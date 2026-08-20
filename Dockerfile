@@ -8,7 +8,15 @@ RUN apt-get update \
         git \
         make \
         python3 \
+        python3-pip \
     && rm -rf /var/lib/apt/lists/*
+
+# asm-differ runtime dependencies.
+RUN pip3 install --break-system-packages \
+        colorama \
+        watchdog \
+        levenshtein \
+        cxxfilt
 
 # agbcc: zhade's new_newlib_pret fork (the compiler needed to match the
 # sibling KATAM decompilation), pinned for reproducibility.
