@@ -16,7 +16,8 @@ OBJCOPY := arm-none-eabi-objcopy
 BUILD_DIR := build
 
 ASM_OBJS  := $(BUILD_DIR)/asm/rom_header.o
-DATA_OBJS := $(BUILD_DIR)/data/main.o
+DATA_SRCS := $(sort $(wildcard data/*.s))
+DATA_OBJS := $(patsubst %.s,$(BUILD_DIR)/%.o,$(DATA_SRCS))
 ALL_OBJS  := $(ASM_OBJS) $(DATA_OBJS)
 
 ELF := $(BUILD_DIR)/$(ROM:.gba=.elf)
