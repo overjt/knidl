@@ -1,0 +1,37 @@
+name: Build
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Try downloading baserom artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: baserom
+          path: .
+        continue-on-error: true
+
+      - name: Materialize baserom from secret
+        if: ${{ hashFiles('baserom.gba') == '' && secrets.BASEROM_GBA_BASE64 != '' }}
+        run: echo "${{ secrets.BASEROM_GBA_BASE64 }}" | base64 -d > baserom.gba
+
+      - name: Build Docker image
+        run: make image
+
+      - name: Compare build with expected hash
+        if: ${{ hashFiles('baserom.gba') != '' }}
+        run: make compare
+
+      - name: Skip compare explicitly when baserom is unavailable
+        if: ${{ hashFiles('baserom.gba') == '' }}
+        run: |
+          echo "::notice::No baserom.gba available (local file, artifact, or BASEROM_GBA_BASE64 secret). Skipping make compare."
+          docker run --rm -v "$PWD":/src -w /src knidl-builder python3 -m py_compile tools/gbafix.py
+          docker run --rm -v "$PWD":/src -w /src knidl-builder perl -c tools/calcrom.pl

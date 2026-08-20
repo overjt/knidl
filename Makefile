@@ -21,7 +21,7 @@ ALL_OBJS  := $(ASM_OBJS) $(DATA_OBJS)
 
 ELF := $(BUILD_DIR)/$(ROM:.gba=.elf)
 
-.PHONY: all compare clean
+.PHONY: all compare progress clean
 
 all: $(ROM)
 
@@ -39,6 +39,9 @@ $(ROM): $(ELF)
 compare: $(ROM)
 	sha1sum -c $(SHA1_FILE)
 
+progress: $(ELF)
+	perl tools/calcrom.pl $(BUILD_DIR)/knidl.map
+
 clean:
 	rm -rf $(BUILD_DIR) $(ROM)
 
@@ -46,7 +49,7 @@ else
 
 DOCKER_RUN := docker run --rm -v $(CURDIR):/src -w /src $(IMAGE)
 
-.PHONY: image all compare clean
+.PHONY: image all compare progress clean
 
 image:
 	docker build -t $(IMAGE) .
@@ -56,6 +59,9 @@ all: image
 
 compare: image
 	$(DOCKER_RUN) make compare INSIDE_DOCKER=1
+
+progress: image
+	$(DOCKER_RUN) make progress INSIDE_DOCKER=1
 
 clean:
 	rm -rf $(BUILD_DIR) $(ROM)
