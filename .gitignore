@@ -1,0 +1,11 @@
+# Never commit ROMs or copyrighted assets
+baserom.gba
+*.gba
+*.elf
+*.map
+
+# Build artifacts
+build/
+
+# OS
+.DS_Store
