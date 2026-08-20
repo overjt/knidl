@@ -27,7 +27,7 @@ Matching decompilation of Kirby: The Amazing Mirror's predecessor, **Kirby: Nigh
 
 - pret-style layout: `src/` (decompiled C), `asm/` (hand-written assembly), `data/` (extracted blobs), `tools/`, `linker.ld`, `<game>.sha1`.
 - The Nintendo logo and any copyrighted assets are `.incbin`'d from `baserom.gba` at build time, never committed.
-- Compiler: agbcc family. Default `agbcc`; `old_agbcc` for SDK files (m4a, agb_sram); `agbcc_arm` only for ARM-mode units.
+- Compiler: agbcc family (validated in `docs/research/compiler-validation.md`, issue #7): default `agbcc` with `-O2 -mthumb-interwork` for `src/`; `old_agbcc` reserved for SDK files (m4a, agb_sram, `0x080CF9xx` zone); `agbcc_arm` only for ARM-mode units. Fork flags `-fhex-asm -f2003-patch -ffix-debug-line` are safe additions (no codegen change).
 
 ## Status
 
