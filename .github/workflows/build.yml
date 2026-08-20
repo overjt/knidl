@@ -1,0 +1,146 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+# CI never needs write access.
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+env:
+  # Expected SHA-1 of baserom.gba (USA A7KE) and of the built knidl.gba.
+  EXPECTED_BASEROM_SHA1: 37a476567d133c146fee6b5e2eb0b07a215da6b0
+
+jobs:
+  build:
+    name: Build and verify
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Build the knidl-builder Docker image
+        run: docker build -t knidl-builder .
+
+      # ----- Checks that never require baserom.gba (always run) -----
+
+      - name: Python tooling check (tools/gbafix.py)
+        run: docker run --rm -v "$PWD":/src -w /src knidl-builder python3 -m py_compile tools/gbafix.py
+
+      - name: Perl tooling check (tools/calcrom.pl)
+        run: docker run --rm -v "$PWD":/src -w /src knidl-builder perl -c tools/calcrom.pl
+
+      - name: Compile baserom-free objects (crt0 + all of src/)
+        shell: bash
+        run: |
+          objects=(build/asm/crt0.o)
+          for c in src/*.c; do
+            [ -e "$c" ] || continue
+            objects+=("build/src/$(basename "$c" .c).o")
+          done
+          docker run --rm -v "$PWD":/src -w /src knidl-builder make "${objects[@]}" INSIDE_DOCKER=1
+
+      # ----- baserom acquisition (any of: self-hosted runner file,
+      # ----- Actions cache seeded by an earlier run, or BASEROM_URL secret) -----
+
+      - name: Restore baserom.gba from the Actions cache (if seeded)
+        id: baserom-cache
+        uses: actions/cache@v4
+        with:
+          path: baserom.gba
+          key: baserom-A7KE-${{ env.EXPECTED_BASEROM_SHA1 }}
+
+      - name: Acquire baserom.gba (self-hosted file / cache / BASEROM_URL secret)
+        id: baserom
+        env:
+          BASEROM_URL: ${{ secrets.BASEROM_URL }}
+          BASEROM_TOKEN: ${{ secrets.BASEROM_TOKEN }}
+        run: |
+          set -eu
+          # Self-hosted runners: the ROM must live OUTSIDE the workspace
+          # (actions/checkout cleans untracked/ignored files in it), so pick
+          # it up from the runner user's home and copy it in.
+          if [ ! -f baserom.gba ] && [ -f "$HOME/baserom.gba" ]; then
+            cp "$HOME/baserom.gba" baserom.gba
+            echo "baserom.gba copied from \$HOME (self-hosted runner)"
+          fi
+          if [ -f baserom.gba ]; then
+            echo "have=true" >> "$GITHUB_OUTPUT"
+            echo "source=cache-or-runner" >> "$GITHUB_OUTPUT"
+            echo "baserom.gba found (restored from cache or present on a self-hosted runner)"
+            exit 0
+          fi
+          if [ -n "${BASEROM_URL:-}" ]; then
+            if [ -n "${BASEROM_TOKEN:-}" ]; then
+              curl --fail --location --retry 3 \
+                -H "Authorization: Bearer $BASEROM_TOKEN" \
+                -o baserom.gba "$BASEROM_URL"
+            else
+              curl --fail --location --retry 3 -o baserom.gba "$BASEROM_URL"
+            fi
+            echo "have=true" >> "$GITHUB_OUTPUT"
+            echo "source=url" >> "$GITHUB_OUTPUT"
+            echo "baserom.gba downloaded from BASEROM_URL secret"
+            exit 0
+          fi
+          echo "have=false" >> "$GITHUB_OUTPUT"
+
+      # ----- Full verification path (only when a baserom is available).
+      # ----- Every step below fails closed on any hash mismatch. -----
+
+      - name: Verify baserom.gba SHA-1 (fail closed)
+        if: steps.baserom.outputs.have == 'true'
+        run: |
+          set -eu
+          echo "$EXPECTED_BASEROM_SHA1  baserom.gba" | sha1sum --check --strict - || {
+            echo "::error::baserom.gba SHA-1 mismatch: expected $EXPECTED_BASEROM_SHA1. Refusing to build with a wrong/corrupt ROM."
+            exit 1
+          }
+
+      - name: Build and compare (make compare)
+        if: steps.baserom.outputs.have == 'true'
+        run: make compare
+
+      - name: Progress report (make progress)
+        if: steps.baserom.outputs.have == 'true'
+        run: |
+          {
+            echo "### Decompilation progress"
+            echo
+            make progress
+          } | tee -a "$GITHUB_STEP_SUMMARY"
+
+      - name: Seed the Actions cache with the verified baserom
+        if: >-
+          steps.baserom.outputs.have == 'true' &&
+          steps.baserom.outputs.source == 'url' &&
+          steps.baserom-cache.outputs.cache-hit != 'true'
+        uses: actions/cache/save@v4
+        with:
+          path: baserom.gba
+          key: baserom-A7KE-${{ env.EXPECTED_BASEROM_SHA1 }}
+
+      # ----- Explicit, visible skip when no baserom is available -----
+
+      - name: Skip notice (no baserom on this runner)
+        if: steps.baserom.outputs.have != 'true'
+        run: |
+          echo "::notice::No baserom.gba available on this runner: 'make compare' was SKIPPED. Toolchain image build, C/asm compilation, and tooling checks ran instead. See README.md (CI) for how to wire a baserom."
+          echo "=================================================================="
+          echo " SKIP: make compare"
+          echo " "
+          echo " baserom.gba is not present on this runner and no BASEROM_URL"
+          echo " secret is configured. The ROM is copyrighted and is never"
+          echo " committed to this repository, so the byte-for-byte comparison"
+          echo " cannot run here."
+          echo " "
+          echo " Ran instead (always green without a baserom):"
+          echo "   - knidl-builder Docker image build (full toolchain)"
+          echo "   - tools/gbafix.py and tools/calcrom.pl syntax checks"
+          echo "   - compilation of crt0 and every file in src/"
+          echo "=================================================================="

@@ -29,6 +29,21 @@ section coming from the C object (e.g. `.sram_driver 0x080cfa9c ... build/src/ag
 and that the old `.incbin` slice no longer covers that range. This catches
 duplication that `make compare` would catch only as a size/overlap error.
 
+### 1.4 GNU ld prints long section names on TWO lines in the map
+With this repo's long custom section names (`.crt0_master_isr`,
+`.gap_sram_driver_fn_table_asset_metadata_index`, ...), ld emits the section
+name alone on one line and `address size object` on the next. Upstream
+`calcrom.pl` (katam/pret) only matches the one-line form and silently drops
+those sections (progress showed 1.6 MB of "data" instead of 8.4 MB).
+`tools/calcrom.pl` now handles both forms; keep that when re-vendoring.
+
+### 1.5 Unquoted `$VAR` word-splitting differs between shells
+A CI step passed `make $OBJECTS` unquoted; fine in bash (GitHub Actions) but
+zsh (the local dev shell) does not word-split and passes it as one target,
+`make: *** No rule to make target 'build/asm/crt0.o build/src/agb_sram.o'`.
+Use bash arrays (`objects=(...); make "${objects[@]}"`) so snippets are
+copy-paste safe on any shell.
+
 ## 2. Tooling pitfalls
 
 ### 2.1 The PyPI package `m2c` is NOT the m2c decompiler
