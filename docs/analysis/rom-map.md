@@ -127,8 +127,8 @@ read from the ROM; all are plain compiler-shaped Thumb-1 with pc-relative litera
 | Entry | Size | Calls | Return | Shape (evidence) |
 |---|---|---|---|---|
 | `0x080022A0` | 0x08 | 0 | `bx lr` | literal store: `str 0 -> [0x03000B00]` |
-| `0x080055B0` | 0x0E | 0 | `bx lr` | scaled-index field set: `strb r0,[base + ((idx*9)<<4) + 19]`, base `0x03009027` lit @0x080055C0 |
-| `0x08009AA0` | 0x0E | 0 | `bx lr` | two global clears: byte `[0x02003060]`, word `[0x03001400]` |
+| `0x080055B0` | 0x0E | 0 | `bx lr` | scaled-index field set: `strb r0,[base + ((idx*9)<<4) + 19]`, base `0x03002790` lit @0x080055C0 |
+| `0x08009AA0` | 0x0E | 0 | `bx lr` | two global clears: byte `[0x02006030]`, word `[0x03000014]` |
 | `0x08022F9C` | 0x08 | 0 | `bx lr` | literal store (pool @0x08022FA0) |
 | `0x08001488` | 0x1C | 0 | `bx lr` | two masked IO halfword writes + word store (lits @0x080014A4+) |
 | `0x08004968` | 0x1C | 0 | `bx lr` | same pattern family |
