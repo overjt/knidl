@@ -1,0 +1,31 @@
+# KNiDL (USA, A7KE) ROM segments - machine-readable
+# format: start_vma end_vma kind name
+# verify against baserom.gba (file offset = vma - 0x08000000)
+0x08000000 0x080000C0 data rom_header
+0x080000C0 0x08000210 arm_code crt0_master_isr
+0x08000210 0x08000234 pool crt0_literals
+0x08000234 0x080002E5 arm_code task_switch_helpers
+0x080002E5 0x08000310 pool task_literals
+0x08000310 0x080006FF thumb_code agb_init
+0x080006FF 0x08007300 thumb_code game_code_early
+0x08007300 0x080CFA40 thumb_code game_code_and_rodata
+0x080CFA40 0x080CFA7F thumb_code sdk_swi_wrappers
+0x080CFA7F 0x080CFDDC thumb_code sdk_lib_sram_driver
+0x080CFDDC 0x080CFDE4 arm_code interworking_veneer
+0x080CFDE8 0x080CFE20 data irq_handler_table_14
+0x080CFE20 0x080CFF00 data lib_misc
+0x080CFF00 0x080D0000 data lib_rodata_fir_tables
+0x080D0000 0x08120000 data level_object_tables
+0x08120000 0x083356E0 data level_graphics_palettes
+0x083356E0 0x0834EEE8 data sound_samples_1
+0x0834EEE8 0x08350AF8 data level_graphics_palettes_2
+0x08350AF8 0x083A85D4 data sound_samples_2
+0x083A85D4 0x083D0000 data level_graphics_palettes_3
+0x083D0000 0x085C0000 data compressed_graphics
+0x085C0000 0x0872E9F8 data m4a_songs
+0x0872E9F8 0x0872EA02 data sram_v112_string
+0x0872EA04 0x0872EA14 data sram_driver_fn_table
+0x08730000 0x08760000 data asset_metadata_index
+0x08760000 0x087E1D58 data song_tail_misc_audio
+0x087E1D58 0x087E3088 data sample_set_index
+0x087E3088 0x08800000 data zero_padding
