@@ -7,6 +7,7 @@ RUN apt-get update \
         ca-certificates \
         git \
         make \
+        perl \
         python3 \
         python3-pip \
     && rm -rf /var/lib/apt/lists/*
