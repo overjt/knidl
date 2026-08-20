@@ -54,6 +54,11 @@ Notes:
 - Boundaries inside `0x080D0000-0x083D0000` (segs 11-13) are soft: table zones and data
   blobs interleave. The boundary `0x080CFFFF|0x080D0000` (code|data) is sharp: last
   validated Thumb entry `0x080CFBF8`, lib rodata to `0x080CFFFF`, then table data.
+- Three small gaps between the segments above were found during the `main_blob` split
+  and are now explicit entries in `segments.txt`:
+  `0x080CFDE4-0x080CFDE8` (4 B, veneer→IRQ table padding, bytes `55 56 00 08`),
+  `0x0872EA02-0x0872EA04` (2 B, null padding after SRAM string),
+  `0x0872EA14-0x08730000` (5612 B, data between SRAM fn table and asset metadata).
 
 ## 3. ARM vs Thumb mix
 
@@ -136,13 +141,13 @@ read from the ROM; all are plain compiler-shaped Thumb-1 with pc-relative litera
 
 Suggested first target: `0x080022A0` / `0x080055B0` (pure Thumb leaf, no frame) to
 confirm default-`agbcc` Thumb codegen (pool placement, `ldr pc` literals), then
-`0x08001488` to validate IO-register idioms before splitting `main_blob`.
+`0x08001488` to validate IO-register idioms now that `main_blob` has been split into per-segment sections.
 
 ## 6. Notes / open questions
 
 - SWI numbering follows GBATEK (`0x0B` = CpuSet, `0x0C` = CpuFastSet); `0x080CFA54`/`0x080CFA58` are the SDK's syscall thunks for exactly these two.
 - Segments 18-20 (asset metadata, sample index) are indexed but not yet named; their semantics belong to the graphics/sound loaders and should be resolved when those loaders are decompiled.
-- One isolated Thumb `bl` pair was detected at `0x080D1B1E -> 0x080315E0` inside the seg-11 data zone (single occurrence; possibly a small code overlay or coincidence — re-check when splitting `main_blob`).
+- One isolated Thumb `bl` pair was detected at `0x080D1B1E -> 0x080315E0` inside the seg-11 data zone (single occurrence; possibly a small code overlay or coincidence — investigate when decompiling the level/object table loaders).
 - `0x08000210: 89abcdef` magic + task-switch helpers (seg 4) suggest the engine's cooperative task system; the IWRAM task pointer (`0x03004C94` etc.) cells should be named during crt0 extraction.
 
 Generated summaries (not committed): strings/pointers/lz77/zeros/isa scans as described in §1.
