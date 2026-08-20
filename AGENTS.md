@@ -31,6 +31,7 @@ Matching decompilation of Kirby: The Amazing Mirror's predecessor, **Kirby: Nigh
 
 ## Status
 
-- Bootstrap complete: `make compare` passes (ROM built from source matches baserom byte-for-byte; everything after the header is one `data/main.s` `.incbin` blob).
+- `make compare` passes (ROM built from source matches baserom byte-for-byte).
+- ROM split into 30 address-pinned sections in `linker.ld` (boundaries from `docs/analysis/segments.txt`); each section is a per-segment `.incbin` slice in `data/`.
 - Research docs with sources live in `docs/research/` (prior art, toolchain, tooling pipeline, ROM facts + bootstrap checklist).
-- Next milestones: split `main_blob` into sections in `linker.ld`, extract crt0/entry (`0x080000C0`) into `asm/crt0.s`, then decompile first C modules (validate agbcc codegen against leaf functions).
+- Next milestones: extract crt0/entry (`0x080000C0`) into `asm/crt0.s`, then decompile first C modules (validate agbcc codegen against leaf functions).

@@ -16,7 +16,13 @@ OBJCOPY := arm-none-eabi-objcopy
 BUILD_DIR := build
 
 ASM_OBJS  := $(BUILD_DIR)/asm/rom_header.o
-DATA_OBJS := $(BUILD_DIR)/data/main.o
+
+# Per-segment data objects, split from the former main_blob.
+# Each .s file .incbin's its slice of baserom.gba; the linker script
+# pins every section at its exact ROM VMA.
+DATA_SRCS := $(wildcard data/*.s)
+DATA_OBJS := $(patsubst %.s,$(BUILD_DIR)/%.o,$(DATA_SRCS))
+
 ALL_OBJS  := $(ASM_OBJS) $(DATA_OBJS)
 
 ELF := $(BUILD_DIR)/$(ROM:.gba=.elf)

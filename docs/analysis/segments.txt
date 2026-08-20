@@ -1,6 +1,7 @@
 # KNiDL (USA, A7KE) ROM segments - machine-readable
 # format: start_vma end_vma kind name
 # verify against baserom.gba (file offset = vma - 0x08000000)
+# coverage must be contiguous: every byte from 0x08000000 to 0x08800000
 0x08000000 0x080000C0 data rom_header
 0x080000C0 0x08000210 arm_code crt0_master_isr
 0x08000210 0x08000234 pool crt0_literals
@@ -12,6 +13,7 @@
 0x080CFA40 0x080CFA7F thumb_code sdk_swi_wrappers
 0x080CFA7F 0x080CFDDC thumb_code sdk_lib_sram_driver
 0x080CFDDC 0x080CFDE4 arm_code interworking_veneer
+0x080CFDE4 0x080CFDE8 data gap_interworking_veneer_irq_handler_table_14
 0x080CFDE8 0x080CFE20 data irq_handler_table_14
 0x080CFE20 0x080CFF00 data lib_misc
 0x080CFF00 0x080D0000 data lib_rodata_fir_tables
@@ -24,7 +26,9 @@
 0x083D0000 0x085C0000 data compressed_graphics
 0x085C0000 0x0872E9F8 data m4a_songs
 0x0872E9F8 0x0872EA02 data sram_v112_string
+0x0872EA02 0x0872EA04 data gap_sram_v112_string_sram_driver_fn_table
 0x0872EA04 0x0872EA14 data sram_driver_fn_table
+0x0872EA14 0x08730000 data gap_sram_driver_fn_table_asset_metadata_index
 0x08730000 0x08760000 data asset_metadata_index
 0x08760000 0x087E1D58 data song_tail_misc_audio
 0x087E1D58 0x087E3088 data sample_set_index
