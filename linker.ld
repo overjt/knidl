@@ -18,12 +18,12 @@ SECTIONS
      * As decompilation progresses, individual .incbin sections will be
      * replaced with compiled/assembled object files. */
 
-    /* crt0 + master ISR (ARM code) */
+    /* crt0 + master ISR (ARM code) — assembled from asm/crt0.s */
     .crt0_master_isr 0x080000C0 : {
         KEEP(*(.crt0_master_isr))
     } > ROM
 
-    /* crt0/ISR literal pool */
+    /* crt0/ISR literal pool — assembled from asm/crt0.s */
     .crt0_literals 0x08000210 : {
         KEEP(*(.crt0_literals))
     } > ROM

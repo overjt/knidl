@@ -15,7 +15,8 @@ OBJCOPY := arm-none-eabi-objcopy
 
 BUILD_DIR := build
 
-ASM_OBJS  := $(BUILD_DIR)/asm/rom_header.o
+ASM_OBJS  := $(BUILD_DIR)/asm/rom_header.o \
+             $(BUILD_DIR)/asm/crt0.o
 
 # Per-segment data objects, split from the former main_blob.
 # Each .s file .incbin's its slice of baserom.gba; the linker script
