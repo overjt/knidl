@@ -13,6 +13,16 @@ AS      := arm-none-eabi-as
 LD      := arm-none-eabi-ld
 OBJCOPY := arm-none-eabi-objcopy
 
+# agbcc toolchain.  Per-file overrides are possible by adding rules like:
+#   $(BUILD_DIR)/src/foo.o: CC    := old_agbcc
+#   $(BUILD_DIR)/src/foo.o: CFLAGS := -O1 -mthumb-interwork
+# before the generic pattern rule below.
+CC      := agbcc
+CPP     := cpp -P
+CFLAGS  := -O2 -mthumb-interwork -Wimplicit -Wparentheses -Werror -fhex-asm
+
+INCLUDE := -I include
+
 BUILD_DIR := build
 
 ASM_OBJS  := $(BUILD_DIR)/asm/rom_header.o \
@@ -24,7 +34,12 @@ ASM_OBJS  := $(BUILD_DIR)/asm/rom_header.o \
 DATA_SRCS := $(wildcard data/*.s)
 DATA_OBJS := $(patsubst %.s,$(BUILD_DIR)/%.o,$(DATA_SRCS))
 
-ALL_OBJS  := $(ASM_OBJS) $(DATA_OBJS)
+# C objects compiled from src/. Empty by default — add .c files to src/ to
+# grow this list organically. The link is unchanged until real objects appear.
+SRC_SRCS  := $(wildcard src/**/*.c src/*.c)
+SRC_OBJS  := $(patsubst %.c,$(BUILD_DIR)/%.o,$(SRC_SRCS))
+
+ALL_OBJS  := $(ASM_OBJS) $(DATA_OBJS) $(SRC_OBJS)
 
 ELF := $(BUILD_DIR)/$(ROM:.gba=.elf)
 
@@ -35,6 +50,17 @@ all: $(ROM)
 $(BUILD_DIR)/%.o: %.s
 	@mkdir -p $(dir $@)
 	$(AS) -mcpu=arm7tdmi -o $@ $<
+
+# agbcc C compilation pipeline:
+#   1. cpp          — standard C pre-processor (strips comments, expands macros)
+#   2. $(CC)        — agbcc (GCC 2.x back-end), emits GAS assembly to stdout
+#   3. echo/cat     — appends ".text\n\t.align\t2, 0" (required by agbcc output)
+#   4. $(AS)        — assemble the resulting .s into an object file
+$(BUILD_DIR)/src/%.o: src/%.c
+	@mkdir -p $(dir $@)
+	$(CPP) $(INCLUDE) $< | $(CC) $(CFLAGS) -o - - | \
+	  { cat; printf '.text\n\t.align\t2, 0\n'; } | \
+	  $(AS) -mcpu=arm7tdmi -o $@ -
 
 $(ELF): $(ALL_OBJS) linker.ld
 	$(LD) -T linker.ld -Map $(BUILD_DIR)/knidl.map -o $@ $(ALL_OBJS)
