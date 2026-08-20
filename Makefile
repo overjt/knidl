@@ -20,8 +20,9 @@ DATA_OBJS := $(BUILD_DIR)/data/main.o
 ALL_OBJS  := $(ASM_OBJS) $(DATA_OBJS)
 
 ELF := $(BUILD_DIR)/$(ROM:.gba=.elf)
+MAP := $(BUILD_DIR)/knidl.map
 
-.PHONY: all compare clean
+.PHONY: all compare progress clean
 
 all: $(ROM)
 
@@ -30,7 +31,7 @@ $(BUILD_DIR)/%.o: %.s
 	$(AS) -mcpu=arm7tdmi -o $@ $<
 
 $(ELF): $(ALL_OBJS) linker.ld
-	$(LD) -T linker.ld -Map $(BUILD_DIR)/knidl.map -o $@ $(ALL_OBJS)
+	$(LD) -T linker.ld -Map $(MAP) -o $@ $(ALL_OBJS)
 
 $(ROM): $(ELF)
 	$(OBJCOPY) -O binary $< $@
@@ -39,6 +40,9 @@ $(ROM): $(ELF)
 compare: $(ROM)
 	sha1sum -c $(SHA1_FILE)
 
+progress: $(ELF)
+	perl tools/calcrom.pl $(MAP)
+
 clean:
 	rm -rf $(BUILD_DIR) $(ROM)
 
@@ -46,7 +50,7 @@ else
 
 DOCKER_RUN := docker run --rm -v $(CURDIR):/src -w /src $(IMAGE)
 
-.PHONY: image all compare clean
+.PHONY: image all compare progress clean
 
 image:
 	docker build -t $(IMAGE) .
@@ -56,6 +60,9 @@ all: image
 
 compare: image
 	$(DOCKER_RUN) make compare INSIDE_DOCKER=1
+
+progress: image
+	$(DOCKER_RUN) make progress INSIDE_DOCKER=1
 
 clean:
 	rm -rf $(BUILD_DIR) $(ROM)

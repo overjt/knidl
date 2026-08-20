@@ -1,0 +1,47 @@
+name: CI
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Build Docker image
+        run: |
+          make image
+
+      - name: Setup baserom if secret exists
+        env:
+          BASEROM_B64: ${{ secrets.BASEROM_B64 }}
+        run: |
+          if [ -n "$BASEROM_B64" ]; then
+            echo "Decoding BASEROM_B64 secret to baserom.gba..."
+            echo "$BASEROM_B64" | base64 -d > baserom.gba
+          fi
+
+      - name: Verify or Skip ROM Comparison
+        run: |
+          if [ -f "baserom.gba" ]; then
+            echo "baserom.gba found. Running make compare..."
+            make compare
+            make progress
+          else
+            echo "========================================================="
+            echo "NOTICE: baserom.gba is not available in this environment."
+            echo "Explicitly skipping 'make compare' step."
+            echo "Building header-only path and running tooling checks..."
+            echo "========================================================="
+          fi
+
+      - name: Tooling and syntax verification
+        run: |
+          python3 -m py_compile tools/gbafix.py
+          perl -c tools/calcrom.pl
