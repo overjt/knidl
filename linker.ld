@@ -58,9 +58,20 @@ SECTIONS
         KEEP(*(.sdk_swi_wrappers))
     } > ROM
 
-    /* C library + SRAM driver (Thumb) */
-    .sdk_lib_sram_driver 0x080CFA7F : {
-        KEEP(*(.sdk_lib_sram_driver))
+    /* SDK swi reset helper tail + literals */
+    .sdk_reset_helper 0x080CFA7F : {
+        KEEP(*(.sdk_reset_helper))
+    } > ROM
+
+    /* SDK SRAM driver (libagbsrd, "SRAM_V112") — decompiled to C
+     * (src/agb_sram.c, compiled with old_agbcc). */
+    .sram_driver 0x080CFA9C : {
+        build/src/agb_sram.o(.text)
+    } > ROM
+
+    /* C library: call_via_rN, copy loops, division routines (verbatim) */
+    .sdk_libc 0x080CFC30 : {
+        KEEP(*(.sdk_libc))
     } > ROM
 
     /* Interworking veneer (ARM) */

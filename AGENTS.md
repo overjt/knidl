@@ -6,6 +6,9 @@ Matching decompilation of Kirby: The Amazing Mirror's predecessor, **Kirby: Nigh
 
 - Language: C/C++.
 - All code, comments, commit messages, and documentation must be in **English**.
+- Before decompiling a new module, read `docs/lessons-learned.md` — pitfalls and
+  validated workflow from previous modules (build-system gotchas, m2c/tooling,
+  old_agbcc source shapes). Add new lessons there as they are discovered.
 
 ## ROM handling
 
@@ -27,11 +30,12 @@ Matching decompilation of Kirby: The Amazing Mirror's predecessor, **Kirby: Nigh
 
 - pret-style layout: `src/` (decompiled C), `asm/` (hand-written assembly), `data/` (extracted blobs), `tools/`, `linker.ld`, `<game>.sha1`.
 - The Nintendo logo and any copyrighted assets are `.incbin`'d from `baserom.gba` at build time, never committed.
-- Compiler: agbcc family (validated in `docs/research/compiler-validation.md`, issue #7): default `agbcc` with `-O2 -mthumb-interwork` for `src/`; `old_agbcc` reserved for SDK files (m4a, agb_sram, `0x080CF9xx` zone); `agbcc_arm` only for ARM-mode units. Fork flags `-fhex-asm -f2003-patch -ffix-debug-line` are safe additions (no codegen change).
+- Compiler: agbcc family (validated in `docs/research/compiler-validation.md`, issue #7): default `agbcc` with `-O2 -mthumb-interwork` for `src/`; `old_agbcc` with `-O1 -mthumb-interwork` for SDK files (m4a, `0x080CF9xx` zone — confirmed byte-exact on `src/agb_sram.c`, issue #8); `agbcc_arm` only for ARM-mode units. Fork flags `-fhex-asm -f2003-patch -ffix-debug-line` are safe additions (no codegen change).
 
 ## Status
 
 - `make compare` passes (ROM built from source matches baserom byte-for-byte).
 - ROM split into 30 address-pinned sections in `linker.ld` (boundaries from `docs/analysis/segments.txt`); each section is a per-segment `.incbin` slice in `data/`.
 - Research docs with sources live in `docs/research/` (prior art, toolchain, tooling pipeline, ROM facts + bootstrap checklist).
-- Next milestones: extract crt0/entry (`0x080000C0`) into `asm/crt0.s`, then decompile first C modules (validate agbcc codegen against leaf functions).
+- First C module decompiled (issue #8): SRAM driver `src/agb_sram.c` (`0x080CFA9C-0x080CFC2F`, old_agbcc `-O1`), linked from C; ROM remains byte-identical.
+- Next milestones: crt0/entry (`0x080000C0`) into `asm/crt0.s` (done), decompile more SDK/game modules using the validated per-zone compiler recipe.

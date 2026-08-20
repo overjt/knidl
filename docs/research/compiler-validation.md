@@ -123,3 +123,32 @@ str r0,[r1]`. Instruction sequence, order and pool are identical. This is a
 source-shape question for the decomp phase (possibly an aggregate write or an
 inlined helper shape), not a compiler question — both agbcc-family compilers
 produce the same 96% result and gcc2.96 is far away.
+
+## 7. Confirmed: SDK zone uses `old_agbcc -O1` (SRAM driver, issue #8)
+
+The SRAM driver (`0x080CFA9C-0x080CFC2F`, libagbsrd "SRAM_V112": `ReadSram_Core`,
+`ReadSram`, `WriteSram`, `VerifySram_Core`, `VerifySram`, `WriteSramEx`) was
+decompiled to `src/agb_sram.c` and matches byte-for-byte with:
+
+    old_agbcc -O1 -mthumb-interwork
+
+Findings (agbcc fork `jiangzhengwenjz/agbcc@new_newlib_pret`, commit `59b966e`):
+
+- `-O2`/`-O3` do NOT match this zone: the leaf copy loops come out with an
+  in-place `subs` + compare-against-materialized `-1`, while the ROM keeps the
+  original counter (`subs r3, r2, #1; cmp r2, #0`) — the signature of a
+  `while (size--)` loop compiled at `-O1`.
+- Source shapes that matter for gcc2.9 codegen here:
+  - `while (size--)` (post-decrement) for the byte loops;
+  - `s = (const u16 *)((u32)ReadSram_Core); s = (const u16 *)((u32)s ^ 1);`
+    as TWO statements: the in-place `eors` invalidates the CSE'd literal, so the
+    compiler re-materializes `ReadSram_Core|1` for the size computation
+    (`ldr r3,[pool]; ...; eors r3,r0; ...; ldr r1,[pool]` — double load from
+    the same pool slot, as in the ROM);
+  - `REG_WAITCNT = (REG_WAITCNT & 0xFFFC) | 3;` (mask literal is
+    `0x0000FFFC` in the pool, i.e. a 16-bit mask, not `~3` sign-extended).
+- Indirect (interworking) calls emit `bl _call_via_rN`; the helpers live in the
+  verbatim libc blob and are exported from `data/sdk_libc.s`
+  (`_call_via_r0`..`_call_via_r7` at `0x080CFC30-0x080CFC4F`).
+- Game code remains `agbcc -O2 -mthumb-interwork`; the SDK library zone
+  (`0x080CF9xx`: agb_sram, m4a family) is `old_agbcc -O1 -mthumb-interwork`.

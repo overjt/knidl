@@ -25,6 +25,12 @@ INCLUDE := -I include
 
 BUILD_DIR := build
 
+# SDK library units are compiled with old_agbcc (docs/research/compiler-
+# validation.md, issue #7): the 0x080CF9xx zone (agb_sram etc.) matches the
+# old compiler's interwork epilogues (pop {rN}; bx rN) and bl _call_via_rN.
+$(BUILD_DIR)/src/agb_sram.o: CC := old_agbcc
+$(BUILD_DIR)/src/agb_sram.o: CFLAGS := -O1 -mthumb-interwork
+
 ASM_OBJS  := $(BUILD_DIR)/asm/rom_header.o \
              $(BUILD_DIR)/asm/crt0.o
 
