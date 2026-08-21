@@ -21,7 +21,14 @@
     ".word <name> from split literal pools; definitions land in rom_syms.s.",
     "Values below are the IWRAM cells of the cooperative task system that",
     "the ARM helpers at 0x08000234-0x080002E4 operate on (see",
-    "docs/analysis/rom-map.md section 6 for the per-cell evidence)."
+    "docs/analysis/rom-map.md section 6 for the per-cell evidence).",
+    "",
+    "Segments with \"chunk_bytes\" are cut at even function boundaries",
+    "roughly that many bytes apart and emitted as one file per chunk under",
+    "asm/<segment>/ (<segment>_NN.s); all chunks share the segment's",
+    "linker section, so ld concatenates them in address order. Branches",
+    "that cross a chunk boundary resolve through global loc_XXXXXXXX",
+    "labels defined by the owning chunk (issue #25)."
   ],
   "external_defined": [
     "AgbMain",
@@ -56,6 +63,9 @@
     "0x030025F0": "gTaskFlagsTable"
   },
   "segments": [
+    { "name": "agb_init", "chunk_bytes": 65536 },
+    { "name": "game_code_early", "chunk_bytes": 65536 },
+    { "name": "game_code_and_rodata", "chunk_bytes": 65536 },
     { "name": "task_switch_helpers" },
     { "name": "task_literals" },
     { "name": "sdk_swi_wrappers" },

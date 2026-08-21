@@ -7,12 +7,16 @@ range is split, `build/knidl.map` shows every function (so `asmdiff.sh`,
 `asm-differ`, and link-time references work), and C migration can replace
 functions one by one.
 
-All SDK/ARM segments around the code region are split (issues #23/#24);
-`data/` incbin slices remain only for bulk asset zones. The currently
+All SDK/ARM segments around the code region are split (issues #23/#24), and
+the whole Thumb game-code region is split into per-function chunks (issue
+#25). `data/` incbin slices remain only for bulk asset zones. The currently
 configured segments (`tools/split_config.json`):
 
 | segment              | range                        | contents                          |
 | -------------------- | ---------------------------- | --------------------------------- |
+| `agb_init`           | `0x08000310-0x080006FF`      | `AgbInit` + fill tables — 1 chunk in `asm/agb_init/` |
+| `game_code_early`    | `0x080006FF-0x08007300`      | early subsystems — 3 chunks in `asm/game_code_early/` (chunk 00 is the 1 odd byte at the odd segment start) |
+| `game_code_and_rodata` | `0x08007300-0x080CFA40`    | bulk of the game logic (~5,000 functions) — 14 chunks of ~64 KiB in `asm/game_code_and_rodata/` |
 | `task_switch_helpers`| `0x08000234-0x080002E5`      | cooperative task switch (ARM, 4 helpers + 1-byte tail) |
 | `task_literals`      | `0x080002E5-0x08000310`      | their literal pools (10 words, all named cells) |
 | `sdk_swi_wrappers`   | `0x080CFA40-0x080CFA7F`      | 11 Thumb SWI thunks (svc wrappers)|
@@ -23,6 +27,37 @@ configured segments (`tools/split_config.json`):
 | `irq_handler_table_14` | `0x080CFDE8-0x080CFE20`    | 14-entry IRQ handler pointer table|
 | `lib_misc`           | `0x080CFE20-0x080CFF00`      | SRAM id string + sound-driver coefficient windows |
 | `lib_rodata_fir_tables` | `0x080CFF00-0x080D0000`   | FIR/envelope-style coefficient tables |
+
+## Chunked segments (issue #25)
+
+Segments configured with a `"chunk_bytes"` value are cut at EVEN function
+boundaries roughly that many bytes apart and emitted as one file per chunk,
+`asm/<segment>/<segment>_NN.s`:
+
+* Every chunk re-uses the segment's section name (`.<segment>`), so
+  `linker.ld` needs no edit: ld concatenates same-named input sections in
+  command-line order and the Makefile globs them with zero-padded suffixes
+  so alphabetical order equals address order.
+* Only the FIRST chunk defines the `.global <segment>` anchor label;
+  later chunks get file-local `<segment>_NN:` marker labels.
+* Branches between chunks resolve through global `loc_XXXXXXXX` labels:
+  every non-function branch/adr target inside the segment gets one,
+  defined by its owning chunk. Within a chunk, targets keep the legacy
+  file-local `.L_XXXXXXXX` labels. Flat segments behave exactly as before
+  issue #25.
+* Cuts land on even addresses because gas aligns Thumb instructions to 2
+  within a section and ld aligns each input section to its own
+  `sh_addralign`: an input section whose first byte would sit at an odd
+  ROM address gets padded by ld and shifts everything after it. An
+  odd-start segment therefore yields a tiny leading data-only chunk (for
+  `game_code_early`, the single byte at `0x080006FF`).
+* Two objdump→gas round-trip hazards are repaired automatically (see
+  lessons-learned §4): halfwords in undefined-decode spaces print as
+  later-architecture mnemonics that arm7tdmi gas rejects, and unified-
+  syntax aliases (`lsls rd, rm, #0` printed as `movs rd, rm`) re-encode to
+  the canonical form. Both are detected by feeding assembler errors /
+  verification byte-diffs back into the emitter and forcing the affected
+  single instructions to raw `.short` bytes (<0.5% of the region).
 
 ## Usage
 
@@ -55,7 +90,9 @@ so committed outputs must equal regeneration byte-for-byte.
 
 and regenerates:
 
-* `asm/<segment>.s` — one file per configured segment (committed);
+* `asm/<segment>.s` — one file per flat configured segment, or
+  `asm/<segment>/<segment>_NN.s` per chunk for chunked segments
+  (committed);
 * `asm/rom_syms.s` — absolute symbols (`name = 0xADDR`) for every database
   function not defined by a real label, plus the `data_symbols` definitions
   (committed);
@@ -148,7 +185,8 @@ Notes on round-tripping objdump text (validated empirically, see
 ## Wiring a new segment into the build
 
 1. Add `{"name": "<segment>"}` to `tools/split_config.json`.
-2. Run `make split` (writes `asm/<segment>.s`, deletes
+2. Run `make split` (writes `asm/<segment>.s` or `asm/<segment>/<segment>_NN.s`,
+   deletes
    `data/<segment>.s`, regenerates `asm/rom_syms.s`).
 3. Run `make compare` — it must report `knidl.gba: OK`.
 4. Check `build/knidl.map` (lesson 1.3 in `docs/lessons-learned.md`): the

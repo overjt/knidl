@@ -281,6 +281,63 @@ pre-edit object. Rules: never retype numbers while annotating; after any
 boundary edit run a CLEAN full build, not just `make compare` on top of
 stale objects.
 
+### 4.14 ld aligns each INPUT section at ABSOLUTE addresses
+Inside an output section pinned at an odd VMA, an input section whose
+`sh_addralign` is 2 is placed at the next even address — ld silently
+inserts a pad byte and shifts everything after it (verified empirically,
+issue #25). Consequences: (a) a range starting at an odd address can never
+contain real instructions; emit its leading bytes as a data-only prefix;
+(b) when splitting one segment across several objects that share the
+section name, cut at EVEN function boundaries so every piece starts even
+and no padding ever appears; (c) same-named input sections concatenate in
+command-line order, so the build must enumerate chunk objects sorted by
+address (zero-padded suffixes make `$(wildcard)` order equal address
+order).
+
+### 4.15 Disassemble blobs with `-marmv4t`, never plain `-marm`
+With `-b binary -marm`, objdump decodes undefined-space halfwords using
+the toolchain's newest architecture and prints Thumb-2-only mnemonics
+(`rev`, `cbnz`, `it`, `blx reg`, NEON/FPA junk) that arm7tdmi gas then
+rejects — every such line would force a whole chunk into raw fallback.
+`-marmv4t` (as used by `asmdiff.sh`) fixes most but NOT all: a few
+undefined-space halfwords still print later-arch mnemonics, so the split
+tool additionally feeds gas error line numbers back into the emitter and
+re-emits exactly those addresses as raw `.short`.
+
+### 4.16 objdump's byte column is ENDIAN-SWAPPED per unit
+For `-bbinary` blobs objdump prints halfword/word VALUES, not file-order
+bytes: ROM bytes `70 47` show as `4770`. To validate that a disassembly
+entry really describes the bytes at its address (needed because the
+linear sweep desyncs on fake-BL pairs, lesson 4.10), reverse each token's
+bytes before comparing against the ROM slice.
+
+### 4.17 Unified-syntax ALIASES re-encode silently
+objdump prints `lsls rd, rm, #0` as the alias `movs rd, rm`; gas accepts
+that happily but encodes the canonical form (`adds rd, rm, #0`,
+`0x1Cxx`) instead of the original `0x00xx` halfword — NO assembler error,
+wrong bytes found only at final comparison. The fix in tools/split.py is
+generic: after assembling, diff the linked section against baserom and
+feed the first differing address back into the emitter, forcing that one
+instruction to raw bytes (a handful of addresses per segment). Any future
+alias of this kind is caught automatically by the same loop.
+
+### 4.18 `--defsym` stand-ins carry no ARM/Thumb marker
+The split verification link used to provide C-defined symbols (`ReadSram`,
+...) via `--defsym=...=0xADDR`. Absolutes have no ISA bit, so a `bl` from
+split code into one makes ld inject a 16-byte interworking veneer into the
+layout (`.__stub` appeared right after `game_code_and_rodata`, shifting
+every later section and failing the byte compare). Fix: define each
+external symbol as a LABEL in a zero-size section pinned at its real VMA
+with the correct `.thumb`/`.arm` directive — same address, right ISA, no
+bytes contributed.
+
+### 4.19 Thumb 0xDExx is UDF, not `b<cond>`
+`thumb_decode` originally treated `0xD000-0xDFFF` as conditional branches;
+`0xDE00-0xDEFF` is actually the permanently-undefined (UDF) space, and
+rewriting those operands to labels produced `udf loc_...`, which gas
+rejects ("constant expression required"). Branch decoding stops at
+`0xDDFF`; `svc` (0xDFxx) was already excluded.
+
 ## 5. Workflow that worked
 
 1. Disassemble the range from `baserom.gba` (objdump in Docker), identify
