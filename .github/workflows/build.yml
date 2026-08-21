@@ -29,8 +29,8 @@ jobs:
 
       # ----- Checks that never require baserom.gba (always run) -----
 
-      - name: Python tooling check (tools/gbafix.py)
-        run: docker run --rm -v "$PWD":/src -w /src knidl-builder python3 -m py_compile tools/gbafix.py
+      - name: Python tooling check (tools/gbafix.py, tools/symdb.py, tools/symdb_check.py)
+        run: docker run --rm -v "$PWD":/src -w /src knidl-builder python3 -m py_compile tools/gbafix.py tools/symdb.py tools/symdb_check.py
 
       - name: Perl tooling check (tools/calcrom.pl)
         run: docker run --rm -v "$PWD":/src -w /src knidl-builder perl -c tools/calcrom.pl
@@ -114,6 +114,15 @@ jobs:
             echo
             make progress
           } | tee -a "$GITHUB_STEP_SUMMARY"
+
+      # The symbol database must regenerate byte-for-byte from baserom.gba;
+      # a diff means tools/symdb.py changed without recommitting the CSVs
+      # (or the ROM differs from the one the DB was generated from).
+      - name: Symbol database regeneration check (make symbols)
+        if: steps.baserom.outputs.have == 'true'
+        run: |
+          make symbols
+          git diff --exit-code -- docs/analysis/symbols.csv docs/analysis/callgraph.csv
 
       - name: Seed the Actions cache with the verified baserom
         if: >-

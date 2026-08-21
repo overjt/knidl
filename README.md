@@ -36,6 +36,7 @@ make image    # build the knidl-builder toolchain image (Debian 12 + pinned agbc
 make          # build knidl.gba from source + baserom.gba
 make compare  # verify the built ROM SHA-1 (byte-for-byte match)
 make progress # print code/data decompilation percentages
+make symbols  # regenerate + validate the ROM-wide function symbol database
 ```
 
 Full instructions, including `baserom.gba` placement and hash verification:

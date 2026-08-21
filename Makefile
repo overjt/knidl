@@ -49,7 +49,7 @@ ALL_OBJS  := $(ASM_OBJS) $(DATA_OBJS) $(SRC_OBJS)
 
 ELF := $(BUILD_DIR)/$(ROM:.gba=.elf)
 
-.PHONY: all compare progress clean
+.PHONY: all compare progress symbols clean
 
 all: $(ROM)
 
@@ -84,6 +84,13 @@ compare: $(ROM)
 progress: $(ELF)
 	perl tools/calcrom.pl $(BUILD_DIR)/knidl.map
 
+# ROM-wide function/symbol database (issue #22): regenerate
+# docs/analysis/symbols.csv + callgraph.csv from baserom.gba and validate
+# them (coverage + spot checks against a fresh dual-view disassembly).
+symbols: baserom.gba tools/symdb.py tools/symdb_check.py docs/analysis/segments.txt
+	python3 tools/symdb.py --rom baserom.gba --segments docs/analysis/segments.txt --out-dir docs/analysis
+	python3 tools/symdb_check.py --rom baserom.gba --symbols docs/analysis/symbols.csv --callgraph docs/analysis/callgraph.csv --segments docs/analysis/segments.txt
+
 clean:
 	rm -rf $(BUILD_DIR) $(ROM)
 
@@ -91,7 +98,7 @@ else
 
 DOCKER_RUN := docker run --rm -v $(CURDIR):/src -w /src $(IMAGE)
 
-.PHONY: image all compare progress clean
+.PHONY: image all compare progress symbols clean
 
 image:
 	docker build -t $(IMAGE) .
@@ -104,6 +111,9 @@ compare: image
 
 progress: image
 	$(DOCKER_RUN) make progress INSIDE_DOCKER=1
+
+symbols: image
+	$(DOCKER_RUN) make symbols INSIDE_DOCKER=1
 
 clean:
 	rm -rf $(BUILD_DIR) $(ROM)

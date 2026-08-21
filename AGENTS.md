@@ -42,4 +42,5 @@ Matching decompilation of Kirby: The Amazing Mirror's predecessor, **Kirby: Nigh
 - ROM split into 30 address-pinned sections in `linker.ld` (boundaries from `docs/analysis/segments.txt`); each section is a per-segment `.incbin` slice in `data/`.
 - Research docs with sources live in `docs/research/` (prior art, toolchain, tooling pipeline, ROM facts + bootstrap checklist).
 - First C module decompiled (issue #8): SRAM driver `src/agb_sram.c` (`0x080CFA9C-0x080CFC2F`, old_agbcc `-O1`), linked from C; ROM remains byte-identical.
+- ROM-wide symbol database (issue #22): `tools/symdb.py` + `tools/symdb_check.py` via `make symbols` (Docker); committed `docs/analysis/symbols.csv` (5,201 functions: 5,194 Thumb + 7 ARM) and `docs/analysis/callgraph.csv` (19,317 edges); validated against a fresh dual-view objdump disassembly (see `docs/analysis/rom-map.md` §7).
 - Next milestones: crt0/entry (`0x080000C0`) into `asm/crt0.s` (done), decompile more SDK/game modules using the validated per-zone compiler recipe.
