@@ -62,7 +62,7 @@ ARM_ENTRIES = [
 ]
 
 # Canonical names, all previously validated in this repo (asm/crt0.s,
-# src/agb_sram.c, data/sdk_libc.s) or canonical SDK/BIOS-syscall names from
+# src/agb_sram.c, asm/sdk_libc.s) or canonical SDK/BIOS-syscall names from
 # sibling pret projects (katam / pokeemerald; SWI numbering per GBATEK).
 KNOWN_SYMBOLS = {
     0x08000310: "AgbInit",  # rom-map.md section 2 seg 5 (crt0 literal 0x08000311)
@@ -85,7 +85,7 @@ KNOWN_SYMBOLS = {
     0x080CFB64: "VerifySram_Core",
     0x080CFB94: "VerifySram",
     0x080CFBF8: "WriteSramEx",
-    # SDK libc (data/sdk_libc.s; agbcc libgcc division helpers)
+    # SDK libc (asm/sdk_libc.s; agbcc libgcc division helpers)
     0x080CFC30: "_call_via_r0",
     0x080CFC34: "_call_via_r1",
     0x080CFC38: "_call_via_r2",

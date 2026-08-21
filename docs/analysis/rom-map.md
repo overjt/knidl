@@ -35,13 +35,13 @@ symbol database and call graph (section 7), and is validated by
 | 1 | `0x08000000-0x080000BF` | 0xC0 | **Cartridge header** | `0x08000000: ea00002e  b 0x080000C0` (ARM entry); title `AGB KIRBY DX` @0x080000A0; code `A7KE` @0x080000AC; maker `01` @0x080000B0; fixed `0x96` @0x080000B2; version `0x00` @0x080000BC; complement `0xC1` @0x080000BD |
 | 2 | `0x080000C0-0x0800020C` | 0x14C | **crt0 + master ISR (ARM)** | `msr CPSR_fc` mode switches, stack loads `0x03007EC0`/`0x03007F60`, `bx` calls to Thumb init/main; ISR pushes `{r0-r3,lr}`, dispatches through table @`0x030004B0` |
 | 3 | `0x08000210-0x08000233` | 0x24 | crt0/ISR literal pool | `0x08000214: 03007FFC`, `0x08000218: 08000311` (init|1), `0x0800021C: 08007301` (main|1), `0x0800022C: 030004B0`, `0x08000210: 89abcdef` |
-| 4 | `0x08000234-0x080002E4` | 0xB1 | **Task/context-switch helpers (ARM)** | 4 small routines saving/restoring `sp`/`lr`/`r0` into IWRAM cells (`0x03004C94`, `0x03002470`, `0x030026F8`, `0x030025E0`, `0x0300248C`, `0x030025F0`); `bl 0x080CFDDC` @0x08000290 (the only ARM `bl` in the ROM) |
+| 4 | `0x08000234-0x080002E4` | 0xB1 | **Task/context-switch helpers (ARM)** — split to `asm/task_switch_helpers.s` (#24); their literal pools `0x080002E5-0x0800030F` are the separate `task_literals` segment (`asm/task_literals.s`), all ten words named cells | 4 small routines saving/restoring `sp`/`lr`/`r0` into IWRAM cells (`0x03004C94`, `0x03002470`, `0x030026F8`, `0x030025E0`, `0x0300248C`, `0x030025F0`; named via `tools/split_config.json` `data_symbols`, semantics in §6); `bl 0x080CFDDC` @0x08000290 (the only ARM `bl` in the ROM) |
 | 5 | `0x08000310-0x080006FE` | 0x3EE | **AgbInit (Thumb)** | Prologue `b5f0 464f 4646 b4c0` @0x08000310; epilogue `pop {r4-r7}; pop {r0}; bx r0` @0x080006F4-0x080006FE; performs the memory clears/copies listed in §4 |
 | 6 | `0x08000700-0x080072FF` | 0x6C00 | Game code (Thumb): early subsystems | 160+ Thumb BL targets in this window; includes IRQ default handler `0x08001518`, `0x080010CC`, task entry `0x08005654` |
 | 7 | `0x08007300-0x080CF9FF` | ~0xC8700 | **Game code + rodata (Thumb)** | ~2,650 Thumb BL targets, thumb-pointer tables throughout; interleaved rodata (pointer tables 122 runs ≥8 entries, e.g. 43-entry table @0x0803EC48) |
 | 8 | `0x080CFA40-0x080CFA7E` | 0x3F | **SDK syscall wrappers (Thumb)** — named via SDK-order SWI table (`include/gba/syscall.h`, issue #27) | `svc N; bx lr` pairs: `0x080CFA50` ArcTan2 (`svc 0x0A`), `0x080CFA54` CpuFastSet (`svc 0x0C`), `0x080CFA58` CpuSet (`svc 0x0B`), `0x080CFA5C` Div (`svc 0x06`), `0x080CFA60` Mod (`svc 0x06`, returns remainder), `0x080CFA68` HuffUnComp (`svc 0x13`), `0x080CFA6C` LZ77UnCompVram (`svc 0x12`), `0x080CFA70` LZ77UnCompWram (`svc 0x11`), `0x080CFA74` MultiBoot mode=1 (`svc 0x25`), `0x080CFA7C` SoundDriverVSyncOff (`svc 0x28`); plus `0x080CFA40` (unidentified SDK helper, 0 callers) and `0x080CFA4C` (`bx lr` stub, referenced from `0x080CEA48`); `0x080CFA80` reset helper (`svc 1; svc 0`) |
-| 9 | `0x080CFA9C-0x080CFDDB` | ~0x340 | **C library + SRAM driver (Thumb)** — SRAM driver **decompiled** (`src/agb_sram.c`, old_agbcc `-O1 -mthumb-interwork`) | SRAM driver `0x080CFA9C-0x080CFC2F`: `ReadSram_Core` `0x080CFA9C`, `ReadSram` `0x080CFAC0`, `WriteSram` `0x080CFB24`, `VerifySram_Core` `0x080CFB64`, `VerifySram` `0x080CFB94`, `WriteSramEx` `0x080CFBF8` (all byte-identical, linked from C); WAITCNT setup + stack-copy calls via `_call_via_r3` @`0x080CFC3C`; fn table `0x0872EA04` = {ReadSram_Core, ReadSram, VerifySram_Core, VerifySram} (no xrefs); remaining libc tail `0x080CFC30-0x080CFDDB` verbatim (call_via_rN, copy loops, division) |
-| 10 | `0x080CFF00-0x080CFFFF` | 0x100 | lib rodata | small tables (sine-like `0x0700..0001` @0x080CFF00), `0x7FFF` blocks @0x080CFF20, reverb/FIR-style coefficient sets — bytes `e8 50 e0 c1 00 90 00 00` / `.. 08 00` / `.. 80 00` @0x080CFF3A — m4a-family sound tables |
+| 9 | `0x080CFA9C-0x080CFDDB` | ~0x340 | **C library + SRAM driver (Thumb)** — SRAM driver **decompiled** (`src/agb_sram.c`, old_agbcc `-O1 -mthumb-interwork`); libc tail split to `asm/sdk_libc.s` (#24) | SRAM driver `0x080CFA9C-0x080CFC2F`: `ReadSram_Core` `0x080CFA9C`, `ReadSram` `0x080CFAC0`, `WriteSram` `0x080CFB24`, `VerifySram_Core` `0x080CFB64`, `VerifySram` `0x080CFB94`, `WriteSramEx` `0x080CFBF8` (all byte-identical, linked from C); libc tail `0x080CFC30-0x080CFDDB`: `_call_via_r0..r7` (+ `_call_via_r8/r9/sl/fp/ip/sp/lr`), `__divsi3`/`__umodsi3`/`_div0`, three Thumb->ARM task trampolines `0x080CFDC4/DCC/DD4` (`bx pc; nop; ARM b 0x08000234/58/88` — see §6); fn table `0x0872EA04` = {ReadSram_Core, ReadSram, VerifySram_Core, VerifySram} (no xrefs) |
+| 10 | `0x080CFF00-0x080CFFFF` | 0x100 | lib rodata — split to `asm/lib_rodata_fir_tables.s` (#24) | FIR/envelope-style coefficient tables consumed with signed relative indexing by the sound-driver code at `0x080C2xxx-0x080C5xxx`; symmetric byte ramp peaking at 0x10 @0x080CFF00, `0x7FFF` saturation block @0x080CFF20, reverb/FIR-style coefficient sets — bytes `e8 50 e0 c1 ...` @0x080CFF3A — m4a-family sound tables |
 | 11 | `0x080D0000-0x08120000` | 0x50000 | Level/map & object tables | entropy 4.4-5.4, 31-48% zeros, few pointers; `faff/0000/0100` pattern tables (e.g. file `0xD00C0`) |
 | 12 | `0x08120000-0x08330000` | ~0x210000 | Level data / uncompressed graphics / palettes, with embedded table zones | pointer clusters @0x08120000 (1066), 0x08150000 (962), 0x081A0000 (1140), 0x08200000 (1206), 0x08250000 (1526) |
 | 13 | `0x083356E0-0x0834EEE8`, `0x08350AF8-0x083A85D4` | ~0x1B290 | **Sound sample data (PCM)** | pointed to by the sample index @`0x087E1D58` (24 pointers into `0x0833-0x0834`, 339 into `0x0835-0x083A`); high entropy (~7.2), zero-pct ~6-8% |
@@ -62,7 +62,9 @@ Notes:
   validated Thumb entry `0x080CFBF8`, lib rodata to `0x080CFFFF`, then table data.
 - Three small gaps between the segments above were found during the `main_blob` split
   and are now explicit entries in `segments.txt`:
-  `0x080CFDE4-0x080CFDE8` (4 B, veneer→IRQ table padding, bytes `55 56 00 08`),
+  `0x080CFDE4-0x080CFDE8` (4 B — **not padding**: it is the interworking veneer's
+  literal word, `0x08005655` = Thumb pointer to the task dispatcher `0x08005654`,
+  emitted as `.word sub_08005654+1`),
   `0x0872EA02-0x0872EA04` (2 B, null padding after SRAM string),
   `0x0872EA14-0x08730000` (5612 B, data between SRAM fn table and asset metadata).
 
@@ -161,7 +163,34 @@ confirm default-`agbcc` Thumb codegen (pool placement, `ldr pc` literals), then
 - SWI numbering follows the **SDK/libagbsyscall order**, not the retail-BIOS order: the two agree for 0x00-0x07, 0x10-0x1F and 0x25+, but differ for 0x08-0x0F (e.g. `0x0B` = CpuSet here, Sqrt on a retail BIOS; `0x0A` = ArcTan2 here, GetBiosChecksum on retail). `0x080CFA54`/`0x080CFA58` are the SDK's thunks for CpuFastSet/CpuSet in that order. Full verified table and thunk map: `include/gba/syscall.h` (issue #27; identification method in docs/lessons-learned.md §3.6).
 - Segments 18-20 (asset metadata, sample index) are indexed but not yet named; their semantics belong to the graphics/sound loaders and should be resolved when those loaders are decompiled.
 - One isolated Thumb `bl` pair was detected at `0x080D1B1E -> 0x080315E0` inside the seg-11 data zone (single occurrence; possibly a small code overlay or coincidence — investigate when decompiling the level/object table loaders).
-- `0x08000210: 89abcdef` magic + task-switch helpers (seg 4) suggest the engine's cooperative task system; the IWRAM task pointer (`0x03004C94` etc.) cells should be named during crt0 extraction.
+- Cooperative task system (seg 4, split in #24). Behavioral reading of the four ARM
+  helpers (names are inferences from control flow, to be confirmed when the Thumb-side
+  scheduler is decompiled):
+  - `sub_08000234` switch-to-task: saves the caller's `sp` to **`gTaskBaseSp`**
+    (`0x03004C94`), installs the task stack (`sp = r2`), restores callee-saved regs,
+    forces bit 0 of `r1` and jumps (`bx r1`) into the Thumb task entry.
+  - `sub_08000258` yield-back: saves current `sp`/`lr`/`r0` to **`gTaskSavedSp`**
+    (`0x03002470`), **`gTaskSavedLr`** (`0x030026F8`), **`gTaskSavedR0`**
+    (`0x030025E0`), restores `sp` from `gTaskBaseSp`, returns via a popped word.
+  - `sub_08000288` dispatcher call: passes `*gCurTaskIdx` (`0x0300248C`) as `r0`
+    through the ARM veneer to the game-side routine `0x08005654`, then restores the
+    base stack as above.
+  - `sub_080002A8` halt check: if `gTaskSavedR0 != -1` return; else if
+    `gTaskFlagsTable[gCurTaskIdx]` (`0x030025F0 + idx*4`) is nonzero, loop forever.
+- The three Thumb->ARM trampolines at the tail of `sdk_libc` each decode as
+  `bx pc; nop; ARM b <target>` with targets `0x08000234` / `0x08000258` /
+  `0x08000288` — i.e. they let Thumb code reach task helpers 1-3. The trailing
+  ARM branch words are emitted as raw halfwords in `asm/sdk_libc.s`; their decode
+  is documented here.
+- `lib_misc[0]` (`0x080CFE20`, named `gSramIdString`) is the ASCII string
+  `"AGB  KIRBY"`; save-init code at `0x080B7AF8` writes those 10 bytes to SRAM
+  (`0x0E000000`) via `WriteSramEx`. The rest of `lib_misc`/`lib_rodata_fir_tables`
+  are sound-driver coefficient tables: the mixer/sequencer code at
+  `0x080C2xxx-0x080C5xxx` loads window bases (e.g. `0x080CFE60`, `0x080CFEE4`,
+  `0x080CFF52`) into pools and indexes them with signed offsets (`ldrsh` index +
+  byte load), which explains pointer-like values landing mid-table. Ascending
+  24-bit step triplets (`fd770a`, `fd811e`, ...) look like pitch-increment ladders;
+  canonical per-table names await decompilation of that driver.
 
 Generated summaries (not committed): strings/pointers/lz77/zeros/isa scans as described in §1.
 
@@ -181,7 +210,7 @@ byte-for-byte.
 | `size` | upper bound: distance to the next accepted entry, capped at 4 KiB (includes trailing literal pools / padding) |
 | `isa` | `thumb` or `arm` |
 | `evidence` | how the entry was discovered, strongest first: `bl-target` (reached by a decoded `bl`), `rom-pointer` (referenced by a word in the ROM; bit 0 set for Thumb, clear for ARM), `prologue-scan` (curated ARM-zone split). Combined values use `+`. |
-| `name` | `sub_08xxxxxx` for unknowns; canonical SDK/m4a/libc names where previously validated in this repo (`asm/crt0.s`, `src/agb_sram.c`, `data/sdk_libc.s`) or canonical from sibling projects (SWI thunks per GBATEK numbering) |
+| `name` | `sub_08xxxxxx` for unknowns; canonical SDK/m4a/libc names where previously validated in this repo (`asm/crt0.s`, `src/agb_sram.c`, `asm/sdk_libc.s`) or canonical from sibling projects (SWI thunks per GBATEK numbering) |
 
 Current contents: 5,201 functions (5,194 Thumb + 7 ARM across the three ARM zones
 of §3), 19,317 call-graph edges (14,524 `bl`, 4,793 `ptr`). In `callgraph.csv`,
@@ -208,8 +237,10 @@ random entries against a fresh dual-view objdump disassembly.
   end addresses from their own analysis.
 - ~35 BL targets whose shape validates nowhere were rejected; most look like
   data, a few may be real oddly-shaped leaves.
-- Of the three `bx pc` Thumb→ARM veneers at `0x080CFDC4/0x080CFDD0/0x080CFDD8`
-  (→ task helpers 1-3), only `0x080CFDC4` is BL-reachable and included; the
-  other two have no BL/pointer references and follow the general limitation
-  above (the ARM helpers themselves carry `prologue-scan` evidence from the
-  curated §3 split).
+- Of the three `bx pc` Thumb→ARM trampolines at `0x080CFDC4/0x080CFDCC/0x080CFDD4`
+  (ARM branches back to task helpers 1-3, see §6), all three carry `bl-target`
+  evidence in the database; the ARM helpers themselves carry `prologue-scan`
+  evidence from the curated §3 split. (An earlier revision of this section listed
+  wrong addresses for the second/third trampoline and claimed only the first was
+  BL-reachable — corrected in #24 against `docs/analysis/callgraph.csv`, which
+  records hundreds of `bl 0x080CFDCC/DD4` call sites.)

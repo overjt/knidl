@@ -138,8 +138,9 @@ original compiler would have seen (u16 context).
 ### 3.4 Export ALL `_call_via_rN` aliases from the libc blob
 Interworking indirect calls compile to `bl _call_via_rN` where N depends on
 register allocation; the first attempt used `r4`, the final one `r3`.
-`data/sdk_libc.s` defines `_call_via_r0`..`_call_via_r7` as offsets into the
-verbatim blob — don't narrow that set when touching it.
+`asm/sdk_libc.s` (formerly offsets into the verbatim blob in
+`data/sdk_libc.s`) defines `_call_via_r0`..`_call_via_r7` — don't narrow
+that set when touching it.
 
 ### 3.5 Copy-to-stack idiom (SDK SRAM pattern)
 `ReadSram`/`VerifySram` copy the `_Core` function to a stack buffer
@@ -200,10 +201,11 @@ to raw `.short` bytes.
 `name = 0xADDR` (an absolute symbol), so a split file can emit
 `.word sub_08001518+1` (IRQ table) or `bl __divsi3` and the linker
 resolves it to identical bytes. Symbols that already exist as real
-labels (`asm/crt0.s`, `src/agb_sram.c`, `data/sdk_libc.s`) must be
-excluded (`external_defined` in `tools/split_config.json`) or ld fails
-with "multiple definition". `make split` regenerates the file, so the
-exclusion set stays consistent automatically.
+labels (`asm/crt0.s`, `src/agb_sram.c`) must be excluded
+(`external_defined` in `tools/split_config.json`) — as must every DB
+function inside a configured split range, which the tool handles via its
+`in_split` set — or ld fails with "multiple definition". `make split`
+regenerates the file, so the exclusion set stays consistent automatically.
 
 ### 4.6 Parsing objdump output: split on tabs, not whitespace
 objdump instruction lines are `addr:\t<bytes> \t<mnemonic>\t<operands>`.
@@ -239,6 +241,45 @@ rom_syms.o and `--defsym` stand-ins for C-defined symbols) and compare
 each section via `objcopy --dump-section` — note that `--dump-section`
 takes `section=file` as a SEPARATE argv element and exits 0 without
 creating the file when the section is absent, so check for the file.
+
+### 4.10 objdump's linear sweep desyncs on false BL pairs — budget raw halfwords
+Disassembling one big Thumb buffer decodes address-stably EXCEPT at data
+that pairs as a fake `bl` (lesson 4.7): the bogus pair swallows its own
+4-byte window AND shifts every later entry by an odd offset, so nearby
+real instructions have no entry in the per-address map (`bx pc; nop`
+trampolines at the tail of `sdk_libc` lost two `bx` mnemonics this way).
+The tool falls back to raw `.short` for exactly those items, keeping
+bytes exact; don't chase "why isn't this line an instruction" — check the
+neighbouring fake-BL window first.
+
+### 4.11 Hand labels must flow through the split config, never edit generated asm
+CI re-runs `make split` and fails on any diff under `asm/`/`data/`, so
+hand-edited names would be reverted (or break CI). Everything nameable is
+config-driven: DB names come from `tools/symdb.py` → symbols.csv;
+non-DB function labels go in `extra_labels`; named non-ROM word values
+(IWRAM cells) go in `data_symbols` with definitions auto-appended to
+`asm/rom_syms.s`. The config loader rejects labels outside configured
+segments or colliding with DB names, so mistakes fail loudly.
+
+### 4.12 A "gap" between segments can be someone else's literal pool
+The 4 bytes at `0x080CFDE4` were catalogued as veneer→IRQ-table padding.
+They are actually the literal of the interworking veneer at `0x080CFDDC`
+(`ldr ip,[pc]` reads `pc+0` = the NEXT segment's first word: `0x08005655`,
+Thumb pointer to the task dispatcher). Segment boundaries are an analysis
+grid, not compiler output — pools may straddle them, so before labelling
+a gap "padding", decode the preceding ARM/Thumb stream for a pc-relative
+load aimed at it.
+
+### 4.13 segments.txt ends are EXCLUSIVE — annotation edits must not shift them
+`segments.txt` ranges are half-open (`end` = first byte NOT in the segment);
+prose (issues, rom-map rows) often quotes them inclusively. While adding
+inline annotations (#24), the `sdk_libc` end got "corrected" from
+`0x080CFDDC` to the prose's `0x080CFDDB`, orphaning one byte between two
+sections; ld filled it with `00` and only a from-scratch `make clean &&
+make compare` caught it — incremental builds kept linking the stale
+pre-edit object. Rules: never retype numbers while annotating; after any
+boundary edit run a CLEAN full build, not just `make compare` on top of
+stale objects.
 
 ## 5. Workflow that worked
 

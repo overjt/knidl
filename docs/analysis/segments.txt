@@ -2,23 +2,28 @@
 # format: start_vma end_vma kind name
 # verify against baserom.gba (file offset = vma - 0x08000000)
 # coverage must be contiguous: every byte from 0x08000000 to 0x08800000
+# Trailing "# ..." text after the name is annotation only; tools/split.py,
+# tools/symdb.py and tools/symdb_check.py parse fields 1-4 exclusively.
+# Split status (asm/<name>.s owns the section; data/<name>.s removed):
+# crt0_master_isr + crt0_literals (asm/crt0.s), sram_driver (src/agb_sram.c),
+# and every segment marked [split] below.
 0x08000000 0x080000C0 data rom_header
 0x080000C0 0x08000210 arm_code crt0_master_isr
 0x08000210 0x08000234 pool crt0_literals
-0x08000234 0x080002E5 arm_code task_switch_helpers
-0x080002E5 0x08000310 pool task_literals
+0x08000234 0x080002E5 arm_code task_switch_helpers [split] # cooperative task switch; IWRAM cells named via split_config data_symbols
+0x080002E5 0x08000310 pool task_literals [split] # task helper literal pools (all 10 words = named cells)
 0x08000310 0x080006FF thumb_code agb_init
 0x080006FF 0x08007300 thumb_code game_code_early
 0x08007300 0x080CFA40 thumb_code game_code_and_rodata
-0x080CFA40 0x080CFA7F thumb_code sdk_swi_wrappers
-0x080CFA7F 0x080CFA9C thumb_code sdk_reset_helper
+0x080CFA40 0x080CFA7F thumb_code sdk_swi_wrappers [split] # svc thunks named per include/gba/syscall.h
+0x080CFA7F 0x080CFA9C thumb_code sdk_reset_helper [split]
 0x080CFA9C 0x080CFC30 c_code sram_driver
-0x080CFC30 0x080CFDDC thumb_code sdk_libc
-0x080CFDDC 0x080CFDE4 arm_code interworking_veneer
-0x080CFDE4 0x080CFDE8 data gap_interworking_veneer_irq_handler_table_14
-0x080CFDE8 0x080CFE20 data irq_handler_table_14
-0x080CFE20 0x080CFF00 data lib_misc
-0x080CFF00 0x080D0000 data lib_rodata_fir_tables
+0x080CFC30 0x080CFDDC thumb_code sdk_libc [split] # _call_via_r0..lr + __divsi3/__umodsi3/_div0 + Thumb->ARM task trampolines
+0x080CFDDC 0x080CFDE4 arm_code interworking_veneer [split] # ldr ip,[pc]; bx ip -> 0x08005654|1
+0x080CFDE4 0x080CFDE8 data gap_interworking_veneer_irq_handler_table_14 [split] # NOT padding: the veneer's literal word (sub_08005654+1)
+0x080CFDE8 0x080CFE20 data irq_handler_table_14 [split] # 14 .word entries with symbolic targets
+0x080CFE20 0x080CFF00 data lib_misc [split] # gSramIdString "AGB  KIRBY" + sound-driver coefficient windows
+0x080CFF00 0x080D0000 data lib_rodata_fir_tables [split] # FIR/envelope-style coefficient tables (sound driver)
 0x080D0000 0x08120000 data level_object_tables
 0x08120000 0x083356E0 data level_graphics_palettes
 0x083356E0 0x0834EEE8 data sound_samples_1

@@ -8,10 +8,20 @@
     "pins each section by name, so no linker script change is needed.",
     "",
     "external_defined lists symbols that already exist as real labels in the",
-    "link (asm/crt0.s, src/agb_sram.c, data/sdk_libc.s) and therefore must",
-    "NOT be redefined as absolute symbols in asm/rom_syms.s.",
+    "link (asm/crt0.s, src/agb_sram.c) and therefore must NOT be redefined",
+    "as absolute symbols in asm/rom_syms.s.",
     "",
-    "Current demo set (issue #23 acceptance criteria)."
+    "extra_labels forces a real `.global` label at an address inside one of",
+    "the configured segments: functions that never enter symbols.csv because",
+    "nothing bl-calls them (_call_via_r4..r7 of lesson 3.4, plus the rest of",
+    "the libgcc family up to lr) and named items inside data segments (the",
+    "SRAM save identifier string).",
+    "",
+    "data_symbols names non-ROM word values so they can be emitted as",
+    ".word <name> from split literal pools; definitions land in rom_syms.s.",
+    "Values below are the IWRAM cells of the cooperative task system that",
+    "the ARM helpers at 0x08000234-0x080002E4 operate on (see",
+    "docs/analysis/rom-map.md section 6 for the per-cell evidence)."
   ],
   "external_defined": [
     "AgbMain",
@@ -21,19 +31,40 @@
     "WriteSram",
     "VerifySram_Core",
     "VerifySram",
-    "WriteSramEx",
-    "_call_via_r0",
-    "_call_via_r1",
-    "_call_via_r2",
-    "_call_via_r3",
-    "_call_via_r4",
-    "_call_via_r5",
-    "_call_via_r6",
-    "_call_via_r7"
+    "WriteSramEx"
   ],
+  "extra_labels": {
+    "0x080CFC40": "_call_via_r4",
+    "0x080CFC44": "_call_via_r5",
+    "0x080CFC48": "_call_via_r6",
+    "0x080CFC4C": "_call_via_r7",
+    "0x080CFC50": "_call_via_r8",
+    "0x080CFC54": "_call_via_r9",
+    "0x080CFC58": "_call_via_sl",
+    "0x080CFC5C": "_call_via_fp",
+    "0x080CFC60": "_call_via_ip",
+    "0x080CFC64": "_call_via_sp",
+    "0x080CFC68": "_call_via_lr",
+    "0x080CFE20": "gSramIdString"
+  },
+  "data_symbols": {
+    "0x03004C94": "gTaskBaseSp",
+    "0x03002470": "gTaskSavedSp",
+    "0x030026F8": "gTaskSavedLr",
+    "0x030025E0": "gTaskSavedR0",
+    "0x0300248C": "gCurTaskIdx",
+    "0x030025F0": "gTaskFlagsTable"
+  },
   "segments": [
+    { "name": "task_switch_helpers" },
+    { "name": "task_literals" },
     { "name": "sdk_swi_wrappers" },
     { "name": "sdk_reset_helper" },
-    { "name": "irq_handler_table_14" }
+    { "name": "sdk_libc" },
+    { "name": "interworking_veneer" },
+    { "name": "gap_interworking_veneer_irq_handler_table_14" },
+    { "name": "irq_handler_table_14" },
+    { "name": "lib_misc" },
+    { "name": "lib_rodata_fir_tables" }
   ]
 }
