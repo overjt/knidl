@@ -123,6 +123,17 @@ verbatim blob — don't narrow that set when touching it.
 `((u32)work + 1)` must be spelled exactly; see `src/agb_sram.c` for the
 matching shapes.
 
+### 3.6 SWI numbers follow the SDK order, NOT the retail BIOS order
+The ROM's syscall thunks (`0x080CFA50-0x080CFA7E`) emit `svc` numbers
+that differ from GBATEK's retail-BIOS table in the 0x08-0x0F band
+(e.g. `svc 0x0B` is CpuSet here but Sqrt on a retail BIOS). Misreading
+this silently mislabels every thunk. Identify SWI semantics from call
+sites, not from the number: the AgbInit fills prove 0x080CFA54 (`svc
+0x0C`) = CpuFastSet; an octant-facing helper proves 0x080CFA50 (`svc
+0x0A`) = ArcTan2; the pre-reset path proves 0x080CFA7C (`svc 0x28`) =
+SoundDriverVSyncOff. The full table with evidence lives in
+`include/gba/syscall.h` (see also docs/header-conventions.md).
+
 ## 4. Workflow that worked
 
 1. Disassemble the range from `baserom.gba` (objdump in Docker), identify

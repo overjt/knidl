@@ -49,7 +49,7 @@ ALL_OBJS  := $(ASM_OBJS) $(DATA_OBJS) $(SRC_OBJS)
 
 ELF := $(BUILD_DIR)/$(ROM:.gba=.elf)
 
-.PHONY: all compare progress clean
+.PHONY: all compare check-headers progress clean
 
 all: $(ROM)
 
@@ -65,6 +65,26 @@ $(BUILD_DIR)/%.o: %.s
 $(BUILD_DIR)/src/%.o: src/%.c
 	@mkdir -p $(dir $@)
 	$(CPP) $(INCLUDE) $< | $(CC) $(CFLAGS) -o - - | \
+	  { cat; printf '.text\n\t.align\t2, 0\n'; } | \
+	  $(AS) -mcpu=arm7tdmi -o $@ -
+
+# Header smoke test (issue #27): compile a TU that touches every
+# include/gba/*.h header with both validated compilers.  Compile-only —
+# the objects are never linked into the ROM.
+GBA_HEADERS := $(wildcard include/gba/*.h)
+
+check-headers: $(BUILD_DIR)/header_smoke_agbcc.o $(BUILD_DIR)/header_smoke_old_agbcc.o
+	@echo "header smoke check passed (agbcc + old_agbcc)"
+
+$(BUILD_DIR)/header_smoke_agbcc.o: tools/header_smoke.c $(GBA_HEADERS)
+	@mkdir -p $(dir $@)
+	$(CPP) $(INCLUDE) $< | $(CC) $(CFLAGS) -o - - | \
+	  { cat; printf '.text\n\t.align\t2, 0\n'; } | \
+	  $(AS) -mcpu=arm7tdmi -o $@ -
+
+$(BUILD_DIR)/header_smoke_old_agbcc.o: tools/header_smoke.c $(GBA_HEADERS)
+	@mkdir -p $(dir $@)
+	$(CPP) $(INCLUDE) $< | old_agbcc -O1 -mthumb-interwork -o - - | \
 	  { cat; printf '.text\n\t.align\t2, 0\n'; } | \
 	  $(AS) -mcpu=arm7tdmi -o $@ -
 
@@ -91,7 +111,7 @@ else
 
 DOCKER_RUN := docker run --rm -v $(CURDIR):/src -w /src $(IMAGE)
 
-.PHONY: image all compare progress clean
+.PHONY: image all compare check-headers progress clean
 
 image:
 	docker build -t $(IMAGE) .
@@ -101,6 +121,9 @@ all: image
 
 compare: image
 	$(DOCKER_RUN) make compare INSIDE_DOCKER=1
+
+check-headers: image
+	$(DOCKER_RUN) make check-headers INSIDE_DOCKER=1
 
 progress: image
 	$(DOCKER_RUN) make progress INSIDE_DOCKER=1
