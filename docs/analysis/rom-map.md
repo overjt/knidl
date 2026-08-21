@@ -22,6 +22,12 @@ Classification heuristics: BL call-target census (both dumps), function-pointer 
 (`push {..,lr}` / `stmfd sp!, {..lr}`), entropy/zero-density per 64 KiB block,
 ASCII scan, BIOS-LZ77 header scan, zero-run scan, pointer-run clustering.
 
+The census heuristics are now committed as a reproducible generator,
+`tools/symdb.py` (run via `make symbols`, Docker-wrapped): it decodes
+`baserom.gba` directly (no intermediate dumps), emits the machine-readable
+symbol database and call graph (section 7), and is validated by
+`tools/symdb_check.py` against a fresh dual-view objdump disassembly.
+
 ## 2. Segment table
 
 | # | ROM range (VMA) | Size | Content | Evidence |
@@ -78,6 +84,13 @@ code span `0x080000C0-0x080CFFFF`):
 unlike its ARM-compiled successor KATAM. For this repo this means: default `agbcc`
 (Thumb) for `src/`, `agbcc_arm` only for the crt0/ISR/task units, and `old_agbcc` is the
 likely match for the SDK lib/SRAM units (`0x080CF9xx` zone).
+
+The committed symbol database (section 7) applies the same census method with a
+corrected BL decoder and records **5,194 Thumb entries** (plus the 7 ARM functions
+covering the three ARM zones above) — a superset of the 3,149-entry floor measured
+here: the ad-hoc scan undercounted BL targets (its decoder dropped `bl` pairs whose
+suffix halfword is even, i.e. whenever `target - site - 4` has bit 1 clear) and missed
+pointer-only entries with non-push leaf shapes.
 
 ## 4. Boot flow trace
 
@@ -151,3 +164,52 @@ confirm default-`agbcc` Thumb codegen (pool placement, `ldr pc` literals), then
 - `0x08000210: 89abcdef` magic + task-switch helpers (seg 4) suggest the engine's cooperative task system; the IWRAM task pointer (`0x03004C94` etc.) cells should be named during crt0 extraction.
 
 Generated summaries (not committed): strings/pointers/lz77/zeros/isa scans as described in §1.
+
+## 7. Symbol database (committed, machine-readable)
+
+**Location:** `docs/analysis/symbols.csv` (one record per function) and
+`docs/analysis/callgraph.csv` (caller → callee edges). Regenerate and validate
+with `make symbols` (Docker-wrapped; requires `baserom.gba`). Generation is
+deterministic — regenerating on an unmodified ROM reproduces both files
+byte-for-byte.
+
+**symbols.csv** columns:
+
+| column | meaning |
+|---|---|
+| `vma` | entry address (GBA cart VMA; file offset = vma − 0x08000000) |
+| `size` | upper bound: distance to the next accepted entry, capped at 4 KiB (includes trailing literal pools / padding) |
+| `isa` | `thumb` or `arm` |
+| `evidence` | how the entry was discovered, strongest first: `bl-target` (reached by a decoded `bl`), `rom-pointer` (referenced by a word in the ROM; bit 0 set for Thumb, clear for ARM), `prologue-scan` (curated ARM-zone split). Combined values use `+`. |
+| `name` | `sub_08xxxxxx` for unknowns; canonical SDK/m4a/libc names where previously validated in this repo (`asm/crt0.s`, `src/agb_sram.c`, `data/sdk_libc.s`) or canonical from sibling projects (SWI thunks per GBATEK numbering) |
+
+Current contents: 5,201 functions (5,194 Thumb + 7 ARM across the three ARM zones
+of §3), 19,317 call-graph edges (14,524 `bl`, 4,793 `ptr`). In `callgraph.csv`,
+`caller` `0x00000000` means the reference site is outside any known function
+(rodata table); `site` is the address of the `bl` pair / pointer word, and
+`count` the number of such sites (for `bl` edges, aggregated per caller/callee).
+
+**Method** (tools/symdb.py): candidates = BL-target census (Thumb `bl` pairs
+decoded at every even offset of the §3 code span — ARMv4T encoding
+`hw1[10:0]:hw2[10:0]:0`, sign at bit 22; the one ARM `bl` is decoded from the
+`arm_code` segments only) ∪ bit0-set ROM pointers into the span (whole-ROM
+word scan). Candidates are validated by prologue shape: pointer-only
+candidates must start with `push {.., lr}` or an immediate terminator; BL
+targets additionally pass with any body reaching an unconditional terminator
+within 0x100 bytes. Validation harness `tools/symdb_check.py` re-checks
+structure, coverage (≥ 3,149 Thumb + the 3 ARM zones) and ~20 deterministic
+random entries against a fresh dual-view objdump disassembly.
+
+**Known limitations** (fine to consume, fix later):
+- Functions reached only by fallthrough or intra-function `b` (never `bl`,
+  never a pointer) are absent — e.g. the IRQ helper at `0x0800151C` behind the
+  `bx lr` default handler at `0x08001518`.
+- Sizes are next-entry upper bounds; decompiled modules must derive real
+  end addresses from their own analysis.
+- ~35 BL targets whose shape validates nowhere were rejected; most look like
+  data, a few may be real oddly-shaped leaves.
+- Of the three `bx pc` Thumb→ARM veneers at `0x080CFDC4/0x080CFDD0/0x080CFDD8`
+  (→ task helpers 1-3), only `0x080CFDC4` is BL-reachable and included; the
+  other two have no BL/pointer references and follow the general limitation
+  above (the ARM helpers themselves carry `prologue-scan` evidence from the
+  curated §3 split).

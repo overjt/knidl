@@ -81,6 +81,31 @@ objcopy → compare) in ONE `bash -c` invocation.
 `docker run ... -e INSIDE_DOCKER=1 knidl-builder bash -c './asmdiff.sh ...'`
 or it will try to nest docker and fail with "image not found".
 
+### 2.6 ARMv4T BL encoding: bit 0 of the suffix halfword is NOT a flag
+The Thumb `bl` pair is `hw1 = 0xF000|offset[22:12]`, `hw2 = 0xF800|offset[11:1]`
+— bit 0 of `hw2` stores **bit 1 of the offset**, so real BLs have even suffix
+halfwords whenever `(target - site - 4) & 2 == 0` (e.g. `f000 f890` at
+`0x0800115C` is a genuine `bl 0x08001280`). Filtering on `hw2 & 1` silently
+drops roughly half of all call sites. Verify encodings empirically:
+`echo '.code 16\nbl .+0x120' | arm-none-eabi-as -mcpu=arm7tdmi` — gas output
+is ground truth for what the original toolchain emitted.
+
+### 2.7 Never scan a Thumb ROM for ARM-mode `bl` outside the ARM zones
+Any Thumb halfword pair forms a little-endian word, and pairs like
+`68a0 4b01` form `0x4B0168A0` whose bits [27:24] are `1011` — a perfectly
+valid ARM `bl` conditional. Scanning the whole ROM in ARM view produced
+~8,500 bogus `bl` edges whose "targets" polluted the symbol census with
+mid-function fragments. Restrict ARM-mode instruction decoding to the
+`arm_code` segments from `docs/analysis/segments.txt`.
+
+### 2.8 objdump's linear sweep hides real entries
+`objdump -D -bbinary -Mforce-thumb` disassembles in one linear pass: data or
+padding before a function (e.g. `ffff ffff` before `0x0807ED98`) can make a
+32-bit decode swallow the real entry address, so the address has no line in
+the dump. When an address is missing from a dump, re-disassemble just that
+entry with `--start-address` (the sweep then starts exactly at the entry)
+before concluding anything about the ROM.
+
 ## 3. Compiler / source-shape lessons (gcc 2.9 "old_agbcc")
 
 ### 3.1 Opt level is per-zone and readable from loop shape
