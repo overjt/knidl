@@ -7,13 +7,22 @@ range is split, `build/knidl.map` shows every function (so `asmdiff.sh`,
 `asm-differ`, and link-time references work), and C migration can replace
 functions one by one.
 
-The currently split segments are the demo set from issue #23:
+All SDK/ARM segments around the code region are split (issues #23/#24);
+`data/` incbin slices remain only for bulk asset zones. The currently
+configured segments (`tools/split_config.json`):
 
 | segment              | range                        | contents                          |
 | -------------------- | ---------------------------- | --------------------------------- |
+| `task_switch_helpers`| `0x08000234-0x080002E5`      | cooperative task switch (ARM, 4 helpers + 1-byte tail) |
+| `task_literals`      | `0x080002E5-0x08000310`      | their literal pools (10 words, all named cells) |
 | `sdk_swi_wrappers`   | `0x080CFA40-0x080CFA7F`      | 11 Thumb SWI thunks (svc wrappers)|
 | `sdk_reset_helper`   | `0x080CFA7F-0x080CFA9C`      | odd-start reset helper tail + pool|
+| `sdk_libc`           | `0x080CFC30-0x080CFDDC`      | `_call_via_r0..lr`, division/modulo, task trampolines |
+| `interworking_veneer`| `0x080CFDDC-0x080CFDE4`      | ARM `ldr ip,[pc]; bx ip` -> `0x08005654\|1` |
+| `gap_interworking_veneer_irq_handler_table_14` | `0x080CFDE4-0x080CFDE8` | the veneer's literal word (not padding) |
 | `irq_handler_table_14` | `0x080CFDE8-0x080CFE20`    | 14-entry IRQ handler pointer table|
+| `lib_misc`           | `0x080CFE20-0x080CFF00`      | SRAM id string + sound-driver coefficient windows |
+| `lib_rodata_fir_tables` | `0x080CFF00-0x080D0000`   | FIR/envelope-style coefficient tables |
 
 ## Usage
 
@@ -24,19 +33,32 @@ make compare    # must stay byte-identical (SHA-1 vs knidl.sha1)
 
 `make split` reads three committed inputs:
 
-* `tools/split_config.json` — which segments to split, plus
-  `external_defined`: symbols that already exist as real labels elsewhere
-  (`asm/crt0.s`, `src/agb_sram.c`, `data/sdk_libc.s`) and must not be
-  redefined as absolute symbols;
+* `tools/split_config.json` — which segments to split, plus:
+  * `external_defined`: symbols that already exist as real labels elsewhere
+    (`asm/crt0.s`, `src/agb_sram.c`) and must not be redefined as absolute
+    symbols;
+  * `extra_labels`: `{address: name}` — force a real `.global` label at an
+    address inside a configured segment, for functions absent from
+    symbols.csv because nothing `bl`s them (the libgcc `_call_via_r4..lr`
+    half of lesson 3.4's family) or for named items inside data segments
+    (`gSramIdString`);
+  * `data_symbols`: `{value: name}` — non-ROM word values emitted
+    symbolically wherever they appear as pool/data words (the task system's
+    IWRAM cells); definitions are appended to `asm/rom_syms.s`.
 * `docs/analysis/segments.txt` — segment boundaries and kinds (the single
   source of truth; the config only selects segments by name);
 * `docs/analysis/symbols.csv` — the function database (issue #22).
+
+Hand names must always go through the config, never by editing generated
+files: CI re-runs `make split` and fails on any diff in `asm/` or `data/`,
+so committed outputs must equal regeneration byte-for-byte.
 
 and regenerates:
 
 * `asm/<segment>.s` — one file per configured segment (committed);
 * `asm/rom_syms.s` — absolute symbols (`name = 0xADDR`) for every database
-  function not defined by a real label (committed);
+  function not defined by a real label, plus the `data_symbols` definitions
+  (committed);
 * it deletes the obsolete `data/<segment>.s` incbin slice.
 
 The tool verifies each output itself before writing it (see below), so

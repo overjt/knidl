@@ -9,7 +9,7 @@ Driven by three committed inputs:
 
   * tools/split_config.json    - which segments to split, plus the names that
                                  are already defined as real labels elsewhere
-                                 (crt0.s, src/*.c, data/sdk_libc.s)
+                                 (asm/crt0.s, src/*.c)
   * docs/analysis/segments.txt - address ranges / kinds (single source of
                                  truth for segment boundaries)
   * docs/analysis/symbols.csv  - function database from issue #22
@@ -18,6 +18,18 @@ For every configured segment the tool writes `asm/<name>.s` and removes the
 obsolete `data/<name>.s` incbin slice.  linker.ld needs no edit: it already
 pins every section by name, and the generated file re-uses the same section
 name, so the object simply takes the place of the incbin blob.
+
+Two optional config keys add hand labels on top of the database:
+
+  * "extra_labels": {"0x080CFC50": "_call_via_r8", ...} - emits a real
+    `.global <name>` label at that address inside its split segment (for
+    functions that never appear in symbols.csv because nothing calls them,
+    or for named items inside data segments);
+  * "data_symbols": {"0x03004C94": "gTaskBaseSp", ...} - word values that
+    are emitted symbolically as `.word <name>` wherever they appear in a
+    pool/data word; the definitions (`<name> = 0x...`) are appended to
+    `asm/rom_syms.s`.  Used for IWRAM/MMIO cells referenced by literal
+    pools of split code.
 
 The tool also regenerates `asm/rom_syms.s`, which defines every database
 function that is not otherwise labeled as an *absolute* symbol
@@ -240,7 +252,8 @@ def disassemble(rom, start, end, thumb, tmpdir, tag):
 
 
 class SegmentEmitter(object):
-    def __init__(self, rom, name, start, end, kind, funcs, db, level):
+    def __init__(self, rom, name, start, end, kind, funcs, db, level,
+                 extra_labels=None, data_symbols=None):
         self.rom = rom
         self.name = name
         self.start = start
@@ -249,6 +262,8 @@ class SegmentEmitter(object):
         self.funcs = funcs  # sorted [(vma, name, isa)]
         self.db = db
         self.level = level  # 0 = real instructions, 1 = raw .short
+        self.extra_labels = extra_labels or {}  # addr -> name (config)
+        self.data_symbols = data_symbols or {}  # word value -> name (config)
         self.lines = []
         self.pool_addrs = set()
         self.pending = {}  # addr -> [label, ...]
@@ -256,6 +271,7 @@ class SegmentEmitter(object):
         self.cursor = start  # emission frontier (labels behind it are placed)
         self.main_end = end
         self._noted_raw = False
+        self._extra_placed = set()
         self.func_map = dict((vma, name) for vma, name, _isa in funcs)
         self.stats = {}
 
@@ -267,7 +283,18 @@ class SegmentEmitter(object):
             return self.func_map[addr]
         if addr == self.start:
             return self.name
+        if addr in self.extra_labels:
+            return self.extra_labels[addr]
         return None
+
+    def emit_extra_label(self, addr):
+        """Emit the config-driven `.global` label at `addr`, if any."""
+        name = self.extra_labels.get(addr)
+        if name is None or addr in self._extra_placed:
+            return
+        self._extra_placed.add(addr)
+        self.lines.append("\t.global\t%s" % name)
+        self.lines.append("%s:" % name)
 
     def resolve_target(self, addr):
         """Label for a branch/pool target, or None if not resolvable."""
@@ -335,6 +362,9 @@ class SegmentEmitter(object):
     def word_line(self, addr):
         """Emit line(s) for the 4 bytes at `addr` (a pool or data word)."""
         v = u32(self.rom, vma_off(addr))
+        if v in self.data_symbols:
+            self.stats["named_words"] += 1
+            return "\t.word\t%s" % self.data_symbols[v]
         if v & 1:
             target = v & ~1
             if target in self.db:
@@ -370,6 +400,7 @@ class SegmentEmitter(object):
         while addr < re:
             self.cursor = addr
             self.emit_labels_at(addr)
+            self.emit_extra_label(addr)
             left = re - addr
             if (
                 addr % 4 == 0
@@ -430,6 +461,7 @@ class SegmentEmitter(object):
         while addr < re:
             self.cursor = addr
             self.emit_labels_at(addr)
+            self.emit_extra_label(addr)
             left = re - addr
             off = vma_off(addr)
 
@@ -535,12 +567,14 @@ class SegmentEmitter(object):
         self.dis_cache = {}
         self.cursor = self.start
         self._noted_raw = False
+        self._extra_placed = set()
         self.stats = {
             "instructions": 0,
             "raw_instructions": 0,
             "pool_words": 0,
             "symbolic_words": 0,
             "data_words": 0,
+            "named_words": 0,
         }
         self.prescan()
 
@@ -635,6 +669,12 @@ class SegmentEmitter(object):
             raise FallbackNeeded(
                 "unplaceable labels: %s"
                 % ", ".join("%08x" % a for a in sorted(self.pending))
+            )
+        unplaced = set(self.extra_labels) - self._extra_placed
+        if unplaced:
+            raise FallbackNeeded(
+                "unplaceable extra labels: %s"
+                % ", ".join("%08x" % a for a in sorted(unplaced))
             )
         return "\n".join(self.lines) + "\n"
 
@@ -731,7 +771,7 @@ def verify_group(candidates, syms_obj, defsyms, rom, tmpdir):
 # --------------------------------------------------------------------------
 
 
-def emit_rom_syms(db, exclude, path):
+def emit_rom_syms(db, exclude, path, data_symbols):
     lines = [
         "@ Auto-generated by tools/split.py - DO NOT EDIT. Regenerate with: make split",
         "@ Absolute symbols for every function in docs/analysis/symbols.csv that is",
@@ -748,6 +788,14 @@ def emit_rom_syms(db, exclude, path):
         lines.append("\t.global\t%s" % name)
         lines.append("%s = 0x%08X" % (name, vma))
         count += 1
+    if data_symbols:
+        lines.append("")
+        lines.append("@ Named non-ROM cells (tools/split_config.json \"data_symbols\"),")
+        lines.append("@ referenced symbolically from split literal pools / data words:")
+        for value in sorted(data_symbols):
+            lines.append("\t.global\t%s" % data_symbols[value])
+            lines.append("%s = 0x%08X" % (data_symbols[value], value))
+            count += 1
     with open(path, "w") as f:
         f.write("\n".join(lines) + "\n")
     return count
@@ -776,6 +824,20 @@ def main():
     with open(args.config) as f:
         cfg = json.load(f)
 
+    def parse_addr_map(table, key):
+        try:
+            return dict(
+                (int(addr, 16), name) for addr, name in table.items()
+            )
+        except (AttributeError, ValueError):
+            sys.exit(
+                "error: %s must map \"0x...\" hex addresses to names"
+                % key
+            )
+
+    extra_labels = parse_addr_map(cfg.get("extra_labels", {}), "extra_labels")
+    data_symbols = parse_addr_map(cfg.get("data_symbols", {}), "data_symbols")
+
     tmpdir = tempfile.mkdtemp(prefix="split_")
     try:
         entries = []
@@ -793,6 +855,26 @@ def main():
                 sys.exit("error: segment %r exceeds ROM size" % name)
             entries.append((name, start, end, kind))
 
+        # Config sanity: every extra label must live inside one configured
+        # segment and must not shadow a database symbol defined elsewhere.
+        for addr, label in sorted(extra_labels.items()):
+            if not any(s <= addr < e for _n, s, e, _k in entries):
+                sys.exit(
+                    "error: extra label %s at 0x%08X is outside every "
+                    "configured segment" % (label, addr)
+                )
+            if addr in db and db[addr] != label:
+                sys.exit(
+                    "error: extra label %s at 0x%08X collides with "
+                    "database symbol %s" % (label, addr, db[addr])
+                )
+        for value, label in sorted(data_symbols.items()):
+            if value in db.values():
+                sys.exit(
+                    "error: data symbol %s collides with a database "
+                    "function name" % label
+                )
+
         # Symbols that get real labels: every DB function inside a split
         # range is emitted as a label by its segment file.
         split_ranges = [(s, e) for _n, s, e, _k in entries]
@@ -804,7 +886,7 @@ def main():
 
         exclude = set(cfg.get("external_defined", [])) | in_split
         syms_path = os.path.join(args.asm_dir, "rom_syms.s")
-        count = emit_rom_syms(db, exclude, syms_path)
+        count = emit_rom_syms(db, exclude, syms_path, data_symbols)
         print("wrote %s (%d absolute symbols)" % (syms_path, count))
         syms_obj = os.path.join(tmpdir, "rom_syms.o")
         run_checked(
@@ -831,7 +913,15 @@ def main():
                 "splitting %-28s 0x%08X-0x%08X (%s)"
                 % (name, start, end, kind)
             )
-            em = SegmentEmitter(rom, name, start, end, kind, funcs, db, 0)
+            seg_extra = dict(
+                (a, l)
+                for a, l in extra_labels.items()
+                if start <= a < end
+            )
+            em = SegmentEmitter(
+                rom, name, start, end, kind, funcs, db, 0,
+                extra_labels=seg_extra, data_symbols=data_symbols,
+            )
             emitters[name] = (em, funcs)
 
         # Two rounds: prefer real instructions (level 0); any segment that
@@ -891,14 +981,16 @@ def main():
                 print("    removed %s (incbin slice replaced)" % blob)
             note = " [RAW FALLBACK]" if levels[name] != 0 else ""
             print(
-                "    wrote %s: %d functions, %d insns, %d words (%d symbolic),"
-                " %d raw bytes%s"
+                "    wrote %s: %d functions, %d insns, %d words"
+                " (%d symbolic, %d named), %d raw bytes%s"
                 % (
                     out_path,
                     len(funcs),
                     stats["instructions"],
-                    stats["pool_words"] + stats["symbolic_words"],
+                    stats["pool_words"] + stats["symbolic_words"]
+                    + stats["named_words"],
                     stats["symbolic_words"],
+                    stats["named_words"],
                     stats["raw_instructions"],
                     note,
                 )

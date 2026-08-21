@@ -4,14 +4,6 @@
 @ so generated files can reference not-yet-split code symbolically
 @ (e.g. `.word sub_08001518+1' or `bl __divsi3').
 
-	.global	sub_08000234
-sub_08000234 = 0x08000234
-	.global	sub_08000258
-sub_08000258 = 0x08000258
-	.global	sub_08000288
-sub_08000288 = 0x08000288
-	.global	sub_080002a8
-sub_080002a8 = 0x080002A8
 	.global	AgbInit
 AgbInit = 0x08000310
 	.global	sub_08000700
@@ -10344,19 +10336,18 @@ sub_080cf92c = 0x080CF92C
 sub_080cf94c = 0x080CF94C
 	.global	sub_080cf960
 sub_080cf960 = 0x080CF960
-	.global	__divsi3
-__divsi3 = 0x080CFC6C
-	.global	sub_080cfcfc
-sub_080cfcfc = 0x080CFCFC
-	.global	_div0
-_div0 = 0x080CFD00
-	.global	__umodsi3
-__umodsi3 = 0x080CFD04
-	.global	sub_080cfdc4
-sub_080cfdc4 = 0x080CFDC4
-	.global	sub_080cfdcc
-sub_080cfdcc = 0x080CFDCC
-	.global	sub_080cfdd4
-sub_080cfdd4 = 0x080CFDD4
-	.global	sub_080cfddc
-sub_080cfddc = 0x080CFDDC
+
+@ Named non-ROM cells (tools/split_config.json "data_symbols"),
+@ referenced symbolically from split literal pools / data words:
+	.global	gTaskSavedSp
+gTaskSavedSp = 0x03002470
+	.global	gCurTaskIdx
+gCurTaskIdx = 0x0300248C
+	.global	gTaskSavedR0
+gTaskSavedR0 = 0x030025E0
+	.global	gTaskFlagsTable
+gTaskFlagsTable = 0x030025F0
+	.global	gTaskSavedLr
+gTaskSavedLr = 0x030026F8
+	.global	gTaskBaseSp
+gTaskBaseSp = 0x03004C94

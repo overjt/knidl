@@ -147,8 +147,8 @@ Findings (agbcc fork `jiangzhengwenjz/agbcc@new_newlib_pret`, commit `59b966e`):
     the same pool slot, as in the ROM);
   - `REG_WAITCNT = (REG_WAITCNT & 0xFFFC) | 3;` (mask literal is
     `0x0000FFFC` in the pool, i.e. a 16-bit mask, not `~3` sign-extended).
-- Indirect (interworking) calls emit `bl _call_via_rN`; the helpers live in the
-  verbatim libc blob and are exported from `data/sdk_libc.s`
-  (`_call_via_r0`..`_call_via_r7` at `0x080CFC30-0x080CFC4F`).
+- Indirect (interworking) calls emit `bl _call_via_rN`; the helpers live in
+  `asm/sdk_libc.s` (`_call_via_r0`..`_call_via_r7` at
+  `0x080CFC30-0x080CFC4F`).
 - Game code remains `agbcc -O2 -mthumb-interwork`; the SDK library zone
   (`0x080CF9xx`: agb_sram, m4a family) is `old_agbcc -O1 -mthumb-interwork`.
