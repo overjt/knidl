@@ -19,6 +19,13 @@ RUN pip3 install --break-system-packages \
         levenshtein \
         cxxfilt
 
+# decomp-permuter runtime dependencies (tools/decomp-permuter).
+# toml is required (settings files); Levenshtein enables --algorithm
+# levenshtein; pynacl/docker are only needed for permuter@home (-J) and are
+# intentionally omitted.
+RUN pip3 install --break-system-packages \
+        toml
+
 # agbcc: zhade's new_newlib_pret fork (the compiler needed to match the
 # sibling KATAM decompilation), pinned for reproducibility.
 ARG AGBC_COMMIT=59b966ed1b8f371856dcf99f1546c2fe89c678ca

@@ -106,6 +106,38 @@ the dump. When an address is missing from a dump, re-disassemble just that
 entry with `--start-address` (the sweep then starts exactly at the entry)
 before concluding anything about the ROM.
 
+### 2.9 Permuter compile.sh: pipefail is not optional, and diagnostics need it too
+decomp-permuter invokes `compile.sh <in.c> -o <out.o>` and treats any nonzero
+exit as a failed candidate. A `cpp | compiler | as` pipeline WITHOUT
+`set -o pipefail` returns the assembler's status, so a crashed compiler that
+still assembles an empty/garbage object produces false scores — including
+false zeros. Keep `set -euo pipefail` in every compile.sh
+(`tools/permuter-example/compile.sh`). Same trap while DEBUGING the permuter:
+replaying captured candidates through a plain pipeline "proves" everything
+compiles because bash reports only the last command's status; instrument each
+stage's stderr individually before believing any failure count.
+
+### 2.10 gas pads Thumb section tails with NOPs, not zeros
+A `.s` whose last instruction ends unaligned relative to the section alignment
+gets invisible padding at assembly time — gas emits Thumb NOP (`46c0`), but the
+ROM uses zero halfwords between functions. A hand-built `target.s` for the
+permuter must therefore emit trailing pad bytes EXPLICITLY (`.short 0x0000`),
+or byte-compare vs the baserom slice fails at the tail and the scorer counts a
+phantom insertion. The Makefile avoids the same problem for C objects by
+appending `.align 2, 0` (explicit zero fill) after agbcc output.
+
+### 2.11 decomp-permuter on old_agbcc: tune weights, don't set objdump_command
+The default `gcc` weight set assumes a modern compiler; several randomizer
+passes (`perm_inline`'s nested inline_fn chains, type randomization,
+`perm_expand_expr`) generate constructs GCC 2.9 rejects, so 25-75% of
+candidates die as compile errors with defaults. `[weight_overrides]` in the
+function dir's `settings.toml` (see `tools/permuter-example`) disables them and
+brings the error rate to ~4% with `-j4`. Conversely do NOT set
+`objdump_command`: leaving it unset lets the scorer detect ARM from the ELF
+header and add its own objdump flags; a bare override loses them. Some
+candidate failures are inherent — treat a persistent >25% error rate as a base.c
+shape problem, not a reason to re-tune forever.
+
 ## 3. Compiler / source-shape lessons (gcc 2.9 "old_agbcc")
 
 ### 3.1 Opt level is per-zone and readable from loop shape
@@ -339,6 +371,12 @@ rejects ("constant expression required"). Branch decoding stops at
 `0xDDFF`; `svc` (0xDFxx) was already excluded.
 
 ## 5. Workflow that worked
+
+The canonical per-function loop (pick → m2c first pass → asmdiff iterate →
+permuter escalation → land + verify) is documented in
+[`docs/decomp-loop.md`](decomp-loop.md); follow it for new modules and keep
+that doc's subagent handoff contract when delegating. The original SRAM-driver
+run that produced these lessons:
 
 1. Disassemble the range from `baserom.gba` (objdump in Docker), identify
    function boundaries from the fn-pointer tables + `push` prologues.
