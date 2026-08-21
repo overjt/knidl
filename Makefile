@@ -33,10 +33,14 @@ $(BUILD_DIR)/src/agb_sram.o: CFLAGS := -O1 -mthumb-interwork
 
 # All of asm/ is assembled into the ROM: hand-written files (rom_header.s,
 # crt0.s), split-generated segment files (asm/<segment>.s, see tools/
-# split.py / docs/splitting.md) and asm/rom_syms.s (absolute symbols for
-# every DB function not defined by a real label, so split files can
-# reference not-yet-split code symbolically).
-ASM_SRCS  := $(wildcard asm/*.s)
+# split.py / docs/splitting.md), chunked code segments (issue #25:
+# asm/<segment>/<segment>_NN.s, one file per ~64 KiB at function
+# boundaries) and asm/rom_syms.s (absolute symbols for every DB function
+# not defined by a real label, so split files can reference not-yet-split
+# code symbolically).  $(sort) keeps the link order deterministic; within
+# a chunk directory the zero-padded suffixes make alphabetical order equal
+# address order, which ld's input-section concatenation requires.
+ASM_SRCS  := $(sort $(wildcard asm/*.s) $(wildcard asm/*/*.s))
 ASM_OBJS  := $(patsubst %.s,$(BUILD_DIR)/%.o,$(ASM_SRCS))
 
 # Per-segment data objects, split from the former main_blob.

@@ -91,6 +91,67 @@ class FallbackNeeded(Exception):
     """A segment could not be emitted at the current detail level."""
 
 
+LINK_FAILURE = "<link>"
+
+
+def compute_chunks(start, end, func_vmas, chunk_bytes):
+    """Cut points for a chunked segment (issue #25).
+
+    Cuts land on EVEN function-boundary addresses roughly `chunk_bytes`
+    apart so that no function straddles a chunk and every chunk begins at
+    an even ROM address: gas aligns Thumb instructions to 2 within a
+    section and ld aligns each input section to its own sh_addralign at
+    absolute addresses, so a chunk whose first byte is odd can never
+    contain real instructions.  An odd segment start therefore produces a
+    tiny leading data-only chunk up to the nearest even function boundary.
+    """
+    cuts = [start]
+    pos = start
+    while pos < end:
+        window_end = min(end, pos + chunk_bytes)
+        cands = [v for v in func_vmas if pos < v <= window_end and v % 2 == 0]
+        if cands:
+            nxt = min(cands) if pos % 2 else max(cands)
+        else:
+            later = [v for v in func_vmas if v > pos and v % 2 == 0]
+            nxt = later[0] if later and later[0] < end else end
+        cuts.append(nxt)
+        pos = nxt
+    return cuts
+
+
+def collect_ref_targets(rom, start, end, funcs):
+    """Set of branch/adr target addresses referenced from anywhere in the
+    segment's function stream.
+
+    Each function is decoded only up to the next database function start
+    (its real extent): decoding onwards to the segment end would re-walk
+    every later function once per predecessor (~O(n^2) halfword decodes
+    over the 5k-function game region) while only ever yielding false
+    positives from misaligned data.  Literal-pool detection stays inside
+    the per-chunk prescan; this pass exists to precompute the global
+    `loc_XXXXXXXX` labels that chunked files reference across file
+    boundaries.
+    """
+    targets = set()
+    bounds = [vma for vma, _n, _i in funcs]
+    for i, (vma, _name, isa) in enumerate(funcs):
+        stop = bounds[i + 1] if i + 1 < len(bounds) else end
+        off = vma_off(vma)
+        stop_off = vma_off(stop)
+        while off < stop_off:
+            if isa == "thumb":
+                size, info = thumb_decode(rom, off)
+            else:
+                size, info = arm_decode(rom, off)
+            if info:
+                if "branch" in info or "pcadd" in info:
+                    key = "branch" if "branch" in info else "pcadd"
+                    targets.add(info[key])
+            off += size
+    return targets
+
+
 def u16(rom, off):
     return (rom[off] | (rom[off + 1] << 8)) & 0xFFFF
 
@@ -168,7 +229,7 @@ def thumb_decode(rom, off):
         if imm & 0x800:
             imm -= 0x1000
         return 2, {"branch": ROM_BASE + off + 4 + imm}
-    if 0xD000 <= hw <= 0xDEFF:  # b<cond> <label> (0xDFxx is svc)
+    if 0xD000 <= hw <= 0xDDFF:  # b<cond> <label> (0xDExx is udf, 0xDFxx svc)
         imm = (hw & 0xFF) << 1
         if imm & 0x100:
             imm -= 0x200
@@ -204,22 +265,39 @@ def arm_decode(rom, off):
 
 OBJDUMP_LINE = re.compile(r"^\s*([0-9a-f]+):\t(.*)$")
 
+# gas reports failing lines as "<path>/<name>.s:<lineno>: Error: ..." —
+# line numbers index into the exact text we handed the assembler.
+ASM_ERROR_LINE = re.compile(r"^.*\.s:(\d+):\s*Error", re.MULTILINE)
+
 
 def disassemble(rom, start, end, thumb, tmpdir, tag):
-    """Run objdump over rom[start:end]; return {addr: (size, text)}.
+    """Run objdump over rom[start:end]; return {addr: (size, text, hex)}.
 
     text is the re-assemblable instruction with objdump's `@` comments and
-    `<symbol>` suffixes stripped.  Lines look like
+    `<symbol>` suffixes stripped; hex is the byte column.  Lines look like
 
         80002d0:\te0822003 \tadd\tr2, r2, r3
 
     and are split on the tabs: a whitespace-based bytes regex would absorb
     hex-only mnemonics (`add`, `bcc`, ...) into the byte column.
+
+    The byte column matters: objdump's linear sweep desyncs on data that
+    pairs as a fake `bl` and then emits entries whose text decodes bytes
+    from a SHIFTED address (lesson 4.10).  Callers must verify hex against
+    the ROM bytes at the address they are about to emit for.
     """
     binpath = os.path.join(tmpdir, tag + ".bin")
     with open(binpath, "wb") as f:
         f.write(rom[vma_off(start):vma_off(end)])
-    cmd = [OBJDUMP, "-D", "-b", "binary", "-marm", "--adjust-vma=0x%08x" % start]
+    # -marmv4t is essential: with a plain -marm blob objdump prints
+    # Thumb-2-only mnemonics (rev, cbnz, it, blx reg, ...) for halfword
+    # pairs that ARMv4T reads differently, which arm7tdmi gas then rejects,
+    # forcing whole chunks into the raw fallback.  Same choice as
+    # asmdiff.sh.
+    cmd = [
+        OBJDUMP, "-D", "-b", "binary", "-marmv4t",
+        "--adjust-vma=0x%08X" % start,
+    ]
     if thumb:
         cmd.append("-Mforce-thumb")
     cmd.append(binpath)
@@ -242,7 +320,14 @@ def disassemble(rom, start, end, thumb, tmpdir, tag):
         size = sum(len(t) for t in tokens) // 2
         text = text.split("@")[0].strip()
         text = re.sub(r"\s*<[^>]*>", "", text).strip()
-        out[addr] = (size, text)
+        # objdump's byte column shows endian-swapped UNITS (halfwords for
+        # Thumb, words for ARM): file bytes 70 47 print as "4770".  Reverse
+        # each token so the joined string equals the ROM slice's hex and a
+        # shifted/desynced entry can be detected by simple comparison.
+        le = "".join(
+            bytes.fromhex(t)[::-1].hex() for t in tokens
+        )
+        out[addr] = (size, text, le)
     return out
 
 
@@ -253,7 +338,9 @@ def disassemble(rom, start, end, thumb, tmpdir, tag):
 
 class SegmentEmitter(object):
     def __init__(self, rom, name, start, end, kind, funcs, db, level,
-                 extra_labels=None, data_symbols=None):
+                 extra_labels=None, data_symbols=None, chunk_index=None,
+                 num_chunks=1, seg_start=None, seg_end=None,
+                 required_labels=None, seg_names=None):
         self.rom = rom
         self.name = name
         self.start = start
@@ -264,6 +351,21 @@ class SegmentEmitter(object):
         self.level = level  # 0 = real instructions, 1 = raw .short
         self.extra_labels = extra_labels or {}  # addr -> name (config)
         self.data_symbols = data_symbols or {}  # word value -> name (config)
+        # Chunked emission (issue #25): several files share one linker
+        # section; chunk_index None means the legacy one-file-per-segment
+        # layout with file-local .L_ labels.
+        self.chunked = chunk_index is not None
+        self.chunk_index = chunk_index
+        self.num_chunks = num_chunks
+        self.seg_start = start if seg_start is None else seg_start
+        self.seg_end = end if seg_end is None else seg_end
+        # Addresses inside this chunk that must carry a global loc_ label
+        # because other chunks branch/adr to them (plus every non-function
+        # intra-segment branch target, uniformly).
+        self.required_labels = set(required_labels or ())
+        # addr -> name for every named address in the whole segment
+        # (function entries of all chunks, extra labels, loc_ labels).
+        self.seg_names = seg_names or {}
         self.lines = []
         self.pool_addrs = set()
         self.pending = {}  # addr -> [label, ...]
@@ -272,8 +374,23 @@ class SegmentEmitter(object):
         self.main_end = end
         self._noted_raw = False
         self._extra_placed = set()
+        self._required_placed = set()
+        # Addresses whose objdump text gas rejects (undefined-decode-space
+        # halfwords printed as later-arch mnemonics); emit_instruction
+        # forces them to raw .short bytes.  Persists across emit() calls so
+        # the assembly repair loop can grow it incrementally.
+        self.forced_raw_addrs = set()
+        # Address of every instruction line appended to self.lines, in
+        # order (parallel to the file's instruction lines; used by
+        # addrs_from_asm_errors).
+        self.insn_addrs = []
         self.func_map = dict((vma, name) for vma, name, _isa in funcs)
         self.stats = {}
+
+    def _append_insn(self, text):
+        """Append one instruction line and remember its source address."""
+        self.insn_addrs.append(self.cursor)
+        self.lines.append(text)
 
     # ---- label bookkeeping -------------------------------------------
 
@@ -281,7 +398,11 @@ class SegmentEmitter(object):
         """Best label for an address inside this file (or None)."""
         if addr in self.func_map:
             return self.func_map[addr]
-        if addr == self.start:
+        if addr == self.start and (
+            not self.chunked or self.chunk_index == 0
+        ):
+            # Only the first chunk defines the segment anchor symbol;
+            # a second .global definition would be a link error.
             return self.name
         if addr in self.extra_labels:
             return self.extra_labels[addr]
@@ -296,28 +417,53 @@ class SegmentEmitter(object):
         self.lines.append("\t.global\t%s" % name)
         self.lines.append("%s:" % name)
 
+    def emit_required_at(self, addr):
+        """Emit the global cross-file `loc_XXXXXXXX` label at `addr`."""
+        if not self.chunked or addr not in self.required_labels:
+            return
+        if addr in self._required_placed:
+            return
+        self._required_placed.add(addr)
+        name = "loc_%08x" % addr
+        self.lines.append("\t.global\t%s" % name)
+        self.lines.append("%s:" % name)
+
+    def emit_labels_at(self, addr):
+        for label in self.pending.pop(addr, []):
+            self.lines.append("%s:" % label)
+
+    def label_pending_at(self, addr):
+        """True when a label boundary is needed at halfword `addr`."""
+        if addr in self.pending:
+            return True
+        return self.chunked and addr in self.required_labels
+
     def resolve_target(self, addr):
         """Label for a branch/pool target, or None if not resolvable."""
         label = self.file_label(addr)
         if label is not None:
             return label
-        if self.start <= addr < self.end:
-            if self.level == 0:
-                label = LOCAL_PREFIX + "%08x" % addr
-                # Only queue the label if the walk has not emitted the
-                # address yet (a backward branch re-resolves its target
-                # after the label line was already written).
-                if addr >= self.cursor:
-                    labels = self.pending.setdefault(addr, [])
-                    if label not in labels:
-                        labels.append(label)
-                return label
+        if not self.chunked:
+            if self.start <= addr < self.end:
+                if self.level == 0:
+                    label = LOCAL_PREFIX + "%08x" % addr
+                    # Only queue the label if the walk has not emitted the
+                    # address yet (a backward branch re-resolves its target
+                    # after the label line was already written).
+                    if addr >= self.cursor:
+                        labels = self.pending.setdefault(addr, [])
+                        if label not in labels:
+                            labels.append(label)
+                    return label
+                return None
+            return self.db.get(addr)
+        # Chunked mode: names for the whole segment are precomputed, so
+        # targets in other chunks resolve at link time via global labels.
+        if addr in self.seg_names:
+            return self.seg_names[addr]
+        if self.seg_start <= addr < self.seg_end:
             return None
         return self.db.get(addr)
-
-    def emit_labels_at(self, addr):
-        for label in self.pending.pop(addr, []):
-            self.lines.append("%s:" % label)
 
     # ---- metadata pre-pass --------------------------------------------
 
@@ -326,14 +472,24 @@ class SegmentEmitter(object):
         targets.
 
         Runs regardless of emission level so that raw mode can still emit
-        pool words as annotated `.word`s.  Branch targets seed the local
-        label set up front: some are false positives (data that decodes as
-        a branch), but labelling a halfword boundary is harmless and beats
-        losing real instructions for the whole segment.
+        pool words as annotated `.word`s.  Each function is decoded only up
+        to the next database function start (collect_ref_targets mirrors
+        this): walking on to the segment end would re-decode every later
+        function once per predecessor while only ever producing
+        false-positive labels from misaligned data.  Branch targets seed
+        the local label set up front in legacy (flat) mode; some are false
+        positives (data that decodes as a branch), but labelling a
+        halfword boundary is harmless and beats losing real instructions
+        for the whole segment.  In chunked mode cross-file names are
+        precomputed instead, so no local queueing happens.
         """
         self.branch_targets = []
-        for vma, _name, isa in self.funcs:
-            stop = self.end
+        for i, (vma, _name, isa) in enumerate(self.funcs):
+            stop = (
+                self.funcs[i + 1][0]
+                if i + 1 < len(self.funcs)
+                else self.end
+            )
             off = vma_off(vma)
             stop_off = vma_off(stop)
             while off < stop_off:
@@ -351,6 +507,8 @@ class SegmentEmitter(object):
                 off += size
 
         for target in self.branch_targets:
+            if self.chunked:
+                break
             if self.start < target < self.end and target not in self.func_map:
                 label = LOCAL_PREFIX + "%08x" % target
                 labels = self.pending.setdefault(target, [])
@@ -401,11 +559,12 @@ class SegmentEmitter(object):
             self.cursor = addr
             self.emit_labels_at(addr)
             self.emit_extra_label(addr)
+            self.emit_required_at(addr)
             left = re - addr
             if (
                 addr % 4 == 0
                 and left >= 4
-                and (addr + 2) not in self.pending
+                and not self.label_pending_at(addr + 2)
             ):
                 self.lines.append(self.word_line(addr))
                 addr += 4
@@ -462,6 +621,7 @@ class SegmentEmitter(object):
             self.cursor = addr
             self.emit_labels_at(addr)
             self.emit_extra_label(addr)
+            self.emit_required_at(addr)
             left = re - addr
             off = vma_off(addr)
 
@@ -471,7 +631,7 @@ class SegmentEmitter(object):
                 and left >= 4
                 and addr % 4 == 0
                 and (addr - self.start) % 4 == 0
-                and (addr + 2) not in self.pending
+                and not self.label_pending_at(addr + 2)
             ):
                 self.stats["pool_words"] += 1
                 self.lines.append(self.word_line(addr))
@@ -487,15 +647,25 @@ class SegmentEmitter(object):
             # A 4-byte item (bl pair / ARM instruction) with a branch
             # target landing on its second halfword must be split into raw
             # halfwords so the label has a boundary to sit on.
-            if size == 4 and (addr + 2) in self.pending:
+            if size == 4 and self.label_pending_at(addr + 2):
                 self.raw_bytes_lines(addr, 2)
                 addr += 2
                 continue
 
-            text = dis.get(addr, (0, ""))[1] if pretty else ""
+            text = ""
+            entry = dis.get(addr) if pretty else None
+            if entry is not None:
+                entry_size, text, hexbytes = entry
+                want_hex = self.rom[off:off + entry_size].hex()
+                if hexbytes != want_hex or text.startswith("(bad)"):
+                    # Desynced linear-sweep entry (fake-BL window shifted
+                    # objdump's decode onto other bytes, lesson 4.10): the
+                    # text does not describe THIS address's bytes.
+                    text = ""
+                elif entry_size > left:
+                    text = ""
             emitted = False
-            if pretty and text and not text.startswith("(bad)"):
-                entry_size = dis[addr][0]
+            if text:
                 if entry_size <= left:
                     emitted = self.emit_instruction(addr, size, entry_size, text, info)
                     if emitted:
@@ -510,6 +680,11 @@ class SegmentEmitter(object):
         Returns True if the instruction was emitted (caller advances by
         entry_size), False if the caller should use raw bytes instead.
         """
+        if addr in self.forced_raw_addrs:
+            # gas rejected this line in an earlier repair round; emit the
+            # halfwords verbatim instead.
+            return False
+
         parts = text.split(None, 1)
         mnemonic = parts[0]
         operand = parts[1] if len(parts) > 1 else ""
@@ -520,14 +695,14 @@ class SegmentEmitter(object):
             label = self.resolve_target(info["branch"])
             if label is None:
                 return False
-            self.lines.append(
+            self._append_insn(
                 "\t%s\t%s\t@ 0x%08X" % (mnemonic, label, info["branch"])
             )
             self.stats["instructions"] += 1
             return True
 
         if info and "pool" in info:
-            self.lines.append("\t%s\t@ 0x%08X" % (text, info["pool"]))
+            self._append_insn("\t%s\t@ 0x%08X" % (text, info["pool"]))
             self.stats["instructions"] += 1
             return True
 
@@ -539,7 +714,7 @@ class SegmentEmitter(object):
                 label = self.resolve_target(info["pcadd"])
                 if label is None:
                     return False
-                self.lines.append(
+                self._append_insn(
                     "\t%s%s\t@ 0x%08X" % (m.group(1), label, info["pcadd"])
                 )
                 self.stats["instructions"] += 1
@@ -552,22 +727,104 @@ class SegmentEmitter(object):
         if re.search(r"(?<![#\w])0?[0-9a-f]{7,8}(?!\w)", operand.replace("0x", "#")):
             return False
 
-        self.lines.append("\t" + text)
+        self._append_insn("\t" + text)
         self.stats["instructions"] += 1
         return True
+
+    def addrs_from_asm_errors(self, err):
+        """Map gas error line numbers back to instruction addresses."""
+        table = dict()
+        insn_idx = 0
+        for i, line in enumerate(self.lines, start=1):
+            s = line.strip()
+            if (
+                not s
+                or s.startswith("@")
+                or s.startswith(".")
+                or s.endswith(":")
+            ):
+                continue
+            table[i] = (
+                self.insn_addrs[insn_idx]
+                if insn_idx < len(self.insn_addrs)
+                else None
+            )
+            insn_idx += 1
+        addrs = set()
+        for m in ASM_ERROR_LINE.finditer(err):
+            addr = table.get(int(m.group(1)))
+            if addr is not None:
+                addrs.add(addr)
+        return addrs
+
+    def instruction_line_offsets(self):
+        """[(byte_offset, lineno, addr)] for every instruction line.
+
+        Data directives cannot diverge (they carry literal numbers), so the
+        post-assembly repair only ever needs to locate instruction lines:
+        given a mismatching byte offset in the assembled section, the entry
+        whose [offset, offset+size) window contains it identifies both the
+        source line and the ROM address to force to raw emission.
+        """
+        out = []
+        off = 0
+        ins = 0
+        thumb = True
+        for i, line in enumerate(self.lines):
+            s = line.strip()
+            if not s or s.startswith("@"):
+                continue
+            if s.startswith(".thumb"):
+                thumb = True
+                continue
+            if s.startswith(".arm"):
+                thumb = False
+                continue
+            if s.startswith("."):
+                if s.startswith(".word"):
+                    off += 4
+                elif s.startswith(".short"):
+                    off += 2
+                elif s.startswith(".byte"):
+                    off += 1
+                continue
+            if s.endswith(":"):
+                continue
+            if ins < len(self.insn_addrs):
+                addr = self.insn_addrs[ins]
+                ins += 1
+                o = vma_off(addr)
+                size, _info = (
+                    thumb_decode(self.rom, o)
+                    if thumb
+                    else arm_decode(self.rom, o)
+                )
+                out.append((off, i + 1, addr, size))
+                off += size
+        return out
+
+    def addr_for_offset(self, byte_offset):
+        """Instruction address responsible for `byte_offset`, if any."""
+        for off, _lineno, addr, size in self.instruction_line_offsets():
+            if off <= byte_offset < off + size:
+                return addr
+        return None
 
     # ---- top level -----------------------------------------------------
 
     def emit(self, tmpdir):
         # Reset per-attempt state (an emitter may be re-run at level 1 after
-        # a failed level-0 attempt left pending labels behind).
+        # a failed level-0 attempt left pending labels behind).  dis_cache
+        # and forced_raw_addrs intentionally survive: they are derived only
+        # from immutable inputs (ROM bytes / assembler verdicts).
         self.lines = []
+        self.insn_addrs = []
         self.pool_addrs = set()
         self.pending = {}
-        self.dis_cache = {}
         self.cursor = self.start
         self._noted_raw = False
         self._extra_placed = set()
+        self._required_placed = set()
         self.stats = {
             "instructions": 0,
             "raw_instructions": 0,
@@ -595,10 +852,18 @@ class SegmentEmitter(object):
         h = []
         h.append("@ Auto-generated by tools/split.py from baserom.gba - DO NOT EDIT.")
         h.append("@ Regenerate with: make split")
-        h.append(
-            "@ Segment %s: 0x%08X-0x%08X (%s, 0x%X bytes)"
-            % (self.name, self.start, self.end, self.kind, self.end - self.start)
-        )
+        if self.chunked:
+            h.append(
+                "@ Segment %s, chunk %d/%d: 0x%08X-0x%08X (%s, 0x%X bytes)"
+                % (self.name, self.chunk_index + 1, self.num_chunks,
+                   self.start, self.end, self.kind, self.end - self.start)
+            )
+        else:
+            h.append(
+                "@ Segment %s: 0x%08X-0x%08X (%s, 0x%X bytes)"
+                % (self.name, self.start, self.end, self.kind,
+                   self.end - self.start)
+            )
         if self.funcs:
             h.append("@ Functions (docs/analysis/symbols.csv):")
             for vma, name, _isa in self.funcs:
@@ -613,12 +878,18 @@ class SegmentEmitter(object):
         h.append("")
         flags = '"ax"' if self.kind in CODE_KINDS else '"a"'
         h.append("\t.section .%s, %s" % (self.name, flags))
-        h.append("\t.global\t%s" % self.name)
+        # Only the first chunk of a chunked segment defines the anchor
+        # symbol; later chunks get a file-local marker label instead.
+        if not self.chunked or self.chunk_index == 0:
+            h.append("\t.global\t%s" % self.name)
         if align >= 4 and self.start % 4 == 0:
             h.append("\t.align\t2")
         h.append("\t.syntax\tunified")
         h.append("\t.cpu\tarm7tdmi")
-        h.append("%s:" % self.name)
+        if not self.chunked or self.chunk_index == 0:
+            h.append("%s:" % self.name)
+        else:
+            h.append("%s_%02d:" % (self.name, self.chunk_index))
         self.lines = list(h)
 
         regions = []
@@ -642,6 +913,8 @@ class SegmentEmitter(object):
 
         if tail_len:
             self.emit_labels_at(main_end)
+            self.emit_extra_label(main_end)
+            self.emit_required_at(main_end)
             self.lines.append("")
             self.lines.append(
                 "@ Odd trailing byte(s) split out to keep the main section's"
@@ -676,6 +949,13 @@ class SegmentEmitter(object):
                 "unplaceable extra labels: %s"
                 % ", ".join("%08x" % a for a in sorted(unplaced))
             )
+        if self.chunked:
+            unplaced_req = self.required_labels - self._required_placed
+            if unplaced_req:
+                raise FallbackNeeded(
+                    "unplaceable loc_ labels: %s"
+                    % ", ".join("%08x" % a for a in sorted(unplaced_req))
+                )
         return "\n".join(self.lines) + "\n"
 
 
@@ -684,6 +964,38 @@ class SegmentEmitter(object):
 # ROM VMAs (plus rom_syms.o and --defsym stand-ins for symbols that real
 # code defines), and compare each section's bytes against baserom.
 # --------------------------------------------------------------------------
+
+
+def emit_ext_standins(defsyms_with_isa, tmpdir):
+    """Build verification stand-in objects for symbols the real build gets
+    from compiled C / hand asm (src/agb_sram.c, asm/crt0.s).
+
+    `--defsym` absolutes carry no Thumb/ARM marker, so a `bl` from split
+    code into one of them makes ld inject a 16-byte interworking stub into
+    the layout (seen at 0x080CFA40, shifting every later section).  A
+    labelled zero-size section pinned at the real VMA defines the same
+    address WITH the right ISA and contributes no bytes.
+
+    Returns [(section_name, vma, objpath)] for verify_group.
+    """
+    helpers = []
+    for i, name in enumerate(sorted(defsyms_with_isa)):
+        vma, isa = defsyms_with_isa[name]
+        sec = ".ext_%03d" % i
+        spath = os.path.join(tmpdir, "ext_%03d.s" % i)
+        mode = "\t.thumb\n" if isa == "thumb" else "\t.arm\n"
+        with open(spath, "w") as f:
+            f.write(
+                "@ Auto-generated verification stand-in for %s.\n"
+                "\t.section %s, \"ax\"\n"
+                "\t.global\t%s\n"
+                "%s"
+                "%s:\n" % (name, sec, name, mode, name)
+            )
+        opath = os.path.join(tmpdir, "ext_%03d.o" % i)
+        run_checked([AS, "-mcpu=arm7tdmi", "-o", opath, spath], "as (%s)" % name)
+        helpers.append((sec.lstrip("."), vma, opath))
+    return helpers
 
 
 def run_checked(cmd, what):
@@ -706,19 +1018,36 @@ def assemble_text(text, opath):
     return proc.returncode == 0, proc.stderr
 
 
-def verify_group(candidates, syms_obj, defsyms, rom, tmpdir):
-    """candidates: [(name, start, end, has_tail, objpath)].
+def verify_group(candidates, syms_obj, rom, tmpdir, helpers=None):
+    """candidates: [(section, start, end, objpath)].
 
-    Links all candidate objects together at their ROM VMAs and compares each
-    segment's bytes (main section + optional .tail) with baserom.  Linking
-    the whole group is essential: a split segment may reference labels that
-    another split segment defines (e.g. the IRQ table pointing into
-    game_code_early).  Returns the set of segment names that mismatch.
+    One row PER OBJECT: several chunked files share one section (issue #25)
+    and ld concatenates same-named input sections in command-line order, so
+    callers must list an address-ordered segment's objects consecutively.
+    Links all candidate objects together at their ROM VMAs and compares
+    each section's bytes (main + optional .tail, including any alignment
+    padding ld had to insert) with baserom.  Linking the whole group is
+    essential: split files reference labels that other files define (e.g.
+    the IRQ handler table pointing into game_code_early).  Returns the set
+    of section names that mismatch.
     """
+    sections = {}
+    for sec, start, end, _obj in candidates:
+        prev = sections.get(sec)
+        if prev is None:
+            sections[sec] = (start, end)
+        elif prev != (start, end):
+            sys.exit("error: section %r has conflicting bounds" % sec)
     script = ["SECTIONS\n{"]
-    for name, start, _end, _tail, _obj in candidates:
+    # Stand-in label sections first: zero-size, pinned outside every
+    # candidate range, they only give external symbols their ISA marker.
+    for sec, vma, _obj in helpers or []:
         script.append(
-            "  .%s 0x%08X : { *(.%s) *(.%s.tail) }\n" % (name, start, name, name)
+            "  .%s 0x%08X : { *(.%s) }\n" % (sec, vma, sec)
+        )
+    for sec, (start, _end) in sorted(sections.items()):
+        script.append(
+            "  .%s 0x%08X : { *(.%s) *(.%s.tail) }\n" % (sec, start, sec, sec)
         )
     script.append("}\n")
     lpath = os.path.join(tmpdir, "group.ld")
@@ -726,43 +1055,61 @@ def verify_group(candidates, syms_obj, defsyms, rom, tmpdir):
         f.write("".join(script))
     epath = os.path.join(tmpdir, "group.elf")
     cmd = [LD, "-T", lpath, "-o", epath, syms_obj]
-    for name, _s, _e, _t, obj in candidates:
+    for _sec, _vma, obj in helpers or []:
         cmd.append(obj)
-    for name, vma in defsyms.items():
-        cmd.append("--defsym=%s=0x%08X" % (name, vma))
+    for _sec, _s, _e, obj in candidates:
+        cmd.append(obj)
     try:
         run_checked(cmd, "ld (group verify)")
     except RuntimeError as e:
+        # A failed link (usually labels from a unit that is still missing,
+        # e.g. dropped to raw in an earlier round) is not a byte mismatch:
+        # report it specially so the caller can simply retry with the
+        # units' current levels instead of demoting healthy sections.
         print("    group verify failed:\n%s" % e)
-        return set(name for name, _s, _e, _t, _o in candidates)
-    failing = set()
-    for name, start, end, _has_tail, _obj in candidates:
-        # ld folds the optional .name.tail input section into the .name
+        return {LINK_FAILURE}
+    failing = {}  # section -> first differing absolute address (None if ?)
+    for sec, (start, end) in sorted(sections.items()):
+        # ld folds the optional .name.tail input sections into the .name
         # output section (the patterns are listed in order), so one dump of
         # .name covers the whole segment.
-        dump = os.path.join(tmpdir, "dump_%s.bin" % name)
+        dump = os.path.join(tmpdir, "dump_%s.bin" % sec)
         try:
             run_checked(
-                [OBJCOPY, "--dump-section", ".%s=%s" % (name, dump), epath],
-                "objcopy dump (%s)" % name,
+                [OBJCOPY, "--dump-section", ".%s=%s" % (sec, dump), epath],
+                "objcopy dump (%s)" % sec,
             )
         except RuntimeError as e:
             print("    %s" % e)
-            failing.add(name)
+            failing.add(sec)
             continue
         if not os.path.exists(dump):
-            print("    %s: section missing from verification ELF" % name)
-            failing.add(name)
+            print("    %s: section missing from verification ELF" % sec)
+            failing.add(sec)
             continue
         with open(dump, "rb") as f:
             got = f.read()
         want = rom[vma_off(start):vma_off(end)]
         if got != want:
-            print(
-                "    %s: byte mismatch (got %d bytes, expected %d)"
-                % (name, len(got), len(want))
+            first = next(
+                (
+                    i
+                    for i in range(min(len(got), len(want)))
+                    if got[i] != want[i]
+                ),
+                None,
             )
-            failing.add(name)
+            diff_addr = start + first if first is not None else None
+            print(
+                "    %s: byte mismatch (got %d bytes, expected %d)%s"
+                % (
+                    sec,
+                    len(got),
+                    len(want),
+                    "" if first is None else " first at 0x%08X" % diff_addr,
+                )
+            )
+            failing[sec] = diff_addr
     return failing
 
 
@@ -814,6 +1161,10 @@ def main():
     parser.add_argument("--symbols", default="docs/analysis/symbols.csv")
     parser.add_argument("--asm-dir", default="asm")
     parser.add_argument("--data-dir", default="data")
+    parser.add_argument(
+        "--keep-tmp", action="store_true",
+        help="keep the scratch directory for debugging link failures",
+    )
     args = parser.parse_args()
 
     with open(args.rom, "rb") as f:
@@ -853,12 +1204,23 @@ def main():
                 )
             if vma_off(end) > len(rom):
                 sys.exit("error: segment %r exceeds ROM size" % name)
-            entries.append((name, start, end, kind))
+            chunk_bytes = seg_cfg.get("chunk_bytes")
+            if chunk_bytes is not None:
+                try:
+                    chunk_bytes = int(str(chunk_bytes), 0)
+                except ValueError:
+                    sys.exit(
+                        "error: segment %r has a bad chunk_bytes value %r"
+                        % (name, chunk_bytes)
+                    )
+                if chunk_bytes <= 0:
+                    sys.exit("error: chunk_bytes must be positive")
+            entries.append((name, start, end, kind, chunk_bytes))
 
         # Config sanity: every extra label must live inside one configured
         # segment and must not shadow a database symbol defined elsewhere.
         for addr, label in sorted(extra_labels.items()):
-            if not any(s <= addr < e for _n, s, e, _k in entries):
+            if not any(s <= addr < e for _n, s, e, _k, _c in entries):
                 sys.exit(
                     "error: extra label %s at 0x%08X is outside every "
                     "configured segment" % (label, addr)
@@ -877,7 +1239,7 @@ def main():
 
         # Symbols that get real labels: every DB function inside a split
         # range is emitted as a label by its segment file.
-        split_ranges = [(s, e) for _n, s, e, _k in entries]
+        split_ranges = [(s, e) for _n, s, e, _k, _c in entries]
         in_split = set(
             name
             for vma, name in db.items()
@@ -894,109 +1256,310 @@ def main():
         )
 
         # Verification stand-ins for symbols that real code defines
-        # (asm/crt0.s, src/*.c): the real build resolves them from those
-        # objects; rom_syms.o does not define them by design.
-        vma_by_name = dict((name, vma) for vma, name in db.items())
-        defsyms = {}
+        # (asm/crt0.s, src/agb_sram.c): the real build resolves them from
+        # those objects; rom_syms.o does not define them by design.  They
+        # are emitted as ISA-labelled zero-size sections instead of
+        # --defsyms absolutes: absolutes carry no Thumb marker, so `bl`s
+        # into them make ld insert 16-byte interworking stubs that shift
+        # every later section (and the byte compare fails).
+        name_to_row = dict((name, (vma, isa)) for vma, (name, isa) in rows.items())
+        ext_defs = {}
         for name in cfg.get("external_defined", []):
-            if name in vma_by_name:
-                defsyms[name] = vma_by_name[name]
+            if name in name_to_row:
+                ext_defs[name] = name_to_row[name]
+        helpers = emit_ext_standins(ext_defs, tmpdir)
 
-        emitters = {}
-        for name, start, end, kind in entries:
-            funcs = [
+        # Plan emission units: one output file per unit. Flat segments are
+        # a single unit owning section <name>; chunked segments (optional
+        # "chunk_bytes" in the config, issue #25) are cut at even function
+        # boundaries and every chunk shares the segment's linker section,
+        # so linker.ld needs no edit and ld concatenates the chunks in
+        # command-line (address) order.
+        units = {}  # uid -> unit dict
+        order = []
+        seg_names_by_segment = {}
+        for name, start, end, kind, chunk_bytes in entries:
+            funcs_all = [
                 (vma, db[vma], rows[vma][1])
                 for vma in sorted(db)
                 if start <= vma < end
             ]
+            func_vmas = [v for v, _n, _i in funcs_all]
+            cuts = (
+                compute_chunks(start, end, func_vmas, chunk_bytes)
+                if chunk_bytes
+                else [start, end]
+            )
+            num = len(cuts) - 1
+            width = max(2, len(str(num - 1)))
             print(
                 "splitting %-28s 0x%08X-0x%08X (%s)"
                 % (name, start, end, kind)
             )
             seg_extra = dict(
-                (a, l)
-                for a, l in extra_labels.items()
-                if start <= a < end
+                (a, l) for a, l in extra_labels.items() if start <= a < end
             )
-            em = SegmentEmitter(
-                rom, name, start, end, kind, funcs, db, 0,
-                extra_labels=seg_extra, data_symbols=data_symbols,
-            )
-            emitters[name] = (em, funcs)
 
-        # Two rounds: prefer real instructions (level 0); any segment that
-        # fails to assemble or to match byte-for-byte falls back to raw
-        # .short/.byte emission (level 1), which copies the bytes verbatim.
-        levels = dict((name, 0) for name, _s, _e, _k in entries)
-        results = {}  # name -> (text, objpath, stats)
-        for attempt in (0, 1):
-            candidates = []
-            for name, start, end, _kind in entries:
-                if name in results:
-                    continue
-                em, funcs = emitters[name]
-                em.level = levels[name]
-                try:
-                    text = em.emit(tmpdir)
-                except FallbackNeeded as e:
-                    print("    %s: level %d unusable: %s" % (name, em.level, e))
-                    levels[name] = 1
-                    continue
-                obj = os.path.join(tmpdir, "%s_%d.o" % (name, em.level))
-                ok, err = assemble_text(text, obj)
-                if not ok:
+            # Segment-wide name table + global loc_ label set. Every
+            # non-function branch/adr target inside a chunked segment gets
+            # a global loc_XXXXXXXX label defined by its owning chunk so
+            # any other chunk can reference it; flat segments keep the
+            # legacy file-local .L_ labels instead.
+            seg_names = {}
+            for vma, fname, _isa in funcs_all:
+                seg_names.setdefault(vma, fname)
+            for addr, lab in seg_extra.items():
+                seg_names.setdefault(addr, lab)
+            required_all = set()
+            if num > 1:
+                targets = collect_ref_targets(rom, start, end, funcs_all)
+                for target in sorted(targets):
+                    if start <= target < end and target not in seg_names:
+                        loc = "loc_%08x" % target
+                        seg_names[target] = loc
+                        required_all.add(target)
+                print(
+                    "    %d chunks (%d cross-file loc_ labels):"
+                    % (num, len(required_all))
+                )
+                for ci in range(num):
                     print(
-                        "    %s: level %d does not assemble:\n%s"
-                        % (name, em.level, err)
+                        "      %s_%0*d: 0x%08X-0x%08X"
+                        % (name, width, ci, cuts[ci], cuts[ci + 1])
                     )
-                    levels[name] = 1
+            seg_names_by_segment[name] = seg_names
+
+            # Layout flag: configured chunk_bytes segments live in their
+            # own directory even when they fit a single chunk. Cross-file
+            # (chunked) emitter semantics kick in only with 2+ chunks.
+            layout = bool(chunk_bytes)
+            for ci in range(num):
+                cs, ce = cuts[ci], cuts[ci + 1]
+                uid = (
+                    "%s_%0*d" % (name, width, ci) if layout else name
+                )
+                rel = (
+                    os.path.join(name, "%s.s" % uid)
+                    if layout
+                    else "%s.s" % name
+                )
+                units[uid] = {
+                    "uid": uid,
+                    "section": name,
+                    "rel": rel,
+                    "chunked": num > 1,
+                    "index": ci if num > 1 else None,
+                    "num_chunks": num,
+                    "seg_start": start,
+                    "seg_end": end,
+                    "start": cs,
+                    "end": ce,
+                    "kind": kind,
+                    "funcs": [
+                        (v, n, i) for v, n, i in funcs_all if cs <= v < ce
+                    ],
+                    "extra": dict(
+                        (a, l) for a, l in seg_extra.items() if cs <= a < ce
+                    ),
+                    "required": set(
+                        a for a in required_all if cs <= a < ce
+                    ),
+                }
+                order.append(uid)
+
+        # Rounds: prefer real instructions (level 0); fall back to raw
+        # .short/.byte emission (level 1) only as a last resort.  Two
+        # repair mechanisms run before that:
+        #
+        #   * gas ERRORS (later-arch mnemonics for undefined-decode
+        #     halfwords: revsh, yield, FPA junk, ...) are mapped back to
+        #     instruction addresses and those are forced to raw bytes;
+        #   * gas ALIAS re-encodings assemble cleanly but to the canonical
+        #     encoding instead of the original one (`movs r0, r2` printed
+        #     for a `lsls r0, r2, #0` halfword re-encodes as adds).  These
+        #     surface as byte mismatches in the group verification; the
+        #     first differing address is mapped back to its instruction
+        #     line and blacklisted, and the unit is regenerated.
+        #
+        # Objects that pass stay in every subsequent verification link:
+        # their real labels may be the only definition of symbols other
+        # files reference (they are excluded from rom_syms.s via in_split),
+        # so a retry round without them would fail to link.
+        levels = dict((uid, 0) for uid in order)
+        raw_addrs = dict((uid, set()) for uid in order)
+        fail_count = dict((uid, 0) for uid in order)
+        results = {}  # uid -> (text, objpath, stats, emitter)
+        for attempt in range(40):
+            # 1) Fill in any missing units (first round, or surgically
+            # deleted / newly demoted ones).
+            for uid in order:
+                if uid in results:
                     continue
-                has_tail = ".%s.tail" % name in text
-                candidates.append((name, start, end, has_tail, obj))
-                results[name] = (text, obj, em.stats, funcs)
+                u = units[uid]
+                em = SegmentEmitter(
+                    rom, u["section"], u["start"], u["end"], u["kind"],
+                    u["funcs"], db, levels[uid],
+                    extra_labels=u["extra"], data_symbols=data_symbols,
+                    chunk_index=u["index"], num_chunks=u["num_chunks"],
+                    seg_start=u["seg_start"], seg_end=u["seg_end"],
+                    required_labels=u["required"] if u["chunked"] else None,
+                    seg_names=(
+                        seg_names_by_segment[u["section"]]
+                        if u["chunked"] else None
+                    ),
+                )
+                em.forced_raw_addrs = raw_addrs[uid]
+                text = None
+                obj = os.path.join(
+                    tmpdir, "%s_%d_%d.o" % (uid, em.level, attempt % 2)
+                )
+                for _repair in range(16):
+                    try:
+                        text = em.emit(tmpdir)
+                    except FallbackNeeded as e:
+                        print("    %s: level %d unusable: %s" % (uid, em.level, e))
+                        break
+                    ok, err = assemble_text(text, obj)
+                    if ok:
+                        break
+                    bad = em.addrs_from_asm_errors(err)
+                    fresh = bad - em.forced_raw_addrs
+                    if not fresh:
+                        print(
+                            "    %s: level %d does not assemble:\n%s"
+                            % (uid, em.level, err)
+                        )
+                        break
+                    em.forced_raw_addrs |= fresh
+                if text is None:
+                    if levels[uid] == 0:
+                        levels[uid] = 1
+                        continue
+                    sys.exit(
+                        "error: %s cannot even be emitted as raw bytes" % uid
+                    )
+                results[uid] = (text, obj, em.stats, em)
+
+            # 2) Verify the whole group.
+            candidates = []
+            for uid in order:
+                u = units[uid]
+                _t, obj, _s, _e = results[uid]
+                candidates.append(
+                    (u["section"], u["seg_start"], u["seg_end"], obj)
+                )
             failing = verify_group(
-                candidates, syms_obj, defsyms, rom, tmpdir
+                candidates, syms_obj, rom, tmpdir, helpers=helpers
             )
-            for cand in candidates:
-                if cand[0] in failing:
-                    print("    %s: level %d failed byte verification"
-                          % (cand[0], levels[cand[0]]))
-                    del results[cand[0]]
-                    levels[cand[0]] = 1
-        missing = [n for n, _s, _e, _k in entries if n not in results]
+            if not failing:
+                break
+            if LINK_FAILURE in failing:
+                sys.exit(
+                    "error: group link failed even with every unit present\n%s"
+                    % failing
+                )
+
+            # 3) Surgical repair: route each section's FIRST differing
+            # address to the unit that owns it and force that instruction
+            # to raw bytes.  Only the owner regenerates next round.
+            for sec in sorted(failing):
+                diff_addr = failing[sec]
+                owner = None
+                for uid in order:
+                    u = units[uid]
+                    if u["section"] == sec and (
+                        diff_addr is None
+                        or u["start"] <= diff_addr < u["end"]
+                    ):
+                        owner = uid
+                        if diff_addr is not None:
+                            break
+                if owner is None:
+                    sys.exit("error: no unit owns %r" % sec)
+                u = units[owner]
+                em = results[owner][3]
+                addr = None
+                if diff_addr is not None and u["start"] <= diff_addr < u["end"]:
+                    addr = em.addr_for_offset(diff_addr - u["start"])
+                progressed = False
+                if addr is not None and addr not in raw_addrs[owner]:
+                    raw_addrs[owner].add(addr)
+                    fail_count[owner] = 0
+                    progressed = True
+                    print(
+                        "    %s: alias/decode mismatch at 0x%08X;"
+                        " forcing raw bytes there" % (owner, addr)
+                    )
+                del results[owner]
+                if progressed:
+                    continue
+                fail_count[owner] += 1
+                if levels[owner] == 0 and fail_count[owner] >= 2:
+                    levels[owner] = 1
+                    fail_count[owner] = 0
+                    print(
+                        "    %s: no surgical fix found; falling back to"
+                        " RAW emission" % owner
+                    )
+        else:
+            missing = [uid for uid in order if uid not in results]
+            sys.exit(
+                "error: split did not converge; unverified files: %s"
+                % ", ".join(missing)
+            )
+        missing = [uid for uid in order if uid not in results]
         if missing:
             sys.exit(
-                "error: segments could not be emitted byte-identically: %s"
+                "error: files could not be emitted byte-identically: %s"
                 % ", ".join(missing)
             )
 
-        for name, start, end, kind in entries:
-            text, _obj, stats, funcs = results[name]
-            out_path = os.path.join(args.asm_dir, "%s.s" % name)
-            with open(out_path, "w") as f:
-                f.write(text)
+        made_dirs = set()
+        for name, start, end, kind, chunk_bytes in entries:
             blob = os.path.join(args.data_dir, "%s.s" % name)
             if os.path.exists(blob):
                 os.remove(blob)
                 print("    removed %s (incbin slice replaced)" % blob)
-            note = " [RAW FALLBACK]" if levels[name] != 0 else ""
+            seg_uids = [u for u in order if units[u]["section"] == name]
+            raw_any = any(levels[u] != 0 for u in seg_uids)
+            total_funcs = sum(len(units[u]["funcs"]) for u in seg_uids)
+            note = " [RAW FALLBACK]" if raw_any else ""
             print(
-                "    wrote %s: %d functions, %d insns, %d words"
-                " (%d symbolic, %d named), %d raw bytes%s"
-                % (
-                    out_path,
-                    len(funcs),
-                    stats["instructions"],
-                    stats["pool_words"] + stats["symbolic_words"]
-                    + stats["named_words"],
-                    stats["symbolic_words"],
-                    stats["named_words"],
-                    stats["raw_instructions"],
-                    note,
-                )
+                "    %s -> %d file(s), %d functions%s"
+                % (name, len(seg_uids), total_funcs, note)
             )
+            for uid in seg_uids:
+                text, _obj, stats, _em = results[uid]
+                out_path = os.path.join(args.asm_dir, units[uid]["rel"])
+                out_dir = os.path.dirname(out_path)
+                if out_dir not in made_dirs:
+                    made_dirs.add(out_dir)
+                    # Regeneration stability: drop stale chunks from an
+                    # earlier run with a different chunk layout.
+                    if units[uid]["chunked"] and os.path.isdir(out_dir):
+                        shutil.rmtree(out_dir)
+                    os.makedirs(out_dir, exist_ok=True)
+                with open(out_path, "w") as f:
+                    f.write(text)
+                print(
+                    "    wrote %s: %d functions, %d insns, %d words"
+                    " (%d symbolic, %d named), %d raw bytes"
+                    % (
+                        out_path,
+                        len(units[uid]["funcs"]),
+                        stats["instructions"],
+                        stats["pool_words"] + stats["symbolic_words"]
+                        + stats["named_words"],
+                        stats["symbolic_words"],
+                        stats["named_words"],
+                        stats["raw_instructions"],
+                    )
+                )
     finally:
-        shutil.rmtree(tmpdir, ignore_errors=True)
+        if args.keep_tmp:
+            print("kept scratch dir: %s" % tmpdir)
+        else:
+            shutil.rmtree(tmpdir, ignore_errors=True)
 
 
 if __name__ == "__main__":
