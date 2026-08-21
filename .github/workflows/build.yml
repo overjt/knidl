@@ -35,6 +35,22 @@ jobs:
       - name: Perl tooling check (tools/calcrom.pl)
         run: docker run --rm -v "$PWD":/src -w /src knidl-builder perl -c tools/calcrom.pl
 
+      # decomp-permuter smoke test (issue #26): the vendored tool must keep
+      # running inside the image against a ROM-extracted target (no baserom
+      # needed). The known-good reference source must score exactly 0.
+      - name: decomp-permuter smoke test (tools/permuter-example)
+        run: |
+          mkdir -p build/scratch
+          cp -r tools/permuter-example build/scratch/fn
+          docker run --rm -v "$PWD":/src -w /src knidl-builder bash -c '
+            set -e
+            cd build/scratch/fn
+            chmod +x compile.sh
+            arm-none-eabi-as -mcpu=arm7tdmi -o target.o target.s
+            cp base.matching-reference.c base.c
+            python3 /src/tools/decomp-permuter/permuter.py . --debug 2>&1 | tee /tmp/score.log
+            grep -q "base score = 0" /tmp/score.log'
+
       - name: Compile baserom-free objects (crt0 + all of src/)
         shell: bash
         run: |

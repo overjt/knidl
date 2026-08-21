@@ -1,0 +1,13 @@
+func_name = "ReadSram_Core"
+compiler_type = "gcc"
+
+# old_agbcc (GCC 2.9-era) chokes on several modern-GCC-oriented randomizer
+# passes; disabling them keeps candidate compile-success high.
+[weight_overrides]
+perm_inline = 0
+perm_var_cond_block = 0
+perm_randomize_internal_type = 0
+perm_randomize_external_type = 0
+perm_randomize_function_type = 0
+perm_expand_expr = 0
+perm_long_chain_assignment = 0

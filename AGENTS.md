@@ -6,9 +6,12 @@ Matching decompilation of Kirby: The Amazing Mirror's predecessor, **Kirby: Nigh
 
 - Language: C/C++.
 - All code, comments, commit messages, and documentation must be in **English**.
-- Before decompiling a new module, read `docs/lessons-learned.md` — pitfalls and
-  validated workflow from previous modules (build-system gotchas, m2c/tooling,
-  old_agbcc source shapes). Add new lessons there as they are discovered.
+- Before decompiling a new module, read `docs/decomp-loop.md` — the standard
+  per-function loop (pick → m2c first pass → asmdiff iterate → decomp-permuter
+  escalation → land + verify) including the subagent handoff contract — and
+  `docs/lessons-learned.md` — pitfalls and validated workflow from previous
+  modules (build-system gotchas, m2c/tooling, old_agbcc source shapes). Add new
+  lessons there as they are discovered.
 
 ## ROM handling
 
@@ -48,4 +51,5 @@ Matching decompilation of Kirby: The Amazing Mirror's predecessor, **Kirby: Nigh
 - ROM splitter (issue #23): `tools/split.py` + `tools/split_config.json` via `make split` extracts segments into labeled, byte-verified `asm/<segment>.s` (functions labeled from the symbol DB, symbolic literal pools, `asm/rom_syms.s` absolute symbols for unsplit targets) and removes the replaced `data/<segment>.s` incbin; usage and pitfalls in `docs/splitting.md` + `docs/lessons-learned.md` §4.
 - All SDK/ARM segments around the code region converted from `.incbin` to labeled asm (issue #24): `task_switch_helpers`, `task_literals`, `sdk_swi_wrappers`, `sdk_reset_helper`, `sdk_libc` (`_call_via_r0..lr` exported; task trampolines decoded in rom-map §6), `interworking_veneer` (+ its literal-word gap), `irq_handler_table_14`, `lib_misc`, `lib_rodata_fir_tables`. Task-system IWRAM cells are named via config `data_symbols`, non-DB labels via `extra_labels`; hand names must always go through `tools/split_config.json` because CI re-checks split regeneration byte-for-byte.
 - Whole Thumb game-code region split into per-function labeled asm (issue #25): `agb_init` (1 chunk), `game_code_early` (3 chunks; odd start = 1 data byte) and `game_code_and_rodata` (14 ~64 KiB chunks, 5,003 functions) live under `asm/<segment>/<segment>_NN.s` via the config's `chunk_bytes`. Chunks share the segment's linker section (ld concatenates them in address order); cross-chunk branches use global `loc_XXXXXXXX` labels; no `.incbin` remains below `0x080D0000`. objdump→gas hazards are auto-repaired per instruction (`-marmv4t`, error-line feedback, post-assemble byte-diff feedback — lessons §4.15–4.17); ROM stays byte-identical.
+- Decomp-permuter vendored + standard loop documented (issue #26): `tools/decomp-permuter/` (simonlindholm/decomp-permuter@`2795247`, own MIT LICENSE kept; Dockerfile gained the required `toml` pip dep) verified inside `knidl-builder` on a scratch example (`tools/permuter-example/`, scorer reaches 0 against ROM-extracted target asm); per-function workflow + subagent handoff contract in `docs/decomp-loop.md`, old_agbcc-specific pitfalls in lessons §2.9–2.11.
 - Next milestones: decompile split/SDK modules to C using the validated per-zone compiler recipe (task system Thumb side, sound driver, then game code); grow `src/` one module at a time with `asmdiff.sh` on the module range.
