@@ -45,6 +45,9 @@ jobs:
           done
           docker run --rm -v "$PWD":/src -w /src knidl-builder make "${objects[@]}" INSIDE_DOCKER=1
 
+      - name: Header smoke check (include/gba with agbcc + old_agbcc)
+        run: docker run --rm -v "$PWD":/src -w /src knidl-builder make check-headers INSIDE_DOCKER=1
+
       # ----- baserom acquisition (any of: self-hosted runner file,
       # ----- Actions cache seeded by an earlier run, or BASEROM_URL secret) -----
 
@@ -152,4 +155,5 @@ jobs:
           echo "   - knidl-builder Docker image build (full toolchain)"
           echo "   - tools/gbafix.py and tools/calcrom.pl syntax checks"
           echo "   - compilation of crt0 and every file in src/"
+          echo "   - header smoke check of include/gba/ (make check-headers)"
           echo "=================================================================="
