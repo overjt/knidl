@@ -31,8 +31,13 @@ BUILD_DIR := build
 $(BUILD_DIR)/src/agb_sram.o: CC := old_agbcc
 $(BUILD_DIR)/src/agb_sram.o: CFLAGS := -O1 -mthumb-interwork
 
-ASM_OBJS  := $(BUILD_DIR)/asm/rom_header.o \
-             $(BUILD_DIR)/asm/crt0.o
+# All of asm/ is assembled into the ROM: hand-written files (rom_header.s,
+# crt0.s), split-generated segment files (asm/<segment>.s, see tools/
+# split.py / docs/splitting.md) and asm/rom_syms.s (absolute symbols for
+# every DB function not defined by a real label, so split files can
+# reference not-yet-split code symbolically).
+ASM_SRCS  := $(wildcard asm/*.s)
+ASM_OBJS  := $(patsubst %.s,$(BUILD_DIR)/%.o,$(ASM_SRCS))
 
 # Per-segment data objects, split from the former main_blob.
 # Each .s file .incbin's its slice of baserom.gba; the linker script
@@ -49,7 +54,7 @@ ALL_OBJS  := $(ASM_OBJS) $(DATA_OBJS) $(SRC_OBJS)
 
 ELF := $(BUILD_DIR)/$(ROM:.gba=.elf)
 
-.PHONY: all compare check-headers progress symbols clean
+.PHONY: all compare check-headers progress symbols split clean
 
 all: $(ROM)
 
@@ -111,6 +116,13 @@ symbols: baserom.gba tools/symdb.py tools/symdb_check.py docs/analysis/segments.
 	python3 tools/symdb.py --rom baserom.gba --segments docs/analysis/segments.txt --out-dir docs/analysis
 	python3 tools/symdb_check.py --rom baserom.gba --symbols docs/analysis/symbols.csv --callgraph docs/analysis/callgraph.csv --segments docs/analysis/segments.txt
 
+# Extract configured ROM ranges into labeled, byte-identical assembly
+# (issue #23; see docs/splitting.md).  For each segment in tools/
+# split_config.json this writes asm/<name>.s, deletes the data/<name>.s
+# incbin slice, and regenerates asm/rom_syms.s.
+split: baserom.gba tools/split.py tools/split_config.json docs/analysis/segments.txt docs/analysis/symbols.csv
+	python3 tools/split.py --rom baserom.gba --config tools/split_config.json
+
 clean:
 	rm -rf $(BUILD_DIR) $(ROM)
 
@@ -118,7 +130,7 @@ else
 
 DOCKER_RUN := docker run --rm -v $(CURDIR):/src -w /src $(IMAGE)
 
-.PHONY: image all compare check-headers progress symbols clean
+.PHONY: image all compare check-headers progress symbols split clean
 
 image:
 	docker build -t $(IMAGE) .
@@ -137,6 +149,9 @@ progress: image
 
 symbols: image
 	$(DOCKER_RUN) make symbols INSIDE_DOCKER=1
+
+split: image
+	$(DOCKER_RUN) make split INSIDE_DOCKER=1
 
 clean:
 	rm -rf $(BUILD_DIR) $(ROM)

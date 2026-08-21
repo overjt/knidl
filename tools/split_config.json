@@ -1,0 +1,39 @@
+{
+  "comment": [
+    "Segments to extract from baserom.gba into labeled asm (tools/split.py).",
+    "Names/kinds/boundaries come from docs/analysis/segments.txt; function",
+    "labels come from docs/analysis/symbols.csv. For every segment listed",
+    "here, make split writes asm/<name>.s (verified byte-identical against",
+    "the ROM) and removes the data/<name>.s incbin slice; linker.ld already",
+    "pins each section by name, so no linker script change is needed.",
+    "",
+    "external_defined lists symbols that already exist as real labels in the",
+    "link (asm/crt0.s, src/agb_sram.c, data/sdk_libc.s) and therefore must",
+    "NOT be redefined as absolute symbols in asm/rom_syms.s.",
+    "",
+    "Current demo set (issue #23 acceptance criteria)."
+  ],
+  "external_defined": [
+    "AgbMain",
+    "MasterIsr",
+    "ReadSram_Core",
+    "ReadSram",
+    "WriteSram",
+    "VerifySram_Core",
+    "VerifySram",
+    "WriteSramEx",
+    "_call_via_r0",
+    "_call_via_r1",
+    "_call_via_r2",
+    "_call_via_r3",
+    "_call_via_r4",
+    "_call_via_r5",
+    "_call_via_r6",
+    "_call_via_r7"
+  ],
+  "segments": [
+    { "name": "sdk_swi_wrappers" },
+    { "name": "sdk_reset_helper" },
+    { "name": "irq_handler_table_14" }
+  ]
+}

@@ -159,7 +159,88 @@ sites, not from the number: the AgbInit fills prove 0x080CFA54 (`svc
 SoundDriverVSyncOff. The full table with evidence lives in
 `include/gba/syscall.h` (see also docs/header-conventions.md).
 
-## 4. Workflow that worked
+## 4. Splitting ROM ranges into asm (tools/split.py)
+
+### 4.1 objdump text only round-trips under `.syntax unified`
+objdump prints unified mnemonics (`adds r0, #1`, `lsls r1, r1, #18`,
+`svc 40`). Feeding them to gas in the default *divided* syntax fails with
+"instruction not supported in Thumb16 mode"; with `.syntax unified` they
+encode to the exact original halfwords. Generated files therefore always
+set `.syntax unified` (same choice as `asm/crt0.s`).
+
+### 4.2 gas pads a section's SIZE to its instruction alignment
+A section that contains any Thumb instruction (or even just a `.thumb`
+directive) gets `sh_addralign = 2` and is padded to an even size at
+assembly time; ARM content pads to 4. A split segment with an odd size
+(the `sdk_swi_wrappers` boundary at `0x080CFA7F` splits a `bx lr` in
+half) would silently grow a byte and push every later section.
+Workaround: park the odd trailing byte(s) in a separate alignment-1
+section `.segment.tail` which the linker script appends after the main
+section. Data-only directives (`.byte`/`.short`/`.word`) never pad —
+mid-section odd bytes are fine (e.g. the odd-start `sdk_reset_helper`
+section is emitted as pure data at `0x080CFA7F`).
+
+### 4.3 gas silently aligns Thumb *instructions* to 2
+A `.byte` followed by a real instruction gains an invisible `0x00` pad
+byte. Any instruction stream at odd section offsets (segments with an
+odd start such as `sdk_reset_helper` / `game_code_early`) must therefore
+be emitted as raw `.short` data instead of instruction text.
+
+### 4.4 objdump comments and `<symbol>` suffixes must be stripped
+`@` is a comment character for ARM gas, so objdump's annotations
+(`ldr r3, [pc, #16] @ (0x80cfa94)`) are harmless to re-assemble — but
+`;` is a statement separator, and branch operands carry address
+references (`bl 0x80cfa54`) that gas would re-relativize against the
+wrong origin. Rewrite branch/`adr` operands to labels (the split tool
+resolves them from the symbol DB / rom_syms.s) or drop the instruction
+to raw `.short` bytes.
+
+### 4.5 Absolute symbols let split files reference unsplit code
+`asm/rom_syms.s` defines every not-yet-labeled database function as
+`name = 0xADDR` (an absolute symbol), so a split file can emit
+`.word sub_08001518+1` (IRQ table) or `bl __divsi3` and the linker
+resolves it to identical bytes. Symbols that already exist as real
+labels (`asm/crt0.s`, `src/agb_sram.c`, `data/sdk_libc.s`) must be
+excluded (`external_defined` in `tools/split_config.json`) or ld fails
+with "multiple definition". `make split` regenerates the file, so the
+exclusion set stays consistent automatically.
+
+### 4.6 Parsing objdump output: split on tabs, not whitespace
+objdump instruction lines are `addr:\t<bytes> \t<mnemonic>\t<operands>`.
+A whitespace-based "bytes column" regex silently absorbs mnemonics that
+consist purely of hex characters (`add`, `bcc`, ...): the byte count
+comes out wrong (4+3 hex chars -> "5 bytes") and the mnemonic vanishes,
+which desynchronizes the emission walk. Parse on the tabs.
+
+### 4.7 objdump elides trailing repeated instructions as `...`
+A 4-byte disassembly buffer `70 47 00 00` prints `bx lr` then `...`
+instead of decoding the trailing `movs r0, r0`. Disassembling one big
+buffer per segment (not per function) keeps interior zeros decodable;
+only the very segment tail may elide (harmless — those bytes fall back
+to raw `.short`).
+
+### 4.8 Branch labels need an emission cursor
+A backward branch (`bge .L_loop_head`) is emitted *after* the walk has
+already written the label line for its target. Re-queueing the label on
+every resolution leaves a stale "unplaceable" entry and needlessly
+falls the whole segment back to raw bytes. Track the emission frontier
+and only queue labels for addresses not yet passed. Data that merely
+*decodes* like a branch (inside pools) creates harmless false-positive
+`.L_` labels on halfword boundaries; splitting any 4-byte item (bl
+pair, pool word) whose second halfword carries a label keeps every
+label placeable.
+
+### 4.9 Verify split segments as a group, not one by one
+A split segment may reference labels that another split segment defines
+(the IRQ table points into `game_code_early`). Per-segment verification
+links fail with "undefined reference" even though the real build is
+fine. Link all candidate objects together at their ROM VMAs (plus
+rom_syms.o and `--defsym` stand-ins for C-defined symbols) and compare
+each section via `objcopy --dump-section` — note that `--dump-section`
+takes `section=file` as a SEPARATE argv element and exits 0 without
+creating the file when the section is absent, so check for the file.
+
+## 5. Workflow that worked
 
 1. Disassemble the range from `baserom.gba` (objdump in Docker), identify
    function boundaries from the fn-pointer tables + `push` prologues.

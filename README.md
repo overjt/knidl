@@ -37,6 +37,7 @@ make          # build knidl.gba from source + baserom.gba
 make compare  # verify the built ROM SHA-1 (byte-for-byte match)
 make progress # print code/data decompilation percentages
 make symbols  # regenerate + validate the ROM-wide function symbol database
+make split    # extract configured ROM ranges into labeled, byte-identical asm
 ```
 
 Full instructions, including `baserom.gba` placement and hash verification:
@@ -53,22 +54,22 @@ make progress
 ```
 
 ```
-968 total bytes of code
-    404 bytes of code in src (41.7355%)
-    564 bytes of code in asm (58.2645%)
-        0 bytes of code remaining to be decompiled
+1124 total bytes of code
+    404 bytes of code in src (35.9431%)
+    720 bytes of code in asm (64.0569%)
+        156 bytes of code remaining to be decompiled
         0 bytes in 0 functions in asm/nonmatching
         564 bytes excluded from decompilation tracking
 
-39 total symbols
-    39 symbols documented (100.0000%)
-    0 symbols undocumented (0.0000%)
+5227 total symbols
+    49 symbols documented (0.9374%)
+    5178 symbols undocumented (99.0626%)
 
-8387672 total bytes of data
+8387520 total bytes of data
     16 bytes of data in src (0.0002%)
-    8387656 bytes of data in data (99.9998%)
+    8387504 bytes of data in data (99.9998%)
 
-8387796 bytes of data in 30 baserom incbins (100.0015%)
+8387648 bytes of data in 27 baserom incbins (100.0015%)
 ```
 
 (Output from the current tree; run `make progress` for live values. The
