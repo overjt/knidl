@@ -29,7 +29,7 @@
  * in from the same SDK-order table (GBATEK alternate order; mirrored in
  * rust-console/gba issue #27) and have no thunk in this ROM.
  *
- * ROM thunk map (SDK syscall wrappers, 0x080CFA40-0x080CFA80, Thumb,
+ * ROM thunk map (SDK syscall wrappers, 0x080CFA4C-0x080CFA80, Thumb,
  * each `svc N; bx lr`); caller counts from a full-ROM BL census:
  *
  *   0x080CFA50  svc 0x0A               ArcTan2              (11 callers)
@@ -43,15 +43,29 @@
  *   0x080CFA74  mov r1,#1; svc 0x25    MultiBoot            (1)
  *   0x080CFA7C  svc 0x28               SoundDriverVSyncOff  (1)
  *
- *   0x080CFA80  (svc 0x01; svc 0x00)   compound reset helper
+ *   0x080CFA80  (svc 0x01; svc 0x00)   SoftReset
  *               (clears IME + high byte of INTR_CHECK, sets sp=0x03007F00,
- *               RegisterRamReset(r0) then SoftReset); 2 callers.  It and
- *               the non-syscall helpers at 0x080CFA40 / 0x080CFA4C get
- *               named with the SDK wrappers in issue #29.
+ *               RegisterRamReset(r0) then reset); 2 BL callers (0x08000FF8,
+ *               0x08008C40).  Named per katam precedent (its
+ *               asm/libagbsyscall.s SoftReset is this same compound).  The
+ *               label is a split_config.json extra_labels data label — the
+ *               segment starts at the odd address 0x080CFA7F and is
+ *               data-emitted, so the label carries no Thumb function mark;
+ *               deliberately NOT a symbols.csv entry and NOT prototyped
+ *               here, because a `bl SoftReset` relocation against an
+ *               unmarked label makes ld insert an interworking veneer that
+ *               shifts every later section.  The two callers keep raw
+ *               `.short` BL pairs.
  *
- * When the wrappers themselves are decompiled (issue #29), implement them
- * in one place and include this header; do not hand-code `svc` numbers in
- * game code.
+ *   The former "unidentified SDK helper" at 0x080CFA40 was no helper at
+ *   all: it was the tail of the m4a XCMD handler ply_xswee (entry
+ *   0x080CFA38), cut in half by the old segment boundary; the boundary
+ *   moved to 0x080CFA4C in issue #29.  0x080CFA4C is DummyFunc (bx lr).
+ *
+ * These wrappers stay named asm forever, by design (issue #29): agbcc
+ * cannot produce a bare `svc N; bx lr` thunk from C, and pret projects
+ * (katam, pokeemerald) keep libagbsyscall as asm too.  Do not hand-code
+ * `svc` numbers in game code; call the named thunks declared below.
  */
 
 #include "gba/types.h"
@@ -133,8 +147,7 @@ void HuffUnComp(const void *src, void *dest);                  /* 0x080CFA68 */
 
 /* MultiBoot: the thunk hardcodes mode = 1 (master).  Returns 0 on
  * success, a nonzero error code otherwise.  struct MultiBootParam is
- * defined with the multiboot/communication module (see also the helper
- * at 0x080CFA40). */
+ * defined with the multiboot/communication module. */
 u8 MultiBoot(struct MultiBootParam *param);                    /* 0x080CFA74 */
 
 /* SoundDriverVSyncOff: shuts down the sound DMA/vsync path; the ROM calls

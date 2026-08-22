@@ -67,7 +67,7 @@ SECTIONS
     } > ROM
 
     /* SDK syscall wrappers (Thumb) */
-    .sdk_swi_wrappers 0x080CFA40 : {
+    .sdk_swi_wrappers 0x080CFA4C : {
         KEEP(*(.sdk_swi_wrappers)) KEEP(*(.sdk_swi_wrappers.tail))
     } > ROM
 

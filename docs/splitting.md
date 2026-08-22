@@ -15,11 +15,11 @@ configured segments (`tools/split_config.json`):
 | segment              | range                        | contents                          |
 | -------------------- | ---------------------------- | --------------------------------- |
 | `game_code_early`    | `0x080008E8-0x08007300`      | early subsystems — 2 chunks in `asm/game_code_early/` (`agb_init` before it was decompiled to `src/agb_init.c` in #28; its old 0x080006FF boundary split the `bx r0` return and the literal pool of `AgbInit` in half — the real compiler unit ends at 0x080008E8) |
-| `game_code_and_rodata` | `0x08007300-0x080CFA40`    | bulk of the game logic (~5,000 functions) — 14 chunks of ~64 KiB in `asm/game_code_and_rodata/` |
+| `game_code_and_rodata` | `0x080075B8-0x080CFA4C`    | bulk of the game logic (~5,000 functions) — 14 chunks of ~64 KiB in `asm/game_code_and_rodata/` (end moved from 0x080CFA40 in #29: the old boundary cut the m4a XCMD handler `ply_xswee` in half) |
 | `task_switch_helpers`| `0x08000234-0x080002E5`      | cooperative task switch (ARM, 4 helpers + 1-byte tail) |
 | `task_literals`      | `0x080002E5-0x08000310`      | their literal pools (10 words, all named cells) |
-| `sdk_swi_wrappers`   | `0x080CFA40-0x080CFA7F`      | 11 Thumb SWI thunks (svc wrappers)|
-| `sdk_reset_helper`   | `0x080CFA7F-0x080CFA9C`      | odd-start reset helper tail + pool|
+| `sdk_swi_wrappers`   | `0x080CFA4C-0x080CFA7F`      | 11 Thumb SWI thunks (svc wrappers)|
+| `sdk_reset_helper`   | `0x080CFA7F-0x080CFA9C`      | odd-start segment: `SoftReset` (0x080CFA80) + pool|
 | `sdk_libc`           | `0x080CFC30-0x080CFDDC`      | `_call_via_r0..lr`, division/modulo, task trampolines |
 | `interworking_veneer`| `0x080CFDDC-0x080CFDE4`      | ARM `ldr ip,[pc]; bx ip` -> `0x08005654\|1` |
 | `gap_interworking_veneer_irq_handler_table_14` | `0x080CFDE4-0x080CFDE8` | the veneer's literal word (not padding) |
@@ -194,9 +194,9 @@ Notes on round-tripping objdump text (validated empirically, see
    e.g.
 
        .sdk_swi_wrappers
-                       0x080cfa40       0x3e build/asm/sdk_swi_wrappers.o
-                       0x080cfa40                gUnk_080cfa40
+                       0x080cfa4c       0x32 build/asm/sdk_swi_wrappers.o
                        0x080cfa4c                DummyFunc
+                       0x080cfa50                ArcTan2
                        ...
 
 No `linker.ld` edit is needed: every segment rule already pins its section
