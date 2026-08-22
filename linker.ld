@@ -57,7 +57,12 @@ SECTIONS
     } > ROM
 
     /* Game code + rodata (Thumb) — bulk of the game logic */
-    .game_code_and_rodata 0x08007300 : {
+    /* main — decompiled to C (src/main.c, carved by tools/carve.py) */
+    .main 0x08007300 : {
+        build/src/main.o(.text)
+    } > ROM
+
+    .game_code_and_rodata 0x080075B8 : {
         KEEP(*(.game_code_and_rodata)) KEEP(*(.game_code_and_rodata.tail))
     } > ROM
 

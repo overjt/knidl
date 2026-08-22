@@ -268,6 +268,29 @@ sites, not from the number: the AgbInit fills prove 0x080CFA54 (`svc
 SoundDriverVSyncOff. The full table with evidence lives in
 `include/gba/syscall.h` (see also docs/header-conventions.md).
 
+### 3.13 Never name the C main loop `main` — gcc inserts `bl __gccmain`
+gcc 2.9 hard-codes a `bl __gccmain` call into the prologue of any function
+literally named `main` (with `-Werror` it also aborts on the "return type
+of `main` is not `int`" warning for `void main`). The ROM's function at
+0x08007300 has no such call, which is byte-level proof the original source
+used another name; we use `AgbMain` (SDK/pret convention, issue #33 — the
+crt0 ARM entry was renamed `Start` to free the name). If a future
+"function won't match: extra bl before user code" appears, check the name
+first.
+
+### 3.14 Switch dispatch: case order = layout order; the operand's address
+CSE survives into early case bodies
+agbcc -O2 emits a bounds-checked jump table (`cmp; bhi; lsls #2; ldr;
+mov pc, r0`) for dense switches and lays case bodies out in SOURCE order,
+not case-number order — recover the original order from the body VMAs
+(AgbMain's is 0,1,3,4,7,5,6,8,9,10,13,19,18,17,22,14/15/16,20,21,11,12,2)
+or the pool/table layout will never line up. The switch operand's symbol
+address stays CSE'd in a call-clobbered register (r2 in AgbMain) and case
+bodies whose first access to that global happens BEFORE any call reuse it;
+after a `bl`, or at a cross-jump merge point reachable from a call path,
+it is re-materialized from the pool. Plain direct accesses to the global
+in natural C reproduce all of this — do not hand-cache pointers.
+
 ## 4. Splitting ROM ranges into asm (tools/split.py)
 
 ### 4.1 objdump text only round-trips under `.syntax unified`

@@ -41,6 +41,7 @@
     "MasterIsr",
     "ReadSram",
     "ReadSram_Core",
+    "Start",
     "VerifySram",
     "VerifySram_Core",
     "WriteSram",
@@ -61,12 +62,9 @@
     "0x080CFE20": "gSramIdString"
   },
   "data_symbols": {
-    "0x03004C94": "gTaskBaseSp",
-    "0x03002470": "gTaskSavedSp",
-    "0x030026F8": "gTaskSavedLr",
-    "0x030025E0": "gTaskSavedR0",
-    "0x0300248C": "gCurTaskIdx",
-    "0x030025F0": "gTaskFlagsTable",
+    "0x02005588": "gUnk_02005588",
+    "0x02007D48": "gUnk_02007D48",
+    "0x02007FC0": "gUnk_02007FC0",
     "0x0200EBA0": "gUnk_0200EBA0",
     "0x0200EC48": "gUnk_0200EC48",
     "0x03000010": "gUnk_03000010",
@@ -151,10 +149,19 @@
     "0x03001EEC": "gUnk_03001EEC",
     "0x03001EF4": "gUnk_03001EF4",
     "0x03001EF8": "gUnk_03001EF8",
+    "0x03001F30": "gUnk_03001F30",
+    "0x03002150": "gUnk_03002150",
     "0x030023A8": "gUnk_030023A8",
     "0x030023AC": "gUnk_030023AC",
+    "0x030023D8": "gUnk_030023D8",
     "0x0300243C": "gUnk_0300243C",
-    "0x0300244C": "gUnk_0300244C"
+    "0x0300244C": "gUnk_0300244C",
+    "0x03002470": "gTaskSavedSp",
+    "0x0300248C": "gCurTaskIdx",
+    "0x030025E0": "gTaskSavedR0",
+    "0x030025F0": "gTaskFlagsTable",
+    "0x030026F8": "gTaskSavedLr",
+    "0x03004C94": "gTaskBaseSp"
   },
   "segments": [
     {

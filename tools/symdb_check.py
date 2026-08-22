@@ -246,8 +246,8 @@ def main():
             res.note("coverage: arm zone %s covered" % zname)
 
     for vma, name in (
-        (0x080000C0, "AgbMain"), (0x08000108, "MasterIsr"),
-        (0x08000310, "AgbInit"), (0x08007300, "main"),
+        (0x080000C0, "Start"), (0x08000108, "MasterIsr"),
+        (0x08000310, "AgbInit"), (0x08007300, "AgbMain"),
         (0x080CFA9C, "ReadSram_Core"), (0x080CFAC0, "ReadSram"),
         (0x080CFB24, "WriteSram"), (0x080CFB64, "VerifySram_Core"),
         (0x080CFB94, "VerifySram"), (0x080CFBF8, "WriteSramEx"),

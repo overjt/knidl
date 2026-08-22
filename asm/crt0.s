@@ -12,8 +12,8 @@
 @ ─────────────────────────────────────────────────────────────────────────────
 @ Section: .crt0_master_isr  (ROM VMA 0x080000C0, size 0x14D bytes)
 @ Contains two ARM functions:
-@   AgbMain    - entry point, sets up CPU modes/stacks, installs ISR, calls
-@                AgbInit (Thumb) then main (Thumb); loops if main returns.
+@   Start      - entry point, sets up CPU modes/stacks, installs ISR, calls
+@                AgbInit (Thumb) then AgbMain (Thumb); loops if it returns.
 @   MasterIsr  - master IRQ dispatcher; dispatches via 14-entry table at IWRAM.
 @
 @ NOTE: Several ldr instructions in this section use PC-relative offsets that
@@ -27,11 +27,11 @@
 	.arm
 
 @ ────────────────────────────────────
-@ AgbMain — ROM entry point (0x080000C0)
+@ Start — ROM entry point (0x080000C0)
 @ Called by the GBA BIOS after verifying the header; CPU is in ARM state.
 @ ────────────────────────────────────
-	.global AgbMain
-AgbMain:
+	.global Start
+Start:
 	@ 0x080000C0: mov r0, #0x12 — switch to IRQ mode
 	mov	r0, #0x12
 	@ 0x080000C4: msr CPSR_fc, r0
@@ -66,16 +66,16 @@ AgbMain:
 	@ 0x080000EC: bx r1  ->  call AgbInit (Thumb)
 	bx	r1
 
-	@ 0x080000F0: ldr r1, [pc, #292]  ->  0x800021C (main Thumb ptr = 0x08007301)
+	@ 0x080000F0: ldr r1, [pc, #292]  ->  0x800021C (AgbMain Thumb ptr = 0x08007301)
 	.word	0xE59F1124		@ ldr r1, [pc, #292]  @ 0x800021C
 
 	@ 0x080000F4: mov lr, pc
 	mov	lr, pc
-	@ 0x080000F8: bx r1  ->  call main (Thumb)
+	@ 0x080000F8: bx r1  ->  call AgbMain (Thumb)
 	bx	r1
 
-	@ 0x080000FC: b AgbMain  ->  loop forever if main returns
-	b	AgbMain
+	@ 0x080000FC: b Start  ->  loop forever if AgbMain returns
+	b	Start
 
 @ Inline literal pool (0x08000100-0x08000107): stack pointers.
 @ These are referenced by the ldr instructions above via PC-relative offsets
@@ -258,7 +258,7 @@ _isr_restore_done:
 
 @ ─────────────────────────────────────────────────────────────────────────────
 @ Section: .crt0_literals  (ROM VMA 0x08000210, size 0x24 bytes)
-@ Literal pool referenced by PC-relative LDR instructions in AgbMain and
+@ Literal pool referenced by PC-relative LDR instructions in Start and
 @ MasterIsr above.  Words must appear at exactly the addresses the linker
 @ script pins (0x08000210-0x08000233).
 @ ─────────────────────────────────────────────────────────────────────────────
@@ -274,7 +274,7 @@ _isr_restore_done:
 @ 0x08000218 — AgbInit Thumb interwork ptr (target of ldr r1 at 0x080000E4)
 	.word	0x08000311
 
-@ 0x0800021C — main Thumb interwork ptr (target of ldr r1 at 0x080000F0)
+@ 0x0800021C — AgbMain Thumb interwork ptr (target of ldr r1 at 0x080000F0)
 	.word	0x08007301
 
 @ 0x08000220 — ISR stack guard threshold (target of ldr r1 at 0x080001A0)
