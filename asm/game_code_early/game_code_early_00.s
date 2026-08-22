@@ -950,7 +950,7 @@ loc_08000e50:
 	.word	gUnk_03000FCC
 	.word	gUnk_03000B0C
 	.word	gUnk_03000AF8
-	.word	0x03006810
+	.word	gMPlayInfo_BGM
 	ldr	r2, [pc, #56]	@ 0x08000EA8
 	ldr	r3, [pc, #60]	@ 0x08000EAC
 	ldrh	r0, [r2, #0]
@@ -986,7 +986,7 @@ loc_08000e96:
 	.word	gUnk_03000FCC
 	.word	gUnk_03000B0C
 	.word	gUnk_03000AF8
-	.word	0x03006810
+	.word	gMPlayInfo_BGM
 	ldr	r4, [pc, #76]	@ 0x08000F0C
 	ldr	r2, [pc, #80]	@ 0x08000F10
 	ldrh	r0, [r4, #0]
@@ -1015,26 +1015,26 @@ loc_08000ee2:
 	ldr	r0, [pc, #48]	@ 0x08000F1C
 	ldrh	r2, [r4, #0]
 	movs	r1, #255
-	bl	sub_080cf588	@ 0x080CF588
+	bl	m4aMPlayVolumeControl	@ 0x080CF588
 	ldr	r0, [pc, #40]	@ 0x08000F20
 	ldrh	r2, [r4, #0]
 	movs	r1, #255
-	bl	sub_080cf588	@ 0x080CF588
+	bl	m4aMPlayVolumeControl	@ 0x080CF588
 	ldr	r0, [pc, #36]	@ 0x08000F24
 	ldrh	r2, [r4, #0]
 	.global	loc_08000f02
 loc_08000f02:
 	movs	r1, #255
-	bl	sub_080cf588	@ 0x080CF588
+	bl	m4aMPlayVolumeControl	@ 0x080CF588
 	b.n	loc_08000f6c	@ 0x08000F6C
 	movs	r0, r0
 	.word	gUnk_03000FBC
 	.word	gUnk_03000FCC
 	.word	gUnk_03000B0C
 	.word	gUnk_03000AF8
-	.word	0x03006850
-	.word	0x03006890
-	.word	0x030068E0
+	.word	gMPlayInfo_SE1
+	.word	gMPlayInfo_SE2
+	.word	gMPlayInfo_SE3
 	ldr	r4, [pc, #316]	@ 0x08001068
 	ldr	r2, [pc, #320]	@ 0x0800106C
 	ldrh	r0, [r4, #0]
@@ -1059,15 +1059,15 @@ loc_08000f46:
 	ldr	r0, [pc, #296]	@ 0x08001078
 	ldrh	r2, [r4, #0]
 	movs	r1, #255
-	bl	sub_080cf588	@ 0x080CF588
+	bl	m4aMPlayVolumeControl	@ 0x080CF588
 	ldr	r0, [pc, #288]	@ 0x0800107C
 	ldrh	r2, [r4, #0]
 	movs	r1, #255
-	bl	sub_080cf588	@ 0x080CF588
+	bl	m4aMPlayVolumeControl	@ 0x080CF588
 	ldr	r0, [pc, #284]	@ 0x08001080
 	ldrh	r2, [r4, #0]
 	movs	r1, #255
-	bl	sub_080cf588	@ 0x080CF588
+	bl	m4aMPlayVolumeControl	@ 0x080CF588
 	.global	loc_08000f6c
 loc_08000f6c:
 	ldr	r0, [pc, #276]	@ 0x08001084
@@ -1136,7 +1136,7 @@ loc_08000fb0:
 	ldrh	r0, [r1, #0]
 	strh	r0, [r3, #0]
 	bl	SoundDriverVSyncOff	@ 0x080CFA7C
-	bl	sub_080cdf00	@ 0x080CDF00
+	bl	m4aSoundVSync	@ 0x080CDF00
 	movs	r0, #128
 	lsls	r0, r0, #7
 	.global	loc_08000ff0
@@ -1211,9 +1211,9 @@ loc_08001062:
 	.word	gUnk_03000FCC
 	.word	gUnk_03000B0C
 	.word	gUnk_03000AF8
-	.word	0x03006850
-	.word	0x03006890
-	.word	0x030068E0
+	.word	gMPlayInfo_SE1
+	.word	gMPlayInfo_SE2
+	.word	gMPlayInfo_SE3
 	.word	gUnk_0300003C
 	.word	gUnk_03001014
 	.word	gUnk_03000B74
@@ -1241,7 +1241,7 @@ sub_080010cc:
 	ldrh	r0, [r0, #0]
 	cmp	r0, #0
 	beq.n	loc_080010da	@ 0x080010DA
-	bl	sub_080cdf00	@ 0x080CDF00
+	bl	m4aSoundVSync	@ 0x080CDF00
 	.global	loc_080010da
 loc_080010da:
 	ldr	r0, [pc, #84]	@ 0x08001130
@@ -1320,7 +1320,7 @@ loc_08001174:
 	ldrh	r0, [r0, #0]
 	cmp	r0, #0
 	beq.n	loc_08001180	@ 0x08001180
-	bl	sub_080ce5d4	@ 0x080CE5D4
+	bl	m4aSoundMain	@ 0x080CE5D4
 	.global	loc_08001180
 loc_08001180:
 	ldr	r0, [pc, #32]	@ 0x080011A4
@@ -5625,7 +5625,7 @@ loc_0800312a:
 	bne.n	loc_0800314e	@ 0x0800314E
 	lsls	r0, r4, #16
 	lsrs	r0, r0, #16
-	bl	sub_080ce658	@ 0x080CE658
+	bl	m4aSongNumStartOrContinue	@ 0x080CE658
 	.global	loc_0800314e
 loc_0800314e:
 	strh	r4, [r5, #0]
@@ -5650,7 +5650,7 @@ loc_08003164:
 	bne.n	loc_08003174	@ 0x08003174
 	lsls	r0, r4, #16
 	lsrs	r0, r0, #16
-	bl	sub_080ce5e0	@ 0x080CE5E0
+	bl	m4aSongNumStart	@ 0x080CE5E0
 	.global	loc_08003174
 loc_08003174:
 	strh	r4, [r5, #0]
@@ -5668,10 +5668,10 @@ sub_08003184:
 	.thumb
 	push	{lr}
 	ldr	r0, [pc, #8]	@ 0x08003190
-	bl	sub_080ce7d0	@ 0x080CE7D0
+	bl	m4aMPlayImmInit	@ 0x080CE7D0
 	pop	{r0}
 	bx	r0
-	.word	0x03006810
+	.word	gMPlayInfo_BGM
 	.thumb_func
 	.global	sub_08003194
 sub_08003194:
@@ -5686,7 +5686,7 @@ sub_08003194:
 	asrs	r0, r0, #16
 	b.n	loc_080031b4	@ 0x080031B4
 	movs	r0, r0
-	.word	0x03006810
+	.word	gMPlayInfo_BGM
 	.word	gUnk_03000490
 	.global	loc_080031b0
 loc_080031b0:
@@ -6074,7 +6074,7 @@ loc_08003430:
 	ldr	r0, [r0, #0]
 	ldr	r7, [sp, #4]
 	ldr	r1, [r7, #0]
-	bl	sub_080ced14	@ 0x080CED14
+	bl	MPlayStart	@ 0x080CED14
 	ldr	r0, [pc, #40]	@ 0x08003480
 	add	r0, r8
 	ldrh	r1, [r0, #0]
@@ -6106,7 +6106,7 @@ sub_08003484:
 	ldr	r2, [pc, #16]	@ 0x0800349C
 	adds	r0, r2, #0
 	strh	r0, [r1, #0]
-	bl	sub_080ce714	@ 0x080CE714
+	bl	m4aMPlayAllStop	@ 0x080CE714
 	pop	{r0}
 	bx	r0
 	movs	r0, r0
@@ -6117,7 +6117,7 @@ sub_08003484:
 	ldrh	r0, [r0, #0]
 	cmp	r0, #0
 	bne.n	loc_080034ae	@ 0x080034AE
-	bl	sub_080ce714	@ 0x080CE714
+	bl	m4aMPlayAllStop	@ 0x080CE714
 	.global	loc_080034ae
 loc_080034ae:
 	pop	{r0}
@@ -6129,7 +6129,7 @@ loc_080034ae:
 	ldrh	r0, [r0, #0]
 	cmp	r0, #0
 	bne.n	loc_080034c6	@ 0x080034C6
-	bl	sub_080ce74c	@ 0x080CE74C
+	bl	m4aMPlayAllContinue	@ 0x080CE74C
 	.global	loc_080034c6
 loc_080034c6:
 	pop	{r0}
@@ -6147,7 +6147,7 @@ sub_080034d0:
 	bne.n	loc_080034e2	@ 0x080034E2
 	ldr	r0, [pc, #16]	@ 0x080034EC
 	ldr	r0, [r0, #0]
-	bl	sub_080cedf8	@ 0x080CEDF8
+	bl	m4aMPlayStop	@ 0x080CEDF8
 	.global	loc_080034e2
 loc_080034e2:
 	pop	{r0}
@@ -6195,7 +6195,7 @@ sub_080034f0:
 	cmp	r0, r3
 	bne.n	loc_0800354a	@ 0x0800354A
 	adds	r0, r1, #0
-	bl	sub_080cedf8	@ 0x080CEDF8
+	bl	m4aMPlayStop	@ 0x080CEDF8
 	ldrb	r0, [r4, #0]
 	lsls	r0, r0, #24
 	asrs	r0, r0, #23
@@ -6263,7 +6263,7 @@ loc_08003590:
 	adds	r0, r1, #0
 	str	r2, [sp, #0]
 	str	r3, [sp, #4]
-	bl	sub_080cedf8	@ 0x080CEDF8
+	bl	m4aMPlayStop	@ 0x080CEDF8
 	ldrb	r0, [r4, #0]
 	lsls	r0, r0, #24
 	asrs	r0, r0, #23
@@ -6343,7 +6343,7 @@ loc_08003620:
 	adds	r0, r1, #0
 	str	r2, [sp, #0]
 	str	r3, [sp, #4]
-	bl	sub_080cedf8	@ 0x080CEDF8
+	bl	m4aMPlayStop	@ 0x080CEDF8
 	ldrb	r0, [r4, #0]
 	lsls	r0, r0, #24
 	asrs	r0, r0, #23
@@ -6395,7 +6395,7 @@ sub_08003688:
 	.global	loc_0800369a
 loc_0800369a:
 	ldr	r0, [r5, #0]
-	bl	sub_080cedf8	@ 0x080CEDF8
+	bl	m4aMPlayStop	@ 0x080CEDF8
 	adds	r5, #12
 	subs	r4, #1
 	cmp	r4, #0
@@ -6451,7 +6451,7 @@ loc_080036ec:
 	cmp	r0, #0
 	bne.n	loc_08003740	@ 0x08003740
 	lsrs	r0, r4, #16
-	bl	sub_080ce658	@ 0x080CE658
+	bl	m4aSongNumStartOrContinue	@ 0x080CE658
 	b.n	loc_08003740	@ 0x08003740
 	.word	gUnk_03000B0C
 	.word	gUnk_03000FBC
@@ -6467,9 +6467,9 @@ loc_08003724:
 	cmp	r0, #0
 	bne.n	loc_08003740	@ 0x08003740
 	lsrs	r0, r4, #16
-	bl	sub_080ce5e0	@ 0x080CE5E0
+	bl	m4aSongNumStart	@ 0x080CE5E0
 	ldr	r0, [pc, #12]	@ 0x08003748
-	bl	sub_080ce7d0	@ 0x080CE7D0
+	bl	m4aMPlayImmInit	@ 0x080CE7D0
 	strh	r7, [r6, #0]
 	.global	loc_08003740
 loc_08003740:
@@ -6477,7 +6477,7 @@ loc_08003740:
 	pop	{r0}
 	bx	r0
 	movs	r0, r0
-	.word	0x03006810
+	.word	gMPlayInfo_BGM
 	.thumb_func
 	.global	sub_0800374c
 sub_0800374c:
@@ -6519,14 +6519,14 @@ loc_08003780:
 	bne.n	loc_08003794	@ 0x08003794
 	ldr	r0, [pc, #16]	@ 0x080037A0
 	movs	r1, #255
-	bl	sub_080cf588	@ 0x080CF588
+	bl	m4aMPlayVolumeControl	@ 0x080CF588
 	.global	loc_08003794
 loc_08003794:
 	pop	{r0}
 	bx	r0
 	.word	gUnk_03000FBC
 	.word	gUnk_03000AF8
-	.word	0x03006810
+	.word	gMPlayInfo_BGM
 	push	{r4, lr}
 	lsls	r0, r0, #16
 	lsrs	r4, r0, #16
@@ -6546,15 +6546,15 @@ loc_080037b4:
 	ldr	r0, [pc, #40]	@ 0x080037EC
 	movs	r1, #255
 	adds	r2, r4, #0
-	bl	sub_080cf588	@ 0x080CF588
+	bl	m4aMPlayVolumeControl	@ 0x080CF588
 	ldr	r0, [pc, #36]	@ 0x080037F0
 	movs	r1, #255
 	adds	r2, r4, #0
-	bl	sub_080cf588	@ 0x080CF588
+	bl	m4aMPlayVolumeControl	@ 0x080CF588
 	ldr	r0, [pc, #28]	@ 0x080037F4
 	movs	r1, #255
 	adds	r2, r4, #0
-	bl	sub_080cf588	@ 0x080CF588
+	bl	m4aMPlayVolumeControl	@ 0x080CF588
 	.global	loc_080037de
 loc_080037de:
 	pop	{r4}
@@ -6562,9 +6562,9 @@ loc_080037de:
 	bx	r0
 	.word	gUnk_03000FBC
 	.word	gUnk_03000AF8
-	.word	0x03006850
-	.word	0x03006890
-	.word	0x030068E0
+	.word	gMPlayInfo_SE1
+	.word	gMPlayInfo_SE2
+	.word	gMPlayInfo_SE3
 	.thumb_func
 	.global	sub_080037f8
 sub_080037f8:
@@ -6608,7 +6608,7 @@ sub_0800381c:
 sub_08003840:
 	.thumb
 	push	{lr}
-	bl	sub_080cebe4	@ 0x080CEBE4
+	bl	m4aSoundVSyncOff	@ 0x080CEBE4
 	ldr	r1, [pc, #16]	@ 0x08003858
 	ldr	r2, [pc, #16]	@ 0x0800385C
 	adds	r0, r2, #0
@@ -6626,7 +6626,7 @@ sub_08003840:
 sub_08003864:
 	.thumb
 	push	{lr}
-	bl	sub_080cec60	@ 0x080CEC60
+	bl	m4aSoundVSyncOn	@ 0x080CEC60
 	ldr	r1, [pc, #16]	@ 0x0800387C
 	ldr	r2, [pc, #16]	@ 0x08003880
 	adds	r0, r2, #0

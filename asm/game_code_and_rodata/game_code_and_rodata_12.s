@@ -114,56 +114,88 @@
 @   0x080CD674 sub_080cd674
 @   0x080CD70C sub_080cd70c
 @   0x080CD75C sub_080cd75c
-@   0x080CD89C sub_080cd89c
-@   0x080CD8AC sub_080cd8ac
+@   0x080CD89C umul3232H32
+@   0x080CD8AC SoundMain
+@   0x080CD930 SoundMainRAM
 @   0x080CDCCE sub_080cdcce
-@   0x080CDCEC sub_080cdcec
-@   0x080CDD0C sub_080cdd0c
-@   0x080CDD3C sub_080cdd3c
-@   0x080CDD56 sub_080cdd56
+@   0x080CDCD4 SoundMainBTM
+@   0x080CDCEC RealClearChain
+@   0x080CDD0C ply_fine
+@   0x080CDD3C MPlayJumpTableCopy
+@   0x080CDD54 ld_r3_r2
+@   0x080CDD56 chk_adr_r2
+@   0x080CDD70 ld_r3_tp_adr_i
 @   0x080CDD72 sub_080cdd72
-@   0x080CDD7C sub_080cdd7c
-@   0x080CDDCC sub_080cddcc
-@   0x080CDF00 sub_080cdf00
+@   0x080CDD7C ply_goto
+@   0x080CDD9C ply_patt
+@   0x080CDDB8 ply_pend
+@   0x080CDDCC ply_rept
+@   0x080CDDFC ply_prio
+@   0x080CDE08 ply_tempo
+@   0x080CDE1C ply_keysh
+@   0x080CDE30 ply_voice
+@   0x080CDE60 ply_volu
+@   0x080CDE74 ply_pan
+@   0x080CDE88 ply_bend
+@   0x080CDE9C ply_bendr
+@   0x080CDEB0 ply_lfodl
+@   0x080CDEBC ply_modt
+@   0x080CDED4 ply_tune
+@   0x080CDEE8 ply_port
+@   0x080CDF00 m4aSoundVSync
+@   0x080CDF4C MPlayMain
 @   0x080CE1A4 sub_080ce1a4
-@   0x080CE1B4 sub_080ce1b4
-@   0x080CE1F8 sub_080ce1f8
-@   0x080CE228 sub_080ce228
-@   0x080CE468 sub_080ce468
-@   0x080CE484 sub_080ce484
-@   0x080CE4B8 sub_080ce4b8
-@   0x080CE520 sub_080ce520
-@   0x080CE53C sub_080ce53c
-@   0x080CE55C sub_080ce55c
-@   0x080CE5D4 sub_080ce5d4
-@   0x080CE5E0 sub_080ce5e0
-@   0x080CE658 sub_080ce658
-@   0x080CE6AC sub_080ce6ac
-@   0x080CE714 sub_080ce714
-@   0x080CE74C sub_080ce74c
-@   0x080CE7D0 sub_080ce7d0
-@   0x080CE818 sub_080ce818
-@   0x080CE934 sub_080ce934
-@   0x080CE948 sub_080ce948
-@   0x080CE95C sub_080ce95c
-@   0x080CEA54 sub_080cea54
-@   0x080CEAF8 sub_080ceaf8
-@   0x080CEBE4 sub_080cebe4
-@   0x080CEC60 sub_080cec60
-@   0x080CEC9C sub_080cec9c
-@   0x080CED14 sub_080ced14
-@   0x080CEDF8 sub_080cedf8
-@   0x080CEE38 sub_080cee38
-@   0x080CEF00 sub_080cef00
-@   0x080CEFB4 sub_080cefb4
-@   0x080CF05C sub_080cf05c
-@   0x080CF0AC sub_080cf0ac
-@   0x080CF114 sub_080cf114
-@   0x080CF588 sub_080cf588
-@   0x080CF5F0 sub_080cf5f0
-@   0x080CF6CC sub_080cf6cc
-@   0x080CF7D4 sub_080cf7d4
-@   0x080CF92C sub_080cf92c
+@   0x080CE1B4 TrackStop
+@   0x080CE1F8 ChnVolSetAsm
+@   0x080CE228 ply_note
+@   0x080CE428 ply_endtie
+@   0x080CE468 ClearModM_asm
+@   0x080CE484 ld_r3_tp_adr
+@   0x080CE490 ply_lfos
+@   0x080CE4A4 ply_mod
+@   0x080CE4B8 MidiKeyToFreq
+@   0x080CE520 MPlayContinue
+@   0x080CE53C MPlayFadeOut
+@   0x080CE55C m4aSoundInit
+@   0x080CE5D4 m4aSoundMain
+@   0x080CE5E0 m4aSongNumStart
+@   0x080CE60C m4aSongNumStartOrChange
+@   0x080CE658 m4aSongNumStartOrContinue
+@   0x080CE6AC m4aSongNumStop
+@   0x080CE6E0 m4aSongNumContinue
+@   0x080CE714 m4aMPlayAllStop
+@   0x080CE740 m4aMPlayContinue
+@   0x080CE74C m4aMPlayAllContinue
+@   0x080CE778 m4aMPlayFadeOut
+@   0x080CE788 m4aMPlayFadeOutTemporarily
+@   0x080CE7A8 m4aMPlayFadeIn
+@   0x080CE7D0 m4aMPlayImmInit
+@   0x080CE818 MPlayExtender
+@   0x080CE934 ClearChain
+@   0x080CE948 Clear64byte
+@   0x080CE95C SoundInit
+@   0x080CEA54 SampleFreqSet
+@   0x080CEAF8 m4aSoundMode
+@   0x080CEB90 SoundClear
+@   0x080CEBE4 m4aSoundVSyncOff
+@   0x080CEC60 m4aSoundVSyncOn
+@   0x080CEC9C MPlayOpen
+@   0x080CED14 MPlayStart
+@   0x080CEDF8 m4aMPlayStop
+@   0x080CEE38 FadeOutBody
+@   0x080CEF00 TrkVolPitSet
+@   0x080CEFB4 MidiKeyToCgbFreq
+@   0x080CF05C CgbOscOff
+@   0x080CF0AC CgbModVol
+@   0x080CF114 CgbSound
+@   0x080CF588 m4aMPlayVolumeControl
+@   0x080CF5F0 m4aMPlayPitchControl
+@   0x080CF664 m4aMPlayPanpotControl
+@   0x080CF6CC ClearModM
+@   0x080CF6EC m4aMPlayModDepthSet
+@   0x080CF760 m4aMPlayLFOSpeedSet
+@   0x080CF7D4 ply_memacc
+@   0x080CF92C ply_xcmd
 @   0x080CF94C ply_xxx
 @   0x080CF960 ply_xwave
 @   0x080CF9A8 ply_xtype
@@ -14239,8 +14271,8 @@ loc_080cd888:
 	.word	gUnk_0300117C
 	.word	0x04000012
 	.thumb_func
-	.global	sub_080cd89c
-sub_080cd89c:
+	.global	umul3232H32
+umul3232H32:
 	.thumb
 	.short	0xA200
 	bx	r2
@@ -14253,8 +14285,8 @@ loc_080cd8a0:
 	.short	0xFF1E
 	.short	0xE12F
 	.thumb_func
-	.global	sub_080cd8ac
-sub_080cd8ac:
+	.global	SoundMain
+SoundMain:
 	.thumb
 	ldr	r0, [pc, #104]	@ 0x080CD918
 	ldr	r0, [r0, #0]
@@ -14320,12 +14352,16 @@ loc_080cd90e:
 	ldr	r3, [pc, #12]	@ 0x080CD920
 	bx	r3
 	movs	r0, r0
-	.word	0x03007FF0
+	.word	SOUND_INFO_PTR
 	.word	0x68736D53
 	.word	0x03007151
 	.word	0x04000006
 	.word	0x00000350
 	.word	0x00000630
+	.thumb_func
+	.global	SoundMainRAM
+SoundMainRAM:
+	.thumb
 	ldrb	r3, [r0, #5]
 	cmp	r3, #0
 	beq.n	loc_080cd990	@ 0x080CD990
@@ -14668,7 +14704,7 @@ loc_080cdb34:
 	strb	r0, [r6, #24]
 	b.n	loc_080cd68c	@ 0x080CD68C
 	lsls	r1, r2, #3
-	b.n	sub_080cdd0c	@ 0x080CDD0C
+	b.n	ply_fine	@ 0x080CDD0C
 	lsls	r2, r3, #2
 	b.n	loc_080cdb6c	@ 0x080CDB6C
 	adds	r7, r7, r3
@@ -14910,8 +14946,10 @@ sub_080cdcce:
 	.thumb
 	bx	r3
 	.word	0x68736D53
-	.global	loc_080cdcd4
-loc_080cdcd4:
+	.thumb_func
+	.global	SoundMainBTM
+SoundMainBTM:
+	.thumb
 	mov	ip, r4
 	movs	r1, #0
 	movs	r2, #0
@@ -14927,8 +14965,8 @@ loc_080cdcda:
 	bx	lr
 	movs	r0, r0
 	.thumb_func
-	.global	sub_080cdcec
-sub_080cdcec:
+	.global	RealClearChain
+RealClearChain:
 	.thumb
 	ldr	r3, [r0, #44]
 	cmp	r3, #0
@@ -14957,8 +14995,8 @@ loc_080cdd06:
 loc_080cdd0a:
 	bx	lr
 	.thumb_func
-	.global	sub_080cdd0c
-sub_080cdd0c:
+	.global	ply_fine
+ply_fine:
 	.thumb
 	push	{r4, r5, lr}
 	adds	r5, r1, #0
@@ -14977,7 +15015,7 @@ loc_080cdd16:
 	.global	loc_080cdd24
 loc_080cdd24:
 	adds	r0, r4, #0
-	bl	sub_080cdcec	@ 0x080CDCEC
+	bl	RealClearChain	@ 0x080CDCEC
 	ldr	r4, [r4, #52]
 	cmp	r4, #0
 	bne.n	loc_080cdd16	@ 0x080CDD16
@@ -14992,8 +15030,8 @@ loc_080cdd36:
 	bx	r0
 	movs	r0, r0
 	.thumb_func
-	.global	sub_080cdd3c
-sub_080cdd3c:
+	.global	MPlayJumpTableCopy
+MPlayJumpTableCopy:
 	.thumb
 	mov	ip, lr
 	movs	r1, #36
@@ -15001,19 +15039,21 @@ sub_080cdd3c:
 	.global	loc_080cdd42
 loc_080cdd42:
 	ldr	r3, [r2, #0]
-	bl	sub_080cdd56	@ 0x080CDD56
+	bl	chk_adr_r2	@ 0x080CDD56
 	stmia	r0!, {r3}
 	adds	r2, #4
 	subs	r1, #1
 	bgt.n	loc_080cdd42	@ 0x080CDD42
 	bx	ip
 	movs	r0, r0
-	.global	loc_080cdd54
-loc_080cdd54:
+	.thumb_func
+	.global	ld_r3_r2
+ld_r3_r2:
+	.thumb
 	ldrb	r3, [r2, #0]
 	.thumb_func
-	.global	sub_080cdd56
-sub_080cdd56:
+	.global	chk_adr_r2
+chk_adr_r2:
 	.thumb
 	push	{r0}
 	lsrs	r0, r2, #25
@@ -15036,8 +15076,10 @@ loc_080cdd68:
 	.global	loc_080cdd6e
 loc_080cdd6e:
 	lsrs	r0, r4, #1
-	.global	loc_080cdd70
-loc_080cdd70:
+	.thumb_func
+	.global	ld_r3_tp_adr_i
+ld_r3_tp_adr_i:
+	.thumb
 	ldr	r2, [r1, #64]
 	.thumb_func
 	.global	sub_080cdd72
@@ -15046,11 +15088,11 @@ sub_080cdd72:
 	adds	r3, r2, #1
 	str	r3, [r1, #64]
 	ldrb	r3, [r2, #0]
-	b.n	sub_080cdd56	@ 0x080CDD56
+	b.n	chk_adr_r2	@ 0x080CDD56
 	movs	r0, r0
 	.thumb_func
-	.global	sub_080cdd7c
-sub_080cdd7c:
+	.global	ply_goto
+ply_goto:
 	.thumb
 	push	{lr}
 	.global	loc_080cdd7e
@@ -15064,11 +15106,15 @@ loc_080cdd7e:
 	ldrb	r3, [r2, #1]
 	orrs	r0, r3
 	lsls	r0, r0, #8
-	bl	loc_080cdd54	@ 0x080CDD54
+	bl	ld_r3_r2	@ 0x080CDD54
 	orrs	r0, r3
 	str	r0, [r1, #64]
 	pop	{r0}
 	bx	r0
+	.thumb_func
+	.global	ply_patt
+ply_patt:
+	.thumb
 	ldrb	r2, [r1, #2]
 	cmp	r2, #3
 	bcs.n	loc_080cddb4	@ 0x080CDDB4
@@ -15082,11 +15128,15 @@ loc_080cdd7e:
 	.global	loc_080cddb0
 loc_080cddb0:
 	strb	r2, [r1, #2]
-	b.n	sub_080cdd7c	@ 0x080CDD7C
+	b.n	ply_goto	@ 0x080CDD7C
 	.global	loc_080cddb4
 loc_080cddb4:
-	b.n	sub_080cdd0c	@ 0x080CDD0C
+	b.n	ply_fine	@ 0x080CDD0C
 	movs	r0, r0
+	.thumb_func
+	.global	ply_pend
+ply_pend:
+	.thumb
 	ldrb	r2, [r1, #2]
 	cmp	r2, #0
 	beq.n	loc_080cddca	@ 0x080CDDCA
@@ -15100,8 +15150,8 @@ loc_080cddb4:
 loc_080cddca:
 	bx	lr
 	.thumb_func
-	.global	sub_080cddcc
-sub_080cddcc:
+	.global	ply_rept
+ply_rept:
 	.thumb
 	push	{lr}
 	ldr	r2, [r1, #64]
@@ -15117,7 +15167,7 @@ loc_080cdddc:
 	adds	r3, #1
 	strb	r3, [r1, #3]
 	mov	ip, r3
-	bl	loc_080cdd70	@ 0x080CDD70
+	bl	ld_r3_tp_adr_i	@ 0x080CDD70
 	cmp	ip, r3
 	bcs.n	loc_080cddee	@ 0x080CDDEE
 	b.n	loc_080cdd7e	@ 0x080CDD7E
@@ -15130,13 +15180,21 @@ loc_080cddee:
 	pop	{r0}
 	bx	r0
 	movs	r0, r0
+	.thumb_func
+	.global	ply_prio
+ply_prio:
+	.thumb
 	mov	ip, lr
-	bl	loc_080cdd70	@ 0x080CDD70
+	bl	ld_r3_tp_adr_i	@ 0x080CDD70
 	strb	r3, [r1, #29]
 	bx	ip
 	movs	r0, r0
+	.thumb_func
+	.global	ply_tempo
+ply_tempo:
+	.thumb
 	mov	ip, lr
-	bl	loc_080cdd70	@ 0x080CDD70
+	bl	ld_r3_tp_adr_i	@ 0x080CDD70
 	lsls	r3, r3, #1
 	strh	r3, [r0, #28]
 	ldrh	r2, [r0, #30]
@@ -15146,10 +15204,14 @@ loc_080cddee:
 	.global	loc_080cde1a
 loc_080cde1a:
 	bx	ip
+	.thumb_func
+	.global	ply_keysh
+ply_keysh:
+	.thumb
 	mov	ip, lr
 	.global	loc_080cde1e
 loc_080cde1e:
-	bl	loc_080cdd70	@ 0x080CDD70
+	bl	ld_r3_tp_adr_i	@ 0x080CDD70
 	strb	r3, [r1, #10]
 	ldrb	r3, [r1, #0]
 	movs	r2, #12
@@ -15159,6 +15221,10 @@ loc_080cde1e:
 	.global	loc_080cde2e
 loc_080cde2e:
 	movs	r0, r0
+	.thumb_func
+	.global	ply_voice
+ply_voice:
+	.thumb
 	mov	ip, lr
 	ldr	r2, [r1, #64]
 	ldrb	r3, [r2, #0]
@@ -15172,18 +15238,22 @@ loc_080cde2e:
 loc_080cde42:
 	adds	r2, r2, r3
 	ldr	r3, [r2, #0]
-	bl	sub_080cdd56	@ 0x080CDD56
+	bl	chk_adr_r2	@ 0x080CDD56
 	str	r3, [r1, #36]
 	ldr	r3, [r2, #4]
-	bl	sub_080cdd56	@ 0x080CDD56
+	bl	chk_adr_r2	@ 0x080CDD56
 	str	r3, [r1, #40]
 	ldr	r3, [r2, #8]
-	bl	sub_080cdd56	@ 0x080CDD56
+	bl	chk_adr_r2	@ 0x080CDD56
 	str	r3, [r1, #44]
 	bx	ip
 	movs	r0, r0
+	.thumb_func
+	.global	ply_volu
+ply_volu:
+	.thumb
 	mov	ip, lr
-	bl	loc_080cdd70	@ 0x080CDD70
+	bl	ld_r3_tp_adr_i	@ 0x080CDD70
 	strb	r3, [r1, #18]
 	ldrb	r3, [r1, #0]
 	movs	r2, #3
@@ -15193,8 +15263,12 @@ loc_080cde42:
 loc_080cde70:
 	bx	ip
 	movs	r0, r0
+	.thumb_func
+	.global	ply_pan
+ply_pan:
+	.thumb
 	mov	ip, lr
-	bl	loc_080cdd70	@ 0x080CDD70
+	bl	ld_r3_tp_adr_i	@ 0x080CDD70
 	subs	r3, #64
 	strb	r3, [r1, #20]
 	ldrb	r3, [r1, #0]
@@ -15202,8 +15276,12 @@ loc_080cde70:
 	orrs	r3, r2
 	strb	r3, [r1, #0]
 	bx	ip
+	.thumb_func
+	.global	ply_bend
+ply_bend:
+	.thumb
 	mov	ip, lr
-	bl	loc_080cdd70	@ 0x080CDD70
+	bl	ld_r3_tp_adr_i	@ 0x080CDD70
 	subs	r3, #64
 	strb	r3, [r1, #14]
 	ldrb	r3, [r1, #0]
@@ -15211,8 +15289,12 @@ loc_080cde70:
 	orrs	r3, r2
 	strb	r3, [r1, #0]
 	bx	ip
+	.thumb_func
+	.global	ply_bendr
+ply_bendr:
+	.thumb
 	mov	ip, lr
-	bl	loc_080cdd70	@ 0x080CDD70
+	bl	ld_r3_tp_adr_i	@ 0x080CDD70
 	strb	r3, [r1, #15]
 	ldrb	r3, [r1, #0]
 	movs	r2, #12
@@ -15222,13 +15304,21 @@ loc_080cde70:
 loc_080cdeac:
 	bx	ip
 	movs	r0, r0
+	.thumb_func
+	.global	ply_lfodl
+ply_lfodl:
+	.thumb
 	mov	ip, lr
-	bl	loc_080cdd70	@ 0x080CDD70
+	bl	ld_r3_tp_adr_i	@ 0x080CDD70
 	strb	r3, [r1, #27]
 	bx	ip
 	movs	r0, r0
+	.thumb_func
+	.global	ply_modt
+ply_modt:
+	.thumb
 	mov	ip, lr
-	bl	loc_080cdd70	@ 0x080CDD70
+	bl	ld_r3_tp_adr_i	@ 0x080CDD70
 	ldrb	r0, [r1, #24]
 	cmp	r0, r3
 	beq.n	loc_080cded2	@ 0x080CDED2
@@ -15240,8 +15330,12 @@ loc_080cdeac:
 	.global	loc_080cded2
 loc_080cded2:
 	bx	ip
+	.thumb_func
+	.global	ply_tune
+ply_tune:
+	.thumb
 	mov	ip, lr
-	bl	loc_080cdd70	@ 0x080CDD70
+	bl	ld_r3_tp_adr_i	@ 0x080CDD70
 	subs	r3, #64
 	strb	r3, [r1, #12]
 	ldrb	r3, [r1, #0]
@@ -15249,6 +15343,10 @@ loc_080cded2:
 	orrs	r3, r2
 	strb	r3, [r1, #0]
 	bx	ip
+	.thumb_func
+	.global	ply_port
+ply_port:
+	.thumb
 	mov	ip, lr
 	ldr	r2, [r1, #64]
 	ldrb	r3, [r2, #0]
@@ -15260,8 +15358,8 @@ loc_080cded2:
 	bx	ip
 	.word	0x04000060
 	.thumb_func
-	.global	sub_080cdf00
-sub_080cdf00:
+	.global	m4aSoundVSync
+m4aSoundVSync:
 	.thumb
 	ldr	r0, [pc, #680]	@ 0x080CE1AC
 	ldr	r0, [r0, #0]
@@ -15315,6 +15413,10 @@ loc_080cdf40:
 	movs	r0, r0
 	.word	0x040000BC
 	.word	0x84400004
+	.thumb_func
+	.global	MPlayMain
+MPlayMain:
+	.thumb
 	ldr	r2, [pc, #608]	@ 0x080CE1B0
 	ldr	r3, [r0, #52]
 	cmp	r2, r3
@@ -15350,7 +15452,7 @@ loc_080cdf80:
 	ldr	r0, [r0, #0]
 	mov	r8, r0
 	adds	r0, r7, #0
-	bl	sub_080cee38	@ 0x080CEE38
+	bl	FadeOutBody	@ 0x080CEE38
 	ldr	r0, [r7, #4]
 	.global	loc_080cdf8e
 loc_080cdf8e:
@@ -15409,7 +15511,7 @@ loc_080cdfc4:
 	.global	loc_080cdfd6
 loc_080cdfd6:
 	adds	r0, r4, #0
-	bl	sub_080ce934	@ 0x080CE934
+	bl	ClearChain	@ 0x080CE934
 	.global	loc_080cdfdc
 loc_080cdfdc:
 	ldr	r4, [r4, #52]
@@ -15424,7 +15526,7 @@ loc_080cdfe2:
 	.global	loc_080cdfea
 loc_080cdfea:
 	adds	r0, r5, #0
-	bl	sub_080ce948	@ 0x080CE948
+	bl	Clear64byte	@ 0x080CE948
 	movs	r0, #128
 	strb	r0, [r5, #0]
 	movs	r0, #2
@@ -15627,7 +15729,7 @@ loc_080ce10e:
 	tst	r0, r1
 	bne.n	loc_080ce11e	@ 0x080CE11E
 	adds	r0, r4, #0
-	bl	sub_080ce934	@ 0x080CE934
+	bl	ClearChain	@ 0x080CE934
 	.global	loc_080ce11c
 loc_080ce11c:
 	b.n	loc_080ce17a	@ 0x080CE17A
@@ -15640,7 +15742,7 @@ loc_080ce11e:
 	movs	r0, #3
 	tst	r0, r3
 	beq.n	loc_080ce13c	@ 0x080CE13C
-	bl	sub_080ce1f8	@ 0x080CE1F8
+	bl	ChnVolSetAsm	@ 0x080CE1F8
 	cmp	r6, #0
 	beq.n	loc_080ce13c	@ 0x080CE13C
 	ldrb	r0, [r4, #29]
@@ -15684,7 +15786,7 @@ loc_080ce16e:
 	adds	r1, r2, #0
 	ldrb	r2, [r5, #9]
 	ldr	r0, [r4, #36]
-	bl	sub_080ce4b8	@ 0x080CE4B8
+	bl	MidiKeyToFreq	@ 0x080CE4B8
 	str	r0, [r4, #32]
 	.global	loc_080ce17a
 loc_080ce17a:
@@ -15726,11 +15828,11 @@ sub_080ce1a4:
 	.global	loc_080ce1a8
 loc_080ce1a8:
 	.word	0x0860A3B4
-	.word	0x03007FF0
+	.word	SOUND_INFO_PTR
 	.word	0x68736D53
 	.thumb_func
-	.global	sub_080ce1b4
-sub_080ce1b4:
+	.global	TrackStop
+TrackStop:
 	.thumb
 	push	{r4, r5, r6, lr}
 	adds	r5, r1, #0
@@ -15775,10 +15877,10 @@ loc_080ce1ec:
 	pop	{r0}
 	bx	r0
 	movs	r0, r0
-	.word	0x03007FF0
+	.word	SOUND_INFO_PTR
 	.thumb_func
-	.global	sub_080ce1f8
-sub_080ce1f8:
+	.global	ChnVolSetAsm
+ChnVolSetAsm:
 	.thumb
 	ldrb	r1, [r4, #18]
 	movs	r0, #20
@@ -15811,8 +15913,8 @@ loc_080ce224:
 	strb	r0, [r4, #3]
 	bx	lr
 	.thumb_func
-	.global	sub_080ce228
-sub_080ce228:
+	.global	ply_note
+ply_note:
 	.thumb
 	push	{r4, r5, r6, r7, lr}
 	mov	r4, r8
@@ -16031,7 +16133,7 @@ loc_080ce35c:
 	.global	loc_080ce368
 loc_080ce368:
 	adds	r0, r4, #0
-	bl	sub_080ce934	@ 0x080CE934
+	bl	ClearChain	@ 0x080CE934
 	movs	r1, #0
 	str	r1, [r4, #48]
 	ldr	r3, [r5, #32]
@@ -16050,12 +16152,12 @@ loc_080ce37c:
 	cmp	r0, r1
 	beq.n	loc_080ce38e	@ 0x080CE38E
 	adds	r1, r5, #0
-	bl	sub_080ce468	@ 0x080CE468
+	bl	ClearModM_asm	@ 0x080CE468
 	.global	loc_080ce38e
 loc_080ce38e:
 	ldr	r0, [sp, #0]
 	adds	r1, r5, #0
-	bl	sub_080cef00	@ 0x080CEF00
+	bl	TrkVolPitSet	@ 0x080CEF00
 	ldr	r0, [r5, #4]
 	str	r0, [r4, #16]
 	ldr	r0, [sp, #16]
@@ -16073,7 +16175,7 @@ loc_080ce38e:
 	str	r0, [r4, #4]
 	ldrh	r0, [r5, #30]
 	strh	r0, [r4, #12]
-	bl	sub_080ce1f8	@ 0x080CE1F8
+	bl	ChnVolSetAsm	@ 0x080CE1F8
 	ldrb	r1, [r4, #8]
 	movs	r0, #8
 	ldrsb	r0, [r5, r0]
@@ -16117,7 +16219,7 @@ loc_080ce3f6:
 	.global	loc_080ce3fa
 loc_080ce3fa:
 	adds	r0, r7, #0
-	bl	sub_080ce4b8	@ 0x080CE4B8
+	bl	MidiKeyToFreq	@ 0x080CE4B8
 	.global	loc_080ce400
 loc_080ce400:
 	str	r0, [r4, #32]
@@ -16138,8 +16240,12 @@ loc_080ce40e:
 	pop	{r0}
 	bx	r0
 	movs	r0, r0
-	.word	0x03007FF0
+	.word	SOUND_INFO_PTR
 	.word	0x0860A3B4
+	.thumb_func
+	.global	ply_endtie
+ply_endtie:
+	.thumb
 	push	{r4, r5}
 	ldr	r2, [r1, #64]
 	ldrb	r3, [r2, #0]
@@ -16183,8 +16289,8 @@ loc_080ce464:
 	pop	{r4, r5}
 	bx	lr
 	.thumb_func
-	.global	sub_080ce468
-sub_080ce468:
+	.global	ClearModM_asm
+ClearModM_asm:
 	.thumb
 	movs	r2, #0
 	strb	r2, [r1, #22]
@@ -16207,8 +16313,8 @@ loc_080ce47c:
 	bx	lr
 	movs	r0, r0
 	.thumb_func
-	.global	sub_080ce484
-sub_080ce484:
+	.global	ld_r3_tp_adr
+ld_r3_tp_adr:
 	.thumb
 	ldr	r2, [r1, #64]
 	adds	r3, r2, #1
@@ -16216,29 +16322,37 @@ sub_080ce484:
 	ldrb	r3, [r2, #0]
 	bx	lr
 	movs	r0, r0
+	.thumb_func
+	.global	ply_lfos
+ply_lfos:
+	.thumb
 	mov	ip, lr
-	bl	sub_080ce484	@ 0x080CE484
+	bl	ld_r3_tp_adr	@ 0x080CE484
 	strb	r3, [r1, #25]
 	cmp	r3, #0
 	bne.n	loc_080ce4a0	@ 0x080CE4A0
-	bl	sub_080ce468	@ 0x080CE468
+	bl	ClearModM_asm	@ 0x080CE468
 	.global	loc_080ce4a0
 loc_080ce4a0:
 	bx	ip
 	movs	r0, r0
+	.thumb_func
+	.global	ply_mod
+ply_mod:
+	.thumb
 	mov	ip, lr
-	bl	sub_080ce484	@ 0x080CE484
+	bl	ld_r3_tp_adr	@ 0x080CE484
 	strb	r3, [r1, #23]
 	cmp	r3, #0
 	bne.n	loc_080ce4b4	@ 0x080CE4B4
-	bl	sub_080ce468	@ 0x080CE468
+	bl	ClearModM_asm	@ 0x080CE468
 	.global	loc_080ce4b4
 loc_080ce4b4:
 	bx	ip
 	movs	r0, r0
 	.thumb_func
-	.global	sub_080ce4b8
-sub_080ce4b8:
+	.global	MidiKeyToFreq
+MidiKeyToFreq:
 	.thumb
 	push	{r4, r5, r6, r7, lr}
 	mov	ip, r0
@@ -16278,11 +16392,11 @@ loc_080ce4cc:
 	ldr	r4, [r1, #4]
 	subs	r0, r0, r5
 	adds	r1, r7, #0
-	bl	sub_080cd89c	@ 0x080CD89C
+	bl	umul3232H32	@ 0x080CD89C
 	adds	r1, r0, #0
 	adds	r1, r5, r1
 	adds	r0, r4, #0
-	bl	sub_080cd89c	@ 0x080CD89C
+	bl	umul3232H32	@ 0x080CD89C
 	pop	{r4, r5, r6, r7}
 	pop	{r1}
 	bx	r1
@@ -16291,8 +16405,8 @@ loc_080ce4cc:
 	bx	lr
 	movs	r0, r0
 	.thumb_func
-	.global	sub_080ce520
-sub_080ce520:
+	.global	MPlayContinue
+MPlayContinue:
 	.thumb
 	adds	r2, r0, #0
 	ldr	r3, [r2, #52]
@@ -16309,8 +16423,8 @@ loc_080ce532:
 	.word	0x68736D53
 	.word	0x7FFFFFFF
 	.thumb_func
-	.global	sub_080ce53c
-sub_080ce53c:
+	.global	MPlayFadeOut
+MPlayFadeOut:
 	.thumb
 	adds	r2, r0, #0
 	lsls	r1, r1, #16
@@ -16330,8 +16444,8 @@ loc_080ce554:
 	movs	r0, r0
 	.word	0x68736D53
 	.thumb_func
-	.global	sub_080ce55c
-sub_080ce55c:
+	.global	m4aSoundInit
+m4aSoundInit:
 	.thumb
 	push	{r4, r5, r6, lr}
 	ldr	r0, [pc, #80]	@ 0x080CE5B0
@@ -16342,11 +16456,11 @@ sub_080ce55c:
 	ldr	r2, [pc, #76]	@ 0x080CE5B8
 	bl	CpuSet	@ 0x080CFA58
 	ldr	r0, [pc, #76]	@ 0x080CE5BC
-	bl	sub_080ce95c	@ 0x080CE95C
+	bl	SoundInit	@ 0x080CE95C
 	ldr	r0, [pc, #72]	@ 0x080CE5C0
-	bl	sub_080ce818	@ 0x080CE818
+	bl	MPlayExtender	@ 0x080CE818
 	ldr	r0, [pc, #72]	@ 0x080CE5C4
-	bl	sub_080ceaf8	@ 0x080CEAF8
+	bl	m4aSoundMode	@ 0x080CEAF8
 	ldr	r0, [pc, #68]	@ 0x080CE5C8
 	lsls	r0, r0, #16
 	lsrs	r0, r0, #16
@@ -16360,7 +16474,7 @@ loc_080ce58e:
 	ldr	r1, [r5, #4]
 	ldrb	r2, [r5, #8]
 	adds	r0, r4, #0
-	bl	sub_080cec9c	@ 0x080CEC9C
+	bl	MPlayOpen	@ 0x080CEC9C
 	ldrh	r0, [r5, #10]
 	strb	r0, [r4, #11]
 	ldr	r0, [pc, #48]	@ 0x080CE5D0
@@ -16374,27 +16488,27 @@ loc_080ce5aa:
 	pop	{r4, r5, r6}
 	pop	{r0}
 	bx	r0
-	.word	0x080CD931
-	.word	0x03007150
+	.word	SoundMainRAM+1
+	.word	gSoundMainRAM_Buffer
 	.word	0x04000100
-	.word	0x030056D0
-	.word	0x03006710
+	.word	gSoundInfo
+	.word	gCgbChans
 	.word	0x0095F700
 	.word	0x00000004
 	.word	0x0860B430
-	.word	0x030068D0
+	.word	gMPlayMemAccArea
 	.thumb_func
-	.global	sub_080ce5d4
-sub_080ce5d4:
+	.global	m4aSoundMain
+m4aSoundMain:
 	.thumb
 	push	{lr}
-	bl	sub_080cd8ac	@ 0x080CD8AC
+	bl	SoundMain	@ 0x080CD8AC
 	pop	{r0}
 	bx	r0
 	movs	r0, r0
 	.thumb_func
-	.global	sub_080ce5e0
-sub_080ce5e0:
+	.global	m4aSongNumStart
+m4aSongNumStart:
 	.thumb
 	push	{lr}
 	lsls	r0, r0, #16
@@ -16410,11 +16524,15 @@ sub_080ce5e0:
 	ldr	r2, [r1, #0]
 	ldr	r1, [r0, #0]
 	adds	r0, r2, #0
-	bl	sub_080ced14	@ 0x080CED14
+	bl	MPlayStart	@ 0x080CED14
 	pop	{r0}
 	bx	r0
 	.word	0x0860B430
 	.word	0x0860B460
+	.thumb_func
+	.global	m4aSongNumStartOrChange
+m4aSongNumStartOrChange:
+	.thumb
 	push	{lr}
 	lsls	r0, r0, #16
 	ldr	r2, [pc, #36]	@ 0x080CE638
@@ -16435,7 +16553,7 @@ loc_080ce616:
 	beq.n	loc_080ce640	@ 0x080CE640
 	adds	r0, r1, #0
 	adds	r1, r2, #0
-	bl	sub_080ced14	@ 0x080CED14
+	bl	MPlayStart	@ 0x080CED14
 	b.n	loc_080ce654	@ 0x080CE654
 	movs	r0, r0
 	.word	0x0860B430
@@ -16452,14 +16570,14 @@ loc_080ce640:
 loc_080ce64c:
 	adds	r0, r1, #0
 	adds	r1, r3, #0
-	bl	sub_080ced14	@ 0x080CED14
+	bl	MPlayStart	@ 0x080CED14
 	.global	loc_080ce654
 loc_080ce654:
 	pop	{r0}
 	bx	r0
 	.thumb_func
-	.global	sub_080ce658
-sub_080ce658:
+	.global	m4aSongNumStartOrContinue
+m4aSongNumStartOrContinue:
 	.thumb
 	push	{lr}
 	lsls	r0, r0, #16
@@ -16479,7 +16597,7 @@ sub_080ce658:
 	beq.n	loc_080ce68c	@ 0x080CE68C
 	adds	r0, r1, #0
 	adds	r1, r2, #0
-	bl	sub_080ced14	@ 0x080CED14
+	bl	MPlayStart	@ 0x080CED14
 	b.n	loc_080ce6a8	@ 0x080CE6A8
 	movs	r0, r0
 	.word	0x0860B430
@@ -16492,21 +16610,21 @@ loc_080ce68c:
 	bne.n	loc_080ce69e	@ 0x080CE69E
 	adds	r0, r1, #0
 	adds	r1, r3, #0
-	bl	sub_080ced14	@ 0x080CED14
+	bl	MPlayStart	@ 0x080CED14
 	b.n	loc_080ce6a8	@ 0x080CE6A8
 	.global	loc_080ce69e
 loc_080ce69e:
 	cmp	r2, #0
 	bge.n	loc_080ce6a8	@ 0x080CE6A8
 	adds	r0, r1, #0
-	bl	sub_080ce520	@ 0x080CE520
+	bl	MPlayContinue	@ 0x080CE520
 	.global	loc_080ce6a8
 loc_080ce6a8:
 	pop	{r0}
 	bx	r0
 	.thumb_func
-	.global	sub_080ce6ac
-sub_080ce6ac:
+	.global	m4aSongNumStop
+m4aSongNumStop:
 	.thumb
 	push	{lr}
 	lsls	r0, r0, #16
@@ -16525,7 +16643,7 @@ sub_080ce6ac:
 	cmp	r1, r0
 	bne.n	loc_080ce6d2	@ 0x080CE6D2
 	adds	r0, r2, #0
-	bl	sub_080cedf8	@ 0x080CEDF8
+	bl	m4aMPlayStop	@ 0x080CEDF8
 	.global	loc_080ce6d2
 loc_080ce6d2:
 	pop	{r0}
@@ -16533,6 +16651,10 @@ loc_080ce6d2:
 	movs	r0, r0
 	.word	0x0860B430
 	.word	0x0860B460
+	.thumb_func
+	.global	m4aSongNumContinue
+m4aSongNumContinue:
+	.thumb
 	push	{lr}
 	lsls	r0, r0, #16
 	ldr	r2, [pc, #36]	@ 0x080CE70C
@@ -16552,7 +16674,7 @@ loc_080ce6f8:
 	cmp	r1, r0
 	bne.n	loc_080ce706	@ 0x080CE706
 	adds	r0, r2, #0
-	bl	sub_080ce520	@ 0x080CE520
+	bl	MPlayContinue	@ 0x080CE520
 	.global	loc_080ce706
 loc_080ce706:
 	pop	{r0}
@@ -16561,8 +16683,8 @@ loc_080ce706:
 	.word	0x0860B430
 	.word	0x0860B460
 	.thumb_func
-	.global	sub_080ce714
-sub_080ce714:
+	.global	m4aMPlayAllStop
+m4aMPlayAllStop:
 	.thumb
 	push	{r4, r5, lr}
 	ldr	r0, [pc, #32]	@ 0x080CE738
@@ -16575,7 +16697,7 @@ sub_080ce714:
 	.global	loc_080ce724
 loc_080ce724:
 	ldr	r0, [r5, #0]
-	bl	sub_080cedf8	@ 0x080CEDF8
+	bl	m4aMPlayStop	@ 0x080CEDF8
 	adds	r5, #12
 	.global	loc_080ce72c
 loc_080ce72c:
@@ -16589,14 +16711,18 @@ loc_080ce732:
 	bx	r0
 	.word	0x00000004
 	.word	0x0860B430
+	.thumb_func
+	.global	m4aMPlayContinue
+m4aMPlayContinue:
+	.thumb
 	push	{lr}
-	bl	sub_080ce520	@ 0x080CE520
+	bl	MPlayContinue	@ 0x080CE520
 	pop	{r0}
 	bx	r0
 	movs	r0, r0
 	.thumb_func
-	.global	sub_080ce74c
-sub_080ce74c:
+	.global	m4aMPlayAllContinue
+m4aMPlayAllContinue:
 	.thumb
 	push	{r4, r5, lr}
 	ldr	r0, [pc, #32]	@ 0x080CE770
@@ -16609,7 +16735,7 @@ sub_080ce74c:
 	.global	loc_080ce75c
 loc_080ce75c:
 	ldr	r0, [r5, #0]
-	bl	sub_080ce520	@ 0x080CE520
+	bl	MPlayContinue	@ 0x080CE520
 	adds	r5, #12
 	subs	r4, #1
 	cmp	r4, #0
@@ -16621,13 +16747,21 @@ loc_080ce76a:
 	bx	r0
 	.word	0x00000004
 	.word	0x0860B430
+	.thumb_func
+	.global	m4aMPlayFadeOut
+m4aMPlayFadeOut:
+	.thumb
 	push	{lr}
 	lsls	r1, r1, #16
 	lsrs	r1, r1, #16
-	bl	sub_080ce53c	@ 0x080CE53C
+	bl	MPlayFadeOut	@ 0x080CE53C
 	pop	{r0}
 	bx	r0
 	movs	r0, r0
+	.thumb_func
+	.global	m4aMPlayFadeOutTemporarily
+m4aMPlayFadeOutTemporarily:
+	.thumb
 	adds	r2, r0, #0
 	lsls	r1, r1, #16
 	lsrs	r1, r1, #16
@@ -16644,6 +16778,10 @@ loc_080ce79e:
 	bx	lr
 	.word	0x68736D53
 	.word	0x00000101
+	.thumb_func
+	.global	m4aMPlayFadeIn
+m4aMPlayFadeIn:
+	.thumb
 	adds	r2, r0, #0
 	lsls	r1, r1, #16
 	lsrs	r1, r1, #16
@@ -16665,8 +16803,8 @@ loc_080ce7c6:
 	.word	0x68736D53
 	.word	0x7FFFFFFF
 	.thumb_func
-	.global	sub_080ce7d0
-sub_080ce7d0:
+	.global	m4aMPlayImmInit
+m4aMPlayImmInit:
 	.thumb
 	push	{r4, r5, r6, r7, lr}
 	ldrb	r5, [r0, #8]
@@ -16687,7 +16825,7 @@ loc_080ce7dc:
 	cmp	r0, #0
 	beq.n	loc_080ce80a	@ 0x080CE80A
 	adds	r0, r4, #0
-	bl	sub_080ce948	@ 0x080CE948
+	bl	Clear64byte	@ 0x080CE948
 	strb	r7, [r4, #0]
 	movs	r0, #2
 	strb	r0, [r4, #15]
@@ -16710,8 +16848,8 @@ loc_080ce812:
 	pop	{r0}
 	bx	r0
 	.thumb_func
-	.global	sub_080ce818
-sub_080ce818:
+	.global	MPlayExtender
+MPlayExtender:
 	.thumb
 	push	{r4, r5, r6, lr}
 	sub	sp, #4
@@ -16819,28 +16957,28 @@ loc_080ce8d8:
 	.word	0x04000084
 	.word	0x04000080
 	.word	0x04000063
-	.word	0x03007FF0
+	.word	SOUND_INFO_PTR
 	.word	0x68736D53
-	.word	0x03006680
-	.word	sub_080cf7d4+1
-	.word	0x080CE491
-	.word	0x080CE4A5
-	.word	sub_080cf92c+1
-	.word	0x080CE429
-	.word	sub_080cea54+1
-	.word	sub_080ce1b4+1
-	.word	sub_080cee38+1
-	.word	sub_080cef00+1
-	.word	sub_080cf114+1
-	.word	sub_080cf05c+1
-	.word	sub_080cefb4+1
+	.word	gMPlayJumpTable
+	.word	ply_memacc+1
+	.word	ply_lfos+1
+	.word	ply_mod+1
+	.word	ply_xcmd+1
+	.word	ply_endtie+1
+	.word	SampleFreqSet+1
+	.word	TrackStop+1
+	.word	FadeOutBody+1
+	.word	TrkVolPitSet+1
+	.word	CgbSound+1
+	.word	CgbOscOff+1
+	.word	MidiKeyToCgbFreq+1
 	.word	0x00000000
 	.word	0x05000040
 	svc	42
 	bx	lr
 	.thumb_func
-	.global	sub_080ce934
-sub_080ce934:
+	.global	ClearChain
+ClearChain:
 	.thumb
 	push	{lr}
 	ldr	r1, [pc, #12]	@ 0x080CE944
@@ -16851,8 +16989,8 @@ sub_080ce934:
 	movs	r0, r0
 	.word	0x03006708
 	.thumb_func
-	.global	sub_080ce948
-sub_080ce948:
+	.global	Clear64byte
+Clear64byte:
 	.thumb
 	push	{lr}
 	ldr	r1, [pc, #12]	@ 0x080CE958
@@ -16863,8 +17001,8 @@ sub_080ce948:
 	movs	r0, r0
 	.word	0x0300670C
 	.thumb_func
-	.global	sub_080ce95c
-sub_080ce95c:
+	.global	SoundInit
+SoundInit:
 	.thumb
 	push	{r4, r5, lr}
 	sub	sp, #4
@@ -16948,11 +17086,11 @@ loc_080ce986:
 	str	r0, [r5, #60]
 	ldr	r4, [pc, #84]	@ 0x080CEA4C
 	adds	r0, r4, #0
-	bl	sub_080cdd3c	@ 0x080CDD3C
+	bl	MPlayJumpTableCopy	@ 0x080CDD3C
 	str	r4, [r5, #52]
 	movs	r0, #128
 	lsls	r0, r0, #11
-	bl	sub_080cea54	@ 0x080CEA54
+	bl	SampleFreqSet	@ 0x080CEA54
 	ldr	r0, [pc, #68]	@ 0x080CEA50
 	str	r0, [r5, #0]
 	add	sp, #4
@@ -16969,15 +17107,15 @@ loc_080ce986:
 	.word	0x040000BC
 	.word	0x040000A0
 	.word	0x040000A4
-	.word	0x03007FF0
+	.word	SOUND_INFO_PTR
 	.word	0x050003EC
-	.word	sub_080ce228+1
+	.word	ply_note+1
 	.word	DummyFunc+1
-	.word	0x03006680
+	.word	gMPlayJumpTable
 	.word	0x68736D53
 	.thumb_func
-	.global	sub_080cea54
-sub_080cea54:
+	.global	SampleFreqSet
+SampleFreqSet:
 	.thumb
 	push	{r4, r5, r6, lr}
 	adds	r2, r0, #0
@@ -17022,7 +17160,7 @@ sub_080cea54:
 	bl	__divsi3	@ 0x080CFC6C
 	negs	r0, r0
 	strh	r0, [r4, #0]
-	bl	sub_080cec60	@ 0x080CEC60
+	bl	m4aSoundVSyncOn	@ 0x080CEC60
 	ldr	r1, [pc, #60]	@ 0x080CEAF4
 	.global	loc_080ceab8
 loc_080ceab8:
@@ -17042,7 +17180,7 @@ loc_080ceac0:
 	pop	{r0}
 	bx	r0
 	movs	r0, r0
-	.word	0x03007FF0
+	.word	SOUND_INFO_PTR
 	.word	0x0860A2B4
 	.word	0x00091D1B
 	.word	0x00001388
@@ -17052,8 +17190,8 @@ loc_080ceac0:
 	.word	0x00044940
 	.word	0x04000006
 	.thumb_func
-	.global	sub_080ceaf8
-sub_080ceaf8:
+	.global	m4aSoundMode
+m4aSoundMode:
 	.thumb
 	push	{r4, r5, lr}
 	adds	r3, r0, #0
@@ -17125,9 +17263,9 @@ loc_080ceb66:
 	ands	r4, r3
 	cmp	r4, #0
 	beq.n	loc_080ceb7a	@ 0x080CEB7A
-	bl	sub_080cebe4	@ 0x080CEBE4
+	bl	m4aSoundVSyncOff	@ 0x080CEBE4
 	adds	r0, r4, #0
-	bl	sub_080cea54	@ 0x080CEA54
+	bl	SampleFreqSet	@ 0x080CEA54
 	.global	loc_080ceb7a
 loc_080ceb7a:
 	ldr	r0, [pc, #12]	@ 0x080CEB88
@@ -17137,9 +17275,13 @@ loc_080ceb7e:
 	pop	{r4, r5}
 	pop	{r0}
 	bx	r0
-	.word	0x03007FF0
+	.word	SOUND_INFO_PTR
 	.word	0x68736D53
 	.word	0x04000089
+	.thumb_func
+	.global	SoundClear
+SoundClear:
+	.thumb
 	push	{r4, r5, r6, r7, lr}
 	ldr	r0, [pc, #72]	@ 0x080CEBDC
 	ldr	r6, [r0, #0]
@@ -17185,11 +17327,11 @@ loc_080cebd6:
 	pop	{r4, r5, r6, r7}
 	pop	{r0}
 	bx	r0
-	.word	0x03007FF0
+	.word	SOUND_INFO_PTR
 	.word	0x68736D53
 	.thumb_func
-	.global	sub_080cebe4
-sub_080cebe4:
+	.global	m4aSoundVSyncOff
+m4aSoundVSyncOff:
 	.thumb
 	push	{lr}
 	sub	sp, #4
@@ -17243,7 +17385,7 @@ loc_080cec3c:
 	pop	{r0}
 	bx	r0
 	movs	r0, r0
-	.word	0x03007FF0
+	.word	SOUND_INFO_PTR
 	.word	0x978C92AD
 	.word	0x040000C4
 	.word	0x84400004
@@ -17251,8 +17393,8 @@ loc_080cec3c:
 	.word	0x040000C6
 	.word	0x05000318
 	.thumb_func
-	.global	sub_080cec60
-sub_080cec60:
+	.global	m4aSoundVSyncOn
+m4aSoundVSyncOn:
 	.thumb
 	push	{r4, lr}
 	ldr	r0, [pc, #44]	@ 0x080CEC90
@@ -17282,12 +17424,12 @@ loc_080cec88:
 	pop	{r0}
 	bx	r0
 	movs	r0, r0
-	.word	0x03007FF0
+	.word	SOUND_INFO_PTR
 	.word	0x68736D53
 	.word	0x040000C6
 	.thumb_func
-	.global	sub_080cec9c
-sub_080cec9c:
+	.global	MPlayOpen
+MPlayOpen:
 	.thumb
 	push	{r4, r5, r6, r7, lr}
 	adds	r7, r0, #0
@@ -17310,7 +17452,7 @@ loc_080cecb0:
 	adds	r0, r1, #1
 	str	r0, [r5, #0]
 	adds	r0, r7, #0
-	bl	sub_080ce948	@ 0x080CE948
+	bl	Clear64byte	@ 0x080CE948
 	str	r6, [r7, #44]
 	strb	r4, [r7, #8]
 	movs	r0, #128
@@ -17352,12 +17494,12 @@ loc_080ced00:
 	pop	{r0}
 	bx	r0
 	movs	r0, r0
-	.word	0x03007FF0
+	.word	SOUND_INFO_PTR
 	.word	0x68736D53
-	.word	0x080CDF4D
+	.word	MPlayMain+1
 	.thumb_func
-	.global	sub_080ced14
-sub_080ced14:
+	.global	MPlayStart
+MPlayStart:
 	.thumb
 	push	{r4, r5, r6, r7, lr}
 	mov	r7, r8
@@ -17428,7 +17570,7 @@ loc_080ced56:
 loc_080ced8a:
 	adds	r0, r5, #0
 	adds	r1, r4, #0
-	bl	sub_080ce1b4	@ 0x080CE1B4
+	bl	TrackStop	@ 0x080CE1B4
 	movs	r0, #192
 	strb	r0, [r4, #0]
 	mov	r1, r8
@@ -17460,7 +17602,7 @@ loc_080cedb6:
 loc_080cedc0:
 	adds	r0, r5, #0
 	adds	r1, r4, #0
-	bl	sub_080ce1b4	@ 0x080CE1B4
+	bl	TrackStop	@ 0x080CE1B4
 	mov	r0, r8
 	strb	r0, [r4, #0]
 	adds	r6, #1
@@ -17476,7 +17618,7 @@ loc_080cedd6:
 	cmp	r0, #0
 	beq.n	loc_080cede6	@ 0x080CEDE6
 	ldrb	r0, [r7, #3]
-	bl	sub_080ceaf8	@ 0x080CEAF8
+	bl	m4aSoundMode	@ 0x080CEAF8
 	.global	loc_080cede6
 loc_080cede6:
 	ldr	r0, [pc, #12]	@ 0x080CEDF4
@@ -17490,8 +17632,8 @@ loc_080cedea:
 	bx	r0
 	.word	0x68736D53
 	.thumb_func
-	.global	sub_080cedf8
-sub_080cedf8:
+	.global	m4aMPlayStop
+m4aMPlayStop:
 	.thumb
 	push	{r4, r5, r6, lr}
 	adds	r6, r0, #0
@@ -17514,7 +17656,7 @@ sub_080cedf8:
 loc_080cee1a:
 	adds	r0, r6, #0
 	adds	r1, r5, #0
-	bl	sub_080ce1b4	@ 0x080CE1B4
+	bl	TrackStop	@ 0x080CE1B4
 	subs	r4, #1
 	adds	r5, #80
 	cmp	r4, #0
@@ -17530,8 +17672,8 @@ loc_080cee2e:
 	bx	r0
 	.word	0x68736D53
 	.thumb_func
-	.global	sub_080cee38
-sub_080cee38:
+	.global	FadeOutBody
+FadeOutBody:
 	.thumb
 	push	{r4, r5, r6, r7, lr}
 	adds	r6, r0, #0
@@ -17583,7 +17725,7 @@ loc_080cee7c:
 loc_080cee92:
 	adds	r0, r6, #0
 	adds	r1, r4, #0
-	bl	sub_080ce1b4	@ 0x080CE1B4
+	bl	TrackStop	@ 0x080CE1B4
 	.global	loc_080cee9a
 loc_080cee9a:
 	movs	r0, #1
@@ -17654,8 +17796,8 @@ loc_080ceefa:
 	pop	{r0}
 	bx	r0
 	.thumb_func
-	.global	sub_080cef00
-sub_080cef00:
+	.global	TrkVolPitSet
+TrkVolPitSet:
 	.thumb
 	push	{r4, lr}
 	adds	r2, r1, #0
@@ -17762,8 +17904,8 @@ loc_080cefa8:
 	pop	{r0}
 	bx	r0
 	.thumb_func
-	.global	sub_080cefb4
-sub_080cefb4:
+	.global	MidiKeyToCgbFreq
+MidiKeyToCgbFreq:
 	.thumb
 	push	{r4, r5, r6, r7, lr}
 	lsls	r0, r0, #24
@@ -17859,8 +18001,8 @@ loc_080cf04e:
 	.word	0x0860A2CC
 	.word	0x0860A350
 	.thumb_func
-	.global	sub_080cf05c
-sub_080cf05c:
+	.global	CgbOscOff
+CgbOscOff:
 	.thumb
 	lsls	r0, r0, #24
 	lsrs	r0, r0, #24
@@ -17915,8 +18057,8 @@ loc_080cf0a2:
 	movs	r0, r0
 	.word	0x04000079
 	.thumb_func
-	.global	sub_080cf0ac
-sub_080cf0ac:
+	.global	CgbModVol
+CgbModVol:
 	.thumb
 	push	{r4, lr}
 	adds	r1, r0, #0
@@ -17981,8 +18123,8 @@ loc_080cf0f8:
 	pop	{r0}
 	bx	r0
 	.thumb_func
-	.global	sub_080cf114
-sub_080cf114:
+	.global	CgbSound
+CgbSound:
 	.thumb
 	push	{r4, r5, r6, r7, lr}
 	mov	r7, sl
@@ -18000,7 +18142,7 @@ sub_080cf114:
 	ldr	r1, [sp, #4]
 	strb	r0, [r1, #10]
 	b.n	loc_080cf13e	@ 0x080CF13E
-	.word	0x03007FF0
+	.word	SOUND_INFO_PTR
 	.global	loc_080cf138
 loc_080cf138:
 	movs	r0, #14
@@ -18123,7 +18265,7 @@ loc_080cf1d4:
 	strb	r0, [r4, #29]
 	adds	r0, r4, #0
 	str	r3, [sp, #24]
-	bl	sub_080cf0ac	@ 0x080CF0AC
+	bl	CgbModVol	@ 0x080CF0AC
 	ldr	r3, [sp, #24]
 	cmp	r6, #2
 	beq.n	loc_080cf23c	@ 0x080CF23C
@@ -18258,7 +18400,7 @@ loc_080cf2ca:
 loc_080cf2ee:
 	lsls	r0, r6, #24
 	lsrs	r0, r0, #24
-	bl	sub_080cf05c	@ 0x080CF05C
+	bl	CgbOscOff	@ 0x080CF05C
 	movs	r0, #0
 	strb	r0, [r4, #0]
 	b.n	loc_080cf540	@ 0x080CF540
@@ -18310,7 +18452,7 @@ loc_080cf33c:
 	.global	loc_080cf34e
 loc_080cf34e:
 	adds	r0, r4, #0
-	bl	sub_080cf0ac	@ 0x080CF0AC
+	bl	CgbModVol	@ 0x080CF0AC
 	movs	r0, #3
 	ldrb	r2, [r4, #0]
 	ands	r0, r2
@@ -18640,8 +18782,8 @@ loc_080cf57c:
 	movs	r0, r0
 	.word	0x68736D53
 	.thumb_func
-	.global	sub_080cf588
-sub_080cf588:
+	.global	m4aMPlayVolumeControl
+m4aMPlayVolumeControl:
 	.thumb
 	push	{r4, r5, r6, r7, lr}
 	mov	r7, r9
@@ -18703,8 +18845,8 @@ loc_080cf5e0:
 	bx	r0
 	.word	0x68736D53
 	.thumb_func
-	.global	sub_080cf5f0
-sub_080cf5f0:
+	.global	m4aMPlayPitchControl
+m4aMPlayPitchControl:
 	.thumb
 	push	{r4, r5, r6, r7, lr}
 	mov	r7, sl
@@ -18771,6 +18913,10 @@ loc_080cf652:
 	pop	{r0}
 	bx	r0
 	.word	0x68736D53
+	.thumb_func
+	.global	m4aMPlayPanpotControl
+m4aMPlayPanpotControl:
+	.thumb
 	push	{r4, r5, r6, r7, lr}
 	mov	r7, r9
 	mov	r6, r8
@@ -18831,8 +18977,8 @@ loc_080cf6bc:
 	bx	r0
 	.word	0x68736D53
 	.thumb_func
-	.global	sub_080cf6cc
-sub_080cf6cc:
+	.global	ClearModM
+ClearModM:
 	.thumb
 	adds	r1, r0, #0
 	movs	r2, #0
@@ -18854,6 +19000,10 @@ loc_080cf6e2:
 	strb	r0, [r1, #0]
 	bx	lr
 	movs	r0, r0
+	.thumb_func
+	.global	m4aMPlayModDepthSet
+m4aMPlayModDepthSet:
+	.thumb
 	push	{r4, r5, r6, r7, lr}
 	mov	r7, sl
 	mov	r6, r9
@@ -18895,7 +19045,7 @@ loc_080cf71c:
 	cmp	r1, #0
 	bne.n	loc_080cf73e	@ 0x080CF73E
 	adds	r0, r4, #0
-	bl	sub_080cf6cc	@ 0x080CF6CC
+	bl	ClearModM	@ 0x080CF6CC
 	.global	loc_080cf73e
 loc_080cf73e:
 	subs	r5, #1
@@ -18918,6 +19068,10 @@ loc_080cf74c:
 	bx	r0
 	movs	r0, r0
 	.word	0x68736D53
+	.thumb_func
+	.global	m4aMPlayLFOSpeedSet
+m4aMPlayLFOSpeedSet:
+	.thumb
 	push	{r4, r5, r6, r7, lr}
 	mov	r7, sl
 	mov	r6, r9
@@ -18961,7 +19115,7 @@ loc_080cf79c:
 	cmp	r1, #0
 	bne.n	loc_080cf7b2	@ 0x080CF7B2
 	adds	r0, r4, #0
-	bl	sub_080cf6cc	@ 0x080CF6CC
+	bl	ClearModM	@ 0x080CF6CC
 	.global	loc_080cf7b2
 loc_080cf7b2:
 	subs	r5, #1
@@ -18985,8 +19139,8 @@ loc_080cf7c0:
 	movs	r0, r0
 	.word	0x68736D53
 	.thumb_func
-	.global	sub_080cf7d4
-sub_080cf7d4:
+	.global	ply_memacc
+ply_memacc:
 	.thumb
 	push	{r4, r5, r6, lr}
 	adds	r4, r0, #0
@@ -19166,8 +19320,8 @@ loc_080cf926:
 	pop	{r0}
 	bx	r0
 	.thumb_func
-	.global	sub_080cf92c
-sub_080cf92c:
+	.global	ply_xcmd
+ply_xcmd:
 	.thumb
 	push	{lr}
 	ldr	r2, [r1, #64]
@@ -19194,7 +19348,7 @@ ply_xxx:
 	pop	{r0}
 	bx	r0
 	movs	r0, r0
-	.word	0x03006680
+	.word	gMPlayJumpTable
 	.thumb_func
 	.global	ply_xwave
 ply_xwave:

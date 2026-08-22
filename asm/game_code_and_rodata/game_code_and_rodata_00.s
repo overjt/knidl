@@ -12358,7 +12358,7 @@ loc_0800d4f6:
 	blt.n	loc_0800d574	@ 0x0800D574
 	lsls	r0, r3, #16
 	lsrs	r0, r0, #16
-	bl	sub_080ce6ac	@ 0x080CE6AC
+	bl	m4aSongNumStop	@ 0x080CE6AC
 	movs	r0, #49
 	bl	sub_08008c64	@ 0x08008C64
 	b.n	loc_0800d59e	@ 0x0800D59E

@@ -119,7 +119,7 @@ extern struct Unk_030023A8 gUnk_030023A8;
 extern vs16 gUnk_0300244C;
 extern vu32 gUnk_03000B00;
 
-extern void sub_080ce55c(void);
+extern void m4aSoundInit(void);
 extern void sub_08001a0c(void);
 extern void sub_08001b08(void);
 extern void sub_08002028(void);
@@ -255,7 +255,7 @@ void AgbInit(void)
     gUnk_03001EA0 = zeroB;
     gUnk_03001EA8 = zeroB;
 
-    sub_080ce55c();
+    m4aSoundInit();
 
     gUnk_03001EE4 = 1;
     gUnk_03000B0C = zeroB;

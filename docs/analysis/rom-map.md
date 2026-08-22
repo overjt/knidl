@@ -38,19 +38,19 @@ symbol database and call graph (section 7), and is validated by
 | 4 | `0x08000234-0x080002E4` | 0xB1 | **Task/context-switch helpers (ARM)** — split to `asm/task_switch_helpers.s` (#24); their literal pools `0x080002E5-0x0800030F` are the separate `task_literals` segment (`asm/task_literals.s`), all ten words named cells | 4 small routines saving/restoring `sp`/`lr`/`r0` into IWRAM cells (`0x03004C94`, `0x03002470`, `0x030026F8`, `0x030025E0`, `0x0300248C`, `0x030025F0`; named via `tools/split_config.json` `data_symbols`, semantics in §6); `bl 0x080CFDDC` @0x08000290 (the only ARM `bl` in the ROM) |
 | 5 | `0x08000310-0x080008E7` | 0x5D8 | **AgbInit (Thumb)** — **decompiled** (`src/agb_init.c`, agbcc `-O2 -mthumb-interwork`, issue #28) | Prologue `b5f0 464f 4646 b4c0` @0x08000310; epilogue `pop {r4-r7}; pop {r0}; bx r0` @0x080006F4-0x080006FE; performs the memory clears/copies listed in §4. The compiler's pool-skip branch (`b 0x080008E8`) sits at 0x08000700 followed by the 121-word literal pool to 0x080008E7 — the census entry `sub_08000700` is that branch (pointer-referenced from the data table @0x08369198), not a real function |
 | 6 | `0x080008E8-0x080072FF` | 0x6A18 | Game code (Thumb): early subsystems | 160+ Thumb BL targets in this window; includes IRQ default handler `0x08001518`, `0x080010CC`, task entry `0x08005654` |
-| 7 | `0x08007300-0x080CFA4B` | ~0xC8700 | **Game code + rodata (Thumb)** | ~2,650 Thumb BL targets, thumb-pointer tables throughout; interleaved rodata (pointer tables 122 runs ≥8 entries, e.g. 43-entry table @0x0803EC48). Tail (`0x080CF94C-0x080CFA4B`) is the m4a/mp2k XCMD handler block, named in #29 via the 12-entry jump table @`0x0860A3E8` (matches katam/pokeemerald `gXcmdTable` 1:1, `ply_xxx` at indices 0 AND 3) + per-handler `MusicPlayerTrack` field offsets: `ply_xxx` `0x080CF94C`, `ply_xwave` `0x080CF960`, `ply_xtype` `0x080CF9A8`, `ply_xatta` `0x080CF9BC`, `ply_xdeca` `0x080CF9D0`, `ply_xsust` `0x080CF9E4`, `ply_xrele` `0x080CF9F8`, `ply_xiecv` `0x080CFA0C`, `ply_xiecl` `0x080CFA18`, `ply_xleng` `0x080CFA24`, `ply_xswee` `0x080CFA38`. The old `0x080CFA40` segment boundary cut `ply_xswee` in half (its tail was seg 8's "unidentified SDK helper" `gUnk_080cfa40`, 0 BL callers because XCMD handlers are table-dispatched only); boundary moved to `0x080CFA4C` in #29 |
+| 7 | `0x08007300-0x080CFA4B` | ~0xC8700 | **Game code + rodata (Thumb)** | ~2,650 Thumb BL targets, thumb-pointer tables throughout; interleaved rodata (pointer tables 122 runs ≥8 entries, e.g. 43-entry table @0x0803EC48). Tail (`0x080CF94C-0x080CFA4B`) is the m4a/mp2k XCMD handler block, named in #29 via the 12-entry jump table @`0x0860A3E8` (matches katam/pokeemerald `gXcmdTable` 1:1, `ply_xxx` at indices 0 AND 3) + per-handler `MusicPlayerTrack` field offsets: `ply_xxx` `0x080CF94C`, `ply_xwave` `0x080CF960`, `ply_xtype` `0x080CF9A8`, `ply_xatta` `0x080CF9BC`, `ply_xdeca` `0x080CF9D0`, `ply_xsust` `0x080CF9E4`, `ply_xrele` `0x080CF9F8`, `ply_xiecv` `0x080CFA0C`, `ply_xiecl` `0x080CFA18`, `ply_xleng` `0x080CFA24`, `ply_xswee` `0x080CFA38`. The old `0x080CFA40` segment boundary cut `ply_xswee` in half (its tail was seg 8's "unidentified SDK helper" `gUnk_080cfa40`, 0 BL callers because XCMD handlers are table-dispatched only); boundary moved to `0x080CFA4C` in #29. **The whole m4a/mp2k engine occupies the segment tail `0x080CD89C-0x080CFA4B` and is fully named in the symbol DB (issue #31) — see §8** |
 | 8 | `0x080CFA4C-0x080CFA9B` | 0x50 | **SDK syscall wrappers + SoftReset (Thumb)** — named via SDK-order SWI table (`include/gba/syscall.h`, issue #27; finalized in #29). **Stays named asm forever, by design**: agbcc cannot emit a bare `svc N; bx lr` thunk from C, and the reset-helper segment starts at the odd address `0x080CFA7F` so the splitter emits it as raw data (lessons 4.2/4.3/4.14) — pret projects (katam `asm/libagbsyscall.s`) keep both as named asm and we do the same. Segment start moved from `0x080CFA40` to `0x080CFA4C` in #29 (the old boundary cut m4a's `ply_xswee` in half, see seg 7) | `svc N; bx lr` pairs: `0x080CFA50` ArcTan2 (`svc 0x0A`), `0x080CFA54` CpuFastSet (`svc 0x0C`), `0x080CFA58` CpuSet (`svc 0x0B`), `0x080CFA5C` Div (`svc 0x06`), `0x080CFA60` Mod (`svc 0x06`, returns remainder), `0x080CFA68` HuffUnComp (`svc 0x13`), `0x080CFA6C` LZ77UnCompVram (`svc 0x12`), `0x080CFA70` LZ77UnCompWram (`svc 0x11`), `0x080CFA74` MultiBoot mode=1 (`svc 0x25`), `0x080CFA7C` SoundDriverVSyncOff (`svc 0x28`); `0x080CFA4C` DummyFunc (`bx lr` stub, referenced from `0x080CEA48`); `0x080CFA80` **SoftReset** (IME=0, clear `0x03007FFA`, sp=`0x03007F00`, `svc 1; svc 0` = RegisterRamReset(r0) then reset — identical to katam's `SoftReset`; 2 BL callers `0x08000FF8`/`0x08008C40` kept as raw `.short` pairs, and the label is a `split_config.json` `extra_labels` data label, NOT a symbols.csv function: it carries no Thumb mark, so resolving the BLs against it would make ld insert an interworking veneer and shift every later section) |
 | 9 | `0x080CFA9C-0x080CFDDB` | ~0x340 | **C library + SRAM driver (Thumb)** — SRAM driver **decompiled** (`src/agb_sram.c`, old_agbcc `-O1 -mthumb-interwork`); libc tail split to `asm/sdk_libc.s` (#24), fully named in #30. **The libc tail stays named asm forever, by design**: `_call_via_r0..lr` are gcc interworking shims reached by register-allocation-dependent `bl _call_via_rN` (lesson 3.4, all 15 variants exported); `__divsi3`/`__umodsi3`/`_div0` are libgcc routines that are hand-written *assembly* in gcc's own source tree (`lib1funcs.asm` — no C input produces them; the ROM bytes match the gcc 2.9 Thumb shapes instruction-for-instruction); the three trampolines are SDK glue with raw ARM branch words. No memcpy/memset copy loops exist in this range | SRAM driver `0x080CFA9C-0x080CFC2F`: `ReadSram_Core` `0x080CFA9C`, `ReadSram` `0x080CFAC0`, `WriteSram` `0x080CFB24`, `VerifySram_Core` `0x080CFB64`, `VerifySram` `0x080CFB94`, `WriteSramEx` `0x080CFBF8` (all byte-identical, linked from C); libc tail `0x080CFC30-0x080CFDDB`: `_call_via_r0..r7` (+ `_call_via_r8/r9/sl/fp/ip/sp/lr`), `__divsi3`/`__umodsi3`/`_div0`, three Thumb->ARM task trampolines `TaskSwitchTrampoline` `0x080CFDC4` / `TaskYieldTrampoline` `0x080CFDCC` / `TaskDispatchTrampoline` `0x080CFDD4` (`bx pc; nop; ARM b 0x08000234/58/88` — named in #30 after the task-helper semantics, see §6); the former `sub_080cfcfc` was a false positive — it is the `pop {pc}` tail of `__divsi3`'s `Ldiv0` path (`push {lr}; bl __div0; mov r0, #0; pop {pc}`, exactly gcc 2.9 `lib1funcs.asm`), whose only "rom-pointer" was a coincidental PCM word at `0x086DA494` inside `m4a_songs` (curated out via `tools/symdb.py` `FALSE_POSITIVES`, #30); fn table `0x0872EA04` = {ReadSram_Core, ReadSram, VerifySram_Core, VerifySram} (no xrefs) |
-| 10 | `0x080CFF00-0x080CFFFF` | 0x100 | lib rodata — split to `asm/lib_rodata_fir_tables.s` (#24) | FIR/envelope-style coefficient tables consumed with signed relative indexing by the sound-driver code at `0x080C2xxx-0x080C5xxx`; symmetric byte ramp peaking at 0x10 @0x080CFF00, `0x7FFF` saturation block @0x080CFF20, reverb/FIR-style coefficient sets — bytes `e8 50 e0 c1 ...` @0x080CFF3A — m4a-family sound tables |
+| 10 | `0x080CFF00-0x080CFFFF` | 0x100 | lib rodata — split to `asm/lib_rodata_fir_tables.s` (#24) | FIR/envelope-style coefficient tables consumed with signed relative indexing by **game code** at `0x080B7B14` and `0x080C2580-0x080C4FE8` (pool literals `0x080CFE2C`, `0x080CFE60`, `0x080CFEE4`, `0x080CFF52`, `0x080CFF70`, ... — several byte-granular); symmetric byte ramp peaking at 0x10 @0x080CFF00, `0x7FFF` saturation block @0x080CFF20. **NOT m4a tables**: the m4a engine (§8) never references this range — the earlier "m4a-family sound tables / mixer at 0x080C2xxx" hypothesis is corrected by issue #31 |
 | 11 | `0x080D0000-0x08120000` | 0x50000 | Level/map & object tables | entropy 4.4-5.4, 31-48% zeros, few pointers; `faff/0000/0100` pattern tables (e.g. file `0xD00C0`) |
 | 12 | `0x08120000-0x08330000` | ~0x210000 | Level data / uncompressed graphics / palettes, with embedded table zones | pointer clusters @0x08120000 (1066), 0x08150000 (962), 0x081A0000 (1140), 0x08200000 (1206), 0x08250000 (1526) |
 | 13 | `0x083356E0-0x0834EEE8`, `0x08350AF8-0x083A85D4` | ~0x1B290 | **Sound sample data (PCM)** | pointed to by the sample index @`0x087E1D58` (24 pointers into `0x0833-0x0834`, 339 into `0x0835-0x083A`); high entropy (~7.2), zero-pct ~6-8% |
 | 14 | `0x083D0000-0x085C0000` | 0x1F0000 | Compressed graphics (LZ77/RLE-class) | entropy 7.0-7.8 uniformly, near-zero pointer density |
-| 15 | `0x085C0000-0x0872E9F7` | ~0x16EA00 | **m4a songs / sequences** | song table @`0x0860B460` (0x338 bytes, 103 `(ptr,0)` entries; first → song header @`0x0870F504`, bytes `08 00 00 80` + track ptr `0x0860A418` = valid m4a header); tail pointers `0x0860ACB8`,`0x0872E800` @0x0872E9F0 |
+| 15 | `0x085C0000-0x0872E9F7` | ~0x16EA00 | **m4a songs / sequences + engine rodata** | engine rodata block `0x0860A140-0x0860B797` (§8.3: gMPlayJumpTableTemplate, gScaleTable/gFreqTable/gCgb*/gNoiseTable, gPcmSamplesPerVBlankTable, gClockTable, gXcmdTable, gMPlayTable, gSongTable); song table @`0x0860B460` (0x338 bytes, 103 `(ptr,0)` entries; first → song header @`0x0870F504`, bytes `08 00 00 80` + track ptr `0x0860A418` = valid m4a header); tail pointers `0x0860ACB8`,`0x0872E800` @0x0872E9F0 |
 | 16 | `0x0872E9F8-0x0872EA01` | 10 | `SRAM_V112` string | ASCII @0x0872E9F8 (`53 52 41 4D 5F 56 31 31 32 00`), save-type marker |
 | 17 | `0x0872EA04-0x0872EA13` | 16 | SRAM driver function table | 4 Thumb ptrs `0x080CFA9D, 0x080CFAC1, 0x080CFB65, 0x080CFB95` |
 | 18 | `0x08730000-0x08760000` | 0x30000 | **Asset metadata / index zone** | >30k in-ROM pointers; targets spread across segs 7,11,12,15 and self-referential @0x0873-0x0876 (2186+1176+1616+2129 self pointers) |
-| 19 | `0x08760000-0x087E1D57` | ~0x181D58 | Song tail / misc audio data | song headers/tracks referenced from seg 15 (e.g. `0x0870F504`); moderate entropy 6.5-7.3 |
+| 19 | `0x08760000-0x087E1D57` | ~0x181D58 | Song tail / misc audio data **+ multiboot child images** | song headers/tracks referenced from seg 15 (e.g. `0x0870F504`); moderate entropy 6.5-7.3. Contains multiboot child-program images: the link/multiboot sender at `0x08007C5C-0x08007E5x` loads blob pointers `0x087954C0` and `0x087C0A4C` (pools @`0x08007CDC/0x08007CEC`) plus `0x0876B1FC`/`0x0876F690` (@`0x08007E40/0x08007CD8`); each image embeds its own copy of the m4a driver — Thumb code clusters with `SOUND_INFO_PTR`/`ID_NUMBER` literals at `0x08777800+`, `0x0879F2E0+`, `0x087CA834+` are those embedded drivers, NOT the main game's (whose engine is §8) |
 | 20 | `0x087E1D58-0x087E3087` | 0x1330 | **End-of-ROM index (sample sets)** | 1228 words; entries point into seg 13 (`0x083356E0...`, `0x08350AF8...`) and back into this table; first entries point @0x087E1F68+ (sub-tables) |
 | 21 | `0x087E3088-0x087FFFFF` | 0x1CF78 | Zero padding | last non-zero byte @ file `0x7E3087` |
 
@@ -223,12 +223,14 @@ confirm default-`agbcc` Thumb codegen (pool placement, `ldr pc` literals), then
 - `lib_misc[0]` (`0x080CFE20`, named `gSramIdString`) is the ASCII string
   `"AGB  KIRBY"`; save-init code at `0x080B7AF8` writes those 10 bytes to SRAM
   (`0x0E000000`) via `WriteSramEx`. The rest of `lib_misc`/`lib_rodata_fir_tables`
-  are sound-driver coefficient tables: the mixer/sequencer code at
-  `0x080C2xxx-0x080C5xxx` loads window bases (e.g. `0x080CFE60`, `0x080CFEE4`,
-  `0x080CFF52`) into pools and indexes them with signed offsets (`ldrsh` index +
-  byte load), which explains pointer-like values landing mid-table. Ascending
-  24-bit step triplets (`fd770a`, `fd811e`, ...) look like pitch-increment ladders;
-  canonical per-table names await decompilation of that driver.
+  are coefficient tables consumed by **game code** at `0x080B7B14` and
+  `0x080C2580-0x080C4FE8`: those functions load window bases (e.g. `0x080CFE60`,
+  `0x080CFEE4`, `0x080CFF52`) into pools and index them with signed offsets
+  (`ldrsh` index + byte load), which explains pointer-like values landing
+  mid-table. Ascending 24-bit step triplets (`fd770a`, `fd811e`, ...) look like
+  pitch/step-increment ladders. **They are NOT m4a driver tables** — the m4a
+  engine (mapped in §8, issue #31) never references this range; canonical
+  per-table names await decompilation of their game-side consumers.
 
 Generated summaries (not committed): strings/pointers/lz77/zeros/isa scans as described in §1.
 
@@ -247,14 +249,17 @@ byte-for-byte.
 | `vma` | entry address (GBA cart VMA; file offset = vma − 0x08000000) |
 | `size` | upper bound: distance to the next accepted entry, capped at 4 KiB (includes trailing literal pools / padding) |
 | `isa` | `thumb` or `arm` |
-| `evidence` | how the entry was discovered, strongest first: `bl-target` (reached by a decoded `bl`), `rom-pointer` (referenced by a word in the ROM; bit 0 set for Thumb, clear for ARM), `prologue-scan` (curated ARM-zone split). Combined values use `+`. |
+| `evidence` | how the entry was discovered, strongest first: `bl-target` (reached by a decoded `bl`), `rom-pointer` (referenced by a word in the ROM; bit 0 set for Thumb, clear for ARM), `prologue-scan` (curated ARM-zone split), `curated` (hand-verified entry with no in-ROM reference — dead m4a SDK exports from `EXTRA_THUMB_ENTRIES`, issue #31). Combined values use `+`. |
 | `name` | `sub_08xxxxxx` for unknowns; canonical SDK/m4a/libc names where previously validated in this repo (`asm/crt0.s`, `src/agb_sram.c`, `asm/sdk_libc.s`) or canonical from sibling projects (SWI thunks per GBATEK numbering) |
 
-Current contents: 5,210 functions (5,203 Thumb + 7 ARM across the three ARM zones
-of §3), 19,326 call-graph edges (14,524 `bl`, 4,802 `ptr`; +9 rows/edges in #29:
-the curated m4a XCMD handlers, accepted via the KNOWN_SYMBOLS bypass — they are
-table-dispatched only and open with `ldr r0, [r1, #0x40]`, which the strict
-pointer-candidate prologue filter rejects by design). In `callgraph.csv`,
+Current contents: 5,241 functions (5,234 Thumb + 7 ARM across the three ARM zones
+of §3), 19,364 call-graph edges (+9 rows/edges in #29: the curated m4a XCMD
+handlers, accepted via the KNOWN_SYMBOLS bypass — they are table-dispatched only
+and open with `ldr r0, [r1, #0x40]`, which the strict pointer-candidate prologue
+filter rejects by design; +31 rows in #31: the m4a engine map of §8 — 21
+previously-hidden entries with bl/pointer evidence accepted via KNOWN_SYMBOLS,
+plus 10 dead SDK exports injected via the curated `EXTRA_THUMB_ENTRIES` list
+with evidence kind `curated`). In `callgraph.csv`,
 `caller` `0x00000000` means the reference site is outside any known function
 (rodata table); `site` is the address of the `bl` pair / pointer word, and
 `count` the number of such sites (for `bl` edges, aggregated per caller/callee).
@@ -285,3 +290,86 @@ random entries against a fresh dual-view objdump disassembly.
   wrong addresses for the second/third trampoline and claimed only the first was
   BL-reachable — corrected in #24 against `docs/analysis/callgraph.csv`, which
   records hundreds of `bl 0x080CFDCC/DD4` call sites.)
+
+## 8. m4a/mp2k sound engine map (issue #31)
+
+The game uses Nintendo's m4a (a.k.a. mp2k/"Sappy") sound engine. The engine
+code occupies the tail of `game_code_and_rodata`:
+**`0x080CD89C-0x080CFA4B`**, immediately followed by `DummyFunc` (`0x080CFA4C`,
+the m4a no-op used for the default CGB hooks) at the head of
+`sdk_swi_wrappers`. Everything below is named in `docs/analysis/symbols.csv`
+(generated from `tools/symdb.py` KNOWN_SYMBOLS; per-function evidence lives in
+the KNOWN_SYMBOLS comments). Game-side sound glue (e.g. `sub_080cd330`, called
+once from AgbMain, and the sample-set users of seg 20) is NOT part of the
+engine; the engine's first byte is `umul3232H32` at `0x080CD89C`.
+
+### 8.1 Identification method
+
+- **Hard anchors:** every m4a build references the BIOS sound-info pointer
+  `SOUND_INFO_PTR = 0x03007FF0` and the magic `ID_NUMBER = 0x68736D53`
+  ("Smsh") from literal pools. In the main code span these literals cluster
+  exclusively in `0x080CD918-0x080CF7D0`.
+- **Jump table:** `MPlayJumpTableCopy` (`0x080CDD3C`, `movs r1, #36`) copies
+  the 36-entry `gMPlayJumpTableTemplate` @`0x0860A140`, whose slots map
+  sequence commands 0xB1..0xCF one-for-one to handlers — the same layout as
+  pokeemerald's template, including ply_fine defaults in the slots that
+  `MPlayExtender` fills at runtime (ply_memacc [8], ply_xcmd [28]) and the
+  tail entries [31]=TrackStop, [32]=FadeOutBody, [33]=TrkVolPitSet,
+  [34]=RealClearChain, [35]=SoundMainBTM.
+- **Byte-identical tables:** `gScaleTable` (`0x0860A1D0`), `gFreqTable`
+  (`0x0860A284`) and `gClockTable` (`0x0860A3B4`) match pokeemerald's tables
+  byte-for-byte — same engine revision.
+- **Function order** matches pokeemerald `m4a_1.s` + `m4a.c`, so pret names
+  carry over directly; every function was additionally verified by body shape
+  (register/field offsets against `m4a_internal.h` structs).
+
+### 8.2 Code layout
+
+| Range | Content |
+|---|---|
+| `0x080CD89C-0x080CE51F` | **asm core** (pret `m4a_1.s` equivalent; hand-scheduled, stays asm): `umul3232H32`, `SoundMain`, `SoundMainRAM` (ROM image `0x080CD930-0x080CDD2F`; `m4aSoundInit` CpuSet-copies 0x400 bytes to IWRAM `0x03007150` = `gSoundMainRAM_Buffer`, and `SoundMain` tail-jumps to `0x03007151`; contains an embedded ARM-mode inner mixer loop entered via `adr r1; bx r1` at `0x080CD936`), `SoundMainBTM`, `RealClearChain`, `ply_fine`, `MPlayJumpTableCopy`, byte-fetch helpers (`ld_r3_r2`/`chk_adr_r2`/`ld_r3_tp_adr_i`/`ld_r3_tp_adr` — descriptive names; the check variants zero r3 for implausible addresses, a HAL/SDK hardening absent from pokeemerald), `ply_goto/patt/pend/rept/prio/tempo/keysh/voice/volu/pan/bend/bendr/lfodl/modt/tune/port`, `m4aSoundVSync` (`0x080CDF00`, DMA1/2 FIFO restart), `MPlayMain` (`0x080CDF4C`, pointer-installed into `soundInfo->func` by MPlayOpen — pool word `0x080CDF4D` @`0x080CED10`), `TrackStop`, `ChnVolSetAsm`, `ply_note` (`0x080CE228`; `SoundInit` stores `soundInfo->plynote = 0x080CE229`), `ply_endtie`, `ClearModM_asm`, `ply_lfos`, `ply_mod`, `MidiKeyToFreq`. Three tiny `bx r3` call shims stay `sub_080cdcce`/`sub_080cdd72`/`sub_080ce1a4` (no canonical names). |
+| `0x080CE520-0x080CFA4B` | **C driver** (pret `m4a.c` equivalent; expect `old_agbcc -O1 -mthumb-interwork` per the SDK-zone recipe): `MPlayContinue`/`MPlayFadeOut` (internal bodies; the public `m4aMPlayContinue` `0x080CE740` / `m4aMPlayFadeOut` `0x080CE778` are thin wrappers), `m4aSoundInit` (called from AgbInit), `m4aSoundMain`, `m4aSongNumStart/StartOrChange/StartOrContinue/Stop/Continue`, `m4aMPlayAllStop/AllContinue/FadeOutTemporarily/FadeIn/ImmInit`, `MPlayExtender`, `ClearChain`, `Clear64byte`, `SoundInit`, `SampleFreqSet`, `m4aSoundMode`, `SoundClear`, `m4aSoundVSyncOff/On`, `MPlayOpen`, `MPlayStart`, `m4aMPlayStop`, `FadeOutBody`, `TrkVolPitSet`, `MidiKeyToCgbFreq`, `CgbOscOff`, `CgbModVol`, `CgbSound`, `m4aMPlayVolumeControl/PitchControl/PanpotControl`, `ClearModM`, `m4aMPlayModDepthSet/LFOSpeedSet`, `ply_memacc`, `ply_xcmd`, `ply_x*` XCMD handlers (#29). Ten of these are dead SDK exports with zero in-ROM references (whole-object linking), injected into the symbol DB via `EXTRA_THUMB_ENTRIES` with evidence `curated`. `m4aMPlayTempoControl` does not exist in this build. |
+
+### 8.3 Engine rodata (inside seg 15, still `.incbin` — extraction is a child issue)
+
+| VMA | Symbol (pret name) | Notes |
+|---|---|---|
+| `0x0860A140` | `gMPlayJumpTableTemplate` | 36 Thumb pointers (see §8.1) |
+| `0x0860A1D0` | `gScaleTable` | byte-identical to pokeemerald |
+| `0x0860A284` | `gFreqTable` | 12 words, byte-identical to pokeemerald |
+| `0x0860A2B4` | `gPcmSamplesPerVBlankTable` | halfwords, indexed by freq-1 in `SampleFreqSet` |
+| `0x0860A2CC` | `gCgbScaleTable` | used by `MidiKeyToCgbFreq` (pool `0x080CF054`) |
+| `0x0860A350` | `gCgbFreqTable` | used by `MidiKeyToCgbFreq` (pool `0x080CF058`) |
+| `0x0860A368` | `gNoiseTable` | used by `MidiKeyToCgbFreq` (pool `0x080CEFE8`) |
+| `0x0860A3A4` | (CgbSound table) | pool `0x080CF508` |
+| `0x0860A3B4` | `gClockTable` | 48 gate-time bytes + pad, byte-identical to pokeemerald |
+| `0x0860A3E8` | `gXcmdTable` | 12 Thumb pointers (#29) |
+| `0x0860B430` | `gMPlayTable` | 4 players × (info, tracks, count): BGM 8 tracks, SE1-SE3 6 tracks |
+| `0x0860B460` | `gSongTable` | 103 `(header, ms/me)` entries, 0x338 bytes, ends `0x0860B797` |
+
+### 8.4 RAM map (named via `tools/split_config.json` `data_symbols`)
+
+| Address | Symbol | Source of the address |
+|---|---|---|
+| `0x030056D0` | `gSoundInfo` | `m4aSoundInit` pool `0x080CE5BC`; SoundInfo is 0xFB0 bytes (CpuSet fill word `0x050003EC`) |
+| `0x03006680` | `gMPlayJumpTable` | `SoundInit` pool `0x080CEA4C` / `MPlayExtender` pool `0x080CE8F4` |
+| `0x03006710` | `gCgbChans` | `m4aSoundInit` pool `0x080CE5C0` |
+| `0x03006810/50/90/E0` | `gMPlayInfo_BGM/SE1/SE2/SE3` | `gMPlayTable[i].info` |
+| `0x030068D0` | `gMPlayMemAccArea` | `m4aSoundInit` pool `0x080CE5D0` |
+| `0x03006930/6BB0/6D90/6F70` | `gMPlayTrack_BGM/SE1/SE2/SE3` | `gMPlayTable[i].track` (track = 0x50 bytes) |
+| `0x03007150` | `gSoundMainRAM_Buffer` | CpuSet dest pool `0x080CE5B4`; `SoundMain` jumps to `0x03007151` (pool `0x080CD920`) |
+| `0x03007FF0` | `SOUND_INFO_PTR` | BIOS-defined sound-info pointer cell |
+
+### 8.5 Decompilation plan (child issues)
+
+Split follows pret precedent: the asm core stays hand-written asm forever
+(`m4a_1.s` is not compiler output); the C driver decompiles to `m4a.c` with
+`old_agbcc -O1 -mthumb-interwork` (validate per function with
+`./tools/fnmatch.sh <start> <end> src/m4a_<x>.c --old` before landing;
+diagnose per lesson 3.1 if a function disagrees). Suggested chunks: (a)
+engine rodata extraction (§8.3, tables only — song data stays `.incbin` for
+issue #36), (b) carve the asm core `0x080CD89C-0x080CE51F` into a dedicated
+`asm/m4a_1.s`-style unit, (c) `m4a.c` part 1 `0x080CE520-0x080CEFB3`
+(init/song-number/MPlay API), (d) `m4a.c` part 2 `0x080CEFB4-0x080CF587`
+(CGB: MidiKeyToCgbFreq/CgbOscOff/CgbModVol/CgbSound), (e) `m4a.c` part 3
+`0x080CF588-0x080CFA4B` (track controls, ply_memacc/ply_xcmd/ply_x*).

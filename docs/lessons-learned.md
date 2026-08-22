@@ -147,6 +147,30 @@ long-lived experiments outside `build/`. Related: the macOS Docker daemon
 can hang for ~2 minutes under rapid repeated `docker run` — back off
 instead of stacking more containers.
 
+### 2.13 SDK libraries are linked whole-object: expect DEAD exports the census cannot see
+
+The m4a driver (issue #31) contains ten public functions with ZERO in-ROM
+references (no `bl`, no pointer word): `m4aSongNumStartOrChange`,
+`m4aSongNumContinue`, the `m4aMPlayContinue`/`m4aMPlayFadeOut` wrappers,
+`m4aMPlayFadeOutTemporarily`, `m4aMPlayFadeIn`, `SoundClear`,
+`m4aMPlayPanpotControl`, `m4aMPlayModDepthSet`, `m4aMPlayLFOSpeedSet`.
+They exist because the SDK object was linked wholesale, so the evidence-driven
+census (`bl` targets + ROM pointers) can NEVER discover them — when mapping an
+SDK module, walk the gaps between evidenced functions and identify the dead
+bodies by shape against the reference source (function ORDER inside an SDK
+object is stable). `tools/symdb.py` grew a curated `EXTRA_THUMB_ENTRIES` list
+(evidence kind `curated`) for exactly this case.
+
+### 2.14 Multiboot child images embed their own library copies — grep hits in data segments are NOT the main driver
+
+Scanning the ROM for m4a's `SOUND_INFO_PTR`/`ID_NUMBER` literals returns, besides
+the real driver at `0x080CDxxx`, three clusters inside seg 19 data
+(`0x08777800+`, `0x0879F2E0+`, `0x087CA834+`). Those are multiboot child-program
+images (blob pointers `0x087954C0`/`0x087C0A4C` loaded by the link sender at
+`0x08007C5C+`), each embedding its own driver copy. When locating a library by
+literal scan, always cross-check hits against the code span and trace who
+references the containing blob before concluding anything.
+
 ## 3. Compiler / source-shape lessons (gcc 2.9 "old_agbcc")
 
 ### 3.1 Opt level is per-zone and readable from loop shape

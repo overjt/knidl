@@ -192,7 +192,7 @@ def main():
     known_names = set(symdb.KNOWN_SYMBOLS.values())
     known_names |= {n for _, _, n in symdb.ARM_ENTRIES if n}
     name_re = re.compile(r"^sub_[0-9a-f]{8}$")
-    valid_ev = {"bl-target", "rom-pointer", "prologue-scan"}
+    valid_ev = {"bl-target", "rom-pointer", "prologue-scan", "curated"}
     prev = None
     for vma, size, isa, ev, name in symbols:
         if isa not in ("thumb", "arm"):
