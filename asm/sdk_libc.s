@@ -7,12 +7,11 @@
 @   0x080CFC38 _call_via_r2
 @   0x080CFC3C _call_via_r3
 @   0x080CFC6C __divsi3
-@   0x080CFCFC sub_080cfcfc
 @   0x080CFD00 _div0
 @   0x080CFD04 __umodsi3
-@   0x080CFDC4 sub_080cfdc4
-@   0x080CFDCC sub_080cfdcc
-@   0x080CFDD4 sub_080cfdd4
+@   0x080CFDC4 TaskSwitchTrampoline
+@   0x080CFDCC TaskYieldTrampoline
+@   0x080CFDD4 TaskDispatchTrampoline
 
 	.section .sdk_libc, "ax"
 	.global	sdk_libc
@@ -175,10 +174,6 @@ __divsi3:
 	push	{lr}
 	bl	_div0	@ 0x080CFD00
 	movs	r0, #0
-	.thumb_func
-	.global	sub_080cfcfc
-sub_080cfcfc:
-	.thumb
 	pop	{pc}
 	movs	r0, r0
 	.thumb_func
@@ -302,24 +297,24 @@ __umodsi3:
 	movs	r0, #0
 	pop	{pc}
 	.thumb_func
-	.global	sub_080cfdc4
-sub_080cfdc4:
+	.global	TaskSwitchTrampoline
+TaskSwitchTrampoline:
 	.thumb
 	bx	pc
 	nop
 	stmia	r1!, {r0, r3, r4}
 	.short	0xEAFC
 	.thumb_func
-	.global	sub_080cfdcc
-sub_080cfdcc:
+	.global	TaskYieldTrampoline
+TaskYieldTrampoline:
 	.thumb
 	.short	0x4778
 	nop
 	stmia	r1!, {r5}
 	.short	0xEAFC
 	.thumb_func
-	.global	sub_080cfdd4
-sub_080cfdd4:
+	.global	TaskDispatchTrampoline
+TaskDispatchTrampoline:
 	.thumb
 	.short	0x4778
 	nop

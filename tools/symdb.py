@@ -126,7 +126,26 @@ KNOWN_SYMBOLS = {
     0x080CFC6C: "__divsi3",
     0x080CFD00: "_div0",
     0x080CFD04: "__umodsi3",
+    # Thumb->ARM task trampolines at the sdk_libc tail (issue #30).  Each
+    # decodes as `bx pc; nop` + one raw ARM `b` into the seg-4 task helpers
+    # (asm/task_switch_helpers.s): 0xEAFCC119 @0x080CFDC8 -> 0x08000234
+    # (switch-to-task), 0xEAFCC120 @0x080CFDD0 -> 0x08000258 (yield-back),
+    # 0xEAFCC12A @0x080CFDD8 -> 0x08000288 (dispatcher call).  Names follow
+    # the helper semantics documented in docs/analysis/rom-map.md section 6.
+    0x080CFDC4: "TaskSwitchTrampoline",
+    0x080CFDCC: "TaskYieldTrampoline",
+    0x080CFDD4: "TaskDispatchTrampoline",
 }
+
+# Curated false positives: candidate addresses whose only evidence is
+# coincidental data, rejected before the prologue filter (issue #30).
+# 0x080CFCFC is the `pop {pc}` tail of __divsi3's division-by-zero path
+# (gcc 2.9 lib1funcs.asm Ldiv0: push {lr}; bl __div0; mov r0, #0; pop {pc})
+# — the interior of __divsi3, not a function entry.  Its single
+# "rom-pointer" reference (word 0x080CFCFD at 0x086DA494) sits inside the
+# m4a_songs data segment surrounded by signed 8-bit PCM sample bytes; the
+# `pop {pc}` halfword passes the strict terminator check by accident.
+FALSE_POSITIVES = {0x080CFCFC}
 
 EVIDENCE_KINDS = ("bl-target", "rom-pointer", "prologue-scan")
 
@@ -292,6 +311,8 @@ def build(rom, segments):
     # to the code span, excluding the ARM zones, validated by prologue shape.
     candidates = {}
     for target in set(bl_targets) | set(ptr_targets):
+        if target in FALSE_POSITIVES:
+            continue
         if not CODE_SPAN_START <= target < CODE_SPAN_END:
             continue
         if target & 1 or any(s <= target < e for s, e in arm_ranges):

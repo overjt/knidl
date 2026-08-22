@@ -19,7 +19,7 @@
 0x080CFA4C 0x080CFA7F thumb_code sdk_swi_wrappers [split] # svc thunks named per include/gba/syscall.h; stays named asm by design (bare `svc N; bx lr` is not producible from C by agbcc — issue #29)
 0x080CFA7F 0x080CFA9C thumb_code sdk_reset_helper [split] # SoftReset (0x080CFA80, svc 1 + svc 0) via split_config extra_labels; odd start => data-emitted, stays named asm by design (issue #29)
 0x080CFA9C 0x080CFC30 c_code sram_driver
-0x080CFC30 0x080CFDDC thumb_code sdk_libc [split] # _call_via_r0..lr + __divsi3/__umodsi3/_div0 + Thumb->ARM task trampolines
+0x080CFC30 0x080CFDDC thumb_code sdk_libc [split] # _call_via_r0..lr + __divsi3/__umodsi3/_div0 (gcc lib1funcs.asm, hand-written asm upstream) + Task{Switch,Yield,Dispatch}Trampoline; stays named asm forever by design (#30, rom-map section 2 seg 9)
 0x080CFDDC 0x080CFDE4 arm_code interworking_veneer [split] # ldr ip,[pc]; bx ip -> 0x08005654|1
 0x080CFDE4 0x080CFDE8 data gap_interworking_veneer_irq_handler_table_14 [split] # NOT padding: the veneer's literal word (sub_08005654+1)
 0x080CFDE8 0x080CFE20 data irq_handler_table_14 [split] # 14 .word entries with symbolic targets

@@ -1308,7 +1308,7 @@ loc_080c6c88:
 	bl	sub_08002e98	@ 0x08002E98
 	.global	loc_080c6c92
 loc_080c6c92:
-	bl	sub_080cfdd4	@ 0x080CFDD4
+	bl	TaskDispatchTrampoline	@ 0x080CFDD4
 	pop	{r0}
 	bx	r0
 	movs	r0, r0
@@ -1495,11 +1495,11 @@ sub_080c6d84:
 	ldr	r0, [pc, #908]	@ 0x080C7194
 	strh	r0, [r1, #60]
 	movs	r0, #240
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	movs	r0, #12
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	movs	r0, #190
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [pc, #888]	@ 0x080C7198
 	ldr	r0, [r4, #0]
 	adds	r2, r0, #0
@@ -1516,7 +1516,7 @@ sub_080c6d84:
 	movs	r3, #0
 	bl	sub_08001a94	@ 0x08001A94
 	movs	r0, #1
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [pc, #856]	@ 0x080C719C
 	ldr	r0, [r4, #0]
 	adds	r2, r0, #0
@@ -1533,7 +1533,7 @@ sub_080c6d84:
 	movs	r3, #0
 	bl	sub_08001a94	@ 0x08001A94
 	movs	r0, #1
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [pc, #820]	@ 0x080C71A0
 	ldr	r0, [r4, #0]
 	adds	r2, r0, #0
@@ -1550,7 +1550,7 @@ sub_080c6d84:
 	movs	r3, #0
 	bl	sub_08001a94	@ 0x08001A94
 	movs	r0, #1
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [pc, #788]	@ 0x080C71A4
 	ldr	r0, [r4, #0]
 	adds	r2, r0, #0
@@ -1567,7 +1567,7 @@ sub_080c6d84:
 	movs	r3, #0
 	bl	sub_08001a94	@ 0x08001A94
 	movs	r0, #1
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [pc, #752]	@ 0x080C71A8
 	ldr	r0, [r4, #0]
 	adds	r2, r0, #0
@@ -1584,7 +1584,7 @@ sub_080c6d84:
 	movs	r3, #0
 	bl	sub_08001a94	@ 0x08001A94
 	movs	r0, #1
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [pc, #720]	@ 0x080C71AC
 	ldr	r0, [r4, #0]
 	adds	r2, r0, #0
@@ -1601,9 +1601,9 @@ sub_080c6d84:
 	movs	r3, #0
 	bl	sub_08001a94	@ 0x08001A94
 	movs	r0, #1
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	movs	r0, #16
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r0, [r4, #0]
 	movs	r3, #62
 	strh	r3, [r0, #60]
@@ -1618,51 +1618,51 @@ sub_080c6d84:
 	str	r5, [r1, #40]
 	bl	sub_080062c4	@ 0x080062C4
 	movs	r0, #4
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r0, [r4, #0]
 	ldr	r1, [pc, #644]	@ 0x080C71B4
 	str	r1, [r0, #84]
 	ldr	r2, [pc, #644]	@ 0x080C71B8
 	str	r2, [r0, #88]
 	movs	r0, #80
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r4, #0]
 	ldr	r0, [pc, #636]	@ 0x080C71BC
 	str	r0, [r1, #84]
 	movs	r0, #24
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r4, #0]
 	ldr	r0, [pc, #628]	@ 0x080C71C0
 	str	r0, [r1, #84]
 	movs	r0, #24
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r0, [r4, #0]
 	movs	r3, #128
 	lsls	r3, r3, #4
 	str	r3, [r0, #84]
 	movs	r0, #24
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r0, [r4, #0]
 	str	r5, [r0, #84]
 	movs	r0, #24
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r0, [r4, #0]
 	movs	r1, #128
 	lsls	r1, r1, #6
 	str	r1, [r0, #84]
 	movs	r0, #24
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r0, [r4, #0]
 	movs	r7, #128
 	.word	0x654701FF
 	movs	r0, #24
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r0, [r4, #0]
 	movs	r5, #128
 	lsls	r5, r5, #8
 	str	r5, [r0, #84]
 	movs	r0, #24
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r4, #0]
 	movs	r0, #1
 	negs	r0, r0
@@ -1674,13 +1674,13 @@ sub_080c6d84:
 	mov	r9, r2
 	str	r2, [r0, #84]
 	movs	r0, #28
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r0, [r4, #0]
 	ldr	r3, [pc, #528]	@ 0x080C71C4
 	str	r3, [r0, #84]
 	str	r7, [r0, #88]
 	movs	r0, #32
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	movs	r0, #24
 	bl	sub_08003110	@ 0x08003110
 	ldr	r0, [r4, #0]
@@ -1689,17 +1689,17 @@ sub_080c6d84:
 	str	r5, [r0, #84]
 	str	r7, [r0, #88]
 	movs	r0, #48
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r0, [r4, #0]
 	str	r5, [r0, #88]
 	movs	r0, #32
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r4, #0]
 	movs	r0, #192
 	lsls	r0, r0, #8
 	str	r0, [r1, #88]
 	movs	r0, #16
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r4, #0]
 	movs	r0, #1
 	negs	r0, r0
@@ -1710,7 +1710,7 @@ sub_080c6d84:
 	mov	r3, r9
 	str	r3, [r1, #88]
 	movs	r0, #14
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r4, #0]
 	movs	r0, #192
 	lsls	r0, r0, #7
@@ -1718,7 +1718,7 @@ sub_080c6d84:
 	ldr	r0, [pc, #436]	@ 0x080C71C4
 	str	r0, [r1, #88]
 	movs	r0, #32
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r4, #0]
 	movs	r0, #1
 	str	r0, [r1, #52]
@@ -1733,49 +1733,49 @@ sub_080c6d84:
 	str	r0, [r1, #84]
 	str	r5, [r1, #88]
 	movs	r0, #32
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r0, [r4, #0]
 	str	r7, [r0, #88]
 	movs	r0, #16
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r0, [r4, #0]
 	ldr	r1, [pc, #372]	@ 0x080C71B8
 	str	r1, [r0, #88]
 	movs	r0, #16
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r0, [r4, #0]
 	ldr	r5, [pc, #384]	@ 0x080C71D0
 	str	r5, [r0, #88]
 	movs	r0, #16
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r0, [r4, #0]
 	mov	r2, r8
 	str	r2, [r0, #84]
 	str	r2, [r0, #88]
 	movs	r0, #16
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r4, #0]
 	str	r5, [r1, #84]
 	ldr	r0, [pc, #360]	@ 0x080C71D4
 	str	r0, [r1, #88]
 	movs	r0, #16
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r0, [r4, #0]
 	ldr	r3, [pc, #320]	@ 0x080C71B8
 	str	r3, [r0, #84]
 	str	r5, [r0, #88]
 	movs	r0, #16
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r0, [r4, #0]
 	str	r7, [r0, #84]
 	ldr	r1, [pc, #304]	@ 0x080C71B8
 	str	r1, [r0, #88]
 	movs	r0, #16
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r0, [r4, #0]
 	str	r7, [r0, #88]
 	movs	r0, #64
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r0, [r4, #0]
 	adds	r0, #108
 	movs	r2, #0
@@ -1798,13 +1798,13 @@ loc_080c70b8:
 	mov	r1, sl
 	str	r1, [r0, #88]
 	movs	r0, #8
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r0, [r4, #0]
 	str	r5, [r0, #84]
 	mov	r2, r8
 	str	r2, [r0, #88]
 	movs	r0, #8
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r4, #0]
 	mov	r3, r9
 	str	r3, [r1, #84]
@@ -1812,45 +1812,45 @@ loc_080c70b8:
 	lsls	r0, r0, #8
 	str	r0, [r1, #88]
 	movs	r0, #32
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r0, [r4, #0]
 	str	r5, [r0, #84]
 	mov	r1, r8
 	str	r1, [r0, #88]
 	movs	r0, #8
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	bl	sub_080062c4	@ 0x080062C4
 	ldr	r0, [r4, #0]
 	mov	r2, sl
 	str	r2, [r0, #88]
 	movs	r0, #8
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r0, [r4, #0]
 	str	r6, [r0, #88]
 	movs	r0, #8
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r0, [r4, #0]
 	str	r5, [r0, #84]
 	str	r7, [r0, #88]
 	movs	r0, #8
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r4, #0]
 	mov	r3, r9
 	str	r3, [r1, #84]
 	ldr	r0, [pc, #172]	@ 0x080C71D0
 	str	r0, [r1, #88]
 	movs	r0, #32
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r0, [r4, #0]
 	str	r5, [r0, #84]
 	str	r7, [r0, #88]
 	movs	r0, #8
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	bl	sub_080062c4	@ 0x080062C4
 	ldr	r0, [r4, #0]
 	str	r6, [r0, #88]
 	movs	r0, #8
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r4, #0]
 	adds	r1, #108
 	ldrh	r0, [r1, #0]
@@ -1918,13 +1918,13 @@ loc_080c71e2:
 	mov	r3, sl
 	str	r3, [r0, #88]
 	movs	r0, #8
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r0, [r4, #0]
 	str	r5, [r0, #84]
 	mov	r1, r8
 	str	r1, [r0, #88]
 	movs	r0, #8
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r0, [r4, #0]
 	mov	r2, r9
 	str	r2, [r0, #84]
@@ -1932,45 +1932,45 @@ loc_080c71e2:
 	lsls	r3, r3, #8
 	str	r3, [r0, #88]
 	movs	r0, #32
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r0, [r4, #0]
 	str	r5, [r0, #84]
 	mov	r1, r8
 	str	r1, [r0, #88]
 	movs	r0, #8
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	bl	sub_080062c4	@ 0x080062C4
 	ldr	r0, [r4, #0]
 	mov	r2, sl
 	str	r2, [r0, #88]
 	movs	r0, #8
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r0, [r4, #0]
 	str	r7, [r0, #88]
 	movs	r0, #8
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r0, [r4, #0]
 	str	r5, [r0, #84]
 	str	r6, [r0, #88]
 	movs	r0, #8
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r0, [r4, #0]
 	mov	r3, r9
 	str	r3, [r0, #84]
 	ldr	r1, [pc, #884]	@ 0x080C75C4
 	str	r1, [r0, #88]
 	movs	r0, #32
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r0, [r4, #0]
 	str	r5, [r0, #84]
 	str	r6, [r0, #88]
 	movs	r0, #8
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	bl	sub_080062c4	@ 0x080062C4
 	ldr	r0, [r4, #0]
 	str	r7, [r0, #88]
 	movs	r0, #8
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r4, #0]
 	adds	r1, #108
 	ldrh	r0, [r1, #0]
@@ -1990,7 +1990,7 @@ loc_080c71e2:
 	lsls	r7, r7, #6
 	str	r7, [r0, #88]
 	movs	r0, #8
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r0, [r4, #0]
 	movs	r3, #128
 	lsls	r3, r3, #4
@@ -2000,29 +2000,29 @@ loc_080c71e2:
 	mov	r9, r1
 	str	r1, [r0, #88]
 	movs	r0, #8
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r0, [r4, #0]
 	movs	r2, #128
 	lsls	r2, r2, #8
 	str	r2, [r0, #88]
 	movs	r0, #32
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r0, [r4, #0]
 	mov	r3, r9
 	str	r3, [r0, #88]
 	movs	r0, #8
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r0, [r4, #0]
 	mov	r1, r8
 	str	r1, [r0, #84]
 	str	r7, [r0, #88]
 	movs	r0, #8
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r0, [r4, #0]
 	ldr	r5, [pc, #736]	@ 0x080C75BC
 	str	r5, [r0, #88]
 	movs	r0, #8
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r0, [r4, #0]
 	movs	r2, #128
 	lsls	r2, r2, #4
@@ -2031,28 +2031,28 @@ loc_080c71e2:
 	mov	sl, r3
 	str	r3, [r0, #88]
 	movs	r0, #8
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r0, [r4, #0]
 	ldr	r1, [pc, #712]	@ 0x080C75C4
 	str	r1, [r0, #88]
 	movs	r0, #32
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r0, [r4, #0]
 	mov	r2, sl
 	str	r2, [r0, #88]
 	movs	r0, #8
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r0, [r4, #0]
 	mov	r3, r8
 	str	r3, [r0, #84]
 	str	r5, [r0, #88]
 	movs	r0, #8
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	bl	sub_080062c4	@ 0x080062C4
 	ldr	r0, [r4, #0]
 	str	r5, [r0, #88]
 	movs	r0, #8
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r0, [r4, #0]
 	adds	r0, #108
 	movs	r1, #0
@@ -2068,13 +2068,13 @@ loc_080c733a:
 	lsls	r1, r1, #6
 	str	r1, [r0, #88]
 	movs	r0, #8
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r0, [r4, #0]
 	str	r7, [r0, #84]
 	mov	r2, r8
 	str	r2, [r0, #88]
 	movs	r0, #8
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r0, [r4, #0]
 	movs	r3, #128
 	lsls	r3, r3, #4
@@ -2083,29 +2083,29 @@ loc_080c733a:
 	lsls	r1, r1, #8
 	str	r1, [r0, #88]
 	movs	r0, #32
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r0, [r4, #0]
 	str	r7, [r0, #84]
 	mov	r2, r8
 	str	r2, [r0, #88]
 	movs	r0, #8
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	bl	sub_080062c4	@ 0x080062C4
 	ldr	r0, [r4, #0]
 	movs	r3, #128
 	lsls	r3, r3, #6
 	str	r3, [r0, #88]
 	movs	r0, #8
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r0, [r4, #0]
 	str	r5, [r0, #88]
 	movs	r0, #8
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r0, [r4, #0]
 	str	r7, [r0, #84]
 	str	r6, [r0, #88]
 	movs	r0, #8
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r0, [r4, #0]
 	movs	r1, #128
 	lsls	r1, r1, #4
@@ -2113,17 +2113,17 @@ loc_080c733a:
 	ldr	r2, [pc, #532]	@ 0x080C75C4
 	str	r2, [r0, #88]
 	movs	r0, #32
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r0, [r4, #0]
 	str	r7, [r0, #84]
 	str	r6, [r0, #88]
 	movs	r0, #8
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	bl	sub_080062c4	@ 0x080062C4
 	ldr	r0, [r4, #0]
 	str	r5, [r0, #88]
 	movs	r0, #8
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r4, #0]
 	adds	r1, #108
 	ldrh	r0, [r1, #0]
@@ -2140,7 +2140,7 @@ loc_080c733a:
 	lsls	r3, r3, #6
 	str	r3, [r0, #88]
 	movs	r0, #8
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r0, [r4, #0]
 	movs	r1, #128
 	lsls	r1, r1, #3
@@ -2150,7 +2150,7 @@ loc_080c733a:
 	lsls	r2, r2, #7
 	str	r2, [r0, #88]
 	movs	r0, #8
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r0, [r4, #0]
 	movs	r3, #128
 	lsls	r3, r3, #4
@@ -2160,7 +2160,7 @@ loc_080c733a:
 	lsls	r1, r1, #8
 	str	r1, [r0, #88]
 	movs	r0, #28
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r0, [r4, #0]
 	mov	r2, r8
 	str	r2, [r0, #84]
@@ -2168,44 +2168,44 @@ loc_080c733a:
 	lsls	r3, r3, #7
 	str	r3, [r0, #88]
 	movs	r0, #8
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	bl	sub_080062c4	@ 0x080062C4
 	ldr	r0, [r4, #0]
 	movs	r1, #128
 	lsls	r1, r1, #6
 	str	r1, [r0, #88]
 	movs	r0, #8
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r0, [r4, #0]
 	ldr	r7, [pc, #368]	@ 0x080C75BC
 	str	r7, [r0, #88]
 	movs	r0, #8
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r0, [r4, #0]
 	mov	r2, r8
 	str	r2, [r0, #84]
 	ldr	r5, [pc, #356]	@ 0x080C75C0
 	str	r5, [r0, #88]
 	movs	r0, #8
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r0, [r4, #0]
 	mov	r3, r9
 	str	r3, [r0, #84]
 	ldr	r1, [pc, #344]	@ 0x080C75C4
 	str	r1, [r0, #88]
 	movs	r0, #28
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r0, [r4, #0]
 	mov	r2, r8
 	str	r2, [r0, #84]
 	str	r5, [r0, #88]
 	movs	r0, #8
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	bl	sub_080062c4	@ 0x080062C4
 	ldr	r0, [r4, #0]
 	str	r7, [r0, #88]
 	movs	r0, #8
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r0, [r4, #0]
 	movs	r1, #1
 	str	r1, [r0, #52]
@@ -2225,7 +2225,7 @@ loc_080c74a2:
 	lsls	r2, r2, #6
 	str	r2, [r0, #88]
 	movs	r0, #8
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r0, [r4, #0]
 	movs	r3, #128
 	lsls	r3, r3, #4
@@ -2233,18 +2233,18 @@ loc_080c74a2:
 	mov	r1, sl
 	str	r1, [r0, #88]
 	movs	r0, #8
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r0, [r4, #0]
 	movs	r6, #128
 	lsls	r6, r6, #8
 	str	r6, [r0, #88]
 	movs	r0, #32
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r0, [r4, #0]
 	mov	r2, sl
 	str	r2, [r0, #88]
 	movs	r0, #8
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r0, [r4, #0]
 	mov	r3, r8
 	str	r3, [r0, #84]
@@ -2252,35 +2252,35 @@ loc_080c74a2:
 	lsls	r1, r1, #6
 	str	r1, [r0, #88]
 	movs	r0, #8
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r0, [r4, #0]
 	mov	r2, r9
 	str	r2, [r0, #88]
 	movs	r0, #8
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r0, [r4, #0]
 	movs	r3, #128
 	lsls	r3, r3, #4
 	str	r3, [r0, #84]
 	str	r5, [r0, #88]
 	movs	r0, #8
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r0, [r4, #0]
 	ldr	r7, [pc, #176]	@ 0x080C75C4
 	str	r7, [r0, #88]
 	movs	r0, #24
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r0, [r4, #0]
 	str	r5, [r0, #88]
 	movs	r0, #8
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r0, [r4, #0]
 	mov	r1, r8
 	str	r1, [r0, #84]
 	mov	r2, r9
 	str	r2, [r0, #88]
 	movs	r0, #8
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r4, #0]
 	adds	r1, #108
 	ldrh	r0, [r1, #0]
@@ -2295,7 +2295,7 @@ loc_080c74a2:
 	str	r7, [r0, #84]
 	str	r6, [r0, #88]
 	movs	r0, #8
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r0, [r4, #0]
 	ldr	r5, [pc, #116]	@ 0x080C75CC
 	str	r5, [r0, #84]
@@ -2304,39 +2304,39 @@ loc_080c74a2:
 	mov	r9, r3
 	str	r3, [r0, #88]
 	movs	r0, #8
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r0, [r4, #0]
 	ldr	r1, [pc, #100]	@ 0x080C75D0
 	mov	r8, r1
 	str	r1, [r0, #84]
 	str	r6, [r0, #88]
 	movs	r0, #12
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r0, [r4, #0]
 	str	r7, [r0, #88]
 	movs	r0, #12
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r0, [r4, #0]
 	str	r5, [r0, #84]
 	str	r5, [r0, #88]
 	movs	r0, #8
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r0, [r4, #0]
 	str	r7, [r0, #84]
 	movs	r0, #8
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r0, [r4, #0]
 	str	r6, [r0, #84]
 	mov	r2, r8
 	str	r2, [r0, #88]
 	movs	r0, #8
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r0, [r4, #0]
 	mov	r3, r9
 	str	r3, [r0, #84]
 	str	r5, [r0, #88]
 	movs	r0, #8
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r0, [r4, #0]
 	movs	r5, #128
 	lsls	r5, r5, #10
@@ -2354,66 +2354,66 @@ loc_080c75d4:
 	.short	0x6545
 	str	r6, [r0, #88]
 	movs	r0, #40
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r0, [r4, #0]
 	mov	r1, r9
 	str	r1, [r0, #84]
 	movs	r0, #8
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r4, #0]
 	str	r6, [r1, #84]
 	ldr	r0, [pc, #164]	@ 0x080C7694
 	str	r0, [r1, #88]
 	movs	r0, #8
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r4, #0]
 	movs	r0, #128
 	lsls	r0, r0, #6
 	str	r0, [r1, #84]
 	str	r7, [r1, #88]
 	movs	r0, #8
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	bl	sub_080062c4	@ 0x080062C4
 	movs	r0, #16
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r0, [r4, #0]
 	str	r5, [r0, #88]
 	movs	r0, #2
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r0, [r4, #0]
 	mov	r2, r8
 	str	r2, [r0, #88]
 	movs	r0, #2
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	bl	sub_080062c4	@ 0x080062C4
 	movs	r0, #60
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r0, [r4, #0]
 	str	r5, [r0, #88]
 	movs	r0, #2
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r0, [r4, #0]
 	mov	r3, r8
 	str	r3, [r0, #88]
 	movs	r0, #2
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	bl	sub_080062c4	@ 0x080062C4
 	movs	r0, #14
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	movs	r0, #68
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r0, [r4, #0]
 	str	r5, [r0, #88]
 	movs	r0, #2
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r0, [r4, #0]
 	mov	r1, r8
 	str	r1, [r0, #88]
 	movs	r0, #2
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	bl	sub_080062c4	@ 0x080062C4
 	movs	r0, #46
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [pc, #28]	@ 0x080C7698
 	movs	r0, #0
 	strb	r0, [r1, #0]
@@ -2714,13 +2714,13 @@ loc_080c7886:
 	str	r2, [r1, #84]
 	strh	r6, [r1, #60]
 	movs	r0, #1
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r0, [r7, #0]
 	ldr	r5, [pc, #100]	@ 0x080C7914
 	str	r5, [r0, #84]
 	strh	r6, [r0, #60]
 	movs	r0, #1
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r0, [r7, #0]
 	movs	r3, #128
 	lsls	r3, r3, #9
@@ -2728,12 +2728,12 @@ loc_080c7886:
 	movs	r4, #1
 	strh	r4, [r0, #60]
 	movs	r0, #1
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r0, [r7, #0]
 	str	r5, [r0, #84]
 	strh	r4, [r0, #60]
 	movs	r0, #1
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r0, [r7, #0]
 	movs	r1, #128
 	lsls	r1, r1, #9
@@ -2741,12 +2741,12 @@ loc_080c7886:
 	movs	r4, #2
 	strh	r4, [r0, #60]
 	movs	r0, #1
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r0, [r7, #0]
 	str	r5, [r0, #84]
 	strh	r4, [r0, #60]
 	movs	r0, #1
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r0, [r7, #0]
 	movs	r2, #128
 	lsls	r2, r2, #9
@@ -2754,14 +2754,14 @@ loc_080c7886:
 	movs	r4, #3
 	strh	r4, [r0, #60]
 	movs	r0, #1
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r0, [r7, #0]
 	str	r5, [r0, #84]
 	strh	r4, [r0, #60]
 	.global	loc_080c790c
 loc_080c790c:
 	movs	r0, #1
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	b.n	loc_080c7834	@ 0x080C7834
 	.word	0xFFFF0000
 	.global	loc_080c7918
@@ -2802,31 +2802,31 @@ loc_080c7918:
 	mov	r2, sl
 	strh	r2, [r0, #60]
 	movs	r0, #2
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r0, [r7, #0]
 	movs	r3, #5
 	mov	r9, r3
 	mov	r1, r9
 	strh	r1, [r0, #60]
 	movs	r0, #2
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r0, [r7, #0]
 	movs	r2, #6
 	mov	r8, r2
 	mov	r3, r8
 	strh	r3, [r0, #60]
 	movs	r0, #2
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r0, [r7, #0]
 	movs	r6, #7
 	strh	r6, [r0, #60]
 	movs	r0, #2
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r0, [r7, #0]
 	movs	r5, #8
 	strh	r5, [r0, #60]
 	movs	r0, #2
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	movs	r0, #12
 	bl	sub_08002ee8	@ 0x08002EE8
 	ldr	r1, [r7, #0]
@@ -2854,25 +2854,25 @@ loc_080c7918:
 	mov	r1, sl
 	strh	r1, [r0, #60]
 	movs	r0, #2
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r0, [r7, #0]
 	mov	r2, r9
 	strh	r2, [r0, #60]
 	movs	r0, #2
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r0, [r7, #0]
 	mov	r3, r8
 	strh	r3, [r0, #60]
 	movs	r0, #2
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r0, [r7, #0]
 	strh	r6, [r0, #60]
 	movs	r0, #2
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r0, [r7, #0]
 	strh	r5, [r0, #60]
 	movs	r0, #2
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	b.n	loc_080c7834	@ 0x080C7834
 	.word	0x5A5A5A5A
 	.word	0xFFFFF800
@@ -2900,32 +2900,32 @@ loc_080c7a1c:
 	movs	r6, #9
 	strh	r6, [r1, #60]
 	movs	r0, #1
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r0, [r7, #0]
 	movs	r2, #10
 	strh	r2, [r0, #60]
 	movs	r0, #1
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r0, [r7, #0]
 	movs	r5, #11
 	strh	r5, [r0, #60]
 	movs	r0, #1
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r0, [r7, #0]
 	movs	r3, #12
 	strh	r3, [r0, #60]
 	movs	r0, #1
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r0, [r7, #0]
 	movs	r1, #13
 	strh	r1, [r0, #60]
 	movs	r0, #1
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r0, [r7, #0]
 	movs	r4, #14
 	strh	r4, [r0, #60]
 	movs	r0, #1
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	movs	r0, #32
 	bl	sub_08002ee8	@ 0x08002EE8
 	ldr	r1, [r7, #0]
@@ -2940,35 +2940,35 @@ loc_080c7a1c:
 	str	r0, [r1, #80]
 	strh	r6, [r1, #60]
 	movs	r0, #1
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r0, [r7, #0]
 	movs	r2, #10
 	strh	r2, [r0, #60]
 	movs	r0, #1
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r0, [r7, #0]
 	strh	r5, [r0, #60]
 	movs	r0, #1
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r0, [r7, #0]
 	movs	r3, #12
 	strh	r3, [r0, #60]
 	movs	r0, #1
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r0, [r7, #0]
 	movs	r1, #13
 	strh	r1, [r0, #60]
 	movs	r0, #1
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r0, [r7, #0]
 	strh	r4, [r0, #60]
 	movs	r0, #1
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r7, #0]
 	ldr	r0, [pc, #116]	@ 0x080C7B60
 	strh	r0, [r1, #60]
 	movs	r0, #15
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	movs	r0, #32
 	bl	sub_08002ee8	@ 0x08002EE8
 	ldr	r1, [r7, #0]
@@ -2983,36 +2983,36 @@ loc_080c7a1c:
 	str	r0, [r1, #80]
 	strh	r6, [r1, #60]
 	movs	r0, #1
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r0, [r7, #0]
 	movs	r2, #10
 	strh	r2, [r0, #60]
 	movs	r0, #1
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r0, [r7, #0]
 	strh	r5, [r0, #60]
 	movs	r0, #1
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r0, [r7, #0]
 	movs	r3, #12
 	strh	r3, [r0, #60]
 	movs	r0, #1
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r0, [r7, #0]
 	movs	r1, #13
 	strh	r1, [r0, #60]
 	movs	r0, #1
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r0, [r7, #0]
 	strh	r4, [r0, #60]
 	movs	r0, #1
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r7, #0]
 	movs	r0, #1
 	negs	r0, r0
 	strh	r0, [r1, #60]
 	movs	r0, #30
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	b.n	loc_080c7834	@ 0x080C7834
 	movs	r0, r0
 	.word	0x0000FFFF
@@ -3058,7 +3058,7 @@ loc_080c7b64:
 	adds	r0, #68
 	strh	r1, [r0, #0]
 	movs	r0, #16
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	movs	r0, #100
 	movs	r1, #32
 	bl	sub_080058e4	@ 0x080058E4
@@ -3098,7 +3098,7 @@ loc_080c7b64:
 	adds	r0, #68
 	strh	r1, [r0, #0]
 	movs	r0, #16
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	movs	r0, #100
 	movs	r1, #32
 	bl	sub_080058e4	@ 0x080058E4
@@ -3138,7 +3138,7 @@ loc_080c7b64:
 	adds	r0, #68
 	strh	r1, [r0, #0]
 	movs	r0, #8
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	movs	r0, #100
 	movs	r1, #32
 	bl	sub_080058e4	@ 0x080058E4
@@ -3178,7 +3178,7 @@ loc_080c7b64:
 	adds	r0, #68
 	strh	r1, [r0, #0]
 	movs	r0, #8
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	b.n	loc_080c7834	@ 0x080C7834
 	.word	0x03002790
 	.word	gCurTaskIdx
@@ -3273,22 +3273,22 @@ loc_080c7d66:
 	movs	r0, #15
 	strh	r0, [r1, #60]
 	movs	r0, #3
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r4, #0]
 	movs	r0, #16
 	strh	r0, [r1, #60]
 	movs	r0, #3
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r4, #0]
 	movs	r0, #17
 	strh	r0, [r1, #60]
 	movs	r0, #3
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r4, #0]
 	movs	r0, #18
 	strh	r0, [r1, #60]
 	movs	r0, #3
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r4, #0]
 	adds	r1, #108
 	ldrh	r0, [r1, #0]
@@ -3311,22 +3311,22 @@ loc_080c7db2:
 	movs	r0, #19
 	strh	r0, [r1, #60]
 	movs	r0, #3
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r4, #0]
 	movs	r0, #20
 	strh	r0, [r1, #60]
 	movs	r0, #3
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r4, #0]
 	movs	r0, #21
 	strh	r0, [r1, #60]
 	movs	r0, #3
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r4, #0]
 	movs	r0, #22
 	strh	r0, [r1, #60]
 	movs	r0, #3
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r4, #0]
 	adds	r1, #108
 	ldrh	r0, [r1, #0]
@@ -3349,22 +3349,22 @@ loc_080c7dfe:
 	movs	r0, #23
 	strh	r0, [r1, #60]
 	movs	r0, #3
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r4, #0]
 	movs	r0, #24
 	strh	r0, [r1, #60]
 	movs	r0, #3
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r4, #0]
 	movs	r0, #25
 	strh	r0, [r1, #60]
 	movs	r0, #3
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r4, #0]
 	movs	r0, #26
 	strh	r0, [r1, #60]
 	movs	r0, #3
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r4, #0]
 	adds	r1, #108
 	ldrh	r0, [r1, #0]
@@ -3376,7 +3376,7 @@ loc_080c7dfe:
 	ble.n	loc_080c7dfe	@ 0x080C7DFE
 	.global	loc_080c7e40
 loc_080c7e40:
-	bl	sub_080cfdd4	@ 0x080CFDD4
+	bl	TaskDispatchTrampoline	@ 0x080CFDD4
 	pop	{r4, r5, r6, r7}
 	pop	{r0}
 	bx	r0
@@ -3409,64 +3409,64 @@ sub_080c7e4c:
 	movs	r0, #1
 	str	r0, [r1, #40]
 	movs	r0, #200
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	movs	r0, #200
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	movs	r0, #64
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r0, [r4, #0]
 	strh	r5, [r0, #60]
 	movs	r0, #252
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r4, #0]
 	ldr	r0, [pc, #940]	@ 0x080C8248
 	strh	r0, [r1, #60]
 	movs	r0, #60
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r0, [r4, #0]
 	strh	r5, [r0, #60]
 	movs	r0, #96
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r4, #0]
 	movs	r0, #1
 	negs	r0, r0
 	strh	r0, [r1, #60]
 	movs	r0, #46
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r4, #0]
 	movs	r0, #2
 	strh	r0, [r1, #60]
 	movs	r0, #208
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	movs	r0, #128
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	movs	r0, #128
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	movs	r0, #128
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	movs	r0, #128
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	movs	r0, #128
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	movs	r0, #128
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	movs	r0, #128
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	movs	r0, #128
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	movs	r0, #128
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	movs	r0, #200
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	movs	r0, #170
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	movs	r0, #16
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r4, #0]
 	movs	r0, #4
 	strh	r0, [r1, #60]
 	movs	r0, #68
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r0, [r4, #0]
 	adds	r0, #108
 	strh	r5, [r0, #0]
@@ -3478,28 +3478,28 @@ loc_080c7f24:
 	movs	r0, #6
 	strh	r0, [r1, #60]
 	movs	r0, #10
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r0, [r4, #0]
 	strh	r6, [r0, #60]
 	movs	r0, #6
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r0, [r4, #0]
 	strh	r5, [r0, #60]
 	movs	r0, #6
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r4, #0]
 	movs	r0, #12
 	strh	r0, [r1, #60]
 	movs	r0, #10
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r0, [r4, #0]
 	strh	r5, [r0, #60]
 	movs	r0, #6
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r0, [r4, #0]
 	strh	r6, [r0, #60]
 	movs	r0, #6
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r4, #0]
 	adds	r1, #108
 	ldrh	r0, [r1, #0]
@@ -3516,83 +3516,83 @@ loc_080c7f24:
 	movs	r0, #22
 	strh	r0, [r1, #60]
 	movs	r0, #6
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r0, [r4, #0]
 	movs	r1, #14
 	mov	r8, r1
 	mov	r1, r8
 	strh	r1, [r0, #60]
 	movs	r0, #4
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r0, [r4, #0]
 	movs	r6, #16
 	strh	r6, [r0, #60]
 	movs	r0, #6
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r0, [r4, #0]
 	movs	r5, #18
 	strh	r5, [r0, #60]
 	movs	r0, #6
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r4, #0]
 	movs	r0, #20
 	strh	r0, [r1, #60]
 	movs	r0, #10
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r0, [r4, #0]
 	strh	r5, [r0, #60]
 	movs	r0, #6
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r0, [r4, #0]
 	strh	r6, [r0, #60]
 	movs	r0, #6
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r0, [r4, #0]
 	mov	r1, r8
 	strh	r1, [r0, #60]
 	movs	r0, #8
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r4, #0]
 	movs	r0, #4
 	strh	r0, [r1, #60]
 	movs	r0, #6
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r0, [r4, #0]
 	movs	r5, #2
 	strh	r5, [r0, #60]
 	movs	r0, #6
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r4, #0]
 	movs	r0, #60
 	strh	r0, [r1, #60]
 	movs	r0, #134
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r0, [r4, #0]
 	strh	r5, [r0, #60]
 	movs	r0, #12
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	movs	r0, #120
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	movs	r0, #120
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	movs	r0, #120
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	movs	r0, #120
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	movs	r0, #120
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	movs	r0, #120
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	movs	r0, #120
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	movs	r0, #120
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	movs	r0, #120
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	movs	r0, #152
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	movs	r0, #2
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r4, #0]
 	mov	r0, r9
 	str	r0, [r1, #40]
@@ -3607,7 +3607,7 @@ loc_080c7f24:
 	lsls	r5, r5, #6
 	str	r5, [r1, #96]
 	movs	r0, #1
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r0, [r4, #0]
 	mov	r1, r9
 	str	r1, [r0, #84]
@@ -3615,14 +3615,14 @@ loc_080c7f24:
 	str	r1, [r0, #88]
 	str	r5, [r0, #96]
 	movs	r0, #1
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	movs	r0, #28
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r4, #0]
 	movs	r0, #26
 	strh	r0, [r1, #60]
 	movs	r0, #2
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r0, [r4, #0]
 	adds	r0, #108
 	mov	r1, r9
@@ -3633,12 +3633,12 @@ loc_080c8098:
 	movs	r6, #28
 	strh	r6, [r0, #60]
 	movs	r0, #2
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r4, #0]
 	movs	r0, #30
 	strh	r0, [r1, #60]
 	movs	r0, #2
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r4, #0]
 	adds	r1, #108
 	ldrh	r0, [r1, #0]
@@ -3653,7 +3653,7 @@ loc_080c8098:
 	movs	r5, #0
 	strh	r6, [r0, #60]
 	movs	r0, #2
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	bl	sub_080062c4	@ 0x080062C4
 	ldr	r1, [r4, #0]
 	movs	r0, #32
@@ -3662,24 +3662,24 @@ loc_080c8098:
 	lsls	r0, r0, #10
 	str	r0, [r1, #88]
 	movs	r0, #2
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r4, #0]
 	ldr	r0, [pc, #360]	@ 0x080C8254
 	str	r0, [r1, #88]
 	movs	r0, #2
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	bl	sub_080062c4	@ 0x080062C4
 	ldr	r1, [r4, #0]
 	movs	r0, #34
 	strh	r0, [r1, #60]
 	movs	r0, #8
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r4, #0]
 	movs	r0, #128
 	lsls	r0, r0, #6
 	str	r0, [r1, #92]
 	movs	r0, #6
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	bl	sub_080062c4	@ 0x080062C4
 	ldr	r0, [r4, #0]
 	adds	r0, #108
@@ -3690,12 +3690,12 @@ loc_080c811a:
 	movs	r0, #36
 	strh	r0, [r1, #60]
 	movs	r0, #2
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r4, #0]
 	movs	r0, #38
 	strh	r0, [r1, #60]
 	movs	r0, #2
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r4, #0]
 	adds	r1, #108
 	ldrh	r0, [r1, #0]
@@ -3718,17 +3718,17 @@ loc_080c811a:
 	movs	r0, #40
 	strh	r0, [r1, #60]
 	movs	r0, #2
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r4, #0]
 	movs	r0, #42
 	strh	r0, [r1, #60]
 	movs	r0, #2
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r4, #0]
 	movs	r0, #44
 	strh	r0, [r1, #60]
 	movs	r0, #2
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	bl	sub_080062c4	@ 0x080062C4
 	ldr	r1, [r4, #0]
 	movs	r0, #160
@@ -3743,12 +3743,12 @@ loc_080c811a:
 	movs	r5, #46
 	strh	r5, [r0, #60]
 	movs	r0, #4
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	bl	sub_080062c4	@ 0x080062C4
 	ldr	r0, [r4, #0]
 	strh	r5, [r0, #60]
 	movs	r0, #4
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r4, #0]
 	ldr	r0, [pc, #180]	@ 0x080C8268
 	str	r0, [r1, #88]
@@ -3760,37 +3760,37 @@ loc_080c811a:
 	.global	loc_080c81be
 loc_080c81be:
 	movs	r0, #2
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r4, #0]
 	movs	r0, #48
 	strh	r0, [r1, #60]
 	movs	r0, #2
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r4, #0]
 	movs	r0, #49
 	strh	r0, [r1, #60]
 	movs	r0, #2
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r4, #0]
 	movs	r0, #50
 	strh	r0, [r1, #60]
 	movs	r0, #2
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r4, #0]
 	movs	r0, #51
 	strh	r0, [r1, #60]
 	movs	r0, #2
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r4, #0]
 	movs	r0, #52
 	strh	r0, [r1, #60]
 	movs	r0, #2
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r4, #0]
 	movs	r0, #53
 	strh	r0, [r1, #60]
 	movs	r0, #2
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r0, [r4, #0]
 	adds	r0, #108
 	strh	r6, [r0, #0]
@@ -3800,12 +3800,12 @@ loc_080c8212:
 	movs	r0, #48
 	strh	r0, [r1, #60]
 	movs	r0, #2
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r4, #0]
 	movs	r0, #54
 	strh	r0, [r1, #60]
 	movs	r0, #2
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r4, #0]
 	adds	r1, #108
 	ldrh	r0, [r1, #0]
@@ -4183,80 +4183,80 @@ loc_080c84fc:
 	movs	r0, #15
 	strh	r0, [r1, #60]
 	movs	r0, #2
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r0, [r5, #0]
 	strh	r4, [r0, #60]
 	movs	r0, #2
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r5, #0]
 	movs	r0, #1
 	strh	r0, [r1, #60]
 	movs	r0, #2
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r5, #0]
 	movs	r0, #2
 	strh	r0, [r1, #60]
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r5, #0]
 	movs	r0, #3
 	strh	r0, [r1, #60]
 	movs	r0, #2
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r5, #0]
 	movs	r0, #4
 	strh	r0, [r1, #60]
 	movs	r0, #2
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r5, #0]
 	movs	r0, #5
 	strh	r0, [r1, #60]
 	movs	r0, #2
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r5, #0]
 	movs	r0, #6
 	strh	r0, [r1, #60]
 	movs	r0, #2
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r5, #0]
 	movs	r0, #7
 	strh	r0, [r1, #60]
 	movs	r0, #2
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r5, #0]
 	movs	r0, #8
 	strh	r0, [r1, #60]
 	movs	r0, #2
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r5, #0]
 	movs	r0, #9
 	strh	r0, [r1, #60]
 	movs	r0, #2
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r5, #0]
 	movs	r0, #10
 	strh	r0, [r1, #60]
 	movs	r0, #2
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r5, #0]
 	movs	r0, #11
 	strh	r0, [r1, #60]
 	movs	r0, #2
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r5, #0]
 	movs	r0, #12
 	strh	r0, [r1, #60]
 	movs	r0, #2
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r5, #0]
 	movs	r0, #13
 	strh	r0, [r1, #60]
 	movs	r0, #2
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r5, #0]
 	movs	r0, #14
 	strh	r0, [r1, #60]
 	movs	r0, #2
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	b.n	loc_080c84fc	@ 0x080C84FC
 	.word	0x03002490
 	.word	sub_080059d8+1
@@ -4294,29 +4294,29 @@ sub_080c85d8:
 	ldr	r0, [pc, #328]	@ 0x080C8750
 	strh	r0, [r1, #60]
 	movs	r0, #200
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	movs	r0, #200
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	movs	r0, #200
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	movs	r0, #200
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	movs	r0, #200
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	movs	r0, #200
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	movs	r0, #200
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	movs	r0, #200
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	movs	r0, #200
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	movs	r0, #200
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	movs	r0, #200
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	movs	r0, #78
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r5, #0]
 	movs	r0, #224
 	lsls	r0, r0, #16
@@ -4336,11 +4336,11 @@ sub_080c85d8:
 	ldr	r0, [pc, #228]	@ 0x080C8758
 	str	r0, [r1, #88]
 	movs	r0, #200
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	movs	r0, #200
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	movs	r0, #16
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r0, [r5, #0]
 	movs	r1, #128
 	lsls	r1, r1, #4
@@ -4348,7 +4348,7 @@ sub_080c85d8:
 	str	r1, [r0, #84]
 	str	r6, [r0, #88]
 	movs	r0, #64
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r5, #0]
 	movs	r0, #128
 	lsls	r0, r0, #3
@@ -4356,7 +4356,7 @@ sub_080c85d8:
 	ldr	r0, [pc, #184]	@ 0x080C875C
 	str	r0, [r1, #88]
 	movs	r0, #72
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r4, [pc, #180]	@ 0x080C8760
 	ldr	r3, [pc, #180]	@ 0x080C8764
 	movs	r0, #128
@@ -4368,7 +4368,7 @@ sub_080c85d8:
 	adds	r2, r4, #0
 	bl	sub_0800625c	@ 0x0800625C
 	movs	r0, #24
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r5, #0]
 	movs	r0, #5
 	str	r0, [r1, #44]
@@ -4386,7 +4386,7 @@ sub_080c85d8:
 loc_080c86e0:
 	bl	sub_0800625c	@ 0x0800625C
 	movs	r0, #72
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r0, [r5, #0]
 	mov	r1, r9
 	str	r1, [r0, #24]
@@ -4401,21 +4401,21 @@ loc_080c86e0:
 	movs	r0, #66
 	strh	r0, [r1, #60]
 	movs	r0, #12
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r5, #0]
 	movs	r0, #67
 	strh	r0, [r1, #60]
 	movs	r0, #12
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r5, #0]
 	ldr	r0, [pc, #88]	@ 0x080C8774
 	str	r0, [r1, #96]
 	movs	r0, #68
 	strh	r0, [r1, #60]
 	movs	r0, #60
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	bl	sub_080062c4	@ 0x080062C4
-	bl	sub_080cfdd4	@ 0x080CFDD4
+	bl	TaskDispatchTrampoline	@ 0x080CFDD4
 	add	sp, #8
 	pop	{r3, r4}
 	mov	r8, r3
@@ -4652,15 +4652,15 @@ sub_080c88f0:
 	str	r0, [r1, #0]
 	str	r0, [r1, #12]
 	movs	r0, #240
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	bl	sub_080c8924	@ 0x080C8924
 	movs	r0, #141
 	lsls	r0, r0, #1
 	bl	sub_080031b8	@ 0x080031B8
 	movs	r0, #12
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	bl	sub_080269e8	@ 0x080269E8
-	bl	sub_080cfdd4	@ 0x080CFDD4
+	bl	TaskDispatchTrampoline	@ 0x080CFDD4
 	pop	{r0}
 	bx	r0
 	.word	0x03002490
@@ -4752,7 +4752,7 @@ loc_080c899c:
 	movs	r0, #4
 	strh	r0, [r2, #60]
 	movs	r0, #3
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r5, #0]
 	ldr	r2, [pc, #72]	@ 0x080C8A0C
 	adds	r3, r1, #0
@@ -4773,7 +4773,7 @@ loc_080c899c:
 	movs	r0, #5
 	strh	r0, [r1, #60]
 	movs	r0, #1
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r0, [r5, #0]
 	adds	r0, #108
 	strh	r7, [r0, #0]
@@ -4790,29 +4790,29 @@ loc_080c899c:
 loc_080c8a14:
 	strh	r4, [r2, #60]
 	movs	r0, #1
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r5, #0]
 	movs	r0, #1
 	strh	r0, [r1, #60]
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r5, #0]
 	movs	r0, #2
 	strh	r0, [r1, #60]
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r5, #0]
 	movs	r0, #3
 	strh	r0, [r1, #60]
 	movs	r0, #2
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r0, [r5, #0]
 	strh	r6, [r0, #60]
 	movs	r0, #1
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r5, #0]
 	movs	r0, #13
 	strh	r0, [r1, #60]
 	movs	r0, #1
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r0, [r5, #0]
 	adds	r0, #108
 	strh	r4, [r0, #0]
@@ -4827,21 +4827,21 @@ loc_080c8a60:
 	orrs	r0, r6
 	strh	r0, [r1, #60]
 	movs	r0, #3
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r0, [r4, #0]
 	strh	r5, [r0, #60]
 	movs	r0, #1
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r4, #0]
 	ldrh	r0, [r1, #60]
 	orrs	r0, r6
 	strh	r0, [r1, #60]
 	movs	r0, #3
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r0, [r4, #0]
 	strh	r5, [r0, #60]
 	movs	r0, #1
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r4, #0]
 	adds	r1, #108
 	ldrh	r0, [r1, #0]
@@ -4866,23 +4866,23 @@ loc_080c8ab2:
 	orrs	r0, r5
 	strh	r0, [r1, #60]
 	movs	r0, #4
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r4, #0]
 	movs	r0, #14
 	strh	r0, [r1, #60]
 	movs	r0, #1
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r4, #0]
 	ldrh	r0, [r1, #60]
 	orrs	r0, r5
 	strh	r0, [r1, #60]
 	movs	r0, #4
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r4, #0]
 	movs	r0, #12
 	strh	r0, [r1, #60]
 	movs	r0, #1
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r4, #0]
 	adds	r1, #108
 	ldrh	r0, [r1, #0]
@@ -4904,12 +4904,12 @@ loc_080c8b04:
 	ldr	r0, [pc, #40]	@ 0x080C8B30
 	strh	r0, [r1, #60]
 	movs	r0, #5
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r4, #0]
 	movs	r0, #14
 	strh	r0, [r1, #60]
 	movs	r0, #1
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r4, #0]
 	adds	r1, #108
 	ldrh	r0, [r1, #0]
@@ -4929,46 +4929,46 @@ loc_080c8b38:
 	movs	r0, #6
 	strh	r0, [r1, #60]
 	movs	r0, #2
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r4, #0]
 	ldr	r0, [pc, #388]	@ 0x080C8CD0
 	strh	r0, [r1, #60]
 	movs	r0, #2
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r4, #0]
 	movs	r0, #8
 	strh	r0, [r1, #60]
 	movs	r0, #2
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r4, #0]
 	movs	r0, #1
 	negs	r0, r0
 	strh	r0, [r1, #60]
 	movs	r0, #2
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r4, #0]
 	movs	r0, #7
 	strh	r0, [r1, #60]
 	movs	r0, #2
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r4, #0]
 	movs	r0, #1
 	negs	r0, r0
 	strh	r0, [r1, #60]
 	movs	r0, #2
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r4, #0]
 	movs	r0, #9
 	strh	r0, [r1, #60]
 	movs	r0, #2
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r4, #0]
 	movs	r0, #1
 	negs	r0, r0
 	adds	r5, r0, #0
 	strh	r0, [r1, #60]
 	movs	r0, #2
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r0, [r4, #0]
 	adds	r1, r0, #0
 	adds	r1, #108
@@ -4987,24 +4987,24 @@ loc_080c8bba:
 	movs	r0, #8
 	strh	r0, [r1, #60]
 	movs	r0, #2
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r4, #0]
 	ldrh	r0, [r1, #60]
 	orrs	r0, r5
 	strh	r0, [r1, #60]
 	movs	r0, #2
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r4, #0]
 	movs	r0, #9
 	strh	r0, [r1, #60]
 	movs	r0, #2
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r4, #0]
 	ldrh	r0, [r1, #60]
 	orrs	r0, r5
 	strh	r0, [r1, #60]
 	movs	r0, #2
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r4, #0]
 	adds	r1, #108
 	ldrh	r0, [r1, #0]
@@ -5028,24 +5028,24 @@ loc_080c8c10:
 	movs	r0, #10
 	strh	r0, [r1, #60]
 	movs	r0, #1
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r4, #0]
 	ldrh	r0, [r1, #60]
 	orrs	r0, r5
 	strh	r0, [r1, #60]
 	movs	r0, #2
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r4, #0]
 	movs	r0, #11
 	strh	r0, [r1, #60]
 	movs	r0, #1
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r4, #0]
 	ldrh	r0, [r1, #60]
 	orrs	r0, r5
 	strh	r0, [r1, #60]
 	movs	r0, #2
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r4, #0]
 	adds	r1, #108
 	ldrh	r0, [r1, #0]
@@ -5066,14 +5066,14 @@ loc_080c8c62:
 	ldr	r1, [r4, #0]
 	movs	r0, #1
 	strh	r0, [r1, #60]
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	.global	loc_080c8c6c
 loc_080c8c6c:
 	ldr	r1, [r4, #0]
 	ldr	r0, [pc, #96]	@ 0x080C8CD0
 	strh	r0, [r1, #60]
 	movs	r0, #3
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r4, #0]
 	adds	r1, #108
 	ldrh	r0, [r1, #0]
@@ -5095,12 +5095,12 @@ loc_080c8c96:
 	movs	r0, #0
 	strh	r0, [r1, #60]
 	movs	r0, #1
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r4, #0]
 	ldr	r0, [pc, #40]	@ 0x080C8CD0
 	strh	r0, [r1, #60]
 	movs	r0, #3
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r4, #0]
 	adds	r1, #108
 	ldrh	r0, [r1, #0]
@@ -5112,7 +5112,7 @@ loc_080c8c96:
 	ble.n	loc_080c8c96	@ 0x080C8C96
 	.global	loc_080c8cc0
 loc_080c8cc0:
-	bl	sub_080cfdd4	@ 0x080CFDD4
+	bl	TaskDispatchTrampoline	@ 0x080CFDD4
 	pop	{r4, r5, r6, r7}
 	pop	{r0}
 	bx	r0
@@ -5146,7 +5146,7 @@ sub_080c8cd4:
 	str	r0, [r1, #80]
 	bl	sub_080062c4	@ 0x080062C4
 	movs	r0, #60
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r0, [r4, #0]
 	adds	r0, #108
 	strh	r5, [r0, #0]
@@ -5157,12 +5157,12 @@ loc_080c8d0e:
 	lsls	r0, r0, #9
 	str	r0, [r1, #88]
 	movs	r0, #2
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r4, #0]
 	ldr	r0, [pc, #344]	@ 0x080C8E78
 	str	r0, [r1, #88]
 	movs	r0, #2
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r4, #0]
 	adds	r1, #108
 	ldrh	r0, [r1, #0]
@@ -5185,12 +5185,12 @@ loc_080c8d46:
 	lsls	r0, r0, #10
 	str	r0, [r1, #88]
 	movs	r0, #2
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r4, #0]
 	ldr	r0, [pc, #292]	@ 0x080C8E7C
 	str	r0, [r1, #88]
 	movs	r0, #2
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r4, #0]
 	adds	r1, #108
 	ldrh	r0, [r1, #0]
@@ -5213,12 +5213,12 @@ loc_080c8d7e:
 	lsls	r0, r0, #10
 	str	r0, [r1, #88]
 	movs	r0, #2
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r4, #0]
 	ldr	r0, [pc, #240]	@ 0x080C8E80
 	str	r0, [r1, #88]
 	movs	r0, #2
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r4, #0]
 	adds	r1, #108
 	ldrh	r0, [r1, #0]
@@ -5233,7 +5233,7 @@ loc_080c8d7e:
 	movs	r0, #31
 	strh	r0, [r4, #0]
 	movs	r0, #4
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	movs	r0, #0
 	strh	r0, [r4, #0]
 	ldr	r2, [pc, #164]	@ 0x080C8E64
@@ -5249,12 +5249,12 @@ loc_080c8dca:
 	lsls	r0, r0, #10
 	str	r0, [r1, #88]
 	movs	r0, #2
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r4, #0]
 	ldr	r0, [pc, #160]	@ 0x080C8E7C
 	str	r0, [r1, #88]
 	movs	r0, #2
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r4, #0]
 	adds	r1, #108
 	ldrh	r0, [r1, #0]
@@ -5277,12 +5277,12 @@ loc_080c8e02:
 	lsls	r0, r0, #9
 	str	r0, [r1, #88]
 	movs	r0, #2
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r4, #0]
 	ldr	r0, [pc, #100]	@ 0x080C8E78
 	str	r0, [r1, #88]
 	movs	r0, #2
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r4, #0]
 	adds	r1, #108
 	ldrh	r0, [r1, #0]
@@ -5294,15 +5294,15 @@ loc_080c8e02:
 	ble.n	loc_080c8e02	@ 0x080C8E02
 	bl	sub_080062c4	@ 0x080062C4
 	movs	r0, #120
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	movs	r0, #64
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	movs	r0, #200
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	movs	r0, #200
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	movs	r0, #54
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r0, [pc, #16]	@ 0x080C8E64
 	ldr	r1, [r0, #0]
 	movs	r0, #192
@@ -5368,7 +5368,7 @@ sub_080c8ea8:
 	.global	loc_080c8ed4
 loc_080c8ed4:
 	movs	r0, #60
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r4, #0]
 	adds	r1, #108
 	ldrh	r0, [r1, #0]
@@ -5423,7 +5423,7 @@ loc_080c8f24:
 	mov	r1, r9
 	strb	r0, [r1, #0]
 	movs	r0, #1
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r6, #0]
 	adds	r1, #110
 	ldrh	r0, [r1, #0]
@@ -5434,7 +5434,7 @@ loc_080c8f24:
 	cmp	r0, #31
 	ble.n	loc_080c8f24	@ 0x080C8F24
 	movs	r0, #224
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r0, [r6, #0]
 	adds	r0, #110
 	movs	r1, #0
@@ -5456,7 +5456,7 @@ loc_080c8f6a:
 	subs	r0, r0, r1
 	strb	r0, [r7, #0]
 	movs	r0, #1
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r4, #0]
 	adds	r1, #110
 	ldrh	r0, [r1, #0]
@@ -5467,7 +5467,7 @@ loc_080c8f6a:
 	cmp	r0, #31
 	ble.n	loc_080c8f6a	@ 0x080C8F6A
 	movs	r0, #12
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r6, #0]
 	adds	r1, #108
 	ldrh	r0, [r1, #0]
@@ -5494,7 +5494,7 @@ loc_080c8f6a:
 	ldr	r0, [pc, #48]	@ 0x080C9000
 	ands	r0, r1
 	strh	r0, [r2, #0]
-	bl	sub_080cfdd4	@ 0x080CFDD4
+	bl	TaskDispatchTrampoline	@ 0x080CFDD4
 	pop	{r3, r4}
 	mov	r8, r3
 	mov	r9, r4
@@ -5537,7 +5537,7 @@ loc_080c9028:
 	bl	sub_08002e98	@ 0x08002E98
 	.global	loc_080c9032
 loc_080c9032:
-	bl	sub_080cfdd4	@ 0x080CFDD4
+	bl	TaskDispatchTrampoline	@ 0x080CFDD4
 	pop	{r0}
 	bx	r0
 	movs	r0, r0
@@ -5684,7 +5684,7 @@ sub_080c9114:
 	lsls	r0, r0, #16
 	str	r0, [r2, #80]
 	movs	r0, #32
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	bl	sub_080062c4	@ 0x080062C4
 	ldr	r0, [r4, #0]
 	movs	r1, #128
@@ -5698,82 +5698,82 @@ loc_080c9168:
 	movs	r0, #7
 	strh	r0, [r1, #60]
 	movs	r0, #2
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r4, #0]
 	movs	r0, #8
 	strh	r0, [r1, #60]
 	movs	r0, #2
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r4, #0]
 	movs	r0, #9
 	strh	r0, [r1, #60]
 	movs	r0, #2
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r4, #0]
 	movs	r0, #10
 	strh	r0, [r1, #60]
 	movs	r0, #2
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r4, #0]
 	movs	r0, #11
 	strh	r0, [r1, #60]
 	movs	r0, #2
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r4, #0]
 	movs	r0, #12
 	strh	r0, [r1, #60]
 	movs	r0, #2
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r4, #0]
 	movs	r0, #13
 	strh	r0, [r1, #60]
 	movs	r0, #2
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r4, #0]
 	movs	r0, #14
 	strh	r0, [r1, #60]
 	movs	r0, #2
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r4, #0]
 	movs	r0, #15
 	strh	r0, [r1, #60]
 	movs	r0, #2
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r4, #0]
 	movs	r0, #16
 	strh	r0, [r1, #60]
 	movs	r0, #2
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r4, #0]
 	movs	r0, #17
 	strh	r0, [r1, #60]
 	movs	r0, #2
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r4, #0]
 	movs	r0, #18
 	strh	r0, [r1, #60]
 	movs	r0, #2
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r4, #0]
 	movs	r0, #19
 	strh	r0, [r1, #60]
 	movs	r0, #2
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r4, #0]
 	movs	r0, #20
 	strh	r0, [r1, #60]
 	movs	r0, #2
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r4, #0]
 	movs	r0, #21
 	strh	r0, [r1, #60]
 	movs	r0, #2
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r4, #0]
 	movs	r0, #22
 	strh	r0, [r1, #60]
 	movs	r0, #2
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r4, #0]
 	adds	r1, #108
 	ldrh	r0, [r1, #0]
@@ -5789,7 +5789,7 @@ loc_080c9168:
 	movs	r0, #23
 	strh	r0, [r1, #60]
 	movs	r0, #3
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	bl	sub_080062c4	@ 0x080062C4
 	movs	r0, #238
 	bl	sub_080031b8	@ 0x080031B8
@@ -5846,7 +5846,7 @@ loc_080c929e:
 	movs	r3, #16
 	bl	sub_08003014	@ 0x08003014
 	movs	r0, #5
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r0, [r4, #0]
 	adds	r0, #64
 	ldrh	r0, [r0, #0]
@@ -5861,7 +5861,7 @@ loc_080c929e:
 	movs	r3, #16
 	bl	sub_08003014	@ 0x08003014
 	movs	r0, #5
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r4, #0]
 	adds	r1, #108
 	ldrh	r0, [r1, #0]
@@ -5897,7 +5897,7 @@ loc_080c9318:
 	movs	r3, #16
 	bl	sub_08003014	@ 0x08003014
 	movs	r0, #4
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r0, [r4, #0]
 	adds	r0, #64
 	ldrh	r0, [r0, #0]
@@ -5912,7 +5912,7 @@ loc_080c9318:
 	movs	r3, #16
 	bl	sub_08003014	@ 0x08003014
 	movs	r0, #4
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r4, #0]
 	adds	r1, #108
 	ldrh	r0, [r1, #0]
@@ -5947,7 +5947,7 @@ loc_080c936e:
 	movs	r3, #16
 	bl	sub_08003014	@ 0x08003014
 	movs	r0, #3
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r0, [r4, #0]
 	adds	r0, #64
 	ldrh	r0, [r0, #0]
@@ -5962,7 +5962,7 @@ loc_080c936e:
 	movs	r3, #16
 	bl	sub_08003014	@ 0x08003014
 	movs	r0, #3
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r4, #0]
 	adds	r1, #108
 	ldrh	r0, [r1, #0]
@@ -5973,7 +5973,7 @@ loc_080c936e:
 	cmp	r0, #10
 	ble.n	loc_080c936e	@ 0x080C936E
 	movs	r0, #96
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r0, [pc, #20]	@ 0x080C93E0
 	ldr	r1, [r0, #0]
 	ldr	r0, [pc, #68]	@ 0x080C9414
@@ -6152,9 +6152,9 @@ sub_080c94cc:
 	ldr	r0, [pc, #440]	@ 0x080C96FC
 	strh	r0, [r1, #60]
 	movs	r0, #99
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	movs	r0, #96
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r4, #0]
 	movs	r0, #1
 	str	r0, [r1, #40]
@@ -6183,56 +6183,56 @@ sub_080c94cc:
 	mov	r9, r0
 	str	r0, [r1, #88]
 	movs	r0, #2
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r4, #0]
 	movs	r0, #128
 	lsls	r0, r0, #8
 	str	r0, [r1, #88]
 	movs	r0, #2
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r4, #0]
 	movs	r0, #128
 	lsls	r0, r0, #6
 	str	r0, [r1, #88]
 	movs	r0, #2
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r4, #0]
 	ldr	r0, [pc, #348]	@ 0x080C970C
 	str	r0, [r1, #88]
 	movs	r0, #4
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r0, [r4, #0]
 	ldr	r1, [pc, #340]	@ 0x080C9710
 	mov	sl, r1
 	str	r1, [r0, #88]
 	movs	r0, #4
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r0, [r4, #0]
 	ldr	r5, [pc, #328]	@ 0x080C9714
 	str	r5, [r0, #88]
 	movs	r0, #4
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r4, #0]
 	ldr	r0, [pc, #320]	@ 0x080C9718
 	str	r0, [r1, #88]
 	movs	r0, #4
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r4, #0]
 	ldr	r0, [pc, #312]	@ 0x080C971C
 	str	r0, [r1, #88]
 	movs	r0, #13
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	bl	sub_080062c4	@ 0x080062C4
 	ldr	r0, [r4, #0]
 	str	r7, [r0, #40]
 	movs	r0, #70
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	movs	r0, #200
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	movs	r0, #97
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	movs	r0, #210
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r0, [pc, #276]	@ 0x080C9720
 	bl	sub_080031b8	@ 0x080031B8
 	ldr	r1, [r4, #0]
@@ -6252,32 +6252,32 @@ sub_080c94cc:
 	str	r0, [r1, #84]
 	str	r5, [r1, #88]
 	movs	r0, #8
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r4, #0]
 	movs	r0, #128
 	lsls	r0, r0, #11
 	str	r0, [r1, #84]
 	movs	r0, #8
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r4, #0]
 	movs	r0, #128
 	lsls	r0, r0, #10
 	str	r0, [r1, #84]
 	movs	r0, #8
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r4, #0]
 	movs	r0, #160
 	lsls	r0, r0, #9
 	str	r0, [r1, #84]
 	movs	r0, #8
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r0, [r4, #0]
 	mov	r3, r9
 	str	r3, [r0, #84]
 	movs	r0, #24
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	movs	r0, #20
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r4, #0]
 	adds	r0, r1, #0
 	adds	r0, #72
@@ -6298,7 +6298,7 @@ sub_080c94cc:
 	ldr	r0, [pc, #140]	@ 0x080C9724
 	str	r0, [r1, #88]
 	movs	r0, #20
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r4, #0]
 	movs	r0, #192
 	lsls	r0, r0, #8
@@ -6306,14 +6306,14 @@ sub_080c94cc:
 	mov	r0, sl
 	str	r0, [r1, #88]
 	movs	r0, #80
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	movs	r0, #82
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r4, #0]
 	movs	r0, #2
 	str	r0, [r1, #36]
 	movs	r0, #128
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r0, [pc, #100]	@ 0x080C9728
 	movs	r1, #0
 	strb	r1, [r0, #0]
@@ -6563,8 +6563,8 @@ sub_080c9884:
 	lsls	r0, r0, #11
 	str	r0, [r1, #88]
 	movs	r0, #24
-	bl	sub_080cfdcc	@ 0x080CFDCC
-	bl	sub_080cfdd4	@ 0x080CFDD4
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
+	bl	TaskDispatchTrampoline	@ 0x080CFDD4
 	pop	{r4}
 	pop	{r0}
 	bx	r0
@@ -6600,13 +6600,13 @@ sub_080c98d8:
 	strh	r0, [r1, #62]
 	strh	r3, [r1, #60]
 	movs	r0, #200
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	movs	r0, #200
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	movs	r0, #200
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	movs	r0, #207
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r2, [r4, #0]
 	ldrh	r1, [r2, #62]
 	movs	r3, #128
@@ -6615,28 +6615,28 @@ sub_080c98d8:
 	orrs	r0, r1
 	strh	r0, [r2, #62]
 	movs	r0, #56
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	.global	loc_080c9930
 loc_080c9930:
 	ldr	r1, [r4, #0]
 	movs	r0, #1
 	strh	r0, [r1, #60]
 	movs	r0, #5
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r4, #0]
 	movs	r0, #3
 	strh	r0, [r1, #60]
 	movs	r0, #2
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r4, #0]
 	movs	r0, #4
 	strh	r0, [r1, #60]
 	movs	r0, #5
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r4, #0]
 	movs	r0, #2
 	strh	r0, [r1, #60]
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	b.n	loc_080c9930	@ 0x080C9930
 	.word	0x03002490
 	.word	sub_080c9974+1
@@ -6761,7 +6761,7 @@ sub_080c9a28:
 	str	r0, [r1, #80]
 	bl	sub_080062c4	@ 0x080062C4
 	movs	r0, #99
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r0, [r4, #0]
 	adds	r0, #108
 	strh	r5, [r0, #0]
@@ -6780,7 +6780,7 @@ loc_080c9a64:
 	movs	r3, #128
 	bl	sub_08003014	@ 0x08003014
 	movs	r0, #1
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r4, #0]
 	adds	r1, #108
 	ldrh	r0, [r1, #0]
@@ -6811,7 +6811,7 @@ loc_080c9aa2:
 	movs	r3, #128
 	bl	sub_08003014	@ 0x08003014
 	movs	r0, #1
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r4, #0]
 	adds	r1, #108
 	ldrh	r0, [r1, #0]
@@ -6842,7 +6842,7 @@ loc_080c9ae0:
 	movs	r3, #128
 	bl	sub_08003014	@ 0x08003014
 	movs	r0, #1
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r4, #0]
 	adds	r1, #108
 	ldrh	r0, [r1, #0]
@@ -6853,9 +6853,9 @@ loc_080c9ae0:
 	cmp	r0, #15
 	ble.n	loc_080c9ae0	@ 0x080C9AE0
 	movs	r0, #68
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	movs	r0, #80
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	movs	r0, #101
 	movs	r1, #32
 	bl	sub_080058e4	@ 0x080058E4
@@ -6875,11 +6875,11 @@ loc_080c9ae0:
 	movs	r1, #2
 	strb	r1, [r0, #0]
 	movs	r0, #60
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	movs	r0, #60
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	movs	r0, #30
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r0, [r4, #0]
 	adds	r0, #108
 	strh	r6, [r0, #0]
@@ -6930,7 +6930,7 @@ loc_080c9b5c:
 	ldr	r0, [pc, #260]	@ 0x080C9CBC
 	str	r0, [r1, #88]
 	movs	r0, #16
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r4, #0]
 	ldr	r0, [pc, #252]	@ 0x080C9CC0
 	str	r0, [r1, #88]
@@ -6959,7 +6959,7 @@ loc_080c9b5c:
 	.global	loc_080c9bf0
 loc_080c9bf0:
 	movs	r0, #1
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldrh	r0, [r4, #0]
 	cmp	r0, #0
 	bne.n	loc_080c9bf0	@ 0x080C9BF0
@@ -6986,7 +6986,7 @@ loc_080c9bfc:
 	strh	r0, [r1, #0]
 	bl	sub_080062c4	@ 0x080062C4
 	movs	r0, #120
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r2, [pc, #100]	@ 0x080C9C94
 	ldr	r0, [r2, #0]
 	adds	r0, #108
@@ -7121,111 +7121,111 @@ loc_080c9d50:
 	movs	r0, #0
 	strh	r0, [r1, #60]
 	movs	r0, #1
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r4, #0]
 	movs	r0, #16
 	strh	r0, [r1, #60]
 	movs	r0, #1
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r4, #0]
 	movs	r0, #1
 	strh	r0, [r1, #60]
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r4, #0]
 	movs	r0, #17
 	strh	r0, [r1, #60]
 	movs	r0, #1
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r4, #0]
 	movs	r0, #2
 	strh	r0, [r1, #60]
 	movs	r0, #1
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r4, #0]
 	movs	r0, #18
 	strh	r0, [r1, #60]
 	movs	r0, #1
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r4, #0]
 	movs	r0, #3
 	strh	r0, [r1, #60]
 	movs	r0, #1
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r4, #0]
 	movs	r0, #19
 	strh	r0, [r1, #60]
 	movs	r0, #1
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r4, #0]
 	movs	r0, #4
 	strh	r0, [r1, #60]
 	movs	r0, #1
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r4, #0]
 	movs	r0, #20
 	strh	r0, [r1, #60]
 	movs	r0, #1
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r4, #0]
 	movs	r0, #5
 	strh	r0, [r1, #60]
 	movs	r0, #1
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r4, #0]
 	movs	r0, #21
 	strh	r0, [r1, #60]
 	movs	r0, #1
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r4, #0]
 	movs	r0, #6
 	strh	r0, [r1, #60]
 	movs	r0, #1
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r4, #0]
 	movs	r0, #11
 	strh	r0, [r1, #60]
 	movs	r0, #1
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r4, #0]
 	movs	r0, #7
 	strh	r0, [r1, #60]
 	movs	r0, #1
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r4, #0]
 	movs	r0, #12
 	strh	r0, [r1, #60]
 	movs	r0, #1
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r4, #0]
 	movs	r0, #8
 	strh	r0, [r1, #60]
 	movs	r0, #1
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r4, #0]
 	movs	r0, #13
 	strh	r0, [r1, #60]
 	movs	r0, #1
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r4, #0]
 	movs	r0, #9
 	strh	r0, [r1, #60]
 	movs	r0, #1
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r4, #0]
 	movs	r0, #14
 	strh	r0, [r1, #60]
 	movs	r0, #1
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r4, #0]
 	movs	r0, #10
 	strh	r0, [r1, #60]
 	movs	r0, #1
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r4, #0]
 	movs	r0, #15
 	strh	r0, [r1, #60]
 	movs	r0, #1
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r4, #0]
 	adds	r1, #108
 	ldrh	r0, [r1, #0]
@@ -7238,7 +7238,7 @@ loc_080c9d50:
 	b.n	loc_080c9d50	@ 0x080C9D50
 	.global	loc_080c9e6a
 loc_080c9e6a:
-	bl	sub_080cfdd4	@ 0x080CFDD4
+	bl	TaskDispatchTrampoline	@ 0x080CFDD4
 	pop	{r4}
 	pop	{r0}
 	bx	r0
@@ -7327,7 +7327,7 @@ loc_080c9eee:
 	ldr	r0, [pc, #60]	@ 0x080C9F58
 	str	r0, [r1, #88]
 	movs	r0, #6
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r5, #0]
 	movs	r0, #160
 	lsls	r0, r0, #9
@@ -7335,7 +7335,7 @@ loc_080c9eee:
 	ldr	r0, [pc, #48]	@ 0x080C9F5C
 	str	r0, [r1, #88]
 	movs	r0, #12
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r5, #0]
 	movs	r0, #192
 	lsls	r0, r0, #8
@@ -7343,7 +7343,7 @@ loc_080c9eee:
 	ldr	r0, [pc, #32]	@ 0x080C9F60
 	str	r0, [r1, #88]
 	movs	r0, #18
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r5, #0]
 	movs	r0, #128
 	lsls	r0, r0, #7
@@ -7367,19 +7367,19 @@ loc_080c9f58:
 	str	r0, [r1, #84]
 	str	r0, [r1, #88]
 	movs	r0, #6
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r5, #0]
 	ldr	r0, [pc, #40]	@ 0x080C9FAC
 	str	r0, [r1, #84]
 	str	r0, [r1, #88]
 	movs	r0, #12
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r5, #0]
 	ldr	r0, [pc, #32]	@ 0x080C9FB0
 	str	r0, [r1, #84]
 	str	r0, [r1, #88]
 	movs	r0, #18
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r5, #0]
 	ldr	r0, [pc, #20]	@ 0x080C9FB4
 	str	r0, [r1, #84]
@@ -7398,17 +7398,17 @@ loc_080c9f58:
 	ldr	r0, [pc, #44]	@ 0x080C9FF0
 	str	r0, [r1, #88]
 	movs	r0, #6
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r5, #0]
 	ldr	r0, [pc, #36]	@ 0x080C9FF4
 	str	r0, [r1, #88]
 	movs	r0, #6
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r5, #0]
 	ldr	r0, [pc, #28]	@ 0x080C9FF8
 	str	r0, [r1, #88]
 	movs	r0, #18
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r5, #0]
 	ldr	r0, [pc, #20]	@ 0x080C9FFC
 	b.n	loc_080ca154	@ 0x080CA154
@@ -7429,7 +7429,7 @@ loc_080c9f58:
 	ldr	r0, [pc, #60]	@ 0x080CA050
 	str	r0, [r1, #88]
 	movs	r0, #6
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r5, #0]
 	movs	r0, #192
 	lsls	r0, r0, #8
@@ -7437,7 +7437,7 @@ loc_080c9f58:
 	ldr	r0, [pc, #48]	@ 0x080CA054
 	str	r0, [r1, #88]
 	movs	r0, #12
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r5, #0]
 	movs	r0, #128
 	lsls	r0, r0, #8
@@ -7445,7 +7445,7 @@ loc_080c9f58:
 	ldr	r0, [pc, #32]	@ 0x080CA058
 	str	r0, [r1, #88]
 	movs	r0, #18
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r5, #0]
 	movs	r0, #128
 	lsls	r0, r0, #6
@@ -7472,20 +7472,20 @@ loc_080ca064:
 loc_080ca070:
 	str	r0, [r1, #88]
 	movs	r0, #6
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r5, #0]
 	ldr	r4, [pc, #48]	@ 0x080CA0AC
 	str	r4, [r1, #84]
 	ldr	r0, [pc, #48]	@ 0x080CA0B0
 	str	r0, [r1, #88]
 	movs	r0, #12
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r5, #0]
 	ldr	r0, [pc, #40]	@ 0x080CA0B4
 	str	r0, [r1, #84]
 	str	r4, [r1, #88]
 	movs	r0, #18
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r5, #0]
 	ldr	r0, [pc, #28]	@ 0x080CA0B8
 	str	r0, [r1, #84]
@@ -7512,7 +7512,7 @@ loc_080ca0bc:
 	ldr	r0, [pc, #56]	@ 0x080CA10C
 	str	r0, [r1, #88]
 	movs	r0, #6
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r5, #0]
 	movs	r0, #128
 	lsls	r0, r0, #10
@@ -7520,7 +7520,7 @@ loc_080ca0bc:
 	ldr	r0, [pc, #44]	@ 0x080CA110
 	str	r0, [r1, #88]
 	movs	r0, #12
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	.global	loc_080ca0ec
 loc_080ca0ec:
 	ldr	r1, [r5, #0]
@@ -7530,7 +7530,7 @@ loc_080ca0ec:
 	ldr	r0, [pc, #28]	@ 0x080CA114
 	str	r0, [r1, #88]
 	movs	r0, #18
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r5, #0]
 	movs	r0, #128
 	lsls	r0, r0, #7
@@ -7550,20 +7550,20 @@ loc_080ca0ec:
 	ldr	r0, [pc, #64]	@ 0x080CA168
 	str	r0, [r1, #88]
 	movs	r0, #6
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r5, #0]
 	ldr	r0, [pc, #56]	@ 0x080CA16C
 	str	r0, [r1, #84]
 	ldr	r4, [pc, #56]	@ 0x080CA170
 	str	r4, [r1, #88]
 	movs	r0, #12
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r0, [r5, #0]
 	str	r4, [r0, #84]
 	ldr	r4, [pc, #44]	@ 0x080CA174
 	str	r4, [r0, #88]
 	movs	r0, #18
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r5, #0]
 	str	r4, [r1, #84]
 	.global	loc_080ca152
@@ -7573,7 +7573,7 @@ loc_080ca152:
 loc_080ca154:
 	str	r0, [r1, #88]
 	movs	r0, #12
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	b.n	loc_080ca318	@ 0x080CA318
 	movs	r0, r0
 	.word	0x0874CF28
@@ -7586,7 +7586,7 @@ loc_080ca154:
 	.global	loc_080ca17c
 loc_080ca17c:
 	.short	0x2002
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r4, [pc, #76]	@ 0x080CA1D0
 	ldr	r1, [r4, #0]
 	ldr	r0, [pc, #76]	@ 0x080CA1D4
@@ -7599,7 +7599,7 @@ loc_080ca17c:
 	ldr	r0, [pc, #64]	@ 0x080CA1D8
 	str	r0, [r1, #88]
 	movs	r0, #6
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r4, #0]
 	movs	r0, #128
 	lsls	r0, r0, #8
@@ -7607,7 +7607,7 @@ loc_080ca17c:
 	ldr	r0, [pc, #52]	@ 0x080CA1DC
 	str	r0, [r1, #88]
 	movs	r0, #12
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r4, #0]
 	movs	r0, #128
 	lsls	r0, r0, #7
@@ -7615,7 +7615,7 @@ loc_080ca17c:
 	ldr	r0, [pc, #36]	@ 0x080CA1E0
 	str	r0, [r1, #88]
 	movs	r0, #18
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r4, #0]
 	movs	r0, #128
 	lsls	r0, r0, #6
@@ -7630,7 +7630,7 @@ loc_080ca17c:
 	.word	0xFFFF8000
 	.word	0xFFFFC000
 	.short	0x2002
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r4, [pc, #72]	@ 0x080CA238
 	ldr	r1, [r4, #0]
 	ldr	r0, [pc, #72]	@ 0x080CA23C
@@ -7644,20 +7644,20 @@ loc_080ca1f4:
 	ldr	r0, [pc, #68]	@ 0x080CA244
 	str	r0, [r1, #88]
 	movs	r0, #6
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r4, #0]
 	ldr	r6, [pc, #60]	@ 0x080CA248
 	str	r6, [r1, #84]
 	ldr	r0, [pc, #60]	@ 0x080CA24C
 	str	r0, [r1, #88]
 	movs	r0, #12
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r0, [r4, #0]
 	ldr	r5, [pc, #52]	@ 0x080CA250
 	str	r5, [r0, #84]
 	str	r6, [r0, #88]
 	movs	r0, #18
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r4, #0]
 	ldr	r0, [pc, #40]	@ 0x080CA254
 	str	r0, [r1, #84]
@@ -7665,7 +7665,7 @@ loc_080ca1f4:
 	.global	loc_080ca22e
 loc_080ca22e:
 	movs	r0, #10
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	b.n	loc_080ca318	@ 0x080CA318
 	movs	r0, r0
 	.global	loc_080ca238
@@ -7681,7 +7681,7 @@ loc_080ca238:
 	.global	loc_080ca258
 loc_080ca258:
 	.short	0x2004
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r4, [pc, #84]	@ 0x080CA2B4
 	ldr	r1, [r4, #0]
 	ldr	r0, [pc, #84]	@ 0x080CA2B8
@@ -7694,7 +7694,7 @@ loc_080ca258:
 	ldr	r0, [pc, #72]	@ 0x080CA2BC
 	str	r0, [r1, #88]
 	movs	r0, #6
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r4, #0]
 	movs	r0, #128
 	lsls	r0, r0, #9
@@ -7702,7 +7702,7 @@ loc_080ca258:
 	ldr	r0, [pc, #60]	@ 0x080CA2C0
 	str	r0, [r1, #88]
 	movs	r0, #12
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r4, #0]
 	movs	r0, #128
 	lsls	r0, r0, #8
@@ -7710,7 +7710,7 @@ loc_080ca258:
 	ldr	r0, [pc, #44]	@ 0x080CA2C4
 	str	r0, [r1, #88]
 	movs	r0, #18
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r4, #0]
 	.global	loc_080ca2a0
 loc_080ca2a0:
@@ -7720,7 +7720,7 @@ loc_080ca2a0:
 	ldr	r0, [pc, #32]	@ 0x080CA2C8
 	str	r0, [r1, #88]
 	movs	r0, #8
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	b.n	loc_080ca318	@ 0x080CA318
 	movs	r0, r0
 	.word	0x03002490
@@ -7732,7 +7732,7 @@ loc_080ca2a0:
 	.global	loc_080ca2cc
 loc_080ca2cc:
 	.short	0x2004
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r5, [pc, #80]	@ 0x080CA324
 	ldr	r1, [r5, #0]
 	ldr	r0, [pc, #80]	@ 0x080CA328
@@ -7744,29 +7744,29 @@ loc_080ca2cc:
 	ldr	r0, [pc, #76]	@ 0x080CA330
 	str	r0, [r1, #88]
 	movs	r0, #6
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r5, #0]
 	ldr	r0, [pc, #68]	@ 0x080CA334
 	str	r0, [r1, #84]
 	ldr	r4, [pc, #68]	@ 0x080CA338
 	str	r4, [r1, #88]
 	movs	r0, #12
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r0, [r5, #0]
 	str	r4, [r0, #84]
 	ldr	r4, [pc, #56]	@ 0x080CA33C
 	str	r4, [r0, #88]
 	movs	r0, #18
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r5, #0]
 	str	r4, [r1, #84]
 	ldr	r0, [pc, #48]	@ 0x080CA340
 	str	r0, [r1, #88]
 	movs	r0, #8
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	.global	loc_080ca318
 loc_080ca318:
-	bl	sub_080cfdd4	@ 0x080CFDD4
+	bl	TaskDispatchTrampoline	@ 0x080CFDD4
 	pop	{r4, r5, r6}
 	pop	{r0}
 	bx	r0
@@ -7852,7 +7852,7 @@ loc_080ca360:
 	.short	0xA548
 	lsrs	r4, r1, #32
 	movs	r0, #30
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r0, [pc, #8]	@ 0x080CA3E4
 	ldr	r1, [r0, #0]
 	movs	r0, #128
@@ -7862,7 +7862,7 @@ loc_080ca360:
 loc_080ca3e4:
 	.word	0x03002490
 	movs	r0, #34
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r0, [pc, #8]	@ 0x080CA3F8
 	ldr	r1, [r0, #0]
 	movs	r0, #192
@@ -7872,7 +7872,7 @@ loc_080ca3e4:
 	.global	loc_080ca3fc
 loc_080ca3fc:
 	movs	r0, #100
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r0, [pc, #8]	@ 0x080CA40C
 	ldr	r1, [r0, #0]
 	movs	r0, #0
@@ -7880,9 +7880,9 @@ loc_080ca3fc:
 	movs	r0, r0
 	.word	0x03002490
 	movs	r0, #160
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	movs	r0, #210
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r0, [pc, #8]	@ 0x080CA428
 	ldr	r1, [r0, #0]
 	movs	r0, #128
@@ -7891,9 +7891,9 @@ loc_080ca3fc:
 	movs	r0, r0
 	.word	0x03002490
 	movs	r0, #14
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	movs	r0, #210
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r0, [pc, #8]	@ 0x080CA444
 	ldr	r1, [r0, #0]
 	movs	r0, #160
@@ -7902,7 +7902,7 @@ loc_080ca3fc:
 	movs	r0, r0
 	.word	0x03002490
 	movs	r0, #210
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r0, [pc, #8]	@ 0x080CA458
 	ldr	r1, [r0, #0]
 	movs	r0, #128
@@ -7912,9 +7912,9 @@ loc_080ca3fc:
 loc_080ca458:
 	.word	0x03002490
 	movs	r0, #200
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	movs	r0, #210
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r0, [pc, #8]	@ 0x080CA474
 	ldr	r1, [r0, #0]
 	movs	r0, #160
@@ -7925,11 +7925,11 @@ loc_080ca470:
 	movs	r0, r0
 	.word	0x03002490
 	movs	r0, #240
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	movs	r0, #240
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	movs	r0, #34
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r0, [pc, #16]	@ 0x080CA49C
 	ldr	r1, [r0, #0]
 	movs	r0, #192
@@ -7942,7 +7942,7 @@ loc_080ca492:
 	movs	r0, r0
 	.word	0x03002490
 	movs	r0, #30
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r0, [pc, #8]	@ 0x080CA4B0
 	ldr	r1, [r0, #0]
 	movs	r0, #128
@@ -7950,7 +7950,7 @@ loc_080ca492:
 	b.n	loc_080ca562	@ 0x080CA562
 	.word	0x03002490
 	movs	r0, #90
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r0, [pc, #8]	@ 0x080CA4C4
 	ldr	r1, [r0, #0]
 	movs	r0, #144
@@ -7969,7 +7969,7 @@ loc_080ca4cc:
 	b.n	loc_080ca562	@ 0x080CA562
 	.word	0x03002490
 	movs	r0, #180
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r0, [pc, #8]	@ 0x080CA4EC
 	ldr	r1, [r0, #0]
 	movs	r0, #128
@@ -7982,7 +7982,7 @@ loc_080ca4cc:
 loc_080ca4f4:
 	.short	0xFC6B
 	movs	r0, #98
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r0, [pc, #8]	@ 0x080CA508
 	ldr	r1, [r0, #0]
 	movs	r0, #128
@@ -7991,9 +7991,9 @@ loc_080ca4f4:
 	movs	r0, r0
 	.word	0x03002490
 	movs	r0, #240
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	movs	r0, #160
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r0, [pc, #8]	@ 0x080CA524
 	ldr	r1, [r0, #0]
 	movs	r0, #240
@@ -8004,11 +8004,11 @@ loc_080ca520:
 	movs	r0, r0
 	.word	0x03002490
 	movs	r0, #240
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	movs	r0, #240
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	movs	r0, #130
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r0, [pc, #8]	@ 0x080CA544
 	ldr	r1, [r0, #0]
 	movs	r0, #160
@@ -8016,11 +8016,11 @@ loc_080ca520:
 	b.n	loc_080ca562	@ 0x080CA562
 	.word	0x03002490
 	movs	r0, #240
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	movs	r0, #240
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	movs	r0, #98
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r0, [pc, #16]	@ 0x080CA56C
 	ldr	r1, [r0, #0]
 	movs	r0, #192
@@ -8067,27 +8067,27 @@ loc_080ca59e:
 	lsls	r0, r0, #6
 	str	r0, [r1, #84]
 	movs	r0, #4
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r0, [r4, #0]
 	str	r7, [r0, #84]
 	movs	r0, #8
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r4, #0]
 	movs	r0, #128
 	lsls	r0, r0, #9
 	str	r0, [r1, #84]
 	movs	r0, #20
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r0, [r4, #0]
 	str	r7, [r0, #84]
 	movs	r0, #8
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r4, #0]
 	movs	r0, #192
 	lsls	r0, r0, #6
 	str	r0, [r1, #84]
 	movs	r0, #4
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r0, [r4, #0]
 	str	r6, [r0, #84]
 	movs	r0, #4
@@ -8098,20 +8098,20 @@ loc_080ca5e4:
 	ldr	r0, [r4, #0]
 	str	r5, [r0, #84]
 	movs	r0, #8
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r4, #0]
 	ldr	r0, [pc, #72]	@ 0x080CA63C
 	str	r0, [r1, #84]
 	movs	r0, #20
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r0, [r4, #0]
 	str	r5, [r0, #84]
 	movs	r0, #8
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r0, [r4, #0]
 	str	r6, [r0, #84]
 	movs	r0, #4
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r4, #0]
 	adds	r1, #108
 	ldrh	r0, [r1, #0]
@@ -8171,7 +8171,7 @@ loc_080ca678:
 	mov	r1, r8
 	str	r1, [r0, #84]
 	movs	r0, #4
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r0, [r4, #0]
 	str	r7, [r0, #84]
 	movs	r0, #8
@@ -8183,40 +8183,40 @@ loc_080ca68c:
 	ldr	r0, [pc, #132]	@ 0x080CA718
 	str	r0, [r1, #84]
 	movs	r0, #16
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r0, [r4, #0]
 	str	r7, [r0, #84]
 	movs	r0, #8
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r0, [r4, #0]
 	mov	r1, r8
 	str	r1, [r0, #84]
 	movs	r0, #4
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r0, [r4, #0]
 	str	r6, [r0, #84]
 	movs	r0, #4
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r0, [r4, #0]
 	str	r5, [r0, #84]
 	movs	r0, #8
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r4, #0]
 	movs	r0, #128
 	lsls	r0, r0, #8
 	str	r0, [r1, #84]
 	movs	r0, #16
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r0, [r4, #0]
 	str	r5, [r0, #84]
 	movs	r0, #8
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r0, [r4, #0]
 	str	r6, [r0, #84]
 	.global	loc_080ca6e0
 loc_080ca6e0:
 	movs	r0, #4
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r4, #0]
 	.global	loc_080ca6e8
 loc_080ca6e8:
@@ -8277,27 +8277,27 @@ loc_080ca73c:
 	ldr	r0, [pc, #220]	@ 0x080CA82C
 	strh	r0, [r1, #60]
 	movs	r0, #131
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r4, #0]
 	movs	r0, #10
 	strh	r0, [r1, #60]
 	movs	r0, #1
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r4, #0]
 	movs	r0, #9
 	strh	r0, [r1, #60]
 	movs	r0, #1
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r4, #0]
 	movs	r0, #8
 	strh	r0, [r1, #60]
 	movs	r0, #2
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r4, #0]
 	movs	r0, #7
 	strh	r0, [r1, #60]
 	movs	r0, #2
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r4, #0]
 	.global	loc_080ca788
 loc_080ca788:
@@ -8311,7 +8311,7 @@ loc_080ca790:
 	ldr	r1, [r4, #0]
 	movs	r0, #5
 	strh	r0, [r1, #60]
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r0, [r4, #0]
 	adds	r0, #108
 	strh	r5, [r0, #0]
@@ -8321,31 +8321,31 @@ loc_080ca7a2:
 	movs	r5, #0
 	strh	r5, [r0, #60]
 	movs	r0, #5
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r4, #0]
 	movs	r0, #1
 	strh	r0, [r1, #60]
 	movs	r0, #5
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r4, #0]
 	movs	r0, #2
 	strh	r0, [r1, #60]
 	movs	r0, #5
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r4, #0]
 	movs	r0, #3
 	strh	r0, [r1, #60]
 	movs	r0, #5
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r4, #0]
 	movs	r0, #4
 	strh	r0, [r1, #60]
 	movs	r0, #5
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r4, #0]
 	movs	r0, #5
 	strh	r0, [r1, #60]
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r4, #0]
 	adds	r1, #108
 	ldrh	r0, [r1, #0]
@@ -8359,7 +8359,7 @@ loc_080ca7a2:
 	ldr	r0, [r4, #0]
 	strh	r5, [r0, #60]
 	movs	r0, #3
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r4, #0]
 	ldr	r0, [pc, #32]	@ 0x080CA82C
 	strh	r0, [r1, #60]
@@ -8405,44 +8405,44 @@ sub_080ca830:
 	ldr	r0, [pc, #136]	@ 0x080CA8EC
 	strh	r0, [r1, #60]
 	movs	r0, #115
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r0, [r5, #0]
 	strh	r4, [r0, #60]
 	movs	r0, #5
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r5, #0]
 	movs	r0, #1
 	strh	r0, [r1, #60]
 	movs	r0, #5
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r5, #0]
 	movs	r0, #2
 	strh	r0, [r1, #60]
 	movs	r0, #5
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r5, #0]
 	movs	r0, #3
 	strh	r0, [r1, #60]
 	movs	r0, #5
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r5, #0]
 	movs	r0, #4
 	strh	r0, [r1, #60]
 	movs	r0, #5
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r0, [r5, #0]
 	movs	r4, #5
 	strh	r4, [r0, #60]
 	movs	r0, #65
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r0, [r5, #0]
 	strh	r4, [r0, #60]
 	movs	r0, #200
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r0, [r5, #0]
 	strh	r4, [r0, #60]
 	movs	r0, #72
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r5, #0]
 	movs	r0, #1
 	negs	r0, r0
@@ -8494,33 +8494,33 @@ sub_080ca8f0:
 	ldr	r0, [pc, #272]	@ 0x080CAA38
 	strh	r0, [r1, #60]
 	movs	r0, #140
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r4, #0]
 	movs	r0, #3
 	strh	r0, [r1, #60]
 	movs	r0, #1
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r4, #0]
 	movs	r0, #1
 	negs	r0, r0
 	strh	r0, [r1, #60]
 	movs	r0, #2
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r4, #0]
 	movs	r0, #4
 	strh	r0, [r1, #60]
 	movs	r0, #2
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r4, #0]
 	movs	r0, #1
 	negs	r0, r0
 	strh	r0, [r1, #60]
 	movs	r0, #1
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r4, #0]
 	movs	r0, #5
 	strh	r0, [r1, #60]
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r0, [r4, #0]
 	adds	r0, #108
 	strh	r5, [r0, #0]
@@ -8532,7 +8532,7 @@ loc_080ca974:
 	mov	r1, r9
 	strh	r1, [r0, #60]
 	movs	r0, #5
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r0, [r4, #0]
 	movs	r1, #1
 	mov	r8, r1
@@ -8541,26 +8541,26 @@ loc_080ca974:
 loc_080ca98c:
 	strh	r1, [r0, #60]
 	movs	r0, #5
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r0, [r4, #0]
 	movs	r7, #2
 	strh	r7, [r0, #60]
 	movs	r0, #5
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r0, [r4, #0]
 	movs	r6, #3
 	strh	r6, [r0, #60]
 	movs	r0, #5
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r0, [r4, #0]
 	movs	r5, #4
 	strh	r5, [r0, #60]
 	movs	r0, #5
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r4, #0]
 	movs	r0, #5
 	strh	r0, [r1, #60]
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r4, #0]
 	adds	r1, #108
 	ldrh	r0, [r1, #0]
@@ -8575,24 +8575,24 @@ loc_080ca98c:
 	mov	r1, r9
 	strh	r1, [r0, #60]
 	movs	r0, #5
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r0, [r4, #0]
 	mov	r1, r8
 	strh	r1, [r0, #60]
 	movs	r0, #5
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r0, [r4, #0]
 	strh	r7, [r0, #60]
 	movs	r0, #5
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r0, [r4, #0]
 	strh	r6, [r0, #60]
 	movs	r0, #5
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r0, [r4, #0]
 	strh	r5, [r0, #60]
 	movs	r0, #5
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r4, #0]
 	ldr	r0, [pc, #40]	@ 0x080CAA38
 	strh	r0, [r1, #60]
@@ -9923,7 +9923,7 @@ loc_080cb3fc:
 	adds	r0, #8
 	strh	r0, [r1, #60]
 	movs	r0, #1
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	b.n	loc_080cb3fc	@ 0x080CB3FC
 	movs	r0, r0
 	.word	0x03002490
@@ -10039,7 +10039,7 @@ loc_080cb4c6:
 	movs	r3, #4
 	bl	sub_08003014	@ 0x08003014
 	movs	r0, #1
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	b.n	loc_080cb452	@ 0x080CB452
 	.word	0x08584BB0
 	.word	0x03001390
@@ -10098,7 +10098,7 @@ loc_080cb548:
 	movs	r2, #18
 	bl	sub_080c68b0	@ 0x080C68B0
 	movs	r0, #1
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r4, #0]
 	ldr	r0, [pc, #32]	@ 0x080CB584
 	ldrh	r0, [r0, #0]
@@ -10110,7 +10110,7 @@ loc_080cb548:
 	bne.n	loc_080cb548	@ 0x080CB548
 	.global	loc_080cb570
 loc_080cb570:
-	bl	sub_080cfdd4	@ 0x080CFDD4
+	bl	TaskDispatchTrampoline	@ 0x080CFDD4
 	pop	{r4, r5, r6}
 	pop	{r0}
 	bx	r0
@@ -10237,25 +10237,25 @@ loc_080cb66a:
 	movs	r0, #0
 	bl	sub_08006338	@ 0x08006338
 	movs	r0, #16
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r4, #0]
 	ldrh	r0, [r1, #60]
 	adds	r0, #1
 	strh	r0, [r1, #60]
 	movs	r0, #16
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r4, #0]
 	ldrh	r0, [r1, #60]
 	adds	r0, #1
 	strh	r0, [r1, #60]
 	movs	r0, #20
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r4, #0]
 	ldrh	r0, [r1, #60]
 	subs	r0, #1
 	strh	r0, [r1, #60]
 	movs	r0, #12
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r0, [r4, #0]
 	ldr	r0, [r0, #24]
 	cmp	r0, #0
@@ -10271,11 +10271,11 @@ loc_080cb6ae:
 	subs	r0, #1
 	strh	r0, [r1, #60]
 	movs	r0, #12
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	movs	r0, #3
 	bl	sub_08006338	@ 0x08006338
 	movs	r0, #48
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	b.n	loc_080cb66a	@ 0x080CB66A
 	movs	r0, r0
 	.word	0x03002490
@@ -10326,13 +10326,13 @@ sub_080cb70c:
 	ldr	r1, [r0, #0]
 	.word	0x87882003
 	movs	r0, #2
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r2, [pc, #860]	@ 0x080CBA90
 	ldr	r1, [r2, #0]
 	movs	r0, #9
 	strh	r0, [r1, #60]
 	movs	r0, #2
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r0, [pc, #844]	@ 0x080CBA90
 	ldr	r1, [r0, #0]
 	movs	r0, #12
@@ -10349,37 +10349,37 @@ sub_080cb70c:
 	adds	r2, r4, #0
 	bl	sub_0800625c	@ 0x0800625C
 	movs	r0, #2
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r2, [pc, #808]	@ 0x080CBA90
 	ldr	r1, [r2, #0]
 	movs	r0, #10
 	strh	r0, [r1, #60]
 	movs	r0, #2
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r0, [pc, #792]	@ 0x080CBA90
 	ldr	r1, [r0, #0]
 	movs	r0, #13
 	strh	r0, [r1, #60]
 	movs	r0, #2
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r2, [pc, #780]	@ 0x080CBA90
 	ldr	r1, [r2, #0]
 	movs	r0, #11
 	strh	r0, [r1, #60]
 	movs	r0, #2
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r0, [pc, #764]	@ 0x080CBA90
 	ldr	r1, [r0, #0]
 	movs	r0, #6
 	strh	r0, [r1, #60]
 	movs	r0, #4
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [pc, #752]	@ 0x080CBA90
 	ldr	r0, [r1, #0]
 	movs	r2, #5
 	strh	r2, [r0, #60]
 	movs	r0, #26
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r0, [pc, #736]	@ 0x080CBA90
 	ldr	r1, [r0, #0]
 	.word	0x87882007
@@ -10391,7 +10391,7 @@ sub_080cb70c:
 	movs	r3, #0
 	bl	sub_0800625c	@ 0x0800625C
 	movs	r0, #4
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r2, [pc, #708]	@ 0x080CBA90
 	ldr	r0, [r2, #0]
 	movs	r1, #5
@@ -10405,7 +10405,7 @@ sub_080cb70c:
 	adds	r2, r4, #0
 	bl	sub_0800625c	@ 0x0800625C
 	movs	r0, #19
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	movs	r0, #0
 	str	r0, [sp, #0]
 	str	r4, [sp, #4]
@@ -10414,7 +10414,7 @@ sub_080cb70c:
 	movs	r3, #0
 	bl	sub_0800625c	@ 0x0800625C
 	movs	r0, #11
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	movs	r1, #128
 	lsls	r1, r1, #10
 	mov	r9, r1
@@ -10432,7 +10432,7 @@ sub_080cb70c:
 	adds	r3, r7, #0
 	bl	sub_0800625c	@ 0x0800625C
 	movs	r0, #10
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r6, [pc, #636]	@ 0x080CBAA8
 	movs	r1, #0
 	str	r1, [sp, #0]
@@ -10443,7 +10443,7 @@ sub_080cb70c:
 	movs	r3, #0
 	bl	sub_0800625c	@ 0x0800625C
 	movs	r0, #8
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	movs	r2, #0
 	str	r2, [sp, #0]
 	str	r4, [sp, #4]
@@ -10453,7 +10453,7 @@ sub_080cb70c:
 	movs	r3, #0
 	bl	sub_0800625c	@ 0x0800625C
 	movs	r0, #10
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	mov	r0, r8
 	str	r0, [sp, #0]
 	str	r4, [sp, #4]
@@ -10463,7 +10463,7 @@ sub_080cb70c:
 	adds	r3, r7, #0
 	bl	sub_0800625c	@ 0x0800625C
 	movs	r0, #10
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	movs	r1, #0
 	str	r1, [sp, #0]
 	str	r4, [sp, #4]
@@ -10473,7 +10473,7 @@ sub_080cb70c:
 	movs	r3, #0
 	bl	sub_0800625c	@ 0x0800625C
 	movs	r0, #8
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	movs	r2, #0
 	str	r2, [sp, #0]
 	str	r4, [sp, #4]
@@ -10483,7 +10483,7 @@ sub_080cb70c:
 	movs	r3, #0
 	bl	sub_0800625c	@ 0x0800625C
 	movs	r0, #10
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [pc, #492]	@ 0x080CBA90
 	.global	loc_080cb8a4
 loc_080cb8a4:
@@ -10499,13 +10499,13 @@ loc_080cb8a4:
 	adds	r3, r7, #0
 	bl	sub_0800625c	@ 0x0800625C
 	movs	r0, #8
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [pc, #460]	@ 0x080CBA90
 	ldr	r0, [r1, #0]
 	movs	r2, #5
 	strh	r2, [r0, #60]
 	movs	r0, #2
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	movs	r0, #0
 	str	r0, [sp, #0]
 	str	r4, [sp, #4]
@@ -10515,7 +10515,7 @@ loc_080cb8a4:
 	movs	r3, #0
 	bl	sub_0800625c	@ 0x0800625C
 	movs	r0, #8
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [pc, #420]	@ 0x080CBA90
 	ldr	r0, [r1, #0]
 	strh	r5, [r0, #60]
@@ -10528,7 +10528,7 @@ loc_080cb8a4:
 	movs	r3, #0
 	bl	sub_0800625c	@ 0x0800625C
 	movs	r0, #10
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r0, [pc, #392]	@ 0x080CBA90
 	ldr	r1, [r0, #0]
 	movs	r0, #24
@@ -10543,21 +10543,21 @@ loc_080cb8a4:
 	adds	r2, r4, #0
 	bl	sub_0800625c	@ 0x0800625C
 	movs	r0, #5
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r2, [pc, #356]	@ 0x080CBA90
 	ldr	r1, [r2, #0]
 	ldrh	r0, [r1, #60]
 	adds	r0, #1
 	strh	r0, [r1, #60]
 	movs	r0, #5
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r0, [pc, #340]	@ 0x080CBA90
 	ldr	r1, [r0, #0]
 	ldrh	r0, [r1, #60]
 	adds	r0, #1
 	strh	r0, [r1, #60]
 	movs	r0, #5
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r2, [pc, #324]	@ 0x080CBA90
 	ldr	r1, [r2, #0]
 	ldrh	r0, [r1, #60]
@@ -10571,7 +10571,7 @@ loc_080cb8a4:
 	movs	r3, #0
 	bl	sub_0800625c	@ 0x0800625C
 	movs	r0, #2
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	movs	r0, #156
 	bl	sub_080031b8	@ 0x080031B8
 	ldr	r2, [pc, #288]	@ 0x080CBA90
@@ -10589,28 +10589,28 @@ loc_080cb8a4:
 	movs	r3, #0
 	bl	sub_0800625c	@ 0x0800625C
 	movs	r0, #2
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r0, [pc, #252]	@ 0x080CBA90
 	ldr	r1, [r0, #0]
 	ldrh	r0, [r1, #60]
 	adds	r0, #1
 	strh	r0, [r1, #60]
 	movs	r0, #4
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r2, [pc, #236]	@ 0x080CBA90
 	ldr	r1, [r2, #0]
 	ldrh	r0, [r1, #60]
 	adds	r0, #1
 	strh	r0, [r1, #60]
 	movs	r0, #8
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r0, [pc, #220]	@ 0x080CBA90
 	ldr	r1, [r0, #0]
 	ldrh	r0, [r1, #60]
 	adds	r0, #1
 	strh	r0, [r1, #60]
 	movs	r0, #4
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r2, [pc, #204]	@ 0x080CBA90
 	ldr	r1, [r2, #0]
 	ldrh	r0, [r1, #60]
@@ -10625,7 +10625,7 @@ loc_080cb8a4:
 	movs	r3, #0
 	bl	sub_0800625c	@ 0x0800625C
 	movs	r0, #2
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	movs	r0, #156
 	bl	sub_080031b8	@ 0x080031B8
 	ldr	r2, [pc, #164]	@ 0x080CBA90
@@ -10634,34 +10634,34 @@ loc_080cb8a4:
 	adds	r0, #1
 	strh	r0, [r1, #60]
 	movs	r0, #2
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r0, [pc, #148]	@ 0x080CBA90
 	ldr	r1, [r0, #0]
 	ldrh	r0, [r1, #60]
 	adds	r0, #1
 	strh	r0, [r1, #60]
 	movs	r0, #4
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r2, [pc, #132]	@ 0x080CBA90
 	ldr	r1, [r2, #0]
 	movs	r0, #14
 	strh	r0, [r1, #60]
 	movs	r0, #8
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r0, [pc, #116]	@ 0x080CBA90
 	ldr	r1, [r0, #0]
 	ldrh	r0, [r1, #60]
 	adds	r0, #1
 	strh	r0, [r1, #60]
 	movs	r0, #4
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r2, [pc, #100]	@ 0x080CBA90
 	ldr	r1, [r2, #0]
 	ldrh	r0, [r1, #60]
 	adds	r0, #1
 	strh	r0, [r1, #60]
 	movs	r0, #2
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	movs	r0, #156
 	bl	sub_080031b8	@ 0x080031B8
 	ldr	r0, [pc, #80]	@ 0x080CBA90
@@ -10670,21 +10670,21 @@ loc_080cb8a4:
 	adds	r0, #1
 	strh	r0, [r1, #60]
 	movs	r0, #2
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r2, [pc, #64]	@ 0x080CBA90
 	ldr	r1, [r2, #0]
 	ldrh	r0, [r1, #60]
 	adds	r0, #1
 	strh	r0, [r1, #60]
 	movs	r0, #4
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r0, [pc, #48]	@ 0x080CBA90
 	ldr	r1, [r0, #0]
 	ldrh	r0, [r1, #60]
 	adds	r0, #1
 	strh	r0, [r1, #60]
 	movs	r0, #8
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r0, [pc, #68]	@ 0x080CBAB4
 	movs	r1, #1
 	strb	r1, [r0, #0]
@@ -10748,52 +10748,52 @@ sub_080cbac0:
 	mov	r9, r2
 	str	r2, [r0, #84]
 	movs	r0, #2
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r0, [r4, #0]
 	ldr	r1, [pc, #904]	@ 0x080CBE84
 	mov	r8, r1
 	str	r1, [r0, #84]
 	movs	r0, #2
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r0, [r4, #0]
 	movs	r6, #128
 	lsls	r6, r6, #8
 	str	r6, [r0, #84]
 	movs	r0, #2
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r0, [r4, #0]
 	ldr	r5, [pc, #880]	@ 0x080CBE88
 	str	r5, [r0, #84]
 	movs	r0, #2
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r0, [r4, #0]
 	mov	r2, sl
 	str	r2, [r0, #84]
 	movs	r0, #12
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r0, [r4, #0]
 	mov	r1, r9
 	str	r1, [r0, #84]
 	movs	r0, #2
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r0, [r4, #0]
 	mov	r2, r8
 	str	r2, [r0, #84]
 	movs	r0, #2
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r0, [r4, #0]
 	str	r6, [r0, #84]
 	movs	r0, #2
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r0, [r4, #0]
 	str	r5, [r0, #84]
 	movs	r0, #2
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r0, [r4, #0]
 	mov	r1, sl
 	str	r1, [r0, #84]
 	movs	r0, #12
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r0, [r4, #0]
 	movs	r2, #192
 	lsls	r2, r2, #8
@@ -10803,7 +10803,7 @@ sub_080cbac0:
 	mov	r9, r1
 	str	r1, [r0, #92]
 	movs	r0, #5
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r0, [r4, #0]
 	ldr	r6, [pc, #788]	@ 0x080CBE90
 	str	r6, [r0, #84]
@@ -10811,19 +10811,19 @@ sub_080cbac0:
 	lsls	r5, r5, #7
 	str	r5, [r0, #92]
 	movs	r0, #5
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r0, [r4, #0]
 	mov	r2, r8
 	str	r2, [r0, #84]
 	mov	r1, r9
 	str	r1, [r0, #92]
 	movs	r0, #5
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r0, [r4, #0]
 	str	r6, [r0, #84]
 	str	r5, [r0, #92]
 	movs	r0, #5
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r4, #0]
 	ldrh	r0, [r1, #60]
 	adds	r0, #1
@@ -10832,55 +10832,55 @@ sub_080cbac0:
 	str	r2, [r1, #84]
 	str	r2, [r1, #92]
 	movs	r0, #10
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r4, #0]
 	ldrh	r0, [r1, #60]
 	adds	r0, #1
 	strh	r0, [r1, #60]
 	movs	r0, #10
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r4, #0]
 	ldrh	r0, [r1, #60]
 	adds	r0, #1
 	strh	r0, [r1, #60]
 	movs	r0, #10
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r4, #0]
 	ldrh	r0, [r1, #60]
 	adds	r0, #1
 	strh	r0, [r1, #60]
 	movs	r0, #30
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r4, #0]
 	ldrh	r0, [r1, #60]
 	adds	r0, #1
 	strh	r0, [r1, #60]
 	movs	r0, #10
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r4, #0]
 	ldrh	r0, [r1, #60]
 	adds	r0, #1
 	strh	r0, [r1, #60]
 	movs	r0, #6
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r4, #0]
 	ldrh	r0, [r1, #60]
 	subs	r0, #1
 	strh	r0, [r1, #60]
 	movs	r0, #8
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r4, #0]
 	ldrh	r0, [r1, #60]
 	adds	r0, #1
 	strh	r0, [r1, #60]
 	movs	r0, #20
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r4, #0]
 	ldrh	r0, [r1, #60]
 	subs	r0, #1
 	strh	r0, [r1, #60]
 	movs	r0, #3
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r4, #0]
 	movs	r0, #7
 	strh	r0, [r1, #60]
@@ -10890,7 +10890,7 @@ sub_080cbac0:
 	mov	r0, r9
 	str	r0, [r1, #96]
 	movs	r0, #6
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	movs	r0, #103
 	bl	sub_080031b8	@ 0x080031B8
 	ldr	r1, [r4, #0]
@@ -10899,7 +10899,7 @@ sub_080cbac0:
 	adds	r0, #1
 	strh	r0, [r1, #60]
 	movs	r0, #3
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	bl	sub_080062c4	@ 0x080062C4
 	ldr	r0, [r4, #0]
 	adds	r0, #108
@@ -10911,13 +10911,13 @@ loc_080cbc62:
 	movs	r0, #9
 	strh	r0, [r1, #60]
 	movs	r0, #4
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r4, #0]
 	ldrh	r0, [r1, #60]
 	adds	r0, #1
 	strh	r0, [r1, #60]
 	movs	r0, #3
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r4, #0]
 	adds	r1, #108
 	ldrh	r0, [r1, #0]
@@ -10945,29 +10945,29 @@ loc_080cbc62:
 	ldr	r0, [pc, #480]	@ 0x080CBE94
 	str	r0, [r1, #84]
 	movs	r0, #2
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r5, #0]
 	movs	r0, #192
 	lsls	r0, r0, #11
 	str	r0, [r1, #84]
 	movs	r0, #2
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r5, #0]
 	ldr	r0, [pc, #456]	@ 0x080CBE98
 	str	r0, [r1, #84]
 	movs	r0, #2
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r5, #0]
 	movs	r0, #128
 	lsls	r0, r0, #10
 	str	r0, [r1, #84]
 	movs	r0, #2
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r0, [r5, #0]
 	ldr	r7, [pc, #412]	@ 0x080CBE84
 	str	r7, [r0, #84]
 	movs	r0, #2
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r5, #0]
 	ldrh	r0, [r1, #60]
 	adds	r0, #1
@@ -10975,7 +10975,7 @@ loc_080cbc62:
 	mov	r0, r8
 	str	r0, [r1, #84]
 	movs	r0, #2
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	movs	r0, #4
 	bl	sub_080cbf34	@ 0x080CBF34
 	ldr	r0, [r5, #0]
@@ -10996,7 +10996,7 @@ loc_080cbc62:
 	mov	r3, sl
 	bl	sub_0800625c	@ 0x0800625C
 	movs	r0, #6
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r5, #0]
 	ldrh	r0, [r1, #60]
 	adds	r0, #1
@@ -11010,7 +11010,7 @@ loc_080cbc62:
 	movs	r3, #0
 	bl	sub_0800625c	@ 0x0800625C
 	movs	r0, #2
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r0, [r5, #0]
 	mov	r2, r9
 	strh	r2, [r0, #60]
@@ -11022,7 +11022,7 @@ loc_080cbc62:
 	mov	r3, sl
 	bl	sub_0800625c	@ 0x0800625C
 	movs	r0, #6
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r5, #0]
 	ldrh	r0, [r1, #60]
 	adds	r0, #1
@@ -11036,13 +11036,13 @@ loc_080cbc62:
 	movs	r3, #0
 	bl	sub_0800625c	@ 0x0800625C
 	movs	r0, #2
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r5, #0]
 	ldrh	r0, [r1, #60]
 	subs	r0, #1
 	strh	r0, [r1, #60]
 	movs	r0, #8
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	movs	r0, #224
 	lsls	r0, r0, #10
 	mov	r1, r8
@@ -11053,7 +11053,7 @@ loc_080cbc62:
 	movs	r3, #0
 	bl	sub_0800625c	@ 0x0800625C
 	movs	r0, #6
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r5, #0]
 	ldrh	r0, [r1, #60]
 	adds	r0, #1
@@ -11067,62 +11067,62 @@ loc_080cbc62:
 	movs	r3, #0
 	bl	sub_0800625c	@ 0x0800625C
 	movs	r0, #2
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r5, #0]
 	ldrh	r0, [r1, #60]
 	subs	r0, #1
 	strh	r0, [r1, #60]
 	movs	r0, #20
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	movs	r0, #113
 	bl	sub_080031b8	@ 0x080031B8
 	ldr	r1, [r5, #0]
 	movs	r0, #13
 	strh	r0, [r1, #60]
 	movs	r0, #2
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r5, #0]
 	ldrh	r0, [r1, #60]
 	adds	r0, #1
 	strh	r0, [r1, #60]
 	movs	r0, #2
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r5, #0]
 	ldrh	r0, [r1, #60]
 	adds	r0, #1
 	strh	r0, [r1, #60]
 	movs	r0, #4
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r5, #0]
 	ldrh	r0, [r1, #60]
 	adds	r0, #1
 	strh	r0, [r1, #60]
 	movs	r0, #2
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r5, #0]
 	ldrh	r0, [r1, #60]
 	subs	r0, #1
 	strh	r0, [r1, #60]
 	movs	r0, #2
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r5, #0]
 	ldrh	r0, [r1, #60]
 	adds	r0, #1
 	strh	r0, [r1, #60]
 	movs	r0, #2
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r5, #0]
 	ldrh	r0, [r1, #60]
 	adds	r0, #1
 	strh	r0, [r1, #60]
 	movs	r0, #4
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r5, #0]
 	ldrh	r0, [r1, #60]
 	adds	r0, #1
 	strh	r0, [r1, #60]
 	movs	r0, #4
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r0, [r5, #0]
 	adds	r0, #67
 	movs	r1, #255
@@ -11449,12 +11449,12 @@ sub_080cc0a4:
 	movs	r3, #0
 	bl	sub_0800625c	@ 0x0800625C
 	movs	r0, #9
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r4, #0]
 	ldr	r0, [pc, #24]	@ 0x080CC0F0
 	str	r0, [r1, #96]
 	movs	r0, #9
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	b.n	loc_080cc11c	@ 0x080CC11C
 	movs	r0, r0
 	.word	0x03002490
@@ -11473,18 +11473,18 @@ loc_080cc0f4:
 	movs	r3, #0
 	bl	sub_0800625c	@ 0x0800625C
 	movs	r0, #9
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r4, #0]
 	movs	r0, #160
 	lsls	r0, r0, #7
 	str	r0, [r1, #96]
 	movs	r0, #9
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	.global	loc_080cc11c
 loc_080cc11c:
 	bl	sub_080062c4	@ 0x080062C4
 	movs	r0, #5
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r0, [pc, #32]	@ 0x080CC148
 	ldr	r1, [r0, #0]
 	movs	r0, #0
@@ -11553,20 +11553,20 @@ sub_080cc180:
 	lsls	r0, r0, #6
 	str	r0, [r1, #92]
 	movs	r0, #2
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r0, [r4, #0]
 	movs	r1, #10
 	mov	r9, r1
 	mov	r1, r9
 	strh	r1, [r0, #60]
 	movs	r0, #3
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	bl	sub_080062c4	@ 0x080062C4
 	ldr	r0, [r4, #0]
 	mov	r1, r8
 	strh	r1, [r0, #60]
 	movs	r0, #2
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r4, #0]
 	ldrh	r0, [r1, #60]
 	subs	r0, #1
@@ -11575,7 +11575,7 @@ sub_080cc180:
 	lsls	r6, r6, #9
 	str	r6, [r1, #84]
 	movs	r0, #2
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r0, [r4, #0]
 	strh	r5, [r0, #60]
 	ldr	r1, [pc, #180]	@ 0x080CC2A4
@@ -11589,13 +11589,13 @@ sub_080cc180:
 	adds	r2, r5, #0
 	bl	sub_0800625c	@ 0x0800625C
 	movs	r0, #10
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	bl	sub_080062c4	@ 0x080062C4
 	ldr	r0, [r4, #0]
 	mov	r1, sl
 	strh	r1, [r0, #60]
 	movs	r0, #10
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r0, [r4, #0]
 	mov	r1, r8
 	strh	r1, [r0, #60]
@@ -11608,23 +11608,23 @@ sub_080cc180:
 	movs	r3, #0
 	bl	sub_0800625c	@ 0x0800625C
 	movs	r0, #2
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r0, [r4, #0]
 	mov	r1, r9
 	strh	r1, [r0, #60]
 	movs	r0, #15
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r0, [r4, #0]
 	mov	r1, r8
 	strh	r1, [r0, #60]
 	movs	r0, #2
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r4, #0]
 	ldrh	r0, [r1, #60]
 	subs	r0, #1
 	strh	r0, [r1, #60]
 	movs	r0, #10
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r4, #0]
 	movs	r5, #3
 	movs	r0, #3
@@ -11632,13 +11632,13 @@ sub_080cc180:
 	ldr	r0, [pc, #76]	@ 0x080CC2B4
 	str	r0, [r1, #96]
 	movs	r0, #2
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r4, #0]
 	ldrh	r0, [r1, #60]
 	adds	r0, #1
 	strh	r0, [r1, #60]
 	movs	r0, #8
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	bl	sub_080062c4	@ 0x080062C4
 	ldr	r0, [r4, #0]
 	strb	r5, [r0, #20]
@@ -11715,7 +11715,7 @@ sub_080cc2e0:
 	adds	r3, r7, #0
 	bl	sub_0800625c	@ 0x0800625C
 	movs	r0, #3
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r5, #0]
 	movs	r0, #1
 	str	r0, [r1, #32]
@@ -11732,13 +11732,13 @@ sub_080cc2e0:
 	adds	r3, r6, #0
 	bl	sub_0800625c	@ 0x0800625C
 	movs	r0, #10
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r5, #0]
 	ldrh	r0, [r1, #60]
 	adds	r0, #1
 	strh	r0, [r1, #60]
 	movs	r0, #3
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	movs	r0, #140
 	lsls	r0, r0, #1
 	bl	sub_080031b8	@ 0x080031B8
@@ -11756,7 +11756,7 @@ sub_080cc2e0:
 	adds	r3, r6, #0
 	bl	sub_0800625c	@ 0x0800625C
 	movs	r0, #6
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	movs	r0, #192
 	lsls	r0, r0, #5
 	str	r0, [sp, #0]
@@ -11768,7 +11768,7 @@ sub_080cc2e0:
 	movs	r3, #0
 	bl	sub_0800625c	@ 0x0800625C
 	movs	r0, #12
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r0, [pc, #540]	@ 0x080CC5BC
 	movs	r6, #160
 	lsls	r6, r6, #4
@@ -11781,7 +11781,7 @@ sub_080cc2e0:
 	adds	r3, r4, #0
 	bl	sub_0800625c	@ 0x0800625C
 	movs	r0, #12
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	movs	r3, #176
 	lsls	r3, r3, #9
 	ldr	r0, [pc, #508]	@ 0x080CC5C0
@@ -11794,7 +11794,7 @@ sub_080cc2e0:
 loc_080cc3cc:
 	bl	sub_0800625c	@ 0x0800625C
 	movs	r0, #24
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	movs	r0, #128
 	lsls	r0, r0, #9
 	movs	r1, #224
@@ -11807,18 +11807,18 @@ loc_080cc3cc:
 	lsls	r3, r3, #7
 	bl	sub_0800625c	@ 0x0800625C
 	movs	r0, #3
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r5, #0]
 	movs	r0, #8
 	strh	r0, [r1, #60]
 	movs	r0, #3
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r5, #0]
 	ldrh	r0, [r1, #60]
 	adds	r0, #1
 	strh	r0, [r1, #60]
 	movs	r0, #3
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r6, [pc, #436]	@ 0x080CC5C4
 	adds	r0, r6, #0
 	bl	sub_080031b8	@ 0x080031B8
@@ -11836,16 +11836,16 @@ loc_080cc3cc:
 	movs	r3, #0
 	bl	sub_0800625c	@ 0x0800625C
 	movs	r0, #10
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r0, [r5, #0]
 	ldr	r1, [pc, #400]	@ 0x080CC5CC
 	mov	sl, r1
 	str	r1, [r0, #92]
 	movs	r0, #8
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	bl	sub_080062c4	@ 0x080062C4
 	movs	r0, #10
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	adds	r0, r6, #0
 	bl	sub_080031b8	@ 0x080031B8
 	mov	r2, r9
@@ -11857,15 +11857,15 @@ loc_080cc3cc:
 	movs	r3, #0
 	bl	sub_0800625c	@ 0x0800625C
 	movs	r0, #10
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r0, [r5, #0]
 	mov	r1, sl
 	str	r1, [r0, #92]
 	movs	r0, #8
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	bl	sub_080062c4	@ 0x080062C4
 	movs	r0, #10
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	adds	r0, r6, #0
 	bl	sub_080031b8	@ 0x080031B8
 	mov	r2, r9
@@ -11877,26 +11877,26 @@ loc_080cc3cc:
 	movs	r3, #0
 	bl	sub_0800625c	@ 0x0800625C
 	movs	r0, #10
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r0, [r5, #0]
 	mov	r1, sl
 	str	r1, [r0, #92]
 	movs	r0, #8
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	bl	sub_080062c4	@ 0x080062C4
 	movs	r0, #16
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r0, [r5, #0]
 	ldr	r2, [pc, #252]	@ 0x080CC5B8
 	str	r2, [r0, #84]
 	movs	r0, #6
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r0, [r5, #0]
 	movs	r1, #128
 	lsls	r1, r1, #5
 	str	r1, [r0, #92]
 	movs	r0, #16
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	mov	r2, r9
 	str	r2, [sp, #0]
 	str	r4, [sp, #4]
@@ -11907,7 +11907,7 @@ loc_080cc3cc:
 	movs	r3, #0
 	bl	sub_0800625c	@ 0x0800625C
 	movs	r0, #4
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r6, [pc, #224]	@ 0x080CC5D0
 	mov	r0, r9
 	str	r0, [sp, #0]
@@ -11918,12 +11918,12 @@ loc_080cc3cc:
 	movs	r3, #0
 	bl	sub_0800625c	@ 0x0800625C
 	movs	r0, #14
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r0, [r5, #0]
 	mov	r1, sl
 	str	r1, [r0, #92]
 	movs	r0, #8
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	mov	r2, r9
 	str	r2, [sp, #0]
 	str	r4, [sp, #4]
@@ -11934,7 +11934,7 @@ loc_080cc3cc:
 	movs	r3, #0
 	bl	sub_0800625c	@ 0x0800625C
 	movs	r0, #4
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	mov	r0, r9
 	str	r0, [sp, #0]
 	str	r4, [sp, #4]
@@ -11944,12 +11944,12 @@ loc_080cc3cc:
 	movs	r3, #0
 	bl	sub_0800625c	@ 0x0800625C
 	movs	r0, #14
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r0, [r5, #0]
 	mov	r1, sl
 	str	r1, [r0, #92]
 	movs	r0, #8
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	mov	r2, r9
 	str	r2, [sp, #0]
 	str	r4, [sp, #4]
@@ -11960,7 +11960,7 @@ loc_080cc3cc:
 	movs	r3, #0
 	bl	sub_0800625c	@ 0x0800625C
 	movs	r0, #4
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	mov	r0, r9
 	str	r0, [sp, #0]
 	str	r4, [sp, #4]
@@ -11970,12 +11970,12 @@ loc_080cc3cc:
 	movs	r3, #0
 	bl	sub_0800625c	@ 0x0800625C
 	movs	r0, #14
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r0, [r5, #0]
 	mov	r1, sl
 	str	r1, [r0, #92]
 	movs	r0, #8
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	bl	sub_08006138	@ 0x08006138
 	add	sp, #8
 	pop	{r3, r4, r5}
@@ -12057,20 +12057,20 @@ sub_080cc608:
 	lsls	r0, r0, #6
 	str	r0, [r1, #92]
 	movs	r0, #2
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r0, [r4, #0]
 	movs	r1, #10
 	mov	r9, r1
 	mov	r1, r9
 	strh	r1, [r0, #60]
 	movs	r0, #3
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	bl	sub_080062c4	@ 0x080062C4
 	ldr	r0, [r4, #0]
 	mov	r1, r8
 	strh	r1, [r0, #60]
 	movs	r0, #2
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r4, #0]
 	ldrh	r0, [r1, #60]
 	subs	r0, #1
@@ -12079,7 +12079,7 @@ sub_080cc608:
 	lsls	r6, r6, #9
 	str	r6, [r1, #84]
 	movs	r0, #2
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r4, #0]
 	movs	r0, #2
 	strh	r0, [r1, #60]
@@ -12094,13 +12094,13 @@ sub_080cc608:
 	adds	r2, r5, #0
 	bl	sub_0800625c	@ 0x0800625C
 	movs	r0, #10
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	bl	sub_080062c4	@ 0x080062C4
 	ldr	r0, [r4, #0]
 	mov	r1, sl
 	strh	r1, [r0, #60]
 	movs	r0, #10
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r0, [r4, #0]
 	mov	r1, r8
 	strh	r1, [r0, #60]
@@ -12115,23 +12115,23 @@ sub_080cc608:
 	movs	r3, #0
 	bl	sub_0800625c	@ 0x0800625C
 	movs	r0, #2
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r0, [r4, #0]
 	mov	r1, r9
 	strh	r1, [r0, #60]
 	movs	r0, #15
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r0, [r4, #0]
 	mov	r1, r8
 	strh	r1, [r0, #60]
 	movs	r0, #2
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r4, #0]
 	ldrh	r0, [r1, #60]
 	subs	r0, #1
 	strh	r0, [r1, #60]
 	movs	r0, #20
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	movs	r0, #128
 	lsls	r0, r0, #10
 	movs	r3, #128
@@ -12143,7 +12143,7 @@ sub_080cc608:
 	adds	r2, r5, #0
 	bl	sub_0800625c	@ 0x0800625C
 	movs	r0, #3
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	bl	sub_080062c4	@ 0x080062C4
 	ldr	r1, [r4, #0]
 	movs	r0, #5
@@ -12223,13 +12223,13 @@ sub_080cc768:
 	mov	r3, sl
 	bl	sub_0800625c	@ 0x0800625C
 	movs	r0, #7
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r0, [r5, #0]
 	movs	r1, #1
 	mov	r8, r1
 	str	r1, [r0, #32]
 	movs	r0, #3
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r0, [r5, #0]
 	movs	r2, #0
 	strh	r2, [r0, #60]
@@ -12241,7 +12241,7 @@ sub_080cc768:
 	movs	r3, #0
 	bl	sub_0800625c	@ 0x0800625C
 	movs	r0, #10
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	movs	r0, #139
 	lsls	r0, r0, #1
 	bl	sub_080031b8	@ 0x080031B8
@@ -12257,7 +12257,7 @@ sub_080cc768:
 	mov	r3, sl
 	bl	sub_0800625c	@ 0x0800625C
 	movs	r0, #10
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r0, [r5, #0]
 	movs	r1, #0
 	strh	r1, [r0, #60]
@@ -12270,7 +12270,7 @@ sub_080cc768:
 	movs	r3, #0
 	bl	sub_0800625c	@ 0x0800625C
 	movs	r0, #20
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r0, [pc, #840]	@ 0x080CCB6C
 	movs	r1, #192
 	lsls	r1, r1, #4
@@ -12282,7 +12282,7 @@ sub_080cc768:
 	adds	r2, r4, #0
 	bl	sub_0800625c	@ 0x0800625C
 	movs	r0, #33
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r0, [r5, #0]
 	mov	r1, r8
 	strh	r1, [r0, #60]
@@ -12296,12 +12296,12 @@ sub_080cc768:
 	movs	r3, #0
 	bl	sub_0800625c	@ 0x0800625C
 	movs	r0, #2
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r0, [r5, #0]
 	movs	r1, #10
 	strh	r1, [r0, #60]
 	movs	r0, #7
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	movs	r2, #0
 	str	r2, [sp, #0]
 	str	r4, [sp, #4]
@@ -12311,7 +12311,7 @@ sub_080cc768:
 	movs	r3, #0
 	bl	sub_0800625c	@ 0x0800625C
 	movs	r0, #3
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r0, [r5, #0]
 	mov	r1, r8
 	strh	r1, [r0, #60]
@@ -12326,22 +12326,22 @@ sub_080cc768:
 	movs	r3, #0
 	bl	sub_0800625c	@ 0x0800625C
 	movs	r0, #6
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r0, [r5, #0]
 	movs	r1, #0
 	strh	r1, [r0, #60]
 	movs	r0, #3
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r0, [r5, #0]
 	movs	r2, #2
 	strh	r2, [r0, #60]
 	movs	r0, #16
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r0, [r5, #0]
 	movs	r1, #0
 	strh	r1, [r0, #60]
 	movs	r0, #2
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r0, [r5, #0]
 	mov	r2, r8
 	strh	r2, [r0, #60]
@@ -12355,12 +12355,12 @@ sub_080cc768:
 	movs	r3, #0
 	bl	sub_0800625c	@ 0x0800625C
 	movs	r0, #2
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r0, [r5, #0]
 	movs	r1, #10
 	strh	r1, [r0, #60]
 	movs	r0, #7
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	movs	r2, #0
 	str	r2, [sp, #0]
 	str	r4, [sp, #4]
@@ -12370,7 +12370,7 @@ sub_080cc768:
 	movs	r3, #0
 	bl	sub_0800625c	@ 0x0800625C
 	movs	r0, #3
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r0, [r5, #0]
 	mov	r1, r8
 	strh	r1, [r0, #60]
@@ -12384,22 +12384,22 @@ sub_080cc768:
 	movs	r3, #0
 	bl	sub_0800625c	@ 0x0800625C
 	movs	r0, #6
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r0, [r5, #0]
 	movs	r1, #0
 	strh	r1, [r0, #60]
 	movs	r0, #3
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r0, [r5, #0]
 	movs	r2, #2
 	strh	r2, [r0, #60]
 	movs	r0, #16
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r0, [r5, #0]
 	movs	r1, #0
 	strh	r1, [r0, #60]
 	movs	r0, #2
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r0, [r5, #0]
 	mov	r2, r8
 	strh	r2, [r0, #60]
@@ -12413,12 +12413,12 @@ sub_080cc768:
 	movs	r3, #0
 	bl	sub_0800625c	@ 0x0800625C
 	movs	r0, #2
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r0, [r5, #0]
 	movs	r1, #10
 	strh	r1, [r0, #60]
 	movs	r0, #7
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	movs	r2, #0
 	str	r2, [sp, #0]
 	str	r4, [sp, #4]
@@ -12428,7 +12428,7 @@ sub_080cc768:
 	movs	r3, #0
 	bl	sub_0800625c	@ 0x0800625C
 	movs	r0, #3
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r0, [r5, #0]
 	mov	r1, r8
 	strh	r1, [r0, #60]
@@ -12442,17 +12442,17 @@ sub_080cc768:
 	movs	r3, #0
 	bl	sub_0800625c	@ 0x0800625C
 	movs	r0, #6
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r0, [r5, #0]
 	movs	r1, #0
 	strh	r1, [r0, #60]
 	movs	r0, #3
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r0, [r5, #0]
 	movs	r2, #2
 	strh	r2, [r0, #60]
 	movs	r0, #11
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r0, [r5, #0]
 	mov	r1, r8
 	strh	r1, [r0, #60]
@@ -12469,12 +12469,12 @@ sub_080cc768:
 	movs	r3, #0
 	bl	sub_0800625c	@ 0x0800625C
 	movs	r0, #2
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r5, #0]
 	movs	r0, #11
 	strh	r0, [r1, #60]
 	movs	r0, #5
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r0, [pc, #380]	@ 0x080CCB7C
 	movs	r2, #0
 	str	r2, [sp, #0]
@@ -12484,7 +12484,7 @@ sub_080cc768:
 	movs	r3, #0
 	bl	sub_0800625c	@ 0x0800625C
 	movs	r0, #5
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r7, [pc, #360]	@ 0x080CCB80
 	movs	r0, #0
 	str	r0, [sp, #0]
@@ -12496,7 +12496,7 @@ sub_080cc768:
 	movs	r3, #0
 	bl	sub_0800625c	@ 0x0800625C
 	movs	r0, #5
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r0, [pc, #336]	@ 0x080CCB84
 	ldr	r3, [pc, #336]	@ 0x080CCB88
 	mov	r1, r8
@@ -12506,19 +12506,19 @@ sub_080cc768:
 	adds	r2, r4, #0
 	bl	sub_0800625c	@ 0x0800625C
 	movs	r0, #3
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r5, #0]
 	ldrh	r0, [r1, #60]
 	adds	r0, #1
 	strh	r0, [r1, #60]
 	movs	r0, #3
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r5, #0]
 	ldrh	r0, [r1, #60]
 	adds	r0, #1
 	strh	r0, [r1, #60]
 	movs	r0, #3
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	movs	r2, #0
 	str	r2, [sp, #0]
 	str	r4, [sp, #4]
@@ -12528,7 +12528,7 @@ sub_080cc768:
 	movs	r3, #0
 	bl	sub_0800625c	@ 0x0800625C
 	movs	r0, #5
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r0, [pc, #268]	@ 0x080CCB8C
 	movs	r1, #128
 	lsls	r1, r1, #4
@@ -12539,13 +12539,13 @@ sub_080cc768:
 	movs	r3, #0
 	bl	sub_0800625c	@ 0x0800625C
 	movs	r0, #8
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r5, #0]
 	ldrh	r0, [r1, #60]
 	adds	r0, #1
 	strh	r0, [r1, #60]
 	movs	r0, #4
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	.thumb_func
 	.global	sub_080ccaa6
 sub_080ccaa6:
@@ -12564,7 +12564,7 @@ sub_080ccaa6:
 	movs	r3, #0
 	bl	sub_0800625c	@ 0x0800625C
 	movs	r0, #4
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r5, #0]
 	ldrh	r0, [r1, #60]
 	adds	r0, #1
@@ -12579,7 +12579,7 @@ sub_080ccaa6:
 	movs	r3, #0
 	bl	sub_0800625c	@ 0x0800625C
 	movs	r0, #8
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r0, [r5, #0]
 	adds	r0, #108
 	movs	r1, #0
@@ -12599,25 +12599,25 @@ loc_080ccaf4:
 	movs	r3, #0
 	bl	sub_0800625c	@ 0x0800625C
 	movs	r0, #2
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r5, #0]
 	ldrh	r0, [r1, #60]
 	adds	r0, #1
 	strh	r0, [r1, #60]
 	movs	r0, #2
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r5, #0]
 	ldrh	r0, [r1, #60]
 	adds	r0, #1
 	strh	r0, [r1, #60]
 	movs	r0, #2
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r5, #0]
 	ldrh	r0, [r1, #60]
 	adds	r0, #1
 	strh	r0, [r1, #60]
 	movs	r0, #2
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r5, #0]
 	adds	r1, #108
 	ldrh	r0, [r1, #0]
@@ -12666,12 +12666,12 @@ loc_080ccb94:
 	movs	r3, #0
 	bl	sub_0800625c	@ 0x0800625C
 	movs	r0, #2
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r5, #0]
 	ldr	r0, [pc, #328]	@ 0x080CCD00
 	strh	r0, [r1, #60]
 	movs	r0, #2
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	mov	r0, r8
 	str	r0, [sp, #0]
 	str	r4, [sp, #4]
@@ -12681,7 +12681,7 @@ loc_080ccb94:
 	movs	r3, #0
 	bl	sub_0800625c	@ 0x0800625C
 	movs	r0, #10
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r5, #0]
 	movs	r2, #240
 	lsls	r2, r2, #15
@@ -12703,7 +12703,7 @@ loc_080ccb94:
 	ldr	r3, [pc, #264]	@ 0x080CCD04
 	bl	sub_0800625c	@ 0x0800625C
 	movs	r0, #3
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r0, [pc, #256]	@ 0x080CCD08
 	str	r0, [sp, #0]
 	str	r4, [sp, #4]
@@ -12714,7 +12714,7 @@ loc_080ccb94:
 	lsls	r3, r3, #11
 	bl	sub_0800625c	@ 0x0800625C
 	movs	r0, #3
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r5, #0]
 	movs	r0, #1
 	negs	r0, r0
@@ -12728,7 +12728,7 @@ loc_080ccb94:
 	movs	r3, #0
 	bl	sub_0800625c	@ 0x0800625C
 	movs	r0, #2
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r0, [r5, #0]
 	mov	r2, r9
 	strh	r2, [r0, #60]
@@ -12740,7 +12740,7 @@ loc_080ccb94:
 	ldr	r3, [pc, #176]	@ 0x080CCD04
 	bl	sub_0800625c	@ 0x0800625C
 	movs	r0, #3
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r0, [pc, #168]	@ 0x080CCD08
 	str	r0, [sp, #0]
 	str	r4, [sp, #4]
@@ -12751,7 +12751,7 @@ loc_080ccb94:
 	lsls	r3, r3, #11
 	bl	sub_0800625c	@ 0x0800625C
 	movs	r0, #3
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r5, #0]
 	movs	r0, #1
 	negs	r0, r0
@@ -12765,7 +12765,7 @@ loc_080ccb94:
 	movs	r3, #0
 	bl	sub_0800625c	@ 0x0800625C
 	movs	r0, #10
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r5, #0]
 	movs	r2, #240
 	lsls	r2, r2, #15
@@ -12785,7 +12785,7 @@ loc_080ccb94:
 	movs	r3, #0
 	bl	sub_0800625c	@ 0x0800625C
 	movs	r0, #3
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	movs	r1, #128
 	lsls	r1, r1, #6
 	mov	r2, r8
@@ -12796,7 +12796,7 @@ loc_080ccb94:
 	movs	r3, #0
 	bl	sub_0800625c	@ 0x0800625C
 	movs	r0, #3
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r5, #0]
 	movs	r0, #1
 	negs	r0, r0
@@ -12881,7 +12881,7 @@ sub_080ccd4c:
 	ldr	r0, [pc, #272]	@ 0x080CCE90
 	strh	r0, [r1, #60]
 	movs	r0, #64
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r0, [r4, #0]
 	str	r5, [r0, #36]
 	ldr	r6, [pc, #260]	@ 0x080CCE94
@@ -12940,25 +12940,25 @@ loc_080ccdec:
 	movs	r0, #0
 	bl	sub_08006338	@ 0x08006338
 	movs	r0, #6
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r5, #0]
 	ldrh	r0, [r1, #60]
 	adds	r0, #1
 	strh	r0, [r1, #60]
 	movs	r0, #4
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r5, #0]
 	ldrh	r0, [r1, #60]
 	adds	r0, #1
 	strh	r0, [r1, #60]
 	movs	r0, #6
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r5, #0]
 	ldrh	r0, [r1, #60]
 	subs	r0, #1
 	strh	r0, [r1, #60]
 	movs	r0, #4
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r5, #0]
 	adds	r1, #108
 	ldrh	r0, [r1, #0]
@@ -12971,31 +12971,31 @@ loc_080ccdec:
 	movs	r0, #3
 	bl	sub_08006338	@ 0x08006338
 	movs	r0, #6
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r4, #0]
 	ldrh	r0, [r1, #60]
 	adds	r0, #1
 	strh	r0, [r1, #60]
 	movs	r0, #4
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r4, #0]
 	ldrh	r0, [r1, #60]
 	adds	r0, #1
 	strh	r0, [r1, #60]
 	movs	r0, #6
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r4, #0]
 	ldrh	r0, [r1, #60]
 	subs	r0, #1
 	strh	r0, [r1, #60]
 	movs	r0, #4
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	bl	sub_080062c4	@ 0x080062C4
 	ldr	r1, [r4, #0]
 	ldr	r0, [pc, #28]	@ 0x080CCE90
 	strh	r0, [r1, #60]
 	movs	r0, #64
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	b.n	loc_080ccd8e	@ 0x080CCD8E
 	.word	0x03002490
 	.word	0x087549FC
@@ -13113,7 +13113,7 @@ sub_080ccf2c:
 	ldr	r0, [pc, #328]	@ 0x080CD0A4
 	strh	r0, [r1, #60]
 	movs	r0, #1
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r0, [pc, #320]	@ 0x080CD0A8
 	mov	sl, r0
 	ldr	r4, [pc, #320]	@ 0x080CD0AC
@@ -13125,18 +13125,18 @@ sub_080ccf2c:
 	adds	r2, r4, #0
 	bl	sub_0800625c	@ 0x0800625C
 	movs	r0, #2
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r5, #0]
 	ldr	r0, [pc, #304]	@ 0x080CD0B4
 	str	r0, [r1, #88]
 	movs	r0, #4
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r0, [r5, #0]
 	ldr	r1, [pc, #296]	@ 0x080CD0B8
 	mov	r9, r1
 	str	r1, [r0, #88]
 	movs	r0, #6
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r5, #0]
 	movs	r0, #2
 	strh	r0, [r1, #60]
@@ -13144,7 +13144,7 @@ sub_080ccf2c:
 	mov	r8, r0
 	str	r0, [r1, #88]
 	movs	r0, #2
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r5, #0]
 	ldrh	r0, [r1, #60]
 	adds	r0, #1
@@ -13157,7 +13157,7 @@ sub_080ccf2c:
 	adds	r2, r4, #0
 	bl	sub_0800625c	@ 0x0800625C
 	movs	r0, #1
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	movs	r1, #128
 	lsls	r1, r1, #10
 	str	r6, [sp, #0]
@@ -13167,12 +13167,12 @@ sub_080ccf2c:
 	mov	r3, r8
 	bl	sub_0800625c	@ 0x0800625C
 	movs	r0, #1
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r0, [r5, #0]
 	mov	r1, sl
 	str	r1, [r0, #92]
 	movs	r0, #2
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	movs	r0, #128
 	lsls	r0, r0, #7
 	str	r0, [sp, #0]
@@ -13191,49 +13191,49 @@ loc_080cd008:
 	movs	r0, #3
 	strh	r0, [r1, #60]
 	movs	r0, #2
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r5, #0]
 	ldrh	r0, [r1, #60]
 	adds	r0, #1
 	strh	r0, [r1, #60]
 	movs	r0, #2
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r5, #0]
 	ldrh	r0, [r1, #60]
 	adds	r0, #1
 	strh	r0, [r1, #60]
 	movs	r0, #2
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r5, #0]
 	ldrh	r0, [r1, #60]
 	adds	r0, #1
 	strh	r0, [r1, #60]
 	movs	r0, #2
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r5, #0]
 	ldrh	r0, [r1, #60]
 	adds	r0, #1
 	strh	r0, [r1, #60]
 	movs	r0, #2
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r5, #0]
 	ldrh	r0, [r1, #60]
 	adds	r0, #1
 	strh	r0, [r1, #60]
 	movs	r0, #2
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r5, #0]
 	ldrh	r0, [r1, #60]
 	adds	r0, #1
 	strh	r0, [r1, #60]
 	movs	r0, #2
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r5, #0]
 	ldrh	r0, [r1, #60]
 	adds	r0, #1
 	strh	r0, [r1, #60]
 	movs	r0, #2
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r5, #0]
 	adds	r1, #108
 	ldrh	r0, [r1, #0]
@@ -13303,34 +13303,34 @@ sub_080cd0cc:
 	ldr	r0, [pc, #312]	@ 0x080CD234
 	str	r0, [r1, #84]
 	movs	r0, #2
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r5, #0]
 	movs	r0, #192
 	lsls	r0, r0, #11
 	str	r0, [r1, #84]
 	movs	r0, #2
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r5, #0]
 	ldr	r0, [pc, #288]	@ 0x080CD238
 	str	r0, [r1, #84]
 	movs	r0, #2
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r5, #0]
 	movs	r0, #128
 	lsls	r0, r0, #10
 	str	r0, [r1, #84]
 	movs	r0, #2
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r0, [r5, #0]
 	ldr	r1, [pc, #268]	@ 0x080CD23C
 	mov	r8, r1
 	str	r1, [r0, #84]
 	movs	r0, #2
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r0, [r5, #0]
 	str	r6, [r0, #84]
 	movs	r0, #2
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r4, [pc, #248]	@ 0x080CD240
 	ldr	r3, [pc, #252]	@ 0x080CD244
 	movs	r0, #128
@@ -13342,7 +13342,7 @@ sub_080cd0cc:
 	adds	r2, r4, #0
 	bl	sub_0800625c	@ 0x0800625C
 	movs	r0, #16
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	str	r6, [sp, #0]
 	str	r4, [sp, #4]
 	movs	r0, #0
@@ -13351,7 +13351,7 @@ sub_080cd0cc:
 	movs	r3, #0
 	bl	sub_0800625c	@ 0x0800625C
 	movs	r0, #8
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	movs	r0, #224
 	lsls	r0, r0, #10
 	str	r6, [sp, #0]
@@ -13361,7 +13361,7 @@ sub_080cd0cc:
 	movs	r3, #0
 	bl	sub_0800625c	@ 0x0800625C
 	movs	r0, #6
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	str	r6, [sp, #0]
 	str	r4, [sp, #4]
 	movs	r0, #0
@@ -13370,7 +13370,7 @@ sub_080cd0cc:
 	movs	r3, #0
 	bl	sub_0800625c	@ 0x0800625C
 	movs	r0, #22
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r5, #0]
 	ldrh	r0, [r1, #60]
 	adds	r0, #1
@@ -13385,44 +13385,44 @@ sub_080cd0cc:
 	mov	r3, r8
 	bl	sub_0800625c	@ 0x0800625C
 	movs	r0, #2
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r5, #0]
 	ldrh	r0, [r1, #60]
 	adds	r0, #1
 	strh	r0, [r1, #60]
 	movs	r0, #2
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r5, #0]
 	ldrh	r0, [r1, #60]
 	subs	r0, #1
 	strh	r0, [r1, #60]
 	movs	r0, #2
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r5, #0]
 	ldrh	r0, [r1, #60]
 	adds	r0, #1
 	strh	r0, [r1, #60]
 	movs	r0, #2
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r5, #0]
 	ldrh	r0, [r1, #60]
 	subs	r0, #1
 	strh	r0, [r1, #60]
 	movs	r0, #2
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r5, #0]
 	ldrh	r0, [r1, #60]
 	adds	r0, #1
 	strh	r0, [r1, #60]
 	movs	r0, #2
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r5, #0]
 	ldrh	r0, [r1, #60]
 	subs	r0, #1
 	strh	r0, [r1, #60]
 	movs	r0, #2
-	bl	sub_080cfdcc	@ 0x080CFDCC
-	bl	sub_080cfdd4	@ 0x080CFDD4
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
+	bl	TaskDispatchTrampoline	@ 0x080CFDD4
 	add	sp, #8
 	pop	{r3}
 	mov	r8, r3
@@ -13474,14 +13474,14 @@ sub_080cd24c:
 	mov	r8, r0
 	str	r0, [r1, #96]
 	movs	r0, #6
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r0, [r4, #0]
 	ldr	r1, [pc, #96]	@ 0x080CD2F0
 	strh	r1, [r0, #60]
 	str	r5, [r0, #88]
 	str	r5, [r0, #96]
 	movs	r0, #2
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r0, [r4, #0]
 	strh	r6, [r0, #60]
 	mov	r1, r9
@@ -13489,14 +13489,14 @@ sub_080cd24c:
 	mov	r1, r8
 	str	r1, [r0, #96]
 	movs	r0, #6
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r0, [r4, #0]
 	movs	r1, #1
 	negs	r1, r1
 	strh	r1, [r0, #60]
 	.word	0x66056585
 	movs	r0, #10
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	ldr	r1, [r4, #0]
 	strh	r6, [r1, #60]
 	movs	r0, #224
@@ -13505,8 +13505,8 @@ sub_080cd24c:
 	ldr	r0, [pc, #40]	@ 0x080CD2F4
 	str	r0, [r1, #92]
 	movs	r0, #6
-	bl	sub_080cfdcc	@ 0x080CFDCC
-	bl	sub_080cfdd4	@ 0x080CFDD4
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
+	bl	TaskDispatchTrampoline	@ 0x080CFDD4
 	pop	{r3, r4}
 	mov	r8, r3
 	mov	r9, r4
