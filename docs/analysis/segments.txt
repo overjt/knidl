@@ -12,8 +12,8 @@
 0x08000210 0x08000234 pool crt0_literals
 0x08000234 0x080002E5 arm_code task_switch_helpers [split] # cooperative task switch; IWRAM cells named via split_config data_symbols
 0x080002E5 0x08000310 pool task_literals [split] # task helper literal pools (all 10 words = named cells)
-0x08000310 0x080006FF thumb_code agb_init [split] # asm/agb_init/ (1 chunk)
-0x080006FF 0x08007300 thumb_code game_code_early [split] # asm/game_code_early/ (3 chunks; odd start = 1 data byte)
+0x08000310 0x080008E8 c_code agb_init # src/agb_init.c: AgbInit + its literal pool (0x0700 pool-skip branch + words to 0x08E7)
+0x080008E8 0x08007300 thumb_code game_code_early [split] # asm/game_code_early/
 0x08007300 0x080CFA40 thumb_code game_code_and_rodata [split] # asm/game_code_and_rodata/ (14 chunks, ~64 KiB each)
 0x080CFA40 0x080CFA7F thumb_code sdk_swi_wrappers [split] # svc thunks named per include/gba/syscall.h
 0x080CFA7F 0x080CFA9C thumb_code sdk_reset_helper [split]

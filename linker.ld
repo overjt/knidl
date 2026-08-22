@@ -44,13 +44,15 @@ SECTIONS
         KEEP(*(.task_literals)) KEEP(*(.task_literals.tail))
     } > ROM
 
-    /* AgbInit (Thumb) */
+    /* AgbInit (Thumb) — decompiled to C (src/agb_init.c, issue #28).
+     * The section spans 0x08000310-0x080008E7: the function body, the
+     * compiler's pool-skip branch at 0x0700 and its literal pool. */
     .agb_init 0x08000310 : {
-        KEEP(*(.agb_init)) KEEP(*(.agb_init.tail))
+        build/src/agb_init.o(.text)
     } > ROM
 
     /* Game code: early subsystems (Thumb) */
-    .game_code_early 0x080006FF : {
+    .game_code_early 0x080008E8 : {
         KEEP(*(.game_code_early)) KEEP(*(.game_code_early.tail))
     } > ROM
 

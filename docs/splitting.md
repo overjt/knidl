@@ -14,8 +14,7 @@ configured segments (`tools/split_config.json`):
 
 | segment              | range                        | contents                          |
 | -------------------- | ---------------------------- | --------------------------------- |
-| `agb_init`           | `0x08000310-0x080006FF`      | `AgbInit` + fill tables — 1 chunk in `asm/agb_init/` |
-| `game_code_early`    | `0x080006FF-0x08007300`      | early subsystems — 3 chunks in `asm/game_code_early/` (chunk 00 is the 1 odd byte at the odd segment start) |
+| `game_code_early`    | `0x080008E8-0x08007300`      | early subsystems — 2 chunks in `asm/game_code_early/` (`agb_init` before it was decompiled to `src/agb_init.c` in #28; its old 0x080006FF boundary split the `bx r0` return and the literal pool of `AgbInit` in half — the real compiler unit ends at 0x080008E8) |
 | `game_code_and_rodata` | `0x08007300-0x080CFA40`    | bulk of the game logic (~5,000 functions) — 14 chunks of ~64 KiB in `asm/game_code_and_rodata/` |
 | `task_switch_helpers`| `0x08000234-0x080002E5`      | cooperative task switch (ARM, 4 helpers + 1-byte tail) |
 | `task_literals`      | `0x080002E5-0x08000310`      | their literal pools (10 words, all named cells) |
@@ -50,7 +49,8 @@ boundaries roughly that many bytes apart and emitted as one file per chunk,
   `sh_addralign`: an input section whose first byte would sit at an odd
   ROM address gets padded by ld and shifts everything after it. An
   odd-start segment therefore yields a tiny leading data-only chunk (for
-  `game_code_early`, the single byte at `0x080006FF`).
+  `game_code_early`, formerly the single byte at `0x080006FF` — a boundary
+  corrected in #28).
 * Two objdump→gas round-trip hazards are repaired automatically (see
   lessons-learned §4): halfwords in undefined-decode spaces print as
   later-architecture mnemonics that arm7tdmi gas rejects, and unified-
@@ -135,7 +135,7 @@ handling (both occur in the demo set):
   `KEEP(*(.segment.tail))` pattern that appends it after the main content.
 * **Odd segment start** (`sdk_reset_helper` begins at `0x080CFA7F`, the
   second half of the previous segment's `bx lr`; `game_code_early` at
-  `0x080006FF` is the same shape): real instructions cannot be placed at odd
+  an odd segment start is the same shape): real instructions cannot be placed at odd
   section offsets (gas would pad), so such segments are emitted from raw
   `.short`/`.byte`/`.word` data with labels but no instruction text. Pure
   data directives do not pad, so the bytes stay exact.
@@ -163,11 +163,11 @@ segment defines, e.g. the IRQ table pointing into `game_code_early`):
    back to raw halfwords one instruction at a time.
 
 `make compare` remains the authoritative end-to-end check. Note that a
-segment whose *start* is odd (e.g. `game_code_early` at `0x080006FF`) is
-always emitted as labeled raw data — gas would silently pad real
-instructions to even offsets — and that odd *trailing* bytes live in the
-`.tail` section described above. A stress run over `task_switch_helpers`
-(ARM), `agb_init` (1 KB of Thumb with branches and pools) and
+segment whose *start* is odd is always emitted as labeled raw data — gas
+would silently pad real instructions to even offsets — and that odd
+*trailing* bytes live in the `.tail` section described above. A stress run
+over `task_switch_helpers` (ARM), the former `agb_init` split (1 KB of
+Thumb with branches and pools; since decompiled, #28) and the pre-#28
 `game_code_early` (odd start, 162 functions) verified all three paths.
 
 Notes on round-tripping objdump text (validated empirically, see
