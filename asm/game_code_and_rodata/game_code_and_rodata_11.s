@@ -5071,7 +5071,7 @@ loc_080b85c8:
 	ldrb	r0, [r6, #0]
 	subs	r0, #3
 	movs	r1, #3
-	bl	sub_080cfa60	@ 0x080CFA60
+	bl	Mod	@ 0x080CFA60
 	cmp	r4, #7
 	bgt.n	loc_080b8680	@ 0x080B8680
 	cmp	r0, #1
@@ -5316,7 +5316,7 @@ loc_080b8788:
 	ands	r0, r1
 	subs	r0, #3
 	movs	r1, #3
-	bl	sub_080cfa60	@ 0x080CFA60
+	bl	Mod	@ 0x080CFA60
 	ldr	r3, [sp, #12]
 	cmp	r5, #7
 	bgt.n	loc_080b884a	@ 0x080B884A
@@ -15381,7 +15381,7 @@ sub_080bd188:
 	ldr	r0, [r4, #12]
 	ldr	r5, [pc, #44]	@ 0x080BD1C4
 	adds	r1, r5, #0
-	bl	LZ77UnCompVram	@ 0x080CFA70
+	bl	LZ77UnCompWram	@ 0x080CFA70
 	ldr	r2, [pc, #40]	@ 0x080BD1C8
 	ldrh	r3, [r4, #2]
 	lsls	r3, r3, #5
@@ -31593,7 +31593,7 @@ sub_080c4ac4:
 	adds	r6, r1, #0
 	adds	r7, r2, #0
 	movs	r1, #60
-	bl	sub_080cfa60	@ 0x080CFA60
+	bl	Mod	@ 0x080CFA60
 	adds	r5, r0, #0
 	adds	r0, r4, #0
 	movs	r1, #60
@@ -31619,7 +31619,7 @@ loc_080c4ae8:
 loc_080c4afc:
 	adds	r0, r5, #0
 	movs	r1, #10
-	bl	sub_080cfa60	@ 0x080CFA60
+	bl	Mod	@ 0x080CFA60
 	adds	r0, #2
 	adds	r1, r6, #0
 	adds	r1, #36
@@ -31640,7 +31640,7 @@ loc_080c4afc:
 	bl	sub_080c4a5c	@ 0x080C4A5C
 	adds	r0, r4, #0
 	movs	r1, #10
-	bl	sub_080cfa60	@ 0x080CFA60
+	bl	Mod	@ 0x080CFA60
 	adds	r0, #2
 	adds	r1, r6, #0
 	adds	r1, #9
@@ -31706,7 +31706,7 @@ loc_080c4bae:
 	movs	r0, #0
 	ldrsh	r1, [r7, r0]
 	adds	r0, r6, #0
-	bl	sub_080cfa60	@ 0x080CFA60
+	bl	Mod	@ 0x080CFA60
 	adds	r6, r0, #0
 	adds	r4, #1
 	ldr	r1, [pc, #40]	@ 0x080C4BE8

@@ -30924,7 +30924,7 @@ loc_080b56e6:
 	ldr	r0, [r6, #12]
 	ldr	r4, [pc, #40]	@ 0x080B573C
 	adds	r1, r4, #0
-	bl	HuffUnComp	@ 0x080CFA6C
+	bl	LZ77UnCompVram	@ 0x080CFA6C
 	movs	r7, #2
 	ldrsh	r2, [r5, r7]
 	lsls	r2, r2, #6
@@ -31119,7 +31119,7 @@ loc_080b5860:
 	ldr	r0, [r5, #12]
 	ldr	r4, [pc, #40]	@ 0x080B58B0
 	adds	r1, r4, #0
-	bl	HuffUnComp	@ 0x080CFA6C
+	bl	LZ77UnCompVram	@ 0x080CFA6C
 	movs	r0, #2
 	ldrsh	r2, [r6, r0]
 	lsls	r2, r2, #6
@@ -31221,7 +31221,7 @@ loc_080b592c:
 	ldr	r0, [r5, #12]
 	ldr	r4, [pc, #40]	@ 0x080B597C
 	adds	r1, r4, #0
-	bl	HuffUnComp	@ 0x080CFA6C
+	bl	LZ77UnCompVram	@ 0x080CFA6C
 	movs	r0, #2
 	ldrsh	r2, [r6, r0]
 	lsls	r2, r2, #6
@@ -31310,7 +31310,7 @@ sub_080b59d8:
 	ldr	r0, [r5, #12]
 	ldr	r4, [pc, #32]	@ 0x080B5A28
 	adds	r1, r4, #0
-	bl	HuffUnComp	@ 0x080CFA6C
+	bl	LZ77UnCompVram	@ 0x080CFA6C
 	ldr	r2, [pc, #28]	@ 0x080B5A2C
 	ldrh	r3, [r5, #2]
 	lsls	r3, r3, #5
@@ -31360,7 +31360,7 @@ loc_080b5a58:
 	ldr	r1, [r1, #0]
 	ldr	r2, [pc, #36]	@ 0x080B5A90
 	adds	r1, r1, r2
-	bl	HuffUnComp	@ 0x080CFA6C
+	bl	LZ77UnCompVram	@ 0x080CFA6C
 	.global	loc_080b5a72
 loc_080b5a72:
 	adds	r6, #4
@@ -31469,7 +31469,7 @@ loc_080b5b10:
 	ldr	r0, [r5, #12]
 	ldr	r4, [pc, #52]	@ 0x080B5B70
 	adds	r1, r4, #0
-	bl	HuffUnComp	@ 0x080CFA6C
+	bl	LZ77UnCompVram	@ 0x080CFA6C
 	movs	r0, #2
 	ldrsh	r2, [r6, r0]
 	lsls	r2, r2, #6

@@ -138,6 +138,15 @@ header and add its own objdump flags; a bare override loses them. Some
 candidate failures are inherent — treat a persistent >25% error rate as a base.c
 shape problem, not a reason to re-tune forever.
 
+### 2.12 `make clean` deletes build/scratch mid-iteration
+Scratch dirs under `build/` (function harnesses, permuter working dirs) die
+with every `make clean` — and full clean rebuilds are part of the landing
+checklist, so this WILL happen mid-task. Keep only regenerable state there
+(tools/fnmatch.sh regenerates everything from versioned inputs), or park
+long-lived experiments outside `build/`. Related: the macOS Docker daemon
+can hang for ~2 minutes under rapid repeated `docker run` — back off
+instead of stacking more containers.
+
 ## 3. Compiler / source-shape lessons (gcc 2.9 "old_agbcc")
 
 ### 3.1 Opt level is per-zone and readable from loop shape

@@ -3503,7 +3503,7 @@ sub_08008d10:
 	beq.n	loc_08008d4e	@ 0x08008D4E
 	ldr	r4, [pc, #92]	@ 0x08008D8C
 	adds	r1, r4, #0
-	bl	LZ77UnCompVram	@ 0x080CFA70
+	bl	LZ77UnCompWram	@ 0x080CFA70
 	ldr	r2, [pc, #88]	@ 0x08008D90
 	ldr	r3, [pc, #88]	@ 0x08008D94
 	lsls	r0, r5, #2
@@ -3525,7 +3525,7 @@ loc_08008d4e:
 	beq.n	loc_08008d7c	@ 0x08008D7C
 	ldr	r4, [pc, #48]	@ 0x08008D8C
 	adds	r1, r4, #0
-	bl	LZ77UnCompVram	@ 0x080CFA70
+	bl	LZ77UnCompWram	@ 0x080CFA70
 	ldr	r2, [pc, #44]	@ 0x08008D90
 	ldr	r3, [pc, #44]	@ 0x08008D94
 	lsls	r0, r5, #2
@@ -3588,17 +3588,17 @@ sub_08008d98:
 	ldr	r0, [r0, #0]
 	movs	r1, #192
 	lsls	r1, r1, #19
-	bl	HuffUnComp	@ 0x080CFA6C
+	bl	LZ77UnCompVram	@ 0x080CFA6C
 	adds	r5, #8
 	adds	r4, r4, r5
 	ldr	r0, [r4, #0]
 	mov	r1, r8
-	bl	HuffUnComp	@ 0x080CFA6C
+	bl	LZ77UnCompVram	@ 0x080CFA6C
 	cmp	r6, #7
 	bne.n	loc_08008dfe	@ 0x08008DFE
 	ldr	r0, [pc, #32]	@ 0x08008E18
 	adds	r1, r7, #0
-	bl	HuffUnComp	@ 0x080CFA6C
+	bl	LZ77UnCompVram	@ 0x080CFA6C
 	.global	loc_08008dfe
 loc_08008dfe:
 	pop	{r3}
@@ -3635,12 +3635,12 @@ sub_08008e1c:
 	adds	r0, r4, r0
 	ldr	r0, [r0, #0]
 	ldr	r1, [pc, #32]	@ 0x08008E64
-	bl	HuffUnComp	@ 0x080CFA6C
+	bl	LZ77UnCompVram	@ 0x080CFA6C
 	adds	r5, #8
 	adds	r4, r4, r5
 	ldr	r0, [r4, #0]
 	ldr	r1, [pc, #24]	@ 0x08008E68
-	bl	HuffUnComp	@ 0x080CFA6C
+	bl	LZ77UnCompVram	@ 0x080CFA6C
 	pop	{r4, r5}
 	pop	{r0}
 	bx	r0
@@ -3825,22 +3825,22 @@ sub_08008fc4:
 	ldr	r0, [pc, #60]	@ 0x0800901C
 	ldr	r4, [pc, #60]	@ 0x08009020
 	adds	r1, r4, #0
-	bl	RLUnCompWram	@ 0x080CFA68
+	bl	HuffUnComp	@ 0x080CFA68
 	ldr	r1, [pc, #56]	@ 0x08009024
 	adds	r0, r4, #0
-	bl	HuffUnComp	@ 0x080CFA6C
+	bl	LZ77UnCompVram	@ 0x080CFA6C
 	ldr	r0, [pc, #52]	@ 0x08009028
 	ldr	r4, [pc, #56]	@ 0x0800902C
 	adds	r1, r4, #0
-	bl	RLUnCompWram	@ 0x080CFA68
+	bl	HuffUnComp	@ 0x080CFA68
 	ldr	r1, [pc, #52]	@ 0x08009030
 	adds	r0, r4, #0
-	bl	HuffUnComp	@ 0x080CFA6C
+	bl	LZ77UnCompVram	@ 0x080CFA6C
 	cmp	r5, #0
 	beq.n	loc_08009040	@ 0x08009040
 	ldr	r0, [pc, #44]	@ 0x08009034
 	ldr	r1, [pc, #44]	@ 0x08009038
-	bl	HuffUnComp	@ 0x080CFA6C
+	bl	LZ77UnCompVram	@ 0x080CFA6C
 	ldr	r0, [pc, #44]	@ 0x0800903C
 	b.n	loc_0800904a	@ 0x0800904A
 	movs	r0, r0
@@ -3859,12 +3859,12 @@ sub_08008fc4:
 loc_08009040:
 	ldr	r0, [pc, #16]	@ 0x08009054
 	ldr	r1, [pc, #20]	@ 0x08009058
-	bl	HuffUnComp	@ 0x080CFA6C
+	bl	LZ77UnCompVram	@ 0x080CFA6C
 	ldr	r0, [pc, #16]	@ 0x0800905C
 	.global	loc_0800904a
 loc_0800904a:
 	ldr	r1, [pc, #20]	@ 0x08009060
-	bl	HuffUnComp	@ 0x080CFA6C
+	bl	LZ77UnCompVram	@ 0x080CFA6C
 	b.n	loc_0800916a	@ 0x0800916A
 	movs	r0, r0
 	.word	0x085704CC
@@ -3881,14 +3881,14 @@ loc_08009064:
 	bl	sub_080017e4	@ 0x080017E4
 	ldr	r0, [pc, #36]	@ 0x08009098
 	ldr	r1, [pc, #36]	@ 0x0800909C
-	bl	HuffUnComp	@ 0x080CFA6C
+	bl	LZ77UnCompVram	@ 0x080CFA6C
 	ldr	r0, [pc, #36]	@ 0x080090A0
 	ldr	r4, [pc, #36]	@ 0x080090A4
 	adds	r1, r4, #0
-	bl	RLUnCompWram	@ 0x080CFA68
+	bl	HuffUnComp	@ 0x080CFA68
 	ldr	r1, [pc, #32]	@ 0x080090A8
 	adds	r0, r4, #0
-	bl	HuffUnComp	@ 0x080CFA6C
+	bl	LZ77UnCompVram	@ 0x080CFA6C
 	b.n	loc_0800916a	@ 0x0800916A
 	movs	r0, r0
 	.word	0x0857111C
@@ -3908,15 +3908,15 @@ loc_080090ac:
 	bl	sub_080017e4	@ 0x080017E4
 	ldr	r0, [pc, #36]	@ 0x080090E0
 	ldr	r1, [pc, #36]	@ 0x080090E4
-	bl	HuffUnComp	@ 0x080CFA6C
+	bl	LZ77UnCompVram	@ 0x080CFA6C
 	cmp	r5, #0
 	beq.n	loc_080090f8	@ 0x080090F8
 	ldr	r0, [pc, #32]	@ 0x080090E8
 	ldr	r1, [pc, #32]	@ 0x080090EC
-	bl	HuffUnComp	@ 0x080CFA6C
+	bl	LZ77UnCompVram	@ 0x080CFA6C
 	ldr	r0, [pc, #32]	@ 0x080090F0
 	ldr	r1, [pc, #32]	@ 0x080090F4
-	bl	HuffUnComp	@ 0x080CFA6C
+	bl	LZ77UnCompVram	@ 0x080CFA6C
 	b.n	loc_08009108	@ 0x08009108
 	.word	0x0857111C
 	.word	0x03001370
@@ -3930,10 +3930,10 @@ loc_080090ac:
 loc_080090f8:
 	ldr	r0, [pc, #116]	@ 0x08009170
 	ldr	r1, [pc, #120]	@ 0x08009174
-	bl	HuffUnComp	@ 0x080CFA6C
+	bl	LZ77UnCompVram	@ 0x080CFA6C
 	ldr	r0, [pc, #116]	@ 0x08009178
 	ldr	r1, [pc, #120]	@ 0x0800917C
-	bl	HuffUnComp	@ 0x080CFA6C
+	bl	LZ77UnCompVram	@ 0x080CFA6C
 	.global	loc_08009108
 loc_08009108:
 	ldr	r4, [pc, #116]	@ 0x08009180
@@ -3942,26 +3942,26 @@ loc_08009108:
 	ldr	r0, [r0, #0]
 	ldr	r5, [pc, #112]	@ 0x08009184
 	adds	r1, r5, #0
-	bl	RLUnCompWram	@ 0x080CFA68
+	bl	HuffUnComp	@ 0x080CFA68
 	ldr	r1, [pc, #108]	@ 0x08009188
 	adds	r0, r5, #0
-	bl	HuffUnComp	@ 0x080CFA6C
+	bl	LZ77UnCompVram	@ 0x080CFA6C
 	ldr	r0, [pc, #104]	@ 0x0800918C
 	ldr	r5, [pc, #108]	@ 0x08009190
 	adds	r1, r5, #0
-	bl	RLUnCompWram	@ 0x080CFA68
+	bl	HuffUnComp	@ 0x080CFA68
 	ldr	r1, [pc, #104]	@ 0x08009194
 	adds	r0, r5, #0
-	bl	HuffUnComp	@ 0x080CFA6C
+	bl	LZ77UnCompVram	@ 0x080CFA6C
 	adds	r4, #4
 	adds	r4, r6, r4
 	ldr	r0, [r4, #0]
 	ldr	r4, [pc, #92]	@ 0x08009198
 	adds	r1, r4, #0
-	bl	RLUnCompWram	@ 0x080CFA68
+	bl	HuffUnComp	@ 0x080CFA68
 	ldr	r1, [pc, #88]	@ 0x0800919C
 	adds	r0, r4, #0
-	bl	HuffUnComp	@ 0x080CFA6C
+	bl	LZ77UnCompVram	@ 0x080CFA6C
 	ldr	r4, [pc, #84]	@ 0x080091A0
 	adds	r0, r6, r4
 	ldr	r1, [r0, #0]
@@ -5105,7 +5105,7 @@ loc_08009a0a:
 	ldr	r0, [r4, #12]
 	ldr	r5, [pc, #76]	@ 0x08009A94
 	adds	r1, r5, #0
-	bl	HuffUnComp	@ 0x080CFA6C
+	bl	LZ77UnCompVram	@ 0x080CFA6C
 	ldr	r2, [pc, #72]	@ 0x08009A98
 	ldrh	r3, [r4, #2]
 	lsls	r3, r3, #5
@@ -14470,7 +14470,7 @@ sub_0800e2dc:
 	ldr	r0, [r0, #0]
 	ldr	r5, [pc, #32]	@ 0x0800E30C
 	adds	r1, r5, #0
-	bl	LZ77UnCompVram	@ 0x080CFA70
+	bl	LZ77UnCompWram	@ 0x080CFA70
 	lsls	r4, r4, #11
 	adds	r4, r4, r5
 	ldr	r2, [pc, #24]	@ 0x0800E310
@@ -18751,7 +18751,7 @@ sub_080102c0:
 	ldr	r0, [r5, #12]
 	ldr	r4, [pc, #96]	@ 0x0801033C
 	adds	r1, r4, #0
-	bl	LZ77UnCompVram	@ 0x080CFA70
+	bl	LZ77UnCompWram	@ 0x080CFA70
 	ldr	r2, [pc, #92]	@ 0x08010340
 	ldrh	r3, [r5, #2]
 	lsls	r3, r3, #5
@@ -18788,7 +18788,7 @@ loc_0801031a:
 	bne.n	loc_0801032e	@ 0x0801032E
 	ldr	r0, [pc, #44]	@ 0x08010354
 	ldr	r1, [pc, #16]	@ 0x0801033C
-	bl	LZ77UnCompVram	@ 0x080CFA70
+	bl	LZ77UnCompWram	@ 0x080CFA70
 	.global	loc_0801032e
 loc_0801032e:
 	pop	{r4, r5}

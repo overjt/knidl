@@ -73,9 +73,10 @@ KNOWN_SYMBOLS = {
     0x080CFA54: "CpuFastSet",  # svc 0x0C
     0x080CFA58: "CpuSet",  # svc 0x0B
     0x080CFA5C: "Div",  # svc 0x06
-    0x080CFA68: "RLUnCompWram",  # svc 0x13
-    0x080CFA6C: "HuffUnComp",  # svc 0x12
-    0x080CFA70: "LZ77UnCompVram",  # svc 0x11
+    0x080CFA60: "Mod",  # svc 0x06 + mov r0,r1 (returns remainder; syscall.h)
+    0x080CFA68: "HuffUnComp",  # svc 0x13 (SDK order; verified insn bytes, #29)
+    0x080CFA6C: "LZ77UnCompVram",  # svc 0x12
+    0x080CFA70: "LZ77UnCompWram",  # svc 0x11
     0x080CFA74: "MultiBoot",  # r1=1; svc 0x25
     0x080CFA7C: "SoundDriverVSyncOff",  # svc 0x28
     # SRAM driver (decompiled in src/agb_sram.c, issue #8)

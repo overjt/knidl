@@ -7090,7 +7090,7 @@ loc_0803a194:
 loc_0803a1c8:
 	ldr	r0, [pc, #104]	@ 0x0803A234
 	ldr	r1, [pc, #108]	@ 0x0803A238
-	bl	LZ77UnCompVram	@ 0x080CFA70
+	bl	LZ77UnCompWram	@ 0x080CFA70
 	ldr	r1, [pc, #104]	@ 0x0803A23C
 	ldr	r2, [pc, #108]	@ 0x0803A240
 	movs	r3, #128

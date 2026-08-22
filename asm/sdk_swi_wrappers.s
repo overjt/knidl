@@ -7,10 +7,10 @@
 @   0x080CFA54 CpuFastSet
 @   0x080CFA58 CpuSet
 @   0x080CFA5C Div
-@   0x080CFA60 sub_080cfa60
-@   0x080CFA68 RLUnCompWram
-@   0x080CFA6C HuffUnComp
-@   0x080CFA70 LZ77UnCompVram
+@   0x080CFA60 Mod
+@   0x080CFA68 HuffUnComp
+@   0x080CFA6C LZ77UnCompVram
+@   0x080CFA70 LZ77UnCompWram
 @   0x080CFA74 MultiBoot
 @   0x080CFA7C SoundDriverVSyncOff
 @ Trailing 1 byte(s) at 0x080CFA7E live in .sdk_swi_wrappers.tail: gas would otherwise pad
@@ -57,28 +57,28 @@ Div:
 	svc	6
 	bx	lr
 	.thumb_func
-	.global	sub_080cfa60
-sub_080cfa60:
+	.global	Mod
+Mod:
 	.thumb
 	svc	6
 	adds	r0, r1, #0
 	bx	lr
 	movs	r0, r0
 	.thumb_func
-	.global	RLUnCompWram
-RLUnCompWram:
+	.global	HuffUnComp
+HuffUnComp:
 	.thumb
 	svc	19
 	bx	lr
 	.thumb_func
-	.global	HuffUnComp
-HuffUnComp:
+	.global	LZ77UnCompVram
+LZ77UnCompVram:
 	.thumb
 	svc	18
 	bx	lr
 	.thumb_func
-	.global	LZ77UnCompVram
-LZ77UnCompVram:
+	.global	LZ77UnCompWram
+LZ77UnCompWram:
 	.thumb
 	svc	17
 	bx	lr
