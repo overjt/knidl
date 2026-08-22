@@ -181,7 +181,74 @@ that set when touching it.
 `((u32)work + 1)` must be spelled exactly; see `src/agb_sram.c` for the
 matching shapes.
 
-### 3.6 SWI numbers follow the SDK order, NOT the retail BIOS order
+### 3.6 A ~1KB function's literal pool hides behind a pool-skip branch
+When a Thumb function's early `ldr rN, [pc, #off]` literals approach the
+1020-byte pc-relative limit, agbcc emits the pool after the epilogue as
+`bx r0; b .Lskip; .align 2, 0; <pool>; .Lskip:`. Two traps (both hit while
+decompiling AgbInit, issue #28): (a) the segment map had cut the function at
+0x080006FF, splitting the final `bx r0` halfword AND orphaning the pool into
+the next segment; the real compiler unit runs to the end of the pool
+(0x080008E8). (b) The symbol census sees the `b .Lskip` at 0x08000700 as a
+"function" (`sub_08000700`, even pointer-referenced from a data table that
+uses it as a tail-call thunk); it is compiler output, not source. When a
+census function is a lone `b.n` right after another function's return,
+suspect a pool-skip branch before assigning it a C body.
+
+### 3.7 Volatile *indexed* stores emit a dead pre-read; direct ones don't
+agbcc reads a volatile lvalue before writing it when the address is an
+indexed expression — `vu8 arr[4]; arr[i] = 0;` compiles to
+`ldrb rX,[rB,rI]; strb r0,[rB,rI]` (dead load), and `((vu16*)sym)[3] = 0`
+likewise. A volatile store through a plain symbol (`gCell = 0`) or a
+pointer deref (`*p = 0`) has no pre-read. Compound assignment doubles up:
+`arr[i] |= m` on a volatile element reads twice (RMW read + store pre-read);
+the ROM's single-read `|=` loops therefore operate on *non-volatile* arrays.
+Match reads first, then choose volatility/indexing to reproduce them.
+
+### 3.8 Chained assignments are visible in pool order and re-reads
+`REG = shadow = value` is one statement: the OUTER address is materialized
+first (its pool word precedes the inner one — pool order exposes chains),
+the inner cell is stored, and — if the inner is volatile — RE-READ for the
+outer store (`strh rV,[rIn]; ldrh r0,[rIn]; strh r0,[rOut]`). Non-volatile
+inner cells forward the value register with no re-read. AgbInit is almost
+entirely such chains; two separate statements produce the reversed pool
+order and don't match.
+
+### 3.9 RAM cells must be extern symbols, not cast constants
+gcc derives nearby *constant* addresses from a live register with add/sub
+chains (`adds r1,#4` between I/O register writes) but never across distinct
+symbols. The ROM pools one word per IWRAM cell even for adjacent addresses
+(0x03001EA0/0x03001EA8), proving the original used named globals. Reference
+unnamed cells as `extern vu16 gUnk_<addr>;` with the definitions generated
+into `asm/rom_syms.s` via `split_config.json` `data_symbols`; casting the
+addresses inline lets CSE derive/merge them and breaks the pool layout.
+
+### 3.10 Zero-source variables: one per region, block-local, r4
+AgbInit stores dozens of zeros. The ROM materializes `movs rN, #0` once per
+straight-line region and keeps it in a callee-saved register across calls —
+the shape of a LOCAL VARIABLE (`zero = 0; cell = zero; ...`), not repeated
+literals: literal zeros get CSE-unified across call boundaries into one
+long-lived pseudo and ruin the whole register allocation downstream (the
+allocator ranks pseudos by refs/live-length, so one merged zero drops to r7
+and evicts everything else). One zero variable per region keeps each pseudo
+block-local (local-alloc gives each r4 independently). Corollaries:
+(a) a *dead store* to the variable after its last use (`zeroC = 2;`)
+compiles to nothing but invalidates the compiler's reg==0 knowledge, forcing
+the ROM's fresh `movs` in the next region — without it the tail reuses the
+old register across three calls; (b) the same trick class as lesson 3.2
+(state must be invalidated at the source level to defeat CSE).
+
+### 3.11 Loop shapes: reversed counters and hoisted QI zeros
+If a `for (i = 0; i < 4; i++)` loop uses `i` only for indexing, loop opt
+strength-reduces the arrays to walking pointers and REPLACES the counter
+with a down-counter (`movs r2,#3 ... subs/bge`): an ascending C loop can
+match descending-counter asm. If `i` is also stored (`arr[i] = i`), the
+ascending counter survives (`adds/cmp #3/ble`). Loop-invariant constants
+(the store value 0, base addresses) hoist to the preheader in statement
+order; with more invariants than free low registers the last one loses and
+is re-materialized inside the loop (`ldr rX, =base` per iteration) — which
+of them loses is allocation, not source, so match the others first.
+
+### 3.12 SWI numbers follow the SDK order, NOT the retail BIOS order
 The ROM's syscall thunks (`0x080CFA50-0x080CFA7E`) emit `svc` numbers
 that differ from GBATEK's retail-BIOS table in the 0x08-0x0F band
 (e.g. `svc 0x0B` is CpuSet here but Sqrt on a retail BIOS). Misreading

@@ -28,16 +28,22 @@
     "asm/<segment>/ (<segment>_NN.s); all chunks share the segment's",
     "linker section, so ld concatenates them in address order. Branches",
     "that cross a chunk boundary resolve through global loc_XXXXXXXX",
-    "labels defined by the owning chunk (issue #25)."
+    "labels defined by the owning chunk (issue #25).",
+    "",
+    "The gUnk_<addr> data_symbols are the IWRAM/EWRAM cells initialized by",
+    "AgbInit (src/agb_init.c, issue #28); the C references them as extern",
+    "symbols so their pool words stay one-per-symbol (no cross-cell address",
+    "derivation), matching the original codegen."
   ],
   "external_defined": [
+    "AgbInit",
     "AgbMain",
     "MasterIsr",
-    "ReadSram_Core",
     "ReadSram",
-    "WriteSram",
-    "VerifySram_Core",
+    "ReadSram_Core",
     "VerifySram",
+    "VerifySram_Core",
+    "WriteSram",
     "WriteSramEx"
   ],
   "extra_labels": {
@@ -60,21 +66,134 @@
     "0x030026F8": "gTaskSavedLr",
     "0x030025E0": "gTaskSavedR0",
     "0x0300248C": "gCurTaskIdx",
-    "0x030025F0": "gTaskFlagsTable"
+    "0x030025F0": "gTaskFlagsTable",
+    "0x0200EBA0": "gUnk_0200EBA0",
+    "0x0200EC48": "gUnk_0200EC48",
+    "0x03000010": "gUnk_03000010",
+    "0x03000014": "gUnk_03000014",
+    "0x03000018": "gUnk_03000018",
+    "0x0300001C": "gUnk_0300001C",
+    "0x03000020": "gUnk_03000020",
+    "0x03000038": "gUnk_03000038",
+    "0x0300003C": "gUnk_0300003C",
+    "0x03000040": "gUnk_03000040",
+    "0x03000044": "gUnk_03000044",
+    "0x03000490": "gUnk_03000490",
+    "0x03000498": "gUnk_03000498",
+    "0x030004A0": "gUnk_030004A0",
+    "0x03000AF4": "gUnk_03000AF4",
+    "0x03000AF8": "gUnk_03000AF8",
+    "0x03000AFC": "gUnk_03000AFC",
+    "0x03000B00": "gUnk_03000B00",
+    "0x03000B08": "gUnk_03000B08",
+    "0x03000B0C": "gUnk_03000B0C",
+    "0x03000B10": "gUnk_03000B10",
+    "0x03000B14": "gUnk_03000B14",
+    "0x03000B18": "gUnk_03000B18",
+    "0x03000B20": "gUnk_03000B20",
+    "0x03000B24": "gUnk_03000B24",
+    "0x03000B70": "gUnk_03000B70",
+    "0x03000B74": "gUnk_03000B74",
+    "0x03000B78": "gUnk_03000B78",
+    "0x03000B7C": "gUnk_03000B7C",
+    "0x03000F7C": "gUnk_03000F7C",
+    "0x03000F80": "gUnk_03000F80",
+    "0x03000F88": "gUnk_03000F88",
+    "0x03000F8C": "gUnk_03000F8C",
+    "0x03000F90": "gUnk_03000F90",
+    "0x03000F98": "gUnk_03000F98",
+    "0x03000FA0": "gUnk_03000FA0",
+    "0x03000FA4": "gUnk_03000FA4",
+    "0x03000FA8": "gUnk_03000FA8",
+    "0x03000FAC": "gUnk_03000FAC",
+    "0x03000FB0": "gUnk_03000FB0",
+    "0x03000FB4": "gUnk_03000FB4",
+    "0x03000FBC": "gUnk_03000FBC",
+    "0x03000FC0": "gUnk_03000FC0",
+    "0x03000FC4": "gUnk_03000FC4",
+    "0x03000FC8": "gUnk_03000FC8",
+    "0x03000FCC": "gUnk_03000FCC",
+    "0x03000FD0": "gUnk_03000FD0",
+    "0x03000FD4": "gUnk_03000FD4",
+    "0x03000FD8": "gUnk_03000FD8",
+    "0x03001000": "gUnk_03001000",
+    "0x03001004": "gUnk_03001004",
+    "0x03001008": "gUnk_03001008",
+    "0x0300100C": "gUnk_0300100C",
+    "0x03001010": "gUnk_03001010",
+    "0x03001014": "gUnk_03001014",
+    "0x03001018": "gUnk_03001018",
+    "0x03001020": "gUnk_03001020",
+    "0x03001170": "gUnk_03001170",
+    "0x03001178": "gUnk_03001178",
+    "0x0300117C": "gUnk_0300117C",
+    "0x03001180": "gUnk_03001180",
+    "0x03001188": "gUnk_03001188",
+    "0x0300118C": "gUnk_0300118C",
+    "0x03001670": "gUnk_03001670",
+    "0x03001674": "gUnk_03001674",
+    "0x03001E94": "gUnk_03001E94",
+    "0x03001E9C": "gUnk_03001E9C",
+    "0x03001EA0": "gUnk_03001EA0",
+    "0x03001EA4": "gUnk_03001EA4",
+    "0x03001EA8": "gUnk_03001EA8",
+    "0x03001EAC": "gUnk_03001EAC",
+    "0x03001EB0": "gUnk_03001EB0",
+    "0x03001EB4": "gUnk_03001EB4",
+    "0x03001EB8": "gUnk_03001EB8",
+    "0x03001EC4": "gUnk_03001EC4",
+    "0x03001ECC": "gUnk_03001ECC",
+    "0x03001ED0": "gUnk_03001ED0",
+    "0x03001ED8": "gUnk_03001ED8",
+    "0x03001EDC": "gUnk_03001EDC",
+    "0x03001EE0": "gUnk_03001EE0",
+    "0x03001EE4": "gUnk_03001EE4",
+    "0x03001EEC": "gUnk_03001EEC",
+    "0x03001EF4": "gUnk_03001EF4",
+    "0x03001EF8": "gUnk_03001EF8",
+    "0x030023A8": "gUnk_030023A8",
+    "0x030023AC": "gUnk_030023AC",
+    "0x0300243C": "gUnk_0300243C",
+    "0x0300244C": "gUnk_0300244C"
   },
   "segments": [
-    { "name": "agb_init", "chunk_bytes": 65536 },
-    { "name": "game_code_early", "chunk_bytes": 65536 },
-    { "name": "game_code_and_rodata", "chunk_bytes": 65536 },
-    { "name": "task_switch_helpers" },
-    { "name": "task_literals" },
-    { "name": "sdk_swi_wrappers" },
-    { "name": "sdk_reset_helper" },
-    { "name": "sdk_libc" },
-    { "name": "interworking_veneer" },
-    { "name": "gap_interworking_veneer_irq_handler_table_14" },
-    { "name": "irq_handler_table_14" },
-    { "name": "lib_misc" },
-    { "name": "lib_rodata_fir_tables" }
+    {
+      "name": "game_code_early",
+      "chunk_bytes": 65536
+    },
+    {
+      "name": "game_code_and_rodata",
+      "chunk_bytes": 65536
+    },
+    {
+      "name": "task_switch_helpers"
+    },
+    {
+      "name": "task_literals"
+    },
+    {
+      "name": "sdk_swi_wrappers"
+    },
+    {
+      "name": "sdk_reset_helper"
+    },
+    {
+      "name": "sdk_libc"
+    },
+    {
+      "name": "interworking_veneer"
+    },
+    {
+      "name": "gap_interworking_veneer_irq_handler_table_14"
+    },
+    {
+      "name": "irq_handler_table_14"
+    },
+    {
+      "name": "lib_misc"
+    },
+    {
+      "name": "lib_rodata_fir_tables"
+    }
   ]
 }
