@@ -19591,7 +19591,7 @@ loc_0809fdda:
 	.word	0x0000FFFF
 	.word	0x02007D00
 	.word	0x0000021B
-	.word	0x03001F30
+	.word	gUnk_03001F30
 	.word	0x030023E8
 	.word	sub_0806a344+1
 	.word	gCurTaskIdx
@@ -31311,7 +31311,7 @@ loc_080a581c:
 	b.n	loc_080a5884	@ 0x080A5884
 	.word	0x03002490
 	.word	0x03002158
-	.word	0x03001F30
+	.word	gUnk_03001F30
 	.word	0x03002350
 	.word	0x08748D28
 	.global	loc_080a587c

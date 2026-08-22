@@ -1,5 +1,5 @@
 vma,size,isa,evidence,name
-0x080000C0,0x48,arm,prologue-scan,AgbMain
+0x080000C0,0x48,arm,prologue-scan,Start
 0x08000108,0x108,arm,rom-pointer,MasterIsr
 0x08000234,0x24,arm,prologue-scan,sub_08000234
 0x08000258,0x30,arm,prologue-scan,sub_08000258
@@ -168,7 +168,7 @@ vma,size,isa,evidence,name
 0x08007174,0x68,thumb,bl-target,sub_08007174
 0x080071DC,0x104,thumb,bl-target,sub_080071dc
 0x080072E0,0x20,thumb,bl-target,sub_080072e0
-0x08007300,0x2B8,thumb,rom-pointer,main
+0x08007300,0x2B8,thumb,rom-pointer,AgbMain
 0x080075B8,0x6C,thumb,bl-target,sub_080075b8
 0x08007624,0x218,thumb,bl-target,sub_08007624
 0x0800783C,0xE0,thumb,bl-target,sub_0800783c

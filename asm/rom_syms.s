@@ -9,6 +9,12 @@ sub_08000700 = 0x08000700
 
 @ Named non-ROM cells (tools/split_config.json "data_symbols"),
 @ referenced symbolically from split literal pools / data words:
+	.global	gUnk_02005588
+gUnk_02005588 = 0x02005588
+	.global	gUnk_02007D48
+gUnk_02007D48 = 0x02007D48
+	.global	gUnk_02007FC0
+gUnk_02007FC0 = 0x02007FC0
 	.global	gUnk_0200EBA0
 gUnk_0200EBA0 = 0x0200EBA0
 	.global	gUnk_0200EC48
@@ -177,10 +183,16 @@ gUnk_03001EEC = 0x03001EEC
 gUnk_03001EF4 = 0x03001EF4
 	.global	gUnk_03001EF8
 gUnk_03001EF8 = 0x03001EF8
+	.global	gUnk_03001F30
+gUnk_03001F30 = 0x03001F30
+	.global	gUnk_03002150
+gUnk_03002150 = 0x03002150
 	.global	gUnk_030023A8
 gUnk_030023A8 = 0x030023A8
 	.global	gUnk_030023AC
 gUnk_030023AC = 0x030023AC
+	.global	gUnk_030023D8
+gUnk_030023D8 = 0x030023D8
 	.global	gUnk_0300243C
 gUnk_0300243C = 0x0300243C
 	.global	gUnk_0300244C

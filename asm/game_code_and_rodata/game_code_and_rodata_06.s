@@ -518,7 +518,7 @@ loc_080667b4:
 	pop	{r0}
 	bx	r0
 	movs	r0, r0
-	.word	0x030023D8
+	.word	gUnk_030023D8
 	.thumb_func
 	.global	sub_080667c0
 sub_080667c0:
@@ -1677,8 +1677,8 @@ sub_08066fc0:
 	b.n	loc_0806703e	@ 0x0806703E
 	.word	0x0000D3D0
 	.word	0x03002790
-	.word	0x030023D8
-	.word	0x03001F30
+	.word	gUnk_030023D8
+	.word	gUnk_03001F30
 	.global	loc_08067028
 loc_08067028:
 	adds	r1, r2, #0
@@ -2304,7 +2304,7 @@ sub_080674a8:
 loc_080674cc:
 	pop	{r0}
 	bx	r0
-	.word	0x03001F30
+	.word	gUnk_03001F30
 	.word	0x03002490
 	.thumb_func
 	.global	sub_080674d8
@@ -2413,7 +2413,7 @@ sub_08067550:
 	b.n	loc_080675ae	@ 0x080675AE
 	.word	0x03002490
 	.word	0x03002790
-	.word	0x03001F30
+	.word	gUnk_03001F30
 	.word	0x000011C1
 	.global	loc_080675a4
 loc_080675a4:
@@ -2531,7 +2531,7 @@ loc_0806765a:
 	.word	0x03002490
 	.word	0x03002790
 	.word	0x0873E1F8
-	.word	0x03001F30
+	.word	gUnk_03001F30
 	.global	loc_08067680
 loc_08067680:
 	ldr	r0, [r3, #40]
@@ -2631,7 +2631,7 @@ loc_08067718:
 	b.n	loc_0806773e	@ 0x0806773E
 	.word	0x03002490
 	.word	sub_0803d494+1
-	.word	0x03001F30
+	.word	gUnk_03001F30
 	.word	0x03002790
 	.global	loc_08067738
 loc_08067738:
@@ -2663,7 +2663,7 @@ loc_08067758:
 	b.n	loc_0806779e	@ 0x0806779E
 	.word	gCurTaskIdx
 	.word	0x03002360
-	.word	0x03001F30
+	.word	gUnk_03001F30
 	.word	0x03002490
 	.global	loc_08067778
 loc_08067778:
@@ -2787,7 +2787,7 @@ loc_080677bc:
 	.word	0x03002490
 	.word	0x5A5A5A5A
 	.word	0xFFFD8000
-	.word	0x03001F30
+	.word	gUnk_03001F30
 	.word	0x000011C2
 	.global	loc_0806788c
 loc_0806788c:
@@ -2809,7 +2809,7 @@ loc_0806788c:
 	bl	sub_08006364	@ 0x08006364
 	b.n	loc_080678c2	@ 0x080678C2
 	.word	0x03002490
-	.word	0x03001F30
+	.word	gUnk_03001F30
 	.word	0x00000133
 	.global	loc_080678bc
 loc_080678bc:
@@ -3059,7 +3059,7 @@ loc_08067a6c:
 	ldr	r0, [r0, #0]
 	mov	pc, r0
 	movs	r0, r0
-	.word	0x03001F30
+	.word	gUnk_03001F30
 	.word	0x03002490
 	.word	0x03002790
 	.word	0x08067A9C
@@ -3197,7 +3197,7 @@ loc_08067b72:
 	movs	r0, r0
 	.word	0x03002490
 	.word	sub_0803d494+1
-	.word	0x03001F30
+	.word	gUnk_03001F30
 	.word	0x03002360
 	.word	gCurTaskIdx
 	.global	loc_08067bb0
@@ -3314,7 +3314,7 @@ loc_08067bd6:
 	.word	0x03002490
 	.word	0x5A5A5A5A
 	.word	0xFFFD8000
-	.word	0x03001F30
+	.word	gUnk_03001F30
 	.global	loc_08067cb4
 loc_08067cb4:
 	adds	r0, r1, #0
@@ -3477,7 +3477,7 @@ sub_08067db0:
 	movs	r0, r0
 	.word	0x03002490
 	.word	0x03002790
-	.word	0x03001F30
+	.word	gUnk_03001F30
 	.global	loc_08067e00
 loc_08067e00:
 	adds	r4, #150
@@ -3561,7 +3561,7 @@ loc_08067e80:
 	bx	r0
 	movs	r0, r0
 	.word	0x0873E3C8
-	.word	0x03001F30
+	.word	gUnk_03001F30
 	.thumb_func
 	.global	sub_08067ea4
 sub_08067ea4:
@@ -3673,7 +3673,7 @@ loc_08067f48:
 	.word	0x03002790
 	.word	0x5A5A5A5A
 	.word	0xFFFD8000
-	.word	0x03001F30
+	.word	gUnk_03001F30
 	.word	0x00000171
 	.word	0x00000173
 	.global	loc_08067f9c
@@ -3914,7 +3914,7 @@ loc_0806814c:
 	.word	0x03002790
 	.word	0x5A5A5A5A
 	.word	0xFFFD8000
-	.word	0x03001F30
+	.word	gUnk_03001F30
 	.word	0x00000171
 	.word	0x00000173
 	.global	loc_08068198
@@ -4098,7 +4098,7 @@ loc_080682dc:
 	b.n	loc_0806833e	@ 0x0806833E
 	.word	0x03002490
 	.word	sub_0803d494+1
-	.word	0x03001F30
+	.word	gUnk_03001F30
 	.word	0x03002360
 	.word	gCurTaskIdx
 	.global	loc_08068318
@@ -4191,7 +4191,7 @@ loc_0806833e:
 	.word	0x03002490
 	.word	0x5A5A5A5A
 	.word	0xFFFD8000
-	.word	0x03001F30
+	.word	gUnk_03001F30
 	.global	loc_080683e4
 loc_080683e4:
 	adds	r0, r1, #0
@@ -4591,7 +4591,7 @@ sub_08068690:
 	b.n	loc_08068756	@ 0x08068756
 	.word	0x03002490
 	.word	0x03002790
-	.word	0x03001F30
+	.word	gUnk_03001F30
 	.word	0x00000171
 	.global	loc_08068718
 loc_08068718:
@@ -4824,7 +4824,7 @@ sub_08068840:
 	movs	r0, r0
 	.word	0x03002490
 	.word	0x02007D00
-	.word	0x03001F30
+	.word	gUnk_03001F30
 	.word	0x00000133
 	.global	loc_080688a8
 loc_080688a8:
@@ -4965,7 +4965,7 @@ loc_0806899c:
 	bgt.n	loc_080689c0	@ 0x080689C0
 	strh	r3, [r2, #60]
 	b.n	loc_080689c0	@ 0x080689C0
-	.word	0x03001F30
+	.word	gUnk_03001F30
 	.word	0x03002490
 	.word	0x00000135
 	.word	0x00000125
@@ -5377,7 +5377,7 @@ loc_08068ca0:
 	bx	r0
 	movs	r0, r0
 	.word	sub_08032bd0+1
-	.word	0x02005588
+	.word	gUnk_02005588
 	.thumb_func
 	.global	sub_08068cb4
 sub_08068cb4:
@@ -8402,7 +8402,7 @@ loc_0806a2ec:
 	b.n	loc_0806a30a	@ 0x0806A30A
 	movs	r0, r0
 	.word	0x03002490
-	.word	0x030023D8
+	.word	gUnk_030023D8
 	.global	loc_0806a304
 loc_0806a304:
 	ldr	r0, [pc, #20]	@ 0x0806A31C
@@ -10252,7 +10252,7 @@ loc_0806b110:
 	bl	sub_080034d0	@ 0x080034D0
 	b.n	loc_0806b128	@ 0x0806B128
 	movs	r0, r0
-	.word	0x030023D8
+	.word	gUnk_030023D8
 	.global	loc_0806b124
 loc_0806b124:
 	bl	sub_080034d0	@ 0x080034D0
@@ -18265,7 +18265,7 @@ loc_0806ee54:
 	strb	r0, [r2, #0]
 	b.n	loc_0806eef6	@ 0x0806EEF6
 	.word	0x03002490
-	.word	0x03001F30
+	.word	gUnk_03001F30
 	.word	sub_0806ff7c+1
 	.word	sub_0806ef1c+1
 	.word	0x0874CFEC
@@ -21228,7 +21228,7 @@ loc_0807052e:
 	.word	0x03002790
 	.word	0x020055C0
 	.word	gUnk_0300244C
-	.word	0x03001F30
+	.word	gUnk_03001F30
 	.word	0x0873F950
 	.word	gUnk_030023AC
 	.word	0x03002490
@@ -22757,7 +22757,7 @@ loc_080711f8:
 	b.n	loc_08071264	@ 0x08071264
 	.word	gUnk_0300244C
 	.word	0x03002490
-	.word	0x02005588
+	.word	gUnk_02005588
 	.word	0x020061E0
 	.global	loc_0807123c
 loc_0807123c:
@@ -23732,7 +23732,7 @@ loc_080719c6:
 	b.n	loc_08071b96	@ 0x08071B96
 	movs	r0, r0
 	.word	0x03002490
-	.word	0x03001F30
+	.word	gUnk_03001F30
 	.word	0x03002348
 	.word	0x030023E4
 	.global	loc_08071a1c
@@ -23896,7 +23896,7 @@ loc_08071abc:
 	strh	r0, [r2, #62]
 	b.n	loc_08071b96	@ 0x08071B96
 	.word	0x0000F3FF
-	.word	0x03001F30
+	.word	gUnk_03001F30
 	.word	0x00007FFF
 	.word	0x0873FF98
 	.word	0x03002348
@@ -23962,7 +23962,7 @@ sub_08071bb0:
 	.global	loc_08071bbe
 loc_08071bbe:
 	b.n	loc_08071bbe	@ 0x08071BBE
-	.word	0x03001F30
+	.word	gUnk_03001F30
 	.global	loc_08071bc4
 loc_08071bc4:
 	movs	r4, #0
@@ -24037,7 +24037,7 @@ sub_08071c38:
 	.global	loc_08071c46
 loc_08071c46:
 	b.n	loc_08071c46	@ 0x08071C46
-	.word	0x03001F30
+	.word	gUnk_03001F30
 	.global	loc_08071c4c
 loc_08071c4c:
 	movs	r4, #0
@@ -24383,7 +24383,7 @@ sub_08071ebc:
 	.word	0x03002490
 	.word	0x02004B4C
 	.word	0x02005584
-	.word	0x03001F30
+	.word	gUnk_03001F30
 	.global	loc_08071f3c
 loc_08071f3c:
 	movs	r0, #3
@@ -25972,7 +25972,7 @@ loc_08072d50:
 	.word	0xFFFF8000
 	.word	0xFFFF0000
 	.word	0xFFF80000
-	.word	0x03001F30
+	.word	gUnk_03001F30
 	.global	loc_08072d60
 loc_08072d60:
 	movs	r0, #4
@@ -26561,7 +26561,7 @@ sub_080731d0:
 	.word	sub_0806572c+1
 	.word	0x02004B4C
 	.word	0x02005584
-	.word	0x03001F30
+	.word	gUnk_03001F30
 	.global	loc_08073270
 loc_08073270:
 	movs	r0, #5
@@ -27429,7 +27429,7 @@ sub_080739bc:
 	.word	0x03002490
 	.word	0x02004B4C
 	.word	0x02005584
-	.word	0x03001F30
+	.word	gUnk_03001F30
 	.global	loc_08073a3c
 loc_08073a3c:
 	movs	r0, #3
@@ -27965,7 +27965,7 @@ sub_08073e80:
 	.word	0x03002490
 	.word	0x02004B4C
 	.word	0x02005584
-	.word	0x03001F30
+	.word	gUnk_03001F30
 	.global	loc_08073f00
 loc_08073f00:
 	movs	r0, #3
@@ -28492,7 +28492,7 @@ loc_08074390:
 	.word	0xFFFE0000
 	.word	0x02004B4C
 	.word	0x02005584
-	.word	0x03001F30
+	.word	gUnk_03001F30
 	.global	loc_080743ac
 loc_080743ac:
 	movs	r0, #7
@@ -28645,7 +28645,7 @@ sub_0807447c:
 	.word	0x03002490
 	.word	0x02004B4C
 	.word	0x02005584
-	.word	0x03001F30
+	.word	gUnk_03001F30
 	.global	loc_080744f4
 loc_080744f4:
 	movs	r0, #1
@@ -32328,7 +32328,7 @@ loc_08076416:
 	ldr	r2, [r4, #0]
 	ldr	r1, [pc, #4]	@ 0x08076428
 	b.n	loc_08076430	@ 0x08076430
-	.word	0x03001F30
+	.word	gUnk_03001F30
 	.word	0x0874009C
 	.global	loc_0807642c
 loc_0807642c:
@@ -32386,7 +32386,7 @@ sub_08076454:
 	.word	0x03002490
 	.word	0xFFE80000
 	.word	gUnk_0300244C
-	.word	0x03001F30
+	.word	gUnk_03001F30
 	.word	0x00001265
 	.global	loc_08076498
 loc_08076498:

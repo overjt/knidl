@@ -52,7 +52,7 @@ SWEEP_LIMIT = 0x100
 # still derived automatically from the censuses. Names marked None stay
 # sub_XXXXXXXX until they are identified from sibling projects.
 ARM_ENTRIES = [
-    (0x080000C0, 0x48, "AgbMain"),  # asm/crt0.s (ROM entry via header branch)
+    (0x080000C0, 0x48, "Start"),  # asm/crt0.s (ROM entry via header branch)
     (0x08000108, 0x108, "MasterIsr"),  # asm/crt0.s (copied to 0x03001030)
     (0x08000234, 0x24, None),  # task/context-switch helper 1 (stmfd sp!,{lr})
     (0x08000258, 0x30, None),  # helper 2: save sp/lr/r0, restore task sp
@@ -66,7 +66,9 @@ ARM_ENTRIES = [
 # sibling pret projects (katam / pokeemerald; SWI numbering per GBATEK).
 KNOWN_SYMBOLS = {
     0x08000310: "AgbInit",  # rom-map.md section 2 seg 5 (crt0 literal 0x08000311)
-    0x08007300: "main",  # rom-map.md section 4 (crt0 literal 0x08007301)
+    0x08007300: "AgbMain",  # rom-map.md section 4 (crt0 literal 0x08007301); the
+    # ROM has no __gccmain call in its prologue, so the original source did
+    # NOT name it `main` — AgbMain per SDK/pret convention (issue #33).
     # SDK SWI thunks (rom-map.md section 2 seg 8 / GBATEK SWI numbering)
     0x080CFA4C: "DummyFunc",  # bare `bx lr` (m4a-style no-op)
     0x080CFA50: "ArcTan2",  # svc 0x0A

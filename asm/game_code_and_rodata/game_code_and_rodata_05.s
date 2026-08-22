@@ -28129,7 +28129,7 @@ loc_08064a22:
 	pop	{r0}
 	bx	r0
 	.word	0x03002490
-	.word	0x030023D8
+	.word	gUnk_030023D8
 	.word	gUnk_03001EA4
 	.word	0x0873DF14
 	.thumb_func
@@ -31674,7 +31674,7 @@ sub_08066394:
 	movs	r0, r0
 	.word	gUnk_030023AC
 	.word	0x03002340
-	.word	0x02005588
+	.word	gUnk_02005588
 	.global	loc_080663c4
 loc_080663c4:
 	adds	r3, #1
@@ -31702,7 +31702,7 @@ loc_080663e6:
 	pop	{r1}
 	bx	r1
 	movs	r0, r0
-	.word	0x02005588
+	.word	gUnk_02005588
 	.thumb_func
 	.global	sub_080663f4
 sub_080663f4:

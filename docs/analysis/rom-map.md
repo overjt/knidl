@@ -33,8 +33,8 @@ symbol database and call graph (section 7), and is validated by
 | # | ROM range (VMA) | Size | Content | Evidence |
 |---|-----------------|------|---------|----------|
 | 1 | `0x08000000-0x080000BF` | 0xC0 | **Cartridge header** | `0x08000000: ea00002e  b 0x080000C0` (ARM entry); title `AGB KIRBY DX` @0x080000A0; code `A7KE` @0x080000AC; maker `01` @0x080000B0; fixed `0x96` @0x080000B2; version `0x00` @0x080000BC; complement `0xC1` @0x080000BD |
-| 2 | `0x080000C0-0x0800020C` | 0x14C | **crt0 + master ISR (ARM)** | `msr CPSR_fc` mode switches, stack loads `0x03007EC0`/`0x03007F60`, `bx` calls to Thumb init/main; ISR pushes `{r0-r3,lr}`, dispatches through table @`0x030004B0` |
-| 3 | `0x08000210-0x08000233` | 0x24 | crt0/ISR literal pool | `0x08000214: 03007FFC`, `0x08000218: 08000311` (init|1), `0x0800021C: 08007301` (main|1), `0x0800022C: 030004B0`, `0x08000210: 89abcdef` |
+| 2 | `0x080000C0-0x0800020C` | 0x14C | **crt0 + master ISR (ARM)** | `msr CPSR_fc` mode switches, stack loads `0x03007EC0`/`0x03007F60`, `bx` calls to Thumb AgbInit/AgbMain; ISR pushes `{r0-r3,lr}`, dispatches through table @`0x030004B0` |
+| 3 | `0x08000210-0x08000233` | 0x24 | crt0/ISR literal pool | `0x08000214: 03007FFC`, `0x08000218: 08000311` (init|1), `0x0800021C: 08007301` (AgbMain|1), `0x0800022C: 030004B0`, `0x08000210: 89abcdef` |
 | 4 | `0x08000234-0x080002E4` | 0xB1 | **Task/context-switch helpers (ARM)** — split to `asm/task_switch_helpers.s` (#24); their literal pools `0x080002E5-0x0800030F` are the separate `task_literals` segment (`asm/task_literals.s`), all ten words named cells | 4 small routines saving/restoring `sp`/`lr`/`r0` into IWRAM cells (`0x03004C94`, `0x03002470`, `0x030026F8`, `0x030025E0`, `0x0300248C`, `0x030025F0`; named via `tools/split_config.json` `data_symbols`, semantics in §6); `bl 0x080CFDDC` @0x08000290 (the only ARM `bl` in the ROM) |
 | 5 | `0x08000310-0x080008E7` | 0x5D8 | **AgbInit (Thumb)** — **decompiled** (`src/agb_init.c`, agbcc `-O2 -mthumb-interwork`, issue #28) | Prologue `b5f0 464f 4646 b4c0` @0x08000310; epilogue `pop {r4-r7}; pop {r0}; bx r0` @0x080006F4-0x080006FE; performs the memory clears/copies listed in §4. The compiler's pool-skip branch (`b 0x080008E8`) sits at 0x08000700 followed by the 121-word literal pool to 0x080008E7 — the census entry `sub_08000700` is that branch (pointer-referenced from the data table @0x08369198), not a real function |
 | 6 | `0x080008E8-0x080072FF` | 0x6A18 | Game code (Thumb): early subsystems | 160+ Thumb BL targets in this window; includes IRQ default handler `0x08001518`, `0x080010CC`, task entry `0x08005654` |
@@ -80,7 +80,7 @@ code span `0x080000C0-0x080CFFFF`):
 | Thumb code+inline-pool coverage (union of entry→next-entry intervals, 4 KiB cap) | **~824 KiB** (upper bound; includes interleaved rodata gaps) |
 | ARM functions | 3 zones: crt0+ISR `0x080000C0-0x0800020C` (0x14C), task switch `0x08000234-0x080002E4` (0xB0), veneer `0x080CFDDC` (8) = **~0x204 bytes** |
 | ARM `bl` instructions in the entire ROM | **1** (`0x08000290: bl 0x080CFDDC`) |
-| Interworking | ARM→Thumb only via `bx reg` with odd literal (`0x08000311` init, `0x08007301` main, `0x08005655` veneer target); Thumb↔Thumb `bl` throughout |
+| Interworking | ARM→Thumb only via `bx reg` with odd literal (`0x08000311` AgbInit, `0x08007301` AgbMain, `0x08005655` veneer target); Thumb↔Thumb `bl` throughout |
 
 **Conclusion: KNiDL is a Thumb-compiled game** (~99.9% of in-ROM code bytes are Thumb),
 unlike its ARM-compiled successor KATAM. For this repo this means: default `agbcc`
@@ -104,9 +104,14 @@ BIOS -> 0x08000000: b 0x080000C0                     ; header entry, ARM state
 0x080000D4: ldr sp,=0x03007EC0                       ; SYS stack (lit @0x08000100)
 0x080000D8-0x080000E0: str 0x08000108 -> [0x03007FFC]; install ROM master ISR
 0x080000E4-0x080000EC: mov lr,pc ; bx 0x08000311     ; -> AgbInit (Thumb) 0x08000310
-0x080000F0-0x080000F8: mov lr,pc ; bx 0x08007301     ; -> main (Thumb) 0x08007300
-0x080000FC: b 0x080000C0                             ; loop if main returns
+0x080000F0-0x080000F8: mov lr,pc ; bx 0x08007301     ; -> AgbMain (Thumb) 0x08007300
+0x080000FC: b 0x080000C0                             ; loop if AgbMain returns
 ```
+
+Naming note (issue #33): the crt0 ARM entry at `0x080000C0` is `Start`; the
+Thumb C main loop at `0x08007300` is `AgbMain` (SDK/pret convention). The ROM's
+prologue has no `__gccmain` call, which gcc 2.9 inserts into any function
+literally named `main` — proof the original source did not use that name.
 
 `AgbInit` (`0x08000310-0x080008E7`, **decompiled to `src/agb_init.c`**, issue #28) memory setup — all via SWI wrappers, no open-coded loops:
 
@@ -131,6 +136,35 @@ computes a priority index (`ip` = 0/4/8/12/24/52 by bit tests `0x80/0x40/0x01/0x
 at `0x08000130-0x08000174`), tail-calls `[[0x030004B0 + ip]]` (`0x080001BC-0x080001D0`),
 restores and `bx lr` (`0x080001EC-0x0800020C`), including an IRQ-stack guard
 (`sp < 0x03007B80` → save to `[0x03000FA0]`, `sp = 0x03000FA0`).
+
+`AgbMain` (`0x08007300-0x080075B7`, **decompiled to `src/main.c`**, issue #33)
+is the game's top-level state machine: an infinite loop dispatching on the u16
+game state `gUnk_030023D8` through a 23-entry jump table at `0x08007328`.
+Boot order of operations:
+
+1. `gUnk_030023D8 = 0`, then `sub_080b7800()` — one-time init before the loop.
+2. **State 0**: `sub_0800b44c()` → state 1.
+3. **State 1**: if `gUnk_03000B00 == 0` (cell zeroed by AgbInit) call
+   `sub_080091ac()` → state 3.
+4. **State 3**: `sub_080096e0()` → state 4, and `gUnk_03002150 = 3`
+   (`gUnk_03002150` holds the "return-to" state consumed by state 7).
+5. **State 4**: `sub_0800b920(); sub_0800b4a8(); sub_0800b514();` (no state
+   change — those callees advance `gUnk_030023D8` themselves).
+6. **State 5**: normal frame pump — `sub_0800b5dc()` then
+   `while (state == 5) { sub_0800b5dc(); sub_08007624(); }`; if the flag
+   `gUnk_02007FC0` is set instead, park in state 7 with return-state 5.
+7. **State 7**: if `gUnk_02007FC0` call `sub_080100ac()`, clear the flag,
+   then `state = gUnk_03002150` (resume).
+
+Other states: 2→3 re-entry; 6 (as 5 but via `sub_0800b628()` → 8);
+8/9/17/18/19 busy-pump `sub_0800791c()`/`sub_0800783c()` while the state
+holds; 10 (`gUnk_03001F30` selects `sub_0805b110()` vs `sub_0800b628()`) → 5;
+11 `sub_080c6260()` → 12; 12 (`sub_080cd330()` unless `gUnk_03001F30 == 1` or
+`gUnk_03002150 == 20`, then `sub_080c6420()`) → 0; 13 `sub_08007f9c()`;
+14/15/16 `sub_080ba354()`; 20 clears `gUnk_02005588[0..3]`, sets
+`gUnk_02007D48[0..3] = 1`, runs `sub_080022bc(); sub_08022f50();`, pumps
+`sub_08008a00()` → return-state 20; 21 `sub_0800b4a8()`, sets `gUnk_02007FC0`
+→ 5; 22 `sub_080cacf0()`. States > 22 spin on the dispatch read.
 
 ## 5. Compiler-validation leaf candidates
 

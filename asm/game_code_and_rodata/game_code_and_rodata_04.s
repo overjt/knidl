@@ -18582,7 +18582,7 @@ loc_0804ffcc:
 	bx	r0
 	movs	r0, r0
 	.word	0x030023E4
-	.word	0x02005588
+	.word	gUnk_02005588
 	.thumb_func
 	.global	sub_0804ffdc
 sub_0804ffdc:
@@ -18895,8 +18895,8 @@ loc_08050196:
 	.word	0x03002490
 	.word	sub_080502f0+1
 	.word	0x0000FFFF
-	.word	0x030023D8
-	.word	0x02005588
+	.word	gUnk_030023D8
+	.word	gUnk_02005588
 	.word	0x02005580
 	.word	0x00001056
 	.word	0xFFFE0000
