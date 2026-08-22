@@ -10,6 +10,8 @@ sdk_reset_helper:
 	.global	gUnk_080cfa7f
 gUnk_080cfa7f:
 	.byte	0x47
+	.global	SoftReset
+SoftReset:
 	.word	0x22004B04
 	.word	0x4B04701A
 	.word	0x701A2200

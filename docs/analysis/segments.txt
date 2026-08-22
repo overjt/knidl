@@ -15,9 +15,9 @@
 0x08000310 0x080008E8 c_code agb_init # src/agb_init.c: AgbInit + its literal pool (0x0700 pool-skip branch + words to 0x08E7)
 0x080008E8 0x08007300 thumb_code game_code_early [split] # asm/game_code_early/
 0x08007300 0x080075B8 c_code main # src/main.c (carved by tools/carve.py)
-0x080075B8 0x080CFA40 thumb_code game_code_and_rodata [split]
-0x080CFA40 0x080CFA7F thumb_code sdk_swi_wrappers [split] # svc thunks named per include/gba/syscall.h
-0x080CFA7F 0x080CFA9C thumb_code sdk_reset_helper [split]
+0x080075B8 0x080CFA4C thumb_code game_code_and_rodata [split] # ends after ply_xswee: the old 0x080CFA40 boundary cut that m4a XCMD handler in half (issue #29)
+0x080CFA4C 0x080CFA7F thumb_code sdk_swi_wrappers [split] # svc thunks named per include/gba/syscall.h; stays named asm by design (bare `svc N; bx lr` is not producible from C by agbcc — issue #29)
+0x080CFA7F 0x080CFA9C thumb_code sdk_reset_helper [split] # SoftReset (0x080CFA80, svc 1 + svc 0) via split_config extra_labels; odd start => data-emitted, stays named asm by design (issue #29)
 0x080CFA9C 0x080CFC30 c_code sram_driver
 0x080CFC30 0x080CFDDC thumb_code sdk_libc [split] # _call_via_r0..lr + __divsi3/__umodsi3/_div0 + Thumb->ARM task trampolines
 0x080CFDDC 0x080CFDE4 arm_code interworking_veneer [split] # ldr ip,[pc]; bx ip -> 0x08005654|1

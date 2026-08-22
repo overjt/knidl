@@ -81,6 +81,32 @@ KNOWN_SYMBOLS = {
     0x080CFA70: "LZ77UnCompWram",  # svc 0x11
     0x080CFA74: "MultiBoot",  # r1=1; svc 0x25
     0x080CFA7C: "SoundDriverVSyncOff",  # svc 0x28
+    # m4a/mp2k XCMD (extended command 0xCD) handlers, issue #29.  Evidence:
+    # the 12-entry Thumb-pointer table at 0x0860A3E8 matches gXcmdTable of
+    # katam (src/m4a_tables.c) / pokeemerald one-for-one — ply_xxx fills
+    # indices 0 AND 3 in both — and each handler stores its argument byte
+    # to exactly the MusicPlayerTrack field its name implies
+    # (m4a_internal.h offsets: pseudoEchoVolume 0x1E, pseudoEchoLength
+    # 0x1F, instrument.type 0x24, .length 0x26, .pan_sweep 0x27, .wav
+    # 0x28, .attack 0x2C, .decay 0x2D, .sustain 0x2E, .release 0x2F;
+    # track->cmdPtr 0x40).  None is ever BL-called (dispatched through the
+    # table only), and most start with `ldr r0, [r1, #0x40]`, so the
+    # strict pointer-candidate prologue filter would reject them — the
+    # KNOWN_SYMBOLS bypass in build() accepts curated entries instead.
+    0x080CF94C: "ply_xxx",    # xcmd 0x00/0x03: gMPlayJumpTable dispatch
+    0x080CF960: "ply_xwave",  # xcmd 0x01: assemble instrument.wav pointer
+    0x080CF9A8: "ply_xtype",  # xcmd 0x02: instrument.type
+    0x080CF9BC: "ply_xatta",  # xcmd 0x04: instrument.attack
+    0x080CF9D0: "ply_xdeca",  # xcmd 0x05: instrument.decay
+    0x080CF9E4: "ply_xsust",  # xcmd 0x06: instrument.sustain
+    0x080CF9F8: "ply_xrele",  # xcmd 0x07: instrument.release
+    0x080CFA0C: "ply_xiecv",  # xcmd 0x08: pseudoEchoVolume
+    0x080CFA18: "ply_xiecl",  # xcmd 0x09: pseudoEchoLength
+    0x080CFA24: "ply_xleng",  # xcmd 0x0A: instrument.length
+    0x080CFA38: "ply_xswee",  # xcmd 0x0B: instrument.pan_sweep.  Its tail
+    # (0x080CFA40-0x080CFA4B) was the former sdk_swi_wrappers
+    # gUnk_080cfa40: the old 0x080CFA40 segment boundary cut this handler
+    # in half; issue #29 moved it to 0x080CFA4C.
     # SRAM driver (decompiled in src/agb_sram.c, issue #8)
     0x080CFA9C: "ReadSram_Core",
     0x080CFAC0: "ReadSram",
@@ -277,7 +303,12 @@ def build(rom, segments):
     for i, target in enumerate(order):
         nxt = order[i + 1] if i + 1 < len(order) else CODE_SPAN_END
         strict = target not in bl_targets
-        if plausible_thumb_entry(rom, target, nxt - ROM_BASE, strict):
+        # Curated identifications (KNOWN_SYMBOLS) are accepted directly:
+        # the m4a XCMD handlers are table-dispatched only and open with
+        # `ldr r0, [r1, #0x40]`, which no generic prologue filter admits.
+        if target in KNOWN_SYMBOLS or plausible_thumb_entry(
+            rom, target, nxt - ROM_BASE, strict
+        ):
             candidates[target] = nxt
     thumb_entries = {t: n for t, n in candidates.items() if n is not None}
 

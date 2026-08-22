@@ -15,7 +15,12 @@
     "the configured segments: functions that never enter symbols.csv because",
     "nothing bl-calls them (_call_via_r4..r7 of lesson 3.4, plus the rest of",
     "the libgcc family up to lr) and named items inside data segments (the",
-    "SRAM save identifier string).",
+    "SRAM save identifier string).  SoftReset (0x080CFA80, issue #29) is",
+    "deliberately an extra label and NOT a symbols.csv entry: the segment is",
+    "data-emitted (odd start 0x080CFA7F), so the label carries no Thumb",
+    "function mark, and resolving its two BL callers against it would make",
+    "ld insert an interworking veneer that shifts every later section; the",
+    "callers keep their raw .short BL pairs instead.",
     "",
     "data_symbols names non-ROM word values so they can be emitted as",
     ".word <name> from split literal pools; definitions land in rom_syms.s.",
@@ -59,6 +64,7 @@
     "0x080CFC60": "_call_via_ip",
     "0x080CFC64": "_call_via_sp",
     "0x080CFC68": "_call_via_lr",
+    "0x080CFA80": "SoftReset",
     "0x080CFE20": "gSramIdString"
   },
   "data_symbols": {
