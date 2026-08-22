@@ -31,6 +31,13 @@ Matching decompilation of Kirby: The Amazing Mirror's predecessor, **Kirby: Nigh
   - `make clean` — remove `build/` and `knidl.gba`.
 - Header fields for `gbafix`: title `AGB KIRBY DX`, code `A7KE`, maker `01`, version `0`. Internal ROM codes are `A7K*` (not `AKT*`).
 
+## Git / PR workflow (mandatory for agents)
+
+- `master` is the main branch and the ONLY valid PR base. `init` is a frozen bootstrap snapshot — never merge or push work into it (it may appear as origin/HEAD locally; ignore that).
+- Work on a feature branch, open the PR against `master`, and wait for CI ("Build and verify") to pass.
+- **Do NOT merge PRs.** The repo owner reviews and approves every merge personally. An agent's job ends with: PR open, CI green, a clear description (what/why, evidence of `make clean && make compare` OK), and a comment or summary pointing at anything a reviewer should double-check.
+- Issues auto-close via "Closes #N" only when the owner merges to `master` — do not close issues manually.
+
 ## Conventions
 
 - pret-style layout: `src/` (decompiled C), `asm/` (hand-written assembly), `data/` (extracted blobs), `tools/`, `linker.ld`, `<game>.sha1`.
