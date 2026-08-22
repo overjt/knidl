@@ -9883,7 +9883,7 @@ sub_0805b370:
 	ldr	r0, [r4, #12]
 	ldr	r5, [pc, #264]	@ 0x0805B4A4
 	adds	r1, r5, #0
-	bl	LZ77UnCompVram	@ 0x080CFA70
+	bl	LZ77UnCompWram	@ 0x080CFA70
 	ldr	r2, [pc, #260]	@ 0x0805B4A8
 	ldrh	r3, [r4, #2]
 	lsls	r3, r3, #5

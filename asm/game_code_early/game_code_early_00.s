@@ -2119,7 +2119,7 @@ loc_080017a0:
 	.word	gUnk_03000F88
 	adds	r0, r6, #0
 	adds	r1, r7, #0
-	bl	HuffUnComp	@ 0x080CFA6C
+	bl	LZ77UnCompVram	@ 0x080CFA6C
 	.global	loc_080017c0
 loc_080017c0:
 	mov	r3, r8
@@ -2446,7 +2446,7 @@ loc_080019da:
 	.word	gUnk_03000F88
 	adds	r0, r7, #0
 	mov	r1, r8
-	bl	HuffUnComp	@ 0x080CFA6C
+	bl	LZ77UnCompVram	@ 0x080CFA6C
 	.global	loc_080019f8
 loc_080019f8:
 	ldr	r0, [pc, #12]	@ 0x08001A08

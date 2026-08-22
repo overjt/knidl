@@ -3773,7 +3773,7 @@ sub_08019000:
 	ldr	r0, [r5, #12]
 	ldr	r4, [pc, #968]	@ 0x08019404
 	adds	r1, r4, #0
-	bl	LZ77UnCompVram	@ 0x080CFA70
+	bl	LZ77UnCompWram	@ 0x080CFA70
 	ldr	r2, [pc, #964]	@ 0x08019408
 	movs	r3, #128
 	lsls	r3, r3, #6

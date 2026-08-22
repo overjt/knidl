@@ -5176,10 +5176,10 @@ vma,size,isa,evidence,name
 0x080CFA54,0x4,thumb,bl-target,CpuFastSet
 0x080CFA58,0x4,thumb,bl-target,CpuSet
 0x080CFA5C,0x4,thumb,bl-target,Div
-0x080CFA60,0x8,thumb,bl-target,sub_080cfa60
-0x080CFA68,0x4,thumb,bl-target,RLUnCompWram
-0x080CFA6C,0x4,thumb,bl-target,HuffUnComp
-0x080CFA70,0x4,thumb,bl-target,LZ77UnCompVram
+0x080CFA60,0x8,thumb,bl-target,Mod
+0x080CFA68,0x4,thumb,bl-target,HuffUnComp
+0x080CFA6C,0x4,thumb,bl-target,LZ77UnCompVram
+0x080CFA70,0x4,thumb,bl-target,LZ77UnCompWram
 0x080CFA74,0x8,thumb,bl-target,MultiBoot
 0x080CFA7C,0x20,thumb,bl-target,SoundDriverVSyncOff
 0x080CFA9C,0x24,thumb,rom-pointer,ReadSram_Core

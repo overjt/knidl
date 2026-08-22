@@ -30024,7 +30024,7 @@ sub_08075000:
 	ldr	r0, [pc, #580]	@ 0x08075270
 	ldr	r4, [pc, #584]	@ 0x08075274
 	adds	r1, r4, #0
-	bl	LZ77UnCompVram	@ 0x080CFA70
+	bl	LZ77UnCompWram	@ 0x080CFA70
 	ldr	r2, [pc, #580]	@ 0x08075278
 	movs	r3, #128
 	lsls	r3, r3, #4
@@ -30033,7 +30033,7 @@ sub_08075000:
 	bl	sub_080017e4	@ 0x080017E4
 	ldr	r0, [pc, #568]	@ 0x0807527C
 	adds	r1, r4, #0
-	bl	LZ77UnCompVram	@ 0x080CFA70
+	bl	LZ77UnCompWram	@ 0x080CFA70
 	ldr	r2, [pc, #564]	@ 0x08075280
 	movs	r3, #128
 	lsls	r3, r3, #5

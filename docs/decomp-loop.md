@@ -37,6 +37,12 @@ ends in `segments.txt` are exclusive).
 mkdir -p build/scratch/fn_<name>
 ```
 
+> [!WARNING]
+> Everything under `build/` — including this scratch dir and any permuter
+> working dir — is DELETED by `make clean`. Full clean rebuilds are part of
+> the landing checklist, so keep anything you cannot regenerate in one
+> command outside `build/`, or expect to recreate it.
+
 Extract the target disassembly for reference (read-only; do not edit generated
 asm, lesson 4.11):
 
@@ -58,32 +64,36 @@ resolution; for small SDK-shaped functions, hand-port from a sibling project
 (katam) instead — often faster than fixing m2c input. Make the C self-contained
 for now (inline `typedef u8/u16/u32;` or use repo headers later when linking).
 
-## 3. Iterate with asmdiff.sh on the function's range only
+## 3. Iterate with tools/fnmatch.sh — no build wiring needed
 
-Wire the file into the build first so there is something to diff:
+`tools/fnmatch.sh` compiles ONE candidate C file with the zone's exact
+recipe, auto-generates stand-ins for every external it references (function
+labels pinned at their VMAs, `gUnk_*`/data_symbols as absolutes), links it
+alone at the target address and byte-compares against `baserom.gba`:
 
-1. Put the C in `src/<name>.c`.
-2. Add a per-file override AFTER `BUILD_DIR := build` in the `Makefile`
-   (lesson 1.1) with the zone's recipe, e.g.:
+```sh
+./tools/fnmatch.sh 0x08000310 0x080008E8 src/agb_init.c          # game zone
+./tools/fnmatch.sh 0x080CFA9C 0x080CFC30 src/agb_sram.c --old    # SDK zone
+```
 
-   ```make
-   $(BUILD_DIR)/src/<name>.o: CC := old_agbcc
-   $(BUILD_DIR)/src/<name>.o: CFLAGS := -O1 -mthumb-interwork
-   ```
+- `MATCH (N bytes ...)` = the file will be byte-identical once landed.
+- On mismatch it prints the differing byte count and a **pool-resolving
+  instruction diff** (`tools/fnmatch_diff.py`): `ldr rN, [pc, #off]`
+  operands are folded to the pool VALUES they load, so literal-pool layout
+  shifts don't drown the real differences. Fix the topmost divergence
+  first — register-allocation noise downstream usually follows from it.
+- Externals must be resolvable: named functions come from
+  `docs/analysis/symbols.csv`, RAM cells must be referenced as
+  `gUnk_<address>` externs (or added to `split_config.json`
+  `data_symbols`). The tool errors loudly on anything else.
+- The range END must include trailing literal pools. For functions near
+  1KB the pool sits AFTER the epilogue behind a pool-skip branch
+  (lesson 3.6) — cutting it off makes a match impossible.
 
-   For a new pinned section, also add a section to `linker.ld` and remove the
-   covering `.incbin`/chunk slice — see step 5; during iteration keep the asm
-   in place and just diff.
-3. Rebuild and diff ONLY the function range:
-
-   ```sh
-   rm -f build/src/<name>.o          # flag changes don't trigger rebuilds (lesson 1.2)
-   make && ./asmdiff.sh 0x0<ADDR> 0x<SIZE>
-   ```
-
-Empty diff = done with this stage. While iterating,
-`python3 tools/asm-differ/diff.py -mwo <symbol>` gives colored instruction
-diffs (see `docs/diffing.md` §2).
+Iterate on the C until MATCH. Source-shape fixes live in
+`docs/lessons-learned.md` §3 — for game-zone code read §3.6-§3.11 first
+(chained assignments, volatile indexed-store pre-reads, zero variables);
+try the other opt level BEFORE rewriting source (lesson 3.1).
 
 Source-shape fixes live in `docs/lessons-learned.md` §3 (opt level per zone,
 CSE defeat, mask widths, stack-copy idioms). Try the other opt level BEFORE
@@ -186,22 +196,46 @@ Useful flags: `--stop-on-zero` (halt on match), `--better-only`,
 `--print-diffs` (show what changed per improvement), `--debug` (dumps compiled
 base object). Full CLI: `tools/decomp-permuter/USAGE.md`.
 
-## 5. Land it: link the C object in its pinned section
+## 5. Land it with tools/carve.py
 
-1. `linker.ld`: pin the new section at the function's VMA
-   (`.name ADDR : { build/src/<name>.o(.text) })` style, mirroring existing
-   entries) and delete the replaced asm slice/chunk coverage for that range.
-2. Remove the function's body from the `asm/` chunk (or regenerate split
-   outputs if config-driven — never hand-edit generated asm, lesson 4.11).
-3. Full clean verification — incremental builds hide stale objects (lesson 4.13):
+Once fnmatch says MATCH, carving the range out of its asm segment is
+mechanical:
 
-   ```sh
-   make clean && make compare          # SHA-1 must pass
-   grep -A2 '<section name>' build/knidl.map   # section from src/<name>.o at right VMA,
-                                               # no leftover duplicate (lesson 1.3)
+```sh
+python3 tools/carve.py 0x08007300 0x080075B8 <name>          # DRY RUN: prints diffs
+python3 tools/carve.py 0x08007300 0x080075B8 <name> --write  # applies them
+```
+
+carve.py splits the containing segment in `docs/analysis/segments.txt`,
+updates `tools/split_config.json` (segments + `external_defined` for every
+DB function the C now defines) and pins the `.<name>` section to
+`build/src/<name>.o(.text)` in `linker.ld`. It validates function
+boundaries, even addresses and single-segment containment, and refuses
+anything else. Cross-segment carves (boundary corrections like #28's) stay
+manual.
+
+Then:
+
+1. Put the fnmatch-verified C in `src/<name>.c`. If the zone recipe is not
+   the default, add the per-file override AFTER `BUILD_DIR := build` in the
+   `Makefile` (lesson 1.1):
+
+   ```make
+   $(BUILD_DIR)/src/<name>.o: CC := old_agbcc
+   $(BUILD_DIR)/src/<name>.o: CFLAGS := -O1 -mthumb-interwork
    ```
 
-4. `make progress` to record the byte shift.
+2. Regenerate and verify from scratch — incremental builds hide stale
+   objects (lesson 4.13):
+
+   ```sh
+   make symbols && make split
+   make clean && make compare          # SHA-1 must pass
+   grep -A2 '\.<name>' build/knidl.map  # section from src/<name>.o at right VMA,
+                                        # no leftover duplicate (lesson 1.3)
+   ```
+
+3. `make progress` to record the byte shift.
 
 ## 6. Update the maps
 

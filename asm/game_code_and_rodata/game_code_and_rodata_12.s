@@ -1315,7 +1315,7 @@ sub_080c6ca0:
 	ldr	r0, [r4, #12]
 	ldr	r5, [pc, #108]	@ 0x080C6D1C
 	adds	r1, r5, #0
-	bl	LZ77UnCompVram	@ 0x080CFA70
+	bl	LZ77UnCompWram	@ 0x080CFA70
 	ldr	r7, [pc, #104]	@ 0x080C6D20
 	ldrh	r3, [r4, #2]
 	lsls	r3, r3, #5
@@ -1349,7 +1349,7 @@ loc_080c6cf2:
 	ldr	r4, [pc, #64]	@ 0x080C6D34
 	ldr	r0, [r4, #12]
 	adds	r1, r5, #0
-	bl	LZ77UnCompVram	@ 0x080CFA70
+	bl	LZ77UnCompWram	@ 0x080CFA70
 	ldrh	r3, [r4, #2]
 	lsls	r3, r3, #5
 	movs	r0, #3
@@ -5542,7 +5542,7 @@ sub_080c9040:
 	ldr	r0, [r4, #12]
 	ldr	r6, [pc, #96]	@ 0x080C90A8
 	adds	r1, r6, #0
-	bl	LZ77UnCompVram	@ 0x080CFA70
+	bl	LZ77UnCompWram	@ 0x080CFA70
 	ldr	r2, [pc, #92]	@ 0x080C90AC
 	ldrh	r3, [r4, #2]
 	lsls	r3, r3, #5
@@ -5579,7 +5579,7 @@ loc_080c9088:
 	bl	sub_080017e4	@ 0x080017E4
 	ldr	r0, [pc, #44]	@ 0x080C90C4
 	adds	r1, r6, #0
-	bl	LZ77UnCompVram	@ 0x080CFA70
+	bl	LZ77UnCompWram	@ 0x080CFA70
 	pop	{r4, r5, r6}
 	pop	{r0}
 	bx	r0
@@ -9685,7 +9685,7 @@ sub_080cb21c:
 	ldr	r0, [pc, #60]	@ 0x080CB270
 	ldr	r4, [pc, #60]	@ 0x080CB274
 	adds	r1, r4, #0
-	bl	LZ77UnCompVram	@ 0x080CFA70
+	bl	LZ77UnCompWram	@ 0x080CFA70
 	ldr	r2, [pc, #56]	@ 0x080CB278
 	movs	r3, #168
 	lsls	r3, r3, #6
@@ -9694,7 +9694,7 @@ sub_080cb21c:
 	bl	sub_080017e4	@ 0x080017E4
 	ldr	r0, [pc, #48]	@ 0x080CB27C
 	adds	r1, r4, #0
-	bl	LZ77UnCompVram	@ 0x080CFA70
+	bl	LZ77UnCompWram	@ 0x080CFA70
 	ldr	r2, [pc, #44]	@ 0x080CB280
 	movs	r3, #232
 	lsls	r3, r3, #6
@@ -9716,7 +9716,7 @@ loc_080cb284:
 	ldr	r0, [pc, #28]	@ 0x080CB2A4
 	ldr	r4, [pc, #32]	@ 0x080CB2A8
 	adds	r1, r4, #0
-	bl	LZ77UnCompVram	@ 0x080CFA70
+	bl	LZ77UnCompWram	@ 0x080CFA70
 	ldr	r2, [pc, #28]	@ 0x080CB2AC
 	movs	r3, #192
 	lsls	r3, r3, #4
@@ -10062,7 +10062,7 @@ sub_080cb4f4:
 	adds	r0, r0, r5
 	ldr	r0, [r0, #0]
 	movs	r1, #10
-	bl	sub_080cfa60	@ 0x080CFA60
+	bl	Mod	@ 0x080CFA60
 	ldr	r3, [r6, #0]
 	str	r0, [r3, #44]
 	ldrh	r2, [r4, #0]
@@ -14083,7 +14083,7 @@ loc_080cd76e:
 	adds	r0, r0, r1
 	ldr	r0, [r0, #0]
 	ldr	r1, [pc, #20]	@ 0x080CD790
-	bl	LZ77UnCompVram	@ 0x080CFA70
+	bl	LZ77UnCompWram	@ 0x080CFA70
 	b.n	loc_080cd7a0	@ 0x080CD7A0
 	movs	r0, r0
 	.word	0x0201C19C
