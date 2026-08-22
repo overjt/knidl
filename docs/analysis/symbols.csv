@@ -5201,11 +5201,10 @@ vma,size,isa,evidence,name
 0x080CFC34,0x4,thumb,bl-target,_call_via_r1
 0x080CFC38,0x4,thumb,bl-target,_call_via_r2
 0x080CFC3C,0x30,thumb,bl-target,_call_via_r3
-0x080CFC6C,0x90,thumb,bl-target,__divsi3
-0x080CFCFC,0x4,thumb,rom-pointer,sub_080cfcfc
+0x080CFC6C,0x94,thumb,bl-target,__divsi3
 0x080CFD00,0x4,thumb,bl-target,_div0
 0x080CFD04,0xC0,thumb,bl-target,__umodsi3
-0x080CFDC4,0x8,thumb,bl-target,sub_080cfdc4
-0x080CFDCC,0x8,thumb,bl-target,sub_080cfdcc
-0x080CFDD4,0x8,thumb,bl-target,sub_080cfdd4
+0x080CFDC4,0x8,thumb,bl-target,TaskSwitchTrampoline
+0x080CFDCC,0x8,thumb,bl-target,TaskYieldTrampoline
+0x080CFDD4,0x8,thumb,bl-target,TaskDispatchTrampoline
 0x080CFDDC,0x8,arm,bl-target,sub_080cfddc

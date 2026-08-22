@@ -10296,7 +10296,7 @@ loc_080052de:
 	adds	r2, r2, r3
 	ldr	r2, [r2, #0]
 	str	r3, [sp, #0]
-	bl	sub_080cfdc4	@ 0x080CFDC4
+	bl	TaskSwitchTrampoline	@ 0x080CFDC4
 	ldr	r0, [r4, #0]
 	ldr	r3, [sp, #0]
 	movs	r2, #1
@@ -12153,7 +12153,7 @@ sub_08006138:
 	.global	loc_0800613a
 loc_0800613a:
 	ldr	r0, [pc, #8]	@ 0x08006144
-	bl	sub_080cfdcc	@ 0x080CFDCC
+	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	b.n	loc_0800613a	@ 0x0800613A
 	movs	r0, r0
 	.word	0x00007FFF
