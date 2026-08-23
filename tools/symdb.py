@@ -93,6 +93,136 @@ KNOWN_SYMBOLS = {
     # table only), and most start with `ldr r0, [r1, #0x40]`, so the
     # strict pointer-candidate prologue filter would reject them — the
     # KNOWN_SYMBOLS bypass in build() accepts curated entries instead.
+    # ------------------------------------------------------------------
+    # m4a/mp2k sound engine (issue #31).  The engine occupies
+    # 0x080CD89C-0x080CFA4B at the tail of game_code_and_rodata, split in
+    # two halves exactly like pret sibling projects (pokeemerald/katam):
+    #
+    #   asm core ("m4a_1.s"): 0x080CD89C-0x080CE51F.  Identified by shape
+    #   against pokeemerald m4a_1.s and by the 36-entry
+    #   gMPlayJumpTableTemplate at 0x0860A140 (copied verbatim by
+    #   MPlayJumpTableCopy, `movs r1, #36` loop), whose slots map commands
+    #   0xB1..0xCF one-for-one to the handlers below (slots B6-B9/C6-C7/
+    #   C9-CB/CD default to ply_fine, exactly like pokeemerald's template;
+    #   MPlayExtender installs ply_memacc/ply_xcmd/ply_endtie at runtime).
+    #   gScaleTable (0x0860A1D0), gFreqTable (0x0860A284) and gClockTable
+    #   (0x0860A3B4) match pokeemerald's tables BYTE-FOR-BYTE (same engine
+    #   revision).  SoundMain checks SOUND_INFO_PTR (0x03007FF0) against
+    #   ID_NUMBER 'Smsh' (0x68736D53) and tail-jumps to 0x03007151: the
+    #   mixer SoundMainRAM (ROM image 0x080CD930, with an embedded
+    #   ARM-mode inner loop) is CpuSet-copied to IWRAM 0x03007150 by
+    #   m4aSoundInit (0x400 bytes, literals at 0x080CE5B0/0x080CE5B4).
+    0x080CD89C: "umul3232H32",  # adr r2; bx r2 -> ARM umull r2,r3,r0,r1
+    0x080CD8AC: "SoundMain",  # ident lock, VCOUNT wrap (0xA0/+0xE4),
+    # calls soundInfo->func/intp (0x20/0x24) and CgbSound (0x28)
+    0x080CD930: "SoundMainRAM",  # ROM image; envelope loop + ARM mixer;
+    # runs from IWRAM 0x03007150 (pointer 0x080CD931 in m4aSoundInit pool)
+    0x080CDCD4: "SoundMainBTM",  # 16-word stmia zero-fill (template[35])
+    0x080CDCEC: "RealClearChain",  # unlink chan: track 0x2C/prev 0x30/next 0x34
+    0x080CDD0C: "ply_fine",  # template[0] (cmd B1); stop flag 0x40 + RealClearChain
+    0x080CDD3C: "MPlayJumpTableCopy",  # movs r1,#36; copies 0x0860A140 template
+    0x080CDD54: "ld_r3_r2",  # ldrb r3,[r2] + fall into chk_adr_r2 (descriptive)
+    0x080CDD56: "chk_adr_r2",  # zeroes r3 unless r2 is a sane sample/ROM adr (descriptive)
+    0x080CDD70: "ld_r3_tp_adr_i",  # fetch byte at track->cmdPtr++ (0x40) w/ check
+    0x080CDD7C: "ply_goto",  # template[1]: assemble 4-byte LE target -> cmdPtr
+    0x080CDD9C: "ply_patt",  # template[2]: push cmdPtr to patternStack (0x44+)
+    0x080CDDB8: "ply_pend",  # template[3]: pop patternStack
+    0x080CDDCC: "ply_rept",  # template[4]: repeat count via track->repN (0x03)
+    0x080CDDFC: "ply_prio",  # template[9]: strb -> track->priority (0x1D)
+    0x080CDE08: "ply_tempo",  # template[10]: tempoD 0x1C, tempoU 0x1E, tempoI 0x20
+    0x080CDE1C: "ply_keysh",  # template[11]: strb -> track->keyShiftX (0x0A)
+    0x080CDE30: "ply_voice",  # template[12]: 12-byte voicegroup entry -> 0x24/0x28/0x2C
+    0x080CDE60: "ply_volu",  # template[13]: strb -> track->vol (0x12), flags |= 3
+    0x080CDE74: "ply_pan",  # template[14]: -0x40 -> track->pan (0x14), flags |= 3
+    0x080CDE88: "ply_bend",  # template[15]: -0x40 -> track->bend (0x0E), flags |= 0xC
+    0x080CDE9C: "ply_bendr",  # template[16]: strb -> track->bendRange (0x0F), flags |= 0xC
+    0x080CDEB0: "ply_lfodl",  # template[18]: strb -> track->lfoDelay (0x1B)
+    0x080CDEBC: "ply_modt",  # template[20]: cmp/strb track->modT (0x18), flags |= 0xF
+    0x080CDED4: "ply_tune",  # template[23]: -0x40 -> track->tune (0x0C), flags |= 0xC
+    0x080CDEE8: "ply_port",  # template[27] (cmd CC): strb -> REG_SOUND1CNT_L+n (0x04000060)
+    0x080CDF00: "m4aSoundVSync",  # (ident-ID)<=1 gate; DMA1/DMA2 FIFO restart
+    # (0x040000BC pool; CNT_H 0x0400 then 0xB600)
+    0x080CDF4C: "MPlayMain",  # player ident lock; calls player->func/intp
+    # (0x38/0x3C); installed into soundInfo->func by MPlayOpen (pool word
+    # 0x080CDF4D at 0x080CED10)
+    0x080CE1B4: "TrackStop",  # template[31]; CgbOscOff via soundInfo+0x2C for type&7
+    0x080CE1F8: "ChnVolSetAsm",  # chan L/R vol from velocity x (128+-pan) >> 14
+    0x080CE228: "ply_note",  # gClockTable (0x0860A3B4) gate lookup, chan alloc by
+    # prio, TrkVolPitSet + MidiKeyToFreq/MidiKeyToCgbFreq; SoundInit stores
+    # soundInfo->plynote = 0x080CE229 (pool 0x080CEA44)
+    0x080CE428: "ply_endtie",  # template[29]/extender: match midiKey (0x11), stop 0x40
+    0x080CE468: "ClearModM_asm",  # asm-block copy of ClearModM (used by
+    # ply_lfos/ply_mod); the C driver has its own static copy at 0x080CF6CC
+    0x080CE484: "ld_r3_tp_adr",  # fetch byte at track->cmdPtr++, no check (descriptive)
+    0x080CE490: "ply_lfos",  # template[17]: strb -> track->lfoSpeed (0x19), 0 -> ClearModM
+    0x080CE4A4: "ply_mod",  # template[19]: strb -> track->mod (0x17), 0 -> ClearModM
+    0x080CE4B8: "MidiKeyToFreq",  # clamp key 0xB2; gScaleTable 0x0860A1D0 +
+    # gFreqTable 0x0860A284 interpolation via 2x umul3232H32
+    #
+    #   C driver ("m4a.c", old_agbcc -O1 expected): 0x080CE520-0x080CFA4B.
+    #   Function order matches pokeemerald src/m4a.c; each identified by
+    #   its literal pool (SOUND_INFO_PTR / ID_NUMBER / gSongTable
+    #   0x0860B460 / gMPlayTable 0x0860B430 / IO regs) and field offsets.
+    0x080CE520: "MPlayContinue",  # internal body: ident check, status &= ~0x80000000
+    0x080CE53C: "MPlayFadeOut",  # internal body: fadeOI/OC (0x24/0x26) = speed, fadeOV = 0x100
+    0x080CE55C: "m4aSoundInit",  # called from AgbInit; CpuSet-copies SoundMainRAM
+    # to 0x03007150, then SoundInit(gSoundInfo=0x030056D0),
+    # MPlayExtender(gCgbChans=0x03006710), m4aSoundMode(0x0095F700),
+    # MPlayOpen loop over gMPlayTable (0x0860B430, 4 players),
+    # info->memAccArea = gMPlayMemAccArea (0x030068D0)
+    0x080CE5D4: "m4aSoundMain",  # bl SoundMain
+    0x080CE5E0: "m4aSongNumStart",  # gSongTable 0x0860B460 + gMPlayTable -> MPlayStart
+    0x080CE60C: "m4aSongNumStartOrChange",  # dead SDK export (no in-ROM ref)
+    0x080CE658: "m4aSongNumStartOrContinue",
+    0x080CE6AC: "m4aSongNumStop",  # songHeader match -> m4aMPlayStop
+    0x080CE6E0: "m4aSongNumContinue",  # dead SDK export (no in-ROM ref)
+    0x080CE714: "m4aMPlayAllStop",  # 4-player loop -> m4aMPlayStop
+    0x080CE740: "m4aMPlayContinue",  # public wrapper -> MPlayContinue; dead export
+    0x080CE74C: "m4aMPlayAllContinue",  # 4-player loop -> MPlayContinue
+    0x080CE778: "m4aMPlayFadeOut",  # public wrapper -> MPlayFadeOut; dead export
+    0x080CE788: "m4aMPlayFadeOutTemporarily",  # fadeOV = 0x101; dead export
+    0x080CE7A8: "m4aMPlayFadeIn",  # fadeOV = 2, clears pause bit; dead export
+    0x080CE7D0: "m4aMPlayImmInit",  # per started track: Clear64byte, bendRange=2,
+    # volX=0x40, lfoSpeed=22, tone.type=1
+    0x080CE818: "MPlayExtender",  # PSG reg init; installs ply_memacc/ply_lfos/
+    # ply_mod/ply_xcmd/ply_endtie/SampleFreqSet slot/TrackStop/FadeOutBody/
+    # TrkVolPitSet into gMPlayJumpTable (0x03006680) and CgbSound/CgbOscOff/
+    # MidiKeyToCgbFreq into SoundInfo (pools 0x080CE8F4-0x080CE924)
+    0x080CE934: "ClearChain",  # calls RealClearChain via jump table
+    0x080CE948: "Clear64byte",
+    0x080CE95C: "SoundInit",  # DMA1/2 reset, SOUNDCNT_H=0xA90E, BIAS resolution,
+    # DMA SAD/DAD to pcmBuffer/FIFO_A+B, SOUND_INFO_PTR=soundInfo, CpuSet
+    # clear (0x050003EC), plynote=ply_note, Cgb*=DummyFunc,
+    # MPlayJumpTableCopy(0x03006680), SampleFreqSet, ident=ID_NUMBER
+    0x080CEA54: "SampleFreqSet",  # gPcmSamplesPerVBlankTable 0x0860A2B4;
+    # pcmFreq=(597275*n+5000)/10000; divFreq; TM0CNT setup; VCOUNT 0x9F sync
+    0x080CEAF8: "m4aSoundMode",  # masks: FF reverb, F00 maxChans, F000 vol,
+    # B00000 BIAS resolution, F0000 freq (-> m4aSoundVSyncOff + SampleFreqSet)
+    0x080CEB90: "SoundClear",  # 12-chan clear + cgbChans off via CgbOscOff
+    # (_call_via_r1); dead SDK export (no in-ROM ref)
+    0x080CEBE4: "m4aSoundVSyncOff",  # (ident-ID)<=1 -> ident+=10, DMA1/2 off,
+    # CpuSet-fill pcmBuffer (0x05000318)
+    0x080CEC60: "m4aSoundVSyncOn",  # DMA1/2 CNT_H=0xB600, vsync counter=0, ident-=10
+    0x080CEC9C: "MPlayOpen",  # trackCount clamp 16; Clear64byte(info); chains
+    # soundInfo->func = MPlayMain (pool 0x080CDF4D @0x080CED10)
+    0x080CED14: "MPlayStart",
+    0x080CEDF8: "m4aMPlayStop",
+    0x080CEE38: "FadeOutBody",  # extender slot [32]
+    0x080CEF00: "TrkVolPitSet",  # extender slot [33]; called by ply_note
+    0x080CEFB4: "MidiKeyToCgbFreq",  # gNoiseTable 0x0860A368, gCgbScaleTable
+    # 0x0860A2CC, gCgbFreqTable 0x0860A350 (extender pool 0x080CE924)
+    0x080CF05C: "CgbOscOff",  # extender pool 0x080CE920
+    0x080CF0AC: "CgbModVol",  # static; bl-called from CgbSound only
+    0x080CF114: "CgbSound",  # extender pool 0x080CE91C; PSG channel state machine
+    0x080CF588: "m4aMPlayVolumeControl",  # trackBits; track->volX (0x13) = vol>>2
+    0x080CF5F0: "m4aMPlayPitchControl",  # keyShiftX (0x0B) = pitch>>8, pitX (0x0D)
+    0x080CF664: "m4aMPlayPanpotControl",  # track->panX (0x15); dead SDK export
+    0x080CF6CC: "ClearModM",  # C-side static copy (see ClearModM_asm 0x080CE468)
+    0x080CF6EC: "m4aMPlayModDepthSet",  # track->mod (0x17), 0 -> ClearModM; dead export
+    0x080CF760: "m4aMPlayLFOSpeedSet",  # track->lfoSpeed (0x19), 0 -> ClearModM; dead export
+    0x080CF7D4: "ply_memacc",  # 18-op switch over info->memAccArea (0x18);
+    # conditional ops tail-call ply_goto via _call_via_r2 (extender slot [8])
+    0x080CF92C: "ply_xcmd",  # dispatch via gXcmdTable 0x0860A3E8 (extender slot [28])
     0x080CF94C: "ply_xxx",    # xcmd 0x00/0x03: gMPlayJumpTable dispatch
     0x080CF960: "ply_xwave",  # xcmd 0x01: assemble instrument.wav pointer
     0x080CF9A8: "ply_xtype",  # xcmd 0x02: instrument.type
@@ -147,7 +277,26 @@ KNOWN_SYMBOLS = {
 # `pop {pc}` halfword passes the strict terminator check by accident.
 FALSE_POSITIVES = {0x080CFCFC}
 
-EVIDENCE_KINDS = ("bl-target", "rom-pointer", "prologue-scan")
+# Curated Thumb entries with NO in-ROM reference (issue #31): dead m4a SDK
+# exports.  The m4a driver was linked as whole objects, so public functions
+# this game never calls (and that no ROM word points at) are still present
+# in the binary.  Each address was hand-verified against the pokeemerald
+# m4a.c function order and body shape (see the KNOWN_SYMBOLS comments);
+# they are injected as candidates and carry the "curated" evidence kind.
+EXTRA_THUMB_ENTRIES = {
+    0x080CE60C,  # m4aSongNumStartOrChange
+    0x080CE6E0,  # m4aSongNumContinue
+    0x080CE740,  # m4aMPlayContinue (wrapper)
+    0x080CE778,  # m4aMPlayFadeOut (wrapper)
+    0x080CE788,  # m4aMPlayFadeOutTemporarily
+    0x080CE7A8,  # m4aMPlayFadeIn
+    0x080CEB90,  # SoundClear
+    0x080CF664,  # m4aMPlayPanpotControl
+    0x080CF6EC,  # m4aMPlayModDepthSet
+    0x080CF760,  # m4aMPlayLFOSpeedSet
+}
+
+EVIDENCE_KINDS = ("bl-target", "rom-pointer", "prologue-scan", "curated")
 
 
 def u16(rom, off):
@@ -310,7 +459,7 @@ def build(rom, segments):
     # Thumb candidates: BL targets union bit0-set pointer targets, restricted
     # to the code span, excluding the ARM zones, validated by prologue shape.
     candidates = {}
-    for target in set(bl_targets) | set(ptr_targets):
+    for target in set(bl_targets) | set(ptr_targets) | EXTRA_THUMB_ENTRIES:
         if target in FALSE_POSITIVES:
             continue
         if not CODE_SPAN_START <= target < CODE_SPAN_END:
@@ -368,7 +517,7 @@ def build(rom, segments):
         if vma in (ptr_targets_arm if is_arm else ptr_targets):
             ev.append("rom-pointer")
         if not ev:
-            ev.append("prologue-scan")
+            ev.append("curated" if vma in EXTRA_THUMB_ENTRIES else "prologue-scan")
         name = KNOWN_SYMBOLS.get(vma)
         if is_arm:
             name = dict((a, n) for a, s, n in ARM_ENTRIES).get(vma, name)

@@ -167,7 +167,21 @@
     "0x030025E0": "gTaskSavedR0",
     "0x030025F0": "gTaskFlagsTable",
     "0x030026F8": "gTaskSavedLr",
-    "0x03004C94": "gTaskBaseSp"
+    "0x03004C94": "gTaskBaseSp",
+    "0x030056D0": "gSoundInfo",
+    "0x03006680": "gMPlayJumpTable",
+    "0x03006710": "gCgbChans",
+    "0x03006810": "gMPlayInfo_BGM",
+    "0x03006850": "gMPlayInfo_SE1",
+    "0x03006890": "gMPlayInfo_SE2",
+    "0x030068D0": "gMPlayMemAccArea",
+    "0x030068E0": "gMPlayInfo_SE3",
+    "0x03006930": "gMPlayTrack_BGM",
+    "0x03006BB0": "gMPlayTrack_SE1",
+    "0x03006D90": "gMPlayTrack_SE2",
+    "0x03006F70": "gMPlayTrack_SE3",
+    "0x03007150": "gSoundMainRAM_Buffer",
+    "0x03007FF0": "SOUND_INFO_PTR"
   },
   "segments": [
     {

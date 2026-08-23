@@ -29074,7 +29074,7 @@ loc_080c37e4:
 	adds	r2, r2, r3
 	lsls	r2, r2, #11
 	asrs	r2, r2, #16
-	bl	sub_080cf5f0	@ 0x080CF5F0
+	bl	m4aMPlayPitchControl	@ 0x080CF5F0
 	b.n	loc_080c3832	@ 0x080C3832
 	movs	r0, r0
 	.word	0x0860B430
