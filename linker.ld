@@ -66,6 +66,19 @@ SECTIONS
         KEEP(*(.game_code_and_rodata)) KEEP(*(.game_code_and_rodata.tail))
     } > ROM
 
+    /* m4a sound engine: asm core (pret m4a_1.s equivalent; hand-scheduled
+     * SDK asm, stays asm forever — issue #52). SoundMainRAM's ROM image
+     * embeds an ARM-mode mixer loop (see rom-map section 8.2). */
+    .m4a_1 0x080CD89C : {
+        KEEP(*(.m4a_1)) KEEP(*(.m4a_1.tail))
+    } > ROM
+
+    /* m4a sound engine: C driver (pret m4a.c equivalent; to be decompiled
+     * in issues #53-#55) */
+    .m4a 0x080CE520 : {
+        KEEP(*(.m4a)) KEEP(*(.m4a.tail))
+    } > ROM
+
     /* SDK syscall wrappers (Thumb) */
     .sdk_swi_wrappers 0x080CFA4C : {
         KEEP(*(.sdk_swi_wrappers)) KEEP(*(.sdk_swi_wrappers.tail))
