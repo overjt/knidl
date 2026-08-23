@@ -5175,7 +5175,8 @@ vma,size,isa,evidence,name
 0x080CE788,0x20,thumb,curated,m4aMPlayFadeOutTemporarily
 0x080CE7A8,0x28,thumb,curated,m4aMPlayFadeIn
 0x080CE7D0,0x48,thumb,bl-target,m4aMPlayImmInit
-0x080CE818,0x11C,thumb,bl-target,MPlayExtender
+0x080CE818,0x118,thumb,bl-target,MPlayExtender
+0x080CE930,0x4,thumb,curated,MusicPlayerJumpTableCopy
 0x080CE934,0x14,thumb,bl-target,ClearChain
 0x080CE948,0x14,thumb,bl-target,Clear64byte
 0x080CE95C,0xF8,thumb,bl-target,SoundInit

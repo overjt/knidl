@@ -25,7 +25,7 @@ the steps below reference those lessons by number. Tool references:
 | Function address + size | `docs/analysis/symbols.csv` (e.g. `0x080CFA9C,0x24,thumb,rom-pointer,ReadSram_Core`) |
 | Its current asm | `asm/<segment>/<segment>_NN.s` chunk files (find the chunk via `docs/analysis/segments.txt` boundaries); functions are labeled, literal pools included |
 | Symbol names it calls/references | `docs/analysis/callgraph.csv`, `asm/rom_syms.s` absolute symbols |
-| Compiler recipe for its zone | `Makefile` per-file overrides + `docs/research/compiler-validation.md`: game code = `agbcc -O2 -mthumb-interwork`; SDK zone (`0x080CF9xx`) = `old_agbcc -O1 -mthumb-interwork`; ARM units = `agbcc_arm` |
+| Compiler recipe for its zone | `Makefile` per-file overrides + `docs/research/compiler-validation.md`: game code = `agbcc -O2 -mthumb-interwork`; SDK zone (`0x080CF9xx`) = `old_agbcc -O1 -mthumb-interwork`; m4a driver zone (`0x080CE520+`) = `old_agbcc -O2 -mthumb-interwork` (lesson 3.15); ARM units = `agbcc_arm` |
 
 ## 1. Pick the function and set up scratch space
 
@@ -74,6 +74,7 @@ alone at the target address and byte-compares against `baserom.gba`:
 ```sh
 ./tools/fnmatch.sh 0x08000310 0x080008E8 src/agb_init.c          # game zone
 ./tools/fnmatch.sh 0x080CFA9C 0x080CFC30 src/agb_sram.c --old    # SDK zone
+./tools/fnmatch.sh 0x080CE520 0x080CEFB4 src/m4a_c1.c --old2     # m4a driver zone (lesson 3.15)
 ```
 
 - `MATCH (N bytes ...)` = the file will be byte-identical once landed.

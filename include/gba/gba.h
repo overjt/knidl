@@ -14,5 +14,6 @@
 #include "gba/interrupts.h"
 #include "gba/syscall.h"
 #include "gba/agb_sram.h"
+#include "gba/m4a_internal.h"
 
 #endif // GUARD_GBA_GBA_H
