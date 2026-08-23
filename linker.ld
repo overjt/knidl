@@ -147,9 +147,29 @@ SECTIONS
         KEEP(*(.compressed_graphics)) KEEP(*(.compressed_graphics.tail))
     } > ROM
 
-    /* m4a songs / sequences */
+    /* m4a songs / sequences (head: song track data before the engine tables) */
     .m4a_songs 0x085C0000 : {
         KEEP(*(.m4a_songs)) KEEP(*(.m4a_songs.tail))
+    } > ROM
+
+    /* m4a engine rodata tables (issue #51): gMPlayJumpTableTemplate..gXcmdTable */
+    .m4a_engine_rodata 0x0860A140 : {
+        KEEP(*(.m4a_engine_rodata)) KEEP(*(.m4a_engine_rodata.tail))
+    } > ROM
+
+    /* Song track data between the engine tables and the song table */
+    .m4a_song_tracks 0x0860A418 : {
+        KEEP(*(.m4a_song_tracks)) KEEP(*(.m4a_song_tracks.tail))
+    } > ROM
+
+    /* gMPlayTable + gSongTable (issue #51) */
+    .m4a_song_table 0x0860B430 : {
+        KEEP(*(.m4a_song_table)) KEEP(*(.m4a_song_table.tail))
+    } > ROM
+
+    /* m4a songs / sequences (tail: song headers, tone data, track data) */
+    .m4a_songs_2 0x0860C678 : {
+        KEEP(*(.m4a_songs_2)) KEEP(*(.m4a_songs_2.tail))
     } > ROM
 
     /* SRAM_V112 identifier string */

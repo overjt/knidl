@@ -32,7 +32,11 @@
 0x08350AF8 0x083A85D4 data sound_samples_2
 0x083A85D4 0x083D0000 data level_graphics_palettes_3
 0x083D0000 0x085C0000 data compressed_graphics
-0x085C0000 0x0872E9F8 data m4a_songs
+0x085C0000 0x0860A140 data m4a_songs # song track data head (songs/samples extraction is issue #36)
+0x0860A140 0x0860A418 data m4a_engine_rodata [split] # m4a engine tables (issue #51, rom-map section 8.3): gMPlayJumpTableTemplate..gXcmdTable (gXcmdTable has 12 entries and ends 0x0860A418, not 0x0860A410 as the issue text assumed)
+0x0860A418 0x0860B430 data m4a_song_tracks # song track data referenced by song headers (stays incbin, issue #36)
+0x0860B430 0x0860C678 data m4a_song_table [split] # gMPlayTable (4 players) + gSongTable: 579 entries ending at the first song header 0x0860C678 (all header ptrs >= 0x0860C678; issue #51's "103 entries/0x0860B798" undercounted)
+0x0860C678 0x0872E9F8 data m4a_songs_2 # song headers + tone data + remaining track data (issue #36)
 0x0872E9F8 0x0872EA02 data sram_v112_string
 0x0872EA02 0x0872EA04 data gap_sram_v112_string_sram_driver_fn_table
 0x0872EA04 0x0872EA14 data sram_driver_fn_table
