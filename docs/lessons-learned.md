@@ -347,6 +347,21 @@ unrelated `.word 4`/`.word 0` pool word in split asm to the symbol name.
 stand-ins, so candidate C referencing `gMPlayTable`/`gSongTable`/
 `gNumMusicPlayers` links standalone.
 
+### 3.17 One translation unit upstream = one compiler recipe; unit identity
+beats per-issue guesses
+The m4a C driver shipped as ONE `m4a.c`, so parts 1-3 (issues #53/#54/#55,
+`0x080CE520-0x080CFA4B`) must all use the same recipe (`old_agbcc -O2`) even
+when an issue text guesses otherwise (#55 said `-O1`; the ROM proved -O2 on
+the first fnmatch). Corollaries: (a) when a recipe is in doubt, check what
+the SAME source file's already-matching neighbors use before experimenting;
+(b) the part-1 ident-lock disappearance (3.15) is not a zone property but a
+per-function aliasing verdict: in parts 2-3 the lock stores SURVIVE in the
+ROM because gcc cannot prove the loop's `track[]` writes don't alias
+`mplayInfo->ident` (different pointer origins), so the same pokeruby-style
+lock pairs match as written there; (c) a dead export kept by whole-object
+linking can sit BETWEEN two live functions and still belongs to the same C
+unit (`m4aMPlayTempoControl` at `0x080CF554`).
+
 ## 4. Splitting ROM ranges into asm (tools/split.py)
 
 ### 4.1 objdump text only round-trips under `.syntax unified`

@@ -85,8 +85,9 @@ SECTIONS
         build/src/m4a_cgb.o(.text)
     } > ROM
 
-    .m4a 0x080CF588 : {
-        KEEP(*(.m4a)) KEEP(*(.m4a.tail))
+    /* m4a_ctrl — decompiled to C (src/m4a_ctrl.c, carved by tools/carve.py) */
+    .m4a_ctrl 0x080CF588 : {
+        build/src/m4a_ctrl.o(.text)
     } > ROM
 
     /* SDK syscall wrappers (Thumb) */

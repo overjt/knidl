@@ -19,7 +19,7 @@
 0x080CD89C 0x080CE520 thumb_code m4a_1 [split] # m4a asm core (pret m4a_1.s equivalent): hand-scheduled SDK asm, stays asm forever; SoundMainRAM ROM image embeds an ARM-mode mixer loop (rom-map section 8.2, issue #52)
 0x080CE520 0x080CEFB4 c_code m4a_c1 # src/m4a_c1.c (carved by tools/carve.py): m4a C driver part 1, init/song-number/MPlay API (issue #53, old_agbcc -O2)
 0x080CEFB4 0x080CF588 c_code m4a_cgb # src/m4a_cgb.c (carved by tools/carve.py)
-0x080CF588 0x080CFA4C thumb_code m4a [split]
+0x080CF588 0x080CFA4C c_code m4a_ctrl # src/m4a_ctrl.c (carved by tools/carve.py)
 0x080CFA4C 0x080CFA7F thumb_code sdk_swi_wrappers [split] # svc thunks named per include/gba/syscall.h; stays named asm by design (bare `svc N; bx lr` is not producible from C by agbcc — issue #29)
 0x080CFA7F 0x080CFA9C thumb_code sdk_reset_helper [split] # SoftReset (0x080CFA80, svc 1 + svc 0) via split_config extra_labels; odd start => data-emitted, stays named asm by design (issue #29)
 0x080CFA9C 0x080CFC30 c_code sram_driver
