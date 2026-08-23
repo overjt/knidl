@@ -80,7 +80,12 @@ SECTIONS
         build/src/m4a_c1.o(.text)
     } > ROM
 
-    .m4a 0x080CEFB4 : {
+    /* m4a_cgb — decompiled to C (src/m4a_cgb.c, carved by tools/carve.py) */
+    .m4a_cgb 0x080CEFB4 : {
+        build/src/m4a_cgb.o(.text)
+    } > ROM
+
+    .m4a 0x080CF588 : {
         KEEP(*(.m4a)) KEEP(*(.m4a.tail))
     } > ROM
 

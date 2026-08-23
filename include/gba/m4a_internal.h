@@ -76,6 +76,27 @@ struct ToneData
     u8 release;
 };
 
+/* CgbChannel sf (status flags) bits, pret names. */
+#define SOUND_CHANNEL_SF_START       0x80
+#define SOUND_CHANNEL_SF_STOP        0x40
+#define SOUND_CHANNEL_SF_LOOP        0x10
+#define SOUND_CHANNEL_SF_IEC         0x04
+#define SOUND_CHANNEL_SF_ENV         0x03
+#define SOUND_CHANNEL_SF_ENV_ATTACK  0x03
+#define SOUND_CHANNEL_SF_ENV_DECAY   0x02
+#define SOUND_CHANNEL_SF_ENV_SUSTAIN 0x01
+#define SOUND_CHANNEL_SF_ENV_RELEASE 0x00
+#define SOUND_CHANNEL_SF_ON (SOUND_CHANNEL_SF_START | SOUND_CHANNEL_SF_STOP \
+                           | SOUND_CHANNEL_SF_IEC | SOUND_CHANNEL_SF_ENV)
+
+/* CgbChannel mo (modify) bits. */
+#define CGB_CHANNEL_MO_PIT 0x02
+#define CGB_CHANNEL_MO_VOL 0x01
+
+/* NRx2 envelope direction bit. */
+#define CGB_NRx2_ENV_DIR_INC 0x08
+#define CGB_NRx2_ENV_DIR_DEC 0x00
+
 struct CgbChannel
 {
     u8 sf;
@@ -396,11 +417,14 @@ void m4aMPlayStop(struct MusicPlayerInfo *mplayInfo);
 void FadeOutBody(struct MusicPlayerInfo *mplayInfo);
 void TrkVolPitSet(struct MusicPlayerInfo *mplayInfo, struct MusicPlayerTrack *track);
 
-/* C driver parts 2/3 (0x080CEFB4-, still asm) */
+/* C driver part 2, CGB/PSG side (src/m4a_cgb.c, 0x080CEFB4-0x080CF587) */
 u32 MidiKeyToCgbFreq(u8 chanNum, u8 key, u8 fineAdjust);
 void CgbOscOff(u8 chanNum);
 void CgbModVol(struct CgbChannel *chan);
 void CgbSound(void);
+void m4aMPlayTempoControl(struct MusicPlayerInfo *mplayInfo, u16 tempo);
+
+/* C driver part 3 (0x080CF588-, still asm) */
 void m4aMPlayVolumeControl(struct MusicPlayerInfo *mplayInfo, u16 trackBits, u16 volume);
 void m4aMPlayPitchControl(struct MusicPlayerInfo *mplayInfo, u16 trackBits, s16 pitch);
 void m4aMPlayPanpotControl(struct MusicPlayerInfo *mplayInfo, u16 trackBits, s8 pan);
