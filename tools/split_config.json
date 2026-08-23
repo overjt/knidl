@@ -208,6 +208,12 @@
       "chunk_bytes": 65536
     },
     {
+      "name": "m4a_1"
+    },
+    {
+      "name": "m4a"
+    },
+    {
       "name": "task_switch_helpers"
     },
     {
