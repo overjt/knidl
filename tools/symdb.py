@@ -188,6 +188,9 @@ KNOWN_SYMBOLS = {
     # ply_mod/ply_xcmd/ply_endtie/SampleFreqSet slot/TrackStop/FadeOutBody/
     # TrkVolPitSet into gMPlayJumpTable (0x03006680) and CgbSound/CgbOscOff/
     # MidiKeyToCgbFreq into SoundInfo (pools 0x080CE8F4-0x080CE924)
+    0x080CE930: "MusicPlayerJumpTableCopy",  # dead SDK export: 4-byte BIOS
+    # thunk `swi 0x2A; bx lr` after MPlayExtender's pool, exactly katam's
+    # `void MusicPlayerJumpTableCopy(void) { asm("swi 0x2A"); }` (issue #53)
     0x080CE934: "ClearChain",  # calls RealClearChain via jump table
     0x080CE948: "Clear64byte",
     0x080CE95C: "SoundInit",  # DMA1/2 reset, SOUNDCNT_H=0xA90E, BIAS resolution,
@@ -290,6 +293,7 @@ EXTRA_THUMB_ENTRIES = {
     0x080CE778,  # m4aMPlayFadeOut (wrapper)
     0x080CE788,  # m4aMPlayFadeOutTemporarily
     0x080CE7A8,  # m4aMPlayFadeIn
+    0x080CE930,  # MusicPlayerJumpTableCopy (swi 0x2A thunk, issue #53)
     0x080CEB90,  # SoundClear
     0x080CF664,  # m4aMPlayPanpotControl
     0x080CF6EC,  # m4aMPlayModDepthSet

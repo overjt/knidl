@@ -75,7 +75,12 @@ SECTIONS
 
     /* m4a sound engine: C driver (pret m4a.c equivalent; to be decompiled
      * in issues #53-#55) */
-    .m4a 0x080CE520 : {
+    /* m4a_c1 — decompiled to C (src/m4a_c1.c, carved by tools/carve.py) */
+    .m4a_c1 0x080CE520 : {
+        build/src/m4a_c1.o(.text)
+    } > ROM
+
+    .m4a 0x080CEFB4 : {
         KEEP(*(.m4a)) KEEP(*(.m4a.tail))
     } > ROM
 

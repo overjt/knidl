@@ -17,6 +17,7 @@
 #include "gba/gba.h"
 #include "gba/interrupts.h"
 #include "gba/io_reg.h"
+#include "gba/m4a_internal.h"
 #include "gba/syscall.h"
 #include "gba/types.h"
 
@@ -132,6 +133,31 @@ void header_smoke_syscall(void)
     WriteSram((const u8 *)ROM_START, (u8 *)EWRAM_START, 16);
     sink32 = VerifySram((const u8 *)ROM_START, (u8 *)EWRAM_START, 16);
     sink32 = WriteSramEx((const u8 *)ROM_START, (u8 *)EWRAM_START, 16);
+}
+
+/* m4a struct layouts locked by the ROM (issue #53): SoundInfo fill word
+ * 0x050003EC = 0xFB0 bytes, chans stride 64, track stride 80, the
+ * MusicPlayer table stride 12 and Song stride 8 in m4aSongNumStart. */
+typedef char m4a_check_soundinfo[(sizeof(struct SoundInfo) == 0xFB0) ? 1 : -1];
+typedef char m4a_check_soundchan[(sizeof(struct SoundChannel) == 0x40) ? 1 : -1];
+typedef char m4a_check_cgbchan[(sizeof(struct CgbChannel) == 0x40) ? 1 : -1];
+typedef char m4a_check_track[(sizeof(struct MusicPlayerTrack) == 0x50) ? 1 : -1];
+typedef char m4a_check_mplayinfo[(sizeof(struct MusicPlayerInfo) == 0x40) ? 1 : -1];
+typedef char m4a_check_mplay[(sizeof(struct MusicPlayer) == 12) ? 1 : -1];
+typedef char m4a_check_song[(sizeof(struct Song) == 8) ? 1 : -1];
+
+void header_smoke_m4a(void)
+{
+    struct SoundInfo *soundInfo = SOUND_INFO_PTR;
+
+    soundInfo->ident = ID_NUMBER;
+    soundInfo->chans[0].status = 0;
+    gCgbChans[0].panMask = 0x11;
+    gMPlayJumpTable[34] = (MPlayFunc)0;
+    sink32 = (u32)gMPlayTable[0].info + gSongTable[0].ms
+           + NUM_MUSIC_PLAYERS + MAX_LINES
+           + (SOUND_MODE_DA_BIT_8 | SOUND_MODE_FREQ_13379)
+           + MUSICPLAYER_STATUS_PAUSE + MPT_FLG_EXIST + PCM_DMA_BUF_SIZE;
 }
 
 void header_smoke_types_defines(void)

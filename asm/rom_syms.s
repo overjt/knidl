@@ -237,3 +237,12 @@ gMPlayTrack_SE3 = 0x03006F70
 gSoundMainRAM_Buffer = 0x03007150
 	.global	SOUND_INFO_PTR
 SOUND_INFO_PTR = 0x03007FF0
+
+@ Link-time constants (tools/split_config.json "abs_symbols"):
+@ absolute symbols whose VALUE is the constant (SDK idiom, e.g.
+@ the m4a driver reads (u16)gNumMusicPlayers).  Unlike
+@ data_symbols these never rename split pool words.
+	.global	gMaxLines
+gMaxLines = 0x00000000
+	.global	gNumMusicPlayers
+gNumMusicPlayers = 0x00000004

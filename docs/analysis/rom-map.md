@@ -328,7 +328,7 @@ engine; the engine's first byte is `umul3232H32` at `0x080CD89C`.
 | Range | Content |
 |---|---|
 | `0x080CD89C-0x080CE51F` | **asm core** (pret `m4a_1.s` equivalent; hand-scheduled, stays asm): `umul3232H32`, `SoundMain`, `SoundMainRAM` (ROM image `0x080CD930-0x080CDD2F`; `m4aSoundInit` CpuSet-copies 0x400 bytes to IWRAM `0x03007150` = `gSoundMainRAM_Buffer`, and `SoundMain` tail-jumps to `0x03007151`; contains an embedded ARM-mode inner mixer loop entered via `adr r1; bx r1` at `0x080CD936`), `SoundMainBTM`, `RealClearChain`, `ply_fine`, `MPlayJumpTableCopy`, byte-fetch helpers (`ld_r3_r2`/`chk_adr_r2`/`ld_r3_tp_adr_i`/`ld_r3_tp_adr` — descriptive names; the check variants zero r3 for implausible addresses, a HAL/SDK hardening absent from pokeemerald), `ply_goto/patt/pend/rept/prio/tempo/keysh/voice/volu/pan/bend/bendr/lfodl/modt/tune/port`, `m4aSoundVSync` (`0x080CDF00`, DMA1/2 FIFO restart), `MPlayMain` (`0x080CDF4C`, pointer-installed into `soundInfo->func` by MPlayOpen — pool word `0x080CDF4D` @`0x080CED10`), `TrackStop`, `ChnVolSetAsm`, `ply_note` (`0x080CE228`; `SoundInit` stores `soundInfo->plynote = 0x080CE229`), `ply_endtie`, `ClearModM_asm`, `ply_lfos`, `ply_mod`, `MidiKeyToFreq`. Three tiny `bx r3` call shims stay `sub_080cdcce`/`sub_080cdd72`/`sub_080ce1a4` (no canonical names). |
-| `0x080CE520-0x080CFA4B` | **C driver** (pret `m4a.c` equivalent; expect `old_agbcc -O1 -mthumb-interwork` per the SDK-zone recipe): `MPlayContinue`/`MPlayFadeOut` (internal bodies; the public `m4aMPlayContinue` `0x080CE740` / `m4aMPlayFadeOut` `0x080CE778` are thin wrappers), `m4aSoundInit` (called from AgbInit), `m4aSoundMain`, `m4aSongNumStart/StartOrChange/StartOrContinue/Stop/Continue`, `m4aMPlayAllStop/AllContinue/FadeOutTemporarily/FadeIn/ImmInit`, `MPlayExtender`, `ClearChain`, `Clear64byte`, `SoundInit`, `SampleFreqSet`, `m4aSoundMode`, `SoundClear`, `m4aSoundVSyncOff/On`, `MPlayOpen`, `MPlayStart`, `m4aMPlayStop`, `FadeOutBody`, `TrkVolPitSet`, `MidiKeyToCgbFreq`, `CgbOscOff`, `CgbModVol`, `CgbSound`, `m4aMPlayVolumeControl/PitchControl/PanpotControl`, `ClearModM`, `m4aMPlayModDepthSet/LFOSpeedSet`, `ply_memacc`, `ply_xcmd`, `ply_x*` XCMD handlers (#29). Ten of these are dead SDK exports with zero in-ROM references (whole-object linking), injected into the symbol DB via `EXTRA_THUMB_ENTRIES` with evidence `curated`. `m4aMPlayTempoControl` does not exist in this build. |
+| `0x080CE520-0x080CFA4B` | **C driver** (pret `m4a.c` equivalent; compiler verdict from #53: **`old_agbcc -O2 -mthumb-interwork`**, NOT the -O1 SDK-zone default — see lesson 3.15): part 1 `0x080CE520-0x080CEFB3` **decompiled** (`src/m4a_c1.c`, issue #53, byte-exact): `MPlayContinue`/`MPlayFadeOut` (internal bodies; the public `m4aMPlayContinue` `0x080CE740` / `m4aMPlayFadeOut` `0x080CE778` are thin wrappers), `m4aSoundInit` (called from AgbInit), `m4aSoundMain`, `m4aSongNumStart/StartOrChange/StartOrContinue/Stop/Continue`, `m4aMPlayAllStop/AllContinue/FadeOutTemporarily/FadeIn/ImmInit`, `MPlayExtender`, `MusicPlayerJumpTableCopy` (`0x080CE930`, dead 4-byte `swi 0x2A; bx lr` BIOS thunk from `asm("swi 0x2A")`, exactly as in katam's m4a.c — carved out of MPlayExtender's old 0x11C size in #53), `ClearChain`, `Clear64byte`, `SoundInit`, `SampleFreqSet`, `m4aSoundMode`, `SoundClear`, `m4aSoundVSyncOff/On`, `MPlayOpen`, `MPlayStart`, `m4aMPlayStop`, `FadeOutBody`, `TrkVolPitSet`. Still asm (parts 2-3, issues #54/#55): `MidiKeyToCgbFreq`, `CgbOscOff`, `CgbModVol`, `CgbSound`, `m4aMPlayVolumeControl/PitchControl/PanpotControl`, `ClearModM`, `m4aMPlayModDepthSet/LFOSpeedSet`, `ply_memacc`, `ply_xcmd`, `ply_x*` XCMD handlers (#29). Eleven of these are dead SDK exports with zero in-ROM references (whole-object linking), injected into the symbol DB via `EXTRA_THUMB_ENTRIES` with evidence `curated`. `m4aMPlayTempoControl` does not exist in this build. Source shapes are pokeruby's `src/libs/m4a.c` generation (internal bodies + thin wrappers, ident locks present in source, `NUM_MUSIC_PLAYERS`/`MAX_LINES` read as absolute-symbol addresses — `gNumMusicPlayers`=4/`gMaxLines`=0 via `split_config.json` `abs_symbols`); struct layouts are katam's `gba/m4a.h` variant (`PCM_DMA_BUF_SIZE` 1584, `pcmSamplesPerVBlank` s32 at offset 16, `ExtVolPit` at 60, SoundInfo 0xFB0). This build's bodies differ from pokeruby in: countdown-free ascending player loops, `m4aSoundInit` mode `0x0095F700`, no pokemon-cries code. |
 
 ### 8.3 Engine rodata (extracted in #51: `asm/m4a_engine_rodata.s` `0x0860A140-0x0860A418` + `asm/m4a_song_table.s` `0x0860B430-0x0860C678`, labels via `split_config.json` `extra_labels`; pointer tables resolve symbolically as `.word <fn>+1`)
 
@@ -364,15 +364,18 @@ engine; the engine's first byte is `umul3232H32` at `0x080CD89C`.
 
 Split follows pret precedent: the asm core stays hand-written asm forever
 (`m4a_1.s` is not compiler output); the C driver decompiles to `m4a.c` with
-`old_agbcc -O1 -mthumb-interwork` (validate per function with
-`./tools/fnmatch.sh <start> <end> src/m4a_<x>.c --old` before landing;
-diagnose per lesson 3.1 if a function disagrees). Suggested chunks: (a)
+**`old_agbcc -O2 -mthumb-interwork`** (verdict from #53 — the -O1 SDK-zone
+guess was wrong for this zone, see lesson 3.15; validate per function with
+`./tools/fnmatch.sh <start> <end> src/m4a_<x>.c --old2` before landing).
+Suggested chunks: (a)
 engine rodata extraction (§8.3, tables only — song data stays `.incbin` for
 issue #36) — **done in #51**, (b) carve the asm core `0x080CD89C-0x080CE51F` into a dedicated
 `asm/m4a_1.s`-style unit — **done in #52** (segments `m4a_1`
 `0x080CD89C-0x080CE520` and `m4a` `0x080CE520-0x080CFA4C` carved out of
 `game_code_and_rodata`, which now ends at `0x080CD89C`; the `m4a` segment
 is the split-asm staging unit that (c)-(e) decompile), (c) `m4a.c` part 1 `0x080CE520-0x080CEFB3`
-(init/song-number/MPlay API), (d) `m4a.c` part 2 `0x080CEFB4-0x080CF587`
+(init/song-number/MPlay API) — **done in #53** (`src/m4a_c1.c` +
+`include/gba/m4a_internal.h`; the `m4a` split segment now covers only
+`0x080CEFB4-0x080CFA4C`), (d) `m4a.c` part 2 `0x080CEFB4-0x080CF587`
 (CGB: MidiKeyToCgbFreq/CgbOscOff/CgbModVol/CgbSound), (e) `m4a.c` part 3
 `0x080CF588-0x080CFA4B` (track controls, ply_memacc/ply_xcmd/ply_x*).

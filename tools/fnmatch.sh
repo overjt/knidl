@@ -8,6 +8,7 @@
 #   file.c   candidate source (usually src/<module>.c).
 #   --old    compile with old_agbcc -O1 (SDK zone recipe) instead of the
 #            default agbcc -O2 -mthumb-interwork (game-code zone).
+#   --old2   compile with old_agbcc -O2 (m4a driver zone, issue #53).
 #   --no-werror  drop -Werror while iterating (warnings won't abort).
 #
 # What it does:
@@ -45,6 +46,7 @@ RECIPE="new"; WERROR="-Werror"
 for a in "$@"; do
     case "$a" in
         --old) RECIPE="old" ;;
+        --old2) RECIPE="old2" ;;
         --no-werror) WERROR="" ;;
         *) echo "unknown flag: $a" >&2; exit 2 ;;
     esac
@@ -58,6 +60,7 @@ if [[ "${INSIDE_DOCKER:-0}" != "1" ]]; then
     exec docker run --rm -v "$(pwd):/src" -w /src -e INSIDE_DOCKER=1 \
         "$IMAGE" bash tools/fnmatch.sh "$START_RAW" "$END_RAW" "$CFILE" \
         $( [[ "$RECIPE" == "old" ]] && echo --old ) \
+        $( [[ "$RECIPE" == "old2" ]] && echo --old2 ) \
         $( [[ -z "$WERROR" ]] && echo --no-werror )
 fi
 
@@ -70,6 +73,8 @@ mkdir -p "$D"
 # ── 1. compile exactly like the Makefile ────────────────────────────────────
 if [[ "$RECIPE" == "old" ]]; then
     CCLINE=(old_agbcc -O1 -mthumb-interwork)
+elif [[ "$RECIPE" == "old2" ]]; then
+    CCLINE=(old_agbcc -O2 -mthumb-interwork)
 else
     CCLINE=(agbcc -O2 -mthumb-interwork -Wimplicit -Wparentheses $WERROR -fhex-asm)
 fi
@@ -91,9 +96,12 @@ db = {}
 for row in csv.reader(open('docs/analysis/symbols.csv')):
     if row and row[0].startswith('0x'):
         db[row[4]] = (int(row[0], 16), row[2])
-data_syms = {v: int(k, 16)
-             for k, v in json.load(open('tools/split_config.json'))
-                             .get('data_symbols', {}).items()}
+cfg = json.load(open('tools/split_config.json'))
+data_syms = {v: int(k, 16) for k, v in cfg.get('data_symbols', {}).items()}
+# extra_labels (ROM data labels, only pool-referenced from C) and
+# abs_symbols (link-time constants) resolve as absolutes too.
+data_syms.update({v: int(k, 16) for k, v in cfg.get('extra_labels', {}).items()})
+data_syms.update({k: int(v, 16) for k, v in cfg.get('abs_symbols', {}).items()})
 
 labels, absolutes, unknown = [], [], []
 for name in undef:

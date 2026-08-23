@@ -31,6 +31,12 @@ BUILD_DIR := build
 $(BUILD_DIR)/src/agb_sram.o: CC := old_agbcc
 $(BUILD_DIR)/src/agb_sram.o: CFLAGS := -O1 -mthumb-interwork
 
+# m4a C driver (issue #53): old_agbcc like the SRAM driver but at -O2 —
+# verified byte-exact via tools/fnmatch.sh --old2 (loop strength reduction,
+# pool AND masks and the dead ident-lock stores only reproduce at -O2).
+$(BUILD_DIR)/src/m4a_c1.o: CC := old_agbcc
+$(BUILD_DIR)/src/m4a_c1.o: CFLAGS := -O2 -mthumb-interwork
+
 # All of asm/ is assembled into the ROM: hand-written files (rom_header.s,
 # crt0.s), split-generated segment files (asm/<segment>.s, see tools/
 # split.py / docs/splitting.md), chunked code segments (issue #25:

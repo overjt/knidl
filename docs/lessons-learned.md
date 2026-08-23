@@ -315,6 +315,38 @@ after a `bl`, or at a cross-jump merge point reachable from a call path,
 it is re-materialized from the pool. Plain direct accesses to the global
 in natural C reproduce all of this — do not hand-cache pointers.
 
+### 3.15 The m4a driver zone is old_agbcc -O2 — and dead lock stores still
+shape register allocation
+The m4a C driver (`0x080CE520+`, issue #53) is `old_agbcc -O2
+-mthumb-interwork` (`fnmatch.sh --old2`), NOT the -O1 SDK-zone default that
+agb_sram set: at -O1 the same source produces shift-pair AND masks
+(`lsls/lsrs #1` instead of the ROM's pooled `0x7FFFFFFF`), `bics` instead of
+`movs #2; negs; ands` for `& ~1`, and u16-truncating loop counters where the
+ROM strength-reduces `for (i = 0; i < N; i++)` into pointer-walking
+down-counters. Corollary that cost hours: pokeruby-style ident lock pairs
+(`mplayInfo->ident++; ...; mplayInfo->ident = ID_NUMBER;`) are OPTIMIZED
+AWAY by old_agbcc -O2 (no stores in the ROM!), but the extra references
+give the ident temporary a longer live range that pushes it from r1 to r3 —
+four functions (`MPlayContinue`, `MPlayFadeOut`,
+`m4aMPlayFadeOutTemporarily`, `m4aMPlayFadeIn`) differ ONLY in that r1/r3
+swap unless the invisible lock statements are present in the source. When a
+function matches except for a systematic register swap, look for source
+statements the optimizer deletes but the allocator still feels.
+
+### 3.16 SDK constants read as symbol ADDRESSES need abs_symbols, not
+data_symbols
+The m4a driver reads its music-player count and max-lines limit as the
+address of extern symbols (`(u16)(u32)gNumMusicPlayers` == 4,
+`(u32)gMaxLines` == 0 — katam's `m4a.h` documents the idiom): the ROM pool
+words are plain `0x00000004`/`0x00000000` yet the codegen (`ldr` + u16 mask
+instead of `movs #4`) proves a symbol reference. Define these via
+`split_config.json` `"abs_symbols"` (name → value, emitted into
+`asm/rom_syms.s` only); `data_symbols` would additionally RENAME every
+unrelated `.word 4`/`.word 0` pool word in split asm to the symbol name.
+`fnmatch.sh` resolves `abs_symbols` and `extra_labels` as absolute
+stand-ins, so candidate C referencing `gMPlayTable`/`gSongTable`/
+`gNumMusicPlayers` links standalone.
+
 ## 4. Splitting ROM ranges into asm (tools/split.py)
 
 ### 4.1 objdump text only round-trips under `.syntax unified`
