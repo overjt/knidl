@@ -15,7 +15,10 @@
     "the configured segments: functions that never enter symbols.csv because",
     "nothing bl-calls them (_call_via_r4..r7 of lesson 3.4, plus the rest of",
     "the libgcc family up to lr) and named items inside data segments (the",
-    "SRAM save identifier string).  SoftReset (0x080CFA80, issue #29) is",
+    "SRAM save identifier string; the m4a engine rodata tables of issue",
+    "#51 — pret names, gCgb3Vol identified against pokeemerald's",
+    "m4a_tables.c by its NR32 channel-3 output-level byte pattern).",
+    "SoftReset (0x080CFA80, issue #29) is",
     "deliberately an extra label and NOT a symbols.csv entry: the segment is",
     "data-emitted (odd start 0x080CFA7F), so the label carries no Thumb",
     "function mark, and resolving its two BL callers against it would make",
@@ -65,7 +68,19 @@
     "0x080CFC64": "_call_via_sp",
     "0x080CFC68": "_call_via_lr",
     "0x080CFA80": "SoftReset",
-    "0x080CFE20": "gSramIdString"
+    "0x080CFE20": "gSramIdString",
+    "0x0860A140": "gMPlayJumpTableTemplate",
+    "0x0860A1D0": "gScaleTable",
+    "0x0860A284": "gFreqTable",
+    "0x0860A2B4": "gPcmSamplesPerVBlankTable",
+    "0x0860A2CC": "gCgbScaleTable",
+    "0x0860A350": "gCgbFreqTable",
+    "0x0860A368": "gNoiseTable",
+    "0x0860A3A4": "gCgb3Vol",
+    "0x0860A3B4": "gClockTable",
+    "0x0860A3E8": "gXcmdTable",
+    "0x0860B430": "gMPlayTable",
+    "0x0860B460": "gSongTable"
   },
   "data_symbols": {
     "0x02005588": "gUnk_02005588",
@@ -221,6 +236,12 @@
     },
     {
       "name": "lib_rodata_fir_tables"
+    },
+    {
+      "name": "m4a_engine_rodata"
+    },
+    {
+      "name": "m4a_song_table"
     }
   ]
 }

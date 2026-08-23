@@ -46,7 +46,7 @@ symbol database and call graph (section 7), and is validated by
 | 12 | `0x08120000-0x08330000` | ~0x210000 | Level data / uncompressed graphics / palettes, with embedded table zones | pointer clusters @0x08120000 (1066), 0x08150000 (962), 0x081A0000 (1140), 0x08200000 (1206), 0x08250000 (1526) |
 | 13 | `0x083356E0-0x0834EEE8`, `0x08350AF8-0x083A85D4` | ~0x1B290 | **Sound sample data (PCM)** | pointed to by the sample index @`0x087E1D58` (24 pointers into `0x0833-0x0834`, 339 into `0x0835-0x083A`); high entropy (~7.2), zero-pct ~6-8% |
 | 14 | `0x083D0000-0x085C0000` | 0x1F0000 | Compressed graphics (LZ77/RLE-class) | entropy 7.0-7.8 uniformly, near-zero pointer density |
-| 15 | `0x085C0000-0x0872E9F7` | ~0x16EA00 | **m4a songs / sequences + engine rodata** | engine rodata block `0x0860A140-0x0860B797` (§8.3: gMPlayJumpTableTemplate, gScaleTable/gFreqTable/gCgb*/gNoiseTable, gPcmSamplesPerVBlankTable, gClockTable, gXcmdTable, gMPlayTable, gSongTable); song table @`0x0860B460` (0x338 bytes, 103 `(ptr,0)` entries; first → song header @`0x0870F504`, bytes `08 00 00 80` + track ptr `0x0860A418` = valid m4a header); tail pointers `0x0860ACB8`,`0x0872E800` @0x0872E9F0 |
+| 15 | `0x085C0000-0x0872E9F7` | ~0x16EA00 | **m4a songs / sequences + engine rodata** — engine tables **extracted** (#51): `asm/m4a_engine_rodata.s` (`0x0860A140-0x0860A418`) + `asm/m4a_song_table.s` (`0x0860B430-0x0860C678`); song data stays `.incbin` (`data/m4a_songs.s` / `m4a_song_tracks.s` / `m4a_songs_2.s`, extraction is #36) | engine rodata block `0x0860A140-0x0860A418` (§8.3: gMPlayJumpTableTemplate, gScaleTable/gFreqTable/gCgb*/gNoiseTable, gPcmSamplesPerVBlankTable, gCgb3Vol, gClockTable, gXcmdTable — 12 entries ending `0x0860A418`); gMPlayTable @`0x0860B430`; song table @`0x0860B460`: **579** `(header, u16 ms, u16 me)` entries, 0x1218 bytes, ending at the first song header `0x0860C678` (an empty 0-track header used by 250 filler entries; all 579 header ptrs are ≥ `0x0860C678`, max `0x0872E9EC`; the pre-#51 "0x338 bytes / 103 entries" figure undercounted — entries continue uniformly to `0x0860C678`); first real song header @`0x0870F504`, bytes `08 00 00 80` + track ptr `0x0860A418` = valid m4a header; tail pointers `0x0860ACB8`,`0x0872E800` @0x0872E9F0 |
 | 16 | `0x0872E9F8-0x0872EA01` | 10 | `SRAM_V112` string | ASCII @0x0872E9F8 (`53 52 41 4D 5F 56 31 31 32 00`), save-type marker |
 | 17 | `0x0872EA04-0x0872EA13` | 16 | SRAM driver function table | 4 Thumb ptrs `0x080CFA9D, 0x080CFAC1, 0x080CFB65, 0x080CFB95` |
 | 18 | `0x08730000-0x08760000` | 0x30000 | **Asset metadata / index zone** | >30k in-ROM pointers; targets spread across segs 7,11,12,15 and self-referential @0x0873-0x0876 (2186+1176+1616+2129 self pointers) |
@@ -330,22 +330,22 @@ engine; the engine's first byte is `umul3232H32` at `0x080CD89C`.
 | `0x080CD89C-0x080CE51F` | **asm core** (pret `m4a_1.s` equivalent; hand-scheduled, stays asm): `umul3232H32`, `SoundMain`, `SoundMainRAM` (ROM image `0x080CD930-0x080CDD2F`; `m4aSoundInit` CpuSet-copies 0x400 bytes to IWRAM `0x03007150` = `gSoundMainRAM_Buffer`, and `SoundMain` tail-jumps to `0x03007151`; contains an embedded ARM-mode inner mixer loop entered via `adr r1; bx r1` at `0x080CD936`), `SoundMainBTM`, `RealClearChain`, `ply_fine`, `MPlayJumpTableCopy`, byte-fetch helpers (`ld_r3_r2`/`chk_adr_r2`/`ld_r3_tp_adr_i`/`ld_r3_tp_adr` — descriptive names; the check variants zero r3 for implausible addresses, a HAL/SDK hardening absent from pokeemerald), `ply_goto/patt/pend/rept/prio/tempo/keysh/voice/volu/pan/bend/bendr/lfodl/modt/tune/port`, `m4aSoundVSync` (`0x080CDF00`, DMA1/2 FIFO restart), `MPlayMain` (`0x080CDF4C`, pointer-installed into `soundInfo->func` by MPlayOpen — pool word `0x080CDF4D` @`0x080CED10`), `TrackStop`, `ChnVolSetAsm`, `ply_note` (`0x080CE228`; `SoundInit` stores `soundInfo->plynote = 0x080CE229`), `ply_endtie`, `ClearModM_asm`, `ply_lfos`, `ply_mod`, `MidiKeyToFreq`. Three tiny `bx r3` call shims stay `sub_080cdcce`/`sub_080cdd72`/`sub_080ce1a4` (no canonical names). |
 | `0x080CE520-0x080CFA4B` | **C driver** (pret `m4a.c` equivalent; expect `old_agbcc -O1 -mthumb-interwork` per the SDK-zone recipe): `MPlayContinue`/`MPlayFadeOut` (internal bodies; the public `m4aMPlayContinue` `0x080CE740` / `m4aMPlayFadeOut` `0x080CE778` are thin wrappers), `m4aSoundInit` (called from AgbInit), `m4aSoundMain`, `m4aSongNumStart/StartOrChange/StartOrContinue/Stop/Continue`, `m4aMPlayAllStop/AllContinue/FadeOutTemporarily/FadeIn/ImmInit`, `MPlayExtender`, `ClearChain`, `Clear64byte`, `SoundInit`, `SampleFreqSet`, `m4aSoundMode`, `SoundClear`, `m4aSoundVSyncOff/On`, `MPlayOpen`, `MPlayStart`, `m4aMPlayStop`, `FadeOutBody`, `TrkVolPitSet`, `MidiKeyToCgbFreq`, `CgbOscOff`, `CgbModVol`, `CgbSound`, `m4aMPlayVolumeControl/PitchControl/PanpotControl`, `ClearModM`, `m4aMPlayModDepthSet/LFOSpeedSet`, `ply_memacc`, `ply_xcmd`, `ply_x*` XCMD handlers (#29). Ten of these are dead SDK exports with zero in-ROM references (whole-object linking), injected into the symbol DB via `EXTRA_THUMB_ENTRIES` with evidence `curated`. `m4aMPlayTempoControl` does not exist in this build. |
 
-### 8.3 Engine rodata (inside seg 15, still `.incbin` — extraction is a child issue)
+### 8.3 Engine rodata (extracted in #51: `asm/m4a_engine_rodata.s` `0x0860A140-0x0860A418` + `asm/m4a_song_table.s` `0x0860B430-0x0860C678`, labels via `split_config.json` `extra_labels`; pointer tables resolve symbolically as `.word <fn>+1`)
 
 | VMA | Symbol (pret name) | Notes |
 |---|---|---|
-| `0x0860A140` | `gMPlayJumpTableTemplate` | 36 Thumb pointers (see §8.1) |
+| `0x0860A140` | `gMPlayJumpTableTemplate` | 36 Thumb pointers (see §8.1; [30] = `SampleFreqSet` as in pokeemerald) |
 | `0x0860A1D0` | `gScaleTable` | byte-identical to pokeemerald |
 | `0x0860A284` | `gFreqTable` | 12 words, byte-identical to pokeemerald |
 | `0x0860A2B4` | `gPcmSamplesPerVBlankTable` | halfwords, indexed by freq-1 in `SampleFreqSet` |
 | `0x0860A2CC` | `gCgbScaleTable` | used by `MidiKeyToCgbFreq` (pool `0x080CF054`) |
 | `0x0860A350` | `gCgbFreqTable` | used by `MidiKeyToCgbFreq` (pool `0x080CF058`) |
 | `0x0860A368` | `gNoiseTable` | used by `MidiKeyToCgbFreq` (pool `0x080CEFE8`) |
-| `0x0860A3A4` | (CgbSound table) | pool `0x080CF508` |
-| `0x0860A3B4` | `gClockTable` | 48 gate-time bytes + pad, byte-identical to pokeemerald |
-| `0x0860A3E8` | `gXcmdTable` | 12 Thumb pointers (#29) |
+| `0x0860A3A4` | `gCgb3Vol` | identified in #51 vs pokeemerald `m4a_tables.c`: 16 NR32 channel-3 output-level bytes `00 00 60×4 40×4 80×4 20 20` (mute/25%/50%/75%/100%), indexed by 4-bit volume in `CgbSound` (pool `0x080CF508`) |
+| `0x0860A3B4` | `gClockTable` | 49 gate-time bytes + 3 pad, byte-identical to pokeemerald |
+| `0x0860A3E8` | `gXcmdTable` | 12 Thumb pointers (#29), ends `0x0860A418` (the #51 issue text's `0x0860A410` was off by two entries) |
 | `0x0860B430` | `gMPlayTable` | 4 players × (info, tracks, count): BGM 8 tracks, SE1-SE3 6 tracks |
-| `0x0860B460` | `gSongTable` | 103 `(header, ms/me)` entries, 0x338 bytes, ends `0x0860B797` |
+| `0x0860B460` | `gSongTable` | **579** `(header, u16 ms, u16 me)` entries, 0x1218 bytes, ends `0x0860C678` — corrected in #51 from "103 entries / ends 0x0860B797": entries continue uniformly (ms/me player indices 0-3) up to the first song header `0x0860C678` (an empty 0-track header, the filler target of 250 entries), and all 579 header pointers are ≥ `0x0860C678` |
 
 ### 8.4 RAM map (named via `tools/split_config.json` `data_symbols`)
 
@@ -368,7 +368,7 @@ Split follows pret precedent: the asm core stays hand-written asm forever
 `./tools/fnmatch.sh <start> <end> src/m4a_<x>.c --old` before landing;
 diagnose per lesson 3.1 if a function disagrees). Suggested chunks: (a)
 engine rodata extraction (§8.3, tables only — song data stays `.incbin` for
-issue #36), (b) carve the asm core `0x080CD89C-0x080CE51F` into a dedicated
+issue #36) — **done in #51**, (b) carve the asm core `0x080CD89C-0x080CE51F` into a dedicated
 `asm/m4a_1.s`-style unit, (c) `m4a.c` part 1 `0x080CE520-0x080CEFB3`
 (init/song-number/MPlay API), (d) `m4a.c` part 2 `0x080CEFB4-0x080CF587`
 (CGB: MidiKeyToCgbFreq/CgbOscOff/CgbModVol/CgbSound), (e) `m4a.c` part 3

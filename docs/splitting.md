@@ -26,6 +26,8 @@ configured segments (`tools/split_config.json`):
 | `irq_handler_table_14` | `0x080CFDE8-0x080CFE20`    | 14-entry IRQ handler pointer table|
 | `lib_misc`           | `0x080CFE20-0x080CFF00`      | SRAM id string + sound-driver coefficient windows |
 | `lib_rodata_fir_tables` | `0x080CFF00-0x080D0000`   | FIR/envelope-style coefficient tables |
+| `m4a_engine_rodata`  | `0x0860A140-0x0860A418`      | m4a engine tables (#51): `gMPlayJumpTableTemplate`/`gXcmdTable` (`.word <fn>+1`), `gScaleTable`, `gFreqTable`, `gPcmSamplesPerVBlankTable`, `gCgbScaleTable`, `gCgbFreqTable`, `gNoiseTable`, `gCgb3Vol`, `gClockTable` |
+| `m4a_song_table`     | `0x0860B430-0x0860C678`      | `gMPlayTable` (RAM cells emitted symbolically) + `gSongTable` (579 entries; header pointers stay numeric until #36 extracts song data) |
 
 ## Chunked segments (issue #25)
 
