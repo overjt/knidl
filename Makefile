@@ -41,6 +41,11 @@ $(BUILD_DIR)/src/m4a_c1.o: CFLAGS := -O2 -mthumb-interwork
 $(BUILD_DIR)/src/m4a_cgb.o: CC := old_agbcc
 $(BUILD_DIR)/src/m4a_cgb.o: CFLAGS := -O2 -mthumb-interwork
 
+# m4a C driver part 3, track controls + memacc/xcmd handlers (issue #55):
+# same recipe as parts 1-2 (one translation unit upstream).
+$(BUILD_DIR)/src/m4a_ctrl.o: CC := old_agbcc
+$(BUILD_DIR)/src/m4a_ctrl.o: CFLAGS := -O2 -mthumb-interwork
+
 # All of asm/ is assembled into the ROM: hand-written files (rom_header.s,
 # crt0.s), split-generated segment files (asm/<segment>.s, see tools/
 # split.py / docs/splitting.md), chunked code segments (issue #25:

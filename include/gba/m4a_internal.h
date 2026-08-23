@@ -346,6 +346,10 @@ struct Song
 extern struct SoundInfo gSoundInfo;                     /* 0x030056D0 */
 typedef void (*MPlayFunc)();
 extern MPlayFunc gMPlayJumpTable[36];                   /* 0x03006680 */
+
+/* Engine rodata xcmd dispatch table (asm/m4a_engine_rodata.s, §8.3). */
+typedef void (*XcmdFunc)(struct MusicPlayerInfo *, struct MusicPlayerTrack *);
+extern const XcmdFunc gXcmdTable[];                     /* 0x0860A3E8 */
 extern struct CgbChannel gCgbChans[4];                  /* 0x03006710 */
 extern u8 gMPlayMemAccArea[0x10];                       /* 0x030068D0 */
 extern char gSoundMainRAM_Buffer[0x400];                /* 0x03007150 */
@@ -424,7 +428,7 @@ void CgbModVol(struct CgbChannel *chan);
 void CgbSound(void);
 void m4aMPlayTempoControl(struct MusicPlayerInfo *mplayInfo, u16 tempo);
 
-/* C driver part 3 (0x080CF588-, still asm) */
+/* C driver part 3 (src/m4a_ctrl.c, 0x080CF588-0x080CFA4B) */
 void m4aMPlayVolumeControl(struct MusicPlayerInfo *mplayInfo, u16 trackBits, u16 volume);
 void m4aMPlayPitchControl(struct MusicPlayerInfo *mplayInfo, u16 trackBits, s16 pitch);
 void m4aMPlayPanpotControl(struct MusicPlayerInfo *mplayInfo, u16 trackBits, s8 pan);

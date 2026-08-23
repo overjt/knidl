@@ -63,6 +63,7 @@
     "CgbSound",
     "Clear64byte",
     "ClearChain",
+    "ClearModM",
     "FadeOutBody",
     "MPlayContinue",
     "MPlayExtender",
@@ -90,7 +91,12 @@
     "m4aMPlayFadeOut",
     "m4aMPlayFadeOutTemporarily",
     "m4aMPlayImmInit",
+    "m4aMPlayLFOSpeedSet",
+    "m4aMPlayModDepthSet",
+    "m4aMPlayPanpotControl",
+    "m4aMPlayPitchControl",
     "m4aMPlayStop",
+    "m4aMPlayVolumeControl",
     "m4aSongNumContinue",
     "m4aSongNumStart",
     "m4aSongNumStartOrChange",
@@ -100,7 +106,20 @@
     "m4aSoundMain",
     "m4aSoundMode",
     "m4aSoundVSyncOff",
-    "m4aSoundVSyncOn"
+    "m4aSoundVSyncOn",
+    "ply_memacc",
+    "ply_xatta",
+    "ply_xcmd",
+    "ply_xdeca",
+    "ply_xiecl",
+    "ply_xiecv",
+    "ply_xleng",
+    "ply_xrele",
+    "ply_xsust",
+    "ply_xswee",
+    "ply_xtype",
+    "ply_xwave",
+    "ply_xxx"
   ],
   "extra_labels": {
     "0x080CFC40": "_call_via_r4",
@@ -256,9 +275,6 @@
     },
     {
       "name": "m4a_1"
-    },
-    {
-      "name": "m4a"
     },
     {
       "name": "task_switch_helpers"
