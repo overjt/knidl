@@ -493,6 +493,48 @@ copy (3.19 again); the explicit `zero` local (3.10) puts `movs r2,#0` BETWEEN
 the copy and `adds r0,rBase,#5`, where a hoisted invariant would land after it;
 and the `(s32)` casts give `bge` where a pointer compare emits `bcs`.
 
+### 3.31 `+ hoistZ` (dead-store zero) is the free way to keep a copy alive
+To force two textually-identical subexpressions to stay separate, `u = t;` is
+useless (copy-propagated) and `u = t & 0xF000` costs a real extra `ands`. But
+`u = t + hoistZ;` with a dead-store `hoistZ = 0;` survives cprop as
+`add rD,rS,#0` — a register COPY that CSE will not propagate away, at zero
+instruction cost. Worth 22 of 35 remaining bytes in one function. Companion to
+3.23 and the 3.10 zero-variable idiom.
+
+### 3.32 agbcc canonicalizes commutative operands lowest-pseudo-first
+`*dst = v + tile;` with `u16 *dst` narrows the add to HImode, which creates a
+`(u16)v` temp carrying a HIGH pseudo number, so `tile` sorts first and you get
+`adds r0,r2,r3`. Writing `{ u32 w = v + tile; *dst = w; }` keeps both operands
+at their original pseudo numbers and reproduces the ROM's `adds r0,r3,r2`. A
+swapped `adds` operand pair is therefore a statement about pseudo birth order,
+not about your source's operand order.
+
+### 3.33 CSE's canonical register is `qty_first_reg`
+Two locals set to the same constant (`c = 0xFF; b = 0xFF; b &= v;`) make CSE
+rewrite `b &= v` as `b = v & c`, destroying the ROM's second `movs rX,#255`.
+The fix that preserves ROM statement order is to extend the LATER variable's
+pseudo past the end of the CSE block with a dead store (`b = 0;` after its last
+real use); `make_regs_eqv` then promotes it to canonical. Assigning `b` first
+also works but emits the two `movs` in the wrong order.
+
+### 3.34 Read the register allocator instead of guessing: `agbcc -da`
+`.greg`'s "Registers to be allocated in sorted order" is literally
+`floor_log2(n_refs) * n_refs / live_length` descending; `.greg`'s "Register
+dispositions" plus `.lreg`'s per-pseudo reference counts let you compute
+per-hard-register use totals by hand. This turns "why is this register
+different" from a guessing game into arithmetic, and is the tool of choice once
+a candidate is down to a handful of register-naming bytes. Note `register u16 v
+asm("rN")` (3.24) also pins a short-lived CSE temp to a chosen hard register,
+not just HImode constants.
+
+Caveat found the hard way: block-scoping temporaries is NOT reliably required
+(an earlier function only matched with it, a later one matched with a fully
+flattened declaration list once 3.31-3.33 were applied) — and flattening is
+what lets decomp-permuter run at all, since nested scopes make it emit
+"X undeclared" for most candidates. In this zone the permuter also needs
+`perm_refer_to_var = 0`, `perm_add_mask = 0`, `perm_cast_simple = 0`, otherwise
+~98% of candidates die on "invalid operands to binary &".
+
 ## 4. Splitting ROM ranges into asm (tools/split.py)
 
 ### 4.1 objdump text only round-trips under `.syntax unified`
