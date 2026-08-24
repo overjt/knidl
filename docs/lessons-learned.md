@@ -535,6 +535,45 @@ what lets decomp-permuter run at all, since nested scopes make it emit
 `perm_refer_to_var = 0`, `perm_add_mask = 0`, `perm_cast_simple = 0`, otherwise
 ~98% of candidates die on "invalid operands to binary &".
 
+### 3.35 A two-register swap in a two-address op is a `regmove` decision
+When the only residue is "the ROM ties the result to operand 2, I tie it to
+operand 1" in an `orrs`/`ands`/`adds`, stop hunting expression shapes: it is
+gcc's `regmove` pass doing the two-address matching-constraint fixup. Dump it
+(`old_agbcc -da -dumpbase X file.i`) and read `X.regmove` — `Fixed operand 1 of
+insn N` names the operand the destination was tied to.
+
+**regmove always prefers operand 1.** It only re-targets to operand 2 in a later
+BACKWARD pass, and — verified with a four-case micro-lab — only when the root
+pseudo of that chain is a copy from a HARD register: an incoming parameter or a
+call return value. A chain rooted in a constant or a global load can never get
+the swap, no matter how the expression is written. This makes some ROM register
+assignments structurally unreachable from a given function's environment: the
+identical source shape reproduces them exactly when the accumulator happens to
+root in a parameter. Recognise it and take the documented exception rather than
+burning days.
+
+### 3.36 A comma expression reverses RTL operand order without reordering emission
+`((var = acc), ext) | var` is the only construct that makes `ext` operand 1
+while still emitting `acc` first. Reach for it whenever the ROM emits A before B
+but ties the result to B.
+
+### 3.37 HImode constants only survive inside a 16-bit store's RHS
+A `|0x100`-style constant becomes the 3-insn HImode form (`movs/lsls` +
+`adds rD,rS,#0`, see 3.24) only while it sits inside the RHS of a 16-bit store,
+because expand narrows the whole tree and `force_reg` runs in HImode. Capture
+any part of that tree in a 32-bit variable and the constant silently drops to
+the 2-insn SImode form. Conversely, **any 16-bit-typed local costs 2 extra insns
+on the C integral promotion** — on read for `register u16 x asm("rN")`, on write
+for a plain `u16` (PROMOTE_MODE) — and combine cannot remove them once the value
+flows through a paradoxical `(subreg:SI (reg:HI …))`, because `nonzero_bits`
+gives up on the high half. The two requirements are mutually exclusive, which
+can make a ROM shape unreachable; that is a real outcome, not a failure to try
+hard enough.
+
+### 3.38 Storing through a pointer temp loses a volatile array's dead pre-read
+`arr[i++] = v` on a volatile array emits the dead pre-read `ldrh` (3.7);
+`vs16 *p = &arr[i++]; *p = v;` does not. Complements 3.7's cast-literal case.
+
 ## 4. Splitting ROM ranges into asm (tools/split.py)
 
 ### 4.1 objdump text only round-trips under `.syntax unified`
