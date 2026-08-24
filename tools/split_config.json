@@ -122,6 +122,7 @@
     "ply_xxx",
     "sub_080008e8",
     "sub_08000934",
+    "sub_08000de4",
     "sub_080010cc",
     "sub_080011ac",
     "sub_080011dc",
@@ -318,10 +319,6 @@
     "0x0872EB2C": "gUnk_0872EB2C"
   },
   "segments": [
-    {
-      "name": "game_code_early",
-      "chunk_bytes": 65536
-    },
     {
       "name": "game_code_early_080011ac",
       "chunk_bytes": 65536

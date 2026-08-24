@@ -1540,6 +1540,21 @@ def main():
                 % ", ".join(missing)
             )
 
+        # A segment that a carve consumed ENTIRELY disappears from the
+        # config, so the loop below never visits it and never purges its
+        # chunk directory.  The Makefile's asm/*/*.s glob would keep
+        # assembling the orphan next to the C module that replaced it
+        # ("multiple definition of sub_XXXXXXXX").  Every directory under
+        # asm/ belongs to a configured segment; anything else is stale.
+        configured = {name for name, _s, _e, _k, _cb in entries}
+        if os.path.isdir(args.asm_dir):
+            for child in sorted(os.listdir(args.asm_dir)):
+                child_path = os.path.join(args.asm_dir, child)
+                if os.path.isdir(child_path) and child not in configured:
+                    shutil.rmtree(child_path)
+                    print("    removed %s (segment no longer configured)"
+                          % child_path)
+
         made_dirs = set()
         for name, start, end, kind, chunk_bytes in entries:
             blob = os.path.join(args.data_dir, "%s.s" % name)

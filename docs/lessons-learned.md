@@ -416,6 +416,25 @@ allocation levers found the same way: block-scoping a temporary in its own `{}`
 pins it to a different hard register, and declaration order matters *inside* a
 block but is a complete no-op at function level.
 
+### 3.24 `ldr rS,=K` + `adds rD,rS,#0` is ONE HImode move, not two insns
+agbcc's `*movhi_insn` materialises any constant wider than 8 bits through a
+scratch SI register and then copies it into the HImode destination (`gCell =
+256` → `movs rS,#128; lsls rS,rS,#1; adds rD,rS,#0; strh rD,...`). When the
+destination is a *register* rather than memory, the scratch/dest pair only
+stays distinct if the value really lives in a HImode pseudo — and a plain `u16`
+local does not, because `PROMOTE_MODE` widens it to SImode and you get one bare
+`ldr`. Reproduce it with `register u16 v asm("rN");` (the idiom `FadeOutBody`
+in `src/m4a_c1.c` already uses). **Diagnostic sign: the ROM burns an extra
+callee-saved register that is written once and never read** — that "dead"
+register is the movhi scratch, and it is what drags the extra push/pop into the
+prologue. In `sub_08000de4` this one root cause explained all three apparent
+diff clusters (prologue push, a constant's register, and a swapped pair).
+
+Corollary: `(u16)x` on an SImode value expands to `lsls #16 / lsrs #16`, never
+to `and rX, mask`, and combine will not fold `x & <register>` even when the
+register provably holds `0xFFFF`. So **any `ands rX, rM` in the ROM means the
+mask is a variable in the source**, not a cast.
+
 ## 4. Splitting ROM ranges into asm (tools/split.py)
 
 ### 4.1 objdump text only round-trips under `.syntax unified`
@@ -607,7 +626,16 @@ loc_XXXXXXXX` from a file you did not expect to exist. Fixed in issue #32 by
 gating the purge on the directory layout instead. Symptom to remember: a link
 error naming a chunk file whose address range you just carved away.
 
-### 4.21 An un-carved deliverable in src/ breaks the whole build
+### 4.21 A fully-consumed segment leaves its whole asm directory orphaned
+The sibling of 4.20. Carve a segment's *entire* range and the segment vanishes
+from `segments.txt` and `split_config.json` — so `split.py` never visits it
+again and never purges its chunk directory, which keeps feeding the Makefile's
+`asm/*/*.s` glob. The symptom is a link error blaming the C module you just
+landed ("multiple definition of `sub_XXXXXXXX`"), which reads like a bad carve
+but is really a file nobody regenerated. `split.py` now removes every directory
+under `asm/` whose name is not a configured segment.
+
+### 4.22 An un-carved deliverable in src/ breaks the whole build
 The Makefile globs `src/*.c`, so a verified-but-not-yet-carved C module dropped
 into `src/` collides with the asm that still provides those bytes ("multiple
 definition of sub_XXXXXXXX"). With several agents delivering in parallel this

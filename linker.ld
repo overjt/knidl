@@ -57,8 +57,9 @@ SECTIONS
         build/src/early_08e8.o(.text)
     } > ROM
 
-    .game_code_early 0x08000DE4 : {
-        KEEP(*(.game_code_early)) KEEP(*(.game_code_early.tail))
+    /* early_0de4 — decompiled to C (src/early_0de4.c, carved by tools/carve.py) */
+    .early_0de4 0x08000DE4 : {
+        build/src/early_0de4.o(.text)
     } > ROM
 
     /* early_10cc — decompiled to C (src/early_10cc.c, carved by tools/carve.py) */
