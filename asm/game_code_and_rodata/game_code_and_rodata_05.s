@@ -3871,7 +3871,7 @@ loc_08058376:
 	bx	r0
 	.word	0x02006178
 	.word	0x03002490
-	.word	0x03001270
+	.word	gUnk_03001270
 	.word	gUnk_03001ED8
 	.word	0x0000E0FF
 	.word	0x0873BAFA
@@ -8755,7 +8755,7 @@ loc_0805aade:
 	.word	0x02006178
 	.word	0x03002490
 	.word	0x02007F60
-	.word	0x03000FB8
+	.word	gUnk_03000FB8
 	.word	0x03001F34
 	.thumb_func
 	.global	sub_0805ab04

@@ -3933,7 +3933,7 @@ loc_08077ef0:
 	bx	r0
 	movs	r0, r0
 	.word	0x03002490
-	.word	0x03000FB8
+	.word	gUnk_03000FB8
 	.thumb_func
 	.global	sub_08077f08
 sub_08077f08:

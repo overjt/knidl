@@ -5773,7 +5773,7 @@ loc_08039d04:
 	.word	gUnk_030023AC
 	.word	0x0200AF00
 	.word	gUnk_02005588
-	.word	0x03001E90
+	.word	gUnk_03001E90
 	.word	0x0873D632
 	.word	0x08039D64
 	ldr	r5, [sp, #784]
@@ -25875,7 +25875,7 @@ loc_08042fca:
 	.word	gCurTaskIdx
 	.word	0x0000FFFF
 	.word	0x0200AF00
-	.word	0x03001E90
+	.word	gUnk_03001E90
 	.word	0x0000120B
 	.word	0x00001208
 	.word	0x0873D206

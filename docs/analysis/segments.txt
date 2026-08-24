@@ -13,7 +13,12 @@
 0x08000234 0x080002E5 arm_code task_switch_helpers [split] # cooperative task switch; IWRAM cells named via split_config data_symbols
 0x080002E5 0x08000310 pool task_literals [split] # task helper literal pools (all 10 words = named cells)
 0x08000310 0x080008E8 c_code agb_init # src/agb_init.c: AgbInit + its literal pool (0x0700 pool-skip branch + words to 0x08E7)
-0x080008E8 0x08007300 thumb_code game_code_early [split] # asm/game_code_early/
+0x080008E8 0x08000DE4 c_code early_08e8 # src/early_08e8.c (carved by tools/carve.py)
+0x08000DE4 0x080010CC thumb_code game_code_early [split]
+0x080010CC 0x080011AC c_code early_10cc # src/early_10cc.c (carved by tools/carve.py)
+0x080011AC 0x08001518 c_code early_11ac # src/early_11ac.c (carved by tools/carve.py)
+0x08001518 0x08001B08 c_code early_1518 # src/early_1518.c (carved by tools/carve.py)
+0x08001B08 0x08007300 thumb_code game_code_early_080011ac [split]
 0x08007300 0x080075B8 c_code main # src/main.c (carved by tools/carve.py)
 0x080075B8 0x080CD89C thumb_code game_code_and_rodata [split] # ends where the m4a engine begins (umul3232H32); engine carved out in issue #52
 0x080CD89C 0x080CE520 thumb_code m4a_1 [split] # m4a asm core (pret m4a_1.s equivalent): hand-scheduled SDK asm, stays asm forever; SoundMainRAM ROM image embeds an ARM-mode mixer loop (rom-map section 8.2, issue #52)

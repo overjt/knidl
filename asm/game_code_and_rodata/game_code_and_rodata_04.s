@@ -4939,7 +4939,7 @@ loc_08049408:
 	.word	0x00000DE5
 	.word	0x030023B0
 	.word	0x0873B534
-	.word	0x03000FB8
+	.word	gUnk_03000FB8
 	.word	0x0000F85F
 	.global	loc_08049440
 loc_08049440:

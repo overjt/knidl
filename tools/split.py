@@ -1561,8 +1561,13 @@ def main():
                 if out_dir not in made_dirs:
                     made_dirs.add(out_dir)
                     # Regeneration stability: drop stale chunks from an
-                    # earlier run with a different chunk layout.
-                    if units[uid]["chunked"] and os.path.isdir(out_dir):
+                    # earlier run with a different chunk layout.  Gate on the
+                    # directory layout, not on `chunked`: a segment that
+                    # shrinks to a single chunk (e.g. after a carve) keeps its
+                    # directory but stops being `chunked`, and the orphaned
+                    # tail chunks would still be picked up by the Makefile's
+                    # asm/*/*.s glob and assembled alongside the new segment.
+                    if out_dir != args.asm_dir and os.path.isdir(out_dir):
                         shutil.rmtree(out_dir)
                     os.makedirs(out_dir, exist_ok=True)
                 with open(out_path, "w") as f:

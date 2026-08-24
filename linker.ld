@@ -52,8 +52,32 @@ SECTIONS
     } > ROM
 
     /* Game code: early subsystems (Thumb) */
-    .game_code_early 0x080008E8 : {
+    /* early_08e8 — decompiled to C (src/early_08e8.c, carved by tools/carve.py) */
+    .early_08e8 0x080008E8 : {
+        build/src/early_08e8.o(.text)
+    } > ROM
+
+    .game_code_early 0x08000DE4 : {
         KEEP(*(.game_code_early)) KEEP(*(.game_code_early.tail))
+    } > ROM
+
+    /* early_10cc — decompiled to C (src/early_10cc.c, carved by tools/carve.py) */
+    .early_10cc 0x080010CC : {
+        build/src/early_10cc.o(.text)
+    } > ROM
+
+    /* early_11ac — decompiled to C (src/early_11ac.c, carved by tools/carve.py) */
+    .early_11ac 0x080011AC : {
+        build/src/early_11ac.o(.text)
+    } > ROM
+
+    /* early_1518 — decompiled to C (src/early_1518.c, carved by tools/carve.py) */
+    .early_1518 0x08001518 : {
+        build/src/early_1518.o(.text)
+    } > ROM
+
+    .game_code_early_080011ac 0x08001B08 : {
+        KEEP(*(.game_code_early_080011ac)) KEEP(*(.game_code_early_080011ac.tail))
     } > ROM
 
     /* Game code + rodata (Thumb) — bulk of the game logic */

@@ -15692,7 +15692,7 @@ loc_0802e51c:
 	.word	0x03002490
 	.word	0x03002398
 	.word	0x03001F00
-	.word	0x03000FB8
+	.word	gUnk_03000FB8
 	.word	0x087324A6
 	.word	0x03005628
 	.global	loc_0802e55c
