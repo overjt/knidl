@@ -135,7 +135,22 @@
     "sub_08001a0c",
     "sub_08001a34",
     "sub_08001a84",
-    "sub_08001a94"
+    "sub_08001a94",
+    "sub_08001fd0",
+    "sub_08002028",
+    "sub_080020b8",
+    "sub_0800214c",
+    "sub_08002198",
+    "sub_080021dc",
+    "sub_08002268",
+    "sub_080022a0",
+    "sub_080022ac",
+    "sub_080022bc",
+    "sub_080022d0",
+    "sub_080022e4",
+    "sub_080022fc",
+    "sub_08002338",
+    "sub_08002348"
   ],
   "extra_labels": {
     "0x080CFC40": "_call_via_r4",
@@ -271,6 +286,7 @@
     "0x03001EF4": "gUnk_03001EF4",
     "0x03001EF8": "gUnk_03001EF8",
     "0x03001F30": "gUnk_03001F30",
+    "0x03001F38": "gUnk_03001F38",
     "0x03002150": "gUnk_03002150",
     "0x030023A8": "gUnk_030023A8",
     "0x030023AC": "gUnk_030023AC",
@@ -284,6 +300,7 @@
     "0x030026F8": "gTaskSavedLr",
     "0x03004C94": "gTaskBaseSp",
     "0x03004D30": "gUnk_03004D30",
+    "0x03005274": "gUnk_03005274",
     "0x030056D0": "gSoundInfo",
     "0x03006680": "gMPlayJumpTable",
     "0x03006710": "gCgbChans",
@@ -297,7 +314,8 @@
     "0x03006D90": "gMPlayTrack_SE2",
     "0x03006F70": "gMPlayTrack_SE3",
     "0x03007150": "gSoundMainRAM_Buffer",
-    "0x03007FF0": "SOUND_INFO_PTR"
+    "0x03007FF0": "SOUND_INFO_PTR",
+    "0x0872EB2C": "gUnk_0872EB2C"
   },
   "segments": [
     {
@@ -306,6 +324,10 @@
     },
     {
       "name": "game_code_early_080011ac",
+      "chunk_bytes": 65536
+    },
+    {
+      "name": "game_code_early_080011ac_08002378",
       "chunk_bytes": 65536
     },
     {

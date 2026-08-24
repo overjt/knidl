@@ -46,6 +46,14 @@ $(BUILD_DIR)/src/m4a_cgb.o: CFLAGS := -O2 -mthumb-interwork
 $(BUILD_DIR)/src/m4a_ctrl.o: CC := old_agbcc
 $(BUILD_DIR)/src/m4a_ctrl.o: CFLAGS := -O2 -mthumb-interwork
 
+# game_code_early tail (issue #32): despite sitting in the middle of the
+# agbcc -O2 game-code zone, the translation unit starting around 0x08001CC8 is
+# old_agbcc -O2.  Fingerprint: its leaf functions end in a bare `bx lr`, while
+# agbcc unconditionally emits `push {lr}` / `pop {r0}; bx r0` for every
+# function.  Verified byte-exact via tools/fnmatch.sh --old2.
+$(BUILD_DIR)/src/early_1fd0.o: CC := old_agbcc
+$(BUILD_DIR)/src/early_1fd0.o: CFLAGS := -O2 -mthumb-interwork
+
 # All of asm/ is assembled into the ROM: hand-written files (rom_header.s,
 # crt0.s), split-generated segment files (asm/<segment>.s, see tools/
 # split.py / docs/splitting.md), chunked code segments (issue #25:

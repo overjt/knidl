@@ -18,7 +18,9 @@
 0x080010CC 0x080011AC c_code early_10cc # src/early_10cc.c (carved by tools/carve.py)
 0x080011AC 0x08001518 c_code early_11ac # src/early_11ac.c (carved by tools/carve.py)
 0x08001518 0x08001B08 c_code early_1518 # src/early_1518.c (carved by tools/carve.py)
-0x08001B08 0x08007300 thumb_code game_code_early_080011ac [split]
+0x08001B08 0x08001FD0 thumb_code game_code_early_080011ac [split]
+0x08001FD0 0x08002378 c_code early_1fd0 # src/early_1fd0.c (carved by tools/carve.py)
+0x08002378 0x08007300 thumb_code game_code_early_080011ac_08002378 [split]
 0x08007300 0x080075B8 c_code main # src/main.c (carved by tools/carve.py)
 0x080075B8 0x080CD89C thumb_code game_code_and_rodata [split] # ends where the m4a engine begins (umul3232H32); engine carved out in issue #52
 0x080CD89C 0x080CE520 thumb_code m4a_1 [split] # m4a asm core (pret m4a_1.s equivalent): hand-scheduled SDK asm, stays asm forever; SoundMainRAM ROM image embeds an ARM-mode mixer loop (rom-map section 8.2, issue #52)

@@ -221,6 +221,8 @@ gUnk_03001EF4 = 0x03001EF4
 gUnk_03001EF8 = 0x03001EF8
 	.global	gUnk_03001F30
 gUnk_03001F30 = 0x03001F30
+	.global	gUnk_03001F38
+gUnk_03001F38 = 0x03001F38
 	.global	gUnk_03002150
 gUnk_03002150 = 0x03002150
 	.global	gUnk_030023A8
@@ -247,6 +249,8 @@ gTaskSavedLr = 0x030026F8
 gTaskBaseSp = 0x03004C94
 	.global	gUnk_03004D30
 gUnk_03004D30 = 0x03004D30
+	.global	gUnk_03005274
+gUnk_03005274 = 0x03005274
 	.global	gSoundInfo
 gSoundInfo = 0x030056D0
 	.global	gMPlayJumpTable
@@ -275,6 +279,8 @@ gMPlayTrack_SE3 = 0x03006F70
 gSoundMainRAM_Buffer = 0x03007150
 	.global	SOUND_INFO_PTR
 SOUND_INFO_PTR = 0x03007FF0
+	.global	gUnk_0872EB2C
+gUnk_0872EB2C = 0x0872EB2C
 
 @ Link-time constants (tools/split_config.json "abs_symbols"):
 @ absolute symbols whose VALUE is the constant (SDK idiom, e.g.
