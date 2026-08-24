@@ -362,6 +362,60 @@ lock pairs match as written there; (c) a dead export kept by whole-object
 linking can sit BETWEEN two live functions and still belongs to the same C
 unit (`m4aMPlayTempoControl` at `0x080CF554`).
 
+### 3.18 A zone can hold SEVERAL translation units — read the leaf prologue
+The `game_code_early` zone (issue #32) is not one recipe. `0x080008E8-0x08001B08`
+is `agbcc -O2`, but the unit starting near `0x08001CC8` is `old_agbcc -O2`, and
+they sit in the same census segment with no marker between them. Fingerprint,
+readable in one glance without compiling anything: **old_agbcc omits the leaf
+`push {lr}`** — a run of tiny void functions ending in a bare `bx lr` is
+old_agbcc, while `agbcc` unconditionally emits `push {lr}` / `pop {r0}; bx r0`
+for *every* function. Under the wrong recipe the same source was 37 bytes off
+with a 4-byte size overrun; under the right one it was byte-exact. So 3.17's
+"one unit = one recipe" does not license "one zone = one recipe": check the
+leaves of each new range, and re-test a stuck register-allocation-only diff
+with the other recipe BEFORE hunting source shapes.
+
+### 3.19 A buffer address mentioned twice may be a SYMBOL, not a constant
+Extends 3.9 from single cells to buffers. Written as `(u32 *)0x03001270`, gcc
+CSEs the two mentions into one pseudo and the whole entry/tail register
+assignment shifts by one register — immovable through dozens of shape variants.
+Declared `extern u16 gUnk_03001270[];` and used as `(u32)gUnk_03001270`, each
+mention gets its own pool word and the function matches immediately.
+Diagnostic: the ROM pools the same address twice, or shows an `ldr`+copy pair
+where you emit a single `ldr`.
+
+### 3.20 A void-looking function may need a dead `return`
+`sub_080008e8` only matches as `u32 f(u16 steps, ...) { ...; if (0) return
+steps; }`. The unreachable return keeps the parameter's pseudo alive, which is
+what makes the ROM copy-then-truncate `r0` into `r5` and push one more
+register. Narrow tool: apply it only when the diff is "one extra live copy of a
+parameter" — the same trick moved a sibling function from 67 to 195 bytes off.
+Its cousin: an unused trailing parameter (`u32 f(u32 arg) { ...; return arg; }`)
+shifts a three-instruction function's whole allocation by one register.
+
+### 3.21 Loop notes hoist; `goto` does not
+The natural `do { ... } while (!(a0 & 0x1000));` made gcc run loop.c and hoist a
+table address plus a sign-extension into the preheader — 500+ bytes of
+divergence from a ROM that re-materializes them every iteration. Rewriting as a
+labelled block plus a trailing `if (...) goto top;` removes the loop note
+entirely, so nothing hoists. When a candidate's prologue holds constants the ROM
+re-loads inside the loop, try the goto form BEFORE touching expressions.
+
+### 3.22 Three codegens for one indexed load
+`(tbl + 1)[i]` emits the ROM's `adds r2, #1; adds r1, r1, r2` (bump the base,
+re-add the index); `tbl[i + 1]` folds the +1 into the index; hoisting `tbl` into
+a local pointer emits `ldrb rX, [r1, #1]`. Same value, three different shapes —
+pick by what the ROM does, not by taste.
+
+### 3.23 Dead-store "hoist" locals defeat CSE where in-place ops cannot
+3.2's in-place `w &= mask` trick fails when gcc can re-derive the value from
+unchanged operands. What works instead is making the two uses *different
+expressions*: `t = pal & hoistT` vs `u = t & 0xF000` forced the ROM's two
+separate adds where every same-expression variant was unified. Related
+allocation levers found the same way: block-scoping a temporary in its own `{}`
+pins it to a different hard register, and declaration order matters *inside* a
+block but is a complete no-op at function level.
+
 ## 4. Splitting ROM ranges into asm (tools/split.py)
 
 ### 4.1 objdump text only round-trips under `.syntax unified`
@@ -539,6 +593,26 @@ bytes contributed.
 rewriting those operands to labels produced `udf loc_...`, which gas
 rejects ("constant expression required"). Branch decoding stops at
 `0xDDFF`; `svc` (0xDFxx) was already excluded.
+
+### 4.20 A shrinking segment leaves orphan chunk files behind
+`split.py` writes chunked segments into `asm/<segment>/` and purges the
+directory before regenerating — but the purge was gated on the segment still
+being *chunked* (2+ chunks), while the directory layout is used whenever the
+segment configures `chunk_bytes` at all. Carve enough off the front of a
+segment and it drops to a single chunk: it keeps its directory, stops being
+`chunked`, and its old tail chunks survive regeneration. The Makefile's
+`asm/*/*.s` glob then assembles the orphans alongside the new segment, which
+surfaces as a baffling `relocation truncated to fit: R_ARM_THM_JUMP8 against
+loc_XXXXXXXX` from a file you did not expect to exist. Fixed in issue #32 by
+gating the purge on the directory layout instead. Symptom to remember: a link
+error naming a chunk file whose address range you just carved away.
+
+### 4.21 An un-carved deliverable in src/ breaks the whole build
+The Makefile globs `src/*.c`, so a verified-but-not-yet-carved C module dropped
+into `src/` collides with the asm that still provides those bytes ("multiple
+definition of sub_XXXXXXXX"). With several agents delivering in parallel this
+red-lines the tree for everyone. Keep pending deliverables outside `src/` (this
+repo uses a gitignored `pending/`) and move each one in as its range is carved.
 
 ## 5. Workflow that worked
 
