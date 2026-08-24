@@ -59,6 +59,10 @@ $(BUILD_DIR)/src/early_1fd0.o: CFLAGS := -O2 -mthumb-interwork
 $(BUILD_DIR)/src/early_2b04.o: CC := old_agbcc
 $(BUILD_DIR)/src/early_2b04.o: CFLAGS := -O2 -mthumb-interwork
 
+# 0x0800293C-0x08002B04 (issue #32): back in the DEFAULT agbcc -O2 recipe —
+# the old_agbcc unit does not run contiguously through the zone.  Verified
+# byte-exact with tools/fnmatch.sh and no flag.
+
 # All of asm/ is assembled into the ROM: hand-written files (rom_header.s,
 # crt0.s), split-generated segment files (asm/<segment>.s, see tools/
 # split.py / docs/splitting.md), chunked code segments (issue #25:

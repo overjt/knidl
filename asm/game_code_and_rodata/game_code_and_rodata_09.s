@@ -1146,7 +1146,7 @@ loc_08096774:
 	.word	0x5A5A5A5A
 	.word	0xFFFF0000
 	.word	0x03002490
-	.word	0x03002360
+	.word	gUnk_03002360
 	.word	0x00000237
 	.thumb_func
 	.global	sub_0809680c
@@ -4059,7 +4059,7 @@ loc_08097fde:
 	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	b.n	loc_0809804e	@ 0x0809804E
 	.word	0x03002490
-	.word	0x03002360
+	.word	gUnk_03002360
 	.word	0x0000023A
 	.global	loc_0809800c
 loc_0809800c:
@@ -4116,7 +4116,7 @@ loc_0809804e:
 	bx	r0
 	movs	r0, r0
 	.word	0x03002490
-	.word	0x03002360
+	.word	gUnk_03002360
 	.word	0x0000023A
 	.thumb_func
 	.global	sub_0809809c
@@ -4186,7 +4186,7 @@ loc_080980bc:
 	pop	{r0}
 	bx	r0
 	.word	0x03002490
-	.word	0x03002360
+	.word	gUnk_03002360
 	.word	0x00000239
 	.thumb_func
 	.global	sub_08098140

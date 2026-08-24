@@ -11,6 +11,8 @@ sub_08000700 = 0x08000700
 @ referenced symbolically from split literal pools / data words:
 	.global	gUnk_02005588
 gUnk_02005588 = 0x02005588
+	.global	gUnk_02006068
+gUnk_02006068 = 0x02006068
 	.global	gUnk_02007D48
 gUnk_02007D48 = 0x02007D48
 	.global	gUnk_02007FC0
@@ -197,6 +199,8 @@ gUnk_03001EB4 = 0x03001EB4
 gUnk_03001EB8 = 0x03001EB8
 	.global	gUnk_03001EC4
 gUnk_03001EC4 = 0x03001EC4
+	.global	gUnk_03001EC8
+gUnk_03001EC8 = 0x03001EC8
 	.global	gUnk_03001ECC
 gUnk_03001ECC = 0x03001ECC
 	.global	gUnk_03001ED0
@@ -219,6 +223,8 @@ gUnk_03001EEC = 0x03001EEC
 gUnk_03001EF4 = 0x03001EF4
 	.global	gUnk_03001EF8
 gUnk_03001EF8 = 0x03001EF8
+	.global	gUnk_03001EFC
+gUnk_03001EFC = 0x03001EFC
 	.global	gUnk_03001F08
 gUnk_03001F08 = 0x03001F08
 	.global	gUnk_03001F30
@@ -227,6 +233,8 @@ gUnk_03001F30 = 0x03001F30
 gUnk_03001F38 = 0x03001F38
 	.global	gUnk_03002150
 gUnk_03002150 = 0x03002150
+	.global	gUnk_03002360
+gUnk_03002360 = 0x03002360
 	.global	gUnk_030023A8
 gUnk_030023A8 = 0x030023A8
 	.global	gUnk_030023AC
@@ -259,6 +267,8 @@ gUnk_03004D30 = 0x03004D30
 gUnk_03004D40 = 0x03004D40
 	.global	gUnk_03004D50
 gUnk_03004D50 = 0x03004D50
+	.global	gUnk_03004D70
+gUnk_03004D70 = 0x03004D70
 	.global	gUnk_03004D7C
 gUnk_03004D7C = 0x03004D7C
 	.global	gUnk_03004D88

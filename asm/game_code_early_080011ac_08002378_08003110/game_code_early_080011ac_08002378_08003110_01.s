@@ -22,7 +22,7 @@ sub_080072e0:
 	movs	r0, #0
 	b.n	loc_080072fe	@ 0x080072FE
 	movs	r0, r0
-	.word	0x03004D70
+	.word	gUnk_03004D70
 	.word	0x03004D24
 	.global	loc_080072fc
 loc_080072fc:

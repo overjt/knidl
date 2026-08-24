@@ -28240,7 +28240,7 @@ loc_080b42ba:
 	pop	{r0}
 	bx	r0
 	.word	0x03002490
-	.word	0x03002360
+	.word	gUnk_03002360
 	.thumb_func
 	.global	sub_080b42f8
 sub_080b42f8:
@@ -28318,7 +28318,7 @@ loc_080b4366:
 	.word	0x03002464
 	.word	gUnk_03001F30
 	.word	0x03002490
-	.word	0x03002360
+	.word	gUnk_03002360
 	.thumb_func
 	.global	sub_080b4390
 sub_080b4390:
@@ -29336,7 +29336,7 @@ loc_080b4ae0:
 	movs	r0, r0
 	.word	0x03002490
 	.word	0x08756158
-	.word	0x03002360
+	.word	gUnk_03002360
 	.word	sub_080b4afc+1
 	.word	gCurTaskIdx
 	.thumb_func
@@ -29527,7 +29527,7 @@ loc_080b4c68:
 	movs	r0, r0
 	.word	0x03002490
 	.word	0x0875616C
-	.word	0x03002360
+	.word	gUnk_03002360
 	.word	sub_080b4c84+1
 	.word	gCurTaskIdx
 	.thumb_func

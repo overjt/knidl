@@ -527,6 +527,9 @@ a candidate is down to a handful of register-naming bytes. Note `register u16 v
 asm("rN")` (3.24) also pins a short-lived CSE temp to a chosen hard register,
 not just HImode constants.
 
+See 3.41: function-level declaration order DOES matter whenever two pseudos
+tie on global-alloc priority.
+
 Caveat found the hard way: block-scoping temporaries is NOT reliably required
 (an earlier function only matched with it, a later one matched with a fully
 flattened declaration list once 3.31-3.33 were applied) — and flattening is
@@ -573,6 +576,59 @@ hard enough.
 ### 3.38 Storing through a pointer temp loses a volatile array's dead pre-read
 `arr[i++] = v` on a volatile array emits the dead pre-read `ldrh` (3.7);
 `vs16 *p = &arr[i++]; *p = v;` does not. Complements 3.7's cast-literal case.
+
+### 3.39 A lone reload destination register is `last_spill_reg` ROTATION
+When the ONLY diff is the destination register of a reload (`ldr rN,[sp,#K]`),
+it is almost never liveness. agbcc's `allocate_reload_reg` (gcc/reload1.c) picks
+the reload register by advancing `last_spill_reg` ONE STEP through the ascending
+`spill_regs` array, skipping regs occupied by live pseudos — and that state
+PERSISTS ACROSS INSNS. So the fix is not "free the right register", it is "add
+or remove exactly one reload allocation earlier in the function".
+
+Method: count the reload-inserted insns (UIDs above the max UID in `.lreg`)
+before the divergence. `find_dummy_reload`-supplied OUTPUT reloads do not
+advance the rotation — the `.greg` dump's own `"Spilling for insn N / Spilling
+reg R"` trace tells you which allocations really counted, and is far more direct
+than reasoning from register dispositions. In `sub_08001b08` the ROM's last
+allocation before the compare was index 4 of `spill_regs = [0,1,2,3,7]`, so the
+next was index 0 = r0; our candidate had one extra allocation and landed on r1.
+
+### 3.40 A rematerialized constant silently costs a rotation step
+A mask/constant held in a LONG-LIVED local gets spilled with a `REG_EQUIV` note
+and rematerialized *by reload*. The emitted instructions are byte-identical to a
+plain pseudo's, so it is invisible in the diff — but it burns a `last_spill_reg`
+step and shifts every later reload (3.39). Moving the constant into a
+block-local `u32` temp removes the reload while keeping the same bytes:
+
+    { u32 t2 = v & 0x1000; last = t2; }     /* not: last = v & hoistM; */
+
+Writing `last = v & 0x1000;` directly is also wrong — it narrows the AND to
+HImode and costs the extra `adds rD,rS,#0` movhi copy (3.24). This is the
+counterpart to the `hoist` idiom (3.31), which survives only because
+`a0 = hoist; a0 &= v;` lets `update_equiv_regs` fold the constant into `a0`'s
+own def.
+
+### 3.41 Global-alloc priority TIES are broken by declaration order
+`floor_log2(refs) * refs / live_length * 10000` is integer-truncated, so
+near-equal pseudos tie EXACTLY (`3*12/156 == 2*6/52 == 2307`). `allocno_compare`
+then breaks the tie by pseudo number — i.e. **by declaration order at function
+scope**. This corrects the earlier note under 3.34 that declaration order only
+matters inside a block: at function scope it matters too, whenever two pseudos
+tie, and it decided a 6-byte diff across every `mov rX,r8`/`mov rX,r9` in one
+function body. Diagnostic: read `refs` and `live_length` per pseudo out of
+`.greg`'s "Registers to be allocated in sorted order" header and compute the
+priorities yourself.
+
+### 3.42 Empty `case` labels are load-bearing
+`balance_case_nodes` bisects the case list by cost (1 per value, 2 per range),
+so the NUMBER of case nodes sets the tree root. An empty case in the left
+subtree collapses to `b default`, which jump.c folds into the `ble default` the
+ROM shows — invisible in the output, fatal if omitted. One function only matched
+after adding `case 0x9900: break;`. Complements 3.25. Related: a switch's own
+dispatch compare COUNTS as a use of the case constant when the same constant is
+also stored in the bodies; that hidden extra reference is what pushed a constant
+over loop.c's `combine_movables` hoist threshold
+(`threshold * savings * lifetime` vs `insn_count`) in another function.
 
 ## 4. Splitting ROM ranges into asm (tools/split.py)
 

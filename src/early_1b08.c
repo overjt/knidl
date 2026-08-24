@@ -26,10 +26,10 @@
  * sits inside the copied 0x1C0 bytes.
  *
  * Matching notes (agbcc -O2 -mthumb-interwork; see docs/lessons-learned.md):
- *  - `hoist`/`hoistT`/`hoistM`/`hoistZ` are dead stores (they compile to
- *    nothing).  They exist so the constants they carry are a *different
- *    expression* from the literal spelled at the second use site, which stops
- *    CSE from unifying the two uses -- the ROM materializes both separately.
+ *  - `hoist`/`hoistZ` are dead stores (they compile to nothing).  They exist
+ *    so the constants they carry are a *different expression* from the literal
+ *    spelled at the second use site, which stops CSE from unifying the two
+ *    uses -- the ROM materializes both separately.
  *  - `u = t + hoistZ` (hoistZ == 0) survives cprop as `add rD,rS,#0`, i.e. a
  *    plain register COPY that CSE will not propagate away.  That copy is what
  *    keeps the ROM's two separate `v + <pal offset>` adds; writing `u = t`
@@ -49,11 +49,26 @@
  *    to itself global alloc puts them in r1/r0 because the mask temporaries in
  *    their live range already own r0.  Same idiom as FadeOutBody in
  *    src/m4a_c1.c.
+ *  - `{ u32 t2 = v & 0x1000; last = t2; }` (NOT `last = v & 0x1000;`, NOT a
+ *    long-lived `mask` variable) decides the reload register of `flip` at
+ *    0x08001BC0.  agbcc's reload picks a spill register per insn by rotating
+ *    round-robin from the previously allocated one (reload1.c
+ *    allocate_reload_reg / last_spill_reg).  If the 0x1000 mask lives in a
+ *    function-scope variable, that variable is spilled with a REG_EQUIV
+ *    constant and *rematerialized by reload*, which consumes one rotation step
+ *    and pushes `ldr [sp,#12]` from r0 onto r1.  Written as a block-local u32
+ *    temp the constant is an ordinary short-lived pseudo (no reload), the
+ *    rotation still points at r0, and the ROM's `ldr r0,[sp,#12]` comes out.
+ *    Writing `last = v & 0x1000;` directly instead narrows the AND to HImode
+ *    and costs the extra `adds rD,rS,#0` movhi copy (lessons-learned 3.24).
+ *  - `u16 last;` is declared AFTER `u16 mode, pal, tile;`.  With the u32 temp
+ *    above, `tile` and `last` end up with *identical* global-alloc priorities
+ *    (global.c: floor_log2(refs)*refs/live_length -> 3*12/156 == 2*6/52), and
+ *    allocno_compare breaks that tie by pseudo number.  Declaring `last` last
+ *    makes `tile` the lower pseudo, so `tile` takes r8 and `last` r9 as in the
+ *    ROM; the other order swaps every `mov rX,r8` / `mov rX,r9` in the body.
  *
- * STATUS: 2 of 448 bytes still differ -- at 0x08001BC0 the ROM reloads the
- * spilled `flip` into r0 (`ldr r0,[sp,#12]; cmp r0,#0`) where agbcc picks r1.
- * Everything else, including every instruction and every other register, is
- * byte-identical. */
+ * STATUS: byte-exact (448/448). */
 
 extern u16 *gUnk_03000B04;       /* OAM shadow write cursor */
 extern vu32 gUnk_03000B30[16];   /* per-bucket sprite counts */
@@ -70,22 +85,18 @@ void sub_08001b08(void)
     u16 *p;
     u32 v;
     register u16 flags asm("r3");
-    u16 last;
     u16 mode, pal, tile;
+    u16 last;
     u16 x, y, flip;
     vu32 *cnt;
     u32 prio;
     u32 hoist;
-    u32 hoistT;
-    u32 hoistM;
     u32 hoistZ;
 
     dst = gUnk_03000B04;
     for (i = 0, cnt = gUnk_03000B30; i < 16; cnt++, i++)
     {
         hoist = 0xFF00;
-        hoistT = 0xF000;
-        hoistM = 0x1000;
         hoistZ = 0;
         if (*cnt != 0)
         {
@@ -121,7 +132,7 @@ void sub_08001b08(void)
                         b &= v;
                         *dst++ = a0 | ((y + b) & c);
                     }
-                    last = v & hoistM;
+                    { u32 t2 = v & 0x1000; last = t2; }
 
                     if (flip)
                     {
@@ -148,7 +159,7 @@ void sub_08001b08(void)
                     {
                         if (pal & 0x800)
                         {
-                            s32 t = pal & hoistT;
+                            s32 t = pal & 0xF000;
                             s32 u = t + hoistZ;
 
                             if ((s32)((v + u) & 0xF000) >= u)

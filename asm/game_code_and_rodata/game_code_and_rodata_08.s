@@ -24214,7 +24214,7 @@ loc_0809216a:
 	.word	0x08743A40
 	.word	0x08743A58
 	.word	0x030023B4
-	.word	0x03002360
+	.word	gUnk_03002360
 	.word	0x0000023D
 	.word	gCurTaskIdx
 	.word	sub_08091fe0+1
@@ -27307,7 +27307,7 @@ loc_08093a18:
 	pop	{r0}
 	bx	r0
 	.word	0x03002490
-	.word	0x03002360
+	.word	gUnk_03002360
 	.thumb_func
 	.global	sub_08093a24
 sub_08093a24:

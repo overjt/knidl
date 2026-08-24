@@ -77,7 +77,12 @@ SECTIONS
         build/src/early_1518.o(.text)
     } > ROM
 
-    .game_code_early_080011ac 0x08001B08 : {
+    /* early_1b08 — decompiled to C (src/early_1b08.c, carved by tools/carve.py) */
+    .early_1b08 0x08001B08 : {
+        build/src/early_1b08.o(.text)
+    } > ROM
+
+    .game_code_early_080011ac 0x08001CC8 : {
         KEEP(*(.game_code_early_080011ac)) KEEP(*(.game_code_early_080011ac.tail))
     } > ROM
 
@@ -88,6 +93,11 @@ SECTIONS
 
     .game_code_early_080011ac_08002378 0x08002378 : {
         KEEP(*(.game_code_early_080011ac_08002378)) KEEP(*(.game_code_early_080011ac_08002378.tail))
+    } > ROM
+
+    /* early_293c — decompiled to C (src/early_293c.c, carved by tools/carve.py) */
+    .early_293c 0x0800293C : {
+        build/src/early_293c.o(.text)
     } > ROM
 
     /* early_2b04 — decompiled to C (src/early_2b04.c, carved by tools/carve.py) */
