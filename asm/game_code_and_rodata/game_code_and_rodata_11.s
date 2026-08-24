@@ -4973,7 +4973,7 @@ sub_080b84f0:
 loc_080b8514:
 	b.n	loc_080b85c8	@ 0x080B85C8
 	movs	r0, r0
-	.word	0x03004D90
+	.word	gUnk_03004D90
 	.word	0x0200EB80
 	.global	loc_080b8520
 loc_080b8520:
@@ -5109,7 +5109,7 @@ loc_080b85f6:
 	adds	r2, #42
 	b.n	loc_080b8652	@ 0x080B8652
 	movs	r0, r0
-	.word	0x03004D90
+	.word	gUnk_03004D90
 	.word	0x0200E600
 	.word	0x030023E8
 	.global	loc_080b862c
@@ -5140,7 +5140,7 @@ loc_080b8652:
 	strh	r0, [r3, #6]
 	b.n	loc_080b8680	@ 0x080B8680
 	movs	r0, r0
-	.word	0x03004D90
+	.word	gUnk_03004D90
 	.word	0x0200E600
 	.word	0x030023E8
 	.global	loc_080b8668
@@ -5163,7 +5163,7 @@ loc_080b8680:
 	pop	{r0}
 	bx	r0
 	movs	r0, r0
-	.word	0x03004D90
+	.word	gUnk_03004D90
 	.word	0x0200E600
 	.word	0x030023E8
 	.thumb_func
@@ -5215,7 +5215,7 @@ loc_080b86dc:
 	b.n	loc_080b8788	@ 0x080B8788
 	movs	r0, r0
 	.word	gUnk_030023AC
-	.word	0x03004D50
+	.word	gUnk_03004D50
 	.word	0x0200EA00
 	.global	loc_080b86ec
 loc_080b86ec:
@@ -5511,7 +5511,7 @@ loc_080b88f6:
 	bx	r0
 	movs	r0, r0
 	.word	gUnk_030023AC
-	.word	0x03004D50
+	.word	gUnk_03004D50
 	.thumb_func
 	.global	sub_080b8918
 sub_080b8918:
@@ -7868,7 +7868,7 @@ loc_080b9a6a:
 	movs	r0, r0
 	.word	0x03002360
 	.word	0x03002490
-	.word	0x03001F08
+	.word	gUnk_03001F08
 	.word	0x085B0AD4
 	.thumb_func
 	.global	sub_080b9a88
@@ -8821,7 +8821,7 @@ loc_080ba1a4:
 	b.n	loc_080ba208	@ 0x080BA208
 	.word	gUnk_03005274
 	.word	gUnk_0300243C
-	.word	0x03004D90
+	.word	gUnk_03004D90
 	.word	0x00007755
 	.global	loc_080ba1c8
 loc_080ba1c8:
@@ -8911,10 +8911,10 @@ loc_080ba248:
 	cmp	r0, r3
 	beq.n	loc_080ba2dc	@ 0x080BA2DC
 	b.n	loc_080ba290	@ 0x080BA290
-	.word	0x03004D7C
-	.word	0x03004D88
-	.word	0x03004D90
-	.word	0x03004D50
+	.word	gUnk_03004D7C
+	.word	gUnk_03004D88
+	.word	gUnk_03004D90
+	.word	gUnk_03004D50
 	.word	0x0000AA01
 	.word	0x0000AA02
 	.word	gUnk_03005274

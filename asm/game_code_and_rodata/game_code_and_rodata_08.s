@@ -14518,7 +14518,7 @@ loc_0808d3e8:
 	movs	r0, r0
 	.word	0x0874313C
 	.word	0x03002490
-	.word	0x03001F08
+	.word	gUnk_03001F08
 	.global	loc_0808d42c
 loc_0808d42c:
 	cmp	r0, #2

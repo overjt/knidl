@@ -54,6 +54,11 @@ $(BUILD_DIR)/src/m4a_ctrl.o: CFLAGS := -O2 -mthumb-interwork
 $(BUILD_DIR)/src/early_1fd0.o: CC := old_agbcc
 $(BUILD_DIR)/src/early_1fd0.o: CFLAGS := -O2 -mthumb-interwork
 
+# Same old_agbcc -O2 unit, further along (issue #32): link input dispatch,
+# frame driver, wait helpers, 12-bit LCG rand, decimal split, colour blend.
+$(BUILD_DIR)/src/early_2b04.o: CC := old_agbcc
+$(BUILD_DIR)/src/early_2b04.o: CFLAGS := -O2 -mthumb-interwork
+
 # All of asm/ is assembled into the ROM: hand-written files (rom_header.s,
 # crt0.s), split-generated segment files (asm/<segment>.s, see tools/
 # split.py / docs/splitting.md), chunked code segments (issue #25:

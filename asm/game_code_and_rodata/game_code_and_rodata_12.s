@@ -547,7 +547,7 @@ loc_080c6706:
 	pop	{r0}
 	bx	r0
 	.word	0x02006068
-	.word	0x03001F08
+	.word	gUnk_03001F08
 	.word	0x02020000
 	.word	0x0600AEA0
 	.word	0x0600B0A0

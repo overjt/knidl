@@ -435,6 +435,64 @@ to `and rX, mask`, and combine will not fold `x & <register>` even when the
 register provably holds `0xFFFF`. So **any `ands rX, rM` in the ROM means the
 mask is a variable in the source**, not a cast.
 
+### 3.25 An unbalanceable dispatch tree is an if/else nest, not a switch
+`balance_case_nodes` puts the MIDDLE value at the root for 3 dense-ish cases,
+in every compiler in this repo (agbcc -O1/-O2/-O3, old_agbcc -O1/-O2). So when
+the ROM shows the root at the LOWEST case with an empty left subtree
+(`cmp Klow; beq body; cmp Klow; ble default; cmp Kmid; beq; cmp Khigh; beq;
+b default`), no switch spelling will reproduce it. The source is:
+
+    if (t != Klow) { if (t > Klow) { switch (t) { case Kmid: … case Khigh: … } } }
+    else { …Klow body… }
+
+The `else` also places the Klow body last, which is where the ROM has it.
+
+### 3.26 A 2-D array is visible in the addressing mode
+`g[i + 4]` on a flat `u16 g[]` folds into the walking pointer
+(`ldrh rX,[rWalk,#8]`); `g[1][i]` on `u16 g[3][4]` materialises the row base
+separately (`adds r0,rBase,#0; adds r0,#8; adds r0,rIdx,r0`) and keeps `rBase`
+live — enough extra pressure, in one case, to push a constant into `r8` and add
+a `mov r7,r8; push {r7}` prologue. If the ROM re-derives a base you folded into
+an offset, try the 2-D form.
+
+### 3.27 `lsrs` on store + `asrs` on use means `signed short`, not a cast
+ARM's `PROMOTE_MODE` forces zero-extension, so an `s16` local is stored with
+`lsls #16; lsrs #16` and *sign*-extended at each use (`lsls #16; asrs #16`,
+often reusing the shifted value from the preceding compare). A `u16` local with
+an explicit `(s16)` cast does NOT reproduce this — combine drops the redundant
+sign-extension because the result is re-truncated.
+
+### 3.28 gcc 2.9 never promotes a stack-passed parameter to a register
+`void f(…, u16 *out)` with `out++` compiles to `ldr`/`str [sp,#N]` every
+iteration. A single `ldr r7,[sp,#32]` in the ROM proves the source took a local
+copy (`u16 *p = out;`). Corollary: the POSITION of that `ldr` relative to the
+parameter truncations tells you the parameter types — sitting *before* the
+`lsls` pairs means those values are 32-bit parameters truncated by locals
+(`u16 r = ratio;`), not `u16` parameters, whose truncation `assign_parms` emits
+first.
+
+### 3.29 A volatile parameter DEREF re-ties hard registers
+One function differed from the ROM only by an r1/r2 swap on the address and
+temporary pseudos; five rewrites of the `&=` / `|=` / compare shapes changed
+nothing, but making just the first read volatile
+(`gCell |= *(vu16 *)p;`) flipped the pair and matched. Making the whole
+parameter `vu16 *` is wrong — it re-reads the later fields too.
+
+### 3.30 gcc refuses to strength-reduce a small reversed clear loop
+`for (i = N; i >= 0; i--) buf[i] = 0;` keeps `add rA, rIdx, rBase` in the loop
+under all four compiler/opt combos. When the ROM shows the reduced form
+(`adds r0,rBase,#5` … `subs r0,#1; cmp r0,rBound; bge`) with a SIGNED compare
+against the base, the reproducible source is a do-while over int-cast pointers
+plus a zero *variable*:
+
+    u8 *b = buf; u8 *e = buf; u8 zero = 0; u8 *p = b + 5;
+    do { *p = zero; p--; } while ((s32)p >= (s32)e);
+
+Two separate `buf` mentions give the ROM's `ldr rBase` + `adds rBound,rBase,#0`
+copy (3.19 again); the explicit `zero` local (3.10) puts `movs r2,#0` BETWEEN
+the copy and `adds r0,rBase,#5`, where a hoisted invariant would land after it;
+and the `(s32)` casts give `bge` where a pointer compare emits `bcs`.
+
 ## 4. Splitting ROM ranges into asm (tools/split.py)
 
 ### 4.1 objdump text only round-trips under `.syntax unified`

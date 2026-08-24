@@ -219,6 +219,8 @@ gUnk_03001EEC = 0x03001EEC
 gUnk_03001EF4 = 0x03001EF4
 	.global	gUnk_03001EF8
 gUnk_03001EF8 = 0x03001EF8
+	.global	gUnk_03001F08
+gUnk_03001F08 = 0x03001F08
 	.global	gUnk_03001F30
 gUnk_03001F30 = 0x03001F30
 	.global	gUnk_03001F38
@@ -247,8 +249,24 @@ gTaskFlagsTable = 0x030025F0
 gTaskSavedLr = 0x030026F8
 	.global	gTaskBaseSp
 gTaskBaseSp = 0x03004C94
+	.global	gUnk_03004D28
+gUnk_03004D28 = 0x03004D28
+	.global	gUnk_03004D2C
+gUnk_03004D2C = 0x03004D2C
 	.global	gUnk_03004D30
 gUnk_03004D30 = 0x03004D30
+	.global	gUnk_03004D40
+gUnk_03004D40 = 0x03004D40
+	.global	gUnk_03004D50
+gUnk_03004D50 = 0x03004D50
+	.global	gUnk_03004D7C
+gUnk_03004D7C = 0x03004D7C
+	.global	gUnk_03004D88
+gUnk_03004D88 = 0x03004D88
+	.global	gUnk_03004D90
+gUnk_03004D90 = 0x03004D90
+	.global	gUnk_03004DA0
+gUnk_03004DA0 = 0x03004DA0
 	.global	gUnk_03005274
 gUnk_03005274 = 0x03005274
 	.global	gSoundInfo

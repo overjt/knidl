@@ -5497,7 +5497,7 @@ sub_08098b60:
 	b.n	loc_08098c38	@ 0x08098C38
 	movs	r0, r0
 	.word	0x08745618
-	.word	0x03001F08
+	.word	gUnk_03001F08
 	.global	loc_08098b94
 loc_08098b94:
 	cmp	r0, #2
@@ -5702,7 +5702,7 @@ sub_08098cf4:
 	beq.n	loc_08098d26	@ 0x08098D26
 	b.n	loc_08098d3e	@ 0x08098D3E
 	movs	r0, r0
-	.word	0x03001F08
+	.word	gUnk_03001F08
 	.global	loc_08098d20
 loc_08098d20:
 	cmp	r0, #2

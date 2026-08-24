@@ -151,7 +151,23 @@
     "sub_080022e4",
     "sub_080022fc",
     "sub_08002338",
-    "sub_08002348"
+    "sub_08002348",
+    "sub_08002b04",
+    "sub_08002b8c",
+    "sub_08002d18",
+    "sub_08002d54",
+    "sub_08002d74",
+    "sub_08002d94",
+    "sub_08002db4",
+    "sub_08002de0",
+    "sub_08002e0c",
+    "sub_08002e38",
+    "sub_08002e98",
+    "sub_08002eac",
+    "sub_08002ec0",
+    "sub_08002ee8",
+    "sub_08002f14",
+    "sub_08003014"
   ],
   "extra_labels": {
     "0x080CFC40": "_call_via_r4",
@@ -286,6 +302,7 @@
     "0x03001EEC": "gUnk_03001EEC",
     "0x03001EF4": "gUnk_03001EF4",
     "0x03001EF8": "gUnk_03001EF8",
+    "0x03001F08": "gUnk_03001F08",
     "0x03001F30": "gUnk_03001F30",
     "0x03001F38": "gUnk_03001F38",
     "0x03002150": "gUnk_03002150",
@@ -300,7 +317,15 @@
     "0x030025F0": "gTaskFlagsTable",
     "0x030026F8": "gTaskSavedLr",
     "0x03004C94": "gTaskBaseSp",
+    "0x03004D28": "gUnk_03004D28",
+    "0x03004D2C": "gUnk_03004D2C",
     "0x03004D30": "gUnk_03004D30",
+    "0x03004D40": "gUnk_03004D40",
+    "0x03004D50": "gUnk_03004D50",
+    "0x03004D7C": "gUnk_03004D7C",
+    "0x03004D88": "gUnk_03004D88",
+    "0x03004D90": "gUnk_03004D90",
+    "0x03004DA0": "gUnk_03004DA0",
     "0x03005274": "gUnk_03005274",
     "0x030056D0": "gSoundInfo",
     "0x03006680": "gMPlayJumpTable",
@@ -325,6 +350,10 @@
     },
     {
       "name": "game_code_early_080011ac_08002378",
+      "chunk_bytes": 65536
+    },
+    {
+      "name": "game_code_early_080011ac_08002378_08003110",
       "chunk_bytes": 65536
     },
     {

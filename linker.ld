@@ -90,6 +90,15 @@ SECTIONS
         KEEP(*(.game_code_early_080011ac_08002378)) KEEP(*(.game_code_early_080011ac_08002378.tail))
     } > ROM
 
+    /* early_2b04 — decompiled to C (src/early_2b04.c, carved by tools/carve.py) */
+    .early_2b04 0x08002B04 : {
+        build/src/early_2b04.o(.text)
+    } > ROM
+
+    .game_code_early_080011ac_08002378_08003110 0x08003110 : {
+        KEEP(*(.game_code_early_080011ac_08002378_08003110)) KEEP(*(.game_code_early_080011ac_08002378_08003110.tail))
+    } > ROM
+
     /* Game code + rodata (Thumb) — bulk of the game logic */
     /* main — decompiled to C (src/main.c, carved by tools/carve.py) */
     .main 0x08007300 : {
