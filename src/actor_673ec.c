@@ -364,3 +364,45 @@ void sub_08067950(void)
             t->unk34 = 0;
     }
 }
+
+void sub_08067a48(void)
+{
+    struct Task *t;
+    u8 *p;
+    s32 i;
+
+    if (gUnk_03001F30 != 0)
+    {
+        sub_08006338(0x1243);
+        t = gUnk_03002490;
+        if (t->unk43 == 1)
+            t->unk3E |= 0x8000;
+        else
+            t->unk3E &= 0x7FFF;
+        sub_08006138();
+        return;
+    }
+    t = gUnk_03002490;
+    p = t->unk88;
+    if (p[6] != 1)
+    {
+        sub_08006338(0x12D);
+        sub_080684a4();
+        return;
+    }
+    i = (s16)(gUnk_03002790[t->unk44].unk3C - 30);
+    switch (i)
+    {
+    case 1:
+        sub_08006338(0x173);
+        break;
+    case 0:
+    case 2:
+        sub_08006338(370);
+        break;
+    case 3:
+    case 4:
+        sub_08006338(0x171);
+        break;
+    }
+}
