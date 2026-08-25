@@ -352,46 +352,49 @@ void sub_08067950(void)
 void sub_08067a48(void)
 {
     struct Task *t;
+    struct Task *u;
     u8 *p;
     s32 i;
 
-    if (gUnk_03001F30 != 0)
+    if (gUnk_03001F30 == 0)
+    {
+        t = gUnk_03002490;
+        p = t->unk88;
+        if (p[6] == 1)
+        {
+            i = (s16)(gUnk_03002790[t->unk44].unk3C - 30);
+            switch (i)
+            {
+            case 1:
+                sub_08006338(0x173);
+                break;
+            case 0:
+            case 2:
+                sub_08006338(370);
+                break;
+            case 3:
+            case 4:
+                sub_08006338(0x171);
+                break;
+            }
+        }
+        else
+        {
+            sub_08006338(0x12D);
+            sub_080684a4();
+        }
+    }
+    else
     {
         sub_08006338(0x1243);
-        t = gUnk_03002490;
-        if (t->unk43 == 1)
-            t->unk3E |= 0x8000;
+        u = gUnk_03002490;
+        if (u->unk43 == 1)
+            u->unk3E |= 0x8000;
         else
-            t->unk3E &= 0x7FFF;
+            u->unk3E &= 0x7FFF;
         sub_08006138();
-        return;
-    }
-    t = gUnk_03002490;
-    p = t->unk88;
-    if (p[6] != 1)
-    {
-        sub_08006338(0x12D);
-        sub_080684a4();
-        return;
-    }
-    i = (s16)(gUnk_03002790[t->unk44].unk3C - 30);
-    switch (i)
-    {
-    case 1:
-        sub_08006338(0x173);
-        break;
-    case 0:
-    case 2:
-        sub_08006338(370);
-        break;
-    case 3:
-    case 4:
-        sub_08006338(0x171);
-        break;
     }
 }
-
-/* Task body: the carried task's "dropped" arc. */
 void sub_08067b24(void)
 {
     struct Task *t;
@@ -524,19 +527,19 @@ void sub_08067db0(void)
     t = gUnk_03002490;
     u = &gUnk_03002790[t->unk44];
     i = (u->unk3C - 30) * 5;
-    if (gUnk_03001F30 != 0)
-    {
-        i += 150;
-    }
-    else
+    if (gUnk_03001F30 == 0)
     {
         p = t->unk88;
         if (p[6] == 1)
             i += 75;
     }
+    else
+    {
+        i += 150;
+    }
     t = gUnk_03002490;
-    t->unk48 = gUnk_0873E3C8[i] * u->unk43 + u->unk48;
-    t->unk4A = gUnk_0873E3C8[i + 1] + u->unk4A;
+    t->unk48 = u->unk48 + u->unk43 * gUnk_0873E3C8[i];
+    t->unk4A = u->unk4A + gUnk_0873E3C8[i + 1];
     t->unk4C = t->unk48 << 16;
     t->unk50 = t->unk4A << 16;
     t->unk43 = u->unk43 * (s16)gUnk_0873E3C8[i + 2];
