@@ -291,6 +291,12 @@ FALSE_POSITIVES = {
     # sub_080070e8 (0x3C); byte totals agree either way, which is why the
     # mis-split survived until the range was decompiled.
     0x08007102,
+    # 0x08063DFE is literal-pool data inside sub_08062584, not a function
+    # (issue #65): the word 0xFFFFF000 at 0x08062DFC decodes as the `bl`
+    # pair F000/FFFF, whose target lands mid-way through sub_08063DF4.  The
+    # real function runs 0x08063DF4-0x08063E14 and byte-matches as one body
+    # (src/actor_63698.c).
+    0x08063DFE,
 }
 
 # Curated Thumb entries with NO in-ROM reference (issue #31): dead m4a SDK
@@ -308,6 +314,16 @@ EXTRA_THUMB_ENTRIES = {
     0x080CE7A8,  # m4aMPlayFadeIn
     0x080CE930,  # MusicPlayerJumpTableCopy (swi 0x2A thunk, issue #53)
     0x080CEB90,  # SoundClear
+    0x08063E70,  # hidden dead export inside M17 (issue #65): a rect/point
+                 # containment test nothing in the ROM references, sitting
+                 # between sub_08063E2C and sub_08063EB0 (its own
+                 # `push {r4, lr}` prologue and `pop {r4}; pop {r1}; bx r1`
+                 # epilogue; verified by byte-matching the range).
+    0x080641B0,  # hidden dead export inside M17 (issue #65): the polar
+                 # velocity helper that fills gUnk_030023B4/D4 from
+                 # ArcTan2 + the trig table; nothing in the ROM references
+                 # it, and it sits between sub_08064188 and sub_0806421C
+                 # with its own `push {r4, r5, r6, lr}` prologue.
     0x080CF664,  # m4aMPlayPanpotControl
     0x080CF6EC,  # m4aMPlayModDepthSet
     0x080CF760,  # m4aMPlayLFOSpeedSet
