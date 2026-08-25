@@ -330,6 +330,9 @@ EXTRA_THUMB_ENTRIES = {
     0x08005E1C,  # dead export        (inside sub_08005d9c's 0x10C)
     0x080063F0,  # IsOnScreen         (inside sub_080063ac's 0xB8)
     0x0800641C,  # IsWorldPosOnScreen (inside sub_080063ac's 0xB8)
+    0x08006664,  # TaskSkipMaskSaveOne(inside sub_0800663c's 0xE8)
+    0x0800668C,  # LinkColdInit       (inside sub_0800663c's 0xE8)
+    0x08006904,  # LinkRestart        (inside sub_08006868's 0xAC)
 }
 
 EVIDENCE_KINDS = ("bl-target", "rom-pointer", "prologue-scan", "curated")

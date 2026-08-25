@@ -8215,7 +8215,7 @@ loc_080b9d32:
 	str	r0, [r1, #24]
 	bx	lr
 	.word	gUnk_03002150
-	.word	0x03004D24
+	.word	gUnk_03004D24
 	.word	gUnk_03002490
 	.thumb_func
 	.global	sub_080b9d48

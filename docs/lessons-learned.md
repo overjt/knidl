@@ -951,6 +951,56 @@ base first. Same for a call inside an argument list: `v = f(0); q = g;
 h(q->a, v, …)` keeps the global reload AFTER the call, while `h(q->a, f(0), …)`
 hoists it before.
 
+### 3.80 The `push {lr}` fingerprint fails a SECOND way
+Beyond the prologue bug of 3.75, agbcc also omits the leaf push for
+**straight-line** leaves (one basic block, no `.L` labels). So only a leaf that
+BRANCHES discriminates anything at all — and after 3.75, not even that. One
+agent picked two straight-line leaves as probes and concluded "old_agbcc" for a
+range that is plain agbcc. Treat the fingerprint as a hint to investigate, never
+as an answer.
+
+### 3.81 A `u16`-returning `return a + b;` narrows the PLUS and swaps operands
+`convert_to_integer`'s "shorten" pushes the u16 conversion down into the
+addends, so the wider operand becomes `(subreg:SI (reg:HI …))`. That flips the
+commutative canonical order (3.32) AND ties the two-address result to the
+parameter instead of the call-return chain — which extends the parameter's live
+range, raises its local-alloc priority (refs 6→12) and shifts every
+callee-saved register by one. Computing into a `u32` local first
+(`u32 v = a + b; return v;`) keeps both operands plain SImode and the ROM's
+`adds r0, r0, rParam` falls out. **Diagnostic: the ROM ties the add's
+destination to the call-return register while you tie it to the parameter, with
+byte-identical instruction counts.**
+
+### 3.82 `(int)(signed char)x == K` never keeps its sign-extension
+`fold` narrows the comparison to QImode and expand emits `ldrb; cmp`. The ROM's
+three-instruction `extendqisi2` form (3.76) only survives when the extended
+value has a SECOND reference — verified against 25 spellings (`volatile`,
+`vs8 *`, `s32`/`s8` locals, `s32 f:8` bitfields, struct members, `switch`,
+`(u32)` casts, `c-1==0`, `if (0) return c;`, `c*0`, `c&0`, `register`,
+ternaries), all of which fold.
+
+### 3.83 A packed status word must be ONE assignment expression
+Splitting `g = A|B|…` into `v = …; if (c) v |= K; g = v;` makes gcc load each
+byte field lazily (interleaved `ldrb`/`orr`) and emit the destination address
+last. Written as a single assignment with the conditions as ternaries,
+`expand_assignment` materialises the LHS address FIRST — into a callee-saved
+register, which is what adds the extra `mov r7,r8 / push {r7}` — and every leaf
+shift is evaluated before any branch. Worth 276 → 0 differing bytes in one
+function.
+
+### 3.84 Giv initialisations land at the END of the preheader, in discovery order
+They are emitted after loop.c's hoisted movables, so the array-vs-pointer
+spelling of a subscript decides where its base computation sits relative to the
+hoisted invariants. `*(base + idx + i*30)` and `base[idx + i*30]` are
+semantically identical but differ by 14 bytes: the pointer form makes the whole
+`base+idx` the giv base, the array form splits it. Companion to 3.59.
+
+### 3.85 Read pool words with a script, not off objdump by eye
+`((u8 *)&sym)[K]` with K > 31 gives `ldr rC,=K; adds rD,rBase,rC`, and the SAME
+constant mentioned twice reuses one pool word — which is how a mis-transcribed
+`0x10D` as `0x10C` was caught after a wrong-field detour. Two minutes of
+scripting beats re-reading hex columns.
+
 ## 4. Splitting ROM ranges into asm (tools/split.py)
 
 ### 4.1 objdump text only round-trips under `.syntax unified`

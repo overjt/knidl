@@ -166,9 +166,12 @@ vma,size,isa,evidence,name
 0x080064AC,0x30,thumb,bl-target,sub_080064ac
 0x080064DC,0x50,thumb,bl-target,sub_080064dc
 0x0800652C,0x110,thumb,bl-target,sub_0800652c
-0x0800663C,0xE8,thumb,bl-target,sub_0800663c
+0x0800663C,0x28,thumb,bl-target,sub_0800663c
+0x08006664,0x28,thumb,bl-target,sub_08006664
+0x0800668C,0x98,thumb,curated,sub_0800668c
 0x08006724,0x144,thumb,bl-target,sub_08006724
-0x08006868,0xAC,thumb,bl-target,sub_08006868
+0x08006868,0x9C,thumb,bl-target,sub_08006868
+0x08006904,0x10,thumb,curated,sub_08006904
 0x08006914,0x134,thumb,bl-target,sub_08006914
 0x08006A48,0x28,thumb,bl-target,sub_08006a48
 0x08006A70,0x58,thumb,bl-target,sub_08006a70
