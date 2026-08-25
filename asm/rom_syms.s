@@ -4,21 +4,59 @@
 @ so generated files can reference not-yet-split code symbolically
 @ (e.g. `.word sub_08001518+1' or `bl __divsi3').
 
-	.global	sub_08000700
-sub_08000700 = 0x08000700
 
 @ Named non-ROM cells (tools/split_config.json "data_symbols"),
 @ referenced symbolically from split literal pools / data words:
 	.global	gUnk_02005588
 gUnk_02005588 = 0x02005588
+	.global	gUnk_02006068
+gUnk_02006068 = 0x02006068
 	.global	gUnk_02007D48
 gUnk_02007D48 = 0x02007D48
 	.global	gUnk_02007FC0
 gUnk_02007FC0 = 0x02007FC0
+	.global	gUnk_0200D090
+gUnk_0200D090 = 0x0200D090
+	.global	gUnk_0200D110
+gUnk_0200D110 = 0x0200D110
+	.global	gUnk_0200EB90
+gUnk_0200EB90 = 0x0200EB90
+	.global	gUnk_0200EB94
+gUnk_0200EB94 = 0x0200EB94
+	.global	gUnk_0200EB98
+gUnk_0200EB98 = 0x0200EB98
 	.global	gUnk_0200EBA0
 gUnk_0200EBA0 = 0x0200EBA0
+	.global	gUnk_0200EBA4
+gUnk_0200EBA4 = 0x0200EBA4
+	.global	gUnk_0200EBA8
+gUnk_0200EBA8 = 0x0200EBA8
+	.global	gUnk_0200EBAC
+gUnk_0200EBAC = 0x0200EBAC
+	.global	gUnk_0200EBB0
+gUnk_0200EBB0 = 0x0200EBB0
+	.global	gUnk_0200EBB4
+gUnk_0200EBB4 = 0x0200EBB4
+	.global	gUnk_0200EBB8
+gUnk_0200EBB8 = 0x0200EBB8
+	.global	gUnk_0200EBBC
+gUnk_0200EBBC = 0x0200EBBC
+	.global	gUnk_0200EBC0
+gUnk_0200EBC0 = 0x0200EBC0
+	.global	gUnk_0200EBF0
+gUnk_0200EBF0 = 0x0200EBF0
+	.global	gUnk_0200EC3C
+gUnk_0200EC3C = 0x0200EC3C
+	.global	gUnk_0200EC40
+gUnk_0200EC40 = 0x0200EC40
+	.global	gUnk_0200EC44
+gUnk_0200EC44 = 0x0200EC44
 	.global	gUnk_0200EC48
 gUnk_0200EC48 = 0x0200EC48
+	.global	gUnk_0200EC4C
+gUnk_0200EC4C = 0x0200EC4C
+	.global	gUnk_0203BFE0
+gUnk_0203BFE0 = 0x0203BFE0
 	.global	gUnk_03000010
 gUnk_03000010 = 0x03000010
 	.global	gUnk_03000014
@@ -37,12 +75,22 @@ gUnk_0300003C = 0x0300003C
 gUnk_03000040 = 0x03000040
 	.global	gUnk_03000044
 gUnk_03000044 = 0x03000044
+	.global	gUnk_03000048
+gUnk_03000048 = 0x03000048
+	.global	gUnk_03000050
+gUnk_03000050 = 0x03000050
 	.global	gUnk_03000490
 gUnk_03000490 = 0x03000490
 	.global	gUnk_03000498
 gUnk_03000498 = 0x03000498
 	.global	gUnk_030004A0
 gUnk_030004A0 = 0x030004A0
+	.global	gUnk_030004A4
+gUnk_030004A4 = 0x030004A4
+	.global	gUnk_030004B0
+gUnk_030004B0 = 0x030004B0
+	.global	gUnk_030004F0
+gUnk_030004F0 = 0x030004F0
 	.global	gUnk_03000AF4
 gUnk_03000AF4 = 0x03000AF4
 	.global	gUnk_03000AF8
@@ -51,6 +99,8 @@ gUnk_03000AF8 = 0x03000AF8
 gUnk_03000AFC = 0x03000AFC
 	.global	gUnk_03000B00
 gUnk_03000B00 = 0x03000B00
+	.global	gUnk_03000B04
+gUnk_03000B04 = 0x03000B04
 	.global	gUnk_03000B08
 gUnk_03000B08 = 0x03000B08
 	.global	gUnk_03000B0C
@@ -61,10 +111,14 @@ gUnk_03000B10 = 0x03000B10
 gUnk_03000B14 = 0x03000B14
 	.global	gUnk_03000B18
 gUnk_03000B18 = 0x03000B18
+	.global	gUnk_03000B1C
+gUnk_03000B1C = 0x03000B1C
 	.global	gUnk_03000B20
 gUnk_03000B20 = 0x03000B20
 	.global	gUnk_03000B24
 gUnk_03000B24 = 0x03000B24
+	.global	gUnk_03000B30
+gUnk_03000B30 = 0x03000B30
 	.global	gUnk_03000B70
 gUnk_03000B70 = 0x03000B70
 	.global	gUnk_03000B74
@@ -97,6 +151,8 @@ gUnk_03000FAC = 0x03000FAC
 gUnk_03000FB0 = 0x03000FB0
 	.global	gUnk_03000FB4
 gUnk_03000FB4 = 0x03000FB4
+	.global	gUnk_03000FB8
+gUnk_03000FB8 = 0x03000FB8
 	.global	gUnk_03000FBC
 gUnk_03000FBC = 0x03000FBC
 	.global	gUnk_03000FC0
@@ -131,6 +187,8 @@ gUnk_03001018 = 0x03001018
 gUnk_03001020 = 0x03001020
 	.global	gUnk_03001170
 gUnk_03001170 = 0x03001170
+	.global	gUnk_03001174
+gUnk_03001174 = 0x03001174
 	.global	gUnk_03001178
 gUnk_03001178 = 0x03001178
 	.global	gUnk_0300117C
@@ -141,12 +199,28 @@ gUnk_03001180 = 0x03001180
 gUnk_03001188 = 0x03001188
 	.global	gUnk_0300118C
 gUnk_0300118C = 0x0300118C
+	.global	gUnk_03001190
+gUnk_03001190 = 0x03001190
+	.global	gUnk_03001270
+gUnk_03001270 = 0x03001270
+	.global	gUnk_03001470
+gUnk_03001470 = 0x03001470
 	.global	gUnk_03001670
 gUnk_03001670 = 0x03001670
 	.global	gUnk_03001674
 gUnk_03001674 = 0x03001674
+	.global	gUnk_03001680
+gUnk_03001680 = 0x03001680
+	.global	gUnk_03001A80
+gUnk_03001A80 = 0x03001A80
+	.global	gUnk_03001A90
+gUnk_03001A90 = 0x03001A90
+	.global	gUnk_03001E90
+gUnk_03001E90 = 0x03001E90
 	.global	gUnk_03001E94
 gUnk_03001E94 = 0x03001E94
+	.global	gUnk_03001E98
+gUnk_03001E98 = 0x03001E98
 	.global	gUnk_03001E9C
 gUnk_03001E9C = 0x03001E9C
 	.global	gUnk_03001EA0
@@ -165,10 +239,14 @@ gUnk_03001EB4 = 0x03001EB4
 gUnk_03001EB8 = 0x03001EB8
 	.global	gUnk_03001EC4
 gUnk_03001EC4 = 0x03001EC4
+	.global	gUnk_03001EC8
+gUnk_03001EC8 = 0x03001EC8
 	.global	gUnk_03001ECC
 gUnk_03001ECC = 0x03001ECC
 	.global	gUnk_03001ED0
 gUnk_03001ED0 = 0x03001ED0
+	.global	gUnk_03001ED4
+gUnk_03001ED4 = 0x03001ED4
 	.global	gUnk_03001ED8
 gUnk_03001ED8 = 0x03001ED8
 	.global	gUnk_03001EDC
@@ -177,38 +255,132 @@ gUnk_03001EDC = 0x03001EDC
 gUnk_03001EE0 = 0x03001EE0
 	.global	gUnk_03001EE4
 gUnk_03001EE4 = 0x03001EE4
+	.global	gUnk_03001EE8
+gUnk_03001EE8 = 0x03001EE8
 	.global	gUnk_03001EEC
 gUnk_03001EEC = 0x03001EEC
 	.global	gUnk_03001EF4
 gUnk_03001EF4 = 0x03001EF4
 	.global	gUnk_03001EF8
 gUnk_03001EF8 = 0x03001EF8
+	.global	gUnk_03001EFC
+gUnk_03001EFC = 0x03001EFC
+	.global	gUnk_03001F08
+gUnk_03001F08 = 0x03001F08
 	.global	gUnk_03001F30
 gUnk_03001F30 = 0x03001F30
+	.global	gUnk_03001F38
+gUnk_03001F38 = 0x03001F38
 	.global	gUnk_03002150
 gUnk_03002150 = 0x03002150
+	.global	gUnk_03002158
+gUnk_03002158 = 0x03002158
+	.global	gUnk_03002348
+gUnk_03002348 = 0x03002348
+	.global	gUnk_03002360
+gUnk_03002360 = 0x03002360
 	.global	gUnk_030023A8
 gUnk_030023A8 = 0x030023A8
 	.global	gUnk_030023AC
 gUnk_030023AC = 0x030023AC
 	.global	gUnk_030023D8
 gUnk_030023D8 = 0x030023D8
+	.global	gUnk_030023E4
+gUnk_030023E4 = 0x030023E4
 	.global	gUnk_0300243C
 gUnk_0300243C = 0x0300243C
 	.global	gUnk_0300244C
 gUnk_0300244C = 0x0300244C
 	.global	gTaskSavedSp
 gTaskSavedSp = 0x03002470
+	.global	gUnk_03002478
+gUnk_03002478 = 0x03002478
+	.global	gUnk_03002480
+gUnk_03002480 = 0x03002480
+	.global	gUnk_03002488
+gUnk_03002488 = 0x03002488
 	.global	gCurTaskIdx
 gCurTaskIdx = 0x0300248C
+	.global	gUnk_03002490
+gUnk_03002490 = 0x03002490
+	.global	gUnk_03002494
+gUnk_03002494 = 0x03002494
+	.global	gUnk_030024A0
+gUnk_030024A0 = 0x030024A0
 	.global	gTaskSavedR0
 gTaskSavedR0 = 0x030025E0
 	.global	gTaskFlagsTable
 gTaskFlagsTable = 0x030025F0
+	.global	gUnk_030026F0
+gUnk_030026F0 = 0x030026F0
+	.global	gUnk_030026F4
+gUnk_030026F4 = 0x030026F4
 	.global	gTaskSavedLr
 gTaskSavedLr = 0x030026F8
+	.global	gUnk_03002700
+gUnk_03002700 = 0x03002700
+	.global	gUnk_03002708
+gUnk_03002708 = 0x03002708
+	.global	gUnk_03002710
+gUnk_03002710 = 0x03002710
+	.global	gUnk_03002790
+gUnk_03002790 = 0x03002790
+	.global	gUnk_03004B90
+gUnk_03004B90 = 0x03004B90
+	.global	gUnk_03004C90
+gUnk_03004C90 = 0x03004C90
 	.global	gTaskBaseSp
 gTaskBaseSp = 0x03004C94
+	.global	gUnk_03004CA0
+gUnk_03004CA0 = 0x03004CA0
+	.global	gUnk_03004D20
+gUnk_03004D20 = 0x03004D20
+	.global	gUnk_03004D24
+gUnk_03004D24 = 0x03004D24
+	.global	gUnk_03004D28
+gUnk_03004D28 = 0x03004D28
+	.global	gUnk_03004D2C
+gUnk_03004D2C = 0x03004D2C
+	.global	gUnk_03004D30
+gUnk_03004D30 = 0x03004D30
+	.global	gUnk_03004D34
+gUnk_03004D34 = 0x03004D34
+	.global	gUnk_03004D38
+gUnk_03004D38 = 0x03004D38
+	.global	gUnk_03004D40
+gUnk_03004D40 = 0x03004D40
+	.global	gUnk_03004D44
+gUnk_03004D44 = 0x03004D44
+	.global	gUnk_03004D50
+gUnk_03004D50 = 0x03004D50
+	.global	gUnk_03004D70
+gUnk_03004D70 = 0x03004D70
+	.global	gUnk_03004D74
+gUnk_03004D74 = 0x03004D74
+	.global	gUnk_03004D78
+gUnk_03004D78 = 0x03004D78
+	.global	gUnk_03004D7C
+gUnk_03004D7C = 0x03004D7C
+	.global	gUnk_03004D80
+gUnk_03004D80 = 0x03004D80
+	.global	gUnk_03004D84
+gUnk_03004D84 = 0x03004D84
+	.global	gUnk_03004D88
+gUnk_03004D88 = 0x03004D88
+	.global	gUnk_03004D90
+gUnk_03004D90 = 0x03004D90
+	.global	gUnk_03004DA0
+gUnk_03004DA0 = 0x03004DA0
+	.global	gUnk_03004DA4
+gUnk_03004DA4 = 0x03004DA4
+	.global	gUnk_03005270
+gUnk_03005270 = 0x03005270
+	.global	gUnk_03005274
+gUnk_03005274 = 0x03005274
+	.global	gUnk_03005278
+gUnk_03005278 = 0x03005278
+	.global	gUnk_0300527C
+gUnk_0300527C = 0x0300527C
 	.global	gSoundInfo
 gSoundInfo = 0x030056D0
 	.global	gMPlayJumpTable
@@ -225,6 +397,8 @@ gMPlayInfo_SE2 = 0x03006890
 gMPlayMemAccArea = 0x030068D0
 	.global	gMPlayInfo_SE3
 gMPlayInfo_SE3 = 0x030068E0
+	.global	gUnk_03006920
+gUnk_03006920 = 0x03006920
 	.global	gMPlayTrack_BGM
 gMPlayTrack_BGM = 0x03006930
 	.global	gMPlayTrack_SE1
@@ -237,6 +411,30 @@ gMPlayTrack_SE3 = 0x03006F70
 gSoundMainRAM_Buffer = 0x03007150
 	.global	SOUND_INFO_PTR
 SOUND_INFO_PTR = 0x03007FF0
+	.global	gUnk_04000006
+gUnk_04000006 = 0x04000006
+	.global	gUnk_0400010C
+gUnk_0400010C = 0x0400010C
+	.global	gUnk_0400010E
+gUnk_0400010E = 0x0400010E
+	.global	gUnk_04000120
+gUnk_04000120 = 0x04000120
+	.global	gUnk_04000128
+gUnk_04000128 = 0x04000128
+	.global	gUnk_0400012A
+gUnk_0400012A = 0x0400012A
+	.global	gUnk_04000208
+gUnk_04000208 = 0x04000208
+	.global	gUnk_0872EB14
+gUnk_0872EB14 = 0x0872EB14
+	.global	gUnk_0872EB2C
+gUnk_0872EB2C = 0x0872EB2C
+	.global	gUnk_0872EB38
+gUnk_0872EB38 = 0x0872EB38
+	.global	gUnk_0872FB30
+gUnk_0872FB30 = 0x0872FB30
+	.global	gUnk_0872FF30
+gUnk_0872FF30 = 0x0872FF30
 
 @ Link-time constants (tools/split_config.json "abs_symbols"):
 @ absolute symbols whose VALUE is the constant (SDK idiom, e.g.

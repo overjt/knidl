@@ -19,7 +19,11 @@ OBJCOPY := arm-none-eabi-objcopy
 # before the generic pattern rule below.
 CC      := agbcc
 CPP     := cpp -P
-CFLAGS  := -O2 -mthumb-interwork -Wimplicit -Wparentheses -Werror -fhex-asm
+# -fprologue-bugfix suppresses agbcc's spurious leaf `push {lr}` (it stops
+# caching current_function_has_far_jump, see docs/lessons-learned.md 3.75).
+# The whole game-code zone needs it; without it, leaf functions that branch
+# gain a push/pop pair and old_agbcc coincidentally looks like a better fit.
+CFLAGS  := -O2 -mthumb-interwork -fprologue-bugfix -Wimplicit -Wparentheses -Werror -fhex-asm
 
 INCLUDE := -I include
 
@@ -45,6 +49,15 @@ $(BUILD_DIR)/src/m4a_cgb.o: CFLAGS := -O2 -mthumb-interwork
 # same recipe as parts 1-2 (one translation unit upstream).
 $(BUILD_DIR)/src/m4a_ctrl.o: CC := old_agbcc
 $(BUILD_DIR)/src/m4a_ctrl.o: CFLAGS := -O2 -mthumb-interwork
+
+
+
+
+
+
+
+
+
 
 # All of asm/ is assembled into the ROM: hand-written files (rom_header.s,
 # crt0.s), split-generated segment files (asm/<segment>.s, see tools/

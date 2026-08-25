@@ -278,7 +278,20 @@ KNOWN_SYMBOLS = {
 # "rom-pointer" reference (word 0x080CFCFD at 0x086DA494) sits inside the
 # m4a_songs data segment surrounded by signed 8-bit PCM sample bytes; the
 # `pop {pc}` halfword passes the strict terminator check by accident.
-FALSE_POSITIVES = {0x080CFCFC}
+FALSE_POSITIVES = {
+    0x080CFCFC,
+    # 0x0800315E is literal-pool data inside sub_08003110, not a function
+    # (issue #32): the mask word 0xFFFFF7FF at 0x0800315C has a low half that
+    # decodes as a `bl`, which fooled the bl-target heuristic.  sub_08003110
+    # really runs 0x08003110-0x08003184 and 0x08003164 is a branch target
+    # inside it.
+    0x0800315E,
+    # 0x08007102 is a `b.n 0x800711C` INSIDE sub_080070e8, not an entry point
+    # (issue #32).  The real split of that 0x6C span is sub_080070b8 (0x30) +
+    # sub_080070e8 (0x3C); byte totals agree either way, which is why the
+    # mis-split survived until the range was decompiled.
+    0x08007102,
+}
 
 # Curated Thumb entries with NO in-ROM reference (issue #31): dead m4a SDK
 # exports.  The m4a driver was linked as whole objects, so public functions
@@ -298,6 +311,37 @@ EXTRA_THUMB_ENTRIES = {
     0x080CF664,  # m4aMPlayPanpotControl
     0x080CF6EC,  # m4aMPlayModDepthSet
     0x080CF760,  # m4aMPlayLFOSpeedSet
+
+    # game_code_early dead exports (issue #32).  Same whole-object-linking
+    # cause as the m4a ones above, but in game code: each sits INSIDE the
+    # census size of its predecessor, so without these entries symbols.csv
+    # reports one oversized function where the ROM has two.  Every address
+    # was confirmed by decompiling the range and byte-matching it.
+    0x08001460,  # SetHBlankHandler   (inside sub_080013f8's 0x90)
+    0x080014BC,  # SetVCountHandler   (inside sub_08001488's 0x60)
+    0x0800151C,  # forced-blank on    (inside sub_08001518's 0x64)
+    0x08001560,  # forced-blank off   (inside sub_08001518's 0x64)
+    0x08002104,  # fade variant       (inside sub_080020b8's 0x94)
+    0x08002220,  # fade variant       (inside sub_080021dc's 0x8C)
+    0x08002358,  # debug-code writer  (inside sub_08002348's 0x30)
+    0x080030B8,  # scalar colour blend(inside sub_08003014's 0xFC)
+    0x080034A0,  # SE stop helper     (inside sub_08003484's 0x4C)
+    0x080034B8,  # SE stop helper     (inside sub_08003484's 0x4C)
+    0x080036B8,  # BGM fade-in helper (inside sub_08003688's 0xC4)
+    0x080037A4,  # SE volume setter   (inside sub_08003770's 0x88)
+    0x08005618,  # SetAllTaskSkipMasks(inside sub_080055c4's 0x90)
+    0x08005A74,  # TaskUpdatePosNoIntegrate (inside sub_080059fc's 0x94)
+    0x08005B20,  # TaskUploadGfxAndPal (inside sub_08005acc's 0xF8)
+    0x08005E1C,  # dead export        (inside sub_08005d9c's 0x10C)
+    0x080063F0,  # IsOnScreen         (inside sub_080063ac's 0xB8)
+    0x0800641C,  # IsWorldPosOnScreen (inside sub_080063ac's 0xB8)
+    0x08006664,  # TaskSkipMaskSaveOne(inside sub_0800663c's 0xE8)
+    0x0800668C,  # LinkColdInit       (inside sub_0800663c's 0xE8)
+    0x08006904,  # LinkRestart        (inside sub_08006868's 0xAC)
+    0x08007004,  # LinkSendStep       (inside sub_08006e9c's 0x21C; a real
+                 #                     bl target from 0x08006D52, not dead)
+    0x080070E8,  # LinkEndRound       (bl target from 0x08006D56; the row
+                 #                     0x08007102 was a mis-split of it)
 }
 
 EVIDENCE_KINDS = ("bl-target", "rom-pointer", "prologue-scan", "curated")
@@ -480,9 +524,17 @@ def build(rom, segments):
         # Curated identifications (KNOWN_SYMBOLS) are accepted directly:
         # the m4a XCMD handlers are table-dispatched only and open with
         # `ldr r0, [r1, #0x40]`, which no generic prologue filter admits.
-        if target in KNOWN_SYMBOLS or plausible_thumb_entry(
-            rom, target, nxt - ROM_BASE, strict
-        ):
+        # Curated identifications are accepted directly, bypassing the
+        # prologue filter.  KNOWN_SYMBOLS: the m4a XCMD handlers are
+        # table-dispatched only and open with `ldr r0, [r1, #0x40]`.
+        # EXTRA_THUMB_ENTRIES: every one was hand-verified by decompiling
+        # its range and byte-matching it, and several are dead exports that
+        # open with a pool load rather than a push (e.g. 0x08005A74 starts
+        # `ldr r0, [pc, #20]`), which `strict` rejects.  Curation IS the
+        # evidence — re-deriving it from the prologue shape defeats the
+        # purpose of the list.
+        if (target in KNOWN_SYMBOLS or target in EXTRA_THUMB_ENTRIES
+                or plausible_thumb_entry(rom, target, nxt - ROM_BASE, strict)):
             candidates[target] = nxt
     thumb_entries = {t: n for t, n in candidates.items() if n is not None}
 

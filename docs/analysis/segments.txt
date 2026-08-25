@@ -13,7 +13,43 @@
 0x08000234 0x080002E5 arm_code task_switch_helpers [split] # cooperative task switch; IWRAM cells named via split_config data_symbols
 0x080002E5 0x08000310 pool task_literals [split] # task helper literal pools (all 10 words = named cells)
 0x08000310 0x080008E8 c_code agb_init # src/agb_init.c: AgbInit + its literal pool (0x0700 pool-skip branch + words to 0x08E7)
-0x080008E8 0x08007300 thumb_code game_code_early [split] # asm/game_code_early/
+0x080008E8 0x08000DE4 c_code early_08e8 # src/early_08e8.c (carved by tools/carve.py)
+0x08000DE4 0x080010CC c_code early_0de4 # src/early_0de4.c (carved by tools/carve.py)
+0x080010CC 0x080011AC c_code early_10cc # src/early_10cc.c (carved by tools/carve.py)
+0x080011AC 0x08001518 c_code early_11ac # src/early_11ac.c (carved by tools/carve.py)
+0x08001518 0x08001B08 c_code early_1518 # src/early_1518.c (carved by tools/carve.py)
+0x08001B08 0x08001CC8 c_code early_1b08 # src/early_1b08.c (carved by tools/carve.py)
+0x08001CC8 0x08001FD0 thumb_code game_code_early_080011ac [split]
+0x08001FD0 0x08002378 c_code early_1fd0 # src/early_1fd0.c (carved by tools/carve.py)
+0x08002378 0x08002668 thumb_code game_code_early_080011ac_08002378 [split]
+0x08002668 0x0800293C c_code early_2668 # src/early_2668.c (carved by tools/carve.py)
+0x0800293C 0x08002B04 c_code early_293c # src/early_293c.c (carved by tools/carve.py)
+0x08002B04 0x08003110 c_code early_2b04 # src/early_2b04.c (carved by tools/carve.py)
+0x08003110 0x080031B8 c_code early_3110 # src/early_3110.c (carved by tools/carve.py)
+0x080031B8 0x08003484 thumb_code game_code_early_080011ac_08002378_08003110 [split]
+0x08003484 0x08003888 c_code early_3484 # src/early_3484.c (carved by tools/carve.py)
+0x08003888 0x08003964 thumb_code game_code_early_080011ac_08002378_08003110_08003888 [split]
+0x08003964 0x08004000 c_code early_3964 # src/early_3964.c (carved by tools/carve.py)
+0x08004000 0x08004734 c_code early_4000 # src/early_4000.c (carved by tools/carve.py)
+0x08004734 0x08004984 c_code early_4734 # src/early_4734.c (carved by tools/carve.py)
+0x08004984 0x08004D6C thumb_code game_code_early_080011ac_08002378_08003110_08003888_08004000 [split]
+0x08004D6C 0x08004FEC c_code early_4d6c # src/early_4d6c.c (carved by tools/carve.py)
+0x08004FEC 0x08005228 c_code early_4fec # src/early_4fec.c (carved by tools/carve.py)
+0x08005228 0x080055B0 c_code early_5228 # src/early_5228.c (carved by tools/carve.py)
+0x080055B0 0x08005654 c_code early_55b0 # src/early_55b0.c (carved by tools/carve.py)
+0x08005654 0x080058E4 thumb_code game_code_early_080011ac_08002378_08003110_08003888_08004000_08004fec_08005654 [split]
+0x080058E4 0x08005ACC c_code early_58e4 # src/early_58e4.c (carved by tools/carve.py)
+0x08005ACC 0x08005C4C thumb_code game_code_early_080011ac_08002378_08003110_08003888_08004000_08004fec_08005654_08005acc [split]
+0x08005C4C 0x08005D9C c_code early_5c4c # src/early_5c4c.c (carved by tools/carve.py)
+0x08005D9C 0x08006464 c_code early_5d9c # src/early_5d9c.c (carved by tools/carve.py)
+0x08006464 0x08006AC8 c_code early_6464 # src/early_6464.c (carved by tools/carve.py)
+0x08006AC8 0x08006CD4 thumb_code game_code_early_080011ac_08002378_08003110_08003888_08004000_08004fec_08005654_08005acc_08005d9c [split]
+0x08006CD4 0x08006D18 c_code early_6cd4 # src/early_6cd4.c (carved by tools/carve.py)
+0x08006D18 0x08006D28 c_code early_6d18 # src/early_6d18.c (carved by tools/carve.py)
+0x08006D28 0x08006E8C thumb_code game_code_early_080011ac_08002378_08003110_08003888_08004000_08004fec_08005654_08005acc_08005d9c_08006d18 [split]
+0x08006E8C 0x08006E9C c_code early_6e8c # src/early_6e8c.c (carved by tools/carve.py)
+0x08006E9C 0x08007004 thumb_code game_code_early_080011ac_08002378_08003110_08003888_08004000_08004fec_08005654_08005acc_08005d9c_08006d18_08006e9c [split]
+0x08007004 0x08007300 c_code early_7004 # src/early_7004.c (carved by tools/carve.py)
 0x08007300 0x080075B8 c_code main # src/main.c (carved by tools/carve.py)
 0x080075B8 0x080CD89C thumb_code game_code_and_rodata [split] # ends where the m4a engine begins (umul3232H32); engine carved out in issue #52
 0x080CD89C 0x080CE520 thumb_code m4a_1 [split] # m4a asm core (pret m4a_1.s equivalent): hand-scheduled SDK asm, stays asm forever; SoundMainRAM ROM image embeds an ARM-mode mixer loop (rom-map section 8.2, issue #52)
