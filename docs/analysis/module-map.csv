@@ -1,0 +1,43 @@
+id,start,end,size,functions,ptr_dispatched,blocks,mean_fn,max_fn,pool_pct,ram_cells,jump_tables,anchor_tables,task_types,ext_callers,ext_deps,difficulty,name,evidence
+M01,0x08007300,0x080075B8,0x2B8,1,1,0,0x2B8,0x2B8,16.7,7,1,0,0,0,8,3,main,already landed (c_code)
+M02,0x080075B8,0x0800B920,0x4368,110,15,3,0x9C,0x37C,19.7,161,7,1,5,29,6,3,game mode + screen/asset loader,"class-0 task types #0-2; game-state cells; LZ77UnCompVram x21, HuffUnComp x6; called from AgbMain"
+M03,0x0800B920,0x08010358,0x4A38,83,43,3,0xE4,0x40C,16.0,93,2,0,22,2,6,4,menu / UI task bank,22 class-4 task types #238-259; key auto-repeat + decimal digit buffer; called from AgbMain and the save module
+M04,0x08010358,0x08017668,0x7310,67,64,4,0x1B7,0x7C0,7.3,15,0,0,2,1,3,3,player-character state bodies?,"64/67 functions pointer-dispatched from the 71-entry table @0x08731FA8 (shared with the next module); TaskYieldTrampoline x1340, the densest in the ROM; sprite draw x261"
+M05,0x08017668,0x0801A8C8,0x3260,23,20,3,0x230,0xDFC,7.5,31,0,0,0,10,3,3,player-character driver?,"task type #3; 20/23 pointer-dispatched; called by every stage module, calls the bank above"
+M06,0x0801A8C8,0x08021B18,0x7250,56,1,4,0x20A,0xB42,20.5,82,0,0,0,11,2,5,terrain / collision query (pure leaf),zero outgoing calls except ArcTan2 x3; 1303 pool refs into the 0x030054E0-0x030055B0 room descriptor; 334 into the 0x100-stride index tables @0x087328F0-0x087339F0
+M07,0x08021B18,0x080296A0,0x7B88,154,24,4,0xCD,0x87A,21.3,161,15,1,1,34,8,6,level / room builder + tilemap upload,writes BG map bases 0x06002000-0x06008000; CpuSet+CpuFastSet x25; 15 jump tables; EWRAM working set 0x02005000-0x0200B080; indexes 0x087E1D58; drives the next module x195
+M08,0x080296A0,0x08030804,0x7164,153,42,4,0xBD,0x844,12.2,82,1,2,17,3,4,3,camera / BG scroll + tilemap streaming,all eight BGxHOFS/VOFS 16.16 shadows; 15 class-3 task types #221-236; task position/draw x18
+M09,0x08030804,0x08036280,0x5A7C,60,27,3,0x182,0x888,10.5,62,17,0,1,13,13,5,stage manager A,task type #5 (class 1); 17 jump tables; calls the stage support library x151 and the script runner x23
+M10,0x08036280,0x0803CD60,0x6AE0,41,35,4,0x297,0x1000,7.6,39,21,0,0,1,11,4,stage script runner,21 jump tables; 35/41 pointer-dispatched; task engine x14; calls the stage support library x266
+M11,0x0803CD60,0x080449C8,0x7C68,123,46,4,0x102,0x85E,9.8,50,18,4,0,18,9,5,stage support library,fan-in from every stage module (266+171+165+159+151); hot leaves 0x08040B40 x195 / 0x080413A4 x165; link-aware SE gate 0x0803E34C; 43-entry rodata table @0x0803EC48
+M12,0x080449C8,0x08047FE8,0x3620,22,21,2,0x275,0x694,7.8,10,4,0,0,1,7,3,large actor bank A,"22 functions, 21 pointer-dispatched, mean 0x275; TaskYieldTrampoline x244; sprite draw x89"
+M13,0x08047FE8,0x0804CC7C,0x4C94,27,23,3,0x2C2,0x1000,7.6,16,7,0,0,4,7,3,large actor bank B,"27 functions, 23 pointer-dispatched, mean 0x2c2; TaskYieldTrampoline x317; palette-fade calls; level_graphics_palettes refs x24"
+M14,0x0804CC7C,0x08053AF4,0x6E78,84,73,4,0x150,0xA4A,10.5,24,7,2,1,5,9,3,stage manager B,task type #6 (class 1); anchor tables @0x0873B664 (25) and @0x0873B77C (13); calls the stage support library x159
+M15,0x08053AF4,0x0805AFAC,0x74B8,86,78,5,0x15B,0x670,8.8,24,5,1,1,0,7,3,link multiplayer mode,SIO multi-play (early_6464) x162 - by far the heaviest link user in the bulk; task type #7 (class 1); 49-entry anchor table @0x0873B928
+M16,0x0805AFAC,0x08062584,0x75D8,88,53,4,0x156,0x924,7.9,38,3,1,10,10,6,3,actor / effect support library B,fan-in 76+41+27+25+18 from the stage modules; TaskYieldTrampoline x1052; touches each BG shadow once
+M17,0x08062584,0x080692FC,0x6D78,244,49,4,0x72,0xA04,11.6,63,7,2,2,24,8,3,struct Task field API (actor core),"highest fan-in in the ROM (385+350+313+208+191+190...); 244 small accessors over gUnk_03002490 (current task); hot leaves 0x0806395C x825, 0x08063E14 x265"
+M18,0x080692FC,0x08070EC0,0x7BC4,256,148,4,0x7B,0x474,12.1,24,7,4,31,18,10,1,actor core part 2 + class-1 task bodies,"31 task types (#140-172, 19 of class 1); 256 functions, 148 pointer-dispatched; _call_via_r0 x17; calls the Task API x137"
+M19,0x08070EC0,0x08078B68,0x7CA8,218,151,5,0x92,0x83A,11.6,38,5,8,11,4,7,2,actor bank C (11 class-3 tasks),8 anchor tables in 0x0873F-0x08740; TaskYieldTrampoline x691; sprite draw x172
+M20,0x08078B68,0x0807F044,0x64DC,390,347,5,0x42,0x1C0,15.4,11,1,20,21,0,5,2,enemy/object behaviour bank 1,"390 functions, mean 0x42, 347 pointer-dispatched, 20 anchor tables; no BL callers at all; 21 task types"
+M21,0x0807F044,0x08082E68,0x3E24,188,179,3,0x54,0x190,13.9,11,1,10,9,0,4,1,enemy/object behaviour bank 2,"188 functions, mean 0x54, 179 pointer-dispatched, 10 anchor tables; 9 task types"
+M22,0x08082E68,0x080860F8,0x3290,119,112,3,0x6C,0x2B0,13.2,8,0,8,8,0,4,1,enemy/object behaviour bank 3,"119 functions, mean 0x6c, 112 pointer-dispatched, 8 anchor tables; 8 task types"
+M23,0x080860F8,0x0808CCE8,0x6BF0,285,266,5,0x60,0x1F8,14.0,6,10,14,10,0,3,3,enemy/object behaviour bank 4,"285 functions, mean 0x60, 266 pointer-dispatched, 14 anchor tables; sprite draw x511"
+M24,0x0808CCE8,0x0809000C,0x3324,157,131,2,0x53,0x304,13.0,9,6,8,11,0,4,1,enemy/object behaviour bank 5,"157 functions, mean 0x53, 131 pointer-dispatched, 8 anchor tables; 11 task types"
+M25,0x0809000C,0x08093F64,0x3F58,121,109,3,0x86,0x340,12.8,12,1,4,10,0,3,1,enemy/object behaviour bank 6,"121 functions, mean 0x86, 109 pointer-dispatched, 4 anchor tables; 10 task types"
+M26,0x08093F64,0x080988F8,0x4994,140,100,3,0x86,0x404,15.0,15,4,4,7,0,3,2,enemy/object behaviour bank 7,"140 functions, 100 pointer-dispatched, 4 anchor tables; sprite draw x339; 7 task types"
+M27,0x080988F8,0x0809BA44,0x314C,140,122,2,0x5A,0x150,13.9,6,4,3,5,0,4,1,enemy/object behaviour bank 8,"140 functions, mean 0x5a, 122 pointer-dispatched; anchor tables @0x08745630 (38) and @0x0874574C (48)"
+M28,0x0809BA44,0x080A1590,0x5B4C,198,135,4,0x76,0x35C,11.2,29,3,5,7,0,5,1,enemy/object behaviour bank 9,"198 functions, 135 pointer-dispatched, 5 anchor tables; sprite draw x487"
+M29,0x080A1590,0x080A5644,0x40B4,221,153,3,0x4A,0x100,15.4,21,0,5,9,0,4,2,enemy/object behaviour bank 10,"221 functions, mean 0x4a, 153 pointer-dispatched; 80-entry anchor table @0x08748624"
+M30,0x080A5644,0x080AA338,0x4CF4,130,110,4,0x97,0x5AC,12.0,30,2,2,12,0,4,1,enemy/object behaviour bank 11,"130 functions, 110 pointer-dispatched; anchor tables @0x08748EB8 (53) and @0x08749150 (20); 12 task types"
+M31,0x080AA338,0x080AE3BC,0x4084,121,96,4,0x88,0x378,14.3,21,1,2,18,0,7,2,enemy/object behaviour bank 12,"121 functions, 96 pointer-dispatched; 18 task types; Div x5"
+M32,0x080AE3BC,0x080B2FE8,0x4C2C,129,96,3,0x97,0x320,11.9,15,4,5,15,0,5,1,enemy/object behaviour bank 13,"129 functions, 96 pointer-dispatched, 5 anchor tables; 15 task types; TaskYieldTrampoline x412"
+M33,0x080B2FE8,0x080B6154,0x316C,108,69,4,0x75,0x380,14.2,58,5,5,9,8,7,3,HUD / overlay effects?,9 task types (5 of class 4); LZ77UnCompVram x6 + CpuSet x3 + a DMA0 register pair; VRAM transfer queue x20; EWRAM x102
+M34,0x080B6154,0x080B9D0C,0x3BB8,106,26,3,0x90,0x384,16.9,98,0,2,0,12,2,3,save file / SRAM records + options,"WriteSramEx x5, ReadSram x2, sram_driver x7 - the only SRAM user in the bulk; 98 RAM cells; direct REG_BG1HOFS/REG_BG2HOFS writes"
+M35,0x080B9D0C,0x080BDA2C,0x3D20,193,96,2,0x51,0x1E4,15.1,52,6,4,2,3,3,3,game-mode flow + link lobby,"requested/next game state x7, link session state, link-mode flag, number of linked players; called from AgbMain; 193 small functions"
+M36,0x080BDA2C,0x080C1FFC,0x45D0,117,91,3,0x98,0x314,12.4,22,0,4,1,1,2,1,sub-game / bonus mode?,41-entry anchor table @0x08756668 covering 0x080BDAB4-0x080C1B30; reached only from the game-mode flow module; task type #95
+M37,0x080C1FFC,0x080C6420,0x4424,82,27,3,0xD4,0x6B8,10.7,60,2,1,1,2,5,4,FIR-coefficient effect engine,the consumer rom-map section 2 seg 10 predicted: 22 pool refs into lib_misc + 7 into lib_rodata_fir_tables (0x080CFF00 tables); Div x10 / Mod x4 / __divsi3 x5; EWRAM x183
+M38,0x080C6420,0x080CD89C,0x747C,110,70,6,0x10F,0x918,11.1,83,2,4,7,3,6,4,intro / cutscene / ending sequences?,TaskYieldTrampoline x826; 28 compressed_graphics refs; palette fade + BLD shadows; task types #260-264; called from AgbMain and the mode manager
+M39,0x080CD89C,0x080CE520,0xC84,40,24,0,0x50,0x39E,2.5,2,0,0,0,3,1,1,m4a_1,already landed (thumb_code)
+M40,0x080CE520,0x080CEFB4,0xA94,31,0,0,0x57,0x118,14.6,8,0,0,0,7,1,2,m4a_c1,already landed (c_code)
+M41,0x080CEFB4,0x080CF588,0x5D4,4,2,0,0x175,0x474,7.2,1,0,0,0,0,0,2,m4a_cgb,already landed (c_code)
+M42,0x080CF588,0x080CFA4C,0x4C4,19,13,0,0x40,0x158,4.3,2,1,0,0,3,0,1,m4a_ctrl,already landed (c_code)

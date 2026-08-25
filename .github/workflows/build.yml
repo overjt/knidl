@@ -29,8 +29,8 @@ jobs:
 
       # ----- Checks that never require baserom.gba (always run) -----
 
-      - name: Python tooling check (tools/gbafix.py, tools/symdb.py, tools/symdb_check.py, tools/split.py)
-        run: docker run --rm -v "$PWD":/src -w /src knidl-builder python3 -m py_compile tools/gbafix.py tools/symdb.py tools/symdb_check.py tools/split.py
+      - name: Python tooling check (tools/gbafix.py, tools/symdb.py, tools/symdb_check.py, tools/split.py, tools/modmap.py)
+        run: docker run --rm -v "$PWD":/src -w /src knidl-builder python3 -m py_compile tools/gbafix.py tools/symdb.py tools/symdb_check.py tools/split.py tools/modmap.py
 
       - name: Perl tooling check (tools/calcrom.pl)
         run: docker run --rm -v "$PWD":/src -w /src knidl-builder perl -c tools/calcrom.pl
@@ -151,6 +151,15 @@ jobs:
         run: |
           make split
           git diff --exit-code -- asm data
+
+      # Same contract for the module map (issue #34): docs/analysis/
+      # module-map.csv must regenerate byte-for-byte from the committed
+      # tools/modmap.py (curated names included).
+      - name: Module map regeneration check (make modmap)
+        if: steps.baserom.outputs.have == 'true'
+        run: |
+          make modmap
+          git diff --exit-code -- docs/analysis/module-map.csv
 
       - name: Seed the Actions cache with the verified baserom
         if: >-

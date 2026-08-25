@@ -86,7 +86,7 @@ ALL_OBJS  := $(ASM_OBJS) $(DATA_OBJS) $(SRC_OBJS)
 
 ELF := $(BUILD_DIR)/$(ROM:.gba=.elf)
 
-.PHONY: all compare check-headers progress symbols split clean
+.PHONY: all compare check-headers progress symbols split modmap clean
 
 all: $(ROM)
 
@@ -148,6 +148,13 @@ symbols: baserom.gba tools/symdb.py tools/symdb_check.py docs/analysis/segments.
 	python3 tools/symdb.py --rom baserom.gba --segments docs/analysis/segments.txt --out-dir docs/analysis
 	python3 tools/symdb_check.py --rom baserom.gba --symbols docs/analysis/symbols.csv --callgraph docs/analysis/callgraph.csv --segments docs/analysis/segments.txt
 
+# Subsystem clustering of the bulk game code (issue #34): regenerate
+# docs/analysis/module-map.csv from the symbol DB + call graph + baserom.
+# The narrative map lives in docs/analysis/module-map.md; pass --report to
+# get the full per-module evidence dump that document is written from.
+modmap: baserom.gba tools/modmap.py docs/analysis/segments.txt docs/analysis/symbols.csv docs/analysis/callgraph.csv
+	python3 tools/modmap.py --rom baserom.gba
+
 # Extract configured ROM ranges into labeled, byte-identical assembly
 # (issue #23; see docs/splitting.md).  For each segment in tools/
 # split_config.json this writes asm/<name>.s, deletes the data/<name>.s
@@ -162,7 +169,7 @@ else
 
 DOCKER_RUN := docker run --rm -v $(CURDIR):/src -w /src $(IMAGE)
 
-.PHONY: image all compare check-headers progress symbols split clean
+.PHONY: image all compare check-headers progress symbols split modmap clean
 
 image:
 	docker build -t $(IMAGE) .
@@ -184,6 +191,9 @@ symbols: image
 
 split: image
 	$(DOCKER_RUN) make split INSIDE_DOCKER=1
+
+modmap: image
+	$(DOCKER_RUN) make modmap INSIDE_DOCKER=1
 
 clean:
 	rm -rf $(BUILD_DIR) $(ROM)
