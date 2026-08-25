@@ -23,6 +23,8 @@ gUnk_0200EB94 = 0x0200EB94
 gUnk_0200EB98 = 0x0200EB98
 	.global	gUnk_0200EBA0
 gUnk_0200EBA0 = 0x0200EBA0
+	.global	gUnk_0200EBA4
+gUnk_0200EBA4 = 0x0200EBA4
 	.global	gUnk_0200EBA8
 gUnk_0200EBA8 = 0x0200EBA8
 	.global	gUnk_0200EBAC
@@ -325,6 +327,8 @@ gMPlayInfo_SE2 = 0x03006890
 gMPlayMemAccArea = 0x030068D0
 	.global	gMPlayInfo_SE3
 gMPlayInfo_SE3 = 0x030068E0
+	.global	gUnk_03006920
+gUnk_03006920 = 0x03006920
 	.global	gMPlayTrack_BGM
 gMPlayTrack_BGM = 0x03006930
 	.global	gMPlayTrack_SE1
@@ -337,6 +341,10 @@ gMPlayTrack_SE3 = 0x03006F70
 gSoundMainRAM_Buffer = 0x03007150
 	.global	SOUND_INFO_PTR
 SOUND_INFO_PTR = 0x03007FF0
+	.global	gUnk_04000120
+gUnk_04000120 = 0x04000120
+	.global	gUnk_04000208
+gUnk_04000208 = 0x04000208
 	.global	gUnk_0872EB14
 gUnk_0872EB14 = 0x0872EB14
 	.global	gUnk_0872EB2C

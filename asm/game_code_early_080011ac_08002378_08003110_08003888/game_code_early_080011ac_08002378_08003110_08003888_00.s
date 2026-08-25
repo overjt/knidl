@@ -91,7 +91,7 @@ sub_08003888:
 	bx	r0
 	movs	r0, r0
 	.word	gUnk_03001EF8
-	.word	0x04000208
+	.word	gUnk_04000208
 	.word	0x0000FFFE
 	.word	gUnk_0200EBC0
 	.word	0x01000018

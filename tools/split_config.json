@@ -209,7 +209,16 @@
     "sub_080044b8",
     "sub_080045e8",
     "sub_0800469c",
-    "sub_08004714"
+    "sub_08004714",
+    "sub_08004734",
+    "sub_08004968",
+    "sub_08004d6c",
+    "sub_08004db4",
+    "sub_08004dd8",
+    "sub_08004e9c",
+    "sub_08004eac",
+    "sub_08004f98",
+    "sub_08004fb0"
   ],
   "extra_labels": {
     "0x080CFC40": "_call_via_r4",
@@ -247,6 +256,7 @@
     "0x0200EB94": "gUnk_0200EB94",
     "0x0200EB98": "gUnk_0200EB98",
     "0x0200EBA0": "gUnk_0200EBA0",
+    "0x0200EBA4": "gUnk_0200EBA4",
     "0x0200EBA8": "gUnk_0200EBA8",
     "0x0200EBAC": "gUnk_0200EBAC",
     "0x0200EBB0": "gUnk_0200EBB0",
@@ -398,12 +408,15 @@
     "0x03006890": "gMPlayInfo_SE2",
     "0x030068D0": "gMPlayMemAccArea",
     "0x030068E0": "gMPlayInfo_SE3",
+    "0x03006920": "gUnk_03006920",
     "0x03006930": "gMPlayTrack_BGM",
     "0x03006BB0": "gMPlayTrack_SE1",
     "0x03006D90": "gMPlayTrack_SE2",
     "0x03006F70": "gMPlayTrack_SE3",
     "0x03007150": "gSoundMainRAM_Buffer",
     "0x03007FF0": "SOUND_INFO_PTR",
+    "0x04000120": "gUnk_04000120",
+    "0x04000208": "gUnk_04000208",
     "0x0872EB14": "gUnk_0872EB14",
     "0x0872EB2C": "gUnk_0872EB2C",
     "0x0872EB38": "gUnk_0872EB38",
@@ -428,6 +441,10 @@
     },
     {
       "name": "game_code_early_080011ac_08002378_08003110_08003888_08004000",
+      "chunk_bytes": 65536
+    },
+    {
+      "name": "game_code_early_080011ac_08002378_08003110_08003888_08004000_08004fec",
       "chunk_bytes": 65536
     },
     {

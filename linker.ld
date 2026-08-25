@@ -138,8 +138,22 @@ SECTIONS
         build/src/early_4000.o(.text)
     } > ROM
 
-    .game_code_early_080011ac_08002378_08003110_08003888_08004000 0x08004734 : {
+    /* early_4734 — decompiled to C (src/early_4734.c, carved by tools/carve.py) */
+    .early_4734 0x08004734 : {
+        build/src/early_4734.o(.text)
+    } > ROM
+
+    .game_code_early_080011ac_08002378_08003110_08003888_08004000 0x08004984 : {
         KEEP(*(.game_code_early_080011ac_08002378_08003110_08003888_08004000)) KEEP(*(.game_code_early_080011ac_08002378_08003110_08003888_08004000.tail))
+    } > ROM
+
+    /* early_4d6c — decompiled to C (src/early_4d6c.c, carved by tools/carve.py) */
+    .early_4d6c 0x08004D6C : {
+        build/src/early_4d6c.o(.text)
+    } > ROM
+
+    .game_code_early_080011ac_08002378_08003110_08003888_08004000_08004fec 0x08004FEC : {
+        KEEP(*(.game_code_early_080011ac_08002378_08003110_08003888_08004000_08004fec)) KEEP(*(.game_code_early_080011ac_08002378_08003110_08003888_08004000_08004fec.tail))
     } > ROM
 
     /* Game code + rodata (Thumb) — bulk of the game logic */

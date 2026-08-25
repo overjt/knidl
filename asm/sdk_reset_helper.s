@@ -17,5 +17,5 @@ SoftReset:
 	.word	0x701A2200
 	.word	0x469D3BFA
 	.word	0xDF00DF01
-	.word	0x04000208
+	.word	gUnk_04000208
 	.word	0x03007FFA

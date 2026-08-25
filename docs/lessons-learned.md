@@ -783,6 +783,53 @@ tell but reproduces fine non-volatile. Adding volatile there blew up register
 pressure and pushed a base address into `ip`. Only reach for volatile when the
 re-read is WITHIN one basic block.
 
+### 3.62 An MMIO register can be DERIVED from another live I/O address
+3.9/3.19 said RAM cells must be extern symbols rather than cast constants; the
+same applies to I/O registers. `REG_IME` written as the cast literal
+`0x04000208` came out as `adds r1,#252` off the still-live `0x0400010C`
+(REG_TM3CNT_L) — that deletes one address pseudo and shifts the whole
+function's allocation by one hard register (98 bytes off, immovable). Declaring
+it `extern vu16 gUnk_04000208;` gives it its own pool word and the function
+matched instantly. **Diagnostic: the ROM pools an I/O address that your
+candidate derives with an `adds` off a neighbouring register.**
+
+### 3.63 A cycle-exact delay loop is unreachable from pure C
+The ROM's `subs r0,r0,r1; bgt` has no `cmp`; old_agbcc ALWAYS emits
+`cmp rX,#0` after the subtract (verified across five loop spellings and both
+compilers). Such a function needs inline asm, e.g.
+`asm volatile("1:\n\tsub %0, %0, %2\n\tbgt 1b" : "=r"(c) : "0"(c), "r"(gap));`
+with `register` pins on the operand pair. This is a legitimate exception, not a
+failure to find the shape.
+
+### 3.64 Cross-jump DIRECTION is source order
+When several `return K;` sites must collapse onto ONE block placed at the END of
+the function, gcc keeps the EARLIEST copy and branches backwards into it — the
+opposite of what the ROM often shows. Write them as `goto done;` with
+`done: return K;` last. Same lever for a shared tail call: put `return f(…)` at
+the end of the first case body and `goto` it from the later ones. Companion to
+3.51 (which is about needing the same variable).
+
+### 3.65 `orr rD, rS` always ties to the SHIFTED operand in `lo | (hi << 8)`
+The byte value reaches the `ior` as `(subreg:SI (reg:QI …))`, and the
+`.regmove` dump only ever prints "Could fix operand 2" — regmove skips a
+QI-subreg operand outright. When the ROM ties to the byte instead, the only fix
+found is pinning both with `register u32 lo asm("r1"); register u32 hi
+asm("r0");` in a block. Third structural exception under 3.35, alongside the
+hard-register-root rule and the paradoxical-subreg case of 3.60.
+
+### 3.66 `volatile` on a `u8 *` struct member fixes byte-read ORDER
+`mp->p[0xAC] | (mp->p[0xAD] << 8)` reads 0xAD first — fold hoists the complex
+operand and the scheduler reorders the two `ldrb`s. Typing the member `vu8 *`
+forces source order. Related: **a local pointer to a struct byte field
+manufactures a second address pseudo AND suppresses a giv** — taking
+`u8 *p = &mp->field;` inside a loop while later code still says `mp->field`
+reproduces a `mov ip,r2; mov r8,ip` pair, and the extra pseudo removes the free
+register loop.c was using to strength-reduce an unrelated array walk.
+
+### 3.67 A volatile switch operand is re-loaded for the table index
+`switch (cell)` on a `vs32` emits an `ldr` for the range check AND a second
+`ldr` before the `lsls #2`; a non-volatile operand reuses the first register.
+
 ## 4. Splitting ROM ranges into asm (tools/split.py)
 
 ### 4.1 objdump text only round-trips under `.syntax unified`
