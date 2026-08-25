@@ -240,7 +240,9 @@ module calls them and their signatures decide how `struct Task` is spelled in
 | **5. Modes, UI, save, effects** | M02, M03, M33, M34, M35, M37, M38 | 124 KiB | Reachable from `AgbMain`; needs the game-state cells and the save format. M34 is the only SRAM user; M37 is the only FIR-table consumer. |
 
 Within a wave, take the modules in `module-map.csv` order of
-`(difficulty, ext_deps, size)`; that ordering is:
+`(difficulty, ext_deps, size)`. That ordering, ignoring the wave grouping, is
+below; the filing order of the child issues applies the wave first and this
+ordering inside it:
 
 | # | Module | Size | Fns | Difficulty | Modules it calls | Modules calling it | Task types |
 |---|--------|------|-----|-----------|------------------|--------------------|------------|
