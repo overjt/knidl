@@ -38,7 +38,7 @@ extern void sub_08006338(s32 a);
 extern void sub_080684a4(void);
 extern void TaskYieldTrampoline(u32 a);
 extern u16 gUnk_03001EA4;
-extern void sub_08068a2c(s32 a, s32 b);
+extern s32 sub_08068a2c(s32 a, s32 b);
 extern void sub_0803e1b8(u32 a, u32 b, s32 c);
 extern void sub_080031b8(u32 a);
 extern void sub_080061c0(s32 a, s32 b);
@@ -1014,4 +1014,72 @@ void sub_08068828(void)
     t->unk44 = t->unk18;
     t->unk4C = 0;
     t->unk50 = 0;
+}
+void sub_08068840(void)
+{
+    struct Task *t;
+    struct Task *u;
+    struct Task *v;
+
+    t = gUnk_03002490;
+    t->unk48 = gUnk_02007D00[2];
+    t->unk4A = gUnk_02007D00[3];
+    t->unk4C = t->unk48 << 16;
+    t->unk50 = t->unk4A << 16;
+    t->unk43 = gUnk_02007D00[4];
+    u = gUnk_03002490;
+    u->unk2C = -u->unk43;
+    u->unk28 = 8;
+    if (gUnk_03001F30 == 0)
+        u->unk3C = 0x133;
+    else
+        sub_08006338(0x123B);
+    sub_080061c0(0x8000, 0x5A5A5A5A);
+    sub_0800622c(0xFFFD0000, 0x2000, 0x30000);
+    gUnk_03002490->unk7A = 0;
+    if (sub_08068a2c(-8, 256) != 0)
+        sub_0803e1b8(1, 96, gCurTaskIdx);
+    v = gUnk_03002490;
+    if (v->unk78 != 0)
+        v->unk34 = 48;
+    else
+        v->unk34 = 32;
+}
+void sub_08068920(s32 i, u8 c)
+{
+    struct Task *t;
+
+    t = &gUnk_03002790[i];
+    t->unk18 = gCurTaskIdx;
+    t->unk14 = c;
+    sub_08006148(sub_080673ec, i);
+}
+void sub_08068950(s16 x, s16 y, s16 d)
+{
+    gUnk_02007D00[2] = x;
+    gUnk_02007D00[3] = y;
+    gUnk_02007D00[4] = d;
+}
+void sub_0806896c(void)
+{
+    struct Task *t;
+    struct Task *u;
+
+    if (gUnk_03001F30 != 0)
+        return;
+    t = gUnk_03002490;
+    if (t->unk28 <= 0)
+    {
+        t->unk3C += t->unk2C;
+        t->unk28 = 8;
+        if (t->unk3C > 0x135)
+            t->unk3C = 294;
+        u = gUnk_03002490;
+        if (u->unk3C <= 0x125)
+            u->unk3C = 0x135;
+    }
+    else
+    {
+        t->unk28--;
+    }
 }
