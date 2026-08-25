@@ -132,6 +132,13 @@ extern void sub_08064a60(void);
 extern void sub_0806395c(u8 v);
 extern void sub_08067214(void);
 extern void sub_080656b4(void);
+extern u32 gUnk_0873E284[];
+extern u32 gUnk_0873E2F0[];
+extern void sub_08068e04(void);
+extern void sub_080061c0(s32 a, s32 b);
+extern void sub_080062c4(void);
+extern void sub_08067408(void);
+extern void sub_080059fc(void);
 extern s32 sub_08064d9c(u32 sub, u32 type, int p2Arg, int xArg, int yArg,
                         int prioArg, int altArg);
 extern s16 gUnk_030023E4;
@@ -1920,4 +1927,107 @@ void sub_080671c0(void)
     sub_08067170();
     sub_0806395c(0);
     sub_08002e98(gUnk_03002490->unk14, 1, gUnk_0873E280);
+}
+
+void sub_08067214(void)
+{
+    sub_08002e98(gUnk_03002490->unk15, 1, gUnk_0873E284);
+    if (gUnk_03004CA0[gCurTaskIdx] != -1)
+    {
+        sub_08068e04();
+        sub_08069b44();
+    }
+}
+
+/* Task body: the player's "spin out and vanish" death animation. */
+void sub_08067258(void)
+{
+    struct Task *t;
+
+    gUnk_03002490->unk15 = 0;
+    gUnk_03002490->unk7A = 0;
+    gUnk_03002490->unk24 = 2;
+    sub_080061c0(0x20000, 0x5A5A5A5A);
+    t = gUnk_03002490;
+    t->unk58 = 0xFFFE8000;
+    t->unk3C = 13;
+    TaskYieldTrampoline(2);
+    t = gUnk_03002490;
+    t->unk3C--;
+    TaskYieldTrampoline(2);
+    t = gUnk_03002490;
+    t->unk3C--;
+    TaskYieldTrampoline(2);
+    sub_080061c0(0x8000, 0x5A5A5A5A);
+    t = gUnk_03002490;
+    t->unk58 = 0xFFFF8000;
+    t->unk6C = 0;
+    do
+    {
+        t = gUnk_03002490;
+        t->unk3C = 8;
+        TaskYieldTrampoline(1);
+        t = gUnk_03002490;
+        t->unk3C = 4;
+        TaskYieldTrampoline(3);
+        t = gUnk_03002490;
+        t->unk3C = 10;
+        TaskYieldTrampoline(1);
+        t = gUnk_03002490;
+        t->unk3C = 5;
+        TaskYieldTrampoline(3);
+        t = gUnk_03002490;
+        t->unk3C = 9;
+        TaskYieldTrampoline(1);
+        t = gUnk_03002490;
+        t->unk3C = 6;
+        TaskYieldTrampoline(3);
+        sub_080062c4();
+        t = gUnk_03002490;
+        t->unk3C = 10;
+        TaskYieldTrampoline(1);
+        t = gUnk_03002490;
+        t->unk3C = 7;
+        TaskYieldTrampoline(3);
+        t = gUnk_03002490;
+        t->unk6C++;
+    } while ((s16)t->unk6C <= 3);
+    t = gUnk_03002490;
+    t->unk04 = 0;
+    t->unk3C = 11;
+    TaskYieldTrampoline(2);
+    t = gUnk_03002490;
+    t->unk3C++;
+    TaskYieldTrampoline(2);
+    t = gUnk_03002490;
+    t->unk3C++;
+    TaskYieldTrampoline(1);
+    sub_08063fe0();
+}
+
+void sub_08067378(void)
+{
+}
+
+void sub_0806737c(void)
+{
+    struct Task *t;
+    void **q;
+    u8 *p;
+
+    t = gUnk_03002490;
+    t->unk04 = (u32)sub_08067408;
+    t->unk00 = (u32)sub_080059fc;
+    sub_080062c4();
+    gUnk_03002490->unk43 = 1;
+    t = gUnk_03002490;
+    t->unk3E &= 0x7FFF;
+    t->unk42 = 7;
+    q = &gUnk_03002490->unk88;
+    p = *q;
+    *(u16 *)(p + 66) &= 0xFFEF;
+    p = *q;
+    if (p[6] == 2)
+        p[6] = 0;
+    sub_08002e98(gUnk_03002490->unk14, 11, gUnk_0873E2F0);
 }
