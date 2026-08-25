@@ -33,6 +33,13 @@ extern void sub_0806896c(void);
 extern void sub_08006338(s32 a);
 extern void sub_080684a4(void);
 extern void TaskYieldTrampoline(u32 a);
+extern u16 gUnk_03001EA4;
+extern void sub_08068a2c(s32 a, s32 b);
+extern void sub_0803e1b8(u32 a, u32 b, s32 c);
+extern void sub_080031b8(u32 a);
+extern void sub_080061c0(s32 a, s32 b);
+extern void sub_0800622c(s32 a, s32 b, s32 c);
+extern void sub_08006364(s32 a);
 
 void sub_080675e4(void);
 
@@ -196,4 +203,103 @@ void sub_080675e4(void)
             sub_08006338(0x123B);
     }
     gUnk_03002490->unk42 = *p;
+}
+
+/* Task body: the carried task's "thrown" arc. */
+void sub_080676c0(void)
+{
+    struct Task *t;
+    u8 *p;
+
+    t = gUnk_03002490;
+    t->unk00 = (u32)sub_0803d494;
+    t->unk15 = 4;
+    sub_080062c4();
+    sub_08068a2c(-8, 512);
+    if (gUnk_03001F30 == 0)
+        sub_080675e4();
+    t = gUnk_03002490;
+    t->unk28 = gUnk_03002790[t->unk44].unk28;
+    t->unk34 = 0;
+    if (t->unk78 == 0)
+        t->unk34 = 1;
+    if (gUnk_03002490->unk28 == 3)
+        TaskYieldTrampoline(1);
+    else
+        TaskYieldTrampoline(28);
+    if (gCurTaskIdx == gUnk_03002360)
+    {
+        if (gUnk_03001F30 == 0)
+        {
+            p = gUnk_03002490->unk88;
+            if (p[6] == 1)
+                sub_080031b8(158);
+            else if (gUnk_03001EA4 & 1)
+                sub_080031b8(111);
+            else
+                sub_080031b8(112);
+        }
+        else
+        {
+            sub_080031b8(0x107);
+        }
+    }
+    sub_0803e1b8(1, 96, gCurTaskIdx);
+    t = gUnk_03002490;
+    if (t->unk28 == 2)
+        t->unk43 = -t->unk43;
+    gUnk_03002490->unk7A = 0;
+    sub_080061c0(0x18000, 0x5A5A5A5A);
+    sub_0800622c(0xFFFD8000, 0x2500, 0x30000);
+    p = gUnk_03002490->unk88;
+    if (gUnk_03001F30 == 0 && p[6] == 1)
+    {
+        sub_08006338(0x11C2);
+        TaskYieldTrampoline(3);
+        t = gUnk_03002490;
+        t->unk3C++;
+        TaskYieldTrampoline(4);
+        t = gUnk_03002490;
+        t->unk3C--;
+        TaskYieldTrampoline(2);
+        t = gUnk_03002490;
+        t->unk3C--;
+        TaskYieldTrampoline(4);
+        t = gUnk_03002490;
+        t->unk3C++;
+        TaskYieldTrampoline(2);
+        t = gUnk_03002490;
+        t->unk3C++;
+        TaskYieldTrampoline(4);
+        t = gUnk_03002490;
+        t->unk3C--;
+        TaskYieldTrampoline(3);
+        t = gUnk_03002490;
+        t->unk3C--;
+        TaskYieldTrampoline(5);
+        t = gUnk_03002490;
+        t->unk3C++;
+        TaskYieldTrampoline(3);
+    }
+    else
+    {
+        t = gUnk_03002490;
+        t->unk2C = t->unk43;
+        t->unk28 = 8;
+        if (gUnk_03001F30 == 0)
+            sub_08006364(0x133);
+        else
+            sub_08006338(0x123B);
+        gUnk_03002490->unk6C = 0;
+        do
+        {
+            sub_0806896c();
+            TaskYieldTrampoline(1);
+            t = gUnk_03002490;
+            t->unk6C++;
+        } while ((s16)t->unk6C <= 29);
+    }
+    t = gUnk_03002490;
+    t->unk34 = t->unk34 + 1;
+    sub_08006138();
 }
