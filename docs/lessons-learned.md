@@ -908,6 +908,18 @@ definition of sub_XXXXXXXX"). With several agents delivering in parallel this
 red-lines the tree for everyone. Keep pending deliverables outside `src/` (this
 repo uses a gitignored `pending/`) and move each one in as its range is carved.
 
+### 4.23 A slept Mac can wedge the container runtime beyond `orbctl restart`
+After the host sleeps mid-build, OrbStack can end up in a state where `docker
+ps`, `docker version` AND `orbctl restart` all hang indefinitely (no output, no
+timeout). Every agent depending on the toolchain stalls at once, which looks
+like many independent failures rather than one environment fault. Recovery that
+worked: `pkill -f "OrbStack Helper"; pkill -x OrbStack`, wait, `open -ga
+OrbStack`, then confirm with `docker image inspect knidl-builder` and a real
+`make compare` before resuming anything. Nothing is lost — `build/` is
+regenerable and committed work is untouched — but re-verify the build rather
+than assuming, and do not diagnose the stalled agents individually until the
+daemon answers.
+
 ## 5. Workflow that worked
 
 The canonical per-function loop (pick → m2c first pass → asmdiff iterate →
