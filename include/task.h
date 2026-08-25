@@ -77,7 +77,7 @@ struct Task
     /*0x82*/ u16 unk82;
     /*0x84*/ u16 unk84;
     /*0x86*/ u16 unk86;
-    /*0x88*/ struct Task *unk88;
+    /*0x88*/ void *unk88;
     /*0x8C*/ struct Actor *unk8C;
 };
 
@@ -171,6 +171,15 @@ struct AnimCmd
 {
     /*0x00*/ s16 unk00;
     /*0x02*/ s16 unk02;
+};
+
+/* 116-byte per-player record at gUnk_03002170 (0x08064EB8). */
+struct PlayerState
+{
+    /*0x00*/ u8 filler00[13];
+    /*0x0D*/ s8 unk0D;
+    /*0x0E*/ s8 unk0E;
+    /*0x0F*/ u8 filler0F[116 - 0x0F];
 };
 
 /* Spawn descriptor sub_08064A78 turns into a class-4 task. */

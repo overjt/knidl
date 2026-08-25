@@ -48,6 +48,7 @@ extern u16 gUnk_030023D8;
 extern u16 gUnk_03001EA4;
 extern s32 gUnk_0873DF14[];
 extern struct Actor gUnk_0200C320[];
+extern struct PlayerState gUnk_03002170[];
 extern void sub_0800a04c(s32 a, u32 b);
 extern s32 sub_08021a40(s16 x, s16 y);
 
@@ -88,6 +89,10 @@ s8 sub_08064a38(void);
 void sub_080636e4(u32 i);
 s32 sub_08064a78(struct ActorSpawn *p);
 s32 sub_08064c1c(u32 type, int xArg, int yArg, int prioArg);
+s32 sub_08064d34(u32 type, u8 keepPrio);
+s32 sub_08064d9c(u32 sub, u32 type, int p2Arg, int xArg, int yArg, int prioArg,
+                 int altArg);
+s32 sub_08064e5c(u32 sub, u32 type, u8 p2);
 
 s32 sub_08063698(u32 type, s32 start)
 {
@@ -1451,4 +1456,108 @@ s32 sub_08064cdc(u32 type, s16 dx, s16 dy, u8 keepPrio)
     else
         prio = 0;
     return sub_08064c1c(type, x, y, prio);
+}
+
+s32 sub_08064d34(u32 type, u8 keepPrio)
+{
+    struct Task *t;
+    s32 x;
+    s32 y;
+    u16 prio;
+
+    t = gUnk_03002490;
+    x = t->unk48;
+    y = t->unk4A;
+    if (keepPrio != 0)
+        prio = t->unk40;
+    else
+        prio = 0;
+    return sub_08064c1c(type, x, y, prio);
+}
+
+s32 sub_08064d6c(u32 type, s16 xArg, s16 yArg, u8 keepPrio)
+{
+    s32 x = xArg;
+    s32 y = yArg;
+    u16 prio;
+
+    if (keepPrio != 0)
+        prio = gUnk_03002490->unk40;
+    else
+        prio = 0;
+    return sub_08064c1c(type, x, y, prio);
+}
+
+/* Spawn a class-5/6 task; the 16-bit arguments are `int` for the same
+   reason as sub_08064C1C's. */
+s32 sub_08064d9c(u32 sub, u32 type, int p2Arg, int xArg, int yArg,
+                 int prioArg, int altArg)
+{
+    struct Task *t;
+    s32 i;
+    u8 p2 = p2Arg;
+    u16 x = xArg;
+    u16 y = yArg;
+    u16 prio = prioArg;
+    u8 alt = altArg;
+
+    i = sub_08063698(type, 32);
+    if (i != -1)
+    {
+        t = &gUnk_03002790[i];
+        if (alt != 0)
+            t->unk72 = 6;
+        else
+            t->unk72 = 5;
+        t->unk76 = sub;
+        t->unk73 = 0;
+        t->unk74 = p2;
+        t->unk48 = x;
+        t->unk4A = y;
+        t->unk4C = x << 16;
+        t->unk50 = y << 16;
+        t->unk44 = gCurTaskIdx;
+        t->unk40 = prio;
+        t->unk8C = &gUnk_0200C320[i];
+        sub_080636e4(i);
+    }
+    return i;
+}
+
+s32 sub_08064e5c(u32 sub, u32 type, u8 p2)
+{
+    struct Task *t;
+
+    t = gUnk_03002490;
+    return sub_08064d9c(sub, type, p2, t->unk48, t->unk4A, 0, 1);
+}
+
+s32 sub_08064e90(u32 sub, u32 type, u8 p2, s16 xArg, s16 yArg)
+{
+    s32 x = xArg;
+    s32 y = yArg;
+
+    return sub_08064d9c(sub, type, p2, x, y, 0, 1);
+}
+
+s32 sub_08064eb8(u8 p2)
+{
+    struct Task *t;
+    struct Actor *a;
+    struct PlayerState *p;
+    s32 i;
+
+    i = sub_08064e5c(0, 68, p2);
+    if (i != -1)
+    {
+        t = &gUnk_03002790[i];
+        t->unk88 = p = &gUnk_03002170[gCurTaskIdx];
+        a = t->unk8C;
+        t->unk18 = p->unk0D;
+        t->unk1C = p->unk0E;
+        t->unk20 = gCurTaskIdx;
+        a->unk00 = p->unk0D;
+    }
+    sub_08064d34(166, 0);
+    return i;
 }
