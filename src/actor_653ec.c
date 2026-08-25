@@ -18,6 +18,10 @@ extern u32 gUnk_0873DF24[];
 extern u8 gUnk_0825088C[];
 extern u8 gUnk_03001470[];
 extern u32 gUnk_0873DF38[][4];
+extern u8 gUnk_0873DF78[];
+extern u8 gUnk_082530C8[];
+extern u32 gUnk_0873DF7C[][3];
+extern u8 gUnk_0873DFAC[];
 extern s16 gUnk_030023E4;
 
 extern u32 sub_08005acc(void);
@@ -392,6 +396,140 @@ void sub_080659b4(void)
         }
         x = gUnk_03002490;
         x->unk18--;
+        TaskYieldTrampoline(1);
+    }
+    TaskDispatchTrampoline();
+}
+
+/* Task body: flash one palette entry on and off. */
+void sub_08065a68(void)
+{
+    struct Task *t;
+    struct Task *u;
+    struct Task *w;
+    struct Task *x;
+    u32 off;
+
+    t = gUnk_03002490;
+    t->unk18 = 2;
+    t->unk1C = 0;
+    off = (t->unk40 >> 12) << 5;
+    off += 26;
+    while (gUnk_02007FB8[gUnk_03002490->unk74] != 0)
+    {
+        u = gUnk_03002490;
+        if (u->unk18 <= 0)
+        {
+            if (u->unk1C != 0)
+                sub_080017e4(2, (u32)gUnk_0873DF78,
+                             (u32)(gUnk_03001470 + off), 2);
+            else
+                sub_080017e4(2, (u32)gUnk_082530C8,
+                             (u32)(gUnk_03001470 + off), 2);
+            w = gUnk_03002490;
+            w->unk18 = 2;
+            w->unk1C ^= 1;
+        }
+        x = gUnk_03002490;
+        x->unk18--;
+        TaskYieldTrampoline(1);
+    }
+    TaskDispatchTrampoline();
+}
+
+/* Task body: cross-fade the actor's palette pair out of gUnk_0873DF7C. */
+void sub_08065b14(void)
+{
+    struct Task *t;
+    struct Task *u;
+    struct Task *v;
+    struct Task *w;
+    struct Task *x;
+    struct Task *y;
+    struct Actor *a;
+
+    t = gUnk_03002490;
+    a = t->unk8C;
+    t->unk28 = 10;
+    t->unk2C = 1;
+    t->unk30 = 2;
+    t->unk34 = 0;
+    while (gUnk_02007FB8[gUnk_03002490->unk74] != 0)
+    {
+        u = gUnk_03002490;
+        u->unk28--;
+        if (u->unk28 == 0)
+        {
+            u->unk28 = 10;
+            u->unk2C++;
+            if (u->unk2C > 2)
+            {
+                u->unk2C = 0;
+                u->unk28 = 2;
+            }
+            v = gUnk_03002490;
+            v->unk30++;
+            if (v->unk30 > 2)
+                v->unk30 = 0;
+            gUnk_03002490->unk34 = 0;
+        }
+        w = gUnk_03002490;
+        if (w->unk30 == 0)
+            w->unk34 = w->unk34 + 16;
+        else
+            w->unk34 = w->unk34 + 128;
+        x = gUnk_03002490;
+        if (x->unk34 > 256)
+            x->unk34 = 256;
+        y = gUnk_03002490;
+        sub_08003014(gUnk_0873DF7C[a->unk0C][y->unk2C],
+                     gUnk_0873DF7C[a->unk0C][y->unk30], (u16)y->unk34, 16,
+                     (u32)(gUnk_03001470 + (y->unk18 << 5)));
+        TaskYieldTrampoline(1);
+    }
+    TaskDispatchTrampoline();
+}
+
+/* Task body: fade the shared palette in, out, or straight to zero. */
+void sub_08065c14(void)
+{
+    struct Task *t;
+    struct Task *u;
+
+    gUnk_03002490->unk20 = 0;
+    while (gUnk_02007FB8[gUnk_03002490->unk74] != 0)
+    {
+        t = gUnk_03002490;
+        switch (t->unk1C)
+        {
+        case 0:
+            t->unk20 += t->unk18;
+            if (t->unk20 > t->unk24)
+            {
+                t->unk20 = t->unk24;
+                t->unk1C = 3;
+            }
+            u = gUnk_03002490;
+            sub_08003014((u32)gUnk_02005E10, (u32)gUnk_0873DFAC,
+                         (u16)u->unk20, 224, (u32)gUnk_030012B0);
+            break;
+        case 1:
+            t->unk20 -= t->unk18;
+            if (t->unk20 < 0)
+            {
+                t->unk20 = 0;
+                t->unk1C = 3;
+            }
+            u = gUnk_03002490;
+            sub_08003014((u32)gUnk_02005E10, (u32)gUnk_0873DFAC,
+                         (u16)u->unk20, 224, (u32)gUnk_030012B0);
+            break;
+        case 2:
+            sub_08003014((u32)gUnk_02005E10, (u32)gUnk_0873DFAC, 0, 224,
+                         (u32)gUnk_030012B0);
+            gUnk_03002490->unk1C = 3;
+            break;
+        }
         TaskYieldTrampoline(1);
     }
     TaskDispatchTrampoline();

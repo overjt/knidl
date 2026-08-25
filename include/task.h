@@ -32,8 +32,8 @@ struct Task
     /*0x15*/ u8 unk15;
     /*0x16*/ u16 unk16;
     /*0x18*/ s32 unk18;
-    /*0x1C*/ u32 unk1C;
-    /*0x20*/ u32 unk20;
+    /*0x1C*/ s32 unk1C;
+    /*0x20*/ s32 unk20;
     /*0x24*/ s32 unk24;
     /*0x28*/ s32 unk28;
     /*0x2C*/ s32 unk2C;
