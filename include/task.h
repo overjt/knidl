@@ -69,7 +69,7 @@ struct Task
     /*0x76*/ u16 unk76;
     /*0x78*/ s16 unk78;
     /*0x7A*/ s8 unk7A;
-    /*0x7B*/ u8 unk7B;
+    /*0x7B*/ s8 unk7B;
     /*0x7C*/ u8 unk7C;
     /*0x7D*/ u8 unk7D;
     /*0x7E*/ s8 unk7E;
@@ -198,7 +198,8 @@ struct AnimCmd
 struct PlayerState
 {
     /*0x00*/ s8 unk00;
-    /*0x01*/ u8 filler01[3];
+    /*0x01*/ u8 unk01;
+    /*0x02*/ u8 filler02[2];
     /*0x04*/ u8 unk04;
     /*0x05*/ u8 unk05;
     /*0x06*/ u8 unk06;
@@ -208,7 +209,9 @@ struct PlayerState
     /*0x0F*/ u8 filler0F[5];
     /*0x14*/ u16 unk14;
     /*0x16*/ u8 unk16;
-    /*0x17*/ u8 filler17[13];
+    /*0x17*/ u8 filler17[11];
+    /*0x22*/ u8 unk22;
+    /*0x23*/ u8 filler23;
     /*0x24*/ u16 unk24;
     /*0x26*/ u16 unk26;
     /*0x28*/ u8 unk28;
@@ -222,7 +225,10 @@ struct PlayerState
     /*0x42*/ u16 unk42;
     /*0x44*/ u8 filler44;
     /*0x45*/ u8 unk45;
-    /*0x46*/ u8 filler46[116 - 0x46];
+    /*0x46*/ u8 filler46[0x5E - 0x46];
+    /*0x5E*/ u16 unk5E;
+    /*0x60*/ u16 unk60;
+    /*0x62*/ u8 filler62[116 - 0x62];
 };
 
 /* Spawn descriptor sub_08064A78 turns into a class-4 task. */

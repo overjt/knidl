@@ -15,6 +15,7 @@ extern u32 gUnk_0873E31C[];
 extern vs16 gUnk_03004CA0[];
 extern u32 gUnk_02007D00[];
 extern struct PlayerState gUnk_03002170[];
+extern s16 gUnk_02005588[];
 
 extern void sub_08002e98(u32 a, u32 b, u32 *c);
 extern void sub_080062e0(s32 i);
@@ -25,8 +26,17 @@ extern void sub_080034f0(s32 a, s32 b);
 extern void sub_0803d1c4(s32 i);
 extern void sub_0803d2d4(s32 i);
 extern void sub_08067108(void);
+extern void sub_08067114(void);
+extern void sub_08032d48(void);
+extern void sub_0803332c(void);
+extern void sub_08032bd0(void);
+extern void sub_0801b7dc(void);
+extern u8 sub_0801b24c(void);
+extern u8 sub_0801af14(void);
+extern u8 sub_0801a8c8(void);
+extern void sub_08069234(u8 a);
 extern void sub_08068a8c(s32 i, u8 flag);
-extern void sub_08068b88(s32 i, u32 b, u32 c, u32 d);
+extern void sub_08068b88(s32 i, u16 b, u8 c, u8 d);
 extern void sub_0806737c(void);
 extern void sub_0803e2d4(void);
 extern void sub_0803e080(void);
@@ -1170,4 +1180,81 @@ void sub_08068a8c(s32 i, u8 flag)
     gUnk_03002170[i].unk45 = b;
     p->unk16 = 255;
     sub_08067108();
+}
+void sub_08068b88(s32 i, u16 b, u8 c, u8 d)
+{
+    struct Task *t;
+    struct PlayerState *p;
+
+    t = &gUnk_03002790[i];
+    p = &gUnk_03002170[i];
+    if (c != 0)
+        sub_0803d1c4(i);
+    else
+        sub_0803d2d4(i);
+    t->unk12 = 1;
+    t->unk42 = 7;
+    t->unk44 = i;
+    t->unk00 = (u32)sub_0803d494;
+    t->unk04 = (u32)sub_08032d48;
+    t->unk08 = (u32)sub_0803332c;
+    if (b == 0)
+    {
+        if (t->unk7B == 0)
+        {
+            if (t->unk7A != 0)
+                p->unk01 = 1;
+            else
+                p->unk01 = 7;
+        }
+        else
+        {
+            if (t->unk7A != 0)
+                p->unk01 = 24;
+            else
+                p->unk01 = 23;
+        }
+    }
+    else
+    {
+        p->unk01 = b;
+    }
+    switch (p->unk0D)
+    {
+    case 7:
+    case 20:
+    case 21:
+        p->unk22 = 2;
+        break;
+    case 24:
+        p->unk01 = 55;
+        break;
+    }
+    sub_08006148(sub_08032bd0, i);
+    if (d != 0)
+        sub_0803e1b8(1, 96, i);
+    p->unk5E = t->unk48;
+    p->unk60 = t->unk4A;
+    if (gUnk_02005588[i] != 0)
+        sub_08067114();
+}
+u32 sub_08068cb4(u8 a)
+{
+    sub_0801b7dc();
+    if (sub_0801b24c() != 0)
+    {
+        sub_08069234(a);
+        return 1;
+    }
+    if (sub_0801af14() != 0)
+    {
+        sub_08069234(a);
+        return 1;
+    }
+    if (sub_0801a8c8() != 0)
+    {
+        sub_08069234(a);
+        return 1;
+    }
+    return 0;
 }
