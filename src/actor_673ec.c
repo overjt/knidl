@@ -406,3 +406,102 @@ void sub_08067a48(void)
         break;
     }
 }
+
+/* Task body: the carried task's "dropped" arc. */
+void sub_08067b24(void)
+{
+    struct Task *t;
+    u8 *p;
+
+    t = gUnk_03002490;
+    t->unk00 = (u32)sub_0803d494;
+    t->unk15 = 6;
+    sub_080062c4();
+    t = gUnk_03002490;
+    t->unk4C = t->unk48 << 16;
+    t->unk50 = t->unk4A << 16;
+    sub_08068a2c(-8, 512);
+    t = gUnk_03002490;
+    t->unk34 = 0;
+    if (t->unk78 == 0)
+        t->unk34 = 1;
+    if (gUnk_03001F30 == 0)
+    {
+        if (gUnk_03002360 == gCurTaskIdx)
+        {
+            p = gUnk_03002490->unk88;
+            if (p[6] == 1)
+                sub_080031b8(158);
+            else if (gUnk_03001EA4 & 1)
+                sub_080031b8(111);
+            else
+                sub_080031b8(112);
+        }
+    }
+    else
+    {
+        sub_080031b8(0x107);
+    }
+    sub_0803e1b8(1, 96, gCurTaskIdx);
+    gUnk_03002490->unk7A = 0;
+    sub_080061c0(0x18000, 0x5A5A5A5A);
+    sub_0800622c(0xFFFD8000, 0x2500, 0x30000);
+    if (gUnk_03001F30 == 0)
+    {
+        t = gUnk_03002490;
+        p = t->unk88;
+        if (p[6] == 1)
+        {
+            sub_08006338(370);
+            TaskYieldTrampoline(3);
+            t = gUnk_03002490;
+            t->unk3C++;
+            TaskYieldTrampoline(4);
+            t = gUnk_03002490;
+            t->unk3C--;
+            TaskYieldTrampoline(2);
+            t = gUnk_03002490;
+            t->unk3C--;
+            TaskYieldTrampoline(4);
+            t = gUnk_03002490;
+            t->unk3C++;
+            TaskYieldTrampoline(2);
+            t = gUnk_03002490;
+            t->unk3C++;
+            TaskYieldTrampoline(4);
+            t = gUnk_03002490;
+            t->unk3C--;
+            TaskYieldTrampoline(3);
+            t = gUnk_03002490;
+            t->unk3C--;
+            TaskYieldTrampoline(5);
+            t = gUnk_03002490;
+            t->unk3C++;
+            TaskYieldTrampoline(3);
+        }
+        else
+        {
+            t->unk2C = t->unk43;
+            t->unk28 = 8;
+            sub_08006364(0x133);
+            gUnk_03002490->unk6C = 0;
+            do
+            {
+                sub_0806896c();
+                TaskYieldTrampoline(1);
+                t = gUnk_03002490;
+                t->unk6C++;
+            } while ((s16)t->unk6C <= 29);
+        }
+    }
+    else
+    {
+        sub_08006338(0x123B);
+        TaskYieldTrampoline(6);
+        sub_08006338(0x1241);
+        TaskYieldTrampoline(26);
+    }
+    t = gUnk_03002490;
+    t->unk34++;
+    sub_08006138();
+}
