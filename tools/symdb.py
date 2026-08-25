@@ -301,6 +301,10 @@ FALSE_POSITIVES = {
     # word 0xFFFFF000 at 0x080633A0, inside sub_08062F88's literal pool,
     # decodes as the same bl pair and lands inside sub_08064398.
     0x080643A2,
+    # 0x080671F8 is the `bx r0` that ends sub_080671C0 (issue #65).  A word
+    # in the compressed-graphics blob at 0x0826ECC8 happens to equal
+    # 0x080671F9, which the rom-pointer heuristic read as a Thumb entry.
+    0x080671F8,
 }
 
 # Curated Thumb entries with NO in-ROM reference (issue #31): dead m4a SDK
@@ -323,6 +327,10 @@ EXTRA_THUMB_ENTRIES = {
                  # between sub_08063E2C and sub_08063EB0 (its own
                  # `push {r4, lr}` prologue and `pop {r4}; pop {r1}; bx r1`
                  # epilogue; verified by byte-matching the range).
+    0x08067074,  # hidden dead export inside M17 (issue #65): "count the
+                 # active players" - nothing in the ROM references it, and
+                 # it sits between sub_08067060 and sub_080670AC with its
+                 # own `push {r4, r5, lr}` prologue.
     0x0806567C,  # hidden dead export inside M17 (issue #65): the
                  # sub_0806555C draw wrapper without the "kill the task
                  # when off-screen" arm, sitting between sub_08065640 and

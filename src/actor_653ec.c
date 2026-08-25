@@ -65,6 +65,11 @@ void sub_08066988(u32 i);
 u8 sub_08066a0c(s16 dx, u16 dy);
 void sub_08066c08(u32 def, u8 b);
 void sub_08066dcc(void);
+void sub_08066f78(void);
+s32 sub_08066fc0(u8 p3, s16 x, s16 y);
+void sub_08067108(void);
+void sub_08067114(void);
+void sub_08067170(void);
 extern void sub_080640c8(void);
 extern s32 sub_080640dc(struct AnimCmd *p);
 extern void sub_080639b4(u32 v);
@@ -112,6 +117,21 @@ extern u8 gUnk_03001610[];
 extern u8 gUnk_03001F30;
 extern void sub_080713f8(s32 a, s32 b, u32 c);
 extern void sub_08003110(u32 a);
+extern u8 gUnk_0200B030;
+extern u8 gUnk_03001F34;
+extern u8 gUnk_03001270[];
+extern struct ActorDef *gUnk_0873F690;
+extern u8 gUnk_0873F7E4[];
+extern u32 gUnk_0874CCBC[];
+extern u32 gUnk_0873E280[];
+extern void sub_0800652c(u16 a, s32 b);
+extern void sub_080271ec(void);
+extern void sub_08027210(void);
+extern s32 sub_08064ba8(struct ActorSpawn *p, u8 keepPrio);
+extern void sub_08064a60(void);
+extern void sub_0806395c(u8 v);
+extern void sub_08067214(void);
+extern void sub_080656b4(void);
 extern s32 sub_08064d9c(u32 sub, u32 type, int p2Arg, int xArg, int yArg,
                         int prioArg, int altArg);
 extern s16 gUnk_030023E4;
@@ -150,6 +170,11 @@ void sub_08066988(u32 i);
 u8 sub_08066a0c(s16 dx, u16 dy);
 void sub_08066c08(u32 def, u8 b);
 void sub_08066dcc(void);
+void sub_08066f78(void);
+s32 sub_08066fc0(u8 p3, s16 x, s16 y);
+void sub_08067108(void);
+void sub_08067114(void);
+void sub_08067170(void);
 
 void sub_080653ec(void)
 {
@@ -1790,4 +1815,109 @@ s32 sub_08066fc0(u8 p3, s16 x, s16 y)
         }
     }
     return i;
+}
+
+void sub_0806704c(void)
+{
+    sub_08066f78();
+    sub_08066fc0(0, 128, 104);
+}
+
+u8 sub_08067060(void)
+{
+    if (gUnk_0200B030 != 0)
+        return 1;
+    return 0;
+}
+
+u8 sub_08067074(void)
+{
+    s32 i;
+    s32 n;
+
+    n = 0;
+    for (i = 0; i < gUnk_030023AC; i++)
+    {
+        if ((gUnk_03002340 >> i) & 1)
+            n++;
+    }
+    return n;
+}
+
+void sub_080670ac(u16 a)
+{
+    sub_0800652c(a, gCurTaskIdx);
+    sub_080055b0(0, 63);
+    sub_080271ec();
+    sub_08067108();
+}
+
+void sub_080670d4(void)
+{
+    sub_0800652c(0, gCurTaskIdx);
+    sub_08027210();
+    sub_08067114();
+}
+
+void sub_080670f0(u32 src)
+{
+    sub_080017e4(2, src, (u32)gUnk_03001270, 2);
+}
+
+void sub_08067108(void)
+{
+    gUnk_03001F34 = 1;
+}
+
+void sub_08067114(void)
+{
+    gUnk_03001F34 = 0;
+}
+
+s32 sub_08067120(s16 x, s16 y, u16 dir, u8 p8)
+{
+    struct ActorSpawn sp;
+    s32 i;
+
+    sp.unk00 = 36;
+    sp.unk04 = 139;
+    sp.unk08 = p8;
+    sp.unk09 = 0;
+    sp.unk0C = x;
+    sp.unk0E = y;
+    sp.unk10 = 0;
+    sp.unk0A = 0;
+    i = sub_08064ba8(&sp, 1);
+    if (i != -1)
+        gUnk_03002790[i].unk43 = dir;
+    return i;
+}
+
+void sub_08067170(void)
+{
+    u8 v;
+
+    v = gUnk_03002490->unk73;
+    if (v == 1)
+        sub_08063908(gUnk_0873F690);
+    else if (v >= 1 && v <= 3)
+        sub_080639b4((u32)gUnk_0873F7E4);
+    if (gUnk_03002490->unk43 == 0)
+        sub_08064a60();
+}
+
+void sub_080671c0(void)
+{
+    struct Task *t;
+
+    t = gUnk_03002490;
+    t->unk00 = (u32)sub_080656b4;
+    t->unk0C = (u32)sub_0806523c;
+    t->unk42 = 9;
+    t = gUnk_03002490;
+    t->unk38 = gUnk_0874CCBC;
+    t->unk04 = (u32)sub_08067214;
+    sub_08067170();
+    sub_0806395c(0);
+    sub_08002e98(gUnk_03002490->unk14, 1, gUnk_0873E280);
 }
