@@ -7,14 +7,22 @@
 
 @ Named non-ROM cells (tools/split_config.json "data_symbols"),
 @ referenced symbolically from split literal pools / data words:
+	.global	gUnk_02000008
+gUnk_02000008 = 0x02000008
 	.global	gUnk_02005588
 gUnk_02005588 = 0x02005588
 	.global	gUnk_02006068
 gUnk_02006068 = 0x02006068
+	.global	gUnk_02006178
+gUnk_02006178 = 0x02006178
 	.global	gUnk_02007D48
 gUnk_02007D48 = 0x02007D48
+	.global	gUnk_02007F50
+gUnk_02007F50 = 0x02007F50
 	.global	gUnk_02007FC0
 gUnk_02007FC0 = 0x02007FC0
+	.global	gUnk_0200C320
+gUnk_0200C320 = 0x0200C320
 	.global	gUnk_0200D090
 gUnk_0200D090 = 0x0200D090
 	.global	gUnk_0200D110
@@ -275,14 +283,24 @@ gUnk_03001F38 = 0x03001F38
 gUnk_03002150 = 0x03002150
 	.global	gUnk_03002158
 gUnk_03002158 = 0x03002158
+	.global	gUnk_03002170
+gUnk_03002170 = 0x03002170
+	.global	gUnk_03002340
+gUnk_03002340 = 0x03002340
 	.global	gUnk_03002348
 gUnk_03002348 = 0x03002348
+	.global	gUnk_03002350
+gUnk_03002350 = 0x03002350
 	.global	gUnk_03002360
 gUnk_03002360 = 0x03002360
 	.global	gUnk_030023A8
 gUnk_030023A8 = 0x030023A8
 	.global	gUnk_030023AC
 gUnk_030023AC = 0x030023AC
+	.global	gUnk_030023B4
+gUnk_030023B4 = 0x030023B4
+	.global	gUnk_030023D4
+gUnk_030023D4 = 0x030023D4
 	.global	gUnk_030023D8
 gUnk_030023D8 = 0x030023D8
 	.global	gUnk_030023E4
@@ -431,10 +449,36 @@ gUnk_0872EB14 = 0x0872EB14
 gUnk_0872EB2C = 0x0872EB2C
 	.global	gUnk_0872EB38
 gUnk_0872EB38 = 0x0872EB38
+	.global	gUnk_0872FA30
+gUnk_0872FA30 = 0x0872FA30
 	.global	gUnk_0872FB30
 gUnk_0872FB30 = 0x0872FB30
 	.global	gUnk_0872FF30
 gUnk_0872FF30 = 0x0872FF30
+	.global	gUnk_0873DF14
+gUnk_0873DF14 = 0x0873DF14
+	.global	gUnk_0873ECEC
+gUnk_0873ECEC = 0x0873ECEC
+	.global	gUnk_0873ED90
+gUnk_0873ED90 = 0x0873ED90
+	.global	gUnk_0873EDB8
+gUnk_0873EDB8 = 0x0873EDB8
+	.global	gUnk_0873EDDC
+gUnk_0873EDDC = 0x0873EDDC
+	.global	gUnk_0873EE70
+gUnk_0873EE70 = 0x0873EE70
+	.global	gUnk_0873EE88
+gUnk_0873EE88 = 0x0873EE88
+	.global	gUnk_0873F198
+gUnk_0873F198 = 0x0873F198
+	.global	gUnk_0873F23C
+gUnk_0873F23C = 0x0873F23C
+	.global	gUnk_0873F264
+gUnk_0873F264 = 0x0873F264
+	.global	gUnk_0873F288
+gUnk_0873F288 = 0x0873F288
+	.global	gUnk_0873F2A0
+gUnk_0873F2A0 = 0x0873F2A0
 
 @ Link-time constants (tools/split_config.json "abs_symbols"):
 @ absolute symbols whose VALUE is the constant (SDK idiom, e.g.
