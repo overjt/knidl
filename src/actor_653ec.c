@@ -22,6 +22,12 @@ extern u8 gUnk_0873DF78[];
 extern u8 gUnk_082530C8[];
 extern u32 gUnk_0873DF7C[][3];
 extern u8 gUnk_0873DFAC[];
+extern u32 *gUnk_0873EF74[];
+extern u32 *gUnk_0873F118[];
+extern u32 gUnk_0873F01C[];
+extern u8 gUnk_0825CA44[];
+extern vs16 gUnk_03004CA0[];
+extern void sub_080031b8(u32 a);
 extern s16 gUnk_030023E4;
 
 extern u32 sub_08005acc(void);
@@ -533,4 +539,198 @@ void sub_08065c14(void)
         TaskYieldTrampoline(1);
     }
     TaskDispatchTrampoline();
+}
+
+/* Point the actor at the palette its class/sub/level combination wants. */
+void sub_08065ce0(u32 i)
+{
+    struct Task *t;
+    struct Actor *a;
+    u32 *tbl;
+    u32 v;
+    u32 k;
+    u32 *q;
+
+    t = &gUnk_03002790[i];
+    a = t->unk8C;
+    switch (t->unk72)
+    {
+    case 0:
+        tbl = gUnk_0873EF74[t->unk76];
+        break;
+    case 1:
+        tbl = gUnk_0873F118[t->unk76];
+        break;
+    default:
+        tbl = NULL;
+        break;
+    }
+    if (a->unk0C > 3 || tbl == NULL)
+    {
+        a->unk0C = 0;
+    }
+    else
+    {
+        k = a->unk0C - 1;
+        q = tbl + k;
+        v = *q;
+        if (v != 0)
+            a->unk28 = v;
+    }
+}
+
+/* Copy one palette bank out of the class/sub/level palette tables.
+   `sub` is reused as the table pointer, matching the ROM's register use. */
+/* Copy one palette bank out of the class/sub/level palette tables.  `sub`
+   doubles as the table pointer and `src` as the source address, matching
+   the ROM's register use. */
+/* Copy one palette bank out of the class/sub/level palette tables.
+   `sub` is reused as the table pointer, matching the ROM's register use. */
+void sub_08065d44(u32 slot, u32 sub, u32 level, u32 n, u8 kind, u32 src)
+{
+    u32 off;
+    u32 k;
+    u32 *q;
+    u32 p;
+
+    switch (kind)
+    {
+    case 0:
+        sub = (u32)gUnk_0873EF74[sub];
+        break;
+    case 1:
+        sub = (u32)gUnk_0873F118[sub];
+        break;
+    default:
+        sub = 0;
+        break;
+    }
+    if (level > 3)
+        return;
+    if (sub == 0)
+        return;
+    if (kind == 1 && level == 0)
+    {
+        p = src;
+    }
+    else
+    {
+        k = level - 1;
+        q = (u32 *)sub + k;
+        p = *q;
+    }
+    if (p == 0)
+        return;
+    off = ((u32 *)sub)[4] << 1;
+    p += off;
+    slot <<= 5;
+    slot += off;
+    if (kind == 0)
+        n = ((u32 *)sub)[5];
+    sub_080017e4(2, p, (u32)(gUnk_03001470 + slot), n << 1);
+}
+
+void sub_08065dbc(u32 slot, u32 sub, u32 level)
+{
+    sub_08065d44(slot, sub, level, 0, 0, 0);
+}
+
+void sub_08065dd0(u32 slot, u32 i)
+{
+    u32 p;
+
+    p = gUnk_0873F01C[i];
+    if (p != 0)
+        sub_080017e4(2, p, (u32)(gUnk_03001470 + (slot << 5)), 32);
+}
+
+void sub_08065dfc(u32 slot)
+{
+    slot <<= 5;
+    sub_080017e4(2, (u32)gUnk_0825CA44, (u32)(gUnk_03001470 + slot), 32);
+}
+
+void sub_08065e1c(u32 def, u32 which)
+{
+    struct Actor *a;
+    s32 v;
+
+    a = gUnk_03002490->unk8C;
+    if (which != 0)
+    {
+        v = a->unk34;
+        if (v == -2)
+            return;
+        if (v == -1)
+            sub_080031b8(def);
+        else
+            sub_080031b8(v);
+    }
+    else
+    {
+        v = a->unk38;
+        if (v == -2)
+            return;
+        if (v == -1)
+            sub_080031b8(def);
+        else
+            sub_080031b8(v);
+    }
+}
+
+/* Set bit 0 of every live enemy actor's two flag bytes. */
+void sub_08065e6c(void)
+{
+    struct Task *t;
+    struct Actor *a;
+    s32 i;
+
+    for (i = 32; i < 63; i++)
+    {
+        if (gUnk_03004CA0[i] != -1 && gUnk_03004CA0[i] != 4)
+        {
+            t = &gUnk_03002790[i];
+            a = t->unk8C;
+            if (a != NULL && (u8)(t->unk72 - 7) > 3)
+            {
+                a->unk0A |= 1;
+                a->unk0B |= 1;
+            }
+        }
+    }
+}
+
+void sub_08065ed0(void)
+{
+    struct Task *t;
+    struct Actor *a;
+    s32 i;
+
+    for (i = 32; i < 63; i++)
+    {
+        if (gUnk_03004CA0[i] != -1 && gUnk_03004CA0[i] != 4)
+        {
+            t = &gUnk_03002790[i];
+            a = t->unk8C;
+            if (a != NULL && (u8)(t->unk72 - 7) > 3)
+            {
+                a->unk0A = 0;
+                a->unk0B = 0;
+            }
+        }
+    }
+}
+
+u8 sub_08065f2c(u32 i)
+{
+    struct Task *g;
+    struct Task *a;
+    struct Task *b;
+
+    g = gUnk_03002790;
+    a = &g[gCurTaskIdx];
+    b = &g[i];
+    if (a->unk16 == b->unk16)
+        return 1;
+    return 0;
 }
