@@ -866,6 +866,37 @@ three long-lived address pseudos onto the ROM's registers. Related knob:
 live_length 275→305 in one case) and was the only thing that moved a specific
 pseudo onto the ROM's register.
 
+### 3.73 A commutative SImode op with a 16-bit load: operand order proves USES
+A 16-bit load feeding a commutative SImode operation becomes
+`(subreg:SI (reg:HI …))`, and combine's canonicalisation ALWAYS moves the SUBREG
+operand first. So `adds rD, rPtr, rLoaded` in the ROM — pointer first — **proves
+the loaded value has two or more uses**: with a single use combine folds the
+extension and you unavoidably get `adds rD, rLoaded, rPtr`. Verified with a
+four-case micro-lab (1 use → load first in all three spellings; 2 uses → other
+operand first). No single-use spelling reproduces it, including the comma
+expression of 3.36, `u8 *`/`u32` temps, `q[-1]`, or const/volatile pointees.
+
+### 3.74 Assorted levers confirmed on the task/draw helpers
+- 3.50's OR quirk applies in HImode too: two or more stores of the SAME 16-bit
+  constant give `ldrh/orrs/strh` per store, while exactly one such store stays a
+  plain `ldr =K; strh`.
+- `s32 ff = 0xFFFF; *p16 = ff;` gives `ldr rX,=0xFFFF; strh` with NO movhi
+  scratch, where `*p16 = 0xFFFF` adds 3.24's `adds rD,rS,#0` and `*p16 = -1`
+  gets CSE'd onto any live SImode −1.
+- 3.49 extends to loop guards: with a non-volatile pointee, `while (*p != K)`
+  emits `ldr rK,=K` BEFORE the guard's `ldrh`; a `vu16` pointee flips it to the
+  ROM's `ldrh`-first order.
+- `vs16 *slot = &arr[id]; *slot = v;` suppresses a volatile array's dead
+  pre-read — 3.38 confirmed for variable-indexed arrays, not just `i++`.
+- A dead `adds rN,r0,#0` after a `bl` in the ROM means the wrapper wrote
+  `i = callee(x); return i;` reusing the SAME local the preceding loop used.
+- Two blocks that each re-read one global pointer need TWO different locals when
+  the first pointer must die before a call; one shared local pins it to a
+  callee-saved register for the whole function.
+- `(u16)(x + 63) > 366` reproduces `lsls #16 / adds 0x3F0000 / movs #183;
+  lsls #17 / cmp / bhi` — an unsigned HImode compare shifts BOTH operands left
+  16 and combine folds the addend into the shifted domain.
+
 ## 4. Splitting ROM ranges into asm (tools/split.py)
 
 ### 4.1 objdump text only round-trips under `.syntax unified`
@@ -1072,6 +1103,18 @@ into `src/` collides with the asm that still provides those bytes ("multiple
 definition of sub_XXXXXXXX"). With several agents delivering in parallel this
 red-lines the tree for everyone. Keep pending deliverables outside `src/` (this
 repo uses a gitignored `pending/`) and move each one in as its range is carved.
+
+### 4.22b Curated symbol entries must bypass the prologue filter
+`symdb.py` validated `EXTRA_THUMB_ENTRIES` candidates with
+`plausible_thumb_entry(..., strict)` like any other address, so hand-verified
+entries were silently DROPPED whenever they did not open with a `push` — e.g.
+`0x08005A74` starts `ldr r0, [pc, #20]`. The symptom is subtle: the curated
+address simply never appears in `symbols.csv` and its predecessor keeps an
+oversized size, so the census looks self-consistent while being wrong. Seven of
+fifteen curated additions were being lost this way before it was noticed.
+Curation IS the evidence — `KNOWN_SYMBOLS` already bypassed the filter for the
+m4a XCMD handlers, and `EXTRA_THUMB_ENTRIES` now does too. If you add a curated
+entry, always re-grep `symbols.csv` for it rather than assuming it landed.
 
 ### 4.23 A slept Mac can wedge the container runtime beyond `orbctl restart`
 After the host sleeps mid-build, OrbStack can end up in a state where `docker

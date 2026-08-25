@@ -93,6 +93,12 @@ $(BUILD_DIR)/src/early_4fec.o: CFLAGS := -O2 -mthumb-interwork
 $(BUILD_DIR)/src/early_55b0.o: CC := old_agbcc
 $(BUILD_DIR)/src/early_55b0.o: CFLAGS := -O2 -mthumb-interwork
 
+# Task position/draw helpers, 0x080058E4-0x08005D9C (issue #32).
+$(BUILD_DIR)/src/early_58e4.o: CC := old_agbcc
+$(BUILD_DIR)/src/early_58e4.o: CFLAGS := -O2 -mthumb-interwork
+$(BUILD_DIR)/src/early_5c4c.o: CC := old_agbcc
+$(BUILD_DIR)/src/early_5c4c.o: CFLAGS := -O2 -mthumb-interwork
+
 # All of asm/ is assembled into the ROM: hand-written files (rom_header.s,
 # crt0.s), split-generated segment files (asm/<segment>.s, see tools/
 # split.py / docs/splitting.md), chunked code segments (issue #25:

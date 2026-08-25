@@ -325,6 +325,8 @@ EXTRA_THUMB_ENTRIES = {
     0x080036B8,  # BGM fade-in helper (inside sub_08003688's 0xC4)
     0x080037A4,  # SE volume setter   (inside sub_08003770's 0x88)
     0x08005618,  # SetAllTaskSkipMasks(inside sub_080055c4's 0x90)
+    0x08005A74,  # TaskUpdatePosNoIntegrate (inside sub_080059fc's 0x94)
+    0x08005B20,  # TaskUploadGfxAndPal (inside sub_08005acc's 0xF8)
 }
 
 EVIDENCE_KINDS = ("bl-target", "rom-pointer", "prologue-scan", "curated")
@@ -507,9 +509,17 @@ def build(rom, segments):
         # Curated identifications (KNOWN_SYMBOLS) are accepted directly:
         # the m4a XCMD handlers are table-dispatched only and open with
         # `ldr r0, [r1, #0x40]`, which no generic prologue filter admits.
-        if target in KNOWN_SYMBOLS or plausible_thumb_entry(
-            rom, target, nxt - ROM_BASE, strict
-        ):
+        # Curated identifications are accepted directly, bypassing the
+        # prologue filter.  KNOWN_SYMBOLS: the m4a XCMD handlers are
+        # table-dispatched only and open with `ldr r0, [r1, #0x40]`.
+        # EXTRA_THUMB_ENTRIES: every one was hand-verified by decompiling
+        # its range and byte-matching it, and several are dead exports that
+        # open with a pool load rather than a push (e.g. 0x08005A74 starts
+        # `ldr r0, [pc, #20]`), which `strict` rejects.  Curation IS the
+        # evidence — re-deriving it from the prologue shape defeats the
+        # purpose of the list.
+        if (target in KNOWN_SYMBOLS or target in EXTRA_THUMB_ENTRIES
+                or plausible_thumb_entry(rom, target, nxt - ROM_BASE, strict)):
             candidates[target] = nxt
     thumb_entries = {t: n for t, n in candidates.items() if n is not None}
 

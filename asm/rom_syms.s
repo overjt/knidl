@@ -53,6 +53,8 @@ gUnk_0200EC44 = 0x0200EC44
 gUnk_0200EC48 = 0x0200EC48
 	.global	gUnk_0200EC4C
 gUnk_0200EC4C = 0x0200EC4C
+	.global	gUnk_0203BFE0
+gUnk_0203BFE0 = 0x0203BFE0
 	.global	gUnk_03000010
 gUnk_03000010 = 0x03000010
 	.global	gUnk_03000014
@@ -199,6 +201,8 @@ gUnk_0300118C = 0x0300118C
 gUnk_03001190 = 0x03001190
 	.global	gUnk_03001270
 gUnk_03001270 = 0x03001270
+	.global	gUnk_03001470
+gUnk_03001470 = 0x03001470
 	.global	gUnk_03001670
 gUnk_03001670 = 0x03001670
 	.global	gUnk_03001674
@@ -267,6 +271,10 @@ gUnk_03001F30 = 0x03001F30
 gUnk_03001F38 = 0x03001F38
 	.global	gUnk_03002150
 gUnk_03002150 = 0x03002150
+	.global	gUnk_03002158
+gUnk_03002158 = 0x03002158
+	.global	gUnk_03002348
+gUnk_03002348 = 0x03002348
 	.global	gUnk_03002360
 gUnk_03002360 = 0x03002360
 	.global	gUnk_030023A8
@@ -275,6 +283,8 @@ gUnk_030023A8 = 0x030023A8
 gUnk_030023AC = 0x030023AC
 	.global	gUnk_030023D8
 gUnk_030023D8 = 0x030023D8
+	.global	gUnk_030023E4
+gUnk_030023E4 = 0x030023E4
 	.global	gUnk_0300243C
 gUnk_0300243C = 0x0300243C
 	.global	gUnk_0300244C
@@ -385,6 +395,8 @@ gUnk_0872EB2C = 0x0872EB2C
 gUnk_0872EB38 = 0x0872EB38
 	.global	gUnk_0872FB30
 gUnk_0872FB30 = 0x0872FB30
+	.global	gUnk_0872FF30
+gUnk_0872FF30 = 0x0872FF30
 
 @ Link-time constants (tools/split_config.json "abs_symbols"):
 @ absolute symbols whose VALUE is the constant (SDK idiom, e.g.
