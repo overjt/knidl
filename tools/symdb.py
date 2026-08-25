@@ -323,6 +323,10 @@ EXTRA_THUMB_ENTRIES = {
                  # between sub_08063E2C and sub_08063EB0 (its own
                  # `push {r4, lr}` prologue and `pop {r4}; pop {r1}; bx r1`
                  # epilogue; verified by byte-matching the range).
+    0x0806567C,  # hidden dead export inside M17 (issue #65): the
+                 # sub_0806555C draw wrapper without the "kill the task
+                 # when off-screen" arm, sitting between sub_08065640 and
+                 # sub_080656B4 with its own `push {lr}` prologue.
     0x080641B0,  # hidden dead export inside M17 (issue #65): the polar
                  # velocity helper that fills gUnk_030023B4/D4 from
                  # ArcTan2 + the trig table; nothing in the ROM references

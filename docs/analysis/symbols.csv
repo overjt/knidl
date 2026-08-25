@@ -1473,7 +1473,8 @@ vma,size,isa,evidence,name
 0x08065438,0x38,thumb,rom-pointer,sub_08065438
 0x08065470,0xEC,thumb,bl-target,sub_08065470
 0x0806555C,0xE4,thumb,bl-target,sub_0806555c
-0x08065640,0x74,thumb,rom-pointer,sub_08065640
+0x08065640,0x3C,thumb,rom-pointer,sub_08065640
+0x0806567C,0x38,thumb,curated,sub_0806567c
 0x080656B4,0x78,thumb,rom-pointer,sub_080656b4
 0x0806572C,0x34,thumb,rom-pointer,sub_0806572c
 0x08065760,0x44,thumb,bl-target,sub_08065760

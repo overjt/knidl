@@ -129,7 +129,7 @@ struct Actor
     /*0x00*/ u8 unk00;
     /*0x01*/ u8 unk01;
     /*0x02*/ u8 unk02;
-    /*0x03*/ u8 unk03;
+    /*0x03*/ s8 unk03;
     /*0x04*/ u8 unk04;
     /*0x05*/ u8 unk05;
     /*0x06*/ u8 unk06;
@@ -144,9 +144,9 @@ struct Actor
     /*0x10*/ s16 unk10;
     /*0x12*/ u16 unk12;
     /*0x14*/ u16 unk14;
-    /*0x16*/ u16 unk16;
+    /*0x16*/ s16 unk16;
     /*0x18*/ u16 unk18;
-    /*0x1A*/ u16 unk1A;
+    /*0x1A*/ s16 unk1A;
     /*0x1C*/ u16 unk1C;
     /*0x1E*/ u16 unk1E;
     /*0x20*/ u16 unk20;
