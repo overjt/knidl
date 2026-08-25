@@ -64,6 +64,7 @@ extern void sub_080666a4(void);
 void sub_08066988(u32 i);
 u8 sub_08066a0c(s16 dx, u16 dy);
 void sub_08066c08(u32 def, u8 b);
+void sub_08066dcc(void);
 extern void sub_080640c8(void);
 extern s32 sub_080640dc(struct AnimCmd *p);
 extern void sub_080639b4(u32 v);
@@ -95,6 +96,15 @@ extern void sub_08006304(void);
 extern void sub_0806523c(void);
 extern void sub_08066e88(u8 a);
 extern void sub_080637cc(void);
+extern u32 gUnk_08752BA8[];
+extern s16 gUnk_0873E1E8[];
+extern s16 gUnk_0873E220[];
+extern u8 gUnk_02006178;
+extern void sub_0806ee2c(void);
+extern s32 sub_08064fc4(u8 cls, u32 sub, u8 p3, u8 p4, int x, int y, u16 prio);
+extern s32 sub_08063b38(void);
+extern s32 gUnk_030023B4;
+extern s32 gUnk_030023D4;
 extern s16 gUnk_030023E4;
 
 extern u32 sub_08005acc(void);
@@ -130,6 +140,7 @@ void sub_080666a4(void);
 void sub_08066988(u32 i);
 u8 sub_08066a0c(s16 dx, u16 dy);
 void sub_08066c08(u32 def, u8 b);
+void sub_08066dcc(void);
 
 void sub_080653ec(void)
 {
@@ -269,7 +280,6 @@ void sub_080656b4(void)
 {
     struct Task *t;
     struct Task *u;
-    struct Task *w;
     s32 v;
     s32 m;
     s32 n;
@@ -411,7 +421,6 @@ void sub_080658d8(void)
 {
     struct Task *u;
     struct Task *v;
-    struct Task *w;
     struct Task *x;
     struct Task *y;
 
@@ -458,7 +467,6 @@ void sub_080659b4(void)
 {
     struct Task *t;
     struct Task *u;
-    struct Task *w;
     struct Task *x;
     struct Actor *a;
     u32 v;
@@ -493,7 +501,6 @@ void sub_08065a68(void)
 {
     struct Task *t;
     struct Task *u;
-    struct Task *w;
     struct Task *x;
     u32 off;
 
@@ -530,7 +537,6 @@ void sub_08065b14(void)
     struct Task *t;
     struct Task *u;
     struct Task *v;
-    struct Task *w;
     struct Task *x;
     struct Task *y;
     struct Actor *a;
@@ -1601,4 +1607,133 @@ void sub_08066c3c(u32 def)
     a = t->unk8C;
     if (a->unk1A != -1 && t->unk74 != 2)
         sub_08066c08(def, 1);
+}
+
+/* Draw the running task plus its trailing "sparkle" sprite. */
+/* Draw the running task plus its trailing "sparkle" sprite. */
+void sub_08066c74(void)
+{
+    struct Task *p;
+    struct Task *t;
+    struct Task *u;
+    struct Actor *a;
+    u32 *tbl;
+
+    p = gUnk_03002490;
+    if (p->unk38 == NULL)
+        return;
+    if (p->unk3C == -1)
+        return;
+    if (sub_08065160() != 0)
+    {
+        if (sub_08005acc() == 0)
+            return;
+        t = gUnk_03002490;
+        tbl = t->unk38;
+        sub_08001a94(t->unk42, tbl[t->unk3C], t->unk3E, t->unk40,
+                     t->unk48 - gUnk_03002348,
+                     (s16)(t->unk4A - gUnk_030023E4));
+        u = gUnk_03002490;
+        if ((u->unk13 & 7) == 0)
+        {
+            if (u->unk3C == 3)
+            {
+                u->unk8C->unk1A = 3;
+            }
+            else
+            {
+                a = u->unk8C;
+                if (a->unk16 <= 0)
+                {
+                    a->unk16 = 6;
+                    u->unk8C->unk1A++;
+                    a = u->unk8C;
+                    if (a->unk1A > 7)
+                        a->unk1A = 4;
+                }
+            }
+        }
+        sub_08066dcc();
+        t = gUnk_03002490;
+        sub_08001a94(t->unk42, gUnk_08752BA8[t->unk8C->unk1A], t->unk3E, 0,
+                     (s16)(gUnk_030023B4 + (t->unk48 - gUnk_03002348)),
+                     (s16)(gUnk_030023D4 + (t->unk4A - gUnk_030023E4)));
+        a = gUnk_03002490->unk8C;
+        a->unk16--;
+    }
+    else
+    {
+        sub_08063fe0();
+    }
+}
+
+/* Offset of the trailing sprite for the running task's animation. */
+/* Offset of the trailing sprite for the running task's animation. */
+/* Offset of the trailing sprite for the running task's animation. */
+/* Offset of the trailing sprite for the running task's animation. */
+void sub_08066dcc(void)
+{
+    struct Task *t;
+    s32 i;
+
+    t = gUnk_03002490;
+    i = t->unk3C;
+    switch (t->unk76)
+    {
+    case 9:
+        gUnk_030023B4 = gUnk_0873E220[i * 2] * t->unk43;
+        gUnk_030023D4 = gUnk_0873E220[i * 2 + 1];
+        break;
+    case 0:
+        gUnk_030023B4 = gUnk_0873E1E8[i * 2] * t->unk43;
+        gUnk_030023D4 = gUnk_0873E1E8[i * 2 + 1];
+        break;
+    case 17:
+        gUnk_030023B4 = 0;
+        if (t->unk3C == 3)
+            gUnk_030023D4 = 13;
+        else
+            gUnk_030023D4 = -13;
+        break;
+    default:
+        sub_0806ee2c();
+        gUnk_030023B4 = gUnk_030023D4 = 0;
+        break;
+    }
+}
+
+void sub_08066e88(u8 a)
+{
+    struct Task *t;
+    struct Task *u;
+    s32 i;
+    u8 kind;
+    s32 v;
+
+    kind = 0;
+    if (gUnk_03002490->unk74 == 1)
+        kind = 1;
+    sub_08066dcc();
+    t = gUnk_03002490;
+    i = sub_08064fc4(0, 38, kind, 0,
+                     (s16)(t->unk48 + gUnk_030023B4),
+                     (s16)(t->unk4A + gUnk_030023D4), 0);
+    if (i != -1)
+    {
+        u = &gUnk_03002790[i];
+        v = gUnk_03002490->unk7F;
+        if (v == -1)
+            v = sub_08063b38();
+        u->unk1C = v;
+        u->unk28 = a;
+        if (gUnk_02006178 == 1)
+        {
+            gUnk_03002490->unk8C->unk0D = 1;
+            u->unk73 = 3;
+            u->unk0C = (u32)sub_0806523c;
+            u->unk42 = 11;
+            u->unk38 = gUnk_08752BA8;
+            u->unk3C = 0;
+        }
+    }
 }
