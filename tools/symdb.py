@@ -286,6 +286,11 @@ FALSE_POSITIVES = {
     # really runs 0x08003110-0x08003184 and 0x08003164 is a branch target
     # inside it.
     0x0800315E,
+    # 0x08007102 is a `b.n 0x800711C` INSIDE sub_080070e8, not an entry point
+    # (issue #32).  The real split of that 0x6C span is sub_080070b8 (0x30) +
+    # sub_080070e8 (0x3C); byte totals agree either way, which is why the
+    # mis-split survived until the range was decompiled.
+    0x08007102,
 }
 
 # Curated Thumb entries with NO in-ROM reference (issue #31): dead m4a SDK
@@ -333,6 +338,10 @@ EXTRA_THUMB_ENTRIES = {
     0x08006664,  # TaskSkipMaskSaveOne(inside sub_0800663c's 0xE8)
     0x0800668C,  # LinkColdInit       (inside sub_0800663c's 0xE8)
     0x08006904,  # LinkRestart        (inside sub_08006868's 0xAC)
+    0x08007004,  # LinkSendStep       (inside sub_08006e9c's 0x21C; a real
+                 #                     bl target from 0x08006D52, not dead)
+    0x080070E8,  # LinkEndRound       (bl target from 0x08006D56; the row
+                 #                     0x08007102 was a mis-split of it)
 }
 
 EVIDENCE_KINDS = ("bl-target", "rom-pointer", "prologue-scan", "curated")

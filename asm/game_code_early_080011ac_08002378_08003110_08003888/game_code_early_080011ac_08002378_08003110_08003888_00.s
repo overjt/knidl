@@ -99,9 +99,9 @@ sub_08003888:
 	.word	gUnk_0200EC48
 	.word	gUnk_0300244C
 	.word	gUnk_030023A8
-	.word	0x04000128
+	.word	gUnk_04000128
 	.word	0x00004003
-	.word	0x0400012A
+	.word	gUnk_0400012A
 	.word	gUnk_030004B0
 	.word	sub_08004068+1
 	.word	0x04000200

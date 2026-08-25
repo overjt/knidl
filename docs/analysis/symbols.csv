@@ -181,9 +181,10 @@ vma,size,isa,evidence,name
 0x08006D18,0x10,thumb,rom-pointer,sub_08006d18
 0x08006D28,0x164,thumb,rom-pointer,sub_08006d28
 0x08006E8C,0x10,thumb,bl-target,sub_08006e8c
-0x08006E9C,0x21C,thumb,bl-target,sub_08006e9c
-0x080070B8,0x4A,thumb,bl-target,sub_080070b8
-0x08007102,0x22,thumb,rom-pointer,sub_08007102
+0x08006E9C,0x168,thumb,bl-target,sub_08006e9c
+0x08007004,0xB4,thumb,bl-target,sub_08007004
+0x080070B8,0x30,thumb,bl-target,sub_080070b8
+0x080070E8,0x3C,thumb,bl-target,sub_080070e8
 0x08007124,0x50,thumb,bl-target,sub_08007124
 0x08007174,0x68,thumb,bl-target,sub_08007174
 0x080071DC,0x104,thumb,bl-target,sub_080071dc

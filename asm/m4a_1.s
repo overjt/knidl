@@ -125,7 +125,7 @@ SoundMain:
 	.word	SOUND_INFO_PTR
 	.word	0x68736D53
 	.word	0x03007151
-	.word	0x04000006
+	.word	gUnk_04000006
 	.word	0x00000350
 	.word	0x00000630
 	.thumb_func
@@ -229,7 +229,7 @@ SoundMainRAM:
 	bcc.n	.L_080cd9e8	@ 0x080CD9E8
 	b.n	.L_080cdcba	@ 0x080CDCBA
 	movs	r0, r0
-	.word	0x04000006
+	.word	gUnk_04000006
 .L_080cd9e8:
 	ldrb	r6, [r4, #0]
 	movs	r0, #199

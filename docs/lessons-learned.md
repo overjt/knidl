@@ -1001,6 +1001,59 @@ constant mentioned twice reuses one pool word — which is how a mis-transcribed
 `0x10D` as `0x10C` was caught after a wrong-field detour. Two minutes of
 scripting beats re-reading hex columns.
 
+### 3.86 `&sym[K]` is a link-time constant and behaves nothing like `ptr + K`
+When the ROM shows `mov rX, rBase; adds rX, #K; adds rD, rD, rX` INSTEAD of
+folding `#K` into the load's immediate offset, the source said
+`(u32)&gUnk_XXXX[K]`. gcc gives the `(const (plus symbol K))` its own pseudo —
+cse cannot fold it into the MEM address — and then rewrites the constant as
+`base_reg + K` because a register already holds the symbol. A local pointer `p`
+with `p + K` always folds into the load offset instead. This took one function
+from 44 differing bytes to 16 and, as a side effect, raised block pressure
+enough to move the base into `ip`, which no shape hunting had achieved.
+
+### 3.87 `x * 2` inside an address sum is deferred; `x << 1` is not
+For a constant `MULT_EXPR` in a pointer-sized sum, `expand_expr` returns an
+unexpanded `(mult reg const)` under `EXPAND_SUM` and the shift is emitted later
+by `force_operand` — which interleaves both operand LOADS before either shift.
+Spelling the scaling as explicit shifts (`x << 1`, `((x << 4) - x) << 2`) emits
+each shift right after its load.
+
+### 3.88 A base pointer in `ip` is PRESSURE, not a `register asm` pin
+ARM's `REG_ALLOC_ORDER` is `{0,1,2,3,12,14,4,…}`, so once four block-local
+pseudos occupy r0-r3, global-alloc's next choice for a long-lived base is r12 —
+with `mov rN, ip` reload copies at every use and no prologue push. Writing
+`register T x asm("ip")` produces visibly DIFFERENT (wrong) code: it stops
+offsets folding into `ldrb`/`ldrh`. Raise the pressure instead of pinning.
+
+### 3.89 A `+=` chain pins commutative operand order in a 3-term address
+Plain `A + B + C` lets gcc choose each `adds`'s operand order independently;
+`t = A; t += B; t += C;` ties every destination to the accumulator and gives the
+ROM's `adds rD, rD, rS`. One function matched on this after eight failed
+operand-order permutations.
+
+### 3.90 Integer-typed index arithmetic defeats the `base + i*stride` hoist
+`buf[i][j] = v` hoists `base + i*stride` into the outer loop;
+`*(u16 *)(i*stride + j*2 + (u32)buf) = v` — all integer, base added LAST —
+reproduces the ROM's per-iteration re-add. Extends 3.54, and note the sum must
+be ordered so that no two-term subexpression is loop-invariant.
+
+### 3.91 `while (f(), cond)` puts the call AND the test at the loop bottom
+`while (1) { f(); if (cond) break; body; }` emits `f()` at the top. The comma
+condition emits `goto test; loop: body; test: f(); if (cond) goto loop;`.
+
+### 3.92 `(t << 26) >> 30` and `(t >> 4) & 3` are different codegen
+The shift pair is a literal `lsls`/`lsrs`; the mask form gives
+`lsrs; movs #3; ands`. Bit-field extraction in this zone is written as shift
+pairs.
+
+### 3.93 A provably-false compare against an extern symbol is NOT dead code
+One function contains `ldr r0,=0x53F3; cmp r1,r0` where `r1` holds a pooled
+work-area address — always false. Because the work area is an EXTERN symbol,
+gcc cannot fold `(u32)gUnk_XXXX == 0x53F3` and emits the compare, reproducing
+the ROM exactly. Do not "clean up" such a compare; it is load-bearing. (It is
+probably a bug in the original source — a session-id compare that got the wrong
+operand — which is exactly the kind of thing a matching decomp preserves.)
+
 ## 4. Splitting ROM ranges into asm (tools/split.py)
 
 ### 4.1 objdump text only round-trips under `.syntax unified`
@@ -1219,6 +1272,11 @@ fifteen curated additions were being lost this way before it was noticed.
 Curation IS the evidence — `KNOWN_SYMBOLS` already bypassed the filter for the
 m4a XCMD handlers, and `EXTRA_THUMB_ENTRIES` now does too. If you add a curated
 entry, always re-grep `symbols.csv` for it rather than assuming it landed.
+
+### 4.24 macOS is case-insensitive — scripted variant names can collide
+Writing `t9C.c` silently overwrote `t9c.c` during a variant sweep and produced a
+wrong conclusion before it was noticed. Name generated candidates with a scheme
+that cannot collide under case folding.
 
 ### 4.23 A slept Mac can wedge the container runtime beyond `orbctl restart`
 After the host sleeps mid-build, OrbStack can end up in a state where `docker

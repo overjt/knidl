@@ -53,7 +53,7 @@ sub_08004984:
 	movs	r0, #8
 	eors	r0, r5
 	b.n	.L_08004d5c	@ 0x08004D5C
-	.word	0x04000128
+	.word	gUnk_04000128
 .L_080049d8:
 	ldrb	r0, [r7, #24]
 	cmp	r0, #223
