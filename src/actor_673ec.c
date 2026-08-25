@@ -56,6 +56,8 @@ void sub_080675e4(void);
 
 void sub_080673ec(void)
 {
+    s32 d;
+
     sub_08002e98(gUnk_03002490->unk14, 11, gUnk_0873E2F0);
 }
 
@@ -712,5 +714,167 @@ void sub_08068224(void)
     {
         sub_080062c4();
         sub_08006148(sub_080682a8, gCurTaskIdx);
+    }
+}
+void sub_080682a8(void)
+{
+    struct Task *t;
+    struct Task *u;
+    struct Task *v;
+    struct Task *w;
+
+    t = gUnk_03002490;
+    t->unk00 = (u32)sub_0803d494;
+    t->unk15 = 10;
+    sub_080062c4();
+    sub_08068a2c(-8, 512);
+    u = gUnk_03002490;
+    u->unk34 = 0;
+    if (u->unk78 == 0)
+        u->unk34 = 1;
+    if (gUnk_03001F30 == 0)
+    {
+        if (gUnk_03002360 == gCurTaskIdx)
+        {
+            if (((u8 *)gUnk_03002490->unk88)[6] == 1)
+                sub_080031b8(158);
+            else if (gUnk_03001EA4 & 1)
+                sub_080031b8(111);
+            else
+                sub_080031b8(112);
+        }
+    }
+    else
+    {
+        sub_080031b8(0x107);
+    }
+    sub_0803e1b8(1, 96, gCurTaskIdx);
+    gUnk_03002490->unk7A = 0;
+    sub_080061c0(0x18000, 0x5A5A5A5A);
+    sub_0800622c(0xFFFD8000, 0x2500, 0x30000);
+    if (gUnk_03001F30 == 0)
+    {
+        if (((u8 *)gUnk_03002490->unk88)[6] == 1)
+        {
+            sub_08006338(370);
+            TaskYieldTrampoline(3);
+            gUnk_03002490->unk3C++;
+            TaskYieldTrampoline(4);
+            gUnk_03002490->unk3C--;
+            TaskYieldTrampoline(2);
+            gUnk_03002490->unk3C--;
+            TaskYieldTrampoline(4);
+            gUnk_03002490->unk3C++;
+            TaskYieldTrampoline(2);
+        }
+        else
+        {
+            v = gUnk_03002490;
+            v->unk2C = v->unk43;
+            v->unk28 = 8;
+            sub_08006364(0x133);
+            gUnk_03002490->unk6C = 0;
+            do
+            {
+                sub_0806896c();
+                TaskYieldTrampoline(1);
+            } while ((s16)(++gUnk_03002490->unk6C) <= 14);
+        }
+    }
+    else
+    {
+        sub_08006338(0x123B);
+        TaskYieldTrampoline(6);
+        sub_08006338(0x1241);
+        TaskYieldTrampoline(7);
+    }
+    w = gUnk_03002490;
+    w->unk34 = w->unk34 + 1;
+    sub_08006138();
+}
+void sub_08068460(void)
+{
+    sub_080227a4(gUnk_03002490);
+    sub_0801bcac(gUnk_0873CB1C);
+    if (gUnk_03005550 != 0)
+        gUnk_03002490->unk54 = 0;
+    if (gUnk_03002490->unk34 != 0)
+        sub_0806865c(gCurTaskIdx);
+}
+void sub_080684a4(void)
+{
+    switch (*(s8 *)((u8 *)gUnk_03002490->unk88 + 13))
+    {
+    case 0:
+    case 7:
+    case 11:
+    case 20:
+    case 21:
+    case 24:
+        gUnk_03002490->unk3C += 0;
+        break;
+    case 1:
+        gUnk_03002490->unk3C += 0x143;
+        break;
+    case 2:
+        gUnk_03002490->unk3C += 0x234;
+        break;
+    case 3:
+        gUnk_03002490->unk3C += 0x2B3;
+        break;
+    case 4:
+        gUnk_03002490->unk3C += 0x384;
+        break;
+    case 5:
+        gUnk_03002490->unk3C += 0x495;
+        break;
+    case 6:
+        gUnk_03002490->unk3C += 0x522;
+        break;
+    case 8:
+        gUnk_03002490->unk3C += 0x5CB;
+        break;
+    case 9:
+        gUnk_03002490->unk3C += 0x69C;
+        break;
+    case 10:
+        gUnk_03002490->unk3C += 0x79C;
+        break;
+    case 12:
+        gUnk_03002490->unk3C += 0x838;
+        break;
+    case 13:
+        gUnk_03002490->unk3C += 0x8C4;
+        break;
+    case 14:
+        gUnk_03002490->unk3C += 0x950;
+        break;
+    case 15:
+        gUnk_03002490->unk3C += 0x9F5;
+        break;
+    case 16:
+        gUnk_03002490->unk3C += 0xA87;
+        break;
+    case 17:
+        gUnk_03002490->unk3C += 0xB0A;
+        break;
+    case 18:
+        gUnk_03002490->unk3C += 0xB94;
+        break;
+    case 19:
+        gUnk_03002490->unk3C += 0xC8F;
+        break;
+    case 22:
+        gUnk_03002490->unk3C += 0xD60;
+        break;
+    case 23:
+        gUnk_03002490->unk3C += 0xE38;
+        break;
+    case 25:
+        gUnk_03002490->unk3C += 0xF3A;
+        break;
+    default:
+        while (1)
+            ;
     }
 }
