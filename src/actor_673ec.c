@@ -17,7 +17,7 @@ extern u32 gUnk_02007D00[];
 
 extern void sub_08002e98(u32 a, u32 b, u32 *c);
 extern void sub_08068a8c(s32 i, u32 b);
-extern void sub_08068b88(struct Task *t, u32 b, u32 c, u32 d);
+extern void sub_08068b88(s32 i, u32 b, u32 c, u32 d);
 extern void sub_0806737c(void);
 extern void sub_0803e2d4(void);
 extern void sub_0803e080(void);
@@ -69,9 +69,9 @@ void sub_08067408(void)
 {
     sub_08002e98(gUnk_03002490->unk15, 11, gUnk_0873E31C);
     sub_0803e2d4();
-    if ((*(u16 *)((u8 *)gUnk_03002490->unk88 + 66) & 32) == 0)
+    if ((gUnk_03002490->unk88->unk42 & 32) == 0)
         sub_0803e080();
-    if (gUnk_03002360 == *(s8 *)gUnk_03002490->unk88)
+    if (gUnk_03002360 == gUnk_03002490->unk88->unk00)
         sub_08026264(gUnk_03002490->unk48, gUnk_03002490->unk4A);
 }
 
@@ -146,7 +146,7 @@ void sub_08067520(void)
 void sub_08067550(void)
 {
     struct Task *u;
-    u8 *p;
+    struct PlayerState *p;
 
     gUnk_03002490->unk15 = 3;
     gUnk_03002490->unk43 = gUnk_03002790[gUnk_03002490->unk44].unk43;
@@ -154,7 +154,7 @@ void sub_08067550(void)
     {
         u = gUnk_03002490;
         p = u->unk88;
-        if (p[6] == 1)
+        if (p->unk06 == 1)
         {
             u->unk28 = 0x11C1;
             u->unk2C = 3;
@@ -243,7 +243,7 @@ void sub_080676c0(void)
     {
         if (gUnk_03001F30 == 0)
         {
-            if (((u8 *)gUnk_03002490->unk88)[6] == 1)
+            if (gUnk_03002490->unk88->unk06 == 1)
                 sub_080031b8(158);
             else if (gUnk_03001EA4 & 1)
                 sub_080031b8(111);
@@ -262,7 +262,7 @@ void sub_080676c0(void)
     gUnk_03002490->unk7A = 0;
     sub_080061c0(0x18000, 0x5A5A5A5A);
     sub_0800622c(0xFFFD8000, 0x2500, 0x30000);
-    if (gUnk_03001F30 == 0 && ((u8 *)gUnk_03002490->unk88)[6] == 1)
+    if (gUnk_03001F30 == 0 && gUnk_03002490->unk88->unk06 == 1)
     {
         sub_08006338(0x11C2);
         TaskYieldTrampoline(3);
@@ -338,7 +338,7 @@ void sub_08067950(void)
     while (gUnk_03002790[gUnk_03002490->unk44].unk3C == 34)
         TaskYieldTrampoline(1);
     gUnk_03002490->unk42 = 12;
-    if (((u8 *)gUnk_03002490->unk88)[6] == 1)
+    if (gUnk_03002490->unk88->unk06 == 1)
     {
         sub_08006138();
         return;
@@ -359,14 +359,14 @@ void sub_08067a48(void)
 {
     struct Task *t;
     struct Task *u;
-    u8 *p;
+    struct PlayerState *p;
     s32 i;
 
     if (gUnk_03001F30 == 0)
     {
         t = gUnk_03002490;
         p = t->unk88;
-        if (p[6] == 1)
+        if (p->unk06 == 1)
         {
             i = (s16)(gUnk_03002790[t->unk44].unk3C - 30);
             switch (i)
@@ -404,7 +404,7 @@ void sub_08067a48(void)
 void sub_08067b24(void)
 {
     struct Task *t;
-    u8 *p;
+    struct PlayerState *p;
 
     t = gUnk_03002490;
     t->unk00 = (u32)sub_0803d494;
@@ -423,7 +423,7 @@ void sub_08067b24(void)
         if (gUnk_03002360 == gCurTaskIdx)
         {
             p = gUnk_03002490->unk88;
-            if (p[6] == 1)
+            if (p->unk06 == 1)
                 sub_080031b8(158);
             else if (gUnk_03001EA4 & 1)
                 sub_080031b8(111);
@@ -443,7 +443,7 @@ void sub_08067b24(void)
     {
         t = gUnk_03002490;
         p = t->unk88;
-        if (p[6] == 1)
+        if (p->unk06 == 1)
         {
             sub_08006338(370);
             TaskYieldTrampoline(3);
@@ -527,7 +527,7 @@ void sub_08067db0(void)
 {
     struct Task *t;
     struct Task *u;
-    u8 *p;
+    struct PlayerState *p;
     s32 i;
 
     t = gUnk_03002490;
@@ -536,7 +536,7 @@ void sub_08067db0(void)
     if (gUnk_03001F30 == 0)
     {
         p = t->unk88;
-        if (p[6] == 1)
+        if (p->unk06 == 1)
             i += 75;
     }
     else
@@ -563,7 +563,7 @@ void sub_08067ea4(void)
     struct Task *v;
     struct Task *w;
     struct Task *x;
-    u8 *p;
+    struct PlayerState *p;
     s32 f;
 
     gUnk_03002490->unk15 = 8;
@@ -579,7 +579,7 @@ void sub_08067ea4(void)
     if (gUnk_03001F30 == 0)
     {
         p = gUnk_03002490->unk88;
-        if (p[6] == 1)
+        if (p->unk06 == 1)
         {
             f = 370;
             while (1)
@@ -646,7 +646,7 @@ void sub_08068028(void)
 void sub_080680ac(void)
 {
     struct Task *t;
-    u8 *p;
+    struct PlayerState *p;
     s32 f;
 
     gUnk_03002490->unk15 = 9;
@@ -661,7 +661,7 @@ void sub_080680ac(void)
     if (gUnk_03001F30 == 0)
     {
         p = gUnk_03002490->unk88;
-        if (p[6] == 1)
+        if (p->unk06 == 1)
         {
             f = 370;
             while (1)
@@ -740,7 +740,7 @@ void sub_080682a8(void)
     {
         if (gUnk_03002360 == gCurTaskIdx)
         {
-            if (((u8 *)gUnk_03002490->unk88)[6] == 1)
+            if (gUnk_03002490->unk88->unk06 == 1)
                 sub_080031b8(158);
             else if (gUnk_03001EA4 & 1)
                 sub_080031b8(111);
@@ -758,7 +758,7 @@ void sub_080682a8(void)
     sub_0800622c(0xFFFD8000, 0x2500, 0x30000);
     if (gUnk_03001F30 == 0)
     {
-        if (((u8 *)gUnk_03002490->unk88)[6] == 1)
+        if (gUnk_03002490->unk88->unk06 == 1)
         {
             sub_08006338(370);
             TaskYieldTrampoline(3);
@@ -809,7 +809,7 @@ void sub_080684a4(void)
 {
     s32 d;
 
-    switch (*(s8 *)((u8 *)gUnk_03002490->unk88 + 13))
+    switch (gUnk_03002490->unk88->unk0D)
     {
     case 0:
     case 7:
@@ -909,7 +909,7 @@ void sub_0806865c(s32 i)
     struct Task *t;
 
     t = &gUnk_03002790[i];
-    sub_08068b88(t, 0, 0, 1);
+    sub_08068b88(i, 0, 0, 1);
     gUnk_02007D00[1] = -1;
     t->unk72 = 0;
 }
@@ -927,7 +927,7 @@ void sub_08068690(void)
     t->unk30 = 2;
     if (gUnk_03001F30 == 0)
     {
-        if (((u8 *)t->unk88)[6] == 1)
+        if (t->unk88->unk06 == 1)
         {
             t->unk43 = u->unk43;
             gUnk_03002490->unk2C = 1;

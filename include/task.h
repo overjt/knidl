@@ -17,6 +17,7 @@
 
 struct Actor;
 struct ActorDef;
+struct PlayerState;
 struct AnimCmd;
 struct GfxHeader;
 
@@ -78,7 +79,7 @@ struct Task
     /*0x82*/ u16 unk82;
     /*0x84*/ u16 unk84;
     /*0x86*/ u16 unk86;
-    /*0x88*/ void *unk88;
+    /*0x88*/ struct PlayerState *unk88;
     /*0x8C*/ struct Actor *unk8C;
 };
 
@@ -192,13 +193,36 @@ struct AnimCmd
     /*0x02*/ s16 unk02;
 };
 
-/* 116-byte per-player record at gUnk_03002170 (0x08064EB8). */
+/* 116-byte per-player record at gUnk_03002170 (0x08064EB8); Task.unk88 points
+   at the record of the player the task belongs to (0x08064EB8). */
 struct PlayerState
 {
-    /*0x00*/ u8 filler00[13];
+    /*0x00*/ s8 unk00;
+    /*0x01*/ u8 filler01[3];
+    /*0x04*/ u8 unk04;
+    /*0x05*/ u8 unk05;
+    /*0x06*/ u8 unk06;
+    /*0x07*/ u8 filler07[6];
     /*0x0D*/ s8 unk0D;
     /*0x0E*/ s8 unk0E;
-    /*0x0F*/ u8 filler0F[116 - 0x0F];
+    /*0x0F*/ u8 filler0F[5];
+    /*0x14*/ u16 unk14;
+    /*0x16*/ u8 unk16;
+    /*0x17*/ u8 filler17[13];
+    /*0x24*/ u16 unk24;
+    /*0x26*/ u16 unk26;
+    /*0x28*/ u8 unk28;
+    /*0x29*/ u8 unk29;
+    /*0x2A*/ u8 filler2A;
+    /*0x2B*/ u8 unk2B;
+    /*0x2C*/ s16 unk2C;
+    /*0x2E*/ s16 unk2E;
+    /*0x30*/ u8 filler30[16];
+    /*0x40*/ u16 unk40;
+    /*0x42*/ u16 unk42;
+    /*0x44*/ u8 filler44;
+    /*0x45*/ u8 unk45;
+    /*0x46*/ u8 filler46[116 - 0x46];
 };
 
 /* Spawn descriptor sub_08064A78 turns into a class-4 task. */
