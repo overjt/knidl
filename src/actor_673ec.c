@@ -13,8 +13,12 @@ extern s8 gUnk_0873E1F8[];
 extern u32 gUnk_0873E2F0[];
 extern u32 gUnk_0873E31C[];
 extern vs16 gUnk_03004CA0[];
+extern u32 gUnk_02007D00[];
 
 extern void sub_08002e98(u32 a, u32 b, u32 *c);
+extern void sub_08068a8c(s32 i, u32 b);
+extern void sub_08068b88(struct Task *t, u32 b, u32 c, u32 d);
+extern void sub_0806737c(void);
 extern void sub_0803e2d4(void);
 extern void sub_0803e080(void);
 extern void sub_08026264(s16 x, s16 y);
@@ -803,6 +807,8 @@ void sub_08068460(void)
 }
 void sub_080684a4(void)
 {
+    s32 d;
+
     switch (*(s8 *)((u8 *)gUnk_03002490->unk88 + 13))
     {
     case 0:
@@ -811,70 +817,201 @@ void sub_080684a4(void)
     case 20:
     case 21:
     case 24:
-        gUnk_03002490->unk3C += 0;
+        d = 0;
         break;
     case 1:
-        gUnk_03002490->unk3C += 0x143;
+        d = 0x143;
         break;
     case 2:
-        gUnk_03002490->unk3C += 0x234;
+        d = 0x234;
         break;
     case 3:
-        gUnk_03002490->unk3C += 0x2B3;
+        d = 0x2B3;
         break;
     case 4:
-        gUnk_03002490->unk3C += 0x384;
+        d = 0x384;
         break;
     case 5:
-        gUnk_03002490->unk3C += 0x495;
+        d = 0x495;
         break;
     case 6:
-        gUnk_03002490->unk3C += 0x522;
+        d = 0x522;
         break;
     case 8:
-        gUnk_03002490->unk3C += 0x5CB;
+        d = 0x5CB;
         break;
     case 9:
-        gUnk_03002490->unk3C += 0x69C;
+        d = 0x69C;
         break;
     case 10:
-        gUnk_03002490->unk3C += 0x79C;
+        d = 0x79C;
         break;
     case 12:
-        gUnk_03002490->unk3C += 0x838;
+        d = 0x838;
         break;
     case 13:
-        gUnk_03002490->unk3C += 0x8C4;
+        d = 0x8C4;
         break;
     case 14:
-        gUnk_03002490->unk3C += 0x950;
+        d = 0x950;
         break;
     case 15:
-        gUnk_03002490->unk3C += 0x9F5;
+        d = 0x9F5;
         break;
     case 16:
-        gUnk_03002490->unk3C += 0xA87;
+        d = 0xA87;
         break;
     case 17:
-        gUnk_03002490->unk3C += 0xB0A;
+        d = 0xB0A;
         break;
     case 18:
-        gUnk_03002490->unk3C += 0xB94;
+        d = 0xB94;
         break;
     case 19:
-        gUnk_03002490->unk3C += 0xC8F;
+        d = 0xC8F;
         break;
     case 22:
-        gUnk_03002490->unk3C += 0xD60;
+        d = 0xD60;
         break;
     case 23:
-        gUnk_03002490->unk3C += 0xE38;
+        d = 0xE38;
         break;
     case 25:
-        gUnk_03002490->unk3C += 0xF3A;
+        d = 0xF3A;
         break;
     default:
         while (1)
             ;
     }
+    gUnk_03002490->unk3C += d;
+}
+void sub_080685ec(s32 i, s32 j, u8 c)
+{
+    struct Task *t;
+    struct Task *u;
+
+    t = &gUnk_03002790[i];
+    u = &gUnk_03002790[j];
+    t->unk44 = j;
+    t->unk12 = 4;
+    t->unk14 = c;
+    t->unk72 = gUnk_03002490->unk72;
+    if (u->unk72 == 2)
+        sub_08068a8c(i, 1);
+    else
+        sub_08068a8c(i, 0);
+    gUnk_02007D00[0] = 0;
+    gUnk_02007D00[1] = i;
+    sub_08006148(sub_0806737c, i);
+}
+void sub_0806865c(s32 i)
+{
+    struct Task *t;
+
+    t = &gUnk_03002790[i];
+    sub_08068b88(t, 0, 0, 1);
+    gUnk_02007D00[1] = -1;
+    t->unk72 = 0;
+}
+void sub_08068690(void)
+{
+    struct Task *t;
+    struct Task *u;
+    struct Task *v;
+
+    t = gUnk_03002490;
+    u = &gUnk_03002790[t->unk44];
+    t->unk4C = (t->unk48 - u->unk48) << 16;
+    t->unk50 = (t->unk4A - u->unk4A) << 16;
+    t->unk28 = 8;
+    t->unk30 = 2;
+    if (gUnk_03001F30 == 0)
+    {
+        if (((u8 *)t->unk88)[6] == 1)
+        {
+            t->unk43 = u->unk43;
+            gUnk_03002490->unk2C = 1;
+            sub_08006338(0x171);
+        }
+        else
+        {
+            t->unk43 = -u->unk43;
+            v = gUnk_03002490;
+            v->unk2C = -v->unk43;
+            v->unk3C = 0x133;
+            sub_080684a4();
+        }
+    }
+    else
+    {
+        t->unk43 = u->unk43;
+        sub_08006338(0x123B);
+    }
+}
+void sub_08068760(void)
+{
+    struct Task *t;
+    struct Task *u;
+    s32 v;
+
+    t = gUnk_03002490;
+    if (t->unk4C <= 0)
+        t->unk5C = 10752;
+    else
+        t->unk5C = -10752;
+    u = gUnk_03002490;
+    v = u->unk50;
+    if (v < 0)
+        v = -v;
+    v >>= 3;
+    if (u->unk50 <= 0)
+        u->unk58 = v;
+    else
+        u->unk58 = -v;
+}
+u32 sub_080687a0(void)
+{
+    struct Task *t;
+    struct Task *u;
+    s32 d;
+
+    t = gUnk_03002490;
+    u = &gUnk_03002790[t->unk44];
+    d = u->unk48 - t->unk48;
+    if (d < 0)
+        d = -d;
+    if (d <= 23)
+        return 1;
+    else
+        return 0;
+}
+void sub_080687e0(void)
+{
+    gUnk_02007D00[0] = 1;
+    gUnk_03002490->unk3C = 0xFFFF;
+}
+void sub_080687fc(void)
+{
+    struct Task *t;
+
+    t = gUnk_03002490;
+    if (t->unk28 <= 0)
+    {
+        t->unk3C += t->unk2C;
+        t->unk28 = 8;
+        t->unk30--;
+    }
+    else
+    {
+        t->unk28--;
+    }
+}
+void sub_08068828(void)
+{
+    struct Task *t;
+
+    t = gUnk_03002490;
+    t->unk44 = t->unk18;
+    t->unk4C = 0;
+    t->unk50 = 0;
 }
