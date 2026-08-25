@@ -46,6 +46,7 @@ extern s32 gUnk_0873E348[];
 extern s32 gUnk_0873E388[];
 extern void sub_080227a4(struct Task *t);
 extern void sub_0801bcac(u32 *p);
+extern u16 gUnk_0873E3C8[];
 
 void sub_080675e4(void);
 
@@ -504,4 +505,60 @@ void sub_08067b24(void)
     t = gUnk_03002490;
     t->unk34++;
     sub_08006138();
+}
+
+void sub_08067d30(void)
+{
+    sub_080227a4(gUnk_03002490);
+    sub_0801bcac(gUnk_0873CB1C);
+    if (gUnk_03005550 != 0)
+        gUnk_03002490->unk54 = 0;
+    if (gUnk_03002490->unk34 != 0)
+    {
+        sub_080062c4();
+        sub_0806865c(gCurTaskIdx);
+    }
+}
+
+void sub_08067d78(void)
+{
+    struct Task *t;
+
+    gUnk_03002490->unk15 = 7;
+    t = gUnk_03002490;
+    t->unk43 = gUnk_03002790[t->unk44].unk43;
+    sub_08006138();
+}
+
+/* Track the carrier's frame through the 5-word gUnk_0873E3C8 table. */
+void sub_08067db0(void)
+{
+    struct Task *t;
+    struct Task *u;
+    u8 *p;
+    s32 i;
+
+    t = gUnk_03002490;
+    u = &gUnk_03002790[t->unk44];
+    i = (u->unk3C - 30) * 5;
+    if (gUnk_03001F30 != 0)
+    {
+        i += 150;
+    }
+    else
+    {
+        p = t->unk88;
+        if (p[6] == 1)
+            i += 75;
+    }
+    t = gUnk_03002490;
+    t->unk48 = gUnk_0873E3C8[i] * u->unk43 + u->unk48;
+    t->unk4A = gUnk_0873E3C8[i + 1] + u->unk4A;
+    t->unk4C = t->unk48 << 16;
+    t->unk50 = t->unk4A << 16;
+    t->unk43 = u->unk43 * (s16)gUnk_0873E3C8[i + 2];
+    sub_08006338((s16)gUnk_0873E3C8[i + 3]);
+    if (gUnk_03001F30 == 0)
+        sub_080684a4();
+    gUnk_03002490->unk42 = gUnk_0873E3C8[i + 4];
 }
