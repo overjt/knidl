@@ -56,6 +56,11 @@ extern u32 gUnk_0873F288[];
 extern u32 gUnk_0873F2A0[];
 extern void sub_0800a04c(s32 a, u32 b);
 extern s32 sub_08021a40(s16 x, s16 y);
+extern u32 sub_08005acc(void);
+extern s32 sub_08001a94(u32 a, u32 b, u32 c, u32 d, s32 e, s32 f);
+extern u8 sub_08066a6c(void);
+extern u8 sub_08066a80(void);
+extern void sub_0800a554(void);
 
 void sub_0806391c(u32 i, struct ActorDef *d);
 void sub_080639c8(u32 i, u32 v);
@@ -100,6 +105,8 @@ s32 sub_08064d9c(u32 sub, u32 type, int p2Arg, int xArg, int yArg, int prioArg,
 s32 sub_08064e5c(u32 sub, u32 type, u8 p2);
 s32 sub_08064f28(u8 cls, u32 sub, u32 type, u8 p3, u8 p4, int x, int y,
                  u16 prio);
+u8 sub_08065160(void);
+void sub_08063fe0(void);
 
 s32 sub_08063698(u32 type, s32 start)
 {
@@ -1663,4 +1670,114 @@ s32 sub_08065100(s16 x, s16 y, u32 p2, u8 p3, u8 p4)
         t->unk7E = p2;
     }
     return i;
+}
+
+/* Is the running task inside the 64px-padded camera window? */
+u8 sub_08065160(void)
+{
+    if (gUnk_03002158[0] - 64 < gUnk_03002490->unk48
+        && gUnk_03002490->unk48 < gUnk_03002158[1] + 64
+        && gUnk_03002158[2] - 64 < gUnk_03002490->unk4A
+        && gUnk_03002490->unk4A < gUnk_03002158[3] + 64)
+        return 1;
+    return 0;
+}
+
+void sub_080651b4(void)
+{
+    struct Task *p;
+    struct Task *t;
+    u32 *tbl;
+
+    p = gUnk_03002490;
+    if (p->unk38 == NULL)
+        return;
+    if (p->unk3C == -1)
+        return;
+    if (sub_08065160() == 0)
+        return;
+    if (sub_08005acc() == 0)
+        return;
+    t = gUnk_03002490;
+    tbl = t->unk38;
+    sub_08001a94(t->unk42, tbl[t->unk3C], t->unk3E, t->unk40,
+                 t->unk48 - gUnk_03002348,
+                 (s16)(t->unk4A - gUnk_030023E4));
+}
+
+void sub_0806523c(void)
+{
+    struct Task *p;
+    struct Task *t;
+    u32 *tbl;
+
+    p = gUnk_03002490;
+    if (p->unk38 == NULL)
+        return;
+    if (p->unk3C == -1)
+        return;
+    if (sub_08065160() != 0)
+    {
+        if (sub_08005acc() == 0)
+            return;
+        t = gUnk_03002490;
+        tbl = t->unk38;
+        sub_08001a94(t->unk42, tbl[t->unk3C], t->unk3E, t->unk40,
+                     t->unk48 - gUnk_03002348,
+                     (s16)(t->unk4A - gUnk_030023E4));
+    }
+    else
+    {
+        sub_08063fe0();
+    }
+}
+
+void sub_080652c8(void)
+{
+    struct Task *p;
+    struct Task *t;
+    u32 *tbl;
+
+    p = gUnk_03002490;
+    if (p->unk38 == NULL)
+        return;
+    if (p->unk3C == -1)
+        return;
+    if (sub_08066a6c() == 0)
+        return;
+    if (sub_08005acc() == 0)
+        return;
+    t = gUnk_03002490;
+    tbl = t->unk38;
+    sub_08001a94(t->unk42, tbl[t->unk3C], t->unk3E, t->unk40,
+                 t->unk48 - gUnk_03002348,
+                 (s16)(t->unk4A - gUnk_030023E4));
+}
+
+void sub_08065350(void)
+{
+    struct Task *p;
+    struct Task *t;
+    u32 *tbl;
+
+    p = gUnk_03002490;
+    if (p->unk38 == NULL)
+        return;
+    if (p->unk3C == -1)
+        return;
+    if (sub_08066a6c() != 0)
+    {
+        if (sub_08005acc() == 0)
+            return;
+        t = gUnk_03002490;
+        tbl = t->unk38;
+        sub_08001a94(t->unk42, tbl[t->unk3C], t->unk3E, t->unk40,
+                     t->unk48 - gUnk_03002348,
+                     (s16)(t->unk4A - gUnk_030023E4));
+    }
+    else if (sub_08066a80() != 0)
+    {
+        sub_0800a554();
+        sub_08063fe0();
+    }
 }
