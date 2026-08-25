@@ -40,6 +40,12 @@ extern void sub_080031b8(u32 a);
 extern void sub_080061c0(s32 a, s32 b);
 extern void sub_0800622c(s32 a, s32 b, s32 c);
 extern void sub_08006364(s32 a);
+extern u32 gUnk_0873CB1C[];
+extern u8 gUnk_03005550;
+extern s32 gUnk_0873E348[];
+extern s32 gUnk_0873E388[];
+extern void sub_080227a4(struct Task *t);
+extern void sub_0801bcac(u32 *p);
 
 void sub_080675e4(void);
 
@@ -302,4 +308,59 @@ void sub_080676c0(void)
     t = gUnk_03002490;
     t->unk34 = t->unk34 + 1;
     sub_08006138();
+}
+
+void sub_08067908(void)
+{
+    sub_080227a4(gUnk_03002490);
+    sub_0801bcac(gUnk_0873CB1C);
+    if (gUnk_03005550 != 0)
+        gUnk_03002490->unk54 = 0;
+    if (gUnk_03002490->unk34 != 0)
+    {
+        sub_080062c4();
+        sub_0806865c(gCurTaskIdx);
+    }
+}
+
+/* Task body: the carried task wobbling in the player's hands. */
+void sub_08067950(void)
+{
+    struct Task *t;
+    u8 *p;
+
+    gUnk_03002490->unk15 = 5;
+    t = gUnk_03002490;
+    t->unk43 = gUnk_03002790[t->unk44].unk43;
+    t = gUnk_03002490;
+    t->unk34 = 0;
+    t->unk42 = 7;
+    sub_080062c4();
+    t = gUnk_03002490;
+    t->unk4C = (t->unk43 * 3) << 19;
+    t->unk50 = 0;
+    while (gUnk_03002790[t->unk44].unk3C == 34)
+    {
+        TaskYieldTrampoline(1);
+        t = gUnk_03002490;
+    }
+    gUnk_03002490->unk42 = 12;
+    p = gUnk_03002490->unk88;
+    if (p[6] == 1)
+    {
+        sub_08006138();
+        return;
+    }
+    while (1)
+    {
+        t = gUnk_03002490;
+        sub_080061c0(gUnk_0873E348[t->unk34], 0x5A5A5A5A);
+        t = gUnk_03002490;
+        t->unk58 = gUnk_0873E388[t->unk34];
+        TaskYieldTrampoline(2);
+        t = gUnk_03002490;
+        t->unk34++;
+        if (t->unk34 > 14)
+            t->unk34 = 0;
+    }
 }
