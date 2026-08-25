@@ -63,6 +63,7 @@ extern void sub_08066754(void);
 extern void sub_080666a4(void);
 void sub_08066988(u32 i);
 u8 sub_08066a0c(s16 dx, u16 dy);
+void sub_08066c08(u32 def, u8 b);
 extern void sub_080640c8(void);
 extern s32 sub_080640dc(struct AnimCmd *p);
 extern void sub_080639b4(u32 v);
@@ -85,6 +86,15 @@ extern void sub_0806be4c(u32 i);
 extern void sub_08006148(void *fn, u32 i);
 extern void sub_0806a344(void);
 extern void sub_08063f24(s32 i);
+extern s32 gUnk_0873E1B8[];
+extern void sub_08066c74(void);
+extern void sub_08063908(u32 def);
+extern void sub_08063ff4(void);
+extern void sub_08063e14(void);
+extern void sub_08006304(void);
+extern void sub_0806523c(void);
+extern void sub_08066e88(u8 a);
+extern void sub_080637cc(void);
 extern s16 gUnk_030023E4;
 
 extern u32 sub_08005acc(void);
@@ -119,6 +129,7 @@ void sub_08066658(struct AnimCmd *p);
 void sub_080666a4(void);
 void sub_08066988(u32 i);
 u8 sub_08066a0c(s16 dx, u16 dy);
+void sub_08066c08(u32 def, u8 b);
 
 void sub_080653ec(void)
 {
@@ -1448,4 +1459,146 @@ u8 sub_08066a6c(void)
 u8 sub_08066a80(void)
 {
     return sub_08066a0c(360, 240);
+}
+
+void sub_08066a94(u8 mode)
+{
+    struct Task *t;
+    struct Actor *a;
+    struct TaskGfx *g;
+    struct GfxHeader *h;
+    u32 *tbl;
+    u32 n;
+
+    t = gUnk_03002490;
+    a = t->unk8C;
+    if (a->unk28 != 0)
+        return;
+    if (mode == 1)
+    {
+        tbl = t->unk38;
+        g = (struct TaskGfx *)tbl[t->unk3C];
+        a->unk28 = (u32)(g->unk04 + 1);
+        n = *g->unk04 >> 1;
+    }
+    else
+    {
+        h = a->unk64.unk00;
+        a->unk28 = (u32)h->unk08;
+        n = h->unk00 << 4;
+    }
+    a->unk24 = n;
+}
+
+void sub_08066ae0(void)
+{
+    struct Task *t;
+    struct Actor *a;
+    u8 v;
+
+    t = gUnk_03002490;
+    a = t->unk8C;
+    if (t->unk73 != 0)
+    {
+        switch (gUnk_03002350)
+        {
+        case 2:
+            v = 13;
+            break;
+        case 3:
+            v = 16;
+            break;
+        case 4:
+            v = 18;
+            break;
+        case 1:
+        default:
+            v = 10;
+            break;
+        }
+        a->unk02 = v;
+        gUnk_03002490->unk73 = 0;
+    }
+    sub_080637cc();
+}
+
+void sub_08066b34(u32 def)
+{
+    struct Task *t;
+    struct Actor *a;
+
+    t = gUnk_03002490;
+    a = t->unk8C;
+    if (a->unk1A != -1)
+    {
+        t->unk0C = (u32)sub_08066c74;
+        sub_08063908(def);
+        gUnk_03002490->unk8C->unk16 = 6;
+    }
+}
+
+void sub_08066b70(void)
+{
+    struct Task *t;
+    struct Actor *a;
+
+    t = gUnk_03002490;
+    a = t->unk8C;
+    if (a->unk1A == -1)
+    {
+        sub_08063ff4();
+    }
+    else if (t->unk54 < 0)
+    {
+        t->unk1C = 9;
+    }
+    else
+    {
+        t->unk1C = 3;
+    }
+}
+
+void sub_08066ba8(void)
+{
+    struct Task *t;
+
+    sub_08063e14();
+    sub_08006304();
+    t = gUnk_03002490;
+    t->unk58 = 0x8000;
+    if (t->unk43 == 1)
+        t->unk1C = 0;
+    else
+        t->unk1C = 6;
+}
+
+void sub_08066bdc(void)
+{
+    struct Task *t;
+
+    t = gUnk_03002490;
+    t->unk1C = t->unk1C + 1;
+    if (t->unk1C > 11)
+        t->unk1C = 0;
+    t = gUnk_03002490;
+    t->unk54 = gUnk_0873E1B8[t->unk1C];
+}
+
+void sub_08066c08(u32 def, u8 b)
+{
+    gUnk_03002490->unk8C->unk1A = 0xFFFF;
+    sub_08063908(def);
+    gUnk_03002490->unk0C = (u32)sub_0806523c;
+    sub_08066e88(b);
+}
+
+void sub_08066c3c(u32 def)
+{
+    struct Task *t;
+    struct Actor *a;
+
+    t = gUnk_03002490;
+    a = t->unk8C;
+    if (a->unk1A != -1 && t->unk74 != 2)
+        sub_08066c08(def, 1);
 }
