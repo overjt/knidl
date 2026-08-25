@@ -278,6 +278,7 @@ void sub_0806567c(void)
 /* Integrate the running task's velocity, clamped to its per-axis maximum. */
 void sub_080656b4(void)
 {
+    struct Task *w;
     struct Task *t;
     struct Task *u;
     s32 v;
@@ -419,6 +420,7 @@ void sub_080658b8(void)
 /* Task body: cross-fade two palettes while the helper's refcount holds. */
 void sub_080658d8(void)
 {
+    struct Task *w;
     struct Task *u;
     struct Task *v;
     struct Task *x;
@@ -465,6 +467,7 @@ void sub_080658d8(void)
 /* Task body: cycle the actor's 32-byte palette out of gUnk_0873DF38. */
 void sub_080659b4(void)
 {
+    struct Task *w;
     struct Task *t;
     struct Task *u;
     struct Task *x;
@@ -499,6 +502,7 @@ void sub_080659b4(void)
 /* Task body: flash one palette entry on and off. */
 void sub_08065a68(void)
 {
+    struct Task *w;
     struct Task *t;
     struct Task *u;
     struct Task *x;
@@ -534,6 +538,7 @@ void sub_08065a68(void)
 /* Task body: cross-fade the actor's palette pair out of gUnk_0873DF7C. */
 void sub_08065b14(void)
 {
+    struct Task *w;
     struct Task *t;
     struct Task *u;
     struct Task *v;
@@ -1044,7 +1049,7 @@ void sub_080662d8(void)
         switch (v)
         {
         case 1:
-            sub_080663f4(gUnk_02004C90, gUnk_02006190[4]);
+            sub_080663f4((void *)gUnk_02004C90, gUnk_02006190[4]);
             break;
         case 0:
             sub_08066480(a->unk64.unk00, gUnk_02004C90, gUnk_02006190[4]);
@@ -1201,6 +1206,7 @@ void sub_080665a0(void)
     struct Task **g;
     struct Task *t;
     s16 v;
+    s16 w;
 
     g = &gUnk_03002490;
     gUnk_0200AFF8 = 0;
@@ -1213,8 +1219,8 @@ void sub_080665a0(void)
     }
     else
     {
-        v = gUnk_03002490->unk78;
-        sub_0800a294(v);
+        w = gUnk_03002490->unk78;
+        sub_0800a294(w);
     }
 }
 
