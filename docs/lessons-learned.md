@@ -701,6 +701,45 @@ locals leaves both tails emitted in full.
 ROM's `beq case1; cmp K2; beq case2; b default` only comes from a `switch`.
 Complements 3.25/3.42, which cover when a switch will NOT match.
 
+### 3.53 A label INSIDE a `do/while` body is a third loop shape
+Between 3.21's two options there is a third. A plain `do { } while` optimizes
+everything; the `goto` form optimizes nothing BUT also drops the loop NOTES,
+which costs the induction variable its loop-depth-weighted references in flow.c
+and can flip its register. Putting the label INSIDE the `do/while` body gives
+the loop two entry points — `.loop` prints `Loop at N ignored due to multiple
+entry points` — so `scan_loop`/`strength_reduce` are skipped while the notes
+survive and the depth weighting is preserved. **Diagnostic: the ROM re-adds a
+base+index every iteration AND re-materialises small constants in the body, yet
+still has pool addresses in its preheader.** This one change took a function
+from 640 differing bytes to 1. Note the invalid loop cannot hoist its own
+preheader values, so those must be hand-hoisted into a local placed exactly
+where the ROM's `ldr` sits.
+
+### 3.54 `arr[i]` can NEVER produce `adds rD, rIndex, rBase`
+C's `build_binary_op` routes any pointer/int addition through
+`pointer_int_sum(ptrop, intop)`, so `arr[i]`, `i[arr]` and `*(i + arr)` build
+the identical tree and all emit `adds rD, rBase, rIndex`. The ROM's opposite
+operand order requires the addition to happen in INTEGER type:
+`*(s8 *)(i + (int)arr)`. This is a front-end canonicalisation, so — unlike 3.32
+— no declaration-order or pseudo-birth-order change can fix it.
+
+### 3.55 Read `.loop`'s life/savings arithmetic before hunting shapes
+loop.c moves a movable iff `threshold * savings * lifetime >= insn_count`, and
+the `.loop` dump prints all three inputs; `combine_movables` accumulates
+`savings` and `lifetime` across identical loads. In this zone `threshold = 16`.
+If the product is 1 and `insn_count` is 98, no source shape in that family will
+ever produce the hoist — take the documented exception instead of grinding.
+Related, and more terminal: **a symbol address that CSE merged across a branch
+can never be loop-hoisted at all** — `scan_loop` silently omits such a set from
+the movable list (`! reg_in_basic_block_p && maybe_never`), so "the movable is
+not in the `.loop` list at all" is a stronger signal than "not desirable".
+
+### 3.56 Count pool loads per pass to find which pass merged two mentions
+`grep -c 'symbol_ref/u:SI ("\*\.LCn")' x.{rtl,jump,cse,gcse,loop,cse2}` pins
+exactly which pass collapsed two mentions of one symbol (in one case: 5 loads in
+`.rtl`, still 5 after jump, 3 after cse1). Cheap, and it turns 3.19-style
+questions into arithmetic instead of guesswork.
+
 ## 4. Splitting ROM ranges into asm (tools/split.py)
 
 ### 4.1 objdump text only round-trips under `.syntax unified`
