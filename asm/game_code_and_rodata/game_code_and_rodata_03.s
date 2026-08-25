@@ -12045,8 +12045,7 @@ loc_0803cb46:
 	asrs	r0, r0, #16
 	lsls	r1, r4, #16
 	asrs	r1, r1, #16
-	.short	0xF7C9
-	.short	0xFC55
+	bl	sub_0800641c	@ 0x0800641C
 	cmp	r0, #0
 	beq.n	loc_0803cba6	@ 0x0803CBA6
 	ldr	r0, [pc, #84]	@ 0x0803CBCC
@@ -12606,8 +12605,7 @@ loc_0803cf72:
 	adds	r1, #74
 	movs	r2, #0
 	ldrsh	r1, [r1, r2]
-	.short	0xF7C9
-	.short	0xFA4B
+	bl	sub_0800641c	@ 0x0800641C
 	cmp	r0, #0
 	beq.n	loc_0803cfe6	@ 0x0803CFE6
 	.global	loc_0803cf8a
@@ -14642,8 +14640,7 @@ loc_0803de02:
 	adds	r1, #74
 	movs	r2, #0
 	ldrsh	r1, [r1, r2]
-	.short	0xF7C8
-	.short	0xFAFE
+	bl	sub_0800641c	@ 0x0800641C
 	cmp	r0, #0
 	bne.n	loc_0803de50	@ 0x0803DE50
 	ldr	r1, [r4, #0]
@@ -14786,8 +14783,7 @@ loc_0803df24:
 	asrs	r5, r0, #16
 	adds	r0, r4, #0
 	adds	r1, r5, #0
-	.short	0xF7C8
-	.short	0xFA5E
+	bl	sub_080063f0	@ 0x080063F0
 	cmp	r0, #0
 	beq.n	loc_0803dfb8	@ 0x0803DFB8
 	adds	r0, r4, #0
@@ -14884,8 +14880,7 @@ sub_0803dfc8:
 	adds	r1, #74
 	movs	r2, #0
 	ldrsh	r1, [r1, r2]
-	.short	0xF7C8
-	.short	0xFA13
+	bl	sub_0800641c	@ 0x0800641C
 	cmp	r0, #0
 	beq.n	loc_0803e03a	@ 0x0803E03A
 	movs	r0, #0

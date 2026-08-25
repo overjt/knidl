@@ -327,6 +327,9 @@ EXTRA_THUMB_ENTRIES = {
     0x08005618,  # SetAllTaskSkipMasks(inside sub_080055c4's 0x90)
     0x08005A74,  # TaskUpdatePosNoIntegrate (inside sub_080059fc's 0x94)
     0x08005B20,  # TaskUploadGfxAndPal (inside sub_08005acc's 0xF8)
+    0x08005E1C,  # dead export        (inside sub_08005d9c's 0x10C)
+    0x080063F0,  # IsOnScreen         (inside sub_080063ac's 0xB8)
+    0x0800641C,  # IsWorldPosOnScreen (inside sub_080063ac's 0xB8)
 }
 
 EVIDENCE_KINDS = ("bl-target", "rom-pointer", "prologue-scan", "curated")

@@ -362,19 +362,19 @@ lock pairs match as written there; (c) a dead export kept by whole-object
 linking can sit BETWEEN two live functions and still belongs to the same C
 unit (`m4aMPlayTempoControl` at `0x080CF554`).
 
-### 3.18 A zone can hold SEVERAL translation units — read the leaf prologue
-The `game_code_early` zone (issue #32) is not one recipe. `0x080008E8-0x08001B08`
-is `agbcc -O2`, but the unit starting near `0x08001CC8` is `old_agbcc -O2`, and
-they sit in the same census segment with no marker between them. Fingerprint,
-readable in one glance without compiling anything: **old_agbcc omits the leaf
-`push {lr}`** — a run of tiny void functions ending in a bare `bx lr` is
-old_agbcc, while `agbcc` unconditionally emits `push {lr}` / `pop {r0}; bx r0`
-for *every* function. Under the wrong recipe the same source was 37 bytes off
-with a 4-byte size overrun; under the right one it was byte-exact. So 3.17's
-"one unit = one recipe" does not license "one zone = one recipe": check the
-leaves of each new range, and re-test a stuck register-allocation-only diff
-with the other recipe BEFORE hunting source shapes.
+### 3.18 SUPERSEDED BY 3.75 — the leaf `push {lr}` is a BUG, not an identity
+This lesson originally read: "the `game_code_early` zone is not one recipe;
+`0x080008E8-0x08001B08` is `agbcc -O2` but the unit near `0x08001CC8` is
+`old_agbcc -O2`; old_agbcc omits the leaf `push {lr}`, so a run of tiny
+functions ending in a bare `bx lr` identifies it."
 
+**That conclusion was wrong**, and it cost several ranges a wrong Makefile
+recipe — they still matched, because old_agbcc happens to reproduce the missing
+push. The real cause is agbcc's `-fprologue-bugfix` flag; see 3.75. The whole
+game-code zone is ONE recipe. What survives: 3.17's "one unit = one recipe"
+genuinely does not license "one zone = one recipe" a priori, and a prologue
+difference IS a real signal worth chasing — just not evidence of a different
+compiler binary until you have ruled out a flag.
 ### 3.19 A buffer address mentioned twice may be a SYMBOL, not a constant
 Extends 3.9 from single cells to buffers. Written as `(u32 *)0x03001270`, gcc
 CSEs the two mentions into one pseudo and the whole entry/tail register
@@ -896,6 +896,60 @@ expression of 3.36, `u8 *`/`u32` temps, `q[-1]`, or const/volatile pointees.
 - `(u16)(x + 63) > 366` reproduces `lsls #16 / adds 0x3F0000 / movs #183;
   lsls #17 / cmp / bhi` — an unsigned HImode compare shifts BOTH operands left
   16 and combine folds the addend into the shifted domain.
+
+### 3.75 `-fprologue-bugfix` is the game-code zone's real recipe
+`agbcc -O2 -mthumb-interwork -fprologue-bugfix` (fnmatch `--newpb`). The flag's
+own help text is "Prevent unnecessary saving of the lr register to the stack".
+Mechanism: `far_jump_used_p()` in `thumb.c` caches
+`current_function_has_far_jump` unless `flag_prologue_bugfix` is set; the stale
+cache makes `thumb_function_prologue`'s
+`if (live_regs_mask || !leaf_function_p() || far_jump_used_p())` fire and push
+LR on a leaf that only has a 2-byte branch. With the flag the cache is disabled
+and the spurious push disappears.
+
+**Everything 3.18 attributed to "old_agbcc sub-units" inside game_code_early was
+this flag.** Verified by re-checking every landed module of issue #32 —
+including `src/agb_init.c` from issue #28 and the twelve modules that had been
+landed with `old_agbcc -O2` Makefile overrides — all 21 match byte-exact under
+the single `--newpb` recipe, as does `src/main.c`. The m4a driver
+(`m4a_c1/cgb/ctrl`) does NOT, so it stays genuinely `old_agbcc -O2`.
+
+Practical rule: **before concluding that a game-code range needs a different
+compiler binary, re-test it with `--newpb`.** Treat a two-recipe story inside
+one zone as a flag difference until proven otherwise.
+
+### 3.76 `ldrb; lsls #24; asrs #24; cmp rX,#K` is an agbcc-only signature
+Under `old_agbcc` that sign extension is ALWAYS removed on an equality test:
+`simplify_comparison`'s `ASHIFTRT` case rewrites
+`(compare (ashiftrt (ashift X 24) 24) K)` to a QImode compare, and the
+"widen back" block then succeeds for `EQ`/`NE` because `WORD_REGISTER_OPERATIONS`
+plus `LOAD_EXTEND_OP(QI) == ZERO_EXTEND` make `nonzero_bits((mem:QI)) == 0xFF`;
+old_agbcc's `s_register_operand` is plain `register_operand`, which accepts
+`(subreg:SI (mem:QI))`, so `recog` succeeds. agbcc's `s_register_operand`
+rejects subreg-of-mem, `recog` fails, and the shifts survive. Corollary: under
+old_agbcc a signed RELATIONAL (`> 1`) keeps the shifts, since the widen block
+only allows `EQ/NE/GEU/GTU/LEU/LTU`. ROM-wide there are 724 instances of this
+pattern and zero in any confirmed old_agbcc range.
+
+### 3.77 Read the compiler source — there are only nine behavioural differences
+The decisive step on the hardest recipe question was not RTL dumps but cloning
+the pinned `jiangzhengwenjz/agbcc` source and reading `combine.c` + `thumb.c`.
+`grep -rn OLD_COMPILER` lists EVERY behavioural difference between the two
+compiler binaries — there are only nine — and `flag_prologue_bugfix` plus
+`s_register_operand`'s `#ifndef OLD_COMPILER` were both found within minutes.
+Add this to the escalation ladder after 3.34/3.39: the dumps tell you WHICH pass
+did something, the source tells you WHY.
+
+### 3.78 `u16 t = x + K; if (t > LIMIT)` is how you get a HImode range check
+`adds rX,#K; lsls rX,#16; cmp rX,rLIMIT<<16; bhi` comes from a genuine `u16`
+local, not from `(u16)(x + K) > LIMIT`, which zero-extends into an SImode
+compare instead.
+
+### 3.79 Call-argument sub-expressions need their own locals to fix order
+`(u32)q->tbl[q->idx]` loads the index first; `t = q->tbl; t[q->idx]` loads the
+base first. Same for a call inside an argument list: `v = f(0); q = g;
+h(q->a, v, …)` keeps the global reload AFTER the call, while `h(q->a, f(0), …)`
+hoists it before.
 
 ## 4. Splitting ROM ranges into asm (tools/split.py)
 

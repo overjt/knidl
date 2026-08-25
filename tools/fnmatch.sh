@@ -9,6 +9,8 @@
 #   --old    compile with old_agbcc -O1 (SDK zone recipe) instead of the
 #            default agbcc -O2 -mthumb-interwork (game-code zone).
 #   --old2   compile with old_agbcc -O2 (m4a driver zone, issue #53).
+#   --newpb  compile with agbcc -O2 -fprologue-bugfix (game-code zone: that
+#            flag suppresses agbcc's spurious leaf `push {lr}`, issue #32).
 #   --no-werror  drop -Werror while iterating (warnings won't abort).
 #
 # What it does:
@@ -47,6 +49,7 @@ for a in "$@"; do
     case "$a" in
         --old) RECIPE="old" ;;
         --old2) RECIPE="old2" ;;
+        --newpb) RECIPE="newpb" ;;
         --no-werror) WERROR="" ;;
         *) echo "unknown flag: $a" >&2; exit 2 ;;
     esac
@@ -61,6 +64,7 @@ if [[ "${INSIDE_DOCKER:-0}" != "1" ]]; then
         "$IMAGE" bash tools/fnmatch.sh "$START_RAW" "$END_RAW" "$CFILE" \
         $( [[ "$RECIPE" == "old" ]] && echo --old ) \
         $( [[ "$RECIPE" == "old2" ]] && echo --old2 ) \
+        $( [[ "$RECIPE" == "newpb" ]] && echo --newpb ) \
         $( [[ -z "$WERROR" ]] && echo --no-werror )
 fi
 
@@ -75,6 +79,8 @@ if [[ "$RECIPE" == "old" ]]; then
     CCLINE=(old_agbcc -O1 -mthumb-interwork)
 elif [[ "$RECIPE" == "old2" ]]; then
     CCLINE=(old_agbcc -O2 -mthumb-interwork)
+elif [[ "$RECIPE" == "newpb" ]]; then
+    CCLINE=(agbcc -O2 -mthumb-interwork -fprologue-bugfix -Wimplicit -Wparentheses $WERROR -fhex-asm)
 else
     CCLINE=(agbcc -O2 -mthumb-interwork -Wimplicit -Wparentheses $WERROR -fhex-asm)
 fi

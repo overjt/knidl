@@ -13431,8 +13431,7 @@ loc_0806c8a0:
 	adds	r1, r1, r2
 	lsls	r1, r1, #16
 	asrs	r1, r1, #16
-	.short	0xF799
-	.short	0xFDB0
+	bl	sub_0800641c	@ 0x0800641C
 	cmp	r0, #0
 	beq.n	loc_0806c8fc	@ 0x0806C8FC
 	ldr	r2, [pc, #96]	@ 0x0806C924
@@ -20552,8 +20551,7 @@ loc_08070094:
 	asrs	r4, r0, #16
 	adds	r0, r5, #0
 	adds	r1, r4, #0
-	.short	0xF796
-	.short	0xF9A2
+	bl	sub_080063f0	@ 0x080063F0
 	cmp	r0, #0
 	beq.n	loc_080700d2	@ 0x080700D2
 	ldr	r0, [pc, #48]	@ 0x080700E4
@@ -22436,8 +22434,7 @@ loc_08070fae:
 	asrs	r4, r0, #16
 	adds	r0, r5, #0
 	adds	r1, r4, #0
-	.short	0xF795
-	.short	0xFA18
+	bl	sub_080063f0	@ 0x080063F0
 	cmp	r0, #0
 	beq.n	loc_08070fe6	@ 0x08070FE6
 	ldr	r0, [pc, #48]	@ 0x08070FF8

@@ -19,7 +19,11 @@ OBJCOPY := arm-none-eabi-objcopy
 # before the generic pattern rule below.
 CC      := agbcc
 CPP     := cpp -P
-CFLAGS  := -O2 -mthumb-interwork -Wimplicit -Wparentheses -Werror -fhex-asm
+# -fprologue-bugfix suppresses agbcc's spurious leaf `push {lr}` (it stops
+# caching current_function_has_far_jump, see docs/lessons-learned.md 3.75).
+# The whole game-code zone needs it; without it, leaf functions that branch
+# gain a push/pop pair and old_agbcc coincidentally looks like a better fit.
+CFLAGS  := -O2 -mthumb-interwork -fprologue-bugfix -Wimplicit -Wparentheses -Werror -fhex-asm
 
 INCLUDE := -I include
 
@@ -46,58 +50,14 @@ $(BUILD_DIR)/src/m4a_cgb.o: CFLAGS := -O2 -mthumb-interwork
 $(BUILD_DIR)/src/m4a_ctrl.o: CC := old_agbcc
 $(BUILD_DIR)/src/m4a_ctrl.o: CFLAGS := -O2 -mthumb-interwork
 
-# game_code_early tail (issue #32): despite sitting in the middle of the
-# agbcc -O2 game-code zone, the translation unit starting around 0x08001CC8 is
-# old_agbcc -O2.  Fingerprint: its leaf functions end in a bare `bx lr`, while
-# agbcc unconditionally emits `push {lr}` / `pop {r0}; bx r0` for every
-# function.  Verified byte-exact via tools/fnmatch.sh --old2.
-$(BUILD_DIR)/src/early_1fd0.o: CC := old_agbcc
-$(BUILD_DIR)/src/early_1fd0.o: CFLAGS := -O2 -mthumb-interwork
 
-# Same old_agbcc -O2 unit, further along (issue #32): link input dispatch,
-# frame driver, wait helpers, 12-bit LCG rand, decimal split, colour blend.
-$(BUILD_DIR)/src/early_2b04.o: CC := old_agbcc
-$(BUILD_DIR)/src/early_2b04.o: CFLAGS := -O2 -mthumb-interwork
 
-# 0x0800293C-0x08002B04 (issue #32): back in the DEFAULT agbcc -O2 recipe —
-# the old_agbcc unit does not run contiguously through the zone.  Verified
-# byte-exact with tools/fnmatch.sh and no flag.
 
-# Sound/SE subsystem, 0x08003110-0x08003888 (issue #32): old_agbcc -O2 again.
-# Fingerprint: sub_08003194 / sub_0800374c / sub_080037f8 / sub_0800381c are
-# leaves ending in a bare `bx lr`; under the default recipe sub_08003194 is 19
-# bytes off with an extra push/pop.
-$(BUILD_DIR)/src/early_3110.o: CC := old_agbcc
-$(BUILD_DIR)/src/early_3110.o: CFLAGS := -O2 -mthumb-interwork
-$(BUILD_DIR)/src/early_3484.o: CC := old_agbcc
-$(BUILD_DIR)/src/early_3484.o: CFLAGS := -O2 -mthumb-interwork
 
-# SIO multi-play / MultiBoot link driver, 0x08003964-0x08004000 (issue #32).
-$(BUILD_DIR)/src/early_3964.o: CC := old_agbcc
-$(BUILD_DIR)/src/early_3964.o: CFLAGS := -O2 -mthumb-interwork
 
-# SIO link driver continued, 0x08004000-0x08004734 (issue #32): the SIO IRQ
-# handler, handshake steps and the 32-bit normal-mode bulk transfer halves.
-$(BUILD_DIR)/src/early_4000.o: CC := old_agbcc
-$(BUILD_DIR)/src/early_4000.o: CFLAGS := -O2 -mthumb-interwork
 
-# AGB SDK MultiBoot client library + link session sequencer (issue #32).
-$(BUILD_DIR)/src/early_4734.o: CC := old_agbcc
-$(BUILD_DIR)/src/early_4734.o: CFLAGS := -O2 -mthumb-interwork
-$(BUILD_DIR)/src/early_4d6c.o: CC := old_agbcc
-$(BUILD_DIR)/src/early_4d6c.o: CFLAGS := -O2 -mthumb-interwork
 
-# Cooperative task engine, 0x08004FEC-0x08005654 (issue #32).
-$(BUILD_DIR)/src/early_4fec.o: CC := old_agbcc
-$(BUILD_DIR)/src/early_4fec.o: CFLAGS := -O2 -mthumb-interwork
-$(BUILD_DIR)/src/early_55b0.o: CC := old_agbcc
-$(BUILD_DIR)/src/early_55b0.o: CFLAGS := -O2 -mthumb-interwork
 
-# Task position/draw helpers, 0x080058E4-0x08005D9C (issue #32).
-$(BUILD_DIR)/src/early_58e4.o: CC := old_agbcc
-$(BUILD_DIR)/src/early_58e4.o: CFLAGS := -O2 -mthumb-interwork
-$(BUILD_DIR)/src/early_5c4c.o: CC := old_agbcc
-$(BUILD_DIR)/src/early_5c4c.o: CFLAGS := -O2 -mthumb-interwork
 
 # All of asm/ is assembled into the ROM: hand-written files (rom_header.s,
 # crt0.s), split-generated segment files (asm/<segment>.s, see tools/

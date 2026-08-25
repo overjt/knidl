@@ -5372,8 +5372,7 @@ loc_0801a2a8:
 	asrs	r4, r0, #16
 	adds	r0, r5, #0
 	adds	r1, r4, #0
-	.short	0xF7EC
-	.short	0xF89C
+	bl	sub_080063f0	@ 0x080063F0
 	cmp	r0, #0
 	beq.n	loc_0801a2de	@ 0x0801A2DE
 	ldr	r0, [pc, #44]	@ 0x0801A2EC
@@ -5628,8 +5627,7 @@ loc_0801a450:
 	lsls	r1, r2, #16
 	asrs	r5, r1, #16
 	adds	r1, r5, #0
-	.short	0xF7EB
-	.short	0xFFA2
+	bl	sub_080063f0	@ 0x080063F0
 	cmp	r0, #0
 	beq.n	loc_0801a4e0	@ 0x0801A4E0
 	mov	r4, r9
@@ -5662,8 +5660,7 @@ loc_0801a4e0:
 	lsls	r0, r6, #16
 	asrs	r0, r0, #16
 	adds	r1, r5, #0
-	.short	0xF7EB
-	.short	0xFF81
+	bl	sub_080063f0	@ 0x080063F0
 	cmp	r0, #0
 	beq.n	loc_0801a522	@ 0x0801A522
 	mov	r0, r9
@@ -5699,8 +5696,7 @@ loc_0801a522:
 	lsls	r1, r1, #16
 	asrs	r5, r1, #16
 	adds	r1, r5, #0
-	.short	0xF7EB
-	.short	0xFF5D
+	bl	sub_080063f0	@ 0x080063F0
 	cmp	r0, #0
 	beq.n	loc_0801a56a	@ 0x0801A56A
 	mov	r0, r9
@@ -5733,8 +5729,7 @@ loc_0801a56a:
 	lsls	r0, r6, #16
 	asrs	r0, r0, #16
 	adds	r1, r5, #0
-	.short	0xF7EB
-	.short	0xFF3C
+	bl	sub_080063f0	@ 0x080063F0
 	cmp	r0, #0
 	bne.n	loc_0801a57e	@ 0x0801A57E
 	b.n	loc_0801a740	@ 0x0801A740
@@ -5836,8 +5831,7 @@ loc_0801a63c:
 	asrs	r5, r0, #16
 	adds	r0, r6, #0
 	adds	r1, r5, #0
-	.short	0xF7EB
-	.short	0xFED0
+	bl	sub_080063f0	@ 0x080063F0
 	cmp	r0, #0
 	beq.n	loc_0801a740	@ 0x0801A740
 	mov	r0, r9
@@ -5930,8 +5924,7 @@ loc_0801a694:
 	asrs	r5, r0, #16
 	adds	r0, r6, #0
 	adds	r1, r5, #0
-	.short	0xF7EB
-	.short	0xFE6B
+	bl	sub_080063f0	@ 0x080063F0
 	cmp	r0, #0
 	beq.n	loc_0801a740	@ 0x0801A740
 	mov	r2, r9
@@ -31160,8 +31153,7 @@ loc_08026f3a:
 	mov	r1, sl
 	lsls	r4, r1, #16
 	asrs	r1, r4, #16
-	.short	0xF7DF
-	.short	0xFA5E
+	bl	sub_0800641c	@ 0x0800641C
 	cmp	r0, #0
 	bne.n	loc_08026f66	@ 0x08026F66
 	b.n	loc_08027092	@ 0x08027092

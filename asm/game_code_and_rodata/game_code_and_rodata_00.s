@@ -19385,8 +19385,7 @@ loc_08010ac4:
 	lsls	r1, r1, #16
 	asrs	r4, r1, #16
 	adds	r1, r4, #0
-	.short	0xF7F5
-	.short	0xFC94
+	bl	sub_0800641c	@ 0x0800641C
 	cmp	r0, #0
 	beq.n	loc_08010b14	@ 0x08010B14
 	ldr	r0, [r7, #0]
@@ -19447,8 +19446,7 @@ sub_08010b38:
 	adds	r1, #74
 	movs	r2, #0
 	ldrsh	r1, [r1, r2]
-	.short	0xF7F5
-	.short	0xFC5B
+	bl	sub_0800641c	@ 0x0800641C
 	cmp	r0, #0
 	beq.n	loc_08010ba0	@ 0x08010BA0
 	movs	r0, #0

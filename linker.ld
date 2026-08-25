@@ -184,7 +184,12 @@ SECTIONS
         build/src/early_5c4c.o(.text)
     } > ROM
 
-    .game_code_early_080011ac_08002378_08003110_08003888_08004000_08004fec_08005654_08005acc_08005d9c 0x08005D9C : {
+    /* early_5d9c — decompiled to C (src/early_5d9c.c, carved by tools/carve.py) */
+    .early_5d9c 0x08005D9C : {
+        build/src/early_5d9c.o(.text)
+    } > ROM
+
+    .game_code_early_080011ac_08002378_08003110_08003888_08004000_08004fec_08005654_08005acc_08005d9c 0x08006464 : {
         KEEP(*(.game_code_early_080011ac_08002378_08003110_08003888_08004000_08004fec_08005654_08005acc_08005d9c)) KEEP(*(.game_code_early_080011ac_08002378_08003110_08003888_08004000_08004fec_08005654_08005acc_08005d9c.tail))
     } > ROM
 
