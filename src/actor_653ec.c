@@ -105,6 +105,15 @@ extern s32 sub_08064fc4(u8 cls, u32 sub, u8 p3, u8 p4, int x, int y, u16 prio);
 extern s32 sub_08063b38(void);
 extern s32 gUnk_030023B4;
 extern s32 gUnk_030023D4;
+extern u32 gUnk_08334DC0[];
+extern u32 gUnk_0873E264[];
+extern s8 gUnk_0300238C;
+extern u8 gUnk_03001610[];
+extern u8 gUnk_03001F30;
+extern void sub_080713f8(s32 a, s32 b, u32 c);
+extern void sub_08003110(u32 a);
+extern s32 sub_08064d9c(u32 sub, u32 type, int p2Arg, int xArg, int yArg,
+                        int prioArg, int altArg);
 extern s16 gUnk_030023E4;
 
 extern u32 sub_08005acc(void);
@@ -1742,4 +1751,43 @@ void sub_08066e88(u8 a)
             u->unk3C = 0;
         }
     }
+}
+
+void sub_08066f50(s32 x, s32 y)
+{
+    sub_080713f8(x - gUnk_03002158[0], y - gUnk_03002158[2], 23);
+    sub_08003110(1);
+}
+
+void sub_08066f78(void)
+{
+    struct GfxHeader *h;
+
+    h = (struct GfxHeader *)gUnk_08334DC0;
+    sub_080017e4(4, (u32)h->unk0C, 0x06017800, h->unk02 << 5);
+    sub_080017e4(2, gUnk_0873E264[gUnk_0300238C], (u32)gUnk_03001610,
+                 h->unk00 << 5);
+}
+
+s32 sub_08066fc0(u8 p3, s16 x, s16 y)
+{
+    struct Task *t;
+    s32 i;
+
+    i = sub_08064d9c(5, 73, 0, x, y, 0xD3D0, 1);
+    if (i != -1)
+    {
+        t = &gUnk_03002790[i];
+        if (gUnk_030023D8 == 8 && gUnk_03001F30 == 0)
+        {
+            t->unk73 = p3;
+            sub_08003110(1);
+        }
+        else
+        {
+            t->unk73 = 2;
+            t->unk74 = gUnk_03002490->unk76;
+        }
+    }
+    return i;
 }

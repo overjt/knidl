@@ -125,6 +125,7 @@ struct GfxHeader
     /*0x02*/ u16 unk02;
     /*0x04*/ u32 unk04;
     /*0x08*/ void *unk08;
+    /*0x0C*/ void *unk0C;
 };
 
 /* The 12-byte block at Actor+0x64, copied as one unit (0x0806505C). */
