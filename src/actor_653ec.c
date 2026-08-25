@@ -11,6 +11,13 @@ extern s16 gUnk_03002348;
 extern s16 gUnk_03002158[];
 extern s8 gUnk_020061D8[];
 extern struct Actor gUnk_0200C320[];
+extern s8 gUnk_02007FB8[];
+extern u32 gUnk_030012B0[];
+extern u32 gUnk_02005E10[];
+extern u32 gUnk_0873DF24[];
+extern u8 gUnk_0825088C[];
+extern u8 gUnk_03001470[];
+extern u32 gUnk_0873DF38[][4];
 extern s16 gUnk_030023E4;
 
 extern u32 sub_08005acc(void);
@@ -23,9 +30,15 @@ extern void sub_08063fe0(void);
 extern void sub_0806685c(u16 *src, u32 size, u32 c);
 extern u8 sub_08065160(void);
 extern void sub_080059a0(void);
+extern s32 sub_08064d34(u32 type, u8 keepPrio);
+extern void sub_08002e98(u32 a, u32 b, u32 *c);
+extern void sub_08003014(u32 a, u32 b, u32 c, u32 d, u32 e);
+extern void TaskYieldTrampoline(u32 a);
+extern void TaskDispatchTrampoline(void);
 
 void sub_08065470(void);
 void sub_0806555c(void);
+void sub_08065848(u32 p0, s32 idx);
 
 void sub_080653ec(void)
 {
@@ -239,4 +252,147 @@ void sub_080657a4(void)
         t = &gUnk_03002790[j];
         t->unk1C = 2;
     }
+}
+
+void sub_080657cc(u32 v)
+{
+    struct Task *t;
+    s32 j;
+
+    j = gUnk_020061D8[2];
+    if (j != -1)
+    {
+        t = &gUnk_03002790[j];
+        t->unk18 = v;
+        t->unk1C = 1;
+    }
+}
+
+void sub_080657f8(u32 a, u32 b)
+{
+    struct Task *t;
+    s32 j;
+
+    sub_08065848(4, 2);
+    j = gUnk_020061D8[2];
+    if (j != -1)
+    {
+        t = &gUnk_03002790[j];
+        t->unk18 = a;
+        t->unk1C = 0;
+        t->unk24 = b;
+        CpuSet(gUnk_030012B0, gUnk_02005E10, 224);
+    }
+}
+
+/* Reference-counted spawn of the slot-`idx` helper task. */
+void sub_08065848(u32 p0, s32 idx)
+{
+    struct Task *t;
+    s32 i;
+
+    if (idx > 2)
+        return;
+    if (gUnk_02007FB8[idx] == 0)
+    {
+        i = sub_08064d34(174, 1);
+        if (i != -1)
+        {
+            t = &gUnk_03002790[i];
+            t->unk18 = gUnk_03002490->unk40 >> 12;
+            t->unk73 = p0;
+            t->unk74 = idx;
+            gUnk_020061D8[idx] = i;
+        }
+    }
+    gUnk_02007FB8[idx]++;
+}
+
+void sub_080658b8(void)
+{
+    sub_08002e98(gUnk_03002490->unk73, 5, gUnk_0873DF24);
+}
+
+/* Task body: cross-fade two palettes while the helper's refcount holds. */
+/* Task body: cross-fade two palettes while the helper's refcount holds. */
+/* Task body: cross-fade two palettes while the helper's refcount holds. */
+void sub_080658d8(void)
+{
+    struct Task *u;
+    struct Task *v;
+    struct Task *w;
+    struct Task *x;
+    struct Task *y;
+
+    gUnk_03002490->unk28 = 12;
+    gUnk_03002490->unk2C = 2;
+    gUnk_03002490->unk30 = 3;
+    gUnk_03002490->unk34 = 0;
+    while (gUnk_02007FB8[gUnk_03002490->unk74] != 0)
+    {
+        u = gUnk_03002490;
+        u->unk28--;
+        if (u->unk28 == 0)
+        {
+            u->unk28 = 12;
+            u->unk2C++;
+            if (u->unk2C > 3)
+                u->unk2C = 0;
+            v = gUnk_03002490;
+            v->unk30++;
+            if (v->unk30 > 3)
+                v->unk30 = 0;
+            gUnk_03002490->unk34 = 0;
+        }
+        w = gUnk_03002490;
+        if (w->unk30 == 0)
+            w->unk34 = w->unk34 + 128;
+        else
+            w->unk34 = w->unk34 + 64;
+        x = gUnk_03002490;
+        if (x->unk34 > 256)
+            x->unk34 = 256;
+        y = gUnk_03002490;
+        sub_08003014((u32)(gUnk_0825088C + (y->unk2C << 5)),
+                     (u32)(gUnk_0825088C + (y->unk30 << 5)), (u16)y->unk34,
+                     16, (u32)(gUnk_03001470 + (y->unk18 << 5)));
+        TaskYieldTrampoline(1);
+    }
+    TaskDispatchTrampoline();
+}
+
+/* Task body: cycle the actor's 32-byte palette out of gUnk_0873DF38. */
+/* Task body: cycle the actor's 32-byte palette out of gUnk_0873DF38. */
+void sub_080659b4(void)
+{
+    struct Task *t;
+    struct Task *u;
+    struct Task *w;
+    struct Task *x;
+    struct Actor *a;
+    u32 v;
+
+    t = gUnk_03002490;
+    a = t->unk8C;
+    t->unk18 = 10;
+    t->unk1C = 0;
+    while (gUnk_02007FB8[gUnk_03002490->unk74] != 0 && a->unk0C <= 3)
+    {
+        u = gUnk_03002490;
+        if (u->unk18 <= 0)
+        {
+            v = gUnk_0873DF38[a->unk0C][u->unk1C];
+            if (v == 0)
+                v = a->unk28;
+            sub_080017e4(2, v,
+                         (u32)(gUnk_03001470 + ((u->unk40 >> 12) << 5)), 32);
+            w = gUnk_03002490;
+            w->unk18 = 10;
+            w->unk1C = (w->unk1C + 1) & 3;
+        }
+        x = gUnk_03002490;
+        x->unk18--;
+        TaskYieldTrampoline(1);
+    }
+    TaskDispatchTrampoline();
 }

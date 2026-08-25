@@ -31,14 +31,14 @@ struct Task
     /*0x14*/ u8 unk14;
     /*0x15*/ u8 unk15;
     /*0x16*/ u16 unk16;
-    /*0x18*/ u32 unk18;
+    /*0x18*/ s32 unk18;
     /*0x1C*/ u32 unk1C;
     /*0x20*/ u32 unk20;
     /*0x24*/ s32 unk24;
-    /*0x28*/ u32 unk28;
-    /*0x2C*/ struct AnimCmd *unk2C;
-    /*0x30*/ u32 unk30;
-    /*0x34*/ u32 unk34;
+    /*0x28*/ s32 unk28;
+    /*0x2C*/ s32 unk2C;
+    /*0x30*/ s32 unk30;
+    /*0x34*/ s32 unk34;
     /*0x38*/ u32 *unk38;
     /*0x3C*/ s16 unk3C;
     /*0x3E*/ u16 unk3E;
@@ -108,7 +108,7 @@ struct ActorDef
     /*0x0E*/ u16 unk0E;
     /*0x10*/ u32 unk10;
     /*0x14*/ u32 unk14;
-    /*0x18*/ u32 unk18;
+    /*0x18*/ s32 unk18;
     /*0x1C*/ u32 unk1C;
     /*0x20*/ u32 unk20;
     /*0x24*/ void (*unk24)(u32);
