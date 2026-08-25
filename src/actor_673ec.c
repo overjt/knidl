@@ -562,3 +562,67 @@ void sub_08067db0(void)
         sub_080684a4();
     gUnk_03002490->unk42 = gUnk_0873E3C8[i + 4];
 }
+
+/* Task body: the carried task struggling in the player's hands. */
+void sub_08067ea4(void)
+{
+    struct Task *t;
+    struct Task *u;
+    u8 *p;
+    s32 f;
+
+    gUnk_03002490->unk15 = 8;
+    t = gUnk_03002490;
+    t->unk00 = (u32)sub_0803d494;
+    t->unk42 = 7;
+    t = gUnk_03002490;
+    t->unk43 = gUnk_03002790[t->unk44].unk43;
+    t = gUnk_03002490;
+    u = &gUnk_03002790[t->unk44];
+    t->unk4C = (u->unk48 + (t->unk43 << 4)) << 16;
+    t->unk50 = (gUnk_03002790[t->unk44].unk4A - 24) << 16;
+    sub_080061c0(0x50000, 0x5A5A5A5A);
+    sub_0800622c(0xFFFD8000, 0x1200, 0x30000);
+    if (gUnk_03001F30 == 0)
+    {
+        p = gUnk_03002490->unk88;
+        if (p[6] == 1)
+        {
+            f = 370;
+            while (1)
+            {
+                sub_08006338(0x171);
+                TaskYieldTrampoline(4);
+                sub_08006338(f);
+                TaskYieldTrampoline(2);
+                sub_08006338(0x173);
+                TaskYieldTrampoline(4);
+                sub_08006338(f);
+                TaskYieldTrampoline(2);
+            }
+        }
+        while (1)
+        {
+            sub_08006338(0x135);
+            sub_080684a4();
+            TaskYieldTrampoline(1);
+            gUnk_03002490->unk6C = 0;
+            do
+            {
+                t = gUnk_03002490;
+                t->unk3C--;
+                TaskYieldTrampoline(1);
+                t = gUnk_03002490;
+                t->unk6C++;
+            } while ((s16)t->unk6C <= 14);
+        }
+    }
+    sub_08006338(0x123C);
+    t = gUnk_03002490;
+    if (t->unk43 == 1)
+        t->unk3E |= 0x8000;
+    else
+        t->unk3E &= 0x7FFF;
+    sub_08006138();
+    sub_08006138();
+}
