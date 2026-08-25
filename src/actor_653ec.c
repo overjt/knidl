@@ -61,6 +61,8 @@ extern void sub_0800a340(s16 a);
 extern void sub_0800a294(s16 a);
 extern void sub_08066754(void);
 extern void sub_080666a4(void);
+void sub_08066988(u32 i);
+u8 sub_08066a0c(s16 dx, u16 dy);
 extern void sub_080640c8(void);
 extern s32 sub_080640dc(struct AnimCmd *p);
 extern void sub_080639b4(u32 v);
@@ -79,13 +81,15 @@ extern void sub_08006338(s32 a);
 extern void sub_0806ae94(void);
 extern void sub_080262dc(void);
 extern void sub_08065350(void);
+extern void sub_0806be4c(u32 i);
+extern void sub_08006148(void *fn, u32 i);
+extern void sub_0806a344(void);
+extern void sub_08063f24(s32 i);
 extern s16 gUnk_030023E4;
 
 extern u32 sub_08005acc(void);
 extern s32 sub_08001a94(u32 a, u32 b, u32 c, u32 d, s32 e, s32 f);
 extern void sub_080017e4(u32 mode, u32 src, u32 dst, u32 size);
-extern u8 sub_08066a6c(void);
-extern u8 sub_08066a80(void);
 extern void sub_0800a554(void);
 extern void sub_08063fe0(void);
 extern u8 sub_08065160(void);
@@ -105,11 +109,16 @@ void sub_0806627c(void);
 void sub_08066544(void);
 void sub_08066564(void);
 void sub_080665a0(void);
-void sub_0806685c(void *src, u32 size, u32 c);
+void sub_0806685c(void *src, u32 size, u8 force);
+u8 sub_08066a6c(void);
+u8 sub_08066a80(void);
+void sub_080663f4(void *src, u32 size);
 u16 sub_0806660c(u16 a);
 u32 sub_08066718(void);
 void sub_08066658(struct AnimCmd *p);
 void sub_080666a4(void);
+void sub_08066988(u32 i);
+u8 sub_08066a0c(s16 dx, u16 dy);
 
 void sub_080653ec(void)
 {
@@ -1172,13 +1181,14 @@ void sub_08066580(void)
 
 void sub_080665a0(void)
 {
-    s16 v;
+    struct Task **g;
     struct Task *t;
+    s16 v;
 
-    t = gUnk_03002490;
+    g = &gUnk_03002490;
     gUnk_0200AFF8 = 0;
     sub_0800a280();
-    t = gUnk_03002490;
+    t = *g;
     if (t->unk72 == 1 || (t->unk72 == 2 && t->unk76 == 7))
     {
         v = t->unk78;
@@ -1280,15 +1290,17 @@ u32 sub_08066718(void)
 
 void sub_08066754(void)
 {
+    struct Task **g;
     struct Task *t;
     s32 v;
 
-    t = gUnk_03002490;
+    g = &gUnk_03002490;
+    t = *g;
     if (t->unk72 == 2 && t->unk76 == 5)
         v = sub_08064188(t->unk24);
     else
-        v = sub_0806415c(gUnk_03002490->unk24);
-    gUnk_03002490->unk24 = v;
+        v = sub_0806415c((*g)->unk24);
+    (*g)->unk24 = v;
     sub_08068f68();
     sub_08069b44();
 }
@@ -1324,4 +1336,116 @@ void sub_0806684c(void)
 {
     sub_080262dc();
     sub_08066798();
+}
+
+void sub_0806685c(void *src, u32 size, u8 force)
+{
+    struct Task *t;
+    struct Actor *a;
+    u32 slot;
+
+    t = gUnk_03002490;
+    a = t->unk8C;
+    slot = t->unk40 >> 12;
+    if (force == 0 && t->unk72 == 1 && a->unk0C != 0 && a->unk28 != 0)
+        sub_080017e4(2, a->unk28, (u32)(gUnk_03001470 + (slot << 5)), size);
+    else
+        sub_080017e4(2, (u32)src, (u32)(gUnk_03001470 + (slot << 5)), size);
+    a->unk24 = size >> 1;
+}
+
+/* Retire every other live task the running one is allowed to clean up. */
+void sub_080668c8(void)
+{
+    struct Task *t;
+    struct Actor *a;
+    s32 i;
+    u32 cls;
+
+    a = gUnk_03002490->unk8C;
+    for (i = 32; i <= 62; i++)
+    {
+        if (gUnk_03004CA0[i] == -1)
+            continue;
+        if (i == gCurTaskIdx)
+            continue;
+        if (gUnk_03004CA0[i] == 4)
+            continue;
+        t = &gUnk_03002790[i];
+        if (gUnk_03002490->unk72 == 2 && a->unk3C != 0)
+        {
+            if ((u8)((u8 (*)(s32))a->unk3C)(i) != 1)
+                continue;
+        }
+        cls = t->unk72;
+        if (cls == 6 && t->unk76 == 0)
+            continue;
+        if (cls == 10)
+            continue;
+        if (cls == 9 || cls == 7 || cls == 8)
+        {
+            if (gUnk_03004CA0[i] == 174)
+                continue;
+            sub_08063f24(i);
+        }
+        else
+        {
+            sub_08066988(i);
+        }
+    }
+}
+
+/* Park task `i`: reset it to the idle body or kill it outright. */
+void sub_08066988(u32 i)
+{
+    struct Task *t;
+    struct Actor *a;
+    u8 *p;
+
+    t = &gUnk_03002790[i];
+    a = t->unk8C;
+    if (a->unk04 != 0)
+    {
+        p = t->unk88;
+        sub_0806be4c(i);
+        t->unk4C = t->unk48 << 16;
+        t->unk50 = t->unk4A << 16;
+        if (a->unk04 != 1)
+        {
+            if ((u8)(p[22] + 2) <= 1)
+            {
+                sub_08063f24(i);
+                return;
+            }
+        }
+    }
+    t->unk08 = 0;
+    t->unk04 = 0;
+    t->unk82 = 0;
+    sub_08006148(sub_0806a344, i);
+    sub_080055b0(0, i);
+}
+
+/* Is the running task inside the camera window padded by (dx, dy)? */
+u8 sub_08066a0c(s16 dx, u16 dy)
+{
+    struct Task *t;
+
+    t = gUnk_03002490;
+    if (gUnk_03002158[0] - dx < t->unk48
+        && t->unk48 < gUnk_03002158[1] + dx
+        && gUnk_03002158[2] - (s16)dy < t->unk4A
+        && t->unk4A < gUnk_03002158[3] + (s16)dy)
+        return 1;
+    return 0;
+}
+
+u8 sub_08066a6c(void)
+{
+    return sub_08066a0c(80, 40);
+}
+
+u8 sub_08066a80(void)
+{
+    return sub_08066a0c(360, 240);
 }
