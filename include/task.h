@@ -67,7 +67,7 @@ struct Task
     /*0x75*/ u8 unk75;
     /*0x76*/ u16 unk76;
     /*0x78*/ u16 unk78;
-    /*0x7A*/ u8 unk7A;
+    /*0x7A*/ s8 unk7A;
     /*0x7B*/ u8 unk7B;
     /*0x7C*/ u8 unk7C;
     /*0x7D*/ u8 unk7D;

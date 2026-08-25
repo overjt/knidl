@@ -44,6 +44,17 @@ extern void sub_080055b0(u32 a, u32 b);
 extern void sub_080662d8(void);
 extern u32 sub_080b5628(u32 a);
 extern u32 sub_080b55d8(u32 a, u32 b);
+extern s16 gUnk_0873E184[];
+extern u16 gUnk_0873E16C[];
+extern s16 gUnk_02005588[];
+extern u16 gUnk_030023AC;
+extern u8 gUnk_03002340;
+extern void sub_08066468(void);
+extern void sub_080664cc(struct GfxHeader *h);
+extern void sub_08068f68(void);
+extern void sub_08069b44(void);
+extern void sub_08066480(struct GfxHeader *h, u32 b, u32 c);
+extern void sub_080663f4(u32 a, u32 b);
 extern s16 gUnk_030023E4;
 
 extern u32 sub_08005acc(void);
@@ -67,6 +78,7 @@ void sub_0806555c(void);
 void sub_08065848(u32 p0, s32 idx);
 s16 sub_08065f74(u32 i);
 u32 *sub_0806601c(void);
+void sub_0806627c(void);
 
 void sub_080653ec(void)
 {
@@ -921,4 +933,110 @@ void sub_0806619c(u32 p0, u32 p1, u32 p2, u16 p3, u8 p4)
     gUnk_02006190[3] = p0;
     gUnk_0200AEF4 = p1;
     gUnk_02006190[5] = p4;
+}
+
+void sub_0806621c(void)
+{
+    struct Task *t;
+    struct Actor *a;
+
+    a = gUnk_03002490->unk8C;
+    sub_080055b0(0, gCurTaskIdx);
+    t = gUnk_03002490;
+    t->unk08 = 0;
+    t->unk48 = gUnk_02006190[0];
+    t->unk4A = gUnk_02006190[1];
+    t->unk3C = gUnk_02006190[2];
+    if (gUnk_02004C90 != 0)
+    {
+        if (gUnk_02006190[5] != 0)
+            sub_08066468();
+        else
+            sub_080664cc(a->unk64.unk00);
+    }
+}
+
+/* Walk one step of the queued knock-back path. */
+void sub_0806627c(void)
+{
+    struct Task *t;
+    s32 i;
+    s16 j;
+
+    i = gUnk_02006190[3];
+    if (i < 0)
+        return;
+    j = gUnk_0873E184[i] * 2;
+    t = gUnk_03002490;
+    t->unk48 += gUnk_0873E16C[j];
+    t->unk4A += gUnk_0873E16C[j + 1];
+    gUnk_02006190[3]--;
+}
+
+void sub_080662d8(void)
+{
+    struct Actor *a;
+    u32 v;
+
+    a = gUnk_03002490->unk8C;
+    sub_08068f68();
+    sub_08069b44();
+    if (gUnk_02004C90 != 0)
+    {
+        v = gUnk_02006190[5];
+        switch (v)
+        {
+        case 1:
+            sub_080663f4(gUnk_02004C90, gUnk_02006190[4]);
+            break;
+        case 0:
+            sub_08066480(a->unk64.unk00, gUnk_02004C90, gUnk_02006190[4]);
+            break;
+        }
+    }
+    sub_0806627c();
+    if (gUnk_0200AEF4 != 0)
+        ((void (*)(void))gUnk_0200AEF4)();
+}
+
+/* True when every active player is in state 1. */
+u8 sub_08066338(void)
+{
+    s32 n;
+    s32 m;
+    s32 i;
+
+    n = 0;
+    m = 0;
+    for (i = 0; i < gUnk_030023AC; i++)
+    {
+        if ((gUnk_03002340 >> i) & 1)
+        {
+            n++;
+            if (gUnk_03002790[i].unk7A == 1)
+                m++;
+        }
+    }
+    if (n != 0 && n == m)
+        return 1;
+    return 0;
+}
+
+s32 sub_08066394(void)
+{
+    s32 i;
+    s32 v;
+
+    i = 0;
+    v = 0;
+    for (; i < gUnk_030023AC; i++)
+    {
+        if ((gUnk_03002340 >> i) & 1)
+        {
+            v = gUnk_02005588[i];
+            if (v != 0)
+                break;
+        }
+    }
+    return v;
 }
