@@ -16,6 +16,15 @@ extern vs16 gUnk_03004CA0[];
 extern u32 gUnk_02007D00[];
 extern struct PlayerState gUnk_03002170[];
 extern s16 gUnk_02005588[];
+extern u16 gUnk_03002358;
+extern u16 gUnk_0300214C;
+extern u16 gUnk_03002368;
+extern u8 gUnk_03002390;
+extern u8 gUnk_03002440;
+extern u8 gUnk_030023F0;
+extern s16 gUnk_0300239C;
+extern u8 gUnk_03002140;
+extern s32 gUnk_0300236C;
 
 extern void sub_08002e98(u32 a, u32 b, u32 *c);
 extern void sub_080062e0(s32 i);
@@ -35,6 +44,7 @@ extern u8 sub_0801b24c(void);
 extern u8 sub_0801af14(void);
 extern u8 sub_0801a8c8(void);
 extern void sub_08069234(u8 a);
+extern u32 sub_08068cb4(u8 a);
 extern void sub_08068a8c(s32 i, u8 flag);
 extern void sub_08068b88(s32 i, u16 b, u8 c, u8 d);
 extern void sub_0806737c(void);
@@ -1257,4 +1267,43 @@ u32 sub_08068cb4(u8 a)
         return 1;
     }
     return 0;
+}
+u32 sub_08068cf8(s32 a)
+{
+    struct Task *t;
+    struct Task *u;
+    u16 saved;
+    u32 r;
+
+    if (gUnk_03004CA0[gCurTaskIdx] == -1)
+        return 0;
+    gUnk_03002490->unk7C = 0;
+    t = gUnk_03002490;
+    saved = t->unk78;
+    r = 0;
+    if (a != 0)
+    {
+        if (t->unk7E != -1)
+        {
+            if (--t->unk75 <= 0)
+            {
+                gUnk_03002490->unk75 = 0;
+                gUnk_03002490->unk7E = 255;
+                gUnk_03002490->unk7F = -1;
+            }
+        }
+        gUnk_03002358 = gUnk_03002490->unk48;
+        u = gUnk_03002490;
+        gUnk_0300214C = u->unk4A;
+        gUnk_03002368 = u->unk78;
+        gUnk_03002390 = u->unk7E;
+        gUnk_03002440 = u->unk7F;
+        gUnk_030023F0 = u->unk75;
+        gUnk_0300239C = u->unk43;
+        gUnk_03002140 = 30;
+        gUnk_0300236C = a;
+        r = sub_08068cb4(0);
+    }
+    gUnk_03002490->unk78 = saved;
+    return r;
 }
