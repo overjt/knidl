@@ -14,9 +14,18 @@ extern u32 gUnk_0873E2F0[];
 extern u32 gUnk_0873E31C[];
 extern vs16 gUnk_03004CA0[];
 extern u32 gUnk_02007D00[];
+extern struct PlayerState gUnk_03002170[];
 
 extern void sub_08002e98(u32 a, u32 b, u32 *c);
-extern void sub_08068a8c(s32 i, u32 b);
+extern void sub_080062e0(s32 i);
+extern s32 sub_08009ee8(s32 a, s32 b);
+extern void sub_08064eb8(u32 a);
+extern void sub_0800a008(u32 a, s32 b, s32 c);
+extern void sub_080034f0(s32 a, s32 b);
+extern void sub_0803d1c4(s32 i);
+extern void sub_0803d2d4(s32 i);
+extern void sub_08067108(void);
+extern void sub_08068a8c(s32 i, u8 flag);
 extern void sub_08068b88(s32 i, u32 b, u32 c, u32 d);
 extern void sub_0806737c(void);
 extern void sub_0803e2d4(void);
@@ -1082,4 +1091,83 @@ void sub_0806896c(void)
     {
         t->unk28--;
     }
+}
+void sub_080689c8(s32 i, u8 d)
+{
+    struct Task *t;
+    struct PlayerState *p;
+
+    t = &gUnk_03002790[i];
+    p = &gUnk_03002170[i];
+    t->unk43 = d;
+    t->unk7A = 0;
+    t->unk4C = t->unk48 << 16;
+    t->unk50 = t->unk4A << 16;
+    t->unk72 = 0;
+    sub_080062e0(i);
+    sub_08068b88(i, 6, 0, 0);
+    p->unk14 = 4;
+}
+s32 sub_08068a2c(s32 a, s32 b)
+{
+    struct Task *t;
+    s32 r;
+
+    r = sub_08009ee8(a, gCurTaskIdx);
+    if (gUnk_03002490->unk88->unk0D != 0)
+    {
+        sub_08064eb8(0);
+        sub_0800a008(0, -1, gUnk_03002490->unk88->unk00);
+    }
+    t = gUnk_03002490;
+    if (t->unk78 == 0)
+        t->unk82 = b;
+    return r;
+}
+void sub_08068a8c(s32 i, u8 flag)
+{
+    struct Task *t;
+    struct PlayerState *p;
+    u8 a;
+    u8 b;
+
+    t = &gUnk_03002790[i];
+    p = &gUnk_03002170[i];
+    if (p->unk2C != -1)
+        sub_080034f0(p->unk2C, p->unk2E);
+    t->unk08 = 0;
+    t->unk04 = 0;
+    t->unk15 = 0;
+    t->unk10 = 0;
+    t->unk76 = 0;
+    t->unk73 = 0;
+    t->unk7C = 0;
+    if (p->unk40 & 1)
+    {
+        gUnk_03002490->unk88->unk26 = 0;
+        p->unk24 = 0;
+        p->unk2B = 0;
+        p->unk29 = 0;
+        p->unk28 = 0;
+        p->unk40 &= 0xFFFE;
+        t->unk13 = 0;
+    }
+    p->unk42 &= 0xFFEF;
+    t->unk60 = 0;
+    t->unk5C = 0;
+    t->unk58 = 0;
+    t->unk54 = 0;
+    t->unk68 = 0x80000000;
+    t->unk64 = 0x80000000;
+    a = p->unk04;
+    b = p->unk45;
+    if (flag != 0)
+        sub_0803d1c4(i);
+    else
+        sub_0803d2d4(i);
+    p->unk05 = a;
+    p->unk04 = 16;
+    gUnk_03002170[i].unk45 = b;
+    p->unk16 = 255;
+    sub_08067108();
 }
