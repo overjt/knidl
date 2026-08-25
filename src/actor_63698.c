@@ -326,7 +326,7 @@ void sub_080639e0(u32 v)
     gUnk_03002490->unk8C->unk50 = v;
 }
 
-void sub_080639f0(u32 v)
+void sub_080639f0(struct ActorAux *v)
 {
     gUnk_03002490->unk8C->unk60 = v;
 }
@@ -379,7 +379,7 @@ s32 sub_08063a9c(u32 i)
 {
     struct Task *t;
     struct Task *o;
-    struct Task *bestPtr;
+    void *bestPtr;
     s32 best;
     s32 bestDist;
     s32 d;
@@ -412,7 +412,7 @@ s32 sub_08063a9c(u32 i)
 s32 sub_08063b38(void)
 {
     struct Task *o;
-    struct Task *bestPtr;
+    void *bestPtr;
     s32 best;
     s32 bestDist;
     s32 d;

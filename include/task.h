@@ -20,6 +20,7 @@ struct ActorDef;
 struct PlayerState;
 struct AnimCmd;
 struct GfxHeader;
+struct ActorAux;
 
 struct Task
 {
@@ -79,6 +80,8 @@ struct Task
     /*0x82*/ u16 unk82;
     /*0x84*/ u16 unk84;
     /*0x86*/ u16 unk86;
+    /* Context pointer: the player record for actor tasks (0x08064EB8), but
+       task-class specific - sub_08063A9C stores another task here. */
     /*0x88*/ struct PlayerState *unk88;
     /*0x8C*/ struct Actor *unk8C;
 };
@@ -110,13 +113,21 @@ struct ActorDef
     /*0x0C*/ u8 unk0C;
     /*0x0D*/ u8 unk0D;
     /*0x0E*/ u16 unk0E;
-    /*0x10*/ u32 unk10;
+    /*0x10*/ struct ActorAux *unk10;
     /*0x14*/ u32 unk14;
     /*0x18*/ s32 unk18;
     /*0x1C*/ u32 unk1C;
     /*0x20*/ u32 unk20;
     /*0x24*/ void (*unk24)(u32);
     /*0x28*/ void (*unk28)(void);
+};
+
+/* Block ActorDef.unk10 / Actor.unk60 point at (0x08068E04). */
+struct ActorAux
+{
+    /*0x00*/ s8 unk00;
+    /*0x01*/ u8 filler01[3];
+    /*0x04*/ u32 unk04;
 };
 
 /* Graphics header the actor's tail block points at (0x08066088). */
@@ -181,7 +192,7 @@ struct Actor
     /*0x54*/ u32 unk54;
     /*0x58*/ u32 unk58;
     /*0x5C*/ u32 unk5C;
-    /*0x60*/ u32 unk60;
+    /*0x60*/ struct ActorAux *unk60;
     /*0x64*/ struct ActorTail unk64;
 };
 

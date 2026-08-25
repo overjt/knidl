@@ -1221,7 +1221,7 @@ void sub_08066544(void)
     struct Actor *a;
 
     a = gUnk_03002490->unk8C;
-    sub_080639b4(((u32 *)a->unk60)[1]);
+    sub_080639b4(a->unk60->unk04);
     sub_080665a0();
 }
 
@@ -1303,7 +1303,7 @@ void sub_08066658(struct AnimCmd *p)
     if (p != NULL)
         gUnk_03002490->unk24 = sub_080640dc(p);
     sub_080055b0(8, gCurTaskIdx);
-    sub_080639b4(((u32 *)a->unk60)[1]);
+    sub_080639b4(a->unk60->unk04);
 }
 
 void sub_080666a4(void)

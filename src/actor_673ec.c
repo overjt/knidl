@@ -23,7 +23,8 @@ extern u8 gUnk_03002390;
 extern u8 gUnk_03002440;
 extern u8 gUnk_030023F0;
 extern s16 gUnk_0300239C;
-extern u8 gUnk_03002140;
+extern s8 gUnk_03002140;
+extern u8 gUnk_03002460;
 extern s32 gUnk_0300236C;
 
 extern void sub_08002e98(u32 a, u32 b, u32 *c);
@@ -45,6 +46,7 @@ extern u8 sub_0801af14(void);
 extern u8 sub_0801a8c8(void);
 extern void sub_08069234(u8 a);
 extern u32 sub_08068cb4(u8 a);
+extern void sub_0806dedc(void);
 extern void sub_08068a8c(s32 i, u8 flag);
 extern void sub_08068b88(s32 i, u16 b, u8 c, u8 d);
 extern void sub_0806737c(void);
@@ -1306,4 +1308,57 @@ u32 sub_08068cf8(s32 a)
     }
     gUnk_03002490->unk78 = saved;
     return r;
+}
+u32 sub_08068e04(void)
+{
+    struct Task *t;
+    struct Task *u;
+    struct Task *v;
+    struct Actor *a;
+
+    if (gUnk_03004CA0[gCurTaskIdx] == -1)
+        return 0;
+    t = gUnk_03002490;
+    a = t->unk8C;
+    t->unk7C = 0;
+    if (a->unk48 == 0)
+        return 0;
+    u = gUnk_03002490;
+    if (u->unk7E != -1)
+    {
+        if (--u->unk75 <= 0)
+        {
+            gUnk_03002490->unk75 = 0;
+            gUnk_03002490->unk7E = 255;
+            gUnk_03002490->unk7F = -1;
+            if (a->unk05 != 2)
+                a->unk05 = 0;
+        }
+    }
+    gUnk_03002358 = gUnk_03002490->unk48;
+    v = gUnk_03002490;
+    gUnk_0300214C = v->unk4A;
+    gUnk_03002368 = v->unk78;
+    gUnk_03002390 = v->unk7E;
+    gUnk_03002440 = v->unk7F;
+    gUnk_03002460 = a->unk06;
+    gUnk_030023F0 = v->unk75;
+    gUnk_0300239C = v->unk43;
+    if (a->unk60 != NULL)
+    {
+        gUnk_03002140 = a->unk60->unk00;
+        if (v->unk75 > (a->unk60->unk00 >> 1))
+            gUnk_0300236C = a->unk60->unk04;
+        else
+            gUnk_0300236C = a->unk48;
+    }
+    else
+    {
+        gUnk_03002140 = 30;
+        gUnk_0300236C = a->unk48;
+    }
+    sub_0806dedc();
+    if (gUnk_03002140 - gUnk_03002490->unk75 <= 5)
+        return 0;
+    return sub_08068cb4(1);
 }
