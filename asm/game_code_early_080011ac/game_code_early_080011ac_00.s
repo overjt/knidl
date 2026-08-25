@@ -114,8 +114,8 @@ sub_08001cc8:
 	b.n	.L_08001da4	@ 0x08001DA4
 	movs	r0, r0
 	.word	gUnk_03001A80
-	.word	0x03001190
-	.word	0x0872EB14
+	.word	gUnk_03001190
+	.word	gUnk_0872EB14
 	.word	0xFFFFFF00
 .L_08001d98:
 	asrs	r1, r5, #1
@@ -195,7 +195,7 @@ sub_08001cc8:
 	subs	r6, r6, r0
 	b.n	.L_08001e44	@ 0x08001E44
 	movs	r0, r0
-	.word	0x03001190
+	.word	gUnk_03001190
 	.word	gUnk_03001A80
 	.word	0x000001FF
 	.word	0xFFFFFF00
@@ -343,11 +343,11 @@ sub_08001cc8:
 	b.n	.L_08001fb2	@ 0x08001FB2
 	movs	r0, r0
 	.word	0x000001FF
-	.word	0x03001190
+	.word	gUnk_03001190
 	.word	gUnk_03001A80
 	.word	gUnk_03000B1C
 	.word	gUnk_03000050
-	.word	0x0872FB30
+	.word	gUnk_0872FB30
 	.word	0xFFFFFF00
 .L_08001f68:
 	ldr	r1, [pc, #96]	@ 0x08001FCC

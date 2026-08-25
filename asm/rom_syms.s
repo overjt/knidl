@@ -15,18 +15,40 @@ gUnk_02006068 = 0x02006068
 gUnk_02007D48 = 0x02007D48
 	.global	gUnk_02007FC0
 gUnk_02007FC0 = 0x02007FC0
+	.global	gUnk_0200EB90
+gUnk_0200EB90 = 0x0200EB90
+	.global	gUnk_0200EB94
+gUnk_0200EB94 = 0x0200EB94
 	.global	gUnk_0200EB98
 gUnk_0200EB98 = 0x0200EB98
 	.global	gUnk_0200EBA0
 gUnk_0200EBA0 = 0x0200EBA0
 	.global	gUnk_0200EBA8
 gUnk_0200EBA8 = 0x0200EBA8
+	.global	gUnk_0200EBAC
+gUnk_0200EBAC = 0x0200EBAC
+	.global	gUnk_0200EBB0
+gUnk_0200EBB0 = 0x0200EBB0
+	.global	gUnk_0200EBB4
+gUnk_0200EBB4 = 0x0200EBB4
+	.global	gUnk_0200EBB8
+gUnk_0200EBB8 = 0x0200EBB8
+	.global	gUnk_0200EBBC
+gUnk_0200EBBC = 0x0200EBBC
 	.global	gUnk_0200EBC0
 gUnk_0200EBC0 = 0x0200EBC0
 	.global	gUnk_0200EBF0
 gUnk_0200EBF0 = 0x0200EBF0
+	.global	gUnk_0200EC3C
+gUnk_0200EC3C = 0x0200EC3C
+	.global	gUnk_0200EC40
+gUnk_0200EC40 = 0x0200EC40
+	.global	gUnk_0200EC44
+gUnk_0200EC44 = 0x0200EC44
 	.global	gUnk_0200EC48
 gUnk_0200EC48 = 0x0200EC48
+	.global	gUnk_0200EC4C
+gUnk_0200EC4C = 0x0200EC4C
 	.global	gUnk_03000010
 gUnk_03000010 = 0x03000010
 	.global	gUnk_03000014
@@ -169,6 +191,8 @@ gUnk_03001180 = 0x03001180
 gUnk_03001188 = 0x03001188
 	.global	gUnk_0300118C
 gUnk_0300118C = 0x0300118C
+	.global	gUnk_03001190
+gUnk_03001190 = 0x03001190
 	.global	gUnk_03001270
 gUnk_03001270 = 0x03001270
 	.global	gUnk_03001670
@@ -313,8 +337,14 @@ gMPlayTrack_SE3 = 0x03006F70
 gSoundMainRAM_Buffer = 0x03007150
 	.global	SOUND_INFO_PTR
 SOUND_INFO_PTR = 0x03007FF0
+	.global	gUnk_0872EB14
+gUnk_0872EB14 = 0x0872EB14
 	.global	gUnk_0872EB2C
 gUnk_0872EB2C = 0x0872EB2C
+	.global	gUnk_0872EB38
+gUnk_0872EB38 = 0x0872EB38
+	.global	gUnk_0872FB30
+gUnk_0872FB30 = 0x0872FB30
 
 @ Link-time constants (tools/split_config.json "abs_symbols"):
 @ absolute symbols whose VALUE is the constant (SDK idiom, e.g.

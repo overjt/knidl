@@ -184,7 +184,7 @@ sub_080031b8:
 	ldrb	r1, [r0, #0]
 	strb	r6, [r0, #0]
 	b.n	.L_080033d0	@ 0x080033D0
-	.word	0x0872EB38
+	.word	gUnk_0872EB38
 	.word	0x0860B430
 	.word	gUnk_03001180
 	.word	gUnk_03000F80
@@ -227,7 +227,7 @@ sub_080031b8:
 	ldrb	r4, [r0, #4]
 	adds	r6, r5, #0
 	b.n	.L_0800337e	@ 0x0800337E
-	.word	0x0872EB38
+	.word	gUnk_0872EB38
 	.word	gUnk_03000F80
 .L_08003360:
 	ldrh	r0, [r2, #0]
@@ -286,7 +286,7 @@ sub_080031b8:
 	movs	r0, #1
 	negs	r0, r0
 	b.n	.L_08003468	@ 0x08003468
-	.word	0x0872EB38
+	.word	gUnk_0872EB38
 	.word	gUnk_03001674
 .L_080033d0:
 	adds	r6, r5, #0

@@ -740,6 +740,49 @@ exactly which pass collapsed two mentions of one symbol (in one case: 5 loads in
 `.rtl`, still 5 after jump, 3 after cse1). Cheap, and it turns 3.19-style
 questions into arithmetic instead of guesswork.
 
+### 3.57 The `push {lr}` fingerprint covers value-returning leaves too
+3.18's recipe test is not limited to void functions: a `u32`-returning leaf also
+has no prologue under old_agbcc.
+
+### 3.58 An 8-byte STRUCT assignment is how you get the DImode block move
+`*(struct { u32 a, b; } *)dst = *(struct { u32 a, b; } *)REG_ADDR;` gives the
+ROM's `ldr [4]; ldr [0]; str [0]; str [4]` ("created by
+thumb_load_double_from_address"). A `struct { u16 d[4]; }` of the same size
+emits `ldmia`/`stmia` instead. `long long` and `double` casts behave like the
+u32 pair.
+
+### 3.59 Strength reduction needs a MIXED pointer/array loop body
+An all-array loop refuses to strength-reduce; an all-pointer loop reduces but
+loses the volatile store's dead pre-read (3.7). The ROM needs both: read through
+a base pointer (`src[i+1]`) and write the volatile array element
+(`arr[i] = …`). Extends 3.22 — and note `src = base; src[i+1]` folds the `+1`
+into the offset (`ldrh [r2,#2]`) while `src = base + 1; src[i]` puts it into the
+giv's initial value (`adds r2,r6,#2`). Likewise `p[i]` and `p[i-1]` in one loop
+create the ROM's TWO pointer ivs, where a single pointer with `p[-1]` gives
+`subs r7,r6,#2` instead.
+
+### 3.60 A volatile cast pins evaluation ORDER no expression shape can reach
+For `lo | (hi << 16)`, agbcc ALWAYS expands the shift subtree first — regardless
+of operand order, `+`/`*` instead of `|`, masking, temps, or 2-D array shapes
+(32 forms tested). Making the low read volatile (`*(vu16 *)&arr[i]`) is the only
+thing that pins it first. Companion to 3.49.
+
+Sharpens 3.35: `regmove` ALSO refuses operand 1 when it is a paradoxical subreg
+— `(ior (subreg:SI (reg:HI 50)) (reg:SI 54))`, exactly what a volatile `u16`
+read produces. So "volatile u16 operand" is a second structural reason the
+operand-1 tie is unreachable, besides the hard-register-root rule. The escape
+that worked: pin both operands with `register u32 x asm("rN")` AND perform the
+sub-assignments inside the store expression —
+`dst = (u32 *)((lo = a) | (hi = b << 16))` — which additionally keeps the LHS
+address `ldr` ahead of both loads, since `expand_assignment` does the LHS first
+while separate statements push it after.
+
+### 3.61 gcc 2.9 CSE is basic-block-local — cross-block reloads are NOT volatile
+Repeated `ldrh` of the same global across `bne` boundaries looks like a volatile
+tell but reproduces fine non-volatile. Adding volatile there blew up register
+pressure and pushed a base address into `ip`. Only reach for volatile when the
+re-read is WITHIN one basic block.
+
 ## 4. Splitting ROM ranges into asm (tools/split.py)
 
 ### 4.1 objdump text only round-trips under `.syntax unified`

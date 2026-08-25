@@ -76,6 +76,11 @@ $(BUILD_DIR)/src/early_3484.o: CFLAGS := -O2 -mthumb-interwork
 $(BUILD_DIR)/src/early_3964.o: CC := old_agbcc
 $(BUILD_DIR)/src/early_3964.o: CFLAGS := -O2 -mthumb-interwork
 
+# SIO link driver continued, 0x08004000-0x08004734 (issue #32): the SIO IRQ
+# handler, handshake steps and the 32-bit normal-mode bulk transfer halves.
+$(BUILD_DIR)/src/early_4000.o: CC := old_agbcc
+$(BUILD_DIR)/src/early_4000.o: CFLAGS := -O2 -mthumb-interwork
+
 # All of asm/ is assembled into the ROM: hand-written files (rom_header.s,
 # crt0.s), split-generated segment files (asm/<segment>.s, see tools/
 # split.py / docs/splitting.md), chunked code segments (issue #25:

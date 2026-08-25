@@ -1059,8 +1059,8 @@ loc_08007c26:
 	movs	r0, r0
 	.word	gUnk_03004D90
 	.word	0x00005503
-	.word	0x0200EC44
-	.word	0x0200EC3C
+	.word	gUnk_0200EC44
+	.word	gUnk_0200EC3C
 	.word	gUnk_0300243C
 	.word	gUnk_03004D50
 	.word	gUnk_03004D88
@@ -1124,7 +1124,7 @@ loc_08007c82:
 	b.n	loc_08007cf6	@ 0x08007CF6
 	movs	r0, r0
 	.word	gUnk_03001F38
-	.word	0x0200EBB0
+	.word	gUnk_0200EBB0
 	.word	gUnk_03004D90
 	.word	0x02006090
 	.word	gUnk_03004D88
@@ -12236,7 +12236,7 @@ loc_0800d434:
 	bx	r0
 	movs	r0, r0
 	.word	0x0200A6E0
-	.word	0x0872EB38
+	.word	gUnk_0872EB38
 	.word	0x000001DF
 	.thumb_func
 	.global	sub_0800d450

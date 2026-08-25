@@ -26959,7 +26959,7 @@ loc_080641a6:
 	bx	r1
 	movs	r0, r0
 	.word	0x030023B4
-	.word	0x0872FB30
+	.word	gUnk_0872FB30
 	.word	0x030023D4
 	.word	0xFFFFFF00
 	.thumb_func
@@ -26991,7 +26991,7 @@ sub_0806421c:
 	bx	r0
 	movs	r0, r0
 	.word	0x030023B4
-	.word	0x0872FB30
+	.word	gUnk_0872FB30
 	.word	0x030023D4
 	.word	0xFFFFFF00
 	.thumb_func
