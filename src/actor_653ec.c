@@ -54,7 +54,16 @@ extern void sub_080664cc(struct GfxHeader *h);
 extern void sub_08068f68(void);
 extern void sub_08069b44(void);
 extern void sub_08066480(struct GfxHeader *h, u32 b, u32 c);
-extern void sub_080663f4(u32 a, u32 b);
+extern u16 gUnk_03001EA4;
+extern u8 gUnk_0200AFF8;
+extern void sub_0800a280(void);
+extern void sub_0800a340(s16 a);
+extern void sub_0800a294(s16 a);
+extern void sub_08066754(void);
+extern void sub_080666a4(void);
+extern void sub_080640c8(void);
+extern s32 sub_080640dc(struct AnimCmd *p);
+extern void sub_080639b4(u32 v);
 extern s16 gUnk_030023E4;
 
 extern u32 sub_08005acc(void);
@@ -64,7 +73,6 @@ extern u8 sub_08066a6c(void);
 extern u8 sub_08066a80(void);
 extern void sub_0800a554(void);
 extern void sub_08063fe0(void);
-extern void sub_0806685c(void *src, u32 size, u32 c);
 extern u8 sub_08065160(void);
 extern void sub_080059a0(void);
 extern s32 sub_08064d34(u32 type, u8 keepPrio);
@@ -79,6 +87,11 @@ void sub_08065848(u32 p0, s32 idx);
 s16 sub_08065f74(u32 i);
 u32 *sub_0806601c(void);
 void sub_0806627c(void);
+void sub_08066544(void);
+void sub_08066564(void);
+void sub_080665a0(void);
+void sub_0806685c(void *src, u32 size, u32 c);
+u16 sub_0806660c(u16 a);
 
 void sub_080653ec(void)
 {
@@ -1039,4 +1052,135 @@ s32 sub_08066394(void)
         }
     }
     return v;
+}
+
+void sub_080663f4(void *src, u32 size)
+{
+    struct Task *t;
+    struct Actor *a;
+    struct TaskGfx *g;
+    u32 *tbl;
+
+    t = gUnk_03002490;
+    if (t->unk38 == NULL)
+        return;
+    if (t->unk3C == -1)
+        return;
+    a = t->unk8C;
+    if (a->unk0B & 1)
+        return;
+    a->unk0A |= 1;
+    t = gUnk_03002490;
+    tbl = t->unk38;
+    g = (struct TaskGfx *)tbl[t->unk3C];
+    if ((gUnk_03001EA4 & 2) == 0)
+        sub_0806685c(g->unk04 + 1, *g->unk04, 0);
+    else
+        sub_0806685c(src, size << 1, 1);
+}
+
+void sub_08066468(void)
+{
+    gUnk_03002490->unk8C->unk0A &= 254;
+}
+
+void sub_08066480(struct GfxHeader *h, u32 src, u32 size)
+{
+    struct Actor *a;
+
+    a = gUnk_03002490->unk8C;
+    if (a->unk0B & 1)
+        return;
+    if ((gUnk_03001EA4 & 2) == 0)
+        sub_0806685c(h->unk08, h->unk00 << 5, 0);
+    else
+        sub_0806685c((void *)src, size << 1, 1);
+}
+
+void sub_080664cc(struct GfxHeader *h)
+{
+    sub_0806685c(h->unk08, h->unk00 << 5, 0);
+}
+
+/* Task body: hand the actor over to the "carried" routine at 0x08066754. */
+void sub_080664e0(struct AnimCmd *p)
+{
+    struct Task *t;
+
+    sub_08066544();
+    sub_080055b0(8, gCurTaskIdx);
+    t = gUnk_03002490;
+    t->unk20 = t->unk04;
+    t->unk04 = (u32)sub_08066754;
+    sub_080640c8();
+    if (p != NULL)
+        gUnk_03002490->unk24 = sub_080640dc(p);
+    if (gUnk_0200AFF8 == 0)
+    {
+        do
+        {
+            TaskYieldTrampoline(1);
+        } while (gUnk_0200AFF8 == 0);
+    }
+    sub_08066564();
+    sub_080666a4();
+}
+
+void sub_08066544(void)
+{
+    struct Actor *a;
+
+    a = gUnk_03002490->unk8C;
+    sub_080639b4(((u32 *)a->unk60)[1]);
+    sub_080665a0();
+}
+
+void sub_08066564(void)
+{
+    struct Actor *a;
+
+    a = gUnk_03002490->unk8C;
+    sub_080639b4(a->unk44->unk14);
+}
+
+void sub_08066580(void)
+{
+    struct Actor *a;
+
+    a = gUnk_03002490->unk8C;
+    sub_080665a0();
+    sub_080639b4(a->unk44->unk14);
+}
+
+void sub_080665a0(void)
+{
+    struct Task *t;
+    s16 v;
+
+    gUnk_0200AFF8 = 0;
+    sub_0800a280();
+    t = gUnk_03002490;
+    if (t->unk72 == 1 || (t->unk72 == 2 && t->unk76 == 7))
+    {
+        v = t->unk78;
+        sub_0800a340(v);
+    }
+    else
+    {
+        v = gUnk_03002490->unk78;
+        sub_0800a294(v);
+    }
+}
+
+u16 sub_080665fc(void)
+{
+    return sub_0806660c(0);
+}
+
+u16 sub_0806660c(u16 a)
+{
+    struct Actor *p;
+
+    p = gUnk_03002490->unk8C;
+    return ((a + p->unk64.unk08) << 12) | p->unk64.unk04;
 }
