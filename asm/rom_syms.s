@@ -15,6 +15,8 @@ gUnk_02006068 = 0x02006068
 gUnk_02007D48 = 0x02007D48
 	.global	gUnk_02007FC0
 gUnk_02007FC0 = 0x02007FC0
+	.global	gUnk_0200D110
+gUnk_0200D110 = 0x0200D110
 	.global	gUnk_0200EB90
 gUnk_0200EB90 = 0x0200EB90
 	.global	gUnk_0200EB94
@@ -279,16 +281,46 @@ gUnk_0300243C = 0x0300243C
 gUnk_0300244C = 0x0300244C
 	.global	gTaskSavedSp
 gTaskSavedSp = 0x03002470
+	.global	gUnk_03002478
+gUnk_03002478 = 0x03002478
+	.global	gUnk_03002480
+gUnk_03002480 = 0x03002480
+	.global	gUnk_03002488
+gUnk_03002488 = 0x03002488
 	.global	gCurTaskIdx
 gCurTaskIdx = 0x0300248C
+	.global	gUnk_03002490
+gUnk_03002490 = 0x03002490
+	.global	gUnk_03002494
+gUnk_03002494 = 0x03002494
+	.global	gUnk_030024A0
+gUnk_030024A0 = 0x030024A0
 	.global	gTaskSavedR0
 gTaskSavedR0 = 0x030025E0
 	.global	gTaskFlagsTable
 gTaskFlagsTable = 0x030025F0
+	.global	gUnk_030026F0
+gUnk_030026F0 = 0x030026F0
+	.global	gUnk_030026F4
+gUnk_030026F4 = 0x030026F4
 	.global	gTaskSavedLr
 gTaskSavedLr = 0x030026F8
+	.global	gUnk_03002700
+gUnk_03002700 = 0x03002700
+	.global	gUnk_03002708
+gUnk_03002708 = 0x03002708
+	.global	gUnk_03002710
+gUnk_03002710 = 0x03002710
+	.global	gUnk_03002790
+gUnk_03002790 = 0x03002790
+	.global	gUnk_03004B90
+gUnk_03004B90 = 0x03004B90
+	.global	gUnk_03004C90
+gUnk_03004C90 = 0x03004C90
 	.global	gTaskBaseSp
 gTaskBaseSp = 0x03004C94
+	.global	gUnk_03004CA0
+gUnk_03004CA0 = 0x03004CA0
 	.global	gUnk_03004D28
 gUnk_03004D28 = 0x03004D28
 	.global	gUnk_03004D2C

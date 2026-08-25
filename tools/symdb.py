@@ -324,6 +324,7 @@ EXTRA_THUMB_ENTRIES = {
     0x080034B8,  # SE stop helper     (inside sub_08003484's 0x4C)
     0x080036B8,  # BGM fade-in helper (inside sub_08003688's 0xC4)
     0x080037A4,  # SE volume setter   (inside sub_08003770's 0x88)
+    0x08005618,  # SetAllTaskSkipMasks(inside sub_080055c4's 0x90)
 }
 
 EVIDENCE_KINDS = ("bl-target", "rom-pointer", "prologue-scan", "curated")

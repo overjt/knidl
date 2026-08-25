@@ -830,6 +830,42 @@ register loop.c was using to strength-reduce an unrelated array walk.
 `switch (cell)` on a `vs32` emits an `ldr` for the range check AND a second
 `ldr` before the `lsls #2`; a non-volatile operand reuses the first register.
 
+### 3.68 A volatile 16-bit store of ALL-ONES reuses the dead pre-read
+`vu16 A[]; A[i] = 0xFFFF;` emits `ldrh rX,[rP]; orrs rX,rMask; strh rX,[rP]` —
+agbcc emits 3.7's dead pre-read and then ORs the all-ones constant INTO that
+register instead of materialising a fresh value. `A[i] |= 0xFFFF` gives four
+insns (pre-read + RMW read + orrs + strh), and a pointer/cast lvalue drops the
+pre-read but lets `fold` collapse the OR into a plain store. Only the plain
+`= 0xFFFF` on a volatile ARRAY produces the ROM's three.
+
+### 3.69 Chained assignment: addresses left-to-right, stores right-to-left
+`a = b = c = K` materialises `to_rtx(a)`, `to_rtx(b)`, `to_rtx(c)` and THEN
+stores `c, b, a`. So a run of stores at descending offsets with their address
+computations interleaved ahead of them is a chain, while `addr/store/addr/store`
+pairs are separate statements. Combined with `update_equiv_regs` moving
+single-use address loads down to their store, this explains most "out of order"
+pool/`ldr` sequences. Sharpens 3.8.
+
+### 3.70 An address-taken `u16` stack temp still needs `vu16` for the movhi pair
+`u16 fill = 0xFFFF;` emits one `ldr rD,=0xFFFF`; `vu16 fill` emits the ROM's
+`ldr rS,=0xFFFF; adds rD,rS,#0` (3.24). Complements 3.37.
+
+### 3.71 `|= 0xFF` folds on an `s8` field but survives on a `u8` field
+On `s8` it is constant-folded to a plain store; on `u8` it stays as
+`movs rM,#255` + `orrs`. The same ROM byte can therefore need to be `u8` in one
+function and read with an explicit `(s8)` cast in another — the cast still
+produces `ldrsb`.
+
+### 3.72 The goto-vs-loop-note lever steers ALLOCATION, not just hoisting
+3.21/3.53 are about hoisting; the same lever also changes register assignment.
+Rewriting an outer restart from `do {…} while (n)` to a label + `if (n) goto`
+removes one loop level from every `REG_N_REFS` weight inside it, which moved
+three long-lived address pseudos onto the ROM's registers. Related knob:
+**merging a counter into an existing loop variable** shifts
+`floor_log2(refs)*refs/live_length` across a power-of-two boundary (refs 57→63,
+live_length 275→305 in one case) and was the only thing that moved a specific
+pseudo onto the ROM's register.
+
 ## 4. Splitting ROM ranges into asm (tools/split.py)
 
 ### 4.1 objdump text only round-trips under `.syntax unified`
