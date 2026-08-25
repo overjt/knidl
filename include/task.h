@@ -160,6 +160,9 @@ struct Actor
     /*0x58*/ u32 unk58;
     /*0x5C*/ u32 unk5C;
     /*0x60*/ u32 unk60;
+    /*0x64*/ u32 unk64;
+    /*0x68*/ u32 unk68;
+    /*0x6C*/ u32 unk6C;
 };
 
 /* One entry of the actor animation script Actor.unk2C walks (0x080640FC).
@@ -168,6 +171,20 @@ struct AnimCmd
 {
     /*0x00*/ s16 unk00;
     /*0x02*/ s16 unk02;
+};
+
+/* Spawn descriptor sub_08064A78 turns into a class-4 task. */
+struct ActorSpawn
+{
+    /*0x00*/ u32 unk00;
+    /*0x04*/ u32 unk04;
+    /*0x08*/ u8 unk08;
+    /*0x09*/ u8 unk09;
+    /*0x0A*/ u8 unk0A;
+    /*0x0B*/ u8 unk0B;
+    /*0x0C*/ s16 unk0C;
+    /*0x0E*/ s16 unk0E;
+    /*0x10*/ u16 unk10;
 };
 
 /* Axis-aligned box the actor overlap helpers take (0x08063E2C). */

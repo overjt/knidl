@@ -40,6 +40,16 @@ extern void sub_080061a8(s32 a, s32 b, s32 c);
 extern void TaskDispatchTrampoline(void);
 extern s32 gUnk_030026F4;
 extern s16 gUnk_0872FB30[];
+extern u8 gUnk_03002350;
+extern s16 gUnk_03002348;
+extern s16 gUnk_030023E4;
+extern s16 gUnk_03002158[];
+extern u16 gUnk_030023D8;
+extern u16 gUnk_03001EA4;
+extern s32 gUnk_0873DF14[];
+extern struct Actor gUnk_0200C320[];
+extern void sub_0800a04c(s32 a, u32 b);
+extern s32 sub_08021a40(s16 x, s16 y);
 
 void sub_0806391c(u32 i, struct ActorDef *d);
 void sub_080639c8(u32 i, u32 v);
@@ -73,6 +83,9 @@ u16 sub_08064314(s32 prec);
 void sub_08064460(s32 step, s32 limit, u8 axis);
 void sub_080644c0(s32 step, s32 limit, u8 axis);
 void sub_0806453c(s32 step, u8 axis);
+void sub_080648a0(u32 i);
+s8 sub_08064a38(void);
+void sub_080636e4(u32 i);
 
 s32 sub_08063698(u32 type, s32 start)
 {
@@ -1070,4 +1083,248 @@ void sub_080645a4(s32 step, s32 limit)
         sub_080644c0(step, limit, 1);
         break;
     }
+}
+
+/* sub_080645A4 with the direction supplied by the caller. */
+void sub_08064680(s32 step, s32 limit, u16 dir)
+{
+    gUnk_030023B4 = gUnk_030023D4 = 0;
+    switch (dir)
+    {
+    case 0:
+        sub_08064460(step, limit, 0);
+        sub_0806453c(step, 1);
+        break;
+    case 1:
+        sub_08064460(step, limit, 0);
+        sub_08064460(step, limit, 1);
+        break;
+    case 2:
+        sub_0806453c(step, 0);
+        sub_08064460(step, limit, 1);
+        break;
+    case 3:
+        sub_080644c0(step, limit, 0);
+        sub_08064460(step, limit, 1);
+        break;
+    case 4:
+        sub_080644c0(step, limit, 0);
+        sub_0806453c(step, 1);
+        break;
+    case 5:
+        sub_080644c0(step, limit, 0);
+        sub_080644c0(step, limit, 1);
+        break;
+    case 6:
+        sub_0806453c(step, 0);
+        sub_080644c0(step, limit, 1);
+        break;
+    case 7:
+        sub_08064460(step, limit, 0);
+        sub_080644c0(step, limit, 1);
+        break;
+    }
+}
+
+/* Nearest active player whose X offset falls inside [lo, hi). */
+s32 sub_08064758(u16 lo, u16 hi)
+{
+    s32 best;
+    s32 bestDist;
+    s32 d;
+    s32 v;
+    s32 found;
+    s32 i;
+
+    best = -1;
+    found = 0;
+    for (i = 0; i < gUnk_030023AC; i++)
+    {
+        if ((gUnk_03002340 >> i) & 1)
+        {
+            sub_080648a0(i);
+            v = gUnk_030023B4;
+            if (v >= (s16)lo && v < (s16)hi)
+            {
+                found = 1;
+                if (best == -1)
+                {
+                    best = i;
+                    bestDist = sub_08063c60(best);
+                }
+                else
+                {
+                    d = sub_08063c60(i);
+                    if (bestDist > d)
+                    {
+                        bestDist = d;
+                        best = i;
+                    }
+                }
+            }
+        }
+    }
+    gUnk_030023D4 = best;
+    return found;
+}
+
+/* Same over the Y offset. */
+s32 sub_080647fc(u16 lo, u16 hi)
+{
+    s32 best;
+    s32 bestDist;
+    s32 d;
+    s32 v;
+    s32 found;
+    s32 i;
+
+    best = -1;
+    found = 0;
+    for (i = 0; i < gUnk_030023AC; i++)
+    {
+        if ((gUnk_03002340 >> i) & 1)
+        {
+            sub_080648a0(i);
+            v = gUnk_030023D4;
+            if (v >= (s16)lo && v < (s16)hi)
+            {
+                found = 1;
+                if (best == -1)
+                {
+                    best = i;
+                    bestDist = sub_08063c60(best);
+                }
+                else
+                {
+                    d = sub_08063c60(i);
+                    if (bestDist > d)
+                    {
+                        bestDist = d;
+                        best = i;
+                    }
+                }
+            }
+        }
+    }
+    gUnk_030023D4 = best;
+    return found;
+}
+
+/* Screen-space offset of task `i` from the camera, into gUnk_030023B4/D4. */
+void sub_080648a0(u32 i)
+{
+    struct Task *t;
+
+    t = &gUnk_03002790[i];
+    if (gUnk_030023AC == 1 || gUnk_03002350 == 1)
+    {
+        gUnk_030023B4 = t->unk48 - gUnk_03002348;
+        gUnk_030023D4 = t->unk4A - gUnk_030023E4;
+    }
+    else
+    {
+        gUnk_030023B4 = t->unk48 - gUnk_03002158[0];
+        gUnk_030023D4 = t->unk4A - gUnk_03002158[2];
+    }
+}
+
+s32 sub_0806493c(void)
+{
+    s32 i;
+
+    i = sub_08063b38();
+    if (i != -1)
+        sub_080648a0(i);
+    else
+        gUnk_030023B4 = gUnk_030023D4 = 0;
+    return i;
+}
+
+void sub_08064970(void)
+{
+    sub_080648a0(gCurTaskIdx);
+}
+
+s32 sub_08064984(s32 range)
+{
+    s32 i;
+    s32 d;
+
+    i = sub_08063b38();
+    if (i == -1)
+        return 0;
+    d = sub_08063cbc(i);
+    if (abs(d) <= range)
+        return 1;
+    return 0;
+}
+
+void sub_080649b4(u32 arg, s32 mul)
+{
+    struct Task *t;
+    struct Actor *a;
+    s32 v;
+    u32 k;
+
+    t = gUnk_03002490;
+    a = t->unk8C;
+    if (gUnk_030023D8 == 18)
+        return;
+    v = a->unk30;
+    if (t->unk72 == 0 && t->unk76 == 37)
+    {
+        k = gUnk_03001EA4 & 3;
+        v = gUnk_0873DF14[k];
+    }
+    v *= mul;
+    if (gUnk_03002490->unk72 == 0 && gUnk_03002490->unk76 == 40
+        && (u8)(a->unk04 - 2) <= 1)
+        v = 200;
+    sub_0800a04c(v, arg);
+}
+
+s8 sub_08064a38(void)
+{
+    struct Task *t;
+    s32 i;
+
+    i = gUnk_03002490->unk44;
+    t = &gUnk_03002790[i];
+    return t->unk43;
+}
+
+void sub_08064a60(void)
+{
+    gUnk_03002490->unk43 = sub_08064a38();
+}
+
+/* Spawn a class-4 task from a descriptor; returns its slot or -1. */
+s32 sub_08064a78(struct ActorSpawn *p)
+{
+    struct Task *t;
+    s32 i;
+
+    if (p->unk0A == 1)
+    {
+        if (sub_08021a40(p->unk0C, p->unk0E) != 0)
+            return -1;
+    }
+    i = sub_08063698(p->unk04, 32);
+    if (i != -1)
+    {
+        t = &gUnk_03002790[i];
+        t->unk72 = 4;
+        t->unk76 = p->unk00;
+        t->unk73 = p->unk08;
+        t->unk74 = p->unk09;
+        t->unk48 = p->unk0C;
+        t->unk4A = p->unk0E;
+        t->unk4C = p->unk0C << 16;
+        t->unk50 = p->unk0E << 16;
+        t->unk44 = gCurTaskIdx;
+        t->unk40 = p->unk10;
+        t->unk8C = &gUnk_0200C320[i];
+        sub_080636e4(i);
+    }
+    return i;
 }
