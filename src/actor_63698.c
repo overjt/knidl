@@ -63,6 +63,16 @@ s32 sub_08063eb0(struct Rect *r, u32 i);
 void sub_08063f24(s32 i);
 void sub_08063e14(void);
 s32 sub_080640fc(void);
+u16 sub_0806425c(s16 x0, s16 y0, s16 x1, s16 y1, s32 prec);
+u16 sub_080642b0(u32 i, u32 j, s32 prec);
+u16 sub_080642fc(u32 i, s32 prec);
+u8 sub_0806433c(u32 i);
+u8 sub_0806437c(u32 i);
+u8 sub_080643bc(u32 i);
+u16 sub_08064314(s32 prec);
+void sub_08064460(s32 step, s32 limit, u8 axis);
+void sub_080644c0(s32 step, s32 limit, u8 axis);
+void sub_0806453c(s32 step, u8 axis);
 
 s32 sub_08063698(u32 type, s32 start)
 {
@@ -556,7 +566,7 @@ u8 sub_08063e2c(struct Rect *r)
     return 0;
 }
 
-u8 sub_08063e70(struct Rect *r, s16 x, u16 y)
+u8 sub_08063e74(struct Rect *r, s16 x, u16 y)
 {
     if (x > r->left && x < r->right
         && (s16)y > r->top && (s16)y < r->bottom)
@@ -755,4 +765,309 @@ u32 sub_080641b0(s16 x0, s16 y0, s16 x1, s16 y1, u16 mag)
     gUnk_030023B4 = *(gUnk_0872FB30 + t) * (s16)mag;
     gUnk_030023D4 = *(gUnk_0872FB30 - 128 + t) * (s16)mag;
     return t;
+}
+
+void sub_0806421c(s16 t, s16 mag)
+{
+    gUnk_030023B4 = *(gUnk_0872FB30 + t) * mag;
+    gUnk_030023D4 = *(gUnk_0872FB30 - 128 + t) * mag;
+}
+
+/* Angle from (x0, y0) to (x1, y1), narrowed to `prec` steps of resolution. */
+u16 sub_0806425c(s16 x0, s16 y0, s16 x1, s16 y1, s32 prec)
+{
+    u16 a;
+
+    a = ArcTan2(x1 - x0, y1 - y0);
+    switch (prec)
+    {
+    case 0:
+        a >>= 1;
+    case 1:
+        a >>= 4;
+    case 2:
+        a >>= 1;
+    case 3:
+        a >>= 7;
+    }
+    return a;
+}
+
+u16 sub_080642b0(u32 i, u32 j, s32 prec)
+{
+    struct Task *a;
+    struct Task *b;
+
+    a = &gUnk_03002790[i];
+    b = &gUnk_03002790[j];
+    return sub_0806425c(b->unk48, b->unk4A, a->unk48, a->unk4A, prec);
+}
+
+u16 sub_080642fc(u32 i, s32 prec)
+{
+    return sub_080642b0(i, gCurTaskIdx, prec);
+}
+
+u16 sub_08064314(s32 prec)
+{
+    s32 i;
+
+    i = sub_08063b38();
+    if (i == -1)
+        return 0;
+    return sub_080642fc(i, prec);
+}
+
+u8 sub_0806433c(u32 i)
+{
+    s32 d;
+
+    d = sub_08063d18(i);
+    if (d == 0)
+        return 0;
+    if (d < 0)
+        return 2;
+    return 1;
+}
+
+u8 sub_08064358(void)
+{
+    s32 i;
+
+    i = sub_08063b38();
+    if (i == -1)
+        return 0;
+    return sub_0806433c(i);
+}
+
+u8 sub_0806437c(u32 i)
+{
+    s32 d;
+
+    d = sub_08063cbc(i);
+    if (d == 0)
+        return 0;
+    if (d < 0)
+        return 8;
+    return 4;
+}
+
+u8 sub_08064398(void)
+{
+    s32 i;
+
+    i = sub_08063b38();
+    if (i == -1)
+        return 0;
+    return sub_0806437c(i);
+}
+
+/* Combine the two axis signs into one of the 8 compass directions. */
+u8 sub_080643bc(u32 i)
+{
+    u8 dir;
+
+    dir = sub_0806433c(i);
+    dir |= sub_0806437c(i);
+    switch (dir)
+    {
+    case 5:
+        dir = 1;
+        break;
+    case 9:
+        dir = 2;
+        break;
+    case 6:
+        dir = 0;
+        break;
+    case 10:
+        dir = 3;
+        break;
+    case 1:
+        dir = 5;
+        break;
+    case 2:
+        dir = 4;
+        break;
+    case 4:
+        dir = 7;
+        break;
+    case 8:
+        dir = 6;
+        break;
+    default:
+        dir = 8;
+        break;
+    }
+    return dir;
+}
+
+u8 sub_0806443c(void)
+{
+    s32 i;
+
+    i = sub_08063b38();
+    if (i == -1)
+        return 0;
+    return sub_080643bc(i);
+}
+
+/* Accelerate the running task towards +limit on the given axis. */
+/* Accelerate the running task towards +limit on the given axis. */
+void sub_08064460(s32 step, s32 limit, u8 axis)
+{
+    struct Task *t;
+
+    if (axis == 0)
+    {
+        t = gUnk_03002490;
+        if (t->unk54 < 0)
+        {
+            t->unk54 += step;
+            gUnk_030023B4 = 1;
+        }
+        else if (t->unk54 < limit)
+        {
+            t->unk54 += step;
+            gUnk_030023B4 = 1;
+        }
+        else
+        {
+            t->unk54 = limit;
+        }
+    }
+    else
+    {
+        t = gUnk_03002490;
+        if (t->unk58 < 0 || t->unk58 < limit)
+        {
+            t->unk58 += step;
+            gUnk_030023D4 = 1;
+        }
+        else
+        {
+            t->unk58 = limit;
+        }
+    }
+}
+
+/* Accelerate the running task towards -limit on the given axis. */
+/* Accelerate the running task towards -limit on the given axis. */
+void sub_080644c0(s32 step, s32 limit, u8 axis)
+{
+    struct Task *t;
+    s32 v;
+
+    if (axis == 0)
+    {
+        t = gUnk_03002490;
+        if (t->unk54 > 0)
+        {
+            t->unk54 -= step;
+            gUnk_030023B4 = -1;
+        }
+        else if (abs(t->unk54) < limit)
+        {
+            t->unk54 -= step;
+            gUnk_030023B4 = -1;
+        }
+        else
+        {
+            t->unk54 = -limit;
+        }
+    }
+    else
+    {
+        t = gUnk_03002490;
+        v = t->unk58;
+        if (v > 0 || abs(v) < limit)
+        {
+            t->unk58 = v - step;
+            gUnk_030023D4 = -1;
+        }
+        else
+        {
+            t->unk58 = -limit;
+        }
+    }
+}
+
+/* Decay the running task's speed towards zero on the given axis. */
+void sub_0806453c(s32 step, u8 axis)
+{
+    struct Task *t;
+
+    if (axis == 0)
+    {
+        t = gUnk_03002490;
+        if (t->unk54 == 0)
+            return;
+        if (t->unk54 < 0)
+        {
+            t->unk54 += step;
+            gUnk_030023B4 = 1;
+        }
+        else
+        {
+            t->unk54 -= step;
+            gUnk_030023B4 = -1;
+        }
+    }
+    else
+    {
+        t = gUnk_03002490;
+        if (t->unk58 == 0)
+            return;
+        if (t->unk58 < 0)
+        {
+            t->unk58 += step;
+            gUnk_030023D4 = 1;
+        }
+        else
+        {
+            t->unk58 -= step;
+            gUnk_030023D4 = -1;
+        }
+    }
+}
+
+/* Steer the running task towards the nearest player. */
+void sub_080645a4(s32 step, s32 limit)
+{
+    gUnk_030023B4 = gUnk_030023D4 = 0;
+    switch (sub_08064314(0))
+    {
+    case 0:
+        sub_08064460(step, limit, 0);
+        sub_0806453c(step, 1);
+        break;
+    case 1:
+        sub_08064460(step, limit, 0);
+        sub_08064460(step, limit, 1);
+        break;
+    case 2:
+        sub_0806453c(step, 0);
+        sub_08064460(step, limit, 1);
+        break;
+    case 3:
+        sub_080644c0(step, limit, 0);
+        sub_08064460(step, limit, 1);
+        break;
+    case 4:
+        sub_080644c0(step, limit, 0);
+        sub_0806453c(step, 1);
+        break;
+    case 5:
+        sub_080644c0(step, limit, 0);
+        sub_080644c0(step, limit, 1);
+        break;
+    case 6:
+        sub_0806453c(step, 0);
+        sub_080644c0(step, limit, 1);
+        break;
+    case 7:
+        sub_08064460(step, limit, 0);
+        sub_080644c0(step, limit, 1);
+        break;
+    }
 }

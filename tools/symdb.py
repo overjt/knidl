@@ -297,6 +297,10 @@ FALSE_POSITIVES = {
     # real function runs 0x08063DF4-0x08063E14 and byte-matches as one body
     # (src/actor_63698.c).
     0x08063DFE,
+    # 0x080643A2 is the same artifact one function later (issue #65): the
+    # word 0xFFFFF000 at 0x080633A0, inside sub_08062F88's literal pool,
+    # decodes as the same bl pair and lands inside sub_08064398.
+    0x080643A2,
 }
 
 # Curated Thumb entries with NO in-ROM reference (issue #31): dead m4a SDK
@@ -314,7 +318,7 @@ EXTRA_THUMB_ENTRIES = {
     0x080CE7A8,  # m4aMPlayFadeIn
     0x080CE930,  # MusicPlayerJumpTableCopy (swi 0x2A thunk, issue #53)
     0x080CEB90,  # SoundClear
-    0x08063E70,  # hidden dead export inside M17 (issue #65): a rect/point
+    0x08063E74,  # hidden dead export inside M17 (issue #65): a rect/point
                  # containment test nothing in the ROM references, sitting
                  # between sub_08063E2C and sub_08063EB0 (its own
                  # `push {r4, lr}` prologue and `pop {r4}; pop {r1}; bx r1`
