@@ -34,7 +34,7 @@ struct Task
     /*0x18*/ u32 unk18;
     /*0x1C*/ u32 unk1C;
     /*0x20*/ u32 unk20;
-    /*0x24*/ u32 unk24;
+    /*0x24*/ s32 unk24;
     /*0x28*/ u32 unk28;
     /*0x2C*/ struct AnimCmd *unk2C;
     /*0x30*/ u32 unk30;
@@ -207,6 +207,6 @@ struct PointPair
 
 extern struct Task *gUnk_03002490;
 extern struct Task gUnk_03002790[];
-extern s32 gCurTaskIdx;
+extern vs32 gCurTaskIdx;
 
 #endif // GUARD_TASK_H

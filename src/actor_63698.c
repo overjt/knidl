@@ -86,6 +86,8 @@ void sub_0806453c(s32 step, u8 axis);
 void sub_080648a0(u32 i);
 s8 sub_08064a38(void);
 void sub_080636e4(u32 i);
+s32 sub_08064a78(struct ActorSpawn *p);
+s32 sub_08064c1c(u32 type, int xArg, int yArg, int prioArg);
 
 s32 sub_08063698(u32 type, s32 start)
 {
@@ -1327,4 +1329,126 @@ s32 sub_08064a78(struct ActorSpawn *p)
         sub_080636e4(i);
     }
     return i;
+}
+
+s32 sub_08064b28(struct ActorSpawn *p, u8 keepPrio)
+{
+    struct Task *t;
+
+    t = gUnk_03002490;
+    p->unk0C = t->unk48;
+    p->unk0E = t->unk4A;
+    if (keepPrio == 0)
+        p->unk10 = t->unk40;
+    return sub_08064a78(p);
+}
+
+s32 sub_08064b5c(struct ActorSpawn *p, u8 keepPrio)
+{
+    struct Task *t;
+
+    t = gUnk_03002490;
+    p->unk0C = t->unk48 + p->unk0C * t->unk43;
+    p->unk0E += t->unk4A;
+    if (keepPrio == 0)
+        p->unk10 = t->unk40;
+    return sub_08064a78(p);
+}
+
+s32 sub_08064ba8(struct ActorSpawn *p, u8 keepPrio)
+{
+    if (keepPrio == 0)
+        p->unk10 = gUnk_03002490->unk40;
+    return sub_08064a78(p);
+}
+
+/* Cycle the running task's frame between 4 and 7 every other tick. */
+/* Cycle the running task's frame between 4 and 7 every other tick. */
+void sub_08064bcc(void)
+{
+    struct Task *t;
+
+    t = gUnk_03002490;
+    if (t->unk24 <= 0)
+    {
+        if (t->unk43 == 1)
+        {
+            t->unk3C++;
+            if (t->unk3C > 7)
+                t->unk3C = 4;
+        }
+        else
+        {
+            t->unk3C--;
+            if (t->unk3C <= 3)
+                t->unk3C = 7;
+        }
+        gUnk_03002490->unk24 = 2;
+    }
+    else
+    {
+        t->unk24--;
+    }
+}
+
+/* Spawn a helper task at (x, y) inheriting the running task's class. */
+/* Spawn a helper task at (x, y) inheriting the running task's class. */
+/* Spawn a helper task at (x, y) inheriting the running task's class. */
+/* Spawn a helper task at (x, y) inheriting the running task's class.
+   The three 16-bit arguments are declared `int` and narrowed into u16
+   locals: sub_08064CDC passes them sign-extended, so the ROM's call site
+   never converts (issue #65 lessons). */
+s32 sub_08064c1c(u32 type, int xArg, int yArg, int prioArg)
+{
+    struct Task *t;
+    s32 i;
+    u16 x = xArg;
+    u16 y = yArg;
+    u16 prio = prioArg;
+
+    i = sub_08063698(type, 32);
+    if (i != -1)
+    {
+        t = &gUnk_03002790[i];
+        switch (gUnk_03002490->unk72)
+        {
+        case 2:
+        case 7:
+            t->unk72 = 7;
+            break;
+        case 1:
+        case 8:
+            t->unk72 = 8;
+            break;
+        default:
+            t->unk72 = 9;
+            break;
+        }
+        t->unk48 = x;
+        t->unk4A = y;
+        t->unk4C = x << 16;
+        t->unk50 = y << 16;
+        t->unk44 = gCurTaskIdx;
+        t->unk40 = prio;
+        t->unk78 = 2;
+        gUnk_03002790[i].unk16 = gUnk_03002790[gCurTaskIdx].unk16;
+    }
+    return i;
+}
+
+s32 sub_08064cdc(u32 type, s16 dx, s16 dy, u8 keepPrio)
+{
+    struct Task *t;
+    s32 x;
+    s32 y;
+    u16 prio;
+
+    t = gUnk_03002490;
+    x = (s16)(t->unk48 + t->unk43 * dx);
+    y = (s16)(dy + t->unk4A);
+    if (keepPrio != 0)
+        prio = t->unk40;
+    else
+        prio = 0;
+    return sub_08064c1c(type, x, y, prio);
 }
