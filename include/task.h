@@ -18,6 +18,7 @@
 struct Actor;
 struct ActorDef;
 struct AnimCmd;
+struct GfxHeader;
 
 struct Task
 {
@@ -100,8 +101,10 @@ struct TaskGfx
 /* ROM descriptor an actor is bound to (Actor.unk44). */
 struct ActorDef
 {
-    /*0x00*/ u32 unk00;
-    /*0x04*/ u32 unk04;
+    /*0x00*/ u16 unk00;
+    /*0x02*/ u16 unk02;
+    /*0x04*/ u16 unk04;
+    /*0x06*/ u16 unk06;
     /*0x08*/ u32 unk08;
     /*0x0C*/ u8 unk0C;
     /*0x0D*/ u8 unk0D;
@@ -115,10 +118,19 @@ struct ActorDef
     /*0x28*/ void (*unk28)(void);
 };
 
+/* Graphics header the actor's tail block points at (0x08066088). */
+struct GfxHeader
+{
+    /*0x00*/ u16 unk00;
+    /*0x02*/ u16 unk02;
+    /*0x04*/ u32 unk04;
+    /*0x08*/ void *unk08;
+};
+
 /* The 12-byte block at Actor+0x64, copied as one unit (0x0806505C). */
 struct ActorTail
 {
-    /*0x00*/ u32 unk00;
+    /*0x00*/ struct GfxHeader *unk00;
     /*0x04*/ u32 unk04;
     /*0x08*/ u32 unk08;
 };
@@ -128,7 +140,7 @@ struct Actor
 {
     /*0x00*/ u8 unk00;
     /*0x01*/ u8 unk01;
-    /*0x02*/ u8 unk02;
+    /*0x02*/ s8 unk02;
     /*0x03*/ s8 unk03;
     /*0x04*/ u8 unk04;
     /*0x05*/ u8 unk05;

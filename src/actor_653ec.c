@@ -28,6 +28,22 @@ extern u32 gUnk_0873F01C[];
 extern u8 gUnk_0825CA44[];
 extern vs16 gUnk_03004CA0[];
 extern void sub_080031b8(u32 a);
+extern u16 gUnk_02007D60;
+extern u16 gUnk_02007FF0;
+extern u32 *gUnk_0873F0C4[];
+extern u32 *gUnk_0873F138[];
+extern u32 *gUnk_0873F0E4[];
+extern u32 *gUnk_0873F15C[];
+extern u32 gUnk_0200AEF4;
+extern u32 gUnk_02004C90;
+extern u32 gUnk_02007D00[];
+extern u32 gUnk_02006190[];
+extern u32 gUnk_02006040[];
+extern u8 gUnk_03002350;
+extern void sub_080055b0(u32 a, u32 b);
+extern void sub_080662d8(void);
+extern u32 sub_080b5628(u32 a);
+extern u32 sub_080b55d8(u32 a, u32 b);
 extern s16 gUnk_030023E4;
 
 extern u32 sub_08005acc(void);
@@ -37,7 +53,7 @@ extern u8 sub_08066a6c(void);
 extern u8 sub_08066a80(void);
 extern void sub_0800a554(void);
 extern void sub_08063fe0(void);
-extern void sub_0806685c(u16 *src, u32 size, u32 c);
+extern void sub_0806685c(void *src, u32 size, u32 c);
 extern u8 sub_08065160(void);
 extern void sub_080059a0(void);
 extern s32 sub_08064d34(u32 type, u8 keepPrio);
@@ -49,6 +65,8 @@ extern void TaskDispatchTrampoline(void);
 void sub_08065470(void);
 void sub_0806555c(void);
 void sub_08065848(u32 p0, s32 idx);
+s16 sub_08065f74(u32 i);
+u32 *sub_0806601c(void);
 
 void sub_080653ec(void)
 {
@@ -733,4 +751,174 @@ u8 sub_08065f2c(u32 i)
     if (a->unk16 == b->unk16)
         return 1;
     return 0;
+}
+
+s16 sub_08065f5c(void)
+{
+    return sub_08065f74(gCurTaskIdx);
+}
+
+/* Horizontal draw offset of task `i`'s sprite for the current view mode. */
+/* Horizontal draw offset of task `i`'s sprite for the current view mode. */
+s16 sub_08065f74(u32 i)
+{
+    struct Task *t;
+    struct Actor *a;
+    s16 w;
+    s16 adj;
+    s16 r;
+    s32 m;
+
+    t = &gUnk_03002790[i];
+    a = t->unk8C;
+    switch (gUnk_03002350)
+    {
+    case 2:
+        w = a->unk44->unk02;
+        break;
+    case 3:
+        w = a->unk44->unk04;
+        break;
+    case 4:
+        w = a->unk44->unk06;
+        break;
+    case 1:
+    default:
+        w = a->unk44->unk00;
+        break;
+    }
+    switch (t->unk72)
+    {
+    case 1:
+        m = gUnk_02007D60 & 15;
+        if (w > 30)
+            adj = m << 2;
+        else
+            adj = m << 1;
+        break;
+    case 2:
+        m = gUnk_02007FF0 & 15;
+        if (w > 30)
+            adj = m << 2;
+        else
+            adj = m << 1;
+        break;
+    default:
+        adj = 0;
+        break;
+    }
+    r = w - adj;
+    return r + a->unk02;
+}
+
+u32 *sub_0806601c(void)
+{
+    struct Task *t;
+    struct Actor *a;
+    u32 *r;
+    u32 *tbl;
+    u32 v;
+    u32 k;
+    u32 *q;
+
+    t = gUnk_03002490;
+    a = t->unk8C;
+    if (t->unk72 == 1)
+    {
+        r = gUnk_0873F0C4[t->unk76];
+        if (a->unk0C != 0)
+        {
+            tbl = gUnk_0873F118[t->unk76];
+            if (tbl != NULL)
+            {
+                k = a->unk0C - 1;
+                q = tbl + k;
+                v = *q;
+                if (v != 0)
+                    a->unk28 = v;
+            }
+        }
+    }
+    else
+    {
+        r = gUnk_0873F138[t->unk76];
+    }
+    return r;
+}
+
+u16 sub_08066088(u32 mode)
+{
+    struct Task *t;
+    struct Actor *a;
+    u32 *p;
+    u32 *tbl;
+    struct GfxHeader *h;
+    u16 prio;
+    u32 v;
+    s32 sh;
+    u32 lo;
+    u32 w40;
+
+    a = gUnk_03002490->unk8C;
+    a->unk20 = gUnk_03002490->unk40;
+    prio = gUnk_03002490->unk40;
+    p = sub_0806601c();
+    t = gUnk_03002490;
+    if (t->unk72 == 1)
+        a->unk64.unk00 = (struct GfxHeader *)gUnk_0873F0E4[t->unk76];
+    else
+        a->unk64.unk00 = (struct GfxHeader *)gUnk_0873F15C[t->unk76];
+    a->unk64.unk04 = gUnk_03002490->unk40 & 0xFFF;
+    a->unk64.unk08 = gUnk_03002490->unk40 >> 12;
+    if (p != NULL)
+    {
+        if (mode == 1)
+        {
+            sh = sub_080b5628(p[0] << 4);
+            lo = a->unk64.unk08;
+        }
+        else
+        {
+            sh = sub_080b55d8(p[0] << 4, p[1]);
+            lo = sh & 0xFFFF;
+            sh = sh >> 16;
+        }
+        w40 = (lo << 12) | ((sh << 1) + 16);
+        gUnk_03002490->unk40 = w40;
+    }
+    else
+    {
+        sub_0806685c(a->unk64.unk00->unk08, a->unk64.unk00->unk00 << 5, 0);
+    }
+    return prio;
+}
+
+void sub_08066144(void)
+{
+    s32 i;
+
+    for (i = 0; i < 10; i++)
+        gUnk_02007D00[i] = 0;
+    for (i = 0; i < 8; i++)
+        gUnk_02006190[i] = 0;
+    for (i = 0; i < 10; i++)
+        gUnk_02006040[i] = 0;
+    gUnk_0200AEF4 = gUnk_02004C90 = 0;
+}
+
+void sub_0806619c(u32 p0, u32 p1, u32 p2, u16 p3, u8 p4)
+{
+    struct Task *t;
+
+    sub_080055b0(7, gCurTaskIdx);
+    t = gUnk_03002490;
+    t->unk08 = (u32)sub_080662d8;
+    gUnk_02006190[0] = t->unk48;
+    gUnk_02006190[1] = t->unk4A;
+    gUnk_02006190[2] = t->unk3C;
+    gUnk_02004C90 = p2;
+    gUnk_02006190[4] = p3;
+    gUnk_02006190[3] = p0;
+    gUnk_0200AEF4 = p1;
+    gUnk_02006190[5] = p4;
 }
