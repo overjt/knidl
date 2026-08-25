@@ -115,6 +115,14 @@ struct ActorDef
     /*0x28*/ void (*unk28)(void);
 };
 
+/* The 12-byte block at Actor+0x64, copied as one unit (0x0806505C). */
+struct ActorTail
+{
+    /*0x00*/ u32 unk00;
+    /*0x04*/ u32 unk04;
+    /*0x08*/ u32 unk08;
+};
+
 /* Per-task actor record (Task.unk8C). */
 struct Actor
 {
@@ -160,9 +168,7 @@ struct Actor
     /*0x58*/ u32 unk58;
     /*0x5C*/ u32 unk5C;
     /*0x60*/ u32 unk60;
-    /*0x64*/ u32 unk64;
-    /*0x68*/ u32 unk68;
-    /*0x6C*/ u32 unk6C;
+    /*0x64*/ struct ActorTail unk64;
 };
 
 /* One entry of the actor animation script Actor.unk2C walks (0x080640FC).

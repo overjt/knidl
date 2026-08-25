@@ -49,6 +49,11 @@ extern u16 gUnk_03001EA4;
 extern s32 gUnk_0873DF14[];
 extern struct Actor gUnk_0200C320[];
 extern struct PlayerState gUnk_03002170[];
+extern u32 gUnk_0873F198[];
+extern u32 gUnk_0873F23C[];
+extern u32 gUnk_0873F264[];
+extern u32 gUnk_0873F288[];
+extern u32 gUnk_0873F2A0[];
 extern void sub_0800a04c(s32 a, u32 b);
 extern s32 sub_08021a40(s16 x, s16 y);
 
@@ -93,6 +98,8 @@ s32 sub_08064d34(u32 type, u8 keepPrio);
 s32 sub_08064d9c(u32 sub, u32 type, int p2Arg, int xArg, int yArg, int prioArg,
                  int altArg);
 s32 sub_08064e5c(u32 sub, u32 type, u8 p2);
+s32 sub_08064f28(u8 cls, u32 sub, u32 type, u8 p3, u8 p4, int x, int y,
+                 u16 prio);
 
 s32 sub_08063698(u32 type, s32 start)
 {
@@ -1559,5 +1566,101 @@ s32 sub_08064eb8(u8 p2)
         a->unk00 = p->unk0D;
     }
     sub_08064d34(166, 0);
+    return i;
+}
+
+/* Generic task spawn: every field of the new task comes from an argument. */
+s32 sub_08064f28(u8 cls, u32 sub, u32 type, u8 p3, u8 p4, int x, int y,
+                 u16 prio)
+{
+    struct Task *t;
+    s32 i;
+
+    i = sub_08063698(type, 32);
+    if (i != -1)
+    {
+        t = &gUnk_03002790[i];
+        t->unk72 = cls;
+        t->unk76 = sub;
+        t->unk73 = p3;
+        t->unk74 = p4;
+        t->unk48 = x;
+        t->unk4A = y;
+        t->unk4C = x << 16;
+        t->unk50 = y << 16;
+        t->unk40 = prio;
+        t->unk8C = &gUnk_0200C320[i];
+        sub_080636e4(i);
+    }
+    return i;
+}
+
+/* Pick the task type for `cls` out of one of five ROM tables. */
+/* Pick the task type for `cls` out of one of five ROM tables. */
+s32 sub_08064fc4(u8 cls, u32 sub, u8 p3, u8 p4, int x, int y, u16 prio)
+{
+    u32 type;
+
+    switch (cls)
+    {
+    case 0:
+        type = gUnk_0873F198[sub];
+        break;
+    case 1:
+    case 3:
+        type = gUnk_0873F23C[sub];
+        break;
+    case 2:
+        type = gUnk_0873F264[sub];
+        break;
+    case 5:
+        type = gUnk_0873F288[sub];
+        break;
+    case 6:
+        type = gUnk_0873F2A0[sub];
+        break;
+    default:
+        while (1)
+            ;
+    }
+    return sub_08064f28(cls, sub, type, p3, p4, x, y, prio);
+}
+
+/* Clone the running task's class/sub into a fresh task. */
+s32 sub_0806505c(u8 p3, u8 p4, u32 x, u32 y, u16 prio)
+{
+    struct Task *t;
+    struct Task *u;
+    struct Actor *a;
+    struct Actor *b;
+    s32 i;
+
+    t = gUnk_03002490;
+    a = t->unk8C;
+    i = sub_08064f28(t->unk72, t->unk76, gUnk_03004CA0[gCurTaskIdx], p3, p4,
+                     x, y, prio);
+    if (i != -1)
+    {
+        u = &gUnk_03002790[i];
+        b = u->unk8C;
+        u->unk44 = gCurTaskIdx;
+        b->unk64 = a->unk64;
+    }
+    return i;
+}
+
+s32 sub_08065100(s16 x, s16 y, u32 p2, u8 p3, u8 p4)
+{
+    struct Task *t;
+    s32 i;
+
+    i = sub_08064f28(0, 40, 48, 0, 0, x, y, 0);
+    if (i != -1)
+    {
+        t = &gUnk_03002790[i];
+        t->unk7C = p3;
+        t->unk82 = p4;
+        t->unk7E = p2;
+    }
     return i;
 }
