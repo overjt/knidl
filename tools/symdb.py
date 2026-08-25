@@ -278,7 +278,15 @@ KNOWN_SYMBOLS = {
 # "rom-pointer" reference (word 0x080CFCFD at 0x086DA494) sits inside the
 # m4a_songs data segment surrounded by signed 8-bit PCM sample bytes; the
 # `pop {pc}` halfword passes the strict terminator check by accident.
-FALSE_POSITIVES = {0x080CFCFC}
+FALSE_POSITIVES = {
+    0x080CFCFC,
+    # 0x0800315E is literal-pool data inside sub_08003110, not a function
+    # (issue #32): the mask word 0xFFFFF7FF at 0x0800315C has a low half that
+    # decodes as a `bl`, which fooled the bl-target heuristic.  sub_08003110
+    # really runs 0x08003110-0x08003184 and 0x08003164 is a branch target
+    # inside it.
+    0x0800315E,
+}
 
 # Curated Thumb entries with NO in-ROM reference (issue #31): dead m4a SDK
 # exports.  The m4a driver was linked as whole objects, so public functions
@@ -298,6 +306,24 @@ EXTRA_THUMB_ENTRIES = {
     0x080CF664,  # m4aMPlayPanpotControl
     0x080CF6EC,  # m4aMPlayModDepthSet
     0x080CF760,  # m4aMPlayLFOSpeedSet
+
+    # game_code_early dead exports (issue #32).  Same whole-object-linking
+    # cause as the m4a ones above, but in game code: each sits INSIDE the
+    # census size of its predecessor, so without these entries symbols.csv
+    # reports one oversized function where the ROM has two.  Every address
+    # was confirmed by decompiling the range and byte-matching it.
+    0x08001460,  # SetHBlankHandler   (inside sub_080013f8's 0x90)
+    0x080014BC,  # SetVCountHandler   (inside sub_08001488's 0x60)
+    0x0800151C,  # forced-blank on    (inside sub_08001518's 0x64)
+    0x08001560,  # forced-blank off   (inside sub_08001518's 0x64)
+    0x08002104,  # fade variant       (inside sub_080020b8's 0x94)
+    0x08002220,  # fade variant       (inside sub_080021dc's 0x8C)
+    0x08002358,  # debug-code writer  (inside sub_08002348's 0x30)
+    0x080030B8,  # scalar colour blend(inside sub_08003014's 0xFC)
+    0x080034A0,  # SE stop helper     (inside sub_08003484's 0x4C)
+    0x080034B8,  # SE stop helper     (inside sub_08003484's 0x4C)
+    0x080036B8,  # BGM fade-in helper (inside sub_08003688's 0xC4)
+    0x080037A4,  # SE volume setter   (inside sub_08003770's 0x88)
 }
 
 EVIDENCE_KINDS = ("bl-target", "rom-pointer", "prologue-scan", "curated")

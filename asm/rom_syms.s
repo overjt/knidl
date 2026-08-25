@@ -4,8 +4,6 @@
 @ so generated files can reference not-yet-split code symbolically
 @ (e.g. `.word sub_08001518+1' or `bl __divsi3').
 
-	.global	sub_08000700
-sub_08000700 = 0x08000700
 
 @ Named non-ROM cells (tools/split_config.json "data_symbols"),
 @ referenced symbolically from split literal pools / data words:
