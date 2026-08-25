@@ -72,6 +72,10 @@ $(BUILD_DIR)/src/early_3110.o: CFLAGS := -O2 -mthumb-interwork
 $(BUILD_DIR)/src/early_3484.o: CC := old_agbcc
 $(BUILD_DIR)/src/early_3484.o: CFLAGS := -O2 -mthumb-interwork
 
+# SIO multi-play / MultiBoot link driver, 0x08003964-0x08004000 (issue #32).
+$(BUILD_DIR)/src/early_3964.o: CC := old_agbcc
+$(BUILD_DIR)/src/early_3964.o: CFLAGS := -O2 -mthumb-interwork
+
 # All of asm/ is assembled into the ROM: hand-written files (rom_header.s,
 # crt0.s), split-generated segment files (asm/<segment>.s, see tools/
 # split.py / docs/splitting.md), chunked code segments (issue #25:

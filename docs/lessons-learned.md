@@ -424,7 +424,9 @@ destination is a *register* rather than memory, the scratch/dest pair only
 stays distinct if the value really lives in a HImode pseudo — and a plain `u16`
 local does not, because `PROMOTE_MODE` widens it to SImode and you get one bare
 `ldr`. Reproduce it with `register u16 v asm("rN");` (the idiom `FadeOutBody`
-in `src/m4a_c1.c` already uses). **Diagnostic sign: the ROM burns an extra
+in `src/m4a_c1.c` already uses). **This is an `agbcc` property — see 3.47:
+under `old_agbcc` a plain `u16`/`s16` local is already HImode and the
+`register asm` idiom is unnecessary.** **Diagnostic sign: the ROM burns an extra
 callee-saved register that is written once and never read** — that "dead"
 register is the movhi scratch, and it is what drags the extra push/pop into the
 prologue. In `sub_08000de4` this one root cause explained all three apparent
@@ -657,6 +659,47 @@ does it. Making the load volatile does NOT (it only reorders the copy after the
 `ldrb`), and neither does splitting the statement, caching in a local, swapping
 the written operand order, De Morgan, or type juggling — all compile
 byte-identically.
+
+### 3.47 HImode locals differ by RECIPE — scope 3.24 before applying it
+Under `old_agbcc`, `s16 v; v = -1;` pool-loads `0xFFFF` (a real HImode local),
+while `s32 v; v = -1;` emits `movs #1; negs`. So in the old_agbcc units a plain
+`u16`/`s16` local is HImode already and the `register u16 x asm("rN")` idiom of
+3.24 is NOT needed. Under `agbcc`, `PROMOTE_MODE` widens the same local to
+SImode and the idiom IS needed. Establish your range's recipe (3.18) before
+reaching for either.
+
+### 3.48 A volatile local defeats zero-constant CSE across a call
+`u16 zero = 0; CpuSet(&zero, …); z = 0;` merges both zeros into one pseudo that
+lives across the call, costing an extra callee-saved register in the prologue.
+Declaring the fill source `vu16 zero;` (or storing through `u16 *p = &zero`)
+gives the ROM's two independent `movs rX,#0` and drops the extra push.
+Extends 3.10.
+
+### 3.49 Volatile pins instruction ORDER, not just re-reads
+For `(field & K)` in a condition, old_agbcc ALWAYS emits `movs rK` before the
+`ldrb` — unless the field is volatile, in which case the load comes first.
+Making two `MultiBootParam` byte fields `vu8` fixed 22 differing bytes across
+three sites and was the last blocker in that function. Corollary: a
+NON-volatile byte field read three times gives one CSE'd `ldrb` plus one shared
+`lsls #24` zero-extension (`(x>>1)&1`, `(x>>2)&1`, `(x>>3)&1`); copying it into
+a local instead makes the extension disappear.
+
+### 3.50 The OR quirk: one constant stored to several bytes
+Storing the SAME QImode constant to two or more different byte fields compiles
+to `ldrb rT; orrs rT,rK; strb rT` per store, not a plain `strb`. Different
+constants (e.g. `0xFF` vs a register-held `-1`) give plain `strb`s. So **a run
+of plain `strb`s of one value in the ROM proves the source used a VARIABLE**,
+not a repeated literal.
+
+### 3.51 Cross-jumping needs the same hard register, so the same VARIABLE
+Two identical tails only merge into the ROM's single `b` when both are written
+in terms of one shared local. Writing the same statements with two different
+locals leaves both tails emitted in full.
+
+### 3.52 Two dense cases are a real `switch`
+`if (x == 0) … else if (x == 0xD1)` gives an inverted-branch fallthrough; the
+ROM's `beq case1; cmp K2; beq case2; b default` only comes from a `switch`.
+Complements 3.25/3.42, which cover when a switch will NOT match.
 
 ## 4. Splitting ROM ranges into asm (tools/split.py)
 
