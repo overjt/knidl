@@ -630,6 +630,34 @@ also stored in the bodies; that hidden extra reference is what pushed a constant
 over loop.c's `combine_movables` hoist threshold
 (`threshold * savings * lifetime` vs `insn_count`) in another function.
 
+### 3.43 A negative constant in a 16-bit cell needs a SIGNED destination
+`gCell = -999` with `extern vu16` folds to `0x0000FC19` at compile time; the ROM
+pools the full word `0xFFFFFC19`. Only `extern vs16` keeps it. The same
+declaration is what turns the READ into the ROM's `ldrh` + `lsls #16` + `asrs
+#16` rather than a narrowed `ldrsh` — a volatile `s16` sign-extends explicitly,
+it does not use `ldrsh`. Corollary of 3.24/3.27.
+
+### 3.44 Two range guards must stay two `if` statements
+`if (a > K) return; if (a < 0) return;` written as `if (a > K || a < 0)` lets
+fold collapse the pair into one unsigned `(u32)a > K` compare, and BOTH of the
+ROM's compares vanish.
+
+### 3.45 A bound materialised before the value it bounds is a local variable
+`if ((u32)(x - 100) > 478)` always emits the subtraction first. When the ROM
+loads the bound first, the source held it in a local:
+`limit = 478; if ((u32)(id = x - 100) > limit)`. Read the ROM per function —
+in the same batch one function needed this and another needed the plain literal.
+
+### 3.46 `MEM & reg` puts the load first only if the load has a SECOND reference
+agbcc swaps the operands (a MEM cannot be the two-address target) and emits
+`mov tmp,reg` / `ldrb val` / `and tmp,val` — three insns. The ROM's two-insn
+`ldrb rX,[rY,#N]; ands rX,rZ` only appears when the loaded pseudo has another
+reference, so combine cannot fold the load into the AND. An intervening call
+does it. Making the load volatile does NOT (it only reorders the copy after the
+`ldrb`), and neither does splitting the statement, caching in a local, swapping
+the written operand order, De Morgan, or type juggling — all compile
+byte-identically.
+
 ## 4. Splitting ROM ranges into asm (tools/split.py)
 
 ### 4.1 objdump text only round-trips under `.syntax unified`

@@ -63,6 +63,15 @@ $(BUILD_DIR)/src/early_2b04.o: CFLAGS := -O2 -mthumb-interwork
 # the old_agbcc unit does not run contiguously through the zone.  Verified
 # byte-exact with tools/fnmatch.sh and no flag.
 
+# Sound/SE subsystem, 0x08003110-0x08003888 (issue #32): old_agbcc -O2 again.
+# Fingerprint: sub_08003194 / sub_0800374c / sub_080037f8 / sub_0800381c are
+# leaves ending in a bare `bx lr`; under the default recipe sub_08003194 is 19
+# bytes off with an extra push/pop.
+$(BUILD_DIR)/src/early_3110.o: CC := old_agbcc
+$(BUILD_DIR)/src/early_3110.o: CFLAGS := -O2 -mthumb-interwork
+$(BUILD_DIR)/src/early_3484.o: CC := old_agbcc
+$(BUILD_DIR)/src/early_3484.o: CFLAGS := -O2 -mthumb-interwork
+
 # All of asm/ is assembled into the ROM: hand-written files (rom_header.s,
 # crt0.s), split-generated segment files (asm/<segment>.s, see tools/
 # split.py / docs/splitting.md), chunked code segments (issue #25:
