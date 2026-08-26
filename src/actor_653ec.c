@@ -1289,7 +1289,7 @@ u16 sub_08066630(u16 a)
     t = gUnk_03002490;
     v = t->unk40;
     w = a + (v >> 12);
-    return (w << 12) | (v & 0xFFF);
+    return (w << 12) | (0xFFF & v);
 }
 
 void sub_08066658(struct AnimCmd *p)
@@ -1366,7 +1366,8 @@ void sub_08066754(void)
         v = sub_08064188(t->unk24);
     else
         v = sub_0806415c((*g)->unk24);
-    (*g)->unk24 = v;
+    t = *g;
+    t->unk24 = v;
     sub_08068f68();
     sub_08069b44();
 }
