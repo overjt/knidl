@@ -1496,13 +1496,10 @@ void sub_08066988(u32 i)
 /* Is the running task inside the camera window padded by (dx, dy)? */
 u8 sub_08066a0c(s16 dx, u16 dy)
 {
-    struct Task *t;
-
-    t = gUnk_03002490;
-    if (gUnk_03002158[0] - dx < t->unk48
-        && t->unk48 < gUnk_03002158[1] + dx
-        && gUnk_03002158[2] - (s16)dy < t->unk4A
-        && t->unk4A < gUnk_03002158[3] + (s16)dy)
+    if (gUnk_03002158[0] - dx < gUnk_03002490->unk48
+        && gUnk_03002490->unk48 < gUnk_03002158[1] + dx
+        && gUnk_03002158[2] - (s16)dy < gUnk_03002490->unk4A
+        && gUnk_03002490->unk4A < gUnk_03002158[3] + (s16)dy)
         return 1;
     return 0;
 }
@@ -1522,7 +1519,7 @@ void sub_08066a94(u8 mode)
     struct Task *t;
     struct Actor *a;
     struct TaskGfx *g;
-    struct GfxHeader *h;
+    u16 *p;
     u32 *tbl;
     u32 n;
 
@@ -1534,14 +1531,15 @@ void sub_08066a94(u8 mode)
     {
         tbl = t->unk38;
         g = (struct TaskGfx *)tbl[t->unk3C];
-        a->unk28 = (u32)(g->unk04 + 1);
-        n = *g->unk04 >> 1;
+        p = g->unk04;
+        a->unk28 = (u32)(p + 1);
+        n = *p >> 1;
     }
     else
     {
-        h = a->unk64.unk00;
-        a->unk28 = (u32)h->unk08;
-        n = h->unk00 << 4;
+        p = (u16 *)a->unk64.unk00;
+        a->unk28 = ((u32 *)p)[2];
+        n = *p << 4;
     }
     a->unk24 = n;
 }
