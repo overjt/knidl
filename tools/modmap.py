@@ -231,7 +231,7 @@ MODULE_NAMES = {
     0x0805AFAC: ("actor / effect support library B",
                  "fan-in 76+41+27+25+18 from the stage modules; TaskYieldTrampoline x1052; touches each BG shadow once"),
     0x08062584: ("struct Task field API (actor core)",
-                 "highest fan-in in the ROM (385+350+313+208+191+190...); 244 small accessors over gUnk_03002490 (current task); hot leaves 0x0806395C x825, 0x08063E14 x265"),
+                 "confirmed by #65: 244 functions over gUnk_03002490 (current task) and the 64-entry gUnk_03002790[] table - spawn/free, 16.16 position+velocity, ArcTan2 aiming, animation-script walking (struct AnimCmd), actor graphics upload, and the 116-byte per-player record gUnk_03002170[] that Task.unk88 points at; the two 0xa04/0x710 leaders are straight-line cutscene bodies"),
     0x080692FC: ("actor core part 2 + class-1 task bodies",
                  "31 task types (#140-172, 19 of class 1); 256 functions, 148 pointer-dispatched; _call_via_r0 x17; calls the Task API x137"),
     0x08070EC0: ("actor bank C (11 class-3 tasks)",

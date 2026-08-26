@@ -1358,12 +1358,14 @@ void sub_08066754(void)
 {
     struct Task **g;
     struct Task *t;
+    struct Task *u;
     s32 v;
 
+    t = gUnk_03002490;
     g = &gUnk_03002490;
-    t = *g;
-    if (t->unk72 == 2 && t->unk76 == 5)
-        v = sub_08064188(t->unk24);
+    u = t;
+    if (u->unk72 == 2 && u->unk76 == 5)
+        v = sub_08064188(u->unk24);
     else
         v = sub_0806415c((*g)->unk24);
     t = *g;

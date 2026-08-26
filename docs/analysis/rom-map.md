@@ -431,6 +431,24 @@ child issues of #35 are created from it. Findings that belong in this document:
   the `segments.txt` boundary at `0x08730000`** (starts in
   `gap_sram_driver_fn_table_asset_metadata_index`, ends inside
   `asset_metadata_index`) and deserves its own segment (companion to #36).
+- **M17 (`0x08062584-0x080692FB`) is the task/actor field API and the player
+  record.** Decompiled in #65. `gUnk_03002490` is a `struct Task *` holding the
+  currently-running task; `gUnk_03002790[]` is the 64-entry, 0x90-byte task
+  table (the `struct Task` first mapped in #32). `Task.unk88` is a context
+  pointer that for actor tasks points into **`gUnk_03002170[]`, a 116-byte
+  per-player record** (`sub_08064EB8` sets it); `Task.unk8C` points at the
+  0x70-byte `struct Actor`, and `Actor.unk44` at its ROM `struct ActorDef`.
+  Newly identified ROM tables referenced from this range:
+  `0x0873E1E8` / `0x0873E220` (s16 pairs indexed by animation frame,
+  `sub_08066DCC`); `0x0873E1F8` (4 s8 per frame - x offset, y offset, a flag,
+  and the value stored into `Task.unk42`; `sub_080675E4`); `0x0873E3C8` (5 u16
+  per state, indexed by `(Task.unk3C - 30) * 5` - x offset, y offset, facing
+  multiplier, animation id and `Task.unk42`; `sub_08067DB0`); `0x08752BA8` (the
+  `Task.unk38` graphics-descriptor table, one `struct TaskGfx *` per frame); and
+  the 26-entry jump table at `0x080684D0` (switch over `PlayerState.unk0D`,
+  values 0-25, adding a per-character constant to `Task.unk3C`). `0x02007D00`
+  is a 5-word EWRAM "pending spawn" record: flag, task index (or -1), x, y,
+  facing (`sub_080685EC`, `sub_0806865C`, `sub_08068950`, `sub_08068840`).
 - **Seg 7 barely touches hardware.** Across 792 KiB its literal pools reference
   the `0x04000000` I/O block only 20 times; all display/DMA/scroll work goes
   through the early zone's IWRAM shadow cells. 3,288 of its 5,045 functions
