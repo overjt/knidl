@@ -1,6 +1,7 @@
 # Kirby: Nightmare in Dream Land
 
 [![CI](https://github.com/overjt/gba_kirby_nightmare_recomp/actions/workflows/build.yml/badge.svg)](https://github.com/overjt/gba_kirby_nightmare_recomp/actions/workflows/build.yml)
+[![decomp.dev](https://decomp.dev/badge/overjt/gba_kirby_nightmare_recomp)](https://decomp.dev/overjt/gba_kirby_nightmare_recomp)
 
 A work-in-progress **matching decompilation** of *Kirby: Nightmare in Dream Land*
 (Game Boy Advance, 2002), developed by HAL Laboratory and published by Nintendo.
@@ -98,6 +99,10 @@ If the baserom's SHA-1 does not match `37a476567d133c146fee6b5e2eb0b07a215da6b0`
 or the built ROM differs from it, CI **fails closed** — a mismatch can never
 pass. When no baserom is available, the compare step is skipped explicitly and
 visibly (a notice annotation and a step summary banner).
+
+A second workflow (`.github/workflows/report.yml`) generates the objdiff-schema
+progress report and publishes it as the `A7KE_report` artifact for
+[decomp.dev](https://decomp.dev) — see [docs/decomp-dev.md](docs/decomp-dev.md).
 
 ## Disclaimer
 

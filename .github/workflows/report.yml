@@ -1,0 +1,92 @@
+name: Progress report
+
+# Generates the objdiff-schema progress report (report.json) consumed by
+# decomp.dev and uploads it as the `A7KE_report` artifact — the exact name
+# decomp.dev's workflow-run downloader looks for (file stem inside the
+# artifact may be `report.json`; the artifact name is what matters).
+#
+# Requires no baserom: the report derives from the repo's own ground truth
+# (docs/analysis/segments.txt, symbols.csv, module-map.csv, linker.ld),
+# all of which are byte-verified on every `make compare` run in build.yml.
+
+on:
+  push:
+    branches:
+      - master
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: report-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  report:
+    name: Generate decomp.dev progress report
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+
+      - name: Generate report.json
+        run: |
+          set -euxo pipefail
+          python3 -m py_compile tools/gen_report.py
+          python3 tools/gen_report.py --check
+          python3 tools/gen_report.py
+
+      - name: Validate report.json (objdiff schema v2)
+        run: |
+          set -euxo pipefail
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+
+          report = json.loads(Path("report.json").read_text(encoding="utf-8"))
+
+          assert report.get("version") == 2
+          assert isinstance(report.get("measures"), dict)
+          assert isinstance(report.get("units"), list)
+          assert isinstance(report.get("categories"), list)
+
+          measures = report["measures"]
+          required = (
+              "total_code", "matched_code", "matched_code_percent",
+              "total_functions", "matched_functions", "matched_functions_percent",
+              "complete_code", "total_units", "complete_units",
+              "fuzzy_match_percent",
+          )
+          for key in required:
+              assert key in measures, f"missing measure: {key}"
+
+          assert measures["total_code"] >= measures["matched_code"]
+          assert measures["total_functions"] >= measures["matched_functions"]
+          assert measures["total_units"] == len(report["units"])
+
+          for unit in report["units"]:
+              um = unit["measures"]
+              assert um["total_code"] >= um["matched_code"], unit["name"]
+              for fn in unit["functions"]:
+                  assert fn["size"] >= 0 and 0.0 <= fn["fuzzy_match_percent"] <= 100.0
+
+          print("report version :", report["version"])
+          print("units          :", measures["total_units"])
+          print("functions      :", measures["matched_functions"], "/", measures["total_functions"])
+          print("code bytes     :", measures["matched_code"], "/", measures["total_code"])
+          PY
+
+      - name: Upload decomp.dev report artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: A7KE_report
+          path: report.json
+          if-no-files-found: error
+          retention-days: 90
+          compression-level: 9

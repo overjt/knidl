@@ -86,7 +86,7 @@ ALL_OBJS  := $(ASM_OBJS) $(DATA_OBJS) $(SRC_OBJS)
 
 ELF := $(BUILD_DIR)/$(ROM:.gba=.elf)
 
-.PHONY: all compare check-headers progress symbols split modmap clean
+.PHONY: all compare check-headers progress report symbols split modmap clean
 
 all: $(ROM)
 
@@ -141,6 +141,12 @@ compare: $(ROM)
 progress: $(ELF)
 	perl tools/calcrom.pl $(BUILD_DIR)/knidl.map
 
+# objdiff-schema progress report (report.json) for decomp.dev — derived
+# from the repo's own ground truth (segments.txt / symbols.csv /
+# module-map.csv), no baserom needed.  CI uploads the artifact.
+report:
+	python3 tools/gen_report.py
+
 # ROM-wide function/symbol database (issue #22): regenerate
 # docs/analysis/symbols.csv + callgraph.csv from baserom.gba and validate
 # them (coverage + spot checks against a fresh dual-view disassembly).
@@ -185,6 +191,11 @@ check-headers: image
 
 progress: image
 	$(DOCKER_RUN) make progress INSIDE_DOCKER=1
+
+# report.json generation only needs Python + the repo's ground-truth CSVs,
+# so it runs directly on the host (no toolchain image required).
+report:
+	python3 tools/gen_report.py
 
 symbols: image
 	$(DOCKER_RUN) make symbols INSIDE_DOCKER=1
