@@ -1,7 +1,7 @@
 # Kirby: Nightmare in Dream Land
 
 [![CI](https://github.com/overjt/knidl/actions/workflows/build.yml/badge.svg)](https://github.com/overjt/knidl/actions/workflows/build.yml)
-[![decomp.dev](https://decomp.dev/badge/overjt/knidl)](https://decomp.dev/overjt/knidl)
+[![decomp.dev](https://decomp.dev/overjt/knidl?mode=shield)](https://decomp.dev/overjt/knidl)
 
 A work-in-progress **matching decompilation** of *Kirby: Nightmare in Dream Land*
 (Game Boy Advance, 2002), developed by HAL Laboratory and published by Nintendo.

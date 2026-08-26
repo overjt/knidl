@@ -54,7 +54,7 @@ docs/analysis/module-map.csv─┘            │
 3. **Version**: the artifact is named after the game code (`A7KE`), which
    becomes the report "version" tab on the project page.
 4. The badge in the README starts rendering as soon as the first report
-   is ingested: `https://decomp.dev/badge/<owner>/<repo>`.
+   is ingested: `https://decomp.dev/<owner>/<repo>?mode=shield`.
 
 ## Local use
 
