@@ -1356,20 +1356,13 @@ u32 sub_08066718(void)
 
 void sub_08066754(void)
 {
-    struct Task **g;
     struct Task *t;
-    struct Task *u;
-    s32 v;
 
     t = gUnk_03002490;
-    g = &gUnk_03002490;
-    u = t;
-    if (u->unk72 == 2 && u->unk76 == 5)
-        v = sub_08064188(u->unk24);
+    if (t->unk72 == 2 && t->unk76 == 5)
+        gUnk_03002490->unk24 = sub_08064188(t->unk24);
     else
-        v = sub_0806415c((*g)->unk24);
-    t = *g;
-    t->unk24 = v;
+        gUnk_03002490->unk24 = sub_0806415c(gUnk_03002490->unk24);
     sub_08068f68();
     sub_08069b44();
 }
@@ -1784,7 +1777,8 @@ void sub_08066e88(u8 a)
         u->unk28 = a;
         if (gUnk_02006178 == 1)
         {
-            gUnk_03002490->unk8C->unk0D = 1;
+            t = gUnk_03002490;
+            t->unk8C->unk0D = 1;
             u->unk73 = 3;
             u->unk0C = (u32)sub_0806523c;
             u->unk42 = 11;
