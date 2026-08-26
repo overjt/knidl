@@ -1486,6 +1486,7 @@ void sub_08069234(u8 a)
 {
     struct Task *t;
     struct Actor *b;
+    struct Task *u;
 
     t = gUnk_03002490;
     b = t->unk8C;
@@ -1505,6 +1506,7 @@ void sub_08069234(u8 a)
         }
         b->unk06 = gUnk_030023A4;
         b->unk07 = gUnk_030023D0;
-        b->unk0E = gUnk_03002790[gUnk_03002490->unk7E].unk44;
+        u = &gUnk_03002790[gUnk_03002490->unk7E];
+        b->unk0E = u->unk44;
     }
 }
