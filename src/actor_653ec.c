@@ -1108,6 +1108,7 @@ u8 sub_08066338(void)
     s32 n;
     s32 m;
     s32 i;
+    struct Task *t;
 
     n = 0;
     m = 0;
@@ -1116,7 +1117,8 @@ u8 sub_08066338(void)
         if ((gUnk_03002340 >> i) & 1)
         {
             n++;
-            if (gUnk_03002790[i].unk7A == 1)
+            t = &gUnk_03002790[i];
+            if (t->unk7A == 1)
                 m++;
         }
     }
