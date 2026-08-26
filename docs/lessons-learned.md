@@ -1054,6 +1054,99 @@ the ROM exactly. Do not "clean up" such a compare; it is load-bearing. (It is
 probably a bug in the original source — a session-id compare that got the wrong
 operand — which is exactly the kind of thing a matching decomp preserves.)
 
+### 3.94 `pop {r1}; bx r1` in the epilogue means the function RETURNS a value
+A void agbcc function pops the return address into the first free register,
+which is `r0`; a function whose result is live-out pops into `r1` instead. When
+the epilogue reads `pop {r4}; pop {r1}; bx r1` but the body never sets `r0`, the
+original prototype was non-void with no `return` statement — declaring it
+`s32 f(void)` reserves `r0`, which shifts the whole allocation up one register
+and adds the prologue/epilogue. That single change turned `sub_080684A4`
+(a 26-case switch) from an 8-byte mismatch into a byte-match; nothing else about
+the body changed.
+
+### 3.95 Count the callee's argument registers before writing the call
+`sub_0800A340` starts `adds r3, r0, #0; adds r4, r1, #0` — it reads TWO argument
+registers. Its caller's `ldrsh r1, [r0, r2]; adds r0, r1, #0` is therefore not a
+stray reload-copy but `f(v, v)`: the load lands in the second argument register
+and is copied into the first. Reading the callee's prologue is much cheaper than
+hunting for a source shape that reproduces a "spurious" copy — that copy is an
+argument.
+
+### 3.96 A `(u16)` cast on a multiplicand feeding a 16-bit store is free but re-allocates
+`t->unk48 = u->unk48 + u->unk43 * tbl[i];` (`unk43` an `s8`, `unk48` an `s16`)
+emits `muls` in place. The ROM had `adds r7, r0, #0; muls r7, r1; adds r0, r7, #0`
+— the product in a callee-saved register with copies in and out. Writing
+`(u16)u->unk43 * tbl[i]` reproduces it exactly: the zero-extension is dead
+(only the low 16 bits reach the `strh`, and `(u16)x * y == x * y` mod 2^16), so
+gcc emits no masking, but the RTL is a different expression and the product gets
+its own pseudo. Same bytes, same behaviour; try it whenever a multiply is short
+by exactly the two copies.
+
+### 3.97 One local per re-read of a global pointer
+`t = gUnk_03002490;` twice in a function is ONE pseudo whose live range spans
+both uses, so gcc keeps it in a register across the second statement and pays a
+copy (`adds r1, r2, #0`) whenever the ROM instead mutates the pointer in place
+(`adds r1, #66`). Give every re-read its own local (`t`, `u`, `v`, `w`, `x`) and
+the copies disappear. Conversely, when the ROM does keep a copy, merge the
+locals — `sub_080665A0` needed ONE `s16` shared by both arms of an `if/else` so
+the value pseudo spans the branch.
+
+### 3.98 Re-read the global in the loop condition, not at the loop bottom
+```c
+while (gUnk_03002790[gUnk_03002490->unk44].unk3C == 34)
+    TaskYieldTrampoline(1);
+```
+matches; the same loop written with `t = gUnk_03002490;` as the last statement of
+the body does not — `t` is then live across the yield call, so it gets a
+callee-saved register and the whole function's allocation shifts. gcc CSEs the
+first iteration's read with the preceding statement anyway, so the inline form
+still emits the ROM's single pre-loop load.
+
+### 3.99 The destination address is loaded FIRST in a global-to-global store
+`gUnk_03002358 = t->unk48;` with `t` already in a local emits the task load
+first. The ROM loads the destination's pool word first, then the task. Writing
+the first store as `gUnk_03002358 = gUnk_03002490->unk48;` and only then taking
+`t = gUnk_03002490;` for the rest of the block reproduces it (gcc CSEs the second
+read). Applies to every run of "copy N task fields into N globals".
+
+### 3.100 Computed 16-bit call arguments belong in `s16` locals
+For a 6-or-7 argument call, `f(a, b, c, 0, (s16)(x + y), (s16)(p + q))` evaluates
+the casts late and interleaves them with the register arguments. Assigning
+`s16 x = ...; s16 y = ...;` before the call reproduces the ROM's order (stack
+arguments computed first, then `r0`-`r3`). Two functions in M17 (`sub_08066C74`,
+`sub_08066E88`) needed exactly this.
+
+### 3.101 `ldrsb` vs `ldrb` + `lsls #24`/`asrs #24` is register pressure, not syntax
+Both read the same `s8` field. `ldrsb rd, [rn, rm]` needs a spare register for
+the zero index; when none is free gcc falls back to `ldrb` plus a shift pair.
+The same field in the same file compiles to both forms depending on what else is
+live, so do NOT rewrite the field access to chase the opcode — fix the
+surrounding allocation instead.
+
+### 3.102 Give a subexpression shared by two switch arms its own local
+`gUnk_0873E1E8[i * 2]` / `[i * 2 + 1]` in two arms of a switch left `i * 2`
+recomputed inside the (cross-jumped) shared arm; the ROM had it hoisted above the
+switch (`lsls r5, r0, #1`). Adding `j = i * 2;` before the switch and indexing
+`[i * 2]` / `[j + 1]` reproduces the hoist and keeps `i` live for the strength-
+reduced first index (`lsls r0, r0, #2`).
+
+### 3.103 An extra pointer local can flip a whole function's register assignment
+`if (gUnk_03002790[i].unk7A == 1)` and `t = &gUnk_03002790[i]; if (t->unk7A == 1)`
+are the same code, but only the second reproduced the ROM's loop-invariant hoist
+order in `sub_08066338`. When a function differs from the ROM by a consistent
+register permutation and nothing else, adding (or removing) one user variable is
+the cheapest lever — cheaper than the permuter, which failed on several of these.
+
+### 3.104 Case labels are emitted in source order
+A 4-arm switch whose blocks appear in the ROM as `case 0`'s body before
+`case 9`'s must be written with `case 0:` first, even though the jump table is
+index-ordered either way. Read the block order off the ROM, not the table.
+
+### 3.105 agbcc rejects declarations in a nested block
+`else { struct Task *u; ... }` produces `syntax error at end of input` reported
+against a LATER function, which is very hard to read. Declare every local at the
+top of the function body.
+
 ## 4. Splitting ROM ranges into asm (tools/split.py)
 
 ### 4.1 objdump text only round-trips under `.syntax unified`
@@ -1289,6 +1382,32 @@ OrbStack`, then confirm with `docker image inspect knidl-builder` and a real
 regenerable and committed work is untouched — but re-verify the build rather
 than assuming, and do not diagnose the stalled agents individually until the
 daemon answers.
+
+### 4.25 Carving a range re-cuts every later chunk — `split.py` needs a raw-halfword escape
+After `tools/carve.py` shortened `game_code_and_rodata_080653ec`, `make split`
+died with `KeyError: ..._06` ("unplaceable `loc_` labels"): objdump had merged
+two halfwords into one 4-byte instruction, but a cross-chunk `loc_` label had to
+sit on the SECOND halfword. `emit_func_region` now emits raw halfwords when
+`entry_size > size and self.label_pending_at(addr + 2)`, giving the label a
+boundary. Expect this every time a carve moves a chunk edge.
+
+### 4.26 fnmatch's pool-resolving diff is capped — fix from the top and re-run
+The diff stops after a fixed number of blocks, so a function that "has no diff"
+may simply be past the cap. Work top-down, re-running after each fix; the
+`candidate=N bytes, target=M bytes` header and the total differing-byte count are
+the honest progress metrics. A raw byte compare of `cand.bin` against the ROM
+over-reports instead: `bl` targets outside the carved range are unrelocated in
+the candidate, so every external call shows as a difference.
+
+### 4.27 Long straight-line task bodies are worth transcribing mechanically
+M17's two leaders (`sub_08062584` 0xA04, `sub_08062F88` 0x710) are ~230
+statements of `gUnk_03002490->unk3C = K; TaskYieldTrampoline(n);` with occasional
+6-argument calls. A ~90-line Python pass over the split asm — track constants in
+a register map, resolve pool words from the ROM, emit one C statement per store
+or call — produced both functions, and each matched on the FIRST fnmatch run.
+Write the transcriber instead of the C when a function is long, regular and
+literal-heavy; the residual `/*?? ... */` lines it cannot classify (about ten
+here) are exactly the interesting parts.
 
 ## 5. Workflow that worked
 

@@ -686,6 +686,7 @@ void sub_08068028(void)
 void sub_080680ac(void)
 {
     struct Task *t;
+    struct Task *u;
     struct PlayerState *p;
     s32 f;
 
@@ -693,9 +694,9 @@ void sub_080680ac(void)
     gUnk_03002490->unk00 = (u32)sub_0803d494;
     gUnk_03002490->unk42 = 7;
     gUnk_03002490->unk43 = -gUnk_03002790[gUnk_03002490->unk44].unk43;
-    t = gUnk_03002490;
-    t->unk4C = gUnk_03002790[t->unk44].unk48 << 16;
-    t->unk50 = (gUnk_03002790[t->unk44].unk4A - 40) << 16;
+    u = gUnk_03002490;
+    u->unk4C = gUnk_03002790[u->unk44].unk48 << 16;
+    u->unk50 = (gUnk_03002790[u->unk44].unk4A - 40) << 16;
     sub_080061c0(0x50000, 0x5A5A5A5A);
     sub_0800622c(0xFFFD8000, 0x1200, 0x30000);
     if (gUnk_03001F30 == 0)
