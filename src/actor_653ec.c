@@ -57,8 +57,8 @@ extern void sub_08066480(struct GfxHeader *h, u32 b, u32 c);
 extern u16 gUnk_03001EA4;
 extern u8 gUnk_0200AFF8;
 extern void sub_0800a280(void);
-extern void sub_0800a340(s16 a);
-extern void sub_0800a294(s16 a);
+extern void sub_0800a340(s16 a, s16 b);
+extern void sub_0800a294(s16 a, s16 b);
 extern void sub_08066754(void);
 extern void sub_080666a4(void);
 void sub_08066988(u32 i);
@@ -1249,7 +1249,7 @@ void sub_080665a0(void)
 {
     struct Task **g;
     struct Task *t;
-    s16 v;
+    s32 v;
 
     g = &gUnk_03002490;
     gUnk_0200AFF8 = 0;
@@ -1258,12 +1258,12 @@ void sub_080665a0(void)
     if (t->unk72 == 1 || (t->unk72 == 2 && t->unk76 == 7))
     {
         v = t->unk78;
-        sub_0800a340(v);
+        sub_0800a340(v, v);
     }
     else
     {
         v = gUnk_03002490->unk78;
-        sub_0800a294(v);
+        sub_0800a294(v, v);
     }
 }
 
