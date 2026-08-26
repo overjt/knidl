@@ -26,6 +26,15 @@ extern s16 gUnk_0300239C;
 extern s8 gUnk_03002140;
 extern u8 gUnk_03002460;
 extern s32 gUnk_0300236C;
+extern u8 gUnk_03002380;
+extern u8 gUnk_03002450;
+extern u16 gUnk_03002394;
+extern u8 gUnk_03002144;
+extern u8 gUnk_03002354;
+extern u8 gUnk_030023DC;
+extern u8 gUnk_03001F24;
+extern u8 gUnk_030023A4;
+extern u8 gUnk_030023D0;
 
 extern void sub_08002e98(u32 a, u32 b, u32 *c);
 extern void sub_080062e0(s32 i);
@@ -1440,4 +1449,62 @@ u32 sub_08068f68(void)
         return 0;
     sub_08069234(1);
     return 1;
+}
+u32 sub_0806914c(s32 a)
+{
+    struct Task *t;
+    struct Task *u;
+    struct Actor *b;
+
+    if (gUnk_03004CA0[gCurTaskIdx] == -1)
+        return 0;
+    t = gUnk_03002490;
+    b = t->unk8C;
+    t->unk7C = 0;
+    if (a == 0)
+        return 0;
+    gUnk_03002358 = gUnk_03002490->unk48;
+    u = gUnk_03002490;
+    gUnk_0300214C = u->unk4A;
+    gUnk_03002368 = u->unk78;
+    gUnk_03002390 = u->unk7E;
+    gUnk_03002440 = u->unk7F;
+    gUnk_030023F0 = u->unk75;
+    gUnk_0300239C = u->unk43;
+    if (b->unk60 != NULL)
+        gUnk_03002140 = b->unk60->unk00;
+    else
+        gUnk_03002140 = 30;
+    gUnk_0300236C = a;
+    sub_0801b7dc();
+    if (sub_0801a8c8() == 0)
+        return 0;
+    sub_08069234(0);
+    return 1;
+}
+void sub_08069234(u8 a)
+{
+    struct Task *t;
+    struct Actor *b;
+
+    t = gUnk_03002490;
+    b = t->unk8C;
+    t->unk7C = gUnk_03002380;
+    gUnk_03002490->unk82 = gUnk_03002450;
+    gUnk_03002490->unk78 = gUnk_03002394;
+    gUnk_03002490->unk7D = gUnk_03002144;
+    gUnk_03002490->unk75 = gUnk_03002354;
+    gUnk_03002490->unk7E = gUnk_030023DC;
+    gUnk_03002490->unk7F = gUnk_03001F24;
+    if (a != 0)
+    {
+        if ((u8)(gUnk_03002380 - 3) > 1)
+        {
+            if (b->unk05 != 2)
+                b->unk05 = 1;
+        }
+        b->unk06 = gUnk_030023A4;
+        b->unk07 = gUnk_030023D0;
+        b->unk0E = gUnk_03002790[gUnk_03002490->unk7E].unk44;
+    }
 }
