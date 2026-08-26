@@ -1598,17 +1598,16 @@ void sub_08066b70(void)
 
     t = gUnk_03002490;
     a = t->unk8C;
-    if (a->unk1A == -1)
+    if (a->unk1A != -1)
     {
-        sub_08063ff4();
-    }
-    else if (t->unk54 < 0)
-    {
-        t->unk1C = 9;
+        if (t->unk54 >= 0)
+            t->unk1C = 3;
+        else
+            t->unk1C = 9;
     }
     else
     {
-        t->unk1C = 3;
+        sub_08063ff4();
     }
 }
 
@@ -1617,7 +1616,7 @@ void sub_08066ba8(void)
     struct Task *t;
 
     sub_08063e14();
-    sub_08006304();
+    sub_080062c4();
     t = gUnk_03002490;
     t->unk58 = 0x8000;
     if (t->unk43 == 1)
@@ -1629,13 +1628,14 @@ void sub_08066ba8(void)
 void sub_08066bdc(void)
 {
     struct Task *t;
+    struct Task *u;
 
     t = gUnk_03002490;
     t->unk1C = t->unk1C + 1;
     if (t->unk1C > 11)
         t->unk1C = 0;
-    t = gUnk_03002490;
-    t->unk54 = gUnk_0873E1B8[t->unk1C];
+    u = gUnk_03002490;
+    u->unk54 = gUnk_0873E1B8[u->unk1C];
 }
 
 void sub_08066c08(u32 def, u8 b)
