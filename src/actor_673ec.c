@@ -75,7 +75,7 @@ extern void sub_08068840(void);
 extern void sub_0806865c(s32 i);
 extern void sub_0806896c(void);
 extern void sub_08006338(s32 a);
-extern void sub_080684a4(void);
+extern s32 sub_080684a4(void);
 extern void TaskYieldTrampoline(u32 a);
 extern u16 gUnk_03001EA4;
 extern s32 sub_08068a2c(s32 a, s32 b);
@@ -845,7 +845,7 @@ void sub_08068460(void)
     if (gUnk_03002490->unk34 != 0)
         sub_0806865c(gCurTaskIdx);
 }
-void sub_080684a4(void)
+s32 sub_080684a4(void)
 {
     s32 d;
 
