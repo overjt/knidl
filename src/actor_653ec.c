@@ -1550,7 +1550,6 @@ void sub_08066ae0(void)
 {
     struct Task *t;
     struct Actor *a;
-    u8 v;
 
     t = gUnk_03002490;
     a = t->unk8C;
@@ -1559,20 +1558,19 @@ void sub_08066ae0(void)
         switch (gUnk_03002350)
         {
         case 2:
-            v = 13;
+            a->unk02 = 13;
             break;
         case 3:
-            v = 16;
+            a->unk02 = 16;
             break;
         case 4:
-            v = 18;
+            a->unk02 = 18;
             break;
         case 1:
         default:
-            v = 10;
+            a->unk02 = 10;
             break;
         }
-        a->unk02 = v;
         gUnk_03002490->unk73 = 0;
     }
     sub_080637cc();
