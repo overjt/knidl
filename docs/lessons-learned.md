@@ -1383,6 +1383,39 @@ regenerable and committed work is untouched — but re-verify the build rather
 than assuming, and do not diagnose the stalled agents individually until the
 daemon answers.
 
+### 3.106 To land a commutative result in the CONSTANT's register, fold into a variable
+`return r | (v & 0xFFF);` ties the `and`'s destination to `v`'s register
+(`ands r2, r1`). The ROM had `ands r1, r2` — destination = the pooled constant's
+register. Giving the mask its own variable and folding into it reproduces it:
+```c
+u32 m;
+m = 0xFFF;
+m &= v;
+return r | m;
+```
+The constant's reload temp then IS the result pseudo, so no copy is needed and
+the operands land ROM-side-up. Applies to any commutative operator whose ROM
+destination is the constant side. (decomp-permuter found this after a dozen hand
+variants failed — "assign the constant to a temp and compound-assign into it" is
+the class of rewrite it is much better at than a human.)
+
+### 3.107 Prefer repeating the global over a `T **g` local
+A `struct Task **g = &gUnk_03002490;` local makes the address a *user* pseudo,
+which the allocator treats differently from the compiler-generated CSE temp the
+ROM has. `sub_08066754` only matched once `g` was deleted and
+`gUnk_03002490->unk24` was simply written out in each arm — gcc then CSEs the
+address itself, keeps it in a callee-saved register across the calls, and emits
+the ROM's `adds r4, r1, #0` split. Reach for the `**g` idiom only when the plain
+form is short by exactly a pool reload (it is still what `sub_080665A0` needs).
+
+### 3.108 A per-case store beats a shared result variable when the ROM cross-jumps
+`switch (...) { case 2: v = 13; break; ... } a->unk02 = v;` gives the shared
+variable a hard register across the whole switch. Writing `a->unk02 = 13;` in
+each arm lets gcc cross-jump the stores itself and reproduces the ROM's register
+assignment (`sub_08066AE0`). The reverse is also true — `sub_080665A0` needed one
+`s16` shared by both arms — so read the ROM: a value materialised per-arm into
+the *same* register means one variable; a store repeated per-arm means several.
+
 ### 4.25 Carving a range re-cuts every later chunk — `split.py` needs a raw-halfword escape
 After `tools/carve.py` shortened `game_code_and_rodata_080653ec`, `make split`
 died with `KeyError: ..._06` ("unplaceable `loc_` labels"): objdump had merged
