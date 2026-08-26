@@ -1285,11 +1285,13 @@ u16 sub_08066630(u16 a)
     struct Task *t;
     u16 v;
     u16 w;
+    u32 r;
 
     t = gUnk_03002490;
     v = t->unk40;
     w = a + (v >> 12);
-    return (w << 12) | (0xFFF & v);
+    r = w << 12;
+    return r | (v & 0xFFF);
 }
 
 void sub_08066658(struct AnimCmd *p)
@@ -1770,15 +1772,15 @@ void sub_08066e88(u8 a)
     if (i != -1)
     {
         u = &gUnk_03002790[i];
-        v = gUnk_03002490->unk7F;
+        t = gUnk_03002490;
+        v = t->unk7F;
         if (v == -1)
             v = sub_08063b38();
         u->unk1C = v;
         u->unk28 = a;
         if (gUnk_02006178 == 1)
         {
-            t = gUnk_03002490;
-            t->unk8C->unk0D = 1;
+            gUnk_03002490->unk8C->unk0D = 1;
             u->unk73 = 3;
             u->unk0C = (u32)sub_0806523c;
             u->unk42 = 11;
