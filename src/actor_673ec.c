@@ -584,7 +584,7 @@ void sub_08067db0(void)
         i += 150;
     }
     t = gUnk_03002490;
-    t->unk48 = u->unk48 + u->unk43 * gUnk_0873E3C8[i];
+    t->unk48 = u->unk48 + (u16)u->unk43 * gUnk_0873E3C8[i];
     t->unk4A = u->unk4A + gUnk_0873E3C8[i + 1];
     t->unk4C = t->unk48 << 16;
     t->unk50 = t->unk4A << 16;

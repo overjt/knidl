@@ -1762,15 +1762,18 @@ void sub_08066e88(u8 a)
     s32 i;
     u8 kind;
     s32 v;
+    s16 x;
+    s16 y;
 
-    kind = 0;
     if (gUnk_03002490->unk74 == 1)
         kind = 1;
+    else
+        kind = 0;
     sub_08066dcc();
     t = gUnk_03002490;
-    i = sub_08064fc4(0, 38, kind, 0,
-                     (s16)(t->unk48 + gUnk_030023B4),
-                     (s16)(t->unk4A + gUnk_030023D4), 0);
+    x = t->unk48 + gUnk_030023B4;
+    y = t->unk4A + gUnk_030023D4;
+    i = sub_08064fc4(0, 38, kind, 0, x, y, 0);
     if (i != -1)
     {
         u = &gUnk_03002790[i];
