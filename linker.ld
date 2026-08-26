@@ -237,6 +237,11 @@ SECTIONS
         KEEP(*(.game_code_and_rodata)) KEEP(*(.game_code_and_rodata.tail))
     } > ROM
 
+    /* actor_62584 — decompiled to C (src/actor_62584.c, carved by tools/carve.py) */
+    .actor_62584 0x08062584 : {
+        build/src/actor_62584.o(.text)
+    } > ROM
+
     /* actor_63698 — decompiled to C (src/actor_63698.c, carved by tools/carve.py) */
     .actor_63698 0x08063698 : {
         build/src/actor_63698.o(.text)
