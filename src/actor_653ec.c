@@ -1666,6 +1666,8 @@ void sub_08066c74(void)
     struct Task *u;
     struct Actor *a;
     u32 *tbl;
+    s16 x;
+    s16 y;
 
     p = gUnk_03002490;
     if (p->unk38 == NULL)
@@ -1703,9 +1705,10 @@ void sub_08066c74(void)
         }
         sub_08066dcc();
         t = gUnk_03002490;
+        x = t->unk48 - gUnk_03002348 + gUnk_030023B4;
+        y = t->unk4A - gUnk_030023E4 + gUnk_030023D4;
         sub_08001a94(t->unk42, gUnk_08752BA8[t->unk8C->unk1A], t->unk3E, 0,
-                     (s16)(gUnk_030023B4 + (t->unk48 - gUnk_03002348)),
-                     (s16)(gUnk_030023D4 + (t->unk4A - gUnk_030023E4)));
+                     x, y);
         a = gUnk_03002490->unk8C;
         a->unk16--;
     }
