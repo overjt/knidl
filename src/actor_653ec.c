@@ -1286,12 +1286,15 @@ u16 sub_08066630(u16 a)
     u16 v;
     u16 w;
     u32 r;
+    s32 m;
 
     t = gUnk_03002490;
     v = t->unk40;
     w = a + (v >> 12);
     r = w << 12;
-    return r | (v & 0xFFF);
+    m = 0xFFF;
+    m &= v;
+    return r | m;
 }
 
 void sub_08066658(struct AnimCmd *p)
