@@ -1464,7 +1464,7 @@ void sub_08066988(u32 i)
 {
     struct Task *t;
     struct Actor *a;
-    u8 *p;
+    struct PlayerState *p;
 
     t = &gUnk_03002790[i];
     a = t->unk8C;
@@ -1476,7 +1476,7 @@ void sub_08066988(u32 i)
         t->unk50 = t->unk4A << 16;
         if (a->unk04 != 1)
         {
-            if ((u8)(p[22] + 2) <= 1)
+            if ((u8)(p->unk16 + 2) <= 1)
             {
                 sub_08063f24(i);
                 return;
@@ -1906,7 +1906,7 @@ void sub_08067170(void)
 
     v = gUnk_03002490->unk73;
     if (v == 1)
-        sub_08063908(gUnk_0873F690);
+        sub_08063908((u32)gUnk_0873F690);
     else if (v >= 1 && v <= 3)
         sub_080639b4((u32)gUnk_0873F7E4);
     if (gUnk_03002490->unk43 == 0)
@@ -2012,8 +2012,8 @@ void sub_08067378(void)
 void sub_0806737c(void)
 {
     struct Task *t;
-    void **q;
-    u8 *p;
+    struct PlayerState **q;
+    struct PlayerState *p;
 
     t = gUnk_03002490;
     t->unk04 = (u32)sub_08067408;
@@ -2025,9 +2025,9 @@ void sub_0806737c(void)
     t->unk42 = 7;
     q = &gUnk_03002490->unk88;
     p = *q;
-    *(u16 *)(p + 66) &= 0xFFEF;
+    p->unk42 &= 0xFFEF;
     p = *q;
-    if (p[6] == 2)
-        p[6] = 0;
+    if (p->unk06 == 2)
+        p->unk06 = 0;
     sub_08002e98(gUnk_03002490->unk14, 11, gUnk_0873E2F0);
 }
