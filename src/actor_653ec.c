@@ -1726,18 +1726,20 @@ void sub_08066dcc(void)
 {
     struct Task *t;
     s32 i;
+    s32 j;
 
     t = gUnk_03002490;
     i = t->unk3C;
+    j = i * 2;
     switch (t->unk76)
     {
-    case 9:
-        gUnk_030023B4 = gUnk_0873E220[i * 2] * t->unk43;
-        gUnk_030023D4 = gUnk_0873E220[i * 2 + 1];
-        break;
     case 0:
         gUnk_030023B4 = gUnk_0873E1E8[i * 2] * t->unk43;
-        gUnk_030023D4 = gUnk_0873E1E8[i * 2 + 1];
+        gUnk_030023D4 = gUnk_0873E1E8[j + 1];
+        break;
+    case 9:
+        gUnk_030023B4 = gUnk_0873E220[i * 2] * t->unk43;
+        gUnk_030023D4 = gUnk_0873E220[j + 1];
         break;
     case 17:
         gUnk_030023B4 = 0;
