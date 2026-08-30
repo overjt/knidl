@@ -71,7 +71,7 @@ u8 sub_08066a0c(s16 dx, u16 dy);
 void sub_08066c08(u32 def, u8 b);
 void sub_08066dcc(void);
 void sub_08066f78(void);
-s32 sub_08066fc0(u8 p3, s16 x, s16 y);
+void sub_08066fc0(u8 p3, s16 x, s16 y);
 void sub_08067108(void);
 void sub_08067114(void);
 void sub_08067170(void);
@@ -183,7 +183,7 @@ u8 sub_08066a0c(s16 dx, u16 dy);
 void sub_08066c08(u32 def, u8 b);
 void sub_08066dcc(void);
 void sub_08066f78(void);
-s32 sub_08066fc0(u8 p3, s16 x, s16 y);
+void sub_08066fc0(u8 p3, s16 x, s16 y);
 void sub_08067108(void);
 void sub_08067114(void);
 void sub_08067170(void);
@@ -1762,6 +1762,7 @@ void sub_08066dcc(void)
 void sub_08066e88(u8 a)
 {
     struct Task *t;
+    struct Task *s;
     struct Task *u;
     s32 i;
     u8 kind;
@@ -1781,10 +1782,8 @@ void sub_08066e88(u8 a)
     if (i != -1)
     {
         u = &gUnk_03002790[i];
-        t = gUnk_03002490;
-        v = t->unk7F;
-        if (v == -1)
-            v = sub_08063b38();
+        s = gUnk_03002490;
+        v = (s->unk7F == -1) ? sub_08063b38() : s->unk7F;
         u->unk1C = v;
         u->unk28 = a;
         if (gUnk_02006178 == 1)
@@ -1815,7 +1814,7 @@ void sub_08066f78(void)
                  h->unk00 << 5);
 }
 
-s32 sub_08066fc0(u8 p3, s16 x, s16 y)
+void sub_08066fc0(u8 p3, s16 x, s16 y)
 {
     struct Task *t;
     s32 i;
@@ -1835,7 +1834,6 @@ s32 sub_08066fc0(u8 p3, s16 x, s16 y)
             t->unk74 = gUnk_03002490->unk76;
         }
     }
-    return i;
 }
 
 void sub_0806704c(void)
