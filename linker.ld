@@ -247,7 +247,17 @@ SECTIONS
         build/src/actor_63698.o(.text)
     } > ROM
 
-    .game_code_and_rodata_080653ec 0x080653EC : {
+    /* actor_653ec — decompiled to C (src/actor_653ec.c, carved by tools/carve.py) */
+    .actor_653ec 0x080653EC : {
+        build/src/actor_653ec.o(.text)
+    } > ROM
+
+    /* actor_673ec — decompiled to C (src/actor_673ec.c, carved by tools/carve.py) */
+    .actor_673ec 0x080673EC : {
+        build/src/actor_673ec.o(.text)
+    } > ROM
+
+    .game_code_and_rodata_080653ec 0x080692FC : {
         KEEP(*(.game_code_and_rodata_080653ec)) KEEP(*(.game_code_and_rodata_080653ec.tail))
     } > ROM
 
