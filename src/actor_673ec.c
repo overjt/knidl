@@ -100,8 +100,6 @@ void sub_080675e4(void);
 
 void sub_080673ec(void)
 {
-    s32 d;
-
     sub_08002e98(gUnk_03002490->unk14, 11, gUnk_0873E2F0);
 }
 

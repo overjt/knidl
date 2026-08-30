@@ -966,10 +966,7 @@ u16 sub_08066088(u32 mode)
     struct Task *t;
     struct Actor *a;
     u32 *p;
-    u32 *tbl;
-    struct GfxHeader *h;
     u16 prio;
-    u32 v;
     s32 sh;
     u32 lo;
     u32 w40;
