@@ -1428,8 +1428,10 @@ void sub_080668c8(void)
 {
     struct Task *t;
     struct Actor *a;
-    s32 i;
+    u32 *p;
     u32 cls;
+    u32 v;
+    s32 i;
 
     a = gUnk_03002490->unk8C;
     for (i = 32; i <= 62; i++)
@@ -1440,28 +1442,28 @@ void sub_080668c8(void)
             continue;
         if (gUnk_03004CA0[i] == 4)
             continue;
+        t = &gUnk_03002790[i];
+        if (gUnk_03002490->unk72 == 2 && a->unk3C != 0)
         {
-            t = &gUnk_03002790[i];
-            if (gUnk_03002490->unk72 == 2 && a->unk3C != 0)
-            {
-                if ((u8)((u8 (*)(s32))a->unk3C)(i) != 1)
-                    continue;
-            }
-            cls = t->unk72;
-            if (cls == 6 && t->unk76 == 0)
+            if ((u8)((u8 (*)(s32))a->unk3C)(i) != 1)
                 continue;
-            if (cls == 10)
+        }
+        p = &cls;
+        cls = t->unk72;
+        if (*p == 6 && t->unk76 == 0)
+            continue;
+        if (*p == 10)
+            continue;
+        v = *p;
+        if (v == 9 || v == 7 || v == 8)
+        {
+            if (gUnk_03004CA0[i] == 174)
                 continue;
-            if (cls == 9 || cls == 7 || cls == 8)
-            {
-                if (gUnk_03004CA0[i] == 174)
-                    continue;
-                sub_08063f24(i);
-            }
-            else
-            {
-                sub_08066988(i);
-            }
+            sub_08063f24(i);
+        }
+        else
+        {
+            sub_08066988(i);
         }
     }
 }
