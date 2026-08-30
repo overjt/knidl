@@ -1416,6 +1416,28 @@ assignment (`sub_08066AE0`). The reverse is also true — `sub_080665A0` needed 
 `s16` shared by both arms — so read the ROM: a value materialised per-arm into
 the *same* register means one variable; a store repeated per-arm means several.
 
+### 3.109 Taking a local's address can move a loop-invariant hoist
+`sub_080668C8` hoisted its `-1` compare constant into the loop preheader BEFORE
+the induction-variable initialisations; the ROM has it after, and no loop shape,
+`continue`/`goto` form, declaration order, condition order, cast or `-f` flag
+moved it (`-fno-schedule-insns` proved the scheduler is not involved — the order
+comes straight out of `move_movables`, which always runs before
+`strength_reduce`). What did work, found by decomp-permuter, is taking the
+address of the one local that lives across the induction variables:
+```c
+u32 *p;
+...
+p = &cls;
+cls = t->unk72;
+if (*p == 6 && t->unk76 == 0)
+    continue;
+```
+`cls` still ends up in a register — no stack slot appears — but the address-taken
+pseudo changes what `move_movables` considers cheap enough to hoist first, and
+the constant lands after the givs exactly as in the ROM. Keep this in the toolbox
+for "one hoisted constant sits N bytes too early" diffs; it is not something a
+human would guess.
+
 ### 4.25 Carving a range re-cuts every later chunk — `split.py` needs a raw-halfword escape
 After `tools/carve.py` shortened `game_code_and_rodata_080653ec`, `make split`
 died with `KeyError: ..._06` ("unplaceable `loc_` labels"): objdump had merged
