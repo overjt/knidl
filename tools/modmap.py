@@ -560,14 +560,18 @@ def split_range(segments, lo, hi):
     """Split [lo, hi) into (clusterable, fixed) pieces per segments.txt.
 
     A piece is clusterable when it is still `thumb_code` awaiting C; anything
-    already `c_code` (or deliberately-final asm) is reported as-is.
+    already `c_code` (or deliberately-final asm) is reported as-is.  Carving a
+    module out of the middle of the bulk splits `game_code_and_rodata` into
+    `game_code_and_rodata` + `game_code_and_rodata_<addr>` tails (first hit when
+    #65 landed M17), so match on the prefix — otherwise the whole tail collapses
+    into one unclustered "module".
     """
     clusterable, fixed = [], []
     for start, end, kind, name in segments:
         s, e = max(start, lo), min(end, hi)
         if s >= e:
             continue
-        if kind == "thumb_code" and name == "game_code_and_rodata":
+        if kind == "thumb_code" and name.startswith("game_code_and_rodata"):
             clusterable.append((s, e))
         else:
             fixed.append((s, e, kind, name))
