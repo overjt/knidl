@@ -1464,6 +1464,79 @@ Write the transcriber instead of the C when a function is long, regular and
 literal-heavy; the residual `/*?? ... */` lines it cannot classify (about ten
 here) are exactly the interesting parts.
 
+### 3.110 No return value in the ROM means the function is `void`
+The mirror of 3.94. `sub_08066FC0` was written as `s32 ... return i;`, which
+costs a callee-saved register for `i` plus an `adds r0, r4, #0` before the
+epilogue. The ROM leaves whatever the last call or compare put in `r0`, so the
+value is never used: the function is `void`, and its only caller
+(`sub_0806704C`) ignores the result. Read the epilogue before choosing a return
+type — `pop {rN}; bx rN` with nothing feeding `r0` is the tell.
+
+### 3.111 `a >= 1 && a <= 3` is always range-optimised; two signed compares mean a `switch`
+`fold` rewrites every spelling of a two-sided range test — `>= 1 && <= 3`,
+`> 0 && < 4`, `!(a < 1) && !(a > 3)`, `(a - 1) >= 0 && (a - 1) <= 2`, `&` instead
+of `&&`, and every integer type for `a` — into `(unsigned)(a - 1) <= 2`. Nesting
+the two `if`s keeps them separate but canonicalises `a >= 1` into `cmp #0; ble`.
+The ROM's `cmp #1; blt` + `cmp #3; bgt` pair comes from `expand_case`, which
+emits case-node compares against the literal case values and never sees `fold`:
+```c
+switch (v)
+{
+case 1:  sub_08063908(...); break;
+case 2:
+case 3:  sub_080639b4(...); break;
+}
+```
+So "two signed compares against the actual bounds" is a `switch` fingerprint, not
+an `if` chain.
+
+### 3.112 A conditional expression can stop a constant living across a call
+`sub_08066E88` calls `sub_08064FC4(0, 38, kind, 0, x, y, 0)` and later stores
+`u->unk3C = 0`. gcc shared one zero pseudo between the seventh argument and that
+store, so it survived the call in `r7` (`push {r4,r5,r6,r7,lr}`,
+`movs r7,#0; str r7,[sp,#8]`, `strh r7,[r4,#60]`); the ROM materialises both
+zeros separately and pushes only `{r4,r5,r6}`. Proof of causation: changing the
+store to a non-zero constant made the whole function match. Nothing at the
+constant end fixed it — typed zero casts, a zero variable in any subset of
+arguments 1/4/7, address-taken locals, statement reordering, or the flags
+`-fno-gcse -fno-cse-follow-jumps -fno-rerun-cse-after-loop
+-fno-expensive-optimizations` (all four together still push `r7`, so the sharing
+is not CSE). What fixed it was at the *other* end of the function: reading the
+task pointer into its own local and selecting the value with a conditional
+expression,
+```c
+s = gUnk_03002490;
+v = (s->unk7F == -1) ? sub_08063b38() : s->unk7F;
+```
+which also restores the ROM's `movs r0,#0; ldrsb r0,[r2,r0]` (see 3.101 — the
+sign-extending load needs a register that is not already the address). An
+`if`/`else` with a temporary gets the prologue right but costs a second load;
+the ternary keeps one load and still splits the block.
+
+### 3.113 One local per statement group also decides WHICH register the pointer gets
+3.97 says to give each re-read of a global pointer its own local. `sub_08067258`
+shows the sharper version: in a 20-statement task body that re-reads
+`gUnk_03002490` before every store, the statements whose stored value already
+sits in a callee-saved register (`strh r5, [r0, #60]` with `r5 = 10`) load the
+pointer into `r0`, while the ones that need `r0` for the value load it into
+`r1`. Reusing one `t` for all of them forces an extra `adds r0, r1, #0`; giving
+those groups their own locals (`u`, `v`) reproduces the ROM exactly. When a long
+body is two bytes too big at one statement, split the local, not the statement.
+
+### 3.114 An argument that is the symbol's address means the symbol is the object
+`sub_08067170` passes `gUnk_0873F690` with a bare `ldr r0, =gUnk_0873F690`,
+while the declaration `extern struct ActorDef *gUnk_0873F690;` compiled to
+`ldr r0, =...; ldr r0, [r0]`. The extra load is the whole tell: declare the
+symbol as the object (`extern struct ActorDef gUnk_0873F690;`) and pass
+`&gUnk_0873F690`, or as an array when it is a table.
+
+### 4.28 Attribute a diff only after the sizes agree
+`attr.py` bucketed all 17 blocks of a mismatch into one function and hid five
+others; the cap in 4.26 was only half the reason. While `candidate` and `target`
+sizes differ, everything after the first size-changing diff is shifted, so both
+the block addresses and their attribution are fiction. Fix size first (the
+header line), re-run, and only then trust the per-function counts.
+
 ## 5. Workflow that worked
 
 The canonical per-function loop (pick → m2c first pass → asmdiff iterate →
