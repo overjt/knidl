@@ -125,7 +125,7 @@ extern void sub_08003110(u32 a);
 extern u8 gUnk_0200B030;
 extern u8 gUnk_03001F34;
 extern u8 gUnk_03001270[];
-extern struct ActorDef *gUnk_0873F690;
+extern struct ActorDef gUnk_0873F690;
 extern u8 gUnk_0873F7E4[];
 extern u32 gUnk_0874CCBC[];
 extern u32 gUnk_0873E280[];
@@ -1844,9 +1844,9 @@ void sub_0806704c(void)
 
 u8 sub_08067060(void)
 {
-    if (gUnk_0200B030 != 0)
-        return 1;
-    return 0;
+    if (gUnk_0200B030 == 0)
+        return 0;
+    return 1;
 }
 
 u8 sub_08067074(void)
@@ -1854,8 +1854,7 @@ u8 sub_08067074(void)
     s32 i;
     s32 n;
 
-    n = 0;
-    for (i = 0; i < gUnk_030023AC; i++)
+    for (i = 0, n = 0; i < gUnk_030023AC; i++)
     {
         if ((gUnk_03002340 >> i) & 1)
             n++;
@@ -1896,6 +1895,7 @@ void sub_08067114(void)
 s32 sub_08067120(s16 x, s16 y, u16 dir, u8 p8)
 {
     struct ActorSpawn sp;
+    struct Task *t;
     s32 i;
 
     sp.unk00 = 36;
@@ -1908,19 +1908,28 @@ s32 sub_08067120(s16 x, s16 y, u16 dir, u8 p8)
     sp.unk0A = 0;
     i = sub_08064ba8(&sp, 1);
     if (i != -1)
-        gUnk_03002790[i].unk43 = dir;
+    {
+        t = &gUnk_03002790[i];
+        t->unk43 = dir;
+    }
     return i;
 }
 
 void sub_08067170(void)
 {
-    u8 v;
+    s32 v;
 
     v = gUnk_03002490->unk73;
-    if (v == 1)
-        sub_08063908((u32)gUnk_0873F690);
-    else if (v >= 1 && v <= 3)
+    switch (v)
+    {
+    case 1:
+        sub_08063908((u32)&gUnk_0873F690);
+        break;
+    case 2:
+    case 3:
         sub_080639b4((u32)gUnk_0873F7E4);
+        break;
+    }
     if (gUnk_03002490->unk43 == 0)
         sub_08064a60();
 }
