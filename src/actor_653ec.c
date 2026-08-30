@@ -1435,26 +1435,28 @@ void sub_080668c8(void)
             continue;
         if (gUnk_03004CA0[i] == 4)
             continue;
-        t = &gUnk_03002790[i];
-        if (gUnk_03002490->unk72 == 2 && a->unk3C != 0)
         {
-            if ((u8)((u8 (*)(s32))a->unk3C)(i) != 1)
+            t = &gUnk_03002790[i];
+            if (gUnk_03002490->unk72 == 2 && a->unk3C != 0)
+            {
+                if ((u8)((u8 (*)(s32))a->unk3C)(i) != 1)
+                    continue;
+            }
+            cls = t->unk72;
+            if (cls == 6 && t->unk76 == 0)
                 continue;
-        }
-        cls = t->unk72;
-        if (cls == 6 && t->unk76 == 0)
-            continue;
-        if (cls == 10)
-            continue;
-        if (cls == 9 || cls == 7 || cls == 8)
-        {
-            if (gUnk_03004CA0[i] == 174)
+            if (cls == 10)
                 continue;
-            sub_08063f24(i);
-        }
-        else
-        {
-            sub_08066988(i);
+            if (cls == 9 || cls == 7 || cls == 8)
+            {
+                if (gUnk_03004CA0[i] == 174)
+                    continue;
+                sub_08063f24(i);
+            }
+            else
+            {
+                sub_08066988(i);
+            }
         }
     }
 }
