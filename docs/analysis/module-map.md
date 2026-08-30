@@ -569,8 +569,25 @@ early zone and the SDK tails. "Pool references" counts literal-pool words, so
 * **Known RAM cells touched** BG0HOFS shadow (16.16) x1, BG0VOFS shadow (16.16) x1, BG1HOFS shadow (16.16) x1, BG1VOFS shadow (16.16) x1, BG2HOFS shadow (16.16) x1, BG2VOFS shadow (16.16) x1.
 * **Suggested batches** `0x0805AFAC` (53 fns), `0x0805CF3C` (27 fns), `0x0805EE90` (5 fns), `0x08060C2C` (3 fns).
 
-### M17 `0x08062584-0x080692FB` - struct Task field API (actor core)
+### M17 `0x08062584-0x080692FB` - struct Task field API (actor core) - **landed (#65)**
 
+The range is decompiled and carved out of the split asm, so it now appears in
+`module-map.csv` as four `c_code` rows instead of one clusterable module; the
+census below is the pre-decompilation one, kept for the record.
+
+* **Landed as** `src/actor_62584.c` (`0x08062584-0x08063698`, 2 fns),
+  `src/actor_63698.c` (`0x08063698-0x080653EC`, 107 fns),
+  `src/actor_653ec.c` (`0x080653EC-0x080673EC`, 86 fns) and
+  `src/actor_673ec.c` (`0x080673EC-0x080692FC`, 49 fns); shared data model in
+  `include/task.h`. `make progress` reports 0 asm code bytes in the range.
+* **What it turned out to be** the field API over `gUnk_03002490` (the running
+  `struct Task *`) and the 64-entry `gUnk_03002790[]` table: spawn/free, 16.16
+  position and velocity, `ArcTan2` aiming, rectangle/overlap tests,
+  animation-script walking (`struct AnimCmd`), actor graphics upload, and the
+  116-byte per-player record `gUnk_03002170[]` that `Task.unk88` points at.
+  `Task.unk8C` is the 0x70-byte `struct Actor`, `Actor.unk44` its ROM
+  `struct ActorDef`. The two large leaders (`0xa04`/`0x710`) are straight-line
+  cutscene bodies, ~230 `unk3C = frame; TaskYieldTrampoline(n)` steps each.
 * **Size** 27.4 KiB (`0x6d78`), 244 functions (49 reachable only through pointer tables), mean `0x72`, largest `0xa04`, pool words 11.6% of bytes.
 * **Difficulty** 3/6 - 63 distinct RAM cells, 7 jump-table dispatches, 4 functions >= `0x200`.
 * **Seam cost** 2 in / 81 out (local `bl` edges crossing the boundary).
@@ -583,7 +600,7 @@ early zone and the SDK tails. "Pool references" counts literal-pool words, so
 * **Depends on** sdk_libc x311, early_5d9c x127, early_1518 x21, game_code_early_080011ac_08002378_08003110 x17, M06 x14.
 * **Pool references** IWRAM x511, EWRAM x58, asset_metadata_index x54, game_code_and_rodata x38, level_graphics_palettes x4, VRAM x2, gap_sram_driver_fn_table_asset_metadata_index x2, early_58e4 x1.
 * **Known RAM cells touched** current game state (main dispatch) x3.
-* **Suggested batches** `0x08062584` (2 fns), `0x08063698` (100 fns), `0x080653EC` (94 fns), `0x080673EC` (48 fns).
+* **Batches as landed** `0x08062584` (2 fns), `0x08063698` (107 fns), `0x080653EC` (86 fns), `0x080673EC` (49 fns).
 
 ### M18 `0x080692FC-0x08070EBF` - actor core part 2 + class-1 task bodies
 
