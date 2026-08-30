@@ -1964,6 +1964,8 @@ void sub_08067214(void)
 void sub_08067258(void)
 {
     struct Task *t;
+    struct Task *u;
+    struct Task *v;
 
     gUnk_03002490->unk15 = 0;
     gUnk_03002490->unk7A = 0;
@@ -1980,9 +1982,9 @@ void sub_08067258(void)
     t->unk3C--;
     TaskYieldTrampoline(2);
     sub_080061c0(0x8000, 0x5A5A5A5A);
-    t = gUnk_03002490;
-    t->unk58 = 0xFFFF8000;
-    t->unk6C = 0;
+    u = gUnk_03002490;
+    u->unk58 = 0xFFFF8000;
+    u->unk6C = 0;
     do
     {
         t = gUnk_03002490;
@@ -1991,8 +1993,8 @@ void sub_08067258(void)
         t = gUnk_03002490;
         t->unk3C = 4;
         TaskYieldTrampoline(3);
-        t = gUnk_03002490;
-        t->unk3C = 10;
+        v = gUnk_03002490;
+        v->unk3C = 10;
         TaskYieldTrampoline(1);
         t = gUnk_03002490;
         t->unk3C = 5;
@@ -2004,8 +2006,8 @@ void sub_08067258(void)
         t->unk3C = 6;
         TaskYieldTrampoline(3);
         sub_080062c4();
-        t = gUnk_03002490;
-        t->unk3C = 10;
+        v = gUnk_03002490;
+        v->unk3C = 10;
         TaskYieldTrampoline(1);
         t = gUnk_03002490;
         t->unk3C = 7;
