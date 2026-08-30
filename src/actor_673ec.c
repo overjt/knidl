@@ -2,6 +2,11 @@
  *
  * RECIPE: agbcc -O2 -mthumb-interwork -fprologue-bugfix
  *   ./tools/fnmatch.sh 0x080673EC 0x080692FC src/actor_673ec.c --newpb
+ *
+ * Task bodies for the carried/helper actor states (unk15 = 3..10) plus the
+ * player-record plumbing: spawn/teardown (sub_080685EC/sub_0806865C), the
+ * per-character animation-offset switch (sub_080684A4), and the
+ * gUnk_03002170[] save/restore used when a player is picked up or dropped.
  */
 #include "gba/gba.h"
 #include "global.h"

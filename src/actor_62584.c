@@ -2,6 +2,11 @@
  *
  * RECIPE: agbcc -O2 -mthumb-interwork -fprologue-bugfix
  *   ./tools/fnmatch.sh 0x08062584 0x08063698 src/actor_62584.c --newpb
+ *
+ * Two straight-line cutscene bodies: ~230 steps each of
+ * `gUnk_03002490->unk3C = <frame>; TaskYieldTrampoline(<delay>)` with velocity
+ * (unk54/unk58/unk5C/unk60) and screen-shake (sub_0800625C) changes in between.
+ * Transcribed mechanically from the split asm (lessons-learned 4.27).
  */
 #include "gba/gba.h"
 #include "global.h"

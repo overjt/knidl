@@ -1,11 +1,13 @@
-/* game_code_and_rodata 0x08063698-0x08063E14 (issue #65, module M17 batch 1).
+/* game_code_and_rodata 0x08063698-0x080653EC (issue #65, module M17 batch 2).
  *
  * RECIPE: agbcc -O2 -mthumb-interwork -fprologue-bugfix
- *   ./tools/fnmatch.sh 0x08063698 0x08063E14 src/actor_63698.c --newpb
+ *   ./tools/fnmatch.sh 0x08063698 0x080653EC src/actor_63698.c --newpb
  *
- * Actor lifecycle + "nearest other task" queries: binding a task to its ROM
- * descriptor (sub_08063704/sub_0806391c), resetting the actor record
- * (sub_080637E4), and the distance helpers every later module calls.
+ * Actor lifecycle and geometry: binding a task to its ROM descriptor
+ * (sub_08063704/sub_0806391C), resetting the actor record (sub_080637E4),
+ * 16.16 position/velocity accessors, ArcTan2 aiming, rectangle and distance
+ * queries, animation-script walking, and the spawn helpers
+ * (sub_08064A78/sub_08064C1C/sub_08064F28) every later module calls.
  */
 #include "gba/gba.h"
 #include "global.h"

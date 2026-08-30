@@ -2,6 +2,11 @@
  *
  * RECIPE: agbcc -O2 -mthumb-interwork -fprologue-bugfix
  *   ./tools/fnmatch.sh 0x080653EC 0x080673EC src/actor_653ec.c --newpb
+ *
+ * Actor drawing and per-frame upkeep: OAM priority/palette packing
+ * (sub_08066088), graphics upload out of the Task.unk38 descriptor table
+ * (sub_080663F4/sub_08066A94), the per-task update sweep (sub_080668C8), and
+ * the class-2/class-4 task bodies that drive them.
  */
 #include "gba/gba.h"
 #include "global.h"
