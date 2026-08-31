@@ -4784,7 +4784,7 @@ loc_080296de:
 	movs	r0, r0
 	.word	0x03005604
 	.word	0x0300566C
-	.word	0x03001F2C
+	.word	gUnk_03001F2C
 	.word	0x03002448
 	.global	loc_080296f4
 loc_080296f4:

@@ -9686,7 +9686,7 @@ loc_0804b986:
 	movs	r0, r0
 	.word	gUnk_03002490
 	.word	0x03002458
-	.word	0x03001F2C
+	.word	gUnk_03001F2C
 	.global	loc_0804b9ec
 loc_0804b9ec:
 	ldr	r1, [r7, #0]
@@ -11026,7 +11026,7 @@ loc_0804c504:
 	lsls	r0, r0, #2
 	b.n	loc_0804c558	@ 0x0804C558
 	movs	r0, r0
-	.word	0x03001F2C
+	.word	gUnk_03001F2C
 	.global	loc_0804c554
 loc_0804c554:
 	movs	r0, #128
@@ -14763,7 +14763,7 @@ loc_0804e2c2:
 	b.n	loc_0804e25c	@ 0x0804E25C
 	.word	gUnk_0300244C
 	.word	gUnk_02007CF4
-	.word	0x03001F2C
+	.word	gUnk_03001F2C
 	.word	0x02007E90
 	.word	gUnk_03002490
 	.word	0x00000F6E

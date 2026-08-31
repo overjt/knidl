@@ -508,6 +508,40 @@ child issues of #35 are created from it. Findings that belong in this document:
   (a dead export with its own pool) are real Thumb entries the scan missed -
   the two blind spots this document already records, seen once more.
 
+- **M25 (`0x0809000C-0x08093F63`) is a bank of four scripted boss fights.**
+  Decompiled in #67, in three files (`docs/analysis/module-map.md` §6). Each boss owns one anchor table and one
+  `TaskGfx` block, and they are all assembled from the same three pieces: an
+  entry function that installs `sub_080656b4` as `Task.unk00` and one of
+  `sub_08065438`/`sub_08065350`/`sub_080653ec`/`sub_0806523c` as `Task.unk0C`,
+  a per-frame body in `Task.unk04`, and a `<body, state-guard>` pair per state
+  reached by handing `Task.unk73`/`unk14`/`unk15` to `sub_08002e98`. The four
+  tables are `0x08743848` (23 entries), `0x08743984` (15), `0x08743ADC` (27)
+  and `0x087441A4` (6 - the module map's "5" undercounts it by one), and the
+  per-boss graphics descriptors are `0x08752ED8`, `0x087530F8`, `0x087535FC`,
+  `0x08752F60`, `0x08753128`, `0x08753148`, `0x08753160` and `0x087536FC`,
+  all inside `asset_metadata_index`.
+- **`0x02007D00` is a shared EWRAM scratch block, not just M17's pending-spawn
+  record.** M17 (#65) reads it as `{flag, task index, x, y, facing}`; the boss
+  scripts use `[0]`/`[7]` as live-boss counters (the entry increments, the
+  defeat state decrements and calls `sub_0806684c` when it reaches zero),
+  `[4]` as the parent task id / a phase counter, `[5]` as a table row and
+  `[6]` as an RNG result and attack class. Its elements are **signed**: the
+  boss code compares them with `bgt`, so this file declares
+  `extern s32 gUnk_02007D00[]`.
+- **`gUnk_03004CA0[]` is the "is task N still alive" side table.** Every
+  companion task in M25 (`sub_08090fe0`, `sub_08091d24`, `sub_0809397c`,
+  `sub_08093cf8`) starts with `if ((s16)gUnk_03004CA0[Task.unk44] != -1)` and
+  calls `sub_08005654(gCurTaskIdx)` to remove itself otherwise; it is read
+  `ldrh` + explicit sign-extension, i.e. a `volatile s16` array (lessons
+  §3.43), and indexed by the *task index* `Task.unk44`.
+- **`0x087339F0` is the terrain-class byte table the collision probe reads.**
+  `sub_080934f8` walks ten offsets from `0x08743AB8` (`s8`), asks
+  `sub_08021bb4(x, y, offset * Task.unk43, 0)` for a tile id, maps `-1` to 1,
+  and looks the result up in `gUnk_087339F0` (`s8`); the two result bits then
+  index `0x08743AC2` for the new `Task.unk28` direction. That puts
+  `0x087339F0` at the end of the `0x100`-stride index tables the module map
+  attributes to M06 (`0x087328F0-0x087339F0`).
+
 - **The prologue scan and the `bl` scan each have a systematic blind spot in
   this zone, and #64 found seven instances.** Two artifacts account for all of
   them. (a) `.word 0xFFFFF000` in a literal pool always disassembles as
@@ -521,6 +555,15 @@ child issues of #35 are created from it. Findings that belong in this document:
   merged into its predecessor's size unless something points at it:
   `0x080694E0`, `0x0806ACF8`, `0x0806B40C`, `0x080702D8` and `0x08070454`
   were all recovered this way, three of them live code with real callers.
+  #67 added one of each in M25: `0x08090904` is the `bx r0` ending
+  `sub_080908ec` (a byte-table word at `0x086C5964` happens to equal
+  `0x08090905`), and `0x08093858` is a real four-instruction leaf that only a
+  behaviour-table word points at (`0x087440CC`). That range also shows the
+  cheapest sweep for the second class: scan **every** 4-byte-aligned ROM word
+  for `addr | 1` inside the range and check the hits against `symbols.csv` —
+  in M25 that produced 57 candidates, 56 of them coincidental words inside
+  byte-data blobs (recognisable because their neighbours are small bytes, not
+  `0x08xxxxxx` pointers) and one genuine entry.
   Both classes are curated in `tools/symdb.py` (`FALSE_POSITIVES` /
   `EXTRA_THUMB_ENTRIES`) with the evidence in the comment. The practical rule:
   **a size in `symbols.csv` that does not tile with the next entry is a

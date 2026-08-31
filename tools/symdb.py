@@ -349,6 +349,12 @@ FALSE_POSITIVES = {
     # at 0x087D3F04, inside the same sample blob, equals 0x080C1F19.
     # sub_080c1ebc really runs 0x080C1EBC-0x080C1F88 (0xCC).
     0x080C1F18,
+    # 0x08090904 is the `bx r0` that ends sub_080908ec (issue #67): the
+    # function's epilogue is `pop {r0}; bx r0` and the census cut it one
+    # halfword short.  A word of the byte-table blob at 0x086C5964 happens to
+    # equal 0x08090905, which the rom-pointer heuristic read as a Thumb entry.
+    # sub_080908ec really runs 0x080908EC-0x08090914 (0x28), pool included.
+    0x08090904,
 }
 
 # Curated Thumb entries with NO in-ROM reference (issue #31): dead m4a SDK
@@ -384,6 +390,14 @@ EXTRA_THUMB_ENTRIES = {
                  # ArcTan2 + the trig table; nothing in the ROM references
                  # it, and it sits between sub_08064188 and sub_0806421C
                  # with its own `push {r4, r5, r6, lr}` prologue.
+    # 0x08093858 is a real function the prologue filter rejected (issue #67):
+    # a four-instruction leaf (`gUnk_03002490->unk58 = 0;`) that opens with a
+    # pool load and ends `bx lr`, so -fprologue-bugfix left it without a
+    # `push`.  The behaviour-table word at 0x087440CC points at it (its
+    # neighbours point at sub_080937d0, sub_08090ef1, sub_08090f15), and the
+    # byte match of src/enemy_91f9c.c confirms the split: sub_080937d0 runs
+    # 0x080937D0-0x08093858 (0x88) and this one 0x08093858-0x08093868.
+    0x08093858,
     0x080CF664,  # m4aMPlayPanpotControl
     0x080CF6EC,  # m4aMPlayModDepthSet
     0x080CF760,  # m4aMPlayLFOSpeedSet
