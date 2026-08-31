@@ -673,6 +673,14 @@ class SegmentEmitter(object):
                     text = ""
                 elif entry_size > left:
                     text = ""
+                elif entry_size > size and self.label_pending_at(addr + 2):
+                    # objdump merged two halfwords into one 4-byte
+                    # instruction, but a cross-chunk `loc_` label has to sit
+                    # on the second one: emit raw halfwords so the label
+                    # gets a boundary (issue #65 - carving a c_code range
+                    # out of the middle of a chunked segment re-cuts every
+                    # later chunk, which is how this case first appeared).
+                    text = ""
             emitted = False
             if text:
                 if entry_size <= left:

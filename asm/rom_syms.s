@@ -7,14 +7,48 @@
 
 @ Named non-ROM cells (tools/split_config.json "data_symbols"),
 @ referenced symbolically from split literal pools / data words:
+	.global	gUnk_02000008
+gUnk_02000008 = 0x02000008
+	.global	gUnk_02004C90
+gUnk_02004C90 = 0x02004C90
 	.global	gUnk_02005588
 gUnk_02005588 = 0x02005588
+	.global	gUnk_02005E10
+gUnk_02005E10 = 0x02005E10
+	.global	gUnk_02006040
+gUnk_02006040 = 0x02006040
 	.global	gUnk_02006068
 gUnk_02006068 = 0x02006068
+	.global	gUnk_02006178
+gUnk_02006178 = 0x02006178
+	.global	gUnk_02006190
+gUnk_02006190 = 0x02006190
+	.global	gUnk_020061D8
+gUnk_020061D8 = 0x020061D8
+	.global	gUnk_02007D00
+gUnk_02007D00 = 0x02007D00
 	.global	gUnk_02007D48
 gUnk_02007D48 = 0x02007D48
+	.global	gUnk_02007D60
+gUnk_02007D60 = 0x02007D60
+	.global	gUnk_02007F50
+gUnk_02007F50 = 0x02007F50
+	.global	gUnk_02007FB8
+gUnk_02007FB8 = 0x02007FB8
 	.global	gUnk_02007FC0
 gUnk_02007FC0 = 0x02007FC0
+	.global	gUnk_02007FF0
+gUnk_02007FF0 = 0x02007FF0
+	.global	gUnk_0200AEF4
+gUnk_0200AEF4 = 0x0200AEF4
+	.global	gUnk_0200AFF8
+gUnk_0200AFF8 = 0x0200AFF8
+	.global	gUnk_0200B030
+gUnk_0200B030 = 0x0200B030
+	.global	gUnk_0200C320
+gUnk_0200C320 = 0x0200C320
+	.global	gUnk_0200D080
+gUnk_0200D080 = 0x0200D080
 	.global	gUnk_0200D090
 gUnk_0200D090 = 0x0200D090
 	.global	gUnk_0200D110
@@ -203,8 +237,12 @@ gUnk_0300118C = 0x0300118C
 gUnk_03001190 = 0x03001190
 	.global	gUnk_03001270
 gUnk_03001270 = 0x03001270
+	.global	gUnk_030012B0
+gUnk_030012B0 = 0x030012B0
 	.global	gUnk_03001470
 gUnk_03001470 = 0x03001470
+	.global	gUnk_03001610
+gUnk_03001610 = 0x03001610
 	.global	gUnk_03001670
 gUnk_03001670 = 0x03001670
 	.global	gUnk_03001674
@@ -267,30 +305,82 @@ gUnk_03001EF8 = 0x03001EF8
 gUnk_03001EFC = 0x03001EFC
 	.global	gUnk_03001F08
 gUnk_03001F08 = 0x03001F08
+	.global	gUnk_03001F24
+gUnk_03001F24 = 0x03001F24
 	.global	gUnk_03001F30
 gUnk_03001F30 = 0x03001F30
+	.global	gUnk_03001F34
+gUnk_03001F34 = 0x03001F34
 	.global	gUnk_03001F38
 gUnk_03001F38 = 0x03001F38
+	.global	gUnk_03002140
+gUnk_03002140 = 0x03002140
+	.global	gUnk_03002144
+gUnk_03002144 = 0x03002144
+	.global	gUnk_0300214C
+gUnk_0300214C = 0x0300214C
 	.global	gUnk_03002150
 gUnk_03002150 = 0x03002150
 	.global	gUnk_03002158
 gUnk_03002158 = 0x03002158
+	.global	gUnk_03002170
+gUnk_03002170 = 0x03002170
+	.global	gUnk_03002340
+gUnk_03002340 = 0x03002340
 	.global	gUnk_03002348
 gUnk_03002348 = 0x03002348
+	.global	gUnk_03002350
+gUnk_03002350 = 0x03002350
+	.global	gUnk_03002354
+gUnk_03002354 = 0x03002354
+	.global	gUnk_03002358
+gUnk_03002358 = 0x03002358
 	.global	gUnk_03002360
 gUnk_03002360 = 0x03002360
+	.global	gUnk_03002368
+gUnk_03002368 = 0x03002368
+	.global	gUnk_0300236C
+gUnk_0300236C = 0x0300236C
+	.global	gUnk_03002380
+gUnk_03002380 = 0x03002380
+	.global	gUnk_0300238C
+gUnk_0300238C = 0x0300238C
+	.global	gUnk_03002390
+gUnk_03002390 = 0x03002390
+	.global	gUnk_03002394
+gUnk_03002394 = 0x03002394
+	.global	gUnk_0300239C
+gUnk_0300239C = 0x0300239C
+	.global	gUnk_030023A4
+gUnk_030023A4 = 0x030023A4
 	.global	gUnk_030023A8
 gUnk_030023A8 = 0x030023A8
 	.global	gUnk_030023AC
 gUnk_030023AC = 0x030023AC
+	.global	gUnk_030023B4
+gUnk_030023B4 = 0x030023B4
+	.global	gUnk_030023D0
+gUnk_030023D0 = 0x030023D0
+	.global	gUnk_030023D4
+gUnk_030023D4 = 0x030023D4
 	.global	gUnk_030023D8
 gUnk_030023D8 = 0x030023D8
+	.global	gUnk_030023DC
+gUnk_030023DC = 0x030023DC
 	.global	gUnk_030023E4
 gUnk_030023E4 = 0x030023E4
+	.global	gUnk_030023F0
+gUnk_030023F0 = 0x030023F0
 	.global	gUnk_0300243C
 gUnk_0300243C = 0x0300243C
+	.global	gUnk_03002440
+gUnk_03002440 = 0x03002440
 	.global	gUnk_0300244C
 gUnk_0300244C = 0x0300244C
+	.global	gUnk_03002450
+gUnk_03002450 = 0x03002450
+	.global	gUnk_03002460
+gUnk_03002460 = 0x03002460
 	.global	gTaskSavedSp
 gTaskSavedSp = 0x03002470
 	.global	gUnk_03002478
@@ -381,6 +471,8 @@ gUnk_03005274 = 0x03005274
 gUnk_03005278 = 0x03005278
 	.global	gUnk_0300527C
 gUnk_0300527C = 0x0300527C
+	.global	gUnk_03005550
+gUnk_03005550 = 0x03005550
 	.global	gSoundInfo
 gSoundInfo = 0x030056D0
 	.global	gMPlayJumpTable
@@ -425,16 +517,114 @@ gUnk_04000128 = 0x04000128
 gUnk_0400012A = 0x0400012A
 	.global	gUnk_04000208
 gUnk_04000208 = 0x04000208
+	.global	gUnk_0825088C
+gUnk_0825088C = 0x0825088C
+	.global	gUnk_082530C8
+gUnk_082530C8 = 0x082530C8
+	.global	gUnk_0825CA44
+gUnk_0825CA44 = 0x0825CA44
+	.global	gUnk_08334DC0
+gUnk_08334DC0 = 0x08334DC0
 	.global	gUnk_0872EB14
 gUnk_0872EB14 = 0x0872EB14
 	.global	gUnk_0872EB2C
 gUnk_0872EB2C = 0x0872EB2C
 	.global	gUnk_0872EB38
 gUnk_0872EB38 = 0x0872EB38
+	.global	gUnk_0872FA30
+gUnk_0872FA30 = 0x0872FA30
 	.global	gUnk_0872FB30
 gUnk_0872FB30 = 0x0872FB30
 	.global	gUnk_0872FF30
 gUnk_0872FF30 = 0x0872FF30
+	.global	gUnk_0873CB1C
+gUnk_0873CB1C = 0x0873CB1C
+	.global	gUnk_0873DF14
+gUnk_0873DF14 = 0x0873DF14
+	.global	gUnk_0873DF24
+gUnk_0873DF24 = 0x0873DF24
+	.global	gUnk_0873DF38
+gUnk_0873DF38 = 0x0873DF38
+	.global	gUnk_0873DF78
+gUnk_0873DF78 = 0x0873DF78
+	.global	gUnk_0873DF7C
+gUnk_0873DF7C = 0x0873DF7C
+	.global	gUnk_0873DFAC
+gUnk_0873DFAC = 0x0873DFAC
+	.global	gUnk_0873E16C
+gUnk_0873E16C = 0x0873E16C
+	.global	gUnk_0873E184
+gUnk_0873E184 = 0x0873E184
+	.global	gUnk_0873E1B4
+gUnk_0873E1B4 = 0x0873E1B4
+	.global	gUnk_0873E1B8
+gUnk_0873E1B8 = 0x0873E1B8
+	.global	gUnk_0873E1E8
+gUnk_0873E1E8 = 0x0873E1E8
+	.global	gUnk_0873E1F8
+gUnk_0873E1F8 = 0x0873E1F8
+	.global	gUnk_0873E220
+gUnk_0873E220 = 0x0873E220
+	.global	gUnk_0873E264
+gUnk_0873E264 = 0x0873E264
+	.global	gUnk_0873E280
+gUnk_0873E280 = 0x0873E280
+	.global	gUnk_0873E284
+gUnk_0873E284 = 0x0873E284
+	.global	gUnk_0873E2F0
+gUnk_0873E2F0 = 0x0873E2F0
+	.global	gUnk_0873E31C
+gUnk_0873E31C = 0x0873E31C
+	.global	gUnk_0873E348
+gUnk_0873E348 = 0x0873E348
+	.global	gUnk_0873E388
+gUnk_0873E388 = 0x0873E388
+	.global	gUnk_0873E3C8
+gUnk_0873E3C8 = 0x0873E3C8
+	.global	gUnk_0873ECEC
+gUnk_0873ECEC = 0x0873ECEC
+	.global	gUnk_0873ED90
+gUnk_0873ED90 = 0x0873ED90
+	.global	gUnk_0873EDB8
+gUnk_0873EDB8 = 0x0873EDB8
+	.global	gUnk_0873EDDC
+gUnk_0873EDDC = 0x0873EDDC
+	.global	gUnk_0873EE70
+gUnk_0873EE70 = 0x0873EE70
+	.global	gUnk_0873EE88
+gUnk_0873EE88 = 0x0873EE88
+	.global	gUnk_0873EF74
+gUnk_0873EF74 = 0x0873EF74
+	.global	gUnk_0873F01C
+gUnk_0873F01C = 0x0873F01C
+	.global	gUnk_0873F0C4
+gUnk_0873F0C4 = 0x0873F0C4
+	.global	gUnk_0873F0E4
+gUnk_0873F0E4 = 0x0873F0E4
+	.global	gUnk_0873F118
+gUnk_0873F118 = 0x0873F118
+	.global	gUnk_0873F138
+gUnk_0873F138 = 0x0873F138
+	.global	gUnk_0873F15C
+gUnk_0873F15C = 0x0873F15C
+	.global	gUnk_0873F198
+gUnk_0873F198 = 0x0873F198
+	.global	gUnk_0873F23C
+gUnk_0873F23C = 0x0873F23C
+	.global	gUnk_0873F264
+gUnk_0873F264 = 0x0873F264
+	.global	gUnk_0873F288
+gUnk_0873F288 = 0x0873F288
+	.global	gUnk_0873F2A0
+gUnk_0873F2A0 = 0x0873F2A0
+	.global	gUnk_0873F690
+gUnk_0873F690 = 0x0873F690
+	.global	gUnk_0873F7E4
+gUnk_0873F7E4 = 0x0873F7E4
+	.global	gUnk_0874CCBC
+gUnk_0874CCBC = 0x0874CCBC
+	.global	gUnk_08752BA8
+gUnk_08752BA8 = 0x08752BA8
 
 @ Link-time constants (tools/split_config.json "abs_symbols"):
 @ absolute symbols whose VALUE is the constant (SDK idiom, e.g.

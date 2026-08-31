@@ -1054,6 +1054,99 @@ the ROM exactly. Do not "clean up" such a compare; it is load-bearing. (It is
 probably a bug in the original source — a session-id compare that got the wrong
 operand — which is exactly the kind of thing a matching decomp preserves.)
 
+### 3.94 `pop {r1}; bx r1` in the epilogue means the function RETURNS a value
+A void agbcc function pops the return address into the first free register,
+which is `r0`; a function whose result is live-out pops into `r1` instead. When
+the epilogue reads `pop {r4}; pop {r1}; bx r1` but the body never sets `r0`, the
+original prototype was non-void with no `return` statement — declaring it
+`s32 f(void)` reserves `r0`, which shifts the whole allocation up one register
+and adds the prologue/epilogue. That single change turned `sub_080684A4`
+(a 26-case switch) from an 8-byte mismatch into a byte-match; nothing else about
+the body changed.
+
+### 3.95 Count the callee's argument registers before writing the call
+`sub_0800A340` starts `adds r3, r0, #0; adds r4, r1, #0` — it reads TWO argument
+registers. Its caller's `ldrsh r1, [r0, r2]; adds r0, r1, #0` is therefore not a
+stray reload-copy but `f(v, v)`: the load lands in the second argument register
+and is copied into the first. Reading the callee's prologue is much cheaper than
+hunting for a source shape that reproduces a "spurious" copy — that copy is an
+argument.
+
+### 3.96 A `(u16)` cast on a multiplicand feeding a 16-bit store is free but re-allocates
+`t->unk48 = u->unk48 + u->unk43 * tbl[i];` (`unk43` an `s8`, `unk48` an `s16`)
+emits `muls` in place. The ROM had `adds r7, r0, #0; muls r7, r1; adds r0, r7, #0`
+— the product in a callee-saved register with copies in and out. Writing
+`(u16)u->unk43 * tbl[i]` reproduces it exactly: the zero-extension is dead
+(only the low 16 bits reach the `strh`, and `(u16)x * y == x * y` mod 2^16), so
+gcc emits no masking, but the RTL is a different expression and the product gets
+its own pseudo. Same bytes, same behaviour; try it whenever a multiply is short
+by exactly the two copies.
+
+### 3.97 One local per re-read of a global pointer
+`t = gUnk_03002490;` twice in a function is ONE pseudo whose live range spans
+both uses, so gcc keeps it in a register across the second statement and pays a
+copy (`adds r1, r2, #0`) whenever the ROM instead mutates the pointer in place
+(`adds r1, #66`). Give every re-read its own local (`t`, `u`, `v`, `w`, `x`) and
+the copies disappear. Conversely, when the ROM does keep a copy, merge the
+locals — `sub_080665A0` needed ONE `s16` shared by both arms of an `if/else` so
+the value pseudo spans the branch.
+
+### 3.98 Re-read the global in the loop condition, not at the loop bottom
+```c
+while (gUnk_03002790[gUnk_03002490->unk44].unk3C == 34)
+    TaskYieldTrampoline(1);
+```
+matches; the same loop written with `t = gUnk_03002490;` as the last statement of
+the body does not — `t` is then live across the yield call, so it gets a
+callee-saved register and the whole function's allocation shifts. gcc CSEs the
+first iteration's read with the preceding statement anyway, so the inline form
+still emits the ROM's single pre-loop load.
+
+### 3.99 The destination address is loaded FIRST in a global-to-global store
+`gUnk_03002358 = t->unk48;` with `t` already in a local emits the task load
+first. The ROM loads the destination's pool word first, then the task. Writing
+the first store as `gUnk_03002358 = gUnk_03002490->unk48;` and only then taking
+`t = gUnk_03002490;` for the rest of the block reproduces it (gcc CSEs the second
+read). Applies to every run of "copy N task fields into N globals".
+
+### 3.100 Computed 16-bit call arguments belong in `s16` locals
+For a 6-or-7 argument call, `f(a, b, c, 0, (s16)(x + y), (s16)(p + q))` evaluates
+the casts late and interleaves them with the register arguments. Assigning
+`s16 x = ...; s16 y = ...;` before the call reproduces the ROM's order (stack
+arguments computed first, then `r0`-`r3`). Two functions in M17 (`sub_08066C74`,
+`sub_08066E88`) needed exactly this.
+
+### 3.101 `ldrsb` vs `ldrb` + `lsls #24`/`asrs #24` is register pressure, not syntax
+Both read the same `s8` field. `ldrsb rd, [rn, rm]` needs a spare register for
+the zero index; when none is free gcc falls back to `ldrb` plus a shift pair.
+The same field in the same file compiles to both forms depending on what else is
+live, so do NOT rewrite the field access to chase the opcode — fix the
+surrounding allocation instead.
+
+### 3.102 Give a subexpression shared by two switch arms its own local
+`gUnk_0873E1E8[i * 2]` / `[i * 2 + 1]` in two arms of a switch left `i * 2`
+recomputed inside the (cross-jumped) shared arm; the ROM had it hoisted above the
+switch (`lsls r5, r0, #1`). Adding `j = i * 2;` before the switch and indexing
+`[i * 2]` / `[j + 1]` reproduces the hoist and keeps `i` live for the strength-
+reduced first index (`lsls r0, r0, #2`).
+
+### 3.103 An extra pointer local can flip a whole function's register assignment
+`if (gUnk_03002790[i].unk7A == 1)` and `t = &gUnk_03002790[i]; if (t->unk7A == 1)`
+are the same code, but only the second reproduced the ROM's loop-invariant hoist
+order in `sub_08066338`. When a function differs from the ROM by a consistent
+register permutation and nothing else, adding (or removing) one user variable is
+the cheapest lever — cheaper than the permuter, which failed on several of these.
+
+### 3.104 Case labels are emitted in source order
+A 4-arm switch whose blocks appear in the ROM as `case 0`'s body before
+`case 9`'s must be written with `case 0:` first, even though the jump table is
+index-ordered either way. Read the block order off the ROM, not the table.
+
+### 3.105 agbcc rejects declarations in a nested block
+`else { struct Task *u; ... }` produces `syntax error at end of input` reported
+against a LATER function, which is very hard to read. Declare every local at the
+top of the function body.
+
 ## 4. Splitting ROM ranges into asm (tools/split.py)
 
 ### 4.1 objdump text only round-trips under `.syntax unified`
@@ -1289,6 +1382,160 @@ OrbStack`, then confirm with `docker image inspect knidl-builder` and a real
 regenerable and committed work is untouched — but re-verify the build rather
 than assuming, and do not diagnose the stalled agents individually until the
 daemon answers.
+
+### 3.106 To land a commutative result in the CONSTANT's register, fold into a variable
+`return r | (v & 0xFFF);` ties the `and`'s destination to `v`'s register
+(`ands r2, r1`). The ROM had `ands r1, r2` — destination = the pooled constant's
+register. Giving the mask its own variable and folding into it reproduces it:
+```c
+u32 m;
+m = 0xFFF;
+m &= v;
+return r | m;
+```
+The constant's reload temp then IS the result pseudo, so no copy is needed and
+the operands land ROM-side-up. Applies to any commutative operator whose ROM
+destination is the constant side. (decomp-permuter found this after a dozen hand
+variants failed — "assign the constant to a temp and compound-assign into it" is
+the class of rewrite it is much better at than a human.)
+
+### 3.107 Prefer repeating the global over a `T **g` local
+A `struct Task **g = &gUnk_03002490;` local makes the address a *user* pseudo,
+which the allocator treats differently from the compiler-generated CSE temp the
+ROM has. `sub_08066754` only matched once `g` was deleted and
+`gUnk_03002490->unk24` was simply written out in each arm — gcc then CSEs the
+address itself, keeps it in a callee-saved register across the calls, and emits
+the ROM's `adds r4, r1, #0` split. Reach for the `**g` idiom only when the plain
+form is short by exactly a pool reload (it is still what `sub_080665A0` needs).
+
+### 3.108 A per-case store beats a shared result variable when the ROM cross-jumps
+`switch (...) { case 2: v = 13; break; ... } a->unk02 = v;` gives the shared
+variable a hard register across the whole switch. Writing `a->unk02 = 13;` in
+each arm lets gcc cross-jump the stores itself and reproduces the ROM's register
+assignment (`sub_08066AE0`). The reverse is also true — `sub_080665A0` needed one
+`s16` shared by both arms — so read the ROM: a value materialised per-arm into
+the *same* register means one variable; a store repeated per-arm means several.
+
+### 3.109 Taking a local's address can move a loop-invariant hoist
+`sub_080668C8` hoisted its `-1` compare constant into the loop preheader BEFORE
+the induction-variable initialisations; the ROM has it after, and no loop shape,
+`continue`/`goto` form, declaration order, condition order, cast or `-f` flag
+moved it (`-fno-schedule-insns` proved the scheduler is not involved — the order
+comes straight out of `move_movables`, which always runs before
+`strength_reduce`). What did work, found by decomp-permuter, is taking the
+address of the one local that lives across the induction variables:
+```c
+u32 *p;
+...
+p = &cls;
+cls = t->unk72;
+if (*p == 6 && t->unk76 == 0)
+    continue;
+```
+`cls` still ends up in a register — no stack slot appears — but the address-taken
+pseudo changes what `move_movables` considers cheap enough to hoist first, and
+the constant lands after the givs exactly as in the ROM. Keep this in the toolbox
+for "one hoisted constant sits N bytes too early" diffs; it is not something a
+human would guess.
+
+### 4.25 Carving a range re-cuts every later chunk — `split.py` needs a raw-halfword escape
+After `tools/carve.py` shortened `game_code_and_rodata_080653ec`, `make split`
+died with `KeyError: ..._06` ("unplaceable `loc_` labels"): objdump had merged
+two halfwords into one 4-byte instruction, but a cross-chunk `loc_` label had to
+sit on the SECOND halfword. `emit_func_region` now emits raw halfwords when
+`entry_size > size and self.label_pending_at(addr + 2)`, giving the label a
+boundary. Expect this every time a carve moves a chunk edge.
+
+### 4.26 fnmatch's pool-resolving diff is capped — fix from the top and re-run
+The diff stops after a fixed number of blocks, so a function that "has no diff"
+may simply be past the cap. Work top-down, re-running after each fix; the
+`candidate=N bytes, target=M bytes` header and the total differing-byte count are
+the honest progress metrics. A raw byte compare of `cand.bin` against the ROM
+over-reports instead: `bl` targets outside the carved range are unrelocated in
+the candidate, so every external call shows as a difference.
+
+### 4.27 Long straight-line task bodies are worth transcribing mechanically
+M17's two leaders (`sub_08062584` 0xA04, `sub_08062F88` 0x710) are ~230
+statements of `gUnk_03002490->unk3C = K; TaskYieldTrampoline(n);` with occasional
+6-argument calls. A ~90-line Python pass over the split asm — track constants in
+a register map, resolve pool words from the ROM, emit one C statement per store
+or call — produced both functions, and each matched on the FIRST fnmatch run.
+Write the transcriber instead of the C when a function is long, regular and
+literal-heavy; the residual `/*?? ... */` lines it cannot classify (about ten
+here) are exactly the interesting parts.
+
+### 3.110 No return value in the ROM means the function is `void`
+The mirror of 3.94. `sub_08066FC0` was written as `s32 ... return i;`, which
+costs a callee-saved register for `i` plus an `adds r0, r4, #0` before the
+epilogue. The ROM leaves whatever the last call or compare put in `r0`, so the
+value is never used: the function is `void`, and its only caller
+(`sub_0806704C`) ignores the result. Read the epilogue before choosing a return
+type — `pop {rN}; bx rN` with nothing feeding `r0` is the tell.
+
+### 3.111 `a >= 1 && a <= 3` is always range-optimised; two signed compares mean a `switch`
+`fold` rewrites every spelling of a two-sided range test — `>= 1 && <= 3`,
+`> 0 && < 4`, `!(a < 1) && !(a > 3)`, `(a - 1) >= 0 && (a - 1) <= 2`, `&` instead
+of `&&`, and every integer type for `a` — into `(unsigned)(a - 1) <= 2`. Nesting
+the two `if`s keeps them separate but canonicalises `a >= 1` into `cmp #0; ble`.
+The ROM's `cmp #1; blt` + `cmp #3; bgt` pair comes from `expand_case`, which
+emits case-node compares against the literal case values and never sees `fold`:
+```c
+switch (v)
+{
+case 1:  sub_08063908(...); break;
+case 2:
+case 3:  sub_080639b4(...); break;
+}
+```
+So "two signed compares against the actual bounds" is a `switch` fingerprint, not
+an `if` chain.
+
+### 3.112 A conditional expression can stop a constant living across a call
+`sub_08066E88` calls `sub_08064FC4(0, 38, kind, 0, x, y, 0)` and later stores
+`u->unk3C = 0`. gcc shared one zero pseudo between the seventh argument and that
+store, so it survived the call in `r7` (`push {r4,r5,r6,r7,lr}`,
+`movs r7,#0; str r7,[sp,#8]`, `strh r7,[r4,#60]`); the ROM materialises both
+zeros separately and pushes only `{r4,r5,r6}`. Proof of causation: changing the
+store to a non-zero constant made the whole function match. Nothing at the
+constant end fixed it — typed zero casts, a zero variable in any subset of
+arguments 1/4/7, address-taken locals, statement reordering, or the flags
+`-fno-gcse -fno-cse-follow-jumps -fno-rerun-cse-after-loop
+-fno-expensive-optimizations` (all four together still push `r7`, so the sharing
+is not CSE). What fixed it was at the *other* end of the function: reading the
+task pointer into its own local and selecting the value with a conditional
+expression,
+```c
+s = gUnk_03002490;
+v = (s->unk7F == -1) ? sub_08063b38() : s->unk7F;
+```
+which also restores the ROM's `movs r0,#0; ldrsb r0,[r2,r0]` (see 3.101 — the
+sign-extending load needs a register that is not already the address). An
+`if`/`else` with a temporary gets the prologue right but costs a second load;
+the ternary keeps one load and still splits the block.
+
+### 3.113 One local per statement group also decides WHICH register the pointer gets
+3.97 says to give each re-read of a global pointer its own local. `sub_08067258`
+shows the sharper version: in a 20-statement task body that re-reads
+`gUnk_03002490` before every store, the statements whose stored value already
+sits in a callee-saved register (`strh r5, [r0, #60]` with `r5 = 10`) load the
+pointer into `r0`, while the ones that need `r0` for the value load it into
+`r1`. Reusing one `t` for all of them forces an extra `adds r0, r1, #0`; giving
+those groups their own locals (`u`, `v`) reproduces the ROM exactly. When a long
+body is two bytes too big at one statement, split the local, not the statement.
+
+### 3.114 An argument that is the symbol's address means the symbol is the object
+`sub_08067170` passes `gUnk_0873F690` with a bare `ldr r0, =gUnk_0873F690`,
+while the declaration `extern struct ActorDef *gUnk_0873F690;` compiled to
+`ldr r0, =...; ldr r0, [r0]`. The extra load is the whole tell: declare the
+symbol as the object (`extern struct ActorDef gUnk_0873F690;`) and pass
+`&gUnk_0873F690`, or as an array when it is a table.
+
+### 4.28 Attribute a diff only after the sizes agree
+`attr.py` bucketed all 17 blocks of a mismatch into one function and hid five
+others; the cap in 4.26 was only half the reason. While `candidate` and `target`
+sizes differ, everything after the first size-changing diff is shifted, so both
+the block addresses and their attribution are fiction. Fix size first (the
+header line), re-run, and only then trust the per-function counts.
 
 ## 5. Workflow that worked
 
