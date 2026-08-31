@@ -1824,8 +1824,7 @@ vma,size,isa,evidence,name
 0x0806EF38,0x24,thumb,rom-pointer,sub_0806ef38
 0x0806EF5C,0x8C,thumb,rom-pointer,sub_0806ef5c
 0x0806EFE8,0x4,thumb,rom-pointer,sub_0806efe8
-0x0806EFEC,0xF6,thumb,rom-pointer,sub_0806efec
-0x0806F0E2,0x92,thumb,bl-target+rom-pointer,sub_0806f0e2
+0x0806EFEC,0x188,thumb,rom-pointer,sub_0806efec
 0x0806F174,0x6C,thumb,rom-pointer,sub_0806f174
 0x0806F1E0,0x18C,thumb,rom-pointer,sub_0806f1e0
 0x0806F36C,0x6C,thumb,rom-pointer,sub_0806f36c

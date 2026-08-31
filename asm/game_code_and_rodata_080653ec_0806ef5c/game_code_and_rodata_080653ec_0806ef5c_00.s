@@ -5,7 +5,6 @@
 @   0x0806EF5C sub_0806ef5c
 @   0x0806EFE8 sub_0806efe8
 @   0x0806EFEC sub_0806efec
-@   0x0806F0E2 sub_0806f0e2
 @   0x0806F174 sub_0806f174
 @   0x0806F1E0 sub_0806f1e0
 @   0x0806F36C sub_0806f36c
@@ -870,10 +869,6 @@ loc_0806f086:
 	str	r0, [r1, #88]
 	movs	r0, #8
 	bl	TaskYieldTrampoline	@ 0x080CFDCC
-	.thumb_func
-	.global	sub_0806f0e2
-sub_0806f0e2:
-	.thumb
 	ldr	r1, [r4, #0]
 	movs	r0, #128
 	lsls	r0, r0, #11

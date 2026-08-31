@@ -305,6 +305,15 @@ FALSE_POSITIVES = {
     # in the compressed-graphics blob at 0x0826ECC8 happens to equal
     # 0x080671F9, which the rom-pointer heuristic read as a Thumb entry.
     0x080671F8,
+    # 0x0806F0E2 is the middle of sub_0806efec (issue #64).  Two independent
+    # artifacts pointed at it: the words 5A5A5A5A/FFFFF000 at 0x0806E0DC,
+    # inside sub_0806df98's literal pool, decode as the bl pair F000/FFFF,
+    # and one word of the signed-byte table at 0x086EAE64 happens to equal
+    # 0x0806F0E3.  The entry itself has no prologue -- it opens
+    # `ldr r1, [r4, #0]` with r4 set by the code above it -- and
+    # sub_0806efec really runs 0x0806EFEC-0x0806F174, pool included
+    # (src/actor_6ef5c.c).
+    0x0806F0E2,
 }
 
 # Curated Thumb entries with NO in-ROM reference (issue #31): dead m4a SDK
