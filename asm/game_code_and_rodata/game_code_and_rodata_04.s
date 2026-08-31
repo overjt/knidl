@@ -6690,7 +6690,7 @@ loc_0804a214:
 	.word	0x0873CF5C
 	.word	0x0000FFEF
 	.word	0x00000AD2
-	.word	0x0873D3B8
+	.word	gUnk_0873D3B8
 	.global	loc_0804a250
 loc_0804a250:
 	pop	{r4, r5}

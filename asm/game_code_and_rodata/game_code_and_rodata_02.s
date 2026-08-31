@@ -29222,7 +29222,7 @@ loc_08034b14:
 	ldr	r0, [r0, #0]
 	mov	pc, r0
 	.word	gUnk_03002490
-	.word	0x0873D384
+	.word	gUnk_0873D384
 	.word	0x08034B50
 	ldr	r3, [pc, #704]	@ 0x08034E14
 	lsrs	r3, r0, #32
@@ -29523,7 +29523,7 @@ loc_08034d7e:
 	mov	pc, r0
 	movs	r0, r0
 	.word	gUnk_03002490
-	.word	0x0873D384
+	.word	gUnk_0873D384
 	.word	0x08034DBC
 	ldr	r6, [pc, #272]	@ 0x08034ED0
 	lsrs	r3, r0, #32
@@ -29865,7 +29865,7 @@ loc_0803505e:
 	ldr	r0, [r0, #0]
 	mov	pc, r0
 	movs	r0, r0
-	.word	0x0873D3B8
+	.word	gUnk_0873D3B8
 	.word	0x08035090
 	str	r0, [r7, r3]
 	lsrs	r3, r0, #32
@@ -30039,7 +30039,7 @@ loc_080351c8:
 	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	b.n	loc_080351c8	@ 0x080351C8
 	movs	r0, r0
-	.word	0x0873D3B8
+	.word	gUnk_0873D3B8
 	.global	loc_080351f0
 loc_080351f0:
 	ldr	r0, [r4, #0]

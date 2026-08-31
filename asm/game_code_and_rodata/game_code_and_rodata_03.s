@@ -7135,7 +7135,7 @@ loc_0803a760:
 	.word	gUnk_03002490
 	.word	0x02020000
 	.word	0x06014000
-	.word	0x0873D3B8
+	.word	gUnk_0873D3B8
 	.word	0x0803A788
 	.short	0xA7E0
 	lsrs	r3, r0, #32
