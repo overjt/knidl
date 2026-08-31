@@ -305,6 +305,37 @@ FALSE_POSITIVES = {
     # in the compressed-graphics blob at 0x0826ECC8 happens to equal
     # 0x080671F9, which the rom-pointer heuristic read as a Thumb entry.
     0x080671F8,
+    # 0x0806F0E2 is the middle of sub_0806efec (issue #64).  Two independent
+    # artifacts pointed at it: the words 5A5A5A5A/FFFFF000 at 0x0806E0DC,
+    # inside sub_0806df98's literal pool, decode as the bl pair F000/FFFF,
+    # and one word of the signed-byte table at 0x086EAE64 happens to equal
+    # 0x0806F0E3.  The entry itself has no prologue -- it opens
+    # `ldr r1, [r4, #0]` with r4 set by the code above it -- and
+    # sub_0806efec really runs 0x0806EFEC-0x0806F174, pool included
+    # (src/actor_6ef5c.c).
+    0x0806F0E2,
+    # 0x0806FC3E is the middle of sub_0806fb0c (issue #64), from the same
+    # artifact one function later: the word 0xFFFFF000 at 0x0806EC3C, in
+    # sub_0806eba4's literal pool, decodes as the bl pair F000/FFFF.  The
+    # entry opens `movs r0, #128` with r1/r4 set by the code above it, and
+    # sub_0806fb0c really runs 0x0806FB0C-0x0806FC98 (0x18C).
+    #
+    # 0xFFFFF000 has now produced four of these across #32/#65/#64: for any
+    # bl-target-only symbol S, check whether the word at S - 0x1002 is
+    # 0xFFFFF000 before believing it.
+    0x0806FC3E,
+    # 0x0806FFF8 and 0x08070406 are the `b.n` that skips a mid-function
+    # literal pool (issue #64; the shape of lessons 3.6), reached by
+    # fall-through from the instruction above.  Their real functions are
+    # sub_0806ff7c (0x0806FF7C-0x080700E8, 0x16C) and sub_080703a8
+    # (0x080703A8-0x0807042C, 0x84).
+    0x0806FFF8,
+    0x08070406,
+    # 0x080706A8 opens `adds r1, r3, #0` with r3 live from the
+    # `ldr r3, [r5, #0]` three halfwords above it, and the next epilogue is
+    # at 0x0807072A: it is the middle of sub_08070648
+    # (0x08070648-0x0807073C, 0xF4).
+    0x080706A8,
 }
 
 # Curated Thumb entries with NO in-ROM reference (issue #31): dead m4a SDK
@@ -374,6 +405,36 @@ EXTRA_THUMB_ENTRIES = {
                  #                     bl target from 0x08006D52, not dead)
     0x080070E8,  # LinkEndRound       (bl target from 0x08006D56; the row
                  #                     0x08007102 was a mis-split of it)
+    0x080702D8,  # real function the prologue filter dropped (issue #64): a
+                 # straight-line body opening `ldr r1, [pc, #84]`, with two
+                 # honest `bl` callers at 0x0806FF72 and 0x0807044A.  The
+                 # census folded it into sub_0807029c, whose real size is
+                 # 0x3C rather than 0x98.
+    0x08070454,  # same (issue #64): sub_08070208 stores the pool word
+                 # 0x08070455 into Task.unk00, but the pointer scan only
+                 # walks data segments, and the entry opens
+                 # `ldr r0, [pc, #56]` with no prologue.  It follows
+                 # sub_0807042c's `bx r0` + alignment halfword, so
+                 # sub_0807042c is 0x24, not 0x6C.
+    0x0806B40C,  # dead `bx lr` stub inside what the census read as one
+                 # 0x4C-byte sub_0806b3c4 (issue #64).  It is the same
+                 # two-byte no-op body as the named stubs sub_0806b330 and
+                 # sub_0806b3c0, nothing references it, and the leaf has no
+                 # prologue to scan for.  sub_0806b3c4 is really 0x48.
+    0x080694E0,  # dead export inside what the census read as one 0x220-byte
+                 # sub_080692fc (issue #64).  It has its own
+                 # `push {lr}; sub sp, #8` prologue but nothing in the 8 MiB
+                 # image references it -- no word pointer, no bl -- so the
+                 # prologue scan never got to propose it.  sub_080692fc
+                 # really runs 0x080692FC-0x080694E0 (0x1E4).
+    0x0806ACF8,  # dead leaf inside what the census read as one 0x50-byte
+                 # sub_0806acc8 (issue #64).  Nothing in the ROM references
+                 # it -- no word pointer, no bl -- so it survives only
+                 # because the game was linked whole-object, and it has no
+                 # prologue because -fprologue-bugfix drops the leaf
+                 # `push {lr}`.  Body:
+                 #   u32 f(void) { return
+                 #       gUnk_03002490->unk8C->unk1A != -1; }
 }
 
 EVIDENCE_KINDS = ("bl-target", "rom-pointer", "prologue-scan", "curated")

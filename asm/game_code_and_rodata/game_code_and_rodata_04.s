@@ -6690,7 +6690,7 @@ loc_0804a214:
 	.word	0x0873CF5C
 	.word	0x0000FFEF
 	.word	0x00000AD2
-	.word	0x0873D3B8
+	.word	gUnk_0873D3B8
 	.global	loc_0804a250
 loc_0804a250:
 	pop	{r4, r5}
@@ -14762,7 +14762,7 @@ loc_0804e2c2:
 	ble.n	loc_0804e2aa	@ 0x0804E2AA
 	b.n	loc_0804e25c	@ 0x0804E25C
 	.word	gUnk_0300244C
-	.word	0x02007CF4
+	.word	gUnk_02007CF4
 	.word	0x03001F2C
 	.word	0x02007E90
 	.word	gUnk_03002490
@@ -26693,7 +26693,7 @@ loc_08053f0e:
 	.word	gUnk_03002490
 	.word	sub_080059d8+1
 	.word	sub_08005d9c+1
-	.word	0x0874C500
+	.word	gUnk_0874C500
 	.word	0x0873B9EC
 	.thumb_func
 	.global	sub_08053f70
@@ -26869,7 +26869,7 @@ loc_0805406c:
 	pop	{r0}
 	bx	r0
 	.word	sub_08005d9c+1
-	.word	0x0874C500
+	.word	gUnk_0874C500
 	.word	0x0873B9EC
 	.thumb_func
 	.global	sub_080540d0
@@ -27887,7 +27887,7 @@ loc_080548b6:
 	.word	gUnk_03002490
 	.word	sub_080059d8+1
 	.word	sub_08005d9c+1
-	.word	0x0874C520
+	.word	gUnk_0874C520
 	.thumb_func
 	.global	sub_080548f0
 sub_080548f0:
@@ -27968,7 +27968,7 @@ sub_080548f0:
 	.word	gUnk_03002490
 	.word	sub_080059d8+1
 	.word	sub_08005d9c+1
-	.word	0x0874C520
+	.word	gUnk_0874C520
 	.thumb_func
 	.global	sub_080549a4
 sub_080549a4:
@@ -28544,8 +28544,8 @@ loc_08054db4:
 	.word	gUnk_03002490
 	.word	sub_080059d8+1
 	.word	sub_08005d9c+1
-	.word	0x0874CA1C
-	.word	0x0873E640
+	.word	gUnk_0874CA1C
+	.word	gUnk_0873E640
 	.thumb_func
 	.global	sub_08054de8
 sub_08054de8:
@@ -28958,7 +28958,7 @@ loc_08055058:
 	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	b.n	loc_08055052	@ 0x08055052
 	movs	r0, r0
-	.word	0x0874C718
+	.word	gUnk_0874C718
 	.word	0xFFFFF000
 	.word	0xFFFF8000
 	.word	0xFFFF0000
@@ -30311,7 +30311,7 @@ loc_08055b5e:
 	.word	sub_080059d8+1
 	.word	sub_08005d9c+1
 	.word	0x08055D25
-	.word	0x0874C718
+	.word	gUnk_0874C718
 	.word	0xFFFFE000
 	.global	loc_08055c50
 loc_08055c50:
@@ -31382,7 +31382,7 @@ sub_080564ac:
 	.word	gUnk_03002490
 	.word	sub_080059d8+1
 	.word	sub_08005d9c+1
-	.word	0x0874C828
+	.word	gUnk_0874C828
 	.global	loc_080564ec
 loc_080564ec:
 	cmp	r3, #2

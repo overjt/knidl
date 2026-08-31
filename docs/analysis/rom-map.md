@@ -449,6 +449,43 @@ child issues of #35 are created from it. Findings that belong in this document:
   values 0-25, adding a per-character constant to `Task.unk3C`). `0x02007D00`
   is a 5-word EWRAM "pending spawn" record: flag, task index (or -1), x, y,
   facing (`sub_080685EC`, `sub_0806865C`, `sub_08068950`, `sub_08068840`).
+- **M18 (`0x080692FC-0x08070EBF`) is the player's own class-1 task bodies.**
+  Decompiled in #64, in ten files (`docs/analysis/module-map.md` §6). It sits
+  directly on top of M17's field API and is where the player-facing state
+  machines live: input probing and the six directional decoders, the
+  carried/riding movement block, the vehicle and star-ride state machines, the
+  screen-transition fades, and the stage-enter/leave sequences. Four anchor
+  tables drive it: `0x0873E5BC` (15 entries -> `0x0806A3AC-0x0806B3C4`),
+  `0x0873E670` (10 -> `0x0806A8F4-0x0806AA98`), `0x0873EAA0`
+  (8 -> `0x0806BF54-0x0806C930`) and `0x0873FB08`
+  (26 -> `0x0806EF5C-0x08070E7C`). The range named **101 new cells** in
+  `split_config.json` `data_symbols`: 73 in `0x0873xxxx` (per-state descriptor
+  rows - several are 2-D, e.g. `gUnk_0873EAD8` is `u16[][4]` and
+  `gUnk_0873D3B8` is `s16[][2]`, which is visible because the compiler leaves
+  the `+ K` as a separate add instead of folding it into the load offset),
+  19 in `0x0874Cxxx` and 4 in `0x08752xxx` (sprite/graphics descriptor lists
+  reached through `Task.unk38`), plus `gUnk_0824A9E4` and four RAM cells.
+  Transitions drive the display through the early zone as predicted: the only
+  hardware-ish cell here is the DISPCNT shadow `gUnk_03001ED8`, masked to
+  `0xE0FF` and re-ORed with a BG-enable pattern.
+- **The prologue scan and the `bl` scan each have a systematic blind spot in
+  this zone, and #64 found seven instances.** Two artifacts account for all of
+  them. (a) `.word 0xFFFFF000` in a literal pool always disassembles as
+  `bl <pc + 0xFFE>`, inventing a function ~4 KiB further on: `0x08063DFE` and
+  `0x080643A2` (#65), `0x0806F0E2` and `0x0806FC3E` (#64). For any
+  `bl-target`-only symbol `S`, check whether the word at `S - 0x1002` is
+  `0xFFFFF000` before believing it. A `b.n` that skips a mid-function pool
+  (lessons §3.6) reads the same way: `0x0806FFF8`, `0x08070406`. (b) Because
+  the game-code zone is compiled `-fprologue-bugfix`, a leaf function has **no
+  `push {lr}`**, so the prologue scan cannot propose one and it is silently
+  merged into its predecessor's size unless something points at it:
+  `0x080694E0`, `0x0806ACF8`, `0x0806B40C`, `0x080702D8` and `0x08070454`
+  were all recovered this way, three of them live code with real callers.
+  Both classes are curated in `tools/symdb.py` (`FALSE_POSITIVES` /
+  `EXTRA_THUMB_ENTRIES`) with the evidence in the comment. The practical rule:
+  **a size in `symbols.csv` that does not tile with the next entry is a
+  signal**, and the cheap check on any suspicious entry is whether its first
+  instruction could run with the registers a caller would have set.
 - **Seg 7 barely touches hardware.** Across 792 KiB its literal pools reference
   the `0x04000000` I/O block only 20 times; all display/DMA/scroll work goes
   through the early zone's IWRAM shadow cells. 3,288 of its 5,045 functions

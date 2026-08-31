@@ -1025,7 +1025,7 @@ loc_080377f2:
 	ble.n	loc_080377da	@ 0x080377DA
 	b.n	loc_0803778c	@ 0x0803778C
 	.word	gUnk_0300244C
-	.word	0x02007CF4
+	.word	gUnk_02007CF4
 	.word	0x03001F2C
 	.word	0x02007E90
 	.word	gUnk_03002490
@@ -7135,7 +7135,7 @@ loc_0803a760:
 	.word	gUnk_03002490
 	.word	0x02020000
 	.word	0x06014000
-	.word	0x0873D3B8
+	.word	gUnk_0873D3B8
 	.word	0x0803A788
 	.short	0xA7E0
 	lsrs	r3, r0, #32

@@ -56,7 +56,17 @@
 0x08063698 0x080653EC c_code actor_63698 # src/actor_63698.c (carved by tools/carve.py)
 0x080653EC 0x080673EC c_code actor_653ec # src/actor_653ec.c (carved by tools/carve.py)
 0x080673EC 0x080692FC c_code actor_673ec # src/actor_673ec.c (carved by tools/carve.py)
-0x080692FC 0x080CD89C thumb_code game_code_and_rodata_080653ec [split]
+0x080692FC 0x0806A344 c_code actor_692fc # src/actor_692fc.c (carved by tools/carve.py)
+0x0806A344 0x0806AD18 c_code actor_6a344 # src/actor_6a344.c (carved by tools/carve.py)
+0x0806AD18 0x0806B2E4 c_code actor_6ad18 # src/actor_6ad18.c (carved by tools/carve.py)
+0x0806B2E4 0x0806C2A4 c_code actor_6b2e4 # src/actor_6b2e4.c (carved by tools/carve.py)
+0x0806C2A4 0x0806CD40 c_code actor_6c2a4 # src/actor_6c2a4.c (carved by tools/carve.py)
+0x0806CD40 0x0806D22C c_code actor_6cd40 # src/actor_6cd40.c (carved by tools/carve.py)
+0x0806D22C 0x0806E0F0 c_code actor_6d22c # src/actor_6d22c.c (carved by tools/carve.py)
+0x0806E0F0 0x0806EF5C c_code actor_6e0f0 # src/actor_6e0f0.c (carved by tools/carve.py)
+0x0806EF5C 0x0806FF24 c_code actor_6ef5c # src/actor_6ef5c.c (carved by tools/carve.py)
+0x0806FF24 0x08070EC0 c_code actor_6ff24 # src/actor_6ff24.c (carved by tools/carve.py)
+0x08070EC0 0x080CD89C thumb_code game_code_and_rodata_080653ec_0806ef5c [split]
 0x080CD89C 0x080CE520 thumb_code m4a_1 [split] # m4a asm core (pret m4a_1.s equivalent): hand-scheduled SDK asm, stays asm forever; SoundMainRAM ROM image embeds an ARM-mode mixer loop (rom-map section 8.2, issue #52)
 0x080CE520 0x080CEFB4 c_code m4a_c1 # src/m4a_c1.c (carved by tools/carve.py): m4a C driver part 1, init/song-number/MPlay API (issue #53, old_agbcc -O2)
 0x080CEFB4 0x080CF588 c_code m4a_cgb # src/m4a_cgb.c (carved by tools/carve.py)

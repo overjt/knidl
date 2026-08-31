@@ -2113,7 +2113,7 @@ loc_080576aa:
 	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	b.n	loc_080579f6	@ 0x080579F6
 	.word	sub_080059d8+1
-	.word	0x0874C718
+	.word	gUnk_0874C718
 	.word	0xFFFE0000
 	.word	0x5A5A5A5A
 	.word	0xFFFFA000
@@ -6489,7 +6489,7 @@ loc_08059a74:
 	.word	sub_08059aac+1
 	.word	0x0874C804
 	.word	sub_08005d9c+1
-	.word	0x0874C828
+	.word	gUnk_0874C828
 	.word	0x0000FFFF
 	.word	sub_080059d8+1
 	.word	sub_08059b18+1
@@ -6685,7 +6685,7 @@ loc_08059c10:
 	pop	{r0}
 	bx	r0
 	.word	gUnk_03002490
-	.word	0x0874C828
+	.word	gUnk_0874C828
 	.word	gUnk_03002348
 	.word	gUnk_030023E4
 	.thumb_func
@@ -14620,7 +14620,7 @@ loc_0805d9f2:
 	.word	0xFFFFD010
 	.word	sub_080059d8+1
 	.word	sub_0805da2c+1
-	.word	0x0874CFEC
+	.word	gUnk_0874CFEC
 	.thumb_func
 	.global	sub_0805da2c
 sub_0805da2c:
@@ -14856,7 +14856,7 @@ loc_0805dbe0:
 	movs	r0, r0
 	.word	gUnk_03002490
 	.word	sub_080059d8+1
-	.word	0x0874CFEC
+	.word	gUnk_0874CFEC
 	.word	0x00007FFF
 	.word	0x0000FFEF
 	.word	0x0873DEA0

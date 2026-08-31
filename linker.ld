@@ -257,8 +257,58 @@ SECTIONS
         build/src/actor_673ec.o(.text)
     } > ROM
 
-    .game_code_and_rodata_080653ec 0x080692FC : {
-        KEEP(*(.game_code_and_rodata_080653ec)) KEEP(*(.game_code_and_rodata_080653ec.tail))
+    /* actor_692fc — decompiled to C (src/actor_692fc.c, carved by tools/carve.py) */
+    .actor_692fc 0x080692FC : {
+        build/src/actor_692fc.o(.text)
+    } > ROM
+
+    /* actor_6a344 — decompiled to C (src/actor_6a344.c, carved by tools/carve.py) */
+    .actor_6a344 0x0806A344 : {
+        build/src/actor_6a344.o(.text)
+    } > ROM
+
+    /* actor_6ad18 — decompiled to C (src/actor_6ad18.c, carved by tools/carve.py) */
+    .actor_6ad18 0x0806AD18 : {
+        build/src/actor_6ad18.o(.text)
+    } > ROM
+
+    /* actor_6b2e4 — decompiled to C (src/actor_6b2e4.c, carved by tools/carve.py) */
+    .actor_6b2e4 0x0806B2E4 : {
+        build/src/actor_6b2e4.o(.text)
+    } > ROM
+
+    /* actor_6c2a4 — decompiled to C (src/actor_6c2a4.c, carved by tools/carve.py) */
+    .actor_6c2a4 0x0806C2A4 : {
+        build/src/actor_6c2a4.o(.text)
+    } > ROM
+
+    /* actor_6cd40 — decompiled to C (src/actor_6cd40.c, carved by tools/carve.py) */
+    .actor_6cd40 0x0806CD40 : {
+        build/src/actor_6cd40.o(.text)
+    } > ROM
+
+    /* actor_6d22c — decompiled to C (src/actor_6d22c.c, carved by tools/carve.py) */
+    .actor_6d22c 0x0806D22C : {
+        build/src/actor_6d22c.o(.text)
+    } > ROM
+
+    /* actor_6e0f0 — decompiled to C (src/actor_6e0f0.c, carved by tools/carve.py) */
+    .actor_6e0f0 0x0806E0F0 : {
+        build/src/actor_6e0f0.o(.text)
+    } > ROM
+
+    /* actor_6ef5c — decompiled to C (src/actor_6ef5c.c, carved by tools/carve.py) */
+    .actor_6ef5c 0x0806EF5C : {
+        build/src/actor_6ef5c.o(.text)
+    } > ROM
+
+    /* actor_6ff24 — decompiled to C (src/actor_6ff24.c, carved by tools/carve.py) */
+    .actor_6ff24 0x0806FF24 : {
+        build/src/actor_6ff24.o(.text)
+    } > ROM
+
+    .game_code_and_rodata_080653ec_0806ef5c 0x08070EC0 : {
+        KEEP(*(.game_code_and_rodata_080653ec_0806ef5c)) KEEP(*(.game_code_and_rodata_080653ec_0806ef5c.tail))
     } > ROM
 
     /* m4a sound engine: asm core (pret m4a_1.s equivalent; hand-scheduled

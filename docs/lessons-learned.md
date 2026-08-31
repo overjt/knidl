@@ -1537,6 +1537,493 @@ sizes differ, everything after the first size-changing diff is shifted, so both
 the block addresses and their attribution are fiction. Fix size first (the
 header line), re-run, and only then trust the per-function counts.
 
+### 3.115 A "hold N extra frames" loop is a SIGNED count-up `for`, reversed by `check_dbra_loop`
+Every class-1 task body in M18 has this shape, and no hand-written down-counter
+reproduces it:
+```
+loc_TOP: ldr r4,=gUnk_03002490 ; ldr r1,[r4] ; ... ; bl TaskYieldTrampoline
+         cmp r7,#0 ; beq loc_TOP        @ guard on the COUNT
+         adds r5,r4,#0                  @ loop-invariant hoist: a COPY of the pool address
+         adds r4,r7,#0                  @ the down-counter's initial value
+loc_INNER: ldr r1,[r5] ; ... ; bl TaskYieldTrampoline
+         subs r4,#1 ; cmp r4,#0 ; bne loc_INNER ; b loc_TOP
+```
+The two `adds` copies **in that order** are the whole tell. Write it as
+```c
+s32 d, n, i;
+for (i = 0; i < n; i++) { gUnk_03002490->unk3C++; TaskYieldTrampoline(d); }
+```
+`loop.c`'s `move_movables` inserts the invariant pool-address copy immediately
+before `NOTE_INSN_LOOP_BEG`, but `check_dbra_loop` — which runs later, inside
+`strength_reduce` — reverses `for (i = 0; i < n; i++)` into a down-counter and
+puts *its* initialisation at the END of the preheader, i.e. after the hoist
+(3.84). That ordering is what keeps the outer pool pseudo's live range from
+overlapping the counter, so the allocator can give both `r4` and the inner pool
+pseudo `r5`. A hand-written `i = n; do {...} while (i != 0);` puts `i = n`
+before the hoist, the ranges overlap, the outer pseudo is pushed to `r5`, the
+copy collapses, and the function comes out 4 bytes short.
+`check_dbra_loop` (`gcc/loop.c` ~7330) needs the comparison to be **`LT`
+(signed)** — `u32` gives `LTU` and the reversal is silently skipped, and so does
+`i != n` — plus increment `+1`, initial value 0, and a counter used only for
+counting. Do not add a redundant `if (n != 0)` guard: that emits a second `cmp`.
+(`sub_0806ef5c`.)
+
+### 3.116 `break` out of a task loop ROTATES it; count the ROM's exit tests before choosing
+`gcc/stmt.c:expand_end_loop` carries a CYGNUS "loop test" transformation: it
+scans the first ~30 insns of the loop for a conditional jump to the loop's own
+`end_label` and, finding one, moves everything from the loop top through that
+test to the bottom, adding an entry `goto`. A `break` is exactly such a jump.
+Getting this wrong costs 8 bytes *and* a mid-function literal pool, because the
+rotated body pushes the pool out of `ldr rN,[pc,#imm]` range (3.6): 301
+differing bytes in `sub_0806cd40` before the shape was right.
+The decision is readable off the ROM — **count the copies of the loop's own
+exit test**:
+* two copies (one before the body, one after) IS the rotation, so the plain
+  `while (c1 && c2) { ... break; ... }` matches (`sub_0806cd40`);
+* one copy means the rotation did not happen, so spell the exits `goto done;`
+  with `done:` after the loop. The jump target is then a user label, the scan
+  finds nothing, and the loop NOTES survive so `move_movables` still hoists the
+  pool-address copy of 3.115.
+
+### 3.117 A pure register PERMUTATION is `regs_someone_prefers`, not a shape problem
+`sub_0806c770` was instruction-identical to the ROM but 34 bytes off: ROM
+`addr=r3 / k=r1 / dx=r4`, candidate `r4 / r3 / r1`. About eighty source
+variants — statement order, declaration order, every integer type for every
+local, `+=` vs `+`, goto forms, per-arm duplication, address-taken locals, dead
+stores — all left it at exactly 34.
+The cause is `gcc/global.c:find_reg`'s **pass 0**, which skips not only
+conflicting registers but every register that a *lower-priority conflicting*
+allocno **prefers** (`regs_someone_prefers`, built by `prune_preferences`).
+Pass 1, conflicts only, runs only if pass 0 finds nothing — and pass 0
+practically never fails, because r0-r3 are `call_used_regs` and are seeded into
+`regs_used_so_far` unconditionally.
+Here `u->unk1C = dy;` (an `s16` local into an `s32` field) expands to a pair of
+block-local shift temps; `local_alloc` renumbers them and, the block's task
+pointer already holding r0, one gets r1. `set_preference` then runs on the
+store, takes `XEXP (src, 0)` — `dy` — and, because the destination is already
+renumbered, records `dy prefers r1`. `dy` conflicts with `k` and is lower
+priority (2 refs/28 = 714 against 8 refs/40 = 6000), so r1 is excluded for `k`
+in pass 0; `k` takes r3, which pushes the long-lived pool-address pseudo to r4,
+which pushes the `>> 16` temp to r1. One preference, a three-way rotation.
+The escape hatch is in `prune_preferences`: a register the allocno **itself**
+prefers is not excluded. So do not try to remove the other allocno's
+preference — give the loser the same one, with an insn `(set (X) (op (k) ...))`
+whose destination is block-local and lands on r1:
+```c
+if (t->unk43 == 1) t->unk30 = dx - (ka = k + 8);   /* not: dx - (k += 8) */
+else               t->unk30 = dx + (kb = k + 8);
+```
+Three details are load-bearing: the assignment must stay **inside** the store
+expression (hoisting it emits `adds r1,#8` before the other operand's
+`lsls/asrs`, 12 bytes off); the two arms need **two different** temps, because
+one shared temp is defined in two blocks, becomes a global allocno and
+`set_preference` skips it; and `k + 8` without an assignment is tied back by
+`regmove`. See 4.31 for how to read this out of `agbcc -da`.
+
+### 3.118 `(x != 0)` as a VALUE only comes from `if (c) v = 1; else v = 0;`
+Thumb has no `setcc`, and `expr.c:do_store_flag` bails out before reaching
+`emit_store_flag`: `setcc_gen_code[NE] == CODE_FOR_nothing`, and its fallback
+gate additionally wants `abs_optab` or `ffs_optab` for SImode, neither of which
+Thumb has. So *every* spelling of a boolean value — `return (x & M) != 0;`,
+`!!(...)`, `(...) ? 1 : 0`, a temporary, a `u8` return type — compiles to
+`cmp rX,#0; beq .L; movs rX,#1; .L:`. The ROM's branchless
+`negs r0,r1; orrs r0,r1; lsrs r0,r0,#31` comes from `jump.c`, which calls
+`emit_store_flag` directly, with no gate, when it sees two constant stores to
+the same pseudo. Write the `if`/`else` out.
+(`sub_0806951c`, `sub_0806956c`, `sub_080695bc`.)
+
+### 3.119 Two constant arms and one store: the ROM says whether it is `if`/`else` or `?:`
+Both spellings are legitimate and they compile differently:
+* `beq .L2; A; b .L3; .L2: B; .L3: <store>` — a branch **over** the second arm —
+  is `if (c) f->x = A; else f->x = B;`, with cross-jumping merging the store
+  (`sub_0806e424`, `sub_0806ed28`, `sub_0806bbe8`);
+* `movs K1; cmp; beq .L; movs K2; .L: <store>` — one arm with a fall-through
+  default — is the ternary `x = c ? K2 : K1;` (`sub_0806ff7c`).
+Getting it backwards costs ~10 bytes each way. Two corollaries: with the
+`if`/`else` form the *then* arm is emitted first, so spell the condition so the
+arm the ROM lays out first is the `if` arm (3.64); and the shared-variable form
+(`if (c) w = A; else w = B; t->x = w;`) is a *third* shape — "materialise B,
+conditionally overwrite, one store" — which is 3.108 read from the other end.
+
+### 3.120 Where the table base `ldr` sits picks the array spelling
+Four different C spellings of "index a ROM table" put the base load in four
+different places, and the ROM's placement tells you which one the source used.
+Decide by what happens to the base:
+
+| ROM | spelling |
+|---|---|
+| base `ldr` FIRST, before the index shifts | plain value subscript `arr[i]` |
+| base `ldr` LAST, after the index arithmetic | `p = &arr[i];` (an ADDR_EXPR) |
+| plain symbol kept live, two different `adds rD, rBase, #K` | 2-D array `arr[i][k]` |
+| base bumped in place (`adds rBase, #K`) | `(&sym[K])[i * N]` |
+| offset folded into the load (`ldrh rD,[rB,#K]`) | struct array, or a literal index |
+
+The mechanism: a plain subscript expands the whole address under `EXPAND_SUM`,
+where `force_operand` emits both operand loads before either shift (3.87); an
+`&element` builds an ADDR_EXPR whose base load `update_equiv_regs` sinks down to
+the add. So the choice is about the ADDR_EXPR, not about how many fields you
+read — a *single* `gUnk_03002790[i].unk43 = 1;` already differs from
+`p = &gUnk_03002790[i]; p->unk43 = 1;`.
+In practice both forms occur in one file, and the index tells you which:
+an index that comes from a **load** goes with the plain subscript (and with the
+index assignment written inline inside the subscript, `arr[j = t->unk44].fld`,
+which keeps the base load in front — 3.87); an index that comes from a **call
+return** goes with `p = &arr[i];`. The 2-D form is the constructive companion of
+3.26: it materialises the row base separately and keeps the plain symbol live,
+so two column constants come out as `adds rD, rBase, #K` off one pool word,
+which nothing else reproduces (fifteen other spellings of `gUnk_0873EAD8` all
+sat at 50 differing bytes).
+(`sub_0806e0f0` and seven clones, `sub_0806b410`, `sub_0806c5d4`,
+`sub_0806cd40`, `sub_0806d1e8`.)
+
+### 3.121 Narrow locals: where the conversion lands names the type
+A 16-bit local is only right when the ROM converts at every USE; if it merely
+reloads and compares, the local is 32-bit — a `u16` local costs
+`adds rD, rS, #0` (PROMOTE_MODE's HImode store) even when `ldrh` already
+truncated (3.24 from the other end). For a value coming out of a call, read
+what sits between the `bl` and the extension pair:
+* `bl; ldr r2,[r4]; lsls; asrs` — something loaded in between, so the
+  conversion belongs at the use: an `s16` local, which extends on read (3.27);
+* `bl; lsls; lsrs; ldr r2,[r4]` — conversion immediately after the call, i.e. a
+  `u16` local truncating on write (3.37);
+* conversion at the use but unsigned — an `s32` local plus an explicit `(u16)`.
+Two traps. An `(s16)` cast **vanishes** inside an expression that is itself
+narrowed to `s16` (`convert_to_integer`'s "shorten" drops it at the tree level),
+no matter how many references the value has, so 3.82's escape does not apply —
+if the ROM sign-extends an argument your candidate uses raw, the value is an
+`s16` *parameter*. And you cannot infer parameter types by counting entry
+truncations: combine merges an `s16` parameter's `lsls #16; lsrs #16` into the
+`lsls/asrs` of its first signed use, so the entry pair survives only when that
+use is far away — `sub_0806d08c(s16, s16, s16)` shows all three variants in one
+prologue.
+(`sub_0806ceb8`, `sub_0806cffc`, `sub_0806d08c`, `sub_0806bd10`.)
+
+### 3.122 Reading a `switch` off the ROM: node count, root, and the condition code
+Four independent tells, all of which came up in M18:
+* **`bgt`/`blt` versus `bhi`/`bls` on a freshly zero-extended value.** For a
+  value produced by `lsls #24; lsrs #24`, an `if` gives `bhi`: combine's
+  `simplify_comparison` folds the shift pair into the comparison and, the
+  operand being an LSHIFTRT, calls `unsigned_condition`. `expand_case` emits its
+  compares against the index pseudo with the promoted `int` type and combine
+  never sees a shift to fold, so a `switch` keeps `bgt`. An otherwise perfect
+  `if` chain that differs from the ROM in exactly this condition code is telling
+  you to write a `switch`.
+* **The number of case NODES sets the tree root** (3.42), and `add_case_node`
+  merges adjacent values that share a label. So `case 0: case 1: x = 7; break;`
+  builds one RANGE node and emits a range test, while four separate bodies build
+  four VALUE nodes and root at 1 — and jump.c cross-jumps the duplicate bodies
+  away, so the OUTPUT is identical either way. Count the nodes in the dispatch
+  tree, not the blocks in the output (`sub_080700e8`).
+* **A case stacked on `default:` moves the root down.** When the ROM roots at
+  the lowest case with an empty left arm, add a fourth case node below the range
+  sharing the default's label (`case 0: default: c = -1; break;`);
+  `balance_case_nodes` then roots one lower and jump.c folds the empty arm into
+  the parent's `ble`. Writing that value as its own body instead fails whenever
+  the function already materialises the same constant, because gcse shares the
+  pseudo and the blocks stop being identical (3.112 family). (`sub_0806df28`.)
+* **The operand keeps its own QImode type** — gcc 2.9's C front end does not
+  integer-promote a switch operand, so `switch ((s8)t->unk7C)` is a faithful
+  shape; `cmp rN,#K; bhi` with no subtraction means the lowest case label is 0
+  (so a `case 0:` exists even with an empty body); and when the jump table's
+  filler entries point at the switch's END label rather than at the `bhi`
+  target there is **no `default:`** and every value is an explicit case
+  (`sub_08069c8c` genuinely lists 26).
+
+### 3.123 Write converging arms out in FULL and let cross-jumping merge them
+Three separate M18 functions failed the same way: a block reached from two paths
+was written once, and the ROM has its head duplicated in each predecessor.
+jump.c's `do_cross_jump` merges identical tails, and 3.51 requires the arms to
+use the same variables — so the source really did contain both copies.
+* `sub_0806b670` loads the task pointer **in each predecessor** of a shared
+  store; writing it once after an early-`return` is 4 bytes short and swaps
+  `r8`/`r9` across the whole function.
+* `sub_0806be4c`'s `movs r0,#0` sits in ONE predecessor of a shared four-`strb`
+  clear, because the other path already knows the register is zero from the
+  preceding `cmp/beq`. Duplicating the whole clear block lets cross-jumping
+  merge just the four stores.
+* `sub_0806f638` merges a **24-instruction** tail, `bl sub_08006338` included;
+  only the argument setup is per-arm. A shared local plus one call after the
+  `switch` gives a different, longer shape.
+The corollary for case order: arm bodies are emitted in source order (3.104), so
+the `movs r0,#K` block order in the ROM is the order the cases were written —
+`sub_0806d4e4`'s is 1, 0, 2, 4, 3, 5, not the numeric order the jump table
+suggests.
+
+### 3.124 `pop {r1}; bx r1` is a statement about the function's TYPE
+3.94 sharpened. `sub_0806b0f0` is a pure `switch` whose arms only call a void
+function; nothing anywhere feeds `r0`. But its epilogue is `pop {r1}; bx r1` and
+its switch operand lives in `r1`. Declaring it `s32 sub_0806b0f0(void)` **with
+no `return` statement anywhere** matched byte-for-byte: a non-void return type
+reserves `r0` and biases every allocation in the function away from it.
+The mirror case is a `void` callee whose caller consumes `r0` — the original had
+no prototype in scope and used K&R's implicit `int ()`. Reproducing that
+literally costs `-Wimplicit -Werror`, which is on for every file; instead cast
+the function **symbol**, which gcc 2.9 folds back into a direct call:
+`r = ((u32 (*)(void))sub_0806a158)();` (an indirect call only appears when the
+cast is applied to a pointer *value*). (`sub_08069bbc` calling `sub_0806a158`.)
+
+### 3.125 `&=` then `|=` on one cell, with a store between, means `volatile`
+```
+ldrh r1,[r4] ; ands ; strh r0,[r4] ; ldrh r0,[r4] ; orrs ; strh r0,[r4]
+```
+A non-volatile `u16` global CSEs that pair into one load and one store
+(`x = (x & M) | K`), 8 bytes shorter. `vu16` reproduces the ROM exactly, and
+because this is a *plain symbol* store there is no extra dead pre-read (3.7 only
+bites indexed lvalues). `gUnk_03001ED8`, the DISPCNT shadow, is written this way
+all over M18's transition code. Keep in mind the mask constant is
+loop-invariant and gets hoisted, so inside the loop it shows up as 3.24's
+`adds rD, rInv, #0` copy before the `ands` — a copy that must NOT be removed.
+
+### 3.126 Literal constants in a `while (1)` task body hoist THEMSELVES
+`sub_0806e258` keeps `0x10000` / `0` / `0xFFFF0000` / `0xFFFF` in r9/r8/r7/r6
+for a whole loop, and `sub_0806e424` keeps `5`, `6`, `0xFFFF`. These are plain
+literals in the source, **not** 3.10 zero-variables: `loop.c` hoists them into
+the preheader in order of first use in the body, and a constant used only once
+per iteration is not hoisted at all. So the preheader's register order is a free
+check on your statement order — and the "one variable per constant" reflex from
+M17 is wrong inside an infinite task loop.
+
+### 3.127 Reading an UNINITIALISED local is a real ROM shape — do not fix it
+Three M18 functions do it, and each needs it to match: `sub_0806b410` reads `r8`
+sixteen insns before its only write; `sub_0806caa0` returns a value the default
+switch arm never sets; `sub_0806d4e4`'s cross-jumped arms leave the variable
+untouched on the default path (which is *why* they merge — 3.51). Write the
+local, read it, and compile with `--no-werror`; adding an initialiser costs two
+bytes and shifts the tail. Same family as 3.93: the original source's bugs are
+part of the target.
+
+### 3.128 Pre-shifted 16-bit constants are the `s16`-local fingerprint
+`s16 r; r += 64;` materialises the addend **already shifted** into bits 16-31
+(`movs r1,#128; lsls r1,#15`); `u16 r; r += 64;` gives the shorter
+`adds rD,#64` before the truncation. Same for `|` and `&`: an `s16` destination
+pools `0xF0000` for `| 0xF` and `0xFFF00000` for `& 0xFFF0`. So whenever a
+16-bit computation carries its constants pre-shifted left by 16, the destination
+local is `s16`. To move the truncation away from the operator, split it with an
+intermediate: `m = t->unk48 - 16; y = m | 0xF;` costs no instructions, while
+`y = (t->unk48 - 16) | 0xF;` stays in SImode and emits `movs r1,#15; orrs`.
+(`sub_0806a03c`, `sub_080699a8`.)
+
+### 3.129 `fold_truthop` merges same-polarity bit tests only
+`(f & 1) != 0 || (f & 0x40) != 0` and `(f & 1) == 0 && (f & 0x40) == 0` both
+collapse into one `(f & 0x41)` test. MIXED polarity —
+`(g & 1) != 0 && (g & 0x40) == 0` — never merges and stays two `ands`. So when
+the ROM keeps two same-polarity tests apart, they were separate statements;
+transcribe them with a label and a `goto`. Extends 3.44 from range guards to bit
+tests.
+
+### 3.130 `A + (B + K)` is re-associated; a `K` held in a local is not
+Every literal spelling — `a + (b + 4)`, `a + b + 4`, `a + (4 + b)` — lets `fold`
+re-associate into `(a + 4) + b` and emit `adds rD, rD, #4` right after the first
+load. The ROM adds the constant to the *second* operand. Assigning the constant
+to a plain local first blocks the fold at zero instruction cost — the `#4` still
+ends up an immediate, and the local never gets a register. (`sub_0806d7ec`.)
+
+### 3.131 Hoisting a load out of a call argument extends a CSE'd symbol's live range
+`sub_0806ff7c`'s ROM pools `gUnk_03002490` **twice**: the CSE'd address pseudo
+dies mid-function. Computing a table index into a local *before* the call keeps
+one pseudo alive across all 192 insns and costs an extra callee-saved register.
+Writing the index expression inline in the argument fixes it, because gcc
+evaluates argument 1 (itself a call) first, so the global re-read lands after
+that call — fresh load, short live range. Diagnostic: **the ROM pools the same
+global twice and your candidate pools it once** (3.19 applied to a live range
+rather than to a pool word); `.greg` names it in one line
+(`Register 194 used 3 times across 192 insns; crosses 2 calls`).
+
+### 3.132 `muls rD, rS` ties to the operand the source names SECOND
+Written `t->unk43 * tbl[i]`, agbcc loads `unk43` first and multiplies the table
+byte into it; the ROM loads the table byte first and does `muls r0, r2` with r0
+holding `unk43`. Swap the source operands. The operand written first is
+evaluated first, and the two-address destination ties to the second.
+(`sub_0806cbd4`, 27 differing bytes to 0 with nothing else changed.)
+
+### 3.133 `movs rN, #255` is an `s8` local holding -1
+`movs r4,#255` followed later by `lsls r4,#24; asrs r4,#24` **writing back into
+r4** is a plain `s8` local assigned -1, whose QI-to-SI extension happens once at
+its first signed use and is reused afterwards. Spelling it `u8 sign = 255;` with
+`(s8)sign` at each use creates a second pseudo, and that one extra long-lived
+value pushed `sub_0806ff7c` from six to seven callee-saved registers. Contrast
+3.76's genuine `u8` + per-use-cast case, where the extension does *not* write
+back to the same register.
+
+### 3.134 `bne default; b case` comes from a first case whose body is a bare `goto`
+`expand_case` always emits `do_jump_if_equal` for a single-valued leaf, i.e.
+`cmp K; beq case; b default`, so the ROM's `cmp #8; bne default; b body` cannot
+be produced that way. It IS what you get when the case is the first arm in
+source order and its body is nothing but `goto label;`: RTL order then puts the
+case label immediately after `emit_jump_if_reachable(default_label)`, which
+triggers jump.c's "conditional jump jumping over an unconditional jump"
+(`invert_jump (insn, JUMP_LABEL (reallabelprev))`), inverting the `beq` and
+deleting the `b`. (`sub_0806a6e0`.)
+
+### 3.135 `T **g` versus repeating the global — read the diff, do not apply a rule
+3.107 says prefer repeating the global to a `struct Task **g` local. M18 found
+both the case that needs the opposite and the case where it does not matter.
+* **Needs `**g`**: `sub_0806a6e0`'s ROM keeps ONE pool word in r4 and re-loads
+  the pointer through it in three different basic blocks, then the block after
+  the switch loads its own pool word. Writing every mention as the plain global
+  gives three address pseudos and lets gcse hoist the tail's load into the
+  switch arms — an extra pool word plus an `adds r0, r4, #0` on the fall-through
+  path. Diagnostic: the ROM has FEWER pool words for the global than your
+  candidate AND your candidate has a `adds rX, rPool, #0` copy on a merge path.
+* **Does not matter**: `sub_0806e73c`'s setup block is byte-identical written
+  either way, because CSE collapses the repeated loads into the pseudo the local
+  would have created. All of `src/actor_6e0f0.c` matched with locals.
+So treat this as a diagnostic, not a rule: reach for the rewrite when the diff
+shows a spurious `adds rX, rY, #0` before an offset fix-up, and never churn a
+file that already matches. The real lever for *which* register each group gets
+is still 3.113.
+
+### 3.136 A zero variable's `movs` lands correctly only after the first store's address
+Extends 3.10. Three M18 functions put `movs rN, #0` *after* the first store's
+address computation; writing the zero variables at the top of the block emits
+the `movs` two instructions too early. The shape that matches puts the
+declaration-initialisation after the first statement of the group:
+```c
+t = gUnk_03002490;
+zero = 0;
+t->unk18 = zero;
+```
+When two zero variables of different widths are needed (a `u8` for the `strb`s,
+an `s32` for the `str`s, 3.50) both go there in either order — emission order is
+decided by first use, not by source order.
+(`sub_0806a638`, `sub_0806a9d8`, `sub_0806ac6c`.)
+
+### 3.137 A ROM base added LAST in an integer address sum needs its own local
+3.90 gets the operand order right, but the base's pool `ldr` still sinks below
+the shifts, because `update_equiv_regs` moves a single-use constant load down to
+its use. The ROM loads it first. Assigning the base to a local pointer restores
+the order at no cost:
+```c
+tbl = gUnk_0873E5F8;      /* ldr r4, =0x873E5F8 lands HERE */
+a = n << 1; a += i << 2; a += (u32)tbl;
+```
+(`sub_0806a5a0`, 23 differing bytes to 0.)
+
+### 3.138 A commutative sum mixing a MEM and a computed value: source order picks the address
+`(s16)(t->unk43 * a + t->unk48)` computes the product and then the address of
+`unk48`; the ROM materialises `&t->unk48` first. Writing the field first —
+`(s16)(t->unk48 + t->unk43 * a)` — reproduces it exactly and does not change the
+`adds` operand order, since the product still ties the destination. A
+`s16 *p48 = &t->unk48;` local works too but costs a user pseudo. Companion to
+3.87/3.89.
+
+### 3.139 `sym[K]` folds into the pool word; only a VARIABLE index keeps the base
+Thumb `ldrsh` needs `reg+reg`, so `((s16 *)gUnk_03005550)[4]` is emitted as
+`ldr rB, =gUnk_03005550+8` plus `movs rI,#0`. The ROM's `ldr rB, =gUnk_03005550`
+plus `movs rI,#8` needs the offset to reach expand as a register. A pointer
+local gives the right addressing but emits the pool load at the assignment,
+before the earlier call arguments (8 bytes wrong); a plain index variable set
+next to the other initialisations gives both the addressing and the emission
+order, because cse folds it to 4 only after the address form has been chosen.
+(All three input dispatchers in `src/actor_692fc.c`.)
+
+### 3.140 Assorted M18 one-liners
+* **Fall-through `case` chains are how a small multiply is spelled.** `unk7D * 64`
+  is seven fall-through arms each doing `r += 64`. N identical blocks in a row
+  whose jump-table entries point at successively later blocks is a fall-through
+  chain, never a loop (`sub_0806a03c`).
+* **`!= K1 && == K2` collapses** — gcc deletes the redundant first compare.
+  Nesting the two `if`s keeps both, exactly as 3.44 does for range guards
+  (`sub_0806bfd8`).
+* **The return-value extension pair names the CALLEE's return type**: `lsls #16;
+  asrs #16` after a `bl` is an `s16` return, `lsls #16; lsrs #16` a `u16` one.
+  Related trap: `src/early_6464.c` declares two helpers with a `u16` first
+  parameter, but every M18 caller passes a negative base, where `u16` folds the
+  constant to `0xFFF4` and pools it instead of the ROM's `movs; negs`. Declare
+  the parameter `s32` in the caller's file — `s16` does not work, because ARM
+  `PROMOTE_MODE` zero-extends (3.27).
+* **One `= 0xFFFF` store is a plain `strh`; two or more become 3.74's OR quirk.**
+  Both come from the identical source line, so do not rewrite the OR-shaped one
+  as `|=` — that adds a fourth instruction (`sub_0806e138` vs `sub_0806e258`).
+* **Two byte-identical neighbouring functions really are two functions.**
+  `sub_0806b1c4` and `sub_0806b1f4` are the same eight statements with the same
+  constants and the same table. Write them out twice.
+
+### 4.29 Literal pools cross function boundaries — cut a prefix at the POOL
+`sub_0806efec` (`symbols.csv` size `0xF6`, nominally ending at `0x0806F0E2`)
+loads eight of its constants from a pool at `0x0806F158-0x0806F174`, well past
+its own end. Running `tools/fnmatch.sh` on the nominal range prints a wall of
+fake differences, and the tell is asymmetric: the **rom** side shows an
+unresolved `ldr rN, [pc, #K] @ (0x……)` while the **candidate** side shows a
+resolved `ldr rN, =VALUE`, because the pool word is outside the compared slice
+and the tool could not fold it. Extend the range past the pool — usually to the
+start of the next real function — and re-run. The same rule governs partial
+landings: a matched *prefix* is only carvable if it ends after the pool.
+Dumping every pool in a range with a script (3.85) up front is worth the two
+minutes; in some ranges every pool ends exactly on the next entry, and then any
+`symbols.csv` boundary is a valid cut.
+
+### 4.30 The census has two systematic blind spots in the game-code zone — sweep for them BEFORE writing C
+M18 found **seven** defects in 256 entries; batch 8 alone had five in 31. Both
+classes come from the zone's own properties, so expect them in every bulk
+module, and both sweeps take about a minute.
+
+*Invented functions.* `.word 0xFFFFF000` in a literal pool always disassembles
+as `bl <pc + 0xFFE>`, so it invents a function roughly 4 KiB further on: this
+one constant produced `0x08063DFE` and `0x080643A2` (#65) and `0x0806F0E2` and
+`0x0806FC3E` (#64). A `b.n` that skips a mid-function pool (3.6) reads the same
+way (`0x0806FFF8`, `0x08070406`), as does a mid-function address a stray ROM
+word happens to match (`0x080706A8`). **Sweep**: disassemble the first
+instruction of every entry (`arm-none-eabi-objdump ... -Mforce-thumb` over the
+baserom slice). Anything that is not a prologue is a suspect; look at what
+precedes it. Preceded by a literal pool, it is a genuine straight-line leaf
+(3.80); preceded by real code, the recorded size of the function *above* it is
+wrong. For any `bl-target`-only symbol `S`, also check whether the word at
+`S - 0x1002` is `0xFFFFF000`.
+
+*Missed functions.* The zone is compiled `-fprologue-bugfix`, so a leaf has **no
+`push {lr}`** and the prologue scan cannot propose it; unless something points
+at it, it is silently merged into its predecessor's size. `0x080694E0`,
+`0x0806ACF8`, `0x0806B40C`, `0x080702D8` and `0x08070454` were all recovered
+this way, and three of them are live code with real callers — `0x0806ACF8` had
+six. **Sweep**: `grep -o 'bl\tloc_[0-9a-f]*'` over the split asm lists every
+`bl` whose target `split.py` could not name; function pointers stored into
+fields (`Task.unk00`/`unk04`/`unk0C`) never appear that way, so also scan the
+pool words for odd values inside your own range.
+
+Both classes are curated in `tools/symdb.py` (`FALSE_POSITIVES` /
+`EXTRA_THUMB_ENTRIES`), and both must be fixed before `tools/carve.py` will take
+the range. The compact diagnostic, which generalises 4.13's "a size that does
+not tile is a signal": **when the byte after a function's real epilogue is a
+prologue, the census merged two functions; when the entry has no prologue and is
+reached by fall-through, the census invented one.** Getting either wrong is not
+a small diff — a false entry makes you write two C functions where the ROM has
+one, and agbcc gives each its own literal pool, so the range can never match.
+
+### 4.31 Read the allocator's own dump instead of guessing at register diffs
+`agbcc -O2 -mthumb-interwork -fprologue-bugfix -da -o out.s in.c` writes
+`<file>.greg`, and two parts of it answer almost every register-permutation
+question:
+
+* the header lists each pseudo as `Register N used X times across Y insns`
+  (that is `n_refs` and `live_length`) and ends with `;; Register dispositions:`,
+  the final hard register per pseudo. Allocation order is `qsort` by
+  `gcc/global.c:allocno_compare`, priority
+  `floor_log2(n_refs) * n_refs / live_length * 10000 * size`, highest first,
+  each taking the lowest non-conflicting register;
+* just above the `Spilling for insn` trace, each allocno's conflicts and
+  preferences: `;; 31 conflicts: 22 29 … 0 13` (trailing small numbers are HARD
+  registers) and `;; 30 preferences: 1`. Grepping
+  `^;; [0-9]* preferences: 1` is a one-step oracle for "does anything still
+  prefer r1?" and steers far better than the byte count.
+
+`in.c.loop` and `in.c.cse2` show which pass created an extra reference. A full
+agbcc source tree (`git clone https://github.com/jiangzhengwenjz/agbcc`, commit
+`59b966e`) is worth keeping in a gitignored scratch dir for this; `grep -rn
+OLD_COMPILER` still lists the nine behavioural differences between the two
+compiler binaries. Two minutes of dump beat an afternoon of source shapes on
+both of M18's hard functions (3.115, 3.117).
+
+### 4.32 Grep the config before inventing a `gUnk_` name
+`tools/fnmatch.sh` resolves any `gUnk_<hexaddr>` automatically, so a wrongly
+named cell **matches** and only fails at the real link with "undefined reference
+to `gUnk_0300248C'". Before naming a pool address, grep
+`tools/split_config.json` `data_symbols` and the headers: `0x0300248C` is
+`gCurTaskIdx`, and the task zone also pools `gUnk_03002490`, `gUnk_03002790` and
+`gUnk_03001ED8` (the DISPCNT shadow, `vu16`) constantly. The same asymmetry
+applies to every symbol fnmatch stands in for — a green `fnmatch` is necessary
+but not sufficient; the landing check is `make clean && make compare`.
+
 ## 5. Workflow that worked
 
 The canonical per-function loop (pick → m2c first pass → asmdiff iterate →
