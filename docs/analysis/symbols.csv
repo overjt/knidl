@@ -3537,7 +3537,8 @@ vma,size,isa,evidence,name
 0x08099A0C,0x4,thumb,rom-pointer,sub_08099a0c
 0x08099A10,0x44,thumb,rom-pointer,sub_08099a10
 0x08099A54,0x28,thumb,rom-pointer,sub_08099a54
-0x08099A7C,0x70,thumb,rom-pointer,sub_08099a7c
+0x08099A7C,0x54,thumb,rom-pointer,sub_08099a7c
+0x08099AD0,0x1C,thumb,rom-pointer,sub_08099ad0
 0x08099AEC,0x34,thumb,rom-pointer,sub_08099aec
 0x08099B20,0x12C,thumb,rom-pointer,sub_08099b20
 0x08099C4C,0xF4,thumb,rom-pointer,sub_08099c4c
