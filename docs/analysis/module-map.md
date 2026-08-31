@@ -196,7 +196,7 @@ dispatches, pool density) — a planning aid, not a promise.
 | M15 | `0x08053AF4-0x0805AFAB` | 29.2 KiB | 86 | 1 | *** | link multiplayer mode |
 | M16 | `0x0805AFAC-0x08062583` | 29.5 KiB | 88 | 1 | *** | actor / effect support library B |
 | M17 | `0x08062584-0x080692FB` | 27.4 KiB | 244 | 2 | *** | struct Task field API (actor core) |
-| M18 | `0x080692FC-0x08070EBF` | 30.9 KiB | 256 | 4 | * | actor core part 2 + class-1 task bodies |
+| M18 | `0x080692FC-0x08070EBF` | 30.9 KiB | 256 | 4 | * | player-state task bodies (actor core part 2) - **landed (#64)** |
 | M19 | `0x08070EC0-0x08078B67` | 31.2 KiB | 218 | 8 | ** | actor bank C (11 class-3 tasks) |
 | M20 | `0x08078B68-0x0807F043` | 25.2 KiB | 390 | 20 | ** | enemy/object behaviour bank 1 |
 | M21 | `0x0807F044-0x08082E67` | 15.5 KiB | 188 | 10 | * | enemy/object behaviour bank 2 |
@@ -292,7 +292,7 @@ sub-issue of #35, so the numbering ascends with the recommended order):
 
 | Order | Issue | Module | Range | Size | Wave |
 |-------|-------|--------|-------|------|------|
-| 1 | #64 | M18 actor core part 2 + class-1 task bodies | `0x080692FC-0x08070EBF` | 30.9 KiB | 1 |
+| 1 | #64 | M18 player-state task bodies (actor core part 2) - landed | `0x080692FC-0x08070EBF` | 30.9 KiB | 1 |
 | 2 | #65 | M17 struct Task field API (actor core) | `0x08062584-0x080692FB` | 27.4 KiB | 1 |
 | 3 | #66 | M36 sub-game / bonus mode? | `0x080BDA2C-0x080C1FFB` | 17.5 KiB | 2 |
 | 4 | #67 | M25 enemy/object behaviour bank 6 | `0x0809000C-0x08093F63` | 15.8 KiB | 2 |
@@ -602,7 +602,51 @@ census below is the pre-decompilation one, kept for the record.
 * **Known RAM cells touched** current game state (main dispatch) x3.
 * **Batches as landed** `0x08062584` (2 fns), `0x08063698` (107 fns), `0x080653EC` (86 fns), `0x080673EC` (49 fns).
 
-### M18 `0x080692FC-0x08070EBF` - actor core part 2 + class-1 task bodies
+### M18 `0x080692FC-0x08070EBF` - player-state task bodies (actor core part 2) - **landed (#64)**
+
+The range is decompiled and carved out of the split asm, so it now appears in
+`module-map.csv` as ten `c_code` rows instead of one clusterable module; the
+census below is the pre-decompilation one, kept for the record.
+
+* **Landed as** `src/actor_692fc.c` (`0x080692FC-0x0806A344`, 32 fns),
+  `src/actor_6a344.c` (`0x0806A344-0x0806AD18`, 37),
+  `src/actor_6ad18.c` (`0x0806AD18-0x0806B2E4`, 19),
+  `src/actor_6b2e4.c` (`0x0806B2E4-0x0806C2A4`, 39),
+  `src/actor_6c2a4.c` (`0x0806C2A4-0x0806CD40`, 19),
+  `src/actor_6cd40.c` (`0x0806CD40-0x0806D22C`, 7),
+  `src/actor_6d22c.c` (`0x0806D22C-0x0806E0F0`, 31),
+  `src/actor_6e0f0.c` (`0x0806E0F0-0x0806EF5C`, 29),
+  `src/actor_6ef5c.c` (`0x0806EF5C-0x0806FF24`, 13) and
+  `src/actor_6ff24.c` (`0x0806FF24-0x08070EC0`, 30); shared data model in
+  `include/task.h`. `make progress` reports 0 asm code bytes in the range.
+* **What it turned out to be** the class-1 task bodies the player's own tasks
+  run, layered on the M17 field API. In address order: the input-probe
+  wrappers and their six directional decoders (they snapshot the running
+  task's state into a 6-byte stack record and dispatch through
+  `Actor.unk54`); the "player is out of the level" bodies (warp-star and door
+  exits, the level-clear dance); the screen-transition fades, which mask the
+  `gUnk_03001ED8` DISPCNT shadow to `0xE0FF` and re-OR a BG-enable pattern
+  while alternating a ROM window descriptor with a stack copy of
+  `gUnk_03001270`; the "carried by / riding on another task" movement block
+  with its two 16.16 position integrators and the `gUnk_03002170[]`
+  player-record bookkeeping; the vehicle and star-ride state machines; a
+  family of scripted set-piece and scenery/effect actors laid out as
+  repeating `<body, alive-check, spawner>` triples; and finally the
+  stage-enter and stage-leave sequences dispatched from the 26-entry anchor
+  table at `0x0873FB08`, each a run of `Task.unk58 = <16.16 offset>;
+  TaskYieldTrampoline(8);` steps separated by
+  `while (gUnk_03002490->unk24 != K) TaskYieldTrampoline(1);` barriers.
+* **Census defects found** seven, all curated in `tools/symdb.py` and all
+  confirmed by the byte match. False positives `0x0806F0E2`, `0x0806FC3E`
+  (the `.word 0xFFFFF000` bl-pair artifact, as in #32/#65), `0x0806FFF8` and
+  `0x08070406` (the `b.n` that skips a mid-function literal pool), and
+  `0x080706A8` (mid-function, no prologue); missed real functions
+  `0x080694E0`, `0x0806ACF8`, `0x0806B40C`, `0x080702D8` and `0x08070454`,
+  invisible to the prologue scan because `-fprologue-bugfix` drops the leaf
+  `push {lr}`. The module's true function count is 258, not 256.
+* **ROM data** ~110 tables named in `tools/split_config.json` `data_symbols`,
+  clustering in `0x0873D3xx`, `0x0873E5xx-0x0873F9xx`,
+  `0x0874C5xx-0x0874CFxx` and `0x087525xx-0x08752Exx`.
 
 * **Size** 30.9 KiB (`0x7bc4`), 256 functions (148 reachable only through pointer tables), mean `0x7b`, largest `0x474`, pool words 12.1% of bytes.
 * **Difficulty** 1/6 - 24 distinct RAM cells, 7 jump-table dispatches, 5 functions >= `0x200`.
@@ -616,7 +660,7 @@ census below is the pre-decompilation one, kept for the record.
 * **Depends on** sdk_libc x427, early_5d9c x201, M17 x137, M07 x30, early_6464 x26.
 * **Pool references** IWRAM x473, asset_metadata_index x146, game_code_and_rodata x125, early_58e4 x19, EWRAM x9, VRAM x1, early_5c4c x1, level_graphics_palettes x1.
 * **Known RAM cells touched** DISPCNT shadow x3, current game state (main dispatch) x2.
-* **Suggested batches** `0x080692FC` (86 fns), `0x0806B2E4` (64 fns), `0x0806D22C` (60 fns), `0x0806EF5C` (46 fns).
+* **Batches as landed** `0x080692FC` (32 fns), `0x0806A344` (37), `0x0806AD18` (19), `0x0806B2E4` (39), `0x0806C2A4` (19), `0x0806CD40` (7), `0x0806D22C` (31), `0x0806E0F0` (29), `0x0806EF5C` (13), `0x0806FF24` (30).
 
 ### M19 `0x08070EC0-0x08078B67` - actor bank C (11 class-3 tasks)
 

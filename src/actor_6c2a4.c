@@ -1,8 +1,25 @@
-/* game_code_and_rodata 0x0806C2A4-0x0806D22C (issue #64, module M18 batch 4).
+/* game_code_and_rodata 0x0806C2A4-0x0806CD40 (issue #64, module M18 batch 4).
  *
  * RECIPE: agbcc -O2 -mthumb-interwork -fprologue-bugfix
- *   ./tools/fnmatch.sh 0x0806C2A4 0x0806D22C pending/batch4/actor_6c2a4.c --newpb
+ *   ./tools/fnmatch.sh 0x0806C2A4 0x0806CD40 src/actor_6c2a4.c --newpb
+ *
+ * Class-1 task bodies for the vehicle/ride actors: the launch-and-fall pair
+ * (sub_0806c2a4 / sub_0806c930 set Task.unk54/unk58 from the sign in unk43
+ * and hand control to sub_080656b4), the star-ride state machine
+ * (sub_0806c4a0 / sub_0806c5d4 / sub_0806c770 - a nine-step animation
+ * switch over Task.unk46, the gUnk_0873EAC0 speed table and the
+ * gUnk_0873EAF0 drift table), and the short spawn-effect bodies that only
+ * walk Task.unk3C through a gfx list (gUnk_0874C520 / gUnk_0874CBC8) before
+ * TaskDispatchTrampoline.  sub_0806caa0 and sub_0806cc90 are the two helper
+ * spawners that fix up Task.unk43 (facing) on the task they created.
+ *
+ * sub_0806c770 was the hardest function in M18: instruction-identical to the
+ * ROM but 34 bytes of a three-way register rotation, caused by a preference
+ * exclusion in the allocator rather than a wrong shape.  Its `ka`, `kb`,
+ * `tbl` and `p` locals are load-bearing - see the commit message and
+ * docs/lessons-learned.md.
  */
+
 #include "gba/gba.h"
 #include "global.h"
 #include "task.h"

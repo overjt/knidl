@@ -1,16 +1,14 @@
 /* game_code_and_rodata 0x0806CD40-0x0806D22C (issue #64, module M18 batch 4c).
  *
  * RECIPE: agbcc -O2 -mthumb-interwork -fprologue-bugfix
- *   ./tools/fnmatch.sh 0x0806CD40 0x0806D22C pending/batch4c/actor_6cd40.c --newpb
+ *   ./tools/fnmatch.sh 0x0806CD40 0x0806D22C src/actor_6cd40.c --newpb
  *
- * The tail of the gUnk_0874CB90 sprite-set family: four class-1 task bodies
- * that play the same three-beat animation (sub_0806cd40 repeats it
- * Task.unk18 times while the parent task stays alive, sub_0806ceb8 jitters
- * the start position with sub_080064dc/ac, sub_0806cf70 and sub_0806d148 are
- * fixed-trajectory variants), plus three spawn helpers: sub_0806cffc and
- * sub_0806d08c drop a mirrored pair of type-146 actors either side of the
- * running task, and sub_0806d1e8 spawns a type-147 actor and seeds its
- * Task.unk20/unk24.
+ * The tail of the vehicle/ride block: sub_0806cd40's per-frame integrator
+ * over the gUnk_03002790[] task table, the two sprite-list players
+ * sub_0806ceb8 / sub_0806cf70, and the spawn/teardown helpers
+ * sub_0806cffc / sub_0806d08c / sub_0806d148 / sub_0806d1e8.  Every literal
+ * pool in this range ends exactly on the next function's entry, so any
+ * symbols.csv boundary here is a valid carve point.
  */
 
 #include "gba/gba.h"

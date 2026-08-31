@@ -19,7 +19,7 @@ M17,0x08062584,0x08063698,0x1114,2,2,0,0x88A,0xA04,5.2,1,0,0,0,0,1,3,struct Task
 M18,0x08063698,0x080653EC,0x1D54,100,3,0,0x4B,0x124,10.0,21,5,0,0,28,5,1,actor_63698,already landed (c_code)
 M19,0x080653EC,0x080673EC,0x2000,95,19,0,0x56,0x158,12.8,37,0,0,2,28,10,1,actor_653ec,already landed (c_code)
 M20,0x080673EC,0x080692FC,0x1F10,48,24,0,0xA5,0x248,15.3,30,2,0,0,21,7,2,actor_673ec,already landed (c_code)
-M21,0x080692FC,0x0806A344,0x1048,32,1,0,0x82,0x1E8,11.1,7,5,0,0,21,11,1,actor core part 2 + class-1 task bodies,"31 task types (#140-172, 19 of class 1); 256 functions, 148 pointer-dispatched; _call_via_r0 x17; calls the Task API x137"
+M21,0x080692FC,0x0806A344,0x1048,32,1,0,0x82,0x1E8,11.1,7,5,0,0,21,11,1,player-state task bodies (actor core part 2),"confirmed by #64: the class-1 bodies the player's own tasks run - input probing and the six directional decoders, the carried/riding movement block, the vehicle and star-ride state machines, the screen-transition fades over the DISPCNT shadow, and the stage-enter/leave sequences dispatched from the 26-entry table @0x0873FB08; 258 functions in 30.9 KiB"
 M22,0x0806A344,0x0806AD18,0x9D4,37,26,0,0x44,0xE4,13.8,10,0,0,0,9,7,1,actor_6a344,already landed (c_code)
 M23,0x0806AD18,0x0806B2E4,0x5CC,19,11,0,0x4E,0xE4,13.2,6,0,0,0,6,9,1,actor_6ad18,already landed (c_code)
 M24,0x0806B2E4,0x0806C2A4,0xFC0,39,17,0,0x67,0x260,10.8,8,0,0,0,4,9,1,actor_6b2e4,already landed (c_code)
