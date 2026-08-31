@@ -1,8 +1,20 @@
 /* game_code_and_rodata 0x0806AD18-0x0806B2E4 (issue #64, module M18 batch 2b).
  *
  * RECIPE: agbcc -O2 -mthumb-interwork -fprologue-bugfix
- *   ./tools/fnmatch.sh 0x0806AD18 0x0806B2E4 pending/batch2b/actor_6ad18.c --newpb
+ *   ./tools/fnmatch.sh 0x0806AD18 0x0806B2E4 src/actor_6ad18.c --newpb
+ *
+ * The screen-transition half of the module. sub_0806ad18 nudges the carried
+ * actor one frame either way; sub_0806adb0 and sub_0806af78 are the two
+ * DISPCNT-shadow fades (gUnk_03001ED8 masked to 0xE0FF and re-ORed with the
+ * BG-enable pattern, alternating a ROM window descriptor with a copy of
+ * gUnk_03001270 on the stack); sub_0806aec0 plays the six-step
+ * gUnk_0873E6A0/gUnk_0873E6D0 blend-and-offset table. sub_0806b070
+ * dispatches through gUnk_0873E734[Task.unk76], sub_0806b098 is the
+ * transition body proper, and sub_0806b12c is the entry point that saves and
+ * restores Task.unk40 around it. The tail (0x0806B12C-0x0806B2E4) is the
+ * small task-field setters and their gUnk_0873E7xx descriptor tables.
  */
+
 #include "gba/gba.h"
 #include "global.h"
 #include "task.h"

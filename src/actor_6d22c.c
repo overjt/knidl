@@ -1,8 +1,19 @@
 /* game_code_and_rodata 0x0806D22C-0x0806E0F0 (issue #64, module M18 batch 5).
  *
  * RECIPE: agbcc -O2 -mthumb-interwork -fprologue-bugfix
- *   ./tools/fnmatch.sh 0x0806D22C 0x0806E0F0 pending/batch5/actor_6d22c.c --newpb
+ *   ./tools/fnmatch.sh 0x0806D22C 0x0806E0F0 src/actor_6d22c.c --newpb
+ *
+ * Class-1 task bodies for a family of scripted set-piece actors: the
+ * three-stage entrance at sub_0806d22c (three sub_080061c0 sweeps with the
+ * position recomputed from the parent task each time), the four short
+ * animation-table players sub_0806d65c/6e4/730/77c and their dispatch
+ * wrappers sub_0806d554/564/574/5a4/5b8/5cc, the sub_08064d34 spawner
+ * helpers sub_0806d4e4/d928/da3c, the eight-way "carried" body
+ * sub_0806d7ec, the gUnk_03002790[].unk73-keyed body sub_0806daec (with its
+ * per-frame mover sub_0806da74), the two-sprite draw callback sub_0806dca0,
+ * and the two random-walk bodies sub_0806dd90 and sub_0806df98.
  */
+
 #include "gba/gba.h"
 #include "global.h"
 #include "task.h"
