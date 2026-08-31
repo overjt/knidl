@@ -2,6 +2,16 @@
  *
  * RECIPE: agbcc -O2 -mthumb-interwork -fprologue-bugfix
  *   ./tools/fnmatch.sh 0x08091F08 0x08091F9C src/enemy_91f08.c --newpb
+ *
+ * sub_08091f08, the entry of M25's third boss (its states live in
+ * src/enemy_91f9c.c): it installs sub_080656b4 / sub_080653ec as the draw and
+ * per-frame hooks, points Task.unk38 at gUnk_087535FC, counts the boss into
+ * gUnk_02007D00[7], seeds the state block (Task.unk28 = -1, Task.unk34 = 1,
+ * Task.unk1C = -1, Task.unk24 = Actor.unk28) and dispatches Task.unk73
+ * through the 27-entry anchor table at 0x08743ADC.
+ *
+ * It sits in its own file only because sub_08091e18, one function earlier in
+ * the ROM, is still assembly; it belongs with src/enemy_91f9c.c.
  */
 #include "gba/gba.h"
 #include "global.h"

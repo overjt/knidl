@@ -2,6 +2,39 @@
  *
  * RECIPE: agbcc -O2 -mthumb-interwork -fprologue-bugfix
  *   ./tools/fnmatch.sh 0x08091F9C 0x08093F64 src/enemy_91f9c.c --newpb
+ *
+ * M25's third and fourth boss scripts.  The third (entry sub_08091f08 in
+ * src/enemy_91f08.c, table 0x08743ADC) starts here with sub_08091f9c, which
+ * installs the per-frame body sub_08091ffc and the animation script
+ * gUnk_08743AC8.  sub_08091ffc is the busiest body in the module: besides the
+ * usual Task.unk15 dispatch it calls sub_080227a4 (the camera/room hook) on
+ * entry, and when the row gUnk_08743A58[Task.unk34] is non-null it runs the
+ * "hit the wall" transition - sub_0806914c, then Task.unk1C = Task.unk7E,
+ * a re-seat of the actor at gUnk_030023B4 - Task.unk43 * 16, and a hand-off to
+ * sub_080685ec / sub_08006148.
+ *
+ * States 0-12 follow as <body, guard> pairs.  sub_08092250 is the attack
+ * chooser: it walks Task.unk6C over gUnk_08743A70[Task.unk74] rounds, and per
+ * round stores |sub_08063cd0()| in gUnk_03001F2C, classifies it into
+ * gUnk_02007D00[6] (0/1/2) against the RNG, and plays one of three yield
+ * sequences; sub_080926fc is the three-phase charge, sub_08092cdc the
+ * multi-hit dive, sub_080930ac the four-way finisher whose case 3 spawns the
+ * actor 154 at gUnk_030023B4/gUnk_030023D4, and sub_08093380 the defeat
+ * sequence.  sub_080934b8 is the shake helper the first states yield to and
+ * sub_080934f8 is the collision probe: ten sub_08021bb4 samples along
+ * gUnk_08743AB8, mapped through the terrain-class table gUnk_087339F0 into a
+ * two-bit result that picks the next Task.unk28 direction from gUnk_08743AC2.
+ * sub_0809364c / sub_080936a0 / sub_08093780 are the shared step sequences,
+ * sub_080937d0 the hit hook, sub_08093858 the four-instruction "stop moving"
+ * leaf the census had missed, and sub_0809397c the companion body.
+ *
+ * The fourth boss starts at sub_08093a24 (table 0x087441A4, graphics
+ * gUnk_08752F60): sub_08093a64 installs sub_08093a98 as its body,
+ * sub_08093ac8 is its one state, sub_08093bd4 / sub_08093c30 are the second
+ * entry pair (graphics gUnk_08753160, Actor.unk38 = 0x20E), sub_08093ccc and
+ * sub_08093dcc are the endless spawners that call sub_08064cdc(181, -8, -8, 1)
+ * every six frames, and sub_08093cf8 / sub_08093e58 / sub_08093f00 are the
+ * companions that copy the boss's 16.16 position (±8 rows) and expire with it.
  */
 #include "gba/gba.h"
 #include "global.h"

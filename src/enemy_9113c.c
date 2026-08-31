@@ -2,6 +2,26 @@
  *
  * RECIPE: agbcc -O2 -mthumb-interwork -fprologue-bugfix
  *   ./tools/fnmatch.sh 0x0809113C 0x08091E18 src/enemy_9113c.c --newpb
+ *
+ * M25's second boss script, dispatched through the 15-entry anchor table at
+ * 0x08743984; its entry (sub_080910c0) is the last function of
+ * src/enemy_9000c.c.  Same skeleton as the first: sub_0809113c installs the
+ * per-frame body sub_080911a8 and the animation script gUnk_0874397C,
+ * sub_080911a8 dispatches Task.unk15 and reloads the graphics record
+ * gUnk_0827565C, and states 0-6 are <body, guard> pairs.  Two states shell out
+ * to sub_08091954, which runs the boss's attack loop: it repeats Task.unk1C
+ * times, flips Task.unk20 between the two step helpers sub_08091a30 and
+ * sub_08091a98 (they walk Task.unk3C up and down while yielding Task.unk24
+ * frames per step), and waits on Task.unk7A between passes.
+ *
+ * sub_08091b00 / sub_08091b24 / sub_08091b60 are the hit hooks (they return
+ * 1 when they take over the task), and sub_08091b6c is the class-4 companion
+ * the boss spawns: it builds an ActorSpawn on the stack, then flies the task
+ * along three 16.16 ramps (Task.unk28 / Task.unk30) with a wait in the middle
+ * for gUnk_03002790[Task.unk44].unk20 to clear.  sub_08091d24 is that
+ * companion's per-frame body (it integrates the ramps and copies the boss's
+ * position and facing), and sub_08091ddc installs sub_08091e18, the animation
+ * walker that is still asm in this batch (see the issue #67 notes).
  */
 #include "gba/gba.h"
 #include "global.h"

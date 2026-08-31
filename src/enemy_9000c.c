@@ -2,6 +2,35 @@
  *
  * RECIPE: agbcc -O2 -mthumb-interwork -fprologue-bugfix
  *   ./tools/fnmatch.sh 0x0809000C 0x0809113C src/enemy_9000c.c --newpb
+ *
+ * The first of M25's four boss scripts, dispatched through the 23-entry
+ * anchor table at 0x08743848.  sub_0809000c is the task entry: it installs
+ * sub_080656b4 as the draw hook (Task.unk00) and sub_08065438 as the
+ * per-frame hook (Task.unk0C), points Task.unk38 at the graphics block
+ * gUnk_08752ED8, counts the boss into gUnk_02007D00[0], spawns its helper
+ * task with sub_08064d34(177, 1) and hands Task.unk73 to sub_08002e98, which
+ * jumps into the table.  sub_080900f4 is the per-frame body: it runs down
+ * Task.unk18, asks sub_0806acf8 / sub_080692fc whether the player interrupted,
+ * dispatches Task.unk15 through the same table, reloads the graphics through
+ * sub_080663f4 / sub_08066468 and drives the three animation calls from the
+ * per-frame row gUnk_087437D0[Task.unk3C].
+ *
+ * States 0-10 then follow as <body, guard> pairs (sub_080901e0 /
+ * sub_08090270, sub_08090298 / sub_080903c8, ...): the body is a run of
+ * TaskYieldTrampoline waits that steps Task.unk3C, clears and then waits on
+ * Task.unk7A (set when the boss lands) and pushes 16.16 velocities through
+ * sub_080061c0 / sub_0800622c, and the guard re-arms sub_080900d8 through
+ * sub_08006148 whenever Task.unk14 leaves the state.  State 4 aims with
+ * Div(|sub_08063cd0()|, 3), state 5 spawns the actors 8 and 145, and state 10
+ * is the defeat sequence (sub_0806684c, sub_0806caa0, sub_0806ad18).
+ *
+ * The tail holds the pieces the states share - sub_08090e18 (fire a shot at
+ * the boss's own position through sub_08067120), sub_08090e54 (advance the
+ * animation from gUnk_08743744[Task.unk28]), sub_08090e9c (the hover loop),
+ * the sub_08090ef0 / sub_08090f14 / sub_08090f4c hit hooks, the companion
+ * task sub_08090fc0 / sub_08090fe0 that mirrors the boss's position while
+ * gUnk_03004CA0[Task.unk44] says the boss is alive - and sub_080910c0, the
+ * entry of the second boss, whose states live in src/enemy_9113c.c.
  */
 #include "gba/gba.h"
 #include "global.h"
