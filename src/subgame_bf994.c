@@ -4,26 +4,33 @@
  * RECIPE: agbcc -O2 -mthumb-interwork -fprologue-bugfix
  *   ./tools/fnmatch.sh 0x080BF994 0x080C0DE8 src/subgame_bf994.c --newpb
  *
- * The middle of M36: the per-slot task that owns one player's marker, and
- * the geometry helpers the whole module places sprites with.
+ * The middle of M36: the four per-slot tasks and the geometry the whole
+ * module places sprites with.  A slot task carries its own index in
+ * Task.unk1C and the id of the task that spawned it in Task.unk44, so
+ * `&gUnk_03002790[t->unk44]` is the mode task whose Task.unk34 says whose
+ * turn it is.
  *
- *   sub_080bf994 / sub_080bfb24 / sub_080bfb4c / sub_080bfb94
- *       the slot task's entry and its three short states.
- *   sub_080bfbf4   the "hit" animation: six frames off gUnk_0875676C driven
- *       by a countdown in Task.unk30/unk34, then the hand-off through
+ *   sub_080bf994   slot-task entry: seat the sprite from the per-slot lists
+ *       gUnk_0875674C / gUnk_0875675C (16.16 x/y) and gUnk_0875671C
+ *       (animation), then branch on whether this slot has the turn.
+ *   sub_080bfb24 / sub_080bfb4c / sub_080bfb94   its three short states.
+ *   sub_080bfbf4   the hand-off animation: six frames off gUnk_0875676C
+ *       counted down in Task.unk30/unk34, then the position update through
  *       sub_080bdf3c.
- *   sub_080bfde8 / sub_080bfe64   the eliminated / winner states.
- *   sub_080bff28   the free-running slot driver: waits out the intro, then
- *       loops forever re-reading the owning task's slot (Task.unk34) and,
- *       whenever it changes, re-arms the sprite and recomputes the hand-off
- *       speed as Div((gUnk_08756770[next] - gUnk_08756770[cur]) << 4, frames).
- *   sub_080c0074 / sub_080c0388 / sub_080c0540   the three placement bodies.
+ *   sub_080bfde8 / sub_080bfe64   the eliminated and winner states.
+ *   sub_080bff28   the free-running driver: waits out the intro, then loops
+ *       for ever re-reading the mode task's slot and, whenever it changes,
+ *       re-arms the sprite and recomputes the hand-off speed as
+ *       Div((gUnk_08756770[next] - gUnk_08756770[cur]) << 4, frames).
+ *   sub_080c0074 / sub_080c0388 / sub_080c0540   the three placement bodies
+ *       that walk a turn: sub_080c072c for the thrower, sub_080c061c for the
+ *       projectile and sub_080c0a10 for its shadow.
  *   sub_080c05f0 / sub_080c0704   set a slot's sprite frame / animation.
  *   sub_080c061c   position on the 16.16 parabola p0 + v*t + (a*t*t)/2:
- *       p0 from gUnk_08756798/gUnk_087567A0, v from gUnk_087567A8[c][b] and
- *       the two coefficient rows from gUnk_08756D3C[c][0..1].
- *   sub_080c072c / sub_080c0a10 / sub_080c0b18 / sub_080c0c58 / sub_080c0ca4
- *       the remaining table-driven placement and animation helpers.
+ *       p0 from gUnk_08756798 / gUnk_087567A0, v from gUnk_087567A8[c][b],
+ *       and the two coefficient rows from gUnk_08756D3C[c][0..1].
+ *   sub_080c0b18 / sub_080c0c58 / sub_080c0ca4 / sub_080c0d30   the
+ *       remaining table-driven animation helpers.
  */
 #include "gba/gba.h"
 #include "global.h"
