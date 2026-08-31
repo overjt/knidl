@@ -2271,6 +2271,21 @@ different number of reload allocations **earlier** in the function (3.39/3.40),
 not a different expression shape — and if none of the plausible earlier changes
 is byte-neutral, stop and record it, as this one is.
 
+The dump reads this out directly and is a much better signal than the byte
+count: `agbcc -da` writes `Spilling for insn N.` for every insn reload
+processes and `Spilling reg R.` each time it takes a hard register for reload
+use. `sub_08091e18` prints `4, 2, 4, 4` where the ROM needs `4, 5, 5, 4`, and
+the choice is reload's spill-cost comparison over the pseudos currently
+allocated to each candidate register (`.greg`'s header gives each one as
+`Register N used X times across Y insns; crosses K calls`), not the rotation
+alone. Two useful facts fell out of probing it: the sequence *is*
+source-sensitive (indexing the table from the other struct moved the second
+entry to `3`, hoisting the animation pointer into a local moved it to `1`),
+and it is stable under everything that only renames or reorders locals. If you
+need to move a scratch register, drive the search off the `Spilling reg`
+sequence — one dump per variant, no linking — and stop when the sequence stops
+moving.
+
 ### 3.157 One more use of a temporary can flip a register-priority tie
 Global-alloc sorts by `floor_log2(refs) * refs / live_length` (4.31), so moving
 a single reference across a `floor_log2` step re-orders two allocnos. In
