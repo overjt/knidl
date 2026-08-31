@@ -22,6 +22,7 @@
 @   0x080C17AC sub_080c17ac
 @   0x080C17B0 sub_080c17b0
 @   0x080C1804 sub_080c1804
+@   0x080C1820 sub_080c1820
 @   0x080C183C sub_080c183c
 @   0x080C18C4 sub_080c18c4
 @   0x080C18C8 sub_080c18c8
@@ -35,7 +36,6 @@
 @   0x080C1CEC sub_080c1cec
 @   0x080C1D84 sub_080c1d84
 @   0x080C1EBC sub_080c1ebc
-@   0x080C1F18 sub_080c1f18
 @   0x080C1F88 sub_080c1f88
 @   0x080C1F9C sub_080c1f9c
 @   0x080C1FDC sub_080c1fdc
@@ -1555,6 +1555,10 @@ sub_080c1804:
 	bx	r0
 	.word	gUnk_03002490
 	.word	0x08757244
+	.thumb_func
+	.global	sub_080c1820
+sub_080c1820:
+	.thumb
 	push	{lr}
 	ldr	r0, [pc, #16]	@ 0x080C1834
 	ldr	r0, [r0, #0]
@@ -2533,10 +2537,6 @@ loc_080c1efc:
 	bgt.n	loc_080c1f1a	@ 0x080C1F1A
 	cmp	r4, #0
 	beq.n	loc_080c1f24	@ 0x080C1F24
-	.thumb_func
-	.global	sub_080c1f18
-sub_080c1f18:
-	.thumb
 	b.n	loc_080c1f4c	@ 0x080C1F4C
 	.global	loc_080c1f1a
 loc_080c1f1a:

@@ -553,11 +553,11 @@
 @   0x080C0074 sub_080c0074
 @   0x080C0388 sub_080c0388
 @   0x080C0540 sub_080c0540
+@   0x080C05F0 sub_080c05f0
 @   0x080C061C sub_080c061c
 @   0x080C0704 sub_080c0704
 @   0x080C072C sub_080c072c
 @   0x080C0A10 sub_080c0a10
-@   0x080C0AFC sub_080c0afc
 @   0x080C0B18 sub_080c0b18
 @   0x080C0C58 sub_080c0c58
 @   0x080C0CA4 sub_080c0ca4
@@ -32344,7 +32344,7 @@ sub_080bfde8:
 	str	r6, [r1, #48]
 	ldr	r0, [r4, #52]
 	str	r0, [r1, #36]
-	bl	loc_080c05f0	@ 0x080C05F0
+	bl	sub_080c05f0	@ 0x080C05F0
 	ldr	r0, [r5, #0]
 	ldr	r0, [r0, #24]
 	bl	sub_080c0704	@ 0x080C0704
@@ -32533,7 +32533,7 @@ loc_080bff84:
 	lsls	r0, r0, #1
 	strh	r0, [r2, #60]
 	ldr	r0, [r5, #52]
-	bl	loc_080c05f0	@ 0x080C05F0
+	bl	sub_080c05f0	@ 0x080C05F0
 	ldr	r1, [r4, #0]
 	ldr	r0, [pc, #160]	@ 0x080C003C
 	str	r0, [r1, #88]
@@ -32561,7 +32561,7 @@ loc_080bffb0:
 	ble.n	loc_080bffd0	@ 0x080BFFD0
 	bl	sub_08006244	@ 0x08006244
 	ldr	r0, [r5, #52]
-	bl	loc_080c05f0	@ 0x080C05F0
+	bl	sub_080c05f0	@ 0x080C05F0
 	.global	loc_080bffd0
 loc_080bffd0:
 	movs	r0, #1
@@ -32596,7 +32596,7 @@ loc_080bffee:
 	cmp	r0, r1
 	beq.n	loc_080c006c	@ 0x080C006C
 	adds	r0, r1, #0
-	bl	loc_080c05f0	@ 0x080C05F0
+	bl	sub_080c05f0	@ 0x080C05F0
 	ldr	r0, [r5, #52]
 	bl	sub_080c0704	@ 0x080C0704
 	ldr	r1, [r6, #0]
@@ -33360,8 +33360,10 @@ loc_080c05d4:
 	.word	gUnk_03002490
 	.word	sub_080bfdcc+1
 	.word	gCurTaskIdx
-	.global	loc_080c05f0
-loc_080c05f0:
+	.thumb_func
+	.global	sub_080c05f0
+sub_080c05f0:
+	.thumb
 	ldr	r1, [pc, #28]	@ 0x080C0610
 	ldr	r2, [r1, #0]
 	ldr	r1, [pc, #28]	@ 0x080C0614
@@ -34019,10 +34021,6 @@ loc_080c0af0:
 	mov	r9, r4
 	pop	{r4, r5, r6, r7}
 	pop	{r0}
-	.thumb_func
-	.global	sub_080c0afc
-sub_080c0afc:
-	.thumb
 	bx	r0
 	movs	r0, r0
 	.word	0x08756798

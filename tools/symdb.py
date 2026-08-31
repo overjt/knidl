@@ -336,6 +336,19 @@ FALSE_POSITIVES = {
     # at 0x0807072A: it is the middle of sub_08070648
     # (0x08070648-0x0807073C, 0xF4).
     0x080706A8,
+    # 0x080C0AFC is the `bx r0` that ends sub_080c0a10 (issue #66): the
+    # function's epilogue is `pop {r4-r7}; pop {r0}; bx r0` and the census cut
+    # it one halfword short.  A word of the compressed sound-sample blob at
+    # 0x087D2CB8 happens to equal 0x080C0AFD, which the rom-pointer heuristic
+    # read as a Thumb entry.  sub_080c0a10 really runs
+    # 0x080C0A10-0x080C0B18 (0x108), pool included.
+    0x080C0AFC,
+    # 0x080C1F18 is the `b.n 0x080C1F4C` default arm of the switch inside
+    # sub_080c1ebc (issue #66), reached by fall-through from the `beq` above
+    # it and branched to from three other arms.  Same artifact class: the word
+    # at 0x087D3F04, inside the same sample blob, equals 0x080C1F19.
+    # sub_080c1ebc really runs 0x080C1EBC-0x080C1F88 (0xCC).
+    0x080C1F18,
 }
 
 # Curated Thumb entries with NO in-ROM reference (issue #31): dead m4a SDK
@@ -435,6 +448,18 @@ EXTRA_THUMB_ENTRIES = {
                  # `push {lr}`.  Body:
                  #   u32 f(void) { return
                  #       gUnk_03002490->unk8C->unk1A != -1; }
+    0x080C05F0,  # real leaf the prologue filter dropped (issue #66): a
+                 # straight-line body opening `ldr r1, [pc, #28]` and ending
+                 # `bx lr`, with its own pool at 0x080C0610, called by `bl`
+                 # from 0x080BFE16, 0x080BFF94, 0x080BFFCC and 0x080C000C.
+                 # The census folded it into sub_080c0540, whose real size is
+                 # 0xB0 rather than 0xDC.
+    0x080C1820,  # dead export inside what the census read as one 0x38-byte
+                 # sub_080c1804 (issue #66).  It has its own `push {lr}`
+                 # prologue and its own literal pool at 0x080C1834, and it is
+                 # sub_080c1804 with `Task.unk15` swapped for `Task.unk14`;
+                 # nothing in the 8 MiB image references it.  sub_080c1804 is
+                 # really 0x1C.
 }
 
 EVIDENCE_KINDS = ("bl-target", "rom-pointer", "prologue-scan", "curated")
