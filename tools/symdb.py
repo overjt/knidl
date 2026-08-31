@@ -324,6 +324,18 @@ FALSE_POSITIVES = {
     # bl-target-only symbol S, check whether the word at S - 0x1002 is
     # 0xFFFFF000 before believing it.
     0x0806FC3E,
+    # 0x0806FFF8 and 0x08070406 are the `b.n` that skips a mid-function
+    # literal pool (issue #64; the shape of lessons 3.6), reached by
+    # fall-through from the instruction above.  Their real functions are
+    # sub_0806ff7c (0x0806FF7C-0x080700E8, 0x16C) and sub_080703a8
+    # (0x080703A8-0x0807042C, 0x84).
+    0x0806FFF8,
+    0x08070406,
+    # 0x080706A8 opens `adds r1, r3, #0` with r3 live from the
+    # `ldr r3, [r5, #0]` three halfwords above it, and the next epilogue is
+    # at 0x0807072A: it is the middle of sub_08070648
+    # (0x08070648-0x0807073C, 0xF4).
+    0x080706A8,
 }
 
 # Curated Thumb entries with NO in-ROM reference (issue #31): dead m4a SDK
@@ -393,6 +405,17 @@ EXTRA_THUMB_ENTRIES = {
                  #                     bl target from 0x08006D52, not dead)
     0x080070E8,  # LinkEndRound       (bl target from 0x08006D56; the row
                  #                     0x08007102 was a mis-split of it)
+    0x080702D8,  # real function the prologue filter dropped (issue #64): a
+                 # straight-line body opening `ldr r1, [pc, #84]`, with two
+                 # honest `bl` callers at 0x0806FF72 and 0x0807044A.  The
+                 # census folded it into sub_0807029c, whose real size is
+                 # 0x3C rather than 0x98.
+    0x08070454,  # same (issue #64): sub_08070208 stores the pool word
+                 # 0x08070455 into Task.unk00, but the pointer scan only
+                 # walks data segments, and the entry opens
+                 # `ldr r0, [pc, #56]` with no prologue.  It follows
+                 # sub_0807042c's `bx r0` + alignment halfword, so
+                 # sub_0807042c is 0x24, not 0x6C.
     0x0806B40C,  # dead `bx lr` stub inside what the census read as one
                  # 0x4C-byte sub_0806b3c4 (issue #64).  It is the same
                  # two-byte no-op body as the named stubs sub_0806b330 and

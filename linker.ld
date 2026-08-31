@@ -296,7 +296,12 @@ SECTIONS
         build/src/actor_6ef5c.o(.text)
     } > ROM
 
-    .game_code_and_rodata_080653ec_0806ef5c 0x0806FF24 : {
+    /* actor_6ff24 — decompiled to C (src/actor_6ff24.c, carved by tools/carve.py) */
+    .actor_6ff24 0x0806FF24 : {
+        build/src/actor_6ff24.o(.text)
+    } > ROM
+
+    .game_code_and_rodata_080653ec_0806ef5c 0x08070EC0 : {
         KEEP(*(.game_code_and_rodata_080653ec_0806ef5c)) KEEP(*(.game_code_and_rodata_080653ec_0806ef5c.tail))
     } > ROM
 

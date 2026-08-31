@@ -30572,7 +30572,7 @@ loc_08035640:
 	movs	r0, r0
 	.word	gUnk_03002490
 	.word	0x0000FFFD
-	.word	0x0873D420
+	.word	gUnk_0873D420
 	.global	loc_08035658
 loc_08035658:
 	cmp	r0, #2

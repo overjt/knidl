@@ -8621,7 +8621,7 @@ loc_0800b730:
 	.word	0x02000020
 	.word	0x020061E0
 	.word	0x02006160
-	.word	0x02006094
+	.word	gUnk_02006094
 	.word	0x020060CC
 	.word	gUnk_02007FB8
 	.word	gUnk_02000008
