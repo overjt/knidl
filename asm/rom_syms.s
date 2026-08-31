@@ -587,6 +587,30 @@ gUnk_0873E388 = 0x0873E388
 gUnk_0873E3C8 = 0x0873E3C8
 	.global	gUnk_0873E5F8
 gUnk_0873E5F8 = 0x0873E5F8
+	.global	gUnk_0873E620
+gUnk_0873E620 = 0x0873E620
+	.global	gUnk_0873E634
+gUnk_0873E634 = 0x0873E634
+	.global	gUnk_0873E640
+gUnk_0873E640 = 0x0873E640
+	.global	gUnk_0873E700
+gUnk_0873E700 = 0x0873E700
+	.global	gUnk_0873EB40
+gUnk_0873EB40 = 0x0873EB40
+	.global	gUnk_0873EB60
+gUnk_0873EB60 = 0x0873EB60
+	.global	gUnk_0873EB80
+gUnk_0873EB80 = 0x0873EB80
+	.global	gUnk_0873EBA0
+gUnk_0873EBA0 = 0x0873EBA0
+	.global	gUnk_0873EC20
+gUnk_0873EC20 = 0x0873EC20
+	.global	gUnk_0873ECA0
+gUnk_0873ECA0 = 0x0873ECA0
+	.global	gUnk_0873ECC0
+gUnk_0873ECC0 = 0x0873ECC0
+	.global	gUnk_0873ECD0
+gUnk_0873ECD0 = 0x0873ECD0
 	.global	gUnk_0873ECE0
 gUnk_0873ECE0 = 0x0873ECE0
 	.global	gUnk_0873ECEC
@@ -635,18 +659,36 @@ gUnk_0873FAE8 = 0x0873FAE8
 gUnk_0873FB04 = 0x0873FB04
 	.global	gUnk_0873FB24
 gUnk_0873FB24 = 0x0873FB24
+	.global	gUnk_0874C500
+gUnk_0874C500 = 0x0874C500
 	.global	gUnk_0874C718
 gUnk_0874C718 = 0x0874C718
 	.global	gUnk_0874C828
 gUnk_0874C828 = 0x0874C828
+	.global	gUnk_0874C9D8
+gUnk_0874C9D8 = 0x0874C9D8
+	.global	gUnk_0874CA1C
+gUnk_0874CA1C = 0x0874CA1C
+	.global	gUnk_0874CA78
+gUnk_0874CA78 = 0x0874CA78
+	.global	gUnk_0874CAD8
+gUnk_0874CAD8 = 0x0874CAD8
 	.global	gUnk_0874CB3C
 gUnk_0874CB3C = 0x0874CB3C
 	.global	gUnk_0874CB7C
 gUnk_0874CB7C = 0x0874CB7C
+	.global	gUnk_0874CB90
+gUnk_0874CB90 = 0x0874CB90
 	.global	gUnk_0874CBD0
 gUnk_0874CBD0 = 0x0874CBD0
 	.global	gUnk_0874CC38
 gUnk_0874CC38 = 0x0874CC38
+	.global	gUnk_0874CC48
+gUnk_0874CC48 = 0x0874CC48
+	.global	gUnk_0874CC60
+gUnk_0874CC60 = 0x0874CC60
+	.global	gUnk_0874CC84
+gUnk_0874CC84 = 0x0874CC84
 	.global	gUnk_0874CCA4
 gUnk_0874CCA4 = 0x0874CCA4
 	.global	gUnk_0874CCBC
@@ -657,8 +699,12 @@ gUnk_0874CFEC = 0x0874CFEC
 gUnk_08752548 = 0x08752548
 	.global	gUnk_08752BA8
 gUnk_08752BA8 = 0x08752BA8
+	.global	gUnk_08752D20
+gUnk_08752D20 = 0x08752D20
 	.global	gUnk_08752D50
 gUnk_08752D50 = 0x08752D50
+	.global	gUnk_08752E48
+gUnk_08752E48 = 0x08752E48
 
 @ Link-time constants (tools/split_config.json "abs_symbols"):
 @ absolute symbols whose VALUE is the constant (SDK idiom, e.g.

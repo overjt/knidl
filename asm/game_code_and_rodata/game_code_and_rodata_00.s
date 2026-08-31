@@ -23366,8 +23366,8 @@ loc_08012e28:
 	.word	gUnk_03002490
 	.word	sub_080059fc+1
 	.word	sub_08005ca0+1
-	.word	0x0874CA1C
-	.word	0x0873E640
+	.word	gUnk_0874CA1C
+	.word	gUnk_0873E640
 	.word	0x0000FFFF
 	.thumb_func
 	.global	sub_08012e6c
@@ -24022,7 +24022,7 @@ sub_08013348:
 	.word	gUnk_03002490
 	.word	sub_080059d8+1
 	.word	sub_08005ca0+1
-	.word	0x0874C500
+	.word	gUnk_0874C500
 	.word	gUnk_03002790
 	.word	0xFFFD0000
 	.word	0xFFFF8000

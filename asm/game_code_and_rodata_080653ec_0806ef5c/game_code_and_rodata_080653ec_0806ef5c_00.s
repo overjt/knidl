@@ -11919,7 +11919,7 @@ loc_08074cde:
 	movs	r0, r0
 	.word	gUnk_030023B4
 	.word	gUnk_030023D4
-	.word	0x0874C500
+	.word	gUnk_0874C500
 	.global	loc_08074cf4
 loc_08074cf4:
 	movs	r1, #0

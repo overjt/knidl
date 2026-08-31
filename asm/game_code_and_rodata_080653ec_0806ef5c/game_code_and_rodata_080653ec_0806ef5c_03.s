@@ -13676,7 +13676,7 @@ sub_080a5324:
 	.word	gUnk_03002490
 	.word	sub_080656b4+1
 	.word	sub_0806523c+1
-	.word	0x0874C500
+	.word	gUnk_0874C500
 	.word	0xFFFE0000
 	.word	0x5A5A5A5A
 	.thumb_func
