@@ -203,7 +203,7 @@ dispatches, pool density) — a planning aid, not a promise.
 | M22 | `0x08082E68-0x080860F7` | 12.6 KiB | 119 | 8 | * | enemy/object behaviour bank 3 |
 | M23 | `0x080860F8-0x0808CCE7` | 27.0 KiB | 285 | 14 | *** | enemy/object behaviour bank 4 |
 | M24 | `0x0808CCE8-0x0809000B` | 12.8 KiB | 157 | 8 | * | enemy/object behaviour bank 5 |
-| M25 | `0x0809000C-0x08093F63` | 15.8 KiB | 121 | 4 | * | enemy/object behaviour bank 6 |
+| M25 | `0x0809000C-0x08093F63` | 15.8 KiB | 121 | 4 | * | boss behaviour bank (four scripted bosses) - **landed (#67)** |
 | M26 | `0x08093F64-0x080988F7` | 18.4 KiB | 140 | 4 | ** | enemy/object behaviour bank 7 |
 | M27 | `0x080988F8-0x0809BA43` | 12.3 KiB | 140 | 3 | * | enemy/object behaviour bank 8 |
 | M28 | `0x0809BA44-0x080A158F` | 22.8 KiB | 198 | 5 | * | enemy/object behaviour bank 9 |
@@ -247,7 +247,7 @@ ordering inside it:
 | # | Module | Size | Fns | Difficulty | Modules it calls | Modules calling it | Task types |
 |---|--------|------|-----|-----------|------------------|--------------------|------------|
 | 1 | M36 sub-game: four-slot bomb-pass minigame | 0x45D0 | 117 | 1 | 2 | 1 | 1 |
-| 2 | M25 enemy/object behaviour bank 6 | 0x3F58 | 121 | 1 | 3 | 0 | 10 |
+| 2 | M25 boss behaviour bank (four scripted bosses) | 0x3F58 | 121 | 1 | 3 | 0 | 10 |
 | 3 | M27 enemy/object behaviour bank 8 | 0x314C | 140 | 1 | 4 | 0 | 5 |
 | 4 | M22 enemy/object behaviour bank 3 | 0x3290 | 119 | 1 | 4 | 0 | 8 |
 | 5 | M24 enemy/object behaviour bank 5 | 0x3324 | 157 | 1 | 4 | 0 | 11 |
@@ -295,7 +295,7 @@ sub-issue of #35, so the numbering ascends with the recommended order):
 | 1 | #64 | M18 player-state task bodies (actor core part 2) - landed | `0x080692FC-0x08070EBF` | 30.9 KiB | 1 |
 | 2 | #65 | M17 struct Task field API (actor core) | `0x08062584-0x080692FB` | 27.4 KiB | 1 |
 | 3 | #66 | M36 sub-game: four-slot bomb-pass minigame - landed | `0x080BDA2C-0x080C1FFB` | 17.5 KiB | 2 |
-| 4 | #67 | M25 enemy/object behaviour bank 6 | `0x0809000C-0x08093F63` | 15.8 KiB | 2 |
+| 4 | #67 | M25 boss behaviour bank (four scripted bosses) - landed | `0x0809000C-0x08093F63` | 15.8 KiB | 2 |
 | 5 | #68 | M27 enemy/object behaviour bank 8 | `0x080988F8-0x0809BA43` | 12.3 KiB | 2 |
 | 6 | #69 | M22 enemy/object behaviour bank 3 | `0x08082E68-0x080860F7` | 12.6 KiB | 2 |
 | 7 | #70 | M24 enemy/object behaviour bank 5 | `0x0808CCE8-0x0809000B` | 12.8 KiB | 2 |
@@ -749,7 +749,68 @@ census below is the pre-decompilation one, kept for the record.
 * **Known RAM cells touched** decimal digit buffer, [5] = sign/flag x1.
 * **Suggested batches** `0x0808CCE8` (45 fns), `0x0808E070` (112 fns).
 
-### M25 `0x0809000C-0x08093F63` - enemy/object behaviour bank 6
+### M25 `0x0809000C-0x08093F63` - boss behaviour bank (four scripted bosses) - **landed (#67)**
+
+The range is decompiled and carved out of the split asm, so it now appears in
+`module-map.csv` as four `c_code` rows instead of one clusterable module; the
+census below is the pre-decompilation one, kept for the record.
+
+* **Landed as** `src/enemy_9000c.c` (`0x0809000C-0x0809113C`, 35 fns),
+  `src/enemy_9113c.c` (`0x0809113C-0x08091E18`, 23),
+  `src/enemy_91f08.c` (`0x08091F08-0x08091F9C`, 1) and
+  `src/enemy_91f9c.c` (`0x08091F9C-0x08093F64`, 58).  One function,
+  `sub_08091e18` (`0x08091E18-0x08091F08`, `0xF0`), is still asm: its C is
+  semantically complete and 231 of its 240 bytes match, but three
+  reload-scratch registers refuse to move (lessons `3.156`).
+  `make progress` therefore still counts 240 asm code bytes in the range.
+* **What it turned out to be** four self-contained boss scripts, one per
+  anchor table, all built to the same pattern:
+  * an **entry** function installs the draw hook (`Task.unk00` =
+    `sub_080656b4`, `Task.unk0C` = one of `sub_08065438` / `sub_08065350` /
+    `sub_080653ec` / `sub_0806523c`), points `Task.unk38` at the boss's
+    `TaskGfx` block in `0x08752ED8-0x087536FC`, bumps the live-boss counter
+    `gUnk_02007D00[0]`/`[7]`, and hands `Task.unk73` to `sub_08002e98`, which
+    dispatches through the anchor table;
+  * the **per-frame body** (`Task.unk04`) counts `Task.unk18`/`unk20` down,
+    asks `sub_0806acf8`/`sub_080692fc` whether the player interrupted, and
+    then dispatches `Task.unk15` through the same table; it also drives the
+    three animation calls `sub_080639b4`/`sub_080639f0`/`sub_08063a00` off a
+    per-state row (`0x087437D0`+`0x087437F4`... per family) and the
+    graphics-reload pair `sub_080663f4`/`sub_08066468`;
+  * each **state** is a `<body, guard>` pair: the body is a run of
+    `TaskYieldTrampoline` waits that step `Task.unk3C` (the animation frame),
+    clear and then wait on `Task.unk7A` (the flag the movement helpers set
+    when the boss lands), and set the 16.16 velocity pair through
+    `sub_080061c0` / `sub_0800622c` (`0x5A5A5A5A` is the "leave this axis
+    alone" sentinel); the guard is the six-instruction
+    `if (Task.unk14 != N) sub_08006148(body_dispatcher, gCurTaskIdx);` that
+    re-arms the dispatcher whenever the state byte changes.
+  Boss-specific pieces worth naming: `sub_080905d8` aims by dividing
+  `|sub_08063cd0()|` by 3 (`Div`), `sub_0809074c` and `sub_080925b8` spawn the
+  helper actors 8/30/110/133 through `sub_08064b5c`, `sub_08092250` picks the
+  next attack by classifying `|sub_08063cd0()|` into `gUnk_02007D00[6]` and
+  then running one of three `switch` arms, `sub_080934f8` probes the terrain
+  with ten `sub_08021bb4` samples along `0x08743AB8` and turns the two result
+  bits into a new `Task.unk28` direction via `0x08743AC2`, and
+  `sub_08090fe0` / `sub_08091d24` / `sub_0809397c` / `sub_08093cf8` are the
+  companion tasks that mirror a boss's position: each checks
+  `gUnk_03004CA0[Task.unk44] != -1` (the parent is still alive), then copies
+  16.16 position or animation state out of `gUnk_03002790[Task.unk44]`, and
+  calls `sub_08005654(gCurTaskIdx)` to kill itself when the parent is gone.
+* **Census fixes** two, both curated in `tools/symdb.py`: `0x08090904` is a
+  false positive (the `bx r0` that ends `sub_080908ec`, pointed at by a
+  coincidental byte-table word at `0x086C5964`), and `0x08093858` is a real
+  four-instruction leaf the prologue scan could not propose because
+  `-fprologue-bugfix` left it without a `push` - the behaviour-table word at
+  `0x087440CC` points at it.  The module's true function count is 120.
+* **ROM data** 77 new `tools/split_config.json` `data_symbols`: the per-boss
+  state and script tables cluster in `0x08743734-0x08743B48`, the fourth
+  boss's in `0x087440DC-0x08744324`, the `TaskGfx` blocks in
+  `0x08752ED8-0x087536FC`, and three shared blobs sit outside those
+  (`0x0826A668`, `0x0827565C`/`0x08275670`, `0x082959A8` - the 16-byte
+  graphics records `sub_080663f4`/`sub_08066480` upload).
+
+### M25 census (pre-decompilation)
 
 * **Size** 15.8 KiB (`0x3f58`), 121 functions (109 reachable only through pointer tables), mean `0x86`, largest `0x340`, pool words 12.8% of bytes.
 * **Difficulty** 1/6 - 12 distinct RAM cells, 1 jump-table dispatches, 3 functions >= `0x200`.

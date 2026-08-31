@@ -2172,6 +2172,184 @@ to `gUnk_0300248C'". Before naming a pool address, grep
 applies to every symbol fnmatch stands in for — a green `fnmatch` is necessary
 but not sufficient; the landing check is `make clean && make compare`.
 
+### 3.150 Write literal `0`s in a task body; do not invent zero variables
+M17/M18 taught the zero-variable idiom (3.10, 3.136) and M25 shows its limit:
+in six of its bodies the plain literal is what matches and a `zero` local is
+what breaks. The mechanism is that cse already gives the repeated zero one
+pseudo per MODE (one for the `strb`s, one for the `strh`s, one for the `str`s)
+and places its `movs` where the ROM has it — including *before* an intervening
+call, which is exactly what a hand-written variable is usually reached for.
+Reach for a variable only when the ROM keeps the zero in a **high** register
+(`mov r8, rN`) or when one register serves stores of two different widths;
+otherwise start from literals. (`sub_0809074c`, `sub_08092198`,
+`sub_08092cdc`, `sub_08091f08`, `sub_08093ac8`, `sub_08093bd4`.)
+
+### 3.151 A `while (cond) yield;` loop has two shapes; count the exit tests
+3.116 explains the rotation for `break`; the plain wait loop needs the same
+count. With **two** copies of the exit test (one before the body, one after)
+the natural `while (gUnk_03002490->unk7A == 0) TaskYieldTrampoline(1);`
+matches, and the entry copy re-uses the pointer the preceding statement left in
+a register (3.98). With **one** copy and a `b` into it, gcc's
+`expand_end_loop` rotation is what you want but the plain `while` will not
+produce it — write
+```c
+while (1) { if (cond_is_false) break; body; }
+```
+which rotates the same way *and* keeps the loop notes, so a loop-invariant
+pool address stays hoisted. The `goto wait; do { … wait: ; } while (cond);`
+form of 3.148 gives one test copy too, but kills the hoist and re-loads the
+pool inside the loop — use it only when the ROM really does re-load.
+(`sub_08091390` needed the `while (1)` form, `sub_080903f0` the plain one.)
+
+### 3.152 An explicit pointer copy inside the arm that crosses a call splits the live range
+`sub_08091390` reads the running task once, tests one field, and in the `else`
+arm keeps the pointer across three calls. Written the obvious way the pointer
+becomes one long-lived pseudo, takes a second callee-saved register and pushes
+the pool address out of `r4`; the ROM instead copies it (`adds r4, r1, #0`)
+*inside* the arm. Reproduce that with a second local assigned from the first
+at the top of the arm:
+```c
+v = gUnk_03002490;
+if (v->unk1C == 0) v->unk20 = 4;
+else { p2 = v; p2->unk24 = abs_expr; … }
+```
+`v` then dies at the test and only `p2` is saved. Diagnostic: the ROM pushes
+one callee-saved register fewer than your candidate and has a
+`adds rN, rM, #0` copy at the top of one arm.
+
+### 3.153 A wait loop that indexes a task table wants the address assigned inside the condition
+The shape is `while (arr[p->idx].field != 0) { yield; p = g; }`. Written that
+way the element address is built base-first and the offset lands in the index
+register; the ROM builds it base-**last** with the field offset folded into the
+load. Assigning the element address to a local *inside the condition* gives
+both, at no instruction cost:
+```c
+p = gUnk_03002490;
+while ((q = &gUnk_03002790[p->unk44])->unk20 != 0)
+{
+    TaskYieldTrampoline(1);
+    p = gUnk_03002490;
+}
+```
+(`sub_08091b6c`; 3.120's "`p = &arr[i]`" row, applied to a loop test.)
+
+### 3.154 A narrow signed load whose extension must survive needs its own `s32` local
+`ldrsh` in the ROM where your candidate emits `ldrh` means the sign extension
+matters, but writing `(s16)` inside the expression does not help: if the result
+is stored back into a 16-bit field, `convert_to_integer` shortens the whole
+tree and the extension disappears (3.82's mechanism, seen from the store side).
+Give the load its own statement and a 32-bit destination:
+```c
+m = ((s16 *)v)[27];          /* ldrsh — the high half of a 16.16 field */
+v->unk4A = u->unk4A + m;
+```
+`update_equiv_regs` then sinks the load to its use, so the emission order is
+unchanged. (`sub_08091d24`, `sub_08091ffc`.)
+
+### 3.155 Which operand a `muls` names decides more than the multiply
+3.132 says the two-address destination ties to the operand named second. In
+`sub_08090fe0` that choice also decided which of two long-lived pointers got
+`ip`: with `(u16)u->unk43 * gUnk_087438A4[i]` the product's temp took `r3`,
+which pushed the task pointer to `r4` and the table pointer to `ip`; with the
+operands swapped (`gUnk_087438A4[i] * (u16)u->unk43`) the temp took a different
+register, `r3` stayed free for the element pointer and the task pointer landed
+in `ip` exactly as the ROM has it. When a function is instruction-identical but
+two registers are exchanged and a multiply is involved, swap the multiply
+before hunting anything else.
+
+### 3.156 Reload-scratch registers are not reachable from the source
+`ldrsh`/`ldrsb` with a register offset is `*extendhisi2_insn`, whose index is a
+`(clobber (match_scratch))`: reload fills it, so the register is chosen by the
+`last_spill_reg` rotation (3.39) and by which hard registers the allocator has
+already handed out — not by anything in the C. `sub_08091e18` matches the ROM
+in every instruction and differs only in three such registers (two `ldrsh`
+indices and the `subs rD, rS, #1` that decrements a field); ~40 source shapes,
+both compiler binaries, and 9,400 decomp-permuter iterations all leave them
+alone. Recognise the pattern early: if the diff is only the *register* fields
+of insns whose registers are scratches or reload destinations, the lever is a
+different number of reload allocations **earlier** in the function (3.39/3.40),
+not a different expression shape — and if none of the plausible earlier changes
+is byte-neutral, stop and record it, as this one is.
+
+### 3.157 One more use of a temporary can flip a register-priority tie
+Global-alloc sorts by `floor_log2(refs) * refs / live_length` (4.31), so moving
+a single reference across a `floor_log2` step re-orders two allocnos. In
+`sub_08093cf8` the ROM has the 16.16 pair in `r1`/`r2` and the candidate had
+them swapped; splitting the last use of the value into its own local
+```c
+y = x >> 16;      /* instead of  v->unk48 = x >> 16; */
+v->unk48 = y;
+```
+dropped `x` from 5 refs to 4, flipped the tie and closed the function. The
+mirror lever is 3.144 (merge two locals into one); read the ROM to see which
+direction you need.
+
+### 3.158 `p += 1` between two `ldrsh` reads is not the same as `p[1]`
+Both spell "the next halfword", but `p[1]` puts the offset in the index
+register (`movs rI,#2; ldrsh rD,[rP,rI]`) while an explicit increment bumps the
+pointer and leaves the index zero (`adds rP,#2; movs rI,#0; ldrsh rD,[rP,rI]`)
+— which is what the ROM does when it reads `Task.unk48` and then `Task.unk4A`
+through one pointer. `*p++` and `r = p + 1` both fold back to `&u->unk4A` and
+re-materialise the address from the struct base, so the two-statement form is
+the only one that matches. (`sub_08093cf8`.)
+
+### 3.159 A 2-D ROM table is still visible in the addressing mode
+3.26 read this from the row-base side; M25 shows the flat/2-D distinction in a
+plain lookup. `tbl[a*2 + b]` on a `u32 tbl[]` computes the index and then
+scales it (`lsls #1`, `adds`, `lsls #2`); `tbl[a][b]` on a `u32 tbl[][2]`
+distributes the scale into the two terms (`lsls #3` and `lsls #2`, then one
+`adds` each) — which is what the ROM does whenever a table is indexed by two
+fields. Declaring the extern as `[][2]` is also the honest description of the
+data. (`sub_08093dcc`.)
+
+### 3.160 A `vu8`/`vu16` cell read puts the load before the mask constant
+3.49 established this for old_agbcc byte fields; it holds for agbcc globals
+too. `if ((gUnk_03005550 & 2) != 0)` on a plain `u8` emits `movs rK,#2` first,
+on a `vu8` the `ldrb` first — and in the same function the volatile read is
+also what puts `ldrb rV; adds rT,rK,#0; ands rT,rV` in the ROM's order instead
+of the copy-first form of 3.46. When two reads of one cell disagree with your
+candidate only in the order of the load and the mask, make the cell volatile.
+(`sub_080937d0`.)
+
+### 3.161 Per-arm stores keep a base address out of loop.c's movable list
+`sub_08092250` classifies a value into `gUnk_02007D00[6]` in six arms and then
+runs a `switch` on it, all inside a loop. Written as "compute into a local,
+store once after the `if`/`else` chain" the array's base becomes one movable
+with `savings 4` and loop.c hoists it out of the loop — the ROM re-loads it in
+every arm. Writing the store **in each arm** (3.108) makes each arm's base
+pseudo live into the cross-jumped store block, so `reg_in_basic_block_p` fails
+and `scan_loop` drops them from the movable list (3.55) — no hoist, four pool
+words, exactly like the ROM. The companion observation: mentioning a RAM cell
+three times (`gUnk_03001F2C = abs(x); if (gUnk_03001F2C <= 43) … else if
+(gUnk_03001F2C <= 87)`) raises *its* address's `savings` to 3 and gets it
+hoisted instead, which is what the ROM keeps in `r8`.
+
+### 3.162 `abs()` in a condition distributes into two compares
+`(f() < 0 ? -f() : f()) <= 47` compiles to `cmp #0; bge arm2; f(); negs;
+cmp #47; ble body; b skip; arm2: f(); cmp #47; bgt skip;` — `do_jump` walks the
+`COND_EXPR` and emits one comparison per arm, with jump.c inverting the first
+arm's branch pair (3.134). Three calls to `f()` in the ROM around one compare
+is therefore an `abs`-style ternary in the condition, not a value in a local;
+`global.h`'s `abs()` macro has the arms the other way round (`>= 0 ? n : -n`),
+which puts the *negated* arm second — read the ROM's arm order and spell the
+ternary to match. M25 has eight of these. (`sub_0809074c`, `sub_08092a14`,
+`sub_08091954`, …)
+
+### 4.33 Verify a growing batch file by fnmatching the prefix, and keep a backup
+`tools/fnmatch.sh` compiles the WHOLE file and links it at the given start, so
+"just this function" runs report the entire file as one giant diff. Two habits
+make a 60-function file tractable: (a) after adding functions, re-run fnmatch
+with the range end of the **last** function written (`0x0809000C 0x08090298`,
+then `…0x080903F0`, …) — every prefix that ends on a `symbols.csv` boundary is
+a valid range once you have checked that no literal pool crosses it (4.29;
+a five-line script over the split asm's `@ 0x…` pool comments answers that for
+the whole module in one go); and (b) work on one function at a time in a
+scratch copy that holds the file header plus that function, so an iteration is
+3 s instead of 20 s. Splice the result back with a matcher that requires the
+`name(args)\n{` form: `file.index("void " + name)` also matches the forward
+declaration in the header and silently duplicates half the file — which cost
+this issue a rebuild of 26 functions from the transcript.
+
 ## 5. Workflow that worked
 
 The canonical per-function loop (pick → m2c first pass → asmdiff iterate →
