@@ -214,7 +214,7 @@ dispatches, pool density) — a planning aid, not a promise.
 | M33 | `0x080B2FE8-0x080B6153` | 12.4 KiB | 108 | 5 | *** | HUD / overlay effects? |
 | M34 | `0x080B6154-0x080B9D0B` | 14.9 KiB | 106 | 2 | *** | save file / SRAM records + options |
 | M35 | `0x080B9D0C-0x080BDA2B` | 15.3 KiB | 193 | 4 | *** | game-mode flow + link lobby |
-| M36 | `0x080BDA2C-0x080C1FFB` | 17.5 KiB | 117 | 4 | * | sub-game / bonus mode? |
+| M36 | `0x080BDA2C-0x080C1FFB` | 17.5 KiB | 117 | 4 | * | sub-game: four-slot bomb-pass minigame - **landed (#66)** |
 | M37 | `0x080C1FFC-0x080C641F` | 17.0 KiB | 82 | 1 | **** | FIR-coefficient effect engine |
 | M38 | `0x080C6420-0x080CD89B` | 29.1 KiB | 110 | 4 | **** | intro / cutscene / ending sequences? |
 | M39 | `0x080CD89C-0x080CE51F` | 3.1 KiB | 40 | 0 | - | **done** - m4a_1 |
@@ -246,7 +246,7 @@ ordering inside it:
 
 | # | Module | Size | Fns | Difficulty | Modules it calls | Modules calling it | Task types |
 |---|--------|------|-----|-----------|------------------|--------------------|------------|
-| 1 | M36 sub-game / bonus mode? | 0x45D0 | 117 | 1 | 2 | 1 | 1 |
+| 1 | M36 sub-game: four-slot bomb-pass minigame | 0x45D0 | 117 | 1 | 2 | 1 | 1 |
 | 2 | M25 enemy/object behaviour bank 6 | 0x3F58 | 121 | 1 | 3 | 0 | 10 |
 | 3 | M27 enemy/object behaviour bank 8 | 0x314C | 140 | 1 | 4 | 0 | 5 |
 | 4 | M22 enemy/object behaviour bank 3 | 0x3290 | 119 | 1 | 4 | 0 | 8 |
@@ -294,7 +294,7 @@ sub-issue of #35, so the numbering ascends with the recommended order):
 |-------|-------|--------|-------|------|------|
 | 1 | #64 | M18 player-state task bodies (actor core part 2) - landed | `0x080692FC-0x08070EBF` | 30.9 KiB | 1 |
 | 2 | #65 | M17 struct Task field API (actor core) | `0x08062584-0x080692FB` | 27.4 KiB | 1 |
-| 3 | #66 | M36 sub-game / bonus mode? | `0x080BDA2C-0x080C1FFB` | 17.5 KiB | 2 |
+| 3 | #66 | M36 sub-game: four-slot bomb-pass minigame - landed | `0x080BDA2C-0x080C1FFB` | 17.5 KiB | 2 |
 | 4 | #67 | M25 enemy/object behaviour bank 6 | `0x0809000C-0x08093F63` | 15.8 KiB | 2 |
 | 5 | #68 | M27 enemy/object behaviour bank 8 | `0x080988F8-0x0809BA43` | 12.3 KiB | 2 |
 | 6 | #69 | M22 enemy/object behaviour bank 3 | `0x08082E68-0x080860F7` | 12.6 KiB | 2 |
@@ -910,7 +910,38 @@ census below is the pre-decompilation one, kept for the record.
 * **Known RAM cells touched** DISPCNT shadow x12, requested/next game state x7, frames left to wait x6, per-player keys pressed x5, link session state, high byte = command x4, BLDCNT lo shadow x3.
 * **Suggested batches** `0x080B9D0C` (101 fns), `0x080BBC04` (92 fns).
 
-### M36 `0x080BDA2C-0x080C1FFB` - sub-game / bonus mode?
+### M36 `0x080BDA2C-0x080C1FFB` - sub-game: four-slot bomb-pass minigame - **landed (#66)**
+
+The range is decompiled and carved out of the split asm, so it now appears in
+`module-map.csv` as `c_code` rows instead of one clusterable module; the census
+below is the pre-decompilation one, kept for the record.
+
+* **Landed as** `src/subgame_bda2c.c` (`0x080BDA2C-0x080BF994`, 57 fns),
+  `src/subgame_bf994.c` (`0x080BF994-0x080C0DE8`, 24) and
+  `src/subgame_c0de8.c` (`0x080C0DE8-0x080C1FFC`, 36); 81 new
+  `split_config.json` `data_symbols`. `make progress` reports 0 asm code bytes
+  in the range.
+* **What it turned out to be** the sub-game M35 launches as task type #95: a
+  round-robin in which four slots take turns and a projectile is handed from
+  slot to slot until a player misses their timing window and is eliminated.
+  `sub_080bda2c` installs the two dispatchers and starts BGM `0x82E`;
+  `sub_080bdab4` is the beat loop, walking `Task.unk34` (the slot, 0-3) forwards
+  while `Task.unk28 <= 2` and backwards otherwise, waiting
+  `gUnk_08756570[Task.unk2C]` frames per beat and stepping the speed level
+  `Task.unk2C` up to 6 as `Task.unk1C` reaches the per-mode limit;
+  `sub_080be04c` shuffles the player ids into `gUnk_02006A10[]` and spawns the
+  four slot tasks; `sub_080bf0ac` judges the button press against the five-byte
+  threshold records at `0x087565F4` (result 2/1/0 into `Task.unk20`);
+  `sub_080bf394` advances a turn - RNG over `gUnk_087565E0`, animation pick,
+  SE, and the eight `TaskYieldTrampoline` steps that fan the position out;
+  `sub_080c061c` places a slot on the 16.16 parabola
+  `p0 + v*t + (a*t*t)/2`; and batch 3 is the presentation layer (fourteen
+  sprite bodies, the ranking markers, the path-script walker `sub_080c1ebc` and
+  the score-record reset `sub_080c1f9c`).
+* **Census fixes** `0x080C0AFC` and `0x080C1F18` dropped as false positives
+  (`.word`s in the compressed sound-sample blobs that disassemble as `bl`),
+  `0x080C05F0` and `0x080C1820` added as real Thumb entries the prologue and
+  `bl` scans both missed - `tools/symdb.py` carries the evidence.
 
 * **Size** 17.5 KiB (`0x45d0`), 117 functions (91 reachable only through pointer tables), mean `0x98`, largest `0x314`, pool words 12.4% of bytes.
 * **Difficulty** 1/6 - 22 distinct RAM cells, 0 jump-table dispatches, 5 functions >= `0x200`.
@@ -993,9 +1024,11 @@ and reproducible. The **names are inference**, at three confidence levels:
   `0x087328F0-0x087339F0`, shared with M07. Whether that block is the room
   descriptor or something else is untested. **To settle it:** name the block's
   fields while decompiling M07, which builds it.
-* M33 "HUD/overlay effects", M36 "sub-game", M38 "intro/cutscene/ending" — each
-  rests on one strong hint (class-4 tasks + LZ77-to-VRAM; a 41-entry table
-  reached only from the mode-flow module; compressed-graphics refs + fades).
+* M33 "HUD/overlay effects" and M38 "intro/cutscene/ending" each rest on one
+  strong hint (class-4 tasks + LZ77-to-VRAM; compressed-graphics refs + fades).
+  M36's equivalent hint - a 41-entry table reached only from the mode-flow
+  module - turned out to be right: #66 decompiled it and it is a four-slot
+  bomb-pass minigame (see §6).
 * M07/M08's split into "builder" and "camera/scroll": the 104-edge seam says
   they are one subsystem; the BG-scroll shadows are all on the M08 side, which
   is why they are named separately.
