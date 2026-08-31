@@ -3240,8 +3240,7 @@ vma,size,isa,evidence,name
 0x080905D8,0x14C,thumb,rom-pointer,sub_080905d8
 0x08090724,0x28,thumb,rom-pointer,sub_08090724
 0x0809074C,0x1A0,thumb,rom-pointer,sub_0809074c
-0x080908EC,0x18,thumb,rom-pointer,sub_080908ec
-0x08090904,0x10,thumb,rom-pointer,sub_08090904
+0x080908EC,0x28,thumb,rom-pointer,sub_080908ec
 0x08090914,0x98,thumb,rom-pointer,sub_08090914
 0x080909AC,0x28,thumb,rom-pointer,sub_080909ac
 0x080909D4,0x144,thumb,rom-pointer,sub_080909d4

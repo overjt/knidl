@@ -349,6 +349,12 @@ FALSE_POSITIVES = {
     # at 0x087D3F04, inside the same sample blob, equals 0x080C1F19.
     # sub_080c1ebc really runs 0x080C1EBC-0x080C1F88 (0xCC).
     0x080C1F18,
+    # 0x08090904 is the `bx r0` that ends sub_080908ec (issue #67): the
+    # function's epilogue is `pop {r0}; bx r0` and the census cut it one
+    # halfword short.  A word of the byte-table blob at 0x086C5964 happens to
+    # equal 0x08090905, which the rom-pointer heuristic read as a Thumb entry.
+    # sub_080908ec really runs 0x080908EC-0x08090914 (0x28), pool included.
+    0x08090904,
 }
 
 # Curated Thumb entries with NO in-ROM reference (issue #31): dead m4a SDK

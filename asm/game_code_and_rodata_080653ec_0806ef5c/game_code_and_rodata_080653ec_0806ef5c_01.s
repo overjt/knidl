@@ -676,7 +676,6 @@
 @   0x08090724 sub_08090724
 @   0x0809074C sub_0809074c
 @   0x080908EC sub_080908ec
-@   0x08090904 sub_08090904
 @   0x08090914 sub_08090914
 @   0x080909AC sub_080909ac
 @   0x080909D4 sub_080909d4
@@ -32344,10 +32343,6 @@ sub_080908ec:
 	.global	loc_08090902
 loc_08090902:
 	pop	{r0}
-	.thumb_func
-	.global	sub_08090904
-sub_08090904:
-	.thumb
 	bx	r0
 	movs	r0, r0
 	.word	gUnk_03002490
