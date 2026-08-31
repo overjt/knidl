@@ -2056,6 +2056,37 @@ function are the fingerprint — do not assume they are two variables.
 * **`s32 i` versus `s8 i` for an `s8` array element moves a pool load**
   (`sub_080bdd28`).
 
+### 3.149 A variable ASSIGNED IN BOTH ARMS is not a loop movable — and that is how you keep a constant out of a register
+`sub_080bff28`'s inner loop ends in
+
+```
+    bgt else ; adds r0,r2,#1 ; b join ; else: subs r0,r2,#1 ; join: movs r1,#3 ; ands r0,r1
+```
+
+Written the obvious way — `d = (m + 1) & 3;` / `d = (m - 1) & 3;` — the two
+arms produce two `(set reg 3)` movables, `combine_movables` matches them
+(savings 2, lifetime 2), and loop.c hoists the constant into a fourth
+callee-saved register.  Padding the loop with a narrow local (`u8 d`) pushes
+`insn_count` past `13 * 2 * 2` and stops the hoist (3.146), but a narrow local
+makes gcc treat every def of `d` as partial: `d` becomes live across the loop's
+calls, picks up a hard-r0 conflict, and lands in r1 instead of the ROM's r0.
+The way out is `scan_loop`'s own rule that a register set more than once in the
+loop is not a movable at all:
+
+```c
+if (u->unk28 <= 2) { n = m + 1; msk = 3; d = n & msk; }
+else               { n = m - 1; msk = 3; d = n & msk; }
+```
+
+`msk` and `n` are ordinary `s32` locals assigned in *both* arms, so neither is
+hoistable, `d` stays a full-width pseudo, cross-jumping still merges the
+`movs`/`ands` tail, and the arms match to the byte.  Reusing `n` again for the
+table value two statements later (`n = tb[d]; n -= tb[m];`) ties the `subs`
+destination to the same register the ROM uses and closes the function.  Read
+`;; N conflicts:` in the `.greg` dump for the hard registers (4.31): a lone
+`0` in an allocno's conflict list that disappears when the narrow type does is
+this exact effect.
+
 ### 4.29 Literal pools cross function boundaries — cut a prefix at the POOL
 `sub_0806efec` (`symbols.csv` size `0xF6`, nominally ending at `0x0806F0E2`)
 loads eight of its constants from a pool at `0x0806F158-0x0806F174`, well past

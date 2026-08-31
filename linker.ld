@@ -316,8 +316,9 @@ SECTIONS
         build/src/subgame_bda2c.o(.text)
     } > ROM
 
-    .game_code_and_rodata_080653ec_0806ef5c_080bf994 0x080BF994 : {
-        KEEP(*(.game_code_and_rodata_080653ec_0806ef5c_080bf994)) KEEP(*(.game_code_and_rodata_080653ec_0806ef5c_080bf994.tail))
+    /* subgame_bf994 — decompiled to C (src/subgame_bf994.c, carved by tools/carve.py) */
+    .subgame_bf994 0x080BF994 : {
+        build/src/subgame_bf994.o(.text)
     } > ROM
 
     /* subgame_c0de8 — decompiled to C (src/subgame_c0de8.c, carved by tools/carve.py) */

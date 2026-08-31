@@ -185,7 +185,7 @@ extern void sub_080061c0(s32 a, s32 b);
 extern s32 sub_080c1ebc(s32 a, s32 b);
 extern void sub_080c061c(s32 a, s32 b, s32 c, s32 d);
 extern void sub_080c072c(s32 a, s32 b, s32 c, s32 d, s32 e, s32 f);
-extern void sub_080c0a10(s32 a, s32 b, s32 c, s32 d, u16 e);
+extern void sub_080c0a10(s32 a, s32 b, s32 c, s32 d, s16 e);
 /* NOTE: sub_080bdebc's third parameter is `u16` at its definition
    (src/subgame_bda2c.c) but the ROM's call sites here sign-extend the
    argument, so the declaration visible here is the wider `s32` - the
