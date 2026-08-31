@@ -3322,7 +3322,8 @@ vma,size,isa,evidence,name
 0x0809364C,0x54,thumb,bl-target,sub_0809364c
 0x080936A0,0xE0,thumb,bl-target,sub_080936a0
 0x08093780,0x50,thumb,bl-target,sub_08093780
-0x080937D0,0x98,thumb,rom-pointer,sub_080937d0
+0x080937D0,0x88,thumb,rom-pointer,sub_080937d0
+0x08093858,0x10,thumb,rom-pointer,sub_08093858
 0x08093868,0x24,thumb,rom-pointer,sub_08093868
 0x0809388C,0x58,thumb,rom-pointer,sub_0809388c
 0x080938E4,0x98,thumb,rom-pointer,sub_080938e4

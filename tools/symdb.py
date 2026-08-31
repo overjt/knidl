@@ -390,6 +390,14 @@ EXTRA_THUMB_ENTRIES = {
                  # ArcTan2 + the trig table; nothing in the ROM references
                  # it, and it sits between sub_08064188 and sub_0806421C
                  # with its own `push {r4, r5, r6, lr}` prologue.
+    # 0x08093858 is a real function the prologue filter rejected (issue #67):
+    # a four-instruction leaf (`gUnk_03002490->unk58 = 0;`) that opens with a
+    # pool load and ends `bx lr`, so -fprologue-bugfix left it without a
+    # `push`.  The behaviour-table word at 0x087440CC points at it (its
+    # neighbours point at sub_080937d0, sub_08090ef1, sub_08090f15), and the
+    # byte match of src/enemy_91f9c.c confirms the split: sub_080937d0 runs
+    # 0x080937D0-0x08093858 (0x88) and this one 0x08093858-0x08093868.
+    0x08093858,
     0x080CF664,  # m4aMPlayPanpotControl
     0x080CF6EC,  # m4aMPlayModDepthSet
     0x080CF760,  # m4aMPlayLFOSpeedSet
