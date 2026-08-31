@@ -1,7 +1,7 @@
 /* game_code_and_rodata 0x080692FC-0x0806A344 (issue #64, module M18 batch 1).
  *
  * RECIPE: agbcc -O2 -mthumb-interwork -fprologue-bugfix
- *   ./tools/fnmatch.sh 0x080692FC 0x0806A344 pending/batch1/actor_692fc.c --newpb
+ *   ./tools/fnmatch.sh 0x080692FC 0x0806A344 src/actor_692fc.c --newpb
  *
  * The player-input dispatch layer of the actor core.  Six probe wrappers
  * (0x080694E0-0x080696A0) snapshot the current task's directional state into a

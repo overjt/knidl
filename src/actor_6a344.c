@@ -1,7 +1,7 @@
 /* game_code_and_rodata 0x0806A344-0x0806AD18 (issue #64, module M18 batch 2).
  *
  * RECIPE: agbcc -O2 -mthumb-interwork -fprologue-bugfix
- *   ./tools/fnmatch.sh 0x0806A344 0x0806AD18 pending/batch2/actor_6a344.c --newpb
+ *   ./tools/fnmatch.sh 0x0806A344 0x0806AD18 src/actor_6a344.c --newpb
  *
  * Class-1 task bodies for the "player is out of the level" states: the
  * warp-star / door exit animation driver (sub_0806a3dc + its per-exit

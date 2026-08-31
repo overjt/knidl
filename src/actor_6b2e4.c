@@ -1,7 +1,7 @@
 /* game_code_and_rodata 0x0806B2E4-0x0806C2A4 (issue #64, module M18 batch 3).
  *
  * RECIPE: agbcc -O2 -mthumb-interwork -fprologue-bugfix
- *   ./tools/fnmatch.sh 0x0806B2E4 0x0806C2A4 pending/batch3/actor_6b2e4.c --newpb
+ *   ./tools/fnmatch.sh 0x0806B2E4 0x0806C2A4 src/actor_6b2e4.c --newpb
  *
  * The "carried by / riding on another task" movement block: the per-frame
  * position integrators sub_0806b410 and sub_0806b670 that walk the two stride-5

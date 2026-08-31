@@ -1,7 +1,7 @@
 /* game_code_and_rodata 0x0806E0F0-0x0806EF5C (issue #64, module M18 batch 6).
  *
  * RECIPE: agbcc -O2 -mthumb-interwork -fprologue-bugfix
- *   ./tools/fnmatch.sh 0x0806E0F0 0x0806EF5C pending/batch6/actor_6e0f0.c --newpb
+ *   ./tools/fnmatch.sh 0x0806E0F0 0x0806EF5C src/actor_6e0f0.c --newpb
  *
  * Class-1 task bodies for a family of scenery/effect actors, each laid out as
  * the same three-function group:

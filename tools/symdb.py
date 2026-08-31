@@ -393,6 +393,11 @@ EXTRA_THUMB_ENTRIES = {
                  #                     bl target from 0x08006D52, not dead)
     0x080070E8,  # LinkEndRound       (bl target from 0x08006D56; the row
                  #                     0x08007102 was a mis-split of it)
+    0x0806B40C,  # dead `bx lr` stub inside what the census read as one
+                 # 0x4C-byte sub_0806b3c4 (issue #64).  It is the same
+                 # two-byte no-op body as the named stubs sub_0806b330 and
+                 # sub_0806b3c0, nothing references it, and the leaf has no
+                 # prologue to scan for.  sub_0806b3c4 is really 0x48.
     0x080694E0,  # dead export inside what the census read as one 0x220-byte
                  # sub_080692fc (issue #64).  It has its own
                  # `push {lr}; sub sp, #8` prologue but nothing in the 8 MiB
