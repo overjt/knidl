@@ -56,7 +56,7 @@
 0x08063698 0x080653EC c_code actor_63698 # src/actor_63698.c (carved by tools/carve.py)
 0x080653EC 0x080673EC c_code actor_653ec # src/actor_653ec.c (carved by tools/carve.py)
 0x080673EC 0x080692FC c_code actor_673ec # src/actor_673ec.c (carved by tools/carve.py)
-0x080692FC 0x0806A344 thumb_code game_code_and_rodata_080653ec [split]
+0x080692FC 0x0806A344 c_code actor_692fc # src/actor_692fc.c (carved by tools/carve.py)
 0x0806A344 0x0806AD18 c_code actor_6a344 # src/actor_6a344.c (carved by tools/carve.py)
 0x0806AD18 0x0806B2E4 c_code actor_6ad18 # src/actor_6ad18.c (carved by tools/carve.py)
 0x0806B2E4 0x0806D22C thumb_code game_code_and_rodata_080653ec_0806b2e4 [split]
