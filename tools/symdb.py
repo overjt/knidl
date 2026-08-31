@@ -393,6 +393,12 @@ EXTRA_THUMB_ENTRIES = {
                  #                     bl target from 0x08006D52, not dead)
     0x080070E8,  # LinkEndRound       (bl target from 0x08006D56; the row
                  #                     0x08007102 was a mis-split of it)
+    0x080694E0,  # dead export inside what the census read as one 0x220-byte
+                 # sub_080692fc (issue #64).  It has its own
+                 # `push {lr}; sub sp, #8` prologue but nothing in the 8 MiB
+                 # image references it -- no word pointer, no bl -- so the
+                 # prologue scan never got to propose it.  sub_080692fc
+                 # really runs 0x080692FC-0x080694E0 (0x1E4).
     0x0806ACF8,  # dead leaf inside what the census read as one 0x50-byte
                  # sub_0806acc8 (issue #64).  Nothing in the ROM references
                  # it -- no word pointer, no bl -- so it survives only

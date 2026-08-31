@@ -1612,7 +1612,8 @@ vma,size,isa,evidence,name
 0x08068F68,0x1E4,thumb,bl-target,sub_08068f68
 0x0806914C,0xE8,thumb,bl-target,sub_0806914c
 0x08069234,0xC8,thumb,bl-target,sub_08069234
-0x080692FC,0x220,thumb,bl-target,sub_080692fc
+0x080692FC,0x1E4,thumb,bl-target,sub_080692fc
+0x080694E0,0x3C,thumb,curated,sub_080694e0
 0x0806951C,0x50,thumb,bl-target,sub_0806951c
 0x0806956C,0x50,thumb,bl-target,sub_0806956c
 0x080695BC,0x48,thumb,bl-target,sub_080695bc
