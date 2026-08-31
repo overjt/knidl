@@ -1,8 +1,37 @@
 /* game_code_and_rodata 0x0806EF5C-0x0806FF24 (issue #64, module M18 batch 7).
  *
  * RECIPE: agbcc -O2 -mthumb-interwork -fprologue-bugfix
- *   ./tools/fnmatch.sh 0x0806EF5C 0x0806FF24 pending/batch7/actor_6ef5c.c --newpb
+ *   ./tools/fnmatch.sh 0x0806EF5C 0x0806FF24 src/actor_6ef5c.c --newpb
+ *
+ * Class-1 task bodies for the scripted "player enters / leaves the stage"
+ * sequences, laid out as repeating pairs:
+ *
+ *   <sequence body>   sets Task.unk15 to the state id, installs
+ *                     sub_0803ddc0 in Task.unk0C, picks a mask from
+ *                     PlayerState.unk00 and hands it to sub_080061c0, then
+ *                     walks a fixed run of `Task.unk58 = <16.16 offset>;
+ *                     TaskYieldTrampoline(8);` steps with
+ *                     `while (gUnk_03002490->unk24 != K) TaskYieldTrampoline(1);`
+ *                     barriers between them.  sub_0806efec, sub_0806f1e0,
+ *                     sub_0806f3d8, sub_0806f638 (the 0x474 leader),
+ *                     sub_0806fb0c and sub_0806fd04.
+ *   <per-frame hook>  sub_0806f174, sub_0806f36c, sub_0806f5c4,
+ *                     sub_0806faac and sub_0806fc98: re-aim the camera at
+ *                     the owning player, run sub_0801bcac over a ROM
+ *                     descriptor, and advance Task.unk24 on the
+ *                     `Task.unk7A & 1` edge.
+ *
+ * sub_0806ef5c is the idle animation loop the sequences fall back to, and
+ * sub_0806efe8 is a real no-op callback slot (a ROM-pointer entry, not
+ * padding).
+ *
+ * Two symbol-DB false positives live in this range and are curated away in
+ * tools/symdb.py: 0x0806F0E2 (inside sub_0806efec, whose true extent is
+ * 0x0806EFEC-0x0806F174) and 0x0806FC3E (inside sub_0806fb0c,
+ * 0x0806FB0C-0x0806FC98).  Both come from the word 0xFFFFF000 in a
+ * neighbouring literal pool decoding as a bl pair.
  */
+
 #include "gba/gba.h"
 #include "global.h"
 #include "task.h"
