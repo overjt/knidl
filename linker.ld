@@ -272,7 +272,12 @@ SECTIONS
         build/src/actor_6ad18.o(.text)
     } > ROM
 
-    .game_code_and_rodata_080653ec_0806b2e4 0x0806B2E4 : {
+    /* actor_6b2e4 — decompiled to C (src/actor_6b2e4.c, carved by tools/carve.py) */
+    .actor_6b2e4 0x0806B2E4 : {
+        build/src/actor_6b2e4.o(.text)
+    } > ROM
+
+    .game_code_and_rodata_080653ec_0806b2e4 0x0806C2A4 : {
         KEEP(*(.game_code_and_rodata_080653ec_0806b2e4)) KEEP(*(.game_code_and_rodata_080653ec_0806b2e4.tail))
     } > ROM
 

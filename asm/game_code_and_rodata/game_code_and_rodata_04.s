@@ -14762,7 +14762,7 @@ loc_0804e2c2:
 	ble.n	loc_0804e2aa	@ 0x0804E2AA
 	b.n	loc_0804e25c	@ 0x0804E25C
 	.word	gUnk_0300244C
-	.word	0x02007CF4
+	.word	gUnk_02007CF4
 	.word	0x03001F2C
 	.word	0x02007E90
 	.word	gUnk_03002490

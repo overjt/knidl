@@ -8637,7 +8637,7 @@ loc_0800b730:
 	.word	0x030023C0
 	.word	0x03002438
 	.word	gUnk_0300244C
-	.word	0x02007CF4
+	.word	gUnk_02007CF4
 	.thumb_func
 	.global	sub_0800b788
 sub_0800b788:
