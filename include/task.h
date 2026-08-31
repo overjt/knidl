@@ -13,6 +13,11 @@
  * Task.unk8C that module M17 (issue #65) is the field API for, and
  * `struct ActorDef` is the ROM descriptor an actor is bound to
  * (Actor.unk44).
+ *
+ * Field signedness is evidence-based: `ldrsh`/`ldrsb`, or `ldrh`/`ldrb`
+ * followed by a `lsls #16; asrs #16` (or `#24`) pair, means the field is
+ * signed.  Where M17 and M18 disagree about one field, the header keeps the
+ * unsigned type and the signed call sites cast (see Task.unk6C/unk70).
  */
 
 struct Actor;
@@ -60,8 +65,11 @@ struct Task
     /*0x60*/ s32 unk60;
     /*0x64*/ s32 unk64;
     /*0x68*/ s32 unk68;
+    /* 0x6C and 0x70 are read with `ldrsh`/`(s16)` casts throughout M18
+       (issue #64) but unsigned in M17's src/actor_673ec.c, so they stay u16
+       and the signed sites cast. 0x6E is signed everywhere. */
     /*0x6C*/ u16 unk6C;
-    /*0x6E*/ u16 unk6E;
+    /*0x6E*/ s16 unk6E;
     /*0x70*/ u16 unk70;
     /*0x72*/ u8 unk72;
     /*0x73*/ u8 unk73;
@@ -71,7 +79,7 @@ struct Task
     /*0x78*/ s16 unk78;
     /*0x7A*/ s8 unk7A;
     /*0x7B*/ s8 unk7B;
-    /*0x7C*/ u8 unk7C;
+    /*0x7C*/ s8 unk7C;
     /*0x7D*/ u8 unk7D;
     /*0x7E*/ s8 unk7E;
     /*0x7F*/ s8 unk7F;
@@ -167,7 +175,7 @@ struct Actor
     /*0x0D*/ u8 unk0D;
     /*0x0E*/ s16 unk0E;
     /*0x10*/ s16 unk10;
-    /*0x12*/ u16 unk12;
+    /*0x12*/ s16 unk12;
     /*0x14*/ u16 unk14;
     /*0x16*/ s16 unk16;
     /*0x18*/ u16 unk18;
