@@ -942,8 +942,7 @@ sub_080900f4:
 	.word	gUnk_03002490
 	.global	loc_0809010c
 loc_0809010c:
-	.short	0xF7DA
-	.short	0xFDF4
+	bl	sub_0806acf8	@ 0x0806ACF8
 	lsls	r0, r0, #24
 	cmp	r0, #0
 	bne.n	loc_08090134	@ 0x08090134
@@ -3004,8 +3003,7 @@ sub_080911a8:
 	.word	gUnk_03002490
 	.global	loc_080911c0
 loc_080911c0:
-	.short	0xF7D9
-	.short	0xFD9A
+	bl	sub_0806acf8	@ 0x0806ACF8
 	lsls	r0, r0, #24
 	cmp	r0, #0
 	bne.n	loc_080911e8	@ 0x080911E8
@@ -4806,8 +4804,7 @@ sub_08091ffc:
 	.word	gUnk_03002490
 	.global	loc_0809201c
 loc_0809201c:
-	.short	0xF7D8
-	.short	0xFE6C
+	bl	sub_0806acf8	@ 0x0806ACF8
 	lsls	r0, r0, #24
 	cmp	r0, #0
 	bne.n	loc_08092044	@ 0x08092044
@@ -9184,8 +9181,7 @@ loc_08094300:
 	bl	sub_08066468	@ 0x08066468
 	.global	loc_08094304
 loc_08094304:
-	.short	0xF7D6
-	.short	0xFCF8
+	bl	sub_0806acf8	@ 0x0806ACF8
 	lsls	r0, r0, #24
 	cmp	r0, #0
 	bne.n	loc_08094330	@ 0x08094330
@@ -13912,8 +13908,7 @@ sub_080969c8:
 	push	{lr}
 	bl	sub_08096e9c	@ 0x08096E9C
 	bl	sub_08096a40	@ 0x08096A40
-	.short	0xF7D4
-	.short	0xF991
+	bl	sub_0806acf8	@ 0x0806ACF8
 	lsls	r0, r0, #24
 	cmp	r0, #0
 	bne.n	loc_08096a00	@ 0x08096A00
@@ -15462,8 +15457,7 @@ loc_08097634:
 	bl	sub_08066468	@ 0x08066468
 	.global	loc_08097638
 loc_08097638:
-	.short	0xF7D3
-	.short	0xFB5E
+	bl	sub_0806acf8	@ 0x0806ACF8
 	lsls	r0, r0, #24
 	cmp	r0, #0
 	bne.n	loc_08097664	@ 0x08097664

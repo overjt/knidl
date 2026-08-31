@@ -314,6 +314,16 @@ FALSE_POSITIVES = {
     # sub_0806efec really runs 0x0806EFEC-0x0806F174, pool included
     # (src/actor_6ef5c.c).
     0x0806F0E2,
+    # 0x0806FC3E is the middle of sub_0806fb0c (issue #64), from the same
+    # artifact one function later: the word 0xFFFFF000 at 0x0806EC3C, in
+    # sub_0806eba4's literal pool, decodes as the bl pair F000/FFFF.  The
+    # entry opens `movs r0, #128` with r1/r4 set by the code above it, and
+    # sub_0806fb0c really runs 0x0806FB0C-0x0806FC98 (0x18C).
+    #
+    # 0xFFFFF000 has now produced four of these across #32/#65/#64: for any
+    # bl-target-only symbol S, check whether the word at S - 0x1002 is
+    # 0xFFFFF000 before believing it.
+    0x0806FC3E,
 }
 
 # Curated Thumb entries with NO in-ROM reference (issue #31): dead m4a SDK
@@ -383,6 +393,14 @@ EXTRA_THUMB_ENTRIES = {
                  #                     bl target from 0x08006D52, not dead)
     0x080070E8,  # LinkEndRound       (bl target from 0x08006D56; the row
                  #                     0x08007102 was a mis-split of it)
+    0x0806ACF8,  # dead leaf inside what the census read as one 0x50-byte
+                 # sub_0806acc8 (issue #64).  Nothing in the ROM references
+                 # it -- no word pointer, no bl -- so it survives only
+                 # because the game was linked whole-object, and it has no
+                 # prologue because -fprologue-bugfix drops the leaf
+                 # `push {lr}`.  Body:
+                 #   u32 f(void) { return
+                 #       gUnk_03002490->unk8C->unk1A != -1; }
 }
 
 EVIDENCE_KINDS = ("bl-target", "rom-pointer", "prologue-scan", "curated")
