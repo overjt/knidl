@@ -1279,7 +1279,7 @@ loc_08027c50:
 	ands	r0, r1
 	b.n	loc_08027c98	@ 0x08027C98
 	movs	r0, r0
-	.word	0x030023B8
+	.word	gUnk_030023B8
 	.word	0x0873240C
 	.word	0x0200001C
 	.word	0x0200AFE0
@@ -1344,7 +1344,7 @@ loc_08027cd0:
 	b.n	loc_08027e0a	@ 0x08027E0A
 	movs	r0, r0
 	.word	0x0200001C
-	.word	0x030023B8
+	.word	gUnk_030023B8
 	.word	0x03002400
 	.word	0x03005620
 	.word	0x0300561C
@@ -1423,7 +1423,7 @@ loc_08027d54:
 	b.n	loc_08027d8a	@ 0x08027D8A
 	movs	r0, r0
 	.word	0x0873232C
-	.word	0x030023B8
+	.word	gUnk_030023B8
 	.word	0x030023E0
 	.word	0x030023C8
 	.word	0x03005620
@@ -1469,7 +1469,7 @@ loc_08027d90:
 	ldr	r0, [r2, #0]
 	ands	r0, r1
 	b.n	loc_08027de2	@ 0x08027DE2
-	.word	0x030023B8
+	.word	gUnk_030023B8
 	.word	0x0873240C
 	.word	0x0000FF7F
 	.global	loc_08027dd4
@@ -1781,7 +1781,7 @@ loc_08027f7e:
 	.word	0x03005628
 	.word	0x0300561C
 	.word	0x03005600
-	.word	0x030023B8
+	.word	gUnk_030023B8
 	ldr	r1, [pc, #40]	@ 0x08028080
 	movs	r0, #6
 	strb	r0, [r1, #0]
@@ -1877,7 +1877,7 @@ loc_08028110:
 	.word	0x0200B078
 	.word	0x02006098
 	.word	0x02007D64
-	.word	0x030023B8
+	.word	gUnk_030023B8
 	.thumb_func
 	.global	sub_08028130
 sub_08028130:
@@ -2316,7 +2316,7 @@ loc_0802843e:
 	b.n	loc_080284aa	@ 0x080284AA
 	.word	0x0000270F
 	.word	0x08732348
-	.word	0x030023B8
+	.word	gUnk_030023B8
 	.word	0x0000FFFF
 	.word	0x030023C8
 	.global	loc_080284a0
@@ -15021,7 +15021,7 @@ loc_0802e052:
 	.word	0x0200AFE0
 	.word	0x087323C6
 	.word	0x02007FC4
-	.word	0x030023B8
+	.word	gUnk_030023B8
 	.word	0x03005620
 	.word	0x02004CA0
 	.word	0x0200A6F0
@@ -15990,7 +15990,7 @@ loc_0802e758:
 	.word	0x0200AFE0
 	.word	0x087323C6
 	.word	0x02007FC4
-	.word	0x030023B8
+	.word	gUnk_030023B8
 	.word	0x03005620
 	.word	0x02004CA0
 	.word	0x0200A6F0
@@ -19844,7 +19844,7 @@ sub_080304ec:
 	.word	gUnk_03002490
 	.word	sub_080059d8+1
 	.word	sub_08005d9c+1
-	.word	0x08752548
+	.word	gUnk_08752548
 	.word	0xFFFF0000
 	.thumb_func
 	.global	sub_08030580
@@ -24536,7 +24536,7 @@ loc_0803271c:
 	.word	sub_0803ddc0+1
 	.word	sub_08032d48+1
 	.word	sub_0803332c+1
-	.word	0x0874CFEC
+	.word	gUnk_0874CFEC
 	.word	gUnk_030023AC
 	.word	gUnk_03002360
 	.global	loc_08032778

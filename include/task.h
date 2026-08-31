@@ -231,7 +231,9 @@ struct PlayerState
     /*0x2B*/ u8 unk2B;
     /*0x2C*/ s16 unk2C;
     /*0x2E*/ s16 unk2E;
-    /*0x30*/ u8 filler30[16];
+    /*0x30*/ u8 filler30[7];
+    /*0x37*/ u8 unk37;
+    /*0x38*/ u8 filler38[8];
     /*0x40*/ u16 unk40;
     /*0x42*/ u16 unk42;
     /*0x44*/ u8 filler44;

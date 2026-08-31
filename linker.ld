@@ -261,6 +261,15 @@ SECTIONS
         KEEP(*(.game_code_and_rodata_080653ec)) KEEP(*(.game_code_and_rodata_080653ec.tail))
     } > ROM
 
+    /* actor_6e0f0 — decompiled to C (src/actor_6e0f0.c, carved by tools/carve.py) */
+    .actor_6e0f0 0x0806E0F0 : {
+        build/src/actor_6e0f0.o(.text)
+    } > ROM
+
+    .game_code_and_rodata_080653ec_0806ef5c 0x0806EF5C : {
+        KEEP(*(.game_code_and_rodata_080653ec_0806ef5c)) KEEP(*(.game_code_and_rodata_080653ec_0806ef5c.tail))
+    } > ROM
+
     /* m4a sound engine: asm core (pret m4a_1.s equivalent; hand-scheduled
      * SDK asm, stays asm forever — issue #52). SoundMainRAM's ROM image
      * embeds an ARM-mode mixer loop (see rom-map section 8.2). */
