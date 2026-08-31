@@ -509,8 +509,7 @@ child issues of #35 are created from it. Findings that belong in this document:
   the two blind spots this document already records, seen once more.
 
 - **M25 (`0x0809000C-0x08093F63`) is a bank of four scripted boss fights.**
-  Decompiled in #67, in four files (`docs/analysis/module-map.md` §6; one
-  240-byte function is still asm). Each boss owns one anchor table and one
+  Decompiled in #67, in three files (`docs/analysis/module-map.md` §6). Each boss owns one anchor table and one
   `TaskGfx` block, and they are all assembled from the same three pieces: an
   entry function that installs `sub_080656b4` as `Task.unk00` and one of
   `sub_08065438`/`sub_08065350`/`sub_080653ec`/`sub_0806523c` as `Task.unk0C`,

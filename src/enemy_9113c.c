@@ -1,7 +1,7 @@
-/* game_code_and_rodata 0x0809113C-0x08091E18 (issue #67, module M25 batch 2a).
+/* game_code_and_rodata 0x0809113C-0x08091F9C (issue #67, module M25 batch 2).
  *
  * RECIPE: agbcc -O2 -mthumb-interwork -fprologue-bugfix
- *   ./tools/fnmatch.sh 0x0809113C 0x08091E18 src/enemy_9113c.c --newpb
+ *   ./tools/fnmatch.sh 0x0809113C 0x08091F9C src/enemy_9113c.c --newpb
  *
  * M25's second boss script, dispatched through the 15-entry anchor table at
  * 0x08743984; its entry (sub_080910c0) is the last function of
@@ -21,9 +21,19 @@
  * for gUnk_03002790[Task.unk44].unk20 to clear.  sub_08091d24 is that
  * companion's per-frame body (it integrates the ramps and copies the boss's
  * position and facing), and sub_08091ddc installs sub_08091e18, the animation
- * walker that is still asm in this batch (see the issue #67 notes).
- */
-#include "gba/gba.h"
+ * walker that mirrors the leader's animation onto the companion and steps the
+ * companion's own AnimCmd script from gUnk_08743A00.
+ *
+ * sub_08091f08 (the last function here) is the entry of M25's third boss, whose
+ * states live in src/enemy_91f9c.c: it installs sub_080656b4 / sub_080653ec as
+ * the draw and per-frame hooks, points Task.unk38 at gUnk_087535FC, counts the
+ * boss into gUnk_02007D00[7], seeds the state block (Task.unk28 = -1,
+ * Task.unk34 = 1, Task.unk1C = -1, Task.unk24 = Actor.unk28) and dispatches
+ * Task.unk73 through the 27-entry anchor table at 0x08743ADC.
+ *
+ * The one empty `asm` in sub_08091e18 is load-bearing and emits no code; see
+ * lessons-learned 3.156 for why the register allocation needs it.
+ */#include "gba/gba.h"
 #include "global.h"
 #include "task.h"
 
@@ -717,3 +727,98 @@ void sub_08091ddc(void)
     sub_08006138();
 }
 
+void sub_08091e18(void)
+{
+    struct Task *t;
+    struct Task *u;
+    struct Task *v;
+    struct Task *w;
+    struct AnimCmd *p;
+    struct AnimCmd *q;
+    s32 n;
+    s32 d2;
+    s32 n3;
+    u32 b2;
+    u16 frame;
+
+    if ((s16)gUnk_03004CA0[gUnk_03002490->unk44] != -1)
+    {
+        t = gUnk_03002490;
+        u = &gUnk_03002790[t->unk44];
+        if (u->unk76 == 1 && u->unk2C == 0)
+        {
+            t->unk48 = u->unk48;
+            t->unk4A = u->unk4A;
+            t->unk43 = u->unk43;
+            sub_08006304();
+            v = gUnk_03002490;
+            if (v->unk30 != u->unk30)
+            {
+                v->unk30 = u->unk30;
+                v->unk2C = 0;
+                p = gUnk_08743A00[v->unk30];
+                v->unk28 = p->unk02;
+                v->unk3C = p->unk00;
+            }
+            w = gUnk_03002490;
+            n3 = w->unk28;
+            if (n3 != 0)
+            {
+                d2 = n3 - 1;
+                w->unk28 = d2;
+                if (d2 == 0)
+                {
+                    n = ++w->unk2C;
+                    b2 = (u32)gUnk_08743A00[w->unk30];
+                    q = (struct AnimCmd *)(n * 4 + b2);
+                    frame = q->unk00;
+                    if (q->unk00 != -1)
+                    {
+                        /* Emits no code: it keeps the decremented timer
+                         * live through this test, which is what pins the
+                         * ldrsh scratch registers and the subtract's
+                         * destination (lessons-learned 3.156). */
+                        asm("" : : "r"(d2));
+                        w->unk28 = q->unk02;
+                        w->unk3C = frame;
+                    }
+                }
+            }
+        }
+        else
+        {
+            sub_08005654(gCurTaskIdx);
+        }
+    }
+    else
+    {
+        sub_08005654(gCurTaskIdx);
+    }
+}
+
+void sub_08091f08(void)
+{
+    struct Task *t;
+    struct Task *u;
+
+    sub_08066088(0);
+    t = gUnk_03002490;
+    t->unk00 = (u32)sub_080656b4;
+    t->unk0C = (u32)sub_080653ec;
+    t->unk42 = 11;
+    u = gUnk_03002490;
+    u->unk38 = gUnk_087535FC;
+    gUnk_02007D00[7]++;
+    u->unk28 = -1;
+    u->unk2C = 0;
+    u->unk30 = 0;
+    u->unk34 = 1;
+    u->unk1C = -1;
+    u->unk24 = u->unk8C->unk28;
+    if (sub_08067060() == 1)
+        gUnk_03002490->unk20 = 24;
+    else
+        gUnk_03002490->unk20 = 0;
+    sub_08066ae0();
+    sub_08002e98(gUnk_03002490->unk73, 1, gUnk_08743ADC);
+}

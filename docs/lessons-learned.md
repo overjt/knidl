@@ -2257,34 +2257,64 @@ in `ip` exactly as the ROM has it. When a function is instruction-identical but
 two registers are exchanged and a multiply is involved, swap the multiply
 before hunting anything else.
 
-### 3.156 Reload-scratch registers are not reachable from the source
+### 3.156 A reload scratch register is chosen by LIVENESS, and an empty `asm` is the lever
 `ldrsh`/`ldrsb` with a register offset is `*extendhisi2_insn`, whose index is a
-`(clobber (match_scratch))`: reload fills it, so the register is chosen by the
-`last_spill_reg` rotation (3.39) and by which hard registers the allocator has
-already handed out — not by anything in the C. `sub_08091e18` matches the ROM
-in every instruction and differs only in three such registers (two `ldrsh`
-indices and the `subs rD, rS, #1` that decrements a field); ~40 source shapes,
-both compiler binaries, and 9,400 decomp-permuter iterations all leave them
-alone. Recognise the pattern early: if the diff is only the *register* fields
-of insns whose registers are scratches or reload destinations, the lever is a
-different number of reload allocations **earlier** in the function (3.39/3.40),
-not a different expression shape — and if none of the plausible earlier changes
-is byte-neutral, stop and record it, as this one is.
+`(clobber (match_scratch))` that reload fills in, so no expression shape reaches
+it. What does reach it is *what is live at that insn*. The algorithm (read out
+of the fork's `gcc/reload1.c`, and confirmed insn by insn against `-da` dumps):
 
-The dump reads this out directly and is a much better signal than the byte
-count: `agbcc -da` writes `Spilling for insn N.` for every insn reload
-processes and `Spilling reg R.` each time it takes a hard register for reload
-use. `sub_08091e18` prints `4, 2, 4, 4` where the ROM needs `4, 5, 5, 4`, and
-the choice is reload's spill-cost comparison over the pseudos currently
-allocated to each candidate register (`.greg`'s header gives each one as
-`Register N used X times across Y insns; crosses K calls`), not the rotation
-alone. Two useful facts fell out of probing it: the sequence *is*
-source-sensitive (indexing the table from the other struct moved the second
-entry to `3`, hoisting the animation pointer into a local moved it to `1`),
-and it is stable under everything that only renames or reorders locals. If you
-need to move a scratch register, drive the search off the `Spilling reg`
-sequence — one dump per variant, no linking — and stop when the sequence stops
-moving.
+* `order_regs_for_reload` runs per insn. A hard register is a candidate only if
+  it is not fixed, not live there as a hard register, and **no pseudo that is
+  live before or after this insn is allocated to it**. Candidates come out
+  call-used first (`r0-r3`), then call-saved (`r4-r7`), each group ascending by
+  regno; everything else is appended behind them.
+* The registers picked that way over the whole function are `spill_regs`.
+  `allocate_reload_reg` then walks that array **round-robin from
+  `last_spill_reg`** (a function-wide cursor, 3.39), skipping any register that
+  is busy at the insn in the sense above.
+
+So four `ldrsh`es in one function give a four-element sequence that is a pure
+function of the live sets. `agbcc -da` prints the per-insn candidate as
+`Spilling reg R.` after each `Spilling for insn N.`; the register that actually
+lands is in `.greg` (dumped after reload) or simply in the `.s`. Diff those
+against the ROM's `movs rS,#imm; ldrsh rD,[rB,rS]` pairs — one compile per
+variant, no linking — and you know exactly which insn disagrees.
+
+`sub_08091e18` gave `4, 2, 4, 4` where the ROM has `4, 5, 5, 4`. Working the
+rules backwards pins it down to a single fact: at the third `ldrsh` the ROM has
+a live pseudo in `r4`, and by the fourth it is gone. But every register the ROM
+still reads after that point is accounted for (`r0` the load, `r1` the AnimCmd
+pointer, `r2` the frame, `r3` the task, `r7` the `-1`), so the value in `r4` is
+live *without being used* — dead code that still has a live range. Pure C
+cannot express that here: the block is only reached when `d2 == 0`, so cse
+folds every use of `d2` to a constant and the live range dies with it. 36
+rewrites of the same function (statement order, `--x` vs `x = x - 1`, pointer
+vs index arithmetic, extra temporaries, `t`/`v`/`w` spellings) all compile to
+the same bytes, which is the tell that the lever is not in the source *shape*.
+
+The lever is an empty `asm` with an input operand:
+
+```c
+if (q->unk00 != -1) {
+    asm("" : : "r"(d2));   /* emits nothing; keeps d2 live to here */
+    w->unk28 = q->unk02;
+    w->unk3C = frame;
+}
+```
+
+It emits no instruction (only a `.code 16` directive lands in the `.s`), and it
+extends the value's live range to exactly the insn you put it in front of,
+which is what reload reads. One statement moved the sequence to `4, 5, 5, 4`
+and, as a bonus, stopped local-alloc tying the subtract's destination to its
+dying source, turning `sub r0, r0, #1` into the ROM's `subs r4, r0, #1` - the
+same fix for both, because both passes read the same live range. Byte-exact.
+
+Placement is the whole trick: put it at the *first* insn of the block where the
+value must still be live, not earlier and not inside a deeper `if`; reload's
+liveness is per-insn, so a statement one block too early or one insn too late
+moves a different scratch. This is the third structural exception alongside
+3.63 (cycle-exact loop) and 3.65 (`register` pins) - a compiler hint that
+recreates the original allocation, not a claim about the original source.
 
 ### 3.157 One more use of a temporary can flip a register-priority tie
 Global-alloc sorts by `floor_log2(refs) * refs / live_length` (4.31), so moving

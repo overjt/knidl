@@ -852,6 +852,7 @@
     "sub_08091b6c",
     "sub_08091d24",
     "sub_08091ddc",
+    "sub_08091e18",
     "sub_08091f08",
     "sub_08091f9c",
     "sub_08091fe0",
@@ -1673,10 +1674,6 @@
     },
     {
       "name": "game_code_and_rodata_080653ec_0806ef5c",
-      "chunk_bytes": 65536
-    },
-    {
-      "name": "game_code_and_rodata_080653ec_0806ef5c_0809113c",
       "chunk_bytes": 65536
     },
     {

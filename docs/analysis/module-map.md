@@ -752,17 +752,16 @@ census below is the pre-decompilation one, kept for the record.
 ### M25 `0x0809000C-0x08093F63` - boss behaviour bank (four scripted bosses) - **landed (#67)**
 
 The range is decompiled and carved out of the split asm, so it now appears in
-`module-map.csv` as four `c_code` rows instead of one clusterable module; the
+`module-map.csv` as three `c_code` rows instead of one clusterable module; the
 census below is the pre-decompilation one, kept for the record.
 
 * **Landed as** `src/enemy_9000c.c` (`0x0809000C-0x0809113C`, 35 fns),
-  `src/enemy_9113c.c` (`0x0809113C-0x08091E18`, 23),
-  `src/enemy_91f08.c` (`0x08091F08-0x08091F9C`, 1) and
-  `src/enemy_91f9c.c` (`0x08091F9C-0x08093F64`, 58).  One function,
-  `sub_08091e18` (`0x08091E18-0x08091F08`, `0xF0`), is still asm: its C is
-  semantically complete and 231 of its 240 bytes match, but three
-  reload-scratch registers refuse to move (lessons `3.156`).
-  `make progress` therefore still counts 240 asm code bytes in the range.
+  `src/enemy_9113c.c` (`0x0809113C-0x08091F9C`, 24) and
+  `src/enemy_91f9c.c` (`0x08091F9C-0x08093F64`, 58).  All 120 functions are C
+  and `make progress` counts 0 asm code bytes in the range.  The last one to
+  fall, `sub_08091e18`, needed an empty `asm` statement to hold a dead value
+  live so the register allocator reproduces the ROM's scratch registers
+  (lessons `3.156`); it emits no code.
 * **What it turned out to be** four self-contained boss scripts, one per
   anchor table, all built to the same pattern:
   * an **entry** function installs the draw hook (`Task.unk00` =
