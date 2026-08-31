@@ -23,7 +23,7 @@ M21,0x080692FC,0x0806A344,0x1048,32,1,0,0x82,0x1E8,11.1,7,5,0,0,21,11,1,actor co
 M22,0x0806A344,0x0806AD18,0x9D4,37,26,0,0x44,0xE4,13.8,10,0,0,0,9,7,1,actor_6a344,already landed (c_code)
 M23,0x0806AD18,0x0806B2E4,0x5CC,19,11,0,0x4E,0xE4,13.2,6,0,0,0,6,9,1,actor_6ad18,already landed (c_code)
 M24,0x0806B2E4,0x0806C2A4,0xFC0,39,17,0,0x67,0x260,10.8,8,0,0,0,4,9,1,actor_6b2e4,already landed (c_code)
-M25,0x0806C2A4,0x0806CD40,0xA9C,19,16,2,0x8E,0x1C0,12.1,8,1,1,3,10,7,1,,
+M25,0x0806C2A4,0x0806CD40,0xA9C,19,16,0,0x8E,0x1C0,12.1,8,1,0,3,10,7,1,actor_6c2a4,already landed (c_code)
 M26,0x0806CD40,0x0806D22C,0x4EC,7,4,0,0xB4,0x178,11.7,3,0,0,4,4,3,1,actor_6cd40,already landed (c_code)
 M27,0x0806D22C,0x0806E0F0,0xEC4,31,20,0,0x79,0x270,10.9,6,1,0,15,13,5,1,actor_6d22c,already landed (c_code)
 M28,0x0806E0F0,0x0806EF5C,0xE6C,29,22,0,0x7F,0x1CC,12.9,7,0,0,9,11,4,1,actor_6e0f0,already landed (c_code)
