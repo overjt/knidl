@@ -27508,7 +27508,7 @@ loc_080252ec:
 	movs	r0, #10
 	b.n	loc_08025452	@ 0x08025452
 	movs	r0, r0
-	.word	0x02006168
+	.word	gUnk_02006168
 	.word	0x087323E2
 	.word	0x03002464
 	.word	gUnk_030023B8
@@ -27564,7 +27564,7 @@ loc_080252ec:
 	ldr	r0, [pc, #48]	@ 0x08025400
 	strb	r3, [r0, #0]
 	b.n	loc_08025898	@ 0x08025898
-	.word	0x02006168
+	.word	gUnk_02006168
 	.word	0x087323E2
 	.word	0x03002464
 	.word	gUnk_030023B8
@@ -27624,7 +27624,7 @@ loc_08025452:
 	movs	r0, #2
 	strb	r0, [r1, #0]
 	b.n	loc_08025898	@ 0x08025898
-	.word	0x02006168
+	.word	gUnk_02006168
 	.word	0x087323E2
 	.word	0x03002464
 	.word	gUnk_030023B8

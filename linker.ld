@@ -311,6 +311,25 @@ SECTIONS
         KEEP(*(.game_code_and_rodata_080653ec_0806ef5c)) KEEP(*(.game_code_and_rodata_080653ec_0806ef5c.tail))
     } > ROM
 
+    /* subgame_bda2c — decompiled to C (src/subgame_bda2c.c, carved by tools/carve.py) */
+    .subgame_bda2c 0x080BDA2C : {
+        build/src/subgame_bda2c.o(.text)
+    } > ROM
+
+    /* subgame_bf994 — decompiled to C (src/subgame_bf994.c, carved by tools/carve.py) */
+    .subgame_bf994 0x080BF994 : {
+        build/src/subgame_bf994.o(.text)
+    } > ROM
+
+    /* subgame_c0de8 — decompiled to C (src/subgame_c0de8.c, carved by tools/carve.py) */
+    .subgame_c0de8 0x080C0DE8 : {
+        build/src/subgame_c0de8.o(.text)
+    } > ROM
+
+    .game_code_and_rodata_080653ec_0806ef5c_080bf994_080c1ffc 0x080C1FFC : {
+        KEEP(*(.game_code_and_rodata_080653ec_0806ef5c_080bf994_080c1ffc)) KEEP(*(.game_code_and_rodata_080653ec_0806ef5c_080bf994_080c1ffc.tail))
+    } > ROM
+
     /* m4a sound engine: asm core (pret m4a_1.s equivalent; hand-scheduled
      * SDK asm, stays asm forever — issue #52). SoundMainRAM's ROM image
      * embeds an ARM-mode mixer loop (see rom-map section 8.2). */

@@ -468,6 +468,46 @@ child issues of #35 are created from it. Findings that belong in this document:
   Transitions drive the display through the early zone as predicted: the only
   hardware-ish cell here is the DISPCNT shadow `gUnk_03001ED8`, masked to
   `0xE0FF` and re-ORed with a BG-enable pattern.
+- **M36 (`0x080BDA2C-0x080C1FFB`) is the four-slot bomb-pass sub-game.**
+  Decompiled in #66, in three files (`docs/analysis/module-map.md` §6). It is
+  started by M35 (game-mode flow) as task type #95 and dispatched entirely
+  through the 41-entry anchor table `0x08756668` on `Task.unk14`, with a second
+  table `0x08756670` on `Task.unk15` and `0x087572CC` on `gUnk_02007D2C` for the
+  results screen. The mode is a round-robin over four slots: `sub_080be04c`
+  shuffles the four player ids into `gUnk_02006A10[]` (rotated so the local
+  player `gUnk_03002360` lands at a fixed index) and picks the starter with
+  `sub_08002ee8(gUnk_030023AC)`, i.e. over the number of players; `Task.unk34`
+  is the slot whose turn it is and walks forwards while `Task.unk28 <= 2` and backwards otherwise,
+  `Task.unk2C` is the speed level 0-6 that indexes the seven-entry beat-length
+  table `gUnk_08756570`, and `Task.unk1C` counts beats until the level steps up
+  (the limits are the three parallel byte tables at
+  `0x0875665C`/`0x0875665F`/`0x08756662`, indexed by the mode selector
+  `gUnk_02006168`, an `s8` that also picks the row of the pointer table
+  `gUnk_08756650` and is copied into the score block by `sub_080c1f9c`).
+  `sub_080bf0ac` is the button-timing judgement: five-byte records at
+  `0x087565F4`, four thresholds compared against `Task.unk30`, result 2/1/0 into
+  `Task.unk20`. `sub_080c061c` evaluates the hand-off flight as a 16.16 parabola
+  `p0 + v*t + (a*t*t)/2` into `Task.unk4C`/`unk50`, with `p0` from
+  `gUnk_08756798`/`gUnk_087567A0`, `v` from `gUnk_087567A8[c][b]` and the two
+  coefficient rows from the pointer-pair table `gUnk_08756D3C[c][0..1]`.
+  Elimination order is written into `gUnk_0200B044[]` (3 = still in) with the
+  running rank in `gUnk_0200AFF0` and the out-mask `gUnk_0200AF10`, and
+  `sub_080c1f9c` resets the four 60-byte score records at `gUnk_0201B0E0 + 0x18`
+  and copies the mode selector into `gUnk_02016C40`.
+- **M36's rodata lives at `0x08755DC0-0x087572CC`, inside the
+  `asset_metadata_index` data segment, and is not code-adjacent.** The 81 cells
+  the range needed are therefore ordinary `split_config.json` `data_symbols`
+  absolutes, not `extra_labels`: 62 in `0x0875xxxx` (anchor tables, animation
+  scripts reached through `Task.unk38`, the beat/threshold/coefficient tables
+  above; several are 2-D - `gUnk_087567A8` is `s32[][3]`, `gUnk_08757178` and
+  `gUnk_087571B8` are `s32[][4]`, `gUnk_08756D3C` is `s32 *[][2]`) plus 9 EWRAM
+  cells in `0x0200xxxx`/`0x0201xxxx`. Two more census entries were fixed while
+  reading the range: `0x080C0AFC` and `0x080C1F18` are false positives (words
+  inside the compressed sound-sample blobs at `0x087D2CB8`/`0x087D3F04` that
+  disassemble as a `bl`), and `0x080C05F0` (four `bl` callers) and `0x080C1820`
+  (a dead export with its own pool) are real Thumb entries the scan missed -
+  the two blind spots this document already records, seen once more.
+
 - **The prologue scan and the `bl` scan each have a systematic blind spot in
   this zone, and #64 found seven instances.** Two artifacts account for all of
   them. (a) `.word 0xFFFFF000` in a literal pool always disassembles as

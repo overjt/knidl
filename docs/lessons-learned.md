@@ -1939,6 +1939,154 @@ order, because cse folds it to 4 only after the address form has been chosen.
   `sub_0806b1c4` and `sub_0806b1f4` are the same eight statements with the same
   constants and the same table. Write them out twice.
 
+### 3.141 A `switch`'s dispatch shape is decided by the SOURCE ORDER of its arms
+For `switch (n)` over {0,1}, {2}, {3}, `balance_case_nodes` always roots the
+tree at `[2]` and `emit_case_nodes` always emits
+`cmp #2/beq body2; cmp #2/bgt test; <left subtree>; test: <right subtree>`.
+jump.c then applies its range-swap (the block commented `insn = condjump
+label1; ...range1...; jump label2; label1: ...range2...; jump; label2:`),
+which **inverts the condition and exchanges the two ranges** whenever
+`next_label(test_label)` is what range1's trailing jump targets — that is,
+whenever the FIRST case body in source order belongs to the left subtree.  So
+
+    source order 0/1, 3, 2  ->  `ble left`  (right subtree inline)
+    source order 3, 2, 0/1  ->  `bgt right` (left subtree inline)   <- the ROM
+
+`sub_080c18c8` matched only in the second order.  When a switch is
+instruction-identical except that the dispatch branch polarity and the
+subtree order are flipped, permute the arms; a sweep over all orderings of
+the arms plus `default:` is a couple of minutes and settles it.
+
+### 3.142 `ptr + int` is normalised, so the pointer's register is the one reused
+`build_binary_op` rewrites `int + ptr` into `ptr + int`, and local-alloc ties
+an `adds` destination to its FIRST operand.  `p = base + off;` therefore always
+compiles to `adds rBase, rBase, rOff`, and `p` inherits *base*'s register.
+`sub_080bf0ac`'s ROM does the opposite — `adds rOff, rOff, rBase`, freeing the
+pointer's register for the next load.  The fix is to drop the pointer local and
+index the base array directly:
+
+```c
+v = u->unk2C * 5;
+q1 = r[v + 1];  q2 = r[v + 2];  q3 = r[v + 3];   /* not: p = r + v; p[1] … */
+```
+
+### 3.143 `A - (B - C)` is re-associated; the ROM's `subs rT, rB, #C` means two statements
+fold-const.c's `associate:` path splits `arg1` into var and con, so
+`tbl[n * 5 - (q - 2)]` becomes `(5n + 2) - q` and emits `adds r0,#2; subs r0,r0,q`.
+When the ROM computes the inner difference in its own `subs r1, r4, #2` and only
+then subtracts, the original had the two halves as separate statements, in the
+ROM's evaluation order:
+
+```c
+vv = u->unk2C * 5;
+m  = q - 2;
+t->unk28 = tbl[vv - m];
+```
+(`sub_080bf394`.)  The mirror of 3.130.
+
+### 3.144 One register across two disjoint live ranges is usually ONE variable
+`sub_080bf394` kept an `u8` RNG result and an `u8` animation index both in r4.
+Merging the two locals into a single `u8 q` took the function from 22 differing
+bytes to MATCH; no amount of declaration-order or type permutation had moved it
+before.  Read it the other way too: when the ROM uses two registers for what
+looks like one value, split the variable (3.117's companion at the source level).
+
+### 3.145 A leading `ldr rX,=pool; ldr rY,[rX]` may have no local behind it
+`sub_080bf394`'s prologue only matched after the `t = gUnk_03002490; …
+t->unk15 = 7;` local was deleted and the two field accesses written as
+`gUnk_03002490->unk44` / `->unk15`: cse builds the pseudo either way, but the
+pseudo NUMBERING that results is what the ROM's register assignment needs.
+Same for `sub_080c061c`, where dropping `t`/`u` moved the fourth argument out of
+`ip` into a low register and removed 12 bytes of `mov ip` shuffling.  Try both
+spellings whenever a function is instruction-identical but permuted; it is one
+edit, and 3.135 is the same lesson seen from the `T **g` side.
+
+### 3.146 Which loop invariant gets hoisted is arithmetic, and the loop dump prints it
+loop.c moves a movable when `threshold * savings * lifetime >= insn_count`,
+with `threshold = (loop_has_call ? 1 : 2) * (1 + n_non_fixed_regs)` (13 in the
+game-code zone), `savings` counting the movables `combine_movables` merged into
+it, and `threshold -= 3` after every move.  `agbcc -dL` prints exactly these:
+
+    Insn 337: regno 126 (life 2), move-insn savings 2  moved to 431
+    Insn 352: regno 129 (life 5), move-insn savings 1 not desirable
+
+`sub_080bff28`'s loop hoists two invariants out of three; the ROM hoists the
+`gUnk_08756770` base and leaves `movs r1,#3` inside, the candidate did the
+reverse, and the whole 63-byte diff was that one swap.  loop.c runs twice and
+the second pass sees a smaller `insn_count`, so a decision can flip between
+passes — read the SECOND `Loop from …` block for the loop you care about.
+
+### 3.147 One pointer variable shared by two loops outranks the task-pointer pseudo
+Global-alloc sorts by `floor_log2(n_refs) * n_refs / live_length` (4.31), and
+`n_refs` is loop-depth-weighted, so a value set in a preheader and used twice
+inside scores `1 + 2*2 = 5`.  The current-task address, used three times in the
+same loop, scores 7 and always wins — it takes r4 and pushes the table base to
+r6.  In `sub_080bff28` the ROM has it the other way round, and the reason is
+that ONE `s16 *` variable carries `gUnk_087567A0` for the second wait loop and
+`gUnk_08756770` for the main loop: as a single pseudo set in two loops its
+`n_refs` is 8 over both, `floor_log2` steps from 2 to 3, and it is allocated
+first.  Two identical `ldr r4, =<table>` hoists in two different loops of one
+function are the fingerprint — do not assume they are two variables.
+
+### 3.148 Assorted M36 one-liners
+* **`while (1) { A; if (t) break; body; }` puts an un-CSE'd copy of `A` before
+  the loop and a CSE'd copy at the bottom.**  That asymmetry is gcc's loop
+  exit-test duplication, not a `**g` local and not `volatile` (`sub_080bdab4`).
+* **`while (cond) yield;` gets its exit test duplicated too**; the ROM's
+  jump-into-the-test shape needs `goto wait; do { … wait: ; } while (cond);`
+  plus hand-hoisted invariant locals, because the `goto` gives the loop two
+  entries and also stops loop.c hoisting (`sub_080be1ec`).
+* **A three-case switch is always root-balanced.**  A lopsided
+  `cmp #1/beq/ble default` tree therefore means a FOURTH, empty case —
+  `case 0: break;` (`sub_080be774`).  `use_cost_table` never helps for values
+  1..3, they are all ISCNTRL.
+* **When the ROM materialises an array base BEFORE the object pointer, drop the
+  pointer local**: `tbl[gUnk_03002490->unk1C]`, not `t = gUnk_03002490;
+  tbl[t->unk1C]` (six functions in this module).  The converse — an explicit
+  `base = tbl;` local — is what forces the base out before the index
+  (`sub_080c1ebc`).
+* **`sym[K + i]` does NOT fold `K` into the pool word** (the complement of
+  3.139): the three parallel byte tables at 0x0875665C/0x0875665F/0x08756662
+  each need their own symbol.
+* **A loop whose pointer walks backwards wants the offset in a second
+  induction variable.**  `for (i = 3; i >= 0; i--) r[i * 15 + 6] = 0;` splits
+  the `+6` into the MEM offset; `j = 51; for (i = 3; i >= 0; i--) { r[j] = 0;
+  j -= 15; }` gives the ROM's `adds r0,#204` / `str r3,[r0,#0]`
+  (`sub_080c1f9c`).
+* **`s32 i` versus `s8 i` for an `s8` array element moves a pool load**
+  (`sub_080bdd28`).
+
+### 3.149 A variable ASSIGNED IN BOTH ARMS is not a loop movable — and that is how you keep a constant out of a register
+`sub_080bff28`'s inner loop ends in
+
+```
+    bgt else ; adds r0,r2,#1 ; b join ; else: subs r0,r2,#1 ; join: movs r1,#3 ; ands r0,r1
+```
+
+Written the obvious way — `d = (m + 1) & 3;` / `d = (m - 1) & 3;` — the two
+arms produce two `(set reg 3)` movables, `combine_movables` matches them
+(savings 2, lifetime 2), and loop.c hoists the constant into a fourth
+callee-saved register.  Padding the loop with a narrow local (`u8 d`) pushes
+`insn_count` past `13 * 2 * 2` and stops the hoist (3.146), but a narrow local
+makes gcc treat every def of `d` as partial: `d` becomes live across the loop's
+calls, picks up a hard-r0 conflict, and lands in r1 instead of the ROM's r0.
+The way out is `scan_loop`'s own rule that a register set more than once in the
+loop is not a movable at all:
+
+```c
+if (u->unk28 <= 2) { n = m + 1; msk = 3; d = n & msk; }
+else               { n = m - 1; msk = 3; d = n & msk; }
+```
+
+`msk` and `n` are ordinary `s32` locals assigned in *both* arms, so neither is
+hoistable, `d` stays a full-width pseudo, cross-jumping still merges the
+`movs`/`ands` tail, and the arms match to the byte.  Reusing `n` again for the
+table value two statements later (`n = tb[d]; n -= tb[m];`) ties the `subs`
+destination to the same register the ROM uses and closes the function.  Read
+`;; N conflicts:` in the `.greg` dump for the hard registers (4.31): a lone
+`0` in an allocno's conflict list that disappears when the narrow type does is
+this exact effect.
+
 ### 4.29 Literal pools cross function boundaries — cut a prefix at the POOL
 `sub_0806efec` (`symbols.csv` size `0xF6`, nominally ending at `0x0806F0E2`)
 loads eight of its constants from a pool at `0x0806F158-0x0806F174`, well past

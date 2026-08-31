@@ -45,11 +45,13 @@ M43,0x080AA338,0x080AE3BC,0x4084,121,96,4,0x88,0x378,14.3,21,1,2,18,0,10,2,enemy
 M44,0x080AE3BC,0x080B2FE8,0x4C2C,129,96,3,0x97,0x320,11.9,15,4,5,15,0,9,1,enemy/object behaviour bank 13,"129 functions, 96 pointer-dispatched, 5 anchor tables; 15 task types; TaskYieldTrampoline x412"
 M45,0x080B2FE8,0x080B6154,0x316C,108,69,4,0x75,0x380,14.2,58,5,5,9,10,11,3,HUD / overlay effects?,9 task types (5 of class 4); LZ77UnCompVram x6 + CpuSet x3 + a DMA0 register pair; VRAM transfer queue x20; EWRAM x102
 M46,0x080B6154,0x080B9D0C,0x3BB8,106,26,3,0x90,0x384,16.9,98,0,2,0,12,2,3,save file / SRAM records + options,"WriteSramEx x5, ReadSram x2, sram_driver x7 - the only SRAM user in the bulk; 98 RAM cells; direct REG_BG1HOFS/REG_BG2HOFS writes"
-M47,0x080B9D0C,0x080BDA2C,0x3D20,193,96,2,0x51,0x1E4,15.1,52,6,4,2,3,3,3,game-mode flow + link lobby,"requested/next game state x7, link session state, link-mode flag, number of linked players; called from AgbMain; 193 small functions"
-M48,0x080BDA2C,0x080C1FFC,0x45D0,117,91,3,0x98,0x314,12.4,22,0,4,1,1,2,1,sub-game / bonus mode?,41-entry anchor table @0x08756668 covering 0x080BDAB4-0x080C1B30; reached only from the game-mode flow module; task type #95
-M49,0x080C1FFC,0x080C6420,0x4424,82,27,3,0xD4,0x6B8,10.7,60,2,1,1,2,5,4,FIR-coefficient effect engine,the consumer rom-map section 2 seg 10 predicted: 22 pool refs into lib_misc + 7 into lib_rodata_fir_tables (0x080CFF00 tables); Div x10 / Mod x4 / __divsi3 x5; EWRAM x183
-M50,0x080C6420,0x080CD89C,0x747C,110,70,6,0x10F,0x918,11.1,83,2,5,7,3,6,4,intro / cutscene / ending sequences?,TaskYieldTrampoline x826; 28 compressed_graphics refs; palette fade + BLD shadows; task types #260-264; called from AgbMain and the mode manager
-M51,0x080CD89C,0x080CE520,0xC84,40,24,0,0x50,0x39E,2.5,2,0,0,0,3,1,1,m4a_1,already landed (thumb_code)
-M52,0x080CE520,0x080CEFB4,0xA94,31,0,0,0x57,0x118,14.6,8,0,0,0,7,1,2,m4a_c1,already landed (c_code)
-M53,0x080CEFB4,0x080CF588,0x5D4,4,2,0,0x175,0x474,7.2,1,0,0,0,0,0,2,m4a_cgb,already landed (c_code)
-M54,0x080CF588,0x080CFA4C,0x4C4,19,13,0,0x40,0x158,4.3,2,1,0,0,3,0,1,m4a_ctrl,already landed (c_code)
+M47,0x080B9D0C,0x080BDA2C,0x3D20,193,96,2,0x51,0x1E4,15.1,52,6,5,2,3,3,3,game-mode flow + link lobby,"requested/next game state x7, link session state, link-mode flag, number of linked players; called from AgbMain; 193 small functions"
+M48,0x080BDA2C,0x080BF994,0x1F68,57,38,0,0x8D,0x2E8,12.4,17,0,0,1,1,2,1,sub-game: four-slot bomb-pass minigame,"confirmed by #66: task type #95, started from the game-mode flow module and dispatched through the 41-entry anchor table @0x08756668; four players are shuffled into the four slots of gUnk_02006A10[] and a projectile is passed from slot to slot (Task.unk34 0-3, forward while Task.unk28 <= 2 and backward otherwise), the beat length comes from the seven-entry level table @0x08756570, the button window from the five-byte records @0x087565F4, the hand-off flight from the 16.16 parabola p0 + v*t + (a*t*t)/2 in sub_080c061c, and elimination order is written into gUnk_0200B044[] with the out-mask gUnk_0200AF10"
+M49,0x080BF994,0x080C0DE8,0x1454,24,18,0,0xD8,0x314,14.0,7,0,0,0,0,2,2,subgame_bf994,already landed (c_code)
+M50,0x080C0DE8,0x080C1FFC,0x1214,36,33,0,0x80,0x168,10.5,12,0,0,0,2,0,1,subgame_c0de8,already landed (c_code)
+M51,0x080C1FFC,0x080C6420,0x4424,82,27,3,0xD4,0x6B8,10.7,60,2,1,1,2,5,4,FIR-coefficient effect engine,the consumer rom-map section 2 seg 10 predicted: 22 pool refs into lib_misc + 7 into lib_rodata_fir_tables (0x080CFF00 tables); Div x10 / Mod x4 / __divsi3 x5; EWRAM x183
+M52,0x080C6420,0x080CD89C,0x747C,110,70,6,0x10F,0x918,11.1,83,2,5,7,3,6,4,intro / cutscene / ending sequences?,TaskYieldTrampoline x826; 28 compressed_graphics refs; palette fade + BLD shadows; task types #260-264; called from AgbMain and the mode manager
+M53,0x080CD89C,0x080CE520,0xC84,40,24,0,0x50,0x39E,2.5,2,0,0,0,3,1,1,m4a_1,already landed (thumb_code)
+M54,0x080CE520,0x080CEFB4,0xA94,31,0,0,0x57,0x118,14.6,8,0,0,0,7,1,2,m4a_c1,already landed (c_code)
+M55,0x080CEFB4,0x080CF588,0x5D4,4,2,0,0x175,0x474,7.2,1,0,0,0,0,0,2,m4a_cgb,already landed (c_code)
+M56,0x080CF588,0x080CFA4C,0x4C4,19,13,0,0x40,0x158,4.3,2,1,0,0,3,0,1,m4a_ctrl,already landed (c_code)
