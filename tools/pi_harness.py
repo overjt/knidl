@@ -441,6 +441,65 @@ def emit_quota(as_json: bool) -> int:
     return 0
 
 
+# YAML indicator characters that change a scalar's meaning when unquoted.
+YAML_LEADERS = tuple("@`*&!%|>{}[]#,")
+
+
+def frontmatter_problems(text: str, path: str = "<text>") -> list[str]:
+    """Report frontmatter that Pi's YAML parser will reject.
+
+    Pi loads every .pi resource by parsing the `---` block as YAML, and a
+    parse error silently drops the resource: the skill that carries the whole
+    workflow simply is not there. The common way to write one by accident is an
+    unquoted description containing ": " — "Kirby: Nightmare in Dream Land"
+    parses as a nested mapping, which is not allowed there.
+
+    This is a targeted check, not a YAML implementation: it encodes the
+    failure modes that actually occur in a one-line-per-key frontmatter.
+    """
+    problems: list[str] = []
+    lines = text.split("\n")
+    if not lines or lines[0].strip() != "---":
+        return [f"{path}: no frontmatter block"]
+    try:
+        end = lines.index("---", 1)
+    except ValueError:
+        return [f"{path}: frontmatter block is not closed"]
+    keys: set[str] = set()
+    for number, line in enumerate(lines[1:end], start=2):
+        if not line.strip() or line.lstrip().startswith("#"):
+            continue
+        if ":" not in line:
+            problems.append(f"{path}:{number}: not a `key: value` line")
+            continue
+        key, value = line.split(":", 1)
+        keys.add(key.strip())
+        value = value.strip()
+        if not value:
+            continue
+        quoted = len(value) >= 2 and value[0] in "\"'" and value[-1] == value[0]
+        if value[0] in "\"'" and not quoted:
+            problems.append(f"{path}:{number}: unbalanced quotes in `{key.strip()}`")
+        elif not quoted and ": " in value:
+            problems.append(
+                f"{path}:{number}: `{key.strip()}` contains ': ' unquoted, which YAML reads as a nested mapping"
+            )
+        elif not quoted and value.startswith(YAML_LEADERS):
+            problems.append(f"{path}:{number}: `{key.strip()}` starts with the YAML indicator {value[0]!r}; quote it")
+    if "description" not in keys:
+        problems.append(f"{path}: no `description` key; Pi needs one to list the resource")
+    if path.endswith("SKILL.md") and "name" not in keys:
+        problems.append(f"{path}: a skill needs a `name` key")
+    return problems
+
+
+def pi_resources() -> list[Path]:
+    root = ROOT / ".pi"
+    if not root.is_dir():
+        return []
+    return sorted(p for p in root.rglob("*.md") if "sessions" not in p.parts)
+
+
 def ignored(path: str) -> bool:
     return run(["git", "check-ignore", "-q", path]).returncode == 0
 
@@ -892,6 +951,17 @@ def emit_selftest() -> int:
     )
     check("absolute" in hook_status() or hook_status() in {"active", "inactive (launch Pi through ./tools/pi-knidl.sh)"}
           or "pointing elsewhere" in hook_status(), "hook_status returned an unexpected string")
+
+    for resource in pi_resources():
+        for problem in frontmatter_problems(
+            resource.read_text(encoding="utf-8"), str(resource.relative_to(ROOT))
+        ):
+            check(False, problem)
+    check(bool(pi_resources()), "no .pi resources found to validate")
+    # Proof the check bites: this is the exact shape that silently dropped the
+    # skill, so a validator that stops catching it must fail the selftest.
+    bad = '---\nname: x\ndescription: Kirby: Nightmare in Dream Land\n---\n'
+    check(bool(frontmatter_problems(bad)), "the frontmatter check no longer catches an unquoted ': '")
 
     recipe = compiler_recipe(0x080988F8)
     check("--newpb" in recipe, "game-code recipe lost its -fprologue-bugfix flag")

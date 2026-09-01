@@ -1,6 +1,6 @@
 ---
 name: knidl-decomp
-description: Safely develop the Kirby: Nightmare in Dream Land matching decompilation. Use for any source, asm, map, build, validation, module-selection, commit, or PR task in this repository.
+description: "Safely develop the Kirby: Nightmare in Dream Land matching decompilation. Use for any source, asm, map, build, validation, module-selection, commit, or PR task in this repository."
 ---
 
 # KnIDL matching-decompilation workflow
