@@ -398,6 +398,25 @@ EXTRA_THUMB_ENTRIES = {
     # byte match of src/enemy_91f9c.c confirms the split: sub_080937d0 runs
     # 0x080937D0-0x08093858 (0x88) and this one 0x08093858-0x08093868.
     0x08093858,
+    # 0x08099AD0 is the same shape one module later (issue #68, M27): a leaf
+    # that opens with a pool load and ends `bx lr`, so -fprologue-bugfix left
+    # it without a `push` and the prologue filter rejected it.  The behaviour
+    # table word at 0x087456C8 points at it, and the byte match of
+    # src/enemy_988f8.c confirms the split: sub_08099a7c runs
+    # 0x08099A7C-0x08099AD0 (0x54) and this one 0x08099AD0-0x08099AEC.
+    0x08099AD0,
+    # Three more M27 leaves the same filter rejected (issue #68): the pair of
+    # empty `bx lr` state handlers at 0x08099FE0/0x08099FE4 (dead: nothing in
+    # the ROM points at them, they sit between sub_08099fd0's pool and
+    # sub_08099fe8), the timer-decrement leaf at 0x0809B438 (the table word at
+    # 0x0874580C points at it; sub_0809b408 is 0x30, not 0x4C), and the dead
+    # table re-arm at 0x0809B8AC (a copy of sub_0809b5ec for the 0x08745B04
+    # table; sub_0809b868 is 0x44, not 0x60).  All four are byte-matched by
+    # src/enemy_99b20.c.
+    0x08099FE0,
+    0x08099FE4,
+    0x0809B438,
+    0x0809B8AC,
     0x080CF664,  # m4aMPlayPanpotControl
     0x080CF6EC,  # m4aMPlayModDepthSet
     0x080CF760,  # m4aMPlayLFOSpeedSet

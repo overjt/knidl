@@ -569,6 +569,34 @@ child issues of #35 are created from it. Findings that belong in this document:
   **a size in `symbols.csv` that does not tile with the next entry is a
   signal**, and the cheap check on any suspicious entry is whether its first
   instruction could run with the registers a caller would have set.
+  #68 repeated the sweep over M27 and found **four** more of the second class
+  in 12.3 KiB (`0x08099AD0`, `0x08099FE0`, `0x08099FE4`, `0x0809B438`,
+  `0x0809B8AC` — five entries, of which three are dead exports nothing points
+  at). Dead `bx lr` stubs are the worst case: no pointer, no `bl`, no
+  prologue, and they only show up as a hole between a function's real end and
+  the next symbol.
+
+- **M27 (`0x080988F8-0x0809BA43`) is the same skeleton as M25, applied to two
+  mid-bosses and three companions.** Decompiled in #68 into
+  `src/enemy_988f8.c` and `src/enemy_99b20.c`. Each script owns a *pair* of
+  consecutive dispatch tables rather than one: the guard table indexed by
+  `Task.unk14` and, immediately after it in ROM, the body table indexed by
+  `Task.unk15`. For the first script that is `0x08745634` (19 words) and
+  `0x08745680` (19); for the second `0x08745750` (24) and `0x087457B0` (24);
+  the one-word tables at `0x08745630` and `0x0874574C` hold the start function
+  the entry hands `Task.unk73` to. The three companion tasks that close the
+  module use the same layout at `0x08745AE4`/`0x08745AE8`/`0x08745AF4` (3
+  states), `0x08745B00`/`0x08745B04`/`0x08745B08` (1) and `0x08745B1C` — and
+  that last table points **forward into M28** (`0x0809BA45`), so an anchor
+  table does not have to live in the same module as its targets. `TaskGfx`
+  blocks: `0x08753090`, `0x08753180`, `0x087531C4`, `0x087531DC` and
+  `0x0874CB7C`; the 16-byte graphics records the per-frame bodies re-upload
+  through `sub_080663f4` are `0x08274840` and `0x082797C8`.
+- **`sub_08002e98(index, count, table)` dispatches a flat word table, not a
+  pair table.** Its `count` argument is exactly the number of words: in M27
+  every table's `count` times four lands precisely on the next named table
+  (`0x08745634 + 19*4 = 0x08745680`, `0x08745750 + 24*4 = 0x087457B0`), which
+  is how the guard/body split above was proved.
 - **Seg 7 barely touches hardware.** Across 792 KiB its literal pools reference
   the `0x04000000` I/O block only 20 times; all display/DMA/scroll work goes
   through the early zone's IWRAM shadow cells. 3,288 of its 5,045 functions
