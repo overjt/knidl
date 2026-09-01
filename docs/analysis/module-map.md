@@ -908,8 +908,9 @@ The range is decompiled and carved out of the split asm, so it now appears in
 below is the pre-decompilation one, kept for the record.
 
 * **Landed as** `src/enemy_93f64.c` (`0x08093F64-0x080957BC`, 50 fns),
-  `src/enemy_957bc.c` (`0x080957BC-0x080970C4`, 47) and `src/enemy_974c8.c`
-  (`0x080974C8-0x080988F8`, 50).
+  `src/enemy_957bc.c` (`0x080957BC-0x080970C4`, 47), `src/enemy_970c4.c`
+  (`0x080970C4-0x080974C8`, 1) and `src/enemy_974c8.c` (`0x080974C8-0x080988F8`,
+  50) - all 148 functions, no asm left in the range.
 * **What it turned out to be** four independent scripted enemies in the same
   three-table shape M22 and M25 use, plus two companion tasks and one
   standalone wanderer:
@@ -944,7 +945,10 @@ below is the pre-decompilation one, kept for the record.
 * **The wanderer** `sub_080970c4` reads the 112-byte room record at
   `gUnk_0200D120[Task.unk44 - 32]`, follows its `+0x48` pointer to a six-byte
   `s8` box and picks a random 16.16 target inside it into `Task.unk4C` /
-  `Task.unk50`, choosing corner, mid-edge or centre from `Task.unk73`.
+  `Task.unk50`, choosing corner, mid-edge or centre from `Task.unk73`. It is
+  the module's own file (`src/enemy_970c4.c`) because it was the last function
+  to fall: the four switch arms only allocate registers the way the ROM does
+  when each arm gets its own set of locals (`docs/lessons-learned.md` 3.186).
 * **Census fixes** eight curated `EXTRA_THUMB_ENTRIES` in `tools/symdb.py`, so
   the module has 148 functions, not 140. Four are pointer-referenced leaves the
   `-fprologue-bugfix` prologue scan could not propose (`0x08094144` from the

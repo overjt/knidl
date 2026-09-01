@@ -2741,6 +2741,73 @@ makes one insn differ - stops the merge at the right place.  An empty
 `asm("")`/`BLOCK_CROSS_JUMP` did NOT stop this one; the difference has to be in
 a real insn.
 
+### 3.186 A local shared by two `switch` arms is invisible to `local_alloc`, and that is what puts a pointer in `ip`
+`sub_080970c4` was the last M26 function to fall and it cost a full day.  Its
+four `switch` arms all compute `&gUnk_03002790[Task.unk44]` and read three
+fields off it; the ROM keeps that pointer in `ip`:
+
+```
+    add   r0, r9        @ r9 = gUnk_03002790
+    mov   ip, r0
+    mov   r4, ip
+    adds  r4, #72       @ a = &q->unk48
+    adds  r0, #67       @ r0 STILL holds q
+```
+
+Every candidate kept it in a low register instead (`mov r3, r9; adds r2, r0, r3`),
+which also costs two bytes per arm because the `+67` address then needs its own
+copy.  ~60 hand variants, a 180-variant statement-order sweep and ~4000
+decomp-permuter iterations all failed, because none of them touched the actual
+cause.
+
+**`ip` is not a preference, it is what is left.**  `gcc/thumb.h` defines no
+`REG_ALLOC_ORDER`, so allocation walks the registers in ascending order and
+`FIXED_REGISTERS` rules out r11/r13/r14/r15 - r12 is simply the last
+allocatable one.  A pseudo lands there only when EVERY low register already
+conflicts with it at the moment it is allocated.
+
+**`local_alloc` runs first, and it only sees single-block pseudos.**  A local
+declared once and reused in several `switch` arms is referenced from several
+basic blocks, so `local_alloc` skips it entirely and `global_alloc` places it -
+from the low end.  In the failing version `p`, `k` and `a` were shared across
+the arms, so they were global and grabbed r3/r4/r5 *after* the task pointer had
+already taken r2.  Giving each arm its own `p0`/`k0`/`a0` made them single-block,
+`local_alloc` pre-assigned them r3/r4 before `global_alloc` ran, and the task
+pointer - still global, because it is the one value the arm needs across the
+whole block - found no free low register and went to `ip`.  Case 0 became
+byte-identical immediately; the byte diff fell 668 -> 371 across the function.
+
+So: **when the ROM parks something in `ip`, do not look for a way to promote
+that value - look for values around it that should have been allocated first,
+and the usual reason they were not is that a local is shared between arms.**
+This is the mirror image of 3.147.
+
+**How to see it instead of guessing.**  `agbcc -O2 -mthumb-interwork
+-fprologue-bugfix -da -o out.s in.i` writes `in.i.greg`, which contains:
+
+* `;; N regs to allocate: 29 124 162 ...` - exactly the pseudos `global_alloc`
+  has to place, IN PRIORITY ORDER (`allocno_compare` in `gcc/global.c` sorts by
+  `floor_log2(n_refs) * n_refs * size / live_length`; no frequency term in this
+  version).  A pseudo that is *absent* from this list is one `local_alloc`
+  already placed - that absence is the signal.
+* `;; Register dispositions:` - the final pseudo -> hard register map.
+
+Read the two together with the `.lreg` RTL (which names the pseudos) and the
+allocation stops being a black box.  Cloning the compiler
+(`jiangzhengwenjz/agbcc@new_newlib_pret`) to read `gcc/global.c` and
+`gcc/thumb.h` takes a minute and answers what no amount of source-shuffling can.
+
+### 3.187 Two smaller shapes from the same function
+* `adds r0, r4, r0` versus `adds r0, r0, r4`: for `a + b` agbcc emits the
+  operands in source order even when `b` is the big subexpression, so the ROM's
+  `adds r0, r4, r0` after a `muls` means the source really is
+  `x = base + (...) * k`, not `(...) * k + base`.
+* Hoisting an lvalue is not the same as hoisting its address.  Case 2 loads
+  `&q->unk4A` early and dereferences it late (`s16 *b = &q->unk4A; ... *b`),
+  case 3 loads the VALUE early (`s32 h = q->unk4A;`) and the ROM shows which is
+  which: a lone `adds rN, #74` followed much later by `ldrh` is the address
+  form, an `adds`+`ldrsh` pair at the same spot is the value form.
+
 ### 4.36 An address-annotated listing plus a reachability walk is the cheapest census sweep
 M26 (issue #75) built `pending/m26/ann/<fn>.s` up front: the split asm walked
 with a 2-byte/4-byte cursor (only `bl` is four bytes, everything else is two),

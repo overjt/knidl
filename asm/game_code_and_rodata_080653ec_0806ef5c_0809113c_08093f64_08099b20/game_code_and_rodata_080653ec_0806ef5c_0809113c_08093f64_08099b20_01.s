@@ -5179,7 +5179,7 @@ loc_080add54:
 	b.n	loc_080addee	@ 0x080ADDEE
 	.word	gUnk_03002490
 	.word	gUnk_03002790
-	.word	0x0200D120
+	.word	gUnk_0200D120
 	.word	sub_080ade98+1
 	.word	gCurTaskIdx
 	.global	loc_080addc8
@@ -5457,7 +5457,7 @@ loc_080adfba:
 	movs	r0, r0
 	.word	gUnk_03002490
 	.word	gUnk_03002790
-	.word	0x0200D120
+	.word	gUnk_0200D120
 	.word	sub_080adfd4+1
 	.word	gCurTaskIdx
 	.thumb_func
@@ -5641,7 +5641,7 @@ sub_080ae0b4:
 	movs	r0, r0
 	.word	gUnk_03002490
 	.word	gUnk_03002790
-	.word	0x0200D120
+	.word	gUnk_0200D120
 	.word	sub_080ae174+1
 	.word	gCurTaskIdx
 	.global	loc_080ae13c
@@ -12383,7 +12383,7 @@ sub_080b1910:
 	bl	sub_080b17d0	@ 0x080B17D0
 	b.n	loc_080b1954	@ 0x080B1954
 	movs	r0, r0
-	.word	0x0200D120
+	.word	gUnk_0200D120
 	.word	gUnk_03002490
 	.global	loc_080b1950
 loc_080b1950:

@@ -66,8 +66,8 @@ Matching decompilation of Kirby: The Amazing Mirror's predecessor, **Kirby: Nigh
 - Bulk code clustered into a module map (issue #34): `docs/analysis/module-map.md` + `docs/analysis/module-map.csv` (`make modmap`, `tools/modmap.py`, CSV regeneration checked in CI) partition the remaining `0x080075B8-0x080CD89C` (792.7 KiB, 4,950 functions) into **37 contiguous candidate modules** of 12-31 KiB with per-module evidence (anchor tables, task types, call traffic, pool references, difficulty, suggested batches) and a five-wave decompile order; child issues of #35 are generated from it. Key findings: the ROM task-type table at `0x0872FF30` has **266 entries whose second word is the task body's entry point** (not a flag word — corrects rom-map §6 / `src/early_58e4.c`), seg 7 references the I/O block only 20 times in 792 KiB (everything goes through the early zone's IWRAM shadows), and 3,288 of 5,045 functions are reachable only through ROM pointer tables.
 - Enemy/object behaviour bank 7 decompiled (issue #75): module M26
   `0x08093F64-0x080988F7` (18.4 KiB) landed as `src/enemy_93f64.c`,
-  `src/enemy_957bc.c` and `src/enemy_974c8.c` (147 of its 148 functions;
-  `sub_080970c4` `0x080970C4-0x080974C8` is still asm - see the PR for #75).
+  `src/enemy_957bc.c`, `src/enemy_970c4.c` and `src/enemy_974c8.c` (all 148
+  functions; no asm left in the range).
   Four scripted enemies in the M22/M25 three-table shape plus two companions
   and a room-edge wanderer; eight census entries curated in `tools/symdb.py`
   and 131 ROM tables named via `split_config.json` `data_symbols`.

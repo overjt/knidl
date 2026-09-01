@@ -355,8 +355,9 @@ SECTIONS
         build/src/enemy_957bc.o(.text)
     } > ROM
 
-    .game_code_and_rodata_080653ec_0806ef5c_0809113c_08093f64 0x080970C4 : {
-        KEEP(*(.game_code_and_rodata_080653ec_0806ef5c_0809113c_08093f64)) KEEP(*(.game_code_and_rodata_080653ec_0806ef5c_0809113c_08093f64.tail))
+    /* enemy_970c4 — decompiled to C (src/enemy_970c4.c, carved by tools/carve.py) */
+    .enemy_970c4 0x080970C4 : {
+        build/src/enemy_970c4.o(.text)
     } > ROM
 
     /* enemy_974c8 — decompiled to C (src/enemy_974c8.c, carved by tools/carve.py) */
