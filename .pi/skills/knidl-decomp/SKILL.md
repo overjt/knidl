@@ -119,8 +119,13 @@ python3 tools/pi_harness.py next     # next module in the recommended order
 python3 tools/pi_harness.py plan     # the whole remaining queue
 python3 tools/pi_harness.py assignment M27
 python3 tools/pi_harness.py verify --full
+python3 tools/pi_harness.py quota    # plan usage and time to reset
+python3 tools/pi_harness.py publish  # push the branch; one PR tracks it
 python3 tools/pi_harness.py selftest # metadata contract check (no ROM needed)
 ```
+
+If a run stops making progress, check `quota` before concluding anything about
+the code: a spent token window looks exactly like a stuck problem.
 
 ## Autopilot
 

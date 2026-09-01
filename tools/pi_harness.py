@@ -22,11 +22,14 @@ import argparse
 import csv
 import hashlib
 import json
+import os
 import re
 import shutil
 import subprocess
 import sys
 import time
+import urllib.error
+import urllib.request
 from dataclasses import dataclass
 from pathlib import Path
 
@@ -44,6 +47,14 @@ ASM_FOREVER = {
     "m4a_1",
 }
 MODULE_MAP = "docs/analysis/module-map.md"
+
+# The z.ai coding plan meters a rolling 5-hour token window and a weekly one.
+# This monitoring endpoint costs no tokens, so the autopilot can poll it to
+# decide whether to work or wait instead of discovering the wall as a 429.
+QUOTA_URL = "https://api.z.ai/api/monitor/usage/quota/limit"
+QUOTA_ENV = ("ZAI_GLM_API_KEY", "ZAI_API_KEY", "ZAI_CODING_API_KEY", "GLM_API_KEY")
+# unit 3 is the 5-hour token window, unit 6 the weekly one.
+QUOTA_UNITS = {3: "five_hour", 6: "weekly"}
 
 # Section 4: | M27 | `0x080988F8-0x0809BA43` | 12.3 KiB | 140 | 3 | * | name |
 MODULE_ROW = re.compile(
@@ -348,6 +359,88 @@ def hook_status() -> str:
     return "inactive (launch Pi through ./tools/pi-knidl.sh)"
 
 
+def quota_key() -> str | None:
+    """The z.ai credential, from the environment or from Pi's own resolver."""
+    for name in QUOTA_ENV:
+        value = os.environ.get(name)
+        if value:
+            return value
+    for provider in ("zai-coding", "zai"):
+        result = run(["pi", "auth", "print-api-key", "--provider", provider], timeout=20)
+        if result.returncode == 0 and result.stdout.strip():
+            return result.stdout.strip()
+    return None
+
+
+def quota_snapshot() -> dict | None:
+    """Current plan usage, or None when it cannot be determined.
+
+    Never raises: a monitoring outage must not be able to stop the queue.
+    """
+    key = quota_key()
+    if not key:
+        return None
+    request = urllib.request.Request(
+        QUOTA_URL,
+        headers={"Authorization": f"Bearer {key}", "Accept": "application/json"},
+    )
+    try:
+        with urllib.request.urlopen(request, timeout=20) as response:
+            payload = json.loads(response.read().decode("utf-8"))
+    except (urllib.error.URLError, TimeoutError, ValueError, OSError):
+        return None
+    data = payload.get("data") or {}
+    snapshot: dict = {"level": data.get("level"), "windows": {}}
+    for limit in data.get("limits", []):
+        name = QUOTA_UNITS.get(limit.get("unit"))
+        if name is None or limit.get("type") != "TOKENS_LIMIT":
+            continue
+        reset_ms = limit.get("nextResetTime") or 0
+        snapshot["windows"][name] = {
+            "percentage": limit.get("percentage"),
+            "reset_ms": reset_ms,
+            "reset_iso": time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(reset_ms / 1000)) if reset_ms else None,
+            "seconds_to_reset": max(0, int(reset_ms / 1000 - time.time())) if reset_ms else None,
+        }
+    used = [w["percentage"] for w in snapshot["windows"].values() if isinstance(w["percentage"], (int, float))]
+    snapshot["max_percentage"] = max(used) if used else None
+    snapshot["exhausted"] = bool(used) and max(used) >= 100
+    # How long to wait before the earliest window frees up again.
+    waits = [
+        w["seconds_to_reset"]
+        for w in snapshot["windows"].values()
+        if isinstance(w.get("percentage"), (int, float))
+        and w["percentage"] >= 100
+        and isinstance(w.get("seconds_to_reset"), int)
+    ]
+    snapshot["wait_seconds"] = min(waits) if waits else 0
+    return snapshot
+
+
+def emit_quota(as_json: bool) -> int:
+    snapshot = quota_snapshot()
+    if snapshot is None:
+        if as_json:
+            print(json.dumps(None))
+        else:
+            print("Quota unavailable: no z.ai credential found, or the monitor endpoint did not answer.")
+        return 0
+    if as_json:
+        print(json.dumps(snapshot, indent=2))
+        return 0
+    print(f"z.ai coding plan ({snapshot.get('level') or 'unknown tier'})")
+    if not snapshot["windows"]:
+        print("  no token windows reported")
+    for name, window in sorted(snapshot["windows"].items()):
+        label = "5-hour" if name == "five_hour" else "weekly"
+        seconds = window.get("seconds_to_reset")
+        when = f"{window['reset_iso']} (in {seconds // 60} min)" if seconds is not None else "unknown"
+        print(f"  {label:7} used {window['percentage']}%   resets {when}")
+    if snapshot["exhausted"]:
+        print(f"  EXHAUSTED: wait {snapshot['wait_seconds'] // 60} min")
+    return 0
+
+
 def ignored(path: str) -> bool:
     return run(["git", "check-ignore", "-q", path]).returncode == 0
 
@@ -588,6 +681,62 @@ def emit_unpark(identifier: str) -> int:
 # ---------------------------------------------------------------- verification
 
 
+def emit_publish(dry_run: bool) -> int:
+    """Push the accumulating branch and make sure one PR tracks it.
+
+    The chosen delivery model is a single long-lived branch with a PR opened
+    once: every later push updates that PR by itself, so an unattended run
+    needs no human step between modules, and the reviewer still sees one
+    coherent diff instead of a chain of conflicting per-module branches.
+    """
+    branch = git("branch", "--show-current")
+    if not branch or branch in {"master", "init"}:
+        print("ERROR: refusing to publish from " + (branch or "a detached HEAD"))
+        return 2
+    state = read_state()
+    landed = [entry["module"] for entry in state["history"] if entry.get("result") == "landed"]
+    remaining = sum(uncovered_bytes(m.start, m.end) for m in pending(state, include_parked=True))
+    if dry_run:
+        existing = run(["gh", "pr", "view", branch, "--json", "number", "-q", ".number"])
+        print(f"branch: {branch}")
+        print(f"landed this branch: {', '.join(dict.fromkeys(landed)) or '(none recorded)'}")
+        print(f"assembly left in the queue: {remaining:#x}")
+        print("existing PR: " + (existing.stdout.strip() if existing.returncode == 0 else "none"))
+        return 0
+
+    push = run(["git", "push", "-u", "origin", branch], timeout=300)
+    if push.returncode:
+        print("ERROR: push failed:\n" + push.stderr)
+        return push.returncode
+    print(f"pushed {branch}")
+
+    existing = run(["gh", "pr", "view", branch, "--json", "number", "-q", ".number"])
+    if existing.returncode == 0 and existing.stdout.strip():
+        print(f"PR #{existing.stdout.strip()} already tracks this branch; the push updated it.")
+        return 0
+
+    unique = list(dict.fromkeys(landed))
+    title = "Decompile the bulk module queue" + (f" ({len(unique)} module(s) so far)" if unique else "")
+    body = "\n".join(
+        [
+            "Accumulating branch driven by the Pi autopilot (`docs/pi-harness.md`).",
+            "",
+            "Modules landed on this branch: " + (", ".join(unique) if unique else "(none yet)"),
+            f"Assembly left in the queue: {remaining:#x} bytes.",
+            "",
+            "Every commit passed the local merge gate, which rebuilds the ROM and",
+            "compares it byte-for-byte. Do not merge until CI is green and you have",
+            "reviewed the diff.",
+        ]
+    )
+    created = run(["gh", "pr", "create", "--base", "master", "--head", branch, "--title", title, "--body", body], timeout=120)
+    if created.returncode:
+        print("ERROR: could not open the PR:\n" + created.stderr)
+        return created.returncode
+    print(created.stdout.strip())
+    return 0
+
+
 def emit_verify(full: bool) -> int:
     if not (ROOT / "baserom.gba").is_file():
         print("ERROR: baserom.gba is absent; refusing to claim byte-exact verification.")
@@ -763,7 +912,7 @@ def main() -> int:
     parser = argparse.ArgumentParser(description="KnIDL Pi harness oracle")
     subparsers = parser.add_subparsers(dest="command", required=True)
 
-    for name in ("status", "next", "plan"):
+    for name in ("status", "next", "plan", "quota"):
         sub = subparsers.add_parser(name)
         sub.add_argument("--json", action="store_true")
     subparsers.add_parser("preflight")
@@ -782,6 +931,9 @@ def main() -> int:
     unpark = subparsers.add_parser("unpark", help="clear a parked module and its attempt count")
     unpark.add_argument("module")
 
+    publish = subparsers.add_parser("publish", help="push the branch and ensure one PR tracks it")
+    publish.add_argument("--dry-run", action="store_true")
+
     verify = subparsers.add_parser("verify")
     verify.add_argument("--full", action="store_true", help="also regenerate and diff generated outputs")
 
@@ -794,6 +946,8 @@ def main() -> int:
         return emit_next(args.json)
     if args.command == "plan":
         return emit_plan(args.json)
+    if args.command == "quota":
+        return emit_quota(args.json)
     if args.command == "assignment":
         return emit_assignment(args.module, args.json)
     if args.command == "record":
@@ -802,6 +956,8 @@ def main() -> int:
         return emit_unpark(args.module)
     if args.command == "selftest":
         return emit_selftest()
+    if args.command == "publish":
+        return emit_publish(args.dry_run)
     if args.command == "merge-gate":
         return emit_merge_gate()
     return emit_verify(args.full)

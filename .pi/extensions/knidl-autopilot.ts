@@ -51,6 +51,46 @@ type State = {
 
 const state: State = { running: false, module: null, baseline: -1, attempts: 0, landed: 0, settles: 0 };
 
+let resumeTimer: ReturnType<typeof setTimeout> | null = null;
+
+/**
+ * Deliver a prompt, but only while the plan has quota left.
+ *
+ * The z.ai coding plan meters a rolling window; hitting it mid-run looks
+ * exactly like a model that stopped cooperating, so without this the loop
+ * would burn its attempt budget and park perfectly good modules. The monitor
+ * endpoint costs no tokens, so asking first is free. A paused loop consumes no
+ * attempts: it sleeps until the window resets and then sends the same prompt.
+ */
+async function deliver(pi: ExtensionAPI, ctx: ExtensionContext, text: string): Promise<void> {
+  let quota: any = null;
+  try {
+    quota = await oracle(ctx.cwd, ["quota", "--json"]);
+  } catch {
+    quota = null; // A monitoring outage must never stop the queue.
+  }
+  if (quota && quota.exhausted) {
+    const seconds = Math.max(60, Number(quota.wait_seconds || 0) + 60);
+    if (resumeTimer) clearTimeout(resumeTimer);
+    const window = Object.entries(quota.windows || {})
+      .map(([name, w]: [string, any]) => `${name} ${w.percentage}%`)
+      .join(", ");
+    say(
+      ctx,
+      `Plan quota exhausted (${window}). Sleeping ${Math.ceil(seconds / 60)} min until it resets; no attempt consumed.`,
+      "warning",
+    );
+    pi.appendEntry("knidl-autopilot", { event: "quota-wait", seconds, windows: quota.windows });
+    resumeTimer = setTimeout(() => {
+      resumeTimer = null;
+      say(ctx, "Quota window reset; resuming.");
+      pi.sendUserMessage(text);
+    }, seconds * 1000);
+    return;
+  }
+  pi.sendUserMessage(text);
+}
+
 async function oracle(cwd: string, args: string[]): Promise<any> {
   const { stdout } = await execFileAsync("python3", ["tools/pi_harness.py", ...args], {
     cwd,
@@ -142,7 +182,7 @@ export default function knidlAutopilot(pi: ExtensionAPI) {
       state.settles = 0;
       pi.appendEntry("knidl-autopilot", { event: "start", module: assignment.id });
       say(ctx, `Autopilot started on ${assignment.id} [${assignment.start}, ${assignment.end}).`);
-      pi.sendUserMessage(briefing(assignment));
+      await deliver(pi, ctx, briefing(assignment));
     },
   });
 
@@ -172,6 +212,15 @@ export default function knidlAutopilot(pi: ExtensionAPI) {
       pi.appendEntry("knidl-autopilot", { event: "landed", module: state.module });
       say(ctx, `${state.module} is fully C. ${state.landed} module(s) landed this run.`);
 
+      // Publish immediately: the branch accumulates and one PR tracks it, so a
+      // landed module is reviewable without anyone doing anything by hand.
+      try {
+        const published = await oracle(ctx.cwd, ["publish"]);
+        if (published) say(ctx, String(published).split("\n").slice(-1)[0]);
+      } catch (error: any) {
+        say(ctx, `Publish failed (work is committed locally): ${error?.message || error}`, "warning");
+      }
+
       if (MAX_MODULES > 0 && state.landed >= MAX_MODULES) {
         say(ctx, `Reached KNIDL_MAX_MODULES=${MAX_MODULES}. Stopping.`);
         state.running = false;
@@ -193,11 +242,11 @@ export default function knidlAutopilot(pi: ExtensionAPI) {
         ctx.compact({
           customInstructions:
             "Keep the agbcc source-shape lessons and the repository workflow. Drop the finished module's per-function detail.",
-          onComplete: () => pi.sendUserMessage(briefing(next)),
-          onError: () => pi.sendUserMessage(briefing(next)),
+          onComplete: () => void deliver(pi, ctx, briefing(next)),
+          onError: () => void deliver(pi, ctx, briefing(next)),
         });
       } else {
-        pi.sendUserMessage(briefing(next));
+        await deliver(pi, ctx, briefing(next));
       }
       return;
     }
@@ -227,7 +276,7 @@ export default function knidlAutopilot(pi: ExtensionAPI) {
       state.module = next.id;
       state.baseline = next.uncovered_bytes;
       state.attempts = 0;
-      pi.sendUserMessage(briefing(next));
+      await deliver(pi, ctx, briefing(next));
       return;
     }
 
@@ -235,11 +284,19 @@ export default function knidlAutopilot(pi: ExtensionAPI) {
     if (usage && usage.contextWindow && usage.tokens / usage.contextWindow > COMPACT_AT) {
       ctx.compact({
         customInstructions: "Keep the current module's verified ranges, failures, and next step.",
-        onComplete: () => pi.sendUserMessage(nudge(assignment, before)),
-        onError: () => pi.sendUserMessage(nudge(assignment, before)),
+        onComplete: () => void deliver(pi, ctx, nudge(assignment, before)),
+        onError: () => void deliver(pi, ctx, nudge(assignment, before)),
       });
       return;
     }
-    pi.sendUserMessage(nudge(assignment, before));
+    await deliver(pi, ctx, nudge(assignment, before));
+  });
+
+  // Visibility only: Pi retries transient 429s itself, and the quota gate above
+  // is what keeps the loop from walking into the wall in the first place.
+  pi.on("after_provider_response", (event, ctx) => {
+    if (ENABLED && event.status === 429) {
+      say(ctx, `Provider returned 429 (retry-after: ${event.headers?.["retry-after"] ?? "unset"}).`, "warning");
+    }
   });
 }

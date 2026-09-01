@@ -54,6 +54,8 @@ python3 tools/pi_harness.py next        # next module in the recommended order
 python3 tools/pi_harness.py plan        # the whole remaining queue
 python3 tools/pi_harness.py assignment M27
 python3 tools/pi_harness.py verify --full
+python3 tools/pi_harness.py quota       # plan usage and time to reset
+python3 tools/pi_harness.py publish     # push the branch, ensure one PR tracks it
 python3 tools/pi_harness.py selftest    # metadata contract; no ROM, no Docker
 python3 tools/pi_harness.py unpark M27  # requeue a parked module
 ```
@@ -80,6 +82,37 @@ So a model that claims a module is finished cannot advance the queue, and a
 model that quietly gives up cannot stall it. Parking is the point: with a
 smaller model most modules will land and some will not, and the run should
 still make progress overnight.
+
+### Quota
+
+The z.ai coding plan meters a rolling 5-hour token window and a weekly one.
+`quota` reads the plan's monitoring endpoint, which costs no tokens:
+
+```
+z.ai coding plan (lite)
+  5-hour  used 30%   resets 2026-08-31 20:59:50 (in 51 min)
+```
+
+The autopilot asks before sending every prompt. When a window is exhausted it
+sleeps until the reset and then sends the same prompt — **without consuming an
+attempt**, because hitting a quota wall looks exactly like a model that stopped
+cooperating, and without this the loop would park perfectly good modules. A
+monitoring outage never stops the queue: an unreadable quota is treated as
+"carry on".
+
+The credential is taken from `ZAI_GLM_API_KEY`, `ZAI_API_KEY`,
+`ZAI_CODING_API_KEY` or `GLM_API_KEY`, and otherwise from
+`pi auth print-api-key`.
+
+### Delivery
+
+After every landed module the autopilot runs `publish`: it pushes the branch
+and, the first time, opens one PR against `master`. Later pushes update that
+same PR, so an unattended run needs no human step between modules. The branch
+accumulates deliberately — a chain of per-module branches would conflict in
+`segments.txt`, `linker.ld`, `split_config.json` and `symbols.csv`.
+
+Publishing never merges: CI and the owner remain the merge authority.
 
 | Variable | Meaning |
 |----------|---------|
