@@ -2502,6 +2502,182 @@ check while writing a batch file: after each function, confirm that
 `start + size` of the symbol equals the address the next one starts at *in the
 disassembly*, not just in `symbols.csv`.
 
+### 3.170 Read the EPILOGUE before hunting registers - it is worth 39 bytes
+`sub_08083d28` (M22, issue #69) sat 39 differing bytes away for a dozen source
+shapes - a clean register permutation where the ROM had the working value in
+`r3` and every candidate put it in `r2`.  The cause was not in the body at all:
+the epilogue is `pop {r1}; bx r1`, so the function is **not `void`** (3.94,
+3.124, 3.169), and declaring it `s32 sub_08083d28(u8 a)` **with no `return`
+statement** reserved `r0` and shifted every allocation by one.  It matched
+immediately afterwards, with the plainest possible source (a literal `0x1FF`
+mask and no temporaries).  Everything the register diff seemed to be telling
+me - "the mask is a HImode variable", "the constant is being derived from
+272", "a `register asm` pin is needed" - was a downstream symptom.  Practical
+rule, and the cheapest check in this file: **before writing a single line of a
+function, classify its epilogue.**  `pop {rN}; bx rN` with `N != 0` means
+non-void; `pop {r0}; bx r0` means void.
+
+### 3.171 A shared block needs TWO predecessors to re-load a global
+`sub_0808451c` (M22) runs two identical `Task.unk7A & 1` tests and, when
+either fails, clears the high half of `Task.unk24`.  Written as the natural
+nest (`if (a) { ...; if (b) clear(); } else clear();`) jump.c merges the two
+`clear()` copies into one block with a single predecessor, so cse re-uses the
+task pointer the preceding test left in a register.  The ROM re-loads it,
+because in the ROM that block has two predecessors - the first test branches
+**directly** into it.  The shape that reproduces it is an explicit `goto` out
+of the nest:
+
+```c
+if ((t->unk7A & 1) != 0)
+{
+    if (...) t->unk24 = (u16)t->unk24 | 0x10000;
+    if ((gUnk_03002490->unk7A & 1) != 0)
+        goto skip;
+}
+u = gUnk_03002490;
+u->unk24 = (u16)u->unk24;
+skip:
+```
+
+Diagnostic: your candidate re-uses a pointer register in a block the ROM
+starts with a fresh `ldr rN, =sym; ldr rM, [rN]` pair, and the block is
+reachable from two tests of the same condition.  (Companion to 3.61 - cse is
+basic-block-local, so the number of predecessors is what decides.)
+
+### 3.172 An `s16` index local is what produces `ldrsb rD, [rB, rI]`
+`sub_08083a48` reads `gUnk_087339F0[i]` where `i` is the `(s16)` result of
+`sub_08021b18`.  With `s32 i` agbcc emits `ldr rB, =sym` **after** the
+sign-extension of the return value and then `ldrb` + a shift pair; with
+`s16 i = sub_08021b18(a, b);` it emits the base load **before** the extension
+and `movs rI, #0; ldrsb rD, [rB, rI]`, exactly as the ROM has it.  Both spell
+the same access; the narrow index type is what moves the base load and picks
+the reg+reg addressing (3.101/3.139 seen from the index side).
+
+### 3.173 Pointer locals for the last arguments compute addresses early, loads late
+`sub_08083bbc` calls `sub_08021bb4(a, b, tbl1[k], tbl2[k])` and the ROM
+computes **both element addresses** before converting arguments 1 and 2, then
+loads the two bytes just before the `bl`.  Neither the inline subscripts (which
+interleave address, load and conversion per argument) nor `s32` locals holding
+the loaded values (which load early too) reproduce that.  Pointer locals do:
+
+```c
+p = &gUnk_0874169C[k];
+q = &gUnk_087416A0[k];
+i = sub_08021bb4(a, b, *p, *q);
+```
+
+`p`/`q` are ADDR_EXPRs expanded where they are written, and `update_equiv_regs`
+sinks the dereferences down to the call.  Companion to 3.100 and 3.120.
+
+### 3.174 3.164 cuts both ways - count the ROM's re-loads, then try the other one
+M22 needed "one local per basic block" (3.164) in most functions, and the exact
+opposite in three: `sub_08082f04`'s loop head only matched when the loop-head
+fetch **re-used** the same `t` the pre-loop block had used, which makes `t` a
+global allocno and swaps the `<pointer, value>` register pair
+(`ldr r1,[r4]; ldr r0,[r1,#48]` instead of `ldr r0,[r4]; ldr r1,[r0,#48]`).
+`sub_080856e0` needed a *fresh* local for one block of a loop body whose other
+blocks shared one.  The cheap procedure: write one local per block first, and
+when a function is instruction-identical with exactly one `<pointer, value>`
+pair exchanged, merge (or split) that one local - it is a two-character edit
+and it is almost always the answer.
+
+### 3.175 A `default:` that must be laid out AFTER the switch tail needs a `goto`
+`sub_08084bc0` and `sub_08084c0c` (M22) both end
+`sub_0806395c(v); sub_08006148(...); return 1;` for two case groups and do
+something else for `default`.  `expand_case` emits every case body - `default`
+included - before the code that follows the `switch`, so a plain
+`default: sub_080062c4(); return 0;` lands *between* the case bodies and the
+shared tail.  The ROM has it after the `return 1` block, sharing the outer
+`return 0`.  `default: goto def;` with `def:` placed after the `return 1`
+reproduces it exactly, and (3.134) also gives the ROM's inverted first
+compare.  Read the case-body order off the ROM (3.104) *and* where the default
+sits.
+
+### 3.176 Two ways to test a `vu16` table against -1, and the ROM picks one
+`gUnk_03004CA0[i]` is the 64-entry task-type array, and every module tests it
+for "slot empty".  Both spellings occur inside M22:
+* `(s16)gUnk_03004CA0[i] != -1` gives `ldrh; lsls #16; asrs #16; movs rK,#1;
+  negs; cmp; beq` (`sub_08083f04`, `sub_0808424c`);
+* `gUnk_03004CA0[i] != 0xFFFF` gives the HImode compare `ldrh; lsls #16;
+  cmp rX, =0xFFFF0000` - and the `0xFFFF0000` pool word is then shared with the
+  `struct PointPair` bitfield masks in the same function (`sub_08083fbc`).
+So the constant in the pool tells you which one to write; when the function
+also builds a packed point pair, expect the unsigned form.
+
+### 3.177 A zero VARIABLE and a literal `0` are not interchangeable in a loop
+3.150 says to start from literals and 3.136 says a zero variable's `movs` lands
+after the first store's address.  M22 adds the third case.  In
+`sub_08085cd8` one zero feeds a `str` (Task.unk34), three `strh`s (Task.unk6C)
+and two `strb`s (an `ActorSpawn` field) inside an infinite outer loop, and the
+ROM keeps it in `r7` for the whole function - which looks exactly like the
+"one register serves two widths" signature that 3.150 says needs a variable.
+It does not: a variable's `(set reg 0)` insn sits *before* the loop, so it is
+emitted before `move_movables` inserts the hoisted pool-address copy, and the
+two preheader instructions come out in the wrong order.  Plain literals make
+the zero a loop movable discovered *after* the pool address, and the pair lands
+ROM-side-up.  Rule: inside a loop, write literals and let loop.c hoist them
+(3.126); reach for a variable only in straight-line code.
+
+### 3.178 Splitting a subtraction out of a `(u16)` cast pre-shifts the constant
+`(u16)(sub_08064314(2) - 64) > 128` compiles to `subs #64; lsls #16; lsrs #16;
+cmp #128` - the ROM instead has `lsls #16; ldr rK, =0xFFC00000; adds; lsrs
+#16; cmp #128`, i.e. the subtraction folded into the 16-shifted domain (3.74).
+Two statements on a 16-bit local are what produce it:
+
+```c
+u16 m;
+m = sub_08064314(2);
+m -= 64;
+if (m > 128)
+```
+
+The mirror of 3.128: a 16-bit local's own `-=` gets the pre-shifted addend,
+while the same arithmetic inside a cast stays in SImode.  (`sub_0808330c`; the
+other four range tests in the same module keep the SImode form because their
+value has a second use.)
+
+### 3.179 A struct in `include/task.h` can be right for the callee and wrong for the caller
+`sub_08063E2C` / `sub_08063F00` take an axis-aligned box, and
+`src/actor_63698.c` byte-matches them with `struct Rect` (four separate `s16`
+fields).  Three M22 callers do NOT: `sub_08083020`, `sub_08083488` and
+`sub_08083fbc` build the argument in their own stack frame with 32-bit
+read-modify-write over *pairs* of halfwords
+(`ldr rX,[sp]; ands rX, 0xFFFF0000; orrs rX, val; str rX,[sp]`), which four
+`s16` fields can only ever compile to `strh`.  Declaring the helper as taking a
+`struct PointPair *` (the bitfield type already in the header) is what matches,
+so the original had one packed "two corners" type - or a union of the two views
+- and the header models only the callee's half.
+
+The general shape of the trap: **a shared header's struct is evidence from
+whoever decompiled the callee, and the caller is free to disagree.**  When the
+ROM's stores are wider or narrower than the field layout you were handed, look
+for a second type describing the same bytes before rewriting the assignments,
+and leave a note in the header for the next module - `include/task.h` now
+carries one on `struct Rect`.  (Same family as 3.114: an argument's type is
+read off the call site, not off the callee.)
+
+### 4.35 Making decomp-permuter score 0 on a byte-exact function
+The vendored permuter compares `objdump` text, so a target built naively from
+this repo's split asm scores 205 on a function that is already byte-exact - and
+a relative score against a wrong baseline is worse than no score.  Three fixes
+make the baseline honest, and they are worth applying before trusting any
+permuter run:
+* `base.c` must be preprocessed with `cpp -P -nostdinc -I <fake> -I include`
+  against two two-line fake headers (`stddef.h`, `stdint.h`).  With the real
+  system headers, the permuter's parse/print round-trip re-emits glibc's
+  `__attribute__((aligned(_Alignof(long long))))` typedefs and agbcc rejects
+  them; the permuter reports only "Syntax error in base.c".
+* `target.s` must have every `.global loc_*` line **deleted**.  Those labels
+  turn the function's internal branches into `R_ARM_THM_JUMP8` relocations, so
+  objdump prints `d1fe` where the candidate has the real displacement.
+* raw ROM addresses in `target.s` pools (`.word 0x08742004`) must be rewritten
+  to the `data_symbols` name (`.word gUnk_08742004`), so both sides show a
+  relocation instead of one literal and one relocation.
+Even then the permuter earned nothing on M22's two hard functions: the answer
+to both was structural (3.170, 3.171), and 500 random mutations never moved the
+score.  Treat it as the tool for "assign the constant to a temp"-class rewrites
+(3.106, 3.109) and not for register permutations.
+
 ## 5. Workflow that worked
 
 The canonical per-function loop (pick → m2c first pass → asmdiff iterate →

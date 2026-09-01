@@ -417,6 +417,26 @@ EXTRA_THUMB_ENTRIES = {
     0x08099FE4,
     0x0809B438,
     0x0809B8AC,
+    # Six more entries the two blind spots of lesson 4.30 hid inside M22
+    # (issue #69).  Four are dead exports with their own `push {lr}` prologue
+    # sitting immediately after the previous function's literal pool, each a
+    # copy of its host's tail dispatch and referenced by nothing in the ROM:
+    # 0x080839D0 (host sub_0808398c is 0x44, not 0x60), 0x08083EE8 (host
+    # sub_08083eb4 is 0x34, not 0x50), 0x080840D4 (host sub_080840a4 is 0x30,
+    # not 0x4C) and 0x0808429C (host sub_0808424c is 0x50, not 0x6C).
+    # The other two ARE pointer-referenced and were rejected only because
+    # -fprologue-bugfix left them without a `push`: 0x08084A50 opens
+    # `ldr r0, [pc, #N]` and the anchor-table word at 0x08741FA0 points at it
+    # (host sub_080849dc is 0x74, not 0x98), and 0x08085FEC opens the same way
+    # with the table word at 0x08742D40 pointing at it (host sub_08085fa0 is
+    # 0x4C, not 0x84).  All six are byte-matched by src/enemy_82e68.c /
+    # src/enemy_84d14.c.
+    0x080839D0,
+    0x08083EE8,
+    0x080840D4,
+    0x0808429C,
+    0x08084A50,
+    0x08085FEC,
     0x080CF664,  # m4aMPlayPanpotControl
     0x080CF6EC,  # m4aMPlayModDepthSet
     0x080CF760,  # m4aMPlayLFOSpeedSet
