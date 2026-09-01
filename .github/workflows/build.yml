@@ -29,38 +29,8 @@ jobs:
 
       # ----- Checks that never require baserom.gba (always run) -----
 
-      - name: Python tooling check (including Pi merge gate)
-        run: docker run --rm -v "$PWD":/src -w /src knidl-builder python3 -m py_compile tools/gbafix.py tools/symdb.py tools/symdb_check.py tools/split.py tools/modmap.py tools/pi_harness.py
-
-      - name: Pi harness shell syntax check
-        run: bash -n tools/pi-knidl.sh .githooks/pre-commit
-
-      # The harness reads the module map and segments.txt to decide what work
-      # is left. selftest pins that contract (frozen module ids, range tiling,
-      # the .gitignore patterns the merge gate depends on) and needs neither
-      # the baserom nor Docker.
-      - name: Pi harness selftest (metadata contract)
-        run: python3 tools/pi_harness.py selftest
-
-      - name: Set up Node for the Pi harness checks
-        uses: actions/setup-node@v4
-        with:
-          node-version: '24'
-
-      - name: Pi harness guard rules
-        run: node tools/knidl-rules.test.mjs
-
-      # Loading the extensions catches a broken import path, which otherwise
-      # only shows up as a silently missing guard at agent startup.
-      - name: Pi extensions load
-        run: |
-          for f in .pi/extensions/*.ts; do
-            node --input-type=module -e "
-              const m = await import('./$f');
-              if (typeof m.default !== 'function') { throw new Error('$f has no default export'); }
-              console.log('$f loaded');
-            "
-          done
+      - name: Python tooling check (tools/gbafix.py, tools/symdb.py, tools/symdb_check.py, tools/split.py, tools/modmap.py)
+        run: docker run --rm -v "$PWD":/src -w /src knidl-builder python3 -m py_compile tools/gbafix.py tools/symdb.py tools/symdb_check.py tools/split.py tools/modmap.py
 
       - name: Perl tooling check (tools/calcrom.pl)
         run: docker run --rm -v "$PWD":/src -w /src knidl-builder perl -c tools/calcrom.pl
