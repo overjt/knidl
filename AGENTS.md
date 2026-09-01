@@ -13,18 +13,6 @@ Matching decompilation of Kirby: The Amazing Mirror's predecessor, **Kirby: Nigh
   modules (build-system gotchas, m2c/tooling, old_agbcc source shapes). Add new
   lessons there as they are discovered.
 
-## Agent harness (optional)
-
-A project-local harness for the Pi coding agent lives in `tools/pi_harness.py`,
-`tools/pi-knidl.sh`, `.githooks/` and `.pi/`; see
-[docs/pi-harness.md](docs/pi-harness.md). It is optional — every rule in this
-file applies with or without it — but when it is active a `pre-commit` merge
-gate rejects any commit whose staged snapshot does not rebuild the ROM
-byte-for-byte, and `python3 tools/pi_harness.py next` is the authoritative
-answer to "which module is next". Name modules by the frozen ids of
-`docs/analysis/module-map.md` section 4; the `id` column of
-`module-map.csv` is positional and renumbers as ranges land.
-
 ## ROM handling
 
 - Builds require a user-supplied, legally-dumped `baserom.gba`. The ROM is **never committed**; it must always be gitignored.
