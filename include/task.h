@@ -266,7 +266,24 @@ struct ActorSpawn
     /*0x10*/ u16 unk10;
 };
 
-/* Axis-aligned box the actor overlap helpers take (0x08063E2C). */
+/* Axis-aligned box the actor overlap helpers take (0x08063E2C).
+ *
+ * INCOMPLETE MODEL - read this before declaring a caller of sub_08063E2C or
+ * sub_08063F00.  Four separate `s16` fields are what the CALLEE reads (that is
+ * how src/actor_63698.c matches), but a caller that fills the box in the
+ * caller's own stack frame does NOT necessarily see this type: M22 (issue #69)
+ * has three of them (sub_08083020, sub_08083488, sub_08083fbc) where the ROM
+ * builds the argument with 32-bit read-modify-write over PAIRS of halfwords
+ * (`ldr; ands 0xFFFF0000; orrs; str`), which four `s16` fields can only ever
+ * compile to `strh`.  Those callers declare the helper as taking a
+ * `struct PointPair *` instead, and that is what byte-matches.
+ *
+ * So the original almost certainly had one packed "two corners" type (or a
+ * union of the two views) and this header currently models only the callee's
+ * half.  If you hit the same fork, try `struct PointPair *` before rewriting
+ * the assignments - and if you work out the real type, fix it here rather than
+ * adding a fourth per-file spelling.
+ */
 struct Rect
 {
     /*0x00*/ s16 left;
@@ -275,7 +292,9 @@ struct Rect
     /*0x06*/ s16 bottom;
 };
 
-/* Two 16.16-packed points, laid out as four 16-bit fields (0x08063BD4). */
+/* Two 16.16-packed points, laid out as four 16-bit fields (0x08063BD4).
+ * Also the shape every M22 caller of the sub_08063E2C / sub_08063F00 overlap
+ * helpers passes them - see the note on struct Rect above. */
 struct PointPair
 {
     u32 x0:16;

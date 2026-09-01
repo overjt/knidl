@@ -2636,6 +2636,26 @@ while the same arithmetic inside a cast stays in SImode.  (`sub_0808330c`; the
 other four range tests in the same module keep the SImode form because their
 value has a second use.)
 
+### 3.179 A struct in `include/task.h` can be right for the callee and wrong for the caller
+`sub_08063E2C` / `sub_08063F00` take an axis-aligned box, and
+`src/actor_63698.c` byte-matches them with `struct Rect` (four separate `s16`
+fields).  Three M22 callers do NOT: `sub_08083020`, `sub_08083488` and
+`sub_08083fbc` build the argument in their own stack frame with 32-bit
+read-modify-write over *pairs* of halfwords
+(`ldr rX,[sp]; ands rX, 0xFFFF0000; orrs rX, val; str rX,[sp]`), which four
+`s16` fields can only ever compile to `strh`.  Declaring the helper as taking a
+`struct PointPair *` (the bitfield type already in the header) is what matches,
+so the original had one packed "two corners" type - or a union of the two views
+- and the header models only the callee's half.
+
+The general shape of the trap: **a shared header's struct is evidence from
+whoever decompiled the callee, and the caller is free to disagree.**  When the
+ROM's stores are wider or narrower than the field layout you were handed, look
+for a second type describing the same bytes before rewriting the assignments,
+and leave a note in the header for the next module - `include/task.h` now
+carries one on `struct Rect`.  (Same family as 3.114: an argument's type is
+read off the call site, not off the callee.)
+
 ### 4.35 Making decomp-permuter score 0 on a byte-exact function
 The vendored permuter compares `objdump` text, so a target built naively from
 this repo's split asm scores 205 on a function that is already byte-exact - and
