@@ -1,0 +1,21 @@
+#!/usr/bin/env bash
+# Turns the harness's advisory workflow into an enforceable commit boundary.
+# Do not bypass it with --no-verify or a replacement hooks path.
+#
+# core.hooksPath is configured RELATIVE (".githooks"), which Git resolves
+# against each working tree's own root. A sibling worktree of this repository
+# that does not carry the harness therefore has no hook at all and commits
+# normally, instead of inheriting this one and failing on a missing script.
+# The guard below is the second half of that contract: if this checkout somehow
+# runs the hook without the harness present, say so and get out of the way.
+set -euo pipefail
+
+repo_root="$(git rev-parse --show-toplevel)"
+cd "$repo_root"
+
+if [ ! -f tools/pi_harness.py ]; then
+  echo "pre-commit: tools/pi_harness.py is absent in $repo_root; skipping the KnIDL merge gate." >&2
+  exit 0
+fi
+
+exec python3 tools/pi_harness.py merge-gate
