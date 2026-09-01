@@ -3549,7 +3549,9 @@ vma,size,isa,evidence,name
 0x08099E9C,0x48,thumb,bl-target,sub_08099e9c
 0x08099EE4,0xD0,thumb,bl-target,sub_08099ee4
 0x08099FB4,0x1C,thumb,bl-target,sub_08099fb4
-0x08099FD0,0x18,thumb,bl-target,sub_08099fd0
+0x08099FD0,0x10,thumb,bl-target,sub_08099fd0
+0x08099FE0,0x4,thumb,curated,sub_08099fe0
+0x08099FE4,0x4,thumb,curated,sub_08099fe4
 0x08099FE8,0x24,thumb,bl-target,sub_08099fe8
 0x0809A00C,0x30,thumb,bl-target,sub_0809a00c
 0x0809A03C,0x44,thumb,bl-target,sub_0809a03c
@@ -3604,7 +3606,8 @@ vma,size,isa,evidence,name
 0x0809B394,0x40,thumb,rom-pointer,sub_0809b394
 0x0809B3D4,0x30,thumb,rom-pointer,sub_0809b3d4
 0x0809B404,0x4,thumb,rom-pointer,sub_0809b404
-0x0809B408,0x4C,thumb,rom-pointer,sub_0809b408
+0x0809B408,0x30,thumb,rom-pointer,sub_0809b408
+0x0809B438,0x1C,thumb,rom-pointer,sub_0809b438
 0x0809B454,0x84,thumb,rom-pointer,sub_0809b454
 0x0809B4D8,0x4,thumb,rom-pointer,sub_0809b4d8
 0x0809B4DC,0x20,thumb,rom-pointer,sub_0809b4dc
@@ -3621,7 +3624,8 @@ vma,size,isa,evidence,name
 0x0809B7EC,0x4,thumb,rom-pointer,sub_0809b7ec
 0x0809B7F0,0x40,thumb,rom-pointer,sub_0809b7f0
 0x0809B830,0x38,thumb,rom-pointer,sub_0809b830
-0x0809B868,0x60,thumb,rom-pointer,sub_0809b868
+0x0809B868,0x44,thumb,rom-pointer,sub_0809b868
+0x0809B8AC,0x1C,thumb,curated,sub_0809b8ac
 0x0809B8C8,0x9C,thumb,rom-pointer,sub_0809b8c8
 0x0809B964,0x5C,thumb,rom-pointer,sub_0809b964
 0x0809B9C0,0x20,thumb,rom-pointer,sub_0809b9c0
