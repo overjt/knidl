@@ -205,7 +205,7 @@ dispatches, pool density) — a planning aid, not a promise.
 | M24 | `0x0808CCE8-0x0809000B` | 12.8 KiB | 157 | 8 | * | enemy/object behaviour bank 5 |
 | M25 | `0x0809000C-0x08093F63` | 15.8 KiB | 121 | 4 | * | boss behaviour bank (four scripted bosses) - **landed (#67)** |
 | M26 | `0x08093F64-0x080988F7` | 18.4 KiB | 140 | 4 | ** | enemy/object behaviour bank 7 |
-| M27 | `0x080988F8-0x0809BA43` | 12.3 KiB | 140 | 3 | * | enemy/object behaviour bank 8 |
+| M27 | `0x080988F8-0x0809BA43` | 12.3 KiB | 140 | 3 | * | mid-boss behaviour bank (two scripts + three companions) - **landed (#68)** |
 | M28 | `0x0809BA44-0x080A158F` | 22.8 KiB | 198 | 5 | * | enemy/object behaviour bank 9 |
 | M29 | `0x080A1590-0x080A5643` | 16.2 KiB | 221 | 5 | ** | enemy/object behaviour bank 10 |
 | M30 | `0x080A5644-0x080AA337` | 19.2 KiB | 130 | 2 | * | enemy/object behaviour bank 11 |
@@ -248,7 +248,7 @@ ordering inside it:
 |---|--------|------|-----|-----------|------------------|--------------------|------------|
 | 1 | M36 sub-game: four-slot bomb-pass minigame | 0x45D0 | 117 | 1 | 2 | 1 | 1 |
 | 2 | M25 boss behaviour bank (four scripted bosses) | 0x3F58 | 121 | 1 | 3 | 0 | 10 |
-| 3 | M27 enemy/object behaviour bank 8 | 0x314C | 140 | 1 | 4 | 0 | 5 |
+| 3 | M27 mid-boss behaviour bank (two scripts + three companions) - landed | 0x314C | 140 | 1 | 4 | 0 | 5 |
 | 4 | M22 enemy/object behaviour bank 3 | 0x3290 | 119 | 1 | 4 | 0 | 8 |
 | 5 | M24 enemy/object behaviour bank 5 | 0x3324 | 157 | 1 | 4 | 0 | 11 |
 | 6 | M21 enemy/object behaviour bank 2 | 0x3E24 | 188 | 1 | 4 | 0 | 9 |
@@ -296,7 +296,7 @@ sub-issue of #35, so the numbering ascends with the recommended order):
 | 2 | #65 | M17 struct Task field API (actor core) | `0x08062584-0x080692FB` | 27.4 KiB | 1 |
 | 3 | #66 | M36 sub-game: four-slot bomb-pass minigame - landed | `0x080BDA2C-0x080C1FFB` | 17.5 KiB | 2 |
 | 4 | #67 | M25 boss behaviour bank (four scripted bosses) - landed | `0x0809000C-0x08093F63` | 15.8 KiB | 2 |
-| 5 | #68 | M27 enemy/object behaviour bank 8 | `0x080988F8-0x0809BA43` | 12.3 KiB | 2 |
+| 5 | #68 | M27 mid-boss behaviour bank (two scripts + three companions) - landed | `0x080988F8-0x0809BA43` | 12.3 KiB | 2 |
 | 6 | #69 | M22 enemy/object behaviour bank 3 | `0x08082E68-0x080860F7` | 12.6 KiB | 2 |
 | 7 | #70 | M24 enemy/object behaviour bank 5 | `0x0808CCE8-0x0809000B` | 12.8 KiB | 2 |
 | 8 | #71 | M21 enemy/object behaviour bank 2 | `0x0807F044-0x08082E67` | 15.5 KiB | 2 |
@@ -837,7 +837,73 @@ census below is the pre-decompilation one, kept for the record.
 * **Pool references** IWRAM x300, asset_metadata_index x199, game_code_and_rodata x67, EWRAM x18, level_graphics_palettes x4, early_58e4 x1, early_5d9c x1.
 * **Suggested batches** `0x08093F64` (48 fns), `0x080957BC` (47 fns), `0x080974F8` (45 fns).
 
-### M27 `0x080988F8-0x0809BA43` - enemy/object behaviour bank 8
+### M27 `0x080988F8-0x0809BA43` - mid-boss behaviour bank (two scripts + three companions) - **landed (#68)**
+
+The range is decompiled and carved out of the split asm, so it now appears in
+`module-map.csv` as two `c_code` rows instead of one clusterable module; the
+census below is the pre-decompilation one, kept for the record.
+
+* **Landed as** `src/enemy_988f8.c` (`0x080988F8-0x08099B20`, 54 fns) and
+  `src/enemy_99b20.c` (`0x08099B20-0x0809BA44`, 91).  All 145 functions are C
+  and `make progress` counts 0 asm code bytes in the range.
+* **What it turned out to be** the same "scripted enemy" skeleton M25 uses,
+  twice, plus three small companion tasks.  Each script is four layers:
+  * an **entry** (`sub_08098e64`, `sub_0809a0a8`) that calls `sub_08066088(0)`,
+    installs the draw hook `Task.unk00` = `sub_080656b4` and the per-frame hook
+    `Task.unk0C` = `sub_08065438`, sets `Task.unk42` = 11, points `Task.unk38`
+    at its `TaskGfx` block (`gUnk_08753090` / `gUnk_08753180`), bumps the
+    live-enemy counter `gUnk_02007D00[0]`, loads the animation script
+    (`sub_080666cc`) and hands `Task.unk73` to `sub_08002e98` with the
+    one-entry table at `0x08745630` / `0x0874574C`;
+  * a **start** function (`sub_08098ed4`, `sub_0809a118`) that installs the
+    per-frame body in `Task.unk04`, asks `sub_08067060()` whether this is the
+    first player, and dispatches `Task.unk14` through the **guard** table
+    (`0x08745634`, 19 entries; `0x08745750`, 24);
+  * the **per-frame body** (`sub_08098f38`, `sub_0809a17c`): count `Task.unk2C`
+    down while `Task.unk18` is set, re-uploading the 16-byte graphics record
+    (`sub_080663f4(&gUnk_08274840 / &gUnk_082797C8, 16)`) or dropping it
+    (`sub_08066468`), then dispatch `Task.unk15` through the **body** table
+    that sits immediately after the guard table (`0x08745680`, `0x087457B0`),
+    then the animation-row selector (`sub_08098de4`, `sub_0809a03c`) and
+    `sub_08068f68` / `sub_08069b44`;
+  * one `<body, guard>` **pair per state**, exactly as in M25: the body is a
+    run of `TaskYieldTrampoline` waits stepping `Task.unk3C` and the 16.16
+    velocity fields `Task.unk58`/`unk60`/`unk68`, the guard is
+    `if (--Task.unk30 < 0) { sub_0806395c(N); sub_08006148(rearm, gCurTaskIdx); }`.
+    `sub_08098fb0` and `sub_0809a1f4` are the re-arm hooks the guards install;
+    both call `sub_08098afc` first, which frees the helper task recorded in
+    `Task.unk46` once `gUnk_03004CA0[]` says its type is 143 and
+    `gUnk_03002790[]` says this task is its parent.
+* **Shared pieces** `sub_0809a080(flag)` is the hit reaction (rumble
+  `sub_080261d4(2)` or `(4)`, then SE `0x1F7`); `sub_08098d58`, `sub_08099e9c`
+  and `sub_08099ee4` build `struct ActorSpawn` records for actors 13/16/17 and
+  hand them to `sub_08064b5c`; `sub_08099dec` picks the next animation from one
+  of four 16-byte tables (`0x087456D4`/`0x087456E4`/`0x087456F4`/`0x08745704`)
+  by classifying `|sub_08063cd0()|` against 128 and `|sub_08063d2c()|`
+  against 64; `sub_08099b20` and `sub_08099c4c` are the two jump-table
+  dispatchers that turn `Task.unk14` into the next state.
+* **The three companions** `sub_0809b528` (`0x08745AE4`, gfx `gUnk_0874CB7C`),
+  `sub_0809b7f0` (`0x08745B00`, gfx `gUnk_087531C4`) and `sub_0809ba00`
+  (`0x08745B1C`, gfx `gUnk_087531DC`) share the same skeleton but use
+  `sub_0806523c` as the per-frame hook and `Task.unk42` = 9.  The third one's
+  state functions are **not** in this module: `0x08745B1C` points at
+  `sub_0809ba44`, the first function of M28.
+* **Census fixes** five, curated in `tools/symdb.py` `EXTRA_THUMB_ENTRIES`:
+  `0x08099AD0` and `0x0809B438` are real timer leaves the prologue scan could
+  not propose because `-fprologue-bugfix` left them without a `push` (the
+  behaviour-table words at `0x087456C8` and `0x0874580C` point at them), and
+  `0x08099FE0`, `0x08099FE4` and `0x0809B8AC` are dead exports nothing in the
+  ROM references (two empty `bx lr` state handlers and a copy of the
+  `0x08745B04` table re-arm).  The module's true function count is 145, not
+  140; `sub_08099a7c` is `0x54`, `sub_08099fd0` `0x10`, `sub_0809b408` `0x30`
+  and `sub_0809b868` `0x44`.
+* **ROM data** 55 new `tools/split_config.json` `data_symbols`: the state and
+  animation tables cluster in `0x08745618-0x08745C4C`, the `TaskGfx` blocks at
+  `0x08753090`/`0x08753180`/`0x087531C4`/`0x087531DC` and `0x0874CB7C`, and the
+  two 16-byte graphics records the bodies upload sit outside those
+  (`0x08274840`, `0x082797C8`).
+
+### M27 census (pre-decompilation)
 
 * **Size** 12.3 KiB (`0x314c`), 140 functions (122 reachable only through pointer tables), mean `0x5a`, largest `0x150`, pool words 13.9% of bytes.
 * **Difficulty** 1/6 - 6 distinct RAM cells, 4 jump-table dispatches, 0 functions >= `0x200`.

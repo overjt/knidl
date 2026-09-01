@@ -2395,6 +2395,113 @@ scratch copy that holds the file header plus that function, so an iteration is
 declaration in the header and silently duplicates half the file — which cost
 this issue a rebuild of 26 functions from the transcript.
 
+### 3.163 `if (c) { A; return 1; } return 0;` and `if (!c) return 0; A; return 1;` are different functions
+Both are the same C, and gcc 2.9 lays them out differently. The ROM shape
+`cmp; b<cond> .Lbody; movs r0, #0; b .Lret; .Lbody: A; movs r0, #1; .Lret: pop`
+— the *failure* path inline, the body jumped to, one shared epilogue — comes
+from the **positive** form:
+```c
+if (v <= 10) { sub_0806395c(17); sub_08006148(f, gCurTaskIdx); return 1; }
+return 0;
+```
+The inverted `if (v > 10) return 0;` form makes jump.c move the two-instruction
+`return 0` to the end of the function and *duplicate* the epilogue, so the byte
+count is right but every branch offset is wrong. Rule: whichever value the ROM
+reaches by falling through the compare is the one that belongs in the `return`
+*after* the `if`. (`sub_08098da4`, `sub_08099aec`, `sub_08099fb4`; M27 has
+eleven of these guards.)
+
+### 3.164 Every re-fetch of the running task in a new basic block is its own local
+`gUnk_03002490` is not volatile, so one `t = gUnk_03002490` covers a whole
+function — and that is usually wrong. The register the ROM picks tells you how
+many pseudos the original had: `sub_08098ed4` loads the task pointer three
+times (`r1` in the entry block, `r0` in the `if` arm, `r1` again in the `else`)
+and only matches with **three** locals, one per block. With one local the whole
+function moves to `r2`; with two it is still off by one. Diagnostic: count the
+`ldr rN, [r4, #0]` re-loads in the ROM and give each one a name. The same
+applies inside a switch — `sub_08099020` needs `t`/`u`/`v` for `unk15`,
+`unk7A` and the `unk28`/`unk58`/`unk60`/`unk68` group.
+
+### 3.165 `x->f = call()` reloads the base *after* the call; a local does not
+`u = gUnk_03002490; u->unk46 = sub_0806cc90(...)` evaluates the LHS address
+first and keeps it live across the call in a callee-saved register. The ROM
+almost always does the opposite — `bl`, then `ldr r1, [r4, #0]`, then the store
+— which is exactly what writing the global inline gives:
+`gUnk_03002490->unk46 = sub_0806cc90(...)`. When the same fetch feeds two or
+more stores after the call, still write it inline every time and let cse merge
+them (`sub_08099ee4` stores `unk70` and `unk6C` and reads `unk6C` back for the
+spawn record, all off one post-call `ldr`). (`sub_080991ac`, `sub_080992ac`,
+`sub_0809aa24`.)
+
+### 3.166 `a[p->f]` loads the array base first; `(a + p->f)` loads it last
+Both spell the same access, and agbcc emits the pool load at the point the
+address pseudo is created. `gUnk_03002790[t->unk44].unk14` gives
+`ldr r?, =gUnk_03002790` *before* the `ldrsh`+`*144` scaling; the ROM's
+`ldrsh; lsls; adds; lsls; ldr r1, =gUnk_03002790; adds` needs
+`(gUnk_03002790 + t->unk44)->unk14` (a local `struct Task *o = &arr[i]` or a
+`s32` index local work too, but the pointer-arithmetic form is the smallest
+edit). It goes the other way as well: when the ROM loads the base first,
+inline the index expression into the subscript — `sub_08098afc` only matched
+as `gUnk_03004CA0[gUnk_03002490->unk46]`, with the index re-spelled at every
+use instead of hoisted into an `s16 i`. Diagnostic: one `ldr rN, =<table>` too
+early or too late, with everything else identical. (`sub_0809b6ac`,
+`sub_0809b964`.)
+
+### 3.167 Cross-jumping always merges *into the later block*; an earlier tail needs a `goto`
+Two switch arms that end the same way get their common tail merged by jump.c,
+and the surviving copy is the one that comes **second** in the source: the
+first arm is rewritten to `b` into it. When the ROM has it the other way round
+— the first block holding the tail and the second jumping backwards — no
+source ordering reproduces it, because swapping the arms also swaps the jump
+table entries. A label in the first arm and a `goto` in the second does:
+```c
+case 4: … sub_080062c4();
+stop:   gUnk_03002490->unk28 = 1; break;
+case 2: … goto stop;
+```
+(`sub_08099b20`.) Note also that gcc 2.9 will not merge *through* a `bl`: two
+arms that differ only in the argument of the same call keep one call each and
+merge from the instruction after it — see 3.168 for the shape that does share
+the call.
+
+### 3.168 Two constant arms feeding one call are if-converted; `BLOCK_CROSS_JUMP` undoes it
+`if (c) v = 18; else v = 17; f(v);` compiles to a preload plus a conditional
+overwrite (`movs r1, #17; cmp; beq; movs r1, #18`), and so do the ternary and
+the equivalent two-case `switch` — all three reach the same `COND_EXPR`
+expansion. The ROM's branchy select (`beq .L17; movs r0, #18; b .Lcall;
+.L17: movs r0, #17; .Lcall: bl f`) needs the arms kept as real blocks, which
+is what `global.h`'s `BLOCK_CROSS_JUMP` (`asm("")`) is for — anywhere inside
+either arm, emitting no code:
+```c
+if (sub_08021a40(…) != 0) { BLOCK_CROSS_JUMP v = 18; }
+else                      { v = 17; }
+sub_0806395c(v);
+```
+Diagnostic: the candidate is 4 bytes short and has a `movs rN, #<else value>`
+*before* the compare. (`sub_0809ad6c`, M27's only use of the macro.)
+
+### 3.169 The epilogue register says whether the function returns a value
+`pop {r4}; pop {r0}; bx r0` pops the return address into `r0`, so `r0` is dead
+— the function is `void`. `pop {r4}; pop {r1}; bx r1` avoids `r0` on purpose:
+something is being returned in it, even when the body ends in a bare
+`bl`/`str`. `sub_08099e9c` differs from its twin `sub_08098d58` by exactly
+that: `return sub_08064b5c(&sp, 1);` instead of dropping the result. This is a
+two-byte diff that no amount of body rewriting fixes, so read the epilogue
+before writing the signature.
+
+### 4.34 A dead `bx lr` stub is invisible to every heuristic — look for the hole
+`-fprologue-bugfix` already hides leaf functions from the prologue scan
+(rom-map §9), and an *empty* one hides from everything: no `push`, no `bl`
+caller, and — if it is a dead export — no ROM pointer either. All that is left
+is a `bx lr` + alignment `movs r0, r0` pair sitting between the previous
+function's literal pool and the next symbol, inside the previous function's
+declared size. M27 had five such holes (`0x08099AD0`, `0x08099FE0`,
+`0x08099FE4`, `0x0809B438`, `0x0809B8AC`); three were reachable only because
+the byte-match of the surrounding range refused to close otherwise. The cheap
+check while writing a batch file: after each function, confirm that
+`start + size` of the symbol equals the address the next one starts at *in the
+disassembly*, not just in `symbols.csv`.
+
 ## 5. Workflow that worked
 
 The canonical per-function loop (pick → m2c first pass → asmdiff iterate →

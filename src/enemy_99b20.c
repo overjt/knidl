@@ -2,6 +2,33 @@
  *
  * RECIPE: agbcc -O2 -mthumb-interwork -fprologue-bugfix
  *   ./tools/fnmatch.sh 0x08099B20 0x0809BA44 src/enemy_99b20.c --newpb
+ *
+ * The tail of the first mid-boss script, M27's second one, and the three small
+ * companion tasks that close the module.
+ *
+ * sub_08099b20 (22 cases) and sub_08099c4c (18) are the first script's
+ * remaining jump-table dispatchers; sub_08099dec picks the next animation from
+ * one of gUnk_087456D4 / gUnk_087456E4 / gUnk_087456F4 / gUnk_08745704 by
+ * classifying |sub_08063cd0()| against 128 and |sub_08063d2c()| against 64;
+ * sub_08099e9c and sub_08099ee4 build struct ActorSpawn records for the actors
+ * 16 and 17; sub_0809a080 is the shared hit reaction (rumble sub_080261d4(2)
+ * or (4), then SE 0x1F7).  sub_08099fe0 and sub_08099fe4 are two dead `bx lr`
+ * state handlers nothing in the ROM points at.
+ *
+ * The second script starts at sub_0809a0a8 (graphics gUnk_08753180, animation
+ * gUnk_08745744, one-word table gUnk_0874574C): sub_0809a118 installs
+ * sub_0809a17c and dispatches Task.unk14 through the 24-word guard table
+ * gUnk_08745750, sub_0809a17c dispatches Task.unk15 through the 24-word body
+ * table gUnk_087457B0 that follows it, and sub_0809a1f4 is its re-arm hook.
+ * States 0-23 follow as <body, guard> pairs; sub_0809b438 is the timer leaf
+ * the table word at 0x0874580C points at.
+ *
+ * sub_0809b528, sub_0809b7f0 and sub_0809ba00 are the three companion tasks
+ * (graphics gUnk_0874CB7C, gUnk_087531C4, gUnk_087531DC).  They use
+ * sub_0806523c as the per-frame hook and Task.unk42 = 9; sub_0809b6ac and
+ * sub_0809b964 read the parent's state out of gUnk_03002790[Task.unk44], and
+ * the third one's own states live in the next module - gUnk_08745B1C points at
+ * sub_0809ba44.  sub_0809b8ac is a dead copy of the gUnk_08745B04 re-arm.
  */
 #include "gba/gba.h"
 #include "global.h"

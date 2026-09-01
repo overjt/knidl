@@ -2,6 +2,35 @@
  *
  * RECIPE: agbcc -O2 -mthumb-interwork -fprologue-bugfix
  *   ./tools/fnmatch.sh 0x080988F8 0x08099B20 src/enemy_988f8.c --newpb
+ *
+ * M27's first mid-boss script, built exactly like M25's bosses (rom-map section 9).
+ * sub_08098e64 is the task entry: it installs sub_080656b4 as the draw hook
+ * (Task.unk00) and sub_08065438 as the per-frame hook (Task.unk0C), points
+ * Task.unk38 at the graphics block gUnk_08753090, counts the enemy into
+ * gUnk_02007D00[0], loads the animation script gUnk_08745624 and hands
+ * Task.unk73 to sub_08002e98 with the one-word table gUnk_08745630, whose only
+ * entry is sub_08098ed4.
+ *
+ * sub_08098ed4 installs sub_08098f38 as the per-frame body and dispatches
+ * Task.unk14 through the 19-word guard table gUnk_08745634; sub_08098f38
+ * re-uploads (sub_080663f4) or drops (sub_08066468) the 16-byte graphics
+ * record gUnk_08274840 while Task.unk18 is set, dispatches Task.unk15 through
+ * the 19-word body table gUnk_08745680 that follows it, and finishes with the
+ * animation-row selector sub_08098de4 plus sub_08068f68 / sub_08069b44.
+ * sub_08098fb0 is the re-arm hook every guard installs through
+ * sub_08006148(fn, gCurTaskIdx).
+ *
+ * The rest are the states.  sub_080988f8 / sub_08098a04 are the two jump-table
+ * dispatchers that turn Task.unk14 into the next animation, sub_08098afc frees
+ * the helper task recorded in Task.unk46 once gUnk_03004CA0[] says its type is
+ * 143 and gUnk_03002790[] says this task is its parent, sub_08098b60 walks the
+ * gUnk_08745618 / gUnk_0874561F rows with the decimal-digit buffer
+ * gUnk_03001F08[1] as the index, sub_08098c54 fires the timed
+ * sub_08002ee8-gated transitions at Task.unk30 == 120 / 60 / 45, sub_08098d58
+ * spawns the actor 13 through sub_08064b5c and sub_08098da4 is the "close
+ * enough" probe (|sub_08063cbc(Task.unk1C)| <= 10).  sub_080992a8 and
+ * sub_08099a0c are empty state handlers, and sub_08099ad0 is the timer leaf
+ * the guard table word at 0x087456C8 points at.
  */
 #include "gba/gba.h"
 #include "global.h"
