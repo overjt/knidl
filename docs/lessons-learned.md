@@ -2678,6 +2678,92 @@ to both was structural (3.170, 3.171), and 500 random mutations never moved the
 score.  Treat it as the tool for "assign the constant to a temp"-class rewrites
 (3.106, 3.109) and not for register permutations.
 
+### 3.180 This module's `|x|` is `(n) < 0 ? -(n) : (n)`, not `global.h`'s `abs()`
+`abs(n)` in `include/global.h` expands to `((n) >= 0) ? (n) : -(n)`, and gcc
+lays the two arms out in source order: the `>= 0` test makes the POSITIVE arm
+the fall-through and the negating arm the branch target.  Every `|x|` in M26
+(issue #75) is the other way round - `bl f; cmp r0,#0; bge .Lpos; bl f; negs;
+cmp r0,#K` - so it needs `((n) < 0 ? -(n) : (n))`.  M26 defines its own `ABS()`
+at the top of each file for that reason; do not "fix" it to use `abs()`.  The
+distinction is worth two instructions per site and it is the first thing to
+flip when an `abs()` diff is only a swapped branch condition.
+
+### 3.181 `while (A && ABS(f()) <= K)` cross-jumps the two compares; the `break` form does not
+Written as a compound loop condition, gcc emits the `ABS` ternary once and lets
+both arms fall into a single `cmp rX,#K` - the ROM has TWO `cmp #K` sites, one
+per arm.  Splitting the second test out of the condition fixes it:
+
+```c
+while (A) {                       /* not: while (A && ABS(f()) <= K) */
+    if (ABS(f()) > K)
+        break;
+    ...
+}
+```
+
+Both shapes are the same C, but only the second keeps the arms apart
+(`sub_0809619c`, `sub_08095eac`).  The plain `if (ABS(f()) <= K) ...` inside a
+body never merged, so this is specific to the loop-condition position.
+
+### 3.182 `cmp rX,#C; blt` on a constant can only come from a `switch`
+gcc canonicalises `x >= C` and `x < C` to `x > C-1` / `x <= C-1` at the tree
+level, so no `if` ever produces `cmp rX,#C; blt`.  A dispatch that opens
+`cmp r0,#4; blt default; cmp r0,#5; ble arm1; cmp r0,#14; bne default` is
+`switch (x) { case 14: ...; case 4: case 5: ...; }` - the case-range test
+`emit_case_nodes` builds keeps the original constant.  `sub_080983a4` cost
+several rounds of if/else shapes before that clicked; the case bodies are
+emitted in source order, so read the ROM's body order (14 before 4/5 there)
+straight into the source.
+
+### 3.183 `u16` locals for computed call arguments defer the `(s16)` conversions to the call
+`sub_08067120(s16, s16, s16, u8)` in `sub_08097088` is called with two computed
+sums.  Passing the expressions directly converts each one as it is built
+(`... ; lsls; asrs; <next arg>`); the ROM computes BOTH raw sums first and then
+does all three `lsls #16; asrs #16` pairs back to back.  Assigning the sums to
+`u16` locals reproduces that: the u16 store needs no insn of its own and the
+u16->s16 conversion is emitted at the call.
+
+### 3.184 Falling off the end of a non-void function is a real ROM shape
+`sub_08096d64` returns `s32`, but its `switch` has no `default` and the ROM's
+default path reaches `pop {r1}; bx r1` with `r0` never set.  Writing
+`s32 r; switch (...) {... return 0; ...} return r;` costs an `adds r0, rN, #0`
+because `r` gets a register of its own; deleting the trailing `return`
+entirely - so control really falls off the end - is what matches.  agbcc does
+not warn about it under this repo's flags.
+
+### 3.185 Two identical `switch` arms get cross-jumped whole; one own local breaks the merge
+`sub_080970c4`'s `case 0` and `case 2` compute the same `y` formula from
+different task reads.  Written with the same locals they compile to identical
+insn streams and gcc cross-jumps the ENTIRE computation, leaving `case 0` as a
+two-instruction stub.  The ROM shares only the last three insns.  Giving one of
+them its own pointer variable (`p2` instead of reusing `p`) - or any change that
+makes one insn differ - stops the merge at the right place.  An empty
+`asm("")`/`BLOCK_CROSS_JUMP` did NOT stop this one; the difference has to be in
+a real insn.
+
+### 4.36 An address-annotated listing plus a reachability walk is the cheapest census sweep
+M26 (issue #75) built `pending/m26/ann/<fn>.s` up front: the split asm walked
+with a 2-byte/4-byte cursor (only `bl` is four bytes, everything else is two),
+every `ldr rN,[pc,#K] @ 0xADDR` rewritten to `ldr rN, =<pool value>`, and the
+raw-halfword escapes `split.py` emits decoded from a force-thumb `objdump` of
+the same slice.  Two sweeps over that listing then paid for the whole tool:
+
+* **Pool containment.** Every `ldr` whose pool address falls outside the
+  owning function's `[start,end)` is a mis-cut boundary (4.29).  M26 had none,
+  which made every `symbols.csv` boundary a valid carve.
+* **Reachability.** Walk each function from its entry, following branches and
+  the `mov pc, rN` jump tables (find the table base by backtracking to the
+  `ldr rN,=<addr>` and reading words until one leaves the module).  Code no
+  path reaches is a hidden function.  That found all EIGHT of M26's census
+  defects in one pass - four pointer-referenced leaves the `-fprologue-bugfix`
+  prologue scan could not propose and four dead exports nothing references -
+  where the per-function "is the first insn a prologue?" check (4.30) only
+  flags the ones that start without a `push`.
+
+The same walk also proves the jump tables: the four `mov pc` dispatches in M26
+resolve to 5, 7, 29 and 11 entries, and those counts are exactly the `case`
+ranges the C needs.
+
 ## 5. Workflow that worked
 
 The canonical per-function loop (pick → m2c first pass → asmdiff iterate →
