@@ -44,6 +44,38 @@ make split    # extract configured ROM ranges into labeled, byte-identical asm
 Full instructions, including `baserom.gba` placement and hash verification:
 [INSTALL.md](INSTALL.md).
 
+## Pi coding-agent harness
+
+This checkout includes a project-local harness for the
+[Pi coding agent](https://github.com/earendil-works/pi): a deterministic oracle
+over the module map, a guard for the `AGENTS.md` rules, a pre-commit merge
+gate, and an autopilot that works the module queue unattended.
+
+```sh
+./tools/pi-knidl.sh                  # interactive session
+./tools/pi-knidl.sh start M27        # interactive, aimed at one module
+./tools/pi-knidl.sh autopilot        # unattended run of the whole queue
+python3 tools/pi_harness.py status   # read-only project status
+```
+
+Full documentation: [docs/pi-harness.md](docs/pi-harness.md).
+
+Sessions and autopilot bookkeeping live in `.pi/sessions/` and `.pi/state/` and
+are not committed; the harness resources themselves are versioned. The harness
+does not provide a ROM: byte-exact matching still needs your own legal
+`baserom.gba`.
+
+The launcher activates `.githooks/pre-commit`, so a commit only lands once the
+staged snapshot passes split, symbol, module-map, header, report, and
+byte-for-byte clean-build validation. That gate proves local byte-exactness; a
+green **Build and verify** run and owner review remain the merge authority. For
+an unbypassable boundary, protect `master` in GitHub: require pull requests,
+require the status check, and prohibit direct pushes.
+
+Pi has no sandbox and the extensions run with your permissions — read them
+before trusting this checkout, and prefer a dedicated worktree for unattended
+runs.
+
 ## Progress
 
 The project started as a full ROM split (30 address-pinned segments in
