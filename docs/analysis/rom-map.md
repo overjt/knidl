@@ -592,6 +592,44 @@ child issues of #35 are created from it. Findings that belong in this document:
   blocks: `0x08753090`, `0x08753180`, `0x087531C4`, `0x087531DC` and
   `0x0874CB7C`; the 16-byte graphics records the per-frame bodies re-upload
   through `sub_080663f4` are `0x08274840` and `0x082797C8`.
+- **M22 (`0x08082E68-0x080860F7`) is five behaviour scripts in a THREE-table
+  shape.** Decompiled in #69 into `src/enemy_82e68.c`, `src/enemy_844c4.c` and
+  `src/enemy_84d14.c`. Where M25/M27 pair a guard table with a body table, M22
+  puts a *third* table in front of them: the entry hands `Task.unk73` to
+  `sub_08002e98` to pick which sub-script runs, that row hands `Task.unk14` to
+  the BODY table (each body writes its own state number into `Task.unk15` and
+  then yields), and the per-frame hook in `Task.unk04` hands `Task.unk15` to the
+  HANDLER table (each handler is the guard
+  `if (Task.unk14 != N) sub_08006148(entry, gCurTaskIdx);`). All three tables of
+  one script are consecutive, so the `count` argument separates them:
+  `0x0874176C` (2 unk73 rows) / `0x08741778` (7 bodies) / `0x08741794`
+  (7 handlers); `0x087417B0`+`0x087417B4` (1+1); `0x08741E64` / `0x08741E68` /
+  `0x08741E6C` (task #105); `0x08741E7C` (2) / `0x08741E84`+`0x08741E88` /
+  `0x08741E8C`+`0x08741E90` (task #108, two sub-scripts); `0x08741F70` (2) /
+  `0x08741F78` (6) / `0x08741F90` (6) (task #10); `0x08741FB8` (2) /
+  `0x08741FC0` (5) / `0x08741FD4` (5) (task #14); `0x08741FE8` (4) /
+  `0x08741FF8` (3) / `0x08742004` (3) (task #17); `0x08742030` (4) /
+  `0x08742040` (4).
+- **A behaviour bank can dispatch into its neighbour.** M22's class-3 task #20
+  entry `sub_08086090` hands `Task.unk73` to `sub_08002e98` with seven rows at
+  `0x08742064` — the table §9 lists as **M23's** anchor. Combined with M27's
+  forward-pointing `0x08745B1C`, the rule is that anchor tables and their
+  targets are independent of the module split.
+- **The class-3 "hook row" tables are `u8`-returning guards, not bodies.** M22
+  has three four-word groups of them (`0x08742CF0`, `0x08742D0C`, `0x08742D28`,
+  each followed by a two-word continuation at `+0x10`); every entry returns 1
+  when it has moved the task to a new state and 0 otherwise, and every one of
+  them opens with `if (Task.unk73 == 1) return 0;`. The `0x08742D28` group
+  switches on `Task.unk73` instead (0 = plain, 1 = carried by another actor,
+  2-3 = ignore).
+- **The room-class lookup chain used by the terrain probes is
+  `gUnk_087339F0` -> `gUnk_08732CF0` -> `gUnk_087416A4`.** `sub_08021b18(x, y)`
+  returns a tile index (or -1); `gUnk_087339F0[i]` (`s8`) says whether the tile
+  exists, `gUnk_08732CF0[i]` (`u8`) is its raw class, and
+  `gUnk_087416A4[class]` (`u8`) maps it to the behaviour code the scripts
+  branch on. M22's four probes (`sub_08083a48`, `sub_08083ad4`,
+  `sub_08083bbc`, `sub_08083cb8`) all end by discarding a code in 2-5 when
+  `Task.unk7A` is clear, i.e. "solid only while standing".
 - **`sub_08002e98(index, count, table)` dispatches a flat word table, not a
   pair table.** Its `count` argument is exactly the number of words: in M27
   every table's `count` times four lands precisely on the next named table
