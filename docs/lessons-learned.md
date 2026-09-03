@@ -3043,6 +3043,88 @@ that way, all first-try.  Do this immediately after the census sweep — the
 groups also tell you which function to write *first* (the one that unlocks the
 most twins).
 
+### 3.206 The ROM's absolute value is `(n < 0 ? -n : n)`, not `global.h`'s `abs()`
+The two macros differ only in branch polarity and the ROM shows which one it
+was: `abs(n)` (`(n) >= 0 ? (n) : -(n)`) branches AROUND the negation, the ROM's
+`cmp r0, #0; bge <positive arm>` falls THROUGH into it.  Every absolute value
+in M21 (`sub_0807f488`, `sub_0807f9a0`, `sub_08080fa4`, `sub_080816e8`,
+`sub_08082c5c`) is the ternary written out by hand; `abs()` costs 14 bytes of
+branch-polarity diff each time.
+
+### 3.207 A loop with an inner `break` is PEELED unless its back edge is a `goto`
+`do { A; if (X) break; } while (Y)` and `while (1) { A; if (X) break;
+if (!Y) break; }` both make gcc emit `A` twice - once as a peeled entry
+iteration, once as the steady state - because the front end rotates the loop
+and the exit test cannot be hoisted past the `break`.  Writing the same loop as
+`label: A; if (!X) { if (Y) goto label; }` emits `A` once.  This is the second
+half of 3.21: a `goto` back-edge carries no `NOTE_INSN_LOOP_BEG`, so the `loop`
+pass neither hoists invariants into a preheader **nor duplicates the body**.
+Two consequences worth knowing:
+* the unconditional `b` that a rotated loop needs is exactly where agbcc
+  flushes a literal pool, so a rotated loop can also cost a mid-function pool
+  the ROM does not have (`sub_0807f4dc`);
+* when the ROM re-loads a pool constant *inside* a loop after the calls
+  instead of once before it, that loop is a `goto` loop
+  (`sub_0807fa98`: two back-to-back frame loops, the first spelled with
+  `goto`, the second with `do/while`, and the outer `while (1)` a `goto` too).
+
+### 3.208 Reading a two-case `switch` off the ROM
+gcc balances the case list and roots the tree at `node[(n-1)/2]`, so the shape
+names the number of `case` labels, not the number of reachable bodies:
+* `cmp #A beq; cmp #B beq; b default` - two nodes, rooted at the FIRST case;
+* `cmp #B beq; cmp #B bgt default; cmp #A bne default` - THREE nodes rooted at
+  the second, where the third is an empty `case` whose `break` lands on the
+  default label so its subtree collapses into the `bgt`.  Add `case 2: break;`
+  to reproduce it (`sub_080818a8`, `sub_08081900`, `sub_08082de4`,
+  `sub_0807fc20`).
+A range test emitted low-bound-first (`cmp #0 blt; cmp #1 bgt`) is not a
+`switch` at all but two NESTED `if`s on an `s32` local - a `switch` over the
+same values emits the high bound first (`sub_08081984` vs `sub_080824ec`;
+3.44/3.111/3.201).
+
+### 3.209 Levers for where a value is materialised, from M21
+* **A dead assignment keeps the pool constant alive.**  When the ROM loads a
+  pool word into a callee-saved register BEFORE the function's first call but
+  only dereferences it after, the source assigns that global to a local ahead
+  of the call and again after it; the first store is deleted, the
+  `ldr rN, =sym` it created is not, and its live range now spans the call
+  (`sub_08082108`).  Companion to 3.31.
+* **`base + K + i*stride` computed as `(base + K) + i*stride`** needs BOTH
+  the scaled index and the offset base in their own locals -- with anything
+  less gcc re-associates the constant back to the end of the sum
+  (`sub_08080d58`; 3.130 in reverse).
+* **`movs rI, #K; ldrsh rD, [rB, rI]` on a global** is 3.139 one step further:
+  give the global an array type and index it with a plain `s32 i = K/2;` local
+  set at the top of the function, so cse folds `i` to the byte offset only
+  after the register addressing form has been chosen and the pool word stays
+  the bare symbol (`gUnk_03002158[i]` in `sub_08080fa4`/`sub_080810c4`).
+* **`x->f op= (cond ? A : B)`** hoists the load and the constant out of the
+  branch; the ROM's duplicated `ldr`/`movs` per arm with only the `adds`+`str`
+  shared is the full-arm `if/else` letting cross-jumping merge the tail
+  (`sub_0807f9a0`, twice; 3.123).
+* **`(s16)u16_local` inside a call argument is folded** when the argument is
+  itself narrowed to `s16`; the ROM's `lsls #16; asrs #16` per use survives
+  only if the sign-extended value is a real `s16` local assigned just before
+  the call (`sub_0807f6a8`: four such copies are the difference between a
+  212-byte candidate and the 228-byte ROM).
+* **A `u16` parameter the CALLEE narrows but the caller passes full-width**
+  means no prototype was in scope upstream: declare the parameter `int` and
+  assign it to a `u16` local (`sub_0807f6a8`).
+
+### 3.210 `*g` through a `T **` local is not invalidated; `gUnk_...` is
+A store through an unrelated `struct Task *` does not stop gcc CSE-ing a later
+`*g` (where `g` is a `struct Task **` local) with the pointer the loop body
+already loaded, but the same read spelled `gUnk_03002490` IS invalidated and
+reloads from the pool.  So three different ROM shapes for "read the global
+task pointer" map to three different spellings:
+* reuse the register the body already has -> `(*g)`;
+* fresh `ldr rN, =sym; ldr rM, [rN, #0]` -> `gUnk_03002490`;
+* fresh `ldr rM, [r5, #0]` off the hoisted address -> `struct Task *volatile *g`.
+The volatile form also forces a re-deref at the loop top, so a call whose
+result is stored through it has to go into a local first.  `sub_0807f0c4`, the
+last and by far the most expensive function of M21, needs all of 3.206-3.210
+at once.
+
 ## 5. Workflow that worked
 
 The canonical per-function loop (pick → m2c first pass → asmdiff iterate →

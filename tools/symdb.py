@@ -382,6 +382,22 @@ FALSE_POSITIVES = {
     # really runs 0x08086F54-0x0808705C (0x108).
     0x08087000,
     0x08087006,
+    # Five M21 rows the rom-pointer heuristic invented (issue #71), each a
+    # word inside a graphics/data blob that happens to equal a mid-function
+    # address; the reachability walk over the module's annotated listing shows
+    # the preceding function's code runs straight through all five.
+    # 0x0807FBFC is the `b.n 0x0807FC10` that skips sub_0807fbd0's second arm
+    # (host really runs 0x0807FBD0-0x0807FC20, 0x50); 0x0807FDF4 is the
+    # `bne` fall-through inside sub_0807fdc8 (0x0807FDC8-0x0807FE18, 0x50);
+    # 0x080803FC is the `bx r1` of sub_080803cc's epilogue
+    # (0x080803CC-0x08080400, 0x34); 0x08080A0A is a literal-pool word inside
+    # sub_08080930 (0x08080930-0x08080AA8, 0x178); and 0x08080E32 is the
+    # `bl sub_08063e14` inside sub_08080e10 (0x08080E10-0x08080E40, 0x30).
+    0x0807FBFC,
+    0x0807FDF4,
+    0x080803FC,
+    0x08080A0A,
+    0x08080E32,
 }
 
 # Curated Thumb entries with NO in-ROM reference (issue #31): dead m4a SDK
@@ -503,6 +519,43 @@ EXTRA_THUMB_ENTRIES = {
     0x08098738,
     0x080988A4,
     0x080988C0,
+    # Seventeen more entries the same two blind spots hid inside M21
+    # (issue #71), found by the same reachability walk.  Seven are
+    # pointer-referenced leaves the prologue filter rejected because
+    # -fprologue-bugfix left them without a `push` (they open `ldr rN, [pc]`
+    # and end `bx lr`): 0x0807FC94 (table word 0x08741BD0; host sub_0807fc70
+    # is 0x24, not 0x3C), 0x080803BC (0x08741BEC; host sub_080803a4 is 0x18,
+    # not 0x28), 0x08081960 (0x08741BF0; host sub_08081900 is 0x60, not 0x84),
+    # 0x08081E40 (0x087415E0; host sub_08081db4 is 0x8C, not 0xB0),
+    # 0x08081F08 and 0x08081F18 (0x08741C40 / 0x08741C2C; host sub_08081e64
+    # is 0xA4, not 0xD4) and 0x08082458 (0x0874161C; host sub_08082338 is
+    # 0x120, not 0x154).
+    # The other ten are dead exports with their own `push {lr}` prologue,
+    # each a copy of its host's tail dispatch that no ROM word (4-aligned)
+    # references: 0x0807FB44 (host sub_0807fb00 is 0x44, not 0x60),
+    # 0x08080300 (sub_080802bc 0x44, not 0x60), 0x080807BC (sub_0808076c
+    # 0x50, not 0x6C), 0x0808164C (sub_08081614 0x38, not 0x54), 0x080817B8
+    # (sub_08081774 0x44, not 0x60), 0x08081D68 (sub_08081d24 0x44, not
+    # 0x60), 0x080820EC (sub_080820b8 0x34, not 0x50), 0x080822E4
+    # (sub_080822b0 0x34, not 0x50), 0x080824D0 (sub_0808248c 0x44, not
+    # 0x60) and 0x08082BFC (sub_08082bb8 0x44, not 0x60).
+    0x0807FB44,
+    0x0807FC94,
+    0x08080300,
+    0x080803BC,
+    0x080807BC,
+    0x0808164C,
+    0x080817B8,
+    0x08081960,
+    0x08081D68,
+    0x08081E40,
+    0x08081F08,
+    0x08081F18,
+    0x080820EC,
+    0x080822E4,
+    0x08082458,
+    0x080824D0,
+    0x08082BFC,
     0x080CF664,  # m4aMPlayPanpotControl
     0x080CF6EC,  # m4aMPlayModDepthSet
     0x080CF760,  # m4aMPlayLFOSpeedSet
