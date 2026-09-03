@@ -24,10 +24,12 @@
 @   0x0808159C sub_0808159c
 @   0x080815DC sub_080815dc
 @   0x08081614 sub_08081614
+@   0x0808164C sub_0808164c
 @   0x08081668 sub_08081668
 @   0x0808168C sub_0808168c
 @   0x080816E8 sub_080816e8
 @   0x08081774 sub_08081774
+@   0x080817B8 sub_080817b8
 @   0x080817D4 sub_080817d4
 @   0x080817F8 sub_080817f8
 @   0x08081810 sub_08081810
@@ -35,6 +37,7 @@
 @   0x08081884 sub_08081884
 @   0x080818A8 sub_080818a8
 @   0x08081900 sub_08081900
+@   0x08081960 sub_08081960
 @   0x08081984 sub_08081984
 @   0x080819A4 sub_080819a4
 @   0x080819B4 sub_080819b4
@@ -48,21 +51,29 @@
 @   0x08081C78 sub_08081c78
 @   0x08081CE0 sub_08081ce0
 @   0x08081D24 sub_08081d24
+@   0x08081D68 sub_08081d68
 @   0x08081D84 sub_08081d84
 @   0x08081DB4 sub_08081db4
+@   0x08081E40 sub_08081e40
 @   0x08081E64 sub_08081e64
+@   0x08081F08 sub_08081f08
+@   0x08081F18 sub_08081f18
 @   0x08081F38 sub_08081f38
 @   0x08081F50 sub_08081f50
 @   0x08081F60 sub_08081f60
 @   0x08082008 sub_08082008
 @   0x080820B8 sub_080820b8
+@   0x080820EC sub_080820ec
 @   0x08082108 sub_08082108
 @   0x08082270 sub_08082270
 @   0x080822A4 sub_080822a4
 @   0x080822B0 sub_080822b0
+@   0x080822E4 sub_080822e4
 @   0x08082300 sub_08082300
 @   0x08082338 sub_08082338
+@   0x08082458 sub_08082458
 @   0x0808248C sub_0808248c
+@   0x080824D0 sub_080824d0
 @   0x080824EC sub_080824ec
 @   0x0808253C sub_0808253c
 @   0x08082548 sub_08082548
@@ -89,6 +100,7 @@
 @   0x08082B14 sub_08082b14
 @   0x08082B48 sub_08082b48
 @   0x08082BB8 sub_08082bb8
+@   0x08082BFC sub_08082bfc
 @   0x08082C18 sub_08082c18
 @   0x08082C3C sub_08082c3c
 @   0x08082C58 sub_08082c58
@@ -1106,6 +1118,10 @@ sub_08081614:
 	.word	gUnk_03002490
 	.word	sub_08081668+1
 	.word	0x0874159C
+	.thumb_func
+	.global	sub_0808164c
+sub_0808164c:
+	.thumb
 	push	{lr}
 	ldr	r0, [pc, #16]	@ 0x08081660
 	ldr	r0, [r0, #0]
@@ -1289,6 +1305,10 @@ sub_08081774:
 	.word	sub_080817d4+1
 	.word	gUnk_0873F500
 	.word	0x087415A4
+	.thumb_func
+	.global	sub_080817b8
+sub_080817b8:
+	.thumb
 	push	{lr}
 	ldr	r0, [pc, #16]	@ 0x080817CC
 	ldr	r0, [r0, #0]
@@ -1507,6 +1527,10 @@ loc_08081950:
 	movs	r0, r0
 	.word	sub_08081440+1
 	.word	gCurTaskIdx
+	.thumb_func
+	.global	sub_08081960
+sub_08081960:
+	.thumb
 	ldr	r0, [pc, #28]	@ 0x08081980
 	ldr	r1, [r0, #0]
 	adds	r0, r1, #0
@@ -2018,6 +2042,10 @@ sub_08081d24:
 	.word	sub_08081d84+1
 	.word	gUnk_0873F500
 	.word	0x087415DC
+	.thumb_func
+	.global	sub_08081d68
+sub_08081d68:
+	.thumb
 	push	{lr}
 	ldr	r0, [pc, #16]	@ 0x08081D7C
 	ldr	r0, [r0, #0]
@@ -2121,6 +2149,10 @@ loc_08081e22:
 	b.n	loc_08081dc4	@ 0x08081DC4
 	.word	gUnk_03002490
 	.word	0xFFFF3300
+	.thumb_func
+	.global	sub_08081e40
+sub_08081e40:
+	.thumb
 	.short	0x4807
 	ldr	r1, [r0, #0]
 	ldr	r0, [r1, #36]
@@ -2240,6 +2272,10 @@ loc_08081f00:
 	pop	{r4, r5, r6}
 	pop	{r1}
 	bx	r1
+	.thumb_func
+	.global	sub_08081f08
+sub_08081f08:
+	.thumb
 	ldr	r0, [pc, #8]	@ 0x08081F14
 	ldr	r1, [r0, #0]
 	movs	r0, #0
@@ -2247,6 +2283,10 @@ loc_08081f00:
 	bx	lr
 	movs	r0, r0
 	.word	gUnk_03002490
+	.thumb_func
+	.global	sub_08081f18
+sub_08081f18:
+	.thumb
 	ldr	r0, [pc, #24]	@ 0x08081F34
 	ldr	r1, [r0, #0]
 	ldrb	r0, [r1, #20]
@@ -2485,6 +2525,10 @@ sub_080820b8:
 	.word	gUnk_03002490
 	.word	sub_08082108+1
 	.word	0x08741610
+	.thumb_func
+	.global	sub_080820ec
+sub_080820ec:
+	.thumb
 	push	{lr}
 	ldr	r0, [pc, #16]	@ 0x08082100
 	ldr	r0, [r0, #0]
@@ -2742,6 +2786,10 @@ sub_080822b0:
 	.word	gUnk_03002490
 	.word	sub_08082300+1
 	.word	0x08741618
+	.thumb_func
+	.global	sub_080822e4
+sub_080822e4:
+	.thumb
 	push	{lr}
 	ldr	r0, [pc, #16]	@ 0x080822F8
 	ldr	r0, [r0, #0]
@@ -2928,6 +2976,10 @@ loc_08082436:
 	.word	0x087415F4
 	.word	0x087415FC
 	.word	gCurTaskIdx
+	.thumb_func
+	.global	sub_08082458
+sub_08082458:
+	.thumb
 	ldr	r0, [pc, #44]	@ 0x08082488
 	ldr	r1, [r0, #0]
 	ldr	r0, [r1, #36]
@@ -2985,6 +3037,10 @@ sub_0808248c:
 	.word	sub_080824ec+1
 	.word	gUnk_0873F500
 	.word	0x08741620
+	.thumb_func
+	.global	sub_080824d0
+sub_080824d0:
+	.thumb
 	push	{lr}
 	ldr	r0, [pc, #16]	@ 0x080824E4
 	ldr	r0, [r0, #0]
@@ -3928,6 +3984,10 @@ sub_08082bb8:
 	.word	sub_08082c18+1
 	.word	gUnk_0873F500
 	.word	0x0874167C
+	.thumb_func
+	.global	sub_08082bfc
+sub_08082bfc:
+	.thumb
 	push	{lr}
 	ldr	r0, [pc, #16]	@ 0x08082C10
 	ldr	r0, [r0, #0]
