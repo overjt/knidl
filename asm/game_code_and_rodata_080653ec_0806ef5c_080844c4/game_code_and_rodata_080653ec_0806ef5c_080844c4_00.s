@@ -301,6 +301,7 @@
 @   0x0808D304 sub_0808d304
 @   0x0808D354 sub_0808d354
 @   0x0808D364 sub_0808d364
+@   0x0808D388 sub_0808d388
 @   0x0808D3E4 sub_0808d3e4
 @   0x0808D460 sub_0808d460
 @   0x0808D494 sub_0808d494
@@ -329,7 +330,6 @@
 @   0x0808DF58 sub_0808df58
 @   0x0808DF9C sub_0808df9c
 @   0x0808DFC4 sub_0808dfc4
-@   0x0808DFE2 sub_0808dfe2
 @   0x0808E050 sub_0808e050
 @   0x0808E054 sub_0808e054
 @   0x0808E070 sub_0808e070
@@ -374,6 +374,7 @@
 @   0x0808EC90 sub_0808ec90
 @   0x0808ECB4 sub_0808ecb4
 @   0x0808ECE0 sub_0808ece0
+@   0x0808ED0C sub_0808ed0c
 @   0x0808ED38 sub_0808ed38
 @   0x0808EE60 sub_0808ee60
 @   0x0808EE9C sub_0808ee9c
@@ -407,7 +408,6 @@
 @   0x0808F71C sub_0808f71c
 @   0x0808F728 sub_0808f728
 @   0x0808F75C sub_0808f75c
-@   0x0808F75E sub_0808f75e
 @   0x0808F7AC sub_0808f7ac
 @   0x0808F844 sub_0808f844
 @   0x0808F888 sub_0808f888
@@ -420,6 +420,7 @@
 @   0x0808F9B8 sub_0808f9b8
 @   0x0808F9D8 sub_0808f9d8
 @   0x0808F9F8 sub_0808f9f8
+@   0x0808FA04 sub_0808fa04
 @   0x0808FA10 sub_0808fa10
 @   0x0808FA50 sub_0808fa50
 @   0x0808FA84 sub_0808fa84
@@ -433,7 +434,6 @@
 @   0x0808FC40 sub_0808fc40
 @   0x0808FC90 sub_0808fc90
 @   0x0808FCD4 sub_0808fcd4
-@   0x0808FCEE sub_0808fcee
 @   0x0808FD1C sub_0808fd1c
 @   0x0808FD38 sub_0808fd38
 @   0x0808FD5C sub_0808fd5c
@@ -442,6 +442,7 @@
 @   0x0808FDB8 sub_0808fdb8
 @   0x0808FDF8 sub_0808fdf8
 @   0x0808FE28 sub_0808fe28
+@   0x0808FE6C sub_0808fe6c
 @   0x0808FE88 sub_0808fe88
 
 	.section .game_code_and_rodata_080653ec_0806ef5c_080844c4, "ax"
@@ -14828,6 +14829,10 @@ loc_0808d37e:
 	pop	{r1}
 	bx	r1
 	.word	gUnk_03002490
+	.thumb_func
+	.global	sub_0808d388
+sub_0808d388:
+	.thumb
 	ldr	r0, [pc, #28]	@ 0x0808D3A8
 	ldr	r2, [r0, #0]
 	ldr	r1, [r2, #84]
@@ -16314,10 +16319,8 @@ sub_0808dfc4:
 	.global	loc_0808dfde
 loc_0808dfde:
 	bl	sub_0808d460	@ 0x0808D460
-	.thumb_func
-	.global	sub_0808dfe2
-sub_0808dfe2:
-	.thumb
+	.global	loc_0808dfe2
+loc_0808dfe2:
 	bl	sub_0808d4d0	@ 0x0808D4D0
 	ldr	r0, [pc, #100]	@ 0x0808E04C
 	ldr	r1, [r0, #0]
@@ -18001,6 +18004,10 @@ sub_0808ece0:
 	.word	0x08743390
 	.word	sub_0808f3b8+1
 	.word	gCurTaskIdx
+	.thumb_func
+	.global	sub_0808ed0c
+sub_0808ed0c:
+	.thumb
 	push	{lr}
 	ldr	r0, [pc, #28]	@ 0x0808ED2C
 	movs	r1, #0
@@ -19366,10 +19373,8 @@ loc_0808f74e:
 sub_0808f75c:
 	.thumb
 	push	{lr}
-	.thumb_func
-	.global	sub_0808f75e
-sub_0808f75e:
-	.thumb
+	.global	loc_0808f75e
+loc_0808f75e:
 	ldr	r0, [pc, #40]	@ 0x0808F788
 	ldr	r0, [r0, #0]
 	adds	r0, #140
@@ -19711,6 +19716,10 @@ sub_0808f9f8:
 	movs	r0, #0
 	pop	{r1}
 	bx	r1
+	.thumb_func
+	.global	sub_0808fa04
+sub_0808fa04:
+	.thumb
 	push	{lr}
 	bl	sub_08063ff4	@ 0x08063FF4
 	movs	r0, #0
@@ -20057,10 +20066,6 @@ sub_0808fcd4:
 	ldr	r2, [pc, #12]	@ 0x0808FCF4
 	movs	r1, #2
 	bl	sub_08002e98	@ 0x08002E98
-	.thumb_func
-	.global	sub_0808fcee
-sub_0808fcee:
-	.thumb
 	b.n	loc_0808fd08	@ 0x0808FD08
 	.word	gUnk_03002490
 	.word	0x0874360C
@@ -20254,6 +20259,10 @@ loc_0808fe56:
 	movs	r0, r0
 	.word	sub_0806a344+1
 	.word	gCurTaskIdx
+	.thumb_func
+	.global	sub_0808fe6c
+sub_0808fe6c:
+	.thumb
 	push	{lr}
 	ldr	r0, [pc, #16]	@ 0x0808FE80
 	ldr	r0, [r0, #0]
