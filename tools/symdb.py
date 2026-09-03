@@ -372,6 +372,16 @@ FALSE_POSITIVES = {
     # sits inside the m4a_songs_2 tone/track data.  sub_0808fcd4 really runs
     # 0x0808FCD4-0x0808FD1C (0x48).
     0x0808FCEE,
+    # 0x08087000 and 0x08087006 are jump-table landing pads inside
+    # sub_08086f54 (issue #80, M23), not entries: the 9-entry table at
+    # 0x08086FA0 that `mov pc, r0` at 0x08086F90 dispatches through has
+    # 0x08087002 and 0x08087008 among its targets, so both "functions" are
+    # arms of the same `switch`.  The words 0x08087001 / 0x08087007 the
+    # rom-pointer heuristic found sit at 0x0827C564 / 0x0827C1AC, inside the
+    # compressed-graphics blob (same artifact as 0x080671F8).  sub_08086f54
+    # really runs 0x08086F54-0x0808705C (0x108).
+    0x08087000,
+    0x08087006,
 }
 
 # Curated Thumb entries with NO in-ROM reference (issue #31): dead m4a SDK
@@ -569,6 +579,39 @@ EXTRA_THUMB_ENTRIES = {
                  # sub_080c1804 with `Task.unk15` swapped for `Task.unk14`;
                  # nothing in the 8 MiB image references it.  sub_080c1804 is
                  # really 0x1C.
+    # Fourteen more entries the two blind spots of lesson 4.30 hid inside M23
+    # (issue #80), all found by the reachability walk over the module's
+    # annotated listing: code no path from the declared entry can reach.
+    # Five ARE pointer-referenced and were rejected only because
+    # -fprologue-bugfix left them without a `push`, so they look like the tail
+    # of the function above them: 0x08086274 (anchor-table word 0x08742084;
+    # host sub_08086170 is 0x104, not 0x15C), 0x08087210 (table word
+    # 0x087425B4; host sub_0808713c is 0xD4, not 0x12C), 0x08089530 (table
+    # word 0x08742760; host sub_08089460 is 0xD0, not 0xE4), 0x08089C0C
+    # (table word 0x08742D9C; host sub_08089bf0 is 0x1C, not 0x40) and
+    # 0x0808AA28 (table word 0x08742DCC; host sub_0808a9d8 is 0x50, not 0x90).
+    0x08086274,
+    0x08087210,
+    0x08089530,
+    0x08089C0C,
+    0x0808AA28,
+    # The other nine are dead exports with their own `push {lr}` prologue,
+    # each a near-copy of the tail of the function that hosts them and
+    # referenced by nothing in the ROM (the hosts' real sizes in brackets):
+    # 0x08086128 (sub_080860f8, 0x30), 0x080862FC (sub_080862cc, 0x30),
+    # 0x080868B8 (sub_08086824, 0x94), 0x08086A20 (sub_080869f0, 0x30),
+    # 0x080870F4 (sub_080870c4, 0x30), 0x08087298 (sub_08087268, 0x30),
+    # 0x08087824 (sub_08087790, 0x94), 0x0808798C (sub_0808795c, 0x30) and
+    # 0x08088394 (sub_08088360, 0x34).
+    0x08086128,
+    0x080862FC,
+    0x080868B8,
+    0x08086A20,
+    0x080870F4,
+    0x08087298,
+    0x08087824,
+    0x0808798C,
+    0x08088394,
 }
 
 EVIDENCE_KINDS = ("bl-target", "rom-pointer", "prologue-scan", "curated")
