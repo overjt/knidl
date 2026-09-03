@@ -3043,6 +3043,25 @@ that way, all first-try.  Do this immediately after the census sweep — the
 groups also tell you which function to write *first* (the one that unlocks the
 most twins).
 
+### 4.38 A jump table stores targets WITHOUT the Thumb bit; a pointer word WITH it
+The census sweep of 4.36 needs the two rules kept separate.  ARMv4T
+`mov pc, rN` ignores bit 0 and stays in Thumb state, so a `mov pc` jump table
+holds plain even addresses; every *pointer* word that reaches `bx` or
+`sub_08006148` holds `addr | 1`.  M20's single jump table (`0x0807A920`, five
+states over `Task.unk73`) is all-even, and a walker that required `w & 1` read
+zero entries and reported the table plus every arm as unreachable - which hid
+five real leaves until the rule was split.  Two more fixes the same sweep
+needed in M20, on top of #70's and #80's:
+* `split.py` sometimes prints a literal-pool word as *code* (it decoded the two
+  halfwords as instructions).  Any `ldr rN, [pc, #K]` target that the split asm
+  emitted as code is ROM data mis-decoded - and if that word happens to hold a
+  `data_symbols` address the symbolic name is lost, so an annotated-listing
+  builder must re-resolve pool values against `split_config.json` rather than
+  trusting the asm text.
+* run the escape decoder as a FIXPOINT: decoding an unreferenced `.word` run as
+  Thumb reveals new `ldr [pc]` pool targets, which reclassify more words as
+  data, which shortens the runs.  Two passes are not always enough.
+
 ### 3.206 The ROM's absolute value is `(n < 0 ? -n : n)`, not `global.h`'s `abs()`
 The two macros differ only in branch polarity and the ROM shows which one it
 was: `abs(n)` (`(n) >= 0 ? (n) : -(n)`) branches AROUND the negation, the ROM's
@@ -3124,6 +3143,79 @@ The volatile form also forces a re-deref at the loop top, so a call whose
 result is stored through it has to go into a local first.  `sub_0807f0c4`, the
 last and by far the most expensive function of M21, needs all of 3.206-3.210
 at once.
+
+### 3.211 Read the branch condition BACKWARDS to recover the source's if/else
+agbcc emits the source's THEN block as the fall-through and branches on the
+INVERTED condition to the ELSE block, so `bgt L` in the ROM means the source
+said `if (x <= ...)` with the else body at `L`.  M20's `sub_080795d8` (four
+nested if/elses) needed three separate inversions and cost six iterations
+before that was applied mechanically; doing it to every branch in the listing
+*before* writing any C makes these one-shot.  Two corollaries that showed up
+in the same module:
+* a predicate returning a flag is an **early return** (`if (cond) return 0;
+  work(); return 1;`), which puts the `return 0` after the pool with a forward
+  `bne` to it - `if (!cond) { work(); return 1; } return 0;` inverts the
+  branch and inlines the zero, 41 of 56 bytes different in `sub_08079fd0`;
+* when a `||` short-circuit's then-block dereferences a pointer local that the
+  second operand's call clobbers, look at where the *reload* sits.  If the ROM
+  jumps PAST the reload, the reload belongs to the second operand's block,
+  which no `a || b` spelling produces: `sub_0807b16c` only matched as a nested
+  `if` with an explicit `goto` out of the inner arm.
+
+### 3.212 Give every straight-line block that re-reads a global its own local
+The highest-yield shape in M20.  One function-wide `struct Task *t =
+gUnk_03002490;` parks the pointer in a callee-saved register and adds an
+`adds rX, r4, #0` copy at every point where the ROM instead lets the temp die;
+several `{ struct Task *t = gUnk_03002490; ... }` scopes, one per straight-line
+run, reproduce the ROM exactly.  `sub_08078f8c` (three such blocks around a
+`do/while`) was 205 of 228 bytes different with one local and matched first try
+with two scopes; `sub_0807d510` needed four.  Same mechanism as the `ip`
+permutation of #75: `local_alloc` only pre-assigns pseudos referenced in ONE
+basic block.
+
+### 3.213 A `u8` local re-truncates; hold a cast value in a WIDE local
+`s32 v = (u8)call();` emits the ROM's `lsls #24; lsrs r5, r0, #24` - the
+truncation lands directly in the allocated register.  `u8 v = (u8)call();`
+emits `lsls #24; lsrs r0, #24; adds r5, r0, #0`: agbcc keeps the value in a
+byte-typed pseudo and copies it out, which also drags in a `movs r0, r0` pad.
+`sub_0807d3b0` (the last M20 function to fall) needed the wide local plus an
+address-of on the SOURCE struct field (`s = &o->unk48; ... + *s`) - the
+address-of is what keeps `o` a real pointer and leaves no low register for the
+destination, which is how the ROM's `mov ip, r0` appears.  Note the inverse of
+3.202: there a `u8` local is what *keeps* a shift alive.
+
+### 3.214 An unsigned range check means `&&`; two signed compares mean nested ifs
+agbcc turns `x > LO && x <= HI` into `subs r0, x, #LO+1; cmp r0, #HI-LO-1;
+bhi`.  Where the ROM shows two separate *signed* compares against the two
+bounds, the source had them as nested `if`s (`sub_0807c828`).  Related operand
+rules from the same module: `v = cond ? A : B;` schedules B's `movs` between
+the condition's subexpression and its `cmp`, while `v = B; if (cond) v = A;`
+puts it before the whole condition (15 bytes apart in `sub_0807c828`, and the
+reverse direction in `sub_0807e290`); and `x & MASK` accumulates into the
+register holding whichever operand was loaded LAST, so a ROM `ands rd, rm`
+with the constant in `rd` means the mask was written FIRST
+(`15 & (r + t->unk24)`, `sub_0807c508`).
+
+### 3.215 `check_dbra_loop` on the array side: a down counter can be an UP counter
+Lesson from #64 restated for table walks.  `sub_0807aa5c` steps two ROM tables
+two words at a time; the ROM shows a pointer biv (`adds r4, #8`) plus a DOWN
+counter compared against zero, which is `loop.c` REVERSING an up counter.
+Writing the loop with an explicit pointer and a down counter reproduces those
+instructions but lets `loop.c` hoist the `ldr rN, =gUnk_03002490` out of the
+loop, costing 4 bytes and a whole-function register permutation.  The source is
+plain array indexing with an up counter: `for (i = 0; i <= 16; i += 2) { ...
+tab[i] ... tab[i + 1] ... }`.  Rule: when the ROM counts DOWN to zero but the
+data is indexed forward, assume the source counted UP.
+
+### 3.216 A redundant `(u16)` survives a `u16` local but is folded inline
+`sub_0807cbf4` masks a call result with `& 0x1FF`, which makes the `(u16)`
+truncation provably redundant - and agbcc drops it when the cast is inline
+(`(sub_080642fc(...) + 256) & 511`) or when the callee's prototype is
+`u16`-returning, but KEEPS it when the value passes through a `u16` local
+(`u16 v = call(); ... (v + 256) & 511`).  The ROM has the `lsls #16; lsrs #16`
+pair, so the local is what the original wrote.  Compare 3.213: the same "does
+the narrow type survive" question, opposite answer, because there the value is
+live across a call and here it is consumed immediately.
 
 ## 5. Workflow that worked
 

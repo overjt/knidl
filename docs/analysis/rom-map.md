@@ -620,6 +620,37 @@ child issues of #35 are created from it. Findings that belong in this document:
   six-byte `s8` box (`x0, y0, x1, y1, x2, y2`) and picks a random 16.16 target
   inside it into `Task.unk4C`/`Task.unk50`, choosing corner, mid-edge or
   centre from `Task.unk73`.
+- **M20 (`0x08078B68-0x0807F043`) is the three-table shape applied to MOVING
+  SCENERY, not enemies.** Decompiled in #77 into `src/enemy_78b68.c`,
+  `src/enemy_7aa5c.c` and `src/enemy_7d3b0.c`. Twenty-one ROM task types live
+  here — eighteen class-3 (#9, #12, #15, #16, #18, #19, #21, #22, #26, #29,
+  #36, #37, #44, #45, #46, #48, #216, #217), the class-2 pair #102/#134 and
+  the class-4 coroutine #173 — but the bodies do not aim at anything: they
+  write the 16.16 velocity pair `Task.unk54`/`Task.unk58` and the gravity
+  cell `Task.unk60` from ROM constants and then spin on the collision flag
+  `Task.unk7A` (`while (Task.unk7A == 0) TaskYieldTrampoline(1);`). That is
+  what a lift, a swinging platform, a conveyor or a falling block looks like
+  in this engine, and it explains the bank's unusually low RAM-cell count
+  (11 distinct cells in 25.2 KiB). The class-2 pair is the only place in the
+  behaviour banks that installs `sub_080059d8` as the draw hook and forces
+  the palette nibble of `Task.unk40` to `0xF`. #173 is the coroutine itself:
+  `sub_0807d3b0` re-seats its actor 20 units from
+  `gUnk_03002790[Task.unk44]` every frame and kills itself with
+  `sub_08005654` as soon as that task's `Task.unk76` leaves 28/29 — the same
+  "ride my parent" shape as M21's #175, one bank later.
+  121 tables in `0x0873F7xx-0x08752Bxx` were named through
+  `split_config.json` `data_symbols`.
+- **A `mov pc` jump table stores its targets WITHOUT the Thumb bit; a
+  function-pointer word stores them WITH it.** M20's only jump table
+  (`0x0807A920`, five states over `Task.unk73` inside `sub_0807a8fc`) holds
+  `0x0807A934`, `0x0807A94C`, `0x0807A952`, `0x0807A958`, `0x0807A958` —
+  all even, because ARMv4T `mov pc, rN` ignores bit 0 and stays in Thumb
+  state. Every *pointer* table in the same bank (the entry/hook pairs, the
+  `Task.unk04` hooks, `0x08741220`) stores `addr | 1` because those words
+  reach `bx`/`sub_08006148`. A census or reachability tool must apply the two
+  rules separately: requiring `w & 1` on a jump table reads zero entries and
+  reports the whole table plus every arm as unreachable (this is what hid
+  M20's five hidden leaves until the sweep was fixed).
 - **M21 (`0x0807F044-0x08082E67`) is the same three-table shape one bank
   earlier, with the bank's own tables interleaved with M22's.** Decompiled in
   #71 into `src/enemy_7f044.c`, `src/enemy_80b70.c` and `src/enemy_820b8.c`.
