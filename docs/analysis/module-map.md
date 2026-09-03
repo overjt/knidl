@@ -198,7 +198,7 @@ dispatches, pool density) — a planning aid, not a promise.
 | M17 | `0x08062584-0x080692FB` | 27.4 KiB | 244 | 2 | *** | struct Task field API (actor core) |
 | M18 | `0x080692FC-0x08070EBF` | 30.9 KiB | 256 | 4 | * | player-state task bodies (actor core part 2) - **landed (#64)** |
 | M19 | `0x08070EC0-0x08078B67` | 31.2 KiB | 218 | 8 | ** | actor bank C (11 class-3 tasks) |
-| M20 | `0x08078B68-0x0807F043` | 25.2 KiB | 390 | 20 | ** | enemy/object behaviour bank 1 |
+| M20 | `0x08078B68-0x0807F043` | 25.2 KiB | 390 | 20 | ** | enemy/object behaviour bank 1 - **landed (#77)** |
 | M21 | `0x0807F044-0x08082E67` | 15.5 KiB | 188 | 10 | * | enemy/object behaviour bank 2 - **landed (#71)** |
 | M22 | `0x08082E68-0x080860F7` | 12.6 KiB | 119 | 8 | * | enemy/object behaviour bank 3 (five three-table scripts) - **landed (#69)** |
 | M23 | `0x080860F8-0x0808CCE7` | 27.0 KiB | 297 | 14 | *** | enemy/object behaviour bank 4 (fourteen three-table scripts + two bosses) - **landed (#80)** |
@@ -305,7 +305,7 @@ sub-issue of #35, so the numbering ascends with the recommended order):
 | 11 | #74 | M28 enemy/object behaviour bank 9 | `0x0809BA44-0x080A158F` | 22.8 KiB | 2 |
 | 12 | #75 | M26 enemy/object behaviour bank 7 (four three-table scripts + two companions) - landed | `0x08093F64-0x080988F7` | 18.4 KiB | 2 |
 | 13 | #76 | M29 enemy/object behaviour bank 10 | `0x080A1590-0x080A5643` | 16.2 KiB | 2 |
-| 14 | #77 | M20 enemy/object behaviour bank 1 | `0x08078B68-0x0807F043` | 25.2 KiB | 2 |
+| 14 | #77 | M20 enemy/object behaviour bank 1 (21 task types, mostly moving scenery) - landed | `0x08078B68-0x0807F043` | 25.2 KiB | 2 |
 | 15 | #78 | M31 enemy/object behaviour bank 12 | `0x080AA338-0x080AE3BB` | 16.1 KiB | 2 |
 | 16 | #79 | M19 actor bank C (11 class-3 tasks) | `0x08070EC0-0x08078B67` | 31.2 KiB | 2 |
 | 17 | #80 | M23 enemy/object behaviour bank 4 (fourteen three-table scripts + two bosses) - landed | `0x080860F8-0x0808CCE7` | 27.0 KiB | 2 |
@@ -678,19 +678,91 @@ census below is the pre-decompilation one, kept for the record.
 * **Known RAM cells touched** DISPCNT shadow x3, per-player keys held x1, per-player keys pressed x1.
 * **Suggested batches** `0x08070EC0` (42 fns), `0x08072D8C` (47 fns), `0x08074C0C` (13 fns), `0x080763E8` (63 fns), `0x08077AE0` (53 fns).
 
-### M20 `0x08078B68-0x0807F043` - enemy/object behaviour bank 1
+### M20 `0x08078B68-0x0807F043` - enemy/object behaviour bank 1 - **landed (#77)**
 
-* **Size** 25.2 KiB (`0x64dc`), 390 functions (347 reachable only through pointer tables), mean `0x42`, largest `0x1c0`, pool words 15.4% of bytes.
-* **Difficulty** 2/6 - 11 distinct RAM cells, 1 jump-table dispatches, 0 functions >= `0x200`.
-* **Seam cost** 0 in / 0 out (local `bl` edges crossing the boundary).
-* **Why** 390 functions, mean 0x42, 347 pointer-dispatched, 20 anchor tables; no BL callers at all; 21 task types.
-* **Task types** 21 (class 2 x2, class 3 x18, class 4 x1): #9, #12, #15, #16, #18, #19, #21, #22, #26, #29, #36, #37, #44, #45, #46, #48, #102, #134, #173, #216, #217.
-* **Anchor tables** `0x08740630` 6 entries -> `0x08078BE0-0x080792F8`; `0x08740658` 4 entries -> `0x08078C80-0x08078CE4`; `0x08740670` 4 entries -> `0x08078D88-0x08078E38`; `0x087406C4` 10 entries -> `0x08078EEC-0x0807921C`; `0x08740700` 8 entries -> `0x080792DC-0x08079918`; `0x08740758` 24 entries -> `0x080795B4-0x0807A578` (+14 more).
-* **Calls into the decompiled early zone** sprite draw/update x315, frame driver + RNG + blend x154.
-* **Named helpers** TaskYieldTrampoline x313, TaskDispatchTrampoline x3.
-* **Depends on** M17 x385, sdk_libc x316, early_5d9c x315, early_2b04 x154, M18 x80.
-* **Pool references** IWRAM x540, asset_metadata_index x252, game_code_and_rodata x151, EWRAM x4, early_58e4 x3, level_graphics_palettes x1.
-* **Suggested batches** `0x08078B68` (128 fns), `0x0807AB54` (103 fns), `0x0807C4A0` (44 fns), `0x0807D1BC` (41 fns), `0x0807DD70` (74 fns).
+The range is decompiled and carved out of the split asm, so it now appears in
+`module-map.csv` as three `c_code` rows instead of one clusterable module; the
+census below is the pre-decompilation one, kept for the record (it counts 390
+functions; the reachability sweep of #77 corrected that to 414, see below).
+
+* **Landed as** `src/enemy_78b68.c` (`0x08078B68-0x0807AA5C`, 131 fns),
+  `src/enemy_7aa5c.c` (`0x0807AA5C-0x0807D3B0`, 170) and
+  `src/enemy_7d3b0.c` (`0x0807D3B0-0x0807F044`, 113).  All 414 functions are C
+  and `make progress` counts 0 asm code bytes in the range.
+* **Census** the 390-row census was wrong in 24 places, all found by the
+  reachability walk over the module's annotated listing (code inside a
+  declared range that no path from that range's entry reaches).  Five are
+  pointer-referenced leaves the prologue filter rejected because
+  `-fprologue-bugfix` leaves a pool-loading leaf without a `push`
+  (`0x08079B98`, `0x0807A05C`, `0x0807BEFC`, `0x0807E9B4`, `0x0807EFEC`);
+  the other nineteen are dead exports - copies of a host's tail dispatch that
+  no 4-aligned ROM word references.  All 24 are curated in `tools/symdb.py`.
+  `sub_0807e9b0` is the extreme case: its whole declared size was a bare
+  `bx lr` stub plus the hidden entry's 0x14 bytes (lesson 4.34).
+* **What it turned out to be** twenty-one ROM task types built to the same
+  three-table pattern as M21/M22/M24/M25/M26, but - unlike every other bank -
+  almost all of them are **moving scenery** rather than enemies: the bodies
+  drive the 16.16 velocity pair `Task.unk54`/`Task.unk58` and the gravity cell
+  `Task.unk60` from ROM constants and then wait on the collision flag
+  `Task.unk7A`, instead of aiming at a player.
+  * eighteen **class-3** types (#9 `sub_0807d684`, #12 `sub_08079440`,
+    #15 `sub_0807de98`, #16 `sub_0807e530`, #18 `sub_0807e9d8`,
+    #19 `sub_0807edb4`, #21 `sub_0807effc`, #22 `sub_080799e0`,
+    #26 `sub_08079e24`, #29 `sub_0807a898`, #36 `sub_0807af58`,
+    #37 `sub_0807af98`, #44 `sub_0807bd20`, #45 `sub_0807c444`,
+    #46 `sub_0807cbb4`, #48 `sub_0807bcac`, #216 `sub_0807d490`,
+    #217 `sub_0807d510`), each one `sub_08002e98(Task.unk73, N, table)`
+    dispatch - tables `0x08740718`, `0x08740820`, `0x08740990`,
+    `0x08740A74`, `0x08740B00`, `0x08740BAC`, `0x087410AC`, `0x087411C0`,
+    `0x08741228`, `0x0874126C`, `0x08741300` and `0x08741380`;
+  * two **class-2** types, #102 `sub_0807d008` and #134 `sub_0807d17c`,
+    which install `sub_080059d8` as the draw hook (not `sub_080656b4`) and
+    force the palette nibble of `Task.unk40` to `0xF`;
+  * one **class-4** type, #173 `sub_0807d388`, the odd one out again: it
+    clears `Task.unk00`/`Task.unk0C`, hangs `sub_0807d3b0` off `Task.unk04`
+    and yields into `TaskDispatchTrampoline`; `sub_0807d3b0` re-seats the
+    actor 20 units from `gUnk_03002790[Task.unk44]` every frame and kills
+    itself with `sub_08005654` as soon as that task leaves state 28/29;
+  * 38 **entry/hook script pairs** underneath them, each an entry that writes
+    `Task.unk04` and dispatches `Task.unk14`, plus a hook that dispatches
+    `Task.unk15` (`0x08740658`/`0x08740660`, `0x08740670`/`0x08740678`,
+    `0x087406C4`/`0x087406D0`, `0x087406DC`/`0x087406E4`,
+    `0x08740700`/`0x08740704`, `0x08740708`/`0x08740710`,
+    `0x08740758`/`0x08740768`, `0x08740778`/`0x0874077C`,
+    `0x08740788`/`0x08740798`, `0x087407A8`/`0x087407AC`,
+    `0x087407E4`/`0x087407F4`, `0x08740804`/`0x08740808`,
+    `0x08740810`/`0x08740818`, `0x08740960`/`0x08740978`,
+    `0x087409FC`/`0x08740A1C`, `0x08740A3C`/`0x08740A40`,
+    `0x08740A44`/`0x08740A5C`, `0x08740AC8`/`0x08740AE0`,
+    `0x08740AF8`/`0x08740AFC`, `0x08740B84`/`0x08740B94`,
+    `0x08740BA4`/`0x08740BA8`, `0x08740BBC`/`0x08740BC0`,
+    `0x08740BC4`/`0x08740BC8`, `0x08740BCC`/`0x08740BD0`,
+    `0x0874108C`/`0x08741090`, `0x087410B0`/`0x087410B8`,
+    `0x087411CC`/`0x087411E0`, `0x087411F4`/`0x087411F8`,
+    `0x087411FC`/`0x08741208`, `0x08741234`/`0x08741240`,
+    `0x0874124C`/`0x08741258`, `0x08741264`/`0x08741268`,
+    `0x08741278`/`0x0874127C`, `0x08741280`/`0x08741288`,
+    `0x08741290`/`0x08741294`, `0x087412CC`-`0x087412E8` (five pairs in a
+    run), `0x08741308`/`0x0874130C` and `0x08741310`/`0x08741314`).
+* **Shared library** `sub_08078b68` (the eight-frame "bob" coroutine nine
+  idle bodies tail-call), the `sub_08079eec` / `sub_08079f18` /
+  `sub_08079f54` sound-cue chain every script funnels its "player hit me"
+  reaction through (all `u16`-parameterised, all guarded on
+  `sub_08063c74() > 0x1000`), `sub_0807b294` (the state re-entry that resets
+  `Task.unk28`/`unk2C`/`unk30`/`unk34` and picks one of two cues with
+  `sub_08002ee8`), `sub_0807c5ac` (a `struct Rect` + `sub_08063BD4` "is the
+  player within 64" test), `sub_0807c530` / `sub_0807c5e4` (aim helpers over
+  the `0x08740B3C` / `0x08740B60` offset tables and `sub_0806421C`),
+  `sub_0807a968` (clamp a spawn point from `0x08740824` into the camera box
+  `gUnk_03002158[0..3]`) and `sub_0807dd10` (the shared six-step "open, hold,
+  close" door cycle).
+* **Jump tables** exactly one: `sub_0807a8fc`, five states over `Task.unk73`
+  at `0x0807A920`.  Its words carry **no Thumb bit** (ARMv4T `mov pc` ignores
+  bit 0), which is why the census sweep needs a separate rule for jump tables
+  and function-pointer words - see `docs/lessons-learned.md` 4.35.
+* **Difficulty** 2/6 as predicted; the two functions that cost real time were
+  both register-allocation residue (`sub_0807aa5c`'s `check_dbra_loop` shape
+  and `sub_0807d3b0`'s `ip` pointer), not structure.
 
 ### M21 `0x0807F044-0x08082E67` - enemy/object behaviour bank 2 - **landed (#71)**
 
