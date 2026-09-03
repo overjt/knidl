@@ -311,6 +311,15 @@ SECTIONS
         KEEP(*(.game_code_and_rodata_080653ec_0806ef5c)) KEEP(*(.game_code_and_rodata_080653ec_0806ef5c.tail))
     } > ROM
 
+    /* enemy_78b68 — decompiled to C (src/enemy_78b68.c, carved by tools/carve.py) */
+    .enemy_78b68 0x08078B68 : {
+        build/src/enemy_78b68.o(.text)
+    } > ROM
+
+    .game_code_and_rodata_080653ec_0806ef5c_0807aa5c 0x0807AA5C : {
+        KEEP(*(.game_code_and_rodata_080653ec_0806ef5c_0807aa5c)) KEEP(*(.game_code_and_rodata_080653ec_0806ef5c_0807aa5c.tail))
+    } > ROM
+
     /* enemy_7f044 — decompiled to C (src/enemy_7f044.c, carved by tools/carve.py) */
     .enemy_7f044 0x0807F044 : {
         build/src/enemy_7f044.o(.text)

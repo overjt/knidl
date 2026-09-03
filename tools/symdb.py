@@ -556,6 +556,56 @@ EXTRA_THUMB_ENTRIES = {
     0x08082458,
     0x080824D0,
     0x08082BFC,
+    # Twenty-four more entries the same two blind spots hid inside M20
+    # (issue #77), found by the same reachability walk.  Five are
+    # pointer-referenced leaves the prologue filter rejected because
+    # -fprologue-bugfix left them without a `push` (they open `ldr rN, [pc]`
+    # and end `bx lr`): 0x08079B98 (table word 0x08740798; host sub_08079b40
+    # is 0x58, not 0x6C), 0x0807A05C (0x08740EC0; host sub_0807a050 is 0xC,
+    # not 0x1C), 0x0807BEFC (0x08740EF8; host sub_0807bed4 is 0x28, not
+    # 0x38), 0x0807E9B4 (0x08741BAC; host sub_0807e9b0 is a bare `bx lr`
+    # stub of 0x4, not 0x18) and 0x0807EFEC (0x087418BC; host sub_0807ef7c
+    # is 0x70, not 0x80).
+    # The other nineteen are dead exports with their own `push {lr}`
+    # prologue, each a copy of its host's tail dispatch (or of a sibling
+    # leaf) that no 4-aligned ROM word references: 0x0807927C (host
+    # sub_08079238 is 0x44, not 0x60), 0x080794D0 (sub_080794c0 0x10, not
+    # 0x1C), 0x080799A0 (sub_0807995c 0x44, not 0x60), 0x08079DB8
+    # (sub_08079d74 0x44, not 0x60), 0x0807A4E4 (sub_0807a4a0 0x44, not
+    # 0x60), 0x0807B888 (sub_0807b844 0x44, not 0x60), 0x0807BD60
+    # (sub_0807bd20 0x40, not 0x5C), 0x0807C3D8 (sub_0807c394 0x44, not
+    # 0x60), 0x0807CADC (sub_0807ca98 0x44, not 0x60), 0x0807CCEC
+    # (sub_0807cc9c 0x50, not 0x6C), 0x0807CDEC (sub_0807cd9c 0x50, not
+    # 0x6C), 0x0807CF64 (sub_0807cf20 0x44, not 0x60), 0x0807D0D8
+    # (sub_0807d094 0x44, not 0x60), 0x0807DAF0 (sub_0807daac 0x44, not
+    # 0x60), 0x0807E428 (sub_0807e3e4 0x44, not 0x60), 0x0807E5A0
+    # (sub_0807e568 0x38, not 0x54), 0x0807E904 (sub_0807e8b8 0x4C, not
+    # 0x68), 0x0807EE44 (sub_0807ee14 0x30, not 0x4C) and 0x0807EF08
+    # (sub_0807eec4 0x44, not 0x60).
+    0x0807927C,
+    0x080794D0,
+    0x080799A0,
+    0x08079B98,
+    0x08079DB8,
+    0x0807A05C,
+    0x0807A4E4,
+    0x0807B888,
+    0x0807BD60,
+    0x0807BEFC,
+    0x0807C3D8,
+    0x0807CADC,
+    0x0807CCEC,
+    0x0807CDEC,
+    0x0807CF64,
+    0x0807D0D8,
+    0x0807DAF0,
+    0x0807E428,
+    0x0807E5A0,
+    0x0807E904,
+    0x0807E9B4,
+    0x0807EE44,
+    0x0807EF08,
+    0x0807EFEC,
     0x080CF664,  # m4aMPlayPanpotControl
     0x080CF6EC,  # m4aMPlayModDepthSet
     0x080CF760,  # m4aMPlayLFOSpeedSet
