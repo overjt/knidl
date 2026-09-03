@@ -1,7 +1,7 @@
-/* game_code_and_rodata 0x0807D490-0x0807F044 (issue #77, module M20 batch 3).
+/* game_code_and_rodata 0x0807D3B0-0x0807F044 (issue #77, module M20 batch 3).
  *
  * RECIPE: agbcc -O2 -mthumb-interwork -fprologue-bugfix
- *   ./tools/fnmatch.sh 0x0807D490 0x0807F044 src/enemy_7d490.c --newpb
+ *   ./tools/fnmatch.sh 0x0807D3B0 0x0807F044 src/enemy_7d3b0.c --newpb
  *
  * The last third of enemy/object behaviour bank 1 (see src/enemy_78b68.c for
  * the bank's three-table script pattern).  Mostly "moving scenery": scripts
@@ -34,6 +34,8 @@
 /* RAM cells */
 extern s8 gUnk_02007FB8[];
 extern struct Task *gUnk_03002490;
+extern struct Task gUnk_03002790[];
+extern vs16 gUnk_03004CA0[];
 
 /* ROM tables */
 extern struct AnimCmd gUnk_087412A8[];
@@ -41,6 +43,8 @@ extern struct AnimCmd gUnk_087412EC[];
 extern u32 gUnk_0873F500[];
 extern u32 gUnk_087410C0[];
 extern u32 gUnk_087410D8[];
+extern u32 gUnk_08741158[];
+extern u32 gUnk_08741174[];
 extern u32 gUnk_087411C0[];
 extern u32 gUnk_087411CC[];
 extern u32 gUnk_087411E0[];
@@ -108,11 +112,14 @@ extern s32 sub_08064fc4(u8 cls, u32 sub, u8 p3, u8 p4, int x, int y, u16 prio);
 extern s32 sub_0806956c();
 extern s32 sub_080695bc();
 extern s32 sub_08069b44(void);
+extern u32 sub_08068cf8(void *p);
 extern u32 sub_08068e04(void);
 extern u32 sub_080692fc(void);
+extern u8 sub_08065f2c(s32 i);
 extern void TaskDispatchTrampoline(void);
 extern void TaskYieldTrampoline(u32 frames);
 extern void sub_08002e98(u32 a, u32 b, u32 *c);
+extern void sub_08005654(s32 a);
 extern void sub_080059d8(void);
 extern void sub_08006138(void);
 extern void sub_08006148(void *fn, u32 i);
@@ -156,6 +163,49 @@ void sub_0807ecfc(void);
 void sub_0807ee60(void);
 void sub_0807ef24(void);
 void sub_0807ef7c(void);
+
+void sub_0807d3b0(void)
+{
+    s32 v;
+
+    if (gUnk_03004CA0[gUnk_03002490->unk44] == -1)
+        goto kill1;
+    v = (u8)sub_08065f2c(gUnk_03002490->unk44);
+    if (v != 1)
+        goto kill1;
+    {
+        struct Task *t = gUnk_03002490;
+        struct Task *o = &gUnk_03002790[t->unk44];
+        s16 *s;
+
+        if ((u16)(o->unk76 - 28) > 1)
+            goto kill2;
+        s = &o->unk48;
+        t->unk48 = o->unk2C * 20 + *s;
+        t->unk4A = o->unk4A;
+        if (t->unk18 != 0)
+        {
+            sub_08068cf8(gUnk_08741174);
+            return;
+        }
+    }
+    if (sub_08068cf8(gUnk_08741158) != 0)
+    {
+        if (gUnk_03002490->unk7C == 6)
+        {
+            sub_080031b8(243);
+            gUnk_03002490->unk18 = v;
+        }
+    }
+    return;
+
+kill2:
+    sub_08005654(gCurTaskIdx);
+    return;
+
+kill1:
+    sub_08005654(gCurTaskIdx);
+}
 
 void sub_0807d490(void)
 {

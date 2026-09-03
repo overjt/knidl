@@ -1,7 +1,7 @@
-/* game_code_and_rodata 0x0807AAB8-0x0807D3B0 (issue #77, module M20 batch 2).
+/* game_code_and_rodata 0x0807AA5C-0x0807D3B0 (issue #77, module M20 batch 2).
  *
  * RECIPE: agbcc -O2 -mthumb-interwork -fprologue-bugfix
- *   ./tools/fnmatch.sh 0x0807AAB8 0x0807D3B0 src/enemy_7aab8.c --newpb
+ *   ./tools/fnmatch.sh 0x0807AA5C 0x0807D3B0 src/enemy_7aa5c.c --newpb
  *
  * The middle third of enemy/object behaviour bank 1 (see src/enemy_78b68.c for
  * the bank's three-table script pattern).  Twelve more scripts, among them:
@@ -53,6 +53,8 @@ extern struct AnimCmd gUnk_08740AAC[];
 extern u32 gUnk_0825B350[];
 extern u32 gUnk_0873F500[];
 extern u32 gUnk_0873F720[];
+extern u32 gUnk_08740864[];
+extern u32 gUnk_087408AC[];
 extern u32 gUnk_08740934[];
 extern u32 gUnk_08740950[];
 extern u32 gUnk_08740960[];
@@ -173,7 +175,6 @@ extern s32 sub_0807a8d4();
 extern s32 sub_0807a8fc();
 extern s32 sub_0807a968();
 extern s32 sub_0807aa0c();
-extern s32 sub_0807aa5c();
 void sub_0807aae4(void);
 void sub_0807b32c(void);
 void sub_0807b3dc(void);
@@ -194,6 +195,27 @@ void sub_0807d094(void);
 void sub_0807d230(void);
 void sub_0807d29c(void);
 extern s32 sub_0807d3b0();
+
+void sub_0807aa5c(void)
+{
+    s32 i;
+
+    for (i = 0; i <= 16; i += 2)
+    {
+        gUnk_03002490->unk58 = gUnk_08740864[i] * gUnk_03002490->unk28;
+        TaskYieldTrampoline(gUnk_08740864[i + 1]);
+    }
+    gUnk_03002490->unk28 = -gUnk_03002490->unk28;
+    while (1)
+    {
+        for (i = 0; i <= 32; i += 2)
+        {
+            gUnk_03002490->unk58 = gUnk_087408AC[i] * gUnk_03002490->unk28;
+            TaskYieldTrampoline(gUnk_087408AC[i + 1]);
+        }
+        gUnk_03002490->unk28 = -gUnk_03002490->unk28;
+    }
+}
 
 void sub_0807aab8(void)
 {
