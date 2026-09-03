@@ -201,7 +201,7 @@ dispatches, pool density) — a planning aid, not a promise.
 | M20 | `0x08078B68-0x0807F043` | 25.2 KiB | 390 | 20 | ** | enemy/object behaviour bank 1 |
 | M21 | `0x0807F044-0x08082E67` | 15.5 KiB | 188 | 10 | * | enemy/object behaviour bank 2 |
 | M22 | `0x08082E68-0x080860F7` | 12.6 KiB | 119 | 8 | * | enemy/object behaviour bank 3 (five three-table scripts) - **landed (#69)** |
-| M23 | `0x080860F8-0x0808CCE7` | 27.0 KiB | 285 | 14 | *** | enemy/object behaviour bank 4 |
+| M23 | `0x080860F8-0x0808CCE7` | 27.0 KiB | 297 | 14 | *** | enemy/object behaviour bank 4 (fourteen three-table scripts + two bosses) - **landed (#80)** |
 | M24 | `0x0808CCE8-0x0809000B` | 12.8 KiB | 158 | 8 | * | enemy/object behaviour bank 5 (six three-table scripts) - **landed (#70)** |
 | M25 | `0x0809000C-0x08093F63` | 15.8 KiB | 121 | 4 | * | boss behaviour bank (four scripted bosses) - **landed (#67)** |
 | M26 | `0x08093F64-0x080988F7` | 18.4 KiB | 140 | 4 | ** | enemy/object behaviour bank 7 (four three-table scripts + two companions) - **landed (#75)** |
@@ -308,7 +308,7 @@ sub-issue of #35, so the numbering ascends with the recommended order):
 | 14 | #77 | M20 enemy/object behaviour bank 1 | `0x08078B68-0x0807F043` | 25.2 KiB | 2 |
 | 15 | #78 | M31 enemy/object behaviour bank 12 | `0x080AA338-0x080AE3BB` | 16.1 KiB | 2 |
 | 16 | #79 | M19 actor bank C (11 class-3 tasks) | `0x08070EC0-0x08078B67` | 31.2 KiB | 2 |
-| 17 | #80 | M23 enemy/object behaviour bank 4 | `0x080860F8-0x0808CCE7` | 27.0 KiB | 2 |
+| 17 | #80 | M23 enemy/object behaviour bank 4 (fourteen three-table scripts + two bosses) - landed | `0x080860F8-0x0808CCE7` | 27.0 KiB | 2 |
 | 18 | #81 | M05 player-character driver? | `0x08017668-0x0801A8C7` | 12.6 KiB | 3 |
 | 19 | #82 | M04 player-character state bodies? | `0x08010358-0x08017667` | 28.8 KiB | 3 |
 | 20 | #83 | M16 actor / effect support library B | `0x0805AFAC-0x08062583` | 29.5 KiB | 3 |
@@ -798,19 +798,89 @@ census below is the pre-decompilation one, kept for the record.
 * **Pool references** IWRAM x211, asset_metadata_index x124, game_code_and_rodata x64, early_58e4 x1, early_5d9c x1.
 * **Suggested batches** `0x08082E68` (44 fns), `0x080844C4` (24 fns), `0x08084D14` (51 fns).
 
-### M23 `0x080860F8-0x0808CCE7` - enemy/object behaviour bank 4
+### M23 `0x080860F8-0x0808CCE7` - enemy/object behaviour bank 4 (fourteen three-table scripts + two bosses) - **landed (#80)**
 
-* **Size** 27.0 KiB (`0x6bf0`), 285 functions (266 reachable only through pointer tables), mean `0x60`, largest `0x1f8`, pool words 14.0% of bytes.
+The range is decompiled and carved out of the split asm, so it now appears in
+`module-map.csv` as three `c_code` rows instead of one clusterable module; the
+census below is the pre-decompilation one, kept for the record.
+
+* **Landed as** `src/enemy_860f8.c` (`0x080860F8-0x08088000`, 81 fns),
+  `src/enemy_88000.c` (`0x08088000-0x0808AA68`, 137) and
+  `src/enemy_8aa68.c` (`0x0808AA68-0x0808CCE8`, 79).  All 297 functions are C
+  and `make progress` counts 0 asm code bytes in the range.
+* **Census** the module really has **297** functions, not the 285 the sweep
+  counted: sixteen rows were wrong, in both directions (issue #80).  Fourteen
+  entries were missing - five that ARE pointer-referenced and were rejected
+  only because `-fprologue-bugfix` left them without a `push`, so they read as
+  the tail of the function above (`0x08086274`, `0x08087210`, `0x08089530`,
+  `0x08089C0C`, `0x0808AA28`), and nine dead exports with their own
+  `push {lr}` that nothing in the ROM points at (`0x08086128`, `0x080862FC`,
+  `0x080868B8`, `0x08086A20`, `0x080870F4`, `0x08087298`, `0x08087824`,
+  `0x0808798C`, `0x08088394`).  Two rows were false positives:
+  `0x08087000`/`0x08087006` are arms of the `switch` in `sub_08086f54` (the
+  9-entry jump table at `0x08086FA0` lands on `0x08087002`/`0x08087008`); the
+  words that looked like pointers to them sit at `0x0827C564`/`0x0827C1AC`
+  inside the compressed-graphics blob, the same artifact as `0x080671F8`.
+* **What it turned out to be** fourteen scripted objects in the same
+  three-table shape as M22/M24/M25/M26, plus two multi-state bosses and one
+  shared terrain probe:
+  * an **entry** installs the hooks (`Task.unk00` = `sub_080656b4` or
+    `sub_080059d8`, `Task.unk0C` = `sub_0806523c` or `sub_08005d9c`,
+    `Task.unk42` = 11/12), points `Task.unk38` at a TaskGfx block in
+    `0x08752560-0x08752BD4` and hands `Task.unk73` to `sub_08002e98` with a
+    per-script entry table: `0x08742064` (8), `0x08742570` (10),
+    `0x087426B4` (4), `0x0874273C` (2), `0x08742798` (2), `0x087427B4` (2),
+    `0x087428C0` (6) and `0x08742940` (2).
+  * each row installs a per-frame **body** from a table indexed by
+    `Task.unk14` and the body's resume function reads a **guard** table
+    indexed by `Task.unk15`: `0x08742080`/`0x08742084`,
+    `0x087420A0`/`0x087420A4`, `0x087420F0`/`0x08742100`,
+    `0x08742104`/`0x08742108`, `0x0874212C`/`0x08742138` (3+3),
+    `0x087425B0`/`0x087425B4`, `0x087425D0`/`0x087425D4`,
+    `0x087425F8`/`0x087425FC`, `0x0874260C`/`0x08742610`,
+    `0x0874263C`/`0x08742648` (3+3), `0x08742654`/`0x08742660` (3+3),
+    `0x0874266C`/`0x08742684` (6+6), `0x087426AC`/`0x087426B0`,
+    `0x087426C4`/`0x087426D8` (5+5), `0x08742704`/`0x08742710` (3+3),
+    `0x0874271C`/`0x08742728` (3+3), `0x08742744`/`0x08742758` (5+5),
+    `0x087427A0`/`0x087427A8` (2+2), `0x087428D8`/`0x087428E0` (2+2),
+    `0x08742908`/`0x0874290C`, `0x08742910`/`0x08742918` (2+2) and
+    `0x08742920`/`0x08742928` (2+2).
+  * the **eleven-state boss** entered at `0x08089D20`
+    (bodies `0x087427BC`, guards `0x087427E8`) walks its states with
+    `sub_0808a270`/`sub_0808a36c`/`sub_0808a478`/`sub_0808a5b8`/`sub_0808a710`
+    (each re-arms the entry when `Task.unk14` leaves its state, and every one
+    of them ends by probing the tile under the actor through `sub_08021c14`).
+    `sub_08089808` sets the sprite frame and the `Task.unk3E` H-flip bit from
+    the 16-row `u8` pair table at `0x08742778`; `sub_0808a7f4` +
+    `sub_0808a84c` roll a weighted move out of `0x08742854`/`0x08742856`/
+    `0x0874285C` into `gUnk_030023B4`/`gUnk_030023D4`; `sub_0808a880` turns an
+    `sub_08064314` heading into a `Task.unk2C` angle and a facing through the
+    `u16` table at `0x08742862`.
+  * the **twelve-state boss** entered at `0x0808BE3C`
+    (bodies `0x08742948`, guards `0x08742978`) picks its next attack in
+    `sub_0808c8bc` from the four weight tables the pointer array at
+    `0x08742998` selects, aims a 16.16 jump in `sub_0808c980` with `Div`, and
+    probes one tile to the left or right of `Task.unk48` with the
+    `sub_0808ca00`/`sub_0808cab8` pair.  That pair is the module's only
+    terrain code: it maps the point through `sub_08021b18` and then walks the
+    same `0x100`-stride index chain M06 uses -
+    `gUnk_087339F0` (must be non-zero) -> `0x087336F0` -> `0x087337F0` ->
+    `gUnk_08732CF0` -> `0x08732FF0` (all must be zero) - before reading the
+    per-tile height byte out of the row `0x087347F0[i]` (right) or
+    `0x087343F0[i]` (left) at index `(x & 15) * 17`.
+  * the shared **`sub_08086f54`** is a 9-way "which way can I walk" probe: it
+    folds `Task.unk7A` and the room bytes `gUnk_03005550[0]`/`[1]`/`[4]` into
+    a 0-32 index of the `s16` grid at `0x08742150` (16 columns of
+    `Task.unk2C >> 5`) and writes the new `Task.unk2C` back when the entry is
+    non-negative.
+* **Size** 27.0 KiB (`0x6bf0`), 297 functions (266 reachable only through pointer tables), mean `0x60`, largest `0x1f8`, pool words 14.0% of bytes.
 * **Difficulty** 3/6 - 6 distinct RAM cells, 10 jump-table dispatches, 0 functions >= `0x200`.
 * **Seam cost** 0 in / 0 out (local `bl` edges crossing the boundary).
-* **Why** 285 functions, mean 0x60, 266 pointer-dispatched, 14 anchor tables; sprite draw x511.
 * **Task types** 10 (class 2 x1, class 3 x9): #24, #28, #30, #33, #34, #35, #47, #104, #218, #219.
-* **Anchor tables** `0x08742064` 8 entries -> `0x080860F8-0x08086EFC`; `0x0874212C` 6 entries -> `0x08086C5C-0x08086EC8`; `0x08742570` 10 entries -> `0x080870C4-0x08088498`; `0x0874263C` 23 entries -> `0x08087B8C-0x0808835C`; `0x087426AC` 16 entries -> `0x080883DC-0x08088F4C`; `0x08742704` 12 entries -> `0x08088B58-0x08088F24` (+8 more).
 * **Calls into the decompiled early zone** sprite draw/update x511, frame driver + RNG + blend x108.
 * **Named helpers** TaskYieldTrampoline x340, TaskDispatchTrampoline x2, Div x1.
 * **Depends on** early_5d9c x511, M17 x350, sdk_libc x342, early_2b04 x108, M18 x63.
 * **Pool references** IWRAM x463, asset_metadata_index x239, game_code_and_rodata x175, early_58e4 x3, early_5d9c x2.
-* **Suggested batches** `0x080860F8` (35 fns), `0x080870C4` (98 fns), `0x08089064` (73 fns), `0x0808AA68` (40 fns), `0x0808BC60` (39 fns).
 
 ### M24 `0x0808CCE8-0x0809000B` - enemy/object behaviour bank 5 (six three-table scripts) - **landed (#70)**
 
