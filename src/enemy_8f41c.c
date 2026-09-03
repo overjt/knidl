@@ -1,3 +1,32 @@
+/* game_code_and_rodata 0x0808F41C-0x0809000C (issue #70, module M24 batch 3).
+ *
+ * RECIPE: agbcc -O2 -mthumb-interwork -fprologue-bugfix
+ *   ./tools/fnmatch.sh 0x0808F41C 0x0809000C src/enemy_8f41c.c --newpb
+ *
+ * See src/enemy_8cce8.c for the three-table pattern all of M24 is built on.
+ *
+ * This batch holds:
+ *   * script 4's bodies and guards (tables `0x0874329C`/`0x087432A8`,
+ *     `0x087432B4`/`0x087432C0`, `0x087432CC`/`0x087432D8` and the
+ *     single-row `0x087432E4`/`0x087432E8`); the bodies walk the `s16[][4]`
+ *     aim table `gUnk_0874325A` one row per Task.unk34 / Task.unk73 through
+ *     `sub_0808eec4`;
+ *   * the class-3 hook row `0x08743518` — `sub_0808f9b8`, `sub_0808f978`,
+ *     `sub_0808f9d8` and `sub_0808f9f8`;
+ *   * script 5: entry `sub_0808fa10` (`0x087432F4`, 2 rows), rows
+ *     `sub_0808fa50` / `sub_0808fbac`, bodies `0x087432FC` (3) and
+ *     `0x08743308` (1);
+ *   * script 6: entry `sub_0808fc40` (`0x08743600`, 1 row), row
+ *     `sub_0808fc90`, bodies `0x08743604` (2), guards `0x0874360C` (2);
+ *   * script 7: entry `sub_0808fdb8` (`0x0874362C`, 4 identical rows), row
+ *     `sub_0808fdf8`, body `0x0874363C` (`sub_0808fe88`, the class-2 wanderer
+ *     that picks its heading from gUnk_03002790[Task.unk44].unk34) and guard
+ *     `0x08743640` (`sub_0808ffe0`).
+ *
+ * `sub_0808fa04` and `sub_0808fe6c` are dead exports (twins of
+ * `sub_0808f9f8` and of `sub_0808fdf8`'s cue call) that no ROM word points at;
+ * both are curated in tools/symdb.py.
+ */
 #include "gba/gba.h"
 #include "global.h"
 #include "task.h"

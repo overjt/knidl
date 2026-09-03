@@ -1,3 +1,46 @@
+/* game_code_and_rodata 0x0808CCE8-0x0808E404 (issue #70, module M24 batch 1).
+ *
+ * RECIPE: agbcc -O2 -mthumb-interwork -fprologue-bugfix
+ *   ./tools/fnmatch.sh 0x0808CCE8 0x0808E404 src/enemy_8cce8.c --newpb
+ *
+ * M24 is a bank of six enemy/object behaviour scripts built to the same
+ * three-table pattern as M22/M25/M26 (rom-map section 9):
+ *
+ *   entry       -> installs the draw hook in Task.unk00 (sub_080059d8 or
+ *                  sub_080656b4) and the per-frame hook in Task.unk0C, points
+ *                  Task.unk38 at a TaskGfx block, and hands Task.unk73 to
+ *                  sub_08002e98 with the script's entry table;
+ *   unk14 table -> the coroutine BODIES: each installs its own resume function
+ *                  in Task.unk04 and then runs a chain of TaskYieldTrampoline
+ *                  waits;
+ *   unk15 table -> the per-frame GUARDS that re-arm the body through
+ *                  sub_08006148(fn, gCurTaskIdx) when the state changes.
+ *
+ * This batch holds:
+ *   * the two stand-alone class-2 bodies `sub_0808cce8` (a two-variant intro
+ *     that walks Task.unk4C/unk50 with sub_080064ac and waits on the room byte
+ *     gUnk_03004CA0[Task.unk44] through `sub_0808cfec`) and `sub_0808d014`,
+ *     plus the smaller `sub_0808d148` and `sub_0808d218`;
+ *   * script 1: entry `sub_0808d4e8` (Task.unk73 -> `0x08743188`, 3 rows) with
+ *     the row bodies `sub_0808d558` / `sub_0808da00` / `sub_0808df58`, the
+ *     body tables `0x08743194` / `0x087431AC` / `0x087431C4` and the guard
+ *     tables `0x087431A0` / `0x087431B8` / `0x087431C8`;
+ *   * its movement library: `sub_0808d364` / `sub_0808d388` snap Task.unk2C to
+ *     the 16-pixel grid, `sub_0808d3e4` rolls a new mode out of the 8-entry
+ *     table `gUnk_0874313C`, `sub_0808d460` flips the sprite through
+ *     Task.unk3E and `sub_0808d494` / `sub_0808d4a8` / `sub_0808d4bc` /
+ *     `sub_0808d4d0` set the animation id in Actor.unk1A;
+ *   * script 2's entry `sub_0808e3a8` (Task.unk73 -> `0x087431E4`) and its
+ *     aiming half: `sub_0808e070` / `sub_0808e0d0` / `sub_0808e174` turn the
+ *     vector to the target into a heading with ArcTan2, `sub_0808e254` spawns
+ *     actor 103, `sub_0808e2b4` is the sub_08063bd4 proximity test and
+ *     `sub_0808e33c` / `sub_0808e36c` are the per-frame step.  The script's
+ *     rows continue in src/enemy_8e404.c.
+ *
+ * `sub_0808d388` is a pointer-referenced leaf the prologue scan could not
+ * propose (no `push`, lesson 3.75); it and the module's three other census
+ * fixes are curated in tools/symdb.py.
+ */
 #include "gba/gba.h"
 #include "global.h"
 #include "task.h"

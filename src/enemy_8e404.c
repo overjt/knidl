@@ -1,3 +1,37 @@
+/* game_code_and_rodata 0x0808E404-0x0808F41C (issue #70, module M24 batch 2).
+ *
+ * RECIPE: agbcc -O2 -mthumb-interwork -fprologue-bugfix
+ *   ./tools/fnmatch.sh 0x0808E404 0x0808F41C src/enemy_8e404.c --newpb
+ *
+ * See src/enemy_8cce8.c for the three-table pattern all of M24 is built on.
+ *
+ * This batch holds:
+ *   * script 2's rows `sub_0808e404` / `sub_0808e804` (bodies `0x087431EC`
+ *     (4) and `0x0874320C` (1), guards `0x087431FC` (4) and `0x08743210`),
+ *     with `sub_0808e480` / `sub_0808e54c` / `sub_0808e610` / `sub_0808e730`
+ *     as the bodies and `sub_0808e510` / `sub_0808e5cc` / `sub_0808e704` /
+ *     `sub_0808e800` as their guards;
+ *   * script 3: entry `sub_0808e8d4` (Task.unk73 -> `0x08743224`, 3 rows),
+ *     rows `sub_0808e914` / `sub_0808eb24`, bodies `0x08743230` (3) and
+ *     `0x08743240`, guards `0x0874323C` and `0x08743244`;
+ *   * the class-3 hook row `0x087434FC` — `sub_0808ec34`, `sub_0808ebe0`,
+ *     `sub_0808ecb4` and `sub_0808ec90`, every one returning s32;
+ *   * the module's shared aiming library: `sub_0808ed38` classifies the
+ *     direction to the target into 16 sectors ((u16)ArcTan2 >> 12) and stores
+ *     it in Task.unk30 with the parity in Task.unk20, `sub_0808ee60` turns
+ *     Task.unk34 one notch towards it, `sub_0808ee9c` reports arrival in
+ *     Task.unk1C, `sub_0808eec4` converts the heading into an aim angle for
+ *     sub_0806421c, `sub_0808efdc` / `sub_0808f058` fire actor 109 through
+ *     sub_08064b5c + sub_08064cdc, and `sub_0808f0d0` / `sub_0808f1b4` are the
+ *     per-frame drivers;
+ *   * script 4's entry `sub_0808f224` (Task.unk73 -> `0x08743284`, 6 rows) and
+ *     its three <body, guard> table pairs `0x0874329C`/`0x087432A8`,
+ *     `0x087432B4`/`0x087432C0` and `0x087432CC`/`0x087432D8`.  Its bodies
+ *     continue in src/enemy_8f41c.c.
+ *
+ * `sub_0808ed0c` is a dead export: a byte-for-byte twin of `sub_0808ece0`
+ * that no ROM word points at (lesson 4.30, curated in tools/symdb.py).
+ */
 #include "gba/gba.h"
 #include "global.h"
 #include "task.h"
