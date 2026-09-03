@@ -620,6 +620,33 @@ child issues of #35 are created from it. Findings that belong in this document:
   six-byte `s8` box (`x0, y0, x1, y1, x2, y2`) and picks a random 16.16 target
   inside it into `Task.unk4C`/`Task.unk50`, choosing corner, mid-edge or
   centre from `Task.unk73`.
+- **M21 (`0x0807F044-0x08082E67`) is the same three-table shape one bank
+  earlier, with the bank's own tables interleaved with M22's.** Decompiled in
+  #71 into `src/enemy_7f044.c`, `src/enemy_80b70.c` and `src/enemy_820b8.c`.
+  Nine ROM task types live here: eight class-3 ones whose bodies are a single
+  `sub_08002e98(Task.unk73, N, table)` dispatch (#27 `0x08741488`,
+  #32 `0x087414B4`, #31 `0x08741544`, #38 `0x087415B8`, #39 and #40 sharing
+  `0x08741604`, #42 `0x08741640`, #43 `0x0874176C` — note that last one is the
+  table §9 lists under M22's range, another instance of "anchor tables and
+  their targets are independent of the module split"), and one class-4 type,
+  #175 (`sub_08080c48`), which is the coroutine itself and re-seats its actor
+  next to `gUnk_03002790[Task.unk44]` every cycle. Under them sit 21
+  entry/hook script pairs (`0x08741390`/`0x0874139C`, `0x087413A8`/
+  `0x087413B4`, `0x087413C0`/`0x087413C8`, `0x087413D0`/`0x087413D4`,
+  `0x08741490`/`0x0874149C`, `0x087414A8`, `0x087414C0`, `0x087414D8`,
+  `0x087414E0`, `0x08741554`/`0x0874156C`, `0x08741584`, `0x0874159C`,
+  `0x087415A4`, `0x087415C4`, `0x087415DC`, `0x08741610`/`0x08741614`,
+  `0x08741618`/`0x0874161C`, `0x08741620`, `0x0874164C`/`0x08741664`,
+  `0x0874167C`) and four `unk73` guard quartets (`0x08741BB8`, `0x08741BF4`,
+  `0x08741C44`, `0x08741C64`) — all `s32`-returning, and, unlike M22's, they do
+  *not* uniformly bail out on `Task.unk73 == 1`: `0x08741BB8`'s first row
+  treats `unk73 == 1` as "hand the task to `sub_0806a344`" instead. The
+  module's one jump table is `0x0807FE3C` (five words, a state machine over
+  `Task.unk30` inside `sub_0807fe18`). 98 tables in `0x087413xx-0x08752Axx`
+  were named through `split_config.json` `data_symbols`; several are `u8`
+  arrays addressed at odd VMAs (`0x0874131A`, `0x08741355`, `0x0874163B`),
+  which is what an inner `u8[]` of a `u8[][N]` looks like when only one row is
+  ever indexed.
 - **M22 (`0x08082E68-0x080860F7`) is five behaviour scripts in a THREE-table
   shape.** Decompiled in #69 into `src/enemy_82e68.c`, `src/enemy_844c4.c` and
   `src/enemy_84d14.c`. Where M25/M27 pair a guard table with a body table, M22

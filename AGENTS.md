@@ -87,4 +87,14 @@ Matching decompilation of Kirby: The Amazing Mirror's predecessor, **Kirby: Nigh
   nine-way walk probe `sub_08086f54`; sixteen census rows corrected in
   `tools/symdb.py` (fourteen hidden entries added, two graphics-blob phantoms
   removed) and 129 ROM tables named via `split_config.json` `data_symbols`.
+- Enemy/object behaviour bank 2 decompiled (issue #71): module M21
+  `0x0807F044-0x08082E67` (15.5 KiB) landed as `src/enemy_7f044.c`,
+  `src/enemy_80b70.c` and `src/enemy_820b8.c` (all 200 functions; no asm left
+  in the range).  Nine ROM task types in the M22/M24/M25/M26 three-table shape
+  (eight class-3 dispatchers plus the class-4 coroutine #175), 21 entry/hook
+  script pairs and a shared library of terrain probe, animation loops and
+  facing flip; twenty-two census rows corrected in `tools/symdb.py` (five
+  graphics-blob phantoms removed, seven prologue-filter misses and ten dead
+  exports added) and 98 ROM tables named via `split_config.json`
+  `data_symbols`.
 - Next milestones: decompile split/SDK modules to C using the validated per-zone compiler recipe (task system Thumb side, sound driver, then game code); grow `src/` one module at a time with `asmdiff.sh` on the module range.

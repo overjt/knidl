@@ -199,7 +199,7 @@ dispatches, pool density) — a planning aid, not a promise.
 | M18 | `0x080692FC-0x08070EBF` | 30.9 KiB | 256 | 4 | * | player-state task bodies (actor core part 2) - **landed (#64)** |
 | M19 | `0x08070EC0-0x08078B67` | 31.2 KiB | 218 | 8 | ** | actor bank C (11 class-3 tasks) |
 | M20 | `0x08078B68-0x0807F043` | 25.2 KiB | 390 | 20 | ** | enemy/object behaviour bank 1 |
-| M21 | `0x0807F044-0x08082E67` | 15.5 KiB | 188 | 10 | * | enemy/object behaviour bank 2 |
+| M21 | `0x0807F044-0x08082E67` | 15.5 KiB | 188 | 10 | * | enemy/object behaviour bank 2 - **landed (#71)** |
 | M22 | `0x08082E68-0x080860F7` | 12.6 KiB | 119 | 8 | * | enemy/object behaviour bank 3 (five three-table scripts) - **landed (#69)** |
 | M23 | `0x080860F8-0x0808CCE7` | 27.0 KiB | 297 | 14 | *** | enemy/object behaviour bank 4 (fourteen three-table scripts + two bosses) - **landed (#80)** |
 | M24 | `0x0808CCE8-0x0809000B` | 12.8 KiB | 158 | 8 | * | enemy/object behaviour bank 5 (six three-table scripts) - **landed (#70)** |
@@ -251,7 +251,7 @@ ordering inside it:
 | 3 | M27 mid-boss behaviour bank (two scripts + three companions) - landed | 0x314C | 140 | 1 | 4 | 0 | 5 |
 | 4 | M22 enemy/object behaviour bank 3 (five three-table scripts) - landed | 0x3290 | 119 | 1 | 4 | 0 | 8 |
 | 5 | M24 enemy/object behaviour bank 5 (six three-table scripts) - landed | 0x3324 | 158 | 1 | 4 | 0 | 11 |
-| 6 | M21 enemy/object behaviour bank 2 | 0x3E24 | 188 | 1 | 4 | 0 | 9 |
+| 6 | M21 enemy/object behaviour bank 2 - landed | 0x3E24 | 188 | 1 | 4 | 0 | 9 |
 | 7 | M30 enemy/object behaviour bank 11 | 0x4CF4 | 130 | 1 | 4 | 0 | 12 |
 | 8 | M32 enemy/object behaviour bank 13 | 0x4C2C | 129 | 1 | 5 | 0 | 15 |
 | 9 | M28 enemy/object behaviour bank 9 | 0x5B4C | 198 | 1 | 5 | 0 | 7 |
@@ -299,7 +299,7 @@ sub-issue of #35, so the numbering ascends with the recommended order):
 | 5 | #68 | M27 mid-boss behaviour bank (two scripts + three companions) - landed | `0x080988F8-0x0809BA43` | 12.3 KiB | 2 |
 | 6 | #69 | M22 enemy/object behaviour bank 3 (five three-table scripts) - landed | `0x08082E68-0x080860F7` | 12.6 KiB | 2 |
 | 7 | #70 | M24 enemy/object behaviour bank 5 (six three-table scripts) - landed | `0x0808CCE8-0x0809000B` | 12.8 KiB | 2 |
-| 8 | #71 | M21 enemy/object behaviour bank 2 | `0x0807F044-0x08082E67` | 15.5 KiB | 2 |
+| 8 | #71 | M21 enemy/object behaviour bank 2 - landed | `0x0807F044-0x08082E67` | 15.5 KiB | 2 |
 | 9 | #72 | M30 enemy/object behaviour bank 11 | `0x080A5644-0x080AA337` | 19.2 KiB | 2 |
 | 10 | #73 | M32 enemy/object behaviour bank 13 | `0x080AE3BC-0x080B2FE7` | 19.0 KiB | 2 |
 | 11 | #74 | M28 enemy/object behaviour bank 9 | `0x0809BA44-0x080A158F` | 22.8 KiB | 2 |
@@ -692,7 +692,63 @@ census below is the pre-decompilation one, kept for the record.
 * **Pool references** IWRAM x540, asset_metadata_index x252, game_code_and_rodata x151, EWRAM x4, early_58e4 x3, level_graphics_palettes x1.
 * **Suggested batches** `0x08078B68` (128 fns), `0x0807AB54` (103 fns), `0x0807C4A0` (44 fns), `0x0807D1BC` (41 fns), `0x0807DD70` (74 fns).
 
-### M21 `0x0807F044-0x08082E67` - enemy/object behaviour bank 2
+### M21 `0x0807F044-0x08082E67` - enemy/object behaviour bank 2 - **landed (#71)**
+
+The range is decompiled and carved out of the split asm, so it now appears in
+`module-map.csv` as three `c_code` rows instead of one clusterable module; the
+census below is the pre-decompilation one, kept for the record (it counts 188
+functions; the reachability sweep of #71 corrected that to 200, see below).
+
+* **Landed as** `src/enemy_7f044.c` (`0x0807F044-0x08080B70`, 81 fns),
+  `src/enemy_80b70.c` (`0x08080B70-0x080820B8`, 70) and
+  `src/enemy_820b8.c` (`0x080820B8-0x08082E68`, 49).  All 200 functions are C
+  and `make progress` counts 0 asm code bytes in the range.
+* **Census** the 188-row census was wrong in 22 places (commit "Fix
+  twenty-two M21 census defects"): five phantom rows the rom-pointer
+  heuristic invented out of graphics-blob words, seven real entries the
+  prologue filter rejected because `-fprologue-bugfix` leaves a pool-loading
+  leaf without a `push`, and ten dead exports (copies of a host's tail
+  dispatch that no 4-aligned ROM word references).  All 22 are curated in
+  `tools/symdb.py`.
+* **What it turned out to be** nine ROM task types built to the same
+  three-table pattern as M22/M24/M25/M26:
+  * eight **class-3** types (#27 `sub_0807fcbc`, #31 `sub_08080dd0`,
+    #32 `sub_08080400`, #38 `sub_080819b4`, #39 `sub_08081f60`,
+    #40 `sub_08082008`, #42 `sub_080826d8`, #43 `sub_08082de4`) whose bodies
+    are one `sub_08002e98(Task.unk73, N, table)` dispatch each - tables
+    `0x08741488`, `0x087414B4`, `0x08741544`, `0x087415B8`, `0x08741604`
+    (shared by #39 and #40), `0x08741640` and `0x0874176C`;
+  * one **class-4** type, #175 `sub_08080c48`, which is the coroutine itself:
+    it re-seats its actor next to `gUnk_03002790[Task.unk44]` every cycle and
+    hangs `sub_08080d58` off `Task.unk04`;
+  * 21 **entry/hook script pairs** underneath them, each an entry that writes
+    `Task.unk04` and dispatches `Task.unk14`, plus a hook that dispatches
+    `Task.unk15` (`0x08741390`/`0x0874139C`, `0x087413A8`/`0x087413B4`,
+    `0x087413C0`/`0x087413C8`, `0x087413D0`/`0x087413D4`,
+    `0x08741490`/`0x0874149C`, `0x087414A8`, `0x087414C0`, `0x087414D8`,
+    `0x087414E0`, `0x08741554`/`0x0874156C`, `0x08741584`, `0x0874159C`,
+    `0x087415A4`, `0x087415C4`, `0x087415DC`, `0x08741610`/`0x08741614`,
+    `0x08741618`/`0x0874161C`, `0x08741620`, `0x0874164C`/`0x08741664`,
+    `0x0874167C`);
+  * the `unk73` quartets at `0x08741BB8`, `0x08741BF4`, `0x08741C44` and
+    `0x08741C64` are the `s32`-returning guards.
+* **Shared library** `sub_0807f6a8` (four `sub_08021c14` terrain samples
+  around a box whose six signed offsets come from `Actor.unk50`),
+  `sub_08080374` (drain `Task.unk18` by N and fire cue 192 when it runs out),
+  `sub_08081814` / `sub_08080b2c` / `sub_08082cc4` (the walk, flap and hop
+  animation loops), `sub_08081e64` (flip `Task.unk43` from the
+  `gUnk_03005550[4]` input, returning 1 when the input already matches the
+  facing) and `sub_08082c5c` (turn around once every 30 frames if the player
+  is behind and within 31 units).  `sub_0807fe18` is the module's only
+  jump-table dispatch: a five-state machine over `Task.unk30` whose table
+  sits at `0x0807FE3C`.
+* **Cost** the bank is mechanical apart from `sub_0807f0c4`, which needed
+  eleven separate source-shape decisions (lessons `3.206`-`3.209`) before it
+  matched; 98 ROM tables were named through `split_config.json`
+  `data_symbols`.
+
+#### M21 census (pre-decompilation)
+
 
 * **Size** 15.5 KiB (`0x3e24`), 188 functions (179 reachable only through pointer tables), mean `0x54`, largest `0x190`, pool words 13.9% of bytes.
 * **Difficulty** 1/6 - 11 distinct RAM cells, 1 jump-table dispatches, 0 functions >= `0x200`.
