@@ -71,4 +71,12 @@ Matching decompilation of Kirby: The Amazing Mirror's predecessor, **Kirby: Nigh
   Four scripted enemies in the M22/M25 three-table shape plus two companions
   and a room-edge wanderer; eight census entries curated in `tools/symdb.py`
   and 131 ROM tables named via `split_config.json` `data_symbols`.
+- Enemy/object behaviour bank 5 decompiled (issue #70): module M24
+  `0x0808CCE8-0x0809000C` (12.8 KiB) landed as `src/enemy_8cce8.c`,
+  `src/enemy_8e404.c` and `src/enemy_8f41c.c` (all 158 functions; no asm left
+  in the range).  Six scripted enemies in the M22/M25/M26 three-table shape
+  plus the bank's own ArcTan2 aiming library; seven census rows corrected in
+  `tools/symdb.py` (three `0xFFFFF000`/rom-pointer phantoms removed, four
+  hidden entries added) and 65 ROM tables named via `split_config.json`
+  `data_symbols`.
 - Next milestones: decompile split/SDK modules to C using the validated per-zone compiler recipe (task system Thumb side, sound driver, then game code); grow `src/` one module at a time with `asmdiff.sh` on the module range.

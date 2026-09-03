@@ -2808,6 +2808,90 @@ allocation stops being a black box.  Cloning the compiler
   which: a lone `adds rN, #74` followed much later by `ldrh` is the address
   form, an `adds`+`ldrsh` pair at the same spot is the value form.
 
+### 3.188 Narrow locals are stored ZERO-extended; the ROM's single `asr` means an `s32` local
+ARM's `PROMOTE_MODE` promotes every `s8`/`s16` local to SImode **unsigned**, so
+agbcc stores `s16 dx = a - b;` with `lsl #16; lsr #16` and re-signs it
+(`lsl #16; asr #16`) at every use.  When the ROM sign-extends exactly once, at
+the assignment, the local is an `s32` holding an explicit cast:
+
+```c
+s32 dx;                                 /* NOT s16 dx; */
+dx = (s16)(t->unk2C - (u16)t->unk48);   /* one lsl/asr, right here */
+```
+
+(M24 `sub_0808e174`/`sub_0808e0d0`, issue #70.)  The same reading applies to
+struct fields: an `ldrh` where `include/task.h` says `s16` means the source
+casts the field `(u16)`, and an `ldrsh` on a `u16` field means it casts `(s16)`.
+
+### 3.189 A narrow PARAMETER is a decision about the CALLER, not the callee
+`void f(u16 a)` and `void f(s32 a) { u16 b = a; ... }` compile to the *same*
+body — the entry `lsl #16; lsr #16` is the local's store, not an ABI
+conversion — but they are not interchangeable at the call site.  With the `u16`
+parameter every caller loads an `s16` table entry with a bare `ldrh`; with the
+`s32` parameter it sign-extends (`movs rN,#0; ldrsb/ldrsh rD,[rB,rN]`).  M24's
+`sub_0808eec4` matched either way on its own and only the call in
+`sub_0808f41c` could tell them apart (issue #70).  When a callee already
+matches, do not assume its prototype is settled.
+
+### 3.190 `-x` on an `s8` field narrows the load; `-1 * x` does not
+`t->unk43 = -t->unk43;` lets agbcc keep the value 8-bit
+(`ldrb; neg; strb`), because only the low byte is stored.  The ROM's
+`movs r0,#0; ldrsb r0,[r1,r0]; negs; strb` needs the sign, and the source shape
+that asks for it is `t->unk43 = -1 * t->unk43;` (M24 `sub_0808d3e4`, issue
+\#70).  Six other spellings — `0 - x`, `(s8)-x`, `-(s32)x`, `~x + 1`, an `s32`
+temp — all reduce back to the narrow form.
+
+### 3.191 An index local's type decides whether the table address leaves the loop
+`s32 i = gUnk_03001F08[0];` inside a loop keeps the sign extension explicit
+(`ldrb; lsl #24; asr #24`) *and* stops agbcc hoisting the companion table's
+address out of the loop.  Declaring the same local `s8 i;` produces the ROM's
+`ldrsb` and the `ldr r4, =table` in the pre-header (M24 `sub_0808d3e4`, issue
+\#70).  Note the direction: 3.188 says do NOT narrow a local that holds a
+computed value; this says DO narrow one that only carries a table index.
+
+### 3.192 `switch (field = call())` is a real source shape
+When the ROM stores a call's result into a task field and then dispatches on
+the same register — `bl; ldr rP,[..]; lsl/lsr; str rV,[rP,#N]; cmp rV,#K` — the
+assignment IS the switch expression:
+
+```c
+switch (gUnk_03002490->unk20 = sub_08064398()) { ... }
+```
+
+Splitting it (`v = call(); field = v; switch (v)`) moves the pointer load
+*after* the narrowing and never matches (M24 `sub_0808e480`, `sub_0808ed38`,
+`sub_0808fe88`; issue #70).
+
+### 3.193 Three arms with one tail: `return` in every arm
+With TWO arms, hoisting the differing value into a local (`f = fn;` then one
+`call(f)`) and duplicating the call both reproduce the ROM.  With THREE neither
+does: the local lands in r2 and costs an `adds r0, r2, #0` before the call
+(3.164's problem — it is referenced in four blocks, so `local_alloc` skips it),
+and duplicating the call leaves one arm unmerged.  Writing the whole tail plus
+`return N;` inside each arm lets cross-jumping fold all three into the ROM's
+single epilogue (M24 `sub_0808ebe0`, `sub_0808ec34`, `sub_0808f978`; issue
+\#70).
+
+### 3.194 A stride that is not the element size is a 2-D array
+Two separate scalings that never get folded — `idx1 << 1` and `idx2 << 3` added
+to the same base — are `s16 tbl[][4]`, i.e. `tbl[idx2][idx1]`.  The 1-D
+spelling `tbl[idx1 + idx2 * 4]` scales the *sum* once (`add; lsl #1`) and can
+never produce the ROM's pair (M24 `gUnk_0874325A`, `gUnk_087432EC`; issue
+\#70).  Same tell for `u8 tbl[][4]`: `idx << 0` folds away and only the row
+scaling shows.
+
+### 3.195 Which arm the ROM lays out last tells you how to spell the condition
+agbcc emits `test; jump-if-false -> ELSE; THEN; b end; ELSE:`.  So the block the
+ROM *branches forward to* is the `else`, and the fallthrough is the `then`.
+When the ROM's forward target is the arm you wrote as the `then`, invert the
+condition rather than reordering the statements:
+`if (t->unk34 > 3) {shared} else {step}` becomes
+`if (t->unk34 <= 3) {step} else {shared}` (M24 `sub_0808ee60`,
+`sub_0808f1b4`, `sub_0808f978`; issue #70).  For a `switch`, the arm BODIES are
+laid out in source order while the compare chain is emitted in case-value
+order, so `case 8:` before `case 4:` is a legitimate source shape
+(`sub_0808e480`, `sub_0808e610`).
+
 ### 4.36 An address-annotated listing plus a reachability walk is the cheapest census sweep
 M26 (issue #75) built `pending/m26/ann/<fn>.s` up front: the split asm walked
 with a 2-byte/4-byte cursor (only `bl` is four bytes, everything else is two),
@@ -2830,6 +2914,24 @@ the same slice.  Two sweeps over that listing then paid for the whole tool:
 The same walk also proves the jump tables: the four `mov pc` dispatches in M26
 resolve to 5, 7, 29 and 11 entries, and those counts are exactly the `case`
 ranges the C needs.
+
+M24 (issue #70) reran the same sweep and found seven more census defects, but
+only after two fixes the M26 version needed:
+
+* **Read jump tables out of the ROM, not out of the split asm.**  `split.py`'s
+  linear disassembly turns a table word like `0x0808E1EC` into the instruction
+  pair `b.n 0x0808E5A8` + `lsrs r0, r1, #32`, so following the *printed*
+  branch targets sends the walk to addresses that are the second halfword of a
+  `bl`.  Locate the base by backtracking from `mov pc, rN` to the `ldr` whose
+  pool word is in-module, then read `struct.unpack('<I')` straight from
+  `baserom.gba`, stopping at the first word that leaves the module or at the
+  lowest target seen so far.  M24's six tables came out as 8/16/5/5/5/5 entries.
+* **Unresolvable pool references are the other half of the sweep.**  Four
+  `ldr rN,[pc,#K] @ 0xADDR` in M24 pointed at addresses `split.py` had emitted
+  as *instructions* rather than `.word`s — that is exactly the signature of ROM
+  data mis-decoded as code, and re-reading those four words from the ROM
+  (`0x03002790`, `0x0300248C`, `0x08752C18`, `0x0808F39D`) explained every
+  remaining "unreached" hit that was not a real function.
 
 ## 5. Workflow that worked
 

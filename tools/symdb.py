@@ -355,6 +355,23 @@ FALSE_POSITIVES = {
     # equal 0x08090905, which the rom-pointer heuristic read as a Thumb entry.
     # sub_080908ec really runs 0x080908EC-0x08090914 (0x28), pool included.
     0x08090904,
+    # 0x0808DFE2 and 0x0808F75E are the 0xFFFFF000 artifact twice more inside
+    # M24 (issue #70).  Both pool words (at 0x0808CFE0 and 0x0808E75C) split
+    # into the halfwords F000/FFFF, which the bl-target heuristic reads as
+    # `bl pc+0x1002`.  Neither target has a prologue: 0x0808DFE2 is the body
+    # of sub_0808dfc4's infinite loop (it branches back to 0x0808DFDE, above
+    # itself), and 0x0808F75E is the instruction right after sub_0808f75c's
+    # `push {lr}`.  The real functions are 0x0808DFC4-0x0808E050 (0x8C) and
+    # 0x0808F75C-0x0808F7AC (0x50).
+    0x0808DFE2,
+    0x0808F75E,
+    # 0x0808FCEE is the `b.n 0x0808FD08` that ends sub_0808fcd4's first arm
+    # (issue #70), not an entry: it has no prologue and the `pop {r0}` that
+    # closes the body at 0x0808FD10 pairs with sub_0808fcd4's `push {lr}`.
+    # The word 0x0808FCEF at 0x08673250 that the rom-pointer heuristic found
+    # sits inside the m4a_songs_2 tone/track data.  sub_0808fcd4 really runs
+    # 0x0808FCD4-0x0808FD1C (0x48).
+    0x0808FCEE,
 }
 
 # Curated Thumb entries with NO in-ROM reference (issue #31): dead m4a SDK
@@ -398,6 +415,22 @@ EXTRA_THUMB_ENTRIES = {
     # byte match of src/enemy_91f9c.c confirms the split: sub_080937d0 runs
     # 0x080937D0-0x08093858 (0x88) and this one 0x08093858-0x08093868.
     0x08093858,
+    # Four M24 entries the census missed (issue #70), all found by the
+    # reachability walk over the module's annotated listing: code inside a
+    # declared range that no path from that range's entry reaches.
+    0x0808D388,  # a real function the prologue filter rejected: a leaf that
+                 # opens with a pool load and ends `bx lr` (no `push`), so it
+                 # looks like the tail of sub_0808d364.  It recomputes
+                 # Task.unk2C/unk18 from Task.unk48 and nothing points at it.
+                 # sub_0808d364 really runs 0x0808D364-0x0808D388 (0x24).
+    0x0808ED0C,  # hidden dead export: a byte-for-byte twin of sub_0808ece0
+                 # (same 0x08743390 argument, same sub_0808f3b8 resume), with
+                 # its own `push {lr}`; nothing in the ROM references it.
+    0x0808FA04,  # hidden dead export: a byte-for-byte twin of sub_0808f9f8
+                 # ("call sub_08063ff4, return 0"), with its own `push {lr}`.
+    0x0808FE6C,  # hidden dead export: the sub_0808fe28 arm that plays cue
+                 # 0x0874363C for Task.unk14, with its own `push {lr}`;
+                 # nothing in the ROM references it.
     # 0x08099AD0 is the same shape one module later (issue #68, M27): a leaf
     # that opens with a pool load and ends `bx lr`, so -fprologue-bugfix left
     # it without a `push` and the prologue filter rejected it.  The behaviour

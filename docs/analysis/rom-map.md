@@ -663,6 +663,27 @@ child issues of #35 are created from it. Findings that belong in this document:
   every table's `count` times four lands precisely on the next named table
   (`0x08745634 + 19*4 = 0x08745680`, `0x08745750 + 24*4 = 0x087457B0`), which
   is how the guard/body split above was proved.
+- **The `0xFFFFF000` pool word is the single biggest source of phantom
+  functions in seg 7.**  Its halfwords `F000`/`FFFF` decode as `bl pc+0x1002`,
+  so the symbol DB's bl-target heuristic invents an entry a little over 4 KiB
+  further on.  It has now fired in M17 (#65 x2), M24 (#70 x2: `0x0808CFE0` and
+  `0x0808E75C`) and is why `FALSE_POSITIVES` in `tools/symdb.py` keeps growing;
+  the tell is always the same, the "function" has no prologue.
+- **A behaviour bank carries its own aiming library.**  M24 (#70) is six
+  three-table scripts plus five shared helpers that nothing outside the module
+  calls: `sub_0808ed38` turns the vector to the target into one of 16 headings
+  with `ArcTan2` (`(u16)angle >> 12`) and stores it in `Task.unk30`, with the
+  parity bit in `Task.unk20`; `sub_0808ee60` steps `Task.unk34` one notch
+  towards it and `sub_0808ee9c` reports arrival in `Task.unk1C`;
+  `sub_0808eec4` converts the heading into an aim angle for `sub_0806421c`;
+  `sub_0808efdc`/`sub_0808f058` fire actor 109 with `sub_08064b5c` +
+  `sub_08064cdc`.  Expect one of these per bank rather than a single global
+  one.
+- **`Task.unk74` is the per-variant difficulty row.**  M24's scripts index
+  `gUnk_08743248` (frame budget), `gUnk_087432EC` (`u8[][4]`, four per-state
+  waits), `gUnk_08743214`/`gUnk_0874321C` (16.16 speeds) and
+  `gUnk_08743614`/`gUnk_0874361A` with it, so the same body serves several
+  table rows.
 - **Seg 7 barely touches hardware.** Across 792 KiB its literal pools reference
   the `0x04000000` I/O block only 20 times; all display/DMA/scroll work goes
   through the early zone's IWRAM shadow cells. 3,288 of its 5,045 functions
