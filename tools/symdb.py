@@ -437,6 +437,29 @@ EXTRA_THUMB_ENTRIES = {
     0x0808429C,
     0x08084A50,
     0x08085FEC,
+    # Eight more entries the same two blind spots hid inside M26 (issue #75),
+    # all found by a reachability walk over the module's annotated listing:
+    # code no path from the declared entry can reach is a hidden function.
+    # Four are pointer-referenced and were rejected only because
+    # -fprologue-bugfix left them without a `push`: 0x08094144 (table word
+    # 0x087441D4; host sub_08094040 is 0x104, not 0x124), 0x080963C0 (table
+    # word 0x08744588; host sub_08096320 is 0xA0, not 0xBC), 0x08098738
+    # (table word 0x087455E0; host sub_08098728 is 0x10, not 0x20) and
+    # 0x080988A4 (table word 0x087455E4; host sub_0809887c is 0x28, not 0x38).
+    # The other four are dead exports nothing in the ROM references:
+    # 0x08095768 (a `push {lr}` copy of sub_080956e4's tail; host is 0x84, not
+    # 0xB0), 0x08096E70 (a `push {r4, r5, r6, lr}` four-byte SE splitter; host
+    # sub_08096e24 is 0x4C, not 0x78), 0x08098708 (a `Task.unk2C = 0` leaf;
+    # host sub_080986ec is 0x18, not 0x2C) and 0x080988C0 (a bare `bx lr`
+    # stub, lesson 4.34; host sub_080988b4 is 0xC, not 0x10).
+    0x08094144,
+    0x08095768,
+    0x080963C0,
+    0x08096E70,
+    0x08098708,
+    0x08098738,
+    0x080988A4,
+    0x080988C0,
     0x080CF664,  # m4aMPlayPanpotControl
     0x080CF6EC,  # m4aMPlayModDepthSet
     0x080CF760,  # m4aMPlayLFOSpeedSet

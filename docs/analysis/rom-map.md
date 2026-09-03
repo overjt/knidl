@@ -592,6 +592,34 @@ child issues of #35 are created from it. Findings that belong in this document:
   blocks: `0x08753090`, `0x08753180`, `0x087531C4`, `0x087531DC` and
   `0x0874CB7C`; the 16-byte graphics records the per-frame bodies re-upload
   through `sub_080663f4` are `0x08274840` and `0x082797C8`.
+- **M26 (`0x08093F64-0x080988F7`) is four three-table scripts, two companions
+  and a room-edge wanderer.** Decompiled in #75 into `src/enemy_93f64.c`,
+  `src/enemy_957bc.c` and `src/enemy_974c8.c`. Every script is the M22/M25
+  shape: an entry that installs `sub_080656b4` in `Task.unk00` plus
+  `sub_08065438` or `sub_0806523c` in `Task.unk0C`, sets `Task.unk42`
+  (9 or 11), points `Task.unk38` at a `TaskGfx` block and hands `Task.unk73`
+  to `sub_08002e98` with a one-word entry table; then a `<guard, body>` table
+  pair dispatched from `Task.unk14` / `Task.unk15`. The four scripts are
+  `sub_08093f64` (entry `0x087441CC`, guard `0x087441D0`, body `0x087441D4`,
+  one state, gfx `gUnk_087536FC`), `sub_080941ac` (`0x08744440`,
+  `0x08744444` x11, `0x08744470` x11, gfx `gUnk_08752F74`, anim
+  `gUnk_0874433C`), `sub_080957bc` (`0x087444E4` x12, `0x08744564` x13, gfx
+  `gUnk_08753718`) and `sub_080974f8` (`0x0874489C` x9, `0x087448C0` x9, gfx
+  `gUnk_087537FC`); `sub_080985e0` and `sub_0809876c` are the two companion
+  tasks (`Task.unk42` = 9, gfx `gUnk_08753054` / `gUnk_087538B0`), each a
+  `while (1)` that re-selects an animation from `Task.unk2C` / `Task.unk34`.
+  Shared machinery worth naming: `sub_080956e4` is the module's own
+  `struct AnimCmd` walker (`-3` = loop, `-2` = stop, odd frame ids go to
+  `sub_08006364` and even ones to `sub_0800634c` when `Task.unk43 == 1`, and
+  the other way round otherwise), `sub_08095794` / `sub_08095768` are its two
+  step wrappers, `sub_080956c8` restarts a script, and `sub_08094d10` is a
+  four-way facing classifier over `gUnk_03005550[4]` and `Task.unk43` whose
+  `s8` result `sub_08094bbc` and `sub_08098748` turn into an animation swap.
+  `sub_080970c4` is a standalone wanderer: it reads the 112-byte room record
+  at `gUnk_0200D120[Task.unk44 - 32]`, follows its `+0x48` pointer to a
+  six-byte `s8` box (`x0, y0, x1, y1, x2, y2`) and picks a random 16.16 target
+  inside it into `Task.unk4C`/`Task.unk50`, choosing corner, mid-edge or
+  centre from `Task.unk73`.
 - **M22 (`0x08082E68-0x080860F7`) is five behaviour scripts in a THREE-table
   shape.** Decompiled in #69 into `src/enemy_82e68.c`, `src/enemy_844c4.c` and
   `src/enemy_84d14.c`. Where M25/M27 pair a guard table with a body table, M22
