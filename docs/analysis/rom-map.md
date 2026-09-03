@@ -679,6 +679,30 @@ child issues of #35 are created from it. Findings that belong in this document:
   `sub_0808efdc`/`sub_0808f058` fire actor 109 with `sub_08064b5c` +
   `sub_08064cdc`.  Expect one of these per bank rather than a single global
   one.
+- **The `0x100`-stride index chain has five layers, not three.**  M23's
+  `sub_0808ca00`/`sub_0808cab8` (#80) probe the tile one step to the left or
+  right of `Task.unk48` and accept it only when
+  `gUnk_087339F0[i] != 0` and `0x087336F0[i] == 0x087337F0[i] ==
+  gUnk_08732CF0[i] == 0x08732FF0[i] == 0`, so `0x087336F0`, `0x087337F0` and
+  `0x08732FF0` are three more `s8[0x100]` per-tile attribute planes next to the
+  two M22 already named.  The height of the accepted tile then comes out of a
+  *pointer* table: `0x087347F0[i]` (step right) and `0x087343F0[i]` (step left)
+  each hold a pointer to a 256-byte height map read at index
+  `(x & 15) * 17` — i.e. the same nibble on both axes, which is how a slope
+  gets one byte per 16x16 diagonal cell.
+- **The nine-way walk probe is one function, shared by a whole bank.**  M23's
+  `sub_08086f54` folds `Task.unk7A` and the room bytes `gUnk_03005550[0]`,
+  `[1]` and `[4]` into a 0-32 row index of the `s16` grid at `0x08742150`
+  (16 columns, selected by `Task.unk2C >> 5`) and writes the new
+  `Task.unk2C` back when the entry is non-negative; a negative entry means
+  "cannot go there".  `gUnk_03005550` is therefore a small per-room control
+  block, not a scalar.
+- **`gUnk_030023B4`/`gUnk_030023D4` are a two-word scratch return.**  M23's
+  `sub_0808a84c` (#80) walks a `u8` weight table until an entry exceeds a
+  fresh `sub_08002ee8` roll and leaves the roll in `gUnk_030023B4` and the
+  chosen index in `gUnk_030023D4`; `sub_08064680` and `sub_0806421c` fill the
+  same pair with a velocity.  Scripts read them immediately after the call, so
+  treat the pair as an out-parameter block rather than as state.
 - **`Task.unk74` is the per-variant difficulty row.**  M24's scripts index
   `gUnk_08743248` (frame budget), `gUnk_087432EC` (`u8[][4]`, four per-state
   waits), `gUnk_08743214`/`gUnk_0874321C` (16.16 speeds) and

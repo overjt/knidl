@@ -2892,6 +2892,102 @@ laid out in source order while the compare chain is emitted in case-value
 order, so `case 8:` before `case 4:` is a legitimate source shape
 (`sub_0808e480`, `sub_0808e610`).
 
+### 3.196 Reference `gUnk_03002490` at every use; a cached `struct Task *` costs a register permutation
+M23 (issue #80) is 297 functions of behaviour script and every one of them
+reads the current task through the global.  Caching it
+(`struct Task *t = gUnk_03002490;`) compiles to the same instruction *count*
+but swaps two register assignments — the pointer-to-the-cell pseudo and the
+task pseudo trade places — because the cached local is one long-lived pseudo
+instead of a chain of short ones.  `sub_08086444`, `sub_080864ec` and
+`sub_080865c0` each matched the moment the local was deleted.  The exception
+is a function that reads the task once and then only walks fields off it
+(`sub_08088dac`, `sub_0808b9d0`): there the ROM does keep one pointer.
+
+### 3.197 `else if` without braces is what stops two `ABS()` arms being cross-jumped
+The bank tests `ABS(sub_08063cd0()) > K` about a dozen times.  Written
+`if (f() < 0) { if (-f() <= K) break; } else { if (f() <= K) break; }` gcc
+cross-jumps the two `cmp rN,#K` tails and the function comes out 4 bytes short.
+Writing the second arm as `else if (f() <= K) break;` — no braces, no
+`continue` — keeps them apart (`sub_08086c5c`).  When the two arms have to
+reach *different* labels the fix is a pair of asymmetric `goto`s: the negative
+arm branches positively to the near block and then unconditionally to the far
+one, the positive arm branches negatively to the far one
+(`sub_0808bf1c`, `sub_0808b4d0`).
+
+### 3.198 `cmn rV, rX` is `V > -X`, and the limit has to be written first
+`sub_080880fc` gates on `ABS(sub_08063cd0()) < limit`.  The ROM's negative arm
+is `cmn r4,r0; bgt`, the positive arm `cmp r4,r0; ble`, and the only spelling
+that reproduces both is `if (v > (f() < 0 ? -f() : f())) { ...guarded work... }`
+— limit first, and the work nested inside the `if` rather than an early
+`return` on the negation.  `... < v` emits `cmp r0,r4` and the negated form
+gives the two branches the wrong polarity.
+
+### 3.199 `switch (--field)` needs the decrement in its own statement
+The ROM dispatches straight off the register the `subs` produced
+(`ldr; subs; str; cmp r0,#40`).  Writing `switch (--t->unk34)` — or the 3.192
+chained form `switch (t->unk34 = t->unk34 - 1)` — inserts an extra
+`adds r2, r0, #0` copy.  `s32 n = t->unk34 - 1; t->unk34 = n; switch (n)`
+matches (`sub_080887a0`).
+
+### 3.200 A one-case `switch` only stays out-of-line if `default:` comes first
+The guards in this bank are `switch (t->unk73)` with a single interesting case.
+Written `case 0: ... default: return 0;` gcc inlines the body (`bne skip`),
+4 bytes short of the ROM.  Writing `default: return 0; case 0: ...` reproduces
+the ROM's `cmp; beq body; movs r0,#0; b end; body:` layout (`sub_08089024`).
+With two or more cases the plain order already matches.  The mirror-image
+trick is 3.201: when a `case` has to branch *backwards* to an earlier case's
+`return 0`, spell that branch as an explicit `goto` to a label on the earlier
+case (`sub_0808bc60`) — otherwise gcc merges the two blocks and moves them.
+
+### 3.201 `cmp #hi; bgt` followed by `cmp #lo; blt` is a `switch` case RANGE, not `&&`
+`sub_08089d44` guards one store with `cmp r2,#9; bgt skip; cmp r2,#4; blt skip`.
+No `if` spelling reproduces it: `k <= 9 && k >= 4` folds to the *unsigned*
+range test `(u8)(k-4) <= 5`, and every two-`if` variant emits `cmp #3; ble`
+because agbcc canonicalises `< 4` to `<= 3`.  gcc's `emit_case_nodes` does not
+fold — for one case node it emits the HIGH bound test first (`GT`) and then the
+LOW bound (`LT`) with the raw constants.  So the source is
+`switch (t->unk14) { case 4: ... case 9: t->unk7A = 0; }`, and the `u8` field
+promotes to `int`, which is why the compares are signed.  (The *unsigned*
+`subs #3; cmp #1; bhi` shape IS the `&&`/`||` fold — `sub_0808aeec`.)
+
+### 3.202 A `u8` local is what keeps the `<<24` alive in a mask-and-shift
+`sub_0808abf4` picks a direction with
+`lsls r0,#24; movs r2,#240; lsls r2,#20; ands r2,r0; lsrs r2,#25`, i.e.
+`((y << 24) & 0x0F000000) >> 25`.  Every one-expression spelling
+(`(u8)y >> 1 & 7`, `((y+1) & 0xF) >> 1`, `/2 % 8`, ...) loses either the
+`<<24` — `fold` drops a narrowing cast under an `&` whose mask fits in the
+narrow type — or the pre-shift mask.  Two statements reproduce it:
+`u8 c = f() + 1;  d = (c & 0xF) >> 1;`.  The cast has to be a real store
+before the mask sees it.
+
+### 3.203 In `a + b` the ROM's `adds rD, rA, rB` order can be a red herring
+`sub_0808b468` / `sub_0808b8c4` pass `(s16)(actorByte + t->unk4A)` to
+`sub_08021c4c`.  `Task.unk4A` sits at offset 74, past the `ldrh` immediate
+range, so agbcc materialises its ADDRESS first, evaluates the other addend,
+then loads — and the `adds r1,r1,r2` that comes out has the byte first even
+though `t->unk4A` is written first in the source.  Writing it in the ROM's
+register order costs 8 bytes of scheduling no local can fix; writing
+`(u16)t->unk4A + ((s8 *)t->unk8C->unk50)[2]` matches exactly.  Same tell in
+`sub_0808c82c`.
+
+### 3.204 An `s8` read the ROM spells `ldrb`+`lsl`/`asr` is a `(s8)` cast of a `u8` ARRAY OF POINTERS
+`sub_0808ca00` reads a per-tile height byte and the ROM emits
+`ldrb r0,[r0,#0]; lsls r0,#24; asrs r0,#24`, not `ldrsb`.  Declaring the outer
+table `s8 *tbl[]` (or `u8 *tbl[]` with a `(s8)` cast on the element) both give
+`movs rN,#0; ldrsb` — combine folds the sign extension into the load.  The ROM
+shape needs the pointer to be untyped: `extern u32 tbl[];` plus
+`(s8)((u8 *)tbl[i])[k]`.  Two more shapes from the same function: the index
+`(v << 4) | v` has to be its own statement (otherwise the table base is loaded
+first), and `v` and the index have to be *different* locals or `local_alloc`
+reuses one register and the whole tail shifts by one.
+
+### 3.205 A `return` whose value is already in `r0` is why an arm looks like it returns nothing
+Several M23 guards end an arm with `movs r0,#0; str r0,[r1,#88]` and then fall
+straight into the epilogue — the store's constant IS the return value.  Reading
+that as "this arm returns garbage" and writing `break;` costs a register
+permutation across the whole tail; writing `t->unk58 = 0; return 0;` matches
+(`sub_0808bb70`, `sub_0808c7ec`, `sub_0808c82c`).
+
 ### 4.36 An address-annotated listing plus a reachability walk is the cheapest census sweep
 M26 (issue #75) built `pending/m26/ann/<fn>.s` up front: the split asm walked
 with a 2-byte/4-byte cursor (only `bl` is four bytes, everything else is two),
@@ -2932,6 +3028,20 @@ only after two fixes the M26 version needed:
   data mis-decoded as code, and re-reading those four words from the ROM
   (`0x03002790`, `0x0300248C`, `0x08752C18`, `0x0808F39D`) explained every
   remaining "unreached" hit that was not a real function.
+
+### 4.37 Cluster the module by instruction SHAPE before writing any C
+M23 (issue #80) is 297 functions but only 217 distinct instruction shapes: a
+script's entry, its resume stub and its guard are copied verbatim from script
+to script and differ only in the words their literal pools hold.  Normalising
+each `ann/<fn>.s` (drop addresses, pool *values*, `loc_` labels and
+`sub_XXXXXXXX` names) and grouping the results found 35 groups with more than
+one member covering 100 of the functions, the largest with 10.  A 40-line
+`twin.py` then clones a matched function onto its twins: the i-th pool value in
+one listing corresponds to the i-th in the other, so the diff between them is a
+pure text substitution.  Thirty functions landed in a single `tryall.sh` run
+that way, all first-try.  Do this immediately after the census sweep — the
+groups also tell you which function to write *first* (the one that unlocks the
+most twins).
 
 ## 5. Workflow that worked
 
