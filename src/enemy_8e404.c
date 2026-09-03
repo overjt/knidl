@@ -116,7 +116,7 @@ s32 sub_0808ed0c(void);
 void sub_0808ed38(void);
 void sub_0808ee60(void);
 void sub_0808ee9c(void);
-void sub_0808eec4(u16 a);
+void sub_0808eec4(s32 a);
 void sub_0808ef88(void);
 void sub_0808efdc(void);
 void sub_0808f058(void);
@@ -742,9 +742,12 @@ void sub_0808ee9c(void)
         t->unk1C = 1;
 }
 
-void sub_0808eec4(u16 a)
+void sub_0808eec4(s32 a)
 {
     struct Task *t;
+    u16 b;
+
+    b = a;
 
     switch (gUnk_03002490->unk73)
     {
@@ -753,30 +756,30 @@ void sub_0808eec4(u16 a)
         switch (gUnk_03002490->unk34)
         {
         case 0:
-            sub_0806421c(0, (s16)a);
+            sub_0806421c(0, (s16)b);
             break;
         case 1:
-            sub_0806421c(224 << 1, (s16)a);
+            sub_0806421c(224 << 1, (s16)b);
             break;
         case 2:
-            sub_0806421c(192 << 1, (s16)a);
+            sub_0806421c(192 << 1, (s16)b);
             break;
         case 3:
-            sub_0806421c(160 << 1, (s16)a);
+            sub_0806421c(160 << 1, (s16)b);
             break;
         case 4:
-            sub_0806421c(128 << 1, (s16)a);
+            sub_0806421c(128 << 1, (s16)b);
             break;
         }
         break;
     case 1:
-        sub_0806421c(192 << 1, (s16)a);
+        sub_0806421c(192 << 1, (s16)b);
         break;
     case 2:
-        sub_0806421c(224 << 1, (s16)a);
+        sub_0806421c(224 << 1, (s16)b);
         break;
     case 3:
-        sub_0806421c(160 << 1, (s16)a);
+        sub_0806421c(160 << 1, (s16)b);
         break;
     default:
         sub_0806ee2c();
