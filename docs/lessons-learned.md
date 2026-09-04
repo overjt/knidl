@@ -171,6 +171,15 @@ images (blob pointers `0x087954C0`/`0x087C0A4C` loaded by the link sender at
 literal scan, always cross-check hits against the code span and trace who
 references the containing blob before concluding anything.
 
+### 2.15 A variant sweep must grep the tester's `': MATCH'`, not `'MATCH'`
+Every `MISMATCH` line contains the substring, so a sloppy sweep reports the
+first variant as a match and silently keeps a wrong file - five M19 functions
+were "matched" that way before the byte-exact tester caught up.  Land only in
+the directory the byte-exact tester itself writes (`good/`), and make the sweep
+report the BEST score rather than the last variant, because a sweep always ends
+on the last one.  The same sweep must never copy an ERRORING variant back over
+the working file just because its score sorts first.
+
 ## 3. Compiler / source-shape lessons (gcc 2.9 "old_agbcc")
 
 ### 3.1 Opt level is per-zone and readable from loop shape
@@ -3216,6 +3225,143 @@ truncation provably redundant - and agbcc drops it when the cast is inline
 pair, so the local is what the original wrote.  Compare 3.213: the same "does
 the narrow type survive" question, opposite answer, because there the value is
 live across a call and here it is consumed immediately.
+
+### 3.217 A per-file prototype edit silently invalidates functions that already matched
+`sub_08001a94`'s sixth parameter is `s16` in M19, not the `u16` the M18 files
+declare: the ROM sign-extends the y difference at every call site
+(`lsls #16; asrs #16`), and with `u16` the two `(s16)` copies of a `u16`
+difference reorder and half the function permutes (`sub_08070ec0`,
+`sub_080719a0`).  Per-file prototypes are legitimate (3.179) - but re-run the
+byte-exact tester over the WHOLE module after changing one.  The M19 harness
+grew a `recheck.sh` for exactly this: any edit to the shared header or the type
+list re-verifies all 220 bodies before the next function is attempted.
+
+### 3.218 A signed and an unsigned read of the same field are different rtl, so cse keeps both
+`u16 h = t->unk78; s16 s = t->unk78;` gives the ROM's `ldrh` + `movs rI,#0;
+ldrsh` pair, while one `u16` local plus `t->unk78 == K` compares makes gcc
+sign-extend the local instead (`sub_080718c0`).  Thumb `ldrsh` has no
+immediate-offset form, which is why every signed halfword read costs a zero
+index register - and why `movs rI,#0` next to a load is evidence of a SIGNED
+source read, not of a spare register.
+
+### 3.219 `v = cond ? A : B` puts B's `movs` between the condition and its `cmp`
+Reading the ROM backwards, `movs r2,#1; cmp r0,#0; beq` is
+`v = (call() == 0) ? 1 : 0`, not `v = call() ? 0 : 1` (`sub_080718c0`).
+Companion to 3.211 (read the branch condition backwards).
+
+### 3.220 `gCell = call(K);` materialises the destination address BEFORE the call
+When a register is free agbcc computes `&gCell` first, which swaps two
+callee-saved registers for the whole function.  The ROM's `bl; ldr rN,=cell;
+str r0,[rN,#0]` order needs the result to pass through a temp:
+`{ s32 r; r = call(K); gCell = r; }` (`sub_08071d60`, `sub_08071f54`, and every
+`0x02005584`/`0x02004B4C` sound-cue pair in M19).
+
+### 3.221 `x->unk38[x->unk3C]` loads the INDEX first; a table local loads the base first
+The ROM's base-first order (`ldr r3,[r6,#56]` before the `ldrsh` of the index)
+needs the table in its own local (`u32 *g = x->unk38;`), and that local must be
+ONE function-scope variable shared by every block - a per-block copy costs an
+r2/r3 swap (`sub_080719a0`).
+
+### 3.222 `&table[i]` in a pointer local frees the register the index wanted
+`table[i].field = v` gives the INDEX pseudo the register the address
+computation wants; assigning `&table[i]` to a pointer local first frees it, and
+that is what puts a call result in r1 instead of r2 (`sub_08075290`).  Same
+family as 3.166.
+
+### 3.223 A loop-invariant table base is declared INSIDE the loop body
+A ROM-table base that the ROM loads ONCE in the loop preheader (after the entry
+test) is a local declared inside the loop: `for (...) { struct T *base = gTable;
+... base[i] ... }` lets loop.c hoist it, while a local declared before the loop
+puts the `ldr rN,=table` ahead of the entry test and flips the `adds` operand
+order (`sub_0807802c`).
+
+### 3.224 Inside a loop, read the global through `gUnk_...->f` at every use
+That is what makes the increment and the exit test share ONE re-read of the
+pointer after a call; a `struct Task *t` local never reloads and costs the whole
+loop tail (`sub_0807802c`, `sub_080780c4`).  The straight-line rule is the
+opposite (3.212) - per-block locals there, per-use globals in a loop.
+
+### 3.225 One local per index TERM, and the `+ K` last
+When the ROM computes an index term by term in source order (`ldrb`, scale,
+`ldrb`, scale, add), each term is its own local: `s32 j = a * 4; s32 k = b * 96;
+tab[j + k + 2]` matches where `tab[b * 96 + a * 4 + 2]` reorders the two loads
+and `tab[a * 4 + b * 96 + 2]` reorders the two scalings (`sub_0807811c`,
+`sub_0807840c`).  The trailing `+ K` is what makes cse's related-value logic
+emit `adds rD, rBase, #K` instead of a second pool word - but only while the
+base stays in a register, which needs the SAME `(u8 *)table` spelling at every
+use in the function.
+
+### 3.226 Switch arms do NOT inherit cse's constants: hold the table base in a `u8 *` local
+cse starts a fresh hash table at every jump-table arm, so a table symbol spelled
+inline in five arms costs five pool words and the related-value trick of 3.225
+never fires.  A `u8 *tab = (u8 *)gTable;` LOCAL fixes that - the pseudo is live
+across the switch and each arm just adds to it.  But then `tab[j + k + 3]` folds
+the `+ 3` into the load's immediate offset (`ldrb rD,[rB,#3]`, one instruction
+SHORTER than the ROM) and `(tab + 3)[j + k]` constant-folds the base back into a
+pool word.  What reproduces the ROM's `adds rD, rTab, #3` is an INTEGER temp:
+`s32 q = (s32)tab + 3; ... *(u8 *)(i + q)` - integer arithmetic is not
+reassociated into the addressing mode, and the temp keeps `tab` itself a
+register (`sub_0807840c`).
+
+### 3.227 The jump table's word ORDER is the source's case order
+agbcc emits switch arms in the order the `case` labels appear in the source and
+fills the table by case VALUE, so the table words read out the original
+ordering.  `sub_0807840c`'s table (`0x08078464`, `0x080784D4`, `0x08078494`,
+`0x08078514`, `0x08078554`) says the source is `case 0: ... case 2: ...
+case 1: ...`; decompiling in numeric order put the two middle bodies in the
+wrong arms and cost 30 bytes of diff that no expression rewrite could remove.
+Read the table before writing the switch.
+
+### 3.228 Two constants in one expression get folded unless a paren separates them
+`call(48) + 232 + (u8)x + 96` folds `232 + 96` into `328`, which no longer fits
+an `adds` immediate and costs `movs rD,#164; lsls rD,#1`; the ROM's separate
+`adds r0,#232` and `adds r0,#96` come from `call(48) + 232 + ((u8)x + 96)`.
+Related: which operand a two-address `adds` ties to is decided by the SHAPE, not
+the order - `{ s32 v = call(48) + 232; p->f = v + (u8)x; }` puts the `+232` on
+the call result (the ROM's `adds r0,#232` before the `ldrb`) where the flat
+expression puts it on the loaded byte (`sub_0807840c`).
+
+### 3.229 `register X asm("rN")` is the practical tie-break for a global-alloc priority tie
+When the only residue is a two-register permutation, compute the priorities
+(3.34/3.41: `floor_log2(refs) * refs / live_length`) out of `agbcc -da`'s
+`.greg` header, and if the loser cannot be given another reference or a shorter
+range by any natural source shape, pin it.  Three M19 functions needed it and
+each pin is one line: `sub_0807840c` pins the table base to `r3` AND the
+`base + 3` temp to `r0` (without the second pin gcc adds 3 to the base in place
+and destroys it), `sub_0807777c` pins the `struct Task *`, the index and the
+loaded halfword, and `sub_08074c0c` pins the zero constant to `r5` by turning it
+into a variable (`register s32 z asm("r5"); z = 0; t->unk40 = z;`) so the
+`&gUnk_03002490` copy takes `r6`.  15 functions in `src/` already use the idiom
+(3.24), so it is a legitimate last resort - but it is a LAST resort: each of the
+three had a real source-shape bug in front of it (a mis-ordered switch, a folded
+constant, a wrong load width) that the pin would have hidden.
+
+### 3.230 A `u16` load feeding a sign-extension becomes `ldrsh`; the ROM's `ldrh` + shifts needs a second use
+combine merges `(sign_extend (zero_extend (mem:HI)))` into one `ldrsh` (with a
+zero index register, 3.218) no matter how the source spells the cast - a `u16`
+local, an explicit `(s16)`, even `(v << 16) >> 16`.  The ROM's
+`ldrh; lsls #16; asrs #16` therefore means the loaded value has a SECOND use in
+the same block (the classic `t->f++; if (t->f > K)` shape, `sub_080710fc`) or,
+where there is none, that the value lives in a pinned register (3.229,
+`sub_0807777c`).  In that same function `*(u16 *)(q + i)` ties the address add
+to the index while the ROM ties it to the pointer: `q += i; v = *(u16 *)q;` is
+the spelling that ties to `q`.
+
+### 4.39 A census entry the PREVIOUS function's branch walk reaches is part of that function
+`bl` edges are not evidence to the contrary: a Thumb `b.n` only reaches
++/-2 KiB, so agbcc spells a long jump inside ONE function as `bl` too.  M19's
+`0x08076050` is the shared epilogue of the 3456-byte `sub_080752f4`, with five
+`bl` far jumps and seven `b.n` ones into it, and `symbols.csv` had it as a
+function.  The rule that survives: a real function entry is never a BRANCH
+target of another function's body, and a `bl` target inside the caller's own
+declared range is a long jump, not a call.
+
+### 4.40 A `bl` edge whose SITE is a literal-pool word is a phantom
+`0xFFFFF000` in a pool decodes as a `bl` prefix/suffix pair, so the call-graph
+extractor invents an edge out of the middle of the pool.  M19's
+`0x08074B2C -> 0x08075B2E` invented a function in the middle of a jump-table
+arm.  Filter every `bl` edge whose site falls inside a pool run before feeding
+the graph to a census sweep (4.29 does the same for pool containment).
 
 ## 5. Workflow that worked
 
