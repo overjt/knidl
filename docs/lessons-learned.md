@@ -3515,7 +3515,16 @@ per arm of an if/else) is reduced and its `[i+3]` (cse'd to one address) is not.
 The lever is lifetime: hoisting the offset into its own long-lived local at the
 top of the loop body (`o3 = i * 4 + 12;`, the accesses then
 `*(s32 *)(o3 + (s32)gUnk_02006040)`) gets the fourth giv AND stops loop.c
-spending the freed register on hoisting `&gUnk_03002158` out of the loop.
+spending the freed register on hoisting `&gUnk_03002158` out of the loop.  The
+two do not co-exist for free, though: every shape that gets all four givs puts
+the loop counter `i` in a HIGH register (so the increment costs an extra
+`movs rN, #1` and the test an extra `mov`), and every shape that gets `i` low
+loses a giv to the hoist.  A 256-point systematic sweep over the seven
+independent axes (`[i]`/`[i+6]` as subscript vs integer-offset vs pointer, the
+`+=` arms merged or not, the shared `&g[i]` pointer, the stored-value reuse,
+the camera local, and pinning `i`) got to the right size with 263 differing
+bytes and no closer, so do NOT repeat it: the remaining freedom is in
+global-alloc's priority order, not in any source shape.
 
 ### 3.250 Read the whole module's shape before believing the module name
 The census called M28 "enemy/object behaviour bank 9"; three of its seven ROM
