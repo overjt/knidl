@@ -9,8 +9,12 @@
 @ referenced symbolically from split literal pools / data words:
 	.global	gUnk_02000008
 gUnk_02000008 = 0x02000008
+	.global	gUnk_02004B4C
+gUnk_02004B4C = 0x02004B4C
 	.global	gUnk_02004C90
 gUnk_02004C90 = 0x02004C90
+	.global	gUnk_02005584
+gUnk_02005584 = 0x02005584
 	.global	gUnk_02005588
 gUnk_02005588 = 0x02005588
 	.global	gUnk_020055C0
@@ -33,6 +37,8 @@ gUnk_02006190 = 0x02006190
 gUnk_020061D8 = 0x020061D8
 	.global	gUnk_020061DC
 gUnk_020061DC = 0x020061DC
+	.global	gUnk_020061E0
+gUnk_020061E0 = 0x020061E0
 	.global	gUnk_02006A10
 gUnk_02006A10 = 0x02006A10
 	.global	gUnk_02007CF4
@@ -777,6 +783,8 @@ gUnk_0873F288 = 0x0873F288
 gUnk_0873F2A0 = 0x0873F2A0
 	.global	gUnk_0873F500
 gUnk_0873F500 = 0x0873F500
+	.global	gUnk_0873F5CC
+gUnk_0873F5CC = 0x0873F5CC
 	.global	gUnk_0873F5D4
 gUnk_0873F5D4 = 0x0873F5D4
 	.global	gUnk_0873F690
@@ -841,6 +849,8 @@ gUnk_0873FB24 = 0x0873FB24
 gUnk_0873FB44 = 0x0873FB44
 	.global	gUnk_0873FB60
 gUnk_0873FB60 = 0x0873FB60
+	.global	gUnk_0873FC94
+gUnk_0873FC94 = 0x0873FC94
 	.global	gUnk_0873FF98
 gUnk_0873FF98 = 0x0873FF98
 	.global	gUnk_08740648
@@ -2467,6 +2477,8 @@ gUnk_087537E8 = 0x087537E8
 gUnk_087537FC = 0x087537FC
 	.global	gUnk_087538B0
 gUnk_087538B0 = 0x087538B0
+	.global	gUnk_08754560
+gUnk_08754560 = 0x08754560
 	.global	gUnk_08755DC0
 gUnk_08755DC0 = 0x08755DC0
 	.global	gUnk_08755E00

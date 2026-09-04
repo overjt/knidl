@@ -66,7 +66,9 @@
 0x0806E0F0 0x0806EF5C c_code actor_6e0f0 # src/actor_6e0f0.c (carved by tools/carve.py)
 0x0806EF5C 0x0806FF24 c_code actor_6ef5c # src/actor_6ef5c.c (carved by tools/carve.py)
 0x0806FF24 0x08070EC0 c_code actor_6ff24 # src/actor_6ff24.c (carved by tools/carve.py)
-0x08070EC0 0x08078B68 thumb_code game_code_and_rodata_080653ec_0806ef5c [split]
+0x08070EC0 0x08072D8C thumb_code game_code_and_rodata_080653ec_0806ef5c [split]
+0x08072D8C 0x08074C0C c_code actor_72d8c # src/actor_72d8c.c (carved by tools/carve.py)
+0x08074C0C 0x08078B68 thumb_code game_code_and_rodata_080653ec_0806ef5c_08074c0c [split]
 0x08078B68 0x0807AA5C c_code enemy_78b68 # src/enemy_78b68.c (carved by tools/carve.py)
 0x0807AA5C 0x0807D3B0 c_code enemy_7aa5c # src/enemy_7aa5c.c (carved by tools/carve.py)
 0x0807D3B0 0x0807F044 c_code enemy_7d3b0 # src/enemy_7d3b0.c (carved by tools/carve.py)

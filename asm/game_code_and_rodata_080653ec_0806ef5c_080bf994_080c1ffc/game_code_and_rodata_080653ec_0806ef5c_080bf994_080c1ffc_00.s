@@ -23268,7 +23268,7 @@ loc_080cd6c0:
 	bx	r0
 	movs	r0, r0
 	.word	gUnk_02007FB8
-	.word	0x020061E0
+	.word	gUnk_020061E0
 	.word	gUnk_02000008
 	.word	gUnk_02006178
 	.word	0x02007CF0

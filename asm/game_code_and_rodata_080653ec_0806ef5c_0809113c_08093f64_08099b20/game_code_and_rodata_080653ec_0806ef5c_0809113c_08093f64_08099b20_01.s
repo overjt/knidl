@@ -10742,7 +10742,7 @@ sub_080b0b04:
 	.word	0x03001570
 	.word	gUnk_03002490
 	.word	0x00008010
-	.word	0x08754560
+	.word	gUnk_08754560
 	.thumb_func
 	.global	sub_080b0b50
 sub_080b0b50:

@@ -8619,7 +8619,7 @@ loc_0800b730:
 	bx	r0
 	movs	r0, r0
 	.word	0x02000020
-	.word	0x020061E0
+	.word	gUnk_020061E0
 	.word	0x02006160
 	.word	gUnk_02006094
 	.word	0x020060CC
@@ -8734,7 +8734,7 @@ loc_0800b808:
 	.word	gUnk_03001E94
 	.word	gUnk_03000FA8
 	.word	gUnk_02007FB8
-	.word	0x020061E0
+	.word	gUnk_020061E0
 	.word	gUnk_02007F50
 	.word	0x03002458
 	.word	gUnk_03001EB8
@@ -8808,7 +8808,7 @@ loc_0800b8ca:
 	movs	r0, r0
 	.word	gUnk_03001ED8
 	.word	gUnk_02007FB8
-	.word	0x020061E0
+	.word	gUnk_020061E0
 	.word	gUnk_02007F50
 	.word	0x03002458
 	.word	gUnk_03001EB8
