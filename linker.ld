@@ -477,8 +477,9 @@ SECTIONS
         build/src/enemy_9cc24.o(.text)
     } > ROM
 
-    .game_code_and_rodata_080653ec_0806ef5c_0809113c_08093f64_08099b20_0809cb90_0809d994 0x0809D994 : {
-        KEEP(*(.game_code_and_rodata_080653ec_0806ef5c_0809113c_08093f64_08099b20_0809cb90_0809d994)) KEEP(*(.game_code_and_rodata_080653ec_0806ef5c_0809113c_08093f64_08099b20_0809cb90_0809d994.tail))
+    /* enemy_9d994 — decompiled to C (src/enemy_9d994.c, carved by tools/carve.py) */
+    .enemy_9d994 0x0809D994 : {
+        build/src/enemy_9d994.o(.text)
     } > ROM
 
     /* enemy_9da1c — decompiled to C (src/enemy_9da1c.c, carved by tools/carve.py) */
@@ -486,8 +487,9 @@ SECTIONS
         build/src/enemy_9da1c.o(.text)
     } > ROM
 
-    .game_code_and_rodata_080653ec_0806ef5c_0809113c_08093f64_08099b20_0809cb90_0809d994_0809f2f4 0x0809F2F4 : {
-        KEEP(*(.game_code_and_rodata_080653ec_0806ef5c_0809113c_08093f64_08099b20_0809cb90_0809d994_0809f2f4)) KEEP(*(.game_code_and_rodata_080653ec_0806ef5c_0809113c_08093f64_08099b20_0809cb90_0809d994_0809f2f4.tail))
+    /* enemy_9f2f4 — decompiled to C (src/enemy_9f2f4.c, carved by tools/carve.py) */
+    .enemy_9f2f4 0x0809F2F4 : {
+        build/src/enemy_9f2f4.o(.text)
     } > ROM
 
     /* enemy_9f37c — decompiled to C (src/enemy_9f37c.c, carved by tools/carve.py) */
