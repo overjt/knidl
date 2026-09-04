@@ -279,6 +279,16 @@ KNOWN_SYMBOLS = {
 # m4a_songs data segment surrounded by signed 8-bit PCM sample bytes; the
 # `pop {pc}` halfword passes the strict terminator check by accident.
 FALSE_POSITIVES = {
+    # --- M28 (issue #74), one row the reachability sweep dropped ---
+    # 0x080A02FC is the pool-skip branch INSIDE sub_080A02D4: the ROM falls
+    # into its `b.n 0x080A031E` from the guard above and `loc_080A0304` is a
+    # branch target of that same function.  The only ROM word holding
+    # 0x080A02FD sits at 0x086FDD40, in the middle of a graphics blob
+    # (neighbours 0xFD02F5F9, 0x0C07F4F1, 0xFBFF0405 - pixel data), so the
+    # rom-pointer evidence is a phantom.  sub_080A02D4 runs
+    # 0x080A02D4-0x080A0358 (0x84).
+    0x080A02FC,
+
     # --- M19 (issue #79), three rows the reachability sweep dropped ---
     # 0x080711F6 is the `b.n 0x807132A` pool-skip branch INSIDE sub_080711D0,
     # not an entry: the three pool words it "owns" (0x0807122C-0x08071234) are
@@ -423,6 +433,29 @@ FALSE_POSITIVES = {
 # m4a.c function order and body shape (see the KNOWN_SYMBOLS comments);
 # they are injected as candidates and carry the "curated" evidence kind.
 EXTRA_THUMB_ENTRIES = {
+    # --- M28 (issue #74), seven hidden entries the reachability sweep found ---
+    # Six are real anchor-table targets that -fprologue-bugfix left without a
+    # `push`, so the prologue filter could not propose them; the seventh is a
+    # dead export nothing in the ROM references.  All are code inside a
+    # declared range that no path from that range's entry reaches.
+    0x0809D138,  # `movs r0, #0; bx lr` leaf; table word 0x087481B8 points at
+                 # it (neighbours 0x0809D0DD twice).  sub_0809d0dc is 0x5C.
+    0x0809E7D4,  # sets gUnk_03002490->unk24 from a pool constant and returns;
+                 # table word 0x087481C0.  sub_0809e7c8 is 0xC, not 0x20.
+    0x0809E820,  # `movs r0, #0; bx lr` leaf; table word 0x087481D4.
+                 # sub_0809e7e8 is 0x38, not 0x3C.
+    0x0809F618,  # `movs r0, #0; bx lr` leaf; table word 0x087481F0.
+                 # sub_0809f588 is 0x90, not 0x94.
+    0x0809F7F8,  # sets Task.unk24 = 18 and returns; four table words
+                 # (0x08748214/0x0874822C/0x08748238/0x08748250) point at it.
+                 # sub_0809f7e4 is 0x14, not 0x24.
+    0x0809FFEC,  # dead export: the "if state 6 and unk82 == 4, poke the
+                 # object row" leaf with its own pool; nothing references it.
+                 # sub_0809fe10 is 0x1DC, not 0x218.
+    0x080A0588,  # sets Task.unk54 = 0 and returns; table word 0x08748940
+                 # (its neighbour 0x08748948 points at 0x080A0598).
+                 # sub_080a0538 is 0x50, not 0x60.
+
     # --- M19 (issue #79), five hidden entries the reachability sweep found ---
     # 0x08071850: a dead export - the `sub_08002e98(Task.unk14, 26,
     # 0x0873FBC4)` twin of sub_08071830's unk15 dispatch, with its own

@@ -8330,7 +8330,7 @@ loc_0805a8c6:
 	.word	0x0873BB3E
 	.word	0x02007D64
 	.word	0x02007F60
-	.word	0x03001570
+	.word	gUnk_03001570
 	.word	gUnk_0200AF20
 	.word	gUnk_03002490
 	.word	0x0000FFFF
@@ -8643,7 +8643,7 @@ loc_0805ab38:
 	.word	0x03002444
 	.word	gUnk_0200AF20
 	.word	0x0873BC3E
-	.word	0x03001570
+	.word	gUnk_03001570
 	.global	loc_0805ab68
 loc_0805ab68:
 	ldr	r0, [pc, #80]	@ 0x0805ABBC
@@ -8691,7 +8691,7 @@ loc_0805ab94:
 	b.n	loc_0805ac46	@ 0x0805AC46
 	.word	gUnk_0200AF20
 	.word	0x0873BB7E
-	.word	0x03001570
+	.word	gUnk_03001570
 	.word	gUnk_03002490
 	.word	gCurTaskIdx
 	.word	0x030055D0
@@ -8716,7 +8716,7 @@ loc_0805abd8:
 	.word	0x03002444
 	.word	gUnk_0200AF20
 	.word	0x0873BC3E
-	.word	0x03001570
+	.word	gUnk_03001570
 	.global	loc_0805ac08
 loc_0805ac08:
 	ldr	r0, [pc, #36]	@ 0x0805AC30
@@ -8742,7 +8742,7 @@ loc_0805ac18:
 	b.n	loc_0805ac46	@ 0x0805AC46
 	.word	gUnk_0200AF20
 	.word	0x0873BB7E
-	.word	0x03001570
+	.word	gUnk_03001570
 	.word	gUnk_03002490
 	.global	loc_0805ac40
 loc_0805ac40:
@@ -9844,9 +9844,9 @@ loc_0805b48a:
 	.word	gUnk_02007D00
 	.word	0x0000FFFF
 	.word	0x085B9B6C
-	.word	0x02020000
+	.word	gUnk_02020000
 	.word	0x06010000
-	.word	0x03001570
+	.word	gUnk_03001570
 	.word	gUnk_03002790
 	.word	0x0873DBAC
 	.word	gUnk_03002350

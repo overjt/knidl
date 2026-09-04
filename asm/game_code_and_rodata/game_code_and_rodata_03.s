@@ -6402,7 +6402,7 @@ loc_0803a1fe:
 	mov	pc, r0
 	movs	r0, r0
 	.word	0x080D07C8
-	.word	0x02020000
+	.word	gUnk_02020000
 	.word	0x080DCC68
 	.word	0x06014000
 	.word	gCurTaskIdx
@@ -7133,7 +7133,7 @@ loc_0803a760:
 	.word	0x020055E8
 	.word	gCurTaskIdx
 	.word	gUnk_03002490
-	.word	0x02020000
+	.word	gUnk_02020000
 	.word	0x06014000
 	.word	gUnk_0873D3B8
 	.word	0x0803A788
