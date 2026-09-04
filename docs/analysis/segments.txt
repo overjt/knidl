@@ -98,7 +98,7 @@
 0x0809BA44 0x0809C028 c_code enemy_9ba44 # src/enemy_9ba44.c (carved by tools/carve.py)
 0x0809C028 0x0809C0A8 c_code enemy_9c028 # src/enemy_9c028.c (carved by tools/carve.py)
 0x0809C0A8 0x0809CB90 c_code enemy_9c0a8 # src/enemy_9c0a8.c (carved by tools/carve.py)
-0x0809CB90 0x0809CC24 thumb_code game_code_and_rodata_080653ec_0806ef5c_0809113c_08093f64_08099b20_0809cb90 [split]
+0x0809CB90 0x0809CC24 c_code enemy_9cb90 # src/enemy_9cb90.c (carved by tools/carve.py)
 0x0809CC24 0x0809D994 c_code enemy_9cc24 # src/enemy_9cc24.c (carved by tools/carve.py)
 0x0809D994 0x0809DA1C thumb_code game_code_and_rodata_080653ec_0806ef5c_0809113c_08093f64_08099b20_0809cb90_0809d994 [split]
 0x0809DA1C 0x0809F2F4 c_code enemy_9da1c # src/enemy_9da1c.c (carved by tools/carve.py)
