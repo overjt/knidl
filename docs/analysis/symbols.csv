@@ -1874,8 +1874,7 @@ vma,size,isa,evidence,name
 0x08071098,0x48,thumb,rom-pointer,sub_08071098
 0x080710E0,0x1C,thumb,rom-pointer,sub_080710e0
 0x080710FC,0xD4,thumb,bl-target,sub_080710fc
-0x080711D0,0x26,thumb,bl-target,sub_080711d0
-0x080711F6,0x16A,thumb,rom-pointer,sub_080711f6
+0x080711D0,0x190,thumb,bl-target,sub_080711d0
 0x08071360,0x98,thumb,bl-target,sub_08071360
 0x080713F8,0x20,thumb,bl-target,sub_080713f8
 0x08071418,0x154,thumb,rom-pointer,sub_08071418
@@ -1885,7 +1884,8 @@ vma,size,isa,evidence,name
 0x08071694,0xE0,thumb,rom-pointer,sub_08071694
 0x08071774,0x4,thumb,rom-pointer,sub_08071774
 0x08071778,0xB8,thumb,rom-pointer,sub_08071778
-0x08071830,0x3C,thumb,rom-pointer,sub_08071830
+0x08071830,0x20,thumb,rom-pointer,sub_08071830
+0x08071850,0x1C,thumb,curated,sub_08071850
 0x0807186C,0x2C,thumb,bl-target,sub_0807186c
 0x08071898,0x28,thumb,bl-target,sub_08071898
 0x080718C0,0xE0,thumb,bl-target,sub_080718c0
@@ -1931,7 +1931,8 @@ vma,size,isa,evidence,name
 0x08073F18,0x184,thumb,rom-pointer,sub_08073f18
 0x0807409C,0x20,thumb,rom-pointer,sub_0807409c
 0x080740BC,0x30C,thumb,rom-pointer,sub_080740bc
-0x080743C8,0x28,thumb,rom-pointer,sub_080743c8
+0x080743C8,0x4,thumb,rom-pointer,sub_080743c8
+0x080743CC,0x24,thumb,curated,sub_080743cc
 0x080743F0,0x30,thumb,rom-pointer,sub_080743f0
 0x08074420,0x5C,thumb,rom-pointer,sub_08074420
 0x0807447C,0x90,thumb,rom-pointer,sub_0807447c
@@ -1963,10 +1964,9 @@ vma,size,isa,evidence,name
 0x08074F48,0xB8,thumb,bl-target,sub_08074f48
 0x08075000,0x290,thumb,rom-pointer,sub_08075000
 0x08075290,0x64,thumb,bl-target,sub_08075290
-0x080752F4,0x83A,thumb,rom-pointer,sub_080752f4
-0x08075B2E,0x522,thumb,bl-target,sub_08075b2e
-0x08076050,0x24,thumb,bl-target,sub_08076050
-0x08076074,0x2A4,thumb,rom-pointer,sub_08076074
+0x080752F4,0xD80,thumb,rom-pointer,sub_080752f4
+0x08076074,0x140,thumb,rom-pointer,sub_08076074
+0x080761B4,0x164,thumb,curated,sub_080761b4
 0x08076318,0x64,thumb,bl-target+rom-pointer,sub_08076318
 0x0807637C,0x48,thumb,rom-pointer,sub_0807637c
 0x080763C4,0x24,thumb,rom-pointer,sub_080763c4
@@ -2064,7 +2064,8 @@ vma,size,isa,evidence,name
 0x080780C4,0x58,thumb,rom-pointer,sub_080780c4
 0x0807811C,0x60,thumb,bl-target,sub_0807811c
 0x0807817C,0x80,thumb,bl-target,sub_0807817c
-0x080781FC,0xB8,thumb,bl-target,sub_080781fc
+0x080781FC,0x5C,thumb,bl-target,sub_080781fc
+0x08078258,0x5C,thumb,curated,sub_08078258
 0x080782B4,0x68,thumb,bl-target,sub_080782b4
 0x0807831C,0xC4,thumb,bl-target,sub_0807831c
 0x080783E0,0x2C,thumb,bl-target,sub_080783e0
@@ -2085,7 +2086,8 @@ vma,size,isa,evidence,name
 0x080789AC,0x9C,thumb,rom-pointer,sub_080789ac
 0x08078A48,0xC0,thumb,rom-pointer,sub_08078a48
 0x08078B08,0x30,thumb,rom-pointer,sub_08078b08
-0x08078B38,0x30,thumb,rom-pointer,sub_08078b38
+0x08078B38,0x2C,thumb,rom-pointer,sub_08078b38
+0x08078B64,0x4,thumb,rom-pointer,sub_08078b64
 0x08078B68,0x78,thumb,bl-target,sub_08078b68
 0x08078BE0,0x34,thumb,rom-pointer,sub_08078be0
 0x08078C14,0x50,thumb,rom-pointer,sub_08078c14

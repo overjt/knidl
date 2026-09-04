@@ -279,6 +279,22 @@ KNOWN_SYMBOLS = {
 # m4a_songs data segment surrounded by signed 8-bit PCM sample bytes; the
 # `pop {pc}` halfword passes the strict terminator check by accident.
 FALSE_POSITIVES = {
+    # --- M19 (issue #79), three rows the reachability sweep dropped ---
+    # 0x080711F6 is the `b.n 0x807132A` pool-skip branch INSIDE sub_080711D0,
+    # not an entry: the three pool words it "owns" (0x0807122C-0x08071234) are
+    # loaded from before it, and the ROM falls into it from the guard above.
+    0x080711F6,
+    # 0x08075B2E is a phantom from a literal-pool word: the `bl` edge the
+    # symbol DB found is the pool value 0xFFFFF000 at 0x08074B2C decoding as a
+    # `bl` pair.  The address is the middle of the eighth arm of the jump
+    # table at 0x08075364, inside sub_080752F4.
+    0x08075B2E,
+    # 0x08076050 is the SHARED EPILOGUE of sub_080752F4 (`bl
+    # TaskDispatchTrampoline` + the multi-register pop), reached by five `bl`
+    # far jumps and seven `b.n` ones from that one 3456-byte function: a Thumb
+    # `b.n` only reaches +/-2 KiB, so agbcc spells the long jumps as `bl` and
+    # the bl-target heuristic saw a function.
+    0x08076050,
     0x080CFCFC,
     # 0x0800315E is literal-pool data inside sub_08003110, not a function
     # (issue #32): the mask word 0xFFFFF7FF at 0x0800315C has a low half that
@@ -407,6 +423,23 @@ FALSE_POSITIVES = {
 # m4a.c function order and body shape (see the KNOWN_SYMBOLS comments);
 # they are injected as candidates and carry the "curated" evidence kind.
 EXTRA_THUMB_ENTRIES = {
+    # --- M19 (issue #79), five hidden entries the reachability sweep found ---
+    # 0x08071850: a dead export - the `sub_08002e98(Task.unk14, 26,
+    # 0x0873FBC4)` twin of sub_08071830's unk15 dispatch, with its own
+    # `push {lr}` prologue and pool; no ROM word references it.
+    0x08071850,
+    # 0x080743CC: the whole declared body of "sub_080743C8" is a bare `bx lr`
+    # plus this function (lesson 4.34); it is the class-3 state 25 entry.
+    0x080743CC,
+    # 0x080761B4: a dead export sitting after sub_08076074's epilogue and pool
+    # with its own `push {r4, r5, r6, lr}`; nothing references it.
+    0x080761B4,
+    # 0x08078258: same shape after sub_080781FC's epilogue and pool.
+    0x08078258,
+    # 0x08078B64: a four-byte `movs r0, #0; bx lr` leaf that the
+    # -fprologue-bugfix prologue filter cannot propose; the anchor table word
+    # at 0x08740E6C points at it.
+    0x08078B64,
     0x080CE60C,  # m4aSongNumStartOrChange
     0x080CE6E0,  # m4aSongNumContinue
     0x080CE740,  # m4aMPlayContinue (wrapper)

@@ -20250,7 +20250,7 @@ sub_08050d00:
 	.word	sub_080059d8+1
 	.word	sub_08005f30+1
 	.word	sub_08050e84+1
-	.word	0x0874C44C
+	.word	gUnk_0874C44C
 	.word	0x0873CB4C
 	.global	loc_08050d68
 loc_08050d68:
@@ -29206,7 +29206,7 @@ loc_0805532e:
 	ldr	r0, [r0, #0]
 	bl	sub_08005654	@ 0x08005654
 	b.n	loc_080553ca	@ 0x080553CA
-	.word	0x02007CF0
+	.word	gUnk_02007CF0
 	.word	gUnk_03002490
 	.word	0x02000020
 	.word	gCurTaskIdx

@@ -24957,7 +24957,7 @@ loc_08032aa8:
 	strb	r0, [r1, #2]
 	b.n	loc_08032b7a	@ 0x08032B7A
 	.word	gUnk_03002490
-	.word	0x020061E0
+	.word	gUnk_020061E0
 	.word	gUnk_03001F34
 	.global	loc_08032ac8
 loc_08032ac8:
@@ -26254,7 +26254,7 @@ loc_0803344a:
 	strh	r0, [r2, #0]
 	b.n	loc_080334ce	@ 0x080334CE
 	.word	gUnk_03002490
-	.word	0x02007CF0
+	.word	gUnk_02007CF0
 	.word	gUnk_03001F30
 	.word	0x02004B50
 	.word	0x02008008

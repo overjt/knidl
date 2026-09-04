@@ -18696,7 +18696,7 @@ sub_080a498c:
 	.word	gUnk_03002490
 	.word	sub_080059d8+1
 	.word	sub_0806523c+1
-	.word	0x0874C44C
+	.word	gUnk_0874C44C
 	.word	0x087489B4
 	.thumb_func
 	.global	sub_080a49cc
@@ -19475,7 +19475,7 @@ loc_080a4fdc:
 	movs	r0, r0
 	.word	0x00000215
 	.word	gUnk_03002490
-	.word	0x0874C44C
+	.word	gUnk_0874C44C
 	.thumb_func
 	.global	sub_080a5008
 sub_080a5008:

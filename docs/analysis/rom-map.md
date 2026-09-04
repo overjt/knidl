@@ -620,6 +620,41 @@ child issues of #35 are created from it. Findings that belong in this document:
   six-byte `s8` box (`x0, y0, x1, y1, x2, y2`) and picks a random 16.16 target
   inside it into `Task.unk4C`/`Task.unk50`, choosing corner, mid-edge or
   centre from `Task.unk73`.
+- **M19 (`0x08070EC0-0x08078B67`) is the cutscene / ending-sequence bank, and
+  it does NOT use the three-table shape.** Decompiled in #79 into
+  `src/actor_70ec0.c`, `src/actor_72d8c.c`, `src/actor_74c0c.c`,
+  `src/actor_763e8.c` and `src/actor_77ae0.c` (220 functions, 31.2 KiB).
+  Eleven ROM task types live here, all class 3 (#8, #74, #75, #76, #77, #78,
+  #79, #97, #98, #99, #165), and every one of them is a *linear* script: the
+  entry installs a draw hook (`sub_080656b4`/`sub_080059d8`) plus a per-frame
+  body and then dispatches `Task.unk14`/`Task.unk73` through ONE anchor table
+  into a run of `TaskYieldTrampoline` waits that step the 16.16 velocity pair
+  `Task.unk54`/`Task.unk58`, the animation cell `Task.unk3C` and the
+  fade/blend cells out of ROM step tables. The anchor tables are `0x0873FBAC`
+  (8 entries), `0x0873FBB8`, `0x0873FBC4`, `0x0873FBD4` (20), `0x0873FC2C`,
+  `0x0873FC3C` (21), `0x0873FC94` (25), `0x0873FCA4` (17), `0x08740098`,
+  `0x0874009C`, `0x087400A6`, `0x087400B0` (13), `0x087400C8`, `0x087400E0`
+  (13), `0x087400E4`, `0x08740100` (9), `0x08740110`, `0x08740120` (9),
+  `0x08740124`, `0x087401CC`, `0x087402BC`, `0x087402C8`, `0x087402D4`,
+  `0x087402D8`, `0x087402E4`, `0x087402F0`, `0x087402F4`, `0x087402F8`,
+  `0x087402FC`, `0x08740620`, `0x08740630` and `0x08740BD4`. Three
+  module-local record types were identified and are declared in the C files:
+  the **script table `0x087401E4`** (per entry: a four-byte header, a `u16` at
+  +4, a *forward* `s16` step list at +6 and a *reverse* one at +18 that
+  `sub_0807777c` picks between on `Task.unk18`/`Task.unk24`); the **eight
+  4-byte credits particles at `0x03000FE0`** (frame-table index, frame,
+  timer, countdown); and the **24-entry animation rows at `0x08740320` and
+  `0x087404A0`** those particles walk (`unk00` indexes the gfx pointer table,
+  `unk03` is the per-step delta `sub_0807840c` applies). Task #165's
+  four-ring sparkle reads four separate `s16` offset tables — `0x0873FCF8`,
+  `0x0873FD20`, `0x0873FD48` and `0x0873FD70` — one `sub_08001a94` blit each
+  per frame, and the two cutscene directors decompress out of `0x085E6FA4`,
+  `0x085E6FE4` and `0x085E72D4`. 63 further cells were named through
+  `split_config.json` `data_symbols`, including the `Task.unk38` graphics
+  blocks `0x08752118`, `0x08752C38`, `0x08752C74`, `0x08752D40`,
+  `0x08752D48`, `0x08752D8C`, `0x08752DB8`, `0x08752E00` and `0x0875549C`,
+  the palette ramps `0x0873FD98`/`0x0873FE98`, and the EWRAM cells
+  `0x02004B64`, `0x02006160`, `0x02007CF0` and `0x0200AF20`.
 - **M20 (`0x08078B68-0x0807F043`) is the three-table shape applied to MOVING
   SCENERY, not enemies.** Decompiled in #77 into `src/enemy_78b68.c`,
   `src/enemy_7aa5c.c` and `src/enemy_7d3b0.c`. Twenty-one ROM task types live

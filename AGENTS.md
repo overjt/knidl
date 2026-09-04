@@ -107,4 +107,19 @@ Matching decompilation of Kirby: The Amazing Mirror's predecessor, **Kirby: Nigh
   Task.unk7A.  Twenty-four census rows corrected in `tools/symdb.py` (five
   prologue-filter misses and nineteen dead exports) and 121 ROM tables named
   via `split_config.json` `data_symbols`.
+- Cutscene / ending-sequence bank decompiled (issue #79): module M19
+  `0x08070EC0-0x08078B68` (31.2 KiB) landed as `src/actor_70ec0.c`,
+  `src/actor_72d8c.c`, `src/actor_74c0c.c`, `src/actor_763e8.c` and
+  `src/actor_77ae0.c` (all 220 functions; no asm left in the range).  Eleven
+  class-3 ROM task types (#8, #74-#79, #97-#99, #165) that run the game's
+  non-interactive sequences - warp-star intro, stage-clear pose, goal-game
+  walk, four-ring sparkle and the end credits.  Unlike the enemy banks these
+  are NOT the three-table shape: each type dispatches one anchor table into a
+  linear TaskYieldTrampoline script.  Three module-local records were
+  identified (the 0x087401E4 script table with its forward/reverse step lists,
+  the eight credits particles at 0x03000FE0 and the 24-entry animation rows at
+  0x08740320/0x087404A0); eight census rows corrected in `tools/symdb.py`
+  (three non-functions removed - a pool-skip branch, a phantom pool `bl` and a
+  shared epilogue - and five hidden entries added) and 63 ROM/RAM cells named
+  via `split_config.json` `data_symbols`.
 - Next milestones: decompile split/SDK modules to C using the validated per-zone compiler recipe (task system Thumb side, sound driver, then game code); grow `src/` one module at a time with `asmdiff.sh` on the module range.
