@@ -307,8 +307,9 @@ SECTIONS
         build/src/actor_6ff24.o(.text)
     } > ROM
 
-    .game_code_and_rodata_080653ec_0806ef5c 0x08070EC0 : {
-        KEEP(*(.game_code_and_rodata_080653ec_0806ef5c)) KEEP(*(.game_code_and_rodata_080653ec_0806ef5c.tail))
+    /* actor_70ec0 — decompiled to C (src/actor_70ec0.c, carved by tools/carve.py) */
+    .actor_70ec0 0x08070EC0 : {
+        build/src/actor_70ec0.o(.text)
     } > ROM
 
     /* actor_72d8c — decompiled to C (src/actor_72d8c.c, carved by tools/carve.py) */
@@ -316,8 +317,19 @@ SECTIONS
         build/src/actor_72d8c.o(.text)
     } > ROM
 
-    .game_code_and_rodata_080653ec_0806ef5c_08074c0c 0x08074C0C : {
-        KEEP(*(.game_code_and_rodata_080653ec_0806ef5c_08074c0c)) KEEP(*(.game_code_and_rodata_080653ec_0806ef5c_08074c0c.tail))
+    /* actor_74c0c — decompiled to C (src/actor_74c0c.c, carved by tools/carve.py) */
+    .actor_74c0c 0x08074C0C : {
+        build/src/actor_74c0c.o(.text)
+    } > ROM
+
+    /* actor_763e8 — decompiled to C (src/actor_763e8.c, carved by tools/carve.py) */
+    .actor_763e8 0x080763E8 : {
+        build/src/actor_763e8.o(.text)
+    } > ROM
+
+    /* actor_77ae0 — decompiled to C (src/actor_77ae0.c, carved by tools/carve.py) */
+    .actor_77ae0 0x08077AE0 : {
+        build/src/actor_77ae0.o(.text)
     } > ROM
 
     /* enemy_78b68 — decompiled to C (src/enemy_78b68.c, carved by tools/carve.py) */
