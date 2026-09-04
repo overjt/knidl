@@ -64,6 +64,25 @@ Matching decompilation of Kirby: The Amazing Mirror's predecessor, **Kirby: Nigh
 - Decomp-permuter vendored + standard loop documented (issue #26): `tools/decomp-permuter/` (simonlindholm/decomp-permuter@`2795247`, own MIT LICENSE kept; Dockerfile gained the required `toml` pip dep) verified inside `knidl-builder` on a scratch example (`tools/permuter-example/`, scorer reaches 0 against ROM-extracted target asm); per-function workflow + subagent handoff contract in `docs/decomp-loop.md`, old_agbcc-specific pitfalls in lessons §2.9–2.11.
 - m4a/mp2k sound engine located and fully labeled (issue #31): engine code `0x080CD89C-0x080CFA4B` (asm core + C driver halves, boundaries/evidence in `docs/analysis/rom-map.md` §8), 91 canonical names in the symbol DB (94 entries in the range; 3 tiny bx-r3 shims stay sub_*) (incl. 10 dead SDK exports via the new `EXTRA_THUMB_ENTRIES`/`curated` evidence mechanism in `tools/symdb.py`), engine RAM cells named via `data_symbols` (`gSoundInfo` `0x030056D0`, `SOUND_INFO_PTR` `0x03007FF0`, players/tracks, `gSoundMainRAM_Buffer` `0x03007150`), engine rodata tables mapped at `0x0860A140-0x0860B797` (byte-identical to pokeemerald's — same engine revision). Decompilation proceeds in child issues per rom-map §8.5.
 - Bulk code clustered into a module map (issue #34): `docs/analysis/module-map.md` + `docs/analysis/module-map.csv` (`make modmap`, `tools/modmap.py`, CSV regeneration checked in CI) partition the remaining `0x080075B8-0x080CD89C` (792.7 KiB, 4,950 functions) into **37 contiguous candidate modules** of 12-31 KiB with per-module evidence (anchor tables, task types, call traffic, pool references, difficulty, suggested batches) and a five-wave decompile order; child issues of #35 are generated from it. Key findings: the ROM task-type table at `0x0872FF30` has **266 entries whose second word is the task body's entry point** (not a flag word — corrects rom-map §6 / `src/early_58e4.c`), seg 7 references the I/O block only 20 times in 792 KiB (everything goes through the early zone's IWRAM shadows), and 3,288 of 5,045 functions are reachable only through ROM pointer tables.
+- Enemy/object behaviour bank 9 decompiled (issue #74): module M28
+  `0x0809BA44-0x080A158F` (22.8 KiB) landed as `src/enemy_9ba44.c`,
+  `src/enemy_9c028.c`, `src/enemy_9c0a8.c`, `src/enemy_9cb90.c`,
+  `src/enemy_9cc24.c`, `src/enemy_9d994.c`, `src/enemy_9da1c.c`,
+  `src/enemy_9f2f4.c`, `src/enemy_9f37c.c`, `src/enemy_9f9dc.c`,
+  `src/enemy_9fbd0.c` and `src/enemy_a0274.c` (203 of 204 functions, 22980 of
+  23372 bytes; `sub_080A00EC`, the 392-byte three-star burst stepper, is still
+  asm - agbcc reduces three of the ROM's four induction variables and spends
+  the freed register on hoisting `&gUnk_03002158` out of the loop, see
+  `docs/lessons-learned.md` 3.249).  Despite the census name this is NOT one
+  behaviour bank: seven ROM task types share the range, and three of them are a
+  four-lane actor spawner (#57), a six-variant enemy family whose variant picks
+  both the script and the OAM palette bank (#58) and the player's damage/death
+  -and-retry coroutine (#59, including the three-star burst and the
+  `gUnk_02006190[]` save block).  Eight census rows corrected in
+  `tools/symdb.py` (one pool-skip-branch phantom removed, seven hidden entries
+  added) and 80 ROM/RAM cells named via `split_config.json` `data_symbols`;
+  `tools/addsyms.py` is new and folds the linker's `undefined reference to
+  gUnk_<addr>` wall back into that map.
 - Enemy/object behaviour bank 7 decompiled (issue #75): module M26
   `0x08093F64-0x080988F7` (18.4 KiB) landed as `src/enemy_93f64.c`,
   `src/enemy_957bc.c`, `src/enemy_970c4.c` and `src/enemy_974c8.c` (all 148

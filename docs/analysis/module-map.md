@@ -206,7 +206,7 @@ dispatches, pool density) — a planning aid, not a promise.
 | M25 | `0x0809000C-0x08093F63` | 15.8 KiB | 121 | 4 | * | boss behaviour bank (four scripted bosses) - **landed (#67)** |
 | M26 | `0x08093F64-0x080988F7` | 18.4 KiB | 140 | 4 | ** | enemy/object behaviour bank 7 (four three-table scripts + two companions) - **landed (#75)** |
 | M27 | `0x080988F8-0x0809BA43` | 12.3 KiB | 140 | 3 | * | mid-boss behaviour bank (two scripts + three companions) - **landed (#68)** |
-| M28 | `0x0809BA44-0x080A158F` | 22.8 KiB | 198 | 5 | * | enemy/object behaviour bank 9 |
+| M28 | `0x0809BA44-0x080A158F` | 22.8 KiB | 198 | 5 | * | enemy/object behaviour bank 9 (four-lane spawner, a six-variant enemy family, the player death sequence) - **landed (#74)** |
 | M29 | `0x080A1590-0x080A5643` | 16.2 KiB | 221 | 5 | ** | enemy/object behaviour bank 10 |
 | M30 | `0x080A5644-0x080AA337` | 19.2 KiB | 130 | 2 | * | enemy/object behaviour bank 11 |
 | M31 | `0x080AA338-0x080AE3BB` | 16.1 KiB | 121 | 2 | ** | enemy/object behaviour bank 12 |
@@ -254,7 +254,7 @@ ordering inside it:
 | 6 | M21 enemy/object behaviour bank 2 - landed | 0x3E24 | 188 | 1 | 4 | 0 | 9 |
 | 7 | M30 enemy/object behaviour bank 11 | 0x4CF4 | 130 | 1 | 4 | 0 | 12 |
 | 8 | M32 enemy/object behaviour bank 13 | 0x4C2C | 129 | 1 | 5 | 0 | 15 |
-| 9 | M28 enemy/object behaviour bank 9 | 0x5B4C | 198 | 1 | 5 | 0 | 7 |
+| 9 | M28 enemy/object behaviour bank 9 - landed | 0x5B4C | 198 | 1 | 5 | 0 | 7 |
 | 10 | M18 actor core part 2 + class-1 task bodies | 0x7BC4 | 256 | 1 | 10 | 18 | 31 |
 | 11 | M26 enemy/object behaviour bank 7 - landed | 0x4994 | 140 | 2 | 3 | 0 | 7 |
 | 12 | M29 enemy/object behaviour bank 10 | 0x40B4 | 221 | 2 | 4 | 0 | 9 |
@@ -302,7 +302,7 @@ sub-issue of #35, so the numbering ascends with the recommended order):
 | 8 | #71 | M21 enemy/object behaviour bank 2 - landed | `0x0807F044-0x08082E67` | 15.5 KiB | 2 |
 | 9 | #72 | M30 enemy/object behaviour bank 11 | `0x080A5644-0x080AA337` | 19.2 KiB | 2 |
 | 10 | #73 | M32 enemy/object behaviour bank 13 | `0x080AE3BC-0x080B2FE7` | 19.0 KiB | 2 |
-| 11 | #74 | M28 enemy/object behaviour bank 9 | `0x0809BA44-0x080A158F` | 22.8 KiB | 2 |
+| 11 | #74 | M28 enemy/object behaviour bank 9 (four-lane spawner, a six-variant enemy family, the player death sequence) - landed | `0x0809BA44-0x080A158F` | 22.8 KiB | 2 |
 | 12 | #75 | M26 enemy/object behaviour bank 7 (four three-table scripts + two companions) - landed | `0x08093F64-0x080988F7` | 18.4 KiB | 2 |
 | 13 | #76 | M29 enemy/object behaviour bank 10 | `0x080A1590-0x080A5643` | 16.2 KiB | 2 |
 | 14 | #77 | M20 enemy/object behaviour bank 1 (21 task types, mostly moving scenery) - landed | `0x08078B68-0x0807F043` | 25.2 KiB | 2 |
@@ -1362,7 +1362,133 @@ census below is the pre-decompilation one, kept for the record.
 * **Known RAM cells touched** decimal digit buffer, [5] = sign/flag x2.
 * **Suggested batches** `0x080988F8` (53 fns), `0x08099B20` (87 fns).
 
-### M28 `0x0809BA44-0x080A158F` - enemy/object behaviour bank 9
+### M28 `0x0809BA44-0x080A158F` - enemy/object behaviour bank 9 (four-lane spawner, a six-variant enemy family, the player death sequence) - **landed (#74)**
+
+The range is decompiled and carved out of the split asm, so it now appears in
+`module-map.csv` as `c_code` rows instead of one clusterable module; the census
+below is the pre-decompilation one, kept for the record.
+
+* **Landed as** `src/enemy_9ba44.c` (`0x0809BA44-0x0809C028`, 11 fns),
+  `src/enemy_9c028.c` (`0x0809C028-0x0809C0A8`, 1), `src/enemy_9c0a8.c`
+  (`0x0809C0A8-0x0809CB90`, 19), `src/enemy_9cb90.c`
+  (`0x0809CB90-0x0809CC24`, 1), `src/enemy_9cc24.c`
+  (`0x0809CC24-0x0809D994`, 33), `src/enemy_9d994.c`
+  (`0x0809D994-0x0809DA1C`, 1), `src/enemy_9da1c.c`
+  (`0x0809DA1C-0x0809F2F4`, 55), `src/enemy_9f2f4.c`
+  (`0x0809F2F4-0x0809F37C`, 1), `src/enemy_9f37c.c`
+  (`0x0809F37C-0x0809F9DC`, 23), `src/enemy_9f9dc.c`
+  (`0x0809F9DC-0x0809FBD0`, 2), `src/enemy_9fbd0.c`
+  (`0x0809FBD0-0x080A00EC`, 11) and `src/enemy_a0274.c`
+  (`0x080A0274-0x080A1590`, 45) - **203 of 204 functions**;
+  `sub_080A00EC` (`0x080A00EC-0x080A0274`, 392 bytes) is still asm, see
+  *The one hole* below.
+* **What it turned out to be** *not* one homogeneous enemy bank. Four
+  unrelated things share the `0x08747AA4-0x087484D4` table cluster, the
+  `0x08753204-0x087538E0` `TaskGfx` blocks and the four-slot EWRAM record
+  `gUnk_02007D00[]`:
+  * **A four-lane spawner** - task type #57, `sub_0809BBD8`. `sub_0809BFAC`
+    uploads four `struct GfxHeader` blobs (`0x0827AC64`, `0x0827B8F8`,
+    `0x0827CA48`, `0x0827D808`) into `0x06010000` and the OBJ palettes at
+    `gUnk_03001570`; `sub_0809C028` picks the level row out of
+    `gUnk_08745D4C` or `gUnk_08745CFC` (`gUnk_0300244C` selects the table,
+    the index is `Task.unk73 * 4 + gUnk_03002350 - 1`) and fans its six
+    words into `sub_08063908(p[0])`, the per-hit charge
+    `gUnk_02007D00[4] = p[1]` and four 8-byte-per-entry spawn lists in
+    `Task.unk28`/`unk2C`/`unk30`/`unk34`. The per-frame hook
+    `sub_0809BC1C` tops each lane up whenever `gUnk_02007D00[lane]` drops
+    to 0: it reads the lane's next row (`q[0]` kind, `q[1]` a byte
+    parameter, `((s16 *)q)[1]`/`[2]` the position, priority from
+    `gUnk_08745CEC[q[0]]`), spawns class-3 type **58** through
+    `sub_08064F28(3, 9, 58, ...)` and stamps the lane index into the new
+    task's `Task.unk6E`. `sub_0809BF2C` then drains the hit bitmask
+    `gUnk_02007D00[5]`, charging `Task.unk78` one `gUnk_02007D00[4]` per set
+    bit and calling `sub_0800A42C` if anything was hit.
+  * **A six-variant enemy family** - task type #58, `sub_0809C404`. Its jump
+    table at `0x0809C450` turns `Task.unk74` into one of six independent
+    scripts (`sub_0809C490`, `sub_0809D13C`, `sub_0809DC7C`, `sub_0809E824`,
+    `sub_0809F61C`, `sub_0809F7E4`), each with its own `TaskGfx` block and
+    its own `<count, table>` triple handed to `sub_08002E98`:
+    `0x08747AA4` (4, `unk73`) / `0x08747AB4` (5, `unk14`) / `0x08747AC8`
+    (5, `unk15`), `0x08747ADC` (2, `unk73`) / `0x08747AE4` (6, `unk14`) /
+    `0x08747AFC` (5, `unk15`), `0x08747BCC` (3, `unk73`) / `0x08747BD8`
+    (2, `unk14`) / `0x08747BE0` (2, `unk15`). Variants 0-3 also get their own
+    OAM palette bank: `sub_0809F9DC` and `sub_0809FB10` write 8/9/10/11 into
+    the `0xF000` field of `Task.unk40` from `Task.unk74`, and when
+    `Task.unk74 == 2` and `gUnk_03004CA0[Task.unk46] == 130` they recolour
+    the companion task `gUnk_03002790[Task.unk46]` the same way.
+  * **The player damage/death-and-retry coroutine** - task type #59,
+    `sub_0809FC44`. It seeds `Task.unk70` with `sub_08065F5C() * 85 / 256`
+    (a third of the player's meter, built as `n*5` then `(w + (w << 4)) >> 8`),
+    installs `sub_080059D8`/`sub_08065438` and dispatches `Task.unk73` through
+    the one-entry table at `0x08748264`. `sub_0809FCB4` parks
+    `Task.unk48`/`unk4A`/`unk3C` in `gUnk_02006190[]` and rumbles
+    (`sub_080261D4(4)`), `sub_0809FD20` restores them, `sub_0809FE10` is the
+    eleven-arm knockback switch on `Task.unk14`, and `sub_0809FD64` tears the
+    stage down - releasing the helper task ids parked in `gUnk_02007D00[8]`
+    and `gUnk_02007D00[9]` and installing `sub_0806A344`. `sub_080A0098` and
+    `sub_080A00EC` step the three-star burst out of the 3x3 `s32` block
+    `gUnk_02006040[]` (three 16.16 x velocities, three 16.16 y velocities,
+    three x accelerations) and draw it through `sub_08001A94` with the
+    `gUnk_080D2148` record. Its state machine is the 11+11 pair at
+    `0x0874844C`/`0x08748478`, re-dispatched by `sub_080A0B10`.
+  * **Four satellites** - #129 (`sub_0809CF60`, class 2): a launched effect
+    (`sub_080061C0(224 << 10, 0xFFFFDB00)`) that cycles SE 4/7/6/5 every two
+    frames forever. The class-4 #130 (`sub_0809E284`): a carried companion
+    whose draw hook `sub_0809E2C4` re-seats it on `gUnk_03002790[Task.unk44]`
+    every frame, dispatching `Task.unk73` through `0x08747BE8` (3). #131
+    (`sub_0809F37C`) and #132 (`sub_0809DA1C`): two thrown objects with
+    gravity in `Task.unk60` (`148 << 6` and `184 << 5`), tables `0x08747C6C`
+    (5, `unk73`) and `0x08747BF4` (4, `unk73`) / `0x08747C04` (4, `unk14`) /
+    `0x08747C14` (5, `unk15`). The five words at `0x08745B1C` are M27's - its
+    third companion's state functions are `sub_0809BA44`, `sub_0809BB08`,
+    `sub_0809BB6C`, `sub_0809BB68` and `sub_0809BBD4`, the first five
+    functions of this module.
+* **Shared library** `sub_0809F90C` (x17) is "bump and yield"
+  (`sub_08063E14(); sub_08006304();`); `sub_0809F8D4` (x12) faces the player
+  (`Task.unk43 = gUnk_030023B4 <= 119 ? 1 : -1`) and yields; `sub_0809F930`
+  (x10) flips `Task.unk43` and negates the 16.16 x velocity `Task.unk54`;
+  `sub_0809F994` (x9) is the room-edge test - it reads the six `s8` box bytes
+  through `Actor.unk50` and returns 1 when `Task.unk48` is outside
+  `[q[4] + 24, 288 - q[5]]` *and* `Task.unk54` still points that way;
+  `sub_0809F818` (x4) writes the four-slot flag `gUnk_02007D00[Task.unk6E]`
+  and hangs in `while (1);` on an out-of-range slot (so the slot index is a
+  hard 0-3 invariant); `sub_0809E8B0` (x9) and `sub_080A0B10` (x15) are the
+  two `sub_08002E98` re-dispatchers.
+* **The one hole** `sub_080A00EC` (392 bytes) is the three-star burst stepper.
+  The ROM strength-reduces **four** induction variables out of its
+  `for (i = 0; i <= 2; i++)` loop - `sl` = `12 + 4i`, `r9` = `24 + 4i`,
+  `r8` = `4i` and the pointer `r6` = `&gUnk_02006040[i]` - and loads
+  `&gUnk_03002158` *inside* the loop. agbcc only ever produces three of them:
+  `agbcc -da`'s `.loop` dump shows the `mult 4 add 12` giv rejected with
+  "giv of insn 244 not worth while, 30 vs 145", where 145 is the loop's real
+  insn count, and it spends the freed register on hoisting
+  `&gUnk_03002158` into `r9` instead. Giving the `12 + 4i` offset its own
+  long-lived local (`o3 = i * 4 + 12;` at the top of the body, the accesses
+  then written as `*(s32 *)(o3 + (s32)gUnk_02006040)`) does raise the giv's
+  lifetime enough to get all four *and* stops the hoist, but then `i` and
+  `4i` swap between the low and high register banks and the body is 16 bytes
+  long. See `docs/lessons-learned.md` 3.246.
+* **Census fixes** eight rows curated in `tools/symdb.py`, so the module has
+  **204** functions, not 198. `0x080A02FC` is a `FALSE_POSITIVES` entry - it
+  is the pool-skip branch inside `sub_080A02D4`, not a function - and seven
+  `EXTRA_THUMB_ENTRIES` are real entries the `-fprologue-bugfix` prologue scan
+  could not propose because they have no `push`: `0x0809D138` (table word
+  `0x087481B8`), `0x0809E7D4` (`0x087481C0`), `0x0809E820` (`0x087481D4`),
+  `0x0809F618` (`0x087481F0`), `0x0809F7F8` (four words -
+  `0x08748214`/`0x0874822C`/`0x08748238`/`0x08748250`) and `0x080A0588`
+  (`0x08748940`), plus `0x0809FFEC`, a dead export nothing in the ROM
+  references. All eight came out of a reachability fixpoint over the module's
+  annotated listing (`docs/lessons-learned.md` 4.36).
+* **ROM data** 80 new `tools/split_config.json` `data_symbols`: the state,
+  animation and descriptor tables cluster in `0x08747AA4-0x087484D4`, the
+  level parameter rows at `0x08745CEC`/`0x08745CFC`/`0x08745D4C`, the
+  `TaskGfx` blocks at `0x08753204`, `0x08753270`, `0x08753290`, `0x08753354`,
+  `0x08753378`, `0x08753404`, `0x08753414`, `0x087534E0`, `0x08753510`,
+  `0x087535A8` and `0x087538E0`, and the graphics records outside those
+  (`0x0827AC64`, `0x0827B8F8`, `0x0827CA48`, `0x0827D808`, `0x080D2148`,
+  `0x082D8638`).
+
+### M28 census (pre-decompilation)
 
 * **Size** 22.8 KiB (`0x5b4c`), 198 functions (135 reachable only through pointer tables), mean `0x76`, largest `0x35c`, pool words 11.2% of bytes.
 * **Difficulty** 1/6 - 29 distinct RAM cells, 3 jump-table dispatches, 4 functions >= `0x200`.
