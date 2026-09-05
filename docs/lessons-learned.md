@@ -3347,6 +3347,332 @@ where there is none, that the value lives in a pinned register (3.229,
 to the index while the ROM ties it to the pointer: `q += i; v = *(u16 *)q;` is
 the spelling that ties to `q`.
 
+### 3.231 One local per straight-line block that re-reads `gUnk_03002490`, per ARM too
+3.212 said "per block"; M28 needed it per **if/else arm** as well.
+`sub_0809f9dc` has an outer `if ((gUnk_03001EA4 & 2) != 0) { t = ...; } else
+{ t = ...; }`; sharing one `struct Task *` between the two arms rotates the
+whole first arm's register assignment (`t` in r2 instead of r3, `v` the other
+way round).  Two locals - one per arm - fix it with no extra instructions,
+because the arms never live at the same time.  Same lever in `sub_0809c404`,
+`sub_0809c490` and `sub_0809c4d0`.
+
+### 3.232 A constant VARIABLE's `movs` must land after the block's pointer load
+`t = gUnk_03002490; v = 12; t->unk3C = v;` puts `movs r5, #12` AFTER
+`ldr r0, [r4, #0]`; a declaration initializer puts it before (`sub_0809c984`,
+`sub_0809ca10`).  Companion to 3.136.
+
+### 3.233 Two disjoint uses of the same constant are TWO variables
+One `s16 v` set to 12 and later to 14 lowers its global-alloc priority and
+swaps two registers; `v = 12` and `w = 14` share one hard register anyway but
+keep the priority (`sub_0809ca10`).
+
+### 3.234 A pool constant used as a call argument is materialised inside the call
+`sub_080061c0(128 << 11, k = 0x5A5A5A5A)` puts `ldr r5, =0x5A5A5A5A` after the
+first argument's `movs`/`lsls`, where a preceding `k = ...;` statement puts it
+before (`sub_0809c74c`, `sub_0809cc24`).
+
+### 3.235 `abs()` on a VARIABLE folds to ABS_EXPR; on a CALL it does not
+`abs(vx)` with a local operand gives `expand_abs`'s shape - copy, then
+`cmp #0; bge` AROUND the negation (`sub_0809da9c`).  Where the operand is a
+call, `fold` cannot build an ABS_EXPR, so the source's ternary stays a ternary,
+the call is emitted TWICE and the comparison is duplicated into each arm
+(`sub_0809c638`, `sub_0809d71c`): `(f() < 0 ? -f() : f()) <= 39`.  3.180 and
+3.206 both apply inside one module - the operand's kind decides which.
+
+### 3.236 A `u8` predicate whose ROM puts `movs r0, #0; b <epilogue>` at the fall-through is a result variable
+`u8 r; if (c) r = 0; else { ...; r = 1; } return r;` (`sub_0809d0a0`).  Every
+early-return spelling gcc inverts back into a single-exit shape that puts the
+`movs` somewhere else.
+
+### 3.237 Constants stored to a task field inside a `while (1)` body hoist themselves
+Write plain literals and let loop.c lift the ones used twice into the
+preheader; call ARGUMENTS are hard registers and never hoist.
+`sub_0809cab0` reproduces six hoisted constants that way.
+
+### 3.238 An index local assigned INSIDE the array subscript keeps the table base load first
+`gUnk_03004CA0[i = t->unk44] == 58` gives the ROM's `ldr r1, =table` before the
+`ldrsh` of the index; `i = t->unk44;` as its own statement puts the base load
+after it (`sub_0809cfe0`; companion to 3.120).
+
+### 3.239 Two DEREFS of a `s16 *` local keep it out of the task pointer's register
+`p = &g->unk46; if (*p != -1) { ... gUnk_03002790[*p] ... }` gives the ROM's
+`adds r2, r0, #0; adds r2, #70` copy; one deref through an `s32 i` lets gcc
+coalesce `p` with the task pointer and the copy disappears (`sub_0809dd08`,
+`sub_0809ddbc`).
+
+### 3.240 Three case values sharing one body are `a == X || a == Y || a == Z`
+A `switch` adds gcc's low/high range check (`cmp #1; blt` + `cmp #4; bgt`) that
+the ROM does not have (`sub_0809dd08`).
+
+### 3.241 A ROM index-scaled `adds rD, rIndex, rBase` where rD IS the index's register is integer arithmetic
+3.54 says `arr[i]` can never do that.  `q = i * 4 + (s32)tab; *(u16 *)q`
+reproduces it where `&tab[i * 2]` accumulates into the base's register instead
+(`sub_080a06f0`).  The same shape one level up: a task-table base the ROM adds
+LAST is `((struct Task *)(*q * 144 + (s32)gUnk_03002790))->unk48`, not
+`gUnk_03002790[*q].unk48` (`sub_0809e2c4`; 3.137 + 3.226), and it needs an
+`s16 *q = &t->unk44` local at the same time so the index address survives both
+statements.
+
+### 3.242 A narrow parameter type is per-file (3.189) and one module can need BOTH
+`sub_0806395c` is `u8`-taking almost everywhere (its callers pass constants, so
+the width is invisible) but `u16`-taking in M28: `sub_080a06f0` passes a `u16`
+table word and the ROM keeps the `ldrh`.  Declaring the parameter `u8` narrows
+the load to `ldrb` and shifts the rest of the function.
+
+### 3.243 Sign is a TYPE decision that shifts a whole function
+`gUnk_02006190` is `s32[]`, not `u32[]` - `gUnk_02006190[5] <= 0` is a signed
+test (`bgt`); with an unsigned type gcc folds it to `== 0` (`bne`) and the tail
+shifts (`sub_080a1400`).  `gUnk_02006040` is `s32[]` too: with `u32` the
+`abs()` macro's compare goes unsigned (`bhi`) and every `>> 16`/`>> 20` becomes
+`lsrs` instead of `asrs` (`sub_080a00ec`).  When a whole function is 90% right
+but every shift and compare is the wrong flavour, re-check the array's declared
+type before touching the source shape.
+
+### 3.244 Pin a pointer-to-global to a CALL-CLOBBERED register to force a reload on both sides of a call
+`sub_0809c028` reads `gUnk_03002490` before and after `sub_08063908`.  Written
+as two plain `gUnk_03002490` reads, cse folds the ADDRESS into one pseudo that
+global-alloc then parks in a callee-saved register (`push {r4,r5,lr}` and
+`ldr r5, =0x3002490` once); the ROM has `push {r4,lr}` and reloads the same
+pool word twice.  Writing one of them as `*(struct Task **)0x03002490` gets the
+code right but costs a SECOND pool word (a `const_int` and a `symbol_ref` never
+share a pool entry).  What works, at one pool word and no extra instruction:
+
+    register struct Task **tp asm("r0");
+    tp = &gUnk_03002490; u = *tp;      /* before the call */
+    ...
+    tp = &gUnk_03002490; t = *tp;      /* after it */
+
+r0 cannot survive the call, so agbcc must reload - and both reloads reference
+the one `symbol_ref` pool entry.  r1/r3 score 4 differing bytes, r2 scores 14:
+the register matters, so try the call-clobbered four.
+
+### 3.245 `asm("" : "+r"(x))` makes a value opaque to cse/gcse - two distinct uses
+An empty asm with a read-write register operand emits nothing but tells gcc the
+value is both used and redefined there.  M28 needed it twice in one function
+(`sub_0809cb90`):
+
+* **Against constant propagation.**  The ROM has `movs r3,#144; lsls r3,#1;
+  adds r0,r3,#0; subs r0,r0,r1` - 288 in its own pseudo, *copied* into the
+  accumulator.  `r = 288 - q[5]` folds to one `subs`; `r = 288; r -= q[5]`
+  writes 288 straight into r0.  `c = 288; asm("" : "+r"(c)); r = c;
+  asm("" : "+r"(r)); r -= d;` reproduces the ROM exactly - the first barrier
+  stops cprop, the second stops combine folding the copy into the subtract.
+* **Against gcse copy propagation.**  A later re-read of `gUnk_03002490` has to
+  be a fresh `ldr r0, =0x3002490`, but gcse had the address available in r4
+  from the reads before the call and emitted `adds r0, r4, #0`.  Laundering the
+  EARLIER pointer (`tq = &gUnk_03002490; asm("" : "+r"(tq));` and reading
+  through `*tq`) makes its value opaque, so gcse cannot reuse it.
+
+Pinning a second `register` variable to a hard register another live variable
+already owns is NOT an alternative - agbcc silently emits wrong code.
+
+### 3.246 `asm("" :: "r"(a), "r"(b))` after an add stops the destination reusing either operand
+`adds rD, rN, rM` where both operands die at that insn lets global-alloc pick
+the lowest free hard register for rD, which is almost always rN's.  When the
+ROM picks a THIRD register, the operands outlive the add in the ROM's rtl.
+Stating that costs no instructions (`sub_0809d994`, `sub_0809f2f4`):
+
+    bp = gUnk_08747B88;
+    k = t->unk3C * 2;
+    pp = (s16 *)(k + (s32)bp);
+    asm("" :: "r"(k), "r"(bp));       /* both still live -> rD != r0, r1 */
+    idx = *pp;
+
+with `register s16 *pp asm("r2")`.  Naming ONE operand moves rD one register
+(r0 -> r1); naming both moves it two.  Splitting the base into its own local is
+part of the fix: a bare `&gUnk_08747B88[t->unk3C]` with a pointer local moves
+the base's pool load AFTER the first `ldrsh`, and the ROM loads it first.
+
+### 3.247 The ROM's extra dead `movs rN, #0` means a field is read INLINE at each use, not cached
+`sub_0809f9dc` has `movs r4, #0` and `movs r5, #0` that nothing reads.  They are
+the `(clobber (scratch))` of `extendhisi2` insns that cse merged in my version
+and did not in the ROM's: caching `i = t->unk46;` in a local gives ONE `ldrsh`
+and one scratch, while writing `gUnk_03004CA0[t->unk46]` and
+`gUnk_03002790[t->unk46]` inline gives two candidates, two scratches and the
+right size.  Symmetrically, a switch operand a case arm RE-READS is a `u8 *s =
+&t->unk74` pointer local (both `sub_0809f9dc` and `sub_0809fb10` need it).
+When a function is exactly 2N bytes short and the missing bytes are dead
+`movs rN, #0`, stop looking at register allocation and un-cache a field.
+
+### 3.248 `BLOCK_CROSS_JUMP` placement is load-bearing in both directions
+In `sub_0809f9dc` a barrier inside the inner `if` is what stops agbcc merging
+the two identical `gUnk_03002790[i].unk40 = ...` blocks (12 bytes) - but the
+same barrier makes the enclosing `bne` branch to the block's own `b` instead of
+the shared exit, a 1-byte residue.  Once the two arms had their own
+`struct Task *` locals (3.231) the cross-jump stopped happening on its own and
+the barrier could be deleted.  Always retry with the barrier REMOVED after a
+structural fix lands.
+
+### 3.249 `agbcc -da`'s `.loop` dump names the giv threshold: it is the loop's insn count
+`Insn 244: giv reg 129 src reg 23 benefit 4 lifetime 1 replaceable mult 4
+add 12` followed by `giv of insn 244 not worth while, 30 vs 145.` - and three
+lines above, `Loop from 13 to 391: 145 real insns.`  So a candidate induction
+variable is strength-reduced only when `benefit * threshold * lifetime` exceeds
+the number of real insns in the loop, and in a ~140-insn loop a `lifetime 1`
+address giv never makes it.  Two candidates for the same `(mult, add)` pair
+COMBINE and pass together, which is why `sub_080a00ec`'s `[i+6]` (computed once
+per arm of an if/else) is reduced and its `[i+3]` (cse'd to one address) is not.
+The lever is lifetime: hoisting the offset into its own long-lived local at the
+top of the loop body (`o3 = i * 4 + 12;`, the accesses then
+`*(s32 *)(o3 + (s32)gUnk_02006040)`) gets the fourth giv AND stops loop.c
+spending the freed register on hoisting `&gUnk_03002158` out of the loop.  The
+lifetime lever alone is not enough, though: it took five more findings to get
+`sub_080A00EC` from 344 differing bytes to **4** (the whole function is the
+right size and byte-identical except for one register, `movs r3, #4` where the
+ROM has `movs r0, #4`, used by the three `add rHigh, rLow` giv increments).
+Those five are 3.251-3.255 below; the residue that survives them is a
+`regs_used_so_far` tie inside `global_alloc`'s `find_reg` (it prefers a hard
+register no earlier allocno has taken, and in our build r0/r1/r2 are all taken
+by then), which no source shape, pin, declaration-order permutation or
+statement reordering moved - roughly 1,400 compilations of systematic sweeps
+and two 250-step randomised hill-climbs.
+
+### 3.251 A ROM `(base + K) + index` where you emit `(index + base)` with K in the ldrsh's index register
+`gUnk_08748268[r + 16]` compiles to `adds r0, r2, #0; adds r0, #16; lsls r0, #1;
+adds r0, r0, r1` - the `+16` inside the scaling.  The ROM shares the `r * 2`
+that the two `if` arms already computed and adds 32 to the BASE:
+`adds r0, r1, #0; adds r0, #32; adds r0, r2, r0`.  Spelling it
+`*(s16 *)(r * 2 + ((s32)tb + 32))` folds 32 into the `ldrsh` index register
+instead; what reproduces the ROM is a base LOCAL assigned in BOTH arms
+(`tb = gUnk_08748268;` inside each) plus `tb2 = (s32)tb + 32` - the local makes
+`+32` a runtime add on a live register, and the two arm assignments are what
+cse leaves available in the shared tail.  Worth 2 bytes and it unblocked
+everything downstream.
+
+### 3.252 A constant that is a source VARIABLE is a global-alloc pseudo; inline it and it becomes a RELOAD
+The two arms of `if (x > 0) g[i+6] += A; else g[i+6] += B;` only cross-jump
+their `adds`/`str` tail when both arms put the addend in the same place, which
+tempts you to hoist it into `d`.  Do not: with `d` a variable, agbcc allocates
+it a register in `global_alloc` and reload's rotation never advances over it,
+so the NEXT scratch in the other arm comes out one register too low
+(`mov r2, r9` where the ROM has `mov r3, r9`).  Writing the constant inline in
+each arm (`*q6 += 0xFFFFA000;` / `*q6 += 192 << 7;`) makes it a reload, the
+rotation advances, and the arm's scratch lands where the ROM has it.
+
+### 3.253 `asm("" :: "r"(i))` keeps `check_dbra_loop` from reversing the loop
+Once every use of the counter has been strength-reduced into a giv, `i`'s only
+remaining reference is the exit test and loop.c turns it into a down-counter
+(`movs r1, #1; negs r1, r1; add r9, r1; mov r3, r9; cmp r3, #0; blt`).  One
+empty asm that merely *reads* `i` inside the body restores the ROM's
+`adds r7, #1; cmp r7, #2; bgt`, costs no instructions, and also moves `i` from
+a high register back to a low one (3.215 is the same pass from the other side).
+
+### 3.254 A store to a global whose address register the ROM picks is a pinned `T *` local
+`gUnk_03001F2C = x;` leaves the address in whatever register reload hands out
+(r0 for us, r5 in the ROM).  There is nothing to pin - until you write the
+store through a pointer: `register s32 *px asm("r5"); px = &gUnk_03001F2C;
+*px = x;`.  Reusing the SAME `px` for a second global store a few lines later
+costs nothing and fixes both.  Worth 4 bytes in `sub_080A00EC`.  **Caveat
+(3.258)**: the pin gets the register right but REMOVES the address reload, so
+every later reload's rotation phase shifts - if the residue then moves to a
+scratch register downstream, the ROM's store was an address reload from an
+UNALLOCATED pseudo, and the un-pinned hoisted-pointer shape in 3.258 is the
+one that matches both.
+
+### 3.257 decomp-permuter's scorer is unusable on this target: verify the base score before trusting a run
+Set up for `sub_080A00EC` (a function 3 bytes from matching) the permuter
+reports `base score = 25990`.  The scorer diffs objdump text and its ARM
+support does not normalise what MIPS gets for free, so a three-byte residue and
+a wholesale rewrite land in the same range and there is no gradient to descend.
+Two practical notes if you try it anyway: `base.c` must be fully
+self-contained, and `cpp -P -I include` drags in the HOST `stddef.h`/`stdint.h`
+whose `__attribute__` lines agbcc cannot parse - preprocess with
+`-nostdinc -I <stub dir> -I include` against two-line stubs instead.  Emitting
+the target's literal pool as `.word gUnk_...` rather than raw values (so both
+sides carry the same relocations) moves the score by 700 out of 26000, which
+tells you how little of it is signal.  Lesson 4.35 already said the permuter
+never moves a register permutation; this adds that on ARM it cannot even score
+one.
+
+### 3.256 reload's scratch register is a round-robin over a PER-INSN list, and `agbcc/gcc/reload1.c` gives you both halves of it
+When the only residue is which register a `movs rN, #K` / `mov rN, rHigh`
+scratch lands in, stop guessing and read `allocate_reload_reg` and
+`order_regs_for_reload`:
+
+* `order_regs_for_reload` rebuilds `potential_reload_regs` **for every insn**:
+  first the call-clobbered registers with no pseudo live at that insn (ascending
+  regno), then the callee-saved ones with none, then the rest by increasing use
+  count.  Any hard register live across the insn is excluded outright.
+* `allocate_reload_reg` starts at the file-static `last_spill_reg` - the INDEX
+  the previous reload chose, carried across insns - increments, and wraps.
+
+So one reload's register choice sets the phase for the next, and making one
+register busy at an earlier insn shifts every later scratch.  That is how
+M28's `sub_080A00EC` epilogue was moved from `movs r3, #4` to the ROM's
+`movs r0, #4`: keeping any value alive in r2 across the `gUnk_03002158[2]`
+read (`asm("" :: "r"(sh));` after the statement, no instructions emitted)
+pushes that read's own scratch to r5, which lands on the last index and makes
+the next reload wrap to r0.  The catch in this particular function is that the
+ROM has *both* r2 at the earlier read and r0 in the epilogue, which the phase
+rule makes mutually exclusive for every source shape tried - so the residue is
+3 bytes (one instruction) and not zero.  The tool worth keeping is the pairing:
+a sweep script that reports the *score plus the register in question* per
+variant, so you can see the phase move even when the byte count does not.
+**Superseded by 3.258**: the exclusivity was real but self-inflicted - it holds
+only while the two global stores' addresses are allocator-chosen pseudos.  Turn
+them back into address reloads and both registers land where the ROM has them.
+
+### 3.258 Not every `ldr rN, =sym` is the same insn: pseudo vs address reload decides the reload phase, and 30 printf lines in reload1.c settle it
+What finally closed `sub_080A00EC` (392 bytes, the last function of M28) after
+~2,000 blind compilations failed.  Three mechanisms, all invisible in the bytes:
+
+* **A store's `ldr rN, =gUnk_...` can be two different things.**  (a) A
+  *pseudo* holding the address - expand always forces an illegitimate symbol
+  address into one - which local/global alloc assigns (r0 for us, because the
+  store's 2-insn span had r0 free) and which does NOT touch reload's rotation.
+  (b) An *address reload*, when that pseudo reaches reload with **no hard
+  register**: reload substitutes its `REG_EQUIV (symbol_ref)` note, the mem's
+  address becomes illegitimate, and `find_reloads_address` materialises the
+  `ldr` via `allocate_reload_reg` - WHICH ADVANCES `last_spill_reg`.  The ROM's
+  two stores are (b); every pinned-px (3.254) or plain-store shape we swept was
+  (a), and the two missing rotation advances are why the epilogue constant kept
+  landing on `movs r3, #4` instead of the ROM's `movs r0, #4`.
+* **The C shape that produces (b) with zero extra bytes**: hoist the address
+  into a plain (un-pinned) pointer local whose range crosses the loop's calls -
+  `s32 *pa = &gUnk_03001F2C; s32 *pb = &gUnk_03002448;` before the `for`, then
+  `*pa = x; ... *pb = y;` inside.  Multi-block kills local_alloc, the
+  call-crossing range and 2-3 refs kill its global_alloc priority, the pseudo
+  gets nothing, and reload rematerialises the symbol at each use (deleting the
+  init insn via `reg_equiv_init`).  Bytes: identical to the ROM, including both
+  `ldr r5, =...` picks and the epilogue's `movs r0, #4`, because the rotation
+  now runs r5(store) -> r5(uy idx) -> r2(cam idx) -> r5(store) -> wrap -> r0.
+* **Which insns advance the rotation** (the part 3.256 could not see):
+  matching-constraint input reloads that reuse the insn's own output register
+  (`mov r0, ip; adds r0, #66; ldrb r0, [r0]` - `find_dummy_reload`, reload.c
+  ~1285) do NOT advance; `extendhisi2` index scratches (`movs rN, #imm` before
+  `ldrsh`), constant materialisations for high-reg adds, and address reloads DO.
+* **The instrument beats the sweep.**  A ~30-line patch to the pinned agbcc
+  clone - `fprintf` at `allocate_reload_reg`'s success (insn uid, reg, index,
+  prev `last_spill_reg`), at both inheritance sites in `choose_reload_regs`, at
+  `find_dummy_reload`'s hit, plus a FINAL per-insn dump - built with
+  `make -C gcc normal` in the repo Docker image and gated on `getenv("RRTRACE")`
+  (same binary, same codegen), turned the phase from conjecture into a printed
+  trace.  One hour of reading traces found what two 250-step hill-climbs and
+  fourteen sweep campaigns could not: the divergence was two ALLOC events that
+  existed in the ROM's compile and not in ours.  When a register-only residue
+  survives two informed shape attempts AND the `-da` dumps, instrument the
+  compiler - it is the same escalation 3.75/4.35 recommend, one level deeper.
+
+### 3.255 fold hoists a constant addend out of `A + (B + K)`; a temp for A pins it back
+`y = t->unk4A + ((o >> 16) + 16) - cam[2]` comes out as `adds r1, #16;
+asrs r2, r2, #16; adds r1, r1, r2` - fold rewrote it as `(A + 16) + B`.  No
+parenthesisation, operand order or `K`-side temp changes that.  What does is a
+temp for the LEFT operand plus a separate `+=` statement for the constant:
+`uy = t->unk4A; sh = o >> 16; sh += 16; y = uy + sh - cam[2];` gives the ROM's
+`ldrsh r1, ...; asrs r2, r2, #16; adds r2, #16; adds r1, r1, r2`.  The `uy`
+temp is the part that matters - without it gcc sinks the shift above the
+preceding store.
+
+### 3.250 Read the whole module's shape before believing the module name
+The census called M28 "enemy/object behaviour bank 9"; three of its seven ROM
+task types are a four-lane actor spawner, a six-variant enemy family and the
+player's damage/death coroutine, sharing nothing but a table cluster and one
+EWRAM record.  `sub_0809f818`'s `while (1);` default arm is the giveaway that
+`Task.unk6E` is a hard 0-3 slot index, which is what tied the spawner to the
+palette setters.  Spending twenty minutes on the ROM task-type table
+(`0x0872FF30`) and a pointer-run scan of `0x08740000-0x08760000` before writing
+any C would have named the parts sooner.
+
 ### 4.39 A census entry the PREVIOUS function's branch walk reaches is part of that function
 `bl` edges are not evidence to the contrary: a Thumb `b.n` only reaches
 +/-2 KiB, so agbcc spells a long jump inside ONE function as `bl` too.  M19's

@@ -592,6 +592,46 @@ child issues of #35 are created from it. Findings that belong in this document:
   blocks: `0x08753090`, `0x08753180`, `0x087531C4`, `0x087531DC` and
   `0x0874CB7C`; the 16-byte graphics records the per-frame bodies re-upload
   through `sub_080663f4` are `0x08274840` and `0x082797C8`.
+- **M28 (`0x0809BA44-0x080A158F`) is NOT one behaviour bank.** Decompiled in
+  #74 into thirteen `src/enemy_9*.c` / `src/enemy_a*.c` files (all 204
+  functions, no asm left in the range). Four unrelated things share its
+  table cluster `0x08747AA4-0x087484D4`, the `TaskGfx` blocks
+  `0x08753204`/`0x08753270`/`0x08753290`/`0x08753354`/`0x08753378`/`0x08753404`/
+  `0x08753414`/`0x087534E0`/`0x08753510`/`0x087535A8`/`0x087538E0` and the
+  EWRAM record `gUnk_02007D00[]`:
+  * **Task type #57 (`sub_0809BBD8`) is a four-lane actor spawner.** Its level
+    parameters come from two parallel `u32 *[]` tables, `gUnk_08745CFC` and
+    `gUnk_08745D4C`, selected by `gUnk_0300244C` and indexed by
+    `Task.unk73 * 4 + gUnk_03002350 - 1` (so four difficulty rows per stage);
+    each row is six words - a `sub_08063908` argument, the per-hit charge, and
+    four pointers to 8-byte-per-entry spawn lists. `gUnk_08745CEC` is a small
+    `u32[]` of sprite priorities indexed by the spawn row's kind byte.
+    `gUnk_02007D00[0..3]` are the four lane-occupancy flags, `[4]` the charge
+    and `[5]` a hit bitmask; `[8]` and `[9]` hold helper task ids the death
+    path releases.
+  * **Task type #58 (`sub_0809C404`) is a six-variant enemy family** whose
+    jump table at `0x0809C450` selects the script from `Task.unk74`, and for
+    variants 0-3 the palette setters `sub_0809F9DC`/`sub_0809FB10` write OAM
+    palette bank 8/9/10/11 into the `0xF000` field of `Task.unk40`. When
+    `Task.unk74 == 2` and `gUnk_03004CA0[Task.unk46] == 130` they recolour the
+    companion task `gUnk_03002790[Task.unk46]` the same way - so
+    **`Task.unk40`'s top nibble is an OAM palette index and `gUnk_03004CA0[]`
+    is a per-task type array** (it is read as `vu16`).
+  * **Task type #59 (`sub_0809FC44`) is the player's damage/death-and-retry
+    coroutine.** `gUnk_02006190[]` is its `s32[]` save block (`[0]`/`[1]` the
+    16.16-truncated position, `[2]` the animation frame, `[3]`-`[5]` the retry
+    parameters, `[7]` a busy flag) and `gUnk_02006040[]` is a 3x3 `s32` block -
+    three 16.16 x velocities, three 16.16 y velocities, three x accelerations -
+    that `sub_080A0098`/`sub_080A00EC` step for the three-star burst, drawn
+    through `sub_08001A94` with the `gUnk_080D2148` record. It ends by
+    installing `sub_0806A344` (M18).
+  * **Four satellites**, task types #129/#130/#131/#132, with tables
+    `0x08747BE8`, `0x08747BF4`/`0x08747C04`/`0x08747C14` and `0x08747C6C`.
+  `sub_0809F818` writes `gUnk_02007D00[Task.unk6E]` and hangs in `while (1);`
+  on any other index, which pins `Task.unk6E` to a 0-3 lane index. The graphics
+  the spawner uploads are four `struct GfxHeader` blobs at `0x0827AC64`,
+  `0x0827B8F8`, `0x0827CA48` and `0x0827D808`, landed at `0x06010000` and the
+  OBJ palette shadow `gUnk_03001570`.
 - **M26 (`0x08093F64-0x080988F7`) is four three-table scripts, two companions
   and a room-edge wanderer.** Decompiled in #75 into `src/enemy_93f64.c`,
   `src/enemy_957bc.c` and `src/enemy_974c8.c`. Every script is the M22/M25
