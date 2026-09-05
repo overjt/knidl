@@ -3564,6 +3564,21 @@ store through a pointer: `register s32 *px asm("r5"); px = &gUnk_03001F2C;
 *px = x;`.  Reusing the SAME `px` for a second global store a few lines later
 costs nothing and fixes both.  Worth 4 bytes in `sub_080A00EC`.
 
+### 3.257 decomp-permuter's scorer is unusable on this target: verify the base score before trusting a run
+Set up for `sub_080A00EC` (a function 3 bytes from matching) the permuter
+reports `base score = 25990`.  The scorer diffs objdump text and its ARM
+support does not normalise what MIPS gets for free, so a three-byte residue and
+a wholesale rewrite land in the same range and there is no gradient to descend.
+Two practical notes if you try it anyway: `base.c` must be fully
+self-contained, and `cpp -P -I include` drags in the HOST `stddef.h`/`stdint.h`
+whose `__attribute__` lines agbcc cannot parse - preprocess with
+`-nostdinc -I <stub dir> -I include` against two-line stubs instead.  Emitting
+the target's literal pool as `.word gUnk_...` rather than raw values (so both
+sides carry the same relocations) moves the score by 700 out of 26000, which
+tells you how little of it is signal.  Lesson 4.35 already said the permuter
+never moves a register permutation; this adds that on ARM it cannot even score
+one.
+
 ### 3.256 reload's scratch register is a round-robin over a PER-INSN list, and `agbcc/gcc/reload1.c` gives you both halves of it
 When the only residue is which register a `movs rN, #K` / `mov rN, rHigh`
 scratch lands in, stop guessing and read `allocate_reload_reg` and
