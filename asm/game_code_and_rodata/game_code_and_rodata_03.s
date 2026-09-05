@@ -14559,7 +14559,7 @@ loc_0803dd5a:
 	.word	gUnk_03002490
 	.word	0xFFFFF113
 	.word	0xFFFFEE53
-	.word	0x030023B0
+	.word	gUnk_030023B0
 	.word	0x080DCA28
 	.global	loc_0803dd8c
 loc_0803dd8c:
@@ -14767,7 +14767,7 @@ loc_0803dee0:
 	.word	gUnk_03002348
 	.word	gUnk_030023E4
 	.word	gUnk_03001F30
-	.word	0x030023B0
+	.word	gUnk_030023B0
 	.word	gUnk_030023AC
 	.global	loc_0803df1c
 loc_0803df1c:

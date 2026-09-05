@@ -5867,7 +5867,7 @@ loc_0800a29c:
 	b.n	loc_0800a32e	@ 0x0800A32E
 	.global	loc_0800a2d4
 loc_0800a2d4:
-	.word	0x030023B0
+	.word	gUnk_030023B0
 	ldr	r3, [pc, #416]	@ 0x0800A47C
 	.global	loc_0800a2da
 loc_0800a2da:
@@ -5992,7 +5992,7 @@ loc_0800a3a4:
 	movs	r0, r0
 	.word	0x02005590
 	.word	gCurTaskIdx
-	.word	0x030023B0
+	.word	gUnk_030023B0
 	.word	0x02004B68
 	.word	0x02007D30
 	.word	0x02007FBC
@@ -8285,7 +8285,7 @@ sub_0800b44c:
 	.word	gUnk_030023AC
 	.word	gUnk_03001F30
 	.word	0x0200EC58
-	.word	0x030023B0
+	.word	gUnk_030023B0
 	.word	0x0200EC50
 	.thumb_func
 	.global	sub_0800b4a8

@@ -22899,7 +22899,7 @@ sub_080cd330:
 	.word	0x02000028
 	.word	gUnk_03002360
 	.word	0x03002464
-	.word	0x030023B0
+	.word	gUnk_030023B0
 	.global	loc_080cd3cc
 loc_080cd3cc:
 	ldr	r0, [pc, #180]	@ 0x080CD484
@@ -22990,7 +22990,7 @@ loc_080cd422:
 	ldr	r2, [pc, #60]	@ 0x080CD4BC
 	bl	sub_080008e8	@ 0x080008E8
 	b.n	loc_080cd4ca	@ 0x080CD4CA
-	.word	0x030023B0
+	.word	gUnk_030023B0
 	.word	0x0201C1B0
 	.word	0x087583CC
 	.word	0x0875841E

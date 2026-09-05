@@ -24477,7 +24477,7 @@ loc_080326e6:
 	.word	gUnk_03002170
 	.word	gUnk_02007D48
 	.word	gUnk_02005588
-	.word	0x030023B0
+	.word	gUnk_030023B0
 	.word	gUnk_030023D8
 	.global	loc_08032700
 loc_08032700:

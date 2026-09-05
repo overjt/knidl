@@ -2773,7 +2773,7 @@ loc_08048096:
 	.word	gUnk_03002490
 	.word	gUnk_03001F34
 	.word	0x0000FFEF
-	.word	0x030023B0
+	.word	gUnk_030023B0
 	.word	0x0873B534
 	.global	loc_08048168
 loc_08048168:
@@ -4937,7 +4937,7 @@ loc_08049408:
 	.word	0x00000DDB
 	.word	gUnk_03002490
 	.word	0x00000DE5
-	.word	0x030023B0
+	.word	gUnk_030023B0
 	.word	0x0873B534
 	.word	gUnk_03000FB8
 	.word	0x0000F85F
