@@ -1454,20 +1454,23 @@ below is the pre-decompilation one, kept for the record.
   and hangs in `while (1);` on an out-of-range slot (so the slot index is a
   hard 0-3 invariant); `sub_0809E8B0` (x9) and `sub_080A0B10` (x15) are the
   two `sub_08002E98` re-dispatchers.
-* **The one hole** `sub_080A00EC` (392 bytes) is the three-star burst stepper.
-  The ROM strength-reduces **four** induction variables out of its
-  `for (i = 0; i <= 2; i++)` loop - `sl` = `12 + 4i`, `r9` = `24 + 4i`,
-  `r8` = `4i` and the pointer `r6` = `&gUnk_02006040[i]` - and loads
-  `&gUnk_03002158` *inside* the loop. agbcc only ever produces three of them:
-  `agbcc -da`'s `.loop` dump shows the `mult 4 add 12` giv rejected with
-  "giv of insn 244 not worth while, 30 vs 145", where 145 is the loop's real
-  insn count, and it spends the freed register on hoisting
-  `&gUnk_03002158` into `r9` instead. Giving the `12 + 4i` offset its own
-  long-lived local (`o3 = i * 4 + 12;` at the top of the body, the accesses
-  then written as `*(s32 *)(o3 + (s32)gUnk_02006040)`) does raise the giv's
-  lifetime enough to get all four *and* stops the hoist, but then `i` and
-  `4i` swap between the low and high register banks and the body is 16 bytes
-  long. See `docs/lessons-learned.md` 3.246.
+* **The one hole** `sub_080A00EC` (392 bytes) is the three-star burst stepper,
+  and it is **4 bytes** from matching: the parked candidate
+  (`pending/m28/wip/sub_080a00ec.c`, gitignored) is the right size and
+  byte-identical everywhere except one register - `movs r3, #4` where the ROM
+  has `movs r0, #4`, which the three `add rHigh, rLow` giv increments in the
+  loop epilogue then inherit.  Getting there needed the whole of
+  `docs/lessons-learned.md` 3.249-3.255: the ROM strength-reduces **three**
+  offset induction variables out of its `for (i = 0; i <= 2; i++)` loop
+  (`sl` = `12 + 4i`, `r9` = `24 + 4i`, `r8` = `4i`) plus the pointer biv
+  `r6` = `&gUnk_02006040[i]`, and loads `&gUnk_03002158` *inside* the loop;
+  agbcc drops the `12 + 4i` giv (`agbcc -da`'s `.loop` dump: "giv of insn 244
+  not worth while, 30 vs 145", where 145 is the loop's real insn count) unless
+  that offset is given its own long-lived local at the top of the body.  The
+  surviving 4 bytes are a `regs_used_so_far` tie inside `global_alloc`'s
+  `find_reg`, which no source shape, register pin, declaration-order
+  permutation or statement reordering reached across ~1,400 compilations of
+  systematic sweeps and two 250-step randomised hill-climbs.
 * **Census fixes** eight rows curated in `tools/symdb.py`, so the module has
   **204** functions, not 198. `0x080A02FC` is a `FALSE_POSITIVES` entry - it
   is the pool-skip branch inside `sub_080A02D4`, not a function - and seven

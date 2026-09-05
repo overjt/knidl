@@ -3516,15 +3516,63 @@ The lever is lifetime: hoisting the offset into its own long-lived local at the
 top of the loop body (`o3 = i * 4 + 12;`, the accesses then
 `*(s32 *)(o3 + (s32)gUnk_02006040)`) gets the fourth giv AND stops loop.c
 spending the freed register on hoisting `&gUnk_03002158` out of the loop.  The
-two do not co-exist for free, though: every shape that gets all four givs puts
-the loop counter `i` in a HIGH register (so the increment costs an extra
-`movs rN, #1` and the test an extra `mov`), and every shape that gets `i` low
-loses a giv to the hoist.  A 256-point systematic sweep over the seven
-independent axes (`[i]`/`[i+6]` as subscript vs integer-offset vs pointer, the
-`+=` arms merged or not, the shared `&g[i]` pointer, the stored-value reuse,
-the camera local, and pinning `i`) got to the right size with 263 differing
-bytes and no closer, so do NOT repeat it: the remaining freedom is in
-global-alloc's priority order, not in any source shape.
+lifetime lever alone is not enough, though: it took five more findings to get
+`sub_080A00EC` from 344 differing bytes to **4** (the whole function is the
+right size and byte-identical except for one register, `movs r3, #4` where the
+ROM has `movs r0, #4`, used by the three `add rHigh, rLow` giv increments).
+Those five are 3.251-3.255 below; the residue that survives them is a
+`regs_used_so_far` tie inside `global_alloc`'s `find_reg` (it prefers a hard
+register no earlier allocno has taken, and in our build r0/r1/r2 are all taken
+by then), which no source shape, pin, declaration-order permutation or
+statement reordering moved - roughly 1,400 compilations of systematic sweeps
+and two 250-step randomised hill-climbs.
+
+### 3.251 A ROM `(base + K) + index` where you emit `(index + base)` with K in the ldrsh's index register
+`gUnk_08748268[r + 16]` compiles to `adds r0, r2, #0; adds r0, #16; lsls r0, #1;
+adds r0, r0, r1` - the `+16` inside the scaling.  The ROM shares the `r * 2`
+that the two `if` arms already computed and adds 32 to the BASE:
+`adds r0, r1, #0; adds r0, #32; adds r0, r2, r0`.  Spelling it
+`*(s16 *)(r * 2 + ((s32)tb + 32))` folds 32 into the `ldrsh` index register
+instead; what reproduces the ROM is a base LOCAL assigned in BOTH arms
+(`tb = gUnk_08748268;` inside each) plus `tb2 = (s32)tb + 32` - the local makes
+`+32` a runtime add on a live register, and the two arm assignments are what
+cse leaves available in the shared tail.  Worth 2 bytes and it unblocked
+everything downstream.
+
+### 3.252 A constant that is a source VARIABLE is a global-alloc pseudo; inline it and it becomes a RELOAD
+The two arms of `if (x > 0) g[i+6] += A; else g[i+6] += B;` only cross-jump
+their `adds`/`str` tail when both arms put the addend in the same place, which
+tempts you to hoist it into `d`.  Do not: with `d` a variable, agbcc allocates
+it a register in `global_alloc` and reload's rotation never advances over it,
+so the NEXT scratch in the other arm comes out one register too low
+(`mov r2, r9` where the ROM has `mov r3, r9`).  Writing the constant inline in
+each arm (`*q6 += 0xFFFFA000;` / `*q6 += 192 << 7;`) makes it a reload, the
+rotation advances, and the arm's scratch lands where the ROM has it.
+
+### 3.253 `asm("" :: "r"(i))` keeps `check_dbra_loop` from reversing the loop
+Once every use of the counter has been strength-reduced into a giv, `i`'s only
+remaining reference is the exit test and loop.c turns it into a down-counter
+(`movs r1, #1; negs r1, r1; add r9, r1; mov r3, r9; cmp r3, #0; blt`).  One
+empty asm that merely *reads* `i` inside the body restores the ROM's
+`adds r7, #1; cmp r7, #2; bgt`, costs no instructions, and also moves `i` from
+a high register back to a low one (3.215 is the same pass from the other side).
+
+### 3.254 A store to a global whose address register the ROM picks is a pinned `T *` local
+`gUnk_03001F2C = x;` leaves the address in whatever register reload hands out
+(r0 for us, r5 in the ROM).  There is nothing to pin - until you write the
+store through a pointer: `register s32 *px asm("r5"); px = &gUnk_03001F2C;
+*px = x;`.  Reusing the SAME `px` for a second global store a few lines later
+costs nothing and fixes both.  Worth 4 bytes in `sub_080A00EC`.
+
+### 3.255 fold hoists a constant addend out of `A + (B + K)`; a temp for A pins it back
+`y = t->unk4A + ((o >> 16) + 16) - cam[2]` comes out as `adds r1, #16;
+asrs r2, r2, #16; adds r1, r1, r2` - fold rewrote it as `(A + 16) + B`.  No
+parenthesisation, operand order or `K`-side temp changes that.  What does is a
+temp for the LEFT operand plus a separate `+=` statement for the constant:
+`uy = t->unk4A; sh = o >> 16; sh += 16; y = uy + sh - cam[2];` gives the ROM's
+`ldrsh r1, ...; asrs r2, r2, #16; adds r2, #16; adds r1, r1, r2`.  The `uy`
+temp is the part that matters - without it gcc sinks the shift above the
+preceding store.
 
 ### 3.250 Read the whole module's shape before believing the module name
 The census called M28 "enemy/object behaviour bank 9"; three of its seven ROM

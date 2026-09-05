@@ -71,9 +71,9 @@ Matching decompilation of Kirby: The Amazing Mirror's predecessor, **Kirby: Nigh
   `src/enemy_9f2f4.c`, `src/enemy_9f37c.c`, `src/enemy_9f9dc.c`,
   `src/enemy_9fbd0.c` and `src/enemy_a0274.c` (203 of 204 functions, 22980 of
   23372 bytes; `sub_080A00EC`, the 392-byte three-star burst stepper, is still
-  asm - agbcc reduces three of the ROM's four induction variables and spends
-  the freed register on hoisting `&gUnk_03002158` out of the loop, see
-  `docs/lessons-learned.md` 3.249).  Despite the census name this is NOT one
+  asm - the parked candidate is the right size and **4 bytes** from matching,
+  one register in the loop epilogue that no source shape reaches, see
+  `docs/lessons-learned.md` 3.249-3.255).  Despite the census name this is NOT one
   behaviour bank: seven ROM task types share the range, and three of them are a
   four-lane actor spawner (#57), a six-variant enemy family whose variant picks
   both the script and the OAM palette bank (#58) and the player's damage/death
