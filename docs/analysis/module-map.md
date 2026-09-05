@@ -1378,10 +1378,11 @@ below is the pre-decompilation one, kept for the record.
   (`0x0809F2F4-0x0809F37C`, 1), `src/enemy_9f37c.c`
   (`0x0809F37C-0x0809F9DC`, 23), `src/enemy_9f9dc.c`
   (`0x0809F9DC-0x0809FBD0`, 2), `src/enemy_9fbd0.c`
-  (`0x0809FBD0-0x080A00EC`, 11) and `src/enemy_a0274.c`
-  (`0x080A0274-0x080A1590`, 45) - **203 of 204 functions**;
-  `sub_080A00EC` (`0x080A00EC-0x080A0274`, 392 bytes) is still asm, see
-  *The one hole* below.
+  (`0x0809FBD0-0x080A00EC`, 11), `src/enemy_a00ec.c`
+  (`0x080A00EC-0x080A0274`, 1) and `src/enemy_a0274.c`
+  (`0x080A0274-0x080A1590`, 45) - **all 204 functions, no asm left in the
+  range**.  `sub_080A00EC` was the last to fall; see *The last function*
+  below for what it took.
 * **What it turned out to be** *not* one homogeneous enemy bank. Four
   unrelated things share the `0x08747AA4-0x087484D4` table cluster, the
   `0x08753204-0x087538E0` `TaskGfx` blocks and the four-slot EWRAM record
@@ -1454,25 +1455,25 @@ below is the pre-decompilation one, kept for the record.
   and hangs in `while (1);` on an out-of-range slot (so the slot index is a
   hard 0-3 invariant); `sub_0809E8B0` (x9) and `sub_080A0B10` (x15) are the
   two `sub_08002E98` re-dispatchers.
-* **The one hole** `sub_080A00EC` (392 bytes) is the three-star burst stepper,
-  and it is **3 bytes** from matching: the parked candidate
-  (`pending/m28/wip/sub_080a00ec.c`, gitignored) is the right size and
-  byte-identical except for one instruction - `movs r5, #4` where the ROM has
-  `movs r2, #4` (the `gUnk_03002158[2]` load's index scratch).  Getting there needed the whole of
-  `docs/lessons-learned.md` 3.249-3.255: the ROM strength-reduces **three**
-  offset induction variables out of its `for (i = 0; i <= 2; i++)` loop
-  (`sl` = `12 + 4i`, `r9` = `24 + 4i`, `r8` = `4i`) plus the pointer biv
-  `r6` = `&gUnk_02006040[i]`, and loads `&gUnk_03002158` *inside* the loop;
-  agbcc drops the `12 + 4i` giv (`agbcc -da`'s `.loop` dump: "giv of insn 244
-  not worth while, 30 vs 145", where 145 is the loop's real insn count) unless
-  that offset is given its own long-lived local at the top of the body.  The
-  surviving 3 bytes are a reload PHASE conflict, not a source-shape problem:
-  reload picks scratch registers by round-robin over a per-insn list starting
-  at the previous reload's index (`docs/lessons-learned.md` 3.256), and the ROM
-  wants `movs r2, #4` at that read *and* `movs r0, #4` in the epilogue, which
-  the phase rule makes mutually exclusive for every shape tried across ~2,000
-  compilations of systematic sweeps, two 250-step randomised hill-climbs and a
-  declaration-order permutation sweep.
+* **The last function** `sub_080A00EC` (392 bytes, `src/enemy_a00ec.c`) is the
+  three-star burst stepper and cost more than the other 203 together.  Getting
+  to size-exact needed `docs/lessons-learned.md` 3.249-3.255: the ROM
+  strength-reduces **three** offset induction variables out of its
+  `for (i = 0; i <= 2; i++)` loop (`sl` = `12 + 4i`, `r9` = `24 + 4i`,
+  `r8` = `4i`) plus the pointer biv `r6` = `&gUnk_02006040[i]`, and loads
+  `&gUnk_03002158` *inside* the loop; agbcc drops the `12 + 4i` giv
+  (`agbcc -da`'s `.loop` dump: "giv of insn 244 not worth while, 30 vs 145",
+  where 145 is the loop's real insn count) unless that offset is given its own
+  long-lived local at the top of the body.  The last 3-4 bytes were a reload
+  PHASE problem (3.256) that ~2,000 compilations of sweeps and two randomised
+  hill-climbs never moved, because the deadlock was self-inflicted: the two
+  global stores must be spelled through un-pinned, before-the-loop pointer
+  locals (`s32 *pa = &gUnk_03001F2C;` ... `*pa = x;`) so their address pseudos
+  LOSE register allocation and come back as address reloads, whose two rotation
+  advances are what parks the epilogue constant in the ROM's `movs r0, #4`
+  (lesson 3.258).  Found in an hour with an RRTRACE-instrumented build of the
+  pinned agbcc source printing every `allocate_reload_reg` decision - the
+  instrument, not more sweeping, is the escalation that works.
 * **Census fixes** eight rows curated in `tools/symdb.py`, so the module has
   **204** functions, not 198. `0x080A02FC` is a `FALSE_POSITIVES` entry - it
   is the pool-skip branch inside `sub_080A02D4`, not a function - and seven

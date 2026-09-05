@@ -13175,7 +13175,7 @@ sub_0803d3d4:
 	mvns	r0, r5
 	b.n	loc_0803d416	@ 0x0803D416
 	.word	gUnk_03001F2C
-	.word	0x03002448
+	.word	gUnk_03002448
 	.word	0x03002344
 	.global	loc_0803d408
 loc_0803d408:
@@ -13375,7 +13375,7 @@ loc_0803d51c:
 	.word	gUnk_03002490
 	.word	gUnk_03001F2C
 	.word	0x03002344
-	.word	0x03002448
+	.word	gUnk_03002448
 	.thumb_func
 	.global	sub_0803d55c
 sub_0803d55c:

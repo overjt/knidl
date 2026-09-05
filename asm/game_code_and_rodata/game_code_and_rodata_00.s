@@ -6551,7 +6551,7 @@ loc_0800a7e8:
 	b.n	loc_0800a844	@ 0x0800A844
 	movs	r0, r0
 	.word	0x0200801C
-	.word	0x03002448
+	.word	gUnk_03002448
 	ldr	r1, [pc, #20]	@ 0x0800A814
 	ldrh	r0, [r1, #0]
 	subs	r0, #1
@@ -6592,7 +6592,7 @@ loc_0800a844:
 	bx	r0
 	movs	r0, r0
 	.word	0x0200801C
-	.word	0x03002448
+	.word	gUnk_03002448
 	.thumb_func
 	.global	sub_0800a854
 sub_0800a854:

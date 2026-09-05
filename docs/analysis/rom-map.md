@@ -593,8 +593,8 @@ child issues of #35 are created from it. Findings that belong in this document:
   `0x0874CB7C`; the 16-byte graphics records the per-frame bodies re-upload
   through `sub_080663f4` are `0x08274840` and `0x082797C8`.
 - **M28 (`0x0809BA44-0x080A158F`) is NOT one behaviour bank.** Decompiled in
-  #74 into twelve `src/enemy_9*.c` / `src/enemy_a0274.c` files (203 of its 204
-  functions; `sub_080A00EC` is still asm). Four unrelated things share its
+  #74 into thirteen `src/enemy_9*.c` / `src/enemy_a*.c` files (all 204
+  functions, no asm left in the range). Four unrelated things share its
   table cluster `0x08747AA4-0x087484D4`, the `TaskGfx` blocks
   `0x08753204`/`0x08753270`/`0x08753290`/`0x08753354`/`0x08753378`/`0x08753404`/
   `0x08753414`/`0x087534E0`/`0x08753510`/`0x087535A8`/`0x087538E0` and the

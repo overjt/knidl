@@ -3227,8 +3227,8 @@ loc_08018fb6:
 	.word	gUnk_03002490
 	.word	gUnk_03002790
 	.word	gUnk_03001F2C
-	.word	0x03002448
-	.word	0x080D2148
+	.word	gUnk_03002448
+	.word	gUnk_080D2148
 	.global	loc_08018fec
 loc_08018fec:
 	bl	TaskDispatchTrampoline	@ 0x080CFDD4
@@ -30696,7 +30696,7 @@ loc_08026b86:
 	.word	0x030055EC
 	.word	0x0200AEF0
 	.word	gUnk_03001F2C
-	.word	0x03002448
+	.word	gUnk_03002448
 	.word	0x00001A0A
 	.word	0x00001E61
 	.word	0x000015B3
@@ -30928,7 +30928,7 @@ loc_08026d52:
 	.word	0x03002160
 	.word	0x03002344
 	.word	gUnk_03002340
-	.word	0x03002448
+	.word	gUnk_03002448
 	.word	gUnk_03002790
 	.word	gUnk_03001F2C
 	.global	loc_08026de4

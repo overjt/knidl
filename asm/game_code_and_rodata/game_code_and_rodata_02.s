@@ -4785,7 +4785,7 @@ loc_080296de:
 	.word	0x03005604
 	.word	0x0300566C
 	.word	gUnk_03001F2C
-	.word	0x03002448
+	.word	gUnk_03002448
 	.global	loc_080296f4
 loc_080296f4:
 	cmp	r0, #0

@@ -3562,7 +3562,12 @@ a high register back to a low one (3.215 is the same pass from the other side).
 (r0 for us, r5 in the ROM).  There is nothing to pin - until you write the
 store through a pointer: `register s32 *px asm("r5"); px = &gUnk_03001F2C;
 *px = x;`.  Reusing the SAME `px` for a second global store a few lines later
-costs nothing and fixes both.  Worth 4 bytes in `sub_080A00EC`.
+costs nothing and fixes both.  Worth 4 bytes in `sub_080A00EC`.  **Caveat
+(3.258)**: the pin gets the register right but REMOVES the address reload, so
+every later reload's rotation phase shifts - if the residue then moves to a
+scratch register downstream, the ROM's store was an address reload from an
+UNALLOCATED pseudo, and the un-pinned hoisted-pointer shape in 3.258 is the
+one that matches both.
 
 ### 3.257 decomp-permuter's scorer is unusable on this target: verify the base score before trusting a run
 Set up for `sub_080A00EC` (a function 3 bytes from matching) the permuter
@@ -3603,6 +3608,50 @@ rule makes mutually exclusive for every source shape tried - so the residue is
 3 bytes (one instruction) and not zero.  The tool worth keeping is the pairing:
 a sweep script that reports the *score plus the register in question* per
 variant, so you can see the phase move even when the byte count does not.
+**Superseded by 3.258**: the exclusivity was real but self-inflicted - it holds
+only while the two global stores' addresses are allocator-chosen pseudos.  Turn
+them back into address reloads and both registers land where the ROM has them.
+
+### 3.258 Not every `ldr rN, =sym` is the same insn: pseudo vs address reload decides the reload phase, and 30 printf lines in reload1.c settle it
+What finally closed `sub_080A00EC` (392 bytes, the last function of M28) after
+~2,000 blind compilations failed.  Three mechanisms, all invisible in the bytes:
+
+* **A store's `ldr rN, =gUnk_...` can be two different things.**  (a) A
+  *pseudo* holding the address - expand always forces an illegitimate symbol
+  address into one - which local/global alloc assigns (r0 for us, because the
+  store's 2-insn span had r0 free) and which does NOT touch reload's rotation.
+  (b) An *address reload*, when that pseudo reaches reload with **no hard
+  register**: reload substitutes its `REG_EQUIV (symbol_ref)` note, the mem's
+  address becomes illegitimate, and `find_reloads_address` materialises the
+  `ldr` via `allocate_reload_reg` - WHICH ADVANCES `last_spill_reg`.  The ROM's
+  two stores are (b); every pinned-px (3.254) or plain-store shape we swept was
+  (a), and the two missing rotation advances are why the epilogue constant kept
+  landing on `movs r3, #4` instead of the ROM's `movs r0, #4`.
+* **The C shape that produces (b) with zero extra bytes**: hoist the address
+  into a plain (un-pinned) pointer local whose range crosses the loop's calls -
+  `s32 *pa = &gUnk_03001F2C; s32 *pb = &gUnk_03002448;` before the `for`, then
+  `*pa = x; ... *pb = y;` inside.  Multi-block kills local_alloc, the
+  call-crossing range and 2-3 refs kill its global_alloc priority, the pseudo
+  gets nothing, and reload rematerialises the symbol at each use (deleting the
+  init insn via `reg_equiv_init`).  Bytes: identical to the ROM, including both
+  `ldr r5, =...` picks and the epilogue's `movs r0, #4`, because the rotation
+  now runs r5(store) -> r5(uy idx) -> r2(cam idx) -> r5(store) -> wrap -> r0.
+* **Which insns advance the rotation** (the part 3.256 could not see):
+  matching-constraint input reloads that reuse the insn's own output register
+  (`mov r0, ip; adds r0, #66; ldrb r0, [r0]` - `find_dummy_reload`, reload.c
+  ~1285) do NOT advance; `extendhisi2` index scratches (`movs rN, #imm` before
+  `ldrsh`), constant materialisations for high-reg adds, and address reloads DO.
+* **The instrument beats the sweep.**  A ~30-line patch to the pinned agbcc
+  clone - `fprintf` at `allocate_reload_reg`'s success (insn uid, reg, index,
+  prev `last_spill_reg`), at both inheritance sites in `choose_reload_regs`, at
+  `find_dummy_reload`'s hit, plus a FINAL per-insn dump - built with
+  `make -C gcc normal` in the repo Docker image and gated on `getenv("RRTRACE")`
+  (same binary, same codegen), turned the phase from conjecture into a printed
+  trace.  One hour of reading traces found what two 250-step hill-climbs and
+  fourteen sweep campaigns could not: the divergence was two ALLOC events that
+  existed in the ROM's compile and not in ours.  When a register-only residue
+  survives two informed shape attempts AND the `-da` dumps, instrument the
+  compiler - it is the same escalation 3.75/4.35 recommend, one level deeper.
 
 ### 3.255 fold hoists a constant addend out of `A + (B + K)`; a temp for A pins it back
 `y = t->unk4A + ((o >> 16) + 16) - cam[2]` comes out as `adds r1, #16;

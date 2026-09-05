@@ -69,7 +69,7 @@ M67,0x0809F2F4,0x0809F37C,0x88,1,0,0,0x88,0x88,14.7,3,0,0,0,1,0,2,enemy_9f2f4,al
 M68,0x0809F37C,0x0809F9DC,0x660,23,12,0,0x46,0x1C8,12.5,5,1,0,1,4,4,1,enemy_9f37c,already landed (c_code)
 M69,0x0809F9DC,0x0809FBD0,0x1F4,2,0,0,0xFA,0x134,15.2,4,0,0,0,4,0,3,enemy_9f9dc,already landed (c_code)
 M70,0x0809FBD0,0x080A00EC,0x51C,11,3,0,0x76,0x1DC,19.3,11,1,0,1,2,8,2,enemy_9fbd0,already landed (c_code)
-M71,0x080A00EC,0x080A0274,0x188,1,0,1,0x188,0x188,12.2,5,0,0,0,1,0,2,,
+M71,0x080A00EC,0x080A0274,0x188,1,0,0,0x188,0x188,12.2,5,0,0,0,1,0,2,enemy_a00ec,already landed (c_code)
 M72,0x080A0274,0x080A1590,0x131C,45,32,0,0x6C,0x108,12.3,9,0,0,0,0,7,1,enemy_a0274,already landed (c_code)
 M73,0x080A1590,0x080A5644,0x40B4,221,153,3,0x4A,0x100,15.4,21,0,5,9,0,10,2,enemy/object behaviour bank 10,"221 functions, mean 0x4a, 153 pointer-dispatched; 80-entry anchor table @0x08748624"
 M74,0x080A5644,0x080AA338,0x4CF4,130,110,4,0x97,0x5AC,12.0,30,2,2,12,0,7,1,enemy/object behaviour bank 11,"130 functions, 110 pointer-dispatched; anchor tables @0x08748EB8 (53) and @0x08749150 (20); 12 task types"
