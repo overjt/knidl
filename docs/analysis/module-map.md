@@ -1455,11 +1455,10 @@ below is the pre-decompilation one, kept for the record.
   hard 0-3 invariant); `sub_0809E8B0` (x9) and `sub_080A0B10` (x15) are the
   two `sub_08002E98` re-dispatchers.
 * **The one hole** `sub_080A00EC` (392 bytes) is the three-star burst stepper,
-  and it is **4 bytes** from matching: the parked candidate
+  and it is **3 bytes** from matching: the parked candidate
   (`pending/m28/wip/sub_080a00ec.c`, gitignored) is the right size and
-  byte-identical everywhere except one register - `movs r3, #4` where the ROM
-  has `movs r0, #4`, which the three `add rHigh, rLow` giv increments in the
-  loop epilogue then inherit.  Getting there needed the whole of
+  byte-identical except for one instruction - `movs r5, #4` where the ROM has
+  `movs r2, #4` (the `gUnk_03002158[2]` load's index scratch).  Getting there needed the whole of
   `docs/lessons-learned.md` 3.249-3.255: the ROM strength-reduces **three**
   offset induction variables out of its `for (i = 0; i <= 2; i++)` loop
   (`sl` = `12 + 4i`, `r9` = `24 + 4i`, `r8` = `4i`) plus the pointer biv
@@ -1467,10 +1466,13 @@ below is the pre-decompilation one, kept for the record.
   agbcc drops the `12 + 4i` giv (`agbcc -da`'s `.loop` dump: "giv of insn 244
   not worth while, 30 vs 145", where 145 is the loop's real insn count) unless
   that offset is given its own long-lived local at the top of the body.  The
-  surviving 4 bytes are a `regs_used_so_far` tie inside `global_alloc`'s
-  `find_reg`, which no source shape, register pin, declaration-order
-  permutation or statement reordering reached across ~1,400 compilations of
-  systematic sweeps and two 250-step randomised hill-climbs.
+  surviving 3 bytes are a reload PHASE conflict, not a source-shape problem:
+  reload picks scratch registers by round-robin over a per-insn list starting
+  at the previous reload's index (`docs/lessons-learned.md` 3.256), and the ROM
+  wants `movs r2, #4` at that read *and* `movs r0, #4` in the epilogue, which
+  the phase rule makes mutually exclusive for every shape tried across ~2,000
+  compilations of systematic sweeps, two 250-step randomised hill-climbs and a
+  declaration-order permutation sweep.
 * **Census fixes** eight rows curated in `tools/symdb.py`, so the module has
   **204** functions, not 198. `0x080A02FC` is a `FALSE_POSITIVES` entry - it
   is the pool-skip branch inside `sub_080A02D4`, not a function - and seven

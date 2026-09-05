@@ -3564,6 +3564,31 @@ store through a pointer: `register s32 *px asm("r5"); px = &gUnk_03001F2C;
 *px = x;`.  Reusing the SAME `px` for a second global store a few lines later
 costs nothing and fixes both.  Worth 4 bytes in `sub_080A00EC`.
 
+### 3.256 reload's scratch register is a round-robin over a PER-INSN list, and `agbcc/gcc/reload1.c` gives you both halves of it
+When the only residue is which register a `movs rN, #K` / `mov rN, rHigh`
+scratch lands in, stop guessing and read `allocate_reload_reg` and
+`order_regs_for_reload`:
+
+* `order_regs_for_reload` rebuilds `potential_reload_regs` **for every insn**:
+  first the call-clobbered registers with no pseudo live at that insn (ascending
+  regno), then the callee-saved ones with none, then the rest by increasing use
+  count.  Any hard register live across the insn is excluded outright.
+* `allocate_reload_reg` starts at the file-static `last_spill_reg` - the INDEX
+  the previous reload chose, carried across insns - increments, and wraps.
+
+So one reload's register choice sets the phase for the next, and making one
+register busy at an earlier insn shifts every later scratch.  That is how
+M28's `sub_080A00EC` epilogue was moved from `movs r3, #4` to the ROM's
+`movs r0, #4`: keeping any value alive in r2 across the `gUnk_03002158[2]`
+read (`asm("" :: "r"(sh));` after the statement, no instructions emitted)
+pushes that read's own scratch to r5, which lands on the last index and makes
+the next reload wrap to r0.  The catch in this particular function is that the
+ROM has *both* r2 at the earlier read and r0 in the epilogue, which the phase
+rule makes mutually exclusive for every source shape tried - so the residue is
+3 bytes (one instruction) and not zero.  The tool worth keeping is the pairing:
+a sweep script that reports the *score plus the register in question* per
+variant, so you can see the phase move even when the byte count does not.
+
 ### 3.255 fold hoists a constant addend out of `A + (B + K)`; a temp for A pins it back
 `y = t->unk4A + ((o >> 16) + 16) - cam[2]` comes out as `adds r1, #16;
 asrs r2, r2, #16; adds r1, r1, r2` - fold rewrote it as `(A + 16) + B`.  No
