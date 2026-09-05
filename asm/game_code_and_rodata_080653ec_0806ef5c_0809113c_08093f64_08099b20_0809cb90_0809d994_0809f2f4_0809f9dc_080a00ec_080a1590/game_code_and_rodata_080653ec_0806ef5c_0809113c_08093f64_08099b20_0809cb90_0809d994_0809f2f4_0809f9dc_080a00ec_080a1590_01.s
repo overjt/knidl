@@ -15,7 +15,6 @@
 @   0x080B199C sub_080b199c
 @   0x080B1A00 sub_080b1a00
 @   0x080B1A1C sub_080b1a1c
-@   0x080B1AFA sub_080b1afa
 @   0x080B1B2C sub_080b1b2c
 @   0x080B1C04 sub_080b1c04
 @   0x080B1D2C sub_080b1d2c
@@ -57,9 +56,12 @@
 @   0x080B2D80 sub_080b2d80
 @   0x080B2DD4 sub_080b2dd4
 @   0x080B2E20 sub_080b2e20
+@   0x080B2E3C sub_080b2e3c
 @   0x080B2E58 sub_080b2e58
 @   0x080B2F34 sub_080b2f34
 @   0x080B2F38 sub_080b2f38
+@   0x080B2F78 sub_080b2f78
+@   0x080B2FB0 sub_080b2fb0
 @   0x080B2FE8 sub_080b2fe8
 @   0x080B3010 sub_080b3010
 @   0x080B3050 sub_080b3050
@@ -77,6 +79,7 @@
 @   0x080B3318 sub_080b3318
 @   0x080B3368 sub_080b3368
 @   0x080B3398 sub_080b3398
+@   0x080B33BC sub_080b33bc
 @   0x080B33D8 sub_080b33d8
 @   0x080B3758 sub_080b3758
 @   0x080B37EC sub_080b37ec
@@ -94,6 +97,7 @@
 @   0x080B3FFC sub_080b3ffc
 @   0x080B404C sub_080b404c
 @   0x080B406C sub_080b406c
+@   0x080B408C sub_080b408c
 @   0x080B40A4 sub_080b40a4
 @   0x080B4100 sub_080b4100
 @   0x080B4158 sub_080b4158
@@ -1174,10 +1178,8 @@ loc_080b1ad8:
 	adds	r0, r0, r4
 	ldrb	r0, [r0, #0]
 	.short	0xF01E
-	.thumb_func
-	.global	sub_080b1afa
-sub_080b1afa:
-	.thumb
+	.global	loc_080b1afa
+loc_080b1afa:
 	.short	0xF968
 	ldr	r1, [r5, #0]
 	movs	r0, #2
@@ -3648,6 +3650,10 @@ sub_080b2e20:
 	bx	r0
 	.word	gUnk_03002490
 	.word	0x0874C154
+	.thumb_func
+	.global	sub_080b2e3c
+sub_080b2e3c:
+	.thumb
 	push	{lr}
 	ldr	r0, [pc, #16]	@ 0x080B2E50
 	ldr	r0, [r0, #0]
@@ -3798,6 +3804,10 @@ loc_080b2f6a:
 	movs	r0, r0
 	.word	sub_080b3110+1
 	.word	gCurTaskIdx
+	.thumb_func
+	.global	sub_080b2f78
+sub_080b2f78:
+	.thumb
 	push	{r4, lr}
 	ldr	r4, [pc, #36]	@ 0x080B2FA0
 	ldr	r0, [r4, #0]
@@ -3821,6 +3831,10 @@ loc_080b2f6a:
 	.word	0x0001CD00
 	.word	0x5A5A5A5A
 	.word	0xFFFFC000
+	.thumb_func
+	.global	sub_080b2fb0
+sub_080b2fb0:
+	.thumb
 	.short	0xB510
 	ldr	r4, [pc, #36]	@ 0x080B2FD8
 	ldr	r0, [r4, #0]
@@ -4339,6 +4353,10 @@ sub_080b3398:
 	bx	r0
 	.word	gUnk_03002490
 	.word	0x0874C25C
+	.thumb_func
+	.global	sub_080b33bc
+sub_080b33bc:
+	.thumb
 	push	{lr}
 	ldr	r0, [pc, #16]	@ 0x080B33D0
 	ldr	r0, [r0, #0]
@@ -5822,6 +5840,10 @@ sub_080b406c:
 	bx	r1
 	.word	sub_080b4158+1
 	.word	gCurTaskIdx
+	.thumb_func
+	.global	sub_080b408c
+sub_080b408c:
+	.thumb
 	ldr	r0, [pc, #16]	@ 0x080B40A0
 	ldr	r1, [r0, #0]
 	movs	r0, #128

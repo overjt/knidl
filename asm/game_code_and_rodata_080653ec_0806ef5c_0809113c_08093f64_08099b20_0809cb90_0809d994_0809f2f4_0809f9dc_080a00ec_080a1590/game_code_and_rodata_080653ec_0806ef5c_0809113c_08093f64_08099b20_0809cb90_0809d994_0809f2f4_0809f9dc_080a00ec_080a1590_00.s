@@ -23,6 +23,7 @@
 @   0x080A1C90 sub_080a1c90
 @   0x080A1D2C sub_080a1d2c
 @   0x080A1D84 sub_080a1d84
+@   0x080A1DBC sub_080a1dbc
 @   0x080A1DD4 sub_080a1dd4
 @   0x080A1DF8 sub_080a1df8
 @   0x080A1E4C sub_080a1e4c
@@ -177,11 +178,13 @@
 @   0x080A49CC sub_080a49cc
 @   0x080A4A1C sub_080a4a1c
 @   0x080A4A60 sub_080a4a60
+@   0x080A4AA8 sub_080a4aa8
 @   0x080A4AC4 sub_080a4ac4
 @   0x080A4B1C sub_080a4b1c
 @   0x080A4B68 sub_080a4b68
 @   0x080A4BA8 sub_080a4ba8
 @   0x080A4BDC sub_080a4bdc
+@   0x080A4C20 sub_080a4c20
 @   0x080A4C3C sub_080a4c3c
 @   0x080A4C80 sub_080a4c80
 @   0x080A4C84 sub_080a4c84
@@ -195,6 +198,7 @@
 @   0x080A4E14 sub_080a4e14
 @   0x080A4E9C sub_080a4e9c
 @   0x080A4EE0 sub_080a4ee0
+@   0x080A4F24 sub_080a4f24
 @   0x080A4F40 sub_080a4f40
 @   0x080A5008 sub_080a5008
 @   0x080A5020 sub_080a5020
@@ -208,6 +212,7 @@
 @   0x080A5184 sub_080a5184
 @   0x080A5188 sub_080a5188
 @   0x080A51DC sub_080a51dc
+@   0x080A5220 sub_080a5220
 @   0x080A523C sub_080a523c
 @   0x080A528C sub_080a528c
 @   0x080A52C8 sub_080a52c8
@@ -347,6 +352,7 @@
 @   0x080A9CF0 sub_080a9cf0
 @   0x080A9DA4 sub_080a9da4
 @   0x080A9E14 sub_080a9e14
+@   0x080A9E88 sub_080a9e88
 @   0x080A9EA4 sub_080a9ea4
 @   0x080A9ED8 sub_080a9ed8
 @   0x080A9EF4 sub_080a9ef4
@@ -424,6 +430,7 @@
 @   0x080ACAF0 sub_080acaf0
 @   0x080ACB20 sub_080acb20
 @   0x080ACC18 sub_080acc18
+@   0x080ACC8C sub_080acc8c
 @   0x080ACC9C sub_080acc9c
 @   0x080ACCF0 sub_080accf0
 @   0x080ACD38 sub_080acd38
@@ -474,6 +481,7 @@
 @   0x080AE198 sub_080ae198
 @   0x080AE1F0 sub_080ae1f0
 @   0x080AE37C sub_080ae37c
+@   0x080AE380 sub_080ae380
 @   0x080AE3BC sub_080ae3bc
 @   0x080AE470 sub_080ae470
 @   0x080AE4C4 sub_080ae4c4
@@ -493,13 +501,16 @@
 @   0x080AEFD4 sub_080aefd4
 @   0x080AEFF8 sub_080aeff8
 @   0x080AF020 sub_080af020
+@   0x080AF100 sub_080af100
 @   0x080AF114 sub_080af114
 @   0x080AF144 sub_080af144
+@   0x080AF178 sub_080af178
 @   0x080AF188 sub_080af188
 @   0x080AF1B8 sub_080af1b8
 @   0x080AF1C8 sub_080af1c8
 @   0x080AF1D4 sub_080af1d4
 @   0x080AF20C sub_080af20c
+@   0x080AF26C sub_080af26c
 @   0x080AF278 sub_080af278
 @   0x080AF294 sub_080af294
 @   0x080AF308 sub_080af308
@@ -522,6 +533,7 @@
 @   0x080AFF40 sub_080aff40
 @   0x080B0144 sub_080b0144
 @   0x080B0338 sub_080b0338
+@   0x080B0570 sub_080b0570
 @   0x080B05E8 sub_080b05e8
 @   0x080B07D8 sub_080b07d8
 @   0x080B0840 sub_080b0840
@@ -1616,9 +1628,13 @@ sub_080a1d84:
 	bx	r0
 	.word	gUnk_03002490
 	.word	0x0874898C
-	.word	0x080A1DBD
+	.word	sub_080a1dbc+1
 	.word	sub_0806a344+1
 	.word	gCurTaskIdx
+	.thumb_func
+	.global	sub_080a1dbc
+sub_080a1dbc:
+	.thumb
 	ldr	r1, [pc, #12]	@ 0x080A1DCC
 	lsls	r0, r0, #1
 	adds	r0, r0, r1
@@ -7475,6 +7491,10 @@ loc_080a4a94:
 	.word	0x087489BC
 	.word	gUnk_03004CA0
 	.word	gCurTaskIdx
+	.thumb_func
+	.global	sub_080a4aa8
+sub_080a4aa8:
+	.thumb
 	push	{lr}
 	ldr	r0, [pc, #16]	@ 0x080A4ABC
 	ldr	r0, [r0, #0]
@@ -7658,6 +7678,10 @@ loc_080a4c0c:
 	.word	0x087489DC
 	.word	gUnk_03004CA0
 	.word	gCurTaskIdx
+	.thumb_func
+	.global	sub_080a4c20
+sub_080a4c20:
+	.thumb
 	push	{lr}
 	ldr	r0, [pc, #16]	@ 0x080A4C34
 	ldr	r0, [r0, #0]
@@ -8039,6 +8063,10 @@ loc_080a4f10:
 	.word	0x08748A30
 	.word	gUnk_03004CA0
 	.word	gCurTaskIdx
+	.thumb_func
+	.global	sub_080a4f24
+sub_080a4f24:
+	.thumb
 	push	{lr}
 	ldr	r0, [pc, #16]	@ 0x080A4F38
 	ldr	r0, [r0, #0]
@@ -8420,6 +8448,10 @@ loc_080a520c:
 	.word	0x08748A6C
 	.word	gUnk_03004CA0
 	.word	gCurTaskIdx
+	.thumb_func
+	.global	sub_080a5220
+sub_080a5220:
+	.thumb
 	push	{lr}
 	ldr	r0, [pc, #16]	@ 0x080A5234
 	ldr	r0, [r0, #0]
@@ -13963,7 +13995,7 @@ sub_080a7d2c:
 	.word	sub_080656b4+1
 	.word	sub_080651b4+1
 	.word	0x087543E8
-	.word	0x080A9E89
+	.word	sub_080a9e88+1
 	.word	0x08749150
 	.thumb_func
 	.global	sub_080a7d98
@@ -18149,6 +18181,10 @@ loc_080a9e80:
 	pop	{r0}
 	bx	r0
 	.word	gCurTaskIdx
+	.thumb_func
+	.global	sub_080a9e88
+sub_080a9e88:
+	.thumb
 	ldr	r1, [pc, #16]	@ 0x080A9E9C
 	ldr	r1, [r1, #0]
 	adds	r1, #70
@@ -23872,6 +23908,10 @@ loc_080acc7e:
 	movs	r0, r0
 	.word	sub_0806a344+1
 	.word	gCurTaskIdx
+	.thumb_func
+	.global	sub_080acc8c
+sub_080acc8c:
+	.thumb
 	ldr	r1, [pc, #8]	@ 0x080ACC98
 	ldr	r0, [r1, #8]
 	subs	r0, #1
@@ -25066,7 +25106,7 @@ loc_080ad5dc:
 	.word	0x03002398
 	.word	0x03001F00
 	.word	gUnk_02007D00
-	.word	0x080AE381
+	.word	sub_080ae380+1
 	.word	sub_080ad710+1
 	.thumb_func
 	.global	sub_080ad630
@@ -26849,6 +26889,10 @@ sub_080ae37c:
 	.thumb
 	bx	lr
 	movs	r0, r0
+	.thumb_func
+	.global	sub_080ae380
+sub_080ae380:
+	.thumb
 	ldr	r1, [pc, #28]	@ 0x080AE3A0
 	lsls	r0, r0, #1
 	adds	r0, r0, r1
@@ -28425,6 +28469,10 @@ loc_080af0f8:
 	pop	{r0}
 	bx	r0
 	movs	r0, r0
+	.thumb_func
+	.global	sub_080af100
+sub_080af100:
+	.thumb
 	ldr	r0, [pc, #12]	@ 0x080AF110
 	ldr	r0, [r0, #0]
 	adds	r0, #120
@@ -28488,6 +28536,10 @@ loc_080af16a:
 	movs	r0, r0
 	.word	gUnk_02007D00
 	.word	gUnk_03002490
+	.thumb_func
+	.global	sub_080af178
+sub_080af178:
+	.thumb
 	ldr	r1, [pc, #8]	@ 0x080AF184
 	ldr	r0, [r1, #4]
 	subs	r0, #1
@@ -28625,6 +28677,10 @@ loc_080af258:
 	.word	gUnk_02007D00
 	.word	gUnk_03002490
 	.word	0x0000A110
+	.thumb_func
+	.global	sub_080af26c
+sub_080af26c:
+	.thumb
 	ldr	r1, [pc, #4]	@ 0x080AF274
 	movs	r0, #1
 	str	r0, [r1, #8]
@@ -30962,6 +31018,10 @@ loc_080b0566:
 	pop	{r4, r5, r6, r7}
 	pop	{r0}
 	bx	r0
+	.thumb_func
+	.global	sub_080b0570
+sub_080b0570:
+	.thumb
 	push	{r4, lr}
 	ldr	r0, [pc, #108]	@ 0x080B05E0
 	ldr	r1, [r0, #0]
