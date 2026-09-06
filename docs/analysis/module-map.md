@@ -304,7 +304,7 @@ sub-issue of #35, so the numbering ascends with the recommended order):
 | 10 | #73 | M32 enemy/object behaviour bank 13 | `0x080AE3BC-0x080B2FE7` | 19.0 KiB | 2 |
 | 11 | #74 | M28 enemy/object behaviour bank 9 (four-lane spawner, a six-variant enemy family, the player death sequence) - landed | `0x0809BA44-0x080A158F` | 22.8 KiB | 2 |
 | 12 | #75 | M26 enemy/object behaviour bank 7 (four three-table scripts + two companions) - landed | `0x08093F64-0x080988F7` | 18.4 KiB | 2 |
-| 13 | #76 | M29 enemy/object behaviour bank 10 | `0x080A1590-0x080A5643` | 16.2 KiB | 2 |
+| 13 | #76 | M29 enemy/object behaviour bank 10 - landed | `0x080A1590-0x080A5643` | 16.2 KiB | 2 |
 | 14 | #77 | M20 enemy/object behaviour bank 1 (21 task types, mostly moving scenery) - landed | `0x08078B68-0x0807F043` | 25.2 KiB | 2 |
 | 15 | #78 | M31 enemy/object behaviour bank 12 | `0x080AA338-0x080AE3BB` | 16.1 KiB | 2 |
 | 16 | #79 | M19 cutscene / ending-sequence bank (11 class-3 tasks) - landed | `0x08070EC0-0x08078B67` | 31.2 KiB | 2 |
@@ -1508,8 +1508,9 @@ below is the pre-decompilation one, kept for the record.
 * **Pool references** IWRAM x353, game_code_and_rodata x85, asset_metadata_index x76, EWRAM x41, level_graphics_palettes x15, early_58e4 x6, VRAM x1, level_object_tables x1.
 * **Suggested batches** `0x0809BA44` (13 fns), `0x0809C404` (58 fns), `0x0809DCBC` (74 fns), `0x0809FCA4` (53 fns).
 
-### M29 `0x080A1590-0x080A5643` - enemy/object behaviour bank 10
+### M29 `0x080A1590-0x080A5643` - enemy/object behaviour bank 10 - **landed (#76)**
 
+* **Decompiled** into `src/enemy_a1590.c` (226 functions incl. census additions, all byte-matched; `make compare` ROM-identical). Same guard+body script shape as M25/M27 over the 80-entry anchor table `0x08748624`; four-slot EWRAM state in `gUnk_02007D00[]`, companion actors via `gUnk_03002790[]`.
 * **Size** 16.2 KiB (`0x40b4`), 221 functions (153 reachable only through pointer tables), mean `0x4a`, largest `0x100`, pool words 15.4% of bytes.
 * **Difficulty** 2/6 - 21 distinct RAM cells, 0 jump-table dispatches, 0 functions >= `0x200`.
 * **Seam cost** 0 in / 0 out (local `bl` edges crossing the boundary).
