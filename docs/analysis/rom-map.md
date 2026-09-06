@@ -592,6 +592,13 @@ child issues of #35 are created from it. Findings that belong in this document:
   blocks: `0x08753090`, `0x08753180`, `0x087531C4`, `0x087531DC` and
   `0x0874CB7C`; the 16-byte graphics records the per-frame bodies re-upload
   through `sub_080663f4` are `0x08274840` and `0x082797C8`.
+- **M29 (`0x080A1590-0x080A5643`) is enemy/object behaviour bank 10.**
+  Decompiled in #76 into `src/enemy_a1590.c` (226 functions, all
+  byte-matched, no asm left in the range). The M25/M27 guard+body script
+  shape over the 80-entry anchor table `0x08748624` (plus the smaller
+  `0x087484C4`/`0x087489D4`/`0x08748A28`/`0x08748A54` tables); per-lane
+  state in `gUnk_02007D00[]` and companion actors through
+  `gUnk_03002790[Task.unk44]`, both shared with M28.
 - **M28 (`0x0809BA44-0x080A158F`) is NOT one behaviour bank.** Decompiled in
   #74 into thirteen `src/enemy_9*.c` / `src/enemy_a*.c` files (all 204
   functions, no asm left in the range). Four unrelated things share its
