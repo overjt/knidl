@@ -3653,6 +3653,31 @@ What finally closed `sub_080A00EC` (392 bytes, the last function of M28) after
   survives two informed shape attempts AND the `-da` dumps, instrument the
   compiler - it is the same escalation 3.75/4.35 recommend, one level deeper.
 
+### 3.270 SOLVED (rotation-advance sub-case): a redundant reg-offset read forces the reload reload_cse later deletes, reproducing the phantom reservation
+
+sub_080B1890's 2-byte residue (§3.268 phantom-reservation class) IS solvable
+when the needed register is already in the spill set and the divergence is a
+single uniform one-off rotation phase. The lever:
+
+    k = *e;              /* the real read, value now in a register        */
+    ...
+    kdummy = *e;         /* REDUNDANT reg-offset re-read of same memory   */
+    asm("" : : "r"(kdummy));   /* keep it from dead-stripping before reload */
+
+The redundant `ldrsh` needs an extendhisi2 zero-temp, so reload allocates
+one (advancing the round-robin by one), then reload_cse notices the loaded
+value already sits in a register and DELETES the whole redundant load - zero
+bytes added, but the rotation advance persists exactly as the ROM's
+deleted-insn reservation did. Closed b1890 and carved all of M32.
+
+Applies ONLY when: (a) the target register is already enrolled in the spill
+set (SPILLSET trace), and (b) every divergence downstream is uniformly one
+rotation step behind - a global advance fixes them together. It does NOT
+help when the register must first ENTER the set (ada20's r4, a78a0/b4ea8's
+r7 - those need §3.267 enrollment, and forcing a deletable reload onto the
+appended slot disturbs the low-index rotation), nor when divergences are
+non-uniform per-site (a860c's four independent phases).
+
 ### 3.259 A switch with case ranges keeps exact compare constants, and SOURCE ARM ORDER picks the block layout
 
 combine canonicalizes if-chain compares (`LT C` -> `LE C-1`), so a ROM tree
