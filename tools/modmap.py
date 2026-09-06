@@ -259,7 +259,7 @@ MODULE_NAMES = {
     0x080A5644: ("enemy/object behaviour bank 11",
                  "130 functions, 110 pointer-dispatched; anchor tables @0x08748EB8 (53) and @0x08749150 (20); 12 task types"),
     0x080AA338: ("enemy/object behaviour bank 12",
-                 "121 functions, 96 pointer-dispatched; 18 task types; Div x5"),
+                 "decompiled in #78 as src/enemy_aa338.c (123 functions, all byte-matched, ROM identical); 18 task types, Div x5; last straggler sub_080ADA20 closed via the dropped-pseudo address-reload form (lessons 3.258/3.273)"),
     0x080AE3BC: ("enemy/object behaviour bank 13",
                  "decompiled in #73 as src/enemy_ae3bc.c (135 functions, all byte-matched, ROM identical); dispatch-heavy behaviour bank, closed via the redundant-read reload lever (lessons 3.270)"),
     0x080B2FE8: ("HUD / overlay effects?",

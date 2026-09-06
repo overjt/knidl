@@ -598,6 +598,15 @@ child issues of #35 are created from it. Findings that belong in this document:
   closed with the redundant-read reload lever (a dead reg-offset re-read
   that reload_cse deletes but whose rotation advance persists; lessons
   3.270).
+- **M31 (`0x080AA338-0x080AE3BB`) is enemy/object behaviour bank 12.**
+  Decompiled in #78 into `src/enemy_aa338.c` (123 functions, all
+  byte-matched, ROM identical). Anchor tables `0x087493F4` (25 entries ->
+  `0x080AA338-0x080AB46C`) and `0x08749B8C` (8 entries ->
+  `0x080AC868-0x080ACC18`); 18 task types, Div x5. The last straggler
+  `sub_080ADA20` (3 bytes) was closed with the dropped-pseudo
+  address-reload form: the store-cell pointer written as a plain
+  multi-block un-pinned local so reload rematerializes it and the
+  `movs r4,#0` extendhisi2 zero-temp lands in r4 (lessons 3.258/3.273).
 - **M29 (`0x080A1590-0x080A5643`) is enemy/object behaviour bank 10.**
   Decompiled in #76 into `src/enemy_a1590.c` (226 functions, all
   byte-matched, no asm left in the range). The M25/M27 guard+body script

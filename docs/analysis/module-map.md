@@ -1538,7 +1538,9 @@ below is the pre-decompilation one, kept for the record.
 * **Known RAM cells touched** BG2CNT shadow x2, BG3CNT shadow x2, MOSAIC lo shadow x1, per-player keys held x1.
 * **Suggested batches** `0x080A5644` (68 fns), `0x080A7438` (12 fns), `0x080A7D98` (38 fns), `0x080A99A0` (12 fns).
 
-### M31 `0x080AA338-0x080AE3BB` - enemy/object behaviour bank 12
+### M31 `0x080AA338-0x080AE3BB` - enemy/object behaviour bank 12 - **landed (#78)**
+
+* **Decompiled** into `src/enemy_aa338.c` (123 functions, all byte-matched; `make clean && make compare` ROM-identical). Last straggler `sub_080ADA20` (3 bytes) closed via the dropped-pseudo address-reload form (lessons 3.258/3.273).
 
 * **Size** 16.1 KiB (`0x4084`), 121 functions (96 reachable only through pointer tables), mean `0x88`, largest `0x378`, pool words 14.3% of bytes.
 * **Difficulty** 2/6 - 21 distinct RAM cells, 1 jump-table dispatches, 2 functions >= `0x200`.

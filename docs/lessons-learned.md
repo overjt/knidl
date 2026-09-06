@@ -3653,6 +3653,42 @@ What finally closed `sub_080A00EC` (392 bytes, the last function of M28) after
   survives two informed shape attempts AND the `-da` dumps, instrument the
   compiler - it is the same escalation 3.75/4.35 recommend, one level deeper.
 
+### 3.273 SOLVED (ada20, M31's last straggler): the extendhisi2 zero-temp lands in r4 when the store-cell pointer is a dropped-pseudo address reload, not a pin
+
+`sub_080ADA20`'s 3-byte residue was `movs r4,#0; ldrsh r1,[r0,r4]` (ROM) vs
+`movs r2,#0` (ours): the epilogue's `ldrsh` extendhisi2 index scratch wanted
+r4, but r4 was pinned to a pointer variable (`pb3`) so it never entered the
+spill set and reload fell back to r2. This is the 3.269b symptom
+(explicit-register vars are invisible to `order_regs_for_reload`), but here it
+has a zero-byte fix, found with the RRTRACE-instrumented compiler:
+
+- The RR trace showed `SPILLSET n=3: r0 r1 r2` — r4 was never enrolled. The
+  ROM enrolls r4 because at the `ldr r0,[r4,#0]` (`*pb2`) load in the same
+  region every low reg is busy, forcing reload to take r4 as an additional
+  spill register (`new_spill_reg`), which then serves the later zero-temp.
+- The winning shape had THREE independent moves, each necessary:
+  1. **Unpin the store-cell pointer** (`c2` was `register ... asm("r2")`);
+     write it as a plain local and, crucially, assign it `= &gUnk_03002490`
+     **once, before the loop** so it is multi-block + call-crossing with 2-3
+     refs — local_alloc skips it, global_alloc drops it, and reload
+     rematerializes the `ldr rN,=sym` per use (the 3.258 dropped-pseudo /
+     address-reload form). Written as a pinned register or initialized inside
+     the tail it becomes an allocator pseudo instead and the rotation never
+     advances to r4.
+  2. **Unpin the second table-base pointer** (`pb3`→plain local) so r4 is
+     free for reload to enroll.
+  3. **Leave the loop-tail pointer (`pb2`) natural** (NOT pinned to r8): the
+     pin legitimizes its address into an expand-time pseudo that never
+     reloads, which is what kept r4 out of the spill set. Natural, it takes
+     r8 by conflict pressure exactly as the ROM does, and its load is the
+     insn that enrolls r4.
+- The general rule: when a scratch register the ROM uses is a *callee-saved
+  low reg* (r4-r6) that your build puts in a call-clobbered one, check the
+  SPILLSET trace first. If the reg is absent, the fix is almost never a pin
+  (a pin makes it more absent) — it is removing whatever pin/pseudo is
+  keeping the enrolling load from happening, so reload adds the reg itself.
+  ada20 went 3B → MATCH and carved all of M31.
+
 ### 3.272 The combined structural+pin annealing permuter reduces but cannot zero the r7/coalescing residues
 
 Built three permuter generations (all in pending/): permute2 (pin/natural/
