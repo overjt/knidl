@@ -1553,7 +1553,9 @@ below is the pre-decompilation one, kept for the record.
 * **Known RAM cells touched** current game state (main dispatch) x3.
 * **Suggested batches** `0x080AA338` (50 fns), `0x080AC30C` (21 fns), `0x080ACC9C` (22 fns), `0x080AD4B8` (28 fns).
 
-### M32 `0x080AE3BC-0x080B2FE7` - enemy/object behaviour bank 13
+### M32 `0x080AE3BC-0x080B2FE7` - enemy/object behaviour bank 13 - **landed (#73)**
+
+* **Decompiled** into `src/enemy_ae3bc.c` (135 functions, all byte-matched; `make clean && make compare` ROM-identical).
 
 * **Size** 19.0 KiB (`0x4c2c`), 129 functions (96 reachable only through pointer tables), mean `0x97`, largest `0x320`, pool words 11.9% of bytes.
 * **Difficulty** 1/6 - 15 distinct RAM cells, 4 jump-table dispatches, 3 functions >= `0x200`.

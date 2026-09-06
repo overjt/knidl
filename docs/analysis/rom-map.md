@@ -592,6 +592,12 @@ child issues of #35 are created from it. Findings that belong in this document:
   blocks: `0x08753090`, `0x08753180`, `0x087531C4`, `0x087531DC` and
   `0x0874CB7C`; the 16-byte graphics records the per-frame bodies re-upload
   through `sub_080663f4` are `0x08274840` and `0x082797C8`.
+- **M32 (`0x080AE3BC-0x080B2FE7`) is enemy/object behaviour bank 13.**
+  Decompiled in #73 into `src/enemy_ae3bc.c` (135 functions, all
+  byte-matched, ROM identical). The last straggler `sub_080b1890` was
+  closed with the redundant-read reload lever (a dead reg-offset re-read
+  that reload_cse deletes but whose rotation advance persists; lessons
+  3.270).
 - **M29 (`0x080A1590-0x080A5643`) is enemy/object behaviour bank 10.**
   Decompiled in #76 into `src/enemy_a1590.c` (226 functions, all
   byte-matched, no asm left in the range). The M25/M27 guard+body script

@@ -261,7 +261,7 @@ MODULE_NAMES = {
     0x080AA338: ("enemy/object behaviour bank 12",
                  "121 functions, 96 pointer-dispatched; 18 task types; Div x5"),
     0x080AE3BC: ("enemy/object behaviour bank 13",
-                 "129 functions, 96 pointer-dispatched, 5 anchor tables; 15 task types; TaskYieldTrampoline x412"),
+                 "decompiled in #73 as src/enemy_ae3bc.c (135 functions, all byte-matched, ROM identical); dispatch-heavy behaviour bank, closed via the redundant-read reload lever (lessons 3.270)"),
     0x080B2FE8: ("HUD / overlay effects?",
                  "9 task types (5 of class 4); LZ77UnCompVram x6 + CpuSet x3 + a DMA0 register pair; VRAM transfer queue x20; EWRAM x102"),
     0x080B6154: ("save file / SRAM records + options",
