@@ -3653,6 +3653,23 @@ What finally closed `sub_080A00EC` (392 bytes, the last function of M28) after
   survives two informed shape attempts AND the `-da` dumps, instrument the
   compiler - it is the same escalation 3.75/4.35 recommend, one level deeper.
 
+### 3.271 PROBE-CONFIRMED: r7 cannot be forced into the prologue-saved set from C at all
+
+Two direct probes settle the r7-enrollment cases (a78a0, b4ea8) definitively:
+- `asm("movs r7,#0" ::: "r7")` compiles to `push {lr}` - r7 clobber does NOT
+  push r7, even with -O2's omit-frame-pointer. Inline asm can place an r7
+  instruction but produces a CORRUPT function (r7 not saved).
+- `register int v asm("r7"); v = ...; ext(v); ext(v*2);` is MISCOMPILED: no
+  r7 push, and the second use reads `sp` instead of r7 - the value is lost
+  across the call. A register-r7 variable is unusable.
+
+Therefore the ROM's r7 (used as an extendhisi2 zero-temp AND pushed) can ONLY
+originate from reload choosing r7 as a spill register under enough pressure
+that r0-r6 are exhausted - a global-allocation outcome. No C-level construct
+(pin, clobber, or asm) reaches it: they are ignored (§3.269b), skip the
+save (§3.266), or miscompile. a78a0 (7B) and b4ea8 (11B) are parked here with
+this proof, not a guess.
+
 ### 3.270 SOLVED (rotation-advance sub-case): a redundant reg-offset read forces the reload reload_cse later deletes, reproducing the phantom reservation
 
 sub_080B1890's 2-byte residue (§3.268 phantom-reservation class) IS solvable
