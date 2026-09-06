@@ -3739,14 +3739,15 @@ Two related traps, both from r7 being thumb's nominal frame pointer:
 (a) flow.c skips `regs_ever_live` marking for registers in `elim_reg_set`,
 so a `register ... asm("r7")` variable is used but never pushed - the
 prologue is 2 bytes short and the code is a real miscompile (probe-verified).
-(b) global.c puts the FP in `no_global_alloc_regs` whenever
-`-fomit-frame-pointer` is absent (it is absent in this pipeline), so NO
-call-crossing pseudo ever lands in r7 from global alloc; ROM r7 residency
-comes from local-alloc block temps or reload scratches only.  If the ROM
-keeps a loop-carried variable in r7 with a proper `push {r4-r7}`, the
-matching source shape is NOT a pin and NOT a plain local - look for a spill
-(sub sp) or a per-block recompute that keeps every def-use pair inside one
-basic block.  sub_080B4EA8's last 11 bytes are exactly this and remain open.
+(b) global_alloc CAN hand r7 to an unpinned call-crossing pseudo - matched
+sub_080B5D84's t7 proves it (unpinning was the fix: natural r7 + saved
+prologue) - but it often refuses for cost/conflict reasons that resist
+modeling: probes with r4-r6 pinned and r7 free spill the 4th variable or
+pick r9 instead, with or without -fomit-frame-pointer.  When the ROM keeps a
+loop-carried variable in r7, FIRST try the plain unpinned local (b5d84);
+if global insists on r9/spill (b4ea8's n7, still open at 11 bytes), the
+conflict is inside that function's allocation order and no source-level
+shape has reproduced it yet.
 
 ### 3.267 The reload SPILLSET is the missing half of the rotation: pinned registers can never enter it
 
