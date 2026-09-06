@@ -3762,6 +3762,35 @@ necessary but not sufficient - the natural allocation must also fail to home
 the variable, which needs the multi-block/call-crossing/2-3-refs shape.
 sub_080ADA20 (3B) and sub_080B1890 (2B) are parked on exactly this.
 
+### 3.268 The rotation is two-pass and starts at last_spill_reg+1: the TRY trace settles any scratch-register residue
+
+Extending RRTRACE with a per-candidate print in `allocate_reload_reg`
+(`TRY insn=N i=N reg=N free=N`, gate RRTRACE2) shows the full mechanics:
+pass 0 only accepts registers already used for this insn's reloads
+(reuse), pass 1 takes the first FREE candidate scanning spill_regs from
+`last_spill_reg + 1`.  sub_080B1890's 2-byte residue reads directly off the
+trace: cand insn 87 starts at i=3 (r5, free, taken); the ROM's byte needs
+r5 BUSY there so the scan wraps to r4 - and nothing in the ROM's bytes
+occupies r5, meaning the ROM compile had a reload event in r5 whose insn
+was later deleted (reload_cse / inheritance), leaving only the phantom
+reservation and the r5 save in the prologue.  No source shape reproduces a
+deleted-but-reserving reload yet; sub_080B1890 (2B), sub_080ADA20 (3B),
+sub_080A78A0 (7B) and sub_080A860C (8B) are all parked on this class.
+
+### 3.269 The `mov rX, sp; strb rV, [rX, #4]` byte-slot form has no reproducing C shape yet
+
+A ROM u8 frame slot written as `mov r5, sp; strb r0, [r5, #4]` and read as
+`mov r1, sp; ldrb r1, [r1, #4]` resisted every construction: plain u8 local
+-> pseudo spills in SImode (`str r0, [sp, #4]`, one insn short); u8/u16
+array -> expand legitimizes the address early (`add rX, sp, #4` +
+zero-offset access); volatile scalar or array -> same add-form plus
+re-reads; one-byte struct -> word RMW; address-taken scalar -> add-form;
+inline asm with "m" constraints -> materialized addresses elsewhere.  The
+form is what RELOAD emits for a QI access whose (mem (plus sp 4)) survives
+to reload; only spill-machinery-generated accesses go down that path, and
+user code apparently cannot.  sub_080B5670's last structural gap (219B of
+mostly cascading +-2 shifts) hangs on this plus ~15 rotation temps.
+
 ### 3.255 fold hoists a constant addend out of `A + (B + K)`; a temp for A pins it back
 `y = t->unk4A + ((o >> 16) + 16) - cam[2]` comes out as `adds r1, #16;
 asrs r2, r2, #16; adds r1, r1, r2` - fold rewrote it as `(A + 16) + B`.  No
