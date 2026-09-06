@@ -10868,7 +10868,7 @@ loc_0803c2b4:
 	beq.n	loc_0803c292	@ 0x0803C292
 	b.n	loc_0803c35a	@ 0x0803C35A
 	.word	gUnk_02005588
-	.word	0x02005580
+	.word	gUnk_02005580
 	.word	gUnk_03002360
 	.global	loc_0803c2dc
 loc_0803c2dc:
@@ -10947,8 +10947,8 @@ loc_0803c35a:
 	b.n	loc_0803c3a2	@ 0x0803C3A2
 	movs	r0, r0
 	.word	gUnk_02005588
-	.word	0x02005580
-	.word	0x03002464
+	.word	gUnk_02005580
+	.word	gUnk_03002464
 	.word	gUnk_03002360
 	.global	loc_0803c374
 loc_0803c374:
@@ -11158,7 +11158,7 @@ loc_0803c4c0:
 	ble.n	loc_0803c4c0	@ 0x0803C4C0
 	b.n	loc_0803c69a	@ 0x0803C69A
 	.word	gUnk_02005588
-	.word	0x02005580
+	.word	gUnk_02005580
 	.word	gUnk_03002360
 	.word	gUnk_03002490
 	.global	loc_0803c510
@@ -11302,8 +11302,8 @@ loc_0803c5da:
 	b.n	loc_0803c69a	@ 0x0803C69A
 	movs	r0, r0
 	.word	gUnk_02005588
-	.word	0x02005580
-	.word	0x03002464
+	.word	gUnk_02005580
+	.word	gUnk_03002464
 	.word	gUnk_03002360
 	.word	gUnk_03002490
 	.global	loc_0803c630
@@ -11559,7 +11559,7 @@ loc_0803c7da:
 	b.n	loc_0803c880	@ 0x0803C880
 	movs	r0, r0
 	.word	gUnk_02005588
-	.word	0x02005580
+	.word	gUnk_02005580
 	.word	gUnk_03002360
 	.global	loc_0803c804
 loc_0803c804:
@@ -11636,8 +11636,8 @@ loc_0803c880:
 	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	b.n	loc_0803c8c4	@ 0x0803C8C4
 	.word	gUnk_02005588
-	.word	0x02005580
-	.word	0x03002464
+	.word	gUnk_02005580
+	.word	gUnk_03002464
 	.word	gUnk_03002360
 	.global	loc_0803c898
 loc_0803c898:
@@ -13176,7 +13176,7 @@ sub_0803d3d4:
 	b.n	loc_0803d416	@ 0x0803D416
 	.word	gUnk_03001F2C
 	.word	gUnk_03002448
-	.word	0x03002344
+	.word	gUnk_03002344
 	.global	loc_0803d408
 loc_0803d408:
 	cmp	r3, #0
@@ -13231,7 +13231,7 @@ loc_0803d440:
 	bne.n	loc_0803d480	@ 0x0803D480
 	b.n	loc_0803d484	@ 0x0803D484
 	movs	r0, r0
-	.word	0x03002160
+	.word	gUnk_03002160
 	.word	0x03001F10
 	.global	loc_0803d460
 loc_0803d460:
@@ -13374,7 +13374,7 @@ loc_0803d51c:
 	movs	r0, r0
 	.word	gUnk_03002490
 	.word	gUnk_03001F2C
-	.word	0x03002344
+	.word	gUnk_03002344
 	.word	gUnk_03002448
 	.thumb_func
 	.global	sub_0803d55c

@@ -598,6 +598,17 @@ child issues of #35 are created from it. Findings that belong in this document:
   closed with the redundant-read reload lever (a dead reg-offset re-read
   that reload_cse deletes but whose rotation advance persists; lessons
   3.270).
+- **M30 (`0x080A5644-0x080AA337`) is enemy/object behaviour bank 11.**
+  Decompiled in #72 (partial, 127/130) into `src/enemy_a5644.c`,
+  `enemy_a7998.c`, `enemy_a87c8.c`, `enemy_a93ec.c`; ROM-identical around 3
+  asm holes. Anchor tables `0x08748EB8` (53) and `0x08749150` (20); 12 task
+  types. Remaining in asm: `sub_080A78A0` (r7-enrollment terminal, 3.271),
+  `sub_080A860C` (8B rotation), `sub_080A932C` (16B coalescing).
+- **M33 (`0x080B2FE8-0x080B6153`) is HUD / overlay effects (candidate).**
+  Decompiled in #97 (partial, 106/108) into `src/hud_b2fe8.c`,
+  `hud_b5024.c`, `hud_b5840.c`; ROM-identical around 2 asm holes. Remaining
+  in asm: `sub_080B4EA8` (r7 web-split, 3.274) and `sub_080B5670` (48B
+  r7-preference core, 3.272).
 - **M31 (`0x080AA338-0x080AE3BB`) is enemy/object behaviour bank 12.**
   Decompiled in #78 into `src/enemy_aa338.c` (123 functions, all
   byte-matched, ROM identical). Anchor tables `0x087493F4` (25 entries ->

@@ -3653,6 +3653,40 @@ What finally closed `sub_080A00EC` (392 bytes, the last function of M28) after
   survives two informed shape attempts AND the `-da` dumps, instrument the
   compiler - it is the same escalation 3.75/4.35 recommend, one level deeper.
 
+### 3.274 r7 IS reachable via global_alloc pressure (b4ea8), refining 3.271: natural loop-carried pseudos push r7 correctly; the residual blocker is web-splitting, not enrollment
+
+3.271 said "r7 can only come from reload under pressure, not from C." That is
+true for a *reload scratch* (a78a0's extendhisi2 zero-temp). But r7 as a
+*variable* (global_alloc pseudo) IS reachable, and this is the correct model
+for `sub_080B4EA8`, whose ROM keeps the loop counter `n7 = i4+1` in a pushed
+r7 (`push {r4,r5,r6,r7,lr}; mov r7,r8; push {r7}`).
+
+- **Pinning `register x asm("r7")` still miscompiles** (no push, 3.271) UNLESS
+  some *other* natural pseudo also lands in r7 (global_alloc sets
+  `regs_ever_live[7]`, so the pin is then saved too). Do not rely on it.
+- **The working lever: make the loop-carried variables NATURAL** (drop the
+  `asm("rN")` pins on i4/e5/p6/k8/n7). global_alloc then assigns them the
+  callee-saved bank r4-r8 and pushes r7. Confirmed with the RRTRACE `.greg`
+  "Hard regs used" line and the emitted `push {r7}`.
+- **Two traps that add a 6th callee-saved reg (r9) and desync everything:**
+  (1) a shared materialized constant - `one=1; asm volatile("":"+r"(one)); k8+=one;`
+  repeated in several arms lets cse merge the `1` into ONE pseudo that crosses
+  every call (r9). The ROM emits `movs r0,#1; add r8,r0` fresh per site, so
+  write `k8 += 1;` inline and let agbcc rematerialize. (2) a call-clobbered
+  pointer (`n3` in r3) staged across a call must go to the STACK
+  (`str r3,[sp]`), not a callee-saved reg - use a `volatile` frame slot
+  (`spill = (u32)n3, ...; n3 = (u8*)spill`).
+- **The residual blocker (why b4ea8 still parks at 380B in asm):** the counter
+  `n7=i4+1` splits into TWO webs - a pre-switch def (used by the empty cases
+  0/4/7 which cross their calls, correctly r7) and the per-arm recomputes
+  (a separate web that global_alloc puts in r9). The ROM keeps both in one r7.
+  Removing the per-arm recomputes makes the function 48B short (the ROM really
+  does re-emit `adds r7,r4,#1` per arm); keeping them splits the web. Unifying
+  the two webs into one r7 is a global-alloc coalescing fixed-point no source
+  shape tried this session reaches. This is a NARROWER, better-understood
+  blocker than 3.271's "unreachable" - the r7 push is solved, only the web
+  split remains.
+
 ### 3.273 SOLVED (ada20, M31's last straggler): the extendhisi2 zero-temp lands in r4 when the store-cell pointer is a dropped-pseudo address reload, not a pin
 
 `sub_080ADA20`'s 3-byte residue was `movs r4,#0; ldrsh r1,[r0,r4]` (ROM) vs

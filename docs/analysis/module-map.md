@@ -1523,7 +1523,9 @@ below is the pre-decompilation one, kept for the record.
 * **Pool references** IWRAM x327, asset_metadata_index x102, game_code_and_rodata x78, EWRAM x66, early_58e4 x5, level_graphics_palettes x5, VRAM x1.
 * **Suggested batches** `0x080A1590` (49 fns), `0x080A2814` (119 fns), `0x080A4808` (53 fns).
 
-### M30 `0x080A5644-0x080AA337` - enemy/object behaviour bank 11
+### M30 `0x080A5644-0x080AA337` - enemy/object behaviour bank 11 - **landed (#72, partial: 127/130)**
+
+* **Decompiled** into `src/enemy_a5644.c`, `enemy_a7998.c`, `enemy_a87c8.c`, `enemy_a93ec.c` (127 of 130 functions byte-matched; `make clean && make compare` ROM-identical around 3 asm holes). **3 functions remain in asm**: `sub_080A78A0` (248B, r7-enrollment terminal - the extendhisi2 zero-temp needs r7 in the spill set before tb occupies r5, unreachable from C; lessons 3.271), `sub_080A860C` (444B, 8-byte residue: 4 non-uniform extendhisi2 rotation phases; 3.268), `sub_080A932C` (192B, 16-byte coalescing residue; 3.272).
 
 * **Size** 19.2 KiB (`0x4cf4`), 130 functions (110 reachable only through pointer tables), mean `0x97`, largest `0x5ac`, pool words 12.0% of bytes.
 * **Difficulty** 1/6 - 30 distinct RAM cells, 2 jump-table dispatches, 7 functions >= `0x200`.
@@ -1571,7 +1573,9 @@ below is the pre-decompilation one, kept for the record.
 * **Pool references** IWRAM x230, asset_metadata_index x129, game_code_and_rodata x70, EWRAM x24, early_5d9c x8, level_graphics_palettes x6, early_58e4 x3, VRAM x2.
 * **Suggested batches** `0x080AE3BC` (47 fns), `0x080B0338` (52 fns), `0x080B22F8` (30 fns).
 
-### M33 `0x080B2FE8-0x080B6153` - HUD / overlay effects?
+### M33 `0x080B2FE8-0x080B6153` - HUD / overlay effects? - **landed (#97, partial: 106/108)**
+
+* **Decompiled** into `src/hud_b2fe8.c`, `hud_b5024.c`, `hud_b5840.c` (106 of 108 functions byte-matched; `make clean && make compare` ROM-identical around 2 asm holes). **2 functions remain in asm**: `sub_080B4EA8` (380B, r7 web-split - the loop counter n7=i4+1 splits into a pre-switch pseudo (r7, correctly pushed) plus per-case recomputes that global_alloc coalesces into a separate callee-saved reg r9; natural pressure DOES push r7 but the exact 5-callee-saved web split is a global-alloc fixed-point; lessons 3.271/3.273) and `sub_080B5670` (464B, the same r7-preference core the permuter reduced to 48B but cannot zero; 3.272).
 
 * **Size** 12.4 KiB (`0x316c`), 108 functions (69 reachable only through pointer tables), mean `0x75`, largest `0x380`, pool words 14.2% of bytes.
 * **Difficulty** 3/6 - 58 distinct RAM cells, 5 jump-table dispatches, 4 functions >= `0x200`.
