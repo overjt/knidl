@@ -3653,6 +3653,114 @@ What finally closed `sub_080A00EC` (392 bytes, the last function of M28) after
   survives two informed shape attempts AND the `-da` dumps, instrument the
   compiler - it is the same escalation 3.75/4.35 recommend, one level deeper.
 
+### 3.259 A switch with case ranges keeps exact compare constants, and SOURCE ARM ORDER picks the block layout
+
+combine canonicalizes if-chain compares (`LT C` -> `LE C-1`), so a ROM tree
+holding `cmp #189/blt` + `cmp #123/bge` cannot come from ifs.  `case 121 ...
+124:` GNU ranges emitted by `emit_case_nodes` keep the exact constants.  The
+second half nobody tells you: with the tree fixed, the residual inverted-root
+(`ble` to the left subtree with the right inline) is not an emission path at
+all - it is the ARM ORDER in the source.  Brute-forcing the 5!x2 orderings of
+sub_080AE380's arms found `B,A,C,D,E + default-last` matched exactly; the
+straightforward ascending order was 29 bytes off.  Generate-and-score the
+permutations (`pending/tmp/genswitch.py`), do not reason about
+`emit_case_nodes` - the layout also depends on jump threading after it.
+
+### 3.260 Empty `asm` barriers inflate branch-shortening estimates and flip `beq` <-> `bne+b` relaxation ties
+
+shorten_branches counts every `asm("" ...)` as a real instruction when it
+estimates conditional-branch reach.  A `beq` whose true distance is ~250
+bytes (limit 254) goes LONG (`bne .+4; b target`) if two or three
+zero-instruction barriers sit inside the span - and every byte after it
+shifts, which reads as a 160-byte diff (sub_080B0B50).  The ROM's plain 2002
+sources have no asm, so on any function where the diff shows a lone
+`beq far` vs `bne+b` pair: count the barriers between branch and target and
+replace them with fully-pinned staging (3.261), which needs no asm at all.
+
+### 3.261 The volatile-staged pinned copy: how to place a hi-reg reload temp in a chosen register
+
+ROM code that reads `mov r4, r9; strh r4, ...` where we emit `mov r0, r9` is
+reload picking a rotation scratch.  The zero-instruction fix:
+
+    register s32 w asm("r4");
+    w = one9;                      /* one9 lives in r9 */
+    asm volatile("" : "+r"(w));    /* volatile, or cse folds the copy away */
+    t->fld = w;
+
+Plain `asm("" : "+r"(w))` gets dead-stripped (output unused after); without
+the barrier cse propagates the constant/value and drops the pin silently.
+Same recipe with both sides pinned (`cw1 asm("r1") = c9; tA asm("r0") = *cw1`)
+forces a hard-to-hard copy that CANNOT coalesce - no asm needed at all when
+the source register is itself pinned.  Closed sub_080B09AC (344B residue),
+sub_080AE1F0 (278B) and most of the M32/M33 second-order temps.
+
+### 3.262 Pointer arithmetic canonicalizes base-first; the `(u32)` cast form keeps source operand order
+
+`p3 = i1 + b7` (int + pointer) canonicalizes to `adds rP, rB7, rI1` - base
+first - no matter which order the source writes.  The ROM's `adds r3, r1, r7`
+(index first) comes from INTEGER addition: `(u8 *)((u32)i1 + (u32)b7)`.
+Zero-byte lever, fires constantly (sub_080B5A94 x3, afdf0 family x6).
+
+### 3.263 A pinned base register blocks EVERY addressing fold; natural homes come from forced copies, not pins
+
+`register u8 *b asm("r7"); *(vu16 *)(b + 4)` compiles to `add r0,r7,#4; ldrh
+r0,[r0]` - the pin blocks the `[r7,#4]` fold, volatile or not (probe-verified,
+and it blocks ldrsb/reg-offset forms the same way).  The ROM's folded
+`ldrh r1,[r7,#4]` means its variable was a NATURAL pseudo homed r7.  You get
+natural homes by (a) freeing the target reg of pinned squatters, (b) boosting
+the pseudo's priority with `asm("" :: "r"(x))` dummy refs (2 suffice), or
+(c) the hard-to-hard copy of 3.261.  A pin is the LAST resort for a base reg
+that is dereferenced.
+
+### 3.264 Match one family member, then transcribe the recipe: the afdf0/aff40/b0144/b0338 quartet
+
+Four adjacent M32 functions (322/393/467/502 differing bytes) shared one
+skeleton.  Cracking the first took ~20 iterations; each sibling then matched
+in 1-3 edits by copying the exact staging: `i9 = i*9; o = i9<<4` (multiply
+split), `pa`/`nv` with one volatile barrier (separate ABS loads), per-arm
+`w58 asm("r0")` result staging, `v3t asm("r0")` shift temp, and the
+`asm("" : "+r"(a44) :: "memory")` re-read.  sub_080B0338 matched FIRST TRY.
+When a module has sibling functions, always finish one completely before
+touching the next.
+
+### 3.265 The pin permuter finds byte-optimal WRONG code: audit every pin it adds
+
+`pending/permute.py` hill-climbs pins/unpins with fnmatch as scorer.  It
+closed sub_080B3758 in one mutation (unpin t), but on sub_080B09AC it pinned
+u4 to r6 while v5 was already pinned r6 - the resulting `str r6, [r6, #84]`
+is 14 bytes closer to the ROM and semantically WRONG (stores 4096 to address
+4096+84).  gcc drops conflicting pins silently, and fnmatch only scores
+bytes.  After adopting any permuter result, read the diff hunks for
+same-register base/value stores before building on it.
+
+### 3.266 r7 is FRAME_POINTER_REGNUM: pinned-r7 vars are never saved, and global_alloc never hands r7 out
+
+Two related traps, both from r7 being thumb's nominal frame pointer:
+(a) flow.c skips `regs_ever_live` marking for registers in `elim_reg_set`,
+so a `register ... asm("r7")` variable is used but never pushed - the
+prologue is 2 bytes short and the code is a real miscompile (probe-verified).
+(b) global.c puts the FP in `no_global_alloc_regs` whenever
+`-fomit-frame-pointer` is absent (it is absent in this pipeline), so NO
+call-crossing pseudo ever lands in r7 from global alloc; ROM r7 residency
+comes from local-alloc block temps or reload scratches only.  If the ROM
+keeps a loop-carried variable in r7 with a proper `push {r4-r7}`, the
+matching source shape is NOT a pin and NOT a plain local - look for a spill
+(sub sp) or a per-block recompute that keeps every def-use pair inside one
+basic block.  sub_080B4EA8's last 11 bytes are exactly this and remain open.
+
+### 3.267 The reload SPILLSET is the missing half of the rotation: pinned registers can never enter it
+
+Extending the RRTRACE build with a `SPILLSET` print (finish_spills) showed
+why some 2-3-byte zero-temp residues are unreachable by source tweaks: the
+ROM picks `movs r4, #0` but r4 IS NOT IN our spill set (`{r0,r1,r2}`),
+because a pinned variable squats r4 for the whole function and reload only
+accumulates registers it actually allocates.  The ROM's set had r4 because
+its pool-pointer local was a DROPPED pseudo (3.258's reload form) whose
+address reloads both advanced the rotation and enrolled r4.  Unpinning is
+necessary but not sufficient - the natural allocation must also fail to home
+the variable, which needs the multi-block/call-crossing/2-3-refs shape.
+sub_080ADA20 (3B) and sub_080B1890 (2B) are parked on exactly this.
+
 ### 3.255 fold hoists a constant addend out of `A + (B + K)`; a temp for A pins it back
 `y = t->unk4A + ((o >> 16) + 16) - cam[2]` comes out as `adds r1, #16;
 asrs r2, r2, #16; adds r1, r1, r2` - fold rewrote it as `(A + 16) + B`.  No
