@@ -3777,7 +3777,39 @@ reservation and the r5 save in the prologue.  No source shape reproduces a
 deleted-but-reserving reload yet; sub_080B1890 (2B), sub_080ADA20 (3B),
 sub_080A78A0 (7B) and sub_080A860C (8B) are all parked on this class.
 
-### 3.269 The `mov rX, sp; strb rV, [rX, #4]` byte-slot form has no reproducing C shape yet
+### 3.269 SOLVED: the `mov rX, sp; strb rV, [rX, #4]` byte-slot form is a frame-offset-0 struct accessed through per-site barrier'd byte pointers
+
+The shape that reproduces it exactly (sub_080B5670, 219 -> 112 in one edit):
+
+    struct { volatile s32 c; u8 save; } fr;   /* fr at sp+0: c=[sp,#0], save=sp+4 */
+    ...
+    sv1 = p2[0];                    /* value FIRST (rom order), pinned r0 */
+    fp1 = (u8 *)&fr;                /* &fr = sp+0 -> "mov r5, sp" exactly  */
+    asm("" : "+r"(fp1));            /* per-site copy, blocks address CSE   */
+    fp1[4] = sv1;                   /* strb r0, [r5, #4] - offset folds    */
+
+Why everything else failed: GO_IF_LEGITIMATE_ADDRESS rejects ANY sub-word
+address mentioning the frame/arg/virtual regs before reload, so u8 locals,
+arrays, volatiles and address-taken scalars all get their address
+legitimized at expand (`add rX, sp, #4` + zero-offset access), and plain u8
+pseudos spill in SImode (PROMOTE_MODE) giving `str r0, [sp, #4]`.  A struct
+whose base IS frame offset 0 makes `&fr` fold to plain sp (mov rX, sp is a
+legitimate reg address), and the member offset then satisfies the 5-bit
+REG+const rule, so the QI access survives with the offset in the store.
+The volatile s32 first member doubles as the ROM's [sp, #0] counter slot.
+
+### 3.269b Reload's spill-set entry order counts PSEUDO refs only - explicit-register variables are invisible
+
+order_regs_for_reload ranks candidate spill regs by uses of pseudos
+ALLOCATED to them; `register ... asm("rN")` variables contribute zero, so a
+heavily-pinned function makes its pinned registers look free-est and every
+scratch/reload lands there first.  This is the root of the remaining
+temp-register residues (b5670's k8-copy in r1 vs the ROM's r7, a932c's
+zero temps): the ROM's registers are protected by natural pseudo refcounts
+that pins cannot imitate.  Unpinning alone does not fix it because the
+freed variable's refs then count on BOTH sides.  Open problem; dummy
+`asm("" :: "r"(x))` refs do NOT increment REG_N_REFS.
+
 
 A ROM u8 frame slot written as `mov r5, sp; strb r0, [r5, #4]` and read as
 `mov r1, sp; ldrb r1, [r1, #4]` resisted every construction: plain u8 local
