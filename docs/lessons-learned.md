@@ -3686,6 +3686,25 @@ r7 (`push {r4,r5,r6,r7,lr}; mov r7,r8; push {r7}`).
   shape tried this session reaches. This is a NARROWER, better-understood
   blocker than 3.271's "unreachable" - the r7 push is solved, only the web
   split remains.
+- **CORRECTION after deeper analysis (same session):** getting r7 as a
+  *variable* (n7 pushed) is NOT enough to byte-match b4ea8. The ROM uses r7 as
+  a general SPILL/SCRATCH register - the diff shows `movs r7,#2; ldrsh`,
+  `ldr r7,=pool`, `mov r7,ip`, `mov r7,r8` all through the body - i.e. r7 is in
+  reload's SPILL SET (SPILLSET trace), exactly like a78a0, not merely a
+  global_alloc pseudo home. Every b4ea8 variant this session keeps the spill
+  set at {r0,r1,r2} (n=3); r7 never enrolls, so the r7-as-variable form
+  (z4ea8_9: correct `push {r7}`, no r9) still diverges ~228B in LAYOUT because
+  the ROM's r7-as-spill-scratch is a different code shape. **b4ea8 is therefore
+  the SAME r7-spill-enrollment class as a78a0** (r7 must enter reload's spill
+  set, which needs r0-r6 exhausted at a reload point - unreachable from C
+  without changing bytes), not a mere coalescing problem. An allocation-scoring
+  permuter (`pending/permute5.py`, rejects candidates that use r9/r10/sl or
+  fail to push r7) descends 294->~228B on the r7-as-variable branch but cannot
+  reach the r7-as-spill shape. The five M30/M33 residues (a78a0, a860c, a932c,
+  b4ea8, b5670) are all this family: r7 spill enrollment and/or non-uniform
+  reload rotation, both internal to reload's spill-set construction and
+  unreachable by any C source shape or pin (which are invisible to the
+  spill-set order, 3.269b).
 
 ### 3.273 SOLVED (ada20, M31's last straggler): the extendhisi2 zero-temp lands in r4 when the store-cell pointer is a dropped-pseudo address reload, not a pin
 
