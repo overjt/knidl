@@ -304,7 +304,7 @@ sub-issue of #35, so the numbering ascends with the recommended order):
 | 10 | #73 | M32 enemy/object behaviour bank 13 | `0x080AE3BC-0x080B2FE7` | 19.0 KiB | 2 |
 | 11 | #74 | M28 enemy/object behaviour bank 9 (four-lane spawner, a six-variant enemy family, the player death sequence) - landed | `0x0809BA44-0x080A158F` | 22.8 KiB | 2 |
 | 12 | #75 | M26 enemy/object behaviour bank 7 (four three-table scripts + two companions) - landed | `0x08093F64-0x080988F7` | 18.4 KiB | 2 |
-| 13 | #76 | M29 enemy/object behaviour bank 10 | `0x080A1590-0x080A5643` | 16.2 KiB | 2 |
+| 13 | #76 | M29 enemy/object behaviour bank 10 - landed | `0x080A1590-0x080A5643` | 16.2 KiB | 2 |
 | 14 | #77 | M20 enemy/object behaviour bank 1 (21 task types, mostly moving scenery) - landed | `0x08078B68-0x0807F043` | 25.2 KiB | 2 |
 | 15 | #78 | M31 enemy/object behaviour bank 12 | `0x080AA338-0x080AE3BB` | 16.1 KiB | 2 |
 | 16 | #79 | M19 cutscene / ending-sequence bank (11 class-3 tasks) - landed | `0x08070EC0-0x08078B67` | 31.2 KiB | 2 |
@@ -1508,8 +1508,9 @@ below is the pre-decompilation one, kept for the record.
 * **Pool references** IWRAM x353, game_code_and_rodata x85, asset_metadata_index x76, EWRAM x41, level_graphics_palettes x15, early_58e4 x6, VRAM x1, level_object_tables x1.
 * **Suggested batches** `0x0809BA44` (13 fns), `0x0809C404` (58 fns), `0x0809DCBC` (74 fns), `0x0809FCA4` (53 fns).
 
-### M29 `0x080A1590-0x080A5643` - enemy/object behaviour bank 10
+### M29 `0x080A1590-0x080A5643` - enemy/object behaviour bank 10 - **landed (#76)**
 
+* **Decompiled** into `src/enemy_a1590.c` (226 functions incl. census additions, all byte-matched; `make compare` ROM-identical). Same guard+body script shape as M25/M27 over the 80-entry anchor table `0x08748624`; four-slot EWRAM state in `gUnk_02007D00[]`, companion actors via `gUnk_03002790[]`.
 * **Size** 16.2 KiB (`0x40b4`), 221 functions (153 reachable only through pointer tables), mean `0x4a`, largest `0x100`, pool words 15.4% of bytes.
 * **Difficulty** 2/6 - 21 distinct RAM cells, 0 jump-table dispatches, 0 functions >= `0x200`.
 * **Seam cost** 0 in / 0 out (local `bl` edges crossing the boundary).
@@ -1522,7 +1523,9 @@ below is the pre-decompilation one, kept for the record.
 * **Pool references** IWRAM x327, asset_metadata_index x102, game_code_and_rodata x78, EWRAM x66, early_58e4 x5, level_graphics_palettes x5, VRAM x1.
 * **Suggested batches** `0x080A1590` (49 fns), `0x080A2814` (119 fns), `0x080A4808` (53 fns).
 
-### M30 `0x080A5644-0x080AA337` - enemy/object behaviour bank 11
+### M30 `0x080A5644-0x080AA337` - enemy/object behaviour bank 11 - **landed (#72, partial: 127/130)**
+
+* **Decompiled** into `src/enemy_a5644.c`, `enemy_a7998.c`, `enemy_a87c8.c`, `enemy_a93ec.c` (127 of 130 functions byte-matched; `make clean && make compare` ROM-identical around 3 asm holes). **3 functions remain in asm**: `sub_080A78A0` (248B, r7-enrollment terminal - the extendhisi2 zero-temp needs r7 in the spill set before tb occupies r5, unreachable from C; lessons 3.271), `sub_080A860C` (444B, 8-byte residue: 4 non-uniform extendhisi2 rotation phases; 3.268), `sub_080A932C` (192B, 16-byte coalescing residue; 3.272).
 
 * **Size** 19.2 KiB (`0x4cf4`), 130 functions (110 reachable only through pointer tables), mean `0x97`, largest `0x5ac`, pool words 12.0% of bytes.
 * **Difficulty** 1/6 - 30 distinct RAM cells, 2 jump-table dispatches, 7 functions >= `0x200`.
@@ -1537,7 +1540,9 @@ below is the pre-decompilation one, kept for the record.
 * **Known RAM cells touched** BG2CNT shadow x2, BG3CNT shadow x2, MOSAIC lo shadow x1, per-player keys held x1.
 * **Suggested batches** `0x080A5644` (68 fns), `0x080A7438` (12 fns), `0x080A7D98` (38 fns), `0x080A99A0` (12 fns).
 
-### M31 `0x080AA338-0x080AE3BB` - enemy/object behaviour bank 12
+### M31 `0x080AA338-0x080AE3BB` - enemy/object behaviour bank 12 - **landed (#78)**
+
+* **Decompiled** into `src/enemy_aa338.c` (123 functions, all byte-matched; `make clean && make compare` ROM-identical). Last straggler `sub_080ADA20` (3 bytes) closed via the dropped-pseudo address-reload form (lessons 3.258/3.273).
 
 * **Size** 16.1 KiB (`0x4084`), 121 functions (96 reachable only through pointer tables), mean `0x88`, largest `0x378`, pool words 14.3% of bytes.
 * **Difficulty** 2/6 - 21 distinct RAM cells, 1 jump-table dispatches, 2 functions >= `0x200`.
@@ -1552,7 +1557,9 @@ below is the pre-decompilation one, kept for the record.
 * **Known RAM cells touched** current game state (main dispatch) x3.
 * **Suggested batches** `0x080AA338` (50 fns), `0x080AC30C` (21 fns), `0x080ACC9C` (22 fns), `0x080AD4B8` (28 fns).
 
-### M32 `0x080AE3BC-0x080B2FE7` - enemy/object behaviour bank 13
+### M32 `0x080AE3BC-0x080B2FE7` - enemy/object behaviour bank 13 - **landed (#73)**
+
+* **Decompiled** into `src/enemy_ae3bc.c` (135 functions, all byte-matched; `make clean && make compare` ROM-identical).
 
 * **Size** 19.0 KiB (`0x4c2c`), 129 functions (96 reachable only through pointer tables), mean `0x97`, largest `0x320`, pool words 11.9% of bytes.
 * **Difficulty** 1/6 - 15 distinct RAM cells, 4 jump-table dispatches, 3 functions >= `0x200`.
@@ -1566,7 +1573,9 @@ below is the pre-decompilation one, kept for the record.
 * **Pool references** IWRAM x230, asset_metadata_index x129, game_code_and_rodata x70, EWRAM x24, early_5d9c x8, level_graphics_palettes x6, early_58e4 x3, VRAM x2.
 * **Suggested batches** `0x080AE3BC` (47 fns), `0x080B0338` (52 fns), `0x080B22F8` (30 fns).
 
-### M33 `0x080B2FE8-0x080B6153` - HUD / overlay effects?
+### M33 `0x080B2FE8-0x080B6153` - HUD / overlay effects? - **landed (#97, partial: 106/108)**
+
+* **Decompiled** into `src/hud_b2fe8.c`, `hud_b5024.c`, `hud_b5840.c` (106 of 108 functions byte-matched; `make clean && make compare` ROM-identical around 2 asm holes). **2 functions remain in asm**: `sub_080B4EA8` (380B, r7 web-split - the loop counter n7=i4+1 splits into a pre-switch pseudo (r7, correctly pushed) plus per-case recomputes that global_alloc coalesces into a separate callee-saved reg r9; natural pressure DOES push r7 but the exact 5-callee-saved web split is a global-alloc fixed-point; lessons 3.271/3.273) and `sub_080B5670` (464B, the same r7-preference core the permuter reduced to 48B but cannot zero; 3.272).
 
 * **Size** 12.4 KiB (`0x316c`), 108 functions (69 reachable only through pointer tables), mean `0x75`, largest `0x380`, pool words 14.2% of bytes.
 * **Difficulty** 3/6 - 58 distinct RAM cells, 5 jump-table dispatches, 4 functions >= `0x200`.

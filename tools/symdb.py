@@ -279,6 +279,14 @@ KNOWN_SYMBOLS = {
 # m4a_songs data segment surrounded by signed 8-bit PCM sample bytes; the
 # `pop {pc}` halfword passes the strict terminator check by accident.
 FALSE_POSITIVES = {
+    # --- M32 (issue #73), one row the reachability sweep dropped ---
+    # 0x080B1AFA is the second halfword of the `bl TaskYieldTrampoline` at
+    # 0x080B1AF8, inside sub_080b1a1c's second yield loop.  The "bl edge" the
+    # symbol DB found is the pool word 0xFFFFF000 at 0x080B0AF8 (inside
+    # sub_080b09ac's literal pool) decoding as a bl pair.  sub_080b1a1c runs
+    # 0x080B1A1C-0x080B1B2C (0x110).
+    0x080B1AFA,
+
     # --- M28 (issue #74), one row the reachability sweep dropped ---
     # 0x080A02FC is the pool-skip branch INSIDE sub_080A02D4: the ROM falls
     # into its `b.n 0x080A031E` from the guard above and `loc_080A0304` is a
@@ -433,6 +441,37 @@ FALSE_POSITIVES = {
 # m4a.c function order and body shape (see the KNOWN_SYMBOLS comments);
 # they are injected as candidates and carry the "curated" evidence kind.
 EXTRA_THUMB_ENTRIES = {
+    # --- M29-M33 (issues #76 #72 #78 #73 #97), seventeen hidden entries the
+    # reachability sweep found.  Three kinds: (a) continuation entries stored
+    # as `fn+1` pool words into a task field or referenced from a script/anchor
+    # table in asset_metadata_index; (b) dead twin tails - a small
+    # `sub_08002e98(Task.unk14, N, <table>)` epilogue-twin of the function
+    # right before it that nothing in the ROM references; (c) standalone
+    # helpers after the owner's epilogue.
+    0x080A1DBC,  # continuation: pool word 0x080A1DBD at 0x080A1DB0 is stored
+                 # into Task.unk3C by sub_080a1d84 itself.
+    0x080A4AA8,  # dead twin tail of sub_080a4a60 (reads Task.unk14, table
+                 # 0x087489B8; the live twin uses unk15/0x087489BC).
+    0x080A4C20,  # dead twin tail of sub_080a4bdc (table 0x087489D8).
+    0x080A4F24,  # dead twin tail of sub_080a4ee0 (table 0x08748A28).
+    0x080A5220,  # dead twin tail of sub_080a51dc (table 0x08748A68).
+    0x080A9E88,  # continuation: pool word 0x080A9E89 at 0x080A7D90 (inside
+                 # sub_080a7d14) is stored into a task field.
+    0x080ACC8C,  # anchor-table entry: word 0x080ACC8D at 0x08749C40.
+    0x080AE380,  # the y-coordinate window comparator after sub_080ae37c's
+                 # 2-byte `bx lr` body; pool word 0x080AE381 at 0x080AD628.
+    0x080AF100,  # anchor-table entry: 0x080AF101 x4 at 0x0874AD7C...0x0874ADA0.
+    0x080AF178,  # anchor-table entry: 0x080AF179 x4 at 0x0874ADE4...0x0874AEA4.
+    0x080AF26C,  # anchor-table entry: 0x080AF26D at 0x0874B514.
+    0x080B0570,  # standalone scroll-shadow helper after sub_080b0338's
+                 # TaskDispatchTrampoline epilogue; nothing references it.
+    0x080B2E3C,  # dead twin tail of sub_080b2e20 (table 0x0874C150).
+    0x080B2F78,  # dead twin tail of sub_080b2f38 (blend setup via
+                 # sub_080061c0(0x1CD00, 0x5A5A5A5A)).
+    0x080B2FB0,  # second dead twin tail in the same range (same body shape).
+    0x080B33BC,  # dead twin tail of sub_080b3398 (table 0x0874C258).
+    0x080B408C,  # anchor-table entry: word 0x080B408D at 0x0873F620.
+
     # --- M28 (issue #74), seven hidden entries the reachability sweep found ---
     # Six are real anchor-table targets that -fprologue-bugfix left without a
     # `push`, so the prologue filter could not propose them; the seventh is a

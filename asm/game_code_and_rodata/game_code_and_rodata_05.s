@@ -8328,7 +8328,7 @@ loc_0805a8c6:
 	.word	gUnk_03002348
 	.word	gUnk_030023E4
 	.word	0x0873BB3E
-	.word	0x02007D64
+	.word	gUnk_02007D64
 	.word	0x02007F60
 	.word	gUnk_03001570
 	.word	gUnk_0200AF20
@@ -8621,7 +8621,7 @@ loc_0805ab2a:
 	cmp	r0, #2
 	beq.n	loc_0805abd8	@ 0x0805ABD8
 	b.n	loc_0805ac46	@ 0x0805AC46
-	.word	0x02007D64
+	.word	gUnk_02007D64
 	.word	gUnk_03002490
 	.global	loc_0805ab38
 loc_0805ab38:
@@ -14170,7 +14170,7 @@ sub_0805d668:
 	.word	gUnk_03002490
 	.word	sub_080059d8+1
 	.word	sub_08005d9c+1
-	.word	0x0874CCF4
+	.word	gUnk_0874CCF4
 	.global	loc_0805d6b4
 loc_0805d6b4:
 	ldr	r2, [pc, #196]	@ 0x0805D77C

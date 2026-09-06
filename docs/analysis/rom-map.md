@@ -592,6 +592,39 @@ child issues of #35 are created from it. Findings that belong in this document:
   blocks: `0x08753090`, `0x08753180`, `0x087531C4`, `0x087531DC` and
   `0x0874CB7C`; the 16-byte graphics records the per-frame bodies re-upload
   through `sub_080663f4` are `0x08274840` and `0x082797C8`.
+- **M32 (`0x080AE3BC-0x080B2FE7`) is enemy/object behaviour bank 13.**
+  Decompiled in #73 into `src/enemy_ae3bc.c` (135 functions, all
+  byte-matched, ROM identical). The last straggler `sub_080b1890` was
+  closed with the redundant-read reload lever (a dead reg-offset re-read
+  that reload_cse deletes but whose rotation advance persists; lessons
+  3.270).
+- **M30 (`0x080A5644-0x080AA337`) is enemy/object behaviour bank 11.**
+  Decompiled in #72 (partial, 127/130) into `src/enemy_a5644.c`,
+  `enemy_a7998.c`, `enemy_a87c8.c`, `enemy_a93ec.c`; ROM-identical around 3
+  asm holes. Anchor tables `0x08748EB8` (53) and `0x08749150` (20); 12 task
+  types. Remaining in asm: `sub_080A78A0` (r7-enrollment terminal, 3.271),
+  `sub_080A860C` (8B rotation), `sub_080A932C` (16B coalescing).
+- **M33 (`0x080B2FE8-0x080B6153`) is HUD / overlay effects (candidate).**
+  Decompiled in #97 (partial, 106/108) into `src/hud_b2fe8.c`,
+  `hud_b5024.c`, `hud_b5840.c`; ROM-identical around 2 asm holes. Remaining
+  in asm: `sub_080B4EA8` (r7 web-split, 3.274) and `sub_080B5670` (48B
+  r7-preference core, 3.272).
+- **M31 (`0x080AA338-0x080AE3BB`) is enemy/object behaviour bank 12.**
+  Decompiled in #78 into `src/enemy_aa338.c` (123 functions, all
+  byte-matched, ROM identical). Anchor tables `0x087493F4` (25 entries ->
+  `0x080AA338-0x080AB46C`) and `0x08749B8C` (8 entries ->
+  `0x080AC868-0x080ACC18`); 18 task types, Div x5. The last straggler
+  `sub_080ADA20` (3 bytes) was closed with the dropped-pseudo
+  address-reload form: the store-cell pointer written as a plain
+  multi-block un-pinned local so reload rematerializes it and the
+  `movs r4,#0` extendhisi2 zero-temp lands in r4 (lessons 3.258/3.273).
+- **M29 (`0x080A1590-0x080A5643`) is enemy/object behaviour bank 10.**
+  Decompiled in #76 into `src/enemy_a1590.c` (226 functions, all
+  byte-matched, no asm left in the range). The M25/M27 guard+body script
+  shape over the 80-entry anchor table `0x08748624` (plus the smaller
+  `0x087484C4`/`0x087489D4`/`0x08748A28`/`0x08748A54` tables); per-lane
+  state in `gUnk_02007D00[]` and companion actors through
+  `gUnk_03002790[Task.unk44]`, both shared with M28.
 - **M28 (`0x0809BA44-0x080A158F`) is NOT one behaviour bank.** Decompiled in
   #74 into thirteen `src/enemy_9*.c` / `src/enemy_a*.c` files (all 204
   functions, no asm left in the range). Four unrelated things share its

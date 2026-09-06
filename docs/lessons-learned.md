@@ -3653,6 +3653,326 @@ What finally closed `sub_080A00EC` (392 bytes, the last function of M28) after
   survives two informed shape attempts AND the `-da` dumps, instrument the
   compiler - it is the same escalation 3.75/4.35 recommend, one level deeper.
 
+### 3.274 r7 IS reachable via global_alloc pressure (b4ea8), refining 3.271: natural loop-carried pseudos push r7 correctly; the residual blocker is web-splitting, not enrollment
+
+3.271 said "r7 can only come from reload under pressure, not from C." That is
+true for a *reload scratch* (a78a0's extendhisi2 zero-temp). But r7 as a
+*variable* (global_alloc pseudo) IS reachable, and this is the correct model
+for `sub_080B4EA8`, whose ROM keeps the loop counter `n7 = i4+1` in a pushed
+r7 (`push {r4,r5,r6,r7,lr}; mov r7,r8; push {r7}`).
+
+- **Pinning `register x asm("r7")` still miscompiles** (no push, 3.271) UNLESS
+  some *other* natural pseudo also lands in r7 (global_alloc sets
+  `regs_ever_live[7]`, so the pin is then saved too). Do not rely on it.
+- **The working lever: make the loop-carried variables NATURAL** (drop the
+  `asm("rN")` pins on i4/e5/p6/k8/n7). global_alloc then assigns them the
+  callee-saved bank r4-r8 and pushes r7. Confirmed with the RRTRACE `.greg`
+  "Hard regs used" line and the emitted `push {r7}`.
+- **Two traps that add a 6th callee-saved reg (r9) and desync everything:**
+  (1) a shared materialized constant - `one=1; asm volatile("":"+r"(one)); k8+=one;`
+  repeated in several arms lets cse merge the `1` into ONE pseudo that crosses
+  every call (r9). The ROM emits `movs r0,#1; add r8,r0` fresh per site, so
+  write `k8 += 1;` inline and let agbcc rematerialize. (2) a call-clobbered
+  pointer (`n3` in r3) staged across a call must go to the STACK
+  (`str r3,[sp]`), not a callee-saved reg - use a `volatile` frame slot
+  (`spill = (u32)n3, ...; n3 = (u8*)spill`).
+- **The residual blocker (why b4ea8 still parks at 380B in asm):** the counter
+  `n7=i4+1` splits into TWO webs - a pre-switch def (used by the empty cases
+  0/4/7 which cross their calls, correctly r7) and the per-arm recomputes
+  (a separate web that global_alloc puts in r9). The ROM keeps both in one r7.
+  Removing the per-arm recomputes makes the function 48B short (the ROM really
+  does re-emit `adds r7,r4,#1` per arm); keeping them splits the web. Unifying
+  the two webs into one r7 is a global-alloc coalescing fixed-point no source
+  shape tried this session reaches. This is a NARROWER, better-understood
+  blocker than 3.271's "unreachable" - the r7 push is solved, only the web
+  split remains.
+- **CORRECTION after deeper analysis (same session):** getting r7 as a
+  *variable* (n7 pushed) is NOT enough to byte-match b4ea8. The ROM uses r7 as
+  a general SPILL/SCRATCH register - the diff shows `movs r7,#2; ldrsh`,
+  `ldr r7,=pool`, `mov r7,ip`, `mov r7,r8` all through the body - i.e. r7 is in
+  reload's SPILL SET (SPILLSET trace), exactly like a78a0, not merely a
+  global_alloc pseudo home. Every b4ea8 variant this session keeps the spill
+  set at {r0,r1,r2} (n=3); r7 never enrolls, so the r7-as-variable form
+  (z4ea8_9: correct `push {r7}`, no r9) still diverges ~228B in LAYOUT because
+  the ROM's r7-as-spill-scratch is a different code shape. **b4ea8 is therefore
+  the SAME r7-spill-enrollment class as a78a0** (r7 must enter reload's spill
+  set, which needs r0-r6 exhausted at a reload point - unreachable from C
+  without changing bytes), not a mere coalescing problem. An allocation-scoring
+  permuter (`pending/permute5.py`, rejects candidates that use r9/r10/sl or
+  fail to push r7) descends 294->~228B on the r7-as-variable branch but cannot
+  reach the r7-as-spill shape. The five M30/M33 residues (a78a0, a860c, a932c,
+  b4ea8, b5670) are all this family: r7 spill enrollment and/or non-uniform
+  reload rotation, both internal to reload's spill-set construction and
+  unreachable by any C source shape or pin (which are invisible to the
+  spill-set order, 3.269b).
+
+### 3.273 SOLVED (ada20, M31's last straggler): the extendhisi2 zero-temp lands in r4 when the store-cell pointer is a dropped-pseudo address reload, not a pin
+
+`sub_080ADA20`'s 3-byte residue was `movs r4,#0; ldrsh r1,[r0,r4]` (ROM) vs
+`movs r2,#0` (ours): the epilogue's `ldrsh` extendhisi2 index scratch wanted
+r4, but r4 was pinned to a pointer variable (`pb3`) so it never entered the
+spill set and reload fell back to r2. This is the 3.269b symptom
+(explicit-register vars are invisible to `order_regs_for_reload`), but here it
+has a zero-byte fix, found with the RRTRACE-instrumented compiler:
+
+- The RR trace showed `SPILLSET n=3: r0 r1 r2` — r4 was never enrolled. The
+  ROM enrolls r4 because at the `ldr r0,[r4,#0]` (`*pb2`) load in the same
+  region every low reg is busy, forcing reload to take r4 as an additional
+  spill register (`new_spill_reg`), which then serves the later zero-temp.
+- The winning shape had THREE independent moves, each necessary:
+  1. **Unpin the store-cell pointer** (`c2` was `register ... asm("r2")`);
+     write it as a plain local and, crucially, assign it `= &gUnk_03002490`
+     **once, before the loop** so it is multi-block + call-crossing with 2-3
+     refs — local_alloc skips it, global_alloc drops it, and reload
+     rematerializes the `ldr rN,=sym` per use (the 3.258 dropped-pseudo /
+     address-reload form). Written as a pinned register or initialized inside
+     the tail it becomes an allocator pseudo instead and the rotation never
+     advances to r4.
+  2. **Unpin the second table-base pointer** (`pb3`→plain local) so r4 is
+     free for reload to enroll.
+  3. **Leave the loop-tail pointer (`pb2`) natural** (NOT pinned to r8): the
+     pin legitimizes its address into an expand-time pseudo that never
+     reloads, which is what kept r4 out of the spill set. Natural, it takes
+     r8 by conflict pressure exactly as the ROM does, and its load is the
+     insn that enrolls r4.
+- The general rule: when a scratch register the ROM uses is a *callee-saved
+  low reg* (r4-r6) that your build puts in a call-clobbered one, check the
+  SPILLSET trace first. If the reg is absent, the fix is almost never a pin
+  (a pin makes it more absent) — it is removing whatever pin/pseudo is
+  keeping the enrolling load from happening, so reload adds the reg itself.
+  ada20 went 3B → MATCH and carved all of M31.
+
+### 3.272 The combined structural+pin annealing permuter reduces but cannot zero the r7/coalescing residues
+
+Built three permuter generations (all in pending/): permute2 (pin/natural/
+barrier), permute3 (stmt reorder, deref/index toggle, kept-alive redundant
+read), permute4 (both, simulated-annealing). Run across all 6 M30-M33
+stragglers with 500-900 iterations and 6+ seeds, permute4 improved two:
+a932c 19->16, b5670 521->84->50->48. The other four never moved from their
+floor (ada20 3, a78a0 7, a860c 8, b4ea8 11). Even the improved two do NOT
+reach zero: b5670's residue is the SAME r7-preference core (ROM keeps the
+const 2 and scratch values in callee-saved r7) that a78a0/b4ea8 need and
+3.271 proved unreachable. MODULE-LEVEL CONSEQUENCE: a carve needs every
+function at zero, and each of M30/M31/M33 contains at least one floor-locked
+function (M31: ada20; M30: a78a0+a860c; M33: b4ea8), so none can carve
+regardless of a932c/b5670 progress. The two blocking classes are r7 spill
+enrollment (§3.271) and r4/pointer coalescing + retard-rotation (§3.268b/
+3.269b) - both internal allocator fixed-points. The only remaining lever is
+a permuter that scores against the target ROM at the allocation level;
+pending/permute4.py is the scaffold for it.
+
+### 3.271 PROBE-CONFIRMED: r7 cannot be forced into the prologue-saved set from C at all
+
+Two direct probes settle the r7-enrollment cases (a78a0, b4ea8) definitively:
+- `asm("movs r7,#0" ::: "r7")` compiles to `push {lr}` - r7 clobber does NOT
+  push r7, even with -O2's omit-frame-pointer. Inline asm can place an r7
+  instruction but produces a CORRUPT function (r7 not saved).
+- `register int v asm("r7"); v = ...; ext(v); ext(v*2);` is MISCOMPILED: no
+  r7 push, and the second use reads `sp` instead of r7 - the value is lost
+  across the call. A register-r7 variable is unusable.
+
+Therefore the ROM's r7 (used as an extendhisi2 zero-temp AND pushed) can ONLY
+originate from reload choosing r7 as a spill register under enough pressure
+that r0-r6 are exhausted - a global-allocation outcome. No C-level construct
+(pin, clobber, or asm) reaches it: they are ignored (§3.269b), skip the
+save (§3.266), or miscompile. a78a0 (7B) and b4ea8 (11B) are parked here with
+this proof, not a guess.
+
+### 3.270 SOLVED (rotation-advance sub-case): a redundant reg-offset read forces the reload reload_cse later deletes, reproducing the phantom reservation
+
+sub_080B1890's 2-byte residue (§3.268 phantom-reservation class) IS solvable
+when the needed register is already in the spill set and the divergence is a
+single uniform one-off rotation phase. The lever:
+
+    k = *e;              /* the real read, value now in a register        */
+    ...
+    kdummy = *e;         /* REDUNDANT reg-offset re-read of same memory   */
+    asm("" : : "r"(kdummy));   /* keep it from dead-stripping before reload */
+
+The redundant `ldrsh` needs an extendhisi2 zero-temp, so reload allocates
+one (advancing the round-robin by one), then reload_cse notices the loaded
+value already sits in a register and DELETES the whole redundant load - zero
+bytes added, but the rotation advance persists exactly as the ROM's
+deleted-insn reservation did. Closed b1890 and carved all of M32.
+
+Applies ONLY when: (a) the target register is already enrolled in the spill
+set (SPILLSET trace), and (b) every divergence downstream is uniformly one
+rotation step behind - a global advance fixes them together. It does NOT
+help when the register must first ENTER the set (ada20's r4, a78a0/b4ea8's
+r7 - those need §3.267 enrollment, and forcing a deletable reload onto the
+appended slot disturbs the low-index rotation), nor when divergences are
+non-uniform per-site (a860c's four independent phases).
+
+### 3.259 A switch with case ranges keeps exact compare constants, and SOURCE ARM ORDER picks the block layout
+
+combine canonicalizes if-chain compares (`LT C` -> `LE C-1`), so a ROM tree
+holding `cmp #189/blt` + `cmp #123/bge` cannot come from ifs.  `case 121 ...
+124:` GNU ranges emitted by `emit_case_nodes` keep the exact constants.  The
+second half nobody tells you: with the tree fixed, the residual inverted-root
+(`ble` to the left subtree with the right inline) is not an emission path at
+all - it is the ARM ORDER in the source.  Brute-forcing the 5!x2 orderings of
+sub_080AE380's arms found `B,A,C,D,E + default-last` matched exactly; the
+straightforward ascending order was 29 bytes off.  Generate-and-score the
+permutations (`pending/tmp/genswitch.py`), do not reason about
+`emit_case_nodes` - the layout also depends on jump threading after it.
+
+### 3.260 Empty `asm` barriers inflate branch-shortening estimates and flip `beq` <-> `bne+b` relaxation ties
+
+shorten_branches counts every `asm("" ...)` as a real instruction when it
+estimates conditional-branch reach.  A `beq` whose true distance is ~250
+bytes (limit 254) goes LONG (`bne .+4; b target`) if two or three
+zero-instruction barriers sit inside the span - and every byte after it
+shifts, which reads as a 160-byte diff (sub_080B0B50).  The ROM's plain 2002
+sources have no asm, so on any function where the diff shows a lone
+`beq far` vs `bne+b` pair: count the barriers between branch and target and
+replace them with fully-pinned staging (3.261), which needs no asm at all.
+
+### 3.261 The volatile-staged pinned copy: how to place a hi-reg reload temp in a chosen register
+
+ROM code that reads `mov r4, r9; strh r4, ...` where we emit `mov r0, r9` is
+reload picking a rotation scratch.  The zero-instruction fix:
+
+    register s32 w asm("r4");
+    w = one9;                      /* one9 lives in r9 */
+    asm volatile("" : "+r"(w));    /* volatile, or cse folds the copy away */
+    t->fld = w;
+
+Plain `asm("" : "+r"(w))` gets dead-stripped (output unused after); without
+the barrier cse propagates the constant/value and drops the pin silently.
+Same recipe with both sides pinned (`cw1 asm("r1") = c9; tA asm("r0") = *cw1`)
+forces a hard-to-hard copy that CANNOT coalesce - no asm needed at all when
+the source register is itself pinned.  Closed sub_080B09AC (344B residue),
+sub_080AE1F0 (278B) and most of the M32/M33 second-order temps.
+
+### 3.262 Pointer arithmetic canonicalizes base-first; the `(u32)` cast form keeps source operand order
+
+`p3 = i1 + b7` (int + pointer) canonicalizes to `adds rP, rB7, rI1` - base
+first - no matter which order the source writes.  The ROM's `adds r3, r1, r7`
+(index first) comes from INTEGER addition: `(u8 *)((u32)i1 + (u32)b7)`.
+Zero-byte lever, fires constantly (sub_080B5A94 x3, afdf0 family x6).
+
+### 3.263 A pinned base register blocks EVERY addressing fold; natural homes come from forced copies, not pins
+
+`register u8 *b asm("r7"); *(vu16 *)(b + 4)` compiles to `add r0,r7,#4; ldrh
+r0,[r0]` - the pin blocks the `[r7,#4]` fold, volatile or not (probe-verified,
+and it blocks ldrsb/reg-offset forms the same way).  The ROM's folded
+`ldrh r1,[r7,#4]` means its variable was a NATURAL pseudo homed r7.  You get
+natural homes by (a) freeing the target reg of pinned squatters, (b) boosting
+the pseudo's priority with `asm("" :: "r"(x))` dummy refs (2 suffice), or
+(c) the hard-to-hard copy of 3.261.  A pin is the LAST resort for a base reg
+that is dereferenced.
+
+### 3.264 Match one family member, then transcribe the recipe: the afdf0/aff40/b0144/b0338 quartet
+
+Four adjacent M32 functions (322/393/467/502 differing bytes) shared one
+skeleton.  Cracking the first took ~20 iterations; each sibling then matched
+in 1-3 edits by copying the exact staging: `i9 = i*9; o = i9<<4` (multiply
+split), `pa`/`nv` with one volatile barrier (separate ABS loads), per-arm
+`w58 asm("r0")` result staging, `v3t asm("r0")` shift temp, and the
+`asm("" : "+r"(a44) :: "memory")` re-read.  sub_080B0338 matched FIRST TRY.
+When a module has sibling functions, always finish one completely before
+touching the next.
+
+### 3.265 The pin permuter finds byte-optimal WRONG code: audit every pin it adds
+
+`pending/permute.py` hill-climbs pins/unpins with fnmatch as scorer.  It
+closed sub_080B3758 in one mutation (unpin t), but on sub_080B09AC it pinned
+u4 to r6 while v5 was already pinned r6 - the resulting `str r6, [r6, #84]`
+is 14 bytes closer to the ROM and semantically WRONG (stores 4096 to address
+4096+84).  gcc drops conflicting pins silently, and fnmatch only scores
+bytes.  After adopting any permuter result, read the diff hunks for
+same-register base/value stores before building on it.
+
+### 3.266 r7 is FRAME_POINTER_REGNUM: pinned-r7 vars are never saved, and global_alloc never hands r7 out
+
+Two related traps, both from r7 being thumb's nominal frame pointer:
+(a) flow.c skips `regs_ever_live` marking for registers in `elim_reg_set`,
+so a `register ... asm("r7")` variable is used but never pushed - the
+prologue is 2 bytes short and the code is a real miscompile (probe-verified).
+(b) global_alloc CAN hand r7 to an unpinned call-crossing pseudo - matched
+sub_080B5D84's t7 proves it (unpinning was the fix: natural r7 + saved
+prologue) - but it often refuses for cost/conflict reasons that resist
+modeling: probes with r4-r6 pinned and r7 free spill the 4th variable or
+pick r9 instead, with or without -fomit-frame-pointer.  When the ROM keeps a
+loop-carried variable in r7, FIRST try the plain unpinned local (b5d84);
+if global insists on r9/spill (b4ea8's n7, still open at 11 bytes), the
+conflict is inside that function's allocation order and no source-level
+shape has reproduced it yet.
+
+### 3.267 The reload SPILLSET is the missing half of the rotation: pinned registers can never enter it
+
+Extending the RRTRACE build with a `SPILLSET` print (finish_spills) showed
+why some 2-3-byte zero-temp residues are unreachable by source tweaks: the
+ROM picks `movs r4, #0` but r4 IS NOT IN our spill set (`{r0,r1,r2}`),
+because a pinned variable squats r4 for the whole function and reload only
+accumulates registers it actually allocates.  The ROM's set had r4 because
+its pool-pointer local was a DROPPED pseudo (3.258's reload form) whose
+address reloads both advanced the rotation and enrolled r4.  Unpinning is
+necessary but not sufficient - the natural allocation must also fail to home
+the variable, which needs the multi-block/call-crossing/2-3-refs shape.
+sub_080ADA20 (3B) and sub_080B1890 (2B) are parked on exactly this.
+
+### 3.268 The rotation is two-pass and starts at last_spill_reg+1: the TRY trace settles any scratch-register residue
+
+Extending RRTRACE with a per-candidate print in `allocate_reload_reg`
+(`TRY insn=N i=N reg=N free=N`, gate RRTRACE2) shows the full mechanics:
+pass 0 only accepts registers already used for this insn's reloads
+(reuse), pass 1 takes the first FREE candidate scanning spill_regs from
+`last_spill_reg + 1`.  sub_080B1890's 2-byte residue reads directly off the
+trace: cand insn 87 starts at i=3 (r5, free, taken); the ROM's byte needs
+r5 BUSY there so the scan wraps to r4 - and nothing in the ROM's bytes
+occupies r5, meaning the ROM compile had a reload event in r5 whose insn
+was later deleted (reload_cse / inheritance), leaving only the phantom
+reservation and the r5 save in the prologue.  No source shape reproduces a
+deleted-but-reserving reload yet; sub_080B1890 (2B), sub_080ADA20 (3B),
+sub_080A78A0 (7B) and sub_080A860C (8B) are all parked on this class.
+
+### 3.269 SOLVED: the `mov rX, sp; strb rV, [rX, #4]` byte-slot form is a frame-offset-0 struct accessed through per-site barrier'd byte pointers
+
+The shape that reproduces it exactly (sub_080B5670, 219 -> 112 in one edit):
+
+    struct { volatile s32 c; u8 save; } fr;   /* fr at sp+0: c=[sp,#0], save=sp+4 */
+    ...
+    sv1 = p2[0];                    /* value FIRST (rom order), pinned r0 */
+    fp1 = (u8 *)&fr;                /* &fr = sp+0 -> "mov r5, sp" exactly  */
+    asm("" : "+r"(fp1));            /* per-site copy, blocks address CSE   */
+    fp1[4] = sv1;                   /* strb r0, [r5, #4] - offset folds    */
+
+Why everything else failed: GO_IF_LEGITIMATE_ADDRESS rejects ANY sub-word
+address mentioning the frame/arg/virtual regs before reload, so u8 locals,
+arrays, volatiles and address-taken scalars all get their address
+legitimized at expand (`add rX, sp, #4` + zero-offset access), and plain u8
+pseudos spill in SImode (PROMOTE_MODE) giving `str r0, [sp, #4]`.  A struct
+whose base IS frame offset 0 makes `&fr` fold to plain sp (mov rX, sp is a
+legitimate reg address), and the member offset then satisfies the 5-bit
+REG+const rule, so the QI access survives with the offset in the store.
+The volatile s32 first member doubles as the ROM's [sp, #0] counter slot.
+
+### 3.269b Reload's spill-set entry order counts PSEUDO refs only - explicit-register variables are invisible
+
+order_regs_for_reload ranks candidate spill regs by uses of pseudos
+ALLOCATED to them; `register ... asm("rN")` variables contribute zero, so a
+heavily-pinned function makes its pinned registers look free-est and every
+scratch/reload lands there first.  This is the root of the remaining
+temp-register residues (b5670's k8-copy in r1 vs the ROM's r7, a932c's
+zero temps): the ROM's registers are protected by natural pseudo refcounts
+that pins cannot imitate.  Unpinning alone does not fix it because the
+freed variable's refs then count on BOTH sides.  Open problem; dummy
+`asm("" :: "r"(x))` refs do NOT increment REG_N_REFS.
+
+
+A ROM u8 frame slot written as `mov r5, sp; strb r0, [r5, #4]` and read as
+`mov r1, sp; ldrb r1, [r1, #4]` resisted every construction: plain u8 local
+-> pseudo spills in SImode (`str r0, [sp, #4]`, one insn short); u8/u16
+array -> expand legitimizes the address early (`add rX, sp, #4` +
+zero-offset access); volatile scalar or array -> same add-form plus
+re-reads; one-byte struct -> word RMW; address-taken scalar -> add-form;
+inline asm with "m" constraints -> materialized addresses elsewhere.  The
+form is what RELOAD emits for a QI access whose (mem (plus sp 4)) survives
+to reload; only spill-machinery-generated accesses go down that path, and
+user code apparently cannot.  sub_080B5670's last structural gap (219B of
+mostly cascading +-2 shifts) hangs on this plus ~15 rotation temps.
+
 ### 3.255 fold hoists a constant addend out of `A + (B + K)`; a temp for A pins it back
 `y = t->unk4A + ((o >> 16) + 16) - cam[2]` comes out as `adds r1, #16;
 asrs r2, r2, #16; adds r1, r1, r2` - fold rewrote it as `(A + 16) + B`.  No
