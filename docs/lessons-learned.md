@@ -3653,6 +3653,25 @@ What finally closed `sub_080A00EC` (392 bytes, the last function of M28) after
   survives two informed shape attempts AND the `-da` dumps, instrument the
   compiler - it is the same escalation 3.75/4.35 recommend, one level deeper.
 
+### 3.272 The combined structural+pin annealing permuter reduces but cannot zero the r7/coalescing residues
+
+Built three permuter generations (all in pending/): permute2 (pin/natural/
+barrier), permute3 (stmt reorder, deref/index toggle, kept-alive redundant
+read), permute4 (both, simulated-annealing). Run across all 6 M30-M33
+stragglers with 500-900 iterations and 6+ seeds, permute4 improved two:
+a932c 19->16, b5670 521->84->50->48. The other four never moved from their
+floor (ada20 3, a78a0 7, a860c 8, b4ea8 11). Even the improved two do NOT
+reach zero: b5670's residue is the SAME r7-preference core (ROM keeps the
+const 2 and scratch values in callee-saved r7) that a78a0/b4ea8 need and
+3.271 proved unreachable. MODULE-LEVEL CONSEQUENCE: a carve needs every
+function at zero, and each of M30/M31/M33 contains at least one floor-locked
+function (M31: ada20; M30: a78a0+a860c; M33: b4ea8), so none can carve
+regardless of a932c/b5670 progress. The two blocking classes are r7 spill
+enrollment (§3.271) and r4/pointer coalescing + retard-rotation (§3.268b/
+3.269b) - both internal allocator fixed-points. The only remaining lever is
+a permuter that scores against the target ROM at the allocation level;
+pending/permute4.py is the scaffold for it.
+
 ### 3.271 PROBE-CONFIRMED: r7 cannot be forced into the prologue-saved set from C at all
 
 Two direct probes settle the r7-enrollment cases (a78a0, b4ea8) definitively:
