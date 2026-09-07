@@ -279,6 +279,42 @@ KNOWN_SYMBOLS = {
 # m4a_songs data segment surrounded by signed 8-bit PCM sample bytes; the
 # `pop {pc}` halfword passes the strict terminator check by accident.
 FALSE_POSITIVES = {
+    # --- M11 (issue #85), five rows: the census had split ONE 2820-byte
+    # function into five and clipped a second one's shared epilogue.
+    #
+    # sub_0803eaf8 really runs 0x0803EAF8-0x0803F5FC (0xB04).  Across that
+    # whole span there is exactly ONE prologue (`push {r4, r5, lr}` at
+    # 0x0803EAF8) and ONE epilogue (`pop {r4, r5}; pop {r1}` at 0x0803F5E6,
+    # whose register set matches that push); no other `push` appears anywhere
+    # inside it.  The four bogus entries:
+    #   0x0803EFEE  a POOL-SKIP BRANCH at the top of a mid-function literal
+    #               pool (`b.n loc_0803f334` immediately followed by `.word`,
+    #               lesson 3.6).  Its "rom-pointer" evidence is a phantom: the
+    #               only ROM word holding 0x0803EFEF is at 0x087D2A94, in the
+    #               middle of the song_tail_misc_audio data segment, between
+    #               0xEFECF6FF and 0x20180205 - audio samples, not a table.
+    0x0803EFEE,
+    #   0x0803F41A  and
+    #   0x0803F494  long-jump targets: a Thumb `b.n` reaches only +/-2 KiB, so
+    #               agbcc spells the jumps inside this 2.8 KiB function as
+    #               `bl` (lesson 4.39).  Their four `bl` sites (0x0803EB62,
+    #               0x0803EB68, 0x0803EB94, 0x0803EC34) are all real
+    #               instructions inside the same function, and both blocks are
+    #               prologue-less and end by branching onward rather than
+    #               returning.
+    0x0803F41A,
+    0x0803F494,
+    #   0x0803F5C4  the SHARED EPILOGUE itself - prologue-less, opens
+    #               `ldrh r2, [r5, #60]` on an r5 established far earlier, and
+    #               ends with the function's only `pop` pair.
+    0x0803F5C4,
+    #
+    # And 0x0804139E is the same 4.39 shape one function later: it starts
+    # `pop {r4, r5, r6}; pop {r0}`, is reached by a `bl` from 0x08040B5C
+    # inside the 2142-byte sub_08040b40, and sits exactly at that function's
+    # claimed end.  sub_08040b40 really runs 0x08040B40-0x080413A4 (0x864).
+    0x0804139E,
+
     # --- M05 (issue #81), one row the reachability sweep dropped ---
     # 0x0801A41A has no prologue: it shares sub_0801a3e4's frame (the `push
     # {r4-r7,lr}` + `sub sp, #12` at 0x0801A3E4) and its epilogue at
