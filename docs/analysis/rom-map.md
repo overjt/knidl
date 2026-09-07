@@ -622,8 +622,8 @@ child issues of #35 are created from it. Findings that belong in this document:
   `movs r4,#0` extendhisi2 zero-temp lands in r4 (lessons 3.258/3.273).
 - **M04 (`0x08010358-0x08017667`) is the driver half of the same scripted
   sequence bank M05 holds the scripts for.** Decompiled in #82 into
-  `src/player_10358.c` and `src/player_10b38.c` (64 of 65 functions, 29088 of
-  29456 bytes; one 368-byte register-allocation residue stays asm).
+  `src/player_10358.c`, `src/player_109c8.c` and `src/player_10b38.c` (all 65
+  functions byte-matched, no asm left in the range).
   The 71-entry table at `0x08731FA8` is **two tables in one**: entries 0-7 are
   sequence bodies, entries 8-70 the 63 animation scripts (50 in M04, 13 in
   M05).  Both dispatchers are one-line bodies and both are ROM task types:

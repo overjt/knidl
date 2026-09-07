@@ -242,8 +242,9 @@ SECTIONS
         build/src/player_10358.o(.text)
     } > ROM
 
-    .game_code_and_rodata_080109c8 0x080109C8 : {
-        KEEP(*(.game_code_and_rodata_080109c8)) KEEP(*(.game_code_and_rodata_080109c8.tail))
+    /* player_109c8 — decompiled to C (src/player_109c8.c, carved by tools/carve.py) */
+    .player_109c8 0x080109C8 : {
+        build/src/player_109c8.o(.text)
     } > ROM
 
     /* player_10b38 — decompiled to C (src/player_10b38.c, carved by tools/carve.py) */

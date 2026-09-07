@@ -379,7 +379,7 @@ early zone and the SDK tails. "Pool references" counts literal-pool words, so
 
 ### M04 `0x08010358-0x08017667` - scripted-sequence bank: director + 50 of the 63 scripts
 
-**Decompiled in issue #82** (64 of 65 functions, 29088 of 29456 bytes): `src/player_10358.c`, `src/player_10b38.c`.
+**Decompiled in issue #82** (all 65 functions, no asm left in the range): `src/player_10358.c`, `src/player_109c8.c`, `src/player_10b38.c`.
 
 * **Size** 28.8 KiB (`0x7310`), 65 functions (58 of them reachable only through the dispatch table), mean `0x1c4`, largest `0x7c0`, pool words 7.3% of bytes.
 * **What it is.** The **driver half** of the sequence bank M05 holds the rest of. The 71-entry table at `0x08731FA8` is two tables in one:
@@ -417,7 +417,6 @@ early zone and the SDK tails. "Pool references" counts literal-pool words, so
 * **Task fields this module pins down.** `Task.unk18` is the script selector the spawner writes (and a packed word elsewhere, lesson 3.287); `Task.unk44` is the **parent/anchor task index**; `Task.unk48/unk4A` are screen coordinates relative to that parent, mirrored by the 16.16 `Task.unk4C/unk50`; `Task.unk3C` is the animation id every script drives; `Task.unk00`/`unk04` are the update hooks.
 * **Census: two phantoms**, both now in `tools/symdb.py`. `0x080153A2` and `0x0801625A` were invented by the pool word `0xFFFFF000` at `0x080143A0` and `0x08015258` decoding as a `bl` pair (lesson 4.40, fourth and fifth instances); neither has a prologue and each continues the function above it, so `sub_08015268` really runs `0x198` bytes and `sub_0801607c` `0x224`. The module has 65 functions, not 67.
 * **Seam cost** 0 in / 1 out. **Called from** M05 x5.
-* **Still asm** `sub_080109c8` (368 B).
 
 ### M05 `0x08017668-0x0801A8C7` - player-character animation bank + collision registry
 
