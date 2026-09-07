@@ -3653,6 +3653,119 @@ What finally closed `sub_080A00EC` (392 bytes, the last function of M28) after
   survives two informed shape attempts AND the `-da` dumps, instrument the
   compiler - it is the same escalation 3.75/4.35 recommend, one level deeper.
 
+### 3.281 caller-save IS on (-fcaller-saves at -O2): a natural call-clobbered pseudo live across a call gets the ROM's `str rN, [sp]` / `ldr rN, [sp]` pair for free
+
+b4ea8's case-6 loop keeps `n3` (r3, call-clobbered) alive across an inner
+call. 3.274's workaround was a volatile frame slot spelled by hand; the ROM
+form is simply the caller-save mechanism: leave the variable natural, let
+global allocate it r3, and reload's caller-save pass emits `str r3, [sp, #0]`
+right before the `bl` and the reload right after - byte-exact, including the
+slot at [sp, #0] once no other frame object competes. The volatile-slot hack
+(3.274 trap 2) is obsolete: it emits the same bytes but at the WRONG position
+(expand_call precomputes side-effect args before all argument moves).
+
+### 3.280 File-scope `register s32 gR9 asm("r9")` globals exclude r9-r11 at zero prologue cost
+
+A function-local pin on r9-r11 gets the register SAVED in the prologue
+(+4-8 bytes). A file-scope global register variable makes the register FIXED
+for the TU: global_alloc never hands it out, and no save is emitted. This is
+the zero-byte way to force a call-crossing pseudo into r7 when global would
+otherwise prefer r9 (b4ea8's n7, 3.274's "web-split" residue - which was
+never a web problem: with r9-r11 fixed and the cse temp broken up, n7 lands
+r7 naturally). Only for carved single-function modules - the register is
+reserved for the whole file.
+
+### 3.279 asm insns block cross-jump entirely; a DELIBERATE duplicate arm that merges post-reload is a zero-byte rotation advance
+
+Three facts that compose into the strongest phase lever found so far:
+- cross-jump (jump2, post-reload) never matches across an asm insn - that is
+  WHY `BLOCK_CROSS_JUMP` (3.248) works. Distinct whitespace templates
+  (`asm(" ")`, `asm("  ")`) are distinct insns: use one per switch arm to
+  keep otherwise-identical tails from merging (b4ea8's per-arm recomputes).
+- conversely, tails that should NOT merge need no asm at all once their
+  reload scratches differ (the per-arm `movs rN, #1` constants come from the
+  rotation, one step per arm).
+- THE LEVER: give an arm that the ROM cross-jumps into another (`case 5:
+  goto common`) its OWN duplicate body with the SAME asm template as the
+  target arm. Reload processes the duplicate's chains - each `movs rN, #1`
+  const reload ADVANCES the rotation - and jump2 then merges the
+  now-identical tails back into `b common`. Bytes: identical to the goto;
+  side effect: one extra rotation advance per duplicated reload. This is the
+  reproducible form of 3.268's "deleted-insn phantom reservation" (b4ea8:
+  the case-5 duplicate advanced all four downstream `movs rN, #1` picks into
+  place). It also closed the 3.270 gap: advances no longer need a deletable
+  redundant read.
+
+### 3.278 Pinned staging copies emit the ROM's bytes but not its rotation advances: de-stage to real reloads
+
+The recurring root cause behind a860c/a932c/b5670's "non-uniform rotation"
+residues: a pinned staging var (`cw2 = c; (*cw2)->x = ...` with cw2
+asm("r2")) emits the same `mov r2, r8` the ROM has, but as a REAL insn -
+invisible to `last_spill_reg`. The ROM's copy is an input/address RELOAD
+(reading through the pin/pseudo directly: `(*c)->x = ...`), which advances
+the rotation. Symmetrically, a pinned pointer var whose reads should be
+reload-materialized (`ldr rX, =sym` per use) must be a plain local in the
+3.258 dropped form. When a scratch downstream is one rotation step off,
+count the pinned stagings upstream: each is a missing advance. The a860c
+match needed exactly two zero-byte live-range extensions (`asm("" ::
+"r"(w28))` inside the case body, `asm("" :: "r"(cw2))` after a read) - the
+"retard rotation" 3.270 declared impossible is just an exclusion: a hard reg
+live at the chain is skipped by both the per-chain spill pick and the
+rotation, which RETARDS every later pick past it.
+
+### 3.277 `ldrh rX, [rX]` (dest == base) is a qty tie: copy + self-load
+
+The ROM shape `ldrh r2, [r2, #0]` where r2 held a dying pointer is
+local_alloc tying the loaded value to the pointer's qty. From C:
+`t2 = (u32)psrc; asm("" : "+r"(t2)); t2 = *(u16 *)t2;` - the copy ties the
+qtys (deleted as a self-move), the barrier stops cse folding it back, and
+the self-load lands dest == base. Also works through the variable itself
+when it dies on that path: `bS = (u8 *)(u32)*(u16 *)bS;` (a932c's arms).
+Needed because a fresh load temp always gets the lowest free call-used reg
+(r1 when r0 is busy), never the base.
+
+### 3.276 global_alloc STRIPS eliminable regs from every allocno's hard-reg conflicts: pins can never keep a pseudo out of r7
+
+global.c line ~492: `AND_COMPL_HARD_REG_SET (hard_reg_conflicts[i],
+eliminable_regset)` - r7 (FRAME_POINTER_REGNUM) is deliberately removed from
+every allocno's hard-conflict set, so a `register ... asm("r7")` variable is
+INVISIBLE to global allocation: any pseudo can be assigned r7 right across
+the pin's live range (silent double-booking; the bytes may still be what you
+want, but never rely on a pin to exclude r7). The only thing that keeps a
+pseudo out of r7 is ANOTHER ALLOCATED PSEUDO whose range conflicts - which
+is also why the ROM's r7 patterns always trace back to a natural pseudo
+(3.274's b7/n7) or a reload event, never a pin.
+
+### 3.275 SOLVED (a78a0 and the whole r7-enrollment family): pinned x-var windows are zero-byte hard-liveness, and they steer both the spill pick and the rotation
+
+3.271 proved a pin/clobber/asm cannot PRODUCE the r7 zero-temp. What it
+missed: reload's per-chain spill pick (`find_reload_regs` ->
+`order_regs_for_reload`) excludes any hard reg live at the chain, and a
+pinned variable defined and used by EMPTY asms is hard-live across that
+window at zero bytes:
+
+    register s32 x2 asm("r2"), x3 asm("r3"), x5 asm("r5");
+    asm("" : "=r"(x2), "=r"(x3), "=r"(x5));   /* def: 0 bytes */
+    ... the statement whose chain must pick r7 ...
+    asm("" : : "r"(x2), "r"(x3), "r"(x5));    /* use: 0 bytes */
+
+With r0 busy (the insn's own address/output), r2/r3/r5 hard-live, r4/r6
+pinned by real vars and r1 excluded by a live value, the chain's potential
+order starts at r7: NEWSPILL enrolls it, the union spill set becomes
+{r2,r3,r7}-shaped, and the global rotation then lands every downstream
+scratch where the ROM has it. Key mechanics (read from reload1.c):
+- the spill set is the UNION of per-chain picks; finish_spills rebuilds
+  spill_regs ascending and recomputes each chain's usable set as
+  (union minus busy);
+- allocation is one global round-robin (`last_spill_reg`) over that union,
+  skipping regs busy at each chain - so ONE enrollment fixes several sites;
+- the window must END after the target insn (an asm use placed before it
+  kills the liveness exactly at the asm - a78a0/a860c both needed the use
+  INSIDE the guarded block, after the read).
+a78a0 (parked "unreachable from C" since 3.271) matched with exactly one
+def/use window plus the 3.277 tie. The family verdict in 3.274 is now
+obsolete: all five M30/M33 functions were reachable.
+
 ### 3.274 r7 IS reachable via global_alloc pressure (b4ea8), refining 3.271: natural loop-carried pseudos push r7 correctly; the residual blocker is web-splitting, not enrollment
 
 3.271 said "r7 can only come from reload under pressure, not from C." That is

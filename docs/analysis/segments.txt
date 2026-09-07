@@ -110,11 +110,11 @@
 0x080A0274 0x080A1590 c_code enemy_a0274 # src/enemy_a0274.c (carved by tools/carve.py)
 0x080A1590 0x080A5644 c_code enemy_a1590 # src/enemy_a1590.c (carved by tools/carve.py)
 0x080A5644 0x080A78A0 c_code enemy_a5644 # src/enemy_a5644.c (carved by tools/carve.py)
-0x080A78A0 0x080A7998 thumb_code game_code_and_rodata_080653ec_0806ef5c_0809113c_08093f64_08099b20_0809cb90_0809d994_0809f2f4_0809f9dc_080a00ec_080a1590 [split]
+0x080A78A0 0x080A7998 c_code enemy_a78a0 # src/enemy_a78a0.c (carved by tools/carve.py)
 0x080A7998 0x080A860C c_code enemy_a7998 # src/enemy_a7998.c (carved by tools/carve.py)
-0x080A860C 0x080A87C8 thumb_code game_code_and_rodata_080653ec_0806ef5c_0809113c_08093f64_08099b20_0809cb90_0809d994_0809f2f4_0809f9dc_080a00ec_080a1590_080a860c [split]
+0x080A860C 0x080A87C8 c_code enemy_a860c # src/enemy_a860c.c (carved by tools/carve.py)
 0x080A87C8 0x080A932C c_code enemy_a87c8 # src/enemy_a87c8.c (carved by tools/carve.py)
-0x080A932C 0x080A93EC thumb_code game_code_and_rodata_080653ec_0806ef5c_0809113c_08093f64_08099b20_0809cb90_0809d994_0809f2f4_0809f9dc_080a00ec_080a1590_080a860c_080a932c [split]
+0x080A932C 0x080A93EC c_code enemy_a932c # src/enemy_a932c.c (carved by tools/carve.py)
 0x080A93EC 0x080AA338 c_code enemy_a93ec # src/enemy_a93ec.c (carved by tools/carve.py)
 0x080AA338 0x080AE3BC c_code enemy_aa338 # src/enemy_aa338.c (carved by tools/carve.py)
 0x080AE3BC 0x080B2FE8 c_code enemy_ae3bc # src/enemy_ae3bc.c (carved by tools/carve.py)

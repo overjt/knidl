@@ -73,11 +73,11 @@ M71,0x080A00EC,0x080A0274,0x188,1,0,0,0x188,0x188,12.2,5,0,0,0,1,0,2,enemy_a00ec
 M72,0x080A0274,0x080A1590,0x131C,45,32,0,0x6C,0x108,12.3,9,0,0,0,0,7,1,enemy_a0274,already landed (c_code)
 M73,0x080A1590,0x080A5644,0x40B4,226,154,0,0x49,0x100,15.4,21,0,0,9,0,10,2,enemy/object behaviour bank 10,"decompiled in #76 as src/enemy_a1590.c (226 functions, all byte-matched): the M25/M27 guard+body script shape over the 80-entry anchor table @0x08748624, four-slot EWRAM state in gUnk_02007D00[] and the gUnk_03002790[] companion-actor array shared with M28"
 M74,0x080A5644,0x080A78A0,0x225C,73,63,0,0x78,0x2DC,10.7,19,1,0,1,0,6,1,enemy/object behaviour bank 11,"decompiled in #72 (partial) as src/enemy_a5644.c/a7998.c/a87c8.c/a93ec.c (127 of 130 functions byte-matched, ROM identical around 3 asm holes); anchor tables @0x08748EB8 (53) and @0x08749150 (20); 12 task types. 3 functions remain in asm - sub_080A78A0 (r7-enrollment terminal, lessons 3.271), sub_080A860C (8B non-uniform rotation phase, 3.268), sub_080A932C (16B coalescing residue)"
-M75,0x080A78A0,0x080A7998,0xF8,1,1,1,0xF8,0xF8,12.9,4,0,0,0,0,1,2,,
+M75,0x080A78A0,0x080A7998,0xF8,1,1,0,0xF8,0xF8,12.9,4,0,0,0,0,1,2,enemy_a78a0,already landed (c_code)
 M76,0x080A7998,0x080A860C,0xC74,12,12,0,0x109,0x5AC,10.7,8,1,0,5,0,7,2,enemy_a7998,already landed (c_code)
-M77,0x080A860C,0x080A87C8,0x1BC,1,1,1,0x1BC,0x1BC,15.3,10,0,0,0,0,2,3,,
+M77,0x080A860C,0x080A87C8,0x1BC,1,1,0,0x1BC,0x1BC,15.3,10,0,0,0,0,2,3,enemy_a860c,already landed (c_code)
 M78,0x080A87C8,0x080A932C,0xB64,17,17,0,0xAB,0x328,12.9,12,0,0,0,0,5,1,enemy_a87c8,already landed (c_code)
-M79,0x080A932C,0x080A93EC,0xC0,1,0,1,0xC0,0xC0,6.2,2,0,0,0,1,0,1,,
+M79,0x080A932C,0x080A93EC,0xC0,1,0,0,0xC0,0xC0,6.2,2,0,0,0,1,0,1,enemy_a932c,already landed (c_code)
 M80,0x080A93EC,0x080AA338,0xF4C,26,17,0,0x96,0x278,15.4,15,0,0,6,2,3,2,enemy_a93ec,already landed (c_code)
 M81,0x080AA338,0x080AE3BC,0x4084,123,98,0,0x86,0x378,14.3,21,1,0,18,0,10,2,enemy/object behaviour bank 12,"decompiled in #78 as src/enemy_aa338.c (123 functions, all byte-matched, ROM identical); 18 task types, Div x5; last straggler sub_080ADA20 closed via the dropped-pseudo address-reload form (lessons 3.258/3.273)"
 M82,0x080AE3BC,0x080B2FE8,0x4C2C,135,99,0,0x90,0x320,11.9,15,4,0,15,0,9,1,enemy/object behaviour bank 13,"decompiled in #73 as src/enemy_ae3bc.c (135 functions, all byte-matched, ROM identical); dispatch-heavy behaviour bank, closed via the redundant-read reload lever (lessons 3.270)"
