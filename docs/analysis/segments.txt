@@ -51,7 +51,10 @@
 0x08006E9C 0x08007004 thumb_code game_code_early_080011ac_08002378_08003110_08003888_08004000_08004fec_08005654_08005acc_08005d9c_08006d18_08006e9c [split]
 0x08007004 0x08007300 c_code early_7004 # src/early_7004.c (carved by tools/carve.py)
 0x08007300 0x080075B8 c_code main # src/main.c (carved by tools/carve.py)
-0x080075B8 0x08017668 thumb_code game_code_and_rodata [split]
+0x080075B8 0x08010358 thumb_code game_code_and_rodata [split]
+0x08010358 0x080109C8 c_code player_10358 # src/player_10358.c (carved by tools/carve.py)
+0x080109C8 0x08010B38 thumb_code game_code_and_rodata_080109c8 [split]
+0x08010B38 0x08017668 c_code player_10b38 # src/player_10b38.c (carved by tools/carve.py)
 0x08017668 0x08018B84 c_code player_17668 # src/player_17668.c (carved by tools/carve.py)
 0x08018B84 0x08018E14 c_code player_18b84 # src/player_18b84.c (carved by tools/carve.py)
 0x08018E14 0x08019000 thumb_code game_code_and_rodata_08018b84 [split]

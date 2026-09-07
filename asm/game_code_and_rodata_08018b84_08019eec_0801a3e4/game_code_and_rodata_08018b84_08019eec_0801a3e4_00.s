@@ -237,7 +237,7 @@ sub_0801a3e4:
 	movs	r0, r0
 	.word	gUnk_03002490
 	.word	0x00000FFF
-	.word	0x06010000
+	.word	gUnk_06010000
 	.word	gUnk_03000B78
 	.word	gUnk_03000FA8
 	.word	gUnk_08755440

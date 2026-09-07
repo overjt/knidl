@@ -27952,7 +27952,7 @@ loc_080377f2:
 	.word	gUnk_0300244C
 	.word	gUnk_02007CF4
 	.word	gUnk_03001F2C
-	.word	0x02007E90
+	.word	gUnk_02007E90
 	.word	gUnk_03002490
 	.global	loc_08037820
 loc_08037820:
