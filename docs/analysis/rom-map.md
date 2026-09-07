@@ -599,11 +599,13 @@ child issues of #35 are created from it. Findings that belong in this document:
   that reload_cse deletes but whose rotation advance persists; lessons
   3.270).
 - **M30 (`0x080A5644-0x080AA337`) is enemy/object behaviour bank 11.**
-  Decompiled in #72 (partial, 127/130) into `src/enemy_a5644.c`,
-  `enemy_a7998.c`, `enemy_a87c8.c`, `enemy_a93ec.c`; ROM-identical around 3
-  asm holes. Anchor tables `0x08748EB8` (53) and `0x08749150` (20); 12 task
-  types. Remaining in asm: `sub_080A78A0` (r7-enrollment terminal, 3.271),
-  `sub_080A860C` (8B rotation), `sub_080A932C` (16B coalescing).
+  Decompiled in #72 (complete, 130/130) into `src/enemy_a5644.c`,
+  `enemy_a78a0.c`, `enemy_a7998.c`, `enemy_a860c.c`, `enemy_a87c8.c`,
+  `enemy_a932c.c`, `enemy_a93ec.c`; ROM-identical, zero asm bytes in the
+  range. Anchor tables `0x08748EB8` (53) and `0x08749150` (20); 12 task
+  types. The 3 former reload-allocator terminals (`sub_080A78A0`,
+  `sub_080A860C`, `sub_080A932C`) fell to the zero-byte hard-liveness
+  levers (lessons 3.275-3.278).
 - **M33 (`0x080B2FE8-0x080B6153`) is HUD / overlay effects (candidate).**
   Decompiled in #97 (partial, 106/108) into `src/hud_b2fe8.c`,
   `hud_b5024.c`, `hud_b5840.c`; ROM-identical around 2 asm holes. Remaining

@@ -208,7 +208,7 @@ dispatches, pool density) — a planning aid, not a promise.
 | M27 | `0x080988F8-0x0809BA43` | 12.3 KiB | 140 | 3 | * | mid-boss behaviour bank (two scripts + three companions) - **landed (#68)** |
 | M28 | `0x0809BA44-0x080A158F` | 22.8 KiB | 198 | 5 | * | enemy/object behaviour bank 9 (four-lane spawner, a six-variant enemy family, the player death sequence) - **landed (#74)** |
 | M29 | `0x080A1590-0x080A5643` | 16.2 KiB | 221 | 5 | ** | enemy/object behaviour bank 10 |
-| M30 | `0x080A5644-0x080AA337` | 19.2 KiB | 130 | 2 | * | enemy/object behaviour bank 11 |
+| M30 | `0x080A5644-0x080AA337` | 19.2 KiB | 130 | 2 | * | enemy/object behaviour bank 11 - **landed (#72)** |
 | M31 | `0x080AA338-0x080AE3BB` | 16.1 KiB | 121 | 2 | ** | enemy/object behaviour bank 12 |
 | M32 | `0x080AE3BC-0x080B2FE7` | 19.0 KiB | 129 | 5 | * | enemy/object behaviour bank 13 |
 | M33 | `0x080B2FE8-0x080B6153` | 12.4 KiB | 108 | 5 | *** | HUD / overlay effects? |
@@ -300,7 +300,7 @@ sub-issue of #35, so the numbering ascends with the recommended order):
 | 6 | #69 | M22 enemy/object behaviour bank 3 (five three-table scripts) - landed | `0x08082E68-0x080860F7` | 12.6 KiB | 2 |
 | 7 | #70 | M24 enemy/object behaviour bank 5 (six three-table scripts) - landed | `0x0808CCE8-0x0809000B` | 12.8 KiB | 2 |
 | 8 | #71 | M21 enemy/object behaviour bank 2 - landed | `0x0807F044-0x08082E67` | 15.5 KiB | 2 |
-| 9 | #72 | M30 enemy/object behaviour bank 11 | `0x080A5644-0x080AA337` | 19.2 KiB | 2 |
+| 9 | #72 | M30 enemy/object behaviour bank 11 - landed | `0x080A5644-0x080AA337` | 19.2 KiB | 2 |
 | 10 | #73 | M32 enemy/object behaviour bank 13 | `0x080AE3BC-0x080B2FE7` | 19.0 KiB | 2 |
 | 11 | #74 | M28 enemy/object behaviour bank 9 (four-lane spawner, a six-variant enemy family, the player death sequence) - landed | `0x0809BA44-0x080A158F` | 22.8 KiB | 2 |
 | 12 | #75 | M26 enemy/object behaviour bank 7 (four three-table scripts + two companions) - landed | `0x08093F64-0x080988F7` | 18.4 KiB | 2 |
@@ -1523,9 +1523,9 @@ below is the pre-decompilation one, kept for the record.
 * **Pool references** IWRAM x327, asset_metadata_index x102, game_code_and_rodata x78, EWRAM x66, early_58e4 x5, level_graphics_palettes x5, VRAM x1.
 * **Suggested batches** `0x080A1590` (49 fns), `0x080A2814` (119 fns), `0x080A4808` (53 fns).
 
-### M30 `0x080A5644-0x080AA337` - enemy/object behaviour bank 11 - **landed (#72, partial: 127/130)**
+### M30 `0x080A5644-0x080AA337` - enemy/object behaviour bank 11 - **landed (#72, complete: 130/130)**
 
-* **Decompiled** into `src/enemy_a5644.c`, `enemy_a7998.c`, `enemy_a87c8.c`, `enemy_a93ec.c` (127 of 130 functions byte-matched; `make clean && make compare` ROM-identical around 3 asm holes). **3 functions remain in asm**: `sub_080A78A0` (248B, r7-enrollment terminal - the extendhisi2 zero-temp needs r7 in the spill set before tb occupies r5, unreachable from C; lessons 3.271), `sub_080A860C` (444B, 8-byte residue: 4 non-uniform extendhisi2 rotation phases; 3.268), `sub_080A932C` (192B, 16-byte coalescing residue; 3.272).
+* **Decompiled** into `src/enemy_a5644.c`, `enemy_a78a0.c`, `enemy_a7998.c`, `enemy_a860c.c`, `enemy_a87c8.c`, `enemy_a932c.c`, `enemy_a93ec.c` (all 130 functions byte-matched; `make clean && make compare` ROM-identical, zero asm bytes in the range). The 3 former terminals fell to the zero-byte hard-liveness levers: `sub_080A78A0` (r7 spill-set enrollment forced with pinned x-var windows over the zero-temp chain, 3.275), `sub_080A932C` (pinned staging replaced by real reloads + self-load `bS = *(u16 *)bS`, 3.277/3.278), `sub_080A860C` (the "impossible" retard-rotation fixed by two asm live-range extensions, 3.278).
 
 * **Size** 19.2 KiB (`0x4cf4`), 130 functions (110 reachable only through pointer tables), mean `0x97`, largest `0x5ac`, pool words 12.0% of bytes.
 * **Difficulty** 1/6 - 30 distinct RAM cells, 2 jump-table dispatches, 7 functions >= `0x200`.
