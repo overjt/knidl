@@ -2,8 +2,8 @@ id,start,end,size,functions,ptr_dispatched,blocks,mean_fn,max_fn,pool_pct,ram_ce
 M01,0x08007300,0x080075B8,0x2B8,1,1,0,0x2B8,0x2B8,16.7,7,1,0,0,0,8,3,main,already landed (c_code)
 M02,0x080075B8,0x0800B920,0x4368,110,15,3,0x9C,0x37C,19.7,161,7,1,5,34,6,3,game mode + screen/asset loader,"class-0 task types #0-2; game-state cells; LZ77UnCompVram x21, HuffUnComp x6; called from AgbMain"
 M03,0x0800B920,0x08010358,0x4A38,83,43,3,0xE4,0x40C,16.0,93,2,0,22,2,6,4,menu / UI task bank,22 class-4 task types #238-259; key auto-repeat + decimal digit buffer; called from AgbMain and the save module
-M04,0x08010358,0x08017668,0x7310,67,64,4,0x1B7,0x7C0,7.3,15,0,1,2,3,3,3,player-character state bodies?,"64/67 functions pointer-dispatched from the 71-entry table @0x08731FA8 (shared with the next module); TaskYieldTrampoline x1340, the densest in the ROM; sprite draw x261"
-M05,0x08017668,0x08018B84,0x151C,3,3,0,0x709,0xDFC,5.3,2,0,0,0,0,2,3,player-character driver?,"task type #3; 20/23 pointer-dispatched; called by every stage module, calls the bank above"
+M04,0x08010358,0x08017668,0x7310,67,64,4,0x1B7,0x7C0,7.3,15,0,1,2,3,3,3,player-character state bodies,"64/67 functions pointer-dispatched from the 71-entry table @0x08731FA8 (shared with the next module); TaskYieldTrampoline x1340, the densest in the ROM; sprite draw x261"
+M05,0x08017668,0x08018B84,0x151C,3,3,0,0x709,0xDFC,5.3,2,0,0,0,0,2,3,player-character animation bank + collision registry,13 bodies are entries 58-70 of the 71-entry table @0x08731FA8 (shared with the module above); sub_0801a76c binds Task.unk88 to gUnk_03002170[i] (PlayerState); sub_0801a828 is the ROM-wide collision registry (50+ callers)
 M06,0x08018B84,0x08018E14,0x290,3,3,0,0xDA,0x1C4,12.2,3,0,0,0,0,1,2,player_18b84,already landed (c_code)
 M07,0x08018E14,0x08019000,0x1EC,1,1,1,0x1EC,0x1EC,9.8,5,0,0,0,0,0,2,,
 M08,0x08019000,0x08019EEC,0xEEC,8,8,0,0x1DD,0x590,7.1,6,0,0,0,0,2,2,player_19000,already landed (c_code)

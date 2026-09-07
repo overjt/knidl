@@ -4106,6 +4106,72 @@ palette setters.  Spending twenty minutes on the ROM task-type table
 (`0x0872FF30`) and a pointer-run scan of `0x08740000-0x08760000` before writing
 any C would have named the parts sooner.
 
+### 3.282 `x |= -1` must keep the literal inline: a variable holding -1 costs an extra copy per use
+
+`sub_08019000` (M05, issue #81) sets every bit of `Task.unk3C` twice inside a
+loop. The ROM does it as
+
+```
+    movs r2, #1 ; negs r2, r2 ; adds r4, r2, #0     @ once, before the loop
+    ...
+    ldrh r0, [r1, #62] ; orrs r0, r4 ; strh r0, [r1, #62]
+```
+
+so the -1 is materialized once and cse parks it in a callee-saved register.
+Writing that as a source variable (`s32 m = -1; ... unk3C |= m;`) produces a
+global-alloc pseudo and every use becomes `adds r0, r4, #0 ; orrs r0, r1` - the
+copy of the LIVE operand described in the `|=` note of 3.196, one extra
+instruction per site, and a spurious extra callee-saved register in the
+prologue when the variable is declared at function scope.
+
+Write the literal inline (`gUnk_03002490->unk3C |= -1;`) and cse does the
+hoisting itself, with the ROM's register assignment. Same rule as 3.252 for
+if-arms, one level up: **a constant belongs in the expression, never in a
+variable, unless the ROM shows a copy at each use.**
+
+### 3.283 The BG scroll shadows are `vs32`: a non-volatile read narrows `>> 16` into an `ldrsh`
+
+`sub_0801a3e4` (M05) computes screen coordinates as
+`t->unk48 - (gUnk_03000B78 >> 16)`. Declared `s32`, agbcc proves only the top
+halfword is needed and emits `movs rN, #2 ; ldrsh r1, [r0, rN]`; declared `u32`
+it emits `ldrh r1, [r0, #2]`. The ROM has `ldr r1, [r0, #0] ; asrs r1, r1, #16`,
+the full-word load, which is what the **`vs32`** declaration `src/early_11ac.c`
+already uses for these two cells (they are the BG3HOFS/BG3VOFS 16.16 shadows)
+produces. Reuse the existing declaration of a cell before inventing one: the
+early zone named most of IWRAM in #32 and the volatility is part of the type.
+
+### 3.284 A callee that ignores its argument register shows up as a MISSING argument setup
+
+`sub_08017668` ended 4 bytes short with the ROM doing
+`movs r0, #56 ; bl sub_08003110 ; bl sub_08003184` - the second call sets up no
+argument at all. That is not cse across a call (r0 is call-clobbered and the
+compiler knows it): it means **`sub_08003184` takes no argument**. Reading a
+missing argument setup as "the callee's arity is smaller than I assumed" is
+faster than any allocator hunt, and the fix is a one-line prototype. The
+converse also appeared in the same module: `gUnk_02007D00[0] = sub_080031b8(...)`
+proves `sub_080031b8` RETURNS a value even though every landed caller declares
+it `void` (per-file prototypes, 3.189).
+
+### 4.41 A draft generator must classify what it drops, or it deletes code silently
+
+The M05 pipeline (issue #81) drafts a function from its annotated listing and
+emits every instruction it cannot model as a comment; a finalize pass then
+strips the comments. That pass deleted **real code** four times in two
+functions: a loop increment plus its back-branch (whose `ble` sits behind a
+pool-skip `b.n`, so the loop-tail matcher never saw it), an
+`unk3E &= 0x7FFF` whose `ands` is separated from its `strh` by constant
+staging, a call whose return value is stored, and a whole conditional block.
+Each one cost an allocator hunt on a defect that was really a missing
+statement.
+
+The fix is cheap and mandatory: before stripping, match every dropped comment
+against a whitelist of forms that carry no semantics of their own - a constant
+landing in a register the next statement already prints, a register copy, a
+pool-skip branch, alignment padding - and print the rest. Every non-trivial
+line the guard reported in M05 was a real bug. **A silent drop is worse than
+no generator at all**: it produces plausible code that diffs like an
+allocation problem.
+
 ### 4.39 A census entry the PREVIOUS function's branch walk reaches is part of that function
 `bl` edges are not evidence to the contrary: a Thumb `b.n` only reaches
 +/-2 KiB, so agbcc spells a long jump inside ONE function as `bl` too.  M19's
@@ -4121,6 +4187,12 @@ extractor invents an edge out of the middle of the pool.  M19's
 `0x08074B2C -> 0x08075B2E` invented a function in the middle of a jump-table
 arm.  Filter every `bl` edge whose site falls inside a pool run before feeding
 the graph to a census sweep (4.29 does the same for pool containment).
+
+Seen a third time in M05 (#81): the pool word `0xFFFFF000` at `0x08019418`
+invented `sub_0801a41a`, a "function" with no prologue that shares
+`sub_0801a3e4`'s frame and epilogue.  The tell is always the same pair: the
+claimed entry has no `push` AND its only evidence is one `bl` whose site is a
+4-aligned word inside another function's pool.
 
 ## 5. Workflow that worked
 

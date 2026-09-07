@@ -620,6 +620,33 @@ child issues of #35 are created from it. Findings that belong in this document:
   address-reload form: the store-cell pointer written as a plain
   multi-block un-pinned local so reload rematerializes it and the
   `movs r4,#0` extendhisi2 zero-temp lands in r4 (lessons 3.258/3.273).
+- **M05 (`0x08017668-0x0801A8C7`) is the player character's animation bank
+  plus the ROM-wide collision registry.** Decompiled in #81 into
+  `src/player_17668.c`, `src/player_18b84.c`, `src/player_19000.c`,
+  `src/player_1a07c.c` and `src/player_1a76c.c` (20 of 23 functions, 11100 of
+  12896 bytes; three same-size register-allocation residues stay asm).
+  Thirteen of its bodies are entries **58-70** of the 71-entry dispatch table
+  at `0x08731FA8` whose entries 0-57 belong to M04, and each is a linear
+  `TaskYieldTrampoline` script over `Task.unk3C` (animation id), the 16.16
+  cells `Task.unk54/unk58/unk5C/unk60` and the OAM flip bit
+  `Task.unk3E & 0x8000`.  Its script/graphics tables cluster at
+  `0x08755068-0x08755484` and its per-animation index tables at
+  `0x08732150-0x087321EC`, immediately after the dispatch table.
+  * `sub_0801a76c` is a **dead export** that binds the running task to a
+    player: `Task.unk88 = &gUnk_03002170[i]` (the 116-byte `PlayerState`
+    array) with the OAM priority bits derived from `i`.  This is what settles
+    the M04/M05 "player character?" hypothesis in the module map.
+  * `sub_0801a828` is the **collision registry**: 50+ callers across M09-M16
+    and M18 append `{u8 task index, u16 x, u16 y, descriptor *}` to one of
+    three fixed-capacity IWRAM lists picked by the descriptor's class nibble
+    (`p[8] & 0xF0`) - `gUnk_030054B0` (4 entries, count `gUnk_03005290`),
+    `gUnk_030053A0` (20, `gUnk_030054A8`), `gUnk_030052A0` (20,
+    `gUnk_030054F4`) - and it returns 1 when the list is full.
+    `sub_0801a7b4` clears all three lists and counts once per frame.
+  * Census: `0x0801A41A` was a phantom entry (the only `bl` to it is the pool
+    word `0xFFFFF000` at `0x08019418`; the code there has no prologue and
+    shares `sub_0801a3e4`'s frame and epilogue) and `0x0801A76C` was missing.
+    Both corrected in `tools/symdb.py`.
 - **M29 (`0x080A1590-0x080A5643`) is enemy/object behaviour bank 10.**
   Decompiled in #76 into `src/enemy_a1590.c` (226 functions, all
   byte-matched, no asm left in the range). The M25/M27 guard+body script
