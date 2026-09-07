@@ -620,6 +620,74 @@ child issues of #35 are created from it. Findings that belong in this document:
   address-reload form: the store-cell pointer written as a plain
   multi-block un-pinned local so reload rematerializes it and the
   `movs r4,#0` extendhisi2 zero-temp lands in r4 (lessons 3.258/3.273).
+- **M04 (`0x08010358-0x08017667`) is the driver half of the same scripted
+  sequence bank M05 holds the scripts for.** Decompiled in #82 into
+  `src/player_10358.c`, `src/player_109c8.c` and `src/player_10b38.c` (all 65
+  functions byte-matched, no asm left in the range).
+  The 71-entry table at `0x08731FA8` is **two tables in one**: entries 0-7 are
+  sequence bodies, entries 8-70 the 63 animation scripts (50 in M04, 13 in
+  M05).  Both dispatchers are one-line bodies and both are ROM task types:
+  * **type #91** (class 1, `sub_080103f0`) is the director -
+    `sub_08002e98(gUnk_030023B8, 9, gUnk_08731FA8)` picks the sequence,
+    `Task.unk04` gets the per-frame hook `sub_08010480`, `Task.unk6C` counts up
+    to `gUnk_08731F98[id] - 60`, then `gUnk_030023D8 = 5` and `sub_08006138`.
+  * **type #92** (class 2, `sub_080104f0`) is the script runner -
+    `sub_08002e98(gUnk_03002490->unk18, 63, gUnk_08731FC8)`, and
+    `0x08731FC8 == &gUnk_08731FA8[8]`, so the ROM itself states both the window
+    and the count.
+  * `sub_08010358(script, minSlot)` spawns a type-92 child via
+    `sub_08005904(92, minSlot, 62)`, copying `unk48/unk4A` and the 16.16
+    `unk4C/unk50` from the parent, inheriting `unk43`, writing `gCurTaskIdx`
+    into the child's `Task.unk44` and `script` into `Task.unk18`, and setting
+    `unk40 = 0x8810` when `gUnk_08731F78[id]` is non-null.  It **returns the
+    new task index**, which callers store in `Task.unk46`.
+  * `sub_08010480` is the **skip hook**: over `gUnk_030023AC` players it tests
+    the per-player keys `gUnk_03001EB8[i] & 9` (A | START), plays sound
+    `0x21B` for sequence 7, sets `gUnk_030023D8 = 5` and kills the task with
+    `sub_08005654(gCurTaskIdx)`.  This is why neither M04 nor M05 bodies read
+    the key cells: the input is read once, by the director's hook, only to
+    abort the sequence.
+  * **Per-sequence tables**, all indexed by the `s8` cell `gUnk_030023B8`
+    (0-7, written outside the module): `0x08731F78` graphics blobs
+    (`0x085BC800-0x085CC328`, 7 non-null), `0x08731F98` total durations in
+    frames (270, 416, 352, 552, 592, 456, 552, 2020), `0x08731FA8` the bodies.
+    Script/graphics descriptors sit at `0x08754A14-0x08754F68` and
+    `0x08751C44-0x08751E00`; `0x0873E640` is a `u16[23]` frame-id list and
+    `0x08732138` a 6-entry sprite-descriptor table indexed by a 0-5 phase
+    counter (the four-slot afterimage driver `sub_080162a0`).
+  * **Task fields this module pins down**: `unk18` script selector (packed
+    elsewhere), `unk44` **parent/anchor task index**, `unk46` last spawned
+    child index, `unk48/unk4A` screen coordinates relative to the parent,
+    `unk4C/unk50` their 16.16 mirrors, `unk3C` animation id, `unk00`/`unk04`
+    the update hooks.
+  * **The spark/particle records at `0x02007E90`** are three 16-byte slots per
+    player, indexed by the player id in `Task.unk88->unk00`: `s32` x and y in
+    16.16 (the integer parts are read as the `s16` high halves at +2/+6), the
+    16.16 y-delta at +8, a down-counter at +0xC and a frame id at +0xD.
+    `0x087320C4` is **two 16-entry `s16` tables** (initial |x| and y velocity,
+    picked by `sub_08002ee8(16)`) and `0x08732104` a 10-entry table indexed by
+    the frame id.  `sub_08010834` is the state entry (clear all three slots,
+    DMA four 128-byte tile groups from `0x081AC378` into OBJ VRAM slots
+    12/44/76/108 and a 32-byte palette from `0x081AC358`) and `sub_080109c8`
+    the per-frame updater: gravity `+/-0x6000`, magnitude damping
+    `v -= (|v| & 0xFFFF0000) >> ((|y| >> 20) + 1)`, kill at `|x| <= 0xF0000`,
+    frame id stepping 0-3-5-7-9-11.
+  * `Task.unk1C` is a **child discriminator**: `sub_08010bac` spawns four
+    children through `sub_08010358(3, 32)` and stamps 0-3 into each one's
+    `unk1C`, which is exactly the value `sub_08010cb4` switches on
+    (`unk1C & 15`) - one arm per sibling, with `case 2` falling into `case 3`.
+  * **Open question.** `sub_080109c8` byte-matches only if the ROM's re-reads
+    of the record's `unk00` (before `+= unk08`) and `unk04` (for the magnitude)
+    do not fold into the neighbouring read; the landed C forces them with
+    `*(volatile s32 *)&p->unkNN`, which is a placeholder for a source shape
+    nobody has identified yet.  Ruled out: `volatile` on the whole struct,
+    snapshot locals, declaration reordering, an extra index local, the
+    byte-offset index spelling and the flat 1-D table.  Worth 4 bytes; if a
+    sibling module finds the real shape, this is the site to revisit.
+  * Census: `0x080153A2` and `0x0801625A` were phantoms from the pool word
+    `0xFFFFF000` at `0x080143A0` and `0x08015258` (lesson 4.40, fourth and
+    fifth instances); the module has 65 functions, not 67.  Both corrected in
+    `tools/symdb.py`.
 - **M05 (`0x08017668-0x0801A8C7`) is the player character's animation bank
   plus the ROM-wide collision registry.** Decompiled in #81 into
   `src/player_17668.c`, `src/player_18b84.c`, `src/player_19000.c`,

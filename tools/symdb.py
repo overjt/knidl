@@ -279,6 +279,22 @@ KNOWN_SYMBOLS = {
 # m4a_songs data segment surrounded by signed 8-bit PCM sample bytes; the
 # `pop {pc}` halfword passes the strict terminator check by accident.
 FALSE_POSITIVES = {
+    # --- M04 (issue #82), two rows the reachability sweep dropped ---
+    # Both are the same shape as M05's 0x0801A41A below and share its cause:
+    # the pool word 0xFFFFF000 decodes as the `bl` pair F000/FFFF, whose
+    # target is (pool address + 4 + 0xFFE).
+    # 0x080153A2 has no prologue and keeps using the r4 task pointer and the
+    # r5 constant that sub_08015268's `push {r4-r6,lr}` frame set up; the fake
+    # `bl` comes from the pool word at 0x080143A0 (inside sub_080142a0's
+    # pool).  sub_08015268 really runs 0x08015268-0x08015400 (0x198).
+    0x080153A2,
+    # 0x0801625A is the `str r0, [r1, #84]` completing the constant
+    # materialised by `movs r0, #128` + `lsls r0, r0, #12` at the end of
+    # sub_0801607c; the fake `bl` comes from the pool word at 0x08015258
+    # (inside sub_08015268's pool).  sub_0801607c really runs
+    # 0x0801607C-0x080162A0 (0x224).
+    0x0801625A,
+
     # --- M05 (issue #81), one row the reachability sweep dropped ---
     # 0x0801A41A has no prologue: it shares sub_0801a3e4's frame (the `push
     # {r4-r7,lr}` + `sub sp, #12` at 0x0801A3E4) and its epilogue at

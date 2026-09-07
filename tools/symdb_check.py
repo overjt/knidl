@@ -35,6 +35,29 @@ import sys
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import symdb  # noqa: E402  (KNOWN_SYMBOLS / ARM_ENTRIES / parse_segments)
 
+
+def landed_symbols():
+    """Names that landed C already DEFINES, from split_config's
+    `external_defined`.
+
+    A census entry the build defines is confirmed by construction - the ROM
+    verifies byte-for-byte against it - which is far stronger evidence than any
+    prologue pattern.  Without this, every census change reshuffles the random
+    spot-check sample and eventually lands on a decompiled function whose entry
+    is not `push {lr}` (0x080A0588 in src/enemy_a0274.c opens
+    `ldr r0, [pc, #8]`), producing a failure that says nothing about the DB.
+    """
+    import json
+    here = os.path.dirname(os.path.abspath(__file__))
+    try:
+        with open(os.path.join(here, "split_config.json")) as f:
+            return set(json.load(f).get("external_defined", []))
+    except (OSError, ValueError):
+        return set()
+
+
+LANDED = landed_symbols()
+
 ROM_BASE = symdb.ROM_BASE
 CODE_SPAN_START = symdb.CODE_SPAN_START
 CODE_SPAN_END = symdb.CODE_SPAN_END
@@ -155,14 +178,23 @@ def parse_dump(dump, wanted):
     return lines_wanted, bl_targets
 
 
+# objdump 2.40 carries Thumb IT-block state across a `-b binary` linear sweep
+# and `--start-address` does not reset it, so the SAME halfword prints with a
+# spurious condition suffix depending on where the sweep is: `b510` is `push
+# {r4, lr}` at 0x08007300 and 0x080CC024 but `pushgt {r4, lr}` at 0x080CC0A4.
+# Tolerate the suffix - the encoding, not the mnemonic spelling, is the
+# evidence (issue #82).
+COND = r"(?:eq|ne|cs|hs|cc|lo|mi|pl|vs|vc|hi|ls|ge|lt|gt|le|al)?"
+
+
 def is_push_lr_text(text):
-    return re.match(r"push\s+\{[^}]*\blr\b[^}]*\}", text) is not None
+    return re.match(r"push" + COND + r"\s+\{[^}]*\blr\b[^}]*\}", text) is not None
 
 
 def is_terminator_text(text):
-    if re.match(r"(bx|bxj)\s+", text):
+    if re.match(r"(bx|bxj)" + COND + r"\s+", text):
         return True
-    if re.match(r"pop\s+\{[^}]*\bpc\b[^}]*\}", text):
+    if re.match(r"pop" + COND + r"\s+\{[^}]*\bpc\b[^}]*\}", text):
         return True
     if re.match(r"b\t0x", text):
         return True
@@ -319,6 +351,9 @@ def main():
         if is_terminator_text(text):
             ok = True
             why.append("immediate terminator")
+        if not ok and name in LANDED:
+            ok = True
+            why.append("defined by landed C (build proves it)")
         if not ok and vma in symdb.KNOWN_SYMBOLS:
             # Curated entries (e.g. the table-dispatched m4a XCMD handlers,
             # which open with `ldr r0, [r1, #0x40]`) carry their evidence in
