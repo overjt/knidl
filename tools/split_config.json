@@ -290,7 +290,9 @@
     "sub_08007174",
     "sub_080071dc",
     "sub_080072e0",
+    "sub_08017668",
     "sub_08018464",
+    "sub_08018498",
     "sub_08018b84",
     "sub_08018bb8",
     "sub_08018d7c",
@@ -5492,6 +5494,8 @@
     "0x08754718": "gUnk_08754718",
     "0x08754738": "gUnk_08754738",
     "0x08754780": "gUnk_08754780",
+    "0x08755068": "gUnk_08755068",
+    "0x08755378": "gUnk_08755378",
     "0x087553DC": "gUnk_087553DC",
     "0x087553FC": "gUnk_087553FC",
     "0x08755440": "gUnk_08755440",
@@ -5635,23 +5639,19 @@
       "chunk_bytes": 65536
     },
     {
-      "name": "game_code_and_rodata_08018498",
+      "name": "game_code_and_rodata_08018b84",
       "chunk_bytes": 65536
     },
     {
-      "name": "game_code_and_rodata_08018498_08018e14",
+      "name": "game_code_and_rodata_08018b84_08019eec",
       "chunk_bytes": 65536
     },
     {
-      "name": "game_code_and_rodata_08018498_08018e14_08019eec",
+      "name": "game_code_and_rodata_08018b84_08019eec_0801a3e4",
       "chunk_bytes": 65536
     },
     {
-      "name": "game_code_and_rodata_08018498_08018e14_08019eec_0801a3e4",
-      "chunk_bytes": 65536
-    },
-    {
-      "name": "game_code_and_rodata_08018498_08018e14_08019eec_0801a3e4_0801a8c8",
+      "name": "game_code_and_rodata_08018b84_08019eec_0801a3e4_0801a8c8",
       "chunk_bytes": 65536
     },
     {

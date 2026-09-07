@@ -8,7 +8,7 @@ extern u32 gUnk_0874C600[];
 
 void TaskDispatchTrampoline(void);
 void TaskYieldTrampoline(s32 frames);
-void sub_080031b8(s32 id);
+s32 sub_080031b8(s32 id);
 void sub_080059d8(void);
 void sub_08005ca0(void);
 void sub_0800625c(s32 a, s32 b, s32 c, s32 d, s32 e, s32 f);
