@@ -182,8 +182,8 @@ dispatches, pool density) — a planning aid, not a promise.
 | M01 | `0x08007300-0x080075B7` | 0.7 KiB | 1 | 0 | - | **done** - main |
 | M02 | `0x080075B8-0x0800B91F` | 16.9 KiB | 110 | 1 | *** | game mode + screen/asset loader |
 | M03 | `0x0800B920-0x08010357` | 18.6 KiB | 83 | 0 | **** | menu / UI task bank |
-| M04 | `0x08010358-0x08017667` | 28.8 KiB | 67 | 0 | *** | player-character state bodies? |
-| M05 | `0x08017668-0x0801A8C7` | 12.6 KiB | 23 | 0 | *** | player-character driver? |
+| M04 | `0x08010358-0x08017667` | 28.8 KiB | 67 | 0 | *** | player-character state bodies |
+| M05 | `0x08017668-0x0801A8C7` | 12.6 KiB | 23 | 0 | *** | player-character animation bank + collision registry - **landed (#81)**, 20/23 |
 | M06 | `0x0801A8C8-0x08021B17` | 28.6 KiB | 56 | 0 | ***** | terrain / collision query (pure leaf) |
 | M07 | `0x08021B18-0x0802969F` | 30.9 KiB | 154 | 1 | ****** | level / room builder + tilemap upload |
 | M08 | `0x080296A0-0x08030803` | 28.3 KiB | 153 | 2 | *** | camera / BG scroll + tilemap streaming |
@@ -392,19 +392,44 @@ early zone and the SDK tails. "Pool references" counts literal-pool words, so
 * **Known RAM cells touched** DISPCNT shadow x3, current game state (main dispatch) x2, per-player keys pressed x1.
 * **Suggested batches** `0x08010358` (23 fns), `0x0801201C` (13 fns), `0x08013E38` (18 fns), `0x08015758` (13 fns).
 
-### M05 `0x08017668-0x0801A8C7` - player-character driver?
+### M05 `0x08017668-0x0801A8C7` - player-character animation bank + collision registry
+
+**Decompiled in issue #81** (20 of 23 functions, 11100 of 12896 bytes):
+`src/player_17668.c`, `src/player_18b84.c`, `src/player_19000.c`,
+`src/player_1a07c.c`, `src/player_1a76c.c`.
 
 * **Size** 12.6 KiB (`0x3260`), 23 functions (20 reachable only through pointer tables), mean `0x230`, largest `0xdfc`, pool words 7.5% of bytes.
-* **Difficulty** 3/6 - 31 distinct RAM cells, 0 jump-table dispatches, 5 functions >= `0x200`.
-* **Seam cost** 1 in / 0 out (local `bl` edges crossing the boundary).
-* **Why** task type #3; 20/23 pointer-dispatched; called by every stage module, calls the bank above.
+* **What it is.** Thirteen of its bodies are entries **58-70** of the 71-entry
+  dispatch table at `0x08731FA8` that it shares with M04 (which owns entries
+  0-57): each is a linear `TaskYieldTrampoline` script that drives the player's
+  animation id `Task.unk3C`, its 16.16 velocity/gravity cells and the OAM flip
+  bit `Task.unk3E & 0x8000`.  The hidden export `sub_0801a76c` is what settles
+  the "player character?" question in section 7: it binds the running task to a
+  player record (`Task.unk88 = &gUnk_03002170[i]`, the 116-byte `PlayerState`)
+  and derives the OAM priority bits from the player index `i`.
+* **Shared library (three functions, called from outside).**
+  `sub_0801a828` is the ROM's **collision registration** entry point - 50+
+  callers across M09-M16 and M18 - appending `{u8 task index, u16 x, u16 y,
+  descriptor *}` to one of three fixed-capacity IWRAM lists chosen by the
+  descriptor's class nibble (`p[8] & 0xF0`): `gUnk_030054B0` (capacity 4,
+  count `gUnk_03005290`), `gUnk_030053A0` (20, `gUnk_030054A8`) and
+  `gUnk_030052A0` (20, `gUnk_030054F4`).  It returns 1 when the chosen list is
+  full.  `sub_0801a7b4` clears all three lists and their counts (6 callers, all
+  in M02 and the 0x080CD3xx zone), and `sub_0801a3e4` is a graphics uploader
+  reached from three tables in M38.
+* **Census: two defects**, both now in `tools/symdb.py`.  `0x0801A41A` is a
+  phantom (its only `bl` edge is the pool word `0xFFFFF000` at `0x08019418`;
+  the code has no prologue and shares `sub_0801a3e4`'s frame and epilogue), and
+  `0x0801A76C` is a hidden dead export.  A reachability walk over the whole
+  module then reports zero unreachable code, and no literal pool straddles a
+  `symbols.csv` boundary - every function boundary is a valid carve point.
+* **Still asm** (same-size register-allocation residues): `sub_08018e14`
+  (492 bytes, a three-particle simulation over `gUnk_02006040`),
+  `sub_08019eec` (400 bytes, 17 differing) and `sub_0801a3e4` (904 bytes).
 * **Calls into the decompiled early zone** sprite draw/update x71, VRAM transfer queue + sprite buckets x24, frame driver + RNG + blend x6, sound/BGM x2, sound/SE x2.
 * **Named helpers** TaskYieldTrampoline x553, TaskDispatchTrampoline x3, LZ77UnCompWram x1.
 * **Called from** M14 x21, M18 x10, M13 x8, M12 x7, M11 x6.
-* **Depends on** sdk_libc x556, early_5d9c x71, early_1518 x24, game_code_early_080011ac_08002378_08003110 x20, early_2b04 x6.
-* **Pool references** IWRAM x101, asset_metadata_index x25, early_58e4 x13, game_code_and_rodata x11, m4a_songs x11, EWRAM x10, VRAM x10, early_5c4c x4.
-* **Known RAM cells touched** BLDALPHA hi shadow x2, BLDALPHA lo shadow x2, BG3HOFS shadow (16.16) x1, BG3VOFS shadow (16.16) x1, BLDCNT hi shadow x1, BLDCNT lo shadow x1.
-* **Suggested batches** `0x08017668` (2 fns), `0x08018498` (5 fns), `0x08019000` (16 fns).
+* **Known RAM cells touched** BLDALPHA hi/lo shadows, BG3HOFS/BG3VOFS shadows (16.16, read as `vs32` and shifted right 16 for the camera), BLDCNT hi/lo shadows.
 
 ### M06 `0x0801A8C8-0x08021B17` - terrain / collision query (pure leaf)
 
@@ -1723,13 +1748,13 @@ and reproducible. The **names are inference**, at three confidence levels:
 
 **Plausible, marked `?` in the table**
 
-* M04+M05 — "player character". The evidence is a 71-entry dispatch table
-  (`0x08731FA8`) spanning both, the densest `TaskYieldTrampoline` use in the
-  ROM (1,340 in M04 alone), 261 sprite-draw calls, and callers in every stage
-  module. What does *not* fit a player controller is how little it reads the
-  key cells (one reference). **To settle it:** decompile one dispatched body
-  and see whether it reads `gUnk_0300100C`/`gUnk_03000F98[]` through a
-  per-player struct, or trace which task type spawns it.
+* M04+M05 — "player character": **SETTLED by #81, and the names are now
+  unqualified.** `sub_0801a76c` in M05 binds the running task to a player
+  record (`Task.unk88 = &gUnk_03002170[i]`, the 116-byte `PlayerState`) and
+  sets the OAM priority bits from the player index, and M05's thirteen bodies
+  are entries 58-70 of the shared `0x08731FA8` table.  The reason neither reads
+  the key cells is that they are *animation* scripts: the input handling lives
+  in the state machine that picks the table entry, not in the bodies.
 * M06 — "terrain/collision query". It is certainly a pure leaf over the IWRAM
   block `0x030054E0-0x030055B0` and the `0x100`-stride index tables at
   `0x087328F0-0x087339F0`, shared with M07. Whether that block is the room

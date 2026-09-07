@@ -469,8 +469,8 @@ vma,size,isa,evidence,name
 0x0801A07C,0x170,thumb,rom-pointer,sub_0801a07c
 0x0801A1EC,0x124,thumb,rom-pointer,sub_0801a1ec
 0x0801A310,0xD4,thumb,rom-pointer,sub_0801a310
-0x0801A3E4,0x36,thumb,rom-pointer,sub_0801a3e4
-0x0801A41A,0x39A,thumb,bl-target,sub_0801a41a
+0x0801A3E4,0x388,thumb,rom-pointer,sub_0801a3e4
+0x0801A76C,0x48,thumb,curated,sub_0801a76c
 0x0801A7B4,0x74,thumb,bl-target,sub_0801a7b4
 0x0801A828,0xA0,thumb,bl-target,sub_0801a828
 0x0801A8C8,0x64C,thumb,bl-target,sub_0801a8c8

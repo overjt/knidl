@@ -279,6 +279,15 @@ KNOWN_SYMBOLS = {
 # m4a_songs data segment surrounded by signed 8-bit PCM sample bytes; the
 # `pop {pc}` halfword passes the strict terminator check by accident.
 FALSE_POSITIVES = {
+    # --- M05 (issue #81), one row the reachability sweep dropped ---
+    # 0x0801A41A has no prologue: it shares sub_0801a3e4's frame (the `push
+    # {r4-r7,lr}` + `sub sp, #12` at 0x0801A3E4) and its epilogue at
+    # loc_0801a740, and sub_0801a3e4 falls straight into it.  The only "bl
+    # edge" to it is the pool word 0xFFFFF000 at 0x08019418 (inside
+    # sub_08019000's literal pool) decoding as a bl pair.  sub_0801a3e4 runs
+    # 0x0801A3E4-0x0801A76C (0x388).
+    0x0801A41A,
+
     # --- M32 (issue #73), one row the reachability sweep dropped ---
     # 0x080B1AFA is the second halfword of the `bl TaskYieldTrampoline` at
     # 0x080B1AF8, inside sub_080b1a1c's second yield loop.  The "bl edge" the
@@ -441,6 +450,14 @@ FALSE_POSITIVES = {
 # m4a.c function order and body shape (see the KNOWN_SYMBOLS comments);
 # they are injected as candidates and carry the "curated" evidence kind.
 EXTRA_THUMB_ENTRIES = {
+    # --- M05 (issue #81), one hidden entry the reachability sweep found ---
+    0x0801A76C,  # dead export: binds the running task to a player record
+                 # (Task.unk88 = &gUnk_03002170[i], the 116-byte PlayerState)
+                 # and sets the OAM priority bits from the player index.  No
+                 # ROM word holds 0x0801A76D and nothing `bl`s it; it sits
+                 # after sub_0801a3e4's literal pool with its own prologue-less
+                 # `bx lr` body and its own pool at 0x0801A7A0.
+
     # --- M29-M33 (issues #76 #72 #78 #73 #97), seventeen hidden entries the
     # reachability sweep found.  Three kinds: (a) continuation entries stored
     # as `fn+1` pool words into a task field or referenced from a script/anchor
