@@ -1573,9 +1573,9 @@ below is the pre-decompilation one, kept for the record.
 * **Pool references** IWRAM x230, asset_metadata_index x129, game_code_and_rodata x70, EWRAM x24, early_5d9c x8, level_graphics_palettes x6, early_58e4 x3, VRAM x2.
 * **Suggested batches** `0x080AE3BC` (47 fns), `0x080B0338` (52 fns), `0x080B22F8` (30 fns).
 
-### M33 `0x080B2FE8-0x080B6153` - HUD / overlay effects? - **landed (#97, partial: 106/108)**
+### M33 `0x080B2FE8-0x080B6153` - HUD / overlay effects? - **landed (#97, partial: 107/108)**
 
-* **Decompiled** into `src/hud_b2fe8.c`, `hud_b5024.c`, `hud_b5840.c` (106 of 108 functions byte-matched; `make clean && make compare` ROM-identical around 2 asm holes). **2 functions remain in asm**: `sub_080B4EA8` (380B, r7 web-split - the loop counter n7=i4+1 splits into a pre-switch pseudo (r7, correctly pushed) plus per-case recomputes that global_alloc coalesces into a separate callee-saved reg r9; natural pressure DOES push r7 but the exact 5-callee-saved web split is a global-alloc fixed-point; lessons 3.271/3.273) and `sub_080B5670` (464B, the same r7-preference core the permuter reduced to 48B but cannot zero; 3.272).
+* **Decompiled** into `src/hud_b2fe8.c`, `hud_b4ea8.c`, `hud_b5024.c`, `hud_b5840.c` (107 of 108 functions byte-matched; `make clean && make compare` ROM-identical around 1 asm hole). `sub_080B4EA8` (the 3.274 r7 "web-split" terminal) matched via pre-switch n3/n7 + file-scope register globals r9-r11 + per-arm unique asm barriers + natural caller-save + a deliberately-mergeable duplicate case-5 tail whose reload chains advance the rotation before jump2 folds it away (lessons 3.275-3.281). **1 function remains in asm**: `sub_080B5670` (464B, best candidate 34 differing bytes in pending/fns/: the loop-compare needs q2i homed ip with its base-copy reload-materialized (r7 by rotation), plus an after2-block staging residue and a 2-insn prologue ordering; the {r0,r7} spill-set union and the in-loop symbol reload are already correct).
 
 * **Size** 12.4 KiB (`0x316c`), 108 functions (69 reachable only through pointer tables), mean `0x75`, largest `0x380`, pool words 14.2% of bytes.
 * **Difficulty** 3/6 - 58 distinct RAM cells, 5 jump-table dispatches, 4 functions >= `0x200`.
