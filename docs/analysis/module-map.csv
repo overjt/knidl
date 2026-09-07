@@ -82,7 +82,7 @@ M80,0x080A93EC,0x080AA338,0xF4C,26,17,0,0x96,0x278,15.4,15,0,0,6,2,3,2,enemy_a93
 M81,0x080AA338,0x080AE3BC,0x4084,123,98,0,0x86,0x378,14.3,21,1,0,18,0,10,2,enemy/object behaviour bank 12,"decompiled in #78 as src/enemy_aa338.c (123 functions, all byte-matched, ROM identical); 18 task types, Div x5; last straggler sub_080ADA20 closed via the dropped-pseudo address-reload form (lessons 3.258/3.273)"
 M82,0x080AE3BC,0x080B2FE8,0x4C2C,135,99,0,0x90,0x320,11.9,15,4,0,15,0,9,1,enemy/object behaviour bank 13,"decompiled in #73 as src/enemy_ae3bc.c (135 functions, all byte-matched, ROM identical); dispatch-heavy behaviour bank, closed via the redundant-read reload lever (lessons 3.270)"
 M83,0x080B2FE8,0x080B4EA8,0x1EC0,91,68,0,0x56,0x380,13.4,21,0,0,9,4,11,1,HUD / overlay effects?,"decompiled in #97 (partial) as src/hud_b2fe8.c/b5024.c/b5840.c (106 of 108 functions byte-matched, ROM identical around 2 asm holes); 9 task types (5 of class 4); LZ77UnCompVram x6 + CpuSet x3 + a DMA0 register pair; VRAM transfer queue x20; EWRAM x102. 2 functions remain in asm - sub_080B4EA8 (r7 web-split: n7 splits into pre-switch + per-case pseudos, one lands r9 not r7; 3.271/3.273) and sub_080B5670 (48B r7-preference core)"
-M84,0x080B4EA8,0x080B5024,0x17C,1,0,1,0x17C,0x17C,10.5,5,1,0,0,2,3,2,,
+M84,0x080B4EA8,0x080B5024,0x17C,1,0,0,0x17C,0x17C,10.5,5,1,0,0,2,3,2,hud_b4ea8,already landed (c_code)
 M85,0x080B5024,0x080B5670,0x64C,9,0,0,0xB3,0x314,16.4,24,3,0,0,11,4,2,hud_b5024,already landed (c_code)
 M86,0x080B5670,0x080B5840,0x1D0,1,0,1,0x1D0,0x1D0,9.5,5,0,0,0,1,2,2,,
 M87,0x080B5840,0x080B6154,0x914,8,2,0,0x122,0x2B8,16.9,33,1,0,0,2,3,3,hud_b5840,already landed (c_code)
