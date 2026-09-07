@@ -647,6 +647,64 @@ child issues of #35 are created from it. Findings that belong in this document:
     word `0xFFFFF000` at `0x08019418`; the code there has no prologue and
     shares `sub_0801a3e4`'s frame and epilogue) and `0x0801A76C` was missing.
     Both corrected in `tools/symdb.py`.
+- **M16 (`0x0805AFAC-0x08062583`) is the effect spawner plus a two-level state
+  machine**, decompiled in #83. Three things the module map had wrong or
+  missing:
+  * **`sub_0805afac(s8 band, u8 id, s32 payload)` is a priority-banded
+    spawner** and the module's most-called function (13 sites). It takes a
+    **type-7** task via `sub_08005904(7, base, base + 3)` with base
+    16/20/24/28 chosen by `band`, retries a 3-slot fallback window at
+    4/7/10/13 when the primary band is full, writes
+    **`Task.unk18 = (id << 24) | (payload & 0x00FFFFFF)`**, and copies the
+    parent's `unk48`/`unk4A`/`unk43`/`unk88` and the 16.16 mirrors
+    `unk4C`/`unk50` into the child.  It returns the new task index.
+    `sub_0805b088` is the same shape fixed at slots 32-62, and it also sets
+    `Task.unk72 = 10`.  The packed selector word is the layout M04 writes too
+    (lesson 3.287), so it is the task system's convention.
+  * **The "22-entry anchor table" at `0x0873DBE4` is two 11-entry tables.**
+    `0x0873DBE4` is dispatched on `Task.unk14` (the major state) by
+    `sub_0805b278` (which sets the field, then runs it) and `sub_0805b354`
+    (which runs the current one); `0x0873DC10` is dispatched on `Task.unk15`
+    (the minor state) by the non-void `sub_0805b4bc`.  All three dispatchers
+    are one-line `sub_08002e98(field, 11, table)` bodies.  `Task.unk15` is a
+    per-handler tag - each entry point stores its own id - and `Task.unk14`
+    the NEXT state, always followed by `sub_08006148(sub_0805b354,
+    gCurTaskIdx)` or a direct call to the next handler.
+  * **`0x0873DEDC` is a 13-entry script table that spans the M16/M17
+    boundary** (its last entry is `0x08062585`, in M17).  `sub_0805e1bc` and
+    `sub_0805e24c` seed `*(s8 *)gUnk_02008010 = sub_08002ee8(7)` and dispatch
+    `sub_08002e98(i, 14, table)` when `Task.unk30 != 0` or
+    `sub_08002e98(i + 7, 14, table)` when it is 0 - **two banks of seven
+    randomly chosen scripts**, spawned as task type 14.  The song only
+    (re)starts for the player whose index matches `gUnk_03002360`, and
+    `gUnk_020060CC` is a one-shot "already started" latch.  Bodies on both
+    sides of the boundary end with the same four-statement terminator
+    (`sub_080062c4(); sub_0805afac(unk88->unk00, 16, 0); unk3C = 146;
+    TaskYieldTrampoline(21);`), which is the strongest evidence that M16's
+    task types #81-#90 are the same sequence family as M17's.
+  * **Ten ROM task types**, #81-#90 (8 class-3, 2 class-4): entries
+    `sub_0805beb0`, `sub_0805c204`, `sub_0805c410`, `sub_0805cb30`,
+    `sub_0805cca0`, `sub_0805cf3c`, `sub_0805cbec`, `sub_0805d564`,
+    `sub_0805d668`, `sub_0805c5fc`.  Type #88 is a 5-frame sprite with its own
+    draw hook `sub_0805d5fc` over the 5-entry table `gUnk_0874CDF8`; type #89
+    is produced by `sub_0805d420`, which sweeps the active-player bitmask
+    `gUnk_03002340` over `gUnk_030023AC` players and hands each child a lane
+    index in `Task.unk2C`.
+  * **A sound-script interpreter** lives at `sub_0805d8a4`-`sub_0805d918`:
+    `Task.unk18` is the script base (`s16 *`), `unk1C` the program counter,
+    `unk20` the frames left, with opcodes -2 stop, -3 rewind, -4 switch to
+    script `((u8 *)p)[(i + 1) * 2]` through the 8-entry table `0x0873DDE8`,
+    and any other value an SFX id for `sub_08006338` followed by its delay.
+  * **Three `switch` dispatches**, `0x0805DC5C` (25 entries, 3 arms),
+    `0x0805DE1C` (22, 2) and `0x0805DEF0` (22, 2), all switching on
+    `Task.unk88->unk0D` - a character/costume id - and sharing the arm set
+    `{0, 7, 11, 20, 21}`.  `0x0873DEA8` is a `u16[]` of animation frame ids
+    indexed by that same id.
+  * Census: `0x0805DBFC` was a hidden **dead export** merged into
+    `sub_0805dba0` (which really ends at `0x0805DBE0`, followed by its pool);
+    corrected in `tools/symdb.py`, so the module has 89 functions.
+    `struct PlayerState` gained `unk64`/`unk68`/`unk6C`, which
+    `sub_0805e15c` zeroes per player and which had been inside `filler62`.
 - **M29 (`0x080A1590-0x080A5643`) is enemy/object behaviour bank 10.**
   Decompiled in #76 into `src/enemy_a1590.c` (226 functions, all
   byte-matched, no asm left in the range). The M25/M27 guard+body script

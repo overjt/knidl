@@ -194,7 +194,7 @@ dispatches, pool density) — a planning aid, not a promise.
 | M13 | `0x08047FE8-0x0804CC7B` | 19.1 KiB | 27 | 0 | *** | large actor bank B |
 | M14 | `0x0804CC7C-0x08053AF3` | 27.6 KiB | 84 | 2 | *** | stage manager B |
 | M15 | `0x08053AF4-0x0805AFAB` | 29.2 KiB | 86 | 1 | *** | link multiplayer mode |
-| M16 | `0x0805AFAC-0x08062583` | 29.5 KiB | 88 | 1 | *** | actor / effect support library B |
+| M16 | `0x0805AFAC-0x08062583` | 29.5 KiB | 89 | 1 | *** | effect spawner + two-level state machine (task types #81-#90) |
 | M17 | `0x08062584-0x080692FB` | 27.4 KiB | 244 | 2 | *** | struct Task field API (actor core) |
 | M18 | `0x080692FC-0x08070EBF` | 30.9 KiB | 256 | 4 | * | player-state task bodies (actor core part 2) - **landed (#64)** |
 | M19 | `0x08070EC0-0x08078B67` | 31.2 KiB | 220 | 8 | ** | cutscene / ending-sequence bank (11 class-3 tasks) - **landed (#79)** |
@@ -268,7 +268,7 @@ ordering inside it:
 | 20 | M04 player-character state bodies? | 0x7310 | 67 | 3 | 3 | 1 | 2 |
 | 21 | M08 camera / BG scroll + tilemap streaming | 0x7164 | 153 | 3 | 4 | 3 | 17 |
 | 22 | M02 game mode + screen/asset loader | 0x4368 | 110 | 3 | 6 | 29 | 5 |
-| 23 | M16 actor / effect support library B | 0x75D8 | 88 | 3 | 6 | 10 | 10 |
+| 23 | M16 effect spawner + two-level state machine (task types #81-#90) - landed | 0x75D8 | 89 | 3 | 6 | 10 | 10 |
 | 24 | M33 HUD / overlay effects? | 0x316C | 108 | 3 | 7 | 8 | 9 |
 | 25 | M12 large actor bank A | 0x3620 | 22 | 3 | 7 | 1 | 0 |
 | 26 | M13 large actor bank B | 0x4C94 | 27 | 3 | 7 | 4 | 0 |
@@ -311,7 +311,7 @@ sub-issue of #35, so the numbering ascends with the recommended order):
 | 17 | #80 | M23 enemy/object behaviour bank 4 (fourteen three-table scripts + two bosses) - landed | `0x080860F8-0x0808CCE7` | 27.0 KiB | 2 |
 | 18 | #81 | M05 player-character driver? | `0x08017668-0x0801A8C7` | 12.6 KiB | 3 |
 | 19 | #82 | M04 player-character state bodies? | `0x08010358-0x08017667` | 28.8 KiB | 3 |
-| 20 | #83 | M16 actor / effect support library B | `0x0805AFAC-0x08062583` | 29.5 KiB | 3 |
+| 20 | #83 | M16 effect spawner + two-level state machine (task types #81-#90) - landed | `0x0805AFAC-0x08062583` | 29.5 KiB | 3 |
 | 21 | #84 | M06 terrain / collision query (pure leaf) | `0x0801A8C8-0x08021B17` | 28.6 KiB | 3 |
 | 22 | #85 | M11 stage support library | `0x0803CD60-0x080449C7` | 31.1 KiB | 3 |
 | 23 | #86 | M08 camera / BG scroll + tilemap streaming | `0x080296A0-0x08030803` | 28.3 KiB | 4 |
@@ -578,21 +578,49 @@ early zone and the SDK tails. "Pool references" counts literal-pool words, so
 * **Known RAM cells touched** DISPCNT shadow x3.
 * **Suggested batches** `0x08053AF4` (12 fns), `0x08054330` (25 fns), `0x0805614C` (18 fns), `0x08057CE0` (17 fns), `0x08059C28` (14 fns).
 
-### M16 `0x0805AFAC-0x08062583` - actor / effect support library B
+### M16 `0x0805AFAC-0x08062583` - effect spawner + two-level state machine (task types #81-#90)
 
-* **Size** 29.5 KiB (`0x75d8`), 88 functions (53 reachable only through pointer tables), mean `0x156`, largest `0x924`, pool words 7.9% of bytes.
-* **Difficulty** 3/6 - 38 distinct RAM cells, 3 jump-table dispatches, 16 functions >= `0x200`.
-* **Seam cost** 7 in / 2 out (local `bl` edges crossing the boundary).
-* **Why** fan-in 76+41+27+25+18 from the stage modules; TaskYieldTrampoline x1052; touches each BG shadow once.
-* **Task types** 10 (class 3 x8, class 4 x2): #81, #82, #83, #84, #85, #86, #87, #88, #89, #90.
-* **Anchor tables** `0x0873DBE4` 22 entries -> `0x0805B4D8-0x0805BE3C`.
-* **Calls into the decompiled early zone** sprite draw/update x200, frame driver + RNG + blend x17, task position/draw x14, VRAM transfer queue + sprite buckets x11, BG/fade/blend reset x7, sound/BGM x3.
-* **Named helpers** TaskYieldTrampoline x1052, TaskDispatchTrampoline x5, LZ77UnCompWram x1.
-* **Called from** M13 x76, M12 x41, M10 x27, M11 x25, M14 x18.
-* **Depends on** sdk_libc x1057, early_5d9c x200, early_2b04 x17, early_58e4 x14, early_1518 x11.
-* **Pool references** IWRAM x254, asset_metadata_index x55, game_code_and_rodata x35, EWRAM x22, early_58e4 x8, early_5d9c x6, VRAM x3, compressed_graphics x2.
-* **Known RAM cells touched** BG0HOFS shadow (16.16) x1, BG0VOFS shadow (16.16) x1, BG1HOFS shadow (16.16) x1, BG1VOFS shadow (16.16) x1, BG2HOFS shadow (16.16) x1, BG2VOFS shadow (16.16) x1.
-* **Suggested batches** `0x0805AFAC` (53 fns), `0x0805CF3C` (27 fns), `0x0805EE90` (5 fns), `0x08060C2C` (3 fns).
+**Decompiled in issue #83** (all 89 functions, no asm left in the range): `src/effect_5afac.c`.
+
+* **Size** 29.5 KiB (`0x75d8`), 89 functions (53 reachable only through pointer tables), mean `0x156`, largest `0x924`, pool words 7.9% of bytes.
+* **The spawner.** `sub_0805afac(s8 band, u8 id, s32 payload)` is the
+  module's most-called function (13 sites) and returns the new task
+  index (`pop {r1}; bx r1`, lesson 3.94). It allocates a **type-7**
+  task in a priority band - `sub_08005904(7, base, base + 3)` with
+  base 16/20/24/28 by `band`, retrying a 3-slot fallback window at
+  4/7/10/13 when the primary band is full - writes
+  **`Task.unk18 = (id << 24) | (payload & 0x00FFFFFF)`** and copies
+  the parent's `unk48`/`unk4A` and their 16.16 mirrors `unk4C`/`unk50`
+  into the child. That packed-selector layout is the same one M04
+  writes (lesson 3.287), so it is the task system's convention rather
+  than a local trick.
+* **A two-level state machine, and the anchor table is really two.**
+  §4 lists `0x0873DBE4` as one 22-entry table; the code dispatches it
+  as **two 11-entry tables** indexed by two different fields:
+  `0x0873DBE4` on `Task.unk14` (major state) through `sub_0805b278`
+  (which sets the field, then runs it) and `sub_0805b354` (which runs
+  the current one), and `0x0873DC10` on `Task.unk15` (minor state)
+  through the non-void `sub_0805b4bc`. All three dispatchers are
+  one-line `sub_08002e98(field, 11, table)` bodies.
+* **Task types** 10 (class 3 x8, class 4 x2), #81-#90, entries
+  `sub_0805beb0`, `sub_0805c204`, `sub_0805c410`, `sub_0805cb30`,
+  `sub_0805cca0`, `sub_0805cf3c`, `sub_0805cbec`, `sub_0805d564`,
+  `sub_0805d668`, `sub_0805c5fc`.
+* **Three `switch` dispatches**, all in `0x0805DC5C-0x0805DF48` and
+  all wide case ranges collapsing onto a few shared arms:
+  `0x0805DC5C` 25 entries / 3 arms, `0x0805DE1C` 22 / 2,
+  `0x0805DEF0` 22 / 2. split.py prints these tables as code (they
+  decode as nonsense like `svc 72`), so a listing generator has to
+  demote them back to data - the inverse of lesson 4.42.
+* **Layout** `0x0805AFAC-0x0805B4D8` the spawner and dispatchers,
+  `0x0805B4D8-0x0805BE48` the 11 + 11 state bodies, 
+  `0x0805BEB0-0x0805D668` the ten task-type bodies, and the rest the
+  module's four biggest functions (1920-2340 bytes).
+* **Census** clean: all 88 entries tile exactly and every
+  `bl-target`-only entry is 4-aligned, so the lesson 4.40 phantom test
+  flags nothing.
+* **Seam cost** 7 in / 2 out. **Called from** M13 x76, M12 x41,
+  M10 x27, M11 x25, M14 x18, M09 x12.
 
 ### M17 `0x08062584-0x080692FB` - struct Task field API (actor core) - **landed (#65)**
 
