@@ -2521,7 +2521,7 @@ loc_080b71d6:
 	.word	gUnk_03002468
 	.word	gUnk_030023AC
 	.word	gUnk_020069F0
-	.word	0x02000020
+	.word	gUnk_02000020
 	.word	gUnk_02005580
 	.word	gUnk_0200B04C
 	.word	gUnk_03002360
@@ -2906,7 +2906,7 @@ loc_080b7518:
 	.word	gUnk_020069F0
 	.word	0x020055E0
 	.word	0x0200AEF0
-	.word	0x02000020
+	.word	gUnk_02000020
 	.word	gUnk_02005580
 	.word	gUnk_0200B04C
 	.word	gUnk_03001F30

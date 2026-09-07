@@ -79,7 +79,7 @@ sub_08005b20:
 	movs	r0, r0
 	.word	gUnk_03002490
 	.word	0x000007FF
-	.word	0x06010000
+	.word	gUnk_06010000
 	.global	loc_08005b4c
 loc_08005b4c:
 	ldr	r0, [pc, #100]	@ 0x08005BB4

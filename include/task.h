@@ -249,7 +249,13 @@ struct PlayerState
     /*0x46*/ u8 filler46[0x5E - 0x46];
     /*0x5E*/ u16 unk5E;
     /*0x60*/ u16 unk60;
-    /*0x62*/ u8 filler62[116 - 0x62];
+    /*0x62*/ u8 filler62[0x64 - 0x62];
+    /* M16's sub_0805e15c zeroes these three per player when a run starts
+       (issue #83); they were inside filler62. */
+    /*0x64*/ u32 unk64;
+    /*0x68*/ u32 unk68;
+    /*0x6C*/ u32 unk6C;
+    /*0x70*/ u8 filler70[116 - 0x70];
 };
 
 /* Spawn descriptor sub_08064A78 turns into a class-4 task. */

@@ -450,6 +450,18 @@ FALSE_POSITIVES = {
 # m4a.c function order and body shape (see the KNOWN_SYMBOLS comments);
 # they are injected as candidates and carry the "curated" evidence kind.
 EXTRA_THUMB_ENTRIES = {
+    # --- M16 (issue #83), one hidden entry ---
+    0x0805DBFC,  # dead export.  sub_0805dba0 ENDS at 0x0805DBE0 with a
+                 # complete `pop {r4}; pop {r0}; bx r0` epilogue followed by
+                 # its literal pool (0x0805DBE4-0x0805DBFB); 0x0805DBFC then
+                 # opens its own `push {lr}` prologue and dispatches
+                 # `sub_08002e98(Task.unk14, ...)`.  No ROM word holds
+                 # 0x0805DBFD and no `bl` anywhere in 0x08000000-0x080D0000
+                 # targets it, so the census had merged the two into one
+                 # 0x78-byte entry.  Real split: sub_0805dba0 0x0805DBA0-
+                 # 0x0805DBFC (0x5C) and sub_0805dbfc 0x0805DBFC-0x0805DC18
+                 # (0x1C).
+
     # --- M05 (issue #81), one hidden entry the reachability sweep found ---
     0x0801A76C,  # dead export: binds the running task to a player record
                  # (Task.unk88 = &gUnk_03002170[i], the 116-byte PlayerState)
