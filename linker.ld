@@ -237,6 +237,51 @@ SECTIONS
         KEEP(*(.game_code_and_rodata)) KEEP(*(.game_code_and_rodata.tail))
     } > ROM
 
+    /* player_18464 — decompiled to C (src/player_18464.c, carved by tools/carve.py) */
+    .player_18464 0x08018464 : {
+        build/src/player_18464.o(.text)
+    } > ROM
+
+    .game_code_and_rodata_08018498 0x08018498 : {
+        KEEP(*(.game_code_and_rodata_08018498)) KEEP(*(.game_code_and_rodata_08018498.tail))
+    } > ROM
+
+    /* player_18b84 — decompiled to C (src/player_18b84.c, carved by tools/carve.py) */
+    .player_18b84 0x08018B84 : {
+        build/src/player_18b84.o(.text)
+    } > ROM
+
+    .game_code_and_rodata_08018498_08018e14 0x08018E14 : {
+        KEEP(*(.game_code_and_rodata_08018498_08018e14)) KEEP(*(.game_code_and_rodata_08018498_08018e14.tail))
+    } > ROM
+
+    /* player_19000 — decompiled to C (src/player_19000.c, carved by tools/carve.py) */
+    .player_19000 0x08019000 : {
+        build/src/player_19000.o(.text)
+    } > ROM
+
+    .game_code_and_rodata_08018498_08018e14_08019eec 0x08019EEC : {
+        KEEP(*(.game_code_and_rodata_08018498_08018e14_08019eec)) KEEP(*(.game_code_and_rodata_08018498_08018e14_08019eec.tail))
+    } > ROM
+
+    /* player_1a07c — decompiled to C (src/player_1a07c.c, carved by tools/carve.py) */
+    .player_1a07c 0x0801A07C : {
+        build/src/player_1a07c.o(.text)
+    } > ROM
+
+    .game_code_and_rodata_08018498_08018e14_08019eec_0801a3e4 0x0801A3E4 : {
+        KEEP(*(.game_code_and_rodata_08018498_08018e14_08019eec_0801a3e4)) KEEP(*(.game_code_and_rodata_08018498_08018e14_08019eec_0801a3e4.tail))
+    } > ROM
+
+    /* player_1a76c — decompiled to C (src/player_1a76c.c, carved by tools/carve.py) */
+    .player_1a76c 0x0801A76C : {
+        build/src/player_1a76c.o(.text)
+    } > ROM
+
+    .game_code_and_rodata_08018498_08018e14_08019eec_0801a3e4_0801a8c8 0x0801A8C8 : {
+        KEEP(*(.game_code_and_rodata_08018498_08018e14_08019eec_0801a3e4_0801a8c8)) KEEP(*(.game_code_and_rodata_08018498_08018e14_08019eec_0801a3e4_0801a8c8.tail))
+    } > ROM
+
     /* actor_62584 — decompiled to C (src/actor_62584.c, carved by tools/carve.py) */
     .actor_62584 0x08062584 : {
         build/src/actor_62584.o(.text)

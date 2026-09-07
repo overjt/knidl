@@ -603,6 +603,18 @@ gUnk_03005274 = 0x03005274
 gUnk_03005278 = 0x03005278
 	.global	gUnk_0300527C
 gUnk_0300527C = 0x0300527C
+	.global	gUnk_03005290
+gUnk_03005290 = 0x03005290
+	.global	gUnk_030052A0
+gUnk_030052A0 = 0x030052A0
+	.global	gUnk_030053A0
+gUnk_030053A0 = 0x030053A0
+	.global	gUnk_030054A8
+gUnk_030054A8 = 0x030054A8
+	.global	gUnk_030054B0
+gUnk_030054B0 = 0x030054B0
+	.global	gUnk_030054F4
+gUnk_030054F4 = 0x030054F4
 	.global	gUnk_03005550
 gUnk_03005550 = 0x03005550
 	.global	gUnk_03005568
@@ -731,6 +743,8 @@ gUnk_082FB210 = 0x082FB210
 gUnk_082FB230 = 0x082FB230
 	.global	gUnk_082FD438
 gUnk_082FD438 = 0x082FD438
+	.global	gUnk_082FE0D0
+gUnk_082FE0D0 = 0x082FE0D0
 	.global	gUnk_082FE0E4
 gUnk_082FE0E4 = 0x082FE0E4
 	.global	gUnk_082FE104
@@ -3219,6 +3233,8 @@ gUnk_0874C500 = 0x0874C500
 gUnk_0874C520 = 0x0874C520
 	.global	gUnk_0874C568
 gUnk_0874C568 = 0x0874C568
+	.global	gUnk_0874C600
+gUnk_0874C600 = 0x0874C600
 	.global	gUnk_0874C718
 gUnk_0874C718 = 0x0874C718
 	.global	gUnk_0874C828
@@ -3267,6 +3283,8 @@ gUnk_0874CD24 = 0x0874CD24
 gUnk_0874CD3C = 0x0874CD3C
 	.global	gUnk_0874CE68
 gUnk_0874CE68 = 0x0874CE68
+	.global	gUnk_0874CE90
+gUnk_0874CE90 = 0x0874CE90
 	.global	gUnk_0874CFEC
 gUnk_0874CFEC = 0x0874CFEC
 	.global	gUnk_08752108
@@ -3553,6 +3571,16 @@ gUnk_08754718 = 0x08754718
 gUnk_08754738 = 0x08754738
 	.global	gUnk_08754780
 gUnk_08754780 = 0x08754780
+	.global	gUnk_087553DC
+gUnk_087553DC = 0x087553DC
+	.global	gUnk_087553FC
+gUnk_087553FC = 0x087553FC
+	.global	gUnk_08755440
+gUnk_08755440 = 0x08755440
+	.global	gUnk_0875546C
+gUnk_0875546C = 0x0875546C
+	.global	gUnk_08755484
+gUnk_08755484 = 0x08755484
 	.global	gUnk_0875549C
 gUnk_0875549C = 0x0875549C
 	.global	gUnk_08755DC0
@@ -3733,6 +3761,8 @@ gUnk_08757278 = 0x08757278
 gUnk_08757280 = 0x08757280
 	.global	gUnk_087572CC
 gUnk_087572CC = 0x087572CC
+	.global	gUnk_08757368
+gUnk_08757368 = 0x08757368
 
 @ Link-time constants (tools/split_config.json "abs_symbols"):
 @ absolute symbols whose VALUE is the constant (SDK idiom, e.g.
