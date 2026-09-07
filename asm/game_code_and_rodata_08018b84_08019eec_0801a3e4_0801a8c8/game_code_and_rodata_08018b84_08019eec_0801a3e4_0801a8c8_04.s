@@ -3402,7 +3402,7 @@ loc_0805b48a:
 	.word	0x0000FFFF
 	.word	0x085B9B6C
 	.word	gUnk_02020000
-	.word	0x06010000
+	.word	gUnk_06010000
 	.word	gUnk_03001570
 	.word	gUnk_03002790
 	.word	0x0873DBAC

@@ -155,14 +155,23 @@ def parse_dump(dump, wanted):
     return lines_wanted, bl_targets
 
 
+# objdump 2.40 carries Thumb IT-block state across a `-b binary` linear sweep
+# and `--start-address` does not reset it, so the SAME halfword prints with a
+# spurious condition suffix depending on where the sweep is: `b510` is `push
+# {r4, lr}` at 0x08007300 and 0x080CC024 but `pushgt {r4, lr}` at 0x080CC0A4.
+# Tolerate the suffix - the encoding, not the mnemonic spelling, is the
+# evidence (issue #82).
+COND = r"(?:eq|ne|cs|hs|cc|lo|mi|pl|vs|vc|hi|ls|ge|lt|gt|le|al)?"
+
+
 def is_push_lr_text(text):
-    return re.match(r"push\s+\{[^}]*\blr\b[^}]*\}", text) is not None
+    return re.match(r"push" + COND + r"\s+\{[^}]*\blr\b[^}]*\}", text) is not None
 
 
 def is_terminator_text(text):
-    if re.match(r"(bx|bxj)\s+", text):
+    if re.match(r"(bx|bxj)" + COND + r"\s+", text):
         return True
-    if re.match(r"pop\s+\{[^}]*\bpc\b[^}]*\}", text):
+    if re.match(r"pop" + COND + r"\s+\{[^}]*\bpc\b[^}]*\}", text):
         return True
     if re.match(r"b\t0x", text):
         return True
