@@ -620,6 +620,50 @@ child issues of #35 are created from it. Findings that belong in this document:
   address-reload form: the store-cell pointer written as a plain
   multi-block un-pinned local so reload rematerializes it and the
   `movs r4,#0` extendhisi2 zero-temp lands in r4 (lessons 3.258/3.273).
+- **M04 (`0x08010358-0x08017667`) is the driver half of the same scripted
+  sequence bank M05 holds the scripts for.** Decompiled in #82 into
+  `src/player_10358.c` and `src/player_10b38.c` (64 of 65 functions, 29088 of
+  29456 bytes; one 368-byte register-allocation residue stays asm).
+  The 71-entry table at `0x08731FA8` is **two tables in one**: entries 0-7 are
+  sequence bodies, entries 8-70 the 63 animation scripts (50 in M04, 13 in
+  M05).  Both dispatchers are one-line bodies and both are ROM task types:
+  * **type #91** (class 1, `sub_080103f0`) is the director -
+    `sub_08002e98(gUnk_030023B8, 9, gUnk_08731FA8)` picks the sequence,
+    `Task.unk04` gets the per-frame hook `sub_08010480`, `Task.unk6C` counts up
+    to `gUnk_08731F98[id] - 60`, then `gUnk_030023D8 = 5` and `sub_08006138`.
+  * **type #92** (class 2, `sub_080104f0`) is the script runner -
+    `sub_08002e98(gUnk_03002490->unk18, 63, gUnk_08731FC8)`, and
+    `0x08731FC8 == &gUnk_08731FA8[8]`, so the ROM itself states both the window
+    and the count.
+  * `sub_08010358(script, minSlot)` spawns a type-92 child via
+    `sub_08005904(92, minSlot, 62)`, copying `unk48/unk4A` and the 16.16
+    `unk4C/unk50` from the parent, inheriting `unk43`, writing `gCurTaskIdx`
+    into the child's `Task.unk44` and `script` into `Task.unk18`, and setting
+    `unk40 = 0x8810` when `gUnk_08731F78[id]` is non-null.  It **returns the
+    new task index**, which callers store in `Task.unk46`.
+  * `sub_08010480` is the **skip hook**: over `gUnk_030023AC` players it tests
+    the per-player keys `gUnk_03001EB8[i] & 9` (A | START), plays sound
+    `0x21B` for sequence 7, sets `gUnk_030023D8 = 5` and kills the task with
+    `sub_08005654(gCurTaskIdx)`.  This is why neither M04 nor M05 bodies read
+    the key cells: the input is read once, by the director's hook, only to
+    abort the sequence.
+  * **Per-sequence tables**, all indexed by the `s8` cell `gUnk_030023B8`
+    (0-7, written outside the module): `0x08731F78` graphics blobs
+    (`0x085BC800-0x085CC328`, 7 non-null), `0x08731F98` total durations in
+    frames (270, 416, 352, 552, 592, 456, 552, 2020), `0x08731FA8` the bodies.
+    Script/graphics descriptors sit at `0x08754A14-0x08754F68` and
+    `0x08751C44-0x08751E00`; `0x0873E640` is a `u16[23]` frame-id list and
+    `0x08732138` a 6-entry sprite-descriptor table indexed by a 0-5 phase
+    counter (the four-slot afterimage driver `sub_080162a0`).
+  * **Task fields this module pins down**: `unk18` script selector (packed
+    elsewhere), `unk44` **parent/anchor task index**, `unk46` last spawned
+    child index, `unk48/unk4A` screen coordinates relative to the parent,
+    `unk4C/unk50` their 16.16 mirrors, `unk3C` animation id, `unk00`/`unk04`
+    the update hooks.
+  * Census: `0x080153A2` and `0x0801625A` were phantoms from the pool word
+    `0xFFFFF000` at `0x080143A0` and `0x08015258` (lesson 4.40, fourth and
+    fifth instances); the module has 65 functions, not 67.  Both corrected in
+    `tools/symdb.py`.
 - **M05 (`0x08017668-0x0801A8C7`) is the player character's animation bank
   plus the ROM-wide collision registry.** Decompiled in #81 into
   `src/player_17668.c`, `src/player_18b84.c`, `src/player_19000.c`,

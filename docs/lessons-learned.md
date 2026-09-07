@@ -4129,6 +4129,46 @@ hoisting itself, with the ROM's register assignment. Same rule as 3.252 for
 if-arms, one level up: **a constant belongs in the expression, never in a
 variable, unless the ROM shows a copy at each use.**
 
+M04 (#82) found the other half of this rule: **`-1` and `0xFFFF` are not
+interchangeable here even though the stored halfword is identical.** agbcc's
+combine simplifies `(subreg:HI (ior:SI x 65535))` to a constant, so
+`field |= 0xFFFF` on an `s16`/`u16` field folds into a *plain store*
+(`movs r0,#1; negs r0,r0; strh`, or `ldr r0,=0xFFFF; strh`) and the `ldrh` and
+`orrs` vanish entirely. Spelled `|= -1`, Thumb has no `-1` immediate, so the
+constant is materialised into a pseudo with multiple uses, combine cannot
+substitute it, and you get the read-modify-write the ROM shows. The diagnostic
+runs both ways:
+
+* an `orrs` against a register holding `0x0000FFFF` means the source said
+  **`-1`**;
+* a bare `strh` of a pool-loaded `0xFFFF` means it said **`0xFFFF`** (or
+  `|= -1` outside a loop, which folds the same way).
+
+Ruled out as equivalents while establishing this: `*(u16 *)&f |= 0xFFFF`
+(folds), `*(vu16 *)&f |= 0xFFFF` (keeps the `ldrh` but stores the constant -
+`ldrh; ldr; add; strh`, no `orrs`), `|= 0x1FFFF`, `|= (u16)0xFFFF`,
+`u32 m = 0xFFFF; |= m`, and `f = f | 0xFFFF`. The `|= 0xFFFF` sites in
+`src/early_4fec.c` and `src/agb_init.c` are not counter-evidence: those apply
+`|=` to a wider or indexed lvalue, where the fold does not arise.
+
+### 3.292 Constant grouping in a mixed shift-and-add expression is observable
+agbcc does not reassociate `((a - 88) << 16) + K + b` into
+`((a - 88) << 16) + (K + b)`: the first emits `add r0, #K` *after* the load of
+`b`, the second puts `adds r0, #K` immediately after the `lsls #16`. M04's
+`sub_080162a0` only matched with the parenthesised form, register for register,
+across four spellings. When a diff is nothing but the position of one `adds`,
+re-bracket the constant instead of touching the variables.
+
+### 3.293 Whether the task pointer needs a named local depends on the loop TAIL
+Within one function, `sub_08015f18` needs both spellings. A `do/while` whose
+counter is read again *after* the back-edge (`t->unk6C = 0;` following the
+loop) wants the named local — `t = gUnk_03002490;` — because the pointer is
+live past the back-edge and the ROM shows the extra `adds r1, r0, #0` copy. A
+loop whose counter is dead afterwards wants the direct
+`gUnk_03002490->unk6C++`, which is one `ldr r1, [r0, #0]` and no copy. Read the
+instruction *after* the loop before choosing.
+
+
 ### 3.283 The BG scroll shadows are `vs32`: a non-volatile read narrows `>> 16` into an `ldrsh`
 
 `sub_0801a3e4` (M05) computes screen coordinates as
@@ -4152,6 +4192,76 @@ converse also appeared in the same module: `gUnk_02007D00[0] = sub_080031b8(...)
 proves `sub_080031b8` RETURNS a value even though every landed caller declares
 it `void` (per-file prototypes, 3.189).
 
+### 3.288 An `ip` pin is about the VALUE's liveness, not about `mov ip, rN` appearing
+agbcc picks r12 by itself for a pointer that stays live across a long call-free
+run, so `mov ip, r0` in the ROM is not by itself a reason to write
+`register struct Task *t asm("ip")`. Pinning it when agbcc would have chosen ip
+anyway is actively harmful: in M04's `sub_08013348` the pin turned the
+ip-to-low-register copies into real pseudos instead of reload-generated ones,
+which consumed r3, pushed two more values onto callee-saved registers and grew
+the prologue to `push {r4,r5,r6,lr}` - 49 differing bytes at the correct size.
+Dropping the pin went to 4 differing bytes in one step. Reach for the pin only
+when the value must survive a region where agbcc would otherwise spill it.
+
+### 3.289 An explicit zero variable can MIS-SCHEDULE the constant (refines 3.11)
+3.11's named zero exists to force a `movs rN, #0` that a literal would not
+produce; it is the wrong tool when the constant already appears and only its
+*position* is at issue. Adding `s32 z = 0;` to M04's `sub_08013348` moved the
+`movs r5, #0` one instruction too early, and `register s32 z asm("r5")` forced
+an r8 save and grew the function by 12 bytes. Plain `0` literals let agbcc CSE
+the constant into a callee-saved register at the right point on its own. Try
+the unadorned literal first.
+
+### 3.290 `ldrsh` vs `ldrh` on the same field tells you which cast the author wrote
+`Task.unk48`/`unk4A` are `s16` and both encodings appear against them:
+`ldrsh` means the source reads the field plainly (`(t->unk48 - 5) << 16` -
+the value is shifted left, so the sign matters), while `ldrh` means the source
+has an explicit `(u16)` cast (`t->unk48 = (x >> 16) + (u16)parent->unk48` -
+the result is narrowed by `strh` anyway, and the cast is what selects the
+zero-extending load). Same for `field++` on an `s16`, which is always
+`ldrh; adds #1; strh`. The load encoding is the evidence; do not "fix" it by
+changing the field's declared type.
+
+### 3.291 A register copy in a loop preheader means a SECOND pseudo for the same address
+When a loop reads a global through a pointer and the ROM shows
+`ldr rN, =gUnk_...` in the blocks before AND after the loop plus a bare
+`adds r6, r4, #0` copy in the preheader, the source held a second variable
+aliasing that address - in M04's `sub_08012df8`,
+`struct Task **c = &gUnk_03002490;` used as `(*c)->unk3C` inside the loop.
+Spelling the loop body with plain `gUnk_03002490->` reuses the entry block's
+pseudo, needs no copy, and comes out 2 bytes short. Note also that a pointer
+walk must be spelled in the `for` increment clause (`p++`), not as `*p++` in
+the body, or the `adds rN, #2` lands before the call instead of after it.
+
+### 3.285 A call result stored to a field and then tested is ONE assignment expression
+`sub_0801201c`'s loop reads `bl sub_080058e4; strh r0, [r1, #70]; lsls r0, r0,
+#16; asrs r0, r0, #16; cmp r0, #-1` - the sign-extension operates on the
+register that was just STORED, with no reload.  The source is the assignment
+used as a value, taking the field's `s16` type:
+
+```c
+if ((gUnk_03002490->unk46 = sub_080058e4(7, 32)) != -1)
+```
+
+Split into `f(...)` then `if (field != -1)` and agbcc emits an `ldrsh` reload
+that can never match.  This is §3.6's chained-assignment rule in its
+*conditional* form, and it is the shape behind every "the ROM sign-extends a
+register it did not load" diff.
+
+### 3.286 A zero register in front of `ldrsh`/`ldrsb` is not an index variable
+Thumb `LDRSH`/`LDRSB` have no immediate-offset encoding, so agbcc materialises
+`movs r7, #0` purely to satisfy `ldrsh r0, [r1, r7]` on a plain field read.
+Modelling that `movs` as a loop counter or an index invents a variable that
+shifts the whole allocation.  Every signed halfword/byte field read in the
+task-script modules looks like this.
+
+### 3.287 `Task.unk18` is a packed word, not a small integer
+`gUnk_03002790[n].unk18 = ((s16)parent->unk6C & 0x00FFFFFF) | (192 << 20)`
+(M04's `sub_0801201c`) shows the field carrying a 24-bit payload plus a top
+byte, so a diff that looks like a missing mask is usually the packing. In this
+subsystem the payload is the spawn ordinal and the top byte a layer selector;
+`sub_08010358` writes the same field as a bare script index.
+
 ### 4.41 A draft generator must classify what it drops, or it deletes code silently
 
 The M05 pipeline (issue #81) drafts a function from its annotated listing and
@@ -4171,6 +4281,23 @@ pool-skip branch, alignment padding - and print the rest. Every non-trivial
 line the guard reported in M05 was a real bug. **A silent drop is worse than
 no generator at all**: it produces plausible code that diffs like an
 allocation problem.
+
+M04 (#82) found the failure mode one step worse than a drop. For a pc-relative
+`ldr` whose pool value it could not resolve, the generator **silently reused
+the previous statement's constant**, emitting `unk3C = 152 << 15` where the
+ROM loads `0x0000FFFF`. That line looks entirely plausible and only tripped a
+diagnostic by luck (the value overflowed the `s16` field, and warnings are
+errors). The guard must therefore cover unresolved *operands*, not just
+unmodelled lines: emit a hard `/* UNRESOLVED POOL @addr */` marker and let the
+compile fail rather than substituting anything.
+
+The cheapest guard of all, also from #82, is a **trace-diff**: simulate the
+listing's register moves into a normalised event log (`[offset] = value`,
+`CALL f(args)`), normalise the candidate C the same way, and diff the two. On
+the 1984-byte `sub_08015758` that isolated the single missing
+`TaskYieldTrampoline(4)` in one command, with no allocator guessing at all. It
+catches the two classes a comment-whitelist cannot: a dropped call, and a
+back-branch that forms a counter-less `while (1)` the generator never emitted.
 
 ### 4.39 A census entry the PREVIOUS function's branch walk reaches is part of that function
 `bl` edges are not evidence to the contrary: a Thumb `b.n` only reaches
@@ -4193,6 +4320,51 @@ invented `sub_0801a41a`, a "function" with no prologue that shares
 `sub_0801a3e4`'s frame and epilogue.  The tell is always the same pair: the
 claimed entry has no `push` AND its only evidence is one `bl` whose site is a
 4-aligned word inside another function's pool.
+
+Fourth and fifth instances in M04 (#82), both `0xFFFFF000` again:
+`0x080143A0` invented `sub_080153a2` (which keeps using the r4 task pointer and
+r5 constant that `sub_08015268`'s frame set up) and `0x08015258` invented
+`sub_0801625a` (the `str r0, [r1, #84]` completing a constant `sub_0801607c`
+materialised two instructions earlier).  Both target addresses are
+**not 4-aligned**, and both follow a function whose size is not a multiple of
+4 - that pair of properties alone flagged them before a single byte was
+decompiled.  The arithmetic is worth memorising: the phantom always lands at
+`pool address + 4 + 0xFFE`, because `0xF000`/`0xFFFF` is `bl` with offset
+`0x7FF << 1`.
+
+### 4.44 Grep the landed `src/` for a twin before hand-deriving anything
+The same body is reused across modules, not just within one. M04's
+`sub_08012fe0` is byte-for-byte the already-landed `sub_080b0570`
+(`src/enemy_ae3bc.c`) in a completely different module, scaffolding and
+`register ... asm("ip")` pin included; copying it verbatim cost seconds where
+deriving it would have cost an hour. Search on a distinctive *expression* from
+the listing rather than on a name - `grep -n "(x >> 16) + (u16)" src/` found
+it immediately. Do this pass on every straggler before opening the allocator
+toolkit. Within a module the same trick applies to same-size siblings: M04's
+`sub_08016ac4`/`sub_08016dd4`/`sub_080170e4` are three 784-byte functions
+identical apart from constants, and matching the first made the other two
+mechanical.
+
+### 4.42 Give objdump an 8-byte window when decoding one address at a time
+A listing generator that resolves "is this data really code?" by decoding each
+candidate address in isolation must request at least 8 bytes of
+`--stop-address`, not 4.  With a 4-byte window a 32-bit Thumb `bl` comes back
+with its hex column truncated to 2 bytes; the byte cursor then desyncs and the
+whole run stays classified as a literal pool.  In M04 (#82) this hid 24 bytes
+of straight-line code, printed as fake pool words like
+`.word 0xF0BD2002` + `.short 0xFF75` - really `movs r0, #2` +
+`bl TaskYieldTrampoline`.  The reader's rule of thumb: **a `.word` in the
+middle of straight-line code with no pool-skip branch before it is never a
+real pool word.**
+
+### 4.43 objdump 2.40 carries Thumb IT state across a `-b binary` sweep
+The same halfword prints with a spurious condition suffix depending on where
+the linear sweep is, and `--start-address` does not reset it: `b510` is
+`push {r4, lr}` at `0x08007300` and `0x080CC024` but `pushgt {r4, lr}` at
+`0x080CC0A4`.  Any check that pattern-matches a prologue mnemonic must tolerate
+the suffix - the *encoding* is the evidence, not the spelling.  This surfaced
+in `tools/symdb_check.py` only because #82's census fix reshuffled its random
+spot-check sample, which means the defect had been latent for six modules.
 
 ## 5. Workflow that worked
 
