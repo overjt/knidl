@@ -660,6 +660,30 @@ child issues of #35 are created from it. Findings that belong in this document:
     child index, `unk48/unk4A` screen coordinates relative to the parent,
     `unk4C/unk50` their 16.16 mirrors, `unk3C` animation id, `unk00`/`unk04`
     the update hooks.
+  * **The spark/particle records at `0x02007E90`** are three 16-byte slots per
+    player, indexed by the player id in `Task.unk88->unk00`: `s32` x and y in
+    16.16 (the integer parts are read as the `s16` high halves at +2/+6), the
+    16.16 y-delta at +8, a down-counter at +0xC and a frame id at +0xD.
+    `0x087320C4` is **two 16-entry `s16` tables** (initial |x| and y velocity,
+    picked by `sub_08002ee8(16)`) and `0x08732104` a 10-entry table indexed by
+    the frame id.  `sub_08010834` is the state entry (clear all three slots,
+    DMA four 128-byte tile groups from `0x081AC378` into OBJ VRAM slots
+    12/44/76/108 and a 32-byte palette from `0x081AC358`) and `sub_080109c8`
+    the per-frame updater: gravity `+/-0x6000`, magnitude damping
+    `v -= (|v| & 0xFFFF0000) >> ((|y| >> 20) + 1)`, kill at `|x| <= 0xF0000`,
+    frame id stepping 0-3-5-7-9-11.
+  * `Task.unk1C` is a **child discriminator**: `sub_08010bac` spawns four
+    children through `sub_08010358(3, 32)` and stamps 0-3 into each one's
+    `unk1C`, which is exactly the value `sub_08010cb4` switches on
+    (`unk1C & 15`) - one arm per sibling, with `case 2` falling into `case 3`.
+  * **Open question.** `sub_080109c8` byte-matches only if the ROM's re-reads
+    of the record's `unk00` (before `+= unk08`) and `unk04` (for the magnitude)
+    do not fold into the neighbouring read; the landed C forces them with
+    `*(volatile s32 *)&p->unkNN`, which is a placeholder for a source shape
+    nobody has identified yet.  Ruled out: `volatile` on the whole struct,
+    snapshot locals, declaration reordering, an extra index local, the
+    byte-offset index spelling and the flat 1-D table.  Worth 4 bytes; if a
+    sibling module finds the real shape, this is the site to revisit.
   * Census: `0x080153A2` and `0x0801625A` were phantoms from the pool word
     `0xFFFFF000` at `0x080143A0` and `0x08015258` (lesson 4.40, fourth and
     fifth instances); the module has 65 functions, not 67.  Both corrected in

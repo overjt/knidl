@@ -253,7 +253,7 @@ struct M04Spark
     /*0x0E*/ u16 unk0E;
 };
 
-extern struct M04Spark m04Sparks[][3] __asm__("gUnk_02007E90");
+extern struct M04Spark gUnk_02007E90[][3];
 
 /* OBJ VRAM tile base; not in hdr.c. */
 extern u8 gUnk_06010000[];
@@ -267,11 +267,11 @@ void sub_08010834(void)
     gUnk_03001F2C = 0;
     do
     {
-        m04Sparks[gUnk_03002490->unk88->unk00][gUnk_03001F2C].unk00 = 0;
-        m04Sparks[gUnk_03002490->unk88->unk00][gUnk_03001F2C].unk04 = 0;
-        m04Sparks[gUnk_03002490->unk88->unk00][gUnk_03001F2C].unk08 = 0;
-        m04Sparks[gUnk_03002490->unk88->unk00][gUnk_03001F2C].unk0C = 1;
-        m04Sparks[gUnk_03002490->unk88->unk00][gUnk_03001F2C].unk0D = 0;
+        gUnk_02007E90[gUnk_03002490->unk88->unk00][gUnk_03001F2C].unk00 = 0;
+        gUnk_02007E90[gUnk_03002490->unk88->unk00][gUnk_03001F2C].unk04 = 0;
+        gUnk_02007E90[gUnk_03002490->unk88->unk00][gUnk_03001F2C].unk08 = 0;
+        gUnk_02007E90[gUnk_03002490->unk88->unk00][gUnk_03001F2C].unk0C = 1;
+        gUnk_02007E90[gUnk_03002490->unk88->unk00][gUnk_03001F2C].unk0D = 0;
         gUnk_03001F2C++;
     } while (gUnk_03001F2C <= 2);
     sub_080017e4(1, (u32)gUnk_081AC378, (u32)(dst + 384), 128);

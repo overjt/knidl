@@ -24,8 +24,8 @@ struct M04Spark
     /*0x0E*/ u16 unk0E;
 };
 
-extern struct M04Spark m04Sparks[][3] __asm__("gUnk_02007E90");
-extern s16 m04SparkVel[][16] __asm__("gUnk_087320C4");
+extern struct M04Spark gUnk_02007E90[][3];
+extern s16 gUnk_087320C4[][16];
 
 void sub_080109c8(void)
 {
@@ -38,19 +38,22 @@ void sub_080109c8(void)
     s32 x;
     s32 y;
     s32 n;
+    /* Pin (3.229): without it the RNG result coalesces into r0 and the whole
+       block's r0/r1/r2 assignment rotates.  Pinning the table temp to r0 is
+       what forces the ROM's `adds r1, r0, #0` copy of the call result. */
     register s16 *tp asm("r0");
 
     i = 0;
     do
     {
-        p = &m04Sparks[gUnk_03002490->unk88->unk00][i];
+        p = &gUnk_02007E90[gUnk_03002490->unk88->unk00][i];
         if (p->unk00 == 0)
         {
             p->unk08 = 0;
             n = sub_08002ee8(16);
-            tp = &m04SparkVel[0][n];
+            tp = &gUnk_087320C4[0][n];
             p->unk00 = -(*tp << 16);
-            p->unk04 = m04SparkVel[1][n] << 16;
+            p->unk04 = gUnk_087320C4[1][n] << 16;
         }
         if (abs(p->unk00) <= 0xF0000)
         {
@@ -64,6 +67,10 @@ void sub_080109c8(void)
                 p->unk08 -= 0x6000;
             else
                 p->unk08 += 0x6000;
+            /* The two `volatile` reads are placeholders for a source shape not
+               yet identified: the ROM re-reads unk00 here and unk04 below
+               instead of reusing the value it already holds, and a plain read
+               is folded into the earlier one. */
             p->unk00 = *(volatile s32 *)&p->unk00 + p->unk08;
             sh = (abs(p->unk00) >> 20) + 1;
             u = *(volatile s32 *)&p->unk04;

@@ -4233,6 +4233,64 @@ pseudo, needs no copy, and comes out 2 bytes short. Note also that a pointer
 walk must be spelled in the `for` increment clause (`p++`), not as `*p++` in
 the body, or the `adds rN, #2` lands before the call instead of after it.
 
+### 3.294 A 2-D array must be DECLARED 2-D: a cast to pointer-to-array folds the strides
+`((T (*)[3])sym)[k][i]` computes `(k*3 + i) << 4` - one multiply, one index -
+while `extern T sym[][3]` computes the ROM's `k*48` and `i*16` as two separate
+addends with the field offset folded into the base register
+(`adds r1, r4, #4; adds r0, r0, r1`). The declaration, not the subscript
+syntax, is what carries the stride. In M04 this single change took
+`sub_08010834` from 389 differing bytes to 9.
+
+The tell to look for: **`adds rX, rBase, #K` used for a struct-field offset,
+where a one-dimensional array would have spelled `str rD, [rX, #K]`**, means
+three independent address terms are in play, i.e. a genuine multi-dimensional
+array. A hoisted `base` *and* `base + K` pair in two callee-saved registers is
+the same signal for a ROM table: `s16 tbl[][16]` read as `tbl[0][n]` and
+`tbl[1][n]` hoists both `0x087320C4` and `0x087320E4`, where the flat spelling
+`tbl[n]` / `tbl[n + 16]` folds the `+32` into the index and loses the hoist
+(352 bytes against the ROM's 368).
+
+### 3.295 A `base + K` register means the base is a SYMBOL held in a variable
+`0x06010000 + 384` folds to a single pool word, and so does
+`(u32)gUnk_06010000 + 384` (cse then anchors on `base + 384`). Only routing it
+through a pointer variable - `u8 *dst = gUnk_06010000; ... (u32)(dst + 384);` -
+keeps the **bare** base in a register and adds each delta separately, which is
+what the ROM's `movs r2, #192; lsls r2, r2, #1; add r2, r8` requires. When the
+ROM holds an address in a callee-saved register and adds offsets to it, the
+source had a pointer variable, not an arithmetic expression on a constant.
+
+### 3.296 `ldrsb` versus `ldrb; lsls #24; asrs #24` is not a type difference
+The same `s8` field load compiled to `ldrsb r1, [r0, r1]` in M04's
+`sub_08010834` and to `ldrb` plus the shift pair in `sub_080109c8`. Thumb's
+`extendqisi2` only has an `ldrsb` alternative for the register+register
+addressing form, so which one appears is decided by reload and register
+pressure. Do not chase it with casts or type changes - fix whatever put the
+address in a register (or an immediate) instead.
+
+### 3.297 `if (c) t = -t; x += t;` is not `x += c ? -t : t;`
+The ternary is folded into `subs` and `adds` in the two arms with a merged
+store; the ROM's `negs rT, rT` followed by a single `adds` needs the two
+separate statements. Related: the ROM computing a shift COUNT before the value
+being shifted means the count was its own statement (`sh = ...; t = v >> sh;`)
+- `expand_expr` evaluates op0 first, so an inline `(A & M) >> B` emits A first.
+And `& 0xFFFF0000` yields an *unsigned* operand (the literal is `unsigned int`
+in C), so the following `>>` is `lsrs`, not `asrs`, for free.
+
+### 3.298 Pin the CONSUMER of a value, not the value itself (extends 3.229)
+M04's `sub_080109c8` needed an RNG result not to coalesce into r0. Pinning the
+result to r1 made it live too long and killed a `n*2` CSE; pinning the
+**table-address temp** to r0 instead - `register s16 *tp asm("r0"); tp =
+&tbl[0][n]; ... = -(*tp << 16);` - produced the ROM's `adds r1, r0, #0` copy
+and fixed a whole-block r0/r1/r2 rotation in one line, 62 differing bytes to
+MATCH. When a rotation spans a block, look for the register you can pin at the
+*use* site rather than at the definition.
+
+### 3.299 `(s16)` at a call argument keeps `ldrsh`; an `s16` local narrows to `ldrh`
+`s32 y = a + b + 4; f((s16)y);` emits the ROM's `movs r3, #0; ldrsh` pairs,
+while declaring `s16 y = ...` lets combine narrow both loads to
+`ldrh rX, [rY, #imm]` and costs 4 bytes. The cast at the argument and the
+narrow local are not interchangeable; complements 3.230.
+
 ### 3.285 A call result stored to a field and then tested is ONE assignment expression
 `sub_0801201c`'s loop reads `bl sub_080058e4; strh r0, [r1, #70]; lsls r0, r0,
 #16; asrs r0, r0, #16; cmp r0, #-1` - the sign-extension operates on the
@@ -4290,6 +4348,16 @@ diagnostic by luck (the value overflowed the `s16` field, and warnings are
 errors). The guard must therefore cover unresolved *operands*, not just
 unmodelled lines: emit a hard `/* UNRESOLVED POOL @addr */` marker and let the
 compile fail rather than substituting anything.
+
+M04's full inventory of what its generator dropped, as a checklist for the
+next one: field *loads* used as values (leaving a bare `rN` in the C), whole
+`switch` statements (the four arms were emitted sequentially with no
+`switch (field & 15)`), return values of calls, `++`/`--` on a task field
+(emitted as `field = rN`), whole loop bodies over a global counter, and
+invented field names for byte offsets that `include/task.h` does not have
+(`unk95`). Fallthrough between switch arms is real and must survive the
+transcription: `sub_08010cb4`'s `case 2` falls into `case 3`, and reading the
+arms as independent flattens 516 bytes into nonsense.
 
 The cheapest guard of all, also from #82, is a **trace-diff**: simulate the
 listing's register moves into a normalised event log (`[offset] = value`,
