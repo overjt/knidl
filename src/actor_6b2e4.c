@@ -383,8 +383,8 @@ void sub_0806b938(void)
     if (p->unk04 == 10)
         return;
     z = 0;
-    p->filler07[1] = z;
-    p->filler07[0] = z;
+    p->unk08 = z;
+    p->unk07 = z;
     sub_0806b8bc();
 }
 
@@ -403,7 +403,7 @@ void sub_0806b95c(void)
     a = t->unk8C;
     p = t->unk88;
     if (t->unk72 != 0 || t->unk76 != 40)
-        p->filler07[2] = 1;
+        p->unk09 = 1;
     u = gUnk_03002490;
     if (u->unk0C == (u32)sub_08065640)
         u->unk0C = (u32)sub_0806523c;
@@ -428,7 +428,7 @@ void sub_0806b9dc(void)
     t = gUnk_03002490;
     t->unk44 = t->unk7E;
     t->unk88 = p = &gUnk_03002170[t->unk44];
-    p->filler07[0]++;
+    p->unk07++;
     u = gUnk_03002490;
     s = &gUnk_03002790[u->unk44];
     u->unk28 = s->unk43;
@@ -563,7 +563,7 @@ void sub_0806bc28(void)
 
     t = gUnk_03002490;
     p = t->unk88;
-    if (*(s8 *)&p->filler07[1] != 0)
+    if (*(s8 *)&p->unk08 != 0)
     {
         t->unk18 = 1;
         sub_080062c4();
@@ -602,7 +602,7 @@ void sub_0806bc9c(void)
     t = gUnk_03002490;
     p = t->unk88;
     sub_080649b4(t->unk44, 1);
-    if (*(s8 *)&p->filler07[1] != 0)
+    if (*(s8 *)&p->unk08 != 0)
     {
         gUnk_03002490->unk18 = 1;
         sub_080062c4();
@@ -610,8 +610,8 @@ void sub_0806bc9c(void)
     else
     {
         one = 1;
-        p->filler07[1] = one;
-        p->filler07[0] = one;
+        p->unk08 = one;
+        p->unk07 = one;
         sub_080062c4();
     }
 }
@@ -643,24 +643,24 @@ void sub_0806bd10(void)
     p = t->unk88;
     if ((s8)a->unk44->unk0D == 1)
     {
-        if (*(s8 *)&p->filler07[0] == 1 && t->unk72 == 6 && t->unk76 != 0)
+        if (*(s8 *)&p->unk07 == 1 && t->unk72 == 6 && t->unk76 != 0)
         {
-            p->filler07[2] = 3;
-            gUnk_03002490->unk30 = *(s8 *)&p->filler07[1];
-            p->filler07[1]++;
+            p->unk09 = 3;
+            gUnk_03002490->unk30 = *(s8 *)&p->unk08;
+            p->unk08++;
         }
-        else if ((s8)p->filler07[0] > 0)
+        else if ((s8)p->unk07 > 0)
         {
-            p->filler07[0]--;
+            p->unk07--;
         }
     }
     else
     {
-        t->unk30 = *(s8 *)&p->filler07[1];
-        p->filler07[1]++;
+        t->unk30 = *(s8 *)&p->unk08;
+        p->unk08++;
         p->unk06 = 1;
     }
-    p->filler30[1] = 0;
+    p->unk31 = 0;
     if (*(s8 *)&a->unk00 == 0)
         return;
     u = gUnk_03002490;
@@ -669,24 +669,24 @@ void sub_0806bd10(void)
         f = u->unk76;
         if (f == 0)
         {
-            p->filler07[4] = u->unk18;
+            p->unk0B = u->unk18;
             v = gUnk_03002490;
-            p->filler07[5] = v->unk1C;
+            p->unk0C = v->unk1C;
             w = gUnk_03002490;
             if (w->unk20 == w->unk44)
-                p->filler30[1] = 1;
+                p->unk31 = 1;
             if (gUnk_0300244C == 0)
                 return;
-            p->filler07[3] = f;
+            p->unk0A = f;
             gUnk_02007CF4[p->unk00] = 1;
             return;
         }
     }
     if (gUnk_0300244C == 0 || gUnk_02007CF4[p->unk00] != 1)
-        p->filler07[3]++;
-    if (*(s8 *)&p->filler07[4] != 0)
+        p->unk0A++;
+    if (*(s8 *)&p->unk0B != 0)
         return;
-    p->filler07[4] = a->unk00;
+    p->unk0B = a->unk00;
     switch ((s8)a->unk00)
     {
     case 7:
@@ -701,7 +701,7 @@ void sub_0806bd10(void)
         q = 255;
         break;
     }
-    p->filler07[5] = q;
+    p->unk0C = q;
 }
 
 void sub_0806be4c(u32 i)
@@ -715,24 +715,24 @@ void sub_0806be4c(u32 i)
     p = s->unk88;
     if (a->unk04 == 1)
     {
-        if (*(s8 *)&p->filler07[1] != 0)
+        if (*(s8 *)&p->unk08 != 0)
         {
-            p->filler07[0] = p->filler07[1];
+            p->unk07 = p->unk08;
         }
         else
         {
-            p->filler07[3] = 0;
-            p->filler07[2] = 0;
-            p->filler07[1] = 0;
-            p->filler07[0] = 0;
+            p->unk0A = 0;
+            p->unk09 = 0;
+            p->unk08 = 0;
+            p->unk07 = 0;
         }
     }
     else
     {
-        p->filler07[3] = 0;
-        p->filler07[2] = 0;
-        p->filler07[1] = 0;
-        p->filler07[0] = 0;
+        p->unk0A = 0;
+        p->unk09 = 0;
+        p->unk08 = 0;
+        p->unk07 = 0;
     }
 }
 

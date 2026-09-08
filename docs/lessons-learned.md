@@ -44,6 +44,44 @@ zsh (the local dev shell) does not word-split and passes it as one target,
 Use bash arrays (`objects=(...); make "${objects[@]}"`) so snippets are
 copy-paste safe on any shell.
 
+### 1.6 The main Makefile needed `pipefail` too, and its absence swallowed EVERY compile error
+Lesson 2.9 established that the permuter's `compile.sh` needs `pipefail`.  The
+same reasoning was never applied to the Makefile, where every compile rule is
+`cpp -P | agbcc | as`.  A pipeline's exit status is its LAST command's, so an
+agbcc error printed its diagnostic to stderr and was then discarded: `as`
+assembled the truncated output, produced a valid-looking object, the link
+succeeded, and `make` exited 0 with a silently wrong ROM.  `-Werror` does not
+help; the error was real and fatal, just unreported.
+
+This is how issue #85 reached "green locally, red in CI": the only step that
+caught it was CI's separate `Compile baserom-free objects` pass.  The fix is
+two lines in the `INSIDE_DOCKER` branch:
+
+    SHELL       := /bin/bash
+    .SHELLFLAGS := -o pipefail -c
+
+Diagnosing it also cost hours because the failure LOOKED like a codegen
+mismatch (a 3345-byte ROM diff in a region no one had touched) rather than a
+compile error.  When a diff lands in a module the change could not reach,
+suspect the build before the compiler, and grep the FULL build log for
+`^stdin:[0-9]*:` - agbcc reports source errors against `stdin`, so they carry
+no filename and are trivially missed.  Attribute them only from a serial
+build: `make -j` interleaves stderr and pins diagnostics to the wrong file.
+
+### 1.7 `BUILD_DIR` inside the `INSIDE_DOCKER` branch made host-side `make clean` a silent no-op
+`clean` runs on the HOST (it is just `rm -rf`), but `BUILD_DIR` was defined
+only inside `ifeq ($(INSIDE_DOCKER),1)`.  So `rm -rf $(BUILD_DIR) $(ROM)`
+expanded to `rm -rf  knidl.gba` - an EMPTY first argument - and `build/` was
+never removed.  Every "clean rebuild" silently reused stale objects, which is
+exactly what masked 1.6: a header change that broke a landed file still
+reported a byte-identical ROM because that file was never recompiled.
+
+Any variable a host-side target expands must be defined ABOVE the split.  And
+treat `make clean` as something to verify, not assume: `make clean && ls build`
+should say `No such file or directory`.  Note also that bare `make` on the host
+only builds the Docker image - the real build is `make compare`, so "I ran
+`make` and it passed" proves nothing.
+
 ## 2. Tooling pitfalls
 
 ### 2.1 The PyPI package `m2c` is NOT the m2c decompiler
@@ -4180,6 +4218,157 @@ already uses for these two cells (they are the BG3HOFS/BG3VOFS 16.16 shadows)
 produces. Reuse the existing declaration of a cell before inventing one: the
 early zone named most of IWRAM in #32 and the volatility is part of the type.
 
+### 3.320 The switch-tree ROOT tells you how many `case` labels the source has
+`balance_case_nodes` only splits when `i > 2`, so the shape of the dispatch
+identifies the label count:
+
+* root with **no left child** (`cmp K; beq arm; cmp K; ble default; ...`)
+  -> i <= 2, **except** i == 4, where the bisect lands on the *second* node;
+* cases {1,2,3} give root 2 (`cmp #2; bgt`), while {0,1,2,3} give root 1 and a
+  different chain — one 120-byte M11 function only matched after adding an
+  **empty `case 0:`**;
+* i == 3 -> the root is the **middle** case.
+
+A case set whose lowest value is 0 on an **unsigned** index (a `u8` field with
+no cast) suppresses the low-bound test; a `(signed char)` cast changes the tree.
+
+A second, independent threshold decides table-versus-chain: `group_case_nodes`
+runs first, and if the surviving node count falls below the jump-table
+threshold gcc emits a comparison chain instead. M11's `sub_08042980` has a
+7-entry table for cases 0-4 and 6 and only produced it once an explicit
+`case 5: break;` brought the count to 4 nodes. So an empty arm can be
+load-bearing twice over: for the tree shape and for the table decision.
+
+### 3.321 `if (c) goto L;` with the label BEHIND the test is a real shape
+And the branch polarity is what distinguishes it from an ordinary `if`:
+
+* `beq <past the body>` with the body inline -> `if (c) { body }`;
+* `bne <body>` where the body sits at a **lower** address -> the source is
+  `if (c) goto L;` with `L:` placed *before* the test.
+
+Spelling three labels between a `case 2: break;` and `case 3:` that way took
+an M11 function from 776 bytes to exactly 760. This qualifies 3.312: that
+lesson explains a `switch`'s dispatch polarity, and this one a plain `if`'s —
+read the direction of the branch before choosing, because both readings are
+live inside one module.
+
+`while (1) { lab: ... goto lab; ... }` is a distinct third shape: the `while`
+supplies the loop-invariant hoisting that a pure `goto` loop does not
+(3.314), while the internal label absorbs `continue`s that an inner
+`do/while` would otherwise capture.
+
+### 3.322 The ROM's registers are a variable-PARTITION oracle
+The sharpest form of the per-block-locals rule, and it closed three M11
+functions outright. **The same hard register across disjoint blocks means the
+same C local; a different register means a different local.** One function went
+414 -> 12 -> 0 differing bytes purely by regrouping four `struct Task *` locals
+to mirror the ROM's r2/r3/r5 assignment, and another went 3 -> 0 by *reusing*
+the loop's variable for a later temp because the ROM had put it in the loop's
+register. Read the register assignment as a partition of the source's variables
+before sweeping spellings.
+
+Why it works: any store through a pointer invalidates cse's entry for
+`(mem (symbol_ref gUnk_...))`, so consecutive statements spelled
+`gUnk_03002490->x = ...` each reload the global. Where the ROM reuses the
+register **across a store**, the source held a local.
+
+### 3.323 A missing struct field is load-bearing: COMPONENT_REF vs ARRAY_REF
+`p->unk35 = x` computes the base+offset **at the store**, after the RHS;
+`((s8 *)p)[53] = x` computes the destination address **first**. For a constant
+RHS both emit the same code, which is why a cast can match one function and
+fail the next — M11 hit exactly that pair. Two reliable detectors that the
+header is missing a field at an offset:
+
+* `lsls #16; cmp #0` with **no** `lsrs` between them: a `((u16 *)p)[n]` cast
+  always adds the `lsrs`, a real `u16` field does not;
+* `movs r0,#128; lsls r0,r0,#8; strh r0,[r1,#18]` for `0x8000`: every
+  `*(u16 *)((u8 *)p + 18)` spelling adds an `adds r0,rN,#0` copy, and `-32768`
+  goes to the literal pool instead.
+
+Corollary for a harness: retrofitting a field into a shared struct invalidates
+every body that reached the offset through a cast. Nineteen already-matching
+M11 bodies broke across two such passes and all had to be re-spelled — budget
+for a full re-verification sweep after any shared-header change.
+
+### 3.324 Cross-jumping runs AFTER reload and compares HARD registers
+Which makes it a source-shape signal rather than noise. In M11's
+`sub_08040b40` a single function-scope `s32 v` became a 121-reference allocno
+in r3 and over-merged some 25 sign-extend tails into one shared block; moving
+the declaration inside each block put it in r2 and cut the diff from 1356 to
+183 differing bytes. Identical source tails still merge when the allocator
+agrees and stop merging when it does not, which is why the ROM keeps one
+case's sign-extend inline while folding another's into a different case.
+
+Two spelling consequences:
+* **Duplicate the shared tail inside each arm.** `if (c) x = q[2]; else x =
+  q[4]; use(x);` came out 180 bytes short of the form with `use(x)` written in
+  both arms — the ROM has two copies and lets cross-jumping fold one of them
+  into a *different* case's block.
+* `if (A) main; else fallback;` and `if (!A) { fallback; break; } main;` differ
+  only in where the fallback lands, and that is observable.
+
+### 3.325 Two-byte ROM records want `u8 tbl[][2]`, and no flat spelling matches
+`arr[i][1]` puts the constant field offset on the **base**
+(`ldr r0,=tbl; lsls r1,i,#1; adds r0,#1; adds r1,r1,r0`). Nothing flat
+reproduces it: `tbl[i*2+1]` and `tbl[1+i*2]` add the 1 to the *index*, and
+`(tbl+1)[i*2]` folds `sym+1` into a **second pool word**. Same mechanism for
+`u16 tbl[][2]`.
+
+And the element-type rule of 3.305 is **per reference, not per symbol**: inside
+one M11 expression tree `gUnk_03002458[i]` needed the plain subscript
+(symbol before the index math) while `gUnk_030023C0` needed
+`*(gUnk_030023C0 + i)` (symbol after), both sharing one CSE'd `i*2`.
+
+### 3.326 Four more shapes that are source, not noise
+All M11 (#85), each byte-match-verified:
+
+* **A long `&&` chain in a loop condition leaks its first two tests into the
+  preheader.** `while (t1()==0 && ... && t7()==0) { body; break; }` emits tests
+  1-2 before the body and 3-7 after it. Reading that as "an outer `if` of two
+  plus an inner loop of five" puts *four* tests up front and is the trap.
+* **A store between two argument evaluations is INSIDE the argument list.**
+  `movs r1,#8; str r1,[r2,#44]` sitting between arg0 and arg1 is
+  `f(p->unk00, &tbl[t->unk2C = 8])`, not a statement followed by a call.
+  Arguments are evaluated right to left, so a load *before* the r0 computation
+  is a real second argument, not a leftover.
+* **A `v & A` / `v & B` / `v & C` chain on a table element must repeat the
+  array expression.** Caching it in a `u16 v` local makes agbcc keep a second
+  pseudo (`adds r3,r1,#0`) and flip the `ands` operand order; repeating
+  `tbl[i]` and letting CSE merge the loads gives the ROM's three
+  `movs r0,#K; ands r0,r1` pairs.
+* **`switch (x) { case 1: case 2: ... }` is not a range check.** Two labels on
+  one body emit `cmp #2; bgt out; cmp #1; blt out`; `x >= 1 && x <= 2` emits
+  the tests in the other order.
+
+### 3.327 `cse2` substitutes a register known equal to a constant
+Inside `if (x == 1) { ... }` a later `& 1` compiles to `ands rX, rY` where rX
+still holds x — that is **not** `x & something`. The same applies to `f = 9`
+reusing the register that held 9, and to `= 1` reusing a hoisted mask
+constant. Two M11 functions looked like they were ANDing two fields together
+because of it.
+
+Related constant traps in the same module: a **hex literal above INT_MAX is
+unsigned in C89**, so `x < 0 && x <= 0xFFFF4D00` keeps `cmp #0; bge` plus
+`bhi` where `<= -45824` folds both tests into one `bgt`; and
+`s8 var = (x >= 0)` keeps a `lsl #24` with **no** matching `lsr`, because
+combine drops the second shift when the only use is a zero-test, while
+`u8`/`u16`/`s16` all emit the `lsl` *before* the `lsr #31`.
+
+### 3.328 `fold_range_test` truncates to the operand's own type
+So `k == 12 || k == 13` on an `s8` field gives `(u8)(k-12) <= 1`
+(`lsls/lsrs #24`) while `switch (k)` on the same field gives `(s8)(k-low)`
+(`lsls/asrs #24`). Both appear on one `PlayerState` field in one M11 function
+and both fall out of the plain source — do not chase the shift pair. By the
+same token every `(u16)(x-K) <= N` in the ROM is just `x >= K && x <= K+N` on
+a `u16` local.
+
+### 3.329 gcc genuinely compiles a use-before-set, and matching requires it
+M11's `sub_08040894` stores through an **uninitialized** `struct PlayerState *`
+in its else arm (`strh r1,[r2,#56]` with r2 never set on that path). The
+original source has that bug and byte-matching means reproducing it; a
+defensive rewrite cannot. Decompilation is not code review — record the UB in a
+comment and move on.
+
 ### 3.284 A callee that ignores its argument register shows up as a MISSING argument setup
 
 `sub_08017668` ended 4 bytes short with the ROM doing
@@ -4319,6 +4508,331 @@ task-script modules looks like this.
 byte, so a diff that looks like a missing mask is usually the packing. In this
 subsystem the payload is the spawn ordinal and the top byte a layer selector;
 `sub_08010358` writes the same field as a bare script index.
+### 4.55 `agbcc -dg` turns a register permutation into arithmetic, and names the lever
+Following 4.51: the dump gives `Registers to be allocated in sorted order` with
+per-pseudo refs and live length, and the priority is
+`floor_log2(refs) * refs / live_length`, loop-depth weighted. Two M11 residues
+were closed by *raising the priority of the pseudo that had to win*, and the
+levers are source-level:
+
+* **Variable reuse across distant loops is a register lever.** Reusing one
+  counter for an inner dedup loop *and* a later index stretched its live length
+  from 38 to about 130 insns, dropping it below a loop-invariant global's
+  pseudo (0.909 against 1.026) — which is exactly what the ROM does.
+* **Semantically identical arm inversion changes cse's EBB boundaries.**
+  Rewriting `else if (A || B) X; else if (C) Y;` as
+  `else if (!A && !B) { if (C) Y; } else X;` moved block X out of the
+  fall-through chain; cse's extended basic block stops at a label with
+  `LABEL_NUSES > 1`, so the moved block re-loads the global instead of reusing
+  the CSE'd pointer, taking that address pseudo from 3 references to 4,
+  flipping `floor_log2` from 1 to 2 and winning it r7.
+
+The dump also tells you when to STOP: a pseudo allocated 85th of 85 with
+density 10/556 gets whatever is left, and no source spelling will move it.
+
+### 4.68 cse keeps a constant for a REGISTER destination and substitutes for MEMORY
+Three related rules, all from M11 (#85), that together explain why a chain of
+identical small constants sometimes reuses a register and sometimes
+re-materialises:
+
+* **Destination kind decides.** For a register destination cse keeps the
+  constant (`movs rN, #K`); for a **memory** destination it substitutes a
+  register that already holds the value. So `k = 0;` costs four bytes over
+  `goto <the block that stores 0>` when the value is only ever stored.
+* **A literal `mem = const` store gives cse nothing to reuse.** The RTL stays
+  `(set (mem:QI) (const_int 1))` and reload invents the register only *after*
+  cse runs, so no pseudo exists for a later `& 1` to reuse. Writing the store
+  through a real local (`p->unk22 = k = 1;`) creates the pseudo, and then cse
+  rewrites the later `movs r0, #1` into `adds r0, r5, #0`. This is why "one
+  live pseudo holding 1" attempts kept failing: reusing the *same* variable let
+  cse delete the assignment, while a separate local was right and only its
+  spelling was wrong.
+* **`cse_end_of_basic_block` follows the TAKEN side of a conditional branch**
+  when the target label has `LABEL_NUSES == 1`. That is what carries a constant
+  known on one side of an `if`/`else` into the far arm — and the confirming
+  tell in the listing is a constant materialised in the branching code that is
+  still live inside the far block.
+
+Also from the same function: a store through a field whose offset exceeds the
+instruction's immediate range still emits address-then-constant
+(`adds r0, #34; movs r1, #1`), whereas a cast-indexed destination emits the
+constant first. The field form is both the natural spelling and the matching
+one.
+
+### 4.69 `find_cross_jump`'s minimum-2 rule explains which duplicate tails merge
+Sharpening 4.64 with the case that matters most in practice. Jump-to-jump
+merging (form 2) needs **two** matching insns; merging against the code that
+*falls through* into the target label needs only **one**. So a
+`movs r0, #K; strb; b` tail pair matches on a single insn and **never merges**
+when the constants differ — which means a set of `field = K; goto store;`
+blocks sitting together before a switch's end label is a **source** shape, not
+a cross-jump artifact:
+
+```c
+Lset2:  k = 2;
+Lstore: *st = k; break;      /* just the fall-through, survivor of nothing */
+Lset0:  *st = 0; break;
+Lset1:  k = 1; goto Lstore;
+Lset3:  k = 3; goto Lstore;
+```
+
+An earlier pass spent a batch trying to reproduce that layout as a cross-jump
+outcome. The rule to carry forward: **identical-constant blocks merge,
+different-constant blocks do not**, so when the ROM keeps several near-identical
+one-store blocks, write them out with `goto`s and stop looking for an optimiser
+that produced them.
+
+Related and worth pairing with 3.322: a `u8 *st = &t->unk73;` local is
+mandatory when several stores to one field live in multi-predecessor blocks —
+five such stores all use `strb rN, [r5]` in the ROM, and without the local each
+block recomputes the address (`mov r1, ip; add r1, #0x73`) for sixteen extra
+bytes.
+
+### 4.65 The `next_qty == 3` mis-sort: a real agbcc bug you can steer around
+`block_alloc`'s hand-rolled sort for two and three block-local quantities
+calls `qty_compare(0,1)` and `qty_compare(1,2)` on the **literal** quantity
+numbers while `EXCHANGE` permutes `qty_order`. For exactly three quantities it
+double-swaps back to the identity order, so **the first-born quantity wins
+regardless of priority**. Any block with exactly three local quantities can
+therefore allocate "wrong" in a way no priority reasoning predicts.
+
+The escape is cheap: add or remove one block-local quantity to reach the
+`qsort` path, which sorts correctly. Adding one is free when a value the block
+already computes is given its own variable whose every reference stays inside
+the block. On M11's `sub_08042128` a single extra `s32 xa` used only for one
+loop's first assignment took it from 29 differing bytes to MATCH — and it fixed
+the same r1/r2 swap in *both* loops, because the mis-sort was in the entry
+block they shared.
+
+This also settles where the density formula does and does not apply: it is a
+red herring in `find_reg` (4.59) but it IS the real sort key in `local_alloc`,
+where `QTY_CMP_PRI` is `floor_log2(refs) * refs * size / (death - birth)`. And
+local-alloc's choice then decides the *global* allocation through
+`set_preference`, which is why a short-lived chain's register matters so much.
+
+**The theft chain, end to end, as a checklist:** local-alloc assigns a hard reg
+-> `set_preference` on `XEXP(SET_SRC, 0)` (so for `(plus A B)` only **A**'s
+register is preferenced) -> `expand_preferences` merges it into a
+non-conflicting pseudo -> `prune_preferences` -> `regs_someone_prefers` ->
+`find_reg` pass 0 skips it. And because pass 1 never runs when pass 0 succeeds,
+the copy-preference override afterwards works from pass 0's `used` set and
+cannot recover a register that `regs_someone_prefers` removed.
+
+The oracles: `;; Register N in H.` lines in the `-dl` (`.lreg`) dump are the
+direct read-out of local-alloc's decisions, and that dump's RTL shows the
+`plus` operand order, which is exactly what `set_preference` reads.
+
+### 4.66 A narrowing prototype can destroy a CSE, and that is visible in the ROM
+`(u16)(s16)x` on a `u16` variable folds back to `x`, which silently un-shares
+the sign-extended value and extends the source variable's live range. On M11's
+`sub_0803ddc0` a `u16` parameter list on the callee meant the call was fed the
+**raw** x/y, so x and y stayed live past their sign-extends, the `(s16)x` CSE
+needed two extra callee-saved registers, and the result was a size-exact
+26-byte residue that looked purely like an allocator problem.
+
+**When the ROM feeds a call the CONVERTED value rather than the raw one,
+suspect the prototype's parameter signedness before suspecting the allocator.**
+
+The resolution is worth recording because two batches reached opposite
+conclusions from it: the caller needs `s16` parameters, while the callee's own
+body zero-extends both arguments (`lsls #16; lsrs #16`) and therefore reads
+them as `u16`. Both are true at once — the definition is
+`void f(s16 p0, s16 p1)` with `u16` locals assigned from the parameters, which
+produces the callee's zero-extends *and* keeps the caller's CSE. Declaring
+`u16` matches the callee alone; declaring `s16` with `u16` locals matches both.
+An empty parameter list is not an option: gcc rejects it once a
+default-promoting definition lands in the same translation unit.
+
+### 4.67 Block placement follows SOURCE ORDER, labelled `goto` targets included
+A run of instructions sitting in a hole between two arms of an if/else is not
+a compiler mystery — it is diagnostic of labels placed at exactly that textual
+point, with the surrounding arms rewritten to `goto`. An earlier pass on M11's
+`sub_08042328` concluded "no C source can produce that position" and that was
+wrong: the two assignment arms are labelled statements written *inside* the
+first case, between its second and third arms, with the third reached by
+`goto arm3` and the tail branching backward to the labels with un-inverted
+conditions. Getting the order right also removed a 4-byte literal-pool padding
+delta, which had been mistaken for an independent problem.
+
+The confirming tell: a constant materialised in the branching code and still
+live inside the far block — CSE only carries it across if the far block is a
+jump target rather than an inline arm.
+
+### 4.62 `find_reg` pass 0 only considers registers ALREADY USED — the third mechanism
+4.55 offered density and 4.59 offered preferences. M11's `sub_08040b40` (#85)
+is neither, and the actual rule explains a whole class of "why did it pick
+`ip`?" residues:
+
+`find_reg` pass 0 does `IOR_COMPL_HARD_REG_SET (used_nopref, regs_used_so_far)`,
+so **pass 0 can only pick a register already in `regs_used_so_far`** — and that
+set is seeded (global.c:329) with every `call_used_regs` register. So `r12`/`ip`
+is a pass-0 candidate from the very start, while callee-saved r4-r6 are not
+until something has used them. If pass 0 succeeds with `ip`, **pass 1 — the one
+that would have offered r4 — never runs.**
+
+On that function the pseudo in `ip` is #831 with 14 refs over 51 insns,
+allocated 13th of 85, taken in pass 0. The density figure the first pass
+measured (10 refs / 556) belonged to a different pseudo entirely, and the whole
+function emits only 19 `;; N preferences:` lines, none of them on an allocno
+conflicting with 831 — so neither earlier theory could have been right.
+
+What decides it is `allocno_compare`'s ordering: the conflicting mask variable
+scored `2*5/10` against the pointer's `3*14/51`, so the mask took r3 first and
+the pointer fell to `ip`. In the ROM the order is reversed and the mask falls
+through to **pass 1**, landing in r4 — which is exactly the ROM's `ldrh r4`.
+
+### 4.63 `regmove` can add a def+use and reorder the whole allocation
+And it is worth checking before blaming the source. `regmove`'s forward pass
+(`fixup_match_1`, regmove.c:3059) rewrites `(set T (and m C))` into
+`(set m (and m C))` when `m` carries a `REG_DEAD` note on that insn, which adds
+a def and a use of `m`. On M11's `sub_08040b40` that single rewrite raised the
+mask variable's reference count from 3 to 5, flipping `allocno_compare` against
+the task pointer (4.62) — **one cause explaining all four divergence sites**,
+including the `ands r1,r0` versus `ands r3,r0` operand order, since the rewrite
+is what makes the destination tie operand 1.
+
+The rewrite is visible verbatim in the `-dl` RTL, so look there rather than
+inferring. The trigger can be moved: adding any use of the mask **reachable
+from** the innermost test restores the ROM's operand order, while a use on the
+other side of the branch does not.
+
+Recognising when to stop is part of the lesson. On that function the only
+levers that flip the allocation are the mask at 4 refs or fewer, or the pointer
+at 16 refs or more with a live length of 42 or less, and every one of those
+needs a live reference the ROM's instruction stream does not contain. An 8-byte
+residue on 2148 bytes was the right call.
+
+### 4.64 To STOP a cross-jump, route the sibling exit through a labelled `goto`
+`jump_optimize`'s `find_cross_jump` (jump.c:2687) has two forms with different
+thresholds, and knowing them turns "the ROM keeps a duplicate tail" from a
+mystery into a spelling choice:
+
+* **form 1** compares the insns before a simplejump with the insns before its
+  own target label, with `minimum = 1`;
+* **form 2** only runs if form 1 fails, walking `jump_chain[label]` — every
+  other simplejump to the same label — with `minimum = 2`.
+
+Every matched insn decrements `minimum`, and the walk stops where the streams
+diverge. Stream 2 walks *through* `CODE_LABEL`s, while **stream 1 stops at one
+and takes a free decrement** ("those jumps will be tensioned"). A second free
+decrement comes when stream 1 stops on a conditional jump whose target's
+`prev_real_insn` is the jump being redirected — the jump-around-jump diamond.
+
+So a **one-insn tail** merges via form 2 only if one of those two discounts
+applies. `movs r0,#144 / lsls r0,r0,#2` is ONE rtl insn (`*movsi_insn` with
+`const_int 576`; it splits only at asm output), so `return 576;` after
+`if (c) return -1;` merges via discount 1 (label-entered), and inverting the
+test merges via discount 2 (fallthrough of a `bne` over it) — which is why both
+spellings an earlier pass tried collapsed.
+
+Routing the sibling arm through `goto ret_m1;` to a labelled shared
+`return -1;` removes both: jump1 folds `beq L; jump ret_m1; L:` into
+`bne <ret_m1>` **before** jump2 runs, so the 576 insn is then preceded by a
+conditional jump to a far target, `minimum` stays 1, and the ROM's second copy
+survives. That closed `sub_0803d870` at 772 bytes.
+
+Two corollaries. Every `return -1` in that function merges by **form 1**,
+because the insn before the return label *is* `(set r0 -1)` — hence the bare
+`b`. And **form 2 can never fire on a label `do_cross_jump` created during the
+same pass**, because `mark_all_labels` built `jump_chain` before it existed:
+that is why cross-jumping looks inconsistent between functions.
+
+Bracket the pass with `agbcc -dJ` against `-dg` (greg is pre-jump2, jump2 is
+post) to see what merged, and use `-dl` for pseudo-numbered RTL so
+`;; N regs to allocate:` plus each `Register N, refs/live_length` reproduces
+the exact `allocno_compare` arithmetic.
+
+### 4.59 CORRECTION to 4.55: read `preferences`, not density — density is last-resort
+4.55 presented the priority formula as the lever for a register permutation.
+That is wrong often enough to matter, and M11 (#85) pinned why: the
+`local_reg_n_refs[regno] / local_reg_live_length[regno]` comparison lives in
+`find_reg`'s **last-resort block, which only runs when `best_reg < 0` after
+both passes**. When pass 0 succeeds with a register you did not want, no source
+change that only moves density will move it. Two earlier passes on two
+different functions each concluded "the density is 0.44 against 0.52, so
+`find_reg` rejects r1" and then swept ~230 and ~40 spellings for nothing.
+
+**Read `;; N preferences: ...` in the `.greg` dump instead.** It is the direct
+oracle for a register that has been taken, and the theft can be two hops long.
+The chain on one M11 function:
+
+1. an address pseudo (`t + 122`) is local-allocated to r1;
+2. `set_preference` on `(set addr (plus t 122))` makes the *task* allocno
+   prefer r1;
+3. `expand_preferences` **merges** that preference into the `&gUnk_...`
+   pool-address pseudo, because the two do not conflict (the pool pointer dies
+   exactly as the task pointer is born);
+4. `prune_preferences` then puts r1 in `regs_someone_prefers[value]`, since
+   that pool pseudo conflicts with the value allocno and ranks lower;
+5. `find_reg` pass 0 skips r1 for the value.
+
+The value allocno never had a conflict on r1 — it lost to a preference
+cascade. (This extends 3.117 by the `expand_preferences` hop.)
+
+**The escape is to shorten the loser's live range so it dies at the copy.**
+Giving a loaded value its own result variable (`s32 s = c << 8;` rather than
+reusing `v`) makes the sentinel pseudo die at the copy insn, so it no longer
+conflicts with the shifted result and the two share one register — which is
+what the ROM does. A `u16` intermediate is what stops cse2 collapsing the
+pair: at cse time it is a `zero_extend(subreg:HI)`, a distinct expression, and
+only combine later degrades it to a plain `mov`.
+
+Also worth knowing before reaching for a pin: `local-alloc.c:357` makes a
+single-block pseudo eligible for local allocation only when
+`REG_N_DEATHS == 1`, which is why some address pseudos cannot be pushed into
+global allocation by any spelling of the store.
+
+### 4.60 Two ROM loads of the SAME address are evidence about cse block boundaries
+Not about the addresses. `cse.c:make_regs_eqv`'s canonical-register rule: on
+`A = B`, `A` becomes canonical only if its last use is **beyond the current cse
+block end** *and* later than `B`'s. So when the ROM shows an in-place
+`adds rN, #4` on a live base *plus* a redundant reload of that same address,
+the aliased variable's last use stayed inside the cse block.
+
+The lever is to hoist the shared load into a third local: that drops the
+aliasing variable's last use back inside the block, the walking pointer stays
+canonical, `p++` stays two-address, and the two identical `mem` reads stop
+being CSE'd together. `;; Processing block from N to M` in the `.cse` dump is
+the oracle for where the boundaries are.
+
+### 4.61 Score variants by NORMALISED INSTRUCTION diff, not by byte count
+Refining 4.50. Diff each variant's assembly against the annotated listing with
+mnemonics de-`s`-ed and branch targets and pool offsets folded away, all inside
+one multi-variant compile; then run
+`awk '/;; Function/{f=$3} /preferences:/{print f,$0}'` over the `.greg` dump.
+That gives a per-variant verdict on the *cause* rather than on the byte count,
+and it turned two M11 residues from multi-hundred-spelling sweeps into about
+five compiles each.
+
+The agbcc source tree is worth keeping unpacked while doing this
+(`gcc/global.c`, `gcc/local-alloc.c`, `gcc/cse.c`); `gcc/global.c` still
+carries the `RRTRACE`/`GALLOC` instrumentation from issue #74.
+
+### 4.56 A raw address literal and an extern symbol allocate differently
+`0x080DC628` used as a value becomes a reload-time spill (`-dg` prints
+`Spilling reg 3`); `gUnk_080DC628` becomes a real `local_alloc` pseudo. That
+flipped an r2/r3 permutation and closed an M11 function. So a harness header
+should carry a symbol for any pool address a body loads **as a value** — which
+is the opposite of 4.52's case, where the listing renders the word numerically
+because the source wrote a literal. The discriminator stays 4.52's: symbolic
+rendering means the source named a symbol.
+
+### 4.57 A function-pointer cast is the safe way to work around a wrong prototype
+`((void (*)(s32))f)(x)` and `((s32 (*)(void))f)()` on a known function symbol
+compile to a plain `bl` with correct argument setup, verified on ten M11
+callees. Unlike a `#define` rename or an `__asm__` alias it keeps the real
+symbol, so it cannot break the link — which makes it the one acceptable
+local workaround while a shared prototype is being corrected. Report the
+correction anyway; the cast should not ship.
+
+### 4.58 "A `bl loc_XXXX` is a goto" needs a bounds check first
+4.39 says a long jump inside one function is spelled `bl`, and a draft
+generator can act on that — but only after checking that the target lies inside
+**this** function's bounds. An M11 draft emitted `goto loc_0803fce4;` for what
+was a genuine *call* into a mis-split census entry; the target was in a
+different function, and the census was what needed fixing. Target inside the
+current range means a jump; target outside means either a call or a census
+error, never a goto.
 
 ### 4.41 A draft generator must classify what it drops, or it deletes code silently
 

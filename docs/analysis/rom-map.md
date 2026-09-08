@@ -715,6 +715,60 @@ child issues of #35 are created from it. Findings that belong in this document:
     word `0xFFFFF000` at `0x08019418`; the code there has no prologue and
     shares `sub_0801a3e4`'s frame and epilogue) and `0x0801A76C` was missing.
     Both corrected in `tools/symdb.py`.
+- **M11 (`0x0803CD60-0x080449C7`) is the player mode/state machine plus the
+  stage support services**, decompiled in #85 into `src/stage_3cd60.c`,
+  `src/stage_413a4.c` and `src/stage_43654.c` (119 of 121 functions, 28940 of
+  31848 bytes; two register-allocation residues stay asm).
+  * **`PlayerState.unk04`/`unk05` is a current/previous MODE pair** and
+    `Task.unk15` selects the script.  Nineteen predicates in
+    `0x0803F870-0x08040710` are the transition table: each reads the two
+    per-player bit-mask tables, combines them with `Task.unk7A`/`unk7B` bit 0,
+    `Task.unk43` (facing) and `Task.unk54`/`unk58`, writes the next state into
+    `PlayerState.unk01` and returns it.  Observed state ids: 1,2,3,4,5,7,9,10,
+    12,14,15,17,19,20,23,24,25,26,27,28,29,57.
+  * **`sub_08040788` names two globals the whole module uses.**  For
+    `i < gUnk_030023AC` it copies `gUnk_03002458[i] = gUnk_03000F98[i]` and
+    `gUnk_030023C0[i] = gUnk_03001EB8[i]`, zeroing both when
+    `PlayerState[i].unk42 & 0x40`.  So **`gUnk_030023C0` is the latched
+    keys-pressed and `gUnk_03002458` the latched state mask**, both indexed by
+    `(s8)PlayerState.unk00`, and bit 0x40 of `unk42` is "input suppressed".
+  * **`sub_08040b40(mode, 72)`** is a 14-way camera/scroll velocity preset
+    dispatcher over `Task.unk54`-`unk68`, and `sub_080413a4(i)` applies one
+    8-byte record of `0x0873B204` as three signed 8.8 velocities, skipping any
+    field equal to the sentinel `0x9999`.  `gUnk_0873AF6C` is a 44-byte record
+    of 22 signed 8.8 halfwords indexed by `gUnk_03001F30`.
+  * **Four anchor tables of `void (*)(void)`** - `0x0873B430` (11),
+    `0x0873B46C` (14 words, two null), `0x0873B4AC` (7), `0x0873B500` (4) -
+    holding coroutine/handler PAIRS: the coroutine yields with
+    `TaskYieldTrampoline` and sets `Task.unk73` on exit, the handler re-binds
+    it with `sub_08006148(<coroutine>, gCurTaskIdx)`.
+  * **A sound-script interpreter** at `sub_0803d8a4`-`sub_0803d918`:
+    `Task.unk18` is the script base (`s16 *`), `unk1C` the program counter,
+    `unk20` the frames left; opcodes -2 stop, -3 rewind, -4 switch to script
+    `((u8 *)p)[(i+1)*2]` through the 8-entry table `0x0873DDE8`, anything else
+    an SFX id for `sub_08006338` followed by its delay.
+  * **Record shapes** established by byte-match: 8-byte rows in `0x02005550`,
+    `0x0873D044`, `0x0873CAA4`, `0x0873D04C` and `0x0873B204`; 20-byte rows in
+    `0x020060E0` with `0x0873CA90` as the template copied into it; 6-byte
+    (3 x u16) rows in `0x0873D986`, a knock-back/shake table walked by
+    `Task.unk28`.  `0x0873D08C`/`0x0873D0A4`/`0x0873D0B4` are NOT symbols -
+    they are `&gUnk_0873D04C[8]`, `[11]` and `[13]`, which the ROM proves by
+    deriving one from another with `subs r4, #64` / `subs r4, #88` /
+    `adds r4, #8`.
+  * `struct PlayerState` is now **fully mapped** (all 116 bytes, 70 named
+    fields) from this module's three "reset player record" variants
+    `sub_0803d0a0`/`d1c4`/`d2d4`; existing names and offsets were unchanged.
+  * Census: **twelve corrections** in `tools/symdb.py`.  `sub_0803eaf8` really
+    runs `0x0803EAF8-0x0803F5FC` as one 2820-byte function where the census had
+    five (one `push`, one matching `pop`, and the four bogus entries were a
+    pool-skip branch, two long-jump targets and the shared epilogue);
+    `sub_08040b40` runs to `0x080413A4`; four hidden entries were added
+    (`0x0803E5C0` and `0x0803FCE4`, real leaves with seven `bl` sites each,
+    three from M12; `0x08040084` and `0x080404E4`, dead exports;
+    `0x08042D40`, reached by a genuine pointer table at `0x0873B4E8`); and
+    `0x080401FC`, `0x08040512` and `0x0803E1F4` were removed - the first two
+    phantom rom-pointers whose ROM words sit among palette, audio and song
+    data, the third the sixth word of the jump table at `0x0803E1E0`.
 - **M29 (`0x080A1590-0x080A5643`) is enemy/object behaviour bank 10.**
   Decompiled in #76 into `src/enemy_a1590.c` (226 functions, all
   byte-matched, no asm left in the range). The M25/M27 guard+body script

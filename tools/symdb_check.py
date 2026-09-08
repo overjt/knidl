@@ -35,6 +35,29 @@ import sys
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import symdb  # noqa: E402  (KNOWN_SYMBOLS / ARM_ENTRIES / parse_segments)
 
+
+def landed_symbols():
+    """Names that landed C already DEFINES, from split_config's
+    `external_defined`.
+
+    A census entry the build defines is confirmed by construction - the ROM
+    verifies byte-for-byte against it - which is far stronger evidence than any
+    prologue pattern.  Without this, every census change reshuffles the random
+    spot-check sample and eventually lands on a decompiled function whose entry
+    is not `push {lr}` (0x080A0588 in src/enemy_a0274.c opens
+    `ldr r0, [pc, #8]`), producing a failure that says nothing about the DB.
+    """
+    import json
+    here = os.path.dirname(os.path.abspath(__file__))
+    try:
+        with open(os.path.join(here, "split_config.json")) as f:
+            return set(json.load(f).get("external_defined", []))
+    except (OSError, ValueError):
+        return set()
+
+
+LANDED = landed_symbols()
+
 ROM_BASE = symdb.ROM_BASE
 CODE_SPAN_START = symdb.CODE_SPAN_START
 CODE_SPAN_END = symdb.CODE_SPAN_END
@@ -328,6 +351,9 @@ def main():
         if is_terminator_text(text):
             ok = True
             why.append("immediate terminator")
+        if not ok and name in LANDED:
+            ok = True
+            why.append("defined by landed C (build proves it)")
         if not ok and vma in symdb.KNOWN_SYMBOLS:
             # Curated entries (e.g. the table-dispatched m4a XCMD handlers,
             # which open with `ldr r0, [r1, #0x40]`) carry their evidence in

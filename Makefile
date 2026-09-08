@@ -7,7 +7,28 @@ ROM       := knidl.gba
 SHA1_FILE := knidl.sha1
 IMAGE     := knidl-builder
 
+# BUILD_DIR and ROM must be visible on BOTH sides of the INSIDE_DOCKER split:
+# the host-side `clean` target expands them directly, and while they were
+# defined only inside the container branch it ran `rm -rf  knidl.gba` with an
+# EMPTY first argument - so `make clean` never removed build/ on the host and
+# every "clean rebuild" silently reused stale objects.  That masked a real
+# regression in this issue (#85): a shared-header change that broke M17/M18
+# still reported a byte-identical ROM because those objects were never
+# recompiled.
+BUILD_DIR := build
+ROM       := knidl.gba
+
 ifeq ($(INSIDE_DOCKER),1)
+
+# Every compile rule is a pipeline (cpp | agbcc | as).  Without pipefail the
+# pipeline's status is `as`'s, so an agbcc error ("structure has no member
+# named ...") was reported on stderr and then SWALLOWED: `as` happily
+# assembled the truncated output, the object linked, and `make` exited 0 with
+# a silently wrong ROM.  That is how issue #85 reached CI green locally and
+# failed there.  bash + pipefail makes any stage's failure fail the rule.
+SHELL       := /bin/bash
+.SHELLFLAGS := -o pipefail -c
+
 
 AS      := arm-none-eabi-as
 LD      := arm-none-eabi-ld
