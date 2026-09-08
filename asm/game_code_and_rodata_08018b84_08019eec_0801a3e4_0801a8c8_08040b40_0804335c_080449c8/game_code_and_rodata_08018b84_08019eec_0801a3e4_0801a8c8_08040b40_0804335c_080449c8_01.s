@@ -772,7 +772,7 @@ sub_08054de8:
 	.word	gUnk_03002490
 	.word	sub_080059fc+1
 	.word	sub_08005d9c+1
-	.word	0x0874C67C
+	.word	gUnk_0874C67C
 	.global	loc_08054e2c
 loc_08054e2c:
 	cmp	r2, #2
@@ -5489,7 +5489,7 @@ sub_08057430:
 	.word	gUnk_03002490
 	.word	sub_080059fc+1
 	.word	sub_08005d9c+1
-	.word	0x08751CEC
+	.word	gUnk_08751CEC
 	.thumb_func
 	.global	sub_08057494
 sub_08057494:
@@ -7878,7 +7878,7 @@ sub_08058720:
 	.word	gUnk_03002490
 	.word	sub_080059d8+1
 	.word	sub_08005d9c+1
-	.word	0x08751E00
+	.word	gUnk_08751E00
 	.global	loc_08058764
 loc_08058764:
 	adds	r1, r3, #0
@@ -13584,7 +13584,7 @@ loc_0805b48a:
 	.word	0x0000FFFF
 	.word	0x085B9B6C
 	.word	gUnk_02020000
-	.word	0x06010000
+	.word	gUnk_06010000
 	.word	gUnk_03001570
 	.word	gUnk_03002790
 	.word	0x0873DBAC

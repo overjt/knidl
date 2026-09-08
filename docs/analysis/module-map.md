@@ -182,7 +182,7 @@ dispatches, pool density) — a planning aid, not a promise.
 | M01 | `0x08007300-0x080075B7` | 0.7 KiB | 1 | 0 | - | **done** - main |
 | M02 | `0x080075B8-0x0800B91F` | 16.9 KiB | 110 | 1 | *** | game mode + screen/asset loader |
 | M03 | `0x0800B920-0x08010357` | 18.6 KiB | 83 | 0 | **** | menu / UI task bank |
-| M04 | `0x08010358-0x08017667` | 28.8 KiB | 67 | 0 | *** | player-character state bodies |
+| M04 | `0x08010358-0x08017667` | 28.8 KiB | 65 | 0 | *** | scripted-sequence bank: director + 50 of the 63 scripts |
 | M05 | `0x08017668-0x0801A8C7` | 12.6 KiB | 23 | 0 | *** | player-character animation bank + collision registry - **landed (#81)**, 20/23 |
 | M06 | `0x0801A8C8-0x08021B17` | 28.6 KiB | 56 | 0 | ***** | terrain / collision query (pure leaf) |
 | M07 | `0x08021B18-0x0802969F` | 30.9 KiB | 154 | 1 | ****** | level / room builder + tilemap upload |
@@ -265,7 +265,7 @@ ordering inside it:
 | 17 | M05 player-character driver? | 0x3260 | 23 | 3 | 3 | 10 | 0 |
 | 18 | M35 game-mode flow + link lobby | 0x3D20 | 193 | 3 | 3 | 3 | 2 |
 | 19 | M23 enemy/object behaviour bank 4 | 0x6BF0 | 285 | 3 | 3 | 0 | 10 |
-| 20 | M04 player-character state bodies? | 0x7310 | 67 | 3 | 3 | 1 | 2 |
+| 20 | M04 scripted-sequence bank: director + 50 of the 63 scripts - landed | 0x7310 | 65 | 3 | 3 | 1 | 2 |
 | 21 | M08 camera / BG scroll + tilemap streaming | 0x7164 | 153 | 3 | 4 | 3 | 17 |
 | 22 | M02 game mode + screen/asset loader | 0x4368 | 110 | 3 | 6 | 29 | 5 |
 | 23 | M16 actor / effect support library B | 0x75D8 | 88 | 3 | 6 | 10 | 10 |
@@ -310,7 +310,7 @@ sub-issue of #35, so the numbering ascends with the recommended order):
 | 16 | #79 | M19 cutscene / ending-sequence bank (11 class-3 tasks) - landed | `0x08070EC0-0x08078B67` | 31.2 KiB | 2 |
 | 17 | #80 | M23 enemy/object behaviour bank 4 (fourteen three-table scripts + two bosses) - landed | `0x080860F8-0x0808CCE7` | 27.0 KiB | 2 |
 | 18 | #81 | M05 player-character driver? | `0x08017668-0x0801A8C7` | 12.6 KiB | 3 |
-| 19 | #82 | M04 player-character state bodies? | `0x08010358-0x08017667` | 28.8 KiB | 3 |
+| 19 | #82 | M04 scripted-sequence bank: director + 50 of the 63 scripts - landed | `0x08010358-0x08017667` | 28.8 KiB | 3 |
 | 20 | #83 | M16 actor / effect support library B | `0x0805AFAC-0x08062583` | 29.5 KiB | 3 |
 | 21 | #84 | M06 terrain / collision query (pure leaf) | `0x0801A8C8-0x08021B17` | 28.6 KiB | 3 |
 | 22 | #85 | M11 player mode/state machine + stage support services - landed | `0x0803CD60-0x080449C7` | 31.1 KiB | 3 |
@@ -377,20 +377,46 @@ early zone and the SDK tails. "Pool references" counts literal-pool words, so
 * **Known RAM cells touched** DISPCNT shadow x26, keys newly pressed x20, current game state (main dispatch) x11, BG3VOFS shadow (16.16) x10, decimal digit buffer, [5] = sign/flag x9, auto-repeat first delay (14) x7.
 * **Suggested batches** `0x0800B920` (13 fns), `0x0800CA10` (37 fns), `0x0800EA0C` (33 fns).
 
-### M04 `0x08010358-0x08017667` - player-character state bodies?
+### M04 `0x08010358-0x08017667` - scripted-sequence bank: director + 50 of the 63 scripts
 
-* **Size** 28.8 KiB (`0x7310`), 67 functions (64 reachable only through pointer tables), mean `0x1b7`, largest `0x7c0`, pool words 7.3% of bytes.
-* **Difficulty** 3/6 - 15 distinct RAM cells, 0 jump-table dispatches, 22 functions >= `0x200`.
-* **Seam cost** 0 in / 1 out (local `bl` edges crossing the boundary).
-* **Why** 64/67 functions pointer-dispatched from the 71-entry table @0x08731FA8 (shared with the next module); TaskYieldTrampoline x1340, the densest in the ROM; sprite draw x261.
-* **Task types** 2 (class 1 x1, class 2 x1): #91, #92.
-* **Calls into the decompiled early zone** sprite draw/update x261, VRAM transfer queue + sprite buckets x11, sound/BGM x8, frame driver + RNG + blend x3, task position/draw x3, SIO multi-play x2.
-* **Named helpers** TaskYieldTrampoline x1340, TaskDispatchTrampoline x6.
-* **Called from** M05 x5.
-* **Depends on** sdk_libc x1346, early_5d9c x261, early_1518 x11, M17 x8, early_3110 x8.
-* **Pool references** IWRAM x105, asset_metadata_index x60, early_58e4 x48, early_5c4c x47, game_code_and_rodata x4, EWRAM x3, level_graphics_palettes x2, VRAM x1.
-* **Known RAM cells touched** DISPCNT shadow x3, current game state (main dispatch) x2, per-player keys pressed x1.
-* **Suggested batches** `0x08010358` (23 fns), `0x0801201C` (13 fns), `0x08013E38` (18 fns), `0x08015758` (13 fns).
+**Decompiled in issue #82** (all 65 functions, no asm left in the range): `src/player_10358.c`, `src/player_109c8.c`, `src/player_10b38.c`.
+
+* **Size** 28.8 KiB (`0x7310`), 65 functions (58 of them reachable only through the dispatch table), mean `0x1c4`, largest `0x7c0`, pool words 7.3% of bytes.
+* **What it is.** The **driver half** of the sequence bank M05 holds the rest of. The 71-entry table at `0x08731FA8` is two tables in one:
+  entries **0-7** are sequence bodies and entries **8-70** are the 63
+  animation scripts (50 here, 13 in M05).
+  * Task type **#91** (class 1) `sub_080103f0` is the **director**: it
+    dispatches a sequence body with
+    `sub_08002e98(gUnk_030023B8, 9, gUnk_08731FA8)`, installs
+    `sub_08010480` as the per-frame hook in `Task.unk04`, counts frames
+    in `Task.unk6C` until `gUnk_08731F98[id] - 60`, then sets the
+    game-state cell `gUnk_030023D8` to 5 and ends via `sub_08006138`.
+  * Task type **#92** (class 2) `sub_080104f0` is the **script runner**,
+    a single call: `sub_08002e98(gUnk_03002490->unk18, 63,
+    gUnk_08731FC8)` - and `0x08731FC8` is `&gUnk_08731FA8[8]`, so both
+    the window and the count 63 are the ROM's, not inference.
+  * `sub_08010358(script, minSlot)` is the **spawner**: it takes a type-92
+    slot with `sub_08005904(92, minSlot, 62)`, copies the parent's
+    `unk48/unk4A` and 16.16 `unk4C/unk50` into the child, inherits
+    `unk43`, records the parent index in `Task.unk44` (from
+    `gCurTaskIdx`), stores `script` in `Task.unk18`, and sets
+    `unk40 = 0x8810` when `gUnk_08731F78[id]` is non-null. It returns the
+    new task index - hence the `pop {r1}; bx r1` epilogue (lesson 3.94).
+  * `sub_08010480` is the **skip hook**: over `gUnk_030023AC` players it
+    tests the per-player keys `gUnk_03001EB8[i] & 9` (A | START), plays
+    sound `0x21B` through `sub_080034f0` for sequence 7, sets
+    `gUnk_030023D8 = 5` and kills itself with `sub_08005654(gCurTaskIdx)`.
+* **Per-sequence ROM tables**, all indexed by the `s8` cell
+  `gUnk_030023B8` (0-7, written outside this module):
+  `gUnk_08731F78` graphics blobs (`0x085BC800-0x085CC328`, 7 non-null),
+  `gUnk_08731F98` total durations in frames (270, 416, 352, 552, 592,
+  456, 552, 2020 - 4.5 to 33.7 s at 60 Hz), `gUnk_08731FA8` the bodies.
+  Script/graphics descriptors cluster at `0x08754A14-0x08754F68` and
+  `0x08751C44-0x08751E00`; `gUnk_0873E640` is a `u16[23]` frame-id list
+  (`sub_08012df8` streams it straight into `Task.unk3C`).
+* **Task fields this module pins down.** `Task.unk18` is the script selector the spawner writes (and a packed word elsewhere, lesson 3.287); `Task.unk44` is the **parent/anchor task index**; `Task.unk48/unk4A` are screen coordinates relative to that parent, mirrored by the 16.16 `Task.unk4C/unk50`; `Task.unk3C` is the animation id every script drives; `Task.unk00`/`unk04` are the update hooks.
+* **Census: two phantoms**, both now in `tools/symdb.py`. `0x080153A2` and `0x0801625A` were invented by the pool word `0xFFFFF000` at `0x080143A0` and `0x08015258` decoding as a `bl` pair (lesson 4.40, fourth and fifth instances); neither has a prologue and each continues the function above it, so `sub_08015268` really runs `0x198` bytes and `sub_0801607c` `0x224`. The module has 65 functions, not 67.
+* **Seam cost** 0 in / 1 out. **Called from** M05 x5.
 
 ### M05 `0x08017668-0x0801A8C7` - player-character animation bank + collision registry
 
@@ -1795,16 +1821,30 @@ and reproducible. The **names are inference**, at three confidence levels:
   `current game state` / `requested game state` cells, and does the
   LZ77/Huff decompression into VRAM.
 * M37 — FIR-coefficient consumer (see §3.5).
+* M04+M05 — the player character's **scripted-sequence bank**. Settled by #81,
+  sharpened by #82, which found the driver side. The 71-entry table at
+  `0x08731FA8` is really two tables in one: entries **0-7** are sequence bodies
+  selected by `gUnk_030023B8`, and entries **8-70** are the 63 animation
+  scripts (50 in M04, 13 in M05). Task type **#92** (class 2, `sub_080104f0`)
+  is the script runner — literally
+  `sub_08002e98(gUnk_03002490->unk18, 63, &gUnk_08731FA8[8])`, so the count 63
+  and the base `+0x20` are in the ROM, not inferred. Task type **#91**
+  (class 1, `sub_080103f0`) is the director: it dispatches the sequence body,
+  installs `sub_08010480` as the per-frame hook (`Task.unk04`), counts out
+  `gUnk_08731F98[id]` frames (270-2020, i.e. 4.5-33.7 s at 60 Hz) in
+  `Task.unk6C`, then sets the game-state cell `gUnk_030023D8` to 5 and ends.
+  `sub_08010480` is the **skip hook**: it scans the per-player keys
+  `gUnk_03001EB8[i]` for `& 9` (A | START) across `gUnk_030023AC` players.
+  `sub_08010358` spawns the script tasks (type 92, slot search
+  `sub_08005904(92, minSlot, 62)`), copying the parent's position and 16.16
+  velocity across and recording the parent's index in `Task.unk44`; it returns
+  the new task index, which is why its epilogue is `pop {r1}; bx r1`
+  (lesson 3.94). What #81 could not see from the bodies alone — why they never
+  read the key cells — now has a mechanical answer: the input is read once, by
+  the director's hook, for the sole purpose of aborting the sequence.
 
 **Plausible, marked `?` in the table**
 
-* M04+M05 — "player character": **SETTLED by #81, and the names are now
-  unqualified.** `sub_0801a76c` in M05 binds the running task to a player
-  record (`Task.unk88 = &gUnk_03002170[i]`, the 116-byte `PlayerState`) and
-  sets the OAM priority bits from the player index, and M05's thirteen bodies
-  are entries 58-70 of the shared `0x08731FA8` table.  The reason neither reads
-  the key cells is that they are *animation* scripts: the input handling lives
-  in the state machine that picks the table entry, not in the bodies.
 * M06 — "terrain/collision query". It is certainly a pure leaf over the IWRAM
   block `0x030054E0-0x030055B0` and the `0x100`-stride index tables at
   `0x087328F0-0x087339F0`, shared with M07. Whether that block is the room

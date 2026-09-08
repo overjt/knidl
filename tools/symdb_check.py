@@ -183,7 +183,7 @@ def parse_dump(dump, wanted):
 # spurious condition suffix depending on where the sweep is: `b510` is `push
 # {r4, lr}` at 0x08007300 and 0x080CC024 but `pushgt {r4, lr}` at 0x080CC0A4.
 # Tolerate the suffix - the encoding, not the mnemonic spelling, is the
-# evidence.
+# evidence (issue #82).
 COND = r"(?:eq|ne|cs|hs|cc|lo|mi|pl|vs|vc|hi|ls|ge|lt|gt|le|al)?"
 
 

@@ -113,7 +113,7 @@ sub_080b5670:
 	.word	gUnk_020055D8
 	.word	gUnk_020060A0
 	.word	gUnk_02020000
-	.word	0x06010000
+	.word	gUnk_06010000
 .L_080b5744:
 	adds	r0, r1, r7
 	mov	r1, sp
@@ -236,7 +236,7 @@ sub_080b5670:
 	pop	{r1}
 	bx	r1
 	movs	r0, r0
-	.word	0x06010000
+	.word	gUnk_06010000
 	.word	0x0873EF48
 	.word	gUnk_020055D8
 	.word	gUnk_020060A0
