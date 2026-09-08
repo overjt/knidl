@@ -44,6 +44,44 @@ zsh (the local dev shell) does not word-split and passes it as one target,
 Use bash arrays (`objects=(...); make "${objects[@]}"`) so snippets are
 copy-paste safe on any shell.
 
+### 1.6 The main Makefile needed `pipefail` too, and its absence swallowed EVERY compile error
+Lesson 2.9 established that the permuter's `compile.sh` needs `pipefail`.  The
+same reasoning was never applied to the Makefile, where every compile rule is
+`cpp -P | agbcc | as`.  A pipeline's exit status is its LAST command's, so an
+agbcc error printed its diagnostic to stderr and was then discarded: `as`
+assembled the truncated output, produced a valid-looking object, the link
+succeeded, and `make` exited 0 with a silently wrong ROM.  `-Werror` does not
+help; the error was real and fatal, just unreported.
+
+This is how issue #85 reached "green locally, red in CI": the only step that
+caught it was CI's separate `Compile baserom-free objects` pass.  The fix is
+two lines in the `INSIDE_DOCKER` branch:
+
+    SHELL       := /bin/bash
+    .SHELLFLAGS := -o pipefail -c
+
+Diagnosing it also cost hours because the failure LOOKED like a codegen
+mismatch (a 3345-byte ROM diff in a region no one had touched) rather than a
+compile error.  When a diff lands in a module the change could not reach,
+suspect the build before the compiler, and grep the FULL build log for
+`^stdin:[0-9]*:` - agbcc reports source errors against `stdin`, so they carry
+no filename and are trivially missed.  Attribute them only from a serial
+build: `make -j` interleaves stderr and pins diagnostics to the wrong file.
+
+### 1.7 `BUILD_DIR` inside the `INSIDE_DOCKER` branch made host-side `make clean` a silent no-op
+`clean` runs on the HOST (it is just `rm -rf`), but `BUILD_DIR` was defined
+only inside `ifeq ($(INSIDE_DOCKER),1)`.  So `rm -rf $(BUILD_DIR) $(ROM)`
+expanded to `rm -rf  knidl.gba` - an EMPTY first argument - and `build/` was
+never removed.  Every "clean rebuild" silently reused stale objects, which is
+exactly what masked 1.6: a header change that broke a landed file still
+reported a byte-identical ROM because that file was never recompiled.
+
+Any variable a host-side target expands must be defined ABOVE the split.  And
+treat `make clean` as something to verify, not assume: `make clean && ls build`
+should say `No such file or directory`.  Note also that bare `make` on the host
+only builds the Docker image - the real build is `make compare`, so "I ran
+`make` and it passed" proves nothing.
+
 ## 2. Tooling pitfalls
 
 ### 2.1 The PyPI package `m2c` is NOT the m2c decompiler

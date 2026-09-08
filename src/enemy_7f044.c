@@ -1411,7 +1411,7 @@ void sub_080806e8(void)
 {
     struct PlayerState *p = &gUnk_03002170[sub_08063b38()];
 
-    if (*(s8 *)&p->filler07[4] == 1 || p->unk0D == 1)
+    if (*(s8 *)&p->unk0B == 1 || p->unk0D == 1)
     {
         sub_08006338(*(s16 *)&gUnk_03002490->unk30);
         sub_0806395c(0);
@@ -1590,7 +1590,7 @@ void sub_08080aa8(void)
 {
     struct PlayerState *p = &gUnk_03002170[sub_08063b38()];
 
-    if (*(s8 *)&p->filler07[4] == 1 || p->unk0D == 1)
+    if (*(s8 *)&p->unk0B == 1 || p->unk0D == 1)
     {
         sub_08006338(*(s16 *)&gUnk_03002490->unk30);
         sub_0806395c(0);
