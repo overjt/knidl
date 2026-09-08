@@ -189,7 +189,7 @@ dispatches, pool density) — a planning aid, not a promise.
 | M08 | `0x080296A0-0x08030803` | 28.3 KiB | 153 | 2 | *** | camera / BG scroll + tilemap streaming |
 | M09 | `0x08030804-0x0803627F` | 22.6 KiB | 60 | 0 | ***** | stage manager A |
 | M10 | `0x08036280-0x0803CD5F` | 26.7 KiB | 41 | 0 | **** | stage script runner |
-| M11 | `0x0803CD60-0x080449C7` | 31.1 KiB | 123 | 4 | ***** | stage support library |
+| M11 | `0x0803CD60-0x080449C7` | 31.1 KiB | 121 | 4 | ***** | player mode/state machine + stage support services |
 | M12 | `0x080449C8-0x08047FE7` | 13.5 KiB | 22 | 0 | *** | large actor bank A |
 | M13 | `0x08047FE8-0x0804CC7B` | 19.1 KiB | 27 | 0 | *** | large actor bank B |
 | M14 | `0x0804CC7C-0x08053AF3` | 27.6 KiB | 84 | 2 | *** | stage manager B |
@@ -280,7 +280,7 @@ ordering inside it:
 | 32 | M38 intro / cutscene / ending sequences? | 0x747C | 110 | 4 | 6 | 3 | 7 |
 | 33 | M10 stage script runner | 0x6AE0 | 41 | 4 | 11 | 1 | 0 |
 | 34 | M06 terrain / collision query (pure leaf) | 0x7250 | 56 | 5 | 2 | 11 | 0 |
-| 35 | M11 stage support library | 0x7C68 | 123 | 5 | 9 | 18 | 0 |
+| 35 | M11 player mode/state machine + stage support services - landed | 0x7C68 | 121 | 5 | 9 | 18 | 0 |
 | 36 | M09 stage manager A | 0x5A7C | 60 | 5 | 13 | 13 | 1 |
 | 37 | M07 level / room builder + tilemap upload | 0x7B88 | 154 | 6 | 8 | 34 | 1 |
 
@@ -313,7 +313,7 @@ sub-issue of #35, so the numbering ascends with the recommended order):
 | 19 | #82 | M04 scripted-sequence bank: director + 50 of the 63 scripts - landed | `0x08010358-0x08017667` | 28.8 KiB | 3 |
 | 20 | #83 | M16 effect spawner + two-level state machine (task types #81-#90) - landed | `0x0805AFAC-0x08062583` | 29.5 KiB | 3 |
 | 21 | #84 | M06 terrain / collision query (pure leaf) | `0x0801A8C8-0x08021B17` | 28.6 KiB | 3 |
-| 22 | #85 | M11 stage support library | `0x0803CD60-0x080449C7` | 31.1 KiB | 3 |
+| 22 | #85 | M11 player mode/state machine + stage support services - landed | `0x0803CD60-0x080449C7` | 31.1 KiB | 3 |
 | 23 | #86 | M08 camera / BG scroll + tilemap streaming | `0x080296A0-0x08030803` | 28.3 KiB | 4 |
 | 24 | #87 | M12 large actor bank A | `0x080449C8-0x08047FE7` | 13.5 KiB | 4 |
 | 25 | #88 | M13 large actor bank B | `0x08047FE8-0x0804CC7B` | 19.1 KiB | 4 |
@@ -530,20 +530,70 @@ early zone and the SDK tails. "Pool references" counts literal-pool words, so
 * **Known RAM cells touched** DISPCNT shadow x4, current game state (main dispatch) x1, frames left to wait x1.
 * **Suggested batches** `0x08036280` (6 fns), `0x080371F0` (10 fns), `0x08038FE8` (8 fns), `0x0803AFCC` (17 fns).
 
-### M11 `0x0803CD60-0x080449C7` - stage support library
+### M11 `0x0803CD60-0x080449C7` - player mode/state machine + stage support services
 
-* **Size** 31.1 KiB (`0x7c68`), 123 functions (46 reachable only through pointer tables), mean `0x102`, largest `0x85e`, pool words 9.8% of bytes.
-* **Difficulty** 5/6 - 50 distinct RAM cells, 18 jump-table dispatches, 16 functions >= `0x200`.
-* **Seam cost** 95 in / 56 out (local `bl` edges crossing the boundary).
-* **Why** fan-in from every stage module (266+171+165+159+151); hot leaves 0x08040B40 x195 / 0x080413A4 x165; link-aware SE gate 0x0803E34C; 43-entry rodata table @0x0803EC48.
-* **Anchor tables** `0x0873B430` 11 entries -> `0x08041438-0x08042128`; `0x0873B46C` 12 entries -> `0x08042580-0x08044288`; `0x0873B4AC` 7 entries -> `0x080415C8-0x08042328`; `0x0873B500` 4 entries -> `0x08043A88-0x08044470`.
-* **Calls into the decompiled early zone** sprite draw/update x132, VRAM transfer queue + sprite buckets x26, frame driver + RNG + blend x4, sound/SE x4, SIO multi-play x2, task engine x2.
-* **Named helpers** TaskYieldTrampoline x136, CpuSet x1.
+**Decompiled in issue #85** (119 of 121 functions, 28940 of 31848 bytes):
+`src/stage_3cd60.c`, `src/stage_413a4.c`, `src/stage_43654.c`.
+
+* **Size** 31.1 KiB (`0x7c68`), 121 functions, 18 jump-table dispatches - the
+  most of any module - and the highest coupling in Wave 3 (95 `bl` edges in,
+  56 out).
+* **What it is.** The census called it a "support library", which understates
+  it: the module is the **player mode machine** plus the services the stage
+  modules call into. `PlayerState.unk04`/`unk05` is a **current/previous mode
+  pair** and `Task.unk15` selects the script; a body sets the new mode, writes
+  `Task.unk15`, and calls `sub_08040b40(<unk15>, <sub-id>)`,
+  `sub_080413a4(<index>)` and `sub_08006338(<message id>)`.  Nineteen small
+  predicates in `0x0803F870-0x08040710` form the transition table: each reads
+  the two per-player bit-mask tables, combines them with `Task.unk7A`/`unk7B`
+  bit 0, `Task.unk43` (facing) and `Task.unk54`/`unk58`, writes the next state
+  into `PlayerState.unk01` and returns it.
+* **`sub_08040788` is the per-player input latch** and it names two globals the
+  whole module indexes: for `i < gUnk_030023AC` it copies
+  `gUnk_03002458[i] = gUnk_03000F98[i]` and
+  `gUnk_030023C0[i] = gUnk_03001EB8[i]`, zeroing **both** when
+  `PlayerState[i].unk42 & 0x40`.  So `gUnk_030023C0` is the latched
+  keys-pressed, `gUnk_03002458` the latched state mask (both indexed by
+  `(s8)PlayerState.unk00`), and bit 0x40 of `unk42` means "input suppressed".
+* **`sub_08040b40` is a 14-way camera/scroll velocity preset dispatcher**
+  (`sub_08040b40(mode, 72)`), writing `Task.unk54`-`unk68` and calling
+  `sub_080061c0(0x5A5A5A5A, <8.8 value>)`; `sub_080413a4` applies one 8-byte
+  record of `gUnk_0873B204` as three signed 8.8 velocities, skipping any field
+  equal to the sentinel `0x9999`.
+* **Four anchor tables of `void (*)(void)`** at `0x0873B430` (11),
+  `0x0873B46C` (14 words, two of them 0), `0x0873B4AC` (7) and `0x0873B500`
+  (4).  They come in pairs: a coroutine that yields with
+  `TaskYieldTrampoline` and sets `Task.unk73` on exit, and a per-frame handler
+  that re-binds it with `sub_08006148(<coroutine>, gCurTaskIdx)` - that call is
+  the module's "replace the running task's function" idiom.
+* **Other services.** `sub_0803d0a0`/`d1c4`/`d2d4` are three variants of
+  "reset player record" (full, and two that skip progressively more fields);
+  `sub_0803d3d4`/`sub_0803d494` are the camera/scroll clamp;
+  `sub_0803d55c`/`sub_0803d710` the per-frame graphics uploaders over
+  `Task.unk38[Task.unk3C]`; `sub_0803d870` maps `Task.unk3C` plus
+  `PlayerState.unk0D` to a HUD tile slot through two jump tables;
+  `sub_0803eaf8` (2820 bytes, the module's largest) is the stage-id to
+  (pitch, pan) lookup; `sub_0803d8a4`-`sub_0803d918` are a small **sound-script
+  interpreter** (`Task.unk18` script base, `unk1C` program counter, `unk20`
+  frames left, opcodes -2 stop / -3 rewind / -4 switch script, anything else an
+  SFX id followed by its delay).
+* **Census: TWELVE corrections**, all in `tools/symdb.py`.  The largest:
+  `sub_0803eaf8` really runs `0x0803EAF8-0x0803F5FC` as **one 2820-byte
+  function** where the census had five - across that span there is exactly one
+  `push {r4, r5, lr}` and one matching `pop`, and the four bogus entries were a
+  pool-skip branch, two long-jump targets and the shared epilogue itself.  Also
+  four hidden entries (two real leaves with seven `bl` sites each, three of
+  them from M12, and two dead exports), three phantom rom-pointers whose only
+  ROM words sit in `level_graphics_palettes`, `song_tail_misc_audio` and
+  `m4a_songs_2` among palette, audio and song data, a 2-byte "function" that is
+  really a `bx lr`, and one entry that was the sixth WORD of the jump table at
+  `0x0803E1E0`.
+* **Still asm** `sub_08040b40` (2148 B, +8 bytes: case 13's task pointer lands
+  in `ip`, and the only levers that would flip it need a live reference the ROM
+  does not contain - see lesson 4.62/4.63) and `sub_0804335c` (760 B, 7
+  differing: the ROM's halfword density must fall inside a window no source
+  spelling reaches).
 * **Called from** M10 x266, M13 x171, M12 x165, M14 x159, M09 x151.
-* **Depends on** sdk_libc x136, early_5d9c x132, M07 x28, early_1518 x26, M16 x25.
-* **Pool references** IWRAM x450, asset_metadata_index x52, EWRAM x43, game_code_and_rodata x28, level_object_tables x11, level_graphics_palettes x5, VRAM x3.
-* **Known RAM cells touched** DISPCNT shadow x2, frames left to wait x1, per-player keys held x1, per-player keys pressed x1.
-* **Suggested batches** `0x0803CD60` (38 fns), `0x0803EAF8` (41 fns), `0x08040A44` (24 fns), `0x080429FC` (20 fns).
 
 ### M12 `0x080449C8-0x08047FE7` - large actor bank A
 

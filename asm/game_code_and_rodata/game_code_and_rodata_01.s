@@ -76,5 +76,5 @@ loc_0801032e:
 	.word	gUnk_03001570
 	.word	gUnk_030023AC
 	.word	gUnk_03002360
-	.word	0x080DC628
+	.word	gUnk_080DC628
 	.word	0x085E0090

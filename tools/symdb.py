@@ -295,6 +295,65 @@ FALSE_POSITIVES = {
     # 0x0801607C-0x080162A0 (0x224).
     0x0801625A,
 
+    # --- M11 (issue #85), two phantom ROM-POINTERS.  The pattern that
+    # identifies them: the "pointer" is a lone word inside a DATA segment,
+    # with neighbours that are plainly not addresses.
+    0x0803E1F4,  # the sixth WORD of the 7-entry jump table at 0x0803E1E0,
+                 # which runs to 0x0803E1FC - the harness's own table detector
+                 # (lesson 4.45) flags the whole run as data.  symbols.csv
+                 # already tagged it `rom-pointer` rather than a prologue, and
+                 # sub_0803e1b8 has exactly one `push {r4,r5,lr}` at
+                 # 0x0803E1B8 and one `pop {r4,r5}; pop {r0}` at 0x0803E286,
+                 # so it really runs 0x0803E1B8-0x0803E28C.
+    0x080401FC,  # opens `b.n +0x54` - a pool-skip branch (lesson 3.6) inside
+                 # sub_080400c0, which really runs 0x080400C0-0x08040264
+                 # (0x1A4, was 0x13C).  Its two "pointers" sit at 0x0825DA28
+                 # in level_graphics_palettes (neighbours 0x11FB10FD,
+                 # 0x01FB00FB - palette data) and 0x087D7FD0 in
+                 # song_tail_misc_audio (neighbours 0xEEECE9E7, 0xF7F3F2F0 -
+                 # audio samples).
+    0x08040512,  # a 2-byte "function" that is really the `bx lr` ENDING
+                 # sub_080404e4: 0x08040512 decodes as `bx r14` and 0x08040514
+                 # opens the next function with a `push`.  Its only "pointer"
+                 # is at 0x087083D0 in m4a_songs_2 (neighbours 0x06FEF6F1,
+                 # 0x0AFAF800 - song data).
+
+    # --- M11 (issue #85), five rows: the census had split ONE 2820-byte
+    # function into five and clipped a second one's shared epilogue.
+    #
+    # sub_0803eaf8 really runs 0x0803EAF8-0x0803F5FC (0xB04).  Across that
+    # whole span there is exactly ONE prologue (`push {r4, r5, lr}` at
+    # 0x0803EAF8) and ONE epilogue (`pop {r4, r5}; pop {r1}` at 0x0803F5E6,
+    # whose register set matches that push); no other `push` appears anywhere
+    # inside it.  The four bogus entries:
+    #   0x0803EFEE  a POOL-SKIP BRANCH at the top of a mid-function literal
+    #               pool (`b.n loc_0803f334` immediately followed by `.word`,
+    #               lesson 3.6).  Its "rom-pointer" evidence is a phantom: the
+    #               only ROM word holding 0x0803EFEF is at 0x087D2A94, in the
+    #               middle of the song_tail_misc_audio data segment, between
+    #               0xEFECF6FF and 0x20180205 - audio samples, not a table.
+    0x0803EFEE,
+    #   0x0803F41A  and
+    #   0x0803F494  long-jump targets: a Thumb `b.n` reaches only +/-2 KiB, so
+    #               agbcc spells the jumps inside this 2.8 KiB function as
+    #               `bl` (lesson 4.39).  Their four `bl` sites (0x0803EB62,
+    #               0x0803EB68, 0x0803EB94, 0x0803EC34) are all real
+    #               instructions inside the same function, and both blocks are
+    #               prologue-less and end by branching onward rather than
+    #               returning.
+    0x0803F41A,
+    0x0803F494,
+    #   0x0803F5C4  the SHARED EPILOGUE itself - prologue-less, opens
+    #               `ldrh r2, [r5, #60]` on an r5 established far earlier, and
+    #               ends with the function's only `pop` pair.
+    0x0803F5C4,
+    #
+    # And 0x0804139E is the same 4.39 shape one function later: it starts
+    # `pop {r4, r5, r6}; pop {r0}`, is reached by a `bl` from 0x08040B5C
+    # inside the 2142-byte sub_08040b40, and sits exactly at that function's
+    # claimed end.  sub_08040b40 really runs 0x08040B40-0x080413A4 (0x864).
+    0x0804139E,
+
     # --- M05 (issue #81), one row the reachability sweep dropped ---
     # 0x0801A41A has no prologue: it shares sub_0801a3e4's frame (the `push
     # {r4-r7,lr}` + `sub sp, #12` at 0x0801A3E4) and its epilogue at
@@ -466,6 +525,38 @@ FALSE_POSITIVES = {
 # m4a.c function order and body shape (see the KNOWN_SYMBOLS comments);
 # they are injected as candidates and carry the "curated" evidence kind.
 EXTRA_THUMB_ENTRIES = {
+    # --- M11 (issue #85), four hidden entries the reachability sweep missed ---
+    # Two are genuine callees the size heuristic swallowed, two are dead
+    # exports.  In all four the PRECEDING function has its own complete
+    # `pop {..}; bx rN` epilogue (plus alignment and literal pool) before the
+    # address, so the split is unambiguous.
+    0x0803F7E0,  # leaf with a `u16` parameter (`lsls r0,r0,#16; lsrs r3,r0,#16`),
+                 # ending `bx lr` at 0x0803F82C, with no `push`.  sub_0803f6e0
+                 # closes with its full epilogue at 0x0803F7CA and its pool
+                 # fills 0x0803F7CC-0x0803F7DF, so it really runs
+                 # 0x0803F6E0-0x0803F7E0 (0x100).
+    0x08042D40,  # real table entry: the ROM word 0x08042D41 sits at
+                 # 0x0873B4E8, inside a GENUINE function-pointer table whose
+                 # neighbours are 0x08042981, 0x0803AA41, 0x0804335D,
+                 # 0x0803B47D and 0x0803B6ED - not a data blob.  The preceding
+                 # function closes `pop; pop; bx r0` with its pool after it.
+    0x0803E5C0,  # leaf, `adds r3,r0,#0; adds r2,r1,#0; ldrb r0,[r2,#0]`: two
+                 # args, no `push` (it saves nothing).  SEVEN `bl` sites, three
+                 # of them OUTSIDE this module (0x080453FA, 0x080454A0,
+                 # 0x080454C2 are in M12), which a long intra-function jump
+                 # cannot be.  sub_0803e55c really runs 0x0803E55C-0x0803E5C0
+                 # (0x64, was 0x9C) and ends `pop {r1}; bx r1` at 0x0803E5B6.
+    0x0803FCE4,  # same shape: `adds r3,r0,#0; ldr r0,[pc,#36]; ldr r0,[r0,#0]`
+                 # and seven `bl` sites, three from M12.  sub_0803fb54 really
+                 # runs 0x0803FB54-0x0803FCE4 (0x190, was 0x1CC).
+    0x08040084,  # dead export: nothing points at it and nothing `bl`s it, but
+                 # sub_0803ffe0 closes with `pop; pop; bx r1` at 0x0804007E,
+                 # so it cannot be part of it.  sub_0803ffe0 runs
+                 # 0x0803FFE0-0x08040084 (0xA4, was 0xE0).
+    0x080404E4,  # dead export, same evidence: sub_0804042c closes with
+                 # `pop; pop; bx r1` at 0x080404DE.  sub_0804042c runs
+                 # 0x0804042C-0x080404E4 (0xB8, was 0xE6).
+
     # --- M16 (issue #83), one hidden entry ---
     0x0805DBFC,  # dead export.  sub_0805dba0 ENDS at 0x0805DBE0 with a
                  # complete `pop {r4}; pop {r0}; bx r0` epilogue followed by
