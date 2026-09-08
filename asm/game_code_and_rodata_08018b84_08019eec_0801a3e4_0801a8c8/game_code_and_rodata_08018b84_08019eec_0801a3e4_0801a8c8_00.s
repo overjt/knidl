@@ -25432,7 +25432,7 @@ loc_080270ac:
 	pop	{r0}
 	bx	r0
 	.word	0x0873264C
-	.word	0x0874CDF8
+	.word	gUnk_0874CDF8
 	.word	gUnk_03002348
 	.word	gUnk_030023E4
 	.word	0x030055EC

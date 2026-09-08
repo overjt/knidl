@@ -290,6 +290,8 @@ struct PlayerState
     /*0x5E*/ u16 unk5E;
     /*0x60*/ u16 unk60;
     /*0x62*/ u8 filler62[2];
+    /* M16's sub_0805e15c zeroes unk64/unk68/unk6C per player when a run
+       starts (issue #83); they were inside filler62 before M11 named them. */
     /*0x64*/ u32 unk64;
     /*0x68*/ u32 unk68;
     /* M11 keeps &gUnk_02005550[unk00] here and clears it to 0 (issue #85). */

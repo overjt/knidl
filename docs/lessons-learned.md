@@ -4368,6 +4368,295 @@ in its else arm (`strh r1,[r2,#56]` with r2 never set on that path). The
 original source has that bug and byte-matching means reproducing it; a
 defensive rewrite cannot. Decompilation is not code review — record the UB in a
 comment and move on.
+### 3.305 An array's DECLARED element type is load-bearing: symbol-first vs index-first
+The single most common residual in M16 (#83), found independently by two
+batches, and it cannot be fixed from the call site.
+
+**The position of `ldr rN, =<table>` relative to the index arithmetic tells you
+how the array was declared.**
+
+* `arr[i]`, where the declared element type matches the access, loads the
+  symbol **before** the index math: `ldr rB, =table; ldr rI, [task, #0x34];
+  adds`.
+* `((T *)arr)[i]` — any cast, in any spelling, including
+  `*(T *)((u32)arr + i * 2)` and `(*(T (*)[])arr)[i]` — loads it **after**.
+
+Same instruction count, different order. The mechanism: a cast makes the base a
+`TREE_CONSTANT` operand of a `PLUS_EXPR`, which `fold` canonicalises into the
+second position, while a real array is an `ARRAY_REF` whose expander
+materialises the base first. So declaring a ROM table `u32[]` and casting at
+every use can never reproduce a properly-typed access, no matter how the
+expression is written. Three functions in one batch turned on this alone
+(81 -> 6 -> 0 differing bytes on one of them).
+
+The rule fires on an **uncast, correctly-typed** array too, which is the part
+that surprises: `arr[i]` and `*(arr + i)` are not interchangeable in agbcc.
+`gUnk_0873DDE8[i]` loads the base before the `lsls`, while `*(arr + i)`,
+`*(i + arr)`, `i[arr]` and `*(u32 *)((u8 *)arr + i * 4)` all emit the `lsls`
+first. **The subscript operator itself is the symbol-first form**; everything
+that decays the array to a pointer is index-first.
+
+Two more spellings, both **index-first**, both needed somewhere in M16:
+`&arr[i]` assigned to a pointer and then used as `p->f` (the `&` folds an
+ARRAY_REF into `arr + i * size`, a PLUS with a constant operand, which `fold`
+canonicalises index-first), and `(arr + i)->f`. So for the *same* array,
+`arr[i].f` is symbol-first while `&arr[i]` into a local is not.
+
+**Index scaling is a second, independent tell.** `arr[a * 4 + b]` on a real
+`s16[]` computes `(a * 4 + b) * 2` — a single shift at the end — while
+`*(arr + a * 4 + b)` distributes the scale into `a * 8 + b * 2` and costs two
+bytes. A cast, `((s16 *)arr)[a * 4 + b]`, keeps the single trailing shift AND
+is index-first; that combination is what one M16 function needed.
+
+A **block-scoped** local is a third, independently useful position:
+`{ T *p = (T *)arr; ... p[i] ... }` puts the load at the start of that block,
+which is what matches when the ROM's base load sits at a statement boundary.
+Declared at function scope the same local hoists to the prologue, which is
+usually wrong.
+
+**Struct arrays follow the same rule and add a second effect.**
+`gUnk_03002790[i].f` is symbol-first; `(gUnk_03002790 + i)->f` is index-first
+*and* keeps the field offset in the access (`str r1, [r0, #40]`) instead of
+folding it into the base (`adds r3, #40`). Both forms are needed within one
+module, so read the listing rather than picking a house style. Related:
+`&arr[i]` assigned to a typed local and then used as `t->field` gives
+`adds rX, rX, rBase; ldr rY, [rX, #off]`, where writing `arr[i].field` as one
+expression folds the offset into the base and hoists the load.
+
+Practical consequence for a module harness: get the element types into the
+shared header from the first pass, because retrofitting them invalidates
+nothing (all 62 already-matched M16 bodies re-verified unchanged after eleven
+type corrections) but every function written against the wrong type has to be
+revisited.
+
+### 3.310 `asrs` after a plain `ldrb`/`ldrh` is C promotion, not a signed declaration
+`u8` and `u16` globals promote to signed `int`, so `g >> n` on an unsigned
+global emits `asrs`, not `lsrs`, even though the load is a zero-extending
+`ldrb`/`ldrh`. Three M16 functions read the same `u8` tables this way. Do not
+"fix" the shift by declaring the table signed — check the LOAD for the
+signedness and read the shift as promotion.
+
+### 3.311 The house spelling for a short descending zero loop
+Two landed files already contain it (`src/enemy_9fbd0.c:327`,
+`src/early_6464.c:266`) and nothing else reproduces `cmp r0, r1; bge`:
+
+```c
+    q = arr; z = 0;
+    p = q + 2;
+    do { *p = z; p--; } while ((s32)p >= (s32)q);
+```
+
+The explicit `(s32)` casts on the guard are what make the comparison signed; a
+plain pointer compare emits an unsigned `bcs` plus a loop pre-guard, and an
+index loop (`for (i = 2; i >= 0; i--) arr[i] = 0;`) keeps the index live and
+recomputes the address inside the loop. The named zero is 3.11's shape. Grep
+the landed `src/` for an idiom like this before deriving one — it is faster and
+it keeps the decomp internally consistent.
+
+### 3.312 A `switch`'s ARM SOURCE ORDER is observable in the dispatch polarity
+`expand_end_case` moves the dispatch code to the front of the switch, so the
+label of the **textually first** arm lands immediately after it. `jump.c` then
+inverts that arm's test, because the conditional's target is now the
+fallthrough label. So:
+
+* `beq <case>; b <default>` at the deepest node -> that arm is NOT written first;
+* `bne <default>; b <case>` -> **that arm IS the first one written**.
+
+Arm bodies still emit in source order either way; only the dispatch leaf's
+polarity moves. M16's `sub_0805d918` needed `case -2:` written before
+`case -3:` and `case -4:` for exactly this reason.
+
+**This corrects a wrong inference worth recording.** The same `bne default;
+b case` shape in the landed twin `sub_080af020` (`src/enemy_ae3bc.c`) was first
+read as evidence of a FOUR-case tree with a hidden case value, and a full pass
+over the alternatives disproved it: adding `case -1:` in any form (empty,
+body-sharing, `case -2 ... -1:`, `case -2 ... 0:`, or a different fourth value)
+either collapses the leaf into `cmp r2, #0; bge default` or adds a second
+comparison, and never reproduces the ROM's five-instruction
+`movs/negs/cmp/bne/b`. The twin simply writes its `case -1:` first. Tree
+*arity* is not what the polarity tells you; source *order* is.
+
+### 3.313 Separate locals per RE-READ of the global, not merely per block
+3.293 and the per-block rule are both narrower than the real constraint. In
+M16's `sub_0805d918` the post-switch code re-reads `gUnk_03002490` **twice**,
+and each read needs its own locals — six, not three:
+
+```c
+    t2 = gUnk_03002490; k = t2->unk1C; q = (s16 *)t2->unk18;
+    v = q[k]; k++; t2->unk1C = k; sub_08006338(v);
+    t3 = gUnk_03002490; m = t3->unk1C; r = (s16 *)t3->unk18;
+    t3->unk20 = r[m]; m++; t3->unk1C = m;
+```
+
+Sharing `t2`/`k`/`q` across the two halves changes the allocno reference counts
+enough to flip the task pointer and the switch subject between r2 and r3. Note
+also what does NOT matter: declaration order. With two locals of equal
+reference count, `global_alloc`'s priority
+(`floor_log2(n_refs) * n_refs / live_length`) is decided purely by live length,
+and ten permutations of nine declarations all gave the same assignment.
+
+### 3.314 A `goto` loop and a `while` loop are different to `loop_optimize`
+A structured loop gets `NOTE_INSN_LOOP_BEG` and therefore loop-invariant
+hoisting; a `goto`-based loop does not, so `loop_optimize` skips it entirely.
+The observable consequence: when the ROM **re-loads** `ldr rN, =<global>`
+*inside* a backward-branching block, the source used `goto`, not `while (1)`.
+Writing the structured form hoists the load out and can never match.
+
+### 3.315 A constant narrows to the pool when the op and the store share a block
+New instance of 3.282 with a sharper trigger. `unk40 = x | 0xFFFFC010` pools
+`0x0000C010`, not the full word, because the destination is `u16` and the
+`orrs` feeds the `strh` in one basic block, so agbcc truncates the constant.
+Two ways to keep the full 32-bit literal, both confirmed: write it as a
+**negative decimal** (`| -16368`), or put the mask in a local
+(`m = 0xFFFFC010; ... = v | m;`). Trigger = narrow destination + a
+positively-typed constant in the same block.
+
+Related, and the opposite direction: one pool word `0xFFFF0000` legitimately
+serves **both** `-1` and `0xFFFF` in the same function — write the natural
+`if (f == -1)` and `while (p[0] != 0xFFFF)` and agbcc pools one word, deriving
+`-1` with `asrs #16` and `0xFFFF` with `lsrs #16`. Do not invent a variable.
+
+### 3.316 Offsets in the split listing are DECIMAL
+`strb r0, [r1, #22]` is offset 22, i.e. field `unk16`, not `unk22`. Only
+offsets of 10 and above carry an `@ 0x..` comment, so the small ones are the
+trap. This cost a build in M16; it is worth a deliberate check on every
+hand-written field access.
+
+### 3.306 A chained assignment loads every LHS address UP FRONT, in reverse order
+`a = b = c = d = 0;` is not N statements: `expand_assignment` computes each
+left-hand address before recursing into the right-hand side, so all N pool
+addresses appear at the top of the sequence in **reverse** order of use. That
+pattern in the listing is the tell.
+
+Whether the middle links need `volatile` follows from the same shape: M16's
+`gUnk_0300117C = gUnk_03001EE0 = gUnk_03000F8C = gUnk_03000B78 = 0;` only keeps
+its store-and-re-load pairs if the middle cells are `vs32` — a non-volatile
+chain lets CSE drop the reloads and store the constant N times. `vs32`
+specifically: with `vu32` the first link stops re-reading and the chain loses
+an instruction. The outermost cell stays non-volatile, because its assigned
+value is never consumed and the distinction cannot be observed.
+
+### 3.307 Three more shapes that look like allocation problems and are not
+All three from M16 (#83), each confirmed by byte-match:
+
+* **A shared store at a join is not a ternary.**
+  `if (c) t->unk3C = 4; else t->unk3C = tbl[i];` produces the merged `strh`
+  *and* the ROM's arm order. The ternary adds an `adds rX, rY, #0`, reverses
+  the arms and costs four bytes, and inverting its condition changes nothing
+  because agbcc canonicalises it.
+* **An exit test that appears TWICE with different registers is agbcc's own
+  loop-exit duplication.** Write the plain `while`; `if (c) do { ... } while
+  (c);` gets threaded back into one test and comes out 12-16 bytes short. The
+  duplication only fires when the loop's invariant symbol load sits inside the
+  condition — i.e. only with a correctly typed array (3.305) — so two
+  structurally identical loops in one function can legitimately compile one
+  duplicated and one not.
+* **A peeled first iteration is not extra source.**
+  `for (g = 0; g < n; g++) { if (bit(g)) { ...; break; } }` emits the body's
+  `if` once with the index constant-folded (`ands r0, #1`, no shift) and then a
+  loop that *starts* with the increment.
+
+### 3.308 `switch` layout: bodies in source order, tests sorted by value
+gcc splices the dispatch sequence in **before** the case bodies, so a
+comparison chain at the top of a block with `case 1:`'s body physically before
+`case 0:`'s means a **`switch`** — `if`/`else if` always puts the first-tested
+body first. Reading a 1252-byte M16 function that way matched it on the first
+compile.
+
+Two corollaries. A wide case range collapsing onto few distinct arms means
+cases sharing bodies: consecutive labels falling into one body, not repeated
+bodies, and fallthrough between arms is real. And **inside an arm, a register
+still holding the dispatched value IS the case constant** — `strh r4, [r0, #0]`
+with r4 holding the switch value is `= 0` in `case 0:`, and `ands r0, r4` is
+`& 1` in `case 1:`. CSE's `record_jump_equiv` does that; do not invent a
+variable for it.
+
+### 3.309 `ldrh` versus `ldrsh` on a SIGNED field is a context signal
+Not a type signal, and not the same question as 3.296 (which is about
+`ldrsb` versus `ldrb` plus shifts on the same access). On a signed halfword
+field, `ldrh` means the value is being truncated to 16 bits — stored into a
+16-bit field, or converted to an `s16` parameter — while `ldrsh` means it feeds
+a 32-bit expression. Combined with the case-constant rule above, this is what
+settled the signature of `sub_08001a94`: the ROM passes argument 5 straight
+from two `ldrsh`s and truncates only argument 6, so the prototype is all-`u32`
+with an explicit `(s16)` cast at the last argument, exactly as the landed twin
+`src/early_5d9c.c:65` spells it.
+
+### 3.300 A sub-word LOCAL costs a sign-extend at every read
+`lsls rX, rX, #24; lsrs rSAVED, rX, #24` at entry, followed later by
+`lsls r0, rSAVED, #24; asrs r0, r0, #24` at each use, is an **`s8` local or
+parameter**, not a cast on a wider value. agbcc's `PROMOTE_MODE` keeps sub-word
+locals zero-extended in a register, so the truncating `lsls` CSEs with the
+first read and every subsequent read pays its own `lsls #24; asrs #24`. Two
+consequences, both from M16's `sub_0805afac` (#83):
+
+* `s8 k = a0; if (k == 0)` compiles to `lsls; asrs; cmp r0, #0`, while
+  `u8 k = a0; if ((s8)k == 0)` **folds** to a bare `cmp r5, #0` and loses four
+  bytes. A sign-extend in front of a `cmp #0` therefore means the variable is
+  `s8`-TYPED; it is not a `(s8)` cast applied to a `u8`.
+* An `lsrs` (not `asrs`) into a callee-saved register at entry means the value
+  is a sub-word local held zero-extended. Do not read it as a `(u8)` cast.
+
+This is the source-side companion to the rule that `ldrsb` versus
+`ldrb; lsls #24; asrs #24` on a FIELD is reload pressure rather than a type
+difference: on a field the encoding is the compiler's choice, on a local the
+extra pair is mandatory.
+
+### 3.301 An early-out plus a shared tail is TWO `if`s, not a `return`
+When the ROM enters the success path by `bne <tail>` from the first test and
+leaves it by `beq <return>` from the second, the source guards the tail with a
+second `if` rather than returning early:
+
+```c
+    idx = call1(...);
+    if (idx == -1) { ...retry...; idx = call2(...); }
+    if (idx != -1) { ...the stores... }
+    return idx;
+```
+
+Writing `if (idx == -1) return idx;` before the stores gives byte-identical
+SIZE but the wrong basic-block order (31 of 220 bytes differing in M16's
+`sub_0805afac`), and no permutation of `return -1` against `return idx` moves
+it — gcc const-propagates the -1 into whichever `return` is adjacent. Guarding
+the tail lets gcc thread the first test straight into it, which is what the ROM
+does. About eight iterations went into finding this.
+
+### 3.302 NEGATIVE RESULT: a shared reload is not evidence for a named local
+In M16's shared four-statement tail, one body reuses a single `r0` across an
+`unk3E` store and a following `unk88` deref while another reloads the global,
+which reads as "the first had a `t = gUnk_03002490;` local and the second did
+not". All four combinations were compiled: **both spellings byte-match in both
+functions**, because agbcc CSEs the global's load across those statements by
+itself. Recorded because the signal is convincing and chasing it costs
+iterations for nothing. The discriminators for a named local that DO hold are a
+copy in a loop preheader, and a counter still live past a back-edge.
+
+### 3.303 Frame size is not diagnosable: `sub sp, #N` tells you nothing
+Three M16 functions with identical outgoing-call shapes — eight bytes of stack
+arguments, no locals, no `[sp, #8]` traffic — compiled to `sub sp, #8`,
+`sub sp, #12` and `sub sp, #16`, and all three reproduced from straight-line
+source with nothing declared. The `#16` is a spill slot agbcc reserved before
+final allocation and never used. Write the statements and the frame falls out;
+never reason backwards from it to locals or arity.
+
+The one real signal: **declared-but-unused PARAMETERS do occupy frame space.**
+`sub_0805eb2c` reads none of its three arguments, but they are exactly what
+produces its `sub sp, #12`, so simplifying the prototype to `void` breaks the
+match. See 4.47 for what that costs a tool.
+
+### 3.304 `adds rN, #K` on a live constant register builds a NEW constant
+agbcc materialises a constant outside the `movs` immediate range by adding to a
+register that already holds a nearby one. `movs r5, #97; ... adds r5, #212`
+leaves r5 = **309**, so every later `strh r5, [r0, #60]` is `field = 309`, not
+`field = 97` and not `field += 212`. Same shape as `subs r5, #8` where r5 held
+`0x133` (= 299) and `adds r6, #161` where r6 held 151 (= 312), and as
+`adds r6, #4` where r6 held `149 << 1` (= 0x12E).
+
+This is the most dangerous single line for a mechanical transcriber, because it
+is the one case where dropping the instruction does not merely omit a statement
+— it silently corrupts a data constant while leaving plausible code behind.
+Every constant store whose value arrives in a callee-saved register has to be
+folded, not copied.
 
 ### 3.284 A callee that ignores its argument register shows up as a MISSING argument setup
 
@@ -4833,6 +5122,150 @@ was a genuine *call* into a mis-split census entry; the target was in a
 different function, and the census was what needed fixing. Target inside the
 current range means a jump; target outside means either a call or a census
 error, never a goto.
+### 4.48 "bl-target-only and not 4-aligned" flags a CANDIDATE, not a phantom
+The test is cheap and worth running on every census — in M04 (#82) it caught
+two phantoms before a byte was decompiled. But it identifies a *shape*, and the
+shape has at least three causes, so the site of the `bl` must be identified
+before concluding anything:
+
+* the only `bl` site is a `0xFFFFF000` **pool word** -> phantom, absorb it
+  (4.40);
+* the site is a real instruction inside a large function -> a **long
+  intra-function jump**, because Thumb `b.n` only reaches +/-2 KiB, so absorb
+  it into that function (4.39). M11's `0x0804139E` is this: it starts
+  `pop {r4, r5, r6}; pop {r0}`, an epilogue, reached by a `bl` from inside the
+  2142-byte `sub_08040b40`;
+* the site is a real instruction in a DIFFERENT function -> a shared block
+  reached by `bl` and tailing into a third function, which is neither of the
+  above and needs the surrounding code decompiled before it can be settled
+  (M11's `0x0803F41A`).
+
+One more trap in the tooling: a scan for "halfword pairs that decode as a `bl`
+reaching address X" tests every even address, but a pool word must be
+4-aligned, so a pair straddling two adjacent pool words produces a false hit.
+Check the candidate site against the disassembly, not just against the bytes.
+
+### 4.51 `agbcc -dg` prints the allocator's own state: stop guessing permutations
+The biggest escalation lever found since the RRTRACE build, and far cheaper.
+GCC's register-allocation dumps are available straight from the pinned
+compiler:
+
+```sh
+docker run --rm -v "$(pwd):/src" -w /src knidl-builder bash -c \
+  'cpp -P -I include X.c > m.i && \
+   agbcc -O2 -mthumb-interwork -fprologue-bugfix -dg -o /dev/null m.i'   # -> m.i.greg
+```
+
+`m.i.greg` contains `;; N regs to allocate:` **with the exact allocation
+order**, a per-pseudo `Register N used R times across L insns`, and the full
+conflict graph. The sort key is exactly
+**`floor_log2(refs) * refs / live_length`**, verified to reproduce the printed
+order for all 18 allocnos of one M16 function, and `refs` is loop-depth
+weighted (x2 inside a loop). `-dl` dumps `.lreg`, which still carries pseudo
+numbers, so allocnos map back to source variables: user locals appear as
+`reg/v` with consecutive pseudo numbers **in declaration order**.
+
+With those two dumps a register permutation becomes arithmetic — you can see
+which pseudo needs more references or a shorter live range instead of sweeping
+source shapes. Two facts fell out of it immediately, both of which had been
+guessed at before: **declaration order of locals is inert** (four orderings,
+byte-identical output; only refs, live length and conflicts matter), and an
+explicit copy variable (`b = a;`) is inert too, because GCC coalesces it into
+its own generated copy.
+
+The levers the dumps then point at, in the order they worked on M16's last
+straggler (180 -> 87 -> 14 -> 10 -> 0 differing bytes): a **missing statement**
+(a local holding `p + 1` kept across a call, which had presented as a register
+residue — 4.41 yet again), a **pointer to a member** (`u16 **pal = &g->unk04;`
+used as `pal[1]`, while the other accesses stay `g->unk04`, because CSE does
+not rewrite a register-based MEM address), a **literal instead of a symbol**
+(below), and finally **block-scoping a loop temporary** so that two duplicated
+loops get two per-arm pseudos rather than one shared one, which is what
+reordered the allocation.
+
+### 4.52 Symbolic vs numeric pool rendering tells you if the SOURCE named a symbol
+The listing prints a pool word symbolically when the symbol database has a name
+for that address and numerically when it does not — and that distinction turns
+out to track what the original source wrote. In M16's `sub_0805da2c` the pool
+word `0x0600FE00` prints numerically while `gUnk_03001470` next to it prints
+symbolically, and the function only matches with the VRAM address written as
+the literal `0x0600FE00`; spelling it `(u8 *)0x03001470` for the other one made
+that access *worse*. The landed `src/` agrees — `actor_653ec.c`,
+`player_1a07c.c` and `enemy_a93ec.c` all write
+`((prio & 0x7FF) << 5) + 0x0600FE00`.
+
+Practical consequence: a `data_symbols` entry invented for an address the
+source treats as a literal is worse than no entry, because it makes the harness
+offer a symbol that cannot match. `extern u32 gUnk_0600FE00[]` was exactly that
+and the landed C does not reference it.
+
+### 4.49 A `bl` split into two `.short`s loses a statement with NO marker
+The worst listing defect found so far, because every other one leaves a trace.
+split.py's objdump desyncs at a few sites and prints a 32-bit `bl` as
+`.short 0xF7A8` / `.short 0xF888`, sometimes with a **phantom `loc_` label
+wedged between the halves** that nothing in the ROM branches to. The asm
+reassembles byte-identically, so the build never complains — but a listing
+model that passes the pair through hides a CALL, and a draft generator then
+drops the whole statement **without emitting an unmodelled-line comment**. That
+makes it invisible to the 4.41 checklist, which is the only reason it survived
+a full pass.
+
+Detect and re-join it: two consecutive `.short` data lines whose halfwords are
+`0xF000-0xF7FF` and `0xF800-0xFFFF`, skipping any zero-size label or `.global`
+line between them (the phantom label sits at the midpoint address, so a naive
+"next line" test finds the `.global` and gives up). `grep -l '\.short' ann/*.s`
+finds every candidate in a module — there was exactly one in M16's 30 KiB.
+
+### 4.50 Test source hypotheses in ONE compile, not one per verifier run
+The per-function verifier is the oracle but it is a Docker round-trip per
+attempt. For a question of the form "which of these spellings gives the ROM's
+register or branch shape?", put every variant in one file as separate
+`void tN(void)` functions, run `cpp -P -I include <file> | agbcc -O2
+-mthumb-interwork -fprologue-bugfix -o - -` once inside `knidl-builder`, and
+grep the assembly for the pattern. Two M16 stragglers were closed this way at
+about forty variants in five compiles, where the same work through the verifier
+would have been forty runs. Escalate to the byte-verifier only once a variant
+looks right.
+
+### 4.45 Demote code back to DATA too: a jump table is not instructions
+Promoting mis-decoded data to code is only half the job; the inverse is just as
+damaging. split.py prints a `mov pc, rN` jump table as instructions, and the
+entries decode as nonsense — `svc 72; lsrs r5, r0, #32` is the two halves of
+the pointer `0x0805DF48`. A model that only promotes leaves the whole table in
+the listing as fake instructions, and a draft generator then transcribes them.
+The cheap detector that found all three of M16's tables with no false
+positives: a 4-aligned run of at least three consecutive words whose values all
+lie inside the module and are even. Real code does not have three consecutive
+halfword pairs that read as in-module even addresses.
+
+### 4.46 A re-decoded branch loses its symbol — restore it
+Any line a listing model decodes ITSELF comes from objdump, which prints raw
+addresses where split.py would have printed the symbol. In M16 that turned six
+`bl TaskYieldTrampoline` and one `bl sub_080062c4` into `bl 0x80cfdcc` and
+`bl 0x80062c4`, which read as wild branches out of the module and which the
+draft generator faithfully transcribed as the call `0x80cfdcc();` — a hard
+compile error, and the only reason two functions failed their first build. The
+trigger is structural: the affected `bl` is the first instruction after a label
+that a mid-function literal pool was branched over, so it always sits in a
+region the model re-decoded. Map the address back through the symbol table
+before printing.
+
+### 4.47 An argument the prologue never reads is invisible from the callee
+Inferring a function's arity by walking its prologue for reads of r0-r3 works
+and is worth doing — it agreed with the call sites on seven of eight
+spot-checked M16 functions, and it is what let 88 in-module prototypes be
+generated at once. But it has a hard blind spot: a parameter the body never
+touches leaves no trace, and `sub_0805eb2c`'s three unused arguments (which
+produce its `sub sp, #12`, lesson 3.303) cannot be seen that way.
+**Unused parameters can only come from the call sites** — read which of r0-r3
+each caller sets, then byte-match one caller to confirm.
+
+Two implementation notes for the walker itself, both learned the hard way:
+whether a destination register is also a SOURCE is decided by the mnemonic and
+not by the operand count (Thumb's `movs rD, #imm` has one comma and does not
+read rD, while `adds rD, #imm` does), and `adds rD, rS, #0` is the
+register-copy idiom, so counting it as a use of rD is what made the first
+version of the script claim four arguments for a function that takes none.
 
 ### 4.41 A draft generator must classify what it drops, or it deletes code silently
 

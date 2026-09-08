@@ -320,6 +320,11 @@ SECTIONS
         KEEP(*(.game_code_and_rodata_08018b84_08019eec_0801a3e4_0801a8c8_08040b40_0804335c_080449c8)) KEEP(*(.game_code_and_rodata_08018b84_08019eec_0801a3e4_0801a8c8_08040b40_0804335c_080449c8.tail))
     } > ROM
 
+    /* effect_5afac — decompiled to C (src/effect_5afac.c, carved by tools/carve.py) */
+    .effect_5afac 0x0805AFAC : {
+        build/src/effect_5afac.o(.text)
+    } > ROM
+
     /* actor_62584 — decompiled to C (src/actor_62584.c, carved by tools/carve.py) */
     .actor_62584 0x08062584 : {
         build/src/actor_62584.o(.text)

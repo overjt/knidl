@@ -69,7 +69,8 @@
 0x080413A4 0x0804335C c_code stage_413a4 # src/stage_413a4.c (carved by tools/carve.py)
 0x0804335C 0x08043654 thumb_code game_code_and_rodata_08018b84_08019eec_0801a3e4_0801a8c8_08040b40_0804335c [split]
 0x08043654 0x080449C8 c_code stage_43654 # src/stage_43654.c (carved by tools/carve.py)
-0x080449C8 0x08062584 thumb_code game_code_and_rodata_08018b84_08019eec_0801a3e4_0801a8c8_08040b40_0804335c_080449c8 [split]
+0x080449C8 0x0805AFAC thumb_code game_code_and_rodata_08018b84_08019eec_0801a3e4_0801a8c8_08040b40_0804335c_080449c8 [split]
+0x0805AFAC 0x08062584 c_code effect_5afac # src/effect_5afac.c (carved by tools/carve.py)
 0x08062584 0x08063698 c_code actor_62584 # src/actor_62584.c (carved by tools/carve.py)
 0x08063698 0x080653EC c_code actor_63698 # src/actor_63698.c (carved by tools/carve.py)
 0x080653EC 0x080673EC c_code actor_653ec # src/actor_653ec.c (carved by tools/carve.py)

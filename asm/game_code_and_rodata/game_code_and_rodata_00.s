@@ -8554,14 +8554,14 @@ loc_0800b730:
 	.word	gUnk_020061E0
 	.word	gUnk_02006160
 	.word	gUnk_02006094
-	.word	0x020060CC
+	.word	gUnk_020060CC
 	.word	gUnk_02007FB8
 	.word	gUnk_02000008
 	.word	gUnk_03005274
 	.word	gUnk_03001F34
 	.word	gUnk_02006178
 	.word	gUnk_02007CF0
-	.word	0x02008010
+	.word	gUnk_02008010
 	.word	gUnk_020055C4
 	.word	gUnk_03002458
 	.word	gUnk_03001EB8
