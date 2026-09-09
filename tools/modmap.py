@@ -263,7 +263,7 @@ MODULE_NAMES = {
     0x080AE3BC: ("enemy/object behaviour bank 13",
                  "decompiled in #73 as src/enemy_ae3bc.c (135 functions, all byte-matched, ROM identical); dispatch-heavy behaviour bank, closed via the redundant-read reload lever (lessons 3.270)"),
     0x080B2FE8: ("HUD / overlay effects?",
-                 "decompiled in #97 (partial) as src/hud_b2fe8.c/b5024.c/b5840.c (106 of 108 functions byte-matched, ROM identical around 2 asm holes); 9 task types (5 of class 4); LZ77UnCompVram x6 + CpuSet x3 + a DMA0 register pair; VRAM transfer queue x20; EWRAM x102. 2 functions remain in asm - sub_080B4EA8 (r7 web-split: n7 splits into pre-switch + per-case pseudos, one lands r9 not r7; 3.271/3.273) and sub_080B5670 (48B r7-preference core)"),
+                 "decompiled in #97 (partial) as src/hud_b2fe8.c/b4ea8.c/b5024.c/b5840.c (107 of 108 functions byte-matched, ROM identical around 1 asm hole); 9 task types (5 of class 4); LZ77UnCompVram x6 + CpuSet x3 + a DMA0 register pair; VRAM transfer queue x20; EWRAM x102. 1 function remains in asm - sub_080B5670 (r7-preference core, best candidate 34 differing bytes); sub_080B4EA8 closed via the zero-byte allocator levers (lessons 3.275-3.281)"),
     0x080B6154: ("save file / SRAM records + options",
                  "WriteSramEx x5, ReadSram x2, sram_driver x7 - the only SRAM user in the bulk; 98 RAM cells; direct REG_BG1HOFS/REG_BG2HOFS writes"),
     0x080B9D0C: ("game-mode flow + link lobby",

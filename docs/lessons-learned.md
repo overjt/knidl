@@ -3804,7 +3804,7 @@ a78a0 (parked "unreachable from C" since 3.271) matched with exactly one
 def/use window plus the 3.277 tie. The family verdict in 3.274 is now
 obsolete: all five M30/M33 functions were reachable.
 
-### 3.274 r7 IS reachable via global_alloc pressure (b4ea8), refining 3.271: natural loop-carried pseudos push r7 correctly; the residual blocker is web-splitting, not enrollment
+### 3.274 SOLVED for b4ea8 by 3.279-3.281 - r7 IS reachable via global_alloc pressure, refining 3.271: natural loop-carried pseudos push r7 correctly; the residual blocker was web-splitting, not enrollment
 
 3.271 said "r7 can only come from reload under pressure, not from C." That is
 true for a *reload scratch* (a78a0's extendhisi2 zero-temp). But r7 as a
@@ -3856,6 +3856,30 @@ r7 (`push {r4,r5,r6,r7,lr}; mov r7,r8; push {r7}`).
   reload rotation, both internal to reload's spill-set construction and
   unreachable by any C source shape or pin (which are invisible to the
   spill-set order, 3.269b).
+- **SOLVED (b4ea8, landed as `src/hud_b4ea8.c`).** The "same class as a78a0,
+  unreachable" verdict above is WRONG, and so is the r7-as-spill model it
+  rests on: the ROM's shape needs no r7 spill enrollment at all, only the
+  right web and the right rotation. Six zero-byte levers, all already
+  documented, compose into the match:
+  (1) compute `n3`/`n7` PRE-SWITCH (plain `break` in the empty cases), which
+      unifies the two webs 3.274 called a coalescing fixed-point;
+  (2) file-scope `register ... asm("r9"/"r10"/"r11")` globals (3.280) exclude
+      the r9 home at zero prologue cost, so `n7` lands r7 naturally;
+  (3) per-arm UNIQUE whitespace asm barriers (3.279) keep the arm tails from
+      cross-jumping while their reload scratches still differ;
+  (4) leave `n3` natural - caller-save (3.281) emits the ROM's
+      `str`/`ldr [sp,#0]` around the inner call for free, which RETIRES the
+      volatile-frame-slot hack trap (2) above prescribes;
+  (5) an `asm` memory clobber at the case-6 loop end blocks gcse load-PRE
+      from splitting the loop-condition reads per path;
+  (6) a DELIBERATELY mergeable duplicate of the common tail in case 5
+      (3.279): its reload chains advance the rotation - aligning all four
+      per-arm `movs rN,#1` constants - and then jump2 folds it back into
+      `b common`.
+  Generalisation: when a residue is diagnosed as "r7 must enter reload's
+  spill set", check FIRST whether an r7 *variable* plus a rotation advance
+  reproduces the same bytes. Here it did, and the spill-set reading cost the
+  function several sessions of blind sweeps.
 
 ### 3.273 SOLVED (ada20, M31's last straggler): the extendhisi2 zero-temp lands in r4 when the store-cell pointer is a dropped-pseudo address reload, not a pin
 
@@ -3903,10 +3927,16 @@ a932c 19->16, b5670 521->84->50->48. The other four never moved from their
 floor (ada20 3, a78a0 7, a860c 8, b4ea8 11). Even the improved two do NOT
 reach zero: b5670's residue is the SAME r7-preference core (ROM keeps the
 const 2 and scratch values in callee-saved r7) that a78a0/b4ea8 need and
-3.271 proved unreachable. MODULE-LEVEL CONSEQUENCE: a carve needs every
-function at zero, and each of M30/M31/M33 contains at least one floor-locked
-function (M31: ada20; M30: a78a0+a860c; M33: b4ea8), so none can carve
-regardless of a932c/b5670 progress. The two blocking classes are r7 spill
+3.271 proved unreachable. MODULE-LEVEL CONSEQUENCE (as believed then; every
+one of these "floor-locked" functions has since matched except b5670 - see
+3.273, 3.275 and 3.274's SOLVED note): a carve needs every function at zero,
+and each of M30/M31/M33 contains at least one floor-locked function (M31:
+ada20; M30: a78a0+a860c; M33: b4ea8), so none can carve regardless of
+a932c/b5670 progress.  What actually broke them was neither of the "only
+remaining levers" below but the zero-byte hard-liveness and rotation levers
+of 3.275-3.281; carve granularity did the rest (a carve needs every function
+in ITS OWN range at zero, so a single hole splits a module into two c_code
+segments instead of blocking it). The two blocking classes are r7 spill
 enrollment (§3.271) and r4/pointer coalescing + retard-rotation (§3.268b/
 3.269b) - both internal allocator fixed-points. The only remaining lever is
 a permuter that scores against the target ROM at the allocation level;
@@ -3927,7 +3957,10 @@ originate from reload choosing r7 as a spill register under enough pressure
 that r0-r6 are exhausted - a global-allocation outcome. No C-level construct
 (pin, clobber, or asm) reaches it: they are ignored (§3.269b), skip the
 save (§3.266), or miscompile. a78a0 (7B) and b4ea8 (11B) are parked here with
-this proof, not a guess.
+this proof, not a guess.  **Both have since matched** - a78a0 via 3.275's
+pinned x-var windows, b4ea8 via 3.274's SOLVED note - so read this lesson as
+"a pin/clobber cannot push r7", which stays true, and NOT as "the ROM's r7
+shape is unreachable", which was an over-generalisation from it.
 
 ### 3.270 SOLVED (rotation-advance sub-case): a redundant reg-offset read forces the reload reload_cse later deletes, reproducing the phantom reservation
 
@@ -4046,9 +4079,9 @@ prologue) - but it often refuses for cost/conflict reasons that resist
 modeling: probes with r4-r6 pinned and r7 free spill the 4th variable or
 pick r9 instead, with or without -fomit-frame-pointer.  When the ROM keeps a
 loop-carried variable in r7, FIRST try the plain unpinned local (b5d84);
-if global insists on r9/spill (b4ea8's n7, still open at 11 bytes), the
-conflict is inside that function's allocation order and no source-level
-shape has reproduced it yet.
+if global insists on r9/spill (b4ea8's n7), exclude the r9-r11 bank with
+file-scope register globals (3.280) - that was the fix there - and only then
+suspect the allocation order.
 
 ### 3.267 The reload SPILLSET is the missing half of the rotation: pinned registers can never enter it
 
