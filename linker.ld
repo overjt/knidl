@@ -660,8 +660,9 @@ SECTIONS
         build/src/hud_b2fe8.o(.text)
     } > ROM
 
-    .game_code_and_rodata_080653ec_0806ef5c_0809113c_08093f64_08099b20_0809cb90_0809d994_0809f2f4_0809f9dc_080a00ec_080a1590_080b2fe8 0x080B4EA8 : {
-        KEEP(*(.game_code_and_rodata_080653ec_0806ef5c_0809113c_08093f64_08099b20_0809cb90_0809d994_0809f2f4_0809f9dc_080a00ec_080a1590_080b2fe8)) KEEP(*(.game_code_and_rodata_080653ec_0806ef5c_0809113c_08093f64_08099b20_0809cb90_0809d994_0809f2f4_0809f9dc_080a00ec_080a1590_080b2fe8.tail))
+    /* hud_b4ea8 — decompiled to C (src/hud_b4ea8.c, carved by tools/carve.py) */
+    .hud_b4ea8 0x080B4EA8 : {
+        build/src/hud_b4ea8.o(.text)
     } > ROM
 
     /* hud_b5024 — decompiled to C (src/hud_b5024.c, carved by tools/carve.py) */

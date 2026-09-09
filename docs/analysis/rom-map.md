@@ -607,10 +607,11 @@ child issues of #35 are created from it. Findings that belong in this document:
   `sub_080A860C`, `sub_080A932C`) fell to the zero-byte hard-liveness
   levers (lessons 3.275-3.278).
 - **M33 (`0x080B2FE8-0x080B6153`) is HUD / overlay effects (candidate).**
-  Decompiled in #97 (partial, 106/108) into `src/hud_b2fe8.c`,
-  `hud_b5024.c`, `hud_b5840.c`; ROM-identical around 2 asm holes. Remaining
-  in asm: `sub_080B4EA8` (r7 web-split, 3.274) and `sub_080B5670` (48B
-  r7-preference core, 3.272).
+  Decompiled in #97 (partial, 107/108) into `src/hud_b2fe8.c`,
+  `hud_b4ea8.c`, `hud_b5024.c`, `hud_b5840.c`; ROM-identical around 1 asm
+  hole. `sub_080B4EA8` (the 3.274 terminal) matched with the zero-byte
+  allocator levers (lessons 3.275-3.281). Remaining in asm:
+  `sub_080B5670` (best candidate 34 differing bytes).
 - **M31 (`0x080AA338-0x080AE3BB`) is enemy/object behaviour bank 12.**
   Decompiled in #78 into `src/enemy_aa338.c` (123 functions, all
   byte-matched, ROM identical). Anchor tables `0x087493F4` (25 entries ->
