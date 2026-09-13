@@ -5573,6 +5573,15 @@ is down to a register rotation in its LAST loop and every instruction is
 already right, count the live locals before touching anything else - the ROM's
 author reused a counter, and so must you.
 
+### 3.340 `c++` on an `s8` local is `(c << 24) + (1 << 24)`, on a `u8` it is not
+When the incremented byte is needed BOTH as the stored value and as a signed
+comparison, agbcc computes it once in the shifted domain:
+`lsls r0, r4, #24; movs r3, #128; lsls r3, r3, #17; adds r0, r0, r3` followed
+by `lsrs` for the store and `asrs` for the compare.  That is a **signed** char
+local.  With `u8 c` you get `adds r0, r4, #1; lsls r0, r0, #24` instead - two
+bytes shorter, and the tell that the local's declared type is wrong even
+though the array it came from is `u8[]` (`sub_080b75a4`, M34).
+
 ## 5. Workflow that worked
 
 The canonical per-function loop (pick → m2c first pass → asmdiff iterate →
