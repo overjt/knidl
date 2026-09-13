@@ -62,7 +62,7 @@ extern u8 gUnk_03002464;
 extern u16 gUnk_03004D50[];
 extern u16 gUnk_03004D90[];
 
-void sub_080b79b8(s32 a);
+s32 sub_080b79b8(s32 a);
 s32 sub_080b7a9c(s32 a);
 u32 sub_080b7df4(s32 a);
 void sub_080b7e14(s32 a);

@@ -734,8 +734,9 @@ SECTIONS
         build/src/save_b77d4.o(.text)
     } > ROM
 
-    .game_code_and_rodata_080653ec_0806ef5c_0809113c_08093f64_08099b20_0809cb90_0809d994_0809f2f4_0809f9dc_080a00ec_080a1590_080b2fe8_080b5670_080b6154_080b6b08_080b6f38_080b79b8 0x080B79B8 : {
-        KEEP(*(.game_code_and_rodata_080653ec_0806ef5c_0809113c_08093f64_08099b20_0809cb90_0809d994_0809f2f4_0809f9dc_080a00ec_080a1590_080b2fe8_080b5670_080b6154_080b6b08_080b6f38_080b79b8)) KEEP(*(.game_code_and_rodata_080653ec_0806ef5c_0809113c_08093f64_08099b20_0809cb90_0809d994_0809f2f4_0809f9dc_080a00ec_080a1590_080b2fe8_080b5670_080b6154_080b6b08_080b6f38_080b79b8.tail))
+    /* save_b79b8 — decompiled to C (src/save_b79b8.c, carved by tools/carve.py) */
+    .save_b79b8 0x080B79B8 : {
+        build/src/save_b79b8.o(.text)
     } > ROM
 
     /* save_b7a9c — decompiled to C (src/save_b7a9c.c, carved by tools/carve.py) */

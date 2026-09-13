@@ -65,7 +65,7 @@ extern void sub_08002338(void);
 extern void sub_08002348(void);
 extern void sub_08002d18(void);
 
-void sub_080b79b8(s32 a);
+s32 sub_080b79b8(s32 a);
 s32 sub_080b7a9c(s32 a);
 u32 sub_080b7df4(s32 a);
 void sub_080b7e14(s32 a);
