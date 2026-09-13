@@ -57,12 +57,12 @@ loc_080b76d0:
 	b.n	loc_080b77c4	@ 0x080B77C4
 	movs	r0, r0
 	.word	gUnk_030023AC
-	.word	0x0200EC60
+	.word	gUnk_0200EC60
 	.word	gUnk_03000F98
 	.word	gUnk_0200EC78
 	.word	gUnk_03001EB8
 	.word	gUnk_0200EC70
-	.word	0x0200EC54
+	.word	gUnk_0200EC54
 	.global	loc_080b7714
 loc_080b7714:
 	ldr	r4, [pc, #96]	@ 0x080B7778

@@ -46,7 +46,7 @@ loc_080b75be:
 	.word	gUnk_030023AC
 	.word	gUnk_0200EC78
 	.word	gUnk_0200EC70
-	.word	0x0200EC54
+	.word	gUnk_0200EC54
 	.global	loc_080b75ec
 loc_080b75ec:
 	ldr	r0, [pc, #60]	@ 0x080B762C
@@ -85,7 +85,7 @@ loc_080b75ec:
 	.word	0x000003FF
 	.word	gUnk_0200EC68
 	.word	gUnk_02016480
-	.word	0x0200EC60
+	.word	gUnk_0200EC60
 	.word	gUnk_030023AC
 	.global	loc_080b7644
 loc_080b7644:

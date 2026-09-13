@@ -22998,7 +22998,7 @@ loc_080cd422:
 	.word	gUnk_0200EC58
 	.word	gUnk_03001ED8
 	.word	0x0000FF7F
-	.word	0x0200EC50
+	.word	gUnk_0200EC50
 	.word	0x02008008
 	.word	gUnk_03002360
 	.word	0x02007FA8

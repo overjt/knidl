@@ -8218,7 +8218,7 @@ sub_0800b44c:
 	.word	gUnk_03001F30
 	.word	gUnk_0200EC58
 	.word	gUnk_030023B0
-	.word	0x0200EC50
+	.word	gUnk_0200EC50
 	.thumb_func
 	.global	sub_0800b4a8
 sub_0800b4a8:
