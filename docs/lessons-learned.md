@@ -5553,9 +5553,25 @@ bytes, not 252).
 `register u16 c asm("r6")` assigned before the loop gets to **14** differing
 bytes - the copy and the registers are all correct and only the two hoisted
 blocks are swapped - but a pinned variable is never hoisted, so it lands
-before the loop's own preheader instead of inside it.  The remaining lever is
-inside `move_movables` itself; instrument it (3.258's RRTRACE recipe) rather
-than sweeping more C.
+before the loop's own preheader instead of inside it.
+
+**Instrumenting `move_movables` settles the order half, as a negative
+result.**  A 12-line `fprintf` in `loop.c` gated on `getenv("MVTRACE")`, built
+with `make -C gcc normal` in `knidl-builder` (3.258's recipe), dumps each
+loop's movables list.  Two facts fall out and they are worth more than the
+function: the list is built by `scan_loop` in **insn order** (appended through
+`last_movable->next`), and `move_movables` walks it forward emitting each with
+`emit_insn_before (..., loop_start)`, so **the preheader order IS the order of
+first use inside the loop** - there is no reordering pass to exploit.  For
+`sub_080b6474` the inner list prints as
+`[copy-of-&gUnk_02016494, (const_int 256)]`, in that order, for every spelling
+tried.  The ROM's preheader is the other way round, so **the ROM's inner loop
+body must use the constant before it touches the cell** - which
+`*p = 256 - t; *q = t + 256;` cannot do, because the subtraction needs `t`.
+The source shape is therefore not the obvious transcription, and no amount of
+statement reordering will find it.  That rules out the whole class; the next
+attempt should look for a different formulation of the two stores (or accept
+the two functions as placeholders) rather than sweeping operand orders.
 
 ### 3.337 A pinned copy plus a barrier is how to keep a value in two registers
 `sub_080b7df4` returns the checksum it has just stored, and the ROM keeps it in
