@@ -1237,14 +1237,20 @@ does not, although the emitted `mov sl` sits BEFORE the `strb` either way
 constant copy is off by one register, try moving its assignment past the
 neighbouring stores before touching anything else.
 
-### 3.292 A stored value that is reused is a chained assignment
-`sub_0801c444` computes the actor's room position, stores it to
-`gUnk_03005518` and then adds four offsets to it. `x = expr; gUnk_03005518
-= x;` loads the destination address AFTER the arithmetic; the ROM loads it
-first and keeps `x` in a low register for the adds: `gUnk_03005518 = x =
-expr;` (3.8's "outer address first" applied to a local on the inside).
-Keep `x` as `s32` — the `asr #16` result is already int, and an `s16 x`
-adds a narrowing move and shifts the allocation of everything after it.
+### 3.292 A stored value that is reused: read the cell back, do not keep a local
+`sub_0801c444` and its six siblings compute the actor's room position,
+store it to `gUnk_03005518` and add four box offsets to it, narrowed into
+16-bit cells. Every local-variable spelling loses: `x = expr; g = x;` loads
+the destination address after the arithmetic; `g = x = expr;` fixes that but
+the narrowed adds come out `load + x` (the `s32` local becomes a
+`(subreg:HI ...)` and the swap rule puts it second, 3.81); an `s16` copy
+restores `x + load` but costs a register and permutes the allocation. The
+ROM's spelling has no local at all: `gUnk_03005518 = expr;` then
+`gUnk_0300550C = gUnk_03005518 + gUnk_0300551C;` - cse folds the re-read into
+the register that was just stored, in the right mode, and the operand order
+falls out. Seven functions (1848 bytes) matched from this one change.
+Diagnostic: a 6-byte residue that is only `adds rD, rA, rB` vs
+`adds rD, rB, rA` on narrowed sums of a value stored a few lines earlier.
 
 ## 4. Splitting ROM ranges into asm (tools/split.py)
 

@@ -76,7 +76,7 @@ loc_0801c6ee:
 	.word	gUnk_03005560
 	.word	gUnk_0300559C
 	.word	gUnk_03005570
-	.word	0x08732EF0
+	.word	gUnk_08732EF0
 	.word	gUnk_03005578
 	.word	gUnk_087336F0
 	.word	gUnk_03005594
@@ -152,7 +152,7 @@ loc_0801c7a2:
 	.word	gUnk_0300559C
 	.word	gUnk_03005570
 	.word	gUnk_0300557C
-	.word	0x08732EF0
+	.word	gUnk_08732EF0
 	.word	gUnk_03005578
 	.word	gUnk_087336F0
 	.word	gUnk_03005594

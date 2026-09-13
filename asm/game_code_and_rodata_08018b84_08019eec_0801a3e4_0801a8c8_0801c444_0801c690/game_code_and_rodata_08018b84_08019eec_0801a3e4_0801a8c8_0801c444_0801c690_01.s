@@ -137,7 +137,7 @@ loc_0801c8ae:
 	.word	gUnk_03005560
 	.word	gUnk_0300551C
 	.word	gUnk_03005570
-	.word	0x08732EF0
+	.word	gUnk_08732EF0
 	.word	gUnk_03005578
 	.word	gUnk_087336F0
 	.word	gUnk_03005510
