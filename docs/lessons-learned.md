@@ -5513,6 +5513,27 @@ hoists its base into block 1's preheader; the subscript form keeps the ROM's
 fresh pool load in block 2's own preheader because loop-invariant motion, not
 cse, is what materialises it there (runs after cse1, so nothing merges it).
 
+**What is still open on this family** (`sub_080b6474` 12 differing bytes,
+`sub_080b6154` 31): block 3's preheader must materialise the loop-invariant
+`256` BEFORE the loop-invariant `&gUnk_02016494`, and must do it in two
+insns plus a copy (`movs r4, #128; lsls r4, r4, #1; adds r6, r4, #0`).  The
+two halves are individually reachable and mutually exclusive so far:
+
+* the LITERAL in the expressions (`*p = 256 - t; *q = t + 256;`) gives the
+  two-pseudo copy but emits the constant AFTER the address;
+* a VARIABLE assigned in the OUTER loop body (`c = 256;` before the inner
+  `do`) gives the ROM's order but collapses to one pseudo, losing the copy.
+
+Ruled out for the second half: `c1 = 256; c = c1;` in either order, an
+`asm("" : "+r"(c))` barrier on either, a `register` pin on either (a pin on
+the source flips the order back), a pinned copy inside the inner loop, an
+inline-asm `mov`, mixing a literal and a variable across the two expressions,
+`*p = 256 - (t = ...)`, `(1 << 8)`/`0x100` spellings, and moving the array
+base into or out of the loop.  The lever is likely in how `move_movables`
+decides between moving a `SET reg, const` and hoisting a copy of it - worth
+one `agbcc -da` RTL dump (the 3.258 escalation) rather than more source
+sweeps.
+
 ### 3.337 A pinned copy plus a barrier is how to keep a value in two registers
 `sub_080b7df4` returns the checksum it has just stored, and the ROM keeps it in
 r0 (the return register) while storing from r2.  Every ordinary spelling - a
