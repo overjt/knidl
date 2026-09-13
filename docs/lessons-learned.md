@@ -5716,6 +5716,61 @@ declaring it `u16`/`s16` does not help, because a narrow local is still kept in
 SImode.  So the two halves really are mode-exclusive as written.
 
 
+### 3.345 Audit the epilogue for a return value BEFORE fighting the allocator
+`sub_080b79b8` sat at 108 differing bytes of pure register rotation for a long
+time.  The cause was lesson 4.70 applied one function too late: its epilogue is
+`pop {r4, r5, r6, r7}; pop {r1}; bx r1`, popping the return address into **r1**,
+which means r0 carries a return value and is therefore unavailable as a scratch
+for the whole function.  The draft declared it `void`.  Changing the signature
+to `s32` (with the early exit still spelled `return;`) moved every temp up one
+register and took the residue from 108 to 72 in one compile.  Do the epilogue
+audit for every function in a module up front - it is one `grep` over the
+listing - because a wrong return type looks exactly like an allocator mystery.
+
+### 3.346 Turn the preheader's hoisted invariants into named locals, then pin them
+The recipe that closed `sub_080b79b8` and took `sub_080b6474` from 12 to 3
+differing bytes.  When a candidate is right except for which registers the
+loop preheader uses, the obstacle is that the preheader's contents are
+*compiler temps*: their order is fixed by the movables rule of 3.336 and they
+cannot be named, so neither `register X asm("rN")` nor an `asm` clobber can
+reach them.  The fix is to write each one as an explicit local assigned in the
+ROM's own preheader order:
+
+```c
+    i = 0;                          /* the loop's own biv init            */
+    pmask = gUnk_030023C8;          /* was a hoisted address pseudo       */
+    one = 1;                        /* was a hoisted constant             */
+    m = *pmask;                     /* was a hoisted load                 */
+    cp = &gUnk_0300235C;            /* was a hoisted address pseudo       */
+    do { if (m & (one << i)) (*cp)++; i++; } while (i <= 16);
+```
+
+That alone fixed the order; `register u32 m asm("r3")` then fixed the last
+register and the function matched.  Three rules learned while doing it:
+
+* **real insns always precede hoists in the preheader**, so anything that must
+  come first has to be a real statement and anything that must come last has to
+  stay a hoist;
+* **a `register ... asm()` local is a hard-register set, so loop-invariant
+  motion will not move it** - pinning a variable pins it *inside* the loop.
+  That is the whole reason `sub_080b6474` is stuck at 3 bytes: its `256` needs
+  the pin to get the ROM's scratch-and-copy, and the pin then keeps the
+  assignment inside the loop so the back-edge lands two insns early;
+* **a pool address written as a plain preheader statement gets CSE'd** with an
+  earlier reference to the same symbol (gcse runs before loop), while the same
+  statement written *inside* the loop is hoisted afterwards and keeps its own
+  `ldr rN, =sym`.  So "put it in the preheader" and "give it a fresh pool load"
+  are in tension; `sub_080b6474` needs both for the same variable.
+
+`asm("" ::: "rN")` (3.341) still has its place - it is the only lever for a
+pseudo you cannot name - but a pin on a named local is stronger and does not
+perturb the rest of the function.  And a *pinned local assigned from another
+pinned local* is how to force agbcc's `movs rS, #imm; lsls rS, rS, #n;
+adds rD, rS, #0` scratch-and-copy for a wide constant: `register u16 c asm("r6")`
+assigned `256` produces it, while a plain `s32` local materialises straight into
+its own register.
+
+
 ## 5. Workflow that worked
 
 The canonical per-function loop (pick → m2c first pass → asmdiff iterate →
