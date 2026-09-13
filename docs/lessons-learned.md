@@ -5414,6 +5414,77 @@ the suffix - the *encoding* is the evidence, not the spelling.  This surfaced
 in `tools/symdb_check.py` only because #82's census fix reshuffled its random
 spot-check sample, which means the defect had been latent for six modules.
 
+### 3.330 A constant on the LEFT of `&` changes the loop preheader's hoist order
+`(x >> i) & 1` and `1 & (x >> i)` compile to the same `asrs`/`ands` pair, but
+the shared `1` lands in a different slot of the loop preheader's hoisted
+invariants: written on the right it is materialised LAST, written on the left
+FIRST.  In M34 (#94) that single operand swap - plus writing the flag-array
+subscript inline instead of through a local pointer - closed both
+`sub_080b9424` and `sub_080b94b4`, which had been stuck at six and nine
+differing bytes with every other spelling of the same test.  When the ROM's
+preheader materialises a small constant before the pool addresses, look at
+which side of the `&` it sits on before touching allocation.
+
+### 3.331 An indexed lvalue escapes 3.282's `|= 0xFFFF` fold
+3.282 established that `field |= 0xFFFF` on a 16-bit field folds into a plain
+store.  `arr[i] |= 0xFFFF` does not: the ARRAY_REF keeps the read-modify-write,
+so the ROM's `ldrh; orrs; strh` against a pool-loaded `0x0000FFFF` survives.
+The three near-misses that do NOT work, all tried on `sub_080b902c` before the
+subscript form matched: a walking pointer (`*p |= 0xFFFF`, folds to a bare
+`strh`), a variable holding the constant (`m = 0xFFFF; *p |= m`, keeps the
+`orrs` but adds a copy of `m` at every site, 3.282's cost note), and a
+`volatile` pointer (keeps the `ldrh` but still stores the constant).
+
+### 3.332 Let strength reduction own a pointer step that equals a call argument
+A loop that both passes a constant SIZE to a call and advances a pointer by
+that same constant hoists the constant into a callee-saved register - and then
+spills whatever loses the race.  `WriteSramEx(src, addr, 256); addr += 256;`
+cost `sub_080b7a9c` a second hi register and `sub_080b7800` a stack slot.
+Writing the destination inline as `base + i * 256` and dropping the `addr`
+variable hands the step to `strength_reduce`, which re-materialises `256`
+inside the loop exactly as the ROM does.  The rule generalises: **when a loop
+constant appears both as a call argument and as a pointer delta, express the
+pointer as a function of the induction variable, not as a running total.**
+
+### 3.333 `default:` written FIRST keeps every case body after the dispatch
+With the default arm implicit or last, agbcc inlines the case body adjacent to
+the dispatch tree and the literal pool moves to the end of the function.
+Writing `default: break;` as the FIRST arm emits the tree, then an
+unconditional jump to the end, then the bodies - and the pool lands between
+them, which is what `sub_080b77d4`'s 44 bytes (against 40 for every other
+spelling) are made of.  The dispatch comparisons are identical in both, so a
+switch whose tests already match but whose bodies sit in the wrong place is a
+default-placement problem, not a case-order problem.
+
+### 3.334 A base pointer local assigned BEFORE the task pointer fixes pool-load order
+Throughout M34 the ROM loads the address of an array into a register *before*
+it loads `gUnk_03002490`, then indexes with a field of the task.  Writing
+`p = gUnk_02007D48; t = gUnk_03002490; ... p[t->unk1C]` reproduces that order;
+the natural `gUnk_02007D48[gUnk_03002490->unk1C]` loads the task first.  The
+same local is what keeps a bare symbol in a register when the ROM adds a small
+constant to it at runtime (3.295): `s = &gUnk_02005E00; f = (u8 *)s + 4;`
+gives the ROM's `adds r1, r2, #4`, while `gUnk_02005E00.unk04[i]` folds the 4
+into the load offset.  Inside a LOOP the opposite is true - there the inline
+member expression is the one that matches, because loop-invariant motion folds
+the `+4` into the hoisted pool word (`sub_080b98c0`, `sub_080b9424`).
+
+### 3.335 `(u16)(x >> 16)` is how the ROM spells a high-halfword load
+`ldrh rD, [rB, #2]` on the high half of a `u32` field comes from
+`field >> 16`, not from `((u16 *)&field)[1]` or
+`*(u16 *)((u8 *)&field + 2)`; both cast forms fold the `+2` into a
+symbol-plus-offset pool word instead.  combine narrows the shift to a halfword
+load when the result is stored to a 16-bit destination (`sub_080b84f0`).
+
+### 4.70 A `pop {r1}; bx r1` epilogue means the function returns a value
+agbcc pops the return address into r0 for a `void` function and into r1 when
+r0 is live, so the epilogue alone settles the return type - even when every
+caller ignores the result.  Three M34 functions were void in the first draft
+and only matched once they were given a return: `sub_080b7df4` (returns the
+checksum it just stored), `sub_080b8348` (returns 0 on the early exit and
+falls off the end otherwise - gcc emits nothing for that path, 3.329), and
+`sub_080b6b08`.  The converse is just as useful: a `pop {r0}; bx r0` epilogue
+under a function you wrote as non-void means the return is spurious.
+
 ## 5. Workflow that worked
 
 The canonical per-function loop (pick → m2c first pass → asmdiff iterate →

@@ -1,7 +1,7 @@
 id,start,end,size,functions,ptr_dispatched,blocks,mean_fn,max_fn,pool_pct,ram_cells,jump_tables,anchor_tables,task_types,ext_callers,ext_deps,difficulty,name,evidence
 M01,0x08007300,0x080075B8,0x2B8,1,1,0,0x2B8,0x2B8,16.7,7,1,0,0,0,8,3,main,already landed (c_code)
-M02,0x080075B8,0x0800B920,0x4368,110,15,3,0x9C,0x37C,19.7,161,7,1,5,34,6,3,game mode + screen/asset loader,"class-0 task types #0-2; game-state cells; LZ77UnCompVram x21, HuffUnComp x6; called from AgbMain"
-M03,0x0800B920,0x08010358,0x4A38,83,43,3,0xE4,0x40C,16.0,93,2,0,22,2,6,4,menu / UI task bank,22 class-4 task types #238-259; key auto-repeat + decimal digit buffer; called from AgbMain and the save module
+M02,0x080075B8,0x0800B920,0x4368,110,15,3,0x9C,0x37C,19.7,161,7,1,5,34,10,3,game mode + screen/asset loader,"class-0 task types #0-2; game-state cells; LZ77UnCompVram x21, HuffUnComp x6; called from AgbMain"
+M03,0x0800B920,0x08010358,0x4A38,83,43,3,0xE4,0x40C,16.0,93,2,0,22,2,11,4,menu / UI task bank,22 class-4 task types #238-259; key auto-repeat + decimal digit buffer; called from AgbMain and the save module
 M04,0x08010358,0x080109C8,0x670,7,6,0,0xEB,0x30C,11.2,11,0,0,2,4,0,2,scripted-sequence bank: director + 50 of the 63 scripts,task type #91 (class 1) sub_080103f0 picks a sequence body by gUnk_030023B8 (0-7) and runs it for gUnk_08731F98[id] frames (270-2020); type #92 (class 2) sub_080104f0 dispatches Task.unk18 into the 63 scripts at &gUnk_08731FA8[8]; sub_08010358 spawns type-92 children; sub_08010480 is the A|START skip hook
 M05,0x080109C8,0x08010B38,0x170,1,1,0,0x170,0x170,7.6,2,0,0,0,0,0,2,player_109c8,already landed (c_code)
 M06,0x08010B38,0x08017668,0x6B30,57,57,0,0x1E1,0x7C0,7.0,6,0,0,0,0,4,3,player_10b38,already landed (c_code)
@@ -14,11 +14,11 @@ M12,0x0801A07C,0x0801A3E4,0x368,3,3,0,0x122,0x170,8.7,5,0,0,0,0,1,2,player_1a07c
 M13,0x0801A3E4,0x0801A76C,0x388,1,1,1,0x388,0x388,11.1,4,0,0,0,0,0,2,,
 M14,0x0801A76C,0x0801A8C8,0x15C,3,0,0,0x74,0xA0,19.5,8,0,0,0,13,0,2,player_1a76c,already landed (c_code)
 M15,0x0801A8C8,0x08021B18,0x7250,56,1,4,0x20A,0xB42,20.5,82,0,0,0,17,2,5,terrain / collision query (pure leaf),zero outgoing calls except ArcTan2 x3; 1303 pool refs into the 0x030054E0-0x030055B0 room descriptor; 334 into the 0x100-stride index tables @0x087328F0-0x087339F0
-M16,0x08021B18,0x080296A0,0x7B88,154,24,4,0xCD,0x87A,21.3,161,15,1,1,59,10,6,level / room builder + tilemap upload,writes BG map bases 0x06002000-0x06008000; CpuSet+CpuFastSet x25; 15 jump tables; EWRAM working set 0x02005000-0x0200B080; indexes 0x087E1D58; drives the next module x195
+M16,0x08021B18,0x080296A0,0x7B88,154,24,4,0xCD,0x87A,21.3,161,15,1,1,59,11,6,level / room builder + tilemap upload,writes BG map bases 0x06002000-0x06008000; CpuSet+CpuFastSet x25; 15 jump tables; EWRAM working set 0x02005000-0x0200B080; indexes 0x087E1D58; drives the next module x195
 M17,0x080296A0,0x08030804,0x7164,153,42,4,0xBD,0x844,12.2,82,1,3,17,4,4,3,camera / BG scroll + tilemap streaming,all eight BGxHOFS/VOFS 16.16 shadows; 15 class-3 task types #221-236; task position/draw x18
 M18,0x08030804,0x08037F2A,0x7726,74,41,4,0x19C,0x888,9.9,66,25,0,1,14,17,5,stage manager A,task type #5 (class 1); 17 jump tables; calls the stage support library x151 and the script runner x23
 M19,0x08037F2A,0x0803CD60,0x4E36,27,21,3,0x2DF,0x1000,7.5,33,13,0,0,1,11,4,,
-M20,0x0803CD60,0x08040B40,0x3DE0,78,2,0,0xCB,0xB04,10.3,45,14,0,0,25,8,5,player mode/state machine + stage support services,"PlayerState.unk04/unk05 is a current/previous MODE pair and Task.unk15 selects the script; sub_08040788 is the per-player input latch (gUnk_03002458 = latched state mask, gUnk_030023C0 = latched keys, both zeroed when PlayerState.unk42 & 0x40); sub_08040b40 is a 14-way camera/scroll velocity preset dispatcher; four anchor tables of void(*)(void) coroutine/handler pairs at 0x0873B430/46C/4AC/500"
+M20,0x0803CD60,0x08040B40,0x3DE0,78,2,0,0xCB,0xB04,10.3,45,14,0,0,25,7,5,player mode/state machine + stage support services,"PlayerState.unk04/unk05 is a current/previous MODE pair and Task.unk15 selects the script; sub_08040788 is the per-player input latch (gUnk_03002458 = latched state mask, gUnk_030023C0 = latched keys, both zeroed when PlayerState.unk42 & 0x40); sub_08040b40 is a 14-way camera/scroll velocity preset dispatcher; four anchor tables of void(*)(void) coroutine/handler pairs at 0x0873B430/46C/4AC/500"
 M21,0x08040B40,0x080413A4,0x864,1,0,1,0x864,0x864,12.7,4,2,0,0,9,1,3,,
 M22,0x080413A4,0x0804335C,0x1FB8,28,27,0,0x122,0x400,9.3,17,2,0,0,8,5,2,stage_413a4,already landed (c_code)
 M23,0x0804335C,0x08043654,0x2F8,1,1,1,0x2F8,0x2F8,7.9,4,0,0,0,0,3,2,,
@@ -101,14 +101,27 @@ M99,0x080B4EA8,0x080B5024,0x17C,1,0,0,0x17C,0x17C,10.5,5,1,0,0,2,3,2,hud_b4ea8,a
 M100,0x080B5024,0x080B5670,0x64C,9,0,0,0xB3,0x314,16.4,24,3,0,0,11,4,2,hud_b5024,already landed (c_code)
 M101,0x080B5670,0x080B5840,0x1D0,1,0,1,0x1D0,0x1D0,9.5,5,0,0,0,1,2,2,,
 M102,0x080B5840,0x080B6154,0x914,8,2,0,0x122,0x2B8,16.9,33,1,0,0,2,3,3,hud_b5840,already landed (c_code)
-M103,0x080B6154,0x080B9D0C,0x3BB8,106,26,3,0x90,0x384,16.9,98,0,2,0,12,2,3,save file / SRAM records + options,"WriteSramEx x5, ReadSram x2, sram_driver x7 - the only SRAM user in the bulk; 98 RAM cells; direct REG_BG1HOFS/REG_BG2HOFS writes"
-M104,0x080B9D0C,0x080BDA2C,0x3D20,193,96,2,0x51,0x1E4,15.1,52,6,5,2,3,3,3,game-mode flow + link lobby,"requested/next game state x7, link session state, link-mode flag, number of linked players; called from AgbMain; 193 small functions"
-M105,0x080BDA2C,0x080BF994,0x1F68,57,38,0,0x8D,0x2E8,12.4,17,0,0,1,1,2,1,sub-game: four-slot bomb-pass minigame,"confirmed by #66: task type #95, started from the game-mode flow module and dispatched through the 41-entry anchor table @0x08756668; four players are shuffled into the four slots of gUnk_02006A10[] and a projectile is passed from slot to slot (Task.unk34 0-3, forward while Task.unk28 <= 2 and backward otherwise), the beat length comes from the seven-entry level table @0x08756570, the button window from the five-byte records @0x087565F4, the hand-off flight from the 16.16 parabola p0 + v*t + (a*t*t)/2 in sub_080c061c, and elimination order is written into gUnk_0200B044[] with the out-mask gUnk_0200AF10"
-M106,0x080BF994,0x080C0DE8,0x1454,24,18,0,0xD8,0x314,14.0,7,0,0,0,0,2,2,subgame_bf994,already landed (c_code)
-M107,0x080C0DE8,0x080C1FFC,0x1214,36,33,0,0x80,0x168,10.5,12,0,0,0,2,0,1,subgame_c0de8,already landed (c_code)
-M108,0x080C1FFC,0x080C6420,0x4424,82,27,3,0xD4,0x6B8,10.7,60,2,1,1,2,5,4,FIR-coefficient effect engine,the consumer rom-map section 2 seg 10 predicted: 22 pool refs into lib_misc + 7 into lib_rodata_fir_tables (0x080CFF00 tables); Div x10 / Mod x4 / __divsi3 x5; EWRAM x183
-M109,0x080C6420,0x080CD89C,0x747C,110,70,6,0x10F,0x918,11.1,83,2,5,7,3,6,4,intro / cutscene / ending sequences?,TaskYieldTrampoline x826; 28 compressed_graphics refs; palette fade + BLD shadows; task types #260-264; called from AgbMain and the mode manager
-M110,0x080CD89C,0x080CE520,0xC84,40,24,0,0x50,0x39E,2.5,2,0,0,0,3,1,1,m4a_1,already landed (thumb_code)
-M111,0x080CE520,0x080CEFB4,0xA94,31,0,0,0x57,0x118,14.6,8,0,0,0,7,1,2,m4a_c1,already landed (c_code)
-M112,0x080CEFB4,0x080CF588,0x5D4,4,2,0,0x175,0x474,7.2,1,0,0,0,0,0,2,m4a_cgb,already landed (c_code)
-M113,0x080CF588,0x080CFA4C,0x4C4,19,13,0,0x40,0x158,4.3,2,1,0,0,3,0,1,m4a_ctrl,already landed (c_code)
+M103,0x080B6154,0x080B6A90,0x93C,6,6,1,0x18A,0x2B4,18.4,13,0,1,0,0,1,3,save file / SRAM records + options,"decompiled in #94 (partial) as src/save_b6a90.c/b6e44.c/b77d4.c/b7a9c.c/b7e14.c/b8888.c/b8ea0.c (87 of 105 functions byte-matched, ROM identical around 6 asm holes). Three subsystems share the range: an HBlank wavy-scroll effect driven by the callback cell gUnk_0300003C over the 480-halfword table gUnk_020164A0; the SRAM save file itself - four 256-byte slots at gUnk_0200E600 mirrored to 0x0E000200, each a struct whose 0x70 word is the 28-word additive checksum seeded 0x97538642 (sub_080b7dd0), an erased slot being 28 words of 0x99999999; and the link-play results screen, a class-1 task whose coroutines live at 0x080B9610-0x080B9D0C and whose per-player flags sit in the {count, flags[4], done[4]} record at gUnk_02005E00"
+M104,0x080B6A90,0x080B6B08,0x78,1,1,0,0x78,0x78,36.7,7,0,0,0,0,0,2,save_b6a90,already landed (c_code)
+M105,0x080B6B08,0x080B6E44,0x33C,3,3,1,0x114,0x140,25.6,10,0,0,0,0,0,3,,
+M106,0x080B6E44,0x080B6F38,0xF4,8,0,0,0x1E,0x34,41.0,5,0,0,0,3,0,2,save_b6e44,already landed (c_code)
+M107,0x080B6F38,0x080B77D4,0x89C,4,0,1,0x227,0x384,20.7,46,0,0,0,3,1,4,,
+M108,0x080B77D4,0x080B79B8,0x1E4,5,0,0,0x60,0xE4,9.1,5,0,0,0,4,3,1,save_b77d4,already landed (c_code)
+M109,0x080B79B8,0x080B7A9C,0xE4,1,0,1,0xE4,0xE4,17.5,5,0,0,0,2,0,3,,
+M110,0x080B7A9C,0x080B7DF4,0x358,9,0,0,0x5F,0xC0,9.3,5,0,0,0,8,3,1,save_b7a9c,already landed (c_code)
+M111,0x080B7DF4,0x080B7E14,0x20,1,0,1,0x20,0x20,12.5,1,0,0,0,2,1,1,,
+M112,0x080B7E14,0x080B8694,0x880,11,0,0,0xC5,0x1A4,16.4,19,0,0,0,7,4,3,save_b7e14,already landed (c_code)
+M113,0x080B8694,0x080B8888,0x1F4,1,0,1,0x1F4,0x1F4,12.8,9,0,0,0,1,0,2,,
+M114,0x080B8888,0x080B8918,0x90,1,0,0,0x90,0x90,16.7,3,0,0,0,1,0,2,save_b8888,already landed (c_code)
+M115,0x080B8918,0x080B8EA0,0x588,2,0,1,0x2C4,0x374,12.1,18,0,0,0,3,1,2,,
+M116,0x080B8EA0,0x080B9D0C,0xE6C,52,16,0,0x47,0xC8,15.0,12,0,0,0,2,1,2,save_b8ea0,already landed (c_code)
+M117,0x080B9D0C,0x080BDA2C,0x3D20,193,96,2,0x51,0x1E4,15.1,52,6,5,2,3,3,3,game-mode flow + link lobby,"requested/next game state x7, link session state, link-mode flag, number of linked players; called from AgbMain; 193 small functions"
+M118,0x080BDA2C,0x080BF994,0x1F68,57,38,0,0x8D,0x2E8,12.4,17,0,0,1,1,2,1,sub-game: four-slot bomb-pass minigame,"confirmed by #66: task type #95, started from the game-mode flow module and dispatched through the 41-entry anchor table @0x08756668; four players are shuffled into the four slots of gUnk_02006A10[] and a projectile is passed from slot to slot (Task.unk34 0-3, forward while Task.unk28 <= 2 and backward otherwise), the beat length comes from the seven-entry level table @0x08756570, the button window from the five-byte records @0x087565F4, the hand-off flight from the 16.16 parabola p0 + v*t + (a*t*t)/2 in sub_080c061c, and elimination order is written into gUnk_0200B044[] with the out-mask gUnk_0200AF10"
+M119,0x080BF994,0x080C0DE8,0x1454,24,18,0,0xD8,0x314,14.0,7,0,0,0,0,2,2,subgame_bf994,already landed (c_code)
+M120,0x080C0DE8,0x080C1FFC,0x1214,36,33,0,0x80,0x168,10.5,12,0,0,0,2,0,1,subgame_c0de8,already landed (c_code)
+M121,0x080C1FFC,0x080C6420,0x4424,82,27,3,0xD4,0x6B8,10.7,60,2,1,1,2,5,4,FIR-coefficient effect engine,the consumer rom-map section 2 seg 10 predicted: 22 pool refs into lib_misc + 7 into lib_rodata_fir_tables (0x080CFF00 tables); Div x10 / Mod x4 / __divsi3 x5; EWRAM x183
+M122,0x080C6420,0x080CD89C,0x747C,110,70,6,0x10F,0x918,11.1,83,2,5,7,3,7,4,intro / cutscene / ending sequences?,TaskYieldTrampoline x826; 28 compressed_graphics refs; palette fade + BLD shadows; task types #260-264; called from AgbMain and the mode manager
+M123,0x080CD89C,0x080CE520,0xC84,40,24,0,0x50,0x39E,2.5,2,0,0,0,3,1,1,m4a_1,already landed (thumb_code)
+M124,0x080CE520,0x080CEFB4,0xA94,31,0,0,0x57,0x118,14.6,8,0,0,0,7,1,2,m4a_c1,already landed (c_code)
+M125,0x080CEFB4,0x080CF588,0x5D4,4,2,0,0x175,0x474,7.2,1,0,0,0,0,0,2,m4a_cgb,already landed (c_code)
+M126,0x080CF588,0x080CFA4C,0x4C4,19,13,0,0x40,0x158,4.3,2,1,0,0,3,0,1,m4a_ctrl,already landed (c_code)

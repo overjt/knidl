@@ -9693,7 +9693,7 @@ loc_080c6536:
 	movs	r3, #144
 	lsls	r3, r3, #4
 	b.n	loc_080c6574	@ 0x080C6574
-	.word	0x03002364
+	.word	gUnk_03002364
 	.word	gUnk_03002464
 	.word	gUnk_03001ED8
 	.word	0x0000E0FF
@@ -22995,7 +22995,7 @@ loc_080cd422:
 	.word	0x087583CC
 	.word	0x0875841E
 	.word	gUnk_03001270
-	.word	0x0200EC58
+	.word	gUnk_0200EC58
 	.word	gUnk_03001ED8
 	.word	0x0000FF7F
 	.word	0x0200EC50
