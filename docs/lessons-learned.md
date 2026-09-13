@@ -1225,6 +1225,27 @@ b end` sits between the guards and the literal pool. The second shape is
 `if`, the failure as the fall-through — not a third `if (cy >= h) return 0;`.
 Read the branch condition of the last guard, not just its target.
 
+### 3.358 A zero variable's position among the stores picks its reload temp
+M06's `sub_08021130`/`sub_0802136c` keep a `zero = 0` local in `sl` for one
+`x | 2 | zero` later (3.10's zero-variable shape). Moving it to a hi register
+needs a low scratch that reload picks by rotation (3.39), and the ROM's `movs
+r0,#0; mov sl,r0` vs the candidate's `movs r1,#0; mov sl,r1` was the whole
+4-byte residue. The lever was statement order, not allocation: `unk8 =
+0xFFFF; unk7 = 0; zero = 0;` matches, `unk8 = 0xFFFF; zero = 0; unk7 = 0;`
+does not, although the emitted `mov sl` sits BEFORE the `strb` either way
+(the store's own `movs #0` is a separate rematerialisation). When a hi-reg
+constant copy is off by one register, try moving its assignment past the
+neighbouring stores before touching anything else.
+
+### 3.359 A stored value that is reused is a chained assignment
+`sub_0801c444` computes the actor's room position, stores it to
+`gUnk_03005518` and then adds four offsets to it. `x = expr; gUnk_03005518
+= x;` loads the destination address AFTER the arithmetic; the ROM loads it
+first and keeps `x` in a low register for the adds: `gUnk_03005518 = x =
+expr;` (3.8's "outer address first" applied to a local on the inside).
+Keep `x` as `s32` — the `asr #16` result is already int, and an `s16 x`
+adds a narrowing move and shifts the allocation of everything after it.
+
 ## 4. Splitting ROM ranges into asm (tools/split.py)
 
 ### 4.1 objdump text only round-trips under `.syntax unified`

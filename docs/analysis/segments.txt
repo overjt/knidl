@@ -63,9 +63,17 @@
 0x0801A07C 0x0801A3E4 c_code player_1a07c # src/player_1a07c.c (carved by tools/carve.py)
 0x0801A3E4 0x0801A76C thumb_code game_code_and_rodata_08018b84_08019eec_0801a3e4 [split]
 0x0801A76C 0x0801A8C8 c_code player_1a76c # src/player_1a76c.c (carved by tools/carve.py)
-0x0801A8C8 0x0802069C thumb_code game_code_and_rodata_08018b84_08019eec_0801a3e4_0801a8c8 [split]
+0x0801A8C8 0x0801C30C thumb_code game_code_and_rodata_08018b84_08019eec_0801a3e4_0801a8c8 [split]
+0x0801C30C 0x0801C444 c_code terrain_1c30c # src/terrain_1c30c.c (carved by tools/carve.py)
+0x0801C444 0x0801C51C thumb_code game_code_and_rodata_08018b84_08019eec_0801a3e4_0801a8c8_0801c444 [split]
+0x0801C51C 0x0801C690 c_code terrain_1c51c # src/terrain_1c51c.c (carved by tools/carve.py)
+0x0801C690 0x0801C8DC thumb_code game_code_and_rodata_08018b84_08019eec_0801a3e4_0801a8c8_0801c444_0801c690 [split]
+0x0801C8DC 0x0801C930 c_code terrain_1c8dc # src/terrain_1c8dc.c (carved by tools/carve.py)
+0x0801C930 0x0802069C thumb_code game_code_and_rodata_08018b84_08019eec_0801a3e4_0801a8c8_0801c444_0801c690_0801c930 [split]
 0x0802069C 0x080207A0 c_code terrain_2069c # src/terrain_2069c.c (carved by tools/carve.py)
-0x080207A0 0x080214E0 thumb_code game_code_and_rodata_08018b84_08019eec_0801a3e4_0801a8c8_080207a0 [split]
+0x080207A0 0x08021130 thumb_code game_code_and_rodata_08018b84_08019eec_0801a3e4_0801a8c8_080207a0 [split]
+0x08021130 0x0802136C c_code terrain_21130 # src/terrain_21130.c (carved by tools/carve.py)
+0x0802136C 0x080214E0 thumb_code game_code_and_rodata_08018b84_08019eec_0801a3e4_0801a8c8_080207a0_0802136c [split]
 0x080214E0 0x08021B18 c_code terrain_214e0 # src/terrain_214e0.c (carved by tools/carve.py)
 0x08021B18 0x0803CD60 thumb_code game_code_and_rodata_08018b84_08019eec_0801a3e4_0801a8c8_08021b18 [split]
 0x0803CD60 0x08040B40 c_code stage_3cd60 # src/stage_3cd60.c (carved by tools/carve.py)
