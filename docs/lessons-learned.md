@@ -1194,6 +1194,64 @@ index-ordered either way. Read the block order off the ROM, not the table.
 against a LATER function, which is very hard to read. Declare every local at the
 top of the function body.
 
+### 3.288 A row pointer local hoists the base load above the multiply; inline it
+`idx = y * w; row = &map[idx]; t = row[x].f;` loads `map` BEFORE `muls` and
+the width pseudo then conflicts with the base-address pseudo, so global-alloc
+moves it one register over and every `ldrsh` scratch that reload picks after
+that lands one rotation step off (3.39). The ROM's order is `muls`, THEN the
+base load, THEN the two scalings: `idx = y * w; t = (&map[idx])[x].f;` — the
+product in its own statement and the row pointer folded into the access. The
+same fold, `(&map[idx])[w].f`, reproduces the "cell below" access in M06's
+`sub_080216d8`; a `cell` local only survives when it is reused across a branch
+(`sub_080217dc` keeps `cell[-1]`/`cell[1]`). Diagnostic: a register permutation
+that starts exactly at a `movs rZ,#0; ldrsh` pair right after a base load.
+
+### 3.289 A narrow-returning helper is `int` when its caller compares the raw `r0`
+M06's probes end in `ldrb; lsls #24; asrs #24; bx lr` and look like `s8`
+functions, but `sub_0802069c` compares the result with a bare `cmp r0,#0`.
+With an `s8` prototype agbcc re-extends the return value at the call site
+(`lsls/asrs` before the `cmp`, 4 extra bytes); with `s32` it does not. The
+callee's own extension comes from the `s8` ELEMENT type (`s8 *const tbl[]`,
+`return p[i]`), not from the return type — so a byte-returning leaf that
+matches on its own can still be mis-prototyped; the first caller decides
+(the return-type twin of 3.189).
+
+### 3.290 A fail path BEFORE the pool is a positively-written guard
+`sub_08021a40` and `sub_08021ab4` are the same probe minus one guard, but the
+second range check compiles differently: a40 branches `bcs fail` twice with
+`fail: movs r0,#0` after the body; ab4 branches `bcc ok` and its `movs r0,#0;
+b end` sits between the guards and the literal pool. The second shape is
+`if (cy < h) { ...; return p[off]; } return 0;` — the body inside a positive
+`if`, the failure as the fall-through — not a third `if (cy >= h) return 0;`.
+Read the branch condition of the last guard, not just its target.
+
+### 3.291 A zero variable's position among the stores picks its reload temp
+M06's `sub_08021130`/`sub_0802136c` keep a `zero = 0` local in `sl` for one
+`x | 2 | zero` later (3.10's zero-variable shape). Moving it to a hi register
+needs a low scratch that reload picks by rotation (3.39), and the ROM's `movs
+r0,#0; mov sl,r0` vs the candidate's `movs r1,#0; mov sl,r1` was the whole
+4-byte residue. The lever was statement order, not allocation: `unk8 =
+0xFFFF; unk7 = 0; zero = 0;` matches, `unk8 = 0xFFFF; zero = 0; unk7 = 0;`
+does not, although the emitted `mov sl` sits BEFORE the `strb` either way
+(the store's own `movs #0` is a separate rematerialisation). When a hi-reg
+constant copy is off by one register, try moving its assignment past the
+neighbouring stores before touching anything else.
+
+### 3.292 A stored value that is reused: read the cell back, do not keep a local
+`sub_0801c444` and its six siblings compute the actor's room position,
+store it to `gUnk_03005518` and add four box offsets to it, narrowed into
+16-bit cells. Every local-variable spelling loses: `x = expr; g = x;` loads
+the destination address after the arithmetic; `g = x = expr;` fixes that but
+the narrowed adds come out `load + x` (the `s32` local becomes a
+`(subreg:HI ...)` and the swap rule puts it second, 3.81); an `s16` copy
+restores `x + load` but costs a register and permutes the allocation. The
+ROM's spelling has no local at all: `gUnk_03005518 = expr;` then
+`gUnk_0300550C = gUnk_03005518 + gUnk_0300551C;` - cse folds the re-read into
+the register that was just stored, in the right mode, and the operand order
+falls out. Seven functions (1848 bytes) matched from this one change.
+Diagnostic: a 6-byte residue that is only `adds rD, rA, rB` vs
+`adds rD, rB, rA` on narrowed sums of a value stored a few lines earlier.
+
 ## 4. Splitting ROM ranges into asm (tools/split.py)
 
 ### 4.1 objdump text only round-trips under `.syntax unified`
