@@ -606,6 +606,22 @@ child issues of #35 are created from it. Findings that belong in this document:
   types. The 3 former reload-allocator terminals (`sub_080A78A0`,
   `sub_080A860C`, `sub_080A932C`) fell to the zero-byte hard-liveness
   levers (lessons 3.275-3.278).
+- **M06 (`0x0801A8C8-0x08021B17`) is terrain / collision query (pure leaf).**
+  Decompilation started in #84 (partial, 15/55) with the tail of the module:
+  `src/terrain_214e0.c` (`0x080214E0-0x08021B17`, 14 functions) and
+  `src/terrain_2069c.c` (`0x0802069C-0x080207A0`), ROM-identical. The room
+  descriptor cells the probes read: `gUnk_03005620` x `gUnk_0300561C` map size
+  in 16x16-pixel cells, `gUnk_03005660` -> cell array (4 bytes per cell, byte 3
+  = tile-set index, byte 2 = second attribute), `gUnk_03005508` = pixel offset
+  inside the cell of the last query, `gUnk_03005578`/`gUnk_03005574` = the
+  queried cell's bytes 3/2, `gUnk_03005588`/`gUnk_030055AC` the cell below,
+  `gUnk_03005594`/`gUnk_03005504` the cell to the left, `gUnk_03005510`/
+  `gUnk_0300556C` the cell to the right. The five 32-byte helpers at
+  `0x08021970` index the `0x08733BF0..0x08734BF0` pointer tables by tile set and
+  return the attribute byte at `gUnk_03005508`. The census entry `sub_08021b0e`
+  is the `bx r1` tail of `sub_08021ab4` plus its pool (curated out in
+  `tools/symdb.py`), so the module has 55 real functions. Remaining in asm:
+  `0x0801A8C8-0x0802069B` and `0x080207A0-0x080214DF` (40 functions).
 - **M33 (`0x080B2FE8-0x080B6153`) is HUD / overlay effects (candidate).**
   Decompiled in #97 (partial, 107/108) into `src/hud_b2fe8.c`,
   `hud_b4ea8.c`, `hud_b5024.c`, `hud_b5840.c`; ROM-identical around 1 asm

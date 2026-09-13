@@ -293,6 +293,24 @@ SECTIONS
         KEEP(*(.game_code_and_rodata_08018b84_08019eec_0801a3e4_0801a8c8)) KEEP(*(.game_code_and_rodata_08018b84_08019eec_0801a3e4_0801a8c8.tail))
     } > ROM
 
+    /* terrain_2069c — decompiled to C (src/terrain_2069c.c, carved by tools/carve.py) */
+    .terrain_2069c 0x0802069C : {
+        build/src/terrain_2069c.o(.text)
+    } > ROM
+
+    .game_code_and_rodata_08018b84_08019eec_0801a3e4_0801a8c8_080207a0 0x080207A0 : {
+        KEEP(*(.game_code_and_rodata_08018b84_08019eec_0801a3e4_0801a8c8_080207a0)) KEEP(*(.game_code_and_rodata_08018b84_08019eec_0801a3e4_0801a8c8_080207a0.tail))
+    } > ROM
+
+    /* terrain_214e0 — decompiled to C (src/terrain_214e0.c, carved by tools/carve.py) */
+    .terrain_214e0 0x080214E0 : {
+        build/src/terrain_214e0.o(.text)
+    } > ROM
+
+    .game_code_and_rodata_08018b84_08019eec_0801a3e4_0801a8c8_08021b18 0x08021B18 : {
+        KEEP(*(.game_code_and_rodata_08018b84_08019eec_0801a3e4_0801a8c8_08021b18)) KEEP(*(.game_code_and_rodata_08018b84_08019eec_0801a3e4_0801a8c8_08021b18.tail))
+    } > ROM
+
     /* stage_3cd60 — decompiled to C (src/stage_3cd60.c, carved by tools/carve.py) */
     .stage_3cd60 0x0803CD60 : {
         build/src/stage_3cd60.o(.text)

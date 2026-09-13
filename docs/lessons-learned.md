@@ -1194,6 +1194,37 @@ index-ordered either way. Read the block order off the ROM, not the table.
 against a LATER function, which is very hard to read. Declare every local at the
 top of the function body.
 
+### 3.288 A row pointer local hoists the base load above the multiply; inline it
+`idx = y * w; row = &map[idx]; t = row[x].f;` loads `map` BEFORE `muls` and
+the width pseudo then conflicts with the base-address pseudo, so global-alloc
+moves it one register over and every `ldrsh` scratch that reload picks after
+that lands one rotation step off (3.39). The ROM's order is `muls`, THEN the
+base load, THEN the two scalings: `idx = y * w; t = (&map[idx])[x].f;` — the
+product in its own statement and the row pointer folded into the access. The
+same fold, `(&map[idx])[w].f`, reproduces the "cell below" access in M06's
+`sub_080216d8`; a `cell` local only survives when it is reused across a branch
+(`sub_080217dc` keeps `cell[-1]`/`cell[1]`). Diagnostic: a register permutation
+that starts exactly at a `movs rZ,#0; ldrsh` pair right after a base load.
+
+### 3.289 A narrow-returning helper is `int` when its caller compares the raw `r0`
+M06's probes end in `ldrb; lsls #24; asrs #24; bx lr` and look like `s8`
+functions, but `sub_0802069c` compares the result with a bare `cmp r0,#0`.
+With an `s8` prototype agbcc re-extends the return value at the call site
+(`lsls/asrs` before the `cmp`, 4 extra bytes); with `s32` it does not. The
+callee's own extension comes from the `s8` ELEMENT type (`s8 *const tbl[]`,
+`return p[i]`), not from the return type — so a byte-returning leaf that
+matches on its own can still be mis-prototyped; the first caller decides
+(the return-type twin of 3.189).
+
+### 3.290 A fail path BEFORE the pool is a positively-written guard
+`sub_08021a40` and `sub_08021ab4` are the same probe minus one guard, but the
+second range check compiles differently: a40 branches `bcs fail` twice with
+`fail: movs r0,#0` after the body; ab4 branches `bcc ok` and its `movs r0,#0;
+b end` sits between the guards and the literal pool. The second shape is
+`if (cy < h) { ...; return p[off]; } return 0;` — the body inside a positive
+`if`, the failure as the fall-through — not a third `if (cy >= h) return 0;`.
+Read the branch condition of the last guard, not just its target.
+
 ## 4. Splitting ROM ranges into asm (tools/split.py)
 
 ### 4.1 objdump text only round-trips under `.syntax unified`
