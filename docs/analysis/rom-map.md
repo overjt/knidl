@@ -607,12 +607,19 @@ child issues of #35 are created from it. Findings that belong in this document:
   `sub_080A860C`, `sub_080A932C`) fell to the zero-byte hard-liveness
   levers (lessons 3.275-3.278).
 - **M06 (`0x0801A8C8-0x08021B17`) is terrain / collision query (pure leaf).**
-  Decompilation started in #84 (partial, 21/55): `src/terrain_214e0.c`
+  Decompilation started in #84 (partial, 28/55): `src/terrain_214e0.c`
   (`0x080214E0-0x08021B17`, 14 functions), `src/terrain_21130.c`
   (`sub_08021130`, the player's room probe), `src/terrain_2069c.c`
-  (`sub_0802069c`), `src/terrain_1c30c.c` (`sub_0801c30c`/`sub_0801c3a4`, the
-  per-frame entry points), `src/terrain_1c51c.c` (`sub_0801c51c`/`sub_0801c5c8`,
-  box load and task write-back) and `src/terrain_1c8dc.c`; all ROM-identical. The room
+  (`sub_0802069c`), `src/terrain_1bcac.c` (`0x0801BCAC-0x0801C30B`, the six
+  per-frame entry points `sub_0801bcac`..`sub_0801c230`), `src/terrain_1c30c.c`
+  (`sub_0801c30c`/`sub_0801c3a4`), `src/terrain_1c444.c`, `src/terrain_1c51c.c`
+  (`sub_0801c51c`/`sub_0801c5c8`, box load and task write-back) and
+  `src/terrain_1c8dc.c`; all ROM-identical. The entry points share one body:
+  box load, room-relative position from `Task.unk4C/unk50` (16.16) and the
+  room origin `Task.unk54/unk58` into `gUnk_03005518/gUnk_03005520`, box
+  corners `gUnk_0300550C/gUnk_03005590` (x) and `gUnk_030055A4/gUnk_030055B0`
+  (y), then a probe set chosen by the sign of `gUnk_03005598` (x velocity)
+  and `gUnk_03005514` (y velocity). The room
   descriptor cells the probes read: `gUnk_03005620` x `gUnk_0300561C` map size
   in 16x16-pixel cells, `gUnk_03005660` -> cell array (4 bytes per cell, byte 3
   = tile-set index, byte 2 = second attribute), `gUnk_03005508` = pixel offset
@@ -624,9 +631,9 @@ child issues of #35 are created from it. Findings that belong in this document:
   return the attribute byte at `gUnk_03005508`. The census entry `sub_08021b0e`
   is the `bx r1` tail of `sub_08021ab4` plus its pool (curated out in
   `tools/symdb.py`), so the module has 55 real functions. Remaining in asm:
-  `0x0801A8C8-0x0801C30B`, `0x0801C444-0x0801C51B`, `0x0801C690-0x0801C8DB`,
-  `0x0801C930-0x0802069B`, `0x080207A0-0x0802112F` and `sub_0802136c`
-  (34 functions).
+  `0x0801A8C8-0x0801BCAB` (7), `sub_0801c690`/`sub_0801c7cc`,
+  `0x0801C930-0x0802069B` (12), `0x080207A0-0x0802112F` (2) and
+  `sub_0802136c` (27 functions).
 - **M33 (`0x080B2FE8-0x080B6153`) is HUD / overlay effects (candidate).**
   Decompiled in #97 (partial, 107/108) into `src/hud_b2fe8.c`,
   `hud_b4ea8.c`, `hud_b5024.c`, `hud_b5840.c`; ROM-identical around 1 asm
