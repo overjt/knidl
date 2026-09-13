@@ -5542,6 +5542,16 @@ a 16-bit store; declaring the cell `vu32` forbids that and the ROM's
 second signal: `w = g; w >>= 16;` shifts in place (`ldr r3; lsrs r3, r3`),
 while `t = g; w = t >> 16;` uses two registers as the ROM does.
 
+### 3.339 Reuse a loop variable when the ROM is one register tighter
+`sub_080b8b2c` (884 bytes) came out at 9 differing bytes with three distinct
+loop counters `i`, `j`, `k`, and matched exactly when the last loop reused `i`
+instead of declaring `k`.  Nothing else changed: the three registers the ROM
+assigns to that loop's counter, base copy and cell pointer rotate by one when
+the function has one pseudo more than the original did.  When a long function
+is down to a register rotation in its LAST loop and every instruction is
+already right, count the live locals before touching anything else - the ROM's
+author reused a counter, and so must you.
+
 ## 5. Workflow that worked
 
 The canonical per-function loop (pick → m2c first pass → asmdiff iterate →

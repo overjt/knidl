@@ -145,9 +145,9 @@ Matching decompilation of Kirby: The Amazing Mirror's predecessor, **Kirby: Nigh
   M34 `0x080B6154-0x080B9D0B` (14.9 KiB) landed as `src/save_b6a90.c`,
   `src/save_b63a4.c`, `src/save_b6c40.c`, `src/save_b6e44.c`,
   `src/save_b77d4.c`, `src/save_b7a9c.c`, `src/save_b7df4.c`,
-  `src/save_b7e14.c`, `src/save_b8888.c` and `src/save_b8ea0.c` (**90 of 105
-  functions byte-matched**, `make clean && make compare` ROM-identical around
-  nine asm holes).  The range is three subsystems, not one: an HBlank
+  `src/save_b7e14.c`, `src/save_b8888.c`, `src/save_b8918.c` and
+  `src/save_b8ea0.c` (**92 of 105 functions byte-matched**,
+  `make clean && make compare` ROM-identical around eight asm holes).  The range is three subsystems, not one: an HBlank
   wavy-scroll effect (`gUnk_0300003C` is the HBlank callback cell), the SRAM
   save file proper (four 256-byte slots at `gUnk_0200E600` mirrored to
   `0x0E000200`, each checksummed by the 28-word additive sum seeded

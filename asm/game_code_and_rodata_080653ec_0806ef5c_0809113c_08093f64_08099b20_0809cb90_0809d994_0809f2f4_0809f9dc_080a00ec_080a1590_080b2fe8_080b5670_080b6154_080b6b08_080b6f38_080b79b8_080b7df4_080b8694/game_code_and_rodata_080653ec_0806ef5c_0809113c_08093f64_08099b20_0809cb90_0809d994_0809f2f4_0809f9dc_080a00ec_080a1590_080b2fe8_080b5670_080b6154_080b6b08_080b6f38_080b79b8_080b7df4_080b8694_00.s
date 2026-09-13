@@ -56,7 +56,7 @@ sub_080b8694:
 	movs	r0, r0
 	.word	gUnk_030023AC
 	.word	gUnk_03004D50
-	.word	0x0200EA00
+	.word	gUnk_0200EA00
 .L_080b86ec:
 	cmp	r1, #2
 	beq.n	.L_080b8754	@ 0x080B8754
