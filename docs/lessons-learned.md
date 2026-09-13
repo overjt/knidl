@@ -5485,6 +5485,63 @@ falls off the end otherwise - gcc emits nothing for that path, 3.329), and
 `sub_080b6b08`.  The converse is just as useful: a `pop {r0}; bx r0` epilogue
 under a function you wrote as non-void means the return is spurious.
 
+### 3.336 The four-loop HBlank family: `for (i = 0; i <= 6; i = j) { ...; j = i + 1; ... }`
+M34's `sub_080b6154`/`6290`/`63a4`/`6474` are one body with four sets of
+constants, and all four resisted every ordinary loop spelling until the outer
+loop of the third block was written with the increment as a NAMED temp advanced
+in the `for`'s third clause.  The ROM computes `i + 1` into a fresh register at
+the TOP of the body and copies it back at the bottom (`adds r5, r1, #1` ...
+`adds r1, r5, #0`), which is what `i = j` plus `j = i + 1;` as the body's second
+statement emits; a plain `i++` keeps `i` in one register and increments in
+place.  That one change took `sub_080b63a4` from 51 differing bytes to 10.
+The rest of the recipe, in the order the statements must appear:
+
+```c
+    pe = &gUnk_03001EE0;            /* cell pointers FIRST, in ROM's order */
+    base = gUnk_020164A0;
+    pc = &gUnk_0300101C;
+    p1 = base; ... /* block 1: walking pointer, descending counter */
+    for (m = 136; m < 152; m++)    /* block 2: SUBSCRIPT, not a pointer - */
+        gUnk_020164A0[m] = ...;     /* this is what re-loads the pool word  */
+    for (i = 0; i <= 6; i = j) { k = 2 * i; j = i + 1; ... }
+    vt = base[0] << 16;             /* value into a temp BEFORE the store,  */
+    *pe = vt;                       /* or gcc computes the address first    */
+```
+
+Writing block 2 as a walking pointer (`p2 = &arr[136]; do { *p2 = 0; p2++; }`)
+hoists its base into block 1's preheader; the subscript form keeps the ROM's
+fresh pool load in block 2's own preheader because loop-invariant motion, not
+cse, is what materialises it there (runs after cse1, so nothing merges it).
+
+### 3.337 A pinned copy plus a barrier is how to keep a value in two registers
+`sub_080b7df4` returns the checksum it has just stored, and the ROM keeps it in
+r0 (the return register) while storing from r2.  Every ordinary spelling - a
+temp, a chained assignment, a volatile store, a re-read, a second variable -
+collapses the two into one pseudo.  What reproduces it is a pinned copy with an
+empty barrier on the copy, so gcc cannot coalesce it away:
+
+```c
+    register u32 d asm("r2");
+
+    c = sub_080b7dd0(a);
+    d = c;
+    asm("" : "+r"(d));
+    gUnk_0200E600[a].unk70 = d;
+    return c;
+```
+
+Treat it as a placeholder for a source shape nobody has identified (4.11's
+rule): it is byte-exact and structurally honest, but the pin is doing work the
+original source did some other way.
+
+### 3.338 A `vu32` global keeps `ldr; lsrs #16`; a plain one narrows to `ldrh [.,#2]`
+The mirror of 3.335.  `w = gUnk_03001E94 >> 16;` on a non-volatile `u32`
+global lets combine narrow the load to `ldrh rD, [rB, #2]` when the only use is
+a 16-bit store; declaring the cell `vu32` forbids that and the ROM's
+`ldr r0, [r0]; lsrs r3, r0, #16` survives.  The intermediate register is a
+second signal: `w = g; w >>= 16;` shifts in place (`ldr r3; lsrs r3, r3`),
+while `t = g; w = t >> 16;` uses two registers as the ROM does.
+
 ## 5. Workflow that worked
 
 The canonical per-function loop (pick → m2c first pass → asmdiff iterate →
