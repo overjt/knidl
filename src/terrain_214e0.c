@@ -14,7 +14,8 @@
  *
  * Matching notes (agbcc -O2 -mthumb-interwork -fprologue-bugfix):
  *  - the helpers return int, not s8: callers compare the result without
- *    re-extending it (sub_0802069c);
+ *    re-extending it (sub_0802069c, sub_0801c690); the sign extension comes
+ *    from the s8 element type (lesson 3.289);
  *  - `p = table[i]; return p[j];` orders the pointer load before the index
  *    load; writing table[i][j] in one expression loads the index first;
  *  - the row/column cell access is `(&gUnk_03005660[idx])[x]` with
@@ -26,11 +27,11 @@
 
 
 /* ROM pointer tables: one entry per tile set, each pointing at a byte table. */
-extern u8 *const gUnk_08734BF0[];
-extern u8 *const gUnk_08733BF0[];
-extern u8 *const gUnk_08733FF0[];
-extern u8 *const gUnk_087343F0[];
-extern u8 *const gUnk_087347F0[];
+extern s8 *const gUnk_08734BF0[];
+extern s8 *const gUnk_08733BF0[];
+extern s8 *const gUnk_08733FF0[];
+extern s8 *const gUnk_087343F0[];
+extern s8 *const gUnk_087347F0[];
 extern s8 *const gUnk_087330F0[];
 extern s8 *const gUnk_087328F0[];
 
@@ -241,33 +242,33 @@ s32 sub_080218f8(u32 x, u32 y)
     return gUnk_087330F0[tile][off];
 }
 
-s8 sub_08021970(u16 a)
+s32 sub_08021970(u16 a)
 {
-    u8 *p = gUnk_08734BF0[a];
+    s8 *p = gUnk_08734BF0[a];
     return p[gUnk_03005508];
 }
 
-s8 sub_08021990(u16 a)
+s32 sub_08021990(u16 a)
 {
-    u8 *p = gUnk_08733BF0[a];
+    s8 *p = gUnk_08733BF0[a];
     return p[gUnk_03005508];
 }
 
-s8 sub_080219b0(u16 a)
+s32 sub_080219b0(u16 a)
 {
-    u8 *p = gUnk_08733FF0[a];
+    s8 *p = gUnk_08733FF0[a];
     return p[gUnk_03005508];
 }
 
-s8 sub_080219d0(u16 a)
+s32 sub_080219d0(u16 a)
 {
-    u8 *p = gUnk_087343F0[a];
+    s8 *p = gUnk_087343F0[a];
     return p[gUnk_03005508];
 }
 
-s8 sub_080219f0(u16 a)
+s32 sub_080219f0(u16 a)
 {
-    u8 *p = gUnk_087347F0[a];
+    s8 *p = gUnk_087347F0[a];
     return p[gUnk_03005508];
 }
 
