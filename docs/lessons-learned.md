@@ -5621,6 +5621,88 @@ local.  With `u8 c` you get `adds r0, r4, #1; lsls r0, r0, #24` instead - two
 bytes shorter, and the tell that the local's declared type is wrong even
 though the array it came from is `u8[]` (`sub_080b75a4`, M34).
 
+### 3.341 An empty `asm("" ::: "rN")` is a zero-byte lever on register allocation
+When a candidate is byte-identical except for a register rotation, an empty asm
+with only a **clobber list** costs no code and forbids those hard registers for
+every pseudo live at that point.  Placement is the whole trick:
+
+* **after a call** it acts on the return value and whatever is live across it -
+  `n = Div(...); asm("" ::: "r0", "r1", "r2");` is what forced the ROM's
+  `adds r3, r0, #0` copy of the quotient in `sub_080b72bc` and `sub_080b6f38`,
+  because it makes r0 unusable for the pseudo that receives the result;
+* **inside a loop body** it acts on the loop's own pseudos only -
+  `for (...) { asm("" ::: "r1"); gUnk_0200EC70[i] = n - 4; }` pushed the
+  strength-reduced store pointer off r1 onto the ROM's r2 and closed
+  `sub_080b72bc` (744 bytes) outright.
+
+Two rules learned the hard way: a clobber inside the *innermost hot* loop
+usually forces a spill and makes things much worse (`sub_080b6f38`'s 8x8 copy
+went from 4 to 593 differing bytes), and a clobber only bites pseudos whose
+live range covers it - to move a variable that is live across several loops,
+clobber in a *later* loop where the competing pseudo is already dead.  Prefer
+this over `register X asm("rN")`: the pin reserves the register for the whole
+function and blocks the ROM's reuse of it after the variable dies, which is
+exactly how `sub_080b72bc` got stuck at 10 differing bytes before the clobber
+form took it to zero.
+
+### 3.342 A redundant reload of a base pointer reorders the hoisted pool loads
+`sub_080b6f38` copies `gUnk_02007BF0[i]` into the link-save buffer through a
+nested loop.  Everything matched except the order of the two pool loads hoisted
+out of the outer loop: the ROM loads `&gUnk_0200EC6C` first, the candidate
+loaded `&gUnk_02007BF0` first.  The hoist order follows the order the address
+insns appear in the loop body (3.336's movables rule), and the source pointer's
+address is used first because `src = gUnk_02007BF0[i];` is the outer body's
+first statement.  What fixes it is a **dead-looking assignment of the
+destination base in the outer body, before the source pointer**:
+
+```c
+for (i = 0; i <= 7; i++)
+{
+    d = (u8 *)gUnk_0200EC6C->unk40;   /* overwritten inside the loop */
+    src = gUnk_02007BF0[i];
+    off = i * 16;
+    n = 7;
+    do {
+        d = (u8 *)gUnk_0200EC6C->unk40;   /* the reload the store forces */
+        *(u16 *)(d + off) = *src++;
+        off += 2;
+    } while (--n >= 0);
+}
+```
+
+Dropping either copy breaks it: without the outer one the pool loads swap back,
+without the inner one gcc keeps the pointer live and the loop grows 8 bytes
+(the store through `d` may alias `gUnk_0200EC6C`, so the ROM re-reads it every
+iteration).
+
+### 3.343 Give a loop's byte offset its own name, or it lands in a callee-saved register
+Same function, same loop.  The ROM's inner preheader is
+`src init, dst-offset init, counter init`, and the candidate put the counter
+second because a compiler-generated giv init is appended *after* every real
+preheader insn.  Writing the destination offset as a real variable
+(`off = i * 16;` with `*(u16 *)((u8 *)... + off)` and `off += 2`) puts all three
+in source order - but only if `off` is a **fresh** variable.  Reusing the `j`
+that later loops also use gives it a long live range, so global-alloc hands it a
+callee-saved register (r4) and the ROM's r2/r4 assignment inverts; a
+single-loop local gets the low register the ROM used.  17 -> 8 -> 0 differing
+bytes.
+
+### 3.344 A user variable for a hoisted constant fixes the order but loses the copy
+The open question of 3.336 narrowed but did not close.  `sub_080b6474`'s inner
+loop needs the preheader to materialise `256` *before* `&gUnk_02016494`, and
+the movables list is in body-insn order, so with `*p = 256 - (t = g << 4);` the
+address always comes first.  Writing the constant as a variable assigned at the
+top of the body (`c = 256; t = g << 4; *p = c - t; *q = t + c;`) **does** put it
+first - the residue drops from a 12-byte order flip to a single missing insn -
+but the ROM also copies the constant into a second register
+(`movs r4, #128; lsls r4, r4, #1; adds r6, r4, #0`), and a user variable is a
+single pseudo, so the copy disappears.  Ruled out for producing both at once:
+a second variable (`d = c`), 3.337's pinned copy with and without the barrier,
+pinning either half to r4/r6, and hoisting the assignment to the outer body or
+above the outer loop.  Whatever the original wrote, it is a spelling that keeps
+the constant a *compiler* invariant while still using it before the global.
+
+
 ## 5. Workflow that worked
 
 The canonical per-function loop (pick → m2c first pass → asmdiff iterate →
