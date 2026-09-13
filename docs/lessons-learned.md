@@ -5414,6 +5414,308 @@ the suffix - the *encoding* is the evidence, not the spelling.  This surfaced
 in `tools/symdb_check.py` only because #82's census fix reshuffled its random
 spot-check sample, which means the defect had been latent for six modules.
 
+### 3.330 A constant on the LEFT of `&` changes the loop preheader's hoist order
+`(x >> i) & 1` and `1 & (x >> i)` compile to the same `asrs`/`ands` pair, but
+the shared `1` lands in a different slot of the loop preheader's hoisted
+invariants: written on the right it is materialised LAST, written on the left
+FIRST.  In M34 (#94) that single operand swap - plus writing the flag-array
+subscript inline instead of through a local pointer - closed both
+`sub_080b9424` and `sub_080b94b4`, which had been stuck at six and nine
+differing bytes with every other spelling of the same test.  When the ROM's
+preheader materialises a small constant before the pool addresses, look at
+which side of the `&` it sits on before touching allocation.
+
+### 3.331 An indexed lvalue escapes 3.282's `|= 0xFFFF` fold
+3.282 established that `field |= 0xFFFF` on a 16-bit field folds into a plain
+store.  `arr[i] |= 0xFFFF` does not: the ARRAY_REF keeps the read-modify-write,
+so the ROM's `ldrh; orrs; strh` against a pool-loaded `0x0000FFFF` survives.
+The three near-misses that do NOT work, all tried on `sub_080b902c` before the
+subscript form matched: a walking pointer (`*p |= 0xFFFF`, folds to a bare
+`strh`), a variable holding the constant (`m = 0xFFFF; *p |= m`, keeps the
+`orrs` but adds a copy of `m` at every site, 3.282's cost note), and a
+`volatile` pointer (keeps the `ldrh` but still stores the constant).
+
+### 3.332 Let strength reduction own a pointer step that equals a call argument
+A loop that both passes a constant SIZE to a call and advances a pointer by
+that same constant hoists the constant into a callee-saved register - and then
+spills whatever loses the race.  `WriteSramEx(src, addr, 256); addr += 256;`
+cost `sub_080b7a9c` a second hi register and `sub_080b7800` a stack slot.
+Writing the destination inline as `base + i * 256` and dropping the `addr`
+variable hands the step to `strength_reduce`, which re-materialises `256`
+inside the loop exactly as the ROM does.  The rule generalises: **when a loop
+constant appears both as a call argument and as a pointer delta, express the
+pointer as a function of the induction variable, not as a running total.**
+
+### 3.333 `default:` written FIRST keeps every case body after the dispatch
+With the default arm implicit or last, agbcc inlines the case body adjacent to
+the dispatch tree and the literal pool moves to the end of the function.
+Writing `default: break;` as the FIRST arm emits the tree, then an
+unconditional jump to the end, then the bodies - and the pool lands between
+them, which is what `sub_080b77d4`'s 44 bytes (against 40 for every other
+spelling) are made of.  The dispatch comparisons are identical in both, so a
+switch whose tests already match but whose bodies sit in the wrong place is a
+default-placement problem, not a case-order problem.
+
+### 3.334 A base pointer local assigned BEFORE the task pointer fixes pool-load order
+Throughout M34 the ROM loads the address of an array into a register *before*
+it loads `gUnk_03002490`, then indexes with a field of the task.  Writing
+`p = gUnk_02007D48; t = gUnk_03002490; ... p[t->unk1C]` reproduces that order;
+the natural `gUnk_02007D48[gUnk_03002490->unk1C]` loads the task first.  The
+same local is what keeps a bare symbol in a register when the ROM adds a small
+constant to it at runtime (3.295): `s = &gUnk_02005E00; f = (u8 *)s + 4;`
+gives the ROM's `adds r1, r2, #4`, while `gUnk_02005E00.unk04[i]` folds the 4
+into the load offset.  Inside a LOOP the opposite is true - there the inline
+member expression is the one that matches, because loop-invariant motion folds
+the `+4` into the hoisted pool word (`sub_080b98c0`, `sub_080b9424`).
+
+### 3.335 `(u16)(x >> 16)` is how the ROM spells a high-halfword load
+`ldrh rD, [rB, #2]` on the high half of a `u32` field comes from
+`field >> 16`, not from `((u16 *)&field)[1]` or
+`*(u16 *)((u8 *)&field + 2)`; both cast forms fold the `+2` into a
+symbol-plus-offset pool word instead.  combine narrows the shift to a halfword
+load when the result is stored to a 16-bit destination (`sub_080b84f0`).
+
+### 4.70 A `pop {r1}; bx r1` epilogue means the function returns a value
+agbcc pops the return address into r0 for a `void` function and into r1 when
+r0 is live, so the epilogue alone settles the return type - even when every
+caller ignores the result.  Three M34 functions were void in the first draft
+and only matched once they were given a return: `sub_080b7df4` (returns the
+checksum it just stored), `sub_080b8348` (returns 0 on the early exit and
+falls off the end otherwise - gcc emits nothing for that path, 3.329), and
+`sub_080b6b08`.  The converse is just as useful: a `pop {r0}; bx r0` epilogue
+under a function you wrote as non-void means the return is spurious.
+
+### 3.336 The four-loop HBlank family: `for (i = 0; i <= 6; i = j) { ...; j = i + 1; ... }`
+M34's `sub_080b6154`/`6290`/`63a4`/`6474` are one body with four sets of
+constants, and all four resisted every ordinary loop spelling until the outer
+loop of the third block was written with the increment as a NAMED temp advanced
+in the `for`'s third clause.  The ROM computes `i + 1` into a fresh register at
+the TOP of the body and copies it back at the bottom (`adds r5, r1, #1` ...
+`adds r1, r5, #0`), which is what `i = j` plus `j = i + 1;` as the body's second
+statement emits; a plain `i++` keeps `i` in one register and increments in
+place.  That one change took `sub_080b63a4` from 51 differing bytes to 10.
+The rest of the recipe, in the order the statements must appear:
+
+```c
+    pe = &gUnk_03001EE0;            /* cell pointers FIRST, in ROM's order */
+    base = gUnk_020164A0;
+    pc = &gUnk_0300101C;
+    p1 = base; ... /* block 1: walking pointer, descending counter */
+    for (m = 136; m < 152; m++)    /* block 2: SUBSCRIPT, not a pointer - */
+        gUnk_020164A0[m] = ...;     /* this is what re-loads the pool word  */
+    for (i = 0; i <= 6; i = j) { k = 2 * i; j = i + 1; ... }
+    vt = base[0] << 16;             /* value into a temp BEFORE the store,  */
+    *pe = vt;                       /* or gcc computes the address first    */
+```
+
+Writing block 2 as a walking pointer (`p2 = &arr[136]; do { *p2 = 0; p2++; }`)
+hoists its base into block 1's preheader; the subscript form keeps the ROM's
+fresh pool load in block 2's own preheader because loop-invariant motion, not
+cse, is what materialises it there (runs after cse1, so nothing merges it).
+
+**What is still open on this family** (`sub_080b6474` 12 differing bytes,
+`sub_080b6154` 31): block 3's preheader must materialise the loop-invariant
+`256` BEFORE the loop-invariant `&gUnk_02016494`, and must do it in two
+insns plus a copy (`movs r4, #128; lsls r4, r4, #1; adds r6, r4, #0`).  The
+two halves are individually reachable and mutually exclusive so far:
+
+* the LITERAL in the expressions (`*p = 256 - t; *q = t + 256;`) gives the
+  two-pseudo copy but emits the constant AFTER the address;
+* a VARIABLE assigned in the OUTER loop body (`c = 256;` before the inner
+  `do`) gives the ROM's order but collapses to one pseudo, losing the copy.
+
+**The `agbcc -da` dump settles WHY the copy appears**, which is half the
+answer.  In the expand RTL the constant is already HImode -
+`(set (reg:HI 81) (const_int 256))` feeding
+`(minus:SI (subreg:SI (reg:HI 81)) ...)` - because the destination is a `u16`
+store, and agbcc's HImode move of a constant too large for `movs` needs a
+scratch: `movs rX,#128; lsls rX,#1; adds rY,rX,#0`.  That is the same shape
+`src/early_0de4.c`'s header comment records for its `0xFFFF` mask, where the
+fix was `register u16 mask asm("r2")`.  So the copy is a property of the
+LITERAL (combine can narrow it to HImode); a variable is promoted to SImode
+and synthesises straight into its register with no copy.
+
+**The order is the half still open.**  The dump also shows why: agbcc emits a
+constant's `SET` immediately before the insn that first uses it, and the first
+use is `256 - t`, which is necessarily after `t`'s load of the cell.  Every
+attempt to give the constant an earlier first use either turns it into a
+variable (losing HImode, hence the copy) or changes the emitted code.  Ruled
+out: `c1 = 256; c = c1;` in either order, an `asm("" : "+r"(c))` barrier on
+either, a `register` pin on the source (flips the order back), a pinned copy
+inside the inner loop, an inline-asm `mov`/`add`, mixing a literal and a
+variable across the two expressions, `*p = 256 - (t = ...)`, `(1 << 8)` and
+`0x100` spellings, `u16`/`s16`/`vu16` for the variable, moving the array base
+into or out of the loop, hoisting `t` into the outer body, and two independent
+cell reads (which drops the `t` pseudo, frees a low register and moves the
+cell out of `ip` - four bytes shorter and the reason that variant is 248
+bytes, not 252).
+
+`register u16 c asm("r6")` assigned before the loop gets to **14** differing
+bytes - the copy and the registers are all correct and only the two hoisted
+blocks are swapped - but a pinned variable is never hoisted, so it lands
+before the loop's own preheader instead of inside it.
+
+**Instrumenting `move_movables` settles the order half, as a negative
+result.**  A 12-line `fprintf` in `loop.c` gated on `getenv("MVTRACE")`, built
+with `make -C gcc normal` in `knidl-builder` (3.258's recipe), dumps each
+loop's movables list.  Two facts fall out and they are worth more than the
+function: the list is built by `scan_loop` in **insn order** (appended through
+`last_movable->next`), and `move_movables` walks it forward emitting each with
+`emit_insn_before (..., loop_start)`, so **the preheader order IS the order of
+first use inside the loop** - there is no reordering pass to exploit.  For
+`sub_080b6474` the inner list prints as
+`[copy-of-&gUnk_02016494, (const_int 256)]`, in that order, for every spelling
+tried.  The ROM's preheader is the other way round, so **the ROM's inner loop
+body must use the constant before it touches the cell** - which
+`*p = 256 - t; *q = t + 256;` cannot do, because the subtraction needs `t`.
+The source shape is therefore not the obvious transcription, and no amount of
+statement reordering will find it.  That rules out the whole class; the next
+attempt should look for a different formulation of the two stores (or accept
+the two functions as placeholders) rather than sweeping operand orders.
+
+### 3.337 A pinned copy plus a barrier is how to keep a value in two registers
+`sub_080b7df4` returns the checksum it has just stored, and the ROM keeps it in
+r0 (the return register) while storing from r2.  Every ordinary spelling - a
+temp, a chained assignment, a volatile store, a re-read, a second variable -
+collapses the two into one pseudo.  What reproduces it is a pinned copy with an
+empty barrier on the copy, so gcc cannot coalesce it away:
+
+```c
+    register u32 d asm("r2");
+
+    c = sub_080b7dd0(a);
+    d = c;
+    asm("" : "+r"(d));
+    gUnk_0200E600[a].unk70 = d;
+    return c;
+```
+
+Treat it as a placeholder for a source shape nobody has identified (4.11's
+rule): it is byte-exact and structurally honest, but the pin is doing work the
+original source did some other way.
+
+### 3.338 A `vu32` global keeps `ldr; lsrs #16`; a plain one narrows to `ldrh [.,#2]`
+The mirror of 3.335.  `w = gUnk_03001E94 >> 16;` on a non-volatile `u32`
+global lets combine narrow the load to `ldrh rD, [rB, #2]` when the only use is
+a 16-bit store; declaring the cell `vu32` forbids that and the ROM's
+`ldr r0, [r0]; lsrs r3, r0, #16` survives.  The intermediate register is a
+second signal: `w = g; w >>= 16;` shifts in place (`ldr r3; lsrs r3, r3`),
+while `t = g; w = t >> 16;` uses two registers as the ROM does.
+
+### 3.339 Reuse a loop variable when the ROM is one register tighter
+`sub_080b8b2c` (884 bytes) came out at 9 differing bytes with three distinct
+loop counters `i`, `j`, `k`, and matched exactly when the last loop reused `i`
+instead of declaring `k`.  Nothing else changed: the three registers the ROM
+assigns to that loop's counter, base copy and cell pointer rotate by one when
+the function has one pseudo more than the original did.  When a long function
+is down to a register rotation in its LAST loop and every instruction is
+already right, count the live locals before touching anything else - the ROM's
+author reused a counter, and so must you.
+
+### 3.340 `c++` on an `s8` local is `(c << 24) + (1 << 24)`, on a `u8` it is not
+When the incremented byte is needed BOTH as the stored value and as a signed
+comparison, agbcc computes it once in the shifted domain:
+`lsls r0, r4, #24; movs r3, #128; lsls r3, r3, #17; adds r0, r0, r3` followed
+by `lsrs` for the store and `asrs` for the compare.  That is a **signed** char
+local.  With `u8 c` you get `adds r0, r4, #1; lsls r0, r0, #24` instead - two
+bytes shorter, and the tell that the local's declared type is wrong even
+though the array it came from is `u8[]` (`sub_080b75a4`, M34).
+
+### 3.341 An empty `asm("" ::: "rN")` is a zero-byte lever on register allocation
+When a candidate is byte-identical except for a register rotation, an empty asm
+with only a **clobber list** costs no code and forbids those hard registers for
+every pseudo live at that point.  Placement is the whole trick:
+
+* **after a call** it acts on the return value and whatever is live across it -
+  `n = Div(...); asm("" ::: "r0", "r1", "r2");` is what forced the ROM's
+  `adds r3, r0, #0` copy of the quotient in `sub_080b72bc` and `sub_080b6f38`,
+  because it makes r0 unusable for the pseudo that receives the result;
+* **inside a loop body** it acts on the loop's own pseudos only -
+  `for (...) { asm("" ::: "r1"); gUnk_0200EC70[i] = n - 4; }` pushed the
+  strength-reduced store pointer off r1 onto the ROM's r2 and closed
+  `sub_080b72bc` (744 bytes) outright.
+
+Two rules learned the hard way: a clobber inside the *innermost hot* loop
+usually forces a spill and makes things much worse (`sub_080b6f38`'s 8x8 copy
+went from 4 to 593 differing bytes), and a clobber only bites pseudos whose
+live range covers it - to move a variable that is live across several loops,
+clobber in a *later* loop where the competing pseudo is already dead.  Prefer
+this over `register X asm("rN")`: the pin reserves the register for the whole
+function and blocks the ROM's reuse of it after the variable dies, which is
+exactly how `sub_080b72bc` got stuck at 10 differing bytes before the clobber
+form took it to zero.
+
+### 3.342 A redundant reload of a base pointer reorders the hoisted pool loads
+`sub_080b6f38` copies `gUnk_02007BF0[i]` into the link-save buffer through a
+nested loop.  Everything matched except the order of the two pool loads hoisted
+out of the outer loop: the ROM loads `&gUnk_0200EC6C` first, the candidate
+loaded `&gUnk_02007BF0` first.  The hoist order follows the order the address
+insns appear in the loop body (3.336's movables rule), and the source pointer's
+address is used first because `src = gUnk_02007BF0[i];` is the outer body's
+first statement.  What fixes it is a **dead-looking assignment of the
+destination base in the outer body, before the source pointer**:
+
+```c
+for (i = 0; i <= 7; i++)
+{
+    d = (u8 *)gUnk_0200EC6C->unk40;   /* overwritten inside the loop */
+    src = gUnk_02007BF0[i];
+    off = i * 16;
+    n = 7;
+    do {
+        d = (u8 *)gUnk_0200EC6C->unk40;   /* the reload the store forces */
+        *(u16 *)(d + off) = *src++;
+        off += 2;
+    } while (--n >= 0);
+}
+```
+
+Dropping either copy breaks it: without the outer one the pool loads swap back,
+without the inner one gcc keeps the pointer live and the loop grows 8 bytes
+(the store through `d` may alias `gUnk_0200EC6C`, so the ROM re-reads it every
+iteration).
+
+### 3.343 Give a loop's byte offset its own name, or it lands in a callee-saved register
+Same function, same loop.  The ROM's inner preheader is
+`src init, dst-offset init, counter init`, and the candidate put the counter
+second because a compiler-generated giv init is appended *after* every real
+preheader insn.  Writing the destination offset as a real variable
+(`off = i * 16;` with `*(u16 *)((u8 *)... + off)` and `off += 2`) puts all three
+in source order - but only if `off` is a **fresh** variable.  Reusing the `j`
+that later loops also use gives it a long live range, so global-alloc hands it a
+callee-saved register (r4) and the ROM's r2/r4 assignment inverts; a
+single-loop local gets the low register the ROM used.  17 -> 8 -> 0 differing
+bytes.
+
+### 3.344 A user variable for a hoisted constant fixes the order but loses the copy
+The open question of 3.336 narrowed but did not close.  `sub_080b6474`'s inner
+loop needs the preheader to materialise `256` *before* `&gUnk_02016494`, and
+the movables list is in body-insn order, so with `*p = 256 - (t = g << 4);` the
+address always comes first.  Writing the constant as a variable assigned at the
+top of the body (`c = 256; t = g << 4; *p = c - t; *q = t + c;`) **does** put it
+first - the residue drops from a 12-byte order flip to a single missing insn -
+but the ROM also copies the constant into a second register
+(`movs r4, #128; lsls r4, r4, #1; adds r6, r4, #0`), and a user variable is a
+single pseudo, so the copy disappears.  Ruled out for producing both at once:
+a second variable (`d = c`), 3.337's pinned copy with and without the barrier,
+pinning either half to r4/r6, and hoisting the assignment to the outer body or
+above the outer loop.  Whatever the original wrote, it is a spelling that keeps
+the constant a *compiler* invariant while still using it before the global.
+
+The `-da` dumps pin down both halves.  `aa.i.loop` prints the outer preheader
+as `reg34 = &gUnk_020164A0`, `reg111 = &gUnk_02016494`, `reg114:HI = 256`, so
+the hoist order is the body-insn order and `expand_binop` only forces the
+constant into a register *after* both operands are expanded - the address load
+is always first.  And the copy comes from the mode: the hoisted 256 is a
+`(reg:HI ...)` that combine narrowed out of the u16 store, so reload builds it
+in an SImode scratch and moves it (`movs r4, #128; lsls r4, r4, #1;
+adds r6, r4, #0`), exactly as it does for the `0x1F00` of
+`gUnk_03001ED8 |= 0x1F00;` earlier in the same function.  A user variable is a
+plain SImode pseudo and gcc materialises straight into its register - and
+declaring it `u16`/`s16` does not help, because a narrow local is still kept in
+SImode.  So the two halves really are mode-exclusive as written.
+
+
 ## 5. Workflow that worked
 
 The canonical per-function loop (pick → m2c first pass → asmdiff iterate →

@@ -212,7 +212,7 @@ dispatches, pool density) — a planning aid, not a promise.
 | M31 | `0x080AA338-0x080AE3BB` | 16.1 KiB | 121 | 2 | ** | enemy/object behaviour bank 12 |
 | M32 | `0x080AE3BC-0x080B2FE7` | 19.0 KiB | 129 | 5 | * | enemy/object behaviour bank 13 |
 | M33 | `0x080B2FE8-0x080B6153` | 12.4 KiB | 108 | 5 | *** | HUD / overlay effects? |
-| M34 | `0x080B6154-0x080B9D0B` | 14.9 KiB | 106 | 2 | *** | save file / SRAM records + options |
+| M34 | `0x080B6154-0x080B9D0B` | 14.9 KiB | 105 | 2 | *** | save file / SRAM records + options |
 | M35 | `0x080B9D0C-0x080BDA2B` | 15.3 KiB | 193 | 4 | *** | game-mode flow + link lobby |
 | M36 | `0x080BDA2C-0x080C1FFB` | 17.5 KiB | 117 | 4 | * | sub-game: four-slot bomb-pass minigame - **landed (#66)** |
 | M37 | `0x080C1FFC-0x080C641F` | 17.0 KiB | 82 | 1 | **** | FIR-coefficient effect engine |
@@ -1719,8 +1719,40 @@ below is the pre-decompilation one, kept for the record.
 * **Pool references** IWRAM x185, EWRAM x102, asset_metadata_index x69, game_code_and_rodata x42, VRAM x10, early_58e4 x5.
 * **Suggested batches** `0x080B2FE8` (19 fns), `0x080B37EC` (32 fns), `0x080B447C` (37 fns), `0x080B4E40` (20 fns).
 
-### M34 `0x080B6154-0x080B9D0B` - save file / SRAM records + options
+### M34 `0x080B6154-0x080B9D0B` - save file / SRAM records + options - **landed (#94, partial: 94/105)**
 
+* **Decompiled** into `src/save_b6a90.c`, `save_b6e44.c`, `save_b77d4.c`,
+  `save_b63a4.c`, `save_b6c40.c`, `save_b7a9c.c`, `save_b7df4.c`,
+  `save_b6f38.c`, `save_b72bc.c`, `save_b7e14.c`, `save_b8888.c`,
+  `save_b8918.c`, `save_b8ea0.c` (94 of 105
+  functions byte-matched; `make clean && make compare` ROM-identical around 6
+  asm holes).  **The census had 106 rows**: `0x080B6B36` is the `b.n` that ends
+  `sub_080b6b08`'s first arm, invented by the pool word `0xFFFFF078` at
+  `0x0803DB34` (lesson 4.40, sixth instance); `sub_080b6b08` really runs
+  `0x080B6B08-0x080B6C40`.
+* **What it turned out to be** three subsystems, not one:
+  * an **HBlank wavy-scroll effect** - `gUnk_0300003C` is the HBlank callback
+    cell, `gUnk_02016490` its 0/1/2/3 state, `gUnk_02016494` a frame counter,
+    and `gUnk_020164A0` the 480-halfword scroll table DMA'd to `REG_BG1HOFS` /
+    `REG_BG2HOFS` (`gUnk_0300101C` holds the destination register address);
+  * the **SRAM save file** - four 256-byte slots at `gUnk_0200E600`, mirrored
+    to `0x0E000200` two 256-byte writes at a time.  Slot 3 is the scratch
+    copy.  Each slot's `0x70` word is the additive 28-word checksum seeded
+    `0x97538642` (`sub_080b7dd0`), an erased slot is 28 words of `0x99999999`,
+    and `gUnk_030023E8` indexes the slot with the highest `unk08` generation
+    counter (`sub_080b78e4`).  `sub_080b7af8` writes the `SRAM_V112` signature
+    at `0x080CFE20` to `0x0E000000`;
+  * the **link-play results screen** - a class-1 task whose coroutines occupy
+    `0x080B9610-0x080B9D0C` and dispatch through the 14-entry anchor table
+    `0x08756270` on `Task.unk14`, with per-player state in the
+    `{ s32 count; u8 flags[4]; u8 done[4]; }` record at `gUnk_02005E00` and
+    text drawn through `sub_0800b318`.
+* **11 functions remain in asm**: `sub_080b6154`, `sub_080b6290`,
+  `sub_080b6474`, `sub_080b6570`, `sub_080b67dc`, `sub_080b6b08`,
+  `sub_080b6d04`, `sub_080b75a4`, `sub_080b76a8`, `sub_080b79b8`,
+  `sub_080b8694` (see #94 for the per-function residue).  Six of them are the four-loop HBlank family of 3.336 and its two
+  `gUnk_03001E94` siblings, already down to 12-31 differing bytes of pure
+  allocation.
 * **Size** 14.9 KiB (`0x3bb8`), 106 functions (26 reachable only through pointer tables), mean `0x90`, largest `0x384`, pool words 16.9% of bytes.
 * **Difficulty** 3/6 - 98 distinct RAM cells, 0 jump-table dispatches, 6 functions >= `0x200`.
 * **Seam cost** 0 in / 0 out (local `bl` edges crossing the boundary).
