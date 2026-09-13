@@ -5702,6 +5702,19 @@ pinning either half to r4/r6, and hoisting the assignment to the outer body or
 above the outer loop.  Whatever the original wrote, it is a spelling that keeps
 the constant a *compiler* invariant while still using it before the global.
 
+The `-da` dumps pin down both halves.  `aa.i.loop` prints the outer preheader
+as `reg34 = &gUnk_020164A0`, `reg111 = &gUnk_02016494`, `reg114:HI = 256`, so
+the hoist order is the body-insn order and `expand_binop` only forces the
+constant into a register *after* both operands are expanded - the address load
+is always first.  And the copy comes from the mode: the hoisted 256 is a
+`(reg:HI ...)` that combine narrowed out of the u16 store, so reload builds it
+in an SImode scratch and moves it (`movs r4, #128; lsls r4, r4, #1;
+adds r6, r4, #0`), exactly as it does for the `0x1F00` of
+`gUnk_03001ED8 |= 0x1F00;` earlier in the same function.  A user variable is a
+plain SImode pseudo and gcc materialises straight into its register - and
+declaring it `u16`/`s16` does not help, because a narrow local is still kept in
+SImode.  So the two halves really are mode-exclusive as written.
+
 
 ## 5. Workflow that worked
 
