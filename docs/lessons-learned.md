@@ -5524,15 +5524,38 @@ two halves are individually reachable and mutually exclusive so far:
 * a VARIABLE assigned in the OUTER loop body (`c = 256;` before the inner
   `do`) gives the ROM's order but collapses to one pseudo, losing the copy.
 
-Ruled out for the second half: `c1 = 256; c = c1;` in either order, an
-`asm("" : "+r"(c))` barrier on either, a `register` pin on either (a pin on
-the source flips the order back), a pinned copy inside the inner loop, an
-inline-asm `mov`, mixing a literal and a variable across the two expressions,
-`*p = 256 - (t = ...)`, `(1 << 8)`/`0x100` spellings, and moving the array
-base into or out of the loop.  The lever is likely in how `move_movables`
-decides between moving a `SET reg, const` and hoisting a copy of it - worth
-one `agbcc -da` RTL dump (the 3.258 escalation) rather than more source
-sweeps.
+**The `agbcc -da` dump settles WHY the copy appears**, which is half the
+answer.  In the expand RTL the constant is already HImode -
+`(set (reg:HI 81) (const_int 256))` feeding
+`(minus:SI (subreg:SI (reg:HI 81)) ...)` - because the destination is a `u16`
+store, and agbcc's HImode move of a constant too large for `movs` needs a
+scratch: `movs rX,#128; lsls rX,#1; adds rY,rX,#0`.  That is the same shape
+`src/early_0de4.c`'s header comment records for its `0xFFFF` mask, where the
+fix was `register u16 mask asm("r2")`.  So the copy is a property of the
+LITERAL (combine can narrow it to HImode); a variable is promoted to SImode
+and synthesises straight into its register with no copy.
+
+**The order is the half still open.**  The dump also shows why: agbcc emits a
+constant's `SET` immediately before the insn that first uses it, and the first
+use is `256 - t`, which is necessarily after `t`'s load of the cell.  Every
+attempt to give the constant an earlier first use either turns it into a
+variable (losing HImode, hence the copy) or changes the emitted code.  Ruled
+out: `c1 = 256; c = c1;` in either order, an `asm("" : "+r"(c))` barrier on
+either, a `register` pin on the source (flips the order back), a pinned copy
+inside the inner loop, an inline-asm `mov`/`add`, mixing a literal and a
+variable across the two expressions, `*p = 256 - (t = ...)`, `(1 << 8)` and
+`0x100` spellings, `u16`/`s16`/`vu16` for the variable, moving the array base
+into or out of the loop, hoisting `t` into the outer body, and two independent
+cell reads (which drops the `t` pseudo, frees a low register and moves the
+cell out of `ip` - four bytes shorter and the reason that variant is 248
+bytes, not 252).
+
+`register u16 c asm("r6")` assigned before the loop gets to **14** differing
+bytes - the copy and the registers are all correct and only the two hoisted
+blocks are swapped - but a pinned variable is never hoisted, so it lands
+before the loop's own preheader instead of inside it.  The remaining lever is
+inside `move_movables` itself; instrument it (3.258's RRTRACE recipe) rather
+than sweeping more C.
 
 ### 3.337 A pinned copy plus a barrier is how to keep a value in two registers
 `sub_080b7df4` returns the checksum it has just stored, and the ROM keeps it in
