@@ -31007,7 +31007,7 @@ sub_080299e8:
 	.word	0x03005690
 	.word	gUnk_03002348
 	.word	gUnk_030023E4
-	.word	0x02016C30
+	.word	gUnk_02016C30
 	.thumb_func
 	.global	sub_08029a4c
 sub_08029a4c:

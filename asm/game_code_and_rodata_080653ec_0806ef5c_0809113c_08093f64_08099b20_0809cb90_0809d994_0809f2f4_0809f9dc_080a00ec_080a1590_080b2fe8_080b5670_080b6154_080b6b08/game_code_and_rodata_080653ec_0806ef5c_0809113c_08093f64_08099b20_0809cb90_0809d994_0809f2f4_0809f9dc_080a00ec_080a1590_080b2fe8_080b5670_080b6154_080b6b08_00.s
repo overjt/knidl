@@ -149,8 +149,8 @@ sub_080b6b08:
 	.word	0x000001FF
 	.word	gUnk_030023E4
 	.word	gUnk_03001E94
-	.word	0x087561CC
-	.word	0x02016C30
+	.word	gUnk_087561CC
+	.word	gUnk_02016C30
 	.word	gUnk_020164A0
 	.word	gUnk_03000F8C
 	.word	gUnk_03000B78
