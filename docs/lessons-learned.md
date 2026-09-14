@@ -5931,6 +5931,44 @@ copy that reads it.**  If the residue is "the right instruction through the
 wrong scratch", delete the pin first and steer with a clobber afterwards.
 
 
+### 3.351 `asm("" ::: "r7")` is inert in Thumb: r7 is the frame-pointer register
+Every other low register responds to 3.341's empty-clobber lever, but a clobber
+of **r7** changes nothing at all - the same candidate compiles byte-identically
+with and without it, at any statement, inside or outside a loop.  r7 is Thumb's
+`HARD_FRAME_POINTER_REGNUM`, and `global.c` clears the eliminable registers out
+of the conflict and preference sets (`AND_COMPL_HARD_REG_SET (...,
+eliminable_regset)`), so the clobber never becomes a conflict for any allocno.
+
+That matters because r7 is exactly the register agbcc likes to leave free for
+reload's `mov r7, r8` hi-register copies (3.350).  When a residue is "a
+long-lived pointer sits in r7 where the ROM keeps r7 for scratches", the lever
+has to be indirect: **occupy r7 with a different pseudo** (clobber the register
+that pseudo currently holds, so it moves into r7) rather than trying to evict
+the one that is there.  `sub_080b6b08` is the worked example: clobbering `r6`
+pushes `px` into r7, which in turn pushes `pc3` out of r7 and into `ip` exactly
+as the ROM has it - 56 -> 14 differing bytes - and the residue that is left is
+the r6/r7 pair, which no further clobber can reach.
+
+### 3.352 Iterate the clobber sweep: each round is cheap and they compose
+`asm("" ::: "rN")` inserted at *every* statement boundary and scored with
+`fnmatch.sh` is ~25 compiles a minute per register, so a whole function can be
+swept in a couple of minutes.  What the M34 stragglers showed is that the sweep
+should be **re-run on its own winner**: single clobbers interact, and the score
+falls in steps that one round never finds.  `sub_080b75a4` went
+173 -> 164 -> 117 differing bytes (and from 8 bytes short to the exact 260) over
+three rounds of `r2`, then `r0`, then `r1`, each found by re-sweeping the
+previous best; `sub_080b6b08` went 71 -> 14 the same way.  Stop when a round
+improves by less than a couple of bytes - that is the signal the residue is
+structural (a missing statement, a wrong type) and not an allocation rotation.
+
+Two practical notes on the sweep harness: insert the clobber **inside braces**
+when the target statement is the body of an `if`, or the sweep silently tests a
+different program (the `asm` becomes the `if` body and the real statement
+becomes unconditional); and score `differing + 1000 * |size delta|` so that
+variants which reach the ROM's exact byte count sort above smaller-diff ones
+that are still missing instructions.
+
+
 ## 5. Workflow that worked
 
 The canonical per-function loop (pick → m2c first pass → asmdiff iterate →

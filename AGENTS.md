@@ -156,6 +156,6 @@ Matching decompilation of Kirby: The Amazing Mirror's predecessor, **Kirby: Nigh
   coroutines fill `0x080B9610-0x080B9D0C`).  One census row corrected in
   `tools/symdb.py` (`0x080B6B36`, the sixth `0xFFFFF0xx` pool-word phantom,
   lesson 4.40) and 40 RAM/ROM cells named via `split_config.json`
-  `data_symbols`; new agbcc lessons 3.330-3.350 and 4.70.
+  `data_symbols`; new agbcc lessons 3.330-3.352 and 4.70.
 
 - Next milestones: decompile split/SDK modules to C using the validated per-zone compiler recipe (task system Thumb side, sound driver, then game code); grow `src/` one module at a time with `asmdiff.sh` on the module range.
