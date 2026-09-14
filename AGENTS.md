@@ -144,11 +144,11 @@ Matching decompilation of Kirby: The Amazing Mirror's predecessor, **Kirby: Nigh
 - Save file / SRAM records + options partially decompiled (issue #94): module
   M34 `0x080B6154-0x080B9D0B` (14.9 KiB) landed as `src/save_b6a90.c`,
   `src/save_b63a4.c`, `src/save_b6c40.c`, `src/save_b6e44.c`,
-  `src/save_b6f38.c`, `src/save_b72bc.c`, `src/save_b77d4.c`,
+  `src/save_b6d04.c`, `src/save_b6f38.c`, `src/save_b72bc.c`, `src/save_b77d4.c`,
   `src/save_b79b8.c`, `src/save_b7a9c.c`, `src/save_b7df4.c`,
   `src/save_b7e14.c`, `src/save_b8888.c`, `src/save_b8918.c` and
-  `src/save_b8ea0.c` (**95 of 105 functions byte-matched**,
-  `make clean && make compare` ROM-identical around seven asm holes).  The range is three subsystems, not one: an HBlank
+  `src/save_b8ea0.c` (**96 of 105 functions byte-matched**,
+  `make clean && make compare` ROM-identical around six asm holes).  The range is three subsystems, not one: an HBlank
   wavy-scroll effect (`gUnk_0300003C` is the HBlank callback cell), the SRAM
   save file proper (four 256-byte slots at `gUnk_0200E600` mirrored to
   `0x0E000200`, each checksummed by the 28-word additive sum seeded
@@ -156,6 +156,6 @@ Matching decompilation of Kirby: The Amazing Mirror's predecessor, **Kirby: Nigh
   coroutines fill `0x080B9610-0x080B9D0C`).  One census row corrected in
   `tools/symdb.py` (`0x080B6B36`, the sixth `0xFFFFF0xx` pool-word phantom,
   lesson 4.40) and 40 RAM/ROM cells named via `split_config.json`
-  `data_symbols`; new agbcc lessons 3.330-3.338 and 4.70.
+  `data_symbols`; new agbcc lessons 3.330-3.350 and 4.70.
 
 - Next milestones: decompile split/SDK modules to C using the validated per-zone compiler recipe (task system Thumb side, sound driver, then game code); grow `src/` one module at a time with `asmdiff.sh` on the module range.

@@ -5830,6 +5830,107 @@ residue.  Both halves are now understood; what is still missing is a spelling
 that records the constant first *without* moving the load.
 
 
+### 3.348 `agbcc -da`'s `.loop` dump already prints the movables list - no instrumented build needed
+3.347 built a patched compiler to print `scan_loop`'s movables.  That was
+unnecessary: `loop_dump_stream` prints the same list, and `-da` turns it on.
+`<file>.i.loop` opens each loop with
+
+```
+Loop from 193 to 238: 13 real insns.
+Insn 198: regno 80 (life 1), move-insn savings 1  moved to 299
+Insn 204: regno 82 (life 3), move-insn savings 1  moved to 301
+```
+
+and the lines appear **in the order the movables will be emitted into the
+preheader**, each followed by `moved to <uid>` or `not desirable`.  The whole
+decision is one inequality in `move_movables`:
+
+```c
+threshold * savings * m->lifetime  >=  (moved_once[regno] ? insn_count*2 : insn_count)
+```
+
+with `threshold = (loop_has_call ? 1 : 2) * (1 + n_non_fixed_regs)` and
+`threshold -= 3` after **every** movable it actually moves.  Two consequences
+worth memorising:
+
+* a life-1 movable (an address pseudo whose only use is the load right after
+  it) is hoisted out of any loop smaller than `threshold` real insns - which
+  is every loop in this ROM, so **you cannot make an address stay in the body
+  by making it cheap**;
+* `moved_once` doubles the bar on the second hoist, which is why an invariant
+  of a nested loop occasionally stops at the *inner* preheader.
+
+Measured bounds for the pinned agbcc on this target: a life-1 movable moved at
+`insn_count = 13` and was `not desirable` at `insn_count = 31`, so
+`13 <= threshold < 31`.
+
+The preheader that comes out is always, in order:
+**[real statements, in source order] ++ [movables, in body-insn order] ++
+[`strength_reduce`'s biv/giv inits]** (3.343 for the last part, 3.346 for the
+first).  For a nested loop the inner movables are hoisted into the inner
+preheader first, and the outer pass then re-scans the *outer body*, where the
+inner preheader physically precedes the inner body - so the relative order of
+two inner movables survives both hoists.  That closes the M34 four-loop
+family's open question from the other side: the ROM's
+`[base, 256, &gUnk_02016494]` needs the `256` insn to be generated **before**
+the address insn inside the inner body, and `expand` emits a constant's `SET`
+only when `expand_binop` forces it into a register, i.e. after both operands
+(hence after the load).  No statement order reaches it.
+
+### 3.349 A `vs32` cell reproduces the four-loop HBlank family with no pins at all
+The pinned `sub_080b6474` candidate (3.346, 3 differing bytes) needs
+`register` pins on five locals.  Declaring the cell `extern vs32 gUnk_02016494`
+instead - and writing the inner body as the obvious
+
+```c
+    do {
+        t = gUnk_02016494 << 4;
+        *p = 256 - t;
+        *q = t + 256;
+        q++; p++;
+    } while (--n >= 0);
+```
+
+gives the same 252 bytes with **every instruction and every register correct**
+except the two hoisted preheader entries (12 differing bytes), and not one
+`asm` in the function.  The `volatile` is doing exactly one job: an ordinary
+global load *through a pointer local* is loop-invariant and gets hoisted out of
+the inner loop (which is what forced the `register s32 *xq asm("r1")` pin in
+the old candidate), while `volatile` forbids that and leaves the ROM's
+per-iteration `ldr`.  A *direct* reference to a non-volatile global survives in
+the body anyway (`sub_080b63a4`, which matched), because the stores through
+`u16 *` may alias a `SYMBOL_REF` MEM but not a pseudo-address MEM - so the two
+spellings are not interchangeable.  Prefer the volatile-plus-literal shape as
+the base for any further attempt on `sub_080b6154`/`6290`/`6474`.
+
+### 3.350 Un-pinning the hi-register pointers is what gives the ROM's `mov r7, rN` reloads
+The lever that closed `sub_080b6d04` (M34, 320 bytes), and it inverts the
+usual instinct.  The ROM reads four pointers out of `r8`/`r9`/`sl`/`ip` through
+a low-register copy, and always picks **r7** for that copy.  With the pointers
+written as `register vs32 *pb asm("sl")` the copy is an operand of the move
+pattern, so `local_alloc` gives it the first free low register - r0 - and no
+clobber moves it.  Written as plain locals, the same copy is a *reload*, and
+reload draws from the spill registers ordered by how little the function's
+pseudos use them, which is r7.  17 -> 16 differing bytes, and then:
+
+* the remaining residue was a four-way permutation of the hi registers
+  themselves, fixed by `asm("" ::: "r8", "ip")` placed **after** the loop,
+  where only `pf`/`pb` are still live (3.341: clobber where the competing
+  pseudo is already dead);
+* the tail `gUnk_0300101C = 0x04000018;` shares its address expression with
+  the function's early `gUnk_02016490 == 3` branch, and gcse hoists that
+  address into the **loop preheader** (26 differing bytes).  Spelling that one
+  store through the raw address blocks the sharing; the pool word is identical
+  (4.52), so the cost is style only, and the file says so.
+* `register u32 tw asm("r0")` for the stored word is what puts the pair in the
+  ROM's `ldr r0, =value; ldr r1, =address` order; `asm` clobbers around the
+  statement do not reach those two one-insn pseudos.
+
+Read the whole chain as one rule: **pin a hi register and you also pin the low
+copy that reads it.**  If the residue is "the right instruction through the
+wrong scratch", delete the pin first and steer with a clobber afterwards.
+
+
 ## 5. Workflow that worked
 
 The canonical per-function loop (pick → m2c first pass → asmdiff iterate →
