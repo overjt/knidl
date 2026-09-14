@@ -5877,6 +5877,39 @@ the address insn inside the inner body, and `expand` emits a constant's `SET`
 only when `expand_binop` forces it into a register, i.e. after both operands
 (hence after the load).  No statement order reaches it.
 
+### 3.353 Two plain `int` locals fix the four-loop family's hoist ORDER
+3.336/3.344/3.347/3.348 all concluded that the ROM's inner preheader order
+`[base, 256, &gUnk_02016494]` was unreachable, because `expand_binop` only
+forces a constant into a register after both operands are expanded - so the
+address insn is always generated first and the movables list is always
+`[&g, 256]`.  That is true for every *literal* spelling.  It is not true for a
+variable: writing the inner body as
+
+```c
+    do {
+        c1 = 256;
+        c2 = 256;
+        t = gUnk_02016494 << 4;
+        *p = c1 - t;
+        *q = t + c2;
+        q++; p++;
+    } while (--n >= 0);
+```
+
+with two plain `s32` locals puts the constant's `SET` at the *top* of the body,
+so it is recorded as a movable before the address is, and the preheader comes
+out in the ROM's order with a completely pin-free source (252 bytes, exact
+size, `sub_080b6474`).  The dead-looking `c1`/`c2` cost nothing: they are
+hoisted out of both loops.
+
+What remains is only the copy.  cse merges `c1` and `c2` (same value) into one
+**SImode** movable, and an SImode constant materialises straight into its
+register, while the ROM's `movs r4, #128; lsls r4, r4, #1; adds r6, r4, #0` is
+reload synthesising an **HImode** one with a scratch (3.344).  So the two halves
+are still mode-exclusive - but the order half now has a clean answer instead of
+a proof that it cannot be done, and `sub_080b6154`/`6290`/`6474` should be
+re-attacked from this shape rather than from the pinned one.
+
 ### 3.349 A `vs32` cell reproduces the four-loop HBlank family with no pins at all
 The pinned `sub_080b6474` candidate (3.346, 3 differing bytes) needs
 `register` pins on five locals.  Declaring the cell `extern vs32 gUnk_02016494`
