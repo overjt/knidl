@@ -5936,6 +5936,27 @@ the body anyway (`sub_080b63a4`, which matched), because the stores through
 spellings are not interchangeable.  Prefer the volatile-plus-literal shape as
 the base for any further attempt on `sub_080b6154`/`6290`/`6474`.
 
+**Cast the pointer, not the declaration.** Making the whole cell `vs32` costs
+four bytes elsewhere in `sub_080b6290`, because the entry test reads it three
+times (`== 16`, `<= 13`, `13 - x`) and volatile forbids sharing those loads.
+Declaring the cell normally and reading the *loop's* copy through a
+`vs32 *` local is what you want:
+
+```c
+    vs32 *xp;
+    ...
+    xp = (vs32 *)&gUnk_02016494;      /* only this load is volatile */
+    do { *p1 = -*xp << 4; p1++; } while (--n >= 0);
+```
+
+That is worth more than the byte it saves: the previous candidate had to hold
+the load down with an `asm("" ::: "r1")` *inside* the loop, and that clobber was
+also forbidding r1 to the loop counter - which is the register the ROM uses for
+it.  Removing the clobber this way took `sub_080b6290` from 11 to 10 differing
+bytes and left a three-register rotation as the only residue.  **A clobber that
+is holding a load in place is nearly always costing you a register somewhere
+else; prefer a volatile-qualified read.**
+
 ### 3.350 Un-pinning the hi-register pointers is what gives the ROM's `mov r7, rN` reloads
 The lever that closed `sub_080b6d04` (M34, 320 bytes), and it inverts the
 usual instinct.  The ROM reads four pointers out of `r8`/`r9`/`sl`/`ip` through
