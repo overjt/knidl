@@ -5771,6 +5771,65 @@ assigned `256` produces it, while a plain `s32` local materialises straight into
 its own register.
 
 
+### 3.347 An MVTRACE-instrumented agbcc prints the movable list: stop guessing hoist order
+When a residue is "the preheader has the right instructions in the wrong order",
+the question is always *what order did `scan_loop` record the movables in*, and
+that is one `fprintf` away.  Clone the pinned compiler, add a print at the top
+of `move_movables`' describe loop, and build it inside the repo image:
+
+```sh
+git clone --depth 1 https://github.com/jiangzhengwenjz/agbcc agbcc-src
+# in gcc/loop.c, inside `for (m = movables; m; m = m->next) {`:
+#   if (getenv ("MVTRACE"))
+#     { fprintf (stderr, "MV insn=%d regno=%d mode=%s life=%d%s%s%s%s%s src=",
+#                INSN_UID (m->insn), m->regno,
+#                GET_MODE_NAME (GET_MODE (m->set_dest)), m->lifetime,
+#                m->cond ? " cond" : "", m->force ? " force" : "",
+#                m->global ? " global" : "", m->partial ? " partial" : "",
+#                m->done ? " done" : "");
+#       if (m->match) fprintf (stderr, "[match insn=%d] ", INSN_UID (m->match->insn));
+#       print_rtl (stderr, m->set_src); fprintf (stderr, "\n"); }
+docker run --rm -v "$PWD/agbcc-src":/src -w /src knidl-builder \
+    bash -c 'make -C gcc -j1'          # -j1: genrtl.h generation races under -j
+MVTRACE=1 agbcc-src/gcc/agbcc -O2 -mthumb-interwork -fprologue-bugfix -o /dev/null x.i
+```
+
+Each loop prints its list innermost-first, so the **last group is the outermost
+loop** - that is the one whose order you are matching.  A `done` flag with
+`[match insn=N]` means `combine_movables` folded this movable into an earlier
+one; the mode rule there is that two movables of the same constant merge only
+if the **earlier one is the wider or equal mode**, so an SImode 256 swallows a
+later HImode 256 but not the other way round.
+
+What it settled for M34's four-loop family: the list for `*p = 256 - (t = g << 4);
+*q = t + 256;` is always `[&g, 256:HI]`, in every spelling tried - the address
+insn is generated with the load and the constant only afterwards, so no
+rearrangement of the two stores can flip it.  The ROM needs `[base, 256, &g]`.
+The one shape that produces it is to **rotate the load to the bottom of the
+body** and seed the value before the loop:
+
+```c
+    t = gUnk_02016494 << 4;              /* before the outer loop */
+    for (i = 0; i <= 6; i = j)
+    {
+        ...
+        n = 7;
+        do {
+            *p = 256 - t;                /* 256 is now the first movable      */
+            *q = t + 256;
+            q++; p++;
+            t = gUnk_02016494 << 4;      /* address is the second movable     */
+        } while (--n >= 0);
+    }
+```
+
+which prints `[base, 256:HI, &g]` - exactly the ROM - and the dead seed is
+eliminated.  The catch is that the emitted body is then rotated by three insns
+relative to the ROM, so it trades a 12-byte order residue for a 29-byte body
+residue.  Both halves are now understood; what is still missing is a spelling
+that records the constant first *without* moving the load.
+
+
 ## 5. Workflow that worked
 
 The canonical per-function loop (pick → m2c first pass → asmdiff iterate →
