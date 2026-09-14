@@ -1719,12 +1719,12 @@ below is the pre-decompilation one, kept for the record.
 * **Pool references** IWRAM x185, EWRAM x102, asset_metadata_index x69, game_code_and_rodata x42, VRAM x10, early_58e4 x5.
 * **Suggested batches** `0x080B2FE8` (19 fns), `0x080B37EC` (32 fns), `0x080B447C` (37 fns), `0x080B4E40` (20 fns).
 
-### M34 `0x080B6154-0x080B9D0B` - save file / SRAM records + options - **landed (#94, partial: 95/105)**
+### M34 `0x080B6154-0x080B9D0B` - save file / SRAM records + options - **landed (#94, partial: 96/105)**
 
-* **Decompiled** into `src/save_b6a90.c`, `save_b6e44.c`, `save_b77d4.c`,
-  `save_b63a4.c`, `save_b6c40.c`, `save_b7a9c.c`, `save_b7df4.c`,
-  `save_b6f38.c`, `save_b72bc.c`, `save_b79b8.c`, `save_b7e14.c`,
-  `save_b8888.c`, `save_b8918.c`, `save_b8ea0.c` (95 of 105
+* **Decompiled** into `src/save_b6a90.c`, `save_b6d04.c`, `save_b6e44.c`,
+  `save_b77d4.c`, `save_b63a4.c`, `save_b6c40.c`, `save_b7a9c.c`,
+  `save_b7df4.c`, `save_b6f38.c`, `save_b72bc.c`, `save_b79b8.c`,
+  `save_b7e14.c`, `save_b8888.c`, `save_b8918.c`, `save_b8ea0.c` (96 of 105
   functions byte-matched; `make clean && make compare` ROM-identical around 6
   asm holes).  **The census had 106 rows**: `0x080B6B36` is the `b.n` that ends
   `sub_080b6b08`'s first arm, invented by the pool word `0xFFFFF078` at
