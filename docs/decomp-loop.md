@@ -197,6 +197,26 @@ Useful flags: `--stop-on-zero` (halt on match), `--better-only`,
 `--print-diffs` (show what changed per improvement), `--debug` (dumps compiled
 base object). Full CLI: `tools/decomp-permuter/USAGE.md`.
 
+### 4b. Register residues: tools/clobber_sweep.py
+
+When the candidate is the right size and the right instructions but the wrong
+registers, the permuter is the wrong tool — it mutates source shape, not
+allocation.  Use the empty-clobber lever instead
+(`docs/lessons-learned.md` §3.341, §3.350–§3.352):
+
+```sh
+python3 tools/clobber_sweep.py pending/<mod>/cand.c 0x080B75A4 0x080B76A8 6
+```
+
+It inserts `asm("" ::: "rN")` at every statement boundary, keeps the best
+scoring insertion (score = differing bytes + 1000x |size delta|, so exact size
+always wins), and repeats on its own winner — clobbers compose, and one round
+rarely finds the pair that closes a function.  The candidate must live inside
+the repo and carry a `/* --- functions --- */` marker with a single function
+after it.  Stop when a round gains less than a couple of bytes: that is the
+signal the residue is structural (a missing statement, a wrong type, a wrong
+return type — §4.70) rather than an allocation rotation.
+
 ## 5. Land it with tools/carve.py
 
 Once fnmatch says MATCH, carving the range out of its asm segment is

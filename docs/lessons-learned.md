@@ -5952,7 +5952,8 @@ the r6/r7 pair, which no further clobber can reach.
 ### 3.352 Iterate the clobber sweep: each round is cheap and they compose
 `asm("" ::: "rN")` inserted at *every* statement boundary and scored with
 `fnmatch.sh` is ~25 compiles a minute per register, so a whole function can be
-swept in a couple of minutes.  What the M34 stragglers showed is that the sweep
+swept in a couple of minutes.  `tools/clobber_sweep.py <file.c> <start> <end>
+[rounds]` does exactly that and re-runs itself on its own winner.  What the M34 stragglers showed is that the sweep
 should be **re-run on its own winner**: single clobbers interact, and the score
 falls in steps that one round never finds.  `sub_080b75a4` went
 173 -> 164 -> 117 differing bytes (and from 8 bytes short to the exact 260) over
