@@ -126,6 +126,8 @@ $(BUILD_DIR)/src/%.o: src/%.c
 	  { cat; printf '.text\n\t.align\t2, 0\n'; } | \
 	  $(AS) -mcpu=arm7tdmi -o $@ -
 
+$(BUILD_DIR)/src/player_18e14.o: src/player_18e14.inc
+
 # Header smoke test (issue #27): compile a TU that touches every
 # include/gba/*.h header with both validated compilers.  Compile-only —
 # the objects are never linked into the ROM.
