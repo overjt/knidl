@@ -6038,6 +6038,35 @@ variants which reach the ROM's exact byte count sort above smaller-diff ones
 that are still missing instructions.
 
 
+### 3.354 Assign a pool address INSIDE the loop and loop.c hoists it; assign it outside and gcse copies it
+The move that closed `sub_080b6290`, and the cleanest statement so far of when
+an address becomes a hoist and when it becomes a copy.
+
+Both spellings put the address in a register before the loop.  They are not the
+same insn, and they are not in the same place:
+
+* `xp = &g;` **before** the loop is an ordinary statement, so gcse sees the
+  address as globally available, inserts `reg_new = reg_old` on the *entry
+  edge* of the block that needs it, and substitutes the new pseudo into the
+  uses in that block - including the entry test's load, which then reads
+  through the copy instead of the pool pseudo.  That was `sub_080b6290`'s last
+  differing byte: `ldr r2, [r4, #0]` where the ROM has `ldr r2, [r3, #0]`.
+* `xp = &g;` **inside** the loop is loop-invariant, so `move_movables` hoists it
+  into the preheader as a fresh `ldr rN, =g` (3.346) and gcse never touches the
+  entry block at all.
+
+So when a residue is "the right instruction reading through the wrong one of two
+registers that both hold the address", move the assignment *into* the loop.
+
+The same function needed the second half of the trick in the same loop: its
+first block is the **subscript** form, not a walking pointer.  Read 3.348's
+preheader ordering backwards to see it - the ROM's `mov r2, ip` sits *after* the
+hoisted address copy, and real statements always precede hoists, so `mov r2, ip`
+cannot be a source-level `p1 = base;`.  It is `strength_reduce`'s giv init for
+`base[n]`.  Between them the two changes took the function from 1 differing byte
+to a MATCH, and from four `asm` statements down to none.
+
+
 ## 5. Workflow that worked
 
 The canonical per-function loop (pick → m2c first pass → asmdiff iterate →
