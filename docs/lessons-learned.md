@@ -4852,6 +4852,20 @@ levers are source-level:
 The dump also tells you when to STOP: a pseudo allocated 85th of 85 with
 density 10/556 gets whatever is left, and no source spelling will move it.
 
+**Count conflicts, not just references.** The priority formula decides the
+*order*; the conflict graph decides what is still free when a pseudo's turn
+comes, and a shared loop counter is the usual way a draft invents a conflict
+the ROM does not have.  M34's `sub_080b6154` and `sub_080b6290` both have three
+loops; the ROM gives the first two loops' counter and the outer index of the
+third the **same** hard register (they never overlap) and the third loop's inner
+counter a different one (it is live where the outer index is).  Writing one `n`
+for all three makes it conflict with the index, so it loses r1, and every low
+register downstream rotates.  Splitting it into `n` for loops 1-2 and `n2` for
+loop 3's inner body took `sub_080b6290` from 10 to 5 differing bytes and
+`sub_080b6154` from 11 to 9 - and it is the *opposite* move to 3.339, where the
+ROM's author had reused a counter.  Read the ROM's registers first: two loops
+that share a register are one variable, two that do not are two.
+
 ### 4.68 cse keeps a constant for a REGISTER destination and substitutes for MEMORY
 Three related rules, all from M11 (#85), that together explain why a chain of
 identical small constants sometimes reuses a register and sometimes
