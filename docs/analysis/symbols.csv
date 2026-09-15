@@ -4629,8 +4629,7 @@ vma,size,isa,evidence,name
 0x080B6570,0x26C,thumb,rom-pointer,sub_080b6570
 0x080B67DC,0x2B4,thumb,rom-pointer,sub_080b67dc
 0x080B6A90,0x78,thumb,rom-pointer,sub_080b6a90
-0x080B6B08,0x2E,thumb,rom-pointer,sub_080b6b08
-0x080B6B36,0x10A,thumb,bl-target,sub_080b6b36
+0x080B6B08,0x138,thumb,rom-pointer,sub_080b6b08
 0x080B6C40,0xC4,thumb,rom-pointer,sub_080b6c40
 0x080B6D04,0x140,thumb,rom-pointer,sub_080b6d04
 0x080B6E44,0x1C,thumb,bl-target,sub_080b6e44

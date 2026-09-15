@@ -1045,3 +1045,22 @@ child issues of #35 are created from it. Findings that belong in this document:
   the FIR tables, and it contains the `0x080C2580-0x080C4FE8` functions named
   there); the `gSramIdString` consumer at `0x080B7AF8` is the save module
   `0x080B6154-0x080B9D0B`, the only `WriteSramEx`/`ReadSram` caller in seg 7.
+- **The save file is four 256-byte slots at `gUnk_0200E600`, mirrored to
+  `0x0E000200`** (M34, #94).  `sub_080b7a9c` writes one slot as two 256-byte
+  `WriteSramEx` calls to `0x0E000200 + slot * 512`, so slot `n` occupies SRAM
+  `[0x0E000200 + 512n, +512)`; slot 3 is the scratch copy that
+  `sub_080b83b8` fills from `gUnk_030023E8`'s slot before a write.  Each slot's
+  `0x70` word is the additive 28-word checksum seeded `0x97538642`
+  (`sub_080b7dd0`), an erased slot is 28 words of `0x99999999`
+  (`sub_080b7d94`), and `gUnk_030023E8` tracks the slot with the highest
+  generation counter at `0x08` (`sub_080b78e4`).  The `SRAM_V112` signature at
+  `0x080CFE20` goes to `0x0E000000` (`sub_080b7af8`) and a second 0x7800-byte
+  region at `0x0E000800` mirrors `gUnk_0200EC80` (`sub_080b8348`/`sub_080b8374`).
+- **`gUnk_0300003C` is the HBlank callback cell** (M34, #94): the save module's
+  wavy-scroll effect installs `sub_080b60e8`/`sub_080b6a90` in it, keeps its
+  state in `gUnk_02016490` (0/1/2/3) and its frame counter in `gUnk_02016494`,
+  builds the scroll table in `gUnk_020164A0` and puts the destination I/O
+  address (`REG_BG1HOFS` `0x04000014` or `REG_BG2HOFS` `0x04000018`) in
+  `gUnk_0300101C`.  This is one of the twenty `0x04000000` references noted
+  above.
+

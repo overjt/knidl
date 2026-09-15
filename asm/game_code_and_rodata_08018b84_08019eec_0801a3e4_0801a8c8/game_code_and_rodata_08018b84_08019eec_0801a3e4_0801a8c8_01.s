@@ -18950,7 +18950,7 @@ loc_0803323c:
 	.word	0xFFFFF72E
 	.word	0x0873CF9C
 	.word	gUnk_02005550
-	.word	0x02005E00
+	.word	gUnk_02005E00
 	.word	gUnk_03000F98
 	.global	loc_080332a8
 loc_080332a8:

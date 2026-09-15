@@ -363,6 +363,17 @@ FALSE_POSITIVES = {
     # 0x0801A3E4-0x0801A76C (0x388).
     0x0801A41A,
 
+    # --- M34 (issue #94), one row the reachability sweep dropped ---
+    # 0x080B6B36 is the `b.n loc_080b6c02` that ends sub_080b6b08's first arm,
+    # sitting immediately in front of that function's own literal pool: no
+    # prologue, not 4-aligned, and the preceding entry's claimed size (0x2E) is
+    # not a multiple of 4 - the pair of properties from lesson 4.40.  Its only
+    # evidence is one `bl` whose SITE, 0x0803DB34, is a literal-pool word
+    # (0xFFFFF078, inside the landed src/stage_3cd60.c range) decoding as a bl
+    # pair: 0x0803DB38 + 0x78FFE = 0x080B6B36 exactly.  sub_080b6b08 really
+    # runs 0x080B6B08-0x080B6C40 (0x138).
+    0x080B6B36,
+
     # --- M32 (issue #73), one row the reachability sweep dropped ---
     # 0x080B1AFA is the second halfword of the `bl TaskYieldTrampoline` at
     # 0x080B1AF8, inside sub_080b1a1c's second yield loop.  The "bl edge" the
