@@ -142,7 +142,8 @@
 0x080B5024 0x080B5670 c_code hud_b5024 # src/hud_b5024.c (carved by tools/carve.py)
 0x080B5670 0x080B5840 thumb_code game_code_and_rodata_080653ec_0806ef5c_0809113c_08093f64_08099b20_0809cb90_0809d994_0809f2f4_0809f9dc_080a00ec_080a1590_080b2fe8_080b5670 [split]
 0x080B5840 0x080B6154 c_code hud_b5840 # src/hud_b5840.c (carved by tools/carve.py)
-0x080B6154 0x080B63A4 thumb_code game_code_and_rodata_080653ec_0806ef5c_0809113c_08093f64_08099b20_0809cb90_0809d994_0809f2f4_0809f9dc_080a00ec_080a1590_080b2fe8_080b5670_080b6154 [split]
+0x080B6154 0x080B6290 thumb_code game_code_and_rodata_080653ec_0806ef5c_0809113c_08093f64_08099b20_0809cb90_0809d994_0809f2f4_0809f9dc_080a00ec_080a1590_080b2fe8_080b5670_080b6154 [split]
+0x080B6290 0x080B63A4 c_code save_b6290 # src/save_b6290.c (carved by tools/carve.py)
 0x080B63A4 0x080B6474 c_code save_b63a4 # src/save_b63a4.c (carved by tools/carve.py)
 0x080B6474 0x080B6A90 thumb_code game_code_and_rodata_080653ec_0806ef5c_0809113c_08093f64_08099b20_0809cb90_0809d994_0809f2f4_0809f9dc_080a00ec_080a1590_080b2fe8_080b5670_080b6154_080b6474 [split]
 0x080B6A90 0x080B6B08 c_code save_b6a90 # src/save_b6a90.c (carved by tools/carve.py)
