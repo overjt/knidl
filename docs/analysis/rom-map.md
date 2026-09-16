@@ -1547,7 +1547,9 @@ child issues of #35 are created from it. Findings that belong in this document:
 - **The `lib_misc`/`lib_rodata_fir_tables` consumer predicted in §2 seg 10 is
   one module**, `0x080C1FFC-0x080C641F` (22 pool refs into `lib_misc`, 7 into
   the FIR tables, and it contains the `0x080C2580-0x080C4FE8` functions named
-  there); the `gSramIdString` consumer at `0x080B7AF8` is the save module
+  there). Its signed divide-by-two helper `sub_080c6258`
+  (`0x080C6258-0x080C625F`) is decompiled in `src/sub_080c6258.c`; the
+  `gSramIdString` consumer at `0x080B7AF8` is the save module
   `0x080B6154-0x080B9D0B`, the only `WriteSramEx`/`ReadSram` caller in seg 7.
 - **The save file is four 256-byte slots at `gUnk_0200E600`, mirrored to
   `0x0E000200`** (M34, #94).  `sub_080b7a9c` writes one slot as two 256-byte

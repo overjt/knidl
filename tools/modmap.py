@@ -90,6 +90,11 @@ MODULE_MIN = 0x3000
 BLOCK_MAX = 0x2000      # fine granularity: one decompilation batch (~8 KiB)
 BLOCK_MIN = 0x0800
 
+# Reviewed boundaries that must survive an interior c_code carve.  Without
+# this cut, carving sub_080c6258 makes the remaining 0x080C6260 tail absorb
+# the separate intro/cutscene module that starts at 0x080C6420.
+FROZEN_MODULE_BOUNDARIES = {0x080C6420}
+
 # ROM task-type table (rom-map section 6): 8-byte entries
 # `{u8 class; u8 pad[3]; u32 entry}`.  The second word is the task body's Thumb
 # entry point, not a flag word: every one of the 266 entries points at an
@@ -112,7 +117,7 @@ WAVES = {
     0x08021B18: 4, 0x080296A0: 4, 0x08030804: 4, 0x08036280: 4, 0x080449C8: 4,
     0x08047FE8: 4, 0x0804CC7C: 4, 0x08053AF4: 4,
     0x080075B8: 5, 0x0800B920: 5, 0x080B2FE8: 5, 0x080B6154: 5, 0x080B9D0C: 5,
-    0x080C1FFC: 5, 0x080C6420: 5,
+    0x080C1FFC: 5, 0x080C6260: 5, 0x080C6420: 5,
 }
 
 WAVE_NAMES = {
@@ -272,6 +277,8 @@ MODULE_NAMES = {
                  "confirmed by #66: task type #95, started from the game-mode flow module and dispatched through the 41-entry anchor table @0x08756668; four players are shuffled into the four slots of gUnk_02006A10[] and a projectile is passed from slot to slot (Task.unk34 0-3, forward while Task.unk28 <= 2 and backward otherwise), the beat length comes from the seven-entry level table @0x08756570, the button window from the five-byte records @0x087565F4, the hand-off flight from the 16.16 parabola p0 + v*t + (a*t*t)/2 in sub_080c061c, and elimination order is written into gUnk_0200B044[] with the out-mask gUnk_0200AF10"),
     0x080C1FFC: ("FIR-coefficient effect engine",
                  "the consumer rom-map section 2 seg 10 predicted: 22 pool refs into lib_misc + 7 into lib_rodata_fir_tables (0x080CFF00 tables); Div x10 / Mod x4 / __divsi3 x5; EWRAM x183"),
+    0x080C6260: ("FIR-coefficient effect engine (remaining tail)",
+                 "five-function tail of the 0x080C1FFC-0x080C6420 engine after the sub_080c6258 carve"),
     0x080C6420: ("intro / cutscene / ending sequences?",
                  "TaskYieldTrampoline x826; 28 compressed_graphics refs; palette fade + BLD shadows; task types #260-264; called from AgbMain and the mode manager"),
 }
@@ -572,7 +579,14 @@ def split_range(segments, lo, hi):
         if s >= e:
             continue
         if kind == "thumb_code" and name.startswith("game_code_and_rodata"):
-            clusterable.append((s, e))
+            # Preserve the reviewed module boundaries after an interior carve.
+            # Otherwise each remaining thumb_code run is clustered in
+            # isolation and can absorb the beginning of its next neighbour.
+            cuts = [s]
+            cuts.extend(vma for vma in sorted(FROZEN_MODULE_BOUNDARIES)
+                        if s < vma < e)
+            cuts.append(e)
+            clusterable.extend(zip(cuts, cuts[1:]))
         else:
             fixed.append((s, e, kind, name))
     return clusterable, fixed

@@ -4874,7 +4874,8 @@
     "sub_080c1ebc",
     "sub_080c1f88",
     "sub_080c1f9c",
-    "sub_080c1fdc"
+    "sub_080c1fdc",
+    "sub_080c6258"
   ],
   "extra_labels": {
     "0x080CFC40": "_call_via_r4",
@@ -7537,6 +7538,10 @@
     },
     {
       "name": "game_code_and_rodata_080653ec_0806ef5c_080bf994_080c1ffc",
+      "chunk_bytes": 65536
+    },
+    {
+      "name": "game_code_and_rodata_080653ec_0806ef5c_080bf994_080c1ffc_080c6260",
       "chunk_bytes": 65536
     },
     {
