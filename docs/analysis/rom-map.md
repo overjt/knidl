@@ -1540,6 +1540,12 @@ child issues of #35 are created from it. Findings that belong in this document:
   have no `bl` caller at all and are reachable only through ROM pointer tables
   (2,562 `ptr` edges originate in `asset_metadata_index`, seg 18) — for this
   region, `rom-pointer`-only evidence is the norm, not a red flag.
+- **M27's `sub_0804e3a0` (`0x0804E3A0-0x0804E5A3`) is decompiled.** The
+  516-byte handler in `src/sub_0804e3a0.c` dispatches `Task.unk73` states 0-3,
+  counts down `Task.unk28`/`unk2C`, spawns the state-1 effect, and re-arms the
+  task through `sub_08006148` when the per-player input mask allows it. Its
+  common tail chooses the movement preset from `Task.unk7A`/`unk7B` and always
+  finishes through `sub_0803f9c0`.
 - **Seg 20 (`0x087E1D58`) is indexed by level code**, not only by the sound
   engine: the level/room builder module (`0x08021B18-0x0802969F`) loads it 21
   times, and its leaves point into seg 13 (`0x0836xxxx`) — per-room sample-bank
@@ -1569,4 +1575,3 @@ child issues of #35 are created from it. Findings that belong in this document:
   address (`REG_BG1HOFS` `0x04000014` or `REG_BG2HOFS` `0x04000018`) in
   `gUnk_0300101C`.  This is one of the twenty `0x04000000` references noted
   above.
-

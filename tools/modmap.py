@@ -90,10 +90,17 @@ MODULE_MIN = 0x3000
 BLOCK_MAX = 0x2000      # fine granularity: one decompilation batch (~8 KiB)
 BLOCK_MIN = 0x0800
 
-# Reviewed boundaries that must survive an interior c_code carve.  Without
-# this cut, carving sub_080c6258 makes the remaining 0x080C6260 tail absorb
-# the separate intro/cutscene module that starts at 0x080C6420.
-FROZEN_MODULE_BOUNDARIES = {0x080C6420}
+# Reviewed module boundaries that must survive interior c_code carves.  A
+# carve splits the containing thumb_code run, but must not let either remnant
+# absorb an independently reviewed neighbouring module.
+FROZEN_MODULE_BOUNDARIES = {
+    0x08047FE8,
+    0x0804CC7C,
+    0x08054538,
+    0x08057CE0,
+    0x0805AF80,
+    0x080C6420,
+}
 
 # ROM task-type table (rom-map section 6): 8-byte entries
 # `{u8 class; u8 pad[3]; u32 entry}`.  The second word is the task body's Thumb
@@ -229,8 +236,10 @@ MODULE_NAMES = {
                  "22 functions, 21 pointer-dispatched, mean 0x275; TaskYieldTrampoline x244; sprite draw x89"),
     0x08047FE8: ("large actor bank B",
                  "27 functions, 23 pointer-dispatched, mean 0x2c2; TaskYieldTrampoline x317; palette-fade calls; level_graphics_palettes refs x24"),
-    0x0804CC7C: ("stage manager B",
-                 "task type #6 (class 1); anchor tables @0x0873B664 (25) and @0x0873B77C (13); calls the stage support library x159"),
+    0x0804CC7C: ("stage manager B (six-function head)",
+                 "six-function head of the original 0x0804CC7C-0x08054538 module before the sub_0804e3a0 carve"),
+    0x0804E5A4: ("stage manager B (remaining tail)",
+                 "90-function tail of the original 0x0804CC7C-0x08054538 module after the sub_0804e3a0 carve"),
     0x08053AF4: ("link multiplayer mode",
                  "SIO multi-play (early_6464) x162 - by far the heaviest link user in the bulk; task type #7 (class 1); 49-entry anchor table @0x0873B928"),
     0x0805AFAC: ("effect spawner + two-level state machine (task types #81-#90)",
@@ -626,7 +635,10 @@ def build_modules(args):
         cost, cut, pen = boundary_costs(fn_addrs, bl_edges, tables, lo, hi)
         blocks = segment(sizes, cost, args.block_min, args.block_max)
         allowed = set(i for i, _j in blocks)
-        mods = segment(sizes, cost, args.module_min, args.module_max, allowed)
+        if hi in FROZEN_MODULE_BOUNDARIES and hi - lo <= args.module_max:
+            mods = [(0, len(sizes))]
+        else:
+            mods = segment(sizes, cost, args.module_min, args.module_max, allowed)
         for i, j in blocks:
             blocks_all.append((fn_addrs[i],
                                fn_addrs[j] if j < len(fn_addrs) else hi, j - i))
