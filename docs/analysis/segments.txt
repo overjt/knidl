@@ -100,7 +100,9 @@
 0x080296A0 0x08029C74 c_code camera_296a0 # src/camera_296a0.c (carved by tools/carve.py)
 0x08029C74 0x0802B2F0 thumb_code game_code_and_rodata_08018b84_08019eec_0801a3e4_0801a8c8_08021b18_08029c74 [split]
 0x0802B2F0 0x0802B4BC c_code bgmap_2b2f0 # src/bgmap_2b2f0.c (carved by tools/carve.py)
-0x0802B4BC 0x08030238 thumb_code game_code_and_rodata_08018b84_08019eec_0801a3e4_0801a8c8_08021b18_0802b4bc [split]
+0x0802B4BC 0x0802D01C thumb_code game_code_and_rodata_08018b84_08019eec_0801a3e4_0801a8c8_08021b18_0802b4bc [split]
+0x0802D01C 0x0802D38C c_code camera_2d01c # src/camera_2d01c.c (carved by tools/carve.py)
+0x0802D38C 0x08030238 thumb_code game_code_and_rodata_08018b84_08019eec_0801a3e4_0801a8c8_08021b18_0802b4bc_0802d38c [split]
 0x08030238 0x080306B4 c_code obj_30238 # src/obj_30238.c (carved by tools/carve.py)
 0x080306B4 0x08030804 c_code obj_306b4 # src/obj_306b4.c (carved by tools/carve.py)
 0x08030804 0x0803CD60 thumb_code game_code_and_rodata_08018b84_08019eec_0801a3e4_0801a8c8_08021b18_08030804 [split]
