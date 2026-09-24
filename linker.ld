@@ -450,8 +450,68 @@ SECTIONS
         build/src/terrain_214e0.o(.text)
     } > ROM
 
-    .game_code_and_rodata_08018b84_08019eec_0801a3e4_0801a8c8_08021b18 0x08021B18 : {
-        KEEP(*(.game_code_and_rodata_08018b84_08019eec_0801a3e4_0801a8c8_08021b18)) KEEP(*(.game_code_and_rodata_08018b84_08019eec_0801a3e4_0801a8c8_08021b18.tail))
+    /* terrain_21b18 — decompiled to C (src/terrain_21b18.c, carved by tools/carve.py) */
+    .terrain_21b18 0x08021B18 : {
+        build/src/terrain_21b18.o(.text)
+    } > ROM
+
+    /* level_2296c — decompiled to C (src/level_2296c.c, carved by tools/carve.py) */
+    .level_2296c 0x0802296C : {
+        build/src/level_2296c.o(.text)
+    } > ROM
+
+    /* roomtask_23618 — decompiled to C (src/roomtask_23618.c, carved by tools/carve.py) */
+    .roomtask_23618 0x08023618 : {
+        build/src/roomtask_23618.o(.text)
+    } > ROM
+
+    /* level_23948 — decompiled to C (src/level_23948.c, carved by tools/carve.py) */
+    .level_23948 0x08023948 : {
+        build/src/level_23948.o(.text)
+    } > ROM
+
+    /* level_242d0 — decompiled to C (src/level_242d0.c, carved by tools/carve.py) */
+    .level_242d0 0x080242D0 : {
+        build/src/level_242d0.o(.text)
+    } > ROM
+
+    /* stage_261c0 — decompiled to C (src/stage_261c0.c, carved by tools/carve.py) */
+    .stage_261c0 0x080261C0 : {
+        build/src/stage_261c0.o(.text)
+    } > ROM
+
+    /* door_26b60 — decompiled to C (src/door_26b60.c, carved by tools/carve.py) */
+    .door_26b60 0x08026B60 : {
+        build/src/door_26b60.o(.text)
+    } > ROM
+
+    /* stage_270d0 — decompiled to C (src/stage_270d0.c, carved by tools/carve.py) */
+    .stage_270d0 0x080270D0 : {
+        build/src/stage_270d0.o(.text)
+    } > ROM
+
+    /* stage_273a0 — decompiled to C (src/stage_273a0.c, carved by tools/carve.py) */
+    .stage_273a0 0x080273A0 : {
+        build/src/stage_273a0.o(.text)
+    } > ROM
+
+    .game_code_and_rodata_08018b84_08019eec_0801a3e4_0801a8c8_08021b18_08023948_08024e40_080270d0_08027a6c 0x08027A6C : {
+        KEEP(*(.game_code_and_rodata_08018b84_08019eec_0801a3e4_0801a8c8_08021b18_08023948_08024e40_080270d0_08027a6c)) KEEP(*(.game_code_and_rodata_08018b84_08019eec_0801a3e4_0801a8c8_08021b18_08023948_08024e40_080270d0_08027a6c.tail))
+    } > ROM
+
+    /* room_27e28 — decompiled to C (src/room_27e28.c, carved by tools/carve.py) */
+    .room_27e28 0x08027E28 : {
+        build/src/room_27e28.o(.text)
+    } > ROM
+
+    /* room_28320 — decompiled to C (src/room_28320.c, carved by tools/carve.py) */
+    .room_28320 0x08028320 : {
+        build/src/room_28320.o(.text)
+    } > ROM
+
+    /* camera_28b8c — decompiled to C (src/camera_28b8c.c, carved by tools/carve.py) */
+    .camera_28b8c 0x08028B8C : {
+        build/src/camera_28b8c.o(.text)
     } > ROM
 
     /* camera_296a0 — decompiled to C (src/camera_296a0.c, carved by tools/carve.py) */

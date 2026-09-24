@@ -189,7 +189,7 @@ loc_0801bbf8:
 	movs	r0, r0
 	.word	gUnk_03002490
 	.word	gUnk_030055A8
-	.word	0x030055F0
+	.word	gUnk_030055F0
 	.global	loc_0801bc34
 loc_0801bc34:
 	lsls	r0, r1, #8
@@ -218,10 +218,10 @@ loc_0801bc3c:
 	ldr	r0, [r0, #0]
 	adds	r0, r1, r0
 	b.n	loc_0801bc7c	@ 0x0801BC7C
-	.word	0x030055F0
+	.word	gUnk_030055F0
 	.word	gUnk_03002490
 	.word	gUnk_03005580
-	.word	0x03005618
+	.word	gUnk_03005618
 	.global	loc_0801bc74
 loc_0801bc74:
 	lsls	r0, r1, #8
@@ -247,6 +247,6 @@ loc_0801bc7c:
 	pop	{r4, r5, r6, r7}
 	pop	{r0}
 	bx	r0
-	.word	0x03005618
+	.word	gUnk_03005618
 	.word	gUnk_03005550
 	.word	gUnk_03005530

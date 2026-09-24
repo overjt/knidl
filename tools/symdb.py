@@ -279,6 +279,19 @@ KNOWN_SYMBOLS = {
 # m4a_songs data segment surrounded by signed 8-bit PCM sample bytes; the
 # `pop {pc}` halfword passes the strict terminator check by accident.
 FALSE_POSITIVES = {
+    # --- M07 (issue #93) ---
+    # 0x0802589E is not a function: it is the shared epilogue of the
+    # 2170-byte sub_08025024 (`pop {r3-r5}; mov r8-sl; pop {r4-r7};
+    # pop {r1}; bx r1`), which the body reaches by falling through from
+    # 0x0802589C and by the long `bl` jump at 0x0802503A (a Thumb `b.n`
+    # cannot reach it, lesson 4.39).  Thirteen of sub_08025024's pool loads
+    # (0x08025834-0x08025898) read the words at 0x080258AC-0x080258DF right
+    # after it.  0x08025898 (`ldr r4, =0x02000030; ldrh r0, [r4]; lsrs r0,
+    # #8`, the return-value load that falls into that epilogue) is the
+    # target of the second long jump, the `bl` at 0x08025076.
+    # sub_08025024 really runs 0x08025024-0x080258E0 (0x8BC).
+    0x08025898,
+    0x0802589E,
     # --- M06 (issue #84) ---
     # 0x08021B0E is not a function: it is the `bx r1` that completes
     # sub_08021ab4's epilogue (`pop {r4-r6}; pop {r1}; bx r1`), followed by
@@ -608,6 +621,22 @@ FALSE_POSITIVES = {
 # m4a.c function order and body shape (see the KNOWN_SYMBOLS comments);
 # they are injected as candidates and carry the "curated" evidence kind.
 EXTRA_THUMB_ENTRIES = {
+    # --- M07 (issue #93), four dead exports the reachability sweep found ---
+    # Nothing points at or `bl`s any of them, but in each case the PRECEDING
+    # function closes with its own complete epilogue and literal pool before
+    # the address, so none can be part of it.
+    0x08021B70,  # `push {r4, lr}`: the byte-2 twin of sub_08021b2c (same
+                 # metatile-map lookup, `ldrb r0, [r1, #2]` instead of #3).
+                 # sub_08021b2c closes `pop {r4}; pop {r1}; bx r1` at
+                 # 0x08021B6A + pool, so it really runs 0x08021B2C-0x08021B70.
+    0x080228C4,  # `push {r4-r6, lr}`: a three-bound clamp of a task's
+                 # position against gUnk_030055F8.  sub_08022810 closes at
+                 # 0x080228B6 + pool (0x08022810-0x080228C4).
+    0x08026900,  # `push {r4, r5, lr}`.  sub_08026834 closes at 0x080268D6
+                 # + pool 0x080268D8-0x080268FF (0x08026834-0x08026900).
+    0x08026994,  # an empty `bx lr` stub (lesson 4.34) after sub_0802695c's
+                 # own `bx lr` at 0x0802697E and its pool
+                 # 0x08026980-0x08026993 (0x0802695C-0x08026994).
     # --- M11 (issue #85), four hidden entries the reachability sweep missed ---
     # Two are genuine callees the size heuristic swallowed, two are dead
     # exports.  In all four the PRECEDING function has its own complete

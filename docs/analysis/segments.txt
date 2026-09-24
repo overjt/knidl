@@ -96,7 +96,19 @@
 0x08021130 0x0802136C c_code terrain_21130 # src/terrain_21130.c (carved by tools/carve.py)
 0x0802136C 0x080214E0 thumb_code game_code_and_rodata_08018b84_08019eec_0801a3e4_0801a8c8_080207a0_0802136c [split]
 0x080214E0 0x08021B18 c_code terrain_214e0 # src/terrain_214e0.c (carved by tools/carve.py)
-0x08021B18 0x080296A0 thumb_code game_code_and_rodata_08018b84_08019eec_0801a3e4_0801a8c8_08021b18 [split]
+0x08021B18 0x0802296C c_code terrain_21b18 # src/terrain_21b18.c (carved by tools/carve.py)
+0x0802296C 0x08023618 c_code level_2296c # src/level_2296c.c (carved by tools/carve.py)
+0x08023618 0x08023948 c_code roomtask_23618 # src/roomtask_23618.c (carved by tools/carve.py)
+0x08023948 0x080242D0 c_code level_23948 # src/level_23948.c (carved by tools/carve.py)
+0x080242D0 0x080261C0 c_code level_242d0 # src/level_242d0.c (carved by tools/carve.py)
+0x080261C0 0x08026B60 c_code stage_261c0 # src/stage_261c0.c (carved by tools/carve.py)
+0x08026B60 0x080270D0 c_code door_26b60 # src/door_26b60.c (carved by tools/carve.py)
+0x080270D0 0x080273A0 c_code stage_270d0 # src/stage_270d0.c (carved by tools/carve.py)
+0x080273A0 0x08027A6C c_code stage_273a0 # src/stage_273a0.c (carved by tools/carve.py)
+0x08027A6C 0x08027E28 thumb_code game_code_and_rodata_08018b84_08019eec_0801a3e4_0801a8c8_08021b18_08023948_08024e40_080270d0_08027a6c [split]
+0x08027E28 0x08028320 c_code room_27e28 # src/room_27e28.c (carved by tools/carve.py)
+0x08028320 0x08028B8C c_code room_28320 # src/room_28320.c (carved by tools/carve.py)
+0x08028B8C 0x080296A0 c_code camera_28b8c # src/camera_28b8c.c (carved by tools/carve.py)
 0x080296A0 0x08029C74 c_code camera_296a0 # src/camera_296a0.c (carved by tools/carve.py)
 0x08029C74 0x0802A9CC c_code camera_29c74 # src/camera_29c74.c (carved by tools/carve.py)
 0x0802A9CC 0x0802B2F0 c_code bgmap_2a9cc # src/bgmap_2a9cc.c (carved by tools/carve.py)

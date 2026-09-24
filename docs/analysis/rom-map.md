@@ -590,6 +590,87 @@ child issues of #35 are created from it. Findings that belong in this document:
   `0x08755650` and `0x08755688`; the 256-byte save slots are M34's
   `gUnk_0200E600[]`, whose `unk04 == 0x99999999` marks an empty slot and
   whose `unk10` bits unlock menu rows.
+- **M07 (`0x08021B18-0x0802969F`) is the level / room builder: it loads a
+  room, places the player, runs the room's per-frame task and handles the
+  doors.**  Decompiled in #93 (156 of 157 functions; `sub_08027a6c` is
+  still asm), in twelve files (`docs/analysis/module-map.md` §6).  It is one subsystem with M08, which it drives (195 `bl` edges): M07
+  decides which room is on screen and where the camera starts, M08 moves the
+  camera and streams the map.
+  * **The room table.**  `gUnk_087E1D58[level][stage][room]` (`struct
+    RoomDef **[][8]`) holds one header per room; `gUnk_0300238C` is the
+    level (8 is the hub), `gUnk_030023EC` the stage and `gUnk_03002468` the
+    room, all `s8`, and `gUnk_08334EB4[level]` the number of stages.  The
+    current header is `gUnk_030055EC` (`struct RoomDef`, 0x58 bytes):
+    `+0x04` the BGM (`s8`, -1 keeps the current one; `gUnk_087325A2`
+    remaps it), `+0x05` whether the maps are compressed, `+0x08`/`+0x0C`
+    the metatile map and the second map layer (decompressed with
+    `sub_080017e4` mode 8, or `CpuSet`-copied, into `gUnk_02000040`/
+    `gUnk_02008160`), `+0x10` a table indexed by the second layer's
+    metatiles (`sub_08022540`), `+0x14`/`+0x16` the size in metatiles,
+    `+0x18`/`+0x28` the BG and OBJ palettes (length-prefixed), `+0x1C`/
+    `+0x2C` the BG and OBJ tiles (to `0x06004000`/`0x06008000`), `+0x20`
+    the metatile table (to `gUnk_0200B080`), `+0x24`/`+0x26` the room
+    origin (`gUnk_03005600`), `+0x30` the BG map header (`struct BgMap`, to
+    `0x06003000`), `+0x34`/`+0x36` the BG3 origin (`gUnk_03005608`),
+    `+0x3A` the number of door records and `+0x44` the records,
+    `+0x3C`/`+0x3E`/`+0x48` the object spawn list (`gUnk_020055D8`),
+    `+0x40` the BG animation script set (M08), `+0x50`/`+0x52` the start
+    position, and bytes `+0x54`-`+0x57` (`+0x55` goes to `gUnk_02000000`,
+    `+0x57` to `gUnk_02007D64`).
+  * **Doors.**  A door record (`struct Door`, 12 bytes) is an id (`s16`:
+    `0x270F` an ordinary door, `0x22B8` a stage door, `0x1A0A`/`0x1E61`/
+    `0x15B3` special), its position in metatiles and three halfwords; the
+    low byte of `+6` is the kind of an ordinary door and `+8` its target
+    stage.  `gUnk_02004B90[]` holds one 8-byte door-object record per door
+    (usable flag, animation frame and timer in the two nibbles of `+4`) and
+    `gUnk_02006A20[32][3]` the M08 stage objects spawned for them.
+    `sub_08024e40(x, y)` finds the door at a pixel (the door metatiles are
+    16/144, 54/182 and 55/183) and checks its locks (`gUnk_02007D58[stage]`,
+    `gUnk_0200B04C`, the save flags `gUnk_030023C8`/`gUnk_03002400`, and
+    `gUnk_08732348[level][k]`, 9 halfwords per level, naming the flags);
+    it records the door in `gUnk_02000030` (`type << 8 | index`).
+    `sub_08025024` enters it: a 9-way `switch` on the kind sets the next
+    level/stage/room, the arrival position (`gUnk_020055E0`/
+    `gUnk_0200AEF0`) and the stage request `gUnk_03002438` that M02's
+    state bodies act on (1-3 change the room or level, the other values
+    lead to the special stages and states).
+  * **The loaders**, one per game state: `sub_08022fa8`/`sub_080233e0`
+    (M02's screen setup `sub_0800b648`), `sub_08023948`/`sub_08023ca0`
+    (`sub_0800b788`/`sub_0800b87c`, which build the map in the second
+    buffer `gUnk_02006AA0` through `sub_08027a6c`), `sub_08023fd4` (the
+    fixed room `[8][7][0]`), `sub_08024300` (M02's stage-sequence state),
+    `sub_08024698` (through `sub_08024610`/`sub_08024654`) and
+    `sub_0802497c`.  Each looks the room up, copies its header into the
+    camera cells, loads its graphics and maps, resets M08's camera and
+    shake, builds the door objects, refills and restarts the players and
+    streams the whole view.  `sub_0802296c`/`sub_08022c3c` are the level
+    resets that rebuild the door and cleared-stage masks from the save
+    flags.
+  * **Task type #3** (class 4, `sub_08023618`) dispatches `Task.unk14`
+    through the anchor table `0x08732614` into seven room-task variants
+    (`sub_08023634`, `sub_08023e34`, `sub_08023e78`, `sub_08024540`,
+    `sub_080242d0`, `sub_08024904`, `sub_08024da4`), one per loader, which
+    spawns the task with `sub_080235ec(index)`.  A variant installs the
+    task's callbacks: the door objects and HUD (`unk0C`), the camera update
+    of the camera mode `gUnk_030055C0` (`unk04`, M08's modes) and one of
+    eleven per-frame bodies (`unk08`) chosen by the BG layout
+    `gUnk_0200B050`, all gated by the flag cell `gUnk_03005624` (1 camera
+    and BG streaming, 2 screen shake, 8 HUD, 16 door objects).
+  * **Map and collision queries** (`terrain_21b18.c`) continue M06's probes
+    on the metatile map `gUnk_03005660`; **camera start-up**
+    (`room_28320.c`, `camera_28b8c.c`) sets the room, camera and group
+    bounds, the BG3 parallax factors (`gUnk_030055E8`/`gUnk_03005630`,
+    16.16) and streams BG3 (`gUnk_03005690`/`gUnk_03005668`) like M08
+    streams the main layer; the **stage helpers** (`stage_*.c`) are what
+    the rest of the game calls - screen shake, task spawning in the high
+    slots, player and camera placement, the looping-room coordinate wrap,
+    the two-player race record `gUnk_02006098` and the per-player camera
+    modes `gUnk_0300560C`.
+  * Census: 157 functions, not 154 - four dead exports (`0x08021B70`,
+    `0x080228C4`, `0x08026900` and the empty `0x08026994`) were hidden in
+    their predecessors, and `0x0802589E`/`0x08025898` are the shared
+    epilogue of `sub_08025024` and the return-value load before it, both
+    reached by long `bl` jumps.
 - **M08 (`0x080296A0-0x08030803`) is the camera, the BG map streaming and
   the level's scripted map events.**  Decompiled in #86, in twelve files
   (`docs/analysis/module-map.md` §6).  M07, the level / room builder, calls

@@ -594,7 +594,74 @@ below is the pre-decompilation one, kept for the record.
 * **Pool references** IWRAM x1303, asset_metadata_index x334, EWRAM x3.
 * **Suggested batches** `0x0801A8C8` (7 fns), `0x0801BCAC` (17 fns), `0x0801DC88` (9 fns), `0x0801FC48` (23 fns).
 
-### M07 `0x08021B18-0x0802969F` - level / room builder + tilemap upload
+### M07 `0x08021B18-0x0802969F` - the level / room builder: room loaders, task type #3, doors, map queries and camera start-up - **landed (#93) except one function**
+
+The range is decompiled and carved out of the split asm, so it now appears in
+`module-map.csv` as `c_code` rows instead of one clusterable module; the census
+below is the pre-decompilation one, kept for the record.
+
+* **Landed as** twelve files, 156 of the 157 functions byte-exact under
+  the `--newpb` recipe with no `asm` statements and no `register` pins,
+  48 new `split_config.json` `data_symbols`:
+  `src/terrain_21b18.c` (`0x08021B18-0x0802296C`, 22 fns),
+  `src/level_2296c.c` (`0x0802296C-0x08023618`, 8),
+  `src/roomtask_23618.c` (`0x08023618-0x08023948`, 10),
+  `src/level_23948.c` (`0x08023948-0x080242D0`, 10),
+  `src/level_242d0.c` (`0x080242D0-0x080261C0`, 27),
+  `src/stage_261c0.c` (`0x080261C0-0x08026B60`, 24),
+  `src/door_26b60.c` (`0x08026B60-0x080270D0`, 3),
+  `src/stage_270d0.c` (`0x080270D0-0x080273A0`, 10),
+  `src/stage_273a0.c` (`0x080273A0-0x08027A6C`, 13),
+  `src/room_27e28.c` (`0x08027E28-0x08028320`, 4),
+  `src/room_28320.c` (`0x08028320-0x08028B8C`, 5),
+  `src/camera_28b8c.c` (`0x08028B8C-0x080296A0`, 20).
+  `level_242d0.c` holds both the part-3 loaders and the doors: split at
+  `0x08024E40`, `sub_08025024` and `sub_080258e0` only match with the
+  loaders in front of them in the same translation unit, and `stage_270d0.c`
+  / `stage_273a0.c` are two files for the opposite reason
+  (`docs/lessons-learned.md` 4.79, 4.86).  **One function is left in
+  asm:** `sub_08027a6c` (`0x08027A6C-0x08027E28`, 956 bytes), which builds
+  the second map buffer `gUnk_02006AA0` for `sub_08023948`/`sub_08023ca0`;
+  three agents took it from 675 to 234 differing bytes (948 of 956 bytes,
+  15 structural differences with registers masked, all loop-optimisation and
+  allocation), and the best source is recorded on #93.  Both neighbours,
+  M06 and M08, are C (M06 partly).
+* **What it turned out to be** (`docs/analysis/rom-map.md` §9): the half of
+  the level engine that decides WHICH room is on screen, one subsystem with
+  M08 (the camera and map streaming), which it drives.
+  * **The room loaders** (`level_*.c`), one per game state: look the room
+    header up in `gUnk_087E1D58[level][stage][room]`, copy its size, origin
+    and palettes into the camera cells, load its graphics and metatile maps,
+    reset the camera and the players and stream the whole view; plus the two
+    level resets that rebuild the door and cleared-stage masks from the save
+    flags.
+  * **Task type #3** (`roomtask_23618.c` and the `level_*.c` variants): the
+    room's per-frame driver, seven variants dispatched through the anchor
+    table `0x08732614`, each gated by the flag cell `gUnk_03005624`.
+  * **Doors** (`level_242d0.c`, `door_26b60.c`, `room_28320.c`): the door
+    records of the room header, the door objects, finding the door under
+    the player and entering it (`sub_08025024`, a 9-way `switch` on the door
+    kind that sets the next level/stage/room and the stage request
+    `gUnk_03002438`).
+  * **Map and collision queries** (`terrain_21b18.c`), continuing M06.
+  * **Stage helpers** (`stage_*.c`) the rest of the game calls: screen
+    shake, task spawning in the high slots, player / camera placement, the
+    looping-room coordinate wrap, the two-player race record and the
+    per-player camera modes.
+  * **Camera start-up** (`room_*.c`, `camera_28b8c.c`): room, camera and
+    group bounds, the BG layout of special rooms, the BG3 parallax factors
+    and the BG3 streaming glue.
+* **Census fixes** 157 functions, not 154: four dead exports added
+  (`0x08021B70`, `0x080228C4`, `0x08026900`, the empty `0x08026994`) and
+  two phantoms removed (`0x0802589E`, `sub_08025024`'s shared epilogue, and
+  `0x08025898`, the return-value load before it - both targets of long `bl`
+  jumps inside the function).
+* **How** Phase A (census, harness, 59 cross-batch leaves, the task #3
+  callbacks and the camera services) by the coordinator, then four
+  subagents with disjoint file lists, per-function declarations and a
+  canonical `types.txt`; seven handovers through `variants.sh`.
+
+
 
 * **Size** 30.9 KiB (`0x7b88`), 154 functions (24 reachable only through pointer tables), mean `0xcd`, largest `0x87a`, pool words 21.3% of bytes.
 * **Difficulty** 6/6 - 161 distinct RAM cells, 15 jump-table dispatches, 17 functions >= `0x200`.
