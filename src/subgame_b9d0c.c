@@ -55,7 +55,7 @@ extern u32 gUnk_0300117C;
 extern vu8 gUnk_0300118C;
 extern u16 gUnk_03001270[];
 extern vu16 gUnk_03001E90;
-extern vs32 gUnk_03001E94;
+extern vs32 gUnk_03001E94;    /* vs32 here (vu32 elsewhere): see sub_080b9f34 */
 extern vu16 gUnk_03001EB8[];
 extern vu16 gUnk_03001ED8;
 extern vs32 gUnk_03001EE0;
@@ -75,7 +75,7 @@ extern u32 gUnk_03004D70;
 extern u32 gUnk_03004D7C;
 extern u16 gUnk_03004D88[];
 extern u16 gUnk_03004D90[];
-extern u16 gUnk_03005274;
+extern u16 gUnk_03005274;     /* SIO handshake word; see sub_080ba150 */
 extern u32 gUnk_087562A8[][2];
 extern u16 gUnk_087562C0[];
 extern s32 (*const gUnk_087562CC[])(void);
@@ -251,6 +251,11 @@ void sub_080b9f34(s32 a0)
     if (a0 != 0 || gUnk_02007FCC != 2)
     {
         gUnk_0300117C = gUnk_03001EE0 = gUnk_03000F8C = gUnk_03000B78 = 0;
+        /* Every link of a volatile chain is re-read after its store, but
+           only while neighbouring links have the same type: a signedness
+           change wraps the inner assignment in a conversion that fold()
+           turns into `(y = 0, (T)0)`, dropping the re-read.  The ROM
+           re-reads gUnk_03000FA8, so gUnk_03001E94 is vs32 in this file. */
         gUnk_03000010 = gUnk_03000FC0 = gUnk_03001E94 = gUnk_03000FA8 = 0;
     }
     else
@@ -269,6 +274,8 @@ void sub_080b9f34(s32 a0)
         while (gUnk_03001E90 != 0)
             sub_080ba118();
         goto wait;
+        /* The ROM places this call between the two arms: a labelled
+           block reached from the phase test below (lesson 4.67). */
     de8:
         sub_080b9de8();
         goto tail;
@@ -285,6 +292,8 @@ void sub_080b9f34(s32 a0)
     }
 wait:
     gUnk_03000048 = 0;
+    /* goto loop, not do/while: the ROM re-loads the cell's address every
+       iteration, and a loop note would hoist it (lesson 3.21). */
 loop:
     sub_080ba118();
     if (gUnk_02007D2C <= 1)
@@ -351,9 +360,12 @@ void sub_080ba150(void)
         return;
     n = 0;
     stall = 0;
-    timer = 0;
+    timer = 0;     /* nothing ever sets it non-zero, but the ROM keeps it */
     for (;;)
     {
+        /* gUnk_03005274 is NOT volatile here: a vu16 switch operand costs a
+           register copy the ROM does not have, and the cell is re-read every
+           iteration anyway because the loop calls out. */
         switch (gUnk_03005274)
         {
         case 0x7755:
@@ -384,7 +396,7 @@ void sub_080ba150(void)
         {
             switch (gUnk_03004D50[i])
             {
-            case 0x7755:
+            case 0x7755:    /* empty, but it roots the tree at 0xAA00 (3.42) */
                 break;
             case 0xAA00:
                 gUnk_03005274 = 0xAA01;
