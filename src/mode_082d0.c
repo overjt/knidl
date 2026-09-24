@@ -4,7 +4,11 @@
 
 /* mode_082d0.c (0x080082D0-0x08008663, issue #96).
  *
- * Task bodies of the anchor table at 0x0873078C and task type #265. */
+ * Task type #265: sub_080082d0 spawns two instances, sub_08008348 is the
+ * body (it dispatches one of two scripts from the anchor table at
+ * 0x0873078C through sub_08002e98), and sub_080083b0/sub_08008460/
+ * sub_080084dc/sub_08008558 are the four script bodies (a sprite pair,
+ * a BG scroll plus palette cycle, a sprite loop and a palette pulse). */
 
 extern u8 gUnk_02006090;
 extern s8 gUnk_02006168;

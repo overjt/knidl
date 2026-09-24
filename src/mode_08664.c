@@ -4,7 +4,10 @@
 
 /* mode_08664.c (0x08008664-0x08008B8B, issue #96).
  *
- * Stage entry and AgbMain state 20. */
+ * The pause screen sub_08008664: it fades out, loads the level's pause
+ * picture (sub_08008fc4), waits for A/START or B and, when the stage
+ * allows it, toggles a Continue/Exit choice drawn by sub_080089e0.  Also
+ * the per-frame body of AgbMain state 20, sub_08008a00. */
 
 extern u16 gUnk_02004B60;
 extern s16 gUnk_02005588[];

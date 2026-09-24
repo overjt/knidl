@@ -4,7 +4,11 @@
 
 /* gfx_08b8c.c (0x08008B8C-0x080091AB, issue #96).
  *
- * Screen/asset loaders (LZ77/Huffman decompression into VRAM). */
+ * Screen/asset loaders: LZ77/Huffman decompression of palettes, tiles and
+ * maps into VRAM from the ROM tables at 0x08731980-0x08731BA8.
+ * sub_08008c4c(i) loads a palette set and sub_08008c64(i) queues a VRAM
+ * transfer node (both called ROM-wide); sub_08008fc4 loads the pause
+ * pictures; sub_08008b8c is the soft-reset prompt. */
 
 extern u32 gUnk_02020000[];
 extern u32 gUnk_02028000[];

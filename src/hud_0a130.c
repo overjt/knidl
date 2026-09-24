@@ -4,7 +4,9 @@
 
 /* hud_0a130.c (0x0800A130-0x0800AACF, issue #96).
  *
- * HUD/score state updates. */
+ * HUD/score state updates: the life/health/score/timer changes, the
+ * per-player bar records gUnk_02006A00[] and the two 5-way state switches
+ * (sub_0800a19c, sub_0800a21c) over gUnk_020061D4. */
 
 struct HudBar
 {

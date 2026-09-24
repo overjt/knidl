@@ -4,7 +4,9 @@
 
 /* hud_0aad0.c (0x0800AAD0-0x0800B317, issue #96).
  *
- * HUD/score drawing. */
+ * HUD drawing into the tilemap buffer: the clock copy/clamp (sub_0800aad0),
+ * the lives, health and bar renderers, the 8-digit decimal score renderer
+ * sub_0800ad68 and the clock renderer sub_0800af40. */
 
 extern s16 gUnk_02005580;
 extern u8 gUnk_02006014;

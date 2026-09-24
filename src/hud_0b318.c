@@ -4,7 +4,9 @@
 
 /* hud_0b318.c (0x0800B318-0x0800B44B, issue #96).
  *
- * HUD tilemap buffer helpers. */
+ * The HUD tilemap buffer gUnk_02005600 (32 tiles per row): tile copy and
+ * clear at (x, y), whole-buffer clears, and the flush to 0x06001000 when
+ * the dirty flag gUnk_0200002C is set. */
 
 extern u8 gUnk_0200002C;
 extern u16 gUnk_02005600[];

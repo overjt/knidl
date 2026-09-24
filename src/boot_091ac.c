@@ -4,7 +4,13 @@
 
 /* boot_091ac.c (0x080091AC-0x080099FB, issue #96).
  *
- * AgbMain states 1 and 3 and the class-0 task types #0-#2. */
+ * The boot and title sequence.  AgbMain state 1 (sub_080091ac) runs the
+ * skippable logo sequence sub_08009200, whose frame waits sub_08009398(n)
+ * return 1 on A/B/START (sub_080093cc is a dead twin) and whose task type
+ * #0 (sub_080093fc) runs every frame.  State 3 (sub_080096e0) alternates
+ * the title screen sub_0800973c - task type #1 (sub_08009418) animates the
+ * title palette, task type #2 (sub_080095c0) spawns ten sprite children
+ * (sub_08009640) - with the nine-scene intro story sub_080098a8. */
 
 extern vs32 gUnk_03000010;
 extern vu16 gUnk_03000038;

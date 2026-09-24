@@ -4,7 +4,12 @@
 
 /* hud_099fc.c (0x080099FC-0x0800A12F, issue #96).
  *
- * Task type #237 and the HUD/score interface. */
+ * Task type #237 (sub_080099fc, one intro-story picture) and the
+ * HUD/score interface other modules call: HUD init/redraw
+ * (sub_08009b2c/sub_08009cb0), lives (sub_08009e60), health
+ * (sub_08009ee8, returns the new value), score (sub_08009fcc/sub_0800a008/
+ * sub_0800a04c/sub_0800a0ac, clamped to 99999999) and the clock mode
+ * (sub_08009aa0/sub_08009ab8). */
 
 struct HudBar
 {

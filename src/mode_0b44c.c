@@ -4,7 +4,11 @@
 
 /* mode_0b44c.c (0x0800B44C-0x0800B91F, issue #96).
  *
- * Game-state setup helpers called from AgbMain. */
+ * The game-state setup helpers AgbMain and the state bodies call:
+ * sub_0800b44c (reset the game-state cells), sub_0800b4a8 (scores, the
+ * maximum health 24 or 48, the HUD mode), sub_0800b514 (three lives and
+ * cleared records per player), sub_0800b5dc/sub_0800b628, and the three
+ * screen setups sub_0800b648/sub_0800b788/sub_0800b87c. */
 
 struct Unk02005E00
 {

@@ -4,8 +4,14 @@
 
 /* mode_075b8.c (0x080075B8-0x08007B67, issue #96).
  *
- * Per-frame bodies of the main dispatch loop's game states (AgbMain
- * states 5, 8/17/18/19 and 9) plus the pause-request scan they share. */
+ * The per-frame bodies AgbMain pumps while game states 5 (sub_08007624),
+ * 9 (sub_0800783c) and 8/17/18/19 (sub_0800791c) hold.  Each runs a setup
+ * helper from mode_0b44c.c, fades in, then loops until the stage-request
+ * byte gUnk_03002438 asks for something: 1-4 switch the game state, 5 opens
+ * the pause screen (sub_08008664), 6 is a lost life (state 22 when nobody
+ * has lives left), 7/8/12 go to states 11/10/17 and 9-14 are the sub-game
+ * doors.  sub_080075b8 raises request 5 when a present, living player
+ * presses START and records that player in gUnk_02004B60. */
 
 extern u16 gUnk_02004B50[];
 extern u16 gUnk_02004B60;
