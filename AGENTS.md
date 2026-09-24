@@ -194,4 +194,27 @@ Matching decompilation of Kirby: The Amazing Mirror's predecessor, **Kirby: Nigh
   four-agent fan-out with per-function declarations and mid-run handovers;
   new lessons 3.367-3.372 and 4.72-4.75.
 
+- Main menu, its sprite tasks, the BG scroll animator and the stage
+  sequence state decompiled (issue #99): module M03 `0x0800B920-0x08010357`
+  (18.6 KiB) landed as `src/menu_0b920.c`, `src/menu_0c09c.c`,
+  `src/menu_0ca10.c`, `src/menu_0d450.c`, `src/menutask_0daf8.c`,
+  `src/menutask_0e314.c`, `src/menutask_0ea0c.c`, `src/menutask_0f180.c`,
+  `src/bgscroll_0fcbc.c` and `src/mode_100ac.c` (**all 79 functions, no asm
+  left in the range**; one zero-byte `asm("" ::: "r6")` clobber, no
+  `register` pins), so `0x080075B8-0x08017667` (M02-M04) is contiguous C.
+  `AgbMain` state 4 is the main menu: `sub_0800b920` dispatches on the menu
+  screen `gUnk_020060D0` (file select, file menu, two-way choices, the mode
+  list whose rows pick M35-M37's sub-game `gUnk_02007FCC`, erase, the sound
+  test, the link-play connection screen) until the player starts a game
+  (state 5 or 13) or backs out to the title.  All 22 class-4 task types
+  #238-#259 are its sprites and background effects, among them #257, a BG
+  scroll animator for up to eight BG/axis scrolls (`gUnk_02004B74`,
+  `gUnk_02006070[2][4]`, `gUnk_020061B0[2][4]`, shadow pointer tables
+  `0x08731DA0`/`0x08731DB0`).  State 7 (`sub_080100ac`) plays the stage's
+  scripted sequence through M04's director, task type #91.  Six census rows
+  corrected in `tools/symdb.py` (five phantoms removed, one hidden leaf
+  added) and 83 RAM/ROM cells named via `split_config.json`
+  `data_symbols`; done by a four-agent fan-out after the coordinator seeded
+  the cross-batch leaves; new lessons 3.373-3.378 and 4.76-4.78.
+
 - Next milestones: decompile split/SDK modules to C using the validated per-zone compiler recipe (task system Thumb side, sound driver, then game code); grow `src/` one module at a time with `asmdiff.sh` on the module range.

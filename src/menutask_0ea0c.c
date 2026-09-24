@@ -12,7 +12,8 @@
  * sound-test screen (menu screen 7: the cursor sprites and the palette
  * pulse of the selected column, which stays lit while its song plays);
  * task types #249 (sub_0800ef30) and #250 (sub_0800f084) cycle the
- * palettes of menu screens 8 and 9 through sub_08003014 blends. */
+ * palettes of the link-play screen (menu screen 8) through sub_08003014
+ * blends. */
 
 extern s8 gUnk_020060D0;
 extern s8 gUnk_02007D34;

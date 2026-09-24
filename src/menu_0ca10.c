@@ -10,8 +10,9 @@
  * and draws its 3-5 rows with sub_0800cc30 according to the save slot
  * unlock bits; sub_0800cd60 is its input loop (A/START picks a mode and
  * sets gUnk_02007FCC, row 4 leaves for game state 13, B goes back to the
- * file menu).  sub_0800cff4 and sub_0800d0f4 run the two-choice screens
- * 8/9, sub_0800d280 opens the sound test (screen 7), and
+ * file menu).  sub_0800d0f4 runs screen 5 (one player, or link play
+ * through sub_0800cff4, which opens the link-play screen 8),
+ * sub_0800d280 opens the sound test (screen 7), and
  * sub_0800d310/sub_0800d35c/sub_0800d404 draw its cursor and three-digit
  * numbers and play the chosen sound. */
 

@@ -208,6 +208,58 @@ holds; 10 (`gUnk_03001F30` selects `sub_0805b110()` vs `sub_0800b628()`) → 5;
   (`sub_08007b68`/`sub_08007c5c`); `sub_08007d4c` is the failure prompt that
   returns to state 4.
 
+**What states 4 and 7 run (issue #99, M03 `0x0800B920-0x08010357`, all C now):**
+
+- **State 4** `sub_0800b920` is the main menu.  It resets the menu cells,
+  spawns the four background tasks **#256-#259** (#257 `sub_0800ff00` is the
+  BG scroll animator of `src/bgscroll_0fcbc.c`), picks the first screen from
+  the return state `gUnk_03002150` (3 = the file select; 14-16/20/21 = back
+  from an extra mode, straight to the mode list with the cursor on that
+  mode) and then dispatches on the **menu screen** `gUnk_020060D0` (`s8`)
+  until it becomes 9 (start a game) or 10 (back to the title, state 3 with
+  return state 4):
+  - 0 file select `sub_0800c09c` (three save slots, cursor `gUnk_0200B074`;
+    A/START picks slot `gUnk_030023E8`, initialising an empty one -
+    `unk04 == 0x99999999` - with `sub_080b798c`; B leaves);
+  - 1 file menu `sub_0800c34c`, four entries in `gUnk_020055E4`: start,
+    the mode list (`sub_0800ca10`), the sound test (`sub_0800d280`), erase;
+  - 2 `sub_0800c558`, a two-way choice stored in `gUnk_03002464`, offered
+    only when the slot's `unk10` bit 2 is set; 3 `sub_0800c610`, one player
+    (game state 5) or link play (screen 8);
+  - 4 the mode list `sub_0800cd60` (3-5 rows by the slot's unlock bits,
+    drawn by `sub_0800cc30`): rows 0-2 set the sub-game `gUnk_02007FCC`
+    (M35-M37), row 3 sets 6, row 4 goes straight to state 13 as extra mode 7;
+    5 `sub_0800d0f4`, one player (state 13) or link play (screen 8);
+  - 6 the two-step erase `sub_0800c8a0` (`sub_080b7d74` clears the slot);
+  - 7 the sound test `sub_0800d450`: music 0-43 (song ids through
+    `gUnk_08731DC0`) and sound effects 0-273 in `gUnk_0200A6E0[2]`;
+  - 8 the link-play connection screen `sub_0800d85c` (SIO multi-play via
+    `sub_08003888`/`sub_08004000`, the session mode from `sub_0800da18`),
+    which leaves for state 5 or 13.
+  Leaving to state 5 loads the slot (`sub_080b8070`), resets the scores
+  (`sub_0800b4a8`) and sets `gUnk_02007FC0`, so AgbMain passes through
+  state 7 first.  Keys: `gUnk_03000038` newly pressed, `gUnk_03001EF4`
+  held (last frame), `gUnk_03000B70` auto-repeat (the menu sets the first delay
+  `gUnk_03000FC8` to 10 and the interval `gUnk_03001ECC` to 6; the sound
+  test drops the interval to 3 after five repeats); `gUnk_02004B70`
+  buffers a key pressed during a screen transition.
+- **State 7** `sub_080100ac` plays the scripted sequence of stage
+  `gUnk_030023B8`: it clears the blend/window shadows, loads the
+  sequence's palette set and pictures (`sub_08008d98`, `sub_080102c0`),
+  opens window 0 (full width for sequence 7), spawns M04's director, task
+  type **#91**, and pumps `sub_08002d18` until the director leaves state 7.
+- **The menu's sprite tasks** are the 22 class-4 types **#238-#259**:
+  #238/#239 the three save-slot sprites (`sub_0800da9c` spawns them with
+  #240, the cursor), #241/#242 the file menu, #243 and #244 the erase
+  screen, #245/#246 screens 2 and 3, #247 the mode list, #248 screen 5,
+  #249-#253 the link-play screen (#251 spawns #252/#253 per player), #254
+  and #255 the sound test, #256 the menu title sprite, #257 the BG scroll
+  animator, #258 and #259 the background palette cycles.  Each entry sets
+  `Task.unk00 = sub_080059d8`, `unk0C = sub_08005ca0` and `unk38` to one
+  of the sprite tables `0x08755620`/`0x08755650`/`0x08755688`, installs a
+  per-frame draw hook in `unk04` and yields until `gUnk_020060D0` leaves
+  its screen.
+
 ## 5. Compiler-validation leaf candidates
 
 Criteria: Thumb entry reached by `bl` or a bit0-set pointer; no external branch or
@@ -523,6 +575,21 @@ child issues of #35 are created from it. Findings that belong in this document:
   buffer `gUnk_02005600` that `sub_0800b3f8` flushes to `0x06001000`
   whenever the dirty flag `gUnk_0200002C` is set.  Task types it owns: #0,
   #1, #2 (class 0), #237 and #265 (class 4).
+- **M03 (`0x0800B920-0x08010357`) is the main menu and the stage
+  sequence state.**  Decompiled in #99 in ten files
+  (`docs/analysis/module-map.md` §6); what states 4 and 7 run is in §4
+  above.  The census name "menu / UI task bank" was right: all 22 class-4
+  task types #238-#259 are the menu screens' sprites and background
+  effects.  Two reusable pieces live here: the **BG scroll animator**
+  (`src/bgscroll_0fcbc.c`: up to eight scrolls, one per BG and axis, with
+  running bits in `gUnk_02004B74`, speeds in `gUnk_02006070[2][4]`,
+  targets in `gUnk_020061B0[2][4]` and the BGnHOFS/BGnVOFS shadows reached
+  through the pointer tables `gUnk_08731DB0`/`gUnk_08731DA0`), and the
+  window/blend setters `sub_08010048` (window 0 or 1, called from M34 too)
+  and `sub_08010020`.  The menu's sprite tables are `0x08755620`,
+  `0x08755650` and `0x08755688`; the 256-byte save slots are M34's
+  `gUnk_0200E600[]`, whose `unk04 == 0x99999999` marks an empty slot and
+  whose `unk10` bits unlock menu rows.
 - **M35 (`0x080B9D0C-0x080BDA2B`) is the sub-game framework plus one
   complete sub-game, a reaction-time duel.**  Decompiled in #95, in five files
   (`docs/analysis/module-map.md` §6).  The census name "game-mode flow + link
