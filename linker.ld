@@ -478,6 +478,11 @@ SECTIONS
         KEEP(*(.game_code_and_rodata_08018b84_08019eec_0801a3e4_0801a8c8_08021b18_0802b4bc)) KEEP(*(.game_code_and_rodata_08018b84_08019eec_0801a3e4_0801a8c8_08021b18_0802b4bc.tail))
     } > ROM
 
+    /* camera_2c42c — decompiled to C (src/camera_2c42c.c, carved by tools/carve.py) */
+    .camera_2c42c 0x0802C42C : {
+        build/src/camera_2c42c.o(.text)
+    } > ROM
+
     /* camera_2d01c — decompiled to C (src/camera_2d01c.c, carved by tools/carve.py) */
     .camera_2d01c 0x0802D01C : {
         build/src/camera_2d01c.o(.text)
