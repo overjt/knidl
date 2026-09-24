@@ -279,6 +279,33 @@ KNOWN_SYMBOLS = {
 # m4a_songs data segment surrounded by signed 8-bit PCM sample bytes; the
 # `pop {pc}` halfword passes the strict terminator check by accident.
 FALSE_POSITIVES = {
+    # --- M10 (issue #91), four long-jump targets inside two big actions ---
+    # 0x08037F2A, 0x08038F8E and 0x08038FD8 are not functions: they are the
+    # loop head, one arm and the shared exit of the 4368-byte player action
+    # sub_08037ed8 (entry 16 of the "enter" table gUnk_0873A748).
+    # 0x08037F2A is the top of its seven-state `switch (Task.unk73)` loop,
+    # reached by the `beq`/`bne` at 0x08037F06/0x08037F24 of the function's
+    # own head and by the long `bl` at 0x08038F98 (a Thumb `b.n` cannot reach
+    # it, lesson 4.39); its first pool load reads 0x08037F48, which
+    # sub_08037ed8's head also loads.  0x08038F8E (`t->unk73 = 6;` and that
+    # long `bl` back to the loop head) is reached only by the long `bl` at
+    # 0x08038436.  0x08038FD8 is `bl sub_08006138` + the `pop {r3}; mov r8, r3;
+    # pop {r4-r6}; pop {r0}` epilogue that pairs with sub_08037ed8's
+    # `push {r4-r6, lr}; mov r6, r8; push {r6}`, reached by the long `bl` at
+    # 0x08037F38 (the switch's default) and four `b.n`s.
+    # sub_08037ed8 really runs 0x08037ED8-0x08038FE8 (0x1110; symbols.csv
+    # records the census's MAX_SIZE cap, 0x1000).
+    0x08037F2A,
+    0x08038F8E,
+    0x08038FD8,
+    # 0x0803AA14 is the exit tail of sub_08039c24 (entry 21): `t->unk28++;
+    # sub_08006138();` + the `pop {r4-r7}; pop {r0}` epilogue, reached by
+    # three long `bl`s from inside the body (0x08039FC0, 0x08039FD8,
+    # 0x0803A1B6) and by the fall-through from the `bl sub_08049738` at
+    # 0x0803AA10.  Six of sub_08039c24's pool loads read the words at
+    # 0x0803AA28-0x0803AA3B after it.  sub_08039c24 really runs
+    # 0x08039C24-0x0803AA40 (0xE1C).
+    0x0803AA14,
     # --- M07 (issue #93) ---
     # 0x0802589E is not a function: it is the shared epilogue of the
     # 2170-byte sub_08025024 (`pop {r3-r5}; mov r8-sl; pop {r4-r7};
@@ -1130,6 +1157,12 @@ EXTRA_THUMB_ENTRIES = {
                  # word references these two, and each stub is `bx lr` + the
                  # 2-byte alignment pad, so sub_080337f4 and sub_080337fc are
                  # 4 bytes each, not 8.
+    # --- M10 (issue #91), one hidden leaf the reachability sweep found ---
+    0x0803BDD4,  # leaf `gUnk_03002490->unk88->unk01 = 7;` (no `push`),
+                 # per-frame handler 17 of gUnk_0873A840 (table word
+                 # 0x0873A884); the prologue filter cannot propose it.
+                 # sub_0803bd90 ends `pop {r0}; bx r0` at 0x0803BDCC with its
+                 # pool word at 0x0803BDD0, so it is 0x44, not 0x58.
 }
 
 EVIDENCE_KINDS = ("bl-target", "rom-pointer", "prologue-scan", "curated")

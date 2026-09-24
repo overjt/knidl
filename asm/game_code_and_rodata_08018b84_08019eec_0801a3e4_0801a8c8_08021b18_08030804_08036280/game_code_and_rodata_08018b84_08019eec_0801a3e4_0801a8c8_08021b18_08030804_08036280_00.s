@@ -16,14 +16,11 @@
 @   0x08037D64 sub_08037d64
 @   0x08037E28 sub_08037e28
 @   0x08037ED8 sub_08037ed8
-@   0x08037F2A sub_08037f2a
-@   0x08038FD8 sub_08038fd8
 @   0x08038FE8 sub_08038fe8
 @   0x0803919C sub_0803919c
 @   0x080396A4 sub_080396a4
 @   0x080397F8 sub_080397f8
 @   0x08039C24 sub_08039c24
-@   0x0803AA14 sub_0803aa14
 @   0x0803AA40 sub_0803aa40
 @   0x0803AA64 sub_0803aa64
 @   0x0803AFCC sub_0803afcc
@@ -38,6 +35,7 @@
 @   0x0803B9A0 sub_0803b9a0
 @   0x0803BBF0 sub_0803bbf0
 @   0x0803BD90 sub_0803bd90
+@   0x0803BDD4 sub_0803bdd4
 @   0x0803BDE8 sub_0803bde8
 @   0x0803C990 sub_0803c990
 @   0x0803C9B4 sub_0803c9b4
@@ -3861,7 +3859,7 @@ sub_08037ed8:
 	ldr	r2, [r0, #0]
 	ldrb	r0, [r2, #5]
 	cmp	r0, #17
-	beq.n	sub_08037f2a	@ 0x08037F2A
+	beq.n	loc_08037f2a	@ 0x08037F2A
 	adds	r2, #66
 	ldrh	r1, [r2, #0]
 	ldr	r0, [pc, #60]	@ 0x08037F4C
@@ -3876,13 +3874,11 @@ sub_08037ed8:
 	ldr	r1, [r0, #0]
 	ldrb	r0, [r1, #6]
 	cmp	r0, #2
-	bne.n	sub_08037f2a	@ 0x08037F2A
+	bne.n	loc_08037f2a	@ 0x08037F2A
 	movs	r0, #0
 	strb	r0, [r1, #6]
-	.thumb_func
-	.global	sub_08037f2a
-sub_08037f2a:
-	.thumb
+	.global	loc_08037f2a
+loc_08037f2a:
 	ldr	r1, [pc, #28]	@ 0x08037F48
 	ldr	r0, [r1, #0]
 	adds	r0, #115
@@ -3890,7 +3886,7 @@ sub_08037f2a:
 	adds	r6, r1, #0
 	cmp	r0, #6
 	bls.n	loc_08037f3c	@ 0x08037F3C
-	bl	sub_08038fd8	@ 0x08038FD8
+	bl	loc_08038fd8	@ 0x08038FD8
 	.global	loc_08037f3c
 loc_08037f3c:
 	lsls	r0, r0, #2
@@ -4069,7 +4065,7 @@ loc_0803807e:
 	movs	r0, #128
 	lsls	r0, r0, #8
 	strh	r0, [r1, #18]
-	b.n	sub_08037f2a	@ 0x08037F2A
+	b.n	loc_08037f2a	@ 0x08037F2A
 	movs	r0, r0
 	.word	gUnk_03002490
 	.word	gUnk_03002360
@@ -5321,7 +5317,7 @@ loc_08038a38:
 	movs	r1, #24
 	movs	r2, #0
 	bl	sub_0805afac	@ 0x0805AFAC
-	b.n	sub_08038fd8	@ 0x08038FD8
+	b.n	loc_08038fd8	@ 0x08038FD8
 	movs	r0, r0
 	.word	0x00000111
 	.word	gUnk_03002490
@@ -5463,7 +5459,7 @@ loc_08038ba8:
 	ldr	r0, [r3, #40]
 	cmp	r0, #4
 	bls.n	loc_08038bb0	@ 0x08038BB0
-	b.n	sub_08038fd8	@ 0x08038FD8
+	b.n	loc_08038fd8	@ 0x08038FD8
 	.global	loc_08038bb0
 loc_08038bb0:
 	lsls	r0, r0, #2
@@ -5518,7 +5514,7 @@ loc_08038bf2:
 	ldrh	r0, [r1, #60]
 	adds	r0, #1
 	strh	r0, [r1, #60]
-	b.n	sub_08038fd8	@ 0x08038FD8
+	b.n	loc_08038fd8	@ 0x08038FD8
 	movs	r0, r0
 	.word	gUnk_03002490
 	.word	0x00000185
@@ -5756,7 +5752,7 @@ loc_08038e48:
 	ldr	r1, [r0, #0]
 	movs	r0, #1
 	strh	r0, [r1, #20]
-	b.n	sub_08038fd8	@ 0x08038FD8
+	b.n	loc_08038fd8	@ 0x08038FD8
 	movs	r0, r0
 	.word	gUnk_03002490
 	ldr	r0, [pc, #40]	@ 0x08038E84
@@ -5916,7 +5912,7 @@ loc_08038f8e:
 	adds	r0, #115
 	movs	r1, #6
 	strb	r1, [r0, #0]
-	bl	sub_08037f2a	@ 0x08037F2A
+	bl	loc_08037f2a	@ 0x08037F2A
 	.word	gUnk_03002490
 	ldr	r0, [r6, #0]
 	adds	r0, #123
@@ -5946,10 +5942,8 @@ loc_08038fb2:
 	adds	r0, r3, #0
 	orrs	r0, r2
 	strh	r0, [r1, #0]
-	.thumb_func
-	.global	sub_08038fd8
-sub_08038fd8:
-	.thumb
+	.global	loc_08038fd8
+loc_08038fd8:
 	bl	sub_08006138	@ 0x08006138
 	pop	{r3}
 	mov	r8, r3
@@ -7999,7 +7993,7 @@ loc_08039fb0:
 	ldr	r0, [r0, #44]
 	cmp	r0, #0
 	beq.n	loc_08039fc4	@ 0x08039FC4
-	bl	sub_0803aa14	@ 0x0803AA14
+	bl	loc_0803aa14	@ 0x0803AA14
 	.global	loc_08039fc4
 loc_08039fc4:
 	bl	sub_08026584	@ 0x08026584
@@ -8010,7 +8004,7 @@ loc_08039fc4:
 	lsls	r0, r0, #24
 	asrs	r0, r0, #24
 	bl	sub_08040808	@ 0x08040808
-	bl	sub_0803aa14	@ 0x0803AA14
+	bl	loc_0803aa14	@ 0x0803AA14
 	.word	gUnk_03002490
 	.global	loc_08039fe0
 loc_08039fe0:
@@ -8265,7 +8259,7 @@ loc_0803a194:
 	ldr	r1, [r0, #0]
 	movs	r0, #15
 	bl	sub_080055b0	@ 0x080055B0
-	bl	sub_0803aa14	@ 0x0803AA14
+	bl	loc_0803aa14	@ 0x0803AA14
 	movs	r0, r0
 	.word	gUnk_03002490
 	.word	0x0000FFEF
@@ -9429,10 +9423,8 @@ loc_0803aa06:
 	.global	loc_0803aa10
 loc_0803aa10:
 	bl	sub_08049738	@ 0x08049738
-	.thumb_func
-	.global	sub_0803aa14
-sub_0803aa14:
-	.thumb
+	.global	loc_0803aa14
+loc_0803aa14:
 	ldr	r0, [pc, #36]	@ 0x0803AA3C
 	ldr	r1, [r0, #0]
 	ldr	r0, [r1, #40]
@@ -12133,6 +12125,10 @@ sub_0803bd90:
 	bx	r0
 	movs	r0, r0
 	.word	gUnk_03002490
+	.thumb_func
+	.global	sub_0803bdd4
+sub_0803bdd4:
+	.thumb
 	ldr	r0, [pc, #12]	@ 0x0803BDE4
 	ldr	r0, [r0, #0]
 	adds	r0, #136
