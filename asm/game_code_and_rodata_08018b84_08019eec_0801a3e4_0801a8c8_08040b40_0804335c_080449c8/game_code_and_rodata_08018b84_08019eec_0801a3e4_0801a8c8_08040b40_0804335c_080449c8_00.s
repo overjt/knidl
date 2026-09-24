@@ -18549,7 +18549,7 @@ loc_0804df9e:
 	b.n	loc_0804e0d8	@ 0x0804E0D8
 	.word	0x0873CC64
 	.word	gUnk_02007FA0
-	.word	0x02004B6C
+	.word	gUnk_02004B6C
 	.word	gCurTaskIdx
 	.word	gUnk_03005550
 	.global	loc_0804dfcc
@@ -19158,7 +19158,7 @@ loc_0804e400:
 	movs	r0, r0
 	.word	0x0873CC54
 	.word	gUnk_02007FA0
-	.word	0x02004B6C
+	.word	gUnk_02004B6C
 	.word	gCurTaskIdx
 	.global	loc_0804e45c
 loc_0804e45c:

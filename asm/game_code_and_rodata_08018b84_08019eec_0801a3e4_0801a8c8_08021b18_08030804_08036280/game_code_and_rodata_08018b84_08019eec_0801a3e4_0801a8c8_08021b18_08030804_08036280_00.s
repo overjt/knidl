@@ -3231,7 +3231,7 @@ loc_080379dc:
 	b.n	loc_08037a44	@ 0x08037A44
 	.word	0x0873CC54
 	.word	gUnk_02007FA0
-	.word	0x02004B6C
+	.word	gUnk_02004B6C
 	.word	gCurTaskIdx
 	.global	loc_08037a40
 loc_08037a40:
