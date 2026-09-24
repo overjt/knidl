@@ -207,7 +207,6 @@
 @   0x0802B49C sub_0802b49c
 @   0x0802B4BC sub_0802b4bc
 @   0x0802B62C sub_0802b62c
-@   0x0802BE70 sub_0802be70
 @   0x0802BE80 sub_0802be80
 @   0x0802BFF4 sub_0802bff4
 @   0x0802C42C sub_0802c42c
@@ -222,6 +221,7 @@
 @   0x0802CDA0 sub_0802cda0
 @   0x0802D01C sub_0802d01c
 @   0x0802D074 sub_0802d074
+@   0x0802D0C4 sub_0802d0c4
 @   0x0802D0F4 sub_0802d0f4
 @   0x0802D188 sub_0802d188
 @   0x0802D25C sub_0802d25c
@@ -272,7 +272,6 @@
 @   0x0802F62C sub_0802f62c
 @   0x0802F684 sub_0802f684
 @   0x0802F6C0 sub_0802f6c0
-@   0x0802F6EA sub_0802f6ea
 @   0x0802F6F4 sub_0802f6f4
 @   0x0802F718 sub_0802f718
 @   0x0802F7DC sub_0802f7dc
@@ -282,7 +281,6 @@
 @   0x0802FA3C sub_0802fa3c
 @   0x0802FAA8 sub_0802faa8
 @   0x0802FD98 sub_0802fd98
-@   0x0802FDE8 sub_0802fde8
 @   0x0802FDF4 sub_0802fdf4
 @   0x0802FE64 sub_0802fe64
 @   0x0802FEA4 sub_0802fea4
@@ -20715,7 +20713,7 @@ sub_0802b62c:
 	ldrb	r0, [r0, #0]
 	cmp	r0, #0
 	bne.n	loc_0802b642	@ 0x0802B642
-	bl	sub_0802be70	@ 0x0802BE70
+	bl	loc_0802be70	@ 0x0802BE70
 	.global	loc_0802b642
 loc_0802b642:
 	ldr	r4, [pc, #44]	@ 0x0802B670
@@ -21052,7 +21050,7 @@ loc_0802b8a8:
 	strh	r0, [r1, #4]
 	adds	r0, #160
 	strh	r0, [r1, #6]
-	b.n	sub_0802be70	@ 0x0802BE70
+	b.n	loc_0802be70	@ 0x0802BE70
 	.word	0x03002388
 	.word	0x030055F8
 	.word	0x030055D0
@@ -21801,7 +21799,7 @@ loc_0802be36:
 	ldr	r1, [pc, #24]	@ 0x0802BE68
 	movs	r0, #3
 	strh	r0, [r1, #0]
-	b.n	sub_0802be70	@ 0x0802BE70
+	b.n	loc_0802be70	@ 0x0802BE70
 	movs	r0, r0
 	.word	0x030055D0
 	.word	0x03005614
@@ -21811,10 +21809,8 @@ loc_0802be36:
 	.global	loc_0802be6c
 loc_0802be6c:
 	bl	sub_0802a63c	@ 0x0802A63C
-	.thumb_func
-	.global	sub_0802be70
-sub_0802be70:
-	.thumb
+	.global	loc_0802be70
+loc_0802be70:
 	pop	{r3, r4, r5}
 	mov	r8, r3
 	mov	r9, r4
@@ -24344,6 +24340,10 @@ loc_0802d0bc:
 	strh	r0, [r1, #0]
 	bx	lr
 	.word	0x030055C0
+	.thumb_func
+	.global	sub_0802d0c4
+sub_0802d0c4:
+	.thumb
 	push	{lr}
 	bl	sub_08028948	@ 0x08028948
 	bl	sub_08028b1c	@ 0x08028B1C
@@ -29420,10 +29420,6 @@ loc_0802f6d4:
 	str	r0, [r1, #40]
 	movs	r0, #2
 	bl	TaskYieldTrampoline	@ 0x080CFDCC
-	.thumb_func
-	.global	sub_0802f6ea
-sub_0802f6ea:
-	.thumb
 	b.n	loc_0802f6d4	@ 0x0802F6D4
 	.word	gUnk_03002490
 	.word	0x087558DC
@@ -30296,10 +30292,6 @@ loc_0802fde2:
 	add	sp, #8
 	pop	{r4, r5}
 	pop	{r0}
-	.thumb_func
-	.global	sub_0802fde8
-sub_0802fde8:
-	.thumb
 	bx	r0
 	movs	r0, r0
 	.word	gUnk_03002490

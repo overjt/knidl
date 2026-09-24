@@ -417,6 +417,24 @@ FALSE_POSITIVES = {
                  # in front of its literal pool [0x083D3034: 081250B1 0800FC27
                  # 2F04FB05].  sub_0800fb94 runs 0x0800FB94-0x0800FCBC (0x128).
 
+    # --- M08 (issue #86), three rows the reachability sweep dropped ---
+    # A shared epilogue reached by a `bl` long jump and two tails of the
+    # function in front of them; none has a prologue.  The last two sit right
+    # after a claimed size that is not a multiple of 4 and are "evidenced"
+    # only by a lone word inside a graphics blob (neighbours in brackets).
+    0x0802BE70,  # the shared epilogue of the 2116-byte sub_0802b62c
+                 # (`pop {r3, r4, r5}; mov r8, r3 ...; pop {r0}; bx r0`),
+                 # reached by the `bl` far jump at 0x0802B63E (+0x832 is out of
+                 # `b.n` range, lesson 4.39).  sub_0802b62c runs
+                 # 0x0802B62C-0x0802BE80 (0x854).
+    0x0802F6EA,  # the back-branch `b.n loc_0802f6d4` of sub_0802f6c0's
+                 # two-frame yield loop, then its two pool words
+                 # [0x0865DC14: E3DBD6D6 0802F6EB 00040709].  sub_0802f6c0 runs
+                 # 0x0802F6C0-0x0802F6F4 (0x34).
+    0x0802FDE8,  # the `bx r0` of sub_0802fd98's `pop {r4, r5}; pop {r0}`,
+                 # then its two pool words [0x086DA624: EF01D2FD 0802FDE9
+                 # DCC6ED0F].  sub_0802fd98 runs 0x0802FD98-0x0802FDF4 (0x5C).
+
     # --- M34 (issue #94), one row the reachability sweep dropped ---
     # 0x080B6B36 is the `b.n loc_080b6c02` that ends sub_080b6b08's first arm,
     # sitting immediately in front of that function's own literal pool: no
@@ -1063,6 +1081,13 @@ EXTRA_THUMB_ENTRIES = {
     0x080BD9E8,  # leaf that zeroes gUnk_0200AFF0/gUnk_0200AF10 and fills
                  # gUnk_0200B044[0..3] with 3; table word 0x087562D0 (next to
                  # 0x080BA455 and 0x080C1F9D).  sub_080bd9b0 is 0x38, not 0x5C.
+    # --- M08 (issue #86), one hidden entry the reachability sweep found ---
+    0x0802D0C4,  # dead export with its own `push {lr}`: calls sub_08028948
+                 # and sub_08028b1c, then stores 0 to 0x030055C0 on both arms
+                 # of a gUnk_03002444 test (sub_0802d074 stores 4/5 there);
+                 # no ROM word or `bl` references it.
+                 # sub_0802d074 ends `bx lr` at 0x0802D0BE with its pool word at
+                 # 0x0802D0C0, so it is 0x50, not 0x80.
 }
 
 EVIDENCE_KINDS = ("bl-target", "rom-pointer", "prologue-scan", "curated")
