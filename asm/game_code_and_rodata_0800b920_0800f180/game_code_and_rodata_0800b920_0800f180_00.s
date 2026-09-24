@@ -278,7 +278,7 @@ loc_0800f2fe:
 	.word	0x03001612
 	.word	0x08563024
 	.word	gUnk_0200EBC0
-	.word	0x02007FC8
+	.word	gUnk_02007FC8
 	.global	loc_0800f378
 loc_0800f378:
 	ldr	r0, [pc, #12]	@ 0x0800F388
@@ -561,7 +561,7 @@ loc_0800f540:
 	adds	r2, r2, r4
 	b.n	loc_0800f5c8	@ 0x0800F5C8
 	movs	r0, r0
-	.word	0x02007FC8
+	.word	gUnk_02007FC8
 	.word	0x08731EA8
 	.word	0x08731EB0
 	.word	gUnk_0200EBC0
@@ -841,7 +841,7 @@ loc_0800f79e:
 	pop	{r0}
 	bx	r0
 	.word	0x08731F48
-	.word	0x02007FC8
+	.word	gUnk_02007FC8
 	.word	0x0000FFFF
 	.thumb_func
 	.global	sub_0800f7b0
