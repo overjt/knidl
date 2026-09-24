@@ -213,7 +213,7 @@ dispatches, pool density) — a planning aid, not a promise.
 | M32 | `0x080AE3BC-0x080B2FE7` | 19.0 KiB | 129 | 5 | * | enemy/object behaviour bank 13 |
 | M33 | `0x080B2FE8-0x080B6153` | 12.4 KiB | 108 | 5 | *** | HUD / overlay effects? |
 | M34 | `0x080B6154-0x080B9D0B` | 14.9 KiB | 105 | 2 | *** | save file / SRAM records + options |
-| M35 | `0x080B9D0C-0x080BDA2B` | 15.3 KiB | 193 | 4 | *** | game-mode flow + link lobby |
+| M35 | `0x080B9D0C-0x080BDA2B` | 15.3 KiB | 193 | 4 | *** | sub-game framework + reaction-duel sub-game - **landed (#95)** |
 | M36 | `0x080BDA2C-0x080C1FFB` | 17.5 KiB | 117 | 4 | * | sub-game: four-slot bomb-pass minigame - **landed (#66)** |
 | M37 | `0x080C1FFC-0x080C641F` | 17.0 KiB | 82 | 1 | **** | FIR-coefficient effect engine |
 | M38 | `0x080C6420-0x080CD89B` | 29.1 KiB | 110 | 4 | **** | intro / cutscene / ending sequences? |
@@ -263,7 +263,7 @@ ordering inside it:
 | 15 | M19 cutscene / ending-sequence bank (11 class-3 tasks) - landed | 0x7CA8 | 220 | 2 | 7 | 4 | 11 |
 | 16 | M34 save file / SRAM records + options | 0x3BB8 | 106 | 3 | 2 | 12 | 0 |
 | 17 | M05 player-character driver? | 0x3260 | 23 | 3 | 3 | 10 | 0 |
-| 18 | M35 game-mode flow + link lobby | 0x3D20 | 193 | 3 | 3 | 3 | 2 |
+| 18 | M35 sub-game framework + reaction-duel sub-game - landed | 0x3D20 | 193 | 3 | 3 | 3 | 2 |
 | 19 | M23 enemy/object behaviour bank 4 | 0x6BF0 | 285 | 3 | 3 | 0 | 10 |
 | 20 | M04 scripted-sequence bank: director + 50 of the 63 scripts - landed | 0x7310 | 65 | 3 | 3 | 1 | 2 |
 | 21 | M08 camera / BG scroll + tilemap streaming | 0x7164 | 153 | 3 | 4 | 3 | 17 |
@@ -323,7 +323,7 @@ sub-issue of #35, so the numbering ascends with the recommended order):
 | 29 | #92 | M09 stage manager A | `0x08030804-0x0803627F` | 22.6 KiB | 4 |
 | 30 | #93 | M07 level / room builder + tilemap upload | `0x08021B18-0x0802969F` | 30.9 KiB | 4 |
 | 31 | #94 | M34 save file / SRAM records + options | `0x080B6154-0x080B9D0B` | 14.9 KiB | 5 |
-| 32 | #95 | M35 game-mode flow + link lobby | `0x080B9D0C-0x080BDA2B` | 15.3 KiB | 5 |
+| 32 | #95 | M35 sub-game framework + reaction-duel sub-game - landed | `0x080B9D0C-0x080BDA2B` | 15.3 KiB | 5 |
 | 33 | #96 | M02 game mode + screen/asset loader | `0x080075B8-0x0800B91F` | 16.9 KiB | 5 |
 | 34 | #97 | M33 HUD / overlay effects? | `0x080B2FE8-0x080B6153` | 12.4 KiB | 5 |
 | 35 | #98 | M37 FIR-coefficient effect engine | `0x080C1FFC-0x080C641F` | 17.0 KiB | 5 |
@@ -1766,7 +1766,42 @@ below is the pre-decompilation one, kept for the record.
 * **Known RAM cells touched** BG1HOFS shadow (16.16) x13, per-player keys pressed x8, BLDALPHA hi shadow x7, BLDALPHA lo shadow x7, BG2HOFS shadow (16.16) x6, BG3HOFS shadow (16.16) x6.
 * **Suggested batches** `0x080B6154` (19 fns), `0x080B6F38` (35 fns), `0x080B8EA0` (52 fns).
 
-### M35 `0x080B9D0C-0x080BDA2B` - game-mode flow + link lobby
+### M35 `0x080B9D0C-0x080BDA2B` - sub-game framework + reaction-duel sub-game - **landed (#95)**
+
+The range is decompiled and carved out of the split asm, so it now appears in
+`module-map.csv` as `c_code` rows instead of one clusterable module; the census
+below is the pre-decompilation one, kept for the record.
+
+* **Landed as** `src/subgame_b9d0c.c` (`0x080B9D0C-0x080BA774`, 27 fns),
+  `src/subgame_ba774.c` (`0x080BA774-0x080BB528`, 55), `src/subgame_bb528.c`
+  (`0x080BB528-0x080BC0CC`, 42), `src/subgame_bc0cc.c`
+  (`0x080BC0CC-0x080BD9E8`, 70) and `src/subgame_bd9e8.c`
+  (`0x080BD9E8-0x080BDA2C`, 2): all 196 functions byte-exact under the
+  `--newpb` recipe, no `register`/`asm` pins, 62 new `split_config.json`
+  `data_symbols`.  `make progress` reports 0 asm code bytes in the range.
+* **What it turned out to be** the code `AgbMain` runs for its sub-game state
+  plus one complete sub-game.  The framework (`src/subgame_b9d0c.c`) is
+  shared by all three sub-games: `gUnk_02007FCC` selects the game and indexes
+  the display-layout / VRAM-list / init-hook / task-body tables
+  `0x087562A8`/`0x087562C0`/`0x087562CC`/`0x087562D8` (game 1 is M36's
+  bomb-pass, game 2 has its body in M37), `gUnk_02007D2C` is the phase (0 the
+  game, 1 its results screen, 3/4 finished), `sub_080ba150` is the SIO
+  handshake over `gUnk_03005274` and task type #93 (`sub_080ba404`) the
+  controller that clears every other task and runs the game's body.  Game 0
+  is a **reaction duel**: after a random delay (`sub_080ba6b4`, row
+  `gUnk_02006168`) the players race to press, `sub_080ba708` collects the
+  presses into `Task.unk2C`, the round controller's seven `<entry, check>`
+  states (`0x087562FC`/`0x08756318` in link play, `0x08756334`/`0x08756350`
+  against the computer) score them into `gUnk_0200B03C[]` / `gUnk_0200B07C[]`
+  / `gUnk_02006184`, and a second seven-state task (`0x08756378`/`0x08756394`)
+  is its results screen.  Task type #94 (`sub_080bc0cc`, kind table
+  `0x087563B0` on `Task.unk73`) is every sprite the duel shows; its kind 0 (a
+  player) and kind 5 (the single-player opponent, five levels) are state
+  machines of their own over `0x08756468`/`0x08756480` and
+  `0x087564E4`/`0x087564FC`.
+* **Census fixes** 196 functions, not 193: `0x080B9DA8` (a dead twin of the
+  key scan `sub_080b9d68`), `0x080BB410` and `0x080BD9E8` (anchor-table leaves
+  the strict prologue filter rejected) added to `EXTRA_THUMB_ENTRIES`.
 
 * **Size** 15.3 KiB (`0x3d20`), 193 functions (96 reachable only through pointer tables), mean `0x51`, largest `0x1e4`, pool words 15.1% of bytes.
 * **Difficulty** 3/6 - 52 distinct RAM cells, 6 jump-table dispatches, 0 functions >= `0x200`.

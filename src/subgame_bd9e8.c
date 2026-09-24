@@ -7,7 +7,10 @@
  * The bomb-pass game's two framework hooks (sub-game 1 of the tables in
  * src/subgame_b9d0c.c): the init hook that clears the elimination state
  * M36 keeps in gUnk_0200AFF0 / gUnk_0200AF10 / gUnk_0200B044[], and the task
- * body that dispatches the game's phase through 0x08756568.
+ * body that dispatches the game's phase through 0x08756568.  That table sits
+ * among M36's own rodata (0x08756528-0x08756564, 0x08756570 on), so these two
+ * probably belong to M36's translation unit; they are a file of their own
+ * only because M36's carve starts at 0x080BDA2C.
  */
 #include "gba/gba.h"
 #include "global.h"

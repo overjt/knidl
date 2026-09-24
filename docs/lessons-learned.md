@@ -1273,6 +1273,86 @@ byte-identical.  **Signature:** three calls to the same function around one
 the `goto` chain m2c produces for that shape is not the source.  (Suggested by
 jiangzhengwenjz on commit 64dd934.)
 
+### 3.361 A volatile assignment chain re-reads each link only while the link types agree
+3.69 established that `a = b = c = 0` with volatile cells stores right to left
+and re-reads each volatile cell after its store.  That holds link by link only
+while neighbouring links have the SAME type.  `vu32 x = (vs32 y = 0)` needs a
+conversion around the inner assignment, and `fold` rewrites `(T)(y = CONST)`
+into `(y = CONST, (T)CONST)` (fold-const.c, "Don't leave an assignment inside a
+conversion unless assigning a bitfield"), so the re-read of `y` disappears and
+the constant is simply stored again.  In M35's `sub_080b9f34` the ROM re-reads
+all three volatile links of
+
+```c
+gUnk_03000010 = gUnk_03000FC0 = gUnk_03001E94 = gUnk_03000FA8 = 0;
+```
+
+and the candidate lost the re-read of `gUnk_03000FA8` (4 bytes short) until
+`gUnk_03001E94`, `vu32` everywhere else, was declared `vs32` in that file like
+its neighbour.  The `-da` `.rtl` dump shows it at expand time: `(set (reg 41)
+(const_int 0))` where the other links have `(set (reg N) (mem/v ...))`.
+**Diagnostic:** a chain that re-reads some volatile links and not others is a
+type mismatch between the links, not a missing `volatile`.
+
+### 3.362 `switch` on a `vu16` costs a copy the ROM does not have
+`switch (gUnk_03005274)` on a `vu16` cell loads the volatile HImode value into
+its own pseudo and zero-extends it through a second one, which comes out as
+`ldrh r0, [r2, #0]; adds r1, r0, #0`.  With the cell declared plain `u16` the
+switch operand is a single `(zero_extend (mem:HI))` and the ROM's lone
+`ldrh r1, [r2, #0]` falls out (`sub_080ba150`, the SIO handshake loop).  The
+cell is re-read at the top of every iteration anyway, because the loop body
+calls out, so the missing `volatile` changes nothing else.  Two companions
+from the same function: case bodies that store the case constant
+(`case 0x7755: gUnk_03004D90[0] = 0x7755;`) compile to `strh r1` - cse
+substitutes the switch-value register - so do not "simplify" them into a
+local; and an inner 3-case switch rooted at its LOWEST case with `ble default`
+had a fourth, empty case below it (`case 0x7755: break;`, lesson 3.42), the
+same case set as the outer switch.
+
+### 3.363 A dead sign-extending load is a `switch` whose arms all optimise away
+Four M35 functions (`sub_080bb874`, `sub_080bc5cc`, `sub_080bc680`,
+`sub_080bd370`) carry `movs rK, #0; ldrsh r0, [rP, rK]` of `Task.unk48` whose
+result nothing reads.  What reproduces it is a `switch (t->unk48)` whose arms
+are all self-assignments, `case 120: x = x; break;`.  The `-da` dumps show the
+mechanism: a self-assignment is a real move insn until reload deletes no-op
+moves, so the four compares survive every pass up to and including `.greg`
+and only disappear in `.jump2` - after flow's last chance to delete the
+now-unused operand load.  Truly empty arms (`case 120: break;`) fold in the
+first jump pass and the load dies with them (16 bytes short on
+`sub_080bb874`), and merging the arms into one loses it too (35 differing
+bytes).  The NUMBER of case labels is visible in the allocation even though no
+compare survives: `sub_080bc5cc` needs exactly two labels, the others four.
+The labels used are those of the sibling `sub_080bb930`, which switches on
+`unk4A` with the same four values and really remaps them; the ROM cannot show
+the originals.  Whatever the 2002 source had in those arms became a no-op
+move only after register allocation.
+
+### 3.364 `x & (1 << i)` becomes `(x >> i) & 1`; a named `bit` keeps the shift of 1
+`fold_single_bit_test` rewrites `if (x & (1 << i))` into `((x >> i) & 1)`,
+which loads `x` first and emits `asrs r0, r4; movs r1, #1; ands`.  The ROM's
+M35 player-mask loops (`sub_080baa38`, `sub_080baabc`, `sub_080babb0`,
+`sub_080bafc8`) build the mask FIRST - `movs r1, #1; lsls r1, r4` before the
+field load, then `ands r0, r1` - and that only comes from a named mask,
+`s32 bit = 1 << i; if (t->unk2C & bit)` (10 differing bytes otherwise, same
+size).  The mirror of 3.330, where the ROM really is the `asrs`/`ands` form.
+
+### 3.365 A caller's `lsls #24` on a call result means the callee returns `u8`
+The converse of 3.356.  Five M35 predicates (`sub_080b9d68`, `sub_080ba774`,
+`sub_080bac5c`, `sub_080bb1ec`, `sub_080bc7c8`) return 0/1 from `s32`-looking
+code and byte-match on their own with any return type, but their callers
+truncate `r0` with `lsls r0, r0, #24` before the test.  That truncation is the
+caller re-narrowing a `u8` return value, so the prototype is `u8 f(void)`;
+with an `s32` prototype the caller comes out two bytes short.  As in 3.356,
+the first caller decides.
+
+### 3.366 A call-site sign-extension can come from the callee's PARAMETER type
+`sub_080bb8f8` passes `gUnk_0200B07C[i]` to `sub_080bb874(u8, s8)` and the ROM
+shows `ldrb; lsls #24; asrs #24` at the call.  That is the conversion to the
+`s8` parameter, not evidence that the table is `s8[]`: declared `u8[]`, as
+the file's other readers declare it, the call compiles identically.
+Resolve a per-file extern-type conflict by checking what the callee's
+prototype already converts before splitting files or adding casts.
+
 ## 4. Splitting ROM ranges into asm (tools/split.py)
 
 ### 4.1 objdump text only round-trips under `.syntax unified`
@@ -5589,6 +5669,17 @@ checksum it just stored), `sub_080b8348` (returns 0 on the early exit and
 falls off the end otherwise - gcc emits nothing for that path, 3.329), and
 `sub_080b6b08`.  The converse is just as useful: a `pop {r0}; bx r0` epilogue
 under a function you wrote as non-void means the return is spurious.
+
+### 4.71 Per-address objdump decoding: trust only the line AT the window start
+4.42's one-window-per-address decode table (`--start-address=A
+--stop-address=A+8`) still produced a truncated entry in M35 (#95): the
+harness kept the FIRST line it saw for each address, and that line came from
+an EARLIER window.  The window opened at `0x080BB2F0` (a pool word) decoded
+`0x080BB2F4 push {lr}` and then `0x080BB2F6 bl` cut to two bytes by its own
+stop address, and `setdefault` stored that as the entry for `0x080BB2F6`.  The
+walker then desynced on `sub_080bb2f4`'s first call and the listing lost a
+`bl sub_080ba708`.  Echo a marker before each window and record only the line
+whose address equals that window's start; every other line is a by-product.
 
 ### 3.336 The four-loop HBlank family: `for (i = 0; i <= 6; i = j) { ...; j = i + 1; ... }`
 M34's `sub_080b6154`/`6290`/`63a4`/`6474` are one body with four sets of
