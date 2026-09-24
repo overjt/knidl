@@ -792,8 +792,8 @@ child issues of #35 are created from it. Findings that belong in this document:
     `PlayerState.unk24`/`unk26` to the task's 16.16 position.
   * **Action bodies** (`player_337f4.c`, `player_343c0.c`,
     `player_34f8c.c`): actions 1-9 and 22 of the first table and handlers
-    1-8 of the second (M10 holds the rest, starting with handler 9,
-    `sub_08036280`).  An "enter" coroutine saves the mode
+    1-8 of the second (M10 holds actions 10-21 and 23-28 and handlers
+    9-25, see its entry below; the rest are in M11-M14).  An "enter" coroutine saves the mode
     (`PlayerState.unk05 = unk04`), sets the new mode and handler
     (`unk04`, `Task.unk15`), then plays the animation of the current
     ability out of a per-action table (`gUnk_0873D0F8[26][5]`,
@@ -808,6 +808,75 @@ child issues of #35 are created from it. Findings that belong in this document:
   * Census: 63 functions, not 60 - three dead exports added (`0x0803093C`,
     the three-argument twin of `sub_080308e8`, and the empty stubs
     `0x080337F8`/`0x08033800`).
+- **M10 (`0x08036280-0x0803CD5F`) is the second half of the player's action
+  bodies.**  Decompiled in #91 as `src/player_36280.c`, `src/player_36c94.c`,
+  `src/player_37ed8.c`, `src/player_3919c.c`, `src/player_39c24.c`,
+  `src/player_3aa64.c` and `src/player_3bde8.c` (all 39 functions, no `asm`
+  statements, no `register` pins).  The census name "stage script runner"
+  was wrong: these are the entries of M09's two action tables that M09 does
+  not hold.
+  * **Table map.**  `gUnk_0873A748[62]` ("enter" coroutines, by
+    `PlayerState.unk02`): 1-9 and 22 are M09's, **10-21 and 23-28 are
+    M10's** (`sub_080366c4`, `sub_080369b0`, `sub_08036c94`,
+    `sub_080375e0`, `sub_08037bd4`, `sub_08037d64`, `sub_08037ed8`,
+    `sub_0803919c`, `sub_0803bd90`, `sub_0803bde8`, `sub_080397f8`,
+    `sub_08039c24`; `sub_0803aa64`, `sub_0803b3c4`, `sub_0803b4f8`,
+    `sub_0803b768`, `sub_0803b87c`, `sub_0803b9a0`), 29-58 are in M11-M14
+    (`0x0804462C-0x0804FE68`) and 59-61 are M09's empty stubs.
+    `gUnk_0873A840[57]` (per-frame handlers, by `Task.unk15`): 1-8 are
+    M09's, **9-25 are M10's** (`sub_08036280`, `sub_08036888`,
+    `sub_08036b9c`, `sub_080371f0`, `sub_08037914`, `sub_08037cc8`,
+    `sub_08037e28`, `sub_08038fe8`, `sub_0803bdd4`, `sub_0803c990`,
+    `sub_0803aa40`, `sub_0803afcc`, `sub_0803b47c`, `sub_0803b6ec`,
+    `sub_0803bbf0`, `sub_0803b914`, `sub_0803b828`), 26-55 are in M11-M14
+    and 56 is M09's stub.  An action's enter body sets `Task.unk15`, which
+    is how the two index spaces pair up: action 10 runs handler 10, ...,
+    action 16 handler 16; action 17 installs its own per-frame callback in
+    `Task.unk04` (`sub_080396a4`) and 20 has no handler; 18 runs 17, 19
+    runs 18, 21 runs 19, 23-25 run 20-22, 26 runs 25, 27 runs 24 and 28
+    runs 23; handler 9 belongs to M09's action 9 (`sub_080359f8`).
+  * **What the actions do** (the shapes are M09's, lesson 3.404-3.408): an
+    enter body saves the mode (`PlayerState.unk05 = unk04`), sets the new
+    mode and handler and plays the ability's animation out of a per-action
+    table indexed by `PlayerState.unk0D` (`gUnk_0873D4BC[][5]`,
+    `gUnk_0873D5CA`, `gUnk_0873D632[][7]`, `gUnk_0873D880`, `gUnk_0873D8B4`,
+    `gUnk_0873D908`, `gUnk_0873D9DA[4][4]`, `gUnk_0873D9FA`,
+    `gUnk_0873DA62`, `gUnk_0873DACA`), or runs a state machine over
+    `Task.unk73`; a handler runs M11's transition predicates, tests the
+    latched held and newly-pressed keys `gUnk_03002458[]` /
+    `gUnk_030023C0[]` (M11's `sub_08040788` copies them from
+    `gUnk_03000F98[]`/`gUnk_03001EB8[]`; 0x30 = left/right, 0x41 = A or
+    up, 0x80 = down, 0x02 = B) and requests the next action in
+    `PlayerState.unk01` or re-binds its coroutine with `sub_08006148`.
+    Action 17 (`sub_0803919c`) is the **player's death**: it counts the
+    players with health left, plays the lost-life or game-over music,
+    lets its callback drop the player off the screen and, once
+    `gUnk_0300234C` reaches 0, raises M02's stage request
+    `gUnk_03002438 = 6`.  Action 20 (`sub_080397f8`) **enters a door**
+    through M07's `sub_08025024`, and action 21 (`sub_08039c24`) **walks
+    through it**, driving the door's M08 stage objects and the cameras
+    through M07's helpers.  Action 13's handler `sub_08037914` **breaks
+    blocks** with the hit box `gUnk_0873CC54` (M09's `sub_08030898`, debris
+    through M17's `sub_08065100`); action 13's enter body clears the
+    ability (`PlayerState.unk0D = 0`).  Action 19 (`sub_0803bde8`) **hands
+    health over** to the partner player in `Task.unk18` (refilling
+    `gUnk_02005588[]` up to `gUnk_02005580` through `sub_080b4204`).
+  * **Helpers M09 calls**: `sub_0803c9b4` (M09's `sub_08033414`) steps and
+    draws the three spark records `gUnk_02007E90[player][3]` (the twin of
+    M04's `sub_080109c8`); `sub_0803cbd8` (M09's `sub_0803332c`) steps the
+    knock-back script `gUnk_0873A994[PlayerState.filler2A][PlayerState.unk28]`
+    (`{dx, dy, flags}`: `flags & 15` frames to hold, `& 64` mirror with the
+    facing, `& 128` sound, 0 = end) into the 8.8 offsets
+    `PlayerState.unk24`/`unk26`; `sub_0803ccd8(n)` (M09's `sub_08034f8c`)
+    applies step `n` of the 8.8 motion table `gUnk_0873AEBC`.
+  * **Twins in M11.**  M11 carries its own copies of several actions for
+    the `gUnk_03001F30 != 0` tables `gUnk_0873B42C`/`gUnk_0873B4A4`, and
+    they are byte-for-byte templates: `sub_0803aa64` is `sub_08043014`,
+    `sub_08036c94` is `sub_08042128`, `sub_080371f0` is `sub_08042328`.
+  * Census: 39 functions, not 41 - the long-jump phantoms `0x08037F2A`,
+    `0x08038F8E`, `0x08038FD8` (inside the 4368-byte `sub_08037ed8`) and
+    `0x0803AA14` (the exit tail of `sub_08039c24`) removed, the hidden
+    leaf `0x0803BDD4` (handler 17) added.
 - **M35 (`0x080B9D0C-0x080BDA2B`) is the sub-game framework plus one
   complete sub-game, a reaction-time duel.**  Decompiled in #95, in five files
   (`docs/analysis/module-map.md` §6).  The census name "game-mode flow + link

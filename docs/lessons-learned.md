@@ -2079,6 +2079,125 @@ yet the label still moves `balance_case_nodes`' pivot (cases 1-4 alone
 pivot at 2, the ROM at 3; 3.42 again), and `&tbl[k] - 1` (a `subs` after
 the `adds`) is not `&tbl[k - 1]`.
 
+### 3.411 A handler's `switch (Task.unk73)` is labelled blocks inside the switch, and every re-bind is its own call
+M10's per-frame handlers that re-bind their coroutine (`sub_0803afcc`,
+`sub_08036280`, `sub_08038fe8`, `sub_080371f0`) end most arms with
+`Task.unk73 = K` and a jump to one shared `sub_08006148(coroutine,
+gCurTaskIdx)`.  Three rules reproduce the ROM's layout:
+* the one-store blocks the ROM places after the last case body are
+  labelled statements written there, inside the switch, and reached by
+  `goto` (4.67; M11's `sub_08042328` is the same shape);
+* several IDENTICAL blocks the ROM keeps apart (`movs r0, #3; strb r0,
+  [r5]; b rebind` three times in `sub_0803afcc`) each had their own call:
+  `*st = 3; sub_08006148(f, gCurTaskIdx); break;`.  jump2 cross-jumps the
+  calls into one tail, and a label it creates in that pass never gets a
+  `jump_chain` entry, so form 2 cannot then merge the store blocks (4.64).
+  Written as `*st = 3; goto rebind;` they merge (24 bytes short in
+  `sub_0803afcc`, 32 in `sub_08036280`);
+* the same happens when the shared call sits after a join label the source
+  already has (`if (a) { ...; x = 1; } else if (b) { ...; x = 4; } else
+  break; sub_08006148(...);`): jump2 adds the other arms' jumps to that
+  label's chain and the store blocks merge again, so write the call in each
+  arm (`sub_08036280`'s last case).
+A test the ROM sends into the THEN-arm of a later `if` (the `bne` lands on
+`sub_08040b40(11, 3)`, not on the test before it) is a label inside that
+arm: `if (k & 48) { k3: sub_08040b40(11, 3); } else ...` with `goto k3;`.
+`u8 *st = &t->unk73;` holds the field address for the stores (4.69).
+
+### 3.412 An empty `do { } while (0)` is two different zero-code levers
+Both closed an M10 function with no `asm` and no pin:
+* **around a block** it counts every reference inside one loop level
+  deeper (3.383).  `sub_0803afcc`'s case 1 needed the key-mask value
+  `gUnk_030023C0[...]` allocated before the switch value (7 refs over 40
+  insns); as a 3-ref HImode temp it ranked below it and three registers
+  rotated (34 bytes; a `u16` local instead gets the order right but
+  regmove then ANDs in place, 13 bytes).  `do { ...case 1... } while (0);
+  break;` doubled the temp's weight and matched.  Read the order in `.greg`'s "regs to allocate"
+  first: a register one step off in several places is often one pseudo
+  that must move in the order;
+* **as a statement** in front of a block (`do { } while (0);` alone) it
+  ends cse's extended basic block, so cse1 no longer follows the jump into
+  the next block.  In `sub_08038fe8` that stopped gcse's copy of the task
+  address from outliving its register and taking r5 (a `push {r4, r5}` and
+  an `adds r5, r4, #0`, 4 bytes).  It may be a compiled-out debug macro in
+  the original; nothing in the ROM can prove it either way.
+
+### 3.413 M11 carries twins of the M10 actions; grep it before hand-deriving
+The player task switches to M11's tables `gUnk_0873B42C`/`gUnk_0873B4A4`
+while `gUnk_03001F30 != 0`, and several of their bodies are the same code
+as M10's: `sub_0803aa64` is M11's `sub_08043014` (mode 15, handler 20, the
+`lab1:` wait loops with `if (gUnk_03002490->unk28 != 0) goto lab1;`),
+`sub_08036c94` is `sub_08042128` and `sub_080371f0` is `sub_08042328`.  Each
+matched within a few builds of the M11 source.  `sub_0803c9b4` is likewise
+M04's `sub_080109c8` (the three spark records), including that twin's two
+`*(volatile s32 *)` re-reads, which gcse's PRE removes in every plain
+spelling tried (4.44).
+
+### 3.414 Local-variable count and scope, measured again
+* One `s32` local serves as the counter of three player loops AND holds
+  `sub_0802653c()`'s result for a later `sub_08026704(i)` in
+  `sub_08039c24`; split into two it rotated r4-r7 (96 bytes) and left a
+  dead `movs r7, #0` in a preheader (3.339).
+* One task-pointer local shared by two blocks of `sub_0803aa64` rotated
+  three registers; a second local (`v`) for the second block matched
+  (3.384).  Each group of `PlayerState` byte stores in `sub_080375e0`
+  likewise needs its own block-scoped `struct PlayerState *`.
+* `if (x == 0) n = 2; else n = 1;` loads the else value first (`movs r1,
+  #1; cmp; bne; movs r1, #2`); `n = x == 0 ? 2 : 1` cost 442 bytes and `n =
+  1; if (x == 0) n = 2;` moves the `movs` above the load (`sub_0803bde8`).
+* Spilled locals get their stack slots in declaration order: declare them
+  in the ROM's slot order (`u16 a43, b43; u8 a42, b42;` in `sub_0803bde8`).
+
+### 3.415 Small M10 shapes, one line each
+- A switch's default body placed between case 2's then- and else-arm is
+  `default:` inside the if-arm: `if (c) { ...; default:
+  TaskYieldTrampoline(1); break; } else-code; break;` (`sub_080397f8`).
+- A case that falls into default while another case jumps into default's
+  body: `case 10: ...; goto anim; case 2: f(); default: anim: ...`
+  (`sub_08039c24`); a 4/9/10/else pick laid out as a linear chain is an
+  if/else-if chain, and a compare tree with the default arm first is
+  `default:` written first (`sub_0803b3c4`, 3.333).
+- `strh r0, [t, #70]; strh r0, [t, #60]` of one call result is `unk3C =
+  unk46 = sub_0803f7e0(3);`.
+- `u16 y = t->unk4A - (u16)(cam.y - 80); if ((s16)y > 184)` stops gcc
+  reassociating into `(unk4A + 80) - cam.y` (`sub_080396a4`).
+- `e = tbl[i]; e += j;` in two statements loads the table base before the
+  task pointer and reads the two signed indices with `ldrb; lsls; asrs`;
+  one `&tbl[i][j]` lets cse derive the second address from the first
+  (`sub_0803cbd8`).  Whether a signed byte comes out `ldrb; lsls; asrs` or
+  `movs rK, #n; ldrsb` is register allocation (the destination equals the
+  base or not), not the spelling.
+- The 8.8 unpack re-reads the table halfword at each use: `x = e[1] << 8;
+  if (e[1] & 0x8000) x |= 0xFF000000;`; a local copy of `e[1]` costs a
+  register copy (`sub_0803ccd8`).
+- A speed clamp is `if ((u32)abs(t->unk54) > 0x9900) { if (t->unk54 < 0)
+  t->unk54 = -0x9900; else t->unk54 = 0x9900; }` (`sub_0803b4f8`), and the
+  stored `0x9900` reuses the compare's register.
+- `if (sub_08040298() != 0) break;` followed by `t->unk7A = 0` stores the
+  call's zero result register (`sub_08036280`): write the literal 0.
+- `while (1) { ...; break; }` around the top tests of a handler moves its
+  `X; break;` arms after the first unconditional branch, an alternative to
+  labels (`sub_08037914`).
+- `sub_08037ed8`, the 4368-byte state machine, is `loop: switch
+  (gUnk_03002490->unk73) { ... }` with `goto loop` at the end of cases 5, 0
+  and 4 and ONE `sub_08006138();` after the switch; a `while (1)` form
+  keeps a gcse copy of the task address the ROM does not have (149 bytes
+  in one agent's attempt, MATCH in the other's).
+- `ldr r5, =K1; bne; subs r5, #K` (the value loaded before the test) is
+  `if (!(x & 1)) a = K2; else a = K1;`; the positive test emits the
+  constants in the other order and reverses the branch.
+- A compare tree `cmp #4; beq; cmp #4; ble default; cmp #25; beq` is the
+  case set {0, 4, 25} with `case 0: default:` first: three labels put the
+  pivot on 4 (3.42); {4, 25} lacks the `ble` and {4, 25, 26} moves the
+  pivot to 25.
+- A `&&` chain whose third test jumps past both arms is a nested `if`
+  inside the first two terms: `if (!(p->unk42 & 2) && p->unk37 == 0) { if
+  (p->unk0D != 0) {...} } else ...`.
+- Several `ldr r0, [rX]; b shared` stubs in front of one store-and-exit are
+  copies of the same statement jump2 cross-jumped: write the store in each
+  arm.  A wait loop whose exit test the ROM does not copy in front of the
+  loop is `for (;;) { if (flag) break; TaskYieldTrampoline(1); }`.
+
 ## 4. Splitting ROM ranges into asm (tools/split.py)
 
 ### 4.1 objdump text only round-trips under `.syntax unified`
@@ -6639,6 +6758,36 @@ pointer table seems unreferenced, grep the pools for its address minus 4
 spaces differ: M09's first nine actions happen to set `Task.unk15` to
 their own number, so their entries line up by position, but action 22
 (`sub_08034f70`) runs handler 7.
+
+### 4.90 A census row of exactly `0x1000` is symdb's size cap: look for long-jump phantoms
+`symbols.csv` caps every size at `MAX_SIZE = 0x1000` (rom-map §3), so a
+round `0x1000` row is a function that runs into the next entry, and in M10
+that next entry was a phantom.  `sub_08037ed8` is 4368 bytes, a seven-state
+`switch (Task.unk73)` loop whose head (`0x08037F2A`), one arm
+(`0x08038F8E`) and shared exit (`0x08038FD8`) are reached by long `bl`
+jumps from inside the function (a Thumb `b.n` reaches only +/-2 KiB,
+4.39), and the census took all three for functions; `0x0803AA14`, the
+exit tail of the 3612-byte `sub_08039c24`, is the same case.  With the
+phantoms folded, `sub_08037ed8` is still larger than the cap, so
+`symbols.csv` keeps `0x1000` for it (`symdb_check.py` rejects anything
+bigger); `carve.py` only checks entry points, so the carve is unaffected.
+The action tables also verify a census directly: every entry of
+`gUnk_0873A748`/`gUnk_0873A840` that lands in the range must be a census
+row, and handler 17 (`0x0803BDD4`, a prologue-less leaf) was not - it sat
+inside `sub_0803bd90`'s row.
+
+### 4.91 Racing two agents on one function through `variants.sh` needs per-agent variant names
+The last M10 function (`sub_08037ed8`, 4368 bytes) was worked by two agents
+at once, neither in `fns/`: each wrote candidates under its own
+`wip/<agent>/` and tested them with `variants.sh`, which saves the first
+MATCH to `good/`.  `variants.sh` logs to `build/var_<fn>/<variant>.log`, so
+the two agents' variant file names must not collide: give each agent a
+prefix (`b_`, `c_`).  The agent that won had just matched the function's
+own per-frame handler (`sub_08038fe8`) and wrote down its sub-states
+first; its first full draft came out at the exact size, and a full diff
+that ignores pool words and branch offsets showed that only 18
+instructions differed - fnmatch's 80-line diff (4.86) hides that on a
+4 KiB function.  Match the handler of a big state-machine body first.
 
 ### 3.336 The four-loop HBlank family: `for (i = 0; i <= 6; i = j) { ...; j = i + 1; ... }`
 M34's `sub_080b6154`/`6290`/`63a4`/`6474` are one body with four sets of
