@@ -522,7 +522,8 @@ vma,size,isa,evidence,name
 0x08021A40,0x74,thumb,bl-target,sub_08021a40
 0x08021AB4,0x64,thumb,bl-target,sub_08021ab4
 0x08021B18,0x14,thumb,bl-target,sub_08021b18
-0x08021B2C,0x88,thumb,bl-target,sub_08021b2c
+0x08021B2C,0x44,thumb,bl-target,sub_08021b2c
+0x08021B70,0x44,thumb,curated,sub_08021b70
 0x08021BB4,0x60,thumb,bl-target,sub_08021bb4
 0x08021C14,0x38,thumb,bl-target,sub_08021c14
 0x08021C4C,0x28,thumb,bl-target,sub_08021c4c
@@ -539,7 +540,8 @@ vma,size,isa,evidence,name
 0x08022760,0x28,thumb,bl-target,sub_08022760
 0x08022788,0x1C,thumb,bl-target,sub_08022788
 0x080227A4,0x6C,thumb,bl-target,sub_080227a4
-0x08022810,0x13C,thumb,bl-target,sub_08022810
+0x08022810,0xB4,thumb,bl-target,sub_08022810
+0x080228C4,0x88,thumb,curated,sub_080228c4
 0x0802294C,0x20,thumb,bl-target,sub_0802294c
 0x0802296C,0x2D0,thumb,bl-target,sub_0802296c
 0x08022C3C,0x314,thumb,bl-target,sub_08022c3c
@@ -582,8 +584,7 @@ vma,size,isa,evidence,name
 0x0802497C,0x428,thumb,bl-target,sub_0802497c
 0x08024DA4,0x9C,thumb,rom-pointer,sub_08024da4
 0x08024E40,0x1E4,thumb,bl-target,sub_08024e40
-0x08025024,0x87A,thumb,bl-target,sub_08025024
-0x0802589E,0x42,thumb,bl-target,sub_0802589e
+0x08025024,0x8BC,thumb,bl-target,sub_08025024
 0x080258E0,0x150,thumb,bl-target,sub_080258e0
 0x08025A30,0x9C,thumb,bl-target,sub_08025a30
 0x08025ACC,0x40,thumb,bl-target,sub_08025acc
@@ -611,8 +612,10 @@ vma,size,isa,evidence,name
 0x08026584,0x180,thumb,bl-target,sub_08026584
 0x08026704,0x28,thumb,bl-target,sub_08026704
 0x0802672C,0x108,thumb,bl-target,sub_0802672c
-0x08026834,0x128,thumb,bl-target,sub_08026834
-0x0802695C,0x3C,thumb,bl-target,sub_0802695c
+0x08026834,0xCC,thumb,bl-target,sub_08026834
+0x08026900,0x5C,thumb,curated,sub_08026900
+0x0802695C,0x38,thumb,bl-target,sub_0802695c
+0x08026994,0x4,thumb,curated,sub_08026994
 0x08026998,0x40,thumb,bl-target,sub_08026998
 0x080269D8,0x10,thumb,bl-target,sub_080269d8
 0x080269E8,0x24,thumb,bl-target,sub_080269e8

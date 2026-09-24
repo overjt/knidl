@@ -4,6 +4,7 @@
 @ Functions (docs/analysis/symbols.csv):
 @   0x08021B18 sub_08021b18
 @   0x08021B2C sub_08021b2c
+@   0x08021B70 sub_08021b70
 @   0x08021BB4 sub_08021bb4
 @   0x08021C14 sub_08021c14
 @   0x08021C4C sub_08021c4c
@@ -21,6 +22,7 @@
 @   0x08022788 sub_08022788
 @   0x080227A4 sub_080227a4
 @   0x08022810 sub_08022810
+@   0x080228C4 sub_080228c4
 @   0x0802294C sub_0802294c
 @   0x0802296C sub_0802296c
 @   0x08022C3C sub_08022c3c
@@ -64,7 +66,6 @@
 @   0x08024DA4 sub_08024da4
 @   0x08024E40 sub_08024e40
 @   0x08025024 sub_08025024
-@   0x0802589E sub_0802589e
 @   0x080258E0 sub_080258e0
 @   0x08025A30 sub_08025a30
 @   0x08025ACC sub_08025acc
@@ -93,7 +94,9 @@
 @   0x08026704 sub_08026704
 @   0x0802672C sub_0802672c
 @   0x08026834 sub_08026834
+@   0x08026900 sub_08026900
 @   0x0802695C sub_0802695c
+@   0x08026994 sub_08026994
 @   0x08026998 sub_08026998
 @   0x080269D8 sub_080269d8
 @   0x080269E8 sub_080269e8
@@ -215,6 +218,10 @@ loc_08021b66:
 	pop	{r1}
 	bx	r1
 	.word	gUnk_03005660
+	.thumb_func
+	.global	sub_08021b70
+sub_08021b70:
+	.thumb
 	push	{r4, lr}
 	adds	r3, r0, #0
 	lsrs	r3, r3, #4
@@ -2000,6 +2007,10 @@ loc_080228ac:
 	.word	gUnk_0300559C
 	.word	gUnk_03005570
 	.word	gUnk_0300557C
+	.thumb_func
+	.global	sub_080228c4
+sub_080228c4:
+	.thumb
 	push	{r4, r5, r6, lr}
 	mov	ip, r0
 	movs	r5, #0
@@ -6708,7 +6719,7 @@ sub_08025024:
 	.global	loc_08025038
 loc_08025038:
 	movs	r0, #0
-	bl	sub_0802589e	@ 0x0802589E
+	bl	loc_0802589e	@ 0x0802589E
 	movs	r0, r0
 	.word	0x02000030
 	.global	loc_08025044
@@ -7719,10 +7730,8 @@ loc_08025898:
 	ldr	r4, [pc, #64]	@ 0x080258DC
 	ldrh	r0, [r4, #0]
 	lsrs	r0, r0, #8
-	.thumb_func
-	.global	sub_0802589e
-sub_0802589e:
-	.thumb
+	.global	loc_0802589e
+loc_0802589e:
 	pop	{r3, r4, r5}
 	mov	r8, r3
 	mov	r9, r4
@@ -9850,6 +9859,10 @@ loc_080268d0:
 	.word	gUnk_0200AEF0
 	.word	gUnk_03005628
 	.word	gUnk_020055E8
+	.thumb_func
+	.global	sub_08026900
+sub_08026900:
+	.thumb
 	push	{r4, r5, lr}
 	ldr	r3, [pc, #76]	@ 0x08026950
 	ldr	r2, [pc, #76]	@ 0x08026954
@@ -9928,6 +9941,10 @@ sub_0802695c:
 	.word	gUnk_03002384
 	.word	gUnk_03001F20
 	.word	0x02007FB0
+	.thumb_func
+	.global	sub_08026994
+sub_08026994:
+	.thumb
 	bx	lr
 	movs	r0, r0
 	.thumb_func
