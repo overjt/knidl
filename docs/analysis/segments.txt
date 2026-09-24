@@ -96,7 +96,8 @@
 0x08021130 0x0802136C c_code terrain_21130 # src/terrain_21130.c (carved by tools/carve.py)
 0x0802136C 0x080214E0 thumb_code game_code_and_rodata_08018b84_08019eec_0801a3e4_0801a8c8_080207a0_0802136c [split]
 0x080214E0 0x08021B18 c_code terrain_214e0 # src/terrain_214e0.c (carved by tools/carve.py)
-0x08021B18 0x08023618 thumb_code game_code_and_rodata_08018b84_08019eec_0801a3e4_0801a8c8_08021b18 [split]
+0x08021B18 0x0802296C c_code terrain_21b18 # src/terrain_21b18.c (carved by tools/carve.py)
+0x0802296C 0x08023618 thumb_code game_code_and_rodata_08018b84_08019eec_0801a3e4_0801a8c8_08021b18 [split]
 0x08023618 0x08023948 c_code roomtask_23618 # src/roomtask_23618.c (carved by tools/carve.py)
 0x08023948 0x080242D0 thumb_code game_code_and_rodata_08018b84_08019eec_0801a3e4_0801a8c8_08021b18_08023948 [split]
 0x080242D0 0x08024E40 c_code level_242d0 # src/level_242d0.c (carved by tools/carve.py)

@@ -450,7 +450,12 @@ SECTIONS
         build/src/terrain_214e0.o(.text)
     } > ROM
 
-    .game_code_and_rodata_08018b84_08019eec_0801a3e4_0801a8c8_08021b18 0x08021B18 : {
+    /* terrain_21b18 — decompiled to C (src/terrain_21b18.c, carved by tools/carve.py) */
+    .terrain_21b18 0x08021B18 : {
+        build/src/terrain_21b18.o(.text)
+    } > ROM
+
+    .game_code_and_rodata_08018b84_08019eec_0801a3e4_0801a8c8_08021b18 0x0802296C : {
         KEEP(*(.game_code_and_rodata_08018b84_08019eec_0801a3e4_0801a8c8_08021b18)) KEEP(*(.game_code_and_rodata_08018b84_08019eec_0801a3e4_0801a8c8_08021b18.tail))
     } > ROM
 

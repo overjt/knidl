@@ -5426,7 +5426,7 @@ loc_08032e48:
 	.word	gUnk_03005568
 	.word	gUnk_02005574
 	.word	gUnk_03005550
-	.word	0x03005544
+	.word	gUnk_03005544
 	.global	loc_08032eb8
 loc_08032eb8:
 	ldr	r0, [r4, #0]
