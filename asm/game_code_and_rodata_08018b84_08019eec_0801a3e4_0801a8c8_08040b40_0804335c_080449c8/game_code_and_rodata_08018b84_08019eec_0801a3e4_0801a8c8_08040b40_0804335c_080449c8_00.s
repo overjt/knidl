@@ -19156,7 +19156,7 @@ loc_0804e400:
 	strb	r4, [r0, #9]
 	b.n	loc_0804e460	@ 0x0804E460
 	movs	r0, r0
-	.word	0x0873CC54
+	.word	gUnk_0873CC54
 	.word	gUnk_02007FA0
 	.word	gUnk_02004B6C
 	.word	gCurTaskIdx
