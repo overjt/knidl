@@ -475,10 +475,6 @@ SECTIONS
         build/src/level_242d0.o(.text)
     } > ROM
 
-    .game_code_and_rodata_08018b84_08019eec_0801a3e4_0801a8c8_08021b18_08023948_08024e40 0x08024E40 : {
-        KEEP(*(.game_code_and_rodata_08018b84_08019eec_0801a3e4_0801a8c8_08021b18_08023948_08024e40)) KEEP(*(.game_code_and_rodata_08018b84_08019eec_0801a3e4_0801a8c8_08021b18_08023948_08024e40.tail))
-    } > ROM
-
     /* stage_261c0 — decompiled to C (src/stage_261c0.c, carved by tools/carve.py) */
     .stage_261c0 0x080261C0 : {
         build/src/stage_261c0.o(.text)
