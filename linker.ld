@@ -508,8 +508,9 @@ SECTIONS
         build/src/room_28320.o(.text)
     } > ROM
 
-    .game_code_and_rodata_08018b84_08019eec_0801a3e4_0801a8c8_08021b18_08023948_08024e40_080270d0_08028b8c 0x08028B8C : {
-        KEEP(*(.game_code_and_rodata_08018b84_08019eec_0801a3e4_0801a8c8_08021b18_08023948_08024e40_080270d0_08028b8c)) KEEP(*(.game_code_and_rodata_08018b84_08019eec_0801a3e4_0801a8c8_08021b18_08023948_08024e40_080270d0_08028b8c.tail))
+    /* camera_28b8c — decompiled to C (src/camera_28b8c.c, carved by tools/carve.py) */
+    .camera_28b8c 0x08028B8C : {
+        build/src/camera_28b8c.o(.text)
     } > ROM
 
     /* camera_296a0 — decompiled to C (src/camera_296a0.c, carved by tools/carve.py) */

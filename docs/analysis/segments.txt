@@ -108,7 +108,7 @@
 0x080273A0 0x08027A6C c_code stage_273a0 # src/stage_273a0.c (carved by tools/carve.py)
 0x08027A6C 0x08028320 thumb_code game_code_and_rodata_08018b84_08019eec_0801a3e4_0801a8c8_08021b18_08023948_08024e40_080270d0_08027a6c [split]
 0x08028320 0x08028B8C c_code room_28320 # src/room_28320.c (carved by tools/carve.py)
-0x08028B8C 0x080296A0 thumb_code game_code_and_rodata_08018b84_08019eec_0801a3e4_0801a8c8_08021b18_08023948_08024e40_080270d0_08028b8c [split]
+0x08028B8C 0x080296A0 c_code camera_28b8c # src/camera_28b8c.c (carved by tools/carve.py)
 0x080296A0 0x08029C74 c_code camera_296a0 # src/camera_296a0.c (carved by tools/carve.py)
 0x08029C74 0x0802A9CC c_code camera_29c74 # src/camera_29c74.c (carved by tools/carve.py)
 0x0802A9CC 0x0802B2F0 c_code bgmap_2a9cc # src/bgmap_2a9cc.c (carved by tools/carve.py)
