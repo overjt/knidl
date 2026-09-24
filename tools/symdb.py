@@ -279,6 +279,14 @@ KNOWN_SYMBOLS = {
 # m4a_songs data segment surrounded by signed 8-bit PCM sample bytes; the
 # `pop {pc}` halfword passes the strict terminator check by accident.
 FALSE_POSITIVES = {
+    # --- M06 (issue #84) ---
+    # 0x08021B0E is not a function: it is the `bx r1` that completes
+    # sub_08021ab4's epilogue (`pop {r4-r6}; pop {r1}; bx r1`), followed by
+    # that function's two literal-pool words (0x03005660, 0x087328F0).  The
+    # census split it off because the pool words that follow look like data
+    # after a terminator; nothing in the ROM references 0x08021B0E.  Same
+    # shape as the former sub_080cfcfc (`pop {pc}` tail of __divsi3).
+    0x08021B0E,
     # --- M04 (issue #82), two rows the reachability sweep dropped ---
     # Both are the same shape as M05's 0x0801A41A below and share its cause:
     # the pool word 0xFFFFF000 decodes as the `bl` pair F000/FFFF, whose

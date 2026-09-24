@@ -293,6 +293,66 @@ SECTIONS
         KEEP(*(.game_code_and_rodata_08018b84_08019eec_0801a3e4_0801a8c8)) KEEP(*(.game_code_and_rodata_08018b84_08019eec_0801a3e4_0801a8c8.tail))
     } > ROM
 
+    /* terrain_1bcac — decompiled to C (src/terrain_1bcac.c, carved by tools/carve.py) */
+    .terrain_1bcac 0x0801BCAC : {
+        build/src/terrain_1bcac.o(.text)
+    } > ROM
+
+    /* terrain_1c30c — decompiled to C (src/terrain_1c30c.c, carved by tools/carve.py) */
+    .terrain_1c30c 0x0801C30C : {
+        build/src/terrain_1c30c.o(.text)
+    } > ROM
+
+    /* terrain_1c444 — decompiled to C (src/terrain_1c444.c, carved by tools/carve.py) */
+    .terrain_1c444 0x0801C444 : {
+        build/src/terrain_1c444.o(.text)
+    } > ROM
+
+    /* terrain_1c51c — decompiled to C (src/terrain_1c51c.c, carved by tools/carve.py) */
+    .terrain_1c51c 0x0801C51C : {
+        build/src/terrain_1c51c.o(.text)
+    } > ROM
+
+    .game_code_and_rodata_08018b84_08019eec_0801a3e4_0801a8c8_0801c444_0801c690 0x0801C690 : {
+        KEEP(*(.game_code_and_rodata_08018b84_08019eec_0801a3e4_0801a8c8_0801c444_0801c690)) KEEP(*(.game_code_and_rodata_08018b84_08019eec_0801a3e4_0801a8c8_0801c444_0801c690.tail))
+    } > ROM
+
+    /* terrain_1c8dc — decompiled to C (src/terrain_1c8dc.c, carved by tools/carve.py) */
+    .terrain_1c8dc 0x0801C8DC : {
+        build/src/terrain_1c8dc.o(.text)
+    } > ROM
+
+    .game_code_and_rodata_08018b84_08019eec_0801a3e4_0801a8c8_0801c444_0801c690_0801c930 0x0801C930 : {
+        KEEP(*(.game_code_and_rodata_08018b84_08019eec_0801a3e4_0801a8c8_0801c444_0801c690_0801c930)) KEEP(*(.game_code_and_rodata_08018b84_08019eec_0801a3e4_0801a8c8_0801c444_0801c690_0801c930.tail))
+    } > ROM
+
+    /* terrain_2069c — decompiled to C (src/terrain_2069c.c, carved by tools/carve.py) */
+    .terrain_2069c 0x0802069C : {
+        build/src/terrain_2069c.o(.text)
+    } > ROM
+
+    .game_code_and_rodata_08018b84_08019eec_0801a3e4_0801a8c8_080207a0 0x080207A0 : {
+        KEEP(*(.game_code_and_rodata_08018b84_08019eec_0801a3e4_0801a8c8_080207a0)) KEEP(*(.game_code_and_rodata_08018b84_08019eec_0801a3e4_0801a8c8_080207a0.tail))
+    } > ROM
+
+    /* terrain_21130 — decompiled to C (src/terrain_21130.c, carved by tools/carve.py) */
+    .terrain_21130 0x08021130 : {
+        build/src/terrain_21130.o(.text)
+    } > ROM
+
+    .game_code_and_rodata_08018b84_08019eec_0801a3e4_0801a8c8_080207a0_0802136c 0x0802136C : {
+        KEEP(*(.game_code_and_rodata_08018b84_08019eec_0801a3e4_0801a8c8_080207a0_0802136c)) KEEP(*(.game_code_and_rodata_08018b84_08019eec_0801a3e4_0801a8c8_080207a0_0802136c.tail))
+    } > ROM
+
+    /* terrain_214e0 — decompiled to C (src/terrain_214e0.c, carved by tools/carve.py) */
+    .terrain_214e0 0x080214E0 : {
+        build/src/terrain_214e0.o(.text)
+    } > ROM
+
+    .game_code_and_rodata_08018b84_08019eec_0801a3e4_0801a8c8_08021b18 0x08021B18 : {
+        KEEP(*(.game_code_and_rodata_08018b84_08019eec_0801a3e4_0801a8c8_08021b18)) KEEP(*(.game_code_and_rodata_08018b84_08019eec_0801a3e4_0801a8c8_08021b18.tail))
+    } > ROM
+
     /* stage_3cd60 — decompiled to C (src/stage_3cd60.c, carved by tools/carve.py) */
     .stage_3cd60 0x0803CD60 : {
         build/src/stage_3cd60.o(.text)

@@ -525,8 +525,7 @@ vma,size,isa,evidence,name
 0x080219F0,0x20,thumb,bl-target,sub_080219f0
 0x08021A10,0x30,thumb,bl-target,sub_08021a10
 0x08021A40,0x74,thumb,bl-target,sub_08021a40
-0x08021AB4,0x5A,thumb,bl-target,sub_08021ab4
-0x08021B0E,0xA,thumb,rom-pointer,sub_08021b0e
+0x08021AB4,0x64,thumb,bl-target,sub_08021ab4
 0x08021B18,0x14,thumb,bl-target,sub_08021b18
 0x08021B2C,0x88,thumb,bl-target,sub_08021b2c
 0x08021BB4,0x60,thumb,bl-target,sub_08021bb4

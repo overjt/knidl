@@ -184,7 +184,7 @@ dispatches, pool density) — a planning aid, not a promise.
 | M03 | `0x0800B920-0x08010357` | 18.6 KiB | 83 | 0 | **** | menu / UI task bank |
 | M04 | `0x08010358-0x08017667` | 28.8 KiB | 65 | 0 | *** | scripted-sequence bank: director + 50 of the 63 scripts |
 | M05 | `0x08017668-0x0801A8C7` | 12.6 KiB | 23 | 0 | *** | player-character animation bank + collision registry - **landed (#81)**, 20/23 |
-| M06 | `0x0801A8C8-0x08021B17` | 28.6 KiB | 56 | 0 | ***** | terrain / collision query (pure leaf) |
+| M06 | `0x0801A8C8-0x08021B17` | 28.6 KiB | 56 | 0 | ***** | terrain / collision query (pure leaf) - **partial (#84)**, 28/55 (`sub_08021b0e` was a census false positive) |
 | M07 | `0x08021B18-0x0802969F` | 30.9 KiB | 154 | 1 | ****** | level / room builder + tilemap upload |
 | M08 | `0x080296A0-0x08030803` | 28.3 KiB | 153 | 2 | *** | camera / BG scroll + tilemap streaming |
 | M09 | `0x08030804-0x0803627F` | 22.6 KiB | 60 | 0 | ***** | stage manager A |
