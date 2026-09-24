@@ -4729,7 +4729,8 @@ vma,size,isa,evidence,name
 0x080B9D0C,0x18,thumb,bl-target,sub_080b9d0c
 0x080B9D24,0x24,thumb,bl-target,sub_080b9d24
 0x080B9D48,0x20,thumb,bl-target,sub_080b9d48
-0x080B9D68,0x80,thumb,bl-target,sub_080b9d68
+0x080B9D68,0x40,thumb,bl-target,sub_080b9d68
+0x080B9DA8,0x40,thumb,curated,sub_080b9da8
 0x080B9DE8,0x48,thumb,bl-target,sub_080b9de8
 0x080B9E30,0x20,thumb,bl-target,sub_080b9e30
 0x080B9E50,0x50,thumb,bl-target,sub_080b9e50
@@ -4801,7 +4802,8 @@ vma,size,isa,evidence,name
 0x080BB358,0x28,thumb,rom-pointer,sub_080bb358
 0x080BB380,0x28,thumb,rom-pointer,sub_080bb380
 0x080BB3A8,0x40,thumb,rom-pointer,sub_080bb3a8
-0x080BB3E8,0x44,thumb,rom-pointer,sub_080bb3e8
+0x080BB3E8,0x28,thumb,rom-pointer,sub_080bb3e8
+0x080BB410,0x1C,thumb,rom-pointer,sub_080bb410
 0x080BB42C,0x28,thumb,rom-pointer,sub_080bb42c
 0x080BB454,0x28,thumb,rom-pointer,sub_080bb454
 0x080BB47C,0x80,thumb,rom-pointer,sub_080bb47c
@@ -4917,7 +4919,8 @@ vma,size,isa,evidence,name
 0x080BD828,0x84,thumb,bl-target,sub_080bd828
 0x080BD8AC,0x8C,thumb,rom-pointer,sub_080bd8ac
 0x080BD938,0x78,thumb,rom-pointer,sub_080bd938
-0x080BD9B0,0x5C,thumb,rom-pointer,sub_080bd9b0
+0x080BD9B0,0x38,thumb,rom-pointer,sub_080bd9b0
+0x080BD9E8,0x24,thumb,rom-pointer,sub_080bd9e8
 0x080BDA0C,0x20,thumb,rom-pointer,sub_080bda0c
 0x080BDA2C,0x4C,thumb,rom-pointer,sub_080bda2c
 0x080BDA78,0x20,thumb,rom-pointer,sub_080bda78

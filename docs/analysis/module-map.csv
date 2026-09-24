@@ -1,6 +1,6 @@
 id,start,end,size,functions,ptr_dispatched,blocks,mean_fn,max_fn,pool_pct,ram_cells,jump_tables,anchor_tables,task_types,ext_callers,ext_deps,difficulty,name,evidence
 M01,0x08007300,0x080075B8,0x2B8,1,1,0,0x2B8,0x2B8,16.7,7,1,0,0,0,8,3,main,already landed (c_code)
-M02,0x080075B8,0x0800B920,0x4368,110,15,3,0x9C,0x37C,19.7,161,7,1,5,34,10,3,game mode + screen/asset loader,"class-0 task types #0-2; game-state cells; LZ77UnCompVram x21, HuffUnComp x6; called from AgbMain"
+M02,0x080075B8,0x0800B920,0x4368,110,15,3,0x9C,0x37C,19.7,161,7,1,5,35,10,3,game mode + screen/asset loader,"class-0 task types #0-2; game-state cells; LZ77UnCompVram x21, HuffUnComp x6; called from AgbMain"
 M03,0x0800B920,0x08010358,0x4A38,83,43,3,0xE4,0x40C,16.0,93,2,0,22,2,11,4,menu / UI task bank,22 class-4 task types #238-259; key auto-repeat + decimal digit buffer; called from AgbMain and the save module
 M04,0x08010358,0x080109C8,0x670,7,6,0,0xEB,0x30C,11.2,11,0,0,2,4,0,2,scripted-sequence bank: director + 50 of the 63 scripts,task type #91 (class 1) sub_080103f0 picks a sequence body by gUnk_030023B8 (0-7) and runs it for gUnk_08731F98[id] frames (270-2020); type #92 (class 2) sub_080104f0 dispatches Task.unk18 into the 63 scripts at &gUnk_08731FA8[8]; sub_08010358 spawns type-92 children; sub_08010480 is the A|START skip hook
 M05,0x080109C8,0x08010B38,0x170,1,1,0,0x170,0x170,7.6,2,0,0,0,0,0,2,player_109c8,already landed (c_code)
@@ -135,13 +135,14 @@ M133,0x080B8694,0x080B8888,0x1F4,1,0,1,0x1F4,0x1F4,12.8,9,0,0,0,1,0,2,,
 M134,0x080B8888,0x080B8918,0x90,1,0,0,0x90,0x90,16.7,3,0,0,0,1,0,2,save_b8888,already landed (c_code)
 M135,0x080B8918,0x080B8EA0,0x588,2,0,0,0x2C4,0x374,12.1,18,0,0,0,3,1,2,save_b8918,already landed (c_code)
 M136,0x080B8EA0,0x080B9D0C,0xE6C,52,16,0,0x47,0xC8,15.0,12,0,0,0,2,1,2,save_b8ea0,already landed (c_code)
-M137,0x080B9D0C,0x080BDA2C,0x3D20,193,96,2,0x51,0x1E4,15.1,52,6,5,2,3,3,3,game-mode flow + link lobby,"requested/next game state x7, link session state, link-mode flag, number of linked players; called from AgbMain; 193 small functions"
-M138,0x080BDA2C,0x080BF994,0x1F68,57,38,0,0x8D,0x2E8,12.4,17,0,0,1,1,2,1,sub-game: four-slot bomb-pass minigame,"confirmed by #66: task type #95, started from the game-mode flow module and dispatched through the 41-entry anchor table @0x08756668; four players are shuffled into the four slots of gUnk_02006A10[] and a projectile is passed from slot to slot (Task.unk34 0-3, forward while Task.unk28 <= 2 and backward otherwise), the beat length comes from the seven-entry level table @0x08756570, the button window from the five-byte records @0x087565F4, the hand-off flight from the 16.16 parabola p0 + v*t + (a*t*t)/2 in sub_080c061c, and elimination order is written into gUnk_0200B044[] with the out-mask gUnk_0200AF10"
-M139,0x080BF994,0x080C0DE8,0x1454,24,18,0,0xD8,0x314,14.0,7,0,0,0,0,2,2,subgame_bf994,already landed (c_code)
-M140,0x080C0DE8,0x080C1FFC,0x1214,36,33,0,0x80,0x168,10.5,12,0,0,0,2,0,1,subgame_c0de8,already landed (c_code)
-M141,0x080C1FFC,0x080C6420,0x4424,82,27,3,0xD4,0x6B8,10.7,60,2,1,1,2,5,4,FIR-coefficient effect engine,the consumer rom-map section 2 seg 10 predicted: 22 pool refs into lib_misc + 7 into lib_rodata_fir_tables (0x080CFF00 tables); Div x10 / Mod x4 / __divsi3 x5; EWRAM x183
-M142,0x080C6420,0x080CD89C,0x747C,110,70,6,0x10F,0x918,11.1,83,2,5,7,3,7,4,intro / cutscene / ending sequences?,TaskYieldTrampoline x826; 28 compressed_graphics refs; palette fade + BLD shadows; task types #260-264; called from AgbMain and the mode manager
-M143,0x080CD89C,0x080CE520,0xC84,40,24,0,0x50,0x39E,2.5,2,0,0,0,3,1,1,m4a_1,already landed (thumb_code)
-M144,0x080CE520,0x080CEFB4,0xA94,31,0,0,0x57,0x118,14.6,8,0,0,0,7,1,2,m4a_c1,already landed (c_code)
-M145,0x080CEFB4,0x080CF588,0x5D4,4,2,0,0x175,0x474,7.2,1,0,0,0,0,0,2,m4a_cgb,already landed (c_code)
-M146,0x080CF588,0x080CFA4C,0x4C4,19,13,0,0x40,0x158,4.3,2,1,0,0,3,0,1,m4a_ctrl,already landed (c_code)
+M137,0x080B9D0C,0x080BA774,0xA68,27,4,0,0x62,0x1E4,21.2,46,0,0,1,4,3,3,game-mode flow + link lobby,"requested/next game state x7, link session state, link-mode flag, number of linked players; called from AgbMain; 193 small functions"
+M138,0x080BA774,0x080BDA2C,0x32B8,169,94,2,0x4C,0x148,13.9,23,6,5,1,0,2,1,,
+M139,0x080BDA2C,0x080BF994,0x1F68,57,38,0,0x8D,0x2E8,12.4,17,0,0,1,1,2,1,sub-game: four-slot bomb-pass minigame,"confirmed by #66: task type #95, started from the game-mode flow module and dispatched through the 41-entry anchor table @0x08756668; four players are shuffled into the four slots of gUnk_02006A10[] and a projectile is passed from slot to slot (Task.unk34 0-3, forward while Task.unk28 <= 2 and backward otherwise), the beat length comes from the seven-entry level table @0x08756570, the button window from the five-byte records @0x087565F4, the hand-off flight from the 16.16 parabola p0 + v*t + (a*t*t)/2 in sub_080c061c, and elimination order is written into gUnk_0200B044[] with the out-mask gUnk_0200AF10"
+M140,0x080BF994,0x080C0DE8,0x1454,24,18,0,0xD8,0x314,14.0,7,0,0,0,0,2,2,subgame_bf994,already landed (c_code)
+M141,0x080C0DE8,0x080C1FFC,0x1214,36,33,0,0x80,0x168,10.5,12,0,0,0,2,0,1,subgame_c0de8,already landed (c_code)
+M142,0x080C1FFC,0x080C6420,0x4424,82,27,3,0xD4,0x6B8,10.7,60,2,1,1,2,5,4,FIR-coefficient effect engine,the consumer rom-map section 2 seg 10 predicted: 22 pool refs into lib_misc + 7 into lib_rodata_fir_tables (0x080CFF00 tables); Div x10 / Mod x4 / __divsi3 x5; EWRAM x183
+M143,0x080C6420,0x080CD89C,0x747C,110,70,6,0x10F,0x918,11.1,83,2,5,7,3,7,4,intro / cutscene / ending sequences?,TaskYieldTrampoline x826; 28 compressed_graphics refs; palette fade + BLD shadows; task types #260-264; called from AgbMain and the mode manager
+M144,0x080CD89C,0x080CE520,0xC84,40,24,0,0x50,0x39E,2.5,2,0,0,0,3,1,1,m4a_1,already landed (thumb_code)
+M145,0x080CE520,0x080CEFB4,0xA94,31,0,0,0x57,0x118,14.6,8,0,0,0,7,1,2,m4a_c1,already landed (c_code)
+M146,0x080CEFB4,0x080CF588,0x5D4,4,2,0,0x175,0x474,7.2,1,0,0,0,0,0,2,m4a_cgb,already landed (c_code)
+M147,0x080CF588,0x080CFA4C,0x4C4,19,13,0,0x40,0x158,4.3,2,1,0,0,3,0,1,m4a_ctrl,already landed (c_code)
