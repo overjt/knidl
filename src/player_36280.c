@@ -38,8 +38,8 @@ struct Unk03005550
     /*0x0D*/ u8 unkD;
 };
 
-extern u16 gUnk_03002458[];             /* latched state mask per player (M11) */
-extern u16 gUnk_030023C0[];             /* newly-pressed mask per player */
+extern u16 gUnk_03002458[];             /* held keys, latched per player (M11) */
+extern u16 gUnk_030023C0[];             /* newly-pressed keys, latched per player */
 extern struct Unk03005550 gUnk_03005550;
 extern u32 gUnk_0873BD28[];
 extern u32 gUnk_0873CB24[];

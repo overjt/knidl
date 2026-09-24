@@ -57,11 +57,11 @@ struct HitBoxSet
     /*0x04*/ s8 (*unk4)[4];
 };
 
-extern u16 gUnk_03002458[];             /* latched state mask per player (M11) */
+extern u16 gUnk_03002458[];             /* held keys, latched per player (M11) */
 extern s16 gUnk_0873D880[];
 extern u16 gUnk_0873D8B4[];
 extern u16 gUnk_0873D908[];
-extern u16 gUnk_030023C0[];             /* newly-pressed mask per player */
+extern u16 gUnk_030023C0[];             /* newly-pressed keys, latched per player */
 extern struct Unk03005550 gUnk_03005550;
 extern s16 gUnk_0300244C;
 extern struct M04Spark gUnk_02007E90[][3];

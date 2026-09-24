@@ -18,9 +18,9 @@
  * request the next action through PlayerState.unk01.  sub_0803bd90
  * (action 18) installs handler 17, the leaf sub_0803bdd4. */
 
-extern u16 gUnk_03002458[];             /* latched state mask per player (M11) */
+extern u16 gUnk_03002458[];             /* held keys, latched per player (M11) */
 extern s16 gUnk_0873D9DA[4][4];
-extern u16 gUnk_030023C0[];             /* newly-pressed mask per player */
+extern u16 gUnk_030023C0[];             /* newly-pressed keys, latched per player */
 extern s16 gUnk_0300244C;
 
 void TaskYieldTrampoline(s32 frames);
@@ -307,6 +307,10 @@ void sub_0803afcc(void)
             sub_08006148(sub_0803aa64, gCurTaskIdx);
             break;
         case 1:
+            /* The do { } while (0) changes no code: it counts case 1's
+               references one loop level deeper (lessons 3.383, 3.412),
+               which lets the key-mask value win its register ahead of
+               the switch value, as in the ROM. */
             do
             {
                 if ((gUnk_03002458[t->unk88->unk00] & 193) == 128)
