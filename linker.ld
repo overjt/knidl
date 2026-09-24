@@ -323,8 +323,9 @@ SECTIONS
         build/src/menutask_0ea0c.o(.text)
     } > ROM
 
-    .game_code_and_rodata_0800b920_0800f180 0x0800F180 : {
-        KEEP(*(.game_code_and_rodata_0800b920_0800f180)) KEEP(*(.game_code_and_rodata_0800b920_0800f180.tail))
+    /* menutask_0f180 — decompiled to C (src/menutask_0f180.c, carved by tools/carve.py) */
+    .menutask_0f180 0x0800F180 : {
+        build/src/menutask_0f180.o(.text)
     } > ROM
 
     /* bgscroll_0fcbc — decompiled to C (src/bgscroll_0fcbc.c, carved by tools/carve.py) */
