@@ -40,7 +40,7 @@ extern u8 gUnk_0200618C;
 extern s8 gUnk_02007D34;
 extern s8 gUnk_0200B074;
 extern struct SaveSlot gUnk_0200E600[];
-extern u16 gUnk_030012F0[];
+extern u16 gUnk_030012F0[][16];
 extern u16 gUnk_0300153C[];
 extern u16 gUnk_03001550[];
 extern u16 gUnk_03001570[];
@@ -230,7 +230,7 @@ void sub_0800e7b0(void)
     u16 *p;
 
     for (i = 0; i < gUnk_02000018 + 3; i++) {
-        p = gUnk_030012F0;
+        p = gUnk_030012F0[0];
         if (i == gUnk_0200B074)
             sub_080017e4(2, (u32)gUnk_08559CE6, (u32)&p[i * 3 + 1], 6);
         else

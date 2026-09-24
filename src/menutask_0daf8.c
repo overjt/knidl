@@ -39,7 +39,7 @@ extern s8 gUnk_020055E4;
 extern s8 gUnk_020060D0;
 extern s8 gUnk_0200B074;
 extern struct SaveSlot gUnk_0200E600[];
-extern u8 gUnk_02020000[];
+extern u32 gUnk_02020000[];
 extern u16 gUnk_03001270[];
 extern u16 gUnk_0300153C[];
 extern u16 gUnk_03001668[];
@@ -361,5 +361,5 @@ void sub_0800e28c(void)
 s32 sub_0800e2dc(s32 id, s32 part)
 {
     LZ77UnCompWram(gUnk_08731E34[id], gUnk_02020000);
-    sub_080017e4(1, (u32)&gUnk_02020000[part << 11], 0x06004200, 0x800);
+    sub_080017e4(1, (u32)gUnk_02020000 + (part << 11), 0x06004200, 0x800);
 }
