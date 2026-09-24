@@ -3913,7 +3913,7 @@ loc_08032350:
 	movs	r0, #1
 	negs	r0, r0
 	b.n	loc_080323fa	@ 0x080323FA
-	.word	0x0200A6F0
+	.word	gUnk_0200A6F0
 	.word	0x00007FFF
 	.global	loc_08032360
 loc_08032360:
@@ -4057,7 +4057,7 @@ loc_0803244a:
 	b.n	loc_080324b2	@ 0x080324B2
 	movs	r0, r0
 	.word	0x00007FFF
-	.word	0x0200A6F0
+	.word	gUnk_0200A6F0
 	.global	loc_0803247c
 loc_0803247c:
 	cmp	r0, #4
@@ -4119,7 +4119,7 @@ loc_080324c6:
 	pop	{r4, r5, r6}
 	pop	{r0}
 	bx	r0
-	.word	0x0200A6F0
+	.word	gUnk_0200A6F0
 	.word	0x00007FFF
 	.thumb_func
 	.global	sub_080324e4
@@ -4357,7 +4357,7 @@ loc_0803267c:
 	pop	{r0}
 	bx	r0
 	movs	r0, r0
-	.word	0x0200A6F0
+	.word	gUnk_0200A6F0
 	.thumb_func
 	.global	sub_08032688
 sub_08032688:

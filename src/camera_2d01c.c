@@ -65,9 +65,16 @@ struct BgMap
     /*0x06*/ u16 unk6[0];
 };
 
-struct Unk030055EC
+/* The room header gUnk_030055EC points at (one entry of the gUnk_087E1D58
+   room table): unk18/unk28 are length-prefixed palettes, unk30 the BG map
+   streamed into 0x06003000, unk40 the room's BG animation script set. */
+struct RoomDef
 {
-    /*0x00*/ u8 filler00[0x30];
+    /*0x00*/ u8 filler00[0x18];
+    /*0x18*/ u16 *unk18;
+    /*0x1C*/ u8 filler1C[0xC];
+    /*0x28*/ u16 *unk28;
+    /*0x2C*/ u8 filler2C[4];
     /*0x30*/ struct BgMap *unk30;
     /*0x34*/ u8 filler34[0xC];
     /*0x40*/ u16 unk40;
@@ -106,7 +113,7 @@ extern s16 gUnk_03002398;
 extern s32 gUnk_03005634;
 extern s16 gUnk_03001F00;
 extern s8 gUnk_03002444;
-extern struct Unk030055EC *gUnk_030055EC;
+extern struct RoomDef *gUnk_030055EC;
 extern struct Unk02007D70 gUnk_02007D70[];
 extern struct Unk02007D70Cmd **gUnk_087E1F20[];
 extern u16 gUnk_030012B0[];

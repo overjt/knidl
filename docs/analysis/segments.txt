@@ -104,7 +104,7 @@
 0x0802B4BC 0x0802C42C c_code camera_2b4bc # src/camera_2b4bc.c (carved by tools/carve.py)
 0x0802C42C 0x0802D01C c_code camera_2c42c # src/camera_2c42c.c (carved by tools/carve.py)
 0x0802D01C 0x0802D38C c_code camera_2d01c # src/camera_2d01c.c (carved by tools/carve.py)
-0x0802D38C 0x0802EAC8 thumb_code game_code_and_rodata_08018b84_08019eec_0801a3e4_0801a8c8_08021b18_0802b4bc_0802d38c [split]
+0x0802D38C 0x0802EAC8 c_code camtask_2d38c # src/camtask_2d38c.c (carved by tools/carve.py)
 0x0802EAC8 0x0802F62C c_code obj_2eac8 # src/obj_2eac8.c (carved by tools/carve.py)
 0x0802F62C 0x08030238 c_code obj_2f62c # src/obj_2f62c.c (carved by tools/carve.py)
 0x08030238 0x080306B4 c_code obj_30238 # src/obj_30238.c (carved by tools/carve.py)

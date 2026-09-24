@@ -489,8 +489,9 @@ SECTIONS
         build/src/camera_2d01c.o(.text)
     } > ROM
 
-    .game_code_and_rodata_08018b84_08019eec_0801a3e4_0801a8c8_08021b18_0802b4bc_0802d38c 0x0802D38C : {
-        KEEP(*(.game_code_and_rodata_08018b84_08019eec_0801a3e4_0801a8c8_08021b18_0802b4bc_0802d38c)) KEEP(*(.game_code_and_rodata_08018b84_08019eec_0801a3e4_0801a8c8_08021b18_0802b4bc_0802d38c.tail))
+    /* camtask_2d38c — decompiled to C (src/camtask_2d38c.c, carved by tools/carve.py) */
+    .camtask_2d38c 0x0802D38C : {
+        build/src/camtask_2d38c.o(.text)
     } > ROM
 
     /* obj_2eac8 — decompiled to C (src/obj_2eac8.c, carved by tools/carve.py) */
