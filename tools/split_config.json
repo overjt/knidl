@@ -200,6 +200,7 @@
     "sub_0800381c",
     "sub_08003840",
     "sub_08003864",
+    "sub_08003888",
     "sub_08003964",
     "sub_08003a00",
     "sub_08003a34",
@@ -361,6 +362,7 @@
     "sub_08018b84",
     "sub_08018bb8",
     "sub_08018d7c",
+    "sub_08018e14",
     "sub_08019000",
     "sub_08019590",
     "sub_080195ec",
@@ -6214,10 +6216,6 @@
       "chunk_bytes": 65536
     },
     {
-      "name": "game_code_early_080011ac_08002378_08003110_08003888",
-      "chunk_bytes": 65536
-    },
-    {
       "name": "game_code_early_080011ac_08002378_08003110_08003888_08004000",
       "chunk_bytes": 65536
     },
@@ -6243,10 +6241,6 @@
     },
     {
       "name": "game_code_and_rodata",
-      "chunk_bytes": 65536
-    },
-    {
-      "name": "game_code_and_rodata_08018b84",
       "chunk_bytes": 65536
     },
     {
