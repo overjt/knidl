@@ -181,7 +181,7 @@ dispatches, pool density) — a planning aid, not a promise.
 |---|-------|------|-----|---------|------------|---------------------|
 | M01 | `0x08007300-0x080075B7` | 0.7 KiB | 1 | 0 | - | **done** - main |
 | M02 | `0x080075B8-0x0800B91F` | 16.9 KiB | 109 | 1 | *** | game-state bodies, boot/title sequence, screen loaders, pause screen + HUD - **landed (#96)** |
-| M03 | `0x0800B920-0x08010357` | 18.6 KiB | 83 | 0 | **** | menu / UI task bank |
+| M03 | `0x0800B920-0x08010357` | 18.6 KiB | 79 | 0 | **** | main menu + its 22 sprite tasks, BG scroll animator, stage sequence state - **landed (#99)** |
 | M04 | `0x08010358-0x08017667` | 28.8 KiB | 65 | 0 | *** | scripted-sequence bank: director + 50 of the 63 scripts |
 | M05 | `0x08017668-0x0801A8C7` | 12.6 KiB | 23 | 0 | *** | player-character animation bank + collision registry - **landed (#81)**, 20/23 |
 | M06 | `0x0801A8C8-0x08021B17` | 28.6 KiB | 56 | 0 | ***** | terrain / collision query (pure leaf) - **partial (#84)**, 28/55 (`sub_08021b0e` was a census false positive) |
@@ -276,7 +276,7 @@ ordering inside it:
 | 28 | M17 struct Task field API (actor core) | 0x6D78 | 244 | 3 | 8 | 24 | 2 |
 | 29 | M14 stage manager B | 0x6E78 | 84 | 3 | 9 | 5 | 1 |
 | 30 | M37 FIR-coefficient effect engine | 0x4424 | 82 | 4 | 5 | 2 | 1 |
-| 31 | M03 menu / UI task bank | 0x4A38 | 83 | 4 | 6 | 2 | 22 |
+| 31 | M03 main menu + sprite tasks, BG scroll animator, stage sequence state - landed | 0x4A38 | 79 | 4 | 6 | 2 | 22 |
 | 32 | M38 intro / cutscene / ending sequences? | 0x747C | 110 | 4 | 6 | 3 | 7 |
 | 33 | M10 stage script runner | 0x6AE0 | 41 | 4 | 11 | 1 | 0 |
 | 34 | M06 terrain / collision query (pure leaf) | 0x7250 | 56 | 5 | 2 | 11 | 0 |
@@ -327,7 +327,7 @@ sub-issue of #35, so the numbering ascends with the recommended order):
 | 33 | #96 | M02 game-state bodies, boot/title sequence, screen loaders, pause screen + HUD - landed | `0x080075B8-0x0800B91F` | 16.9 KiB | 5 |
 | 34 | #97 | M33 HUD / overlay effects? | `0x080B2FE8-0x080B6153` | 12.4 KiB | 5 |
 | 35 | #98 | M37 FIR-coefficient effect engine | `0x080C1FFC-0x080C641F` | 17.0 KiB | 5 |
-| 36 | #99 | M03 menu / UI task bank | `0x0800B920-0x08010357` | 18.6 KiB | 5 |
+| 36 | #99 | M03 main menu + sprite tasks, BG scroll animator, stage sequence state - landed | `0x0800B920-0x08010357` | 18.6 KiB | 5 |
 | 37 | #100 | M38 intro / cutscene / ending sequences? | `0x080C6420-0x080CD89B` | 29.1 KiB | 5 |
 
 ### Sizing the child issues
@@ -433,7 +433,61 @@ below is the pre-decompilation one, kept for the record.
 * **Known RAM cells touched** current game state (main dispatch) x25, DISPCNT shadow x20, requested/next game state x10, per-player keys pressed x8, BG3HOFS shadow (16.16) x7, BG3VOFS shadow (16.16) x7.
 * **Suggested batches** `0x080075B8` (7 fns), `0x08007E04` (41 fns), `0x08009AA0` (62 fns).
 
-### M03 `0x0800B920-0x08010357` - menu / UI task bank
+### M03 `0x0800B920-0x08010357` - main menu, its 22 sprite tasks, the BG scroll animator and the stage sequence state - **landed (#99)**
+
+The range is decompiled and carved out of the split asm, so it now appears in
+`module-map.csv` as `c_code` rows instead of one clusterable module; the census
+below is the pre-decompilation one, kept for the record.
+
+* **Landed as** ten files, all 79 functions byte-exact under the `--newpb`
+  recipe, 83 new `split_config.json` `data_symbols`, `make progress` reports 0
+  asm code bytes in the range:
+  `src/menu_0b920.c` (`0x0800B920-0x0800C09C`, 6 fns),
+  `src/menu_0c09c.c` (`0x0800C09C-0x0800CA10`, 6),
+  `src/menu_0ca10.c` (`0x0800CA10-0x0800D450`, 9),
+  `src/menu_0d450.c` (`0x0800D450-0x0800DAF8`, 5),
+  `src/menutask_0daf8.c` (`0x0800DAF8-0x0800E314`, 12),
+  `src/menutask_0e314.c` (`0x0800E314-0x0800EA0C`, 10),
+  `src/menutask_0ea0c.c` (`0x0800EA0C-0x0800F180`, 8),
+  `src/menutask_0f180.c` (`0x0800F180-0x0800FCBC`, 10),
+  `src/bgscroll_0fcbc.c` (`0x0800FCBC-0x080100AC`, 11),
+  `src/mode_100ac.c` (`0x080100AC-0x08010358`, 2).
+  One function carries a zero-byte `asm("" ::: "r6")` clobber
+  (`sub_0800f408`, a global-alloc priority tie the `-da` dump explains);
+  there are no `register` pins.  With M02 and M04, `0x080075B8-0x08017667`
+  is now contiguous C.
+* **What it turned out to be** the code behind two `AgbMain` states
+  (`docs/analysis/rom-map.md` §4):
+  * **State 4, the main menu** (`sub_0800b920`): it dispatches on the menu
+    screen `gUnk_020060D0` - 0 file select (three save slots, drawn by
+    `sub_0800bcf0` and its helpers), 1 file menu, 2/3 and 5 two-way choices
+    (3 and 5: one player or link play), 4 the mode list (rows 0-2 set the
+    sub-game `gUnk_02007FCC` that M35-M37 run, row 4 extra mode 7), 6 the
+    two-step erase, 7 the sound test (music 0-43 through `gUnk_08731DC0`,
+    sound effects 0-273), 8 the link-play connection screen - until 9
+    (start: game state 5, or 13 for the extra modes) or 10 (back to the
+    title).
+  * **Its 22 class-4 task types #238-#259**, all menu sprites and
+    background effects: the save-slot sprites and cursor (#238-#240), the
+    file menu (#241/#242), the erase screen (#243/#244), screens 2/3/5 and
+    the mode list (#245-#248), the link-play screen (#249-#253), the sound
+    test (#254/#255), the menu title sprite (#256), the BG scroll animator
+    (#257) and two background palette cycles (#258/#259).
+  * **The BG scroll animator** (`src/bgscroll_0fcbc.c`), up to eight scrolls
+    (one per BG and axis): running bits `gUnk_02004B74`, speeds
+    `gUnk_02006070[2][4]`, targets `gUnk_020061B0[2][4]`, and the
+    BGnHOFS/BGnVOFS shadows through the pointer tables `gUnk_08731DB0` and
+    `gUnk_08731DA0`; plus the window and blend shadow setters
+    `sub_08010048` (M34 calls it too) and `sub_08010020`.
+  * **State 7** (`sub_080100ac`), the stage's scripted sequence: it loads
+    the sequence's pictures, opens window 0, spawns M04's director (task
+    type #91) and pumps frames until the director leaves the state.
+* **Census fixes** 79 functions, not 83: five phantoms removed
+  (`0x0800BF02`, `0x0800E306` - bare `bx rN` epilogue tails - and
+  `0x0800EE7E`, `0x0800F8FC`, `0x0800FC26` - branches inside a switch; all
+  "evidenced" by stray words in graphics blobs) and one hidden leaf added
+  (`0x0800FFE8`, the on-screen test seven sprite bodies call).
+
 
 * **Size** 18.6 KiB (`0x4a38`), 83 functions (43 reachable only through pointer tables), mean `0xe4`, largest `0x40c`, pool words 16.0% of bytes.
 * **Difficulty** 4/6 - 93 distinct RAM cells, 2 jump-table dispatches, 7 functions >= `0x200`.

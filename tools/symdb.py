@@ -391,6 +391,32 @@ FALSE_POSITIVES = {
                  # words [0x083FD268: BA0EB34A 0800A333 45080044].
                  # sub_0800a294 runs 0x0800A294-0x0800A340 (0xAC).
 
+    # --- M03 (issue #99), five rows the reachability sweep dropped ---
+    # Same classes as M02's: two bare `bx rN` completing the previous
+    # function's epilogue (each followed by that function's literal pool) and
+    # three branches in the middle of a switch.  None has a prologue, all but
+    # 0x0800F8FC sit right after a claimed size that is not a multiple of 4,
+    # and each is "evidenced" only by a lone word inside a graphics/data blob
+    # (neighbours in brackets).
+    0x0800BF02,  # the `bx r0` of sub_0800be8c's `pop {r4-r7}; pop {r0}`, then
+                 # its three pool words [0x085E4DC4: 002B20DF 0800BF03
+                 # 5FF0B604].  sub_0800be8c runs 0x0800BE8C-0x0800BF10 (0x84).
+    0x0800E306,  # the `bx r1` of sub_0800e2dc's `pop {r4, r5}; pop {r1}`, then
+                 # its three pool words [0x083B7E54 and three other tile maps:
+                 # E306E305 0800E307 0AE309E3].  sub_0800e2dc runs
+                 # 0x0800E2DC-0x0800E314 (0x38).
+    0x0800EE7E,  # `b.n` into the shared `sub_08003014` call of sub_0800ed78's
+                 # two draw arms; the `mov r1, r9` before it falls straight in
+                 # [0x08564338: 0C000320 0800EE7F 07340310].  sub_0800ed78
+                 # runs 0x0800ED78-0x0800EF30 (0x1B8).
+    0x0800F8FC,  # the `b.n` default of sub_0800f840's state switch: the `bne`
+                 # in front of it lands on 0x0800F8FE, the first case compare
+                 # [0x08662C78 and 0x08780D0C: 0406FFFE 0800F8FD 06050405].
+                 # sub_0800f840 runs 0x0800F840-0x0800FA30 (0x1F0).
+    0x0800FC26,  # pool-skip `b.n` default of sub_0800fb94's three-way switch,
+                 # in front of its literal pool [0x083D3034: 081250B1 0800FC27
+                 # 2F04FB05].  sub_0800fb94 runs 0x0800FB94-0x0800FCBC (0x128).
+
     # --- M34 (issue #94), one row the reachability sweep dropped ---
     # 0x080B6B36 is the `b.n loc_080b6c02` that ends sub_080b6b08's first arm,
     # sitting immediately in front of that function's own literal pool: no
@@ -1014,6 +1040,13 @@ EXTRA_THUMB_ENTRIES = {
     0x0800AAD0,  # leaf copying/clamping gUnk_03000498 into gUnk_02006068;
                  # its pointer 0x0800AAD1 sits in sub_08009ab8's literal pool
                  # at 0x08009AD8.  sub_0800aaac is 0x24, not 0x5C.
+    # --- M03 (issue #99), one hidden entry the reachability sweep found ---
+    0x0800FFE8,  # leaf (`bx lr`, no `push`): returns 1 while the current
+                 # task's screen position (Task.unk48/unk4A) is inside
+                 # x in [-63, 303], y in [-63, 223]; seven `bl loc_0800ffe8`
+                 # sites in M03's sprite task bodies.  sub_0800ffd8 ends `bx lr` at
+                 # 0x0800FFE2 with its pool word at 0x0800FFE4, so it is 0x10,
+                 # not 0x48.
     # --- M35 (issue #95), three hidden entries the reachability sweep found ---
     # Two are anchor-table targets that -fprologue-bugfix left without a
     # `push` (they open with a pool load and end `bx lr`), so the strict

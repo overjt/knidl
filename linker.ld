@@ -288,8 +288,54 @@ SECTIONS
         build/src/mode_0b44c.o(.text)
     } > ROM
 
-    .game_code_and_rodata_0800b920 0x0800B920 : {
-        KEEP(*(.game_code_and_rodata_0800b920)) KEEP(*(.game_code_and_rodata_0800b920.tail))
+    /* menu_0b920 — decompiled to C (src/menu_0b920.c, carved by tools/carve.py) */
+    .menu_0b920 0x0800B920 : {
+        build/src/menu_0b920.o(.text)
+    } > ROM
+
+    /* menu_0c09c — decompiled to C (src/menu_0c09c.c, carved by tools/carve.py) */
+    .menu_0c09c 0x0800C09C : {
+        build/src/menu_0c09c.o(.text)
+    } > ROM
+
+    /* menu_0ca10 — decompiled to C (src/menu_0ca10.c, carved by tools/carve.py) */
+    .menu_0ca10 0x0800CA10 : {
+        build/src/menu_0ca10.o(.text)
+    } > ROM
+
+    /* menu_0d450 — decompiled to C (src/menu_0d450.c, carved by tools/carve.py) */
+    .menu_0d450 0x0800D450 : {
+        build/src/menu_0d450.o(.text)
+    } > ROM
+
+    /* menutask_0daf8 — decompiled to C (src/menutask_0daf8.c, carved by tools/carve.py) */
+    .menutask_0daf8 0x0800DAF8 : {
+        build/src/menutask_0daf8.o(.text)
+    } > ROM
+
+    /* menutask_0e314 — decompiled to C (src/menutask_0e314.c, carved by tools/carve.py) */
+    .menutask_0e314 0x0800E314 : {
+        build/src/menutask_0e314.o(.text)
+    } > ROM
+
+    /* menutask_0ea0c — decompiled to C (src/menutask_0ea0c.c, carved by tools/carve.py) */
+    .menutask_0ea0c 0x0800EA0C : {
+        build/src/menutask_0ea0c.o(.text)
+    } > ROM
+
+    /* menutask_0f180 — decompiled to C (src/menutask_0f180.c, carved by tools/carve.py) */
+    .menutask_0f180 0x0800F180 : {
+        build/src/menutask_0f180.o(.text)
+    } > ROM
+
+    /* bgscroll_0fcbc — decompiled to C (src/bgscroll_0fcbc.c, carved by tools/carve.py) */
+    .bgscroll_0fcbc 0x0800FCBC : {
+        build/src/bgscroll_0fcbc.o(.text)
+    } > ROM
+
+    /* mode_100ac — decompiled to C (src/mode_100ac.c, carved by tools/carve.py) */
+    .mode_100ac 0x080100AC : {
+        build/src/mode_100ac.o(.text)
     } > ROM
 
     /* player_10358 — decompiled to C (src/player_10358.c, carved by tools/carve.py) */

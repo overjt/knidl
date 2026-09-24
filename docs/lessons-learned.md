@@ -1446,6 +1446,133 @@ same literal-vs-symbol choice decided `sub_08007e04`'s link-payload offsets
   goto loop or an `if/else if ... goto` chain has the right size and the
   wrong layout.
 
+### 3.373 A statement block written in BOTH arms of an if/else is a zero-byte reload-rotation step
+`sub_080100ac` (M03) came out 7 bytes off with every instruction right: only
+the scratch registers of three `movhi` constants (`ldr rS, =K; adds r0, rS,
+#0` for `0x28D0`, `0x1090`, `0x8800`) were one step out of the ROM's
+rotation (r2/r3/r2 against r3/r2/r3).  A one-line RRTRACE print in
+`allocate_reload_reg` (lesson 4.77) showed `spill_regs = [r2, r3]` and five
+constant reloads, so the ROM needed exactly one more reload allocation after
+the DISPCNT arms that left no trace in the output.  The source had the
+window setup that follows `if (stage == 7) WIN0H = 240; else WIN0H =
+0x28D0;` written inside both arms:
+
+```c
+if (gUnk_030023B8 == 7) {
+    gUnk_03000FD4 = 240;
+    gUnk_03000044 = 0x1090;
+    gUnk_03000B18 = 63;
+    gUnk_03000F7C = 47;
+} else {
+    gUnk_03000FD4 = 0x28D0;
+    gUnk_03000044 = 0x1090;  /* same four stores again */
+    ...
+}
+```
+
+Each copy of the `0x1090` store costs its own reload (they land in the same
+register, so the tails are identical), jump2 cross-jumps them back into one
+join, and the output is byte-identical to the single-copy source except for
+the rotation.  Zero-byte `asm` clobbers are inert here: a reload scratch is
+not a pseudo.  **When a scratch register is exactly one rotation step off
+after an if/else, duplicate the statements after the join into both arms.**
+This is the source-level form of 3.268's phantom reservation.
+
+### 3.374 Duplicated branches that the ROM shows merged are still two source branches (3.373's twin)
+`sub_0800bda4` has a draw block reached by `ldr r4, =A; b draw` from one
+branch while the other does `ldr r4, =B` and falls into it.  Written as a
+`goto draw` with a shared `u8 *src`, it came out with src and size swapped
+(r6/r4, 9 bytes): the shared pointer spans several blocks, so global-alloc
+places it after the draw block's own values (the `-dg` dump shows r4/r5
+taken first).  Two complete branches, each passing its table constant
+straight to the calls, match - cross-jumping merges them after register
+allocation, and before the merge each copy was a single block.  If a
+goto/shared-variable form leaves only a register swap in the shared block,
+write the branches out in full.
+
+### 3.375 Six ways to keep a constant offset out of the pool word
+agbcc folds `sym + K` into one literal (`=0x03001272`) whenever the
+expression is a symbol plus a constant; M03's ROM keeps the offset as an
+`adds` in six different shapes, each needing its own spelling:
+
+* a giv init `ldr r0, =base; adds r4, r0, #2` in a loop preheader: a base
+  pointer assigned INSIDE the loop and indexed, `p = gUnk_03001270; ...
+  &p[i * 3 + 1]` (3.354; `sub_0800e28c`, `sub_0800e7b0`);
+* `adds r1, #8; lsls #5; adds base`: `&tbl[(pal + 8) * 16]` on a flat
+  array (`sub_0800bf10`); `tbl[pal + 8]` on a `[][16]` array folds;
+* `lsls #4; adds #1; lsls #1; adds base`: integer arithmetic,
+  `(u32)buf + ((x * 16 + 1) * 2)` (`sub_0800d310`, also
+  `(u16 *)tbl + (x * 3 + 2) * 16`);
+* `adds rIdx, #96; adds rIdx, rBase` with the base already in a register:
+  `p = g;` between the two calls, then `&p[x * 192 + 96]`
+  (`sub_0800dda0`);
+* `lsls; adds #6; adds base` inside `case 1:`: index with the switch
+  variable, `tbl[mode][slot]`, not the literal `tbl[1][slot]`
+  (`sub_0800bf6c`);
+* `+12` kept as a load offset: one pointer local reassigned between two
+  tables, `tbl = A; ... tbl = B; tbl[i + 3]` (`sub_0800dfdc`).
+
+### 3.376 Local pointers to the key and state cells before a polling loop
+M03's menu input loops (`sub_0800c09c`, `sub_0800c558`) load the
+newly-pressed-keys cell and the menu-screen cell into callee-saved registers
+before the loop's first `b test`.  With plain globals, loop.c leaves them in
+the body: its `.loop` dump rates them "not desirable" (savings times
+lifetime too small for a 63-insn loop, 3.348).  The ROM's shape is a
+programmer's pointer: `vu16 *keys = &gUnk_03000038; s8 *state =
+&gUnk_020060D0;` before the loop.  The two cases are told apart by the load
+ORDER in front of the loop: hoisted globals come out in order of first use
+inside the loop (`sub_0800c34c` and `sub_0800c610` matched that way), a
+local pointer is initialised before any hoisted value.
+
+### 3.377 Which bound a case range tests first depends on its neighbour nodes
+`emit_case_nodes` drops a redundant bound test when a child is a single
+value, so the case NODES around a range decide the compare order:
+
+* `switch (x) { case 1: case 2: case 3: ... }` tests the high bound first
+  (`cmp #3; bgt`); the ROM's `cmp #1; blt` then `cmp #3; bgt` needed an
+  extra empty `case 4: break;` (`sub_0800da74`);
+* a two-case `switch` on 5 and 13 that compiles to `cmp #5; beq; cmp #5;
+  ble default; cmp #13; beq` has an empty case BELOW 5 (`case 3: break;`),
+  which jump optimisation deletes after it has shaped the tree
+  (`sub_0800b920`).
+
+Both are 3.42's load-bearing empty cases, seen from the range side.
+
+### 3.378 Small M03 shapes, one line each
+- A table the ROM re-reads after every call must be declared non-`const`;
+  `const` lets cse keep the value across the calls (`sub_0800bf6c`).
+- `a[k + (c ? 1 : 0)]` folds into a store-flag sequence
+  (`eors; negs; orrs; lsrs`); `a[c ? (y != K) : 0]` pushes the base add into
+  both arms (`adds r1, r4, #0` / `adds r1, r4, #1`, `sub_0800bcf0`).
+- In a polling loop, `s8 s = g; if (s == 1 || s == 8) break;` rotated the
+  loop (+52 bytes, `sub_0800e5b0`) where re-reading `g` in each comparison
+  matched; `sub_0800e0c0` was the other way round - try both.
+- `x == 8 || x == 9` on an `s8` cell is the ROM's `ldrb; subs #8; lsls #24;
+  lsrs #24; cmp #1; bhi`.
+- `if (--x != 0 && k)` keeps the ROM's jump back to the re-test;
+  `x--; if (x != 0 && k)` lets cse jump past it (`sub_0800d0f4`).
+- A loop-invariant register copy placed between the other hoisted
+  invariants came from declaring the compared local `s16` instead of `s32`
+  (`sub_0800d404`).
+- `t->unk2C >> 16` on an `s32` field narrows to a halfword load of its
+  high half (`movs r3, #46; ldrsh r0, [r2, r3]`), and
+  `(t->unk2C >> 16) + 144` keeps the sign extension;
+  `((s16 *)&t->unk2C)[1] + 144` adds in 16 bits (`ldrh`, `sub_0800ec08`).
+- `vu8cell == (t->f & 0xFF)` keeps the ROM's volatile read before the task
+  pointer load; `vu8cell == (u8)t->f` narrows the compare and reorders it
+  (`sub_0800f408`).
+- `gUnk_03002490->unk28 = sub_080058e4(..); u = gUnk_03002490; x =
+  &gUnk_03002790[u->unk28];` keeps the spawned id in r0; `id = f(); t =
+  &gUnk_03002790[id];` gives the ROM's `adds r1, r0, #0` copy.  The copy
+  (or its absence) tells you which one the source wrote (`sub_0800f180`
+  vs `sub_0800da9c`).
+- An address the ROM derives from another hoisted symbol
+  (`ldr r0, =0xFFFFFEA0; add r0, r9`) is written relative to that symbol,
+  `gUnk_03001430 - 176`; a separate `gUnk_030012D0` gets its own pool word
+  (`sub_0800fa30`).
+- `v = *p + d; *p = v;` through a `vs32 *` - the compound `v = *p += d`
+  re-reads the volatile cell (`sub_0800ff00`).
+
 ## 4. Splitting ROM ranges into asm (tools/split.py)
 
 ### 4.1 objdump text only round-trips under `.syntax unified`
@@ -5814,6 +5941,46 @@ wrote candidates only under its own `wip/<agent>/<fn>/` and tested them with
 `fns/<fn>.c`.  The old owner was told first to stop editing that one file.
 Even if both had matched, `good/` would only have been overwritten by
 another matching body.
+
+### 4.76 On a logic-heavy bank, seed the cross-batch leaves before the fan-out
+The listing-to-C transcriber of 4.41 is built for yield-script banks; on
+M03's menu code it produced 79 drafts that were almost entirely the listing
+as comments, so the whole-census verifier pass had nothing to verify.  What
+replaced it: before any subagent started, the coordinator wrote 20 of the 79
+functions - its own two files (the BG scroll helpers and the on-screen test
+`sub_0800ffe8` among them) plus the small functions in the other batches'
+files that some OTHER batch calls (the save-slot palette `sub_0800bf10`,
+the task spawner `sub_0800da9c`, the picture loader `sub_0800e2dc`, ...) -
+and put their matched prototypes in the shared lessons file.  Four agents then
+ran with zero cross-batch prototype conflicts; the only harmonisation left
+was an OUTSIDE callee spelled two ways (`sub_08001a94`'s sixth parameter,
+`s32` in one body and `s16` in the rest, both byte-exact).  The confirmed
+return widths paid off at once: seven sprite bodies truncate
+`sub_0800ffe8`'s result with `lsls r0, r0, #24` (3.365), which a `s32`
+guess would have got wrong in every caller.
+
+### 4.77 A one-print RRTRACE build is ten minutes, and it turns a rotation into a count
+3.258's instrumented compiler has many print sites; for a residue that is
+only "one scratch register one step off", a single `fprintf` in
+`allocate_reload_reg` (reload1.c, just before `new = spill_reg_rtx[i];`:
+insn uid, reload index, chosen register, spill index, `last_spill_reg`,
+`n_spills`, mode) is enough.  Clone `jiangzhengwenjz/agbcc` at `59b966e`
+into the gitignored `pending/`, patch, `docker run --rm -v
+"$PWD":/agbcc -w /agbcc knidl-builder make -C gcc -j1` (about two
+minutes), and drive it with a script that runs `cpp -P -I include | agbcc
+-O2 -mthumb-interwork -fprologue-bugfix` with `RRTRACE=1`.  On
+`sub_080100ac` it printed five lines - `spill_regs = [r2, r3]`, the five
+`movhi` constants and which were forced onto r3 because r2 was busy - which
+reduced the problem to "the ROM has one more reload between insns 212 and
+242" and pointed straight at 3.373's duplicated arm.
+
+### 4.78 `fnmatch.sh` prints "N differing byte(s)": match the singular
+The M02 harness scripts grepped `[0-9]+ differing bytes`; `fnmatch.sh`
+prints `differing byte(s)`, so every mismatch showed as a bare `FAIL
+candidate=.. target=..` with no count, and the agents' first hour of M03
+compared variants by size only.  Grep `[0-9]+ differing byte` in
+`tryall.sh`, `variants.sh` and `recheck.sh` (fixed in the M03 harness; a
+subagent spotted it).
 
 ### 3.336 The four-loop HBlank family: `for (i = 0; i <= 6; i = j) { ...; j = i + 1; ... }`
 M34's `sub_080b6154`/`6290`/`63a4`/`6474` are one body with four sets of
