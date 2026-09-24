@@ -470,18 +470,8 @@ void sub_0806ba9c(void)
 
 s32 sub_0806baec(s32 a)
 {
-    if (sub_08063cbc(gUnk_03002490->unk44) < 0)
-    {
-        if (a > -sub_08063cbc(gUnk_03002490->unk44))
-            goto yes;
-        goto no;
-    }
-    if (a > sub_08063cbc(gUnk_03002490->unk44))
-        goto yes;
-    goto no;
-yes:
-    return 1;
-no:
+    if (a > abs(sub_08063cbc(gUnk_03002490->unk44)))
+        return 1;
     return 0;
 }
 

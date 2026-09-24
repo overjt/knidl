@@ -692,7 +692,7 @@ void sub_08041f10(void)
         sub_08006338(0x1203);
         TaskYieldTrampoline(2);
         gUnk_03002490->unk3C++;
-        while ((u32)(gUnk_03002490->unk54 < 0 ? -gUnk_03002490->unk54 : gUnk_03002490->unk54) > 0x7FFF)
+        while ((u32)abs(gUnk_03002490->unk54) > 0x7FFF)
             TaskYieldTrampoline(1);
         gUnk_03002490->unk73 = 2;
         /* fallthrough */

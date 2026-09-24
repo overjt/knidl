@@ -1409,9 +1409,7 @@ s32 sub_080a93ec(void)
 {
     if ((u8)sub_0806433c(gUnk_02007D00[5]) == 2)
     {
-        if ((sub_08063cbc(gUnk_02007D00[5]) < 0
-             ? -sub_08063cbc(gUnk_02007D00[5])
-             : sub_08063cbc(gUnk_02007D00[5])) <= 15)
+        if (abs(sub_08063cbc(gUnk_02007D00[5])) <= 15)
             return 1;
     }
     return 0;

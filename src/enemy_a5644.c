@@ -1636,13 +1636,13 @@ void sub_080a5af4(void)
         }
         else
             sub_08063e14();
-        if ((d < 0 ? -d : d) <= 1)
+        if (abs(d) <= 1)
         {
             gUnk_03002490->unk24 = 1;
             gUnk_03002490->unk54 = 0;
             gUnk_02007D00[7] = 0;
         }
-        else if ((d < 0 ? -d : d) <= 27)
+        else if (abs(d) <= 27)
         {
             gUnk_03002490->unk20 &= ~2;
             if (d > 0)
@@ -1688,7 +1688,7 @@ void sub_080a5af4(void)
                         gUnk_02007D00[7] = 0;
                     gUnk_02007D00[7]--;
                 }
-                if ((gUnk_02007D00[7] < 0 ? -gUnk_02007D00[7] : gUnk_02007D00[7]) == 15)
+                if (abs(gUnk_02007D00[7]) == 15)
                     gUnk_03002490->unk24 = 0;
             }
             else if (pt->unk54 == 0)
@@ -1727,7 +1727,7 @@ void sub_080a5af4(void)
     sub_08006304();
     if (!(gUnk_03002490->unk34 & 6))
     {
-        if ((sub_08063cd0() < 0 ? -sub_08063cd0() : sub_08063cd0()) <= 31)
+        if (abs(sub_08063cd0()) <= 31)
         {
             sub_0806395c(gUnk_08748DA8[pt->unk7A][sub_08002ee8(8)]);
             sub_080a7168();
@@ -1852,7 +1852,7 @@ void sub_080a6020(void)
     d = x - gUnk_02007D00[7];
     if (d >= 0 ? d <= 5 : gUnk_02007D00[7] - x <= 5)
     {
-        if ((sub_08063d2c() < 0 ? -sub_08063d2c() : sub_08063d2c()) <= 47)
+        if (abs(sub_08063d2c()) <= 47)
             sub_0806395c(gUnk_08748E48[sub_08002ee8(16)]);
         else
             sub_0806395c(gUnk_08748E68[sub_08002ee8(16)]);
@@ -1886,7 +1886,7 @@ void sub_080a60d8(void)
 void sub_080a6130(void)
 {
     sub_080227a4(gUnk_03002490);
-    if ((sub_08063cd0() < 0 ? -sub_08063cd0() : sub_08063cd0()) <= 43)
+    if (abs(sub_08063cd0()) <= 43)
     {
         gUnk_03002490->unk34 = 0;
         if (gUnk_03002490->unk78 >= gUnk_02007D00[3] >> 1)
@@ -2588,7 +2588,7 @@ void sub_080a6fb4(void)
             else
             {
                 g = gUnk_02007D00[4];
-                if ((g < 0 ? -g : g) <= 15)
+                if (abs(g) <= 15)
                     k = 1;
                 else if ((g > 0 && gUnk_03002490->unk43 == 1) ||
                          (g < 0 && gUnk_03002490->unk43 == -1))

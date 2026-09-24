@@ -698,7 +698,7 @@ void sub_080795d8(void)
 
     if (n <= 0)
     {
-        if ((sub_08063cd0() < 0 ? -sub_08063cd0() : sub_08063cd0()) <= 63)
+        if (abs(sub_08063cd0()) <= 63)
         {
             if (gUnk_03002490->unk2C <= 0 && sub_08002ee8(2) == 0)
                 sub_0807964c();

@@ -2,9 +2,6 @@
 #include "global.h"
 #include "task.h"
 
-/* This module's |x|: the ROM tests `< 0` first, unlike global.h's abs(). */
-#define ABS(n) ((n) < 0 ? -(n) : (n))
-
 /* RAM cells */
 extern s32 gUnk_02007D00[];
 extern s32 gUnk_030023D4;
@@ -477,14 +474,14 @@ void sub_08095eac(void)
     gUnk_03002490->unk15 = 4;
     sub_080639e0(gUnk_08745304);
     sub_08063e14();
-    if (ABS(sub_08063cd0()) <= 47) {
+    if (abs(sub_08063cd0()) <= 47) {
         sub_08096888();
         gUnk_03002490->unk15 = 4;
-    } else if (ABS(sub_08063cd0()) > 71) {
+    } else if (abs(sub_08063cd0()) > 71) {
         sub_08095e4c();
         gUnk_03002490->unk6C = 0;
         while ((s16)gUnk_03002490->unk6C <= 3) {
-            if (ABS(sub_08063cd0()) <= 71)
+            if (abs(sub_08063cd0()) <= 71)
                 break;
             sub_08063e14();
             sub_08095d40();
@@ -560,7 +557,7 @@ void sub_080960bc(void)
     sub_08063e14();
     sub_080639e0(gUnk_08745304);
     gUnk_03002490->unk1C = 1;
-    if (ABS(sub_08063cd0()) <= 31)
+    if (abs(sub_08063cd0()) <= 31)
         sub_08096888();
     sub_080062c4();
     t = gUnk_03002490;
@@ -602,7 +599,7 @@ void sub_0809619c(void)
     gUnk_03002490->unk28 = sub_080640dc(gUnk_0874453C);
     TaskYieldTrampoline(48);
     while (gUnk_03002490->unk43 == sub_08063df4()) {
-        if (ABS(sub_08063cd0()) > 48)
+        if (abs(sub_08063cd0()) > 48)
             break;
         TaskYieldTrampoline(10);
     }
@@ -709,7 +706,7 @@ void sub_080963dc(void)
     sub_080639e0(gUnk_08745304);
     sub_080640c8();
     sub_08063e14();
-    if (ABS(sub_08063cd0()) <= 47) {
+    if (abs(sub_08063cd0()) <= 47) {
         t = gUnk_03002490;
         goto flip;
     }
@@ -737,7 +734,7 @@ doloop:
             if (t->unk2C != 0)
                 goto flip;
             sub_08063e14();
-            if (ABS(sub_08063cd0()) <= 79)
+            if (abs(sub_08063cd0()) <= 79)
                 goto rest;
             t = gUnk_03002490;
             t->unk6C++;

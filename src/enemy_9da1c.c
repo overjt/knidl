@@ -952,7 +952,7 @@ void sub_0809ea08(void)
         return;
     if (u->unk28 != 0)
         return;
-    if ((sub_08063cd0() < 0 ? -sub_08063cd0() : sub_08063cd0()) <= 63)
+    if (abs(sub_08063cd0()) <= 63)
     {
         v = gUnk_03002490;
         v->unk28 = 1;
@@ -1091,11 +1091,11 @@ void sub_0809ec80(void)
 void sub_0809ec84(void)
 {
     if (gUnk_03002490->unk2C > 59
-        || (sub_08063cd0() < 0 ? -sub_08063cd0() : sub_08063cd0()) > 63)
+        || abs(sub_08063cd0()) > 63)
     {
         sub_0809ed74();
     }
-    else if ((sub_08063cd0() < 0 ? -sub_08063cd0() : sub_08063cd0()) <= 31)
+    else if (abs(sub_08063cd0()) <= 31)
     {
         sub_0806395c(1);
         sub_08006148(sub_0809e8b0, gCurTaskIdx);
@@ -1112,7 +1112,7 @@ void sub_0809ed08(void)
     gUnk_03002490->unk2C = 60;
     if (sub_08002ee8(2) == 0)
     {
-        if ((sub_08063cd0() < 0 ? -sub_08063cd0() : sub_08063cd0()) > 63)
+        if (abs(sub_08063cd0()) > 63)
         {
             sub_0806395c(3);
             sub_08006148(sub_0809e8b0, gCurTaskIdx);

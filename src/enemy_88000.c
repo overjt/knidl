@@ -186,10 +186,10 @@ void sub_080880fc(void)
     if (gUnk_03002490->unk14 != 0)
         sub_08006148(sub_08088000, gCurTaskIdx);
     v = gUnk_0874269C[gUnk_03002490->unk74];
-    if (v > (sub_08063cd0() < 0 ? -sub_08063cd0() : sub_08063cd0()))
+    if (v > abs(sub_08063cd0()))
     {
         v = gUnk_087426A4[gUnk_03002490->unk74];
-        if (v > (sub_08063d2c() < 0 ? -sub_08063d2c() : sub_08063d2c()))
+        if (v > abs(sub_08063d2c()))
         {
             sub_0806395c(4);
             sub_08006148(sub_08088000, gCurTaskIdx);
@@ -1054,9 +1054,7 @@ void sub_08089334(void)
         TaskYieldTrampoline(3);
     }
     gUnk_03002490->unk00 = (u32)sub_080656b4;
-    sub_080061c0(gUnk_03002490->unk54 < 0 ? -gUnk_03002490->unk54
-                                          : gUnk_03002490->unk54,
-                 0x5A5A5A5A);
+    sub_080061c0(abs(gUnk_03002490->unk54), 0x5A5A5A5A);
     sub_080639b4((u32)gUnk_08742C14);
     while (1)
     {

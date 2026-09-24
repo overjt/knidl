@@ -555,7 +555,7 @@ void sub_0808b4d0(void)
         sub_08006148(sub_0808b210, gCurTaskIdx);
         return;
     }
-    if ((sub_08063cd0() < 0 ? -sub_08063cd0() : sub_08063cd0()) > 64)
+    if (abs(sub_08063cd0()) > 64)
         return;
     if (--gUnk_03002490->unk34 > 0)
         return;
@@ -1479,7 +1479,7 @@ void sub_0808c980(void)
     s32 d;
 
     sub_080061c0(0x20000, 0x5A5A5A5A);
-    a = (sub_08063cd0() < 0 ? -sub_08063cd0() : sub_08063cd0()) >> 1;
+    a = abs(sub_08063cd0()) >> 1;
     d = -sub_08063d2c() + 32;
     if (d < 0)
         d = -d;

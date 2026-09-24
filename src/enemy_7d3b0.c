@@ -387,15 +387,9 @@ void sub_0807d748(void)
 void sub_0807d82c(void)
 {
     gUnk_03002490->unk2C = sub_08063b38();
-    if ((sub_08063cbc(gUnk_03002490->unk2C) < 0
-             ? -sub_08063cbc(gUnk_03002490->unk2C)
-             : sub_08063cbc(gUnk_03002490->unk2C))
-        <= 49)
+    if (abs(sub_08063cbc(gUnk_03002490->unk2C)) <= 49)
     {
-        if ((sub_08063d18(gUnk_03002490->unk2C) < 0
-                 ? -sub_08063d18(gUnk_03002490->unk2C)
-                 : sub_08063d18(gUnk_03002490->unk2C))
-            <= 15)
+        if (abs(sub_08063d18(gUnk_03002490->unk2C)) <= 15)
         {
             struct Task *t = gUnk_03002490;
             s32 n = --t->unk28;
@@ -427,15 +421,9 @@ void sub_0807d8f8(void)
 void sub_0807d918(void)
 {
     gUnk_03002490->unk2C = sub_08063b38();
-    if ((sub_08063cbc(gUnk_03002490->unk2C) < 0
-             ? -sub_08063cbc(gUnk_03002490->unk2C)
-             : sub_08063cbc(gUnk_03002490->unk2C))
-        <= 49)
+    if (abs(sub_08063cbc(gUnk_03002490->unk2C)) <= 49)
     {
-        if ((sub_08063d18(gUnk_03002490->unk2C) < 0
-                 ? -sub_08063d18(gUnk_03002490->unk2C)
-                 : sub_08063d18(gUnk_03002490->unk2C))
-            <= 15)
+        if (abs(sub_08063d18(gUnk_03002490->unk2C)) <= 15)
             sub_08063ddc(gUnk_03002490->unk2C);
     }
     if (gUnk_03002490->unk14 != 1)
@@ -766,7 +754,7 @@ void sub_0807df8c(void)
 
     if (--t->unk28 == 0)
     {
-        if ((sub_08063cd0() < 0 ? -sub_08063cd0() : sub_08063cd0()) <= 63)
+        if (abs(sub_08063cd0()) <= 63)
         {
             if (sub_08002ee8(gUnk_08741214[gUnk_03002490->unk74]) == 0)
                 sub_0806395c(2);
@@ -829,7 +817,7 @@ void sub_0807e100(void)
 
     if (--t->unk28 == 0)
     {
-        if ((sub_08063cd0() < 0 ? -sub_08063cd0() : sub_08063cd0()) <= 63)
+        if (abs(sub_08063cd0()) <= 63)
         {
             if (sub_08002ee8(gUnk_08741214[gUnk_03002490->unk74]) == 0)
                 sub_0806395c(2);

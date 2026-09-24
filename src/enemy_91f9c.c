@@ -340,7 +340,7 @@ void sub_08092250(void)
         gUnk_02007D00[4] = sub_08063b38();
         sub_08063ddc(gUnk_02007D00[4]);
         gUnk_02007D00[6] = sub_08002ee8(8);
-        gUnk_03001F2C = (sub_08063cd0() < 0 ? -sub_08063cd0() : sub_08063cd0());
+        gUnk_03001F2C = abs(sub_08063cd0());
         if (gUnk_03001F2C <= 43)
         {
             if (gUnk_02007D00[6] <= 5)
@@ -674,9 +674,9 @@ void sub_08092a14(void)
             TaskYieldTrampoline(1);
         } while ((s16)++gUnk_03002490->unk6C <= 59);
     }
-    if ((sub_08063cd0() < 0 ? -sub_08063cd0() : sub_08063cd0()) <= 31)
+    if (abs(sub_08063cd0()) <= 31)
         sub_0806395c(8);
-    else if ((sub_08063d2c() < 0 ? -sub_08063d2c() : sub_08063d2c()) <= 15)
+    else if (abs(sub_08063d2c()) <= 15)
         sub_0806395c(3);
     else
         sub_0806395c(5);
