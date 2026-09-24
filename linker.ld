@@ -617,6 +617,15 @@ SECTIONS
         KEEP(*(.game_code_and_rodata_08018b84_08019eec_0801a3e4_0801a8c8_08021b18_08030804_08036280_08039c24)) KEEP(*(.game_code_and_rodata_08018b84_08019eec_0801a3e4_0801a8c8_08021b18_08030804_08036280_08039c24.tail))
     } > ROM
 
+    /* player_3aa64 — decompiled to C (src/player_3aa64.c, carved by tools/carve.py) */
+    .player_3aa64 0x0803AA64 : {
+        build/src/player_3aa64.o(.text)
+    } > ROM
+
+    .game_code_and_rodata_08018b84_08019eec_0801a3e4_0801a8c8_08021b18_08030804_08036280_08039c24_0803bde8 0x0803BDE8 : {
+        KEEP(*(.game_code_and_rodata_08018b84_08019eec_0801a3e4_0801a8c8_08021b18_08030804_08036280_08039c24_0803bde8)) KEEP(*(.game_code_and_rodata_08018b84_08019eec_0801a3e4_0801a8c8_08021b18_08030804_08036280_08039c24_0803bde8.tail))
+    } > ROM
+
     /* stage_3cd60 — decompiled to C (src/stage_3cd60.c, carved by tools/carve.py) */
     .stage_3cd60 0x0803CD60 : {
         build/src/stage_3cd60.o(.text)
