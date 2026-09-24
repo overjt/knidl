@@ -246,6 +246,11 @@ SECTIONS
         KEEP(*(.game_code_and_rodata_080091ac)) KEEP(*(.game_code_and_rodata_080091ac.tail))
     } > ROM
 
+    /* hud_099fc — decompiled to C (src/hud_099fc.c, carved by tools/carve.py) */
+    .hud_099fc 0x080099FC : {
+        build/src/hud_099fc.o(.text)
+    } > ROM
+
     /* hud_0a130 — decompiled to C (src/hud_0a130.c, carved by tools/carve.py) */
     .hud_0a130 0x0800A130 : {
         build/src/hud_0a130.o(.text)
