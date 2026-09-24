@@ -79,7 +79,7 @@ M77,0x080343C0,0x08034F8C,0xBCC,9,9,0,0x14F,0x2DC,15.6,4,4,0,0,0,6,3,player_343c
 M78,0x08034F8C,0x08036280,0x12F4,5,4,0,0x3CA,0x888,6.9,5,7,0,0,1,7,3,player_34f8c,already landed (c_code)
 M79,0x08036280,0x0803919C,0x2F1C,15,15,2,0x311,0x1000,7.4,14,12,1,0,0,12,4,stage script runner,21 jump tables; 35/41 pointer-dispatched; task engine x14; calls the stage support library x266
 M80,0x0803919C,0x08039C24,0xA88,3,3,0,0x382,0x508,8.6,18,2,0,0,0,10,2,player_3919c,already landed (c_code)
-M81,0x08039C24,0x0803AA64,0xE40,2,2,2,0x720,0xE1C,8.3,11,5,0,0,0,8,3,,
+M81,0x08039C24,0x0803AA64,0xE40,2,2,0,0x720,0xE1C,8.3,11,5,0,0,0,8,3,player_39c24,already landed (c_code)
 M82,0x0803AA64,0x0803BDE8,0x1384,14,14,0,0x164,0x568,6.5,5,0,0,0,0,4,2,player_3aa64,already landed (c_code)
 M83,0x0803BDE8,0x0803CD60,0xF78,5,2,2,0x318,0xBA8,8.3,11,2,0,0,2,2,3,,
 M84,0x0803CD60,0x08040B40,0x3DE0,78,2,0,0xCB,0xB04,10.3,45,14,0,0,37,9,5,player mode/state machine + stage support services,"PlayerState.unk04/unk05 is a current/previous MODE pair and Task.unk15 selects the script; sub_08040788 is the per-player input latch (gUnk_03002458 = latched state mask, gUnk_030023C0 = latched keys, both zeroed when PlayerState.unk42 & 0x40); sub_08040b40 is a 14-way camera/scroll velocity preset dispatcher; four anchor tables of void(*)(void) coroutine/handler pairs at 0x0873B430/46C/4AC/500"
