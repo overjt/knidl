@@ -8197,7 +8197,7 @@ loc_0803a12c:
 	b.n	loc_0803a194	@ 0x0803A194
 	movs	r0, r0
 	.word	gUnk_03002490
-	.word	0x0873D0F8
+	.word	gUnk_0873D0F8
 	.global	loc_0803a13c
 loc_0803a13c:
 	adds	r0, r3, #0
