@@ -1719,6 +1719,210 @@ read-modify-write.  The OR quirk of 3.50, reached through a bit-field.
   only where the listing differed, matched the 1820-byte `sub_0802e3ac` on
   its first build.
 
+### 3.389 `X - (A + K)` is re-associated: give each operand its own statement
+`sub_0802885c` computes the BG3 parallax factors from
+`(width << 3) - (origin * 2 + 240)`.  In one expression, fold rewrites it as
+`((width << 3) - 240) - origin * 2` (a `subs #240` on the first operand, 30
+bytes).  A local for `origin * 2 + 240` alone keeps the sum but moves the
+origin load in front of the width load, and `a = width << 3;` loads into one
+register and shifts into another.  The ROM's order and registers need one
+statement per step:
+
+```c
+a = gUnk_030055EC->unk30->unk2;
+a <<= 3;
+k = gUnk_03005608[0] * 2 + 240;
+num = a - k;
+```
+
+### 3.390 Index a table with the cell you just stored, not with the constant
+`sub_08022f50` sets the level to 0 and then reads the stage count of level 0:
+`gUnk_0300238C = 0; gUnk_030023EC = gUnk_08334EB4[gUnk_0300238C] - 1;`.  cse
+propagates the stored 0 into the index, so the load is the same as
+`gUnk_08334EB4[0]`, but the zero stays a pseudo of its own.  That pseudo is
+the ROM's second `movs r1, #0`, scheduled after `ldr r0, =gUnk_08334EB4` for
+the byte stores that follow.  Every spelling with a literal index or a scalar
+cell was 4-33 bytes off.  `sub_080272dc` follows the same rule for the room
+table: `gUnk_0300238C = 8; ... gUnk_087E1D58[gUnk_0300238C][gUnk_030023EC][0]`
+keeps the index sum `(stage * 4 + 256) + base`, while `[8][...]` folds the 256
+into the base first.
+
+### 3.391 A function that never touches r0 may return its unused parameter
+`sub_080276ac` sets one player's camera mode.  It ignores the argument its
+only caller passes (the player index) and re-reads the index from its own
+task.  All of its registers are one step up from every natural spelling
+(`r2` for the table, `r1` for the index), which is what a live `r0` looks
+like.  `s32 sub_080276ac(s32 a) { ...; return a; }` matches.  A plain
+`void f(s32 a)` does not: the parameter is dead at entry and r0 is free
+again.  The epilogue cannot show this, because the function is a `bx lr`
+leaf with no pop.
+
+### 3.392 A byte-table array type loads the base first; a row pointer loads it after
+`gUnk_02006A20` holds 3-byte records indexed by `gUnk_0200B034`.  Declared
+`s8 gUnk_02006A20[][3]` and indexed in place, `gUnk_02006A20[i][0]` loads the
+table address before the index (3.166), and `sub_080264b0`, `sub_08026584`
+and `sub_08027198` do it that way.  With `s8 *e = &gUnk_02006A20[i * 3]` or
+`e = gUnk_02006A20[i]` the table address loads after the index (83 bytes off
+in `sub_080264b0`), and a `struct { s8 a, b, c; }` array was 30 bytes off.
+The same rule for a struct address: `gUnk_030055EC->unk44[i].unk2`, used
+directly as a memory reference, loads `unk44` before the index multiply,
+while `d = &gUnk_030055EC->unk44[i]` multiplies first.  Where the ROM keeps
+the element address in a third register, write `doors =
+gUnk_030055EC->unk44; d = (struct Door *)(i * sizeof(struct Door) +
+(u32)doors);` (`sub_08026584`).
+
+### 3.393 `cell &= 0x1FF` on a 16-bit cell is the `adds rD, rK, #0; ands rD, rV` pair
+`sub_08026308` masks sixteen camera and object coordinates with `0x1FF`.
+The ROM keeps the constant in a callee-saved register and emits `adds r0,
+r5, #0; ands r0, r1` for each cell.  That copy is the constant's own HImode
+move (3.24), not a mask variable: 3.24's corollary is about a register
+operand of `ands`.  A variable `m = 0x1FF; cell = m & cell;` gives the right
+per-cell code but a different allocation of the later constants (210 bytes
+off).  Plain `cell &= 0x1FF;` matches, including the `ldr r1, =0x1FF` the ROM
+re-materialises after the loop, where cse's reach ends.
+
+### 3.394 An if/else of two stores and `if (f) f = 1; *p = f;` are one output and two cse paths
+`sub_0802672c` and `sub_08026834` store a flag into a task:
+`f = gUnk_0200AF08 & 16; if (f != 0) t->unk24 = 1; else t->unk24 = 0;`.
+Written as `if (f != 0) f = 1; t->unk24 = f;`, both compile to the same
+`ands; lsls #24; lsrs #24; cmp #0; beq; movs r0, #1; str`.  But in the
+second form, cse follows the join into the next `if`'s jump target and
+carries the task-table base across in one pseudo.  The ROM's `adds r5, r2,
+#0`, a gcse PRE copy of that base for the later arm, only appears with the
+if/else stores (41 bytes, same size, before the change).  An iterated
+clobber sweep found nothing (docs/decomp-loop.md §4b), which is the sign of
+a structural residue.
+
+### 3.395 The loop optimiser runs twice, and its hoist budget spans both passes
+`sub_08029318` compared door ids with `0x22B8`, and our build hoisted the
+constant into `sl` (an extra push, 149 bytes).  The ROM hoists only 0 and
+-16, the bit-field mask.  The `.loop` dump shows why.  With -frerun-loop-opt
+the loop pass runs twice.  A movable is hoisted when threshold x savings x
+lifetime >= the loop's insn count, and the threshold starts at 13 per pass
+and drops by 3 for every register hoisted.  Dead insns are deleted between
+the passes, so a constant that pass 1 refused can be hoisted by pass 2 on a
+shorter loop.  The source defect was one store: the loop starts by clearing
+the record's nibble byte (`unk4_0`/`unk4_4`).  Written as two bit-field
+stores, that clear leaves the -16 mask and a zero in the loop at loop time,
+so pass 1 hoists them and pass 2 still has budget for `0x22B8`.  Written as
+one plain byte store through the struct, pass 1 hoists only the table
+address, pass 2 spends its budget on 0 and -16, and `0x22B8` stays in the
+arm.  A `((u8 *)&rec)[4] = 0` cast store computes `sym + 4` separately and
+was 155 bytes off, and a 32-bit compare only moves the hoist to the bit-field
+constant 2.  **To keep a compare constant out of a preheader, change what
+gets hoisted before it, not the compare.**
+
+### 3.396 Duplicated statements beat a goto form for register allocation
+`sub_080275cc` has two arms that each end in one of two shared tails.
+Written with gotos into those tails, the code comes out the right size, but
+the parameter and the record pointer swap registers (138 bytes).  Written
+out in full as nested if/else with the tails duplicated, it matches:
+jump2's cross-jumping merges the copies back into the ROM's shared tails,
+and before that each copy counts as uses of the pointer, which lifts it
+above the parameter in global-alloc priority.  This is 3.123 seen from the
+allocator's side.  In the same function, a store of -1 that the ROM spells
+`movs r1, #255` into an `s8` record is `((u8 *)p)[3] = 0xFF;` or a `u8`
+local holding `0xFF`.
+
+### 3.397 On an incomplete `u8 []`, `a[0] = K` and `*a = K` are different stores
+`extern u8 gUnk_02005574[];` is cleared in every room loader, and the array
+reference does not compile like the pointer dereference: with a nonzero
+constant `gUnk_02005574[0] = K` is a read-and-OR byte store (3.50's OR quirk,
+reached through the array), and with zero it loads an SImode zero that the
+loaders' neighbouring QImode byte stores cannot share, which strands a
+register.  `*gUnk_02005574 = K` is a plain store and closed `sub_08023fd4`
+(40 bytes), `sub_08027e28`, `sub_08023948` and `sub_08024300`.
+
+### 3.398 Small M07 shapes, one line each
+- A loop-invariant pointer the ROM loads between the loop's `i = 0` and its
+  first test is a pointer local assigned after `i`: `i = 0; m =
+  &gUnk_030055C0; for (; i < n; i++) ... *m = 3;` (`sub_08027908`).  In the
+  same way, `i = 13; p = gUnk_02000040; for (; i <= 18; i++)` puts `movs r4,
+  #13` before the pointer load (`sub_08027e28`).
+- `for (...; d++, i++)` versus `i++, d++` decides the order of the two `adds`
+  (`sub_080272dc`).
+- A jump table whose default shares an arm: `default: case 0: case 1:` in
+  front of that arm (`sub_080236e4`).  A two-case inner `switch {1, 2}`
+  compiled as `cmp #1; beq; cmp #1; ble default` needs `default: case 0:`
+  sharing the default body (`sub_08028320`).
+- A task-init `switch` that reloads `ldr r1, [r2]` in every arm writes
+  `gUnk_03002490->unk08 = (u32)f;` per arm; an if/else between two
+  callbacks that keeps the task in a register writes `t->unk08`
+  (`sub_08024904` versus `sub_08023e34`).
+- A `u8` parameter costs the callee a `lsls`/`lsrs` pair even when its only
+  use is a `strb` (`sub_080235ec` is `(s32 a)`).
+- A loop storing one array element per iteration becomes a walking pointer
+  only when the source writes the reference twice, `if (c) a[i] = 15; else
+  a[i] = 0;` (`sub_0802296c`).
+- `u8 tile; r = 0; if (tile > 127) r = 256;` becomes a sign mask (`lsls #24;
+  asrs #31; ands`); an `s32 tile` keeps the ROM's `cmp #127; ble`
+  (`sub_0802259c`).
+- `x == 1 || x == 2` folds into `subs; cmp #1; bhi`; the ROM's `cmp #1; beq;
+  cmp #2; bne` is two identical `if`/`else if` arms merged later
+  (`sub_08021c74`).
+- A base load followed by `adds rBase, #1` before the index add is
+  `tbl[i][1]` on a 2-D `u8 tbl[][2]` (`sub_08026ca4`).
+- `(s16)(y - z)` passed to an `s16` parameter is computed in 16 bits; `-z +
+  y` keeps it 32-bit and loads z first (`sub_08026eec`).
+- A pointer local to a table element (`p = &tbl[y * w + x]`) puts the `lsls`
+  before the base `ldr`; `idx = y * w + x;` and `tbl[idx]` twice gives the
+  base-first order (`sub_08022540`).
+- Two long-lived zero registers after a call are two variables of different
+  types (`u8 z; u32 w;`), with CpuFastSet's source copied from `w` just
+  before the call (`sub_08023ca0`).
+- `muls r0, r2` with r2 loaded first is `field * cell`, in source order
+  (`sub_08026308`, 3.132).
+- A `y + 1` the ROM keeps in a stack slot at the top of an outer loop body
+  and copies back at the bottom is agbcc's own handling of `y++`; an
+  explicit `k = y + 1` (3.372) moves the add earlier (`sub_08027a6c`).
+- A `register T x asm("rN")` pin is a cheap one-off measure of what a
+  global-register swap is worth before hunting a natural fix: in
+  `sub_08027a6c` it recovered only 13 of 234 bytes, so the swap was not the
+  residue (the pin was not kept).
+- A room-loader template shared by eight functions: write
+  `gUnk_030055EC->field` at every use (a `r = gUnk_030055EC;` local moves
+  the load ahead of the first store address), and re-read the size cells
+  just stored for `gUnk_030055E4 = gUnk_03005620 * gUnk_0300561C;`
+  (`sub_08022fa8`, cloned onto `sub_0802497c` with four call changes).
+
+### 3.399 An exact global-alloc priority tie is decided by gcse's hash order: break it strictly
+`sub_08025bc8` came out with two loop-hoisted addresses in `r8`/`ip` where the
+ROM has them the other way round (4 bytes).  `.greg` showed an exact tie:
+`&gUnk_02007E8C` (8 refs, live length 1760) and `&gUnk_030023C8` (9 refs,
+1984) both score 136 after the integer truncation of `floor_log2(refs) *
+refs * 10000 / live_length`.  On a tie the lower pseudo number wins, and gcse
+numbers those pseudos in the hash order of their pool labels (4.79), so a
+spelling that merely reorders them (`s8 lvl`, `s16 lvl`) matches alone and
+can break in the carve file.  Declaring a nearby local `s8 v` instead of
+`s32 v` adds one extension insn inside the second address's range (1984 ->
+2016, priority 133), which is strictly lower.  Check a tie fix in the
+sorted-order list, not only in the byte count.
+
+### 3.400 Write `& 0xFF` as a literal: a mask variable makes cse reuse a stale register
+`sub_08025024` tests the door kind, the low byte of a halfword field, in
+many places.  With the mask in a variable, cse reuses the register an
+earlier `x & 0xFF` left behind after combine had already turned that one into
+an `ldrb`: the output gets a `movs r7, #255` at the top and `ldrh; ands rX,
+r7` in every block cse reaches, but a plain `ldrb` at a loop head it does
+not reach (848 bytes).  The literal `d->unk6 & 0xFF` (or `(u8)d->unk6`) at
+each use matches.
+
+### 3.401 Small M07 door-code shapes, one line each
+- A pair of loads of the same field in both arms of an if/else (`ldrsh r0`,
+  then `ldrh r3`) followed by `lsls/asrs r3` at the join is gcse's PRE of the
+  join's `d->unk0 == K` compare; the natural source produces it, a local
+  does not (`sub_08024e40`).
+- A constant inner index on a real multi-dimensional array is added to the
+  base first: `ldr =tbl; adds #12; adds rD, rOff, rBase` is `u16 tbl[][9]`
+  indexed `[i][6]`; `adds #2`/`#4` is `u8 [][3][2]` at `[i][1 or 2][j]`
+  (`gUnk_08732348`, `gUnk_087323E2`).
+- `if (c) x = 0; else x = w * 16;` keeps the ROM's arm order, the ternary
+  reverses it (`sub_08025f00`).
+- `a = expr; b = a;` loads b's address after a's store; the chained `b = a =
+  expr` loads it first (`sub_08025e0c`).
+- `EC = B8; 8C = 8; EC++;` gives the ROM's `ldr EC; ldr B8; ldrb; strb 8C;
+  adds; strb EC`: flow deletes the dead first store (`sub_080258e0`).
+
 ## 4. Splitting ROM ranges into asm (tools/split.py)
 
 ### 4.1 objdump text only round-trips under `.syntax unified`
@@ -6179,6 +6383,64 @@ M08 findings: all four agents died at once on a session limit and resumed
 cleanly from `SendMessage` with their open lists re-derived from `good/`;
 and `variants.sh` builds into `build/fnmatch/<variant name>_<start>`, so
 agents should prefix variant file names with their own name.
+
+### 4.82 A listing model must not take jump-table words for `ldr [pc]` instructions
+split.py prints a `mov pc` jump table as code, and M07's table words decode
+as `ldr r1, [pc, #416]` (the halves of `0x08024968`).  The pool-reference
+fixpoint of 4.72 then treated their "targets" as literal-pool words.  That
+kept two real instructions of `sub_0802497c` (`0x08024A80` `str r0, [r1,
+#4]; ldr r0, [pc, #96]` and `0x08024AF0` `ldr r0, [r3, #8]; movs r3, #0`)
+as `.word`s, and the reachability sweep reported 228 unreachable
+instructions in that function and 178 in `sub_08024e40`.  Compute the jump
+tables on the raw parse first and drop every `ldr [pc]` that sits inside one
+before the pool fixpoint; both reports then came out clean, leaving only the
+real census defects.
+
+### 4.83 `variants.sh` tests every `*.c` in the directory, helpers' copies included
+An agent's probe script wrote `<variant>.full.c` (hdr.c plus the candidate)
+next to the variants.  `variants.sh` tested it too, it matched, and it was
+saved into `good/` with the includes duplicated.  gen.py would have emitted
+the headers twice.  Keep helper output out of variant directories (or name
+it `*.i`/`*.txt`).  The macOS case-insensitivity trap of 4.24 hit again as
+well: the logs of `m07-loadB_A.c` and `m07-loadB_a.c` overwrote each other.
+
+### 4.84 Emit shared struct definitions from the canonical file, not from the first body
+gen.py unions the declarations of a carve file's bodies and emits each
+struct from the first body that declares it.  One agent's tool had stripped
+the `/*0x00*/` offset comments, so `level_242d0.c` would have shipped a bare
+`struct RoomDef` even though every body agreed on its layout.  gen.py now
+prints a struct from `types.txt` whenever its normalised form equals the
+canonical one, and falls back to the first body otherwise.
+
+### 4.85 Naming a ROM table in `data_symbols` renames pool words in other modules' asm
+`addsyms.py` names every `gUnk_<addr>` a landed file references.  `make
+split` then prints matching pool words symbolically everywhere, including
+the generated asm of M05/M06 (`.word 0x08735018` became `.word
+gUnk_08735018` in `..._0801c444_0801c690_0801c930_00.s`).  The bytes are
+identical and CI regenerates the file, so this is the normal cost of a
+landing, but it touches files an outside contributor may be editing.  Say so
+in the PR so they re-run `make split` when they rebase.  Do not use
+`abs_symbols` to avoid it: those are for link-time constants.
+
+### 4.86 The 4.79 hash order depends only on the label count: scan it before landing
+The door agent measured 4.79 precisely.  gcse hashes a `(symbol_ref
+".LCn")` by the address of its name string, and those strings come out in
+creation order, so the hash is a pure function of n.  A function's result
+therefore depends only on K, the number of pool labels the translation unit
+allocated before it.  An unused `static inline` function placed in front
+shifts K without emitting code, and scanning K = 0..220 (about 0.3 s per K,
+`wip/m07-door/kscan.sh`) showed which functions are sensitive:
+`sub_080258e0` matches only at K = 8, 18, 28, ...; `sub_08025024` fails at
+K = 6-10, 36-40, ...; eleven of the fifteen door functions match at every
+K.  For landing, the scan tells you which cut points are safe: here no split
+of 0x080242D0-0x080261C0 worked, the whole range matched only as one file
+starting at `sub_080242d0`, and `level_242d0.c` (already landed at
+0x080242D0-0x08024E40) was extended to cover it (carve the second half with
+carve.py, then merge the two `c_code` rows in `segments.txt` and drop the
+second section from `linker.ld`).  Two related traps: `fnmatch.sh` truncates
+its diff to 80 lines, so a whole-file mismatch needs a per-function byte
+compare to locate; and a one-off Docker glitch (a stale file right after a
+write) can produce an isolated failure, so re-run before debugging.
 
 ### 3.336 The four-loop HBlank family: `for (i = 0; i <= 6; i = j) { ...; j = i + 1; ... }`
 M34's `sub_080b6154`/`6290`/`63a4`/`6474` are one body with four sets of

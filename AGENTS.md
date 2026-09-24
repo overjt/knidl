@@ -244,4 +244,34 @@ Matching decompilation of Kirby: The Amazing Mirror's predecessor, **Kirby: Nigh
   4.79-4.81 (4.79: a function can match alone and not inside its carve
   file, because gcse hashes pool-label addresses).
 
+- Level / room builder decompiled (issue #93): module M07
+  `0x08021B18-0x0802969F` (30.9 KiB) landed as `src/terrain_21b18.c`,
+  `src/level_2296c.c`, `src/roomtask_23618.c`, `src/level_23948.c`,
+  `src/level_242d0.c`, `src/stage_261c0.c`, `src/door_26b60.c`,
+  `src/stage_270d0.c`, `src/stage_273a0.c`, `src/room_27e28.c`,
+  `src/room_28320.c` and `src/camera_28b8c.c` (**156 of 157 functions**,
+  no `asm` statements and no `register` pins; the one hole is
+  `sub_08027a6c`, 956 bytes, parked at 234 differing bytes with its best
+  source on #93), so `0x08021B18-0x08030803` (M07+M08) is C except that
+  one function.  It is the half of the
+  level engine that decides which room is on screen and drives M08's camera:
+  the room table `gUnk_087E1D58[level][stage][room]` gives the room header
+  `gUnk_030055EC` (`struct RoomDef`, 0x58 bytes: BGM, compressed maps,
+  tiles, palettes, BG map, origins, door records, object list); one loader
+  per game state loads the room, resets the camera and the players and
+  spawns task type #3 (class 4), whose body dispatches `Task.unk14` through
+  the anchor table `0x08732614` into seven room-task variants gated by the
+  per-frame flags `gUnk_03005624`; `sub_08024e40` finds the door under the
+  player and `sub_08025024` (a 9-way `switch` on the door kind) enters it and
+  raises M02's stage request `gUnk_03002438`.  The rest continue M06's map
+  queries, hold the stage helpers the whole game calls and start the camera
+  and the BG3 parallax layer.  `level_242d0.c` covers the part-3 loaders and
+  the doors as one translation unit because the doors only match after them
+  (lessons 4.79/4.86).  Six census rows corrected in `tools/symdb.py` (four
+  dead exports added, the two long-jump phantoms inside `sub_08025024`
+  removed) and 48 RAM/ROM cells named via `split_config.json`
+  `data_symbols`; done by a four-agent fan-out after the coordinator matched
+  59 cross-batch leaves, with seven handovers through `variants.sh`; new
+  lessons 3.389-3.401 and 4.82-4.86.
+
 - Next milestones: decompile split/SDK modules to C using the validated per-zone compiler recipe (task system Thumb side, sound driver, then game code); grow `src/` one module at a time with `asmdiff.sh` on the module range.
