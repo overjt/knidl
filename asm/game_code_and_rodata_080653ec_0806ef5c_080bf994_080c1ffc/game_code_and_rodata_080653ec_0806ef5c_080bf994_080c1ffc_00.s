@@ -19328,7 +19328,7 @@ loc_080cb4c6:
 	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	b.n	loc_080cb452	@ 0x080CB452
 	.word	0x08584BB0
-	.word	0x03001390
+	.word	gUnk_03001390
 	.thumb_func
 	.global	sub_080cb4f4
 sub_080cb4f4:

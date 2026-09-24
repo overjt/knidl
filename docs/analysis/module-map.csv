@@ -3,7 +3,7 @@ M01,0x08007300,0x080075B8,0x2B8,1,1,0,0x2B8,0x2B8,16.7,7,1,0,0,0,13,3,main,alrea
 M02,0x080075B8,0x08007B68,0x5B0,4,0,0,0x16C,0x24C,19.2,27,3,0,0,2,11,3,game mode + screen/asset loader,"class-0 task types #0-2; game-state cells; LZ77UnCompVram x21, HuffUnComp x6; called from AgbMain"
 M03,0x08007B68,0x080082D0,0x768,5,0,1,0x17B,0x334,25.5,50,0,0,0,1,3,4,,
 M04,0x080082D0,0x08008664,0x394,7,6,0,0x82,0x10C,17.9,13,0,0,1,1,0,2,mode_082d0,already landed (c_code)
-M05,0x08008664,0x08008B8C,0x528,3,0,1,0x1B8,0x37C,16.4,26,1,0,0,2,9,3,,
+M05,0x08008664,0x08008B8C,0x528,3,0,0,0x1B8,0x37C,16.4,26,1,0,0,2,9,3,mode_08664,already landed (c_code)
 M06,0x08008B8C,0x080091AC,0x620,13,0,0,0x78,0x1E8,25.5,17,0,0,0,21,1,2,gfx_08b8c,already landed (c_code)
 M07,0x080091AC,0x080099FC,0x850,13,3,1,0xA3,0x1A8,14.3,32,0,0,3,1,2,2,,
 M08,0x080099FC,0x0800A130,0x734,17,1,0,0x6C,0x184,22.3,31,0,0,1,19,4,2,hud_099fc,already landed (c_code)

@@ -247,8 +247,9 @@ SECTIONS
         build/src/mode_082d0.o(.text)
     } > ROM
 
-    .game_code_and_rodata_08008664 0x08008664 : {
-        KEEP(*(.game_code_and_rodata_08008664)) KEEP(*(.game_code_and_rodata_08008664.tail))
+    /* mode_08664 — decompiled to C (src/mode_08664.c, carved by tools/carve.py) */
+    .mode_08664 0x08008664 : {
+        build/src/mode_08664.o(.text)
     } > ROM
 
     /* gfx_08b8c — decompiled to C (src/gfx_08b8c.c, carved by tools/carve.py) */
