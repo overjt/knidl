@@ -7,6 +7,8 @@
 
 @ Named non-ROM cells (tools/split_config.json "data_symbols"),
 @ referenced symbolically from split literal pools / data words:
+	.global	gUnk_02000000
+gUnk_02000000 = 0x02000000
 	.global	gUnk_02000004
 gUnk_02000004 = 0x02000004
 	.global	gUnk_02000008
@@ -49,6 +51,8 @@ gUnk_02004B68 = 0x02004B68
 gUnk_02004B70 = 0x02004B70
 	.global	gUnk_02004B74
 gUnk_02004B74 = 0x02004B74
+	.global	gUnk_02004B78
+gUnk_02004B78 = 0x02004B78
 	.global	gUnk_02004C90
 gUnk_02004C90 = 0x02004C90
 	.global	gUnk_02005550
@@ -63,6 +67,8 @@ gUnk_02005584 = 0x02005584
 gUnk_02005588 = 0x02005588
 	.global	gUnk_02005590
 gUnk_02005590 = 0x02005590
+	.global	gUnk_020055B8
+gUnk_020055B8 = 0x020055B8
 	.global	gUnk_020055C0
 gUnk_020055C0 = 0x020055C0
 	.global	gUnk_020055C4
@@ -781,6 +787,8 @@ gUnk_03002708 = 0x03002708
 gUnk_03002710 = 0x03002710
 	.global	gUnk_03002790
 gUnk_03002790 = 0x03002790
+	.global	gUnk_03004B00
+gUnk_03004B00 = 0x03004B00
 	.global	gUnk_03004B90
 gUnk_03004B90 = 0x03004B90
 	.global	gUnk_03004C90
@@ -915,6 +923,8 @@ gUnk_030055AC = 0x030055AC
 gUnk_030055B0 = 0x030055B0
 	.global	gUnk_030055E4
 gUnk_030055E4 = 0x030055E4
+	.global	gUnk_03005604
+gUnk_03005604 = 0x03005604
 	.global	gUnk_0300560C
 gUnk_0300560C = 0x0300560C
 	.global	gUnk_0300561C
@@ -925,8 +935,14 @@ gUnk_03005620 = 0x03005620
 gUnk_03005628 = 0x03005628
 	.global	gUnk_03005660
 gUnk_03005660 = 0x03005660
+	.global	gUnk_0300566C
+gUnk_0300566C = 0x0300566C
+	.global	gUnk_03005670
+gUnk_03005670 = 0x03005670
 	.global	gUnk_03005680
 gUnk_03005680 = 0x03005680
+	.global	gUnk_03005690
+gUnk_03005690 = 0x03005690
 	.global	gSoundInfo
 gSoundInfo = 0x030056D0
 	.global	gMPlayJumpTable
