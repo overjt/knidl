@@ -6,6 +6,7 @@
 @   0x08030848 sub_08030848
 @   0x08030898 sub_08030898
 @   0x080308E8 sub_080308e8
+@   0x0803093C sub_0803093c
 @   0x0803097C sub_0803097c
 @   0x08030B14 sub_08030b14
 @   0x08030DB8 sub_08030db8
@@ -41,7 +42,9 @@
 @   0x0803332C sub_0803332c
 @   0x08033414 sub_08033414
 @   0x080337F4 sub_080337f4
+@   0x080337F8 sub_080337f8
 @   0x080337FC sub_080337fc
+@   0x08033800 sub_08033800
 @   0x08033804 sub_08033804
 @   0x08033808 sub_08033808
 @   0x0803380C sub_0803380c
@@ -285,6 +288,10 @@ loc_08030910:
 	pop	{r1}
 	bx	r1
 	.word	gUnk_03002490
+	.thumb_func
+	.global	sub_0803093c
+sub_0803093c:
+	.thumb
 	push	{r4, r5, lr}
 	sub	sp, #4
 	adds	r4, r0, #0
@@ -6640,6 +6647,10 @@ sub_080337f4:
 	.thumb
 	bx	lr
 	movs	r0, r0
+	.thumb_func
+	.global	sub_080337f8
+sub_080337f8:
+	.thumb
 	bx	lr
 	movs	r0, r0
 	.thumb_func
@@ -6648,6 +6659,10 @@ sub_080337fc:
 	.thumb
 	bx	lr
 	movs	r0, r0
+	.thumb_func
+	.global	sub_08033800
+sub_08033800:
+	.thumb
 	bx	lr
 	movs	r0, r0
 	.thumb_func
