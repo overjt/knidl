@@ -761,7 +761,7 @@ sub_080290dc:
 	movs	r0, r0
 	.word	gUnk_0300566C
 	.word	gUnk_03005604
-	.word	0x03005668
+	.word	gUnk_03005668
 	.word	gUnk_03005690
 	.thumb_func
 	.global	sub_08029110

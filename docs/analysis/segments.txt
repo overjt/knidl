@@ -101,7 +101,8 @@
 0x08023618 0x08023948 c_code roomtask_23618 # src/roomtask_23618.c (carved by tools/carve.py)
 0x08023948 0x080242D0 c_code level_23948 # src/level_23948.c (carved by tools/carve.py)
 0x080242D0 0x08024E40 c_code level_242d0 # src/level_242d0.c (carved by tools/carve.py)
-0x08024E40 0x08026B60 thumb_code game_code_and_rodata_08018b84_08019eec_0801a3e4_0801a8c8_08021b18_08023948_08024e40 [split]
+0x08024E40 0x080261C0 thumb_code game_code_and_rodata_08018b84_08019eec_0801a3e4_0801a8c8_08021b18_08023948_08024e40 [split]
+0x080261C0 0x08026B60 c_code stage_261c0 # src/stage_261c0.c (carved by tools/carve.py)
 0x08026B60 0x080270D0 c_code door_26b60 # src/door_26b60.c (carved by tools/carve.py)
 0x080270D0 0x08028320 thumb_code game_code_and_rodata_08018b84_08019eec_0801a3e4_0801a8c8_08021b18_08023948_08024e40_080270d0 [split]
 0x08028320 0x08028B8C c_code room_28320 # src/room_28320.c (carved by tools/carve.py)

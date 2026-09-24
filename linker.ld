@@ -479,6 +479,11 @@ SECTIONS
         KEEP(*(.game_code_and_rodata_08018b84_08019eec_0801a3e4_0801a8c8_08021b18_08023948_08024e40)) KEEP(*(.game_code_and_rodata_08018b84_08019eec_0801a3e4_0801a8c8_08021b18_08023948_08024e40.tail))
     } > ROM
 
+    /* stage_261c0 — decompiled to C (src/stage_261c0.c, carved by tools/carve.py) */
+    .stage_261c0 0x080261C0 : {
+        build/src/stage_261c0.o(.text)
+    } > ROM
+
     /* door_26b60 — decompiled to C (src/door_26b60.c, carved by tools/carve.py) */
     .door_26b60 0x08026B60 : {
         build/src/door_26b60.o(.text)

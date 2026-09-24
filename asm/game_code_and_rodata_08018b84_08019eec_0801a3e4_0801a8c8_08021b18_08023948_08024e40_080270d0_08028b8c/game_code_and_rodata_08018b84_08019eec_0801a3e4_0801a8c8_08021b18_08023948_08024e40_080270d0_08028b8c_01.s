@@ -54,7 +54,7 @@ loc_080295f4:
 	blt.n	loc_080295f4	@ 0x080295F4
 	b.n	loc_0802962e	@ 0x0802962E
 	.word	gUnk_03005690
-	.word	0x03005668
+	.word	gUnk_03005668
 	.global	loc_08029610
 loc_08029610:
 	movs	r4, #0
@@ -107,7 +107,7 @@ loc_0802964e:
 	cmp	r4, r5
 	blt.n	loc_0802964e	@ 0x0802964E
 	b.n	loc_08029684	@ 0x08029684
-	.word	0x03005668
+	.word	gUnk_03005668
 	.word	gUnk_03005690
 	.global	loc_08029668
 loc_08029668:
@@ -144,5 +144,5 @@ loc_0802968c:
 	pop	{r4, r5, r6, r7}
 	pop	{r0}
 	bx	r0
-	.word	0x03005668
+	.word	gUnk_03005668
 	.word	gUnk_03005690

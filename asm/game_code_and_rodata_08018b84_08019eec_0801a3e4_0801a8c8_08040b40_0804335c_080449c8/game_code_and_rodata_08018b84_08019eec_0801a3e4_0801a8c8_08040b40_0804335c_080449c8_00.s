@@ -18548,7 +18548,7 @@ loc_0804df9e:
 	strb	r0, [r1, #1]
 	b.n	loc_0804e0d8	@ 0x0804E0D8
 	.word	0x0873CC64
-	.word	0x02007FA0
+	.word	gUnk_02007FA0
 	.word	0x02004B6C
 	.word	gCurTaskIdx
 	.word	gUnk_03005550
@@ -19157,7 +19157,7 @@ loc_0804e400:
 	b.n	loc_0804e460	@ 0x0804E460
 	movs	r0, r0
 	.word	0x0873CC54
-	.word	0x02007FA0
+	.word	gUnk_02007FA0
 	.word	0x02004B6C
 	.word	gCurTaskIdx
 	.global	loc_0804e45c
