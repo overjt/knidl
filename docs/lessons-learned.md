@@ -1353,6 +1353,99 @@ the file's other readers declare it, the call compiles identically.
 Resolve a per-file extern-type conflict by checking what the callee's
 prototype already converts before splitting files or adding casts.
 
+### 3.367 A walking index, not `base + i`, keeps a copied pointer incremented in place
+M02's HUD tile copy `sub_0800b318` is `ldrh; strh; adds dst, #2; adds src,
+#2; subs n, #1; cmp #0; bne` with the source parameter itself (r4) as the
+walking pointer.  `buf[pos + i] = src[i]` makes strength reduction create a
+FRESH giv for `src[i]` (a copy of r4 plus an extra callee-saved register,
++4 bytes), and `buf[pos + i] = *src++` puts the source increment BEFORE the
+destination's.  The ROM's order and registers come from a separate walking
+index advanced like the pointer:
+
+```c
+pos = x + (y << 5);
+for (i = 0; i < n; i++) {
+    buf[pos] = *src;
+    pos++;
+    src++;
+}
+```
+
+`i` is then only the counter check_dbra_loop reverses into `n--`.
+
+### 3.368 Addresses the ROM loads BEFORE an unrelated loop are pointer locals
+`sub_0800b648` loads four byte-cell addresses into r3/r5/r6/r7 ahead of a
+three-byte clear loop and stores through them only after it.  Written as
+plain `gUnk_X = 0;` statements after the loop, agbcc still hoists the four
+`ldr`s in front of the loop - but AFTER the loop's own base/zero/start setup,
+so the preheader comes out in the wrong order.  Only pointer locals assigned
+before the loop (`q1 = &gUnk_020061E0; ... *q1 = 0;`) put the loads first,
+as real statements always precede hoisted ones (3.348).
+
+### 3.369 A `mov pc` jump table needs at least FIVE case labels
+gcc 2.x's `CASE_VALUES_THRESHOLD` is 5 on this target (no `casesi`
+pattern), and `expand_end_case` counts case NODES (a `case A ... B:` range
+counts twice): a `switch` with four labels compiles to a compare tree even
+when the values are dense.  So every label the ROM's
+`.word` table shows must be written, including the ones that share the
+default/exit arm (`case 2: break;`, `case 0: case 1:`), or the table
+disappears.  In the same vein, an empty `case 0:` moves a compare tree's
+split point ({0,1,2,3} splits at 1, {1,2,3} at 2), and a threaded
+`case N: done = 1; break;` inside `do { switch ... } while (done == 0)`
+compiles to a direct branch out of the loop with no code of its own, yet its
+label is still load-bearing (`sub_0800a19c`, `sub_0800a21c`, `sub_08008a00`).
+
+### 3.370 A 4-byte shortfall with one arm branching into the other is cross-jumping
+`sub_08009640` came out exactly 4 bytes short, and the diff showed the else
+arm of `if (n <= 4) f = n * 0x140000 + 0x180000; else f = (n - 5) *
+0x140000 + 0x880000;` jumping into the then arm's `adds; str` pair.  Nothing
+was missing: both arms ended in the same two instructions and jump2 merged
+them (4.64, 4.69).  In the ROM the else arm's product lives in r1, not r0, so
+its tail differs and survives.  Six natural spellings (locals, operand order,
+`* 5 << 18`, a shared result variable) all merged; the zero-byte
+`asm("" ::: "r0")` between the product and the add is what gives the ROM's
+allocation.  When a size delta is exactly one shared tail, look for the merge
+before looking for a missing statement.
+
+### 3.371 An integer-literal RAM address is re-materialised; a symbol is kept
+The mirror of 4.56.  `sub_08008f10` passes `0x02020000 + off` to four
+`sub_080017e4` calls, and the ROM reloads the buffer address from the pool
+around every call.  Written as `gUnk_02020000`, cse keeps the symbol in a
+callee-saved register across the calls and the `if` (-8 bytes, r7/r8
+swapped); written as the literal, reload rematerialises it each time.  The
+same literal-vs-symbol choice decided `sub_08007e04`'s link-payload offsets
+(`size + 0x02020010`).
+
+### 3.372 Small ordering levers from M02, one line each
+- A `flag = 0` the ROM emits AFTER a global's load: copy the global into a
+  local first (`mode = gUnk_030023D8; flag = 0; if (mode == 8 && ...)`);
+  `if (gUnk_030023D8 == 8 ...)` zeroes the flag first (`sub_08008664`).
+- `A = (k = B) + 14;` keeps A's address load ahead of the read of B and B's
+  value in `k` for a later test (`sub_08007f9c`); `k = B;` as its own
+  statement moves the read first.
+- A pointer chosen between two constant addresses by `if/else` or `?:` is
+  canonicalised to `p = b; if (c) p = a;`; the ROM's `bne; ldr =A; b join;
+  ldr =B` is the whole block written twice (identical tails then merge).
+- When only the ORDER of hoisted `ldr =sym` loads in front of a loop
+  differs, flip the cell's volatility: `gUnk_0300243C` must be plain `u16`
+  in `sub_08007b68` although ten files declare it `vu16`.
+- `n - (i + 1)` folds to `(n - 1) - i`; the ROM's `adds rA, rB, #1 ... adds
+  rB, rA, #0` pair is `for (i = 0; i < n; i = j) { j = i + 1; ... tbl[n - j] }`
+  (compare 3.336).  Likewise `r = 4 - (r - 4)` folds to `8 - r`, while
+  `r -= 4; r = 4 - r;` keeps both subtractions.
+- Keep a difference in a local (`d = to - from; if (d != 0)`) to keep the
+  ROM's `subs; cmp #0`; an inline `to - from` folds to `cmp rA, rB`.
+- A single `lsls` at an if/else join feeding a `(u16)` argument cast was
+  written in BOTH arms: jump2's cross-jumping merges the two copies into the
+  join, but at combine time the shift and the cast sit in different blocks,
+  so they are not folded into one `lsls #22` (`sub_08008558`).
+- Several `return 1` exits after a loop are one `fail:` label reached by
+  `goto`; separate `return 1` statements merge into the last copy (3.64).
+- Coroutine loops whose exits call something and leave are
+  `for (;;) { if (a) { f(); break; } if (b) { g(); break; } body(); }`; a
+  goto loop or an `if/else if ... goto` chain has the right size and the
+  wrong layout.
+
 ## 4. Splitting ROM ranges into asm (tools/split.py)
 
 ### 4.1 objdump text only round-trips under `.syntax unified`
@@ -5680,6 +5773,47 @@ stop address, and `setdefault` stored that as the entry for `0x080BB2F6`.  The
 walker then desynced on `sub_080bb2f4`'s first call and the listing lost a
 `bl sub_080ba708`.  Echo a marker before each window and record only the line
 whose address equals that window's start; every other line is a by-product.
+
+### 4.72 An `ldr [pc]` that sits ON a pool word points at a phantom pool word
+A listing model classifies a word as literal data when some `ldr rN, [pc,
+#K]` loads it.  M02's `0x0800A2D8` is itself a pool word (loaded by
+`sub_0800a294`) whose halves decode as `ldr r3, [pc, #416]`, so the model
+treated `0x0800A47C` - two live instructions of `sub_0800a42c`, `movs r3,
+#0; ldrsh r0, [r1, r3]` - as a literal, and the reachability sweep reported
+code after it as unreachable.  Compute the pool set as a fixpoint over
+GENUINE loads: drop every `ldr [pc]` whose own address (or address - 2) is a
+pool target, recompute, repeat.  Use the same set both to promote
+unreferenced data to code and to demote referenced "code" to data.
+
+### 4.73 Per-function declarations need a type-only comparison and a cross-file check
+The M35/M02 harness gives every function its own extern and prototype lines
+and unions them per carve file, failing on a conflict.  Two refinements were
+needed in M02: compare prototypes by parameter TYPES only (`void f(s32 a)`
+and `extern void f(s32 idx)` are the same declaration - agents name
+parameters freely), and parse arrays of function pointers
+(`extern void (*tbl[])(void);`) as variables, not prototypes.  The per-file
+check cannot see a cell declared `u16` in one carve file and `s16` in the
+next; a module-wide listing of every cell's spellings found thirteen such
+splits after the fan-out, and all were harmonised with byte-exact rechecks.
+
+### 4.74 Carve order decides what the next module's segment is called
+`tools/carve.py` gives the part AFTER a carve the name `<segment>_<end>`
+only when a part remains BEFORE it; a start-adjacent carve leaves the name
+unchanged.  Carving M02's last two files as `[hud_0b318][mode_0b44c]` in
+that order named M03's segment `game_code_and_rodata_0800b44c` (the end of
+the first carve), not its own start.  Carve the file adjacent to the next
+module FIRST (`mode_0b44c`, then `hud_0b318`): M03 then lives in
+`game_code_and_rodata_0800b920`, and every intermediate name inside M02 is
+consumed as the module completes.
+
+### 4.75 Hand a function to another agent through `variants.sh`, never `fns/`
+When one agent finished early, four of the busier batches' unstarted or
+parked functions were handed to it mid-run without a collision: the new owner
+wrote candidates only under its own `wip/<agent>/<fn>/` and tested them with
+`variants.sh`, which saves a MATCH to `good/` and never touches
+`fns/<fn>.c`.  The old owner was told first to stop editing that one file.
+Even if both had matched, `good/` would only have been overwritten by
+another matching body.
 
 ### 3.336 The four-loop HBlank family: `for (i = 0; i <= 6; i = j) { ...; j = i + 1; ... }`
 M34's `sub_080b6154`/`6290`/`63a4`/`6474` are one body with four sets of

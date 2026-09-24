@@ -180,7 +180,7 @@ dispatches, pool density) — a planning aid, not a promise.
 | # | Range | Size | Fns | Anchors | Difficulty | Candidate subsystem |
 |---|-------|------|-----|---------|------------|---------------------|
 | M01 | `0x08007300-0x080075B7` | 0.7 KiB | 1 | 0 | - | **done** - main |
-| M02 | `0x080075B8-0x0800B91F` | 16.9 KiB | 110 | 1 | *** | game mode + screen/asset loader |
+| M02 | `0x080075B8-0x0800B91F` | 16.9 KiB | 109 | 1 | *** | game-state bodies, boot/title sequence, screen loaders, pause screen + HUD - **landed (#96)** |
 | M03 | `0x0800B920-0x08010357` | 18.6 KiB | 83 | 0 | **** | menu / UI task bank |
 | M04 | `0x08010358-0x08017667` | 28.8 KiB | 65 | 0 | *** | scripted-sequence bank: director + 50 of the 63 scripts |
 | M05 | `0x08017668-0x0801A8C7` | 12.6 KiB | 23 | 0 | *** | player-character animation bank + collision registry - **landed (#81)**, 20/23 |
@@ -267,7 +267,7 @@ ordering inside it:
 | 19 | M23 enemy/object behaviour bank 4 | 0x6BF0 | 285 | 3 | 3 | 0 | 10 |
 | 20 | M04 scripted-sequence bank: director + 50 of the 63 scripts - landed | 0x7310 | 65 | 3 | 3 | 1 | 2 |
 | 21 | M08 camera / BG scroll + tilemap streaming | 0x7164 | 153 | 3 | 4 | 3 | 17 |
-| 22 | M02 game mode + screen/asset loader | 0x4368 | 110 | 3 | 6 | 29 | 5 |
+| 22 | M02 game-state bodies, boot/title sequence, screen loaders, pause screen + HUD - landed | 0x4368 | 109 | 3 | 6 | 29 | 5 |
 | 23 | M16 effect spawner + two-level state machine (task types #81-#90) - landed | 0x75D8 | 89 | 3 | 6 | 10 | 10 |
 | 24 | M33 HUD / overlay effects? | 0x316C | 108 | 3 | 7 | 8 | 9 |
 | 25 | M12 large actor bank A | 0x3620 | 22 | 3 | 7 | 1 | 0 |
@@ -324,7 +324,7 @@ sub-issue of #35, so the numbering ascends with the recommended order):
 | 30 | #93 | M07 level / room builder + tilemap upload | `0x08021B18-0x0802969F` | 30.9 KiB | 4 |
 | 31 | #94 | M34 save file / SRAM records + options | `0x080B6154-0x080B9D0B` | 14.9 KiB | 5 |
 | 32 | #95 | M35 sub-game framework + reaction-duel sub-game - landed | `0x080B9D0C-0x080BDA2B` | 15.3 KiB | 5 |
-| 33 | #96 | M02 game mode + screen/asset loader | `0x080075B8-0x0800B91F` | 16.9 KiB | 5 |
+| 33 | #96 | M02 game-state bodies, boot/title sequence, screen loaders, pause screen + HUD - landed | `0x080075B8-0x0800B91F` | 16.9 KiB | 5 |
 | 34 | #97 | M33 HUD / overlay effects? | `0x080B2FE8-0x080B6153` | 12.4 KiB | 5 |
 | 35 | #98 | M37 FIR-coefficient effect engine | `0x080C1FFC-0x080C641F` | 17.0 KiB | 5 |
 | 36 | #99 | M03 menu / UI task bank | `0x0800B920-0x08010357` | 18.6 KiB | 5 |
@@ -346,7 +346,78 @@ Cross-references use module ids. "Depends on" and "Called from" are `bl` call
 counts; segment names (`early_*`, `sdk_libc`, …) are the already decompiled
 early zone and the SDK tails. "Pool references" counts literal-pool words, so
 `asset_metadata_index x252` means 252 pool words pointing into the asset zone.
-### M02 `0x080075B8-0x0800B91F` - game mode + screen/asset loader
+### M02 `0x080075B8-0x0800B91F` - game-state bodies, boot/title sequence, screen loaders, pause screen and HUD - **landed (#96)**
+
+The range is decompiled and carved out of the split asm, so it now appears in
+`module-map.csv` as `c_code` rows instead of one clusterable module; the census
+below is the pre-decompilation one, kept for the record.
+
+* **Landed as** eleven files, all 109 functions byte-exact under the `--newpb`
+  recipe, 108 new `split_config.json` `data_symbols`, `make progress` reports 0
+  asm code bytes in the range:
+  `src/mode_075b8.c` (`0x080075B8-0x08007B68`, 4 fns),
+  `src/mode_07b68.c` (`0x08007B68-0x080082D0`, 5),
+  `src/mode_082d0.c` (`0x080082D0-0x08008664`, 7),
+  `src/mode_08664.c` (`0x08008664-0x08008B8C`, 3),
+  `src/gfx_08b8c.c` (`0x08008B8C-0x080091AC`, 13),
+  `src/boot_091ac.c` (`0x080091AC-0x080099FC`, 13),
+  `src/hud_099fc.c` (`0x080099FC-0x0800A130`, 17),
+  `src/hud_0a130.c` (`0x0800A130-0x0800AAD0`, 19),
+  `src/hud_0aad0.c` (`0x0800AAD0-0x0800B318`, 14),
+  `src/hud_0b318.c` (`0x0800B318-0x0800B44C`, 6),
+  `src/mode_0b44c.c` (`0x0800B44C-0x0800B920`, 8).
+  One function carries a zero-byte `asm("" ::: "r0")` clobber
+  (`sub_08009640`, lessons-learned 3.370); there are no `register` pins.
+* **What it turned out to be** the code `AgbMain` (`src/main.c`) dispatches
+  into, in five parts:
+  * **The per-frame bodies of the game states** (`src/mode_075b8.c`,
+    `src/mode_08664.c`): states 5 (`sub_08007624`), 9 (`sub_0800783c`),
+    8/17/18/19 (`sub_0800791c`) and 20 (`sub_08008a00`) each run a setup
+    helper from `src/mode_0b44c.c` (`sub_0800b788`/`sub_0800b87c`/
+    `sub_0800b648`), fade in, then pump the frame driver until the
+    **stage-request byte** `gUnk_03002438` asks for something: 1-4 switch the
+    game state, 5 opens the **pause screen** `sub_08008664` (raised by
+    `sub_080075b8` when a present, living player presses START; the pausing
+    player is `gUnk_02004B60`), 6 is a lost life (state 22, game over, when no
+    player has lives left), 7/8/12 go to states 11/10/17 and 9-14 enter one
+    of six extra modes (`gUnk_02006090` 0-5; the first visit goes through
+    state 13, later ones straight to states 14-19).
+  * **AgbMain state 13, the extra modes' title screen** (`src/mode_07b68.c`,
+    `sub_08007f9c`): the mode's picture, two task-#265 decorations and a
+    level select (`gUnk_02006168`, 0-2) for the first three modes.  In
+    single-pak link play it first stages a multiboot image at `0x02020000`
+    (`sub_08007e04`, a common blob plus one of three per-mode chunk sets),
+    sends it and runs the `0x5503` SIO handshake (`sub_08007b68`/
+    `sub_08007c5c`); `sub_08007d4c` is the failure prompt.
+  * **The boot and title sequence** (`src/boot_091ac.c`): state 1's
+    `sub_080091ac`/`sub_08009200` is the skippable logo sequence
+    (`sub_08009398(n)` waits n frames and returns 1 on A/B/START; task type
+    **#0** `sub_080093fc`, spawned there, calls `sub_080caab8` every frame), state 3's `sub_080096e0`
+    alternates the title screen `sub_0800973c` (task type **#1**
+    `sub_08009418` animates the title palette, task type **#2**
+    `sub_080095c0` spawns ten sprite children in two rows of five,
+    `sub_08009640`) with the nine-scene intro
+    story `sub_080098a8`, each scene a task-**#237** picture (`sub_080099fc`).
+    Task type **#265** (`src/mode_082d0.c`, two instances from
+    `sub_080082d0` on the state-13 title screen) runs one of the four
+    effect scripts of the anchor table `0x0873078C`.
+  * **The screen/asset loaders** (`src/gfx_08b8c.c`): LZ77/Huffman
+    decompression of palettes, tiles and maps into VRAM from the ROM tables at
+    `0x08731980-0x08731BA8`; `sub_08008c4c(i)` (palette set) and
+    `sub_08008c64(i)` (VRAM transfer node) are called ROM-wide, and
+    `sub_08008fc4` loads the level's pause picture.
+  * **The HUD** (`src/hud_*.c`): lives `gUnk_02007D48[4]` (0-99), health
+    `gUnk_02005588[4]` up to `gUnk_02005580` (24 or 48), score
+    `gUnk_02006020[4]` (clamped to 99999999), the per-player bar records
+    `gUnk_02006A00[]` and a four-field clock (`gUnk_03000498`, clamped into
+    `gUnk_02006068`), drawn by `sub_0800b318`-family helpers into the 32x32
+    tilemap buffer `gUnk_02005600` and flushed to `0x06001000` when the dirty
+    flag `gUnk_0200002C` is set.  `gUnk_02006014 == 1` means the HUD is shown.
+* **Census fixes** 109 functions, not 110: five phantoms removed
+  (`0x080091EA`, `0x080091FA`, `0x080099E0`, `0x0800A202`, `0x0800A332` -
+  pool-skip branches and epilogue tails "evidenced" by stray words in graphics
+  blobs) and four hidden entries added (`0x080093CC`, `0x0800A178`,
+  `0x0800A19C`, `0x0800AAD0`).
 
 * **Size** 16.9 KiB (`0x4368`), 110 functions (15 reachable only through pointer tables), mean `0x9c`, largest `0x37c`, pool words 19.7% of bytes.
 * **Difficulty** 3/6 - 161 distinct RAM cells, 7 jump-table dispatches, 4 functions >= `0x200`.

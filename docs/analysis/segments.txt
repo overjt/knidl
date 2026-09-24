@@ -51,7 +51,18 @@
 0x08006E9C 0x08007004 thumb_code game_code_early_080011ac_08002378_08003110_08003888_08004000_08004fec_08005654_08005acc_08005d9c_08006d18_08006e9c [split]
 0x08007004 0x08007300 c_code early_7004 # src/early_7004.c (carved by tools/carve.py)
 0x08007300 0x080075B8 c_code main # src/main.c (carved by tools/carve.py)
-0x080075B8 0x08010358 thumb_code game_code_and_rodata [split]
+0x080075B8 0x08007B68 c_code mode_075b8 # src/mode_075b8.c (carved by tools/carve.py)
+0x08007B68 0x080082D0 c_code mode_07b68 # src/mode_07b68.c (carved by tools/carve.py)
+0x080082D0 0x08008664 c_code mode_082d0 # src/mode_082d0.c (carved by tools/carve.py)
+0x08008664 0x08008B8C c_code mode_08664 # src/mode_08664.c (carved by tools/carve.py)
+0x08008B8C 0x080091AC c_code gfx_08b8c # src/gfx_08b8c.c (carved by tools/carve.py)
+0x080091AC 0x080099FC c_code boot_091ac # src/boot_091ac.c (carved by tools/carve.py)
+0x080099FC 0x0800A130 c_code hud_099fc # src/hud_099fc.c (carved by tools/carve.py)
+0x0800A130 0x0800AAD0 c_code hud_0a130 # src/hud_0a130.c (carved by tools/carve.py)
+0x0800AAD0 0x0800B318 c_code hud_0aad0 # src/hud_0aad0.c (carved by tools/carve.py)
+0x0800B318 0x0800B44C c_code hud_0b318 # src/hud_0b318.c (carved by tools/carve.py)
+0x0800B44C 0x0800B920 c_code mode_0b44c # src/mode_0b44c.c (carved by tools/carve.py)
+0x0800B920 0x08010358 thumb_code game_code_and_rodata_0800b920 [split]
 0x08010358 0x080109C8 c_code player_10358 # src/player_10358.c (carved by tools/carve.py)
 0x080109C8 0x08010B38 c_code player_109c8 # src/player_109c8.c (carved by tools/carve.py)
 0x08010B38 0x08017668 c_code player_10b38 # src/player_10b38.c (carved by tools/carve.py)

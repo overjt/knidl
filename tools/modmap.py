@@ -200,8 +200,8 @@ NAMED_HELPERS[0x080CFDD4] = "TaskDispatchTrampoline"
 # the full reasoning per module is in docs/analysis/module-map.md.  Names
 # ending in "?" are candidate identifications, not established ones.
 MODULE_NAMES = {
-    0x080075B8: ("game mode + screen/asset loader",
-                 "class-0 task types #0-2; game-state cells; LZ77UnCompVram x21, HuffUnComp x6; called from AgbMain"),
+    0x080075B8: ("game-state bodies, boot/title sequence, screen loaders, pause screen + HUD",
+                 "decompiled in #96 as src/mode_075b8.c/mode_07b68.c/mode_082d0.c/mode_08664.c/gfx_08b8c.c/boot_091ac.c/hud_099fc.c/hud_0a130.c/hud_0aad0.c/hud_0b318.c/mode_0b44c.c (all 109 functions; 5 census phantoms removed, 4 hidden entries added). What AgbMain dispatches into: the per-frame bodies of game states 5, 8/17/18/19, 9 and 20, which loop until the stage-request byte gUnk_03002438 asks for a state change, the pause screen (5, sub_08008664) or a lost life (6); state 13, the extra modes' title screen (level select; in single-pak link play it first sends a multiboot image staged at 0x02020000 over the 0x5503 SIO handshake) with its task-#265 decorations running the four effect scripts of the anchor table @0x0873078C; the boot logo (state 1, task type #0) and the title screen / nine-scene intro story (state 3, task types #1, #2 and #237); the LZ77/Huffman screen loaders over the tables @0x08731980-0x08731BA8 (sub_08008c4c/sub_08008c64 are called ROM-wide); and the HUD - lives gUnk_02007D48[], health gUnk_02005588[] up to gUnk_02005580, score gUnk_02006020[] clamped to 99999999, a four-field clock, all drawn into the 32x32 tilemap buffer gUnk_02005600 flushed to 0x06001000 on the dirty flag gUnk_0200002C"),
     0x0800B920: ("menu / UI task bank",
                  "22 class-4 task types #238-259; key auto-repeat + decimal digit buffer; called from AgbMain and the save module"),
     0x08010358: ("scripted-sequence bank: director + 50 of the 63 scripts",

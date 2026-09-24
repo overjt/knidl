@@ -9590,7 +9590,7 @@ loc_080c645a:
 	movs	r2, #0
 	bl	sub_080c68b0	@ 0x080C68B0
 	b.n	loc_080c649a	@ 0x080C649A
-	.word	0x02006020
+	.word	gUnk_02006020
 	.word	gUnk_02000028
 	.global	loc_080c6478
 loc_080c6478:
@@ -10344,7 +10344,7 @@ loc_080c6a7a:
 loc_080c6a8c:
 	.word	0xFF676980
 	.word	0x00989680
-	.word	0x085A6F34
+	.word	gUnk_085A6F34
 	.word	0xFFF0BDC0
 	.word	0x000F4240
 	.word	0xFFFE7960
@@ -10545,8 +10545,8 @@ loc_080c6bdc:
 	pop	{r4, r5, r6, r7}
 	pop	{r0}
 	bx	r0
-	.word	0x085A6F34
-	.word	0x085A6F5C
+	.word	gUnk_085A6F34
+	.word	gUnk_085A6F5C
 	.word	0x085A6F48
 	.thumb_func
 	.global	sub_080c6c3c
@@ -17958,7 +17958,7 @@ loc_080caa4a:
 	bx	r0
 	movs	r0, r0
 	.word	0x08757440
-	.word	0x02030000
+	.word	gUnk_02030000
 	.word	0x087577D8
 	.word	0x0201BFD0
 	.word	0x0000FFFF
@@ -18002,7 +18002,7 @@ loc_080caae2:
 	strh	r0, [r5, #10]
 	b.n	loc_080cac54	@ 0x080CAC54
 	movs	r0, r0
-	.word	0x02030000
+	.word	gUnk_02030000
 	.global	loc_080caaf8
 loc_080caaf8:
 	ldr	r1, [pc, #76]	@ 0x080CAB48
@@ -18538,7 +18538,7 @@ loc_080caea2:
 	.word	gUnk_03000B78
 	.word	gUnk_03001E94
 	.word	gUnk_03000FA8
-	.word	0x02006020
+	.word	gUnk_02006020
 	.word	gUnk_03002360
 	.word	gUnk_03001ED8
 	.word	0x0000E0FF
@@ -19328,7 +19328,7 @@ loc_080cb4c6:
 	bl	TaskYieldTrampoline	@ 0x080CFDCC
 	b.n	loc_080cb452	@ 0x080CB452
 	.word	0x08584BB0
-	.word	0x03001390
+	.word	gUnk_03001390
 	.thumb_func
 	.global	sub_080cb4f4
 sub_080cb4f4:
@@ -19402,7 +19402,7 @@ loc_080cb570:
 	bx	r0
 	movs	r0, r0
 	.word	gUnk_03002490
-	.word	0x02006020
+	.word	gUnk_02006020
 	.word	gUnk_03002360
 	.thumb_func
 	.global	sub_080cb588
@@ -22895,7 +22895,7 @@ sub_080cd330:
 	.word	gUnk_03001EEC
 	.word	gUnk_03001EDC
 	.word	0x0201C1A4
-	.word	0x02006020
+	.word	gUnk_02006020
 	.word	gUnk_02000028
 	.word	gUnk_03002360
 	.word	gUnk_03002464
@@ -22999,9 +22999,9 @@ loc_080cd422:
 	.word	gUnk_03001ED8
 	.word	0x0000FF7F
 	.word	gUnk_0200EC50
-	.word	0x02008008
+	.word	gUnk_02008008
 	.word	gUnk_03002360
-	.word	0x02007FA8
+	.word	gUnk_02007FA8
 	.word	0x0000FFFF
 	.word	0x0000E0FF
 	.word	0x08758334
@@ -23203,7 +23203,7 @@ loc_080cd5f0:
 	.word	gUnk_03001ED8
 	.word	gUnk_03000AF4
 	.word	gUnk_03001EDC
-	.word	0x02006020
+	.word	gUnk_02006020
 	.word	gUnk_02000028
 	.word	0x0201C1A4
 	.thumb_func

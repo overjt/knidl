@@ -7089,8 +7089,7 @@ loc_08048220:
 	ldrb	r1, [r1, #0]
 	lsls	r1, r1, #24
 	asrs	r1, r1, #24
-	.short	0xF7C1
-	.short	0xFFA2
+	bl	sub_0800a178	@ 0x0800A178
 	ldr	r0, [r4, #0]
 	adds	r0, #136
 	ldr	r1, [r0, #0]

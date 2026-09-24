@@ -233,8 +233,63 @@ SECTIONS
         build/src/main.o(.text)
     } > ROM
 
-    .game_code_and_rodata 0x080075B8 : {
-        KEEP(*(.game_code_and_rodata)) KEEP(*(.game_code_and_rodata.tail))
+    /* mode_075b8 — decompiled to C (src/mode_075b8.c, carved by tools/carve.py) */
+    .mode_075b8 0x080075B8 : {
+        build/src/mode_075b8.o(.text)
+    } > ROM
+
+    /* mode_07b68 — decompiled to C (src/mode_07b68.c, carved by tools/carve.py) */
+    .mode_07b68 0x08007B68 : {
+        build/src/mode_07b68.o(.text)
+    } > ROM
+
+    /* mode_082d0 — decompiled to C (src/mode_082d0.c, carved by tools/carve.py) */
+    .mode_082d0 0x080082D0 : {
+        build/src/mode_082d0.o(.text)
+    } > ROM
+
+    /* mode_08664 — decompiled to C (src/mode_08664.c, carved by tools/carve.py) */
+    .mode_08664 0x08008664 : {
+        build/src/mode_08664.o(.text)
+    } > ROM
+
+    /* gfx_08b8c — decompiled to C (src/gfx_08b8c.c, carved by tools/carve.py) */
+    .gfx_08b8c 0x08008B8C : {
+        build/src/gfx_08b8c.o(.text)
+    } > ROM
+
+    /* boot_091ac — decompiled to C (src/boot_091ac.c, carved by tools/carve.py) */
+    .boot_091ac 0x080091AC : {
+        build/src/boot_091ac.o(.text)
+    } > ROM
+
+    /* hud_099fc — decompiled to C (src/hud_099fc.c, carved by tools/carve.py) */
+    .hud_099fc 0x080099FC : {
+        build/src/hud_099fc.o(.text)
+    } > ROM
+
+    /* hud_0a130 — decompiled to C (src/hud_0a130.c, carved by tools/carve.py) */
+    .hud_0a130 0x0800A130 : {
+        build/src/hud_0a130.o(.text)
+    } > ROM
+
+    /* hud_0aad0 — decompiled to C (src/hud_0aad0.c, carved by tools/carve.py) */
+    .hud_0aad0 0x0800AAD0 : {
+        build/src/hud_0aad0.o(.text)
+    } > ROM
+
+    /* hud_0b318 — decompiled to C (src/hud_0b318.c, carved by tools/carve.py) */
+    .hud_0b318 0x0800B318 : {
+        build/src/hud_0b318.o(.text)
+    } > ROM
+
+    /* mode_0b44c — decompiled to C (src/mode_0b44c.c, carved by tools/carve.py) */
+    .mode_0b44c 0x0800B44C : {
+        build/src/mode_0b44c.o(.text)
+    } > ROM
+
+    .game_code_and_rodata_0800b920 0x0800B920 : {
+        KEEP(*(.game_code_and_rodata_0800b920)) KEEP(*(.game_code_and_rodata_0800b920.tail))
     } > ROM
 
     /* player_10358 — decompiled to C (src/player_10358.c, carved by tools/carve.py) */

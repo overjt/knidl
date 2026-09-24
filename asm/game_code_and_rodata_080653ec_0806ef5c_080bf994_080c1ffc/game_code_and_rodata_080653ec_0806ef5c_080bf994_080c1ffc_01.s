@@ -34,7 +34,7 @@ sub_080cd75c:
 	.word	0x0201C19C
 	.word	0x0201C1A8
 	.word	0x087583B4
-	.word	0x02005600
+	.word	gUnk_02005600
 	.global	loc_080cd794
 loc_080cd794:
 	mov	r0, sp
@@ -81,7 +81,7 @@ loc_080cd7d2:
 	bl	sub_080017e4	@ 0x080017E4
 	b.n	loc_080cd806	@ 0x080CD806
 	movs	r0, r0
-	.word	0x02005600
+	.word	gUnk_02005600
 	.word	0x01000400
 	.word	0x0201C19C
 	.word	0x0201C1A8
@@ -108,7 +108,7 @@ loc_080cd812:
 	add	sp, #4
 	pop	{r0}
 	bx	r0
-	.word	0x02005600
+	.word	gUnk_02005600
 	.word	0x06001800
 	.word	0x0201C19C
 	.word	0x0201C1B4
