@@ -30,7 +30,7 @@ extern s8 gUnk_020055D0;
 extern s8 gUnk_020055F0[];
 extern struct Unk02005E00 gUnk_02005E00;
 extern u8 gUnk_02006014;
-extern u32 gUnk_02006020[];
+extern s32 gUnk_02006020[];
 extern u8 gUnk_02006030;
 extern u16 gUnk_02006068[];
 extern s8 gUnk_0200617C;

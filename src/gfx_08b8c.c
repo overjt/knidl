@@ -15,7 +15,7 @@ extern vu16 gUnk_03000048;
 extern vs32 gUnk_03000B78;
 extern vs32 gUnk_03000FA8;
 extern vs16 gUnk_03000FB8;
-extern u16 gUnk_03001270[];
+extern vu16 gUnk_03001270[];
 extern u8 gUnk_03001370[];
 extern u8 gUnk_030013B0[];
 extern u32 gUnk_03001610[];

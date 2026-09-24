@@ -38,7 +38,7 @@ extern u16 gUnk_0300243C;
 extern u16 gUnk_03004D50[4][4];
 extern u16 gUnk_03004D88[];
 extern u16 gUnk_03004D90[4];
-extern u32 gUnk_03005280;
+extern s32 gUnk_03005280;
 extern u16 gUnk_085B113C[];
 extern u16 gUnk_085B119C[];
 extern u16 gUnk_085B274C[];

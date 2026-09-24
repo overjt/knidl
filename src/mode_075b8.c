@@ -9,7 +9,7 @@
 
 extern u16 gUnk_02004B50[];
 extern u16 gUnk_02004B60;
-extern u16 gUnk_02005580;
+extern s16 gUnk_02005580;
 extern s16 gUnk_02005588[];
 extern u8 gUnk_020055CC;
 extern u8 gUnk_02006090;
@@ -19,7 +19,7 @@ extern u16 gUnk_0200AF18[];
 extern s16 gUnk_0200EC58;
 extern vu16 gUnk_03000048;
 extern vu16 gUnk_03001E90;
-extern u16 gUnk_03001EB8[];
+extern vu16 gUnk_03001EB8[];
 extern vu16 gUnk_03001ED8;
 extern s32 gUnk_03001F2C;
 extern u8 gUnk_03001F30;
