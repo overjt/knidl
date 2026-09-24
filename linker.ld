@@ -288,8 +288,9 @@ SECTIONS
         build/src/mode_0b44c.o(.text)
     } > ROM
 
-    .game_code_and_rodata_0800b920 0x0800B920 : {
-        KEEP(*(.game_code_and_rodata_0800b920)) KEEP(*(.game_code_and_rodata_0800b920.tail))
+    /* menu_0b920 — decompiled to C (src/menu_0b920.c, carved by tools/carve.py) */
+    .menu_0b920 0x0800B920 : {
+        build/src/menu_0b920.o(.text)
     } > ROM
 
     /* menu_0c09c — decompiled to C (src/menu_0c09c.c, carved by tools/carve.py) */
