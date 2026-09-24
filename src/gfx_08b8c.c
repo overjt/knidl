@@ -6,11 +6,10 @@
  *
  * Screen/asset loaders (LZ77/Huffman decompression into VRAM). */
 
-extern void (*gUnk_03000014)(void);
-extern void SoftReset(u32 resetFlags);
 extern u32 gUnk_02020000[];
 extern u32 gUnk_02028000[];
 extern u32 gUnk_02030000[];
+extern void (*gUnk_03000014)(void);
 extern vu16 gUnk_03000038;
 extern vu16 gUnk_03000048;
 extern vs32 gUnk_03000B78;
@@ -57,6 +56,7 @@ extern u32 gUnk_08731B70[];
 extern u16 gUnk_08731B88[][2];
 extern u32 gUnk_08731BA0[][2];
 
+void SoftReset(u32 resetFlags);
 void sub_0800157c(struct TransferNode *node);
 void sub_080017e4(u32 mode, u32 src, u32 dst, u32 size);
 void sub_08002028(void);

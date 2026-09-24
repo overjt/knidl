@@ -10344,7 +10344,7 @@ loc_080c6a7a:
 loc_080c6a8c:
 	.word	0xFF676980
 	.word	0x00989680
-	.word	0x085A6F34
+	.word	gUnk_085A6F34
 	.word	0xFFF0BDC0
 	.word	0x000F4240
 	.word	0xFFFE7960
@@ -10545,8 +10545,8 @@ loc_080c6bdc:
 	pop	{r4, r5, r6, r7}
 	pop	{r0}
 	bx	r0
-	.word	0x085A6F34
-	.word	0x085A6F5C
+	.word	gUnk_085A6F34
+	.word	gUnk_085A6F5C
 	.word	0x085A6F48
 	.thumb_func
 	.global	sub_080c6c3c

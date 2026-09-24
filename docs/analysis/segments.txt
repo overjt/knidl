@@ -53,7 +53,9 @@
 0x08007300 0x080075B8 c_code main # src/main.c (carved by tools/carve.py)
 0x080075B8 0x08008B8C thumb_code game_code_and_rodata [split]
 0x08008B8C 0x080091AC c_code gfx_08b8c # src/gfx_08b8c.c (carved by tools/carve.py)
-0x080091AC 0x0800B318 thumb_code game_code_and_rodata_080091ac [split]
+0x080091AC 0x0800A130 thumb_code game_code_and_rodata_080091ac [split]
+0x0800A130 0x0800AAD0 c_code hud_0a130 # src/hud_0a130.c (carved by tools/carve.py)
+0x0800AAD0 0x0800B318 c_code hud_0aad0 # src/hud_0aad0.c (carved by tools/carve.py)
 0x0800B318 0x0800B44C c_code hud_0b318 # src/hud_0b318.c (carved by tools/carve.py)
 0x0800B44C 0x0800B920 c_code mode_0b44c # src/mode_0b44c.c (carved by tools/carve.py)
 0x0800B920 0x08010358 thumb_code game_code_and_rodata_0800b920 [split]
