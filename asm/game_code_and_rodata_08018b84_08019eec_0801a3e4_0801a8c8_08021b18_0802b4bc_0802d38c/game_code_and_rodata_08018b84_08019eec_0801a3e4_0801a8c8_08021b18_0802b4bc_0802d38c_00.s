@@ -1690,7 +1690,7 @@ loc_0802e052:
 	.word	gUnk_03002398
 	.word	0x0200AFE0
 	.word	0x087323C6
-	.word	0x02007FC4
+	.word	gUnk_02007FC4
 	.word	gUnk_030023B8
 	.word	gUnk_03005620
 	.word	0x02004CA0
@@ -1919,7 +1919,7 @@ loc_0802e208:
 	bne.n	loc_0802e1a6	@ 0x0802E1A6
 	b.n	loc_0802e364	@ 0x0802E364
 	.word	0x06001800
-	.word	0x02007FC4
+	.word	gUnk_02007FC4
 	.word	0x0200AF08
 	.word	0x08732428
 	.word	gUnk_03002490
@@ -2123,5 +2123,5 @@ loc_0802e380:
 	.word	gUnk_03002398
 	.word	gUnk_03001F00
 	.word	gUnk_03002490
-	.word	0x020055D4
+	.word	gUnk_020055D4
 	.word	gUnk_020055E8
