@@ -1923,6 +1923,162 @@ each use matches.
 - `EC = B8; 8C = 8; EC++;` gives the ROM's `ldr EC; ldr B8; ldrb; strb 8C;
   adds; strb EC`: flow deletes the dead first store (`sub_080258e0`).
 
+### 3.402 A key mask tested twice is re-read at each test, not held in a local
+M09's per-frame mode handlers test the latched state mask twice in a row,
+`& 48` and then `& 32` or `& 16`.  With a `u16 k = gUnk_03002458[...]`
+local, the second `ands` ties its result to `k` (`ands r1, r0`, 4 bytes off
+in `sub_080349b4`); re-reading the global in each test,
+`if (gUnk_03002458[gUnk_03002490->unk88->unk00] & 32)`, lets cse reuse the
+first load and gives the ROM's `ands r0, r1`, with the result in the
+constant's register.  This is M11's own spelling (`src/stage_413a4.c`).
+The re-read form also loads the array base BEFORE the task pointer; the
+ROM's other order (`ldr` of the task and its player record first) comes from
+`t = gUnk_03002490; p = t->unk88;` locals (`sub_08033a2c`, 13 bytes).
+
+### 3.403 The task-exit call is not `noreturn`: a `case` that ends in it falls through
+`sub_08006138()` ends the running task and never returns, but nothing tells
+the compiler, so the code after it runs into whatever follows.  M09's ROM
+relies on that: in `sub_080355d8` `case 10: sub_080413a4(2);` falls into
+`case 0: default: ...; sub_08006138();`, which falls into the arm of `case 1:
+case 2: case 5: ...`, and both `switch`es of the player task `sub_08032688`
+chain their arms the same way.  An arm whose last call runs straight into
+the next arm's first instruction is a missing `break`, not a `goto`.
+
+### 3.404 Where `expand_end_loop` puts the exit tests decides `break` versus `goto end`
+M11's transition handlers are `while (p1() == 0 && p2() == 0 && ...) { ...;
+break; }`, and the ROM shows the first predicates copied in front of the
+loop and the rest at the bottom (`sub_080349b4`, `sub_08035458`): gcc moves
+the code between the loop top and the LAST jump to the loop's end label,
+within about 30 counted insns (calls are not counted), to the bottom.  Every
+`break` and every predicate exit counts as such a jump; a `goto end` to a
+label after the loop does not.  So a test the ROM leaves at the top of the
+body, where the `break` version moves it down, is a `goto end`
+(`sub_08034bec`'s `unk7A` arm, `sub_08040340` in `sub_08033a2c`,
+`sub_080400c0`/`sub_08040340` in `sub_08034278`), while a two-predicate
+loop keeps its `break` (`sub_08034e60`).  A predicate chain whose last
+result is not tested at all (`bl sub_08040340` with no `cmp r0` after it)
+is `if (sub_0803ff7c() == 0 && ... ) sub_08040340();` (`sub_08035848`).
+
+### 3.405 Small arithmetic shapes of the player bodies
+* `ldrh; adds #K; lsls #16; asrs #16` before a call is `f((s16)(tbl[i] +
+  K))` - the sum is done in 16 bits because of the cast (`sub_080355d8`,
+  `sub_080359f8`'s `(s16)(unk46 + 5)`).
+* `ldrh rX` and `ldrsh rY` of the SAME halfword, the test on rY and the
+  decrement on rX, is `if ((s16)p->unk14 != 0) p->unk14--;` (`sub_08035458`).
+* `(cell & 16) * 2` on a `u16` cell gives `ands; lsls #16; lsrs #16; lsls
+  #1`: C shortens the AND to 16 bits and zero-extends it again.  `(cell * 2 &
+  32)` has no such pair, so the pair means the source ANDed the narrow cell
+  (`sub_08031374`'s BG-map slot).
+* A 16.16 unpack whose `ldr [t, #76]` comes before the branch is one
+  expression with the ternary inside the sum: `t->unk48 = (t->unk4C + (v &
+  0x8000 ? (v << 8) | 0xFF000000 : v << 8)) >> 16;` (`sub_08033414`).
+* A pooled `0x0000FFFF` stored into an `s16` field is `field = 0xFFFF;`,
+  no cast and no unsigned field needed; `-1` gives `movs #1; negs`.  A
+  pooled `0xFFFF` store therefore does not by itself prove an unsigned
+  destination (compare 3.43, which is about reading the cell back).
+
+### 3.406 Which stores make agbcc reload `gUnk_03002490`
+Type-based aliasing is on: after a halfword or word store to a struct
+field, agbcc keeps the task pointer it loaded from `gUnk_03002490` (a store
+through `u16`/`u32` cannot alias a `struct Task *`), but after a BYTE store
+it reloads it (a `u8` lvalue may alias anything), and a store through a cast
+pointer such as `*(u16 *)&p->unk4E = ...` also forces the reload and cost
+about 1,000 bytes of diff in `sub_08033414`.  The same rule decides which
+FIELDS are re-read: a `u16` field read before a halfword store is loaded
+again after it, so where the ROM does not reload it the source held it in a
+local (`u32 x = b->unk0; if (x > 39) ...` in `sub_08031ebc`, where the
+`& 31` also needs 3.106's `m = 31; m &= x;` to land in the constant's
+register).
+
+### 3.407 Early-return and free-slot shapes of the block spawners
+* The free-record scan of `sub_08031374`, `sub_08030f78` and
+  `sub_08031738` - first test before the loop, then `i++`, the limit test
+  and the slot test in the body - is `i = 0; while (a[i].unk6 != 0x7FFF) {
+  i++; if (i > 63) return -1; }`; a `for` with a `break` adds a separate
+  limit test after the loop.
+* `s32 i = 0;` as the DECLARATION's initializer, not a statement before the
+  loop, is what produces `sub_08030f78`'s `movs r7, #0` at the very top,
+  and the `strb`/`strh` of 0 later reuse it (363 bytes versus MATCH).  The
+  opposite of 3.150's advice to write literal zeros: here the zero is a real
+  variable of the source.
+* A ROM that puts the `return 0` block first and lets each in-loop hit block
+  fall into the epilogue was written `... goto found; ... return 0; found:
+  return 1;` (`sub_08030b14`); a `return 1` inside each loop places the hit
+  blocks before the else arm (366 bytes).
+* `if (t > 4) return 0; return 1;` gives the ROM's `bgt ->0; b ->1`, and
+  the inverted spelling flips the branch polarity (15 bytes,
+  `sub_0803111c`).
+* A `return;` with no value in a `u16` function is a real shape: the ROM
+  jumps to the epilogue with the parameter still in r0 (`sub_08030e00`'s
+  empty-box exit).  It compiles under `-Werror`.
+
+### 3.408 Small M09 shapes, one line each
+- A block-local `struct M11R20 *d = gUnk_020060E0; ((u8 *)&d[i])[12] = K;`
+  in each arm keeps the table base in a register for the ROM's `[r0, #12]`;
+  `((u8 *)gUnk_020060E0 + i * 20)[12]` folds the 12 into the pool word
+  (a seventh way for 3.375, `sub_08032688`).
+- The action dispatch `t->unk14 = p->unk02; sub_08002e98(p->unk02, N,
+  tbl);` written in both arms of an `if (gUnk_03001F30 == 0)` needs its
+  `struct PlayerState *p` declared inside each arm; a function-scope `p`
+  swaps r1/r2 (`sub_08032688`, `sub_08032bd0`).
+- A flag set to a constant and then tested is threaded twice: gcc jumps past
+  `if (turn != 0)` when `turn` is known to be 1, and merges the identical
+  `turn = 1; b X` tails.  A `turn = 1` that falls straight into the test is
+  an `else turn = 1;` at the end of its `if`, not part of an `||`
+  (`sub_08033a2c`).
+- A `default:` arm with no `break` in front of an infinite-loop arm falls
+  into the loop (`sub_08034a88`), 3.403 again.
+- `for (gUnk_03002490->unk6C = 0; (s16)gUnk_03002490->unk6C <= 3;
+  gUnk_03002490->unk6C++)` is the "hold N frames" counter of the mode
+  bodies: the ROM stores 0, runs the body and tests at the bottom
+  (`sub_08034f8c`, `sub_080359f8`).
+- A lopsided compare tree on a `u8` over cases {1, 2, 3} needs `case 0:
+  break;`, or `case 0: default:` when the default arm has code (3.320,
+  3.369; both switches of `sub_08032688`).
+- `abs()` again (3.360): `x = abs(t->unk54); if ((u32)x <= 0x14BFF)`
+  matches where M11's hand-written `if (x < 0) x = -x;` came from
+  (`sub_0803469c`, `sub_08034278`).
+
+### 3.409 Two induction variables the ROM keeps apart need two index spellings
+`sub_08031f3c` (844 bytes) rebuilds the 3x3 "solid" map `gUnk_0200B060[]`
+around a broken block and was stuck near 700 differing bytes, all
+allocation.  The ROM keeps TWO reduced givs for the row offset, `3 * j` in a
+stack slot for the path that clears a row and `2 * j` in `ip` for the path
+that fills it (`+ j + i` added at each store); one spelling `j * 3 + i` in
+both paths lets loop.c combine them into one.  What closed it, in order
+(726, 684, 96, 90, 30, 6, 2, 0 bytes):
+* the row loop's variables swap roles against the other two sections
+  (outer `j`, inner `i`: when a hard register pair swaps between sections,
+  the sections use different C variables), and `y = j - 1; y += b->unk2;`
+  as two statements - the one-expression fold lets loop.c hoist `unk2 - 1`,
+  where the ROM re-reads `unk2`;
+* the fill writes 0 or 1 straight into the table through `if / else if /
+  else` instead of a value variable shared with the next section (which
+  pinned r3; about 600 bytes);
+* `s32 j, i, l, n;` in that declaration order, which fixes the order of
+  two stack slots through gcse's pseudo numbering;
+* the first section reuses the function's `x`/`y`, not block-scoped
+  copies, and a `u16 *p` local holds the two VRAM destinations;
+* finally `k = j * 2;` at the TOP of the row loop and the fill index
+  written `gUnk_0200B060[j + (k + i)]`, while the clear path keeps `j * 3
+  + i`: with `k` first, the fill's giv is found first and reduced last, has
+  the shorter live range and wins `ip`; `k + (j + i)` swaps one `add`.
+A register-agnostic opcode diff (objdump + difflib with registers and
+sp/pc offsets masked) showed the structural progress while the raw byte
+count stayed around 700 for most of the way.
+
+### 3.410 The block records' script loops test at the top: a goto loop
+M09's three stage hooks step each block's animation script with `again: if
+((s16)--b->unk14 > 0) continue; ...; b->unk6++; goto again;` inside a `for`
+over the 64 records; a `while`/`for` form gets its exit test rotated to the
+bottom, and the identical `b->unk6++; goto again;` arm tails cross-jump
+into one block, as the ROM shows.  Two smaller shapes from the same code:
+a compare-tree `switch` can carry a `case 0x8000: default:` label whose
+compare jump optimisation later deletes (it sits right before `b default`),
+yet the label still moves `balance_case_nodes`' pivot (cases 1-4 alone
+pivot at 2, the ROM at 3; 3.42 again), and `&tbl[k] - 1` (a `subs` after
+the `adds`) is not `&tbl[k - 1]`.
+
 ## 4. Splitting ROM ranges into asm (tools/split.py)
 
 ### 4.1 objdump text only round-trips under `.syntax unified`
@@ -6441,6 +6597,48 @@ second section from `linker.ld`).  Two related traps: `fnmatch.sh` truncates
 its diff to 80 lines, so a whole-file mismatch needs a per-function byte
 compare to locate; and a one-off Docker glitch (a stale file right after a
 write) can produce an isolated failure, so re-run before debugging.
+
+### 4.87 Find jump tables from the ROM words, not from the lines split.py printed as code
+The listing model's jump-table detector (4.45, 4.82) looked only at lines
+split.py had printed as instructions.  M09's twenty-entry tables are partly
+printed as `.word`/`.short` escapes, so it found fragments shorter than
+three words, dropped them, and the escape decoder of 4.38 then promoted the
+rest of each table to code: its words decoded as `ldr r3, [pc, #776]`, whose
+"targets" became phantom literal-pool words, which turned real code of
+`sub_08034e60` back into `.word`s and made the reachability sweep report
+89 unreachable instructions.  Scanning EVERY 4-aligned address of the module
+for runs of three or more in-module even words, whatever split.py printed
+there, found all 17 tables and removed the false report.  The scan also
+picks up the pool word that holds a table's base (an in-module even address
+right before the table); that is harmless, because the word is data anyway.
+
+### 4.88 An escape expander must test every halfword of a data line
+The same model replaces each unreferenced `.word`/`.short` run by the
+instructions objdump decodes there, emitting a decoded instruction for each
+halfword of a data line that STARTS one.  It checked only the line's first
+halfword before emitting anything, so a `.word` whose first half is the
+second half of a `bl` (`0x08034E64` = the tail of `bl sub_0803f870` plus the
+start of `bl sub_080400c0`) was skipped whole, and `sub_08034e60`'s
+listing lost `bl sub_080400c0; cmp r0, #0` with no marker.  Test every
+halfword of the line.  Like 4.49, this loses a CALL silently, and the only
+symptom was a reachability report that made no sense.
+
+### 4.89 A pointer table can start with a NULL entry: the scan finds it four bytes late
+The ROM-pointer scan that locates anchor tables starts a table at its first
+word that points at a function, so M09's two player-action tables came out
+as `0x0873A74C` and `0x0873A844`, with no literal-pool word pointing at
+either.  The code passes `gUnk_0873A748` and `gUnk_0873A840` - four bytes
+earlier - to `sub_08002e98(idx, count, fns)`, the early zone's `if (idx <
+count) fns[idx]();`, because entry 0 of each table is NULL (action 0 and
+handler 0 do nothing).  So the real tables are `gUnk_0873A748[62]`, the
+actions' "enter" coroutines indexed by `PlayerState.unk02`, and
+`gUnk_0873A840[57]`, the per-frame handlers indexed by `Task.unk15`; M11's
+pair `gUnk_0873B42C[30]` / `gUnk_0873B4A4[27]` is the same shape.  When a
+pointer table seems unreferenced, grep the pools for its address minus 4
+(and look for a zero word there) before calling it dead.  The two index
+spaces differ: M09's first nine actions happen to set `Task.unk15` to
+their own number, so their entries line up by position, but action 22
+(`sub_08034f70`) runs handler 7.
 
 ### 3.336 The four-loop HBlank family: `for (i = 0; i <= 6; i = j) { ...; j = i + 1; ... }`
 M34's `sub_080b6154`/`6290`/`63a4`/`6474` are one body with four sets of

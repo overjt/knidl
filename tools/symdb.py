@@ -1117,6 +1117,19 @@ EXTRA_THUMB_ENTRIES = {
                  # no ROM word or `bl` references it.
                  # sub_0802d074 ends `bx lr` at 0x0802D0BE with its pool word at
                  # 0x0802D0C0, so it is 0x50, not 0x80.
+    # --- M09 (issue #92), three dead exports the reachability sweep found ---
+    0x0803093C,  # dead export with its own `push {r4, r5, lr}`: the
+                 # three-argument twin of sub_080308e8 that passes its r1/r2
+                 # through to sub_0803097c instead of the task's position;
+                 # no ROM word or `bl` references it.  sub_080308e8 ends
+                 # `bx r1` at 0x08030936 with its pool word at 0x08030938, so
+                 # it is 0x54, not 0x94.
+    0x080337F8,  # empty `bx lr` stubs (lesson 4.34) between the four stubs
+    0x08033800,  # the anchor tables 0x0873A834/0x0873A920 point at
+                 # (0x080337F4, 0x080337FC, 0x08033804, 0x08033808); no ROM
+                 # word references these two, and each stub is `bx lr` + the
+                 # 2-byte alignment pad, so sub_080337f4 and sub_080337fc are
+                 # 4 bytes each, not 8.
 }
 
 EVIDENCE_KINDS = ("bl-target", "rom-pointer", "prologue-scan", "curated")

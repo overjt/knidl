@@ -574,8 +574,38 @@ SECTIONS
         build/src/obj_306b4.o(.text)
     } > ROM
 
-    .game_code_and_rodata_08018b84_08019eec_0801a3e4_0801a8c8_08021b18_08030804 0x08030804 : {
-        KEEP(*(.game_code_and_rodata_08018b84_08019eec_0801a3e4_0801a8c8_08021b18_08030804)) KEEP(*(.game_code_and_rodata_08018b84_08019eec_0801a3e4_0801a8c8_08021b18_08030804.tail))
+    /* block_30804 — decompiled to C (src/block_30804.c, carved by tools/carve.py) */
+    .block_30804 0x08030804 : {
+        build/src/block_30804.o(.text)
+    } > ROM
+
+    /* block_318b4 — decompiled to C (src/block_318b4.c, carved by tools/carve.py) */
+    .block_318b4 0x080318B4 : {
+        build/src/block_318b4.o(.text)
+    } > ROM
+
+    /* player_32688 — decompiled to C (src/player_32688.c, carved by tools/carve.py) */
+    .player_32688 0x08032688 : {
+        build/src/player_32688.o(.text)
+    } > ROM
+
+    /* player_337f4 — decompiled to C (src/player_337f4.c, carved by tools/carve.py) */
+    .player_337f4 0x080337F4 : {
+        build/src/player_337f4.o(.text)
+    } > ROM
+
+    /* player_343c0 — decompiled to C (src/player_343c0.c, carved by tools/carve.py) */
+    .player_343c0 0x080343C0 : {
+        build/src/player_343c0.o(.text)
+    } > ROM
+
+    /* player_34f8c — decompiled to C (src/player_34f8c.c, carved by tools/carve.py) */
+    .player_34f8c 0x08034F8C : {
+        build/src/player_34f8c.o(.text)
+    } > ROM
+
+    .game_code_and_rodata_08018b84_08019eec_0801a3e4_0801a8c8_08021b18_08030804_08036280 0x08036280 : {
+        KEEP(*(.game_code_and_rodata_08018b84_08019eec_0801a3e4_0801a8c8_08021b18_08030804_08036280)) KEEP(*(.game_code_and_rodata_08018b84_08019eec_0801a3e4_0801a8c8_08021b18_08030804_08036280.tail))
     } > ROM
 
     /* stage_3cd60 — decompiled to C (src/stage_3cd60.c, carved by tools/carve.py) */

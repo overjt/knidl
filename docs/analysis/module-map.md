@@ -187,7 +187,7 @@ dispatches, pool density) — a planning aid, not a promise.
 | M06 | `0x0801A8C8-0x08021B17` | 28.6 KiB | 56 | 0 | ***** | terrain / collision query (pure leaf) - **partial (#84)**, 28/55 (`sub_08021b0e` was a census false positive) |
 | M07 | `0x08021B18-0x0802969F` | 30.9 KiB | 154 | 1 | ****** | level / room builder + tilemap upload |
 | M08 | `0x080296A0-0x08030803` | 28.3 KiB | 151 | 2 | *** | camera, BG map streaming, map-event tasks + stage objects #221-#236 - **landed (#86)** |
-| M09 | `0x08030804-0x0803627F` | 22.6 KiB | 60 | 0 | ***** | stage manager A |
+| M09 | `0x08030804-0x0803627F` | 22.6 KiB | 60 | 0 | ***** | breakable blocks + the player task (#5) and first action bodies - **landed (#92)** |
 | M10 | `0x08036280-0x0803CD5F` | 26.7 KiB | 41 | 0 | **** | stage script runner |
 | M11 | `0x0803CD60-0x080449C7` | 31.1 KiB | 121 | 4 | ***** | player mode/state machine + stage support services |
 | M12 | `0x080449C8-0x08047FE7` | 13.5 KiB | 22 | 0 | *** | large actor bank A |
@@ -281,7 +281,7 @@ ordering inside it:
 | 33 | M10 stage script runner | 0x6AE0 | 41 | 4 | 11 | 1 | 0 |
 | 34 | M06 terrain / collision query (pure leaf) | 0x7250 | 56 | 5 | 2 | 11 | 0 |
 | 35 | M11 player mode/state machine + stage support services - landed | 0x7C68 | 121 | 5 | 9 | 18 | 0 |
-| 36 | M09 stage manager A | 0x5A7C | 60 | 5 | 13 | 13 | 1 |
+| 36 | M09 breakable blocks + player task and action bodies - landed | 0x5A7C | 60 | 5 | 13 | 13 | 1 |
 | 37 | M07 level / room builder + tilemap upload | 0x7B88 | 154 | 6 | 8 | 34 | 1 |
 
 ### Child issues
@@ -754,7 +754,57 @@ below is the pre-decompilation one, kept for the record.
 * **Known RAM cells touched** BG3VOFS shadow (16.16) x5, BG2VOFS shadow (16.16) x4, BG3HOFS shadow (16.16) x4, BG2HOFS shadow (16.16) x3, BG1HOFS shadow (16.16) x2, BG1VOFS shadow (16.16) x2.
 * **Suggested batches** `0x080296A0` (50 fns), `0x0802B62C` (25 fns), `0x0802D38C` (30 fns), `0x0802F38C` (48 fns).
 
-### M09 `0x08030804-0x0803627F` - stage manager A
+### M09 `0x08030804-0x0803627F` - breakable blocks, the player task (type #5) and the first player action bodies - **landed (#92)**
+
+The range is decompiled and carved out of the split asm, so it now appears in
+`module-map.csv` as `c_code` rows instead of one clusterable module; the census
+below is the pre-decompilation one, kept for the record.
+
+* **Landed as** six files, all 63 functions byte-exact under the `--newpb`
+  recipe with no `asm` statements and no `register` pins, 35 new
+  `split_config.json` `data_symbols`:
+  `src/block_30804.c` (`0x08030804-0x080318B4`, 15 fns),
+  `src/block_318b4.c` (`0x080318B4-0x08032688`, 19),
+  `src/player_32688.c` (`0x08032688-0x080337F4`, 5),
+  `src/player_337f4.c` (`0x080337F4-0x080343C0`, 10),
+  `src/player_343c0.c` (`0x080343C0-0x08034F8C`, 9),
+  `src/player_34f8c.c` (`0x08034F8C-0x08036280`, 5).
+  `player_34f8c.c` was carved first, so M10's asm segment is named after its
+  own start (`..._08030804_08036280`, lesson 4.74).
+* **What it turned out to be** (`docs/analysis/rom-map.md` §9): not a
+  "stage manager" but two subsystems.
+  * **Breakable blocks** (`block_*.c`): the per-metatile block layers
+    `gUnk_02008160[]` and `gUnk_02004CA0[]`, the attack hit-box scans and
+    their six wrappers, the break test `sub_0803111c` and spawner
+    `sub_08031374`, the 64-record animation state `gUnk_020061F0[]` /
+    `gUnk_0200A6F0[]` and the three per-frame stage hooks M08 installs in
+    `gUnk_030004A0`.
+  * **The player** (`player_*.c`): task type #5 (class 1, one task per
+    player bound to `gUnk_03002170[i]`), its per-frame callbacks, and the
+    action machine: the "enter" coroutines `gUnk_0873A748[62]` indexed by
+    `PlayerState.unk02` and the per-frame handlers `gUnk_0873A840[57]`
+    indexed by `Task.unk15`, both dispatched by `sub_08002e98` (entry 0
+    NULL; M11's `gUnk_0873B42C`/`gUnk_0873B4A4` take over while
+    `gUnk_03001F30 != 0`).  M09 holds actions 1-9 and 22 and handlers 1-8;
+    the others are in M10 (`0x08036280+`) and M12-M14.  The 20-26-case jump
+    tables are `switch`es on `PlayerState.unk0D` (0-25, most likely the copy
+    ability: 0 is the plain form, and almost every table sends 1, 2, 5 and
+    19 to one shared arm).
+* **Census fixes** 63 functions, not 60: three dead exports added
+  (`0x0803093C`, the three-argument twin of `sub_080308e8`, and the empty
+  `bx lr` stubs `0x080337F8`/`0x08033800`).  The 17 jump tables are all
+  `switch`es: one on the block kind in `sub_0803111c` and one in
+  `sub_08031374`, one on the ability in the player task, and 14 in the
+  action bodies (13 on the ability, one on `sub_080359f8`'s sub-state
+  `Task.unk73`).
+* **How** Phase A (census, harness, 24 leaves and representatives,
+  including one enter coroutine and one per-frame handler as templates for
+  the family) by the coordinator, then four subagents with disjoint file
+  lists (blocks x2, the player task, the action bodies) while the
+  coordinator did the third action file (its five bodies, 4852 bytes,
+  matched on their first or second build from the M11 template).  The last
+  function, `sub_08031f3c`, was worked on by two agents in parallel through
+  `variants.sh`.
 
 * **Size** 22.6 KiB (`0x5a7c`), 60 functions (27 reachable only through pointer tables), mean `0x182`, largest `0x888`, pool words 10.5% of bytes.
 * **Difficulty** 5/6 - 62 distinct RAM cells, 17 jump-table dispatches, 13 functions >= `0x200`.
@@ -2209,7 +2259,7 @@ and reproducible. The **names are inference**, at three confidence levels:
 
 **Structural only (named for what they are, not what they do)**
 
-M09-M14, M16, M19, M21-M32 carry role names ("stage manager A", "bank 7").
+M10, M12-M14, M16, M19, M21-M32 carry role names ("stage manager B", "bank 7").
 Renaming them is expected as decompilation proceeds; that is what the
 `MODULE_NAMES` dict in `tools/modmap.py` is for — update it there, re-run
 `make modmap`, and the CSV, the table and this document's detail blocks stay in

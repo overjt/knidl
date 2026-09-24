@@ -274,4 +274,27 @@ Matching decompilation of Kirby: The Amazing Mirror's predecessor, **Kirby: Nigh
   59 cross-batch leaves, with seven handovers through `variants.sh`; new
   lessons 3.389-3.401 and 4.82-4.86.
 
+- Breakable blocks + the player task decompiled (issue #92): module M09
+  `0x08030804-0x0803627F` (22.6 KiB) landed as `src/block_30804.c`,
+  `src/block_318b4.c`, `src/player_32688.c`, `src/player_337f4.c`,
+  `src/player_343c0.c` and `src/player_34f8c.c` (**all 63 functions, no asm
+  left in the range**, no `asm` statements and no `register` pins).  The
+  census name "stage manager A" was wrong twice over: the first half is the
+  breakable-block system (the per-metatile block layers `gUnk_02008160[]`
+  and `gUnk_02004CA0[]`, the attack hit-box scans, the break test
+  `sub_0803111c` and spawner `sub_08031374`, the 64 animated block records
+  `gUnk_020061F0[]` and the three per-frame stage hooks M08 installs in
+  `gUnk_030004A0`), the second is the player: task type #5 (class 1, one
+  task per player record `gUnk_03002170[i]`), its callbacks, and the
+  action machine M10-M14 continue - "enter" coroutines `gUnk_0873A748[62]`
+  indexed by `PlayerState.unk02` and per-frame handlers `gUnk_0873A840[57]`
+  indexed by `Task.unk15`, both dispatched through `sub_08002e98` with a
+  NULL entry 0, written in M11's style (`src/stage_*.c`).  Three dead
+  exports added in `tools/symdb.py` (so 63, not 60 functions), 35 RAM/ROM
+  cells named via `split_config.json` `data_symbols`, `PlayerState.unk5C`
+  named in `include/task.h`; done by a four-agent fan-out after the
+  coordinator matched 24 leaves and family templates; the last function,
+  `sub_08031f3c`, fell to two index spellings for two induction variables
+  (lesson 3.409); new lessons 3.402-3.410 and 4.87-4.89.
+
 - Next milestones: decompile split/SDK modules to C using the validated per-zone compiler recipe (task system Thumb side, sound driver, then game code); grow `src/` one module at a time with `asmdiff.sh` on the module range.

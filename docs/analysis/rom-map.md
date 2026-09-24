@@ -725,6 +725,89 @@ child issues of #35 are created from it. Findings that belong in this document:
     epilogue reached by a `bl` long jump, `0x0802F6EA` and `0x0802FDE8` are
     function tails "evidenced" by stray words in graphics blobs, and the dead
     export `0x0802D0C4` was hidden in `sub_0802d074`.
+- **M09 (`0x08030804-0x0803627F`) is the breakable-block system, the
+  player task (task type #5) and the first player action bodies.**
+  Decompiled in #92, in six files (`docs/analysis/module-map.md` §6).  The
+  census name "stage manager A" came from the task type and the jump
+  tables; the two halves are:
+  * **Breakable blocks** (`block_30804.c`, `block_318b4.c`).  The room's
+    block layer `gUnk_02008160[]` (decompressed from `RoomDef.unk0C` by
+    M07's loaders) holds one `u16` per metatile: 0 = no block, the low byte
+    = which replacement metatile of `RoomDef.unk10[]` the cell turns into,
+    bit 15 = being broken.  An attack's hit-box set (`struct HitBoxSet`: an
+    id whose bit 15 means "mirror with the task's facing" and whose low 12
+    bits are the attack, an (x, y) offset and a list of `{y0, y1, x0, x1}`
+    boxes ending at 127) is scanned tile by tile by `sub_0803097c` (every
+    covered metatile), `sub_08030b14` (the first block of the centre row)
+    and `sub_08030e00` (the top row of a column), reached through six
+    wrappers that take the task's position and facing (`sub_08030848`, the
+    one the player task uses, is called by 15 actor bodies in M12-M18 too).
+    `sub_0803111c(x, y, id, player)` decides whether an attack breaks a
+    block - an 8-way `switch` on the block kind against two per-collision-
+    byte tables `gUnk_0873A494`/`gUnk_0873A5D4` and the on-screen test
+    `sub_08031310` - and latches it into the cursor cells `gUnk_02007D68`/
+    `gUnk_0200AEFC`/`gUnk_020060C8` (x, y, map index) and `gUnk_02004B40`/
+    `gUnk_02004B48`/`gUnk_02006174`/`gUnk_020061D0` (player, flag, kind,
+    collision byte); `sub_08031374` then takes one of the 64 records
+    `gUnk_020061F0[]` (32 bytes, `0x7FFF` in `+6` = free), points it at the
+    block's BG map entry at `0x06002000`, plays the sound (`sub_080031b8`),
+    scores the player (`sub_0800a04c`) and starts the animation script
+    `gUnk_0873A47C[kind]`.  The script is a list of `{op, arg}` halfword
+    pairs: 1 and 2 draw the next replacement metatile (optionally a whole
+    column of `arg` blocks, through the scratch record `gUnk_02007FD0`), 3
+    breaks the four neighbours (chain reactions), 4 waits `arg` frames,
+    `0x8000`/`0x8001` free the record.  It is run by the per-frame stage
+    hook `gUnk_030004A0` that M08's `src/obj_306b4.c` installs, one of
+    three: `sub_080318b4`, `sub_08031de4` (which also rebuilds the 3x3 edge
+    tiles around the block for rooms whose BG map has edge tiles,
+    `sub_08031f3c`) and `sub_08032428` (the second block layer
+    `gUnk_02004CA0[]` in the BG map at `0x06001800`, with its own records
+    `gUnk_0200A6F0[]`, script `gUnk_0873A458` and the probe/spawner pair
+    `sub_08032288`/`sub_08032338` that M08's map events call).
+    `sub_08030f78` (M08) and `sub_08031738` (M07) break a block directly.
+  * **The player task** (`player_32688.c`).  Task type #5 (class 1,
+    `sub_08032688`) runs once per player: it binds the task to its
+    116-byte record (`Task.unk88 = &gUnk_03002170[gCurTaskIdx]`), ends it
+    when the player has neither lives (`gUnk_02007D48[]`) nor health
+    (`gUnk_02005588[]`), installs the callbacks (`Task.unk00` = M11's
+    `sub_0803d494`, `unk04` = `sub_08032d48` every frame, `unk08` =
+    `sub_0803332c`, `unk0C` = M11's `sub_0803ddc0`), applies the ability
+    `PlayerState.unk0D` and the stage-entry mode (`gUnk_02000020`,
+    `gUnk_020069F0`) and starts the first action.  **Actions are two
+    tables of `void (*)(void)` dispatched through `sub_08002e98(index,
+    count, table)`**, both with a NULL entry 0: `gUnk_0873A748[62]`, the
+    "enter" coroutine of the action `PlayerState.unk02`, and
+    `gUnk_0873A840[57]`, the per-frame handler `Task.unk15` (M11's
+    `gUnk_0873B42C[30]`/`gUnk_0873B4A4[27]` replace them while
+    `gUnk_03001F30 != 0`).  A handler requests the next action in
+    `PlayerState.unk01`, and `sub_08032bd0` is the coroutine that switches
+    to it (`unk03` = the previous action, `unk02` = the new one).
+    `sub_08032d48` applies the attack hit-boxes (`PlayerState.unk6C`), the
+    collision registry `sub_0801a828`, the per-frame handler and the damage
+    reactions every frame; `sub_0803332c` runs the 10-frame timer
+    `PlayerState.unk2B`; `sub_08033414` (from M11's `sub_0803ddc0`) turns
+    the frame's hit event `Task.unk7C` and the status bits
+    `PlayerState.unk40` into an action request, re-binds the task to
+    `sub_08032bd0` when one is pending, and adds the 8.8 offsets
+    `PlayerState.unk24`/`unk26` to the task's 16.16 position.
+  * **Action bodies** (`player_337f4.c`, `player_343c0.c`,
+    `player_34f8c.c`): actions 1-9 and 22 of the first table and handlers
+    1-8 of the second (M10 holds the rest, starting with handler 9,
+    `sub_08036280`).  An "enter" coroutine saves the mode
+    (`PlayerState.unk05 = unk04`), sets the new mode and handler
+    (`unk04`, `Task.unk15`), then plays the animation of the current
+    ability out of a per-action table (`gUnk_0873D0F8[26][5]`,
+    `gUnk_0873D2E8`, `gUnk_0873D31C`, `gUnk_0873D350`, `gUnk_0873D384`,
+    `gUnk_0873D3B8[][2]`, `gUnk_0873D420[][3]`, `gUnk_0873D7E4[][3]`), most
+    of them `switch`ing on the ability over 20-26 cases (1, 2, 5 and 19
+    share one arm in nearly every table); a per-frame handler runs M11's
+    transition predicates in order and writes the next request into
+    `PlayerState.unk01`, or re-binds the task to another coroutine with
+    `sub_08006148`.  Six handlers are empty `bx lr` stubs (entries 59-61
+    of the first table and 56 of the second, plus two dead exports).
+  * Census: 63 functions, not 60 - three dead exports added (`0x0803093C`,
+    the three-argument twin of `sub_080308e8`, and the empty stubs
+    `0x080337F8`/`0x08033800`).
 - **M35 (`0x080B9D0C-0x080BDA2B`) is the sub-game framework plus one
   complete sub-game, a reaction-time duel.**  Decompiled in #95, in five files
   (`docs/analysis/module-map.md` §6).  The census name "game-mode flow + link
