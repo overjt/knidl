@@ -4,11 +4,13 @@
 
 /* mode_07b68.c (0x08007B68-0x080082CF, issue #96).
  *
- * AgbMain state 13, the single-pak link-play boot (sub_08007f9c):
- * sub_08007e04 stages a multiboot image at 0x02020000 from a common blob
- * plus one of three per-sub-game chunk sets, sub_08007b68/sub_08007c5c
- * send it and run the 0x5503 SIO handshake, and sub_08007d4c is the A/B
- * prompt screen that returns to state 4. */
+ * AgbMain state 13, the title screen of the six extra modes
+ * (sub_08007f9c): the mode's picture, two task-#265 decorations and a
+ * level select for the first three modes.  In single-pak link play it
+ * first stages a multiboot image at 0x02020000 (sub_08007e04, a common
+ * blob plus one of three per-mode chunk sets), sends it and runs the
+ * 0x5503 SIO handshake (sub_08007b68/sub_08007c5c); sub_08007d4c is the
+ * failure prompt that returns to state 4. */
 
 extern s8 gUnk_02000004;
 extern u32 gUnk_02004000[];

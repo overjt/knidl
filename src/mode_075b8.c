@@ -9,9 +9,9 @@
  * helper from mode_0b44c.c, fades in, then loops until the stage-request
  * byte gUnk_03002438 asks for something: 1-4 switch the game state, 5 opens
  * the pause screen (sub_08008664), 6 is a lost life (state 22 when nobody
- * has lives left), 7/8/12 go to states 11/10/17 and 9-14 are the sub-game
- * doors.  sub_080075b8 raises request 5 when a present, living player
- * presses START and records that player in gUnk_02004B60. */
+ * has lives left), 7/8/12 go to states 11/10/17 and 9-14 enter the six
+ * extra modes.  sub_080075b8 raises request 5 when a present, living
+ * player presses START and records that player in gUnk_02004B60. */
 
 extern u16 gUnk_02004B50[];
 extern u16 gUnk_02004B60;

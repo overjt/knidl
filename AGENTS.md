@@ -172,5 +172,26 @@ Matching decompilation of Kirby: The Amazing Mirror's predecessor, **Kirby: Nigh
   hidden census entries added in `tools/symdb.py` (so 196, not 193
   functions) and 62 ROM/RAM cells named via `split_config.json`
   `data_symbols`; new agbcc lessons 3.361-3.366 and 4.71.
+- Game-state bodies, boot/title sequence, screen loaders, pause screen and
+  HUD decompiled (issue #96): module M02 `0x080075B8-0x0800B91F` (16.9 KiB)
+  landed as `src/mode_075b8.c`, `src/mode_07b68.c`, `src/mode_082d0.c`,
+  `src/mode_08664.c`, `src/gfx_08b8c.c`, `src/boot_091ac.c`,
+  `src/hud_099fc.c`, `src/hud_0a130.c`, `src/hud_0aad0.c`,
+  `src/hud_0b318.c` and `src/mode_0b44c.c` (**all 109 functions, no asm left
+  in the range**; one zero-byte `asm("" ::: "r0")` clobber, no `register`
+  pins).  It is what `AgbMain` dispatches into: the per-frame bodies of game
+  states 5, 8/17/18/19, 9 and 20, which loop until the stage-request byte
+  `gUnk_03002438` asks for a state change, the pause screen (request 5) or a
+  lost life (6); the extra modes' title screen (state 13, which in
+  single-pak link play first sends a multiboot image staged at
+  `0x02020000`); the boot logo (state 1, task type #0) and the title screen
+  / nine-scene intro story (state 3, task types #1, #2 and #237); the
+  LZ77/Huffman screen loaders; and the HUD (lives `gUnk_02007D48[]`,
+  health `gUnk_02005588[]`, score `gUnk_02006020[]`, a clock, all drawn into
+  the tilemap buffer `gUnk_02005600`).  Nine census rows corrected in
+  `tools/symdb.py` (five phantoms removed, four hidden entries added) and
+  108 RAM/ROM cells named via `split_config.json` `data_symbols`; done by a
+  four-agent fan-out with per-function declarations and mid-run handovers;
+  new lessons 3.367-3.372 and 4.72-4.75.
 
 - Next milestones: decompile split/SDK modules to C using the validated per-zone compiler recipe (task system Thumb side, sound driver, then game code); grow `src/` one module at a time with `asmdiff.sh` on the module range.

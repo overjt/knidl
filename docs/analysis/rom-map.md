@@ -166,6 +166,48 @@ holds; 10 (`gUnk_03001F30` selects `sub_0805b110()` vs `sub_0800b628()`) → 5;
 `sub_08008a00()` → return-state 20; 21 `sub_0800b4a8()`, sets `gUnk_02007FC0`
 → 5; 22 `sub_080cacf0()`. States > 22 spin on the dispatch read.
 
+**What the states run (issue #96, M02 `0x080075B8-0x0800B91F`, all C now):**
+
+- **State 1** `sub_080091ac` → `sub_08009200` is the boot logo sequence:
+  it spawns task type **#0** (`sub_080093fc`, calls `sub_080caab8` every
+  frame), plays SE `0x10D` and waits in `sub_08009398(n)` steps (n frames,
+  returning 1 as soon as A, B or START is pressed); a skipped sequence fades
+  the volume out through `sub_08003770`, a completed one sets the return state
+  `gUnk_03002150 = 1`.
+- **State 3** `sub_080096e0` alternates the title screen `sub_0800973c`
+  (spawns task type **#1** `sub_08009418`, the title-palette animation, and
+  task type **#2** `sub_080095c0`, whose parent instance - `Task.unk18 == -1`
+  - spawns ten children in two rows of five, `sub_08009640`) with the
+  nine-scene intro story `sub_080098a8` (one task **#237** picture per scene,
+  `sub_080099fc`, cross-faded through the BLDALPHA shadows
+  `gUnk_03000B08`/`gUnk_03001EAC`) until A or START leaves the title
+  screen (a 600-frame timeout plays the story again).
+- **State 0 / 4 / 6 / 21 helpers** `sub_0800b44c` (reset the game-state
+  cells), `sub_0800b4a8` (clear the four scores, pick the maximum health
+  `gUnk_02005580` = 24 or 48 and the HUD mode), `sub_0800b514` (three lives,
+  zero health/score records per player), `sub_0800b628`.
+- **States 5, 8/17/18/19, 9 and 20** run `sub_08007624`, `sub_0800791c`,
+  `sub_0800783c` and `sub_08008a00`: a setup helper (`sub_0800b788`,
+  `sub_0800b648`, `sub_0800b87c`), a fade-in, then a frame loop that exits on
+  the **stage-request byte `gUnk_03002438`** (`s8`): 1-4 switch the game
+  state (1 → 5, 2 → 6, 3 → 8, 4 → 9), **5 opens the pause screen**
+  `sub_08008664` (raised by `sub_080075b8` when a present, living player
+  presses START; `gUnk_02004B60` is that player), 6 is a lost life (state 22 =
+  game over when no player has lives left), 7 → 11, 8 → 10, 12 → 17, and
+  9-14 enter one of six extra modes (`gUnk_02006090` = request - 9): the
+  first time through its title screen, state 13 (the bit in `gUnk_020055CC`
+  records the visit), afterwards straight to state `gUnk_03002438 + 5`
+  (14-19; `gUnk_02007FCC` = mode index for states 14-16's sub-games).
+- **State 13** `sub_08007f9c` is that title screen: it loads the mode's
+  picture (`sub_08008e1c`), spawns two task-**#265** decorations
+  (`sub_080082d0`), lets player 1 pick a level `gUnk_02006168` (0-2) for the
+  first three modes, and leaves to state `gUnk_02007FCC + 14`.  In single-pak
+  link play (`gUnk_0200EC48 == 2`) it first stages a multiboot image at
+  `0x02020000` (`sub_08007e04`: a common blob plus one of three per-mode
+  chunk sets), sends it and runs the `0x5503` SIO handshake
+  (`sub_08007b68`/`sub_08007c5c`); `sub_08007d4c` is the failure prompt that
+  returns to state 4.
+
 ## 5. Compiler-validation leaf candidates
 
 Criteria: Thumb entry reached by `bl` or a bit0-set pointer; no external branch or
@@ -468,6 +510,19 @@ child issues of #35 are created from it. Findings that belong in this document:
   Transitions drive the display through the early zone as predicted: the only
   hardware-ish cell here is the DISPCNT shadow `gUnk_03001ED8`, masked to
   `0xE0FF` and re-ORed with a BG-enable pattern.
+- **M02 (`0x080075B8-0x0800B91F`) is what `AgbMain`'s states run.**
+  Decompiled in #96 in eleven files (`docs/analysis/module-map.md` §6); the
+  state-by-state reading is in §4 above.  Besides the game-state bodies it
+  holds the ROM-wide screen loaders (`sub_08008c4c(i)` loads palette set i,
+  `sub_08008c64(i)` queues VRAM transfer node i from `gUnk_0873185C[]`) and
+  the HUD: lives `gUnk_02007D48[4]`, health `gUnk_02005588[4]` (maximum
+  `gUnk_02005580`, 24 or 48), score `gUnk_02006020[4]` (clamped to
+  99999999), a four-field clock `gUnk_03000498` copied into
+  `gUnk_02006068`, the per-player 8-byte bar records `gUnk_02006A00[]`
+  (`struct HudBar` in the HUD files), and the 32x32 tilemap
+  buffer `gUnk_02005600` that `sub_0800b3f8` flushes to `0x06001000`
+  whenever the dirty flag `gUnk_0200002C` is set.  Task types it owns: #0,
+  #1, #2 (class 0), #237 and #265 (class 4).
 - **M35 (`0x080B9D0C-0x080BDA2B`) is the sub-game framework plus one
   complete sub-game, a reaction-time duel.**  Decompiled in #95, in five files
   (`docs/analysis/module-map.md` §6).  The census name "game-mode flow + link
