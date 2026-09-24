@@ -1799,7 +1799,7 @@ sub_0805569c:
 	.word	gUnk_03002490
 	.word	sub_08005a74+1
 	.word	sub_08005d9c+1
-	.word	0x0874C804
+	.word	gUnk_0874C804
 	.thumb_func
 	.global	sub_0805574c
 sub_0805574c:
@@ -10138,7 +10138,7 @@ loc_08059a74:
 	.word	gUnk_03002490
 	.word	sub_08005a74+1
 	.word	sub_08059aac+1
-	.word	0x0874C804
+	.word	gUnk_0874C804
 	.word	sub_08005d9c+1
 	.word	gUnk_0874C828
 	.word	0x0000FFFF
