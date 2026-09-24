@@ -18794,7 +18794,7 @@ loc_0803963c:
 	b.n	loc_0803968a	@ 0x0803968A
 	.word	gUnk_02007CF0
 	.word	gUnk_03002490
-	.word	0x0300234C
+	.word	gUnk_0300234C
 	.word	gUnk_03002438
 	.word	gUnk_02007D48
 	.global	loc_08039684
@@ -19099,7 +19099,7 @@ loc_080398ae:
 	.word	gUnk_03001ED8
 	.word	0x0000E0FF
 	.word	gUnk_030023AC
-	.word	0x0300234C
+	.word	gUnk_0300234C
 	.word	gUnk_02005588
 	.global	loc_080398d8
 loc_080398d8:
