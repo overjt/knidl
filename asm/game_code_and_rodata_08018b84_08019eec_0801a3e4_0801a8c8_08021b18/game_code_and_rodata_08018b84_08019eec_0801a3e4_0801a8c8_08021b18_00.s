@@ -3387,8 +3387,8 @@ loc_08023214:
 	.word	gUnk_02007D48
 	.word	gUnk_02005588
 	.word	gUnk_02005580
-	.word	0x02008008
-	.word	0x02007FA8
+	.word	gUnk_02008008
+	.word	gUnk_02007FA8
 	.word	0x0000FFFF
 	.word	gUnk_02004B50
 	.word	gUnk_0200AF18
@@ -4471,8 +4471,8 @@ loc_08023af0:
 	.word	gUnk_02007D48
 	.word	gUnk_02005588
 	.word	gUnk_02005580
-	.word	0x02008008
-	.word	0x02007FA8
+	.word	gUnk_02008008
+	.word	gUnk_02007FA8
 	.word	0x0000FFFF
 	.word	gUnk_02004B50
 	.word	gUnk_0200AF18
@@ -5228,8 +5228,8 @@ loc_080241a0:
 	.word	gUnk_02007D48
 	.word	gUnk_02005588
 	.word	gUnk_02005580
-	.word	0x02008008
-	.word	0x02007FA8
+	.word	gUnk_02008008
+	.word	gUnk_02007FA8
 	.word	0x0000FFFF
 	.word	gUnk_02004B50
 	.word	gUnk_0200AF18
@@ -6371,8 +6371,8 @@ loc_08024be0:
 	.word	gUnk_02007D48
 	.word	gUnk_02005588
 	.word	gUnk_02005580
-	.word	0x02008008
-	.word	0x02007FA8
+	.word	gUnk_02008008
+	.word	gUnk_02007FA8
 	.word	0x0000FFFF
 	.word	gUnk_02004B50
 	.word	gUnk_0200AF18

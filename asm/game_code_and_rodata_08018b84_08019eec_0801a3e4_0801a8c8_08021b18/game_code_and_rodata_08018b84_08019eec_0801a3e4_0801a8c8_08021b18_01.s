@@ -3565,8 +3565,8 @@ loc_0803344a:
 	.word	gUnk_02007CF0
 	.word	gUnk_03001F30
 	.word	gUnk_02004B50
-	.word	0x02008008
-	.word	0x02007FA8
+	.word	gUnk_02008008
+	.word	gUnk_02007FA8
 	.word	gUnk_0200AF18
 	.global	loc_080334b4
 loc_080334b4:
@@ -3608,8 +3608,8 @@ loc_080334ce:
 	movs	r0, #29
 	strb	r0, [r1, #1]
 	b.n	loc_080335ca	@ 0x080335CA
-	.word	0x02008008
-	.word	0x02007FA8
+	.word	gUnk_02008008
+	.word	gUnk_02007FA8
 	.word	0x0000FFFF
 	.word	gUnk_03002490
 	.global	loc_0803350c
