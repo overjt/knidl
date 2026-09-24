@@ -371,6 +371,26 @@ FALSE_POSITIVES = {
     # 0x0801A3E4-0x0801A76C (0x388).
     0x0801A41A,
 
+    # --- M02 (issue #96), five rows the reachability sweep dropped ---
+    # All five are tails of the function in front of them - a pool-skip
+    # branch, a bare `bx r0` completing an epilogue, or a switch arm - and all
+    # five have no prologue, sit right after a function whose claimed size is
+    # not a multiple of 4 (or inside a jump table's arms), and are "evidenced"
+    # only by a lone word inside a graphics/data blob (neighbours in brackets).
+    0x080091EA,  # pool-skip `b.n` of sub_080091ac, whose `bne` jumps past it
+                 # to 0x080091F0 [0x082A20A8: 81F500E6 080091EB 81D500E6].
+    0x080091FA,  # the `bx r0` of sub_080091ac's `pop {r4, r5}; pop {r0}`,
+                 # then its pool word gUnk_03002150 [0x0832C6C0].
+                 # sub_080091ac really runs 0x080091AC-0x08009200 (0x54).
+    0x080099E0,  # pool-skip `b.n` of sub_080099c8 (the sub_08009398 twin),
+                 # which loads 0x080099E4 [0x085B53AC: EE111D6E 080099E1].
+                 # sub_080099c8 runs 0x080099C8-0x080099FC (0x34).
+    0x0800A202,  # pool-skip `b.n` between two arms of the 5-way switch of the
+                 # hidden 0x0800A19C (table at 0x0800A1D4) [0x08383470].
+    0x0800A332,  # the `bx r0` of sub_0800a294's epilogue, then its three pool
+                 # words [0x083FD268: BA0EB34A 0800A333 45080044].
+                 # sub_0800a294 runs 0x0800A294-0x0800A340 (0xAC).
+
     # --- M34 (issue #94), one row the reachability sweep dropped ---
     # 0x080B6B36 is the `b.n loc_080b6c02` that ends sub_080b6b08's first arm,
     # sitting immediately in front of that function's own literal pool: no
@@ -976,6 +996,24 @@ EXTRA_THUMB_ENTRIES = {
     0x0808798C,
     0x08088394,
 
+    # --- M02 (issue #96), four hidden entries the reachability sweep found ---
+    # -fprologue-bugfix leaves leaves without a `push`, so the strict prologue
+    # filter rejected three of them (their callers' `bl`/pointer edges sit
+    # after a mis-sized entry); the fourth is a dead export with its own
+    # `push {lr}`.  In all four the preceding function closes with its own
+    # epilogue (and literal pool) before the address.
+    0x080093CC,  # dead export: the `while (gUnk_03001E90)` twin of
+                 # sub_08009398's counted key-wait loop; no ROM word or `bl`
+                 # references it.  sub_08009398 is 0x34, not 0x64.
+    0x0800A178,  # leaf (`bx lr`) called by `bl` from sub_08047fe8
+                 # (0x08048230): stores its first argument to 0x0200801C when
+                 # the second matches gUnk_03002360 and 0x02006014 == 1.
+                 # sub_0800a130 is 0x48, not 0xD2.
+    0x0800A19C,  # leaf with a 5-way jump table at 0x0800A1D4, called by
+                 # `bl` from sub_0800a0dc (0x0800A124); it runs to 0x0800A21C.
+    0x0800AAD0,  # leaf copying/clamping gUnk_03000498 into gUnk_02006068;
+                 # its pointer 0x0800AAD1 sits in sub_08009ab8's literal pool
+                 # at 0x08009AD8.  sub_0800aaac is 0x24, not 0x5C.
     # --- M35 (issue #95), three hidden entries the reachability sweep found ---
     # Two are anchor-table targets that -fprologue-bugfix left without a
     # `push` (they open with a pool load and end `bx lr`), so the strict

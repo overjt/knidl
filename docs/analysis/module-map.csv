@@ -1,6 +1,6 @@
 id,start,end,size,functions,ptr_dispatched,blocks,mean_fn,max_fn,pool_pct,ram_cells,jump_tables,anchor_tables,task_types,ext_callers,ext_deps,difficulty,name,evidence
 M01,0x08007300,0x080075B8,0x2B8,1,1,0,0x2B8,0x2B8,16.7,7,1,0,0,0,8,3,main,already landed (c_code)
-M02,0x080075B8,0x0800B920,0x4368,110,15,3,0x9C,0x37C,19.7,161,7,1,5,35,10,3,game mode + screen/asset loader,"class-0 task types #0-2; game-state cells; LZ77UnCompVram x21, HuffUnComp x6; called from AgbMain"
+M02,0x080075B8,0x0800B920,0x4368,109,11,3,0x9E,0x37C,19.7,161,7,1,5,35,10,3,game mode + screen/asset loader,"class-0 task types #0-2; game-state cells; LZ77UnCompVram x21, HuffUnComp x6; called from AgbMain"
 M03,0x0800B920,0x08010358,0x4A38,83,43,3,0xE4,0x40C,16.0,93,2,0,22,2,11,4,menu / UI task bank,22 class-4 task types #238-259; key auto-repeat + decimal digit buffer; called from AgbMain and the save module
 M04,0x08010358,0x080109C8,0x670,7,6,0,0xEB,0x30C,11.2,11,0,0,2,4,0,2,scripted-sequence bank: director + 50 of the 63 scripts,task type #91 (class 1) sub_080103f0 picks a sequence body by gUnk_030023B8 (0-7) and runs it for gUnk_08731F98[id] frames (270-2020); type #92 (class 2) sub_080104f0 dispatches Task.unk18 into the 63 scripts at &gUnk_08731FA8[8]; sub_08010358 spawns type-92 children; sub_08010480 is the A|START skip hook
 M05,0x080109C8,0x08010B38,0x170,1,1,0,0x170,0x170,7.6,2,0,0,0,0,0,2,player_109c8,already landed (c_code)
