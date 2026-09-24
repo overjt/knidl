@@ -464,8 +464,9 @@ SECTIONS
         build/src/roomtask_23618.o(.text)
     } > ROM
 
-    .game_code_and_rodata_08018b84_08019eec_0801a3e4_0801a8c8_08021b18_08023948 0x08023948 : {
-        KEEP(*(.game_code_and_rodata_08018b84_08019eec_0801a3e4_0801a8c8_08021b18_08023948)) KEEP(*(.game_code_and_rodata_08018b84_08019eec_0801a3e4_0801a8c8_08021b18_08023948.tail))
+    /* level_23948 — decompiled to C (src/level_23948.c, carved by tools/carve.py) */
+    .level_23948 0x08023948 : {
+        build/src/level_23948.o(.text)
     } > ROM
 
     /* level_242d0 — decompiled to C (src/level_242d0.c, carved by tools/carve.py) */
