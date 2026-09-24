@@ -138,7 +138,7 @@ M136,0x080B8EA0,0x080B9D0C,0xE6C,52,16,0,0x47,0xC8,15.0,12,0,0,0,2,1,2,save_b8ea
 M137,0x080B9D0C,0x080BA774,0xA68,27,4,0,0x62,0x1E4,21.2,46,0,0,1,5,3,3,game-mode flow + link lobby,"requested/next game state x7, link session state, link-mode flag, number of linked players; called from AgbMain; 193 small functions"
 M138,0x080BA774,0x080BB528,0xDB4,55,32,0,0x3F,0xAC,16.3,13,0,0,0,0,2,2,subgame_ba774,already landed (c_code)
 M139,0x080BB528,0x080BC0CC,0xBA4,42,17,0,0x46,0xB8,14.2,13,0,0,0,0,1,2,subgame_bb528,already landed (c_code)
-M140,0x080BC0CC,0x080BD9E8,0x191C,70,43,1,0x5B,0x148,12.2,11,6,3,1,1,1,1,,
+M140,0x080BC0CC,0x080BD9E8,0x191C,70,43,0,0x5B,0x148,12.2,11,6,0,1,1,1,1,subgame_bc0cc,already landed (c_code)
 M141,0x080BD9E8,0x080BDA2C,0x44,2,2,0,0x22,0x24,29.4,4,0,0,0,0,0,2,subgame_bd9e8,already landed (c_code)
 M142,0x080BDA2C,0x080BF994,0x1F68,57,38,0,0x8D,0x2E8,12.4,17,0,0,1,1,2,1,sub-game: four-slot bomb-pass minigame,"confirmed by #66: task type #95, started from the game-mode flow module and dispatched through the 41-entry anchor table @0x08756668; four players are shuffled into the four slots of gUnk_02006A10[] and a projectile is passed from slot to slot (Task.unk34 0-3, forward while Task.unk28 <= 2 and backward otherwise), the beat length comes from the seven-entry level table @0x08756570, the button window from the five-byte records @0x087565F4, the hand-off flight from the 16.16 parabola p0 + v*t + (a*t*t)/2 in sub_080c061c, and elimination order is written into gUnk_0200B044[] with the out-mask gUnk_0200AF10"
 M143,0x080BF994,0x080C0DE8,0x1454,24,18,0,0xD8,0x314,14.0,7,0,0,0,0,2,2,subgame_bf994,already landed (c_code)

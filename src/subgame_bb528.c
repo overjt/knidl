@@ -4,9 +4,26 @@
  * RECIPE: agbcc -O2 -mthumb-interwork -fprologue-bugfix
  *   ./tools/fnmatch.sh 0x080BB528 0x080BC0CC src/subgame_bb528.c --newpb
  *
- * The duel's results screen: a seven-state task (sub_080bbd9c) whose
- * <entry, check> pairs are the anchor tables 0x08756378 / 0x08756394, and
- * the sprite spawners and placement helpers it calls.
+ * The duel's results screen (sub-game 0, screen 1).  sub_080bbd9c is its
+ * task: sub_080bb528 builds the screen, then seven <entry, check> states
+ * run through the anchor tables 0x08756378 / 0x08756394 (sub_080bbe04 /
+ * sub_080bbde4):
+ *
+ *   0  wait, play song Task.unk2C | 0x800, then go to state Task.unk30
+ *   1  spawn a kind-7 object (sub_080bb718) when gUnk_03002150 == 5
+ *   2  count the markers in (sub_080bb760 / sub_080bb7a0)
+ *   3  place the per-player markers (sub_080bb8f8 -> sub_080bb874)
+ *   4  two-option cursor (sub_080bb554, sub_080bb5b8): option 0 goes to
+ *      state 5, option 1 quits (sub_080b9d24)
+ *   5  three-option cursor (sub_080bb63c, sub_080bb66c): the choice goes to
+ *      sub_080b9d0c, i.e. into gUnk_02006168, the row sub_080ba6b4 picks
+ *      the signal delay from
+ *   6  idle until A/Start, then quit (sub_080b9d24)
+ *
+ * sub_080bb718 / sub_080bb7cc / sub_080bb820 spawn task type #94 objects of
+ * kinds 7, 8 and 9; sub_080bbc70 / sub_080bbcdc / sub_080bbd4c (kinds 1
+ * and 0, the second one the reaction-time readout of gUnk_02006184) and the
+ * single-player placers sub_080bbbb8 / sub_080bbc04 fill the screen.
  */
 #include "gba/gba.h"
 #include "global.h"
@@ -25,6 +42,8 @@ extern u16 gUnk_03002360;
 extern u16 gUnk_030023AC;
 extern struct Task *gUnk_03002490;
 extern struct Task gUnk_03002790[];
+extern u32 gUnk_08755A34[];
+extern u32 gUnk_08755A88[];
 extern u32 gUnk_08755BAC[];
 extern s16 gUnk_0875636C[];
 extern u32 gUnk_08756378[];
@@ -472,7 +491,7 @@ void sub_080bbc70(void)
         t->unk4A = 16;
         t->unk28 = -12;
         t->unk2C = 80;
-        t->unk30 = 0x08755A88;
+        t->unk30 = (s32)gUnk_08755A88;
         t->unk34 = 0;
     }
 }
@@ -494,7 +513,7 @@ void sub_080bbcdc(void)
         t->unk4A = 96;
         t->unk28 = -8;
         t->unk2C = 0;
-        t->unk30 = 0x08755A34;
+        t->unk30 = (s32)gUnk_08755A34;
         t->unk34 = 0;
         v = gUnk_02006184;
         n = 0;

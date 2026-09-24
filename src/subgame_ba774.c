@@ -4,13 +4,31 @@
  * RECIPE: agbcc -O2 -mthumb-interwork -fprologue-bugfix
  *   ./tools/fnmatch.sh 0x080BA774 0x080BB528 src/subgame_ba774.c --newpb
  *
- * The reaction duel's round controller.  Task.unk14 is the requested state
- * and Task.unk15 the running one; each state is an <entry, per-frame check>
- * pair dispatched through sub_08002e98: 0x087562FC / 0x08756318 in link
- * play and 0x08756334 / 0x08756350 against the computer.  Task.unk2C is the
- * mask of players that pressed in time, gUnk_03002790[i] the task of player
- * i, gUnk_0200B03C[] the per-player win counts, gUnk_0200B07C[4] the rank
- * order and gUnk_02006184 the best reaction time so far (starts at 99).
+ * The reaction duel's round controller (sub-game 0 of src/subgame_b9d0c.c).
+ * Task.unk14 is the requested state and Task.unk15 the running one; each of
+ * the seven states is an <entry, per-frame check> pair dispatched through
+ * sub_08002e98: 0x087562FC / 0x08756318 in link play (sub_080bace4 /
+ * sub_080bab68) and 0x08756334 / 0x08756350 against the computer
+ * (sub_080bb23c).  A check re-dispatches as soon as Task.unk14 changes.
+ *
+ *   state 0  wait for the players, then sub_080ba6b4 waits a random delay
+ *            (range from 0x087562F6 / 0x087562F0, row gUnk_02006168)
+ *            before the signal; the check sends anyone pressing too early
+ *            to sub_080babb0, which moves to state 3 once all have
+ *   state 1  the signal is up: sub_080ba708 collects the players that
+ *            pressed into the mask Task.unk2C; sub_080bacbc sends a single
+ *            presser to state 4 and several to state 5, and sub_080ba774
+ *            ends the wait (state 2) once the frame counter Task.unk20
+ *            passes 98
+ *   2..5     pose the player tasks through sub_080bc740, score, wait
+ *   state 6  fade out and back to state 0
+ *
+ * gUnk_03002790[i] is player i's task (task type #94, src/subgame_bc0cc.c),
+ * gUnk_0200B03C[] the per-player win counts, gUnk_0200B07C[4] the rank
+ * order kept by sub_080ba9a4, and gUnk_02006184 the best reaction time
+ * (reset to 99, lowered to Task.unk20 by each winner).  sub_080bac5c and
+ * sub_080bb1ec (single player: first to 5) report the match winner in
+ * gUnk_02004B5C.
  */
 #include "gba/gba.h"
 #include "global.h"
