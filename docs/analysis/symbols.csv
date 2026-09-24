@@ -302,8 +302,7 @@ vma,size,isa,evidence,name
 0x0800B920,0x3D0,thumb,bl-target,sub_0800b920
 0x0800BCF0,0xB4,thumb,bl-target,sub_0800bcf0
 0x0800BDA4,0xE8,thumb,bl-target,sub_0800bda4
-0x0800BE8C,0x76,thumb,bl-target,sub_0800be8c
-0x0800BF02,0xE,thumb,rom-pointer,sub_0800bf02
+0x0800BE8C,0x84,thumb,bl-target,sub_0800be8c
 0x0800BF10,0x5C,thumb,bl-target,sub_0800bf10
 0x0800BF6C,0x130,thumb,bl-target,sub_0800bf6c
 0x0800C09C,0x170,thumb,bl-target,sub_0800c09c
@@ -337,8 +336,7 @@ vma,size,isa,evidence,name
 0x0800E0C0,0x88,thumb,rom-pointer,sub_0800e0c0
 0x0800E148,0x144,thumb,rom-pointer,sub_0800e148
 0x0800E28C,0x50,thumb,bl-target,sub_0800e28c
-0x0800E2DC,0x2A,thumb,bl-target,sub_0800e2dc
-0x0800E306,0xE,thumb,rom-pointer,sub_0800e306
+0x0800E2DC,0x38,thumb,bl-target,sub_0800e2dc
 0x0800E314,0x7C,thumb,rom-pointer,sub_0800e314
 0x0800E390,0xDC,thumb,rom-pointer,sub_0800e390
 0x0800E46C,0xAC,thumb,rom-pointer,sub_0800e46c
@@ -354,8 +352,7 @@ vma,size,isa,evidence,name
 0x0800EC08,0x68,thumb,rom-pointer,sub_0800ec08
 0x0800EC70,0x48,thumb,rom-pointer,sub_0800ec70
 0x0800ECB8,0xC0,thumb,rom-pointer,sub_0800ecb8
-0x0800ED78,0x106,thumb,rom-pointer,sub_0800ed78
-0x0800EE7E,0xB2,thumb,rom-pointer,sub_0800ee7e
+0x0800ED78,0x1B8,thumb,rom-pointer,sub_0800ed78
 0x0800EF30,0x154,thumb,rom-pointer,sub_0800ef30
 0x0800F084,0xFC,thumb,rom-pointer,sub_0800f084
 0x0800F180,0x134,thumb,rom-pointer,sub_0800f180
@@ -365,11 +362,9 @@ vma,size,isa,evidence,name
 0x0800F5EC,0xAC,thumb,rom-pointer,sub_0800f5ec
 0x0800F698,0x118,thumb,rom-pointer,sub_0800f698
 0x0800F7B0,0x90,thumb,rom-pointer,sub_0800f7b0
-0x0800F840,0xBC,thumb,rom-pointer,sub_0800f840
-0x0800F8FC,0x134,thumb,rom-pointer,sub_0800f8fc
+0x0800F840,0x1F0,thumb,rom-pointer,sub_0800f840
 0x0800FA30,0x164,thumb,rom-pointer,sub_0800fa30
-0x0800FB94,0x92,thumb,rom-pointer,sub_0800fb94
-0x0800FC26,0x96,thumb,rom-pointer,sub_0800fc26
+0x0800FB94,0x128,thumb,rom-pointer,sub_0800fb94
 0x0800FCBC,0x40,thumb,bl-target,sub_0800fcbc
 0x0800FCFC,0x28,thumb,rom-pointer,sub_0800fcfc
 0x0800FD24,0x94,thumb,bl-target,sub_0800fd24
@@ -377,7 +372,8 @@ vma,size,isa,evidence,name
 0x0800FE54,0x40,thumb,bl-target,sub_0800fe54
 0x0800FE94,0x6C,thumb,bl-target,sub_0800fe94
 0x0800FF00,0xD8,thumb,rom-pointer,sub_0800ff00
-0x0800FFD8,0x48,thumb,bl-target,sub_0800ffd8
+0x0800FFD8,0x10,thumb,bl-target,sub_0800ffd8
+0x0800FFE8,0x38,thumb,bl-target,sub_0800ffe8
 0x08010020,0x28,thumb,bl-target+rom-pointer,sub_08010020
 0x08010048,0x64,thumb,bl-target,sub_08010048
 0x080100AC,0x214,thumb,bl-target,sub_080100ac
