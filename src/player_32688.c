@@ -21,9 +21,11 @@
  * sub_08032d48 (Task.unk04) runs every frame: the attack hit-boxes
  * (sub_08030848 on PlayerState.unk6C), the collision registry, the
  * per-frame handler and the damage and star-block reactions;
- * sub_0803332c (Task.unk08) handles the hurt / invincibility timer
- * PlayerState.unk2B; sub_08033414 (called by M11's sub_0803ddc0)
- * updates the carried/swallowed state and the 16.16 position unpack. */
+ * sub_0803332c (Task.unk08) runs the 10-frame timer PlayerState.unk2B;
+ * sub_08033414 (called by M11's sub_0803ddc0) turns the frame's hit
+ * event Task.unk7C and the status bits PlayerState.unk40 into an action
+ * request, re-binds the task to sub_08032bd0 when one is pending and
+ * adds the 8.8 offsets PlayerState.unk24/unk26 to the 16.16 position. */
 
 struct M11R8 { u8 unk00; u8 unk01; u8 unk02; u8 unk03; u8 *unk04; };
 

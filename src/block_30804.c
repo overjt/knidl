@@ -49,13 +49,17 @@ struct MapTile
     /*0x03*/ u8 unk3;
 };
 
-/* gUnk_020061F0[64]: one 32-byte record per block being broken (0x7FFF in
-   unk6 = free slot).  unk0/unk2 = metatile x/y, unk4 = its map index,
-   unk8 = the metatile that replaces it (RoomDef.unk10[gUnk_02008160[i]]),
-   unkC = its tile entry in the BG map at 0x06002000, unk10 = the animation
-   script (gUnk_0873A47C[kind]), unk14 = the script step, unk16/unk18 = the
-   replacement's metatile index and collision byte, unk1A = the block kind,
-   unk1C = the owning player (-1 = none). */
+/* gUnk_020061F0[64] (and gUnk_0200A6F0[64] for the second block layer
+   gUnk_02004CA0): one 32-byte record per block being broken.  unk0/unk2 =
+   metatile x/y, unk4 = its map index, unk6 = the position in the animation
+   script (0x7FFF = free slot; bit 15 = already stepped this frame), unk8 =
+   the metatile the cell shows next (RoomDef.unk10[] + the layer's low byte,
+   advanced by one per drawn frame), unkC = its tile entry in the BG map,
+   unk10 = the script (gUnk_0873A47C[kind], {op, arg} pairs: 1 and 2 draw a
+   frame, 3 breaks the four neighbours, 4 waits arg frames, 0x8000/0x8001
+   free the record), unk14 = the frames left to wait, unk16/unk18 = the
+   metatile index and collision byte written back to the map, unk1A = the
+   block kind, unk1C = the player that broke it (-1 = none). */
 struct Unk020061F0
 {
     /*0x00*/ u16 unk0;
