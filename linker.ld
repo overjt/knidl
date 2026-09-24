@@ -292,6 +292,24 @@ SECTIONS
         KEEP(*(.game_code_and_rodata_0800b920)) KEEP(*(.game_code_and_rodata_0800b920.tail))
     } > ROM
 
+    /* menu_0ca10 — decompiled to C (src/menu_0ca10.c, carved by tools/carve.py) */
+    .menu_0ca10 0x0800CA10 : {
+        build/src/menu_0ca10.o(.text)
+    } > ROM
+
+    .game_code_and_rodata_0800b920_0800d450 0x0800D450 : {
+        KEEP(*(.game_code_and_rodata_0800b920_0800d450)) KEEP(*(.game_code_and_rodata_0800b920_0800d450.tail))
+    } > ROM
+
+    /* menutask_0daf8 — decompiled to C (src/menutask_0daf8.c, carved by tools/carve.py) */
+    .menutask_0daf8 0x0800DAF8 : {
+        build/src/menutask_0daf8.o(.text)
+    } > ROM
+
+    .game_code_and_rodata_0800b920_0800e314 0x0800E314 : {
+        KEEP(*(.game_code_and_rodata_0800b920_0800e314)) KEEP(*(.game_code_and_rodata_0800b920_0800e314.tail))
+    } > ROM
+
     /* menutask_0ea0c — decompiled to C (src/menutask_0ea0c.c, carved by tools/carve.py) */
     .menutask_0ea0c 0x0800EA0C : {
         build/src/menutask_0ea0c.o(.text)

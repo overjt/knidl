@@ -888,7 +888,7 @@ sub_0800f7b0:
 	.word	sub_080059d8+1
 	.word	sub_08005ca0+1
 	.word	sub_0800f840+1
-	.word	0x08755620
+	.word	gUnk_08755620
 	.word	gUnk_020060D0
 	.word	0x08731D70
 	.global	loc_0800f818
