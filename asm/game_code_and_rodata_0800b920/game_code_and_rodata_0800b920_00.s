@@ -8637,7 +8637,7 @@ loc_0800fad2:
 	.word	gUnk_03002490
 	.word	0x020060D0
 	.word	0x08731D28
-	.word	0x03001430
+	.word	gUnk_03001430
 	.global	loc_0800faf0
 loc_0800faf0:
 	ldr	r1, [r3, #24]

@@ -258,8 +258,9 @@ SECTIONS
         build/src/gfx_08b8c.o(.text)
     } > ROM
 
-    .game_code_and_rodata_080091ac 0x080091AC : {
-        KEEP(*(.game_code_and_rodata_080091ac)) KEEP(*(.game_code_and_rodata_080091ac.tail))
+    /* boot_091ac — decompiled to C (src/boot_091ac.c, carved by tools/carve.py) */
+    .boot_091ac 0x080091AC : {
+        build/src/boot_091ac.o(.text)
     } > ROM
 
     /* hud_099fc — decompiled to C (src/hud_099fc.c, carved by tools/carve.py) */
