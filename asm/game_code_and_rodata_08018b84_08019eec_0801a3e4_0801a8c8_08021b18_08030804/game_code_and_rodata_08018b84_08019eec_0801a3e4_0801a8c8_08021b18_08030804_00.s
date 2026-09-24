@@ -18899,7 +18899,7 @@ loc_0803970c:
 	lsrs	r0, r0, #16
 	b.n	loc_08039756	@ 0x08039756
 	movs	r0, r0
-	.word	0x030055D0
+	.word	gUnk_030055D0
 	.global	loc_08039750
 loc_08039750:
 	adds	r0, r2, #0

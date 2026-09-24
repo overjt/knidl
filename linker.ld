@@ -459,8 +459,9 @@ SECTIONS
         build/src/camera_296a0.o(.text)
     } > ROM
 
-    .game_code_and_rodata_08018b84_08019eec_0801a3e4_0801a8c8_08021b18_08029c74 0x08029C74 : {
-        KEEP(*(.game_code_and_rodata_08018b84_08019eec_0801a3e4_0801a8c8_08021b18_08029c74)) KEEP(*(.game_code_and_rodata_08018b84_08019eec_0801a3e4_0801a8c8_08021b18_08029c74.tail))
+    /* camera_29c74 — decompiled to C (src/camera_29c74.c, carved by tools/carve.py) */
+    .camera_29c74 0x08029C74 : {
+        build/src/camera_29c74.o(.text)
     } > ROM
 
     /* bgmap_2a9cc — decompiled to C (src/bgmap_2a9cc.c, carved by tools/carve.py) */

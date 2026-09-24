@@ -33,6 +33,20 @@ struct Unk03004B00
     /*0x08*/ u32 unk8;
 };
 
+struct Unk020055D8Entry
+{
+    /*0x00*/ u8 filler0[4];
+    /*0x04*/ u16 unk4;
+    /*0x06*/ u16 unk6;
+};
+
+struct Unk020055D8
+{
+    /*0x00*/ s16 unk0;
+    /*0x02*/ s16 unk2;
+    /*0x04*/ struct Unk020055D8Entry *unk4;
+};
+
 extern u16 gUnk_03005604[2];
 extern u16 gUnk_0300566C[2];
 extern s32 gUnk_03001F2C;
@@ -50,7 +64,7 @@ extern s32 gUnk_02016C30;
 extern vs32 gUnk_03001EE0;
 extern vs32 gUnk_03000FC0;
 extern struct Unk03004B00 gUnk_03004B00;
-extern s16 gUnk_020055D8;
+extern struct Unk020055D8 gUnk_020055D8;
 extern s16 gUnk_02004B78[4];
 extern s16 gUnk_03002158[4];
 
@@ -258,7 +272,7 @@ void sub_08029b30(void)
 
 void sub_08029bb8(void)
 {
-    if (gUnk_020055D8 != 0)
+    if (gUnk_020055D8.unk0 != 0)
     {
         if (gUnk_03002158[0] < gUnk_02004B78[0])
             sub_0802a82c(gUnk_02004B78[0] - 36, gUnk_02004B78[0] - 28, gUnk_02004B78[2] - 40, gUnk_02004B78[3] + 40);
