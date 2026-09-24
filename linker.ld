@@ -454,6 +454,70 @@ SECTIONS
         KEEP(*(.game_code_and_rodata_08018b84_08019eec_0801a3e4_0801a8c8_08021b18)) KEEP(*(.game_code_and_rodata_08018b84_08019eec_0801a3e4_0801a8c8_08021b18.tail))
     } > ROM
 
+    /* camera_296a0 — decompiled to C (src/camera_296a0.c, carved by tools/carve.py) */
+    .camera_296a0 0x080296A0 : {
+        build/src/camera_296a0.o(.text)
+    } > ROM
+
+    /* camera_29c74 — decompiled to C (src/camera_29c74.c, carved by tools/carve.py) */
+    .camera_29c74 0x08029C74 : {
+        build/src/camera_29c74.o(.text)
+    } > ROM
+
+    /* bgmap_2a9cc — decompiled to C (src/bgmap_2a9cc.c, carved by tools/carve.py) */
+    .bgmap_2a9cc 0x0802A9CC : {
+        build/src/bgmap_2a9cc.o(.text)
+    } > ROM
+
+    /* bgmap_2b2f0 — decompiled to C (src/bgmap_2b2f0.c, carved by tools/carve.py) */
+    .bgmap_2b2f0 0x0802B2F0 : {
+        build/src/bgmap_2b2f0.o(.text)
+    } > ROM
+
+    /* camera_2b4bc — decompiled to C (src/camera_2b4bc.c, carved by tools/carve.py) */
+    .camera_2b4bc 0x0802B4BC : {
+        build/src/camera_2b4bc.o(.text)
+    } > ROM
+
+    /* camera_2c42c — decompiled to C (src/camera_2c42c.c, carved by tools/carve.py) */
+    .camera_2c42c 0x0802C42C : {
+        build/src/camera_2c42c.o(.text)
+    } > ROM
+
+    /* camera_2d01c — decompiled to C (src/camera_2d01c.c, carved by tools/carve.py) */
+    .camera_2d01c 0x0802D01C : {
+        build/src/camera_2d01c.o(.text)
+    } > ROM
+
+    /* camtask_2d38c — decompiled to C (src/camtask_2d38c.c, carved by tools/carve.py) */
+    .camtask_2d38c 0x0802D38C : {
+        build/src/camtask_2d38c.o(.text)
+    } > ROM
+
+    /* obj_2eac8 — decompiled to C (src/obj_2eac8.c, carved by tools/carve.py) */
+    .obj_2eac8 0x0802EAC8 : {
+        build/src/obj_2eac8.o(.text)
+    } > ROM
+
+    /* obj_2f62c — decompiled to C (src/obj_2f62c.c, carved by tools/carve.py) */
+    .obj_2f62c 0x0802F62C : {
+        build/src/obj_2f62c.o(.text)
+    } > ROM
+
+    /* obj_30238 — decompiled to C (src/obj_30238.c, carved by tools/carve.py) */
+    .obj_30238 0x08030238 : {
+        build/src/obj_30238.o(.text)
+    } > ROM
+
+    /* obj_306b4 — decompiled to C (src/obj_306b4.c, carved by tools/carve.py) */
+    .obj_306b4 0x080306B4 : {
+        build/src/obj_306b4.o(.text)
+    } > ROM
+
+    .game_code_and_rodata_08018b84_08019eec_0801a3e4_0801a8c8_08021b18_08030804 0x08030804 : {
+        KEEP(*(.game_code_and_rodata_08018b84_08019eec_0801a3e4_0801a8c8_08021b18_08030804)) KEEP(*(.game_code_and_rodata_08018b84_08019eec_0801a3e4_0801a8c8_08021b18_08030804.tail))
+    } > ROM
+
     /* stage_3cd60 — decompiled to C (src/stage_3cd60.c, carved by tools/carve.py) */
     .stage_3cd60 0x0803CD60 : {
         build/src/stage_3cd60.o(.text)

@@ -590,6 +590,60 @@ child issues of #35 are created from it. Findings that belong in this document:
   `0x08755650` and `0x08755688`; the 256-byte save slots are M34's
   `gUnk_0200E600[]`, whose `unk04 == 0x99999999` marks an empty slot and
   whose `unk10` bits unlock menu rows.
+- **M08 (`0x080296A0-0x08030803`) is the camera, the BG map streaming and
+  the level's scripted map events.**  Decompiled in #86, in twelve files
+  (`docs/analysis/module-map.md` §6).  M07, the level / room builder, calls
+  it every frame (195 `bl` edges); what it provides:
+  * **Camera state** in IWRAM `0x030055C0-0x03005694`: the camera mode
+    `gUnk_030055C0`, the camera pixel position `gUnk_03005604` and the
+    position the BG maps were last streamed at `gUnk_0300566C`, the 16.16
+    target `gUnk_03005614`/`gUnk_03005634`, the camera bounds
+    `gUnk_030055F8[4]` and the room bounds `gUnk_03005628[4]`, the room
+    size in metatiles `gUnk_03005620` x `gUnk_0300561C`, the per-player
+    cameras, bounds and modes `gUnk_030055D0[4]`/`gUnk_03005640[4]`/
+    `gUnk_0300560C[]`, the scroll lock `gUnk_03005680` (armed by
+    `sub_0802cda0`, speeds `gUnk_03005610`/`gUnk_03005664`) and the screen
+    shake `gUnk_03005670` (offset lists `gUnk_08732880`, `0x8000` ends a
+    list, `0x9999` restarts it).  `gUnk_030055EC` points at the room header
+    (`struct RoomDef`: palettes at `+0x18`/`+0x28`, BG map at `+0x30`,
+    animation set at `+0x40`), one entry of the room table `0x087E1D58`.
+  * **Tilemap streaming.**  `gUnk_03005660` is the room's metatile map (4
+    bytes per cell: the metatile index and, at `+3`, a solid flag), each
+    metatile 2x2 tiles of `gUnk_0200B080`; the BG layers are `0x06001800`
+    (32x32 tiles, from the u16 map `gUnk_02004CA0`), `0x06002000` (64x32,
+    or 32x64 for tall rooms, with edge tiles from `gUnk_080D71A0`) and
+    `0x06003000` (64x32, from the room header's BG map).  Rows and columns
+    are streamed as the camera crosses 8-pixel boundaries, and the per-frame
+    glue writes the BG1-BG3 16.16 scroll shadows and the sprite camera
+    `gUnk_03002348`/`gUnk_030023E4` from the camera plus the shake offset.
+  * **Task types.**  #4 (class 4, `sub_0802d370`) dispatches `Task.unk14`
+    into the anchor table `0x087328A0`: seven map-event bodies
+    (`0x0802D38C-0x0802E3AC`: passage openers, metatile breakers, room
+    palette fades, two scripted camera pans), spawned through M07's
+    `sub_0802621c(4)` by `sub_0802d344`/`sub_0802d478`/`sub_0802d5b4`.
+    #221-#235 (class 3) are stage objects M07 places, each with a spawner
+    `s32 f(x, y, ...)` that calls `sub_08005904(type, 32, 63)` and returns the
+    task id or -1 (#229 has three spawner variants; #235's positions come
+    from `gUnk_087328C0`, #233's spawner is also called from M33).  #236
+    (class 4, `sub_08030238`) dispatches `Task.unk14` into the anchor table
+    `0x087328D8`: six short sprite effects (`0x08030254-0x08030604`),
+    spawned by `sub_080301e8` from M07, M09 and the map events.
+    `sub_080306b4` is the shared on-screen OAM draw helper.
+  * **The BG animation scripts**: ten slots `gUnk_02007D70[]` loaded from
+    `gUnk_087E1F20[RoomDef.unk40]` and run every frame by `sub_0802d188`
+    (tile copy to `0x06004000`, palette fade into `gUnk_03001270`, wait, loop,
+    metatile solid flag, sound effect); and the per-frame stage hook
+    `gUnk_030004A0` (id `gUnk_02000024`), one of three M09 routines.
+  * It calls out to M09 (`sub_08030f78`, the metatile update the map events
+    use, and `sub_08032288`/`sub_08032338`), to M07 (`sub_0802621c`,
+    `sub_08027750`, `sub_080261c0`, `sub_08026584`, `sub_08025dc4`,
+    `sub_08028948`, `sub_08028b1c`) and to M33's `sub_080b5338`, which
+    `sub_0802a82c` uses to spawn the entries of the room's object list
+    `gUnk_020055D8` that scroll into view.
+  * Census: 151 functions, not 153 - `0x0802BE70` is `sub_0802b62c`'s shared
+    epilogue reached by a `bl` long jump, `0x0802F6EA` and `0x0802FDE8` are
+    function tails "evidenced" by stray words in graphics blobs, and the dead
+    export `0x0802D0C4` was hidden in `sub_0802d074`.
 - **M35 (`0x080B9D0C-0x080BDA2B`) is the sub-game framework plus one
   complete sub-game, a reaction-time duel.**  Decompiled in #95, in five files
   (`docs/analysis/module-map.md` §6).  The census name "game-mode flow + link

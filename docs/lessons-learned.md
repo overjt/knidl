@@ -1573,6 +1573,152 @@ Both are 3.42's load-bearing empty cases, seen from the range side.
 - `v = *p + d; *p = v;` through a `vs32 *` - the compound `v = *p += d`
   re-reads the volatile cell (`sub_0800ff00`).
 
+### 3.379 The parentheses of a tilemap index are the address shape
+M08's tile writers compute a VRAM slot and a metatile-table address per
+call, and each ROM variant is one grouping of the same sum:
+
+* `(u16 *)0x06001800 + ((x & 31) + ((y & 31) << 5))` scales the index sum
+  once (`adds; lsls #1; adds base`); without the inner parentheses each term
+  is scaled on its own (`sub_0802af6c`, 13 bytes).  `((u16 *)0x06002000)[i]`
+  with `i` the sum in a local is the same code.
+* `(&gUnk_03005660[x >> 1])[(y >> 1) * gUnk_03005620]` adds the column term
+  to the map base first and the scaled row term second, as the ROM does
+  (`sub_0802afc8`); `gUnk_03005660[(y >> 1) * w + (x >> 1)]` scales the sum
+  once.
+* `*(gUnk_0200B080 + (tile << 2) + (x & 1) + ((y & 1) << 1))` keeps every
+  term byte-scaled separately (`lsls #3`, `lsls #1`, `lsls #2`), which is
+  what the 32x64 writers `sub_0802b074`/`sub_0802b168` do; the subscript
+  form scales the sum.
+* A field the ROM loads BEFORE an unrelated `if` is a local assigned before
+  it: `w = m->unk2; if (x0 < 0) x0 = 0; if (w < x1) x1 = w;`
+  (`sub_0802ab30`).
+
+### 3.380 A record array must be declared as one: struct view versus 2-D view is per function
+`gUnk_030055D0` holds four `{u16 x, y}` camera positions and
+`gUnk_03005640` four `{s16 x0, x1, y0, y1}` bounds.  Declared
+`struct CamPos gUnk_030055D0[4]` and indexed directly (`a[i].y`), a loop
+gets one address giv and reads the second field as `[reg, #2]`; declared
+`u16[4][2]`, `a[i][1]` folds the `+2` into the symbol and loop.c creates a
+second giv.  Ten camA functions (`sub_08029c74` ... `sub_0802a63c`,
+`sub_0802c42c`, `sub_0802c7f4`) only matched with the struct (the 2-D form
+was 20-90 bytes off), but `sub_0802c680`'s loop needs the 2-D view and is
+written `((u16 (*)[2])gUnk_030055D0)[i][1] = y;` with a comment.  Separately,
+a LOCAL copy of the base (`struct CamPos *c = gUnk_030055D0;`) is its own
+pseudo: it cost 8-55 bytes where the ROM re-materialises the symbol
+(`sub_0802c42c`, `sub_0802c7f4`) and is required where the ROM keeps the
+copy in a register (`sub_0802b4bc`, `sub_0802be80`, `sub_0802c550`,
+`sub_0802cc90`, `sub_0802cda0`).  Read the listing for which one the ROM
+does (one `ldr =sym` per use, or one held register) before choosing.
+
+### 3.381 Operand order in a compare or a sum is register order
+* Clamps: `if (gUnk_03005620 * 2 <= x1) x1 = ...` gives `cmp rW, rX; bgt`,
+  `if (x1 >= gUnk_03005620 * 2)` gives `cmp rX, rW; blt` (every M08 row and
+  column streamer).
+* `sub_0802b62c`'s multi-player compares put the FIELD on the left
+  (`if (gUnk_03005680.unk2 <= c.x)` gives `cmp field, val; bhi`); swapping
+  them closed its last 1132 bytes.
+* `(y1 + y0) >> 1` matched where `(y0 + y1) >> 1` did not (`sub_0802a82c`),
+  and `gUnk_03005604[0] + gUnk_03005670.unk2` fixes which pool word loads
+  first (`sub_08029930`).
+
+### 3.382 A `0xFFxx` constant added before a `strh` is written as an addend
+When the ROM loads `ldr rK, =0x0000FFFD` (or `0xFF8B`, `0xFFB4`) and `adds`
+it before a halfword store, the source added a u16-sized constant:
+`x + 0xFFFD`, `c + -117`, `c + -76`.  Writing `x - 3` or `c - 117` (even
+`- 117U`) gives `subs #imm` and loses the pool word (`sub_0802b2f0`,
+`sub_0802a63c`, `sub_0802b62c`).
+
+### 3.383 `do { } while (0)` around a loop body adds one loop level of reference weight
+`sub_0802d188` (the BG animation script runner) needed its slot pointer in r4
+and the command pointer in r5, and every natural spelling gave the reverse.
+Wrapping the `for` body in `do { ... } while (0)` changes nothing in the
+code but counts every reference inside one loop depth deeper (flow.c's
+`REG_N_REFS` weighting), which lifts the slot pointer above the command
+pointer in global-alloc priority.  The command interpreter inside is a
+`goto` loop: a real `while (1)` gets rotated.  Complements 3.72 (the goto
+lever removes a level; this adds one).
+
+### 3.384 Loop hoisting has a budget: the first address used in the body is the one hoisted
+loop.c's `move_movables` lowers its threshold by 3 after every register it
+hoists (3.348), so when a loop body touches several globals, the order of
+their first uses decides which addresses reach a callee-saved register and
+which are "not desirable".  `sub_0802dcb4`'s last 2 bytes: writing
+`gUnk_03001F00 -= gUnk_03002490->unk34;` BEFORE the task-pointer local of
+that loop put the cell's address first in the movables list; with
+`t = gUnk_03002490;` first, the task address was hoisted, the cell address
+was not, and a later pass added a `mov r6, r8`.  Same function, bigger win:
+one task-pointer local PER BLOCK (`t1` ... `t13`, `d1` ... `d4`) - a shared
+`t` became a long-lived pseudo, forced a `sub sp, #4` spill and cost about
+1000 bytes (3.164/3.231 at scale).  In the draw callbacks, `tbl =
+t->unk38;` goes INSIDE the `if`, and chains of stores are written through
+`gUnk_03002490->` directly (`sub_0802faa8`, 85 bytes).
+
+### 3.385 Two loop shapes that look equivalent and are not
+* A two-sided bounds exit is ONE `if ((a > 0 && x >= hi) || (a < 0 && x <= lo))
+  break;` - two separate `if (...) break;` statements peel the loop head into
+  the preheader (`sub_0802dcb4`, `sub_0802e3ac`).
+* `while (1) { ...; if (done) break; TaskYieldTrampoline(1); }` and the same
+  body under `for (;;)` compile differently: the `for` places the trailing
+  yield block in front of the loop top (`sub_0802dcb4`).
+
+### 3.386 Three chunked DMA calls: index the symbol first, take the pointer after the first call
+`sub_0802eba4`, `sub_0802ed20`, `sub_0802ee88` and `sub_0802f8c8` upload one
+animation frame in three chunks, and the ROM computes `(idx * K + off) +
+base` with the base in a callee-saved register from the second call on.  The
+source that matches indexes the symbol in the first call and takes a pointer
+local only AFTER it:
+
+```c
+sub_080017e4(4, (u32)&gUnk_085A0638[t->unk28 * 384], 0x06012180, 128);
+src = gUnk_085A0638;
+sub_080017e4(4, (u32)(src + (gUnk_03002490->unk28 * 384 + 128)), 0x06012580, 128);
+```
+
+Assigning `src` before the first call loads the base too early (8 bytes);
+indexing the symbol three times folds `off` into the base (52 bytes).
+
+### 3.387 A byte store of -1 that the ROM ORs into the loaded byte is a signed bit-field
+`sub_0802da8c` clears `gUnk_02006098[3]` with `movs rK, #255; orrs rK,
+rLoaded; strb`.  A plain `= -1`, `|= 0xFF` or a `(u8 *)` store all fold to
+`movs #255; strb`; only a store through an 8-bit signed bit-field
+(`struct { s8 a, b, c; s32 unk3:8; }`, cast from the array) keeps the
+read-modify-write.  The OR quirk of 3.50, reached through a bit-field.
+
+### 3.388 Small M08 shapes, one line each
+- `sub_080306b4`'s camera cells must be `s16`, not `u16`: with `u16` the
+  sign extension of its `s16` parameters disappears.
+- `for (i = 0; i <= 1; i++) if (tbl[a][i] != -1) f(a, i);` is a skip, not a
+  `break` - the `break` form is 12 bytes longer (`sub_08030100`).
+- `for (i = 0; i < 64; i++) a[i].unk6 = 0x7FFF;` is the ROM's signed
+  pointer-compare countdown; the written countdown keeps the counter
+  (4 bytes, `sub_08030724`).
+- Load-bearing empty cases: `case 0: break;` for a {1,2,3} tree that tests
+  `== 1` first (`sub_08030758`); `case 2: break;` for `cmp #1; beq; cmp #1;
+  bgt default` (`sub_08029c74`); `{0, 1 ... 2, 3}` gives `cmp #2; bgt`
+  (`sub_0802a190`).  All 3.42.
+- `if (c) m = 0; else m = 0;` is real ROM code (`sub_0802d0c4`); write the
+  constant the enclosing `== 3` proves (`gUnk_03005664 = 3;`) so it reuses
+  the compared register (`sub_0802d01c`).
+- `(u16)((s16)x * 8)` keeps the ROM's `ldrsh; lsls #19; lsrs #16`; `<< 3`
+  narrows the load to `ldrh` (`sub_0802d6cc`).
+- Addresses the ROM derives from one another are one symbol plus offsets:
+  `gUnk_03001270 + 0x20 / 0x100 / 0x180` (`sub_0802d6cc`, 3.378's
+  `gUnk_03001430 - 176` again).
+- `*(long long *)dst = *(long long *)src;` is the 8-byte `ldr; ldr; str;
+  str` copy (`sub_08029bb8`, 3.58).
+- Reuse a loop variable where the ROM keeps two loops in one register:
+  `sub_0802b074`'s row loop and column loop share `i`, `sub_08029ef4`'s third
+  loop accumulates into the dead `y1` (3.339).
+- `sub_0802bff4`'s player clamp needs two fresh `s32` locals, `u = cell; v =
+  u;`, clamped to two different bounds; reusing `x`/`y` was 830-864 bytes
+  off with every instruction right.
+- `v = cond ? a : b` (or if/else) where the ROM tests before the default
+  assignment; `v = a; if (cond) v = b;` puts the default first
+  (`sub_0802b168`).
+- Siblings share a template (3.264): camD's `sub_0802dcb4` source, edited
+  only where the listing differed, matched the 1820-byte `sub_0802e3ac` on
+  its first build.
+
 ## 4. Splitting ROM ranges into asm (tools/split.py)
 
 ### 4.1 objdump text only round-trips under `.syntax unified`
@@ -5981,6 +6127,58 @@ candidate=.. target=..` with no count, and the agents' first hour of M03
 compared variants by size only.  Grep `[0-9]+ differing byte` in
 `tryall.sh`, `variants.sh` and `recheck.sh` (fixed in the M03 harness; a
 subagent spotted it).
+
+### 4.79 A function can match alone and not inside its carve file: gcse hashes pool-label ADDRESSES
+`sub_08030724` byte-matched on its own and swapped r3/r4 when compiled as the
+last-but-five function of `obj_30238.c`.  The `-da` dumps are identical up
+to `.gcse`, where the expression hash table lists the same three
+`(mem (symbol_ref ".LCn"))` pool loads in a different bucket order (hash
+values 2/3/4 in one build, 9/10/0 in the other, 11 buckets): gcc 2.95's
+`hash_expr_1` hashes a `SYMBOL_REF` by the ADDRESS of its name string, and a
+`.LCn` label string is allocated as the constant is created, so the order
+PRE hoists the three addresses in - and therefore which pseudo gets which
+register - depends on how many pool constants the translation unit compiled
+before the function.  It is deterministic but chaotic: starting the file at
+`sub_08030580` or `sub_08030404` also mismatched, at `sub_080304ec`,
+`sub_080302cc` or `sub_08030254` it matched.  Extern declaration order,
+declaration placement and prototype spellings do not move it.  The fix is at
+landing: split the carve file at a boundary where both halves match
+(`obj_30238.c` + `obj_306b4.c`, cut between the type-#236 bodies and the
+helpers).  So the whole-file `fnmatch.sh` before `carve.py` (step 3 of the
+landing checklist) is not a formality - it is the only check that sees this,
+and a whole file can also match where two smaller ones would not
+(`camtask_2d38c.c`, 10 functions, was verified whole before merging).
+
+### 4.80 One canonical declaration per shared cell, changed mid-run by evidence
+The M08 harness added a `types.txt` of canonical spellings (every cell used
+by more than one batch, the shared structs, the trampolines), a
+`canoncheck.py` that diffs every body against it, and kept `cellcheck.py`'s
+module-wide check.  Twice an agent proved a better spelling than the
+coordinator's first guess - `struct CamPos gUnk_030055D0[4]` /
+`struct CamRect gUnk_03005640[4]` instead of 2-D arrays (3.380), and the
+room header `struct RoomDef` (palettes at 0x18/0x28, BG map at 0x30,
+animation set at 0x40) instead of two partial views - and the canonical
+file changed.  Converting the other batches' already-matched bodies was the
+coordinator's job, with a small script (`conv55.py`: rewrite the declaration,
+`c[i][0]` -> `c[i].x`, pointer locals retyped) and a `variants.sh` re-verify
+per function: 17 of 18 conversions matched unchanged, the 18th keeps a
+commented cast to the 2-D view.  Relay the change to the running agents
+first, and tell them NOT to rewrite their matched bodies themselves.
+
+### 4.81 A finished agent's last re-verify pass overwrites the coordinator's copies in good/
+Three times in M08 an agent's "final tryall over all my functions" ran
+AFTER the coordinator had harmonised some of its bodies, and `tryall.sh`
+dutifully copied the agent's (older, still matching) `fns/` file back over
+`good/`: `sub_0802d0f4`, eight camera bodies, and `sub_0802da8c`.  Nothing
+was lost because the converted copies were kept under `wip/coord/`, and
+`cellcheck.py` caught each regression before a landing.  Rules that follow:
+freeze a file by telling its owner "no more testers on these functions"
+BEFORE harmonising it, keep every coordinator-converted body in `wip/` so it
+can be restored, and run `cellcheck.py` right before `gen.py`.  Two smaller
+M08 findings: all four agents died at once on a session limit and resumed
+cleanly from `SendMessage` with their open lists re-derived from `good/`;
+and `variants.sh` builds into `build/fnmatch/<variant name>_<start>`, so
+agents should prefix variant file names with their own name.
 
 ### 3.336 The four-loop HBlank family: `for (i = 0; i <= 6; i = j) { ...; j = i + 1; ... }`
 M34's `sub_080b6154`/`6290`/`63a4`/`6474` are one body with four sets of

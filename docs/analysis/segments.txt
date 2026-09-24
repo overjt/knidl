@@ -96,7 +96,20 @@
 0x08021130 0x0802136C c_code terrain_21130 # src/terrain_21130.c (carved by tools/carve.py)
 0x0802136C 0x080214E0 thumb_code game_code_and_rodata_08018b84_08019eec_0801a3e4_0801a8c8_080207a0_0802136c [split]
 0x080214E0 0x08021B18 c_code terrain_214e0 # src/terrain_214e0.c (carved by tools/carve.py)
-0x08021B18 0x0803CD60 thumb_code game_code_and_rodata_08018b84_08019eec_0801a3e4_0801a8c8_08021b18 [split]
+0x08021B18 0x080296A0 thumb_code game_code_and_rodata_08018b84_08019eec_0801a3e4_0801a8c8_08021b18 [split]
+0x080296A0 0x08029C74 c_code camera_296a0 # src/camera_296a0.c (carved by tools/carve.py)
+0x08029C74 0x0802A9CC c_code camera_29c74 # src/camera_29c74.c (carved by tools/carve.py)
+0x0802A9CC 0x0802B2F0 c_code bgmap_2a9cc # src/bgmap_2a9cc.c (carved by tools/carve.py)
+0x0802B2F0 0x0802B4BC c_code bgmap_2b2f0 # src/bgmap_2b2f0.c (carved by tools/carve.py)
+0x0802B4BC 0x0802C42C c_code camera_2b4bc # src/camera_2b4bc.c (carved by tools/carve.py)
+0x0802C42C 0x0802D01C c_code camera_2c42c # src/camera_2c42c.c (carved by tools/carve.py)
+0x0802D01C 0x0802D38C c_code camera_2d01c # src/camera_2d01c.c (carved by tools/carve.py)
+0x0802D38C 0x0802EAC8 c_code camtask_2d38c # src/camtask_2d38c.c (carved by tools/carve.py)
+0x0802EAC8 0x0802F62C c_code obj_2eac8 # src/obj_2eac8.c (carved by tools/carve.py)
+0x0802F62C 0x08030238 c_code obj_2f62c # src/obj_2f62c.c (carved by tools/carve.py)
+0x08030238 0x080306B4 c_code obj_30238 # src/obj_30238.c (carved by tools/carve.py)
+0x080306B4 0x08030804 c_code obj_306b4 # src/obj_306b4.c (carved by tools/carve.py)
+0x08030804 0x0803CD60 thumb_code game_code_and_rodata_08018b84_08019eec_0801a3e4_0801a8c8_08021b18_08030804 [split]
 0x0803CD60 0x08040B40 c_code stage_3cd60 # src/stage_3cd60.c (carved by tools/carve.py)
 0x08040B40 0x080413A4 thumb_code game_code_and_rodata_08018b84_08019eec_0801a3e4_0801a8c8_08040b40 [split]
 0x080413A4 0x0804335C c_code stage_413a4 # src/stage_413a4.c (carved by tools/carve.py)
