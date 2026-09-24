@@ -8238,9 +8238,9 @@ loc_08048bee:
 	b.n	sub_080493d2	@ 0x080493D2
 	.word	gUnk_020060E0
 	.word	gUnk_03002490
-	.word	0x0873C358
+	.word	gUnk_0873C358
 	.word	gUnk_02005550
-	.word	0x0873CF94
+	.word	gUnk_0873CF94
 	.word	0x000008DB
 	.word	0x0000088C
 	ldr	r4, [pc, #316]	@ 0x08048D94

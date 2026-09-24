@@ -286,7 +286,9 @@ struct PlayerState
     /*0x51*/ u8 filler51[3];
     /*0x54*/ s32 unk54;
     /*0x58*/ s32 unk58;
-    /*0x5C*/ u8 filler5C[2];
+    /* M09's player task copies Task.unk7B here and tests bit 0 (issue #92). */
+    /*0x5C*/ u8 unk5C;
+    /*0x5D*/ u8 filler5D;
     /*0x5E*/ u16 unk5E;
     /*0x60*/ u16 unk60;
     /*0x62*/ u8 filler62[2];
