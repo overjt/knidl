@@ -129,7 +129,7 @@
 0x08034F8C 0x08036280 c_code player_34f8c # src/player_34f8c.c (carved by tools/carve.py)
 0x08036280 0x08036C94 c_code player_36280 # src/player_36280.c (carved by tools/carve.py)
 0x08036C94 0x08037ED8 c_code player_36c94 # src/player_36c94.c (carved by tools/carve.py)
-0x08037ED8 0x0803919C thumb_code game_code_and_rodata_08018b84_08019eec_0801a3e4_0801a8c8_08021b18_08030804_08036280_08037ed8 [split]
+0x08037ED8 0x0803919C c_code player_37ed8 # src/player_37ed8.c (carved by tools/carve.py)
 0x0803919C 0x08039C24 c_code player_3919c # src/player_3919c.c (carved by tools/carve.py)
 0x08039C24 0x0803AA64 c_code player_39c24 # src/player_39c24.c (carved by tools/carve.py)
 0x0803AA64 0x0803BDE8 c_code player_3aa64 # src/player_3aa64.c (carved by tools/carve.py)
