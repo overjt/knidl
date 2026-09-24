@@ -975,6 +975,23 @@ EXTRA_THUMB_ENTRIES = {
     0x08087824,
     0x0808798C,
     0x08088394,
+
+    # --- M35 (issue #95), three hidden entries the reachability sweep found ---
+    # Two are anchor-table targets that -fprologue-bugfix left without a
+    # `push` (they open with a pool load and end `bx lr`), so the strict
+    # prologue filter rejected them; the third is a dead export.  In all three
+    # the preceding function closes with its own epilogue and literal pool
+    # before the address.
+    0x080B9DA8,  # dead export: the `gUnk_03001EB8[i] & 2` twin of
+                 # sub_080b9d68's `& 9` player-key scan, with its own
+                 # `push {r4, r5, lr}`; no ROM word references it.
+                 # sub_080b9d68 is 0x40, not 0x80.
+    0x080BB410,  # leaf: `if (t->unk14 != 4 && t->unk18 != 2) t->unk18 = 2;`
+                 # anchor-table word 0x08756360 (entry 25 of the 27-entry
+                 # table at 0x087562FC).  sub_080bb3e8 is 0x28, not 0x44.
+    0x080BD9E8,  # leaf that zeroes gUnk_0200AFF0/gUnk_0200AF10 and fills
+                 # gUnk_0200B044[0..3] with 3; table word 0x087562D0 (next to
+                 # 0x080BA455 and 0x080C1F9D).  sub_080bd9b0 is 0x38, not 0x5C.
 }
 
 EVIDENCE_KINDS = ("bl-target", "rom-pointer", "prologue-scan", "curated")

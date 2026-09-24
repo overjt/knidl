@@ -468,6 +468,73 @@ child issues of #35 are created from it. Findings that belong in this document:
   Transitions drive the display through the early zone as predicted: the only
   hardware-ish cell here is the DISPCNT shadow `gUnk_03001ED8`, masked to
   `0xE0FF` and re-ORed with a BG-enable pattern.
+- **M35 (`0x080B9D0C-0x080BDA2B`) is the sub-game framework plus one
+  complete sub-game, a reaction-time duel.**  Decompiled in #95, in five files
+  (`docs/analysis/module-map.md` §6).  The census name "game-mode flow + link
+  lobby" is half right: the range is what `AgbMain` enters for its sub-game
+  state (`sub_080ba354`), and it is shared by the three sub-games, but most of
+  its bytes are one of them.
+  * **The framework.**  `gUnk_02007FCC` is the sub-game selector and indexes
+    four parallel tables: `0x087562A8` (`u32[3][2]`, the display-layout
+    record per game and screen that `sub_08008c4c` hands to `sub_08002e38`),
+    `0x087562C0` (the matching VRAM transfer lists for `sub_08008c64`, 0 =
+    none), `0x087562CC` (init hook) and `0x087562D8` (task body).  Game 0 is
+    the duel in this module (`sub_080ba454` / `sub_080ba4e0`), game 1 the
+    four-slot bomb-pass game of M36 (`sub_080bd9e8` / `sub_080bda0c`, which
+    dispatch `0x08756568` into `sub_080bda2c`), and game 2 the game whose
+    body is M37's
+    (`sub_080c1f9c` / `sub_080c1fdc` at the tail of M36, dispatching
+    `0x087572CC`).  Every game has two screens, the game itself and its
+    results screen, and `gUnk_02007D2C` is the phase: `sub_080b9e50` sets it
+    to the screen index (0/1) and the game's body dispatches on it; a screen
+    ends when `Task.unk18` pushes it to 3 (`sub_080b9d0c`, which also saves
+    the results screen's three-option choice in `gUnk_02006168`) or 4
+    (`sub_080b9d24`, the results screen's exit).
+    `sub_080ba354` runs the SIO handshake `sub_080ba150` (the words
+    `0x7755`/`0xAA00`/`0xAA01`/`0xAA02` exchanged through `gUnk_03005274` and
+    the send/receive buffers `gUnk_03004D90`/`gUnk_03004D50` until every
+    linked player answers `0xAA02`), steps the LCG `sub_08002ec0`
+    `gUnk_03000FAC & 0xFF` times on the link master (`gUnk_03002360 == 0`),
+    spawns the task type #93 controller (`sub_080ba404`: kill every other
+    task, then run the game's body) and runs
+    both screens through `sub_080b9f34` (load, fade in, wait for the phase
+    to leave 0/1, then - if it ended at 4 while `gUnk_03002150` is 4 - run
+    the handshake again, or park in the endless fade loop `sub_080b9de8` when
+    `gUnk_0200EC48 == 2`; finally fade out and stop DMA0).
+  * **The duel** (game 0).  A seven-state round controller whose states are
+    `<entry, per-frame check>` pairs dispatched through `sub_08002e98` on
+    `Task.unk14`/`unk15`: `0x087562FC`/`0x08756318` in link play and
+    `0x08756334`/`0x08756350` against the computer.  `Task.unk2C` is the mask
+    of players that pressed in time, `gUnk_03002790[i]` the task of player
+    `i`, `gUnk_0200B03C[]` the per-player win counts, `gUnk_0200B07C[4]` the
+    rank order and `gUnk_02006184` the best reaction time so far (reset to 99
+    and lowered to `Task.unk20` by the winner; `sub_080ba774` ends the wait
+    once `Task.unk20` passes 98).  A second seven-state task
+    (`sub_080bbd9c`, tables `0x08756378`/`0x08756394`) is the results
+    screen with its two- and three-option cursors.
+  * **Task type #94 is the duel's sprite object.**  `sub_080bc0cc` dispatches
+    the table `0x087563B0` on `Task.unk73`, the kind the spawner wrote: ten
+    function pointers followed by the words `0x44` and `0`, although the call
+    passes a count of 12.  Kind 0 (a player) and kind 5 (the single-player
+    opponent, five levels with their own animation sets and reaction times
+    from `0x087564B0`) are themselves state machines over
+    `0x08756468`/`0x08756480` and `0x087564E4`/`0x087564FC`; kind 2 counts
+    the reaction frames up to 99 and mirrors them into the parent's
+    `Task.unk20`.  `gUnk_02006168` (the three-option choice) picks the row of
+    the random signal delay `sub_080ba6b4` waits (`0x087562F6`/`0x087562F0`).
+  * **Census.**  Three hidden entries added (`0x080B9DA8`, a dead twin of the
+    key scan `sub_080b9d68`; `0x080BB410` and `0x080BD9E8`, anchor-table leaves
+    the strict prologue filter rejected), so the range holds 196 functions.
+  * **Rodata** comes in two blocks, and the neighbours interleave with it in
+    the same order: animation scripts M35 `0x087559E4-0x08755BAC`, M36
+    `0x08755DC0-0x08755F3C`; then tables M34 `0x08756198-0x0875628C`, M35
+    `0x087562A8-0x0875651F`, M36 `0x08756528-0x08756564` and `0x08756570` on.
+    The one M35-referenced table outside its block is `0x08756568`, the
+    bomb-pass phase table that `sub_080bda0c` dispatches, which sits among
+    M36's - a hint that `sub_080bd9e8`/`sub_080bda0c` belong to M36's
+    translation unit even though they precede its first function.  62 cells
+    were named through `split_config.json` `data_symbols` (55 in ROM, 7 in
+    EWRAM).
 - **M36 (`0x080BDA2C-0x080C1FFB`) is the four-slot bomb-pass sub-game.**
   Decompiled in #66, in three files (`docs/analysis/module-map.md` §6). It is
   started by M35 (game-mode flow) as task type #95 and dispatched entirely

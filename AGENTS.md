@@ -157,5 +157,20 @@ Matching decompilation of Kirby: The Amazing Mirror's predecessor, **Kirby: Nigh
   `tools/symdb.py` (`0x080B6B36`, the sixth `0xFFFFF0xx` pool-word phantom,
   lesson 4.40) and 40 RAM/ROM cells named via `split_config.json`
   `data_symbols`; new agbcc lessons 3.330-3.354 and 4.70.
+- Sub-game framework + reaction-duel sub-game decompiled (issue #95): module
+  M35 `0x080B9D0C-0x080BDA2B` (15.3 KiB) landed as `src/subgame_b9d0c.c`,
+  `src/subgame_ba774.c`, `src/subgame_bb528.c`, `src/subgame_bc0cc.c` and
+  `src/subgame_bd9e8.c` (**all 196 functions, no asm left in the range**, no
+  `register`/`asm` pins).  The census name "game-mode flow + link lobby" was
+  half right: the range is the framework `AgbMain` runs for its sub-game
+  state - `gUnk_02007FCC` selects one of three sub-games (0 = the duel here,
+  1 = M36's bomb-pass, 2 = M37's) and indexes four per-game tables at
+  `0x087562A8-0x087562E3`, `gUnk_02007D2C` is the game/results phase,
+  `sub_080ba150` the SIO handshake and task type #93 the controller - plus a
+  complete reaction-duel sub-game (a seven-state round controller, a
+  seven-state results screen and task type #94, its sprite objects).  Three
+  hidden census entries added in `tools/symdb.py` (so 196, not 193
+  functions) and 62 ROM/RAM cells named via `split_config.json`
+  `data_symbols`; new agbcc lessons 3.361-3.366 and 4.71.
 
 - Next milestones: decompile split/SDK modules to C using the validated per-zone compiler recipe (task system Thumb side, sound driver, then game code); grow `src/` one module at a time with `asmdiff.sh` on the module range.
