@@ -165,6 +165,7 @@ void sub_0802d0c4(void)
 {
     sub_08028948();
     sub_08028b1c();
+    /* both arms store 0 in the ROM too (sub_0802d074 stores 4 / 5) */
     if (gUnk_03002444 != 0)
         gUnk_030055C0 = 0;
     else
