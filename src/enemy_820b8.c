@@ -702,7 +702,7 @@ void sub_08082c5c(void)
         return;
     if (sub_08063df4() == gUnk_03002490->unk43)
         return;
-    if ((sub_08063d2c() < 0 ? -sub_08063d2c() : sub_08063d2c()) <= 31)
+    if (abs(sub_08063d2c()) <= 31)
         sub_0806395c(2);
 }
 

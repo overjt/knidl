@@ -13,8 +13,10 @@
 /* Convenience: array element count. */
 #define ARRAY_COUNT(array) (sizeof(array) / sizeof((array)[0]))
 
-/* Useful math helpers. */
-#define abs(n)    (((n) >= 0) ? (n) : -(n))
+/* Useful math helpers.  abs() must test `< 0` first: that is the branch
+ * order the ROM's |x| compiles to (the `>= 0` spelling does not match
+ * sub_0806baec). */
+#define abs(n)    ((n) < 0 ? -(n) : (n))
 #define min(a, b) ((a) < (b) ? (a) : (b))
 #define max(a, b) ((a) >= (b) ? (a) : (b))
 

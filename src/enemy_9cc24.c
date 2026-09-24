@@ -689,7 +689,7 @@ void sub_0809d71c(void)
         return;
     }
     gUnk_03002490->unk2C = 0;
-    if ((sub_08063cd0() < 0 ? -sub_08063cd0() : sub_08063cd0()) > 39)
+    if (abs(sub_08063cd0()) > 39)
     {
         sub_0806395c(3);
         sub_08006148(sub_0809d1c0, gCurTaskIdx);

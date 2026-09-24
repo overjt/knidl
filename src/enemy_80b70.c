@@ -300,7 +300,7 @@ void sub_08080edc(void)
     gUnk_03002490->unk18 = (u16)sub_08064314(3);
     if (gUnk_03002490->unk18 == 0 || gUnk_03002490->unk18 > 255)
     {
-        if ((sub_08063cd0() < 0 ? -sub_08063cd0() : sub_08063cd0()) <= 47)
+        if (abs(sub_08063cd0()) <= 47)
         {
             sub_0806395c(1);
             sub_08006148(sub_08080e40, gCurTaskIdx);
@@ -368,7 +368,7 @@ void sub_08080fa4(void)
         u->unk54 = u->unk54 + 0x1900;
     }
     v = gUnk_03002490;
-    if ((v->unk54 < 0 ? -v->unk54 : v->unk54) > 0x20000)
+    if (abs(v->unk54) > 0x20000)
     {
         sub_080061c0(0x20000, 0x5A5A5A5A);
     }
@@ -380,7 +380,7 @@ void sub_08080fa4(void)
             v->unk43 = -1;
     }
     w = gUnk_03002490;
-    if ((w->unk54 < 0 ? -w->unk54 : w->unk54) <= 0x5FFF)
+    if (abs(w->unk54) <= 0x5FFF)
         sub_08006338(13);
     else
         sub_08006338(*(s16 *)&w->unk30);
@@ -743,7 +743,7 @@ void sub_080816e8(void)
     u->unk18 = v;
     w = gUnk_08741524[u->unk2C];
     u->unk1C = w;
-    if ((v < 0 ? -v : v) > 10)
+    if (abs(v) > 10)
     {
         if (v < 0)
         {

@@ -384,8 +384,8 @@ void sub_0809c638(void)
         t->unk30--;
         return;
     }
-    if ((sub_08063cd0() < 0 ? -sub_08063cd0() : sub_08063cd0()) <= 39
-     && (sub_08063d2c() < 0 ? -sub_08063d2c() : sub_08063d2c()) <= 16)
+    if (abs(sub_08063cd0()) <= 39
+     && abs(sub_08063d2c()) <= 16)
     {
         gUnk_03002490->unk30 = 90;
         sub_0806395c(1);

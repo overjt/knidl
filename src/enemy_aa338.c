@@ -1646,7 +1646,7 @@ top:
     TaskYieldTrampoline(1);
     goto top;
 out:
-    if ((sub_08063cd0() < 0 ? -sub_08063cd0() : sub_08063cd0()) <= 111)
+    if (abs(sub_08063cd0()) <= 111)
     {
         sub_080061c0(-0x20000, 0x5A5A5A5A);
         gUnk_03002490->unk6C = 0;
@@ -1833,7 +1833,7 @@ top:
         goto out;
     if ((u8)sub_08064358() != 1)
         goto out;
-    w2 = sub_08063d2c() < 0 ? -sub_08063d2c() : sub_08063d2c();
+    w2 = abs(sub_08063d2c());
     if (w2 > 7)
     {
         TaskYieldTrampoline(1);
@@ -3139,7 +3139,7 @@ void sub_080ac950(void)
     s32 w;
 
     gUnk_03002490->unk15 = 1;
-    if ((sub_08063cd0() < 0 ? -sub_08063cd0() : sub_08063cd0()) <= 15)
+    if (abs(sub_08063cd0()) <= 15)
     {
         sub_0806493c();
         if (gUnk_030023B4 <= 119)

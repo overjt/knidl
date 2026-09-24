@@ -280,7 +280,7 @@ void sub_0807abdc(void)
 void sub_0807ac08(void)
 {
     gUnk_03002490->unk34 = sub_0806415c(gUnk_03002490->unk34);
-    if ((sub_08063d2c() < 0 ? -sub_08063d2c() : sub_08063d2c()) <= 4)
+    if (abs(sub_08063d2c()) <= 4)
     {
         sub_0806395c(2);
         sub_08006148(sub_0807ab38, gCurTaskIdx);
@@ -679,7 +679,7 @@ void sub_0807b430(void)
 {
     struct Task *t;
 
-    if ((sub_08063cd0() < 0 ? -sub_08063cd0() : sub_08063cd0()) <= 63)
+    if (abs(sub_08063cd0()) <= 63)
         sub_0807b294(sub_0807b3dc);
     else
         sub_0807b200();
@@ -943,7 +943,7 @@ void sub_0807ba18(void)
 {
     struct Task *t;
 
-    if ((sub_08063cd0() < 0 ? -sub_08063cd0() : sub_08063cd0()) <= 63)
+    if (abs(sub_08063cd0()) <= 63)
         sub_0807b294(sub_0807b9c8);
     gUnk_03002490->unk34 = sub_08064188(gUnk_03002490->unk34);
     t = gUnk_03002490;
@@ -1295,7 +1295,7 @@ void sub_0807c138(void)
         goto dec;
     if (--t->unk20 <= 0)
         goto reset;
-    if ((sub_08063d2c() < 0 ? -sub_08063d2c() : sub_08063d2c()) <= 9)
+    if (abs(sub_08063d2c()) <= 9)
     {
         if (--gUnk_03002490->unk1C > 0)
             return;

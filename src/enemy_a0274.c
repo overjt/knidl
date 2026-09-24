@@ -234,7 +234,7 @@ void sub_080a0480(u8 a)
 
     if (a == 0)
     {
-        if ((sub_08063cd0() < 0 ? -sub_08063cd0() : sub_08063cd0()) <= 21)
+        if (abs(sub_08063cd0()) <= 21)
             gUnk_03002490->unk24 = 0;
         else
             gUnk_03002490->unk24 = 1;

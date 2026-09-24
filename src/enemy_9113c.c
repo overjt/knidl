@@ -254,7 +254,7 @@ void sub_08091390(void)
     t->unk15 = 2;
     gUnk_03002490->unk7A = zero;
     sub_0800622c(0xFFFD0000, 4096, 196608);
-    if ((sub_08063d2c() < 0 ? -sub_08063d2c() : sub_08063d2c()) <= 63)
+    if (abs(sub_08063d2c()) <= 63)
         gUnk_03002490->unk1C = 1;
     else
         gUnk_03002490->unk1C = 0;
@@ -282,7 +282,7 @@ void sub_08091390(void)
     else
     {
         p2 = v;
-        p2->unk24 = (sub_08063cd0() < 0 ? -sub_08063cd0() : sub_08063cd0());
+        p2->unk24 = abs(sub_08063cd0());
         w = gUnk_03002490;
         n = w->unk24;
         if (n <= 47)
@@ -409,7 +409,7 @@ void sub_080916ec(void)
         TaskYieldTrampoline(1);
     sub_080031b8(528);
     gUnk_03002490->unk7A = 0;
-    if ((sub_08063cd0() < 0 ? -sub_08063cd0() : sub_08063cd0()) <= 55)
+    if (abs(sub_08063cd0()) <= 55)
     {
         sub_080061c0(0xFFFD8000, 0x5A5A5A5A);
         gUnk_03002490->unk58 = 0xFFFE4000;
@@ -483,7 +483,7 @@ void sub_08091954(void)
     while (gUnk_03002490->unk1C-- > 0)
     {
         sub_08063e14();
-        if ((sub_08063cd0() < 0 ? -sub_08063cd0() : sub_08063cd0()) <= 39)
+        if (abs(sub_08063cd0()) <= 39)
             gUnk_03002490->unk20 = 1;
         gUnk_03002490->unk7A = 0;
         sub_080061c0(gUnk_087438E4[gUnk_03002490->unk20], 0x5A5A5A5A);

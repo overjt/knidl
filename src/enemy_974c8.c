@@ -2,9 +2,6 @@
 #include "global.h"
 #include "task.h"
 
-/* This module's |x|: the ROM tests `< 0` first, unlike global.h's abs(). */
-#define ABS(n) ((n) < 0 ? -(n) : (n))
-
 /* RAM cells */
 extern s32 gUnk_02007D00[];
 extern s32 gUnk_030023D4;
@@ -286,7 +283,7 @@ void sub_0809773c(void)
         sub_08063e14();
         sub_080062c4();
         v = gUnk_087448E6[gUnk_03002490->unk74];
-        if (ABS(sub_08063cd0()) <= v) {
+        if (abs(sub_08063cd0()) <= v) {
             gUnk_030023D4 = r = sub_08002ee8(8);
             if (r > 3)
                 goto anim;

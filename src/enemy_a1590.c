@@ -1489,7 +1489,7 @@ void sub_080a1704(s32 a)
 /* sub_080a1740 (0x080A1740-0x080A1790) */
 void sub_080a1740(s32 a)
 {
-    if ((sub_08063cbc(a) < 0 ? -sub_08063cbc(a) : sub_08063cbc(a)) <= 48)
+    if (abs(sub_08063cbc(a)) <= 48)
         sub_080a1668(a);
     else if (gUnk_03002490->unk54 == 0)
         gUnk_02007D00[a] = -1;
@@ -2258,9 +2258,7 @@ void sub_080a268c(s32 a)
 {
     if (gUnk_03002490->unk54 != 0)
     {
-        if ((sub_08063cbc(gUnk_03002490->unk44) < 0
-             ? -sub_08063cbc(gUnk_03002490->unk44)
-             : sub_08063cbc(gUnk_03002490->unk44)) <= a)
+        if (abs(sub_08063cbc(gUnk_03002490->unk44)) <= a)
         {
             gUnk_03002490->unk54 = 0;
             gUnk_03002490->unk24++;
@@ -2268,9 +2266,7 @@ void sub_080a268c(s32 a)
     }
     if (gUnk_03002490->unk58 != 0)
     {
-        if ((sub_08063d18(gUnk_03002490->unk44) < 0
-             ? -sub_08063d18(gUnk_03002490->unk44)
-             : sub_08063d18(gUnk_03002490->unk44)) <= a)
+        if (abs(sub_08063d18(gUnk_03002490->unk44)) <= a)
         {
             gUnk_03002490->unk58 = 0;
             gUnk_03002490->unk24++;

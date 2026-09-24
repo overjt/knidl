@@ -1252,6 +1252,27 @@ falls out. Seven functions (1848 bytes) matched from this one change.
 Diagnostic: a 6-byte residue that is only `adds rD, rA, rB` vs
 `adds rD, rB, rA` on narrowed sums of a value stored a few lines earlier.
 
+### 3.360 `abs()` in `global.h` tests `< 0` first: use it for every `|x|`
+The ROM's absolute value is always `x < 0 ? -x : x`, and that is now what
+`include/global.h`'s `abs()` expands to (it used to be the `>= 0` form, which
+is why 3.162, 3.180 and 3.206 said to avoid it).  The polarity is only
+observable when the operand is a call (3.235: a side-effect-free operand folds
+to ABS_EXPR either way), so the eight older `abs()` callers kept matching when
+the macro flipped.  The payoff is readability, and it is large:
+`sub_0806baec` was a 16-line `goto` chain that called `sub_08063cbc` three
+times, and it is simply
+
+```c
+if (a > abs(sub_08063cbc(gUnk_03002490->unk44)))
+    return 1;
+return 0;
+```
+
+byte-identical.  **Signature:** three calls to the same function around one
+`cmp r0, #0; bge`, with a `negs` on the fall-through arm, are one `abs(f())`;
+the `goto` chain m2c produces for that shape is not the source.  (Suggested by
+jiangzhengwenjz on commit 64dd934.)
+
 ## 4. Splitting ROM ranges into asm (tools/split.py)
 
 ### 4.1 objdump text only round-trips under `.syntax unified`
@@ -2485,6 +2506,9 @@ which puts the *negated* arm second — read the ROM's arm order and spell the
 ternary to match. M25 has eight of these. (`sub_0809074c`, `sub_08092a14`,
 `sub_08091954`, …)
 
+*Update (3.360): `global.h`'s `abs()` now expands to `((n) < 0 ? -(n) : (n))`,
+so write `abs(x)` rather than the ternary or a module-local `ABS()`.*
+
 ### 4.33 Verify a growing batch file by fnmatching the prefix, and keep a backup
 `tools/fnmatch.sh` compiles the WHOLE file and links it at the given start, so
 "just this function" runs report the entire file as one giant diff. Two habits
@@ -2792,6 +2816,9 @@ cmp r0,#K` - so it needs `((n) < 0 ? -(n) : (n))`.  M26 defines its own `ABS()`
 at the top of each file for that reason; do not "fix" it to use `abs()`.  The
 distinction is worth two instructions per site and it is the first thing to
 flip when an `abs()` diff is only a swapped branch condition.
+
+*Update (3.360): `global.h`'s `abs()` now expands to `((n) < 0 ? -(n) : (n))`,
+so write `abs(x)` rather than the ternary or a module-local `ABS()`.*
 
 ### 3.181 `while (A && ABS(f()) <= K)` cross-jumps the two compares; the `break` form does not
 Written as a compound loop condition, gcc emits the `ABS` ternary once and lets
@@ -3175,6 +3202,9 @@ in M21 (`sub_0807f488`, `sub_0807f9a0`, `sub_08080fa4`, `sub_080816e8`,
 `sub_08082c5c`) is the ternary written out by hand; `abs()` costs 14 bytes of
 branch-polarity diff each time.
 
+*Update (3.360): `global.h`'s `abs()` now expands to `((n) < 0 ? -(n) : (n))`,
+so write `abs(x)` rather than the ternary or a module-local `ABS()`.*
+
 ### 3.207 A loop with an inner `break` is PEELED unless its back edge is a `goto`
 `do { A; if (X) break; } while (Y)` and `while (1) { A; if (X) break;
 if (!Y) break; }` both make gcc emit `A` twice - once as a peeled entry
@@ -3474,6 +3504,9 @@ call, `fold` cannot build an ABS_EXPR, so the source's ternary stays a ternary,
 the call is emitted TWICE and the comparison is duplicated into each arm
 (`sub_0809c638`, `sub_0809d71c`): `(f() < 0 ? -f() : f()) <= 39`.  3.180 and
 3.206 both apply inside one module - the operand's kind decides which.
+
+*Update (3.360): `global.h`'s `abs()` now expands to `((n) < 0 ? -(n) : (n))`,
+so write `abs(x)` rather than the ternary or a module-local `ABS()`.*
 
 ### 3.236 A `u8` predicate whose ROM puts `movs r0, #0; b <epilogue>` at the fall-through is a result variable
 `u8 r; if (c) r = 0; else { ...; r = 1; } return r;` (`sub_0809d0a0`).  Every

@@ -2,9 +2,6 @@
 #include "global.h"
 #include "task.h"
 
-/* This module's |x|: the ROM tests `< 0` first, unlike global.h's abs(). */
-#define ABS(n) ((n) < 0 ? -(n) : (n))
-
 struct Unk0200D120
 {
     /*0x00*/ u8 filler00[0x20];
@@ -113,7 +110,7 @@ void sub_080970c4(void)
             k1 = q1->unk43;
             p1 = gUnk_0200D120[i1 - 32].unk48;
             x = k1 * (p1[2] + p1[0]) + *a1;
-            y = (q1->unk4A + p1[5]) - (ABS(p1[5] - p1[3]) >> 1) + p1[1];
+            y = (q1->unk4A + p1[5]) - (abs(p1[5] - p1[3]) >> 1) + p1[1];
             break;
         case 2:
             i2 = w->unk44;
@@ -123,7 +120,7 @@ void sub_080970c4(void)
             k2 = gUnk_03002790[i2].unk43;
             u48_2 = gUnk_03002790[i2].unk48;
             c2_2 = p2[2];
-            x = u48_2 + (c4_2 - (ABS(c4_2 - c2_2) >> 1) + c0_2) * k2;
+            x = u48_2 + (c4_2 - (abs(c4_2 - c2_2) >> 1) + c0_2) * k2;
             j2 = gUnk_03002490->unk44;
             r = &gUnk_03002790[j2];
             b2 = &r->unk4A;
@@ -138,20 +135,20 @@ void sub_080970c4(void)
             k3 = gUnk_03002790[i3].unk43;
             u48_3 = gUnk_03002790[i3].unk48;
             c2_3 = p3[2];
-            x = u48_3 + (c4_3 - (ABS(c4_3 - c2_3) >> 1) + c0_3) * k3;
+            x = u48_3 + (c4_3 - (abs(c4_3 - c2_3) >> 1) + c0_3) * k3;
             j3 = gUnk_03002490->unk44;
             h3 = gUnk_03002790[j3].unk4A;
             p3b = gUnk_0200D120[j3 - 32].unk48;
-            y = (h3 + p3b[5]) - (ABS(p3b[5] - p3b[3]) >> 1) + p3b[1];
+            y = (h3 + p3b[5]) - (abs(p3b[5] - p3b[3]) >> 1) + p3b[1];
             break;
         }
         ia = gUnk_03002490->unk44;
         pa = gUnk_0200D120[ia - 32].unk48;
-        n = sub_08002ee8(ABS(pa[4] - pa[2]) >> 1);
+        n = sub_08002ee8(abs(pa[4] - pa[2]) >> 1);
         ib = gUnk_03002490->unk44;
         x = x + n * gUnk_03002790[ib].unk43;
         pb = gUnk_0200D120[ib - 32].unk48;
-        y = y + sub_08002ee8(ABS(pb[5] - pb[3]) >> 1);
+        y = y + sub_08002ee8(abs(pb[5] - pb[3]) >> 1);
         z = gUnk_03002490;
         z->unk4C = x << 16;
         z->unk50 = y << 16;

@@ -3243,8 +3243,6 @@ top:
     goto top;
 }
 
-#define ABS(n) ((n) < 0 ? -(n) : (n))
-
 void sub_080afdf0(void)
 {
     register struct Task **c asm("r4");
@@ -3303,21 +3301,21 @@ void sub_080afdf0(void)
     pa = (s32 *)(o + (u32)p6);
     nv = *pa;
     asm volatile("" : "+r"(nv));
-    num = ABS(nv) << 4;
+    num = abs(nv) << 4;
     yv = *pa;
-    ya = ABS(yv);
+    ya = abs(yv);
     p7 = p5 + 88;
     pa7 = (s32 *)(o + (u32)p7);
     zv = *pa7;
-    za = ABS(zv);
+    za = abs(zv);
     q = Div(num, ya + za);
     a2 = (s32 *)&gUnk_030023B4;
     *a2 = q;
     i2 = (*c)->unk44;
     o2 = i2 * 144;
-    num2 = ABS(*(s32 *)(o2 + (u32)p7)) << 4;
-    yb = ABS(*(s32 *)(o2 + (u32)p6));
-    zb = ABS(*(s32 *)(o2 + (u32)p7));
+    num2 = abs(*(s32 *)(o2 + (u32)p7)) << 4;
+    yb = abs(*(s32 *)(o2 + (u32)p6));
+    zb = abs(*(s32 *)(o2 + (u32)p7));
     q2 = Div(num2, yb + zb);
     gUnk_030023D4 = q2;
     t4 = *c;
@@ -3355,8 +3353,6 @@ void sub_080afdf0(void)
     } while ((s16)q5->unk6C <= 1);
     TaskDispatchTrampoline();
 }
-
-#define ABS(n) ((n) < 0 ? -(n) : (n))
 
 void sub_080aff40(void)
 {
@@ -3421,21 +3417,21 @@ void sub_080aff40(void)
     pa = (s32 *)(o + (u32)p6);
     nv = *pa;
     asm volatile("" : "+r"(nv));
-    num = ABS(nv) << 4;
+    num = abs(nv) << 4;
     yv = *pa;
-    ya = ABS(yv);
+    ya = abs(yv);
     p7 = p5 + 88;
     pa7 = (s32 *)(o + (u32)p7);
     zv = *pa7;
-    za = ABS(zv);
+    za = abs(zv);
     q = Div(num, ya + za);
     a2 = (s32 *)&gUnk_030023B4;
     *a2 = q;
     i2 = (*c)->unk44;
     o2 = i2 * 144;
-    num2 = ABS(*(s32 *)(o2 + (u32)p7)) << 4;
-    yb = ABS(*(s32 *)(o2 + (u32)p6));
-    zb = ABS(*(s32 *)(o2 + (u32)p7));
+    num2 = abs(*(s32 *)(o2 + (u32)p7)) << 4;
+    yb = abs(*(s32 *)(o2 + (u32)p6));
+    zb = abs(*(s32 *)(o2 + (u32)p7));
     q2 = Div(num2, yb + zb);
     a23d = (s32 *)&gUnk_030023D4;
     *a23d = q2;
@@ -3507,8 +3503,6 @@ void sub_080aff40(void)
     TaskDispatchTrampoline();
 }
 
-#define ABS(n) ((n) < 0 ? -(n) : (n))
-
 void sub_080b0144(void)
 {
     register struct Task **c asm("r4");
@@ -3572,21 +3566,21 @@ void sub_080b0144(void)
     pa = (s32 *)(o + (u32)p6);
     nv = *pa;
     asm volatile("" : "+r"(nv));
-    num = ABS(nv) << 4;
+    num = abs(nv) << 4;
     yv = *pa;
-    ya = ABS(yv);
+    ya = abs(yv);
     p7 = p5 + 88;
     pa7 = (s32 *)(o + (u32)p7);
     zv = *pa7;
-    za = ABS(zv);
+    za = abs(zv);
     q = Div(num, ya + za);
     a2 = (s32 *)&gUnk_030023B4;
     *a2 = q;
     i2 = (*c)->unk44;
     o2 = i2 * 144;
-    num2 = ABS(*(s32 *)(o2 + (u32)p7)) << 4;
-    yb = ABS(*(s32 *)(o2 + (u32)p6));
-    zb = ABS(*(s32 *)(o2 + (u32)p7));
+    num2 = abs(*(s32 *)(o2 + (u32)p7)) << 4;
+    yb = abs(*(s32 *)(o2 + (u32)p6));
+    zb = abs(*(s32 *)(o2 + (u32)p7));
     q2 = Div(num2, yb + zb);
     a23d = (s32 *)&gUnk_030023D4;
     *a23d = q2;
@@ -3658,8 +3652,6 @@ void sub_080b0144(void)
     TaskDispatchTrampoline();
 }
 
-#define ABS(n) ((n) < 0 ? -(n) : (n))
-
 void sub_080b0338(void)
 {
     register struct Task **c asm("r4");
@@ -3725,21 +3717,21 @@ void sub_080b0338(void)
     pa = (s32 *)(o + (u32)p6);
     nv = *pa;
     asm volatile("" : "+r"(nv));
-    num = ABS(nv) << 4;
+    num = abs(nv) << 4;
     yv = *pa;
-    ya = ABS(yv);
+    ya = abs(yv);
     p7 = p5 + 88;
     pa7 = (s32 *)(o + (u32)p7);
     zv = *pa7;
-    za = ABS(zv);
+    za = abs(zv);
     q = Div(num, ya + za);
     pb = &gUnk_030023B4;
     *pb = q;
     i2 = (*c)->unk44;
     o2 = i2 * 144;
-    num2 = ABS(*(s32 *)(o2 + (u32)p7)) << 4;
-    yb = ABS(*(s32 *)(o2 + (u32)p6));
-    zb = ABS(*(s32 *)(o2 + (u32)p7));
+    num2 = abs(*(s32 *)(o2 + (u32)p7)) << 4;
+    yb = abs(*(s32 *)(o2 + (u32)p6));
+    zb = abs(*(s32 *)(o2 + (u32)p7));
     q2 = Div(num2, yb + zb);
     gUnk_030023D4 = q2;
     t4 = *c;

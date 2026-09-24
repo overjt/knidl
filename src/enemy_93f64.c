@@ -736,7 +736,7 @@ other:
 
 s32 sub_08094b94(void)
 {
-    if ((sub_08063cd0() < 0 ? -sub_08063cd0() : sub_08063cd0()) <= 63)
+    if (abs(sub_08063cd0()) <= 63)
         return 1;
     return 0;
 }
