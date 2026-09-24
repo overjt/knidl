@@ -455,8 +455,9 @@ SECTIONS
         build/src/terrain_21b18.o(.text)
     } > ROM
 
-    .game_code_and_rodata_08018b84_08019eec_0801a3e4_0801a8c8_08021b18 0x0802296C : {
-        KEEP(*(.game_code_and_rodata_08018b84_08019eec_0801a3e4_0801a8c8_08021b18)) KEEP(*(.game_code_and_rodata_08018b84_08019eec_0801a3e4_0801a8c8_08021b18.tail))
+    /* level_2296c — decompiled to C (src/level_2296c.c, carved by tools/carve.py) */
+    .level_2296c 0x0802296C : {
+        build/src/level_2296c.o(.text)
     } > ROM
 
     /* roomtask_23618 — decompiled to C (src/roomtask_23618.c, carved by tools/carve.py) */
@@ -476,6 +477,24 @@ SECTIONS
 
     .game_code_and_rodata_08018b84_08019eec_0801a3e4_0801a8c8_08021b18_08023948_08024e40 0x08024E40 : {
         KEEP(*(.game_code_and_rodata_08018b84_08019eec_0801a3e4_0801a8c8_08021b18_08023948_08024e40)) KEEP(*(.game_code_and_rodata_08018b84_08019eec_0801a3e4_0801a8c8_08021b18_08023948_08024e40.tail))
+    } > ROM
+
+    /* door_26b60 — decompiled to C (src/door_26b60.c, carved by tools/carve.py) */
+    .door_26b60 0x08026B60 : {
+        build/src/door_26b60.o(.text)
+    } > ROM
+
+    .game_code_and_rodata_08018b84_08019eec_0801a3e4_0801a8c8_08021b18_08023948_08024e40_080270d0 0x080270D0 : {
+        KEEP(*(.game_code_and_rodata_08018b84_08019eec_0801a3e4_0801a8c8_08021b18_08023948_08024e40_080270d0)) KEEP(*(.game_code_and_rodata_08018b84_08019eec_0801a3e4_0801a8c8_08021b18_08023948_08024e40_080270d0.tail))
+    } > ROM
+
+    /* room_28320 — decompiled to C (src/room_28320.c, carved by tools/carve.py) */
+    .room_28320 0x08028320 : {
+        build/src/room_28320.o(.text)
+    } > ROM
+
+    .game_code_and_rodata_08018b84_08019eec_0801a3e4_0801a8c8_08021b18_08023948_08024e40_080270d0_08028b8c 0x08028B8C : {
+        KEEP(*(.game_code_and_rodata_08018b84_08019eec_0801a3e4_0801a8c8_08021b18_08023948_08024e40_080270d0_08028b8c)) KEEP(*(.game_code_and_rodata_08018b84_08019eec_0801a3e4_0801a8c8_08021b18_08023948_08024e40_080270d0_08028b8c.tail))
     } > ROM
 
     /* camera_296a0 — decompiled to C (src/camera_296a0.c, carved by tools/carve.py) */
