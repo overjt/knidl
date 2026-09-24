@@ -72,7 +72,7 @@ M70,0x0802F62C,0x08030238,0xC0C,24,13,0,0x80,0x2F0,9.9,5,0,0,7,6,2,1,obj_2f62c,a
 M71,0x08030238,0x080306B4,0x47C,7,7,0,0xA4,0x138,9.8,1,0,0,1,0,0,1,obj_30238,already landed (c_code)
 M72,0x080306B4,0x08030804,0x150,7,0,0,0x30,0x70,27.4,5,0,0,0,7,0,2,obj_306b4,already landed (c_code)
 M73,0x08030804,0x080318B4,0x10B0,15,0,0,0x11C,0x3C4,12.5,19,2,0,0,15,4,2,stage manager A,task type #5 (class 1); 17 jump tables; calls the stage support library x151 and the script runner x23
-M74,0x080318B4,0x08032688,0xDD4,19,3,2,0xBA,0x34C,10.3,20,0,0,0,2,3,1,,
+M74,0x080318B4,0x08032688,0xDD4,19,3,0,0xBA,0x34C,10.3,20,0,0,0,2,3,1,block_318b4,already landed (c_code)
 M75,0x08032688,0x080337F4,0x116C,5,4,0,0x37C,0x5E4,11.9,32,1,0,1,1,16,2,player_32688,already landed (c_code)
 M76,0x080337F4,0x080343C0,0xBCC,10,7,0,0x12E,0x56C,6.6,5,3,0,0,1,4,2,player_337f4,already landed (c_code)
 M77,0x080343C0,0x08034F8C,0xBCC,9,9,0,0x14F,0x2DC,15.6,4,4,0,0,0,6,3,player_343c0,already landed (c_code)
