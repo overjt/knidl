@@ -324,8 +324,9 @@ SECTIONS
         build/src/bgscroll_0fcbc.o(.text)
     } > ROM
 
-    .game_code_and_rodata_0800b920_080100ac 0x080100AC : {
-        KEEP(*(.game_code_and_rodata_0800b920_080100ac)) KEEP(*(.game_code_and_rodata_0800b920_080100ac.tail))
+    /* mode_100ac — decompiled to C (src/mode_100ac.c, carved by tools/carve.py) */
+    .mode_100ac 0x080100AC : {
+        build/src/mode_100ac.o(.text)
     } > ROM
 
     /* player_10358 — decompiled to C (src/player_10358.c, carved by tools/carve.py) */

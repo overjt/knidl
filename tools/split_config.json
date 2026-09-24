@@ -439,6 +439,8 @@
     "sub_0800ffe8",
     "sub_08010020",
     "sub_08010048",
+    "sub_080100ac",
+    "sub_080102c0",
     "sub_08010358",
     "sub_080103f0",
     "sub_08010480",
@@ -4558,6 +4560,7 @@
     "0x0200AEF0": "gUnk_0200AEF0",
     "0x0200AEF4": "gUnk_0200AEF4",
     "0x0200AF00": "gUnk_0200AF00",
+    "0x0200AF04": "gUnk_0200AF04",
     "0x0200AF0C": "gUnk_0200AF0C",
     "0x0200AF10": "gUnk_0200AF10",
     "0x0200AF18": "gUnk_0200AF18",
@@ -6812,10 +6815,6 @@
     },
     {
       "name": "game_code_and_rodata_0800b920_0800f180",
-      "chunk_bytes": 65536
-    },
-    {
-      "name": "game_code_and_rodata_0800b920_080100ac",
       "chunk_bytes": 65536
     },
     {

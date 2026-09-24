@@ -70,7 +70,7 @@
 0x0800EA0C 0x0800F180 c_code menutask_0ea0c # src/menutask_0ea0c.c (carved by tools/carve.py)
 0x0800F180 0x0800FCBC thumb_code game_code_and_rodata_0800b920_0800f180 [split]
 0x0800FCBC 0x080100AC c_code bgscroll_0fcbc # src/bgscroll_0fcbc.c (carved by tools/carve.py)
-0x080100AC 0x08010358 thumb_code game_code_and_rodata_0800b920_080100ac [split]
+0x080100AC 0x08010358 c_code mode_100ac # src/mode_100ac.c (carved by tools/carve.py)
 0x08010358 0x080109C8 c_code player_10358 # src/player_10358.c (carved by tools/carve.py)
 0x080109C8 0x08010B38 c_code player_109c8 # src/player_109c8.c (carved by tools/carve.py)
 0x08010B38 0x08017668 c_code player_10b38 # src/player_10b38.c (carved by tools/carve.py)
