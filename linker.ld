@@ -474,8 +474,9 @@ SECTIONS
         build/src/bgmap_2b2f0.o(.text)
     } > ROM
 
-    .game_code_and_rodata_08018b84_08019eec_0801a3e4_0801a8c8_08021b18_0802b4bc 0x0802B4BC : {
-        KEEP(*(.game_code_and_rodata_08018b84_08019eec_0801a3e4_0801a8c8_08021b18_0802b4bc)) KEEP(*(.game_code_and_rodata_08018b84_08019eec_0801a3e4_0801a8c8_08021b18_0802b4bc.tail))
+    /* camera_2b4bc — decompiled to C (src/camera_2b4bc.c, carved by tools/carve.py) */
+    .camera_2b4bc 0x0802B4BC : {
+        build/src/camera_2b4bc.o(.text)
     } > ROM
 
     /* camera_2c42c — decompiled to C (src/camera_2c42c.c, carved by tools/carve.py) */
