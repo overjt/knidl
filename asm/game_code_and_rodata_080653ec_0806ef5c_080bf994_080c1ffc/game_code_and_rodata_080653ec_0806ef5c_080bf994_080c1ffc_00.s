@@ -17958,7 +17958,7 @@ loc_080caa4a:
 	bx	r0
 	movs	r0, r0
 	.word	0x08757440
-	.word	0x02030000
+	.word	gUnk_02030000
 	.word	0x087577D8
 	.word	0x0201BFD0
 	.word	0x0000FFFF
@@ -18002,7 +18002,7 @@ loc_080caae2:
 	strh	r0, [r5, #10]
 	b.n	loc_080cac54	@ 0x080CAC54
 	movs	r0, r0
-	.word	0x02030000
+	.word	gUnk_02030000
 	.global	loc_080caaf8
 loc_080caaf8:
 	ldr	r1, [pc, #76]	@ 0x080CAB48

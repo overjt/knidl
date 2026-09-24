@@ -237,6 +237,15 @@ SECTIONS
         KEEP(*(.game_code_and_rodata)) KEEP(*(.game_code_and_rodata.tail))
     } > ROM
 
+    /* gfx_08b8c — decompiled to C (src/gfx_08b8c.c, carved by tools/carve.py) */
+    .gfx_08b8c 0x08008B8C : {
+        build/src/gfx_08b8c.o(.text)
+    } > ROM
+
+    .game_code_and_rodata_080091ac 0x080091AC : {
+        KEEP(*(.game_code_and_rodata_080091ac)) KEEP(*(.game_code_and_rodata_080091ac.tail))
+    } > ROM
+
     /* hud_0b318 — decompiled to C (src/hud_0b318.c, carved by tools/carve.py) */
     .hud_0b318 0x0800B318 : {
         build/src/hud_0b318.o(.text)
