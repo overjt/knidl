@@ -11,11 +11,11 @@
  * M11's sub_0803d494, unk04 = sub_08032d48, unk08 = sub_0803332c, unk0C =
  * M11's sub_0803ddc0), sets up the ability (PlayerState.unk0D) and the
  * stage entry mode (gUnk_02000020, gUnk_020069F0), and starts the first
- * action.  The actions are two anchor tables dispatched through
- * sub_08002e98(i, count, table) with a 1-based index: the "enter"
- * coroutine of action PlayerState.unk02 from 0x0873A74C (62 entries;
- * M11's 0x0873B430 when gUnk_03001F30 != 0) and the "per-frame" handler
- * Task.unk15 from 0x0873A844 (57; M11's 0x0873B4A8).  A handler requests
+ * action.  The actions are two tables of void (*)(void) dispatched
+ * through sub_08002e98(index, count, table), entry 0 NULL: the "enter"
+ * coroutine of action PlayerState.unk02 from gUnk_0873A748[62] (M11's
+ * gUnk_0873B42C[30] when gUnk_03001F30 != 0) and the "per-frame" handler
+ * Task.unk15 from gUnk_0873A840[57] (M11's gUnk_0873B4A4[27]).  A handler requests
  * the next action in PlayerState.unk01; sub_08032bd0 is the coroutine
  * that switches to it (unk03 = previous, unk02 = new, unk01 = 0).
  * sub_08032d48 (Task.unk04) runs every frame: the attack hit-boxes

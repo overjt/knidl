@@ -4,9 +4,10 @@
 
 /* player_34f8c.c (0x08034F8C-0x0803627F, issue #92).
  *
- * Player mode bodies, part 3: modes 5, 8 and 14.  Each mode has an "enter"
- * coroutine (anchor table 0x0873A74C) and a "per-frame" handler (anchor
- * table 0x0873A844).  An enter coroutine records the previous mode
+ * Player mode bodies, part 3: modes 5, 8 and 14.  Each action has an
+ * "enter" coroutine (gUnk_0873A748[], by PlayerState.unk02) and a
+ * "per-frame" handler (gUnk_0873A840[], by Task.unk15).  An enter
+ * coroutine records the previous mode
  * (PlayerState.unk05 = unk04), sets the new one and the task's animation
  * set (Task.unk15), then plays the animation of the current ability
  * (PlayerState.unk0D, 0..25) out of a per-mode table (gUnk_0873D3B8,
@@ -44,7 +45,7 @@ extern struct Unk03005550 gUnk_03005550;
 extern s16 gUnk_0873D420[][3];
 extern u32 gUnk_0873CC74[];
 extern u8 gUnk_0873BEB0[];
-extern u32 gUnk_0873BD00[];
+extern u32 gUnk_0873BD00[];               /* stored to PlayerState.unk64 as (u32)gUnk_0873BD00 */
 extern u32 gUnk_0873CB1C[];
 extern u32 gUnk_0873BD14[];
 extern s16 gUnk_0873D7E4[][3];

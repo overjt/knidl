@@ -5,8 +5,8 @@
 /* player_337f4.c (0x080337F4-0x080343BF, issue #92).
  *
  * Player mode bodies, part 1.  The six empty handlers sub_080337f4 ...
- * sub_08033808 are entries 59-61 of the action table 0x0873A74C and
- * entry 56 of the per-frame table 0x0873A844 (two of them, sub_080337f8
+ * sub_08033808 are entries 59-61 of the action table gUnk_0873A748 and
+ * entry 56 of the per-frame table gUnk_0873A840 (two of them, sub_080337f8
  * and sub_08033800, are dead exports nothing points at).  Then actions 1
  * and 2: sub_0803380c enters mode 0 (per-frame handler 1, sub_08033a2c)
  * and sub_08033d0c mode 1 (handler 2, sub_08034278).  Their animations

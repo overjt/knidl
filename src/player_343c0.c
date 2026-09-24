@@ -5,10 +5,10 @@
 /* player_343c0.c (0x080343C0-0x08034F8B, issue #92).
  *
  * Player mode bodies, part 2.  The player task starts the "enter"
- * coroutine of the requested action PlayerState.unk02 from the anchor
- * table 0x0873A74C (sub_08002e98(unk02, 62, gUnk_0873A748), 1-based) and
- * runs the "per-frame" handler Task.unk15 from 0x0873A844
- * (sub_08002e98(unk15, 57, gUnk_0873A840)).  Here: actions 3-6 and 22.
+ * coroutine of the requested action PlayerState.unk02 from
+ * gUnk_0873A748[62] and every frame the "per-frame" handler Task.unk15
+ * from gUnk_0873A840[57] (sub_08002e98(index, count, table); entry 0 of
+ * both tables is NULL).  Here: actions 3-6 and 22.
  * sub_080343c0 enters mode 2 (handler 3, sub_0803469c), sub_08034874
  * mode 3 (handler 4, sub_080349b4), sub_08034a88 and sub_08034d34 mode 4
  * (handlers 5 and 6, sub_08034bec and sub_08034e60); sub_08034f70
