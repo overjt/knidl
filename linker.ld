@@ -463,6 +463,11 @@ SECTIONS
         KEEP(*(.game_code_and_rodata_08018b84_08019eec_0801a3e4_0801a8c8_08021b18_08029c74)) KEEP(*(.game_code_and_rodata_08018b84_08019eec_0801a3e4_0801a8c8_08021b18_08029c74.tail))
     } > ROM
 
+    /* bgmap_2a9cc — decompiled to C (src/bgmap_2a9cc.c, carved by tools/carve.py) */
+    .bgmap_2a9cc 0x0802A9CC : {
+        build/src/bgmap_2a9cc.o(.text)
+    } > ROM
+
     /* bgmap_2b2f0 — decompiled to C (src/bgmap_2b2f0.c, carved by tools/carve.py) */
     .bgmap_2b2f0 0x0802B2F0 : {
         build/src/bgmap_2b2f0.o(.text)

@@ -1693,7 +1693,7 @@ loc_0802e052:
 	.word	gUnk_02007FC4
 	.word	gUnk_030023B8
 	.word	gUnk_03005620
-	.word	0x02004CA0
+	.word	gUnk_02004CA0
 	.word	0x0200A6F0
 	.word	0x00007FFF
 	.global	loc_0802e094
