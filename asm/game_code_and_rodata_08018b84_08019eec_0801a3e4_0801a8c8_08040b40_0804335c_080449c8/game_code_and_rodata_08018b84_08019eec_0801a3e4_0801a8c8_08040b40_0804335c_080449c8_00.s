@@ -2115,7 +2115,7 @@ loc_080458bc:
 	.word	0x000005DF
 	.word	0x0000FFEF
 	.word	gUnk_0873CB1C
-	.word	0x0873BD00
+	.word	gUnk_0873BD00
 	.word	0x0000053C
 	.word	0x00000544
 	.global	loc_080459d8
@@ -21457,7 +21457,7 @@ loc_0804f4b6:
 	.word	0x00000501
 	.word	0x00000502
 	.word	0x00000503
-	.word	0x0873BD00
+	.word	gUnk_0873BD00
 	.word	gUnk_0873CB1C
 	ldr	r0, [pc, #36]	@ 0x0804F5E4
 	ldr	r2, [r0, #0]
@@ -23133,7 +23133,7 @@ loc_080502ac:
 	.word	0x0000104D
 	.word	0x0000104F
 	.word	0x0000103F
-	.word	0x0873BD00
+	.word	gUnk_0873BD00
 	.thumb_func
 	.global	sub_080502f0
 sub_080502f0:
