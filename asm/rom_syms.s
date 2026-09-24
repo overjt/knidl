@@ -7,6 +7,8 @@
 
 @ Named non-ROM cells (tools/split_config.json "data_symbols"),
 @ referenced symbolically from split literal pools / data words:
+	.global	gUnk_02000004
+gUnk_02000004 = 0x02000004
 	.global	gUnk_02000008
 gUnk_02000008 = 0x02000008
 	.global	gUnk_0200000C
@@ -21,6 +23,8 @@ gUnk_02000028 = 0x02000028
 gUnk_0200002C = 0x0200002C
 	.global	gUnk_02000034
 gUnk_02000034 = 0x02000034
+	.global	gUnk_02004000
+gUnk_02004000 = 0x02004000
 	.global	gUnk_02004B4C
 gUnk_02004B4C = 0x02004B4C
 	.global	gUnk_02004B50
@@ -1129,6 +1133,24 @@ gUnk_085B0BB4 = 0x085B0BB4
 gUnk_085B0BD4 = 0x085B0BD4
 	.global	gUnk_085B0C2C
 gUnk_085B0C2C = 0x085B0C2C
+	.global	gUnk_085B113C
+gUnk_085B113C = 0x085B113C
+	.global	gUnk_085B119C
+gUnk_085B119C = 0x085B119C
+	.global	gUnk_085B274C
+gUnk_085B274C = 0x085B274C
+	.global	gUnk_085B2D0C
+gUnk_085B2D0C = 0x085B2D0C
+	.global	gUnk_085B2D8C
+gUnk_085B2D8C = 0x085B2D8C
+	.global	gUnk_085B450C
+gUnk_085B450C = 0x085B450C
+	.global	gUnk_085B4ACC
+gUnk_085B4ACC = 0x085B4ACC
+	.global	gUnk_085B4B4C
+gUnk_085B4B4C = 0x085B4B4C
+	.global	gUnk_085B64C8
+gUnk_085B64C8 = 0x085B64C8
 	.global	gUnk_085B6A90
 gUnk_085B6A90 = 0x085B6A90
 	.global	gUnk_085B6AC0
@@ -4477,6 +4499,16 @@ gUnk_08757280 = 0x08757280
 gUnk_087572CC = 0x087572CC
 	.global	gUnk_08757368
 gUnk_08757368 = 0x08757368
+	.global	gUnk_0876B1FC
+gUnk_0876B1FC = 0x0876B1FC
+	.global	gUnk_0876F690
+gUnk_0876F690 = 0x0876F690
+	.global	gUnk_087954C0
+gUnk_087954C0 = 0x087954C0
+	.global	gUnk_087C0A4C
+gUnk_087C0A4C = 0x087C0A4C
+	.global	gUnk_087E1D58
+gUnk_087E1D58 = 0x087E1D58
 
 @ Link-time constants (tools/split_config.json "abs_symbols"):
 @ absolute symbols whose VALUE is the constant (SDK idiom, e.g.

@@ -1371,7 +1371,7 @@ loc_080323fa:
 	pop	{r1}
 	bx	r1
 	.word	0x020060C8
-	.word	0x087E1D58
+	.word	gUnk_087E1D58
 	.word	gUnk_030023EC
 	.word	gUnk_0300238C
 	.word	gUnk_03002468
