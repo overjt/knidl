@@ -92,7 +92,7 @@ loc_08008a78:
 	ldr	r0, [r0, #0]
 	mov	pc, r0
 	movs	r0, r0
-	.word	0x02004B60
+	.word	gUnk_02004B60
 	.word	gUnk_0200EC58
 	.word	gUnk_030023AC
 	.word	gUnk_03001ED8

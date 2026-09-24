@@ -233,7 +233,12 @@ SECTIONS
         build/src/main.o(.text)
     } > ROM
 
-    .game_code_and_rodata 0x080075B8 : {
+    /* mode_075b8 — decompiled to C (src/mode_075b8.c, carved by tools/carve.py) */
+    .mode_075b8 0x080075B8 : {
+        build/src/mode_075b8.o(.text)
+    } > ROM
+
+    .game_code_and_rodata 0x08007B68 : {
         KEEP(*(.game_code_and_rodata)) KEEP(*(.game_code_and_rodata.tail))
     } > ROM
 

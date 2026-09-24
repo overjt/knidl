@@ -357,7 +357,7 @@ loc_08008932:
 	ldr	r0, [pc, #12]	@ 0x08008940
 	b.n	loc_08008950	@ 0x08008950
 	movs	r0, r0
-	.word	0x02004B60
+	.word	gUnk_02004B60
 	.word	gUnk_030023D8
 	.word	0x0000011F
 	.global	loc_08008944
