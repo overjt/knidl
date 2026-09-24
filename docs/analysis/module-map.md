@@ -186,7 +186,7 @@ dispatches, pool density) — a planning aid, not a promise.
 | M05 | `0x08017668-0x0801A8C7` | 12.6 KiB | 23 | 0 | *** | player-character animation bank + collision registry - **landed (#81)**, 20/23 |
 | M06 | `0x0801A8C8-0x08021B17` | 28.6 KiB | 56 | 0 | ***** | terrain / collision query (pure leaf) - **partial (#84)**, 28/55 (`sub_08021b0e` was a census false positive) |
 | M07 | `0x08021B18-0x0802969F` | 30.9 KiB | 154 | 1 | ****** | level / room builder + tilemap upload |
-| M08 | `0x080296A0-0x08030803` | 28.3 KiB | 153 | 2 | *** | camera / BG scroll + tilemap streaming |
+| M08 | `0x080296A0-0x08030803` | 28.3 KiB | 151 | 2 | *** | camera, BG map streaming, map-event tasks + stage objects #221-#236 - **landed (#86)** |
 | M09 | `0x08030804-0x0803627F` | 22.6 KiB | 60 | 0 | ***** | stage manager A |
 | M10 | `0x08036280-0x0803CD5F` | 26.7 KiB | 41 | 0 | **** | stage script runner |
 | M11 | `0x0803CD60-0x080449C7` | 31.1 KiB | 121 | 4 | ***** | player mode/state machine + stage support services |
@@ -266,7 +266,7 @@ ordering inside it:
 | 18 | M35 sub-game framework + reaction-duel sub-game - landed | 0x3D20 | 193 | 3 | 3 | 3 | 2 |
 | 19 | M23 enemy/object behaviour bank 4 | 0x6BF0 | 285 | 3 | 3 | 0 | 10 |
 | 20 | M04 scripted-sequence bank: director + 50 of the 63 scripts - landed | 0x7310 | 65 | 3 | 3 | 1 | 2 |
-| 21 | M08 camera / BG scroll + tilemap streaming | 0x7164 | 153 | 3 | 4 | 3 | 17 |
+| 21 | M08 camera, BG map streaming, map-event tasks + stage objects #221-#236 - landed | 0x7164 | 151 | 3 | 4 | 3 | 17 |
 | 22 | M02 game-state bodies, boot/title sequence, screen loaders, pause screen + HUD - landed | 0x4368 | 109 | 3 | 6 | 29 | 5 |
 | 23 | M16 effect spawner + two-level state machine (task types #81-#90) - landed | 0x75D8 | 89 | 3 | 6 | 10 | 10 |
 | 24 | M33 HUD / overlay effects? | 0x316C | 108 | 3 | 7 | 8 | 9 |
@@ -314,7 +314,7 @@ sub-issue of #35, so the numbering ascends with the recommended order):
 | 20 | #83 | M16 effect spawner + two-level state machine (task types #81-#90) - landed | `0x0805AFAC-0x08062583` | 29.5 KiB | 3 |
 | 21 | #84 | M06 terrain / collision query (pure leaf) | `0x0801A8C8-0x08021B17` | 28.6 KiB | 3 |
 | 22 | #85 | M11 player mode/state machine + stage support services - landed | `0x0803CD60-0x080449C7` | 31.1 KiB | 3 |
-| 23 | #86 | M08 camera / BG scroll + tilemap streaming | `0x080296A0-0x08030803` | 28.3 KiB | 4 |
+| 23 | #86 | M08 camera, BG map streaming, map-event tasks + stage objects #221-#236 - landed | `0x080296A0-0x08030803` | 28.3 KiB | 4 |
 | 24 | #87 | M12 large actor bank A | `0x080449C8-0x08047FE7` | 13.5 KiB | 4 |
 | 25 | #88 | M13 large actor bank B | `0x08047FE8-0x0804CC7B` | 19.1 KiB | 4 |
 | 26 | #89 | M15 link multiplayer mode | `0x08053AF4-0x0805AFAB` | 29.2 KiB | 4 |
@@ -610,7 +610,68 @@ below is the pre-decompilation one, kept for the record.
 * **Known RAM cells touched** current game state (main dispatch) x6, per-player keys held x4, per-player keys pressed x4, DISPCNT shadow x1.
 * **Suggested batches** `0x08021B18` (36 fns), `0x080238A4` (26 fns), `0x0802589E` (55 fns), `0x08027750` (37 fns).
 
-### M08 `0x080296A0-0x08030803` - camera / BG scroll + tilemap streaming
+### M08 `0x080296A0-0x08030803` - the camera, the BG map streaming, the type-#4 map events and the stage objects #221-#236 - **landed (#86)**
+
+The range is decompiled and carved out of the split asm, so it now appears in
+`module-map.csv` as `c_code` rows instead of one clusterable module; the census
+below is the pre-decompilation one, kept for the record.
+
+* **Landed as** twelve files, all 151 functions byte-exact under the
+  `--newpb` recipe with no `asm` statements and no `register` pins, 73 new
+  `split_config.json` `data_symbols`, `make progress` reports 0 asm code
+  bytes in the range:
+  `src/camera_296a0.c` (`0x080296A0-0x08029C74`, 10 fns),
+  `src/camera_29c74.c` (`0x08029C74-0x0802A9CC`, 12),
+  `src/bgmap_2a9cc.c` (`0x0802A9CC-0x0802B2F0`, 22),
+  `src/bgmap_2b2f0.c` (`0x0802B2F0-0x0802B4BC`, 5),
+  `src/camera_2b4bc.c` (`0x0802B4BC-0x0802C42C`, 4),
+  `src/camera_2c42c.c` (`0x0802C42C-0x0802D01C`, 10),
+  `src/camera_2d01c.c` (`0x0802D01C-0x0802D38C`, 12),
+  `src/camtask_2d38c.c` (`0x0802D38C-0x0802EAC8`, 10),
+  `src/obj_2eac8.c` (`0x0802EAC8-0x0802F62C`, 28),
+  `src/obj_2f62c.c` (`0x0802F62C-0x08030238`, 24),
+  `src/obj_30238.c` (`0x08030238-0x080306B4`, 7),
+  `src/obj_306b4.c` (`0x080306B4-0x08030804`, 7).
+  `obj_30238.c`/`obj_306b4.c` are two files because `sub_08030724` only
+  matches without the type-#236 bodies in front of it in the same
+  translation unit (`docs/lessons-learned.md` 4.79).  Both neighbours, M07
+  and M09, are still asm.
+* **What it turned out to be** (`docs/analysis/rom-map.md` §9): one
+  subsystem with M07, which calls it every frame.
+  * **The camera** (`camera_*.c`): the per-frame updates of the room modes
+    (`camera_2b4bc.c`: follow the player inside the camera bounds
+    `gUnk_030055F8`, slide towards the scroll-lock line of
+    `gUnk_03005680`), the multiplayer targets (`camera_29c74.c`: per-player
+    cameras `gUnk_030055D0[4]`, bounds `gUnk_03005640[4]` and modes, the
+    group centre, the visible rectangle `gUnk_03002158`), the snaps, the
+    screen shake and the scroll-lock setup (`camera_2c42c.c`), and the glue
+    that writes the BG1-BG3 16.16 scroll shadows and the sprite camera
+    (`camera_296a0.c`).
+  * **The BG map streaming** (`bgmap_*.c`): metatiles of `gUnk_03005660`
+    (2x2 tiles of `gUnk_0200B080`) into the maps at `0x06001800`,
+    `0x06002000` and `0x06003000`, one tile, row, column or 36x26-tile window
+    at a time, plus the edge tiles built from the solid flags.
+  * **Task type #4** (`camtask_2d38c.c`, dispatched by `sub_0802d370` in
+    `camera_2d01c.c` through the anchor table `0x087328A0`): seven map-event
+    coroutines - passage openers, metatile breakers, room palette fades and
+    two scripted camera pans.  `camera_2d01c.c` also runs the ten BG
+    animation script slots `gUnk_02007D70[]`.
+  * **Task types #221-#236** (`obj_*.c`): each class-3 type #221-#235 is a
+    spawner (`s32 f(x, y, ...)` -> `sub_08005904(type, 32, 63)`), an init
+    body with a `TaskYieldTrampoline` animation, and draw / tile-upload
+    callbacks; #236 (class 4) runs the six sprite effects of the anchor
+    table `0x087328D8`.  `obj_306b4.c` holds the on-screen OAM draw helper
+    `sub_080306b4` and the setters of the per-frame stage hook
+    `gUnk_030004A0` (one of three M09 routines).
+* **Census fixes** 151 functions, not 153: three rows removed
+  (`0x0802BE70`, `sub_0802b62c`'s shared epilogue reached by a `bl` long
+  jump; `0x0802F6EA` and `0x0802FDE8`, function tails "evidenced" by stray
+  words in graphics blobs) and one dead export added (`0x0802D0C4`).
+* **How** Phase A (census, harness, 59 cross-batch leaves and twins
+  including all 18 spawners) by the coordinator, then four subagents with
+  disjoint lists, per-function declarations and a canonical `types.txt`;
+  three mid-run handovers closed the three largest stragglers.
+
 
 * **Size** 28.3 KiB (`0x7164`), 153 functions (42 reachable only through pointer tables), mean `0xbd`, largest `0x844`, pool words 12.2% of bytes.
 * **Difficulty** 3/6 - 82 distinct RAM cells, 1 jump-table dispatches, 10 functions >= `0x200`.

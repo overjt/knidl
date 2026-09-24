@@ -217,4 +217,31 @@ Matching decompilation of Kirby: The Amazing Mirror's predecessor, **Kirby: Nigh
   `data_symbols`; done by a four-agent fan-out after the coordinator seeded
   the cross-batch leaves; new lessons 3.373-3.378 and 4.76-4.78.
 
+- Camera, BG map streaming, the type-#4 map events and the stage objects
+  #221-#236 decompiled (issue #86): module M08 `0x080296A0-0x08030803`
+  (28.3 KiB) landed as `src/camera_296a0.c`, `src/camera_29c74.c`,
+  `src/bgmap_2a9cc.c`, `src/bgmap_2b2f0.c`, `src/camera_2b4bc.c`,
+  `src/camera_2c42c.c`, `src/camera_2d01c.c`, `src/camtask_2d38c.c`,
+  `src/obj_2eac8.c`, `src/obj_2f62c.c`, `src/obj_30238.c` and
+  `src/obj_306b4.c` (**all 151 functions, no asm left in the range**, no
+  `asm` statements and no `register` pins).  It is one subsystem with M07
+  (the level / room builder, still asm), which calls it every frame: the
+  camera (mode `gUnk_030055C0`, pixel position `gUnk_03005604`, 16.16
+  target `gUnk_03005614`/`gUnk_03005634`, camera and room bounds
+  `gUnk_030055F8`/`gUnk_03005628`, per-player cameras for link play, a
+  scroll lock `gUnk_03005680` and a screen shake `gUnk_03005670`) that
+  writes the BG1-BG3 16.16 scroll shadows; the tilemap streaming of the
+  room's metatile map `gUnk_03005660` into the BG maps at `0x06001800`,
+  `0x06002000` and `0x06003000`; task type #4, seven scripted map events
+  (anchor table `0x087328A0`); the M07-placed stage objects #221-#235, each
+  a spawner plus a `TaskYieldTrampoline` body and its callbacks; and #236,
+  six sprite effects (anchor table `0x087328D8`).  Four census rows
+  corrected in `tools/symdb.py` (three phantoms removed, one dead export
+  added) and 73 RAM/ROM cells named via `split_config.json`
+  `data_symbols`; done by a four-agent fan-out after the coordinator matched
+  59 cross-batch leaves and twins, with a canonical `types.txt` of shared
+  cell spellings and three mid-run handovers; new lessons 3.379-3.388 and
+  4.79-4.81 (4.79: a function can match alone and not inside its carve
+  file, because gcse hashes pool-label addresses).
+
 - Next milestones: decompile split/SDK modules to C using the validated per-zone compiler recipe (task system Thumb side, sound driver, then game code); grow `src/` one module at a time with `asmdiff.sh` on the module range.
