@@ -140,10 +140,11 @@
 0x0804335C 0x08043654 thumb_code game_code_and_rodata_08018b84_08019eec_0801a3e4_0801a8c8_08040b40_0804335c [split]
 0x08043654 0x080449C8 c_code stage_43654 # src/stage_43654.c (carved by tools/carve.py)
 0x080449C8 0x08044D04 c_code player_449c8 # src/player_449c8.c (carved by tools/carve.py)
-0x08044D04 0x080455C8 thumb_code game_code_and_rodata_08018b84_08019eec_0801a3e4_0801a8c8_08040b40_0804335c_080449c8 [split]
+0x08044D04 0x080455C8 c_code player_44d04 # src/player_44d04.c (carved by tools/carve.py)
 0x080455C8 0x08045D34 c_code player_455c8 # src/player_455c8.c (carved by tools/carve.py)
 0x08045D34 0x08046330 c_code player_45d34 # src/player_45d34.c (carved by tools/carve.py)
-0x08046330 0x080474E8 thumb_code game_code_and_rodata_08018b84_08019eec_0801a3e4_0801a8c8_08040b40_0804335c_080449c8_08045d34 [split]
+0x08046330 0x08046C00 thumb_code game_code_and_rodata_08018b84_08019eec_0801a3e4_0801a8c8_08040b40_0804335c_080449c8_08045d34 [split]
+0x08046C00 0x080474E8 c_code player_46c00 # src/player_46c00.c (carved by tools/carve.py)
 0x080474E8 0x08047FE8 c_code player_474e8 # src/player_474e8.c (carved by tools/carve.py)
 0x08047FE8 0x0804E3A0 thumb_code game_code_and_rodata_08018b84_08019eec_0801a3e4_0801a8c8_08040b40_0804335c_080449c8_08047fe8 [split]
 0x0804E3A0 0x0804E5A4 c_code sub_0804e3a0 # src/sub_0804e3a0.c (carved by tools/carve.py)
