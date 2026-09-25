@@ -119,7 +119,7 @@ M117,0x080509EC,0x080514F8,0xB0C,8,8,0,0x161,0x25C,10.9,6,2,0,0,0,6,2,plobj_509e
 M118,0x080514F8,0x0805239C,0xEA4,8,8,0,0x1D4,0x2F0,11.6,6,1,0,0,0,6,2,plobj_514f8,already landed (c_code)
 M119,0x0805239C,0x08052F6C,0xBD0,5,5,0,0x25C,0x3E4,8.1,6,0,0,0,0,5,2,plobj_5239c,already landed (c_code)
 M120,0x08052F6C,0x08053AF4,0xB88,9,7,0,0x148,0x414,14.1,6,1,0,0,16,6,3,plobj_52f6c,already landed (c_code)
-M121,0x08053AF4,0x08054330,0x83C,12,12,0,0xAF,0x1C8,10.8,3,0,0,1,0,2,1,link multiplayer mode,SIO multi-play (early_6464) x162 - by far the heaviest link user in the bulk; task type #7 (class 1); 49-entry anchor table @0x0873B928
+M121,0x08053AF4,0x08054330,0x83C,12,12,0,0xAF,0x1C8,10.8,3,0,0,1,0,2,1,player effect objects: task type #7 (body + 49 variants and their callbacks),"decompiled in #89 as src/effect_53af4.c/effect_54330.c/effect_54a80.c/effect_55460.c/effect_55b24.c/effect_56448.c/effect_56dd4.c/effect_57494.c/effect_57ce0.c/effect_58810.c/effect_59570.c/effect_5a358.c (84 functions after the census fix - eight 0xFFFFF000 pool-word phantoms folded, six push-less companion leaves added). Not the link mode: the census's 'SIO multi-play (early_6464) x162' was 149 calls into early_6464's random-range helpers sub_080064ac/sub_080064dc plus its in-view and skip-mask helpers. Task type #7 (class 1, body sub_08053af4) is the effect objects the player's actions and M11's movement code spawn through M16's sub_0805afac/sub_0805b088 (and M14's sub_08053940 as a fallback): Task.unk18 = variant << 24 | arg, the body links the task to its spawner (Task.unk8C = &gUnk_03002790[Task.unk44]) and dispatches the variant through the 49 entries of gUnk_0873B928; each variant installs a motion hook (sub_080059d8 world, sub_080059fc spawner-relative, sub_08005a74 static), a draw hook and an animation table, runs a yield script over Task.unk3C and the 16.16 velocities (most switching on the sub-state Task.unk18 & 15, several respawning their own variant for a trail) and is followed by the callbacks only it installs (kill tests on the player's mode PlayerState.unk04, end flags in Task.unk28, hit tests, draw and palette callbacks)"
 M122,0x08054330,0x08054A80,0x750,8,8,0,0xEA,0x300,11.5,3,0,0,0,0,4,2,effect_54330,already landed (c_code)
 M123,0x08054A80,0x08055460,0x9E0,7,7,0,0x169,0x318,8.1,6,0,0,0,0,1,2,effect_54a80,already landed (c_code)
 M124,0x08055460,0x08055B24,0x6C4,8,8,0,0xD8,0x1C4,9.7,5,0,0,0,0,1,2,effect_55460,already landed (c_code)
@@ -127,7 +127,7 @@ M125,0x08055B24,0x08056448,0x924,8,8,0,0x124,0x388,6.5,2,0,0,0,0,0,2,effect_55b2
 M126,0x08056448,0x08056DD4,0x98C,4,4,0,0x263,0x638,8.2,1,1,0,0,0,1,3,effect_56448,already landed (c_code)
 M127,0x08056DD4,0x08057494,0x6C0,5,5,0,0x159,0x2A8,6.5,2,0,0,0,0,2,2,effect_56dd4,already landed (c_code)
 M128,0x08057494,0x08057CE0,0x84C,5,5,0,0x1A8,0x57C,10.0,3,1,0,0,0,1,2,effect_57494,already landed (c_code)
-M129,0x08057CE0,0x08058810,0xB30,7,7,1,0x199,0x480,9.4,10,1,1,0,0,2,2,,
+M129,0x08057CE0,0x08058810,0xB30,7,7,0,0x199,0x480,9.4,10,1,0,0,0,2,2,effect_57ce0,already landed (c_code)
 M130,0x08058810,0x08059570,0xD60,4,4,0,0x358,0x670,4.1,2,0,0,0,0,0,3,effect_58810,already landed (c_code)
 M131,0x08059570,0x0805A358,0xDE8,6,6,0,0x251,0x5A4,9.1,4,1,0,0,0,1,2,effect_59570,already landed (c_code)
 M132,0x0805A358,0x0805AF80,0xC28,9,9,2,0x159,0x5D8,13.0,17,1,1,0,0,4,2,,

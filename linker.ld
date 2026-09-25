@@ -852,8 +852,9 @@ SECTIONS
         build/src/effect_57494.o(.text)
     } > ROM
 
-    .game_code_and_rodata_08018b84_08019eec_0801a3e4_0801a8c8_08040b40_0804335c_080449c8_0804e5a4_08053af4_08056448_08057494 0x08057CE0 : {
-        KEEP(*(.game_code_and_rodata_08018b84_08019eec_0801a3e4_0801a8c8_08040b40_0804335c_080449c8_0804e5a4_08053af4_08056448_08057494)) KEEP(*(.game_code_and_rodata_08018b84_08019eec_0801a3e4_0801a8c8_08040b40_0804335c_080449c8_0804e5a4_08053af4_08056448_08057494.tail))
+    /* effect_57ce0 — decompiled to C (src/effect_57ce0.c, carved by tools/carve.py) */
+    .effect_57ce0 0x08057CE0 : {
+        build/src/effect_57ce0.o(.text)
     } > ROM
 
     /* effect_58810 — decompiled to C (src/effect_58810.c, carved by tools/carve.py) */

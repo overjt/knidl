@@ -177,7 +177,7 @@
 0x08056448 0x08056DD4 c_code effect_56448 # src/effect_56448.c (carved by tools/carve.py)
 0x08056DD4 0x08057494 c_code effect_56dd4 # src/effect_56dd4.c (carved by tools/carve.py)
 0x08057494 0x08057CE0 c_code effect_57494 # src/effect_57494.c (carved by tools/carve.py)
-0x08057CE0 0x08058810 thumb_code game_code_and_rodata_08018b84_08019eec_0801a3e4_0801a8c8_08040b40_0804335c_080449c8_0804e5a4_08053af4_08056448_08057494 [split]
+0x08057CE0 0x08058810 c_code effect_57ce0 # src/effect_57ce0.c (carved by tools/carve.py)
 0x08058810 0x08059570 c_code effect_58810 # src/effect_58810.c (carved by tools/carve.py)
 0x08059570 0x0805A358 c_code effect_59570 # src/effect_59570.c (carved by tools/carve.py)
 0x0805A358 0x0805AFAC thumb_code game_code_and_rodata_08018b84_08019eec_0801a3e4_0801a8c8_08040b40_0804335c_080449c8_0804e5a4_08053af4_08056448_08057494_08059570 [split]
