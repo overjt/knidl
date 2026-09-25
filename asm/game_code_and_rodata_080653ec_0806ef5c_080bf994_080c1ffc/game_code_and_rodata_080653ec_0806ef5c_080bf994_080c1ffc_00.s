@@ -44,6 +44,7 @@
 @   0x080C4664 sub_080c4664
 @   0x080C46EC sub_080c46ec
 @   0x080C4790 sub_080c4790
+@   0x080C4818 sub_080c4818
 @   0x080C4860 sub_080c4860
 @   0x080C4890 sub_080c4890
 @   0x080C495C sub_080c495c
@@ -63,9 +64,8 @@
 @   0x080C4E10 sub_080c4e10
 @   0x080C4EA8 sub_080c4ea8
 @   0x080C4F60 sub_080c4f60
-@   0x080C501E sub_080c501e
 @   0x080C51C0 sub_080c51c0
-@   0x080C51FE sub_080c51fe
+@   0x080C51D4 sub_080c51d4
 @   0x080C523C sub_080c523c
 @   0x080C5284 sub_080c5284
 @   0x080C52C4 sub_080c52c4
@@ -617,7 +617,7 @@ sub_080c241c:
 	ldrh	r0, [r1, #0]
 	adds	r0, #1
 	strh	r0, [r1, #0]
-	bl	loc_080c51d4	@ 0x080C51D4
+	bl	sub_080c51d4	@ 0x080C51D4
 	bl	sub_080c4890	@ 0x080C4890
 	bl	sub_080b9e30	@ 0x080B9E30
 	pop	{r0}
@@ -5470,6 +5470,10 @@ loc_080c47e4:
 	.word	0x02017094
 	.word	0x0201716C
 	.word	0xFFFF0000
+	.thumb_func
+	.global	sub_080c4818
+sub_080c4818:
+	.thumb
 	.short	0x480D
 	ldr	r2, [r0, #0]
 	ldr	r0, [r2, #76]
@@ -5527,7 +5531,7 @@ sub_080c4860:
 	.word	0x02017094
 	.word	0x0000044C
 	.word	gUnk_03002790
-	.word	0x080C4819
+	.word	sub_080c4818+1
 	.thumb_func
 	.global	sub_080c4890
 sub_080c4890:
@@ -6591,10 +6595,6 @@ loc_080c500c:
 	adds	r0, r3, #0
 	asrs	r0, r0, #8
 	subs	r6, r6, r0
-	.thumb_func
-	.global	sub_080c501e
-sub_080c501e:
-	.thumb
 	b.n	loc_080c5030	@ 0x080C5030
 	.word	0xFFFFFF00
 	.global	loc_080c5024
@@ -6828,8 +6828,10 @@ sub_080c51c0:
 	strb	r2, [r0, #1]
 	bx	lr
 	.word	0x03006928
-	.global	loc_080c51d4
-loc_080c51d4:
+	.thumb_func
+	.global	sub_080c51d4
+sub_080c51d4:
+	.thumb
 	ldr	r0, [pc, #40]	@ 0x080C5200
 	ldrb	r1, [r0, #0]
 	adds	r2, r0, #0
@@ -6851,10 +6853,6 @@ loc_080c51d4:
 	ldr	r0, [pc, #12]	@ 0x080C5208
 	cmp	r1, r0
 	beq.n	loc_080c521a	@ 0x080C521A
-	.thumb_func
-	.global	sub_080c51fe
-sub_080c51fe:
-	.thumb
 	b.n	loc_080c521e	@ 0x080C521E
 	.word	0x03006928
 	.word	0x087572EC
