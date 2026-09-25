@@ -3,7 +3,6 @@
 @ Segment game_code_and_rodata_08018b84_08019eec_0801a3e4_0801a8c8_08040b40_0804335c_080449c8, chunk 1/2: 0x080449C8-0x0804E0E0 (thumb_code, 0x9718 bytes)
 @ Functions (docs/analysis/symbols.csv):
 @   0x080449C8 sub_080449c8
-@   0x08044A72 sub_08044a72
 @   0x08044B94 sub_08044b94
 @   0x08044C7C sub_08044c7c
 @   0x08044D04 sub_08044d04
@@ -157,10 +156,6 @@ loc_08044a4e:
 	ldr	r2, [pc, #976]	@ 0x08044E40
 	lsrs	r4, r0, #32
 	ldr	r2, [pc, #672]	@ 0x08044D14
-	.thumb_func
-	.global	sub_08044a72
-sub_08044a72:
-	.thumb
 	lsrs	r4, r0, #32
 	ldr	r2, [pc, #528]	@ 0x08044C88
 	lsrs	r4, r0, #32
