@@ -662,8 +662,43 @@ SECTIONS
         build/src/stage_43654.o(.text)
     } > ROM
 
-    .game_code_and_rodata_08018b84_08019eec_0801a3e4_0801a8c8_08040b40_0804335c_080449c8 0x080449C8 : {
-        KEEP(*(.game_code_and_rodata_08018b84_08019eec_0801a3e4_0801a8c8_08040b40_0804335c_080449c8)) KEEP(*(.game_code_and_rodata_08018b84_08019eec_0801a3e4_0801a8c8_08040b40_0804335c_080449c8.tail))
+    /* player_449c8 — decompiled to C (src/player_449c8.c, carved by tools/carve.py) */
+    .player_449c8 0x080449C8 : {
+        build/src/player_449c8.o(.text)
+    } > ROM
+
+    /* player_44d04 — decompiled to C (src/player_44d04.c, carved by tools/carve.py) */
+    .player_44d04 0x08044D04 : {
+        build/src/player_44d04.o(.text)
+    } > ROM
+
+    /* player_455c8 — decompiled to C (src/player_455c8.c, carved by tools/carve.py) */
+    .player_455c8 0x080455C8 : {
+        build/src/player_455c8.o(.text)
+    } > ROM
+
+    /* player_45d34 — decompiled to C (src/player_45d34.c, carved by tools/carve.py) */
+    .player_45d34 0x08045D34 : {
+        build/src/player_45d34.o(.text)
+    } > ROM
+
+    /* player_46330 — decompiled to C (src/player_46330.c, carved by tools/carve.py) */
+    .player_46330 0x08046330 : {
+        build/src/player_46330.o(.text)
+    } > ROM
+
+    /* player_46c00 — decompiled to C (src/player_46c00.c, carved by tools/carve.py) */
+    .player_46c00 0x08046C00 : {
+        build/src/player_46c00.o(.text)
+    } > ROM
+
+    /* player_474e8 — decompiled to C (src/player_474e8.c, carved by tools/carve.py) */
+    .player_474e8 0x080474E8 : {
+        build/src/player_474e8.o(.text)
+    } > ROM
+
+    .game_code_and_rodata_08018b84_08019eec_0801a3e4_0801a8c8_08040b40_0804335c_080449c8_08047fe8 0x08047FE8 : {
+        KEEP(*(.game_code_and_rodata_08018b84_08019eec_0801a3e4_0801a8c8_08040b40_0804335c_080449c8_08047fe8)) KEEP(*(.game_code_and_rodata_08018b84_08019eec_0801a3e4_0801a8c8_08040b40_0804335c_080449c8_08047fe8.tail))
     } > ROM
 
     /* sub_0804e3a0 — decompiled to C (src/sub_0804e3a0.c, carved by tools/carve.py) */

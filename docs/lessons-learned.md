@@ -2198,6 +2198,84 @@ spelling tried (4.44).
   arm.  A wait loop whose exit test the ROM does not copy in front of the
   loop is `for (;;) { if (flag) break; TaskYieldTrampoline(1); }`.
 
+### 3.416 Whether the key-mask base loads before the task pointer is the index's spelling (3.402 again)
+M12's handlers test `gUnk_03002458[player] & 48` and then `& 16`, and in
+three places the ROM loads the ARRAY BASE first (`ldr r1, =gUnk_03002458`,
+then `ldr r0, =gUnk_03002490`).  That order comes from the re-read form
+`gUnk_03002458[gUnk_03002490->unk88->unk00]`; a block-scoped
+`struct Task *u = gUnk_03002490;` in front of the test loads the task
+first (6 bytes in `sub_08045398`).  The same holds for a struct copy into a
+player record: `gUnk_02005550[gUnk_03002490->unk88->unk00] = *(struct M11R8
+*)tbl;` matched where the `u`-local version swapped the base and task
+loads (4 bytes in `sub_08047c30`).  When the task pointer is already in a
+register (`t` from the function's `switch (t->unk73)` head), indexing with
+`t->unk88->unk00` still loads the base first (`sub_08047270`).
+
+### 3.417 An `s16` local between a `u16` call and its test keeps the shift
+`sub_08046c00` tests the terrain probe `u16 sub_0802259c(x, y)` with
+`lsls r0, #16; movs r1, #192; lsls r1, #10; ands r1, r0`, i.e. the mask
+`3 << 16` against the result shifted up.  That is `s16 r = sub_0802259c(x,
+y); if (r & 3)`: the HImode local keeps the value in the high half and
+combine folds the shift into the mask.  `sub_0802259c(x, y) & 3` or
+`(s16)sub_0802259c(x, y) & 3` compile to `movs r1, #3; ands` (8 bytes
+short), and `(f() << 16) & 0x30000` has the right size and is still 4
+bytes off.
+
+### 3.418 An assignment inside a call argument is scheduled after the other argument loads
+`sub_0803e5f8(t->unk88->unk00, (s32)((u8 *)tbl + (t->unk2C = 0) * 8));`
+stores `unk2C` after loading `unk88->unk00` for the first argument, 12
+bytes off in `sub_08044d04`; the ROM's store comes first, which is the
+statement `t->unk2C = 0;` written just before the call (followed by
+either `(s32)tbl` or `tbl + t->unk2C * 8`, both match).  M11's
+`sub_08044288` shows the opposite placement and does use `(t->unk2C = 13)`
+inside the argument: read where the `str` sits relative to the argument
+loads.
+
+### 3.419 Small M12 shapes, one line each
+- A `switch` on the animation id `Task.unk3C` over a contiguous range
+  compiles to `ldr rK, =0xFFFFFC95; adds r0, rK, rX; lsls #16; asrs #16;
+  cmp #7; bls`: write `switch (gUnk_03002490->unk3C) { case 0x36B: ... }`
+  with the case labels themselves (`sub_080449c8`); a label shared by
+  non-adjacent values (0x36B, 0x36C, 0x36F, 0x370) is one arm, and an arm
+  that falls into another shows as a jump-table target in the middle of
+  that arm's block.
+- `ands rX, rCase` right after `switch (t->unk73) case 1:` is the plain
+  `t->unk7A & 1`: cse knows the switch register holds 1 (3.327), so do
+  not add a variable for it (`sub_08045398`, `sub_08044c7c` after `if
+  (t->unk28 == 1)`).
+- `if (a) f(); else if (b) ...; <rest>` and `if (a) f(); else { if (b)
+  ...; <rest> }` differ only in where the `b.n` after `bl f` lands: read
+  the branch target before writing the `else` (1 byte in `sub_08047270`
+  against its twin `sub_08045398`).
+- A 16-bit test of two adjacent `u8` fields of `gUnk_03005550` is
+  `*(u16 *)&gUnk_03005550 != 0` (`ldrh r0, [r0, #0]`); other modules read
+  the first three bytes as `*(u32 *)gUnk_03005550 & 0xFFFFFF`.
+- `(s8)p->unk16 != 0` on a `u8` field keeps `ldrb; lsls #24; asrs #24;
+  cmp #0`, while `if (--p->unk0E == 0)` compiles to `lsls #24; cmp #0`
+  with no `asrs` (`sub_08045d34`).
+- Cross-jumping merges the identical `TaskYieldTrampoline(1); break;` tail
+  of three `if`/`else` arms (`sub_08046c00` at `0x0804719A`): write every
+  arm out in full, no `goto`.
+- `ands; lsls #16; lsrs rK, #16; cmp rK, #0` with rK later stored as the
+  zero is `u16 k = gUnk_030023C0[gUnk_03002490->unk88->unk00] & 2; if (k)`
+  (`sub_0804676c`).
+- An enter state machine whose arm ends in a `b` back to the code in front
+  of the `switch` (here `unk88->unk6C = 0; switch (unk73)`) is a label
+  before that code and `goto again;` at the end of the arm
+  (`sub_08046330`, case 2 back into case 1).
+
+### 3.420 A jump-threaded `||` exit needs the same re-read in both tests
+In `sub_0804676c`'s case 2 the ROM sends the false branch of the last test
+of an `||` chain past the next, identical test (the `beq` lands straight on
+the else arm, which reloads its task pointer and zero).  That is
+consistent with `jump_optimize`'s jump threading, which runs before the
+first cse pass, and it only fires when both tests are the same expression, `gUnk_03002490->unk7A & 1` re-read in
+each: a `struct Task *t` local in either test blocks it, because a user
+variable never compares equal to the other test's load.  With the re-reads
+the case also reused the switch head's `&gUnk_03002490` register (`ldr r2,
+[r2]`) instead of reloading it, and the function went from 316 differing
+bytes to MATCH.
+
 ## 4. Splitting ROM ranges into asm (tools/split.py)
 
 ### 4.1 objdump text only round-trips under `.syntax unified`
@@ -7372,6 +7450,32 @@ clustering.  Do not blindly freeze every `MODULE_NAMES` key; doing so
 re-segments unrelated historical ranges and creates a large, noisy map diff.
 After an interior carve, run `make modmap` twice and verify that the second run
 is byte-identical.
+
+### 4.93 objdump's IT state also hides pool words from a listing model
+Lesson 4.43's artifact bites the census sweep too.  M12's model decodes
+every data line with its own `objdump --start-address` window, and the
+`ldr r1, [pc, #48]` at `0x08046AB8` came out as `ldreq r1, [pc, #48]`
+(objdump 2.40 carried an IT state from an earlier window).  The model's
+`ldr rN, [pc]` regex did not accept `ldreq`, so the pool word it loads
+(`gUnk_030023C0` at `0x08046AEC`) was never registered and the sweep
+reported it as two unreachable instructions (`movs r3, #192; lsls r0, r0,
+#12`, the halves of `0x030023C0`).  ARMv4T Thumb has no IT instruction, so
+the fix is to strip a condition suffix from every non-branch mnemonic
+objdump prints (and restore the `s` of flag-setting low-register ops,
+`lsrcs` -> `lsrs`) before any pattern matching.
+
+### 4.94 A 4.40 phantom can sit inside a jump table
+`sub_08044a72` (evidence `bl-target`, `0x122` bytes) started in the middle
+of `sub_080449c8`'s eight-word `mov pc` table at `0x08044A64`: it was the
+upper halfword of the fourth word, so its "first instructions" were the
+table's last four entries and its body was the switch's arms and the
+function's epilogue.  The symptoms were a jump table the sweep read with
+0 entries (the table ran past `sub_080449c8`'s census end) and 118
+unreachable instructions in the phantom; the cause was the usual pool word
+`0xFFFFF000` (in M11's `sub_0804374c`, at `0x08043A70`) decoding as `bl
+0x08044A72`.  A `bl-target`-only row that is not 4-aligned and follows a
+function whose size is not a multiple of 4 is worth checking against the
+previous function's jump tables before anything else.
 
 ## 5. Workflow that worked
 

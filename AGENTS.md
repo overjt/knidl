@@ -320,4 +320,28 @@ Matching decompilation of Kirby: The Amazing Mirror's predecessor, **Kirby: Nigh
   two-agent race on the last function through `variants.sh`; new lessons
   3.411-3.415 and 4.90-4.91.
 
+- Player action bodies, part 3, decompiled (issue #87): module M12
+  `0x080449C8-0x08047FE7` (13.5 KiB) landed as `src/player_449c8.c`,
+  `src/player_44d04.c`, `src/player_455c8.c`, `src/player_45d34.c`,
+  `src/player_46330.c`, `src/player_46c00.c` and `src/player_474e8.c`
+  (**all 21 functions, no asm left in the range**, no `asm` statements and
+  no `register` pins), so `0x08043654-0x08047FE7` (the end of M11 and all
+  of M12) is contiguous C.  The census name "large actor bank A" was
+  wrong: the range is the third part of M09's player action machine -
+  "enter" coroutines 34-43 of `gUnk_0873A748[62]` and per-frame handlers
+  30-40 of `gUnk_0873A840[57]`, each enter body k followed by its handler
+  k - 3 (handler 30 belongs to M11's action 33).  All are mode 13 and none
+  switches on the ability: each action is one move, mostly with a ground
+  and an air form, that installs the player's collider record
+  `gUnk_020060E0[]` and block hit-box set `gUnk_02005550[]` from ROM
+  templates - among them two sibling ground/air attacks, a dash and a spin
+  with bounce-off states driven by the collision block `gUnk_03005550`, a
+  three-charge move that plays a song per charge and drops the ability
+  with the last one, and a palette blend of `gUnk_081BE6BC[player]`.  One
+  census row corrected in `tools/symdb.py` (`0x08044A72`, a lesson 4.40
+  phantom inside `sub_080449c8`'s own jump table, so 21, not 22 functions)
+  and 34 ROM tables named via `split_config.json` `data_symbols`; done by
+  a three-agent fan-out after the coordinator matched 13 templates, with
+  no handovers; new lessons 3.416-3.420 and 4.93-4.94.
+
 - Next milestones: decompile split/SDK modules to C using the validated per-zone compiler recipe (task system Thumb side, sound driver, then game code); grow `src/` one module at a time with `asmdiff.sh` on the module range.

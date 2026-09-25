@@ -279,6 +279,18 @@ KNOWN_SYMBOLS = {
 # m4a_songs data segment surrounded by signed 8-bit PCM sample bytes; the
 # `pop {pc}` halfword passes the strict terminator check by accident.
 FALSE_POSITIVES = {
+    # --- M12 (issue #87) ---
+    # 0x08044A72 is not a function: it is the upper halfword of the fourth
+    # word of sub_080449c8's own eight-entry `mov pc` jump table
+    # (0x08044A64-0x08044A83, the `switch` on Task.unk3C - 0x36B), in the
+    # middle of the table, and the code after the table
+    # (0x08044A84-0x08044B93) is that switch's arms, the shared tail and the
+    # epilogue.  Its only evidence is the lesson 4.40 phantom `bl`: the pool
+    # word 0xFFFFF000 at 0x08043A70 (inside M11's sub_0804374c, landed C that
+    # never calls it) decodes as the pair F000/FFFF, whose target is
+    # 0x08043A74 + 0xFFE.  sub_080449c8 is handler 30 of gUnk_0873A840 and
+    # really runs 0x080449C8-0x08044B94 (0x1CC).
+    0x08044A72,
     # --- M10 (issue #91), four long-jump targets inside two big actions ---
     # 0x08037F2A, 0x08038F8E and 0x08038FD8 are not functions: they are the
     # loop head, one arm and the shared exit of the 4368-byte player action
