@@ -697,8 +697,9 @@ SECTIONS
         build/src/player_474e8.o(.text)
     } > ROM
 
-    .game_code_and_rodata_08018b84_08019eec_0801a3e4_0801a8c8_08040b40_0804335c_080449c8_08047fe8 0x08047FE8 : {
-        KEEP(*(.game_code_and_rodata_08018b84_08019eec_0801a3e4_0801a8c8_08040b40_0804335c_080449c8_08047fe8)) KEEP(*(.game_code_and_rodata_08018b84_08019eec_0801a3e4_0801a8c8_08040b40_0804335c_080449c8_08047fe8.tail))
+    /* player_47fe8 — decompiled to C (src/player_47fe8.c, carved by tools/carve.py) */
+    .player_47fe8 0x08047FE8 : {
+        build/src/player_47fe8.o(.text)
     } > ROM
 
     /* player_49738 — decompiled to C (src/player_49738.c, carved by tools/carve.py) */
@@ -711,8 +712,9 @@ SECTIONS
         build/src/player_49b48.o(.text)
     } > ROM
 
-    .game_code_and_rodata_08018b84_08019eec_0801a3e4_0801a8c8_08040b40_0804335c_080449c8_08047fe8_08049f98 0x08049F98 : {
-        KEEP(*(.game_code_and_rodata_08018b84_08019eec_0801a3e4_0801a8c8_08040b40_0804335c_080449c8_08047fe8_08049f98)) KEEP(*(.game_code_and_rodata_08018b84_08019eec_0801a3e4_0801a8c8_08040b40_0804335c_080449c8_08047fe8_08049f98.tail))
+    /* player_49f98 — decompiled to C (src/player_49f98.c, carved by tools/carve.py) */
+    .player_49f98 0x08049F98 : {
+        build/src/player_49f98.o(.text)
     } > ROM
 
     /* player_4a54c — decompiled to C (src/player_4a54c.c, carved by tools/carve.py) */
@@ -722,6 +724,11 @@ SECTIONS
 
     .game_code_and_rodata_08018b84_08019eec_0801a3e4_0801a8c8_08040b40_0804335c_080449c8_08047fe8_08049f98_0804ab70 0x0804AB70 : {
         KEEP(*(.game_code_and_rodata_08018b84_08019eec_0801a3e4_0801a8c8_08040b40_0804335c_080449c8_08047fe8_08049f98_0804ab70)) KEEP(*(.game_code_and_rodata_08018b84_08019eec_0801a3e4_0801a8c8_08040b40_0804335c_080449c8_08047fe8_08049f98_0804ab70.tail))
+    } > ROM
+
+    /* player_4b5b4 — decompiled to C (src/player_4b5b4.c, carved by tools/carve.py) */
+    .player_4b5b4 0x0804B5B4 : {
+        build/src/player_4b5b4.o(.text)
     } > ROM
 
     /* player_4b858 — decompiled to C (src/player_4b858.c, carved by tools/carve.py) */
