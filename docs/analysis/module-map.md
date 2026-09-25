@@ -190,7 +190,7 @@ dispatches, pool density) — a planning aid, not a promise.
 | M09 | `0x08030804-0x0803627F` | 22.6 KiB | 60 | 0 | ***** | breakable blocks + the player task (#5) and first action bodies - **landed (#92)** |
 | M10 | `0x08036280-0x0803CD5F` | 26.7 KiB | 41 | 0 | **** | stage script runner |
 | M11 | `0x0803CD60-0x080449C7` | 31.1 KiB | 121 | 4 | ***** | player mode/state machine + stage support services |
-| M12 | `0x080449C8-0x08047FE7` | 13.5 KiB | 22 | 0 | *** | large actor bank A |
+| M12 | `0x080449C8-0x08047FE7` | 13.5 KiB | 22 | 0 | *** | player action bodies, part 3 (actions 34-43, handlers 30-40) - **landed (#87)** |
 | M13 | `0x08047FE8-0x0804CC7B` | 19.1 KiB | 27 | 0 | *** | large actor bank B |
 | M14 | `0x0804CC7C-0x08053AF3` | 27.6 KiB | 84 | 2 | *** | stage manager B |
 | M15 | `0x08053AF4-0x0805AFAB` | 29.2 KiB | 86 | 1 | *** | link multiplayer mode |
@@ -956,7 +956,58 @@ below is the pre-decompilation one, kept for the record.
   spelling reaches).
 * **Called from** M10 x266, M13 x171, M12 x165, M14 x159, M09 x151.
 
-### M12 `0x080449C8-0x08047FE7` - large actor bank A
+### M12 `0x080449C8-0x08047FE7` - player action bodies, part 3 (actions 34-43, per-frame handlers 30-40) - **landed (#87)**
+
+The range is decompiled and carved out of the split asm, so it now appears in
+`module-map.csv` as `c_code` rows instead of one clusterable module; the census
+below is the pre-decompilation one, kept for the record.
+
+* **Landed as** seven files, one or more whole action pairs each, all 21
+  functions byte-exact under the `--newpb` recipe with no `asm` statements
+  and no `register` pins, 34 new `split_config.json` `data_symbols`:
+  `src/player_449c8.c` (`0x080449C8-0x08044D04`, 3 fns),
+  `src/player_44d04.c` (`0x08044D04-0x080455C8`, 2),
+  `src/player_455c8.c` (`0x080455C8-0x08045D34`, 4),
+  `src/player_45d34.c` (`0x08045D34-0x08046330`, 2),
+  `src/player_46330.c` (`0x08046330-0x08046C00`, 2),
+  `src/player_46c00.c` (`0x08046C00-0x080474E8`, 2),
+  `src/player_474e8.c` (`0x080474E8-0x08047FE8`, 6).
+  With it `0x08043654-0x08047FE8` (the end of M11 and all of M12) is
+  contiguous C, and M13's segment is named after its own start
+  (`..._08047fe8`, lesson 4.74: `player_474e8` was carved before the files
+  in front of it).
+* **What it turned out to be** (`docs/analysis/rom-map.md` §9): not an
+  actor bank but the third part of M09's **player action machine**: "enter"
+  coroutines 34-43 of `gUnk_0873A748[62]` (by `PlayerState.unk02`) and
+  per-frame handlers 30-40 of `gUnk_0873A840[57]` (by `Task.unk15`), each
+  enter body k followed in the ROM by its handler k - 3 (handler 30 is
+  M11's action 33's).  All are mode 13 and none switches on the ability:
+  each action is one move, mostly in a ground and an air form
+  (`Task.unk7A` bit 0), that installs the player's collider record
+  `gUnk_020060E0[]` (M05's registry `sub_0801a828`) and block hit-box set
+  `gUnk_02005550[]` (M09's `sub_08030848`) from ROM templates and steps
+  their 8-byte rows through M11's `sub_0803e5c0`/`sub_0803e5f8`.  Named
+  pieces: two sibling ground/air attacks (actions 35 and 40, the second
+  probing the metatile ahead and shaking the screen on a solid hit), a
+  dash and a spin with bounce-off states driven from the collision block
+  `gUnk_03005550` (actions 36 and 39, the spin's handler ending its endless
+  loop by re-binding the coroutine), a three-charge move that spends
+  `PlayerState.unk0E`, plays a song per charge, freezes the stage and
+  drops the ability with the last charge (action 38), a palette blend of
+  `gUnk_081BE6BC[player]` over M11's action 33 (handler 30) and three
+  scripted sequences (actions 41-43).
+* **Census fix** 21 functions, not 22: `0x08044A72` is the upper halfword
+  of a word of `sub_080449c8`'s own eight-entry `mov pc` jump table, a
+  lesson 4.40 phantom (its only "caller" was the pool word `0xFFFFF000` at
+  `0x08043A70` in M11's `sub_0804374c`).  The four jump tables are
+  `switch`es on `Task.unk73` sub-states (three) and on the animation id
+  `Task.unk3C` (one).
+* **How** Phase A (census, harness, 13 small and medium bodies by the
+  coordinator as the module's templates, ten of them first-try matches),
+  then three subagents on six of the eight large bodies, grouped by carve
+  file, while the coordinator did the other two (`player_474e8`); five of
+  the eight matched on the first build, and no function needed a
+  handover.
 
 * **Size** 13.5 KiB (`0x3620`), 22 functions (21 reachable only through pointer tables), mean `0x275`, largest `0x694`, pool words 7.8% of bytes.
 * **Difficulty** 3/6 - 10 distinct RAM cells, 4 jump-table dispatches, 11 functions >= `0x200`.

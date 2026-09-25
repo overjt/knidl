@@ -877,6 +877,73 @@ child issues of #35 are created from it. Findings that belong in this document:
     `0x08038F8E`, `0x08038FD8` (inside the 4368-byte `sub_08037ed8`) and
     `0x0803AA14` (the exit tail of `sub_08039c24`) removed, the hidden
     leaf `0x0803BDD4` (handler 17) added.
+- **M12 (`0x080449C8-0x08047FE7`) is the third part of the player's action
+  bodies.**  Decompiled in #87 as `src/player_449c8.c`, `src/player_44d04.c`,
+  `src/player_455c8.c`, `src/player_45d34.c`, `src/player_46330.c`,
+  `src/player_46c00.c` and `src/player_474e8.c` (all 21 functions, no `asm`
+  statements, no `register` pins), so `0x08043654-0x08047FE7` (the end of
+  M11 and all of M12) is contiguous C.  The census name "large actor bank
+  A" was wrong: 21 of its 22 rows are entries of M09's two action tables,
+  and the 22nd was a phantom.
+  * **Table map.**  M12 holds "enter" coroutines **34-43** of
+    `gUnk_0873A748[62]` and per-frame handlers **30-40** of
+    `gUnk_0873A840[57]`, in address order enter k followed by its handler:
+    every enter body k sets `Task.unk15 = k - 3`.  Handler 30
+    (`sub_080449c8`) belongs to M11's action 33 (`sub_08044878`, which sets
+    `unk15 = 30`); then 34 `sub_08044b94` / 31 `sub_08044c7c`, 35
+    `sub_08044d04` / 32 `sub_08045398`, 36 `sub_080455c8` / 33
+    `sub_08045a50`, 37 `sub_08045c40` / 34 `sub_08045d18`, 38
+    `sub_08045d34` / 35 `sub_080462f0`, 39 `sub_08046330` / 36
+    `sub_0804676c`, 40 `sub_08046c00` / 37 `sub_08047270`, 41
+    `sub_080474e8` / 38 `sub_080477cc`, 42 `sub_08047844` / 39
+    `sub_08047bd8`, 43 `sub_08047c30` / 40 `sub_08047e74`.  All of them are
+    mode 13 (`PlayerState.unk04 = 13`).  Actions 32-33 and handler 29 are
+    M11's (`src/stage_43654.c`); actions 29-31 and 44-58 and handlers 26-28
+    and 41-55 are in M13/M14 (`0x08047FE8-0x0804FF1C`).
+  * **What the actions do.**  Unlike M09/M10 no body here switches on the
+    ability: each action is one move (they look like the copy abilities'
+    own attacks), mostly in a ground and an air form (`Task.unk7A` bit 0 = on the ground; `Task.unk7B`
+    bit 0 picks a second variant, remembered in `Task.unk2C`/`unk30`).  An
+    attack installs the player's two hit records - the collider
+    `gUnk_020060E0[player]` (20 bytes, registered every frame with M05's
+    collision registry `sub_0801a828`) and the block hit-box set
+    `gUnk_02005550[player]` (`struct M11R8`, tested by M09's block-break
+    scan `sub_08030848`) - from a ROM template, points
+    `PlayerState.unk6C` at the set while the swing is live, and steps the
+    8-byte rows of a per-move table through M11's `sub_0803e5c0` (collider)
+    and `sub_0803e5f8` (block set) with the row index in `Task.unk2C`
+    (`gUnk_0873B510`...`gUnk_0873DADE`, 34 ROM tables named in `data_symbols`).
+    Action 35 (`sub_08044d04`) and 40 (`sub_08046c00`) are sibling
+    ground/air attacks; 40 probes the metatile 20 pixels ahead
+    (`sub_0802259c`) and a solid hit shakes the screen (`sub_080261d4(2)`).
+    Action 36 (`sub_080455c8`) is a four-state dash with a bounce-off state
+    that its handler `sub_08045a50` enters from the collision block
+    `gUnk_03005550` while fading the palette of `gUnk_0873B510[]` row
+    `Task.unk2C` (12-byte `{src, dst, step}` records, `sub_08003014`).
+    Action 38 (`sub_08045d34`) spends one charge of the ability counter
+    `PlayerState.unk0E` (HUD `sub_08009fcc`), plays one of three sequences
+    by the charges left, each with its own song (`sub_08003564`), freezes
+    the stage (`gUnk_03001F34 = 1`) and switches the DISPCNT shadow to BG0,
+    BG2, BG3 and OBJ, and drops the ability with the last charge
+    (`sub_0800a130`).  Action 39 (`sub_08046330`) is a re-entrant
+    five-state spin: wind-up, an endless spin loop its handler
+    `sub_0804676c` ends by re-binding the coroutine (four `sub_08006148`
+    calls), a turn-around that negates the facing `Task.unk43`, the finish
+    and the same bounce-off as action 36.  Handler 30 blends the player's
+    palettes `gUnk_081BE6BC[player]` into the OBJ palette buffer over the
+    animation frames 0x36B-0x372 of M11's action 33.  Actions 41-43
+    (`player_474e8.c`) are scripted sequences; 43's handler shows frame
+    `gUnk_0873DADE[Task.unk46][Task.unk28]` (`Task.unk28` = last frame's
+    ground flag) and re-binds when the ground flag changes.
+  * **Census.**  21 functions, not 22: `0x08044A72` (evidence `bl-target`)
+    is the upper halfword of the fourth word of `sub_080449c8`'s own
+    `mov pc` jump table (`switch (Task.unk3C)` over 0x36B-0x372), found by
+    lesson 4.40's shape - its only "caller" was the pool word
+    `0xFFFFF000` at `0x08043A70` in M11's `sub_0804374c` decoding as a
+    `bl`.  `sub_080449c8` really runs `0x080449C8-0x08044B93`.  The
+    reachability sweep also needed objdump's IT-state artifact fixed
+    (lesson 4.93): the `ldr r1, [pc, #48]` at `0x08046AB8` decoded as
+    `ldreq`, which hid a pool word.
 - **M35 (`0x080B9D0C-0x080BDA2B`) is the sub-game framework plus one
   complete sub-game, a reaction-time duel.**  Decompiled in #95, in five files
   (`docs/analysis/module-map.md` §6).  The census name "game-mode flow + link
