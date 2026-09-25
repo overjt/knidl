@@ -279,6 +279,36 @@ KNOWN_SYMBOLS = {
 # m4a_songs data segment surrounded by signed 8-bit PCM sample bytes; the
 # `pop {pc}` halfword passes the strict terminator check by accident.
 FALSE_POSITIVES = {
+    # --- M13 (issue #88), three long-jump targets inside two big actions ---
+    # 0x080491EC and 0x080493D2 are not functions: they are code of the
+    # player action sub_08047fe8 (entry 29 of the "enter" table
+    # gUnk_0873A748), whose 25-entry `mov pc` jump table at 0x080483B8 (a
+    # `switch` on the ability PlayerState.unk0D - 1) sends ability 11 to
+    # 0x080493D2 and ability 18 to 0x080491FC.  0x080491EC is the
+    # `b.n 0x080493D2` that ends the arm in front of it (the
+    # `bl TaskYieldTrampoline` at 0x080491E8 falls into it), followed by a
+    # pad and three of that arm's pool words (0x03002490, 0xC48, 0xC4D);
+    # its "rom-pointer" evidence is three coincidental words 0x080491ED in
+    # graphics data (0x082D8480, 0x082D84D0) and in m4a_songs (0x085EF808).
+    # 0x080493D2 (`unk88->unk04 = 19;` ... `sub_08006138();` and the
+    # `pop {r4-r7}; pop {r0}` epilogue that pairs with sub_08047fe8's
+    # `push {r4-r7, lr}`) is also reached by seven long `bl` jumps from the
+    # other arms (0x0804842A and six more; a Thumb `b.n` cannot reach it,
+    # lesson 4.39), which the census took for calls.  sub_08047fe8 really
+    # runs 0x08047FE8-0x08049484 (0x149C; symbols.csv records the census's
+    # MAX_SIZE cap, 0x1000, lesson 4.90).
+    0x080491EC,
+    0x080493D2,
+    # 0x0804B8A0 is the loop head of the player action sub_0804b858 (entry
+    # 53 of gUnk_0873A748; the pool word at 0x0804C600 that re-binds the
+    # coroutine points at it too): sub_0804b858's `ldr r1, [pc]` at
+    # 0x0804B85A loads the word at 0x0804B8B8 behind it, its last store at
+    # 0x0804B89E falls into it, and its only "caller" is the long `bl` at
+    # 0x0804C49E at the bottom of its own row, a jump back to the top of the
+    # eight-way `switch (Task.unk73)` (jump table at 0x0804B8C0, whose
+    # out-of-range `bhi` also branches back to 0x0804B8A0).
+    # sub_0804b858 really runs 0x0804B858-0x0804C4AC (0xC54).
+    0x0804B8A0,
     # --- M12 (issue #87) ---
     # 0x08044A72 is not a function: it is the upper halfword of the fourth
     # word of sub_080449c8's own eight-entry `mov pc` jump table

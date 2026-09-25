@@ -3,8 +3,6 @@
 @ Segment game_code_and_rodata_08018b84_08019eec_0801a3e4_0801a8c8_08040b40_0804335c_080449c8_08047fe8, chunk 1/2: 0x08047FE8-0x0804E0E0 (thumb_code, 0x60F8 bytes)
 @ Functions (docs/analysis/symbols.csv):
 @   0x08047FE8 sub_08047fe8
-@   0x080491EC sub_080491ec
-@   0x080493D2 sub_080493d2
 @   0x08049484 sub_08049484
 @   0x08049738 sub_08049738
 @   0x08049A58 sub_08049a58
@@ -25,7 +23,6 @@
 @   0x0804B5B4 sub_0804b5b4
 @   0x0804B818 sub_0804b818
 @   0x0804B858 sub_0804b858
-@   0x0804B8A0 sub_0804b8a0
 @   0x0804C4AC sub_0804c4ac
 @   0x0804C64C sub_0804c64c
 @   0x0804CA84 sub_0804ca84
@@ -569,7 +566,7 @@ loc_080483a4:
 	adds	r0, #55
 	movs	r1, #3
 	strb	r1, [r0, #0]
-	bl	sub_080493d2	@ 0x080493D2
+	bl	loc_080493d2	@ 0x080493D2
 	movs	r0, r0
 	.word	gUnk_03002490
 	ldr	r0, [pc, #20]	@ 0x0804844C
@@ -637,7 +634,7 @@ loc_080484b8:
 loc_080484be:
 	movs	r0, #32
 	bl	TaskYieldTrampoline	@ 0x080CFDCC
-	bl	sub_080493d2	@ 0x080493D2
+	bl	loc_080493d2	@ 0x080493D2
 	movs	r0, #146
 	bl	sub_08006338	@ 0x08006338
 	movs	r0, #32
@@ -649,7 +646,7 @@ loc_080484be:
 	adds	r0, #34
 	movs	r1, #2
 	strb	r1, [r0, #0]
-	bl	sub_080493d2	@ 0x080493D2
+	bl	loc_080493d2	@ 0x080493D2
 	movs	r0, r0
 	.word	gUnk_03002490
 	ldr	r0, [pc, #268]	@ 0x080485FC
@@ -985,14 +982,14 @@ loc_08048788:
 	ands	r0, r1
 	cmp	r0, #0
 	bne.n	loc_080487e2	@ 0x080487E2
-	bl	sub_080493d2	@ 0x080493D2
+	bl	loc_080493d2	@ 0x080493D2
 	.global	loc_080487e2
 loc_080487e2:
 	ldr	r1, [pc, #20]	@ 0x080487F8
 	ldr	r0, [r1, #8]
 	adds	r0, #1
 	str	r0, [r1, #8]
-	bl	sub_080493d2	@ 0x080493D2
+	bl	loc_080493d2	@ 0x080493D2
 	movs	r0, r0
 	.word	0x0000046A
 	.word	gUnk_03002490
@@ -1149,7 +1146,7 @@ loc_08048938:
 	movs	r1, #15
 	movs	r2, #0
 	bl	sub_0805afac	@ 0x0805AFAC
-	bl	sub_080493d2	@ 0x080493D2
+	bl	loc_080493d2	@ 0x080493D2
 	.word	0x000005CB
 	.word	gUnk_03002490
 	.word	gUnk_0873CCA4
@@ -1377,7 +1374,7 @@ loc_08048b0e:
 	asrs	r0, r0, #16
 	cmp	r0, #1
 	ble.n	loc_08048b0e	@ 0x08048B0E
-	bl	sub_080493d2	@ 0x080493D2
+	bl	loc_080493d2	@ 0x080493D2
 	.word	0x000007DA
 	.word	gUnk_03002490
 	.word	0x0000078B
@@ -1470,7 +1467,7 @@ loc_08048bee:
 	asrs	r0, r0, #16
 	cmp	r0, #2
 	ble.n	loc_08048bee	@ 0x08048BEE
-	b.n	sub_080493d2	@ 0x080493D2
+	b.n	loc_080493d2	@ 0x080493D2
 	.word	gUnk_020060E0
 	.word	gUnk_03002490
 	.word	gUnk_0873C358
@@ -1620,7 +1617,7 @@ loc_08048bee:
 loc_08048d8a:
 	movs	r0, #2
 	bl	TaskYieldTrampoline	@ 0x080CFDCC
-	b.n	sub_080493d2	@ 0x080493D2
+	b.n	loc_080493d2	@ 0x080493D2
 	movs	r0, r0
 	.word	gUnk_03002490
 	.word	gUnk_020060E0
@@ -1756,7 +1753,7 @@ loc_08048ec6:
 	strh	r0, [r1, #60]
 	movs	r0, #3
 	bl	TaskYieldTrampoline	@ 0x080CFDCC
-	b.n	sub_080493d2	@ 0x080493D2
+	b.n	loc_080493d2	@ 0x080493D2
 	.word	0x00000A0A
 	.word	gUnk_03002490
 	.word	0x00000A0D
@@ -1977,7 +1974,7 @@ loc_08049088:
 	bl	sub_08006338	@ 0x08006338
 	movs	r0, #4
 	bl	TaskYieldTrampoline	@ 0x080CFDCC
-	b.n	sub_080493d2	@ 0x080493D2
+	b.n	loc_080493d2	@ 0x080493D2
 	movs	r0, r0
 	.word	0x00000BBD
 	.word	gUnk_03002490
@@ -2111,11 +2108,7 @@ loc_080491bc:
 loc_080491e6:
 	movs	r0, #1
 	bl	TaskYieldTrampoline	@ 0x080CFDCC
-	.thumb_func
-	.global	sub_080491ec
-sub_080491ec:
-	.thumb
-	b.n	sub_080493d2	@ 0x080493D2
+	b.n	loc_080493d2	@ 0x080493D2
 	movs	r0, r0
 	.word	gUnk_03002490
 	.word	0x00000C48
@@ -2242,7 +2235,7 @@ loc_0804923c:
 	ldr	r2, [pc, #32]	@ 0x08049328
 	movs	r1, #44
 	bl	sub_0805afac	@ 0x0805AFAC
-	b.n	sub_080493d2	@ 0x080493D2
+	b.n	loc_080493d2	@ 0x080493D2
 	.word	0x00000CCE
 	.word	gUnk_03002490
 	.word	0x00000CDA
@@ -2332,10 +2325,8 @@ loc_080493a6:
 	bl	sub_08006338	@ 0x08006338
 	movs	r0, #1
 	bl	TaskYieldTrampoline	@ 0x080CFDCC
-	.thumb_func
-	.global	sub_080493d2
-sub_080493d2:
-	.thumb
+	.global	loc_080493d2
+loc_080493d2:
 	ldr	r5, [pc, #84]	@ 0x08049428
 	ldr	r0, [r5, #0]
 	adds	r0, #136
@@ -6947,7 +6938,7 @@ sub_0804b858:
 	ldr	r0, [r0, #0]
 	ldrb	r0, [r0, #5]
 	cmp	r0, #13
-	beq.n	sub_0804b8a0	@ 0x0804B8A0
+	beq.n	loc_0804b8a0	@ 0x0804B8A0
 	adds	r1, #115
 	movs	r0, #6
 	strb	r0, [r1, #0]
@@ -6964,17 +6955,15 @@ sub_0804b858:
 	.global	loc_0804b89e
 loc_0804b89e:
 	strb	r0, [r1, #0]
-	.thumb_func
-	.global	sub_0804b8a0
-sub_0804b8a0:
-	.thumb
+	.global	loc_0804b8a0
+loc_0804b8a0:
 	ldr	r1, [pc, #20]	@ 0x0804B8B8
 	ldr	r0, [r1, #0]
 	adds	r0, #115
 	ldrb	r0, [r0, #0]
 	adds	r5, r1, #0
 	cmp	r0, #7
-	bhi.n	sub_0804b8a0	@ 0x0804B8A0
+	bhi.n	loc_0804b8a0	@ 0x0804B8A0
 	lsls	r0, r0, #2
 	ldr	r1, [pc, #8]	@ 0x0804B8BC
 	adds	r0, r0, r1
@@ -7009,7 +6998,7 @@ loc_0804b8e6:
 	adds	r0, #115
 	movs	r1, #2
 	strb	r1, [r0, #0]
-	b.n	sub_0804b8a0	@ 0x0804B8A0
+	b.n	loc_0804b8a0	@ 0x0804B8A0
 	.global	loc_0804b8f0
 loc_0804b8f0:
 	adds	r1, r2, #0
@@ -7032,7 +7021,7 @@ loc_0804b900:
 	ldrb	r0, [r0, #0]
 	adds	r2, #115
 	strb	r0, [r2, #0]
-	b.n	sub_0804b8a0	@ 0x0804B8A0
+	b.n	loc_0804b8a0	@ 0x0804B8A0
 	.word	0x0873B65E
 	ldr	r4, [pc, #84]	@ 0x0804B970
 	ldr	r0, [r4, #0]
@@ -7128,7 +7117,7 @@ loc_0804b986:
 	ldr	r0, [r7, #0]
 	adds	r0, #115
 	strb	r6, [r0, #0]
-	b.n	sub_0804b8a0	@ 0x0804B8A0
+	b.n	loc_0804b8a0	@ 0x0804B8A0
 	movs	r0, r0
 	.word	gUnk_03002490
 	.word	gUnk_03002458
@@ -8383,7 +8372,7 @@ loc_0804c496:
 	adds	r0, #115
 	movs	r1, #7
 	strb	r1, [r0, #0]
-	bl	sub_0804b8a0	@ 0x0804B8A0
+	bl	loc_0804b8a0	@ 0x0804B8A0
 	movs	r0, r0
 	.word	gUnk_03002490
 	.word	0x00000EE4
