@@ -6483,7 +6483,7 @@ sub_08056dd4:
 	.word	sub_080059d8+1
 	.word	sub_08005d9c+1
 	.word	sub_0805707c+1
-	.word	0x08751CA4
+	.word	gUnk_08751CA4
 	.global	loc_08056e40
 loc_08056e40:
 	cmp	r1, #2

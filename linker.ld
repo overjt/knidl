@@ -797,7 +797,12 @@ SECTIONS
         build/src/plobj_509ec.o(.text)
     } > ROM
 
-    .game_code_and_rodata_08018b84_08019eec_0801a3e4_0801a8c8_08040b40_0804335c_080449c8_0804e5a4 0x080514F8 : {
+    /* plobj_514f8 — decompiled to C (src/plobj_514f8.c, carved by tools/carve.py) */
+    .plobj_514f8 0x080514F8 : {
+        build/src/plobj_514f8.o(.text)
+    } > ROM
+
+    .game_code_and_rodata_08018b84_08019eec_0801a3e4_0801a8c8_08040b40_0804335c_080449c8_0804e5a4 0x0805239C : {
         KEEP(*(.game_code_and_rodata_08018b84_08019eec_0801a3e4_0801a8c8_08040b40_0804335c_080449c8_0804e5a4)) KEEP(*(.game_code_and_rodata_08018b84_08019eec_0801a3e4_0801a8c8_08040b40_0804335c_080449c8_0804e5a4.tail))
     } > ROM
 
