@@ -786,7 +786,8 @@ below is the pre-decompilation one, kept for the record.
     indexed by `Task.unk15`, both dispatched by `sub_08002e98` (entry 0
     NULL; M11's `gUnk_0873B42C`/`gUnk_0873B4A4` take over while
     `gUnk_03001F30 != 0`).  M09 holds actions 1-9 and 22 and handlers 1-8;
-    the others are in M10 (`0x08036280+`) and M12-M14.  The 20-26-case jump
+    M10 holds actions 10-21 and 23-28 and handlers 9-25, M11-M14 the
+    rest.  The 20-26-case jump
     tables are `switch`es on `PlayerState.unk0D` (0-25, most likely the copy
     ability: 0 is the plain form, and almost every table sends 1, 2, 5 and
     19 to one shared arm).
@@ -819,7 +820,64 @@ below is the pre-decompilation one, kept for the record.
 * **Known RAM cells touched** current game state (main dispatch) x2, per-player keys held x1.
 * **Suggested batches** `0x08030804` (33 fns), `0x08032688` (13 fns), `0x080343C0` (14 fns).
 
-### M10 `0x08036280-0x0803CD5F` - stage script runner
+### M10 `0x08036280-0x0803CD5F` - player action bodies, part 2 (actions 10-21 and 23-28, per-frame handlers 9-25) - **landed (#91)**
+
+The range is decompiled and carved out of the split asm, so it now appears in
+`module-map.csv` as `c_code` rows instead of one clusterable module; the census
+below is the pre-decompilation one, kept for the record.
+
+* **Landed as** seven files, all 39 functions byte-exact under the `--newpb`
+  recipe with no `asm` statements and no `register` pins, 20 new
+  `split_config.json` `data_symbols`:
+  `src/player_36280.c` (`0x08036280-0x08036C94`, 5 fns),
+  `src/player_36c94.c` (`0x08036C94-0x08037ED8`, 8),
+  `src/player_37ed8.c` (`0x08037ED8-0x0803919C`, 2),
+  `src/player_3919c.c` (`0x0803919C-0x08039C24`, 3),
+  `src/player_39c24.c` (`0x08039C24-0x0803AA64`, 2),
+  `src/player_3aa64.c` (`0x0803AA64-0x0803BDE8`, 14),
+  `src/player_3bde8.c` (`0x0803BDE8-0x0803CD60`, 5).
+  With it `0x08021B18-0x08040B40` (M07 through the start of M11) is C except
+  M07's parked `sub_08027a6c`.
+* **What it turned out to be** (`docs/analysis/rom-map.md` §9): not a "stage
+  script runner" but the second half of M09's **player action machine**.
+  The player task runs the "enter" coroutine of `PlayerState.unk02` from
+  `gUnk_0873A748[62]` and the per-frame handler `Task.unk15` from
+  `gUnk_0873A840[57]`; M10 holds enter entries 10-21 and 23-28 and handler
+  entries 9-25 (M09 has 1-9 and 22, and 1-8; M11-M14 the rest).  An enter
+  body saves the mode (`PlayerState.unk05 = unk04`), sets the new one and
+  `Task.unk15`, and either plays the ability's animation (a 20-26-case
+  `switch` on `PlayerState.unk0D`, cases 1, 2, 5 and 19 sharing an arm) or
+  runs a state machine over `Task.unk73`; a handler runs M11's transition
+  predicates, tests the latched held/pressed keys `gUnk_03002458[]` /
+  `gUnk_030023C0[]` and requests the next action in `PlayerState.unk01` or
+  re-binds its coroutine with `sub_08006148`.  Named actions: 17 is the
+  player's death (`sub_0803919c` with its per-frame callback `sub_080396a4`;
+  it raises M02's stage request `gUnk_03002438 = 6` when the last player
+  is down), 20 and 21 enter a door and walk through it (`sub_080397f8`
+  calls M07's `sub_08025024`; `sub_08039c24` drives the door's M08 stage
+  objects and the cameras), 13's handler `sub_08037914` breaks blocks with
+  the hit box `gUnk_0873CC54` (M09's `sub_08030898`), 19 (`sub_0803bde8`)
+  hands health over to the partner player in `Task.unk18`.  Three helpers
+  are called from M09: `sub_0803c9b4` (the spark records
+  `gUnk_02007E90[player][3]`, twin of M04's `sub_080109c8`), `sub_0803cbd8`
+  (the knock-back script `gUnk_0873A994`) and `sub_0803ccd8` (the 8.8
+  motion table `gUnk_0873AEBC`).  Four bodies are twins of M11's copies
+  for the `gUnk_03001F30 != 0` tables (`sub_0803aa64` = `sub_08043014`,
+  `sub_08036c94` = `sub_08042128`, `sub_080371f0` = `sub_08042328`).
+* **Census fixes** 39 functions, not 41: `0x08037F2A`, `0x08038F8E` and
+  `0x08038FD8` are the loop head, one arm and the shared exit of the
+  4368-byte `sub_08037ed8` (its seven-state `switch (Task.unk73)` loop is
+  re-entered by long `bl` jumps), `0x0803AA14` is the exit tail of
+  `sub_08039c24`, and the prologue-less leaf `0x0803BDD4` (handler 17)
+  was hidden inside `sub_0803bd90`.  The census's round `0x1000` was
+  symdb's `MAX_SIZE` cap on the phantom row; `sub_08037ed8` keeps that
+  capped size in `symbols.csv`.  All 21 jump tables are `switch`es, most
+  of them on the ability, the rest on `Task.unk73` sub-states.
+* **How** Phase A (census, harness, 17 small bodies by the coordinator as
+  the module's templates, all matching on the first or second build), then
+  four subagents on disjoint carve files while the coordinator did
+  `player_3aa64`; three mid-run handovers through `variants.sh`, and the
+  last function, `sub_08037ed8`, was raced by two agents in parallel.
 
 * **Size** 26.7 KiB (`0x6ae0`), 41 functions (35 reachable only through pointer tables), mean `0x297`, largest `0x1000`, pool words 7.6% of bytes.
 * **Difficulty** 4/6 - 39 distinct RAM cells, 21 jump-table dispatches, 14 functions >= `0x200`.

@@ -905,15 +905,12 @@ vma,size,isa,evidence,name
 0x08037CC8,0x9C,thumb,rom-pointer,sub_08037cc8
 0x08037D64,0xC4,thumb,rom-pointer,sub_08037d64
 0x08037E28,0xB0,thumb,rom-pointer,sub_08037e28
-0x08037ED8,0x52,thumb,rom-pointer,sub_08037ed8
-0x08037F2A,0x1000,thumb,bl-target,sub_08037f2a
-0x08038FD8,0x10,thumb,bl-target,sub_08038fd8
+0x08037ED8,0x1000,thumb,rom-pointer,sub_08037ed8
 0x08038FE8,0x1B4,thumb,rom-pointer,sub_08038fe8
 0x0803919C,0x508,thumb,rom-pointer,sub_0803919c
 0x080396A4,0x154,thumb,rom-pointer,sub_080396a4
 0x080397F8,0x42C,thumb,rom-pointer,sub_080397f8
-0x08039C24,0xDF0,thumb,rom-pointer,sub_08039c24
-0x0803AA14,0x2C,thumb,bl-target,sub_0803aa14
+0x08039C24,0xE1C,thumb,rom-pointer,sub_08039c24
 0x0803AA40,0x24,thumb,rom-pointer,sub_0803aa40
 0x0803AA64,0x568,thumb,rom-pointer,sub_0803aa64
 0x0803AFCC,0x3F8,thumb,rom-pointer,sub_0803afcc
@@ -927,7 +924,8 @@ vma,size,isa,evidence,name
 0x0803B914,0x8C,thumb,rom-pointer,sub_0803b914
 0x0803B9A0,0x250,thumb,rom-pointer,sub_0803b9a0
 0x0803BBF0,0x1A0,thumb,rom-pointer,sub_0803bbf0
-0x0803BD90,0x58,thumb,rom-pointer,sub_0803bd90
+0x0803BD90,0x44,thumb,rom-pointer,sub_0803bd90
+0x0803BDD4,0x14,thumb,rom-pointer,sub_0803bdd4
 0x0803BDE8,0xBA8,thumb,rom-pointer,sub_0803bde8
 0x0803C990,0x24,thumb,rom-pointer,sub_0803c990
 0x0803C9B4,0x224,thumb,bl-target,sub_0803c9b4

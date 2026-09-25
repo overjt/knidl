@@ -297,4 +297,27 @@ Matching decompilation of Kirby: The Amazing Mirror's predecessor, **Kirby: Nigh
   `sub_08031f3c`, fell to two index spellings for two induction variables
   (lesson 3.409); new lessons 3.402-3.410 and 4.87-4.89.
 
+- Player action bodies, part 2, decompiled (issue #91): module M10
+  `0x08036280-0x0803CD5F` (26.7 KiB) landed as `src/player_36280.c`,
+  `src/player_36c94.c`, `src/player_37ed8.c`, `src/player_3919c.c`,
+  `src/player_39c24.c`, `src/player_3aa64.c` and `src/player_3bde8.c`
+  (**all 39 functions, no asm left in the range**, no `asm` statements and
+  no `register` pins), so `0x08021B18-0x08040B3F` (M07 through the start of
+  M11) is C except M07's `sub_08027a6c`.  The census name "stage script
+  runner" was wrong: the range is the second half of M09's player action
+  machine - "enter" coroutines 10-21 and 23-28 of `gUnk_0873A748[62]` and
+  per-frame handlers 9-25 of `gUnk_0873A840[57]` - among them the player's
+  death (action 17, which raises the stage request `gUnk_03002438 = 6`),
+  the door entry and walk (actions 20/21), a block-breaking attack
+  (handler 13) and a health hand-over to the partner player (action 19),
+  plus the spark, knock-back and motion helpers M09 calls; several bodies
+  are twins of M11's `gUnk_03001F30` copies.  Five census rows corrected in
+  `tools/symdb.py` (four long-jump phantoms inside the 4368-byte
+  `sub_08037ed8` and the 3612-byte `sub_08039c24` removed, the hidden
+  handler-17 leaf added, so 39, not 41 functions) and 20 ROM tables named
+  via `split_config.json` `data_symbols`; done by a four-agent fan-out after
+  the coordinator matched 17 templates, with three handovers and a
+  two-agent race on the last function through `variants.sh`; new lessons
+  3.411-3.415 and 4.90-4.91.
+
 - Next milestones: decompile split/SDK modules to C using the validated per-zone compiler recipe (task system Thumb side, sound driver, then game code); grow `src/` one module at a time with `asmdiff.sh` on the module range.
