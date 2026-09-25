@@ -7357,7 +7357,7 @@ cannot be a source-level `p1 = base;`.  It is `strength_reduce`'s giv init for
 to a MATCH, and from four `asm` statements down to none.
 
 
-### 4.71 Interior C carves must preserve reviewed module boundaries
+### 4.92 Interior C carves must preserve reviewed module boundaries
 
 `tools/modmap.py` clusters each remaining `thumb_code` run independently.  An
 interior `c_code` carve therefore creates a new run whose dynamic-programming
