@@ -41,7 +41,7 @@ s32 sub_08040340(void);
 s32 sub_080403e4(void);
 void sub_08040b40(s32 a0, s32 a1);           /* M11, still asm; M11's own spelling */
 void sub_080413a4(s32 a0);
-void sub_08053940(s32 a, s32 b, s32 c);      /* M14, still asm */
+void sub_08053940(s32 a, s32 b, s32 c);      /* M14, src/plobj_52f6c.c (defined s32 (s8, u8, s32); the result is unused here) */
 
 void sub_0803aa64(void)
 {

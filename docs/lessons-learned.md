@@ -2427,6 +2427,120 @@ bytes with the right size.  Two loop-invariant copies were missing:
   < 32; t->unk6C++)`, and those two insns decided it; the `for` form
   hoisted the mask and matched.
 
+### 3.428 A call the ROM makes with another signature than the definition: declare it per file, never cast the function
+Three M14 call sites disagree with the callee they call, and the ROM is
+explicit about it.  The spawner `sub_08053940` narrows its parameters on
+entry (`lsls/asrs` of the player, `lsrs` of the variant) and returns the
+task index, so it is defined `s32 (s8 player, u8 variant, s32 arg)`, while
+ten landed callers in M09-M13 were matched against `void (s32, s32, s32)`
+(an `s8` prototype would add a narrowing at each of them).
+`sub_08051b0c` calls M09's four-parameter `sub_08030804` with three: `r3`
+is whatever the last `ldrsh` left.  `sub_0804df00` passes
+`gUnk_02007FA0[0] + 8` to `sub_08065100(s16 x, ...)` with no `lsls/asrs`.
+The agents first matched the last two through a function-pointer cast
+(`((u16 (*)(struct HitBoxSet *, s32, s32))sub_08030804)(...)`); what landed
+instead is a declaration in that file with the signature the call proves
+(`u16 sub_08030804(struct HitBoxSet *p, s32 x, s32 y);`, `s32
+sub_08065100(s32 x, s32 y, u32, u8, u8);`) and a comment saying why.  The
+bytes are the same, the source reads like C, and the definition keeps its
+own spelling (the 2002 callers probably saw an older or implicit
+declaration).
+
+### 3.429 Compare-tree `switch` layouts, three more
+* A two-case switch whose ROM tree is `cmp #1; beq c1; cmp #1; bgt end;
+  cmp #0; bne end` needs a third, empty `case 2: break;` label so the
+  balanced tree pivots on 1 (`sub_0804fc98`, 75 bytes; 3.42 again).
+* A range test compiled as `cmp #10; bgt; cmp #7; blt`, with no `subs`
+  and unsigned compare, is `case 7: case 8: case 9: case 10:`; `x <= 10
+  && x >= 7` gives the `subs; cmp #3; bls` form (`sub_0804d6d0`, 40
+  bytes).
+* Four endless-loop arms of `switch (Task.unk28)` that the ROM lays out in
+  the order 3, 1, 0, 2 must be written in that order; 0, 1, 2, 3 differs
+  by 228 bytes (`sub_080514f8`, 3.425's sweep would have found it).
+
+### 3.430 Write the statement after a join in both arms when the ROM keeps a register across it
+Four agents hit the same thing from different sides.  When both arms of
+an `if`/`else` or two `case`s feed one statement after the join, a single
+copy of it lets cse (or gcse) carry a value across the join that the ROM
+reloads, or reload one the ROM keeps: `unk73 = 8; unk24 = 7;` / `unk73 =
+9; unk24 = 7;` (`sub_0804cc7c`, the stored `unk24 = 7` kept
+`&gUnk_03002490` in a register), a statement that re-reads `Task.unk8C`
+(`sub_0805239c`, 15 bytes), a register swap of value and address
+(`sub_0805181c`).  Written in both arms, jump2 cross-jumps them back into
+one tail and the registers come out as in the ROM.  The opposite case is
+two exits that call the same function: `if (a) { f(gCurTaskIdx); return;
+} if (b) { f(gCurTaskIdx); return; }` as two blocks (`sub_0805268c`, 239
+bytes; `sub_08051b0c`), because a `||` or a `goto` to one label lets cse
+keep `unk88` across; and a duplicated early-exit body gives the ROM's
+`ble fail; b kill` (`sub_08051d84`).  M14's handler 52 had the reverse:
+two cases with the same tail that the ROM does NOT merge were a `goto`
+into a label inside the second case (3.426).
+
+### 3.431 The operand order of a sum passed as an `s16` argument
+`sub_080538cc` passes the screen position `x + camera` to
+`sub_0801a828(u8, s16, s16, void *)`.  The ROM computes the field address
+first and adds `ldrh camera; ldrh field` (both halfwords, the sum
+truncated to 16 bits for the parameter).  `gUnk_03002348 + t->unk48`
+loaded the global first, ran out of low registers and kept the task in
+`ip` (109 bytes, 8 long); `t->unk48 + gUnk_03002348` matched.  `(s16)`
+or `(u16)` casts on either spelling change nothing.
+
+### 3.432 Branch polarity and constant order, one line each
+- `if (x != 2) A; else B;` when the ROM does `cmp #2; beq B` and places A
+  first (`sub_08050814`, a callback pointer picked by
+  `PlayerState.unk37`; `== 2` swapped the arms, 5 bytes).
+- `dx = (c) ? -8 : 8;` gives `movs r3, #8 ... subs r3, #16` after the
+  facing load; `dx = 8; if (c) dx -= 16;` puts the `movs` one insn early
+  (`sub_08050f80`).
+- A three-way `v = a == 0 ? 0 : a > 7 ? 1 : -1` must follow the ROM's arm
+  order: `if (a == 0) v = 0; else if (a <= 7) v = -1; else v = 1;`
+  (`sub_0804e97c`).
+- `hit++` in the first arm and `hit = 1` in an `else if` give the ROM's
+  `adds r3, #1` next to a separate `movs r3, #1` (`sub_08050e84`); a lone
+  `hit = 0; if (a || b || c) hit++;` gives `movs r4, #0` ... `adds r4, #1`
+  (`sub_08053380`).
+- `abs(x) > K` compiles to `ble`, `(u32)abs(x) > K` to `bls`; one handler
+  has both (`sub_0804e640`, 3.360 again).
+
+### 3.433 Four key probes, two layouts
+Action 49's sub-handlers call `sub_0804f7f8(mode)` for modes 0, 1, 3 and
+2 and act on the first that fires.  Where the ROM tests modes 0 and 1 at
+the top and branches to the tests of 3 and 2 placed after the body, the
+source is M10's `while (!f(0) && !f(1) && !f(3) && !f(2)) { ...; break; }`
+(`sub_0803b47c`'s shape, 3.404): `expand_end_loop` moves the last tests to
+the bottom.  Where the ROM tests two probes in a straight line it is a
+plain `if`; the `while` form then rotates the first test of the body's
+`else if` chain to the bottom (`sub_0804f258`, 111 bytes, 4 short).  For
+`sub_0804ef00` both forms match.
+
+### 3.434 Small M14 shapes, one line each
+- A register copy of the running task for the first block of a variant
+  body (`ldr r0, [r4]; str r1, [r0]; ...`) came out with plain
+  `gUnk_03002490->f = ...` re-reads; a `struct Task *t` from the top put it
+  in r2 (`sub_0805091c`, 19 bytes).  The same with the player record:
+  `t->unk88->` at every use kept the ROM's reload of `unk88` after the
+  stores, where a `p` or `pp` local was 64 bytes off and 4 short
+  (`sub_080506dc`; `sub_0804df00` likewise).
+- Two rows of one ROM table picked by a `case` (`ldr r6, =tbl + 32;
+  movs r2, #16; adds r2, r2, r6`): cse derives the second address from the
+  first only when both are offsets of ONE symbol, so the table is
+  `u16 gUnk_0873B8C6[3][2][8]` indexed with constants, not two externs
+  (`sub_08052f6c`, `sub_0805239c`).
+- Index a ROM row by the loop counter inside the loop
+  (`gUnk_0873B808[k][(s16)u->unk6C]`); a hoisted row pointer made gcc spill
+  (`sub sp, #4`, 892 bytes against 868, `sub_080527a4`).
+- `u32 *tbl = gUnk_03002490->unk38;` right before a sprite-draw call loads
+  `unk38` before `unk42`, the ROM's order (`sub_08050f80`).
+- A `u16`-returning call written inline, `t->unk50 =
+  (sub_080064ac(0, 1, 8) + ...) << 16;`, keeps the ROM's `bl; ldr task;
+  lsls; lsrs`; a `u16` local zero-extends before the task load
+  (`sub_0805035c`/`sub_080527a4`).
+- A dead `ldrb` of `Task.unk43` right before its `ldrsb` comes out of the
+  plain `if (t->unk43 == 1) t->unk43 = -1; else t->unk43 = 1;`
+  (`sub_080536dc`, `sub_0804ecec`): do not model it.
+- `t->unk46 = -1` compiles to `movs #1; negs`, `= 0xFFFF` to a pooled
+  `0x0000FFFF`; follow the listing (`sub_0804ee08` / `sub_0804efec`).
+
 ## 4. Splitting ROM ranges into asm (tools/split.py)
 
 ### 4.1 objdump text only round-trips under `.syntax unified`
@@ -7658,6 +7772,32 @@ out-of-range `bhi` branches back to itself.  It is the `loop:` label of
 `sub_0804b858` (enter 53), which runs `0x0804B858-0x0804C4AC`.  A
 self-caller from inside the row is the first thing to check on a big
 `bl-target`: a real function is called from somewhere else.
+
+### 4.97 A census fix reshuffles `symdb_check`'s spot sample and can surface another module's phantom
+`symdb_check.py` checks a random sample of census rows seeded from the row
+list, so M14's four census fixes moved the sample, and `make symbols`
+failed on `0x080CCAA6` (`sub_080ccaa6`, `bl-target`) in M38: its only
+"caller" was the pool word `0xFFFFF000` at `0x080CBAA4` decoded as a `bl`
+(4.40), and the code there is the middle of the yield script
+`sub_080cc768`.  The failure is real and not the module's own; fix it
+(with the coordinator's approval, since it is outside the range), say so in
+the PR and on the other module's issue, and expect `make split` to turn
+one `sub_` label into a `loc_` in that module's asm and nothing else.
+
+### 4.98 Seed every cross-file helper, callback and spawner, then fan out by family
+M14's Phase A matched 21 of 81 functions: every function another carve
+file calls (the sub-table helpers, the two re-entry callbacks, task type
+#6's body and shared callbacks, both spawners) and one representative per
+family (a sub-action / sub-handler pair, a type-6 variant and its
+companion).  Four agents then took one family each and finished 58
+functions in about 35 minutes with no cross-agent prototype conflict; the
+remaining two were handovers and one race (4.75, 4.91).  The only
+harmonisation left for landing was found by `protocheck.py`: a callee one
+agent proved to return a value (`sub_08052b08`'s `pop {r1}`) that an
+earlier landed file declared `void` (a declaration-only change), and one
+parameter spelled `s32`/`u32` in two files.  Strip the agents' casts at
+landing (3.428): two function-pointer casts had matched and would have
+shipped.
 
 ## 5. Workflow that worked
 

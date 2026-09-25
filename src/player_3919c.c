@@ -70,7 +70,7 @@ u16 sub_0803f7e0(u16 a0);
 s32 sub_080404e4(void);
 void sub_08040934(s32 a0);
 void sub_080413a4(s32 a0);
-void sub_08053940(s32 a, s32 b, s32 c);      /* M14, still asm */
+void sub_08053940(s32 a, s32 b, s32 c);      /* M14, src/plobj_52f6c.c (defined s32 (s8, u8, s32); the result is unused here) */
 s32 sub_0805afac(s32 a0, s32 a1, s32 a2);
 s32 sub_0805b088(s32 a0, s32 a1, s32 a2);
 void sub_080b9118(void);
