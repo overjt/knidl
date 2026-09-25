@@ -372,4 +372,37 @@ Matching decompilation of Kirby: The Amazing Mirror's predecessor, **Kirby: Nigh
   two handovers and a two-agent race on the last function; new lessons
   3.421-3.427 and 4.95-4.96.
 
+- Player action bodies, part 5, the action 49/58 sub-action tables and
+  task type #6 decompiled (issue #90): module M14 `0x0804CC7C-0x08053AF3`
+  (27.6 KiB) landed as `src/player_4cc7c.c`, `src/player_4dc08.c`,
+  `src/player_4e5a4.c`, `src/player_4e78c.c`, `src/player_4ee08.c`,
+  `src/player_4f614.c`, `src/player_4f948.c`, `src/player_4ffdc.c`,
+  `src/plobj_507bc.c`, `src/plobj_509ec.c`, `src/plobj_514f8.c`,
+  `src/plobj_5239c.c` and `src/plobj_52f6c.c` around PR #133's
+  `src/sub_0804e3a0.c` (**all 81 functions, no asm left in the range**,
+  no `asm` statements and no `register` pins), so
+  `0x08043654-0x08053AF3` (the end of M11 through M14) is contiguous C.
+  The census name "stage manager B" was half right: the range holds the
+  last asm entries of M09's two action tables - "enter" coroutines 30,
+  31, 49 and 55-58 of `gUnk_0873A748[62]` and per-frame handlers 27, 28
+  (PR #133), 46 and 52-55 of `gUnk_0873A840[57]`, enter k followed by
+  its handler k - 3 - which completes both tables; two move sets one
+  level down (action 49 dispatches `Task.unk73` through nine sub-actions
+  `gUnk_0873B664` and its handler through nine sub-handlers
+  `gUnk_0873B688`, action 58 through four each, `gUnk_0873B6AC`/
+  `gUnk_0873B6BC`, with their helpers); and task type #6 (class 1, body
+  `sub_080507bc`), the objects the player's actions spawn through
+  `sub_08053940`/`sub_08053a44` (`s32 (s8 player, u8 variant, s32 arg)`;
+  `Task.unk18 = variant << 24 | arg`), 13 variant bodies
+  `gUnk_0873B77C[]` each switching on the sub-state `Task.unk18 & 15` and
+  followed by its own callbacks.  Four census rows corrected in
+  `tools/symdb.py` (the long-jump exit `0x0804D6C6` and the `b.n` arm
+  tails `0x0804F6FA`/`0x08051008` folded, the sub-table entry
+  `0x0804F5BC` added) plus one M38 phantom (`0x080CCAA6`, #100) the
+  reshuffled spot check surfaced, and 79 ROM tables named via
+  `split_config.json` `data_symbols`; done by a four-agent fan-out after
+  the coordinator matched 21 cross-file helpers and representatives, with
+  three handovers and a two-agent race on the last function; new lessons
+  3.428-3.434 and 4.97-4.98.
+
 - Next milestones: decompile split/SDK modules to C using the validated per-zone compiler recipe (task system Thumb side, sound driver, then game code); grow `src/` one module at a time with `asmdiff.sh` on the module range.

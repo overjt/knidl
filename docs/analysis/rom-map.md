@@ -964,9 +964,9 @@ child issues of #35 are created from it. Findings that belong in this document:
     `sub_0804ada8`, 51 `sub_0804af54` / 48 `sub_0804b474`, 52
     `sub_0804b5b4` / 49 `sub_0804b818`, 53 `sub_0804b858` / 50
     `sub_0804c4ac`, 54 `sub_0804c64c` / 51 `sub_0804ca84`.  The gaps are
-    M14's (`0x0804CC7C+`, still asm): enter 30-31, 49 and 55-58 and
-    handlers 27-28 (28 is `sub_0804e3a0`, PR #133's C) and 46.  Action 29
-    is mode 19, the others mode 13.
+    M14's (see its entry below): enter 30-31, 49 and 55-58 and handlers
+    27-28 (28 is `sub_0804e3a0`, PR #133's C) and 46.  Action 29 is mode
+    19, the others mode 13.
   * **The shared helpers** `sub_08049738` and `sub_08049a58`
     (`player_49738.c`, both `void (void)`), called from M09's player task
     (`sub_08032688`, `sub_08032bd0`), M10's actions 13 and 21, action 29,
@@ -1027,6 +1027,83 @@ child issues of #35 are created from it. Findings that belong in this document:
     the loop head of `sub_0804b858`, which runs `0x0804B858-0x0804C4AB`
     (lessons 4.95, 4.96).  The sweep found nothing else: no unreachable
     code, no pool load outside its function.
+- **M14 (`0x0804CC7C-0x08053AF3`) is the fifth and last part of the
+  player's action bodies, two sub-action tables and task type #6.**
+  Decompiled in #90 as `src/player_4cc7c.c`, `src/player_4dc08.c`,
+  `src/player_4e5a4.c`, `src/player_4e78c.c`, `src/player_4ee08.c`,
+  `src/player_4f614.c`, `src/player_4f948.c`, `src/player_4ffdc.c`,
+  `src/plobj_507bc.c`, `src/plobj_509ec.c`, `src/plobj_514f8.c`,
+  `src/plobj_5239c.c` and `src/plobj_52f6c.c` around PR #133's
+  `src/sub_0804e3a0.c` (all 81 functions, no `asm` statements, no
+  `register` pins), so `0x08043654-0x08053AF3` (the end of M11 through
+  M14) is contiguous C.  The census name "stage manager B" was half right.
+  * **Table map (both tables complete).**  M14 holds "enter" coroutines
+    **30, 31, 49 and 55-58** of `gUnk_0873A748[62]` and per-frame handlers
+    **27, 28, 46 and 52-55** of `gUnk_0873A840[57]`, in address order enter
+    k followed by its handler k - 3: 55 `sub_0804cc7c` / 52
+    `sub_0804d6d0`, 30 `sub_0804dc08` / 27 `sub_0804df00`, 31
+    `sub_0804e0e0` / 28 `sub_0804e3a0` (PR #133), 49 `sub_0804e5a4` (and
+    its re-entry callback `sub_0804e600`) / 46 `sub_0804e640`, 56
+    `sub_0804f948` / 53 `sub_0804fab0`, 57 `sub_0804fba4` / 54
+    `sub_0804fc98`, 58 `sub_0804fe68` (and `sub_0804fee8`) / 55
+    `sub_0804ff1c`.  With M14 every entry of both tables is C: enter 1-9
+    and 22 are M09's, 10-21 and 23-28 M10's, 29, 44-48 and 50-54 M13's,
+    30-31, 49 and 55-58 M14's, 32-33 M11's, 34-43 M12's and 59-61 M09's
+    empty stubs; handlers 1-8 M09's, 9-25 M10's, 26, 41-45 and 47-51
+    M13's, 27-28, 46 and 52-55 M14's, 29 M11's, 30-40 M12's and 56 M09's
+    stub.  Actions 30 and 31 are mode 10, the others mode 13 (action 58's
+    sub-action 21 switches to mode 17).  M09's player task also calls
+    enter 58 (`sub_0804fe68`) directly.
+  * **Action 49 and action 58 are move sets one level down.**  Their enter
+    bodies dispatch `Task.unk73` through their own tables and their
+    handlers through a second one, all four back to back at
+    `0x0873B664-0x0873B6CB` (the census's "25-entry anchor table"):
+    `gUnk_0873B664[9]` (action 49's sub-actions 0-8), `gUnk_0873B688[9]`
+    (handler 46's sub-handlers, "9-17"), `gUnk_0873B6AC[4]` (action 58's
+    sub-actions "18-21") and `gUnk_0873B6BC[4]` (handler 55's
+    sub-handlers "22-25").  The bodies fill `0x0804E78C-0x08050664`,
+    each sub-action followed by its sub-handler, and follow the enter/
+    handler shape of the main tables: a sub-action is a yield script or a
+    state machine, a sub-handler reads the keys and re-binds the next
+    sub-action through the re-entry callbacks `sub_0804e600` /
+    `sub_0804fee8`.  Their helpers: `sub_0804f614` (the reaction
+    `PlayerState.unk3E` asks for), `sub_0804f76c` (speed class from
+    `|Task.unk54|`), `sub_0804f79c` (steps the direction `Task.unk46`),
+    `sub_0804f7f8` (the four key probes most sub-handlers share),
+    `sub_0804f8ec` (landing), `sub_08050664` (re-bind sub-action 2 on a
+    direction) and `sub_080506dc` (steering with the held direction,
+    velocity pairs `gUnk_0873B724[Task.unk6E]`).  Handler 55 also clamps
+    the player to 16-224 x 18-132 and, once `gUnk_030023E4` passes 888,
+    takes the player's whole health and requests action 17.
+  * **Task type #6** (class 1, body `sub_080507bc`) is the objects the
+    player's actions spawn.  `sub_08053940(player, variant, arg)` /
+    `sub_08053a44` (`s32 (s8, u8, s32)`, returning the task index or -1;
+    the landed callers declare them `void (s32, s32, s32)`) start a type-6
+    task in the slot band of player 0-3 (4-6, 7-9, 10-12, 13-15;
+    `sub_08053940` then tries a wider band and last a type-7 task in slots
+    32-62 - type 7 is M15's body `0x08053AF4`, the same shape with 49
+    variants at `0x0873B928`) and copy the spawner's position, facing
+    `Task.unk43`, `Task.unk7B` and PlayerState, with `Task.unk18 = variant
+    << 24 | arg`.  The body links the task to its spawner (`Task.unk8C =
+    &gUnk_03002790[Task.unk44]`) and dispatches the variant through
+    `gUnk_0873B77C[13]`; each variant body installs its sprite, switches
+    on the sub-state `Task.unk18 & 15` and installs the callbacks that
+    follow it in the ROM (a hit test / collider callback in `Task.unk04`,
+    a trail drawer in `Task.unk08`), which re-bind the body in another
+    sub-state or the shared exit `sub_08050814` on contact.  Who spawns
+    what: variant 0 M09's `src/player_34f8c.c` and M10's
+    `src/player_3919c.c` (and variant 0 itself, in sub-state 1), 1-3
+    M10's actions, 4 M11 and M13's ability get, 5-6 M12 (and the ability
+    get), 7-8 M13's actions 44 and 47 (and the ability get), 9 M13's
+    action 52, 10 action 55 (sub-states 0-5), 11 action 56 and 12 action
+    58's sub-action 20.
+  * **Census.**  81 functions, not 83: `0x0804D6C6` (`bl-target`) is the
+    exit of `sub_0804cc7c` reached by its switch default's long `bl` and
+    a `b.n` from its own row, and `0x0804F6FA` / `0x08051008`
+    (`rom-pointer`, one coincidental graphics word each) are `b.n` arm
+    tails inside `sub_0804f614`'s and `sub_08050f80`'s jump tables
+    (lessons 4.95, 4.96); `0x0804F5BC`, entry 17 of the sub-tables, a
+    push-less leaf the prologue filter missed, was added.
 - **M35 (`0x080B9D0C-0x080BDA2B`) is the sub-game framework plus one
   complete sub-game, a reaction-time duel.**  Decompiled in #95, in five files
   (`docs/analysis/module-map.md` §6).  The census name "game-mode flow + link

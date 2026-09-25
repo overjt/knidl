@@ -192,7 +192,7 @@ dispatches, pool density) — a planning aid, not a promise.
 | M11 | `0x0803CD60-0x080449C7` | 31.1 KiB | 121 | 4 | ***** | player mode/state machine + stage support services |
 | M12 | `0x080449C8-0x08047FE7` | 13.5 KiB | 22 | 0 | *** | player action bodies, part 3 (actions 34-43, handlers 30-40) - **landed (#87)** |
 | M13 | `0x08047FE8-0x0804CC7B` | 19.1 KiB | 27 | 0 | *** | player action bodies, part 4 (actions 29, 44-48, 50-54, handlers 26, 41-45, 47-51) - **landed (#88)** |
-| M14 | `0x0804CC7C-0x08053AF3` | 27.6 KiB | 84 | 2 | *** | stage manager B |
+| M14 | `0x0804CC7C-0x08053AF3` | 27.6 KiB | 84 | 2 | *** | player action bodies, part 5 (actions 30-31, 49, 55-58, handlers 27-28, 46, 52-55), the action 49/58 sub-action tables and task type #6 - **landed (#90)** |
 | M15 | `0x08053AF4-0x0805AFAB` | 29.2 KiB | 86 | 1 | *** | link multiplayer mode |
 | M16 | `0x0805AFAC-0x08062583` | 29.5 KiB | 89 | 1 | *** | effect spawner + two-level state machine (task types #81-#90) |
 | M17 | `0x08062584-0x080692FB` | 27.4 KiB | 244 | 2 | *** | struct Task field API (actor core) |
@@ -1084,7 +1084,68 @@ below is the pre-decompilation one, kept for the record.
 * **Known RAM cells touched** DISPCNT shadow x1.
 * **Suggested batches** `0x08047FE8` (10 fns), `0x08049F98` (13 fns), `0x0804B8A0` (4 fns).
 
-### M14 `0x0804CC7C-0x08053AF3` - stage manager B
+### M14 `0x0804CC7C-0x08053AF3` - player action bodies, part 5 (actions 30-31, 49, 55-58, per-frame handlers 27-28, 46, 52-55), the action 49/58 sub-action tables and task type #6 - **landed (#90)**
+
+The range is decompiled and carved out of the split asm, so it now appears in
+`module-map.csv` as `c_code` rows instead of one clusterable module; the census
+below is the pre-decompilation one, kept for the record.
+
+* **Landed as** thirteen files around PR #133's `src/sub_0804e3a0.c`
+  (`0x0804E3A0-0x0804E5A4`, handler 28, left as it was), all 81 functions
+  byte-exact under the `--newpb` recipe with no `asm` statements and no
+  `register` pins, 79 new `split_config.json` `data_symbols`:
+  `src/player_4cc7c.c` (`0x0804CC7C-0x0804DC08`, 2 fns),
+  `src/player_4dc08.c` (`0x0804DC08-0x0804E3A0`, 3),
+  `src/player_4e5a4.c` (`0x0804E5A4-0x0804E78C`, 3),
+  `src/player_4e78c.c` (`0x0804E78C-0x0804EE08`, 8),
+  `src/player_4ee08.c` (`0x0804EE08-0x0804F614`, 10),
+  `src/player_4f614.c` (`0x0804F614-0x0804F948`, 5),
+  `src/player_4f948.c` (`0x0804F948-0x0804FFDC`, 7),
+  `src/player_4ffdc.c` (`0x0804FFDC-0x080507BC`, 10),
+  `src/plobj_507bc.c` (`0x080507BC-0x080509EC`, 3),
+  `src/plobj_509ec.c` (`0x080509EC-0x080514F8`, 8),
+  `src/plobj_514f8.c` (`0x080514F8-0x0805239C`, 8),
+  `src/plobj_5239c.c` (`0x0805239C-0x08052F6C`, 5),
+  `src/plobj_52f6c.c` (`0x08052F6C-0x08053AF4`, 9).
+  With it `0x08043654-0x08053AF4` (the end of M11 through M14) is
+  contiguous C.  `plobj_52f6c` was carved first, so M15's segment is
+  named after its own start (`..._0804e5a4_08053af4`, lesson 4.74), and
+  the leftover `0x08053AF4-0x08054538` run now comes out of `make modmap`
+  as its own module under `MODULE_NAMES[0x08053AF4]` ("link multiplayer
+  mode"); no boundary outside M14 moved.
+* **What it turned out to be** (`docs/analysis/rom-map.md` §9): the census
+  name "stage manager B" was half right.  Three pieces:
+  (1) the last asm entries of M09's **player action machine** - "enter"
+  coroutines 30, 31, 49 and 55-58 of `gUnk_0873A748[62]` and per-frame
+  handlers 27, 28 (PR #133), 46 and 52-55 of `gUnk_0873A840[57]`, each
+  enter body k followed by its handler k - 3 (55/52, 30/27, 31/28, 49/46,
+  56/53, 57/54, 58/55) - which completes both tables;
+  (2) **two move sets one level down**: action 49 dispatches `Task.unk73`
+  through its own nine sub-actions `gUnk_0873B664` and its handler 46
+  through nine sub-handlers `gUnk_0873B688`, action 58 through four each
+  (`gUnk_0873B6AC`/`gUnk_0873B6BC`); the census's "25-entry anchor table
+  @0x0873B664" is these four tables back to back (26 words);
+  (3) **task type #6** (class 1, body `sub_080507bc`): the objects the
+  player's actions spawn through `sub_08053940`/`sub_08053a44` (M09-M14
+  call them; variant = top byte of `Task.unk18`, sub-state = `unk18 &
+  15`), 13 variant bodies `gUnk_0873B77C[]` each followed by the
+  collision/trail callbacks only it installs.
+* **Census fix** 81 functions, not 83 (84 rows minus PR #133's): the
+  long-jump exit `0x0804D6C6` of `sub_0804cc7c` and the `b.n` arm tails
+  `0x0804F6FA` / `0x08051008` inside `sub_0804f614`'s and `sub_08050f80`'s
+  jump tables folded (lessons 4.95, 4.96), the hidden sub-table entry
+  `0x0804F5BC` added.  The census change reshuffled `symdb_check`'s spot
+  sample, which surfaced a lesson 4.40 phantom in M38 (`0x080CCAA6`,
+  folded into `sub_080cc768`, #100).
+* **How** Phase A by the coordinator (census, harness, 21 functions: every
+  cross-file helper and callback, both spawners, one representative per
+  family), then four subagents by family - the two big player actions,
+  actions 46/56-58 with action 58's sub-table, action 49's sub-table, task
+  type #6's variants 0-6 - while the coordinator matched variants 10-12
+  and landed them first; finished agents took the remaining file and two
+  handovers, and the last function was raced by two agents through
+  `variants.sh` (lesson 4.91).
+
 
 * **Size** 27.6 KiB (`0x6e78`), 84 functions (73 reachable only through pointer tables), mean `0x150`, largest `0xa4a`, pool words 10.5% of bytes.
 * **Difficulty** 3/6 - 24 distinct RAM cells, 7 jump-table dispatches, 14 functions >= `0x200`.

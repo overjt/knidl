@@ -105,10 +105,10 @@ M103,0x0804AB70,0x0804B5B4,0xA44,4,4,0,0x291,0x520,7.3,7,0,0,0,0,8,2,player_4ab7
 M104,0x0804B5B4,0x0804B858,0x2A4,2,2,0,0x152,0x264,6.5,2,0,0,0,0,4,2,player_4b5b4,already landed (c_code)
 M105,0x0804B858,0x0804C64C,0xDF4,2,2,0,0x6FA,0xC54,4.3,4,2,0,0,0,5,3,player_4b858,already landed (c_code)
 M106,0x0804C64C,0x0804CC7C,0x630,2,2,0,0x318,0x438,7.6,4,1,0,0,0,4,2,player_4c64c,already landed (c_code)
-M107,0x0804CC7C,0x0804DC08,0xF8C,2,2,0,0x7C6,0xA54,9.1,4,2,0,0,0,4,3,stage manager B (six-function head),six-function head of the original 0x0804CC7C-0x08054538 module before the sub_0804e3a0 carve
+M107,0x0804CC7C,0x0804DC08,0xF8C,2,2,0,0x7C6,0xA54,9.1,4,2,0,0,0,4,3,"player action bodies, part 5: actions 30-31, 49, 55-58, per-frame handlers 27-28, 46, 52-55; the action 49/58 sub-action tables; task type #6","decompiled in #90 as src/player_4cc7c.c/player_4dc08.c/player_4e5a4.c/player_4e78c.c/player_4ee08.c/player_4f614.c/player_4f948.c/player_4ffdc.c/plobj_507bc.c/plobj_509ec.c/plobj_514f8.c/plobj_5239c.c/plobj_52f6c.c around PR #133's src/sub_0804e3a0.c (handler 28): 81 functions after the census fix (0x0804D6C6 is sub_0804cc7c's long-jump exit, 0x0804F6FA/0x08051008 are b.n arm tails inside jump tables, 0x0804F5BC a hidden sub-table entry). The last asm entries of M09's two action tables - enter coroutines 30, 31, 49 and 55-58 of gUnk_0873A748[62] and per-frame handlers 27, 28, 46 and 52-55 of gUnk_0873A840[57], enter k followed by its handler k - 3 - which completes both tables; actions 49 and 58 are move sets one level down, dispatching Task.unk73 through their own sub-action/sub-handler tables gUnk_0873B664[9]/gUnk_0873B688[9] and gUnk_0873B6AC[4]/gUnk_0873B6BC[4]. Then task type #6 (class 1, body sub_080507bc): the objects the player's actions spawn through sub_08053940/sub_08053a44 (a type-6 slot band per player, Task.unk18 = variant << 24 | arg, the spawner's position, facing and PlayerState copied in), 13 variant bodies gUnk_0873B77C[] that each switch on the sub-state Task.unk18 & 15 and install their own collision callbacks"
 M108,0x0804DC08,0x0804E3A0,0x798,3,3,0,0x288,0x2F8,7.4,9,0,0,0,0,8,2,player_4dc08,already landed (c_code)
 M109,0x0804E3A0,0x0804E5A4,0x204,1,1,0,0x204,0x204,9.3,5,0,0,0,0,6,2,sub_0804e3a0,already landed (c_code)
-M110,0x0804E5A4,0x0804E78C,0x1E8,3,3,0,0xA2,0x14C,13.1,2,0,0,0,0,2,1,stage manager B (remaining tail),90-function tail of the original 0x0804CC7C-0x08054538 module after the sub_0804e3a0 carve
+M110,0x0804E5A4,0x0804E78C,0x1E8,3,3,0,0xA2,0x14C,13.1,2,0,0,0,0,2,1,"player action bodies, part 5 (after PR #133's handler 28): action 49, its sub-actions, actions 56-58 and task type #6","the part of M14 (#90) after src/sub_0804e3a0.c: action 49 (sub_0804e5a4, its re-entry callback sub_0804e600, handler 46 sub_0804e640) and its nine sub-actions/sub-handlers with their helpers, actions 56-58 and handlers 53-55 (action 58 with its own four sub-actions), and task type #6's body, shared callbacks and 13 variants with the two spawners; see the 0x0804CC7C row"
 M111,0x0804E78C,0x0804EE08,0x67C,8,8,0,0xCF,0x168,9.4,5,0,0,0,0,6,2,player_4e78c,already landed (c_code)
 M112,0x0804EE08,0x0804F614,0x80C,10,10,0,0xCE,0x16C,10.9,4,0,0,0,0,6,2,player_4ee08,already landed (c_code)
 M113,0x0804F614,0x0804F948,0x334,5,0,0,0xA4,0x158,11.7,3,1,0,0,2,2,1,player_4f614,already landed (c_code)
@@ -117,7 +117,7 @@ M115,0x0804FFDC,0x080507BC,0x7E0,10,8,0,0xC9,0x314,12.9,10,0,0,0,1,4,2,player_4f
 M116,0x080507BC,0x080509EC,0x230,3,3,0,0xBA,0x108,10.0,3,0,0,1,0,1,1,plobj_507bc,already landed (c_code)
 M117,0x080509EC,0x080514F8,0xB0C,8,8,0,0x161,0x25C,10.9,6,2,0,0,0,6,2,plobj_509ec,already landed (c_code)
 M118,0x080514F8,0x0805239C,0xEA4,8,8,0,0x1D4,0x2F0,11.6,6,1,0,0,0,6,2,plobj_514f8,already landed (c_code)
-M119,0x0805239C,0x08052F6C,0xBD0,5,5,1,0x25C,0x3E4,8.1,6,0,0,0,0,5,2,,
+M119,0x0805239C,0x08052F6C,0xBD0,5,5,0,0x25C,0x3E4,8.1,6,0,0,0,0,5,2,plobj_5239c,already landed (c_code)
 M120,0x08052F6C,0x08053AF4,0xB88,9,7,0,0x148,0x414,14.1,6,1,0,0,16,6,3,plobj_52f6c,already landed (c_code)
 M121,0x08053AF4,0x08054538,0xA44,13,13,1,0xCA,0x208,10.5,3,0,1,1,0,2,2,link multiplayer mode,SIO multi-play (early_6464) x162 - by far the heaviest link user in the bulk; task type #7 (class 1); 49-entry anchor table @0x0873B928
 M122,0x08054538,0x08057CE0,0x37A8,42,38,3,0x153,0x664,8.5,10,2,1,0,0,6,3,,
