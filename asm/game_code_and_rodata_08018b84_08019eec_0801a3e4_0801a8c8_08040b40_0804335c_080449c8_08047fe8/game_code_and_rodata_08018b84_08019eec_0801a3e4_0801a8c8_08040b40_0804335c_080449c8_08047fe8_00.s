@@ -1152,7 +1152,7 @@ loc_08048938:
 	bl	sub_080493d2	@ 0x080493D2
 	.word	0x000005CB
 	.word	gUnk_03002490
-	.word	0x0873CCA4
+	.word	gUnk_0873CCA4
 	.word	0x000005E1
 	.word	0x000005D3
 	.word	0x000005D9
