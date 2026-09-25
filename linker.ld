@@ -816,6 +816,33 @@ SECTIONS
         KEEP(*(.game_code_and_rodata_08018b84_08019eec_0801a3e4_0801a8c8_08040b40_0804335c_080449c8_0804e5a4_08053af4)) KEEP(*(.game_code_and_rodata_08018b84_08019eec_0801a3e4_0801a8c8_08040b40_0804335c_080449c8_0804e5a4_08053af4.tail))
     } > ROM
 
+    /* effect_55b24 — decompiled to C (src/effect_55b24.c, carved by tools/carve.py) */
+    .effect_55b24 0x08055B24 : {
+        build/src/effect_55b24.o(.text)
+    } > ROM
+
+    .game_code_and_rodata_08018b84_08019eec_0801a3e4_0801a8c8_08040b40_0804335c_080449c8_0804e5a4_08053af4_08056448 0x08056448 : {
+        KEEP(*(.game_code_and_rodata_08018b84_08019eec_0801a3e4_0801a8c8_08040b40_0804335c_080449c8_0804e5a4_08053af4_08056448)) KEEP(*(.game_code_and_rodata_08018b84_08019eec_0801a3e4_0801a8c8_08040b40_0804335c_080449c8_0804e5a4_08053af4_08056448.tail))
+    } > ROM
+
+    /* effect_56dd4 — decompiled to C (src/effect_56dd4.c, carved by tools/carve.py) */
+    .effect_56dd4 0x08056DD4 : {
+        build/src/effect_56dd4.o(.text)
+    } > ROM
+
+    .game_code_and_rodata_08018b84_08019eec_0801a3e4_0801a8c8_08040b40_0804335c_080449c8_0804e5a4_08053af4_08056448_08057494 0x08057494 : {
+        KEEP(*(.game_code_and_rodata_08018b84_08019eec_0801a3e4_0801a8c8_08040b40_0804335c_080449c8_0804e5a4_08053af4_08056448_08057494)) KEEP(*(.game_code_and_rodata_08018b84_08019eec_0801a3e4_0801a8c8_08040b40_0804335c_080449c8_0804e5a4_08053af4_08056448_08057494.tail))
+    } > ROM
+
+    /* effect_58810 — decompiled to C (src/effect_58810.c, carved by tools/carve.py) */
+    .effect_58810 0x08058810 : {
+        build/src/effect_58810.o(.text)
+    } > ROM
+
+    .game_code_and_rodata_08018b84_08019eec_0801a3e4_0801a8c8_08040b40_0804335c_080449c8_0804e5a4_08053af4_08056448_08057494_08059570 0x08059570 : {
+        KEEP(*(.game_code_and_rodata_08018b84_08019eec_0801a3e4_0801a8c8_08040b40_0804335c_080449c8_0804e5a4_08053af4_08056448_08057494_08059570)) KEEP(*(.game_code_and_rodata_08018b84_08019eec_0801a3e4_0801a8c8_08040b40_0804335c_080449c8_0804e5a4_08053af4_08056448_08057494_08059570.tail))
+    } > ROM
+
     /* effect_5afac — decompiled to C (src/effect_5afac.c, carved by tools/carve.py) */
     .effect_5afac 0x0805AFAC : {
         build/src/effect_5afac.o(.text)
