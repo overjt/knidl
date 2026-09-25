@@ -344,4 +344,32 @@ Matching decompilation of Kirby: The Amazing Mirror's predecessor, **Kirby: Nigh
   a three-agent fan-out after the coordinator matched 13 templates, with
   no handovers; new lessons 3.416-3.420 and 4.93-4.94.
 
+- Player action bodies, part 4, decompiled (issue #88): module M13
+  `0x08047FE8-0x0804CC7B` (19.1 KiB) landed as `src/player_47fe8.c`,
+  `src/player_49738.c`, `src/player_49b48.c`, `src/player_49f98.c`,
+  `src/player_4a54c.c`, `src/player_4ab70.c`, `src/player_4b5b4.c`,
+  `src/player_4b858.c` and `src/player_4c64c.c` (**all 24 functions, no
+  asm left in the range**, no `asm` statements and no `register` pins; two
+  zero-code `do { } while (0)` priority levers), so
+  `0x08043654-0x0804CC7B` (the end of M11, M12 and M13) is contiguous C.
+  The census name "large actor bank B" was wrong, as M12's was: 22 of the
+  24 functions are entries of M09's two player action tables - "enter"
+  coroutines 29, 44-48 and 50-54 of `gUnk_0873A748[62]` and per-frame
+  handlers 26, 41-45 and 47-51 of `gUnk_0873A840[57]`, each enter body k
+  followed by its handler k - 3 - and the other two are the ability
+  sprite-tile loaders `sub_08049738`/`sub_08049a58` that M09, M10, M14 and
+  M18 call (`void (void)`, as they already declared them).  Among the
+  actions: the ability get (action 29, mode 19: the stage freeze, the HUD
+  roulette, the new ability's tiles and a 25-way pose `switch` on the
+  ability), the twins of M11's actions 32-33 (44-45), a rolling move (50),
+  a screen-wide blast that drops the ability (51), a six-move stance (53,
+  `loop: switch` over eight states) and a charged three-way move (54).
+  Three census rows corrected in `tools/symdb.py` (two long-jump targets
+  inside the 5276-byte `sub_08047fe8`, which the census capped at 0x1000,
+  and the loop head of `sub_0804b858`, so 24, not 27 functions) and 31 ROM
+  tables named via `split_config.json` `data_symbols`; done by a
+  three-agent fan-out after the coordinator matched ten templates, with
+  two handovers and a two-agent race on the last function; new lessons
+  3.421-3.427 and 4.95-4.96.
+
 - Next milestones: decompile split/SDK modules to C using the validated per-zone compiler recipe (task system Thumb side, sound driver, then game code); grow `src/` one module at a time with `asmdiff.sh` on the module range.

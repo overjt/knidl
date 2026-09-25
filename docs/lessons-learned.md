@@ -2276,6 +2276,157 @@ the case also reused the switch head's `&gUnk_03002490` register (`ldr r2,
 [r2]`) instead of reloading it, and the function went from 316 differing
 bytes to MATCH.
 
+### 3.421 A dead load in front of two identical stores is a test whose arms jump optimisation merged
+`sub_0804b818` (M13's handler 49) has `ldr r0, [r2, #84]` in the middle of
+an arm, and nothing uses `r0` before it is overwritten.  A plain load
+cannot survive flow's dead-code pass, and a `*(vs32 *)&t->unk54;` is not
+something a 2002 source writes.  What the ROM shows is a test whose two
+arms were identical: `if (t->unk54 == 0) t->unk88->unk01 = 1; else
+t->unk88->unk01 = 1;`.  The branch and the second store are removed after
+the load has been allocated, so the load stays.  `< 0`, `>= 0` and `!= 0`
+all match; `== 0` is M11's own test of `unk54` before the same store
+(`src/stage_3cd60.c`).
+
+### 3.422 A pointer shared by every `case` pins one register; the ROM's per-arm registers mean no shared pointer
+`sub_08049738` uploads 1 to 4 tile rows from a per-ability ROM table in 16
+arms.  With a function-scope `u8 *src = gUnk_X;` in each arm it was 550
+bytes off: one pseudo gets one hard register, and the ROM keeps the table
+in r4 in some arms and in r6 in others.  Block-scoped `src` locals were
+still 413 bytes off.  Passing the symbol itself in every call
+(`sub_080017e4(1, gUnk_081BBD70 + 128, vram + 0x580, 128)`) matched: cse
+loads each table once per arm and derives `+ 128` etc. from that register.
+The arms with the same row layout come out as `ldr r4, =table; b shared`
+stubs, because cross-jumping merges their identical tails; write every
+`case` out in full and let jump2 do it.
+
+### 3.423 Two 8.8 unpacks of one value, one before a call and one after it
+In `sub_0804c4ac` the ROM computes `x << 8` for a call and then stores
+`x << 8`, OR-ed with 0xFF000000 when a flag register is set, into
+`Task.unk64` after the call.  The flag is a `movs r5, #0` before the call
+and a `cmp r5, #0` after it, although `x` can only be 0x100, 0x200 or
+0x300.  That is two copies of the 8.8 unpack of 3.415: `v = x << 8; if (x
+& 0x8000) v |= 0xFF000000; sub_080061c0(v, 0);` and then `w = x << 8; if
+(x & 0x8000) w |= 0xFF000000; u->unk64 = w;` in a block with its own `u =
+gUnk_03002490`.  cse gives the second `x & 0x8000` the register of
+the first one, computed before the call; combine folds the first test
+away through `nonzero_bits` (every value `x` is set to has bit 15 clear)
+and turns the AND into `movs r5, #0`, but it does not combine across a
+call, so the second test survives on that zero.  One
+unpack reused for both stores is 233-246 bytes off; every explicit flag
+variable stayed 5 bytes off.
+
+### 3.424 A `do { } while (0)` around ONE statement is a priority lever for a pseudo that statement uses
+Two M13 functions were a two-register swap from matching, and both closed
+with a loop that only raises reference counts (3.383, 3.412).  local-alloc
+and global-alloc allocate by `floor_log2(refs) * refs / live_length`
+(`.lreg` prints "used N times across M insns" for each pseudo), and each
+reference inside a loop counts once per loop level:
+* in handler 51 (`sub_0804ca84`) the task pointer `t` (4 refs across 25
+  insns, 0.40) lost r1 to a block's `struct PlayerState *p` (3 across 7,
+  0.43).  One `do { } while (0)` around the re-bind's `t->unk73 = 5;` was
+  not enough; two nested ones gave `t` the weight it needed and the
+  function matched;
+* in action 54 (`sub_0804c64c`) the address of `Task.unk88` (reused for a
+  second load after `unk42 &= 0xFDFF`) lost r2 to the halfword it loads.
+  `do { sub_0803e1b8(255, 0, gUnk_03002490->unk88->unk00); } while (0);`
+  doubles the reference in the call, and the swap is gone.
+Wrapping the statement that does NOT reference the pseudo, or the whole
+block, changes nothing; try the statement where the wanted pseudo's last
+use sits.
+
+### 3.425 A compare-tree switch whose ROM layout puts one arm between two dispatch tests
+Handler 51 (`sub_0804ca84`) dispatches `Task.unk73` with `cmp #4; beq;
+cmp #4; bgt R; [cmp #2; ble; cmp #0; bge] <case 0-2 body> R: cmp #5; ...
+<case 4 body> ...`: the body of cases 0-2 sits between the two halves of
+the compare tree.  Written in address order (`case 0: case 1: case 2:`
+first) the tree came out mirrored and 459 bytes off.  A sweep over the 24
+orders of the four arms (with and without an explicit `case 3:` or
+`default:`) found `case 4`, `case 0-2`, the labelled re-bind block,
+`case 5` as the source order (98 bytes, then 26), and the nested switch
+over `Task.unk46` inside case 4 likewise wants `case 0: case 1:` before
+`case 2: case 3:`, although the ROM places the 2-3 arm first.  When a
+switch's arms do not come out in the order they are written, sweep the
+permutations (3.259) before touching anything else.
+
+### 3.426 Small M13 shapes, one line each
+- A wait loop whose exit tests the ROM leaves at the top of the body
+  (`sub_0804c64c`'s state 4: `--unk14 == 0` and a newly-pressed B) is
+  `for (;;) { ...; if (a) goto done; if (b) goto done; TaskYieldTrampoline(1);
+  } done:`; `break`s rotate the loop (3.404 again).  Likewise an early
+  `if (x) break;` in a `do`/`while` body ahead of a nested `for` makes
+  `expand_end_loop` move that part to the end and enter the loop in the
+  middle (`sub_0804b858`, +8 bytes).
+- The one-store `unk73 = K; goto loop;` blocks right after
+  `sub_0804b858`'s jump table are the then-arms of `if (c) { t->unk73 =
+  K; goto loop; }` inside a `for (;;)` of one case: loop.c moves each out
+  of the loop to the barrier after the tablejump, in reverse source order.
+  No labels are needed.
+- The long `bl`s inside a big body are not always `goto`s: the seven to
+  `0x080493D2` in `sub_08047fe8` are plain `break`s from arms more than
+  2 KiB from the end of the switch, and the two in `sub_0804b858` are
+  cross-jumped `...; t->unk73 = 7; goto loop;` tails written in full in
+  each case (lesson 4.90's phantoms, seen from the source side).
+- A negative constant passed to a `u16` parameter becomes a pool load; the
+  ROM's `movs r1, #2; negs r1, r1` for `sub_080008e8(4, -2, mask)` proves
+  the parameter is signed (`s16 delta` in `src/player_47fe8.c`; the landed
+  `src/early_08e8.c` spells it `u16`, and two asm callers pass -4 and -2
+  the same way).
+- Two loops counting with the same field (`(s16)++t->unk6C <= N` twice,
+  nested) let loop.c merge and hoist their two `0xFFFF` constants, which
+  adds an `ands` before each `lsls/asrs`; one of them written `for (x = 0;
+  (s16)x <= N; x++)` matched (`sub_08047fe8`).
+- `u16 *keys = gUnk_03002458;` right before a loop makes loop.c hoist the
+  key array's address ahead of the task address, the ROM's order; both as
+  locals swaps the `adds` operands (`sub_08047fe8`).
+- `gUnk_02005550[(u = gUnk_03002490)->unk88->unk00] = *(struct M11R8
+  *)tbl; u->unk30 = -1;` loads the array base before the task and reuses
+  the task after the struct copy (3.416's order with a reused pointer).
+- `if (t->unk88->unk05 != 13) { if (t->unk88->unk05 == 5) t->unk73 = 4;
+  else t->unk73 = 0; ... }` gives one shared `strb` (`sub_08049f98`); a
+  compare tree over {1, 2, 3} whose arms fall into each other is the three
+  cases in source order, and `return;` inside the last one skips the
+  shared tail after the switch (`sub_0804a258`).
+- `sub_08006338((s16)(w->unk46 + a))` and `sub_0800634c((s16)(w->unk46 +
+  a))` truncate the sum (`ldrh; adds; lsls; asrs`) where
+  `sub_08006364(w->unk46 + a)` does not (`ldrsh; adds`) in the same
+  function (`sub_0804a258`): write the cast per call, as the ROM shows it.
+- A post-call `v = gUnk_03002490; v->unk50 = v->unk2C;` that reuses the
+  block's pointer costs a register copy; a fresh block-scoped `struct Task
+  *w = gUnk_03002490;` matches (`sub_0804b474`).
+- A handler arm that jumps into the middle of another arm's code is a
+  real `goto common;` to a label inside that arm (`case 0: case 2: ...;
+  common: ...`); writing the shared code twice and counting on
+  cross-jumping came out 8 bytes longer (`sub_0804ada8`).
+- A wait loop laid out `b test; dec: unk28--; yield: Yield(1); test: if
+  (unk28) goto dec; if (!key) goto yield;` is `while (1) { if (unk28 ==
+  0) { if (key) break; } else unk28--; TaskYieldTrampoline(1); }`
+  (`sub_0804a6bc`).
+- A branch threaded into the middle of a later test (`if (t->unk58 < 0 &&
+  gUnk_03005550.unk1) t->unk58 = 0;`) means the arm in front of it spelled
+  the same test itself, `if (gUnk_03002490->unk58 >= 0)`, with no task
+  local (`sub_0804a970`, 3.420 again).
+
+### 3.427 A preheader copy of `&gUnk_03002490` and a hoisted mask constant, both from loop.c
+The last M13 function, `sub_0804af54` (1312 bytes), was stuck at 158
+bytes with the right size.  Two loop-invariant copies were missing:
+* `adds r5, r4, #0` right before a two-level loop nest, after which the
+  code goes back to r4.  cse1 stops at the `NOTE_INSN_LOOP_END` of a
+  do-while (cse2 runs after loop.c and ignores it), so after the nest the
+  address of `gUnk_03002490` is loaded afresh unless a variable holding it
+  stays live across the nest.  What matched: a block-scoped `struct Task
+  **c = &gUnk_03002490;` declared right before the nest, plain
+  `gUnk_03002490->` inside the nest, and `(*c)->` only in the code after
+  it (M29/M30's idiom, seen from the far side of a loop).  `(*c)->`
+  everywhere swaps r4/r5 and reloads the task after a halfword store;
+  inside the nest it does nothing.
+* `ldr r0, =0xFBFF; adds r5, r0, #0` before a 32-iteration loop, used as
+  `ands r0, r5`.  loop.c only hoists a constant when threshold x savings x
+  lifetime reaches the loop's insn count, and `.loop` prints the verdict
+  ("savings 1 not desirable").  The `do { ... } while ((s16)++t->unk6C <=
+  31);` form has two more RTL insns than `for (t->unk6C = 0; (s16)t->unk6C
+  < 32; t->unk6C++)`, and those two insns decided it; the `for` form
+  hoisted the mask and matched.
+
 ## 4. Splitting ROM ranges into asm (tools/split.py)
 
 ### 4.1 objdump text only round-trips under `.syntax unified`
@@ -7476,6 +7627,37 @@ unreachable instructions in the phantom; the cause was the usual pool word
 0x08044A72`.  A `bl-target`-only row that is not 4-aligned and follows a
 function whose size is not a multiple of 4 is worth checking against the
 previous function's jump tables before anything else.
+
+### 4.95 A `rom-pointer` row can be a `b.n` in the middle of a big function
+`sub_080491ec` (evidence `rom-pointer`, `0x1E6` bytes) was the census row
+right after the capped `0x1000` row of M13's `sub_08047fe8` (4.90).  Its
+first halfword is `e0f1`, a `b.n` to `0x080493D2`, followed by a pad and
+three pool words of the arm in front of it; the code that resumes at
+`0x080491FC` is an arm of `sub_08047fe8`'s 25-way `switch` on the ability
+(the jump table at `0x080483B8` sends ability 18 there).  Its "pointers"
+were three coincidental words `0x080491ED` in graphics data
+(`0x082D8480`, `0x082D84D0`) and in `m4a_songs` (`0x085EF808`), so the
+evidence says nothing.  Two checks settle such a row: the previous
+function's jump tables (does a table word point inside the row?) and the
+row's first instruction (a `b.n` with no `push` in front of it is an arm's
+tail).  The row after it, `sub_080493d2` (`bl-target`, not 4-aligned,
+after a size that is not a multiple of 4), was another arm of the same
+switch and the target of seven long `bl`s from the others - 4.40's shape,
+reached by real `bl`s this time.  `sub_08047fe8` really runs
+`0x08047FE8-0x08049484` (0x149C bytes).
+
+### 4.96 A `bl-target` whose only caller is a `bl` at the bottom of its own row is a loop head
+`sub_0804b8a0` (`0xC0C` bytes, `bl-target`) had one caller, `f7ff f9ff` at
+`0x0804C49E`, inside its own row: a long `bl` back to its first
+instruction, followed by a pad and the pool word `0x03002490`.  The row
+before it, `sub_0804b858`, was only `0x48` bytes, loaded a pool word
+behind `0x0804B8A0` and fell into it with its last store; the pool word
+`0x0804C600` that re-binds action 53 points at `0x0804B858`, not at
+`0x0804B8A0`; and `0x0804B8A0` is the head of `switch (Task.unk73)` whose
+out-of-range `bhi` branches back to itself.  It is the `loop:` label of
+`sub_0804b858` (enter 53), which runs `0x0804B858-0x0804C4AC`.  A
+self-caller from inside the row is the first thing to check on a big
+`bl-target`: a real function is called from somewhere else.
 
 ## 5. Workflow that worked
 

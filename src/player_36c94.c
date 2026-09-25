@@ -91,7 +91,7 @@ s32 sub_08040340(void);
 s32 sub_0804042c(void);
 void sub_08040b40(s32 a0, s32 a1);           /* M11, still asm; M11's own spelling */
 void sub_080413a4(s32 a0);
-void sub_08049738(void);                     /* M12, still asm */
+void sub_08049738(void);                     /* M13, src/player_49738.c */
 void sub_08053940(s32 a, s32 b, s32 c);      /* M14, still asm */
 s32 sub_0805afac(s32 a0, s32 a1, s32 a2);
 s32 sub_08065100(s16 x, s16 y, u32 p2, u8 p3, u8 p4);
