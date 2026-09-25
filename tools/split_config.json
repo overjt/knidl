@@ -1140,6 +1140,8 @@
     "sub_08047bd8",
     "sub_08047c30",
     "sub_08047e74",
+    "sub_0804c64c",
+    "sub_0804ca84",
     "sub_0804e3a0",
     "sub_0805afac",
     "sub_0805b088",
@@ -7567,6 +7569,10 @@
     },
     {
       "name": "game_code_and_rodata_08018b84_08019eec_0801a3e4_0801a8c8_08040b40_0804335c_080449c8_08047fe8",
+      "chunk_bytes": 65536
+    },
+    {
+      "name": "game_code_and_rodata_08018b84_08019eec_0801a3e4_0801a8c8_08040b40_0804335c_080449c8_08047fe8_0804cc7c",
       "chunk_bytes": 65536
     },
     {
