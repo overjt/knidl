@@ -1119,6 +1119,7 @@
     "sub_0804462c",
     "sub_08044800",
     "sub_08044878",
+    "sub_0804e3a0",
     "sub_0805afac",
     "sub_0805b088",
     "sub_0805b110",
@@ -4874,7 +4875,8 @@
     "sub_080c1ebc",
     "sub_080c1f88",
     "sub_080c1f9c",
-    "sub_080c1fdc"
+    "sub_080c1fdc",
+    "sub_080c6258"
   ],
   "extra_labels": {
     "0x080CFC40": "_call_via_r4",
@@ -5755,6 +5757,7 @@
     "0x0873BE9C": "gUnk_0873BE9C",
     "0x0873BEB0": "gUnk_0873BEB0",
     "0x0873BEC4": "gUnk_0873BEC4",
+    "0x0873BEEC": "gUnk_0873BEEC",
     "0x0873C358": "gUnk_0873C358",
     "0x0873C36C": "gUnk_0873C36C",
     "0x0873CA54": "gUnk_0873CA54",
@@ -7512,6 +7515,10 @@
       "chunk_bytes": 65536
     },
     {
+      "name": "game_code_and_rodata_08018b84_08019eec_0801a3e4_0801a8c8_08040b40_0804335c_080449c8_0804e5a4",
+      "chunk_bytes": 65536
+    },
+    {
       "name": "game_code_and_rodata_080653ec_0806ef5c_0809113c_08093f64_08099b20_0809cb90_0809d994_0809f2f4_0809f9dc_080a00ec_080a1590_080b2fe8_080b5670",
       "chunk_bytes": 65536
     },
@@ -7537,6 +7544,10 @@
     },
     {
       "name": "game_code_and_rodata_080653ec_0806ef5c_080bf994_080c1ffc",
+      "chunk_bytes": 65536
+    },
+    {
+      "name": "game_code_and_rodata_080653ec_0806ef5c_080bf994_080c1ffc_080c6260",
       "chunk_bytes": 65536
     },
     {

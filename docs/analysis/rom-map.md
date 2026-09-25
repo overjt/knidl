@@ -1540,6 +1540,13 @@ child issues of #35 are created from it. Findings that belong in this document:
   have no `bl` caller at all and are reachable only through ROM pointer tables
   (2,562 `ptr` edges originate in `asset_metadata_index`, seg 18) — for this
   region, `rom-pointer`-only evidence is the norm, not a red flag.
+- **M14's `sub_0804e3a0` (`0x0804E3A0-0x0804E5A3`, stage manager B, issue
+  #90) is decompiled.** The
+  516-byte handler in `src/sub_0804e3a0.c` dispatches `Task.unk73` states 0-3,
+  counts down `Task.unk28`/`unk2C`, spawns the state-1 effect, and re-arms the
+  task through `sub_08006148` when the per-player input mask allows it. Its
+  common tail chooses the movement preset from `Task.unk7A`/`unk7B` and always
+  finishes through `sub_0803f9c0`.
 - **Seg 20 (`0x087E1D58`) is indexed by level code**, not only by the sound
   engine: the level/room builder module (`0x08021B18-0x0802969F`) loads it 21
   times, and its leaves point into seg 13 (`0x0836xxxx`) — per-room sample-bank
@@ -1547,7 +1554,9 @@ child issues of #35 are created from it. Findings that belong in this document:
 - **The `lib_misc`/`lib_rodata_fir_tables` consumer predicted in §2 seg 10 is
   one module**, `0x080C1FFC-0x080C641F` (22 pool refs into `lib_misc`, 7 into
   the FIR tables, and it contains the `0x080C2580-0x080C4FE8` functions named
-  there); the `gSramIdString` consumer at `0x080B7AF8` is the save module
+  there). Its signed divide-by-two helper `sub_080c6258`
+  (`0x080C6258-0x080C625F`) is decompiled in `src/sub_080c6258.c`; the
+  `gSramIdString` consumer at `0x080B7AF8` is the save module
   `0x080B6154-0x080B9D0B`, the only `WriteSramEx`/`ReadSram` caller in seg 7.
 - **The save file is four 256-byte slots at `gUnk_0200E600`, mirrored to
   `0x0E000200`** (M34, #94).  `sub_080b7a9c` writes one slot as two 256-byte
@@ -1567,4 +1576,3 @@ child issues of #35 are created from it. Findings that belong in this document:
   address (`REG_BG1HOFS` `0x04000014` or `REG_BG2HOFS` `0x04000018`) in
   `gUnk_0300101C`.  This is one of the twenty `0x04000000` references noted
   above.
-

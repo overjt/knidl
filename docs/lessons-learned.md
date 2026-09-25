@@ -7357,6 +7357,22 @@ cannot be a source-level `p1 = base;`.  It is `strength_reduce`'s giv init for
 to a MATCH, and from four `asm` statements down to none.
 
 
+### 4.92 Interior C carves must preserve reviewed module boundaries
+
+`tools/modmap.py` clusters each remaining `thumb_code` run independently.  An
+interior `c_code` carve therefore creates a new run whose dynamic-programming
+solution can absorb the start of the next reviewed module.  Carving the
+eight-byte `sub_080c6258` initially merged the remaining FIR-engine tail
+`0x080C6260-0x080C6420` with the intro/cutscene module at `0x080C6420`, losing
+the latter's curated name and evidence from `module-map.csv`.
+
+Keep such established seams in `FROZEN_MODULE_BOUNDARIES`: `split_range()`
+cuts clusterable runs at those addresses before applying the size/call-traffic
+clustering.  Do not blindly freeze every `MODULE_NAMES` key; doing so
+re-segments unrelated historical ranges and creates a large, noisy map diff.
+After an interior carve, run `make modmap` twice and verify that the second run
+is byte-identical.
+
 ## 5. Workflow that worked
 
 The canonical per-function loop (pick → m2c first pass → asmdiff iterate →
