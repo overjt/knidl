@@ -5156,7 +5156,7 @@ sub_08056320:
 	.word	sub_080059d8+1
 	.word	sub_08005d9c+1
 	.word	0x08056429
-	.word	0x0874C7CC
+	.word	gUnk_0874C7CC
 	.word	gUnk_03001EA4
 	.global	loc_08056374
 loc_08056374:

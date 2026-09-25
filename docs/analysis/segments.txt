@@ -155,9 +155,18 @@
 0x0804B5B4 0x0804B858 c_code player_4b5b4 # src/player_4b5b4.c (carved by tools/carve.py)
 0x0804B858 0x0804C64C c_code player_4b858 # src/player_4b858.c (carved by tools/carve.py)
 0x0804C64C 0x0804CC7C c_code player_4c64c # src/player_4c64c.c (carved by tools/carve.py)
-0x0804CC7C 0x0804E3A0 thumb_code game_code_and_rodata_08018b84_08019eec_0801a3e4_0801a8c8_08040b40_0804335c_080449c8_08047fe8_0804cc7c [split]
+0x0804CC7C 0x0804DC08 c_code player_4cc7c # src/player_4cc7c.c (carved by tools/carve.py)
+0x0804DC08 0x0804E3A0 c_code player_4dc08 # src/player_4dc08.c (carved by tools/carve.py)
 0x0804E3A0 0x0804E5A4 c_code sub_0804e3a0 # src/sub_0804e3a0.c (carved by tools/carve.py)
-0x0804E5A4 0x08052F6C thumb_code game_code_and_rodata_08018b84_08019eec_0801a3e4_0801a8c8_08040b40_0804335c_080449c8_0804e5a4 [split]
+0x0804E5A4 0x0804E78C c_code player_4e5a4 # src/player_4e5a4.c (carved by tools/carve.py)
+0x0804E78C 0x0804EE08 c_code player_4e78c # src/player_4e78c.c (carved by tools/carve.py)
+0x0804EE08 0x0804F614 c_code player_4ee08 # src/player_4ee08.c (carved by tools/carve.py)
+0x0804F614 0x0804F948 c_code player_4f614 # src/player_4f614.c (carved by tools/carve.py)
+0x0804F948 0x0804FFDC c_code player_4f948 # src/player_4f948.c (carved by tools/carve.py)
+0x0804FFDC 0x080507BC c_code player_4ffdc # src/player_4ffdc.c (carved by tools/carve.py)
+0x080507BC 0x080509EC c_code plobj_507bc # src/plobj_507bc.c (carved by tools/carve.py)
+0x080509EC 0x080514F8 c_code plobj_509ec # src/plobj_509ec.c (carved by tools/carve.py)
+0x080514F8 0x08052F6C thumb_code game_code_and_rodata_08018b84_08019eec_0801a3e4_0801a8c8_08040b40_0804335c_080449c8_0804e5a4 [split]
 0x08052F6C 0x08053AF4 c_code plobj_52f6c # src/plobj_52f6c.c (carved by tools/carve.py)
 0x08053AF4 0x0805AFAC thumb_code game_code_and_rodata_08018b84_08019eec_0801a3e4_0801a8c8_08040b40_0804335c_080449c8_0804e5a4_08053af4 [split]
 0x0805AFAC 0x08062584 c_code effect_5afac # src/effect_5afac.c (carved by tools/carve.py)
