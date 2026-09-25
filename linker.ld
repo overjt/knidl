@@ -802,8 +802,9 @@ SECTIONS
         build/src/plobj_514f8.o(.text)
     } > ROM
 
-    .game_code_and_rodata_08018b84_08019eec_0801a3e4_0801a8c8_08040b40_0804335c_080449c8_0804e5a4 0x0805239C : {
-        KEEP(*(.game_code_and_rodata_08018b84_08019eec_0801a3e4_0801a8c8_08040b40_0804335c_080449c8_0804e5a4)) KEEP(*(.game_code_and_rodata_08018b84_08019eec_0801a3e4_0801a8c8_08040b40_0804335c_080449c8_0804e5a4.tail))
+    /* plobj_5239c — decompiled to C (src/plobj_5239c.c, carved by tools/carve.py) */
+    .plobj_5239c 0x0805239C : {
+        build/src/plobj_5239c.o(.text)
     } > ROM
 
     /* plobj_52f6c — decompiled to C (src/plobj_52f6c.c, carved by tools/carve.py) */

@@ -9774,7 +9774,7 @@ loc_0805885a:
 	.word	sub_080059fc+1
 	.word	sub_08005d9c+1
 	.word	sub_08058e80+1
-	.word	0x08751E5C
+	.word	gUnk_08751E5C
 	.global	loc_08058878
 loc_08058878:
 	cmp	r1, #2
