@@ -4,7 +4,22 @@
 
 /* effect_57ce0.c (0x08057CE0-0x0805880F, issue #89).
  *
- * Task type #7: variants 35-39. */
+ * Task type #7 (the player's effect objects, see src/effect_53af4.c):
+ * variants 35-39, all spawned by M12's actions (39 also by M11 and M13).
+ * Variants 35 (sub_08057ce0, two sub-states), 36 (sub_08057e90) and 39
+ * (sub_08058720) are animations in world space (gUnk_08751D88,
+ * gUnk_08751DB0, gUnk_08751E00).  Variant 37 (sub_08057f90) stops other
+ * tasks: it fills the 20-slot table gUnk_0200B000 with 0xFFFF, collects the
+ * indices of the tasks of kinds 1, 2, 7 and 8 (Task.unk72) whose
+ * gUnk_03004CA0 entry is not -1 (while gUnk_03002444 is clear), stops them
+ * through the task skip mask (sub_0800663c, with gUnk_02006178 = 1), and
+ * after the yield releases them (sub_08006664, sub_080055b0(15, i)); then it
+ * walks the tasks 32-62 of kinds 0, 3, 4, 6 and 9 one at a time the same
+ * way.  Its callback sub_08058410 kills it once the player leaves mode 13
+ * and otherwise, while PlayerState.unk16 is set, registers the collider row
+ * gUnk_0873C04C (sub_0801a828).  Variant 38 (sub_08058460) rides on its
+ * spawner through four sub-states and draws through M11's sub_0803dfc8;
+ * sub_080586fc kills it once the player leaves mode 13. */
 
 /* M08's per-player camera positions (src/camera_28b8c.c) */
 struct CamPos { u16 x, y; };

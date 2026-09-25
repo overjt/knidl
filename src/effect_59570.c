@@ -4,7 +4,18 @@
 
 /* effect_59570.c (0x08059570-0x0805A357, issue #89).
  *
- * Task type #7: variants 42-44. */
+ * Task type #7 (the player's effect objects, see src/effect_53af4.c):
+ * variants 42-44, spawned by M13's actions (44 also by M14's action 49
+ * sub-actions).  Variant 42 (sub_08059570) is a six-way jump table over its
+ * sub-state, mixing forms that stay put and forms that move (gUnk_0874C804,
+ * gUnk_0874C828, gUnk_08751F0C); its callbacks are sub_08059aac (the
+ * collider rows gUnk_0873C23C and gUnk_0873C250 through sub_0801a828 in
+ * sub-states 3 and 4) and the draw hook sub_08059b18 (sub_08001a94 when on
+ * screen).  Variant 43 (sub_08059c28) has four sub-states with the draw
+ * hooks sub_08006040 and M11's sub_0803dfc8.  Variant 44 (sub_08059d7c)
+ * selects on the second byte of Task.unk18 (0x100-0x500), queues a VRAM
+ * transfer (sub_080017e4) and installs sub_0805a320, which kills it when the
+ * spawner's Task.unk73 is 8 or the player is in neither mode 13 nor mode 3. */
 
 extern u32 gUnk_08751F0C[];
 extern u32 gUnk_0874C804[];

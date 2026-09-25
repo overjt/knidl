@@ -4,7 +4,21 @@
 
 /* effect_56dd4.c (0x08056DD4-0x08057493, issue #89).
  *
- * Task type #7: variants 29-31. */
+ * Task type #7 (the player's effect objects, see src/effect_53af4.c):
+ * variants 29-31.  Variant 29 (sub_08056dd4, M11/M13) has three sub-states
+ * with random frames (sub_08002ee8); its callback sub_0805707c sets
+ * Task.unk28 once the player leaves mode 13 or its facing no longer matches
+ * the spawner's, and kills it when the ability is no longer 1 or when
+ * PlayerState.unk40 bit 8 is clear while the spawner's Task.unk7B bit 0 is
+ * set.  Variant 30 (sub_0805710c, M11/M13) rides on its spawner with the
+ * draw hook sub_08005fc8 (sub-state 0) or sub_08006040 and re-rolls its
+ * position every two frames from the {base, scale, amount} rows
+ * gUnk_0873BA8C[][2][3]; its callback sub_080573a4 kills it when the player
+ * leaves mode 13 or the spawner's Task.unk73 is not 1, and otherwise, while
+ * Task.unk28 is clear, registers the collider row gUnk_0873C038 (M05's
+ * sub_0801a828) and tests the block hit-box set gUnk_0873CC94 (M09's
+ * sub_08030804) at the spawner's position.  Variant 31 (sub_08057430, M12)
+ * is a single animation on its spawner (gUnk_08751CEC). */
 
 extern u32 gUnk_08751CA4[];
 extern u32 gUnk_08751CBC[];

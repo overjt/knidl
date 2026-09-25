@@ -4,13 +4,43 @@
 
 /* effect_53af4.c (0x08053AF4-0x0805432F, issue #89).
  *
- * Task type #7: body and variants 0-6. */
+ * Task type #7, the player's effect objects: the body and variants 0-6.
+ * Task type #7 (class 1) is started by M16's sub_0805afac/sub_0805b088
+ * (src/effect_5afac.c), and by M14's sub_08053940 when its type-6 bands are
+ * full, with Task.unk18 = variant << 24 | arg and the spawner's position,
+ * facing Task.unk43 and PlayerState Task.unk88 copied in.  The body
+ * sub_08053af4 links the task to its spawner the first time (Task.unk8C =
+ * &gUnk_03002790[Task.unk44], read back as a struct Task) and dispatches the
+ * variant, the top byte of Task.unk18, through the 49 entries of
+ * gUnk_0873B928, which fill this file and the eleven effect_*.c files after
+ * it.  A variant installs a motion hook in Task.unk00 (sub_080059d8 moves in
+ * world space, sub_080059fc keeps the position relative to the spawner's
+ * task, sub_08005a74 stays put), a draw hook in Task.unk0C, often a
+ * per-frame callback in Task.unk04 and an animation table in Task.unk38,
+ * then runs a TaskYieldTrampoline script and ends in TaskDispatchTrampoline;
+ * the functions after a body are the callbacks only it installs.  Variant 0
+ * (sub_08053b40, spawned by M10) rides on its spawner and cycles frames
+ * 0-11, hidden every other frame; sub_08053be0 copies the spawner's
+ * Task.unk13 with bit 2 cleared and kills it once PlayerState.unk40 bit 2
+ * clears, and its draw hook sub_08053c1c draws through M11's sub_0803dfc8 in
+ * player mode 10 and kills it otherwise.  Variants 1 and 2 (M10) are short
+ * puffs launched from 12 pixels behind the point they face, the sub-state
+ * picking the facing; 3 (M13's ability get) shows for three frames at a
+ * random offset from its spawner (sub_08053e34 is its empty Task.unk04
+ * stub); 4 and 5 fly one of eight random trajectories of the s16 rows
+ * gUnk_0873B9EC[6][8] (offsets and 8.8 velocities), 5 with sub_08005ca0's
+ * draw when PlayerState.unk37 == 2.  Variant 6 has two forms picked by the
+ * third byte of Task.unk18: a loop that places a puff 6 pixels behind the
+ * spawner and 8 below it and spawns the other form (a rising puff) each
+ * round until sub_08054298 sets Task.unk28 - when the player's mode differs
+ * from the one saved at the start or is 16, or, by the second byte of
+ * Task.unk18, when the spawner's Task.unk7A clears, a countdown in
+ * Task.unk30 runs out or M11's sub_0803fd20 no longer returns 4. */
 
 extern void (*gUnk_0873B928[])(void);   /* task type #7's 49 variants, indexed by Task.unk18 >> 24 */
 extern u32 gUnk_08751C44[];
 extern u32 gUnk_0874C600[];
 extern u32 gUnk_08751CEC[];
-/* sprite / animation tables stored to Task.unk38 */
 extern u32 gUnk_0874C500[];
 extern s16 gUnk_0873B9EC[];             /* [6][8]: s16 x, y offsets, 8.8 velocities */
 

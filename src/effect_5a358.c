@@ -4,7 +4,30 @@
 
 /* effect_5a358.c (0x0805A358-0x0805AFAB, issue #89).
  *
- * Task type #7: variants 45-48. */
+ * Task type #7 (the player's effect objects, see src/effect_53af4.c):
+ * variants 45-48.  Variant 45 (sub_0805a358, M13) rides on its spawner
+ * through three sub-states (gUnk_08751FCC); sub_0805a508 kills it once the
+ * player leaves mode 13.  Variant 46 (sub_0805a52c, M13) is the twin of
+ * variant 37 (src/effect_57ce0.c): the same stop and release of the tasks of
+ * kinds 1, 2, 7 and 8 through gUnk_0200B000 and the task skip mask, around a
+ * palette effect - it saves the palette buffer (CpuSet of gUnk_03001570 into
+ * gUnk_0200AF20) and calls M11's sub_0803f834/ sub_0803e3e4, M17's
+ * sub_08065e6c and a VRAM transfer.  Its callbacks are sub_0805ab04, which
+ * blends the saved palette towards gUnk_0873BC3E (while gUnk_03002444 is
+ * set) or gUnk_0873BB7E with sub_08003014 (80 or 96 colours by
+ * gUnk_02007D64), raising the ratio Task.unk2C by 10 up to 0x100 in state 1
+ * (with the collider row gUnk_0873C2B4 at the player's camera position
+ * gUnk_030055D0) and lowering it by 46 to 0 in state 2 (then calling M17's
+ * sub_08065ed0), and the draw hook sub_0805ac50.  Variant 47 (sub_0805acec,
+ * M13) is an animation in world space; its callback sub_0805ae00 clears
+ * Task.unk28 in sub-state 0 when the player leaves mode 13 or the spawner's
+ * Task.unk73 is not 4 (and copies the spawner's facing), and in the other
+ * sub-states tests the block hit-box set gUnk_0873CF8C (sub_08030804) at the
+ * spawner's position offset by PlayerState.unk24/unk26 (8.8).  Variant 48
+ * (sub_0805ae94, M14's action 55) rides on its spawner with the draw hook
+ * sub_0805af80 (shared with variant 34: M11's sub_0803dfc8 in player mode
+ * 13, otherwise the task dies) and the callback sub_0805af44, which kills it
+ * once the player leaves mode 13 or releases both A and B. */
 
 /* M08's per-player camera positions (src/camera_28b8c.c) */
 struct CamPos { u16 x, y; };
@@ -23,7 +46,7 @@ extern s8 gUnk_02007D64;
 extern u16 gUnk_02007F60[];
 extern u16 gUnk_03001570[];
 extern u16 gUnk_0200AF20[];
-extern u16 gUnk_0200B000[];             /* 20 task indices, 0xFFFF = empty; NON-volatile, signed reads cast (s16) (good/sub_08057f90.c) */
+extern u16 gUnk_0200B000[];             /* 20 task indices, 0xFFFF = empty; non-volatile, signed reads cast (s16) (variant 37 in effect_57ce0.c) */
 extern vs16 gUnk_03000FB8;
 extern u8 gUnk_03001F34;
 extern u16 gUnk_0873BC3E[];

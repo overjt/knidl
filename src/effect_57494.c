@@ -4,7 +4,16 @@
 
 /* effect_57494.c (0x08057494-0x08057CDF, issue #89).
  *
- * Task type #7: variants 32-34. */
+ * Task type #7 (the player's effect objects, see src/effect_53af4.c):
+ * variants 32-34.  Variant 32 (sub_08057494, M12/M13) is a nine-way jump
+ * table over its sub-state (cases 5-8 share one arm) with the per-sub-state
+ * rows gUnk_0873BAB0[][3] (8.8 x velocity, 8.8 y acceleration, frame); its
+ * sub-states respawn variant 32 and install sub_08057a10, which kills the
+ * task once the player leaves mode 13 or the spawner's Task.unk7B bit 0 is
+ * set.  Variant 33 (sub_08057a48, spawned by M14's task type #6) is a short
+ * animation from gUnk_08751BF4.  Variant 34 (sub_08057ad4, M12) has two
+ * sub-states with the draw hooks sub_08005f30 and sub_0805af80 (shared with
+ * variant 48) and the kill test sub_08057c98 (player mode 13). */
 
 extern u32 gUnk_08751CF0[];
 extern u16 gUnk_0873BAB0[][3];   /* per sub-state: 8.8 x velocity, 8.8 y acceleration, frame */

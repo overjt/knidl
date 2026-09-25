@@ -4,7 +4,26 @@
 
 /* effect_54a80.c (0x08054A80-0x0805545F, issue #89).
  *
- * Task type #7: variants 12-15. */
+ * Task type #7 (the player's effect objects, see src/effect_53af4.c):
+ * variants 12-15.  Variant 12 (sub_08054a80, M10/M11) has no motion or draw
+ * hook: it picks one of eight directions by the low three bits of Task.unk18
+ * and flies two particles from the spawner's position, rows gUnk_0873BA4C[i]
+ * and [i + 4] holding each one's 8.8 velocity and acceleration, which its
+ * Task.unk08 callback sub_08054b98 integrates every frame, drawing both with
+ * sub_08001a94 when on screen (sub_080063f0; camera-relative unless
+ * PlayerState.unk37 == 2).  Variant 13 (sub_08054d94, M11) plays the 23
+ * frames of gUnk_0873E640.  Variant 14 (sub_08054de8, M13's ability get)
+ * rides on its spawner through four sub-states of frame loops.  Variant 15
+ * (sub_08054fe4; M09, M11, M13) runs one of two endless particle loops
+ * chosen by the ability PlayerState.unk0D (1 or 2), re-seeding a random
+ * position around the spawner every round.  Its callbacks: sub_080552fc
+ * (Task.unk04) kills it when gUnk_02007CF0 or gUnk_02000020 is 1, the
+ * ability is no longer the one saved in Task.unk28 or the player is in mode
+ * 13 or 22, and otherwise hides it (sub_080055b0(8, ...)) while the
+ * spawner's Task.unk7B bit 0 is set, M11's sub_0803eaf8 has no offset
+ * (0x5A5A5A5A) or the player is in mode 20 with the spawner's Task.unk18
+ * set, adding that offset to its position; sub_080553d4 (Task.unk08) draws
+ * it with sub_08001a94 when on screen. */
 
 extern u32 gUnk_0874C6F4[];
 extern u16 gUnk_0873BA4C[][4];          /* [8 + 4][4]: 8.8 velocity x, y, acceleration x, y */

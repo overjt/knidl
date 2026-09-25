@@ -4,7 +4,15 @@
 
 /* effect_56448.c (0x08056448-0x08056DD3, issue #89).
  *
- * Task type #7: variants 26-28. */
+ * Task type #7 (the player's effect objects, see src/effect_53af4.c):
+ * variants 26-28.  Variant 26 (sub_08056448, M10) is a two-step animation
+ * from gUnk_0874C930.  Variant 27 (sub_080564ac, M13) has three sub-states
+ * (animation table gUnk_0874C828) and spawns its own sub-states.  Variant 28
+ * (sub_08056770) is the most common ability effect (twenty call sites in
+ * M11-M14): six sub-states over a jump table, some riding on the spawner and
+ * some in world space, respawning variant 28 in other sub-states; its
+ * per-frame callback sub_08056da8 sets Task.unk28 in sub-state 4 once the
+ * player leaves mode 13. */
 
 extern u32 gUnk_0874C930[];
 extern u32 gUnk_0874C828[];

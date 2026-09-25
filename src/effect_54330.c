@@ -4,7 +4,23 @@
 
 /* effect_54330.c (0x08054330-0x08054A7F, issue #89).
  *
- * Task type #7: variants 7-11. */
+ * Task type #7 (the player's effect objects, see src/effect_53af4.c):
+ * variants 7-11.  Variants 7 and 8 (sub_08054330, sub_08054538; spawned by
+ * M09-M11's movement code) are the two-sub-state puff of variant 6:
+ * sub-state 0 places puffs 6 pixels behind the spawner and 8 below it (7 up
+ * to three rounds, until its companion sub_08054504 sets Task.unk28 when the
+ * player leaves mode 2 or the spawner's Task.unk7A clears; 8 three puffs at
+ * decreasing speeds, killed by sub_08054838 once the player leaves mode 7),
+ * each spawning its own sub-state 1, a small rising puff.  Variants 9-11 are
+ * M09's player task effects: 9 (sub_0805485c) and 10 (sub_080548f0) play
+ * short animations from gUnk_0874C520, 9 first calling M11's
+ * sub_0803e34c(134, ...) when the spawner is moving down (Task.unk58 > 0)
+ * and 10 placed at the height the spawner passes in the low half of
+ * Task.unk18; 11 (sub_080549a4) asks M07's sub_08022624 about its position
+ * and, when that returns 0, rises while swaying left and right, until its
+ * companion sub_08054a44 (the collision box gUnk_0873CB74 through
+ * sub_0801c3a4) kills it once its Task.unk7B is clear or gUnk_03005550.unk1
+ * is set. */
 
 /* gUnk_03005550: M06's collision result block (src/terrain_1bcac.c spells it
    the same way except unk8, which M09 reads with ldrsh).  A 16-bit test of

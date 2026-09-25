@@ -405,4 +405,33 @@ Matching decompilation of Kirby: The Amazing Mirror's predecessor, **Kirby: Nigh
   three handovers and a two-agent race on the last function; new lessons
   3.428-3.434 and 4.97-4.98.
 
+- Task type #7, the player's effect objects, decompiled (issue #89): module
+  M15 `0x08053AF4-0x0805AFAB` (29.2 KiB) landed as `src/effect_53af4.c`,
+  `src/effect_54330.c`, `src/effect_54a80.c`, `src/effect_55460.c`,
+  `src/effect_55b24.c`, `src/effect_56448.c`, `src/effect_56dd4.c`,
+  `src/effect_57494.c`, `src/effect_57ce0.c`, `src/effect_58810.c`,
+  `src/effect_59570.c` and `src/effect_5a358.c` (**all 84 functions, no asm
+  left in the range**, no `asm` statements and no `register` pins), so
+  `0x08043654-0x080B566F` (the end of M11 through the head of M33) is one
+  contiguous C run.  The census name "link multiplayer mode" was wrong: its
+  "SIO multi-play x162" counted calls into `src/early_6464.c`, 149 of them
+  the random-range helpers `sub_080064ac`/`sub_080064dc`.  The range is
+  task type #7 (class 1, body `sub_08053af4`): the effect objects the
+  player's actions and M11's movement code spawn through M16's
+  `sub_0805afac`/`sub_0805b088` (`Task.unk18 = variant << 24 | arg`), 49
+  variant bodies `gUnk_0873B928[]` (motion/draw hooks, an animation table
+  and a yield script, most switching on the sub-state `Task.unk18 & 15`)
+  each followed by the 34 callbacks only they install (kill tests on the
+  player's mode `PlayerState.unk04`, end flags in `Task.unk28`, hit tests,
+  draw and palette callbacks).  Fourteen census rows corrected in
+  `tools/symdb.py` (eight `0xFFFFF000` pool-word phantoms folded, six
+  push-less companion leaves added, so 84, not 86 functions) and 50 ROM/RAM
+  cells named via `split_config.json` `data_symbols`; done by a four-agent
+  fan-out after the coordinator matched 23 functions (the body, the shared
+  callbacks, every push-less companion and the first variants); the last
+  register residues were agbcc's `local_alloc` sorting a block of exactly
+  three quantities wrongly (lesson 3.435, found with an instrumented
+  compiler, 4.100) and one pseudo per user variable (3.436); new lessons
+  3.435-3.442 and 4.99-4.100.
+
 - Next milestones: decompile split/SDK modules to C using the validated per-zone compiler recipe (task system Thumb side, sound driver, then game code); grow `src/` one module at a time with `asmdiff.sh` on the module range.

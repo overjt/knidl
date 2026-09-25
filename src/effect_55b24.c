@@ -4,7 +4,18 @@
 
 /* effect_55b24.c (0x08055B24-0x08056447, issue #89).
  *
- * Task type #7: variants 22-25. */
+ * Task type #7 (the player's effect objects, see src/effect_53af4.c):
+ * variants 22-25, spawned by M10's action 16 (sub_08037ed8) and by M11.
+ * Each is a loop of short animations around its spawner (22-24 at random
+ * offsets from sub_080064ac/sub_080064dc; tables gUnk_0874C718,
+ * gUnk_0874C7A4, gUnk_0874C7B4, gUnk_0874C7CC) that ends once its companion
+ * sets Task.unk28: sub_08055d24, sub_080560fc, sub_08056300 and sub_08056428
+ * do so when the player leaves mode 17 (in sub-state 0 of 22 and 23 also
+ * when the spawner's Task.unk7A is set).  Variant 24 (sub_0805614c) sets its
+ * velocities with sub_0800625c and alternates two directions; variant 25
+ * (sub_08056320) stays on the spawner's position, with Task.unk43 = 1 when
+ * gUnk_03001EA4 bit 0 is set and the inherited facing flipped otherwise;
+ * variant 23 (sub_08055d74, 904 bytes) is the longest. */
 
 extern u32 gUnk_0874C718[];
 extern u32 gUnk_0874C7A4[];

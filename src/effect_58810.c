@@ -4,7 +4,18 @@
 
 /* effect_58810.c (0x08058810-0x0805956F, issue #89).
  *
- * Task type #7: variants 40-41. */
+ * Task type #7 (the player's effect objects, see src/effect_53af4.c):
+ * variants 40 and 41, spawned by M13's ability get and actions.  Variant 40
+ * (sub_08058810, 1648 bytes) rides on its spawner through three sub-states,
+ * each a long yield script whose every step stops once Task.unk28 is set;
+ * its callback sub_08058e80 sets it when the player leaves mode 13 or its
+ * facing no longer matches the spawner's, and kills the task when the
+ * ability is no longer 13 or PlayerState.unk40 bit 8 is clear while the
+ * spawner's Task.unk7B bit 0 is set.  Variant 41 (sub_08058f10, 1488 bytes)
+ * is four sub-states in world space (gUnk_08751E7C); its callback
+ * sub_080594e0 sets Task.unk28 when the player leaves mode 13 (or, while
+ * PlayerState.unk40 bit 8 is clear, when the spawner's Task.unk73 is not 1)
+ * and kills it on the same unk40/unk7B test. */
 
 extern u32 gUnk_08751E5C[];
 extern u32 gUnk_08751E7C[];
