@@ -105,9 +105,9 @@ M103,0x0804AB70,0x0804B5B4,0xA44,4,4,0,0x291,0x520,7.3,7,0,0,0,0,8,2,player_4ab7
 M104,0x0804B5B4,0x0804B858,0x2A4,2,2,0,0x152,0x264,6.5,2,0,0,0,0,4,2,player_4b5b4,already landed (c_code)
 M105,0x0804B858,0x0804C64C,0xDF4,2,2,0,0x6FA,0xC54,4.3,4,2,0,0,0,5,3,player_4b858,already landed (c_code)
 M106,0x0804C64C,0x0804CC7C,0x630,2,2,0,0x318,0x438,7.6,4,1,0,0,0,4,2,player_4c64c,already landed (c_code)
-M107,0x0804CC7C,0x0804E3A0,0x1724,6,5,1,0x3DB,0xA4A,8.6,11,2,1,0,0,9,3,stage manager B (six-function head),six-function head of the original 0x0804CC7C-0x08054538 module before the sub_0804e3a0 carve
+M107,0x0804CC7C,0x0804E3A0,0x1724,5,5,1,0x4A0,0xA54,8.6,11,2,1,0,0,9,3,stage manager B (six-function head),six-function head of the original 0x0804CC7C-0x08054538 module before the sub_0804e3a0 carve
 M108,0x0804E3A0,0x0804E5A4,0x204,1,1,0,0x204,0x204,9.3,5,0,0,0,0,6,2,sub_0804e3a0,already landed (c_code)
-M109,0x0804E5A4,0x08054538,0x5F94,90,80,4,0x10F,0x414,11.0,18,5,4,2,13,13,2,stage manager B (remaining tail),90-function tail of the original 0x0804CC7C-0x08054538 module after the sub_0804e3a0 carve
+M109,0x0804E5A4,0x08054538,0x5F94,89,79,4,0x112,0x414,11.0,18,5,4,2,13,13,2,stage manager B (remaining tail),90-function tail of the original 0x0804CC7C-0x08054538 module after the sub_0804e3a0 carve
 M110,0x08054538,0x08057CE0,0x37A8,42,38,3,0x153,0x664,8.5,10,2,1,0,0,6,3,,
 M111,0x08057CE0,0x0805AF80,0x32A0,30,26,3,0x1B0,0x670,8.8,19,3,1,0,0,4,3,,
 M112,0x0805AF80,0x0805AFAC,0x2C,1,1,1,0x2C,0x2C,18.2,2,0,0,0,0,1,2,,
@@ -215,7 +215,7 @@ M213,0x080C0DE8,0x080C1FFC,0x1214,36,33,0,0x80,0x168,10.5,12,0,0,0,2,0,1,subgame
 M214,0x080C1FFC,0x080C6258,0x425C,76,27,3,0xDF,0x6B8,10.6,50,2,1,1,1,4,4,FIR-coefficient effect engine,the consumer rom-map section 2 seg 10 predicted: 22 pool refs into lib_misc + 7 into lib_rodata_fir_tables (0x080CFF00 tables); Div x10 / Mod x4 / __divsi3 x5; EWRAM x183
 M215,0x080C6258,0x080C6260,0x8,1,0,0,0x8,0x8,0.0,0,0,0,0,1,0,1,sub_080c6258,already landed (c_code)
 M216,0x080C6260,0x080C6420,0x1C0,5,0,1,0x59,0x90,17.0,14,0,0,0,1,4,2,FIR-coefficient effect engine (remaining tail),five-function tail of the 0x080C1FFC-0x080C6420 engine after the sub_080c6258 carve
-M217,0x080C6420,0x080CD89C,0x747C,110,70,6,0x10F,0x918,11.1,83,2,5,7,5,10,4,intro / cutscene / ending sequences?,TaskYieldTrampoline x826; 28 compressed_graphics refs; palette fade + BLD shadows; task types #260-264; called from AgbMain and the mode manager
+M217,0x080C6420,0x080CD89C,0x747C,109,70,6,0x111,0x918,11.1,83,2,5,7,5,10,4,intro / cutscene / ending sequences?,TaskYieldTrampoline x826; 28 compressed_graphics refs; palette fade + BLD shadows; task types #260-264; called from AgbMain and the mode manager
 M218,0x080CD89C,0x080CE520,0xC84,40,24,0,0x50,0x39E,2.5,2,0,0,0,3,1,1,m4a_1,already landed (thumb_code)
 M219,0x080CE520,0x080CEFB4,0xA94,31,0,0,0x57,0x118,14.6,8,0,0,0,7,1,2,m4a_c1,already landed (c_code)
 M220,0x080CEFB4,0x080CF588,0x5D4,4,2,0,0x175,0x474,7.2,1,0,0,0,0,0,2,m4a_cgb,already landed (c_code)

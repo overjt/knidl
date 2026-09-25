@@ -3,7 +3,6 @@
 @ Segment game_code_and_rodata_08018b84_08019eec_0801a3e4_0801a8c8_08040b40_0804335c_080449c8_08047fe8_0804cc7c, chunk 1/2: 0x0804CC7C-0x0804E0E0 (thumb_code, 0x1464 bytes)
 @ Functions (docs/analysis/symbols.csv):
 @   0x0804CC7C sub_0804cc7c
-@   0x0804D6C6 sub_0804d6c6
 @   0x0804D6D0 sub_0804d6d0
 @   0x0804DC08 sub_0804dc08
 @   0x0804DF00 sub_0804df00
@@ -64,7 +63,7 @@ loc_0804ccc8:
 	ldrb	r0, [r0, #0]
 	cmp	r0, #10
 	bls.n	loc_0804ccd6	@ 0x0804CCD6
-	bl	sub_0804d6c6	@ 0x0804D6C6
+	bl	loc_0804d6c6	@ 0x0804D6C6
 	.global	loc_0804ccd6
 loc_0804ccd6:
 	lsls	r0, r0, #2
@@ -645,7 +644,7 @@ loc_0804d0ee:
 	ands	r0, r1
 	cmp	r0, #0
 	bne.n	loc_0804d1bc	@ 0x0804D1BC
-	b.n	sub_0804d6c6	@ 0x0804D6C6
+	b.n	loc_0804d6c6	@ 0x0804D6C6
 	.global	loc_0804d1bc
 loc_0804d1bc:
 	adds	r0, r3, #0
@@ -1231,10 +1230,8 @@ loc_0804d6b8:
 	ldrh	r0, [r1, #0]
 	adds	r0, #1
 	strh	r0, [r1, #0]
-	.thumb_func
-	.global	sub_0804d6c6
-sub_0804d6c6:
-	.thumb
+	.global	loc_0804d6c6
+loc_0804d6c6:
 	bl	sub_08006138	@ 0x08006138
 	pop	{r4, r5}
 	pop	{r0}

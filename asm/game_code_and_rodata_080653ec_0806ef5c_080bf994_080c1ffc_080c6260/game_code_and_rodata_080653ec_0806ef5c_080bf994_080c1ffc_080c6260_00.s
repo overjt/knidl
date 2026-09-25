@@ -100,7 +100,6 @@
 @   0x080CC608 sub_080cc608
 @   0x080CC740 sub_080cc740
 @   0x080CC768 sub_080cc768
-@   0x080CCAA6 sub_080ccaa6
 @   0x080CCD10 sub_080ccd10
 @   0x080CCD4C sub_080ccd4c
 @   0x080CCE98 sub_080cce98
@@ -12620,10 +12619,8 @@ sub_080cc768:
 	strh	r0, [r1, #60]
 	movs	r0, #4
 	bl	TaskYieldTrampoline	@ 0x080CFDCC
-	.thumb_func
-	.global	sub_080ccaa6
-sub_080ccaa6:
-	.thumb
+	.global	loc_080ccaa6
+loc_080ccaa6:
 	ldr	r1, [r5, #0]
 	ldrh	r0, [r1, #60]
 	adds	r0, #1

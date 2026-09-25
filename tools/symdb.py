@@ -279,6 +279,38 @@ KNOWN_SYMBOLS = {
 # m4a_songs data segment surrounded by signed 8-bit PCM sample bytes; the
 # `pop {pc}` halfword passes the strict terminator check by accident.
 FALSE_POSITIVES = {
+    # --- M38 (issue #100), found by M14's census sweep ---
+    # 0x080CCAA6 is not a function: it is the middle of the yield script
+    # sub_080cc768 (`ldr r1, [r5]` with r4/r5/r7 and the stack frame already
+    # set up, no prologue; the `bl TaskYieldTrampoline` at 0x080CCAA2 falls
+    # into it).  Its only evidence is the lesson 4.40 phantom `bl`: the pool
+    # word 0xFFFFF000 at 0x080CBAA4 decodes as F000/FFFF, whose target is
+    # 0x080CBAA8 + 0xFFE.  sub_080cc768 really runs 0x080CC768-0x080CCD10.
+    0x080CCAA6,
+    # --- M14 (issue #90), a long-jump exit and two `b.n` arm tails ---
+    # 0x0804D6C6 is not a function: it is the exit of the player action
+    # sub_0804cc7c (entry 55 of the "enter" table gUnk_0873A748),
+    # `bl sub_08006138; pop {r4, r5}; pop {r0}; bx r0`, the epilogue that
+    # pairs with sub_0804cc7c's `push {r4, r5, lr}`.  The code in front of it
+    # (the `strh` at 0x0804D6C4) falls into it, and its only "callers" are
+    # the out-of-range `bls` + long `bl` at 0x0804CCD2 (the default of the
+    # function's own eleven-way `switch (Task.unk73)`, jump table at
+    # 0x0804CCE4) and a `b.n` at 0x0804D1BA, both inside its own row
+    # (lessons 4.39/4.96).  sub_0804cc7c really runs 0x0804CC7C-0x0804D6D0.
+    0x0804D6C6,
+    # 0x0804F6FA and 0x08051008 are `b.n` arm tails (lesson 4.95).
+    # 0x0804F6FA is `b.n 0x0804F756` right after sub_0804f614's pool word
+    # 0x00000CEA; the `bl TaskYieldTrampoline` at 0x0804F6F6 falls into it
+    # and sub_0804f614's six-entry `mov pc` jump table at 0x0804F660 sends
+    # cases 4 and 5 to 0x0804F700, inside the row, so sub_0804f614 really
+    # runs 0x0804F614-0x0804F76C.  0x08051008 is `b.n 0x08051028` after
+    # sub_08050f80's `movs r0, #9` (0x08051006), and that function's jump
+    # table at 0x08050FB0 sends cases 4 and 5 to 0x0805100A, so
+    # sub_08050f80 really runs 0x08050F80-0x08051124.  Their "rom-pointer"
+    # evidence is one coincidental word each, 0x0804F6FB at 0x086B361C and
+    # 0x08051009 at 0x08692178, in graphics data.
+    0x0804F6FA,
+    0x08051008,
     # --- M13 (issue #88), three long-jump targets inside two big actions ---
     # 0x080491EC and 0x080493D2 are not functions: they are code of the
     # player action sub_08047fe8 (entry 29 of the "enter" table
@@ -690,6 +722,13 @@ FALSE_POSITIVES = {
 # m4a.c function order and body shape (see the KNOWN_SYMBOLS comments);
 # they are injected as candidates and carry the "curated" evidence kind.
 EXTRA_THUMB_ENTRIES = {
+    # --- M14 (issue #90), one table entry the prologue filter missed ---
+    0x0804F5BC,  # entry 17 of enter 49's 26-entry sub-table gUnk_0873B664
+                 # (the word 0x0804F5BD at 0x0873B6A8): a `push`-less leaf
+                 # that starts `ldr r0, =gUnk_03002490` and ends `bx lr` at
+                 # 0x0804F612.  sub_0804f450 (entry 8) closes with its own
+                 # epilogue and its pool fills up to 0x0804F5BB, so it
+                 # really runs 0x0804F450-0x0804F5BC (0x16C, was 0x1C4).
     # --- M07 (issue #93), four dead exports the reachability sweep found ---
     # Nothing points at or `bl`s any of them, but in each case the PRECEDING
     # function closes with its own complete epilogue and literal pool before
