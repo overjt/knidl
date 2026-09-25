@@ -193,7 +193,7 @@ dispatches, pool density) — a planning aid, not a promise.
 | M12 | `0x080449C8-0x08047FE7` | 13.5 KiB | 22 | 0 | *** | player action bodies, part 3 (actions 34-43, handlers 30-40) - **landed (#87)** |
 | M13 | `0x08047FE8-0x0804CC7B` | 19.1 KiB | 27 | 0 | *** | player action bodies, part 4 (actions 29, 44-48, 50-54, handlers 26, 41-45, 47-51) - **landed (#88)** |
 | M14 | `0x0804CC7C-0x08053AF3` | 27.6 KiB | 84 | 2 | *** | player action bodies, part 5 (actions 30-31, 49, 55-58, handlers 27-28, 46, 52-55), the action 49/58 sub-action tables and task type #6 - **landed (#90)** |
-| M15 | `0x08053AF4-0x0805AFAB` | 29.2 KiB | 86 | 1 | *** | link multiplayer mode |
+| M15 | `0x08053AF4-0x0805AFAB` | 29.2 KiB | 84 | 1 | *** | player effect objects: task type #7 (body + 49 variants and their callbacks) - **landed (#89)** |
 | M16 | `0x0805AFAC-0x08062583` | 29.5 KiB | 89 | 1 | *** | effect spawner + two-level state machine (task types #81-#90) |
 | M17 | `0x08062584-0x080692FB` | 27.4 KiB | 244 | 2 | *** | struct Task field API (actor core) |
 | M18 | `0x080692FC-0x08070EBF` | 30.9 KiB | 256 | 4 | * | player-state task bodies (actor core part 2) - **landed (#64)** |
@@ -272,7 +272,7 @@ ordering inside it:
 | 24 | M33 HUD / overlay effects? | 0x316C | 108 | 3 | 7 | 8 | 9 |
 | 25 | M12 large actor bank A | 0x3620 | 22 | 3 | 7 | 1 | 0 |
 | 26 | M13 large actor bank B | 0x4C94 | 27 | 3 | 7 | 4 | 0 |
-| 27 | M15 link multiplayer mode | 0x74B8 | 86 | 3 | 7 | 0 | 1 |
+| 27 | M15 player effect objects (task type #7) - landed | 0x74B8 | 84 | 3 | 7 | 0 | 1 |
 | 28 | M17 struct Task field API (actor core) | 0x6D78 | 244 | 3 | 8 | 24 | 2 |
 | 29 | M14 stage manager B | 0x6E78 | 84 | 3 | 9 | 5 | 1 |
 | 30 | M37 FIR-coefficient effect engine | 0x4424 | 82 | 4 | 5 | 2 | 1 |
@@ -317,7 +317,7 @@ sub-issue of #35, so the numbering ascends with the recommended order):
 | 23 | #86 | M08 camera, BG map streaming, map-event tasks + stage objects #221-#236 - landed | `0x080296A0-0x08030803` | 28.3 KiB | 4 |
 | 24 | #87 | M12 large actor bank A | `0x080449C8-0x08047FE7` | 13.5 KiB | 4 |
 | 25 | #88 | M13 large actor bank B | `0x08047FE8-0x0804CC7B` | 19.1 KiB | 4 |
-| 26 | #89 | M15 link multiplayer mode | `0x08053AF4-0x0805AFAB` | 29.2 KiB | 4 |
+| 26 | #89 | M15 player effect objects (task type #7) - landed | `0x08053AF4-0x0805AFAB` | 29.2 KiB | 4 |
 | 27 | #90 | M14 stage manager B | `0x0804CC7C-0x08053AF3` | 27.6 KiB | 4 |
 | 28 | #91 | M10 stage script runner | `0x08036280-0x0803CD5F` | 26.7 KiB | 4 |
 | 29 | #92 | M09 stage manager A | `0x08030804-0x0803627F` | 22.6 KiB | 4 |
@@ -1161,7 +1161,64 @@ below is the pre-decompilation one, kept for the record.
 * **Known RAM cells touched** current game state (main dispatch) x1.
 * **Suggested batches** `0x0804CC7C` (10 fns), `0x0804E78C` (39 fns), `0x080506DC` (22 fns), `0x0805268C` (13 fns).
 
-### M15 `0x08053AF4-0x0805AFAB` - link multiplayer mode
+### M15 `0x08053AF4-0x0805AFAB` - player effect objects: task type #7 (body + 49 variants and their callbacks) - **landed (#89)**
+
+The range is decompiled and carved out of the split asm, so it now appears in
+`module-map.csv` as `c_code` rows instead of one clusterable module; the census
+below is the pre-decompilation one, kept for the record.
+
+* **Landed as** twelve files, all 84 functions byte-exact under the
+  `--newpb` recipe with no `asm` statements and no `register` pins,
+  50 new `split_config.json` `data_symbols`:
+  `src/effect_53af4.c` (`0x08053AF4-0x08054330`, 12 fns: the body and
+  variants 0-6), `src/effect_54330.c` (`0x08054330-0x08054A80`, 8:
+  variants 7-11), `src/effect_54a80.c` (`0x08054A80-0x08055460`, 7:
+  12-15), `src/effect_55460.c` (`0x08055460-0x08055B24`, 8: 16-21),
+  `src/effect_55b24.c` (`0x08055B24-0x08056448`, 8: 22-25),
+  `src/effect_56448.c` (`0x08056448-0x08056DD4`, 4: 26-28),
+  `src/effect_56dd4.c` (`0x08056DD4-0x08057494`, 5: 29-31),
+  `src/effect_57494.c` (`0x08057494-0x08057CE0`, 5: 32-34),
+  `src/effect_57ce0.c` (`0x08057CE0-0x08058810`, 7: 35-39),
+  `src/effect_58810.c` (`0x08058810-0x08059570`, 4: 40-41),
+  `src/effect_59570.c` (`0x08059570-0x0805A358`, 6: 42-44),
+  `src/effect_5a358.c` (`0x0805A358-0x0805AFAC`, 10: 45-48).  With it
+  `0x08043654-0x080B566F` (the end of M11 through the head of M33) is one
+  contiguous C run; no module boundary outside M15 moved, and the frozen
+  keys `0x08054538`/`0x08057CE0`/`0x0805AF80` in
+  `FROZEN_MODULE_BOUNDARIES` now fall inside `c_code` rows.
+* **What it turned out to be** (`docs/analysis/rom-map.md` §9): not the
+  link mode.  The census's "SIO multi-play (early_6464) x162" counted
+  every call into `src/early_6464.c`, and 149 of them are the random-range
+  helpers `sub_080064ac`/`sub_080064dc` (the rest its in-view test and
+  task skip-mask helpers); nothing here reaches the link driver.  The
+  range is **task type #7** (class 1, body `sub_08053af4`): the effect
+  objects the player's actions and M11's movement code spawn through
+  M16's `sub_0805afac(player, variant, arg)` / `sub_0805b088` (and M14's
+  `sub_08053940` as a fallback), with `Task.unk18 = variant << 24 | arg`.
+  The body links the task to its spawner (`Task.unk8C =
+  &gUnk_03002790[Task.unk44]`) and dispatches the variant through the
+  49 entries of `gUnk_0873B928`; each variant body (entry 16 sits after
+  entries 17-18) installs its motion, draw and per-frame hooks and an
+  animation table, runs a yield script, and is followed by the 34
+  callbacks only it installs (kill tests on the player's mode, end flags,
+  hit tests, draw and palette callbacks).  The low variants are mostly
+  spawned by M09-M11's movement code and M16, variants 27-48 by M11-M14's
+  ability moves (variant 28 from twenty call sites).
+* **Census fix** 84 functions, not 86: eight lesson 4.40 phantoms (each an
+  `0xFFFFF000` pool word decoded as `bl`, right after a body whose size is
+  not a multiple of 4) folded into the bodies they continue, six push-less
+  companion leaves the prologue filter missed added (lesson 4.99).  The
+  reachability sweep is clean, no pool load leaves its function, and the
+  census change moved nothing in `symdb_check`'s spot sample.
+* **How** Phase A by the coordinator (census, harness from M14, 23
+  functions: the body, the four shared callbacks, every push-less
+  companion and the first variants as style representatives), then four
+  subagents by address; the coordinator matched variants 4-6 and 15 and
+  landed completed files in five batches while they ran; two handovers and
+  one race (lesson 4.91) closed the rest.  The last two register residues
+  were agbcc bugs rather than source shapes: `local_alloc`'s sort of
+  exactly three quantities (lesson 3.435, found with an instrumented
+  compiler, 4.100) and one pseudo per user variable (3.436).
 
 * **Size** 29.2 KiB (`0x74b8`), 86 functions (78 reachable only through pointer tables), mean `0x15b`, largest `0x670`, pool words 8.8% of bytes.
 * **Difficulty** 3/6 - 24 distinct RAM cells, 5 jump-table dispatches, 17 functions >= `0x200`.
@@ -2431,7 +2488,10 @@ and reproducible. The **names are inference**, at three confidence levels:
   functions, sprite + RNG + yield, ~136 anchor tables between them.
 * M34 — save/records: the only `WriteSramEx`/`ReadSram` caller in the bulk.
 * M15 — link multiplayer mode: 162 calls into `early_6464` (SIO MULTI-PLAY),
-  five times more than the rest of the range put together.
+  five times more than the rest of the range put together.  **Wrong
+  (#89):** 149 of those calls are the random-range helpers
+  `sub_080064ac`/`sub_080064dc` that `early_6464` also holds; M15 is task
+  type #7, the player's effect objects, and never touches the link driver.
 * M03 — UI/menu bank: owns all 22 consecutive class-4 task types #238-#259 and
   the key auto-repeat + decimal-digit cells.
 * M02 — game mode / screen loader: owns the three class-0 tasks and the

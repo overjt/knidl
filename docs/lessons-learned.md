@@ -2541,6 +2541,166 @@ plain `if`; the `while` form then rotates the first test of the body's
 - `t->unk46 = -1` compiles to `movs #1; negs`, `= 0xFFFF` to a pooled
   `0x0000FFFF`; follow the listing (`sub_0804ee08` / `sub_0804efec`).
 
+### 3.435 local_alloc sorts a block with exactly three quantities wrongly
+M15's `sub_08053e38` stopped at four bytes: one `unk3C++` after a yield came
+out `ldr r0, [r6]; ldrh r1, [r0, #60]; adds r1, #1; strh r1, [r0, #60]`
+where the ROM has the pointer in r1 and the value in r0, while an identical
+increment further down matched.  The RTL of both sites was the same, down to
+the `.lreg` reference counts.  The cause is in `gcc/local-alloc.c`,
+`block_alloc`: for fewer than four quantities it sorts by hand,
+
+```c
+case 3:
+  if (qty_compare (0, 1) > 0) EXCHANGE (0, 1);
+  if (qty_compare (1, 2) > 0) EXCHANGE (2, 1);
+case 2:
+  if (qty_compare (0, 1) > 0) EXCHANGE (0, 1);
+```
+
+and `qty_compare` takes quantity NUMBERS, not `qty_order` slots, so with
+exactly three quantities the second test compares the wrong pair and the
+`case 2` test undoes the first swap.  The block holding the first increment
+had three block-local quantities (the task pointer, priority 5000, allocated
+first into r0; the tied value/sum pair, priority 20000; a table address
+after the next call); the second one had more and went through `qsort`,
+which orders by priority.  The fix is to change the number of block-local
+pseudos in that block: giving the table load after the next call its own
+variable (`c = tbl[i]; b = c << 8; if (c & 0x8000) ...` instead of reusing
+`a`) made it block-local, and the function matched; `sub_08053f70` fell the
+same way.  Found with a one-print instrumented agbcc (4.100).  A register
+swap between two single-block pseudos that no priority explains is worth a
+look at the block's quantity count.
+
+### 3.436 A variable reused in two blocks is one pseudo: split it where the ROM's register changes
+A user variable is one pseudo for the whole function (agbcc has no web
+splitting), so it gets one register everywhere.  `sub_08053f70` unpacks four
+8.8 velocities (`b = a << 8; if (a & 0x8000) b |= 0xFF000000;`); the ROM has
+`b` in r1 in the first block and in r2 in the second, which one `a`/`b` pair
+cannot give.  Separate variables per block (`a`/`b`, then `c`/`d` and
+`a`/`d`) matched.  The agents hit the same thing four more times: one shared
+`a`/`b` pair for every unpack left `sub_08057494` 4 bytes long with 882
+bytes differing, block-local `{ s32 a = row[k]; s32 b = a << 8; ... }`
+brought it to the right size; `i = t->unk18 & 7` and `j = (t->unk18 & 7) +
+4` had to be two variables in `sub_08054b98`; per-case task locals `u`/`v`/
+`w` took `sub_08059570` from 45 bytes and `sub_08059d7c` from 1398 to 0;
+reusing `t` for a second `case` of `sub_08054fe4` moved the head's
+`&gUnk_03002490` into a callee-saved register (304 bytes).  When the ROM
+keeps "the same" value in different registers in two blocks, the source had
+two variables.
+
+### 3.437 An unused assignment in both arms keeps a field address across the join
+Seven M15 bodies place a dust puff behind the spawner: the ROM computes `r1
+= &u->unk8C` in each arm of `if (u->unk43 == 1)`, loads the x coordinate,
+subtracts or adds 6 and, after the join, re-reads the pointer through the
+same `r1` for the y coordinate.  The plain `x = p->unk48 - 6; else x =
+p->unk48 + 6;` and the both-arms store (3.430) left 15 bytes, the value and
+the address swapped between r0 and r1; a ternary, a temporary, `!= 1` and a
+reload after the join did not move it.  What matched, first try in five
+functions (`sub_080540d0`, `sub_08054330`, `sub_08054538` three times,
+`sub_0805587c`, `sub_08057494`):
+
+```c
+if (u->unk43 == 1)
+    u->unk4C = ((p = (struct Task *)u->unk8C)->unk48 - 6) << 16;
+else
+    u->unk4C = ((p = (struct Task *)u->unk8C)->unk48 + 6) << 16;
+u->unk50 = (((struct Task *)u->unk8C)->unk4A + 8) << 16;
+```
+
+`p` is never read.  The assignment gives the pointer load its own pseudo in
+each arm, which moves the allocation; it is zero bytes of code.
+
+### 3.438 Loop form and layout in long yield scripts
+* A 16-step script whose every step ends `if (t->unk28 != 0) break;`:
+  `do { } while` and `for (;;)` put step 1 at the bottom behind an entry
+  jump; `while (1)` keeps the ROM's straight layout (`sub_08058810`).
+* `do { } while` loops inside jump-table cases let gcse's load PRE hoist the
+  `&gUnk_03002490` pool load above the `mov pc`, so every case head reuses
+  the prologue's register; `while (1) { ...; if (!(A && B)) break; }`
+  restores the ROM's fresh `ldr` and a literal pool after each case
+  (`sub_08059570`; the `.gcse` dump says "PRE: redundant insn").
+* A `while` whose test contains `abs()` is never rotated: gcc emits `b
+  <test>` at the loop start and the test at the bottom, which is what
+  `sub_08059d7c` shows; with a plain byte compare the test is copied to the
+  top.  `while (A) { ... } unk3C = 0xFFFF; while (!A) yield;` inside `for
+  (;;)` gives both layouts and the jump from the second loop's exit into the
+  first loop's body.
+* A counter loop that increments `unk6C` at the bottom matched as `...;
+  gUnk_03002490->unk6C++; } while ((s16)gUnk_03002490->unk6C <= 11);`; with
+  `(s16)++gUnk_03002490->unk6C <= 11` cse kept the `0xFFFF` of an `unk3C =
+  0xFFFF` store in the loop in a register and used it as the `ands` mask of
+  the u16 increment (8 bytes long, `sub_08053b40`).
+
+### 3.439 A 6-byte ROM row cannot be a struct
+agbcc pads a three-halfword struct to 8 bytes, so a row index compiled to
+`lsls #4` instead of the ROM's `* 12` (`sub_0805710c`, `sub_08057494`).  Declare such tables
+as arrays: `extern s16 gUnk_0873BA8C[][2][3];` for rows passed as
+`sub_080064dc(p[0], p[1], p[2])` (the `u8` parameters come out as `ldrb` of
+the `s16` elements), `extern u16 gUnk_0873BAB0[][3];`.
+
+### 3.440 Switch shapes of the task type #7 variants
+* `switch (t->unk18 & 0xFF0000) { case 0: ... case 0x10000: ... }` for a ROM
+  that tests 0 (`beq` far) and 0x10000 (`bne; b`) before both bodies;
+  `if/else if` puts the first body right after its test (`sub_080540d0`).
+* `switch (t->unk18 & 0xFF00)` over 0x100-0x500 in body order; the last
+  arm's `TaskDispatchTrampoline(); break;` plus the call after the switch
+  give the ROM's two back-to-back dispatch calls (`sub_08059d7c`).  An arm
+  ending in a plain `TaskDispatchTrampoline();` with no `break` falls into
+  the next case in the ROM too (`sub_08059570`, 3.403 again).
+* Two cases that share a tail after one differing store: `case 0: X; goto
+  common; case 1: Y; common: ...` (`sub_0805587c`).
+* A switch on the ability re-reads `unk88->unk0D` after storing it:
+  `u->unk28 = u->unk88->unk0D; switch (u->unk88->unk0D)` (`sub_08054fe4`).
+
+### 3.441 Small M15 shapes, one line each
+- The integer half of a 16.16 cell added to an `s16` field (`movs rK, #42;
+  ldrsh`) is `t->unk48 += t->unk28 >> 16;`; `((s16 *)&t->unk28)[1]` narrows
+  to one `ldrh` and is 4 bytes short (`sub_08054b98`).
+- `sub_08001a94` with its 5th/6th arguments computed before r0-r3 is M11's
+  `tbl = t->unk38; x = ...; y = ...; sub_08001a94(t->unk42, tbl[t->unk3C],
+  ..., x, (s16)y);`; inline expressions are evaluated last.  Its 6th
+  parameter is `s16` at the call sites (`lsls/asrs #16`) although
+  `src/early_1518.c` defines it `u16`; `sub_0800641c` and `sub_080063f0` are
+  tested unnarrowed (`bl; cmp r0, #0`), so the callers declare them `u32`/
+  `s32` (3.428).
+- A 2-D table whose base the ROM loads before the index: write the index in
+  the subscript (`tbl[t->unk18 & 7][0]`), not in a separate statement.
+- `for (i = 0; i < 23; i++) ... = tbl[i];` gives the ROM's `ldrh [r5]; adds
+  r5, #2; subs r4, #1; bge` count-down walk.
+- Two copies of a call, one per arm, are the call written in both arms (`if
+  (w->unk43 == 1) { w->unk3C = 1; TaskYieldTrampoline(2); } else { ... }`,
+  `sub_08056770`); identical arm tails that end in a store are merged.
+- `((volatile struct Task *)gUnk_03002490)->unk3C = 0xFFFF;` gives `ldrh;
+  orrs rK; strh`, a plain `= 0xFFFF` the pooled `ldr =0xFFFF; strh` (3.68).
+
+### 3.442 A plain array store is what lets loop.c strength-reduce a table address
+`sub_08057f90` (variant 37, 1152 bytes) collects up to 20 task indices into
+the EWRAM table `gUnk_0200B000` and walks them twice.  The ROM's collect
+loop loads the table's address fresh (`ldr rX, =0x0200B000`) after the
+other induction-variable inits: loop.c's reduced-giv init.  Every spelling
+that went through a pointer - a `(s16 *)` cast, a local pointer, `*p++` -
+let gcse's load PRE turn the in-loop symbol load into a copy of a PRE
+register, which loop.c then judged "not desirable" to move, so the address
+was never reduced.  What matched is the plainest form on the declared
+array, `extern u16 gUnk_0200B000[];` (non-volatile) and `gUnk_0200B000[k++]
+= i;`, with the reads in index form and `(s16)` casts:
+`while ((s16)gUnk_0200B000[n] != -1 && n != 20) ...`.  The fill `ldrh;
+orrs 0xFFFF; strh` is the non-volatile `gUnk_0200B000[i] |= 0xFFFF;` - on a
+`u16` array fold does not collapse it (3.71's `u8` rule, one size up); the
+volatile forms of 3.68 give the same three instructions but broke the
+collect loop.  Its twin `sub_0805a52c` (variant 46) followed the recipe.
+Two more loop-invariant lessons from the same agent:
+* A constant shared by two calls in a loop (`sub_08058460`) was hoisted only
+  when the 8.8 unpack was passed inline as the argument, `(x & 0x8000) ?
+  (x << 8) | 0xFF000000 : x << 8`; with `b = a << 8; if (a & 0x8000) b |=
+  ...` the constant is set after a conditional jump and used in two basic
+  blocks, and loop.c refuses to move it.
+* A table value passed twice to one call (`sub_08001cc8(g, x, x, 0)`,
+  `sub_0805ac50`) needs its own local; reading the table inline twice cost
+  93 bytes.  A two-case switch whose ROM does `cmp #1; beq; cmp #1; bgt; b
+  default` needs an empty `case 0: break;` (3.429 again) and a task local
+  per arm (`sub_0805ab04`).
+
 ## 4. Splitting ROM ranges into asm (tools/split.py)
 
 ### 4.1 objdump text only round-trips under `.syntax unified`
@@ -7798,6 +7958,33 @@ earlier landed file declared `void` (a declaration-only change), and one
 parameter spelled `s32`/`u32` in two files.  Strip the agents' casts at
 landing (3.428): two function-pointer casts had matched and would have
 shipped.
+
+### 4.99 Push-less companions show up as unreachable runs right after a pool
+M15's census missed six functions: leaf callbacks that start `ldr r0,
+=gUnk_03002490` and end `bx lr`, with no `push`, installed by the variant
+body in front of them.  The reachability sweep reported each as an
+unreachable run starting right after that body's literal pool, and a scan
+of the ROM for the run's address with the Thumb bit set found exactly one
+pointer each, a pool word of the body before it.  They go into
+`EXTRA_THUMB_ENTRIES`; after `make symbols` the census gives them
+`rom-pointer` evidence on its own.  The same range held eight lesson 4.40
+phantoms (`0xFFFFF000` pool words decoded as `bl`), one after every body
+whose size is not a multiple of 4 - one of them inside another phantom's
+"body", really a pool of the function before it.  Check both before any C:
+86 census rows were 84 functions.
+
+### 4.100 A one-print local-alloc trace settles a quantity-order question
+The instrumented agbcc of 4.77 prints reload's choices; the M15 register
+swap of 3.435 was in `local_alloc`, before reload.  One `fprintf` at the end
+of `block_alloc` in `gcc/local-alloc.c` (before "Now propagate the register
+assignments"), gated on `getenv ("RRTRACE")`, printing per `qty_order` slot
+the block, quantity, first pseudo, refs, size, birth, death, the priority
+formula of `QTY_CMP_PRI` (defined after `block_alloc`, so inline it) and
+`qty_phys_reg`, showed a priority-5000 quantity allocated before a
+priority-20000 one in a block of three.  Clone `jiangzhengwenjz/agbcc` at
+`59b966e` into `pending/`, apply the print, and build with `docker run --rm
+-v <clone>:/agbcc -w /agbcc knidl-builder make -C gcc -j1 normal` (two
+minutes); `rr.sh <file.c> 'LA b='` greps the lines.
 
 ## 5. Workflow that worked
 

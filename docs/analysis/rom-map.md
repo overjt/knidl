@@ -1104,6 +1104,80 @@ child issues of #35 are created from it. Findings that belong in this document:
     tails inside `sub_0804f614`'s and `sub_08050f80`'s jump tables
     (lessons 4.95, 4.96); `0x0804F5BC`, entry 17 of the sub-tables, a
     push-less leaf the prologue filter missed, was added.
+- **M15 (`0x08053AF4-0x0805AFAB`) is task type #7, the player's effect
+  objects.**  Decompiled in #89 as `src/effect_53af4.c`,
+  `src/effect_54330.c`, `src/effect_54a80.c`, `src/effect_55460.c`,
+  `src/effect_55b24.c`, `src/effect_56448.c`, `src/effect_56dd4.c`,
+  `src/effect_57494.c`, `src/effect_57ce0.c`, `src/effect_58810.c`,
+  `src/effect_59570.c` and `src/effect_5a358.c` (all 84 functions, no
+  `asm` statements, no `register` pins), so `0x08043654-0x080B566F` (the
+  end of M11 through the head of M33) is contiguous C.  The census name
+  "link multiplayer mode" was wrong: its "SIO multi-play x162" counted the
+  calls into `src/early_6464.c`, which are the random-range helpers
+  `sub_080064ac`/`sub_080064dc` (149 of them: `base + ((rand(256) *
+  amount) >> 8) * scale`, the second negated by the task's facing) and
+  the in-view / skip-mask helpers; nothing in M15 touches the link driver.
+  * **Spawning and dispatch.**  Task type #7 (class 1, entry word at
+    `0x0872FF6C` -> `sub_08053af4`) is started by M16's
+    `sub_0805afac(player, variant, arg)` (slot bands 16/20/24/28, then
+    4/7/10/13) and `sub_0805b088` (slots 32-62), and by M14's
+    `sub_08053940` as its last fallback; `Task.unk18 = variant << 24 |
+    arg`, and the spawner's position, facing `Task.unk43` and PlayerState
+    `Task.unk88` are copied in.  The body links the task to its spawner
+    the first time (`Task.unk80 = 0; Task.unk8C =
+    &gUnk_03002790[Task.unk44]`) and dispatches the variant through the
+    49 entries of **`gUnk_0873B928`** with `sub_08002e98` (entry 0 is a
+    real function; the table stops at the data word `0x00050000`).  The
+    entries are in address order except that entry 16 (`sub_0805569c`)
+    follows entries 17-18.
+  * **Variant bodies.**  Each installs a motion hook in `Task.unk00` -
+    `sub_080059d8` (world 16.16 position plus velocity), `sub_080059fc`
+    (position relative to the spawner's task `Task.unk44`) or
+    `sub_08005a74` (static) - a draw hook in `Task.unk0C`
+    (`sub_08005d9c` mostly, `sub_08005ca0` when PlayerState.unk37 == 2,
+    `sub_08005f30`, `sub_08005fc8`/`sub_08006040`, `sub_08005ea8`, or a
+    callback of its own), the sprite byte `Task.unk42` (5 for most), an animation
+    table in `Task.unk38` (`gUnk_0874C500`/`gUnk_0874C600`/... and
+    `gUnk_08751xxx`) and often a per-frame callback in `Task.unk04`, then
+    runs a yield script over the animation frame `Task.unk3C` and the
+    16.16 velocities `Task.unk54`/`unk58`/`unk5C`/`unk60` (8.8 values
+    from ROM rows, unpacked with `b = a << 8; if (a & 0x8000) b |=
+    0xFF000000;`), ending in `TaskDispatchTrampoline()`.  Most of the
+    bigger ones `switch (Task.unk18 & 15)` over sub-states, and 6, 7, 8,
+    20, 27, 28 and 32 respawn their own variant in another sub-state (a
+    trail of smaller copies); 6 and 44 select on the third or second byte
+    of `unk18` instead, 15 on the ability PlayerState.unk0D.  The 34
+    functions that follow the bodies are the callbacks only they install:
+    kill tests on the player's mode PlayerState.unk04 (`if (unk88->unk04
+    != 7) sub_08005654(gCurTaskIdx);`; most of variants 28-48 die once the
+    player leaves mode 13), end flags in `Task.unk28` (raised once the
+    player leaves mode 17 for 22-25, or from the spawner's `Task.unk7A`),
+    hit tests (`sub_08030804` with the hit-box sets `gUnk_0873CF8C` and
+    `gUnk_0873CC94`, `sub_0801c3a4`), draw callbacks (`sub_080553d4`,
+    `sub_08059b18`) and palette fades (`sub_0805ab04`).  `sub_0805af80` is
+    shared by variants 34 and 48; `sub_08057a10`, `sub_0805a320` and
+    `sub_0805ae00` are installed by several sub-states of variants 32, 44
+    and 47; `sub_08053e34` (variant 3's `Task.unk04`) is an empty stub.
+  * **Who spawns what** (variant: spawning modules in `src/`): 0-2 M10
+    (`player_36c94.c`, `player_3919c.c`); 3 M13's ability get; 4 M09, M11
+    and M14; 5 M10; 6-8 M09-M14's movement code (a puff 6 pixels behind
+    the spawner's feet that spawns smaller ones of its own variant); 9-11
+    M09's player task;
+    12-13 M10/M11; 14 M13's ability get; 15 M09, M11 and M13; 16, 17 and
+    19 M16 (and M17's actor core for 16); 18 and 20 M10; 21 M11; 22-26
+    M10's action 16 (`sub_08037ed8`) and M11; 27 M13; 28 twenty sites in
+    M11-M14 (the most common ability effect); 29-30 M11 and M13; 31 and
+    34-38 M12's actions; 32 M12/M13; 33 M14's task type #6; 39 M11-M13;
+    40-47 M13's ability get and actions; 44 also M14's action 49
+    sub-actions; 48 M14's action 55.
+  * **Census.**  84 functions, not 86: eight lesson 4.40 phantoms
+    (`0x0805613A`, `0x080572F6`, `0x080575B6`, `0x08057C46`, `0x08058E8E`,
+    `0x08058F8E`, `0x0805980E`, `0x0805A366`, each reached only by an
+    `0xFFFFF000` pool word decoded as `bl` and each the continuation of the
+    body in front of it) folded, and six push-less companion leaves the
+    prologue filter missed (`0x08054504`, `0x08055D24`, `0x080560FC`,
+    `0x08056300`, `0x08056428`, `0x08056DA8`, each pointed at by one pool
+    word of the body before it) added (lesson 4.99).
 - **M35 (`0x080B9D0C-0x080BDA2B`) is the sub-game framework plus one
   complete sub-game, a reaction-time duel.**  Decompiled in #95, in five files
   (`docs/analysis/module-map.md` §6).  The census name "game-mode flow + link

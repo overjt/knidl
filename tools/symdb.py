@@ -279,6 +279,40 @@ KNOWN_SYMBOLS = {
 # m4a_songs data segment surrounded by signed 8-bit PCM sample bytes; the
 # `pop {pc}` halfword passes the strict terminator check by accident.
 FALSE_POSITIVES = {
+    # --- M15 (issue #89), eight lesson 4.40 phantoms ---
+    # None of these is a function.  Each one's only evidence is a phantom
+    # `bl`: the pool word 0xFFFFF000 (halfwords F000/FFFF) at a 4-aligned
+    # address in an earlier M15 function's pool, whose "target" is that
+    # address + 4 + 0xFFE.  Each sits right after a body whose census size is
+    # not a multiple of 4, and that body's last instruction falls into it.
+    # Pool word / real owner (all in task type #7's 49-entry anchor table
+    # gUnk_0873B928 or its companions):
+    # 0x0805613A <- 0x08055138: the tail of the push-less companion
+    #   0x080560FC (added below), which runs 0x080560FC-0x0805614C.
+    # 0x080572F6 <- 0x080562F4: entry 30 sub_0805710c, whose `bl
+    #   sub_080064dc` at 0x080572F4 returns into it (0x0805710C-0x080573A4).
+    # 0x080575B6 <- 0x080565B4: entry 32 sub_08057494; its ten-entry `mov pc`
+    #   jump table at 0x080574E0 sends cases 2-9 past it
+    #   (0x08057494-0x08057A10).
+    # 0x08057C46 <- 0x08056C44: entry 34 sub_08057ad4 (0x08057AD4-0x08057C98).
+    # 0x08058E8E <- 0x08057E8C: the companion sub_08058e80, whose `ldr` at
+    #   0x08058E82 loads the pool word 0x08058F08 behind it
+    #   (0x08058E80-0x08058F10).
+    # 0x08058F8E <- 0x08057F8C: entry 41 sub_08058f10, whose `b.n`s at
+    #   0x08058F8A/0x08058F8C branch past it (0x08058F10-0x080594E0).
+    # 0x0805980E <- 0x0805880C: entry 42 sub_08059570; its seven-entry jump
+    #   table at 0x080595A8 sends cases 4-6 past it (0x08059570-0x08059AAC).
+    # 0x0805A366 <- 0x08059364 (inside the 0x08058F8E phantom, really
+    #   sub_08058f10's pool): entry 45 sub_0805a358, whose `ldr`s at
+    #   0x0805A35A-0x0805A362 load pool words behind it (0x0805A358-0x0805A508).
+    0x0805613A,
+    0x080572F6,
+    0x080575B6,
+    0x08057C46,
+    0x08058E8E,
+    0x08058F8E,
+    0x0805980E,
+    0x0805A366,
     # --- M38 (issue #100), found by M14's census sweep ---
     # 0x080CCAA6 is not a function: it is the middle of the yield script
     # sub_080cc768 (`ldr r1, [r5]` with r4/r5/r7 and the stack frame already
@@ -722,6 +756,25 @@ FALSE_POSITIVES = {
 # m4a.c function order and body shape (see the KNOWN_SYMBOLS comments);
 # they are injected as candidates and carry the "curated" evidence kind.
 EXTRA_THUMB_ENTRIES = {
+    # --- M15 (issue #89), six companions the prologue filter missed ---
+    # Push-less leaf callbacks (`ldr r0, =gUnk_03002490` ... `bx lr`) that
+    # the anchor-table entries of task type #7 install; each is pointed at
+    # (Thumb bit set) by one pool word of the entry body in front of it, and
+    # that body closes with its own epilogue and literal pool before the
+    # address, so none can be part of it.
+    0x08054504,  # word 0x08054505 at 0x080543A4 (sub_08054330's pool);
+                 # runs to 0x08054538 (sub_08054330 was 0x208, now 0x1D4).
+    0x08055D24,  # word 0x08055D25 at 0x08055C44 (sub_08055b24's pool);
+                 # runs to 0x08055D74 (sub_08055b24 was 0x250, now 0x200).
+    0x080560FC,  # word 0x080560FD at 0x0805600C (sub_08055d74's pool);
+                 # runs to 0x0805614C, through the 0x0805613A phantom
+                 # (sub_08055d74 was 0x3C6, now 0x388).
+    0x08056300,  # word 0x08056301 at 0x080562E8 (sub_0805614c's pool);
+                 # runs to 0x08056320 (sub_0805614c was 0x1D4, now 0x1B4).
+    0x08056428,  # word 0x08056429 at 0x08056368 (sub_08056320's pool);
+                 # runs to 0x08056448 (sub_08056320 was 0x128, now 0x108).
+    0x08056DA8,  # word 0x08056DA9 at 0x08056C88 (sub_08056770's pool);
+                 # runs to 0x08056DD4 (sub_08056770 was 0x664, now 0x638).
     # --- M14 (issue #90), one table entry the prologue filter missed ---
     0x0804F5BC,  # entry 17 of enter 49's 26-entry sub-table gUnk_0873B664
                  # (the word 0x0804F5BD at 0x0873B6A8): a `push`-less leaf
