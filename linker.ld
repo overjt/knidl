@@ -682,8 +682,9 @@ SECTIONS
         build/src/player_45d34.o(.text)
     } > ROM
 
-    .game_code_and_rodata_08018b84_08019eec_0801a3e4_0801a8c8_08040b40_0804335c_080449c8_08045d34 0x08046330 : {
-        KEEP(*(.game_code_and_rodata_08018b84_08019eec_0801a3e4_0801a8c8_08040b40_0804335c_080449c8_08045d34)) KEEP(*(.game_code_and_rodata_08018b84_08019eec_0801a3e4_0801a8c8_08040b40_0804335c_080449c8_08045d34.tail))
+    /* player_46330 — decompiled to C (src/player_46330.c, carved by tools/carve.py) */
+    .player_46330 0x08046330 : {
+        build/src/player_46330.o(.text)
     } > ROM
 
     /* player_46c00 — decompiled to C (src/player_46c00.c, carved by tools/carve.py) */
