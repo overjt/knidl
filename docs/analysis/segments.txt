@@ -157,7 +157,9 @@
 0x0804C64C 0x0804CC7C c_code player_4c64c # src/player_4c64c.c (carved by tools/carve.py)
 0x0804CC7C 0x0804E3A0 thumb_code game_code_and_rodata_08018b84_08019eec_0801a3e4_0801a8c8_08040b40_0804335c_080449c8_08047fe8_0804cc7c [split]
 0x0804E3A0 0x0804E5A4 c_code sub_0804e3a0 # src/sub_0804e3a0.c (carved by tools/carve.py)
-0x0804E5A4 0x0805AFAC thumb_code game_code_and_rodata_08018b84_08019eec_0801a3e4_0801a8c8_08040b40_0804335c_080449c8_0804e5a4 [split]
+0x0804E5A4 0x08052F6C thumb_code game_code_and_rodata_08018b84_08019eec_0801a3e4_0801a8c8_08040b40_0804335c_080449c8_0804e5a4 [split]
+0x08052F6C 0x08053AF4 c_code plobj_52f6c # src/plobj_52f6c.c (carved by tools/carve.py)
+0x08053AF4 0x0805AFAC thumb_code game_code_and_rodata_08018b84_08019eec_0801a3e4_0801a8c8_08040b40_0804335c_080449c8_0804e5a4_08053af4 [split]
 0x0805AFAC 0x08062584 c_code effect_5afac # src/effect_5afac.c (carved by tools/carve.py)
 0x08062584 0x08063698 c_code actor_62584 # src/actor_62584.c (carved by tools/carve.py)
 0x08063698 0x080653EC c_code actor_63698 # src/actor_63698.c (carved by tools/carve.py)

@@ -755,6 +755,15 @@ SECTIONS
         KEEP(*(.game_code_and_rodata_08018b84_08019eec_0801a3e4_0801a8c8_08040b40_0804335c_080449c8_0804e5a4)) KEEP(*(.game_code_and_rodata_08018b84_08019eec_0801a3e4_0801a8c8_08040b40_0804335c_080449c8_0804e5a4.tail))
     } > ROM
 
+    /* plobj_52f6c — decompiled to C (src/plobj_52f6c.c, carved by tools/carve.py) */
+    .plobj_52f6c 0x08052F6C : {
+        build/src/plobj_52f6c.o(.text)
+    } > ROM
+
+    .game_code_and_rodata_08018b84_08019eec_0801a3e4_0801a8c8_08040b40_0804335c_080449c8_0804e5a4_08053af4 0x08053AF4 : {
+        KEEP(*(.game_code_and_rodata_08018b84_08019eec_0801a3e4_0801a8c8_08040b40_0804335c_080449c8_0804e5a4_08053af4)) KEEP(*(.game_code_and_rodata_08018b84_08019eec_0801a3e4_0801a8c8_08040b40_0804335c_080449c8_0804e5a4_08053af4.tail))
+    } > ROM
+
     /* effect_5afac — decompiled to C (src/effect_5afac.c, carved by tools/carve.py) */
     .effect_5afac 0x0805AFAC : {
         build/src/effect_5afac.o(.text)
