@@ -822,8 +822,9 @@ SECTIONS
         build/src/effect_54330.o(.text)
     } > ROM
 
-    .game_code_and_rodata_08018b84_08019eec_0801a3e4_0801a8c8_08040b40_0804335c_080449c8_0804e5a4_08053af4 0x08054A80 : {
-        KEEP(*(.game_code_and_rodata_08018b84_08019eec_0801a3e4_0801a8c8_08040b40_0804335c_080449c8_0804e5a4_08053af4)) KEEP(*(.game_code_and_rodata_08018b84_08019eec_0801a3e4_0801a8c8_08040b40_0804335c_080449c8_0804e5a4_08053af4.tail))
+    /* effect_54a80 — decompiled to C (src/effect_54a80.c, carved by tools/carve.py) */
+    .effect_54a80 0x08054A80 : {
+        build/src/effect_54a80.o(.text)
     } > ROM
 
     /* effect_55460 — decompiled to C (src/effect_55460.c, carved by tools/carve.py) */
@@ -860,7 +861,12 @@ SECTIONS
         build/src/effect_58810.o(.text)
     } > ROM
 
-    .game_code_and_rodata_08018b84_08019eec_0801a3e4_0801a8c8_08040b40_0804335c_080449c8_0804e5a4_08053af4_08056448_08057494_08059570 0x08059570 : {
+    /* effect_59570 — decompiled to C (src/effect_59570.c, carved by tools/carve.py) */
+    .effect_59570 0x08059570 : {
+        build/src/effect_59570.o(.text)
+    } > ROM
+
+    .game_code_and_rodata_08018b84_08019eec_0801a3e4_0801a8c8_08040b40_0804335c_080449c8_0804e5a4_08053af4_08056448_08057494_08059570 0x0805A358 : {
         KEEP(*(.game_code_and_rodata_08018b84_08019eec_0801a3e4_0801a8c8_08040b40_0804335c_080449c8_0804e5a4_08053af4_08056448_08057494_08059570)) KEEP(*(.game_code_and_rodata_08018b84_08019eec_0801a3e4_0801a8c8_08040b40_0804335c_080449c8_0804e5a4_08053af4_08056448_08057494_08059570.tail))
     } > ROM
 
