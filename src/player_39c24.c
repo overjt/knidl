@@ -60,7 +60,7 @@ s32 sub_0804042c(void);
 void sub_08040808(s32 a0);
 void sub_08040b40(s32 a0, s32 a1);           /* M11, still asm; M11's own spelling */
 void sub_080413a4(s32 a0);
-void sub_08049738(void);                     /* M12, still asm */
+void sub_08049738(void);                     /* M13, src/player_49738.c */
 void sub_08049a58(void);
 s32 sub_0805afac(s32 a0, s32 a1, s32 a2);
 

@@ -191,7 +191,7 @@ dispatches, pool density) — a planning aid, not a promise.
 | M10 | `0x08036280-0x0803CD5F` | 26.7 KiB | 41 | 0 | **** | stage script runner |
 | M11 | `0x0803CD60-0x080449C7` | 31.1 KiB | 121 | 4 | ***** | player mode/state machine + stage support services |
 | M12 | `0x080449C8-0x08047FE7` | 13.5 KiB | 22 | 0 | *** | player action bodies, part 3 (actions 34-43, handlers 30-40) - **landed (#87)** |
-| M13 | `0x08047FE8-0x0804CC7B` | 19.1 KiB | 27 | 0 | *** | large actor bank B |
+| M13 | `0x08047FE8-0x0804CC7B` | 19.1 KiB | 27 | 0 | *** | player action bodies, part 4 (actions 29, 44-48, 50-54, handlers 26, 41-45, 47-51) - **landed (#88)** |
 | M14 | `0x0804CC7C-0x08053AF3` | 27.6 KiB | 84 | 2 | *** | stage manager B |
 | M15 | `0x08053AF4-0x0805AFAB` | 29.2 KiB | 86 | 1 | *** | link multiplayer mode |
 | M16 | `0x0805AFAC-0x08062583` | 29.5 KiB | 89 | 1 | *** | effect spawner + two-level state machine (task types #81-#90) |
@@ -1021,7 +1021,56 @@ below is the pre-decompilation one, kept for the record.
 * **Known RAM cells touched** DISPCNT shadow x1.
 * **Suggested batches** `0x080449C8` (13 fns), `0x0804676C` (9 fns).
 
-### M13 `0x08047FE8-0x0804CC7B` - large actor bank B
+### M13 `0x08047FE8-0x0804CC7B` - player action bodies, part 4 (actions 29, 44-48, 50-54, per-frame handlers 26, 41-45, 47-51) - **landed (#88)**
+
+The range is decompiled and carved out of the split asm, so it now appears in
+`module-map.csv` as `c_code` rows instead of one clusterable module; the census
+below is the pre-decompilation one, kept for the record.
+
+* **Landed as** nine files, one or more whole action pairs each (plus the
+  two shared tile loaders), all 24 functions byte-exact under the `--newpb`
+  recipe with no `asm` statements and no `register` pins, 31 new
+  `split_config.json` `data_symbols`:
+  `src/player_47fe8.c` (`0x08047FE8-0x08049738`, 2 fns),
+  `src/player_49738.c` (`0x08049738-0x08049B48`, 2),
+  `src/player_49b48.c` (`0x08049B48-0x08049F98`, 4),
+  `src/player_49f98.c` (`0x08049F98-0x0804A54C`, 2),
+  `src/player_4a54c.c` (`0x0804A54C-0x0804AB70`, 4),
+  `src/player_4ab70.c` (`0x0804AB70-0x0804B5B4`, 4),
+  `src/player_4b5b4.c` (`0x0804B5B4-0x0804B858`, 2),
+  `src/player_4b858.c` (`0x0804B858-0x0804C64C`, 2),
+  `src/player_4c64c.c` (`0x0804C64C-0x0804CC7C`, 2).
+  With it `0x08043654-0x0804CC7C` (the end of M11, M12 and M13) is
+  contiguous C, and M14's segment is named after its own start
+  (`..._0804cc7c`, lesson 4.74: `player_4c64c` was carved first).
+* **What it turned out to be** (`docs/analysis/rom-map.md` §9): not an
+  actor bank but the fourth part of M09's **player action machine**:
+  "enter" coroutines 29, 44-48 and 50-54 of `gUnk_0873A748[62]` and
+  per-frame handlers 26, 41-45 and 47-51 of `gUnk_0873A840[57]`, each
+  enter body k followed in the ROM by its handler k - 3, plus the ability
+  sprite-tile loaders `sub_08049738`/`sub_08049a58` (`void (void)`, called
+  by M09, M10, M14 and M18).  Named pieces: the ability get (action 29,
+  mode 19: the stage freeze, the HUD roulette, the new ability's tiles and
+  a 25-way pose `switch` on the ability), the twins of M11's actions 32-33
+  (44-45), a charge-and-release move (48), a rolling move that turns at
+  walls (50), a screen-wide blast that flashes the palette and drops the
+  ability (51), a six-move stance (53, 3156 bytes, `loop: switch`) and a
+  charged three-way move (54).
+* **Census fix** 24 functions, not 27: `0x080491EC` and `0x080493D2` are
+  code of `sub_08047fe8` (a `b.n` with coincidental `rom-pointer`
+  evidence and an arm reached by seven long `bl`s; the function runs
+  0x149C bytes past the census's 0x1000 cap) and `0x0804B8A0` is
+  `sub_0804b858`'s loop head, whose only "caller" was the long `bl` back
+  to it from its own row (lessons 4.95, 4.96).  The seven jump tables are
+  `switch`es on the ability (two), `Task.unk73` (four) and the animation
+  id `Task.unk3C` (one).
+* **How** Phase A (census, harness, the two shared helpers and eight small
+  bodies by the coordinator, M11/M12 twins cloned first try), then three
+  subagents grouped by carve file (one per big body, one for two files of
+  mid-size bodies) while the coordinator did `player_4c64c`; the two
+  agents that finished first took the coordinator's remaining files
+  (handovers), and the last function (`sub_0804af54`) was raced by two
+  agents through `variants.sh` (lesson 4.91); its owner matched it.
 
 * **Size** 19.1 KiB (`0x4c94`), 27 functions (23 reachable only through pointer tables), mean `0x2c2`, largest `0x1000`, pool words 7.6% of bytes.
 * **Difficulty** 3/6 - 16 distinct RAM cells, 7 jump-table dispatches, 12 functions >= `0x200`.

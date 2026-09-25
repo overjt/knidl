@@ -944,6 +944,89 @@ child issues of #35 are created from it. Findings that belong in this document:
     reachability sweep also needed objdump's IT-state artifact fixed
     (lesson 4.93): the `ldr r1, [pc, #48]` at `0x08046AB8` decoded as
     `ldreq`, which hid a pool word.
+- **M13 (`0x08047FE8-0x0804CC7B`) is the fourth part of the player's action
+  bodies.**  Decompiled in #88 as `src/player_47fe8.c`, `src/player_49738.c`,
+  `src/player_49b48.c`, `src/player_49f98.c`, `src/player_4a54c.c`,
+  `src/player_4ab70.c`, `src/player_4b5b4.c`, `src/player_4b858.c` and
+  `src/player_4c64c.c` (all 24 functions, no `asm` statements, no
+  `register` pins), so `0x08043654-0x0804CC7B` (the end of M11, M12 and
+  M13) is contiguous C.  The census name "large actor bank B" was wrong, as
+  M12's was: 22 of its 24 functions are entries of M09's two action
+  tables, and the other two are the player's ability sprite-tile loaders.
+  * **Table map.**  M13 holds "enter" coroutines **29, 44-48 and 50-54** of
+    `gUnk_0873A748[62]` and per-frame handlers **26, 41-45 and 47-51** of
+    `gUnk_0873A840[57]`, in address order enter k followed by its handler
+    k - 3 (the enter body sets `Task.unk15 = k - 3`): 29 `sub_08047fe8` /
+    26 `sub_08049484`, 44 `sub_08049b48` / 41 `sub_08049d1c`, 45
+    `sub_08049d94` / 42 `sub_08049edc`, 46 `sub_08049f98` / 43
+    `sub_0804a258`, 47 `sub_0804a54c` / 44 `sub_0804a6a0`, 48
+    `sub_0804a6bc` / 45 `sub_0804a970`, 50 `sub_0804ab70` / 47
+    `sub_0804ada8`, 51 `sub_0804af54` / 48 `sub_0804b474`, 52
+    `sub_0804b5b4` / 49 `sub_0804b818`, 53 `sub_0804b858` / 50
+    `sub_0804c4ac`, 54 `sub_0804c64c` / 51 `sub_0804ca84`.  The gaps are
+    M14's (`0x0804CC7C+`, still asm): enter 30-31, 49 and 55-58 and
+    handlers 27-28 (28 is `sub_0804e3a0`, PR #133's C) and 46.  Action 29
+    is mode 19, the others mode 13.
+  * **The shared helpers** `sub_08049738` and `sub_08049a58`
+    (`player_49738.c`, both `void (void)`), called from M09's player task
+    (`sub_08032688`, `sub_08032bd0`), M10's actions 13 and 21, action 29,
+    M14 and M18's ability objects (`src/actor_6ef5c.c`), upload the
+    ability's sprite tiles: `sub_08049738` switches on the ability
+    `PlayerState.unk0D` (25 cases; abilities 0, 1, 3, 5, 6, 8-11, 13, 14,
+    16, 19, 20 and 24 have tiles) and queues one to four 1D tile rows from
+    the ability's ROM table to the player's OBJ tiles at
+    `0x06010000 + (Task.unk40 & 0x7FF) * 32` through the VRAM transfer
+    queue `sub_080017e4` (ability 0 also queues its palette
+    `gUnk_081AC358` into OBJ palette slot `(Task.unk40 >> 12) + 1`);
+    `sub_08049a58` uploads ability 2's extra tiles `gUnk_081BE45C`.
+  * **What the actions do.**  Action 29 (`sub_08047fe8`) is the **ability
+    get**: it freezes the stage (`gUnk_03001F34 = 1`), starts the palette
+    fade `sub_080008e8` over the rows `gUnk_0873B534[player]` selects and,
+    when the swallowed object gives a random ability
+    (`PlayerState.unk0A > 1`), spins the HUD roulette - `PlayerState.unk0B`
+    steps through abilities 1-24 with the delays `gUnk_0873B634[]` until A
+    or B is pressed - then shows the ability on the HUD (`sub_08009fcc`,
+    `sub_0800a0dc`), loads its tiles (`sub_08049738`) and plays the
+    ability's own pose, a 25-way `switch` on `PlayerState.unk0D - 1` whose
+    arms install hit boxes, spawn effects and load extra tiles
+    (`sub_08049a58`); handler 26 then hands over to the ability's
+    follow-up (action 42 for ability 11, 55 for 24, M11's `sub_08040710`
+    otherwise).  Actions 44/45 are the twins of M11's actions 32/33
+    (`sub_0804462c`/`sub_08044878`, lesson 3.413).  Action 46 is a
+    five-state attack with the block hit-box set `gUnk_0873CF5C` that hands
+    the player over to mode 5 with handler 7; its handler picks one of five
+    animation rows by `|Task.unk54|`.  Action 47 is a scripted sequence and
+    48 a charge-and-release move whose handler plays the landing
+    (`gUnk_0873B654[gUnk_03005550.unk4]`).  Action 50
+    (`sub_0804ab70`) is a rolling move (velocity presets 63-65 through
+    M11's `sub_08040b40`, effects 28 and 45) whose handler turns the
+    player round at a wall (reversing `Task.unk54`/`unk5C`, and the facing
+    on a collision-block hit), jumps on B and registers the collider
+    `gUnk_0873C2A0`.  Action 51
+    (`sub_0804af54`) is a screen-wide blast with the stage frozen: it
+    switches the DISPCNT shadow `gUnk_03001ED8` to windowed BG1-BG3,
+    shakes the screen (`sub_080261d4(5)`), flashes the player's palette
+    `gUnk_080DC628[player]` towards `gUnk_082030B8` (`sub_08003014`),
+    restores the default script `gUnk_0873CB1C` and resets the HUD ability
+    panel (`sub_0800a008(0, -1, player)`); its handler 48 fades the
+    palette back and holds the player under the ceiling `Task.unk2C`.
+    Action 52 is a linear sequence that ends the same way.  Action 53
+    (`sub_0804b858`) is a stance with six moves (`loop: switch
+    (Task.unk73)`, eight states): the stance reads the input - up, back,
+    forward (`sub_0803f884`, kept in `gUnk_03001F2C`), down, A, leaving
+    the ground - or picks a random move (`gUnk_0873B65E[sub_08002ee8(4)]`)
+    when its 120-frame timer `PlayerState.unk14` runs out.  Action 54
+    (`sub_0804c64c`) is a charged three-way move: the held up/down keys
+    pick one of three releases after a charge of up to 120 frames or a
+    press of B.
+  * **Census.**  24 functions, not 27: `0x080491EC` (a `b.n` + pool words
+    with coincidental `rom-pointer` evidence in graphics and song data) and
+    `0x080493D2` (an arm reached by seven long `bl`s) are code of
+    `sub_08047fe8`, which really runs `0x08047FE8-0x08049483` (0x149C;
+    `symbols.csv` keeps the 0x1000 cap, lesson 4.90), and `0x0804B8A0` is
+    the loop head of `sub_0804b858`, which runs `0x0804B858-0x0804C4AB`
+    (lessons 4.95, 4.96).  The sweep found nothing else: no unreachable
+    code, no pool load outside its function.
 - **M35 (`0x080B9D0C-0x080BDA2B`) is the sub-game framework plus one
   complete sub-game, a reaction-time duel.**  Decompiled in #95, in five files
   (`docs/analysis/module-map.md` §6).  The census name "game-mode flow + link

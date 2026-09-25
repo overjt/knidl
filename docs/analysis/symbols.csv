@@ -1074,8 +1074,6 @@ vma,size,isa,evidence,name
 0x08047C30,0x244,thumb,rom-pointer,sub_08047c30
 0x08047E74,0x174,thumb,rom-pointer,sub_08047e74
 0x08047FE8,0x1000,thumb,rom-pointer,sub_08047fe8
-0x080491EC,0x1E6,thumb,rom-pointer,sub_080491ec
-0x080493D2,0xB2,thumb,bl-target,sub_080493d2
 0x08049484,0x2B4,thumb,rom-pointer,sub_08049484
 0x08049738,0x320,thumb,bl-target,sub_08049738
 0x08049A58,0xF0,thumb,bl-target,sub_08049a58
@@ -1095,8 +1093,7 @@ vma,size,isa,evidence,name
 0x0804B474,0x140,thumb,rom-pointer,sub_0804b474
 0x0804B5B4,0x264,thumb,rom-pointer,sub_0804b5b4
 0x0804B818,0x40,thumb,rom-pointer,sub_0804b818
-0x0804B858,0x48,thumb,rom-pointer,sub_0804b858
-0x0804B8A0,0xC0C,thumb,bl-target,sub_0804b8a0
+0x0804B858,0xC54,thumb,rom-pointer,sub_0804b858
 0x0804C4AC,0x1A0,thumb,rom-pointer,sub_0804c4ac
 0x0804C64C,0x438,thumb,rom-pointer,sub_0804c64c
 0x0804CA84,0x1F8,thumb,rom-pointer,sub_0804ca84
