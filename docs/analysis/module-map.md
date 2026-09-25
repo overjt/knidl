@@ -1214,7 +1214,7 @@ below is the pre-decompilation one, kept for the record.
   functions: the body, the four shared callbacks, every push-less
   companion and the first variants as style representatives), then four
   subagents by address; the coordinator matched variants 4-6 and 15 and
-  landed completed files in four batches while they ran; two handovers and
+  landed completed files in five batches while they ran; two handovers and
   one race (lesson 4.91) closed the rest.  The last two register residues
   were agbcc bugs rather than source shapes: `local_alloc`'s sort of
   exactly three quantities (lesson 3.435, found with an instrumented
