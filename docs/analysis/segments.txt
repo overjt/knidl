@@ -94,7 +94,7 @@
 0x0801C930 0x0801D394 c_code terrain_1c930 # src/terrain_1c930.c (carved by tools/carve.py)
 0x0801D394 0x0801D9C8 c_code terrain_1d394 # src/terrain_1d394.c (carved by tools/carve.py)
 0x0801D9C8 0x0801E178 c_code terrain_1d9c8 # src/terrain_1d9c8.c (carved by tools/carve.py)
-0x0801E178 0x0801ECD0 thumb_code game_code_and_rodata_08018b84_08019eec_0801a3e4_0801a8c8_0801c444_0801c690_0801c930 [split]
+0x0801E178 0x0801ECD0 c_code terrain_1e178 # src/terrain_1e178.c (carved by tools/carve.py)
 0x0801ECD0 0x0801F540 c_code terrain_1ecd0 # src/terrain_1ecd0.c (carved by tools/carve.py)
 0x0801F540 0x0801FF84 c_code terrain_1f540 # src/terrain_1f540.c (carved by tools/carve.py)
 0x0801FF84 0x0802069C c_code terrain_1ff84 # src/terrain_1ff84.c (carved by tools/carve.py)
