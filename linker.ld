@@ -390,8 +390,18 @@ SECTIONS
         build/src/player_1a76c.o(.text)
     } > ROM
 
-    .game_code_and_rodata_08018b84_08019eec_0801a3e4_0801a8c8 0x0801A8C8 : {
+    /* hitbox_1a8c8 — decompiled to C (src/hitbox_1a8c8.c, carved by tools/carve.py) */
+    .hitbox_1a8c8 0x0801A8C8 : {
+        build/src/hitbox_1a8c8.o(.text)
+    } > ROM
+
+    .game_code_and_rodata_08018b84_08019eec_0801a3e4_0801a8c8 0x0801B24C : {
         KEEP(*(.game_code_and_rodata_08018b84_08019eec_0801a3e4_0801a8c8)) KEEP(*(.game_code_and_rodata_08018b84_08019eec_0801a3e4_0801a8c8.tail))
+    } > ROM
+
+    /* hitbox_1b7dc — decompiled to C (src/hitbox_1b7dc.c, carved by tools/carve.py) */
+    .hitbox_1b7dc 0x0801B7DC : {
+        build/src/hitbox_1b7dc.o(.text)
     } > ROM
 
     /* terrain_1baa4 — decompiled to C (src/terrain_1baa4.c, carved by tools/carve.py) */
