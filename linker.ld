@@ -1478,8 +1478,9 @@ SECTIONS
         build/src/gameover_ccd4c.o(.text)
     } > ROM
 
-    .game_code_and_rodata_080653ec_0806ef5c_080bf994_080c1ffc_080c6260_080cbed4 0x080CD330 : {
-        KEEP(*(.game_code_and_rodata_080653ec_0806ef5c_080bf994_080c1ffc_080c6260_080cbed4)) KEEP(*(.game_code_and_rodata_080653ec_0806ef5c_080bf994_080c1ffc_080c6260_080cbed4.tail))
+    /* credits_cd330 — decompiled to C (src/credits_cd330.c, carved by tools/carve.py) */
+    .credits_cd330 0x080CD330 : {
+        build/src/credits_cd330.o(.text)
     } > ROM
 
     /* m4a sound engine: asm core (pret m4a_1.s equivalent; hand-scheduled
