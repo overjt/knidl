@@ -3041,6 +3041,217 @@ follow gcse's hash-bucket order (4.105; `H = 13772 + regno + const` mod
 insns to flip.  Both are the 4.105 class: the original evidently differs
 in a way later passes erase.
 
+### 3.458 cse learns `a == 1` from a branch and then swaps a later AND with `a`: the ROM ANDs the constant
+M06's wall probes test a tile attribute, `a = gUnk_08732EF0[t]; if (a == 1
+&& ...)`, and a few tests later AND a flag byte with the same attribute.
+After the `cmp; bne` cse records that `a` holds 1 on the fall-through
+path, and `fold_rtx` then puts the "constant" operand of the commutative
+`(and a x)` second: the RTL becomes `(and x a)`, regmove ties the AND to
+the dying `x` (`.regmove`: "Fixed operand 2 of insn N"), and the ROM's
+`ands rA, rX` (in place on the attribute register) or `adds r0, rA, #0;
+ands r0, rX` (when `a` is still live) comes out as `ands rX, rA`.  The
+ROM's sources avoid the swap in two ways, both confirmed by a match:
+* the mask is the constant itself: `(gUnk_03005530.unkB & 1) == 0` and
+  `!(gUnk_08732CF0[k] & 1)` (two table reads, not a `u8 m` local).  cse
+  substitutes the register known to hold 1 for the constant, the forward
+  tie fails and reload copies it (`sub_0801d9c8`, `sub_0801dc88`,
+  `sub_0801c690`, `sub_0801ff84`, and M07's `src/terrain_21b18.c`); by the
+  same substitution a store of the constant, `gUnk_03005530.unk0 = 1;`,
+  stores the attribute register;
+* the compare is on a cast, `s32 a = gUnk_08732EF0[t]; if ((s8)a == 1
+  ...)`: cse records the equivalence for `(sign_extend (subreg a))`, not
+  for `a`, and combine later drops the redundant extension, so the code is
+  still a plain `ldrsb; cmp #1` (`sub_0801c7cc`).
+A tile attribute the ROM loads with a direct `ldrsb` into the register it
+keeps is an `s32` local; an `s8` local keeps the raw byte and an extended
+copy.  A second block that holds it in another register gets its own local
+(`a2`, `a3`, lesson 3.436).
+
+### 3.459 A goto dispatch puts every direction test first and the bodies after them
+`sub_080207a0` and `sub_08020b38` (920 and 1528 bytes) test the velocity
+signs at the top and place the bodies after the tests in the order right,
+left, up, down, with long `b` jumps from the tests into the bodies; a few
+tests of the left and up bodies sit among the dispatch tests.  None of
+nested `if`/`else` (either polarity first), early returns, a flat chain
+or `do`/`while (0)` and `for (;;)` wrappers give that layout.  A goto
+dispatch does:
+
+```c
+    if (gUnk_03005598 == 0)
+        goto vert;
+    if (gUnk_03005598 > 0)
+        goto right;
+    goto left;
+vert:
+    if (gUnk_03005514 == 0)
+        return;
+    if (gUnk_03005514 > 0)
+        goto down;
+    goto up;
+right: ...; return;
+left: ...; return;
+up: ...; return;
+down: ...
+```
+
+The first jump pass moves the first block of each body that is reached
+by an unconditional `goto` (`left`, `up`) into the place of the goto and
+leaves a `b` to the rest, which is why those tests sit among the dispatch
+(m06-d).  `sub_0801c930` needed the same kind of goto for one arm whose head
+the ROM places before the other arm and whose tail after it (m06-b).  In
+`sub_08020b38` the check the up and down bodies share (ROM `0x080210DC`)
+had to be written out in full in BOTH bodies rather than reached through a
+`goto side`: with one copy after the join the `gUnk_03005570 & 15` value is
+reloaded and three addresses move to other registers, with two copies jump2
+cross-jumps them back into one (3.430 again).
+
+### 3.460 Small M06 shapes, one line each
+- Read the cell index `gUnk_03005578` at every use, `gUnk_087336F0[gUnk_03005578]`:
+  cse keeps it in one register and the table address loads first; a `u16 t`
+  copy loads the index before the table (`sub_0801ff84`, `sub_080207a0`).
+- A byte tested with a mask and then dead, `movs r0, #207; ands r0, r1`,
+  is written on a fresh table read, `(gUnk_08732DF0[gUnk_03005578] & 0xCF)`;
+  a `u8`/`u16`/`s32 k` local makes regmove do the AND in place (`ands r1,
+  r0`), the same tie as 3.458 (`sub_0801ecd0`, `sub_0801ff84`).
+- `p = gUnk_087328F0[u]; if (p[gUnk_03005508] != 0)` puts the pointer load
+  before the index load, as `src/terrain_214e0.c`'s helpers do;
+  `gUnk_087328F0[u][gUnk_03005508]` loads the index first (`sub_0801ecd0`,
+  `sub_0801dee8`).
+- Two side probes that each end `gUnk_03005570 += ...; gUnk_03005530.unk1++;`
+  are two `if` blocks, the first ending in `return` (3.430): the ROM keeps
+  `&gUnk_03005570` in r4 across each block's calls, which one tail after an
+  `||` cannot give (`sub_0801f800`, `sub_0801dee8`).
+- `gUnk_03005570 += sub_08021970(t) + 16;` is the ROM's `ldrh; adds #16;
+  adds r1, r0`; `gUnk_03005570 + 16 + sub_08021970(t)` adds 16 to the call's
+  result first (`sub_0801fc48`).
+- `tbl = gUnk_08735098; p = &tbl[gUnk_03005574];` loads the table address
+  before the index; `p = &gUnk_08735098[gUnk_03005574]` and the integer-add
+  spellings load the index first (`sub_0801dee8`).
+- `gUnk_03005518 = ps->unk5E + (box = (s8 *)ps->unk70)[0];` - the box
+  pointer assigned inside the first sum, the field operand first - puts the
+  destination's pool load in front of both loads (`sub_0801baa4`).
+- A 16.16 conversion whose sum the ROM computes in both arms, with only the
+  store shared, is `r = (x & 0x8000) ? ((x << 8) | 0xFF000000) + g : (x << 8)
+  + g; ps->unk54 = r;`; storing in both arms lets jump2 share the add too
+  (`sub_0801baa4`).
+- A copy variable's type changes live lengths without changing code: `u32
+  prev2 = prev` instead of `u8` shortens `&gUnk_03005570`'s live range from
+  204 to 200 insns and lifts its global-alloc priority (0.1350) above the
+  0x80 mask constant's (0.1333), the ROM's r8/r9 order (`sub_0802136c`).
+- In a `u16` call argument the operand order sets the global-allocation
+  order of the address registers: `gUnk_03005570 + gUnk_03005584 + 1`, not
+  the other order, gave `sub_0801c930`'s r7/r8; and one `tile` variable for
+  three roles (the wall-step selector, the slope tile and the
+  `sub_08021b18` result) fixed that function's r4/r5/r6 rotation (3.452).
+- `gUnk_03005530.unk4 = gUnk_08732CF0[t]; if (gUnk_03005530.unk4 != 0)`
+  compiles to `lsls r0, r2, #24; cmp r0, #0`: cse reuses the stored byte and
+  compares it in QImode (`sub_08020b38`).
+- `gUnk_03005530.unkB &= 0xFB; ... gUnk_03005530.unkB |= 4;` in one
+  extended basic block reuses the stored register with no reload (3.359
+  again), and in `sub_08020b38` it is what gives the ROM's `movs r1, #4;
+  adds r0, r4, #0; orrs r0, r1`, where a `u8 b = unkB & 0xFB` local ORs in
+  place (`orrs r4, r0`); in `sub_0801ff84` the same store shape matched with
+  the local, so try both.
+
+### 3.461 `if (c) goto A; goto B;` always becomes `b!c B; b A`: split the test for the other polarity
+jump.c first redirects a conditional jump through the jump at its target
+and only then inverts a jump over a jump, so any spelling of "if this
+holds go to `set`, else go to `clr`" - `&&`, `||`, a ternary, `!`, `== 0`
+or `!= 0`, one `goto` per arm - comes out `bne set; b clr`.  Where the ROM
+has `beq clr; b set` (`sub_0801ecd0`'s corner flags after a two-arm index
+choice), each part is its own negative test with its own `goto clr` and
+`goto set` comes last:
+
+```c
+    if (x != m)
+        goto clr;
+    if (c)
+    {
+        if (tbl[cell] == 0)
+            goto clr;
+    }
+    else if (tbl[cellBelow] == 0)
+        goto clr;
+    goto set;
+```
+
+The two arms' compares then cross-jump into the ROM's single shared tail
+(m06-c).
+
+### 3.462 PRE inserts a join's address loads at the end of each arm: write the test after the join in both arms
+`sub_0801e178` came out 16 bytes short with one `if (r == 0) goto floor;`
+after an if/else on `gUnk_03005530.unkD & 0x10`: the ROM loads
+`&gUnk_03005570` and `&gUnk_087336F0` at the end of EACH arm (differently
+in the two, one of them through `ip`), because gcse's PRE inserted the
+floor block's address loads into the arms.  With the test written once,
+the insertions were hoisted into the join and jump2 cross-jumped the arms'
+identical tails.  Written at the end of both arms (3.430), the ROM's
+insertion points and the length came back.  The `.gcse` dump's `PRE/HOIST:
+end of bb N ... copying expression K` lines, with the `.LCn` labels mapped
+through their REG_EQUAL notes, show where PRE puts each pooled address
+(m06-c, m06-d).  The same function needed one `s32 u` for three values
+(the push-out tile, the slope link `gUnk_08735018[...]` and the tile set
+used later: the ROM's r5 in every block, 3.436/3.452), `s32` because the
+push-out values need `lsls/lsrs` before the calls, while its twin
+`sub_0801ecd0` uses a `u16 u` for its two uses.
+
+### 3.463 Two passes that move blocks: merge_blocks after jump1, and loop.c's exit-block move
+The hit test `sub_0801a8c8` (1612 bytes) only matched once two block
+movers were accounted for (m06-a, m06-c):
+* **merge_blocks** (a Cygnus-local pass in `flow.c`, run at -O2 right after
+  the first jump pass) splices a block's only successor behind it when that
+  successor has one predecessor and is not the next block.  The ROM layout
+  "case 2/3's head right after the dispatch, its tail after the other
+  cases" means case 2/3 is the LAST case in the source and falls out of the
+  `switch`; written first with a `break`, the compare after the switch is
+  pulled into it and cse then follows it.  jump1 likewise moves the first
+  compare-and-branch of a block reached by a `break` up behind it, so a test
+  the ROM shows at the end of a case can be the first statement after the
+  switch.
+* **loop.c** (`find_and_verify_loops`) moves a block that follows a
+  conditional jump and leaves the loop (`return`, or a `goto` past it) to
+  after the loop end.  Hit paths the ROM keeps inside the loop must end at
+  an in-loop join - one `sub_0801b9e4(); return 1;` per if/else-if group,
+  or the call written in each arm, which jump2 cross-jumps later - and only
+  the ROM's own out-of-line blocks (`if (!c) { ...; return 1; }`) may be
+  lone exits.  How many blocks and stores stay in the loop also decides
+  whether the loop hoists `&gUnk_03002380` into r9 (`.loop`: "savings N not
+  desirable" when too few uses times lifetime beat the insn count).
+Small shapes from the same bank: `x = -b->unk00 + cell` gives the ROM's
+`ldrsb` then `ldrh` order where `cell - b->unk00` loads the cell first; the
+box edges came out as `(x - (u16)cam[0]) + b->unk02` written at each store
+with a block-scoped `s32 x` per branch; a `switch (k)` with `case 1:` /
+`case 2: case 3:` / `default:` keeps two signed compares that an `if`
+range test folds into `(k - 1) <= 2`; `== 0` on a byte cell that the ROM
+compares signed (`lsls; asrs`) needs `*(s8 *)&gUnk_03002460`, because
+`(s8)gUnk_03002460 == 0` is shortened to an unsigned byte compare; and
+reusing an earlier local for a later table load (`mask = gUnk_08732224[k];`)
+moved local-alloc's choice and freed r3 (`sub_0801af14`).
+
+### 3.464 A gcse reaching register set in N arms has its live length doubled N times: the parked `sub_0801b24c`
+`sub_0801b24c` (1424 bytes, the hit test against the third collider list)
+is parked on #84 at 44 differing bytes with the right size and frame,
+after three agents took it from 61; everything left is register
+allocation.  Its main residue is at the join after the three box arms:
+the ROM keeps `&gUnk_030054E4` in r4 and the `gUnk_03005390` value in r7,
+we get them swapped.  The address is a gcse "reaching register" set once
+at the end of each arm, and local-alloc's `update_equiv_regs`
+(`local-alloc.c`) doubles `REG_LIVE_LENGTH` for every set that carries a
+constant REG_EQUIV note, so three sets make it x8 (24 -> 192 insns in
+`.lreg`, priority 24/192), and it is allocated after the value (12/38);
+the ROM behaves as if it got at most one doubling, and no arm, join or
+statement-order rewrite changed that (m06-b).  Read `.lreg`'s "across N
+insns" for such copies, not `.flow`.  Two things that did help: in the
+table tests the ROM ties each AND to the struct field, which one `u32 m`
+local assigned before each test gives (`m = gUnk_08732278[k] | 0x4000; if
+(!(a->unk18 & m))`, reused at all three sites, 61 -> 44, m06-d), while an
+inline `(tbl[k] | 0x4000) & a->unk18` ties it to the table value; and the
+`p = gUnk_03005394` block comes out exactly like the ROM when the test and
+the index read the global (`if (gUnk_03005394 != 4) { p = gUnk_03005394;
+u = &gUnk_03002790[p]; }`), but that frees a register, `u` leaves the
+stack and two cases cross-jump (1380 bytes) - the original evidently has
+one more long-lived value nobody found.  Best sources on #84.
+
 ## 4. Splitting ROM ranges into asm (tools/split.py)
 
 ### 4.1 objdump text only round-trips under `.syntax unified`
@@ -8444,6 +8655,48 @@ installed as a callback by `sub_080cd70c`) and a 4.40 phantom
   `good/` resumed each from its transcript; finished agents then raced the
   last functions through `variants.sh` with per-agent prefixes (4.91), and
   the owner of one of them matched it minutes after the race began.
+
+### 4.108 Census and model notes from M06's second half
+- The four rows over 2 KiB are where the phantoms hide (4.39/4.90), and
+  M06 had one: `0x0801ECBA` (22 bytes, `bl-target`, not 4-aligned, after a
+  size that is not a multiple of 4) is the shared epilogue of the 2904-byte
+  `sub_0801e178`, reached by falling through, by eleven `b.n` and by the
+  long `bl` at `0x0801E470`.  The reachability sweep also reported a single
+  unreachable `bx lr` right after `sub_0801ff84`'s `pop {r0}; bx r0` and
+  alignment pad: an empty dead export (`0x08020698`, no pointer and no
+  `bl` anywhere in the ROM), added to `EXTRA_THUMB_ENTRIES` like M07's
+  `0x08026994` and landed as `void sub_08020698(void) {}`.
+- A module whose remaining asm is several holes between landed C files
+  needs a model that walks each hole's chunk files from the hole's first
+  function label to its end address and asserts that every hole was
+  walked; the landed ranges in between are simply absent from it
+  (`pending/m06/mod.py`, `HOLES`).  Snapshot the chunks before the first
+  carve, as usual.
+- One segment's split asm (`..._080207a0_0802136c`) printed its branch
+  labels as `.L_xxxxxxxx`, the others as `loc_xxxxxxxx`.  A model and sweep that only follow `loc_` targets
+  reported 114 unreachable instructions in `sub_0802136c`; normalising
+  `.L_` to `loc_` while parsing removed them.
+- Each interior carve renumbers the rows of `module-map.csv` after it; to
+  check that nothing outside the module moved, diff the CSV with the ID
+  column cut off (`cut -d, -f2-`): only rows inside `0x0801A8C8-0x08021B18`
+  changed after every M06 landing.
+
+### 4.109 Harness notes from M06
+- With every prototype already proven by landed callers, the phase-A seeds
+  were only style representatives; the fan-out started after the census
+  and `canon.h`, and the coordinator matched eleven functions and the
+  empty stub (the player's entry point, three wall probes, the ceiling
+  probe, the probe sets of three entry points, `sub_0801ff84`) while four
+  agents worked the big bodies; the whole run, census to last landing,
+  took about an hour and forty minutes.
+- Finished agents took over parked functions through `variants.sh`
+  (`sub_0801c690`, `sub_0802136c`, `sub_0801b24c`) and raced the last
+  bodies with per-agent prefixes (4.91); the coordinator took an
+  unstarted function (`sub_0801ff84`) off an agent's list by message
+  before it started, and handed `sub_08020b38` back with a draft once the
+  agent had found the goto dispatch (3.459).  An agent that re-runs
+  `tryall.sh` after a comment-only edit overwrites `good/` (4.81) - harmless
+  when the copy still matches, but recheck it before landing.
 
 ## 5. Workflow that worked
 

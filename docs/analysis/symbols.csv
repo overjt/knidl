@@ -492,8 +492,7 @@ vma,size,isa,evidence,name
 0x0801D9C8,0x2C0,thumb,bl-target,sub_0801d9c8
 0x0801DC88,0x260,thumb,bl-target,sub_0801dc88
 0x0801DEE8,0x290,thumb,bl-target,sub_0801dee8
-0x0801E178,0xB42,thumb,bl-target,sub_0801e178
-0x0801ECBA,0x16,thumb,bl-target,sub_0801ecba
+0x0801E178,0xB58,thumb,bl-target,sub_0801e178
 0x0801ECD0,0x870,thumb,bl-target,sub_0801ecd0
 0x0801F540,0x170,thumb,bl-target,sub_0801f540
 0x0801F6B0,0x150,thumb,bl-target,sub_0801f6b0
@@ -501,7 +500,8 @@ vma,size,isa,evidence,name
 0x0801F9B8,0x290,thumb,bl-target,sub_0801f9b8
 0x0801FC48,0x1E4,thumb,bl-target,sub_0801fc48
 0x0801FE2C,0x158,thumb,bl-target,sub_0801fe2c
-0x0801FF84,0x718,thumb,bl-target,sub_0801ff84
+0x0801FF84,0x714,thumb,bl-target,sub_0801ff84
+0x08020698,0x4,thumb,curated,sub_08020698
 0x0802069C,0x104,thumb,bl-target,sub_0802069c
 0x080207A0,0x398,thumb,bl-target,sub_080207a0
 0x08020B38,0x5F8,thumb,bl-target,sub_08020b38

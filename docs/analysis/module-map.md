@@ -187,7 +187,7 @@ dispatches, pool density) — a planning aid, not a promise.
 | M03 | `0x0800B920-0x08010357` | 18.6 KiB | 79 | 0 | **** | main menu + its 22 sprite tasks, BG scroll animator, stage sequence state - **landed (#99)** |
 | M04 | `0x08010358-0x08017667` | 28.8 KiB | 65 | 0 | *** | scripted-sequence bank: director + 50 of the 63 scripts |
 | M05 | `0x08017668-0x0801A8C7` | 12.6 KiB | 23 | 0 | *** | player-character animation bank + collision registry - **landed (#81)**, 20/23 |
-| M06 | `0x0801A8C8-0x08021B17` | 28.6 KiB | 56 | 0 | ***** | terrain / collision query (pure leaf) - **partial (#84)**, 28/55 (`sub_08021b0e` was a census false positive) |
+| M06 | `0x0801A8C8-0x08021B17` | 28.6 KiB | 55 | 0 | ***** | box-vs-terrain collision engine + actor-vs-collider hit tests - **landed (#84)**, 54/55 |
 | M07 | `0x08021B18-0x0802969F` | 30.9 KiB | 154 | 1 | ****** | level / room builder + tilemap upload |
 | M08 | `0x080296A0-0x08030803` | 28.3 KiB | 151 | 2 | *** | camera, BG map streaming, map-event tasks + stage objects #221-#236 - **landed (#86)** |
 | M09 | `0x08030804-0x0803627F` | 22.6 KiB | 60 | 0 | ***** | breakable blocks + the player task (#5) and first action bodies - **landed (#92)** |
@@ -238,7 +238,7 @@ module calls them and their signatures decide how `struct Task` is spelled in
 |---|---|---|---|
 | **1. Actor API** | M17, M18 | 58 KiB | Highest fan-in in the ROM (M17 is called from 24 modules). Establishes `struct Task` accessors, the field offsets every bank uses, and the `gUnk_03002490` idiom. M18 is difficulty 1. |
 | **2. Behaviour banks** | M19-M32, M36 | 282 KiB | Difficulty 1-2, **zero BL callers** (nothing depends on them), hundreds of tiny table-dispatched functions with repeating shapes. The bulk of the byte count and the safest parallel work: any number of agents can take one bank each. |
-| **3. Support libraries** | M06, M11, M16, M04, M05 | 130 KiB | Called by the engine modules; M06 is a pure leaf (no outgoing calls at all) and is the single best first target for anyone wanting an isolated slice. |
+| **3. Support libraries** | M06, M11, M16, M04, M05 | 130 KiB | Called by the engine modules. M06 was taken for a pure leaf here; #84 found that its probes call M06's own cell queries constantly and three outside helpers (M07's map lookups, M02's health counter). |
 | **4. Engine / stage managers** | M07, M08, M09, M10, M12, M13, M14, M15 | 198 KiB | The level, camera and stage machinery. Highest difficulty scores, densest pools, most jump tables; M07/M08 and M10/M11 are each one subsystem split across two issues. |
 | **5. Modes, UI, save, effects** | M02, M03, M33, M34, M35, M37, M38 | 124 KiB | Reachable from `AgbMain`; needs the game-state cells and the save format. M34 is the only SRAM user; M37 is sub-game 2 and the only user of the `0x080CFE2C-0x080D0600` rodata. |
 
@@ -282,7 +282,7 @@ ordering inside it:
 | 31 | M03 main menu + sprite tasks, BG scroll animator, stage sequence state - landed | 0x4A38 | 79 | 4 | 6 | 2 | 22 |
 | 32 | M38 the ending + the game-over screen - landed | 0x747C | 110 | 4 | 6 | 3 | 7 |
 | 33 | M10 stage script runner | 0x6AE0 | 41 | 4 | 11 | 1 | 0 |
-| 34 | M06 terrain / collision query (pure leaf) | 0x7250 | 56 | 5 | 2 | 11 | 0 |
+| 34 | M06 box-vs-terrain collision engine + hit tests - landed | 0x7250 | 55 | 5 | 2 | 11 | 0 |
 | 35 | M11 player mode/state machine + stage support services - landed | 0x7C68 | 121 | 5 | 9 | 18 | 0 |
 | 36 | M09 breakable blocks + player task and action bodies - landed | 0x5A7C | 60 | 5 | 13 | 13 | 1 |
 | 37 | M07 level / room builder + tilemap upload | 0x7B88 | 154 | 6 | 8 | 34 | 1 |
@@ -315,7 +315,7 @@ sub-issue of #35, so the numbering ascends with the recommended order):
 | 18 | #81 | M05 player-character driver? | `0x08017668-0x0801A8C7` | 12.6 KiB | 3 |
 | 19 | #82 | M04 scripted-sequence bank: director + 50 of the 63 scripts - landed | `0x08010358-0x08017667` | 28.8 KiB | 3 |
 | 20 | #83 | M16 effect spawner + two-level state machine (task types #81-#90) - landed | `0x0805AFAC-0x08062583` | 29.5 KiB | 3 |
-| 21 | #84 | M06 terrain / collision query (pure leaf) | `0x0801A8C8-0x08021B17` | 28.6 KiB | 3 |
+| 21 | #84 | M06 box-vs-terrain collision engine + hit tests - landed | `0x0801A8C8-0x08021B17` | 28.6 KiB | 3 |
 | 22 | #85 | M11 player mode/state machine + stage support services - landed | `0x0803CD60-0x080449C7` | 31.1 KiB | 3 |
 | 23 | #86 | M08 camera, BG map streaming, map-event tasks + stage objects #221-#236 - landed | `0x080296A0-0x08030803` | 28.3 KiB | 4 |
 | 24 | #87 | M12 large actor bank A | `0x080449C8-0x08047FE7` | 13.5 KiB | 4 |
@@ -585,7 +585,59 @@ below is the pre-decompilation one, kept for the record.
 * **Called from** M14 x21, M18 x10, M13 x8, M12 x7, M11 x6.
 * **Known RAM cells touched** BLDALPHA hi/lo shadows, BG3HOFS/BG3VOFS shadows (16.16, read as `vs32` and shifted right 16 for the camera), BLDCNT hi/lo shadows.
 
-### M06 `0x0801A8C8-0x08021B17` - terrain / collision query (pure leaf)
+### M06 `0x0801A8C8-0x08021B17` - the box-vs-terrain collision engine and the actor-vs-collider hit tests - **landed (#84) except one function**
+
+The range is decompiled and carved out of the split asm, so it now appears in
+`module-map.csv` as `c_code` rows instead of one clusterable module; the census
+below is the pre-decompilation one, kept for the record.
+
+* **Landed as** 21 files, 54 of the 55 functions byte-exact under the
+  `--newpb` recipe with no `asm` statements and no `register` pins.  PR
+  #131 landed 28 (`src/terrain_1bcac.c`, `terrain_1c30c.c`,
+  `terrain_1c444.c`, `terrain_1c51c.c`, `terrain_1c8dc.c`,
+  `terrain_2069c.c`, `terrain_21130.c`, `terrain_214e0.c`); the second run
+  the other 26: `src/hitbox_1a8c8.c` (`0x0801A8C8-0x0801B24C`, 2 fns),
+  `src/hitbox_1b7dc.c` (`0x0801B7DC-0x0801BAA4`, 3), `src/terrain_1baa4.c`
+  (1), `src/terrain_1c690.c` (2), `src/terrain_1c930.c` (1),
+  `src/terrain_1d394.c` (1), `src/terrain_1d9c8.c` (3),
+  `src/terrain_1e178.c` (1), `src/terrain_1ecd0.c` (1),
+  `src/terrain_1f540.c` (6), `src/terrain_1ff84.c` (2),
+  `src/terrain_207a0.c` (2) and `src/terrain_2136c.c` (1), with 19 new
+  `split_config.json` `data_symbols` (the hit-test cells
+  `0x03005294-0x030054F0` and three ROM tables).  **One function is left in
+  asm:** `sub_0801b24c` (`0x0801B24C-0x0801B7DC`, 1424 bytes, the hit test
+  against the third collider list), parked on #84 at 44 differing bytes
+  with the right size: a gcse copy of `&gUnk_030054E4` set in three arms
+  has its live length doubled per set by `update_equiv_regs`, which moves
+  it below the value it must outrank in global allocation (lesson 3.464).
+* **What it turned out to be** not a pure leaf, and two things.  The
+  collision engine: ten per-frame entry points (the nine `sub_0801bcac` ...
+  `sub_0801c444`, and `sub_0801baa4` for the player, which M09's player
+  task calls with the player's box record) load an actor's box, compute its
+  room-relative position and box corners, run a probe set chosen by the
+  sign of the x velocity `gUnk_03005598` and, for the first two, by the
+  on-ground flag `gUnk_03005530.unk6` (wall probes and a floor-follow probe
+  for a box standing on the ground, wall, ceiling and landing probes for
+  one in the air), then a room probe and the write-back into the task.  The
+  probes move the probe point `gUnk_03005560/gUnk_03005570` out of walls
+  and onto floors through M06's own cell queries (`src/terrain_214e0.c`)
+  and the per-tile-set tables `0x087328F0-0x08734FF0`, and fill the result
+  block `gUnk_03005530`.  And the actor-vs-collider hit tests M17/M18's
+  actors run (`src/actor_673ec.c`): `sub_0801b7dc` places the actor's
+  attack box against the camera rectangle, `sub_0801a8c8`/`sub_0801af14`/
+  `sub_0801b24c` test it against the three collider lists M05's
+  `sub_0801a828` fills, and `sub_0801b8e4`/`sub_0801b9e4` write the hit
+  (damage, knock-back direction through `ArcTan2`, the hit's details).
+  Outgoing calls: M06's own cell queries constantly, M07's
+  `sub_08021b18`/`sub_08022650`, M02's `sub_08009ee8` (the health
+  counter) and `ArcTan2`.
+* **Census fixes** (second run): `0x0801ECBA` folded (the shared epilogue of
+  `sub_0801e178`, reached by a long `bl`, lesson 4.39) and the empty dead
+  export `0x08020698` added, so 55 functions (lesson 4.108).
+* **Matching notes**: lessons 3.458-3.464 - cse's branch equivalence and
+  the constant-mask tests, the goto dispatch of the two last probes, the
+  two block movers, PRE insertions after a join.
+
 
 * **Size** 28.6 KiB (`0x7250`), 56 functions (1 reachable only through pointer tables), mean `0x20a`, largest `0xb42`, pool words 20.5% of bytes.
 * **Difficulty** 5/6 - 82 distinct RAM cells, 0 jump-table dispatches, 16 functions >= `0x200`.
@@ -2635,11 +2687,13 @@ and reproducible. The **names are inference**, at three confidence levels:
 
 **Plausible, marked `?` in the table**
 
-* M06 — "terrain/collision query". It is certainly a pure leaf over the IWRAM
-  block `0x030054E0-0x030055B0` and the `0x100`-stride index tables at
-  `0x087328F0-0x087339F0`, shared with M07. Whether that block is the room
-  descriptor or something else is untested. **To settle it:** name the block's
-  fields while decompiling M07, which builds it.
+* M06 — "terrain/collision query (pure leaf)" was half right: #84 decompiled it
+  and it is the box-vs-terrain collision engine (the IWRAM block
+  `0x03005504-0x030055B0` is its per-query state and result block, the
+  `0x100`-stride tables at `0x087328F0-0x08734FF0` are per-tile-set
+  attributes) plus the actor-vs-collider hit tests (`0x030052A0-0x030054F4`),
+  and it is not a leaf: its probes call its own cell queries and three
+  outside helpers (see §6).
 * M33 "HUD/overlay effects" rests on one strong hint (class-4 tasks +
   LZ77-to-VRAM).  M38's "intro/cutscene/ending" hint (compressed-graphics
   refs + fades) was half right: #100 decompiled it and it is the ending (two
