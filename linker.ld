@@ -696,8 +696,9 @@ SECTIONS
         build/src/stage_3cd60.o(.text)
     } > ROM
 
-    .game_code_and_rodata_08018b84_08019eec_0801a3e4_0801a8c8_08040b40 0x08040B40 : {
-        KEEP(*(.game_code_and_rodata_08018b84_08019eec_0801a3e4_0801a8c8_08040b40)) KEEP(*(.game_code_and_rodata_08018b84_08019eec_0801a3e4_0801a8c8_08040b40.tail))
+    /* stage_40b40 — decompiled to C (src/stage_40b40.c, carved by tools/carve.py) */
+    .stage_40b40 0x08040B40 : {
+        build/src/stage_40b40.o(.text)
     } > ROM
 
     /* stage_413a4 — decompiled to C (src/stage_413a4.c, carved by tools/carve.py) */
@@ -705,8 +706,9 @@ SECTIONS
         build/src/stage_413a4.o(.text)
     } > ROM
 
-    .game_code_and_rodata_08018b84_08019eec_0801a3e4_0801a8c8_08040b40_0804335c 0x0804335C : {
-        KEEP(*(.game_code_and_rodata_08018b84_08019eec_0801a3e4_0801a8c8_08040b40_0804335c)) KEEP(*(.game_code_and_rodata_08018b84_08019eec_0801a3e4_0801a8c8_08040b40_0804335c.tail))
+    /* stage_4335c — decompiled to C (src/stage_4335c.c, carved by tools/carve.py) */
+    .stage_4335c 0x0804335C : {
+        build/src/stage_4335c.o(.text)
     } > ROM
 
     /* stage_43654 — decompiled to C (src/stage_43654.c, carved by tools/carve.py) */
