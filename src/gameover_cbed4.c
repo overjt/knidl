@@ -52,6 +52,7 @@ void sub_080cbed4(void)
     sub_08006138();
 }
 
+/* Task type #264 variant 1's per-frame hook: handler gUnk_087582DC[Task.unk15]. */
 void sub_080cbf18(void)
 {
     sub_08002e98(gUnk_03002490->unk15, 6, gUnk_087582DC);
@@ -69,6 +70,8 @@ void sub_080cbf34(u8 variant)
     }
 }
 
+/* Re-enter task type #264 variant 0 (task gUnk_02007D28) in sub-state 2
+   when this task's Task.unk24 is set, else 1. */
 void sub_080cbf68(void)
 {
     struct Task *t = &gUnk_03002790[gUnk_02007D28];
@@ -80,6 +83,7 @@ void sub_080cbf68(void)
     sub_08006148(sub_080cb62c, gUnk_02007D28);
 }
 
+/* Re-enter variant 0, clear Task.unk20 and spawn variant 3. */
 void sub_080cbfac(void)
 {
     sub_080cbf68();
@@ -87,6 +91,7 @@ void sub_080cbfac(void)
     sub_080cbf34(3);
 }
 
+/* Re-enter task type #264 variant 1: sub-state gUnk_087582C4[Task.unk14]. */
 void sub_080cbfc8(void)
 {
     sub_08002e98(gUnk_03002490->unk14, 6, gUnk_087582C4);

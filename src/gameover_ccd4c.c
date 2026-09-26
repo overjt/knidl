@@ -108,6 +108,7 @@ void sub_080ccec8(void)
     sub_08006138();
 }
 
+/* Task type #264 variant 3's per-frame hook: handler gUnk_0875832C[Task.unk15]. */
 void sub_080ccf10(void)
 {
     sub_08002e98(gUnk_03002490->unk15, 2, gUnk_0875832C);

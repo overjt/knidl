@@ -158,11 +158,14 @@ void sub_080cb5c4(void)
     sub_08006138();
 }
 
+/* Task type #264 variant 0's per-frame hook: handler gUnk_087582B8[Task.unk15]. */
 void sub_080cb610(void)
 {
     sub_08002e98(gUnk_03002490->unk15, 3, gUnk_087582B8);
 }
 
+/* Re-enter task type #264 variant 0 (sub_08006148 installs this as its
+   body): Task.unk24 = 1, then sub-state gUnk_087582AC[Task.unk14]. */
 void sub_080cb62c(void)
 {
     gUnk_03002490->unk24 = 1;

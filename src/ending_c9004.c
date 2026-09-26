@@ -53,7 +53,7 @@ extern u16 gUnk_085E2A20[];
 extern u16 gUnk_085E2B20[];
 extern u16 gUnk_0875743E[];
 extern u16 gUnk_03001370[];
-extern u16 gUnk_03001270[];
+extern vu16 gUnk_03001270[];
 extern vu16 gUnk_03001E90;
 extern vs16 gUnk_03000FB8;
 extern vu16 gUnk_030004A4;
@@ -520,6 +520,8 @@ void sub_080c9a28(void)
     sub_08006138();
 }
 
+/* Task type #101 variant 11's per-frame hook: move the camera target to
+   the task's position (M07's sub_08026278). */
 void sub_080c9cf0(void)
 {
     struct Task *t = gUnk_03002490;
