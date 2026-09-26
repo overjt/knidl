@@ -1396,7 +1396,12 @@ SECTIONS
         build/src/subgame_c3f44.o(.text)
     } > ROM
 
-    .game_code_and_rodata_080653ec_0806ef5c_080bf994_080c1ffc_080c3648 0x080C4630 : {
+    /* subgame_c4630 — decompiled to C (src/subgame_c4630.c, carved by tools/carve.py) */
+    .subgame_c4630 0x080C4630 : {
+        build/src/subgame_c4630.o(.text)
+    } > ROM
+
+    .game_code_and_rodata_080653ec_0806ef5c_080bf994_080c1ffc_080c3648 0x080C4D08 : {
         KEEP(*(.game_code_and_rodata_080653ec_0806ef5c_080bf994_080c1ffc_080c3648)) KEEP(*(.game_code_and_rodata_080653ec_0806ef5c_080bf994_080c1ffc_080c3648.tail))
     } > ROM
 
