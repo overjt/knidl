@@ -263,6 +263,7 @@ off:
     gUnk_03005530.unkB &= 0xFE;
 }
 
+/* An empty function: nothing in the ROM calls it or points at it. */
 void sub_08020698(void)
 {
 }

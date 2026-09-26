@@ -5,15 +5,15 @@
 /* terrain_1d9c8.c (0x0801D9C8-0x0801E177, issue #84).
  *
  * The probes src/terrain_1bcac.c's entry points run for a box in the air
- * (gUnk_03005530.unk6 == 0): the right and left wall probes sub_0801d9c8 /
+ * (gUnk_03005530.unk6 == 0) before its landing probe: the right and left wall probes sub_0801d9c8 /
  * sub_0801dc88 (top, middle and, in the moving direction, bottom corner of
- * the box edge) and the landing probe sub_0801dee8.
+ * the box edge) and the ceiling probe sub_0801dee8.
  * 
  * Matching notes: a tile attribute the ROM tests with `cmp #1` and then ANDs
  * with a flag is `(flags & 1)`, the constant: cse knows the attribute
  * register holds 1 and substitutes it for the constant, which keeps the AND
  * in place on that register; writing `a & flags` lets cse swap the operands
- * instead.  The landing probe's two side tests each end with their own
+ * instead.  The ceiling probe's two side tests each end with their own
  * `gUnk_03005570 += ...; gUnk_03005530.unk1++;` (lesson 3.430). */
 
 /* The probe result block, filled by the terrain probes and mirrored into
@@ -181,10 +181,11 @@ void sub_0801dc88(void)
     }
 }
 
-/* Landing probe of a box in the air (gUnk_03005530.unk6 == 0): land on the
-   floor cell under the probe point (or the slope tile gUnk_08735098 maps
-   the cell's byte 2 to) and move the probe y onto it, else land one of the
-   box's bottom corners on a floor edge. */
+/* Ceiling probe of a box in the air (gUnk_03005530.unk6 == 0): when the
+   box's top hits a solid cell (or, moving up, the slope tile gUnk_08735098
+   maps the cell's byte 2 to), push the probe y down out of it and count
+   the hit in gUnk_03005530.unk1, else test the box's two top corners
+   against a ceiling edge. */
 void sub_0801dee8(void)
 {
     s32 slope;

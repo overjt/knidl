@@ -1593,34 +1593,71 @@ child issues of #35 are created from it. Findings that belong in this document:
   types. The 3 former reload-allocator terminals (`sub_080A78A0`,
   `sub_080A860C`, `sub_080A932C`) fell to the zero-byte hard-liveness
   levers (lessons 3.275-3.278).
-- **M06 (`0x0801A8C8-0x08021B17`) is terrain / collision query (pure leaf).**
-  Decompilation started in #84 (partial, 28/55): `src/terrain_214e0.c`
-  (`0x080214E0-0x08021B17`, 14 functions), `src/terrain_21130.c`
-  (`sub_08021130`, the player's room probe), `src/terrain_2069c.c`
-  (`sub_0802069c`), `src/terrain_1bcac.c` (`0x0801BCAC-0x0801C30B`, the six
-  per-frame entry points `sub_0801bcac`..`sub_0801c230`), `src/terrain_1c30c.c`
-  (`sub_0801c30c`/`sub_0801c3a4`), `src/terrain_1c444.c`, `src/terrain_1c51c.c`
-  (`sub_0801c51c`/`sub_0801c5c8`, box load and task write-back) and
-  `src/terrain_1c8dc.c`; all ROM-identical. The entry points share one body:
-  box load, room-relative position from `Task.unk4C/unk50` (16.16) and the
-  room origin `Task.unk54/unk58` into `gUnk_03005518/gUnk_03005520`, box
-  corners `gUnk_0300550C/gUnk_03005590` (x) and `gUnk_030055A4/gUnk_030055B0`
-  (y), then a probe set chosen by the sign of `gUnk_03005598` (x velocity)
-  and `gUnk_03005514` (y velocity). The room
-  descriptor cells the probes read: `gUnk_03005620` x `gUnk_0300561C` map size
-  in 16x16-pixel cells, `gUnk_03005660` -> cell array (4 bytes per cell, byte 3
-  = tile-set index, byte 2 = second attribute), `gUnk_03005508` = pixel offset
-  inside the cell of the last query, `gUnk_03005578`/`gUnk_03005574` = the
-  queried cell's bytes 3/2, `gUnk_03005588`/`gUnk_030055AC` the cell below,
-  `gUnk_03005594`/`gUnk_03005504` the cell to the left, `gUnk_03005510`/
-  `gUnk_0300556C` the cell to the right. The five 32-byte helpers at
-  `0x08021970` index the `0x08733BF0..0x08734BF0` pointer tables by tile set and
-  return the attribute byte at `gUnk_03005508`. The census entry `sub_08021b0e`
-  is the `bx r1` tail of `sub_08021ab4` plus its pool (curated out in
-  `tools/symdb.py`), so the module has 55 real functions. Remaining in asm:
-  `0x0801A8C8-0x0801BCAB` (7), `sub_0801c690`/`sub_0801c7cc`,
-  `0x0801C930-0x0802069B` (12), `0x080207A0-0x0802112F` (2) and
-  `sub_0802136c` (27 functions).
+- **M06 (`0x0801A8C8-0x08021B17`) is the box-vs-terrain collision engine
+  and the actor-vs-collider hit tests.** Decompiled in #84: PR #131 landed
+  28 functions, the second run 26 more, so 54 of the 55 are C
+  (`src/hitbox_1a8c8.c`, `hitbox_1b7dc.c` and `src/terrain_1baa4.c` ...
+  `terrain_214e0.c`, 21 files; ROM-identical).  `sub_0801b24c`
+  (`0x0801B24C-0x0801B7DC`) is still asm, parked at 44 differing bytes.
+  It is not a pure leaf: the probes call M06's own cell queries
+  constantly, M07's `sub_08021b18`/`sub_08022650`, M02's `sub_08009ee8`
+  (the health counter) and `ArcTan2`.  Three parts:
+  * **Per-frame entry points**: the nine `sub_0801bcac` ... `sub_0801c444`
+    that the actor banks call with a box record, and `sub_0801baa4`, which
+    M09's player task calls with the player's.  Each loads the box
+    (`sub_0801c51c`: offsets `gUnk_0300557C`/`gUnk_03005584` top/bottom,
+    `gUnk_0300551C`/`gUnk_0300559C` left/right), computes the room-relative
+    position `gUnk_03005518/gUnk_03005520` from `Task.unk4C/unk50` and the
+    box corners `gUnk_0300550C/gUnk_03005590` (x) and
+    `gUnk_030055A4/gUnk_030055B0` (y), runs a probe set, then the room probe
+    (`sub_0802136c`; the player's `sub_08021130`) and the write-back
+    `sub_0801c5c8`.  Which probes run depends on the entry point, on the sign
+    of the x velocity `gUnk_03005598` (`Task.unk54`) and, in the first two,
+    on the **on-ground flag** `gUnk_03005530.unk6` (copied from
+    `Task.unk7A`): a box standing on the ground runs the wall probes
+    `sub_0801c690`/`sub_0801c7cc` and the floor-follow probe `sub_0801d394`
+    (`sub_0801c930` from `sub_0801bde0`), a box in the air the wall probes
+    `sub_0801d9c8`/`sub_0801dc88`, the ceiling probe `sub_0801dee8` and the
+    landing probe `sub_0801ecd0` (`sub_0801e178`).  The other entry points
+    run `sub_0801f540`/`sub_0801f6b0` (walls), `sub_0801f800` +
+    `sub_0801f9b8` (ceiling, landing), `sub_0801fc48`/`sub_0801fe2c`
+    (floor-follow or landing), `sub_0801ff84` (walls with step tiles,
+    ceiling, floor), `sub_080207a0` (slope follow) and `sub_08020b38`
+    (tile edges).
+  * **The probes** move the probe point `gUnk_03005560/gUnk_03005570` out of
+    walls and ceilings and onto floors.  They query cells through
+    `src/terrain_214e0.c` and push the point by the per-pixel offset tables
+    behind `sub_08021970` (floor follow), `sub_08021990` (ceiling),
+    `sub_080219b0` (landing), `sub_080219d0`/`sub_080219f0` (left/right
+    walls), and read the per-tile-set tables (`0x100` entries each):
+    `gUnk_08732EF0` (1 = a wall cell), `gUnk_087336F0` (non-zero on cells the
+    wall probes skip and the ceiling probe passes, one-way tiles by all
+    appearances), `gUnk_08732CF0` (the tile class stored in the result;
+    its bit 0 picks the side a slope faces) with `gUnk_08732DF0` (edge
+    bits), `gUnk_087339F0`, `gUnk_087338F0` (the step tile a passable wall
+    tile maps to) and `gUnk_08735018`/`gUnk_08735098` (slope links by the
+    cell's byte 2).  The result block `gUnk_03005530` (`struct
+    Unk03005530`): `unk0` the wall side (1 = right, 2 = left), `unk1`
+    ceiling hits, `unk2` floor hits, `unk4` the floor's tile class, `unk6`
+    on ground, `unk7`/`unk8` the room probe's flags and cell boundary,
+    `unkB` passable-tile bits, `unkC` the floor row; `sub_0801c5c8` mirrors
+    it into `gUnk_03005550` and the task.
+  * **The actor-vs-collider hit tests**, which M17/M18's actors run through
+    `src/actor_673ec.c`: `sub_0801b7dc` places the actor's attack box
+    (`gUnk_0300236C`, `struct AttackBox`) at the actor's position against
+    the camera rectangle `gUnk_03002158[]`; `sub_0801a8c8`, `sub_0801af14`
+    and `sub_0801b24c` test it against the three collider lists M05's
+    `sub_0801a828` fills (`struct HitEntry` = M05's `struct Collider`:
+    `gUnk_030054B0[gUnk_03005290]`, the up to four players;
+    `gUnk_030053A0[gUnk_030054A8]` and `gUnk_030052A0[gUnk_030054F4]`, up to
+    20 each, picked by the high nibble of the body box's byte 8), place each
+    body box the same way (`gUnk_030054EC`/`gUnk_030054E4`/`gUnk_03005390`/
+    `gUnk_03005494`) and return 1 on a hit; `sub_0801b8e4` computes the
+    damage and the knock-back direction (one of eight, `ArcTan2`) and
+    `sub_0801b9e4` copies the hit's details out.
+  Census: PR #131 folded `0x08021B0E`; the second run folded `0x0801ECBA`
+  (`sub_0801e178`'s shared epilogue, reached by a long `bl`) and added the
+  empty dead export `0x08020698`, so the module holds 55 functions.
 - **M33 (`0x080B2FE8-0x080B6153`) is HUD / overlay effects (candidate).**
   Decompiled in #97 (partial, 107/108) into `src/hud_b2fe8.c`,
   `hud_b4ea8.c`, `hud_b5024.c`, `hud_b5840.c`; ROM-identical around 1 asm

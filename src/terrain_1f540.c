@@ -7,9 +7,9 @@
  * The probe sets of three more entry points in src/terrain_1bcac.c:
  * sub_0801bf1c's right/left wall probes sub_0801f540/sub_0801f6b0 (the
  * box's top corner through a gUnk_08732DF0 wall class, then the middle and
- * bottom corners), sub_0801c030's floor probes sub_0801f800 (land on the
- * floor, a floor-follow without slope tiles) and sub_0801f9b8 (land while
- * not moving up, tracking fall-through tiles in gUnk_03005530.unkB), and
+ * bottom corners), sub_0801c030's ceiling probe sub_0801f800 (sub_0801dee8
+ * without the slope tiles) and landing probe sub_0801f9b8 (not while moving
+ * up; it tracks passable floor tiles in gUnk_03005530.unkB bits 0-2), and
  * sub_0801c12c's pair sub_0801fc48 (on the ground: follow the floor or
  * drop off it) / sub_0801fe2c (in the air: land). */
 
@@ -157,7 +157,7 @@ void sub_0801f6b0(void)
     }
 }
 
-/* Floor probe of the fourth entry point (sub_0801c030): sub_0801dee8
+/* Ceiling probe of the fourth entry point (sub_0801c030): sub_0801dee8
    without the slope-tile case. */
 void sub_0801f800(void)
 {
