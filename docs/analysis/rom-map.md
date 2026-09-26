@@ -2128,4 +2128,30 @@ child issues of #35 are created from it. Findings that belong in this document:
   builds the scroll table in `gUnk_020164A0` and puts the destination I/O
   address (`REG_BG1HOFS` `0x04000014` or `REG_BG2HOFS` `0x04000018`) in
   `gUnk_0300101C`.  This is one of the twenty `0x04000000` references noted
-  above.
+  above.  The nine table drivers (`gUnk_08756198[gUnk_02016860]`, all C
+  since #94's second run) write one halfword per line to BG1HOFS
+  (`sub_080b6154`/`6290`/`63a4`/`6474`: bands of 8 lines shifted by
+  -/+16 per frame, some with the BLDALPHA shadows fading), two per line
+  to BG1HOFS/BG1VOFS (`sub_080b6570`/`sub_080b67dc`: a 24-frame pair of
+  the bands, window 1 set through `sub_08010048`, and a split that opens
+  lines 112-159 by the ramp `gUnk_087561C4`) or three per line to
+  BG2HOFS/BG2VOFS/BG3HOFS (`sub_080b6b08`/`sub_080b6c40`/`sub_080b6d04`:
+  every eighth line offset by the wave table `gUnk_087561CC`), return that
+  count of halfwords per line (`sub_080b6a90` ORs it into the HBlank DMA
+  control word `0xA2600000 | n`), and on state 2 clear the hook.
+- **The link-play input recorder** (M34, #94) records each player's held
+  keys `gUnk_03000F98[i]` into `gUnk_0200EC6C->unk12C[]` as run-length
+  entries (keys in the low 10 bits, 1-63 frames above them, players
+  interleaved, next position `gUnk_0200EC78[i]` stepping by the player count
+  `gUnk_030023AC`, end `gUnk_0200EC70[i]`; `sub_080b75a4`) and plays them
+  back into `gUnk_03000F98[i]` and the newly pressed keys `gUnk_03001EB8[i]`
+  (`sub_080b76a8`; an entry of `0x3FF` ends the playback).  `sub_080b77d4`
+  runs one of the two per frame by the mode `gUnk_0200EC58` (1 records, 2
+  and 3 play back; both clear the running flag `gUnk_0200EC54` when a
+  player reaches the end), which is how the staff credits (state 12) play
+  their demos.  `sub_080b8694` copies
+  what each player sent through the SIO mailbox `gUnk_03004D50[4][4]` into
+  its 96-byte `struct LinkRec` at `gUnk_0200EA00[i]` (row 0's low byte
+  selects the fields: 1 and 2 the per-slot counters, 3 and up a third of a
+  row of the 8x7 grid at `+0x18`); `src/early_2b04.c` calls it for mailbox
+  rows tagged `0x66xx`.
