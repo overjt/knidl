@@ -4,11 +4,12 @@
 
 /* save_b6b08.c (0x080B6B08-0x080B6C3F, issue #94).
  *
- * HBlank wavy-scroll table driver, the sine variant of src/save_b6d04.c:
- * every eighth line picks a new offset from the s8 wave table gUnk_087561CC
- * scaled by the frame counter gUnk_02016494 (which wraps at 0x200), and each
- * of the 160 lines gets the offset, the fixed BG scroll from gUnk_03001E94
- * and the offset again.
+ * HBlank wavy-scroll table driver, the sine variant of src/save_b6d04.c: a
+ * table of three halfwords per line for REG_BG2HOFS/BG2VOFS/BG3HOFS
+ * (gUnk_0300101C = 0x04000018).  Every eighth line picks a new offset from
+ * the s8 wave table gUnk_087561CC scaled by the frame counter gUnk_02016494
+ * (which wraps at 0x200), and each of the 160 lines gets the offset, the
+ * fixed BG2VOFS value from its shadow gUnk_03001E94 and the offset again.
  *
  * Matching note: the ROM keeps &gUnk_02016494 in one register from the wrap
  * test to the loop, which is a pointer local (a direct reference makes gcse
