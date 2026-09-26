@@ -65,7 +65,7 @@ extern s32 gUnk_0201C1B4;           /* credits: scroll since the last page copy,
 extern u32 *gUnk_087583B4[];        /* credits: the 14 compressed text pages */
 extern u16 gUnk_02005600[];
 
-u32 sub_080008e8(u16 steps, s16 delta, u16 *mask);           /* delta is signed: the ROM passes -2 as movs/negs */
+u32 sub_080008e8(u16 steps, s16 delta, u16 *mask);   /* delta passed as movs/negs (-2); early_08e8.c defines it u16, src/effect_5a358.c and src/player_47fe8.c spell it s16 too (lesson 3.428) */
 void sub_080017e4(u32 mode, u32 src, u32 dst, u32 size);
 void sub_08001fd0(void);
 void sub_080022ac(void);

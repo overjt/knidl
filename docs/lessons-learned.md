@@ -2919,6 +2919,128 @@ ROM's (`-da` `.greg`, lesson 3.34):
 * `x = x - K + y` is regrouped to `x + (y - K)`: `x -= K; x += y;` (or the
   shared temp above) keeps the ROM's order.
 
+### 3.453 A halfword the ROM reads both unsigned and signed is two expressions over one cell
+M38 has three functions where one table or local halfword reaches two uses
+of different signedness, and each needs both reads spelled out.  The spawn
+lists of task types #100/#101 (`sub_080c6d38`, `sub_080c90c8`) load each
+entry twice, `ldrh` for the value stored into `Task.unk73` (kept across the
+spawn call) and `ldrsh` for the loop test:
+
+```c
+extern u16 gUnk_0875735C[];
+    for (i = 0; v = gUnk_0875735C[i], (s16)gUnk_0875735C[i] <= 10; i++) {
+        id = sub_080058e4(100, 32);
+        ...
+        t->unk73 = v;                  /* s32 v */
+```
+
+A plain `tbl[i] <= 10` loop with the store reading `tbl[i]` again loads
+after the call; `v = tbl[i]` as the body's first statement is one read; an
+`s16`/`u16` `v` sign- or zero-extends the one load (4 bytes longer).  The
+comma in the condition gives the ROM's two loads at the top and at the
+bottom of the rotated loop.  The scaled-sprite draw callbacks
+(`sub_080c769c`, `sub_080c8298`, `sub_080c8778`) are the same fact the
+other way round: the scale comes from the `s16` table `gUnk_0873FF98`, is
+compared unsigned and passed signed, and only `s16 s = tbl[k]; if ((u16)s
+!= 0x100) sub_08001cc8(g, s, s, 0);` gives `ldrh; lsls r2, r1, #16; cmp
+r1, #256; ... asrs r2, r2, #16` - a `u16 s` moves both shifts into the arm,
+an `s16` compare turns the load into `ldrsh` (23-27 bytes each way).
+
+### 3.454 Two loop spellings from the staff credits
+`sub_080cd330` (836 bytes) came out at 574 differing bytes with
+`for (;;) { A; if (c) break; B; }`: the loop was rotated, with the entry
+jump into the middle and `B` placed first.  `for (;;) { A; if (!c) { B;
+continue; } break; }` gives the ROM's `A; beq exit; B; b top`; `if (c) goto
+out;` gives the same code, and a loop written only with labels keeps the
+layout but loses the loop-invariant addresses the ROM hoists into r8/r9
+(3.21).  Its fade waits are `u16 n = 15; while (n-- != 0) { ... }`, which
+agbcc compiles as the ROM's `movs r4, #14 ... subs; lsls; lsrs; cmp r4,
+=0xFFFF; bne`: the register starts one below the source constant, so a
+`movs #14` / `0xFFFF` pair in the listing is a post-decrement `while`, not a
+count of 14.
+
+### 3.455 Where the task-pointer local goes in callbacks and spawn loops
+- A draw callback whose ROM loads `Task.unk38` before `Task.unk42` after the
+  `sub_08005acc`/`sub_08005c4c` visibility test needs `struct Task *u =
+  gUnk_03002490; u32 *g = u->unk38;` and then `sub_08001a94(u->unk42,
+  g[u->unk3C + ...], ...)`; without the `g` local the loads follow the
+  argument order (69 and 17 differing bytes in `sub_080c9974` and
+  `sub_080c9418`).
+- In a spawn loop, `gUnk_03002790[sub_080058e4(260, 32)].unk18 = i;` lets
+  loop.c hoist `&gUnk_03002790 + 24` into a callee-saved register (23
+  bytes); a pointer local declared INSIDE the loop body, `struct Task *t =
+  &gUnk_03002790[sub_080058e4(260, 32)]; t->unk18 = i;`, keeps the ROM's
+  per-iteration pool load and `str [r1, #24]` (`sub_080cad8c`).
+- `sub_080cb2cc`'s two arms each spawn and store through their own
+  block-scoped task pointer (`t` in one, `t2` in the other); one shared `t`
+  costs a move (14 bytes), and separate `id` locals too still leave 4.
+- `struct Task *t = &gUnk_03002790[gUnk_02007D28]; if (t->unk14 != 0)`
+  (`sub_080cce98`, `sub_080cbf68`): indexing inline loads the table base
+  before the index (20 bytes), an `s32 i` index local leaves 9.
+
+### 3.456 Small M38 shapes, one line each
+- `if (keys & 0xC0) { sfx(101); return 1; } return 0;` is the ROM's `bne
+  call; movs r0, #0; b end` layout; the early-return form `if (!(keys &
+  0xC0)) return 0;` inverts it (`sub_080cb108`, 24 bytes).
+- A callee that returns its argument unchanged (`u32 sub_080022a0(u32 arg)`,
+  3.391) called with no argument set up is declared `void sub_080022a0(void)`
+  in the caller's file, commented (3.428; `sub_080c6420`).
+- `tbl[++cell]` on a `u8` cell indexes with the incremented register (`lsls
+  #24; lsrs #22`); `cell++;` then `tbl[cell]` re-reads the byte
+  (`sub_080cd330`).
+- `gUnk_0201C1B4 = gUnk_0201C1A0 >> 12;`, re-reading a cell stored with
+  `0x400000` four statements earlier, is the ROM's `asrs r2, r2, #12` on the
+  constant's register (cse sees through the store); writing the folded
+  `0x400` costs 14 bytes (`sub_080cd70c`).
+- `switch` on a `u8` field with `case 0:` and a range `case 1 ... 8:` is the
+  compare tree `cmp #0; beq; cmp #0; bge; b dflt; cmp #8; ble`; nine separate
+  labels make a jump table (`sub_080c8958`).
+- `|= -1` on `Task.unk3C` inside a loop keeps `ldrh; orrs rK; strh` with rK
+  = 0xFFFF, where `|= 0xFFFF` folds to a plain store (3.282 again,
+  `sub_080c8958`).
+- `a += b; if (a ...)` and `n = a + b; a = n; if (n ...)` differ: the second
+  swaps the r1/r2 order (`sub_080c8778`).
+- `for (;;) { ...; switch (Task.unk74) { case 0 ... 15 arms } }` with no
+  `default` sends the out-of-range branch back to the loop head
+  (`sub_080ca344`).
+- `if (spawner->unk34 == 0) { TaskYieldTrampoline(1); continue; }` in front
+  of a `switch` reproduces the ROM, which shares that yield with the tail of
+  `case 0` (`sub_080c7810`).
+- `Task.unk3C = 0xFFFF` (pooled) and `= -1` (`movs; negs`) both occur in one
+  function; write each spelling where the ROM has it (`sub_080cc768`,
+  `sub_080cd24c`, `sub_080c6d84`).
+- A command loop the ROM enters with its table address and
+  `&gUnk_0201BFD0[i]` already in a preheader, testing at the bottom, is a
+  `while (obj->unk04 != -1 && obj->unk0A == 0) { ... }` in the else arm of
+  the wait test; a `do { } while` moves both addresses into the body and the
+  test ahead of it (`sub_080caab8`, 524 -> 47 bytes); `for (...; obj++,
+  i++)` then orders the next-iteration adds (3.448 again, 47 -> 42).
+
+### 3.457 An all-ones halfword store keeps its `orrs` only when combine cannot see the constant
+`sub_080caab8` (568 bytes, the boot logo objects' interpreter, parked on
+#100) switches an object off with `ldr r1, =0xFFFF; adds r0, r1, #0; orrs
+r0, r7; strh r0, [r5, #4]`, r7 being the object's id halfword that gcse's
+PRE loaded at the loop head.  `obj->unk04 = 0xFFFF` (or `|= 0xFFFF`, `|=
+-1`, a `u16` field, casts) expands to that `ior` of the old halfword and a
+HImode constant temp, and combine folds it to a plain constant store,
+because the temp's set is in the same block (`-da`: the `.gcse` dump shows
+`(ior:SI (subreg:SI (reg:HI 247)) (subreg:SI (reg:HI 248)))`, the
+`.combine` dump a `(set (reg:SI 249) (const_int 65535))`).  The `.loop`
+dump shows why it is not hoisted either: the temp "matches" the other
+all-ones store (`case 0x2000`) and the pair fails move_movables'
+`threshold * savings * lifetime >= insn_count` test (about 14 x 2 x 2
+against 245 insns).  A mask variable assigned before the loop, `s16 m =
+-1; ... obj->unk04 |= m;`, keeps the `orrs` (combine cannot see across
+blocks and reload rematerializes the constant at the use), giving the
+right size and 33 bytes - but as `ldr; lsls; asrs` (the promoted `s16`),
+where the ROM's `ldr rS; adds rD, rS, #0` is a HImode move (3.24) of a
+temp; a `u16`/`s32` mask gives a bare `ldr r0`.  The other residue is two
+spill slots swapped: `obj + 32` and `i + 1` are PRE copies whose slots
+follow gcse's hash-bucket order (4.105; `H = 13772 + regno + const` mod
+127 here), which would need `obj`'s pseudo number above 38 or 4-5 more cse
+insns to flip.  Both are the 4.105 class: the original evidently differs
+in a way later passes erase.
+
 ## 4. Splitting ROM ranges into asm (tools/split.py)
 
 ### 4.1 objdump text only round-trips under `.syntax unified`
@@ -8284,6 +8406,44 @@ practical rules: when slots of PRE copies differ, test the landed file, not
 the one-function harness (its pool labels are numbered from 1); and read
 the `.gcse` hash table before sweeping declaration orders, which change
 nothing else.
+
+### 4.106 A pointer run in `asset_metadata_index` can be several dispatch tables back to back
+The module map's anchor-table scan reported `0x08758294` as one table of 23
+entries (24 really: its last word is `sub_080ccd10`) and `0x08758324` as one
+of 4.  The dispatch sites say otherwise.  Task type #264's body
+`sub_080cb588` runs `sub_08002e98(Task.unk73, 6, gUnk_08758294)`, so only
+six words are its variants; the next 18 are the M17-style sub-state and
+handler tables of variants 0 and 1 (`gUnk_087582AC[3]`, `gUnk_087582B8[3]`,
+`gUnk_087582C4[6]`, `gUnk_087582DC[6]`), each dispatched with its own count
+by the variant body or its re-entry and per-frame hooks (`sub_080cb5c4`,
+`sub_080cb62c`, `sub_080cb610`, ...), and `0x08758324` is variant 3's
+`[2]` + `[2]`.  The census's missing entry `0x080CB6D8` ("entry 9") is
+entry 0 of the handler table `gUnk_087582B8`.  The two class-3 tables go
+the other way: the scan found them four bytes late (`0x08757334`,
+`0x087573F8`), because their entry 0 is NULL (4.89).  Grep the pools for
+every address inside a pointer run (and the address minus 4) before
+counting its entries: the table boundaries are where the pool words point.
+The same census held a push-less leaf behind a `b.n` and pool (that
+`0x080CB6D8`), a 4.99 companion after `sub_080cd75c`'s pool (`0x080CD828`,
+installed as a callback by `sub_080cd70c`) and a 4.40 phantom
+(`0x080CD5AE`); the sweep of 4.36 reported all three at once.
+
+### 4.107 Harness notes from M38
+- Landing a file (`carve.py`, `make symbols`, `make split`) rewrites files
+  that `fnmatch.sh` reads, and one agent's run failed with a
+  `JSONDecodeError` in the middle of a landing; re-running it matched.
+  Agents should treat a tool error they did not cause as transient and
+  re-run once.
+- `gen.py` keeps the leading comment of a canonical declaration.  With no
+  struct in `types.txt`, the first shared cell inherited the file's own
+  header comment and it landed in `src/`; filter such comments (the
+  harness regex now drops comments naming `canon.h` or
+  "coordinator-maintained") and grep each landed file for the header text.
+- All four agents stopped at once on the account's usage limit.  After the
+  reset, one `SendMessage` per agent with its open functions re-derived from
+  `good/` resumed each from its transcript; finished agents then raced the
+  last functions through `variants.sh` with per-agent prefixes (4.91), and
+  the owner of one of them matched it minutes after the race began.
 
 ## 5. Workflow that worked
 

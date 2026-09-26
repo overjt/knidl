@@ -219,7 +219,7 @@ dispatches, pool density) — a planning aid, not a promise.
 | M35 | `0x080B9D0C-0x080BDA2B` | 15.3 KiB | 193 | 4 | *** | sub-game framework + reaction-duel sub-game - **landed (#95)** |
 | M36 | `0x080BDA2C-0x080C1FFB` | 17.5 KiB | 117 | 4 | * | sub-game: four-slot bomb-pass minigame - **landed (#66)** |
 | M37 | `0x080C1FFC-0x080C641F` | 17.0 KiB | 82 | 1 | **** | sub-game 2: the four-player race + `AgbMain` state 11 - **landed (#98)**, 81/82 |
-| M38 | `0x080C6420-0x080CD89B` | 29.1 KiB | 110 | 4 | **** | intro / cutscene / ending sequences? |
+| M38 | `0x080C6420-0x080CD89B` | 29.1 KiB | 110 | 4 | **** | the ending (two scenes, staff credits, final screen) + the game-over screen - **landed (#100)**, 109/110 |
 | M39 | `0x080CD89C-0x080CE51F` | 3.1 KiB | 40 | 0 | - | **done** - m4a_1 |
 | M40 | `0x080CE520-0x080CEFB3` | 2.6 KiB | 31 | 0 | - | **done** - m4a_c1 |
 | M41 | `0x080CEFB4-0x080CF587` | 1.5 KiB | 4 | 0 | - | **done** - m4a_cgb |
@@ -280,7 +280,7 @@ ordering inside it:
 | 29 | M14 stage manager B | 0x6E78 | 84 | 3 | 9 | 5 | 1 |
 | 30 | M37 sub-game 2 (four-player race) + AgbMain state 11 - landed | 0x4424 | 82 | 4 | 5 | 2 | 1 |
 | 31 | M03 main menu + sprite tasks, BG scroll animator, stage sequence state - landed | 0x4A38 | 79 | 4 | 6 | 2 | 22 |
-| 32 | M38 intro / cutscene / ending sequences? | 0x747C | 110 | 4 | 6 | 3 | 7 |
+| 32 | M38 the ending + the game-over screen - landed | 0x747C | 110 | 4 | 6 | 3 | 7 |
 | 33 | M10 stage script runner | 0x6AE0 | 41 | 4 | 11 | 1 | 0 |
 | 34 | M06 terrain / collision query (pure leaf) | 0x7250 | 56 | 5 | 2 | 11 | 0 |
 | 35 | M11 player mode/state machine + stage support services - landed | 0x7C68 | 121 | 5 | 9 | 18 | 0 |
@@ -331,7 +331,7 @@ sub-issue of #35, so the numbering ascends with the recommended order):
 | 34 | #97 | M33 HUD / overlay effects? | `0x080B2FE8-0x080B6153` | 12.4 KiB | 5 |
 | 35 | #98 | M37 sub-game 2 (four-player race) + AgbMain state 11 - landed | `0x080C1FFC-0x080C641F` | 17.0 KiB | 5 |
 | 36 | #99 | M03 main menu + sprite tasks, BG scroll animator, stage sequence state - landed | `0x0800B920-0x08010357` | 18.6 KiB | 5 |
-| 37 | #100 | M38 intro / cutscene / ending sequences? | `0x080C6420-0x080CD89B` | 29.1 KiB | 5 |
+| 37 | #100 | M38 the ending + the game-over screen - landed | `0x080C6420-0x080CD89B` | 29.1 KiB | 5 |
 
 ### Sizing the child issues
 
@@ -2517,7 +2517,61 @@ below is the pre-decompilation one, kept for the record.
 * **Known RAM cells touched** per-player keys pressed x9, requested/next game state x4, DISPCNT shadow x2, number of linked players x2, per-player keys held x2, 128 8-byte free-list entries x1.
 * **Suggested batches** `0x080C1FFC` (19 fns), `0x080C3648` (46 fns), `0x080C5284` (17 fns).
 
-### M38 `0x080C6420-0x080CD89B` - intro / cutscene / ending sequences?
+### M38 `0x080C6420-0x080CD89B` - the ending (two scenes, staff credits, final screen) + the game-over screen - **landed (#100)**
+
+The range is decompiled and carved out of the split asm, so it now appears in
+`module-map.csv` as `c_code` rows instead of one clusterable module; the census
+below is the pre-decompilation one, kept for the record.
+
+* **Landed as** `src/results_c6420.c` (`0x080C6420-0x080C6C64`, 7 fns),
+  `src/ending_c6c64.c` (`0x080C6C64-0x080C7E4C`, 8), `src/ending_c7e4c.c`
+  (`0x080C7E4C-0x080C9004`, 12), `src/ending_c9004.c`
+  (`0x080C9004-0x080CAA3C`, 21), `src/boot_caa3c.c`
+  (`0x080CAA3C-0x080CAAB8`, 1), `src/gameover_cacf0.c`
+  (`0x080CACF0-0x080CB354`, 13), `src/gameover_cb354.c`
+  (`0x080CB354-0x080CB64C`, 8), `src/gameover_cb64c.c`
+  (`0x080CB64C-0x080CBED4`, 6), `src/gameover_cbed4.c`
+  (`0x080CBED4-0x080CCD4C`, 18), `src/gameover_ccd4c.c`
+  (`0x080CCD4C-0x080CD330`, 10) and `src/credits_cd330.c`
+  (`0x080CD330-0x080CD89C`, 5): 109 of the 110 functions byte-exact
+  under the `--newpb` recipe with no `asm` statements and no `register`
+  pins, and 77 new `split_config.json` `data_symbols`.  One function stays
+  asm: `sub_080caab8` (`0x080CAAB8-0x080CACEF`, 568 bytes, the boot logo
+  objects' command interpreter), parked on #100 at 33 differing bytes with
+  the right size (the ROM's all-ones halfword store keeps an `orrs` that
+  agbcc folds unless the constant comes from outside the block, and two
+  PRE spill slots are swapped, lesson 3.457).  It was the last unstarted
+  bulk module of #35.
+* **What it turned out to be** not an intro: the game's ending and its
+  game-over screen, which `AgbMain` states 11, 12 and 22 run (rom-map §4).
+  State 11 (M37's `src/mode_c6260.c`) plays two scenes directed by task
+  types **#100** (class 3, body `sub_080c6c64`, variants
+  `gUnk_08757330[11]`) and **#101** (class 3, body `sub_080c9004`,
+  `gUnk_087573F4[12]`): linear `TaskYieldTrampoline` scripts, M19's style,
+  whose variant 0 loads the graphics and spawns the variants of a u16 list,
+  and one of which ends the scene by clearing `gUnk_02008018`.  State 12
+  runs the staff credits `sub_080cd330` - recorded demos of the game, one
+  per scene, played back by M34's recorder under a BG0 text layer streamed
+  from 14 LZ77 pages - and the final screen `sub_080c6420` (the score, or a
+  clock, until START), then returns to state 0.  State 22 is the game-over
+  / continue screen `sub_080cacf0` and its objects, task types **#260-#264**
+  (class 4): the eight letters, a cursor sprite, a palette cycle, the
+  score-halving count-down (the price of a continue) and #264, whose six
+  variants `gUnk_08758294[]` include three M17-style state machines
+  (sub-states on `Task.unk14`, per-frame handlers on `Task.unk15`).  The
+  census's hint - compressed graphics plus fades - was right about the
+  sequences and wrong about the intro, which is M02's (#96).  The range also
+  holds the boot logo's 115 script-driven objects (`gUnk_02030000`,
+  `sub_080caa3c`/`sub_080caab8`, called by M02's logo sequence and task type
+  #0), the picture screens `sub_080c6750`/`sub_080c680c` M02 and M03 show,
+  and the VRAM score/clock drawers `sub_080c68b0`/`sub_080c6ab4` (M02's
+  `sub_08007f9c` uses the second).
+* **Census fixes** 109 rows (M14 had folded `0x080CCAA6`), 110 functions:
+  the lesson 4.40 phantom `0x080CD5AE` folded into `sub_080cd330`, the
+  push-less entries `0x080CB6D8` (#264 variant 0's handler 0) and
+  `0x080CD828` (the credits' scroll callback) added.  The "23-entry"
+  anchor table `0x08758294` is five tables (lesson 4.106).
+
 
 * **Size** 29.1 KiB (`0x747c`), 110 functions (70 reachable only through pointer tables), mean `0x10f`, largest `0x918`, pool words 11.1% of bytes.
 * **Difficulty** 4/6 - 83 distinct RAM cells, 2 jump-table dispatches, 17 functions >= `0x200`.
@@ -2586,10 +2640,13 @@ and reproducible. The **names are inference**, at three confidence levels:
   `0x087328F0-0x087339F0`, shared with M07. Whether that block is the room
   descriptor or something else is untested. **To settle it:** name the block's
   fields while decompiling M07, which builds it.
-* M33 "HUD/overlay effects" and M38 "intro/cutscene/ending" each rest on one
-  strong hint (class-4 tasks + LZ77-to-VRAM; compressed-graphics refs + fades).
-  M36's equivalent hint - a 41-entry table reached only from the mode-flow
-  module - turned out to be right: #66 decompiled it and it is a four-slot
+* M33 "HUD/overlay effects" rests on one strong hint (class-4 tasks +
+  LZ77-to-VRAM).  M38's "intro/cutscene/ending" hint (compressed-graphics
+  refs + fades) was half right: #100 decompiled it and it is the ending (two
+  scenes, the staff credits over recorded demos, the final screen) and the
+  game-over screen, not the intro, which is M02's (see §6).  M36's
+  equivalent hint - a 41-entry table reached only from the mode-flow module
+  - turned out to be right: #66 decompiled it and it is a four-slot
   bomb-pass minigame (see §6).
 * M07/M08's split into "builder" and "camera/scroll": the 104-edge seam says
   they are one subsystem; the BG-scroll shadows are all on the M08 side, which

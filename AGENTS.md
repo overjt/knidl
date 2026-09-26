@@ -465,4 +465,38 @@ Matching decompilation of Kirby: The Amazing Mirror's predecessor, **Kirby: Nigh
   a prepended `canon.h` instead of per-function copies (lesson 4.101); done
   by a four-agent fan-out with plain handovers and races; new lessons
   3.443-3.452 and 4.101-4.105.
+- The ending, the staff credits and the game-over screen decompiled (issue
+  #100): module M38 `0x080C6420-0x080CD89B` (29.1 KiB), the last unstarted
+  bulk module, landed as `src/results_c6420.c`, `src/ending_c6c64.c`,
+  `src/ending_c7e4c.c`, `src/ending_c9004.c`, `src/boot_caa3c.c`,
+  `src/gameover_cacf0.c`, `src/gameover_cb354.c`, `src/gameover_cb64c.c`,
+  `src/gameover_cbed4.c`, `src/gameover_ccd4c.c` and `src/credits_cd330.c`
+  (**109 of 110 functions**, no `asm` statements and no `register` pins;
+  the one hole is the boot logo objects' 568-byte interpreter
+  `sub_080caab8`, parked at 33 differing bytes with its best sources on
+  #100), so `0x080C6260-0x080CD89B` is C except that function.  The census
+  name "intro / cutscene / ending sequences?" was half right: it is the
+  ending and the game-over screen.  `AgbMain` state 11 (M37's
+  `src/mode_c6260.c`) plays two scenes directed by task types #100 and #101
+  (class 3, variants `gUnk_08757330[11]` / `gUnk_087573F4[12]`, linear
+  `TaskYieldTrampoline` scripts that end the scene by clearing
+  `gUnk_02008018`); state 12 runs the staff credits `sub_080cd330` -
+  recorded demos of the game, one per scene of `gUnk_087583CC[]`, played
+  back by M34's recorder under a BG0 text layer streamed from the 14 LZ77
+  pages `gUnk_087583B4[]` - and the final score screen `sub_080c6420`,
+  then returns to state 0; state 22 is the game-over / continue screen
+  `sub_080cacf0` with its objects, task types #260-#264 (class 4; #263
+  halves the score, the price of a continue; #264's six variants
+  `gUnk_08758294[]` include three M17-style state machines of sub-states on
+  `Task.unk14` and per-frame handlers on `Task.unk15`).  The rest are the
+  boot logo's 115 script-driven objects at `gUnk_02030000`, two picture
+  screens M02 and M03 show, and the VRAM score/clock drawers.  Three census
+  rows corrected in `tools/symdb.py` (the 4.40 phantom `0x080CD5AE` folded,
+  the push-less entries `0x080CB6D8` and `0x080CD828` added, so 110
+  functions) and 77 RAM/ROM cells named via `split_config.json`
+  `data_symbols`; done by a four-agent fan-out after the coordinator matched
+  46 leaves and representatives, with plain handovers and two races through
+  `variants.sh`; new lessons 3.453-3.457 and 4.106-4.107 (4.106: the
+  "23-entry" anchor table `0x08758294` is five dispatch tables back to
+  back).
 - Next milestones: decompile split/SDK modules to C using the validated per-zone compiler recipe (task system Thumb side, sound driver, then game code); grow `src/` one module at a time with `asmdiff.sh` on the module range.
