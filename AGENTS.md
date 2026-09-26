@@ -499,4 +499,37 @@ Matching decompilation of Kirby: The Amazing Mirror's predecessor, **Kirby: Nigh
   `variants.sh`; new lessons 3.453-3.457 and 4.106-4.107 (4.106: the
   "23-entry" anchor table `0x08758294` is five dispatch tables back to
   back).
+- Box-vs-terrain collision engine + actor-vs-collider hit tests decompiled
+  (issue #84): module M06 `0x0801A8C8-0x08021B17` (28.6 KiB) is C in 21
+  files - PR #131's `src/terrain_1bcac.c`, `terrain_1c30c.c`,
+  `terrain_1c444.c`, `terrain_1c51c.c`, `terrain_1c8dc.c`,
+  `terrain_2069c.c`, `terrain_21130.c` and `terrain_214e0.c` (28
+  functions), and this run's `src/hitbox_1a8c8.c`, `src/hitbox_1b7dc.c`,
+  `src/terrain_1baa4.c`, `src/terrain_1c690.c`, `src/terrain_1c930.c`,
+  `src/terrain_1d394.c`, `src/terrain_1d9c8.c`, `src/terrain_1e178.c`,
+  `src/terrain_1ecd0.c`, `src/terrain_1f540.c`, `src/terrain_1ff84.c`,
+  `src/terrain_207a0.c` and `src/terrain_2136c.c` (26) - **54 of 55
+  functions**, no `asm` statements and no `register` pins; the one hole is
+  `sub_0801b24c` (1424 bytes, the third collider list's hit test), parked
+  at 44 differing bytes with its best sources on #84, so
+  `0x0801A8C8-0x08030803` (M06-M08) is C except it and M07's
+  `sub_08027a6c`.  The census name "terrain / collision query (pure leaf)"
+  was half right: the range is the collision engine every actor and player
+  runs - ten per-frame entry points that load a box, compute its
+  room-relative corners and run a probe set picked by the x velocity and
+  the on-ground flag `gUnk_03005530.unk6` (wall, ceiling, floor-follow and
+  landing probes that push the probe point `gUnk_03005560/gUnk_03005570`
+  through M06's cell queries and the per-tile-set tables
+  `0x087328F0-0x08734FF0` and fill the result block `gUnk_03005530`) - plus
+  the actor-vs-collider hit tests M17/M18's actors run against the three
+  collider lists M05's `sub_0801a828` fills (attack box
+  `gUnk_0300236C`, damage and `ArcTan2` knock-back); not a leaf, it calls
+  M07's map lookups and M02's health counter.  Census: the long-jump
+  phantom `0x0801ECBA` folded (`sub_0801e178`'s shared epilogue) and the
+  empty dead export `0x08020698` added, so 55 functions; 19 RAM/ROM cells
+  named via `split_config.json` `data_symbols`; done by a four-agent
+  fan-out with handovers and races through `variants.sh`; new lessons
+  3.458-3.464 (3.458: cse learns `a == 1` from a branch and swaps a later
+  AND, so the ROM ANDs the constant; 3.459: a goto dispatch puts the tests
+  first and the bodies after them) and 4.108-4.109.
 - Next milestones: decompile split/SDK modules to C using the validated per-zone compiler recipe (task system Thumb side, sound driver, then game code); grow `src/` one module at a time with `asmdiff.sh` on the module range.

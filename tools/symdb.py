@@ -457,6 +457,14 @@ FALSE_POSITIVES = {
     # after a terminator; nothing in the ROM references 0x08021B0E.  Same
     # shape as the former sub_080cfcfc (`pop {pc}` tail of __divsi3).
     0x08021B0E,
+    # 0x0801ECBA is not a function either (lesson 4.39): it is the shared
+    # epilogue of the 2904-byte sub_0801e178 (`add sp, #12; pop {r3-r5};
+    # mov r8-sl; pop {r4-r7}; pop {r0}; bx r0`), which the body reaches by
+    # falling through from the `strb` at 0x0801ECB8, by eleven `b.n` and by
+    # the long `bl` jump at 0x0801E470 (a Thumb `b.n` cannot reach it).  The
+    # pool word behind it (0x0801ECCC, gUnk_03005530) is loaded by the `ldr`
+    # at 0x0801ECB0.  sub_0801e178 really runs 0x0801E178-0x0801ECD0 (0xB58).
+    0x0801ECBA,
     # --- M04 (issue #82), two rows the reachability sweep dropped ---
     # Both are the same shape as M05's 0x0801A41A below and share its cause:
     # the pool word 0xFFFFF000 decodes as the `bl` pair F000/FFFF, whose
@@ -778,6 +786,11 @@ FALSE_POSITIVES = {
 # m4a.c function order and body shape (see the KNOWN_SYMBOLS comments);
 # they are injected as candidates and carry the "curated" evidence kind.
 EXTRA_THUMB_ENTRIES = {
+    # --- M06 (issue #84), one dead export the reachability sweep found ---
+    0x08020698,  # an empty `bx lr` stub (lesson 4.34) after sub_0801ff84's
+                 # own `pop {r0}; bx r0` at 0x08020694 and its alignment pad;
+                 # no ROM word or `bl` references it.  sub_0801ff84 really
+                 # runs 0x0801FF84-0x08020698 (0x714, was 0x718).
     # --- M38 (issue #100), two push-less entries the census missed ---
     0x080CB6D8,  # entry 9 of the class-4 anchor table at 0x08758294 (the
                  # word 0x080CB6D9 at 0x087582B8): a push-less leaf callback
