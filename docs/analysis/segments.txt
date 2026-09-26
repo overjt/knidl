@@ -288,7 +288,8 @@
 0x080C3648 0x080C3F44 c_code subgame_c3648 # src/subgame_c3648.c (carved by tools/carve.py)
 0x080C3F44 0x080C4630 c_code subgame_c3f44 # src/subgame_c3f44.c (carved by tools/carve.py)
 0x080C4630 0x080C4D08 c_code subgame_c4630 # src/subgame_c4630.c (carved by tools/carve.py)
-0x080C4D08 0x080C6258 thumb_code game_code_and_rodata_080653ec_0806ef5c_080bf994_080c1ffc_080c3648 [split]
+0x080C4D08 0x080C5284 c_code subgame_c4d08 # src/subgame_c4d08.c (carved by tools/carve.py)
+0x080C5284 0x080C6258 thumb_code game_code_and_rodata_080653ec_0806ef5c_080bf994_080c1ffc_080c3648 [split]
 0x080C6258 0x080C6260 c_code sub_080c6258 # src/sub_080c6258.c (carved by tools/carve.py)
 0x080C6260 0x080C6420 c_code mode_c6260 # src/mode_c6260.c (carved by tools/carve.py)
 0x080C6420 0x080CD89C thumb_code game_code_and_rodata_080653ec_0806ef5c_080bf994_080c1ffc_080c6260 [split]
