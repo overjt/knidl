@@ -41,7 +41,7 @@ symbol database and call graph (section 7), and is validated by
 | 7 | `0x08007300-0x080CFA4B` | ~0xC8700 | **Game code + rodata (Thumb)** | ~2,650 Thumb BL targets, thumb-pointer tables throughout; interleaved rodata (pointer tables 122 runs ≥8 entries, e.g. 43-entry table @0x0803EC48). Tail (`0x080CF94C-0x080CFA4B`) is the m4a/mp2k XCMD handler block, named in #29 via the 12-entry jump table @`0x0860A3E8` (matches katam/pokeemerald `gXcmdTable` 1:1, `ply_xxx` at indices 0 AND 3) + per-handler `MusicPlayerTrack` field offsets: `ply_xxx` `0x080CF94C`, `ply_xwave` `0x080CF960`, `ply_xtype` `0x080CF9A8`, `ply_xatta` `0x080CF9BC`, `ply_xdeca` `0x080CF9D0`, `ply_xsust` `0x080CF9E4`, `ply_xrele` `0x080CF9F8`, `ply_xiecv` `0x080CFA0C`, `ply_xiecl` `0x080CFA18`, `ply_xleng` `0x080CFA24`, `ply_xswee` `0x080CFA38`. The old `0x080CFA40` segment boundary cut `ply_xswee` in half (its tail was seg 8's "unidentified SDK helper" `gUnk_080cfa40`, 0 BL callers because XCMD handlers are table-dispatched only); boundary moved to `0x080CFA4C` in #29. **The whole m4a/mp2k engine occupies the region tail `0x080CD89C-0x080CFA4B` and is fully named in the symbol DB (issue #31) — see §8; carved out of the `game_code_and_rodata` segment into dedicated segments `m4a_1` (asm core) + `m4a` (C driver) in #52**. **The remaining bulk `0x080075B8-0x080CD89C` is clustered into 37 candidate modules in `docs/analysis/module-map.md` (issue #34) — see §9** |
 | 8 | `0x080CFA4C-0x080CFA9B` | 0x50 | **SDK syscall wrappers + SoftReset (Thumb)** — named via SDK-order SWI table (`include/gba/syscall.h`, issue #27; finalized in #29). **Stays named asm forever, by design**: agbcc cannot emit a bare `svc N; bx lr` thunk from C, and the reset-helper segment starts at the odd address `0x080CFA7F` so the splitter emits it as raw data (lessons 4.2/4.3/4.14) — pret projects (katam `asm/libagbsyscall.s`) keep both as named asm and we do the same. Segment start moved from `0x080CFA40` to `0x080CFA4C` in #29 (the old boundary cut m4a's `ply_xswee` in half, see seg 7) | `svc N; bx lr` pairs: `0x080CFA50` ArcTan2 (`svc 0x0A`), `0x080CFA54` CpuFastSet (`svc 0x0C`), `0x080CFA58` CpuSet (`svc 0x0B`), `0x080CFA5C` Div (`svc 0x06`), `0x080CFA60` Mod (`svc 0x06`, returns remainder), `0x080CFA68` HuffUnComp (`svc 0x13`), `0x080CFA6C` LZ77UnCompVram (`svc 0x12`), `0x080CFA70` LZ77UnCompWram (`svc 0x11`), `0x080CFA74` MultiBoot mode=1 (`svc 0x25`), `0x080CFA7C` SoundDriverVSyncOff (`svc 0x28`); `0x080CFA4C` DummyFunc (`bx lr` stub, referenced from `0x080CEA48`); `0x080CFA80` **SoftReset** (IME=0, clear `0x03007FFA`, sp=`0x03007F00`, `svc 1; svc 0` = RegisterRamReset(r0) then reset — identical to katam's `SoftReset`; 2 BL callers `0x08000FF8`/`0x08008C40` kept as raw `.short` pairs, and the label is a `split_config.json` `extra_labels` data label, NOT a symbols.csv function: it carries no Thumb mark, so resolving the BLs against it would make ld insert an interworking veneer and shift every later section) |
 | 9 | `0x080CFA9C-0x080CFDDB` | ~0x340 | **C library + SRAM driver (Thumb)** — SRAM driver **decompiled** (`src/agb_sram.c`, old_agbcc `-O1 -mthumb-interwork`); libc tail split to `asm/sdk_libc.s` (#24), fully named in #30. **The libc tail stays named asm forever, by design**: `_call_via_r0..lr` are gcc interworking shims reached by register-allocation-dependent `bl _call_via_rN` (lesson 3.4, all 15 variants exported); `__divsi3`/`__umodsi3`/`_div0` are libgcc routines that are hand-written *assembly* in gcc's own source tree (`lib1funcs.asm` — no C input produces them; the ROM bytes match the gcc 2.9 Thumb shapes instruction-for-instruction); the three trampolines are SDK glue with raw ARM branch words. No memcpy/memset copy loops exist in this range | SRAM driver `0x080CFA9C-0x080CFC2F`: `ReadSram_Core` `0x080CFA9C`, `ReadSram` `0x080CFAC0`, `WriteSram` `0x080CFB24`, `VerifySram_Core` `0x080CFB64`, `VerifySram` `0x080CFB94`, `WriteSramEx` `0x080CFBF8` (all byte-identical, linked from C); libc tail `0x080CFC30-0x080CFDDB`: `_call_via_r0..r7` (+ `_call_via_r8/r9/sl/fp/ip/sp/lr`), `__divsi3`/`__umodsi3`/`_div0`, three Thumb->ARM task trampolines `TaskSwitchTrampoline` `0x080CFDC4` / `TaskYieldTrampoline` `0x080CFDCC` / `TaskDispatchTrampoline` `0x080CFDD4` (`bx pc; nop; ARM b 0x08000234/58/88` — named in #30 after the task-helper semantics, see §6); the former `sub_080cfcfc` was a false positive — it is the `pop {pc}` tail of `__divsi3`'s `Ldiv0` path (`push {lr}; bl __div0; mov r0, #0; pop {pc}`, exactly gcc 2.9 `lib1funcs.asm`), whose only "rom-pointer" was a coincidental PCM word at `0x086DA494` inside `m4a_songs` (curated out via `tools/symdb.py` `FALSE_POSITIVES`, #30); fn table `0x0872EA04` = {ReadSram_Core, ReadSram, VerifySram_Core, VerifySram} (no xrefs) |
-| 10 | `0x080CFF00-0x080CFFFF` | 0x100 | lib rodata — split to `asm/lib_rodata_fir_tables.s` (#24) | FIR/envelope-style coefficient tables consumed with signed relative indexing by **game code** at `0x080B7B14` and `0x080C2580-0x080C4FE8` (pool literals `0x080CFE2C`, `0x080CFE60`, `0x080CFEE4`, `0x080CFF52`, `0x080CFF70`, ... — several byte-granular); symmetric byte ramp peaking at 0x10 @0x080CFF00, `0x7FFF` saturation block @0x080CFF20. **NOT m4a tables**: the m4a engine (§8) never references this range — the earlier "m4a-family sound tables / mixer at 0x080C2xxx" hypothesis is corrected by issue #31 |
+| 10 | `0x080CFF00-0x080CFFFF` | 0x100 | lib rodata — split to `asm/lib_rodata_fir_tables.s` (#24) | Not FIR coefficients (#98): part of sub-game 2's (M37's) rodata, which runs `0x080CFE2C-0x080D0600` across `lib_misc` and this segment. The "symmetric byte ramp peaking at 0x10" is the racers' bounce table `gUnk_080CFF01` (`s8[]`), the `0x7FFF` block is the white blend target `gUnk_080CFF1C` of the computer racers' distance fade, and the rest are the effect animation `gUnk_080CFF52`, the background objects' three height bands `gUnk_080CFF60` (0/53/106), the digit divisors `gUnk_080CFF70`, the OAM size table `gUnk_080CFF76` and the script data behind `gUnk_087572EC` (rom-map §9, M37). **NOT m4a tables**: the m4a engine (§8) never references this range — the earlier "m4a-family sound tables / mixer at 0x080C2xxx" hypothesis is corrected by issue #31 |
 | 11 | `0x080D0000-0x08120000` | 0x50000 | Level/map & object tables | entropy 4.4-5.4, 31-48% zeros, few pointers; `faff/0000/0100` pattern tables (e.g. file `0xD00C0`) |
 | 12 | `0x08120000-0x08330000` | ~0x210000 | Level data / uncompressed graphics / palettes, with embedded table zones | pointer clusters @0x08120000 (1066), 0x08150000 (962), 0x081A0000 (1140), 0x08200000 (1206), 0x08250000 (1526) |
 | 13 | `0x083356E0-0x0834EEE8`, `0x08350AF8-0x083A85D4` | ~0x1B290 | **Sound sample data (PCM)** | pointed to by the sample index @`0x087E1D58` (24 pointers into `0x0833-0x0834`, 339 into `0x0835-0x083A`); high entropy (~7.2), zero-pct ~6-8% |
@@ -1191,10 +1191,12 @@ child issues of #35 are created from it. Findings that belong in this document:
     none), `0x087562CC` (init hook) and `0x087562D8` (task body).  Game 0 is
     the duel in this module (`sub_080ba454` / `sub_080ba4e0`), game 1 the
     four-slot bomb-pass game of M36 (`sub_080bd9e8` / `sub_080bda0c`, which
-    dispatch `0x08756568` into `sub_080bda2c`), and game 2 the game whose
-    body is M37's
-    (`sub_080c1f9c` / `sub_080c1fdc` at the tail of M36, dispatching
-    `0x087572CC`).  Every game has two screens, the game itself and its
+    dispatch `0x08756568` into `sub_080bda2c`), and game 2 M37's four-player
+    race (`sub_080c1f9c` / `sub_080c1fdc` at the tail of M36; the body
+    dispatches the phase through `0x087572CC`, 0 = the race
+    `sub_080c21b0`, 1 = its results screen `sub_080c243c`, and
+    `sub_080b9f34` builds the race's course with `sub_080c59d8(gUnk_02006168,
+    1)` before the race screen loads).  Every game has two screens, the game itself and its
     results screen, and `gUnk_02007D2C` is the phase: `sub_080b9e50` sets it
     to the screen index (0/1) and the game's body dispatches on it; a screen
     ends when `Task.unk18` pushes it to 3 (`sub_080b9d0c`, which also saves
@@ -1249,8 +1251,9 @@ child issues of #35 are created from it. Findings that belong in this document:
   Decompiled in #66, in three files (`docs/analysis/module-map.md` §6). It is
   started by M35 (game-mode flow) as task type #95 and dispatched entirely
   through the 41-entry anchor table `0x08756668` on `Task.unk14`, with a second
-  table `0x08756670` on `Task.unk15` and `0x087572CC` on `gUnk_02007D2C` for the
-  results screen. The mode is a round-robin over four slots: `sub_080be04c`
+  table `0x08756670` on `Task.unk15` (`0x087572CC`, dispatched on
+  `gUnk_02007D2C` by `sub_080c1fdc` at M36's tail, is sub-game 2's phase
+  table: M37). The mode is a round-robin over four slots: `sub_080be04c`
   shuffles the four player ids into `gUnk_02006A10[]` (rotated so the local
   player `gUnk_03002360` lands at a fixed index) and picks the starter with
   `sub_08002ee8(gUnk_030023AC)`, i.e. over the number of players; `Task.unk34`
@@ -1284,6 +1287,97 @@ child issues of #35 are created from it. Findings that belong in this document:
   disassemble as a `bl`), and `0x080C05F0` (four `bl` callers) and `0x080C1820`
   (a dead export with its own pool) are real Thumb entries the scan missed -
   the two blind spots this document already records, seen once more.
+- **M37 (`0x080C1FFC-0x080C641F`) is sub-game 2, a four-player race, plus
+  `AgbMain` state 11.**  Decompiled in #98, in ten files around PR #133's
+  `src/sub_080c6258.c` (`docs/analysis/module-map.md` §6); 81 of the 82
+  functions are C, and the course renderer `sub_080c5b84`
+  (`0x080C5B84-0x080C623B`) stays asm.  The census name
+  "FIR-coefficient effect engine" came from its pool references into
+  `0x080CFE20-0x080D0000`; those tables are this game's rodata (below), not a
+  filter.
+  * **The race** (`gUnk_02007FCC == 2`, 0x080C1FFC-0x080C6258).  Four racers
+    run along four lanes of a horizontally scrolling course.  The state is
+    `gUnk_02016C40`, a 0x454-byte record (`struct M37Game`) always used
+    through the pointer cell `gUnk_02017094`, and the course record
+    `gUnk_0201B0E0` (`struct M37Course`) behind `gUnk_0201716C`: the scroll
+    position `unk000`, the start and finish lines `unk00C` (1000) and
+    `unk010` (6000/8500/12000 for levels 0-2) and one 0x3C-byte record per
+    racer at `unk018` (position, the "held A" flag, the segment flag
+    `unk14`, the rank `unk18`, the scores `unk20`/`unk24`).  After the record
+    come the module's other EWRAM cells in declaration order: four palette
+    fades `gUnk_020170A0[4]`, the results record `gUnk_02017140`, the
+    pointer cell `gUnk_0201716C`, the frame counter `gUnk_02017170`, and the
+    course buffers (`0x02017180`-`0x0201BFC0`).
+  * **The screens.**  Phase 0, `sub_080c21b0`, spawns the racers and waits
+    for the scroll to pass the start and finish lines and for all four
+    racers to finish; phase 1, `sub_080c243c`, ranks them by frame count
+    (`M37Game.unk004[]`), and its state machine `sub_080c2740` ends the
+    screen through M35's `sub_080b9d24` or `sub_080b9d0c(level)` (in the
+    extra mode, `gUnk_03002150 == 5`, it first hands stars to the linked
+    players with `sub_08009eb8`).  The sky is a 160-line backdrop gradient:
+    the per-frame hook `sub_080c2d38` (in `gUnk_0300003C`) interpolates it
+    from eleven RGB keys into `M37Game.unk1BC[]` and the VBlank hook
+    `sub_080c2fb8` (in `gUnk_03000FA4`) re-arms HBlank DMA0 to copy it into
+    backdrop colour 0 line by line.
+  * **Task type #96** (class 3, body `sub_080c2ff8`) dispatches `Task.unk73`
+    through `gUnk_087572D4` (= `0x087572CC` + 8) with a count of 5, but only
+    the first three words are functions: variant 0 `sub_080c3018` (a racer,
+    one per player; held A on a segment accelerates, a well-timed press
+    boosts, A held off one starts a 24-frame penalty; computer racers get
+    their "keys" from `sub_080c33a0` with per-level parameters when at most
+    one player is linked), variant 1 `sub_080c46ec` (seven scrolling
+    background objects and the course-line sign) and variant 2
+    `sub_080c3f44` (the racers' effect sprites, nine kinds spawned through
+    `sub_080c2078`).  The two words after them, `0x080CFF3A`/`0x080CFF42`,
+    are sprite data: `gUnk_087572E0` is an animation table variant 2 stores
+    in `Task.unk38`.
+  * **The course builder** `sub_080c59d8(level, flag)` resets the course
+    record, sets the BG scroll shadows and VRAM, and calls `sub_080c5678`,
+    which lays out each lane's shape (`sub_080c52c4`, sine table
+    `gUnk_080D0398`), its distance tables (`gUnk_02017980[4][500]` and the
+    inverse `gUnk_02019140`) and the alternating segments
+    `gUnk_0201B200[lane][]`; `sub_080c5b84` (still asm) then renders the
+    lanes column by column into BG VRAM every frame from `sub_080c383c`
+    (ring buffers `gUnk_0201A0E0`/`gUnk_0201B7C0`/`gUnk_02017180`, the BG
+    scroll cells behind `0x08757300`/`0x08757310`/`0x08757320`) and ranks
+    the racers by depth.
+  * **The helpers** shared across the files: five LCG streams
+    `M37Game.unk1A4[]` (`x = (x * 61 + 0x579) & 0xFFF`, `sub_080c4c78` /
+    `sub_080c4ca4` / `sub_080c4cd4`), the palette fades, the HUD digits and a
+    sprite scaler `sub_080c4f60` that writes a scaled OAM list into
+    `M37Game.unk304`/`unk306[]`, and the script cursor `gUnk_03006928`
+    (`sub_080c51c0` / `sub_080c51d4` / `sub_080c523c`: u16 pairs from
+    `gUnk_087572EC[id]`, `0x8000` ends a script, `0x9999` loops it).
+  * **Rodata.**  The race's `const` tables sit at `0x080CFE2C-0x080D0600`,
+    right after the SDK's `gSramIdString` in `lib_misc` and across
+    `lib_rodata_fir_tables`: `gUnk_080CFE2C` (`u8[][4]`, the racer-to-player
+    rotation for each local link id `gUnk_03002360`), `gUnk_080CFE3C` (`s32[][3]`, the speed
+    thresholds per level), the sky keys `gUnk_080CFE60`/`gUnk_080CFE81`/
+    `gUnk_080CFEA2`/`gUnk_080CFEC3` (`u8[11][3]` each), animation offsets
+    `gUnk_080CFEE4`/`gUnk_080CFEE9`/`gUnk_080CFF01`, the "symmetric byte
+    ramp" `gUnk_080CFF01` and the blend target `gUnk_080CFF1C` §2 seg 10
+    describes, the digit divisors `gUnk_080CFF70` (10/100/1000) and the OAM size table
+    `gUnk_080CFF76`, the script data behind `gUnk_087572EC`, and the s16
+    tables `gUnk_080D0398` (sine) and `gUnk_080D059A` (the depth scale).
+    The ROM-side tables proper live in `asset_metadata_index` after M36's
+    (`0x087572CC-0x08757330`: the phase and variant tables, `0x087572E0`,
+    `0x087572EC` and the BG-scroll cell tables `0x08757300`/`0x08757310`/
+    `0x08757320`).
+  * **`AgbMain` state 11** (`0x080C6260-0x080C641F`, `src/mode_c6260.c`) is
+    not part of the race: `src/main.c` calls `sub_080c6260` once and moves
+    to state 12, which runs M38's `sub_080c6420`.  It saves four cells,
+    tears the SIO session down and, unless `gUnk_03002150 == 20` or
+    `gUnk_03001F30 == 1`, plays two scenes, each a preset room
+    (`sub_08024610(0, 0)` / `sub_08024654(632, 248)`) directed by M38's task
+    type #100 / #101 until it clears `gUnk_02008018`.  The subsystem seam is
+    therefore `0x080C6260`; the frozen module boundary stays at
+    `0x080C6420`.
+  * **Census.**  Two lesson 4.95 rows folded (`0x080C501E` and
+    `0x080C51FE`, each a `b.n` after pool words of the function in front of
+    it, with coincidental data words as their "rom-pointer" evidence) and
+    two push-less entries added (`0x080C4818`, a callback `sub_080c4860`
+    installs, and `0x080C51D4`, a `bl` target of `sub_080c241c`), so the
+    range holds 82 functions, one of them PR #133's.
 
 - **M25 (`0x0809000C-0x08093F63`) is a bank of four scripted boss fights.**
   Decompiled in #67, in three files (`docs/analysis/module-map.md` §6). Each boss owns one anchor table and one
@@ -1853,9 +1947,11 @@ child issues of #35 are created from it. Findings that belong in this document:
   times, and its leaves point into seg 13 (`0x0836xxxx`) — per-room sample-bank
   selection.
 - **The `lib_misc`/`lib_rodata_fir_tables` consumer predicted in §2 seg 10 is
-  one module**, `0x080C1FFC-0x080C641F` (22 pool refs into `lib_misc`, 7 into
-  the FIR tables, and it contains the `0x080C2580-0x080C4FE8` functions named
-  there). Its signed divide-by-two helper `sub_080c6258`
+  one module**, `0x080C1FFC-0x080C641F`, and the tables are its rodata, not
+  FIR coefficients: M37 (#98) is sub-game 2, a four-player race, and
+  `0x080CFE2C-0x080D0600` holds its palette-slot, speed, sky-gradient,
+  animation, digit and sine tables (see the M37 entry above). Its signed
+  divide-by-two helper `sub_080c6258`
   (`0x080C6258-0x080C625F`) is decompiled in `src/sub_080c6258.c`; the
   `gSramIdString` consumer at `0x080B7AF8` is the save module
   `0x080B6154-0x080B9D0B`, the only `WriteSramEx`/`ReadSram` caller in seg 7.
@@ -1870,7 +1966,10 @@ child issues of #35 are created from it. Findings that belong in this document:
   generation counter at `0x08` (`sub_080b78e4`).  The `SRAM_V112` signature at
   `0x080CFE20` goes to `0x0E000000` (`sub_080b7af8`) and a second 0x7800-byte
   region at `0x0E000800` mirrors `gUnk_0200EC80` (`sub_080b8348`/`sub_080b8374`).
-- **`gUnk_0300003C` is the HBlank callback cell** (M34, #94): the save module's
+- **`gUnk_0300003C` is the frame driver's per-frame hook** (M34, #94; #98
+  corrects the "HBlank callback" first written here: `sub_08000de4` calls it
+  once per frame before it waits for VBlank, and `gUnk_03000FA4` is the
+  VBlank handler's hook).  The save module's
   wavy-scroll effect installs `sub_080b60e8`/`sub_080b6a90` in it, keeps its
   state in `gUnk_02016490` (0/1/2/3) and its frame counter in `gUnk_02016494`,
   builds the scroll table in `gUnk_020164A0` and puts the destination I/O

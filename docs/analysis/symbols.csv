@@ -5069,7 +5069,8 @@ vma,size,isa,evidence,name
 0x080C4630,0x34,thumb,bl-target,sub_080c4630
 0x080C4664,0x88,thumb,bl-target,sub_080c4664
 0x080C46EC,0xA4,thumb,rom-pointer,sub_080c46ec
-0x080C4790,0xD0,thumb,rom-pointer,sub_080c4790
+0x080C4790,0x88,thumb,rom-pointer,sub_080c4790
+0x080C4818,0x48,thumb,rom-pointer,sub_080c4818
 0x080C4860,0x30,thumb,bl-target,sub_080c4860
 0x080C4890,0xCC,thumb,bl-target,sub_080c4890
 0x080C495C,0x18,thumb,bl-target,sub_080c495c
@@ -5088,10 +5089,9 @@ vma,size,isa,evidence,name
 0x080C4D08,0x108,thumb,rom-pointer,sub_080c4d08
 0x080C4E10,0x98,thumb,rom-pointer,sub_080c4e10
 0x080C4EA8,0xB8,thumb,rom-pointer,sub_080c4ea8
-0x080C4F60,0xBE,thumb,bl-target,sub_080c4f60
-0x080C501E,0x1A2,thumb,rom-pointer,sub_080c501e
-0x080C51C0,0x3E,thumb,bl-target,sub_080c51c0
-0x080C51FE,0x3E,thumb,rom-pointer,sub_080c51fe
+0x080C4F60,0x260,thumb,bl-target,sub_080c4f60
+0x080C51C0,0x14,thumb,bl-target,sub_080c51c0
+0x080C51D4,0x68,thumb,bl-target,sub_080c51d4
 0x080C523C,0x48,thumb,bl-target,sub_080c523c
 0x080C5284,0x40,thumb,bl-target,sub_080c5284
 0x080C52C4,0x1E0,thumb,bl-target,sub_080c52c4

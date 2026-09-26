@@ -1371,8 +1371,53 @@ SECTIONS
         build/src/subgame_c0de8.o(.text)
     } > ROM
 
-    .game_code_and_rodata_080653ec_0806ef5c_080bf994_080c1ffc 0x080C1FFC : {
-        KEEP(*(.game_code_and_rodata_080653ec_0806ef5c_080bf994_080c1ffc)) KEEP(*(.game_code_and_rodata_080653ec_0806ef5c_080bf994_080c1ffc.tail))
+    /* subgame_c1ffc — decompiled to C (src/subgame_c1ffc.c, carved by tools/carve.py) */
+    .subgame_c1ffc 0x080C1FFC : {
+        build/src/subgame_c1ffc.o(.text)
+    } > ROM
+
+    /* subgame_c243c — decompiled to C (src/subgame_c243c.c, carved by tools/carve.py) */
+    .subgame_c243c 0x080C243C : {
+        build/src/subgame_c243c.o(.text)
+    } > ROM
+
+    /* subgame_c2ff8 — decompiled to C (src/subgame_c2ff8.c, carved by tools/carve.py) */
+    .subgame_c2ff8 0x080C2FF8 : {
+        build/src/subgame_c2ff8.o(.text)
+    } > ROM
+
+    /* subgame_c3648 — decompiled to C (src/subgame_c3648.c, carved by tools/carve.py) */
+    .subgame_c3648 0x080C3648 : {
+        build/src/subgame_c3648.o(.text)
+    } > ROM
+
+    /* subgame_c3f44 — decompiled to C (src/subgame_c3f44.c, carved by tools/carve.py) */
+    .subgame_c3f44 0x080C3F44 : {
+        build/src/subgame_c3f44.o(.text)
+    } > ROM
+
+    /* subgame_c4630 — decompiled to C (src/subgame_c4630.c, carved by tools/carve.py) */
+    .subgame_c4630 0x080C4630 : {
+        build/src/subgame_c4630.o(.text)
+    } > ROM
+
+    /* subgame_c4d08 — decompiled to C (src/subgame_c4d08.c, carved by tools/carve.py) */
+    .subgame_c4d08 0x080C4D08 : {
+        build/src/subgame_c4d08.o(.text)
+    } > ROM
+
+    /* subgame_c5284 — decompiled to C (src/subgame_c5284.c, carved by tools/carve.py) */
+    .subgame_c5284 0x080C5284 : {
+        build/src/subgame_c5284.o(.text)
+    } > ROM
+
+    .game_code_and_rodata_080653ec_0806ef5c_080bf994_080c1ffc_080c3648 0x080C5B84 : {
+        KEEP(*(.game_code_and_rodata_080653ec_0806ef5c_080bf994_080c1ffc_080c3648)) KEEP(*(.game_code_and_rodata_080653ec_0806ef5c_080bf994_080c1ffc_080c3648.tail))
+    } > ROM
+
+    /* subgame_c623c — decompiled to C (src/subgame_c623c.c, carved by tools/carve.py) */
+    .subgame_c623c 0x080C623C : {
+        build/src/subgame_c623c.o(.text)
     } > ROM
 
     /* sub_080c6258 — decompiled to C (src/sub_080c6258.c, carved by tools/carve.py) */
@@ -1380,7 +1425,12 @@ SECTIONS
         build/src/sub_080c6258.o(.text)
     } > ROM
 
-    .game_code_and_rodata_080653ec_0806ef5c_080bf994_080c1ffc_080c6260 0x080C6260 : {
+    /* mode_c6260 — decompiled to C (src/mode_c6260.c, carved by tools/carve.py) */
+    .mode_c6260 0x080C6260 : {
+        build/src/mode_c6260.o(.text)
+    } > ROM
+
+    .game_code_and_rodata_080653ec_0806ef5c_080bf994_080c1ffc_080c6260 0x080C6420 : {
         KEEP(*(.game_code_and_rodata_080653ec_0806ef5c_080bf994_080c1ffc_080c6260)) KEEP(*(.game_code_and_rodata_080653ec_0806ef5c_080bf994_080c1ffc_080c6260.tail))
     } > ROM
 

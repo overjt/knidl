@@ -2701,6 +2701,224 @@ Two more loop-invariant lessons from the same agent:
   default` needs an empty `case 0: break;` (3.429 again) and a task local
   per arm (`sub_0805ab04`).
 
+### 3.443 agbcc rounds every struct up to a multiple of 4 bytes: check a sub-struct's size before nesting it
+agbcc pads every struct to a multiple of 4 bytes, whatever its members'
+alignment (the ARM target's 32-bit structure size boundary; 3.439 is the same
+rule seen from a table's row stride).  M37's first `struct M37ObjSet` (`s32; struct
+M37Obj [7]; s16`, 0x76 bytes of members) came out 0x78, so every
+`struct M37Game` field after offset 0x0EC moved by 2 bytes and, once the next
+`s32` array realigned, by 4: `unk446` compiled as offset 0x44A.  Two agents
+saw their pool words change within minutes.  The fix was to let the
+sub-struct absorb the two colour rows that follow it, so that it ends at
+0x1A4 with the compiler's own 2-byte pad where the flat layout had a filler.
+`struct M37Script` (`u8, u8, s16, s16`) is 8 bytes for the same reason,
+harmless for a single variable.  Before publishing a nested struct, compile a
+probe: `typedef char chk[(sizeof(struct M37Game) == 0x454) ? 1 : -1];` and one
+`offsetof` check per landmark field; a wrong size is a compile error.
+
+### 3.444 A table local makes the init `ldr =sym; adds #4` and lets a compare reuse the pool word
+`sub_080c4b64` (the HUD number drawer) walks the divisor table
+`gUnk_080CFF70[3]` downwards and draws the last digit when the walk reaches
+the table's start.  The ROM loads the table address once, adds 4 into the
+walking pointer, and compares against a second load of the SAME pool word.
+`div = &gUnk_080CFF70[2]` pools `sym + 4` (140 bytes, 4 long); `div =
+gUnk_080CFF70; div += 2;` has the right bytes but two sets of `div`, which
+lifted its global-alloc priority above the counter's and permuted four
+registers (24 bytes).  What matches is a table local, assigned once:
+
+```c
+tbl = gUnk_080CFF70;
+div = tbl + 2;
+...
+if (div == tbl)
+```
+
+The loop is a `goto` loop: every `for`/`do`/`while` spelling let loop.c
+strength-reduce `i * 9 + x` and reverse the counter, which the ROM does not
+(3.21).  Found by m37-a after the coordinator's `do { } while (0)` weight
+levers (3.412) had only reached 11 bytes.
+
+### 3.445 A walking pointer written by hand versus a giv: where the increment and the inits land
+`sub_080c46ec` stores `x = 0, 0x340000, ...` into the seven records' `unk8`.
+With the store indexed (`g->unk0EC.unk04[i].unk8 = x`) loop.c makes the
+address a giv whose increment sits at the loop end (12 bytes); with `x = i *
+0x340000` both become givs and their inits land in the wrong order (108
+bytes).  The ROM is a user pointer and counter initialised in the `for`
+header in that order, stepped right after the store:
+
+```c
+for (i = 0, p = &g->unk0EC.unk04[0].unk8, x = 0; i <= 6; i++) {
+    sub_080c4664(i);
+    *p = x;
+    p += 4;
+    x += 0x340000;
+}
+```
+
+The ROM also reuses the state pointer's register for `p` (`adds r4, #248`),
+which only happens because `g` dies there.
+
+### 3.446 A sub-struct is visible in the address arithmetic of its elements
+`sub_080c4664` addresses an object record as `(set + 4) + i * 16` from a
+register holding `&g->unk0EC` (`lsls r0, #4; adds r0, #4; adds r5, r1, r0`),
+where the flat layout (`s32 unk0EC; struct M37Obj unk0F0[7];`) folds the 4
+into the base.  Only a nested struct, `struct M37ObjSet *set = &g->unk0EC;
+&set->unk04[i]`, reproduces it - and the same function reads the set's last
+field back through `g` (`g->unk0EC.unk74`) while it stores it through `set`,
+both as in the ROM.  When the ROM computes `base + K + i * stride` from a
+base that is itself an offset into a record, look for a struct boundary at
+that offset (and then see 3.443).
+
+### 3.447 A `bx lr` leaf's return value is proven only by its caller
+`sub_080c4ca4` steps one LCG stream and ends `str r0, [r2]; bx lr`, so its
+own bytes are the same as `void` or `u32`.  Its only caller, variant 2's
+`sub_080c3f44`, masks `r0` right after the `bl` (`ands r1, r0` with 7, 31 and
+0xFFF), so the definition is `u32 sub_080c4ca4(s32 i) { return
+g->unk1A4[i] = (g->unk1A4[i] * 61 + 0x579) & 0xFFF; }` (m37-c's reading;
+compare 3.356/3.365, which are about the width, and 3.391, the leaf that
+returns its unused parameter).
+
+### 3.448 Small M37 shapes, one line each
+- `switch (p[s->unk1 * 2]) { case 0x8000: ...; break; case 0x9999: s->unk1 =
+  0; default: ...; }`, a case falling into `default`, is the ROM's `beq end;
+  beq loop; b default` (`sub_080c51d4`); the `if`/`if` form was 4 bytes short,
+  and only the plain `gUnk_03006928.unkN` spelling (no pointer local) re-reads
+  `unk0` after the test as the ROM does.
+- A `(u16)` truncation the ROM applies after the other arguments are ready
+  belongs in the call argument: `s32 r = ...; f(..., (u16)r, ...)`; a `u16 r`
+  local truncates at its assignment (`sub_080c4890`, 18 bytes).
+- `frac *= 0x411A; frac = Div(frac, 10000);` keeps the product in `frac`'s
+  register (`muls r5, r0`), `Div(frac * 0x411A, 10000)` multiplies into the
+  constant's (`sub_080c4ac4`).
+- `n = b != 0 ? Div(a * 1000, b) : 0;` with an `s16 n` gives the ROM's join
+  copy `adds r1, r0, #0`; the `if`/`else` assigning `n` in each arm does not
+  (`sub_080c4bec`).
+- `x = o->unk8; x += 0xFFFF0000; x += (... ) << 16; o->unk8 = x;` pins the
+  ROM's addition order (3.89 again) where one expression reassociated the two
+  addends (`sub_080c4790`); `for (...; o++, i++)` orders the increments.
+- The spawn-retry loop `while ((id = sub_080058e4(100, 32)) == -1)
+  sub_08002d18();` followed by `t = &gUnk_03002790[id]; t->unk73 = 0;`
+  computes the index before the table base; `gUnk_03002790[id].unk73 = 0`
+  loads the base first (`sub_080c6354`).
+- A constant the ROM materialises right after a table's address load is a
+  local assigned after a table-pointer local: `u32 *tbl = gUnk_08755FA8; u32
+  c = 0x6000; f(9, tbl[idx], c, ...)` (`sub_080c4630`).
+- `for (i = 0; i < 4; i++) if (t[i].unk00 == 0) break; if (i > 3) while
+  (1);` is the free-slot scan with the ROM's rotated test (`sub_080c4974`).
+
+### 3.449 Small shapes from the racer bodies (m37-b), one line each
+- A `u16` local assigned from an `s32` field narrows the load to `ldrh` with
+  the struct-array address order (`adds #off; adds idx`); `*(u16 *)&field`
+  folds the offset into the `ldrh` instead (`sub_080c383c`).
+- Two `if`/`else` arms that each "call, then store the result" through one
+  function-scope result variable are merged whole by cross-jumping, call
+  included; a block-scoped variable per arm stays a local pseudo in `r0` and
+  only the identical tail merges, as in the ROM (`sub_080c34ac`).
+- `u8 src` compared with a `u16` field is shortened to an unsigned compare
+  (`bcs`) and the field stays cached; `s32 src = u8table[...]` gives the ROM's
+  signed `bge` and its second `ldrh` (`sub_080c34ac`, `sub_080c3018`).
+- `&u16arr[i * 16 + 1]` folds the `+ 1` into the pool constant; the ROM's
+  `((i << 4) + 1) << 1` needs the byte view `(u16 *)((u8 *)arr + (i * 16 +
+  1) * 2)` (`sub_080c3e18`).
+- A signed post-decrement test of a `u16` field needs an `s16` lvalue,
+  `(*(s16 *)&t->unk6C)-- <= 0`; `(s16)t->unk6C-- <= 0` adds a pooled
+  `0xFFFF` (`sub_080c45fc`).  The cast store then no longer counts as a
+  struct-field store for 3.406's reload rule, so the task pointer needs a
+  `struct Task *t` local where the ROM keeps it (`sub_080c44f0`).
+- A block-scoped `u32 *tbl = gUnk_03002490->unk38;` inside the draw branch
+  loads `unk38` before `unk3C`, the ROM's order; `t->unk38[t->unk3C]` loads
+  the index first (`sub_080c43e8`).
+- For `v = c ? A : B` agbcc emits `ldr =B; cmp; b<c>; movs A`: write the
+  condition so that the ROM's pooled value is the false arm
+  (`u->unk4A < 80 ? 0x10000 : -0x10000`, `sub_080c3f44`).
+- `cmp #0; bne` then `cmp #1; bne` is an `if`/`else if`/`else` chain; a
+  `switch` on the same values tests with `beq` in another order
+  (`sub_080c3018`).
+
+### 3.450 Small shapes from the screens (m37-a), one line each
+- The ROM computing `x`, `x + 1` and `8 - c` before any table address means
+  locals (`from = t->unk6E; to = from + 1; step = 8 - (s16)t->unk6C;`);
+  inline, gcc spreads `(x + 1) * 32` into `x * 32 + 32`.  A second
+  `step2` for the second blend fixed a 2-byte register pick (3.436 again,
+  `sub_080c2ba8`).
+- The bubble sort's bound `j`, reused as the running place in the next loop,
+  keeps both in `ip`; a fresh variable gets a low register and 4 bytes
+  (`sub_080c243c`).
+- `a != 0 || b != 0` on two neighbouring `s8` fields compiles to one `ldr`
+  of the word and a `0x00FFFF00` mask test (`sub_080c25c4`).
+- `y = i * 32 + 43` written in the loop body matches, a second counter `y +=
+  32` does not: the reduced giv is initialised after the hoisted invariants
+  (`sub_080c25c4`).
+- Accumulators of `(x & 0xF800) >> n` must be `u32` for `lsrs`; `s32` gives
+  `asrs` (`sub_080c2d38`).
+- The HBlank DMA re-arm matches as `vu32 *dma = (vu32 *)0x040000B0; dma[0] =
+  ...; dma[1] = ...; dma[2] = ...;`; the `REG_DMA0SAD`/`DAD`/`CNT` macros are
+  8 bytes longer (`sub_080c2fb8`).
+- A table pointer that the ROM keeps in one register for some tests and in
+  another after them is two locals, the second assigned after the tests
+  (`sub_080c4d08`, 3.152 again).
+- A wait loop whose exit test the ROM does not copy in front of it is
+  `while (1) { if (done) break; TaskYieldTrampoline(1); }` next to plain
+  `while` loops in the same function (`sub_080c21b0`, 3.151).
+
+### 3.451 A cast to the store's own width keeps a HImode constant and the ROM's OR grouping
+The last residue of `sub_080c4f60` (the sprite scaler, 608 bytes) was one
+store, `unk306[unk304++] = (a & 0xFF00) | v | 0x100 | (s16)dbl;`.  The ROM
+builds the `0x100` in HImode (`movs r5, #128; lsls r5, #1; adds r0, r5, #0`,
+3.24/3.37), ORs it in before the sign-extended `dbl`, and then derives the
+next constant `0x1FF` from it (`adds r5, #255`).  Plain C lets fold
+reassociate the tree into `(X | v) | (dbl | 0x100)`, which costs a pool load
+for `0x1FF` (4 bytes long); m37-c tried all 96 orders and groupings of the
+four terms.  A chained store through an `int` (`= t = (t = X | v | 0x100) |
+(s16)dbl`) fixes the order but computes the constant in 32 bits (69 bytes).
+What matched (m37-a) is a cast to the destination's width around the first
+three terms:
+
+```c
+gUnk_02017094->unk306[gUnk_02017094->unk304++] = (s16)((a & 0xFF00) | v | 0x100) | (s16)dbl;
+```
+
+The inner tree stays 16-bit, so the constant keeps its HImode form, and the
+cast is a barrier fold does not reassociate across.  A `(u16)` cast or a
+16-bit local both came out 4-20 bytes short.  This relaxes 3.37: a 16-bit
+constant survives in a sub-expression that is itself cast to 16 bits, not
+only directly in a store's right-hand side.  Three more from the same
+function (m37-c): a do/while hoisted the `(s16)` conversion of the scale out
+of the loop (the ROM keeps the `u16` in a stack slot and re-extends it in the
+loop), so the loop is a `goto` loop; an `s16` parameter the callee narrows
+with `lsls/lsrs` is copied into a `u16` local (`u16 s = scale;`) and used as
+`(s16)s`, so its callers keep the `s16` prototype; and the stack slots follow
+the declaration order (`s, ret, a, b, w, h, dbl, half`).
+
+### 3.452 In a big function, variables are roles the ROM shares or splits: measure each one
+`sub_080c5b84` (1720 bytes, the course renderer, still asm) went from 1450
+differing bytes to 22 with the right size through source changes that were
+almost all about WHICH variable holds WHICH value, found by three agents and
+checked with a script that prints each named pseudo's register next to the
+ROM's (`-da` `.greg`, lesson 3.34):
+* one counter for two loops: the column loop and the later rescan loop use
+  the same `k` (1163 -> 489 bytes); the rescan's clamp start is `k` again,
+  and its end and the rank loop's count share `m`; the rescan's 8/16
+  brightness reuses the column loop's `col`, and the mark-loop bounds go
+  through the column loop's `j` (`j = a - 120; a = j + hi;`), not a fresh
+  temp;
+* but three other values the first draft merged are separate variables
+  (`d`, `i`, `cs`): splitting those left the code unchanged, every other
+  split tried changed it by 8-1600 bytes - test each merge and split alone;
+* the lane loop's own state (`p`, `lo`, `hi`, `rem`, `mark`) is
+  block-scoped inside the loop body (that fixes their pseudo numbers, which
+  lesson 4.105 turns into stack-slot order);
+* a table index written out at every access, `gUnk_0201A0E0[lane][k % 256]`,
+  keeps the offset shared but re-loads the pointer after a join, as the ROM
+  does; an `idx = k % 256` local lets cse reuse the load;
+* `*(vu16 *)addr += col << 8;`: a volatile halfword is never combined into
+  the add, so the sum ties to the load's register;
+* a `pos += k` whose sum the ROM puts in a fresh register is a pointer
+  expression, `vp = base + (pos + k); addr = *vp * 64 + ...`, and a
+  CpuSet destination reuses the column's `addr` variable;
+* `x = x - K + y` is regrouped to `x + (y - K)`: `x -= K; x += y;` (or the
+  shared temp above) keeps the ROM's order.
+
 ## 4. Splitting ROM ranges into asm (tools/split.py)
 
 ### 4.1 objdump text only round-trips under `.syntax unified`
@@ -7985,6 +8203,87 @@ priority-20000 one in a block of three.  Clone `jiangzhengwenjz/agbcc` at
 `59b966e` into `pending/`, apply the print, and build with `docker run --rm
 -v <clone>:/agbcc -w /agbcc knidl-builder make -C gcc -j1 normal` (two
 minutes); `rr.sh <file.c> 'LA b='` greps the lines.
+
+### 4.101 Shared structs belong in one prepended header, and a change to it needs a layout probe
+M37's state is two big records (a 0x454-byte `struct M37Game` behind a
+pointer cell, a course record with four 0x3C-byte racer records) that almost
+every function reads.  Copying the struct definitions into each
+`fns/<fn>.c`, as the M08-M15 harness asked, would have meant ~100 lines per
+file.  Instead the coordinator put the canonical structs and shared cells in
+`pending/m37/canon.h` (generated from `types.txt`), the testers prepend it
+(`cat hdr.c canon.h fns/<fn>.c`), agents may not redeclare anything in it,
+and `gen.py` emits the canon items a carve file uses, in canon.h order and
+before the bodies' own declarations, so the landed file declares exactly
+what was tested.  A missing field is a commented cast plus a report; the
+coordinator renames a filler (the layout never moves).  The one risk is a
+layout change: a nested struct padded by 2 bytes (lesson 3.443) shifted
+every later field for everyone within minutes, caught by two agents from
+their pool words.  After any canon.h edit, compile an `offsetof`/`sizeof`
+probe (`typedef char chk[(cond) ? 1 : -1];`) and run `recheck.sh` over all
+of `good/` before telling the agents.
+
+### 4.102 m2c drafts are the transcriber for a logic-heavy module
+The yield-script transcriber of 4.41 is useless on code like M37's (4.76);
+m2c is not.  `pending/m37/m2cin.py` turns each `ann/<fn>.s` into m2c's input
+(`.syntax unified`, `.thumb`, `glabel`, `ldr rN, =gUnk_<addr>` pool loads,
+no `.word`/`.short` lines, `b.n` -> `b`) and `m2c -t gba` wrote a draft for
+78 of 81 functions (the failures were the two `mov pc` jump tables and
+`sub_080c623c`, whose listing carries the chunk label split.py emits at a
+chunk boundary, which m2c took for the start of a second function).  The
+drafts are never byte-exact - their field names are offsets and their
+control flow is goto-heavy - but the agents used them for data flow and
+argument order, and several small functions matched on the first or second
+build from a draft.
+
+### 4.103 A start-adjacent carve cannot give the next module its own segment name
+Lesson 4.74 carves the file next to the following module first so that the
+remainder is named after its own start.  That only works when a part of the
+segment remains in front of the carve.  PR #133's `src/sub_080c6258.c` had
+already split M37's second segment at `0x080C6260`, M37's own seam, so
+carving `mode_c6260` (`0x080C6260-0x080C6420`) first was start-adjacent and
+M38 kept the segment name `..._080c1ffc_080c6260`.  Renaming it would have
+meant editing another module's segment, so it stays; the name is cosmetic
+(the linker section and `carve.py` only use addresses).
+
+### 4.104 A push-less `bl` target hides behind a leaf's `bx lr` and pool
+The census missed `0x080C51D4`: `sub_080c51c0` is a 0x14-byte leaf (`...;
+bx lr` and one pool word), and the code after its pool, a second push-less
+function reached by `bl` from `sub_080c241c`, was counted into its row.  The
+sweep showed it three ways at once: an unreachable run right after the pool,
+three `ldr` pool loads "outside their function" (the second function's pool
+lies past the census row's end), and the next row (`0x080C51FE`) starting
+with a `b.n` behind pool words - a lesson 4.95 phantom inside the hidden
+function.  A whole-ROM `bl` scan for the run's first address confirmed it.
+The same range held one lesson 4.99 companion (`0x080C4818`, found by its
+Thumb-bit pointer in the installer's pool) and a second 4.95 phantom
+(`0x080C501E`), so 82 census rows stayed 82 functions with four rows
+changed.
+
+### 4.105 The stack slots of PRE's copies follow gcse's hash-table order, which the function's size sets
+The last bytes of `sub_080c5b84` were spill-slot offsets: gcse's partial
+redundancy elimination inserts preheader copies of loop-invariant
+expressions (`p + 16`, `lo - 120`, `lane * 4`, the pool load of
+`&gUnk_0201B0E0`), and when those copies spill, their slots come out in the
+order their expressions sit in gcse's expression hash table (m37-b, from the
+`.gcse` dump, `wip/m37-b/ht.py`).  The bucket is `H mod S`, with `H(reg +
+const) = 13772 + regno + const`, `H(reg << const) = 13784 + regno + const`,
+`H(reg - reg) = 14413 + r1 + r2`, a pool constant hashed by its label name
+(`h = 129 * h + c`, and the label is numbered across the whole translation
+unit - lesson 4.79's mechanism), and `S = (real insns in the .cse dump / 2) |
+1`.  So the slot order depends on the pseudo numbers (declaration order and
+block scoping), on the number of pool labels before the function in its
+file, and on how many insns the function has after cse1.  For the ROM's
+order no numbering works at our 673 insns (S = 337); S = 355 (708-711
+insns) with the lane-loop state block-scoped does, and 37 empty `asm("")`
+statements (each counts as an insn) plus the right locals give a byte-exact
+function - a proof of mechanism, not a landable source, so the function was
+parked: the original evidently has ~37 more insns at cse time that later
+passes remove without a trace, and none of ~40 neutral rewrites found them
+(an inlined table helper gives the same code with FEWER cse insns).  Two
+practical rules: when slots of PRE copies differ, test the landed file, not
+the one-function harness (its pool labels are numbered from 1); and read
+the `.gcse` hash table before sweeping declaration orders, which change
+nothing else.
 
 ## 5. Workflow that worked
 

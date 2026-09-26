@@ -279,6 +279,19 @@ KNOWN_SYMBOLS = {
 # m4a_songs data segment surrounded by signed 8-bit PCM sample bytes; the
 # `pop {pc}` halfword passes the strict terminator check by accident.
 FALSE_POSITIVES = {
+    # --- M37 (issue #98), two `b.n` arm tails (lesson 4.95) ---
+    # 0x080C501E is `b.n 0x080C5030` followed by the pool word 0xFFFFFF00
+    # (0x080C5020) that sub_080c4f60's `ldr` at 0x080C5008 loads; the `subs`
+    # at 0x080C501C falls into it and the `beq` at 0x080C5010 lands on
+    # 0x080C5024, inside the row, so sub_080c4f60 really runs
+    # 0x080C4F60-0x080C51C0.  0x080C51FE is `b.n 0x080C521E` followed by the
+    # three pool words (0x080C5200-0x080C5208) of the push-less function
+    # 0x080C51D4 (added below), whose `beq`s at 0x080C51F6/0x080C51FC land on
+    # 0x080C520C/0x080C521A behind them, so 0x080C51D4 runs to 0x080C523C.
+    # Their "rom-pointer" evidence is coincidental words in data: 0x080C501F
+    # at 0x08302440, 0x080C51FF at 0x0824C41C and 0x08257CF0.
+    0x080C501E,
+    0x080C51FE,
     # --- M15 (issue #89), eight lesson 4.40 phantoms ---
     # None of these is a function.  Each one's only evidence is a phantom
     # `bl`: the pool word 0xFFFFF000 (halfwords F000/FFFF) at a 4-aligned
@@ -756,6 +769,18 @@ FALSE_POSITIVES = {
 # m4a.c function order and body shape (see the KNOWN_SYMBOLS comments);
 # they are injected as candidates and carry the "curated" evidence kind.
 EXTRA_THUMB_ENTRIES = {
+    # --- M37 (issue #98), two push-less entries the census missed ---
+    0x080C4818,  # a push-less leaf callback (`ldr r0, =gUnk_03002490` ...
+                 # `bx lr` at 0x080C484E) that sub_080c4860 installs: the
+                 # word 0x080C4819 at 0x080C488C is in its pool.  sub_080c4790
+                 # closes with its own epilogue and pool (0x080C480C-
+                 # 0x080C4817) in front of it, so it really runs 0x080C4790-
+                 # 0x080C4818 (0x88, was 0xD0).
+    0x080C51D4,  # called by `bl` at 0x080C2426 (sub_080c241c); sub_080c51c0
+                 # ends with `bx lr` and its pool word 0x03006928 at
+                 # 0x080C51D0, so it really runs 0x080C51C0-0x080C51D4 (0x14,
+                 # was 0x3E), and 0x080C51D4 runs to 0x080C523C through the
+                 # 0x080C51FE phantom.
     # --- M15 (issue #89), six companions the prologue filter missed ---
     # Push-less leaf callbacks (`ldr r0, =gUnk_03002490` ... `bx lr`) that
     # the anchor-table entries of task type #7 install; each is pointed at

@@ -434,4 +434,35 @@ Matching decompilation of Kirby: The Amazing Mirror's predecessor, **Kirby: Nigh
   compiler, 4.100) and one pseudo per user variable (3.436); new lessons
   3.435-3.442 and 4.99-4.100.
 
+- Sub-game 2 of M35's framework and `AgbMain` state 11 decompiled (issue
+  #98): module M37 `0x080C1FFC-0x080C641F` (17.0 KiB) landed as
+  `src/subgame_c1ffc.c`, `src/subgame_c243c.c`, `src/subgame_c2ff8.c`,
+  `src/subgame_c3648.c`, `src/subgame_c3f44.c`, `src/subgame_c4630.c`,
+  `src/subgame_c4d08.c`, `src/subgame_c5284.c`, `src/subgame_c623c.c` and
+  `src/mode_c6260.c` around PR #133's `src/sub_080c6258.c` (**81 of 82
+  functions** in C, no `asm` statements and no `register` pins; the one
+  hole is the 1720-byte course renderer `sub_080c5b84`, parked at 22 bytes
+  with its best source on #98), so `0x080B9D0C-0x080C5B83` (M35, M36 and
+  most of M37) is contiguous C.  The census name "FIR-coefficient effect
+  engine" was wrong: the `0x080CFE2C-0x080D0600` tables it was named after
+  are this module's rodata.  The range is game 2 of the sub-game framework
+  (`gUnk_02007FCC == 2`), a four-player race along four scrolling lanes:
+  M36's `sub_080c1fdc` dispatches the phase `gUnk_02007D2C` through
+  `gUnk_087572CC` (the race `sub_080c21b0`, the results `sub_080c243c`);
+  task type #96 (class 3, body `sub_080c2ff8`) runs the racers (held A on a
+  course segment accelerates, computer racers from per-level AI tables),
+  seven scrolling background objects and nine kinds of effect sprites; the
+  state is the 0x454-byte record `gUnk_02016C40` behind the pointer cell
+  `gUnk_02017094` and the course record `gUnk_0201B0E0` behind
+  `gUnk_0201716C`, which M35 fills through the course builder
+  `sub_080c59d8` and `sub_080c5b84` (asm) renders column by column;
+  the sky is a 160-line HBlank-DMA backdrop gradient.  After the real seam
+  at `0x080C6260` comes `AgbMain` state 11 (`src/mode_c6260.c`), two scenes
+  directed by M38's task types #100/#101 before state 12.  Four census
+  rows corrected in `tools/symdb.py` (two lesson 4.95 phantoms folded, two
+  push-less entries added, so still 82 functions) and 51 ROM/RAM cells
+  named via `split_config.json` `data_symbols`; the shared structs lived in
+  a prepended `canon.h` instead of per-function copies (lesson 4.101); done
+  by a four-agent fan-out with plain handovers and races; new lessons
+  3.443-3.452 and 4.101-4.105.
 - Next milestones: decompile split/SDK modules to C using the validated per-zone compiler recipe (task system Thumb side, sound driver, then game code); grow `src/` one module at a time with `asmdiff.sh` on the module range.

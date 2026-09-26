@@ -166,10 +166,13 @@ are one subsystem.
   sets)", is referenced **21 times from M07** (level/room build). Its leaves
   point into `0x0836xxxx` (`sound_samples_2`). So it is indexed by *level*
   code: per-room sample/bank selection, not a sound-engine-private table.
-* The FIR/envelope coefficient tables at `0x080CFF00` (`lib_rodata_fir_tables`,
+* The "FIR/envelope coefficient tables" at `0x080CFF00` (`lib_rodata_fir_tables`,
   rom-map §2 seg 10) have exactly one consumer, **M37** (`0x080C1FFC`), with 22
   pool refs into `lib_misc` and 7 into the tables. rom-map predicted a consumer
-  at `0x080C2580-0x080C4FE8`; M37 contains that range.
+  at `0x080C2580-0x080C4FE8`; M37 contains that range.  #98 settled what they
+  are: sub-game 2's rodata (`0x080CFE2C-0x080D0600`: palette slots, speed
+  thresholds, sky-gradient keys, animation offsets, digit divisors, OAM
+  sizes, sine and depth tables), not filter coefficients.
 
 ## 4. Module table
 
@@ -215,7 +218,7 @@ dispatches, pool density) — a planning aid, not a promise.
 | M34 | `0x080B6154-0x080B9D0B` | 14.9 KiB | 105 | 2 | *** | save file / SRAM records + options |
 | M35 | `0x080B9D0C-0x080BDA2B` | 15.3 KiB | 193 | 4 | *** | sub-game framework + reaction-duel sub-game - **landed (#95)** |
 | M36 | `0x080BDA2C-0x080C1FFB` | 17.5 KiB | 117 | 4 | * | sub-game: four-slot bomb-pass minigame - **landed (#66)** |
-| M37 | `0x080C1FFC-0x080C641F` | 17.0 KiB | 82 | 1 | **** | FIR-coefficient effect engine |
+| M37 | `0x080C1FFC-0x080C641F` | 17.0 KiB | 82 | 1 | **** | sub-game 2: the four-player race + `AgbMain` state 11 - **landed (#98)**, 81/82 |
 | M38 | `0x080C6420-0x080CD89B` | 29.1 KiB | 110 | 4 | **** | intro / cutscene / ending sequences? |
 | M39 | `0x080CD89C-0x080CE51F` | 3.1 KiB | 40 | 0 | - | **done** - m4a_1 |
 | M40 | `0x080CE520-0x080CEFB3` | 2.6 KiB | 31 | 0 | - | **done** - m4a_c1 |
@@ -237,7 +240,7 @@ module calls them and their signatures decide how `struct Task` is spelled in
 | **2. Behaviour banks** | M19-M32, M36 | 282 KiB | Difficulty 1-2, **zero BL callers** (nothing depends on them), hundreds of tiny table-dispatched functions with repeating shapes. The bulk of the byte count and the safest parallel work: any number of agents can take one bank each. |
 | **3. Support libraries** | M06, M11, M16, M04, M05 | 130 KiB | Called by the engine modules; M06 is a pure leaf (no outgoing calls at all) and is the single best first target for anyone wanting an isolated slice. |
 | **4. Engine / stage managers** | M07, M08, M09, M10, M12, M13, M14, M15 | 198 KiB | The level, camera and stage machinery. Highest difficulty scores, densest pools, most jump tables; M07/M08 and M10/M11 are each one subsystem split across two issues. |
-| **5. Modes, UI, save, effects** | M02, M03, M33, M34, M35, M37, M38 | 124 KiB | Reachable from `AgbMain`; needs the game-state cells and the save format. M34 is the only SRAM user; M37 is the only FIR-table consumer. |
+| **5. Modes, UI, save, effects** | M02, M03, M33, M34, M35, M37, M38 | 124 KiB | Reachable from `AgbMain`; needs the game-state cells and the save format. M34 is the only SRAM user; M37 is sub-game 2 and the only user of the `0x080CFE2C-0x080D0600` rodata. |
 
 Within a wave, take the modules in `module-map.csv` order of
 `(difficulty, ext_deps, size)`. That ordering, ignoring the wave grouping, is
@@ -275,7 +278,7 @@ ordering inside it:
 | 27 | M15 player effect objects (task type #7) - landed | 0x74B8 | 84 | 3 | 7 | 0 | 1 |
 | 28 | M17 struct Task field API (actor core) | 0x6D78 | 244 | 3 | 8 | 24 | 2 |
 | 29 | M14 stage manager B | 0x6E78 | 84 | 3 | 9 | 5 | 1 |
-| 30 | M37 FIR-coefficient effect engine | 0x4424 | 82 | 4 | 5 | 2 | 1 |
+| 30 | M37 sub-game 2 (four-player race) + AgbMain state 11 - landed | 0x4424 | 82 | 4 | 5 | 2 | 1 |
 | 31 | M03 main menu + sprite tasks, BG scroll animator, stage sequence state - landed | 0x4A38 | 79 | 4 | 6 | 2 | 22 |
 | 32 | M38 intro / cutscene / ending sequences? | 0x747C | 110 | 4 | 6 | 3 | 7 |
 | 33 | M10 stage script runner | 0x6AE0 | 41 | 4 | 11 | 1 | 0 |
@@ -326,7 +329,7 @@ sub-issue of #35, so the numbering ascends with the recommended order):
 | 32 | #95 | M35 sub-game framework + reaction-duel sub-game - landed | `0x080B9D0C-0x080BDA2B` | 15.3 KiB | 5 |
 | 33 | #96 | M02 game-state bodies, boot/title sequence, screen loaders, pause screen + HUD - landed | `0x080075B8-0x0800B91F` | 16.9 KiB | 5 |
 | 34 | #97 | M33 HUD / overlay effects? | `0x080B2FE8-0x080B6153` | 12.4 KiB | 5 |
-| 35 | #98 | M37 FIR-coefficient effect engine | `0x080C1FFC-0x080C641F` | 17.0 KiB | 5 |
+| 35 | #98 | M37 sub-game 2 (four-player race) + AgbMain state 11 - landed | `0x080C1FFC-0x080C641F` | 17.0 KiB | 5 |
 | 36 | #99 | M03 main menu + sprite tasks, BG scroll animator, stage sequence state - landed | `0x0800B920-0x08010357` | 18.6 KiB | 5 |
 | 37 | #100 | M38 intro / cutscene / ending sequences? | `0x080C6420-0x080CD89B` | 29.1 KiB | 5 |
 
@@ -2443,7 +2446,62 @@ below is the pre-decompilation one, kept for the record.
 * **Known RAM cells touched** BG3VOFS shadow (16.16) x16, BG3HOFS shadow (16.16) x13, per-player keys pressed x8, DISPCNT shadow x2, frames left to wait x2, requested/next game state x2.
 * **Suggested batches** `0x080BDA2C` (57 fns), `0x080BF994` (24 fns), `0x080C0DE8` (36 fns).
 
-### M37 `0x080C1FFC-0x080C641F` - FIR-coefficient effect engine
+### M37 `0x080C1FFC-0x080C641F` - sub-game 2: the four-player race + `AgbMain` state 11 - **landed (#98)**
+
+The range is decompiled and carved out of the split asm, so it now appears in
+`module-map.csv` as `c_code` rows instead of one clusterable module; the census
+below is the pre-decompilation one, kept for the record.
+
+* **Landed as** `src/subgame_c1ffc.c` (`0x080C1FFC-0x080C243C`, 6 fns),
+  `src/subgame_c243c.c` (`0x080C243C-0x080C2FF8`, 8), `src/subgame_c2ff8.c`
+  (`0x080C2FF8-0x080C3648`, 5), `src/subgame_c3648.c`
+  (`0x080C3648-0x080C3F44`, 10), `src/subgame_c3f44.c`
+  (`0x080C3F44-0x080C4630`, 9), `src/subgame_c4630.c`
+  (`0x080C4630-0x080C4D08`, 20), `src/subgame_c4d08.c`
+  (`0x080C4D08-0x080C5284`, 7), `src/subgame_c5284.c`
+  (`0x080C5284-0x080C5B84`, 9), `src/subgame_c623c.c`
+  (`0x080C623C-0x080C6258`, 1) and `src/mode_c6260.c`
+  (`0x080C6260-0x080C6420`, 5), around PR #133's `src/sub_080c6258.c`
+  (`0x080C6258-0x080C6260`, untouched): 80 of the 81 functions to write,
+  byte-exact under the `--newpb` recipe with no `asm` statements and no
+  `register` pins, 51 new `split_config.json` `data_symbols`.  One function
+  stays asm: `sub_080c5b84` (`0x080C5B84-0x080C623B`, 1720 bytes, the course
+  renderer), parked on #98 at 22 differing bytes with the right size; a
+  byte-exact version exists but needs 37 empty `asm("")` statements to give
+  gcse's expression hash table the ROM's size (lesson 4.105).
+* **What it turned out to be** not an effect engine: game 2 of M35's
+  sub-game framework (`gUnk_02007FCC == 2`), a four-player race along four
+  lanes of a horizontally scrolling course, and - after the real subsystem
+  seam at `0x080C6260` - `AgbMain` state 11.  M36's `sub_080c1fdc`
+  dispatches the phase `gUnk_02007D2C` through `0x087572CC`: the race screen
+  `sub_080c21b0` (phase 0) and the results screen `sub_080c243c` (phase 1).
+  Task type #96 (class 3, body `sub_080c2ff8`) dispatches `Task.unk73`
+  through `0x087572D4` into its three variants: the racers
+  (`sub_080c3018`, one per player; holding A on a course segment
+  accelerates, a timed press boosts, holding it off a segment starts a
+  penalty; computer racers get simulated keys from per-level AI
+  parameters), the scrolling background objects (`sub_080c46ec`) and the
+  racers' effect sprites (`sub_080c3f44`, nine kinds spawned through
+  `sub_080c2078`).  The state is the 0x454-byte record `gUnk_02016C40`
+  behind the pointer cell `gUnk_02017094` and the course record
+  `gUnk_0201B0E0` behind `gUnk_0201716C`; M35's `sub_080b9f34` builds the
+  course with `sub_080c59d8(level, 1)` (lanes of 6000/8500/12000 pixels),
+  and `sub_080c5b84` (still asm) renders it column by column into BG VRAM.
+  The sky is
+  a 160-line backdrop gradient built each frame by the per-frame hook
+  `sub_080c2d38` and copied by HBlank DMA0, which the VBlank hook
+  `sub_080c2fb8` re-arms.  The census name came from the pool references
+  into `0x080CFE20-0x080D0000`: those tables are this game's rodata.
+  `0x080C6260-0x080C641F` (`src/mode_c6260.c`) is `AgbMain` state 11, the
+  set-up for M38's sequence (state 12 runs `sub_080c6420`): two scenes
+  directed by M38's task types #100 and #101.  The frozen boundary
+  `0x080C6420` is kept; `MODULE_NAMES` names the two parts separately.
+* **Census fixes** 82 rows, still 82 functions: `0x080C501E` and
+  `0x080C51FE` folded (lesson 4.95 `b.n` arm tails after pool words, with
+  coincidental data words as their "rom-pointer" evidence), and the
+  push-less entries `0x080C4818` (a callback `sub_080c4860` installs) and
+  `0x080C51D4` (a `bl` target of `sub_080c241c`) added.
+
 
 * **Size** 17.0 KiB (`0x4424`), 82 functions (27 reachable only through pointer tables), mean `0xd4`, largest `0x6b8`, pool words 10.7% of bytes.
 * **Difficulty** 4/6 - 60 distinct RAM cells, 2 jump-table dispatches, 8 functions >= `0x200`.
@@ -2497,7 +2555,8 @@ and reproducible. The **names are inference**, at three confidence levels:
 * M02 — game mode / screen loader: owns the three class-0 tasks and the
   `current game state` / `requested game state` cells, and does the
   LZ77/Huff decompression into VRAM.
-* M37 — FIR-coefficient consumer (see §3.5).
+* M37 — sub-game 2 of M35's framework, a four-player race, plus `AgbMain`
+  state 11 (settled by #98; see §3.5 and §6).
 * M04+M05 — the player character's **scripted-sequence bank**. Settled by #81,
   sharpened by #82, which found the driver side. The 71-entry table at
   `0x08731FA8` is really two tables in one: entries **0-7** are sequence bodies
