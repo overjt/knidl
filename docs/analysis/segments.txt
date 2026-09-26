@@ -294,9 +294,11 @@
 0x080C623C 0x080C6258 c_code subgame_c623c # src/subgame_c623c.c (carved by tools/carve.py)
 0x080C6258 0x080C6260 c_code sub_080c6258 # src/sub_080c6258.c (carved by tools/carve.py)
 0x080C6260 0x080C6420 c_code mode_c6260 # src/mode_c6260.c (carved by tools/carve.py)
-0x080C6420 0x080C6C64 thumb_code game_code_and_rodata_080653ec_0806ef5c_080bf994_080c1ffc_080c6260 [split]
+0x080C6420 0x080C6C64 c_code results_c6420 # src/results_c6420.c (carved by tools/carve.py)
 0x080C6C64 0x080C7E4C c_code ending_c6c64 # src/ending_c6c64.c (carved by tools/carve.py)
-0x080C7E4C 0x080CB64C thumb_code game_code_and_rodata_080653ec_0806ef5c_080bf994_080c1ffc_080c6260_080c7e4c [split]
+0x080C7E4C 0x080C9004 thumb_code game_code_and_rodata_080653ec_0806ef5c_080bf994_080c1ffc_080c6260_080c7e4c [split]
+0x080C9004 0x080CAA3C c_code ending_c9004 # src/ending_c9004.c (carved by tools/carve.py)
+0x080CAA3C 0x080CB64C thumb_code game_code_and_rodata_080653ec_0806ef5c_080bf994_080c1ffc_080c6260_080c7e4c_080caa3c [split]
 0x080CB64C 0x080CBED4 c_code gameover_cb64c # src/gameover_cb64c.c (carved by tools/carve.py)
 0x080CBED4 0x080CCD4C c_code gameover_cbed4 # src/gameover_cbed4.c (carved by tools/carve.py)
 0x080CCD4C 0x080CD330 c_code gameover_ccd4c # src/gameover_ccd4c.c (carved by tools/carve.py)

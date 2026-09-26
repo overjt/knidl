@@ -51,7 +51,7 @@ M49,0x0802296C,0x08023618,0xCAC,8,0,0,0x195,0x438,24.9,74,1,0,0,5,16,4,level_229
 M50,0x08023618,0x08023948,0x330,10,10,0,0x51,0xA0,11.3,4,2,0,1,0,7,1,roomtask_23618,already landed (c_code)
 M51,0x08023948,0x080242D0,0x988,10,7,0,0xF4,0x358,24.9,50,2,0,0,2,15,4,level_23948,already landed (c_code)
 M52,0x080242D0,0x080261C0,0x1EF0,27,7,0,0x125,0x8BC,27.0,93,5,0,0,19,19,5,level_242d0,already landed (c_code)
-M53,0x080261C0,0x08026B60,0x9A0,24,0,0,0x66,0x1A8,19.5,46,3,0,0,59,8,3,stage_261c0,already landed (c_code)
+M53,0x080261C0,0x08026B60,0x9A0,24,0,0,0x66,0x1A8,19.5,46,3,0,0,60,8,3,stage_261c0,already landed (c_code)
 M54,0x08026B60,0x080270D0,0x570,3,0,0,0x1D0,0x248,14.7,17,0,0,0,2,1,3,door_26b60,already landed (c_code)
 M55,0x080270D0,0x080273A0,0x2D0,10,0,0,0x48,0xC4,17.8,20,0,0,0,13,6,2,stage_270d0,already landed (c_code)
 M56,0x080273A0,0x08027A6C,0x6CC,13,0,0,0x85,0x1A8,20.5,35,0,0,0,9,3,2,stage_273a0,already landed (c_code)
@@ -244,15 +244,16 @@ M242,0x080C5B84,0x080C623C,0x6B8,1,0,1,0x6B8,0x6B8,6.0,5,0,0,0,2,1,3,,
 M243,0x080C623C,0x080C6258,0x1C,1,0,0,0x1C,0x1C,14.3,0,0,0,0,3,0,2,subgame_c623c,already landed (c_code)
 M244,0x080C6258,0x080C6260,0x8,1,0,0,0x8,0x8,0.0,0,0,0,0,1,0,1,sub_080c6258,already landed (c_code)
 M245,0x080C6260,0x080C6420,0x1C0,5,0,0,0x59,0x90,17.0,14,0,0,0,1,4,2,AgbMain state 11: two scenes before M38,"decompiled in #98 as src/mode_c6260.c (5 functions). Not part of the sub-game: AgbMain's state 11 (src/main.c) calls sub_080c6260 once and moves to state 12, which runs M38's sub_080c6420. It saves four cells, tears the SIO session down, and (unless gUnk_03002150 == 20 or gUnk_03001F30 == 1) plays two scenes, each a room preset/loaded by sub_08024610 / sub_08024654 and directed by M38's task type #100 / #101 until it clears gUnk_02008018. The real subsystem seam is therefore 0x080C6260: 0x080C1FFC-0x080C6258 is the sub-game, 0x080C6260-0x080C6420 is set-up for M38's sequence (the 0x080C6420 boundary stays frozen)"
-M246,0x080C6420,0x080C6C64,0x844,7,0,1,0x12E,0x204,13.4,19,0,0,0,5,1,2,intro / cutscene / ending sequences?,TaskYieldTrampoline x826; 28 compressed_graphics refs; palette fade + BLD shadows; task types #260-264; called from AgbMain and the mode manager
+M246,0x080C6420,0x080C6C64,0x844,7,0,0,0x12E,0x204,13.4,19,0,0,0,5,1,2,intro / cutscene / ending sequences?,TaskYieldTrampoline x826; 28 compressed_graphics refs; palette fade + BLD shadows; task types #260-264; called from AgbMain and the mode manager
 M247,0x080C6C64,0x080C7E4C,0x11E8,8,5,0,0x23D,0x918,5.8,8,0,0,1,0,1,3,ending_c6c64,already landed (c_code)
-M248,0x080C7E4C,0x080CB62C,0x37E0,55,34,3,0x104,0x4B8,12.0,52,2,3,6,3,5,3,,
-M249,0x080CB62C,0x080CB64C,0x20,1,1,1,0x20,0x20,25.0,1,0,0,0,0,0,2,,
-M250,0x080CB64C,0x080CBED4,0x888,6,6,0,0x16C,0x3E4,5.9,4,0,0,0,0,1,2,gameover_cb64c,already landed (c_code)
-M251,0x080CBED4,0x080CCD4C,0xE78,18,15,0,0xCD,0x5A8,9.9,6,0,0,0,1,1,2,gameover_cbed4,already landed (c_code)
-M252,0x080CCD4C,0x080CD330,0x5E4,10,10,0,0x96,0x19C,11.9,6,0,0,0,0,0,1,gameover_ccd4c,already landed (c_code)
-M253,0x080CD330,0x080CD89C,0x56C,5,1,1,0x115,0x344,25.4,41,0,0,0,1,8,4,,
-M254,0x080CD89C,0x080CE520,0xC84,40,24,0,0x50,0x39E,2.5,2,0,0,0,3,1,1,m4a_1,already landed (thumb_code)
-M255,0x080CE520,0x080CEFB4,0xA94,31,0,0,0x57,0x118,14.6,8,0,0,0,7,1,2,m4a_c1,already landed (c_code)
-M256,0x080CEFB4,0x080CF588,0x5D4,4,2,0,0x175,0x474,7.2,1,0,0,0,0,0,2,m4a_cgb,already landed (c_code)
-M257,0x080CF588,0x080CFA4C,0x4C4,19,13,0,0x40,0x158,4.3,2,1,0,0,3,0,1,m4a_ctrl,already landed (c_code)
+M248,0x080C7E4C,0x080C9004,0x11B8,12,10,1,0x17A,0x44C,7.4,14,0,1,0,0,1,2,,
+M249,0x080C9004,0x080CAA3C,0x1A38,21,17,0,0x13F,0x4B8,13.3,23,2,0,1,0,1,2,ending_c9004,already landed (c_code)
+M250,0x080CAA3C,0x080CB64C,0xC10,23,8,2,0x86,0x238,15.9,34,0,1,5,3,4,2,,
+M251,0x080CB64C,0x080CBED4,0x888,6,6,0,0x16C,0x3E4,5.9,4,0,0,0,0,1,2,gameover_cb64c,already landed (c_code)
+M252,0x080CBED4,0x080CCD4C,0xE78,18,15,0,0xCD,0x5A8,9.9,6,0,0,0,1,1,2,gameover_cbed4,already landed (c_code)
+M253,0x080CCD4C,0x080CD330,0x5E4,10,10,0,0x96,0x19C,11.9,6,0,0,0,0,0,1,gameover_ccd4c,already landed (c_code)
+M254,0x080CD330,0x080CD89C,0x56C,5,1,1,0x115,0x344,25.4,41,0,0,0,1,8,4,,
+M255,0x080CD89C,0x080CE520,0xC84,40,24,0,0x50,0x39E,2.5,2,0,0,0,3,1,1,m4a_1,already landed (thumb_code)
+M256,0x080CE520,0x080CEFB4,0xA94,31,0,0,0x57,0x118,14.6,8,0,0,0,7,1,2,m4a_c1,already landed (c_code)
+M257,0x080CEFB4,0x080CF588,0x5D4,4,2,0,0x175,0x474,7.2,1,0,0,0,0,0,2,m4a_cgb,already landed (c_code)
+M258,0x080CF588,0x080CFA4C,0x4C4,19,13,0,0x40,0x158,4.3,2,1,0,0,3,0,1,m4a_ctrl,already landed (c_code)

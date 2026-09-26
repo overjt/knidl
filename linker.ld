@@ -1430,8 +1430,9 @@ SECTIONS
         build/src/mode_c6260.o(.text)
     } > ROM
 
-    .game_code_and_rodata_080653ec_0806ef5c_080bf994_080c1ffc_080c6260 0x080C6420 : {
-        KEEP(*(.game_code_and_rodata_080653ec_0806ef5c_080bf994_080c1ffc_080c6260)) KEEP(*(.game_code_and_rodata_080653ec_0806ef5c_080bf994_080c1ffc_080c6260.tail))
+    /* results_c6420 — decompiled to C (src/results_c6420.c, carved by tools/carve.py) */
+    .results_c6420 0x080C6420 : {
+        build/src/results_c6420.o(.text)
     } > ROM
 
     /* ending_c6c64 — decompiled to C (src/ending_c6c64.c, carved by tools/carve.py) */
@@ -1441,6 +1442,15 @@ SECTIONS
 
     .game_code_and_rodata_080653ec_0806ef5c_080bf994_080c1ffc_080c6260_080c7e4c 0x080C7E4C : {
         KEEP(*(.game_code_and_rodata_080653ec_0806ef5c_080bf994_080c1ffc_080c6260_080c7e4c)) KEEP(*(.game_code_and_rodata_080653ec_0806ef5c_080bf994_080c1ffc_080c6260_080c7e4c.tail))
+    } > ROM
+
+    /* ending_c9004 — decompiled to C (src/ending_c9004.c, carved by tools/carve.py) */
+    .ending_c9004 0x080C9004 : {
+        build/src/ending_c9004.o(.text)
+    } > ROM
+
+    .game_code_and_rodata_080653ec_0806ef5c_080bf994_080c1ffc_080c6260_080c7e4c_080caa3c 0x080CAA3C : {
+        KEEP(*(.game_code_and_rodata_080653ec_0806ef5c_080bf994_080c1ffc_080c6260_080c7e4c_080caa3c)) KEEP(*(.game_code_and_rodata_080653ec_0806ef5c_080bf994_080c1ffc_080c6260_080c7e4c_080caa3c.tail))
     } > ROM
 
     /* gameover_cb64c — decompiled to C (src/gameover_cb64c.c, carved by tools/carve.py) */
