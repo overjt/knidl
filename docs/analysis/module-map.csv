@@ -236,11 +236,12 @@ M234,0x080C1FFC,0x080C243C,0x440,6,2,0,0xB5,0x26C,15.1,12,0,0,0,1,2,2,FIR-coeffi
 M235,0x080C243C,0x080C2FF8,0xBBC,8,5,0,0x177,0x44C,11.5,11,1,0,0,0,3,2,subgame_c243c,already landed (c_code)
 M236,0x080C2FF8,0x080C3648,0x650,5,3,0,0x143,0x300,9.4,5,0,0,1,0,1,2,subgame_c2ff8,already landed (c_code)
 M237,0x080C3648,0x080C3F44,0x8FC,10,2,0,0xE6,0x490,10.8,6,0,0,0,0,3,2,subgame_c3648,already landed (c_code)
-M238,0x080C3F44,0x080C6258,0x2314,47,14,2,0xBF,0x6B8,9.9,37,1,0,0,5,1,2,,
-M239,0x080C6258,0x080C6260,0x8,1,0,0,0x8,0x8,0.0,0,0,0,0,1,0,1,sub_080c6258,already landed (c_code)
-M240,0x080C6260,0x080C6420,0x1C0,5,0,0,0x59,0x90,17.0,14,0,0,0,1,4,2,FIR-coefficient effect engine (remaining tail),five-function tail of the 0x080C1FFC-0x080C6420 engine after the sub_080c6258 carve
-M241,0x080C6420,0x080CD89C,0x747C,109,70,6,0x111,0x918,11.1,83,2,5,7,5,10,4,intro / cutscene / ending sequences?,TaskYieldTrampoline x826; 28 compressed_graphics refs; palette fade + BLD shadows; task types #260-264; called from AgbMain and the mode manager
-M242,0x080CD89C,0x080CE520,0xC84,40,24,0,0x50,0x39E,2.5,2,0,0,0,3,1,1,m4a_1,already landed (thumb_code)
-M243,0x080CE520,0x080CEFB4,0xA94,31,0,0,0x57,0x118,14.6,8,0,0,0,7,1,2,m4a_c1,already landed (c_code)
-M244,0x080CEFB4,0x080CF588,0x5D4,4,2,0,0x175,0x474,7.2,1,0,0,0,0,0,2,m4a_cgb,already landed (c_code)
-M245,0x080CF588,0x080CFA4C,0x4C4,19,13,0,0x40,0x158,4.3,2,1,0,0,3,0,1,m4a_ctrl,already landed (c_code)
+M238,0x080C3F44,0x080C4630,0x6EC,9,8,0,0xC4,0x398,14.2,5,1,0,0,0,1,3,subgame_c3f44,already landed (c_code)
+M239,0x080C4630,0x080C6258,0x1C28,38,6,1,0xBD,0x6B8,8.8,37,0,0,0,6,1,2,,
+M240,0x080C6258,0x080C6260,0x8,1,0,0,0x8,0x8,0.0,0,0,0,0,1,0,1,sub_080c6258,already landed (c_code)
+M241,0x080C6260,0x080C6420,0x1C0,5,0,0,0x59,0x90,17.0,14,0,0,0,1,4,2,FIR-coefficient effect engine (remaining tail),five-function tail of the 0x080C1FFC-0x080C6420 engine after the sub_080c6258 carve
+M242,0x080C6420,0x080CD89C,0x747C,109,70,6,0x111,0x918,11.1,83,2,5,7,5,10,4,intro / cutscene / ending sequences?,TaskYieldTrampoline x826; 28 compressed_graphics refs; palette fade + BLD shadows; task types #260-264; called from AgbMain and the mode manager
+M243,0x080CD89C,0x080CE520,0xC84,40,24,0,0x50,0x39E,2.5,2,0,0,0,3,1,1,m4a_1,already landed (thumb_code)
+M244,0x080CE520,0x080CEFB4,0xA94,31,0,0,0x57,0x118,14.6,8,0,0,0,7,1,2,m4a_c1,already landed (c_code)
+M245,0x080CEFB4,0x080CF588,0x5D4,4,2,0,0x175,0x474,7.2,1,0,0,0,0,0,2,m4a_cgb,already landed (c_code)
+M246,0x080CF588,0x080CFA4C,0x4C4,19,13,0,0x40,0x158,4.3,2,1,0,0,3,0,1,m4a_ctrl,already landed (c_code)
