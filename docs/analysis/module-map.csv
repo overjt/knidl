@@ -244,16 +244,18 @@ M242,0x080C5B84,0x080C623C,0x6B8,1,0,1,0x6B8,0x6B8,6.0,5,0,0,0,2,1,3,,
 M243,0x080C623C,0x080C6258,0x1C,1,0,0,0x1C,0x1C,14.3,0,0,0,0,3,0,2,subgame_c623c,already landed (c_code)
 M244,0x080C6258,0x080C6260,0x8,1,0,0,0x8,0x8,0.0,0,0,0,0,1,0,1,sub_080c6258,already landed (c_code)
 M245,0x080C6260,0x080C6420,0x1C0,5,0,0,0x59,0x90,17.0,14,0,0,0,1,4,2,AgbMain state 11: two scenes before M38,"decompiled in #98 as src/mode_c6260.c (5 functions). Not part of the sub-game: AgbMain's state 11 (src/main.c) calls sub_080c6260 once and moves to state 12, which runs M38's sub_080c6420. It saves four cells, tears the SIO session down, and (unless gUnk_03002150 == 20 or gUnk_03001F30 == 1) plays two scenes, each a room preset/loaded by sub_08024610 / sub_08024654 and directed by M38's task type #100 / #101 until it clears gUnk_02008018. The real subsystem seam is therefore 0x080C6260: 0x080C1FFC-0x080C6258 is the sub-game, 0x080C6260-0x080C6420 is set-up for M38's sequence (the 0x080C6420 boundary stays frozen)"
-M246,0x080C6420,0x080C6C64,0x844,7,0,0,0x12E,0x204,13.4,19,0,0,0,5,1,2,intro / cutscene / ending sequences?,TaskYieldTrampoline x826; 28 compressed_graphics refs; palette fade + BLD shadows; task types #260-264; called from AgbMain and the mode manager
+M246,0x080C6420,0x080C6C64,0x844,7,0,0,0x12E,0x204,13.4,19,0,0,0,6,1,2,intro / cutscene / ending sequences?,TaskYieldTrampoline x826; 28 compressed_graphics refs; palette fade + BLD shadows; task types #260-264; called from AgbMain and the mode manager
 M247,0x080C6C64,0x080C7E4C,0x11E8,8,5,0,0x23D,0x918,5.8,8,0,0,1,0,1,3,ending_c6c64,already landed (c_code)
 M248,0x080C7E4C,0x080C9004,0x11B8,12,10,1,0x17A,0x44C,7.4,14,0,1,0,0,1,2,,
 M249,0x080C9004,0x080CAA3C,0x1A38,21,17,0,0x13F,0x4B8,13.3,23,2,0,1,0,1,2,ending_c9004,already landed (c_code)
-M250,0x080CAA3C,0x080CB64C,0xC10,23,8,2,0x86,0x238,15.9,34,0,1,5,3,4,2,,
-M251,0x080CB64C,0x080CBED4,0x888,6,6,0,0x16C,0x3E4,5.9,4,0,0,0,0,1,2,gameover_cb64c,already landed (c_code)
-M252,0x080CBED4,0x080CCD4C,0xE78,18,15,0,0xCD,0x5A8,9.9,6,0,0,0,1,1,2,gameover_cbed4,already landed (c_code)
-M253,0x080CCD4C,0x080CD330,0x5E4,10,10,0,0x96,0x19C,11.9,6,0,0,0,0,0,1,gameover_ccd4c,already landed (c_code)
-M254,0x080CD330,0x080CD89C,0x56C,5,1,1,0x115,0x344,25.4,41,0,0,0,1,8,4,,
-M255,0x080CD89C,0x080CE520,0xC84,40,24,0,0x50,0x39E,2.5,2,0,0,0,3,1,1,m4a_1,already landed (thumb_code)
-M256,0x080CE520,0x080CEFB4,0xA94,31,0,0,0x57,0x118,14.6,8,0,0,0,7,1,2,m4a_c1,already landed (c_code)
-M257,0x080CEFB4,0x080CF588,0x5D4,4,2,0,0x175,0x474,7.2,1,0,0,0,0,0,2,m4a_cgb,already landed (c_code)
-M258,0x080CF588,0x080CFA4C,0x4C4,19,13,0,0x40,0x158,4.3,2,1,0,0,3,0,1,m4a_ctrl,already landed (c_code)
+M250,0x080CAA3C,0x080CACF0,0x2B4,2,0,1,0x15A,0x238,6.4,2,0,0,0,1,0,2,,
+M251,0x080CACF0,0x080CB354,0x664,13,0,0,0x7D,0x160,18.8,26,0,0,0,2,4,2,gameover_cacf0,already landed (c_code)
+M252,0x080CB354,0x080CB64C,0x2F8,8,8,0,0x5F,0xDC,18.4,10,0,0,5,0,1,2,gameover_cb354,already landed (c_code)
+M253,0x080CB64C,0x080CBED4,0x888,6,6,0,0x16C,0x3E4,5.9,4,0,0,0,0,1,2,gameover_cb64c,already landed (c_code)
+M254,0x080CBED4,0x080CCD4C,0xE78,18,15,0,0xCD,0x5A8,9.9,6,0,0,0,1,1,2,gameover_cbed4,already landed (c_code)
+M255,0x080CCD4C,0x080CD330,0x5E4,10,10,0,0x96,0x19C,11.9,6,0,0,0,0,0,1,gameover_ccd4c,already landed (c_code)
+M256,0x080CD330,0x080CD89C,0x56C,5,1,1,0x115,0x344,25.4,41,0,0,0,1,8,4,,
+M257,0x080CD89C,0x080CE520,0xC84,40,24,0,0x50,0x39E,2.5,2,0,0,0,3,1,1,m4a_1,already landed (thumb_code)
+M258,0x080CE520,0x080CEFB4,0xA94,31,0,0,0x57,0x118,14.6,8,0,0,0,7,1,2,m4a_c1,already landed (c_code)
+M259,0x080CEFB4,0x080CF588,0x5D4,4,2,0,0x175,0x474,7.2,1,0,0,0,0,0,2,m4a_cgb,already landed (c_code)
+M260,0x080CF588,0x080CFA4C,0x4C4,19,13,0,0x40,0x158,4.3,2,1,0,0,3,0,1,m4a_ctrl,already landed (c_code)

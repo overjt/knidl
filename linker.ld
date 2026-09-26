@@ -1453,6 +1453,16 @@ SECTIONS
         KEEP(*(.game_code_and_rodata_080653ec_0806ef5c_080bf994_080c1ffc_080c6260_080c7e4c_080caa3c)) KEEP(*(.game_code_and_rodata_080653ec_0806ef5c_080bf994_080c1ffc_080c6260_080c7e4c_080caa3c.tail))
     } > ROM
 
+    /* gameover_cacf0 — decompiled to C (src/gameover_cacf0.c, carved by tools/carve.py) */
+    .gameover_cacf0 0x080CACF0 : {
+        build/src/gameover_cacf0.o(.text)
+    } > ROM
+
+    /* gameover_cb354 — decompiled to C (src/gameover_cb354.c, carved by tools/carve.py) */
+    .gameover_cb354 0x080CB354 : {
+        build/src/gameover_cb354.o(.text)
+    } > ROM
+
     /* gameover_cb64c — decompiled to C (src/gameover_cb64c.c, carved by tools/carve.py) */
     .gameover_cb64c 0x080CB64C : {
         build/src/gameover_cb64c.o(.text)

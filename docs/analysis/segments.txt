@@ -298,7 +298,9 @@
 0x080C6C64 0x080C7E4C c_code ending_c6c64 # src/ending_c6c64.c (carved by tools/carve.py)
 0x080C7E4C 0x080C9004 thumb_code game_code_and_rodata_080653ec_0806ef5c_080bf994_080c1ffc_080c6260_080c7e4c [split]
 0x080C9004 0x080CAA3C c_code ending_c9004 # src/ending_c9004.c (carved by tools/carve.py)
-0x080CAA3C 0x080CB64C thumb_code game_code_and_rodata_080653ec_0806ef5c_080bf994_080c1ffc_080c6260_080c7e4c_080caa3c [split]
+0x080CAA3C 0x080CACF0 thumb_code game_code_and_rodata_080653ec_0806ef5c_080bf994_080c1ffc_080c6260_080c7e4c_080caa3c [split]
+0x080CACF0 0x080CB354 c_code gameover_cacf0 # src/gameover_cacf0.c (carved by tools/carve.py)
+0x080CB354 0x080CB64C c_code gameover_cb354 # src/gameover_cb354.c (carved by tools/carve.py)
 0x080CB64C 0x080CBED4 c_code gameover_cb64c # src/gameover_cb64c.c (carved by tools/carve.py)
 0x080CBED4 0x080CCD4C c_code gameover_cbed4 # src/gameover_cbed4.c (carved by tools/carve.py)
 0x080CCD4C 0x080CD330 c_code gameover_ccd4c # src/gameover_ccd4c.c (carved by tools/carve.py)
