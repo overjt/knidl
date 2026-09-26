@@ -1440,8 +1440,9 @@ SECTIONS
         build/src/ending_c6c64.o(.text)
     } > ROM
 
-    .game_code_and_rodata_080653ec_0806ef5c_080bf994_080c1ffc_080c6260_080c7e4c 0x080C7E4C : {
-        KEEP(*(.game_code_and_rodata_080653ec_0806ef5c_080bf994_080c1ffc_080c6260_080c7e4c)) KEEP(*(.game_code_and_rodata_080653ec_0806ef5c_080bf994_080c1ffc_080c6260_080c7e4c.tail))
+    /* ending_c7e4c — decompiled to C (src/ending_c7e4c.c, carved by tools/carve.py) */
+    .ending_c7e4c 0x080C7E4C : {
+        build/src/ending_c7e4c.o(.text)
     } > ROM
 
     /* ending_c9004 — decompiled to C (src/ending_c9004.c, carved by tools/carve.py) */
