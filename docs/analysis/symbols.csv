@@ -5181,7 +5181,8 @@ vma,size,isa,evidence,name
 0x080CB5C4,0x4C,thumb,rom-pointer,sub_080cb5c4
 0x080CB610,0x1C,thumb,rom-pointer,sub_080cb610
 0x080CB62C,0x20,thumb,rom-pointer,sub_080cb62c
-0x080CB64C,0xC0,thumb,rom-pointer,sub_080cb64c
+0x080CB64C,0x8C,thumb,rom-pointer,sub_080cb64c
+0x080CB6D8,0x34,thumb,rom-pointer,sub_080cb6d8
 0x080CB70C,0x3B0,thumb,rom-pointer,sub_080cb70c
 0x080CBABC,0x4,thumb,rom-pointer,sub_080cbabc
 0x080CBAC0,0x3E4,thumb,rom-pointer,sub_080cbac0
@@ -5214,11 +5215,11 @@ vma,size,isa,evidence,name
 0x080CD248,0x4,thumb,rom-pointer,sub_080cd248
 0x080CD24C,0xAC,thumb,rom-pointer,sub_080cd24c
 0x080CD2F8,0x38,thumb,rom-pointer,sub_080cd2f8
-0x080CD330,0x27E,thumb,bl-target,sub_080cd330
-0x080CD5AE,0xC6,thumb,bl-target,sub_080cd5ae
+0x080CD330,0x344,thumb,bl-target,sub_080cd330
 0x080CD674,0x98,thumb,bl-target,sub_080cd674
 0x080CD70C,0x50,thumb,bl-target,sub_080cd70c
-0x080CD75C,0x140,thumb,bl-target,sub_080cd75c
+0x080CD75C,0xCC,thumb,bl-target,sub_080cd75c
+0x080CD828,0x74,thumb,rom-pointer,sub_080cd828
 0x080CD89C,0x10,thumb,bl-target,umul3232H32
 0x080CD8AC,0x84,thumb,bl-target,SoundMain
 0x080CD930,0x39E,thumb,rom-pointer,SoundMainRAM

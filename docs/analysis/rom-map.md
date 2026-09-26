@@ -260,6 +260,46 @@ holds; 10 (`gUnk_03001F30` selects `sub_0805b110()` vs `sub_0800b628()`) → 5;
   per-frame draw hook in `unk04` and yields until `gUnk_020060D0` leaves
   its screen.
 
+**What states 11, 12 and 22 run (issues #98/#100, M37's
+`src/mode_c6260.c` and M38 `0x080C6420-0x080CD89B`, all C):**
+
+- **State 11** is the ending: a stage raises the stage request
+  `gUnk_03002438 = 7`, M02's frame loop moves to state 11, and
+  `sub_080c6260` (M37) plays two scenes unless `gUnk_03002150 == 20` or
+  `gUnk_03001F30 == 1`: each loads a preset room, spawns one task and pumps
+  frames until the task clears `gUnk_02008018`.  The first is task type
+  **#100** (`sub_080c6c64`: variant 0 loads the graphics and spawns
+  variants 1, 6, 7, 9 and 10; variant 1, the scene's main sprite, ends it),
+  the second **#101** (`sub_080c9004`: variants 1, 3, 6, 7, 8 and 11;
+  variant 3 fades the music out and ends it).  Then state 12.
+- **State 12** runs the staff credits `sub_080cd330` (again skipped when
+  `gUnk_03002150 == 20` or `gUnk_03001F30 == 1`): a run of **recorded demos**
+  of the game, one per scene of `gUnk_087583CC[n]` (`n` = 2 when
+  `gUnk_03002464` is 1, else 1; each entry a recording that goes into
+  `gUnk_0200EC50` and is played back by M34's recorder - mode
+  `gUnk_0200EC58 = 3`, `sub_080b6f38` per scene, `sub_080b77d4` per frame -
+  for `gUnk_0875841E[n][scene]` frames), under a BG0 text layer that the
+  per-frame callback `gUnk_03000AF4 = sub_080cd828` scrolls up half a pixel
+  a frame while `sub_080cd75c` streams the 14 LZ77 pages
+  `gUnk_087583B4[]` into the two BG0 map halves.  The score the demos
+  overwrite is saved in `gUnk_0201C1A4` and put back.  After it,
+  `sub_080c6420` shows the final screen (this player's score, the clock in
+  link play, or `sub_080c6600`'s large clock after state 20) until START,
+  and AgbMain returns to **state 0**.
+- **State 22** is the game-over / continue screen `sub_080cacf0`: one of
+  `sub_080cad8c` (`gUnk_03001F30 == 0`), `sub_080caeec` (link play) or
+  `sub_080cb058` (after state 20) scrolls in the banner, spawns its objects,
+  task types **#260-#264** (class 4; the eight #260 letters one every 8
+  frames), and runs until `gUnk_02007BE0` is set: with one player the #264
+  objects run the choice - up/down flips the cursor `gUnk_02006164` (0 =
+  continue), A/START picks - otherwise A/START or the end of a 480-frame
+  count `gUnk_0200557C` gives up.  The choice leaves
+  the next state in `gUnk_030023D8`: 5 (continue - `sub_080cacf0` then
+  gives the players three lives again with `sub_0800b514` and enters
+  state 6 unless `gUnk_03002438` is 1), 1 (the logo and title) or, after
+  state 20, 4 (the menu).  Task type #263 halves the player's score, the
+  price of a continue.
+
 ## 5. Compiler-validation leaf candidates
 
 Criteria: Thumb entry reached by `bl` or a bit0-set pointer; no external branch or
@@ -1379,6 +1419,82 @@ child issues of #35 are created from it. Findings that belong in this document:
     installs, and `0x080C51D4`, a `bl` target of `sub_080c241c`), so the
     range holds 82 functions, one of them PR #133's.
 
+- **M38 (`0x080C6420-0x080CD89B`) is the game's ending and its game-over
+  screen, not an intro.**  Decompiled in #100, in eleven files
+  (`docs/analysis/module-map.md` §6); 109 of the 110 functions are C, and
+  the boot logo objects' interpreter `sub_080caab8` stays asm.  `AgbMain`
+  states 11, 12 and 22 (§4) run it.
+  * **Task type #100** (class 3, body `sub_080c6c64`), the first ending
+    scene: variant 0 (`Task.unk73 == 0`) loads two sprite sheets
+    (`gUnk_085995AC`, `gUnk_0859990C`) and spawns the variants listed in the
+    u16 list `gUnk_0875735C` (1, 6, 7, 9, 10, ended by 11); the others run
+    `gUnk_08757330[Task.unk73]` (11 words, entry 0 NULL - the module map's
+    `0x08757334` with 10 entries is the same table found four bytes late,
+    lesson 4.89).  Variant 1 (`sub_080c6d84`, 2328 bytes) is the scene's
+    main sprite, drawn scaled by `sub_080c769c`, and ends the scene by
+    clearing `gUnk_02008018`; its helpers are variants 2-5, 6 is a sprite
+    that shrinks in after 2278 frames, 7/8 a burst of nine sprites, 9 an
+    invisible task the camera follows through M07's `sub_08026278` while it
+    shakes, and 10 blends eleven 4 KiB BG tile sets in and out.
+  * **Task type #101** (class 3, body `sub_080c9004`), the second scene:
+    the same shape with `gUnk_08757424` (1, 3, 6, 7, 8, 11, ended by 12)
+    and `gUnk_087573F4[12]` (entry 0 NULL); variant 3 crosses the screen
+    twice, fades the music out and ends the scene, variant 11 is the
+    finale (palette flashes, eleven variant-9 sprites bursting from one
+    point, sixteen falling variant-10 sprites, an OBJ-only display), and
+    variants 6-8 are drawn by M05's `sub_0801a3e4`.
+  * **The staff credits** `sub_080cd330` (state 12): recorded demos, one per
+    scene of `gUnk_087583CC[2][8]` (0-terminated) with lengths
+    `gUnk_0875841E[2][7]`, played back by M34's recorder, under a BG0 text
+    layer - `sub_080cd70c` installs the scroll callback `sub_080cd828` in
+    `gUnk_03000AF4`, `sub_080cd75c` stages the next of the 14 LZ77 pages
+    `gUnk_087583B4[]` in `gUnk_02005600` and copies it into BG0's map
+    (`0x06001000` / `0x06001800`) every 256 pixels of scroll.  Its cells
+    are `gUnk_0201C19C`-`gUnk_0201C1B4` (flag, 16.16 BG0 scroll, the saved
+    score, page, scene, scroll since the last copy).
+  * **The final screen** `sub_080c6420` and its large clock `sub_080c6600`,
+    the picture screens `sub_080c6750`/`sub_080c680c` (screen 57 or 59 until
+    A/START; M02's stage loops show one after a stage when `sub_080b8290()`
+    says so, M03's file menu per slot), and the VRAM number drawers
+    `sub_080c68b0` (8-digit score) / `sub_080c6ab4` (clock), the
+    `0x06001000`-map twins of M02's HUD renderers built on
+    `sub_080c6c3c(src, x, y, n)`.
+  * **The game-over screen** (state 22, `sub_080cacf0`, see §4) and its
+    class-4 objects: **#260** `sub_080cb354`, the eight letters (frame and
+    position from `Task.unk18` through `gUnk_08758274`/`gUnk_08758284`);
+    **#261** `sub_080cb3a8`, the cursor sprite; **#262** `sub_080cb418`, a
+    blend fade-in and a four-colour palette cycle (`gUnk_08584BB0`);
+    **#263** `sub_080cb4f4`, which halves the player's score (rounded down
+    to a multiple of ten) and counts the display down to it; **#264**
+    `sub_080cb588`, six variants `gUnk_08758294[Task.unk73]`.  Variants 0
+    (the player character), 1 (the cursor) and 3 are M17-style state
+    machines (`src/actor_673ec.c`): "sub-state" coroutines on `Task.unk14`,
+    each followed by its per-frame handler on `Task.unk15`, re-entered with
+    `sub_08006148(<re-entry fn>, task index)`.  So the census's
+    "`0x08758294`, 23 entries" is really five tables back to back: the six
+    variant bodies (`sub_080cb588` dispatches it with a count of 6), variant
+    0's sub-states `gUnk_087582AC[3]` and handlers `gUnk_087582B8[3]`, and
+    variant 1's `gUnk_087582C4[6]` and `gUnk_087582DC[6]` (24 words in
+    all); `0x08758324` is variant 3's `gUnk_08758324[2]` plus
+    `gUnk_0875832C[2]`.  Variant 0's task index is kept in
+    `gUnk_02007D28`; the screen's other cells are the done flag
+    `gUnk_02007BE0`, the 480-frame count `gUnk_0200557C` and the cursor
+    `gUnk_02006164` (0 = continue).
+  * **The boot logo's objects**: `sub_080caa3c` (called once by M02's
+    `sub_08009200`) seeds 115 32-byte records at `gUnk_02030000` from the
+    s16 stream `gUnk_08757440` (script id, wait, x, y; the draw layer
+    follows y), and `sub_080caab8` (still asm, `0x080CAAB8-0x080CACEF`,
+    parked on #100; called every frame by task type #0) runs each record's
+    command script (`gUnk_087577D8[id]`: a bit mask per step - velocity,
+    acceleration, sprite, wait, sound, call/return, goto, loop, end, with
+    `gUnk_0201BFD0[i]` as the return/loop cursor), moves it in 24.8 and
+    draws it with a sprite of `gUnk_087554B8[]`.
+  * **Census.**  The phantom `0x080CD5AE` (lesson 4.40: pool word
+    `0xFFFFF000` at `0x080CC5AC`) folded into `sub_080cd330`, and two
+    push-less entries added: `0x080CB6D8` (entry 9 of the census's
+    `0x08758294` run, variant 0's handler 0) and `0x080CD828` (the credits'
+    scroll callback, pointed at by `sub_080cd70c`'s pool); M14 had already
+    folded `0x080CCAA6`.  110 functions.
 - **M25 (`0x0809000C-0x08093F63`) is a bank of four scripted boss fights.**
   Decompiled in #67, in three files (`docs/analysis/module-map.md` §6). Each boss owns one anchor table and one
   `TaskGfx` block, and they are all assembled from the same three pieces: an

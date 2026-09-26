@@ -188,6 +188,6 @@ sub_08019eec:
 	.word	gUnk_03000B08
 	.word	gUnk_03001EAC
 	.word	gUnk_03001370
-	.word	0x085E2920
-	.word	0x085E2A20
-	.word	0x085E2B20
+	.word	gUnk_085E2920
+	.word	gUnk_085E2A20
+	.word	gUnk_085E2B20

@@ -1430,8 +1430,63 @@ SECTIONS
         build/src/mode_c6260.o(.text)
     } > ROM
 
-    .game_code_and_rodata_080653ec_0806ef5c_080bf994_080c1ffc_080c6260 0x080C6420 : {
-        KEEP(*(.game_code_and_rodata_080653ec_0806ef5c_080bf994_080c1ffc_080c6260)) KEEP(*(.game_code_and_rodata_080653ec_0806ef5c_080bf994_080c1ffc_080c6260.tail))
+    /* results_c6420 — decompiled to C (src/results_c6420.c, carved by tools/carve.py) */
+    .results_c6420 0x080C6420 : {
+        build/src/results_c6420.o(.text)
+    } > ROM
+
+    /* ending_c6c64 — decompiled to C (src/ending_c6c64.c, carved by tools/carve.py) */
+    .ending_c6c64 0x080C6C64 : {
+        build/src/ending_c6c64.o(.text)
+    } > ROM
+
+    /* ending_c7e4c — decompiled to C (src/ending_c7e4c.c, carved by tools/carve.py) */
+    .ending_c7e4c 0x080C7E4C : {
+        build/src/ending_c7e4c.o(.text)
+    } > ROM
+
+    /* ending_c9004 — decompiled to C (src/ending_c9004.c, carved by tools/carve.py) */
+    .ending_c9004 0x080C9004 : {
+        build/src/ending_c9004.o(.text)
+    } > ROM
+
+    /* boot_caa3c — decompiled to C (src/boot_caa3c.c, carved by tools/carve.py) */
+    .boot_caa3c 0x080CAA3C : {
+        build/src/boot_caa3c.o(.text)
+    } > ROM
+
+    .game_code_and_rodata_080653ec_0806ef5c_080bf994_080c1ffc_080c6260_080c7e4c_080caa3c 0x080CAAB8 : {
+        KEEP(*(.game_code_and_rodata_080653ec_0806ef5c_080bf994_080c1ffc_080c6260_080c7e4c_080caa3c)) KEEP(*(.game_code_and_rodata_080653ec_0806ef5c_080bf994_080c1ffc_080c6260_080c7e4c_080caa3c.tail))
+    } > ROM
+
+    /* gameover_cacf0 — decompiled to C (src/gameover_cacf0.c, carved by tools/carve.py) */
+    .gameover_cacf0 0x080CACF0 : {
+        build/src/gameover_cacf0.o(.text)
+    } > ROM
+
+    /* gameover_cb354 — decompiled to C (src/gameover_cb354.c, carved by tools/carve.py) */
+    .gameover_cb354 0x080CB354 : {
+        build/src/gameover_cb354.o(.text)
+    } > ROM
+
+    /* gameover_cb64c — decompiled to C (src/gameover_cb64c.c, carved by tools/carve.py) */
+    .gameover_cb64c 0x080CB64C : {
+        build/src/gameover_cb64c.o(.text)
+    } > ROM
+
+    /* gameover_cbed4 — decompiled to C (src/gameover_cbed4.c, carved by tools/carve.py) */
+    .gameover_cbed4 0x080CBED4 : {
+        build/src/gameover_cbed4.o(.text)
+    } > ROM
+
+    /* gameover_ccd4c — decompiled to C (src/gameover_ccd4c.c, carved by tools/carve.py) */
+    .gameover_ccd4c 0x080CCD4C : {
+        build/src/gameover_ccd4c.o(.text)
+    } > ROM
+
+    /* credits_cd330 — decompiled to C (src/credits_cd330.c, carved by tools/carve.py) */
+    .credits_cd330 0x080CD330 : {
+        build/src/credits_cd330.o(.text)
     } > ROM
 
     /* m4a sound engine: asm core (pret m4a_1.s equivalent; hand-scheduled
