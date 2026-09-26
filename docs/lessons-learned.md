@@ -3252,6 +3252,155 @@ u = &gUnk_03002790[p]; }`), but that frees a register, `u` leaves the
 stack and two cases cross-jump (1380 bytes) - the original evidently has
 one more long-lived value nobody found.  Best sources on #84.
 
+### 3.465 The four-loop family's preheader order is agbcc's SECOND loop pass: write the store the plain way and the cell's address is hoisted last
+The answer to M34's "HImode constant" question, which 3.336, 3.344, 3.347,
+3.348 and 3.353 each declared unreachable or mode-exclusive.  The ROM's outer
+preheader in `sub_080b6154`/`sub_080b6474` is `[table base, 256 (HImode,
+reload's scratch-and-copy), &gUnk_02016494 (fresh ldr, then mov ip)]`, and
+the plainest possible source produces it byte for byte, with no pin and no
+`asm`:
+
+```c
+for (i = 0; i < 7; i++)
+{
+    for (n = 0; n < 8; n++)
+    {
+        gUnk_020164A0[(i * 2 + 3) * 8 + n] = 256 - (gUnk_02016494 << 4);
+        gUnk_020164A0[(i * 2 + 4) * 8 + n] = 256 + (gUnk_02016494 << 4);
+    }
+}
+```
+
+All the earlier analysis of one loop pass was right; what it missed is that
+agbcc runs `loop_optimize` twice (`-frerun-loop-opt` is on at `-O2`), and the
+`.loop` dump shows both passes one after the other (the second set of `Loop
+from ... to ...` headers).  In pass 1 the inner loop has 23 real insns.
+`expand_assignment` expands the left-hand side's address before the value,
+so the movables list starts with the table base and three index
+computations; each one moved lowers `threshold` by 3 (26 on Thumb, twelve
+non-fixed registers), so when the copy of `&gUnk_02016494` comes up
+(`life 1, savings 1`) the test is `14 * 1 * 1 >= 23` and it is **not
+desirable**; the `256` after it (`life 8`) passes and is hoisted.  The outer
+pass 1 hoists `[base, 256]` and again refuses the address.  Pass 2 sees the
+inner loop after strength reduction (14 real insns), hoists the address into
+the inner preheader, and its outer pass moves it out once more - and
+`emit_insn_before (loop_start)` puts it *after* everything pass 1 already
+put in the outer preheader.  The literal `256` keeps the HImode mode because
+`expand_binop` forces an expensive constant operand into a register of the
+operation's mode (`preserve_subexpressions_p` is always 1 under
+`-fexpensive-optimizations`), and the operation is HImode because the store
+is `u16`.
+
+What breaks it is anything that makes the address movable come first while
+the threshold is still high: `t = gUnk_02016494 << 4;` as a statement in
+front of the stores emits the load before the stores' addresses, the
+address is the first movable (`26 >= 23`) and pass 1 hoists it ahead of the
+base (`[&g, base, 256]`, 12 differing bytes, the old residue).  So:
+
+* when a preheader's order looks impossible under 3.348's rule, read BOTH
+  passes of the `.loop` dump and look for a `not desirable` in pass 1;
+* the threshold arithmetic is `threshold = 2 * (1 + 12) = 26` without calls
+  (13 with), minus 3 per movable actually moved, against `insn_count` (twice
+  that for a register already moved once);
+* a longer, naiver pass-1 body is a lever, not a cost: strength reduction and
+  cse remove the extra insns before the output.
+
+**Corrects** 3.336's "what is still open", 3.344's "mode-exclusive as
+written", 3.346's pinned invariants, 3.347's negative result, 3.348's "no
+statement order reaches it" and 3.353's "two plain `int` locals" (each now
+carries a note pointing here): the
+order is reachable, the copy with it, from source that has no locals at
+all.  `sub_080b6154` matched with every variant of its first two blocks
+(`base[n]` or the cast `*(vs32 *)&` read), once block 3 was written this way.
+
+### 3.466 Reload's spill-register order was never the lever: the pins were
+The second M34 question ("reload picks r1/r7 where the ROM picks r4/`ip`";
+the tail `mov r4, r8` of `sub_080b6154`/`sub_080b6474` and `sub_080b6b08`'s
+`pc3` that wanted `ip`) dissolved with 3.465's source.  An RRTRACE build with
+two more prints (`ORDER`: `potential_reload_regs` per insn after
+`order_regs_for_reload`; `SPILLSET` in `finish_spills`; the patch is in the
+harness) shows the pin-free `sub_080b6474` with the spill set `{r0, r1, r4}`
+and the round-robin landing the tail's three hi-register copies on r4, r1,
+r4, exactly the ROM's.  The order `order_regs_for_reload` builds is: free
+call-clobbered registers ascending, free call-saved ones ascending, then the
+occupied ones by increasing use count of the pseudos live there - and
+3.269b's point stands, explicit-register variables add nothing to those
+counts, so a pinned candidate's scratches move.  The old candidates needed
+five pins to fake the hoist order, and the pins moved the scratches.  When
+a residue sits in reload's choices, **remove the pins first**; no lever on
+`order_regs_for_reload` was needed for any function of this module.
+
+### 3.467 A cell address kept in one register from a test to a loop is a pointer local; a spilled `u32` local makes the ROM's `mov r0, sp; ldrh`
+`sub_080b6b08` (the sine variant of `src/save_b6d04.c`) keeps
+`&gUnk_02016494` in r6 from the `> 0x1FF` wrap test through the loop.  With
+the cell written directly, gcse gives the test its own pseudo and copies it
+into a second one for the rest (`ldr r0, =g; ... adds r6, r0, #0`, 2 bytes
+long, lesson 3.354).  A pointer local assigned once in the `else` arm,
+`pg = (vs32 *)&gUnk_02016494;`, is one pseudo for every use (the volatile
+keeps the loop's per-iteration load, 3.349).  The same function's
+fixed BG2VOFS value (`w = gUnk_03001E94 >> 16`) is a plain `u32` local:
+every register is taken in the loop, global alloc spills it, and reload's
+HImode use of the stack slot is exactly the ROM's `str r0, [sp]` ...
+`mov r0, sp; ldrh r0, [r0]`.  The `u16 w[2]` written through `*(u32 *)w`
+that the first run used to force this slot (issue #94's comments;
+`src/save_b6d04.c` still carries it) is not needed when the register
+pressure is the ROM's.
+
+### 3.468 Re-attack an old straggler from the plainest source before any lever
+The eight functions M34's first run left were 3-532 bytes away after days of
+pins, clobber sweeps, walking pointers and named hoist temps.  This run
+rewrote them from the listing in the most direct 2002 style - subscripts,
+cells read inline at every use, up-counting `for` loops that
+`check_dbra_loop` reverses (3.215), no temps the ROM does not need - and
+`sub_080b8694` (435 differing bytes before) matched on its FIRST build,
+`sub_080b6154`/`sub_080b6474`/`sub_080b6b08` within a few variants each.
+A straggler's residue is often an artifact of the levers that brought it
+close; the near-miss candidate is the wrong base.
+
+### 3.469 A `u16` array element stored after a test of it keeps the ROM's `ldr =0xFFFF; orrs`
+`sub_080b75a4` (the input recorder) ends its "same keys again" arm with
+`ldr r3, =0xFFFF; adds r0, r3, #0; orrs r0, r5; strh r0, [...]`, r5 being the
+element it compared a moment earlier.  The earlier run spent days on
+`m = 0xFFFF; x = m | prev` and `pv = 0xFFFF | prev` spellings; the source is
+the plain `gUnk_0200EC60[i] = 0xFFFF;` (m34-b).  The `-da` dumps show why:
+agbcc expands a halfword array-element store as a bit-field store
+(`store_fixed_bit_field`: `(mem & ~mask) | value`), omits the AND when the
+value is all ones, and normally folds the rest back into a plain
+`ldr =0xFFFF; strh` (a probe with nothing before the store gives exactly
+that); but when cse already holds the element in a register - here from the
+`gUnk_0200EC60[i] != key` test - the `orrs` with that register survives.  The
+same expansion is behind 3.7's dead pre-read of volatile indexed stores and
+3.331's surviving `arr[i] |= 0xFFFF`.
+
+### 3.470 Two small shapes from the recorder pair
+- `else if (++count == 63)` on an `s8` local (3.340's shifted increment)
+  matches `sub_080b75a4`; the braced `else { count++; if (count == 63) ... }`
+  has the same size and swaps r5/r7 (8 bytes).
+- `sub_080b76a8` reads its entry twice inline (`key = buf[pos] & 0x3FF;
+  gUnk_0200EC68[i] = buf[pos] >> 10;`): cse merges the two loads, and the
+  ROM re-loads `=0x3FF` before the end-marker compare.  A `u16 entry` local
+  makes the AND and the compare share one constant register (14 bytes).
+
+### 3.471 In the 24-frame HBlank variant, one counter for every flat loop and the grid's outer loop; the zero of a calling loop is a variable
+`sub_080b67dc` (m34-b) matched in about fifteen minutes from plain
+subscripts once two roles were right:
+- **One `n` for all its flat loops AND the 7x8 grid's outer loop.**  With a
+  separate outer counter `i`, gcse's PRE hoists `i + 1` above the inner loop
+  and the latch becomes `i = copy`, so the loop pass finds no biv and the
+  row offsets are not strength-reduced.  The shared `n` gives the ROM's row
+  givs (`32 + 16n` in r8, `24 + 16n` in ip, `add r8, r0; add ip, r0;
+  adds r7, #1` at the latch) and took the function from 358 to 173
+  differing bytes at the exact size.  The tell-tale shapes: an early
+  `adds rX, rI, #1` at the top of the outer body is a separate counter
+  (`sub_080b6154`'s ROM, 3.336's `i = j`); givs stepping by 16 in hi
+  registers are the shared one (`sub_080b6570`, `sub_080b67dc`).
+  Compare 3.339 (reuse a counter) and 3.452 (roles, not names).
+- **A zero kept in a callee-saved hi register across a loop that calls**
+  (`movs r1, #0; mov r8, r1` first in the preheader, stores through
+  `mov r3, r8`) is a variable, `z = 0;` before the loop (`u16` or `s32`):
+  a literal 0 is "not desirable" to the loop pass in a loop with calls,
+  whose threshold is halved (3.465), so each store would rematerialise it.
+
 ## 4. Splitting ROM ranges into asm (tools/split.py)
 
 ### 4.1 objdump text only round-trips under `.syntax unified`
@@ -7931,6 +8080,11 @@ statement reordering will find it.  That rules out the whole class; the next
 attempt should look for a different formulation of the two stores (or accept
 the two functions as placeholders) rather than sweeping operand orders.
 
+**Corrected by 3.465 (#94's second run).** The open half is not open: with
+block 3 written as plain subscripts and the cell read inline in both
+stores, agbcc's second loop pass hoists the address after the `256` and
+`sub_080b6154`/`sub_080b6474` match with no pins; 3.465 has the mechanism.
+
 ### 3.337 A pinned copy plus a barrier is how to keep a value in two registers
 `sub_080b7df4` returns the checksum it has just stored, and the ROM keeps it in
 r0 (the return register) while storing from r2.  Every ordinary spelling - a
@@ -8073,6 +8227,9 @@ plain SImode pseudo and gcc materialises straight into its register - and
 declaring it `u16`/`s16` does not help, because a narrow local is still kept in
 SImode.  So the two halves really are mode-exclusive as written.
 
+**Corrected by 3.465.** The halves are not mode-exclusive: the literal keeps
+the HImode copy, and the order comes from agbcc's second loop pass when the
+address movable is "not desirable" in the first one.
 
 ### 3.345 Audit the epilogue for a return value BEFORE fighting the allocator
 `sub_080b79b8` sat at 108 differing bytes of pure register rotation for a long
@@ -8128,6 +8285,9 @@ adds rD, rS, #0` scratch-and-copy for a wide constant: `register u16 c asm("r6")
 assigned `256` produces it, while a plain `s32` local materialises straight into
 its own register.
 
+**Corrected by 3.465/3.466.** `sub_080b6474`'s last 3 bytes were not a pin
+problem to solve but the pins themselves: its plain source (3.465) has no
+named invariants and no pins, and its reload scratches come out right.
 
 ### 3.347 An MVTRACE-instrumented agbcc prints the movable list: stop guessing hoist order
 When a residue is "the preheader has the right instructions in the wrong order",
@@ -8187,6 +8347,9 @@ relative to the ROM, so it trades a 12-byte order residue for a 29-byte body
 residue.  Both halves are now understood; what is still missing is a spelling
 that records the constant first *without* moving the load.
 
+**Corrected by 3.465.** The trace is of loop pass 1 only; the spelling that
+records the constant first without moving the load exists (3.465), because
+the address need not be moved by pass 1 at all.
 
 ### 3.348 `agbcc -da`'s `.loop` dump already prints the movables list - no instrumented build needed
 3.347 built a patched compiler to print `scan_loop`'s movables.  That was
@@ -8235,6 +8398,10 @@ the address insn inside the inner body, and `expand` emits a constant's `SET`
 only when `expand_binop` forces it into a register, i.e. after both operands
 (hence after the load).  No statement order reaches it.
 
+**Corrected by 3.465.** "No statement order reaches it" holds for one pass;
+the `.loop` dump prints a second pass after the first, and the ROM's order is
+the second pass appending the address pass 1 found "not desirable".
+
 ### 3.353 Two plain `int` locals fix the four-loop family's hoist ORDER
 3.336/3.344/3.347/3.348 all concluded that the ROM's inner preheader order
 `[base, 256, &gUnk_02016494]` was unreachable, because `expand_binop` only
@@ -8267,6 +8434,9 @@ reload synthesising an **HImode** one with a scratch (3.344).  So the two halves
 are still mode-exclusive - but the order half now has a clean answer instead of
 a proof that it cannot be done, and `sub_080b6154`/`6290`/`6474` should be
 re-attacked from this shape rather than from the pinned one.
+
+**Superseded by 3.465.** No locals are needed at all: the plain subscripted
+stores with the literal `256` give both the order and the copy.
 
 ### 3.349 A `vs32` cell reproduces the four-loop HBlank family with no pins at all
 The pinned `sub_080b6474` candidate (3.346, 3 differing bytes) needs
@@ -8360,6 +8530,10 @@ the one that is there.  `sub_080b6b08` is the worked example: clobbering `r6`
 pushes `px` into r7, which in turn pushes `pc3` out of r7 and into `ip` exactly
 as the ROM has it - 56 -> 14 differing bytes - and the residue that is left is
 the r6/r7 pair, which no further clobber can reach.
+
+**Note from 3.467.** `sub_080b6b08` was not an r7 problem in the end: its
+source keeps `&gUnk_02016494` in a pointer local, and written that way (with
+no clobbers or pins) it matched.
 
 ### 3.352 Iterate the clobber sweep: each round is cheap and they compose
 `asm("" ::: "rN")` inserted at *every* statement boundary and scored with
@@ -8697,6 +8871,35 @@ installed as a callback by `sub_080cd70c`) and a 4.40 phantom
   agent had found the goto dispatch (3.459).  An agent that re-runs
   `tryall.sh` after a comment-only edit overwrites `good/` (4.81) - harmless
   when the copy still matches, but recheck it before landing.
+
+### 4.110 Harness notes from M34's second run
+- A straggler run is a module run with a tiny census: the eight rows tiled
+  their five holes, every size was a multiple of 4 and no pool word crossed
+  a row, so the census step took minutes; a 60-line annotator
+  (`pending/m34/mkann.py`: byte cursor over snapshots of the five holes'
+  chunk files, `ldr [pc]` resolved to the pool word) replaced the module
+  model, and `m2cin.py` needed its label regex widened for the `.L_`
+  labels some segments print (4.108).
+- `adiff.py` (difflib over the two objdump listings, pool offsets and
+  branch targets masked) is the diff to read first when the sizes differ:
+  `rdiff.py`'s address-aligned view drowns in the shift after the first
+  extra instruction, and the aligned one showed `sub_080b6b08`'s whole
+  residue as three instructions at its entry.
+- An RRTRACE build with three more prints (`ORDER`, `NEWSPILL`,
+  `SPILLSET` in reload1.c; `pending/m34/agbcc-src`, patch in the harness)
+  is five minutes from a fresh clone at `59b966e`; it answered 3.466 in
+  one run.  The `-da` `.loop` dump answered 3.465 without it: read both
+  loop passes.
+- The fan-out was two agents split by family (the 24-frame HBlank pair;
+  the recorder pair) after the coordinator matched the three "compiler
+  question" functions and `sub_080b8694` alone; the finished agent raced
+  the other agent's unstarted function through `variants.sh` and found the
+  two levers (3.471) that closed both.  A stop message that arrives after
+  a racer's batch has run still lets `variants.sh` overwrite `good/` with
+  the racer's (also matching) copy: re-save the version you want to land
+  and re-verify before `gen.py`.
+- The run, census to last landing, took about an hour and a half; all
+  eight functions landed, the module has no asm left.
 
 ## 5. Workflow that worked
 

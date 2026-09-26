@@ -141,22 +141,35 @@ Matching decompilation of Kirby: The Amazing Mirror's predecessor, **Kirby: Nigh
   (three non-functions removed - a pool-skip branch, a phantom pool `bl` and a
   shared epilogue - and five hidden entries added) and 63 ROM/RAM cells named
   via `split_config.json` `data_symbols`.
-- Save file / SRAM records + options partially decompiled (issue #94): module
-  M34 `0x080B6154-0x080B9D0B` (14.9 KiB) landed as `src/save_b6a90.c`,
-  `src/save_b63a4.c`, `src/save_b6c40.c`, `src/save_b6e44.c`,
-  `src/save_b6290.c`, `src/save_b6d04.c`, `src/save_b6f38.c`, `src/save_b72bc.c`, `src/save_b77d4.c`,
+- Save file / SRAM records + options decompiled (issue #94): module
+  M34 `0x080B6154-0x080B9D0B` (14.9 KiB) landed as `src/save_b6154.c`,
+  `src/save_b6290.c`, `src/save_b63a4.c`, `src/save_b6474.c`,
+  `src/save_b6a90.c`, `src/save_b6b08.c`, `src/save_b6c40.c`,
+  `src/save_b6d04.c`, `src/save_b6e44.c`, `src/save_b6f38.c`,
+  `src/save_b72bc.c`, `src/save_b75a4.c`, `src/save_b77d4.c`,
   `src/save_b79b8.c`, `src/save_b7a9c.c`, `src/save_b7df4.c`,
-  `src/save_b7e14.c`, `src/save_b8888.c`, `src/save_b8918.c` and
-  `src/save_b8ea0.c` (**97 of 105 functions byte-matched**,
-  `make clean && make compare` ROM-identical around six asm holes).  The range is three subsystems, not one: an HBlank
-  wavy-scroll effect (`gUnk_0300003C` is the HBlank callback cell), the SRAM
-  save file proper (four 256-byte slots at `gUnk_0200E600` mirrored to
-  `0x0E000200`, each checksummed by the 28-word additive sum seeded
-  `0x97538642`), and the link-play results screen (a class-1 task whose
-  coroutines fill `0x080B9610-0x080B9D0C`).  One census row corrected in
-  `tools/symdb.py` (`0x080B6B36`, the sixth `0xFFFFF0xx` pool-word phantom,
-  lesson 4.40) and 40 RAM/ROM cells named via `split_config.json`
-  `data_symbols`; new agbcc lessons 3.330-3.354 and 4.70.
+  `src/save_b7e14.c`, `src/save_b8694.c`, `src/save_b8888.c`,
+  `src/save_b8918.c` and `src/save_b8ea0.c` (**all 105 functions, no asm
+  left in the range**).  PR #130 landed 97; the last eight (five wavy-scroll
+  drivers, the input recorder pair and the link-record copy, 3,252 bytes)
+  had resisted the first run's pins and clobber sweeps at 3-532 bytes and
+  all matched in the second run from plain, pin-free source (no `asm`, no
+  `register` in them): the four-loop family's preheader order that lessons
+  3.336-3.353 called unreachable is agbcc's second loop pass
+  (`-frerun-loop-opt`) hoisting the cell address after the HImode `256`
+  (lesson 3.465), and the reload-scratch residues were the pins' doing
+  (3.466).  The range is three subsystems, not one: a wavy-scroll effect run
+  from the per-frame hook `gUnk_0300003C` (nine drivers build the per-line
+  HBlank DMA table `gUnk_020164A0`), the SRAM save file proper (four
+  256-byte slots at `gUnk_0200E600` mirrored to `0x0E000200`, each
+  checksummed by the 28-word additive sum seeded `0x97538642`) with the
+  link-play records `gUnk_0200EA00[]` and the run-length input
+  recorder/playback the staff credits use, and the link-play results screen
+  (a class-1 task whose coroutines fill `0x080B9610-0x080B9D0C`).  One
+  census row corrected in `tools/symdb.py` (`0x080B6B36`, the sixth
+  `0xFFFFF0xx` pool-word phantom, lesson 4.40) and 41 RAM/ROM cells named
+  via `split_config.json` `data_symbols`; new agbcc lessons 3.330-3.354,
+  3.465-3.471 and 4.70, 4.110.
 - Sub-game framework + reaction-duel sub-game decompiled (issue #95): module
   M35 `0x080B9D0C-0x080BDA2B` (15.3 KiB) landed as `src/subgame_b9d0c.c`,
   `src/subgame_ba774.c`, `src/subgame_bb528.c`, `src/subgame_bc0cc.c` and

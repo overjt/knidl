@@ -5,7 +5,8 @@
 /* save_b75a4.c (0x080B75A4-0x080B77D3, issue #94).
  *
  * The input recorder and its playback, one step per frame for each player
- * (src/save_b77d4.c runs one or the other while gUnk_0200EC54 is set).  The
+ * (src/save_b77d4.c runs one or the other by the mode gUnk_0200EC58; both
+ * clear the running flag gUnk_0200EC54 when a player reaches the end).  The
  * recording lives in gUnk_0200EC6C->unk12C[] as 16-bit entries, held keys
  * in the low 10 bits and a frame count (1-63) above them, the players'
  * entries interleaved: gUnk_0200EC78[i] is player i's next position and
@@ -15,9 +16,11 @@
  * gUnk_03000F98[i] and the newly pressed keys gUnk_03001EB8[i], and an entry
  * of 0x3FF ends the playback for everyone.
  *
- * Matching notes: `gUnk_0200EC60[i] = 0xFFFF;` is the ROM's `ldr =0xFFFF;
- * orrs` (a u16 array element goes through store_fixed_bit_field, which drops
- * the AND for an all-ones value); the count is an s8 local (3.340). */
+ * Matching notes: the plain `gUnk_0200EC60[i] = 0xFFFF;` is the ROM's
+ * `ldr =0xFFFF; orrs` (a u16 element store is expanded as a bit-field store,
+ * whose AND is dropped for an all-ones value and whose OR survives because cse
+ * still holds the element from the `!=` test, lesson 3.469); the count is an
+ * s8 local (3.340). */
 
 struct LinkSave
 {
