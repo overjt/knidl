@@ -363,8 +363,9 @@ SECTIONS
         build/src/player_18b84.o(.text)
     } > ROM
 
-    .game_code_and_rodata_08018b84 0x08018E14 : {
-        KEEP(*(.game_code_and_rodata_08018b84)) KEEP(*(.game_code_and_rodata_08018b84.tail))
+    /* player_18e14 — decompiled to C (src/player_18e14.c, carved by tools/carve.py) */
+    .player_18e14 0x08018E14 : {
+        build/src/player_18e14.o(.text)
     } > ROM
 
     /* player_19000 — decompiled to C (src/player_19000.c, carved by tools/carve.py) */
@@ -372,8 +373,9 @@ SECTIONS
         build/src/player_19000.o(.text)
     } > ROM
 
-    .game_code_and_rodata_08018b84_08019eec 0x08019EEC : {
-        KEEP(*(.game_code_and_rodata_08018b84_08019eec)) KEEP(*(.game_code_and_rodata_08018b84_08019eec.tail))
+    /* player_19eec — decompiled to C (src/player_19eec.c, carved by tools/carve.py) */
+    .player_19eec 0x08019EEC : {
+        build/src/player_19eec.o(.text)
     } > ROM
 
     /* player_1a07c — decompiled to C (src/player_1a07c.c, carved by tools/carve.py) */
@@ -381,8 +383,9 @@ SECTIONS
         build/src/player_1a07c.o(.text)
     } > ROM
 
-    .game_code_and_rodata_08018b84_08019eec_0801a3e4 0x0801A3E4 : {
-        KEEP(*(.game_code_and_rodata_08018b84_08019eec_0801a3e4)) KEEP(*(.game_code_and_rodata_08018b84_08019eec_0801a3e4.tail))
+    /* player_1a3e4 — decompiled to C (src/player_1a3e4.c, carved by tools/carve.py) */
+    .player_1a3e4 0x0801A3E4 : {
+        build/src/player_1a3e4.o(.text)
     } > ROM
 
     /* player_1a76c — decompiled to C (src/player_1a76c.c, carved by tools/carve.py) */
@@ -1271,8 +1274,9 @@ SECTIONS
         build/src/hud_b5024.o(.text)
     } > ROM
 
-    .game_code_and_rodata_080653ec_0806ef5c_0809113c_08093f64_08099b20_0809cb90_0809d994_0809f2f4_0809f9dc_080a00ec_080a1590_080b2fe8_080b5670 0x080B5670 : {
-        KEEP(*(.game_code_and_rodata_080653ec_0806ef5c_0809113c_08093f64_08099b20_0809cb90_0809d994_0809f2f4_0809f9dc_080a00ec_080a1590_080b2fe8_080b5670)) KEEP(*(.game_code_and_rodata_080653ec_0806ef5c_0809113c_08093f64_08099b20_0809cb90_0809d994_0809f2f4_0809f9dc_080a00ec_080a1590_080b2fe8_080b5670.tail))
+    /* hud_b5670 — decompiled to C (src/hud_b5670.c, carved by tools/carve.py) */
+    .hud_b5670 0x080B5670 : {
+        build/src/hud_b5670.o(.text)
     } > ROM
 
     /* hud_b5840 — decompiled to C (src/hud_b5840.c, carved by tools/carve.py) */
