@@ -581,6 +581,12 @@
     "sub_0801d9c8",
     "sub_0801dc88",
     "sub_0801dee8",
+    "sub_0801f540",
+    "sub_0801f6b0",
+    "sub_0801f800",
+    "sub_0801f9b8",
+    "sub_0801fc48",
+    "sub_0801fe2c",
     "sub_0802069c",
     "sub_08021130",
     "sub_080214e0",
@@ -8216,6 +8222,10 @@
     },
     {
       "name": "game_code_and_rodata_08018b84_08019eec_0801a3e4_0801a8c8_0801c444_0801c690_0801c930",
+      "chunk_bytes": 65536
+    },
+    {
+      "name": "game_code_and_rodata_08018b84_08019eec_0801a3e4_0801a8c8_0801c444_0801c690_0801c930_0801ff84",
       "chunk_bytes": 65536
     },
     {
