@@ -1450,7 +1450,12 @@ SECTIONS
         build/src/ending_c9004.o(.text)
     } > ROM
 
-    .game_code_and_rodata_080653ec_0806ef5c_080bf994_080c1ffc_080c6260_080c7e4c_080caa3c 0x080CAA3C : {
+    /* boot_caa3c — decompiled to C (src/boot_caa3c.c, carved by tools/carve.py) */
+    .boot_caa3c 0x080CAA3C : {
+        build/src/boot_caa3c.o(.text)
+    } > ROM
+
+    .game_code_and_rodata_080653ec_0806ef5c_080bf994_080c1ffc_080c6260_080c7e4c_080caa3c 0x080CAAB8 : {
         KEEP(*(.game_code_and_rodata_080653ec_0806ef5c_080bf994_080c1ffc_080c6260_080c7e4c_080caa3c)) KEEP(*(.game_code_and_rodata_080653ec_0806ef5c_080bf994_080c1ffc_080c6260_080c7e4c_080caa3c.tail))
     } > ROM
 
