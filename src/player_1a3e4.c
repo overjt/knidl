@@ -18,7 +18,7 @@
  * variable; its OR is `movs r3, #128; lsls r3, #4; orrs r3, r4` where the
  * literal `0x800 | Task.unk40` of the other two needs a reload register and a
  * HImode copy, and that one missing copy is what keeps the ROM's cross-jump
- * to four instructions (lesson 3.472). */
+ * to four instructions (lesson 3.475). */
 
 extern u32 gUnk_08755440[];
 extern u32 gUnk_0875546C[];
@@ -118,7 +118,7 @@ void sub_0801a3e4(void)
         /* this arm's attribute bits are a u16 variable: the ROM builds its
            OR as `movs r3, #128; lsls r3, #4; orrs r3, r4`, where the literal
            `0x800 | u->unk40` of the other arms needs a reload register and a
-           HImode copy (lesson 3.472) */
+           HImode copy (lesson 3.475) */
         c = 0x800;
         if (sub_080063f0(xb, yb) != 0)
         {
