@@ -279,6 +279,15 @@ KNOWN_SYMBOLS = {
 # m4a_songs data segment surrounded by signed 8-bit PCM sample bytes; the
 # `pop {pc}` halfword passes the strict terminator check by accident.
 FALSE_POSITIVES = {
+    # --- M38 (issue #100), a lesson 4.40 phantom ---
+    # 0x080CD5AE is not a function: it is the second half of sub_080cd330
+    # (AgbMain state 12's first call), whose `strh r0, [r1]` at 0x080CD5AC
+    # falls into it and whose `ldr`s at 0x080CD580/0x080CD588/0x080CD5A4
+    # load pool words behind it (0x080CD5C8-0x080CD5D0).  Its only evidence
+    # is the phantom `bl` of the pool word 0xFFFFF000 at 0x080CC5AC (in
+    # sub_080cc2e0's pool), whose target is 0x080CC5B0 + 0xFFE.  sub_080cd330
+    # really runs 0x080CD330-0x080CD674 (0x344, was 0x27E).
+    0x080CD5AE,
     # --- M37 (issue #98), two `b.n` arm tails (lesson 4.95) ---
     # 0x080C501E is `b.n 0x080C5030` followed by the pool word 0xFFFFFF00
     # (0x080C5020) that sub_080c4f60's `ldr` at 0x080C5008 loads; the `subs`
@@ -769,6 +778,19 @@ FALSE_POSITIVES = {
 # m4a.c function order and body shape (see the KNOWN_SYMBOLS comments);
 # they are injected as candidates and carry the "curated" evidence kind.
 EXTRA_THUMB_ENTRIES = {
+    # --- M38 (issue #100), two push-less entries the census missed ---
+    0x080CB6D8,  # entry 9 of the class-4 anchor table at 0x08758294 (the
+                 # word 0x080CB6D9 at 0x087582B8): a push-less leaf callback
+                 # (`ldr r2, =gUnk_03002490` ... `bx lr` at 0x080CB6FC).
+                 # sub_080cb64c (entry 6) closes with its own `b.n` and pool
+                 # (0x080CB6D0-0x080CB6D7) in front of it, so it really runs
+                 # 0x080CB64C-0x080CB6D8 (0x8C, was 0xC0).
+    0x080CD828,  # a push-less leaf (`ldr r2, =0x0201C1A0` ... `bx lr` at
+                 # 0x080CD88A) that sub_080cd70c installs: the word
+                 # 0x080CD829 at 0x080CD74C is in its pool.  sub_080cd75c
+                 # closes with its own epilogue and pool (0x080CD812-
+                 # 0x080CD827) in front of it, so it really runs 0x080CD75C-
+                 # 0x080CD828 (0xCC, was 0x140).
     # --- M37 (issue #98), two push-less entries the census missed ---
     0x080C4818,  # a push-less leaf callback (`ldr r0, =gUnk_03002490` ...
                  # `bx lr` at 0x080C484E) that sub_080c4860 installs: the
