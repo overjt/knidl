@@ -9,8 +9,9 @@
  *   sub_080c46ec / sub_080c4790 / sub_080c4664 / sub_080c4630   variant 1
  *       (one task, index in M37Game.unk44C): seven background objects
  *       (M37Game.unk0EC) that scroll with the camera at their own rate,
- *       re-rolled from LCG stream 4 (sprite ids gUnk_080CFF60, never the same
- *       twice in a row) when they leave the screen.
+ *       re-rolled from LCG stream 4 when they leave the screen (a sprite id
+ *       1-4 and one of three height bands gUnk_080CFF60, never the same band
+ *       twice in a row).
  *   sub_080c4860 / sub_080c4818   put the variant-1 task's own sprite (the
  *       course line sign) at a course position and move it with the scroll
  *       until it leaves the screen.
