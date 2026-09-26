@@ -617,6 +617,10 @@ below is the pre-decompilation one, kept for the record.
   with the right size: a gcse copy of `&gUnk_030054E4` set in three arms
   has its live length doubled per set by `update_equiv_regs`, which moves
   it below the value it must outrank in global allocation (lesson 3.464).
+  The straggler campaign's plain rewrite gives the same 44 bytes, so the
+  residue is not the old candidate's shapes; its second half is a cse1/cse2
+  path effect on the `p` block (lesson 3.478), and the best source is on
+  #84.
 * **What it turned out to be** not a pure leaf, and two things.  The
   collision engine: ten per-frame entry points (the nine `sub_0801bcac` ...
   `sub_0801c444`, and `sub_0801baa4` for the player, which M09's player
