@@ -913,6 +913,11 @@ child issues of #35 are created from it. Findings that belong in this document:
     the `gUnk_03001F30 != 0` tables `gUnk_0873B42C`/`gUnk_0873B4A4`, and
     they are byte-for-byte templates: `sub_0803aa64` is `sub_08043014`,
     `sub_08036c94` is `sub_08042128`, `sub_080371f0` is `sub_08042328`.
+    Handler 20 has a twin too: M11's `sub_0804335c` (`gUnk_0873B4A4[20]`)
+    copies `sub_0803afcc`'s key-driven four-way state machine; it and M11's
+    motion preset setter `sub_08040b40` were the last two M11 functions in
+    asm and landed in the straggler campaign (`src/stage_4335c.c`,
+    `src/stage_40b40.c`), so M11 (`0x0803CD60-0x080449C7`) is all C.
   * Census: 39 functions, not 41 - the long-jump phantoms `0x08037F2A`,
     `0x08038F8E`, `0x08038FD8` (inside the 4368-byte `sub_08037ed8`) and
     `0x0803AA14` (the exit tail of `sub_08039c24`) removed, the hidden
@@ -1598,7 +1603,8 @@ child issues of #35 are created from it. Findings that belong in this document:
   28 functions, the second run 26 more, so 54 of the 55 are C
   (`src/hitbox_1a8c8.c`, `hitbox_1b7dc.c` and `src/terrain_1baa4.c` ...
   `terrain_214e0.c`, 21 files; ROM-identical).  `sub_0801b24c`
-  (`0x0801B24C-0x0801B7DC`) is still asm, parked at 44 differing bytes.
+  (`0x0801B24C-0x0801B7DC`) is still asm, parked at 44 differing bytes
+  (plain source since the straggler campaign; lessons 3.464, 3.478).
   It is not a pure leaf: the probes call M06's own cell queries
   constantly, M07's `sub_08021b18`/`sub_08022650`, M02's `sub_08009ee8`
   (the health counter) and `ArcTan2`.  Three parts:
@@ -1659,11 +1665,19 @@ child issues of #35 are created from it. Findings that belong in this document:
   (`sub_0801e178`'s shared epilogue, reached by a long `bl`) and added the
   empty dead export `0x08020698`, so the module holds 55 functions.
 - **M33 (`0x080B2FE8-0x080B6153`) is HUD / overlay effects (candidate).**
-  Decompiled in #97 (partial, 107/108) into `src/hud_b2fe8.c`,
-  `hud_b4ea8.c`, `hud_b5024.c`, `hud_b5840.c`; ROM-identical around 1 asm
-  hole. `sub_080B4EA8` (the 3.274 terminal) matched with the zero-byte
-  allocator levers (lessons 3.275-3.281). Remaining in asm:
-  `sub_080B5670` (best candidate 34 differing bytes).
+  Decompiled in #97 into `src/hud_b2fe8.c`, `hud_b4ea8.c`, `hud_b5024.c`,
+  `hud_b5670.c` and `hud_b5840.c` (all 108 functions; no asm left in the
+  range). `sub_080B4EA8` (the 3.274 terminal) matched with the zero-byte
+  allocator levers (lessons 3.275-3.281); the last one, `sub_080b5670`,
+  fell in the straggler campaign as plain pin-free C.  It is the room-object
+  graphics loader `sub_080b4ea8` calls for every kind-1 entry of the object
+  list `gUnk_020055D8`: it shares the slot of an earlier entry with the same
+  descriptor `gUnk_0873EEA0[kind]` (the per-entry slot byte
+  `gUnk_02006130[]`), or claims the next slot of the 4-byte records
+  `gUnk_020060A0[]` (kind, palette, tile base), allocates and copies its
+  tiles (`sub_080b5628`, LZ77 through `gUnk_02020000` when compressed) and
+  shares or allocates a palette by the group table `gUnk_0873EF48[kind]`
+  (`sub_080b5654`, `sub_08065dbc`).
 - **M31 (`0x080AA338-0x080AE3BB`) is enemy/object behaviour bank 12.**
   Decompiled in #78 into `src/enemy_aa338.c` (123 functions, all
   byte-matched, ROM identical). Anchor tables `0x087493F4` (25 entries ->
@@ -1745,7 +1759,15 @@ child issues of #35 are created from it. Findings that belong in this document:
   plus the ROM-wide collision registry.** Decompiled in #81 into
   `src/player_17668.c`, `src/player_18b84.c`, `src/player_19000.c`,
   `src/player_1a07c.c` and `src/player_1a76c.c` (20 of 23 functions, 11100 of
-  12896 bytes; three same-size register-allocation residues stay asm).
+  12896 bytes); the straggler campaign (#125) landed the other three as
+  plain pin-free C in `src/player_18e14.c`, `src/player_19eec.c` and
+  `src/player_1a3e4.c`, so no asm is left in the range.  Their "register
+  residues" were a `u8` declaration of the `vu8` blend shadows
+  (`sub_08019eec`), a 1-D spelling of the 2-D start table `gUnk_08732150`
+  and a `for (;;)` loop (`sub_08018e14`, the three converging sparkles of
+  script 52) and one draw call whose attribute bits the original held in a
+  `u16` variable (`sub_0801a3e4`, the draw callback of the ending's big
+  scripted sprites; lessons 3.472-3.475).
   Thirteen of its bodies are entries **58-70** of the 71-entry dispatch table
   at `0x08731FA8` whose entries 0-57 belong to M04, and each is a linear
   `TaskYieldTrampoline` script over `Task.unk3C` (animation id), the 16.16

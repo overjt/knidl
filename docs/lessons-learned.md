@@ -3250,7 +3250,9 @@ inline `(tbl[k] | 0x4000) & a->unk18` ties it to the table value; and the
 the index read the global (`if (gUnk_03005394 != 4) { p = gUnk_03005394;
 u = &gUnk_03002790[p]; }`), but that frees a register, `u` leaves the
 stack and two cases cross-jump (1380 bytes) - the original evidently has
-one more long-lived value nobody found.  Best sources on #84.
+one more long-lived value nobody found.  Best sources on #84.  (The straggler
+campaign's plain rewrite gives the same 44 bytes and locates the `p`
+block's cause in cse1/cse2, lesson 3.478.)
 
 ### 3.465 The four-loop family's preheader order is agbcc's SECOND loop pass: write the store the plain way and the cell's address is hoisted last
 The answer to M34's "HImode constant" question, which 3.336, 3.344, 3.347,
@@ -3400,6 +3402,164 @@ subscripts once two roles were right:
   `mov r3, r8`) is a variable, `z = 0;` before the loop (`u16` or `s32`):
   a literal 0 is "not desirable" to the loop pass in a loop with calls,
   whose threshold is halved (3.465), so each store would rematerialise it.
+
+### 3.472 A parked "register residue" can be a wrong declaration: check every cell against src/ before any archaeology
+`sub_08019eec` (M05, 400 bytes) sat at 17 differing bytes from issue #81 to
+the straggler campaign, blamed on "two loop-invariant address webs that swap
+r5/r7" (the 3.274 coalescing class); eleven source variants and a pin matrix
+had not moved it.  It matched the moment its four blend shadows were
+declared `vu8`, which is how every landed file in `src/` declares them: the
+ROM stores `gUnk_03001EAC` and loads it straight back (`strb r0, [r5]; ldrb
+r0, [r5]`) to compute `16 - EVB`, and only a volatile cell gives that
+re-read; without it cse reuses the stored register, the loop keeps one
+address fewer and the two webs coalesce differently.  The M05 harness had
+declared the cells `u8` in its own shared header, so every candidate carried
+the defect.  The campaign's first step for each function was therefore a
+width check of every extern against all spellings in `src/` (a 20-line
+script, `pending/strag/widths.py`), and the old harness headers were
+treated as suspects, not references.  **Corrects** #81's and #125's verdict
+on this function (module map: "same-size register residues of the
+coalescing fixed-point class"): there was no allocator question.
+
+### 3.473 The three-sparkle script: a 2-D table, `while (1)`, and the shift amount as its own statement
+`sub_08018e14` (M05, 492 bytes) went from 286 differing bytes to a match in
+four rewrites of the listing, none of them an allocator lever:
+* the start velocities are `s16 gUnk_08732150[][16]`: after the `if/else`
+  on the facing, the ROM reaches row 1 as `row0 + 32` from the register that
+  held row 0 in both arms (`adds r0, r1, #0; ... adds r0, #32`), which a 1-D
+  table plus a second symbol (`gUnk_08732170`) cannot give and a pointer
+  local imitated only with a copy (3.294 again);
+* the outer loop is `while (1)` with the yield after the exit test: the
+  same loop spelled `for (;;)` makes `expand_end_loop` rotate the yield
+  block in front of the loop head (500 bytes instead of 492);
+* the y step `v = (|y| & 0xFFFF0000) >> ((|x| >> 20) + 2)` needs the shift
+  amount as a statement BEFORE the second `abs()`, because the ROM computes
+  it first (`asrs r0, r1, #20; adds r2, r0, #2`, then the load of y);
+* and that statement reuses the dead random-index variable `r`
+  (`a = abs(x); r = (a >> 20) + 2;`): a fresh variable for it swaps two
+  registers (21 bytes), the reuse is what the ROM's allocation shows (4.55).
+
+### 3.474 The `mov rX, sp; strb rV, [rX, #4]` byte slot is the compiler's own QImode copy, not a user variable
+`sub_080b5670` (M33, 464 bytes) was the last function of M33, parked at 34
+bytes with a heavily pinned candidate built around lesson 3.269's frame
+struct.  A plain redraft from `m2c -t gba` (4.102) was 124 bytes off at the
+right size on its first build, and three source facts took it to zero:
+* the found path is `gUnk_02006130[idx] = gUnk_02006130[i]; return 0;` with
+  no local: cse keeps the byte of the earlier `ldrb` in a QImode register
+  until the store after the loop, global allocation cannot keep it in a
+  register across the loop, and reload spills the QImode pseudo, which is
+  exactly `mov r5, sp; strb r0, [r5, #4]` / `mov r1, sp; ldrb r1, [r1, #4]`
+  (PROMOTE_MODE only promotes declared variables, so a `u8 v` local spills
+  in SImode, `str r0, [sp, #4]`);
+* `sub_08065dbc` takes three arguments (its definition in
+  `src/actor_653ec.c` does; the fourteen declarations elsewhere in `src/`
+  list two): the ROM
+  keeps `e->unk2 >> 4` in r2 across the test because it is the third
+  argument (3.284);
+* the last reload one rotation step off (`movs r1, #0` / `mov r2, r9`
+  against our r0/r1, located with the RRTRACE build of 4.77) was a missing
+  ADDRESS RELOAD: `u32 vram = (u32)gUnk_06010000;` at the top of the
+  function - multi-block, crossing the LZ77 call, two uses - is dropped by
+  global allocation, and reload rematerialises `ldr r0, =gUnk_06010000` in
+  both arms, advancing the rotation once more (3.258); the literal in each
+  arm is a local-alloc pseudo that does not.  `(x << 6) + vram` then keeps
+  the ROM's `adds r2, r2, r0` operand order (3.262).
+**Corrects** 3.269 (the frame struct and per-site barrier'd byte pointers
+are not needed; the slot is a spill), 3.269b's "only spill-machinery-
+generated accesses go down that path, and user code apparently cannot"
+(user code produces it as soon as the byte is not a declared variable),
+and 3.272's "b5670's residue is the SAME r7-preference core": no r7, `ip`
+or spill-set lever was involved.
+
+### 3.475 One draw call without the HImode reload copy: its constant was a `u16` variable
+`sub_0801a3e4` (M05, 904 bytes, the draw callback of the ending's big
+sprites) came out 12 bytes short: cross-jumping merged nine instructions of
+one draw call's tail into another where the ROM merges four.  The ROM's
+second layout builds its OAM attribute as `movs r3, #128; lsls r3, #4;
+orrs r3, r4`, while every other draw call in the function (and in its
+siblings) does `movs r7, #128; lsls r7, #4; adds r3, r7, #0; orrs r3, r4`.
+The latter is the front end's shortening at work: in `0x800 | u->unk40`
+both operands fit in 16 bits, so c-typeck does the OR in `unsigned short`,
+expand widens it with a HImode constant pseudo as the first operand, local
+alloc ties it to the output (r3), and the HImode `(set r3 2048)` needs a
+reload register (r7 by the rotation) plus a HImode move.  The odd site is
+`u16 c; ... c = 0x800; ... c | u->unk40`, with `c` assigned in that arm
+before its visibility test: the variable's pseudo is SImode (PROMOTE_MODE),
+so the widened OR takes it as its first operand, the output is tied to it
+and its set is a plain SImode move that the `movsi` pattern emits straight
+into r3.  With the copy gone the two tails differ one instruction earlier
+and cross-jumping stops at `orrs .. bl`.  An `s32` variable, an assignment
+inside the expression (`0x800 | (f = u->unk40)`) or casts give the right
+size but tie the output to the loaded field (3 bytes; regmove rewrites the
+OR onto its first operand, 4.63), and the variable at function scope
+changes the whole allocation.  Rule: when one of several identical sites
+lacks a copy or a reload the others have, look for a SOURCE difference at
+that site - here a variable where the others have a literal.
+
+### 3.476 A cached mask local lets regmove AND in place; read the table halfword inline at every test
+`sub_08040b40` (M11, 2148 bytes, the player's motion preset setter) was
+parked at +8 bytes with case 13's task pointer in `ip`; lessons 4.62 and
+4.63 were written on it and concluded that "the only levers that flip the
+allocation need a live reference the ROM's instruction stream does not
+contain".  The lever was the source's own caches: every
+`s32 m = gUnk_03002458[...];` followed by `if (m & K)` tests made the mask
+an SImode pseudo that dies at its last test, and regmove (4.63) rewrote
+`(set T (and m K))` into `(set m (and m K))`, raising the mask from 3 to 5
+references and flipping the allocation order that put the task pointer in
+`ip` (4.62).  Written the plain way - `gUnk_03002458[gUnk_03002490->unk88->
+unk00] & K` at every test, no task local in case 13 - the halfword stays an
+HImode pseudo used through a subreg, which regmove does not retarget, cse
+merges the repeated reads and carries the first task-pointer load into
+every arm, and the function matched on its first build (m11 agent).  The
+`s32 m` caches of cases 6, 9 and 12 also became plain
+`if (tbl[...] & 48) ... else t->unk64 = 0;` (cse substitutes the known-zero
+register for the store, 4.68).  `sub_0804335c` (760 bytes) had the same
+trap: its `u16 v` cache of `gUnk_030023C0[...]` made the non-destructive
+`ands r0, r3` an in-place `ands r2, r0` (7 bytes); read inline twice, the
+remaining swap was an allocation-order question that a zero-code
+`do { } while (0)` around case 1 settles (3.383, the lever its M10 twin
+`sub_0803afcc` already carries).  **Corrects** 4.63's closing paragraph
+("an 8-byte residue on 2148 bytes was the right call") and the module
+map's "no source spelling reaches" for `sub_0804335c`.
+
+### 3.477 A copy of `&gUnk_03002490` before a branch that plain source cannot place: gcse kills memory expressions at calls
+`sub_0804335c`'s tail (after two predicate calls) has `adds r3, r4, #0`, a
+copy of the post-switch address pseudo of `gUnk_03002490`, placed BEFORE
+the `cmp` of `unk7B & 1`.  In the M10 twin the same copy is a gcse PRE
+insertion at the end of the block (the address is anticipated in both
+arms) that cse2 turns into a register copy; here the address was loaded
+before three calls, and agbcc's gcse kills every MEM expression at a call
+(a store does not kill a constant-pool load - `true_dependence` honours
+`mem/u` - but a call does), so no plain spelling reaches it: the twin's
+per-arm task locals or the global at every use give 190 bytes.  The landed
+source keeps the old candidate's two stand-ins, `m = gUnk_03002490->unk7B &
+1;` cached before the test and `tp = &gUnk_03002490;` between them (cse
+rewrites `tp`'s init into the copy); `tp` without `m` puts the copy before
+the load (16 bytes).  They are documented as stand-ins in
+`src/stage_4335c.c`, not as the original's spelling.
+
+### 3.478 `sub_0801b24c` again: the plain rewrite keeps 3.464's 44 bytes, and the `p` block is a cse1/cse2 path effect
+The straggler campaign redrafted M06's last function plainly in the style
+of its matched siblings (`sub_0801a8c8`, `sub_0801af14`): no old harness
+declarations, no no-op `(u16)` casts, no assignment inside the join sum,
+no comma expression.  It gives exactly 3.464's 44 bytes (only `s32 i`
+declared first matters: `i` at `[sp]`, `u` at `[sp, #4]`; the other order
+swaps the slots, 52 bytes, 4.105), so neither residue was an artefact of
+the old candidate's shapes.  The join is 3.464's triple-doubled reaching
+register, confirmed in `.lreg`/`.greg`: all three arm sets carry REG_EQUIV
+notes, where the ROM behaves as if one arm set it without one.  The second
+residue has its own cause: cse1 moves the `gUnk_03005394` byte load
+straight into `p` (the multiply by 144 keeps a copy), but on one of the
+paths cse follows it rewrites the third arm's `p != 4` to use the load's
+pseudo; cse2 then finds that pseudo living longer and moves the load back
+into it (`ldrb r3; adds r7, r3` where the ROM has `ldrb r7` and reads a
+surviving copy for the multiply, `adds r1, r7, #0`).  Ruled out: `p` as
+`s32`/`u32` (1420 bytes), `s8` (95), `u16` (44), `if ((p = ...) != 4)`
+(1420), the global at the test, the index or both (216/44/216),
+`gUnk_03002790 + p` (44), the global instead of `p` in the second or third
+arm (44; both 1420).  The next step is an instrumented cse (prints at
+`make_regs_eqv` and at the path boundaries of `cse_end_of_basic_block`);
+the reload trace cannot see either residue.  Best source on #84.
 
 ## 4. Splitting ROM ranges into asm (tools/split.py)
 
@@ -6146,7 +6306,10 @@ a932c 19->16, b5670 521->84->50->48. The other four never moved from their
 floor (ada20 3, a78a0 7, a860c 8, b4ea8 11). Even the improved two do NOT
 reach zero: b5670's residue is the SAME r7-preference core (ROM keeps the
 const 2 and scratch values in callee-saved r7) that a78a0/b4ea8 need and
-3.271 proved unreachable. MODULE-LEVEL CONSEQUENCE (as believed then; every
+3.271 proved unreachable.  (**Correction, 3.474:** b5670 matched in plain
+pin-free C in the straggler campaign; no r7, `ip` or spill-set lever was
+involved, only a missing third call argument, the array-byte spill and a
+dropped VRAM pointer.) MODULE-LEVEL CONSEQUENCE (as believed then; every
 one of these "floor-locked" functions has since matched except b5670 - see
 3.273, 3.275 and 3.274's SOLVED note): a carve needs every function at zero,
 and each of M30/M31/M33 contains at least one floor-locked function (M31:
@@ -6351,6 +6514,11 @@ legitimate reg address), and the member offset then satisfies the 5-bit
 REG+const rule, so the QI access survives with the offset in the store.
 The volatile s32 first member doubles as the ROM's [sp, #0] counter slot.
 
+**Correction (straggler campaign):** the frame struct and the per-site
+barrier'd byte pointers are not needed.  The slot is reload's spill of the
+compiler's own QImode copy of an array byte: `sub_080b5670` matched with
+the plain `gUnk_02006130[idx] = gUnk_02006130[i];` and no local (3.474).
+
 ### 3.269b Reload's spill-set entry order counts PSEUDO refs only - explicit-register variables are invisible
 
 order_regs_for_reload ranks candidate spill regs by uses of pseudos
@@ -6375,6 +6543,10 @@ form is what RELOAD emits for a QI access whose (mem (plus sp 4)) survives
 to reload; only spill-machinery-generated accesses go down that path, and
 user code apparently cannot.  sub_080B5670's last structural gap (219B of
 mostly cascading +-2 shifts) hangs on this plus ~15 rotation temps.
+**Correction (3.474):** user code does produce it, as soon as the byte is not
+a declared variable: a cse-held array byte that spills is a QImode pseudo
+(PROMOTE_MODE only promotes declared variables), and `sub_080B5670` matched
+in plain pin-free C.
 
 ### 3.255 fold hoists a constant addend out of `A + (B + K)`; a temp for A pins it back
 `y = t->unk4A + ((o >> 16) + 16) - cam[2]` comes out as `adds r1, #16;
@@ -7255,7 +7427,10 @@ Recognising when to stop is part of the lesson. On that function the only
 levers that flip the allocation are the mask at 4 refs or fewer, or the pointer
 at 16 refs or more with a live length of 42 or less, and every one of those
 needs a live reference the ROM's instruction stream does not contain. An 8-byte
-residue on 2148 bytes was the right call.
+residue on 2148 bytes was the right call.  **Correction (3.476):** the live
+reference was never needed: the source's `s32` mask caches were what let
+regmove AND in place; with the mask read inline at every test the function
+matched on its first plain build.
 
 ### 4.64 To STOP a cross-jump, route the sibling exit through a labelled `goto`
 `jump_optimize`'s `find_cross_jump` (jump.c:2687) has two forms with different
@@ -8900,6 +9075,35 @@ installed as a callback by `sub_080cd70c`) and a 4.40 phantom
   and re-verify before `gen.py`.
 - The run, census to last landing, took about an hour and a half; all
   eight functions landed, the module has no asm left.
+
+### 4.111 Harness notes from the straggler campaign (M05, M06, M11, M33)
+- Seven parked functions in four modules, each its own asm hole and split
+  segment: the census step was a reachability walk plus a whole-ROM pointer
+  and `bl` scan over the seven rows only (`pending/strag/reach.py`); every
+  row tiled its hole, every size was a multiple of 4, and the two `bl`
+  hits into a row were a known 4.40 pool-word phantom (`0x08019418`) and a
+  long jump to a function's own epilogue, so no census row changed.
+- The M34 annotator (`mkann.py`, 4.110) walked the seven segments' chunk
+  files unchanged; `mkfns.py` (a decl pool + a body -> a `fns/` draft with
+  only the declarations the body uses) turned the old harnesses' shared
+  headers into per-function declarations, and `widths.py` (every extern in
+  a `fns/` file against every spelling in `src/`) caught the one defect
+  that had parked `sub_08019eec` (3.472).  Run it first on any old draft.
+- The RRTRACE build of 4.77 with the M34 patch (`RR`, `ORDER`,
+  `NEWSPILL`, `SPILLSET`, `LA`) was rebuilt from a fresh clone at `59b966e`
+  in about five minutes and settled `sub_080b5670`'s last rotation step in
+  one run (3.474); the `-da` `.lreg` and the `LA` print showed which
+  operand local alloc tied in `sub_0801a3e4` (3.475).
+- Fan-out: the coordinator took the four functions whose drafts were
+  closest or had no saved source (M05's three, M33's), two agents took
+  M11's pair and M06's function.  Five of the seven fell to plain source,
+  `sub_0804335c` needed one documented zero-code lever (and keeps two
+  documented stand-ins), and `sub_0801b24c` stays parked (3.478).  The run
+  took about three hours from census to the last landing.
+- A generator detail: `gen.py` cannot parse a function-like `#define` whose
+  body contains a `;`; the M11 draft's `SX()` sign-extension macro was
+  expanded textually before landing (the preprocessor's own output, so the
+  bytes cannot change), which also removed a macro that declared a local.
 
 ## 5. Workflow that worked
 

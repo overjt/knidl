@@ -186,13 +186,13 @@ dispatches, pool density) — a planning aid, not a promise.
 | M02 | `0x080075B8-0x0800B91F` | 16.9 KiB | 109 | 1 | *** | game-state bodies, boot/title sequence, screen loaders, pause screen + HUD - **landed (#96)** |
 | M03 | `0x0800B920-0x08010357` | 18.6 KiB | 79 | 0 | **** | main menu + its 22 sprite tasks, BG scroll animator, stage sequence state - **landed (#99)** |
 | M04 | `0x08010358-0x08017667` | 28.8 KiB | 65 | 0 | *** | scripted-sequence bank: director + 50 of the 63 scripts |
-| M05 | `0x08017668-0x0801A8C7` | 12.6 KiB | 23 | 0 | *** | player-character animation bank + collision registry - **landed (#81)**, 20/23 |
+| M05 | `0x08017668-0x0801A8C7` | 12.6 KiB | 23 | 0 | *** | player-character animation bank + collision registry - **landed (#81, #125)** |
 | M06 | `0x0801A8C8-0x08021B17` | 28.6 KiB | 55 | 0 | ***** | box-vs-terrain collision engine + actor-vs-collider hit tests - **landed (#84)**, 54/55 |
 | M07 | `0x08021B18-0x0802969F` | 30.9 KiB | 154 | 1 | ****** | level / room builder + tilemap upload |
 | M08 | `0x080296A0-0x08030803` | 28.3 KiB | 151 | 2 | *** | camera, BG map streaming, map-event tasks + stage objects #221-#236 - **landed (#86)** |
 | M09 | `0x08030804-0x0803627F` | 22.6 KiB | 60 | 0 | ***** | breakable blocks + the player task (#5) and first action bodies - **landed (#92)** |
 | M10 | `0x08036280-0x0803CD5F` | 26.7 KiB | 41 | 0 | **** | stage script runner |
-| M11 | `0x0803CD60-0x080449C7` | 31.1 KiB | 121 | 4 | ***** | player mode/state machine + stage support services |
+| M11 | `0x0803CD60-0x080449C7` | 31.1 KiB | 121 | 4 | ***** | player mode/state machine + stage support services - **landed (#85)** |
 | M12 | `0x080449C8-0x08047FE7` | 13.5 KiB | 22 | 0 | *** | player action bodies, part 3 (actions 34-43, handlers 30-40) - **landed (#87)** |
 | M13 | `0x08047FE8-0x0804CC7B` | 19.1 KiB | 27 | 0 | *** | player action bodies, part 4 (actions 29, 44-48, 50-54, handlers 26, 41-45, 47-51) - **landed (#88)** |
 | M14 | `0x0804CC7C-0x08053AF3` | 27.6 KiB | 84 | 2 | *** | player action bodies, part 5 (actions 30-31, 49, 55-58, handlers 27-28, 46, 52-55), the action 49/58 sub-action tables and task type #6 - **landed (#90)** |
@@ -214,7 +214,7 @@ dispatches, pool density) — a planning aid, not a promise.
 | M30 | `0x080A5644-0x080AA337` | 19.2 KiB | 130 | 2 | * | enemy/object behaviour bank 11 - **landed (#72)** |
 | M31 | `0x080AA338-0x080AE3BB` | 16.1 KiB | 121 | 2 | ** | enemy/object behaviour bank 12 |
 | M32 | `0x080AE3BC-0x080B2FE7` | 19.0 KiB | 129 | 5 | * | enemy/object behaviour bank 13 |
-| M33 | `0x080B2FE8-0x080B6153` | 12.4 KiB | 108 | 5 | *** | HUD / overlay effects? |
+| M33 | `0x080B2FE8-0x080B6153` | 12.4 KiB | 108 | 5 | *** | HUD / overlay effects? - **landed (#97)** |
 | M34 | `0x080B6154-0x080B9D0B` | 14.9 KiB | 105 | 2 | *** | save file / SRAM records + options - **landed (#94)** |
 | M35 | `0x080B9D0C-0x080BDA2B` | 15.3 KiB | 193 | 4 | *** | sub-game framework + reaction-duel sub-game - **landed (#95)** |
 | M36 | `0x080BDA2C-0x080C1FFB` | 17.5 KiB | 117 | 4 | * | sub-game: four-slot bomb-pass minigame - **landed (#66)** |
@@ -550,7 +550,9 @@ below is the pre-decompilation one, kept for the record.
 
 **Decompiled in issue #81** (20 of 23 functions, 11100 of 12896 bytes):
 `src/player_17668.c`, `src/player_18b84.c`, `src/player_19000.c`,
-`src/player_1a07c.c`, `src/player_1a76c.c`.
+`src/player_1a07c.c`, `src/player_1a76c.c`; the straggler campaign (#125)
+landed the last three as plain pin-free C (`src/player_18e14.c`,
+`src/player_19eec.c`, `src/player_1a3e4.c`), so all 23 functions are C.
 
 * **Size** 12.6 KiB (`0x3260`), 23 functions (20 reachable only through pointer tables), mean `0x230`, largest `0xdfc`, pool words 7.5% of bytes.
 * **What it is.** Thirteen of its bodies are entries **58-70** of the 71-entry
@@ -577,9 +579,14 @@ below is the pre-decompilation one, kept for the record.
   `0x0801A76C` is a hidden dead export.  A reachability walk over the whole
   module then reports zero unreachable code, and no literal pool straddles a
   `symbols.csv` boundary - every function boundary is a valid carve point.
-* **Still asm** (same-size register-allocation residues): `sub_08018e14`
-  (492 bytes, a three-particle simulation over `gUnk_02006040`),
-  `sub_08019eec` (400 bytes, 17 differing) and `sub_0801a3e4` (904 bytes).
+* **The three stragglers** (#125): `sub_08018e14` (492 bytes, script 52,
+  three sparkles converging on the anchor task over `gUnk_02006040`),
+  `sub_08019eec` (400 bytes, script 62, a blend and palette sequence) and
+  `sub_0801a3e4` (904 bytes, the draw callback of the ending's big scripted
+  sprites).  Parked for weeks as "register-allocation residues", they were
+  source differences: the blend shadows are `vu8`, `gUnk_08732150` is a 2-D
+  table, the outer loop is `while (1)`, and one of `sub_0801a3e4`'s draw
+  calls holds its attribute bits in a `u16` variable (lessons 3.472-3.475).
 * **Calls into the decompiled early zone** sprite draw/update x71, VRAM transfer queue + sprite buckets x24, frame driver + RNG + blend x6, sound/BGM x2, sound/SE x2.
 * **Named helpers** TaskYieldTrampoline x553, TaskDispatchTrampoline x3, LZ77UnCompWram x1.
 * **Called from** M14 x21, M18 x10, M13 x8, M12 x7, M11 x6.
@@ -610,6 +617,10 @@ below is the pre-decompilation one, kept for the record.
   with the right size: a gcse copy of `&gUnk_030054E4` set in three arms
   has its live length doubled per set by `update_equiv_regs`, which moves
   it below the value it must outrank in global allocation (lesson 3.464).
+  The straggler campaign's plain rewrite gives the same 44 bytes, so the
+  residue is not the old candidate's shapes; its second half is a cse1/cse2
+  path effect on the `p` block (lesson 3.478), and the best source is on
+  #84.
 * **What it turned out to be** not a pure leaf, and two things.  The
   collision engine: ten per-frame entry points (the nine `sub_0801bcac` ...
   `sub_0801c444`, and `sub_0801baa4` for the player, which M09's player
@@ -949,7 +960,9 @@ below is the pre-decompilation one, kept for the record.
 ### M11 `0x0803CD60-0x080449C7` - player mode/state machine + stage support services
 
 **Decompiled in issue #85** (119 of 121 functions, 28940 of 31848 bytes):
-`src/stage_3cd60.c`, `src/stage_413a4.c`, `src/stage_43654.c`.
+`src/stage_3cd60.c`, `src/stage_413a4.c`, `src/stage_43654.c`; the straggler
+campaign landed the last two (`src/stage_40b40.c`, `src/stage_4335c.c`), so
+all 121 functions are C.
 
 * **Size** 31.1 KiB (`0x7c68`), 121 functions, 18 jump-table dispatches - the
   most of any module - and the highest coupling in Wave 3 (95 `bl` edges in,
@@ -971,9 +984,13 @@ below is the pre-decompilation one, kept for the record.
   `PlayerState[i].unk42 & 0x40`.  So `gUnk_030023C0` is the latched
   keys-pressed, `gUnk_03002458` the latched state mask (both indexed by
   `(s8)PlayerState.unk00`), and bit 0x40 of `unk42` means "input suppressed".
-* **`sub_08040b40` is a 14-way camera/scroll velocity preset dispatcher**
-  (`sub_08040b40(mode, 72)`), writing `Task.unk54`-`unk68` and calling
-  `sub_080061c0(0x5A5A5A5A, <8.8 value>)`; `sub_080413a4` applies one 8-byte
+* **`sub_08040b40` is the player's 14-way motion preset setter**
+  (`sub_08040b40(kind, preset)`, some 200 callers), writing the task's 16.16
+  motion cells `Task.unk54`-`unk68` from signed 8.8 halfwords of the preset
+  table `gUnk_0873AFC4` or of the row `gUnk_0873AF6C[gUnk_03001F30]`, mostly
+  through `sub_080061c0(0x5A5A5A5A, <value>)` (mirrored by the facing, the
+  sentinel keeping the other component; the census's "camera/scroll" was
+  wrong); `sub_080413a4` applies one 8-byte
   record of `gUnk_0873B204` as three signed 8.8 velocities, skipping any field
   equal to the sentinel `0x9999`.
 * **Four anchor tables of `void (*)(void)`** at `0x0873B430` (11),
@@ -1004,11 +1021,14 @@ below is the pre-decompilation one, kept for the record.
   `m4a_songs_2` among palette, audio and song data, a 2-byte "function" that is
   really a `bx lr`, and one entry that was the sixth WORD of the jump table at
   `0x0803E1E0`.
-* **Still asm** `sub_08040b40` (2148 B, +8 bytes: case 13's task pointer lands
-  in `ip`, and the only levers that would flip it need a live reference the ROM
-  does not contain - see lesson 4.62/4.63) and `sub_0804335c` (760 B, 7
-  differing: the ROM's halfword density must fall inside a window no source
-  spelling reaches).
+* **The two stragglers** (landed in the straggler campaign):
+  `sub_08040b40` (2148 B, parked at +8 bytes with case 13's task pointer in
+  `ip`) matched on its first plain build once the key mask was read inline
+  at every test - the cached `s32` mask was what let regmove AND in place
+  (lessons 4.62/4.63, corrected by 3.476); `sub_0804335c` (760 B, parked at
+  7 differing bytes, handler 20 of `gUnk_0873B4A4`) matched with the key mask
+  inline and a zero-code `do { } while (0)` around case 1, the lever its M10
+  twin `sub_0803afcc` already uses (lesson 3.383).
 * **Called from** M10 x266, M13 x171, M12 x165, M14 x159, M09 x151.
 
 ### M12 `0x080449C8-0x08047FE7` - player action bodies, part 3 (actions 34-43, per-frame handlers 30-40) - **landed (#87)**
@@ -2336,9 +2356,9 @@ below is the pre-decompilation one, kept for the record.
 * **Pool references** IWRAM x230, asset_metadata_index x129, game_code_and_rodata x70, EWRAM x24, early_5d9c x8, level_graphics_palettes x6, early_58e4 x3, VRAM x2.
 * **Suggested batches** `0x080AE3BC` (47 fns), `0x080B0338` (52 fns), `0x080B22F8` (30 fns).
 
-### M33 `0x080B2FE8-0x080B6153` - HUD / overlay effects? - **landed (#97, partial: 107/108)**
+### M33 `0x080B2FE8-0x080B6153` - HUD / overlay effects? - **landed (#97)**
 
-* **Decompiled** into `src/hud_b2fe8.c`, `hud_b4ea8.c`, `hud_b5024.c`, `hud_b5840.c` (107 of 108 functions byte-matched; `make clean && make compare` ROM-identical around 1 asm hole). `sub_080B4EA8` (the 3.274 r7 "web-split" terminal) matched via pre-switch n3/n7 + file-scope register globals r9-r11 + per-arm unique asm barriers + natural caller-save + a deliberately-mergeable duplicate case-5 tail whose reload chains advance the rotation before jump2 folds it away (lessons 3.275-3.281). **1 function remains in asm**: `sub_080B5670` (464B, best candidate 34 differing bytes: the loop-compare needs q2i homed ip with its base-copy reload-materialized (r7 by rotation), plus an after2-block staging residue and a 2-insn prologue ordering; the {r0,r7} spill-set union and the in-loop symbol reload are already correct).
+* **Decompiled** into `src/hud_b2fe8.c`, `hud_b4ea8.c`, `hud_b5024.c`, `hud_b5670.c`, `hud_b5840.c` (all 108 functions; no asm left in the range). `sub_080B4EA8` (the 3.274 r7 "web-split" terminal) matched via pre-switch n3/n7 + file-scope register globals r9-r11 + per-arm unique asm barriers + natural caller-save + a deliberately-mergeable duplicate case-5 tail whose reload chains advance the rotation before jump2 folds it away (lessons 3.275-3.281). The last one, `sub_080B5670` (464 B, parked at 34 differing bytes with a pinned candidate), fell in the straggler campaign as plain pin-free C: it is the room-object graphics loader `sub_080b4ea8` calls per kind-1 entry of `gUnk_020055D8` (shared or new graphics slot in `gUnk_020060A0[]`, tiles through `sub_080b5628`, palette group `gUnk_0873EF48[kind]`), `sub_08065dbc` takes three arguments, the VRAM base is a dropped pointer local (lesson 3.258) and the `[sp, #4]` byte slot is the compiler's own copy of `gUnk_02006130[i]` (lesson 3.474).
 
 * **Size** 12.4 KiB (`0x316c`), 108 functions (69 reachable only through pointer tables), mean `0x75`, largest `0x380`, pool words 14.2% of bytes.
 * **Difficulty** 3/6 - 58 distinct RAM cells, 5 jump-table dispatches, 4 functions >= `0x200`.

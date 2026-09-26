@@ -77,11 +77,11 @@
 0x08010B38 0x08017668 c_code player_10b38 # src/player_10b38.c (carved by tools/carve.py)
 0x08017668 0x08018B84 c_code player_17668 # src/player_17668.c (carved by tools/carve.py)
 0x08018B84 0x08018E14 c_code player_18b84 # src/player_18b84.c (carved by tools/carve.py)
-0x08018E14 0x08019000 thumb_code game_code_and_rodata_08018b84 [split]
+0x08018E14 0x08019000 c_code player_18e14 # src/player_18e14.c (carved by tools/carve.py)
 0x08019000 0x08019EEC c_code player_19000 # src/player_19000.c (carved by tools/carve.py)
-0x08019EEC 0x0801A07C thumb_code game_code_and_rodata_08018b84_08019eec [split]
+0x08019EEC 0x0801A07C c_code player_19eec # src/player_19eec.c (carved by tools/carve.py)
 0x0801A07C 0x0801A3E4 c_code player_1a07c # src/player_1a07c.c (carved by tools/carve.py)
-0x0801A3E4 0x0801A76C thumb_code game_code_and_rodata_08018b84_08019eec_0801a3e4 [split]
+0x0801A3E4 0x0801A76C c_code player_1a3e4 # src/player_1a3e4.c (carved by tools/carve.py)
 0x0801A76C 0x0801A8C8 c_code player_1a76c # src/player_1a76c.c (carved by tools/carve.py)
 0x0801A8C8 0x0801B24C c_code hitbox_1a8c8 # src/hitbox_1a8c8.c (carved by tools/carve.py)
 0x0801B24C 0x0801B7DC thumb_code game_code_and_rodata_08018b84_08019eec_0801a3e4_0801a8c8 [split]
@@ -144,9 +144,9 @@
 0x0803AA64 0x0803BDE8 c_code player_3aa64 # src/player_3aa64.c (carved by tools/carve.py)
 0x0803BDE8 0x0803CD60 c_code player_3bde8 # src/player_3bde8.c (carved by tools/carve.py)
 0x0803CD60 0x08040B40 c_code stage_3cd60 # src/stage_3cd60.c (carved by tools/carve.py)
-0x08040B40 0x080413A4 thumb_code game_code_and_rodata_08018b84_08019eec_0801a3e4_0801a8c8_08040b40 [split]
+0x08040B40 0x080413A4 c_code stage_40b40 # src/stage_40b40.c (carved by tools/carve.py)
 0x080413A4 0x0804335C c_code stage_413a4 # src/stage_413a4.c (carved by tools/carve.py)
-0x0804335C 0x08043654 thumb_code game_code_and_rodata_08018b84_08019eec_0801a3e4_0801a8c8_08040b40_0804335c [split]
+0x0804335C 0x08043654 c_code stage_4335c # src/stage_4335c.c (carved by tools/carve.py)
 0x08043654 0x080449C8 c_code stage_43654 # src/stage_43654.c (carved by tools/carve.py)
 0x080449C8 0x08044D04 c_code player_449c8 # src/player_449c8.c (carved by tools/carve.py)
 0x08044D04 0x080455C8 c_code player_44d04 # src/player_44d04.c (carved by tools/carve.py)
@@ -260,7 +260,7 @@
 0x080B2FE8 0x080B4EA8 c_code hud_b2fe8 # src/hud_b2fe8.c (carved by tools/carve.py)
 0x080B4EA8 0x080B5024 c_code hud_b4ea8 # src/hud_b4ea8.c (carved by tools/carve.py)
 0x080B5024 0x080B5670 c_code hud_b5024 # src/hud_b5024.c (carved by tools/carve.py)
-0x080B5670 0x080B5840 thumb_code game_code_and_rodata_080653ec_0806ef5c_0809113c_08093f64_08099b20_0809cb90_0809d994_0809f2f4_0809f9dc_080a00ec_080a1590_080b2fe8_080b5670 [split]
+0x080B5670 0x080B5840 c_code hud_b5670 # src/hud_b5670.c (carved by tools/carve.py)
 0x080B5840 0x080B6154 c_code hud_b5840 # src/hud_b5840.c (carved by tools/carve.py)
 0x080B6154 0x080B6290 c_code save_b6154 # src/save_b6154.c (carved by tools/carve.py)
 0x080B6290 0x080B63A4 c_code save_b6290 # src/save_b6290.c (carved by tools/carve.py)

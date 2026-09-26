@@ -545,4 +545,28 @@ Matching decompilation of Kirby: The Amazing Mirror's predecessor, **Kirby: Nigh
   3.458-3.464 (3.458: cse learns `a == 1` from a branch and swaps a later
   AND, so the ROM ANDs the constant; 3.459: a goto dispatch puts the tests
   first and the bodies after them) and 4.108-4.109.
+- Straggler campaign over seven parked allocation-residue functions
+  (issues #125, #97, #84 and M11's #85): six landed as C in one file each,
+  `src/player_18e14.c`, `src/player_19eec.c` and `src/player_1a3e4.c`
+  (M05's last three, so M05 has no asm left), `src/stage_40b40.c` and
+  `src/stage_4335c.c` (M11's last two, so M11 is all C) and
+  `src/hud_b5670.c` (M33's last, so M33 is all C); 5,168 of 6,592 bytes.
+  Five are plain pin-free C with no `asm` and no `register`;
+  `sub_0804335c` keeps one commented zero-code `do { } while (0)` (the
+  lever its M10 twin uses) and two documented stand-in locals.  The old
+  "register residues" were mostly source differences, re-derived from the
+  listings in the plainest style as M34's closing run advised (3.468): a
+  `u8` declaration of the `vu8` blend shadows (`sub_08019eec`, 17 bytes for
+  weeks), a 1-D spelling of a 2-D table and `for (;;)` for `while (1)`
+  (`sub_08018e14`, 286 bytes), one draw call whose attribute bits were a
+  `u16` variable (`sub_0801a3e4`), cached mask locals that let regmove AND
+  in place (`sub_08040b40`, `sub_0804335c`, correcting 4.62/4.63), and in
+  `sub_080b5670` a missing third call argument, the compiler's own QImode
+  byte copy behind the `[sp, #4]` slot (correcting 3.269) and a VRAM base
+  that must be a dropped pointer local (3.258).  `sub_0801b24c` (M06,
+  1424 bytes) stays parked at 44 differing bytes, now from plain source,
+  with its residue traced to 3.464's reaching register and a cse1/cse2
+  path effect (3.478; best source on #84).  No census row changed; 13
+  ROM tables named via `split_config.json` `data_symbols`; new lessons
+  3.472-3.478 and 4.111.
 - Next milestones: decompile split/SDK modules to C using the validated per-zone compiler recipe (task system Thumb side, sound driver, then game code); grow `src/` one module at a time with `asmdiff.sh` on the module range.
