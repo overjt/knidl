@@ -4,15 +4,17 @@
 
 /* stage_4335c.c (0x0804335C-0x08043653, issue #85).
  *
- * A per-frame player handler, entry 18 of the anchor table 0x0873B4AC and
- * the M11 copy of M10's sub_0803afcc (src/player_3aa64.c): it re-picks the
- * four-way state Task.unk73 from the latched held keys gUnk_03002458[] (left
- * or right = 3, A or up = 1, down = 2, else 0; state 1 also looks at the
- * newly pressed keys gUnk_030023C0[] and the counter Task.unk28), applies
- * the motion presets of sub_08040b40 and sub_080413a4 in state 3, re-binds
- * the coroutine sub_08043014 when the state changed and then, unless M11's
- * predicates sub_080400c0/sub_08040298 take over, requests the next action
- * through PlayerState.unk01 (9 or 5 on the ground, 24 or 25 in the air).
+ * Per-frame player handler 20 of gUnk_0873B4A4[27], the handler table M09's
+ * player task uses instead of gUnk_0873A840 while gUnk_03001F30 is non-zero,
+ * and the copy of M10's handler 20 sub_0803afcc (src/player_3aa64.c): it
+ * re-picks the four-way state Task.unk73 from the latched held keys
+ * gUnk_03002458[] (left or right = 3, A or up = 1, down = 2, else 0; state 1
+ * also looks at the newly pressed keys gUnk_030023C0[] and the counter
+ * Task.unk28), applies the motion presets of sub_08040b40 and sub_080413a4
+ * in state 3, re-binds the coroutine sub_08043014 when the state changed
+ * and then, unless M11's predicates sub_080400c0/sub_08040298 take over,
+ * requests the next action through PlayerState.unk01 (9 or 5 on the ground,
+ * 24 or 25 in the air).
  *
  * Matching notes (issue #85): case 1 sits in a zero-code do/while (0) (lesson
  * 3.383, as in the M10 twin) and reads the key mask inline; the tail's `m`

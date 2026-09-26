@@ -913,6 +913,11 @@ child issues of #35 are created from it. Findings that belong in this document:
     the `gUnk_03001F30 != 0` tables `gUnk_0873B42C`/`gUnk_0873B4A4`, and
     they are byte-for-byte templates: `sub_0803aa64` is `sub_08043014`,
     `sub_08036c94` is `sub_08042128`, `sub_080371f0` is `sub_08042328`.
+    Handler 20 has a twin too: M11's `sub_0804335c` (`gUnk_0873B4A4[20]`)
+    copies `sub_0803afcc`'s key-driven four-way state machine; it and M11's
+    motion preset setter `sub_08040b40` were the last two M11 functions in
+    asm and landed in the straggler campaign (`src/stage_4335c.c`,
+    `src/stage_40b40.c`), so M11 (`0x0803CD60-0x080449C7`) is all C.
   * Census: 39 functions, not 41 - the long-jump phantoms `0x08037F2A`,
     `0x08038F8E`, `0x08038FD8` (inside the 4368-byte `sub_08037ed8`) and
     `0x0803AA14` (the exit tail of `sub_08039c24`) removed, the hidden

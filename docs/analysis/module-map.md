@@ -192,7 +192,7 @@ dispatches, pool density) — a planning aid, not a promise.
 | M08 | `0x080296A0-0x08030803` | 28.3 KiB | 151 | 2 | *** | camera, BG map streaming, map-event tasks + stage objects #221-#236 - **landed (#86)** |
 | M09 | `0x08030804-0x0803627F` | 22.6 KiB | 60 | 0 | ***** | breakable blocks + the player task (#5) and first action bodies - **landed (#92)** |
 | M10 | `0x08036280-0x0803CD5F` | 26.7 KiB | 41 | 0 | **** | stage script runner |
-| M11 | `0x0803CD60-0x080449C7` | 31.1 KiB | 121 | 4 | ***** | player mode/state machine + stage support services |
+| M11 | `0x0803CD60-0x080449C7` | 31.1 KiB | 121 | 4 | ***** | player mode/state machine + stage support services - **landed (#85)** |
 | M12 | `0x080449C8-0x08047FE7` | 13.5 KiB | 22 | 0 | *** | player action bodies, part 3 (actions 34-43, handlers 30-40) - **landed (#87)** |
 | M13 | `0x08047FE8-0x0804CC7B` | 19.1 KiB | 27 | 0 | *** | player action bodies, part 4 (actions 29, 44-48, 50-54, handlers 26, 41-45, 47-51) - **landed (#88)** |
 | M14 | `0x0804CC7C-0x08053AF3` | 27.6 KiB | 84 | 2 | *** | player action bodies, part 5 (actions 30-31, 49, 55-58, handlers 27-28, 46, 52-55), the action 49/58 sub-action tables and task type #6 - **landed (#90)** |
@@ -956,7 +956,9 @@ below is the pre-decompilation one, kept for the record.
 ### M11 `0x0803CD60-0x080449C7` - player mode/state machine + stage support services
 
 **Decompiled in issue #85** (119 of 121 functions, 28940 of 31848 bytes):
-`src/stage_3cd60.c`, `src/stage_413a4.c`, `src/stage_43654.c`.
+`src/stage_3cd60.c`, `src/stage_413a4.c`, `src/stage_43654.c`; the straggler
+campaign landed the last two (`src/stage_40b40.c`, `src/stage_4335c.c`), so
+all 121 functions are C.
 
 * **Size** 31.1 KiB (`0x7c68`), 121 functions, 18 jump-table dispatches - the
   most of any module - and the highest coupling in Wave 3 (95 `bl` edges in,
@@ -978,9 +980,13 @@ below is the pre-decompilation one, kept for the record.
   `PlayerState[i].unk42 & 0x40`.  So `gUnk_030023C0` is the latched
   keys-pressed, `gUnk_03002458` the latched state mask (both indexed by
   `(s8)PlayerState.unk00`), and bit 0x40 of `unk42` means "input suppressed".
-* **`sub_08040b40` is a 14-way camera/scroll velocity preset dispatcher**
-  (`sub_08040b40(mode, 72)`), writing `Task.unk54`-`unk68` and calling
-  `sub_080061c0(0x5A5A5A5A, <8.8 value>)`; `sub_080413a4` applies one 8-byte
+* **`sub_08040b40` is the player's 14-way motion preset setter**
+  (`sub_08040b40(kind, preset)`, some 200 callers), writing the task's 16.16
+  motion cells `Task.unk54`-`unk68` from signed 8.8 halfwords of the preset
+  table `gUnk_0873AFC4` or of the row `gUnk_0873AF6C[gUnk_03001F30]`, mostly
+  through `sub_080061c0(0x5A5A5A5A, <value>)` (mirrored by the facing, the
+  sentinel keeping the other component; the census's "camera/scroll" was
+  wrong); `sub_080413a4` applies one 8-byte
   record of `gUnk_0873B204` as three signed 8.8 velocities, skipping any field
   equal to the sentinel `0x9999`.
 * **Four anchor tables of `void (*)(void)`** at `0x0873B430` (11),
@@ -1011,11 +1017,14 @@ below is the pre-decompilation one, kept for the record.
   `m4a_songs_2` among palette, audio and song data, a 2-byte "function" that is
   really a `bx lr`, and one entry that was the sixth WORD of the jump table at
   `0x0803E1E0`.
-* **Still asm** `sub_08040b40` (2148 B, +8 bytes: case 13's task pointer lands
-  in `ip`, and the only levers that would flip it need a live reference the ROM
-  does not contain - see lesson 4.62/4.63) and `sub_0804335c` (760 B, 7
-  differing: the ROM's halfword density must fall inside a window no source
-  spelling reaches).
+* **The two stragglers** (landed in the straggler campaign):
+  `sub_08040b40` (2148 B, parked at +8 bytes with case 13's task pointer in
+  `ip`) matched on its first plain build once the key mask was read inline
+  at every test - the cached `s32` mask was what let regmove AND in place
+  (lessons 4.62/4.63, corrected by 3.476); `sub_0804335c` (760 B, parked at
+  7 differing bytes, handler 20 of `gUnk_0873B4A4`) matched with the key mask
+  inline and a zero-code `do { } while (0)` around case 1, the lever its M10
+  twin `sub_0803afcc` already uses (lesson 3.383).
 * **Called from** M10 x266, M13 x171, M12 x165, M14 x159, M09 x151.
 
 ### M12 `0x080449C8-0x08047FE7` - player action bodies, part 3 (actions 34-43, per-frame handlers 30-40) - **landed (#87)**
