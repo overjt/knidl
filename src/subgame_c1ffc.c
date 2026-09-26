@@ -14,9 +14,10 @@
  *       unk20 from the caller).
  *   sub_080c20b4   the state set-up: gUnk_02017094 = &gUnk_02016C40,
  *       gUnk_0201716C = &gUnk_0201B0E0, the linked-player count and mode
- *       cells, the four players' course records, the HBlank callback
- *       sub_080c2d38 (gUnk_0300003C) and sub_080c2fb8 (gUnk_03000FA4), and
- *       two 16-colour rows of gUnk_08609E40.
+ *       cells, the four players' course records, the per-frame hook
+ *       sub_080c2d38 (gUnk_0300003C, called by the frame driver sub_08000de4)
+ *       and the VBlank hook sub_080c2fb8 (gUnk_03000FA4, called by the VBlank
+ *       handler), and two 16-colour rows of gUnk_08609E40.
  *   sub_080c21b0   the screen's task body: waits for the scroll position
  *       gUnk_0201716C->unk000 to reach the two course lines unk00C and unk010
  *       (a sign sprite and songs 0x82B/0x82A/0x82C at each), then for all

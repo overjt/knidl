@@ -1376,8 +1376,9 @@ SECTIONS
         build/src/subgame_c1ffc.o(.text)
     } > ROM
 
-    .game_code_and_rodata_080653ec_0806ef5c_080bf994_080c1ffc 0x080C243C : {
-        KEEP(*(.game_code_and_rodata_080653ec_0806ef5c_080bf994_080c1ffc)) KEEP(*(.game_code_and_rodata_080653ec_0806ef5c_080bf994_080c1ffc.tail))
+    /* subgame_c243c — decompiled to C (src/subgame_c243c.c, carved by tools/carve.py) */
+    .subgame_c243c 0x080C243C : {
+        build/src/subgame_c243c.o(.text)
     } > ROM
 
     /* subgame_c2ff8 — decompiled to C (src/subgame_c2ff8.c, carved by tools/carve.py) */
