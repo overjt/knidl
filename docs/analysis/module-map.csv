@@ -234,7 +234,7 @@ M232,0x080BF994,0x080C0DE8,0x1454,24,18,0,0xD8,0x314,14.0,7,0,0,0,0,2,2,subgame_
 M233,0x080C0DE8,0x080C1FFC,0x1214,36,33,0,0x80,0x168,10.5,12,0,0,0,2,0,1,subgame_c0de8,already landed (c_code)
 M234,0x080C1FFC,0x080C6258,0x425C,76,26,3,0xDF,0x6B8,10.6,50,2,1,1,1,4,4,FIR-coefficient effect engine,the consumer rom-map section 2 seg 10 predicted: 22 pool refs into lib_misc + 7 into lib_rodata_fir_tables (0x080CFF00 tables); Div x10 / Mod x4 / __divsi3 x5; EWRAM x183
 M235,0x080C6258,0x080C6260,0x8,1,0,0,0x8,0x8,0.0,0,0,0,0,1,0,1,sub_080c6258,already landed (c_code)
-M236,0x080C6260,0x080C6420,0x1C0,5,0,1,0x59,0x90,17.0,14,0,0,0,1,4,2,FIR-coefficient effect engine (remaining tail),five-function tail of the 0x080C1FFC-0x080C6420 engine after the sub_080c6258 carve
+M236,0x080C6260,0x080C6420,0x1C0,5,0,0,0x59,0x90,17.0,14,0,0,0,1,4,2,FIR-coefficient effect engine (remaining tail),five-function tail of the 0x080C1FFC-0x080C6420 engine after the sub_080c6258 carve
 M237,0x080C6420,0x080CD89C,0x747C,109,70,6,0x111,0x918,11.1,83,2,5,7,5,10,4,intro / cutscene / ending sequences?,TaskYieldTrampoline x826; 28 compressed_graphics refs; palette fade + BLD shadows; task types #260-264; called from AgbMain and the mode manager
 M238,0x080CD89C,0x080CE520,0xC84,40,24,0,0x50,0x39E,2.5,2,0,0,0,3,1,1,m4a_1,already landed (thumb_code)
 M239,0x080CE520,0x080CEFB4,0xA94,31,0,0,0x57,0x118,14.6,8,0,0,0,7,1,2,m4a_c1,already landed (c_code)
