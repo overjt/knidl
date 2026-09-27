@@ -724,14 +724,52 @@ Matching decompilation of Kirby: The Amazing Mirror's predecessor, **Kirby: Nigh
   `make progress`: 185 -> 1,326 of 11,065 symbols documented (1.7% ->
   12.0%).  Done by four proposal agents by address zone plus the
   coordinator, who alone applied names; new lessons 3.515, 4.123-4.124.
+- Names, run 2 (issue #155): struct fields, the enemies and the
+  abilities.  `tools/rename_field.py` renames a struct field
+  compiler-guided: it renames the member in every definition of the
+  struct (and, with `copies`, in the local copies at the same offset: the
+  task engine's `struct Task` with `h10`/`b12` names, `src/early_5d9c.c`'s
+  `struct Sprite`, the 17 `struct RoomDef` copies), lets gcc 12's
+  `-fsyntax-only` in the knidl-builder image report each access that now
+  fails (file, line, column and struct), renames exactly those, and
+  requires the final error set to equal the original's; `rename.py
+  --verify-diff` checks field renames token by token (kind `field`,
+  `Struct.old` -> `Struct.new` in `renames.csv`).  242 fields of 30 structs
+  named (296 rows with the local copies, 34,096 uses in 247 files):
+  `include/task.h` went from 213 to 69 `unkXX` of its 222 fields (`Task`
+  38 of 58, `PlayerState` 40 of 72, `Actor` 32 of 43, `ActorDef`,
+  `ActorSpawn`, `GfxHeader`, `TaskGfx`, `AnimCmd` all or nearly all), plus
+  `RoomDef`, the room object list, the terrain results, the scroll lock,
+  the save slot and the Air Grind / boot-logo records.  No local copy was
+  layout-identical to `include/task.h`, so no copy was replaced by the
+  header.  The enemies were identified from LOCAL sprite renders
+  (`pending/`, never committed: lesson 4.126) of the room objects'
+  graphics descriptors `gUnk_0873EEA0[subtype]`, corroborated by each
+  subtype's `ActorDef.ability`: 30 kind-0 enemies (Waddle Dee ... UFO, and
+  the parasol), the 8 mid-bosses, Meta Knight's four knights, the 9 bosses
+  (Whispy Woods ... Nightmare), the stage objects and the pickups, named
+  `Task_<Enemy>` with their frame, variant and state tables, state
+  machines (`<Enemy>[<Row>]Init/EnterState/Update`), state verbs and child
+  objects (`docs/naming.md` 2.3).  The HUD ability pictures carry the
+  ability names as text, so the ids 1-25 are fixed (FIRE ... STAR ROD) and
+  the 29 ability moves are `PlayerAction<Ability>` / `...Update`.  M20 is
+  enemies, not moving scenery (file headers, rom-map and module-map
+  corrected).  806 symbol renames (469 functions, 320 ROM tables, 17 RAM
+  cells) in 16 batches; 141 of the 266 task bodies and 1,356 of 5,344
+  functions have a real name.  `make progress`: 1,326 -> 2,132 of 11,065
+  symbols documented (11.98% -> 19.27%).  No rename changed a byte (field
+  names never reach codegen, lesson 3.516).  Done by four proposal agents
+  (fields; actor records; kind-0 enemies; bosses and abilities) in five or
+  six rounds each plus the coordinator, who alone applied names; new
+  lessons 3.516, 4.125-4.127.
 - Next milestones: (1) #36 phase 2, typed C declarations in shared
   headers (with #155's renames), and functional tables as C where their
   consumers prove the layout (the data policy above), which will prove most of seg 18's
   data-to-data tables, the seg 13 re-survey and the linker.ld pins that
-  still keep the ROM from shifting (docs/data.md §7); (2) #155 run 2:
-  struct fields (`Task`, `PlayerState`, `Actor`, `RoomDef`), the enemy
-  banks once their enemies are identified, the ability moves once the
-  abilities have names, and the remaining `gUnk_` cells; then #37's final
-  audit.
+  still keep the ROM from shifting (docs/data.md §7); (2) #155 run 3:
+  the enemies' remaining rows and state verbs, the unidentified subtypes
+  (15, 22, 26, 28/29, 31-33, 39, 40), the boss children and the
+  per-family `Task` fields, and the remaining `gUnk_` cells; then #37's
+  final audit.
   The three functions #154 left pinned or levered are listed in its
   bullet above.

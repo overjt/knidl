@@ -4490,9 +4490,10 @@ A member name is resolved to a byte offset by the C front end
 `MEM` at that offset: no pass after the parser sees the identifier.  So a
 field rename is codegen-neutral by construction, not only by measurement
 (lesson 3.515 needed the gcse hashing argument for symbols; fields never
-get that far).  Measured anyway: #155 run 2 renamed FIELDS_TOTAL field
-declarations over ACCESSES_TOTAL accesses in FILES_TOTAL files, and `make clean && make
-compare` passed after every batch.  The one thing that can change codegen
+get that far).  Measured anyway: #155 run 2 renamed 242 fields of 30 structs (296
+`renames.csv` rows with the local copies), 34,096 identifier uses in 247
+files, in eight batches, and `make clean && make compare` passed after
+every batch.  The one thing that can change codegen
 is the type, and a rename never touches it; the tool compares the whole
 error set of the renamed tree with the original's, so no access moved to
 another struct.
