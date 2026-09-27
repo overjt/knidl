@@ -30,8 +30,8 @@ struct CamRect { s16 x0, x1, y0, y1; };
 struct BgMap
 {
     /*0x00*/ u16 unk0;
-    /*0x02*/ u16 unk2;
-    /*0x04*/ u16 unk4;
+    /*0x02*/ u16 width;
+    /*0x04*/ u16 height;
     /*0x06*/ u16 unk6[0];
 };
 
@@ -69,7 +69,7 @@ struct RoomDef
     /*0x38*/ u16 unk38;
     /*0x3A*/ u16 doorCount;
     /*0x3C*/ u16 objectCount;
-    /*0x3E*/ u16 unk3E;
+    /*0x3E*/ u16 objectsSortedByY;
     /*0x40*/ u16 bgAnimSet;
     /*0x42*/ u16 unk42;
     /*0x44*/ struct Door *doors;
@@ -96,15 +96,15 @@ struct Unk02004B90
 struct Unk020055D8Entry
 {
     /*0x00*/ u8 filler0[4];
-    /*0x04*/ u16 unk4;
-    /*0x06*/ u16 unk6;
+    /*0x04*/ u16 x;
+    /*0x06*/ u16 y;
 };
 
 struct Unk020055D8
 {
-    /*0x00*/ s16 unk0;
-    /*0x02*/ s16 unk2;
-    /*0x04*/ struct Unk020055D8Entry *unk4;
+    /*0x00*/ s16 count;
+    /*0x02*/ s16 sortedByY;
+    /*0x04*/ struct Unk020055D8Entry *entries;
 };
 
 extern u16 gCameraMode;
@@ -456,8 +456,8 @@ void SelectBg3MapShape(void)
     s32 w;
     s32 h;
 
-    w = gCurRoomDef->bg3Map->unk2;
-    h = gCurRoomDef->bg3Map->unk4;
+    w = gCurRoomDef->bg3Map->width;
+    h = gCurRoomDef->bg3Map->height;
     if (w <= 64 && h <= 32)
         gBg3MapShape = 0;
     else if (w <= 32 && h <= 64)
@@ -473,7 +473,7 @@ void LoadBg3Map(void)
 
 void SpawnRoomObjectsInView(void)
 {
-    if (gRoomObjectList.unk0 != 0)
+    if (gRoomObjectList.count != 0)
     {
         SpawnRoomObjectsInRect(gViewRect[0] - 36, gViewRect[1] + 36, gViewRect[2] - 40, gViewRect[3] + 40);
         *(long long *)gObjectSpawnViewRect = *(long long *)gViewRect;

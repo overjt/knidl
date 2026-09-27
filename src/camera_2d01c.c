@@ -23,11 +23,11 @@
 struct Unk03005680
 {
     /*0x00*/ u8 unk0;
-    /*0x01*/ u8 unk1;
-    /*0x02*/ u16 unk2;
-    /*0x04*/ u16 unk4;
-    /*0x06*/ u16 unk6;
-    /*0x08*/ u16 unk8;
+    /*0x01*/ u8 lockedAxes;
+    /*0x02*/ u16 x0;
+    /*0x04*/ u16 x1;
+    /*0x06*/ u16 y0;
+    /*0x08*/ u16 y1;
     /*0x0A*/ u16 unkA;
     /*0x0C*/ u16 unkC;
 };
@@ -60,8 +60,8 @@ struct Unk02007D70
 struct BgMap
 {
     /*0x00*/ u16 unk0;
-    /*0x02*/ u16 unk2;
-    /*0x04*/ u16 unk4;
+    /*0x02*/ u16 width;
+    /*0x04*/ u16 height;
     /*0x06*/ u16 unk6[0];
 };
 
@@ -98,9 +98,9 @@ struct Unk0802D278
 
 struct MapTile
 {
-    /*0x00*/ u16 unk0;
+    /*0x00*/ u16 metatile;
     /*0x02*/ u8 unk2;
-    /*0x03*/ u8 unk3;
+    /*0x03*/ u8 collisionTile;
 };
 
 extern u16 gCameraMode;
@@ -139,11 +139,11 @@ void CameraLeaveScrollLock(void)
 {
     if (gCameraMode == 3)
     {
-        if (gScrollLock.unk1 & 1)
+        if (gScrollLock.lockedAxes & 1)
             gScrollLockSpeedX = 6;
-        if (gScrollLock.unk1 & 2)
+        if (gScrollLock.lockedAxes & 2)
             gScrollLockSpeedY = 3;
-        if (gScrollLock.unk1 != 0)
+        if (gScrollLock.lockedAxes != 0)
             gCameraMode = 4;
         else
             gCameraMode = 0;
@@ -286,7 +286,7 @@ void sub_0802d294(struct Unk02007D70 *p)
 void sub_0802d2f0(u32 x, u32 y, u32 v)
 {
     if (x < gRoomWidth && y < gRoomHeight)
-        gRoomMap[y * gRoomWidth + x].unk3 = v;
+        gRoomMap[y * gRoomWidth + x].collisionTile = v;
 }
 
 void sub_0802d32c(struct Unk02007D70 *p)

@@ -70,7 +70,7 @@ struct MapCell
     /*0x00*/ u8 unk0;
     /*0x01*/ u8 unk1;
     /*0x02*/ u8 unk2;
-    /*0x03*/ u8 unk3;
+    /*0x03*/ u8 collisionTile;
 };
 extern struct MapCell *gRoomMap;
 
@@ -82,7 +82,7 @@ struct Unk03005530
     /*0x03*/ u8 unk3;
     /*0x04*/ u8 unk4;
     /*0x05*/ u8 unk5;
-    /*0x06*/ u8 unk6;
+    /*0x06*/ u8 onGround;
     /*0x07*/ u8 unk7;
     /*0x08*/ u16 unk8;
     /*0x0A*/ u8 unkA;
@@ -147,7 +147,7 @@ s32 TerrainQueryPixel(u32 x, u32 y)
     if (x < w && y < gRoomHeight)
     {
         idx = y * w + x;
-        gTerrainTile = gRoomMap[idx].unk3;
+        gTerrainTile = gRoomMap[idx].collisionTile;
         gUnk_03005574 = gRoomMap[idx].unk2;
         gTerrainTileShape = gCollisionTileShapes[gTerrainTile];
         return gTerrainTileShape[gTerrainPixelIndex];
@@ -171,14 +171,14 @@ s32 TerrainQueryPixelAndBelow(u32 x, u32 y)
         idx = y * w + x;
         if (idx + w <= gRoomMetatileCount)
         {
-            gTerrainTileBelow = (&gRoomMap[idx])[w].unk3;
+            gTerrainTileBelow = (&gRoomMap[idx])[w].collisionTile;
             gUnk_030055AC = (&gRoomMap[idx])[gRoomWidth].unk2;
         }
         else
         {
             gTerrainTileBelow = gUnk_030055AC = 0;
         }
-        gTerrainTile = gRoomMap[idx].unk3;
+        gTerrainTile = gRoomMap[idx].collisionTile;
         gUnk_03005574 = gRoomMap[idx].unk2;
         p = gCollisionTileShapes[gTerrainTile];
         return p[gTerrainPixelIndex];
@@ -200,18 +200,18 @@ s32 TerrainQueryPixelAndSides(u32 x, u32 y)
     if (x < w && y < gRoomHeight)
     {
         idx = y * w + x;
-        gTerrainTileLeft = (&gRoomMap[idx])[-1].unk3;
+        gTerrainTileLeft = (&gRoomMap[idx])[-1].collisionTile;
         gUnk_03005504 = (&gRoomMap[idx])[-1].unk2;
         if (x + 1 < gRoomWidth)
         {
-            gTerrainTileRight = (&gRoomMap[idx])[1].unk3;
+            gTerrainTileRight = (&gRoomMap[idx])[1].collisionTile;
             gUnk_0300556C = (&gRoomMap[idx])[1].unk2;
         }
         else
         {
             gTerrainTileRight = gUnk_0300556C = 0;
         }
-        gTerrainTile = gRoomMap[idx].unk3;
+        gTerrainTile = gRoomMap[idx].collisionTile;
         gUnk_03005574 = gRoomMap[idx].unk2;
         p = gCollisionTileShapes[gTerrainTile];
         return p[gTerrainPixelIndex];
@@ -236,7 +236,7 @@ s32 sub_080218f8(u32 x, u32 y)
     if (y >= gRoomHeight)
         return 0;
     idx = y * w;
-    tile = (&gRoomMap[idx])[x].unk3;
+    tile = (&gRoomMap[idx])[x].collisionTile;
     if (gUnk_08732FF0[tile] == 0)
         return 0;
     return gUnk_087330F0[tile][off];
@@ -294,7 +294,7 @@ s32 sub_08021a40(u32 x, u32 y)
     if (cy >= gRoomHeight)
         return 0;
     idx = cy * w;
-    tile = (&gRoomMap[idx])[cx].unk3;
+    tile = (&gRoomMap[idx])[cx].collisionTile;
     if (gUnk_087336F0[tile] != 0)
         return 0;
     p = gCollisionTileShapes[tile];
@@ -316,7 +316,7 @@ s32 sub_08021ab4(u32 x, u32 y)
     if (cy < gRoomHeight)
     {
         idx = cy * w;
-        tile = (&gRoomMap[idx])[cx].unk3;
+        tile = (&gRoomMap[idx])[cx].collisionTile;
         p = gCollisionTileShapes[tile];
         return p[((y & 15) << 4) + (x & 15)];
     }

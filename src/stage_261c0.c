@@ -51,8 +51,8 @@ struct Door
 struct BgMap
 {
     /*0x00*/ u16 unk0;
-    /*0x02*/ u16 unk2;
-    /*0x04*/ u16 unk4;
+    /*0x02*/ u16 width;
+    /*0x04*/ u16 height;
     /*0x06*/ u16 unk6[0];
 };
 
@@ -80,7 +80,7 @@ struct RoomDef
     /*0x38*/ u16 unk38;
     /*0x3A*/ u16 doorCount;
     /*0x3C*/ u16 objectCount;
-    /*0x3E*/ u16 unk3E;
+    /*0x3E*/ u16 objectsSortedByY;
     /*0x40*/ u16 bgAnimSet;
     /*0x42*/ u16 unk42;
     /*0x44*/ struct Door *doors;
@@ -97,11 +97,11 @@ struct RoomDef
 struct Unk03005680
 {
     /*0x00*/ u8 unk0;
-    /*0x01*/ u8 unk1;
-    /*0x02*/ u16 unk2;
-    /*0x04*/ u16 unk4;
-    /*0x06*/ u16 unk6;
-    /*0x08*/ u16 unk8;
+    /*0x01*/ u8 lockedAxes;
+    /*0x02*/ u16 x0;
+    /*0x04*/ u16 x1;
+    /*0x06*/ u16 y0;
+    /*0x08*/ u16 y1;
     /*0x0A*/ u16 unkA;
     /*0x0C*/ u16 unkC;
 };

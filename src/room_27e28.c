@@ -19,14 +19,14 @@ struct MapCell
     /*0x00*/ u8 unk0;
     /*0x01*/ u8 unk1;
     /*0x02*/ u8 unk2;
-    /*0x03*/ u8 unk3;
+    /*0x03*/ u8 collisionTile;
 };
 
 struct BgMap
 {
     /*0x00*/ u16 unk0;
-    /*0x02*/ u16 unk2;
-    /*0x04*/ u16 unk4;
+    /*0x02*/ u16 width;
+    /*0x04*/ u16 height;
     /*0x06*/ u16 unk6[0];
 };
 
@@ -64,7 +64,7 @@ struct RoomDef
     /*0x38*/ u16 unk38;
     /*0x3A*/ u16 doorCount;
     /*0x3C*/ u16 objectCount;
-    /*0x3E*/ u16 unk3E;
+    /*0x3E*/ u16 objectsSortedByY;
     /*0x40*/ u16 bgAnimSet;
     /*0x42*/ u16 unk42;
     /*0x44*/ struct Door *doors;
@@ -81,23 +81,23 @@ struct RoomDef
 struct Unk020055D8Entry
 {
     /*0x00*/ u8 filler0[4];
-    /*0x04*/ u16 unk4;
-    /*0x06*/ u16 unk6;
+    /*0x04*/ u16 x;
+    /*0x06*/ u16 y;
 };
 
 struct Unk020055D8
 {
-    /*0x00*/ s16 unk0;
-    /*0x02*/ s16 unk2;
-    /*0x04*/ struct Unk020055D8Entry *unk4;
+    /*0x00*/ s16 count;
+    /*0x02*/ s16 sortedByY;
+    /*0x04*/ struct Unk020055D8Entry *entries;
 };
 
 /* M08's view of a map cell (src/bgmap_2a9cc.c): the metatile index is a u16 */
 struct MapTile
 {
-    /*0x00*/ u16 unk0;
+    /*0x00*/ u16 metatile;
     /*0x02*/ u8 unk2;
-    /*0x03*/ u8 unk3;
+    /*0x03*/ u8 collisionTile;
 };
 
 extern s32 gScrollLockSpeedX;
@@ -162,7 +162,7 @@ void InitRoomBgLayout(void)
     gUnk_02005574[0] = 0;
     if ((s16)gCurRoomDef->unk38 != -1)
     {
-        e = (s8 *)&gRoomObjectList.unk4[(s16)gCurRoomDef->unk38];
+        e = (s8 *)&gRoomObjectList.entries[(s16)gCurRoomDef->unk38];
         if (e[1] == 7)
         {
             gUnk_030055F0 = gUnk_087322C0[e[2]][0];
@@ -194,9 +194,9 @@ void InitRoomBgLayout(void)
             for (j = 0; j <= 16; j++)
             {
                 idx = gRoomWidth * i + j;
-                ((struct MapTile *)gRoomMap)[idx].unk0 = 0;
+                ((struct MapTile *)gRoomMap)[idx].metatile = 0;
                 ((struct MapTile *)gRoomMap)[idx].unk2 = 0;
-                ((struct MapTile *)gRoomMap)[idx].unk3 = 0;
+                ((struct MapTile *)gRoomMap)[idx].collisionTile = 0;
                 gBlockLayer[idx] = 0;
             }
         }
@@ -257,7 +257,7 @@ void sub_08028130(void)
     gUnk_02005574[0] = 0;
     if ((s16)gCurRoomDef->unk38 != -1)
     {
-        e = (s8 *)&gRoomObjectList.unk4[(s16)gCurRoomDef->unk38];
+        e = (s8 *)&gRoomObjectList.entries[(s16)gCurRoomDef->unk38];
         if (e[1] == 7)
         {
             gUnk_030055F0 = gUnk_087322C0[e[2]][0];

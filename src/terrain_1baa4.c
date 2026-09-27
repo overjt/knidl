@@ -22,7 +22,7 @@ struct Unk03005530
     /*0x03*/ u8 unk3;
     /*0x04*/ u8 unk4;
     /*0x05*/ u8 unk5;
-    /*0x06*/ u8 unk6;
+    /*0x06*/ u8 onGround;
     /*0x07*/ u8 unk7;
     /*0x08*/ u16 unk8;
     /*0x0A*/ u8 unkA;
@@ -112,7 +112,7 @@ void sub_0801baa4(u32 p)
         gTerrainProbeResult.unkC = (gTerrainProbeY + gTerrainBoxBottom + 16) >> 4;
     }
     sub_08022650();
-    if (gTerrainProbeResult.unk6 != 0)
+    if (gTerrainProbeResult.onGround != 0)
     {
         if ((s8)gTerrainFacing == 1)
         {

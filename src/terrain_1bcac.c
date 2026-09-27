@@ -77,7 +77,7 @@ struct MapCell
     /*0x00*/ u8 unk0;
     /*0x01*/ u8 unk1;
     /*0x02*/ u8 unk2;
-    /*0x03*/ u8 unk3;
+    /*0x03*/ u8 collisionTile;
 };
 extern struct MapCell *gRoomMap;
 
@@ -91,7 +91,7 @@ struct Unk03005530
     /*0x03*/ u8 unk3;
     /*0x04*/ u8 unk4;
     /*0x05*/ u8 unk5;
-    /*0x06*/ u8 unk6;
+    /*0x06*/ u8 onGround;
     /*0x07*/ u8 unk7;
     /*0x08*/ u16 unk8;
     /*0x0A*/ u8 unkA;
@@ -182,7 +182,7 @@ void sub_0801bcac(const s8 *p)
         gTerrainProbeResult.unkB = 1;
         gTerrainProbeResult.unkC = (gTerrainProbeY + gTerrainBoxBottom) >> 4;
     }
-    if (gTerrainProbeResult.unk6 != 0)
+    if (gTerrainProbeResult.onGround != 0)
     {
         v = gTerrainVelX;
         if (v != 0)
@@ -231,7 +231,7 @@ void sub_0801bde0(const s8 *p)
         gTerrainProbeResult.unkC = (gTerrainProbeY + gTerrainBoxBottom) >> 4;
     }
     sub_08022810();
-    if (gTerrainProbeResult.unk6 != 0)
+    if (gTerrainProbeResult.onGround != 0)
     {
         v = gTerrainVelX;
         if (v != 0)
@@ -330,7 +330,7 @@ void sub_0801c12c(const s8 *p)
         gTerrainProbeResult.unkB = 1;
         gTerrainProbeResult.unkC = (gTerrainProbeY + gTerrainBoxBottom + 16) >> 4;
     }
-    if (gTerrainProbeResult.unk6 != 0)
+    if (gTerrainProbeResult.onGround != 0)
         sub_0801fc48();
     else
         sub_0801fe2c();

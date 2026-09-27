@@ -52,9 +52,9 @@ struct M04Spark
 struct HitBoxSet
 {
     /*0x00*/ u16 unk0;
-    /*0x02*/ s8 unk2;
-    /*0x03*/ s8 unk3;
-    /*0x04*/ s8 (*unk4)[4];
+    /*0x02*/ s8 offsetX;
+    /*0x03*/ s8 offsetY;
+    /*0x04*/ s8 (*boxes)[4];
 };
 
 extern u16 gLatchedHeldKeys[];             /* held keys, latched per player (M11) */

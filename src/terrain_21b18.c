@@ -26,7 +26,7 @@ struct MapCell
     /*0x00*/ u8 unk0;
     /*0x01*/ u8 unk1;
     /*0x02*/ u8 unk2;
-    /*0x03*/ u8 unk3;
+    /*0x03*/ u8 collisionTile;
 };
 
 struct Unk03005530
@@ -37,7 +37,7 @@ struct Unk03005530
     /*0x03*/ u8 unk3;
     /*0x04*/ u8 unk4;
     /*0x05*/ u8 unk5;
-    /*0x06*/ u8 unk6;
+    /*0x06*/ u8 onGround;
     /*0x07*/ u8 unk7;
     /*0x08*/ u16 unk8;
     /*0x0A*/ u8 unkA;
@@ -51,8 +51,8 @@ struct Unk03005530
 struct BgMap
 {
     /*0x00*/ u16 unk0;
-    /*0x02*/ u16 unk2;
-    /*0x04*/ u16 unk4;
+    /*0x02*/ u16 width;
+    /*0x04*/ u16 height;
     /*0x06*/ u16 unk6[0];
 };
 
@@ -90,7 +90,7 @@ struct RoomDef
     /*0x38*/ u16 unk38;
     /*0x3A*/ u16 doorCount;
     /*0x3C*/ u16 objectCount;
-    /*0x3E*/ u16 unk3E;
+    /*0x3E*/ u16 objectsSortedByY;
     /*0x40*/ u16 bgAnimSet;
     /*0x42*/ u16 unk42;
     /*0x44*/ struct Door *doors;
@@ -159,7 +159,7 @@ s32 GetCollisionTile(u32 x, u32 y)
     if (x >= w || y >= gRoomHeight)
         return 0;
     idx = y * w;
-    return (&gRoomMap[idx])[x].unk3;
+    return (&gRoomMap[idx])[x].collisionTile;
 }
 
 s32 sub_08021b70(u32 x, u32 y)
@@ -186,7 +186,7 @@ s32 GetCollisionTileAtOffset(s16 x, s16 y, s16 dx, s16 dy)
     if (cx <= 0 || cx >= (w = gRoomWidth) - 1 || cy <= 0 || cy >= gRoomHeight - 1)
         return -1;
     idx = cy * w;
-    return (&gRoomMap[idx])[cx].unk3;
+    return (&gRoomMap[idx])[cx].collisionTile;
 }
 
 u16 sub_08021c14(s16 x, s16 y)
@@ -219,7 +219,7 @@ void sub_08021c74(s8 *box, s32 id)
     gTerrainBoxLeft = box[4];
     gTerrainBoxRight = box[5];
     gTerrainProbeResult.unk2++;
-    gTerrainProbeResult.unk6 = 1;
+    gTerrainProbeResult.onGround = 1;
     TerrainQueryPixelAndBelow(gTerrainProbeX, gTerrainProbeY + gTerrainBoxBottom);
     if (gCollisionTileShapeClass[gTerrainTile] == 0)
     {
@@ -305,12 +305,12 @@ edges:
     goto done;
 
 clear:
-    gTerrainProbeResult.unk6 = 0;
+    gTerrainProbeResult.onGround = 0;
     gTerrainProbeResult.unk2 = 0;
     gTerrainProbeResult.unkB = 0;
 
 done:
-    t->onGround = gTerrainProbeResult.unk6;
+    t->onGround = gTerrainProbeResult.onGround;
     t->unk84 = (gTerrainProbeResult.unkC << 8) | gTerrainProbeResult.unkB;
     n = gTerrainProbeX - box[0];
     if ((t->posX >> 16) != n)
@@ -481,7 +481,7 @@ u16 sub_0802259c(u16 x, u16 y)
     if (x >= w || y >= gRoomHeight)
         return 0;
     idx = y * w;
-    tile = (&gRoomMap[idx])[x].unk3;
+    tile = (&gRoomMap[idx])[x].collisionTile;
     r = 0;
     if (tile > 127)
         r = 256;

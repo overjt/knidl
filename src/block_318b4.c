@@ -25,9 +25,9 @@
 /* M08's view of a map cell (src/bgmap_2a9cc.c): the metatile index is a u16 */
 struct MapTile
 {
-    /*0x00*/ u16 unk0;
+    /*0x00*/ u16 metatile;
     /*0x02*/ u8 unk2;
-    /*0x03*/ u8 unk3;
+    /*0x03*/ u8 collisionTile;
 };
 
 /* gBreakingBlocks[64] (and gBg1BreakingBlocks[64] for the second block layer
@@ -199,8 +199,8 @@ void sub_080319d0(struct Unk020061F0 *b, s32 n)
             {
                 s->unk8 = &gCurRoomDef->unk10[gBlockLayer[s->unk4] & 0xFF];
                 s->unkC = (u16 *)0x06002000 + (((s->unk0 * 2) & 31) + ((((s->unk2 * 2) & 31) + (u16)(s->unk0 & 16) * 2) << 5));
-                s->unk16 = s->unk8->unk0;
-                s->unk18 = s->unk8->unk3;
+                s->unk16 = s->unk8->metatile;
+                s->unk18 = s->unk8->collisionTile;
                 BlockAnimWriteMetatile(s);
                 sub_08031c7c(s);
                 gBlockLayer[s->unk4] = 0;
@@ -258,8 +258,8 @@ void sub_08031b58(struct Unk020061F0 *b, s32 n)
             {
                 s->unk8 = &gCurRoomDef->unk10[gBlockLayer[s->unk4] & 0xFF] - 1;
                 s->unkC = (u16 *)0x06002000 + (((s->unk0 * 2) & 31) + ((((s->unk2 * 2) & 31) + (u16)(s->unk0 & 16) * 2) << 5));
-                s->unk16 = s->unk8->unk0;
-                s->unk18 = s->unk8->unk3;
+                s->unk16 = s->unk8->metatile;
+                s->unk18 = s->unk8->collisionTile;
 
                 sub_08031c7c(s);
                 gBlockLayer[s->unk4] = 0;
@@ -271,10 +271,10 @@ void sub_08031b58(struct Unk020061F0 *b, s32 n)
 
 void BlockAnimWriteMetatile(struct Unk020061F0 *b)
 {
-    b->unk16 = b->unk8->unk0;
-    b->unk18 = b->unk8->unk3;
-    gRoomMap[b->unk4].unk0 = b->unk16;
-    gRoomMap[b->unk4].unk3 = b->unk18;
+    b->unk16 = b->unk8->metatile;
+    b->unk18 = b->unk8->collisionTile;
+    gRoomMap[b->unk4].metatile = b->unk16;
+    gRoomMap[b->unk4].collisionTile = b->unk18;
     gBlockLayer[b->unk4] = ((u8)gBlockLayer[b->unk4] + 1) | 0x8000;
 }
 
@@ -379,17 +379,17 @@ void BlockAnimWriteMetatileWrapped(struct Unk020061F0 *b)
     u32 x;
     u32 m;
 
-    b->unk16 = b->unk8->unk0;
-    b->unk18 = b->unk8->unk3;
-    gRoomMap[b->unk4].unk0 = b->unk16;
-    gRoomMap[b->unk4].unk3 = b->unk18;
+    b->unk16 = b->unk8->metatile;
+    b->unk18 = b->unk8->collisionTile;
+    gRoomMap[b->unk4].metatile = b->unk16;
+    gRoomMap[b->unk4].collisionTile = b->unk18;
     x = b->unk0;
     if (x > 39)
     {
         m = 31;
         m &= x;
-        (&gRoomMap[m])[b->unk2 * gRoomWidth].unk0 = b->unk16;
-        (&gRoomMap[m])[b->unk2 * gRoomWidth].unk3 = b->unk18;
+        (&gRoomMap[m])[b->unk2 * gRoomWidth].metatile = b->unk16;
+        (&gRoomMap[m])[b->unk2 * gRoomWidth].collisionTile = b->unk18;
     }
     gBlockLayer[b->unk4] = ((u8)gBlockLayer[b->unk4] + 1) | 0x8000;
 }
@@ -437,7 +437,7 @@ void sub_08031f3c(struct Unk020061F0 *b)
                     x += b->unk0;
                     if (x < 0 || gRoomWidth <= x)
                         gUnk_0200B060[j + (k + i)] = 0;
-                    else if ((&gRoomMap[x])[y * gRoomWidth].unk3 != 0)
+                    else if ((&gRoomMap[x])[y * gRoomWidth].collisionTile != 0)
                         gUnk_0200B060[j + (k + i)] = 1;
                     else
                         gUnk_0200B060[j + (k + i)] = 0;
@@ -466,7 +466,7 @@ void sub_08031f3c(struct Unk020061F0 *b)
 
                     if (y >= 0 && gRoomHeight * 2 > y && x >= gUnk_020055B8[0] && gUnk_020055B8[1] >= x)
                     {
-                        if ((&gRoomMap[x >> 1])[(y >> 1) * gRoomWidth].unk3 == 0)
+                        if ((&gRoomMap[x >> 1])[(y >> 1) * gRoomWidth].collisionTile == 0)
                         {
                             v = gUnk_0200B060[gUnk_0873A6EC[n][l][0]] + gUnk_0200B060[gUnk_0873A6EC[n][l][1]] * 2;
                             if (v == 0)
@@ -595,7 +595,7 @@ void sub_080324e4(struct Unk020061F0 *b)
 
 void Bg1BlockAnimWriteMetatile(struct Unk020061F0 *b)
 {
-    b->unk16 = b->unk8->unk0;
+    b->unk16 = b->unk8->metatile;
     gBg1MetatileMap[b->unk4] = b->unk16 | 0x8000;
 }
 

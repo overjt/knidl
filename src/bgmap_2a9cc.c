@@ -13,15 +13,15 @@
  * rest loop them over a row, a column or the whole 36x26-tile window
  * around a pixel position, clamped to the room.  sub_0802b074 fills the
  * 0x06002000 map as 32x64 tiles instead, and sub_0802b168 builds such a
- * tile at a metatile edge from the solid flags (MapTile.unk3) of the three
+ * tile at a metatile edge from the solid flags (MapTile.collisionTile) of the three
  * neighbours it touches (table gUnk_080D71A0).  sub_0802b25c/sub_0802b29c
  * restore a metatile column from the backup copy 2048 cells further on. */
 
 struct BgMap
 {
     /*0x00*/ u16 unk0;
-    /*0x02*/ u16 unk2;
-    /*0x04*/ u16 unk4;
+    /*0x02*/ u16 width;
+    /*0x04*/ u16 height;
     /*0x06*/ u16 unk6[0];
 };
 
@@ -42,9 +42,9 @@ struct RoomDef
 
 struct MapTile
 {
-    /*0x00*/ u16 unk0;
+    /*0x00*/ u16 metatile;
     /*0x02*/ u8 unk2;
-    /*0x03*/ u8 unk3;
+    /*0x03*/ u8 collisionTile;
 };
 
 extern s16 gRoomHeight;
@@ -138,12 +138,12 @@ void DrawBg3View(s32 px, s32 py)
     y0 = py - 3;
     y1 = py + 22;
     m = gCurRoomDef->bg3Map;
-    w = m->unk2;
+    w = m->width;
     if (x0 < 0)
         x0 = 0;
     if (w < x1)
         x1 = w;
-    h = m->unk4;
+    h = m->height;
     if (y0 < 0)
         y0 = 0;
     if (h < y1)
@@ -159,9 +159,9 @@ void DrawBg3Row(s32 x0, s32 x1, s32 y)
     struct BgMap *m;
     s32 w;
 
-    if (y < 0 || y >= (m = gCurRoomDef->bg3Map)->unk4)
+    if (y < 0 || y >= (m = gCurRoomDef->bg3Map)->height)
         return;
-    w = m->unk2;
+    w = m->width;
     if (x0 < 0)
         x0 = 0;
     if (w < x1)
@@ -176,9 +176,9 @@ void DrawBg3Column(s32 x, s32 y0, s32 y1)
     struct BgMap *m;
     s32 h;
 
-    if (x < 0 || x >= (m = gCurRoomDef->bg3Map)->unk2)
+    if (x < 0 || x >= (m = gCurRoomDef->bg3Map)->width)
         return;
-    h = m->unk4;
+    h = m->height;
     if (y0 < 0)
         y0 = 0;
     if (h < y1)
@@ -360,7 +360,7 @@ void DrawBg2Tile(s32 x, s32 y)
 {
     u16 *src;
     s32 i;
-    src = &gMetatileTiles[((&gRoomMap[x >> 1])[(y >> 1) * gRoomWidth].unk0 << 2)
+    src = &gMetatileTiles[((&gRoomMap[x >> 1])[(y >> 1) * gRoomWidth].metatile << 2)
                          + (x & 1) + ((y & 1) << 1)];
     i = (x & 31) + ((y & 31) << 5) + ((x & 32) << 5);
     ((u16 *)0x06002000)[i] = *src;
@@ -371,7 +371,7 @@ void DrawBg3Tile(s32 x, s32 y)
     u16 *src;
     s32 i;
 
-    src = &gCurRoomDef->bg3Map->unk6[x] + gCurRoomDef->bg3Map->unk2 * y;
+    src = &gCurRoomDef->bg3Map->unk6[x] + gCurRoomDef->bg3Map->width * y;
     i = (x & 31) + ((y & 31) << 5) + ((x & 32) << 5);
     ((u16 *)0x06003000)[i] = *src;
 }
@@ -391,7 +391,7 @@ void sub_0802b074(s32 px)
     for (i = 0; i < gRoomHeight * 2; i++)
         for (x = x0; x <= x1; x++)
             ((u16 *)0x06002000)[(x & 31) + ((i & 63) << 5)]
-                = *(gMetatileTiles + ((&gRoomMap[x >> 1])[(i >> 1) * gRoomWidth].unk0 << 2) + (x & 1) + ((i & 1) << 1));
+                = *(gMetatileTiles + ((&gRoomMap[x >> 1])[(i >> 1) * gRoomWidth].metatile << 2) + (x & 1) + ((i & 1) << 1));
     for (i = x0; i <= x1; i++)
     {
         sub_0802b168(i, 26);
@@ -411,13 +411,13 @@ void sub_0802b168(s32 x, s32 y)
     q = (x & 1) + ((y & 1) << 1);
     x >>= 1;
     y >>= 1;
-    if ((&gRoomMap[x])[y * gRoomWidth].unk3 == 0)
+    if ((&gRoomMap[x])[y * gRoomWidth].collisionTile == 0)
     {
         xn = (q & 1) ? x + 1 : x - 1;
         yn = (q & 2) ? y + 1 : y - 1;
-        a = (&gRoomMap[x])[yn * gRoomWidth].unk3 != 0;
-        b = (&gRoomMap[xn])[y * gRoomWidth].unk3 != 0;
-        c = (&gRoomMap[xn])[yn * gRoomWidth].unk3 != 0;
+        a = (&gRoomMap[x])[yn * gRoomWidth].collisionTile != 0;
+        b = (&gRoomMap[xn])[y * gRoomWidth].collisionTile != 0;
+        c = (&gRoomMap[xn])[yn * gRoomWidth].collisionTile != 0;
         if (a || b)
             idx = a + (b << 1);
         else
@@ -426,7 +426,7 @@ void sub_0802b168(s32 x, s32 y)
     }
     else
     {
-        *dst = *(gMetatileTiles + ((&gRoomMap[x])[y * gRoomWidth].unk0 << 2) + q);
+        *dst = *(gMetatileTiles + ((&gRoomMap[x])[y * gRoomWidth].metatile << 2) + q);
     }
 }
 
@@ -445,8 +445,8 @@ void sub_0802b29c(s32 x, s32 y)
     s32 i;
 
     i = x + y * gRoomWidth;
-    gRoomMap[i].unk0 = gRoomMap[i + 2048].unk0;
+    gRoomMap[i].metatile = gRoomMap[i + 2048].metatile;
     gRoomMap[i].unk2 = gRoomMap[i + 2048].unk2;
-    gRoomMap[i].unk3 = gRoomMap[i + 2048].unk3;
+    gRoomMap[i].collisionTile = gRoomMap[i + 2048].collisionTile;
     gBlockLayer[i] = gBlockLayer[i + 2048];
 }

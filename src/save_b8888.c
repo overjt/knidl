@@ -7,10 +7,10 @@ struct SaveSlot
 {
     /*0x00*/ u32 unk00;
     /*0x04*/ s32 unk04;
-    /*0x08*/ u32 unk08;
-    /*0x0C*/ s32 unk0C;
-    /*0x10*/ u16 unk10;
-    /*0x12*/ u16 unk12[2];
+    /*0x08*/ u32 generation;
+    /*0x0C*/ s32 saveCount;
+    /*0x10*/ u16 milestoneFlags;
+    /*0x12*/ u16 completionPercent[2];
     /*0x16*/ u8 unk16[2];
     /*0x18*/ u8 unk18[2];
     /*0x1A*/ u8 unk1A[2];

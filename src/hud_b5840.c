@@ -12,18 +12,18 @@ extern s8 gUnk_02005590[];
 extern u8 gUnk_020055D0;
 struct Unk020055D8Entry
 {
-    /*0x00*/ s8 unk0;
+    /*0x00*/ s8 kind;
     /*0x01*/ s8 unk1;
     /*0x02*/ s8 unk2;
     /*0x03*/ s8 unk3;
-    /*0x04*/ u16 unk4;
-    /*0x06*/ u16 unk6;
+    /*0x04*/ u16 x;
+    /*0x06*/ u16 y;
 };
 struct Unk020055D8
 {
-    /*0x00*/ s16 unk0;
-    /*0x02*/ s16 unk2;
-    /*0x04*/ struct Unk020055D8Entry *unk4;
+    /*0x00*/ s16 count;
+    /*0x02*/ s16 sortedByY;
+    /*0x04*/ struct Unk020055D8Entry *entries;
 };
 extern struct Unk020055D8 gRoomObjectList;
 extern u8 gUnk_02005E10[];
@@ -118,11 +118,11 @@ extern s16 gRoomBounds[];
 struct Unk03005680
 {
     /*0x00*/ u8 unk0;
-    /*0x01*/ u8 unk1;
-    /*0x02*/ u16 unk2;
-    /*0x04*/ u16 unk4;
-    /*0x06*/ u16 unk6;
-    /*0x08*/ u16 unk8;
+    /*0x01*/ u8 lockedAxes;
+    /*0x02*/ u16 x0;
+    /*0x04*/ u16 x1;
+    /*0x06*/ u16 y0;
+    /*0x08*/ u16 y1;
     /*0x0A*/ u16 unkA;
     /*0x0C*/ u16 unkC;
 };
@@ -158,12 +158,12 @@ extern u32 gUnk_0873EF48[];
 extern u32 *gUnk_0873F0E4[];
 struct Unk0873EEA0
 {
-    /*0x00*/ u16 unk0;
-    /*0x02*/ u16 unk2;
+    /*0x00*/ u16 paletteBankCount;
+    /*0x02*/ u16 tileCount;
     /*0x04*/ u16 unk4;
-    /*0x06*/ u16 unk6;
-    /*0x08*/ u32 unk8;
-    /*0x0C*/ u32 unkC;
+    /*0x06*/ u16 tilesCompressed;
+    /*0x08*/ u32 palette;
+    /*0x0C*/ u32 tiles;
 };
 extern struct Unk0873EEA0 *gUnk_0873F104[];
 extern u32 *gUnk_0873F15C[];
@@ -1548,25 +1548,25 @@ void sub_080b59d8(u8 *e, s32 idx, s32 n)
     gUnk_020060A0[n].unk2 = 0;
     gUnk_020060A0[n].unk1 = 8;
     d = gUnk_0873F104[0];
-    if (d->unk2 != 0)
+    if (d->tileCount != 0)
     {
-        if (d->unk6 != 0)
+        if (d->tilesCompressed != 0)
         {
-            LZ77UnCompVram((void *)d->unkC, gUnk_02020000);
-            RequestCopy(4, (u32)gUnk_02020000, 0x06010000, d->unk2 << 5);
+            LZ77UnCompVram((void *)d->tiles, gUnk_02020000);
+            RequestCopy(4, (u32)gUnk_02020000, 0x06010000, d->tileCount << 5);
         }
         else
         {
-            RequestCopy(4, d->unkC, 0x06010000, d->unk2 << 5);
+            RequestCopy(4, d->tiles, 0x06010000, d->tileCount << 5);
         }
     }
-    if (d->unk0 != 0)
-        RequestCopy(2, d->unk8, (u32)gUnk_03001570, d->unk0 << 5);
+    if (d->paletteBankCount != 0)
+        RequestCopy(2, d->palette, (u32)gUnk_03001570, d->paletteBankCount << 5);
     for (i = 1; i <= 4; i++)
     {
         d = gUnk_0873F104[i];
-        if (d->unk6 != 0)
-            LZ77UnCompVram((void *)d->unkC, (void *)(gUnk_08756184[i] + (u32)gUnk_02020000));
+        if (d->tilesCompressed != 0)
+            LZ77UnCompVram((void *)d->tiles, (void *)(gUnk_08756184[i] + (u32)gUnk_02020000));
     }
 }
 
@@ -1582,7 +1582,7 @@ s32 sub_080b5a94(struct Unk020055D8Entry *e, s32 idx, s32 n)
         return 0;
     for (i = 0; i < idx; i++)
     {
-        if (gRoomObjectList.unk4[i].unk0 == 5)
+        if (gRoomObjectList.entries[i].kind == 5)
         {
             if (gUnk_02006130[i] != -1
              && gUnk_0873F180[gUnk_020060A0[gUnk_02006130[i]].unk0] == d)
@@ -1594,23 +1594,23 @@ s32 sub_080b5a94(struct Unk020055D8Entry *e, s32 idx, s32 n)
     }
     gUnk_02006130[idx] = n;
     gUnk_020060A0[n].unk0 = e->unk1;
-    if (d->unk2 != 0)
+    if (d->tileCount != 0)
     {
-        gUnk_020060A0[n].unk2 = sub_080b5628(d->unk2);
-        if (d->unk6 != 0)
+        gUnk_020060A0[n].unk2 = sub_080b5628(d->tileCount);
+        if (d->tilesCompressed != 0)
         {
-            LZ77UnCompVram((void *)d->unkC, gUnk_02020000);
-            RequestCopy(4, (u32)gUnk_02020000, (gUnk_020060A0[n].unk2 << 6) + 0x06010000, d->unk2 << 5);
+            LZ77UnCompVram((void *)d->tiles, gUnk_02020000);
+            RequestCopy(4, (u32)gUnk_02020000, (gUnk_020060A0[n].unk2 << 6) + 0x06010000, d->tileCount << 5);
         }
         else
         {
-            RequestCopy(4, d->unkC, (gUnk_020060A0[n].unk2 << 6) + 0x06010000, d->unk2 << 5);
+            RequestCopy(4, d->tiles, (gUnk_020060A0[n].unk2 << 6) + 0x06010000, d->tileCount << 5);
         }
     }
-    if (d->unk0 != 0)
+    if (d->paletteBankCount != 0)
     {
-        gUnk_020060A0[n].unk1 = sub_080b5654(d->unk0);
-        RequestCopy(2, d->unk8, (gUnk_020060A0[n].unk1 << 5) + (u32)gObjPalette, d->unk0 << 5);
+        gUnk_020060A0[n].unk1 = sub_080b5654(d->paletteBankCount);
+        RequestCopy(2, d->palette, (gUnk_020060A0[n].unk1 << 5) + (u32)gObjPalette, d->paletteBankCount << 5);
     }
     return 1;
 }
@@ -1624,27 +1624,27 @@ s32 sub_080b5bdc(struct Unk020055D8Entry *e, s32 i)
         if (e->unk1 == 32)
         {
             if (!(gUnk_02007BF0[gLevelIndex][gStageIndex] & (1 << (e->unk3 & 31))))
-                res = CreateActorByKind(0, e->unk1, e->unk2, 0, e->unk4, e->unk6,
+                res = CreateActorByKind(0, e->unk1, e->unk2, 0, e->x, e->y,
                                    (gUnk_020060A0[gUnk_02006130[i]].unk1 << 12) | ((gUnk_020060A0[gUnk_02006130[i]].unk2 * 2) + 16));
         }
         else if (e->unk1 == 37)
         {
             if (!(gUnk_02007BF0[gLevelIndex][gStageIndex] & (1 << (e->unk3 & 31))))
             {
-                res = CreateActorByKind(0, e->unk1, e->unk2, 0, e->unk4, e->unk6,
+                res = CreateActorByKind(0, e->unk1, e->unk2, 0, e->x, e->y,
                                    (gUnk_020060A0[gUnk_02006130[i]].unk1 << 12) | ((gUnk_020060A0[gUnk_02006130[i]].unk2 * 2) + 16));
                 gUnk_02007BF0[gLevelIndex][gStageIndex] |= 1 << (e->unk3 & 31);
             }
         }
         else
         {
-            res = CreateActorByKind(0, e->unk1, e->unk2, e->unk3 & 31, e->unk4, e->unk6,
+            res = CreateActorByKind(0, e->unk1, e->unk2, e->unk3 & 31, e->x, e->y,
                                (gUnk_020060A0[gUnk_02006130[i]].unk1 << 12) | ((gUnk_020060A0[gUnk_02006130[i]].unk2 * 2) + 16));
         }
     }
     else
     {
-        res = CreateActorByKind(0, e->unk1, e->unk2, e->unk3 & 31, e->unk4, e->unk6, 0);
+        res = CreateActorByKind(0, e->unk1, e->unk2, e->unk3 & 31, e->x, e->y, 0);
     }
     return res;
 }
@@ -1674,51 +1674,51 @@ s32 sub_080b5d84(struct Unk020055D8Entry *e)
         }
         gUnk_02007D60 &= 0xFF;
     }
-    f = &gRoomObjectList.unk4[e->unk2];
+    f = &gRoomObjectList.entries[e->unk2];
     for (i = e->unk2; i < e->unk2 + e->unk3; f++, i++)
     {
-        if (f->unk0 == 6)
+        if (f->kind == 6)
         {
             switch (f->unk1)
             {
             case 1:
                 break;
             case 2:
-                if (e->unk4 < (gViewRect[0] + gViewRect[1]) >> 1)
-                    gScrollLock.unkA = e->unk4 + 156;
+                if (e->x < (gViewRect[0] + gViewRect[1]) >> 1)
+                    gScrollLock.unkA = e->x + 156;
                 else
-                    gScrollLock.unkA = e->unk4 - 156;
-                StartScrollLock(f->unk4, f->unk4 + 240, 0xFFFF, 0xFFFF);
+                    gScrollLock.unkA = e->x - 156;
+                StartScrollLock(f->x, f->x + 240, 0xFFFF, 0xFFFF);
                 t->unk24 = 1;
                 break;
             case 3:
-                if (e->unk6 < (gViewRect[3] + gViewRect[2]) >> 1)
-                    gScrollLock.unkC = e->unk6 + 120;
+                if (e->y < (gViewRect[3] + gViewRect[2]) >> 1)
+                    gScrollLock.unkC = e->y + 120;
                 else
-                    gScrollLock.unkC = e->unk6 - 120;
-                StartScrollLock(0xFFFF, 0xFFFF, f->unk6, f->unk6 + 160);
+                    gScrollLock.unkC = e->y - 120;
+                StartScrollLock(0xFFFF, 0xFFFF, f->y, f->y + 160);
                 t->unk24 = 1;
                 break;
             case 4:
                 t->unk18 = 1;
-                t->unk1C = f->unk4;
-                t->unk20 = f->unk6;
+                t->unk1C = f->x;
+                t->unk20 = f->y;
                 break;
             case 5:
                 t->unk18 = 2;
-                t->unk1C = f->unk4;
-                t->unk20 = f->unk6;
+                t->unk1C = f->x;
+                t->unk20 = f->y;
                 break;
             }
         }
     }
     for (i = 0; i < 2; i++)
         gUnk_02008014[i] = 0xFFFF;
-    f = &gRoomObjectList.unk4[e->unk2];
+    f = &gRoomObjectList.entries[e->unk2];
     n = 0;
     for (i = e->unk2; i < e->unk2 + e->unk3; f++, i++)
     {
-        if (f->unk0 == 7)
+        if (f->kind == 7)
         {
             gUnk_0200D080 = 0;
             if (t->unk24 != 0)
@@ -1726,7 +1726,7 @@ s32 sub_080b5d84(struct Unk020055D8Entry *e)
                 if (gActivePlayerCount == 1)
                 {
                     gUnk_0200B030 = 0;
-                    y = f->unk6;
+                    y = f->y;
                 }
                 else
                 {
@@ -1737,9 +1737,9 @@ s32 sub_080b5d84(struct Unk020055D8Entry *e)
             else
             {
                 gUnk_0200B030 = 0;
-                y = f->unk6;
+                y = f->y;
             }
-            r = CreateActorByKind(1, f->unk1, f->unk2, f->unk3, f->unk4, y,
+            r = CreateActorByKind(1, f->unk1, f->unk2, f->unk3, f->x, y,
                              (gUnk_020060A0[gUnk_02006130[i]].unk1 << 12) | ((gUnk_020060A0[gUnk_02006130[i]].unk2 * 2) + 16));
             if (r != -1)
             {

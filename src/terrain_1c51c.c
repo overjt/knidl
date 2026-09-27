@@ -70,7 +70,7 @@ struct MapCell
     /*0x00*/ u8 unk0;
     /*0x01*/ u8 unk1;
     /*0x02*/ u8 unk2;
-    /*0x03*/ u8 unk3;
+    /*0x03*/ u8 collisionTile;
 };
 extern struct MapCell *gRoomMap;
 
@@ -84,7 +84,7 @@ struct Unk03005530
     /*0x03*/ u8 unk3;
     /*0x04*/ u8 unk4;
     /*0x05*/ u8 unk5;
-    /*0x06*/ u8 unk6;
+    /*0x06*/ u8 onGround;
     /*0x07*/ u8 unk7;
     /*0x08*/ u16 unk8;
     /*0x0A*/ u8 unkA;
@@ -134,7 +134,7 @@ void TerrainProbeBegin(const s8 *p)
     gTerrainBoxRight = p[5];
     gTerrainFacing = gCurTask->facing;
     gTerrainProbeResult.unk0 = gTerrainProbeResult.unk1 = gTerrainProbeResult.unk2 = gTerrainProbeResult.unk3 = gTerrainProbeResult.unk4 = gTerrainProbeResult.unk5 = gTerrainProbeResult.unkE = gTerrainProbeResult.unkF = gTerrainProbeResult.unk10 = 0;
-    gTerrainProbeResult.unk6 = gCurTask->onGround;
+    gTerrainProbeResult.onGround = gCurTask->onGround;
     gTerrainProbeResult.unk7 = gCurTask->waterFlags;
     gTerrainProbeResult.unkB = gCurTask->unk84;
     gTerrainProbeResult.unkC = gCurTask->unk84 >> 8;
@@ -142,7 +142,7 @@ void TerrainProbeBegin(const s8 *p)
 
 void TerrainProbeEnd(const s8 *p)
 {
-    gCurTask->onGround = gTerrainProbeResult.unk6;
+    gCurTask->onGround = gTerrainProbeResult.onGround;
     gCurTask->waterFlags = gTerrainProbeResult.unk7;
     if (gCurTask->posX >> 16 != gTerrainProbeX - p[0])
     {

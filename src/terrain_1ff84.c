@@ -25,7 +25,7 @@ struct Unk03005530
     /*0x03*/ u8 unk3;
     /*0x04*/ u8 unk4;
     /*0x05*/ u8 unk5;
-    /*0x06*/ u8 unk6;
+    /*0x06*/ u8 onGround;
     /*0x07*/ u8 unk7;
     /*0x08*/ u16 unk8;
     /*0x0A*/ u8 unkA;
@@ -245,7 +245,7 @@ vertical:
             gTerrainProbeY += GetTilePushUp(t);
         }
     done:
-        gTerrainProbeResult.unk6 = 1;
+        gTerrainProbeResult.onGround = 1;
         gTerrainProbeResult.unkC = (gTerrainProbeY + gTerrainBoxBottom + 1) >> 4;
         return;
     }

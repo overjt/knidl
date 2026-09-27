@@ -38,9 +38,9 @@ struct M11R20 { u32 w[5]; };
 struct HitBoxSet
 {
     /*0x00*/ u16 unk0;
-    /*0x02*/ s8 unk2;
-    /*0x03*/ s8 unk3;
-    /*0x04*/ s8 (*unk4)[4];
+    /*0x02*/ s8 offsetX;
+    /*0x03*/ s8 offsetY;
+    /*0x04*/ s8 (*boxes)[4];
 };
 
 /* gTerrainResult: M06's collision result block (src/terrain_1bcac.c spells it
@@ -70,7 +70,7 @@ struct Unk03005530
     /*0x03*/ u8 unk3;
     /*0x04*/ u8 unk4;
     /*0x05*/ u8 unk5;
-    /*0x06*/ u8 unk6;
+    /*0x06*/ u8 onGround;
     /*0x07*/ u8 unk7;
     /*0x08*/ u16 unk8;
     /*0x0A*/ u8 unkA;

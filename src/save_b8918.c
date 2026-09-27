@@ -7,10 +7,10 @@ struct SaveSlot
 {
     /*0x00*/ u32 unk00;
     /*0x04*/ s32 unk04;
-    /*0x08*/ u32 unk08;
-    /*0x0C*/ s32 unk0C;
-    /*0x10*/ u16 unk10;
-    /*0x12*/ u16 unk12[2];
+    /*0x08*/ u32 generation;
+    /*0x0C*/ s32 saveCount;
+    /*0x10*/ u16 milestoneFlags;
+    /*0x12*/ u16 completionPercent[2];
     /*0x16*/ u8 unk16[2];
     /*0x18*/ u8 unk18[2];
     /*0x1A*/ u8 unk1A[2];
@@ -105,10 +105,10 @@ void sub_080b8918(void)
                 }
             }
         }
-        if (gSaveSlots[3].unk12[gExtraMode] > gLinkSaveSlots[i].unk02[gExtraMode])
-            gSaveSlots[3].unk12[gExtraMode] = gLinkSaveSlots[i].unk02[gExtraMode];
+        if (gSaveSlots[3].completionPercent[gExtraMode] > gLinkSaveSlots[i].unk02[gExtraMode])
+            gSaveSlots[3].completionPercent[gExtraMode] = gLinkSaveSlots[i].unk02[gExtraMode];
         gSaveSlots[3].unk20[gExtraMode] &= gLinkSaveSlots[i].unk10[gExtraMode];
-        gSaveSlots[3].unk10 &= gLinkSaveSlots[i].unk00;
+        gSaveSlots[3].milestoneFlags &= gLinkSaveSlots[i].unk00;
         for (j = 0; j <= 7; j++)
         {
             for (k = 0; k <= 6; k++)
@@ -138,8 +138,8 @@ void MergeProgressIntoSaveSlot(s32 a)
         }
     }
     CalcCompletionPercent(gExtraMode);
-    gSaveSlots[3].unk12[gExtraMode] = gCompletionPercent;
-    gSaveSlots[3].unk10 = gMilestoneFlags;
+    gSaveSlots[3].completionPercent[gExtraMode] = gCompletionPercent;
+    gSaveSlots[3].milestoneFlags = gMilestoneFlags;
     gSaveSlots[a].unk16[gExtraMode] = gSaveSlots[3].unk16[gExtraMode];
     gSaveSlots[a].unk18[gExtraMode] = gSaveSlots[3].unk18[gExtraMode];
     if ((s8)gSaveSlots[a].unk1A[gExtraMode] < (s8)gSaveSlots[3].unk1A[gExtraMode])
@@ -153,7 +153,7 @@ void MergeProgressIntoSaveSlot(s32 a)
             gSaveSlots[a].unk1C[gExtraMode] = gSaveSlots[3].unk1C[gExtraMode];
     }
     gSaveSlots[a].unk20[gExtraMode] |= gSaveSlots[3].unk20[gExtraMode];
-    gSaveSlots[a].unk10 |= gSaveSlots[3].unk10;
+    gSaveSlots[a].milestoneFlags |= gSaveSlots[3].milestoneFlags;
     for (i = 0; i <= 7; i++)
     {
         for (j = 0; j <= 6; j++)
@@ -162,35 +162,35 @@ void MergeProgressIntoSaveSlot(s32 a)
                 gSaveSlots[a].unk28[i][j] = gSaveSlots[3].unk28[i][j];
         }
     }
-    if ((gSaveSlots[a].unk10 & (4 << gExtraMode)) != 0)
+    if ((gSaveSlots[a].milestoneFlags & (4 << gExtraMode)) != 0)
     {
-        gSaveSlots[a].unk12[gExtraMode] = 100;
+        gSaveSlots[a].completionPercent[gExtraMode] = 100;
     }
     else
     {
         if ((s8)gSaveSlots[a].unk1A[gExtraMode] > 1)
         {
-            gSaveSlots[a].unk12[gExtraMode] = (s8)gSaveSlots[a].unk1C[gExtraMode] * 2;
-            gSaveSlots[a].unk12[gExtraMode] += (s8)gSaveSlots[a].unk1A[gExtraMode]
+            gSaveSlots[a].completionPercent[gExtraMode] = (s8)gSaveSlots[a].unk1C[gExtraMode] * 2;
+            gSaveSlots[a].completionPercent[gExtraMode] += (s8)gSaveSlots[a].unk1A[gExtraMode]
                 + ((((s8)gSaveSlots[a].unk1A[gExtraMode] - 2) * 3) * 4 + 14);
-            if (((gSaveSlots[a].unk10 >> gExtraMode) & 1) != 0)
-                gSaveSlots[a].unk12[gExtraMode] += 3;
+            if (((gSaveSlots[a].milestoneFlags >> gExtraMode) & 1) != 0)
+                gSaveSlots[a].completionPercent[gExtraMode] += 3;
         }
         else if ((s8)gSaveSlots[a].unk1A[gExtraMode] == 1)
         {
-            gSaveSlots[a].unk12[gExtraMode] = (s8)gSaveSlots[a].unk1C[gExtraMode] * 2;
-            gSaveSlots[a].unk12[gExtraMode] += (s8)gSaveSlots[a].unk1A[gExtraMode] + 4;
+            gSaveSlots[a].completionPercent[gExtraMode] = (s8)gSaveSlots[a].unk1C[gExtraMode] * 2;
+            gSaveSlots[a].completionPercent[gExtraMode] += (s8)gSaveSlots[a].unk1A[gExtraMode] + 4;
         }
         else if ((s8)gSaveSlots[a].unk1A[gExtraMode] == 0)
         {
-            gSaveSlots[a].unk12[gExtraMode] = (s8)gSaveSlots[a].unk1C[gExtraMode];
+            gSaveSlots[a].completionPercent[gExtraMode] = (s8)gSaveSlots[a].unk1C[gExtraMode];
         }
         for (i = 0; i <= 16; i++)
         {
             if ((gSaveSlots[a].unk20[gExtraMode] & (1 << i)) != 0)
-                gSaveSlots[a].unk12[gExtraMode]++;
+                gSaveSlots[a].completionPercent[gExtraMode]++;
         }
-        if (gSaveSlots[a].unk12[gExtraMode] == 100)
-            gSaveSlots[a].unk10 |= 4 << gExtraMode;
+        if (gSaveSlots[a].completionPercent[gExtraMode] == 100)
+            gSaveSlots[a].milestoneFlags |= 4 << gExtraMode;
     }
 }

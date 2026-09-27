@@ -35,11 +35,11 @@ struct Unk03005670
 struct Unk03005680
 {
     /*0x00*/ u8 unk0;
-    /*0x01*/ u8 unk1;
-    /*0x02*/ u16 unk2;
-    /*0x04*/ u16 unk4;
-    /*0x06*/ u16 unk6;
-    /*0x08*/ u16 unk8;
+    /*0x01*/ u8 lockedAxes;
+    /*0x02*/ u16 x0;
+    /*0x04*/ u16 x1;
+    /*0x06*/ u16 y0;
+    /*0x08*/ u16 y1;
     /*0x0A*/ u16 unkA;
     /*0x0C*/ u16 unkC;
 };
@@ -520,62 +520,62 @@ void StartScrollLock(s32 x0, s32 x1, s32 y0, s32 y1)
 
     if (x0 != 0xFFFF && x1 != 0xFFFF)
     {
-        gScrollLock.unk2 = x0 + 120;
-        gScrollLock.unk4 = x1 - 120;
-        if (gScrollLock.unk2 < gRoomBounds[0])
-            gScrollLock.unk2 = gRoomBounds[0];
-        if (gRoomBounds[1] < gScrollLock.unk4)
-            gScrollLock.unk4 = gRoomBounds[1];
+        gScrollLock.x0 = x0 + 120;
+        gScrollLock.x1 = x1 - 120;
+        if (gScrollLock.x0 < gRoomBounds[0])
+            gScrollLock.x0 = gRoomBounds[0];
+        if (gRoomBounds[1] < gScrollLock.x1)
+            gScrollLock.x1 = gRoomBounds[1];
         flags = 1;
-        mid = (gScrollLock.unk2 + gScrollLock.unk4) >> 1;
+        mid = (gScrollLock.x0 + gScrollLock.x1) >> 1;
         if (gScrollLock.unkA <= mid)
         {
             gScrollLockSpeedX = 2;
-            gCameraBounds[1] = gScrollLock.unk4;
+            gCameraBounds[1] = gScrollLock.x1;
         }
         else
         {
             gScrollLockSpeedX = -2;
-            gCameraBounds[0] = gScrollLock.unk2;
+            gCameraBounds[0] = gScrollLock.x0;
         }
     }
     else
     {
-        gScrollLock.unk2 = 0xFFFF;
-        gScrollLock.unk4 = -1;
+        gScrollLock.x0 = 0xFFFF;
+        gScrollLock.x1 = -1;
         gScrollLockSpeedX = 0;
     }
     if (y0 != 0xFFFF && y1 != 0xFFFF)
     {
-        gScrollLock.unk6 = y0 + 80;
-        gScrollLock.unk8 = y1 - 80;
-        if (gScrollLock.unk6 < gRoomBounds[2])
-            gScrollLock.unk6 = gRoomBounds[2];
-        if (gScrollLock.unk8 > gRoomBounds[3])
-            gScrollLock.unk8 = gRoomBounds[3];
+        gScrollLock.y0 = y0 + 80;
+        gScrollLock.y1 = y1 - 80;
+        if (gScrollLock.y0 < gRoomBounds[2])
+            gScrollLock.y0 = gRoomBounds[2];
+        if (gScrollLock.y1 > gRoomBounds[3])
+            gScrollLock.y1 = gRoomBounds[3];
         flags |= 2;
-        mid = (gScrollLock.unk6 + gScrollLock.unk8) >> 1;
+        mid = (gScrollLock.y0 + gScrollLock.y1) >> 1;
         if (gScrollLock.unkC <= mid)
         {
             gScrollLockSpeedY = 1;
-            gCameraBounds[3] = gScrollLock.unk8;
+            gCameraBounds[3] = gScrollLock.y1;
         }
         else
         {
             gScrollLockSpeedY = -1;
-            gCameraBounds[2] = gScrollLock.unk6;
+            gCameraBounds[2] = gScrollLock.y0;
         }
     }
     else
     {
-        gScrollLock.unk6 = 0xFFFF;
-        gScrollLock.unk8 = -1;
+        gScrollLock.y0 = 0xFFFF;
+        gScrollLock.y1 = -1;
         gScrollLockSpeedY = 0;
     }
     if (flags != 0)
     {
         gCameraMode = 2;
-        gScrollLock.unk1 = flags;
+        gScrollLock.lockedAxes = flags;
         gScrollLock.unk0 = 0;
         if (gPlayerCount == 1)
         {
@@ -586,18 +586,18 @@ void StartScrollLock(s32 x0, s32 x1, s32 y0, s32 y1)
                 if (gScrollLockSpeedX > 0)
                 {
                     gCameraBounds[0] = gPlayerCameraPos[gLocalPlayer].x;
-                    gCameraBounds[1] = gScrollLock.unk4;
+                    gCameraBounds[1] = gScrollLock.x1;
                 }
                 else
                 {
-                    gCameraBounds[0] = gScrollLock.unk2;
+                    gCameraBounds[0] = gScrollLock.x0;
                     gCameraBounds[1] = gPlayerCameraPos[gLocalPlayer].x;
                 }
                 b = gPlayerBounds;
                 b[gLocalPlayer].x0 = gCameraBounds[0] - 117;
                 b[gLocalPlayer].x1 = gCameraBounds[1] + 117;
             }
-            if (gScrollLock.unk1 & 2)
+            if (gScrollLock.lockedAxes & 2)
             {
                 struct CamRect *b;
 
@@ -607,13 +607,13 @@ void StartScrollLock(s32 x0, s32 x1, s32 y0, s32 y1)
                     struct CamPos *c = gPlayerCameraPos;
 
                     d[2] = c[gLocalPlayer].y;
-                    gCameraBounds[3] = gScrollLock.unk8;
+                    gCameraBounds[3] = gScrollLock.y1;
                 }
                 else
                 {
                     struct CamPos *c;
 
-                    gCameraBounds[2] = gScrollLock.unk6;
+                    gCameraBounds[2] = gScrollLock.y0;
                     c = gPlayerCameraPos;
                     gCameraBounds[3] = c[gLocalPlayer].y;
                 }
@@ -625,9 +625,9 @@ void StartScrollLock(s32 x0, s32 x1, s32 y0, s32 y1)
         else
         {
             sub_0802a63c();
-            if (gScrollLock.unk1 & 1)
+            if (gScrollLock.lockedAxes & 1)
                 gPlayerCameraPos[gPlayerCount].x = gScrollLock.unkA;
-            if (gScrollLock.unk1 & 2)
+            if (gScrollLock.lockedAxes & 2)
             {
                 struct CamPos *c = gPlayerCameraPos;
 

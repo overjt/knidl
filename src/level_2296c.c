@@ -18,8 +18,8 @@
 struct BgMap
 {
     /*0x00*/ u16 unk0;
-    /*0x02*/ u16 unk2;
-    /*0x04*/ u16 unk4;
+    /*0x02*/ u16 width;
+    /*0x04*/ u16 height;
     /*0x06*/ u16 unk6[0];
 };
 
@@ -57,7 +57,7 @@ struct RoomDef
     /*0x38*/ u16 unk38;
     /*0x3A*/ u16 doorCount;
     /*0x3C*/ u16 objectCount;
-    /*0x3E*/ u16 unk3E;
+    /*0x3E*/ u16 objectsSortedByY;
     /*0x40*/ u16 bgAnimSet;
     /*0x42*/ u16 unk42;
     /*0x44*/ struct Door *doors;
@@ -76,21 +76,21 @@ struct MapCell
     /*0x00*/ u8 unk0;
     /*0x01*/ u8 unk1;
     /*0x02*/ u8 unk2;
-    /*0x03*/ u8 unk3;
+    /*0x03*/ u8 collisionTile;
 };
 
 struct Unk020055D8Entry
 {
     /*0x00*/ u8 filler0[4];
-    /*0x04*/ u16 unk4;
-    /*0x06*/ u16 unk6;
+    /*0x04*/ u16 x;
+    /*0x06*/ u16 y;
 };
 
 struct Unk020055D8
 {
-    /*0x00*/ s16 unk0;
-    /*0x02*/ s16 unk2;
-    /*0x04*/ struct Unk020055D8Entry *unk4;
+    /*0x00*/ s16 count;
+    /*0x02*/ s16 sortedByY;
+    /*0x04*/ struct Unk020055D8Entry *entries;
 };
 
 extern struct RoomDef **gRoomTable[][8];
@@ -470,9 +470,9 @@ void sub_08022fa8(void)
     gRoomBorder[1] = gCurRoomDef->borderY;
     gBg3Border[0] = gCurRoomDef->bg3BorderX;
     gBg3Border[1] = gCurRoomDef->bg3BorderY;
-    gRoomObjectList.unk0 = gCurRoomDef->objectCount;
-    gRoomObjectList.unk2 = gCurRoomDef->unk3E;
-    gRoomObjectList.unk4 = gCurRoomDef->objects;
+    gRoomObjectList.count = gCurRoomDef->objectCount;
+    gRoomObjectList.sortedByY = gCurRoomDef->objectsSortedByY;
+    gRoomObjectList.entries = gCurRoomDef->objects;
     gRoomMap = gRoomMapBuffer;
     if (gCurRoomDef->mapsCompressed != 0)
     {
@@ -610,9 +610,9 @@ void sub_080233e0(void)
     gRoomBorder[1] = gCurRoomDef->borderY;
     gBg3Border[0] = gCurRoomDef->bg3BorderX;
     gBg3Border[1] = gCurRoomDef->bg3BorderY;
-    gRoomObjectList.unk0 = gCurRoomDef->objectCount;
-    gRoomObjectList.unk2 = gCurRoomDef->unk3E;
-    gRoomObjectList.unk4 = gCurRoomDef->objects;
+    gRoomObjectList.count = gCurRoomDef->objectCount;
+    gRoomObjectList.sortedByY = gCurRoomDef->objectsSortedByY;
+    gRoomObjectList.entries = gCurRoomDef->objects;
     gRoomMap = gRoomMapBuffer;
     RequestCopy(8, (u32)gCurRoomDef->metatileTiles, (u32)gMetatileTiles, 0);
     gRoomUpdateFlags = 0;

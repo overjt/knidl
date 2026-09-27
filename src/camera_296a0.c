@@ -36,15 +36,15 @@ struct Unk03004B00
 struct Unk020055D8Entry
 {
     /*0x00*/ u8 filler0[4];
-    /*0x04*/ u16 unk4;
-    /*0x06*/ u16 unk6;
+    /*0x04*/ u16 x;
+    /*0x06*/ u16 y;
 };
 
 struct Unk020055D8
 {
-    /*0x00*/ s16 unk0;
-    /*0x02*/ s16 unk2;
-    /*0x04*/ struct Unk020055D8Entry *unk4;
+    /*0x00*/ s16 count;
+    /*0x02*/ s16 sortedByY;
+    /*0x04*/ struct Unk020055D8Entry *entries;
 };
 
 extern u16 gCameraPos[2];
@@ -272,7 +272,7 @@ void sub_08029b30(void)
 
 void SpawnRoomObjectsScrolledIn(void)
 {
-    if (gRoomObjectList.unk0 != 0)
+    if (gRoomObjectList.count != 0)
     {
         if (gViewRect[0] < gObjectSpawnViewRect[0])
             SpawnRoomObjectsInRect(gObjectSpawnViewRect[0] - 36, gObjectSpawnViewRect[0] - 28, gObjectSpawnViewRect[2] - 40, gObjectSpawnViewRect[3] + 40);

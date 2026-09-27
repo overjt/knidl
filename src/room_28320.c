@@ -17,14 +17,14 @@ struct MapCell
     /*0x00*/ u8 unk0;
     /*0x01*/ u8 unk1;
     /*0x02*/ u8 unk2;
-    /*0x03*/ u8 unk3;
+    /*0x03*/ u8 collisionTile;
 };
 
 struct BgMap
 {
     /*0x00*/ u16 unk0;
-    /*0x02*/ u16 unk2;
-    /*0x04*/ u16 unk4;
+    /*0x02*/ u16 width;
+    /*0x04*/ u16 height;
     /*0x06*/ u16 unk6[0];
 };
 
@@ -62,7 +62,7 @@ struct RoomDef
     /*0x38*/ u16 unk38;
     /*0x3A*/ u16 doorCount;
     /*0x3C*/ u16 objectCount;
-    /*0x3E*/ u16 unk3E;
+    /*0x3E*/ u16 objectsSortedByY;
     /*0x40*/ u16 bgAnimSet;
     /*0x42*/ u16 unk42;
     /*0x44*/ struct Door *doors;
@@ -306,7 +306,7 @@ void CalcBg3Parallax(void)
         gBg3ParallaxY = 0x10000;
         return;
     }
-    a = gCurRoomDef->bg3Map->unk2;
+    a = gCurRoomDef->bg3Map->width;
     a <<= 3;
     k = gBg3Border[0] * 2 + 240;
     num = a - k;
@@ -324,7 +324,7 @@ void CalcBg3Parallax(void)
     {
         gBg3ParallaxX = 0x10000;
     }
-    a = gCurRoomDef->bg3Map->unk4;
+    a = gCurRoomDef->bg3Map->height;
     a <<= 3;
     k = gBg3Border[1] * 2 + 160;
     num = a - k;

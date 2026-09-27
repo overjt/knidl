@@ -36,17 +36,17 @@
 struct HitBoxSet
 {
     /*0x00*/ u16 unk0;
-    /*0x02*/ s8 unk2;
-    /*0x03*/ s8 unk3;
-    /*0x04*/ s8 (*unk4)[4];
+    /*0x02*/ s8 offsetX;
+    /*0x03*/ s8 offsetY;
+    /*0x04*/ s8 (*boxes)[4];
 };
 
 /* M08's view of a map cell (src/bgmap_2a9cc.c): the metatile index is a u16 */
 struct MapTile
 {
-    /*0x00*/ u16 unk0;
+    /*0x00*/ u16 metatile;
     /*0x02*/ u8 unk2;
-    /*0x03*/ u8 unk3;
+    /*0x03*/ u8 collisionTile;
 };
 
 /* gBreakingBlocks[64] (and gBg1BreakingBlocks[64] for the second block layer
@@ -186,10 +186,10 @@ u16 BreakBlocksInHitBoxes(struct HitBoxSet *p, s32 x, s32 y, s32 dir, s32 e)
     s16 tx, ty;
 
     if (dir == 1)
-        x += p->unk2;
+        x += p->offsetX;
     else
-        x -= p->unk2;
-    y += p->unk3;
+        x -= p->offsetX;
+    y += p->offsetY;
     if (x < 0)
         x = 0;
     if (x > gRoomWidth * 16)
@@ -198,7 +198,7 @@ u16 BreakBlocksInHitBoxes(struct HitBoxSet *p, s32 x, s32 y, s32 dir, s32 e)
         y = 0;
     if (y > gRoomHeight * 16)
         y = gRoomHeight * 16 - 1;
-    for (box = p->unk4; (*box)[0] != 127; box++)
+    for (box = p->boxes; (*box)[0] != 127; box++)
     {
         if (dir == 1)
         {
@@ -239,10 +239,10 @@ u16 sub_08030b14(struct HitBoxSet *p, s32 x, s32 y, s32 dir, s32 e)
     s16 tx;
 
     if (dir == 1)
-        x += p->unk2;
+        x += p->offsetX;
     else
-        x -= p->unk2;
-    y += p->unk3;
+        x -= p->offsetX;
+    y += p->offsetY;
     if (x < 0)
         x = 0;
     if (x > gRoomWidth * 16)
@@ -251,7 +251,7 @@ u16 sub_08030b14(struct HitBoxSet *p, s32 x, s32 y, s32 dir, s32 e)
         y = 0;
     if (y > gRoomHeight * 16)
         y = gRoomHeight * 16 - 1;
-    box = p->unk4;
+    box = p->boxes;
     if (dir == 1)
     {
         x0 = (x + (*box)[2]) >> 4;
@@ -368,10 +368,10 @@ u16 sub_08030e00(struct HitBoxSet *p, s32 x, s32 y, s32 dir)
     s32 x0, x1, tx, ty;
 
     if (dir == 1)
-        x += p->unk2;
+        x += p->offsetX;
     else
-        x -= p->unk2;
-    y += p->unk3;
+        x -= p->offsetX;
+    y += p->offsetY;
     if (x < 0)
         x = 0;
     if (x > gRoomWidth * 16)
@@ -380,7 +380,7 @@ u16 sub_08030e00(struct HitBoxSet *p, s32 x, s32 y, s32 dir)
         y = 0;
     if (y > gRoomHeight * 16)
         y = gRoomHeight * 16 - 1;
-    box = p->unk4;
+    box = p->boxes;
     if ((*box)[0] == 127)
         return;
     if (dir == 1)
@@ -441,7 +441,7 @@ s32 BreakBlockAt(u32 x, u32 y)
         gBlockCursorIndex = x + gBlockCursorY * gRoomWidth;
         if (gBlockLayer[gBlockCursorIndex] != 0 && !(gBlockLayer[gBlockCursorIndex] & 0x8000))
         {
-            gBlockCursorTile = gRoomMap[gBlockCursorIndex].unk3;
+            gBlockCursorTile = gRoomMap[gBlockCursorIndex].collisionTile;
             gUnk_02004B48 = 0;
             gUnk_02006174 = 0;
             if (gUnk_0873A494[gBlockCursorTile] <= 4)
@@ -482,7 +482,7 @@ s32 CanBreakBlock(s32 x, s32 y, s32 id, s32 e)
         gBlockCursorIndex = x + gBlockCursorY * gRoomWidth;
         if (gBlockLayer[gBlockCursorIndex] != 0 && !(gBlockLayer[gBlockCursorIndex] & 0x8000))
         {
-            gBlockCursorTile = gRoomMap[gBlockCursorIndex].unk3;
+            gBlockCursorTile = gRoomMap[gBlockCursorIndex].collisionTile;
             if (id & 0x800)
                 gUnk_02004B48 = 1;
             else
@@ -736,11 +736,11 @@ s32 sub_08031738(u32 x, u32 y, s32 n)
     b->unk2 = gBlockCursorY;
     b->unk1C = gBlockCursorPlayer;
     b->unkC = (u16 *)0x06002000 + ((gBlockCursorX * 2 & 31) + ((gBlockCursorY * 2 & 31) + (gBlockCursorX & 16) * 2) * 32);
-    b->unk16 = t->unk0;
-    b->unk18 = t->unk3;
+    b->unk16 = t->metatile;
+    b->unk18 = t->collisionTile;
     gBlockLayer[gBlockCursorIndex] |= 0x8000;
-    gRoomMap[gBlockCursorIndex].unk0 = b->unk16;
-    gRoomMap[gBlockCursorIndex].unk3 = b->unk18;
+    gRoomMap[gBlockCursorIndex].metatile = b->unk16;
+    gRoomMap[gBlockCursorIndex].collisionTile = b->unk18;
     b->unk1A = 7;
     b->unk10 = gUnk_0873A47C[5];
     b->unk14 = 0;

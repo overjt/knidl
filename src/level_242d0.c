@@ -36,8 +36,8 @@
 struct BgMap
 {
     /*0x00*/ u16 unk0;
-    /*0x02*/ u16 unk2;
-    /*0x04*/ u16 unk4;
+    /*0x02*/ u16 width;
+    /*0x04*/ u16 height;
     /*0x06*/ u16 unk6[0];
 };
 
@@ -75,7 +75,7 @@ struct RoomDef
     /*0x38*/ u16 unk38;
     /*0x3A*/ u16 doorCount;
     /*0x3C*/ u16 objectCount;
-    /*0x3E*/ u16 unk3E;
+    /*0x3E*/ u16 objectsSortedByY;
     /*0x40*/ u16 bgAnimSet;
     /*0x42*/ u16 unk42;
     /*0x44*/ struct Door *doors;
@@ -94,21 +94,21 @@ struct MapCell
     /*0x00*/ u8 unk0;
     /*0x01*/ u8 unk1;
     /*0x02*/ u8 unk2;
-    /*0x03*/ u8 unk3;
+    /*0x03*/ u8 collisionTile;
 };
 
 struct Unk020055D8Entry
 {
     /*0x00*/ u8 filler0[4];
-    /*0x04*/ u16 unk4;
-    /*0x06*/ u16 unk6;
+    /*0x04*/ u16 x;
+    /*0x06*/ u16 y;
 };
 
 struct Unk020055D8
 {
-    /*0x00*/ s16 unk0;
-    /*0x02*/ s16 unk2;
-    /*0x04*/ struct Unk020055D8Entry *unk4;
+    /*0x00*/ s16 count;
+    /*0x02*/ s16 sortedByY;
+    /*0x04*/ struct Unk020055D8Entry *entries;
 };
 
 struct Unk02004B90
@@ -467,9 +467,9 @@ void sub_08024698(s32 a0)
     gRoomBorder[1] = gCurRoomDef->borderY;
     gBg3Border[0] = gCurRoomDef->bg3BorderX;
     gBg3Border[1] = gCurRoomDef->bg3BorderY;
-    gRoomObjectList.unk0 = gCurRoomDef->objectCount;
-    gRoomObjectList.unk2 = gCurRoomDef->unk3E;
-    gRoomObjectList.unk4 = gCurRoomDef->objects;
+    gRoomObjectList.count = gCurRoomDef->objectCount;
+    gRoomObjectList.sortedByY = gCurRoomDef->objectsSortedByY;
+    gRoomObjectList.entries = gCurRoomDef->objects;
     gRoomMap = gRoomMapBuffer;
     if (gCurRoomDef->mapsCompressed != 0)
     {
@@ -592,9 +592,9 @@ void sub_0802497c(void)
     gRoomBorder[1] = gCurRoomDef->borderY;
     gBg3Border[0] = gCurRoomDef->bg3BorderX;
     gBg3Border[1] = gCurRoomDef->bg3BorderY;
-    gRoomObjectList.unk0 = gCurRoomDef->objectCount;
-    gRoomObjectList.unk2 = gCurRoomDef->unk3E;
-    gRoomObjectList.unk4 = gCurRoomDef->objects;
+    gRoomObjectList.count = gCurRoomDef->objectCount;
+    gRoomObjectList.sortedByY = gCurRoomDef->objectsSortedByY;
+    gRoomObjectList.entries = gCurRoomDef->objects;
     gRoomMap = gRoomMapBuffer;
     if (gCurRoomDef->mapsCompressed != 0)
     {
@@ -1182,7 +1182,7 @@ void sub_08025bc8(s32 id)
     }
     gUnk_02007E8C = id;
     gUnk_0200AF08 = 1;
-    v = ((s8 *)gRoomObjectList.unk4[gUnk_02005590[id - 32]].filler0)[2];
+    v = ((s8 *)gRoomObjectList.entries[gUnk_02005590[id - 32]].filler0)[2];
     gUnk_0200001C = v | 0x100;
     gUnk_030023C8[0] |= 1 << v;
     if (gUnk_03002400[gUnk_030023B8][(s8)gUnk_03001F20] == 1)
@@ -1233,7 +1233,7 @@ void sub_08025e0c(void)
 
 s32 sub_08025e88(s32 i)
 {
-    struct Unk020055D8Entry *e = &gRoomObjectList.unk4[gUnk_02005590[i - 32]];
+    struct Unk020055D8Entry *e = &gRoomObjectList.entries[gUnk_02005590[i - 32]];
 
     if (gUnk_0200B078 == 3)
     {

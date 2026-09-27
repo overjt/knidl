@@ -18,10 +18,10 @@ struct SaveSlot
 {
     /*0x00*/ u32 unk00;
     /*0x04*/ s32 unk04;
-    /*0x08*/ u32 unk08;
-    /*0x0C*/ s32 unk0C;
-    /*0x10*/ u16 unk10;
-    /*0x12*/ u16 unk12[2];
+    /*0x08*/ u32 generation;
+    /*0x0C*/ s32 saveCount;
+    /*0x10*/ u16 milestoneFlags;
+    /*0x12*/ u16 completionPercent[2];
     /*0x16*/ u8 unk16[2];
     /*0x18*/ u8 unk18[2];
     /*0x1A*/ u8 unk1A[2];
@@ -115,13 +115,13 @@ void sub_0800dbdc(void)
         slot = gCurTask->unk1C;
         s = gSaveSlots;
         i = slot * 256;
-        if (gSaveSlots[slot].unk12[1] != 0 && gSaveSlots[slot].unk04 != 0x99999999)
+        if (gSaveSlots[slot].completionPercent[1] != 0 && gSaveSlots[slot].unk04 != 0x99999999)
             i++;
         sub_0800bf10(slot, (s8)s->unk16[i]);
         gCurTask->unk28 = gMenuCursor;
     }
 
-    if (gSaveSlots[gCurTask->unk1C].unk12[1] != 0 && gSaveSlots[gCurTask->unk1C].unk04 != 0x99999999) {
+    if (gSaveSlots[gCurTask->unk1C].completionPercent[1] != 0 && gSaveSlots[gCurTask->unk1C].unk04 != 0x99999999) {
         t = gCurTask;
         QueueSprite(t->layer - 1, gUnk_08755620[t->unk1C + 6], t->spriteFlags, t->tileWord, t->pixelX, t->pixelY);
     }

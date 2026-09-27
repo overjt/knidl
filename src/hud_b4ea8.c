@@ -12,18 +12,18 @@ extern u32 gUnk_02005590[];
 extern u32 gUnk_020055D0[];
 struct Unk020055D8Entry
 {
-    /*0x00*/ s8 unk0;
+    /*0x00*/ s8 kind;
     /*0x01*/ s8 unk1;
     /*0x02*/ s8 unk2;
     /*0x03*/ s8 unk3;
-    /*0x04*/ u16 unk4;
-    /*0x06*/ u16 unk6;
+    /*0x04*/ u16 x;
+    /*0x06*/ u16 y;
 };
 struct Unk020055D8
 {
-    /*0x00*/ s16 unk0;
-    /*0x02*/ s16 unk2;
-    /*0x04*/ struct Unk020055D8Entry *unk4;
+    /*0x00*/ s16 count;
+    /*0x02*/ s16 sortedByY;
+    /*0x04*/ struct Unk020055D8Entry *entries;
 };
 extern struct Unk020055D8 gRoomObjectList;
 extern u8 gUnk_02005E10[];
@@ -1429,14 +1429,14 @@ void sub_080b4ea8(void)
     struct Unk020055D8Entry *f;
 
     n = 0;
-    if (gRoomObjectList.unk0 == 0)
+    if (gRoomObjectList.count == 0)
         return;
     gUnk_0200000C = n;
     gUnk_02007D40 = 8;
-    e = gRoomObjectList.unk4;
-    for (i = 0; i < gRoomObjectList.unk0; e++, i++)
+    e = gRoomObjectList.entries;
+    for (i = 0; i < gRoomObjectList.count; e++, i++)
     {
-        switch (e->unk0)
+        switch (e->kind)
         {
         case 0:
         case 4:
@@ -1457,10 +1457,10 @@ void sub_080b4ea8(void)
         case 6:
             if (e->unk1 == 0)
             {
-                f = &gRoomObjectList.unk4[e->unk2];
+                f = &gRoomObjectList.entries[e->unk2];
                 for (j = e->unk2; j < e->unk2 + e->unk3; f++, j++)
                 {
-                    if (f->unk0 == 7 && sub_080b5840(f, j, n) != 0)
+                    if (f->kind == 7 && sub_080b5840(f, j, n) != 0)
                         n++;
                 }
             }
