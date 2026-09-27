@@ -88,7 +88,7 @@ struct HitEntry
 
 /* Actor-vs-player hit test cells (M17's src/actor_673ec.c widths). */
 extern u8 gUnk_03001F24;
-extern s8 gUnk_03002140;
+extern s8 gAttackHitDuration;
 extern s16 gViewRect[];         /* camera rectangle: left, right, top, bottom */
 extern u8 gUnk_03002354;
 extern u16 gUnk_03002358;           /* actor x */
@@ -99,7 +99,7 @@ extern u8 gUnk_03002390;
 extern u16 gUnk_03002394;
 extern u8 gUnk_030023A4;
 extern u8 gUnk_030023DC;
-extern u8 gUnk_03002440;
+extern u8 gAttackLastHitter;
 extern u8 gUnk_03002450;
 extern u8 gUnk_03002460;
 extern s16 gUnk_03005294;           /* attack box bottom */
@@ -333,7 +333,7 @@ u8 sub_0801a8c8(void)
         gUnk_030023A4 = 0;
         gUnk_03002394 = gUnk_03002368;
         gUnk_030023DC = gUnk_03005498;
-        gUnk_03002354 = gUnk_03002140;
+        gUnk_03002354 = gAttackHitDuration;
         if ((gUnk_0300236C->unk06 & 7) == 2)
         {
             gUnk_03001F24 = gUnk_03005394;
@@ -364,7 +364,7 @@ u8 sub_0801af14(void)
         gUnk_030054F0 = t->unk88;
         gUnk_03005394 = gUnk_030054F0->unk00;
         gUnk_030054E8 = e->unk08;
-        if (gUnk_03005394 == (s8)gUnk_03002440)
+        if (gUnk_03005394 == (s8)gAttackLastHitter)
         {
             e++;
             continue;

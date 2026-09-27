@@ -17,7 +17,7 @@ struct Unk02005E00
     /*0x08*/ u8 unk08[4];
 };
 
-extern u16 gUnk_02000008;
+extern u16 gNextActorSerial;
 extern u8 gUnk_02000020;
 extern u16 gUnk_02004B50[];
 extern u8 gUnk_02004B64;
@@ -221,7 +221,7 @@ void sub_0800b648(void)
     *q3 = -1;
     *q4 = 0;
     sub_08066144();
-    gUnk_02000008 = 0;
+    gNextActorSerial = 0;
     gLinkCommand = 0;
     gUnk_03001F34 = 0;
     gUnk_02006178 = 0;

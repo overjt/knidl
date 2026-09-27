@@ -28,19 +28,19 @@ extern void TaskSetEntry(void *fn, s32 i);
 extern void TaskSetFrame(s32 a);
 extern void sub_0800a698(void);
 extern void sub_080261d4(s32 a);
-extern void sub_0806395c(u16 v);
-extern void sub_080639a4(u32 *p);
-extern void sub_08064970(void);
-extern s32 sub_08064b5c(struct ActorSpawn *p, u8 keepPrio);
-extern s32 sub_08064cdc(u32 type, s16 dx, s16 dy, u8 keepPrio);
+extern void ActorSetState(u16 v);
+extern void ActorSetHitReactions(u32 *p);
+extern void TaskGetScreenPos(void);
+extern s32 CreateActorFromDescAtOffsetFacing(struct ActorSpawn *p, u8 keepPrio);
+extern s32 CreateChildTaskAtOffsetFacing(u32 type, s16 dx, s16 dy, u8 keepPrio);
 extern void sub_08065438(void);
 extern s16 sub_08065f5c(void);
 extern u16 sub_08066088(u32 mode);
 extern void sub_08066468(void);
 extern void sub_080689c8(s32 i, s32 d);
 extern void sub_08068f68(void);
-extern u32 sub_08069b44(void);
-extern void sub_0806a344(void);
+extern u32 ActorReactToHit(void);
+extern void ActorDie(void);
 extern s16 sub_0806caa0(u8 kind, s32 dx, s32 dy);
 extern void sub_080a0a84(void);
 extern void sub_080a0b10(void);
@@ -89,7 +89,7 @@ void sub_0809fc44(void)
 void sub_0809fca4(void)
 {
     sub_08068f68();
-    sub_08069b44();
+    ActorReactToHit();
 }
 
 void sub_0809fcb4(void)
@@ -134,7 +134,7 @@ u8 sub_0809fd64(void)
     struct Task *t;
     s16 *p;
 
-    sub_080639a4(gUnk_08748974);
+    ActorSetHitReactions(gUnk_08748974);
     TaskSetFrame(9);
     t = gCurTask;
     p = &t->unk46;
@@ -158,7 +158,7 @@ u8 sub_0809fd64(void)
         sub_0800a698();
         sub_080b7c00(gCurSaveSlot[0]);
     }
-    TaskSetEntry(sub_0806a344, gCurTaskIdx);
+    TaskSetEntry(ActorDie, gCurTaskIdx);
     return 1;
 }
 
@@ -185,14 +185,14 @@ u8 sub_0809fe10(void)
         if ((u->unk7A & 1) == 0)
         {
             gUnk_02006190[2] = 43;
-            sub_0806395c(10);
+            ActorSetState(10);
             goto install;
         }
         else
         {
             u->unk2C = 1;
             gUnk_02006190[2] = 4;
-            sub_0806395c(1);
+            ActorSetState(1);
         }
         goto install;
     case 4:
@@ -201,7 +201,7 @@ u8 sub_0809fe10(void)
         {
             if (gUnk_0300244C != 0)
                 gUnk_02006190[2] = 43;
-            sub_0806395c(10);
+            ActorSetState(10);
             BLOCK_CROSS_JUMP
             goto install;
         }
@@ -209,7 +209,7 @@ u8 sub_0809fe10(void)
         {
             v->unk2C = 1;
             gUnk_02006190[2] = 4;
-            sub_0806395c(1);
+            ActorSetState(1);
         }
         BLOCK_CROSS_JUMP
         goto install;
@@ -219,7 +219,7 @@ u8 sub_0809fe10(void)
         {
             if (gUnk_0300244C != 0)
                 gUnk_02006190[2] = 43;
-            sub_0806395c(10);
+            ActorSetState(10);
             BLOCK_CROSS_JUMP
             goto install;
         }
@@ -227,7 +227,7 @@ u8 sub_0809fe10(void)
         {
             w->unk2C = 1;
             gUnk_02006190[2] = 4;
-            sub_0806395c(1);
+            ActorSetState(1);
         }
         BLOCK_CROSS_JUMP
         goto install;
@@ -235,7 +235,7 @@ u8 sub_0809fe10(void)
         x = gCurTask;
         x->unk2C = 1;
         gUnk_02006190[2] = 4;
-        sub_0806395c(1);
+        ActorSetState(1);
         a->unk1C = gCurTask->unk1C;
     install:
         TaskSetEntry(sub_080a0b10, gCurTaskIdx);
@@ -254,7 +254,7 @@ u8 sub_0809fe10(void)
         z = gCurTask;
         z->unk2C = 1;
         gUnk_02006190[2] = 4;
-        sub_0806395c(1);
+        ActorSetState(1);
         TaskSetEntry(sub_080a0b10, gCurTaskIdx);
         break;
     case 5:
@@ -279,7 +279,7 @@ void sub_080a0028(void)
 {
     struct ActorSpawn sp;
 
-    sub_08064970();
+    TaskGetScreenPos();
     if (gUnk_030023B4 <= 127)
         gCurTask->unk43 = 1;
     else
@@ -293,7 +293,7 @@ void sub_080a0028(void)
     sp.unk0C = 32;
     sp.unk0E = 16;
     sp.unk0A = 0;
-    sub_08064b5c(&sp, 1);
+    CreateActorFromDescAtOffsetFacing(&sp, 1);
     PlaySfx(0x21D);
 }
 
@@ -318,6 +318,6 @@ void sub_080a0098(void)
     (*tp)->unk20 = 1;
     (*tp)->unk34 = 90;
     r[0] = -1;
-    (*tp)->unk46 = sub_08064cdc(183, 38, 10, 0);
+    (*tp)->unk46 = CreateChildTaskAtOffsetFacing(183, 38, 10, 0);
     r[9] = PlaySfx(0x21B);
 }

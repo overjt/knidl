@@ -24,16 +24,16 @@ extern void TaskStopX(void);
 extern void TaskStopY(void);
 extern void TaskUpdateFlip(void);
 extern void TaskSetFrame(s32 a);
-extern void sub_0806395c(u16 v);
-extern void sub_08063e14(void);
-extern void sub_08063fe0(void);
-extern void sub_08063ff4(void);
-extern void sub_08064970(void);
-extern void sub_08064a60(void);
-extern void sub_0806523c(void);
-extern void sub_080656b4(void);
-extern u32 sub_08068e04(void);
-extern u32 sub_08069b44(void);
+extern void ActorSetState(u16 v);
+extern void TaskFaceNearestPlayer(void);
+extern void ActorDestroy(void);
+extern void TaskTurnAroundAndReverseX(void);
+extern void TaskGetScreenPos(void);
+extern void TaskFaceLikeParent(void);
+extern void ActorDrawWorldInViewOrDestroy(void);
+extern void ActorMove(void);
+extern u32 ActorCheckHits(void);
+extern u32 ActorReactToHit(void);
 extern void sub_0809e8b0(void);
 extern void sub_0809ec84(void);
 
@@ -54,15 +54,15 @@ void sub_0809f37c(void)
     s32 z;
 
     t = gCurTask;
-    t->unk00 = (u32)sub_080656b4;
-    t->unk0C = (u32)sub_0806523c;
+    t->unk00 = (u32)ActorMove;
+    t->unk0C = (u32)ActorDrawWorldInViewOrDestroy;
     p = &t->unk42;
     z = 0;
     *p = 9;
     u = gCurTask;
     u->unk38 = gUnk_087534E0;
     u->unk04 = (u32)sub_0809f3e0;
-    sub_08064a60();
+    TaskFaceLikeParent();
     v = gCurTask;
     v->unk28 = z;
     CallTableEntry(v->unk73, 5, gUnk_08747C6C);
@@ -83,7 +83,7 @@ void sub_0809f3e0(void)
     t = gCurTask;
     if (t->unk4A > gViewRect[2] + 196)
     {
-        sub_08063fe0();
+        ActorDestroy();
         return;
     }
     vy = t->unk58;
@@ -109,8 +109,8 @@ void sub_0809f3e0(void)
         h = u->unk3C;
         u->unk3C = (0xFE & h) + ((h + 1) & 1);
     }
-    sub_08068e04();
-    sub_08069b44();
+    ActorCheckHits();
+    ActorReactToHit();
 }
 
 void sub_0809f478(void)
@@ -159,7 +159,7 @@ u8 sub_0809f52c(void)
             goto zero;
         sub_0809f90c();
         gCurTask->unk28 = 1;
-        sub_0806395c(0);
+        ActorSetState(0);
         TaskSetEntry(sub_0809e8b0, gCurTaskIdx);
         return 1;
     }
@@ -245,7 +245,7 @@ void sub_0809f61c(void)
     case 5:
         t = gCurTask;
         t->unk00 = (u32)TaskMove;
-        t->unk0C = (u32)sub_0806523c;
+        t->unk0C = (u32)ActorDrawWorldInViewOrDestroy;
         p = &t->unk42;
         z = 0;
         *p = 11;
@@ -364,7 +364,7 @@ void sub_0809f874(void)
 
 void TaskFaceScreenCenter(void)
 {
-    sub_08064970();
+    TaskGetScreenPos();
     if (gUnk_030023B4 <= 119)
         gCurTask->unk43 = 1;
     else
@@ -374,7 +374,7 @@ void TaskFaceScreenCenter(void)
 
 void sub_0809f90c(void)
 {
-    sub_08063e14();
+    TaskFaceNearestPlayer();
     TaskUpdateFlip();
 }
 
@@ -389,7 +389,7 @@ void sub_0809f930(void)
     s8 f;
 
     f = gCurTask->unk43;
-    sub_08063e14();
+    TaskFaceNearestPlayer();
     TaskUpdateFlip();
     gCurTask->unk43 = -f;
     t = gCurTask;
@@ -398,8 +398,8 @@ void sub_0809f930(void)
 
 void sub_0809f960(void)
 {
-    sub_08063e14();
-    sub_08063ff4();
+    TaskFaceNearestPlayer();
+    TaskTurnAroundAndReverseX();
 }
 
 void sub_0809f970(void)

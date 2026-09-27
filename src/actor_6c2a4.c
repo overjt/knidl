@@ -5,7 +5,7 @@
  *
  * Class-1 task bodies for the vehicle/ride actors: the launch-and-fall pair
  * (sub_0806c2a4 / sub_0806c930 set Task.unk54/unk58 from the sign in unk43
- * and hand control to sub_080656b4), the star-ride state machine
+ * and hand control to ActorMove), the star-ride state machine
  * (sub_0806c4a0 / sub_0806c5d4 / sub_0806c770 - a nine-step animation
  * switch over Task.unk46, the gUnk_0873EAC0 speed table and the
  * gUnk_0873EAF0 drift table), and the short spawn-effect bodies that only
@@ -30,9 +30,9 @@ extern void TaskSleepForever(void);
 extern void TaskSetEntry(void *fn, s32 i);
 extern void TaskMoveRelativeToParent(void);
 extern void sub_0801a828(u8 a, s16 x, s16 y, void *p);
-extern void sub_0806395c(u8 v);
-extern void sub_08063990(u32 v);
-extern void sub_080656b4(void);
+extern void ActorSetState(u8 v);
+extern void ActorSetTerrainHandlers(u32 v);
+extern void ActorMove(void);
 extern void sub_0806b410(void);
 extern void sub_0806b848(void);
 extern void sub_0806b878(void);
@@ -47,8 +47,8 @@ extern void sub_0806bf38(void);
 
 extern s16 gUnk_0300244C;
 extern void TaskSetMotionXFacing(s32 a, s32 b);
-extern void sub_080639e0(u32 v);
-extern s32 sub_08064d34(u32 type, u8 keepPrio);
+extern void ActorSetTerrainBox(u32 v);
+extern s32 CreateChildTaskHere(u32 type, u8 keepPrio);
 
 extern u8 gUnk_03005550[];
 extern s16 gSpriteCameraX;
@@ -59,15 +59,15 @@ extern u32 gUnk_0874CC84[];
 extern void PlaySfx(u32 a);
 extern void sub_080261d4(u32 a);
 extern void sub_08030848(void *p, s16 v);
-extern void sub_080692fc(void);
+extern void ActorCollideTerrain(void);
 extern void TaskSetMotionY(s32 a, s32 b, s32 c);
-extern void sub_0806523c(void);
-extern s32 sub_08064cdc(u32 type, s16 dx, s16 dy, u8 keepPrio);
+extern void ActorDrawWorldInViewOrDestroy(void);
+extern s32 CreateChildTaskAtOffsetFacing(u32 type, s16 dx, s16 dy, u8 keepPrio);
 extern u32 gUnk_0874C520[];
 extern u32 gUnk_0874CBC8[];
 extern vs16 gTaskSlotTypes[];
-extern void sub_08064a60(void);
-extern u8 sub_08065f2c(u32 i);
+extern void TaskFaceLikeParent(void);
+extern u8 TaskHasSameSerial(u32 i);
 extern void TaskFree(s32 i);
 extern s8 gUnk_0873EB30[];
 extern void TaskSetFrameByFacing(u32 a);
@@ -75,8 +75,8 @@ extern void TaskStop(void);
 extern s16 RandomSpreadFacing(s32 a, u32 b, u32 c);
 extern s32 RandomSpread(s32 a, u32 b, u32 c);
 extern u32 gUnk_0874CB90[];
-extern s32 sub_08064c1c(u32 type, int xArg, int yArg, int prioArg);
-extern s32 sub_08064d6c(u32 type, s16 xArg, s16 yArg, u8 keepPrio);
+extern s32 CreateChildTask(u32 type, int xArg, int yArg, int prioArg);
+extern s32 CreateChildTaskAt(u32 type, s16 xArg, s16 yArg, u8 keepPrio);
 extern void TaskSetFrame(s32 a);
 extern s8 gUnk_0873EB38[];
 
@@ -112,7 +112,7 @@ void sub_0806c2a4(void)
     s32 w;
 
     t = gCurTask;
-    t->unk00 = (u32)sub_080656b4;
+    t->unk00 = (u32)ActorMove;
     t->unk04 = (u32)sub_0806c30c;
     t->unk08 = 0;
     t->unk34 = 0;
@@ -145,7 +145,7 @@ void sub_0806c324(void)
     t = gCurTask;
     t->unk00 = (u32)TaskMoveRelativeToParent;
     t->unk08 = (u32)sub_0806c384;
-    sub_08063990((u32)gUnk_0873F8F4);
+    ActorSetTerrainHandlers((u32)gUnk_0873F8F4);
     sub_0806ba9c();
     u = gCurTask;
     u->unk18 = 0;
@@ -156,7 +156,7 @@ void sub_0806c324(void)
         TaskYieldTrampoline(1);
     }
     sub_0806bc9c();
-    sub_0806395c(5);
+    ActorSetState(5);
     TaskSleepForever();
 }
 
@@ -187,7 +187,7 @@ void sub_0806c3c4(void)
     t->unk20 = t->unk48;
     t->unk1C = t->unk4A;
     t->unk12 = 1;
-    sub_08063990((u32)gUnk_0873F8F4);
+    ActorSetTerrainHandlers((u32)gUnk_0873F8F4);
     TaskSleepForever();
 }
 
@@ -221,12 +221,12 @@ void sub_0806c4a0(void)
     s32 i;
 
     t = gCurTask;
-    t->unk00 = (u32)sub_080656b4;
+    t->unk00 = (u32)ActorMove;
     t->unk04 = (u32)sub_0806c5d4;
     t->unk08 = (u32)sub_0806c770;
     t->unk42 = 11;
     if (gUnk_0300244C != 0 && gCurTask->unk8C->unk50 == 0)
-        sub_080639e0((u32)gUnk_0873F894);
+        ActorSetTerrainBox((u32)gUnk_0873F894);
     u = gCurTask;
     i = (s16)u->unk70 - 3;
     u->unk70 = i;
@@ -245,24 +245,24 @@ void sub_0806c4a0(void)
         while (1)
         {
         gCurTask->unk3E |= 0x8000;
-        sub_08064d34(158, 0);
+        CreateChildTaskHere(158, 0);
         gCurTask->unk3C = 2;
         TaskYieldTrampoline(4);
         gCurTask->unk3E &= 0x7FFF;
-        sub_08064d34(158, 0);
+        CreateChildTaskHere(158, 0);
         TaskYieldTrampoline(4);
         gCurTask->unk3E &= 0x7FFF;
-        sub_08064d34(158, 0);
+        CreateChildTaskHere(158, 0);
         gCurTask->unk3C = 3;
         TaskYieldTrampoline(4);
         gCurTask->unk3E |= 0x8000;
-        sub_08064d34(158, 0);
+        CreateChildTaskHere(158, 0);
         TaskYieldTrampoline(4);
         }
     }
     while (1)
     {
-        sub_08064d34(158, 0);
+        CreateChildTaskHere(158, 0);
         TaskYieldTrampoline(4);
     }
 }
@@ -279,7 +279,7 @@ void sub_0806c5d4(void)
         sub_08030848(gUnk_0873F8DC, t->unk44);
     else
         sub_08030848(gUnk_0873F8CC, t->unk44);
-    sub_080692fc();
+    ActorCollideTerrain();
     if ((*(u32 *)gUnk_03005550 & 0x00FFFFFF) != 0)
     {
         if (gUnk_03005550[1] != 0)
@@ -293,7 +293,7 @@ void sub_0806c5d4(void)
         PlaySfx(237);
         sub_080261d4(2);
         gCurTask->unk08 = 0;
-        sub_0806395c(7);
+        ActorSetState(7);
         TaskSetEntry(sub_0806bf38, gCurTaskIdx);
     }
     else
@@ -427,7 +427,7 @@ void sub_0806c930(void)
     s32 w;
 
     t = gCurTask;
-    t->unk00 = (u32)sub_080656b4;
+    t->unk00 = (u32)ActorMove;
     t->unk04 = (u32)sub_0806c9e8;
     t->unk08 = 0;
     t->unk34 = 0;
@@ -476,8 +476,8 @@ void sub_0806ca00(void)
     struct Task *u;
 
     t = gCurTask;
-    t->unk00 = (u32)sub_080656b4;
-    t->unk0C = (u32)sub_0806523c;
+    t->unk00 = (u32)ActorMove;
+    t->unk0C = (u32)ActorDrawWorldInViewOrDestroy;
     t->unk42 = 10;
     u = gCurTask;
     u->unk38 = gUnk_0874C520;
@@ -509,10 +509,10 @@ s16 sub_0806caa0(u8 kind, s32 dx, s32 dy)
     switch (kind)
     {
     case 0:
-        r = sub_08064cdc(141, (s16)dx, (s16)dy, 0);
+        r = CreateChildTaskAtOffsetFacing(141, (s16)dx, (s16)dy, 0);
         break;
     case 1:
-        i = sub_08064d34(142, 0);
+        i = CreateChildTaskHere(142, 0);
         r = i;
         if ((s16)i != -1)
         {
@@ -531,12 +531,12 @@ void sub_0806cb10(void)
     struct Task *u;
 
     t = gCurTask;
-    t->unk00 = (u32)sub_080656b4;
-    t->unk0C = (u32)sub_0806523c;
+    t->unk00 = (u32)ActorMove;
+    t->unk0C = (u32)ActorDrawWorldInViewOrDestroy;
     t->unk42 = 10;
     u = gCurTask;
     u->unk38 = gUnk_0874CBC8;
-    sub_08064a60();
+    TaskFaceLikeParent();
     gCurTask->unk3C = 0;
     TaskYieldTrampoline(2);
     gCurTask->unk3C++;
@@ -551,12 +551,12 @@ void sub_0806cb64(void)
 
     t = gCurTask;
     t->unk00 = 0;
-    t->unk0C = (u32)sub_0806523c;
+    t->unk0C = (u32)ActorDrawWorldInViewOrDestroy;
     t->unk42 = 10;
     u = gCurTask;
     u->unk38 = gUnk_0874CBC8;
     u->unk04 = (u32)sub_0806cbd4;
-    sub_08064a60();
+    TaskFaceLikeParent();
     gCurTask->unk6C = 0;
     do
     {
@@ -574,7 +574,7 @@ void sub_0806cbd4(void)
     struct Task *p;
     s32 i;
 
-    if (gTaskSlotTypes[i = gCurTask->unk44] != -1 && sub_08065f2c(i) == 1)
+    if (gTaskSlotTypes[i = gCurTask->unk44] != -1 && TaskHasSameSerial(i) == 1)
     {
         t = gCurTask;
         p = &gTasks[t->unk44];
@@ -594,7 +594,7 @@ s16 sub_0806cc90(u8 flag, u16 vx, s32 c, s32 d)
     s32 i;
     u16 r;
 
-    i = sub_08064cdc(143, (s16)c, (s16)d, 0);
+    i = CreateChildTaskAtOffsetFacing(143, (s16)c, (s16)d, 0);
     r = i;
     if ((s16)i != -1)
     {
@@ -619,5 +619,5 @@ s16 sub_0806cc90(u8 flag, u16 vx, s32 c, s32 d)
 
 void sub_0806cd30(void)
 {
-    sub_08064d34(144, 0);
+    CreateChildTaskHere(144, 0);
 }

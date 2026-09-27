@@ -4,10 +4,10 @@
  *   ./tools/fnmatch.sh 0x08063698 0x080653EC src/actor_63698.c --newpb
  *
  * Actor lifecycle and geometry: binding a task to its ROM descriptor
- * (sub_08063704/sub_0806391C), resetting the actor record (sub_080637E4),
+ * (sub_08063704/ActorLoadDefSlot), resetting the actor record (sub_080637E4),
  * 16.16 position/velocity accessors, ArcTan2 aiming, rectangle and distance
  * queries, animation-script walking, and the spawn helpers
- * (sub_08064A78/sub_08064C1C/sub_08064F28) every later module calls.
+ * (sub_08064A78/CreateChildTask/CreateActor) every later module calls.
  */
 #include "gba/gba.h"
 #include "global.h"
@@ -16,7 +16,7 @@
 extern u8 gUnk_02006178;
 extern u8 gTaskSkipMaskStack[][64];
 extern u32 gUnk_02007F50;
-extern u16 gUnk_02000008;
+extern u16 gNextActorSerial;
 extern u8 gUnk_03002340;
 extern vs16 gTaskSlotTypes[];
 extern u16 gPlayerCount;
@@ -49,7 +49,7 @@ extern s16 gViewRect[];
 extern u16 gGameState;
 extern u16 gFrameCount;
 extern s32 gUnk_0873DF14[];
-extern struct Actor gUnk_0200C320[];
+extern struct Actor gActors[];
 extern struct PlayerState gUnk_03002170[];
 extern u32 gUnk_0873F198[];
 extern u32 gUnk_0873F23C[];
@@ -64,51 +64,51 @@ extern u8 sub_08066a6c(void);
 extern u8 sub_08066a80(void);
 extern void sub_0800a554(void);
 
-void sub_0806391c(u32 i, struct ActorDef *d);
-void sub_080639c8(u32 i, u32 v);
+void ActorLoadDefSlot(u32 i, struct ActorDef *d);
+void ActorSetAttackBoxSlot(u32 i, u32 v);
 void sub_08063a14(u32 i, u32 v);
 void sub_08063704(u32 i);
 void sub_080637ac(u32 i);
 void sub_080637e4(u32 i);
 s32 sub_08063a9c(u32 i);
-s32 sub_08063b38(void);
-s32 sub_08063bd4(struct PointPair *p);
-s32 sub_08063bf4(u32 i, u32 j);
-s32 sub_08063c60(u32 i);
-s32 sub_08063c94(u32 i, u32 j);
-s32 sub_08063cbc(u32 i);
-s32 sub_08063cf0(u32 i, u32 j);
-s32 sub_08063d18(u32 i);
-void sub_08063d4c(u32 i);
-s32 sub_08063dac(u32 i);
-s32 sub_08063df4(void);
-s32 sub_08063eb0(struct Rect *r, u32 i);
-void sub_08063f24(s32 i);
-void sub_08063e14(void);
-s32 sub_080640fc(void);
-u16 sub_0806425c(s16 x0, s16 y0, s16 x1, s16 y1, s32 prec);
-u16 sub_080642b0(u32 i, u32 j, s32 prec);
-u16 sub_080642fc(u32 i, s32 prec);
-u8 sub_0806433c(u32 i);
-u8 sub_0806437c(u32 i);
-u8 sub_080643bc(u32 i);
-u16 sub_08064314(s32 prec);
-void sub_08064460(s32 step, s32 limit, u8 axis);
-void sub_080644c0(s32 step, s32 limit, u8 axis);
-void sub_0806453c(s32 step, u8 axis);
-void sub_080648a0(u32 i);
-s8 sub_08064a38(void);
+s32 TaskFindNearestPlayer(void);
+s32 GetDistSq(struct PointPair *p);
+s32 GetTaskDistSq(u32 i, u32 j);
+s32 TaskGetDistSqTo(u32 i);
+s32 GetTaskDx(u32 i, u32 j);
+s32 TaskGetDxTo(u32 i);
+s32 GetTaskDy(u32 i, u32 j);
+s32 TaskGetDyTo(u32 i);
+void TaskGetPosSlot(u32 i);
+s32 TaskGetFacingToward(u32 i);
+s32 TaskGetFacingTowardNearestPlayer(void);
+s32 TaskIsInRectSlot(struct Rect *r, u32 i);
+void ActorDestroySlot(s32 i);
+void TaskFaceNearestPlayer(void);
+s32 ActorStepAnim(void);
+u16 GetPointAngle(s16 x0, s16 y0, s16 x1, s16 y1, s32 prec);
+u16 GetTaskAngle(u32 i, u32 j, s32 prec);
+u16 TaskGetAngleTo(u32 i, s32 prec);
+u8 TaskGetYDirBitTo(u32 i);
+u8 TaskGetXDirBitTo(u32 i);
+u8 TaskGetCompassDirTo(u32 i);
+u16 TaskGetAngleToNearestPlayer(s32 prec);
+void TaskAccelerateAxisPlus(s32 step, s32 limit, u8 axis);
+void TaskAccelerateAxisMinus(s32 step, s32 limit, u8 axis);
+void TaskDecelerateAxis(s32 step, u8 axis);
+void TaskGetScreenPosSlot(u32 i);
+s8 TaskGetParentFacing(void);
 void sub_080636e4(u32 i);
 s32 sub_08064a78(struct ActorSpawn *p);
-s32 sub_08064c1c(u32 type, int xArg, int yArg, int prioArg);
-s32 sub_08064d34(u32 type, u8 keepPrio);
+s32 CreateChildTask(u32 type, int xArg, int yArg, int prioArg);
+s32 CreateChildTaskHere(u32 type, u8 keepPrio);
 s32 sub_08064d9c(u32 sub, u32 type, int p2Arg, int xArg, int yArg, int prioArg,
                  int altArg);
 s32 sub_08064e5c(u32 sub, u32 type, u8 p2);
-s32 sub_08064f28(u8 cls, u32 sub, u32 type, u8 p3, u8 p4, int x, int y,
+s32 CreateActor(u8 cls, u32 sub, u32 type, u8 p3, u8 p4, int x, int y,
                  u16 prio);
-u8 sub_08065160(void);
-void sub_08063fe0(void);
+u8 ActorIsInView(void);
+void ActorDestroy(void);
 
 s32 sub_08063698(u32 type, s32 start)
 {
@@ -209,11 +209,11 @@ void sub_080637e4(u32 i)
     t->unk73 = t->unk73 & 15;
     if (a->unk0C != 0)
         sub_08065ce0(i);
-    t->unk16 = gUnk_02000008;
-    if (gUnk_02000008 > 0xFFFE)
-        gUnk_02000008 = 0;
+    t->unk16 = gNextActorSerial;
+    if (gNextActorSerial > 0xFFFE)
+        gNextActorSerial = 0;
     else
-        gUnk_02000008 = gUnk_02000008 + 1;
+        gNextActorSerial = gNextActorSerial + 1;
     a->unk3C = 0;
     a->unk34 = -1;
     a->unk38 = -1;
@@ -256,12 +256,12 @@ void sub_080637e4(u32 i)
     }
 }
 
-void sub_08063908(struct ActorDef *d)
+void ActorLoadDef(struct ActorDef *d)
 {
-    sub_0806391c(gCurTaskIdx, d);
+    ActorLoadDefSlot(gCurTaskIdx, d);
 }
 
-void sub_0806391c(u32 i, struct ActorDef *d)
+void ActorLoadDefSlot(u32 i, struct ActorDef *d)
 {
     struct Actor *a;
 
@@ -278,7 +278,7 @@ void sub_0806391c(u32 i, struct ActorDef *d)
     sub_080637ac(i);
 }
 
-void sub_0806395c(u8 v)
+void ActorSetState(u8 v)
 {
     struct Task *t;
 
@@ -287,7 +287,7 @@ void sub_0806395c(u8 v)
     t->unk14 = v;
 }
 
-void sub_08063974(u32 i, u8 v)
+void ActorSetStateSlot(u32 i, u8 v)
 {
     struct Task *t;
 
@@ -296,7 +296,7 @@ void sub_08063974(u32 i, u8 v)
     t->unk14 = v;
 }
 
-void sub_08063990(u32 v)
+void ActorSetTerrainHandlers(u32 v)
 {
     struct Actor *a;
 
@@ -305,17 +305,17 @@ void sub_08063990(u32 v)
     a->unk54 = v;
 }
 
-void sub_080639a4(u32 v)
+void ActorSetHitReactions(u32 v)
 {
     gCurTask->unk8C->unk5C = v;
 }
 
-void sub_080639b4(u32 v)
+void ActorSetAttackBox(u32 v)
 {
-    sub_080639c8(gCurTaskIdx, v);
+    ActorSetAttackBoxSlot(gCurTaskIdx, v);
 }
 
-void sub_080639c8(u32 i, u32 v)
+void ActorSetAttackBoxSlot(u32 i, u32 v)
 {
     struct Task *t;
 
@@ -323,7 +323,7 @@ void sub_080639c8(u32 i, u32 v)
     t->unk8C->unk48 = v;
 }
 
-void sub_080639e0(u32 v)
+void ActorSetTerrainBox(u32 v)
 {
     gCurTask->unk8C->unk50 = v;
 }
@@ -411,7 +411,7 @@ s32 sub_08063a9c(u32 i)
     return best;
 }
 
-s32 sub_08063b38(void)
+s32 TaskFindNearestPlayer(void)
 {
     struct Task *o;
     void *bestPtr;
@@ -443,7 +443,7 @@ s32 sub_08063b38(void)
     return best;
 }
 
-s32 sub_08063bd4(struct PointPair *p)
+s32 GetDistSq(struct PointPair *p)
 {
     s16 dx;
     s16 dy;
@@ -453,7 +453,7 @@ s32 sub_08063bd4(struct PointPair *p)
     return dx * dx + dy * dy;
 }
 
-s32 sub_08063bf4(u32 i, u32 j)
+s32 GetTaskDistSq(u32 i, u32 j)
 {
     struct PointPair p;
     struct Task *a;
@@ -465,25 +465,25 @@ s32 sub_08063bf4(u32 i, u32 j)
     p.y1 = a->unk4A;
     p.x0 = b->unk48;
     p.y0 = b->unk4A;
-    return sub_08063bd4(&p);
+    return GetDistSq(&p);
 }
 
-s32 sub_08063c60(u32 i)
+s32 TaskGetDistSqTo(u32 i)
 {
-    return sub_08063bf4(i, gCurTaskIdx);
+    return GetTaskDistSq(i, gCurTaskIdx);
 }
 
-s32 sub_08063c74(void)
+s32 TaskGetNearestPlayerDistSq(void)
 {
     s32 i;
 
-    i = sub_08063b38();
+    i = TaskFindNearestPlayer();
     if (i == -1)
         return 0;
-    return sub_08063c60(i);
+    return TaskGetDistSqTo(i);
 }
 
-s32 sub_08063c94(u32 i, u32 j)
+s32 GetTaskDx(u32 i, u32 j)
 {
     struct Task *a;
     struct Task *b;
@@ -493,22 +493,22 @@ s32 sub_08063c94(u32 i, u32 j)
     return a->unk48 - b->unk48;
 }
 
-s32 sub_08063cbc(u32 i)
+s32 TaskGetDxTo(u32 i)
 {
-    return sub_08063c94(i, gCurTaskIdx);
+    return GetTaskDx(i, gCurTaskIdx);
 }
 
-s32 sub_08063cd0(void)
+s32 TaskGetNearestPlayerDx(void)
 {
     s32 i;
 
-    i = sub_08063b38();
+    i = TaskFindNearestPlayer();
     if (i == -1)
         return 0;
-    return sub_08063cbc(i);
+    return TaskGetDxTo(i);
 }
 
-s32 sub_08063cf0(u32 i, u32 j)
+s32 GetTaskDy(u32 i, u32 j)
 {
     struct Task *a;
     struct Task *b;
@@ -518,22 +518,22 @@ s32 sub_08063cf0(u32 i, u32 j)
     return a->unk4A - b->unk4A;
 }
 
-s32 sub_08063d18(u32 i)
+s32 TaskGetDyTo(u32 i)
 {
-    return sub_08063cf0(i, gCurTaskIdx);
+    return GetTaskDy(i, gCurTaskIdx);
 }
 
-s32 sub_08063d2c(void)
+s32 TaskGetNearestPlayerDy(void)
 {
     s32 i;
 
-    i = sub_08063b38();
+    i = TaskFindNearestPlayer();
     if (i == -1)
         return 0;
-    return sub_08063d18(i);
+    return TaskGetDyTo(i);
 }
 
-void sub_08063d4c(u32 i)
+void TaskGetPosSlot(u32 i)
 {
     struct Task *t;
 
@@ -542,22 +542,22 @@ void sub_08063d4c(u32 i)
     gUnk_030023D4 = t->unk4A;
 }
 
-void sub_08063d7c(void)
+void TaskGetNearestPlayerPos(void)
 {
     s32 i;
 
-    i = sub_08063b38();
+    i = TaskFindNearestPlayer();
     if (i == -1)
     {
         gUnk_030023B4 = gUnk_030023D4 = 0;
     }
     else
     {
-        sub_08063d4c(i);
+        TaskGetPosSlot(i);
     }
 }
 
-s32 sub_08063dac(u32 i)
+s32 TaskGetFacingToward(u32 i)
 {
     struct Task *t;
     s32 d;
@@ -571,27 +571,27 @@ s32 sub_08063dac(u32 i)
     return v;
 }
 
-void sub_08063ddc(u32 i)
+void TaskFaceToward(u32 i)
 {
-    gCurTask->unk43 = sub_08063dac(i);
+    gCurTask->unk43 = TaskGetFacingToward(i);
 }
 
-s32 sub_08063df4(void)
+s32 TaskGetFacingTowardNearestPlayer(void)
 {
     s32 i;
 
-    i = sub_08063b38();
+    i = TaskFindNearestPlayer();
     if (i == -1)
         return 0;
-    return sub_08063dac(i);
+    return TaskGetFacingToward(i);
 }
 
-void sub_08063e14(void)
+void TaskFaceNearestPlayer(void)
 {
-    gCurTask->unk43 = sub_08063df4();
+    gCurTask->unk43 = TaskGetFacingTowardNearestPlayer();
 }
 
-u8 sub_08063e2c(struct Rect *r)
+u8 TaskIsInRect(struct Rect *r)
 {
     struct Task *t;
 
@@ -610,7 +610,7 @@ u8 sub_08063e74(struct Rect *r, s16 x, u16 y)
     return 0;
 }
 
-s32 sub_08063eb0(struct Rect *r, u32 i)
+s32 TaskIsInRectSlot(struct Rect *r, u32 i)
 {
     struct Task *t;
 
@@ -621,19 +621,19 @@ s32 sub_08063eb0(struct Rect *r, u32 i)
     return 0;
 }
 
-s32 sub_08063f00(struct Rect *r)
+s32 TaskIsNearestPlayerInRect(struct Rect *r)
 {
     s32 i;
 
-    i = sub_08063b38();
+    i = TaskFindNearestPlayer();
     if (i == -1)
         return 0;
-    return sub_08063eb0(r, i);
+    return TaskIsInRectSlot(r, i);
 }
 
 /* Tear down task `i`: run the actor's teardown hook, release its child task
    and its slot, then either re-dispatch (if it killed itself) or free it. */
-void sub_08063f24(s32 i)
+void ActorDestroySlot(s32 i)
 {
     struct Task *t;
     struct Actor *a;
@@ -669,12 +669,12 @@ void sub_08063f24(s32 i)
         TaskFree(i);
 }
 
-void sub_08063fe0(void)
+void ActorDestroy(void)
 {
-    sub_08063f24(gCurTaskIdx);
+    ActorDestroySlot(gCurTaskIdx);
 }
 
-void sub_08063ff4(void)
+void TaskTurnAroundAndReverseX(void)
 {
     if (gCurTask->unk43 == 1)
         gCurTask->unk43 = 255;
@@ -685,7 +685,7 @@ void sub_08063ff4(void)
                  gCurTask->unk64);
 }
 
-void sub_08064038(void)
+void TaskTurnAround(void)
 {
     if (gCurTask->unk43 == 1)
         gCurTask->unk43 = 255;
@@ -704,7 +704,7 @@ void sub_0806406c(void)
                  gCurTask->unk64);
 }
 
-s32 sub_080640a8(struct AnimCmd *p)
+s32 ActorStartAnimNoFlip(struct AnimCmd *p)
 {
     struct Actor *a;
 
@@ -712,15 +712,15 @@ s32 sub_080640a8(struct AnimCmd *p)
     a->unk2C = p;
     a->unk09 = 0;
     a->unk08 = 1;
-    return sub_080640fc();
+    return ActorStepAnim();
 }
 
-void sub_080640c8(void)
+void ActorStopAnim(void)
 {
     gCurTask->unk8C->unk2C = NULL;
 }
 
-s32 sub_080640dc(struct AnimCmd *p)
+s32 ActorStartAnim(struct AnimCmd *p)
 {
     struct Actor *a;
 
@@ -728,13 +728,13 @@ s32 sub_080640dc(struct AnimCmd *p)
     a->unk2C = p;
     a->unk09 = 0;
     a->unk08 = 0;
-    return sub_080640fc();
+    return ActorStepAnim();
 }
 
 /* Step the running actor's animation script; returns the new delay. */
 /* Step the running actor's animation script; returns the new delay. */
 /* Step the running actor's animation script; returns the new delay. */
-s32 sub_080640fc(void)
+s32 ActorStepAnim(void)
 {
     struct Actor *a;
     struct AnimCmd *p;
@@ -766,26 +766,26 @@ s32 sub_080640fc(void)
     return delay;
 }
 
-s32 sub_0806415c(s32 n)
+s32 ActorTickAnimFacingNearestPlayer(s32 n)
 {
     if (gCurTask->unk8C->unk2C != NULL)
     {
         if (n <= 0)
         {
-            sub_08063e14();
-            n = sub_080640fc();
+            TaskFaceNearestPlayer();
+            n = ActorStepAnim();
         }
         n--;
     }
     return n;
 }
 
-s32 sub_08064188(s32 n)
+s32 ActorTickAnim(s32 n)
 {
     if (gCurTask->unk8C->unk2C != NULL)
     {
         if (n <= 0)
-            n = sub_080640fc();
+            n = ActorStepAnim();
         n--;
     }
     return n;
@@ -803,14 +803,14 @@ u32 sub_080641b0(s16 x0, s16 y0, s16 x1, s16 y1, u16 mag)
     return t;
 }
 
-void sub_0806421c(s16 t, s16 mag)
+void AngleToVector(s16 t, s16 mag)
 {
     gUnk_030023B4 = *(gCosTable + t) * mag;
     gUnk_030023D4 = *(gCosTable - 128 + t) * mag;
 }
 
 /* Angle from (x0, y0) to (x1, y1), narrowed to `prec` steps of resolution. */
-u16 sub_0806425c(s16 x0, s16 y0, s16 x1, s16 y1, s32 prec)
+u16 GetPointAngle(s16 x0, s16 y0, s16 x1, s16 y1, s32 prec)
 {
     u16 a;
 
@@ -829,36 +829,36 @@ u16 sub_0806425c(s16 x0, s16 y0, s16 x1, s16 y1, s32 prec)
     return a;
 }
 
-u16 sub_080642b0(u32 i, u32 j, s32 prec)
+u16 GetTaskAngle(u32 i, u32 j, s32 prec)
 {
     struct Task *a;
     struct Task *b;
 
     a = &gTasks[i];
     b = &gTasks[j];
-    return sub_0806425c(b->unk48, b->unk4A, a->unk48, a->unk4A, prec);
+    return GetPointAngle(b->unk48, b->unk4A, a->unk48, a->unk4A, prec);
 }
 
-u16 sub_080642fc(u32 i, s32 prec)
+u16 TaskGetAngleTo(u32 i, s32 prec)
 {
-    return sub_080642b0(i, gCurTaskIdx, prec);
+    return GetTaskAngle(i, gCurTaskIdx, prec);
 }
 
-u16 sub_08064314(s32 prec)
+u16 TaskGetAngleToNearestPlayer(s32 prec)
 {
     s32 i;
 
-    i = sub_08063b38();
+    i = TaskFindNearestPlayer();
     if (i == -1)
         return 0;
-    return sub_080642fc(i, prec);
+    return TaskGetAngleTo(i, prec);
 }
 
-u8 sub_0806433c(u32 i)
+u8 TaskGetYDirBitTo(u32 i)
 {
     s32 d;
 
-    d = sub_08063d18(i);
+    d = TaskGetDyTo(i);
     if (d == 0)
         return 0;
     if (d < 0)
@@ -866,21 +866,21 @@ u8 sub_0806433c(u32 i)
     return 1;
 }
 
-u8 sub_08064358(void)
+u8 TaskGetYDirBitToNearestPlayer(void)
 {
     s32 i;
 
-    i = sub_08063b38();
+    i = TaskFindNearestPlayer();
     if (i == -1)
         return 0;
-    return sub_0806433c(i);
+    return TaskGetYDirBitTo(i);
 }
 
-u8 sub_0806437c(u32 i)
+u8 TaskGetXDirBitTo(u32 i)
 {
     s32 d;
 
-    d = sub_08063cbc(i);
+    d = TaskGetDxTo(i);
     if (d == 0)
         return 0;
     if (d < 0)
@@ -888,23 +888,23 @@ u8 sub_0806437c(u32 i)
     return 4;
 }
 
-u8 sub_08064398(void)
+u8 TaskGetXDirBitToNearestPlayer(void)
 {
     s32 i;
 
-    i = sub_08063b38();
+    i = TaskFindNearestPlayer();
     if (i == -1)
         return 0;
-    return sub_0806437c(i);
+    return TaskGetXDirBitTo(i);
 }
 
 /* Combine the two axis signs into one of the 8 compass directions. */
-u8 sub_080643bc(u32 i)
+u8 TaskGetCompassDirTo(u32 i)
 {
     u8 dir;
 
-    dir = sub_0806433c(i);
-    dir |= sub_0806437c(i);
+    dir = TaskGetYDirBitTo(i);
+    dir |= TaskGetXDirBitTo(i);
     switch (dir)
     {
     case 5:
@@ -938,19 +938,19 @@ u8 sub_080643bc(u32 i)
     return dir;
 }
 
-u8 sub_0806443c(void)
+u8 TaskGetCompassDirToNearestPlayer(void)
 {
     s32 i;
 
-    i = sub_08063b38();
+    i = TaskFindNearestPlayer();
     if (i == -1)
         return 0;
-    return sub_080643bc(i);
+    return TaskGetCompassDirTo(i);
 }
 
 /* Accelerate the running task towards +limit on the given axis. */
 /* Accelerate the running task towards +limit on the given axis. */
-void sub_08064460(s32 step, s32 limit, u8 axis)
+void TaskAccelerateAxisPlus(s32 step, s32 limit, u8 axis)
 {
     struct Task *t;
 
@@ -989,7 +989,7 @@ void sub_08064460(s32 step, s32 limit, u8 axis)
 
 /* Accelerate the running task towards -limit on the given axis. */
 /* Accelerate the running task towards -limit on the given axis. */
-void sub_080644c0(s32 step, s32 limit, u8 axis)
+void TaskAccelerateAxisMinus(s32 step, s32 limit, u8 axis)
 {
     struct Task *t;
     s32 v;
@@ -1029,7 +1029,7 @@ void sub_080644c0(s32 step, s32 limit, u8 axis)
 }
 
 /* Decay the running task's speed towards zero on the given axis. */
-void sub_0806453c(s32 step, u8 axis)
+void TaskDecelerateAxis(s32 step, u8 axis)
 {
     struct Task *t;
 
@@ -1068,83 +1068,83 @@ void sub_0806453c(s32 step, u8 axis)
 }
 
 /* Steer the running task towards the nearest player. */
-void sub_080645a4(s32 step, s32 limit)
+void TaskAccelerateTowardNearestPlayer(s32 step, s32 limit)
 {
     gUnk_030023B4 = gUnk_030023D4 = 0;
-    switch (sub_08064314(0))
+    switch (TaskGetAngleToNearestPlayer(0))
     {
     case 0:
-        sub_08064460(step, limit, 0);
-        sub_0806453c(step, 1);
+        TaskAccelerateAxisPlus(step, limit, 0);
+        TaskDecelerateAxis(step, 1);
         break;
     case 1:
-        sub_08064460(step, limit, 0);
-        sub_08064460(step, limit, 1);
+        TaskAccelerateAxisPlus(step, limit, 0);
+        TaskAccelerateAxisPlus(step, limit, 1);
         break;
     case 2:
-        sub_0806453c(step, 0);
-        sub_08064460(step, limit, 1);
+        TaskDecelerateAxis(step, 0);
+        TaskAccelerateAxisPlus(step, limit, 1);
         break;
     case 3:
-        sub_080644c0(step, limit, 0);
-        sub_08064460(step, limit, 1);
+        TaskAccelerateAxisMinus(step, limit, 0);
+        TaskAccelerateAxisPlus(step, limit, 1);
         break;
     case 4:
-        sub_080644c0(step, limit, 0);
-        sub_0806453c(step, 1);
+        TaskAccelerateAxisMinus(step, limit, 0);
+        TaskDecelerateAxis(step, 1);
         break;
     case 5:
-        sub_080644c0(step, limit, 0);
-        sub_080644c0(step, limit, 1);
+        TaskAccelerateAxisMinus(step, limit, 0);
+        TaskAccelerateAxisMinus(step, limit, 1);
         break;
     case 6:
-        sub_0806453c(step, 0);
-        sub_080644c0(step, limit, 1);
+        TaskDecelerateAxis(step, 0);
+        TaskAccelerateAxisMinus(step, limit, 1);
         break;
     case 7:
-        sub_08064460(step, limit, 0);
-        sub_080644c0(step, limit, 1);
+        TaskAccelerateAxisPlus(step, limit, 0);
+        TaskAccelerateAxisMinus(step, limit, 1);
         break;
     }
 }
 
-/* sub_080645A4 with the direction supplied by the caller. */
-void sub_08064680(s32 step, s32 limit, u16 dir)
+/* TaskAccelerateTowardNearestPlayer with the direction supplied by the caller. */
+void TaskAccelerateInDir(s32 step, s32 limit, u16 dir)
 {
     gUnk_030023B4 = gUnk_030023D4 = 0;
     switch (dir)
     {
     case 0:
-        sub_08064460(step, limit, 0);
-        sub_0806453c(step, 1);
+        TaskAccelerateAxisPlus(step, limit, 0);
+        TaskDecelerateAxis(step, 1);
         break;
     case 1:
-        sub_08064460(step, limit, 0);
-        sub_08064460(step, limit, 1);
+        TaskAccelerateAxisPlus(step, limit, 0);
+        TaskAccelerateAxisPlus(step, limit, 1);
         break;
     case 2:
-        sub_0806453c(step, 0);
-        sub_08064460(step, limit, 1);
+        TaskDecelerateAxis(step, 0);
+        TaskAccelerateAxisPlus(step, limit, 1);
         break;
     case 3:
-        sub_080644c0(step, limit, 0);
-        sub_08064460(step, limit, 1);
+        TaskAccelerateAxisMinus(step, limit, 0);
+        TaskAccelerateAxisPlus(step, limit, 1);
         break;
     case 4:
-        sub_080644c0(step, limit, 0);
-        sub_0806453c(step, 1);
+        TaskAccelerateAxisMinus(step, limit, 0);
+        TaskDecelerateAxis(step, 1);
         break;
     case 5:
-        sub_080644c0(step, limit, 0);
-        sub_080644c0(step, limit, 1);
+        TaskAccelerateAxisMinus(step, limit, 0);
+        TaskAccelerateAxisMinus(step, limit, 1);
         break;
     case 6:
-        sub_0806453c(step, 0);
-        sub_080644c0(step, limit, 1);
+        TaskDecelerateAxis(step, 0);
+        TaskAccelerateAxisMinus(step, limit, 1);
         break;
     case 7:
-        sub_08064460(step, limit, 0);
-        sub_080644c0(step, limit, 1);
+        TaskAccelerateAxisPlus(step, limit, 0);
+        TaskAccelerateAxisMinus(step, limit, 1);
         break;
     }
 }
@@ -1165,7 +1165,7 @@ s32 sub_08064758(u16 lo, u16 hi)
     {
         if ((gUnk_03002340 >> i) & 1)
         {
-            sub_080648a0(i);
+            TaskGetScreenPosSlot(i);
             v = gUnk_030023B4;
             if (v >= (s16)lo && v < (s16)hi)
             {
@@ -1173,11 +1173,11 @@ s32 sub_08064758(u16 lo, u16 hi)
                 if (best == -1)
                 {
                     best = i;
-                    bestDist = sub_08063c60(best);
+                    bestDist = TaskGetDistSqTo(best);
                 }
                 else
                 {
-                    d = sub_08063c60(i);
+                    d = TaskGetDistSqTo(i);
                     if (bestDist > d)
                     {
                         bestDist = d;
@@ -1207,7 +1207,7 @@ s32 sub_080647fc(u16 lo, u16 hi)
     {
         if ((gUnk_03002340 >> i) & 1)
         {
-            sub_080648a0(i);
+            TaskGetScreenPosSlot(i);
             v = gUnk_030023D4;
             if (v >= (s16)lo && v < (s16)hi)
             {
@@ -1215,11 +1215,11 @@ s32 sub_080647fc(u16 lo, u16 hi)
                 if (best == -1)
                 {
                     best = i;
-                    bestDist = sub_08063c60(best);
+                    bestDist = TaskGetDistSqTo(best);
                 }
                 else
                 {
-                    d = sub_08063c60(i);
+                    d = TaskGetDistSqTo(i);
                     if (bestDist > d)
                     {
                         bestDist = d;
@@ -1234,7 +1234,7 @@ s32 sub_080647fc(u16 lo, u16 hi)
 }
 
 /* Screen-space offset of task `i` from the camera, into gUnk_030023B4/D4. */
-void sub_080648a0(u32 i)
+void TaskGetScreenPosSlot(u32 i)
 {
     struct Task *t;
 
@@ -1251,21 +1251,21 @@ void sub_080648a0(u32 i)
     }
 }
 
-s32 sub_0806493c(void)
+s32 TaskGetNearestPlayerScreenPos(void)
 {
     s32 i;
 
-    i = sub_08063b38();
+    i = TaskFindNearestPlayer();
     if (i != -1)
-        sub_080648a0(i);
+        TaskGetScreenPosSlot(i);
     else
         gUnk_030023B4 = gUnk_030023D4 = 0;
     return i;
 }
 
-void sub_08064970(void)
+void TaskGetScreenPos(void)
 {
-    sub_080648a0(gCurTaskIdx);
+    TaskGetScreenPosSlot(gCurTaskIdx);
 }
 
 s32 sub_08064984(s32 range)
@@ -1273,16 +1273,16 @@ s32 sub_08064984(s32 range)
     s32 i;
     s32 d;
 
-    i = sub_08063b38();
+    i = TaskFindNearestPlayer();
     if (i == -1)
         return 0;
-    d = sub_08063cbc(i);
+    d = TaskGetDxTo(i);
     if (abs(d) <= range)
         return 1;
     return 0;
 }
 
-void sub_080649b4(u32 arg, s32 mul)
+void ActorAwardScore(u32 arg, s32 mul)
 {
     struct Task *t;
     struct Actor *a;
@@ -1306,7 +1306,7 @@ void sub_080649b4(u32 arg, s32 mul)
     sub_0800a04c(v, arg);
 }
 
-s8 sub_08064a38(void)
+s8 TaskGetParentFacing(void)
 {
     struct Task *t;
     s32 i;
@@ -1316,9 +1316,9 @@ s8 sub_08064a38(void)
     return t->unk43;
 }
 
-void sub_08064a60(void)
+void TaskFaceLikeParent(void)
 {
-    gCurTask->unk43 = sub_08064a38();
+    gCurTask->unk43 = TaskGetParentFacing();
 }
 
 /* Spawn a class-4 task from a descriptor; returns its slot or -1. */
@@ -1346,13 +1346,13 @@ s32 sub_08064a78(struct ActorSpawn *p)
         t->unk50 = p->unk0E << 16;
         t->unk44 = gCurTaskIdx;
         t->unk40 = p->unk10;
-        t->unk8C = &gUnk_0200C320[i];
+        t->unk8C = &gActors[i];
         sub_080636e4(i);
     }
     return i;
 }
 
-s32 sub_08064b28(struct ActorSpawn *p, u8 keepPrio)
+s32 CreateActorFromDescHere(struct ActorSpawn *p, u8 keepPrio)
 {
     struct Task *t;
 
@@ -1364,7 +1364,7 @@ s32 sub_08064b28(struct ActorSpawn *p, u8 keepPrio)
     return sub_08064a78(p);
 }
 
-s32 sub_08064b5c(struct ActorSpawn *p, u8 keepPrio)
+s32 CreateActorFromDescAtOffsetFacing(struct ActorSpawn *p, u8 keepPrio)
 {
     struct Task *t;
 
@@ -1376,7 +1376,7 @@ s32 sub_08064b5c(struct ActorSpawn *p, u8 keepPrio)
     return sub_08064a78(p);
 }
 
-s32 sub_08064ba8(struct ActorSpawn *p, u8 keepPrio)
+s32 CreateActorFromDesc(struct ActorSpawn *p, u8 keepPrio)
 {
     if (keepPrio == 0)
         p->unk10 = gCurTask->unk40;
@@ -1417,9 +1417,9 @@ void sub_08064bcc(void)
 /* Spawn a helper task at (x, y) inheriting the running task's class. */
 /* Spawn a helper task at (x, y) inheriting the running task's class.
    The three 16-bit arguments are declared `int` and narrowed into u16
-   locals: sub_08064CDC passes them sign-extended, so the ROM's call site
+   locals: CreateChildTaskAtOffsetFacing passes them sign-extended, so the ROM's call site
    never converts (issue #65 lessons). */
-s32 sub_08064c1c(u32 type, int xArg, int yArg, int prioArg)
+s32 CreateChildTask(u32 type, int xArg, int yArg, int prioArg)
 {
     struct Task *t;
     s32 i;
@@ -1457,7 +1457,7 @@ s32 sub_08064c1c(u32 type, int xArg, int yArg, int prioArg)
     return i;
 }
 
-s32 sub_08064cdc(u32 type, s16 dx, s16 dy, u8 keepPrio)
+s32 CreateChildTaskAtOffsetFacing(u32 type, s16 dx, s16 dy, u8 keepPrio)
 {
     struct Task *t;
     s32 x;
@@ -1471,10 +1471,10 @@ s32 sub_08064cdc(u32 type, s16 dx, s16 dy, u8 keepPrio)
         prio = t->unk40;
     else
         prio = 0;
-    return sub_08064c1c(type, x, y, prio);
+    return CreateChildTask(type, x, y, prio);
 }
 
-s32 sub_08064d34(u32 type, u8 keepPrio)
+s32 CreateChildTaskHere(u32 type, u8 keepPrio)
 {
     struct Task *t;
     s32 x;
@@ -1488,10 +1488,10 @@ s32 sub_08064d34(u32 type, u8 keepPrio)
         prio = t->unk40;
     else
         prio = 0;
-    return sub_08064c1c(type, x, y, prio);
+    return CreateChildTask(type, x, y, prio);
 }
 
-s32 sub_08064d6c(u32 type, s16 xArg, s16 yArg, u8 keepPrio)
+s32 CreateChildTaskAt(u32 type, s16 xArg, s16 yArg, u8 keepPrio)
 {
     s32 x = xArg;
     s32 y = yArg;
@@ -1501,11 +1501,11 @@ s32 sub_08064d6c(u32 type, s16 xArg, s16 yArg, u8 keepPrio)
         prio = gCurTask->unk40;
     else
         prio = 0;
-    return sub_08064c1c(type, x, y, prio);
+    return CreateChildTask(type, x, y, prio);
 }
 
 /* Spawn a class-5/6 task; the 16-bit arguments are `int` for the same
-   reason as sub_08064C1C's. */
+   reason as CreateChildTask's. */
 s32 sub_08064d9c(u32 sub, u32 type, int p2Arg, int xArg, int yArg,
                  int prioArg, int altArg)
 {
@@ -1534,7 +1534,7 @@ s32 sub_08064d9c(u32 sub, u32 type, int p2Arg, int xArg, int yArg,
         t->unk50 = y << 16;
         t->unk44 = gCurTaskIdx;
         t->unk40 = prio;
-        t->unk8C = &gUnk_0200C320[i];
+        t->unk8C = &gActors[i];
         sub_080636e4(i);
     }
     return i;
@@ -1574,12 +1574,12 @@ s32 sub_08064eb8(u8 p2)
         t->unk20 = gCurTaskIdx;
         a->unk00 = p->unk0D;
     }
-    sub_08064d34(166, 0);
+    CreateChildTaskHere(166, 0);
     return i;
 }
 
 /* Generic task spawn: every field of the new task comes from an argument. */
-s32 sub_08064f28(u8 cls, u32 sub, u32 type, u8 p3, u8 p4, int x, int y,
+s32 CreateActor(u8 cls, u32 sub, u32 type, u8 p3, u8 p4, int x, int y,
                  u16 prio)
 {
     struct Task *t;
@@ -1598,7 +1598,7 @@ s32 sub_08064f28(u8 cls, u32 sub, u32 type, u8 p3, u8 p4, int x, int y,
         t->unk4C = x << 16;
         t->unk50 = y << 16;
         t->unk40 = prio;
-        t->unk8C = &gUnk_0200C320[i];
+        t->unk8C = &gActors[i];
         sub_080636e4(i);
     }
     return i;
@@ -1606,7 +1606,7 @@ s32 sub_08064f28(u8 cls, u32 sub, u32 type, u8 p3, u8 p4, int x, int y,
 
 /* Pick the task type for `cls` out of one of five ROM tables. */
 /* Pick the task type for `cls` out of one of five ROM tables. */
-s32 sub_08064fc4(u8 cls, u32 sub, u8 p3, u8 p4, int x, int y, u16 prio)
+s32 CreateActorByKind(u8 cls, u32 sub, u8 p3, u8 p4, int x, int y, u16 prio)
 {
     u32 type;
 
@@ -1632,7 +1632,7 @@ s32 sub_08064fc4(u8 cls, u32 sub, u8 p3, u8 p4, int x, int y, u16 prio)
         while (1)
             ;
     }
-    return sub_08064f28(cls, sub, type, p3, p4, x, y, prio);
+    return CreateActor(cls, sub, type, p3, p4, x, y, prio);
 }
 
 /* Clone the running task's class/sub into a fresh task. */
@@ -1646,7 +1646,7 @@ s32 sub_0806505c(u8 p3, u8 p4, u32 x, u32 y, u16 prio)
 
     t = gCurTask;
     a = t->unk8C;
-    i = sub_08064f28(t->unk72, t->unk76, gTaskSlotTypes[gCurTaskIdx], p3, p4,
+    i = CreateActor(t->unk72, t->unk76, gTaskSlotTypes[gCurTaskIdx], p3, p4,
                      x, y, prio);
     if (i != -1)
     {
@@ -1663,7 +1663,7 @@ s32 sub_08065100(s16 x, s16 y, u32 p2, u8 p3, u8 p4)
     struct Task *t;
     s32 i;
 
-    i = sub_08064f28(0, 40, 48, 0, 0, x, y, 0);
+    i = CreateActor(0, 40, 48, 0, 0, x, y, 0);
     if (i != -1)
     {
         t = &gTasks[i];
@@ -1675,7 +1675,7 @@ s32 sub_08065100(s16 x, s16 y, u32 p2, u8 p3, u8 p4)
 }
 
 /* Is the running task inside the 64px-padded camera window? */
-u8 sub_08065160(void)
+u8 ActorIsInView(void)
 {
     if (gViewRect[0] - 64 < gCurTask->unk48
         && gCurTask->unk48 < gViewRect[1] + 64
@@ -1685,7 +1685,7 @@ u8 sub_08065160(void)
     return 0;
 }
 
-void sub_080651b4(void)
+void ActorDrawWorldInView(void)
 {
     struct Task *p;
     struct Task *t;
@@ -1696,7 +1696,7 @@ void sub_080651b4(void)
         return;
     if (p->unk3C == -1)
         return;
-    if (sub_08065160() == 0)
+    if (ActorIsInView() == 0)
         return;
     if (TaskIsOnScreen() == 0)
         return;
@@ -1707,7 +1707,7 @@ void sub_080651b4(void)
                  (s16)(t->unk4A - gSpriteCameraY));
 }
 
-void sub_0806523c(void)
+void ActorDrawWorldInViewOrDestroy(void)
 {
     struct Task *p;
     struct Task *t;
@@ -1718,7 +1718,7 @@ void sub_0806523c(void)
         return;
     if (p->unk3C == -1)
         return;
-    if (sub_08065160() != 0)
+    if (ActorIsInView() != 0)
     {
         if (TaskIsOnScreen() == 0)
             return;
@@ -1730,7 +1730,7 @@ void sub_0806523c(void)
     }
     else
     {
-        sub_08063fe0();
+        ActorDestroy();
     }
 }
 
@@ -1780,6 +1780,6 @@ void sub_08065350(void)
     else if (sub_08066a80() != 0)
     {
         sub_0800a554();
-        sub_08063fe0();
+        ActorDestroy();
     }
 }

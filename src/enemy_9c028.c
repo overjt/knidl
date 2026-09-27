@@ -11,7 +11,7 @@ extern u32 * gUnk_08745CFC[];
 extern u32 * gUnk_08745D4C[];
 
 /* Externals */
-extern void sub_08063908(u32 def);
+extern void ActorLoadDef(u32 def);
 
 void sub_0809c028(void)
 {
@@ -22,7 +22,7 @@ void sub_0809c028(void)
         p = gUnk_08745D4C[gCurTask->unk73 * 4 + gUnk_03002350 - 1];
     else
         p = gUnk_08745CFC[gCurTask->unk73 * 4 + gUnk_03002350 - 1];
-    sub_08063908(p[0]);
+    ActorLoadDef(p[0]);
     gUnk_02007D00[4] = p[1];
     t = gCurTask;
     t->unk28 = p[2];

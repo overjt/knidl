@@ -20,18 +20,18 @@ extern vs16 gTaskSlotTypes[];
 
 extern void TaskYieldTrampoline(u32 a);
 extern void TaskExitTrampoline(void);
-extern void sub_080656b4(void);
-extern void sub_0806523c(void);
+extern void ActorMove(void);
+extern void ActorDrawWorldInViewOrDestroy(void);
 extern void TaskSetMotionXFacing(s32 a, s32 b);
 extern void TaskSetFrameByFacing(u32 a);
 extern void TaskStop(void);
 extern void sub_0806cd30(void);
-extern u8 sub_08065f2c(s32 i);
-extern void sub_08064a60(void);
+extern u8 TaskHasSameSerial(s32 i);
+extern void TaskFaceLikeParent(void);
 extern s16 RandomSpreadFacing(s32 base, u8 scale, u8 amount);
 extern u16 RandomSpread(s32 base, u8 scale, u8 amount);
-extern s32 sub_08064c1c(u32 type, int xArg, int yArg, int prioArg);
-extern s32 sub_08064d6c(u32 type, s16 xArg, s16 yArg, u8 keepPrio);
+extern s32 CreateChildTask(u32 type, int xArg, int yArg, int prioArg);
+extern s32 CreateChildTaskAt(u32 type, s16 xArg, s16 yArg, u8 keepPrio);
 extern void TaskSetFrame(s32 a);
 
 void sub_0806cd40(void)
@@ -42,14 +42,14 @@ void sub_0806cd40(void)
     s32 j;
 
     t = gCurTask;
-    t->unk00 = (u32)sub_080656b4;
-    t->unk0C = (u32)sub_0806523c;
+    t->unk00 = (u32)ActorMove;
+    t->unk0C = (u32)ActorDrawWorldInViewOrDestroy;
     t->unk42 = 10;
     u = gCurTask;
     u->unk38 = gUnk_0874CB90;
     while (u->unk18 != 0 && gTaskSlotTypes[u->unk44] != -1)
     {
-        if (sub_08065f2c(gCurTask->unk44) != 1)
+        if (TaskHasSameSerial(gCurTask->unk44) != 1)
             break;
         if ((s8)gTasks[j = gCurTask->unk44].unk7C == 3
          && gTasks[j].unk82 == 1)
@@ -89,12 +89,12 @@ void sub_0806ceb8(void)
     struct Task *u;
 
     t = gCurTask;
-    t->unk00 = (u32)sub_080656b4;
-    t->unk0C = (u32)sub_0806523c;
+    t->unk00 = (u32)ActorMove;
+    t->unk0C = (u32)ActorDrawWorldInViewOrDestroy;
     t->unk42 = 10;
     u = gCurTask;
     u->unk38 = gUnk_0874CB90;
-    sub_08064a60();
+    TaskFaceLikeParent();
     gCurTask->unk4C = (RandomSpreadFacing(-8, 1, 8) + gCurTask->unk48) << 16;
     gCurTask->unk50 = (RandomSpread(-8, 1, 8) + gCurTask->unk4A) << 16;
     TaskSetMotionXFacing(0x5A5A5A5A, 0x4000);
@@ -115,12 +115,12 @@ void sub_0806cf70(void)
     struct Task *v;
 
     t = gCurTask;
-    t->unk00 = (u32)sub_080656b4;
-    t->unk0C = (u32)sub_0806523c;
+    t->unk00 = (u32)ActorMove;
+    t->unk0C = (u32)ActorDrawWorldInViewOrDestroy;
     t->unk42 = 10;
     u = gCurTask;
     u->unk38 = gUnk_0874CB90;
-    sub_08064a60();
+    TaskFaceLikeParent();
     TaskSetMotionXFacing(0xFFFDC000, 0x1800);
     v = gCurTask;
     v->unk58 = -0x4000;
@@ -142,11 +142,11 @@ void sub_0806cffc(s16 dx, s16 dy)
     s32 i;
 
     t = gCurTask;
-    i = (s16)sub_08064c1c(146, (s16)(dx + t->unk48), (s16)(dy + t->unk4A), 0);
+    i = (s16)CreateChildTask(146, (s16)(dx + t->unk48), (s16)(dy + t->unk4A), 0);
     if (i != -1)
         gTasks[i].unk43 = 1;
     u = gCurTask;
-    i = (s16)sub_08064c1c(146, (s16)(u->unk48 - dx), (s16)(dy + u->unk4A), 0);
+    i = (s16)CreateChildTask(146, (s16)(u->unk48 - dx), (s16)(dy + u->unk4A), 0);
     if (i != -1)
         gTasks[i].unk43 = 0xFF;
 }
@@ -158,12 +158,12 @@ void sub_0806d08c(s16 a, s16 b, s16 c)
     s32 i;
 
     t = gCurTask;
-    i = (s16)sub_08064c1c(146, (s16)(t->unk48 + t->unk43 * a),
+    i = (s16)CreateChildTask(146, (s16)(t->unk48 + t->unk43 * a),
                           (s16)(c + t->unk4A), 0);
     if (i != -1)
         gTasks[i].unk43 = gCurTask->unk43;
     u = gCurTask;
-    i = (s16)sub_08064c1c(146, (s16)(u->unk48 - b * u->unk43),
+    i = (s16)CreateChildTask(146, (s16)(u->unk48 - b * u->unk43),
                           (s16)(c + u->unk4A), 0);
     if (i != -1)
         gTasks[i].unk43 = -gCurTask->unk43;
@@ -176,8 +176,8 @@ void sub_0806d148(void)
     struct Task *v;
 
     t = gCurTask;
-    t->unk00 = (u32)sub_080656b4;
-    t->unk0C = (u32)sub_0806523c;
+    t->unk00 = (u32)ActorMove;
+    t->unk0C = (u32)ActorDrawWorldInViewOrDestroy;
     t->unk42 = 10;
     u = gCurTask;
     u->unk38 = gUnk_0874CB90;
@@ -203,7 +203,7 @@ s32 sub_0806d1e8(s16 a, s16 b)
     struct Task *p;
     s32 i;
 
-    i = sub_08064d6c(147, 0, 0, 0);
+    i = CreateChildTaskAt(147, 0, 0, 0);
     if (i != -1)
     {
         p = &gTasks[i];

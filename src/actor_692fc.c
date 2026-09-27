@@ -5,8 +5,8 @@
  *
  * The player-input dispatch layer of the actor core.  Six probe wrappers
  * (0x080694E0-0x080696A0) snapshot the current task's directional state into a
- * 6-byte stack record (sub_08069a64) and hand it to one of the input decoders
- * at 0x0801BCAC..0x0801C3A4; the three big dispatchers (sub_080692fc,
+ * 6-byte stack record (ActorGetTerrainBox) and hand it to one of the input decoders
+ * at 0x0801BCAC..0x0801C3A4; the three big dispatchers (ActorCollideTerrain,
  * sub_080696a0, sub_08069888) then walk the actor's seven-entry handler table
  * at Actor.unk54, calling the first handler that claims the frame.  The tail
  * of the module is the class-1 "carried" task body: state machine entry
@@ -17,7 +17,7 @@
 #include "global.h"
 #include "task.h"
 
-/* The 6-byte directional record sub_08069a64 fills on the stack: three raw
+/* The 6-byte directional record ActorGetTerrainBox fills on the stack: three raw
    bytes copied from Actor.unk50 plus three that are negated when the task
    faces left (Task.unk43 == -1). */
 struct InputState
@@ -80,15 +80,15 @@ extern u32 sub_0801c3a4(struct InputState *p);
 extern u32 sub_0802205c(struct InputState *p);
 extern void sub_080224f8(s32 i);
 extern void sub_0804087c(s32 a);
-extern void sub_0806395c(u8 v);
-extern void sub_08063990(u32 v);
-extern s32 sub_08063dac(u32 i);
-extern void sub_08063fe0(void);
-extern s32 sub_08064d6c(u32 type, s16 xArg, s16 yArg, u8 keepPrio);
-extern void sub_080649b4(s32 a, s32 b);
-extern void sub_08065e1c(u32 def, u32 which);
-extern void sub_08068e04(void);
-extern u32 sub_0806a344(void);
+extern void ActorSetState(u8 v);
+extern void ActorSetTerrainHandlers(u32 v);
+extern s32 TaskGetFacingToward(u32 i);
+extern void ActorDestroy(void);
+extern s32 CreateChildTaskAt(u32 type, s16 xArg, s16 yArg, u8 keepPrio);
+extern void ActorAwardScore(s32 a, s32 b);
+extern void ActorPlaySfx(u32 def, u32 which);
+extern void ActorCheckHits(void);
+extern u32 ActorDie(void);
 extern void sub_0806b26c(void);
 extern u32 sub_0806bb7c(void);
 extern void sub_0806d65c(void);
@@ -99,9 +99,9 @@ extern void sub_080b4240(void);
 extern void sub_080b460c(void);
 extern void sub_080b54d0(s32 i);
 
-void sub_08069a64(struct InputState *out);
+void ActorGetTerrainBox(struct InputState *out);
 u32 sub_08069ae4(s8 a);
-u32 sub_08069b44(void);
+u32 ActorReactToHit(void);
 s8 sub_08069c48(void);
 void sub_08069c8c(void);
 void sub_08069d78(void);
@@ -114,7 +114,7 @@ void sub_08069fb0(void);
 void sub_0806a158(void);
 u32 sub_0806a25c(void);
 
-u32 sub_080692fc(void)
+u32 ActorCollideTerrain(void)
 {
     struct Task *t;
     struct Task *u;
@@ -134,11 +134,11 @@ u32 sub_080692fc(void)
     i = 4;
     k = t->unk7A;
     f = t->unk7B;
-    sub_08069a64(&v);
+    ActorGetTerrainBox(&v);
     sub_0801bcac(&v);
     u = gCurTask;
     if ((u->unk7B & 0x80) != 0)
-        sub_08064d6c(140, u->unk48, ((s16 *)gUnk_03005550)[i], 0);
+        CreateChildTaskAt(140, u->unk48, ((s16 *)gUnk_03005550)[i], 0);
     if ((f & 1) != 0)
         goto b1;
     if ((f & 0x40) == 0)
@@ -215,7 +215,7 @@ u32 sub_080694e0(void)
 
     if (gTaskSlotTypes[gCurTaskIdx] == -1)
         return 0;
-    sub_08069a64(&v);
+    ActorGetTerrainBox(&v);
     sub_0802205c(&v);
 }
 
@@ -226,7 +226,7 @@ u32 sub_0806951c(void)
 
     if (gTaskSlotTypes[gCurTaskIdx] != -1)
     {
-        sub_08069a64(&v);
+        ActorGetTerrainBox(&v);
         sub_0801c230(&v);
         if ((*(u32 *)gUnk_03005550 & 0x00FFFFFF) != 0)
             r = 1;
@@ -244,7 +244,7 @@ u32 sub_0806956c(void)
 
     if (gTaskSlotTypes[gCurTaskIdx] != -1)
     {
-        sub_08069a64(&v);
+        ActorGetTerrainBox(&v);
         sub_0801c030(&v);
         if ((*(u32 *)gUnk_03005550 & 0x00FFFF00) != 0)
             r = 1;
@@ -262,7 +262,7 @@ u32 sub_080695bc(void)
 
     if (gTaskSlotTypes[gCurTaskIdx] != -1)
     {
-        sub_08069a64(&v);
+        ActorGetTerrainBox(&v);
         sub_0801bf1c(&v);
         if (gUnk_03005550[0] != 0)
             r = 1;
@@ -281,7 +281,7 @@ u32 sub_08069604(void)
     if (gTaskSlotTypes[gCurTaskIdx] == -1)
         return 0;
     r = 0;
-    sub_08069a64(&v);
+    ActorGetTerrainBox(&v);
     sub_0801c30c(&v);
     if (gUnk_03005550[0] != 0 || gUnk_03005550[4] != 0 || gUnk_03005550[1] != 0)
         r = 1;
@@ -295,7 +295,7 @@ u32 sub_08069660(void)
 
     if (gTaskSlotTypes[gCurTaskIdx] != -1)
     {
-        sub_08069a64(&v);
+        ActorGetTerrainBox(&v);
         r = (u8)sub_0801c3a4(&v);
     }
     else
@@ -325,12 +325,12 @@ u32 sub_080696a0(void)
     i = 4;
     k = t->unk7A;
     f = t->unk7B;
-    sub_08069a64(&v);
+    ActorGetTerrainBox(&v);
     sub_0801bde0(&v);
     sub_080b460c();
     u = gCurTask;
     if ((u->unk7B & 0x80) != 0)
-        sub_08064d6c(140, u->unk48, ((s16 *)gUnk_03005550)[i], 0);
+        CreateChildTaskAt(140, u->unk48, ((s16 *)gUnk_03005550)[i], 0);
     if ((f & 1) != 0)
         goto b1;
     if ((f & 0x40) == 0)
@@ -421,11 +421,11 @@ u32 sub_08069888(void)
     i = 4;
     k = t->unk7A;
     f = t->unk7B;
-    sub_08069a64(&v);
+    ActorGetTerrainBox(&v);
     sub_0801c12c(&v);
     u = gCurTask;
     if ((u->unk7B & 0x80) != 0)
-        sub_08064d6c(140, u->unk48, ((s16 *)gUnk_03005550)[i], 0);
+        CreateChildTaskAt(140, u->unk48, ((s16 *)gUnk_03005550)[i], 0);
     if ((f & 1) == 0)
         goto b1;
     if ((f & 0x40) == 0)
@@ -498,7 +498,7 @@ u32 sub_080699a8(void)
     return 0;
 }
 
-void sub_08069a64(struct InputState *out)
+void ActorGetTerrainBox(struct InputState *out)
 {
     struct Task *t;
     struct Actor *a;
@@ -559,7 +559,7 @@ u32 sub_08069ae4(s8 a)
     return r;
 }
 
-u32 sub_08069b44(void)
+u32 ActorReactToHit(void)
 {
     if (gTaskSlotTypes[gCurTaskIdx] == -1)
         return 0;
@@ -814,8 +814,8 @@ void sub_08069f70(void)
 
 void sub_08069fb0(void)
 {
-    sub_08068e04();
-    sub_08069b44();
+    ActorCheckHits();
+    ActorReactToHit();
     sub_08069f70();
     sub_08069f0c();
 }
@@ -835,7 +835,7 @@ void sub_0806a008(void)
 
     t = gCurTask;
     if (t->unk72 == 1 || t->unk72 == 2)
-        gCurTask->unk43 = sub_08063dac(t->unk7F);
+        gCurTask->unk43 = TaskGetFacingToward(t->unk7F);
 }
 
 s16 sub_0806a03c(void)
@@ -881,7 +881,7 @@ void sub_0806a0cc(void)
         v = 166;
         break;
     }
-    sub_08065e1c(v, 0);
+    ActorPlaySfx(v, 0);
 }
 
 void sub_0806a0f0(s32 a)
@@ -896,11 +896,11 @@ void sub_0806a0f0(s32 a)
     else
         t->unk18 = a;
     b->unk05 = 2;
-    sub_08063990((u32)gUnk_0873F910);
+    ActorSetTerrainHandlers((u32)gUnk_0873F910);
     if (gCurTask->unk7A & 1)
-        sub_0806395c(1);
+        ActorSetState(1);
     else
-        sub_0806395c(0);
+        ActorSetState(0);
     TaskSetEntry(sub_0806b26c, gCurTaskIdx);
 }
 
@@ -920,28 +920,28 @@ void sub_0806a158(void)
         if (gLocalPlayer == t->unk7E)
             PlaySfx(220);
         sub_08009e60(1, gCurTask->unk7E);
-        sub_08063fe0();
+        ActorDestroy();
         break;
     case 3:
         if (gLocalPlayer == t->unk7E)
             PlaySfx(198);
         sub_0804087c(gCurTask->unk7E);
-        sub_08063fe0();
+        ActorDestroy();
         break;
     case 2:
         if (gLocalPlayer == t->unk7E)
             PlaySfx(198);
-        sub_0806395c(0);
+        ActorSetState(0);
         TaskSetEntry(sub_080b4240, gCurTaskIdx);
         break;
     case 4:
         if (gLocalPlayer == t->unk7E)
             PlaySfx(198);
-        sub_0806395c(1);
+        ActorSetState(1);
         TaskSetEntry(sub_080b4240, gCurTaskIdx);
         break;
     default:
-        sub_08063fe0();
+        ActorDestroy();
         break;
     }
 }
@@ -961,14 +961,14 @@ u32 sub_0806a25c(void)
         sub_0800a42c();
     t = gCurTask;
     if (t->unk72 == 1)
-        sub_080649b4(t->unk7F, 1);
+        ActorAwardScore(t->unk7F, 1);
     else
-        sub_080649b4(t->unk7F, 2);
+        ActorAwardScore(t->unk7F, 2);
     if (p != NULL)
     {
         if (p->unk01 != -1)
         {
-            TaskSetEntry(sub_0806a344, gCurTaskIdx);
+            TaskSetEntry(ActorDie, gCurTaskIdx);
             r = 1;
         }
         else

@@ -64,7 +64,7 @@ struct BodyBox
 
 /* Actor-vs-player hit test cells (M17's src/actor_673ec.c widths). */
 extern u8 gUnk_03001F24;
-extern s8 gUnk_03002140;
+extern s8 gAttackHitDuration;
 extern u8 gUnk_03002144;
 extern u16 gUnk_0300214C;           /* actor y */
 extern s16 gViewRect[];         /* camera rectangle: left, right, top, bottom */
@@ -74,7 +74,7 @@ extern u16 gUnk_03002368;
 extern struct AttackBox *gUnk_0300236C; /* the actor's attack box (s32 in actor_673ec.c) */
 extern u8 gUnk_03002380;            /* hit result */
 extern u16 gUnk_03002394;
-extern s16 gUnk_0300239C;
+extern s16 gAttackFacing;
 extern u8 gUnk_030023A4;
 extern u8 gUnk_030023D0;
 extern u8 gUnk_030023DC;
@@ -105,7 +105,7 @@ void sub_0801b7dc(void)
         gUnk_030054A4 = (x - (u16)gViewRect[0]) + gUnk_0300236C->unk02;
         gUnk_03005490 = (x - (u16)gViewRect[0]) + gUnk_0300236C->unk04;
     }
-    else if (gUnk_0300239C == 1)
+    else if (gAttackFacing == 1)
     {
         s32 x;
         gUnk_03002358 = x = gUnk_0300236C->unk00 + gUnk_03002358;
@@ -160,7 +160,7 @@ void sub_0801b9e4(void)
     if (gUnk_03002380 == 6 || gUnk_03002380 == 8)
         gUnk_03002354 = gCurTask->unk75;
     else
-        gUnk_03002354 = gUnk_03002140;
+        gUnk_03002354 = gAttackHitDuration;
     /* gUnk_03002358/gUnk_0300214C are read signed here (ldrsh) */
     gUnk_03001F04 = (gUnk_0300549C + (s16)gUnk_03002358) >> 1;
     gUnk_03002148 = (gUnk_030054A0 + (s16)gUnk_0300214C) >> 1;

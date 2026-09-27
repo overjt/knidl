@@ -41,15 +41,15 @@ extern void TaskSetFrameNoFlip(s32 a);
 extern void sub_0800a42c(void);
 extern void sub_0800a554(void);
 extern void sub_080262e8(u8 a);
-extern void sub_0806395c(u16 v);
-extern void sub_08063fe0(void);
-extern s32 sub_08064f28(u8 cls, u32 sub, u32 type, u8 p3, u8 p4, int x, int y, u32 prio);
+extern void ActorSetState(u16 v);
+extern void ActorDestroy(void);
+extern s32 CreateActor(u8 cls, u32 sub, u32 type, u8 p3, u8 p4, int x, int y, u32 prio);
 extern void sub_08066544(void);
 extern void sub_08067108(void);
 extern void sub_08067114(void);
-extern u32 sub_08068e04(void);
+extern u32 ActorCheckHits(void);
 extern u8 sub_0806951c(void);
-extern u32 sub_08069b44(void);
+extern u32 ActorReactToHit(void);
 extern void sub_0809c028(void);
 extern void sub_0809c0a8(void);
 extern void sub_0809fbd0(void);
@@ -68,7 +68,7 @@ void sub_0809ba44(void)
 
     t->unk04 = (u32)sub_0809ba94;
     t->unk2C = -gTasks[t->unk44].unk43;
-    sub_0806395c(0);
+    ActorSetState(0);
     CallTableEntry(gCurTask->unk14, 2, gUnk_08745B20);
 }
 
@@ -80,12 +80,12 @@ void sub_0809ba94(void)
     }
     else
     {
-        sub_0806395c(1);
+        ActorSetState(1);
         TaskSetEntry(sub_0809baec, gCurTaskIdx);
     }
     if (gCurTask->unk14 != 1)
-        sub_08068e04();
-    sub_08069b44();
+        ActorCheckHits();
+    ActorReactToHit();
 }
 
 void sub_0809baec(void)
@@ -135,7 +135,7 @@ void sub_0809bb6c(void)
     t = gCurTask;
     t->unk3C += 1;
     TaskYieldTrampoline(2);
-    sub_08063fe0();
+    ActorDestroy();
     TaskSleepForever();
 }
 
@@ -182,7 +182,7 @@ void sub_0809bc1c(void)
     {
         t = gCurTask;
         q = (u8 *)(t->unk28 + (t->unk18 << 3));
-        r = sub_08064f28(3, 9, 58, q[1], q[0], ((s16 *)q)[1], ((s16 *)q)[2],
+        r = CreateActor(3, 9, 58, q[1], q[0], ((s16 *)q)[1], ((s16 *)q)[2],
                          gUnk_08745CEC[q[0]]);
         t2 = gCurTask;
         p2 = &t2->unk46;
@@ -194,7 +194,7 @@ void sub_0809bc1c(void)
     {
         u = gCurTask;
         q = (u8 *)(u->unk2C + (u->unk1C << 3));
-        r = sub_08064f28(3, 9, 58, q[1], q[0], ((s16 *)q)[1], ((s16 *)q)[2],
+        r = CreateActor(3, 9, 58, q[1], q[0], ((s16 *)q)[1], ((s16 *)q)[2],
                          gUnk_08745CEC[q[0]]);
         u2 = gCurTask;
         p2 = &u2->unk46;
@@ -206,7 +206,7 @@ void sub_0809bc1c(void)
     {
         v = gCurTask;
         q = (u8 *)(v->unk30 + (v->unk20 << 3));
-        r = sub_08064f28(3, 9, 58, q[1], q[0], ((s16 *)q)[1], ((s16 *)q)[2],
+        r = CreateActor(3, 9, 58, q[1], q[0], ((s16 *)q)[1], ((s16 *)q)[2],
                          gUnk_08745CEC[q[0]]);
         v2 = gCurTask;
         p2 = &v2->unk46;
@@ -218,7 +218,7 @@ void sub_0809bc1c(void)
     {
         w = gCurTask;
         q = (u8 *)(w->unk34 + (w->unk24 << 3));
-        r = sub_08064f28(3, 9, 58, q[1], q[0], ((s16 *)q)[1], ((s16 *)q)[2],
+        r = CreateActor(3, 9, 58, q[1], q[0], ((s16 *)q)[1], ((s16 *)q)[2],
                          gUnk_08745CEC[q[0]]);
         w2 = gCurTask;
         p2 = &w2->unk46;
@@ -247,7 +247,7 @@ void sub_0809bc1c(void)
     {
         sub_080262e8(gCurTask->unk73);
         sub_0800a554();
-        sub_08063fe0();
+        ActorDestroy();
     }
 }
 

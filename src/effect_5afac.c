@@ -160,7 +160,7 @@ void sub_0805deac(void);
 void sub_0805e15c(void);
 void sub_0805e1bc(void);
 void sub_0805e24c(void);
-void sub_080656b4(void);
+void ActorMove(void);
 void sub_08068a8c(u32 a, u8 flag);
 void sub_0806d4e4(s32 a, s32 b);
 
@@ -879,7 +879,7 @@ void sub_0805c150(void)
 
 void sub_0805c204(void)
 {
-    gCurTask->unk00 = (u32)sub_080656b4;
+    gCurTask->unk00 = (u32)ActorMove;
     gCurTask->unk0C = (u32)TaskDrawWorld;
     gCurTask->unk42 = 11;
     gCurTask->unk38 = gUnk_0874C890;
@@ -949,7 +949,7 @@ void sub_0805c204(void)
 
 void sub_0805c410(void)
 {
-    gCurTask->unk00 = (u32)sub_080656b4;
+    gCurTask->unk00 = (u32)ActorMove;
     gCurTask->unk0C = (u32)TaskDrawWorld;
     gCurTask->unk42 = 13;
     gCurTask->unk38 = gUnk_0874C890;

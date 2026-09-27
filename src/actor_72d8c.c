@@ -39,7 +39,7 @@ extern s32 sub_08025f00();
 extern s32 sub_08026278();
 extern s32 sub_08027798();
 extern s32 sub_080277f0();
-extern s32 sub_08064d6c(u32 type, s16 xArg, s16 yArg, u8 keepPrio);
+extern s32 CreateChildTaskAt(u32 type, s16 xArg, s16 yArg, u8 keepPrio);
 extern void TaskExitTrampoline(void);
 extern void TaskYieldTrampoline(u32 a);
 extern void CallTableEntry(u32 a, u32 b, u32 *c);
@@ -54,9 +54,9 @@ extern void TaskStop(void);
 extern void TaskSetFrame(s32 a);
 extern void sub_0801bcac(u32 *p);
 extern void sub_080261d4(u32 a);
-extern void sub_08063fe0(void);
-extern void sub_08064970(void);
-extern void sub_0806572c(void);
+extern void ActorDestroy(void);
+extern void TaskGetScreenPos(void);
+extern void TaskMoveRelativeToView(void);
 extern void sub_0806d4e4(u32 a, s32 b);
 extern void sub_0807186c(int a, int b, int c, int d);
 extern void sub_08071898(void);
@@ -78,7 +78,7 @@ void sub_08072d8c(void)
 
         t->unk4C = (t->unk48 - gViewRect[0]) << 16;
         t->unk50 = (t->unk4A - gViewRect[2]) << 16;
-        t->unk00 = (u32)sub_0806572c;
+        t->unk00 = (u32)TaskMoveRelativeToView;
         t->unk24 = 0;
     }
     {
@@ -329,7 +329,7 @@ void sub_080731d0(void)
 
         t->unk4C = 0x200000;
         t->unk50 = -0x40000;
-        t->unk00 = (u32)sub_0806572c;
+        t->unk00 = (u32)TaskMoveRelativeToView;
     }
     sub_08071898();
     TaskStop();
@@ -352,7 +352,7 @@ void sub_080731d0(void)
     else
         sub_08071c38(5);
     gUnk_020061E0 = 0;
-    sub_08063fe0();
+    ActorDestroy();
 }
 
 void sub_0807328c(void)
@@ -368,7 +368,7 @@ void sub_08073298(void)
 
         t->unk4C = (t->unk48 - gViewRect[0]) << 16;
         t->unk50 = (t->unk4A - gViewRect[2]) << 16;
-        t->unk00 = (u32)sub_0806572c;
+        t->unk00 = (u32)TaskMoveRelativeToView;
         t->unk24 = 0;
     }
     {
@@ -425,7 +425,7 @@ void sub_08073298(void)
     TaskYieldTrampoline(10);
     gCurTask->unk60 = 0x3000;
     TaskYieldTrampoline(8);
-    sub_08064d6c(148, gCurTask->unk48, gCurTask->unk4A + 16, 0);
+    CreateChildTaskAt(148, gCurTask->unk48, gCurTask->unk4A + 16, 0);
     sub_080261d4(2);
     PlaySfx(272);
     sub_08071898();
@@ -512,7 +512,7 @@ void sub_08073584(void)
 
         t->unk4C = (t->unk48 - gViewRect[0]) << 16;
         t->unk50 = (t->unk4A - gViewRect[2]) << 16;
-        t->unk00 = (u32)sub_0806572c;
+        t->unk00 = (u32)TaskMoveRelativeToView;
         t->unk24 = 0;
     }
     {
@@ -555,7 +555,7 @@ void sub_08073584(void)
         t->unk58 = -0x10000;
     }
     TaskYieldTrampoline(8);
-    sub_08064d6c(148, gCurTask->unk48, gCurTask->unk4A + 16, 0);
+    CreateChildTaskAt(148, gCurTask->unk48, gCurTask->unk4A + 16, 0);
     sub_080261d4(2);
     PlaySfx(272);
     {
@@ -694,7 +694,7 @@ void sub_08073804(void)
 
         t->unk4C = (t->unk48 - gViewRect[0]) << 16;
         t->unk50 = (t->unk4A - gViewRect[2]) << 16;
-        t->unk00 = (u32)sub_0806572c;
+        t->unk00 = (u32)TaskMoveRelativeToView;
         t->unk24 = 0;
         t->unk18 = 0x3F0000;
         t->unk28 = -0x5000;
@@ -781,7 +781,7 @@ void sub_080739bc(void)
         else
             sub_08071c38(3);
         gUnk_020061E0 = 0;
-        sub_08063fe0();
+        ActorDestroy();
     }
 }
 
@@ -793,7 +793,7 @@ void sub_08073a54(void)
 
         t->unk4C = (t->unk48 - gViewRect[0]) << 16;
         t->unk50 = (t->unk4A - gViewRect[2]) << 16;
-        t->unk00 = (u32)sub_0806572c;
+        t->unk00 = (u32)TaskMoveRelativeToView;
         t->unk24 = 0;
     }
     {
@@ -889,7 +889,7 @@ void sub_08073a54(void)
     TaskYieldTrampoline(2);
     gCurTask->unk58 = 0x10000;
     TaskYieldTrampoline(2);
-    sub_08064d6c(148, gCurTask->unk48, gCurTask->unk4A + 16, 0);
+    CreateChildTaskAt(148, gCurTask->unk48, gCurTask->unk4A + 16, 0);
     sub_080261d4(2);
     PlaySfx(272);
     gCurTask->unk58 = 0x2000;
@@ -932,7 +932,7 @@ void sub_08073ce0(void)
 
         t->unk4C = (t->unk48 - gViewRect[0]) << 16;
         t->unk50 = (t->unk4A - gViewRect[2]) << 16;
-        t->unk00 = (u32)sub_0806572c;
+        t->unk00 = (u32)TaskMoveRelativeToView;
         t->unk24 = 0;
     }
     sub_08071898();
@@ -982,7 +982,7 @@ void sub_08073e0c(void)
 
         t->unk4C = (t->unk48 - gViewRect[0]) << 16;
         t->unk50 = (t->unk4A - gViewRect[2]) << 16;
-        t->unk00 = (u32)sub_0806572c;
+        t->unk00 = (u32)TaskMoveRelativeToView;
     }
     {
         s32 r;
@@ -1021,7 +1021,7 @@ void sub_08073e80(void)
         else
             sub_08071c38(3);
         gUnk_020061E0 = 0;
-        sub_08063fe0();
+        ActorDestroy();
     }
 }
 
@@ -1132,7 +1132,7 @@ void sub_080740bc(void)
 
         t->unk4C = 0;
         t->unk50 = -0x220000;
-        t->unk00 = (u32)sub_0806572c;
+        t->unk00 = (u32)TaskMoveRelativeToView;
     }
     sub_08071898();
     TaskStop();
@@ -1304,7 +1304,7 @@ void sub_080740bc(void)
             ;
     sub_08071bb0(7);
     gUnk_020061E0 = 0;
-    sub_08063fe0();
+    ActorDestroy();
 }
 
 void sub_080743c8(void)
@@ -1321,7 +1321,7 @@ void sub_080743cc(void)
 
 void sub_080743f0(void)
 {
-    sub_08064970();
+    TaskGetScreenPos();
     if (gCurTask->unk24 == 0 && gUnk_030023D4 <= 0)
     {
         sub_08025f00();
@@ -1374,7 +1374,7 @@ void sub_0807447c(void)
         else
             sub_08071c38(1);
         gUnk_020061E0 = 0;
-        sub_08063fe0();
+        ActorDestroy();
     }
 }
 
@@ -1701,7 +1701,7 @@ void sub_08074bb0(int a, int b, int c)
     u8 z = c;
     s32 id;
 
-    id = sub_08064d6c(165, gCurTask->unk48, gCurTask->unk4A, 0);
+    id = CreateChildTaskAt(165, gCurTask->unk48, gCurTask->unk4A, 0);
     gTasks[id].unk14 = z;
     if (z != 2)
     {

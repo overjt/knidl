@@ -7,7 +7,7 @@
  * three-stage entrance at sub_0806d22c (three TaskSetMotionXFacing sweeps with the
  * position recomputed from the parent task each time), the four short
  * animation-table players sub_0806d65c/6e4/730/77c and their dispatch
- * wrappers sub_0806d554/564/574/5a4/5b8/5cc, the sub_08064d34 spawner
+ * wrappers sub_0806d554/564/574/5a4/5b8/5cc, the CreateChildTaskHere spawner
  * helpers sub_0806d4e4/d928/da3c, the eight-way "carried" body
  * sub_0806d7ec, the gTasks[].unk73-keyed body sub_0806daec (with its
  * per-frame mover sub_0806da74), the two-sprite draw callback sub_0806dca0,
@@ -47,25 +47,25 @@ extern u32 gUnk_0874CC48[];
 
 extern void TaskYieldTrampoline(u32 a);
 extern void TaskExitTrampoline(void);
-extern void sub_080656b4(void);
-extern void sub_0806523c(void);
-extern void sub_08064a60(void);
+extern void ActorMove(void);
+extern void ActorDrawWorldInViewOrDestroy(void);
+extern void TaskFaceLikeParent(void);
 extern void TaskSetMotionXFacing(s32 a, s32 b);
 extern void TaskSetFrameByFacing(u32 a);
 extern void sub_0806cd30(void);
 extern void TaskStop(void);
-extern u8 sub_08065f2c(s32 i);
+extern u8 TaskHasSameSerial(s32 i);
 extern void TaskFree(s32 i);
-extern s32 sub_08064d34(u32 a, u32 b);
+extern s32 CreateChildTaskHere(u32 a, u32 b);
 extern void TaskMoveRelativeToParent(void);
-extern void sub_080651b4(void);
+extern void ActorDrawWorldInView(void);
 extern void TaskMove(void);
 extern s32 RandomRange(s32 a);
 extern void TaskSleepForever(void);
-extern void sub_08063fe0(void);
+extern void ActorDestroy(void);
 extern void sub_0806af78(void);
 extern void sub_0806aaa4(void);
-extern u8 sub_08065160(void);
+extern u8 ActorIsInView(void);
 extern s32 TaskIsOnScreen(void);
 extern s32 QueueSprite(u32 a, u32 b, u32 c, u32 d, s32 e, s32 f);
 extern s32 RandomSpread(s32 a, s32 b, s32 c);
@@ -92,13 +92,13 @@ void sub_0806d22c(void)
     struct Task *y;
 
     t = gCurTask;
-    t->unk00 = (u32)sub_080656b4;
-    t->unk0C = (u32)sub_0806523c;
+    t->unk00 = (u32)ActorMove;
+    t->unk0C = (u32)ActorDrawWorldInViewOrDestroy;
     t->unk42 = 10;
     u = gCurTask;
     u->unk38 = gUnk_0874CB90;
     u->unk04 = (u32)sub_0806d49c;
-    sub_08064a60();
+    TaskFaceLikeParent();
 
     v = gCurTask;
     v->unk4C = (gTasks[v->unk44].unk48 + -v->unk43 * v->unk24) << 16;
@@ -166,7 +166,7 @@ void sub_0806d22c(void)
 void sub_0806d49c(void)
 {
     if (gTaskSlotTypes[gCurTask->unk44] == -1
-     || sub_08065f2c(gCurTask->unk44) != 1)
+     || TaskHasSameSerial(gCurTask->unk44) != 1)
         TaskFree(gCurTaskIdx);
 }
 
@@ -178,22 +178,22 @@ void sub_0806d4e4(u32 a, s32 b)
     switch (a)
     {
     case 1:
-        i = sub_08064d34(148, 0);
+        i = CreateChildTaskHere(148, 0);
         break;
     case 0:
-        i = sub_08064d34(149, 0);
+        i = CreateChildTaskHere(149, 0);
         break;
     case 2:
-        i = sub_08064d34(150, 0);
+        i = CreateChildTaskHere(150, 0);
         break;
     case 4:
-        i = sub_08064d34(151, 0);
+        i = CreateChildTaskHere(151, 0);
         break;
     case 3:
-        i = sub_08064d34(152, 0);
+        i = CreateChildTaskHere(152, 0);
         break;
     case 5:
-        i = sub_08064d34(153, 0);
+        i = CreateChildTaskHere(153, 0);
         break;
     }
     if (i != -1 && b > 0)
@@ -261,13 +261,13 @@ void sub_0806d5e0(void)
     if (--t->unk24 <= 0)
     {
         t->unk04 = 0;
-        t->unk00 = (u32)sub_080656b4;
+        t->unk00 = (u32)ActorMove;
         t->unk4C = t->unk48 << 16;
         t->unk50 = t->unk4A << 16;
     }
     else
     {
-        if (gTaskSlotTypes[t->unk44] == -1 || sub_08065f2c(t->unk44) != 1)
+        if (gTaskSlotTypes[t->unk44] == -1 || TaskHasSameSerial(t->unk44) != 1)
             TaskFree(gCurTaskIdx);
     }
 }
@@ -279,7 +279,7 @@ void sub_0806d65c(void)
     s32 i;
 
     t = gCurTask;
-    t->unk0C = (u32)sub_080651b4;
+    t->unk0C = (u32)ActorDrawWorldInView;
     t->unk38 = gUnk_0874C9D8;
     t->unk42 = 10;
     u = gCurTask;
@@ -306,7 +306,7 @@ void sub_0806d6e4(void)
     s32 i;
 
     t = gCurTask;
-    t->unk0C = (u32)sub_080651b4;
+    t->unk0C = (u32)ActorDrawWorldInView;
     t->unk38 = gUnk_0874CA78;
     t->unk42 = 10;
     gCurTask->unk40 = 0;
@@ -323,7 +323,7 @@ void sub_0806d730(void)
     s32 i;
 
     t = gCurTask;
-    t->unk0C = (u32)sub_080651b4;
+    t->unk0C = (u32)ActorDrawWorldInView;
     t->unk38 = gUnk_0874CA1C;
     t->unk42 = 4;
     gCurTask->unk40 = 0;
@@ -340,7 +340,7 @@ void sub_0806d77c(void)
     struct Task *u;
 
     t = gCurTask;
-    t->unk0C = (u32)sub_080651b4;
+    t->unk0C = (u32)ActorDrawWorldInView;
     t->unk38 = gUnk_0874CAD8;
     t->unk42 = 10;
     u = gCurTask;
@@ -370,7 +370,7 @@ void sub_0806d7ec(void)
 
     t = gCurTask;
     t->unk00 = (u32)TaskMove;
-    t->unk0C = (u32)sub_080651b4;
+    t->unk0C = (u32)ActorDrawWorldInView;
     t->unk42 = 8;
     gCurTask->unk38 = gUnk_0874C500;
     n = RandomRange(8);
@@ -426,7 +426,7 @@ void sub_0806d928(void)
 
     for (i = 0; i < 8; i++)
     {
-        j = sub_08064d34(155, 0);
+        j = CreateChildTaskHere(155, 0);
         if (j != -1)
         {
             p = &gTasks[j];
@@ -444,8 +444,8 @@ void sub_0806d95c(void)
     s32 k;
 
     t = gCurTask;
-    t->unk00 = (u32)sub_080656b4;
-    t->unk0C = (u32)sub_0806523c;
+    t->unk00 = (u32)ActorMove;
+    t->unk0C = (u32)ActorDrawWorldInViewOrDestroy;
     t->unk42 = 10;
     u = gCurTask;
     u->unk38 = gUnk_0874CC60;
@@ -472,7 +472,7 @@ void sub_0806d9d4(void)
     {
         if (t->unk3C > 7)
         {
-            sub_08063fe0();
+            ActorDestroy();
         }
         else
         {
@@ -513,7 +513,7 @@ void sub_0806da3c(u32 a, u32 b)
     s32 i;
     struct Task *p;
 
-    i = sub_08064d34(156, 0);
+    i = CreateChildTaskHere(156, 0);
     if (i != -1)
     {
         p = &gTasks[i];
@@ -551,8 +551,8 @@ void sub_0806daec(void)
     struct Task *u;
 
     t = gCurTask;
-    t->unk00 = (u32)sub_080656b4;
-    t->unk0C = (u32)sub_080651b4;
+    t->unk00 = (u32)ActorMove;
+    t->unk0C = (u32)ActorDrawWorldInView;
     t->unk38 = gUnk_08752E48;
     t->unk42 = 10;
     gCurTask->unk40 = 0;
@@ -638,7 +638,7 @@ void sub_0806dca0(void)
         return;
     if (p->unk3C == -1)
         return;
-    if (sub_08065160() == 0)
+    if (ActorIsInView() == 0)
         return;
     if (TaskIsOnScreen() == 0)
         return;
@@ -660,7 +660,7 @@ void sub_0806dd90(void)
     s32 i;
 
     t = gCurTask;
-    t->unk00 = (u32)sub_080656b4;
+    t->unk00 = (u32)ActorMove;
     t->unk0C = (u32)sub_0806dca0;
     t->unk38 = gUnk_08752D20;
     t->unk42 = 10;
@@ -684,7 +684,7 @@ void sub_0806dd90(void)
 void sub_0806de18(void)
 {
     if (gTaskSlotTypes[gCurTask->unk44] == -1
-     || sub_08065f2c(gCurTask->unk44) != 1)
+     || TaskHasSameSerial(gCurTask->unk44) != 1)
         TaskFree(gCurTaskIdx);
 }
 
@@ -695,7 +695,7 @@ void sub_0806de60(void)
 
     t = gCurTask;
     t->unk00 = (u32)TaskUpdatePixelPos;
-    t->unk0C = (u32)sub_080651b4;
+    t->unk0C = (u32)ActorDrawWorldInView;
     t->unk38 = gUnk_0874CC84;
     t->unk42 = 10;
     u = gCurTask;
@@ -739,13 +739,13 @@ void sub_0806df28(s32 a, s32 b)
     switch (a)
     {
     case 1:
-        c = sub_08064d34(160, 0);
+        c = CreateChildTaskHere(160, 0);
         break;
     case 2:
-        c = sub_08064d34(161, 0);
+        c = CreateChildTaskHere(161, 0);
         break;
     case 3:
-        c = sub_08064d34(159, 0);
+        c = CreateChildTaskHere(159, 0);
         break;
     case 0:
     default:
@@ -766,7 +766,7 @@ void sub_0806df98(void)
 
     t = gCurTask;
     t->unk00 = (u32)TaskMoveRelativeToParent;
-    t->unk0C = (u32)sub_080651b4;
+    t->unk0C = (u32)ActorDrawWorldInView;
     t->unk38 = gUnk_0874CC48;
     t->unk42 = 6;
     u = gCurTask;

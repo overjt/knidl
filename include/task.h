@@ -317,8 +317,8 @@ struct ActorSpawn
 
 /* Axis-aligned box the actor overlap helpers take (0x08063E2C).
  *
- * INCOMPLETE MODEL - read this before declaring a caller of sub_08063E2C or
- * sub_08063F00.  Four separate `s16` fields are what the CALLEE reads (that is
+ * INCOMPLETE MODEL - read this before declaring a caller of TaskIsInRect or
+ * TaskIsNearestPlayerInRect.  Four separate `s16` fields are what the CALLEE reads (that is
  * how src/actor_63698.c matches), but a caller that fills the box in the
  * caller's own stack frame does NOT necessarily see this type: M22 (issue #69)
  * has three of them (sub_08083020, sub_08083488, sub_08083fbc) where the ROM
@@ -342,7 +342,7 @@ struct Rect
 };
 
 /* Two 16.16-packed points, laid out as four 16-bit fields (0x08063BD4).
- * Also the shape every M22 caller of the sub_08063E2C / sub_08063F00 overlap
+ * Also the shape every M22 caller of the TaskIsInRect / TaskIsNearestPlayerInRect overlap
  * helpers passes them - see the note on struct Rect above. */
 struct PointPair
 {

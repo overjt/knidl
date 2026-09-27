@@ -12,7 +12,7 @@
  *                  then runs an animation script of
  *                  `Task.unk3C = frame; TaskYieldTrampoline(delay);`.
  *   <alive check>  the 0x48-byte helper repeated eight times in this range:
- *                  `if (gTaskSlotTypes[t->unk44] == -1 || sub_08065f2c(...) != 1)
+ *                  `if (gTaskSlotTypes[t->unk44] == -1 || TaskHasSameSerial(...) != 1)
  *                       TaskFree(gCurTaskIdx);`  - i.e. kill this task when
  *                  the task it is attached to (Task.unk44) is gone.
  *   <spawner>      sub_0806e6f8 / sub_0806e808 / sub_0806e9b4 allocate a task
@@ -66,12 +66,12 @@ extern void sub_08006384(s32 a);
 extern u16 RandomSpread(s32 base, u8 scale, u8 amount);
 extern s16 RandomSpreadFacing(s32 base, u8 scale, u8 amount);
 extern u32 sub_08025e88(s32 i);
-extern void sub_08064a60(void);
-extern s32 sub_08064d34(u32 type, u8 keepPrio);
-extern s32 sub_08064d6c(u32 type, s16 xArg, s16 yArg, u8 keepPrio);
-extern void sub_080651b4(void);
-extern void sub_0806523c(void);
-extern u8 sub_08065f2c(s32 i);
+extern void TaskFaceLikeParent(void);
+extern s32 CreateChildTaskHere(u32 type, u8 keepPrio);
+extern s32 CreateChildTaskAt(u32 type, s16 xArg, s16 yArg, u8 keepPrio);
+extern void ActorDrawWorldInView(void);
+extern void ActorDrawWorldInViewOrDestroy(void);
+extern u8 TaskHasSameSerial(s32 i);
 extern void sub_0806ff7c(void);
 extern void sub_08070648(void);
 
@@ -92,7 +92,7 @@ void sub_0806e0f0(void)
 {
     s32 i;
 
-    if (gTaskSlotTypes[i = gCurTask->unk44] == -1 || sub_08065f2c(i) != 1)
+    if (gTaskSlotTypes[i = gCurTask->unk44] == -1 || TaskHasSameSerial(i) != 1)
         TaskFree(gCurTaskIdx);
 }
 
@@ -102,7 +102,7 @@ void sub_0806e138(void)
 
     t = gCurTask;
     t->unk00 = (u32)TaskMoveRelativeToParent;
-    t->unk0C = (u32)sub_080651b4;
+    t->unk0C = (u32)ActorDrawWorldInView;
     t->unk38 = gUnk_0874CBD0;
     t->unk42 = 10;
     gCurTask->unk04 = (u32)sub_0806e210;
@@ -135,7 +135,7 @@ void sub_0806e210(void)
 {
     s32 i;
 
-    if (gTaskSlotTypes[i = gCurTask->unk44] == -1 || sub_08065f2c(i) != 1)
+    if (gTaskSlotTypes[i = gCurTask->unk44] == -1 || TaskHasSameSerial(i) != 1)
         TaskFree(gCurTaskIdx);
 }
 
@@ -145,7 +145,7 @@ void sub_0806e258(void)
 
     t = gCurTask;
     t->unk00 = (u32)TaskMoveRelativeToParent;
-    t->unk0C = (u32)sub_080651b4;
+    t->unk0C = (u32)ActorDrawWorldInView;
     t->unk38 = gUnk_0874CC38;
     t->unk42 = 10;
     gCurTask->unk04 = (u32)sub_0806e3dc;
@@ -199,7 +199,7 @@ void sub_0806e3dc(void)
 {
     s32 i;
 
-    if (gTaskSlotTypes[i = gCurTask->unk44] == -1 || sub_08065f2c(i) != 1)
+    if (gTaskSlotTypes[i = gCurTask->unk44] == -1 || TaskHasSameSerial(i) != 1)
         TaskFree(gCurTaskIdx);
 }
 
@@ -211,7 +211,7 @@ void sub_0806e424(void)
     t = gCurTask;
     t->unk00 = (u32)TaskMoveRelativeToParent;
     if (gUnk_030023B8 != 7)
-        t->unk0C = (u32)sub_080651b4;
+        t->unk0C = (u32)ActorDrawWorldInView;
     else
         t->unk0C = (u32)TaskDrawScreen;
     u = gCurTask;
@@ -275,7 +275,7 @@ void sub_0806e5f0(void)
 {
     s32 i;
 
-    if (gTaskSlotTypes[i = gCurTask->unk44] == -1 || sub_08065f2c(i) != 1)
+    if (gTaskSlotTypes[i = gCurTask->unk44] == -1 || TaskHasSameSerial(i) != 1)
         TaskFree(gCurTaskIdx);
 }
 
@@ -286,7 +286,7 @@ void sub_0806e638(void)
 
     t = gCurTask;
     t->unk00 = (u32)TaskMoveRelativeToParent;
-    t->unk0C = (u32)sub_080651b4;
+    t->unk0C = (u32)ActorDrawWorldInView;
     t->unk38 = gUnk_0874CB3C;
     t->unk42 = 4;
     u = gCurTask;
@@ -309,7 +309,7 @@ void sub_0806e6b0(void)
 {
     s32 i;
 
-    if (gTaskSlotTypes[i = gCurTask->unk44] == -1 || sub_08065f2c(i) != 1)
+    if (gTaskSlotTypes[i = gCurTask->unk44] == -1 || TaskHasSameSerial(i) != 1)
         TaskFree(gCurTaskIdx);
 }
 
@@ -318,7 +318,7 @@ s32 sub_0806e6f8(s16 x, s16 y)
     struct Task *t;
     s32 i;
 
-    i = sub_08064d6c(167, 0, 0, 0);
+    i = CreateChildTaskAt(167, 0, 0, 0);
     if (i != -1)
     {
         t = &gTasks[i];
@@ -335,13 +335,13 @@ void sub_0806e73c(void)
 
     t = gCurTask;
     t->unk00 = (u32)TaskMoveRelativeToParent;
-    t->unk0C = (u32)sub_080651b4;
+    t->unk0C = (u32)ActorDrawWorldInView;
     t->unk42 = 10;
     u = gCurTask;
     u->unk38 = gUnk_0874CCA4;
     u->unk04 = (u32)sub_0806e7c0;
     u->unk40 = 0;
-    sub_08064a60();
+    TaskFaceLikeParent();
     while (1)
     {
         sub_08006384(gCurTask->unk24);
@@ -360,7 +360,7 @@ void sub_0806e7c0(void)
 {
     s32 i;
 
-    if (gTaskSlotTypes[i = gCurTask->unk44] == -1 || sub_08065f2c(i) != 1)
+    if (gTaskSlotTypes[i = gCurTask->unk44] == -1 || TaskHasSameSerial(i) != 1)
         TaskFree(gCurTaskIdx);
 }
 
@@ -369,7 +369,7 @@ s32 sub_0806e808(s16 x, s16 y)
     struct Task *t;
     s32 i;
 
-    i = sub_08064d6c(168, 0, 0, 0);
+    i = CreateChildTaskAt(168, 0, 0, 0);
     if (i != -1)
     {
         t = &gTasks[i];
@@ -386,13 +386,13 @@ void sub_0806e84c(void)
 
     t = gCurTask;
     t->unk00 = (u32)TaskMoveRelativeToParent;
-    t->unk0C = (u32)sub_080651b4;
+    t->unk0C = (u32)ActorDrawWorldInView;
     t->unk42 = 10;
     u = gCurTask;
     u->unk38 = gUnk_0874C718;
     u->unk04 = (u32)sub_0806e96c;
     u->unk40 = 0;
-    sub_08064a60();
+    TaskFaceLikeParent();
     gCurTask->unk43 = -gCurTask->unk43;
     while (1)
     {
@@ -428,7 +428,7 @@ void sub_0806e96c(void)
 {
     s32 i;
 
-    if (gTaskSlotTypes[i = gCurTask->unk44] == -1 || sub_08065f2c(i) != 1)
+    if (gTaskSlotTypes[i = gCurTask->unk44] == -1 || TaskHasSameSerial(i) != 1)
         TaskFree(gCurTaskIdx);
 }
 
@@ -437,7 +437,7 @@ s32 sub_0806e9b4(u8 a, s16 x, s16 y)
     struct Task *t;
     s32 i;
 
-    i = sub_08064d34(169, 0);
+    i = CreateChildTaskHere(169, 0);
     if (i != -1)
     {
         t = &gTasks[i];
@@ -455,7 +455,7 @@ void sub_0806e9fc(void)
 
     t = gCurTask;
     t->unk00 = (u32)TaskMove;
-    t->unk0C = (u32)sub_080651b4;
+    t->unk0C = (u32)ActorDrawWorldInView;
     t->unk42 = 10;
     u = gCurTask;
     u->unk38 = gUnk_0874C828;
@@ -557,7 +557,7 @@ void sub_0806ec40(void)
 
     t = gCurTask;
     t->unk00 = (u32)TaskMoveRelativeToParent;
-    t->unk0C = (u32)sub_0806523c;
+    t->unk0C = (u32)ActorDrawWorldInViewOrDestroy;
     t->unk42 = 7;
     u = gCurTask;
     u->unk38 = gUnk_0874CB7C;
@@ -573,7 +573,7 @@ void sub_0806ec88(void)
     s32 i;
     s32 j;
 
-    if (gTaskSlotTypes[i = gCurTask->unk44] != -1 && sub_08065f2c(i) == 1)
+    if (gTaskSlotTypes[i = gCurTask->unk44] != -1 && TaskHasSameSerial(i) == 1)
     {
         if ((s8)gTasks[j = gCurTask->unk44].unk7C == 4
             && (u16)(gTasks[j].unk82 - 2) <= 1)
@@ -630,7 +630,7 @@ void sub_0806ed9c(void)
     struct Task *t;
 
     t = gCurTask;
-    t->unk0C = (u32)sub_080651b4;
+    t->unk0C = (u32)ActorDrawWorldInView;
     t->unk38 = gUnk_08752548;
     t->unk42 = 10;
     gCurTask->unk40 = 0;

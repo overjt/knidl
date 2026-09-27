@@ -25,10 +25,10 @@ extern u16 gUnk_03002358;
 extern u16 gUnk_0300214C;
 extern u16 gUnk_03002368;
 extern u8 gUnk_03002390;
-extern u8 gUnk_03002440;
+extern u8 gAttackLastHitter;
 extern u8 gUnk_030023F0;
-extern s16 gUnk_0300239C;
-extern s8 gUnk_03002140;
+extern s16 gAttackFacing;
+extern s8 gAttackHitDuration;
 extern u8 gUnk_03002460;
 extern s32 gUnk_0300236C;
 extern u8 gUnk_03002380;
@@ -99,7 +99,7 @@ extern u16 gUnk_0873E3C8[];
 extern void sub_080261d4(u32 a);
 extern void sub_080682a8(void);
 extern void TaskSetEntry(void *fn, s32 i);
-extern s32 sub_08064d34(u32 type, u8 keepPrio);
+extern s32 CreateChildTaskHere(u32 type, u8 keepPrio);
 
 void sub_080675e4(void);
 
@@ -670,7 +670,7 @@ void sub_08068028(void)
     sub_0801bcac(gUnk_0873CB1C);
     if (gUnk_03005550 != 0)
     {
-        sub_08064d34(148, 0);
+        CreateChildTaskHere(148, 0);
         PlaySfx(153);
         sub_080261d4(2);
         t = gCurTask;
@@ -750,7 +750,7 @@ void sub_08068224(void)
     sub_0801bcac(gUnk_0873CB1C);
     if (gUnk_03005550 != 0)
     {
-        sub_08064d34(148, 0);
+        CreateChildTaskHere(148, 0);
         PlaySfx(153);
         sub_080261d4(2);
         t = gCurTask;
@@ -1283,7 +1283,7 @@ u32 sub_08068cb4(u8 a)
     }
     return 0;
 }
-u32 sub_08068cf8(s32 a)
+u32 ActorCheckHitsWithBox(s32 a)
 {
     struct Task *t;
     struct Task *u;
@@ -1312,17 +1312,17 @@ u32 sub_08068cf8(s32 a)
         gUnk_0300214C = u->unk4A;
         gUnk_03002368 = u->unk78;
         gUnk_03002390 = u->unk7E;
-        gUnk_03002440 = u->unk7F;
+        gAttackLastHitter = u->unk7F;
         gUnk_030023F0 = u->unk75;
-        gUnk_0300239C = u->unk43;
-        gUnk_03002140 = 30;
+        gAttackFacing = u->unk43;
+        gAttackHitDuration = 30;
         gUnk_0300236C = a;
         r = sub_08068cb4(0);
     }
     gCurTask->unk78 = saved;
     return r;
 }
-u32 sub_08068e04(void)
+u32 ActorCheckHits(void)
 {
     struct Task *t;
     struct Task *u;
@@ -1353,13 +1353,13 @@ u32 sub_08068e04(void)
     gUnk_0300214C = v->unk4A;
     gUnk_03002368 = v->unk78;
     gUnk_03002390 = v->unk7E;
-    gUnk_03002440 = v->unk7F;
+    gAttackLastHitter = v->unk7F;
     gUnk_03002460 = a->unk06;
     gUnk_030023F0 = v->unk75;
-    gUnk_0300239C = v->unk43;
+    gAttackFacing = v->unk43;
     if (a->unk60 != NULL)
     {
-        gUnk_03002140 = a->unk60->unk00;
+        gAttackHitDuration = a->unk60->unk00;
         if (v->unk75 > (a->unk60->unk00 >> 1))
             gUnk_0300236C = a->unk60->unk04;
         else
@@ -1367,11 +1367,11 @@ u32 sub_08068e04(void)
     }
     else
     {
-        gUnk_03002140 = 30;
+        gAttackHitDuration = 30;
         gUnk_0300236C = a->unk48;
     }
     sub_0806dedc();
-    if (gUnk_03002140 - gCurTask->unk75 <= 5)
+    if (gAttackHitDuration - gCurTask->unk75 <= 5)
         return 0;
     return sub_08068cb4(1);
 }
@@ -1407,13 +1407,13 @@ u32 sub_08068f68(void)
         gUnk_0300214C = v->unk4A;
         gUnk_03002368 = v->unk78;
         gUnk_03002390 = v->unk7E;
-        gUnk_03002440 = v->unk7F;
+        gAttackLastHitter = v->unk7F;
         gUnk_03002460 = a->unk06;
         gUnk_030023F0 = v->unk75;
-        gUnk_0300239C = v->unk43;
+        gAttackFacing = v->unk43;
         if (a->unk60 != NULL)
         {
-            gUnk_03002140 = a->unk60->unk00;
+            gAttackHitDuration = a->unk60->unk00;
             if (v->unk75 > (a->unk60->unk00 >> 1))
                 gUnk_0300236C = a->unk60->unk04;
             else
@@ -1421,10 +1421,10 @@ u32 sub_08068f68(void)
         }
         else
         {
-            gUnk_03002140 = 30;
+            gAttackHitDuration = 30;
             gUnk_0300236C = a->unk48;
         }
-        if (gUnk_03002140 - gCurTask->unk75 <= 5)
+        if (gAttackHitDuration - gCurTask->unk75 <= 5)
             return 0;
         if (sub_08068cb4(1) == 1)
             return 1;
@@ -1438,7 +1438,7 @@ u32 sub_08068f68(void)
     sub_0801b7dc();
     if (a->unk60 != NULL)
     {
-        gUnk_03002140 = a->unk60->unk00;
+        gAttackHitDuration = a->unk60->unk00;
         if (gCurTask->unk75 > (a->unk60->unk00 >> 1))
             gUnk_0300236C = a->unk60->unk04;
         else
@@ -1446,7 +1446,7 @@ u32 sub_08068f68(void)
     }
     else
     {
-        gUnk_03002140 = 30;
+        gAttackHitDuration = 30;
         gUnk_0300236C = a->unk4C;
     }
     if (sub_0801a8c8() == 0)
@@ -1472,13 +1472,13 @@ u32 sub_0806914c(s32 a)
     gUnk_0300214C = u->unk4A;
     gUnk_03002368 = u->unk78;
     gUnk_03002390 = u->unk7E;
-    gUnk_03002440 = u->unk7F;
+    gAttackLastHitter = u->unk7F;
     gUnk_030023F0 = u->unk75;
-    gUnk_0300239C = u->unk43;
+    gAttackFacing = u->unk43;
     if (b->unk60 != NULL)
-        gUnk_03002140 = b->unk60->unk00;
+        gAttackHitDuration = b->unk60->unk00;
     else
-        gUnk_03002140 = 30;
+        gAttackHitDuration = 30;
     gUnk_0300236C = a;
     sub_0801b7dc();
     if (sub_0801a8c8() == 0)

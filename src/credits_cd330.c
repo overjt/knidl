@@ -49,7 +49,7 @@ extern vs16 gBrightness;
 extern vu16 gFadeSteps;
 extern u32 gUnk_03000AF4;
 extern u8 gUnk_020061E0;
-extern u16 gUnk_02000008;
+extern u16 gNextActorSerial;
 extern u8 gUnk_02006178;
 extern u8 gUnk_02007CF0;
 extern s8 gUnk_02007FB8[];
@@ -217,7 +217,7 @@ void sub_080cd674(void)
     } while ((s32)p >= (s32)b);
     gUnk_020061E0 = 0;
     sub_08066144();
-    gUnk_02000008 = 0;
+    gNextActorSerial = 0;
     gUnk_02006178 = 0;
     gUnk_02007CF0 = 0;
     gUnk_03001F34 = 1;

@@ -13,8 +13,8 @@
 gUnk_02000000 = 0x02000000
 	.global	gUnk_02000004
 gUnk_02000004 = 0x02000004
-	.global	gUnk_02000008
-gUnk_02000008 = 0x02000008
+	.global	gNextActorSerial
+gNextActorSerial = 0x02000008
 	.global	gUnk_0200000C
 gUnk_0200000C = 0x0200000C
 	.global	gUnk_02000010
@@ -193,8 +193,8 @@ gUnk_020061B0 = 0x020061B0
 gUnk_020061D0 = 0x020061D0
 	.global	gUnk_020061D4
 gUnk_020061D4 = 0x020061D4
-	.global	gUnk_020061D8
-gUnk_020061D8 = 0x020061D8
+	.global	gPaletteAnimTasks
+gPaletteAnimTasks = 0x020061D8
 	.global	gUnk_020061DC
 gUnk_020061DC = 0x020061DC
 	.global	gUnk_020061E0
@@ -379,8 +379,8 @@ gUnk_0200B078 = 0x0200B078
 gUnk_0200B07C = 0x0200B07C
 	.global	gUnk_0200B080
 gUnk_0200B080 = 0x0200B080
-	.global	gUnk_0200C320
-gUnk_0200C320 = 0x0200C320
+	.global	gActors
+gActors = 0x0200C320
 	.global	gUnk_0200D080
 gUnk_0200D080 = 0x0200D080
 	.global	gTaskSkipMaskStack
@@ -809,8 +809,8 @@ gUnk_03001F30 = 0x03001F30
 gUnk_03001F34 = 0x03001F34
 	.global	gLinkIsMaster
 gLinkIsMaster = 0x03001F38
-	.global	gUnk_03002140
-gUnk_03002140 = 0x03002140
+	.global	gAttackHitDuration
+gAttackHitDuration = 0x03002140
 	.global	gUnk_03002144
 gUnk_03002144 = 0x03002144
 	.global	gUnk_03002148
@@ -865,8 +865,8 @@ gUnk_03002390 = 0x03002390
 gUnk_03002394 = 0x03002394
 	.global	gUnk_03002398
 gUnk_03002398 = 0x03002398
-	.global	gUnk_0300239C
-gUnk_0300239C = 0x0300239C
+	.global	gAttackFacing
+gAttackFacing = 0x0300239C
 	.global	gUnk_030023A4
 gUnk_030023A4 = 0x030023A4
 	.global	gUnk_030023A8
@@ -909,8 +909,8 @@ gUnk_03002400 = 0x03002400
 gUnk_03002438 = 0x03002438
 	.global	gLinkPlayerCount
 gLinkPlayerCount = 0x0300243C
-	.global	gUnk_03002440
-gUnk_03002440 = 0x03002440
+	.global	gAttackLastHitter
+gAttackLastHitter = 0x03002440
 	.global	gUnk_03002444
 gUnk_03002444 = 0x03002444
 	.global	gUnk_03002448

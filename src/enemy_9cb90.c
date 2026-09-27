@@ -6,10 +6,10 @@
 extern u32 gUnk_08747EF4[];
 
 /* Externals */
-extern u8 sub_080692fc(void);
-extern u32 sub_08068cf8(s32 a);
-extern u32 sub_08068e04(void);
-extern u32 sub_08069b44(void);
+extern u8 ActorCollideTerrain(void);
+extern u32 ActorCheckHitsWithBox(s32 a);
+extern u32 ActorCheckHits(void);
+extern u32 ActorReactToHit(void);
 extern void sub_0809f970(void);
 extern s32 sub_0809f994(void);
 extern void sub_0809f9dc(void);
@@ -19,7 +19,7 @@ void sub_0809cb90(void)
 {
     struct Task *t;
 
-    sub_080692fc();
+    ActorCollideTerrain();
     t = gCurTask;
     if (t->unk24 > 0)
     {
@@ -30,10 +30,10 @@ void sub_0809cb90(void)
     {
         sub_0809fb10();
     }
-    sub_08068e04();
-    sub_08069b44();
+    ActorCheckHits();
+    ActorReactToHit();
     if ((u16)(gCurTask->unk3C - 22) <= 1)
-        sub_08068cf8((s32)gUnk_08747EF4);
+        ActorCheckHitsWithBox((s32)gUnk_08747EF4);
     if (sub_0809f994() != 0)
     {
         if (gCurTask->unk48 < ((s8 *)gCurTask->unk8C->unk50)[4] + 24)

@@ -42,7 +42,7 @@ s16 RandomSpreadFacing(s32 a, u32 b, u32 c);
 s32 sub_08010358(s32 a, s32 b);
 void sub_080261d4(s32 a);
 s32 sub_0803d55c(s32 mode);
-void sub_080670f0(u16 *p);
+void LoadBackdropColor(u16 *p);
 
 void sub_08010b38(void)
 {
@@ -3517,11 +3517,11 @@ void sub_08015f18(void)
     {
         gDispCnt &= 0xE0FF;
         gDispCnt |= 0x1100;
-        sub_080670f0((u16 *)gUnk_08732134);
+        LoadBackdropColor((u16 *)gUnk_08732134);
         TaskYieldTrampoline(3);
         gDispCnt &= 0xE0FF;
         gDispCnt |= 0x1D00;
-        sub_080670f0(&v);
+        LoadBackdropColor(&v);
         TaskYieldTrampoline(1);
         t = gCurTask;
         t->unk6C++;
@@ -3531,11 +3531,11 @@ void sub_08015f18(void)
     {
         gDispCnt &= 0xE0FF;
         gDispCnt |= 0x1100;
-        sub_080670f0((u16 *)gUnk_08732134);
+        LoadBackdropColor((u16 *)gUnk_08732134);
         TaskYieldTrampoline(1);
         gDispCnt &= 0xE0FF;
         gDispCnt |= 0x1D00;
-        sub_080670f0(&v);
+        LoadBackdropColor(&v);
         TaskYieldTrampoline(1);
         t = gCurTask;
         t->unk6C++;
@@ -3545,19 +3545,19 @@ void sub_08015f18(void)
     {
         gDispCnt &= 0xE0FF;
         gDispCnt |= 0x1D00;
-        sub_080670f0(&v);
+        LoadBackdropColor(&v);
         TaskYieldTrampoline(2);
         gDispCnt &= 0xE0FF;
         gDispCnt |= 0x1100;
-        sub_080670f0((u16 *)gUnk_08732134);
+        LoadBackdropColor((u16 *)gUnk_08732134);
         TaskYieldTrampoline(1);
         gDispCnt &= 0xE0FF;
         gDispCnt |= 0x1D00;
-        sub_080670f0(&v);
+        LoadBackdropColor(&v);
         TaskYieldTrampoline(1);
         gCurTask->unk6C++;
     } while ((s16)gCurTask->unk6C <= 1);
-    sub_080670f0(&v);
+    LoadBackdropColor(&v);
     TaskExitTrampoline();
 }
 

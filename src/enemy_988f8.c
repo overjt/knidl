@@ -4,7 +4,7 @@
  *   ./tools/fnmatch.sh 0x080988F8 0x08099B20 src/enemy_988f8.c --newpb
  *
  * M27's first mid-boss script, built exactly like M25's bosses (rom-map section 9).
- * sub_08098e64 is the task entry: it installs sub_080656b4 as the draw hook
+ * sub_08098e64 is the task entry: it installs ActorMove as the draw hook
  * (Task.unk00) and sub_08065438 as the per-frame hook (Task.unk0C), points
  * Task.unk38 at the graphics block gUnk_08753090, counts the enemy into
  * gUnk_02007D00[0], loads the animation script gUnk_08745624 and hands
@@ -13,10 +13,10 @@
  *
  * sub_08098ed4 installs sub_08098f38 as the per-frame body and dispatches
  * Task.unk14 through the 19-word guard table gUnk_08745634; sub_08098f38
- * re-uploads (sub_080663f4) or drops (sub_08066468) the 16-byte graphics
+ * re-uploads (ActorFlashPalette) or drops (sub_08066468) the 16-byte graphics
  * record gUnk_08274840 while Task.unk18 is set, dispatches Task.unk15 through
  * the 19-word body table gUnk_08745680 that follows it, and finishes with the
- * animation-row selector sub_08098de4 plus sub_08068f68 / sub_08069b44.
+ * animation-row selector sub_08098de4 plus sub_08068f68 / ActorReactToHit.
  * sub_08098fb0 is the re-arm hook every guard installs through
  * TaskSetEntry(fn, gCurTaskIdx).
  *
@@ -27,8 +27,8 @@
  * gUnk_08745618 / gUnk_0874561F rows with the decimal-digit buffer
  * gDigits[1] as the index, sub_08098c54 fires the timed
  * RandomRange-gated transitions at Task.unk30 == 120 / 60 / 45, sub_08098d58
- * spawns the actor 13 through sub_08064b5c and sub_08098da4 is the "close
- * enough" probe (|sub_08063cbc(Task.unk1C)| <= 10).  sub_080992a8 and
+ * spawns the actor 13 through CreateActorFromDescAtOffsetFacing and sub_08098da4 is the "close
+ * enough" probe (|TaskGetDxTo(Task.unk1C)| <= 10).  sub_080992a8 and
  * sub_08099a0c are empty state handlers, and sub_08099ad0 is the timer leaf
  * the guard table word at 0x087456C8 points at.
  */
@@ -71,39 +71,39 @@ extern void TaskFree(s32 id);
 extern void TaskSetEntry(void *fn, s32 i);
 extern void TaskStopY(void);
 extern void TaskSetFrame(s32 a);
-extern void sub_0806395c(u16 v);
-extern void sub_080639a4(u32 *p);
-extern void sub_080639b4(u32 *p);
-extern void sub_080639e0(u32 *p);
+extern void ActorSetState(u16 v);
+extern void ActorSetHitReactions(u32 *p);
+extern void ActorSetAttackBox(u32 *p);
+extern void ActorSetTerrainBox(u32 *p);
 extern void sub_08063a00(u32 *p);
-extern s32 sub_08063cbc(s32 i);
-extern s32 sub_08064b5c(struct ActorSpawn *p, u8 keepPrio);
-extern s32 sub_08064d34(u32 type, u8 keepPrio);
+extern s32 TaskGetDxTo(s32 i);
+extern s32 CreateActorFromDescAtOffsetFacing(struct ActorSpawn *p, u8 keepPrio);
+extern s32 CreateChildTaskHere(u32 type, u8 keepPrio);
 extern u16 sub_08066088(u32 mode);
 extern void sub_080666cc(struct AnimCmd *p);
 extern void sub_08066580(void);
 extern void sub_08066ae0(void);
 extern void sub_08065438(void);
-extern void sub_080656b4(void);
+extern void ActorMove(void);
 extern void sub_080261d4(s32 a);
 extern void sub_0806ee2c(void);
 extern void TaskStop(void);
-extern void sub_08063e14(void);
-extern void sub_080663f4(void *src, u32 size);
+extern void TaskFaceNearestPlayer(void);
+extern void ActorFlashPalette(void *src, u32 size);
 extern void sub_08066468(void);
 extern u8 sub_08067060(void);
 extern void sub_08068f68(void);
-extern u8 sub_080692fc(void);
-extern s32 sub_08069b44(void);
+extern u8 ActorCollideTerrain(void);
+extern s32 ActorReactToHit(void);
 extern void TaskSetMotionXFacing(s32 a, s32 b);
 extern void TaskSleepForever(void);
 extern void PlaySfx(s32 id);
 extern s16 sub_0806caa0(u8 kind, s32 dx, s32 dy);
 extern s16 sub_0806cc90(u8 flag, u16 vx, s32 c, s32 d);
-extern void sub_08064038(void);
+extern void TaskTurnAround(void);
 extern void sub_0806684c(void);
 extern void sub_080667c0(u8 a, u16 b);
-extern void sub_0806a344(void);
+extern void ActorDie(void);
 extern void sub_0806ad18(void);
 
 /* Defined below */
@@ -124,8 +124,8 @@ u8 sub_080988f8(void)
     case 4:
         sub_0809a080(1);
         gCurTask->unk7A = 0;
-        sub_080639e0(gUnk_08745A14);
-        sub_0806395c(5);
+        ActorSetTerrainBox(gUnk_08745A14);
+        ActorSetState(5);
         TaskSetEntry(sub_08098fb0, gCurTaskIdx);
         return 1;
     case 5:
@@ -133,13 +133,13 @@ u8 sub_080988f8(void)
         break;
     case 13:
         sub_0809a080(0);
-        sub_080639e0(gUnk_08745A14);
-        sub_0806395c(14);
+        ActorSetTerrainBox(gUnk_08745A14);
+        ActorSetState(14);
         TaskSetEntry(sub_08098fb0, gCurTaskIdx);
         return 1;
     case 16:
         sub_0809a080(1);
-        sub_0806395c(0);
+        ActorSetState(0);
         TaskSetEntry(sub_08098fb0, gCurTaskIdx);
         return 1;
     case 10:
@@ -149,7 +149,7 @@ u8 sub_080988f8(void)
     case 18:
         sub_0809a080(0);
         sub_08066580();
-        sub_0806395c(0);
+        ActorSetState(0);
         TaskSetEntry(sub_08098fb0, gCurTaskIdx);
         return 1;
     }
@@ -161,17 +161,17 @@ u8 sub_08098a04(void)
     switch (gCurTask->unk14)
     {
     case 2:
-        sub_0806395c(7);
+        ActorSetState(7);
         TaskSetEntry(sub_08098fb0, gCurTaskIdx);
         return 1;
     case 3:
-        sub_0806395c(4);
+        ActorSetState(4);
         TaskSetEntry(sub_08098fb0, gCurTaskIdx);
         return 1;
     case 5:
         gCurTask->unk7A = 1;
         TaskStopY();
-        sub_0806395c(6);
+        ActorSetState(6);
         TaskSetEntry(sub_08098fb0, gCurTaskIdx);
         return 1;
     case 4:
@@ -179,7 +179,7 @@ u8 sub_08098a04(void)
         gCurTask->unk54 = 0;
         return 0;
     case 14:
-        sub_0806395c(15);
+        ActorSetState(15);
         TaskSetEntry(sub_08098fb0, gCurTaskIdx);
         return 1;
     }
@@ -188,9 +188,9 @@ u8 sub_08098a04(void)
 
 u8 sub_08098aa0(void)
 {
-    sub_080639a4(gUnk_08745A80);
+    ActorSetHitReactions(gUnk_08745A80);
     gCurTask->unk18 = 0;
-    sub_0806395c(13);
+    ActorSetState(13);
     TaskSetEntry(sub_08098fb0, gCurTaskIdx);
     return 1;
 }
@@ -198,7 +198,7 @@ u8 sub_08098aa0(void)
 u8 sub_08098ad8(void)
 {
     gCurTask->unk2C = 32;
-    sub_08064d34(142, 0);
+    CreateChildTaskHere(142, 0);
     sub_080261d4(4);
     return 0;
 }
@@ -224,31 +224,31 @@ void sub_08098b60(void)
     {
     case 0:
         gCurTask->unk34 = 2;
-        sub_0806395c(2);
+        ActorSetState(2);
         break;
     case 1:
         IntToDigits((s16)RandomRange(20));
         t = gCurTask;
         t->unk30 = gUnk_0874561F[(s8)gDigits[1]];
         t->unk34 = 2;
-        sub_0806395c(1);
+        ActorSetState(1);
         break;
     case 2:
         u = gCurTask;
         if (--u->unk34 != 0)
         {
-            sub_0806395c(8);
+            ActorSetState(8);
             break;
         }
         switch (RandomRange(2))
         {
         case 0:
-            sub_0806395c(2);
+            ActorSetState(2);
             break;
         case 1:
             IntToDigits((s16)RandomRange(20));
             gCurTask->unk30 = gUnk_0874561F[(s8)gDigits[1]];
-            sub_0806395c(1);
+            ActorSetState(1);
             break;
         default:
             sub_0806ee2c();
@@ -273,7 +273,7 @@ void sub_08098c54(void)
         if (t->unk74 == 1 && RandomRange(4) == 0)
         {
             gCurTask->unk54 = 0;
-            sub_0806395c(0);
+            ActorSetState(0);
             TaskSetEntry(sub_08098fb0, gCurTaskIdx);
         }
         break;
@@ -281,7 +281,7 @@ void sub_08098c54(void)
         if (t->unk74 == 0 && RandomRange(2) == 0)
         {
             gCurTask->unk54 = 0;
-            sub_0806395c(0);
+            ActorSetState(0);
             TaskSetEntry(sub_08098fb0, gCurTaskIdx);
         }
         break;
@@ -289,7 +289,7 @@ void sub_08098c54(void)
         if (t->unk74 == 1 && RandomRange(4) == 0)
         {
             gCurTask->unk54 = 0;
-            sub_0806395c(0);
+            ActorSetState(0);
             TaskSetEntry(sub_08098fb0, gCurTaskIdx);
         }
         break;
@@ -302,13 +302,13 @@ void sub_08098cf4(void)
     switch ((s8)gDigits[1])
     {
     case 0:
-        sub_0806395c(9);
+        ActorSetState(9);
         break;
     case 1:
-        sub_0806395c(10);
+        ActorSetState(10);
         break;
     case 2:
-        sub_0806395c(11);
+        ActorSetState(11);
         break;
     default:
         sub_0806ee2c();
@@ -333,19 +333,19 @@ void sub_08098d58(void)
     sp.unk0E = 0;
     sp.unk10 = a->unk20;
     sp.unk0A = 1;
-    gCurTask->unk1C = sub_08064b5c(&sp, 1);
+    gCurTask->unk1C = CreateActorFromDescAtOffsetFacing(&sp, 1);
 }
 
 u8 sub_08098da4(void)
 {
     s32 v;
 
-    v = sub_08063cbc(gCurTask->unk1C);
+    v = TaskGetDxTo(gCurTask->unk1C);
     if (v < 0)
         v = -v;
     if (v <= 10)
     {
-        sub_0806395c(17);
+        ActorSetState(17);
         TaskSetEntry(sub_08098fb0, gCurTaskIdx);
         return 1;
     }
@@ -359,18 +359,18 @@ void sub_08098de4(void)
     case 13:
     case 14:
     case 15:
-        sub_080639b4(gUnk_087458F4);
+        ActorSetAttackBox(gUnk_087458F4);
         sub_08063a00(gUnk_08745910);
         break;
     case 8:
-        sub_080639b4(gUnk_087458A0);
+        ActorSetAttackBox(gUnk_087458A0);
         sub_08063a00(gUnk_087458BC);
         break;
     case 1:
-        sub_080639b4(gUnk_0874592C);
+        ActorSetAttackBox(gUnk_0874592C);
         sub_08063a00(gUnk_08745948);
     default:
-        sub_080639b4(gUnk_08745868);
+        ActorSetAttackBox(gUnk_08745868);
         sub_08063a00(gUnk_08745884);
         break;
     }
@@ -384,7 +384,7 @@ void sub_08098e64(void)
 
     sub_08066088(0);
     t = gCurTask;
-    t->unk00 = (u32)sub_080656b4;
+    t->unk00 = (u32)ActorMove;
     t->unk0C = (u32)sub_08065438;
     t->unk42 = 11;
     zero = 0;
@@ -413,14 +413,14 @@ void sub_08098ed4(void)
         u = gCurTask;
         u->unk20 = 0;
         u->unk7A = 0;
-        sub_0806395c(18);
+        ActorSetState(18);
     }
     else
     {
         v = gCurTask;
         v->unk20 = 1;
         sub_08066580();
-        sub_0806395c(0);
+        ActorSetState(0);
     }
     CallTableEntry(gCurTask->unk14, 19, gUnk_08745634);
 }
@@ -436,7 +436,7 @@ void sub_08098f38(void)
         if (t->unk2C > 0)
         {
             t->unk2C--;
-            sub_080663f4(&gUnk_08274840, 16);
+            ActorFlashPalette(&gUnk_08274840, 16);
         }
         else
         {
@@ -446,7 +446,7 @@ void sub_08098f38(void)
     u = gCurTask;
     if (u->unk20 != 0)
     {
-        if (sub_080692fc() == 0)
+        if (ActorCollideTerrain() == 0)
             CallTableEntry(gCurTask->unk15, 19, gUnk_08745680);
     }
     else
@@ -455,7 +455,7 @@ void sub_08098f38(void)
     }
     sub_08098de4();
     sub_08068f68();
-    sub_08069b44();
+    ActorReactToHit();
 }
 
 void sub_08098fb0(void)
@@ -472,7 +472,7 @@ void sub_08098fd0(void)
     t = gCurTask;
     t->unk28 = 1;
     t->unk15 = 0;
-    sub_08063e14();
+    TaskFaceNearestPlayer();
     while (1)
     {
         TaskSetFrame(25);
@@ -531,12 +531,12 @@ void sub_08099080(void)
         if (--t->unk30 == 0)
         {
             t->unk30 = 30;
-            sub_0806395c(0);
+            ActorSetState(0);
             TaskSetEntry(sub_08098fb0, gCurTaskIdx);
         }
         else
         {
-            sub_0806395c(1);
+            ActorSetState(1);
             TaskSetEntry(sub_08098fb0, gCurTaskIdx);
         }
     }
@@ -552,7 +552,7 @@ void sub_080990d4(void)
     t->unk30 = 160;
     zero = 0;
     t->unk15 = 2;
-    sub_08063e14();
+    TaskFaceNearestPlayer();
     u = gCurTask;
     u->unk28 = zero;
     switch (u->unk74)
@@ -587,7 +587,7 @@ void sub_08099180(void)
 {
     if (gCurTask->unk28 != 0)
     {
-        sub_0806395c(3);
+        ActorSetState(3);
         TaskSetEntry(sub_08098fb0, gCurTaskIdx);
     }
 }
@@ -690,7 +690,7 @@ void sub_0809931c(void)
     if (--t->unk30 < 0)
     {
         TaskStopY();
-        sub_0806395c(6);
+        ActorSetState(6);
         TaskSetEntry(sub_08098fb0, gCurTaskIdx);
     }
 }
@@ -731,8 +731,8 @@ void sub_08099394(void)
         t->unk7A = 1;
         u = gCurTask;
         u->unk30 = 30;
-        sub_080639e0(gUnk_08745A0C);
-        sub_0806395c(0);
+        ActorSetTerrainBox(gUnk_08745A0C);
+        ActorSetState(0);
         TaskSetEntry(sub_08098fb0, gCurTaskIdx);
     }
 }
@@ -771,7 +771,7 @@ void sub_08099448(void)
 {
     if (gCurTask->unk28 != 0)
     {
-        sub_0806395c(3);
+        ActorSetState(3);
         TaskSetEntry(sub_08098fb0, gCurTaskIdx);
     }
 }
@@ -785,29 +785,29 @@ void sub_08099474(void)
     t->unk15 = 8;
     u = gCurTask;
     u->unk30 = 44;
-    sub_08063e14();
+    TaskFaceNearestPlayer();
     while (1)
     {
         TaskSetFrame(23);
         TaskYieldTrampoline(1);
-        sub_08064038();
+        TaskTurnAround();
         TaskSetFrame(21);
         TaskYieldTrampoline(1);
-        sub_08064038();
+        TaskTurnAround();
         TaskSetFrame(22);
         TaskYieldTrampoline(4);
-        sub_08064038();
+        TaskTurnAround();
         TaskSetFrame(21);
         TaskYieldTrampoline(1);
-        sub_08064038();
+        TaskTurnAround();
         TaskSetFrame(23);
         TaskYieldTrampoline(1);
         TaskSetFrame(21);
         TaskYieldTrampoline(1);
-        sub_08064038();
+        TaskTurnAround();
         TaskSetFrame(22);
         TaskYieldTrampoline(4);
-        sub_08064038();
+        TaskTurnAround();
         TaskSetFrame(21);
         TaskYieldTrampoline(1);
     }
@@ -866,7 +866,7 @@ void sub_080995b8(void)
     {
         if (sub_08098da4() == 0)
         {
-            sub_0806395c(12);
+            ActorSetState(12);
             TaskSetEntry(sub_08098fb0, gCurTaskIdx);
         }
     }
@@ -885,7 +885,7 @@ void sub_080995f4(void)
     u->unk7A = 0;
     PlaySfx(506);
     sub_08098d58();
-    sub_08064038();
+    TaskTurnAround();
     TaskSetMotionXFacing(0x8000, 0x5A5A5A5A);
     v = gCurTask;
     v->unk58 = -131072;
@@ -916,10 +916,10 @@ void sub_08099690(void)
     t = gCurTask;
     if (--t->unk30 < 0)
     {
-        sub_08064038();
+        TaskTurnAround();
         if (sub_08098da4() == 0)
         {
-            sub_0806395c(12);
+            ActorSetState(12);
             TaskSetEntry(sub_08098fb0, gCurTaskIdx);
         }
     }
@@ -959,7 +959,7 @@ void sub_08099734(void)
     {
         if (sub_08098da4() == 0)
         {
-            sub_0806395c(12);
+            ActorSetState(12);
             TaskSetEntry(sub_08098fb0, gCurTaskIdx);
         }
     }
@@ -1001,7 +1001,7 @@ void sub_080997e4(void)
     if (--t->unk30 < 0)
     {
         t->unk30 = 30;
-        sub_0806395c(0);
+        ActorSetState(0);
         TaskSetEntry(sub_08098fb0, gCurTaskIdx);
     }
 }
@@ -1016,7 +1016,7 @@ void sub_08099818(void)
     t = gCurTask;
     zero = 0;
     t->unk15 = 13;
-    sub_080639a4(gUnk_08745A80);
+    ActorSetHitReactions(gUnk_08745A80);
     u = gCurTask;
     u->unk7A = zero;
     if (--gUnk_02007D00[0] <= 0)
@@ -1033,7 +1033,7 @@ void sub_08099818(void)
 
 void sub_08099890(void)
 {
-    sub_080663f4(&gUnk_08274840, 16);
+    ActorFlashPalette(&gUnk_08274840, 16);
 }
 
 void sub_080998a4(void)
@@ -1061,11 +1061,11 @@ void sub_08099908(void)
 {
     struct Task *t;
 
-    sub_080663f4(&gUnk_08274840, 16);
+    ActorFlashPalette(&gUnk_08274840, 16);
     t = gCurTask;
     if (--t->unk30 < 0)
     {
-        sub_0806395c(15);
+        ActorSetState(15);
         TaskSetEntry(sub_08098fb0, gCurTaskIdx);
     }
 }
@@ -1099,12 +1099,12 @@ void sub_0809998c(void)
 {
     struct Task *t;
 
-    sub_080663f4(&gUnk_08274840, 16);
+    ActorFlashPalette(&gUnk_08274840, 16);
     t = gCurTask;
     if (t->unk30 != 0)
     {
         t->unk20 = 1;
-        TaskSetEntry(sub_0806a344, gCurTaskIdx);
+        TaskSetEntry(ActorDie, gCurTaskIdx);
     }
 }
 
@@ -1145,7 +1145,7 @@ void sub_08099a10(void)
     TaskYieldTrampoline(4);
     TaskSetFrame(9);
     TaskYieldTrampoline(36);
-    sub_0806395c(3);
+    ActorSetState(3);
     TaskSleepForever();
 }
 
@@ -1195,7 +1195,7 @@ u8 sub_08099aec(void)
 {
     if (gCurTask->unk14 == 0)
     {
-        sub_0806395c(22);
+        ActorSetState(22);
         TaskSetEntry(sub_0809a1f4, gCurTaskIdx);
         return 1;
     }

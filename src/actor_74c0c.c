@@ -63,10 +63,10 @@ extern void TaskMove(void);
 extern void TaskSleepForever(void);
 extern void TaskStop(void);
 extern void sub_08026264(s32 a, s32 b);
-extern void sub_0806421c(s16 t, s16 mag);
-extern void sub_0806523c(void);
+extern void AngleToVector(s16 t, s16 mag);
+extern void ActorDrawWorldInViewOrDestroy(void);
 extern void sub_080652c8(void);
-extern void sub_080670f0(u32 src);
+extern void LoadBackdropColor(u32 src);
 extern void sub_0806d4e4(u32 a, s32 b);
 
 /* defined below */
@@ -80,7 +80,7 @@ void sub_08074c0c(void)
         struct Task *t = gCurTask;
 
         t->unk00 = (u32)TaskMove;
-        t->unk0C = (u32)sub_0806523c;
+        t->unk0C = (u32)ActorDrawWorldInViewOrDestroy;
         t->unk42 = 12;
     }
     {
@@ -95,7 +95,7 @@ void sub_08074c0c(void)
     switch (gCurTask->unk14)
     {
     case 1:
-        sub_0806421c(gCurTask->unk28, gCurTask->unk2C);
+        AngleToVector(gCurTask->unk28, gCurTask->unk2C);
         {
             struct Task *t = gCurTask;
 
@@ -107,7 +107,7 @@ void sub_08074c0c(void)
         TaskSleepForever();
         break;
     case 0:
-        sub_0806421c(gCurTask->unk28, gCurTask->unk2C);
+        AngleToVector(gCurTask->unk28, gCurTask->unk2C);
         {
             struct Task *t = gCurTask;
 
@@ -1309,11 +1309,11 @@ void sub_080761b4(void)
     {
         gDispCnt = 0xE0FF & gDispCnt;
         gDispCnt = 0x1100 | gDispCnt;
-        sub_080670f0((u32)gUnk_08740098);
+        LoadBackdropColor((u32)gUnk_08740098);
         TaskYieldTrampoline(3);
         gDispCnt = 0xE0FF & gDispCnt;
         gDispCnt = 0x1D00 | gDispCnt;
-        sub_080670f0((u32)&pal);
+        LoadBackdropColor((u32)&pal);
         TaskYieldTrampoline(1);
         gCurTask->unk6C++;
     } while ((s16)gCurTask->unk6C <= 1);
@@ -1322,11 +1322,11 @@ void sub_080761b4(void)
     {
         gDispCnt = 0xE0FF & gDispCnt;
         gDispCnt = 0x1100 | gDispCnt;
-        sub_080670f0((u32)gUnk_08740098);
+        LoadBackdropColor((u32)gUnk_08740098);
         TaskYieldTrampoline(1);
         gDispCnt = 0xE0FF & gDispCnt;
         gDispCnt = 0x1D00 | gDispCnt;
-        sub_080670f0((u32)&pal);
+        LoadBackdropColor((u32)&pal);
         TaskYieldTrampoline(1);
         gCurTask->unk6C++;
     } while ((s16)gCurTask->unk6C <= 3);
@@ -1335,19 +1335,19 @@ void sub_080761b4(void)
     {
         gDispCnt = 0xE0FF & gDispCnt;
         gDispCnt = 0x1D00 | gDispCnt;
-        sub_080670f0((u32)&pal);
+        LoadBackdropColor((u32)&pal);
         TaskYieldTrampoline(2);
         gDispCnt = 0xE0FF & gDispCnt;
         gDispCnt = 0x1100 | gDispCnt;
-        sub_080670f0((u32)gUnk_08740098);
+        LoadBackdropColor((u32)gUnk_08740098);
         TaskYieldTrampoline(1);
         gDispCnt = 0xE0FF & gDispCnt;
         gDispCnt = 0x1D00 | gDispCnt;
-        sub_080670f0((u32)&pal);
+        LoadBackdropColor((u32)&pal);
         TaskYieldTrampoline(1);
         gCurTask->unk6C++;
     } while ((s16)gCurTask->unk6C <= 1);
-    sub_080670f0((u32)&pal);
+    LoadBackdropColor((u32)&pal);
     TaskExitTrampoline();
 }
 

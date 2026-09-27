@@ -30,15 +30,15 @@ extern void sub_080261d4(u32);
 extern void sub_08027204(u32);
 extern void sub_080670ac(u32);
 extern void sub_080670d4(void);
-extern void sub_080670f0(u16 *);
+extern void LoadBackdropColor(u16 *);
 extern void PlaySfx(u32);
 extern void TaskSetSkipMask(u32, u32);
 extern void TaskSetMotionXFacing(u32, u32);
 extern void TaskStop(void);
 extern void TaskSetFrame(u32);
-extern void sub_08064d34(u32, u32);
-extern void sub_08065e1c(u32, u32);
-extern void sub_0806523c(void);
+extern void CreateChildTaskHere(u32, u32);
+extern void ActorPlaySfx(u32, u32);
+extern void ActorDrawWorldInViewOrDestroy(void);
 extern void sub_0806d4e4(u32, u32);
 
 
@@ -57,15 +57,15 @@ extern void sub_0806d928(void);
 extern void sub_0800a554(void);
 extern void CallTableEntry(u32, u32, void *);
 extern void TaskSetEntry(void (*)(void), u32);
-extern void sub_0806395c(u32);
+extern void ActorSetState(u32);
 extern void sub_08066f78(void);
-extern void sub_08068e04(void);
-extern void sub_08069b44(void);
+extern void ActorCheckHits(void);
+extern void ActorReactToHit(void);
 extern void sub_08069fc8(void);
 extern void sub_0806a7a0(void);
 void sub_0806b2ac(void);
-extern u8 sub_080692fc(void);
-extern void sub_080656b4(void);
+extern u8 ActorCollideTerrain(void);
+extern void ActorMove(void);
 extern void sub_0806b2e4(void);
 extern void sub_0806ed9c(void);
 
@@ -116,25 +116,25 @@ void sub_0806adb0(void)
     {
         gDispCnt &= 0xE0FF;
         gDispCnt |= 0x1000;
-        sub_080670f0(&gUnk_0873E69A);
+        LoadBackdropColor(&gUnk_0873E69A);
         TaskYieldTrampoline(3);
         gDispCnt &= 0xE0FF;
         gDispCnt |= 0x1D00;
-        sub_080670f0(&v);
+        LoadBackdropColor(&v);
         TaskYieldTrampoline(3);
         gDispCnt &= 0xE0FF;
         gDispCnt |= 0x1000;
-        sub_080670f0(&gUnk_0873E69C);
+        LoadBackdropColor(&gUnk_0873E69C);
         TaskYieldTrampoline(3);
         gDispCnt &= 0xE0FF;
         gDispCnt |= 0x1D00;
-        sub_080670f0(&v);
+        LoadBackdropColor(&v);
         TaskYieldTrampoline(3);
         t = gCurTask;
         t->unk6C++;
     } while ((s16)t->unk6C <= 1);
     sub_080261d4(0);
-    sub_080670f0(&v);
+    LoadBackdropColor(&v);
     sub_080670d4();
 }
 
@@ -152,7 +152,7 @@ void sub_0806aec0(void)
 
     TaskStop();
     TaskSetFrame(0);
-    sub_08064d34(142, 0);
+    CreateChildTaskHere(142, 0);
     gCurTask->unk6C = 0;
     do
     {
@@ -165,11 +165,11 @@ void sub_0806aec0(void)
     } while ((s16)t->unk6C <= 5);
     TaskStop();
     t = gCurTask;
-    t->unk0C = (u32)sub_0806523c;
+    t->unk0C = (u32)ActorDrawWorldInViewOrDestroy;
     t->unk38 = gUnk_0874CA78;
     t->unk40 = 0;
     sub_080261d4(4);
-    sub_08065e1c(0x1F9, 0);
+    ActorPlaySfx(0x1F9, 0);
     sub_0806d4e4(1, 0);
     TaskYieldTrampoline(20);
 }
@@ -188,25 +188,25 @@ void sub_0806af78(void)
     {
         gDispCnt &= 0xE0FF;
         gDispCnt |= 0x1000;
-        sub_080670f0(&gUnk_0873E72E);
+        LoadBackdropColor(&gUnk_0873E72E);
         TaskYieldTrampoline(4);
         gDispCnt &= 0xE0FF;
         gDispCnt |= 0x1D00;
-        sub_080670f0(&v);
+        LoadBackdropColor(&v);
         TaskYieldTrampoline(3);
         gDispCnt &= 0xE0FF;
         gDispCnt |= 0x1000;
-        sub_080670f0(&gUnk_0873E730);
+        LoadBackdropColor(&gUnk_0873E730);
         TaskYieldTrampoline(4);
         gDispCnt &= 0xE0FF;
         gDispCnt |= 0x1D00;
-        sub_080670f0(&v);
+        LoadBackdropColor(&v);
         TaskYieldTrampoline(3);
         t = gCurTask;
         t->unk6C++;
     } while ((s16)t->unk6C <= 1);
     sub_080261d4(0);
-    sub_080670f0(&v);
+    LoadBackdropColor(&v);
     sub_080670d4();
 }
 
@@ -230,7 +230,7 @@ void sub_0806b098(void)
     sub_080670ac(15);
     sub_080668c8();
     sub_08027204(2);
-    sub_08065e1c(0x1FD, 0);
+    ActorPlaySfx(0x1FD, 0);
     sub_080261d4(4);
     sub_0806d928();
     sub_0806d4e4(1, 0);
@@ -287,7 +287,7 @@ void sub_0806b1a8(void)
 {
     TaskStop();
     TaskSetFrame(0);
-    sub_08065e1c(212, 0);
+    ActorPlaySfx(212, 0);
     sub_08069fc8();
 }
 
@@ -300,7 +300,7 @@ void sub_0806b1c4(void)
     t = gCurTask;
     t->unk38 = gUnk_0874C9D8;
     t->unk40 = 0;
-    sub_08065e1c(212, 0);
+    ActorPlaySfx(212, 0);
     sub_08069fc8();
 }
 
@@ -313,7 +313,7 @@ void sub_0806b1f4(void)
     t = gCurTask;
     t->unk38 = gUnk_0874C9D8;
     t->unk40 = 0;
-    sub_08065e1c(212, 0);
+    ActorPlaySfx(212, 0);
     sub_08069fc8();
 }
 
@@ -334,7 +334,7 @@ void sub_0806b230(void)
 
 s32 sub_0806b24c(void)
 {
-    sub_0806395c(1);
+    ActorSetState(1);
     TaskSetEntry(sub_0806b2e4, gCurTaskIdx);
     return 1;
 }
@@ -344,8 +344,8 @@ void sub_0806b26c(void)
     struct Task *t;
 
     t = gCurTask;
-    t->unk00 = (u32)sub_080656b4;
-    t->unk0C = (u32)sub_0806523c;
+    t->unk00 = (u32)ActorMove;
+    t->unk0C = (u32)ActorDrawWorldInViewOrDestroy;
     t->unk04 = (u32)sub_0806b2ac;
     t->unk78 = 1;
     t->unk08 = 0;
@@ -354,11 +354,11 @@ void sub_0806b26c(void)
 
 void sub_0806b2ac(void)
 {
-    if (sub_080692fc() == 0)
+    if (ActorCollideTerrain() == 0)
         CallTableEntry(gCurTask->unk15, 3, gUnk_0873E798);
     if (gCurTask->unk14 != 2)
     {
-        sub_08068e04();
-        sub_08069b44();
+        ActorCheckHits();
+        ActorReactToHit();
     }
 }

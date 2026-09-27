@@ -55,7 +55,7 @@ void TaskRestoreSkipMask(u32 idx);
 void TaskSaveSkipMask(u32 idx);
 void sub_0801a828(u8 a, s16 x, s16 y, void *p);   /* M11's caller spelling */
 void sub_0803dfc8(void);
-void sub_080670f0(u32 src);
+void LoadBackdropColor(u32 src);
 void sub_08058410(void);
 void sub_080586fc(void);
 
@@ -308,11 +308,11 @@ void sub_08057f90(void)
     {
         gDispCnt &= 0xE0FF;
         gDispCnt |= 0x1000;
-        sub_080670f0((u32)gUnk_0873BAFA);
+        LoadBackdropColor((u32)gUnk_0873BAFA);
         TaskYieldTrampoline(3);
         gDispCnt &= 0xE0FF;
         gDispCnt |= 0x1D00;
-        sub_080670f0((u32)&pal);
+        LoadBackdropColor((u32)&pal);
         TaskYieldTrampoline(1);
         gCurTask->unk6C++;
     } while ((s16)gCurTask->unk6C <= 1);
@@ -321,11 +321,11 @@ void sub_08057f90(void)
     {
         gDispCnt &= 0xE0FF;
         gDispCnt |= 0x1000;
-        sub_080670f0((u32)gUnk_0873BAFA);
+        LoadBackdropColor((u32)gUnk_0873BAFA);
         TaskYieldTrampoline(1);
         gDispCnt &= 0xE0FF;
         gDispCnt |= 0x1D00;
-        sub_080670f0((u32)&pal);
+        LoadBackdropColor((u32)&pal);
         TaskYieldTrampoline(1);
         gCurTask->unk6C++;
     } while ((s16)gCurTask->unk6C <= 3);
@@ -334,19 +334,19 @@ void sub_08057f90(void)
     {
         gDispCnt &= 0xE0FF;
         gDispCnt |= 0x1D00;
-        sub_080670f0((u32)&pal);
+        LoadBackdropColor((u32)&pal);
         TaskYieldTrampoline(2);
         gDispCnt &= 0xE0FF;
         gDispCnt |= 0x1000;
-        sub_080670f0((u32)gUnk_0873BAFA);
+        LoadBackdropColor((u32)gUnk_0873BAFA);
         TaskYieldTrampoline(1);
         gDispCnt &= 0xE0FF;
         gDispCnt |= 0x1D00;
-        sub_080670f0((u32)&pal);
+        LoadBackdropColor((u32)&pal);
         TaskYieldTrampoline(1);
         gCurTask->unk6C++;
     } while ((s16)gCurTask->unk6C <= 1);
-    sub_080670f0((u32)&pal);
+    LoadBackdropColor((u32)&pal);
     TaskExitTrampoline();
 }
 
