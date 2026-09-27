@@ -169,9 +169,9 @@ progress: $(ELF)
 datastats: baserom.gba tools/datastats.py tools/split_config.json docs/analysis/segments.txt
 	python3 tools/datastats.py --rom baserom.gba
 
-# Data policy (AGENTS.md): no ROM bytes committed.  data/ may hold only
-# labels, symbolic .words and .incbin slices of baserom.gba; needs no
-# baserom, so CI runs it on every push.
+# Data policy (AGENTS.md, docs/data.md): assets are never committed, and
+# data/ may hold only labels, symbolic .words and .incbin slices of
+# baserom.gba; needs no baserom, so CI runs it on every push.
 check-data:
 	python3 tools/check_data_policy.py
 

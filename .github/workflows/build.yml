@@ -152,10 +152,11 @@ jobs:
           make split
           git diff --exit-code -- asm data
 
-      # Data policy (AGENTS.md, issue #36): the repository commits the
-      # STRUCTURE of the ROM's data (labels, symbolic pointers, .incbin
-      # offsets), never its bytes.  Needs no baserom, so it always runs.
-      - name: Data policy check (no ROM bytes committed)
+      # Data policy (AGENTS.md, docs/data.md, issue #36): assets are never
+      # committed; generated data files hold structure only (labels,
+      # symbolic pointers, .incbin offsets).  Needs no baserom, so it
+      # always runs.
+      - name: Data policy check (no assets committed)
         run: docker run --rm -v "$PWD":/src -w /src knidl-builder python3 tools/check_data_policy.py
 
       - name: Data structure metrics (make datastats)

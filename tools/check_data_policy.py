@@ -1,9 +1,11 @@
 #!/usr/bin/env python3
-"""No-ROM-bytes check for the data policy (AGENTS.md, issue #36).
+"""Mechanical check for the data policy (AGENTS.md, docs/data.md, issue #36).
 
-The repository is public, so it commits the STRUCTURE of the ROM's data
-(labels, symbolic pointers, .incbin offsets), never its bytes.  This check
-fails when a committed file carries data values instead:
+The repository is public.  Assets (graphics, audio, text, level maps) are
+never committed in any form; functional tables may become C once a consumer
+proves their layout; everything else is committed as STRUCTURE (labels,
+symbolic pointers, .incbin offsets).  This check fails on what can be
+detected mechanically:
 
   1. every `data` segment of docs/analysis/segments.txt (except the
      hand-written cartridge header) is emitted as data/<segment>.s, and no
@@ -13,11 +15,19 @@ fails when a committed file carries data values instead:
      `.word <symbol>` / `.word <symbol>+<n>` (a symbol, never a number) or
      an alignment directive (`.align` / `.balign` / `.p2align`);
   3. `.incbin` anywhere under asm/ and data/ names only baserom.gba;
-  4. no brace initializer in src/ or include/ lists more than
-     MAX_C_NUMBERS numeric literals (a typed C copy of a ROM table);
+  4. a brace initializer in src/ or include/ with more than MAX_C_NUMBERS
+     numeric literals carries a `data-policy: functional <why>` comment in
+     the three lines above it.  A functional table proven by its consumer
+     may be C; a long number list without that note is presumed to be an
+     asset dump;
   5. no line under asm/, data/, src/ or include/ is a hex dump (more than
      MAX_HEX_BYTES byte-sized hex tokens in a row);
-  6. no committed file is binary (holds a NUL byte), unless it is empty.
+  6. no committed file is binary (holds a NUL byte), unless it is empty;
+  7. no committed file has an asset format's extension (ASSET_EXTS).
+     Assets are extracted at build time, never committed.
+
+Whether a table is functional data or an asset is a judgement this check
+cannot make; reviewers make it with docs/data.md section 1.
 
 Code segments' literal pools and raw `.short` instruction halfwords are
 code, not data, and are out of this check's scope (docs/data.md).
@@ -33,7 +43,13 @@ import re
 import subprocess
 import sys
 
-MAX_C_NUMBERS = 16
+MAX_C_NUMBERS = 256
+FUNCTIONAL_NOTE = "data-policy: functional"
+ASSET_EXTS = (
+    ".png", ".bmp", ".gif", ".pal", ".gbapal", ".jasc", ".1bpp", ".2bpp",
+    ".4bpp", ".8bpp", ".lz", ".lz77", ".rl", ".bin", ".mid", ".midi",
+    ".aif", ".aiff", ".wav", ".pcm", ".sf2", ".ogg", ".mp3",
+)
 MAX_HEX_BYTES = 16
 NOT_DATA_FILES = ("rom_header",)  # asm/rom_header.s, built from source
 
@@ -160,7 +176,7 @@ def main():
                         errors.append("%s:%d: not structure: %s"
                                       % (path, lineno, line[:72]))
 
-    # 4. no numeric C initializer lists; 5. no hex dumps.
+    # 4. long numeric C initializers need a functional note; 5. no hex dumps.
     for root in ("src", "include", "asm", "data"):
         for dirpath, _dirs, files in os.walk(root):
             for fname in sorted(files):
@@ -171,22 +187,31 @@ def main():
                     text = f.read()
                 if fname.endswith((".c", ".h")):
                     clean = strip_c_comments(text)
+                    raw_lines = text.splitlines()
                     for off, body in c_initializers(clean):
                         n = len(C_NUMBER_RE.findall(body))
                         if n > MAX_C_NUMBERS:
                             lineno = clean.count("\n", 0, off) + 1
+                            above = raw_lines[max(0, lineno - 4):lineno]
+                            if any(FUNCTIONAL_NOTE in l for l in above):
+                                continue
                             errors.append(
                                 "%s:%d: initializer with %d numeric literals"
-                                " (a ROM table belongs in data/ as structure)"
-                                % (path, lineno, n)
+                                " and no '%s <why>' note (assets are never"
+                                " committed; docs/data.md section 1)"
+                                % (path, lineno, n, FUNCTIONAL_NOTE)
                             )
                 for lineno, line in enumerate(text.splitlines(), 1):
                     if HEX_BYTE_RUN_RE.search(line + " "):
                         errors.append("%s:%d: hex dump: %s"
                                       % (path, lineno, line.strip()[:72]))
 
-    # 6. no committed binary files.
+    # 6. no committed binary files; 7. no asset-format files.
     for path in tracked_files():
+        if path.lower().endswith(ASSET_EXTS):
+            errors.append("%s: asset-format file committed (assets are"
+                          " extracted at build time)" % path)
+            continue
         try:
             with open(path, "rb") as f:
                 blob = f.read()
@@ -203,8 +228,8 @@ def main():
         print("data policy check FAILED (%d problem(s)); see docs/data.md"
               % len(errors))
         sys.exit(1)
-    print("data policy check passed: data/ holds structure only, no ROM"
-          " bytes committed")
+    print("data policy check passed: data/ holds structure only, no assets"
+          " committed")
 
 
 if __name__ == "__main__":

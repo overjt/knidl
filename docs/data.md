@@ -6,11 +6,32 @@ AGENTS.md). The data side works differently, because of the data policy.
 
 ## 1. The policy
 
-The repository is public, so **no ROM bytes are ever committed**: not as
-`.incbin`'d binaries, not as typed C arrays, not as `.word`/`.short`/`.byte`
-value lists, not as converted assets (tables, text, level data, graphics,
-audio). A table of numbers committed as source is ROM content, whatever
-its form. The rule is in AGENTS.md ("Data policy", decided on #35/#36).
+The repository is public. The rule is in AGENTS.md ("Data policy"). It
+follows the zeldaret/mzm line, which was chosen after comparing what the
+other decompilations do with the ROM's data (surveyed on #36):
+
+| project | data not yet understood | tables a consumer proves | graphics, audio, text, maps |
+|---|---|---|---|
+| katam (Kirby & The Amazing Mirror) | label + `.incbin "baserom.gba"` slices | committed as C with values | committed, converted (PNG, MIDI, AIF) |
+| pret (pokeemerald ...), sa2, fireemblem8u | a few baserom slices, or none | committed as C with values | committed, converted |
+| tmc (Minish Cap), mzm (Zero Mission) | none left | committed as C with values | **not committed**: extracted from the baserom at build time (tmc's JSON asset manifests, mzm's `tools/extractor.py`) |
+| sm64, OoT (N64) | - | committed as C | **not committed**: extracted from the baserom at build time |
+
+So this project draws the same line as tmc, mzm, sm64 and OoT:
+
+- **Assets are never committed, in any form.** That covers graphics
+  (tiles, tilemaps, palettes, sprite frames), audio (samples, songs), text
+  and fonts, and level layouts and maps. They stay `.incbin
+  "baserom.gba", <offset>, <length>` slices, read from the user's own
+  dump. If they are ever made editable, that happens through build-time
+  extraction into gitignored directories, never by committing converted
+  files.
+- **Functional data may be committed as C** once a decompiled consumer
+  proves its layout: pointer tables, task/actor/object definitions,
+  animation and frame tables, parameters. It gets typed, named fields,
+  exactly like the decompiled code.
+- **Until then, data is committed as structure only**. That is what
+  `make split` emits today, and what the rest of this page describes.
 
 What a data change commits is *structure*:
 
@@ -280,13 +301,22 @@ before), while their bytes go down by four per symbolic word (lesson
 push, no baserom needed) enforces the policy: data segments live in
 `data/`; a `data/*.s` line is a comment, `.section`, `.global`, a label,
 `.incbin "baserom.gba", <offset>, <length>`, `.word <symbol>[+n]` or an
-alignment directive; `.incbin` anywhere names only `baserom.gba`; no C
-initializer lists more than 16 numbers; no hex dumps; no binary file is
-committed. Code segments' literal pools and raw instruction halfwords are
+alignment directive; `.incbin` anywhere names only `baserom.gba`; no
+asset-format file (PNG, palettes, tile/LZ/`.bin` blobs, MIDI, AIF/WAV/PCM,
+...) and no binary file is committed; no hex dumps; and a C initializer
+with more than 256 numbers must carry a `data-policy: functional <why>`
+comment within the three lines above it. The hex-dump rule still applies
+inside such a table, so write it one entry (or at most 16 values) per line. Where assets end and functional
+tables begin is a judgement the check cannot make: reviewers make it,
+using §1. Code segments' literal pools and raw instruction halfwords are
 code and outside its scope.
 
 ## 7. Phase 2
 
+- **Functional tables as C.** Once a consumer proves a table's layout and
+  #155 has named it, the table can move from its `data/*.s` slice to a C
+  definition with typed, named fields. Its object keeps the address pin
+  until the pins go. Assets never move this way (§1).
 - **Typed C declarations in shared headers**, deferred to #155, which
   renames the `gUnk_` symbols and consolidates the per-file `extern`s
   (today one table is often `u32 []` in one file and `T *[]` in another).
