@@ -19,14 +19,14 @@
 0x080011AC 0x08001518 c_code early_11ac # src/early_11ac.c (carved by tools/carve.py)
 0x08001518 0x08001B08 c_code early_1518 # src/early_1518.c (carved by tools/carve.py)
 0x08001B08 0x08001CC8 c_code early_1b08 # src/early_1b08.c (carved by tools/carve.py)
-0x08001CC8 0x08001FD0 thumb_code game_code_early_080011ac [split]
+0x08001CC8 0x08001FD0 c_code early_1cc8 # src/early_1cc8.c (carved by tools/carve.py)
 0x08001FD0 0x08002378 c_code early_1fd0 # src/early_1fd0.c (carved by tools/carve.py)
 0x08002378 0x08002668 thumb_code game_code_early_080011ac_08002378 [split]
 0x08002668 0x0800293C c_code early_2668 # src/early_2668.c (carved by tools/carve.py)
 0x0800293C 0x08002B04 c_code early_293c # src/early_293c.c (carved by tools/carve.py)
 0x08002B04 0x08003110 c_code early_2b04 # src/early_2b04.c (carved by tools/carve.py)
 0x08003110 0x080031B8 c_code early_3110 # src/early_3110.c (carved by tools/carve.py)
-0x080031B8 0x08003484 thumb_code game_code_early_080011ac_08002378_08003110 [split]
+0x080031B8 0x08003484 c_code early_31b8 # src/early_31b8.c (carved by tools/carve.py)
 0x08003484 0x08003888 c_code early_3484 # src/early_3484.c (carved by tools/carve.py)
 0x08003888 0x08003964 c_code early_3888 # src/early_3888.c (carved by tools/carve.py)
 0x08003964 0x08004000 c_code early_3964 # src/early_3964.c (carved by tools/carve.py)
