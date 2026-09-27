@@ -651,7 +651,10 @@ child issues of #35 are created from it. Findings that belong in this document:
     `gUnk_02008160`), `+0x10` a table indexed by the second layer's
     metatiles (`sub_08022540`), `+0x14`/`+0x16` the size in metatiles,
     `+0x18`/`+0x28` the BG and OBJ palettes (length-prefixed), `+0x1C`/
-    `+0x2C` the BG and OBJ tiles (to `0x06004000`/`0x06008000`), `+0x20`
+    `+0x2C` the BG and OBJ tiles (to `0x06004000`/`0x06008000`; *correction,
+    #155 run 2: both pairs are BG graphics, BG2's and BG3's -
+    `RoomDef.bg2Palette`/`bg2Tiles`/`bg3Palette`/`bg3Tiles`, see
+    `LoadBg2Gfx`/`LoadBg3Gfx`*), `+0x20`
     the metatile table (to `gUnk_0200B080`), `+0x24`/`+0x26` the room
     origin (`gUnk_03005600`), `+0x30` the BG map header (`struct BgMap`, to
     `0x06003000`), `+0x34`/`+0x36` the BG3 origin (`gUnk_03005608`),
