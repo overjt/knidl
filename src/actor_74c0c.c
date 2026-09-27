@@ -44,7 +44,7 @@ extern u8 gUnk_02005E10[];
 extern u8 gUnk_0200AF20[];
 extern u8 gBgPalette[];
 extern u8 gUnk_03001370[];
-extern u8 gUnk_03002340;
+extern u8 gActivePlayerMask;
 extern vu16 gDispCnt;
 
 /* callees */
@@ -62,7 +62,7 @@ extern void BlendColors(void *src, void *dst, s32 ratio, s32 count, void *out);
 extern void TaskMove(void);
 extern void TaskSleepForever(void);
 extern void TaskStop(void);
-extern void sub_08026264(s32 a, s32 b);
+extern void SetCameraFocus(s32 a, s32 b);
 extern void AngleToVector(s16 t, s16 mag);
 extern void ActorDrawWorldInViewOrDestroy(void);
 extern void sub_080652c8(void);
@@ -180,7 +180,7 @@ void sub_08074ee0(u32 flag)
 
     for (i = 0; i < gPlayerCount; i++)
     {
-        if ((gUnk_03002340 >> i) & 1)
+        if ((gActivePlayerMask >> i) & 1)
         {
             struct PlayerState *p = &gPlayerStates[i];
 
@@ -1384,7 +1384,7 @@ void sub_0807637c(void)
     id = gLocalPlayer;
     t = gCurTask;
     if (id == t->unk88->unk00 && t->unk18 != 0)
-        sub_08026264(t->unk1C, t->unk20);
+        SetCameraFocus(t->unk1C, t->unk20);
 }
 
 void sub_080763c4(void)

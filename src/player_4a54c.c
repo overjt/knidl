@@ -16,7 +16,7 @@
  * variant, animation 0xC4D, effect 43 x4) and state 3 ends it.  Its
  * handler sub_0804a970 registers the collider gUnk_0873C264 in the air
  * or tests the block set gUnk_0873CF6C on the ground in state 0; in
- * state 1 it plays the landing (effect 27, sound 143, sub_080261d4(2))
+ * state 1 it plays the landing (effect 27, sound 143, RequestScreenShake(2))
  * and the terrain animation gUnk_0873B654[gTerrainResult.unk4] on the
  * ground, or the rising presets 40/41 and the collider gUnk_0873C278 in
  * the air, and it stops a rise on a ceiling hit (gTerrainResult.unk1). */
@@ -56,7 +56,7 @@ void TaskSleepForever(void);
 void TaskSetFrame(s32 a);
 void TaskSetFrameNoFlip(s32 a);
 void RegisterCollider(u8 a, s16 x, s16 y, void *p);   /* M11's caller spelling */
-void sub_080261d4(u16 a);
+void RequestScreenShake(u16 a);
 u16 TaskBreakBlocks(struct HitBoxSet *p, s32 e);
 void PlayerStopAxes(s32 a0);
 void SetPlayerInvulnerability(s32 a0, s32 a1, s32 a2);
@@ -231,7 +231,7 @@ void sub_0804a970(void)
             if (t->unk58 != 0) {
                 CreatePlayerEffect(t->unk88->unk00, 27, 0);
                 PlaySfxIfLocalPlayer(143, gCurTask->unk88->unk00);
-                sub_080261d4(2);
+                RequestScreenShake(2);
                 PlayerStopAxes(2);
             }
             if (gTerrainResult.unk4 == 0)

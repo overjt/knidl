@@ -10,7 +10,7 @@ extern s16 gViewRect[];
 extern s32 gUnk_030023B4;
 extern s32 gUnk_030023D4;
 extern vu16 gTaskSlotTypes[];
-extern s16 gUnk_03005628[];
+extern s16 gRoomBounds[];
 extern u32 gUnk_082D8638[];
 extern u16 * gUnk_087482A8[];
 extern s16 gUnk_08748374[];
@@ -43,7 +43,7 @@ extern void TaskStopY(void);
 extern void TaskStop(void);
 extern void TaskSetFrame(s32 a);
 extern void TaskStepForward(s16 a);
-extern void sub_080261d4(s32 a);
+extern void RequestScreenShake(s32 a);
 extern void ActorSetState(u16 v);
 extern void sub_08063a00(u32 v);
 extern s32 TaskGetNearestPlayerDx(void);
@@ -146,10 +146,10 @@ void sub_080a0358(void)
     case 8:
         TaskGetNearestPlayerPos();
         gCurTask->unk20 = gUnk_030023B4;
-        if (gUnk_030023B4 < gUnk_03005628[0] - 87)
-            gCurTask->unk20 = gUnk_03005628[0] - 87;
-        if (gCurTask->unk20 > gUnk_03005628[1] + 87)
-            gCurTask->unk20 = gUnk_03005628[1] + 87;
+        if (gUnk_030023B4 < gRoomBounds[0] - 87)
+            gCurTask->unk20 = gRoomBounds[0] - 87;
+        if (gCurTask->unk20 > gRoomBounds[1] + 87)
+            gCurTask->unk20 = gRoomBounds[1] + 87;
         if (gCurTask->unk48 == gUnk_030023B4)
             goto tail;
         if ((u8)TaskGetXDirBitToNearestPlayer() == 4)
@@ -172,10 +172,10 @@ void sub_080a0358(void)
     }
     t->unk34 = n;
 tail:
-    if (gCurTask->unk20 < gUnk_03005628[0] - 87)
-        gCurTask->unk20 = gUnk_03005628[0] - 87;
-    if (gCurTask->unk20 > gUnk_03005628[1] + 87)
-        gCurTask->unk20 = gUnk_03005628[1] + 87;
+    if (gCurTask->unk20 < gRoomBounds[0] - 87)
+        gCurTask->unk20 = gRoomBounds[0] - 87;
+    if (gCurTask->unk20 > gRoomBounds[1] + 87)
+        gCurTask->unk20 = gRoomBounds[1] + 87;
 }
 
 void sub_080a043c(void)
@@ -429,7 +429,7 @@ void sub_080a0768(void)
     TaskStop();
     PlaySfx(0x1F7);
     sub_080a02d4(0);
-    sub_080261d4(4);
+    RequestScreenShake(4);
     TaskYieldTrampoline(20);
 }
 
@@ -460,7 +460,7 @@ void sub_080a0844(void)
     t->unk3C--;
     z = 0;
     TaskYieldTrampoline(b);
-    sub_080261d4(d);
+    RequestScreenShake(d);
     sub_080a02d4(0);
     u = gCurTask;
     u->unk3C--;
@@ -731,7 +731,7 @@ void sub_080a0ccc(void)
     while ((gCurTask->unk7A & 1) == 0)
         TaskYieldTrampoline(1);
     PlaySfx(0x1F7);
-    sub_080261d4(4);
+    RequestScreenShake(4);
     r = sub_0806d1e8(24, 32);
     u = gCurTask;
     u->unk46 = r;
@@ -929,7 +929,7 @@ void sub_080a1058(void)
         TaskYieldTrampoline(1);
     TaskStop();
     PlaySfx(252 << 1);
-    sub_080261d4(2);
+    RequestScreenShake(2);
     sub_080a02d4(1);
     TaskSetFrame(41);
     TaskYieldTrampoline(34);

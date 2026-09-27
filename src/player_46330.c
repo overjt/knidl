@@ -11,7 +11,7 @@
  * set gUnk_0873CDAC and spins in an endless yield loop, state 2 turns
  * round (it negates the facing Task.unk43) and goes back to state 1,
  * state 3 finishes the move and state 4 bounces off (sound 153, the
- * screen shake sub_080261d4(4), velocity preset 36).  Its handler
+ * screen shake RequestScreenShake(4), velocity preset 36).  Its handler
  * sub_0804676c is what leaves the spin: every frame of state 1 it
  * re-binds the coroutine to state 3 on a newly-pressed B, to state 2
  * when the held direction opposes the facing, and to state 4 when the
@@ -54,7 +54,7 @@ void TaskSetFrame(s32 a);
 void RegisterCollider(u8 a, s16 x, s16 y, void *p);   /* M11's caller spelling */
 u8 IsWaterAtPixel(s16 x, s16 y);
 s32 IsFullBlockAtPixel(u16 x, u16 y);
-void sub_080261d4(u16 a);
+void RequestScreenShake(u16 a);
 void PlayerStopAxes(s32 a0);
 void SetPlayerInvulnerability(s32 a0, s32 a1, s32 a2);
 s32 PlaySfxIfLocalPlayer(s32 a0, u16 a1);
@@ -191,7 +191,7 @@ again:
             }
             PlayerStopSfx();
             PlaySfxIfLocalPlayer(153, gCurTask->unk88->unk00);
-            sub_080261d4(4);
+            RequestScreenShake(4);
             gCurTask->unk7A = 0;
             PlayerSetMotionXPreset(11, 17);
             PlayerSetMotionYPreset(36);

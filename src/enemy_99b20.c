@@ -11,7 +11,7 @@
  * one of gUnk_087456D4 / gUnk_087456E4 / gUnk_087456F4 / gUnk_08745704 by
  * classifying |TaskGetNearestPlayerDx()| against 128 and |TaskGetNearestPlayerDy()| against 64;
  * sub_08099e9c and sub_08099ee4 build struct ActorSpawn records for the actors
- * 16 and 17; sub_0809a080 is the shared hit reaction (rumble sub_080261d4(2)
+ * 16 and 17; sub_0809a080 is the shared hit reaction (rumble RequestScreenShake(2)
  * or (4), then SE 0x1F7).  sub_08099fe0 and sub_08099fe4 are two dead `bx lr`
  * state handlers nothing in the ROM points at.
  *
@@ -93,7 +93,7 @@ extern void TaskSetFrame(s32 a);
 extern void TaskSetFrameNoFlip(s32 a);
 extern void TaskSetFrameFlip(s32 a);
 extern s32 PlaySfx(s32 id);
-extern void sub_080261d4(s32 a);
+extern void RequestScreenShake(s32 a);
 extern void StopSfxOnPlayer(s32 player, s32 songId);
 extern s32 TaskGetNearestPlayerDx(void);
 extern s32 TaskGetNearestPlayerDy(void);
@@ -149,7 +149,7 @@ u8 sub_08099b20(void)
     switch (gCurTask->unk14)
     {
     case 9:
-        sub_080261d4(1);
+        RequestScreenShake(1);
         PlaySfx(0x1F7);
         ActorSetState(10);
         TaskSetEntry(sub_0809a1f4, gCurTaskIdx);
@@ -253,7 +253,7 @@ u8 sub_08099d40(void)
 {
     gCurTask->unk2C = 32;
     CreateChildTaskHere(142, 0);
-    sub_080261d4(4);
+    RequestScreenShake(4);
     return 0;
 }
 
@@ -460,9 +460,9 @@ void sub_0809a03c(void)
 void sub_0809a080(u8 a)
 {
     if (a == 1)
-        sub_080261d4(2);
+        RequestScreenShake(2);
     else
-        sub_080261d4(4);
+        RequestScreenShake(4);
     PlaySfx(0x1F7);
 }
 
@@ -1321,7 +1321,7 @@ void sub_0809adf4(void)
     v->unk58 = -196608;
     v->unk60 = 0x2500;
     v->unk68 = 0x30000;
-    sub_080261d4(2);
+    RequestScreenShake(2);
     TaskSetFrame(7);
     TaskSleepForever();
 }

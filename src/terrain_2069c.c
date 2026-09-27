@@ -5,7 +5,7 @@
  * M06 terrain / collision query (issue #84), range 0x0802069C-0x080207A0.
  *
  * Tile-attribute lookups on the current room: the room descriptor cells at
- * 0x030055xx hold the map size (gUnk_03005620 x gUnk_0300561C cells of 16x16
+ * 0x030055xx hold the map size (gRoomWidth x gRoomHeight cells of 16x16
  * pixels), the cell array pointer (gRoomMap, 4 bytes per cell, byte 3 is
  * the tile-set index) and the last query results; the 0x100-stride ROM index
  * tables at 0x087328F0.. map a tile-set index to its per-pixel attribute
@@ -49,9 +49,9 @@ extern u16 gTerrainTileLeft;
 extern s16 gTerrainBoxRight;
 extern s8 *gTerrainTileShape;
 extern u16 gUnk_030055AC;
-extern s16 gUnk_030055E4;
-extern s16 gUnk_0300561C;
-extern s16 gUnk_03005620;
+extern s16 gRoomMetatileCount;
+extern s16 gRoomHeight;
+extern s16 gRoomWidth;
 
 struct MapCell
 {

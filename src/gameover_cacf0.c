@@ -8,7 +8,7 @@
  *   GameOverMain   the state body: one of three screens - sub_080cad8c
  *       outside link play, sub_080caeec in link play, sub_080cb058 after
  *       AgbMain state 20 - then, when the choice set game state 5 (continue),
- *       back into the stage (state 6 unless gUnk_03002438 is 1), else the SIO
+ *       back into the stage (state 6 unless gStageRequest is 1), else the SIO
  *       session is torn down.
  *   sub_080cb21c / sub_080cb2cc   the screen's graphics and objects: with
  *       one player task type #261 and #264 variants 0-2 (variant 0's task
@@ -44,7 +44,7 @@ extern u32 gObjVram[];         /* OBJ VRAM */
 extern vu16 gKeyRepeatDelay;
 extern vu16 gKeyRepeatInterval;
 extern u8 gUnk_02007FC0;
-extern s8 gUnk_03002438;
+extern s8 gStageRequest;
 extern u32 gUnk_085E2C20[];
 extern u32 gUnk_085E2CE0[];
 extern u32 gUnk_085E4064[];
@@ -108,7 +108,7 @@ void GameOverMain(void)
         gUnk_02007FC0 = 1;
         sub_0800b514();
         sub_08022c3c();
-        if (gUnk_03002438 != 1)
+        if (gStageRequest != 1)
             gGameState = 6;
     } else {
         sub_0800293c();

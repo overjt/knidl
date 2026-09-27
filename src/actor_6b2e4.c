@@ -67,7 +67,7 @@ void sub_0806c1d0(void);
 extern void sub_0806a158(void);
 extern void ActorMove(void);
 extern void ActorCollideTerrain(void);
-extern void sub_080261d4(u32 a);
+extern void RequestScreenShake(u32 a);
 extern void RegisterCollider(u8 a, s16 x, s16 y, u32 *p);
 extern void TaskSetMotionXFacing(u32 a, u32 b);
 extern void TaskSetMotionY(u32 a, u32 b, u32 c);
@@ -904,7 +904,7 @@ void sub_0806c1d0(void)
         if (gTerrainResult[0] != 0)
             gCurTask->unk30 = 2;
         PlaySfx(179);
-        sub_080261d4(2);
+        RequestScreenShake(2);
         ActorSetState(3);
         TaskSetEntry(sub_0806bf38, gCurTaskIdx);
         return;

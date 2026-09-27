@@ -44,13 +44,13 @@ extern u8 gUnk_02000020;
 extern u16 gUnk_02004B50[];
 extern u16 gUnk_02005580;
 extern s16 gUnk_02005588[];
-extern u16 gUnk_020055E0;
-extern u8 gUnk_02006170;
+extern u16 gRoomEntryX;
+extern u8 gRoomEntrySet;
 extern u8 gUnk_020069F0;
 extern u32 gUnk_02007BF0[8][8];
 extern s16 gPlayerLives[];
 extern u8 gUnk_02007D58[];
-extern u16 gUnk_0200AEF0;
+extern u16 gRoomEntryY;
 extern u16 gUnk_0200AF18[];
 extern u8 gUnk_0200B04C;
 extern u8 gUnk_0200EC68[];
@@ -68,16 +68,16 @@ extern u16 gLocalPlayer;
 extern u16 gUnk_03002364;
 extern u16 gUnk_03002378[];
 extern s8 gUnk_03002384;
-extern s8 gUnk_0300238C;
+extern s8 gLevelIndex;
 extern u16 gPlayerCount;
 extern u8 gUnk_030023B0;
 extern u8 gUnk_030023B8;
 extern s32 gUnk_030023C8[];
 extern s8 gUnk_030023E0;
-extern u8 gUnk_030023EC;
+extern u8 gStageIndex;
 extern u8 gUnk_03002400[8][7];
 extern u8 gExtraMode;
-extern u8 gUnk_03002468;
+extern u8 gRoomIndex;
 
 void sub_080b72bc(void)
 {
@@ -87,13 +87,13 @@ void sub_080b72bc(void)
     gRngValue = gInputRecordingPtr->unk00;
     gVBlankCount = gInputRecordingPtr->unk04;
     gFrameCount = gInputRecordingPtr->unk06;
-    gUnk_0300238C = gInputRecordingPtr->unk08;
-    gUnk_030023EC = gInputRecordingPtr->unk09;
-    gUnk_03002468 = gInputRecordingPtr->unk0A;
+    gLevelIndex = gInputRecordingPtr->unk08;
+    gStageIndex = gInputRecordingPtr->unk09;
+    gRoomIndex = gInputRecordingPtr->unk0A;
     gPlayerCount = gInputRecordingPtr->unk0C;
     gUnk_020069F0 = gInputRecordingPtr->unk12;
-    gUnk_020055E0 = gInputRecordingPtr->unk0E;
-    gUnk_0200AEF0 = gInputRecordingPtr->unk10;
+    gRoomEntryX = gInputRecordingPtr->unk0E;
+    gRoomEntryY = gInputRecordingPtr->unk10;
     gUnk_02000020 = gInputRecordingPtr->unk13;
     gUnk_02005580 = gInputRecordingPtr->unk14;
     gUnk_0200B04C = gInputRecordingPtr->unk36;
@@ -140,5 +140,5 @@ void sub_080b72bc(void)
         gUnk_03002378[i] = gInputRecordingPtr->unk114[i];
     }
     gCompletionPercent = gInputRecordingPtr->unkC2;
-    gUnk_02006170 = 1;
+    gRoomEntrySet = 1;
 }

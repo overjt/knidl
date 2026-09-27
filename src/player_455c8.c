@@ -12,7 +12,7 @@
  * gUnk_0873BD3C (PlayerState.unk68/unk64) and cycles the hit-box row
  * Task.unk2C through 0-2, state 2 restores the default scripts
  * gPlayerDefaultTerrainBox / gUnk_0873BD00 and lands (preset 2), and state 3 is the
- * bounce-off (sound 153, sub_080261d4(4), preset 23).  Its handler
+ * bounce-off (sound 153, RequestScreenShake(4), preset 23).  Its handler
  * sub_08045a50 drives it from the collision block gTerrainResult -
  * re-binding state 3 on a hit, fading the palette of gUnk_0873B510[]
  * row Task.unk2C and registering the box gUnk_0873BF00.
@@ -64,7 +64,7 @@ void TaskSleepForever(void);
 void TaskSetEntry(void *a, u32 i);
 void TaskSetFrame(s32 a);
 void RegisterCollider(u8 a, s16 x, s16 y, void *p);   /* M11's caller spelling */
-void sub_080261d4(u16 a);
+void RequestScreenShake(u16 a);
 void PlayerStopAxes(s32 a0);
 void SetPlayerInvulnerability(s32 a0, s32 a1, s32 a2);
 s32 PlaySfxIfLocalPlayer(s32 a0, u16 a1);
@@ -214,7 +214,7 @@ void sub_080455c8(void)
         PlayerStopSfx();
         gCurTask->unk7A = 0;
         PlaySfxIfLocalPlayer(153, gCurTask->unk88->unk00);
-        sub_080261d4(4);
+        RequestScreenShake(4);
         PlayerSetMotionXPreset(11, 17);
         PlayerSetMotionYPreset(23);
         TaskSetFrame(0x544);

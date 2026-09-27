@@ -12,7 +12,7 @@
  * gUnk_0873CDF4 (air) whose rows gUnk_0873CDBC, gUnk_0873CDFC and
  * gUnk_0873CE64 it steps with LoadPlayerHitBoxSet.  On the ground it probes the
  * metatile 20 pixels ahead (sub_0802259c); a solid one (bits 0-1) gives
- * the impact: sound 241, the screen shake sub_080261d4(2) and effect 35.
+ * the impact: sound 241, the screen shake RequestScreenShake(2) and effect 35.
  * Its handler sub_08047270 is sub_08045398's twin with the collider rows
  * gUnk_0873C074, gUnk_0873C0C0 and gUnk_0873C128, and in the air it
  * records the held left/right direction in Task.unk34. */
@@ -40,7 +40,7 @@ void TaskSleepForever(void);
 void TaskSetFrame(s32 a);
 void RegisterCollider(u8 a, s16 x, s16 y, void *p);   /* M11's caller spelling */
 u16 sub_0802259c(u16 x, u16 y);
-void sub_080261d4(u16 a);
+void RequestScreenShake(u16 a);
 s32 PlaySfxIfLocalPlayer(s32 a0, u16 a1);
 s32 PlayerLand(s32 a0);
 s32 LoadPlayerBodyBoxRect(s32 playerIdx, u8 *src6);
@@ -102,7 +102,7 @@ void sub_08046c00(void)
                 r = sub_0802259c(x, gCurTask->unk4A + 13);
                 if (r & 3) {
                     PlaySfxIfLocalPlayer(241, gCurTask->unk88->unk00);
-                    sub_080261d4(2);
+                    RequestScreenShake(2);
                     CreatePlayerEffect(gCurTask->unk88->unk00, 35, 0);
                     CreatePlayerEffect(gCurTask->unk88->unk00, 35, 1);
                     gCurTask->unk3C++;
@@ -155,7 +155,7 @@ void sub_08046c00(void)
                 r = sub_0802259c(x, gCurTask->unk4A + 13);
                 if (r & 3) {
                     PlaySfxIfLocalPlayer(241, gCurTask->unk88->unk00);
-                    sub_080261d4(2);
+                    RequestScreenShake(2);
                     CreatePlayerEffect(gCurTask->unk88->unk00, 35, 0);
                     CreatePlayerEffect(gCurTask->unk88->unk00, 35, 1);
                     gCurTask->unk3C++;

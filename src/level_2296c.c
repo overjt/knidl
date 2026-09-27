@@ -9,10 +9,10 @@
  * the per-stage door masks gUnk_02007D58[] and the cleared-stage mask
  * gUnk_0200B04C from the save flags (gUnk_08732348[level][6] names each
  * stage's flag) and place the player at the matching door of the hub
- * room gUnk_087E1D58[8][stage][0]; sub_08022f50 (AgbMain) resets level,
+ * room gRoomTable[8][stage][0]; sub_08022f50 (AgbMain) resets level,
  * stage and room; sub_08022f98/sub_08022f9c are M02's screen-setup hooks;
  * sub_08022fa8 and sub_080233e0 are the loaders of M02's first screen
- * setup sub_0800b648 (see level_242d0.c); sub_080235ec spawns task type
+ * setup sub_0800b648 (see level_242d0.c); CreateRoomTask spawns task type
  * #3 with its variant index. */
 
 struct BgMap
@@ -93,10 +93,10 @@ struct Unk020055D8
     /*0x04*/ struct Unk020055D8Entry *unk4;
 };
 
-extern struct RoomDef **gUnk_087E1D58[][8];
-extern s8 gUnk_0300238C;
-extern s8 gUnk_030023EC;
-extern s8 gUnk_03002468;
+extern struct RoomDef **gRoomTable[][8];
+extern s8 gLevelIndex;
+extern s8 gStageIndex;
+extern s8 gRoomIndex;
 extern s8 gUnk_030023B8;
 extern u8 gUnk_03001F20;
 extern s8 gUnk_030023E0;
@@ -104,15 +104,15 @@ extern s8 gUnk_03002384;
 extern u16 gUnk_0200001C;
 extern s8 gUnk_02004C98;
 extern u8 gUnk_02005578;
-extern s16 gUnk_020055E0;
-extern u8 gUnk_02006170;
+extern s16 gRoomEntryX;
+extern u8 gRoomEntrySet;
 extern u8 gUnk_020069F0;
 extern u8 gUnk_02007D58[];
 extern u16 gUnk_02007D60;
 extern u8 gUnk_02007FC0;
 extern u16 gUnk_02007FF0;
 extern s8 gUnk_02007FF8;
-extern s16 gUnk_0200AEF0;
+extern s16 gRoomEntryY;
 extern u8 gUnk_0200AF00;
 extern u8 gUnk_0200AF04;
 extern u8 gUnk_0200AF08;
@@ -125,30 +125,30 @@ extern u16 gUnk_08732348[][9];
 extern u8 gUnk_02004B64;
 extern s16 gUnk_0200AF0C;
 extern u32 gUnk_02007BF0[8][8];
-extern s8 gUnk_03002438;
+extern s8 gStageRequest;
 extern u8 gUnk_08334EB4[];
 extern u8 gUnk_020055C8;
 extern s8 gUnk_03002444;
-extern u16 gUnk_030055C0;
-extern struct RoomDef *gUnk_030055EC;
+extern u16 gCameraMode;
+extern struct RoomDef *gCurRoomDef;
 extern s8 gUnk_02007D64;
 extern s8 gUnk_02000000;
-extern s16 gUnk_03005620;
-extern s16 gUnk_0300561C;
-extern s16 gUnk_030055E4;
-extern u16 gUnk_03005600[2];
-extern u16 gUnk_03005608[2];
-extern struct Unk020055D8 gUnk_020055D8;
+extern s16 gRoomWidth;
+extern s16 gRoomHeight;
+extern s16 gRoomMetatileCount;
+extern u16 gRoomBorder[2];
+extern u16 gBg3Border[2];
+extern struct Unk020055D8 gRoomObjectList;
 extern struct MapCell *gRoomMap;
-extern struct MapCell gUnk_02000040[];
+extern struct MapCell gRoomMapBuffer[];
 extern u16 gBlockLayer[];
-extern u16 gUnk_0200B080[];
+extern u16 gMetatileTiles[];
 extern u8 gUnk_02000020;
 extern u8 gUnk_0200B078;
 extern u8 gUnk_0200B040;
-extern u16 gUnk_03005624;
-extern u8 gUnk_03002340;
-extern u8 gUnk_03002350;
+extern u16 gRoomUpdateFlags;
+extern u8 gActivePlayerMask;
+extern u8 gActivePlayerCount;
 extern u8 gUnk_0300234C;
 extern u16 gPlayerCount;
 extern s16 gPlayerLives[];
@@ -158,15 +158,15 @@ extern u16 gUnk_02008008[];
 extern u16 gUnk_02007FA8[];
 extern u16 gUnk_02004B50[];
 extern u16 gUnk_0200AF18[];
-extern u8 gUnk_0300560C[];
+extern u8 gPlayerCameraMode[];
 extern vu16 gPlayerHeldKeys[];
 extern vu16 gPlayerPressedKeys[];
 extern u16 gLatchedHeldKeys[];
 extern u16 gLatchedPressedKeys[];
 extern u16 gLocalPlayer;
-extern u8 gUnk_0200B050;
-extern u16 gUnk_03005604[2];
-extern u16 gUnk_03005690[2];
+extern u8 gRoomBgLayout;
+extern u16 gCameraPos[2];
+extern u16 gBg3Pos[2];
 extern u16 gUnk_02004B80;
 extern u8 gUnk_02007E8C;
 
@@ -182,32 +182,32 @@ s32 sub_08009e60(s32 a, u32 b);
 void sub_08027e28(void);
 void sub_08028130(void);
 void sub_08028304(void);
-void sub_0802885c(void);
-void sub_08028948(void);
+void CalcBg3Parallax(void);
+void CalcRoomBounds(void);
 void sub_08028990(void);
-void sub_08028b1c(void);
+void CameraResetBounds(void);
 void sub_08028e4c(void);
 void sub_080290ac(void);
-void sub_080290dc(void);
+void CameraInitPos(void);
 void sub_08029110(void);
-void sub_080291d0(void);
-void sub_08029204(void);
-void sub_0802923c(void);
-void sub_08029270(void);
-void sub_080292b0(void);
-void sub_080292d0(void);
-void sub_08029318(void);
-void sub_08029930(void);
-void sub_0802a9cc(s32 px, s32 py);
-void sub_0802ab30(s32 px, s32 py);
-void sub_0802aeac(s32 py);
+void LoadBg2Gfx(void);
+void LoadBg3Gfx(void);
+void ClearBg2Bg3Maps(void);
+void SelectBg3MapShape(void);
+void LoadBg3Map(void);
+void SpawnRoomObjectsInView(void);
+void InitDoors(void);
+void CameraWriteScrollParallax(void);
+void DrawBg2View(s32 px, s32 py);
+void DrawBg3View(s32 px, s32 py);
+void DrawBg23FullRows(s32 py);
 void sub_0802b074(s32 px);
-void sub_0802b4bc(void);
-void sub_0802be80(void);
-void sub_0802c42c(void);
-void sub_0802cd24(void);
-void sub_0802d0f4(void);
-void sub_08030724(void);
+void CameraFollowFocus(void);
+void CameraFollowScrollLocked(void);
+void CameraHoldAnchor(void);
+void StopScreenShake(void);
+void LoadRoomBgAnims(void);
+void ResetBlockAnims(void);
 void sub_080307b0(void);
 void CreatePlayer(s32 a0);
 void sub_0803d1c4(s32 a0);
@@ -215,7 +215,7 @@ void sub_08077d38(s32 id);
 void sub_080b4e40(void);
 void sub_080b4ea8(void);
 void sub_080b5024(void);
-void sub_080235ec(s32 a);
+void CreateRoomTask(s32 a);
 
 void sub_0802296c(void)
 {
@@ -252,17 +252,17 @@ void sub_0802296c(void)
             gUnk_0200B04C |= 1 << i;
         }
     }
-    gUnk_0300238C = 8;
-    gUnk_030023EC = gUnk_030023B8;
-    gUnk_03002468 = 0;
+    gLevelIndex = 8;
+    gStageIndex = gUnk_030023B8;
+    gRoomIndex = 0;
     gUnk_0200AF04 = 0;
-    gUnk_02005578 = gUnk_030023EC;
+    gUnk_02005578 = gStageIndex;
     gUnk_02007FF8 = gUnk_03001F20;
-    room = gUnk_087E1D58[gUnk_0300238C][gUnk_030023EC][gUnk_03002468];
+    room = gRoomTable[gLevelIndex][gStageIndex][gRoomIndex];
     d = room->unk44;
     if (gUnk_030023E0 == 0 && gUnk_03002384 == 0)
     {
-        gUnk_02006170 = 0;
+        gRoomEntrySet = 0;
         gUnk_020069F0 = 2;
     }
     else
@@ -274,8 +274,8 @@ void sub_0802296c(void)
                 if (d->unk0 == 0x270F && *(u8 *)&d->unk6 == 1)
                     break;
             }
-            gUnk_020055E0 = d->unk2 * 16 + 22;
-            gUnk_0200AEF0 = d->unk4 * 16 + 5;
+            gRoomEntryX = d->unk2 * 16 + 22;
+            gRoomEntryY = d->unk4 * 16 + 5;
             gUnk_020069F0 = 1;
             gUnk_0200AF00 = 0;
         }
@@ -286,8 +286,8 @@ void sub_0802296c(void)
                 if (d->unk0 == 0x270F && *(u8 *)&d->unk6 == 2)
                     break;
             }
-            gUnk_020055E0 = d->unk2 * 16 + 16;
-            gUnk_0200AEF0 = d->unk4 * 16 + 53;
+            gRoomEntryX = d->unk2 * 16 + 16;
+            gRoomEntryY = d->unk4 * 16 + 53;
             gUnk_020069F0 = 0;
         }
         else
@@ -297,12 +297,12 @@ void sub_0802296c(void)
                 if (d->unk0 == 0x270F && *(u8 *)&d->unk6 == 0 && d->unk8 == (s8)gUnk_03001F20)
                     break;
             }
-            gUnk_020055E0 = d->unk2 * 16 + 22;
-            gUnk_0200AEF0 = d->unk4 * 16 + 5;
+            gRoomEntryX = d->unk2 * 16 + 22;
+            gRoomEntryY = d->unk4 * 16 + 5;
             gUnk_020069F0 = 1;
             gUnk_0200AF00 = 0;
         }
-        gUnk_02006170 = 1;
+        gRoomEntrySet = 1;
     }
     gUnk_02007FC0 = 1;
 }
@@ -344,30 +344,30 @@ void sub_08022c3c(void)
     }
     if (gUnk_030023B8 == 7)
     {
-        gUnk_0300238C = 7;
-        gUnk_030023EC = 0;
-        gUnk_03002468 = 0;
-        gUnk_02006170 = 0;
-        gUnk_03002438 = 2;
+        gLevelIndex = 7;
+        gStageIndex = 0;
+        gRoomIndex = 0;
+        gRoomEntrySet = 0;
+        gStageRequest = 2;
         gUnk_0200AF00 = 0;
         gUnk_020069F0 = 0;
     }
     else
     {
-        gUnk_0300238C = 8;
-        gUnk_030023EC = gUnk_02005578;
-        gUnk_03002468 = 0;
+        gLevelIndex = 8;
+        gStageIndex = gUnk_02005578;
+        gRoomIndex = 0;
         gUnk_0200AF04 = 0;
         if (gUnk_030023E0 == 0 && gUnk_03002384 == 0)
         {
-            gUnk_020055E0 = 70;
-            gUnk_0200AEF0 = 0x105;
+            gRoomEntryX = 70;
+            gRoomEntryY = 0x105;
             gUnk_020069F0 = 0;
             gUnk_0200AF00 = 0;
         }
         else
         {
-            room = gUnk_087E1D58[gUnk_0300238C][gUnk_030023EC][gUnk_03002468];
+            room = gRoomTable[gLevelIndex][gStageIndex][gRoomIndex];
             d = room->unk44;
             if (gUnk_02007FF8 == 16)
             {
@@ -376,8 +376,8 @@ void sub_08022c3c(void)
                     if (d->unk0 == 0x270F && *(u8 *)&d->unk6 == 1)
                         break;
                 }
-                gUnk_020055E0 = d->unk2 * 16 + 22;
-                gUnk_0200AEF0 = d->unk4 * 16 + 5;
+                gRoomEntryX = d->unk2 * 16 + 22;
+                gRoomEntryY = d->unk4 * 16 + 5;
                 gUnk_020069F0 = 1;
                 gUnk_0200AF00 = 0;
             }
@@ -388,8 +388,8 @@ void sub_08022c3c(void)
                     if (d->unk0 == 0x270F && *(u8 *)&d->unk6 == 2)
                         break;
                 }
-                gUnk_020055E0 = d->unk2 * 16 + 16;
-                gUnk_0200AEF0 = d->unk4 * 16 + 53;
+                gRoomEntryX = d->unk2 * 16 + 16;
+                gRoomEntryY = d->unk4 * 16 + 53;
                 gUnk_020069F0 = 0;
                 gUnk_0200AF00 = 0;
             }
@@ -400,14 +400,14 @@ void sub_08022c3c(void)
                     if (d->unk0 == 0x270F && *(u8 *)&d->unk6 == 0 && d->unk8 == gUnk_02007FF8)
                         break;
                 }
-                gUnk_020055E0 = d->unk2 * 16 + 22;
-                gUnk_0200AEF0 = d->unk4 * 16 + 5;
+                gRoomEntryX = d->unk2 * 16 + 22;
+                gRoomEntryY = d->unk4 * 16 + 5;
                 gUnk_020069F0 = 1;
                 gUnk_0200AF00 = 0;
             }
         }
-        gUnk_03002438 = 1;
-        gUnk_02006170 = 1;
+        gStageRequest = 1;
+        gRoomEntrySet = 1;
     }
     gUnk_0200B038 = 0;
     gUnk_02007FC0 = 1;
@@ -415,11 +415,11 @@ void sub_08022c3c(void)
 
 void sub_08022f50(void)
 {
-    gUnk_0300238C = 0;
-    gUnk_030023EC = gUnk_08334EB4[gUnk_0300238C] - 1;
-    gUnk_03002468 = 0;
+    gLevelIndex = 0;
+    gStageIndex = gUnk_08334EB4[gLevelIndex] - 1;
+    gRoomIndex = 0;
     gUnk_020069F0 = 0;
-    gUnk_02006170 = 0;
+    gRoomEntrySet = 0;
     gUnk_02007FC0 = 0;
     sub_08009ab8();
 }
@@ -440,68 +440,68 @@ void sub_08022fa8(void)
 
     ResetTasksAndOam();
     gUnk_03002444 = 0;
-    if (gUnk_0300238C == 8)
+    if (gLevelIndex == 8)
     {
-        gUnk_030023B8 = gUnk_030023EC;
+        gUnk_030023B8 = gStageIndex;
         *(s8 *)&gUnk_03001F20 = -1;
     }
     else
     {
-        gUnk_030023B8 = gUnk_0300238C;
-        gUnk_03001F20 = gUnk_030023EC;
+        gUnk_030023B8 = gLevelIndex;
+        gUnk_03001F20 = gStageIndex;
     }
     if (gUnk_020069F0 == 2)
-        gUnk_030055C0 = 5;
+        gCameraMode = 5;
     else
-        gUnk_030055C0 = 0;
+        gCameraMode = 0;
     sub_08008c64(1);
-    sub_080235ec(0);
-    gUnk_030055EC = gUnk_087E1D58[gUnk_0300238C][gUnk_030023EC][gUnk_03002468];
-    gUnk_02007D64 = gUnk_030055EC->unk57;
-    gUnk_02000000 = gUnk_030055EC->unk55;
-    sub_0802923c();
-    sub_080291d0();
-    sub_08029204();
-    sub_08029270();
-    gUnk_03005620 = gUnk_030055EC->unk14;
-    gUnk_0300561C = gUnk_030055EC->unk16;
-    gUnk_030055E4 = gUnk_03005620 * gUnk_0300561C;
-    gUnk_03005600[0] = gUnk_030055EC->unk24;
-    gUnk_03005600[1] = gUnk_030055EC->unk26;
-    gUnk_03005608[0] = gUnk_030055EC->unk34;
-    gUnk_03005608[1] = gUnk_030055EC->unk36;
-    gUnk_020055D8.unk0 = gUnk_030055EC->unk3C;
-    gUnk_020055D8.unk2 = gUnk_030055EC->unk3E;
-    gUnk_020055D8.unk4 = gUnk_030055EC->unk48;
-    gRoomMap = gUnk_02000040;
-    if (gUnk_030055EC->unk05 != 0)
+    CreateRoomTask(0);
+    gCurRoomDef = gRoomTable[gLevelIndex][gStageIndex][gRoomIndex];
+    gUnk_02007D64 = gCurRoomDef->unk57;
+    gUnk_02000000 = gCurRoomDef->unk55;
+    ClearBg2Bg3Maps();
+    LoadBg2Gfx();
+    LoadBg3Gfx();
+    SelectBg3MapShape();
+    gRoomWidth = gCurRoomDef->unk14;
+    gRoomHeight = gCurRoomDef->unk16;
+    gRoomMetatileCount = gRoomWidth * gRoomHeight;
+    gRoomBorder[0] = gCurRoomDef->unk24;
+    gRoomBorder[1] = gCurRoomDef->unk26;
+    gBg3Border[0] = gCurRoomDef->unk34;
+    gBg3Border[1] = gCurRoomDef->unk36;
+    gRoomObjectList.unk0 = gCurRoomDef->unk3C;
+    gRoomObjectList.unk2 = gCurRoomDef->unk3E;
+    gRoomObjectList.unk4 = gCurRoomDef->unk48;
+    gRoomMap = gRoomMapBuffer;
+    if (gCurRoomDef->unk05 != 0)
     {
-        RequestCopy(8, (u32)gUnk_030055EC->unk08, (u32)gUnk_02000040, 0);
-        RequestCopy(8, (u32)gUnk_030055EC->unk0C, (u32)gBlockLayer, 0);
+        RequestCopy(8, (u32)gCurRoomDef->unk08, (u32)gRoomMapBuffer, 0);
+        RequestCopy(8, (u32)gCurRoomDef->unk0C, (u32)gBlockLayer, 0);
     }
     else
     {
-        CpuSet(gUnk_030055EC->unk08, gUnk_02000040, (gUnk_030055E4 * 2) & 0x1FFFFF);
-        CpuSet(gUnk_030055EC->unk0C, gBlockLayer, gUnk_030055E4 & 0x1FFFFF);
+        CpuSet(gCurRoomDef->unk08, gRoomMapBuffer, (gRoomMetatileCount * 2) & 0x1FFFFF);
+        CpuSet(gCurRoomDef->unk0C, gBlockLayer, gRoomMetatileCount & 0x1FFFFF);
     }
-    RequestCopy(8, (u32)gUnk_030055EC->unk20, (u32)gUnk_0200B080, 0);
+    RequestCopy(8, (u32)gCurRoomDef->unk20, (u32)gMetatileTiles, 0);
     gUnk_02000020 = 0;
     gUnk_0200B078 = 0;
     gUnk_0200B040 = 0;
-    gUnk_03005624 = 31;
-    sub_08030724();
-    sub_0802cd24();
-    sub_0802885c();
-    sub_08028948();
+    gRoomUpdateFlags = 31;
+    ResetBlockAnims();
+    StopScreenShake();
+    CalcBg3Parallax();
+    CalcRoomBounds();
     sub_08027e28();
     sub_080b4e40();
     sub_08028e4c();
     sub_08029110();
-    sub_0802d0f4();
-    sub_08029318();
+    LoadRoomBgAnims();
+    InitDoors();
     sub_08028304();
-    gUnk_03002340 = 0;
-    gUnk_03002350 = 0;
+    gActivePlayerMask = 0;
+    gActivePlayerCount = 0;
     gUnk_0300234C = 0;
     for (i = 0; i < gPlayerCount; i++)
     {
@@ -521,14 +521,14 @@ void sub_08022fa8(void)
                 gUnk_02008008[i] = 0;
                 gUnk_02007FA8[i] = 0xFFFF;
             }
-            gUnk_03002340 |= 1 << i;
-            gUnk_03002350++;
+            gActivePlayerMask |= 1 << i;
+            gActivePlayerCount++;
             gUnk_0300234C++;
-            gUnk_0300560C[i] = 0;
+            gPlayerCameraMode[i] = 0;
         }
         else
         {
-            gUnk_0300560C[i] = 3;
+            gPlayerCameraMode[i] = 3;
         }
         CreatePlayer(i);
         sub_0803d1c4(i);
@@ -537,48 +537,48 @@ void sub_08022fa8(void)
     }
     sub_080b5024();
     if (gPlayerCount == 1)
-        sub_08028b1c();
+        CameraResetBounds();
     else
         sub_08028990();
     sub_08009b2c(gLocalPlayer);
-    switch (gUnk_030055C0)
+    switch (gCameraMode)
     {
     default:
     case 0:
     case 1:
-        sub_0802b4bc();
+        CameraFollowFocus();
         break;
     case 3:
-        sub_0802be80();
+        CameraFollowScrollLocked();
         break;
     case 5:
-        sub_0802c42c();
+        CameraHoldAnchor();
         break;
     }
-    sub_080290dc();
-    sub_08029930();
-    sub_080292d0();
+    CameraInitPos();
+    CameraWriteScrollParallax();
+    SpawnRoomObjectsInView();
     a = 0;
     CpuFastSet(&a, (u32 *)0x06002000, 0x01000400);
-    switch (gUnk_0200B050)
+    switch (gRoomBgLayout)
     {
     default:
     case 0:
     case 2:
-        sub_0802a9cc(gUnk_03005604[0], gUnk_03005604[1]);
-        sub_080292b0();
+        DrawBg2View(gCameraPos[0], gCameraPos[1]);
+        LoadBg3Map();
         break;
     case 3:
-        sub_0802b074(gUnk_03005604[0]);
-        sub_080292b0();
+        sub_0802b074(gCameraPos[0]);
+        LoadBg3Map();
         break;
     case 5:
-        sub_0802aeac(gUnk_03005604[1]);
+        DrawBg23FullRows(gCameraPos[1]);
         break;
     case 1:
     case 4:
-        sub_0802a9cc(gUnk_03005604[0], gUnk_03005604[1]);
-        sub_0802ab30(gUnk_03005690[0], gUnk_03005690[1]);
+        DrawBg2View(gCameraPos[0], gCameraPos[1]);
+        DrawBg3View(gBg3Pos[0], gBg3Pos[1]);
         break;
     }
 }
@@ -591,77 +591,77 @@ void sub_080233e0(void)
     TaskSetOthersSkipMask(15, gUnk_02007E8C);
     sub_08077d38(gUnk_02007E8C);
     gUnk_03002444 = 0;
-    gUnk_030023B8 = gUnk_0300238C;
-    gUnk_03001F20 = gUnk_030023EC;
-    gUnk_030055C0 = 0;
+    gUnk_030023B8 = gLevelIndex;
+    gUnk_03001F20 = gStageIndex;
+    gCameraMode = 0;
     sub_08008c64(1);
-    sub_080235ec(0);
-    gUnk_030055EC = gUnk_087E1D58[gUnk_0300238C][gUnk_030023EC][gUnk_03002468];
-    gUnk_02007D64 = gUnk_030055EC->unk57;
-    gUnk_02000000 = gUnk_030055EC->unk55;
-    sub_0802923c();
-    sub_080291d0();
-    sub_08029204();
-    sub_08029270();
-    gUnk_03005620 = gUnk_030055EC->unk14;
-    gUnk_0300561C = gUnk_030055EC->unk16;
-    gUnk_030055E4 = gUnk_03005620 * gUnk_0300561C;
-    gUnk_03005600[0] = gUnk_030055EC->unk24;
-    gUnk_03005600[1] = gUnk_030055EC->unk26;
-    gUnk_03005608[0] = gUnk_030055EC->unk34;
-    gUnk_03005608[1] = gUnk_030055EC->unk36;
-    gUnk_020055D8.unk0 = gUnk_030055EC->unk3C;
-    gUnk_020055D8.unk2 = gUnk_030055EC->unk3E;
-    gUnk_020055D8.unk4 = gUnk_030055EC->unk48;
-    gRoomMap = gUnk_02000040;
-    RequestCopy(8, (u32)gUnk_030055EC->unk20, (u32)gUnk_0200B080, 0);
-    gUnk_03005624 = 0;
-    sub_08030724();
-    sub_0802cd24();
-    sub_0802885c();
-    sub_08028948();
+    CreateRoomTask(0);
+    gCurRoomDef = gRoomTable[gLevelIndex][gStageIndex][gRoomIndex];
+    gUnk_02007D64 = gCurRoomDef->unk57;
+    gUnk_02000000 = gCurRoomDef->unk55;
+    ClearBg2Bg3Maps();
+    LoadBg2Gfx();
+    LoadBg3Gfx();
+    SelectBg3MapShape();
+    gRoomWidth = gCurRoomDef->unk14;
+    gRoomHeight = gCurRoomDef->unk16;
+    gRoomMetatileCount = gRoomWidth * gRoomHeight;
+    gRoomBorder[0] = gCurRoomDef->unk24;
+    gRoomBorder[1] = gCurRoomDef->unk26;
+    gBg3Border[0] = gCurRoomDef->unk34;
+    gBg3Border[1] = gCurRoomDef->unk36;
+    gRoomObjectList.unk0 = gCurRoomDef->unk3C;
+    gRoomObjectList.unk2 = gCurRoomDef->unk3E;
+    gRoomObjectList.unk4 = gCurRoomDef->unk48;
+    gRoomMap = gRoomMapBuffer;
+    RequestCopy(8, (u32)gCurRoomDef->unk20, (u32)gMetatileTiles, 0);
+    gRoomUpdateFlags = 0;
+    ResetBlockAnims();
+    StopScreenShake();
+    CalcBg3Parallax();
+    CalcRoomBounds();
     sub_08028130();
     sub_080b4ea8();
-    sub_08029318();
+    InitDoors();
     sub_080307b0();
     sub_080290ac();
     if (gPlayerCount == 1)
-        sub_08028b1c();
+        CameraResetBounds();
     else
         sub_08028990();
-    switch (gUnk_030055C0)
+    switch (gCameraMode)
     {
     default:
     case 0:
     case 1:
-        sub_0802b4bc();
+        CameraFollowFocus();
         break;
     case 3:
-        sub_0802be80();
+        CameraFollowScrollLocked();
         break;
     case 5:
-        sub_0802c42c();
+        CameraHoldAnchor();
         break;
     }
-    sub_080290dc();
-    if (gUnk_0200B050 == 2)
-        gUnk_03005690[0] = gUnk_02004B80;
-    sub_08029930();
+    CameraInitPos();
+    if (gRoomBgLayout == 2)
+        gBg3Pos[0] = gUnk_02004B80;
+    CameraWriteScrollParallax();
     a = 0;
     CpuFastSet(&a, (u32 *)0x06002000, 0x01000400);
-    if (gUnk_0200B050 == 1)
+    if (gRoomBgLayout == 1)
     {
-        sub_0802a9cc(gUnk_03005604[0], gUnk_03005604[1]);
-        sub_0802ab30(gUnk_03005690[0], gUnk_03005690[1]);
+        DrawBg2View(gCameraPos[0], gCameraPos[1]);
+        DrawBg3View(gBg3Pos[0], gBg3Pos[1]);
     }
     else
     {
-        sub_0802a9cc(gUnk_03005604[0], gUnk_03005604[1]);
-        sub_080292b0();
+        DrawBg2View(gCameraPos[0], gCameraPos[1]);
+        LoadBg3Map();
     }
 }
 
-void sub_080235ec(s32 a)
+void CreateRoomTask(s32 a)
 {
     s32 id = TaskCreateFrom(3, 63);
     struct Task *t;

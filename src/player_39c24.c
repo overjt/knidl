@@ -40,7 +40,7 @@ void TaskSleepForever(void);
 void TaskSetFrame(s32 a);
 void sub_08021c74(s8 *box, s32 id);
 void TaskInitWaterFlags(void);
-void sub_080261d4(u16 a);
+void RequestScreenShake(u16 a);
 s32 sub_080264b0(void);
 void sub_0802651c(s32 i);
 s32 sub_0802653c(void);
@@ -369,7 +369,7 @@ void sub_08039c24(void)
         TaskYieldTrampoline(2);
         PlayerStopAxes(3);
         i = sub_0802653c();
-        sub_080261d4(2);
+        RequestScreenShake(2);
         CreatePlayerEffect(gCurTask->unk88->unk00, 20, 0);
         CreatePlayerEffect(gCurTask->unk88->unk00, 20, 1);
         PlayerStartOffsetScript(14);

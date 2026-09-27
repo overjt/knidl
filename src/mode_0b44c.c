@@ -58,13 +58,13 @@ extern vs32 gBg1ScrollX;
 extern u8 gUnk_03001F30;
 extern u8 gUnk_03001F34;
 extern u16 gLinkIsMaster;
-extern u8 gUnk_03002340;
-extern u8 gUnk_03002350;
+extern u8 gActivePlayerMask;
+extern u8 gActivePlayerCount;
 extern u16 gLocalPlayer;
 extern u16 gPlayerCount;
 extern u8 gUnk_030023B0;
 extern u16 gLatchedPressedKeys[];
-extern s8 gUnk_03002438;
+extern s8 gStageRequest;
 extern u16 gLinkPlayerCount;
 extern s16 gUnk_0300244C;
 extern u16 gLatchedHeldKeys[];
@@ -145,8 +145,8 @@ void sub_0800b514(void)
         gUnk_02005E00.unk04[i] = 0;
         gUnk_02005E00.unk08[i] = 0;
     }
-    gUnk_03002340 = 0;
-    gUnk_03002350 = 0;
+    gActivePlayerMask = 0;
+    gActivePlayerCount = 0;
     gUnk_02005E00.unk00 = 0;
     gUnk_02006178 = 0;
     gUnk_020055CC = 0;
@@ -230,7 +230,7 @@ void sub_0800b648(void)
     gUnk_020055C4 = 0;
     for (i = 0; i < 4; i++)
         gPlayerHeldKeys[i] = gPlayerPressedKeys[i] = gLatchedHeldKeys[i] = gLatchedPressedKeys[i] = 0;
-    gUnk_03002438 = 0;
+    gStageRequest = 0;
     if (gUnk_0300244C != 0) {
         b2 = gUnk_02007CF4;
         zero2 = 0;
@@ -271,7 +271,7 @@ void sub_0800b788(void)
     for (i = 0; i < 4; i++)
         gPlayerHeldKeys[i] = gPlayerPressedKeys[i] = gLatchedHeldKeys[i] = gLatchedPressedKeys[i] = 0;
     gLinkCommand = 0;
-    gUnk_03002438 = 0;
+    gStageRequest = 0;
 }
 
 void sub_0800b87c(void)
@@ -302,5 +302,5 @@ void sub_0800b87c(void)
     for (i = 0; i < 4; i++)
         gPlayerHeldKeys[i] = gPlayerPressedKeys[i] = gLatchedHeldKeys[i] = gLatchedPressedKeys[i] = 0;
     gLinkCommand = 0;
-    gUnk_03002438 = 0;
+    gStageRequest = 0;
 }

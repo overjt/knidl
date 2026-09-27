@@ -17,7 +17,7 @@
  * set) or gUnk_0873BB7E with BlendColors (80 or 96 colours by
  * gUnk_02007D64), raising the ratio Task.unk2C by 10 up to 0x100 in state 1
  * (with the collider row gUnk_0873C2B4 at the player's camera position
- * gUnk_030055D0) and lowering it by 46 to 0 in state 2 (then calling M17's
+ * gPlayerCameraPos) and lowering it by 46 to 0 in state 2 (then calling M17's
  * sub_08065ed0), and the draw hook sub_0805ac50.  Variant 47 (sub_0805acec,
  * M13) is an animation in world space; its callback sub_0805ae00 clears
  * Task.unk28 in sub-state 0 when the player leaves mode 13 or the spawner's
@@ -33,7 +33,7 @@
 struct CamPos { u16 x, y; };
 
 extern u32 gUnk_08751FCC[];
-extern struct CamPos gUnk_030055D0[4];
+extern struct CamPos gPlayerCameraPos[4];
 extern s16 gSpriteCameraX;               /* scalar, read with ldrsh (33 landed files) */
 extern s16 gSpriteCameraY;               /* scalar, read with ldrsh (32 landed files) */
 extern s8 gUnk_03002444;
@@ -259,9 +259,9 @@ void sub_0805a52c(void)
         w = gCurTask;
         w->unk38 = gUnk_08752020;
         w->unk40 = (((struct Task *)w->unk8C)->unk40 + 0x800) | 4;
-        x0 = gUnk_030055D0[w->unk44].x;
+        x0 = gPlayerCameraPos[w->unk44].x;
         x0 -= 120;
-        y0 = gUnk_030055D0[w->unk44].y - 80;
+        y0 = gPlayerCameraPos[w->unk44].y - 80;
         w->unk48 = ((struct Task *)w->unk8C)->unk48 - gSpriteCameraX;
         w->unk4A = ((struct Task *)w->unk8C)->unk4A - gSpriteCameraY;
         w->unk4C = ((struct Task *)w->unk8C)->unk48;
@@ -430,8 +430,8 @@ void sub_0805ab04(void)
             if (t->unk2C > 0x100)
                 t->unk2C = 0x100;
         }
-        RegisterCollider((u8)gCurTaskIdx, gUnk_030055D0[gCurTask->unk88->unk00].x,
-                     gUnk_030055D0[gCurTask->unk88->unk00].y, gUnk_0873C2B4);
+        RegisterCollider((u8)gCurTaskIdx, gPlayerCameraPos[gCurTask->unk88->unk00].x,
+                     gPlayerCameraPos[gCurTask->unk88->unk00].y, gUnk_0873C2B4);
         break;
     case 2:
         if (gUnk_03002444 != 0)

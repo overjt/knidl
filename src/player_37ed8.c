@@ -26,7 +26,7 @@ void TaskSetFrameNoFlip(s32 a);
 void TaskSetFrameFlip(s32 a);
 s32 sub_0800a008(s32 a, s32 b, u32 c);
 void sub_0800a130(s32 a, s32 id);
-void sub_080261d4(u16 a);
+void RequestScreenShake(u16 a);
 void PlayerStopAxes(s32 a0);
 void SetPlayerInvulnerability(s32 a0, s32 a1, s32 a2);
 s32 PlaySfxIfLocalPlayer(s32 a0, u16 a1);
@@ -95,7 +95,7 @@ loop:
                 sub_0800a130(gCurTask->unk88->unk0D, gCurTask->unk88->unk00);
             }
             if (gLocalPlayer == gCurTask->unk88->unk00)
-                sub_080261d4(2);
+                RequestScreenShake(2);
         }
         gCurTask->unk88->unk3F = 1;
         gCurTask->unk88->unk12 = 0x8000;

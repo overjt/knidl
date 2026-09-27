@@ -5,18 +5,18 @@
  *
  * sub_08027a6c builds the room's map in the second buffer gUnk_02006AA0 for
  * the room loaders sub_08023948 and sub_08023ca0 (src/level_23948.c).  It
- * decompresses the room's metatile table (RoomDef +0x20) into gUnk_0200B080
+ * decompresses the room's metatile table (RoomDef +0x20) into gMetatileTiles
  * and its metatile map (+0x08) into gUnk_02006AA0 (or CpuSet-copies it when
  * +0x05 says the map is stored raw), then walks the map from row 1 with the
  * per-cell marker table gUnk_0873240C[gUnk_030023B8][cell]: a cell whose
  * marker names a flag that is still clear (a gUnk_030023C8 bit for markers
  * with bit 8 set, a gUnk_03002400[gUnk_030023B8][] byte otherwise) takes the
- * matching cell of the next room's 2x2 pattern (gUnk_087E1D58[level][stage]
+ * matching cell of the next room's 2x2 pattern (gRoomTable[level][stage]
  * [room + 1]'s map).  With gUnk_0200AF08 set it first clears the BG map at
- * 0x06001800 and gUnk_02004CA0, records up to two cells whose marker is
+ * 0x06001800 and gBg1MetatileMap, records up to two cells whose marker is
  * gUnk_0200001C | 0x80 in gUnk_0200AFE0 (y then x; src/camtask_2d38c.c
  * reads them as a flat s16[4]) and copies the pattern cell of every
- * gUnk_0200001C marker into gUnk_02004CA0; otherwise it returns early when
+ * gUnk_0200001C marker into gBg1MetatileMap; otherwise it returns early when
  * gUnk_030023B8 < gUnk_030023E0 and gUnk_0873232C[gUnk_030023B8]'s flags
  * are all set (or it has none).
  *
@@ -86,19 +86,19 @@ struct RoomDef
     /*0x56*/ u8 unk56;
     /*0x57*/ u8 unk57;
 };
-extern struct RoomDef *gUnk_030055EC;
-extern u16 gUnk_0200B080[];
+extern struct RoomDef *gCurRoomDef;
+extern u16 gMetatileTiles[];
 extern struct MapCell gUnk_02006AA0[];
-extern s16 gUnk_030055E4;
-extern struct RoomDef **gUnk_087E1D58[][8];
-extern s8 gUnk_030023EC;
-extern s8 gUnk_0300238C;
-extern s8 gUnk_03002468;
+extern s16 gRoomMetatileCount;
+extern struct RoomDef **gRoomTable[][8];
+extern s8 gStageIndex;
+extern s8 gLevelIndex;
+extern s8 gRoomIndex;
 extern u8 gUnk_0200AF08;
-extern u16 gUnk_02004CA0[];
+extern u16 gBg1MetatileMap[];
 extern s16 gUnk_0200AFE0[][2];
-extern s16 gUnk_03005620;
-extern s16 gUnk_0300561C;
+extern s16 gRoomWidth;
+extern s16 gRoomHeight;
 extern s8 gUnk_030023B8;
 extern u16 *gUnk_0873240C[];
 extern u16 gUnk_0200001C;
@@ -120,27 +120,27 @@ void sub_08027a6c(void)
     u32 a, b;
 
     n = 0;
-    RequestCopy(8, (u32)gUnk_030055EC->unk20, (u32)gUnk_0200B080, 0);
-    if (gUnk_030055EC->unk05 != 0)
-        RequestCopy(8, (u32)gUnk_030055EC->unk08, (u32)gUnk_02006AA0, 0);
+    RequestCopy(8, (u32)gCurRoomDef->unk20, (u32)gMetatileTiles, 0);
+    if (gCurRoomDef->unk05 != 0)
+        RequestCopy(8, (u32)gCurRoomDef->unk08, (u32)gUnk_02006AA0, 0);
     else
-        CpuSet(gUnk_030055EC->unk08, gUnk_02006AA0, (gUnk_030055E4 * 2) & 0x1FFFFF);
-    alt = gUnk_087E1D58[gUnk_0300238C][gUnk_030023EC][gUnk_03002468 + 1]->unk08;
+        CpuSet(gCurRoomDef->unk08, gUnk_02006AA0, (gRoomMetatileCount * 2) & 0x1FFFFF);
+    alt = gRoomTable[gLevelIndex][gStageIndex][gRoomIndex + 1]->unk08;
     if (gUnk_0200AF08 != 0)
     {
         a = 0;
         CpuFastSet(&a, (u32 *)0x06001800, 0x01000200);
         b = 0;
-        CpuFastSet(&b, (u32 *)gUnk_02004CA0, ((gUnk_030055E4 / 2) & 0x1FFFFF) | 0x01000000);
+        CpuFastSet(&b, (u32 *)gBg1MetatileMap, ((gRoomMetatileCount / 2) & 0x1FFFFF) | 0x01000000);
         for (idx = 0; idx < 2; idx++)
         {
             gUnk_0200AFE0[idx][0] = -1;
             gUnk_0200AFE0[idx][1] = -1;
         }
-        idx = gUnk_03005620;
-        for (y = 1; y < gUnk_0300561C; y++)
+        idx = gRoomWidth;
+        for (y = 1; y < gRoomHeight; y++)
         {
-            for (x = 0; x < gUnk_03005620; x++)
+            for (x = 0; x < gRoomWidth; x++)
             {
                 if (y & 1)
                 {
@@ -169,14 +169,14 @@ void sub_08027a6c(void)
                     if (v & 0x100)
                     {
                         if (gUnk_0200001C == v)
-                            gUnk_02004CA0[idx] = *(u16 *)p;
+                            gBg1MetatileMap[idx] = *(u16 *)p;
                         if (!(gUnk_030023C8[0] & (1 << (v & 0xFF7F))))
                             gUnk_02006AA0[idx] = *p;
                     }
                     else
                     {
                         if (gUnk_0200001C == v)
-                            gUnk_02004CA0[idx] = *(u16 *)p;
+                            gBg1MetatileMap[idx] = *(u16 *)p;
                         if (!gUnk_03002400[gUnk_030023B8][v - 1])
                             gUnk_02006AA0[idx] = *p;
                     }
@@ -195,10 +195,10 @@ void sub_08027a6c(void)
             if ((gUnk_030023C8[0] & mask) == mask)
                 return;
         }
-        idx = gUnk_03005620;
-        for (y = 1; y < gUnk_0300561C; y++)
+        idx = gRoomWidth;
+        for (y = 1; y < gRoomHeight; y++)
         {
-            for (x = 0; x < gUnk_03005620; x++)
+            for (x = 0; x < gRoomWidth; x++)
             {
                 if (y & 1)
                 {

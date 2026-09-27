@@ -17,7 +17,7 @@
  * sub_0804af54 (action 51, mode 13) is a screen-wide blast with the
  * stage frozen (gUnk_03001F34 = 1): it switches the DISPCNT shadow
  * gDispCnt to windowed BG1-BG3, remembers the height Task.unk50 in
- * Task.unk2C, shakes the screen (sub_080261d4(5), sub_08027204(2)),
+ * Task.unk2C, shakes the screen (RequestScreenShake(5), SetRoomUpdateFlags(2)),
  * flashes the player's palette gUnk_080DC628[player] towards
  * gUnk_082030B8 twice (BlendColors, presets 51/52), waits for the
  * blast task through PlayerState.unk16 and TaskSetSkipMask, restores the
@@ -65,8 +65,8 @@ void TaskSleepForever(void);
 void TaskSetFrame(s32 a);
 s32 sub_0800a008(s32 a, s32 b, u32 c);       /* landed (hud_099fc.c); M12 calls it as sub_0800a008(0, -1, p->unk00) */
 void RegisterCollider(u8 a, s16 x, s16 y, void *p);   /* M11's caller spelling */
-void sub_080261d4(u16 a);
-void sub_08027204(u32 a);
+void RequestScreenShake(u16 a);
+void SetRoomUpdateFlags(u32 a);
 void PlayerStopAxes(s32 a0);
 void SetPlayerInvulnerability(s32 a0, s32 a1, s32 a2);
 s32 PlaySfxIfLocalPlayer(s32 a0, u16 a1);
@@ -235,8 +235,8 @@ void sub_0804af54(void)
     CreatePlayerEffect(gCurTask->unk88->unk00, 46, 0);
     gCurTask->unk88->unk68 = 0;
     gCurTask->unk73 = 0;
-    sub_080261d4(5);
-    sub_08027204(2);
+    RequestScreenShake(5);
+    SetRoomUpdateFlags(2);
     PlaySfx(248);
     gCurTask->unk6C = 0;
     do {
@@ -394,7 +394,7 @@ void sub_0804b474(void)
             struct Task *u = gCurTask;
             if (u->unk28 == 0) {
                 u->unk73 = 0;
-                sub_080261d4(0);
+                RequestScreenShake(0);
                 gCurTask->unk88->unk42 &= 0xFFEF;
             } else {
                 u->unk28 -= 16;

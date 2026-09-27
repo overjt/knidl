@@ -58,7 +58,7 @@ extern u8 gUnk_0876B1FC[];
 extern u8 gUnk_0876F690[];
 extern u8 gUnk_087954C0[];
 extern u8 gUnk_087C0A4C[];
-extern u8 gUnk_087E1D58[];
+extern u8 gRoomTable[];
 
 void RequestCopy(u32 mode, u32 src, u32 dst, u32 size);
 void BeginFastFadeInFromWhite(void);
@@ -174,7 +174,7 @@ s32 sub_08007c5c(void)
         break;
     case 2:
         src = gUnk_087C0A4C;
-        size = gUnk_087E1D58 - gUnk_087C0A4C;
+        size = gRoomTable - gUnk_087C0A4C;
         break;
     }
     ret = sub_08007b68((u32 *)src, gUnk_02004000, size);

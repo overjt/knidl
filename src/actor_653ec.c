@@ -44,7 +44,7 @@ extern u32 gUnk_02004C90;
 extern u32 gUnk_02007D00[];
 extern u32 gUnk_02006190[];
 extern u32 gUnk_02006040[];
-extern u8 gUnk_03002350;
+extern u8 gActivePlayerCount;
 extern void TaskSetSkipMask(u32 a, u32 b);
 extern void sub_080662d8(void);
 extern u32 sub_080b5628(u32 a);
@@ -53,7 +53,7 @@ extern s16 gUnk_0873E184[];
 extern u16 gUnk_0873E16C[];
 extern s16 gUnk_02005588[];
 extern u16 gPlayerCount;
-extern u8 gUnk_03002340;
+extern u8 gActivePlayerMask;
 extern void sub_08066468(void);
 extern void sub_080664cc(struct GfxHeader *h);
 extern void sub_08068f68(void);
@@ -117,7 +117,7 @@ extern s32 gUnk_030023B4;
 extern s32 gUnk_030023D4;
 extern u32 gUnk_08334DC0[];
 extern u32 gUnk_0873E264[];
-extern s8 gUnk_0300238C;
+extern s8 gLevelIndex;
 extern u8 gUnk_03001610[];
 extern u8 gUnk_03001F30;
 extern void sub_080713f8(s32 a, s32 b, u32 c);
@@ -130,8 +130,8 @@ extern u8 gUnk_0873F7E4[];
 extern u32 gUnk_0874CCBC[];
 extern u32 gUnk_0873E280[];
 extern void sub_0800652c(u16 a, s32 b);
-extern void sub_080271ec(void);
-extern void sub_08027210(void);
+extern void PauseRoom(void);
+extern void ResumeRoom(void);
 extern s32 CreateActorFromDesc(struct ActorSpawn *p, u8 keepPrio);
 extern void TaskFaceLikeParent(void);
 extern void ActorSetState(u8 v);
@@ -891,7 +891,7 @@ s16 sub_08065f74(u32 i)
 
     t = &gTasks[i];
     a = t->unk8C;
-    switch (gUnk_03002350)
+    switch (gActivePlayerCount)
     {
     case 2:
         w = a->unk44->unk02;
@@ -1116,7 +1116,7 @@ u8 sub_08066338(void)
     m = 0;
     for (i = 0; i < gPlayerCount; i++)
     {
-        if ((gUnk_03002340 >> i) & 1)
+        if ((gActivePlayerMask >> i) & 1)
         {
             n++;
             t = &gTasks[i];
@@ -1138,7 +1138,7 @@ s32 sub_08066394(void)
     v = 0;
     for (; i < gPlayerCount; i++)
     {
-        if ((gUnk_03002340 >> i) & 1)
+        if ((gActivePlayerMask >> i) & 1)
         {
             v = gUnk_02005588[i];
             if (v != 0)
@@ -1392,7 +1392,7 @@ void sub_080667c0(u8 a, u16 b)
         t->unk0C = (u32)sub_080653ec;
     else
         t->unk0C = (u32)sub_08065350;
-    gCurTask->unk78 += gUnk_0873E1B4[gUnk_03002350 - 1];
+    gCurTask->unk78 += gUnk_0873E1B4[gActivePlayerCount - 1];
     p->unk05 = 2;
     p->unk30 = 0;
     sub_08066a94(a);
@@ -1559,7 +1559,7 @@ void sub_08066ae0(void)
     a = t->unk8C;
     if (t->unk73 != 0)
     {
-        switch (gUnk_03002350)
+        switch (gActivePlayerCount)
         {
         case 2:
             a->unk02 = 13;
@@ -1810,7 +1810,7 @@ void sub_08066f78(void)
 
     h = (struct GfxHeader *)gUnk_08334DC0;
     RequestCopy(4, (u32)h->unk0C, 0x06017800, h->unk02 << 5);
-    RequestCopy(2, gUnk_0873E264[gUnk_0300238C], (u32)gUnk_03001610,
+    RequestCopy(2, gUnk_0873E264[gLevelIndex], (u32)gUnk_03001610,
                  h->unk00 << 5);
 }
 
@@ -1856,7 +1856,7 @@ u8 sub_08067074(void)
 
     for (i = 0, n = 0; i < gPlayerCount; i++)
     {
-        if ((gUnk_03002340 >> i) & 1)
+        if ((gActivePlayerMask >> i) & 1)
             n++;
     }
     return n;
@@ -1866,14 +1866,14 @@ void sub_080670ac(u16 a)
 {
     sub_0800652c(a, gCurTaskIdx);
     TaskSetSkipMask(0, 63);
-    sub_080271ec();
+    PauseRoom();
     sub_08067108();
 }
 
 void sub_080670d4(void)
 {
     sub_0800652c(0, gCurTaskIdx);
-    sub_08027210();
+    ResumeRoom();
     sub_08067114();
 }
 

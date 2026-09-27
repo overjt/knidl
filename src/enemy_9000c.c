@@ -88,7 +88,7 @@ extern void TaskSetFrame(s32 a);
 extern void TaskSetMotionY(s32 a, s32 b, s32 c);
 extern void PlaySfx(s32 id);
 extern void TaskStop(void);
-extern void sub_080261d4(s32 a);
+extern void RequestScreenShake(s32 a);
 extern void sub_08066580(void);
 extern void TaskSleepForever(void);
 extern void TaskSetEntry(void *fn, s32 i);
@@ -224,7 +224,7 @@ void sub_080901e0(void)
             TaskYieldTrampoline(1);
         PlaySfx(0x1F7);
         TaskStop();
-        sub_080261d4(2);
+        RequestScreenShake(2);
         sub_08066580();
         gCurTask->unk3C--;
         TaskYieldTrampoline(30);
@@ -320,7 +320,7 @@ void sub_080903f0(void)
         TaskYieldTrampoline(1);
     TaskStop();
     PlaySfx(0x1F7);
-    sub_080261d4(2);
+    RequestScreenShake(2);
     sub_0806cffc(16, 6);
     gCurTask->unk3C--;
     TaskYieldTrampoline(30);
@@ -357,7 +357,7 @@ void sub_080904d4(void)
             TaskYieldTrampoline(1);
         TaskStop();
         PlaySfx(0x1F7);
-        sub_080261d4(2);
+        RequestScreenShake(2);
         sub_0806cffc(16, 6);
         TaskFaceNearestPlayer();
         gCurTask->unk6C++;
@@ -466,7 +466,7 @@ void sub_0809074c(void)
             TaskYieldTrampoline(1);
         TaskStop();
         PlaySfx(0x1F7);
-        sub_080261d4(2);
+        RequestScreenShake(2);
         sub_0806cffc(16, 6);
     }
     gCurTask->unk6C = 0;
@@ -523,7 +523,7 @@ void sub_08090914(void)
     gCurTask->unk3C++;
     TaskYieldTrampoline(2);
     PlaySfx(520);
-    sub_080261d4(2);
+    RequestScreenShake(2);
     sub_08090e18();
     gCurTask->unk3C++;
     TaskYieldTrampoline(32);
@@ -573,7 +573,7 @@ void sub_080909d4(void)
     while (gCurTask->unk7A == 0)
         TaskYieldTrampoline(1);
     TaskStop();
-    sub_080261d4(2);
+    RequestScreenShake(2);
     PlaySfx(520);
     PlaySfx(0x1F7);
     sub_08090e18();
@@ -615,7 +615,7 @@ void sub_08090b40(void)
     {
         gCurTask->unk3C++;
         TaskYieldTrampoline(2);
-        sub_080261d4(2);
+        RequestScreenShake(2);
         PlaySfx(520);
         if ((s16)gCurTask->unk6C == 0)
             sub_08090e18();
@@ -644,7 +644,7 @@ void sub_08090c18(void)
 
     t = gCurTask;
     t->unk15 = 9;
-    sub_080261d4(2);
+    RequestScreenShake(2);
     PlaySfx(0x1F7);
     gCurTask->unk7A = 0;
     TaskSetMotionXFacing(0xFFFF0000, 0x5A5A5A5A);
@@ -653,7 +653,7 @@ void sub_08090c18(void)
     while (gCurTask->unk7A == 0)
         TaskYieldTrampoline(1);
     TaskStop();
-    sub_080261d4(2);
+    RequestScreenShake(2);
     sub_08090e9c();
     sub_08090e54();
     TaskSleepForever();
@@ -686,7 +686,7 @@ void sub_08090cd0(void)
     while (gCurTask->unk7A == 0)
         TaskYieldTrampoline(1);
     sub_0806caa0(0, 0, 10);
-    sub_080261d4(4);
+    RequestScreenShake(4);
     PlaySfx(0x1F7);
     sub_0806cc90(0, 4, 16, 8);
     TaskStopY();
@@ -749,7 +749,7 @@ s32 sub_08090ef0(void)
 {
     gCurTask->unk30 = 1;
     sub_0806caa0(1, 0, 0);
-    sub_080261d4(2);
+    RequestScreenShake(2);
     return 0;
 }
 

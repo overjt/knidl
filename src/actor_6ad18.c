@@ -26,8 +26,8 @@ extern u16 gBgPalette;
 extern u16 gUnk_0873E69A;
 extern u16 gUnk_0873E69C;
 
-extern void sub_080261d4(u32);
-extern void sub_08027204(u32);
+extern void RequestScreenShake(u32);
+extern void SetRoomUpdateFlags(u32);
 extern void sub_080670ac(u32);
 extern void sub_080670d4(void);
 extern void LoadBackdropColor(u16 *);
@@ -108,8 +108,8 @@ void sub_0806adb0(void)
     u16 v;
 
     sub_080670ac(15);
-    sub_08027204(2);
-    sub_080261d4(5);
+    SetRoomUpdateFlags(2);
+    RequestScreenShake(5);
     v = gBgPalette;
     gCurTask->unk6C = 0;
     do
@@ -133,7 +133,7 @@ void sub_0806adb0(void)
         t = gCurTask;
         t->unk6C++;
     } while ((s16)t->unk6C <= 1);
-    sub_080261d4(0);
+    RequestScreenShake(0);
     LoadBackdropColor(&v);
     sub_080670d4();
 }
@@ -168,7 +168,7 @@ void sub_0806aec0(void)
     t->unk0C = (u32)ActorDrawWorldInViewOrDestroy;
     t->unk38 = gUnk_0874CA78;
     t->unk40 = 0;
-    sub_080261d4(4);
+    RequestScreenShake(4);
     ActorPlaySfx(0x1F9, 0);
     sub_0806d4e4(1, 0);
     TaskYieldTrampoline(20);
@@ -180,8 +180,8 @@ void sub_0806af78(void)
     u16 v;
 
     sub_080670ac(15);
-    sub_08027204(2);
-    sub_080261d4(5);
+    SetRoomUpdateFlags(2);
+    RequestScreenShake(5);
     v = gBgPalette;
     gCurTask->unk6C = 0;
     do
@@ -205,7 +205,7 @@ void sub_0806af78(void)
         t = gCurTask;
         t->unk6C++;
     } while ((s16)t->unk6C <= 1);
-    sub_080261d4(0);
+    RequestScreenShake(0);
     LoadBackdropColor(&v);
     sub_080670d4();
 }
@@ -229,9 +229,9 @@ void sub_0806b098(void)
 {
     sub_080670ac(15);
     sub_080668c8();
-    sub_08027204(2);
+    SetRoomUpdateFlags(2);
     ActorPlaySfx(0x1FD, 0);
-    sub_080261d4(4);
+    RequestScreenShake(4);
     sub_0806d928();
     sub_0806d4e4(1, 0);
     gCurTask->unk3C = 0xFFFF;

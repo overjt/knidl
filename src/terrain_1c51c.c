@@ -58,12 +58,12 @@ extern s8 *gTerrainTileShape;
 extern s16 gUnk_030055A4;
 extern u16 gUnk_030055AC;
 extern s16 gUnk_030055B0;
-extern s16 gUnk_030055E4;
+extern s16 gRoomMetatileCount;
 extern s32 gUnk_03005580;
 extern s32 gTerrainVelX;
 extern s32 gUnk_030055A8;
-extern s16 gUnk_0300561C;
-extern s16 gUnk_03005620;
+extern s16 gRoomHeight;
+extern s16 gRoomWidth;
 
 struct MapCell
 {

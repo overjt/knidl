@@ -66,7 +66,7 @@ extern void sub_08068b88(s32 i, u16 b, u8 c, u8 d);
 extern void sub_0806737c(void);
 extern void sub_0803e2d4(void);
 extern void sub_0803e080(void);
-extern void sub_08026264(s16 x, s16 y);
+extern void SetCameraFocus(s16 x, s16 y);
 extern void sub_08068690(void);
 extern void sub_08068760(void);
 extern u32 sub_080687a0(void);
@@ -96,7 +96,7 @@ extern s32 gUnk_0873E388[];
 extern void ClampTaskToRoom(struct Task *t);
 extern void sub_0801bcac(u32 *p);
 extern u16 gUnk_0873E3C8[];
-extern void sub_080261d4(u32 a);
+extern void RequestScreenShake(u32 a);
 extern void sub_080682a8(void);
 extern void TaskSetEntry(void *fn, s32 i);
 extern s32 CreateChildTaskHere(u32 type, u8 keepPrio);
@@ -115,7 +115,7 @@ void sub_08067408(void)
     if ((gCurTask->unk88->unk42 & 32) == 0)
         sub_0803e080();
     if (gLocalPlayer == gCurTask->unk88->unk00)
-        sub_08026264(gCurTask->unk48, gCurTask->unk4A);
+        SetCameraFocus(gCurTask->unk48, gCurTask->unk4A);
 }
 
 void sub_08067470(void)
@@ -672,7 +672,7 @@ void sub_08068028(void)
     {
         CreateChildTaskHere(148, 0);
         PlaySfx(153);
-        sub_080261d4(2);
+        RequestScreenShake(2);
         t = gCurTask;
         t->unk43 = -t->unk43;
         TaskStop();
@@ -752,7 +752,7 @@ void sub_08068224(void)
     {
         CreateChildTaskHere(148, 0);
         PlaySfx(153);
-        sub_080261d4(2);
+        RequestScreenShake(2);
         t = gCurTask;
         t->unk43 = -t->unk43;
         TaskStop();

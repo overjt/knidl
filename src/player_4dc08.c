@@ -71,7 +71,7 @@ void TaskSleepForever(void);
 void TaskSetEntry(void *a, u32 i);
 void TaskSetFrame(s32 a);
 void RegisterCollider(u8 a, s16 x, s16 y, void *p);   /* M11's caller spelling */
-void sub_080261d4(u16 a);
+void RequestScreenShake(u16 a);
 u16 sub_08030898(struct HitBoxSet *p, s32 e);
 void PlayerStopAxes(s32 a0);
 void SetPlayerInvulnerability(s32 a0, s32 a1, s32 a2);
@@ -216,7 +216,7 @@ void sub_0804df00(void)
             {
                 if (gTerrainResult.unk0 != 0)
                 {
-                    sub_080261d4(1);
+                    RequestScreenShake(1);
                     gCurTask->unk88->unk01 = 18;
                 }
                 else

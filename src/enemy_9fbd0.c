@@ -9,7 +9,7 @@ extern s32 gUnk_02006190[];
 extern s32 gUnk_02007D00[];
 extern u8 gUnk_03001F30;
 extern struct PlayerState gPlayerStates[];
-extern u8 gUnk_03002340;
+extern u8 gActivePlayerMask;
 extern s32 gUnk_030023B4;
 extern u32 gCurSaveSlot[];
 extern s16 gUnk_0300244C;
@@ -27,7 +27,7 @@ extern void TaskMove(void);
 extern void TaskSetEntry(void *fn, s32 i);
 extern void TaskSetFrame(s32 a);
 extern void sub_0800a698(void);
-extern void sub_080261d4(s32 a);
+extern void RequestScreenShake(s32 a);
 extern void ActorSetState(u16 v);
 extern void ActorSetHitReactions(u32 *p);
 extern void TaskGetScreenPos(void);
@@ -52,7 +52,7 @@ void sub_0809fbd0(void)
 
     for (i = 0; i <= 3; i++)
     {
-        if (((gUnk_03002340 >> i) & 1) != 0)
+        if (((gActivePlayerMask >> i) & 1) != 0)
             gPlayerStates[i].unk42 |= 64;
     }
 }
@@ -63,7 +63,7 @@ void sub_0809fc08(void)
 
     for (i = 0; i <= 3; i++)
     {
-        if (((gUnk_03002340 >> i) & 1) != 0)
+        if (((gActivePlayerMask >> i) & 1) != 0)
             gPlayerStates[i].unk42 &= 0xFFBF;
     }
 }
@@ -97,7 +97,7 @@ void sub_0809fcb4(void)
     struct Task *t;
     s32 one;
 
-    sub_080261d4(4);
+    RequestScreenShake(4);
     TaskSetSkipMask(7, gCurTaskIdx);
     t = gCurTask;
     t->unk08 = (u32)sub_080a0a84;

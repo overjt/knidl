@@ -15,7 +15,7 @@
  * and goes to state 7 once PlayerState.unk08 is 0.  States 0-5 are the
  * moves (animations 0xE97-0xEE4 with the frame index PlayerState.unk16,
  * velocity presets 2 and 56-68, sounds 178/179, a landing with effect
- * 27 and sub_080261d4(2)), each back to state 7, which clears
+ * 27 and RequestScreenShake(2)), each back to state 7, which clears
  * PlayerState.unk42 bit 9, calls SetPlayerInvulnerability(255, 0, player) and ends
  * the action (TaskSleepForever, falling into state 0, lesson 3.403).  The
  * long `bl`s at 0x0804C49E and 0x0804C488 are cross-jumped `goto loop`
@@ -35,7 +35,7 @@ void TaskSleepForever(void);
 void TaskSetEntry(void *a, u32 i);
 void TaskSetMotionXFacing(s32 a, s32 b);
 void TaskSetFrame(s32 a);
-void sub_080261d4(u16 a);
+void RequestScreenShake(u16 a);
 void PlayerStopAxes(s32 a0);
 void SetPlayerInvulnerability(s32 a0, s32 a1, s32 a2);
 s32 PlaySfxIfLocalPlayer(s32 a0, u16 a1);
@@ -180,7 +180,7 @@ loop:
         while (!(gCurTask->unk7A & 1))
             TaskYieldTrampoline(1);
         CreatePlayerEffect(gCurTask->unk88->unk00, 27, 0);
-        sub_080261d4(2);
+        RequestScreenShake(2);
         PlaySfxIfLocalPlayer(179, gCurTask->unk88->unk00);
         PlayerStopAxes(2);
         gCurTask->unk88->unk16 = 25;
@@ -226,7 +226,7 @@ loop:
         while (!(gCurTask->unk7A & 1))
             TaskYieldTrampoline(1);
         CreatePlayerEffect(gCurTask->unk88->unk00, 27, 0);
-        sub_080261d4(2);
+        RequestScreenShake(2);
         PlaySfxIfLocalPlayer(179, gCurTask->unk88->unk00);
         PlayerStopAxes(3);
         gCurTask->unk88->unk16 = 11;
@@ -295,7 +295,7 @@ loop:
         } while (!(gCurTask->unk7A & 1));
     done3:
         CreatePlayerEffect(gCurTask->unk88->unk00, 27, 0);
-        sub_080261d4(2);
+        RequestScreenShake(2);
         PlaySfxIfLocalPlayer(179, gCurTask->unk88->unk00);
         PlayerStopAxes(2);
         gCurTask->unk88->unk16 = 23;
@@ -354,7 +354,7 @@ loop:
         while (!(gCurTask->unk7A & 1))
             TaskYieldTrampoline(1);
         CreatePlayerEffect(gCurTask->unk88->unk00, 27, 0);
-        sub_080261d4(2);
+        RequestScreenShake(2);
         PlaySfxIfLocalPlayer(179, gCurTask->unk88->unk00);
         PlayerStopAxes(3);
         gCurTask->unk28++;
@@ -408,7 +408,7 @@ loop:
         while (!(gCurTask->unk7A & 1))
             TaskYieldTrampoline(1);
         CreatePlayerEffect(gCurTask->unk88->unk00, 27, 0);
-        sub_080261d4(2);
+        RequestScreenShake(2);
         PlaySfxIfLocalPlayer(179, gCurTask->unk88->unk00);
         PlayerStopAxes(3);
         gCurTask->unk88->unk16 = 35;

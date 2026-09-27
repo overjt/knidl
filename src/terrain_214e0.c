@@ -5,7 +5,7 @@
  * M06 terrain / collision query (issue #84), range 0x080214E0-0x08021B18.
  *
  * Tile-attribute lookups on the current room: the room descriptor cells at
- * 0x030055xx hold the map size (gUnk_03005620 x gUnk_0300561C cells of 16x16
+ * 0x030055xx hold the map size (gRoomWidth x gRoomHeight cells of 16x16
  * pixels), the cell array pointer (gRoomMap, 4 bytes per cell, byte 3 is
  * the tile-set index) and the last query results; the 0x100-stride ROM index
  * tables at 0x087328F0.. map a tile-set index to its per-pixel attribute
@@ -61,9 +61,9 @@ extern u16 gTerrainTileLeft;
 extern s16 gTerrainBoxRight;
 extern s8 *gTerrainTileShape;
 extern u16 gUnk_030055AC;
-extern s16 gUnk_030055E4;
-extern s16 gUnk_0300561C;
-extern s16 gUnk_03005620;
+extern s16 gRoomMetatileCount;
+extern s16 gRoomHeight;
+extern s16 gRoomWidth;
 
 struct MapCell
 {
@@ -109,7 +109,7 @@ void sub_080214e0(void)
     gTerrainProbeResult.unk8 = 0xFFFF;
     gTerrainProbeResult.unk7 = 0;
     y = gTerrainProbeY;
-    h = gUnk_0300561C << 4;
+    h = gRoomHeight << 4;
     if (y >= h)
     {
         TerrainQueryPixel(gTerrainProbeX, h - 16);
@@ -143,8 +143,8 @@ s32 TerrainQueryPixel(u32 x, u32 y)
     gTerrainPixelIndex = ((y & 15) << 4) + (x & 15);
     x >>= 4;
     y >>= 4;
-    w = gUnk_03005620;
-    if (x < w && y < gUnk_0300561C)
+    w = gRoomWidth;
+    if (x < w && y < gRoomHeight)
     {
         idx = y * w + x;
         gTerrainTile = gRoomMap[idx].unk3;
@@ -165,14 +165,14 @@ s32 TerrainQueryPixelAndBelow(u32 x, u32 y)
     gTerrainPixelIndex = ((y & 15) << 4) + (x & 15);
     x >>= 4;
     y >>= 4;
-    w = gUnk_03005620;
-    if (x < w && y < gUnk_0300561C)
+    w = gRoomWidth;
+    if (x < w && y < gRoomHeight)
     {
         idx = y * w + x;
-        if (idx + w <= gUnk_030055E4)
+        if (idx + w <= gRoomMetatileCount)
         {
             gTerrainTileBelow = (&gRoomMap[idx])[w].unk3;
-            gUnk_030055AC = (&gRoomMap[idx])[gUnk_03005620].unk2;
+            gUnk_030055AC = (&gRoomMap[idx])[gRoomWidth].unk2;
         }
         else
         {
@@ -196,13 +196,13 @@ s32 TerrainQueryPixelAndSides(u32 x, u32 y)
     gTerrainPixelIndex = ((y & 15) << 4) + (x & 15);
     x >>= 4;
     y >>= 4;
-    w = gUnk_03005620;
-    if (x < w && y < gUnk_0300561C)
+    w = gRoomWidth;
+    if (x < w && y < gRoomHeight)
     {
         idx = y * w + x;
         gTerrainTileLeft = (&gRoomMap[idx])[-1].unk3;
         gUnk_03005504 = (&gRoomMap[idx])[-1].unk2;
-        if (x + 1 < gUnk_03005620)
+        if (x + 1 < gRoomWidth)
         {
             gTerrainTileRight = (&gRoomMap[idx])[1].unk3;
             gUnk_0300556C = (&gRoomMap[idx])[1].unk2;
@@ -230,10 +230,10 @@ s32 sub_080218f8(u32 x, u32 y)
 
     x >>= 4;
     y >>= 4;
-    w = gUnk_03005620;
+    w = gRoomWidth;
     if (x >= w)
         return 0;
-    if (y >= gUnk_0300561C)
+    if (y >= gRoomHeight)
         return 0;
     idx = y * w;
     tile = (&gRoomMap[idx])[x].unk3;
@@ -283,7 +283,7 @@ s32 sub_08021a40(u32 x, u32 y)
 {
     u32 cx = x >> 4;
     u32 cy;
-    s16 w = gUnk_03005620;
+    s16 w = gRoomWidth;
     u8 tile;
     u32 idx;
     s8 *p;
@@ -291,7 +291,7 @@ s32 sub_08021a40(u32 x, u32 y)
     if (cx >= w)
         return 0;
     cy = y >> 4;
-    if (cy >= gUnk_0300561C)
+    if (cy >= gRoomHeight)
         return 0;
     idx = cy * w;
     tile = (&gRoomMap[idx])[cx].unk3;
@@ -305,7 +305,7 @@ s32 sub_08021ab4(u32 x, u32 y)
 {
     u32 cx = x >> 4;
     u32 cy;
-    s16 w = gUnk_03005620;
+    s16 w = gRoomWidth;
     u8 tile;
     u32 idx;
     s8 *p;
@@ -313,7 +313,7 @@ s32 sub_08021ab4(u32 x, u32 y)
     if (cx >= w)
         return 0;
     cy = y >> 4;
-    if (cy < gUnk_0300561C)
+    if (cy < gRoomHeight)
     {
         idx = cy * w;
         tile = (&gRoomMap[idx])[cx].unk3;

@@ -30,7 +30,7 @@ void sub_08019590(void);
 void sub_08019ecc(void);
 void sub_0801a310(void);
 void sub_0801a3e4(void);
-void sub_08026264(s32 x, s32 y);
+void SetCameraFocus(s32 x, s32 y);
 
 void sub_08019000(void)
 {
@@ -658,5 +658,5 @@ void sub_08019ecc(void)
 {
     struct Task *t = gCurTask;
 
-    sub_08026264(t->unk48, t->unk4A);
+    SetCameraFocus(t->unk48, t->unk4A);
 }

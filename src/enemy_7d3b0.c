@@ -129,7 +129,7 @@ extern void TaskSetMotionY(s32 a, s32 b, s32 c);
 extern void TaskStopY(void);
 extern void TaskStop(void);
 extern void TaskSetFrame(s32 a);
-extern void sub_080261d4(s32 a);
+extern void RequestScreenShake(s32 a);
 extern void ActorLoadDef(u32 *def);
 extern void ActorSetState(u32 v);
 extern void ActorSetAttackBox(u32 *p);
@@ -630,7 +630,7 @@ s32 sub_0807dd70(void)
         t->unk54 = 0;
         t->unk58 = 0;
     }
-    sub_080261d4(1);
+    RequestScreenShake(1);
     PlaySfx(163);
     r = 0;
     switch (gCurTask->unk73)

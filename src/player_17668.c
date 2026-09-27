@@ -22,7 +22,7 @@ void sub_08018464(void);
 void sub_08018b84(void);
 void sub_0801a1ec(void);
 void sub_0801a310(void);
-void sub_080261d4(s32 a);
+void RequestScreenShake(s32 a);
 
 void sub_08017668(void)
 {
@@ -655,7 +655,7 @@ void sub_08018498(void)
     gCurTask->unk60 = 180 << 6;
     gCurTask->unk3C = 12;
     TaskYieldTrampoline(27);
-    sub_080261d4(2);
+    RequestScreenShake(2);
     PlaySfx(0x1F7);
     TaskStop();
     gCurTask->unk3C = 13;
@@ -760,7 +760,7 @@ void sub_08018498(void)
     TaskYieldTrampoline(18);
     gCurTask->unk3C = 15;
     TaskYieldTrampoline(8);
-    sub_080261d4(2);
+    RequestScreenShake(2);
     PlaySfx(0x1F7);
     gCurTask->unk54 = 0;
     gCurTask->unk58 = 0;

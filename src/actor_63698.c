@@ -17,7 +17,7 @@ extern u8 gUnk_02006178;
 extern u8 gTaskSkipMaskStack[][64];
 extern u32 gUnk_02007F50;
 extern u16 gNextActorSerial;
-extern u8 gUnk_03002340;
+extern u8 gActivePlayerMask;
 extern vs16 gTaskSlotTypes[];
 extern u16 gPlayerCount;
 extern s32 gUnk_030023B4;
@@ -42,7 +42,7 @@ extern void TaskSetMotionX(s32 a, s32 b, s32 c);
 extern void TaskExitTrampoline(void);
 extern s32 gTaskRunPhase;
 extern s16 gCosTable[];
-extern u8 gUnk_03002350;
+extern u8 gActivePlayerCount;
 extern s16 gSpriteCameraX;
 extern s16 gSpriteCameraY;
 extern s16 gViewRect[];
@@ -392,7 +392,7 @@ s32 sub_08063a9c(u32 i)
     t = &gTasks[i];
     for (j = 0; j < gPlayerCount; j++)
     {
-        if ((gUnk_03002340 >> j) & 1)
+        if ((gActivePlayerMask >> j) & 1)
         {
             o = &gTasks[j];
             d = t->unk48 - o->unk48;
@@ -424,7 +424,7 @@ s32 TaskFindNearestPlayer(void)
     bestDist = 0;
     for (j = 0; j < gPlayerCount; j++)
     {
-        if ((gUnk_03002340 >> j) & 1)
+        if ((gActivePlayerMask >> j) & 1)
         {
             o = &gTasks[j];
             d = gCurTask->unk48 - o->unk48;
@@ -1163,7 +1163,7 @@ s32 sub_08064758(u16 lo, u16 hi)
     found = 0;
     for (i = 0; i < gPlayerCount; i++)
     {
-        if ((gUnk_03002340 >> i) & 1)
+        if ((gActivePlayerMask >> i) & 1)
         {
             TaskGetScreenPosSlot(i);
             v = gUnk_030023B4;
@@ -1205,7 +1205,7 @@ s32 sub_080647fc(u16 lo, u16 hi)
     found = 0;
     for (i = 0; i < gPlayerCount; i++)
     {
-        if ((gUnk_03002340 >> i) & 1)
+        if ((gActivePlayerMask >> i) & 1)
         {
             TaskGetScreenPosSlot(i);
             v = gUnk_030023D4;
@@ -1239,7 +1239,7 @@ void TaskGetScreenPosSlot(u32 i)
     struct Task *t;
 
     t = &gTasks[i];
-    if (gPlayerCount == 1 || gUnk_03002350 == 1)
+    if (gPlayerCount == 1 || gActivePlayerCount == 1)
     {
         gUnk_030023B4 = t->unk48 - gSpriteCameraX;
         gUnk_030023D4 = t->unk4A - gSpriteCameraY;

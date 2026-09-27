@@ -40,7 +40,7 @@ extern u32 gPlayerDefaultTerrainBox[];
 void TaskYieldTrampoline(s32 frames);
 void TaskSleepForever(void);
 void TaskSetEntry(void *a, u32 i);
-void sub_080261d4(u16 a);
+void RequestScreenShake(u16 a);
 void PlayerStopAxes(s32 a0);
 s32 PlaySfxIfLocalPlayer(s32 a0, u16 a1);
 void FreezeOtherTasks(s32 a0);
@@ -360,7 +360,7 @@ void sub_0804f450(void)
         if (t->unk74 != 0)
         {
             PlayerStopAxes(3);
-            sub_080261d4(0);
+            RequestScreenShake(0);
             FreezeOtherTasks(15);
         }
     }

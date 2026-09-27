@@ -25,7 +25,7 @@ void TaskSetMotionXFacing(s32 a, s32 b);
 void TaskSetMotionY(s32 a, s32 b, s32 c);
 void TaskSetFrame(s32 a);
 void RegisterCollider(u8 a, s16 x, s16 y, void *p);
-void sub_080261d4(u32 a);
+void RequestScreenShake(u32 a);
 void PlayerStopAxes(s32 a0);
 void PlayerStartSfx(s32 a, u16 b);
 void PlayerStopSfx(void);
@@ -635,7 +635,7 @@ void sub_08044288(void)
         }
         break;
     case 1:
-        sub_080261d4(2);
+        RequestScreenShake(2);
         PlaySfx(0x10F);
         CreatePlayerEffect(gCurTask->unk88->unk00, 39, 0);
         CreatePlayerEffect(gCurTask->unk88->unk00, 39, 1);

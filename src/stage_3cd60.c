@@ -13,12 +13,12 @@ extern struct M11R8 gPlayerHitBoxSets[];
 extern u8 gUnk_02005574[];
 extern s16 gUnk_02005588[];
 extern u8 gUnk_020055C4[];
-extern s16 gUnk_020055E0;
+extern s16 gRoomEntryX;
 extern struct M11R20 gPlayerBodyBoxes[];
 extern struct M11Buf gUnk_02006A80[];
 extern u8 gUnk_02007CF0;
 extern u16 gUnk_02007F60[];
-extern s16 gUnk_0200AEF0;
+extern s16 gRoomEntryY;
 extern u16 gUnk_0200AF18[];
 extern u16 gPlayerBubbleTimers[];
 extern vs16 gCurrentBgm;
@@ -33,10 +33,10 @@ extern u8 gUnk_03001F30;
 extern u8 gUnk_03001F34;
 extern u32 gUnk_03002160;
 extern struct PlayerState gPlayerStates[];
-extern u8 gUnk_03002340;
+extern u8 gActivePlayerMask;
 extern s32 gUnk_03002344;
 extern s16 gSpriteCameraX;
-extern u8 gUnk_03002350;
+extern u8 gActivePlayerCount;
 extern u16 gLocalPlayer;
 extern u16 gPlayerCount;
 extern u8 gUnk_030023B0;
@@ -92,8 +92,8 @@ void sub_0800a008(u32 a, s32 b, s32 c);
 s32 sub_08022760(struct Task *t);
 s32 sub_08024e40(s32 a0, s32 a1);
 void sub_080270d0(void);
-void sub_080271ec(void);
-void sub_08027210(void);
+void PauseRoom(void);
+void ResumeRoom(void);
 void sub_08033414(void);
 s32 sub_0803d010(void);
 void sub_0803d7c4(void);
@@ -211,8 +211,8 @@ void CreatePlayer(s32 a0)
     struct Task *t;
 
     t = &gTasks[TaskCreateFrom(5, 0)];
-    t->unk4C = gUnk_020055E0 << 16;
-    t->unk50 = gUnk_0200AEF0 << 16;
+    t->unk4C = gRoomEntryX << 16;
+    t->unk50 = gRoomEntryY << 16;
     t->unk48 = t->unk4C >> 16;
     t->unk4A = t->unk50 >> 16;
     if ((u8)(gUnk_02000020 - 2) <= 1)
@@ -1124,11 +1124,11 @@ void FreezeOtherTasks(s32 a0)
     if (a0 != 0)
     {
         TaskRestoreSkipMask(63);
-        sub_080271ec();
+        PauseRoom();
     }
     else
     {
-        sub_08027210();
+        ResumeRoom();
     }
 }
 
@@ -2297,7 +2297,7 @@ void sub_0803f6e0(void)
     s32 *p;
 
     gUnk_020055C4[0]++;
-    if (gUnk_03002350 == 1)
+    if (gActivePlayerCount == 1)
     {
         gCurTask->unk2C = 0;
         return;
@@ -2309,11 +2309,11 @@ void sub_0803f6e0(void)
         *p = v;
         p--;
     } while ((s32)p >= (s32)sel);
-    for (i = 0; i < gUnk_03002350; i++)
+    for (i = 0; i < gActivePlayerCount; i++)
     {
     retry:
-        gUnk_03001F2C = RandomRange(gUnk_03002350);
-        for (k = 0; k < gUnk_03002350; k++)
+        gUnk_03001F2C = RandomRange(gActivePlayerCount);
+        for (k = 0; k < gActivePlayerCount; k++)
         {
             if (sel[k] == gUnk_03001F2C)
                 goto retry;
@@ -2325,7 +2325,7 @@ void sub_0803f6e0(void)
     k = 0;
     for (i = 0; i < gPlayerCount; i++)
     {
-        if ((gUnk_03002340 >> i) & 1)
+        if ((gActivePlayerMask >> i) & 1)
             gTasks[i].unk2C = sel[k++];
     }
 }
@@ -2842,7 +2842,7 @@ s32 sub_08040514(void)
     }
     if (gUnk_02007CF0 != 0)
         return 0;
-    if (gUnk_03002350 == 1)
+    if (gActivePlayerCount == 1)
         return 0;
     if (gCurTask->unk88->unk04 == 10 || gCurTask->unk88->unk04 == 11
      || gCurTask->unk88->unk04 == 12 || gCurTask->unk88->unk04 == 16
@@ -2966,7 +2966,7 @@ void sub_08040894(s32 a0, u8 a1)
 {
     struct PlayerState *p;
 
-    if (gUnk_03002350 > 1)
+    if (gActivePlayerCount > 1)
     {
         p = gPlayerStates + a0;
         p->unk38 = 300;

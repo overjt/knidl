@@ -36,7 +36,7 @@ extern s16 gTerrainProbeY;           /* probe y */
 extern u16 gTerrainTile;           /* queried cell: tile set */
 extern s16 gTerrainBoxTop;           /* box top offset */
 extern s16 gTerrainBoxBottom;           /* box bottom offset */
-extern s16 gUnk_0300561C;           /* map height in cells */
+extern s16 gRoomHeight;           /* map height in cells */
 
 s32 TerrainQueryPixel(u32 x, u32 y);
 s32 TerrainQueryPixelAndBelow(u32 x, u32 y);
@@ -64,7 +64,7 @@ void TerrainProbeWater(void)
     gTerrainProbeResult.unk7 = 0;
     zero = 0;
     y = gTerrainProbeY;
-    h = gUnk_0300561C << 4;
+    h = gRoomHeight << 4;
     if (y >= h)
     {
         TerrainQueryPixel(gTerrainProbeX, h - 16);

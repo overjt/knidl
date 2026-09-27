@@ -11,7 +11,7 @@
  * the results screen), counts the players whose health gUnk_02005588[] is
  * not 0, plays the lost-life or game-over music, loops the fall animation
  * until the callback reaches state 3, and when gUnk_0300234C drops to 0
- * raises M02's stage request gUnk_03002438 = 6; Task.unk73 = 4 or 5 then
+ * raises M02's stage request gStageRequest = 6; Task.unk73 = 4 or 5 then
  * says whether the player has lives left (gPlayerLives[]).
  * sub_080397f8 (action 20) enters a door: it stops the player, plays the
  * landing or crouch animation picked by M11's sub_080404e4, calls M07's
@@ -20,8 +20,8 @@
 
 struct CamPos { u16 x, y; };
 
-extern u8 gUnk_03002350;
-extern u8 gUnk_03002340;
+extern u8 gActivePlayerCount;
+extern u8 gActivePlayerMask;
 extern u16 gUnk_0873D9FA[][2];
 extern u16 gPlayerCount;               /* number of players */
 extern s16 gUnk_02005588[];             /* health per player (M02's HUD) */
@@ -30,11 +30,11 @@ extern vu16 gDispCnt;              /* DISPCNT shadow */
 extern vs16 gTaskSlotTypes[];
 extern u8 gUnk_02007CF0;
 extern u8 gUnk_0300234C;
-extern s8 gUnk_03002438;                /* stage request (M02) */
+extern s8 gStageRequest;                /* stage request (M02) */
 extern s16 gPlayerLives[];
 extern u8 gUnk_03001F34;
 extern u16 gGameState;
-extern struct CamPos gUnk_030055D0[4];
+extern struct CamPos gPlayerCameraPos[4];
 extern s16 gSpriteCameraY;
 extern s8 gUnk_03002444;
 extern s16 gUnk_0873D7E4[][3];
@@ -53,10 +53,10 @@ void TaskSetEntry(void *a, u32 i);
 void TaskSetFrame(s32 a);
 s32 sub_0800a008(s32 a, s32 b, u32 c);
 s32 sub_08025024(void);
-void sub_080261d4(u16 a);
+void RequestScreenShake(u16 a);
 s32 sub_080264b0(void);
-void sub_080271ec(void);
-void sub_08027204(u32 a);
+void PauseRoom(void);
+void SetRoomUpdateFlags(u32 a);
 void sub_08027548(void);
 s32 sub_080276ac(s32 a);
 s32 sub_080276cc(s32 i);
@@ -93,8 +93,8 @@ void sub_0803919c(void)
     gCurTask->unk43 = 1;
     t = gCurTask;
     t->unk3E &= 0x7FFF;
-    gUnk_03002350--;
-    gUnk_03002340 &= ~(1 << t->unk88->unk00);
+    gActivePlayerCount--;
+    gActivePlayerMask &= ~(1 << t->unk88->unk00);
     if (t->unk82 == 0x200)
         sub_08027548();
     u = gCurTask;
@@ -136,14 +136,14 @@ void sub_0803919c(void)
             StopAllSfx();
             StopAllSound();
             FreezeOtherTasks(15);
-            sub_08027204(2);
+            SetRoomUpdateFlags(2);
             if (!(gDispCnt & 0x400))
             {
                 gDispCnt &= 0xE0FF;
                 gDispCnt |= 0x1D00;
             }
         }
-        else if (gUnk_03002340 == 0)
+        else if (gActivePlayerMask == 0)
         {
             for (i = 4; i <= 63; i++)
             {
@@ -151,8 +151,8 @@ void sub_0803919c(void)
                     TaskSetSkipMask(15, i);
             }
             StopAllSfx();
-            sub_080271ec();
-            sub_08027204(2);
+            PauseRoom();
+            SetRoomUpdateFlags(2);
             if (!(gDispCnt & 0x400))
             {
                 gDispCnt &= 0xE0FF;
@@ -163,13 +163,13 @@ void sub_0803919c(void)
         {
             sub_08040934(gCurTask->unk88->unk00);
         }
-        if (gCurTask->unk88->unk37 != 2 || gUnk_03002340 == 0)
-            sub_080261d4(4);
+        if (gCurTask->unk88->unk37 != 2 || gActivePlayerMask == 0)
+            RequestScreenShake(4);
     }
     else
     {
         gCurTask->unk3C = anim[0];
-        if (gUnk_03002340 == 0)
+        if (gActivePlayerMask == 0)
         {
             for (i = 4; i <= 63; i++)
             {
@@ -177,9 +177,9 @@ void sub_0803919c(void)
                     TaskSetSkipMask(15, i);
             }
             StopAllSfx();
-            sub_080271ec();
-            sub_08027204(2);
-            sub_080261d4(4);
+            PauseRoom();
+            SetRoomUpdateFlags(2);
+            RequestScreenShake(4);
             if (!(gDispCnt & 0x400))
             {
                 gDispCnt &= 0xE0FF;
@@ -192,7 +192,7 @@ void sub_0803919c(void)
         }
     }
     TaskYieldTrampoline(1);
-    if (gUnk_03002340 == 0)
+    if (gActivePlayerMask == 0)
         PlaySfx(158);
     else
         PlaySfxIfLocalPlayer(158, gCurTask->unk88->unk00);
@@ -238,7 +238,7 @@ void sub_0803919c(void)
     t2->unk08 = 0;
     if (gUnk_0300234C == 0)
     {
-        gUnk_03002438 = 6;
+        gStageRequest = 6;
         TaskExitTrampoline();
     }
     sub_080276cc(gCurTask->unk88->unk00);
@@ -278,7 +278,7 @@ void sub_080396a4(void)
             t->unk68 = 0x40000;
             p = t->unk88;
             if (p->unk37 != 2)
-                y = t->unk4A - (u16)(gUnk_030055D0[p->unk00].y - 80);
+                y = t->unk4A - (u16)(gPlayerCameraPos[p->unk00].y - 80);
             else
                 y = t->unk4A;
             if ((s16)y > 184)
@@ -328,7 +328,7 @@ void sub_080397f8(void)
     gCurTask->unk88->unk3D = 0;
     PlayerStopAxes(3);
     gCurTask->unk88->unk42 |= 0x100;
-    sub_080261d4(0);
+    RequestScreenShake(0);
     if (gUnk_03002444 == 0)
     {
         FreezeOtherTasks(15);

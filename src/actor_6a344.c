@@ -73,7 +73,7 @@ extern void sub_0806d730(void);
 extern void ActorPlaySfx(s32 a, s32 b);
 extern void sub_0806aa40(void);
 extern void LoadBackdropColor(u16 *p);
-extern void sub_080261d4(s32 a);
+extern void RequestScreenShake(s32 a);
 extern void sub_0806aba4(void);
 extern void sub_0806ac48(void);
 extern void sub_0806acc4(void);
@@ -592,7 +592,7 @@ void sub_0806ab34(void)
     v = gCurTask;
     v->unk2C = zero;
     CreateChildTaskHere(163, 1);
-    sub_080261d4(2);
+    RequestScreenShake(2);
     ActorPlaySfx(189, 0);
     sub_0806d730();
 }
@@ -629,7 +629,7 @@ void sub_0806abec(void)
     u->unk04 = (u32)sub_0806ac48;
     a->unk48 = (u32)&gUnk_0873F704;
     u->unk2C = zero;
-    sub_080261d4(2);
+    RequestScreenShake(2);
     ActorPlaySfx(189, 0);
     sub_0806d730();
 }

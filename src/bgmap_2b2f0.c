@@ -7,68 +7,68 @@
  * sub_0802b2f0, sub_0802b368 and sub_0802b3e4 (called from M09) compute
  * the tile rectangle gUnk_020055B8[4] (x0, x1, y0, y1) around the last
  * streamed camera position, clamped to the room; the three differ only in
- * the window width.  sub_0802b460 and sub_0802b49c set the screen-size
+ * the window width.  SetBg23ScreenSize and SetBg3ScreenSize set the screen-size
  * bits (15:14) of the BG2CNT/BG3CNT shadows gBg2Cnt/gBg3Cnt. */
 
 extern s16 gUnk_020055B8[4];
-extern u16 gUnk_0300566C[2];
-extern s16 gUnk_0300561C;
-extern s16 gUnk_03005620;
+extern u16 gCameraStreamPos[2];
+extern s16 gRoomHeight;
+extern s16 gRoomWidth;
 extern vu16 gBg2Cnt;
 extern vu16 gBg3Cnt;
 
 void sub_0802b2f0(void)
 {
     s16 x0;
-    gUnk_020055B8[0] = x0 = (gUnk_0300566C[0] >> 3) + 0xFFFD;
-    gUnk_020055B8[1] = (gUnk_0300566C[0] >> 3) + 32;
-    gUnk_020055B8[2] = (gUnk_0300566C[1] >> 3) + 0xFFFD;
-    gUnk_020055B8[3] = (gUnk_0300566C[1] >> 3) + 22;
+    gUnk_020055B8[0] = x0 = (gCameraStreamPos[0] >> 3) + 0xFFFD;
+    gUnk_020055B8[1] = (gCameraStreamPos[0] >> 3) + 32;
+    gUnk_020055B8[2] = (gCameraStreamPos[1] >> 3) + 0xFFFD;
+    gUnk_020055B8[3] = (gCameraStreamPos[1] >> 3) + 22;
     if (x0 < 0)
         gUnk_020055B8[0] = 0;
-    if (gUnk_020055B8[1] >= gUnk_03005620 * 2)
-        gUnk_020055B8[1] = gUnk_03005620 * 2 - 1;
+    if (gUnk_020055B8[1] >= gRoomWidth * 2)
+        gUnk_020055B8[1] = gRoomWidth * 2 - 1;
     if (gUnk_020055B8[2] < 0)
         gUnk_020055B8[2] = 0;
-    if (gUnk_020055B8[3] >= gUnk_0300561C * 2)
-        gUnk_020055B8[3] = gUnk_0300561C * 2 - 1;
+    if (gUnk_020055B8[3] >= gRoomHeight * 2)
+        gUnk_020055B8[3] = gRoomHeight * 2 - 1;
 }
 
 void sub_0802b368(void)
 {
     s16 x0;
-    gUnk_020055B8[0] = x0 = (gUnk_0300566C[0] >> 3) + 0xFFFF;
-    gUnk_020055B8[1] = (gUnk_0300566C[0] >> 3) + 30;
-    gUnk_020055B8[2] = (gUnk_0300566C[1] >> 3) + 0xFFFD;
-    gUnk_020055B8[3] = (gUnk_0300566C[1] >> 3) + 22;
+    gUnk_020055B8[0] = x0 = (gCameraStreamPos[0] >> 3) + 0xFFFF;
+    gUnk_020055B8[1] = (gCameraStreamPos[0] >> 3) + 30;
+    gUnk_020055B8[2] = (gCameraStreamPos[1] >> 3) + 0xFFFD;
+    gUnk_020055B8[3] = (gCameraStreamPos[1] >> 3) + 22;
     if (x0 < 0)
         gUnk_020055B8[0] = 0;
-    if (gUnk_020055B8[1] >= gUnk_03005620 * 2)
-        gUnk_020055B8[1] = gUnk_03005620 * 2 - 1;
+    if (gUnk_020055B8[1] >= gRoomWidth * 2)
+        gUnk_020055B8[1] = gRoomWidth * 2 - 1;
     if (gUnk_020055B8[2] < 0)
         gUnk_020055B8[2] = 0;
-    if (gUnk_020055B8[3] >= gUnk_0300561C * 2)
-        gUnk_020055B8[3] = gUnk_0300561C * 2 - 1;
+    if (gUnk_020055B8[3] >= gRoomHeight * 2)
+        gUnk_020055B8[3] = gRoomHeight * 2 - 1;
 }
 
 void sub_0802b3e4(void)
 {
     s16 x0;
-    gUnk_020055B8[0] = x0 = (gUnk_0300566C[0] >> 3) + 0xFFFF;
-    gUnk_020055B8[1] = (gUnk_0300566C[0] >> 3) + 30;
-    gUnk_020055B8[2] = (gUnk_0300566C[1] >> 3) + 0xFFFD;
-    gUnk_020055B8[3] = (gUnk_0300566C[1] >> 3) + 22;
+    gUnk_020055B8[0] = x0 = (gCameraStreamPos[0] >> 3) + 0xFFFF;
+    gUnk_020055B8[1] = (gCameraStreamPos[0] >> 3) + 30;
+    gUnk_020055B8[2] = (gCameraStreamPos[1] >> 3) + 0xFFFD;
+    gUnk_020055B8[3] = (gCameraStreamPos[1] >> 3) + 22;
     if (x0 < 0)
         gUnk_020055B8[0] = 0;
-    if (gUnk_020055B8[1] >= gUnk_03005620 * 2)
-        gUnk_020055B8[1] = gUnk_03005620 * 2 - 1;
+    if (gUnk_020055B8[1] >= gRoomWidth * 2)
+        gUnk_020055B8[1] = gRoomWidth * 2 - 1;
     if (gUnk_020055B8[2] < 0)
         gUnk_020055B8[2] = 0;
-    if (gUnk_020055B8[3] >= gUnk_0300561C * 2)
-        gUnk_020055B8[3] = gUnk_0300561C * 2 - 1;
+    if (gUnk_020055B8[3] >= gRoomHeight * 2)
+        gUnk_020055B8[3] = gRoomHeight * 2 - 1;
 }
 
-void sub_0802b460(u16 a)
+void SetBg23ScreenSize(u16 a)
 {
     gBg2Cnt &= 0x3FFF;
     gBg2Cnt |= a;
@@ -76,7 +76,7 @@ void sub_0802b460(u16 a)
     gBg3Cnt |= a;
 }
 
-void sub_0802b49c(u16 a)
+void SetBg3ScreenSize(u16 a)
 {
     gBg3Cnt &= 0x3FFF;
     gBg3Cnt |= a;

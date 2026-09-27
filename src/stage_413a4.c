@@ -12,12 +12,12 @@ extern vu16 gFadeSteps;
 extern vu16 gFrameCount;
 extern vu16 gDispCnt;
 extern u8 gUnk_03001F34;
-extern u8 gUnk_03002340;
+extern u8 gActivePlayerMask;
 extern s16 gSpriteCameraX;
-extern u8 gUnk_03002350;
+extern u8 gActivePlayerCount;
 extern u16 gLatchedPressedKeys[];
 extern s16 gSpriteCameraY;
-extern u8 gUnk_03002438;
+extern u8 gStageRequest;
 extern s8 gUnk_03002444;
 extern u16 gLatchedHeldKeys[];
 extern struct Task *gCurTask;
@@ -50,14 +50,14 @@ void TaskInitWaterFlags(void);
 s32 IsFullBlockAtPixel(u16 a, u16 b);
 s32 sub_08022760(struct Task *t);
 void sub_08025024(void);
-void sub_080261d4(u32 a);
+void RequestScreenShake(u32 a);
 s32 sub_080264b0(void);
 void sub_0802651c(s32 a);
 s32 sub_0802653c(void);
 void sub_08026584(void);
 void sub_08026704(s32 a);
 void sub_0802672c(void);
-void sub_08027204(u32 a);
+void SetRoomUpdateFlags(u32 a);
 void sub_08027548(void);
 void sub_080276ac(s32 a);
 void sub_08027a60(void);
@@ -1044,7 +1044,7 @@ void sub_08042580(void)
         {
         case 5:
             gCurTask->unk88->unk3D = 0;
-            sub_080261d4(2);
+            RequestScreenShake(2);
             t5 = gCurTask;
             if (t5->unk82 & 128)
                 t5->unk73 = 4;
@@ -1196,8 +1196,8 @@ void sub_08042980(void)
     PlayerStopAtCeilingAndWall();
 }
 
-/* Stage entry (issue #85).  Clears the player's bit in gUnk_03002340,
-   decrements gUnk_03002350, installs sub_08042c50 as Task.unk04, spawns five
+/* Stage entry (issue #85).  Clears the player's bit in gActivePlayerMask,
+   decrements gActivePlayerCount, installs sub_08042c50 as Task.unk04, spawns five
    sub-tasks through CreatePlayerEffect (id 12 four times, then id 13) and picks a
    random signed 8.8 value into Task.unk54 from the camera x (gSpriteCameraX)
    and gFrameCount.
@@ -1242,8 +1242,8 @@ void sub_080429fc(void)
     gCurTask->unk88->unk04 = 18;
     gCurTask->unk04 = (u32)sub_08042c50;
     gCurTask->unk08 = 0;
-    gUnk_03002350--;
-    gUnk_03002340 &= ~(1 << gCurTask->unk88->unk00);
+    gActivePlayerCount--;
+    gActivePlayerMask &= ~(1 << gCurTask->unk88->unk00);
     if (gCurTask->unk82 == 512)
         sub_08027548();
     gCurTask->unk88->unk40 |= 8;
@@ -1264,13 +1264,13 @@ void sub_080429fc(void)
     gUnk_03001F34 = 1;
     TaskSetFrame(0x123B);
     FreezeOtherTasks(15);
-    sub_08027204(2);
+    SetRoomUpdateFlags(2);
     if ((gDispCnt & 0x400) == 0)
     {
         gDispCnt &= 0xE0FF;
         gDispCnt |= 0x1D00;
     }
-    sub_080261d4(4);
+    RequestScreenShake(4);
     TaskYieldTrampoline(1);
     PlaySfx(158);
     TaskYieldTrampoline(59);
@@ -1339,7 +1339,7 @@ void sub_08042c50(void)
     case 2:
         if (--gCurTask->unk88->unk14 == 0)
         {
-            gUnk_03002438 = 6;
+            gStageRequest = 6;
             TaskFree(gCurTaskIdx);
         }
         break;
@@ -1372,7 +1372,7 @@ void sub_08042d54(void)
     gUnk_03001F34 = 1;
     PlayerStopAxes(3);
     gCurTask->unk88->unk42 |= 0x100;
-    sub_080261d4(0);
+    RequestScreenShake(0);
     if (gUnk_03002444 == 0)
     {
         StopAllSfx();

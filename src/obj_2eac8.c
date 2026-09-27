@@ -39,7 +39,7 @@ void TaskUpdatePixelPos(void);
 void TaskDrawWorld(void);
 void TaskSleepForever(void);
 void sub_0802f718(void);
-void sub_0802fea4(void);
+void DoorObjectDraw(void);
 void sub_0802ff70(void);
 void sub_0802eba4(void);
 void sub_0802ed20(void);
@@ -79,7 +79,7 @@ void sub_0802eb28(void)
 
     t = gCurTask;
     t->unk00 = (u32)TaskUpdatePixelPos;
-    t->unk0C = (u32)sub_0802fea4;
+    t->unk0C = (u32)DoorObjectDraw;
     t->unk38 = gUnk_087558BC;
     t->unk42 = 15;
     u = gCurTask;
@@ -359,7 +359,7 @@ void sub_0802f0cc(void)
 
 void sub_0802f110(void)
 {
-    gCurTask->unk0C = (u32)sub_0802fea4;
+    gCurTask->unk0C = (u32)DoorObjectDraw;
     for (;;)
     {
         gCurTask->unk3C = 0;
@@ -443,7 +443,7 @@ void sub_0802f26c(void)
 
 void sub_0802f2b0(void)
 {
-    gCurTask->unk0C = (u32)sub_0802fea4;
+    gCurTask->unk0C = (u32)DoorObjectDraw;
     for (;;)
     {
         gCurTask->unk3C = 0;
@@ -509,7 +509,7 @@ void sub_0802f38c(void)
 
 void sub_0802f3d0(void)
 {
-    gCurTask->unk0C = (u32)sub_0802fea4;
+    gCurTask->unk0C = (u32)DoorObjectDraw;
     for (;;)
     {
         gCurTask->unk3C = 0;
@@ -557,7 +557,7 @@ void sub_0802f480(void)
 
     t = gCurTask;
     t->unk00 = (u32)TaskUpdatePixelPos;
-    t->unk0C = (u32)sub_0802fea4;
+    t->unk0C = (u32)DoorObjectDraw;
     t->unk38 = gUnk_08755944;
     t->unk42 = 15;
     u = gCurTask;

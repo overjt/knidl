@@ -147,7 +147,7 @@ extern void TaskStopY(void);
 extern void TaskStop(void);
 extern void TaskUpdateFlip(void);
 extern void TaskSetFrame(s32 a);
-extern void sub_080261d4(s32 a);
+extern void RequestScreenShake(s32 a);
 extern void ActorSetState(u16 v);
 extern void ActorSetHitReactions(u32 *p);
 extern void ActorSetAttackBox(u32 v);
@@ -305,7 +305,7 @@ void sub_08092198(void)
         do
             TaskYieldTrampoline(1);
         while (gCurTask->unk7A == 0);
-        sub_080261d4(2);
+        RequestScreenShake(2);
         PlaySfx(0x1F7);
     }
     TaskStop();
@@ -793,7 +793,7 @@ void sub_08092cdc(void)
             TaskYieldTrampoline(1);
         }
         TaskStopY();
-        sub_080261d4(2);
+        RequestScreenShake(2);
         PlaySfx(0x1F7);
         TaskSetFrame(59);
         TaskYieldTrampoline(5);
@@ -833,7 +833,7 @@ void sub_08092e68(void)
                 TaskSetFrame(57);
             TaskYieldTrampoline(1);
         } while (gCurTask->unk7A == 0);
-        sub_080261d4(2);
+        RequestScreenShake(2);
         PlaySfx(0x1F7);
     }
     TaskStop();
@@ -860,7 +860,7 @@ void sub_08092f2c(void)
     t = gCurTask;
     t->unk15 = 9;
     TaskStop();
-    sub_080261d4(4);
+    RequestScreenShake(4);
     PlaySfx(0x1F7);
     gCurTask->unk7A = 0;
     TaskSetMotionXFacing(0xFFFF0000, 0x5A5A5A5A);
@@ -873,7 +873,7 @@ void sub_08092f2c(void)
     v->unk3C--;
     while (gCurTask->unk7A == 0)
         TaskYieldTrampoline(1);
-    sub_080261d4(4);
+    RequestScreenShake(4);
     PlaySfx(0x1F7);
     sub_0806cc90(0, 4, 24, 24);
     TaskStopY();
@@ -1018,7 +1018,7 @@ void sub_080930ac(void)
             TaskYieldTrampoline(4);
             gCurTask->unk3C++;
             TaskYieldTrampoline(1);
-            sub_080261d4(2);
+            RequestScreenShake(2);
             sub_08093a00(504);
             TaskGetPosSlot(gCurTask->unk1C);
             CreateChildTaskAt(154, *(s16 *)&gUnk_030023B4, *(s16 *)&gUnk_030023D4, 0);
@@ -1068,7 +1068,7 @@ void sub_08093380(void)
     while (gCurTask->unk7A == 0)
         TaskYieldTrampoline(1);
     sub_0806caa0(0, 0, 10);
-    sub_080261d4(4);
+    RequestScreenShake(4);
     PlaySfx(0x1F7);
     sub_0806cc90(0, 4, 24, 24);
     TaskStopY();
@@ -1188,7 +1188,7 @@ void sub_080934f8(void)
 void sub_0809364c(void)
 {
     sub_08068920(gCurTask->unk1C, 4);
-    sub_080261d4(4);
+    RequestScreenShake(4);
     TaskGetPosSlot(gCurTask->unk1C);
     CreateChildTaskAt(154, *(s16 *)&gUnk_030023B4, *(s16 *)&gUnk_030023D4, 0);
     sub_08093a00(504);
@@ -1286,7 +1286,7 @@ s32 sub_08093868(void)
 {
     gCurTask->unk30 = 1;
     sub_0806caa0(1, 0, 0);
-    sub_080261d4(2);
+    RequestScreenShake(2);
     return 0;
 }
 

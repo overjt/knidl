@@ -25,7 +25,7 @@ struct Unk020055D8
     /*0x02*/ s16 unk2;
     /*0x04*/ struct Unk020055D8Entry *unk4;
 };
-extern struct Unk020055D8 gUnk_020055D8;
+extern struct Unk020055D8 gRoomObjectList;
 extern u8 gUnk_02005E10[];
 extern u32 gUnk_02005F10[];
 extern u32 gUnk_02006040[];
@@ -84,19 +84,19 @@ extern u16 gFrameCount;
 extern vu8 gBgMosaic;
 extern vu16 gBg3Cnt;
 extern u32 gHBlankDmaSrc[];
-extern s16 gUnk_03001F00;
+extern s16 gCameraAnchorY;
 extern s32 gUnk_03001F2C;
 extern u8 gUnk_03001F30;
 extern s16 gViewRect[];
 extern u32 gUnk_03002160;
 extern struct PlayerState gPlayerStates[];
-extern u8 gUnk_03002340;
+extern u8 gActivePlayerMask;
 extern s32 gUnk_03002344;
 extern s16 gSpriteCameraX;
-extern u8 gUnk_03002350;
+extern u8 gActivePlayerCount;
 extern u16 gLocalPlayer;
-extern s8 gUnk_0300238C;
-extern s16 gUnk_03002398;
+extern s8 gLevelIndex;
+extern s16 gCameraAnchorX;
 extern u16 gPlayerCount;
 extern u8 gUnk_030023B0;
 extern s32 gUnk_030023B4;
@@ -105,17 +105,17 @@ extern s32 gUnk_030023D4;
 extern u16 gGameState;
 extern s16 gSpriteCameraY;
 extern u32 gCurSaveSlot[];
-extern u32 gUnk_030023EC[];
+extern u32 gStageIndex[];
 extern u32 gUnk_03002448;
 extern s16 gUnk_0300244C;
 extern u32 gExtraMode[];
-extern u32 gUnk_03002468[];
+extern u32 gRoomIndex[];
 extern u32 gUnk_030027A8[];
 extern vs16 gTaskSlotTypes[];
 extern u8 gTerrainResult[];
 extern u32 gUnk_03005568[];
-extern s16 gUnk_03005628[];
-extern u32 gUnk_03005680[];
+extern s16 gRoomBounds[];
+extern u32 gScrollLock[];
 extern u32 gUnk_080A7358[];
 extern u32 gUnk_080A81B8[];
 extern u32 gUnk_080AD86C[];
@@ -571,9 +571,9 @@ extern void sub_080258e0();
 extern void sub_08025a30();
 extern void sub_08025acc();
 extern void sub_08025b5c();
-extern void sub_080261d4(u32 a);
+extern void RequestScreenShake(u32 a);
 extern void sub_080275cc();
-extern void sub_0802cda0();
+extern void StartScrollLock();
 extern s32 sub_0802d344();
 extern void sub_0802ffe8();
 extern void sub_080308e8();
@@ -1442,10 +1442,10 @@ void sub_080b5024(void)
     s32 i;
     s32 r;
 
-    if (gUnk_020055D8.unk0 == 0)
+    if (gRoomObjectList.unk0 == 0)
         return;
-    e = gUnk_020055D8.unk4;
-    for (i = 0; i < gUnk_020055D8.unk0; e++, i++)
+    e = gRoomObjectList.unk4;
+    for (i = 0; i < gRoomObjectList.unk0; e++, i++)
     {
         if (e->unk0 == -1)
             return;
@@ -1488,13 +1488,13 @@ void sub_080b5024(void)
                 else
                 {
                     if (gUnk_087324DA[e->unk2][0] != 0xFFFF)
-                        gUnk_03005628[0] = gUnk_087324DA[e->unk2][0];
+                        gRoomBounds[0] = gUnk_087324DA[e->unk2][0];
                     if (gUnk_087324DA[e->unk2][1] != 0xFFFF)
-                        gUnk_03005628[1] = gUnk_087324DA[e->unk2][1];
+                        gRoomBounds[1] = gUnk_087324DA[e->unk2][1];
                     if (gUnk_087324DA[e->unk2][2] != 0xFFFF)
-                        gUnk_03005628[2] = gUnk_087324DA[e->unk2][2];
+                        gRoomBounds[2] = gUnk_087324DA[e->unk2][2];
                     if (gUnk_087324DA[e->unk2][3] != 0xFFFF)
-                        gUnk_03005628[3] = gUnk_087324DA[e->unk2][3];
+                        gRoomBounds[3] = gUnk_087324DA[e->unk2][3];
                 }
                 break;
             case 1:
@@ -1546,7 +1546,7 @@ s32 sub_080b5338(s32 i)
     res5 = -1;
     if (((u8 *)gUnk_02008020)[i6] != 0)
         goto fail;
-    pd = (u8 *)&gUnk_020055D8;
+    pd = (u8 *)&gRoomObjectList;
     w8 = i6 << 3;
     w9 = (u32)*(u8 **)(pd + 4);
     e4 = (u8 *)(w9 + w8);
@@ -1559,7 +1559,7 @@ s32 sub_080b5338(s32 i)
     case 8:
         break;
     case 1:
-        if (gUnk_03002350 <= (s8)e4[3] >> 5)
+        if (gActivePlayerCount <= (s8)e4[3] >> 5)
             goto fail;
         res5 = sub_080b5bdc(e4, i6);
         break;
@@ -1575,7 +1575,7 @@ s32 sub_080b5338(s32 i)
             break;
         }
         pw = (u8 *)gUnk_02007BF0;
-        pw3 = (u32 *)(((s32)*(s8 *)gUnk_030023EC << 2) + ((s32)gUnk_0300238C << 5) + (u32)pw);
+        pw3 = (u32 *)(((s32)*(s8 *)gStageIndex << 2) + ((s32)gLevelIndex << 5) + (u32)pw);
         m = 1 << *(s8 *)(e4 + 3);
         w3 = *pw3;
         w3 &= m;
@@ -1641,8 +1641,8 @@ void sub_080b54d0(s32 a)
     if (*e3 == -1)
         return;
     pb2 = (u8 *)gUnk_02007BF0;
-    p2 = (u8 *)((((s32)*(s8 *)gUnk_030023EC << 2) + ((s32)gUnk_0300238C << 5)) + (u32)pb2);
-    pd = (u8 *)&gUnk_020055D8;
+    p2 = (u8 *)((((s32)*(s8 *)gStageIndex << 2) + ((s32)gLevelIndex << 5)) + (u32)pb2);
+    pd = (u8 *)&gRoomObjectList;
     wi = *e3;
     wd = *(u8 **)(pd + 4);
     w9 = *(u8 *)(((wi << 3) + (u32)wd) + 3);

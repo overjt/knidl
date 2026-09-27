@@ -40,7 +40,7 @@ u32 IsWorldPosOnScreen(s16 x, s16 y);
 s32 RandomSpread(s32 a, s32 b, s32 c);
 s16 RandomSpreadFacing(s32 a, u32 b, u32 c);
 s32 sub_08010358(s32 a, s32 b);
-void sub_080261d4(s32 a);
+void RequestScreenShake(s32 a);
 s32 PlayerLoadFrameTilesAndPalette(s32 mode);
 void LoadBackdropColor(u16 *p);
 
@@ -969,7 +969,7 @@ void sub_0801201c(void)
     TaskYieldTrampoline(4);
     gCurTask->unk3C = 13;
     TaskYieldTrampoline(2);
-    sub_080261d4(1);
+    RequestScreenShake(1);
     sub_08010358(21, 32);
     TaskSetMotion(128 << 9, 0, 0x5A5A5A5A, 192 << 10, 0xFFFF0000, 0x5A5A5A5A);
     gCurTask->unk3C = 16;
@@ -1156,7 +1156,7 @@ void sub_0801201c(void)
     TaskYieldTrampoline(2);
     TaskStop();
     gCurTask->unk3C = 0xFFFF;
-    sub_080261d4(2);
+    RequestScreenShake(2);
     gCurTask->unk48 += gSpriteCameraX;
     gCurTask->unk4A += gSpriteCameraY;
     gCurTask->unk4C = gCurTask->unk48 << 16;
@@ -3447,7 +3447,7 @@ void sub_08015758(void)
     gCurTask->unk3C = 9;
     TaskYieldTrampoline(5);
     TaskStop();
-    sub_080261d4(6);
+    RequestScreenShake(6);
     sub_08010358(40, 32);
     gCurTask->unk6C = 0;
     do
@@ -3458,7 +3458,7 @@ void sub_08015758(void)
         TaskYieldTrampoline(2);
         gCurTask->unk6C++;
     } while ((s16)gCurTask->unk6C <= 9);
-    sub_080261d4(0);
+    RequestScreenShake(0);
     gCurTask->unk3C = 3;
     TaskYieldTrampoline(2);
     gCurTask->unk58 = 0xFFFE4000;

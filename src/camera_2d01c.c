@@ -5,13 +5,13 @@
 /* camera_2d01c.c (0x0802D01C-0x0802D38B, issue #86).
  *
  * Camera mode switches, the room's BG animation scripts and the camera
- * task spawners.  gUnk_030055C0 is the camera mode: sub_0802d01c leaves
- * mode 3 for 4 or 0 from the flags in gUnk_03005680.unk1, sub_0802d074
- * snaps the 16.16 camera target gUnk_03005614/gUnk_03005634 to the player
+ * task spawners.  gCameraMode is the camera mode: CameraLeaveScrollLock leaves
+ * mode 3 for 4 or 0 from the flags in gScrollLock.unk1, sub_0802d074
+ * snaps the 16.16 camera target gCameraCenterX/gCameraCenterY to the player
  * and picks mode 4 or 5, and sub_0802d0c4 is a dead export (both arms of
- * its test store 0).  sub_0802d0f4 resets the ten BG animation slots
- * gUnk_02007D70[] and loads the room's scripts from
- * gUnk_087E1F20[gUnk_030055EC->unk40]; sub_0802d188 runs them every frame,
+ * its test store 0).  LoadRoomBgAnims resets the ten BG animation slots
+ * gBgAnims[] and loads the room's scripts from
+ * gRoomBgAnimScripts[gCurRoomDef->unk40]; UpdateBgAnims runs them every frame,
  * eight-byte commands: 0 copies tiles to 0x06004000 (sub_0802d25c), 1
  * starts a palette fade (sub_0802d278, stepped by sub_0802d294 into the
  * palette buffer gUnk_030012B0), 2 waits, 3 loops, 5 sets a metatile's
@@ -65,7 +65,7 @@ struct BgMap
     /*0x06*/ u16 unk6[0];
 };
 
-/* The room header gUnk_030055EC points at (one entry of the gUnk_087E1D58
+/* The room header gCurRoomDef points at (one entry of the gRoomTable
    room table): unk18/unk28 are length-prefixed palettes, unk30 the BG map
    streamed into 0x06003000, unk40 the room's BG animation script set. */
 struct RoomDef
@@ -103,22 +103,22 @@ struct MapTile
     /*0x03*/ u8 unk3;
 };
 
-extern u16 gUnk_030055C0;
-extern struct Unk03005680 gUnk_03005680;
-extern s32 gUnk_03005610;
-extern s32 gUnk_03005664;
-extern u8 gUnk_03002340;
-extern s32 gUnk_03005614;
-extern s16 gUnk_03002398;
-extern s32 gUnk_03005634;
-extern s16 gUnk_03001F00;
+extern u16 gCameraMode;
+extern struct Unk03005680 gScrollLock;
+extern s32 gScrollLockSpeedX;
+extern s32 gScrollLockSpeedY;
+extern u8 gActivePlayerMask;
+extern s32 gCameraCenterX;
+extern s16 gCameraAnchorX;
+extern s32 gCameraCenterY;
+extern s16 gCameraAnchorY;
 extern s8 gUnk_03002444;
-extern struct RoomDef *gUnk_030055EC;
-extern struct Unk02007D70 gUnk_02007D70[];
-extern struct Unk02007D70Cmd **gUnk_087E1F20[];
+extern struct RoomDef *gCurRoomDef;
+extern struct Unk02007D70 gBgAnims[];
+extern struct Unk02007D70Cmd **gRoomBgAnimScripts[];
 extern u16 gUnk_030012B0[];
-extern s16 gUnk_0300561C;
-extern s16 gUnk_03005620;
+extern s16 gRoomHeight;
+extern s16 gRoomWidth;
 extern struct MapTile *gRoomMap;
 extern void (*gMapEventVariants[])(void);
 
@@ -127,52 +127,52 @@ void CallTableEntry(u32 idx, u32 count, void (**fns)(void));
 void BlendColors(u16 *src, u16 *dst, s32 ratio, s32 count, u16 *out);
 void PlaySfx(u32 a);
 s32 sub_0802621c(s32 type);
-void sub_08028948(void);
-void sub_08028b1c(void);
+void CalcRoomBounds(void);
+void CameraResetBounds(void);
 void sub_0802d25c(struct Unk0802D25C *a);
 void sub_0802d278(struct Unk02007D70 *p, struct Unk0802D278 *q);
 void sub_0802d294(struct Unk02007D70 *p);
 void sub_0802d2f0(u32 x, u32 y, u32 v);
 void sub_0802d32c(struct Unk02007D70 *p);
 
-void sub_0802d01c(void)
+void CameraLeaveScrollLock(void)
 {
-    if (gUnk_030055C0 == 3)
+    if (gCameraMode == 3)
     {
-        if (gUnk_03005680.unk1 & 1)
-            gUnk_03005610 = 6;
-        if (gUnk_03005680.unk1 & 2)
-            gUnk_03005664 = 3;
-        if (gUnk_03005680.unk1 != 0)
-            gUnk_030055C0 = 4;
+        if (gScrollLock.unk1 & 1)
+            gScrollLockSpeedX = 6;
+        if (gScrollLock.unk1 & 2)
+            gScrollLockSpeedY = 3;
+        if (gScrollLock.unk1 != 0)
+            gCameraMode = 4;
         else
-            gUnk_030055C0 = 0;
-        gUnk_03005680.unk0 = gUnk_03002340;
+            gCameraMode = 0;
+        gScrollLock.unk0 = gActivePlayerMask;
     }
 }
 
 void sub_0802d074(void)
 {
-    gUnk_03005614 = gUnk_03002398 << 16;
-    gUnk_03005634 = gUnk_03001F00 << 16;
+    gCameraCenterX = gCameraAnchorX << 16;
+    gCameraCenterY = gCameraAnchorY << 16;
     if (gUnk_03002444 != 0)
-        gUnk_030055C0 = 4;
+        gCameraMode = 4;
     else
-        gUnk_030055C0 = 5;
+        gCameraMode = 5;
 }
 
 void sub_0802d0c4(void)
 {
-    sub_08028948();
-    sub_08028b1c();
+    CalcRoomBounds();
+    CameraResetBounds();
     /* both arms store 0 in the ROM too (sub_0802d074 stores 4 / 5) */
     if (gUnk_03002444 != 0)
-        gUnk_030055C0 = 0;
+        gCameraMode = 0;
     else
-        gUnk_030055C0 = 0;
+        gCameraMode = 0;
 }
 
-void sub_0802d0f4(void)
+void LoadRoomBgAnims(void)
 {
     s32 i;
     s32 k;
@@ -180,15 +180,15 @@ void sub_0802d0f4(void)
     i = 0;
     for (k = 0; k < 10; k++)
     {
-        gUnk_02007D70[k].unk0 = 0x7FFF;
-        gUnk_02007D70[k].unk8 |= 0xFFFF;
+        gBgAnims[k].unk0 = 0x7FFF;
+        gBgAnims[k].unk8 |= 0xFFFF;
     }
-    if (gUnk_030055EC->unk40 != 0)
+    if (gCurRoomDef->unk40 != 0)
     {
-        while (gUnk_087E1F20[gUnk_030055EC->unk40][i] != 0)
+        while (gRoomBgAnimScripts[gCurRoomDef->unk40][i] != 0)
         {
-            struct Unk02007D70 *p = &gUnk_02007D70[i];
-            p->unk4 = gUnk_087E1F20[gUnk_030055EC->unk40][i];
+            struct Unk02007D70 *p = &gBgAnims[i];
+            p->unk4 = gRoomBgAnimScripts[gCurRoomDef->unk40][i];
             p->unk0 = 0;
             p->unk2 = 0;
             i++;
@@ -201,7 +201,7 @@ void sub_0802d0f4(void)
    the slot pointer above the command pointer in global-alloc priority
    (p = r4, cmd = r5 as in the ROM).  The command loop itself is a goto
    loop, as a real one gets rotated. */
-void sub_0802d188(void)
+void UpdateBgAnims(void)
 {
     s32 i;
     struct Unk02007D70 *p;
@@ -211,7 +211,7 @@ void sub_0802d188(void)
     {
         do
         {
-            p = &gUnk_02007D70[i];
+            p = &gBgAnims[i];
             if (p->unk0 == 0x7FFF)
                 continue;
         loop:
@@ -285,8 +285,8 @@ void sub_0802d294(struct Unk02007D70 *p)
 
 void sub_0802d2f0(u32 x, u32 y, u32 v)
 {
-    if (x < gUnk_03005620 && y < gUnk_0300561C)
-        gRoomMap[y * gUnk_03005620 + x].unk3 = v;
+    if (x < gRoomWidth && y < gRoomHeight)
+        gRoomMap[y * gRoomWidth + x].unk3 = v;
 }
 
 void sub_0802d32c(struct Unk02007D70 *p)

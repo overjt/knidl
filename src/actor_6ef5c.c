@@ -49,7 +49,7 @@ extern void TaskSetMotionXFacing(u32, u32);
 extern void TaskStop(void);
 extern void TaskSetFrame(s32 a);
 extern void sub_0801bcac(u8 *);
-extern void sub_08026264(s32, s32);
+extern void SetCameraFocus(s32, s32);
 extern void sub_0803ddc0(void);
 extern void LoadAbilityTiles(void);
 extern void sub_08049a58(void);
@@ -164,7 +164,7 @@ void sub_0806f174(void)
 
     t = gCurTask;
     if (t->unk88->unk00 == gLocalPlayer)
-        sub_08026264(t->unk48, t->unk4A);
+        SetCameraFocus(t->unk48, t->unk4A);
     sub_0801bcac(gUnk_0873F5D4);
     if (gCurTask->unk7A & 1)
     {
@@ -245,7 +245,7 @@ void sub_0806f36c(void)
 
     t = gCurTask;
     if (t->unk88->unk00 == gLocalPlayer)
-        sub_08026264(t->unk48, t->unk4A);
+        SetCameraFocus(t->unk48, t->unk4A);
     sub_0801bcac(gUnk_0873F5D4);
     if (gCurTask->unk7A & 1)
     {
@@ -339,7 +339,7 @@ void sub_0806f5c4(void)
 
     t = gCurTask;
     if (t->unk88->unk00 == gLocalPlayer)
-        sub_08026264(t->unk48, t->unk4A);
+        SetCameraFocus(t->unk48, t->unk4A);
     sub_0801bcac(gUnk_0873F5D4);
     if (gCurTask->unk7A & 1)
     {
@@ -519,7 +519,7 @@ void sub_0806faac(void)
 
     t = gCurTask;
     if (t->unk88->unk00 == gLocalPlayer)
-        sub_08026264(t->unk48, t->unk4A);
+        SetCameraFocus(t->unk48, t->unk4A);
     sub_0801bcac(gUnk_0873F5D4);
     if (gCurTask->unk7A & 1)
     {
@@ -596,7 +596,7 @@ void sub_0806fc98(void)
 
     t = gCurTask;
     if (t->unk88->unk00 == gLocalPlayer)
-        sub_08026264(t->unk48, t->unk4A);
+        SetCameraFocus(t->unk48, t->unk4A);
     sub_0801bcac(gUnk_0873F5D4);
     if (gCurTask->unk7A & 1)
     {

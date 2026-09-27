@@ -5,7 +5,7 @@
 /* room_27e28.c (0x08027E28-0x0802831F, issue #93).
  *
  * Room start-up, part 1.  sub_08027e28 (the loaders' second step) sets up
- * the scroll speeds, the BG layout gUnk_0200B050/gUnk_0200B078 for the
+ * the scroll speeds, the BG layout gRoomBgLayout/gUnk_0200B078 for the
  * room (a 7-way switch on RoomDef.unk54, table 0x08027F28), the
  * metatile-map edits of the special rooms and the bottom bound
  * (sub_08025e0c); sub_08028130 is its reduced form for sub_080233e0,
@@ -100,46 +100,46 @@ struct MapTile
     /*0x03*/ u8 unk3;
 };
 
-extern s32 gUnk_03005610;
-extern s32 gUnk_03005664;
+extern s32 gScrollLockSpeedX;
+extern s32 gScrollLockSpeedY;
 extern s32 gUnk_030055F0;
 extern s32 gUnk_03005618;
-extern u8 gUnk_0200B050;
+extern u8 gRoomBgLayout;
 extern s16 *gUnk_0300558C;
 extern s16 gUnk_0873A318[];
 extern s16 gUnk_0873A398[];
 extern u8 gUnk_02005574[];
-extern struct RoomDef *gUnk_030055EC;
-extern struct Unk020055D8 gUnk_020055D8;
+extern struct RoomDef *gCurRoomDef;
+extern struct Unk020055D8 gRoomObjectList;
 extern s32 gUnk_087322C0[][2];
-extern u8 gUnk_020055B0;
+extern u8 gBg3MapShape;
 extern u8 gUnk_0200B078;
-extern s32 gUnk_030055E8;
-extern struct MapCell gUnk_02000040[];
-extern s16 gUnk_03005620;
-extern s16 gUnk_0300561C;
+extern s32 gBg3ParallaxX;
+extern struct MapCell gRoomMapBuffer[];
+extern s16 gRoomWidth;
+extern s16 gRoomHeight;
 extern struct MapCell *gRoomMap;
 extern u16 gBlockLayer[];
-extern s16 gUnk_030055E4;
-extern s16 gUnk_03005628[4];
-extern u16 gUnk_03005600[2];
+extern s16 gRoomMetatileCount;
+extern s16 gRoomBounds[4];
+extern u16 gRoomBorder[2];
 extern s8 gUnk_030023B8;
 extern u8 gUnk_02000020;
-extern u16 gUnk_030055C0;
+extern u16 gCameraMode;
 extern u8 gUnk_020069F0;
 extern s8 gUnk_02006098[];
 extern s8 gUnk_02007D64;
-extern struct RoomDef **gUnk_087E1D58[][8];
-extern s8 gUnk_030023EC;
-extern s8 gUnk_0300238C;
-extern s8 gUnk_03002468;
+extern struct RoomDef **gRoomTable[][8];
+extern s8 gStageIndex;
+extern s8 gLevelIndex;
+extern s8 gRoomIndex;
 extern u16 gUnk_030012B0[];
 
 void RequestCopy(u32 mode, u32 src, u32 dst, u32 size);
 void sub_08008c64(u16 a0);
 void sub_08025e0c(void);
-void sub_0802b460(u16 a);
-void sub_0802b49c(u16 a);
+void SetBg23ScreenSize(u16 a);
+void SetBg3ScreenSize(u16 a);
 s32 sub_08030074(s32 a);
 s32 sub_08030100(u8 a);
 void sub_080307b0(void);
@@ -153,16 +153,16 @@ void sub_08027e28(void)
     s32 i, j;
     s16 idx;
 
-    gUnk_03005610 = 0;
-    gUnk_03005664 = 0;
+    gScrollLockSpeedX = 0;
+    gScrollLockSpeedY = 0;
     gUnk_030055F0 = 0;
     gUnk_03005618 = 0;
-    gUnk_0200B050 = 0;
+    gRoomBgLayout = 0;
     gUnk_0300558C = gUnk_0873A318;
     gUnk_02005574[0] = 0;
-    if ((s16)gUnk_030055EC->unk38 != -1)
+    if ((s16)gCurRoomDef->unk38 != -1)
     {
-        e = (s8 *)&gUnk_020055D8.unk4[(s16)gUnk_030055EC->unk38];
+        e = (s8 *)&gRoomObjectList.unk4[(s16)gCurRoomDef->unk38];
         if (e[1] == 7)
         {
             gUnk_030055F0 = gUnk_087322C0[e[2]][0];
@@ -173,59 +173,59 @@ void sub_08027e28(void)
             gUnk_0300558C = gUnk_0873A398;
         }
     }
-    if (gUnk_030055EC->unk56 != 0)
-        gUnk_0200B050 = 2;
-    else if (gUnk_020055B0 == 2)
-        gUnk_0200B050 = 1;
-    else if (gUnk_020055B0 == 1)
-        sub_0802b49c(0x8000);
-    switch (gUnk_030055EC->unk54)
+    if (gCurRoomDef->unk56 != 0)
+        gRoomBgLayout = 2;
+    else if (gBg3MapShape == 2)
+        gRoomBgLayout = 1;
+    else if (gBg3MapShape == 1)
+        SetBg3ScreenSize(0x8000);
+    switch (gCurRoomDef->unk54)
     {
     case 1:
         gUnk_0200B078 = 1;
-        gUnk_0200B050 = 3;
+        gRoomBgLayout = 3;
         *gUnk_02005574 = 1;
-        sub_0802b460(0x8000);
-        gUnk_030055E8 = 0;
+        SetBg23ScreenSize(0x8000);
+        gBg3ParallaxX = 0;
         i = 13;
-        p = gUnk_02000040;
+        p = gRoomMapBuffer;
         for (; i <= 18; i++)
         {
             for (j = 0; j <= 16; j++)
             {
-                idx = gUnk_03005620 * i + j;
+                idx = gRoomWidth * i + j;
                 ((struct MapTile *)gRoomMap)[idx].unk0 = 0;
                 ((struct MapTile *)gRoomMap)[idx].unk2 = 0;
                 ((struct MapTile *)gRoomMap)[idx].unk3 = 0;
                 gBlockLayer[idx] = 0;
             }
         }
-        CpuSet(p, p + 2048, (gUnk_030055E4 * 2) & 0x1FFFFF);
-        CpuSet(gBlockLayer, gBlockLayer + 2048, gUnk_030055E4 & 0x1FFFFF);
-        gUnk_030055C0 = 5;
+        CpuSet(p, p + 2048, (gRoomMetatileCount * 2) & 0x1FFFFF);
+        CpuSet(gBlockLayer, gBlockLayer + 2048, gRoomMetatileCount & 0x1FFFFF);
+        gCameraMode = 5;
         break;
     case 2:
         gUnk_0200B078 = 2;
         break;
     case 3:
         gUnk_0200B078 = 3;
-        gUnk_03005628[2] = gUnk_0300561C * 16 - gUnk_03005600[1] - 80;
+        gRoomBounds[2] = gRoomHeight * 16 - gRoomBorder[1] - 80;
         sub_08008c64(3);
         sub_08030074(gUnk_030023B8);
         break;
     case 4:
         gUnk_0200B078 = 6;
-        gUnk_0200B050 = 4;
+        gRoomBgLayout = 4;
         *gUnk_02005574 = 1;
-        sub_0802b460(0);
+        SetBg23ScreenSize(0);
         sub_080b6ea0(8);
         gUnk_02000020 = 2;
-        gUnk_030055C0 = 5;
+        gCameraMode = 5;
         break;
     case 5:
         gUnk_0200B078 = 7;
-        gUnk_0200B050 = 5;
-        gUnk_03005628[1] = gUnk_03005600[0] + 120;
+        gRoomBgLayout = 5;
+        gRoomBounds[1] = gRoomBorder[0] + 120;
         sub_080b6ea0(9);
         gUnk_02000020 = 3;
         if (gUnk_020069F0 != 2)
@@ -249,63 +249,63 @@ void sub_08028130(void)
     s8 *e;
     struct RoomDef *next;
 
-    gUnk_03005610 = 0;
-    gUnk_03005664 = 0;
+    gScrollLockSpeedX = 0;
+    gScrollLockSpeedY = 0;
     gUnk_030055F0 = 0;
     gUnk_03005618 = 0;
-    gUnk_0200B050 = 0;
+    gRoomBgLayout = 0;
     gUnk_02005574[0] = 0;
-    if ((s16)gUnk_030055EC->unk38 != -1)
+    if ((s16)gCurRoomDef->unk38 != -1)
     {
-        e = (s8 *)&gUnk_020055D8.unk4[(s16)gUnk_030055EC->unk38];
+        e = (s8 *)&gRoomObjectList.unk4[(s16)gCurRoomDef->unk38];
         if (e[1] == 7)
         {
             gUnk_030055F0 = gUnk_087322C0[e[2]][0];
             gUnk_03005618 = gUnk_087322C0[e[2]][1];
         }
     }
-    if (gUnk_030055EC->unk56 != 0)
-        gUnk_0200B050 = 2;
-    else if (gUnk_020055B0 == 2)
-        gUnk_0200B050 = 1;
-    else if (gUnk_020055B0 == 1)
-        sub_0802b49c(0x8000);
-    if (gUnk_030055EC->unk54 != 0)
+    if (gCurRoomDef->unk56 != 0)
+        gRoomBgLayout = 2;
+    else if (gBg3MapShape == 2)
+        gRoomBgLayout = 1;
+    else if (gBg3MapShape == 1)
+        SetBg3ScreenSize(0x8000);
+    if (gCurRoomDef->unk54 != 0)
     {
         gUnk_0200B078 = 4;
         if (gUnk_02006098[0] == 1)
         {
-            next = gUnk_087E1D58[gUnk_0300238C][gUnk_030023EC][gUnk_03002468 + 1];
-            RequestCopy(2, (u32)(next->unk18 + 1), (u32)gUnk_030012B0, *gUnk_030055EC->unk18);
-            RequestCopy(2, (u32)(next->unk28 + 1), (u32)gUnk_030012B0 + 0x1C0 - *gUnk_030055EC->unk28, *gUnk_030055EC->unk28);
+            next = gRoomTable[gLevelIndex][gStageIndex][gRoomIndex + 1];
+            RequestCopy(2, (u32)(next->unk18 + 1), (u32)gUnk_030012B0, *gCurRoomDef->unk18);
+            RequestCopy(2, (u32)(next->unk28 + 1), (u32)gUnk_030012B0 + 0x1C0 - *gCurRoomDef->unk28, *gCurRoomDef->unk28);
         }
     }
 }
 
 void sub_08028280(s32 a)
 {
-    gUnk_03005610 = 0;
-    gUnk_03005664 = 0;
+    gScrollLockSpeedX = 0;
+    gScrollLockSpeedY = 0;
     gUnk_030055F0 = 0;
     gUnk_03005618 = 0;
-    gUnk_0200B050 = 0;
+    gRoomBgLayout = 0;
     gUnk_02005574[0] = 0;
     if (a == 0)
     {
         gUnk_0200B078 = 6;
-        gUnk_0200B050 = 4;
-        sub_0802b460(0);
+        gRoomBgLayout = 4;
+        SetBg23ScreenSize(0);
         sub_080b6ea0(10);
     }
-    else if (gUnk_020055B0 == 2)
+    else if (gBg3MapShape == 2)
     {
-        gUnk_0200B050 = 1;
+        gRoomBgLayout = 1;
     }
-    else if (gUnk_020055B0 == 1)
+    else if (gBg3MapShape == 1)
     {
-        sub_0802b49c(0x8000);
+        SetBg3ScreenSize(0x8000);
     }
-    gUnk_030055C0 = 5;
+    gCameraMode = 5;
 }
 
 void sub_08028304(void)

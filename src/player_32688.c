@@ -146,7 +146,7 @@ void sub_0801baa4(u32 a);
 void sub_08021c74(s8 *box, s32 id);
 void TaskInitWaterFlags(void);
 s32 sub_080260b0(void);
-void sub_08026264(s32 x, s32 y);
+void SetCameraFocus(s32 x, s32 y);
 u16 TaskBreakBlocks(struct HitBoxSet *p, s32 e);
 void sub_0803c9b4(s32 a);                     /* M10: mov r8, r0 on entry, void epilogue */
 void sub_0803cbd8(void);                      /* M10: no argument read, void epilogue */
@@ -550,7 +550,7 @@ check:
     }
 tail:
     if (gCurTask->unk88->unk37 != 2 && gLocalPlayer == gCurTask->unk88->unk00)
-        sub_08026264(gCurTask->unk4C >> 16, gCurTask->unk50 >> 16);
+        SetCameraFocus(gCurTask->unk4C >> 16, gCurTask->unk50 >> 16);
     if (gCurTask->unk88->unk68 != 0 && !(gCurTask->unk13 & 2))
     {
         gCurTask->unk88->unk5E = gCurTask->unk48;

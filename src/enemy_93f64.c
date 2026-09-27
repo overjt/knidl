@@ -95,7 +95,7 @@ extern void TaskSetFrame(s32 a);
 extern void TaskSetFrameNoFlip(s32 a);
 extern void TaskSetFrameFlip(s32 a);
 extern s32 GetCollisionTileAtPixel(u16 x, u16 y);
-extern void sub_080261d4(s32 a);
+extern void RequestScreenShake(s32 a);
 extern void ActorSetState(u16 v);
 extern void ActorSetHitReactions(void *p);
 extern void ActorSetAttackBox(void *p);
@@ -1056,7 +1056,7 @@ void sub_08095254(void)
     else
         t->unk43 = -1;
     PlaySfx(0x1F7);
-    sub_080261d4(2);
+    RequestScreenShake(2);
     TaskSetMotionXFacing(-0x10000, 0x5A5A5A5A);
     TaskSetMotionY(-0x30000, 0x2500, 0x30000);
     gCurTask->unk7A = 0;
@@ -1114,12 +1114,12 @@ void sub_08095360(void)
     while (gCurTask->unk2C == 0)
         TaskYieldTrampoline(1);
     TaskStop();
-    sub_080261d4(4);
+    RequestScreenShake(4);
     PlaySfx(0x1F7);
     CreateChildTaskHere(141, 0);
     sub_080956c8(gUnk_0874441C);
     TaskSetMotionXFacing(-0x8000, 0x5A5A5A5A);
-    sub_080261d4(2);
+    RequestScreenShake(2);
     gCurTask->unk1C = z2 = 0;
     TaskYieldTrampoline(32);
     TaskStop();
@@ -1158,14 +1158,14 @@ s32 sub_080954f0(void)
     switch (gCurTask->unk14) {
     case 0:
         TaskStopY();
-        sub_080261d4(2);
+        RequestScreenShake(2);
         PlaySfx(504);
         ActorSetState(1);
         TaskSetEntry(sub_08094290, gCurTaskIdx);
         return 1;
     case 3:
         TaskStopY();
-        sub_080261d4(2);
+        RequestScreenShake(2);
         PlaySfx(0x1F7);
         if (gCurTask->unk8C->unk2C != gUnk_08744384)
             gCurTask->unk28 = sub_080956c8(gUnk_08744384);
@@ -1223,7 +1223,7 @@ s32 sub_080955a8(void)
 void sub_08095674(void)
 {
     CreateChildTaskHere(142, 0);
-    sub_080261d4(2);
+    RequestScreenShake(2);
     gCurTask->unk20 = 32;
 }
 

@@ -32,7 +32,7 @@ extern s16 gUnk_0873D384[];
 extern s32 gUnk_030023B4;
 extern s32 gUnk_030023D4;
 extern s8 gUnk_02006094;
-extern s8 gUnk_0300238C;
+extern s8 gLevelIndex;
 extern s8 gUnk_087401CC[];
 extern struct M19Script *gUnk_087401E4[];
 extern struct PlayerState gPlayerStates[];
@@ -54,8 +54,8 @@ extern u32 gUnk_087402C8[];
 extern u32 gUnk_08752C38[];
 extern u32 gUnk_08752C74[];
 extern u8 gUnk_03001F30;
-extern u8 gUnk_03002340;
-extern u8 gUnk_03002350;
+extern u8 gActivePlayerMask;
+extern u8 gActivePlayerCount;
 extern vs32 gCurTaskIdx;
 extern vu16 gPlayerHeldKeys[4];
 extern vu16 gPlayerPressedKeys[4];
@@ -82,8 +82,8 @@ extern void TaskStop(void);
 extern void TaskStopSlot(u32 i);
 extern void TaskSetFrame(s32 a);
 extern void sub_0801bcac(u32 *p);
-extern void sub_080261d4(u32 a);
-extern void sub_08026264(s32 a, s32 b);
+extern void RequestScreenShake(u32 a);
+extern void SetCameraFocus(s32 a, s32 b);
 extern void ActorSetState(u8 v);
 extern void AngleToVector(s16 t, s16 mag);
 extern void TaskGetScreenPos(void);
@@ -161,7 +161,7 @@ void sub_08076454(void)
             s32 x = u->unk4C + gTasks[u->unk44].unk4C;
             s32 y = u->unk50 + gTasks[u->unk44].unk50;
 
-            sub_08026264(x >> 16, y >> 16);
+            SetCameraFocus(x >> 16, y >> 16);
         }
     }
 }
@@ -528,7 +528,7 @@ void sub_08076c00(void)
             {
             case 1:
                 PlaySfx(153);
-                sub_080261d4(4);
+                RequestScreenShake(4);
                 sub_0806d4e4(0, 0);
                 {
                     struct Task *v = gCurTask;
@@ -731,7 +731,7 @@ void sub_08076fe4(int a)
 
     for (; i < gPlayerCount; i++)
     {
-        if ((gUnk_03002340 >> i) & 1)
+        if ((gActivePlayerMask >> i) & 1)
         {
             struct Task *t = &gTasks[i];
 
@@ -767,7 +767,7 @@ void sub_0807705c(void)
 
 u16 sub_080770a0(void)
 {
-    s32 i = gUnk_0300238C * 2 + gCurTask->unk74;
+    s32 i = gLevelIndex * 2 + gCurTask->unk74;
     u16 v;
 
     if (i > 13)
@@ -815,25 +815,25 @@ void sub_0807717c(void)
     if (gCurTask->unk1C == 0)
         sub_0806da3c(1, 0);
     sub_0806da3c(2, 2);
-    sub_080261d4(4);
+    RequestScreenShake(4);
     PlaySfx(296);
 }
 
 void sub_080771b0(void)
 {
     sub_0806da3c(2, 2);
-    sub_080261d4(4);
+    RequestScreenShake(4);
 }
 
 void sub_080771c4(void)
 {
     sub_0806da3c(3, 3);
-    sub_080261d4(4);
+    RequestScreenShake(4);
 }
 
 void sub_080771d8(void)
 {
-    if (gCurTask->unk1C == gUnk_03002350)
+    if (gCurTask->unk1C == gActivePlayerCount)
         sub_08076fe4((s16)sub_080770a0());
     else
     {

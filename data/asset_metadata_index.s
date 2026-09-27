@@ -1141,8 +1141,8 @@ gUnk_087327F0:
 	.global	gUnk_08732824
 gUnk_08732824:
 	.incbin	"baserom.gba", 0x732824, 0x5C
-	.global	gUnk_08732880
-gUnk_08732880:
+	.global	gScreenShakePatterns
+gScreenShakePatterns:
 	.incbin	"baserom.gba", 0x732880, 0x4
 	.word	gUnk_08732658
 	.word	gUnk_08732694

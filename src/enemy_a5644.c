@@ -10,7 +10,7 @@ extern u32 gUnk_02005580[];
 extern s16 gUnk_02005588[];
 extern u32 gUnk_02005590[];
 extern u32 gUnk_020055D0[];
-extern u32 gUnk_020055D8[];
+extern u32 gRoomObjectList[];
 extern u8 gUnk_02005E10[];
 extern u32 gUnk_02005F10[];
 extern u32 gUnk_02006040[];
@@ -63,19 +63,19 @@ extern u16 gFrameCount;
 extern vu8 gBgMosaic;
 extern vu16 gBg3Cnt;
 extern u32 gHBlankDmaSrc[];
-extern s16 gUnk_03001F00;
+extern s16 gCameraAnchorY;
 extern s32 gUnk_03001F2C;
 extern u8 gUnk_03001F30;
 extern s16 gViewRect[];
 extern u32 gUnk_03002160;
 extern struct PlayerState gPlayerStates[];
-extern u8 gUnk_03002340;
+extern u8 gActivePlayerMask;
 extern s32 gUnk_03002344;
 extern s16 gSpriteCameraX;
-extern u8 gUnk_03002350;
+extern u8 gActivePlayerCount;
 extern u16 gLocalPlayer;
-extern s8 gUnk_0300238C;
-extern s16 gUnk_03002398;
+extern s8 gLevelIndex;
+extern s16 gCameraAnchorX;
 extern u16 gPlayerCount;
 extern u8 gUnk_030023B0;
 extern s32 gUnk_030023B4;
@@ -84,17 +84,17 @@ extern s32 gUnk_030023D4;
 extern u16 gGameState;
 extern s16 gSpriteCameraY;
 extern u32 gCurSaveSlot[];
-extern u32 gUnk_030023EC[];
+extern u32 gStageIndex[];
 extern u32 gUnk_03002448;
 extern s16 gUnk_0300244C;
 extern u32 gExtraMode[];
-extern u32 gUnk_03002468[];
+extern u32 gRoomIndex[];
 extern u32 gUnk_030027A8[];
 extern vs16 gTaskSlotTypes[];
 extern u8 gTerrainResult[];
 extern u32 gUnk_03005568[];
-extern s16 gUnk_03005628[];
-extern u32 gUnk_03005680[];
+extern s16 gRoomBounds[];
+extern u32 gScrollLock[];
 extern u32 gUnk_080A7358[];
 extern u32 gUnk_080A81B8[];
 extern u32 gUnk_080AD86C[];
@@ -541,9 +541,9 @@ extern void sub_080258e0();
 extern void sub_08025a30();
 extern void sub_08025acc();
 extern void sub_08025b5c();
-extern void sub_080261d4(u32 a);
+extern void RequestScreenShake(u32 a);
 extern void sub_080275cc();
-extern void sub_0802cda0();
+extern void StartScrollLock();
 extern s32 sub_0802d344();
 extern void sub_0802ffe8();
 extern void sub_080308e8();
@@ -1499,13 +1499,13 @@ void sub_080a57d4(void)
     gCurTask->unk50 = (gViewRect[2] + 44) << 16;
     if (gUnk_03001F30 == 0)
     {
-        for (i = 0; i < gUnk_03002350; i++)
+        for (i = 0; i < gActivePlayerCount; i++)
         {
             sp.unk00 = 18;
             sp.unk04 = 120;
             sp.unk08 = 0;
             sp.unk09 = i;
-            sp.unk0C = gUnk_08748D28[i + (gUnk_03002350 - 1) * 4] + gViewRect[0];
+            sp.unk0C = gUnk_08748D28[i + (gActivePlayerCount - 1) * 4] + gViewRect[0];
             sp.unk0E = gViewRect[2];
             sp.unk10 = gCurTask->unk8C->unk20;
             sp.unk0A = 0;
@@ -1516,7 +1516,7 @@ void sub_080a57d4(void)
         gUnk_02007D00[2] = gPlayerCount;
     gCurTask->unk43 = 1;
     TaskSetFrame(4);
-    while (gUnk_02007D00[2] != gUnk_03002350)
+    while (gUnk_02007D00[2] != gActivePlayerCount)
         TaskYieldTrampoline(1);
     TaskYieldTrampoline(1);
     gCurTask->unk30 = 2;
@@ -2091,7 +2091,7 @@ void sub_080a658c(void)
     while (gCurTask->unk7A == 0)
         TaskYieldTrampoline(1);
     TaskStop();
-    sub_080261d4(2);
+    RequestScreenShake(2);
     PlaySfx(504);
     sub_0806e9b4(0, 0, 3);
     gCurTask->unk30 = 0;

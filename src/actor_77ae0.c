@@ -61,7 +61,7 @@ extern u32 gUnk_08752D48[];
 extern u32 gUnk_08752DB8[];
 extern u32 gUnk_08752E00[];
 extern u8 gUnk_02004B64;
-extern u8 gUnk_03002340;
+extern u8 gActivePlayerMask;
 extern u8 gUnk_08740620[];
 extern vs16 gBrightness;
 extern vs32 gCurTaskIdx;
@@ -85,8 +85,8 @@ extern void FadeOutSfx(s32 speed);
 extern void TaskSleepForever(void);
 extern void TaskSetEntry(void *a, u32 i);
 extern void TaskStop(void);
-extern void sub_080261d4(u32 a);
-extern void sub_08027204(u32);
+extern void RequestScreenShake(u32 a);
+extern void SetRoomUpdateFlags(u32);
 extern void ActorSetState(u8 v);
 extern void ActorSetStateSlot(u32 i, u8 v);
 extern void ActorDestroy(void);
@@ -236,7 +236,7 @@ void sub_08077cd4(void)
 {
     gCurTask->unk3C = 1;
     sub_080670ac(15);
-    sub_08027204(2);
+    SetRoomUpdateFlags(2);
 }
 
 void sub_08077cf4(void)
@@ -244,7 +244,7 @@ void sub_08077cf4(void)
     sub_08067108();
     gUnk_02004B64 = 1;
     PlaySfx(226);
-    sub_080261d4(4);
+    RequestScreenShake(4);
     sub_08077cd4();
     sub_08009e14();
     ActorSetStateSlot(gCurTaskIdx, 1);
@@ -265,11 +265,11 @@ void sub_08077d54(void)
     TaskYieldTrampoline(15);
     FadeInSfx(16);
     TaskYieldTrampoline(15);
-    sub_080261d4(4);
+    RequestScreenShake(4);
     gUnk_02004B64 = 0;
     for (i = 0; i < gPlayerCount; i++)
     {
-        if ((gUnk_03002340 >> i) & 1)
+        if ((gActivePlayerMask >> i) & 1)
         {
             u8 done;
 

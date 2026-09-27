@@ -4,7 +4,7 @@
 
 /* hud_b5670.c (0x080B5670-0x080B583F, issue #97).
  *
- * Graphics loader for one object of the room's object list gUnk_020055D8
+ * Graphics loader for one object of the room's object list gRoomObjectList
  * (called by src/hud_b4ea8.c's sub_080b4ea8 for every kind-1 entry, which
  * counts the return values): e is the entry, idx its index in the list and n
  * the next free graphics slot of gUnk_020060A0.  If an earlier kind-1 entry
@@ -56,7 +56,7 @@ struct Unk020060A0
     /*0x02*/ s16 unk2;
 };
 
-extern struct Unk020055D8 gUnk_020055D8;
+extern struct Unk020055D8 gRoomObjectList;
 extern struct Unk020060A0 gUnk_020060A0[];
 extern s8 gUnk_02006130[];
 extern u8 gUnk_02020000[];
@@ -86,7 +86,7 @@ s32 sub_080b5670(struct Unk020055D8Entry *e, s32 idx, s32 n)
         return 0;
     for (i = 0; i < idx; i++)
     {
-        if (gUnk_020055D8.unk4[i].unk0 == 1)
+        if (gRoomObjectList.unk4[i].unk0 == 1)
         {
             if (gUnk_02006130[i] != -1
              && gUnk_0873EEA0[gUnk_020060A0[gUnk_02006130[i]].unk0] == d)
@@ -120,7 +120,7 @@ s32 sub_080b5670(struct Unk020055D8Entry *e, s32 idx, s32 n)
         {
             for (i = 0; i < n; i++)
             {
-                if (gUnk_020055D8.unk4[i].unk0 == 1
+                if (gRoomObjectList.unk4[i].unk0 == 1
                  && gUnk_0873EF48[gUnk_020060A0[i].unk0] == gUnk_0873EF48[e->unk1])
                 {
                     gUnk_020060A0[n].unk1 = gUnk_020060A0[i].unk1;

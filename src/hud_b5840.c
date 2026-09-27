@@ -25,7 +25,7 @@ struct Unk020055D8
     /*0x02*/ s16 unk2;
     /*0x04*/ struct Unk020055D8Entry *unk4;
 };
-extern struct Unk020055D8 gUnk_020055D8;
+extern struct Unk020055D8 gRoomObjectList;
 extern u8 gUnk_02005E10[];
 extern u32 gUnk_02005F10[];
 extern u32 gUnk_02006040[];
@@ -84,19 +84,19 @@ extern u16 gFrameCount;
 extern vu8 gBgMosaic;
 extern vu16 gBg3Cnt;
 extern u32 gHBlankDmaSrc[];
-extern s16 gUnk_03001F00;
+extern s16 gCameraAnchorY;
 extern s32 gUnk_03001F2C;
 extern u8 gUnk_03001F30;
 extern s16 gViewRect[];
 extern u32 gUnk_03002160;
 extern struct PlayerState gPlayerStates[];
-extern u8 gUnk_03002340;
+extern u8 gActivePlayerMask;
 extern s32 gUnk_03002344;
 extern s16 gSpriteCameraX;
-extern u8 gUnk_03002350;
+extern u8 gActivePlayerCount;
 extern u16 gLocalPlayer;
-extern s8 gUnk_0300238C;
-extern s16 gUnk_03002398;
+extern s8 gLevelIndex;
+extern s16 gCameraAnchorX;
 extern u16 gPlayerCount;
 extern u8 gUnk_030023B0;
 extern s32 gUnk_030023B4;
@@ -105,16 +105,16 @@ extern s32 gUnk_030023D4;
 extern u16 gGameState;
 extern s16 gSpriteCameraY;
 extern u32 gCurSaveSlot[];
-extern s8 gUnk_030023EC;
+extern s8 gStageIndex;
 extern u32 gUnk_03002448;
 extern s16 gUnk_0300244C;
 extern u32 gExtraMode[];
-extern s8 gUnk_03002468;
+extern s8 gRoomIndex;
 extern u32 gUnk_030027A8[];
 extern vs16 gTaskSlotTypes[];
 extern u8 gTerrainResult[];
 extern u32 gUnk_03005568[];
-extern s16 gUnk_03005628[];
+extern s16 gRoomBounds[];
 struct Unk03005680
 {
     /*0x00*/ u8 unk0;
@@ -126,7 +126,7 @@ struct Unk03005680
     /*0x0A*/ u16 unkA;
     /*0x0C*/ u16 unkC;
 };
-extern struct Unk03005680 gUnk_03005680;
+extern struct Unk03005680 gScrollLock;
 extern u32 gUnk_080A7358[];
 extern u32 gUnk_080A81B8[];
 extern u32 gUnk_080AD86C[];
@@ -582,9 +582,9 @@ extern void sub_080258e0();
 extern void sub_08025a30();
 extern void sub_08025acc();
 extern void sub_08025b5c();
-extern void sub_080261d4(u32 a);
+extern void RequestScreenShake(u32 a);
 extern void sub_080275cc();
-extern void sub_0802cda0();
+extern void StartScrollLock();
 extern s32 sub_0802d344();
 extern void sub_0802ffe8();
 extern void sub_080308e8();
@@ -1582,7 +1582,7 @@ s32 sub_080b5a94(struct Unk020055D8Entry *e, s32 idx, s32 n)
         return 0;
     for (i = 0; i < idx; i++)
     {
-        if (gUnk_020055D8.unk4[i].unk0 == 5)
+        if (gRoomObjectList.unk4[i].unk0 == 5)
         {
             if (gUnk_02006130[i] != -1
              && gUnk_0873F180[gUnk_020060A0[gUnk_02006130[i]].unk0] == d)
@@ -1623,17 +1623,17 @@ s32 sub_080b5bdc(struct Unk020055D8Entry *e, s32 i)
     {
         if (e->unk1 == 32)
         {
-            if (!(gUnk_02007BF0[gUnk_0300238C][gUnk_030023EC] & (1 << (e->unk3 & 31))))
+            if (!(gUnk_02007BF0[gLevelIndex][gStageIndex] & (1 << (e->unk3 & 31))))
                 res = CreateActorByKind(0, e->unk1, e->unk2, 0, e->unk4, e->unk6,
                                    (gUnk_020060A0[gUnk_02006130[i]].unk1 << 12) | ((gUnk_020060A0[gUnk_02006130[i]].unk2 * 2) + 16));
         }
         else if (e->unk1 == 37)
         {
-            if (!(gUnk_02007BF0[gUnk_0300238C][gUnk_030023EC] & (1 << (e->unk3 & 31))))
+            if (!(gUnk_02007BF0[gLevelIndex][gStageIndex] & (1 << (e->unk3 & 31))))
             {
                 res = CreateActorByKind(0, e->unk1, e->unk2, 0, e->unk4, e->unk6,
                                    (gUnk_020060A0[gUnk_02006130[i]].unk1 << 12) | ((gUnk_020060A0[gUnk_02006130[i]].unk2 * 2) + 16));
-                gUnk_02007BF0[gUnk_0300238C][gUnk_030023EC] |= 1 << (e->unk3 & 31);
+                gUnk_02007BF0[gLevelIndex][gStageIndex] |= 1 << (e->unk3 & 31);
             }
         }
         else
@@ -1667,14 +1667,14 @@ s32 sub_080b5d84(struct Unk020055D8Entry *e)
     t->unk24 = 0;
     if (gUnk_02007D64 != 4)
     {
-        if (gUnk_0200AF0C != gUnk_03002468)
+        if (gUnk_0200AF0C != gRoomIndex)
         {
             gUnk_02007D60 = 0;
-            gUnk_0200AF0C = gUnk_03002468;
+            gUnk_0200AF0C = gRoomIndex;
         }
         gUnk_02007D60 &= 0xFF;
     }
-    f = &gUnk_020055D8.unk4[e->unk2];
+    f = &gRoomObjectList.unk4[e->unk2];
     for (i = e->unk2; i < e->unk2 + e->unk3; f++, i++)
     {
         if (f->unk0 == 6)
@@ -1685,18 +1685,18 @@ s32 sub_080b5d84(struct Unk020055D8Entry *e)
                 break;
             case 2:
                 if (e->unk4 < (gViewRect[0] + gViewRect[1]) >> 1)
-                    gUnk_03005680.unkA = e->unk4 + 156;
+                    gScrollLock.unkA = e->unk4 + 156;
                 else
-                    gUnk_03005680.unkA = e->unk4 - 156;
-                sub_0802cda0(f->unk4, f->unk4 + 240, 0xFFFF, 0xFFFF);
+                    gScrollLock.unkA = e->unk4 - 156;
+                StartScrollLock(f->unk4, f->unk4 + 240, 0xFFFF, 0xFFFF);
                 t->unk24 = 1;
                 break;
             case 3:
                 if (e->unk6 < (gViewRect[3] + gViewRect[2]) >> 1)
-                    gUnk_03005680.unkC = e->unk6 + 120;
+                    gScrollLock.unkC = e->unk6 + 120;
                 else
-                    gUnk_03005680.unkC = e->unk6 - 120;
-                sub_0802cda0(0xFFFF, 0xFFFF, f->unk6, f->unk6 + 160);
+                    gScrollLock.unkC = e->unk6 - 120;
+                StartScrollLock(0xFFFF, 0xFFFF, f->unk6, f->unk6 + 160);
                 t->unk24 = 1;
                 break;
             case 4:
@@ -1714,7 +1714,7 @@ s32 sub_080b5d84(struct Unk020055D8Entry *e)
     }
     for (i = 0; i < 2; i++)
         gUnk_02008014[i] = 0xFFFF;
-    f = &gUnk_020055D8.unk4[e->unk2];
+    f = &gRoomObjectList.unk4[e->unk2];
     n = 0;
     for (i = e->unk2; i < e->unk2 + e->unk3; f++, i++)
     {
@@ -1723,7 +1723,7 @@ s32 sub_080b5d84(struct Unk020055D8Entry *e)
             gUnk_0200D080 = 0;
             if (t->unk24 != 0)
             {
-                if (gUnk_03002350 == 1)
+                if (gActivePlayerCount == 1)
                 {
                     gUnk_0200B030 = 0;
                     y = f->unk6;

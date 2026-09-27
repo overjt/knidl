@@ -5,7 +5,7 @@
 
 /* RAM cells / ROM tables */
 extern s32 gUnk_02007D00[];
-extern u8 gUnk_03002350;
+extern u8 gActivePlayerCount;
 extern s16 gUnk_0300244C;
 extern u32 * gUnk_08745CFC[];
 extern u32 * gUnk_08745D4C[];
@@ -19,9 +19,9 @@ void sub_0809c028(void)
     u32 *p;
 
     if (gUnk_0300244C != 0)
-        p = gUnk_08745D4C[gCurTask->unk73 * 4 + gUnk_03002350 - 1];
+        p = gUnk_08745D4C[gCurTask->unk73 * 4 + gActivePlayerCount - 1];
     else
-        p = gUnk_08745CFC[gCurTask->unk73 * 4 + gUnk_03002350 - 1];
+        p = gUnk_08745CFC[gCurTask->unk73 * 4 + gActivePlayerCount - 1];
     ActorLoadDef(p[0]);
     gUnk_02007D00[4] = p[1];
     t = gCurTask;

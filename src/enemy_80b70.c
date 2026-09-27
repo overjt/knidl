@@ -98,7 +98,7 @@ extern void TaskSetMotionY(s32 a, s32 b, s32 c);
 extern void TaskStopY(void);
 extern void TaskStop(void);
 extern void TaskSetFrame(s32 a);
-extern void sub_080261d4(s32 a);
+extern void RequestScreenShake(s32 a);
 extern void ActorLoadDef(u32 *def);
 extern void ActorSetState(u32 v);
 extern void ActorSetAttackBox(u32 *p);
@@ -440,7 +440,7 @@ void sub_08081140(void)
     while ((s8)gCurTask->unk7A == 0)
         TaskYieldTrampoline(1);
     if (gCurTask->unk2C != 0)
-        sub_080261d4(1);
+        RequestScreenShake(1);
     gCurTask->unk7A = 0;
     TaskSetFrame(13);
     TaskSetMotionY(0xFFFE0000, 0x1500, 0x30000);

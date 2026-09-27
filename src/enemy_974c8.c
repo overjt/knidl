@@ -63,7 +63,7 @@ extern void TaskSetMotionY(s32 a, s32 b, s32 c);
 extern void TaskStopY(void);
 extern void TaskStop(void);
 extern void TaskSetFrame(s32 a);
-extern void sub_080261d4(s32 a);
+extern void RequestScreenShake(s32 a);
 extern void ActorSetState(u16 v);
 extern void ActorSetHitReactions(void *p);
 extern void ActorSetAttackBox(void *p);
@@ -256,7 +256,7 @@ void sub_08097694(void)
         } while (gCurTask->unk28 == 0);
     }
     PlaySfx(0x1F7);
-    sub_080261d4(2);
+    RequestScreenShake(2);
     TaskSetFrame(19);
     TaskYieldTrampoline(24);
     sub_08066580();
@@ -427,7 +427,7 @@ void sub_08097a7c(void)
         while (gCurTask->unk28 == 0)
             TaskYieldTrampoline(1);
         PlaySfx(0x1F7);
-        sub_080261d4(2);
+        RequestScreenShake(2);
         gCurTask->unk6C++;
     }
     ActorSetState(1);
@@ -495,7 +495,7 @@ void sub_08097c78(void)
     gCurTask->unk15 = 4;
     zero = 0;
     PlaySfx(0x1F7);
-    sub_080261d4(4);
+    RequestScreenShake(4);
     ActorSetAttackBox(gUnk_08745270);
     sub_08063a00(gUnk_0874528C);
     t = gCurTask;
@@ -507,7 +507,7 @@ void sub_08097c78(void)
     TaskSetFrame(28);
     while (gCurTask->unk28 == 0)
         TaskYieldTrampoline(1);
-    sub_080261d4(4);
+    RequestScreenShake(4);
     PlaySfx(0x1F7);
     sub_0806cc90(0, 1, 8, 10);
     TaskSetMotionXFacing(-0x18000, 0x5A5A5A5A);
@@ -553,7 +553,7 @@ void sub_08097da4(void)
     while (gCurTask->unk28 == 0)
         TaskYieldTrampoline(1);
     PlaySfx(0x1F7);
-    sub_080261d4(2);
+    RequestScreenShake(2);
     sub_0806cffc(16, 12);
     TaskStop();
     TaskSetFrame(19);
@@ -777,7 +777,7 @@ void sub_0809829c(void)
         TaskYieldTrampoline(1);
     TaskStop();
     TaskSetFrame(29);
-    sub_080261d4(4);
+    RequestScreenShake(4);
     CreateChildTaskHere(141, 0);
     sub_0806cc90(0, 1, -4, 12);
     TaskYieldTrampoline(170);
@@ -905,7 +905,7 @@ miss:
 s32 sub_0809857c(void)
 {
     CreateChildTaskHere(142, 0);
-    sub_080261d4(2);
+    RequestScreenShake(2);
     return 0;
 }
 
@@ -996,7 +996,7 @@ void sub_08098718(void)
 
 void sub_08098728(void)
 {
-    sub_080261d4(1);
+    RequestScreenShake(1);
     sub_0806a25c();
 }
 

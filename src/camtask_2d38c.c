@@ -12,7 +12,7 @@
  * sub_080261c0 and M09's sub_08030f78; sub_0802d4bc and sub_0802d5f8
  * update one or three metatiles behind type-#236 effects;
  * sub_0802d6cc and sub_0802d96c/sub_0802da8c fade the room palettes
- * towards another room's (the table gUnk_087E1D58, BlendColors into the
+ * towards another room's (the table gRoomTable, BlendColors into the
  * palette buffer gBgPalette); sub_0802dcb4 and sub_0802e3ac pan the
  * camera four pixels a frame by the step counts of gUnk_08732428 /
  * gUnk_087324A6 (axis order, x steps, y steps) inside the room bounds,
@@ -26,7 +26,7 @@ struct BgMap
     /*0x06*/ u16 unk6[0];
 };
 
-/* The room header gUnk_030055EC points at (one entry of the gUnk_087E1D58
+/* The room header gCurRoomDef points at (one entry of the gRoomTable
    room table): unk18/unk28 are length-prefixed palettes, unk30 the BG map
    streamed into 0x06003000, unk40 the room's BG animation script set. */
 struct RoomDef
@@ -53,31 +53,31 @@ struct Unk0200A6F0
     /*0x08*/ u8 filler08[0x18];
 };
 
-extern u16 gUnk_030055C0;
+extern u16 gCameraMode;
 extern u8 gUnk_0200D080;
 extern u16 gUnk_02007D60;
 extern s8 gUnk_02007D64;
-extern struct RoomDef *gUnk_030055EC;
+extern struct RoomDef *gCurRoomDef;
 extern u16 gBgPalette[];
-extern struct RoomDef **gUnk_087E1D58[][8];
-extern s8 gUnk_030023EC;
-extern s8 gUnk_0300238C;
-extern s8 gUnk_03002468;
+extern struct RoomDef **gRoomTable[][8];
+extern s8 gStageIndex;
+extern s8 gLevelIndex;
+extern s8 gRoomIndex;
 extern u16 gUnk_02005E10[];
 extern s8 gUnk_02006098[];
 extern u8 gObjPalette[];
 extern u8 gUnk_087328BC[];
 extern u16 gUnk_0200001C;
 extern s8 gUnk_08732428[][3];
-extern s16 gUnk_03002398;
-extern s16 gUnk_03001F00;
-extern s16 gUnk_03005628[4];
+extern s16 gCameraAnchorX;
+extern s16 gCameraAnchorY;
+extern s16 gRoomBounds[4];
 extern s16 gUnk_0200AFE0[4];
 extern u16 gUnk_087323C6[][2];
 extern u8 gUnk_02007FC4;
 extern s8 gUnk_030023B8;
-extern s16 gUnk_03005620;
-extern u16 gUnk_02004CA0[];
+extern s16 gRoomWidth;
+extern u16 gBg1MetatileMap[];
 extern struct Unk0200A6F0 gUnk_0200A6F0[];
 extern u8 gUnk_0200AF08;
 extern s16 gUnk_020055D4;
@@ -98,9 +98,9 @@ s32 sub_0802621c(s32 type);
 s32 sub_08026584(void);
 s32 sub_08027750(void);
 void sub_08029b30(void);
-void sub_0802d01c(void);
+void CameraLeaveScrollLock(void);
 s32 sub_080301e8(s32 a, s32 x, s32 y);
-void sub_080307a4(void);
+void PauseBlockAnims(void);
 void sub_080307e8(void);
 s32 sub_08030f78(u32 x, u32 y);
 s32 sub_08032288(s32 x, s32 y);
@@ -118,7 +118,7 @@ void sub_0802d38c(void)
     t->unk0C = 0;
     if (t->unk24 != 0)
     {
-        while (gUnk_030055C0 != 3)
+        while (gCameraMode != 3)
             TaskYieldTrampoline(1);
         while (sub_08027750() == 0)
             TaskYieldTrampoline(1);
@@ -128,7 +128,7 @@ void sub_0802d38c(void)
         TaskYieldTrampoline(1);
     while (gUnk_0200D080 == 1);
     gUnk_02007D60 |= 0x8000;
-    sub_0802d01c();
+    CameraLeaveScrollLock();
     if (gCurTask->unk18 == 1)
     {
         if (gUnk_02007D64 == 4)
@@ -235,7 +235,7 @@ void sub_0802d6cc(void)
     t = gCurTask;
     t->unk00 = 0;
     t->unk0C = 0;
-    m = gUnk_030055EC;
+    m = gCurRoomDef;
     p18 = m->unk18;
     t->unk54 = *p18 >> 1;
     p28 = m->unk28;
@@ -243,8 +243,8 @@ void sub_0802d6cc(void)
     t->unk60 = (s32)((u8 *)(gBgPalette + 0x100) - *p28);
     t->unk28 = (s32)(p18 + 1);
     t->unk2C = (s32)(p28 + 1);
-    t->unk30 = (s32)(gUnk_087E1D58[gUnk_0300238C][gUnk_030023EC][gUnk_03002468 + 1]->unk18 + 1);
-    t->unk34 = (s32)(gUnk_087E1D58[gUnk_0300238C][gUnk_030023EC][gUnk_03002468 + 1]->unk28 + 1);
+    t->unk30 = (s32)(gRoomTable[gLevelIndex][gStageIndex][gRoomIndex + 1]->unk18 + 1);
+    t->unk34 = (s32)(gRoomTable[gLevelIndex][gStageIndex][gRoomIndex + 1]->unk28 + 1);
     t->unk6C = 0;
     do
     {
@@ -293,14 +293,14 @@ void sub_0802d96c(void)
     t = gCurTask;
     t->unk00 = 0;
     t->unk0C = 0;
-    m = gUnk_030055EC;
+    m = gCurRoomDef;
     t->unk64 = *m->unk18 >> 1;
     t->unk68 = *m->unk28 >> 1;
     t->unk60 = (s32)(gObjPalette - *m->unk28);
-    t->unk28 = (s32)(gUnk_087E1D58[gUnk_0300238C][gUnk_030023EC][gUnk_087328BC[gUnk_02006098[1]]]->unk18 + 1);
-    t->unk2C = (s32)(gUnk_087E1D58[gUnk_0300238C][gUnk_030023EC][gUnk_087328BC[gUnk_02006098[1]]]->unk28 + 1);
-    t->unk30 = (s32)(gUnk_087E1D58[gUnk_0300238C][gUnk_030023EC][gUnk_087328BC[gUnk_02006098[2]]]->unk18 + 1);
-    t->unk34 = (s32)(gUnk_087E1D58[gUnk_0300238C][gUnk_030023EC][gUnk_087328BC[gUnk_02006098[2]]]->unk28 + 1);
+    t->unk28 = (s32)(gRoomTable[gLevelIndex][gStageIndex][gUnk_087328BC[gUnk_02006098[1]]]->unk18 + 1);
+    t->unk2C = (s32)(gRoomTable[gLevelIndex][gStageIndex][gUnk_087328BC[gUnk_02006098[1]]]->unk28 + 1);
+    t->unk30 = (s32)(gRoomTable[gLevelIndex][gStageIndex][gUnk_087328BC[gUnk_02006098[2]]]->unk18 + 1);
+    t->unk34 = (s32)(gRoomTable[gLevelIndex][gStageIndex][gUnk_087328BC[gUnk_02006098[2]]]->unk28 + 1);
     t->unk04 = (u32)sub_0802da8c;
     if (gUnk_02006098[4] > 0)
         t->unk6C = 0;
@@ -339,8 +339,8 @@ void sub_0802da8c(void)
             ((struct Unk02006098Bits *)gUnk_02006098)->unk3 = -1;
             u->unk28 = u->unk30;
             u->unk2C = u->unk34;
-            u->unk30 = (s32)(gUnk_087E1D58[gUnk_0300238C][gUnk_030023EC][gUnk_087328BC[gUnk_02006098[2]]]->unk18 + 1);
-            u->unk34 = (s32)(gUnk_087E1D58[gUnk_0300238C][gUnk_030023EC][gUnk_087328BC[gUnk_02006098[2]]]->unk28 + 1);
+            u->unk30 = (s32)(gRoomTable[gLevelIndex][gStageIndex][gUnk_087328BC[gUnk_02006098[2]]]->unk18 + 1);
+            u->unk34 = (s32)(gRoomTable[gLevelIndex][gStageIndex][gUnk_087328BC[gUnk_02006098[2]]]->unk28 + 1);
             u->unk6C = 0;
             gUnk_02006098[0] = gUnk_02006098[1] | 0x80;
         }
@@ -359,8 +359,8 @@ void sub_0802da8c(void)
             ((struct Unk02006098Bits *)gUnk_02006098)->unk3 = -1;
             v->unk30 = v->unk28;
             v->unk34 = v->unk2C;
-            v->unk28 = (s32)(gUnk_087E1D58[gUnk_0300238C][gUnk_030023EC][gUnk_087328BC[gUnk_02006098[1]]]->unk18 + 1);
-            v->unk2C = (s32)(gUnk_087E1D58[gUnk_0300238C][gUnk_030023EC][gUnk_087328BC[gUnk_02006098[1]]]->unk28 + 1);
+            v->unk28 = (s32)(gRoomTable[gLevelIndex][gStageIndex][gUnk_087328BC[gUnk_02006098[1]]]->unk18 + 1);
+            v->unk2C = (s32)(gRoomTable[gLevelIndex][gStageIndex][gUnk_087328BC[gUnk_02006098[1]]]->unk28 + 1);
             v->unk6C = 0x100;
             gUnk_02006098[0] = gUnk_02006098[2] | 0x80;
         }
@@ -395,7 +395,7 @@ void sub_0802dcb4(void)
     t1 = gCurTask;
     t1->unk00 = 0;
     t1->unk0C = 0;
-    t1->unk1C = gUnk_030023EC * 6 + gUnk_0200001C - 1;
+    t1->unk1C = gStageIndex * 6 + gUnk_0200001C - 1;
     t1->unk54 = t1->unk28 = gUnk_08732428[t1->unk1C][1];
     if (t1->unk28 > 0)
         t1->unk2C = 4;
@@ -414,24 +414,24 @@ void sub_0802dcb4(void)
         t2->unk34 = -4;
     }
     t3 = gCurTask;
-    t3->unk48 = gUnk_03002398;
-    t3->unk4A = gUnk_03001F00;
+    t3->unk48 = gCameraAnchorX;
+    t3->unk4A = gCameraAnchorY;
     if (gUnk_08732428[t3->unk1C][0] == 0)
     {
         for (t3->unk6C = 0; (s16)gCurTask->unk6C < gCurTask->unk28; gCurTask->unk6C++)
         {
             t4 = gCurTask;
-            if ((t4->unk54 > 0 && gUnk_03002398 >= gUnk_03005628[1]) || (t4->unk54 < 0 && gUnk_03002398 <= gUnk_03005628[0]))
+            if ((t4->unk54 > 0 && gCameraAnchorX >= gRoomBounds[1]) || (t4->unk54 < 0 && gCameraAnchorX <= gRoomBounds[0]))
                 break;
-            gUnk_03002398 += t4->unk2C;
+            gCameraAnchorX += t4->unk2C;
             TaskYieldTrampoline(1);
         }
         for (gCurTask->unk6C = 0; (s16)gCurTask->unk6C < gCurTask->unk30; gCurTask->unk6C++)
         {
             t5 = gCurTask;
-            if ((t5->unk58 > 0 && gUnk_03001F00 >= gUnk_03005628[3]) || (t5->unk58 < 0 && gUnk_03001F00 <= gUnk_03005628[2]))
+            if ((t5->unk58 > 0 && gCameraAnchorY >= gRoomBounds[3]) || (t5->unk58 < 0 && gCameraAnchorY <= gRoomBounds[2]))
                 break;
-            gUnk_03001F00 += t5->unk34;
+            gCameraAnchorY += t5->unk34;
             TaskYieldTrampoline(1);
         }
     }
@@ -440,17 +440,17 @@ void sub_0802dcb4(void)
         for (t3->unk6C = 0; (s16)gCurTask->unk6C < gCurTask->unk30; gCurTask->unk6C++)
         {
             t6 = gCurTask;
-            if ((t6->unk54 > 0 && gUnk_03002398 == gUnk_03005628[1]) || (t6->unk54 < 0 && gUnk_03002398 == gUnk_03005628[0]))
+            if ((t6->unk54 > 0 && gCameraAnchorX == gRoomBounds[1]) || (t6->unk54 < 0 && gCameraAnchorX == gRoomBounds[0]))
                 break;
-            gUnk_03001F00 += t6->unk34;
+            gCameraAnchorY += t6->unk34;
             TaskYieldTrampoline(1);
         }
         for (gCurTask->unk6C = 0; (s16)gCurTask->unk6C < gCurTask->unk28; gCurTask->unk6C++)
         {
             t7 = gCurTask;
-            if ((t7->unk58 > 0 && gUnk_03001F00 == gUnk_03005628[3]) || (t7->unk58 < 0 && gUnk_03001F00 == gUnk_03005628[2]))
+            if ((t7->unk58 > 0 && gCameraAnchorY == gRoomBounds[3]) || (t7->unk58 < 0 && gCameraAnchorY == gRoomBounds[2]))
                 break;
-            gUnk_03002398 += t7->unk2C;
+            gCameraAnchorX += t7->unk2C;
             TaskYieldTrampoline(1);
         }
     }
@@ -469,13 +469,13 @@ void sub_0802dcb4(void)
         {
             t8->unk4C = gUnk_087323C6[gUnk_030023B8][0];
             t8->unk50 = gUnk_087323C6[gUnk_030023B8][1];
-            t8->unk5C = gUnk_03005620 * t8->unk50 + t8->unk4C;
+            t8->unk5C = gRoomWidth * t8->unk50 + t8->unk4C;
             for (t8->unk6C = 0; (s16)gCurTask->unk6C <= 1; gCurTask->unk6C++)
             {
                 for (gCurTask->unk6E = 0; gCurTask->unk6E <= 1; gCurTask->unk6E++)
                 {
                     t9 = gCurTask;
-                    if (gUnk_02004CA0[t9->unk5C + (s16)t9->unk6C + gUnk_03005620 * t9->unk6E] != 0)
+                    if (gBg1MetatileMap[t9->unk5C + (s16)t9->unk6C + gRoomWidth * t9->unk6E] != 0)
                         goto skip;
                 }
             }
@@ -497,7 +497,7 @@ void sub_0802dcb4(void)
             break;
         TaskYieldTrampoline(1);
     }
-    sub_080307a4();
+    PauseBlockAnims();
     RequestCopy(6, 0, 0x06001800, 0x800);
     if (gCurTask->unk24 != 0 && gUnk_02007FC4 == 0)
         gUnk_02007FC4++;
@@ -506,42 +506,42 @@ void sub_0802dcb4(void)
     gUnk_0200AF08 = 0;
     if (gUnk_08732428[gCurTask->unk1C][0] == 0)
     {
-        for (gCurTask->unk6C = 0; (s16)gCurTask->unk6C < gCurTask->unk28 && gUnk_03002398 != gCurTask->unk48; gCurTask->unk6C++)
+        for (gCurTask->unk6C = 0; (s16)gCurTask->unk6C < gCurTask->unk28 && gCameraAnchorX != gCurTask->unk48; gCurTask->unk6C++)
         {
             t11 = gCurTask;
-            gUnk_03002398 -= t11->unk2C;
+            gCameraAnchorX -= t11->unk2C;
             d1 = t11->unk54;
-            if ((d1 > 0 && gUnk_03002398 < t11->unk48) || (d1 < 0 && gUnk_03002398 > t11->unk48))
-                gUnk_03002398 = gCurTask->unk48;
+            if ((d1 > 0 && gCameraAnchorX < t11->unk48) || (d1 < 0 && gCameraAnchorX > t11->unk48))
+                gCameraAnchorX = gCurTask->unk48;
             TaskYieldTrampoline(1);
         }
-        for (gCurTask->unk6C = 0; (s16)gCurTask->unk6C < gCurTask->unk30 && gUnk_03002398 != gCurTask->unk4A; gCurTask->unk6C++)
+        for (gCurTask->unk6C = 0; (s16)gCurTask->unk6C < gCurTask->unk30 && gCameraAnchorX != gCurTask->unk4A; gCurTask->unk6C++)
         {
             t12 = gCurTask;
-            gUnk_03001F00 -= t12->unk34;
+            gCameraAnchorY -= t12->unk34;
             d2 = t12->unk58;
-            if ((d2 > 0 && gUnk_03001F00 < t12->unk4A) || (d2 < 0 && gUnk_03001F00 > t12->unk4A))
-                gUnk_03001F00 = gCurTask->unk4A;
+            if ((d2 > 0 && gCameraAnchorY < t12->unk4A) || (d2 < 0 && gCameraAnchorY > t12->unk4A))
+                gCameraAnchorY = gCurTask->unk4A;
             TaskYieldTrampoline(1);
         }
     }
     else
     {
-        for (gCurTask->unk6C = 0; (s16)gCurTask->unk6C < gCurTask->unk30 && gUnk_03002398 != gCurTask->unk4A; gCurTask->unk6C++)
+        for (gCurTask->unk6C = 0; (s16)gCurTask->unk6C < gCurTask->unk30 && gCameraAnchorX != gCurTask->unk4A; gCurTask->unk6C++)
         {
-            gUnk_03001F00 -= gCurTask->unk34;
+            gCameraAnchorY -= gCurTask->unk34;
             d3 = gCurTask->unk58;
-            if ((d3 > 0 && gUnk_03001F00 < gCurTask->unk4A) || (d3 < 0 && gUnk_03001F00 > gCurTask->unk4A))
-                gUnk_03001F00 = gCurTask->unk4A;
+            if ((d3 > 0 && gCameraAnchorY < gCurTask->unk4A) || (d3 < 0 && gCameraAnchorY > gCurTask->unk4A))
+                gCameraAnchorY = gCurTask->unk4A;
             TaskYieldTrampoline(1);
         }
-        for (gCurTask->unk6C = 0; (s16)gCurTask->unk6C < gCurTask->unk28 && gUnk_03002398 != gCurTask->unk48; gCurTask->unk6C++)
+        for (gCurTask->unk6C = 0; (s16)gCurTask->unk6C < gCurTask->unk28 && gCameraAnchorX != gCurTask->unk48; gCurTask->unk6C++)
         {
             t13 = gCurTask;
-            gUnk_03002398 -= t13->unk2C;
+            gCameraAnchorX -= t13->unk2C;
             d4 = t13->unk54;
-            if ((d4 > 0 && gUnk_03002398 < t13->unk48) || (d4 < 0 && gUnk_03002398 > t13->unk48))
-                gUnk_03002398 = gCurTask->unk48;
+            if ((d4 > 0 && gCameraAnchorX < t13->unk48) || (d4 < 0 && gCameraAnchorX > t13->unk48))
+                gCameraAnchorX = gCurTask->unk48;
             TaskYieldTrampoline(1);
         }
     }
@@ -596,8 +596,8 @@ void sub_0802e3ac(void)
         t2->unk34 = -4;
     }
     t3 = gCurTask;
-    t3->unk48 = gUnk_03002398;
-    t3->unk4A = gUnk_03001F00;
+    t3->unk48 = gCameraAnchorX;
+    t3->unk4A = gCameraAnchorY;
     while (gBrightness != 0)
         TaskYieldTrampoline(1);
     TaskYieldTrampoline(20);
@@ -606,17 +606,17 @@ void sub_0802e3ac(void)
         for (gCurTask->unk6C = 0; (s16)gCurTask->unk6C < gCurTask->unk28; gCurTask->unk6C++)
         {
             t4 = gCurTask;
-            if ((t4->unk54 > 0 && gUnk_03002398 >= gUnk_03005628[1]) || (t4->unk54 < 0 && gUnk_03002398 <= gUnk_03005628[0]))
+            if ((t4->unk54 > 0 && gCameraAnchorX >= gRoomBounds[1]) || (t4->unk54 < 0 && gCameraAnchorX <= gRoomBounds[0]))
                 break;
-            gUnk_03002398 += t4->unk2C;
+            gCameraAnchorX += t4->unk2C;
             TaskYieldTrampoline(1);
         }
         for (gCurTask->unk6C = 0; (s16)gCurTask->unk6C < gCurTask->unk30; gCurTask->unk6C++)
         {
             t5 = gCurTask;
-            if ((t5->unk58 > 0 && gUnk_03001F00 >= gUnk_03005628[3]) || (t5->unk58 < 0 && gUnk_03001F00 <= gUnk_03005628[2]))
+            if ((t5->unk58 > 0 && gCameraAnchorY >= gRoomBounds[3]) || (t5->unk58 < 0 && gCameraAnchorY <= gRoomBounds[2]))
                 break;
-            gUnk_03001F00 += t5->unk34;
+            gCameraAnchorY += t5->unk34;
             TaskYieldTrampoline(1);
         }
     }
@@ -625,17 +625,17 @@ void sub_0802e3ac(void)
         for (gCurTask->unk6C = 0; (s16)gCurTask->unk6C < gCurTask->unk30; gCurTask->unk6C++)
         {
             t6 = gCurTask;
-            if ((t6->unk58 > 0 && gUnk_03001F00 >= gUnk_03005628[3]) || (t6->unk58 < 0 && gUnk_03001F00 <= gUnk_03005628[2]))
+            if ((t6->unk58 > 0 && gCameraAnchorY >= gRoomBounds[3]) || (t6->unk58 < 0 && gCameraAnchorY <= gRoomBounds[2]))
                 break;
-            gUnk_03001F00 += t6->unk34;
+            gCameraAnchorY += t6->unk34;
             TaskYieldTrampoline(1);
         }
         for (gCurTask->unk6C = 0; (s16)gCurTask->unk6C < gCurTask->unk28; gCurTask->unk6C++)
         {
             t7 = gCurTask;
-            if ((t7->unk54 > 0 && gUnk_03002398 >= gUnk_03005628[1]) || (t7->unk54 < 0 && gUnk_03002398 <= gUnk_03005628[0]))
+            if ((t7->unk54 > 0 && gCameraAnchorX >= gRoomBounds[1]) || (t7->unk54 < 0 && gCameraAnchorX <= gRoomBounds[0]))
                 break;
-            gUnk_03002398 += t7->unk2C;
+            gCameraAnchorX += t7->unk2C;
             TaskYieldTrampoline(1);
         }
     }
@@ -654,13 +654,13 @@ void sub_0802e3ac(void)
         {
             t8->unk4C = gUnk_087323C6[gUnk_030023B8][0];
             t8->unk50 = gUnk_087323C6[gUnk_030023B8][1];
-            t8->unk5C = gUnk_03005620 * t8->unk50 + t8->unk4C;
+            t8->unk5C = gRoomWidth * t8->unk50 + t8->unk4C;
             for (t8->unk6C = 0; (s16)gCurTask->unk6C <= 1; gCurTask->unk6C++)
             {
                 for (gCurTask->unk6E = 0; gCurTask->unk6E <= 1; gCurTask->unk6E++)
                 {
                     t9 = gCurTask;
-                    if (gUnk_02004CA0[t9->unk5C + (s16)t9->unk6C + gUnk_03005620 * t9->unk6E] != 0)
+                    if (gBg1MetatileMap[t9->unk5C + (s16)t9->unk6C + gRoomWidth * t9->unk6E] != 0)
                         goto skip;
                 }
             }
@@ -682,7 +682,7 @@ void sub_0802e3ac(void)
             break;
         TaskYieldTrampoline(1);
     }
-    sub_080307a4();
+    PauseBlockAnims();
     RequestCopy(6, 0, 0x06001800, 0x800);
     if (gCurTask->unk24 != 0 && gUnk_02007FC4 == 0)
         gUnk_02007FC4++;
@@ -690,43 +690,43 @@ void sub_0802e3ac(void)
     gUnk_0200AF08 = 0;
     if (gUnk_087324A6[gCurTask->unk1C][0] == 0)
     {
-        for (gCurTask->unk6C = 0; (s16)gCurTask->unk6C < gCurTask->unk28 && gUnk_03002398 != gCurTask->unk48; gCurTask->unk6C++)
+        for (gCurTask->unk6C = 0; (s16)gCurTask->unk6C < gCurTask->unk28 && gCameraAnchorX != gCurTask->unk48; gCurTask->unk6C++)
         {
             t13 = gCurTask;
-            gUnk_03002398 -= t13->unk2C;
+            gCameraAnchorX -= t13->unk2C;
             d1 = t13->unk54;
-            if ((d1 > 0 && gUnk_03002398 < t13->unk48) || (d1 < 0 && gUnk_03002398 > t13->unk48))
-                gUnk_03002398 = gCurTask->unk48;
+            if ((d1 > 0 && gCameraAnchorX < t13->unk48) || (d1 < 0 && gCameraAnchorX > t13->unk48))
+                gCameraAnchorX = gCurTask->unk48;
             TaskYieldTrampoline(1);
         }
-        for (gCurTask->unk6C = 0; (s16)gCurTask->unk6C < gCurTask->unk30 && gUnk_03002398 != gCurTask->unk4A; gCurTask->unk6C++)
+        for (gCurTask->unk6C = 0; (s16)gCurTask->unk6C < gCurTask->unk30 && gCameraAnchorX != gCurTask->unk4A; gCurTask->unk6C++)
         {
             t14 = gCurTask;
-            gUnk_03001F00 -= t14->unk34;
+            gCameraAnchorY -= t14->unk34;
             d2 = t14->unk58;
-            if ((d2 > 0 && gUnk_03001F00 < t14->unk4A) || (d2 < 0 && gUnk_03001F00 > t14->unk4A))
-                gUnk_03001F00 = gCurTask->unk4A;
+            if ((d2 > 0 && gCameraAnchorY < t14->unk4A) || (d2 < 0 && gCameraAnchorY > t14->unk4A))
+                gCameraAnchorY = gCurTask->unk4A;
             TaskYieldTrampoline(1);
         }
     }
     else
     {
-        for (gCurTask->unk6C = 0; (s16)gCurTask->unk6C < gCurTask->unk30 && gUnk_03002398 != gCurTask->unk4A; gCurTask->unk6C++)
+        for (gCurTask->unk6C = 0; (s16)gCurTask->unk6C < gCurTask->unk30 && gCameraAnchorX != gCurTask->unk4A; gCurTask->unk6C++)
         {
             t15 = gCurTask;
-            gUnk_03001F00 -= t15->unk34;
+            gCameraAnchorY -= t15->unk34;
             d3 = t15->unk58;
-            if ((d3 > 0 && gUnk_03001F00 < t15->unk4A) || (d3 < 0 && gUnk_03001F00 > t15->unk4A))
-                gUnk_03001F00 = gCurTask->unk4A;
+            if ((d3 > 0 && gCameraAnchorY < t15->unk4A) || (d3 < 0 && gCameraAnchorY > t15->unk4A))
+                gCameraAnchorY = gCurTask->unk4A;
             TaskYieldTrampoline(1);
         }
-        for (gCurTask->unk6C = 0; (s16)gCurTask->unk6C < gCurTask->unk28 && gUnk_03002398 != gCurTask->unk48; gCurTask->unk6C++)
+        for (gCurTask->unk6C = 0; (s16)gCurTask->unk6C < gCurTask->unk28 && gCameraAnchorX != gCurTask->unk48; gCurTask->unk6C++)
         {
             t16 = gCurTask;
-            gUnk_03002398 -= t16->unk2C;
+            gCameraAnchorX -= t16->unk2C;
             d4 = t16->unk54;
-            if ((d4 > 0 && gUnk_03002398 < t16->unk48) || (d4 < 0 && gUnk_03002398 > t16->unk48))
-                gUnk_03002398 = gCurTask->unk48;
+            if ((d4 > 0 && gCameraAnchorX < t16->unk48) || (d4 < 0 && gCameraAnchorX > t16->unk48))
+                gCameraAnchorX = gCurTask->unk48;
             TaskYieldTrampoline(1);
         }
     }

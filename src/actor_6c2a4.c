@@ -57,7 +57,7 @@ extern s32 QueueSprite(u32 a, u32 b, u32 c, u32 d, s32 e, s32 f);
 extern u32 IsWorldPosOnScreen(s16 x, s16 y);
 extern u32 gUnk_0874CC84[];
 extern void PlaySfx(u32 a);
-extern void sub_080261d4(u32 a);
+extern void RequestScreenShake(u32 a);
 extern void TaskBreakBlocks(void *p, s16 v);
 extern void ActorCollideTerrain(void);
 extern void TaskSetMotionY(s32 a, s32 b, s32 c);
@@ -291,7 +291,7 @@ void sub_0806c5d4(void)
         if (gTerrainResult[4] != 0)
             gCurTask->unk30 = 2;
         PlaySfx(237);
-        sub_080261d4(2);
+        RequestScreenShake(2);
         gCurTask->unk08 = 0;
         ActorSetState(7);
         TaskSetEntry(sub_0806bf38, gCurTaskIdx);

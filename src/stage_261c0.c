@@ -4,16 +4,16 @@
 
 /* stage_261c0.c (0x080261C0-0x08026B5F, issue #93).
  *
- * Stage helpers the rest of the game calls.  sub_080261d4 starts a screen
- * shake (gUnk_03005670, levels 1-4 only upgrade), sub_0802621c spawns a task
- * in one of the free high slots 32-62, sub_08026264/sub_08026278 place the
+ * Stage helpers the rest of the game calls.  RequestScreenShake starts a screen
+ * shake (gScreenShake, levels 1-4 only upgrade), sub_0802621c spawns a task
+ * in one of the free high slots 32-62, SetCameraFocus/sub_08026278 place the
  * player or the camera target, sub_080262e8 spawns a map event at a
  * tabled position, sub_08026308 wraps every camera, object and task
  * coordinate back by 0x200 pixels in a looping room, sub_08026900 clamps
  * the player to the room bounds and sub_0802695c starts the next stage.
  * sub_080264b0, sub_0802651c, sub_0802653c, sub_08026584 and sub_08026704
  * spawn and adjust the M08 stage objects of the door the player entered by
- * (gUnk_0200B034, its slots in gUnk_02006A20); sub_0802672c/sub_08026834
+ * (gUnk_0200B034, its slots in gDoorObjectTasks); sub_0802672c/sub_08026834
  * spawn a map-event task and put the camera on the player or a partner.
  * sub_08026a0c, sub_08026a80 and sub_08026aec arm the scroll lock of one
  * room each.  sub_08026994 is an empty dead export. */
@@ -106,42 +106,42 @@ struct Unk03005680
     /*0x0C*/ u16 unkC;
 };
 
-extern struct Unk03005670 gUnk_03005670;
+extern struct Unk03005670 gScreenShake;
 extern vs16 gTaskSlotTypes[];
-extern s16 gUnk_030023CC;
-extern s16 gUnk_03002388;
+extern s16 gCameraFocusX;
+extern s16 gCameraFocusY;
 extern s8 gUnk_03002444;
-extern u16 gUnk_030055C0;
-extern s16 gUnk_03002398;
-extern s16 gUnk_03001F00;
+extern u16 gCameraMode;
+extern s16 gCameraAnchorX;
+extern s16 gCameraAnchorY;
 extern u8 gUnk_0200D080;
 extern u16 gUnk_08732638[][2];
-extern u16 gUnk_0300566C[2];
-extern u16 gUnk_03005604[2];
-extern s32 gUnk_03005614;
-extern u16 gUnk_03005690[2];
-extern u16 gUnk_03005668[2];
+extern u16 gCameraStreamPos[2];
+extern u16 gCameraPos[2];
+extern s32 gCameraCenterX;
+extern u16 gBg3Pos[2];
+extern u16 gBg3StreamPos[2];
 extern s16 gViewRect[4];
-extern s16 gUnk_030055F8[4];
+extern s16 gCameraBounds[4];
 extern s16 gUnk_020055B8[4];
 extern u16 gPlayerCount;
-extern struct CamRect gUnk_03005640[4];
+extern struct CamRect gPlayerBounds[4];
 extern s16 gSpriteCameraX;
 extern u16 gUnk_02007FA0;
 extern struct Unk020061F0 gBreakingBlocks[];
-extern s16 gUnk_03005620;
-extern struct RoomDef *gUnk_030055EC;
-extern s8 gUnk_02006A20[][3];
+extern s16 gRoomWidth;
+extern struct RoomDef *gCurRoomDef;
+extern s8 gDoorObjectTasks[][3];
 extern s8 gUnk_0200B034;
 extern u8 gUnk_0200AF00;
 extern u8 gUnk_03002400[8][7];
-extern s8 gUnk_030023EC;
+extern s8 gStageIndex;
 extern u8 gUnk_0200AF08;
-extern s16 gUnk_03005628[4];
+extern s16 gRoomBounds[4];
 extern u8 gUnk_020055E8;
 extern u8 gUnk_02007D38;
-extern s16 gUnk_020055E0;
-extern s16 gUnk_0200AEF0;
+extern s16 gRoomEntryX;
+extern s16 gRoomEntryY;
 extern s8 gUnk_030023E0;
 extern s8 gUnk_030023B8;
 extern s8 gUnk_03002384;
@@ -151,13 +151,13 @@ extern u8 gUnk_03001F30;
 extern s32 gCurSaveSlot;
 extern u8 gUnk_02005578;
 extern s8 gUnk_02007FF8;
-extern struct Unk03005680 gUnk_03005680;
+extern struct Unk03005680 gScrollLock;
 
 void PlaySfx(s32 id);
 s32 TaskCreateFrom(u32 type, s32 idx);
 void TaskSetEntry(void *a, u32 i);
-void sub_08029930(void);
-void sub_0802cda0(s32 x0, s32 x1, s32 y0, s32 y1);
+void CameraWriteScrollParallax(void);
+void StartScrollLock(s32 x0, s32 x1, s32 y0, s32 y1);
 void sub_0802d074(void);
 s32 sub_0802d344(s32 type);
 s32 sub_0802d478(s32 x, s32 y);
@@ -178,23 +178,23 @@ s32 sub_080261c0(s32 x, s32 y)
     return sub_080301e8(0, x, y);
 }
 
-void sub_080261d4(u16 a)
+void RequestScreenShake(u16 a)
 {
     if (a > 7)
         return;
     if (a == 0)
     {
-        gUnk_03005670.unk0 = 0;
-        gUnk_03005670.unk2 = 0;
-        gUnk_03005670.unk4 = 0;
-        gUnk_03005670.unk6 = 0;
+        gScreenShake.unk0 = 0;
+        gScreenShake.unk2 = 0;
+        gScreenShake.unk4 = 0;
+        gScreenShake.unk6 = 0;
     }
-    else if (gUnk_03005670.unk0 == 0 || gUnk_03005670.unk0 > 4 || gUnk_03005670.unk0 <= a)
+    else if (gScreenShake.unk0 == 0 || gScreenShake.unk0 > 4 || gScreenShake.unk0 <= a)
     {
-        gUnk_03005670.unk0 = a;
-        gUnk_03005670.unk2 = 0;
-        gUnk_03005670.unk4 = 0;
-        gUnk_03005670.unk6 = 0;
+        gScreenShake.unk0 = a;
+        gScreenShake.unk2 = 0;
+        gScreenShake.unk4 = 0;
+        gScreenShake.unk6 = 0;
     }
 }
 
@@ -211,31 +211,31 @@ s32 sub_0802621c(s32 type)
     return TaskCreateFrom(type, i);
 }
 
-void sub_08026264(s32 x, s32 y)
+void SetCameraFocus(s32 x, s32 y)
 {
-    gUnk_030023CC = x;
-    gUnk_03002388 = y;
+    gCameraFocusX = x;
+    gCameraFocusY = y;
 }
 
 void sub_08026278(s32 x, s32 y)
 {
     if (gUnk_03002444 != 0)
     {
-        if (gUnk_030055C0 != 2 && gUnk_030055C0 != 4)
+        if (gCameraMode != 2 && gCameraMode != 4)
         {
-            gUnk_030023CC = x;
-            gUnk_03002388 = y;
+            gCameraFocusX = x;
+            gCameraFocusY = y;
             return;
         }
     }
-    else if (gUnk_030055C0 != 5)
+    else if (gCameraMode != 5)
     {
-        gUnk_030023CC = x;
-        gUnk_03002388 = y;
+        gCameraFocusX = x;
+        gCameraFocusY = y;
         return;
     }
-    gUnk_03002398 = x;
-    gUnk_03001F00 = y;
+    gCameraAnchorX = x;
+    gCameraAnchorY = y;
 }
 
 void sub_080262dc(void)
@@ -252,27 +252,27 @@ void sub_08026308(void)
 {
     s32 i;
 
-    if (gUnk_0300566C[0] > 0x2FF && gUnk_03005604[0] > 0x300)
+    if (gCameraStreamPos[0] > 0x2FF && gCameraPos[0] > 0x300)
     {
-        gUnk_03005614 &= 0x1FFFFFF;
-        gUnk_03005604[0] &= 0x1FF;
-        gUnk_0300566C[0] &= 0x1FF;
-        gUnk_03005690[0] &= 0x1FF;
-        gUnk_03005668[0] &= 0x1FF;
-        sub_08029930();
+        gCameraCenterX &= 0x1FFFFFF;
+        gCameraPos[0] &= 0x1FF;
+        gCameraStreamPos[0] &= 0x1FF;
+        gBg3Pos[0] &= 0x1FF;
+        gBg3StreamPos[0] &= 0x1FF;
+        CameraWriteScrollParallax();
         gViewRect[0] &= 0x1FF;
         gViewRect[1] &= 0x1FF;
-        gUnk_030055F8[0] &= 0x1FF;
-        gUnk_030055F8[1] &= 0x1FF;
+        gCameraBounds[0] &= 0x1FF;
+        gCameraBounds[1] &= 0x1FF;
         gUnk_020055B8[0] &= 0x1FF;
         gUnk_020055B8[1] &= 0x1FF;
         for (i = 0; i < gPlayerCount; i++)
         {
-            gUnk_03005640[i].x0 &= 0x1FF;
-            gUnk_03005640[i].x1 &= 0x1FF;
+            gPlayerBounds[i].x0 &= 0x1FF;
+            gPlayerBounds[i].x1 &= 0x1FF;
         }
-        gUnk_030023CC &= 0x1FF;
-        gUnk_03002398 &= 0x1FF;
+        gCameraFocusX &= 0x1FF;
+        gCameraAnchorX &= 0x1FF;
         gSpriteCameraX &= 0x1FF;
         gUnk_02007FA0 &= 31;
         for (i = 0; i < 64; i++)
@@ -280,7 +280,7 @@ void sub_08026308(void)
             if (gBreakingBlocks[i].unk6 != 0xFFFF)
             {
                 gBreakingBlocks[i].unk0 &= 31;
-                gBreakingBlocks[i].unk4 = gBreakingBlocks[i].unk0 + gBreakingBlocks[i].unk2 * gUnk_03005620;
+                gBreakingBlocks[i].unk4 = gBreakingBlocks[i].unk0 + gBreakingBlocks[i].unk2 * gRoomWidth;
             }
         }
         for (i = 0; i < 64; i++)
@@ -299,10 +299,10 @@ s32 sub_080264b0(void)
     s32 r = -1;
     struct Door *d;
 
-    if (gUnk_02006A20[gUnk_0200B034][0] != -1 && gUnk_0200B034 != -1)
+    if (gDoorObjectTasks[gUnk_0200B034][0] != -1 && gUnk_0200B034 != -1)
     {
-        d = &gUnk_030055EC->unk44[gUnk_0200B034];
-        r = sub_0802ed94((d->unk2 << 4) + 16, (d->unk4 << 4) + 8, gTasks[gUnk_02006A20[gUnk_0200B034][0]].unk20);
+        d = &gCurRoomDef->unk44[gUnk_0200B034];
+        r = sub_0802ed94((d->unk2 << 4) + 16, (d->unk4 << 4) + 8, gTasks[gDoorObjectTasks[gUnk_0200B034][0]].unk20);
     }
     return r;
 }
@@ -320,7 +320,7 @@ s32 sub_0802653c(void)
 
     if (gUnk_0200B034 != -1)
     {
-        d = &gUnk_030055EC->unk44[gUnk_0200B034];
+        d = &gCurRoomDef->unk44[gUnk_0200B034];
         r = sub_0802ef90((d->unk2 << 4) + 16, (d->unk4 << 4) + 8, 3, 0x2000);
     }
     return r;
@@ -338,42 +338,42 @@ s32 sub_08026584(void)
         break;
     case 1:
     case 3:
-        if (gUnk_02006A20[gUnk_0200B034][0] == -1 || gUnk_0200B034 == -1)
+        if (gDoorObjectTasks[gUnk_0200B034][0] == -1 || gUnk_0200B034 == -1)
             break;
-        doors = gUnk_030055EC->unk44;
+        doors = gCurRoomDef->unk44;
         d = (struct Door *)(gUnk_0200B034 * sizeof(struct Door) + (u32)doors);
-        switch (gUnk_03002400[gUnk_030023EC][d->unk8])
+        switch (gUnk_03002400[gStageIndex][d->unk8])
         {
         case 0:
             break;
         case 1:
-            TaskSetEntry(sub_0802f6c0, gUnk_02006A20[gUnk_0200B034][0]);
+            TaskSetEntry(sub_0802f6c0, gDoorObjectTasks[gUnk_0200B034][0]);
             break;
         case 2:
             sub_080301e8(4, (d->unk2 << 4) + 16, (d->unk4 << 4) + 8);
             n = 1;
-            TaskSetEntry(sub_0802f6f4, gUnk_02006A20[gUnk_0200B034][0]);
+            TaskSetEntry(sub_0802f6f4, gDoorObjectTasks[gUnk_0200B034][0]);
             break;
         }
         break;
     case 2:
-        if (gUnk_02006A20[gUnk_0200B034][0] == -1 || gUnk_0200B034 == -1)
+        if (gDoorObjectTasks[gUnk_0200B034][0] == -1 || gUnk_0200B034 == -1)
             break;
-        switch (*(u8 *)&gUnk_030055EC->unk44[gUnk_0200B034].unk6)
+        switch (*(u8 *)&gCurRoomDef->unk44[gUnk_0200B034].unk6)
         {
         case 3:
-            TaskSetEntry(sub_0802f2fc, gUnk_02006A20[gUnk_0200B034][0]);
+            TaskSetEntry(sub_0802f2fc, gDoorObjectTasks[gUnk_0200B034][0]);
             break;
         case 4:
-            TaskSetEntry(sub_0802f400, gUnk_02006A20[gUnk_0200B034][0]);
+            TaskSetEntry(sub_0802f400, gDoorObjectTasks[gUnk_0200B034][0]);
             break;
         case 5:
-            TaskSetEntry(sub_0802f1dc, gUnk_02006A20[gUnk_0200B034][0]);
+            TaskSetEntry(sub_0802f1dc, gDoorObjectTasks[gUnk_0200B034][0]);
             break;
         default:
             return;
         }
-        sub_080301e8(4, (gUnk_030055EC->unk44[gUnk_0200B034].unk2 << 4) + 16, (gUnk_030055EC->unk44[gUnk_0200B034].unk4 << 4) + 8);
+        sub_080301e8(4, (gCurRoomDef->unk44[gUnk_0200B034].unk2 << 4) + 16, (gCurRoomDef->unk44[gUnk_0200B034].unk4 << 4) + 8);
         n++;
         PlaySfx(0x11B);
         break;
@@ -409,22 +409,22 @@ s32 sub_0802672c(void)
             t->unk24 = 0;
         if (gPlayerCount == 1)
         {
-            gUnk_03002398 = gUnk_030023CC;
-            gUnk_03001F00 = gUnk_03002388;
+            gCameraAnchorX = gCameraFocusX;
+            gCameraAnchorY = gCameraFocusY;
         }
         else
         {
-            gUnk_03002398 = gTasks[gUnk_02007D38].unk48;
-            gUnk_03001F00 = gTasks[gUnk_02007D38].unk4A;
+            gCameraAnchorX = gTasks[gUnk_02007D38].unk48;
+            gCameraAnchorY = gTasks[gUnk_02007D38].unk4A;
         }
-        if (gUnk_03002398 < gUnk_03005628[0])
-            gUnk_03002398 = gUnk_03005628[0];
-        if (gUnk_03002398 > gUnk_03005628[1])
-            gUnk_03002398 = gUnk_03005628[1];
-        if (gUnk_03001F00 < gUnk_03005628[2])
-            gUnk_03001F00 = gUnk_03005628[2];
-        if (gUnk_03001F00 > gUnk_03005628[3])
-            gUnk_03001F00 = gUnk_03005628[3];
+        if (gCameraAnchorX < gRoomBounds[0])
+            gCameraAnchorX = gRoomBounds[0];
+        if (gCameraAnchorX > gRoomBounds[1])
+            gCameraAnchorX = gRoomBounds[1];
+        if (gCameraAnchorY < gRoomBounds[2])
+            gCameraAnchorY = gRoomBounds[2];
+        if (gCameraAnchorY > gRoomBounds[3])
+            gCameraAnchorY = gRoomBounds[3];
         sub_0802d074();
         gUnk_020055E8 = 0;
     }
@@ -445,16 +445,16 @@ s32 sub_08026834(void)
             t->unk24 = 1;
         else
             t->unk24 = 0;
-        gUnk_03002398 = gUnk_030023CC = gUnk_020055E0;
-        gUnk_03001F00 = gUnk_03002388 = gUnk_0200AEF0;
-        if (gUnk_03002398 < gUnk_03005628[0])
-            gUnk_03002398 = gUnk_03005628[0];
-        if (gUnk_03002398 > gUnk_03005628[1])
-            gUnk_03002398 = gUnk_03005628[1];
-        if (gUnk_03001F00 < gUnk_03005628[2])
-            gUnk_03001F00 = gUnk_03005628[2];
-        if (gUnk_03001F00 > gUnk_03005628[3])
-            gUnk_03001F00 = gUnk_03005628[3];
+        gCameraAnchorX = gCameraFocusX = gRoomEntryX;
+        gCameraAnchorY = gCameraFocusY = gRoomEntryY;
+        if (gCameraAnchorX < gRoomBounds[0])
+            gCameraAnchorX = gRoomBounds[0];
+        if (gCameraAnchorX > gRoomBounds[1])
+            gCameraAnchorX = gRoomBounds[1];
+        if (gCameraAnchorY < gRoomBounds[2])
+            gCameraAnchorY = gRoomBounds[2];
+        if (gCameraAnchorY > gRoomBounds[3])
+            gCameraAnchorY = gRoomBounds[3];
         sub_0802d074();
         gUnk_020055E8 = 0;
     }
@@ -463,14 +463,14 @@ s32 sub_08026834(void)
 
 void sub_08026900(void)
 {
-    if (gUnk_030023CC < gUnk_03005628[0])
-        gUnk_030023CC = gUnk_03005628[0];
-    if (gUnk_030023CC > gUnk_03005628[1])
-        gUnk_030023CC = gUnk_03005628[1];
-    if (gUnk_03002388 < gUnk_03005628[2])
-        gUnk_03002388 = gUnk_03005628[2];
-    if (gUnk_03002388 > gUnk_03005628[3])
-        gUnk_03002388 = gUnk_03005628[3];
+    if (gCameraFocusX < gRoomBounds[0])
+        gCameraFocusX = gRoomBounds[0];
+    if (gCameraFocusX > gRoomBounds[1])
+        gCameraFocusX = gRoomBounds[1];
+    if (gCameraFocusY < gRoomBounds[2])
+        gCameraFocusY = gRoomBounds[2];
+    if (gCameraFocusY > gRoomBounds[3])
+        gCameraFocusY = gRoomBounds[3];
 }
 
 void sub_0802695c(void)
@@ -511,13 +511,13 @@ void sub_080269e8(void)
 
 u32 sub_08026a0c(void)
 {
-    switch (gUnk_030055C0)
+    switch (gCameraMode)
     {
     case 0:
         if (gViewRect[3] > 0x167)
         {
-            gUnk_03005680.unkC = 280;
-            sub_0802cda0(0xFFFF, 0xFFFF, 200, 360);
+            gScrollLock.unkC = 280;
+            StartScrollLock(0xFFFF, 0xFFFF, 200, 360);
         }
         break;
     case 3:
@@ -533,13 +533,13 @@ u32 sub_08026a0c(void)
 
 u32 sub_08026a80(void)
 {
-    switch (gUnk_030055C0)
+    switch (gCameraMode)
     {
     case 0:
         if (gViewRect[2] <= 69)
         {
-            gUnk_03005680.unkC = 149;
-            sub_0802cda0(0xFFFF, 0xFFFF, 16, 176);
+            gScrollLock.unkC = 149;
+            StartScrollLock(0xFFFF, 0xFFFF, 16, 176);
         }
         break;
     case 3:
@@ -555,13 +555,13 @@ u32 sub_08026a80(void)
 
 u32 sub_08026aec(void)
 {
-    switch (gUnk_030055C0)
+    switch (gCameraMode)
     {
     case 0:
         if (gViewRect[3] > 0x147)
         {
-            gUnk_03005680.unkC = 248;
-            sub_0802cda0(0xFFFF, 0xFFFF, 168, 328);
+            gScrollLock.unkC = 248;
+            StartScrollLock(0xFFFF, 0xFFFF, 168, 328);
         }
         break;
     case 3:

@@ -7,7 +7,7 @@
  * The per-frame bodies AgbMain pumps while game states 5 (sub_08007624),
  * 9 (sub_0800783c) and 8/17/18/19 (sub_0800791c) hold.  Each runs a setup
  * helper from mode_0b44c.c, fades in, then loops until the stage-request
- * byte gUnk_03002438 asks for something: 1-4 switch the game state, 5 opens
+ * byte gStageRequest asks for something: 1-4 switch the game state, 5 opens
  * the pause screen (sub_08008664), 6 is a lost life (state 22 when nobody
  * has lives left), 7/8/12 go to states 11/10/17 and 9-14 enter the six
  * extra modes.  sub_080075b8 raises request 5 when a present, living
@@ -32,13 +32,13 @@ extern u8 gUnk_03001F30;
 extern u8 gUnk_03001F34;
 extern u16 gUnk_03002150;
 extern struct PlayerState gPlayerStates[];
-extern u8 gUnk_03002340;
+extern u8 gActivePlayerMask;
 extern u16 gLocalPlayer;
 extern u16 gUnk_03002364;
 extern u16 gPlayerCount;
 extern u16 gGameState;
 extern s32 gCurSaveSlot;
-extern s8 gUnk_03002438;
+extern s8 gStageRequest;
 extern u8 gExtraMode;
 
 void BeginFastFadeInFromWhite(void);
@@ -75,9 +75,9 @@ void sub_080075b8(void)
     s32 i;
 
     for (i = 0; i < gPlayerCount; i++) {
-        if (((gUnk_03002340 >> i) & 1) && gUnk_03001F34 == 0
+        if (((gActivePlayerMask >> i) & 1) && gUnk_03001F34 == 0
             && (gPlayerPressedKeys[i] & 8)) {
-            gUnk_03002438 = 5;
+            gStageRequest = 5;
             gUnk_02004B60 = i;
             return;
         }
@@ -104,7 +104,7 @@ void sub_08007624(void)
         RunLinkFrame();
         LatchPlayerKeys();
         sub_080075b8();
-        switch (gUnk_03002438) {
+        switch (gStageRequest) {
         case 0:
             break;
         case 2:
@@ -123,7 +123,7 @@ void sub_08007624(void)
             break;
         case 5:
             sub_08008664();
-            gUnk_03002438 = 0;
+            gStageRequest = 0;
             break;
         case 6:
             if (gPlayerLives[gLocalPlayer] != 0) {
@@ -144,8 +144,8 @@ void sub_08007624(void)
         case 12:
         case 13:
         case 14:
-            gUnk_03001F2C = gUnk_03002438 + 5;
-            gUnk_02006090 = gUnk_03002438 - 9;
+            gUnk_03001F2C = gStageRequest + 5;
+            gUnk_02006090 = gStageRequest - 9;
             if (!((gUnk_020055CC >> gUnk_02006090) & 1)) {
                 gUnk_02007FCC = gUnk_03001F2C - 14;
                 gGameState = 13;
@@ -186,7 +186,7 @@ void sub_0800783c(void)
     RunLinkFramesUntilFadeDone();
     do {
         RunLinkFrame();
-        switch (gUnk_03002438) {
+        switch (gStageRequest) {
         case 0:
         case 1:
         case 2:
@@ -245,7 +245,7 @@ void sub_0800791c(void)
         InputRecorderUpdate();
         LatchPlayerKeys();
         sub_080075b8();
-        switch (gUnk_03002438) {
+        switch (gStageRequest) {
         case 0:
             break;
         case 2:
@@ -269,7 +269,7 @@ void sub_0800791c(void)
                 sub_080272dc();
                 done = 1;
             } else {
-                gUnk_03002438 = 0;
+                gStageRequest = 0;
             }
             break;
         case 6:

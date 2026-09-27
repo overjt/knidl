@@ -25,7 +25,7 @@ extern struct Unk02005E00 gUnk_02005E00;
 extern s16 gPlayerLives[];
 extern u32 gBgPalette[];
 extern s8 gDigits[];
-extern u8 gUnk_03002340;
+extern u8 gActivePlayerMask;
 extern u16 gLocalPlayer;
 extern u16 gPlayerCount;
 extern u8 gUnk_085ADD1C[];
@@ -415,7 +415,7 @@ s32 sub_080b9424(void)
     gCurTask->unk24 = 0;
     for (i = 0, n = 0; i < gPlayerCount; i++)
     {
-        if ((1 & (gUnk_03002340 >> i)) != 0 && gPlayerLives[i] > 0 && gUnk_02005E00.unk04[i] == 0)
+        if ((1 & (gActivePlayerMask >> i)) != 0 && gPlayerLives[i] > 0 && gUnk_02005E00.unk04[i] == 0)
         {
             n++;
             gCurTask->unk24 |= 1 << i;
@@ -444,7 +444,7 @@ void sub_080b94b4(s32 a, s32 b)
     {
         for (i = 0, j = 0; i < gPlayerCount; i++)
         {
-            if ((1 & (gUnk_03002340 >> i)) != 0 && gUnk_02005E00.unk04[i] == 0)
+            if ((1 & (gActivePlayerMask >> i)) != 0 && gUnk_02005E00.unk04[i] == 0)
             {
                 e = &gPlayerLives[i];
                 u = *e;
@@ -659,7 +659,7 @@ void sub_080b98c0(void)
         for (i = 0, j = 0; i < gPlayerCount; i++)
         {
             f = gUnk_02005E00.unk04;
-            if (((gUnk_03002340 >> i) & 1) != 0)
+            if (((gActivePlayerMask >> i) & 1) != 0)
             {
                 pe = gPlayerLives;
                 e = &pe[i];

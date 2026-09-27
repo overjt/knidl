@@ -52,10 +52,10 @@ extern void (*gFrameEndCallback)(void);
 extern u16 gObjPalette[];
 extern u8 gUnk_03001F34;
 extern struct PlayerState gPlayerStates[];
-extern u8 gUnk_03002340;
+extern u8 gActivePlayerMask;
 extern u16 gLocalPlayer;
 extern s8 gUnk_03002444;
-extern u8 gUnk_0300560C[];
+extern u8 gPlayerCameraMode[];
 extern u32 gObjVram[];
 extern u16 gUnk_08731CE6[];
 extern u32 gUnk_087555D8[];
@@ -152,7 +152,7 @@ void sub_08009b2c(s32 i)
         sub_0800ab64(i);
         sub_0800abc0(gPlayerLives[i]);
         sub_0800ac38(gUnk_02005588[i] >> 3);
-        if ((gUnk_03002340 >> i) & 1) {
+        if ((gActivePlayerMask >> i) & 1) {
             sub_0800a130((s16)gUnk_02004B50[i], i);
             if ((s16)gUnk_02004B50[i] != 0) {
                 gUnk_020061D4 = 1;
@@ -163,7 +163,7 @@ void sub_08009b2c(s32 i)
                 gUnk_0200801C = 0;
                 sub_0800b0a4(0);
             }
-        } else if (gUnk_0300560C[i] != 1) {
+        } else if (gPlayerCameraMode[i] != 1) {
             sub_0800a130(26, i);
             gUnk_020061D4 = 1;
             gUnk_0200801C = 16;
@@ -203,7 +203,7 @@ void sub_08009cb0(s32 i)
     sub_0800ab64(i);
     sub_0800abc0(gPlayerLives[i]);
     sub_0800ac38(gUnk_02005588[i] >> 3);
-    if ((gUnk_03002340 >> i) & 1) {
+    if ((gActivePlayerMask >> i) & 1) {
         sub_0800a130((s16)gUnk_02004B50[i], i);
         if ((s16)gUnk_02004B50[i] != 0) {
             gUnk_020061D4 = 1;

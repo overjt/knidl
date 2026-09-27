@@ -25,8 +25,8 @@ gUnk_02000018 = 0x02000018
 gUnk_0200001C = 0x0200001C
 	.global	gUnk_02000020
 gUnk_02000020 = 0x02000020
-	.global	gUnk_02000024
-gUnk_02000024 = 0x02000024
+	.global	gBlockAnimHookId
+gBlockAnimHookId = 0x02000024
 	.global	gUnk_02000028
 gUnk_02000028 = 0x02000028
 	.global	gUnk_0200002C
@@ -35,8 +35,8 @@ gUnk_0200002C = 0x0200002C
 gUnk_02000030 = 0x02000030
 	.global	gUnk_02000034
 gUnk_02000034 = 0x02000034
-	.global	gUnk_02000040
-gUnk_02000040 = 0x02000040
+	.global	gRoomMapBuffer
+gRoomMapBuffer = 0x02000040
 	.global	gUnk_02004000
 gUnk_02004000 = 0x02004000
 	.global	gBlockCursorPlayer
@@ -65,20 +65,20 @@ gUnk_02004B6C = 0x02004B6C
 gUnk_02004B70 = 0x02004B70
 	.global	gUnk_02004B74
 gUnk_02004B74 = 0x02004B74
-	.global	gUnk_02004B78
-gUnk_02004B78 = 0x02004B78
+	.global	gObjectSpawnViewRect
+gObjectSpawnViewRect = 0x02004B78
 	.global	gUnk_02004B80
 gUnk_02004B80 = 0x02004B80
-	.global	gUnk_02004B90
-gUnk_02004B90 = 0x02004B90
+	.global	gDoorStates
+gDoorStates = 0x02004B90
 	.global	gUnk_02004C90
 gUnk_02004C90 = 0x02004C90
 	.global	gUnk_02004C94
 gUnk_02004C94 = 0x02004C94
 	.global	gUnk_02004C98
 gUnk_02004C98 = 0x02004C98
-	.global	gUnk_02004CA0
-gUnk_02004CA0 = 0x02004CA0
+	.global	gBg1MetatileMap
+gBg1MetatileMap = 0x02004CA0
 	.global	gPlayerHitBoxSets
 gPlayerHitBoxSets = 0x02005550
 	.global	gUnk_02005574
@@ -95,8 +95,8 @@ gUnk_02005584 = 0x02005584
 gUnk_02005588 = 0x02005588
 	.global	gUnk_02005590
 gUnk_02005590 = 0x02005590
-	.global	gUnk_020055B0
-gUnk_020055B0 = 0x020055B0
+	.global	gBg3MapShape
+gBg3MapShape = 0x020055B0
 	.global	gUnk_020055B8
 gUnk_020055B8 = 0x020055B8
 	.global	gUnk_020055C0
@@ -111,10 +111,10 @@ gUnk_020055CC = 0x020055CC
 gUnk_020055D0 = 0x020055D0
 	.global	gUnk_020055D4
 gUnk_020055D4 = 0x020055D4
-	.global	gUnk_020055D8
-gUnk_020055D8 = 0x020055D8
-	.global	gUnk_020055E0
-gUnk_020055E0 = 0x020055E0
+	.global	gRoomObjectList
+gRoomObjectList = 0x020055D8
+	.global	gRoomEntryX
+gRoomEntryX = 0x020055E0
 	.global	gUnk_020055E4
 gUnk_020055E4 = 0x020055E4
 	.global	gUnk_020055E8
@@ -171,8 +171,8 @@ gGameOverCursor = 0x02006164
 gUnk_02006168 = 0x02006168
 	.global	gUnk_0200616C
 gUnk_0200616C = 0x0200616C
-	.global	gUnk_02006170
-gUnk_02006170 = 0x02006170
+	.global	gRoomEntrySet
+gRoomEntrySet = 0x02006170
 	.global	gUnk_02006174
 gUnk_02006174 = 0x02006174
 	.global	gUnk_02006178
@@ -209,8 +209,8 @@ gUnk_02006A00 = 0x02006A00
 gUnk_02006A10 = 0x02006A10
 	.global	gUnk_02006A14
 gUnk_02006A14 = 0x02006A14
-	.global	gUnk_02006A20
-gUnk_02006A20 = 0x02006A20
+	.global	gDoorObjectTasks
+gDoorObjectTasks = 0x02006A20
 	.global	gUnk_02006A80
 gUnk_02006A80 = 0x02006A80
 	.global	gUnk_02006AA0
@@ -251,8 +251,8 @@ gUnk_02007D60 = 0x02007D60
 gUnk_02007D64 = 0x02007D64
 	.global	gBlockCursorX
 gBlockCursorX = 0x02007D68
-	.global	gUnk_02007D70
-gUnk_02007D70 = 0x02007D70
+	.global	gBgAnims
+gBgAnims = 0x02007D70
 	.global	gUnk_02007E88
 gUnk_02007E88 = 0x02007E88
 	.global	gUnk_02007E8C
@@ -315,8 +315,8 @@ gBlockLayer = 0x02008160
 gUnk_0200A6E0 = 0x0200A6E0
 	.global	gUnk_0200A6F0
 gUnk_0200A6F0 = 0x0200A6F0
-	.global	gUnk_0200AEF0
-gUnk_0200AEF0 = 0x0200AEF0
+	.global	gRoomEntryY
+gRoomEntryY = 0x0200AEF0
 	.global	gUnk_0200AEF4
 gUnk_0200AEF4 = 0x0200AEF4
 	.global	gBlockCursorY
@@ -367,8 +367,8 @@ gUnk_0200B044 = 0x0200B044
 gUnk_0200B048 = 0x0200B048
 	.global	gUnk_0200B04C
 gUnk_0200B04C = 0x0200B04C
-	.global	gUnk_0200B050
-gUnk_0200B050 = 0x0200B050
+	.global	gRoomBgLayout
+gRoomBgLayout = 0x0200B050
 	.global	gUnk_0200B060
 gUnk_0200B060 = 0x0200B060
 	.global	gUnk_0200B074
@@ -377,8 +377,8 @@ gUnk_0200B074 = 0x0200B074
 gUnk_0200B078 = 0x0200B078
 	.global	gUnk_0200B07C
 gUnk_0200B07C = 0x0200B07C
-	.global	gUnk_0200B080
-gUnk_0200B080 = 0x0200B080
+	.global	gMetatileTiles
+gMetatileTiles = 0x0200B080
 	.global	gActors
 gActors = 0x0200C320
 	.global	gUnk_0200D080
@@ -787,8 +787,8 @@ gHeldKeys = 0x03001EF4
 gIntrMasterEnable = 0x03001EF8
 	.global	gUnk_03001EFC
 gUnk_03001EFC = 0x03001EFC
-	.global	gUnk_03001F00
-gUnk_03001F00 = 0x03001F00
+	.global	gCameraAnchorY
+gCameraAnchorY = 0x03001F00
 	.global	gUnk_03001F04
 gUnk_03001F04 = 0x03001F04
 	.global	gDigits
@@ -825,16 +825,16 @@ gViewRect = 0x03002158
 gUnk_03002160 = 0x03002160
 	.global	gPlayerStates
 gPlayerStates = 0x03002170
-	.global	gUnk_03002340
-gUnk_03002340 = 0x03002340
+	.global	gActivePlayerMask
+gActivePlayerMask = 0x03002340
 	.global	gUnk_03002344
 gUnk_03002344 = 0x03002344
 	.global	gSpriteCameraX
 gSpriteCameraX = 0x03002348
 	.global	gUnk_0300234C
 gUnk_0300234C = 0x0300234C
-	.global	gUnk_03002350
-gUnk_03002350 = 0x03002350
+	.global	gActivePlayerCount
+gActivePlayerCount = 0x03002350
 	.global	gUnk_03002354
 gUnk_03002354 = 0x03002354
 	.global	gAttackX
@@ -855,16 +855,16 @@ gUnk_03002378 = 0x03002378
 gHitKind = 0x03002380
 	.global	gUnk_03002384
 gUnk_03002384 = 0x03002384
-	.global	gUnk_03002388
-gUnk_03002388 = 0x03002388
-	.global	gUnk_0300238C
-gUnk_0300238C = 0x0300238C
+	.global	gCameraFocusY
+gCameraFocusY = 0x03002388
+	.global	gLevelIndex
+gLevelIndex = 0x0300238C
 	.global	gUnk_03002390
 gUnk_03002390 = 0x03002390
 	.global	gHitDamage
 gHitDamage = 0x03002394
-	.global	gUnk_03002398
-gUnk_03002398 = 0x03002398
+	.global	gCameraAnchorX
+gCameraAnchorX = 0x03002398
 	.global	gAttackFacing
 gAttackFacing = 0x0300239C
 	.global	gUnk_030023A4
@@ -883,8 +883,8 @@ gUnk_030023B8 = 0x030023B8
 gLatchedPressedKeys = 0x030023C0
 	.global	gUnk_030023C8
 gUnk_030023C8 = 0x030023C8
-	.global	gUnk_030023CC
-gUnk_030023CC = 0x030023CC
+	.global	gCameraFocusX
+gCameraFocusX = 0x030023CC
 	.global	gUnk_030023D0
 gUnk_030023D0 = 0x030023D0
 	.global	gUnk_030023D4
@@ -899,14 +899,14 @@ gUnk_030023E0 = 0x030023E0
 gSpriteCameraY = 0x030023E4
 	.global	gCurSaveSlot
 gCurSaveSlot = 0x030023E8
-	.global	gUnk_030023EC
-gUnk_030023EC = 0x030023EC
+	.global	gStageIndex
+gStageIndex = 0x030023EC
 	.global	gUnk_030023F0
 gUnk_030023F0 = 0x030023F0
 	.global	gUnk_03002400
 gUnk_03002400 = 0x03002400
-	.global	gUnk_03002438
-gUnk_03002438 = 0x03002438
+	.global	gStageRequest
+gStageRequest = 0x03002438
 	.global	gLinkPlayerCount
 gLinkPlayerCount = 0x0300243C
 	.global	gAttackLastHitter
@@ -925,8 +925,8 @@ gLatchedHeldKeys = 0x03002458
 gUnk_03002460 = 0x03002460
 	.global	gExtraMode
 gExtraMode = 0x03002464
-	.global	gUnk_03002468
-gUnk_03002468 = 0x03002468
+	.global	gRoomIndex
+gRoomIndex = 0x03002468
 	.global	gTaskSavedSp
 gTaskSavedSp = 0x03002470
 	.global	gUnk_03002478
@@ -1125,64 +1125,64 @@ gUnk_030055A8 = 0x030055A8
 gUnk_030055AC = 0x030055AC
 	.global	gUnk_030055B0
 gUnk_030055B0 = 0x030055B0
-	.global	gUnk_030055C0
-gUnk_030055C0 = 0x030055C0
-	.global	gUnk_030055D0
-gUnk_030055D0 = 0x030055D0
-	.global	gUnk_030055E4
-gUnk_030055E4 = 0x030055E4
-	.global	gUnk_030055E8
-gUnk_030055E8 = 0x030055E8
-	.global	gUnk_030055EC
-gUnk_030055EC = 0x030055EC
+	.global	gCameraMode
+gCameraMode = 0x030055C0
+	.global	gPlayerCameraPos
+gPlayerCameraPos = 0x030055D0
+	.global	gRoomMetatileCount
+gRoomMetatileCount = 0x030055E4
+	.global	gBg3ParallaxX
+gBg3ParallaxX = 0x030055E8
+	.global	gCurRoomDef
+gCurRoomDef = 0x030055EC
 	.global	gUnk_030055F0
 gUnk_030055F0 = 0x030055F0
-	.global	gUnk_030055F4
-gUnk_030055F4 = 0x030055F4
-	.global	gUnk_030055F8
-gUnk_030055F8 = 0x030055F8
-	.global	gUnk_03005600
-gUnk_03005600 = 0x03005600
-	.global	gUnk_03005604
-gUnk_03005604 = 0x03005604
-	.global	gUnk_03005608
-gUnk_03005608 = 0x03005608
-	.global	gUnk_0300560C
-gUnk_0300560C = 0x0300560C
-	.global	gUnk_03005610
-gUnk_03005610 = 0x03005610
-	.global	gUnk_03005614
-gUnk_03005614 = 0x03005614
+	.global	gPlayerGroupCenter
+gPlayerGroupCenter = 0x030055F4
+	.global	gCameraBounds
+gCameraBounds = 0x030055F8
+	.global	gRoomBorder
+gRoomBorder = 0x03005600
+	.global	gCameraPos
+gCameraPos = 0x03005604
+	.global	gBg3Border
+gBg3Border = 0x03005608
+	.global	gPlayerCameraMode
+gPlayerCameraMode = 0x0300560C
+	.global	gScrollLockSpeedX
+gScrollLockSpeedX = 0x03005610
+	.global	gCameraCenterX
+gCameraCenterX = 0x03005614
 	.global	gUnk_03005618
 gUnk_03005618 = 0x03005618
-	.global	gUnk_0300561C
-gUnk_0300561C = 0x0300561C
-	.global	gUnk_03005620
-gUnk_03005620 = 0x03005620
-	.global	gUnk_03005624
-gUnk_03005624 = 0x03005624
-	.global	gUnk_03005628
-gUnk_03005628 = 0x03005628
-	.global	gUnk_03005630
-gUnk_03005630 = 0x03005630
-	.global	gUnk_03005634
-gUnk_03005634 = 0x03005634
-	.global	gUnk_03005640
-gUnk_03005640 = 0x03005640
+	.global	gRoomHeight
+gRoomHeight = 0x0300561C
+	.global	gRoomWidth
+gRoomWidth = 0x03005620
+	.global	gRoomUpdateFlags
+gRoomUpdateFlags = 0x03005624
+	.global	gRoomBounds
+gRoomBounds = 0x03005628
+	.global	gBg3ParallaxY
+gBg3ParallaxY = 0x03005630
+	.global	gCameraCenterY
+gCameraCenterY = 0x03005634
+	.global	gPlayerBounds
+gPlayerBounds = 0x03005640
 	.global	gRoomMap
 gRoomMap = 0x03005660
-	.global	gUnk_03005664
-gUnk_03005664 = 0x03005664
-	.global	gUnk_03005668
-gUnk_03005668 = 0x03005668
-	.global	gUnk_0300566C
-gUnk_0300566C = 0x0300566C
-	.global	gUnk_03005670
-gUnk_03005670 = 0x03005670
-	.global	gUnk_03005680
-gUnk_03005680 = 0x03005680
-	.global	gUnk_03005690
-gUnk_03005690 = 0x03005690
+	.global	gScrollLockSpeedY
+gScrollLockSpeedY = 0x03005664
+	.global	gBg3StreamPos
+gBg3StreamPos = 0x03005668
+	.global	gCameraStreamPos
+gCameraStreamPos = 0x0300566C
+	.global	gScreenShake
+gScreenShake = 0x03005670
+	.global	gScrollLock
+gScrollLock = 0x03005680
+	.global	gBg3Pos
+gBg3Pos = 0x03005690
 	.global	gSoundInfo
 gSoundInfo = 0x030056D0
 	.global	gMPlayJumpTable

@@ -27,7 +27,7 @@ struct CamPos { u16 x, y; };
 extern u32 gUnk_08751D88[];
 extern u32 gUnk_08751DB0[];
 extern u16 gUnk_0873BAEE[];
-extern struct CamPos gUnk_030055D0[4];
+extern struct CamPos gPlayerCameraPos[4];
 extern u8 gUnk_02006178;
 extern s8 gUnk_03002444;
 extern vs16 gTaskSlotTypes[];
@@ -197,8 +197,8 @@ void sub_08057f90(void)
         while ((s8)gCurTask->unk88->unk16 == 0)
             TaskYieldTrampoline(1);
         u = gCurTask;
-        u->unk28 = gUnk_030055D0[u->unk44].x;
-        u->unk2C = gUnk_030055D0[u->unk44].y;
+        u->unk28 = gPlayerCameraPos[u->unk44].x;
+        u->unk2C = gPlayerCameraPos[u->unk44].y;
         gUnk_02006178 = 0;
         for (i = 0; i < 20; i++)
             gUnk_0200B000[i] |= 0xFFFF;
@@ -248,8 +248,8 @@ void sub_08057f90(void)
         if (m != 0)
             TaskYieldTrampoline(3);
         gUnk_02006178 = 0;
-        x0 = gUnk_030055D0[gCurTask->unk44].x - 120;
-        y0 = gUnk_030055D0[gCurTask->unk44].y - 80;
+        x0 = gPlayerCameraPos[gCurTask->unk44].x - 120;
+        y0 = gPlayerCameraPos[gCurTask->unk44].y - 80;
         for (i = 32; i <= 62; i++)
         {
             if (gUnk_03002444 != 0)

@@ -65,7 +65,7 @@ extern void TaskSetMotionY(s32 a, s32 b, s32 c);
 extern void TaskStopY(void);
 extern void TaskStop(void);
 extern void TaskSetFrame(s32 a);
-extern void sub_080261d4(s32 a);
+extern void RequestScreenShake(s32 a);
 extern void ActorSetState(u16 v);
 extern void ActorSetHitReactions(void *p);
 extern void ActorSetAttackBox(void *p);
@@ -319,7 +319,7 @@ void sub_08095aec(void)
     while ((s16)gCurTask->unk6C < n) {
         TaskSetMotionY(-0x50000, 0x5000, 0x30000);
         sub_0809680c();
-        sub_080261d4(2);
+        RequestScreenShake(2);
         TaskFaceNearestPlayer();
         gCurTask->unk6C++;
     }
@@ -665,7 +665,7 @@ void sub_08096320(void)
     zero = 0;
     gCurTask->unk2C = zero;
     PlaySfx(504);
-    sub_080261d4(2);
+    RequestScreenShake(2);
     gCurTask->unk7A = zero;
     TaskSetMotionXFacing(-0x10000, 0x5A5A5A5A);
     TaskSetMotionY(-0x20000, 0x3000, 0x30000);
@@ -776,7 +776,7 @@ rest:
         } while (gCurTask->unk34 == 0);
     }
     PlaySfx(0x1F7);
-    sub_080261d4(2);
+    RequestScreenShake(2);
     sub_08097088();
     gCurTask->unk28 = ActorStartAnim(gUnk_08744550);
     sub_08063a00(gUnk_08745040);
@@ -1085,7 +1085,7 @@ void sub_08096b7c(void)
     ActorSetAttackBox(gUnk_08745104);
     sub_08063a00(gUnk_08745120);
     sub_080639f0(gUnk_087447B8[gCurTask->unk3C]);
-    sub_080261d4(4);
+    RequestScreenShake(4);
     PlaySfx(0x1F7);
     CreateChildTaskHere(141, 0);
     gCurTask->unk20 = 0;
@@ -1122,7 +1122,7 @@ s32 sub_08096d64(void)
     case 4:
         TaskStopY();
         PlaySfx(0x1F7);
-        sub_080261d4(2);
+        RequestScreenShake(2);
         gCurTask->unk34 = 1;
         return 0;
     case 5:
@@ -1150,7 +1150,7 @@ s32 sub_08096df4(void)
 s32 sub_08096e0c(void)
 {
     CreateChildTaskHere(142, 0);
-    sub_080261d4(2);
+    RequestScreenShake(2);
     return 0;
 }
 

@@ -85,7 +85,7 @@ extern void sub_08066580(void);
 extern void sub_08066ae0(void);
 extern void sub_08065438(void);
 extern void ActorMove(void);
-extern void sub_080261d4(s32 a);
+extern void RequestScreenShake(s32 a);
 extern void sub_0806ee2c(void);
 extern void TaskStop(void);
 extern void TaskFaceNearestPlayer(void);
@@ -199,7 +199,7 @@ u8 sub_08098ad8(void)
 {
     gCurTask->unk2C = 32;
     CreateChildTaskHere(142, 0);
-    sub_080261d4(4);
+    RequestScreenShake(4);
     return 0;
 }
 
@@ -649,7 +649,7 @@ void sub_08099244(void)
     TaskSetMotionXFacing(-49152, 0x5A5A5A5A);
     w = gCurTask;
     w->unk58 = -196608;
-    sub_080261d4(2);
+    RequestScreenShake(2);
     PlaySfx(0x1F7);
     TaskSetFrame(24);
     TaskSleepForever();
@@ -675,7 +675,7 @@ void sub_080992ac(void)
     TaskSetMotionXFacing(-32768, 0x5A5A5A5A);
     v = gCurTask;
     v->unk58 = -65536;
-    sub_080261d4(2);
+    RequestScreenShake(2);
     gCurTask->unk46 = sub_0806cc90(0, 4, 8, 24);
     sub_0806caa0(0, 0, 24);
     TaskSetFrame(24);

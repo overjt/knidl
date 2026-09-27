@@ -4,16 +4,16 @@
 
 /* obj_306b4.c (0x080306B4-0x08030803, issue #86).
  *
- * sub_080306b4 draws one OAM sprite relative to the BG camera
+ * QueueWorldSprite draws one OAM sprite relative to the BG camera
  * (gSpriteCameraX/gSpriteCameraY) when it is on screen, and returns garbage
  * when it is not.  The rest manage the per-frame stage hook gUnk_030004A0:
- * sub_08030724 clears it and the 64 records gBreakingBlocks[] (unk6 =
- * 0x7FFF), sub_08030758 re-installs it from its id gUnk_02000024,
- * sub_080307a4 clears it and sub_080307b0/cc/e8 install one of three M09
+ * ResetBlockAnims clears it and the 64 records gBreakingBlocks[] (unk6 =
+ * 0x7FFF), ResumeBlockAnims re-installs it from its id gBlockAnimHookId,
+ * PauseBlockAnims clears it and sub_080307b0/cc/e8 install one of three M09
  * routines (ids 1-3).
  * 
  * Its own file, not the tail of obj_30238.c: compiled as one translation
- * unit, sub_08030724 swaps r3/r4, because gcse orders its hash table by
+ * unit, ResetBlockAnims swaps r3/r4, because gcse orders its hash table by
  * the addresses of the .LC pool-label strings, which depend on every pool
  * constant compiled earlier in the unit. */
 
@@ -28,14 +28,14 @@ extern s16 gSpriteCameraX;
 extern s16 gSpriteCameraY;
 extern struct Unk020061F0 gBreakingBlocks[];
 extern u32 gUnk_030004A0;
-extern u8 gUnk_02000024;
+extern u8 gBlockAnimHookId;
 
 s32 QueueSprite(u32 a, u32 b, u32 c, u32 d, s32 e, s32 f);
 void sub_080318b4(void);
 void sub_08031de4(void);
 void sub_08032428(void);
 
-s32 sub_080306b4(u8 a, s32 b, u16 c, u16 d, s16 x, s16 y)
+s32 QueueWorldSprite(u8 a, s32 b, u16 c, u16 d, s16 x, s16 y)
 {
     s16 sx;
     s16 sy;
@@ -46,19 +46,19 @@ s32 sub_080306b4(u8 a, s32 b, u16 c, u16 d, s16 x, s16 y)
         return QueueSprite(a, b, c, d, sx, sy);
 }
 
-void sub_08030724(void)
+void ResetBlockAnims(void)
 {
     s32 i;
 
     for (i = 0; i < 64; i++)
         gBreakingBlocks[i].unk6 = 0x7FFF;
     gUnk_030004A0 = 0;
-    gUnk_02000024 = 0;
+    gBlockAnimHookId = 0;
 }
 
-void sub_08030758(void)
+void ResumeBlockAnims(void)
 {
-    switch (gUnk_02000024)
+    switch (gBlockAnimHookId)
     {
     case 0:
         break;
@@ -74,7 +74,7 @@ void sub_08030758(void)
     }
 }
 
-void sub_080307a4(void)
+void PauseBlockAnims(void)
 {
     gUnk_030004A0 = 0;
 }
@@ -82,17 +82,17 @@ void sub_080307a4(void)
 void sub_080307b0(void)
 {
     gUnk_030004A0 = (u32)sub_080318b4;
-    gUnk_02000024 = 1;
+    gBlockAnimHookId = 1;
 }
 
 void sub_080307cc(void)
 {
     gUnk_030004A0 = (u32)sub_08031de4;
-    gUnk_02000024 = 2;
+    gBlockAnimHookId = 2;
 }
 
 void sub_080307e8(void)
 {
     gUnk_030004A0 = (u32)sub_08032428;
-    gUnk_02000024 = 3;
+    gBlockAnimHookId = 3;
 }

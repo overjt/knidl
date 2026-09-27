@@ -46,8 +46,8 @@ extern u32 gUnk_08752D8C[];
 extern u8 gUnk_020061E0;
 extern u8 gUnk_02007CF0;
 extern u8 gUnk_03001F30;
-extern u8 gUnk_03002340;
-extern u8 gUnk_03002350;
+extern u8 gActivePlayerMask;
+extern u8 gActivePlayerCount;
 extern u8 gUnk_0873FAE8[];
 extern vs32 gCurTaskIdx;
 
@@ -82,7 +82,7 @@ extern void TaskStopY(void);
 extern void TaskStop(void);
 extern void TaskSetFrame(s32 a);
 extern void sub_0801bcac(u32 *p);
-extern void sub_080261d4(u32 a);
+extern void RequestScreenShake(u32 a);
 extern void ActorSetState(u8 v);
 extern void ActorSetAttackBox(u32 v);
 extern void ActorDestroy(void);
@@ -373,7 +373,7 @@ void sub_08071418(void)
 
 void sub_0807156c(void)
 {
-    if (gUnk_02007CF0 != 0 && gUnk_03002350 != 1)
+    if (gUnk_02007CF0 != 0 && gActivePlayerCount != 1)
     {
         struct Task *t = gCurTask;
 
@@ -419,7 +419,7 @@ void sub_0807160c(void)
 void sub_08071640(void)
 {
     sub_080710fc();
-    if (gCurTask->unk28 == gUnk_03002350 && sub_08027750())
+    if (gCurTask->unk28 == gActivePlayerCount && sub_08027750())
     {
         struct Task *t = gCurTask;
         u32 v = t->unk74;
@@ -663,7 +663,7 @@ void sub_08071bb0(u16 a)
             ;
     for (i = 0; i < gPlayerCount; i++)
     {
-        if ((gUnk_03002340 >> i) & 1)
+        if ((gActivePlayerMask >> i) & 1)
         {
             struct Task *t = &gTasks[i];
 
@@ -685,7 +685,7 @@ void sub_08071c38(u16 a)
             ;
     for (i = 0; i < gPlayerCount; i++)
     {
-        if ((gUnk_03002340 >> i) & 1)
+        if ((gActivePlayerMask >> i) & 1)
         {
             struct Task *t = &gTasks[i];
 
@@ -749,7 +749,7 @@ void sub_08071d60(void)
     gCurTask->unk58 = 0x8000;
     TaskYieldTrampoline(8);
     CreateChildTaskAt(148, gCurTask->unk48, gCurTask->unk4A + 16, 0);
-    sub_080261d4(2);
+    RequestScreenShake(2);
     PlaySfx(272);
     gCurTask->unk58 = 0x8000;
     TaskYieldTrampoline(32);
@@ -790,7 +790,7 @@ void sub_08071ebc(void)
     if (t->unk7A & 1)
     {
         sub_080277f0(t->unk48, t->unk4A);
-        sub_080261d4(4);
+        RequestScreenShake(4);
         StopSfxOnPlayer(gUnk_02004B4C, gUnk_02005584);
         PlaySfx(219);
         sub_0806d4e4(0, 0);
@@ -1096,7 +1096,7 @@ void sub_08072388(void)
     gCurTask->unk54 = 0x10000;
     TaskYieldTrampoline(12);
     CreateChildTaskAt(148, gCurTask->unk48, gCurTask->unk4A + 16, 0);
-    sub_080261d4(2);
+    RequestScreenShake(2);
     PlaySfx(272);
     gCurTask->unk28 = -0x2600;
     sub_0807186c(1, 4, 3, 0x400);
@@ -1256,7 +1256,7 @@ void sub_08072684(void)
         gCurTask->unk6C++;
     } while ((s16)gCurTask->unk6C <= 7);
     CreateChildTaskAt(148, gCurTask->unk48, gCurTask->unk4A + 16, 0);
-    sub_080261d4(2);
+    RequestScreenShake(2);
     PlaySfx(272);
     {
         struct Task *u = gCurTask;
@@ -1536,7 +1536,7 @@ void sub_08072b00(void)
     TaskYieldTrampoline(6);
     gCurTask->unk43 = 255;
     sub_080277f0(gCurTask->unk48, gCurTask->unk4A);
-    sub_080261d4(4);
+    RequestScreenShake(4);
     StopSfxOnPlayer(gUnk_02004B4C, gUnk_02005584);
     PlaySfx(219);
     sub_0806d4e4(0, 0);

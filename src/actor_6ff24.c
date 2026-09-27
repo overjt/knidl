@@ -85,8 +85,8 @@ extern void TaskSetFrame(s32 a);
 extern s32 IsOnScreen(s16 x, s16 y);
 extern void sub_0801bcac(u8 *a);
 extern u32 sub_08025e88(u32 i);
-extern void sub_080261d4(s32 a);
-extern void sub_08026264(s32 x, s32 y);
+extern void RequestScreenShake(s32 a);
+extern void SetCameraFocus(s32 x, s32 y);
 extern s32 PlayerLoadFrameTilesAndPalette(s32 a);
 extern void sub_0803d7c4(void);
 extern void sub_0803db74(void);
@@ -115,7 +115,7 @@ void sub_0806ff24(void)
 
     t = gCurTask;
     if (t->unk88->unk00 == gLocalPlayer)
-        sub_08026264(t->unk48, t->unk4A);
+        SetCameraFocus(t->unk48, t->unk4A);
     switch (gCurTask->unk24)
     {
     case 1:
@@ -364,7 +364,7 @@ void sub_080703a8(void)
                     PlaySfx(153);
                 gUnk_02006094 = 0;
             }
-            sub_080261d4(4);
+            RequestScreenShake(4);
             sub_0806d4e4(0, 0);
             sub_08070174();
             break;
@@ -591,7 +591,7 @@ void sub_080708ec(void)
         u->unk24++;
         if (u->unk24 == 1)
         {
-            sub_080261d4(4);
+            RequestScreenShake(4);
             sub_0806d4e4(0, 0);
         }
     }
@@ -659,7 +659,7 @@ void sub_08070a84(void)
         u->unk24++;
         if (u->unk24 == 1)
         {
-            sub_080261d4(4);
+            RequestScreenShake(4);
             sub_0806d4e4(0, 0);
         }
     }
@@ -727,7 +727,7 @@ void sub_08070c0c(void)
         u->unk24++;
         if (u->unk24 == 1)
         {
-            sub_080261d4(4);
+            RequestScreenShake(4);
             sub_0806d4e4(0, 0);
         }
     }
@@ -778,7 +778,7 @@ void sub_08070d48(void)
     struct Task *v;
 
     t = gCurTask;
-    sub_08026264(t->unk48, t->unk4A);
+    SetCameraFocus(t->unk48, t->unk4A);
     sub_0801bcac(gUnk_0873F5D4);
     u = gCurTask;
     if (u->unk7A & 1)
@@ -840,7 +840,7 @@ void sub_08070e7c(void)
         u->unk24++;
         if (u->unk24 == 2)
         {
-            sub_080261d4(4);
+            RequestScreenShake(4);
             sub_0806d4e4(0, 0);
         }
     }

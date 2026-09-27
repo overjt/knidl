@@ -6,9 +6,9 @@
  *
  * Task types #229-#235 (class 3) and the spawner of #236, in the same
  * spawner / body / callback layout as obj_2eac8.c.  The draw callbacks
- * (sub_0802f718, sub_0802f93c, sub_0802fd98, sub_0802fea4, sub_0802ff70;
+ * (sub_0802f718, sub_0802f93c, sub_0802fd98, DoorObjectDraw, sub_0802ff70;
  * several types share the last two) draw the frame Task.unk3C of the
- * Task.unk38 table through sub_080306b4, and a second sprite from
+ * Task.unk38 table through QueueWorldSprite, and a second sprite from
  * Task.unk34 at Task.unk54/unk58 where the type has one.  #231
  * (sub_0802faa8) flies a fixed path, eight velocity changes per lap.
  * sub_0802ffe8 is also called from M33 (src/hud_b5024.c), and
@@ -25,7 +25,7 @@ struct Unk02004B90
 extern u32 gUnk_08755948[];
 extern u32 gUnk_087558DC[];
 extern u32 gUnk_087558C4[];
-extern struct Unk02004B90 gUnk_02004B90[];
+extern struct Unk02004B90 gDoorStates[];
 extern u32 gUnk_08755978[];
 extern u8 gUnk_085A2DF8[][32];
 extern s16 gUnk_020055D4;
@@ -47,7 +47,7 @@ void TaskUpdatePixelPos(void);
 void TaskDrawWorld(void);
 void TaskSleepForever(void);
 void sub_08008f10(s32 a0);
-s32 sub_080306b4(u8 a, s32 b, u16 c, u16 d, s16 x, s16 y);
+s32 QueueWorldSprite(u8 a, s32 b, u16 c, u16 d, s16 x, s16 y);
 void sub_0802f684(void);
 void sub_0802f6c0(void);
 void sub_0802f6f4(void);
@@ -55,7 +55,7 @@ void sub_0802f718(void);
 void sub_0802f8c8(void);
 void sub_0802f93c(void);
 void sub_0802fd98(void);
-void sub_0802fea4(void);
+void DoorObjectDraw(void);
 s32 sub_08030140(u8 a, s32 b);
 
 void sub_0802f62c(void)
@@ -137,14 +137,14 @@ void sub_0802f718(void)
     if (t->unk3C != -1)
     {
         tbl = t->unk38;
-        sub_080306b4(t->unk42, tbl[t->unk3C], t->unk3E, t->unk40, t->unk48, t->unk4A);
+        QueueWorldSprite(t->unk42, tbl[t->unk3C], t->unk3E, t->unk40, t->unk48, t->unk4A);
     }
     u = gCurTask;
     tbl = (u32 *)u->unk34;
-    if (gUnk_02004B90[u->unk76].unk1 != 0)
-        sub_080306b4(u->unk42, tbl[u->unk28], u->unk3E, u->unk40, u->unk54, u->unk58);
+    if (gDoorStates[u->unk76].unk1 != 0)
+        QueueWorldSprite(u->unk42, tbl[u->unk28], u->unk3E, u->unk40, u->unk54, u->unk58);
     else
-        sub_080306b4(u->unk42, tbl[2], u->unk3E, u->unk40, u->unk54, u->unk58);
+        QueueWorldSprite(u->unk42, tbl[2], u->unk3E, u->unk40, u->unk54, u->unk58);
 }
 
 s32 sub_0802f7dc(s32 x, s32 y, s32 a, s32 b)
@@ -222,16 +222,16 @@ void sub_0802f93c(void)
 
     t = gCurTask;
     if (t->unk18 != 0)
-        sub_080306b4(t->unk42 + 1, gUnk_087558D0[1], t->unk3E, t->unk40, t->unk54, t->unk58);
-    else if (gUnk_02004B90[t->unk76].unk1 != 0)
-        sub_080306b4(t->unk42 + 1, gUnk_087558D0[0], t->unk3E, t->unk40, t->unk54, t->unk58);
+        QueueWorldSprite(t->unk42 + 1, gUnk_087558D0[1], t->unk3E, t->unk40, t->unk54, t->unk58);
+    else if (gDoorStates[t->unk76].unk1 != 0)
+        QueueWorldSprite(t->unk42 + 1, gUnk_087558D0[0], t->unk3E, t->unk40, t->unk54, t->unk58);
     else
-        sub_080306b4(t->unk42 + 1, gUnk_087558D0[2], t->unk3E, t->unk40, t->unk54, t->unk58);
+        QueueWorldSprite(t->unk42 + 1, gUnk_087558D0[2], t->unk3E, t->unk40, t->unk54, t->unk58);
     u = gCurTask;
     if (u->unk3C != -1)
     {
         tbl = u->unk38;
-        sub_080306b4(u->unk42, tbl[u->unk3C], gUnk_020055D4, u->unk40, u->unk48, u->unk4A);
+        QueueWorldSprite(u->unk42, tbl[u->unk3C], gUnk_020055D4, u->unk40, u->unk48, u->unk4A);
     }
 }
 
@@ -403,7 +403,7 @@ void sub_0802fd98(void)
     if (t->unk3C != -1)
     {
         tbl = t->unk38;
-        sub_080306b4(t->unk42, tbl[t->unk3C], gUnk_020055D4, t->unk40, t->unk48, t->unk4A);
+        QueueWorldSprite(t->unk42, tbl[t->unk3C], gUnk_020055D4, t->unk40, t->unk48, t->unk4A);
     }
 }
 
@@ -436,7 +436,7 @@ void sub_0802fe64(void)
 
     t = gCurTask;
     t->unk00 = (u32)TaskUpdatePixelPos;
-    t->unk0C = (u32)sub_0802fea4;
+    t->unk0C = (u32)DoorObjectDraw;
     t->unk38 = gUnk_0875599C;
     t->unk42 = 15;
     u = gCurTask;
@@ -445,20 +445,20 @@ void sub_0802fe64(void)
     TaskSleepForever();
 }
 
-void sub_0802fea4(void)
+void DoorObjectDraw(void)
 {
     struct Task *u;
     u32 *tbl;
 
-    if (gUnk_02004B90[gCurTask->unk76].unk1 != 0)
-        sub_080306b4(gCurTask->unk42, gUnk_087558D0[0], gCurTask->unk3E, gCurTask->unk40, gCurTask->unk54, gCurTask->unk58);
+    if (gDoorStates[gCurTask->unk76].unk1 != 0)
+        QueueWorldSprite(gCurTask->unk42, gUnk_087558D0[0], gCurTask->unk3E, gCurTask->unk40, gCurTask->unk54, gCurTask->unk58);
     else
-        sub_080306b4(gCurTask->unk42, gUnk_087558D0[2], gCurTask->unk3E, gCurTask->unk40, gCurTask->unk54, gCurTask->unk58);
+        QueueWorldSprite(gCurTask->unk42, gUnk_087558D0[2], gCurTask->unk3E, gCurTask->unk40, gCurTask->unk54, gCurTask->unk58);
     u = gCurTask;
     if (u->unk3C != -1)
     {
         tbl = u->unk38;
-        sub_080306b4(u->unk42, tbl[u->unk3C], u->unk3E, u->unk40, u->unk48, u->unk4A);
+        QueueWorldSprite(u->unk42, tbl[u->unk3C], u->unk3E, u->unk40, u->unk48, u->unk4A);
     }
 }
 
@@ -471,9 +471,9 @@ void sub_0802ff70(void)
     if (t->unk3C != -1)
     {
         tbl = t->unk38;
-        sub_080306b4(15, tbl[t->unk3C], t->unk3E, t->unk40, t->unk48, t->unk4A);
+        QueueWorldSprite(15, tbl[t->unk3C], t->unk3E, t->unk40, t->unk48, t->unk4A);
     }
-    sub_080306b4(15, gUnk_087558D0[1], gCurTask->unk3E, gCurTask->unk40, gCurTask->unk54, gCurTask->unk58);
+    QueueWorldSprite(15, gUnk_087558D0[1], gCurTask->unk3E, gCurTask->unk40, gCurTask->unk54, gCurTask->unk58);
 }
 
 s32 sub_0802ffe8(s32 a, s32 x, s32 y)

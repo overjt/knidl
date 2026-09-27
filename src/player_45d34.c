@@ -28,8 +28,8 @@ void TaskSleepForever(void);
 void TaskSetFrame(s32 a);
 s32 sub_08009fcc(s32 a, s32 b, u32 c);
 void sub_0800a130(s32 a, s32 id);
-void sub_080261d4(u16 a);
-void sub_08027204(u32 a);
+void RequestScreenShake(u16 a);
+void SetRoomUpdateFlags(u32 a);
 void PlayerStopAxes(s32 a0);
 void SetPlayerInvulnerability(s32 a0, s32 a1, s32 a2);
 void FreezeOtherTasks(s32 a0);
@@ -91,8 +91,8 @@ void sub_08045d34(void)
         TaskYieldTrampoline(2);
         PlaySfx(160);
         gCurTask->unk88->unk16++;
-        sub_080261d4(4);
-        sub_08027204(2);
+        RequestScreenShake(4);
+        SetRoomUpdateFlags(2);
         CreatePlayerEffect(gCurTask->unk88->unk00, 37, 1);
         gCurTask->unk6C = 0;
         do {
@@ -126,8 +126,8 @@ void sub_08045d34(void)
         TaskYieldTrampoline(1);
         PlaySfx(161);
         gCurTask->unk88->unk16++;
-        sub_080261d4(4);
-        sub_08027204(2);
+        RequestScreenShake(4);
+        SetRoomUpdateFlags(2);
         CreatePlayerEffect(gCurTask->unk88->unk00, 37, 1);
         gCurTask->unk6C = 0;
         do {
@@ -180,8 +180,8 @@ void sub_08045d34(void)
         PlayerStopAxes(2);
         PlaySfx(162);
         gCurTask->unk88->unk16++;
-        sub_080261d4(4);
-        sub_08027204(2);
+        RequestScreenShake(4);
+        SetRoomUpdateFlags(2);
         CreatePlayerEffect(gCurTask->unk88->unk00, 37, 1);
         gCurTask->unk6C = 0;
         do {

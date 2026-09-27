@@ -81,7 +81,7 @@ extern void TaskStopY(void);
 extern void TaskStop(void);
 extern void TaskUpdateFlip(void);
 extern void TaskSetFrame(s32 a);
-extern void sub_080261d4(s32 a);
+extern void RequestScreenShake(s32 a);
 extern void ActorSetState(u16 v);
 extern void ActorSetHitReactions(u32 *p);
 extern void ActorSetAttackBox(u32 v);
@@ -452,7 +452,7 @@ void sub_08091824(void)
     TaskSetFrame(10);
     while (gCurTask->unk7A == 0)
         TaskYieldTrampoline(1);
-    sub_080261d4(2);
+    RequestScreenShake(2);
     PlaySfx(0x1F7);
     sub_0806cc90(0, 4, 16, 4);
     gCurTask->unk7A = 0;
@@ -567,7 +567,7 @@ s32 sub_08091b00(void)
 {
     gCurTask->unk34 = 1;
     sub_0806caa0(1, 0, -8);
-    sub_080261d4(2);
+    RequestScreenShake(2);
     return 0;
 }
 

@@ -26,13 +26,13 @@ extern vu16 gDispCnt;
 extern s8 gUnk_03001F20;
 extern u8 gUnk_03001F30;
 extern struct PlayerState gPlayerStates[];
-extern u8 gUnk_03002340;
+extern u8 gActivePlayerMask;
 extern u16 gLocalPlayer;
 extern u16 gPlayerCount;
 extern s8 gUnk_030023B8;
 extern u16 gGameState;
 extern u8 gUnk_03002400[8][7];
-extern s8 gUnk_03002438;
+extern s8 gStageRequest;
 extern s8 gUnk_03002444;
 extern s16 gUnk_0300244C;
 extern u16 gUnk_0857121C[][11];
@@ -60,8 +60,8 @@ void sub_08008fc4(s32 a0, s32 a1);
 void sub_0800b648(void);
 void ClearColliderLists(void);
 void sub_08027128(void);
-void sub_080271ec(void);
-void sub_08027210(void);
+void PauseRoom(void);
+void ResumeRoom(void);
 void sub_08027228(void);
 void sub_08027240(void);
 void InitPlayerState(s32 a0);
@@ -85,7 +85,7 @@ void sub_08008664(void)
     PlaySfx(232);
     for (i = 0; i < 64; i++)
         TaskSetSkipMask(15, i);
-    sub_080271ec();
+    PauseRoom();
     BeginFastFadeOutToWhite();
     RunLinkFrames(8);
     FadeOutSfx(32);
@@ -108,7 +108,7 @@ void sub_08008664(void)
         gDispCnt |= 0x800;
         id = 27;
     } else {
-        if (!((gUnk_03002340 >> gLocalPlayer) & 1))
+        if (!((gActivePlayerMask >> gLocalPlayer) & 1))
             id = 26;
         gDispCnt &= 0xE0FF;
         gDispCnt |= 0xE00;
@@ -184,7 +184,7 @@ void sub_08008664(void)
         RunLinkFramesUntilFadeDone();
         for (i = 0; i < 64; i++)
             TaskSetSkipMask(0, i);
-        sub_08027210();
+        ResumeRoom();
     }
 }
 
@@ -222,7 +222,7 @@ void sub_08008a00(void)
         InputRecorderUpdate();
         LatchPlayerKeys();
         sub_080075b8();
-        switch (gUnk_03002438) {
+        switch (gStageRequest) {
         case 0:
             break;
         case 1:
@@ -237,7 +237,7 @@ void sub_08008a00(void)
             break;
         case 5:
             sub_08008664();
-            gUnk_03002438 = 0;
+            gStageRequest = 0;
             break;
         case 6:
             gGameState = 22;

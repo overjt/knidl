@@ -125,7 +125,7 @@ extern void TaskSetMotionY(s32 a, s32 b, s32 c);
 extern void TaskStopY(void);
 extern void TaskStop(void);
 extern void TaskSetFrame(s32 a);
-extern void sub_080261d4(s32 a);
+extern void RequestScreenShake(s32 a);
 extern void ActorSetState(u32 v);
 extern void ActorSetHitReactions(u32 *p);
 extern void ActorSetAttackBox(u32 *p);
@@ -814,7 +814,7 @@ s32 sub_0807fbd0(void)
         t->unk54 = -t->unk54;
         break;
     case 1:
-        sub_080261d4(1);
+        RequestScreenShake(1);
         TaskSetEntry(ActorDie, gCurTaskIdx);
         r = 1;
         break;

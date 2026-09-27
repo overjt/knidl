@@ -24,16 +24,16 @@ extern vu16 gDispCnt;
 extern vs32 gBg1ScrollX;
 extern u8 gUnk_03001F34;
 extern struct PlayerState gPlayerStates[];
-extern u8 gUnk_03002340;
+extern u8 gActivePlayerMask;
 extern s16 gSpriteCameraX;
-extern u8 gUnk_03002350;
+extern u8 gActivePlayerCount;
 extern u16 gLocalPlayer;
 extern u16 gPlayerCount;
 extern s32 gUnk_030023B4;
 extern u32 gLatchedPressedKeys[];
 extern s32 gUnk_030023D4;
 extern s16 gSpriteCameraY;
-extern u32 gUnk_03002438[];
+extern u32 gStageRequest[];
 extern s16 gUnk_0300244C;
 extern struct Task *gCurTask;
 extern struct Task gTasks[];
@@ -116,7 +116,7 @@ void sub_0800a008(u32 a, s32 b, s32 c);
 void sub_0800a04c(s32 a, u32 b);
 void sub_08023fd4(void);
 void sub_080258e0(void);
-void sub_08026264(s32 a, s32 b);
+void SetCameraFocus(s32 a, s32 b);
 void sub_08026998(void);
 void sub_08027178(void);
 void sub_08033d0c(void);
@@ -281,7 +281,7 @@ void sub_0805b16c(void)
     gUnk_03001F34 = 1;
     gUnk_02007CF0 = 0;
     *(s8 *)gUnk_02008010 = -1;
-    *(s8 *)gUnk_03002438 = 0;
+    *(s8 *)gStageRequest = 0;
     q = gUnk_02007FB8;
     z = 0;
     p = q + 2;
@@ -300,7 +300,7 @@ void sub_0805b278(void)
     {
         if ((s16)gCurTask->unk6C == gCurTask->unk88->unk00)
             gCurTask->unk2C = gUnk_030023D4;
-        if (((gUnk_03002340 >> (s16)gCurTask->unk6C) & 1) != 0)
+        if (((gActivePlayerMask >> (s16)gCurTask->unk6C) & 1) != 0)
             gUnk_030023D4++;
         gCurTask->unk6C++;
     }
@@ -338,12 +338,12 @@ void sub_0805b370(void)
         } while ((s16)gCurTask->unk6C <= 6);
         TaskCreateFrom(90, 32);
     }
-    gCurTask->unk4C = gUnk_0873DBAC[gUnk_03002350 * 4 + gCurTask->unk2C] << 16;
+    gCurTask->unk4C = gUnk_0873DBAC[gActivePlayerCount * 4 + gCurTask->unk2C] << 16;
     gCurTask->unk50 = 232 << 18;
     TaskCreateFrom(88, 32);
     gCurTask->unk28 = TaskCreateFrom(84, 32);
     (gTasks + gCurTask->unk28)->unk73 = gCurTask->unk88->unk00;
-    if (gUnk_03002350 > 1)
+    if (gActivePlayerCount > 1)
     {
         gCurTask->unk46 = TaskCreateFrom(87, 32);
         (gTasks + gCurTask->unk46)->unk73 = gCurTask->unk88->unk00;
@@ -607,7 +607,7 @@ void sub_0805ba08(void)
         gCurTask->unk6C = 0;
         while ((s16)gCurTask->unk6C < gPlayerCount)
         {
-            if (((gUnk_03002340 >> (s16)gCurTask->unk6C) & 1) != 0
+            if (((gActivePlayerMask >> (s16)gCurTask->unk6C) & 1) != 0
              && gTasks[(s16)gCurTask->unk6C].unk30 == gCurTask->unk30)
             {
                 if ((s16)gCurTask->unk6C == gCurTaskIdx)
@@ -751,7 +751,7 @@ void sub_0805bd34(void)
     while (gUnk_02007D00[8] != 0)
         TaskYieldTrampoline(1);
     TaskYieldTrampoline(10);
-    *(s8 *)gUnk_03002438 = 1;
+    *(s8 *)gStageRequest = 1;
     TaskSleepForever();
 }
 
@@ -762,7 +762,7 @@ void sub_0805be3c(void)
 
 void sub_0805be48(void)
 {
-    if (((gUnk_03002340 >> gLocalPlayer) & 1) != 0
+    if (((gActivePlayerMask >> gLocalPlayer) & 1) != 0
      && gLocalPlayer == gCurTask->unk88->unk00
      && (gFrameCount & 4) != 0)
         QueueSprite(8, 0x085B9B2C, 0, 0x00009010, 120, 70);
@@ -1010,7 +1010,7 @@ void sub_0805c5fc(void)
 {
     gCurTask->unk00 = (u32)TaskMove;
     gCurTask->unk04 = (u32)sub_0805c990;
-    if ((gUnk_03002340 >> gLocalPlayer) & 1)
+    if ((gActivePlayerMask >> gLocalPlayer) & 1)
     {
         TaskStop();
         gCurTask->unk28 = -1;
@@ -1053,7 +1053,7 @@ void sub_0805c5fc(void)
     {
         for (gUnk_030023D4 = 0; gUnk_030023D4 < gPlayerCount; gUnk_030023D4++)
         {
-            if ((gUnk_03002340 >> gUnk_030023D4) & 1)
+            if ((gActivePlayerMask >> gUnk_030023D4) & 1)
             {
                 gCurTask->unk28 = gUnk_030023D4;
                 break;
@@ -1112,7 +1112,7 @@ void sub_0805c990(void)
     y = gCurTask->unk4A + gCurTask->unk2C;
     if ((s16)y > 0x41C)
         y = 0x41C;
-    sub_08026264((s16)x, (s16)y);
+    SetCameraFocus((s16)x, (s16)y);
     if (gCurTask->unk2C != 0)
     {
         if (gCurTask->unk2C > 0)
@@ -1134,7 +1134,7 @@ void sub_0805c990(void)
         {
             if ((s16)gTasks[gCurTask->unk28].unk70 < 0)
             {
-                if (((gUnk_03002340 >> gUnk_030023D4) & 1)
+                if (((gActivePlayerMask >> gUnk_030023D4) & 1)
                     && gCurTask->unk28 != gUnk_030023D4
                     && (s16)gTasks[gUnk_030023D4].unk70 >= 0)
                 {
@@ -1147,7 +1147,7 @@ void sub_0805c990(void)
             }
             else
             {
-                if (((gUnk_03002340 >> gUnk_030023D4) & 1)
+                if (((gActivePlayerMask >> gUnk_030023D4) & 1)
                     && gCurTask->unk28 != gUnk_030023D4
                     && (s16)gTasks[gUnk_030023D4].unk70 > 0
                     && gTasks[gCurTask->unk28].unk34
@@ -1170,7 +1170,7 @@ void sub_0805cb30(void)
     gCurTask->unk00 = (u32)TaskMove;
     gCurTask->unk0C = (u32)TaskDrawWorld;
     gCurTask->unk42 = 8;
-    if (gUnk_03002350 == 1)
+    if (gActivePlayerCount == 1)
         gCurTask->unk38 = gUnk_08754850;
     else
         gCurTask->unk38 = (u32 *)gUnk_0873DD4C[gCurTask->unk73];
@@ -1178,7 +1178,7 @@ void sub_0805cb30(void)
     {
         s16 *tbl = (s16 *)gUnk_0873DBAC;
 
-        gCurTask->unk4C = tbl[(gUnk_03002350 << 2)
+        gCurTask->unk4C = tbl[(gActivePlayerCount << 2)
             + gTasks[gCurTask->unk44].unk2C] << 16;
     }
     gCurTask->unk50 = 131 << 19;
@@ -1331,7 +1331,7 @@ void sub_0805cf3c(void)
     switch (gCurTask->unk73)
     {
     case 1:
-        if (((gUnk_03002340 >> gLocalPlayer) & 1)
+        if (((gActivePlayerMask >> gLocalPlayer) & 1)
             && (gTasks + gLocalPlayer)->unk30 != 0)
             gCurTask->unk0C = 0;
         gCurTask->unk4C = 244 << 16;
@@ -1399,7 +1399,7 @@ void sub_0805cf3c(void)
              (s16)gCurTask->unk6C < gPlayerCount;
              gCurTask->unk6C++)
         {
-            if (((gUnk_03002340 >> (s16)gCurTask->unk6C) & 1)
+            if (((gActivePlayerMask >> (s16)gCurTask->unk6C) & 1)
                 && (gTasks + (s16)gCurTask->unk6C)->unk30 == 0)
             {
                 gCurTask->unk2C |= 1 << (s16)gCurTask->unk6C;
@@ -1435,7 +1435,7 @@ void sub_0805cf3c(void)
                      gCurTask->unk6E < gPlayerCount;
                      gCurTask->unk6E++)
                 {
-                    if (((gUnk_03002340 >> gCurTask->unk6E) & 1)
+                    if (((gActivePlayerMask >> gCurTask->unk6E) & 1)
                         && ((u8 *)gUnk_02006A14)[gCurTask->unk6E] == 0)
                     {
                         gCurTask->unk46 = TaskCreateFrom(89, 32);
@@ -1498,7 +1498,7 @@ void sub_0805d420(void)
          (s16)gCurTask->unk6C >= 0;
          gCurTask->unk6C--)
     {
-        if (((gUnk_03002340 >> (s16)gCurTask->unk6C) & 1)
+        if (((gActivePlayerMask >> (s16)gCurTask->unk6C) & 1)
             && ((gCurTask->unk2C >> (s16)gCurTask->unk6C) & 1)
             && gCurTask->unk48 < gUnk_0873DBAC[(gCurTask->unk30 << 2) + gCurTask->unk34] - 6)
         {
@@ -1844,7 +1844,7 @@ void sub_0805dc18(void)
 
 void sub_0805dd4c(void)
 {
-    if (gUnk_03002350 == 1)
+    if (gActivePlayerCount == 1)
     {
         if ((s16)gTaskSlotTypes[gCurTask->unk46] == -1)
             sub_0805deac();
@@ -1889,7 +1889,7 @@ void sub_0805deac(void)
 
     for (i = 0; i < gPlayerCount; i++)
     {
-        if (((gUnk_03002340 >> i) & 1) != 0)
+        if (((gActivePlayerMask >> i) & 1) != 0)
         {
             if (gPlayerCount != 1)
             {
