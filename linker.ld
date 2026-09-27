@@ -92,8 +92,9 @@ SECTIONS
         build/src/early_1fd0.o(.text)
     } > ROM
 
-    .game_code_early_080011ac_08002378 0x08002378 : {
-        KEEP(*(.game_code_early_080011ac_08002378)) KEEP(*(.game_code_early_080011ac_08002378.tail))
+    /* early_2378 — decompiled to C (src/early_2378.c, carved by tools/carve.py) */
+    .early_2378 0x08002378 : {
+        build/src/early_2378.o(.text)
     } > ROM
 
     /* early_2668 — decompiled to C (src/early_2668.c, carved by tools/carve.py) */
