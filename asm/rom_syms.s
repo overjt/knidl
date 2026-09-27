@@ -205,8 +205,8 @@ gBreakingBlocks = 0x020061F0
 gUnk_020069F0 = 0x020069F0
 	.global	gHudHpBars
 gHudHpBars = 0x02006A00
-	.global	gUnk_02006A10
-gUnk_02006A10 = 0x02006A10
+	.global	gBombRallySeats
+gBombRallySeats = 0x02006A10
 	.global	gUnk_02006A14
 gUnk_02006A14 = 0x02006A14
 	.global	gDoorObjectTasks
@@ -329,8 +329,8 @@ gUnk_0200AF04 = 0x0200AF04
 gUnk_0200AF08 = 0x0200AF08
 	.global	gUnk_0200AF0C
 gUnk_0200AF0C = 0x0200AF0C
-	.global	gUnk_0200AF10
-gUnk_0200AF10 = 0x0200AF10
+	.global	gBombRallyOutMask
+gBombRallyOutMask = 0x0200AF10
 	.global	gPlayerAbilityUses
 gPlayerAbilityUses = 0x0200AF18
 	.global	gUnk_0200AF20
@@ -339,8 +339,8 @@ gUnk_0200AF20 = 0x0200AF20
 gUnk_0200AFE0 = 0x0200AFE0
 	.global	gPlayerBubbleTimers
 gPlayerBubbleTimers = 0x0200AFE8
-	.global	gUnk_0200AFF0
-gUnk_0200AFF0 = 0x0200AFF0
+	.global	gBombRallyOutCount
+gBombRallyOutCount = 0x0200AFF0
 	.global	gUnk_0200AFF4
 gUnk_0200AFF4 = 0x0200AFF4
 	.global	gUnk_0200AFF8
@@ -361,8 +361,8 @@ gUnk_0200B038 = 0x0200B038
 gQuickDrawWins = 0x0200B03C
 	.global	gHBlankScrollStarted
 gHBlankScrollStarted = 0x0200B040
-	.global	gUnk_0200B044
-gUnk_0200B044 = 0x0200B044
+	.global	gBombRallyFinishOrder
+gBombRallyFinishOrder = 0x0200B044
 	.global	gUnk_0200B048
 gUnk_0200B048 = 0x0200B048
 	.global	gUnk_0200B04C

@@ -14,7 +14,7 @@
  *       Task.unk1C / Task.unk20).
  *   sub_080c18c8 / sub_080c1950    slot placement: Task.posX/unk50 from
  *       gUnk_08757250/gUnk_08757260, and the per-slot horizontal offset
- *       switch over gUnk_0200B044[Task.unk20].
+ *       switch over gBombRallyFinishOrder[Task.unk20].
  *   sub_080c1b30 / sub_080c1b78    the results task.
  *   sub_080c1be8 / sub_080c1cec / sub_080c1d84   the three ranking markers.
  *   sub_080c1ebc   walks the 4-direction path script at gUnk_08757280 in
@@ -29,10 +29,10 @@
 
 extern s8 gSubGameLevel;
 extern u8 gUnk_020061DC;
-extern s8 gUnk_02006A10[];
-extern u8 gUnk_0200AF10;
-extern u8 gUnk_0200AFF0;
-extern u8 gUnk_0200B044[];
+extern s8 gBombRallySeats[];
+extern u8 gBombRallyOutMask;
+extern u8 gBombRallyOutCount;
+extern u8 gBombRallyFinishOrder[];
 extern u16 gFadeSteps;
 extern u8 gObjPalette[];
 extern vs32 gBg3ScrollX;
@@ -101,11 +101,11 @@ extern u8 gUnk_08756570[];
 extern u8 gUnk_0875665C[];
 extern u8 gUnk_0875665F[];
 extern u8 gUnk_08756662[];
-extern u32 gUnk_08756668[];
-extern u32 gUnk_08756670[];
-extern u32 gUnk_08756678[];
-extern u32 gUnk_08756680[];
-extern u32 gUnk_08756688[];
+extern u32 gBombRallyStates[];
+extern u32 gBombRallyStateUpdates[];
+extern u32 gBombRallyResultsStates[];
+extern u32 gBombRallyResultsStateUpdates[];
+extern u32 gBombRallyObjectVariants[];
 extern u32 gUnk_08755DC0;
 extern u16 gUnk_08756538[];
 extern u8 gUnk_087565E0[];
@@ -117,8 +117,8 @@ extern s16 gUnk_08756734[];
 extern s8 gUnk_08756740[];
 extern s8 gUnk_08756744[];
 extern s8 gUnk_08756748[];
-extern u32 gUnk_087566A4[];
-extern u32 gUnk_087566D8[];
+extern u32 gBombRallyPlayerStates[];
+extern u32 gBombRallyPlayerStateUpdates[];
 
 extern void TaskYieldTrampoline(u32 frames);
 
@@ -153,26 +153,26 @@ extern void SubGameReplay(s32 a);
 extern void SubGameQuit(void);
 extern void SubGameCheckEnd(void);
 
-extern void sub_080bda78(void);
-extern void sub_080bda98(void);
-extern u32 sub_080bdd28(void);
-extern u32 sub_080bdd70(void);
+extern void BombRallyRoundUpdate(void);
+extern void BombRallyEnterState(void);
+extern u32 BombRallyKnockOutTurnPlayer(void);
+extern u32 BombRallyIsMatchOver(void);
 extern void sub_080bddb8(void);
 extern void sub_080bde0c(void);
 extern void sub_080bde78(u32 a);
-extern void sub_080be04c(void);
-extern void sub_080be1b0(void);
-extern void sub_080be1d0(void);
+extern void BombRallySeatPlayers(void);
+extern void BombRallyResultsUpdate(void);
+extern void BombRallyResultsEnterState(void);
 extern void sub_080be4a4(void);
 extern void sub_080be550(void);
 extern void sub_080be5fc(void);
 extern void sub_080be6b4(u32 a);
 extern void sub_080be714(u32 a);
-extern void sub_080be774(void);
-extern void sub_080be850(void);
+extern void BombRallyAwardLives(void);
+extern void BombRallyPlayerUpdate(void);
 extern u32 sub_080bf0ac(void);
 extern void sub_080bf154(void);
-extern void sub_080be8a8(void);
+extern void BombRallyPlayerEnterState(void);
 extern void sub_080bfdb0(void);
 extern void sub_080bfdcc(void);
 extern void sub_080be010(void);
@@ -694,7 +694,7 @@ void sub_080c183c(void)
         u->posY = gUnk_08757260[u->unk18] << 16;
     }
     v = gCurTask;
-    v->frame = gUnk_0200B044[v->unk20];
+    v->frame = gBombRallyFinishOrder[v->unk20];
     TaskSleepForever();
 }
 
@@ -720,7 +720,7 @@ void sub_080c18c8(void)
         u->posX = gUnk_08757250[u->unk18] << 16;
         u->posY = gUnk_08757260[u->unk18] << 16;
     }
-    n = gUnk_0200B044[gCurTask->unk20];
+    n = gBombRallyFinishOrder[gCurTask->unk20];
     switch (n) {
     case 3:
         gCurTask->unk2C = -16;
@@ -745,7 +745,7 @@ void sub_080c1950(void)
     struct Task *z;
     s32 r;
 
-    switch (gUnk_0200B044[gCurTask->unk20]) {
+    switch (gBombRallyFinishOrder[gCurTask->unk20]) {
     case 3:
         t = gCurTask;
         if (t->unk28 > 39) {
@@ -808,7 +808,7 @@ void sub_080c1ab8(void)
         u->posY = (gUnk_08757260[u->unk18] - 24) << 16;
     }
     v = gCurTask;
-    v->frame = gUnk_0200B044[v->unk20] + 2;
+    v->frame = gBombRallyFinishOrder[v->unk20] + 2;
     TaskSleepForever();
 }
 

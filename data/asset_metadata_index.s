@@ -10914,10 +10914,10 @@ gUnk_08756560:
 	.global	gUnk_08756564
 gUnk_08756564:
 	.incbin	"baserom.gba", 0x756564, 0x4
-	.global	gUnk_08756568
-gUnk_08756568:
-	.word	sub_080bda2c+1
-	.word	sub_080be164+1
+	.global	gBombRallyPhases
+gBombRallyPhases:
+	.word	BombRallyRound+1
+	.word	BombRallyResults+1
 	.global	gUnk_08756570
 gUnk_08756570:
 	.incbin	"baserom.gba", 0x756570, 0x70
@@ -10950,33 +10950,33 @@ gUnk_0875665F:
 	.global	gUnk_08756662
 gUnk_08756662:
 	.incbin	"baserom.gba", 0x756662, 0x6
-	.global	gUnk_08756668
-gUnk_08756668:
-	.word	sub_080bdab4+1
-	.word	sub_080bdc40+1
-	.global	gUnk_08756670
-gUnk_08756670:
-	.word	sub_080bdc18+1
-	.word	sub_080bdd00+1
-	.global	gUnk_08756678
-gUnk_08756678:
-	.word	sub_080be1ec+1
-	.word	sub_080be318+1
-	.global	gUnk_08756680
-gUnk_08756680:
-	.word	sub_080be2f0+1
-	.word	sub_080be4a0+1
-	.global	gUnk_08756688
-gUnk_08756688:
-	.word	sub_080be7fc+1
+	.global	gBombRallyStates
+gBombRallyStates:
+	.word	BombRallyRoundPass+1
+	.word	BombRallyRoundNext+1
+	.global	gBombRallyStateUpdates
+gBombRallyStateUpdates:
+	.word	BombRallyRoundPassUpdate+1
+	.word	BombRallyRoundNextUpdate+1
+	.global	gBombRallyResultsStates
+gBombRallyResultsStates:
+	.word	BombRallyResultsShow+1
+	.word	BombRallyResultsMenu+1
+	.global	gBombRallyResultsStateUpdates
+gBombRallyResultsStateUpdates:
+	.word	BombRallyResultsShowUpdate+1
+	.word	BombRallyResultsMenuUpdate+1
+	.global	gBombRallyObjectVariants
+gBombRallyObjectVariants:
+	.word	BombRallyPlayer+1
 	.word	sub_080bfd80+1
 	.word	sub_080c0c58+1
 	.word	sub_080c0d30+1
 	.word	sub_080c173c+1
 	.word	sub_080c17b0+1
 	.word	sub_080c1b30+1
-	.global	gUnk_087566A4
-gUnk_087566A4:
+	.global	gBombRallyPlayerStates
+gBombRallyPlayerStates:
 	.word	sub_080be8c4+1
 	.word	sub_080beb08+1
 	.word	sub_080bebd4+1
@@ -10990,8 +10990,8 @@ gUnk_087566A4:
 	.word	sub_080bf994+1
 	.word	sub_080bfb4c+1
 	.word	sub_080bfbf4+1
-	.global	gUnk_087566D8
-gUnk_087566D8:
+	.global	gBombRallyPlayerStateUpdates
+gBombRallyPlayerStateUpdates:
 	.word	sub_080beae0+1
 	.word	sub_080beb54+1
 	.word	sub_080becc0+1

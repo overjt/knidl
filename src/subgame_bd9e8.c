@@ -6,7 +6,7 @@
  *
  * The bomb-pass game's two framework hooks (sub-game 1 of the tables in
  * src/subgame_b9d0c.c): the init hook that clears the elimination state
- * M36 keeps in gUnk_0200AFF0 / gUnk_0200AF10 / gUnk_0200B044[], and the task
+ * M36 keeps in gBombRallyOutCount / gBombRallyOutMask / gBombRallyFinishOrder[], and the task
  * body that dispatches the game's phase through 0x08756568.  That table sits
  * among M36's own rodata (0x08756528-0x08756564, 0x08756570 on), so these two
  * probably belong to M36's translation unit; they are a file of their own
@@ -17,26 +17,26 @@
 #include "task.h"
 
 extern u8 gSubGamePhase;
-extern u8 gUnk_0200AF10;
-extern u8 gUnk_0200AFF0;
-extern u8 gUnk_0200B044[];
-extern u32 gUnk_08756568[];
+extern u8 gBombRallyOutMask;
+extern u8 gBombRallyOutCount;
+extern u8 gBombRallyFinishOrder[];
+extern u32 gBombRallyPhases[];
 
 void CallTableEntry(u32 a, u32 b, u32 *c);
 void TaskSleepForever(void);
 
 void BombRallyInit(void)
 {
-    gUnk_0200AFF0 = 0;
-    gUnk_0200AF10 = 0;
-    gUnk_0200B044[3] = 3;
-    gUnk_0200B044[2] = 3;
-    gUnk_0200B044[1] = 3;
-    gUnk_0200B044[0] = 3;
+    gBombRallyOutCount = 0;
+    gBombRallyOutMask = 0;
+    gBombRallyFinishOrder[3] = 3;
+    gBombRallyFinishOrder[2] = 3;
+    gBombRallyFinishOrder[1] = 3;
+    gBombRallyFinishOrder[0] = 3;
 }
 
 void BombRallyMain(void)
 {
-    CallTableEntry(gSubGamePhase, 2, gUnk_08756568);
+    CallTableEntry(gSubGamePhase, 2, gBombRallyPhases);
     TaskSleepForever();
 }

@@ -38,10 +38,10 @@
 
 extern s8 gSubGameLevel;
 extern u8 gUnk_020061DC;
-extern s8 gUnk_02006A10[];
-extern u8 gUnk_0200AF10;
-extern u8 gUnk_0200AFF0;
-extern u8 gUnk_0200B044[];
+extern s8 gBombRallySeats[];
+extern u8 gBombRallyOutMask;
+extern u8 gBombRallyOutCount;
+extern u8 gBombRallyFinishOrder[];
 extern u16 gFadeSteps;
 extern u8 gObjPalette[];
 extern vs32 gBg3ScrollX;
@@ -95,11 +95,11 @@ extern u8 gUnk_08756570[];
 extern u8 gUnk_0875665C[];
 extern u8 gUnk_0875665F[];
 extern u8 gUnk_08756662[];
-extern u32 gUnk_08756668[];
-extern u32 gUnk_08756670[];
-extern u32 gUnk_08756678[];
-extern u32 gUnk_08756680[];
-extern u32 gUnk_08756688[];
+extern u32 gBombRallyStates[];
+extern u32 gBombRallyStateUpdates[];
+extern u32 gBombRallyResultsStates[];
+extern u32 gBombRallyResultsStateUpdates[];
+extern u32 gBombRallyObjectVariants[];
 extern u32 gUnk_08755DC0;
 extern u16 gUnk_08756538[];
 extern u8 gUnk_087565E0[];
@@ -111,8 +111,8 @@ extern s16 gUnk_08756734[];
 extern s8 gUnk_08756740[];
 extern s8 gUnk_08756744[];
 extern s8 gUnk_08756748[];
-extern u32 gUnk_087566A4[];
-extern u32 gUnk_087566D8[];
+extern u32 gBombRallyPlayerStates[];
+extern u32 gBombRallyPlayerStateUpdates[];
 
 extern void TaskYieldTrampoline(u32 frames);
 
@@ -143,26 +143,26 @@ extern void SubGameReplay(s32 a);
 extern void SubGameQuit(void);
 extern void SubGameCheckEnd(void);
 
-extern void sub_080bda78(void);
-extern void sub_080bda98(void);
-extern u32 sub_080bdd28(void);
-extern u32 sub_080bdd70(void);
+extern void BombRallyRoundUpdate(void);
+extern void BombRallyEnterState(void);
+extern u32 BombRallyKnockOutTurnPlayer(void);
+extern u32 BombRallyIsMatchOver(void);
 extern void sub_080bddb8(void);
 extern void sub_080bde0c(void);
 extern void sub_080bde78(u32 a);
-extern void sub_080be04c(void);
-extern void sub_080be1b0(void);
-extern void sub_080be1d0(void);
+extern void BombRallySeatPlayers(void);
+extern void BombRallyResultsUpdate(void);
+extern void BombRallyResultsEnterState(void);
 extern void sub_080be4a4(void);
 extern void sub_080be550(void);
 extern void sub_080be5fc(void);
 extern void sub_080be6b4(u32 a);
 extern void sub_080be714(u32 a);
-extern void sub_080be774(void);
-extern void sub_080be850(void);
+extern void BombRallyAwardLives(void);
+extern void BombRallyPlayerUpdate(void);
 extern u32 sub_080bf0ac(void);
 extern void sub_080bf154(void);
-extern void sub_080be8a8(void);
+extern void BombRallyPlayerEnterState(void);
 extern void sub_080bfdb0(void);
 extern void sub_080bfdcc(void);
 extern void sub_080be010(void);
@@ -247,7 +247,7 @@ void sub_080bf994(void)
 void sub_080bfb24(void)
 {
     if (gCurTask->state != 10)
-        TaskSetEntry(sub_080be8a8, gCurTaskIdx);
+        TaskSetEntry(BombRallyPlayerEnterState, gCurTaskIdx);
 }
 
 void sub_080bfb4c(void)
@@ -278,7 +278,7 @@ void sub_080bfb94(void)
     if ((u->unk34 == ((t->unk1C + 3) & 3) && u->unk28 <= 2)
      || (u->unk34 == ((t->unk1C + 1) & 3) && u->unk28 > 2)) {
         gCurTask->state = 12;
-        TaskSetEntry(sub_080be8a8, gCurTaskIdx);
+        TaskSetEntry(BombRallyPlayerEnterState, gCurTaskIdx);
     }
 }
 
@@ -362,7 +362,7 @@ void sub_080bfbf4(void)
 void sub_080bfd58(void)
 {
     if (gCurTask->state != 12)
-        TaskSetEntry(sub_080be8a8, gCurTaskIdx);
+        TaskSetEntry(BombRallyPlayerEnterState, gCurTaskIdx);
 }
 
 void sub_080bfd80(void)

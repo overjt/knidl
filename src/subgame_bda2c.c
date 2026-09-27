@@ -17,12 +17,12 @@
  * 0x0875665C/0x0875665F/0x08756662, indexed by the player count in
  * gSubGameLevel).
  *
- *   sub_080bda2c   entry: install the dispatchers and kick BGM 0x82E
- *   sub_080bdab4   the beat loop (states 0..6 in Task.unk28)
- *   sub_080bdd28   "is this a record?" over gUnk_02006A10[]
+ *   BombRallyRound   entry: install the dispatchers and kick BGM 0x82E
+ *   BombRallyRoundPass   the beat loop (states 0..6 in Task.unk28)
+ *   BombRallyKnockOutTurnPlayer   "is this a record?" over gBombRallySeats[]
  *   sub_080bdebc   / sub_080bdf3c / sub_080bdf9c   sprite placement helpers
- *   sub_080be04c   the per-round randomiser (slot + winner)
- *   sub_080be1ec   the vblank-flag wait (goto/do-while shape, lesson 6)
+ *   BombRallySeatPlayers   the per-round randomiser (slot + winner)
+ *   BombRallyResultsShow   the vblank-flag wait (goto/do-while shape, lesson 6)
  *   sub_080bf0ac   the button-timing judgement against the 5-byte records
  *                  at 0x087565F4 (thresholds -> Task.unk20 = 2/1/0)
  *   sub_080bf394   the per-turn state advance: RNG over gUnk_087565E0,
@@ -35,10 +35,10 @@
 
 extern s8 gSubGameLevel;
 extern u8 gUnk_020061DC;
-extern s8 gUnk_02006A10[];
-extern u8 gUnk_0200AF10;
-extern u8 gUnk_0200AFF0;
-extern u8 gUnk_0200B044[];
+extern s8 gBombRallySeats[];
+extern u8 gBombRallyOutMask;
+extern u8 gBombRallyOutCount;
+extern u8 gBombRallyFinishOrder[];
 extern u16 gFadeSteps;
 extern u8 gObjPalette[];
 extern vs32 gBg3ScrollX;
@@ -55,11 +55,11 @@ extern u8 gUnk_08756570[];
 extern u8 gUnk_0875665C[];
 extern u8 gUnk_0875665F[];
 extern u8 gUnk_08756662[];
-extern u32 gUnk_08756668[];
-extern u32 gUnk_08756670[];
-extern u32 gUnk_08756678[];
-extern u32 gUnk_08756680[];
-extern u32 gUnk_08756688[];
+extern u32 gBombRallyStates[];
+extern u32 gBombRallyStateUpdates[];
+extern u32 gBombRallyResultsStates[];
+extern u32 gBombRallyResultsStateUpdates[];
+extern u32 gBombRallyObjectVariants[];
 extern u32 gUnk_08755DC0;
 extern u16 gUnk_08756538[];
 extern u8 gUnk_087565E0[];
@@ -71,8 +71,8 @@ extern s16 gUnk_08756734[];
 extern s8 gUnk_08756740[];
 extern s8 gUnk_08756744[];
 extern s8 gUnk_08756748[];
-extern u32 gUnk_087566A4[];
-extern u32 gUnk_087566D8[];
+extern u32 gBombRallyPlayerStates[];
+extern u32 gBombRallyPlayerStateUpdates[];
 
 extern void TaskYieldTrampoline(u32 frames);
 
@@ -98,53 +98,53 @@ extern void SubGameReplay(s32 a);
 extern void SubGameQuit(void);
 extern void SubGameCheckEnd(void);
 
-extern void sub_080bda78(void);
-extern void sub_080bda98(void);
-extern u32 sub_080bdd28(void);
-extern u32 sub_080bdd70(void);
+extern void BombRallyRoundUpdate(void);
+extern void BombRallyEnterState(void);
+extern u32 BombRallyKnockOutTurnPlayer(void);
+extern u32 BombRallyIsMatchOver(void);
 extern void sub_080bddb8(void);
 extern void sub_080bde0c(void);
 extern void sub_080bde78(u32 a);
-extern void sub_080be04c(void);
-extern void sub_080be1b0(void);
-extern void sub_080be1d0(void);
+extern void BombRallySeatPlayers(void);
+extern void BombRallyResultsUpdate(void);
+extern void BombRallyResultsEnterState(void);
 extern void sub_080be4a4(void);
 extern void sub_080be550(void);
 extern void sub_080be5fc(void);
 extern void sub_080be6b4(u32 a);
 extern void sub_080be714(u32 a);
-extern void sub_080be774(void);
-extern void sub_080be850(void);
+extern void BombRallyAwardLives(void);
+extern void BombRallyPlayerUpdate(void);
 extern u32 sub_080bf0ac(void);
 extern void sub_080bf154(void);
-extern void sub_080be8a8(void);
+extern void BombRallyPlayerEnterState(void);
 extern void sub_080bdf3c(s32 a, s32 b, u32 c, u32 d);
 extern void sub_080be7c0(u32 a);
 
-void sub_080bda2c(void)
+void BombRallyRound(void)
 {
-    gCurTask->updateCallback = (u32)sub_080bda78;
+    gCurTask->updateCallback = (u32)BombRallyRoundUpdate;
     sub_080bddb8();
-    sub_080be04c();
+    BombRallySeatPlayers();
     gCurTask->unk28 = -3;
     PlayBgm(0x82E);
     gCurTask->state = 0;
-    CallTableEntry(gCurTask->state, 2, gUnk_08756668);
+    CallTableEntry(gCurTask->state, 2, gBombRallyStates);
     TaskSleepForever();
 }
 
-void sub_080bda78(void)
+void BombRallyRoundUpdate(void)
 {
-    CallTableEntry(gCurTask->updateState, 2, gUnk_08756670);
+    CallTableEntry(gCurTask->updateState, 2, gBombRallyStateUpdates);
     SubGameCheckEnd();
 }
 
-void sub_080bda98(void)
+void BombRallyEnterState(void)
 {
-    CallTableEntry(gCurTask->state, 2, gUnk_08756668);
+    CallTableEntry(gCurTask->state, 2, gBombRallyStates);
 }
 
-void sub_080bdab4(void)
+void BombRallyRoundPass(void)
 {
     struct Task *t;
     struct Task *u;
@@ -196,33 +196,33 @@ void sub_080bdab4(void)
         }
     }
     gCurTask->unk28 = 6;
-    if (sub_080bdd28())
+    if (BombRallyKnockOutTurnPlayer())
         StopBgm();
     TaskYieldTrampoline(120);
     gCurTask->state = 1;
     TaskSleepForever();
 }
 
-void sub_080bdc18(void)
+void BombRallyRoundPassUpdate(void)
 {
     if (gCurTask->state != 0)
-        TaskSetEntry(sub_080bda98, gCurTaskIdx);
+        TaskSetEntry(BombRallyEnterState, gCurTaskIdx);
 }
 
-void sub_080bdc40(void)
+void BombRallyRoundNext(void)
 {
     u8 i;
 
     gCurTask->updateState = 1;
-    if (sub_080bdd70()) {
-        while (gUnk_0200AFF0 != 3) {
+    if (BombRallyIsMatchOver()) {
+        while (gBombRallyOutCount != 3) {
             for (i = 0; i < 4; i++) {
-                if (gUnk_0200B044[i] == 3) {
-                    gUnk_0200B044[i] = gUnk_0200AFF0;
+                if (gBombRallyFinishOrder[i] == 3) {
+                    gBombRallyFinishOrder[i] = gBombRallyOutCount;
                     break;
                 }
             }
-            gUnk_0200AFF0++;
+            gBombRallyOutCount++;
         }
         gCurTask->unk18 = 2;
     } else {
@@ -238,30 +238,30 @@ void sub_080bdc40(void)
     TaskSleepForever();
 }
 
-void sub_080bdd00(void)
+void BombRallyRoundNextUpdate(void)
 {
     if (gCurTask->state != 1)
-        TaskSetEntry(sub_080bda98, gCurTaskIdx);
+        TaskSetEntry(BombRallyEnterState, gCurTaskIdx);
 }
 
-u32 sub_080bdd28(void)
+u32 BombRallyKnockOutTurnPlayer(void)
 {
-    s32 i = gUnk_02006A10[gCurTask->unk34];
+    s32 i = gBombRallySeats[gCurTask->unk34];
 
-    gUnk_0200B044[i] = gUnk_0200AFF0;
-    gUnk_0200AFF0++;
-    gUnk_0200AF10 |= 1 << i;
-    return sub_080bdd70();
+    gBombRallyFinishOrder[i] = gBombRallyOutCount;
+    gBombRallyOutCount++;
+    gBombRallyOutMask |= 1 << i;
+    return BombRallyIsMatchOver();
 }
 
-u32 sub_080bdd70(void)
+u32 BombRallyIsMatchOver(void)
 {
     s32 i;
     s32 mask = 0;
 
     for (i = 0; i < gPlayerCount; i++)
         mask += 1 << i;
-    if (gUnk_0200AFF0 == 3 || (gUnk_0200AF10 & mask) == mask)
+    if (gBombRallyOutCount == 3 || (gBombRallyOutMask & mask) == mask)
         return 1;
     return 0;
 }
@@ -376,7 +376,7 @@ void sub_080be010(void)
     }
 }
 
-void sub_080be04c(void)
+void BombRallySeatPlayers(void)
 {
     u8 arr[4];
     s32 mask;
@@ -398,16 +398,16 @@ void sub_080be04c(void)
     }
     r = RandomRange(gPlayerCount);
     for (i = 0; i <= 3; i++) {
-        gUnk_02006A10[i] = arr[(slot + i) & 3];
-        if (gUnk_02006A10[i] == r)
+        gBombRallySeats[i] = arr[(slot + i) & 3];
+        if (gBombRallySeats[i] == r)
             gCurTask->unk34 = i;
-        RequestCopy(2, gUnk_08756528[gUnk_02006A10[i]],
+        RequestCopy(2, gUnk_08756528[gBombRallySeats[i]],
                      (u32)(gObjPalette + (i << 5)), 32);
     }
     sub_080bde78(0);
     for (i = 0; i <= 3; i++) {
         for (j = 0; j < 4; j++)
-            if (i == gUnk_02006A10[j])
+            if (i == gBombRallySeats[j])
                 break;
         k = TaskCreateFrom(0x5F, 32);
         if (k != -1) {
@@ -421,29 +421,29 @@ void sub_080be04c(void)
     }
 }
 
-void sub_080be164(void)
+void BombRallyResults(void)
 {
-    gCurTask->updateCallback = (u32)sub_080be1b0;
+    gCurTask->updateCallback = (u32)BombRallyResultsUpdate;
     sub_080be4a4();
     gBg3ScrollX = 0x780000;
     gBg3ScrollY = 0;
     gCurTask->state = 0;
-    CallTableEntry(gCurTask->state, 2, gUnk_08756678);
+    CallTableEntry(gCurTask->state, 2, gBombRallyResultsStates);
     TaskSleepForever();
 }
 
-void sub_080be1b0(void)
+void BombRallyResultsUpdate(void)
 {
-    CallTableEntry(gCurTask->updateState, 2, gUnk_08756680);
+    CallTableEntry(gCurTask->updateState, 2, gBombRallyResultsStateUpdates);
     SubGameCheckEnd();
 }
 
-void sub_080be1d0(void)
+void BombRallyResultsEnterState(void)
 {
-    CallTableEntry(gCurTask->state, 2, gUnk_08756678);
+    CallTableEntry(gCurTask->state, 2, gBombRallyResultsStates);
 }
 
-void sub_080be1ec(void)
+void BombRallyResultsShow(void)
 {
     s32 i;
     s32 x;
@@ -453,7 +453,7 @@ void sub_080be1ec(void)
     gCurTask->updateState = 0;
     TaskYieldTrampoline(60);
     sub_080be5fc();
-    switch (gUnk_0200B044[gLocalPlayer]) {
+    switch (gBombRallyFinishOrder[gLocalPlayer]) {
     case 3:
         PlayBgm(29);
         break;
@@ -467,11 +467,11 @@ void sub_080be1ec(void)
     }
     x = 0;
     for (i = 0; i < gPlayerCount; i++) {
-        if (gUnk_0200B044[i] == 3) {
+        if (gBombRallyFinishOrder[i] == 3) {
             x = 2;
             break;
         }
-        if (gUnk_0200B044[i] == 0)
+        if (gBombRallyFinishOrder[i] == 0)
             x = 1;
     }
     if (x == 0)
@@ -485,7 +485,7 @@ void sub_080be1ec(void)
     } else {
         sub_080be550();
         TaskYieldTrampoline(60);
-        sub_080be774();
+        BombRallyAwardLives();
         p = gPlayerPressedKeys;
         m = 9;
         goto wait;
@@ -499,13 +499,13 @@ void sub_080be1ec(void)
     TaskSleepForever();
 }
 
-void sub_080be2f0(void)
+void BombRallyResultsShowUpdate(void)
 {
     if (gCurTask->state != 0)
-        TaskSetEntry(sub_080be1d0, gCurTaskIdx);
+        TaskSetEntry(BombRallyResultsEnterState, gCurTaskIdx);
 }
 
-void sub_080be318(void)
+void BombRallyResultsMenu(void)
 {
     struct Task *t;
     struct Task *u;
@@ -580,7 +580,7 @@ void sub_080be318(void)
     }
 }
 
-void sub_080be4a0(void)
+void BombRallyResultsMenuUpdate(void)
 {
 }
 
@@ -609,7 +609,7 @@ void sub_080be4a4(void)
                 t->variant = 5;
                 t->unk18 = i;
                 t->unk1C = 0;
-                t->unk20 = gUnk_02006A10[i];
+                t->unk20 = gBombRallySeats[i];
             }
         }
     }
@@ -640,7 +640,7 @@ void sub_080be550(void)
                 t->variant = 5;
                 t->unk18 = i;
                 t->unk1C = 2;
-                t->unk20 = gUnk_02006A10[i];
+                t->unk20 = gBombRallySeats[i];
             }
         }
     }
@@ -672,7 +672,7 @@ void sub_080be5fc(void)
                     t->variant = 5;
                     t->unk18 = i;
                     t->unk1C = 1;
-                    t->unk20 = gUnk_02006A10[i];
+                    t->unk20 = gBombRallySeats[i];
                 }
             }
         }
@@ -721,12 +721,12 @@ void sub_080be714(u32 a)
     }
 }
 
-void sub_080be774(void)
+void BombRallyAwardLives(void)
 {
     s32 i;
 
     for (i = 0; i < gPlayerCount; i++) {
-        switch (gUnk_0200B044[i]) {
+        switch (gBombRallyFinishOrder[i]) {
         case 0:
             break;
         case 3:
@@ -750,26 +750,26 @@ void sub_080be7c0(u32 a)
 
 void Task_BombRallyObject(void)
 {
-    CallTableEntry(gCurTask->variant, 7, gUnk_08756688);
+    CallTableEntry(gCurTask->variant, 7, gBombRallyObjectVariants);
 }
 
-void sub_080be7fc(void)
+void BombRallyPlayer(void)
 {
     struct Task *t;
 
     t = gCurTask;
     t->drawCallback = (u32)sub_080060c0;
-    t->updateCallback = (u32)sub_080be850;
+    t->updateCallback = (u32)BombRallyPlayerUpdate;
     if (t->unk1C <= 1)
         t->layer = 7;
     else
         t->layer = 9;
     gCurTask->state = 0;
-    CallTableEntry(gCurTask->state, 13, gUnk_087566A4);
+    CallTableEntry(gCurTask->state, 13, gBombRallyPlayerStates);
     TaskSleepForever();
 }
 
-void sub_080be850(void)
+void BombRallyPlayerUpdate(void)
 {
     struct Task *t;
     struct Task *u;
@@ -777,17 +777,17 @@ void sub_080be850(void)
 
     t = gCurTask;
     u = &gTasks[t->parent];
-    CallTableEntry(t->updateState, 13, gUnk_087566D8);
+    CallTableEntry(t->updateState, 13, gBombRallyPlayerStateUpdates);
     w = gCurTask;
     if (w->state != 9 && u->unk28 == 6) {
         w->state = 9;
-        TaskSetEntry(sub_080be8a8, gCurTaskIdx);
+        TaskSetEntry(BombRallyPlayerEnterState, gCurTaskIdx);
     }
 }
 
-void sub_080be8a8(void)
+void BombRallyPlayerEnterState(void)
 {
-    CallTableEntry(gCurTask->state, 13, gUnk_087566A4);
+    CallTableEntry(gCurTask->state, 13, gBombRallyPlayerStates);
 }
 
 void sub_080be8c4(void)
@@ -878,7 +878,7 @@ void sub_080be8c4(void)
 void sub_080beae0(void)
 {
     if (gCurTask->state != 0)
-        TaskSetEntry(sub_080be8a8, gCurTaskIdx);
+        TaskSetEntry(BombRallyPlayerEnterState, gCurTaskIdx);
 }
 
 void sub_080beb08(void)
@@ -913,18 +913,18 @@ void sub_080beb54(void)
     t = gCurTask;
     if (t->unk24 != t->unk20) {
         t->state = 2;
-        TaskSetEntry(sub_080be8a8, gCurTaskIdx);
+        TaskSetEntry(BombRallyPlayerEnterState, gCurTaskIdx);
     } else if (gPlayerPressedKeys[t->unk18] & 1) {
         if (sub_080bf0ac()) {
             u = gCurTask;
             u->unk24 = 0;
             u->state = 3;
-            TaskSetEntry(sub_080be8a8, gCurTaskIdx);
+            TaskSetEntry(BombRallyPlayerEnterState, gCurTaskIdx);
         } else {
             v = gCurTask;
             v->unk24 = v->unk20 ^ 1;
             v->state = 2;
-            TaskSetEntry(sub_080be8a8, gCurTaskIdx);
+            TaskSetEntry(BombRallyPlayerEnterState, gCurTaskIdx);
         }
     }
 }
@@ -990,7 +990,7 @@ void sub_080becc0(void)
     if (gPlayerPressedKeys[gCurTask->unk18] & 1)
         gCurTask->unk24 ^= 1;
     if (gCurTask->state != 2)
-        TaskSetEntry(sub_080be8a8, gCurTaskIdx);
+        TaskSetEntry(BombRallyPlayerEnterState, gCurTaskIdx);
 }
 
 void sub_080bed08(void)
@@ -1108,7 +1108,7 @@ void sub_080bef1c(void)
     if (gPlayerPressedKeys[gCurTask->unk18] & 1)
         gCurTask->unk24 ^= 1;
     if (gCurTask->state != 3)
-        TaskSetEntry(sub_080be8a8, gCurTaskIdx);
+        TaskSetEntry(BombRallyPlayerEnterState, gCurTaskIdx);
 }
 
 void sub_080bef64(void)
@@ -1173,7 +1173,7 @@ void sub_080bf048(void)
         }
     }
     if (gCurTask->state != 4)
-        TaskSetEntry(sub_080be8a8, gCurTaskIdx);
+        TaskSetEntry(BombRallyPlayerEnterState, gCurTaskIdx);
 }
 
 u32 sub_080bf0ac(void)
@@ -1263,14 +1263,14 @@ void sub_080bf214(void)
     if ((u->unk34 == ((t->unk1C + 3) & 3) && u->unk28 <= 2)
      || (u->unk34 == ((t->unk1C + 1) & 3) && u->unk28 > 2)) {
         gCurTask->state = 7;
-        TaskSetEntry(sub_080be8a8, gCurTaskIdx);
+        TaskSetEntry(BombRallyPlayerEnterState, gCurTaskIdx);
     } else {
         w = gCurTask;
         w->unk28--;
         if (w->unk28 == 0) {
             if (RandomRange(8) == 0) {
                 gCurTask->state = 6;
-                TaskSetEntry(sub_080be8a8, gCurTaskIdx);
+                TaskSetEntry(BombRallyPlayerEnterState, gCurTaskIdx);
             } else {
                 n = RandomRange(4);
                 gCurTask->unk28 = (n + 1) * 20;
@@ -1320,7 +1320,7 @@ void sub_080bf32c(void)
      || (u->unk34 == ((t->unk1C + 1) & 3) && u->unk28 > 2))
         gCurTask->state = 7;
     if (gCurTask->state != 6)
-        TaskSetEntry(sub_080be8a8, gCurTaskIdx);
+        TaskSetEntry(BombRallyPlayerEnterState, gCurTaskIdx);
 }
 
 void sub_080bf394(void)
@@ -1348,7 +1348,7 @@ void sub_080bf394(void)
     u = &gTasks[gCurTask->parent];
     tbl = gUnk_087565F4[u->unk28];
     gCurTask->updateState = 7;
-    k = gUnk_08756650[gSubGameLevel][u->unk2C * 3 + gUnk_0200AFF0];
+    k = gUnk_08756650[gSubGameLevel][u->unk2C * 3 + gBombRallyOutCount];
     if (gUnk_020061DC == 0 && RandomRange(k) == 0) {
         u->unk20 = 6;
     } else {
@@ -1464,7 +1464,7 @@ void sub_080bf394(void)
 void sub_080bf67c(void)
 {
     if (gCurTask->state != 7)
-        TaskSetEntry(sub_080be8a8, gCurTaskIdx);
+        TaskSetEntry(BombRallyPlayerEnterState, gCurTaskIdx);
 }
 
 void sub_080bf6a4(void)
@@ -1522,7 +1522,7 @@ void sub_080bf788(void)
      || (u->unk34 == ((t->unk1C + 1) & 3) && u->unk28 > 2))
         gCurTask->state = 7;
     if (gCurTask->state != 8)
-        TaskSetEntry(sub_080be8a8, gCurTaskIdx);
+        TaskSetEntry(BombRallyPlayerEnterState, gCurTaskIdx);
 }
 
 void sub_080bf7f0(void)
@@ -1571,10 +1571,10 @@ void sub_080bf934(void)
     t = gCurTask;
     u = &gTasks[t->parent];
     if (u->unk28 == -4) {
-        if (((gUnk_0200AF10 >> t->unk18) & 1) == 0)
+        if (((gBombRallyOutMask >> t->unk18) & 1) == 0)
             t->state = 0;
         else
             t->state = 10;
-        TaskSetEntry(sub_080be8a8, gCurTaskIdx);
+        TaskSetEntry(BombRallyPlayerEnterState, gCurTaskIdx);
     }
 }
