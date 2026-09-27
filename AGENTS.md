@@ -591,4 +591,29 @@ Matching decompilation of Kirby: The Amazing Mirror's predecessor, **Kirby: Nigh
   the libraries' older revisions.  `include/gba/syscall.h` now declares
   `MultiBoot` as returning int.  No census row changed; done by a
   three-agent fan-out; new lessons 3.479-3.488 and 4.112.
+- The final campaign over the last five game functions (issues #63, #84,
+  #93, #98, #100): `sub_08027a6c` (M07, `src/level_27a6c.c`),
+  `sub_08006d28` (SerialCB, `src/early_6d28.c`), `sub_0801b24c` (M06,
+  `src/hitbox_1b24c.c`), `sub_080c5b84` (M37, appended to
+  `src/subgame_c5284.c`, whose nine landed functions stay byte-identical)
+  and `sub_080caab8` (M38, `src/boot_caab8.c`), 5,024 bytes.  Four are
+  plain source, SerialCB with one commented zero-code stand-in (a dead
+  `i = 4;` before a `break`), and `sub_080caab8` keeps two commented
+  zero-byte `asm` levers at one store, approved by the owner's coordinator
+  (its natural best is on #100).  The two shared "compiler questions" had
+  source answers: SerialCB's doubled live length was jump.c's else-arm swap
+  running before register allocation (lesson 3.491), `sub_0801b24c` had no
+  doubling residue at all (a `p` local and one mask spelling, 3.492), and
+  gcse's PRE slot order is bucket arithmetic over declaration order, insn
+  count and the file's pool-label count (3.493, 3.494); `sub_08027a6c`
+  fell to a `u16` value and a struct copy (3.489).  New lessons 3.489-3.494
+  and 4.113, with correction notes on 3.452, 3.457, 3.464, 3.478, 3.487,
+  4.79 and 4.105.  Three agents, about two hours from the census to the
+  last landing.
+- **The game code is complete**: everything from `AgbInit` (`0x08000310`)
+  to `0x080CD89B`, the start of `m4a_1`, is byte-exact C.  The asm left in the ROM is
+  the sound engine's hand-written core `m4a_1`, crt0 and the ARM task
+  switcher, and the SDK stubs (SWI thunks, SoftReset, lib1funcs and the
+  task trampolines, the interworking veneer).  `make progress`: 846924 of
+  857388 code bytes in `src/` (98.7795%).
 - Next milestones: decompile split/SDK modules to C using the validated per-zone compiler recipe (task system Thumb side, sound driver, then game code); grow `src/` one module at a time with `asmdiff.sh` on the module range.
