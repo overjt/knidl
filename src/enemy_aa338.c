@@ -3286,10 +3286,8 @@ void sub_080acf3c(void)
 
 void sub_080acf48(void)
 {
-    struct Task *t = gUnk_03002490;
-
-    t->unk28 = t->unk14;
-    sub_08002e98(t->unk14, 3, gUnk_08749D10);
+    gUnk_03002490->unk28 = gUnk_03002490->unk14;
+    sub_08002e98(gUnk_03002490->unk14, 3, gUnk_08749D10);
 }
 
 void sub_080acf68(void)

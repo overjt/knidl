@@ -1406,110 +1406,28 @@ void sub_080b60e8();
 extern void CpuSet(const void *src, void *dst, u32 control);
 void sub_080a932c(void)
 {
-    register struct Task **c4 asm("r4");
-    register struct Task *t5 asm("r5");
-    register s16 *p asm("ip");
-    register s32 x6 asm("r6");
-    u8 *bS;
-    u8 *b9;
-    u8 *bSa;
-    register u8 *b9a asm("r2");
-    register s16 *pcA asm("r2");
-    register s16 *pcB asm("r1");
-    register s16 *p2 asm("r2");
-    struct Task *t4;
-    register s32 x5b asm("r5");
-    register u8 *b9c4 asm("r3");
-    register s32 pv0 asm("r0");
-    register s16 *pi6 asm("r6");
-    register u8 *b9c6 asm("r6");
-    register s32 w2v asm("r0");
-    s32 bw4;
-    u32 tb2;
-    u32 tc2;
-    register s32 bw6 asm("r0");
-    s32 w;
-    s32 wA;
-    s32 wt;
-    register s32 wtA asm("r0");
-    register u8 *b9c2 asm("r3");
-    register s32 w6v asm("r7");
-    register s32 wtB asm("r0");
-    register s32 bv2 asm("r1");
-    register s32 bv3 asm("r6");
-    register s32 wt2 asm("r3");
-    s32 wva;
-    s32 wv2;
+    struct Task *t = gUnk_03002490;
+    struct Task *u;
 
-    c4 = &gUnk_03002490;
-    t5 = *c4;
-    p = (s16 *)((u8 *)t5 + 74);
-    x6 = *p;
-    bSa = (u8 *)gUnk_03002158;
-    wA = *(s16 *)(bSa + 4);
-    b9a = (u8 *)gUnk_0874909C;
-    w = wA + *(s16 *)b9a;
-    bS = bSa;
-    asm("" : : "r"(bSa));
-    b9 = b9a;
-    asm("" : : "r"(bSa));
-    if (x6 < w)
+    if (t->unk4A < gUnk_03002158[2] + gUnk_0874909C[0])
     {
-        wtA = *(u16 *)b9a;
-        asm volatile("" : "+r"(wtA));
-        bv2 = ((vu16 *)bS)[2];
-        asm volatile("" : "+r"(bv2));
-        wtA += bv2;
-        pcA = p;
-        *pcA = wtA;
-        wva = *pcA;
-        asm("" : : "r"(bv2));
-        goto join1;
+        t->unk4A = gUnk_03002158[2] + gUnk_0874909C[0];
+        t->unk50 = t->unk4A << 16;
     }
-    if (x6 > *(s16 *)(bS + 6) + *(s16 *)(b9 + 2))
+    else if (t->unk4A > gUnk_03002158[3] + gUnk_0874909C[1])
     {
-        wtB = *(u16 *)(b9 + 2);
-        asm volatile("" : "+r"(wtB));
-        bv3 = ((vu16 *)bS)[3];
-        asm volatile("" : "+r"(bv3));
-        wtB += bv3;
-        pcB = p;
-        *pcB = wtB;
-        wva = *pcB;
-        asm("" : : "r"(bv3));
-join1:
-        t5->unk50 = wva << 16;
+        t->unk4A = gUnk_03002158[3] + gUnk_0874909C[1];
+        t->unk50 = t->unk4A << 16;
     }
-    t4 = *c4;
-    p2 = (s16 *)((u8 *)t4 + 72);
-    x5b = *p2;
-    p = (s16 *)bS;
-    asm("" : : "r"(bS));
-    pi6 = p;
-    pv0 = *pi6;
-    b9c4 = b9;
-    asm("" : "+r"(b9c4) : : "memory");
-    if (x5b < pv0 + *(s16 *)(b9c4 + 4))
+    u = gUnk_03002490;
+    if (u->unk48 < gUnk_03002158[0] + gUnk_0874909C[2])
     {
-        bw4 = *(u16 *)(b9c4 + 4);
-        asm volatile("" : "+r"(bw4));
-        bS = (u8 *)(u32)*(u16 *)bS;
-        *p2 = bw4 + (u32)bS;
-        wv2 = *p2;
-        asm("" : : "r"(bS));
-        goto join2;
+        u->unk48 = gUnk_03002158[0] + gUnk_0874909C[2];
+        u->unk4C = u->unk48 << 16;
     }
-    w2v = *(s16 *)(bS + 2);
-    b9c6 = b9;
-    asm("" : "+r"(b9c6) : : "memory");
-    if (x5b > w2v + *(s16 *)(b9c6 + 6))
+    else if (u->unk48 > gUnk_03002158[1] + gUnk_0874909C[3])
     {
-        bw6 = *(u16 *)(b9c6 + 6);
-        asm volatile("" : "+r"(bw6));
-        bS = (u8 *)(u32)*(u16 *)(bS + 2);
-        *p2 = bw6 + (u32)bS;
-        wv2 = *p2;
-join2:
-        t4->unk4C = wv2 << 16;
+        u->unk48 = gUnk_03002158[1] + gUnk_0874909C[3];
+        u->unk4C = u->unk48 << 16;
     }
 }

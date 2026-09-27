@@ -16,6 +16,9 @@
 extern s8 gUnk_020060D0;
 extern s8 gUnk_02007E88;
 extern s8 gUnk_02007FC8;
+/* Plain u8 here (vu8 elsewhere): a volatile byte load expands to a load plus
+   two shifts, which lengthens this address's live range in sub_0800f408 enough
+   to lose r6 to the hoisted copy of &gUnk_03002490. */
 extern u8 gUnk_0200EBC0[];
 extern u16 gUnk_030012B0[];
 extern u16 gUnk_03001430[];

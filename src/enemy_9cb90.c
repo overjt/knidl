@@ -18,7 +18,6 @@ extern void sub_0809fb10(void);
 void sub_0809cb90(void)
 {
     struct Task *t;
-    s8 *q;
 
     sub_080692fc();
     t = gUnk_03002490;

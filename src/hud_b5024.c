@@ -1693,6 +1693,8 @@ s32 sub_080b55d8(u32 a, u32 b)
         gUnk_0200000C = 0;
     if (b + gUnk_02007D40 > 14)
         gUnk_02007D40 = 8;
+    /* stand-in: the volatile read keeps cse from reusing this load for the
+       `+= b` below (the ROM loads the palette cursor twice) */
     r = (gUnk_0200000C << 16) | *(vu16 *)&gUnk_02007D40;
     n = gUnk_0200000C + a;
     gUnk_02007D40 += b;
