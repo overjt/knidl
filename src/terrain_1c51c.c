@@ -8,7 +8,7 @@
  * TerrainProbeBegin copies the actor's six signed box offsets and the task fields
  * into the room-descriptor cells and clears the probe result block at
  * gTerrainProbeResult; TerrainProbeEnd writes the probe results back into the task
- * (re-seating Task.posX/unk50 when the probe moved the actor) and mirrors the
+ * (re-seating Task.posX/posY when the probe moved the actor) and mirrors the
  * result block into gTerrainResult.
  */
 

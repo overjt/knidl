@@ -12,7 +12,8 @@
  * sub_08028280 its layout-only form for sub_08024698, and
  * sub_08028304 picks the tile-upload routine for the layout.
  * sub_08027a6c, the first function of the range (the second map buffer
- * gUnk_02006AA0 for sub_08023948/sub_08023ca0), is still asm. */
+ * gUnk_02006AA0 for sub_08023948/sub_08023ca0), landed separately as
+ * src/level_27a6c.c. */
 
 struct MapCell
 {

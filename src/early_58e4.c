@@ -216,7 +216,7 @@ void TaskIntegrateMotion(void)
     t->posY = t->posY + t->velY;
 }
 
-/* Task body: integrate, then publish the 16.16 position as screen coords. */
+/* Move callback: integrate, then set the pixel position (world pixels) from the 16.16 position. */
 void TaskMove(void)
 {
     struct Task *t;
@@ -227,8 +227,8 @@ void TaskMove(void)
     t->pixelY = t->posY >> 16;
 }
 
-/* Task body: integrate if moving, then publish position relative to the
- * parent task's position (Task.parent indexes the task array). */
+/* Move callback: integrate if moving, then set the pixel position to the
+ * 16.16 offset plus the parent task's position (Task.parent is its slot). */
 void TaskMoveRelativeToParent(void)
 {
     struct Task *t;
@@ -252,7 +252,7 @@ void TaskUpdatePixelPos(void)
     t->pixelY = t->posY >> 16;
 }
 
-/* Task body: integrate, publish position relative to the camera. */
+/* Move callback: integrate, then set the pixel position relative to the BG3 scroll (gBg3ScrollX/Y). */
 void TaskMoveRelativeToBg3(void)
 {
     struct Task *t;

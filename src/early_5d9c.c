@@ -15,17 +15,17 @@
 #include "gba/gba.h"
 #include "global.h"
 
-/* Sprite / draw-request record.  gCurTask points at the entry that is
- * currently being filled in; gTasks[] is the array those entries live
- * in (stride 0x90, indexed by the same slot number used by TaskSetEntry).
+/* The draw code's view of struct Task (include/task.h): gCurTask is the
+ * running task and gTasks[] the 64 control blocks (stride 0x90, indexed
+ * by the same slot number used by TaskSetEntry).
  *
  * Evidence for the field types is in the ROM itself:
- *   unk38  ldr  [p,#0x38] + ldr [base + idx*4]   -> array of pointers
- *   unk3C  ldrsh, compared against -1            -> signed slot index
- *   unk43  ldrb + lsls #24 + asrs #24            -> s8 (see the recipe note)
- *   unk48  ldrsh / ldrh                          -> s16 world X
- *   unk4A  ldrsh / ldrh                          -> s16 world Y
- *   unk54/58/5C/60/64/68 are s32 pairs that are cleared to 0 / 0x80000000.
+ *   frameTable  ldr  [p,#0x38] + ldr [base + idx*4] -> array of pointers
+ *   frame       ldrsh, compared against -1          -> signed frame index
+ *   facing      ldrb + lsls #24 + asrs #24          -> s8 (see the recipe note)
+ *   pixelX      ldrsh / ldrh                        -> s16 world X
+ *   pixelY      ldrsh / ldrh                        -> s16 world Y
+ *   velX/Y, accelX/Y, speedLimitX/Y are s32 pairs cleared to 0 / 0x80000000.
  */
 struct Sprite
 {

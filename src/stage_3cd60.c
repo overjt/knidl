@@ -1075,7 +1075,7 @@ void PlayerUpdateInvulnerability(void)
 
     if ((p->unk42 & 32) == 0)
     {
-        /* task.h has no field at PlayerState+0x12 yet */
+        /* PlayerState+0x12 is invulnerabilityTimer, read here through an s16 view */
         if (((s16 *)p)[9] != -32768)
         {
             if (((s16 *)p)[9] != 0)
@@ -2819,10 +2819,10 @@ s32 sub_080404e4(void)
     return 0;
 }
 
-/* PlayerState+0x38 is a u16 counter; task.h still spells 0x38-0x3C as
-   `u8 filler38[]`, and only a real struct field gives agbcc's `lsls #16; cmp`
-   test instead of `lsls #16; lsrs #16; cmp`.  Replace with `p->unk38` once
-   task.h names it (see report). */
+/* PlayerState+0x38 is a u16 counter (task.h: `u16 unk38`), read through
+   a one-field struct: only a struct field gives agbcc's `lsls #16; cmp`
+   test instead of `lsls #16; lsrs #16; cmp`.  Whether a plain
+   `p->unk38` now matches is untested. */
 struct M11Ctr { u16 unk00; };
 #define CTR(p) (((struct M11Ctr *)&(p)->unk38)->unk00)
 
