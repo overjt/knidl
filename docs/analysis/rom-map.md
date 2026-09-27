@@ -1327,9 +1327,10 @@ child issues of #35 are created from it. Findings that belong in this document:
   the two blind spots this document already records, seen once more.
 - **M37 (`0x080C1FFC-0x080C641F`) is sub-game 2, a four-player race, plus
   `AgbMain` state 11.**  Decompiled in #98, in ten files around PR #133's
-  `src/sub_080c6258.c` (`docs/analysis/module-map.md` §6); 81 of the 82
-  functions are C, and the course renderer `sub_080c5b84`
-  (`0x080C5B84-0x080C623B`) stays asm.  The census name
+  `src/sub_080c6258.c` (`docs/analysis/module-map.md` §6); all 82
+  functions are C (the course renderer `sub_080c5b84`,
+  `0x080C5B84-0x080C623B`, landed in the final campaign at the end of
+  `src/subgame_c5284.c`, lesson 3.493).  The census name
   "FIR-coefficient effect engine" came from its pool references into
   `0x080CFE20-0x080D0000`; those tables are this game's rodata (below), not a
   filter.
@@ -1374,7 +1375,7 @@ child issues of #35 are created from it. Findings that belong in this document:
     which lays out each lane's shape (`sub_080c52c4`, sine table
     `gUnk_080D0398`), its distance tables (`gUnk_02017980[4][500]` and the
     inverse `gUnk_02019140`) and the alternating segments
-    `gUnk_0201B200[lane][]`; `sub_080c5b84` (still asm) then renders the
+    `gUnk_0201B200[lane][]`; `sub_080c5b84` then renders the
     lanes column by column into BG VRAM every frame from `sub_080c383c`
     (ring buffers `gUnk_0201A0E0`/`gUnk_0201B7C0`/`gUnk_02017180`, the BG
     scroll cells behind `0x08757300`/`0x08757310`/`0x08757320`) and ranks

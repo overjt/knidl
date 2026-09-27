@@ -187,8 +187,8 @@ dispatches, pool density) — a planning aid, not a promise.
 | M03 | `0x0800B920-0x08010357` | 18.6 KiB | 79 | 0 | **** | main menu + its 22 sprite tasks, BG scroll animator, stage sequence state - **landed (#99)** |
 | M04 | `0x08010358-0x08017667` | 28.8 KiB | 65 | 0 | *** | scripted-sequence bank: director + 50 of the 63 scripts |
 | M05 | `0x08017668-0x0801A8C7` | 12.6 KiB | 23 | 0 | *** | player-character animation bank + collision registry - **landed (#81, #125)** |
-| M06 | `0x0801A8C8-0x08021B17` | 28.6 KiB | 55 | 0 | ***** | box-vs-terrain collision engine + actor-vs-collider hit tests - **landed (#84)**, 54/55 |
-| M07 | `0x08021B18-0x0802969F` | 30.9 KiB | 154 | 1 | ****** | level / room builder + tilemap upload |
+| M06 | `0x0801A8C8-0x08021B17` | 28.6 KiB | 55 | 0 | ***** | box-vs-terrain collision engine + actor-vs-collider hit tests - **landed (#84, final campaign)** |
+| M07 | `0x08021B18-0x0802969F` | 30.9 KiB | 154 | 1 | ****** | level / room builder + tilemap upload - **landed (#93, final campaign)** |
 | M08 | `0x080296A0-0x08030803` | 28.3 KiB | 151 | 2 | *** | camera, BG map streaming, map-event tasks + stage objects #221-#236 - **landed (#86)** |
 | M09 | `0x08030804-0x0803627F` | 22.6 KiB | 60 | 0 | ***** | breakable blocks + the player task (#5) and first action bodies - **landed (#92)** |
 | M10 | `0x08036280-0x0803CD5F` | 26.7 KiB | 41 | 0 | **** | stage script runner |
@@ -218,7 +218,7 @@ dispatches, pool density) — a planning aid, not a promise.
 | M34 | `0x080B6154-0x080B9D0B` | 14.9 KiB | 105 | 2 | *** | save file / SRAM records + options - **landed (#94)** |
 | M35 | `0x080B9D0C-0x080BDA2B` | 15.3 KiB | 193 | 4 | *** | sub-game framework + reaction-duel sub-game - **landed (#95)** |
 | M36 | `0x080BDA2C-0x080C1FFB` | 17.5 KiB | 117 | 4 | * | sub-game: four-slot bomb-pass minigame - **landed (#66)** |
-| M37 | `0x080C1FFC-0x080C641F` | 17.0 KiB | 82 | 1 | **** | sub-game 2: the four-player race + `AgbMain` state 11 - **landed (#98)**, 81/82 |
+| M37 | `0x080C1FFC-0x080C641F` | 17.0 KiB | 82 | 1 | **** | sub-game 2: the four-player race + `AgbMain` state 11 - **landed (#98, final campaign)** |
 | M38 | `0x080C6420-0x080CD89B` | 29.1 KiB | 110 | 4 | **** | the ending (two scenes, staff credits, final screen) + the game-over screen - **landed (#100)**, 109/110 |
 | M39 | `0x080CD89C-0x080CE51F` | 3.1 KiB | 40 | 0 | - | **done** - m4a_1 |
 | M40 | `0x080CE520-0x080CEFB3` | 2.6 KiB | 31 | 0 | - | **done** - m4a_c1 |
@@ -2537,7 +2537,7 @@ below is the pre-decompilation one, kept for the record.
 * **Known RAM cells touched** BG3VOFS shadow (16.16) x16, BG3HOFS shadow (16.16) x13, per-player keys pressed x8, DISPCNT shadow x2, frames left to wait x2, requested/next game state x2.
 * **Suggested batches** `0x080BDA2C` (57 fns), `0x080BF994` (24 fns), `0x080C0DE8` (36 fns).
 
-### M37 `0x080C1FFC-0x080C641F` - sub-game 2: the four-player race + `AgbMain` state 11 - **landed (#98)**
+### M37 `0x080C1FFC-0x080C641F` - sub-game 2: the four-player race + `AgbMain` state 11 - **landed (#98 and the final campaign)**
 
 The range is decompiled and carved out of the split asm, so it now appears in
 `module-map.csv` as `c_code` rows instead of one clusterable module; the census
@@ -2550,16 +2550,21 @@ below is the pre-decompilation one, kept for the record.
   (`0x080C3F44-0x080C4630`, 9), `src/subgame_c4630.c`
   (`0x080C4630-0x080C4D08`, 20), `src/subgame_c4d08.c`
   (`0x080C4D08-0x080C5284`, 7), `src/subgame_c5284.c`
-  (`0x080C5284-0x080C5B84`, 9), `src/subgame_c623c.c`
+  (`0x080C5284-0x080C623C`, 10), `src/subgame_c623c.c`
   (`0x080C623C-0x080C6258`, 1) and `src/mode_c6260.c`
   (`0x080C6260-0x080C6420`, 5), around PR #133's `src/sub_080c6258.c`
-  (`0x080C6258-0x080C6260`, untouched): 80 of the 81 functions to write,
+  (`0x080C6258-0x080C6260`, untouched): all 81 functions to write,
   byte-exact under the `--newpb` recipe with no `asm` statements and no
-  `register` pins, 51 new `split_config.json` `data_symbols`.  One function
-  stays asm: `sub_080c5b84` (`0x080C5B84-0x080C623B`, 1720 bytes, the course
-  renderer), parked on #98 at 22 differing bytes with the right size; a
-  byte-exact version exists but needs 37 empty `asm("")` statements to give
-  gcse's expression hash table the ROM's size (lesson 4.105).
+  `register` pins, 51 new `split_config.json` `data_symbols` in #98 and
+  seven more in the final campaign.  #98 parked the course renderer
+  `sub_080c5b84` (`0x080C5B84-0x080C623B`, 1720 bytes) at 22 differing
+  bytes (byte-exact only with 37 empty `asm("")` statements that gave
+  gcse's expression hash table another size, lesson 4.105); the final
+  campaign matched it from natural source appended to
+  `src/subgame_c5284.c`: its PRE spill slots follow the hash buckets of
+  its locals' pseudo numbers (declaration order) and of the pool label of
+  `&gUnk_0201B0E0`, which is numbered after that file's 40 earlier ones
+  (lesson 3.493).
 * **What it turned out to be** not an effect engine: game 2 of M35's
   sub-game framework (`gUnk_02007FCC == 2`), a four-player race along four
   lanes of a horizontally scrolling course, and - after the real subsystem
@@ -2577,7 +2582,7 @@ below is the pre-decompilation one, kept for the record.
   behind the pointer cell `gUnk_02017094` and the course record
   `gUnk_0201B0E0` behind `gUnk_0201716C`; M35's `sub_080b9f34` builds the
   course with `sub_080c59d8(level, 1)` (lanes of 6000/8500/12000 pixels),
-  and `sub_080c5b84` (still asm) renders it column by column into BG VRAM.
+  and `sub_080c5b84` renders it column by column into BG VRAM.
   The sky is
   a 160-line backdrop gradient built each frame by the per-frame hook
   `sub_080c2d38` and copied by HBlank DMA0, which the VBlank hook
