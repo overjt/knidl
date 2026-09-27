@@ -32,13 +32,13 @@ extern s32 gCurSaveSlot;
 extern u8 gUnk_080CFE20[];
 
 s32 WriteSaveSlot(s32 a);
-u32 sub_080b7af8(void);
+u32 WriteSramSignature(void);
 void ClearSaveSlot(s32 a);
 u32 CalcSaveSlotChecksum(s32 a);
 u32 UpdateSaveSlotChecksum(s32 a);
-void sub_080b7e14(s32 a);
-void sub_080b7f58(s32 a);
-void sub_080b8b2c(s32 a);
+void StoreProgressInSaveSlot(s32 a);
+void StoreProgressInBothHalves(s32 a);
+void MergeProgressIntoSaveSlot(s32 a);
 
 s32 WriteSaveSlot(s32 a)
 {
@@ -55,18 +55,18 @@ s32 WriteSaveSlot(s32 a)
     }
     return n;
 }
-u32 sub_080b7af8(void)
+u32 WriteSramSignature(void)
 {
     if (gSramAvailable == 0)
         return 0;
     return WriteSramEx(gUnk_080CFE20, (u8 *)(224 << 20), 10);
 }
-void sub_080b7b20(s32 a)
+void WriteNewSaveFile(s32 a)
 {
     u32 best;
     u32 i;
 
-    sub_080b7f58(a);
+    StoreProgressInBothHalves(a);
     best = 0;
     for (i = 0; i <= 2; i++)
     {
@@ -77,9 +77,9 @@ void sub_080b7b20(s32 a)
     gSaveSlots[a].unk0C++;
     UpdateSaveSlotChecksum(a);
     WriteSaveSlot(a);
-    sub_080b7af8();
+    WriteSramSignature();
 }
-void sub_080b7b7c(s32 a)
+void SaveProgress(s32 a)
 {
     u32 best;
     u32 i;
@@ -87,9 +87,9 @@ void sub_080b7b7c(s32 a)
     if (a == -1)
         return;
     if (gPlayerCount == 1)
-        sub_080b7e14(gCurSaveSlot);
+        StoreProgressInSaveSlot(gCurSaveSlot);
     else
-        sub_080b8b2c(gCurSaveSlot);
+        MergeProgressIntoSaveSlot(gCurSaveSlot);
     best = 0;
     for (i = 0; i <= 2; i++)
     {

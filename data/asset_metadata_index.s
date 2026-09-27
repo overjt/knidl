@@ -452,7 +452,7 @@ asset_metadata_index:
 	.incbin	"baserom.gba", 0x7306E0, 0x4
 	.word	sub_0800e46c+1
 	.incbin	"baserom.gba", 0x7306E8, 0x4
-	.word	sub_0800e5b0+1
+	.word	Task_ModeListCursor+1
 	.incbin	"baserom.gba", 0x7306F0, 0x4
 	.word	sub_0800e81c+1
 	.incbin	"baserom.gba", 0x7306F8, 0x4
@@ -460,15 +460,15 @@ asset_metadata_index:
 	.incbin	"baserom.gba", 0x730700, 0x4
 	.word	sub_0800f084+1
 	.incbin	"baserom.gba", 0x730708, 0x4
-	.word	sub_0800f180+1
+	.word	Task_LinkPlayPlayerList+1
 	.incbin	"baserom.gba", 0x730710, 0x4
 	.word	sub_0800f390+1
 	.incbin	"baserom.gba", 0x730718, 0x4
 	.word	sub_0800f5ec+1
 	.incbin	"baserom.gba", 0x730720, 0x4
-	.word	sub_0800ec70+1
+	.word	Task_SoundTestCursors+1
 	.incbin	"baserom.gba", 0x730728, 0x4
-	.word	sub_0800ed78+1
+	.word	Task_SoundTestPulse+1
 	.incbin	"baserom.gba", 0x730730, 0x4
 	.word	Task_MenuScreenTitle+1
 	.incbin	"baserom.gba", 0x730738, 0x4
@@ -10812,14 +10812,14 @@ gUnk_08756394:
 	.word	sub_080bc008+1
 	.word	sub_080bc06c+1
 	.word	sub_080bc0b8+1
-	.global	gUnk_087563B0
-gUnk_087563B0:
-	.word	sub_080bc850+1
+	.global	gQuickDrawObjectKinds
+gQuickDrawObjectKinds:
+	.word	QuickDrawPlayer+1
 	.word	sub_080bcdac+1
-	.word	sub_080bcf60+1
+	.word	QuickDrawTimer+1
 	.word	sub_080bcfa4+1
 	.word	sub_080bd06c+1
-	.word	sub_080bd4bc+1
+	.word	QuickDrawOpponent+1
 	.word	sub_080bd110+1
 	.word	sub_080bd7f0+1
 	.word	sub_080bd8ac+1
@@ -11225,7 +11225,7 @@ gUnk_087572CC:
 	.word	AirGrindResults+1
 	.global	gUnk_087572D4
 gUnk_087572D4:
-	.word	sub_080c3018+1
+	.word	AirGrindRacer+1
 	.word	sub_080c46ec+1
 	.word	sub_080c3f44+1
 	.global	gUnk_087572E0
@@ -11324,8 +11324,8 @@ gUnk_08758284:
 	.incbin	"baserom.gba", 0x758284, 0x10
 	.global	gGameOverObjectVariants
 gGameOverObjectVariants:
-	.word	sub_080cb5c4+1
-	.word	sub_080cbed4+1
+	.word	GameOverPlayer+1
+	.word	GameOverChoice+1
 	.word	sub_080ccd4c+1
 	.word	sub_080ccec8+1
 	.word	sub_080cd24c+1

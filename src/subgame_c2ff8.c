@@ -7,19 +7,19 @@
  * Sub-game 2: task type #96 (class 3) and its variant 0, the racers.
  * 
  *   Task_AirGrindObject   the body: CallTableEntry(Task.unk73, 5, gUnk_087572D4), the
- *       three variants sub_080c3018 / sub_080c46ec / sub_080c3f44 (entries
+ *       three variants AirGrindRacer / sub_080c46ec / sub_080c3f44 (entries
  *       2-4 of gUnk_087572CC; the two words after them are data).
- *   sub_080c3018   variant 0, one per player (Task.unk1C): resets the
+ *   AirGrindRacer   variant 0, one per player (Task.unk1C): resets the
  *       player's M37Player record, picks the computer players' speed and
  *       jitter (M37Player.unk28/unk24) from the level M37Game.unk000 when at
  *       most one player is linked (M37Game.unk448), runs until the player
  *       passes the finish line gAirGrindCoursePtr->unk010 (+240), counting frames
  *       in M37Game.unk004[player].
- *   sub_080c3318 / sub_080c33a0   the computer players' input: a target
+ *   AirGrindCpuRollTarget / AirGrindCpuHoldsA   the computer players' input: a target
  *       M37Player.unk30 re-rolled from the LCG around the course record's
  *       unk28, and the resulting "hold A" decision.
- *   sub_080c34ac   variant 0's per-frame callback: reads the player's keys
- *       (gPlayerHeldKeys/gPlayerPressedKeys for a linked player, sub_080c33a0 for a
+ *   AirGrindRacerUpdate   variant 0's per-frame callback: reads the player's keys
+ *       (gPlayerHeldKeys/gPlayerPressedKeys for a linked player, AirGrindCpuHoldsA for a
  *       computer one) into M37Player.unk02/unk04, counts A presses in unk0E
  *       and publishes the position and the pressed flag in the course
  *       record gAirGrindCoursePtr->unk018[player]. */
@@ -38,7 +38,7 @@ struct M37Obj
    type #96 variant 1's seven scrolling objects.  sub_080c4664 addresses an
    object as &set->unk04[i] off the set's own base (`lsls #4; adds #4`), so
    the records are a sub-struct, not flat fields; the two 16-colour rows
-   sub_080c20b4 fills end it exactly at M37Game.unk1A4. */
+   AirGrindSetupRace fills end it exactly at M37Game.unk1A4. */
 struct M37ObjSet
 {
     /*0x00*/ s32 unk00;         /* the scroll position last frame */
@@ -76,13 +76,13 @@ struct M37Player
 /* gAirGrind, the game's state; always used through gAirGrindPtr */
 struct M37Game
 {
-    /*0x000*/ s32 unk000;       /* the level (M36's AirGrindInit copies gUnk_02006168) */
+    /*0x000*/ s32 unk000;       /* the level (M36's AirGrindInit copies gSubGameLevel) */
     /*0x004*/ s32 unk004[4];
     /*0x014*/ s32 unk014;
     /*0x018*/ s32 unk018;
     /*0x01C*/ struct M37Player unk01C[4];
     /*0x0EC*/ struct M37ObjSet unk0EC;
-    /*0x1A4*/ s32 unk1A4[5];    /* five LCG streams (sub_080c4ca4, sub_080c4cd4) */
+    /*0x1A4*/ s32 unk1A4[5];    /* five LCG streams (AirGrindRandom, AirGrindRandomRange) */
     /*0x1B8*/ s32 unk1B8;
     /*0x1BC*/ u16 unk1BC[160]; /* per-scanline colour, HBlank DMA source */
     /*0x2FC*/ u16 unk2FC;
@@ -148,18 +148,18 @@ void CallTableEntry(u32 idx, u32 count, void (**fns)(void));   /* if (idx < coun
 void TaskSleepForever(void);                                     /* end the running task */
 void sub_080c3efc(void);
 void sub_080c3f20(void);
-u32 sub_080c4cd4(s32 i, u32 range);
+u32 AirGrindRandomRange(s32 i, u32 range);
 void sub_080c4d08(void);
 void sub_080c4ea8(void);
-void sub_080c3318(s32 player);
-void sub_080c34ac(void);
+void AirGrindCpuRollTarget(s32 player);
+void AirGrindRacerUpdate(void);
 
 void Task_AirGrindObject(void)
 {
     CallTableEntry(gCurTask->unk73, 5, gUnk_087572D4);
 }
 
-void sub_080c3018(void)
+void AirGrindRacer(void)
 {
     s32 player = gCurTask->unk1C;
     s32 src;
@@ -169,7 +169,7 @@ void sub_080c3018(void)
     gCurTask->unk38 = (u32 *)gUnk_08755F54;
     gCurTask->unk3E &= 0x7FFF;
     gCurTask->unk40 = gUnk_080CFE2C[gAirGrindPtr->unk446][player] << 12;
-    gCurTask->unk04 = (u32)sub_080c34ac;
+    gCurTask->unk04 = (u32)AirGrindRacerUpdate;
     gCurTask->unk08 = (u32)sub_080c3f20;
     gCurTask->unk14 = 0;
     gCurTask->unk28 = 256;
@@ -244,7 +244,7 @@ void sub_080c3018(void)
         }
     }
     if (gAirGrindPtr->unk01C[player].unk20 != 0)
-        sub_080c3318(player);
+        AirGrindCpuRollTarget(player);
     gAirGrindPtr->unk01C[player].unk21 = 1;
     while (gAirGrindCoursePtr->unk000 < gAirGrindCoursePtr->unk00C)
         TaskYieldTrampoline(1);
@@ -263,7 +263,7 @@ void sub_080c3018(void)
     TaskSleepForever();
 }
 
-void sub_080c3318(s32 player)
+void AirGrindCpuRollTarget(s32 player)
 {
     s32 speed = gAirGrindPtr->unk01C[player].unk28;
     s32 range = gAirGrindPtr->unk01C[player].unk24;
@@ -271,16 +271,16 @@ void sub_080c3318(s32 player)
     if (gAirGrindCoursePtr->unk018[player].unk14 != 0)
         speed = -speed;
     gAirGrindPtr->unk01C[player].unk30 = gAirGrindPtr->unk01C[player].unk2C = gAirGrindCoursePtr->unk018[player].unk28;
-    gAirGrindPtr->unk01C[player].unk30 += speed + sub_080c4cd4(player, range) - range / 2;
+    gAirGrindPtr->unk01C[player].unk30 += speed + AirGrindRandomRange(player, range) - range / 2;
 }
 
-s32 sub_080c33a0(s32 player, s32 pos)
+s32 AirGrindCpuHoldsA(s32 player, s32 pos)
 {
     s32 flag = 0;
     s32 d;
 
     if (gAirGrindCoursePtr->unk018[player].unk28 > gAirGrindPtr->unk01C[player].unk2C)
-        sub_080c3318(player);
+        AirGrindCpuRollTarget(player);
     d = gAirGrindPtr->unk01C[player].unk30 - pos;
     if (gAirGrindPtr->unk01C[player].unk20 > 1) {
         if (gAirGrindPtr->unk01C[player].unk21) {
@@ -307,7 +307,7 @@ s32 sub_080c33a0(s32 player, s32 pos)
     return flag;
 }
 
-void sub_080c34ac(void)
+void AirGrindRacerUpdate(void)
 {
     s32 player = gCurTask->unk1C;
     s32 pos = gCurTask->unk4C >> 16;
@@ -328,7 +328,7 @@ void sub_080c34ac(void)
                 gAirGrindPtr->unk01C[0].unk02 = gPlayerHeldKeys[0];
                 gAirGrindPtr->unk01C[0].unk04 = gPlayerPressedKeys[0];
             } else {
-                u16 keys = sub_080c33a0(player, pos);
+                u16 keys = AirGrindCpuHoldsA(player, pos);
 
                 gAirGrindPtr->unk01C[player].unk04 = keys & ~gAirGrindPtr->unk01C[player].unk02;
                 gAirGrindPtr->unk01C[player].unk02 = keys;
@@ -339,7 +339,7 @@ void sub_080c34ac(void)
                 gAirGrindPtr->unk01C[player].unk02 = gPlayerHeldKeys[src];
                 gAirGrindPtr->unk01C[player].unk04 = gPlayerPressedKeys[src];
             } else {
-                u16 keys = sub_080c33a0(player, pos);
+                u16 keys = AirGrindCpuHoldsA(player, pos);
 
                 gAirGrindPtr->unk01C[player].unk04 = keys & ~gAirGrindPtr->unk01C[player].unk02;
                 gAirGrindPtr->unk01C[player].unk02 = keys;

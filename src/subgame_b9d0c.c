@@ -14,10 +14,10 @@
  *
  *   SubGameMain   entry from AgbMain: link handshake, RNG warm-up, spawn
  *                  the task type #93 controller, run both screens
- *   sub_080b9f34   one screen: load, fade in, wait for the phase to leave
- *                  0/1, optional link resync (sub_080ba150), fade out, stop
+ *   SubGameRunScreen   one screen: load, fade in, wait for the phase to leave
+ *                  0/1, optional link resync (SubGameSyncLink), fade out, stop
  *                  DMA0 and hand the task over to Task_SubGame
- *   sub_080ba150   the SIO handshake: 0x7755 / 0xAA00 / 0xAA01 / 0xAA02
+ *   SubGameSyncLink   the SIO handshake: 0x7755 / 0xAA00 / 0xAA01 / 0xAA02
  *                  exchanged through gLinkCommand and the send/receive
  *                  buffers gSendCmd / gRecvCmds until every
  *                  linked player reports 0xAA02
@@ -33,13 +33,13 @@
 extern s32 gCurTaskIdx;
 extern u8 gUnk_02004B5C;
 extern s16 gUnk_020055EC;
-extern s8 gUnk_02006168;
-extern u8 gUnk_02006184;
+extern s8 gSubGameLevel;
+extern u8 gQuickDrawBestTime;
 extern u8 gSubGamePhase;
 extern u8 gUnk_02007FCC;
-extern u8 gUnk_0200B03C[];
+extern u8 gQuickDrawWins[];
 extern u8 gUnk_0200B048;
-extern u8 gUnk_0200B07C[];
+extern u8 gQuickDrawRanking[];
 extern u32 gLinkDriverMode;
 extern u32 gLinkSetupMode;
 extern u32 gBg0ScrollY;
@@ -55,7 +55,7 @@ extern u32 gBg0ScrollX;
 extern vu8 gBldCntTarget1;
 extern u16 gBgPalette[];
 extern vu16 gFadeSteps;
-extern vs32 gBg2ScrollY;    /* vs32 here (vu32 elsewhere): see sub_080b9f34 */
+extern vs32 gBg2ScrollY;    /* vs32 here (vu32 elsewhere): see SubGameRunScreen */
 extern vu16 gPlayerPressedKeys[];
 extern vu16 gDispCnt;
 extern vs32 gBg1ScrollX;
@@ -75,7 +75,7 @@ extern u32 gLinkStatus;
 extern u32 gSerialIntrCount;
 extern u16 gShouldAdvanceLinkState[];
 extern u16 gSendCmd[];
-extern u16 gLinkCommand;     /* SIO handshake word; see sub_080ba150 */
+extern u16 gLinkCommand;     /* SIO handshake word; see SubGameSyncLink */
 extern u32 gUnk_087562A8[][2];
 extern u16 gUnk_087562C0[];
 extern s32 (*const gSubGameInitHooks[])(void);
@@ -119,17 +119,17 @@ void LoadBgLayout(u32 a);
 void LoadGfxSet(u16 a);
 void sub_08008d10(u32 a, u32 b);
 void sub_080c1f88(void);
-void sub_080c59d8(s32 a, s32 b);
+void AirGrindBuildCourse(s32 a, s32 b);
 
-void sub_080ba134(void);
-void sub_080ba118(void);
-void sub_080ba150(void);
+void SubGameRunFrame(void);
+void SubGameRunLinkFrame(void);
+void SubGameSyncLink(void);
 void Task_SubGame(void);
-void sub_080ba42c(void);
+void SubGameStartBody(void);
 
 void SubGameReplay(s32 a0)
 {
-    gUnk_02006168 = a0;
+    gSubGameLevel = a0;
     gCurTask->unk18 = 3;
 }
 
@@ -187,10 +187,10 @@ void sub_080b9de8(void)
     for (i = 0; i <= 4; i++)
     {
         gBldY = i;
-        sub_080ba134();
+        SubGameRunFrame();
     }
     while (1)
-        sub_080ba134();
+        SubGameRunFrame();
 }
 
 void SubGameCheckEnd(void)
@@ -203,7 +203,7 @@ void SubGameCheckEnd(void)
     }
 }
 
-void sub_080b9e50(s32 a0)
+void SubGameLoadScreen(s32 a0)
 {
     s32 m = gUnk_02007FCC;
 
@@ -242,12 +242,12 @@ void sub_080b9ea0(s32 a0)
     }
 }
 
-void sub_080b9f34(s32 a0)
+void SubGameRunScreen(s32 a0)
 {
     s32 i;
 
     ResetFadeAndBlend();
-    sub_080b9e50(a0);
+    SubGameLoadScreen(a0);
     if (a0 != 0 || gUnk_02007FCC != 2)
     {
         gBg0ScrollX = gBg1ScrollX = gBg2ScrollX = gBg3ScrollX = 0;
@@ -260,19 +260,19 @@ void sub_080b9f34(s32 a0)
     }
     else
     {
-        sub_080c59d8(gUnk_02006168, 1);
+        AirGrindBuildCourse(gSubGameLevel, 1);
         sub_080c1f88();
     }
     LinkRequestSync();
     LinkSyncRandom();
-    sub_080ba134();
+    SubGameRunFrame();
     LinkStartKeyExchange();
     sub_080b9ea0(a0);
     if (gUnk_02007FCC != 2)
     {
         BeginFastFadeInFromWhite();
         while (gFadeSteps != 0)
-            sub_080ba118();
+            SubGameRunLinkFrame();
         goto wait;
         /* The ROM places this call between the two arms: a labelled
            block reached from the phase test below (lesson 4.67). */
@@ -287,7 +287,7 @@ void sub_080b9f34(s32 a0)
         for (i = 16; i >= 0; i--)
         {
             gBldY = i;
-            sub_080ba118();
+            SubGameRunLinkFrame();
         }
     }
 wait:
@@ -295,14 +295,14 @@ wait:
     /* goto loop, not do/while: the ROM re-loads the cell's address every
        iteration, and a loop note would hoist it (lesson 3.21). */
 loop:
-    sub_080ba118();
+    SubGameRunLinkFrame();
     if (gSubGamePhase <= 1)
         goto loop;
     if (gSubGamePhase == 4 && gPrevGameState == 4)
     {
         if (gLinkSetupMode == 2)
             goto de8;
-        sub_080ba150();
+        SubGameSyncLink();
     }
 tail:
     LinkStopKeyExchange();
@@ -310,7 +310,7 @@ tail:
     {
         BeginFastFadeOutToWhite();
         while (gFadeSteps != 0)
-            sub_080ba118();
+            SubGameRunLinkFrame();
     }
     else
     {
@@ -318,7 +318,7 @@ tail:
         for (i = 0; i <= 16; i++)
         {
             gBldY = i;
-            sub_080ba118();
+            SubGameRunLinkFrame();
         }
         ResetFadeAndBlend();
         gDispCnt |= 0x80;
@@ -330,21 +330,21 @@ tail:
     TaskSetEntry(Task_SubGame, gUnk_020055EC);
 }
 
-void sub_080ba118(void)
+void SubGameRunLinkFrame(void)
 {
     RunLinkFrame();
     if (gUnk_02007FCC == 2)
         sub_080c1f88();
 }
 
-void sub_080ba134(void)
+void SubGameRunFrame(void)
 {
     RunFrame();
     if (gUnk_02007FCC == 2)
         sub_080c1f88();
 }
 
-void sub_080ba150(void)
+void SubGameSyncLink(void)
 {
     s32 n;
     u32 stall;
@@ -426,7 +426,7 @@ done:
     if (gLinkIsMaster != 0)
         gLinkDriverMode = 0;
     for (i = 4; i >= 0; i--)
-        sub_080ba134();
+        SubGameRunFrame();
     DisableSerial();
     gLinkStatus = 0;
 }
@@ -460,8 +460,8 @@ void SubGameMain(void)
     LinkSyncRandom();
     gUnk_020055EC = TaskCreateFrom(93, 63);
     sub_080b9d48();
-    sub_080b9f34(0);
-    sub_080b9f34(1);
+    SubGameRunScreen(0);
+    SubGameRunScreen(1);
     ResetTasksAndOam();
     if (gSubGamePhase != 3)
     {
@@ -476,13 +476,13 @@ void Task_SubGame(void)
 
     t->unk00 = 0;
     t->unk0C = 0;
-    t->unk04 = (u32)sub_080ba42c;
+    t->unk04 = (u32)SubGameStartBody;
     t->unk18 = 0;
     FreeOtherTasks();
     TaskSleepForever();
 }
 
-void sub_080ba42c(void)
+void SubGameStartBody(void)
 {
     TaskSetEntry(gSubGameBodies[gUnk_02007FCC], gCurTaskIdx);
 }
@@ -494,11 +494,11 @@ void QuickDrawInit(void)
 
     for (i = 0; i <= 3; i++)
     {
-        gUnk_0200B03C[i] = 0;
-        gUnk_0200B07C[i] = i;
+        gQuickDrawWins[i] = 0;
+        gQuickDrawRanking[i] = i;
     }
     gUnk_02004B5C = 0xFF;
-    gUnk_02006184 = 99;
+    gQuickDrawBestTime = 99;
     gUnk_0200B048 = 0;
     t->unk34 = 3;
     RequestCopy(2, (u32)gUnk_087562E4, (u32)gBgPalette, 2);
@@ -511,7 +511,7 @@ void QuickDrawMain(void)
     TaskSleepForever();
 }
 
-void sub_080ba50c(void)
+void QuickDrawFreeze(void)
 {
     struct Task *t;
 
@@ -524,7 +524,7 @@ void sub_080ba50c(void)
     t->unk1C = 0;
 }
 
-void sub_080ba578(void)
+void CreateQuickDrawTimer(void)
 {
     s32 idx = TaskCreateFrom(94, 32);
 
@@ -538,7 +538,7 @@ void sub_080ba578(void)
     }
 }
 
-void sub_080ba5bc(s32 a0)
+void CreateQuickDrawPlayers(s32 a0)
 {
     s32 i;
 
@@ -563,14 +563,14 @@ void sub_080ba61c(void)
 {
     struct Task *t;
 
-    sub_080ba5bc(0);
-    sub_080ba578();
+    CreateQuickDrawPlayers(0);
+    CreateQuickDrawTimer();
     t = gCurTask;
     t->unk24 = 0;
     t->unk75 = 0;
 }
 
-void sub_080ba63c(void)
+void CreateQuickDrawSignal(void)
 {
     s32 idx = TaskCreateFrom(94, 62);
 
@@ -589,7 +589,7 @@ void sub_080ba63c(void)
     }
 }
 
-void sub_080ba688(void)
+void QuickDrawStartTimer(void)
 {
     struct Task *t;
 
@@ -599,17 +599,17 @@ void sub_080ba688(void)
     t->unk1C = 1;
 }
 
-void sub_080ba6b4(void)
+void QuickDrawWaitForSignal(void)
 {
     struct Task *t = gCurTask;
 
     t->unk70 = 0;
     t->unk6E = 0;
-    TaskYieldTrampoline(RandomRange(gUnk_087562F6[gUnk_02006168]) + gUnk_087562F0[gUnk_02006168]);
-    sub_080ba63c();
+    TaskYieldTrampoline(RandomRange(gUnk_087562F6[gSubGameLevel]) + gUnk_087562F0[gSubGameLevel]);
+    CreateQuickDrawSignal();
 }
 
-s32 sub_080ba708(void)
+s32 QuickDrawCountPresses(void)
 {
     s32 mask = 0;
     s32 i;

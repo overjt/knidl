@@ -107,9 +107,9 @@ void SetBg3ScreenSize(u16 a);
 void ResumeBlockAnims(void);
 void PauseBlockAnims(void);
 void StopHBlankScroll(void);
-void sub_080b6ed4(void);
-void sub_080b6f04(void);
-void sub_080b6f20(void);
+void HoldHBlankScroll(void);
+void RestoreRoomHBlankScroll(void);
+void ResumeHBlankScroll(void);
 
 void sub_080270d0(void)
 {
@@ -170,7 +170,7 @@ void PauseRoom(void)
 {
     gRoomUpdateFlags = 0;
     PauseBlockAnims();
-    sub_080b6ed4();
+    HoldHBlankScroll();
 }
 
 void SetRoomUpdateFlags(u32 a)
@@ -182,7 +182,7 @@ void ResumeRoom(void)
 {
     gRoomUpdateFlags = 31;
     ResumeBlockAnims();
-    sub_080b6f20();
+    ResumeHBlankScroll();
 }
 
 void sub_08027228(void)
@@ -204,7 +204,7 @@ void sub_08027240(void)
         SetBg23ScreenSize(0x8000);
     CameraWriteScrollParallax();
     if (gHBlankScrollStarted != 0)
-        sub_080b6f04();
+        RestoreRoomHBlankScroll();
     sub_0800ab08();
 }
 

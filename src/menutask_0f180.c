@@ -6,7 +6,7 @@
  *
  * Menu sprite tasks, last part: the link-play connection screen (menu
  * screens 8 and 9) and the menu's background tasks.  Task type #251
- * (sub_0800f180, body sub_0800f2b4) spawns a #252 (sub_0800f390, body
+ * (Task_LinkPlayPlayerList, body sub_0800f2b4) spawns a #252 (sub_0800f390, body
  * sub_0800f408) and a #253 (sub_0800f5ec, body sub_0800f698) per player
  * and slides them as partners join (sub_0800ffd8); #256 (Task_MenuScreenTitle,
  * body sub_0800f840) is the menu screen's title sprite; #259
@@ -60,7 +60,7 @@ void sub_0800f408(void);
 void sub_0800f698(void);
 void sub_0800f840(void);
 
-void sub_0800f180(void)
+void Task_LinkPlayPlayerList(void)
 {
     struct Task *t;
     struct Task *s;

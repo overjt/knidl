@@ -36,7 +36,7 @@
 #include "global.h"
 #include "task.h"
 
-extern s8 gUnk_02006168;
+extern s8 gSubGameLevel;
 extern u8 gUnk_020061DC;
 extern s8 gUnk_02006A10[];
 extern u8 gUnk_0200AF10;

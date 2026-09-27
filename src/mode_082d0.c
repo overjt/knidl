@@ -12,7 +12,7 @@
  * loop and a palette pulse). */
 
 extern u8 gUnk_02006090;
-extern s8 gUnk_02006168;
+extern s8 gSubGameLevel;
 extern vs32 gBg0ScrollX;
 extern vu16 gBgPalette[];
 extern u16 gObjPalette[];
@@ -122,9 +122,9 @@ void sub_080084dc(void)
     gCurTask->unk15 = 1;
     for (;;) {
         if (gPrevGameState == 4 && gLocalPlayer == 0)
-            QueueSprite(8, gUnk_08756054[gUnk_02006168 + 4], 0, 0, 120, 144);
+            QueueSprite(8, gUnk_08756054[gSubGameLevel + 4], 0, 0, 120, 144);
         else
-            QueueSprite(8, gUnk_08756054[gUnk_02006168 + 7], 0, 0, 200, 144);
+            QueueSprite(8, gUnk_08756054[gSubGameLevel + 7], 0, 0, 200, 144);
         TaskYieldTrampoline(1);
     }
 }
@@ -149,7 +149,7 @@ void sub_08008558(void)
         } else {
             r <<= 6;
         }
-        BlendColors(gUnk_085B6E78[gUnk_02006168][0], gUnk_085B6E78[gUnk_02006168][2], (u16)r, 16, gUnk_03001490);
+        BlendColors(gUnk_085B6E78[gSubGameLevel][0], gUnk_085B6E78[gSubGameLevel][2], (u16)r, 16, gUnk_03001490);
     } else if (gUnk_03005280 == 3) {
         r = gFrameCount & 15;
         if (r > 7) {
@@ -158,7 +158,7 @@ void sub_08008558(void)
         } else {
             r <<= 5;
         }
-        BlendColors(gUnk_085B6E78[gUnk_02006168][0], gUnk_085B6E78[gUnk_02006168][1], (u16)r, 16, gUnk_03001490);
+        BlendColors(gUnk_085B6E78[gSubGameLevel][0], gUnk_085B6E78[gSubGameLevel][1], (u16)r, 16, gUnk_03001490);
     } else {
         for (i = 0; i < 16; i++)
             gBgPalette[0x110 + i] = gUnk_085B6E78[0][0][i];

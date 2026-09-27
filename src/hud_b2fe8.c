@@ -1402,7 +1402,7 @@ s32 sub_080b5a94();
 s32 sub_080b5bdc();
 s32 sub_080b5d84();
 void HBlankScrollVBlankCallback();
-void sub_080b60e8();
+void UpdateHBlankScroll();
 extern void CpuSet(const void *src, void *dst, u32 control);
 
 void sub_080b2fe8(void)

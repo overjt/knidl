@@ -15,7 +15,7 @@
 extern s8 gLinkSessionMode;
 extern u32 gUnk_02004000[];
 extern u8 gUnk_02006090;
-extern s8 gUnk_02006168;
+extern s8 gSubGameLevel;
 extern s32 gUnk_02007D00;
 extern u8 gUnk_02007FCC;
 extern u32 gLinkDriverMode;
@@ -360,12 +360,12 @@ select:
         RunLinkFrame();
         if (gPrevGameState == 4) {
             if (gUnk_02006090 <= 2) {
-                if ((gPlayerPressedKeys[0] & 0x20) && gUnk_02006168 != 0) {
+                if ((gPlayerPressedKeys[0] & 0x20) && gSubGameLevel != 0) {
                     PlaySfx(101);
-                    gUnk_02006168--;
-                } else if ((gPlayerPressedKeys[0] & 0x10) && gUnk_02006168 != 2) {
+                    gSubGameLevel--;
+                } else if ((gPlayerPressedKeys[0] & 0x10) && gSubGameLevel != 2) {
                     PlaySfx(101);
-                    gUnk_02006168++;
+                    gSubGameLevel++;
                 }
             }
             if (gPlayerCount == 1 && (gPlayerPressedKeys[0] & 2))

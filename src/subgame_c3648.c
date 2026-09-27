@@ -10,7 +10,7 @@
  *       in Task.unk08 (racing / before the start and after the finish): run
  *       sub_080c383c, then sub_080c38c8 or sub_080c3d58, then sub_080c3e18.
  *   sub_080c383c   player 0 drives the camera (sub_080c3670) and rebuilds the
- *       course view (sub_080c5b84) and keeps the leader's position in
+ *       course view (AirGrindDrawCourse) and keeps the leader's position in
  *       M37Game.unk1B8; every racer sets Task.unk42/unk3E from the course
  *       record's unk18 and Task.unk28 from its unk08.
  *   sub_080c38c8   the racing step: holding A (M37Player.unk02 & 1) on the
@@ -45,7 +45,7 @@ struct M37Obj
    type #96 variant 1's seven scrolling objects.  sub_080c4664 addresses an
    object as &set->unk04[i] off the set's own base (`lsls #4; adds #4`), so
    the records are a sub-struct, not flat fields; the two 16-colour rows
-   sub_080c20b4 fills end it exactly at M37Game.unk1A4. */
+   AirGrindSetupRace fills end it exactly at M37Game.unk1A4. */
 struct M37ObjSet
 {
     /*0x00*/ s32 unk00;         /* the scroll position last frame */
@@ -83,13 +83,13 @@ struct M37Player
 /* gAirGrind, the game's state; always used through gAirGrindPtr */
 struct M37Game
 {
-    /*0x000*/ s32 unk000;       /* the level (M36's AirGrindInit copies gUnk_02006168) */
+    /*0x000*/ s32 unk000;       /* the level (M36's AirGrindInit copies gSubGameLevel) */
     /*0x004*/ s32 unk004[4];
     /*0x014*/ s32 unk014;
     /*0x018*/ s32 unk018;
     /*0x01C*/ struct M37Player unk01C[4];
     /*0x0EC*/ struct M37ObjSet unk0EC;
-    /*0x1A4*/ s32 unk1A4[5];    /* five LCG streams (sub_080c4ca4, sub_080c4cd4) */
+    /*0x1A4*/ s32 unk1A4[5];    /* five LCG streams (AirGrindRandom, AirGrindRandomRange) */
     /*0x1B8*/ s32 unk1B8;
     /*0x1BC*/ u16 unk1BC[160]; /* per-scanline colour, HBlank DMA source */
     /*0x2FC*/ u16 unk2FC;
@@ -142,7 +142,7 @@ struct M37Course
     /*0x110*/ s32 unk110;
 };
 
-/* gUnk_03006928: a cursor into one of the u16-pair scripts gUnk_087572EC[]
+/* gAirGrindScript: a cursor into one of the u16-pair scripts gUnk_087572EC[]
    (sub_080c51c0 clears it, sub_080c51d4 steps it, 0x8000 = end, 0x9999 =
    loop) */
 struct M37Script
@@ -155,8 +155,8 @@ struct M37Script
 
 extern struct M37Game *gAirGrindPtr;
 extern struct M37Course *gAirGrindCoursePtr;
-extern u16 gUnk_02017170;
-extern struct M37Script gUnk_03006928;
+extern u16 gAirGrindFrame;
+extern struct M37Script gAirGrindScript;
 extern s32 gUnk_080CFE3C[][3];
 extern u8 gUnk_080CFEE4[];
 extern u8 gUnk_080CFEE9[];
@@ -173,7 +173,7 @@ void StopSfxOnPlayer(s32 player, s32 songId);
 
 void sub_080c2078(s32 a, s32 b, s32 c);
 void sub_080c523c(u16 id);
-void sub_080c5b84(void);
+void AirGrindDrawCourse(void);
 s32 sub_080c623c(s32 x);
 
 void sub_080c3648(void)
@@ -192,8 +192,8 @@ void sub_080c3670(s32 pos)
     struct M37Course *c = gAirGrindCoursePtr;
 
     c->unk000 = pos > c->unk010 ? c->unk010 : pos;
-    c->unk004 = gUnk_03006928.unk4;
-    c->unk008 = gUnk_03006928.unk2;
+    c->unk004 = gAirGrindScript.unk4;
+    c->unk008 = gAirGrindScript.unk2;
 }
 
 s32 sub_080c3698(s32 player)
@@ -251,7 +251,7 @@ void sub_080c383c(s32 player)
 
     if (player == 0) {
         sub_080c3670((gCurTask->unk4C >> 16) + 48);
-        sub_080c5b84();
+        AirGrindDrawCourse();
         max = 0;
         for (i = 0; i < 4; i++) {
             if (gAirGrindCoursePtr->unk018[i].unk00 > max)
@@ -286,9 +286,9 @@ void sub_080c38c8(s32 player)
             else
                 gCurTask->unk5C = 0x8000;
             if (player == 0) {
-                if ((gUnk_02017170 & 3) == 0)
+                if ((gAirGrindFrame & 3) == 0)
                     sub_080c2078(0, gCurTask->unk18, 0);
-                if ((gUnk_02017170 & 7) == 1)
+                if ((gAirGrindFrame & 7) == 1)
                     sub_080c2078(0, gCurTask->unk18, 1);
             }
             if (gAirGrindPtr->unk01C[player].unk0A == 0 && gAirGrindPtr->unk01C[player].unk00 == 0)

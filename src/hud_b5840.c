@@ -1443,7 +1443,7 @@ s32 sub_080b5a94();
 s32 sub_080b5bdc();
 s32 sub_080b5d84();
 void HBlankScrollVBlankCallback();
-void sub_080b60e8();
+void UpdateHBlankScroll();
 extern void CpuSet(const void *src, void *dst, u32 control);
 
 s32 sub_080b5840(u8 *e, s32 i, s32 k)
@@ -1778,7 +1778,7 @@ void HBlankScrollVBlankCallback(void)
     }
 }
 
-void sub_080b60e8(void)
+void UpdateHBlankScroll(void)
 {
     s32 w;
     s32 m;

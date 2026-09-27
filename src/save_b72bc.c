@@ -65,7 +65,7 @@ extern u8 gUnk_03001F20;
 extern u8 gUnk_03001F30;
 extern u16 gCompletionPercent;
 extern u16 gLocalPlayer;
-extern u16 gUnk_03002364;
+extern u16 gMilestoneFlags;
 extern u16 gUnk_03002378[];
 extern s8 gUnk_03002384;
 extern s8 gLevelIndex;
@@ -122,7 +122,7 @@ void sub_080b72bc(void)
     {
         gLocalPlayer = gInputRecordingPtr->unk11C;
         gExtraMode = gInputRecordingPtr->unk0B;
-        gUnk_03002364 = gInputRecordingPtr->unkC0;
+        gMilestoneFlags = gInputRecordingPtr->unkC0;
         gUnk_030023B8 = gInputRecordingPtr->unkC4[gExtraMode];
         gUnk_03001F20 = gInputRecordingPtr->unkC6[gExtraMode];
         gUnk_030023E0 = gInputRecordingPtr->unkC8[gExtraMode];

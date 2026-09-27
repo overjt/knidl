@@ -8,19 +8,19 @@
  * table 0x087563B0 on Task.unk73, the kind its spawner wrote (ten function
  * pointers; the call passes 12):
  *
- *   0  sub_080bc850  a player: a six-state machine over 0x08756468 (entry
+ *   0  QuickDrawPlayer  a player: a six-state machine over 0x08756468 (entry
  *                    coroutines) / 0x08756480 (per-frame hooks), started in
  *                    state 0, 1 or 5 by Task.unk74
  *   1  sub_080bcdac  a label / icon sprite (draw callback sub_080bcbfc)
- *   2  sub_080bcf60  a two-digit counter (sub_080bce28 counts to 99 and
+ *   2  QuickDrawTimer  a two-digit counter (QuickDrawTimerCount counts to 99 and
  *                    mirrors the value into the parent's Task.unk20)
  *   3  sub_080bcfa4  a scripted fly-in
  *   4  sub_080bd06c  a four-frame effect at (120, 96)
- *   5  sub_080bd4bc  the single-player opponent sub_080bb074 spawns: a
+ *   5  QuickDrawOpponent  the single-player opponent CreateQuickDrawOpponent spawns: a
  *                    five-state machine over 0x087564E4 / 0x087564FC, one
  *                    animation set per level Task.unk18 (0-4) and its
  *                    reaction time from 0x087564B0[unk74 * 5 + unk18]; own
- *                    graphics loader sub_080bd188, draw callback sub_080bd938
+ *                    graphics loader QuickDrawLoadOpponentGraphics, draw callback sub_080bd938
  *   6  sub_080bd110  a three-frame sprite
  *   7  sub_080bd7f0  a sprite drawn by TaskDrawScreen (0x08755B90)
  *   8  sub_080bd8ac  the same graphics as a per-player award: in
@@ -47,7 +47,7 @@ struct GfxDesc
 };
 
 extern s32 gCurTaskIdx;
-extern u8 gUnk_0200B03C[];
+extern u8 gQuickDrawWins[];
 extern u8 gUnk_0200B048;
 extern u32 gUnk_02020000[];
 extern vs16 gBrightness;
@@ -78,7 +78,7 @@ extern u32 gUnk_08755B18[];
 extern u32 gUnk_08755B40[];
 extern u32 gUnk_08755B68[];
 extern u32 gUnk_08755B90[];
-extern u32 gUnk_087563B0[];
+extern u32 gQuickDrawObjectKinds[];
 extern u16 gUnk_087563D8[];
 extern u16 gUnk_08756410[];
 extern s16 gUnk_08756448[];
@@ -114,16 +114,16 @@ void sub_08009eb8(u32 a, u32 b);
 void AddPlayerScoreNoHud(u32 a, u32 b);
 
 void sub_080bc1c4(void);
-void sub_080bc8c4(void);
-void sub_080bc8a8(void);
+void QuickDrawPlayerEnterState(void);
+void QuickDrawPlayerUpdate(void);
 void sub_080bcf8c(void);
-void sub_080bd524(void);
+void QuickDrawOpponentEnterState(void);
 void sub_080bd290(void);
-void sub_080bd508(void);
+void QuickDrawOpponentUpdate(void);
 
 void Task_QuickDrawObject(void)
 {
-    CallTableEntry(gCurTask->unk73, 12, gUnk_087563B0);
+    CallTableEntry(gCurTask->unk73, 12, gQuickDrawObjectKinds);
 }
 
 void sub_080bc0ec(void)
@@ -458,7 +458,7 @@ void sub_080bc680(void)
         }
         n = &gTasks[idx];
         n->unk73 = 1;
-        n->unk18 = gUnk_0200B03C[gCurTask->unk18];
+        n->unk18 = gQuickDrawWins[gCurTask->unk18];
         n->unk1C = 2;
         n->unk20 = 60;
         n->unk24 = -1;
@@ -478,7 +478,7 @@ void sub_080bc70c(void)
     gCurTask->unk14 = 1;
 }
 
-void sub_080bc740(s32 a0, u16 a1)
+void QuickDrawSetPlayerState(s32 a0, u16 a1)
 {
     struct Task *t = &gTasks[a0];
     struct Task *p = &gTasks[t->unk44];
@@ -486,7 +486,7 @@ void sub_080bc740(s32 a0, u16 a1)
     if (p->unk18 != 2)
     {
         t->unk14 = a1;
-        TaskSetEntry(sub_080bc8c4, a0);
+        TaskSetEntry(QuickDrawPlayerEnterState, a0);
         if (t->unk34 != -1)
             TaskFree(t->unk34);
         if (t->unk30 != -1)
@@ -501,7 +501,7 @@ void sub_080bc79c(u16 a0)
     s32 i;
 
     for (i = 0; i < gPlayerCount; i++)
-        sub_080bc740(i, a0);
+        QuickDrawSetPlayerState(i, a0);
 }
 
 u8 sub_080bc7c8(void)
@@ -527,12 +527,12 @@ void sub_080bc800(void)
     gCurTask->unk50 = gCurTask->unk4A << 16;
 }
 
-void sub_080bc850(void)
+void QuickDrawPlayer(void)
 {
     struct Task *t = gCurTask;
 
     t->unk0C = (u32)TaskDrawScreen;
-    t->unk04 = (u32)sub_080bc8a8;
+    t->unk04 = (u32)QuickDrawPlayerUpdate;
     t->unk42 = 7;
     t = gCurTask;
     switch (t->unk74)
@@ -551,12 +551,12 @@ void sub_080bc850(void)
     TaskSleepForever();
 }
 
-void sub_080bc8a8(void)
+void QuickDrawPlayerUpdate(void)
 {
     CallTableEntry(gCurTask->unk15, 6, gUnk_08756480);
 }
 
-void sub_080bc8c4(void)
+void QuickDrawPlayerEnterState(void)
 {
     CallTableEntry(gCurTask->unk14, 6, gUnk_08756468);
 }
@@ -584,7 +584,7 @@ void sub_080bc948(void)
     if (gBrightness == 0 && gCurTask->unk24 == 0)
         sub_080bc0ec();
     if (gCurTask->unk14 != 0)
-        TaskSetEntry(sub_080bc8c4, gCurTaskIdx);
+        TaskSetEntry(QuickDrawPlayerEnterState, gCurTaskIdx);
 }
 
 void sub_080bc988(void)
@@ -811,7 +811,7 @@ void sub_080bcde0(void)
     t->unk40 |= 0x800;
 }
 
-void sub_080bce28(void)
+void QuickDrawTimerCount(void)
 {
     struct Task *t = gCurTask;
     struct Task *p = &gTasks[t->unk44];
@@ -855,7 +855,7 @@ void sub_080bce74(void)
     }
 }
 
-void sub_080bcf60(void)
+void QuickDrawTimer(void)
 {
     struct Task *t = gCurTask;
 
@@ -869,7 +869,7 @@ void sub_080bcf60(void)
 void sub_080bcf8c(void)
 {
     if (gCurTask->unk1C != 0)
-        sub_080bce28();
+        QuickDrawTimerCount();
 }
 
 void sub_080bcfa4(void)
@@ -949,7 +949,7 @@ void sub_080bd110(void)
     TaskSleepForever();
 }
 
-void sub_080bd188(s32 a0)
+void QuickDrawLoadOpponentGraphics(s32 a0)
 {
     struct GfxDesc *d = gUnk_087564D0[a0];
 
@@ -958,7 +958,7 @@ void sub_080bd188(s32 a0)
     RequestCopy(2, d->unk08, (u32)gUnk_03001570, d->unk00 << 5);
 }
 
-void sub_080bd1d0(s32 a0, u16 a1)
+void QuickDrawSetOpponentState(s32 a0, u16 a1)
 {
     struct Task *t = &gTasks[a0];
     struct Task *u = &gTasks[t->unk44];
@@ -966,7 +966,7 @@ void sub_080bd1d0(s32 a0, u16 a1)
     if (u->unk18 != 2)
     {
         t->unk14 = a1;
-        TaskSetEntry(sub_080bd524, a0);
+        TaskSetEntry(QuickDrawOpponentEnterState, a0);
     }
 }
 
@@ -1118,12 +1118,12 @@ void sub_080bd494(void)
     t->unk3C = 2;
 }
 
-void sub_080bd4bc(void)
+void QuickDrawOpponent(void)
 {
     struct Task *t;
 
     gCurTask->unk0C = (u32)TaskDrawScreen;
-    gCurTask->unk04 = (u32)sub_080bd508;
+    gCurTask->unk04 = (u32)QuickDrawOpponentUpdate;
     gCurTask->unk42 = 12;
     t = gCurTask;
     t->unk18 = 0;
@@ -1135,12 +1135,12 @@ void sub_080bd4bc(void)
     TaskSleepForever();
 }
 
-void sub_080bd508(void)
+void QuickDrawOpponentUpdate(void)
 {
     CallTableEntry(gCurTask->unk15, 6, gUnk_087564FC);
 }
 
-void sub_080bd524(void)
+void QuickDrawOpponentEnterState(void)
 {
     struct Task *t = gCurTask;
 
@@ -1166,7 +1166,7 @@ void sub_080bd594(void)
     if (gBrightness == 0 && gCurTask->unk24 == 0)
         sub_080bd210();
     if (gCurTask->unk14 != 0)
-        TaskSetEntry(sub_080bd524, gCurTaskIdx);
+        TaskSetEntry(QuickDrawOpponentEnterState, gCurTaskIdx);
 }
 
 void sub_080bd5d4(void)

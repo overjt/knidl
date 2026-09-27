@@ -8,14 +8,14 @@
  * race screen's sky.
  * 
  *   AirGrindResults   the results task body: ranks the four racers by their
- *       frame counts M37Game.unk004[] (a bubble sort into gUnk_02017140.unk04,
+ *       frame counts M37Game.unk004[] (a bubble sort into gAirGrindResults.unk04,
  *       ties share a place in unk0C), picks each one's score (course record
  *       unk20 or unk24) and installs sub_080c25c4 / sub_080c2b8c.
  *   sub_080c25c4   draws the table: time (sub_080c4ac4), score
  *       (sub_080c4bec), the racer's sprite (sub_080c4c30, the winner pulsing)
  *       and the place or the stars won, then the two palette cycles
  *       (sub_080c2ba8).
- *   sub_080c2740   the results state machine (gUnk_02017140.unk00): a place
+ *   sub_080c2740   the results state machine (gAirGrindResults.unk00): a place
  *       jingle (songs 0x81D/0x81C/0x817), in the extra mode (gPrevGameState ==
  *       5) the stars counted up and handed to the linked players
  *       (sub_08009eb8) before M35's SubGameQuit ends the screen, otherwise a
@@ -24,13 +24,13 @@
  *   sub_080c2b8c / sub_080c2ba8 / sub_080c2ccc   the per-frame callback, the
  *       two palette cycles through gUnk_08609F40 with the cursor sprite, and
  *       the cycle's start row for a menu choice.
- *   sub_080c2d38   the per-frame hook sub_080c20b4 installs: builds the
+ *   AirGrindBuildSky   the per-frame hook AirGrindSetupRace installs: builds the
  *       160-line sky gradient M37Game.unk1BC[] from eleven RGB key colours,
  *       fading from gUnk_080CFE60 to gUnk_080CFEA2 (level 2: gUnk_080CFE81 to
  *       gUnk_080CFEC3) between frames 0x4B0 and 0x8B0 of M37Game.unk300.  It
  *       reads one key past the end of the eleven-entry local table, as the
  *       ROM does.
- *   sub_080c2fb8   the VBlank hook: sets backdrop colour 0 and re-arms DMA0
+ *   AirGrindSkyVBlankCallback   the VBlank hook: sets backdrop colour 0 and re-arms DMA0
  *       to copy that gradient into it on every HBlank (0xA2400001). */
 
 /* 16-byte object records, M37ObjSet.unk04[7] (sub_080c4664, sub_080c4790) */
@@ -47,7 +47,7 @@ struct M37Obj
    type #96 variant 1's seven scrolling objects.  sub_080c4664 addresses an
    object as &set->unk04[i] off the set's own base (`lsls #4; adds #4`), so
    the records are a sub-struct, not flat fields; the two 16-colour rows
-   sub_080c20b4 fills end it exactly at M37Game.unk1A4. */
+   AirGrindSetupRace fills end it exactly at M37Game.unk1A4. */
 struct M37ObjSet
 {
     /*0x00*/ s32 unk00;         /* the scroll position last frame */
@@ -85,13 +85,13 @@ struct M37Player
 /* gAirGrind, the game's state; always used through gAirGrindPtr */
 struct M37Game
 {
-    /*0x000*/ s32 unk000;       /* the level (M36's AirGrindInit copies gUnk_02006168) */
+    /*0x000*/ s32 unk000;       /* the level (M36's AirGrindInit copies gSubGameLevel) */
     /*0x004*/ s32 unk004[4];
     /*0x014*/ s32 unk014;
     /*0x018*/ s32 unk018;
     /*0x01C*/ struct M37Player unk01C[4];
     /*0x0EC*/ struct M37ObjSet unk0EC;
-    /*0x1A4*/ s32 unk1A4[5];    /* five LCG streams (sub_080c4ca4, sub_080c4cd4) */
+    /*0x1A4*/ s32 unk1A4[5];    /* five LCG streams (AirGrindRandom, AirGrindRandomRange) */
     /*0x1B8*/ s32 unk1B8;
     /*0x1BC*/ u16 unk1BC[160]; /* per-scanline colour, HBlank DMA source */
     /*0x2FC*/ u16 unk2FC;
@@ -163,8 +163,8 @@ struct M37Results
 extern struct M37Game gAirGrind;
 extern struct M37Game *gAirGrindPtr;
 extern struct M37Course *gAirGrindCoursePtr;
-extern u16 gUnk_02017170;
-extern struct M37Results gUnk_02017140;
+extern u16 gAirGrindFrame;
+extern struct M37Results gAirGrindResults;
 extern u8 gUnk_080CFE2C[][4];
 extern u16 gPrevGameState;
 extern vu16 gPlayerPressedKeys[];
@@ -202,44 +202,44 @@ void AirGrindResults(void)
     s32 j;
     u8 t;
 
-    gUnk_02017140.unk00 = 0;
-    gUnk_02017140.unk01 = 0;
-    gUnk_02017140.unk02 = 0;
+    gAirGrindResults.unk00 = 0;
+    gAirGrindResults.unk01 = 0;
+    gAirGrindResults.unk02 = 0;
     gCurTask->unk04 = (u32)sub_080c2b8c;
     gCurTask->unk3C = 0xFFFF;
     gCurTask->unk0C = (u32)sub_080c25c4;
     x = gAirGrindCoursePtr->unk014 * 2;
     for (i = 0; i < 4; i++) {
         if (gAirGrindPtr->unk01C[i].unk01 == x && gAirGrindPtr->unk01C[i].unk0E == x + 1)
-            gUnk_02017140.unk1C[i] = gAirGrindCoursePtr->unk018[i].unk20;
+            gAirGrindResults.unk1C[i] = gAirGrindCoursePtr->unk018[i].unk20;
         else
-            gUnk_02017140.unk1C[i] = gAirGrindCoursePtr->unk018[i].unk24;
+            gAirGrindResults.unk1C[i] = gAirGrindCoursePtr->unk018[i].unk24;
     }
     for (i = 0; i < 4; i++)
-        gUnk_02017140.unk04[gUnk_080CFE2C[gAirGrindPtr->unk446][i]] = i;
+        gAirGrindResults.unk04[gUnk_080CFE2C[gAirGrindPtr->unk446][i]] = i;
     for (j = 3; j > 0; j--) {
         for (i = 0; i < j; i++) {
-            if (gAirGrindPtr->unk004[gUnk_02017140.unk04[i]] > gAirGrindPtr->unk004[gUnk_02017140.unk04[i + 1]]) {
-                t = gUnk_02017140.unk04[i];
-                gUnk_02017140.unk04[i] = gUnk_02017140.unk04[i + 1];
-                gUnk_02017140.unk04[i + 1] = t;
+            if (gAirGrindPtr->unk004[gAirGrindResults.unk04[i]] > gAirGrindPtr->unk004[gAirGrindResults.unk04[i + 1]]) {
+                t = gAirGrindResults.unk04[i];
+                gAirGrindResults.unk04[i] = gAirGrindResults.unk04[i + 1];
+                gAirGrindResults.unk04[i + 1] = t;
             }
         }
     }
     for (i = 0; i < 4; i++)
-        gUnk_02017140.unk08[gUnk_02017140.unk04[i]] = i;
+        gAirGrindResults.unk08[gAirGrindResults.unk04[i]] = i;
     j = 0;
     for (i = 0; i < 3; i++) {
-        if (gAirGrindPtr->unk004[gUnk_02017140.unk04[i]] < gAirGrindPtr->unk004[gUnk_02017140.unk04[i + 1]]) {
-            gUnk_02017140.unk0C[i] = j;
+        if (gAirGrindPtr->unk004[gAirGrindResults.unk04[i]] < gAirGrindPtr->unk004[gAirGrindResults.unk04[i + 1]]) {
+            gAirGrindResults.unk0C[i] = j;
             j = i + 1;
-            gUnk_02017140.unk0C[i + 1] = j;
+            gAirGrindResults.unk0C[i + 1] = j;
         } else {
-            gUnk_02017140.unk0C[i] = gUnk_02017140.unk0C[i + 1] = j;
+            gAirGrindResults.unk0C[i] = gAirGrindResults.unk0C[i + 1] = j;
         }
     }
-    gUnk_02017140.unk10 = 0x200;
-    gUnk_02017140.unk14 = -4;
+    gAirGrindResults.unk10 = 0x200;
+    gAirGrindResults.unk14 = -4;
     TaskSleepForever();
 }
 
@@ -255,21 +255,21 @@ void sub_080c25c4(void)
 
     for (i = 0; i < 4; i++) {
         y = i * 32 + 43;
-        p = gUnk_02017140.unk04[i];
+        p = gAirGrindResults.unk04[i];
         scale = 0x200;
         if (p == 0)
-            scale = gUnk_02017140.unk10;
+            scale = gAirGrindResults.unk10;
         sub_080c4a48(8);
         sub_080c4ac4(gAirGrindPtr->unk004[p], 114, y);
-        sub_080c4bec(gUnk_02017140.unk1C[p], gAirGrindCoursePtr->unk018[p].unk20, 180, y);
+        sub_080c4bec(gAirGrindResults.unk1C[p], gAirGrindCoursePtr->unk018[p].unk20, 180, y);
         pal = gUnk_080CFE2C[gAirGrindPtr->unk446][p];
         layer = 4;
         if (p == 0)
             layer = 3;
         sub_080c4c30(0, pal, scale, 76, y, layer);
-        if (gUnk_02017140.unk00 != 3) {
-            if (gUnk_02017140.unk00 > 3 && gPrevGameState == 5)
-                blink = gUnk_02017170 & 64;
+        if (gAirGrindResults.unk00 != 3) {
+            if (gAirGrindResults.unk00 > 3 && gPrevGameState == 5)
+                blink = gAirGrindFrame & 64;
             else
                 blink = 1;
             if (blink)
@@ -277,9 +277,9 @@ void sub_080c25c4(void)
         }
         if (p != 0) {
         place:
-            sub_080c4a94(gUnk_02017140.unk0C[i] + 2, 28, y);
-        } else if (gUnk_02017140.unk01 != 0 || gUnk_02017140.unk02 != 0) {
-            switch (gUnk_02017140.unk01) {
+            sub_080c4a94(gAirGrindResults.unk0C[i] + 2, 28, y);
+        } else if (gAirGrindResults.unk01 != 0 || gAirGrindResults.unk02 != 0) {
+            switch (gAirGrindResults.unk01) {
             case 1:
                 sub_080c4a94(0, 28, y);
                 break;
@@ -306,19 +306,19 @@ void sub_080c2740(void)
     s32 i;
     u8 pal;
 
-    gUnk_02017140.unk10 += gUnk_02017140.unk14;
-    if (gUnk_02017140.unk10 <= 384)
-        gUnk_02017140.unk14 = 4;
-    if (gUnk_02017140.unk10 > 507)
-        gUnk_02017140.unk14 = -4;
-    switch (gUnk_02017140.unk00) {
+    gAirGrindResults.unk10 += gAirGrindResults.unk14;
+    if (gAirGrindResults.unk10 <= 384)
+        gAirGrindResults.unk14 = 4;
+    if (gAirGrindResults.unk10 > 507)
+        gAirGrindResults.unk14 = -4;
+    switch (gAirGrindResults.unk00) {
     case 0:
-        gUnk_02017140.unk18 = 0;
-        gUnk_02017140.unk00++;
+        gAirGrindResults.unk18 = 0;
+        gAirGrindResults.unk00++;
         break;
     case 1:
-        if (++gUnk_02017140.unk18 > 10) {
-            switch (gUnk_02017140.unk0C[gUnk_02017140.unk08[0]]) {
+        if (++gAirGrindResults.unk18 > 10) {
+            switch (gAirGrindResults.unk0C[gAirGrindResults.unk08[0]]) {
             case 0:
                 PlayBgm(0x81D);
                 break;
@@ -330,35 +330,35 @@ void sub_080c2740(void)
                 PlayBgm(0x817);
                 break;
             }
-            gUnk_02017140.unk18 = 0;
-            gUnk_02017140.unk00++;
+            gAirGrindResults.unk18 = 0;
+            gAirGrindResults.unk00++;
         }
         break;
     case 2:
-        if (++gUnk_02017140.unk18 > 174) {
+        if (++gAirGrindResults.unk18 > 174) {
             if (gPrevGameState != 5) {
-                gUnk_02017140.unk00 = 4;
+                gAirGrindResults.unk00 = 4;
             } else {
-                gUnk_02017140.unk18 = 20;
-                gUnk_02017140.unk02 = 3 - gUnk_02017140.unk0C[gUnk_02017140.unk08[0]];
-                gUnk_02017140.unk03 = 4;
-                gUnk_02017140.unk00++;
+                gAirGrindResults.unk18 = 20;
+                gAirGrindResults.unk02 = 3 - gAirGrindResults.unk0C[gAirGrindResults.unk08[0]];
+                gAirGrindResults.unk03 = 4;
+                gAirGrindResults.unk00++;
             }
         }
         break;
     case 3:
-        if (gUnk_02017140.unk03 > 0) {
-            if (++gUnk_02017140.unk18 > 20) {
-                gUnk_02017140.unk18 = 0;
-                gUnk_02017140.unk03--;
-                if (gUnk_02017140.unk02 > 0) {
-                    gUnk_02017140.unk02--;
-                    gUnk_02017140.unk01++;
+        if (gAirGrindResults.unk03 > 0) {
+            if (++gAirGrindResults.unk18 > 20) {
+                gAirGrindResults.unk18 = 0;
+                gAirGrindResults.unk03--;
+                if (gAirGrindResults.unk02 > 0) {
+                    gAirGrindResults.unk02--;
+                    gAirGrindResults.unk01++;
                     PlaySfx(220);
                 }
             }
         } else {
-            gUnk_02017140.unk00++;
+            gAirGrindResults.unk00++;
         }
         break;
     case 4:
@@ -377,12 +377,12 @@ void sub_080c2740(void)
                     sub_080c2ccc(-1);
                     PlaySfx(102);
                 }
-                gUnk_02017140.unk00++;
+                gAirGrindResults.unk00++;
             } else {
                 for (i = 0; i < 4; i++) {
                     pal = gUnk_080CFE2C[gAirGrindPtr->unk446][i];
                     if (pal < gAirGrindPtr->unk448) {
-                        switch (gUnk_02017140.unk0C[gUnk_02017140.unk08[i]]) {
+                        switch (gAirGrindResults.unk0C[gAirGrindResults.unk08[i]]) {
                         case 0:
                             sub_08009eb8(3, pal);
                             break;
@@ -395,7 +395,7 @@ void sub_080c2740(void)
                         }
                     }
                 }
-                gUnk_02017140.unk00 = 99;
+                gAirGrindResults.unk00 = 99;
                 SubGameQuit();
             }
         }
@@ -424,10 +424,10 @@ void sub_080c2740(void)
                     gCurTask->unk3C = 0;
                     sub_080c2ccc(gCurTask->unk2C);
                 }
-                gUnk_02017140.unk00++;
+                gAirGrindResults.unk00++;
             } else {
                 SubGameQuit();
-                gUnk_02017140.unk00 = 99;
+                gAirGrindResults.unk00 = 99;
             }
             if (gAirGrindPtr->unk446 == 0)
                 PlaySfx(102);
@@ -452,7 +452,7 @@ void sub_080c2740(void)
         }
         if (gPlayerPressedKeys[0] & 9) {
             SubGameReplay(gCurTask->unk2C);
-            gUnk_02017140.unk00 = 99;
+            gAirGrindResults.unk00 = 99;
             if (gAirGrindPtr->unk446 == 0)
                 PlaySfx(102);
         } else if (gPlayerPressedKeys[0] & 2) {
@@ -461,7 +461,7 @@ void sub_080c2740(void)
                 sub_080c2ccc(gCurTask->unk28);
                 PlaySfx(215);
             }
-            gUnk_02017140.unk00--;
+            gAirGrindResults.unk00--;
         }
         break;
     }
@@ -470,7 +470,7 @@ void sub_080c2740(void)
 void sub_080c2b8c(void)
 {
     sub_080c2740();
-    gUnk_02017170++;
+    gAirGrindFrame++;
     SubGameCheckEnd();
 }
 
@@ -526,7 +526,7 @@ void sub_080c2ccc(s32 mode)
     gCurTask->unk6C = 8;
 }
 
-void sub_080c2d38(void)
+void AirGrindBuildSky(void)
 {
     s32 col[11][3];
     s32 delta[11][3];
@@ -573,7 +573,7 @@ void sub_080c2d38(void)
     gAirGrindPtr->unk300++;
 }
 
-void sub_080c2fb8(void)
+void AirGrindSkyVBlankCallback(void)
 {
     vu32 *dma = (vu32 *)0x040000B0;
 

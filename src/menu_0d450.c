@@ -65,7 +65,7 @@ void BgScrollStartX(s32 speed, s32 dist, s32 bg);
 void BgScrollFinish(void);
 void StopHBlankScroll(void);
 void StartHBlankScroll(s32 a);
-void sub_080b83b8(void);
+void CopySaveSlotToLinkSlot(void);
 void sub_0800da18(void);
 s32 sub_0800da74(void);
 
@@ -179,7 +179,7 @@ void sub_0800d450(void)
 
 void sub_0800d85c(void)
 {
-    sub_080b83b8();
+    CopySaveSlotToLinkSlot();
     sub_0800da18();
     LinkSetupInit();
     MultiBootInitWithParams(gUnk_0876B1FC, gUnk_0876F690);

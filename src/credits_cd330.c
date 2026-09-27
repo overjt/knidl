@@ -9,12 +9,12 @@
  * recorded demos of the game, one per scene.
  *   CreditsMain   the sequence: per scene of gUnk_087583CC[n] (n by
  *       gExtraMode), load the recorded input (gUnk_0200EC50,
- *       InputRecorderStart) and the room (sub_080cd674), fade in, play it for
+ *       InputRecorderStart) and the room (CreditsLoadScene), fade in, play it for
  *       gUnk_0875841E[n][scene] frames and fade out; then fade the music and
  *       the screen and put back the player's score the demos overwrote.
- *   sub_080cd674   load a scene's room and reset the per-scene state (a twin
+ *   CreditsLoadScene   load a scene's room and reset the per-scene state (a twin
  *       of M02's sub_0800b788).
- *   sub_080cd70c / sub_080cd75c / sub_080cd828   the text layer: load it,
+ *   CreditsInitText / CreditsStreamText / CreditsScrollText   the text layer: load it,
  *       stream the 14 compressed pages gUnk_087583B4[] into the two BG0 map
  *       halves, and scroll BG0 from the per-frame callback gVBlankEndCallback. */
 
@@ -85,13 +85,13 @@ void LatchPlayerKeys(void);
 void sub_08066144(void);
 void InputRecorderStart(void);
 void InputRecorderUpdate(void);
-void sub_080cd674(void);
-void sub_080cd70c(void);
-void sub_080cd75c(void);
-void sub_080cd828(void);
+void CreditsLoadScene(void);
+void CreditsInitText(void);
+void CreditsStreamText(void);
+void CreditsScrollText(void);
 
 /* AgbMain state 12, part 1: the staff credits.  The credits text scrolls up
-   BG0 (sub_080cd70c, sub_080cd75c) over a run of recorded demos, one per
+   BG0 (CreditsInitText, CreditsStreamText) over a run of recorded demos, one per
    scene of gUnk_087583CC[n] (n = 2 when gExtraMode is 1, else 1), each
    faded in, played for its length gUnk_0875841E[n][scene] and faded out;
    then the music and the screen fade out and the player's score, which the
@@ -116,7 +116,7 @@ void CreditsMain(void)
     gUnk_0201C1B0 = 0;
     scenes = gUnk_087583CC[gUnk_030023B0];
     frames = gUnk_0875841E[gUnk_030023B0];
-    sub_080cd70c();
+    CreditsInitText();
     ResetScoresAndMaxHealth();
     ResetPlayerRecords();
     LoadGfxSet(0);
@@ -129,7 +129,7 @@ void CreditsMain(void)
         InputRecorderStart();
         gUnk_02008008[gLocalPlayer] = 0;
         gUnk_02007FA8[gLocalPlayer] = 0xFFFF;
-        sub_080cd674();
+        CreditsLoadScene();
         gDispCnt &= 0xE0FF;
         gDispCnt |= 0x1D00;
         if (gUnk_0201C1B0 == 0)
@@ -148,7 +148,7 @@ void CreditsMain(void)
                 gFadeSteps = 0;
                 gBrightness = -5;
             }
-            sub_080cd75c();
+            CreditsStreamText();
             InputRecorderUpdate();
         }
         gBrightness = -5;
@@ -156,7 +156,7 @@ void CreditsMain(void)
         while (--n != 0) {
             ClearColliderLists();
             RunLinkFrame();
-            sub_080cd75c();
+            CreditsStreamText();
             InputRecorderUpdate();
             LatchPlayerKeys();
         }
@@ -165,7 +165,7 @@ void CreditsMain(void)
             n = 15;
             while (n-- != 0) {
                 RunLinkFrame();
-                sub_080cd75c();
+                CreditsStreamText();
                 InputRecorderUpdate();
             }
             gDispCnt &= 0xE0FF;
@@ -197,7 +197,7 @@ void CreditsMain(void)
 
 /* Load the staff credits' next demo scene: the room, palette set 17, and
    the per-scene state M02's stage loaders reset (sub_0800b788's twin). */
-void sub_080cd674(void)
+void CreditsLoadScene(void)
 {
     s32 i;
     s8 *b;
@@ -227,12 +227,12 @@ void sub_080cd674(void)
 
 /* Start the staff credits' text layer: load its screen, reset the BG0
    scroll and the page counters and install the scroll callback. */
-void sub_080cd70c(void)
+void CreditsInitText(void)
 {
     LoadGfxSet(72);
     gUnk_0201C1A0 = 0x400000;
     gUnk_0201C1AC = 0x40000;
-    gVBlankEndCallback = (u32)sub_080cd828;
+    gVBlankEndCallback = (u32)CreditsScrollText;
     gUnk_0201C1A8 = 0;
     gUnk_0201C19C = 0;
     gUnk_0201C1B4 = gUnk_0201C1A0 >> 12;
@@ -242,7 +242,7 @@ void sub_080cd70c(void)
    after the 14 pages) in gHudTilemap, and each time another 256 pixels
    have scrolled by copy it into one of the two BG0 map halves (0x06001000
    for odd pages, 0x06001800 for even ones). */
-void sub_080cd75c(void)
+void CreditsStreamText(void)
 {
     u16 zero;
 
@@ -267,9 +267,9 @@ void sub_080cd75c(void)
 }
 
 /* The staff credits' per-frame callback (installed in gVBlankEndCallback by
-   sub_080cd70c): scroll BG0 up by half a pixel a frame until the text has
+   CreditsInitText): scroll BG0 up by half a pixel a frame until the text has
    gone by, then park it through the BG0 scroll shadows. */
-void sub_080cd828(void)
+void CreditsScrollText(void)
 {
     if (gUnk_0201C1A0 < 0x0F580000) {
         gUnk_0201C1A0 += 0x8000;

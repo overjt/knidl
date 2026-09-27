@@ -144,7 +144,7 @@ s32 sub_08030074(s32 a);
 s32 sub_08030100(u8 a);
 void sub_080307b0(void);
 void sub_080307cc(void);
-void sub_080b6ea0(s32 a);
+void StartRoomHBlankScroll(s32 a);
 
 void sub_08027e28(void)
 {
@@ -218,7 +218,7 @@ void sub_08027e28(void)
         gRoomBgLayout = 4;
         *gUnk_02005574 = 1;
         SetBg23ScreenSize(0);
-        sub_080b6ea0(8);
+        StartRoomHBlankScroll(8);
         gUnk_02000020 = 2;
         gCameraMode = 5;
         break;
@@ -226,7 +226,7 @@ void sub_08027e28(void)
         gUnk_0200B078 = 7;
         gRoomBgLayout = 5;
         gRoomBounds[1] = gRoomBorder[0] + 120;
-        sub_080b6ea0(9);
+        StartRoomHBlankScroll(9);
         gUnk_02000020 = 3;
         if (gUnk_020069F0 != 2)
             sub_08025e0c();
@@ -295,7 +295,7 @@ void sub_08028280(s32 a)
         gUnk_0200B078 = 6;
         gRoomBgLayout = 4;
         SetBg23ScreenSize(0);
-        sub_080b6ea0(10);
+        StartRoomHBlankScroll(10);
     }
     else if (gBg3MapShape == 2)
     {

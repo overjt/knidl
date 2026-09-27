@@ -6,7 +6,7 @@
  *
  * The game-over screen, task type #264 variants 2-5.
  *   sub_080ccd4c / sub_080cce98   variant 2, a sprite that follows variant 0
- *       (gUnk_02007D28) through three motion sets gUnk_087582F4[] and ends
+ *       (gGameOverPlayerTask) through three motion sets gUnk_087582F4[] and ends
  *       once variant 0 leaves sub-state 0.
  *   sub_080ccec8   variant 3: sub-state gUnk_08758324[Task.unk14] (1 when the
  *       cursor gGameOverCursor is set), handlers gUnk_0875832C[Task.unk15]
@@ -16,7 +16,7 @@
 
 extern u16 gPlayerCount;           /* number of players */
 extern s8 gGameOverCursor;            /* game-over screen: cursor (continue = 0?) */
-extern s16 gUnk_02007D28;           /* game-over screen: the #264 variant-0 task's index */
+extern s16 gGameOverPlayerTask;           /* game-over screen: the #264 variant-0 task's index */
 extern u32 gUnk_087549FC[];
 extern s32 gUnk_087582F4[];
 extern void (*gUnk_08758324[])(void);
@@ -45,7 +45,7 @@ void sub_080ccd4c(void)
     gCurTask->unk42 = 7;
     gCurTask->unk38 = gUnk_087549FC;
     gCurTask->unk04 = (u32)sub_080cce98;
-    gCurTask->unk43 = gTasks[gUnk_02007D28].unk43;
+    gCurTask->unk43 = gTasks[gGameOverPlayerTask].unk43;
     gCurTask->unk3C = 0xFFFF;
     TaskYieldTrampoline(64);
     gCurTask->unk24 = 0;
@@ -88,7 +88,7 @@ void sub_080ccd4c(void)
    sub-state 0. */
 void sub_080cce98(void)
 {
-    struct Task *t = &gTasks[gUnk_02007D28];
+    struct Task *t = &gTasks[gGameOverPlayerTask];
 
     if (t->unk14 != 0)
         TaskFree(gCurTaskIdx);

@@ -78,11 +78,11 @@ void BgScrollFinish(void);
 void SetBlend(s32 a, s32 b, s32 c, s32 d);
 void StopHBlankScroll(void);
 void StartHBlankScroll(s32 a);
-void sub_080b798c(s32 a);
+void InitNewSaveFile(s32 a);
 void EraseSaveSlot(s32 a);
-void sub_080b8070(s32 a);
-s32 sub_080b8290(void);
-void sub_080c680c(s32 a);
+void LoadSaveSlot(s32 a);
+s32 CheckNewMilestones(void);
+void ShowMilestonePictureForMode(s32 a);
 void sub_0800c20c(void);
 
 void sub_0800c09c(void)
@@ -99,20 +99,20 @@ void sub_0800c09c(void)
             PlaySfx(102);
             gCurSaveSlot = gMenuCursor;
             if (gSaveSlots[gCurSaveSlot].unk04 == 0x99999999)
-                sub_080b798c(gCurSaveSlot);
+                InitNewSaveFile(gCurSaveSlot);
             done = 0;
             for (i = 0; i < 2; i++)
             {
                 gExtraMode = i;
-                sub_080b8070(gCurSaveSlot);
-                if (sub_080b8290() & 2)
+                LoadSaveSlot(gCurSaveSlot);
+                if (CheckNewMilestones() & 2)
                 {
                     if (done == 0)
                     {
                         BeginFastFadeOutToWhite();
                         RunFramesUntilFadeDone();
                     }
-                    sub_080c680c(i);
+                    ShowMilestonePictureForMode(i);
                     done = 1;
                 }
             }

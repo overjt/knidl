@@ -7,7 +7,7 @@
  * Menu sprite tasks, middle part.  Task types #245 (sub_0800e314, body
  * sub_0800e390) and #246 (sub_0800e46c, body sub_0800e518) show the
  * pictures and palette pulses of menu screens 2 and 3; #247
- * (sub_0800e5b0, body sub_0800e674) the mode list's picture and row
+ * (Task_ModeListCursor, body sub_0800e674) the mode list's picture and row
  * highlight (sub_0800e7b0); #248 (sub_0800e81c, body sub_0800e8c0) the
  * picture of screen 5; and sub_0800e9a4 is the entry of #243, whose
  * body sub_0800ea0c is in menutask_0ea0c.c. */
@@ -163,7 +163,7 @@ void sub_0800e518(void)
     MenuLoadPicture(2, gUnk_02004B44);
 }
 
-void sub_0800e5b0(void)
+void Task_ModeListCursor(void)
 {
     gCurTask->unk00 = (u32)TaskMove;
     gCurTask->unk0C = 0;

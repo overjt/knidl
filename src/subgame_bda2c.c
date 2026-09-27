@@ -15,7 +15,7 @@
  * at gUnk_08756570, and Task.unk1C counts the beats until the level steps
  * up (the per-player-count limits are the three parallel byte tables at
  * 0x0875665C/0x0875665F/0x08756662, indexed by the player count in
- * gUnk_02006168).
+ * gSubGameLevel).
  *
  *   sub_080bda2c   entry: install the dispatchers and kick BGM 0x82E
  *   sub_080bdab4   the beat loop (states 0..6 in Task.unk28)
@@ -33,7 +33,7 @@
 #include "global.h"
 #include "task.h"
 
-extern s8 gUnk_02006168;
+extern s8 gSubGameLevel;
 extern u8 gUnk_020061DC;
 extern s8 gUnk_02006A10[];
 extern u8 gUnk_0200AF10;
@@ -179,7 +179,7 @@ void sub_080bdab4(void)
             gUnk_020061DC--;
         v = gCurTask;
         v->unk1C++;
-        if (v->unk1C == gUnk_0875665F[gUnk_02006168]) {
+        if (v->unk1C == gUnk_0875665F[gSubGameLevel]) {
             v->unk1C = 0;
             if (v->unk2C + 1 != 7)
                 v->unk2C++;
@@ -270,12 +270,12 @@ void sub_080bddb8(void)
 {
     struct Task *t;
 
-    gUnk_020061DC = gUnk_08756662[gUnk_02006168];
+    gUnk_020061DC = gUnk_08756662[gSubGameLevel];
     t = gCurTask;
     t->unk28 = -4;
     t->unk20 = 1;
     t->unk30 = 0;
-    t->unk2C = gUnk_0875665C[gUnk_02006168];
+    t->unk2C = gUnk_0875665C[gSubGameLevel];
     t->unk24 = gUnk_08756570[t->unk2C] * (t->unk20 + 2);
 }
 
@@ -284,14 +284,14 @@ void sub_080bde0c(void)
     struct Task *t;
     struct Task *u;
 
-    gUnk_020061DC = gUnk_08756662[gUnk_02006168];
+    gUnk_020061DC = gUnk_08756662[gSubGameLevel];
     t = gCurTask;
     t->unk28 = -4;
     t->unk20 = 1;
     t->unk30 = 0;
     t->unk2C -= 2;
-    if (t->unk2C < gUnk_0875665C[gUnk_02006168])
-        t->unk2C = gUnk_0875665C[gUnk_02006168];
+    if (t->unk2C < gUnk_0875665C[gSubGameLevel])
+        t->unk2C = gUnk_0875665C[gSubGameLevel];
     u = gCurTask;
     u->unk24 = gUnk_08756570[u->unk2C] * (u->unk20 + 2);
 }
@@ -543,7 +543,7 @@ void sub_080be318(void)
                 TaskYieldTrampoline(10);
             }
         }
-        gCurTask->unk2C = c = gUnk_02006168;
+        gCurTask->unk2C = c = gSubGameLevel;
         sub_080be714(c);
         while (gCurTask->unk28 == 1) {
             TaskYieldTrampoline(1);
@@ -1348,7 +1348,7 @@ void sub_080bf394(void)
     u = &gTasks[gCurTask->unk44];
     tbl = gUnk_087565F4[u->unk28];
     gCurTask->unk15 = 7;
-    k = gUnk_08756650[gUnk_02006168][u->unk2C * 3 + gUnk_0200AFF0];
+    k = gUnk_08756650[gSubGameLevel][u->unk2C * 3 + gUnk_0200AFF0];
     if (gUnk_020061DC == 0 && RandomRange(k) == 0) {
         u->unk20 = 6;
     } else {

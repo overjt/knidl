@@ -66,8 +66,8 @@ void sub_08027228(void);
 void sub_08027240(void);
 void InitPlayerState(s32 a0);
 void LatchPlayerKeys(void);
-void sub_080b6eec(void);
-void sub_080b6f04(void);
+void SuspendHBlankScroll(void);
+void RestoreRoomHBlankScroll(void);
 void InputRecorderStart(void);
 void InputRecorderUpdate(void);
 void sub_080089e0(s32 n);
@@ -92,7 +92,7 @@ void PauseScreen(void)
     RunLinkFramesUntilFadeDone();
     for (i = 0; i < 64; i++)
         TaskSetSkipMask(31, i);
-    sub_080b6eec();
+    SuspendHBlankScroll();
     sub_08027228();
     mode = gGameState;
     flag = 0;
@@ -175,7 +175,7 @@ void PauseScreen(void)
         sub_08027240();
         for (i = 0; i < 64; i++)
             TaskSetSkipMask(15, i);
-        sub_080b6f04();
+        RestoreRoomHBlankScroll();
         LinkRequestSync();
         LinkSyncRandom();
         LinkStartKeyExchange();

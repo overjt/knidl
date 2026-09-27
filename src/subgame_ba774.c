@@ -7,27 +7,27 @@
  * The reaction duel's round controller (sub-game 0 of src/subgame_b9d0c.c).
  * Task.unk14 is the requested state and Task.unk15 the running one; each of
  * the seven states is an <entry, per-frame check> pair dispatched through
- * CallTableEntry: 0x087562FC / 0x08756318 in link play (sub_080bace4 /
- * sub_080bab68) and 0x08756334 / 0x08756350 against the computer
- * (sub_080bb23c).  A check re-dispatches as soon as Task.unk14 changes.
+ * CallTableEntry: 0x087562FC / 0x08756318 in link play (QuickDrawEnterState /
+ * QuickDrawRoundUpdate) and 0x08756334 / 0x08756350 against the computer
+ * (QuickDrawEnterStateVsCpu).  A check re-dispatches as soon as Task.unk14 changes.
  *
- *   state 0  wait for the players, then sub_080ba6b4 waits a random delay
- *            (range from 0x087562F6 / 0x087562F0, row gUnk_02006168)
+ *   state 0  wait for the players, then QuickDrawWaitForSignal waits a random delay
+ *            (range from 0x087562F6 / 0x087562F0, row gSubGameLevel)
  *            before the signal; the check sends anyone pressing too early
  *            to sub_080babb0, which moves to state 3 once all have
- *   state 1  the signal is up: sub_080ba708 collects the players that
+ *   state 1  the signal is up: QuickDrawCountPresses collects the players that
  *            pressed into the mask Task.unk2C; sub_080bacbc sends a single
- *            presser to state 4 and several to state 5, and sub_080ba774
+ *            presser to state 4 and several to state 5, and QuickDrawIsTimeUp
  *            ends the wait (state 2) once the frame counter Task.unk20
  *            passes 98
- *   2..5     pose the player tasks through sub_080bc740, score, wait
+ *   2..5     pose the player tasks through QuickDrawSetPlayerState, score, wait
  *   state 6  fade out and back to state 0
  *
  * gTasks[i] is player i's task (task type #94, src/subgame_bc0cc.c),
- * gUnk_0200B03C[] the per-player win counts, gUnk_0200B07C[4] the rank
- * order kept by sub_080ba9a4, and gUnk_02006184 the best reaction time
- * (reset to 99, lowered to Task.unk20 by each winner).  sub_080bac5c and
- * sub_080bb1ec (single player: first to 5) report the match winner in
+ * gQuickDrawWins[] the per-player win counts, gQuickDrawRanking[4] the rank
+ * order kept by QuickDrawUpdateRanking, and gQuickDrawBestTime the best reaction time
+ * (reset to 99, lowered to Task.unk20 by each winner).  QuickDrawFindMatchWinner and
+ * QuickDrawFindMatchWinnerVsCpu (single player: first to 5) report the match winner in
  * gUnk_02004B5C.
  */
 #include "gba/gba.h"
@@ -36,11 +36,11 @@
 
 extern s32 gCurTaskIdx;
 extern u8 gUnk_02004B5C;
-extern s8 gUnk_02006168;
-extern u8 gUnk_02006184;
-extern u8 gUnk_0200B03C[];
+extern s8 gSubGameLevel;
+extern u8 gQuickDrawBestTime;
+extern u8 gQuickDrawWins[];
 extern u8 gUnk_0200B048;
-extern u8 gUnk_0200B07C[];
+extern u8 gQuickDrawRanking[];
 extern vu16 gFadeSteps;
 extern vu16 gDispCnt;
 extern u16 gPlayerCount;
@@ -65,25 +65,25 @@ s32 TaskCreateFrom(u32 type, s32 idx);
 void TaskSleepForever(void);
 void TaskSetEntry(void *fn, u32 i);
 void SubGameCheckEnd(void);
-void sub_080ba50c(void);
+void QuickDrawFreeze(void);
 void sub_080ba61c(void);
-void sub_080ba688(void);
-void sub_080ba6b4(void);
-s32 sub_080ba708(void);
-void sub_080bc740(s32 a0, u16 a1);
+void QuickDrawStartTimer(void);
+void QuickDrawWaitForSignal(void);
+s32 QuickDrawCountPresses(void);
+void QuickDrawSetPlayerState(s32 a0, u16 a1);
 void sub_080bc79c(u16 a0);
-void sub_080bd188(s32 a0);
-void sub_080bd1d0(s32 a0, u16 a1);
+void QuickDrawLoadOpponentGraphics(s32 a0);
+void QuickDrawSetOpponentState(s32 a0, u16 a1);
 
 void sub_080ba900(void);
 void sub_080baa38(void);
 void sub_080ba94c(void);
 void sub_080ba978(void);
 void sub_080baabc(void);
-void sub_080bab68(void);
-void sub_080bb074(void);
+void QuickDrawRoundUpdate(void);
+void CreateQuickDrawOpponent(void);
 
-u8 sub_080ba774(void)
+u8 QuickDrawIsTimeUp(void)
 {
     if (gCurTask->unk20 > 98)
         return 1;
@@ -199,7 +199,7 @@ void sub_080ba978(void)
     }
 }
 
-void sub_080ba9a4(s32 a0)
+void QuickDrawUpdateRanking(s32 a0)
 {
     u8 buf[4];
     u8 i = 0;
@@ -208,7 +208,7 @@ void sub_080ba9a4(s32 a0)
 
     while (j <= 3)
     {
-        if (!done && gUnk_0200B03C[gUnk_0200B07C[i]] < gUnk_0200B03C[a0])
+        if (!done && gQuickDrawWins[gQuickDrawRanking[i]] < gQuickDrawWins[a0])
         {
             buf[j] = a0;
             done = 1;
@@ -216,16 +216,16 @@ void sub_080ba9a4(s32 a0)
         }
         else
         {
-            if (gUnk_0200B07C[i] != a0 || i == 3)
+            if (gQuickDrawRanking[i] != a0 || i == 3)
             {
-                buf[j] = gUnk_0200B07C[i];
+                buf[j] = gQuickDrawRanking[i];
                 j++;
             }
             i++;
         }
     }
     for (j = 0; j <= 3; j++)
-        gUnk_0200B07C[j] = buf[j];
+        gQuickDrawRanking[j] = buf[j];
 }
 
 void sub_080baa38(void)
@@ -238,16 +238,16 @@ void sub_080baa38(void)
         s32 bit = 1 << i;
         if (gCurTask->unk2C & bit)
         {
-            sub_080bc740(i, 2);
+            QuickDrawSetPlayerState(i, 2);
             o->unk20 = 4;
-            gUnk_0200B03C[o->unk18]++;
-            sub_080ba9a4(o->unk18);
-            if (gUnk_02006184 > gCurTask->unk20)
-                gUnk_02006184 = gCurTask->unk20;
+            gQuickDrawWins[o->unk18]++;
+            QuickDrawUpdateRanking(o->unk18);
+            if (gQuickDrawBestTime > gCurTask->unk20)
+                gQuickDrawBestTime = gCurTask->unk20;
         }
         else
         {
-            sub_080bc740(i, 3);
+            QuickDrawSetPlayerState(i, 3);
         }
     }
 }
@@ -262,7 +262,7 @@ void sub_080baabc(void)
         s32 bit = 1 << i;
         if (gCurTask->unk2C & bit)
         {
-            sub_080bc740(i, 2);
+            QuickDrawSetPlayerState(i, 2);
             o->unk20 = i;
         }
     }
@@ -270,7 +270,7 @@ void sub_080baabc(void)
 
 void QuickDrawRound(void)
 {
-    gCurTask->unk04 = (u32)sub_080bab68;
+    gCurTask->unk04 = (u32)QuickDrawRoundUpdate;
     sub_080ba61c();
     if (gPlayerCount != 1)
     {
@@ -279,14 +279,14 @@ void QuickDrawRound(void)
     }
     else
     {
-        sub_080bb074();
+        CreateQuickDrawOpponent();
         gCurTask->unk14 = 0;
         CallTableEntry(gCurTask->unk14, 7, gUnk_08756334);
     }
     TaskSleepForever();
 }
 
-void sub_080bab68(void)
+void QuickDrawRoundUpdate(void)
 {
     if (gPlayerCount != 1)
         CallTableEntry(gCurTask->unk15, 7, gUnk_08756318);
@@ -306,7 +306,7 @@ void sub_080babb0(s32 a0)
         s32 bit = 1 << i;
         if (gCurTask->unk2C & bit)
         {
-            sub_080bc740(i, 4);
+            QuickDrawSetPlayerState(i, 4);
             o->unk20 = 4;
             if (a0 != 1)
                 o->unk20 = i;
@@ -323,14 +323,14 @@ void sub_080babb0(s32 a0)
     }
 }
 
-u8 sub_080bac5c(void)
+u8 QuickDrawFindMatchWinner(void)
 {
     s32 found = 0;
     s32 i;
 
     for (i = 0; i < gPlayerCount; i++)
     {
-        if (gUnk_0200B03C[i] >= gCurTask->unk34)
+        if (gQuickDrawWins[i] >= gCurTask->unk34)
         {
             gUnk_02004B5C = i;
             found = 1;
@@ -346,10 +346,10 @@ void sub_080bacbc(s32 a0)
         gCurTask->unk14 = 4;
     else
         gCurTask->unk14 = 5;
-    sub_080ba50c();
+    QuickDrawFreeze();
 }
 
-void sub_080bace4(void)
+void QuickDrawEnterState(void)
 {
     CallTableEntry(gCurTask->unk14, 7, gUnk_087562FC);
 }
@@ -360,7 +360,7 @@ void sub_080bad00(void)
     PlayBgm(0x823);
     while (gCurTask->unk24 == 0)
         TaskYieldTrampoline(1);
-    sub_080ba6b4();
+    QuickDrawWaitForSignal();
     gCurTask->unk14 = 1;
     TaskSleepForever();
 }
@@ -369,31 +369,31 @@ void sub_080bad44(void)
 {
     if (gCurTask->unk24 != 0)
     {
-        s32 r = sub_080ba708();
+        s32 r = QuickDrawCountPresses();
         if (r != 0)
             sub_080babb0(r);
         if (gCurTask->unk14 != 0)
-            TaskSetEntry(sub_080bace4, gCurTaskIdx);
+            TaskSetEntry(QuickDrawEnterState, gCurTaskIdx);
     }
 }
 
 void sub_080bad80(void)
 {
     gCurTask->unk15 = 1;
-    sub_080ba688();
+    QuickDrawStartTimer();
     TaskSleepForever();
 }
 
 void sub_080bad9c(void)
 {
-    s32 r = sub_080ba708();
+    s32 r = QuickDrawCountPresses();
 
     if (r != 0)
         sub_080bacbc(r);
-    else if (sub_080ba774())
+    else if (QuickDrawIsTimeUp())
         gCurTask->unk14 = 2;
     if (gCurTask->unk14 != 1)
-        TaskSetEntry(sub_080bace4, gCurTaskIdx);
+        TaskSetEntry(QuickDrawEnterState, gCurTaskIdx);
 }
 
 void sub_080bade4(void)
@@ -408,7 +408,7 @@ void sub_080bade4(void)
 void sub_080bae0c(void)
 {
     if (gCurTask->unk14 != 2)
-        TaskSetEntry(sub_080bace4, gCurTaskIdx);
+        TaskSetEntry(QuickDrawEnterState, gCurTaskIdx);
 }
 
 void sub_080bae34(void)
@@ -423,7 +423,7 @@ void sub_080bae34(void)
 void sub_080bae5c(void)
 {
     if (gCurTask->unk14 != 3)
-        TaskSetEntry(sub_080bace4, gCurTaskIdx);
+        TaskSetEntry(QuickDrawEnterState, gCurTaskIdx);
 }
 
 void sub_080bae84(void)
@@ -441,10 +441,10 @@ void sub_080baeb0(void)
 
     if (t->unk14 != 4 && t->unk18 != 2)
     {
-        if (sub_080bac5c())
+        if (QuickDrawFindMatchWinner())
             gCurTask->unk18 = 2;
         else
-            TaskSetEntry(sub_080bace4, gCurTaskIdx);
+            TaskSetEntry(QuickDrawEnterState, gCurTaskIdx);
     }
 }
 
@@ -460,7 +460,7 @@ void sub_080baef0(void)
 void sub_080baf18(void)
 {
     if (gCurTask->unk14 != 5)
-        TaskSetEntry(sub_080bace4, gCurTaskIdx);
+        TaskSetEntry(QuickDrawEnterState, gCurTaskIdx);
 }
 
 void sub_080baf40(void)
@@ -482,7 +482,7 @@ void sub_080baf9c(void)
     struct Task *t = gCurTask;
 
     if (t->unk14 != 6 && t->unk18 != 2)
-        TaskSetEntry(sub_080bace4, gCurTaskIdx);
+        TaskSetEntry(QuickDrawEnterState, gCurTaskIdx);
 }
 
 void sub_080bafc8(s32 a0)
@@ -496,7 +496,7 @@ void sub_080bafc8(s32 a0)
         s32 bit = 1 << i;
         if (gCurTask->unk2C & bit)
         {
-            sub_080bc740(i, 4);
+            QuickDrawSetPlayerState(i, 4);
             o->unk20 = 4;
             if (a0 != 1)
                 o->unk20 = i;
@@ -513,19 +513,19 @@ void sub_080bafc8(s32 a0)
     }
 }
 
-void sub_080bb074(void)
+void CreateQuickDrawOpponent(void)
 {
     s32 i;
     struct Task *t;
 
-    sub_080bd188(0);
+    QuickDrawLoadOpponentGraphics(0);
     i = TaskCreateFrom(94, 32);
     if (i != -1)
     {
         t = &gTasks[i];
         t->unk44 = gCurTaskIdx;
         t->unk73 = 5;
-        t->unk74 = gUnk_02006168;
+        t->unk74 = gSubGameLevel;
         t->unk76 = 0;
         gCurTask->unk46 = i;
     }
@@ -555,41 +555,41 @@ void sub_080bb120(void)
     {
         gDispCnt &= 0xE0FF;
         gDispCnt |= 0x400;
-        sub_080bd188(gUnk_0200B048);
+        QuickDrawLoadOpponentGraphics(gUnk_0200B048);
     }
-    sub_080bd1d0(gCurTask->unk46, gCurTask->unk30);
+    QuickDrawSetOpponentState(gCurTask->unk46, gCurTask->unk30);
     sub_080ba8cc();
 }
 
 void sub_080bb174(void)
 {
-    sub_080bd1d0(gCurTask->unk46, 3);
+    QuickDrawSetOpponentState(gCurTask->unk46, 3);
     sub_080ba7fc(1);
     gCurTask->unk1C = 1;
 }
 
 void sub_080bb19c(void)
 {
-    sub_080bd1d0(gCurTask->unk46, 2);
+    QuickDrawSetOpponentState(gCurTask->unk46, 2);
     sub_080ba7fc(0);
     gCurTask->unk1C = 0;
 }
 
 void sub_080bb1c4(void)
 {
-    sub_080bd1d0(gCurTask->unk46, 4);
+    QuickDrawSetOpponentState(gCurTask->unk46, 4);
     sub_080ba860();
     gCurTask->unk1C = 0;
 }
 
-u8 sub_080bb1ec(void)
+u8 QuickDrawFindMatchWinnerVsCpu(void)
 {
     s32 found = 0;
     s32 i;
 
     for (i = 0; i < gPlayerCount; i++)
     {
-        if (gUnk_0200B03C[i] > 4)
+        if (gQuickDrawWins[i] > 4)
         {
             gUnk_02004B5C = i;
             found = 1;
@@ -599,7 +599,7 @@ u8 sub_080bb1ec(void)
     return found;
 }
 
-void sub_080bb23c(void)
+void QuickDrawEnterStateVsCpu(void)
 {
     CallTableEntry(gCurTask->unk14, 7, gUnk_08756334);
 }
@@ -610,7 +610,7 @@ void sub_080bb258(void)
     PlayBgm(0x823);
     while (gCurTask->unk24 == 0)
         TaskYieldTrampoline(1);
-    sub_080ba6b4();
+    QuickDrawWaitForSignal();
     gCurTask->unk14 = 1;
     TaskSleepForever();
 }
@@ -619,28 +619,28 @@ void sub_080bb29c(void)
 {
     if (gCurTask->unk24 != 0)
     {
-        s32 r = sub_080ba708();
+        s32 r = QuickDrawCountPresses();
         if (r != 0)
             sub_080bafc8(r);
         if (gCurTask->unk14 != 0)
-            TaskSetEntry(sub_080bb23c, gCurTaskIdx);
+            TaskSetEntry(QuickDrawEnterStateVsCpu, gCurTaskIdx);
     }
 }
 
 void sub_080bb2d8(void)
 {
     gCurTask->unk15 = 1;
-    sub_080ba688();
+    QuickDrawStartTimer();
     TaskSleepForever();
 }
 
 void sub_080bb2f4(void)
 {
-    sub_080bb0d8(sub_080ba708());
+    sub_080bb0d8(QuickDrawCountPresses());
     if (gCurTask->unk14 != 1)
     {
-        sub_080ba50c();
-        TaskSetEntry(sub_080bb23c, gCurTaskIdx);
+        QuickDrawFreeze();
+        TaskSetEntry(QuickDrawEnterStateVsCpu, gCurTaskIdx);
     }
 }
 
@@ -657,7 +657,7 @@ void sub_080bb328(void)
 void sub_080bb358(void)
 {
     if (gCurTask->unk14 != 2)
-        TaskSetEntry(sub_080bb23c, gCurTaskIdx);
+        TaskSetEntry(QuickDrawEnterStateVsCpu, gCurTaskIdx);
 }
 
 void sub_080bb380(void)
@@ -675,10 +675,10 @@ void sub_080bb3a8(void)
 
     if (t->unk14 != 3 && t->unk18 != 2)
     {
-        if (sub_080bb1ec())
+        if (QuickDrawFindMatchWinnerVsCpu())
             gCurTask->unk18 = 2;
         else
-            TaskSetEntry(sub_080bb23c, gCurTaskIdx);
+            TaskSetEntry(QuickDrawEnterStateVsCpu, gCurTaskIdx);
     }
 }
 
@@ -711,7 +711,7 @@ void sub_080bb42c(void)
 void sub_080bb454(void)
 {
     if (gCurTask->unk14 != 5)
-        TaskSetEntry(sub_080bb23c, gCurTaskIdx);
+        TaskSetEntry(QuickDrawEnterStateVsCpu, gCurTaskIdx);
 }
 
 void sub_080bb47c(void)
@@ -736,5 +736,5 @@ void sub_080bb4fc(void)
     struct Task *t = gCurTask;
 
     if (t->unk14 != 6 && t->unk18 != 2)
-        TaskSetEntry(sub_080bb23c, gCurTaskIdx);
+        TaskSetEntry(QuickDrawEnterStateVsCpu, gCurTaskIdx);
 }

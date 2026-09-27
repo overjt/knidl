@@ -8,7 +8,7 @@
  * 
  *   sub_080c623c   gUnk_080D059A[x / 4 - 32], the sprite scale for a course
  *       depth (sub_080c3e18, sub_080c3f44, sub_080c4f60).  It follows the
- *       still-asm sub_080c5b84 and precedes PR #133's src/sub_080c6258.c. */
+ *       still-asm AirGrindDrawCourse and precedes PR #133's src/sub_080c6258.c. */
 
 extern s16 gUnk_080D059A[];
 

@@ -42,7 +42,7 @@ void sub_08022f50(void);
 void sub_08008a00(void);
 void EndingMain(void);
 void CreditsMain(void);
-void sub_080c6420(void);
+void FinalResultsScreen(void);
 
 void AgbMain(void)
 {
@@ -160,7 +160,7 @@ void AgbMain(void)
         case 12:
             if (gUnk_03001F30 != 1 && gPrevGameState != 20)
                 CreditsMain();
-            sub_080c6420();
+            FinalResultsScreen();
             gGameState = 0;
             break;
         case 2:

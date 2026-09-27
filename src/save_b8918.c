@@ -42,14 +42,14 @@ extern s32 Div(s32 a, s32 b);
 extern s32 Mod(s32 a, s32 b);
 extern u16 gHudClock[];
 extern struct SaveSlot gSaveSlots[];
-extern struct LinkRec gUnk_0200EA00[];
-extern u8 gUnk_0200EB80;
-extern u8 gUnk_0200EC80[];
+extern struct LinkRec gLinkSaveSlots[];
+extern u8 gLinkSaveSlotPart;
+extern u8 gInputRecording[];
 extern s32 gSramAvailable;
 extern u16 gUnk_03001F18[];
 extern u8 gUnk_03001F20;
 extern u16 gCompletionPercent;
-extern u16 gUnk_03002364;
+extern u16 gMilestoneFlags;
 extern u16 gUnk_03002378[];
 extern s8 gUnk_03002384;
 extern u16 gPlayerCount;
@@ -65,8 +65,8 @@ extern u16 gSendCmd[];
 s32 CalcCompletionPercent(s32 a);
 s32 WriteSaveSlot(s32 a);
 u32 UpdateSaveSlotChecksum(s32 a);
-void sub_080b7e14(s32 a);
-void sub_080b8b2c(s32 a);
+void StoreProgressInSaveSlot(s32 a);
+void MergeProgressIntoSaveSlot(s32 a);
 
 void sub_080b8918(void)
 {
@@ -76,50 +76,50 @@ void sub_080b8918(void)
 
     for (i = 0; i < gPlayerCount; i++)
     {
-        if ((s8)gSaveSlots[3].unk1A[gExtraMode] > (s8)gUnk_0200EA00[i].unk0A[gExtraMode])
+        if ((s8)gSaveSlots[3].unk1A[gExtraMode] > (s8)gLinkSaveSlots[i].unk0A[gExtraMode])
         {
-            gSaveSlots[3].unk1A[gExtraMode] = gUnk_0200EA00[i].unk0A[gExtraMode];
-            gSaveSlots[3].unk1C[gExtraMode] = gUnk_0200EA00[i].unk0C[gExtraMode];
-            gSaveSlots[3].unk16[gExtraMode] = gUnk_0200EA00[i].unk06[gExtraMode];
-            gSaveSlots[3].unk18[gExtraMode] = gUnk_0200EA00[i].unk08[gExtraMode];
+            gSaveSlots[3].unk1A[gExtraMode] = gLinkSaveSlots[i].unk0A[gExtraMode];
+            gSaveSlots[3].unk1C[gExtraMode] = gLinkSaveSlots[i].unk0C[gExtraMode];
+            gSaveSlots[3].unk16[gExtraMode] = gLinkSaveSlots[i].unk06[gExtraMode];
+            gSaveSlots[3].unk18[gExtraMode] = gLinkSaveSlots[i].unk08[gExtraMode];
         }
-        else if ((s8)gSaveSlots[3].unk1A[gExtraMode] == (s8)gUnk_0200EA00[i].unk0A[gExtraMode])
+        else if ((s8)gSaveSlots[3].unk1A[gExtraMode] == (s8)gLinkSaveSlots[i].unk0A[gExtraMode])
         {
-            if ((s8)gSaveSlots[3].unk1C[gExtraMode] > (s8)gUnk_0200EA00[i].unk0C[gExtraMode])
+            if ((s8)gSaveSlots[3].unk1C[gExtraMode] > (s8)gLinkSaveSlots[i].unk0C[gExtraMode])
             {
-                gSaveSlots[3].unk1C[gExtraMode] = gUnk_0200EA00[i].unk0C[gExtraMode];
-                gSaveSlots[3].unk16[gExtraMode] = gUnk_0200EA00[i].unk06[gExtraMode];
-                gSaveSlots[3].unk18[gExtraMode] = gUnk_0200EA00[i].unk08[gExtraMode];
+                gSaveSlots[3].unk1C[gExtraMode] = gLinkSaveSlots[i].unk0C[gExtraMode];
+                gSaveSlots[3].unk16[gExtraMode] = gLinkSaveSlots[i].unk06[gExtraMode];
+                gSaveSlots[3].unk18[gExtraMode] = gLinkSaveSlots[i].unk08[gExtraMode];
             }
-            else if ((s8)gSaveSlots[3].unk1C[gExtraMode] == (s8)gUnk_0200EA00[i].unk0C[gExtraMode])
+            else if ((s8)gSaveSlots[3].unk1C[gExtraMode] == (s8)gLinkSaveSlots[i].unk0C[gExtraMode])
             {
-                if ((s8)gSaveSlots[3].unk16[gExtraMode] > (s8)gUnk_0200EA00[i].unk06[gExtraMode])
+                if ((s8)gSaveSlots[3].unk16[gExtraMode] > (s8)gLinkSaveSlots[i].unk06[gExtraMode])
                 {
-                    gSaveSlots[3].unk16[gExtraMode] = gUnk_0200EA00[i].unk06[gExtraMode];
-                    gSaveSlots[3].unk18[gExtraMode] = gUnk_0200EA00[i].unk08[gExtraMode];
+                    gSaveSlots[3].unk16[gExtraMode] = gLinkSaveSlots[i].unk06[gExtraMode];
+                    gSaveSlots[3].unk18[gExtraMode] = gLinkSaveSlots[i].unk08[gExtraMode];
                 }
-                else if ((s8)gSaveSlots[3].unk16[gExtraMode] == (s8)gUnk_0200EA00[i].unk06[gExtraMode])
+                else if ((s8)gSaveSlots[3].unk16[gExtraMode] == (s8)gLinkSaveSlots[i].unk06[gExtraMode])
                 {
-                    if ((s8)gSaveSlots[3].unk18[gExtraMode] > (s8)gUnk_0200EA00[i].unk08[gExtraMode])
-                        gSaveSlots[3].unk18[gExtraMode] = gUnk_0200EA00[i].unk08[gExtraMode];
+                    if ((s8)gSaveSlots[3].unk18[gExtraMode] > (s8)gLinkSaveSlots[i].unk08[gExtraMode])
+                        gSaveSlots[3].unk18[gExtraMode] = gLinkSaveSlots[i].unk08[gExtraMode];
                 }
             }
         }
-        if (gSaveSlots[3].unk12[gExtraMode] > gUnk_0200EA00[i].unk02[gExtraMode])
-            gSaveSlots[3].unk12[gExtraMode] = gUnk_0200EA00[i].unk02[gExtraMode];
-        gSaveSlots[3].unk20[gExtraMode] &= gUnk_0200EA00[i].unk10[gExtraMode];
-        gSaveSlots[3].unk10 &= gUnk_0200EA00[i].unk00;
+        if (gSaveSlots[3].unk12[gExtraMode] > gLinkSaveSlots[i].unk02[gExtraMode])
+            gSaveSlots[3].unk12[gExtraMode] = gLinkSaveSlots[i].unk02[gExtraMode];
+        gSaveSlots[3].unk20[gExtraMode] &= gLinkSaveSlots[i].unk10[gExtraMode];
+        gSaveSlots[3].unk10 &= gLinkSaveSlots[i].unk00;
         for (j = 0; j <= 7; j++)
         {
             for (k = 0; k <= 6; k++)
             {
-                if (gSaveSlots[3].unk28[j][k] > gUnk_0200EA00[i].unk18[j][k])
-                    gSaveSlots[3].unk28[j][k] = gUnk_0200EA00[i].unk18[j][k];
+                if (gSaveSlots[3].unk28[j][k] > gLinkSaveSlots[i].unk18[j][k])
+                    gSaveSlots[3].unk28[j][k] = gLinkSaveSlots[i].unk18[j][k];
             }
         }
     }
 }
-void sub_080b8b2c(s32 a)
+void MergeProgressIntoSaveSlot(s32 a)
 {
     s32 i;
     s32 j;
@@ -139,7 +139,7 @@ void sub_080b8b2c(s32 a)
     }
     CalcCompletionPercent(gExtraMode);
     gSaveSlots[3].unk12[gExtraMode] = gCompletionPercent;
-    gSaveSlots[3].unk10 = gUnk_03002364;
+    gSaveSlots[3].unk10 = gMilestoneFlags;
     gSaveSlots[a].unk16[gExtraMode] = gSaveSlots[3].unk16[gExtraMode];
     gSaveSlots[a].unk18[gExtraMode] = gSaveSlots[3].unk18[gExtraMode];
     if ((s8)gSaveSlots[a].unk1A[gExtraMode] < (s8)gSaveSlots[3].unk1A[gExtraMode])

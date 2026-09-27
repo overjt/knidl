@@ -34,7 +34,7 @@ extern u16 gPrevGameState;
 extern struct PlayerState gPlayerStates[];
 extern u8 gActivePlayerMask;
 extern u16 gLocalPlayer;
-extern u16 gUnk_03002364;
+extern u16 gMilestoneFlags;
 extern u16 gPlayerCount;
 extern u16 gGameState;
 extern s32 gCurSaveSlot;
@@ -66,9 +66,9 @@ void sub_080273a0(void);
 void LatchPlayerKeys(void);
 void InputRecorderStart(void);
 void InputRecorderUpdate(void);
-void sub_080b7b7c(s32 a);
-s32 sub_080b8290(void);
-void sub_080c6750(void);
+void SaveProgress(s32 a);
+s32 CheckNewMilestones(void);
+void ShowMilestonePicture(void);
 
 void CheckPauseButton(void)
 {
@@ -213,8 +213,8 @@ void sub_0800783c(void)
     BeginFastFadeOutToWhite();
     RunLinkFramesUntilFadeDone();
     sub_08027198();
-    if (sub_080b8290() != 0 && gUnk_03001F30 == 0)
-        sub_080c6750();
+    if (CheckNewMilestones() != 0 && gUnk_03001F30 == 0)
+        ShowMilestonePicture();
 }
 
 void sub_0800791c(void)
@@ -322,12 +322,12 @@ void sub_0800791c(void)
     gFadeBlankAtWhite = 0;
     sub_08027128();
     if (gUnk_03001F30 == 0 && gGameState != 9
-        && (gUnk_03002364 & (4 << gExtraMode))
-        && !(gUnk_03002364 & (64 << gExtraMode))) {
-        gUnk_03002364 |= 64 << gExtraMode;
-        sub_080b7b7c(gCurSaveSlot);
+        && (gMilestoneFlags & (4 << gExtraMode))
+        && !(gMilestoneFlags & (64 << gExtraMode))) {
+        gMilestoneFlags |= 64 << gExtraMode;
+        SaveProgress(gCurSaveSlot);
         StopAllSfx();
         ResetTasksAndOam();
-        sub_080c6750();
+        ShowMilestonePicture();
     }
 }

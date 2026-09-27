@@ -42,14 +42,14 @@ extern s32 Div(s32 a, s32 b);
 extern s32 Mod(s32 a, s32 b);
 extern u16 gHudClock[];
 extern struct SaveSlot gSaveSlots[];
-extern struct LinkRec gUnk_0200EA00[];
-extern u8 gUnk_0200EB80;
-extern u8 gUnk_0200EC80[];
+extern struct LinkRec gLinkSaveSlots[];
+extern u8 gLinkSaveSlotPart;
+extern u8 gInputRecording[];
 extern s32 gSramAvailable;
 extern u16 gUnk_03001F18[];
 extern u8 gUnk_03001F20;
 extern u16 gCompletionPercent;
-extern u16 gUnk_03002364;
+extern u16 gMilestoneFlags;
 extern u16 gUnk_03002378[];
 extern s8 gUnk_03002384;
 extern u16 gPlayerCount;
@@ -68,8 +68,8 @@ extern void RunLinkFrame(void);
 s32 CalcCompletionPercent(s32 a);
 s32 WriteSaveSlot(s32 a);
 u32 UpdateSaveSlotChecksum(s32 a);
-void sub_080b7e14(s32 a);
-void sub_080b8b2c(s32 a);
+void StoreProgressInSaveSlot(s32 a);
+void MergeProgressIntoSaveSlot(s32 a);
 
 void sub_080b8888(void)
 {
@@ -77,14 +77,14 @@ void sub_080b8888(void)
     s32 i;
 
     LinkStartRecordExchange();
-    gUnk_0200EB80 = 0;
+    gLinkSaveSlotPart = 0;
     do
     {
         RunLinkFrame();
         n = 0;
-        if (gUnk_0200EB80 <= 26)
+        if (gLinkSaveSlotPart <= 26)
         {
-            gUnk_0200EB80++;
+            gLinkSaveSlotPart++;
         }
         else
         {

@@ -29,7 +29,7 @@ extern u32 gUnk_0200E900[];
 extern s16 gInputRecorderMode;
 extern s32 gSramAvailable;
 extern s16 gCompletionPercent;
-extern u16 gUnk_03002364;
+extern u16 gMilestoneFlags;
 extern s8 gUnk_03002384;
 extern s32 gUnk_030023C8[];
 extern s8 gUnk_030023E0;
@@ -39,10 +39,10 @@ void InputRecorderRecordFrame(void);
 void InputRecorderPlayFrame(void);
 void SelectLatestSaveSlot(void);
 s32 ReadSaveSlot(s32 a, s32 b);
-void sub_080b7b20(s32 a);
+void WriteNewSaveFile(s32 a);
 void ClearSaveSlot(s32 a);
 u32 CalcSaveSlotChecksum(s32 a);
-void sub_080b8200(void);
+void ResetProgress(void);
 
 void InputRecorderUpdate(void)
 {
@@ -141,10 +141,10 @@ s32 ReadSaveSlot(s32 a, s32 b)
 one:
     return 1;
 }
-void sub_080b798c(s32 a)
+void InitNewSaveFile(s32 a)
 {
     gSaveSlots[a].unk04 = a;
     gSaveSlots[a].unk0C = 0;
-    sub_080b8200();
-    sub_080b7b20(a);
+    ResetProgress();
+    WriteNewSaveFile(a);
 }

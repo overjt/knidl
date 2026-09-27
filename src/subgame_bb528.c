@@ -6,8 +6,8 @@
  *
  * The duel's results screen (sub-game 0, screen 1).  QuickDrawResults is its
  * task: sub_080bb528 builds the screen, then seven <entry, check> states
- * run through the anchor tables 0x08756378 / 0x08756394 (sub_080bbe04 /
- * sub_080bbde4):
+ * run through the anchor tables 0x08756378 / 0x08756394 (QuickDrawResultsEnterState /
+ * QuickDrawResultsUpdate):
  *
  *   0  wait, play song Task.unk2C | 0x800, then go to state Task.unk30
  *   1  spawn a kind-7 object (sub_080bb718) when gPrevGameState == 5
@@ -16,13 +16,13 @@
  *   4  two-option cursor (sub_080bb554, sub_080bb5b8): option 0 goes to
  *      state 5, option 1 quits (SubGameQuit)
  *   5  three-option cursor (sub_080bb63c, sub_080bb66c): the choice goes to
- *      SubGameReplay, i.e. into gUnk_02006168, the row sub_080ba6b4 picks
+ *      SubGameReplay, i.e. into gSubGameLevel, the row QuickDrawWaitForSignal picks
  *      the signal delay from
  *   6  idle until A/Start, then quit (SubGameQuit)
  *
  * sub_080bb718 / sub_080bb7cc / sub_080bb820 spawn task type #94 objects of
  * kinds 7, 8 and 9; sub_080bbc70 / sub_080bbcdc / sub_080bbd4c (kinds 1
- * and 0, the second one the reaction-time readout of gUnk_02006184) and the
+ * and 0, the second one the reaction-time readout of gQuickDrawBestTime) and the
  * single-player placers sub_080bbbb8 / sub_080bbc04 fill the screen.
  */
 #include "gba/gba.h"
@@ -30,11 +30,11 @@
 #include "task.h"
 
 extern s32 gCurTaskIdx;
-extern s8 gUnk_02006168;
-extern u8 gUnk_02006184;
-extern u8 gUnk_0200B03C[];
+extern s8 gSubGameLevel;
+extern u8 gQuickDrawBestTime;
+extern u8 gQuickDrawWins[];
 extern u8 gUnk_0200B048;
-extern u8 gUnk_0200B07C[];
+extern u8 gQuickDrawRanking[];
 extern vs16 gBrightness;
 extern vu16 gPlayerPressedKeys[];
 extern u16 gPrevGameState;
@@ -61,7 +61,7 @@ void SubGameReplay(s32 a0);
 void SubGameQuit(void);
 u8 sub_080b9d68(void);
 void SubGameCheckEnd(void);
-void sub_080ba5bc(s32 a0);
+void CreateQuickDrawPlayers(s32 a0);
 
 void sub_080bbb70(void);
 void sub_080bbc04(void);
@@ -70,7 +70,7 @@ void sub_080bbbb8(void);
 void sub_080bbc70(void);
 void sub_080bbcdc(void);
 void sub_080bbd4c(void);
-void sub_080bbde4(void);
+void QuickDrawResultsUpdate(void);
 
 void sub_080bb528(void)
 {
@@ -151,7 +151,7 @@ void sub_080bb63c(void)
 
     t->unk48 = 120;
     t->unk4A = 152;
-    v = gUnk_02006168;
+    v = gSubGameLevel;
     t->unk1C = v;
     t->unk24 = 10;
     t->unk3C = v + 2;
@@ -287,7 +287,7 @@ void sub_080bb874(u8 a0, s8 a1)
         x = x;
         break;
     }
-    if (gUnk_0200B03C[a1] == 0)
+    if (gQuickDrawWins[a1] == 0)
     {
         sub_080bb820(gUnk_0200B048 + 1, x, y, a1);
     }
@@ -303,7 +303,7 @@ void sub_080bb8f8(void)
     s32 i;
 
     for (i = 0; i < gPlayerCount; i++)
-        sub_080bb874(i, gUnk_0200B07C[i]);
+        sub_080bb874(i, gQuickDrawRanking[i]);
 }
 
 void sub_080bb930(u8 a0, s8 a1)
@@ -328,7 +328,7 @@ void sub_080bb930(u8 a0, s8 a1)
         y = 52;
         break;
     }
-    if (gUnk_0200B03C[a1] == 0)
+    if (gQuickDrawWins[a1] == 0)
         sub_080bb7cc(3, x, y, a1);
     else
         sub_080bb7cc(a0, x, y, a1);
@@ -336,26 +336,26 @@ void sub_080bb930(u8 a0, s8 a1)
 
 void sub_080bb9b4(void)
 {
-    sub_080bb930(2, gUnk_0200B07C[1]);
+    sub_080bb930(2, gQuickDrawRanking[1]);
 }
 
 void sub_080bb9cc(void)
 {
-    sub_080bb930(1, gUnk_0200B07C[1]);
-    sub_080bb930(2, gUnk_0200B07C[2]);
+    sub_080bb930(1, gQuickDrawRanking[1]);
+    sub_080bb930(2, gQuickDrawRanking[2]);
 }
 
 void sub_080bb9f0(void)
 {
-    sub_080bb930(1, gUnk_0200B07C[1]);
-    sub_080bb930(2, gUnk_0200B07C[2]);
-    sub_080bb930(3, gUnk_0200B07C[3]);
+    sub_080bb930(1, gQuickDrawRanking[1]);
+    sub_080bb930(2, gQuickDrawRanking[2]);
+    sub_080bb930(3, gQuickDrawRanking[3]);
 }
 
 void sub_080bba1c(void)
 {
     struct Task *base = gTasks;
-    struct Task *t = &base[gUnk_0200B07C[0]];
+    struct Task *t = &base[gQuickDrawRanking[0]];
     s16 x = t->unk48 + (2 - gCurTask->unk20) * 24;
     s16 y = t->unk4A;
 
@@ -374,7 +374,7 @@ void sub_080bba1c(void)
         y = 52;
         break;
     }
-    sub_080bb7cc(0, x, y, gUnk_0200B07C[0]);
+    sub_080bb7cc(0, x, y, gQuickDrawRanking[0]);
     if (gCurTask->unk20 == 3)
     {
         switch (gPlayerCount)
@@ -399,13 +399,13 @@ void sub_080bbad4(void)
 
     for (; i < gPlayerCount; i++)
     {
-        if (gUnk_0200B07C[i] == gLocalPlayer)
+        if (gQuickDrawRanking[i] == gLocalPlayer)
         {
             found = i;
             break;
         }
     }
-    if ((gPlayerCount == 2 && found != 0) || gUnk_0200B03C[gLocalPlayer] == 0)
+    if ((gPlayerCount == 2 && found != 0) || gQuickDrawWins[gLocalPlayer] == 0)
         found = 3;
     switch (found)
     {
@@ -426,7 +426,7 @@ void sub_080bbb70(void)
 {
     if (gPrevGameState == 5)
         sub_080bb718(0, 120, 16);
-    sub_080ba5bc(1);
+    CreateQuickDrawPlayers(1);
     sub_080bbad4();
     if (gPrevGameState == 5)
         gCurTask->unk30 = 2;
@@ -515,7 +515,7 @@ void sub_080bbcdc(void)
         t->unk2C = 0;
         t->unk30 = (s32)gUnk_08755A34;
         t->unk34 = 0;
-        v = gUnk_02006184;
+        v = gQuickDrawBestTime;
         n = 0;
         while (v > 9)
         {
@@ -551,18 +551,18 @@ void QuickDrawResults(void)
     while (gBrightness != 0)
         TaskYieldTrampoline(1);
     t = gCurTask;
-    t->unk04 = (u32)sub_080bbde4;
+    t->unk04 = (u32)QuickDrawResultsUpdate;
     CallTableEntry(t->unk14, 7, gUnk_08756378);
     TaskSleepForever();
 }
 
-void sub_080bbde4(void)
+void QuickDrawResultsUpdate(void)
 {
     CallTableEntry(gCurTask->unk15, 7, gUnk_08756394);
     SubGameCheckEnd();
 }
 
-void sub_080bbe04(void)
+void QuickDrawResultsEnterState(void)
 {
     CallTableEntry(gCurTask->unk14, 7, gUnk_08756378);
 }
@@ -580,7 +580,7 @@ void sub_080bbe20(void)
 void sub_080bbe58(void)
 {
     if (gCurTask->unk14 != 0)
-        TaskSetEntry(sub_080bbe04, gCurTaskIdx);
+        TaskSetEntry(QuickDrawResultsEnterState, gCurTaskIdx);
 }
 
 void sub_080bbe80(void)
@@ -608,7 +608,7 @@ void sub_080bbe80(void)
 void sub_080bbedc(void)
 {
     if (gCurTask->unk14 != 1)
-        TaskSetEntry(sub_080bbe04, gCurTaskIdx);
+        TaskSetEntry(QuickDrawResultsEnterState, gCurTaskIdx);
 }
 
 void sub_080bbf04(void)
@@ -628,7 +628,7 @@ void sub_080bbf04(void)
 void sub_080bbf44(void)
 {
     if (gCurTask->unk14 != 2)
-        TaskSetEntry(sub_080bbe04, gCurTaskIdx);
+        TaskSetEntry(QuickDrawResultsEnterState, gCurTaskIdx);
 }
 
 void sub_080bbf6c(void)
@@ -644,7 +644,7 @@ void sub_080bbf6c(void)
 void sub_080bbf9c(void)
 {
     if (gCurTask->unk14 != 3)
-        TaskSetEntry(sub_080bbe04, gCurTaskIdx);
+        TaskSetEntry(QuickDrawResultsEnterState, gCurTaskIdx);
 }
 
 void sub_080bbfc4(void)
@@ -665,7 +665,7 @@ void sub_080bc008(void)
     {
         sub_080bb5b8();
         if (gCurTask->unk14 != 4)
-            TaskSetEntry(sub_080bbe04, gCurTaskIdx);
+            TaskSetEntry(QuickDrawResultsEnterState, gCurTaskIdx);
     }
 }
 
@@ -685,7 +685,7 @@ void sub_080bc06c(void)
     {
         sub_080bb66c();
         if (gCurTask->unk14 != 5)
-            TaskSetEntry(sub_080bbe04, gCurTaskIdx);
+            TaskSetEntry(QuickDrawResultsEnterState, gCurTaskIdx);
     }
 }
 

@@ -204,13 +204,13 @@ extern u8 gUnk_0200AF00;
 extern u8 gUnk_0200AF08;
 extern u16 gUnk_0200AFF4;
 extern s8 gUnk_0200B034;
-extern s8 gUnk_02006168;
+extern s8 gSubGameLevel;
 extern u8 gCutscenePending;
 extern u8 gExtraMode;
 extern u16 gUnk_02007FF0;
 extern u16 gUnk_02007FB0;
 extern s8 gUnk_02004C98;
-extern u16 gUnk_03002364;
+extern u16 gMilestoneFlags;
 extern s8 gUnk_02005590[];
 extern u8 gUnk_02008000;
 extern u8 gUnk_02007FB4;
@@ -901,7 +901,7 @@ s32 sub_08025024(void)
                 gUnk_0200AF00 = 0;
                 break;
             case 3:
-                gUnk_02006168 = gUnk_087323E2[gUnk_030023B8][0][gExtraMode];
+                gSubGameLevel = gUnk_087323E2[gUnk_030023B8][0][gExtraMode];
                 gUnk_02007D58[gStageIndex] |= 1;
                 gRoomEntryX = d->unk2 * 16 + 22;
                 gRoomEntryY = d->unk4 * 16 + 5;
@@ -911,7 +911,7 @@ s32 sub_08025024(void)
                 gUnk_0200AF00 = 2;
                 break;
             case 4:
-                gUnk_02006168 = gUnk_087323E2[gUnk_030023B8][1][gExtraMode];
+                gSubGameLevel = gUnk_087323E2[gUnk_030023B8][1][gExtraMode];
                 gUnk_02007D58[gStageIndex] |= 2;
                 gRoomEntryX = d->unk2 * 16 + 22;
                 gRoomEntryY = d->unk4 * 16 + 5;
@@ -921,7 +921,7 @@ s32 sub_08025024(void)
                 gUnk_0200AF00 = 2;
                 break;
             case 5:
-                gUnk_02006168 = gUnk_087323E2[gUnk_030023B8][2][gExtraMode];
+                gSubGameLevel = gUnk_087323E2[gUnk_030023B8][2][gExtraMode];
                 gUnk_02007D58[gStageIndex] |= 4;
                 gRoomEntryX = d->unk2 * 16 + 22;
                 gRoomEntryY = d->unk4 * 16 + 5;
@@ -1146,9 +1146,9 @@ void sub_08025b5c(void)
     if (gGameState == 8)
     {
         if (gExtraMode != 0)
-            gUnk_03002364 |= 2;
+            gMilestoneFlags |= 2;
         else
-            gUnk_03002364 |= 1;
+            gMilestoneFlags |= 1;
         gUnk_030023B8 = 6;
         gUnk_03001F20 = 32;
         gUnk_02007FB0 |= 1;

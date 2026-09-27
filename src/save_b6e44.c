@@ -8,8 +8,8 @@ extern u8 gHBlankScrollState;
 extern s32 gHBlankScrollTimer;
 extern u16 gHBlankScrollEffect;
 
-void sub_080b60e8(void);
-void sub_080b6a90(void);
+void UpdateHBlankScroll(void);
+void UpdateRoomHBlankScroll(void);
 
 void ResetHBlankScroll(void)
 {
@@ -26,33 +26,33 @@ void StartHBlankScroll(s32 a)
     gHBlankScrollTimer = 0;
     gHBlankScrollState = 1;
     gHBlankScrollEffect = a;
-    gFrameCallback = sub_080b60e8;
+    gFrameCallback = UpdateHBlankScroll;
     gHBlankScrollStarted = 1;
 }
-void sub_080b6ea0(s32 a)
+void StartRoomHBlankScroll(s32 a)
 {
     gHBlankScrollTimer = 0;
     gHBlankScrollState = 1;
     gHBlankScrollEffect = a;
-    gFrameCallback = sub_080b6a90;
+    gFrameCallback = UpdateRoomHBlankScroll;
     gHBlankScrollStarted = 1;
 }
-void sub_080b6ed4(void)
+void HoldHBlankScroll(void)
 {
     if (gHBlankScrollStarted != 0)
         gHBlankScrollState = 3;
 }
-void sub_080b6eec(void)
+void SuspendHBlankScroll(void)
 {
     if (gHBlankScrollStarted != 0)
         gFrameCallback = NULL;
 }
-void sub_080b6f04(void)
+void RestoreRoomHBlankScroll(void)
 {
     if (gHBlankScrollStarted != 0)
-        gFrameCallback = sub_080b6a90;
+        gFrameCallback = UpdateRoomHBlankScroll;
 }
-void sub_080b6f20(void)
+void ResumeHBlankScroll(void)
 {
     if (gHBlankScrollStarted != 0)
         gHBlankScrollState = 1;

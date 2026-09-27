@@ -6,7 +6,7 @@
  *
  * The game-over screen, task type #264 variant 0: the player character.
  * Its sub-states gUnk_087582AC[Task.unk14] and per-frame handlers
- * gUnk_087582B8[Task.unk15] (sub_080cb5c4 starts it, sub_080cb62c re-enters
+ * gUnk_087582B8[Task.unk15] (GameOverPlayer starts it, GameOverPlayerEnterState re-enters
  * it with Task.unk24 = 1):
  *   sub_080cb64c / sub_080cb6d8   sub-state 0, the idle loop; once re-entered
  *       (Task.unk24) the handler counts Task.unk20 down and then ends the
@@ -30,7 +30,7 @@ void TaskSetEntry(void *a, u32 i);
 void TaskSetMotion(s32 a, s32 b, s32 c, s32 d, s32 e, s32 f);
 void TaskStop(void);
 void TaskSetFrame(s32 a);
-void sub_080cb62c(void);
+void GameOverPlayerEnterState(void);
 void CreateGameOverObject(u8 variant);
 
 /* Task type #264 variant 0, sub-state 0. */
@@ -315,6 +315,6 @@ void sub_080cbea4(void)
     if (gCurTask->unk14 != 2) {
         gCurTask->unk20 = 120;
         CreateGameOverObject(2);
-        TaskSetEntry(sub_080cb62c, gCurTaskIdx);
+        TaskSetEntry(GameOverPlayerEnterState, gCurTaskIdx);
     }
 }

@@ -66,8 +66,8 @@ extern u16 gBg3Cnt;
 extern vu32 gRngValue;      /* RNG state */
 extern u8 gDigits[6];     /* decimal digit buffer, [5] = sign/flag */
 
-void sub_080b84f0(void);
-void sub_080b8694(void);
+void FillSendCmdWithSaveSlot(void);
+void ReceiveLinkSaveSlots(void);
 void LinkMain1(u16 *a, u16 *b, u16 *c);
 void LinkErrorScreen(void);
 void RunTasks(void);
@@ -102,7 +102,7 @@ void FillSendCmd(void)
                 }
             }
         } else {
-            sub_080b84f0();
+            FillSendCmdWithSaveSlot();
         }
     }
 }
@@ -161,7 +161,7 @@ void UpdatePlayerKeys(void)
                 }
             }
         } else {
-            sub_080b8694();
+            ReceiveLinkSaveSlots();
         }
         if ((gRecvCmds[0][i] & 0xFF00) != 0x8800)
             gPlayerHeldKeys[i] = gPlayerPressedKeys[i] = 0;

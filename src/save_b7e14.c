@@ -28,13 +28,13 @@ extern s32 Div(s32 a, s32 b);
 extern s32 Mod(s32 a, s32 b);
 extern u16 gHudClock[];
 extern struct SaveSlot gSaveSlots[];
-extern u8 gUnk_0200EB80;
-extern u8 gUnk_0200EC80[];
+extern u8 gLinkSaveSlotPart;
+extern u8 gInputRecording[];
 extern s32 gSramAvailable;
 extern u16 gUnk_03001F18[];
 extern u8 gUnk_03001F20;
 extern u16 gCompletionPercent;
-extern u16 gUnk_03002364;
+extern u16 gMilestoneFlags;
 extern u16 gUnk_03002378[];
 extern s8 gUnk_03002384;
 extern u16 gPlayerCount;
@@ -49,10 +49,10 @@ extern u16 gSendCmd[];
 s32 CalcCompletionPercent(s32 a);
 s32 WriteSaveSlot(s32 a);
 u32 UpdateSaveSlotChecksum(s32 a);
-void sub_080b7e14(s32 a);
-void sub_080b8b2c(s32 a);
+void StoreProgressInSaveSlot(s32 a);
+void MergeProgressIntoSaveSlot(s32 a);
 
-void sub_080b7e14(s32 a)
+void StoreProgressInSaveSlot(s32 a)
 {
     s32 i;
     s32 j;
@@ -77,9 +77,9 @@ void sub_080b7e14(s32 a)
     }
     CalcCompletionPercent(gExtraMode);
     gSaveSlots[a].unk12[gExtraMode] = gCompletionPercent;
-    gSaveSlots[a].unk10 = gUnk_03002364;
+    gSaveSlots[a].unk10 = gMilestoneFlags;
 }
-void sub_080b7f58(s32 a)
+void StoreProgressInBothHalves(s32 a)
 {
     s32 i;
     s32 j;
@@ -94,7 +94,7 @@ void sub_080b7f58(s32 a)
         CalcCompletionPercent(i);
         gSaveSlots[a].unk12[i] = gCompletionPercent;
     }
-    gSaveSlots[a].unk10 = gUnk_03002364;
+    gSaveSlots[a].unk10 = gMilestoneFlags;
     for (i = 0; i <= 7; i++)
     {
         for (j = 0; j <= 6; j++)
@@ -106,7 +106,7 @@ void sub_080b7f58(s32 a)
         gSaveSlots[a].unk68[i] = gUnk_03002378[i];
     }
 }
-void sub_080b8070(s32 a)
+void LoadSaveSlot(s32 a)
 {
     s32 i;
     s32 j;
@@ -115,7 +115,7 @@ void sub_080b8070(s32 a)
         return;
     if (gPlayerCount != 1)
         a = 3;
-    gUnk_03002364 = gSaveSlots[a].unk10;
+    gMilestoneFlags = gSaveSlots[a].unk10;
     gUnk_030023B8 = gSaveSlots[a].unk16[gExtraMode];
     gUnk_03001F20 = gSaveSlots[a].unk18[gExtraMode];
     gUnk_030023E0 = gSaveSlots[a].unk1A[gExtraMode];
@@ -150,7 +150,7 @@ void sub_080b81a0(void)
     }
     CalcCompletionPercent(0);
 }
-void sub_080b8200(void)
+void ResetProgress(void)
 {
     s32 i;
     s32 j;
@@ -158,7 +158,7 @@ void sub_080b8200(void)
     u16 *q;
 
     gExtraMode = 0;
-    gUnk_03002364 = 0;
+    gMilestoneFlags = 0;
     gUnk_030023B8 = 0;
     gUnk_03001F20 = 0;
     gUnk_030023E0 = 0;
@@ -181,24 +181,24 @@ void sub_080b8200(void)
     q[3] = 0;
     p[3] = 0;
 }
-s32 sub_080b8290(void)
+s32 CheckNewMilestones(void)
 {
     s32 r;
     u16 v;
 
     r = 0;
-    v = gUnk_03002364;
+    v = gMilestoneFlags;
     if (((v >> gExtraMode) & 1) != 0 && (v & (16 << gExtraMode)) == 0)
     {
         v |= 16 << gExtraMode;
-        gUnk_03002364 = v;
+        gMilestoneFlags = v;
         r = 1;
     }
-    v = gUnk_03002364;
+    v = gMilestoneFlags;
     if ((v & (4 << gExtraMode)) != 0 && (v & (64 << gExtraMode)) == 0)
     {
         v |= 64 << gExtraMode;
-        gUnk_03002364 = v;
+        gMilestoneFlags = v;
         r |= 2;
     }
     if (r == 0)
@@ -206,9 +206,9 @@ s32 sub_080b8290(void)
     if (gCurSaveSlot == -1)
         return r;
     if (gPlayerCount == 1)
-        sub_080b7e14(gCurSaveSlot);
+        StoreProgressInSaveSlot(gCurSaveSlot);
     else
-        sub_080b8b2c(gCurSaveSlot);
+        MergeProgressIntoSaveSlot(gCurSaveSlot);
     gSaveSlots[gCurSaveSlot].unk0C++;
     UpdateSaveSlotChecksum(gCurSaveSlot);
     WriteSaveSlot(gCurSaveSlot);
@@ -216,23 +216,23 @@ s32 sub_080b8290(void)
 zero:
     return 0;
 }
-u32 sub_080b8348(void)
+u32 ReadInputRecording(void)
 {
     if (gSramAvailable == 0)
         return 0;
-    ReadSram((u8 *)0x0E000800, gUnk_0200EC80, 240 << 7);
+    ReadSram((u8 *)0x0E000800, gInputRecording, 240 << 7);
 }
-u32 sub_080b8374(void)
+u32 WriteInputRecording(void)
 {
     if (gSramAvailable == 0)
         return 0;
-    return WriteSramEx(gUnk_0200EC80, (u8 *)0x0E000800, 240 << 7);
+    return WriteSramEx(gInputRecording, (u8 *)0x0E000800, 240 << 7);
 }
-u32 sub_080b83a0(u8 *src, s32 i)
+u32 WriteInputRecordingEntry(u8 *src, s32 i)
 {
     return WriteSramEx(src, (u8 *)(i * 2 + 0x0E00092C), 2);
 }
-void sub_080b83b8(void)
+void CopySaveSlotToLinkSlot(void)
 {
     s32 i;
     s32 j;
@@ -255,13 +255,13 @@ void sub_080b83b8(void)
         gSaveSlots[3].unk68[i] = gSaveSlots[gCurSaveSlot].unk68[i];
     }
 }
-void sub_080b84f0(void)
+void FillSendCmdWithSaveSlot(void)
 {
     s32 q;
     s32 r;
 
-    gSendCmd[0] = gUnk_0200EB80 | (204 << 7);
-    switch (gUnk_0200EB80)
+    gSendCmd[0] = gLinkSaveSlotPart | (204 << 7);
+    switch (gLinkSaveSlotPart)
     {
     case 0:
         break;
@@ -278,8 +278,8 @@ void sub_080b84f0(void)
         gSendCmd[3] = gSaveSlots[gCurSaveSlot].unk10;
         break;
     default:
-        q = Div(gUnk_0200EB80 - 3, 3);
-        r = Mod(gUnk_0200EB80 - 3, 3);
+        q = Div(gLinkSaveSlotPart - 3, 3);
+        r = Mod(gLinkSaveSlotPart - 3, 3);
         if (q > 7)
             break;
         switch (r)

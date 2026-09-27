@@ -5,20 +5,20 @@
 /* gameover_cacf0.c (0x080CACF0-0x080CB353, issue #100).
  *
  * AgbMain state 22, the game-over / continue screen.
- *   GameOverMain   the state body: one of three screens - sub_080cad8c
+ *   GameOverMain   the state body: one of three screens - GameOverScreen
  *       outside link play, sub_080caeec in link play, sub_080cb058 after
  *       AgbMain state 20 - then, when the choice set game state 5 (continue),
  *       back into the stage (state 6 unless gStageRequest is 1), else the SIO
  *       session is torn down.
- *   sub_080cb21c / sub_080cb2cc   the screen's graphics and objects: with
+ *   GameOverLoadGraphics / CreateGameOverObjects   the screen's graphics and objects: with
  *       one player task type #261 and #264 variants 0-2 (variant 0's task
- *       index goes to gUnk_02007D28), else #264 variant 5.
- *   sub_080cb030   redraw the clock for n frames.
- *   sub_080cb0e8 / sub_080cb108   up or down flips the cursor gGameOverCursor.
- *   sub_080cb12c / sub_080cb178 / sub_080cb1d8   A or START (or the end of
- *       the 480-frame count gUnk_0200557C) ends the screen (gGameOverDone)
+ *       index goes to gGameOverPlayerTask), else #264 variant 5.
+ *   GameOverShowClock   redraw the clock for n frames.
+ *   GameOverMoveCursor / GameOverIsUpDownPressed   up or down flips the cursor gGameOverCursor.
+ *   GameOverCheckConfirm / GameOverCheckTimeout / GameOverCheckChoice   A or START (or the end of
+ *       the 480-frame count gGameOverTimer) ends the screen (gGameOverDone)
  *       and picks the next game state.
- *   sub_080cb2b0   reset the done flag and the count. */
+ *   GameOverResetWait   reset the done flag and the count. */
 
 extern vu16 gDispCnt;          /* DISPCNT shadow */
 extern vs32 gBg1ScrollY;
@@ -37,9 +37,9 @@ extern u16 gHudClock[];         /* clock (four fields) */
 extern vu16 gPlayerPressedKeys[];        /* keys pressed per player */
 extern u32 gUnk_02020000[];         /* decompression buffer */
 extern u8 gGameOverDone;            /* game-over screen: done flag */
-extern s16 gUnk_0200557C;           /* game-over screen: frames left */
+extern s16 gGameOverTimer;           /* game-over screen: frames left */
 extern s8 gGameOverCursor;            /* game-over screen: cursor (continue = 0?) */
-extern s16 gUnk_02007D28;           /* game-over screen: the #264 variant-0 task's index */
+extern s16 gGameOverPlayerTask;           /* game-over screen: the #264 variant-0 task's index */
 extern u32 gObjVram[];         /* OBJ VRAM */
 extern vu16 gKeyRepeatDelay;
 extern vu16 gKeyRepeatInterval;
@@ -74,17 +74,17 @@ void ResetPlayerRecords(void);
 void sub_08022c3c(void);
 void DrawScoreToBgMap(s32 v, s32 x, s32 y);
 void DrawClockToBgMap(u16 *time, s32 x, s32 y);
-void sub_080cad8c(void);
+void GameOverScreen(void);
 void sub_080caeec(void);
-void sub_080cb030(s32 n);
+void GameOverShowClock(s32 n);
 void sub_080cb058(void);
-void sub_080cb0e8(void);
-u8 sub_080cb108(void);
-void sub_080cb178(void);
-void sub_080cb1d8(void);
-void sub_080cb21c(void);
-void sub_080cb2b0(void);
-void sub_080cb2cc(void);
+void GameOverMoveCursor(void);
+u8 GameOverIsUpDownPressed(void);
+void GameOverCheckTimeout(void);
+void GameOverCheckChoice(void);
+void GameOverLoadGraphics(void);
+void GameOverResetWait(void);
+void CreateGameOverObjects(void);
 
 /* AgbMain state 22: the game-over / continue screen. */
 void GameOverMain(void)
@@ -95,7 +95,7 @@ void GameOverMain(void)
     gGameOverCursor = 0;
     if (gPrevGameState != 20) {
         if (gUnk_03001F30 == 0)
-            sub_080cad8c();
+            GameOverScreen();
         else
             sub_080caeec();
     } else {
@@ -118,7 +118,7 @@ void GameOverMain(void)
 /* The game-over screen outside link play (gUnk_03001F30 == 0): scroll the
    banner in, spawn the eight letters (#260) and the #261/#264 objects,
    then wait for the continue choice. */
-void sub_080cad8c(void)
+void GameOverScreen(void)
 {
     s32 i;
 
@@ -131,7 +131,7 @@ void sub_080cad8c(void)
     DrawScoreToBgMap(gPlayerScores[gLocalPlayer], 22, 18);
     gDispCnt &= 0xE0FF;
     gDispCnt |= 0x1D00;
-    sub_080cb21c();
+    GameOverLoadGraphics();
     LinkRequestSync();
     LinkSyncRandom();
     LinkStartKeyExchange();
@@ -155,13 +155,13 @@ void sub_080cad8c(void)
         t->unk18 = i;
         RunLinkFrames(8);
     }
-    sub_080cb2b0();
-    sub_080cb2cc();
+    GameOverResetWait();
+    CreateGameOverObjects();
     RunLinkFrames(8);
     do {
         RunLinkFrame();
         if (gPlayerCount != 1)
-            sub_080cb178();
+            GameOverCheckTimeout();
     } while (gGameOverDone == 0);
 }
 
@@ -196,24 +196,24 @@ void sub_080caeec(void)
                 TaskCreateFrom(262, 32);
             }
         }
-        sub_080cb030(1);
+        GameOverShowClock(1);
     }
     for (i = 0; i < 8; i++) {
         struct Task *t = &gTasks[TaskCreateFrom(260, 32)];
         t->unk18 = i;
-        sub_080cb030(8);
+        GameOverShowClock(8);
     }
-    sub_080cb2b0();
+    GameOverResetWait();
     TaskCreateFrom(261, 32);
-    sub_080cb030(8);
+    GameOverShowClock(8);
     do {
-        sub_080cb030(1);
-        sub_080cb0e8();
-        sub_080cb1d8();
+        GameOverShowClock(1);
+        GameOverMoveCursor();
+        GameOverCheckChoice();
     } while (gGameOverDone == 0);
 }
 
-void sub_080cb030(s32 n)
+void GameOverShowClock(s32 n)
 {
     s32 i;
 
@@ -241,20 +241,20 @@ void sub_080cb058(void)
     ResetFadeAndBlend();
     BeginFastFadeInFromWhite();
     RunLinkFramesUntilFadeDone();
-    sub_080cb2b0();
+    GameOverResetWait();
     do {
         RunLinkFrame();
-        sub_080cb178();
+        GameOverCheckTimeout();
     } while (gGameOverDone == 0);
 }
 
-void sub_080cb0e8(void)
+void GameOverMoveCursor(void)
 {
-    if (sub_080cb108() == 1)
+    if (GameOverIsUpDownPressed() == 1)
         gGameOverCursor ^= 1;
 }
 
-u8 sub_080cb108(void)
+u8 GameOverIsUpDownPressed(void)
 {
     if (gPlayerPressedKeys[0] & 0xC0) {
         PlaySfx(101);
@@ -263,7 +263,7 @@ u8 sub_080cb108(void)
     return 0;
 }
 
-u8 sub_080cb12c(void)
+u8 GameOverCheckConfirm(void)
 {
     s32 i;
 
@@ -277,13 +277,13 @@ u8 sub_080cb12c(void)
     return 0;
 }
 
-void sub_080cb178(void)
+void GameOverCheckTimeout(void)
 {
-    if (gUnk_0200557C <= 0)
+    if (gGameOverTimer <= 0)
         gGameOverDone = 1;
     else
-        sub_080cb12c();
-    gUnk_0200557C--;
+        GameOverCheckConfirm();
+    gGameOverTimer--;
     if (gGameOverDone != 0) {
         if (gPrevGameState == 20)
             gGameState = 4;
@@ -292,9 +292,9 @@ void sub_080cb178(void)
     }
 }
 
-void sub_080cb1d8(void)
+void GameOverCheckChoice(void)
 {
-    if (sub_080cb12c()) {
+    if (GameOverCheckConfirm()) {
         if (gGameOverCursor == 0 && gPlayerCount == 1)
             gGameState = 5;
         else
@@ -304,7 +304,7 @@ void sub_080cb1d8(void)
 
 /* Load the game-over screen's palette and sprite tiles (a second set in
    single-player play). */
-void sub_080cb21c(void)
+void GameOverLoadGraphics(void)
 {
     RequestCopy(2, (u32)gUnk_085E2C20, (u32)gUnk_030014F0, 192);
     if (gPlayerCount == 1) {
@@ -318,16 +318,16 @@ void sub_080cb21c(void)
     }
 }
 
-void sub_080cb2b0(void)
+void GameOverResetWait(void)
 {
     gGameOverDone = 0;
-    gUnk_0200557C = 480;
+    gGameOverTimer = 480;
 }
 
 /* Spawn the game-over screen's objects: in single-player play the cursor
-   (#261) and #264 variants 0-2 (variant 0's index goes to gUnk_02007D28),
+   (#261) and #264 variants 0-2 (variant 0's index goes to gGameOverPlayerTask),
    otherwise #264 variant 5. */
-void sub_080cb2cc(void)
+void CreateGameOverObjects(void)
 {
     s32 i;
     s32 id;
@@ -341,7 +341,7 @@ void sub_080cb2cc(void)
                 t = &gTasks[id];
                 t->unk73 = i;
                 if (i == 0)
-                    gUnk_02007D28 = id;
+                    gGameOverPlayerTask = id;
             }
         }
     } else {

@@ -6,13 +6,13 @@
  *
  * The game-over screen, task type #264 variant 1: the cursor.  Its
  * sub-states gUnk_087582C4[Task.unk14] and per-frame handlers
- * gUnk_087582DC[Task.unk15] (sub_080cbed4 starts it, sub_080cbfc8 re-enters
+ * gUnk_087582DC[Task.unk15] (GameOverChoice starts it, GameOverChoiceEnterState re-enters
  * it), plus the helpers the whole screen uses:
  *   CreateGameOverObject   spawn task type #264 with Task.unk73 = variant.
  *   sub_080cbf68 / sub_080cbfac   re-enter variant 0 (its task index is
- *       gUnk_02007D28) in sub-state 2 or 1 by this cursor's Task.unk24.
+ *       gGameOverPlayerTask) in sub-state 2 or 1 by this cursor's Task.unk24.
  *   sub_080cbfe4 / sub_080cc024   sub-state 0, the cursor at rest; up or down
- *       (sub_080cb108) moves it (sub-state 1), A or START picks: with
+ *       (GameOverIsUpDownPressed) moves it (sub-state 1), A or START picks: with
  *       Task.unk24 set sub-state 4, otherwise task type #263 and sub-state 2.
  *   sub_080cc0a4 / sub_080cc14c   sub-state 1, the move, which flips
  *       gGameOverCursor.
@@ -21,7 +21,7 @@
 
 extern vu16 gPlayerPressedKeys[];        /* keys pressed per player */
 extern s8 gGameOverCursor;            /* game-over screen: cursor (continue = 0?) */
-extern s16 gUnk_02007D28;           /* game-over screen: the #264 variant-0 task's index */
+extern s16 gGameOverPlayerTask;           /* game-over screen: the #264 variant-0 task's index */
 extern u32 gUnk_087549B0[];
 extern void (*gUnk_087582C4[])(void);
 extern void (*gUnk_087582DC[])(void);
@@ -34,15 +34,15 @@ void TaskSleepForever(void);                                     /* end the runn
 void TaskSetEntry(void *a, u32 i);
 void TaskSetMotion(s32 a, s32 b, s32 c, s32 d, s32 e, s32 f);
 void TaskStop(void);
-u8 sub_080cb108(void);
-void sub_080cb62c(void);
-void sub_080cbf18(void);
+u8 GameOverIsUpDownPressed(void);
+void GameOverPlayerEnterState(void);
+void GameOverChoiceUpdate(void);
 
 /* Task type #264 variant 1: sub-states gUnk_087582C4[Task.unk14], per-frame
-   handlers gUnk_087582DC[Task.unk15] (sub_080cbf18). */
-void sub_080cbed4(void)
+   handlers gUnk_087582DC[Task.unk15] (GameOverChoiceUpdate). */
+void GameOverChoice(void)
 {
-    gCurTask->unk04 = (u32)sub_080cbf18;
+    gCurTask->unk04 = (u32)GameOverChoiceUpdate;
     gCurTask->unk42 = 6;
     gCurTask->unk38 = gUnk_087549B0;
     gCurTask->unk24 = 0;
@@ -53,7 +53,7 @@ void sub_080cbed4(void)
 }
 
 /* Task type #264 variant 1's per-frame hook: handler gUnk_087582DC[Task.unk15]. */
-void sub_080cbf18(void)
+void GameOverChoiceUpdate(void)
 {
     CallTableEntry(gCurTask->unk15, 6, gUnk_087582DC);
 }
@@ -70,17 +70,17 @@ void CreateGameOverObject(u8 variant)
     }
 }
 
-/* Re-enter task type #264 variant 0 (task gUnk_02007D28) in sub-state 2
+/* Re-enter task type #264 variant 0 (task gGameOverPlayerTask) in sub-state 2
    when this task's Task.unk24 is set, else 1. */
 void sub_080cbf68(void)
 {
-    struct Task *t = &gTasks[gUnk_02007D28];
+    struct Task *t = &gTasks[gGameOverPlayerTask];
 
     if (gCurTask->unk24 != 0)
         t->unk14 = 2;
     else
         t->unk14 = 1;
-    TaskSetEntry(sub_080cb62c, gUnk_02007D28);
+    TaskSetEntry(GameOverPlayerEnterState, gGameOverPlayerTask);
 }
 
 /* Re-enter variant 0, clear Task.unk20 and spawn variant 3. */
@@ -92,7 +92,7 @@ void sub_080cbfac(void)
 }
 
 /* Re-enter task type #264 variant 1: sub-state gUnk_087582C4[Task.unk14]. */
-void sub_080cbfc8(void)
+void GameOverChoiceEnterState(void)
 {
     CallTableEntry(gCurTask->unk14, 6, gUnk_087582C4);
 }
@@ -115,7 +115,7 @@ void sub_080cbfe4(void)
 /* Task type #264 variant 1, handler 0. */
 void sub_080cc024(void)
 {
-    if (sub_080cb108()) {
+    if (GameOverIsUpDownPressed()) {
         gCurTask->unk24 ^= 1;
         gCurTask->unk14 = 1;
     } else if (gPlayerPressedKeys[0] & 9) {
@@ -128,7 +128,7 @@ void sub_080cc024(void)
         }
     }
     if (gCurTask->unk14 != 0)
-        TaskSetEntry(sub_080cbfc8, gCurTaskIdx);
+        TaskSetEntry(GameOverChoiceEnterState, gCurTaskIdx);
 }
 
 /* Task type #264 variant 1, sub-state 1. */
@@ -156,7 +156,7 @@ void sub_080cc0a4(void)
 void sub_080cc14c(void)
 {
     if (gCurTask->unk14 != 1) {
-        TaskSetEntry(sub_080cbfc8, gCurTaskIdx);
+        TaskSetEntry(GameOverChoiceEnterState, gCurTaskIdx);
         gGameOverCursor ^= 1;
     }
 }
@@ -207,7 +207,7 @@ void sub_080cc180(void)
 void sub_080cc2b8(void)
 {
     if (gCurTask->unk14 != 2)
-        TaskSetEntry(sub_080cbfc8, gCurTaskIdx);
+        TaskSetEntry(GameOverChoiceEnterState, gCurTaskIdx);
 }
 
 /* Task type #264 variant 1, sub-state 3. */
@@ -291,7 +291,7 @@ void sub_080cc2e0(void)
 void sub_080cc5d4(void)
 {
     if (gCurTask->unk14 != 3)
-        TaskSetEntry(sub_080cbfc8, gCurTaskIdx);
+        TaskSetEntry(GameOverChoiceEnterState, gCurTaskIdx);
     if (gCurTask->unk20 != 0)
         sub_080cbfac();
 }
@@ -339,7 +339,7 @@ void sub_080cc608(void)
 void sub_080cc740(void)
 {
     if (gCurTask->unk14 != 4)
-        TaskSetEntry(sub_080cbfc8, gCurTaskIdx);
+        TaskSetEntry(GameOverChoiceEnterState, gCurTaskIdx);
 }
 
 /* Task type #264 variant 1, sub-state 5. */
@@ -492,7 +492,7 @@ void sub_080cc768(void)
 void sub_080ccd10(void)
 {
     if (gCurTask->unk14 != 5)
-        TaskSetEntry(sub_080cbfc8, gCurTaskIdx);
+        TaskSetEntry(GameOverChoiceEnterState, gCurTaskIdx);
     if (gCurTask->unk20 != 0) {
         sub_080cbf68();
         gCurTask->unk20 = 0;

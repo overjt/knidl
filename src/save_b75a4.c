@@ -71,7 +71,7 @@ extern vu16 gPlayerHeldKeys[];
 extern vu16 gPlayerPressedKeys[];
 extern u16 gPlayerCount;
 
-u32 sub_080b83a0(u8 *src, s32 i);
+u32 WriteInputRecordingEntry(u8 *src, s32 i);
 
 void InputRecorderRecordFrame(void)
 {
@@ -103,7 +103,7 @@ void InputRecorderRecordFrame(void)
         }
         gUnk_0200EC68[i] = count;
         gInputRecordingPtr->unk12C[pos] = key | (count << 10);
-        sub_080b83a0((u8 *)&gInputRecordingPtr->unk12C[pos], pos);
+        WriteInputRecordingEntry((u8 *)&gInputRecordingPtr->unk12C[pos], pos);
     }
 }
 

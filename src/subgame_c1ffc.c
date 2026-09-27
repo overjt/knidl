@@ -12,17 +12,17 @@
  *       variant 0 once per player (Task.unk1C = the player), variant 1 (its
  *       task index kept in M37Game.unk44C) and variant 2 (Task.unk18/unk1C/
  *       unk20 from the caller).
- *   sub_080c20b4   the state set-up: gAirGrindPtr = &gAirGrind,
+ *   AirGrindSetupRace   the state set-up: gAirGrindPtr = &gAirGrind,
  *       gAirGrindCoursePtr = &gAirGrindCourse, the linked-player count and mode
  *       cells, the four players' course records, the per-frame hook
- *       sub_080c2d38 (gFrameCallback, called by the frame driver EndFrame)
- *       and the VBlank hook sub_080c2fb8 (gVBlankCallback, called by the VBlank
+ *       AirGrindBuildSky (gFrameCallback, called by the frame driver EndFrame)
+ *       and the VBlank hook AirGrindSkyVBlankCallback (gVBlankCallback, called by the VBlank
  *       handler), and two 16-colour rows of gUnk_08609E40.
  *   AirGrindRace   the screen's task body: waits for the scroll position
  *       gAirGrindCoursePtr->unk000 to reach the two course lines unk00C and unk010
  *       (a sign sprite and songs 0x82B/0x82A/0x82C at each), then for all
  *       four players to pass unk010, and ends the screen (Task.unk18 = 2).
- *   sub_080c241c   its per-frame callback: the frame counter gUnk_02017170,
+ *   AirGrindRaceUpdate   its per-frame callback: the frame counter gAirGrindFrame,
  *       the script cursor, the palette fades and M35's SubGameCheckEnd. */
 
 /* 16-byte object records, M37ObjSet.unk04[7] (sub_080c4664, sub_080c4790) */
@@ -39,7 +39,7 @@ struct M37Obj
    type #96 variant 1's seven scrolling objects.  sub_080c4664 addresses an
    object as &set->unk04[i] off the set's own base (`lsls #4; adds #4`), so
    the records are a sub-struct, not flat fields; the two 16-colour rows
-   sub_080c20b4 fills end it exactly at M37Game.unk1A4. */
+   AirGrindSetupRace fills end it exactly at M37Game.unk1A4. */
 struct M37ObjSet
 {
     /*0x00*/ s32 unk00;         /* the scroll position last frame */
@@ -77,13 +77,13 @@ struct M37Player
 /* gAirGrind, the game's state; always used through gAirGrindPtr */
 struct M37Game
 {
-    /*0x000*/ s32 unk000;       /* the level (M36's AirGrindInit copies gUnk_02006168) */
+    /*0x000*/ s32 unk000;       /* the level (M36's AirGrindInit copies gSubGameLevel) */
     /*0x004*/ s32 unk004[4];
     /*0x014*/ s32 unk014;
     /*0x018*/ s32 unk018;
     /*0x01C*/ struct M37Player unk01C[4];
     /*0x0EC*/ struct M37ObjSet unk0EC;
-    /*0x1A4*/ s32 unk1A4[5];    /* five LCG streams (sub_080c4ca4, sub_080c4cd4) */
+    /*0x1A4*/ s32 unk1A4[5];    /* five LCG streams (AirGrindRandom, AirGrindRandomRange) */
     /*0x1B8*/ s32 unk1B8;
     /*0x1BC*/ u16 unk1BC[160]; /* per-scanline colour, HBlank DMA source */
     /*0x2FC*/ u16 unk2FC;
@@ -140,7 +140,7 @@ extern struct M37Game gAirGrind;
 extern struct M37Game *gAirGrindPtr;
 extern struct M37Course gAirGrindCourse;
 extern struct M37Course *gAirGrindCoursePtr;
-extern u16 gUnk_02017170;
+extern u16 gAirGrindFrame;
 extern u16 gLocalPlayer;
 extern u16 gLinkPlayerCount;
 extern u32 gFrameCallback;
@@ -159,17 +159,17 @@ s32 TaskCreateFrom(u32 type, s32 idx);                         /* spawn a task *
 void TaskDrawScreen(void);
 void TaskSleepForever(void);                                     /* end the running task */
 void SubGameCheckEnd(void);
-void sub_080c2d38(void);
-void sub_080c2fb8(void);
+void AirGrindBuildSky(void);
+void AirGrindSkyVBlankCallback(void);
 void sub_080c4860(s32 y);
-void sub_080c4890(void);                                  /* step the four palette fades gUnk_020170A0[] */
+void AirGrindStepPaletteFades(void);                                  /* step the four palette fades gAirGrindPaletteFades[] */
 void sub_080c495c(void);
-s32 sub_080c4974(u16 *src, s32 pal, s32 period, s32 steps, s32 count, s32 repeat);
-void sub_080c4a20(s32 i);
-void sub_080c4c78(void);
+s32 AirGrindStartPaletteFade(u16 *src, s32 pal, s32 period, s32 steps, s32 count, s32 repeat);
+void AirGrindStopPaletteFade(s32 i);
+void AirGrindSeedRandom(void);
 void sub_080c51c0(void);
-void sub_080c51d4(void);                                  /* step the gUnk_03006928 script */
-void sub_080c241c(void);
+void sub_080c51d4(void);                                  /* step the gAirGrindScript script */
+void AirGrindRaceUpdate(void);
 
 void CreateAirGrindRacers(void)
 {
@@ -216,7 +216,7 @@ void sub_080c2078(s32 a, s32 b, s32 c)
     }
 }
 
-void sub_080c20b4(void)
+void AirGrindSetupRace(void)
 {
     s32 i;
 
@@ -224,10 +224,10 @@ void sub_080c20b4(void)
     gAirGrindCoursePtr = &gAirGrindCourse;
     gAirGrindPtr->unk446 = gLocalPlayer;
     gAirGrindPtr->unk448 = gLinkPlayerCount;
-    gUnk_02017170 = 0;
+    gAirGrindFrame = 0;
     StopBgm();
     StopAllSfx();
-    sub_080c4c78();
+    AirGrindSeedRandom();
     sub_080c51c0();
     for (i = 0; i < 4; i++) {
         gAirGrindCoursePtr->unk018[i].unk00 = gAirGrindCoursePtr->unk000;
@@ -235,8 +235,8 @@ void sub_080c20b4(void)
     }
     gAirGrindPtr->unk014 = -1;
     gAirGrindPtr->unk300 = 0;
-    gFrameCallback = (u32)sub_080c2d38;
-    gVBlankCallback = (u32)sub_080c2fb8;
+    gFrameCallback = (u32)AirGrindBuildSky;
+    gVBlankCallback = (u32)AirGrindSkyVBlankCallback;
     sub_080c495c();
     for (i = 0; i < 16; i++) {
         gAirGrindPtr->unk0EC.unk76[i] = gUnk_08609E40[32 + i];
@@ -249,14 +249,14 @@ void AirGrindRace(void)
     s32 n;
     s32 i;
 
-    sub_080c20b4();
+    AirGrindSetupRace();
     gCurTask->unk0C = (u32)TaskDrawScreen;
     gCurTask->unk38 = gUnk_08755FEC;
     gCurTask->unk3C = 0xFFFF;
     PlayBgm(0x82B);
     CreateAirGrindRacers();
     sub_080c2038(0);
-    gCurTask->unk04 = (u32)sub_080c241c;
+    gCurTask->unk04 = (u32)AirGrindRaceUpdate;
     while (gAirGrindCoursePtr->unk000 < gAirGrindCoursePtr->unk00C - 240)
         TaskYieldTrampoline(1);
     sub_080c4860(gAirGrindCoursePtr->unk00C);
@@ -267,18 +267,18 @@ void AirGrindRace(void)
     }
     gCurTask->unk48 = 144;
     gCurTask->unk4A = 80;
-    gCurTask->unk34 = sub_080c4974(gUnk_0860A042, 241, 10, 8, 15, 0);
+    gCurTask->unk34 = AirGrindStartPaletteFade(gUnk_0860A042, 241, 10, 8, 15, 0);
     gCurTask->unk3C = 0;
     PlayBgm(0x82A);
     while (gAirGrindCoursePtr->unk000 < gAirGrindCoursePtr->unk00C + 240)
         TaskYieldTrampoline(1);
     gCurTask->unk08 = 0;
     gCurTask->unk3C = 0xFFFF;
-    sub_080c4a20(gCurTask->unk34);
+    AirGrindStopPaletteFade(gCurTask->unk34);
     if (gFrameCallback != 0 && gAirGrind.unk000 != 2) {
         while (gAirGrindPtr->unk300 <= 0x4AF)
             TaskYieldTrampoline(1);
-        sub_080c4974(&gAirGrindPtr->unk0EC.unk76[1], 161, 256, 2, 6, 1);
+        AirGrindStartPaletteFade(&gAirGrindPtr->unk0EC.unk76[1], 161, 256, 2, 6, 1);
     }
     while (gAirGrindCoursePtr->unk000 < gAirGrindCoursePtr->unk010 - 240)
         TaskYieldTrampoline(1);
@@ -292,7 +292,7 @@ void AirGrindRace(void)
         TaskYieldTrampoline(1);
     gCurTask->unk48 = 112;
     gCurTask->unk4A = 80;
-    gCurTask->unk34 = sub_080c4974(gUnk_0860A042, 241, 10, 8, 15, 0);
+    gCurTask->unk34 = AirGrindStartPaletteFade(gUnk_0860A042, 241, 10, 8, 15, 0);
     gCurTask->unk3C = 1;
     PlayBgm(0x82C);
     while (1) {
@@ -313,10 +313,10 @@ void AirGrindRace(void)
     TaskSleepForever();
 }
 
-void sub_080c241c(void)
+void AirGrindRaceUpdate(void)
 {
-    gUnk_02017170++;
+    gAirGrindFrame++;
     sub_080c51d4();
-    sub_080c4890();
+    AirGrindStepPaletteFades();
     SubGameCheckEnd();
 }

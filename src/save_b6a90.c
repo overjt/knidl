@@ -22,7 +22,7 @@ extern s8 gUnk_087561CC[];
 
 void HBlankScrollVBlankCallback(void);
 
-void sub_080b6a90(void)
+void UpdateRoomHBlankScroll(void)
 {
     s32 r;
     s32 v;

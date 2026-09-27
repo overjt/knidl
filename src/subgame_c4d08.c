@@ -23,7 +23,7 @@
  *       Its loop is a goto loop: a do/while hoists the (s16) conversion of
  *       the scale.
  *   sub_080c51c0 / sub_080c51d4 / sub_080c523c   the script cursor
- *       gUnk_03006928: clear it, step it (u16 pairs from gUnk_087572EC[id],
+ *       gAirGrindScript: clear it, step it (u16 pairs from gUnk_087572EC[id],
  *       0x8000 ends the script, 0x9999 restarts it; the pair lands in unk2/
  *       unk4, which sub_080c3670 copies into the course record), and start
  *       script id 1-4 unless a higher-priority one is running. */
@@ -42,7 +42,7 @@ struct M37Obj
    type #96 variant 1's seven scrolling objects.  sub_080c4664 addresses an
    object as &set->unk04[i] off the set's own base (`lsls #4; adds #4`), so
    the records are a sub-struct, not flat fields; the two 16-colour rows
-   sub_080c20b4 fills end it exactly at M37Game.unk1A4. */
+   AirGrindSetupRace fills end it exactly at M37Game.unk1A4. */
 struct M37ObjSet
 {
     /*0x00*/ s32 unk00;         /* the scroll position last frame */
@@ -80,13 +80,13 @@ struct M37Player
 /* gAirGrind, the game's state; always used through gAirGrindPtr */
 struct M37Game
 {
-    /*0x000*/ s32 unk000;       /* the level (M36's AirGrindInit copies gUnk_02006168) */
+    /*0x000*/ s32 unk000;       /* the level (M36's AirGrindInit copies gSubGameLevel) */
     /*0x004*/ s32 unk004[4];
     /*0x014*/ s32 unk014;
     /*0x018*/ s32 unk018;
     /*0x01C*/ struct M37Player unk01C[4];
     /*0x0EC*/ struct M37ObjSet unk0EC;
-    /*0x1A4*/ s32 unk1A4[5];    /* five LCG streams (sub_080c4ca4, sub_080c4cd4) */
+    /*0x1A4*/ s32 unk1A4[5];    /* five LCG streams (AirGrindRandom, AirGrindRandomRange) */
     /*0x1B8*/ s32 unk1B8;
     /*0x1BC*/ u16 unk1BC[160]; /* per-scanline colour, HBlank DMA source */
     /*0x2FC*/ u16 unk2FC;
@@ -103,7 +103,7 @@ struct M37Game
     /*0x452*/ u8 pad452[2];
 };
 
-/* gUnk_03006928: a cursor into one of the u16-pair scripts gUnk_087572EC[]
+/* gAirGrindScript: a cursor into one of the u16-pair scripts gUnk_087572EC[]
    (sub_080c51c0 clears it, sub_080c51d4 steps it, 0x8000 = end, 0x9999 =
    loop) */
 struct M37Script
@@ -115,8 +115,8 @@ struct M37Script
 };
 
 extern struct M37Game *gAirGrindPtr;
-extern u16 gUnk_02017170;
-extern struct M37Script gUnk_03006928;
+extern u16 gAirGrindFrame;
+extern struct M37Script gAirGrindScript;
 extern u8 gUnk_080CFE2C[][4];
 extern s32 gUnk_080CFE3C[][3];
 extern u8 gUnk_080CFF76[4][4][2];    /* OBJ shape/size -> {width, height} */
@@ -140,7 +140,7 @@ void sub_080c4d08(void)
     if (tbl != NULL && t->unk3C != -1 && (u16)(t->unk48 + 63) <= 366
         && t->unk4A > -64 && t->unk4A < 224) {
         p = tbl;
-        if (gUnk_02017170 & 2) {
+        if (gAirGrindFrame & 2) {
             n = 0;
             switch (t->unk3C) {
             case 0:
@@ -277,31 +277,31 @@ loop:
 
 void sub_080c51c0(void)
 {
-    gUnk_03006928.unk0 = 0;
-    gUnk_03006928.unk2 = 0;
-    gUnk_03006928.unk4 = 0;
-    gUnk_03006928.unk1 = 0;
+    gAirGrindScript.unk0 = 0;
+    gAirGrindScript.unk2 = 0;
+    gAirGrindScript.unk4 = 0;
+    gAirGrindScript.unk1 = 0;
 }
 
 void sub_080c51d4(void)
 {
     u16 *p;
 
-    if (gUnk_03006928.unk0 != 0) {
-        p = gUnk_087572EC[gUnk_03006928.unk0];
-        switch (p[gUnk_03006928.unk1 * 2]) {
+    if (gAirGrindScript.unk0 != 0) {
+        p = gUnk_087572EC[gAirGrindScript.unk0];
+        switch (p[gAirGrindScript.unk1 * 2]) {
         case 0x8000:
-            gUnk_03006928.unk0 = 0;
-            gUnk_03006928.unk2 = 0;
-            gUnk_03006928.unk4 = 0;
-            gUnk_03006928.unk1 = 0;
+            gAirGrindScript.unk0 = 0;
+            gAirGrindScript.unk2 = 0;
+            gAirGrindScript.unk4 = 0;
+            gAirGrindScript.unk1 = 0;
             break;
         case 0x9999:
-            gUnk_03006928.unk1 = 0;
+            gAirGrindScript.unk1 = 0;
         default:
-            gUnk_03006928.unk2 = p[gUnk_03006928.unk1 * 2];
-            gUnk_03006928.unk4 = p[gUnk_03006928.unk1 * 2 + 1];
-            gUnk_03006928.unk1++;
+            gAirGrindScript.unk2 = p[gAirGrindScript.unk1 * 2];
+            gAirGrindScript.unk4 = p[gAirGrindScript.unk1 * 2 + 1];
+            gAirGrindScript.unk1++;
             break;
         }
     }
@@ -311,15 +311,15 @@ void sub_080c523c(u16 id)
 {
     if (id <= 4) {
         if (id == 0) {
-            gUnk_03006928.unk0 = id;
-            gUnk_03006928.unk2 = id;
-            gUnk_03006928.unk4 = id;
-            gUnk_03006928.unk1 = 0;
-        } else if ((u8)(gUnk_03006928.unk0 - 1) > 3 || gUnk_03006928.unk0 <= id) {
-            gUnk_03006928.unk0 = id;
-            gUnk_03006928.unk2 = 0;
-            gUnk_03006928.unk4 = 0;
-            gUnk_03006928.unk1 = 0;
+            gAirGrindScript.unk0 = id;
+            gAirGrindScript.unk2 = id;
+            gAirGrindScript.unk4 = id;
+            gAirGrindScript.unk1 = 0;
+        } else if ((u8)(gAirGrindScript.unk0 - 1) > 3 || gAirGrindScript.unk0 <= id) {
+            gAirGrindScript.unk0 = id;
+            gAirGrindScript.unk2 = 0;
+            gAirGrindScript.unk4 = 0;
+            gAirGrindScript.unk1 = 0;
         }
     }
 }

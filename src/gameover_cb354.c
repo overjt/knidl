@@ -12,10 +12,10 @@
  *   Task_HalveScore   #263, halve this player's score (rounded down to a
  *       multiple of ten) and count the displayed score down to it.
  *   Task_GameOverObject   #264: six variants gGameOverObjectVariants[Task.unk73]; variant 0
- *       (sub_080cb5c4, the player character) is a small state machine of
+ *       (GameOverPlayer, the player character) is a small state machine of
  *       sub-states gUnk_087582AC[Task.unk14] and per-frame handlers
- *       gUnk_087582B8[Task.unk15] (sub_080cb610), re-entered through
- *       sub_080cb62c. */
+ *       gUnk_087582B8[Task.unk15] (GameOverPlayerUpdate), re-entered through
+ *       GameOverPlayerEnterState. */
 
 extern u8 gUnk_03001F30;            /* link-play mode */
 extern u16 gLocalPlayer;           /* this player's index */
@@ -43,7 +43,7 @@ void TaskMove(void);
 void TaskDrawScreen(void);
 void TaskSleepForever(void);                                     /* end the running task */
 void DrawScoreToBgMap(s32 v, s32 x, s32 y);
-void sub_080cb610(void);
+void GameOverPlayerUpdate(void);
 
 /* Task type #260 (class 4): a still sprite, frame and position picked by
    Task.unk18. */
@@ -144,10 +144,10 @@ void Task_GameOverObject(void)
 }
 
 /* Task type #264 variant 0: sub-states gUnk_087582AC[Task.unk14], per-frame
-   handlers gUnk_087582B8[Task.unk15] (sub_080cb610). */
-void sub_080cb5c4(void)
+   handlers gUnk_087582B8[Task.unk15] (GameOverPlayerUpdate). */
+void GameOverPlayer(void)
 {
-    gCurTask->unk04 = (u32)sub_080cb610;
+    gCurTask->unk04 = (u32)GameOverPlayerUpdate;
     gCurTask->unk42 = 8;
     gCurTask->unk38 = gUnk_08754914;
     gCurTask->unk24 = 0;
@@ -159,14 +159,14 @@ void sub_080cb5c4(void)
 }
 
 /* Task type #264 variant 0's per-frame hook: handler gUnk_087582B8[Task.unk15]. */
-void sub_080cb610(void)
+void GameOverPlayerUpdate(void)
 {
     CallTableEntry(gCurTask->unk15, 3, gUnk_087582B8);
 }
 
 /* Re-enter task type #264 variant 0 (TaskSetEntry installs this as its
    body): Task.unk24 = 1, then sub-state gUnk_087582AC[Task.unk14]. */
-void sub_080cb62c(void)
+void GameOverPlayerEnterState(void)
 {
     gCurTask->unk24 = 1;
     CallTableEntry(gCurTask->unk14, 3, gUnk_087582AC);

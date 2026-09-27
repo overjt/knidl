@@ -15,15 +15,15 @@
  *   sub_080c4860 / sub_080c4818   put the variant-1 task's own sprite (the
  *       course line sign) at a course position and move it with the scroll
  *       until it leaves the screen.
- *   sub_080c4974 / sub_080c4890 / sub_080c4a20 / sub_080c495c   four palette
- *       fades (gUnk_020170A0[]): start one (source rows, destination in
+ *   AirGrindStartPaletteFade / AirGrindStepPaletteFades / AirGrindStopPaletteFade / sub_080c495c   four palette
+ *       fades (gAirGrindPaletteFades[]): start one (source rows, destination in
  *       gObjPalette, period, steps, colour count, repeats), step them every
  *       frame with BlendColors, free one, free all.
  *   sub_080c4a48 ... sub_080c4c30   the HUD sprites: the digit palette, a
  *       digit, a symbol, a frame count as ss:cc, a number with leading blanks
  *       (a goto loop over the divisors gUnk_080CFF70), a ratio capped at 1000,
  *       and a racer's sprite scaled by sub_080c4f60.
- *   sub_080c4c78 / sub_080c4ca4 / sub_080c4cd4   five LCG streams
+ *   AirGrindSeedRandom / AirGrindRandom / AirGrindRandomRange   five LCG streams
  *       M37Game.unk1A4[] (x = (x * 61 + 0x579) & 0xFFF): seed all, step one,
  *       step one and scale it to a range. */
 
@@ -41,7 +41,7 @@ struct M37Obj
    type #96 variant 1's seven scrolling objects.  sub_080c4664 addresses an
    object as &set->unk04[i] off the set's own base (`lsls #4; adds #4`), so
    the records are a sub-struct, not flat fields; the two 16-colour rows
-   sub_080c20b4 fills end it exactly at M37Game.unk1A4. */
+   AirGrindSetupRace fills end it exactly at M37Game.unk1A4. */
 struct M37ObjSet
 {
     /*0x00*/ s32 unk00;         /* the scroll position last frame */
@@ -79,13 +79,13 @@ struct M37Player
 /* gAirGrind, the game's state; always used through gAirGrindPtr */
 struct M37Game
 {
-    /*0x000*/ s32 unk000;       /* the level (M36's AirGrindInit copies gUnk_02006168) */
+    /*0x000*/ s32 unk000;       /* the level (M36's AirGrindInit copies gSubGameLevel) */
     /*0x004*/ s32 unk004[4];
     /*0x014*/ s32 unk014;
     /*0x018*/ s32 unk018;
     /*0x01C*/ struct M37Player unk01C[4];
     /*0x0EC*/ struct M37ObjSet unk0EC;
-    /*0x1A4*/ s32 unk1A4[5];    /* five LCG streams (sub_080c4ca4, sub_080c4cd4) */
+    /*0x1A4*/ s32 unk1A4[5];    /* five LCG streams (AirGrindRandom, AirGrindRandomRange) */
     /*0x1B8*/ s32 unk1B8;
     /*0x1BC*/ u16 unk1BC[160]; /* per-scanline colour, HBlank DMA source */
     /*0x2FC*/ u16 unk2FC;
@@ -102,7 +102,7 @@ struct M37Game
     /*0x452*/ u8 pad452[2];
 };
 
-/* four 40-byte records at gUnk_020170A0 (sub_080c4974 fills one) */
+/* four 40-byte records at gAirGrindPaletteFades (AirGrindStartPaletteFade fills one) */
 struct M37Timer
 {
     /*0x00*/ s32 unk00;         /* in use */
@@ -154,9 +154,9 @@ struct M37Course
 };
 
 extern struct M37Game *gAirGrindPtr;
-extern struct M37Timer gUnk_020170A0[4];
+extern struct M37Timer gAirGrindPaletteFades[4];
 extern struct M37Course *gAirGrindCoursePtr;
-extern u16 gUnk_02017170;
+extern u16 gAirGrindFrame;
 extern u32 gUnk_08755FA8[];
 extern s16 gUnk_080CFF60[];
 extern u32 gUnk_08755FBC[];
@@ -174,8 +174,8 @@ void TaskDrawScreen(void);
 void TaskSleepForever(void);                                     /* end the running task */
 u32 sub_080c4f60(u16 *src, s16 scale);                    /* callers pass scale sign-extended (ldrsh / lsls-asrs); the callee narrows it with lsls/lsrs */
 void sub_080c4790(void);
-void sub_080c4a20(s32 i);
-u32 sub_080c4cd4(s32 i, u32 range);
+void AirGrindStopPaletteFade(s32 i);
+u32 AirGrindRandomRange(s32 i, u32 range);
 
 void sub_080c4630(s32 idx, s32 x, s32 y, u16 attr)
 {
@@ -195,7 +195,7 @@ void sub_080c4664(s32 i)
     s16 id;
     s16 *tbl;
 
-    r = sub_080c4cd4(4, 53);
+    r = AirGrindRandomRange(4, 53);
     k = r & 7;
     tbl = gUnk_080CFF60;
     id = tbl[k];
@@ -205,7 +205,7 @@ void sub_080c4664(s32 i)
     }
     set->unk74 = id;
     o->unk4 = (id + r) << 16;
-    o->unk0 = sub_080c4cd4(4, 4) + 1;
+    o->unk0 = AirGrindRandomRange(4, 4) + 1;
     o->unk2 = 0xA000;
 }
 
@@ -267,7 +267,7 @@ void sub_080c4818(void)
     struct Task *t = gCurTask;
 
     t->unk48 = (t->unk4C >> 16) - gAirGrindCoursePtr->unk000 + 120;
-    t->unk3C = gUnk_02017170 & 1;
+    t->unk3C = gAirGrindFrame & 1;
     if (t->unk48 < -120) {
         t->unk3C = 0xFFFF;
         t->unk08 = 0;
@@ -282,29 +282,29 @@ void sub_080c4860(s32 y)
     t->unk08 = (u32)sub_080c4818;
 }
 
-void sub_080c4890(void)
+void AirGrindStepPaletteFades(void)
 {
     s32 i;
 
     for (i = 0; i <= 3; i++) {
-        if (gUnk_020170A0[i].unk00 != 0) {
-            if (--gUnk_020170A0[i].unk04 < 0) {
-                gUnk_020170A0[i].unk04 = gUnk_020170A0[i].unk08;
-                if (++gUnk_020170A0[i].unk0C >= gUnk_020170A0[i].unk10) {
-                    if (gUnk_020170A0[i].unk24 == 0 || --gUnk_020170A0[i].unk24 > 0)
-                        gUnk_020170A0[i].unk0C = 0;
+        if (gAirGrindPaletteFades[i].unk00 != 0) {
+            if (--gAirGrindPaletteFades[i].unk04 < 0) {
+                gAirGrindPaletteFades[i].unk04 = gAirGrindPaletteFades[i].unk08;
+                if (++gAirGrindPaletteFades[i].unk0C >= gAirGrindPaletteFades[i].unk10) {
+                    if (gAirGrindPaletteFades[i].unk24 == 0 || --gAirGrindPaletteFades[i].unk24 > 0)
+                        gAirGrindPaletteFades[i].unk0C = 0;
                     else {
-                        sub_080c4a20(i);
+                        AirGrindStopPaletteFade(i);
                         continue;
                     }
                 }
             }
         {
-            s32 k = gUnk_020170A0[i].unk0C;
+            s32 k = gAirGrindPaletteFades[i].unk0C;
             s32 k1 = k + 1;
-            s32 r = (gUnk_020170A0[i].unk08 - gUnk_020170A0[i].unk04) * gUnk_020170A0[i].unk14;
-            u16 *pal = (u16 *)gUnk_020170A0[i].unk1C;
-            BlendColors(pal + k * 16, pal + k1 * 16, (u16)r, (u16)gUnk_020170A0[i].unk18, (u16 *)gUnk_020170A0[i].unk20);
+            s32 r = (gAirGrindPaletteFades[i].unk08 - gAirGrindPaletteFades[i].unk04) * gAirGrindPaletteFades[i].unk14;
+            u16 *pal = (u16 *)gAirGrindPaletteFades[i].unk1C;
+            BlendColors(pal + k * 16, pal + k1 * 16, (u16)r, (u16)gAirGrindPaletteFades[i].unk18, (u16 *)gAirGrindPaletteFades[i].unk20);
         }
         }
     }
@@ -315,38 +315,38 @@ void sub_080c495c(void)
     s32 i;
 
     for (i = 0; i < 4; i++)
-        gUnk_020170A0[i].unk00 = 0;
+        gAirGrindPaletteFades[i].unk00 = 0;
 }
 
-s32 sub_080c4974(u16 *src, s32 pal, s32 period, s32 steps, s32 count, s32 repeat)
+s32 AirGrindStartPaletteFade(u16 *src, s32 pal, s32 period, s32 steps, s32 count, s32 repeat)
 {
     s32 i;
 
     for (i = 0; i < 4; i++)
-        if (gUnk_020170A0[i].unk00 == 0)
+        if (gAirGrindPaletteFades[i].unk00 == 0)
             break;
     if (i > 3)
         while (1)
             ;
-    gUnk_020170A0[i].unk00 = 1;
-    gUnk_020170A0[i].unk04 = period;
-    gUnk_020170A0[i].unk08 = period;
-    gUnk_020170A0[i].unk0C = 0;
-    gUnk_020170A0[i].unk10 = steps - 1;
-    gUnk_020170A0[i].unk14 = Div(256, period);
-    gUnk_020170A0[i].unk18 = count;
-    gUnk_020170A0[i].unk1C = (s32)src;
-    gUnk_020170A0[i].unk20 = (s32)&gObjPalette[pal];
-    gUnk_020170A0[i].unk24 = repeat;
+    gAirGrindPaletteFades[i].unk00 = 1;
+    gAirGrindPaletteFades[i].unk04 = period;
+    gAirGrindPaletteFades[i].unk08 = period;
+    gAirGrindPaletteFades[i].unk0C = 0;
+    gAirGrindPaletteFades[i].unk10 = steps - 1;
+    gAirGrindPaletteFades[i].unk14 = Div(256, period);
+    gAirGrindPaletteFades[i].unk18 = count;
+    gAirGrindPaletteFades[i].unk1C = (s32)src;
+    gAirGrindPaletteFades[i].unk20 = (s32)&gObjPalette[pal];
+    gAirGrindPaletteFades[i].unk24 = repeat;
     return i;
 }
 
-void sub_080c4a20(s32 i)
+void AirGrindStopPaletteFade(s32 i)
 {
-    if (i > 3 || gUnk_020170A0[i].unk00 == 0)
+    if (i > 3 || gAirGrindPaletteFades[i].unk00 == 0)
         while (1)
             ;
-    gUnk_020170A0[i].unk00 = 0;
+    gAirGrindPaletteFades[i].unk00 = 0;
 }
 
 void sub_080c4a48(s32 pal)
@@ -431,7 +431,7 @@ void sub_080c4c30(s32 idx, s32 pal, s32 scale, s32 x, s32 y, u32 layer)
     QueueSprite(layer, sub_080c4f60(gUnk_08755F54[idx], scale), 0x2000, (pal << 12) & 0xF000, x, y);
 }
 
-void sub_080c4c78(void)
+void AirGrindSeedRandom(void)
 {
     u32 seed;
     s32 i;
@@ -441,12 +441,12 @@ void sub_080c4c78(void)
         gAirGrindPtr->unk1A4[i] = seed;
 }
 
-u32 sub_080c4ca4(s32 i)
+u32 AirGrindRandom(s32 i)
 {
     return gAirGrindPtr->unk1A4[i] = (gAirGrindPtr->unk1A4[i] * 61 + 0x579) & 0xFFF;
 }
 
-u32 sub_080c4cd4(s32 i, u32 range)
+u32 AirGrindRandomRange(s32 i, u32 range)
 {
     u32 x;
 

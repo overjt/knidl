@@ -49,7 +49,7 @@ extern s8 gModeListExtraRows;
 extern u32 gMenuBufferedKeys;
 extern u8 gUnk_02006090;
 extern s8 gMenuScreen;
-extern s8 gUnk_02006168;
+extern s8 gSubGameLevel;
 extern s8 gMenuTransitionTimer;
 extern s8 gMenuChoiceCursor;
 extern s8 gPrevMenuScreen;
@@ -219,7 +219,7 @@ void sub_0800cd60(void)
                 gUnk_02006090 = 6;
                 gUnk_02007FCC = 6;
             }
-            gUnk_02006168 = 0;
+            gSubGameLevel = 0;
             gMenuScreen = 5;
             gMenuChoiceCursor = 0;
             TaskCreateFrom(248, 32);

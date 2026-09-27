@@ -5,16 +5,16 @@
 /* results_c6420.c (0x080C6420-0x080C6C63, issue #100).
  *
  * The screens around the ending and the tile-number helpers.
- *   sub_080c6420   AgbMain state 12, after the staff credits: the final screen
- *       (after AgbMain state 20 sub_080c6600's clock, in link play the clock,
+ *   FinalResultsScreen   AgbMain state 12, after the staff credits: the final screen
+ *       (after AgbMain state 20 DrawLargeClockScreen's clock, in link play the clock,
  *       else this player's score), held until START.
- *   sub_080c6600   the clock drawn with large digit tiles.
- *   sub_080c6750 / sub_080c680c   a full-screen picture (screen 57 or 59) held
+ *   DrawLargeClockScreen   the clock drawn with large digit tiles.
+ *   ShowMilestonePicture / ShowMilestonePictureForMode   a full-screen picture (screen 57 or 59) held
  *       until A or START; M02's game-state bodies and M03's file menu show it.
  *   DrawScoreToBgMap / DrawClockToBgMap   draw an 8-digit score / a clock into the BG
  *       map at 0x06001000 (M02's src/hud_0aad0.c renderers, drawn to VRAM);
  *       M02's sub_08007f9c calls DrawClockToBgMap too.
- *   sub_080c6c3c   copy n map entries to column x, row y of that BG map. */
+ *   CopyToBgMap   copy n map entries to column x, row y of that BG map. */
 
 extern vu16 gDispCnt;          /* DISPCNT shadow */
 extern vs32 gBg0ScrollY;          /* BG0 16.16 scroll shadows ... */
@@ -27,7 +27,7 @@ extern u8 gUnk_03001F30;            /* link-play mode */
 extern u16 gPrevGameState;           /* previous game state */
 extern u16 gPlayerCount;           /* number of players */
 extern u8 gExtraMode;
-extern u16 gUnk_03002364;
+extern u16 gMilestoneFlags;
 extern u16 gUnk_02000028;
 extern s32 gPlayerScores[];         /* score per player */
 extern u16 gHudClock[];         /* clock (four fields) */
@@ -65,17 +65,17 @@ void FadeOutBgm(s32 speed);
 void SetBgmVolume(u16 volume);
 void LoadBgLayout(s32 a0);                                   /* load palette set */
 void LoadGfxSet(u16 a0);                                   /* load screen graphics */
-void sub_080c6600(void);
+void DrawLargeClockScreen(void);
 void DrawScoreToBgMap(s32 v, s32 x, s32 y);
 void DrawClockToBgMap(u16 *time, s32 x, s32 y);
 
-void sub_080c6c3c(u16 *src, s32 x, s32 y, s32 n);
+void CopyToBgMap(u16 *src, s32 x, s32 y, s32 n);
 
 /* AgbMain state 12, after the staff credits: the final screen.  After
-   AgbMain state 20 it shows sub_080c6600's clock screen, in link play the
+   AgbMain state 20 it shows DrawLargeClockScreen's clock screen, in link play the
    clock, otherwise this player's score; then it waits for START, fades out
    and returns (AgbMain goes back to state 0). */
-void sub_080c6420(void)
+void FinalResultsScreen(void)
 {
     if (gPrevGameState != 20) {
         LoadGfxSet(4);
@@ -91,7 +91,7 @@ void sub_080c6420(void)
         }
     } else {
         LoadGfxSet(54);
-        sub_080c6600();
+        DrawLargeClockScreen();
     }
     ResetFadeAndBlend();
     ResetTasksAndOam();
@@ -105,7 +105,7 @@ void sub_080c6420(void)
     } else if (gUnk_03001F30 == 1) {
         gDispCnt &= 0xE0FF;
         gDispCnt |= 0x900;
-    } else if (gUnk_03002364 & (16 << gExtraMode)) {
+    } else if (gMilestoneFlags & (16 << gExtraMode)) {
         gDispCnt &= 0xE0FF;
         gDispCnt |= 0x900;
     } else {
@@ -137,7 +137,7 @@ void sub_080c6420(void)
 /* The final screen after AgbMain state 20: the clock drawn with the large
    digit tiles decompressed to gUnk_02020000 (two tiles per digit, the
    seconds in a second tile set). */
-void sub_080c6600(void)
+void DrawLargeClockScreen(void)
 {
     LoadGfxSet(53);
     IntToDigits(gHudClock[3]);
@@ -159,8 +159,8 @@ void sub_080c6600(void)
 
 /* A full-screen picture (screen 57 or 59, by gExtraMode) shown until a
    player presses A or START; M02's game-state bodies show it once, after a
-   stage when sub_080b8290() says so. */
-void sub_080c6750(void)
+   stage when CheckNewMilestones() says so. */
+void ShowMilestonePicture(void)
 {
     s32 i;
 
@@ -193,9 +193,9 @@ void sub_080c6750(void)
     RunLinkFramesUntilFadeDone();
 }
 
-/* The same picture as sub_080c6750 for save slot `slot` (screen 57 or 59),
+/* The same picture as ShowMilestonePicture for save slot `slot` (screen 57 or 59),
    shown from M03's file menu until A or START; the BG3 scroll is kept. */
-void sub_080c680c(s32 slot)
+void ShowMilestonePictureForMode(s32 slot)
 {
     s32 x, y;
 
@@ -235,8 +235,8 @@ void DrawScoreToBgMap(s32 v, s32 x, s32 y)
             d++;
         }
         v += 10000000;
-        sub_080c6c3c(&gHudDigitTiles[0][d], x, y, 1);
-        sub_080c6c3c(&gHudDigitTiles[1][d], x, y + 1, 1);
+        CopyToBgMap(&gHudDigitTiles[0][d], x, y, 1);
+        CopyToBgMap(&gHudDigitTiles[1][d], x, y + 1, 1);
 
         d = -1;
         while (v >= 0) {
@@ -244,8 +244,8 @@ void DrawScoreToBgMap(s32 v, s32 x, s32 y)
             d++;
         }
         v += 1000000;
-        sub_080c6c3c(&gHudDigitTiles[0][d], x + 1, y, 1);
-        sub_080c6c3c(&gHudDigitTiles[1][d], x + 1, y + 1, 1);
+        CopyToBgMap(&gHudDigitTiles[0][d], x + 1, y, 1);
+        CopyToBgMap(&gHudDigitTiles[1][d], x + 1, y + 1, 1);
 
         d = -1;
         while (v >= 0) {
@@ -253,8 +253,8 @@ void DrawScoreToBgMap(s32 v, s32 x, s32 y)
             d++;
         }
         v += 100000;
-        sub_080c6c3c(&gHudDigitTiles[0][d], x + 2, y, 1);
-        sub_080c6c3c(&gHudDigitTiles[1][d], x + 2, y + 1, 1);
+        CopyToBgMap(&gHudDigitTiles[0][d], x + 2, y, 1);
+        CopyToBgMap(&gHudDigitTiles[1][d], x + 2, y + 1, 1);
 
         d = -1;
         while (v >= 0) {
@@ -262,8 +262,8 @@ void DrawScoreToBgMap(s32 v, s32 x, s32 y)
             d++;
         }
         v += 10000;
-        sub_080c6c3c(&gHudDigitTiles[0][d], x + 3, y, 1);
-        sub_080c6c3c(&gHudDigitTiles[1][d], x + 3, y + 1, 1);
+        CopyToBgMap(&gHudDigitTiles[0][d], x + 3, y, 1);
+        CopyToBgMap(&gHudDigitTiles[1][d], x + 3, y + 1, 1);
 
         d = -1;
         while (v >= 0) {
@@ -271,8 +271,8 @@ void DrawScoreToBgMap(s32 v, s32 x, s32 y)
             d++;
         }
         v += 1000;
-        sub_080c6c3c(&gHudDigitTiles[0][d], x + 4, y, 1);
-        sub_080c6c3c(&gHudDigitTiles[1][d], x + 4, y + 1, 1);
+        CopyToBgMap(&gHudDigitTiles[0][d], x + 4, y, 1);
+        CopyToBgMap(&gHudDigitTiles[1][d], x + 4, y + 1, 1);
 
         d = -1;
         while (v >= 0) {
@@ -280,8 +280,8 @@ void DrawScoreToBgMap(s32 v, s32 x, s32 y)
             d++;
         }
         v += 100;
-        sub_080c6c3c(&gHudDigitTiles[0][d], x + 5, y, 1);
-        sub_080c6c3c(&gHudDigitTiles[1][d], x + 5, y + 1, 1);
+        CopyToBgMap(&gHudDigitTiles[0][d], x + 5, y, 1);
+        CopyToBgMap(&gHudDigitTiles[1][d], x + 5, y + 1, 1);
 
         d = -1;
         while (v >= 0) {
@@ -289,11 +289,11 @@ void DrawScoreToBgMap(s32 v, s32 x, s32 y)
             d++;
         }
         v += 10;
-        sub_080c6c3c(&gHudDigitTiles[0][d], x + 6, y, 1);
-        sub_080c6c3c(&gHudDigitTiles[1][d], x + 6, y + 1, 1);
+        CopyToBgMap(&gHudDigitTiles[0][d], x + 6, y, 1);
+        CopyToBgMap(&gHudDigitTiles[1][d], x + 6, y + 1, 1);
 
-        sub_080c6c3c(&gHudDigitTiles[0][v], x + 7, y, 1);
-        sub_080c6c3c(&gHudDigitTiles[1][v], x + 7, y + 1, 1);
+        CopyToBgMap(&gHudDigitTiles[0][v], x + 7, y, 1);
+        CopyToBgMap(&gHudDigitTiles[1][v], x + 7, y + 1, 1);
     }
 }
 
@@ -311,12 +311,12 @@ void DrawClockToBgMap(u16 *time, s32 x, s32 y)
         d++;
     }
     v += 10;
-    sub_080c6c3c(&gHudDigitTiles[0][d], x, y, 1);
-    sub_080c6c3c(&gHudDigitTiles[1][d], x, y + 1, 1);
-    sub_080c6c3c(&gHudDigitTiles[0][v], x + 1, y, 1);
-    sub_080c6c3c(&gHudDigitTiles[1][v], x + 1, y + 1, 1);
-    sub_080c6c3c(gUnk_085A6F5C, x + 2, y, 1);
-    sub_080c6c3c(gUnk_085A6F5C + 1, x + 2, y + 1, 1);
+    CopyToBgMap(&gHudDigitTiles[0][d], x, y, 1);
+    CopyToBgMap(&gHudDigitTiles[1][d], x, y + 1, 1);
+    CopyToBgMap(&gHudDigitTiles[0][v], x + 1, y, 1);
+    CopyToBgMap(&gHudDigitTiles[1][v], x + 1, y + 1, 1);
+    CopyToBgMap(gUnk_085A6F5C, x + 2, y, 1);
+    CopyToBgMap(gUnk_085A6F5C + 1, x + 2, y + 1, 1);
 
     v = time[2];
     d = -1;
@@ -325,12 +325,12 @@ void DrawClockToBgMap(u16 *time, s32 x, s32 y)
         d++;
     }
     v += 10;
-    sub_080c6c3c(&gHudDigitTiles[0][d], x + 3, y, 1);
-    sub_080c6c3c(&gHudDigitTiles[1][d], x + 3, y + 1, 1);
-    sub_080c6c3c(&gHudDigitTiles[0][v], x + 4, y, 1);
-    sub_080c6c3c(&gHudDigitTiles[1][v], x + 4, y + 1, 1);
-    sub_080c6c3c(gUnk_085A6F5C, x + 5, y, 1);
-    sub_080c6c3c(gUnk_085A6F5C + 1, x + 5, y + 1, 1);
+    CopyToBgMap(&gHudDigitTiles[0][d], x + 3, y, 1);
+    CopyToBgMap(&gHudDigitTiles[1][d], x + 3, y + 1, 1);
+    CopyToBgMap(&gHudDigitTiles[0][v], x + 4, y, 1);
+    CopyToBgMap(&gHudDigitTiles[1][v], x + 4, y + 1, 1);
+    CopyToBgMap(gUnk_085A6F5C, x + 5, y, 1);
+    CopyToBgMap(gUnk_085A6F5C + 1, x + 5, y + 1, 1);
 
     v = time[1];
     d = -1;
@@ -339,14 +339,14 @@ void DrawClockToBgMap(u16 *time, s32 x, s32 y)
         d++;
     }
     v += 10;
-    sub_080c6c3c(&gHudDigitTiles[0][d], x + 6, y, 1);
-    sub_080c6c3c(&gHudDigitTiles[1][d], x + 6, y + 1, 1);
-    sub_080c6c3c(&gHudDigitTiles[0][v], x + 7, y, 1);
-    sub_080c6c3c(&gHudDigitTiles[1][v], x + 7, y + 1, 1);
+    CopyToBgMap(&gHudDigitTiles[0][d], x + 6, y, 1);
+    CopyToBgMap(&gHudDigitTiles[1][d], x + 6, y + 1, 1);
+    CopyToBgMap(&gHudDigitTiles[0][v], x + 7, y, 1);
+    CopyToBgMap(&gHudDigitTiles[1][v], x + 7, y + 1, 1);
 }
 
 /* Copy n tiles from src to the BG map at 0x06001000, row y, column x. */
-void sub_080c6c3c(u16 *src, s32 x, s32 y, s32 n)
+void CopyToBgMap(u16 *src, s32 x, s32 y, s32 n)
 {
     RequestCopy(1, (u32)src, (x + (y << 5)) * 2 + 0x06001000, n * 2);
 }

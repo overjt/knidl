@@ -171,7 +171,7 @@ void sub_0802f6f4(void);
 s32 sub_080301e8(s32 a, s32 x, s32 y);
 s32 sub_08030f78(u32 x, u32 y);
 void sub_08031738(u32 x, u32 y);
-void sub_080b7b7c(s32 a);
+void SaveProgress(s32 a);
 
 s32 sub_080261c0(s32 x, s32 y)
 {
@@ -489,7 +489,7 @@ void sub_08026994(void)
 void sub_08026998(void)
 {
     if (gUnk_03001F30 == 0)
-        sub_080b7b7c(gCurSaveSlot);
+        SaveProgress(gCurSaveSlot);
     gUnk_02005578 = gUnk_030023B8;
     gUnk_02007FF8 = gUnk_03001F20;
 }

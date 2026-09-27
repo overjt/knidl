@@ -6,13 +6,13 @@
  *
  * Sub-game 2: the course builder and the course renderer.
  * 
- *   sub_080c59d8   called by M35's sub_080b9f34 as sub_080c59d8(level, 1)
+ *   AirGrindBuildCourse   called by M35's SubGameRunScreen as AirGrindBuildCourse(level, 1)
  *       before the race screen loads: the BG control and scroll shadows, the
  *       course record gAirGrindCourse (scroll 240, start line 1000, finish line
  *       6000/8500/12000 for levels 0-2, the four racers at 0), cleared VRAM,
- *       the BG palette from gUnk_080D0198, then sub_080c5678 and a first
- *       render by sub_080c5b84.
- *   sub_080c5678   lays the course out: per lane the distance table
+ *       the BG palette from gUnk_080D0198, then AirGrindLayOutCourse and a first
+ *       render by AirGrindDrawCourse.
+ *   AirGrindLayOutCourse   lays the course out: per lane the distance table
  *       gUnk_02017980[lane][500] (the running sum of 0x4000 / (depth + 512),
  *       scaled to 16000) and its inverse gUnk_02019140, then 2n + 1
  *       alternating segment lengths gUnk_0201B690[] from the LCG (n from the
@@ -28,9 +28,9 @@
  *       gUnk_02018920 over a span (the racers' scores).
  *   sub_080c55d8 / sub_080c5628   linear interpolation in gUnk_02017980 /
  *       gUnk_02019140 at 32-pixel steps.
- *   sub_080c5b84   the course renderer (called every frame by player 0's
+ *   AirGrindDrawCourse   the course renderer (called every frame by player 0's
  *       racer step sub_080c383c, src/subgame_c3648.c, and once by
- *       sub_080c59d8): per lane, every course
+ *       AirGrindBuildCourse): per lane, every course
  *       column that scrolled into view since the last frame
  *       (gAirGrindCourse.unk108 -> unk000) gets its BG map column at 0x0600E000
  *       and a vertical strip in its tiles, sized by the depth (gUnk_080D059A)
@@ -43,7 +43,7 @@
  *       (sub_080c5580), and finally the four lanes are ranked by depth into
  *       the racers' unk18 and the priority bits of *gUnk_08757320[lane].
  *
- * Matching note (issue #98's final campaign, lesson 3.493): sub_080c5b84
+ * Matching note (issue #98's final campaign, lesson 3.493): AirGrindDrawCourse
  * only matches in this translation unit.  Its PRE spill slots follow
  * gcse's hash buckets, which depend on its locals' pseudo numbers (the
  * declaration order: lane first, p right after x, y, z) and on the pool
@@ -121,7 +121,7 @@ extern s32 *gUnk_08757310[];
 extern u16 *gUnk_08757320[];
 
 u32 Random(void);                                      /* LCG step */
-void sub_080c5b84(void);
+void AirGrindDrawCourse(void);
 
 s32 sub_080c5284(s32 angle)
 {
@@ -273,7 +273,7 @@ s32 sub_080c5628(s32 lane, s32 x)
     return (hi - lo) * x + lo * 32;
 }
 
-void sub_080c5678(s32 a)
+void AirGrindLayOutCourse(s32 a)
 {
     s32 x, y, z;
     s32 sums[2];
@@ -364,7 +364,7 @@ void sub_080c5678(s32 a)
     }
 }
 
-void sub_080c59d8(s32 a, s32 b)
+void AirGrindBuildCourse(s32 a, s32 b)
 {
     s32 i;
     struct M37CoursePlayer *p;
@@ -411,17 +411,17 @@ void sub_080c59d8(s32 a, s32 b)
         ((vu8 *)0x06000000)[i] = 0;
     for (i = 0; i < 256; i++)
         gBgPalette[i] = gUnk_080D0198[i];
-    sub_080c5678(a);
+    AirGrindLayOutCourse(a);
     for (i = 0; i < 64; i++)
         ((vu8 *)0x0600C000)[i] = 8;
     for (i = 0; i < 0x400; i++)
         ((u16 *)0x0600F800)[i] = 0;
     *(u16 *)0x0600FC20 = 0x300;
     gAirGrindCourse.unk000 = 360;
-    sub_080c5b84();
+    AirGrindDrawCourse();
 }
 
-void sub_080c5b84(void)
+void AirGrindDrawCourse(void)
 {
     s32 depth[4];
     s32 lane;

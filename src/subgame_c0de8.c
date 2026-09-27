@@ -27,7 +27,7 @@
 #include "global.h"
 #include "task.h"
 
-extern s8 gUnk_02006168;
+extern s8 gSubGameLevel;
 extern u8 gUnk_020061DC;
 extern s8 gUnk_02006A10[];
 extern u8 gUnk_0200AF10;
@@ -1057,7 +1057,7 @@ void AirGrindInit(void)
     s32 *r;
 
     p = gAirGrind;
-    q = &gUnk_02006168;
+    q = &gSubGameLevel;
     r = gAirGrindCourse;
     zero = 0;
     j = 51;

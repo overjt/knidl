@@ -111,9 +111,9 @@ void BgScrollStartY(s32 speed, s32 dist, s32 bg);
 void SetBlend(s32 a, s32 b, s32 c, s32 d);
 void ResetHBlankScroll(void);
 void SelectLatestSaveSlot(void);
-void sub_080b8070(s32 a);
+void LoadSaveSlot(s32 a);
 void sub_080b81a0(s32 a);
-s32 sub_080b8290(void);
+s32 CheckNewMilestones(void);
 void sub_080b8888(void);
 void sub_080b8918(void);
 void sub_0800bcf0(void);
@@ -256,16 +256,16 @@ void MainMenuMain(void)
     case 3: /* empty but load-bearing: it adds the `cmp #5; ble` split */
         break;
     case 5:
-        sub_080b8070(gCurSaveSlot);
-        sub_080b8290();
+        LoadSaveSlot(gCurSaveSlot);
+        CheckNewMilestones();
         ResetScoresAndMaxHealth();
         gCutscenePending = 1;
         break;
     case 13:
         if (gUnk_02006090 == 6 || gUnk_02006090 == 7)
         {
-            sub_080b8070(gCurSaveSlot);
-            sub_080b8290();
+            LoadSaveSlot(gCurSaveSlot);
+            CheckNewMilestones();
             if (gUnk_02006090 == 7)
                 sub_080b81a0(gCurSaveSlot);
         }

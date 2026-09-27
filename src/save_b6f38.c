@@ -59,7 +59,7 @@ extern u16 gUnk_0200EC60[];
 extern u8 gUnk_0200EC68[];
 extern u16 gUnk_0200EC70[];
 extern u16 gUnk_0200EC78[];
-extern struct LinkSave gUnk_0200EC80;
+extern struct LinkSave gInputRecording;
 extern u16 gVBlankCount;
 extern u32 gRngValue;
 extern u16 gFrameCount;
@@ -68,7 +68,7 @@ extern u8 gUnk_03001F20;
 extern u8 gUnk_03001F30;
 extern u16 gCompletionPercent;
 extern u16 gLocalPlayer;
-extern u16 gUnk_03002364;
+extern u16 gMilestoneFlags;
 extern u16 gUnk_03002378[];
 extern u8 gUnk_03002384;
 extern u8 gLevelIndex;
@@ -81,8 +81,8 @@ extern u8 gUnk_03002400[8][7];
 extern u8 gExtraMode;
 extern u8 gRoomIndex;
 extern void sub_080b72bc(void);
-extern void sub_080b8348(void);
-extern void sub_080b8374(void);
+extern void ReadInputRecording(void);
+extern void WriteInputRecording(void);
 
 void InputRecorderStart(void)
 {
@@ -93,7 +93,7 @@ void InputRecorderStart(void)
     switch (gInputRecorderMode)
     {
     case 1:
-        gInputRecordingPtr = &gUnk_0200EC80;
+        gInputRecordingPtr = &gInputRecording;
         for (i = 0; i <= 0x3B69; i++)
             gInputRecordingPtr->unk12C[i] = 0;
         gInputRecordingPtr->unk00 = gRngValue;
@@ -129,7 +129,7 @@ void InputRecorderStart(void)
             gInputRecordingPtr->unk26[i] = gPlayerAbilities[i];
             gInputRecordingPtr->unk2E[i] = gUnk_0200AF18[i];
         }
-        gInputRecordingPtr->unkC0 = gUnk_03002364;
+        gInputRecordingPtr->unkC0 = gMilestoneFlags;
         gInputRecordingPtr->unkC4[gExtraMode] = gUnk_030023B8;
         gInputRecordingPtr->unkC6[gExtraMode] = gUnk_03001F20;
         gInputRecordingPtr->unkC8[gExtraMode] = gUnk_030023E0;
@@ -149,14 +149,14 @@ void InputRecorderStart(void)
             gInputRecordingPtr->unk114[i] = gUnk_03002378[i];
         }
         gInputRecordingPtr->unkC2 = gCompletionPercent;
-        sub_080b8374();
+        WriteInputRecording();
         j = Div(0x3B6A, gPlayerCount);
         for (i = 0; i < gPlayerCount; i++)
             gUnk_0200EC70[i] = j - 4;
         break;
     case 2:
-        sub_080b8348();
-        gInputRecordingPtr = &gUnk_0200EC80;
+        ReadInputRecording();
+        gInputRecordingPtr = &gInputRecording;
         sub_080b72bc();
         break;
     case 3:

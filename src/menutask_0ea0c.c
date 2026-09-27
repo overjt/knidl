@@ -8,7 +8,7 @@
  * per-frame body of task type #243 (two sprites plus a palette
  * cross-fade); task type #244 (sub_0800eae4, body sub_0800ec08) slides a
  * sprite pair in, bobs it and slides it out; task types #254
- * (sub_0800ec70, body sub_0800ecb8) and #255 (sub_0800ed78) animate the
+ * (Task_SoundTestCursors, body sub_0800ecb8) and #255 (Task_SoundTestPulse) animate the
  * sound-test screen (menu screen 7: the cursor sprites and the palette
  * pulse of the selected column, which stays lit while its song plays);
  * task types #249 (sub_0800ef30) and #250 (sub_0800f084) cycle the
@@ -131,7 +131,7 @@ void sub_0800ec08(void)
     }
 }
 
-void sub_0800ec70(void)
+void Task_SoundTestCursors(void)
 {
     struct Task *t = gCurTask;
 
@@ -175,7 +175,7 @@ void sub_0800ecb8(void)
     BlendColors(gUnk_08564F38[w->unk2C], gUnk_08564F38[w->unk30], (u16)w->unk34, 5, gUnk_030015F4);
 }
 
-void sub_0800ed78(void)
+void Task_SoundTestPulse(void)
 {
     struct Task *t = gCurTask;
 
