@@ -33,16 +33,16 @@
  *                 IF 0xC0, clear the session block.
  *   sub_08006904  stop + start (HIDDEN)
  *   sub_08006914  the per-frame link driver called from src/early_2b04.c;
- *                 5-state machine on gUnk_03004DA0[1], then packs the link
+ *                 5-state machine on gLink[1], then packs the link
  *                 status word into gUnk_03004D70.
  *   sub_08006a48  refresh the connection state from SIOCNT bits 2-3
  *                 (8 = "all players ready" and we are the parent).
  *   sub_08006a70  arm timer 3 (0xFF7C, /1024 + IRQ) and enable IE bit 6.
- *   sub_08006ac8  queue one 4-halfword send frame into the send ring
- *                 (gUnk_03004DA0+28, u16[4][30]) and clear the caller's
+ *   EnqueueSendCmd  queue one 4-halfword send frame into the send ring
+ *                 (gLink+28, u16[4][30]) and clear the caller's
  *                 buffer.  Overflow (>=30 pending) sets flag byte [20].
- *   sub_08006bb4  dequeue one 4x4 receive frame out of the receive ring
- *                 (gUnk_03004DA0+0x110, u16[4][4][30]); when nothing is
+ *   DequeueRecvCmds  dequeue one 4x4 receive frame out of the receive ring
+ *                 (gLink+0x110, u16[4][4][30]); when nothing is
  *                 pending the caller's matrix is zeroed and [12] is set.
  *   sub_08006cd4  timeout tick (called from the timer-3 IRQ path).
  *
@@ -74,9 +74,9 @@
  *    Splitting it into `v = ...; if (...) v |= ...; gUnk_03004D70 = v;`
  *    loads the fields lazily and drops the r8 push.
  *
- * STATUS: 14 of the 16 functions are byte-exact.  sub_08006ac8 is 8 bytes
+ * STATUS: 14 of the 16 functions are byte-exact.  EnqueueSendCmd is 8 bytes
  * off (the hoisted `movs r6,#0` sits after the induction-variable init
- * instead of before it) and sub_08006bb4 is 140 bytes off (same size, same
+ * instead of before it) and DequeueRecvCmds is 140 bytes off (same size, same
  * instruction sequence: the i/j loop counters land in r4/r3 instead of the
  * ROM's r3/r4 and the inner bound stays in r5 instead of spilling to
  * [sp,#4]).  See the batch report.
@@ -99,7 +99,7 @@ extern u8  gUnk_0200D090[2][64];
 extern u8  gUnk_0200D110;
 extern s16 gUnk_03002158[];
 extern s8 *gUnk_03002490;
-extern u8  gUnk_03004DA0[];
+extern u8  gLink[];
 extern vu16 gUnk_03001EF8;
 extern vu16 gUnk_03000018;
 extern u16 gUnk_03002360;
@@ -129,7 +129,7 @@ extern u16 gUnk_03004D84;
 extern u8  gUnk_03005270;
 void sub_08006e8c(void);
 u32 sub_08002ee8(u32 range);
-void sub_08006d28(void);
+void SerialCB(void);
 void sub_08006d18(void);
 void sub_08007124(void);
 void sub_08007174(void);
@@ -137,8 +137,8 @@ void sub_08006724(void);
 void sub_08006868(void);
 void sub_08006a48(void);
 void sub_08006a70(void);
-void sub_08006ac8(u16 *p);
-void sub_08006bb4(u16 (*p)[4]);
+void EnqueueSendCmd(u16 *p);
+void DequeueRecvCmds(u16 (*p)[4]);
 
 
 
@@ -157,20 +157,20 @@ void sub_08006bb4(u16 (*p)[4]);
 
 void sub_08006cd4(void)
 {
-    if (gUnk_03004DA0[0] == 0)
+    if (gLink[0] == 0)
         return;
-    switch (gUnk_03004DA0[1]) {
+    switch (gLink[1]) {
     case 4:
-        if ((s8)gUnk_03004DA0[13] <= 4) {
-            if (gUnk_03004DA0[18] != 1)
-                gUnk_03004DA0[21] = 1;
+        if ((s8)gLink[13] <= 4) {
+            if (gLink[18] != 1)
+                gLink[21] = 1;
         } else {
-            gUnk_03004DA0[13] = 0;
+            gLink[13] = 0;
             sub_08006e8c();
         }
         break;
     case 2:
-        gUnk_03004DA0[13] = 4;
+        gLink[13] = 4;
         sub_08006e8c();
         break;
     }

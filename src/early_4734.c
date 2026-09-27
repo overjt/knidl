@@ -5,26 +5,27 @@
  * (0x08004734-0x08004FEB, issue #32 batch E2).
  *
  * Recipe: old_agbcc -O2 -mthumb-interwork (fnmatch --old2).  Evidence: the
- * leaves sub_08004968 / sub_08004e9c / sub_08004f98 end in a bare `bx lr`;
+ * leaves MultiBootInit / MultiBootCheckComplete / MultiBootWaitCycles end in a
+ * bare `bx lr`;
  * agbcc unconditionally emits `push {lr}` / `pop {r0}; bx r0` even for leaves
  * (docs/lessons-learned.md 3.18).
  *
  * 0x08004968-0x08004FEB is the AGB SDK multiboot library (the same code
  * pokeemerald ships as src/multiboot.c).  Semantic names, in ROM order:
- *   sub_08004968  MultiBootInit
- *   sub_08004984  MultiBootMain
- *   sub_08004d6c  MultiBootSend           (static)
- *   sub_08004db4  MultiBootStartProbe
- *   sub_08004dd8  MultiBootStartMaster
- *   sub_08004e9c  MultiBootCheckComplete
- *   sub_08004eac  MultiBootHandShake      (static)
- *   sub_08004f98  MultiBootWaitCycles     (static)
- *   sub_08004fb0  MultiBootWaitSendDone   (static)
+ *   0x08004968  MultiBootInit
+ *   0x08004984  MultiBootMain
+ *   0x08004D6C  MultiBootSend           (static)
+ *   0x08004DB4  MultiBootStartProbe
+ *   0x08004DD8  MultiBootStartMaster
+ *   0x08004E9C  MultiBootCheckComplete
+ *   0x08004EAC  MultiBootHandShake      (static)
+ *   0x08004F98  MultiBootWaitCycles     (static)
+ *   0x08004FB0  MultiBootWaitSendDone   (static)
  * sub_08004734 is game code: the 5-step link/multiboot session sequencer
  * driven by the counter at 0x0200EBA8.
  *
- * STATUS: 9 of the 10 functions are byte-exact.  sub_08004984
- * (MultiBootMain) is NOT matched: same size (1000 bytes) and the same
+ * STATUS: 9 of the 10 functions are byte-exact.
+ * MultiBootMain is NOT matched: same size (1000 bytes) and the same
  * instruction sequence, but 534 bytes differ on register naming.  The whole
  * function's allocation is shifted by exactly one hard register (ROM has
  * t=r5 / mp=r7 / &check_wait=sl, this candidate has t=r4 / mp=r6 /
@@ -33,7 +34,7 @@
  * every mention.  See the batch report for the full analysis.
  */
 
-/* AGB SDK MultiBootParam (0x4C bytes); the live instance is gUnk_0200EBF0. */
+/* AGB SDK MultiBootParam (0x4C bytes); the live instance is gMultiBootParam. */
 struct MultiBootParam
 {
     /*0x00*/ u32 system_work[5];
@@ -57,9 +58,9 @@ struct MultiBootParam
     /*0x4B*/ u8 server_type;
 };
 
-/* REG_SIOMULTI0..3 as an array.  UNRESOLVED (see the report): sub_08004eac
+/* REG_SIOMULTI0..3 as an array.  UNRESOLVED (see the report): MultiBootHandShake
  * only reproduces the ROM through the cast literal (gcc rematerialises the
- * pool word at every mention), while sub_08004984 only reproduces the ROM's
+ * pool word at every mention), while MultiBootMain only reproduces the ROM's
  * instruction *count* through a symbol reference.  Both spell 0x04000120. */
 #define SIOMULTI  ((vu16 *)REG_ADDR_SIOMULTI0)
 extern vu16 gUnk_04000120[];
@@ -92,13 +93,13 @@ extern vu16 gUnk_04000208;
  * int-returning.  Alias it rather than fight the header (see report). */
 extern int MultiBootSvc(struct MultiBootParam *mp) asm("MultiBoot");
 
-int sub_08004d6c(struct MultiBootParam *mp, u16 data);
-int sub_08004eac(struct MultiBootParam *mp);
-void sub_08004f98(s32 cycles);
-void sub_08004fb0(void);
-void sub_08004968(struct MultiBootParam *mp);
-void sub_08004db4(struct MultiBootParam *mp);
-int sub_08004e9c(struct MultiBootParam *mp);
+int MultiBootSend(struct MultiBootParam *mp, u16 data);
+int MultiBootHandShake(struct MultiBootParam *mp);
+void MultiBootWaitCycles(s32 cycles);
+void MultiBootWaitSendDone(void);
+void MultiBootInit(struct MultiBootParam *mp);
+void MultiBootStartProbe(struct MultiBootParam *mp);
+int MultiBootCheckComplete(struct MultiBootParam *mp);
 
 
 /*FN sub_08004734*/
@@ -165,8 +166,8 @@ void sub_08004734(void)
 }
 
 
-/*FN sub_08004968*/
-void sub_08004968(struct MultiBootParam *mp)
+/*FN MultiBootInit*/
+void MultiBootInit(struct MultiBootParam *mp)
 {
     mp->client_bit = 0;
     mp->probe_count = 0;

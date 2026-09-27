@@ -421,8 +421,8 @@ gUnk_0200EBB8 = 0x0200EBB8
 gUnk_0200EBBC = 0x0200EBBC
 	.global	gUnk_0200EBC0
 gUnk_0200EBC0 = 0x0200EBC0
-	.global	gUnk_0200EBF0
-gUnk_0200EBF0 = 0x0200EBF0
+	.global	gMultiBootParam
+gMultiBootParam = 0x0200EBF0
 	.global	gUnk_0200EC3C
 gUnk_0200EC3C = 0x0200EC3C
 	.global	gUnk_0200EC40
@@ -1007,8 +1007,8 @@ gUnk_03004D84 = 0x03004D84
 gUnk_03004D88 = 0x03004D88
 	.global	gUnk_03004D90
 gUnk_03004D90 = 0x03004D90
-	.global	gUnk_03004DA0
-gUnk_03004DA0 = 0x03004DA0
+	.global	gLink
+gLink = 0x03004DA0
 	.global	gUnk_03004DA4
 gUnk_03004DA4 = 0x03004DA4
 	.global	gUnk_03005270

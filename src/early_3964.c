@@ -63,7 +63,7 @@ struct Unk030023A8
 };
 
 extern struct SioWork gUnk_0200EBC0;
-extern struct MultiBootParam gUnk_0200EBF0;
+extern struct MultiBootParam gMultiBootParam;
 extern u32 gUnk_0200EBA8;
 extern u32 gUnk_0200EC48;
 extern vu16 gUnk_0200EB98[];
@@ -76,10 +76,10 @@ extern vu16 gUnk_03001EF8;
 extern void sub_08003484(void);
 extern void sub_08003840(void);
 extern void sub_08004068(void);
-extern void sub_08004968(struct MultiBootParam *);
-extern u32 sub_08004984(struct MultiBootParam *);
-extern void sub_08004dd8(struct MultiBootParam *, u32, u32, u32, u32);
-extern u32 sub_08004e9c(struct MultiBootParam *);
+extern void MultiBootInit(struct MultiBootParam *);
+extern u32 MultiBootMain(struct MultiBootParam *);
+extern void MultiBootStartMaster(struct MultiBootParam *, u32, u32, u32, u32);
+extern u32 MultiBootCheckComplete(struct MultiBootParam *);
 
 /*FN sub_08003888*/
 
@@ -105,8 +105,8 @@ void sub_08003a00(u8 *start, u8 *end)
     gUnk_0200EBC0.unk10 = (u32)start + 0xC0;
     gUnk_0200EBC0.unk14 = (u32)end;
     gUnk_0200EBC0.unk18 = len - 0xC0;
-    gUnk_0200EBF0.masterp = start;
-    gUnk_0200EBF0.server_type = 0;
+    gMultiBootParam.masterp = start;
+    gMultiBootParam.server_type = 0;
 }
 
 /*FN sub_08003a34*/
@@ -117,13 +117,13 @@ void sub_08003a34(u8 *start, u8 *end)
 
     len = ((u32)end - (u32)start + 16) & ~15;
     zero = 0;
-    CpuSet((void *)&zero, &gUnk_0200EBF0, 0x01000026);
+    CpuSet((void *)&zero, &gMultiBootParam, 0x01000026);
     gUnk_0200EBC0.unk10 = (u32)start + 0xC0;
     gUnk_0200EBC0.unk14 = (u32)end;
     gUnk_0200EBC0.unk18 = len - 0xC0;
-    gUnk_0200EBF0.masterp = start;
-    gUnk_0200EBF0.server_type = 0;
-    sub_08004968(&gUnk_0200EBF0);
+    gMultiBootParam.masterp = start;
+    gMultiBootParam.server_type = 0;
+    MultiBootInit(&gMultiBootParam);
 }
 
 /*FN sub_08003a98*/
@@ -146,7 +146,7 @@ void sub_08003ab8(void)
 
     cnt = REG_SIOCNT;
     if ((REG_SIOCNT & 4) == 0)
-        sub_08004984(&gUnk_0200EBF0);
+        MultiBootMain(&gMultiBootParam);
     gUnk_0200EBC0.unk25 = 0;
     if ((cnt & 8) == 0)
     {
@@ -284,7 +284,7 @@ void sub_08003dc4(void)
     }
     if (gUnk_0200EBC0.unk2A == 1)
     {
-        if (gUnk_0200EBC0.unk01 == 1 || (gUnk_0200EBF0.client_bit & 14) == 0)
+        if (gUnk_0200EBC0.unk01 == 1 || (gMultiBootParam.client_bit & 14) == 0)
         {
             gUnk_0200EBC0.unk01 = t;
             gUnk_0200EBC0.unk2A = gUnk_0200EBC0.unk02 = gUnk_0200EBC0.unk24 = gUnk_0200EBC0.unk25 = t;
@@ -294,7 +294,7 @@ void sub_08003dc4(void)
     }
     else
     {
-        t = gUnk_0200EBF0.client_bit & 14;
+        t = gMultiBootParam.client_bit & 14;
         if (t == 0)
             goto noconn;
     }
@@ -302,11 +302,11 @@ void sub_08003dc4(void)
         gUnk_0200EBC0.unk2A = 1;
     gUnk_0200EBC0.unk02 = 1;
     gUnk_0200EBC0.unk01 = 1;
-    cb = gUnk_0200EBF0.client_bit;
+    cb = gMultiBootParam.client_bit;
     gUnk_0200EBC0.unk01 = gUnk_0200EBC0.unk01 + ((cb >> 1) & 1);
     gUnk_0200EBC0.unk01 = gUnk_0200EBC0.unk01 + ((cb >> 2) & 1);
     gUnk_0200EBC0.unk01 = gUnk_0200EBC0.unk01 + ((cb >> 3) & 1);
-    switch (gUnk_0200EBF0.probe_count)
+    switch (gMultiBootParam.probe_count)
     {
     case 0:
         if (gUnk_0200EBC0.unk0A <= 15)
@@ -318,10 +318,10 @@ void sub_08003dc4(void)
     case 0xD1:
         gUnk_0200EBC0.unk2B = 2;
         gUnk_0200EBC0.unk04 = 3;
-        gUnk_0200EBF0.server_type = 1;
+        gMultiBootParam.server_type = 1;
         break;
     }
-    if (gUnk_0200EBF0.probe_count > 0xDF)
+    if (gMultiBootParam.probe_count > 0xDF)
         gUnk_0200EBC0.unk04 = 4;
     goto next;
 noconn:
@@ -330,21 +330,21 @@ noconn:
 next:
     if (gUnk_0200EBC0.unk0A == 17)
     {
-        sub_08004dd8(&gUnk_0200EBF0, gUnk_0200EBC0.unk10, gUnk_0200EBC0.unk18, 4, 1);
+        MultiBootStartMaster(&gMultiBootParam, gUnk_0200EBC0.unk10, gUnk_0200EBC0.unk18, 4, 1);
         gUnk_0200EBC0.unk0A = 18;
     }
-    if (gUnk_0200EBC0.unk2B == 1 && gUnk_0200EBC0.unk0A == 16 && gUnk_0200EBF0.probe_count == 0
-     && (gUnk_0200EBF0.client_bit & 14) != 0)
+    if (gUnk_0200EBC0.unk2B == 1 && gUnk_0200EBC0.unk0A == 16 && gMultiBootParam.probe_count == 0
+     && (gMultiBootParam.client_bit & 14) != 0)
     {
         sub_08003484();
         sub_08003840();
         gUnk_0200EBC0.unk0A = 17;
         gUnk_0200EBC0.unk2A = 2;
     }
-    r = sub_08004984(&gUnk_0200EBF0);
+    r = MultiBootMain(&gMultiBootParam);
     if (gUnk_0200EBC0.unk2B == 2)
     {
-        gUnk_0200EBF0.server_type = 0;
+        gMultiBootParam.server_type = 0;
         gUnk_0200EBC0.unk2B = 0;
         if (r != 0)
         {
@@ -357,6 +357,6 @@ next:
             return;
         }
     }
-    if (sub_08004e9c(&gUnk_0200EBF0) != 0)
+    if (MultiBootCheckComplete(&gMultiBootParam) != 0)
         gUnk_0200EBC0.unk02 = 3;
 }

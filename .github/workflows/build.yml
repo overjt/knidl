@@ -29,8 +29,8 @@ jobs:
 
       # ----- Checks that never require baserom.gba (always run) -----
 
-      - name: Python tooling check (tools/gbafix.py, tools/symdb.py, tools/symdb_check.py, tools/split.py, tools/modmap.py, tools/datastats.py, tools/check_data_policy.py)
-        run: docker run --rm -v "$PWD":/src -w /src knidl-builder python3 -m py_compile tools/gbafix.py tools/symdb.py tools/symdb_check.py tools/split.py tools/modmap.py tools/datastats.py tools/check_data_policy.py
+      - name: Python tooling check (tools/gbafix.py, tools/symdb.py, tools/symdb_check.py, tools/split.py, tools/modmap.py, tools/datastats.py, tools/check_data_policy.py, tools/rename.py)
+        run: docker run --rm -v "$PWD":/src -w /src knidl-builder python3 -m py_compile tools/gbafix.py tools/symdb.py tools/symdb_check.py tools/split.py tools/modmap.py tools/datastats.py tools/check_data_policy.py tools/rename.py
 
       - name: Perl tooling check (tools/calcrom.pl)
         run: docker run --rm -v "$PWD":/src -w /src knidl-builder perl -c tools/calcrom.pl

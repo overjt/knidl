@@ -5,6 +5,8 @@ Practical mistakes made and lessons extracted while decompiling the SRAM driver
 them. All examples reference the tools that exist in this repo today
 (`Makefile`, `asmdiff.sh`, Docker image `knidl-builder`).
 
+The lessons keep the `sub_`/`gUnk_` names of their time; `docs/analysis/renames.csv` maps each one to its real name (issue #155, `docs/naming.md`).
+
 ## 1. Build system
 
 ### 1.1 Per-file compiler overrides must come AFTER `BUILD_DIR` is defined

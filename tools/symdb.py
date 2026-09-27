@@ -271,6 +271,23 @@ KNOWN_SYMBOLS = {
     0x080CFDC4: "TaskSwitchTrampoline",
     0x080CFDCC: "TaskYieldTrampoline",
     0x080CFDD4: "TaskDispatchTrampoline",
+    # ---- names given with tools/rename.py (issue #155 onwards) ----
+    # Each name's evidence is its row in docs/analysis/renames.csv;
+    # kept sorted by address, tools/rename.py inserts here.
+    0x08004968: "MultiBootInit",
+    0x08004984: "MultiBootMain",
+    0x08004D6C: "MultiBootSend",
+    0x08004DB4: "MultiBootStartProbe",
+    0x08004DD8: "MultiBootStartMaster",
+    0x08004E9C: "MultiBootCheckComplete",
+    0x08004EAC: "MultiBootHandShake",
+    0x08004F98: "MultiBootWaitCycles",
+    0x08004FB0: "MultiBootWaitSendDone",
+    0x08006AC8: "EnqueueSendCmd",
+    0x08006BB4: "DequeueRecvCmds",
+    0x08006D28: "SerialCB",
+    0x08006E9C: "DoRecv",
+    # ---- end of tools/rename.py names ----
 }
 
 # Curated false positives: candidate addresses whose only evidence is

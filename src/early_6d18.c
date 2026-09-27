@@ -10,16 +10,16 @@
  *
  * Contents in ROM order.  Two functions have no symbols.csv entry of their
  * own (lesson 2.13 dead exports hidden inside a neighbour's size):
- * sub_08007004 lives inside the declared 0x21C of sub_08006e9c, and
+ * sub_08007004 lives inside the declared 0x21C of DoRecv, and
  * sub_080070e8 inside the declared 0x4A of sub_080070b8 -- see the report;
  * symbols.csv's sub_08007102/0x22 entry is a mis-split of sub_080070e8.
  *
  *   sub_08006d18  serial IRQ: stop the timeout timer, re-arm SIOCNT.
- *   sub_08006d28  VBlank IRQ for the link session: snapshots SIOCNT, then
+ *   SerialCB  VBlank IRQ for the link session: snapshots SIOCNT, then
  *                 either runs the transfer step (state 4) or the connect/ID
  *                 handshake (state 2).            [src/early_6d28.c]
  *   sub_08006e8c  re-arm the SIOCNT start bit.
- *   sub_08006e9c  per-frame receive step: copies the four SIOMULTI words to
+ *   DoRecv  per-frame receive step: copies the four SIOMULTI words to
  *                 gUnk_03004D38 and folds them into the per-player buffer.
  *                                                 [src/early_6e9c.c]
  *   sub_08007004  send step: pushes the next ring slot into SIOMLT_SEND.
@@ -31,7 +31,7 @@
  *                 frames without reaching state 4), 0 on success.
  *   sub_080072e0  poll gUnk_03004D70 against the mask in gUnk_03004D24.
  *
- * gUnk_03004DA0 is the link work area (0x4D2 bytes, ending just below
+ * gLink is the link work area (0x4D2 bytes, ending just below
  * gUnk_03005274).  Byte offsets used here:
  *   +0x00 session-active flag      +0x01 state (1,2,3,4)
  *   +0x02 player id (SIOCNT bits 4-5)   +0x03 player count
@@ -59,7 +59,7 @@ struct Link {
     /*0x4D0*/ u8 unk4D0, unk4D1;
 };
 
-extern u8 gUnk_03004DA0[];      /* link work area */
+extern u8 gLink[];      /* link work area */
 extern vu16 gUnk_03004D38[];    /* receive staging, 4 halfwords */
 extern u16 gUnk_03004D88[];     /* send/receive mailbox (sub_08006914) */
 extern u16 gUnk_03004D90[4];
@@ -97,9 +97,9 @@ void sub_08006914(u16 *a, u16 *b, u16 *c);
 void sub_080022e4(void);
 
 void sub_08006d18(void);
-void sub_08006d28(void);
+void SerialCB(void);
 void sub_08006e8c(void);
-void sub_08006e9c(void);
+void DoRecv(void);
 void sub_08007004(void);
 void sub_080070b8(void);
 void sub_080070e8(void);

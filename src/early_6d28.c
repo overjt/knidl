@@ -7,9 +7,9 @@
  * with DoHandshake written inline; this ROM carries an older revision of the
  * library pokeruby ships as src/link.c, see src/early_6ac8.c), installed in
  * gUnk_030004B0[0] by src/early_6464.c and src/early_7004.c.  It records the
- * player id from SIOCNT, then by link state gUnk_03004DA0.unk01: in state 4
+ * player id from SIOCNT, then by link state gLink.unk01: in state 4
  * (connected) it records the SIOCNT error bit and runs the receive step
- * sub_08006e9c, the send step sub_08007004 and sub_080070e8; in state 2 it
+ * DoRecv, the send step sub_08007004 and sub_080070e8; in state 2 it
  * runs the handshake: it sends 0x8FFF (master, unk10 == 1) or 0xCFF0, copies
  * the four SIOMULTI words into recv[], and on a master's 0x8FFF publishes the
  * player id, the master flag and the player count (gUnk_03002360,
@@ -58,7 +58,7 @@ struct SioMultiCnt
     u16 data;
 };
 
-extern struct Link gUnk_03004DA0;
+extern struct Link gLink;
 extern vu16 gUnk_04000120;      /* REG_SIOMULTI0 */
 extern vu16 gUnk_04000128;      /* REG_SIOCNT */
 extern vu16 gUnk_0400012A;      /* REG_SIOMLT_SEND */
@@ -68,62 +68,62 @@ extern u16 gUnk_0300243C;
 extern vu16 gUnk_030023AC;
 extern u32 gUnk_03004D7C;
 extern u8 gUnk_03004D40;
-void sub_08006e9c(void);
+void DoRecv(void);
 void sub_08007004(void);
 void sub_080070e8(void);
 
 /* The serial interrupt of the link session (pokeruby's SerialCB, with
  * DoHandshake written inline): state 4 runs the receive/send step, state 2
  * the connect handshake. */
-void sub_08006d28(void)
+void SerialCB(void)
 {
     u8 i;
     u8 playerCount = 0;
     u16 minRecv = 0xFFFF;
 
-    gUnk_03004DA0.unk02 = ((struct SioMultiCnt *)&gUnk_04000128)->id;
+    gLink.unk02 = ((struct SioMultiCnt *)&gUnk_04000128)->id;
 
-    switch (gUnk_03004DA0.unk01)
+    switch (gLink.unk01)
     {
     case 4:
-        gUnk_03004DA0.unk12 = ((struct SioMultiCnt *)&gUnk_04000128)->error;
-        sub_08006e9c();
+        gLink.unk12 = ((struct SioMultiCnt *)&gUnk_04000128)->error;
+        DoRecv();
         sub_08007004();
         sub_080070e8();
         break;
     case 2:
-        if (gUnk_03004DA0.unk10 == 1)
+        if (gLink.unk10 == 1)
             gUnk_0400012A = 0x8FFF;
         else
             gUnk_0400012A = 0xCFF0;
 
-        *(struct Pair *)gUnk_03004DA0.recv = *(struct Pair *)&gUnk_04000120;
-        gUnk_03004DA0.unk10 = 0;
+        *(struct Pair *)gLink.recv = *(struct Pair *)&gUnk_04000120;
+        gLink.unk10 = 0;
 
-        if (gUnk_03004DA0.recv[0] == 0x8FFF)
+        if (gLink.recv[0] == 0x8FFF)
         {
-            gUnk_03002360 = gUnk_03004DA0.unk02;
-            gUnk_03001F38 = gUnk_03004DA0.unk00;
-            gUnk_0300243C = gUnk_03004DA0.count;
+            gUnk_03002360 = gLink.unk02;
+            gUnk_03001F38 = gLink.unk00;
+            gUnk_0300243C = gLink.count;
             gUnk_030023AC = gUnk_0300243C;
-            if (gUnk_03004DA0.unk00)
-                gUnk_03004DA0.unk01 = 3;
+            if (gLink.unk00)
+                gLink.unk01 = 3;
             else
-                gUnk_03004DA0.unk01 = 4;
+                gLink.unk01 = 4;
             break;
         }
 
         for (i = 0; i < 4; i++)
         {
-            if ((gUnk_03004DA0.recv[i] & ~3) == 0xCFF0)
+            if ((gLink.recv[i] & ~3) == 0xCFF0)
             {
                 playerCount++;
-                if (minRecv > gUnk_03004DA0.recv[i] && gUnk_03004DA0.recv[i] != 0)
-                    minRecv = gUnk_03004DA0.recv[i];
+                if (minRecv > gLink.recv[i] && gLink.recv[i] != 0)
+                    minRecv = gLink.recv[i];
             }
             else
             {
-                if (gUnk_03004DA0.recv[i] != 0xFFFF)
+                if (gLink.recv[i] != 0xFFFF)
                     playerCount = 0;
                 /* Dead store (flow deletes it, zero bytes), but it keeps
                  * this arm's skip label alive until reload, so jump.c's
@@ -136,21 +136,21 @@ void sub_08006d28(void)
             }
         }
 
-        if (gUnk_03004DA0.unk10 == 0)
-            gUnk_03004DA0.count = playerCount;
+        if (gLink.unk10 == 0)
+            gLink.count = playerCount;
 
-        if (gUnk_03004DA0.count > 1)
-            gUnk_03004DA0.unk11 = (minRecv & 3) + 1;
+        if (gLink.count > 1)
+            gLink.unk11 = (minRecv & 3) + 1;
         else
-            gUnk_03004DA0.unk11 = 0;
+            gLink.unk11 = 0;
 
-        gUnk_03004DA0.unk10 = 0;
+        gLink.unk10 = 0;
         break;
     }
 
-    gUnk_03004DA0.unk0D++;
+    gLink.unk0D++;
     gUnk_03004D7C++;
 
-    if ((s8)gUnk_03004DA0.unk0D == 4)
-        gUnk_03004D40 = gUnk_03004DA0.unk4D1;
+    if ((s8)gLink.unk0D == 4)
+        gUnk_03004D40 = gLink.unk4D1;
 }

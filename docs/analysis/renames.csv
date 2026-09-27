@@ -1,0 +1,16 @@
+old,new,kind,evidence,issue
+sub_08004968,MultiBootInit,function,"public: pokeemerald src/multiboot.c MultiBootInit (AGB SDK multiboot library, same function order and body shape; src/early_4734.c header)",155
+sub_08004984,MultiBootMain,function,"public: pokeemerald src/multiboot.c MultiBootMain, older SDK revision (src/early_4984.c)",155
+sub_08004d6c,MultiBootSend,function,"public: pokeemerald src/multiboot.c MultiBootSend (static there), (mp, u16 data) signature (src/early_4d6c.c)",155
+sub_08004db4,MultiBootStartProbe,function,public: pokeemerald src/multiboot.c MultiBootStartProbe (src/early_4d6c.c),155
+sub_08004dd8,MultiBootStartMaster,function,"public: pokeemerald src/multiboot.c MultiBootStartMaster, (mp, srcp, length, palette_color, palette_speed) (src/early_4d6c.c)",155
+sub_08004e9c,MultiBootCheckComplete,function,public: pokeemerald src/multiboot.c MultiBootCheckComplete (src/early_4d6c.c),155
+sub_08004eac,MultiBootHandShake,function,public: pokeemerald src/multiboot.c MultiBootHandShake (static there) (src/early_4d6c.c),155
+sub_08004f98,MultiBootWaitCycles,function,"public: pokeemerald src/multiboot.c MultiBootWaitCycles (static there), (s32 cycles) (src/early_4d6c.c)",155
+sub_08004fb0,MultiBootWaitSendDone,function,public: pokeemerald src/multiboot.c MultiBootWaitSendDone (static there) (src/early_4d6c.c),155
+sub_08006ac8,EnqueueSendCmd,function,"public: pokeruby src/link.c EnqueueSendCmd, older revision (4 command words, 30-entry ring, REG_IE save; src/early_6ac8.c)",155
+sub_08006bb4,DequeueRecvCmds,function,"public: pokeruby src/link.c DequeueRecvCmds, older revision (src/early_6ac8.c)",155
+sub_08006d28,SerialCB,function,"public: pokeruby src/link.c SerialCB, the serial interrupt of the link driver; matched with pokeruby's struct spelling (src/early_6d28.c, rom-map 6.4)",155
+sub_08006e9c,DoRecv,function,"public: pokeruby src/link.c DoRecv, the receive step SerialCB runs (src/early_6e9c.c)",155
+gUnk_0200EBF0,gMultiBootParam,ram,"role: the one struct MultiBootParam (0x4C bytes, SDK layout) every MultiBoot* call is given (src/early_3964.c, src/early_4734.c)",155
+gUnk_03004DA0,gLink,ram,"public: pokeruby src/link.c struct Link gLink; role: the 0x4D2-byte link work area EnqueueSendCmd/DequeueRecvCmds/SerialCB/DoRecv operate on (src/early_6ac8.c, src/early_6d18.c)",155

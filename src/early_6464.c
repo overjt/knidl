@@ -33,16 +33,16 @@
  *                 IF 0xC0, clear the session block.
  *   sub_08006904  stop + start (HIDDEN)
  *   sub_08006914  the per-frame link driver called from src/early_2b04.c;
- *                 5-state machine on gUnk_03004DA0[1], then packs the link
+ *                 5-state machine on gLink[1], then packs the link
  *                 status word into gUnk_03004D70.
  *   sub_08006a48  refresh the connection state from SIOCNT bits 2-3
  *                 (8 = "all players ready" and we are the parent).
  *   sub_08006a70  arm timer 3 (0xFF7C, /1024 + IRQ) and enable IE bit 6.
- *   sub_08006ac8  queue one 4-halfword send frame into the send ring
- *                 (gUnk_03004DA0+28, u16[4][30]) and clear the caller's
+ *   EnqueueSendCmd  queue one 4-halfword send frame into the send ring
+ *                 (gLink+28, u16[4][30]) and clear the caller's
  *                 buffer.  Overflow (>=30 pending) sets flag byte [20].
- *   sub_08006bb4  dequeue one 4x4 receive frame out of the receive ring
- *                 (gUnk_03004DA0+0x110, u16[4][4][30]); when nothing is
+ *   DequeueRecvCmds  dequeue one 4x4 receive frame out of the receive ring
+ *                 (gLink+0x110, u16[4][4][30]); when nothing is
  *                 pending the caller's matrix is zeroed and [12] is set.
  *   sub_08006cd4  timeout tick (called from the timer-3 IRQ path).
  *
@@ -74,9 +74,9 @@
  *    Splitting it into `v = ...; if (...) v |= ...; gUnk_03004D70 = v;`
  *    loads the fields lazily and drops the r8 push.
  *
- * STATUS: 14 of the 16 functions are byte-exact.  sub_08006ac8 is 8 bytes
+ * STATUS: 14 of the 16 functions are byte-exact.  EnqueueSendCmd is 8 bytes
  * off (the hoisted `movs r6,#0` sits after the induction-variable init
- * instead of before it) and sub_08006bb4 is 140 bytes off (same size, same
+ * instead of before it) and DequeueRecvCmds is 140 bytes off (same size, same
  * instruction sequence: the i/j loop counters land in r4/r3 instead of the
  * ROM's r3/r4 and the inner bound stays in r5 instead of spilling to
  * [sp,#4]).  See the batch report.
@@ -99,7 +99,7 @@ extern u8  gUnk_0200D090[2][64];
 extern u8  gUnk_0200D110;
 extern s16 gUnk_03002158[];
 extern s8 *gUnk_03002490;
-extern u8  gUnk_03004DA0[];
+extern u8  gLink[];
 extern vu16 gUnk_03001EF8;
 extern vu16 gUnk_03000018;
 extern u16 gUnk_03002360;
@@ -129,7 +129,7 @@ extern u16 gUnk_03004D84;
 extern u8  gUnk_03005270;
 void sub_08006e8c(void);
 u32 sub_08002ee8(u32 range);
-void sub_08006d28(void);
+void SerialCB(void);
 void sub_08006d18(void);
 void sub_08007124(void);
 void sub_08007174(void);
@@ -137,8 +137,8 @@ void sub_08006724(void);
 void sub_08006868(void);
 void sub_08006a48(void);
 void sub_08006a70(void);
-void sub_08006ac8(u16 *p);
-void sub_08006bb4(u16 (*p)[4]);
+void EnqueueSendCmd(u16 *p);
+void DequeueRecvCmds(u16 (*p)[4]);
 
 u32 sub_08006464(s16 x, s16 y)
 {
@@ -210,12 +210,12 @@ void sub_0800668c(void)
 {
     u32 zero = 0;
 
-    CpuSet(&zero, gUnk_03004DA0, 0x05000135);
+    CpuSet(&zero, gLink, 0x05000135);
     gUnk_03002360 = 0;
     gUnk_03001F38 = 0;
     gUnk_0300243C = 1;
     gUnk_030023AC = 1;
-    gUnk_030004B0[0] = sub_08006d28;
+    gUnk_030004B0[0] = SerialCB;
     gUnk_030004B0[1] = sub_08006d18;
     gUnk_0200EBA0 = 0;
     gUnk_03004D7C = 0;
@@ -246,7 +246,7 @@ void sub_08006724(void)
     REG_IE |= 0x80;
     gUnk_03000018 = REG_IE;
     zero = 0;
-    CpuSet((const void *)&zero, gUnk_03004DA0, 0x05000135);
+    CpuSet((const void *)&zero, gLink, 0x05000135);
     sub_08007124();
     sub_08007174();
     gUnk_03004D84 = gUnk_03004D80 = 0;
@@ -302,7 +302,7 @@ void sub_08006868(void)
     REG_TM3CNT_H = 0;
     REG_IF = 0xC0;
     zero = 0;
-    CpuSet(&zero, gUnk_03004DA0, 0x05000135);
+    CpuSet(&zero, gLink, 0x05000135);
     gUnk_03002360 = 0;
     gUnk_03001F38 = 0;
     gUnk_0300243C = 1;
@@ -321,25 +321,25 @@ void sub_08006914(u8 *cmd, u16 *send, u16 *recv)
     if (gUnk_0200EBA0 == 2)
         return;
 
-    switch (gUnk_03004DA0[1]) {
+    switch (gLink[1]) {
     case 0:
         sub_08006868();
-        gUnk_03004DA0[1] = 1;
+        gLink[1] = 1;
         break;
     case 1:
         if (*cmd == 1) {
             sub_08006724();
-            gUnk_03004DA0[1] = 2;
+            gLink[1] = 2;
         }
         break;
     case 2:
         switch (*cmd) {
         case 1:
-            if (gUnk_03004DA0[0] == 8 && gUnk_03004DA0[3] > 1)
-                gUnk_03004DA0[16] = 1;
+            if (gLink[0] == 8 && gLink[3] > 1)
+                gLink[16] = 1;
             break;
         case 2:
-            gUnk_03004DA0[1] = 0;
+            gLink[1] = 0;
             break;
         default:
             sub_08006a48();
@@ -348,41 +348,41 @@ void sub_08006914(u8 *cmd, u16 *send, u16 *recv)
         break;
     case 3:
         sub_08006a70();
-        gUnk_03004DA0[1] = 4;
+        gLink[1] = 4;
         /* fallthrough */
     case 4:
-        sub_08006ac8(send);
-        sub_08006bb4((u16 (*)[4])recv);
+        EnqueueSendCmd(send);
+        DequeueRecvCmds((u16 (*)[4])recv);
         break;
     }
 
     *cmd = 0;
-    gUnk_03004D70 = gUnk_03004DA0[2]
-        | (gUnk_03004DA0[3] << 2)
-        | (gUnk_03004DA0[0] == 8 ? 0x20 : 0)
-        | (gUnk_03004DA0[1] == 4 ? 0x40 : 0)
-        | (gUnk_03004DA0[12] << 8)
-        | (gUnk_03004DA0[17] << 9)
-        | (gUnk_03004DA0[18] << 12)
-        | (gUnk_03004DA0[19] << 13)
-        | (gUnk_03004DA0[20] << 14)
-        | (gUnk_03004DA0[21] << 16)
-        | (gUnk_03004DA0[2] > 3 ? 0x20000 : 0);
+    gUnk_03004D70 = gLink[2]
+        | (gLink[3] << 2)
+        | (gLink[0] == 8 ? 0x20 : 0)
+        | (gLink[1] == 4 ? 0x40 : 0)
+        | (gLink[12] << 8)
+        | (gLink[17] << 9)
+        | (gLink[18] << 12)
+        | (gLink[19] << 13)
+        | (gLink[20] << 14)
+        | (gLink[21] << 16)
+        | (gLink[2] > 3 ? 0x20000 : 0);
 }
 
 void sub_08006a48(void)
 {
     u32 t = *(vu32 *)REG_ADDR_SIOCNT & 12;
 
-    if (t == 8 && gUnk_03004DA0[2] == 0)
-        gUnk_03004DA0[0] = 8;
+    if (t == 8 && gLink[2] == 0)
+        gLink[0] = 8;
     else
-        gUnk_03004DA0[0] = 0;
+        gLink[0] = 0;
 }
 
 void sub_08006a70(void)
 {
-    if (gUnk_03004DA0[0] != 0) {
+    if (gLink[0] != 0) {
         REG_TM3CNT_L = 0xFF7C;
         REG_TM3CNT_H = 0x41;
         gUnk_03004D44 = REG_IME;

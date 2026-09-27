@@ -4,7 +4,7 @@
 /* early_6e9c.c (0x08006E9C-0x08007003, issue #63).
  *
  * The receive step of the SIO multi-play link driver (pokeruby's DoRecv, see
- * src/early_6ac8.c), called from the serial interrupt sub_08006d28 in the
+ * src/early_6ac8.c), called from the serial interrupt SerialCB in the
  * connected state: it snapshots the four SIOMULTI words into gUnk_03004D38.
  * On the checksum round (send index unk18 == 0) it compares every player's
  * word with the running checksum chk (a mismatch sets unk13), clears chk and
@@ -19,7 +19,7 @@
  * pointer, `p = gUnk_03004D38;` after the copy and `*p++` in each loop; the
  * ROM steps the register that holds the buffer's address (lesson 3.483). */
 
-/* The link work area gUnk_03004DA0 (0x4D2 bytes; layout as in
+/* The link work area gLink (0x4D2 bytes; layout as in
  * src/early_6d18.c).  It is the SIO multi-play library pokeruby ships as
  * src/link.c (struct Link there), in an earlier revision: four command
  * words per frame and 30-entry queues. */
@@ -38,7 +38,7 @@ struct Link {
 
 struct Pair { u32 a, b; };
 
-extern struct Link gUnk_03004DA0;
+extern struct Link gLink;
 extern vu16 gUnk_03004D38[];    /* receive staging, 4 halfwords */
 extern vu16 gUnk_04000120;      /* REG_SIOMULTI0 */
 extern u32 gUnk_03004D74;
@@ -55,7 +55,7 @@ extern u32 gUnk_0200EBA0;
  * holds &gUnk_03004D38 itself, where `gUnk_03004D38[i]` makes a strength-
  * reduced copy of it.  REG_VCOUNT is the io_reg.h macro (a symbol would be
  * hoisted into a callee-saved register by gcse, lesson 3.482). */
-void sub_08006e9c(void)
+void DoRecv(void)
 {
     u32 i;
     u32 index;
@@ -64,43 +64,43 @@ void sub_08006e9c(void)
     *(struct Pair *)gUnk_03004D38 = *(struct Pair *)&gUnk_04000120;
     p = gUnk_03004D38;
 
-    if (gUnk_03004DA0.unk18 == 0)
+    if (gLink.unk18 == 0)
     {
-        for (i = 0; i < gUnk_03004DA0.count; i++)
-            if (gUnk_03004DA0.chk != *p++ && gUnk_03004D74)
-                gUnk_03004DA0.unk13 = 1;
-        gUnk_03004DA0.chk = 0;
+        for (i = 0; i < gLink.count; i++)
+            if (gLink.chk != *p++ && gUnk_03004D74)
+                gLink.unk13 = 1;
+        gLink.chk = 0;
         gUnk_03004D74 = 1;
         gUnk_03004D28 = REG_VCOUNT;
     }
     else
     {
-        index = gUnk_03004DA0.unk4D0 + gUnk_03004DA0.unk4D1;
+        index = gLink.unk4D0 + gLink.unk4D1;
         if (index >= 30)
             index -= 30;
-        if (gUnk_03004DA0.unk4D1 < 30)
+        if (gLink.unk4D1 < 30)
         {
-            for (i = 0; i < gUnk_03004DA0.count; i++)
+            for (i = 0; i < gLink.count; i++)
             {
-                gUnk_03004DA0.chk += *p;
-                if ((gUnk_03005274 & 0xFF00) == 0x8800 && gUnk_03004DA0.unk19 == 3
+                gLink.chk += *p;
+                if ((gUnk_03005274 & 0xFF00) == 0x8800 && gLink.unk19 == 3
                  && *p > 4)
                 {
                     gUnk_03004D30 = 6;
                     gUnk_0200EBA0 = 0;
                 }
                 gUnk_03004D80 |= *p;
-                gUnk_03004DA0.buf[i][gUnk_03004DA0.unk19][index] = *p++;
+                gLink.buf[i][gLink.unk19][index] = *p++;
             }
         }
         else
         {
-            gUnk_03004DA0.unk14 = 2;
+            gLink.unk14 = 2;
         }
-        gUnk_03004DA0.unk19++;
-        if (gUnk_03004DA0.unk19 == 4 && gUnk_03004D80)
+        gLink.unk19++;
+        if (gLink.unk19 == 4 && gUnk_03004D80)
         {
-            gUnk_03004DA0.unk4D1++;
+            gLink.unk4D1++;
             gUnk_03004D80 = 0;
         }
     }

@@ -50,7 +50,7 @@ extern vu16 gUnk_03000F98[];    /* per-player keys held */
 extern vu16 gUnk_03001EB8[];    /* per-player keys pressed */
 extern u16 gUnk_03004D88[];
 extern u16 gUnk_03004D50[3][4]; /* [0]=state [1]=keys held [2]=keys pressed */
-extern u8 gUnk_03004DA0[];
+extern u8 gLink[];
 extern u32 gUnk_03004D28;
 extern vu16 gUnk_03001EC4;      /* VBlank wait flag */
 extern u32 gUnk_03004D7C;       /* frame counter */
@@ -123,7 +123,7 @@ void sub_08002b8c(void)
     sub_08006914(gUnk_03004D88, gUnk_03004D90, gUnk_03004D50[0]);
     if ((gUnk_03005274 & 0xFF00) == 0x8800) {
         tries = 0;
-        if (gUnk_03004DA0[12] != 0) {
+        if (gLink[12] != 0) {
             u32 v;
 
             do {
@@ -132,7 +132,7 @@ void sub_08002b8c(void)
                     v += 228;
             } while (v - gUnk_03004D28 <= 38);
 
-            while (gUnk_03004DA0[12] != 0) {
+            while (gLink[12] != 0) {
                 old = gUnk_03004D7C;
                 gUnk_03001EC4 = 1;
                 if (REG_IME & 1) {
