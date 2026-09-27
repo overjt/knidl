@@ -220,8 +220,10 @@ Notes on round-tripping objdump text (validated empirically, see
                        0x080cfa50                ArcTan2
                        ...
 
-No `linker.ld` edit is needed: every segment rule already pins its section
-by name and collects an optional `.tail`.
+No `linker.ld` edit is needed: every segment rule already names its section
+(and, since #36 phase 2 run 2, asserts its address in matching builds
+instead of pinning it; docs/data.md section 8) and collects an optional
+`.tail`.
 
 To later decompile a split function to C, give it a real definition
 (removing the name from `external_defined` if it was listed there), rerun

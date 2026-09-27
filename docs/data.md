@@ -345,8 +345,9 @@ the model, without its converted assets):
    (links the object's `.rodata` at `<start>` with stand-ins and compares);
 3. `python3 tools/carve_data.py <start> <end> <name> --write` cuts the
    range out of the data segments (it may span two adjacent ones), adds a
-   `c_data` row to `segments.txt` and pins
-   `build/src/data/<name>.o(.rodata)` at `<start>` in `linker.ld`.  It
+   `c_data` row to `segments.txt` and adds a `linker.ld` block for
+   `build/src/data/<name>.o(.rodata)` with the matching-mode assertion
+   of `<start>` (section 8.2).  It
    refuses asset segments and prints the labels the C must define, in
    order;
 4. `make split && make clean && make compare`.

@@ -302,6 +302,28 @@ def main():
         print("%-46s %8s %8s" % ("target segment", "pointer", "unknown"))
         for key, (p, u, _s) in sorted(targets.items(), key=lambda kv: kv[1][2]):
             print("%-46s %8d %8d" % (key, p, u))
+    # An insertion at P is proven safe when no proven-pointer or unknown
+    # word points at or after P (each such word would keep its old value).
+    unproven = sorted(int(v, 16) & ~1 for _a, v in unknown)
+    unproven += sorted((v & ~1) for a, v in words if a in proven)
+    unproven.sort()
+    print()
+    print("insertion points: proven-pointer or unknown words that point at "
+          "or after each segment start")
+    safe = None
+    for st, _e, kind, name in reversed(segs):
+        n = len(unproven) - bisect.bisect_left(unproven, st)
+        if n == 0:
+            safe = (st, name)
+    for st, _e, kind, name in segs:
+        if kind in CODE_KINDS and name not in ("agb_init",):
+            continue
+        n = len(unproven) - bisect.bisect_left(unproven, st)
+        print("  0x%08X %-44s %8d" % (st, name, n))
+    if safe:
+        print("lowest proven-safe insertion point: 0x%08X (.%s)" % safe)
+    else:
+        print("no proven-safe insertion point before the end of the ROM")
     if args.unknown:
         with open(args.unknown, "w") as f:
             json.dump(unknown, f, indent=0)
