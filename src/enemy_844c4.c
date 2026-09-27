@@ -43,8 +43,8 @@ extern u32 gUnk_08741FB8[];
 
 /* Externals */
 extern void TaskYieldTrampoline(u32 frames);
-extern void TaskDispatchTrampoline(void);
-extern void sub_08002e98(u32 a, u32 b, u32 *c);
+extern void TaskExitTrampoline(void);
+extern void CallTableEntry(u32 a, u32 b, u32 *c);
 extern void TaskFree(s32 i);
 extern void TaskSleepForever(void);
 extern void TaskSetEntry(void *fn, s32 i);
@@ -81,7 +81,7 @@ void sub_080844c4(void)
     t->unk04 = (u32)sub_0808451c;
     t->unk7A = 1;
     sub_0806395c(0);
-    sub_08002e98(gUnk_03002490->unk14, 6, gUnk_08741F78);
+    CallTableEntry(gUnk_03002490->unk14, 6, gUnk_08741F78);
 }
 
 void sub_080844f8(void)
@@ -90,7 +90,7 @@ void sub_080844f8(void)
 
     t = gUnk_03002490;
     t->unk04 = (u32)sub_0808451c;
-    sub_08002e98(t->unk14, 6, gUnk_08741F78);
+    CallTableEntry(t->unk14, 6, gUnk_08741F78);
 }
 
 void sub_0808451c(void)
@@ -115,7 +115,7 @@ skip:
     if (r == 0)
     {
         sub_08084c84();
-        sub_08002e98(gUnk_03002490->unk15, 6, gUnk_08741F90);
+        CallTableEntry(gUnk_03002490->unk15, 6, gUnk_08741F90);
     }
     v = gUnk_03002490;
     v->unk24 = (v->unk24 & 0xFFFF0000) | v->unk4A;
@@ -435,7 +435,7 @@ void sub_08084afc(void)
     gUnk_03002490->unk58 = -0x4000;
     TaskSetFrame(0);
     TaskYieldTrampoline(48);
-    TaskDispatchTrampoline();
+    TaskExitTrampoline();
 }
 
 void sub_08084b7c(void)
@@ -549,5 +549,5 @@ void sub_08084cd4(void)
     t->unk42 = 11;
     u = gUnk_03002490;
     u->unk38 = gUnk_08752284;
-    sub_08002e98(u->unk73, 2, gUnk_08741FB8);
+    CallTableEntry(u->unk73, 2, gUnk_08741FB8);
 }

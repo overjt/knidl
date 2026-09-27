@@ -358,7 +358,7 @@ void sub_08006384(u16 a)
         p->unk4C = -(a << 16);
 }
 
-void sub_080063ac(s16 a)
+void TaskStepForward(s16 a)
 {
     struct Sprite *p;
 

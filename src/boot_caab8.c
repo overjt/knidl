@@ -10,7 +10,7 @@
  * then runs its s16 command stream until it waits or is switched off: a
  * command is a bit mask and one argument, and bits 0-5 take one more word
  * each (x/y velocity, x/y acceleration, sprite id, wait; the word is skipped
- * when the bit is clear); bit 6 starts sound effect `arg` (sub_080031b8),
+ * when the bit is clear); bit 6 starts sound effect `arg` (PlaySfx),
  * bit 7 calls script `arg` (the cursor is saved in gUnk_0201BFD0[i]),
  * bit 8 switches to script `arg`, bits 9/10 set and run a loop of `arg`
  * passes, bit 11 restarts the script, bit 12 returns to the saved cursor
@@ -53,7 +53,7 @@ extern s16 *gUnk_0201BFD0[];
 extern s16 *gUnk_087577D8[];
 extern u32 gUnk_087554B8[];
 s32 QueueSprite(u32 a, u32 b, u32 c, u32 d, u32 e, s16 f);
-s32 sub_080031b8(s32 id);
+s32 PlaySfx(s32 id);
 
 /* Run the 115 boot-logo objects one frame: interpret each active object's
    script until it waits or ends, move it and draw it, switching it off
@@ -101,7 +101,7 @@ void BootLogoUpdateObjects(void)
                             obj->unk0A = *p++;
                             break;
                         case 64:
-                            sub_080031b8(arg);
+                            PlaySfx(arg);
                             break;
                         case 128:
                             gUnk_0201BFD0[i] = p;

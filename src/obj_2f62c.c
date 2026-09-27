@@ -38,7 +38,7 @@ extern u32 gUnk_087559C0[];
 extern s16 gUnk_087328C0[][2];
 extern u32 gUnk_087559DC[];
 
-void TaskDispatchTrampoline(void);
+void TaskExitTrampoline(void);
 void TaskYieldTrampoline(u32 frames);
 void RequestCopy(u32 mode, u32 src, u32 dst, u32 size);
 s32 TaskCreateInRange(u32 type, s32 start, s32 end);
@@ -76,7 +76,7 @@ void sub_0802f62c(void)
         sub_0802f6c0();
     else
         sub_0802f684();
-    TaskDispatchTrampoline();
+    TaskExitTrampoline();
 }
 
 void sub_0802f684(void)

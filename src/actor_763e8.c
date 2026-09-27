@@ -61,7 +61,7 @@ extern vu16 gUnk_03000F98[4];
 extern vu16 gUnk_03001EB8[4];
 
 /* callees */
-extern s32 sub_080031b8(u32 a);
+extern s32 PlaySfx(u32 a);
 extern s32 sub_0800a130();
 extern s32 sub_08022540();
 extern s32 sub_0802610c();
@@ -70,7 +70,7 @@ extern s32 sub_08064d34(u32 type, u8 keepPrio);
 extern u32 sub_08068e04(void);
 extern u32 sub_080692fc(void);
 extern void TaskYieldTrampoline(u32 a);
-extern void sub_08002e98(u32 a, u32 b, u32 *c);
+extern void CallTableEntry(u32 a, u32 b, u32 *c);
 extern void TaskFree(s32 id);
 extern void TaskMoveRelativeToParent(void);
 extern void TaskSleepForever(void);
@@ -527,7 +527,7 @@ void sub_08076c00(void)
             switch (u->unk24)
             {
             case 1:
-                sub_080031b8(153);
+                PlaySfx(153);
                 sub_080261d4(4);
                 sub_0806d4e4(0, 0);
                 {
@@ -761,7 +761,7 @@ void sub_0807705c(void)
 
         t->unk38 = gUnk_08752C38;
         t->unk18 = 0;
-        sub_08002e98(t->unk73, 1, gUnk_087400E0);
+        CallTableEntry(t->unk73, 1, gUnk_087400E0);
     }
 }
 
@@ -816,7 +816,7 @@ void sub_0807717c(void)
         sub_0806da3c(1, 0);
     sub_0806da3c(2, 2);
     sub_080261d4(4);
-    sub_080031b8(296);
+    PlaySfx(296);
 }
 
 void sub_080771b0(void)
@@ -847,17 +847,17 @@ void sub_08077224(void)
 {
     gUnk_03002490->unk04 = (u32)sub_08077254;
     sub_0806395c(0);
-    sub_08002e98(gUnk_03002490->unk14, 4, gUnk_08740100);
+    CallTableEntry(gUnk_03002490->unk14, 4, gUnk_08740100);
 }
 
 void sub_08077254(void)
 {
-    sub_08002e98(gUnk_03002490->unk15, 4, gUnk_08740110);
+    CallTableEntry(gUnk_03002490->unk15, 4, gUnk_08740110);
 }
 
 void sub_08077270(void)
 {
-    sub_08002e98(gUnk_03002490->unk14, 4, gUnk_08740100);
+    CallTableEntry(gUnk_03002490->unk14, 4, gUnk_08740100);
 }
 
 void sub_0807728c(void)
@@ -970,7 +970,7 @@ void sub_080773d0(void)
     TaskStop();
     gUnk_03002490->unk3C = 12;
     TaskYieldTrampoline(8);
-    sub_080031b8(225);
+    PlaySfx(225);
     sub_080771b0();
     {
         struct Task *t = gUnk_03002490;
@@ -1052,7 +1052,7 @@ void sub_08077568(void)
     TaskStop();
     gUnk_03002490->unk3C = 14;
     TaskYieldTrampoline(8);
-    sub_080031b8(225);
+    PlaySfx(225);
     sub_080771c4();
     {
         struct Task *t = gUnk_03002490;
@@ -1108,7 +1108,7 @@ void sub_0807771c(void)
         struct Task *t = gUnk_03002490;
 
         t->unk38 = gUnk_08752C74;
-        sub_08002e98(t->unk73, 1, gUnk_08740120);
+        CallTableEntry(t->unk73, 1, gUnk_08740120);
     }
 }
 
@@ -1324,15 +1324,15 @@ void sub_08077a64(void)
     t->unk30 = t->unk48;
     t->unk2C = t->unk4A;
     sub_0806395c(0);
-    sub_08002e98(gUnk_03002490->unk14, 3, gUnk_087402BC);
+    CallTableEntry(gUnk_03002490->unk14, 3, gUnk_087402BC);
 }
 
 void sub_08077aa8(void)
 {
-    sub_08002e98(gUnk_03002490->unk15, 3, gUnk_087402C8);
+    CallTableEntry(gUnk_03002490->unk15, 3, gUnk_087402C8);
 }
 
 void sub_08077ac4(void)
 {
-    sub_08002e98(gUnk_03002490->unk14, 3, gUnk_087402BC);
+    CallTableEntry(gUnk_03002490->unk14, 3, gUnk_087402BC);
 }

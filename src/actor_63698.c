@@ -39,7 +39,7 @@ extern void sub_080b54a4(u32 i);
 extern void TaskFree(s32 id);
 extern void TaskSetFrame(s32 a);
 extern void TaskSetMotionX(s32 a, s32 b, s32 c);
-extern void TaskDispatchTrampoline(void);
+extern void TaskExitTrampoline(void);
 extern s32 gUnk_030026F4;
 extern s16 gUnk_0872FB30[];
 extern u8 gUnk_03002350;
@@ -664,7 +664,7 @@ void sub_08063f24(s32 i)
     }
     gUnk_0200D090[0][i] = gUnk_0200D090[1][i] = 0;
     if (i == gCurTaskIdx && gUnk_030026F4 == 1)
-        TaskDispatchTrampoline();
+        TaskExitTrampoline();
     else
         TaskFree(i);
 }

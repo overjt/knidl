@@ -153,7 +153,7 @@ extern u8 gUnk_02005578;
 extern s8 gUnk_02007FF8;
 extern struct Unk03005680 gUnk_03005680;
 
-void sub_080031b8(s32 id);
+void PlaySfx(s32 id);
 s32 TaskCreateFrom(u32 type, s32 idx);
 void TaskSetEntry(void *a, u32 i);
 void sub_08029930(void);
@@ -375,7 +375,7 @@ s32 sub_08026584(void)
         }
         sub_080301e8(4, (gUnk_030055EC->unk44[gUnk_0200B034].unk2 << 4) + 16, (gUnk_030055EC->unk44[gUnk_0200B034].unk4 << 4) + 8);
         n++;
-        sub_080031b8(0x11B);
+        PlaySfx(0x11B);
         break;
     }
     return n;

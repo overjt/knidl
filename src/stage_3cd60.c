@@ -75,17 +75,17 @@ extern u32 gUnk_087519CC[];
 void TaskYieldTrampoline(s32 frames);
 void RequestCopy(u32 mode, u32 src, u32 dst, u32 size);
 s32 QueueSprite(u32 a, u32 b, u32 c, u32 d, u32 e, s16 f);
-u32 sub_08002ee8(u32 range);
-void sub_08003014(u16 *src, u16 *dst, s32 ratio, s32 count, u16 *out);
-s32 sub_080031b8(s32 id);
-void sub_080034f0(s32 player, s32 songId);
+u32 RandomRange(u32 range);
+void BlendColors(u16 *src, u16 *dst, s32 ratio, s32 count, u16 *out);
+s32 PlaySfx(s32 id);
+void StopSfxOnPlayer(s32 player, s32 songId);
 void TaskFree(s32 id);
 s32 TaskCreateFrom(u32 type, s32 idx);
 void TaskSetFrame(s32 a);
 s32 IsOnScreen(s16 x, s16 y);
 u32 IsWorldPosOnScreen(s16 a, s16 b);
 void sub_0800652c(u16 a, s32 b);
-void sub_0800663c(u32 idx);
+void TaskRestoreSkipMask(u32 idx);
 s32 sub_08009ee8(s32 a, s32 b);
 void sub_08009fcc(s32 a, s32 b, s32 c);
 void sub_0800a008(u32 a, s32 b, s32 c);
@@ -783,14 +783,14 @@ void sub_0803db74(void)
         case 2:
             u = gUnk_03002490;
             if ((u->unk88->unk42 & 16) == 0)
-                sub_08003014(gUnk_08226254, gUnk_08226254 - 16, 128, 16,
+                BlendColors(gUnk_08226254, gUnk_08226254 - 16, 128, 16,
                              (u16 *)((u32)gUnk_03001470
                                      + (((u->unk40 >> 12) + 1) << 5)));
             break;
         case 3:
             u3 = gUnk_03002490;
             if ((u3->unk88->unk42 & 16) == 0)
-                sub_08003014(gUnk_08226254, gUnk_08226254 - 16, 256, 16,
+                BlendColors(gUnk_08226254, gUnk_08226254 - 16, 256, 16,
                              (u16 *)((u32)gUnk_03001470
                                      + (((u3->unk40 >> 12) + 1) << 5)));
             break;
@@ -1096,7 +1096,7 @@ s32 sub_0803e34c(s32 a0, u16 a1)
     u16 songArea = a1;
 
     if (gUnk_03002360 == songArea)
-        return sub_080031b8(a0);
+        return PlaySfx(a0);
     return -1;
 }
 
@@ -1105,7 +1105,7 @@ void sub_0803e374(s32 a0, u16 a1)
     if (gUnk_03002360 == a1)
     {
         gUnk_03002490->unk88->unk2E = a0;
-        gUnk_03002490->unk88->unk2C = sub_080031b8((s16)a0);
+        gUnk_03002490->unk88->unk2C = PlaySfx((s16)a0);
     }
 }
 
@@ -1113,7 +1113,7 @@ void sub_0803e3ac(void)
 {
     if (gUnk_03002490->unk88->unk2C != -1)
     {
-        sub_080034f0(gUnk_03002490->unk88->unk2C, gUnk_03002490->unk88->unk2E);
+        StopSfxOnPlayer(gUnk_03002490->unk88->unk2C, gUnk_03002490->unk88->unk2E);
         gUnk_03002490->unk88->unk2C = -1;
     }
 }
@@ -1123,7 +1123,7 @@ void sub_0803e3e4(s32 a0)
     sub_0800652c((u16)a0, gCurTaskIdx);
     if (a0 != 0)
     {
-        sub_0800663c(63);
+        TaskRestoreSkipMask(63);
         sub_080271ec();
     }
     else
@@ -2312,7 +2312,7 @@ void sub_0803f6e0(void)
     for (i = 0; i < gUnk_03002350; i++)
     {
     retry:
-        gUnk_03001F2C = sub_08002ee8(gUnk_03002350);
+        gUnk_03001F2C = RandomRange(gUnk_03002350);
         for (k = 0; k < gUnk_03002350; k++)
         {
             if (sel[k] == gUnk_03001F2C)

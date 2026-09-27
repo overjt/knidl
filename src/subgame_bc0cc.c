@@ -96,13 +96,13 @@ extern u32 gUnk_087564FC[];
 extern u16 gUnk_08756514[];
 extern u16 gUnk_0875651C[];
 
-void TaskDispatchTrampoline(void);
+void TaskExitTrampoline(void);
 void TaskYieldTrampoline(u32 frames);
 void LZ77UnCompWram(const void *src, void *dest);
 void RequestCopy(u32 mode, u32 src, u32 dst, u32 size);
 s32 QueueSprite(u32 a, u32 b, u32 c, u32 d, u32 e, s16 f);
-void sub_08002e98(u32 a, u32 b, u32 *c);
-s32 sub_080031b8(s32 id);
+void CallTableEntry(u32 a, u32 b, u32 *c);
+s32 PlaySfx(s32 id);
 void TaskFree(s32 id);
 s32 TaskCreateFrom(u32 type, s32 idx);
 void TaskMove(void);
@@ -123,7 +123,7 @@ void sub_080bd508(void);
 
 void Task_QuickDrawObject(void)
 {
-    sub_08002e98(gUnk_03002490->unk73, 12, gUnk_087563B0);
+    CallTableEntry(gUnk_03002490->unk73, 12, gUnk_087563B0);
 }
 
 void sub_080bc0ec(void)
@@ -340,7 +340,7 @@ void sub_080bc460(void)
         gUnk_03002490->unk20 = 0;
         break;
     }
-    sub_080031b8(256);
+    PlaySfx(256);
 }
 
 void sub_080bc4b0(void)
@@ -547,18 +547,18 @@ void sub_080bc850(void)
         t->unk14 = 5;
         break;
     }
-    sub_08002e98(gUnk_03002490->unk14, 6, gUnk_08756468);
+    CallTableEntry(gUnk_03002490->unk14, 6, gUnk_08756468);
     TaskSleepForever();
 }
 
 void sub_080bc8a8(void)
 {
-    sub_08002e98(gUnk_03002490->unk15, 6, gUnk_08756480);
+    CallTableEntry(gUnk_03002490->unk15, 6, gUnk_08756480);
 }
 
 void sub_080bc8c4(void)
 {
-    sub_08002e98(gUnk_03002490->unk14, 6, gUnk_08756468);
+    CallTableEntry(gUnk_03002490->unk14, 6, gUnk_08756468);
 }
 
 void sub_080bc8e0(void)
@@ -788,7 +788,7 @@ void sub_080bcdac(void)
     gUnk_03002490->unk0C = (u32)sub_080bcbfc;
     sub_080bccbc();
     if (gUnk_03002490->unk20 != -1)
-        TaskDispatchTrampoline();
+        TaskExitTrampoline();
     else
         TaskSleepForever();
 }
@@ -904,7 +904,7 @@ void sub_080bcfa4(void)
     w->unk58 = 0x400000;
     w->unk3C++;
     TaskYieldTrampoline(4);
-    TaskDispatchTrampoline();
+    TaskExitTrampoline();
 }
 
 void sub_080bd06c(void)
@@ -927,7 +927,7 @@ void sub_080bd06c(void)
     TaskYieldTrampoline(2);
     gUnk_03002490->unk3C = -1;
     TaskYieldTrampoline(60);
-    TaskDispatchTrampoline();
+    TaskExitTrampoline();
 }
 
 void sub_080bd110(void)
@@ -1081,19 +1081,19 @@ void sub_080bd3dc(u8 a0)
         switch (t->unk18)
         {
         case 0:
-            sub_080031b8(253);
+            PlaySfx(253);
             break;
         case 1:
-            sub_080031b8(258);
+            PlaySfx(258);
             break;
         case 2:
-            sub_080031b8(259);
+            PlaySfx(259);
             break;
         case 3:
-            sub_080031b8(261);
+            PlaySfx(261);
             break;
         case 4:
-            sub_080031b8(260);
+            PlaySfx(260);
             break;
         }
     }
@@ -1131,13 +1131,13 @@ void sub_080bd4bc(void)
         t->unk14 = 5;
     else
         t->unk14 = 0;
-    sub_08002e98(gUnk_03002490->unk14, 6, gUnk_087564E4);
+    CallTableEntry(gUnk_03002490->unk14, 6, gUnk_087564E4);
     TaskSleepForever();
 }
 
 void sub_080bd508(void)
 {
-    sub_08002e98(gUnk_03002490->unk15, 6, gUnk_087564FC);
+    CallTableEntry(gUnk_03002490->unk15, 6, gUnk_087564FC);
 }
 
 void sub_080bd524(void)
@@ -1145,7 +1145,7 @@ void sub_080bd524(void)
     struct Task *t = gUnk_03002490;
 
     t->unk00 = 0;
-    sub_08002e98(t->unk14, 6, gUnk_087564E4);
+    CallTableEntry(t->unk14, 6, gUnk_087564E4);
 }
 
 void sub_080bd544(void)
@@ -1278,7 +1278,7 @@ void sub_080bd6b4(void)
     gUnk_03002490->unk4C = gUnk_03002490->unk48 << 16;
     gUnk_03002490->unk50 = gUnk_03002490->unk4A << 16;
     TaskYieldTrampoline(60);
-    TaskDispatchTrampoline();
+    TaskExitTrampoline();
 }
 
 void sub_080bd7ec(void)
@@ -1332,7 +1332,7 @@ void sub_080bd8ac(void)
     else
         t->unk3C = gUnk_0875651C[t->unk18];
     if (gUnk_03002490->unk3C == 6 && gUnk_03002360 == gUnk_03002490->unk1C)
-        sub_080031b8(220);
+        PlaySfx(220);
     gUnk_03002490->unk40 |= 0x800;
     sub_080bd828();
     TaskSleepForever();

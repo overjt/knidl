@@ -6,7 +6,7 @@ extern struct Task *gUnk_03002490;
 extern u32 gUnk_08732104[];
 
 s32 QueueSprite(u32 a, u32 b, u32 c, u32 d, s32 e, s32 f);
-s32 sub_08002ee8(s32 a);
+s32 RandomRange(s32 a);
 u32 IsWorldPosOnScreen(s16 x, s16 y);
 
 /* 16-byte per-slot record, 3 slots per player, at gUnk_02007E90.
@@ -45,7 +45,7 @@ void sub_080109c8(void)
         if (p->unk00 == 0)
         {
             p->unk08 = 0;
-            n = sub_08002ee8(16);
+            n = RandomRange(16);
             p->unk00 = -(gUnk_087320C4[0][n] << 16);
             p->unk04 = gUnk_087320C4[1][n] << 16;
         }

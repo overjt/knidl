@@ -2,11 +2,11 @@
 #include "global.h"
 
 extern void RunFrameNoTasks(void);
-extern void sub_08006914(void *, void *, void *);
-extern int sub_080072e0(void);
+extern void LinkMain1(void *, void *, void *);
+extern int IsLinkError(void);
 extern void sub_08008b8c(void);
 extern void RunFrames(int);
-extern void sub_08006868(void);
+extern void DisableSerial(void);
 
 extern u16 gUnk_03001F38;
 extern u16 gUnk_03005274;
@@ -58,8 +58,8 @@ void sub_0800293c(void)
         }
         old = gUnk_03004D7C;
         RunFrameNoTasks();
-        sub_08006914(&gUnk_03004D88, gUnk_03004D90, gUnk_03004D50);
-        if (sub_080072e0() != 0)
+        LinkMain1(&gUnk_03004D88, gUnk_03004D90, gUnk_03004D50);
+        if (IsLinkError() != 0)
             sub_08008b8c();
         if (old == gUnk_03004D7C) {
             if (++b > 30)
@@ -95,6 +95,6 @@ done:
     if (gUnk_03001F38 != 0)
         gUnk_0200EBA0 = 0;
     RunFrames(5);
-    sub_08006868();
+    DisableSerial();
     gUnk_03004D70 = 0;
 }

@@ -18,8 +18,8 @@ extern u32 gUnk_08755484[];
 
 void TaskYieldTrampoline(s32 frames);
 void RequestCopy(u32 mode, u32 src, u32 dst, u32 size);
-void sub_08003014(s32 a, s32 b, s32 c, s32 d, void *e);
-s32 sub_080031b8(s32 id);
+void BlendColors(s32 a, s32 b, s32 c, s32 d, void *e);
+s32 PlaySfx(s32 id);
 void TaskMove(void);
 void TaskDrawScreen(void);
 void TaskSleepForever(void);
@@ -216,7 +216,7 @@ void sub_08019000(void)
         TaskYieldTrampoline(2);
         gUnk_03002490->unk6C++;
     } while ((s16)gUnk_03002490->unk6C <= 1);
-    sub_080031b8(144 << 2);
+    PlaySfx(144 << 2);
     gUnk_03002490->unk5C = 128 << 9;
     gUnk_03002490->unk3C = 3;
     TaskYieldTrampoline(2);
@@ -273,7 +273,7 @@ void sub_08019590(void)
 
     if ((s16)t->unk70 > 23)
         t->unk70 = 0;
-    sub_08003014((s32)gUnk_082FE0E4, (s32)gUnk_082FE104,
+    BlendColors((s32)gUnk_082FE0E4, (s32)gUnk_082FE104,
                  gUnk_0874AD44[(s16)gUnk_03002490->unk70], 16, (void *)0x03001590);
     gUnk_03002490->unk70++;
 }
@@ -292,7 +292,7 @@ void sub_080195ec(void)
     TaskStop();
     gUnk_03002490->unk3C = 0;
     TaskYieldTrampoline(156);
-    sub_080031b8(138 << 1);
+    PlaySfx(138 << 1);
     TaskSetMotion(0xFFFF0000, 160 << 3, 0x5A5A5A5A, 0xFFFB8000, 158 << 7, 0x5A5A5A5A);
     gUnk_03002490->unk3C = 0;
     TaskYieldTrampoline(1);
@@ -348,7 +348,7 @@ void sub_080195ec(void)
     TaskStop();
     gUnk_03002490->unk3C = 10;
     TaskYieldTrampoline(1);
-    sub_080031b8(0x00000115);
+    PlaySfx(0x00000115);
     TaskSetMotion(0, 0, 0x5A5A5A5A, 0xFFFA0000, 158 << 7, 0x5A5A5A5A);
     gUnk_03002490->unk3C = 12;
     TaskYieldTrampoline(1);
@@ -429,7 +429,7 @@ void sub_080195ec(void)
     TaskStop();
     gUnk_03002490->unk3C = 11;
     TaskYieldTrampoline(1);
-    sub_080031b8(0x00000115);
+    PlaySfx(0x00000115);
     gUnk_03002490->unk58 = 0xFFFCB000;
     gUnk_03002490->unk60 = 160 << 7;
     gUnk_03002490->unk3C = 9;

@@ -47,13 +47,13 @@ extern vu8 gUnk_03000040;
 extern vu8 gUnk_03000B08;
 extern vu8 gUnk_03001EAC;
 
-void TaskDispatchTrampoline(void);
+void TaskExitTrampoline(void);
 void TaskYieldTrampoline(s32 frames);
 void RequestCopy(u32 mode, u32 src, u32 dst, u32 size);
 s32 QueueSprite(u32 a, u32 b, u32 c, u32 d, u32 e, s16 f);  /* sprite draw; callers pass f sign-extended (lsls/asrs #16), the early_1518 definition says u16 (lesson 3.428) */
 s32 DrawAffineSprite(s32 a, s16 b, s16 c, s32 d);
-void sub_08003014(u16 *src, u16 *dst, s32 ratio, s32 count, u16 *out);
-s32 sub_080031b8(s32 id);                                    /* play a sound effect */
+void BlendColors(u16 *src, u16 *dst, s32 ratio, s32 count, u16 *out);
+s32 PlaySfx(s32 id);                                    /* play a sound effect */
 s32 TaskCreateFrom(u32 type, s32 idx);                         /* spawn a task */
 void TaskMove(void);
 void TaskDrawScreen(void);
@@ -214,7 +214,7 @@ void sub_080c7e4c(void)
     gUnk_03002490->unk58 = 0x28000;
     gUnk_03002490->unk60 = -0x10000;
     sub_080c8468();
-    sub_080031b8(0x121);
+    PlaySfx(0x121);
     gUnk_03002490->unk3C = 46;
     TaskYieldTrampoline(4);
     TaskStop();
@@ -286,7 +286,7 @@ void sub_080c8298(void)
             gUnk_03002490->unk34 = 0;
         if (gUnk_03002490->unk34 > 10)
             gUnk_03002490->unk34 = 0;
-        sub_08003014(gUnk_0859A0B0, gUnk_0859A0D0, gUnk_08757368[gUnk_03002490->unk34], 16,
+        BlendColors(gUnk_0859A0B0, gUnk_0859A0D0, gUnk_08757368[gUnk_03002490->unk34], 16,
                      &gUnk_03001470[((gUnk_03002490->unk40 >> 12) + 2) * 16]);
     }
     t = gUnk_03002490;
@@ -421,7 +421,7 @@ void sub_080c85d8(void)
     gUnk_03002490->unk3C = 68;
     TaskYieldTrampoline(60);
     TaskStop();
-    TaskDispatchTrampoline();
+    TaskExitTrampoline();
 }
 
 /* The draw callback task type #100 variant 6 installs: grows the scale
@@ -443,7 +443,7 @@ void sub_080c8778(void)
         gUnk_03002490->unk1C += gUnk_03002490->unk2C;
         if (gUnk_03002490->unk1C > 255)
             gUnk_03002490->unk1C = 255;
-        sub_08003014(gUnk_0859A0F0, gUnk_0859A110, (u16)gUnk_03002490->unk1C, 16,
+        BlendColors(gUnk_0859A0F0, gUnk_0859A110, (u16)gUnk_03002490->unk1C, 16,
                      &gUnk_03001470[(gUnk_03002490->unk40 >> 12) * 16]);
     }
     if (gUnk_03002490->unk38 == NULL)
@@ -477,10 +477,10 @@ void sub_080c88f0(void)
     gUnk_03002490->unk0C = 0;
     TaskYieldTrampoline(240);
     sub_080c8924();
-    sub_080031b8(282);
+    PlaySfx(282);
     TaskYieldTrampoline(12);
     sub_080269e8();
-    TaskDispatchTrampoline();
+    TaskExitTrampoline();
 }
 
 /* Spawn the nine task type #100 variant-8 sprites (Task.unk74 = 0..8). */
@@ -629,7 +629,7 @@ void sub_080c8958(void)
         } while ((s16)gUnk_03002490->unk6C <= 2);
         break;
     }
-    TaskDispatchTrampoline();
+    TaskExitTrampoline();
 }
 
 /* Task type #100 variant 9: an invisible task at the camera's (120, 80)
@@ -747,5 +747,5 @@ void sub_080c8ea8(void)
     } while ((s16)gUnk_03002490->unk6C <= 10);
     gUnk_0300118C = gUnk_03000040 = gUnk_03000B08 = gUnk_03001EAC = 0;
     gUnk_03001ED8 &= 0xFEFF;
-    TaskDispatchTrampoline();
+    TaskExitTrampoline();
 }

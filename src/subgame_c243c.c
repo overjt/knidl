@@ -177,9 +177,9 @@ extern u8 gUnk_080CFEA2[11][3];
 extern u8 gUnk_080CFEC3[11][3];
 
 s32 QueueSprite(u32 a, u32 b, u32 c, u32 d, u32 e, s16 f);  /* sprite draw; callers pass f sign-extended (lsls/asrs #16), the early_1518 definition says u16 */
-void sub_08003014(u16 *src, u16 *dst, s32 ratio, s32 count, u16 *out);
-s32 sub_08003110(s32 songId);
-s32 sub_080031b8(s32 id);
+void BlendColors(u16 *src, u16 *dst, s32 ratio, s32 count, u16 *out);
+s32 PlayBgm(s32 songId);
+s32 PlaySfx(s32 id);
 void TaskSleepForever(void);                                     /* end the running task */
 s32 sub_08009eb8(s32 a, u32 b);
 void SubGameReplay(s32 a0);
@@ -320,14 +320,14 @@ void sub_080c2740(void)
         if (++gUnk_02017140.unk18 > 10) {
             switch (gUnk_02017140.unk0C[gUnk_02017140.unk08[0]]) {
             case 0:
-                sub_08003110(0x81D);
+                PlayBgm(0x81D);
                 break;
             case 1:
             case 2:
-                sub_08003110(0x81C);
+                PlayBgm(0x81C);
                 break;
             case 3:
-                sub_08003110(0x817);
+                PlayBgm(0x817);
                 break;
             }
             gUnk_02017140.unk18 = 0;
@@ -354,7 +354,7 @@ void sub_080c2740(void)
                 if (gUnk_02017140.unk02 > 0) {
                     gUnk_02017140.unk02--;
                     gUnk_02017140.unk01++;
-                    sub_080031b8(220);
+                    PlaySfx(220);
                 }
             }
         } else {
@@ -375,7 +375,7 @@ void sub_080c2740(void)
                     t->unk3E = 0x2000;
                     t->unk42 = 1;
                     sub_080c2ccc(-1);
-                    sub_080031b8(102);
+                    PlaySfx(102);
                 }
                 gUnk_02017140.unk00++;
             } else {
@@ -406,7 +406,7 @@ void sub_080c2740(void)
                 gUnk_03002490->unk28 = 1;
             if (gAirGrindPtr->unk446 == 0) {
                 sub_080c2ccc(gUnk_03002490->unk28);
-                sub_080031b8(101);
+                PlaySfx(101);
             }
         }
         if (gUnk_03001EB8[0] & 128) {
@@ -414,7 +414,7 @@ void sub_080c2740(void)
                 gUnk_03002490->unk28 = 0;
             if (gAirGrindPtr->unk446 == 0) {
                 sub_080c2ccc(gUnk_03002490->unk28);
-                sub_080031b8(101);
+                PlaySfx(101);
             }
         }
         if (gUnk_03001EB8[0] & 9) {
@@ -430,7 +430,7 @@ void sub_080c2740(void)
                 gUnk_02017140.unk00 = 99;
             }
             if (gAirGrindPtr->unk446 == 0)
-                sub_080031b8(102);
+                PlaySfx(102);
         }
         break;
     case 6:
@@ -439,7 +439,7 @@ void sub_080c2740(void)
                 gUnk_03002490->unk2C = 2;
             if (gAirGrindPtr->unk446 == 0) {
                 sub_080c2ccc(gUnk_03002490->unk2C);
-                sub_080031b8(101);
+                PlaySfx(101);
             }
         }
         if (gUnk_03001EB8[0] & 128) {
@@ -447,19 +447,19 @@ void sub_080c2740(void)
                 gUnk_03002490->unk2C = 0;
             if (gAirGrindPtr->unk446 == 0) {
                 sub_080c2ccc(gUnk_03002490->unk2C);
-                sub_080031b8(101);
+                PlaySfx(101);
             }
         }
         if (gUnk_03001EB8[0] & 9) {
             SubGameReplay(gUnk_03002490->unk2C);
             gUnk_02017140.unk00 = 99;
             if (gAirGrindPtr->unk446 == 0)
-                sub_080031b8(102);
+                PlaySfx(102);
         } else if (gUnk_03001EB8[0] & 2) {
             if (gAirGrindPtr->unk446 == 0) {
                 gUnk_03002490->unk3C = 1;
                 sub_080c2ccc(gUnk_03002490->unk28);
-                sub_080031b8(215);
+                PlaySfx(215);
             }
             gUnk_02017140.unk00--;
         }
@@ -489,12 +489,12 @@ void sub_080c2ba8(void)
     from = gUnk_03002490->unk6E;
     to = from + 1;
     step = 8 - (s16)gUnk_03002490->unk6C;
-    sub_08003014(gUnk_08609F40[from], gUnk_08609F40[to], (u16)(step * 32), 16, gUnk_03001510);
+    BlendColors(gUnk_08609F40[from], gUnk_08609F40[to], (u16)(step * 32), 16, gUnk_03001510);
     gUnk_03002490->unk70--;
     if ((s16)gUnk_03002490->unk70 < 0)
         gUnk_03002490->unk70 = 8;
     step2 = 8 - (s16)gUnk_03002490->unk70;
-    sub_08003014(gUnk_08609F40[6], gUnk_08609F40[7], (u16)(step2 * 32), 16, &gUnk_03001510[16]);
+    BlendColors(gUnk_08609F40[6], gUnk_08609F40[7], (u16)(step2 * 32), 16, &gUnk_03001510[16]);
     if (gAirGrindPtr->unk446 == 0) {
         t = gUnk_03002490;
         tbl = t->unk38;

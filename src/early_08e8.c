@@ -5,10 +5,10 @@
  * agbcc -O2 -mthumb-interwork (game-code recipe).
  *
  * Matching notes (docs/lessons-learned.md):
- *  - sub_080008e8 needs the `if (0) return steps;` dead return: without it
+ *  - BeginFade needs the `if (0) return steps;` dead return: without it
  *    the u16 parameter is truncated in place (r0) instead of into the copy
  *    r5 the ROM keeps, and the function pushes one register less.
- *  - sub_08000934: the fade source/destination buffers 0x03001270 and
+ *  - UpdateFade: the fade source/destination buffers 0x03001270 and
  *    0x03001A90 are SYMBOLS (gUnk_03001270 / gUnk_03001A90), not address
  *    literals.  Written as literals, gcc CSEs the two mentions of each
  *    address into one pseudo and the whole entry/tail register assignment
@@ -64,17 +64,17 @@ extern void m4aSoundVSync(void);
 extern void m4aSoundMain(void);
 extern void SoundDriverVSyncOff(void);
 extern void SoftReset(u32 resetFlags);
-extern void sub_08003484(void);
+extern void StopAllSound(void);
 extern void sub_08004734(void);
-extern void sub_08006cd4(void);
+extern void LinkVSync(void);
 extern void ReadKeys(void);
 extern void FlushDisplayRegs(void);
 extern void CopyOamAndPalette(void);
 extern void ProcessCopyQueue(void);
 
-void sub_08000934(void);
+void UpdateFade(void);
 
-u32 sub_080008e8(u16 steps, u16 delta, u16 *mask)
+u32 BeginFade(u16 steps, u16 delta, u16 *mask)
 {
     gUnk_03001174 = gUnk_03001E98 = 1;
     gUnk_03001E90 = steps;
@@ -84,7 +84,7 @@ u32 sub_080008e8(u16 steps, u16 delta, u16 *mask)
         return steps;
 }
 
-void sub_08000934(void)
+void UpdateFade(void)
 {
     u32 *src;
     u32 *dst;

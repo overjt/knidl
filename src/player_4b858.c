@@ -11,7 +11,7 @@
  * 22: the stance (animation 0xE84, effect 28 on the ground) picks the
  * next move from the input - up 0, back 1 or forward 2 (sub_0803f884,
  * kept in gUnk_03001F2C), down 3, A 4, leaving the ground 5 - or a
- * random one (gUnk_0873B65E[sub_08002ee8(4)]) when the timer runs out,
+ * random one (gUnk_0873B65E[RandomRange(4)]) when the timer runs out,
  * and goes to state 7 once PlayerState.unk08 is 0.  States 0-5 are the
  * moves (animations 0xE97-0xEE4 with the frame index PlayerState.unk16,
  * velocity presets 2 and 56-68, sounds 178/179, a landing with effect
@@ -30,7 +30,7 @@ extern s32 gUnk_03001F2C;               /* boot_091ac.c spelling */
 extern u8 gUnk_0873B65E[];
 
 void TaskYieldTrampoline(s32 frames);
-u32 sub_08002ee8(u32 range);
+u32 RandomRange(u32 range);
 void TaskSleepForever(void);
 void TaskSetEntry(void *a, u32 i);
 void TaskSetMotionXFacing(s32 a, s32 b);
@@ -101,7 +101,7 @@ loop:
             b = gUnk_03002490;
             if (--b->unk88->unk14 == 0)
             {
-                gUnk_03002490->unk73 = gUnk_0873B65E[sub_08002ee8(4)];
+                gUnk_03002490->unk73 = gUnk_0873B65E[RandomRange(4)];
                 goto loop;
             }
             if (!(b->unk7A & 1))

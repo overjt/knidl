@@ -94,7 +94,7 @@ extern s8 gUnk_0300238C;
 extern s8 gUnk_03002468;
 extern u16 gUnk_0873A458[];
 
-s32 sub_080031b8(s32 id);
+s32 PlaySfx(s32 id);
 void sub_08026308(void);
 void sub_0802b2f0(void);
 void sub_0802b368(void);
@@ -535,7 +535,7 @@ s16 sub_08032338(void)
     b->unk14 = 0;
     b->unk10 = gUnk_0873A458;
     gUnk_02004CA0[gUnk_020060C8] |= 0x8000;
-    sub_080031b8(224);
+    PlaySfx(224);
     if (b->unk10[0] == 1)
         sub_08032500(b);
     return i;

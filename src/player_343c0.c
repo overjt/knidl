@@ -7,7 +7,7 @@
  * Player mode bodies, part 2.  The player task starts the "enter"
  * coroutine of the requested action PlayerState.unk02 from
  * gUnk_0873A748[62] and every frame the "per-frame" handler Task.unk15
- * from gUnk_0873A840[57] (sub_08002e98(index, count, table); entry 0 of
+ * from gUnk_0873A840[57] (CallTableEntry(index, count, table); entry 0 of
  * both tables is NULL).  Here: actions 3-6 and 22.
  * sub_080343c0 enters mode 2 (handler 3, sub_0803469c), sub_08034874
  * mode 3 (handler 4, sub_080349b4), sub_08034a88 and sub_08034d34 mode 4

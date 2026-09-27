@@ -18,7 +18,7 @@ extern u32 gUnk_0874C930[];
 extern u32 gUnk_0874C828[];
 extern u32 gUnk_0874C600[];
 
-void TaskDispatchTrampoline(void);
+void TaskExitTrampoline(void);
 void TaskYieldTrampoline(s32 frames);
 void TaskMove(void);
 void TaskMoveRelativeToParent(void);
@@ -26,8 +26,8 @@ void TaskDrawWorld(void);
 void TaskSetFrameByFacing(s16 a);
 void TaskSetMotionXFacing(s32 a, s32 b);
 void TaskStop(void);
-u16 sub_080064ac(s32 base, u8 scale, u8 amount);   /* base + ((rand(256) * amount) >> 8) * scale */
-s16 sub_080064dc(s32 base, u8 scale, u8 amount);   /* the same, negated when Task.unk43 != 1 */
+u16 RandomSpread(s32 base, u8 scale, u8 amount);   /* base + ((rand(256) * amount) >> 8) * scale */
+s16 RandomSpreadFacing(s32 base, u8 scale, u8 amount);   /* the same, negated when Task.unk43 != 1 */
 s32 sub_0805afac(s32 a0, s32 a1, s32 a2);          /* M16's effect spawner (spawns task type #7) */
 void sub_08056da8(void);
 
@@ -49,7 +49,7 @@ void sub_08056448(void)
         TaskYieldTrampoline(1);
         gUnk_03002490->unk6C++;
     } while ((s16)gUnk_03002490->unk6C <= 10);
-    TaskDispatchTrampoline();
+    TaskExitTrampoline();
 }
 
 void sub_080564ac(void)
@@ -179,7 +179,7 @@ void sub_080564ac(void)
         }
         break;
     }
-    TaskDispatchTrampoline();
+    TaskExitTrampoline();
 }
 
 void sub_08056770(void)
@@ -267,8 +267,8 @@ void sub_08056770(void)
             else
             {
                 u->unk43 = -p->unk43;
-                gUnk_03002490->unk4C = sub_080064dc(-8, 1, 16) << 16;
-                gUnk_03002490->unk50 = (sub_080064ac(0, 1, 8) << 16) + 0x80000;
+                gUnk_03002490->unk4C = RandomSpreadFacing(-8, 1, 16) << 16;
+                gUnk_03002490->unk50 = (RandomSpread(0, 1, 8) << 16) + 0x80000;
                 {
                     struct Task *w = gUnk_03002490;
 
@@ -322,8 +322,8 @@ void sub_08056770(void)
         break;
     case 2:
         gUnk_03002490->unk00 = (u32)TaskMoveRelativeToParent;
-        gUnk_03002490->unk4C = sub_080064dc(-8, 1, 8) << 16;
-        gUnk_03002490->unk50 = sub_080064ac(-8, 1, 8) << 16;
+        gUnk_03002490->unk4C = RandomSpreadFacing(-8, 1, 8) << 16;
+        gUnk_03002490->unk50 = RandomSpread(-8, 1, 8) << 16;
         TaskSetMotionXFacing(0x5A5A5A5A, -0x4000);
         {
             struct Task *u = gUnk_03002490;
@@ -441,7 +441,7 @@ void sub_08056770(void)
         TaskYieldTrampoline(2);
         break;
     }
-    TaskDispatchTrampoline();
+    TaskExitTrampoline();
 }
 
 void sub_08056da8(void)

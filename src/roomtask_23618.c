@@ -22,7 +22,7 @@ extern u8 gUnk_0200B050;
 extern u16 gUnk_03005624;
 extern u16 gUnk_030055C0;
 
-void sub_08002e98(u32 idx, u32 count, void (**fns)(void));
+void CallTableEntry(u32 idx, u32 count, void (**fns)(void));
 void TaskSleepForever(void);
 void sub_0800a6a4(void);
 void sub_0800a778(void);
@@ -58,7 +58,7 @@ void sub_080238ec(void);
 
 void Task_Room(void)
 {
-    sub_08002e98(gUnk_03002490->unk14, 7, gRoomTaskVariants);
+    CallTableEntry(gUnk_03002490->unk14, 7, gRoomTaskVariants);
 }
 
 void sub_08023634(void)

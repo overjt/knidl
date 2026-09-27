@@ -68,20 +68,20 @@ extern vs32 gCurTaskIdx;
 
 /* callees */
 extern s32 QueueSprite(u32 a, u32 b, u32 c, u32 d, u32 e, s16 f);
-extern s32 sub_080031b8(u32 a);
+extern s32 PlaySfx(u32 a);
 extern s32 sub_08009e14();
 extern s32 sub_08009e20();
 extern s32 sub_08021b18(u16 x, u16 y);
 extern s32 sub_08025bc8();
 extern s32 sub_080640dc(struct AnimCmd *p);
 extern s32 sub_080b4204();
-extern u32 sub_08002ee8(u32 range);
+extern u32 RandomRange(u32 range);
 extern u32 sub_08068e04(void);
 extern u32 sub_080692fc(void);
 extern void TaskYieldTrampoline(u32 a);
-extern void sub_08002e98(u32 a, u32 b, u32 *c);
-extern void sub_080037f8(u16 speed);
-extern void sub_0800381c(s32 speed);
+extern void CallTableEntry(u32 a, u32 b, u32 *c);
+extern void FadeInSfx(u16 speed);
+extern void FadeOutSfx(s32 speed);
 extern void TaskSleepForever(void);
 extern void TaskSetEntry(void *a, u32 i);
 extern void TaskStop(void);
@@ -164,7 +164,7 @@ void sub_08077b60(void)
     sub_08077a48();
     while (gUnk_02006094 == 0)
     {
-        sub_080031b8(230);
+        PlaySfx(230);
         TaskYieldTrampoline(3);
     }
     TaskSleepForever();
@@ -219,7 +219,7 @@ void sub_08077c64(void)
         struct Task *t = gUnk_03002490;
 
         t->unk38 = gUnk_08752D40;
-        sub_08002e98(t->unk73, 1, gUnk_087402D4);
+        CallTableEntry(t->unk73, 1, gUnk_087402D4);
     }
 }
 
@@ -243,7 +243,7 @@ void sub_08077cf4(void)
 {
     sub_08067108();
     gUnk_02004B64 = 1;
-    sub_080031b8(226);
+    PlaySfx(226);
     sub_080261d4(4);
     sub_08077cd4();
     sub_08009e14();
@@ -263,7 +263,7 @@ void sub_08077d54(void)
 
     sub_08067108();
     TaskYieldTrampoline(15);
-    sub_080037f8(16);
+    FadeInSfx(16);
     TaskYieldTrampoline(15);
     sub_080261d4(4);
     gUnk_02004B64 = 0;
@@ -275,7 +275,7 @@ void sub_08077d54(void)
 
             do
             {
-                sub_080031b8(221);
+                PlaySfx(221);
                 done = sub_080b4204(i);
                 TaskYieldTrampoline(8);
             } while (done == 0);
@@ -291,18 +291,18 @@ void sub_08077dd8(void)
 {
     gUnk_03002490->unk04 = (u32)sub_08077e08;
     sub_0806395c(0);
-    sub_08002e98(gUnk_03002490->unk14, 3, gUnk_087402D8);
+    CallTableEntry(gUnk_03002490->unk14, 3, gUnk_087402D8);
 }
 
 void sub_08077e08(void)
 {
     if ((u8)sub_080692fc() == 0)
-        sub_08002e98(gUnk_03002490->unk15, 3, gUnk_087402E4);
+        CallTableEntry(gUnk_03002490->unk15, 3, gUnk_087402E4);
 }
 
 void sub_08077e30(void)
 {
-    sub_08002e98(gUnk_03002490->unk14, 3, gUnk_087402D8);
+    CallTableEntry(gUnk_03002490->unk14, 3, gUnk_087402D8);
 }
 
 void sub_08077e4c(void)
@@ -324,7 +324,7 @@ void sub_08077e9c(void)
 {
     gUnk_03002490->unk15 = 1;
     TaskYieldTrampoline(8);
-    sub_0800381c(16);
+    FadeOutSfx(16);
     sub_08025bc8(gCurTaskIdx);
     TaskSleepForever();
 }
@@ -359,7 +359,7 @@ void sub_08077f0c(void)
         struct Task *t = gUnk_03002490;
 
         t->unk38 = gUnk_08752D48;
-        sub_08002e98(t->unk73, 1, gUnk_087402F0);
+        CallTableEntry(t->unk73, 1, gUnk_087402F0);
     }
 }
 
@@ -367,12 +367,12 @@ void sub_08077f4c(void)
 {
     gUnk_03002490->unk04 = (u32)sub_08077f7c;
     sub_0806395c(0);
-    sub_08002e98(gUnk_03002490->unk14, 1, gUnk_087402F4);
+    CallTableEntry(gUnk_03002490->unk14, 1, gUnk_087402F4);
 }
 
 void sub_08077f7c(void)
 {
-    sub_08002e98(gUnk_03002490->unk15, 1, gUnk_087402F8);
+    CallTableEntry(gUnk_03002490->unk15, 1, gUnk_087402F8);
 }
 
 void sub_08077f98(void)
@@ -462,7 +462,7 @@ void sub_0807811c(struct M19Particle *p)
     if (p->unk02 > 240)
     {
         p->unk02 = 0;
-        p->unk03 = sub_08002ee8(132) + 8;
+        p->unk03 = RandomRange(132) + 8;
     }
 }
 
@@ -472,25 +472,25 @@ void sub_0807817c(struct M19Particle *p, u8 a, u8 b)
     {
     case 0:
     case 1:
-        p->unk02 = sub_08002ee8(64) + 100;
+        p->unk02 = RandomRange(64) + 100;
         break;
     case 2:
-        p->unk02 = sub_08002ee8(48) + 170;
+        p->unk02 = RandomRange(48) + 170;
         break;
     case 3:
         switch (b)
         {
         case 0:
-            p->unk02 = sub_08002ee8(48) + 120;
+            p->unk02 = RandomRange(48) + 120;
             break;
         case 1:
-            p->unk02 = sub_08002ee8(48) + 40;
+            p->unk02 = RandomRange(48) + 40;
             break;
         }
         break;
     }
-    p->unk03 = sub_08002ee8(132) + 8;
-    p->unk01 = sub_08002ee8(10);
+    p->unk03 = RandomRange(132) + 8;
+    p->unk01 = RandomRange(10);
     p->unk00 = gUnk_08740620[gUnk_03002490->unk28];
 }
 
@@ -571,7 +571,7 @@ void sub_0807840c(struct M19Particle *p, u8 a)
         }
         if (p->unk03 <= 7)
         {
-            p->unk02 = sub_08002ee8(250);
+            p->unk02 = RandomRange(250);
             p->unk03 = 160;
         }
         break;
@@ -586,7 +586,7 @@ void sub_0807840c(struct M19Particle *p, u8 a)
         if (p->unk03 <= 7)
         {
             {
-                s32 v = sub_08002ee8(48) + 232;
+                s32 v = RandomRange(48) + 232;
 
                 p->unk02 = v + (u8)gUnk_03002490->unk48;
             }
@@ -604,7 +604,7 @@ void sub_0807840c(struct M19Particle *p, u8 a)
         if (p->unk03 <= 7)
         {
             {
-                s32 v = sub_08002ee8(64) + 224;
+                s32 v = RandomRange(64) + 224;
 
                 p->unk02 = v + (u8)gUnk_03002490->unk48;
             }
@@ -622,7 +622,7 @@ void sub_0807840c(struct M19Particle *p, u8 a)
         if (p->unk03 <= 7)
         {
             {
-                s32 v = sub_08002ee8(48) + 232;
+                s32 v = RandomRange(48) + 232;
 
                 p->unk02 = v + (u8)gUnk_03002490->unk48 + 96;
             }
@@ -640,7 +640,7 @@ void sub_0807840c(struct M19Particle *p, u8 a)
         if (p->unk03 > 160)
         {
             {
-                s32 v = sub_08002ee8(48) + 232;
+                s32 v = RandomRange(48) + 232;
 
                 p->unk02 = v + (u8)gUnk_03002490->unk48;
             }
@@ -703,7 +703,7 @@ void sub_08078598(void)
         struct Task *t = gUnk_03002490;
 
         t->unk40 = 0xF000 | t->unk40;
-        sub_08002e98(t->unk73, 5, gUnk_087402FC);
+        CallTableEntry(t->unk73, 5, gUnk_087402FC);
     }
 }
 
@@ -861,7 +861,7 @@ void sub_0807893c(void)
 
         t->unk38 = gUnk_08752118;
         t->unk8C->unk1A = 4;
-        sub_08002e98(t->unk73, 6, gUnk_08740630);
+        CallTableEntry(t->unk73, 6, gUnk_08740630);
     }
 }
 

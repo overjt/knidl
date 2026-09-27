@@ -32,7 +32,7 @@ extern u32 *gUnk_0873F118[];
 extern u32 gUnk_0873F01C[];
 extern u8 gUnk_0825CA44[];
 extern vs16 gUnk_03004CA0[];
-extern void sub_080031b8(u32 a);
+extern void PlaySfx(u32 a);
 extern u16 gUnk_02007D60;
 extern u16 gUnk_02007FF0;
 extern u32 *gUnk_0873F0C4[];
@@ -121,7 +121,7 @@ extern s8 gUnk_0300238C;
 extern u8 gUnk_03001610[];
 extern u8 gUnk_03001F30;
 extern void sub_080713f8(s32 a, s32 b, u32 c);
-extern void sub_08003110(u32 a);
+extern void PlayBgm(u32 a);
 extern u8 gUnk_0200B030;
 extern u8 gUnk_03001F34;
 extern u8 gUnk_03001270[];
@@ -156,10 +156,10 @@ extern void sub_08063fe0(void);
 extern u8 sub_08065160(void);
 extern void TaskIntegrateMotion(void);
 extern s32 sub_08064d34(u32 type, u8 keepPrio);
-extern void sub_08002e98(u32 a, u32 b, u32 *c);
-extern void sub_08003014(u32 a, u32 b, u32 c, u32 d, u32 e);
+extern void CallTableEntry(u32 a, u32 b, u32 *c);
+extern void BlendColors(u32 a, u32 b, u32 c, u32 d, u32 e);
 extern void TaskYieldTrampoline(u32 a);
-extern void TaskDispatchTrampoline(void);
+extern void TaskExitTrampoline(void);
 
 void sub_08065470(void);
 void sub_0806555c(void);
@@ -458,7 +458,7 @@ void sub_08065848(u32 p0, s32 idx)
 
 void sub_080658b8(void)
 {
-    sub_08002e98(gUnk_03002490->unk73, 5, gUnk_0873DF24);
+    CallTableEntry(gUnk_03002490->unk73, 5, gUnk_0873DF24);
 }
 
 /* Task body: cross-fade two palettes while the helper's refcount holds. */
@@ -501,12 +501,12 @@ void sub_080658d8(void)
         if (x->unk34 > 256)
             x->unk34 = 256;
         y = gUnk_03002490;
-        sub_08003014((u32)(gUnk_0825088C + (y->unk2C << 5)),
+        BlendColors((u32)(gUnk_0825088C + (y->unk2C << 5)),
                      (u32)(gUnk_0825088C + (y->unk30 << 5)), (u16)y->unk34,
                      16, (u32)(gUnk_03001470 + (y->unk18 << 5)));
         TaskYieldTrampoline(1);
     }
-    TaskDispatchTrampoline();
+    TaskExitTrampoline();
 }
 
 /* Task body: cycle the actor's 32-byte palette out of gUnk_0873DF38. */
@@ -542,7 +542,7 @@ void sub_080659b4(void)
         x->unk18--;
         TaskYieldTrampoline(1);
     }
-    TaskDispatchTrampoline();
+    TaskExitTrampoline();
 }
 
 /* Task body: flash one palette entry on and off. */
@@ -578,7 +578,7 @@ void sub_08065a68(void)
         x->unk18--;
         TaskYieldTrampoline(1);
     }
-    TaskDispatchTrampoline();
+    TaskExitTrampoline();
 }
 
 /* Task body: cross-fade the actor's palette pair out of gUnk_0873DF7C. */
@@ -626,12 +626,12 @@ void sub_08065b14(void)
         if (x->unk34 > 256)
             x->unk34 = 256;
         y = gUnk_03002490;
-        sub_08003014(gUnk_0873DF7C[a->unk0C][y->unk2C],
+        BlendColors(gUnk_0873DF7C[a->unk0C][y->unk2C],
                      gUnk_0873DF7C[a->unk0C][y->unk30], (u16)y->unk34, 16,
                      (u32)(gUnk_03001470 + (y->unk18 << 5)));
         TaskYieldTrampoline(1);
     }
-    TaskDispatchTrampoline();
+    TaskExitTrampoline();
 }
 
 /* Task body: fade the shared palette in, out, or straight to zero. */
@@ -654,7 +654,7 @@ void sub_08065c14(void)
                 t->unk1C = 3;
             }
             u = gUnk_03002490;
-            sub_08003014((u32)gUnk_02005E10, (u32)gUnk_0873DFAC,
+            BlendColors((u32)gUnk_02005E10, (u32)gUnk_0873DFAC,
                          (u16)u->unk20, 224, (u32)gUnk_030012B0);
             break;
         case 1:
@@ -665,18 +665,18 @@ void sub_08065c14(void)
                 t->unk1C = 3;
             }
             u = gUnk_03002490;
-            sub_08003014((u32)gUnk_02005E10, (u32)gUnk_0873DFAC,
+            BlendColors((u32)gUnk_02005E10, (u32)gUnk_0873DFAC,
                          (u16)u->unk20, 224, (u32)gUnk_030012B0);
             break;
         case 2:
-            sub_08003014((u32)gUnk_02005E10, (u32)gUnk_0873DFAC, 0, 224,
+            BlendColors((u32)gUnk_02005E10, (u32)gUnk_0873DFAC, 0, 224,
                          (u32)gUnk_030012B0);
             gUnk_03002490->unk1C = 3;
             break;
         }
         TaskYieldTrampoline(1);
     }
-    TaskDispatchTrampoline();
+    TaskExitTrampoline();
 }
 
 /* Point the actor at the palette its class/sub/level combination wants. */
@@ -800,9 +800,9 @@ void sub_08065e1c(u32 def, u32 which)
         if (v == -2)
             return;
         if (v == -1)
-            sub_080031b8(def);
+            PlaySfx(def);
         else
-            sub_080031b8(v);
+            PlaySfx(v);
     }
     else
     {
@@ -810,9 +810,9 @@ void sub_08065e1c(u32 def, u32 which)
         if (v == -2)
             return;
         if (v == -1)
-            sub_080031b8(def);
+            PlaySfx(def);
         else
-            sub_080031b8(v);
+            PlaySfx(v);
     }
 }
 
@@ -1801,7 +1801,7 @@ void sub_08066e88(u8 a)
 void sub_08066f50(s32 x, s32 y)
 {
     sub_080713f8(x - gUnk_03002158[0], y - gUnk_03002158[2], 23);
-    sub_08003110(1);
+    PlayBgm(1);
 }
 
 void sub_08066f78(void)
@@ -1826,7 +1826,7 @@ void sub_08066fc0(u8 p3, s16 x, s16 y)
         if (gUnk_030023D8 == 8 && gUnk_03001F30 == 0)
         {
             t->unk73 = p3;
-            sub_08003110(1);
+            PlayBgm(1);
         }
         else
         {
@@ -1947,12 +1947,12 @@ void sub_080671c0(void)
     t->unk04 = (u32)sub_08067214;
     sub_08067170();
     sub_0806395c(0);
-    sub_08002e98(gUnk_03002490->unk14, 1, gUnk_0873E280);
+    CallTableEntry(gUnk_03002490->unk14, 1, gUnk_0873E280);
 }
 
 void sub_08067214(void)
 {
-    sub_08002e98(gUnk_03002490->unk15, 1, gUnk_0873E284);
+    CallTableEntry(gUnk_03002490->unk15, 1, gUnk_0873E284);
     if (gUnk_03004CA0[gCurTaskIdx] != -1)
     {
         sub_08068e04();
@@ -2052,5 +2052,5 @@ void sub_0806737c(void)
     r = gUnk_03002490->unk88;
     if (r->unk06 == 2)
         r->unk06 = 0;
-    sub_08002e98(gUnk_03002490->unk14, 11, gUnk_0873E2F0);
+    CallTableEntry(gUnk_03002490->unk14, 11, gUnk_0873E2F0);
 }

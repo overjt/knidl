@@ -59,7 +59,7 @@ extern u8 gUnk_03001470[];              /* OBJ palette buffer (M11 spelling) */
 extern u32 gUnk_0873BF00[];
 
 void TaskYieldTrampoline(s32 frames);
-void sub_08003014(u16 *src, u16 *dst, s32 ratio, s32 count, u16 *out);
+void BlendColors(u16 *src, u16 *dst, s32 ratio, s32 count, u16 *out);
 void TaskSleepForever(void);
 void TaskSetEntry(void *a, u32 i);
 void TaskSetFrame(s32 a);
@@ -265,7 +265,7 @@ void sub_08045a50(void)
                 t->unk6E += f->unk8;
                 if (t->unk6E > 255)
                     t->unk6E = 256;
-                sub_08003014(f->unk0, f->unk4, (u16)gUnk_03002490->unk6E, 16,
+                BlendColors(f->unk0, f->unk4, (u16)gUnk_03002490->unk6E, 16,
                              (u16 *)(gUnk_03001470 + ((gUnk_03002490->unk40 >> 12) << 5)));
             }
         }

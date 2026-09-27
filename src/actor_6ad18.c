@@ -31,7 +31,7 @@ extern void sub_08027204(u32);
 extern void sub_080670ac(u32);
 extern void sub_080670d4(void);
 extern void sub_080670f0(u16 *);
-extern void sub_080031b8(u32);
+extern void PlaySfx(u32);
 extern void TaskSetSkipMask(u32, u32);
 extern void TaskSetMotionXFacing(u32, u32);
 extern void TaskStop(void);
@@ -50,12 +50,12 @@ extern u16 gUnk_0873E730;
 extern u32 gUnk_0873E734[];
 extern u16 gUnk_030023D8;
 
-extern void sub_080034d0(void);
+extern void StopBgm(void);
 extern void sub_080668c8(void);
 extern void sub_08067108(void);
 extern void sub_0806d928(void);
 extern void sub_0800a554(void);
-extern void sub_08002e98(u32, u32, void *);
+extern void CallTableEntry(u32, u32, void *);
 extern void TaskSetEntry(void (*)(void), u32);
 extern void sub_0806395c(u32);
 extern void sub_08066f78(void);
@@ -140,7 +140,7 @@ void sub_0806adb0(void)
 
 void sub_0806ae94(void)
 {
-    sub_080031b8(0x200);
+    PlaySfx(0x200);
     TaskSetSkipMask(14, gCurTaskIdx);
     sub_0806adb0();
     TaskSetSkipMask(0, gCurTaskIdx);
@@ -212,7 +212,7 @@ void sub_0806af78(void)
 
 void sub_0806b05c(void)
 {
-    sub_080031b8(0x1FF);
+    PlaySfx(0x1FF);
     sub_0806af78();
 }
 
@@ -251,12 +251,12 @@ s32 sub_0806b0f0(void)
     case 5:
     case 6:
         if (gUnk_030023D8 != 20)
-            sub_080034d0();
+            StopBgm();
         break;
     case 2:
         break;
     default:
-        sub_080034d0();
+        StopBgm();
         break;
     }
 }
@@ -270,7 +270,7 @@ void sub_0806b12c(void)
     sub_0806b098();
     gUnk_03002490->unk40 = gUnk_02007D00[9];
     sub_08066f78();
-    sub_08002e98(gUnk_03002490->unk76, 9, gUnk_0873E758);
+    CallTableEntry(gUnk_03002490->unk76, 9, gUnk_0873E758);
 }
 
 void sub_0806b178(void)
@@ -280,7 +280,7 @@ void sub_0806b178(void)
     t = gUnk_03002490;
     if (t->unk82 > 3)
         t->unk82 = 0;
-    sub_08002e98(gUnk_03002490->unk82, 4, gUnk_0873E77C);
+    CallTableEntry(gUnk_03002490->unk82, 4, gUnk_0873E77C);
 }
 
 void sub_0806b1a8(void)
@@ -349,13 +349,13 @@ void sub_0806b26c(void)
     t->unk04 = (u32)sub_0806b2ac;
     t->unk78 = 1;
     t->unk08 = 0;
-    sub_08002e98(t->unk14, 3, gUnk_0873E78C);
+    CallTableEntry(t->unk14, 3, gUnk_0873E78C);
 }
 
 void sub_0806b2ac(void)
 {
     if (sub_080692fc() == 0)
-        sub_08002e98(gUnk_03002490->unk15, 3, gUnk_0873E798);
+        CallTableEntry(gUnk_03002490->unk15, 3, gUnk_0873E798);
     if (gUnk_03002490->unk14 != 2)
     {
         sub_08068e04();

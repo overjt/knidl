@@ -6,34 +6,34 @@
  *
  * RECIPE: this translation unit is old_agbcc -O2 -mthumb-interwork
  * (tools/fnmatch.sh --old2), NOT the default agbcc -O2.  Fingerprint per
- * lesson 3.18: sub_08003194, sub_0800374c, sub_080037f8 and sub_0800381c are
+ * lesson 3.18: GetCurrentBgm, FadeOutBgm, FadeInSfx and FadeOutSfx are
  * leaves that end in a bare `bx lr` with no `push {lr}` at all.
  *
  * Contents, in ROM order (four functions have no symbols.csv entry of their
  * own - lesson 2.13 dead exports hidden inside a neighbour's size):
- *   sub_08003110  start/continue a BGM by song id; bit 0x800 of the argument
+ *   PlayBgm  start/continue a BGM by song id; bit 0x800 of the argument
  *                 means "forget the current song first".
  *   sub_08003184  m4aMPlayImmInit on the BGM player.
- *   sub_08003194  current BGM song id, or -1 while the BGM player is paused.
- *   sub_080031b8  the SE allocator: picks one of the three SE players for a
+ *   GetCurrentBgm  current BGM song id, or -1 while the BGM player is paused.
+ *   PlaySfx  the SE allocator: picks one of the three SE players for a
  *                 song, stealing/ageing slots by channel mask and priority.
- *   sub_08003484  stop everything and forget the current BGM.
- *   sub_080034a0  (hidden) stop everything unless sound is muted.
- *   sub_080034b8  (hidden) continue everything unless sound is muted.
- *   sub_080034d0  stop the BGM player (gMPlayTable[0]).
- *   sub_080034f0  stop one SE player if it is playing this song.
- *   sub_08003564  stop every SE player playing this song; returns a bitmask.
- *   sub_080035f4  stop every SE player NOT playing this song; returns the
+ *   StopAllSound  stop everything and forget the current BGM.
+ *   PauseAllSound  (hidden) stop everything unless sound is muted.
+ *   ResumeAllSound  (hidden) continue everything unless sound is muted.
+ *   StopBgm  stop the BGM player (gMPlayTable[0]).
+ *   StopSfxOnPlayer  stop one SE player if it is playing this song.
+ *   StopSfx  stop every SE player playing this song; returns a bitmask.
+ *   StopOtherSfx  stop every SE player NOT playing this song; returns the
  *                 bitmask of the ones that were.
- *   sub_08003688  stop all three SE players.
- *   sub_080036b8  (hidden) BGM change with a fade request seeded first.
- *   sub_0800374c  fade-out request (mode 2).
- *   sub_08003770  BGM volume.
- *   sub_080037a4  (hidden) SE volume (all three SE players).
- *   sub_080037f8  fade request (mode 3).
- *   sub_0800381c  fade request (mode 4).
- *   sub_08003840  m4aSoundVSyncOff + forget the BGM.
- *   sub_08003864  m4aSoundVSyncOn + forget the BGM.
+ *   StopAllSfx  stop all three SE players.
+ *   PlayBgmFadeIn  (hidden) BGM change with a fade request seeded first.
+ *   FadeOutBgm  fade-out request (mode 2).
+ *   SetBgmVolume  BGM volume.
+ *   SetSfxVolume  (hidden) SE volume (all three SE players).
+ *   FadeInSfx  fade request (mode 3).
+ *   FadeOutSfx  fade request (mode 4).
+ *   DisableSoundDriver  m4aSoundVSyncOff + forget the BGM.
+ *   EnableSoundDriver  m4aSoundVSyncOn + forget the BGM.
  *
  * Matching notes:
  *  - gUnk_03000490 must be `vs16`, not `vu16`: only the signed type keeps the
@@ -44,16 +44,16 @@
  *  - `if (a > 56) return; if (a < 0) return;` must be two separate `if`s:
  *    written as `a > 56 || a < 0`, fold collapses the pair into a single
  *    unsigned `(u32)a > 56` compare and the ROM's two compares disappear.
- *  - sub_08003564/sub_080035f4 need the 478 bound in a `limit` local.  Spelled
+ *  - StopSfx/StopOtherSfx need the 478 bound in a `limit` local.  Spelled
  *    as a literal, gcc materialises the constant AFTER computing `songId-100`;
  *    the ROM materialises it first, and only a variable reproduces that order.
- *  - sub_080036b8 needs `s16 id`, not `s32 id` + `(s16)` casts: only a real
+ *  - PlayBgmFadeIn needs `s16 id`, not `s32 id` + `(s16)` casts: only a real
  *    HImode local lets combine rewrite `(u16)id` into the ROM's single
  *    `lsrs r0, r4, #16` reusing the `songId << 16` value (lesson 3.27).
  *  - the arrays are volatile so that the indexed stores emit the ROM's dead
  *    pre-read `ldrb`/`ldrh` before the `strb`/`strh` (lesson 3.9).
  *
- * NOT YET MATCHING: sub_080031b8 is 36 bytes off (the size is exact, and every
+ * NOT YET MATCHING: PlaySfx is 36 bytes off (the size is exact, and every
  * instruction up to 0x0800331e is byte-identical).  The residue is a pure
  * register permutation over its last third: the ROM puts the priority mask in
  * `sl` and the song-table base in `r9` (plus prio=r4 / walk=r2), this source
@@ -102,31 +102,31 @@ extern vu8 gUnk_03001674[];
 
 
 
-void sub_08003484(void)
+void StopAllSound(void)
 {
     gUnk_03000490 = -999;
     m4aMPlayAllStop();
 }
 
-void sub_080034a0(void)
+void PauseAllSound(void)
 {
     if (gUnk_03000AF8 == 0)
         m4aMPlayAllStop();
 }
 
-void sub_080034b8(void)
+void ResumeAllSound(void)
 {
     if (gUnk_03000AF8 == 0)
         m4aMPlayAllContinue();
 }
 
-void sub_080034d0(void)
+void StopBgm(void)
 {
     if (gUnk_03000AF8 == 0)
         m4aMPlayStop(gMPlayTable[0].info);
 }
 
-void sub_080034f0(s32 player, s32 songId)
+void StopSfxOnPlayer(s32 player, s32 songId)
 {
     struct MusicPlayerInfo *info;
     s32 id;
@@ -147,7 +147,7 @@ void sub_080034f0(s32 player, s32 songId)
     gUnk_03000F80[(s8)gUnk_0300001C[player]] = 0xFFFF;
 }
 
-s32 sub_08003564(s32 songId)
+s32 StopSfx(s32 songId)
 {
     struct MusicPlayerInfo *info;
     s32 mask;
@@ -175,7 +175,7 @@ s32 sub_08003564(s32 songId)
     return mask;
 }
 
-s32 sub_080035f4(s32 songId)
+s32 StopOtherSfx(s32 songId)
 {
     struct MusicPlayerInfo *info;
     s32 mask;
@@ -207,7 +207,7 @@ s32 sub_080035f4(s32 songId)
     return mask;
 }
 
-void sub_08003688(void)
+void StopAllSfx(void)
 {
     s32 i;
 
@@ -217,7 +217,7 @@ void sub_08003688(void)
         m4aMPlayStop(gMPlayTable[i].info);
 }
 
-void sub_080036b8(u16 speed, u16 songId)
+void PlayBgmFadeIn(u16 speed, u16 songId)
 {
     s16 id;
     s32 flag;
@@ -251,14 +251,14 @@ void sub_080036b8(u16 speed, u16 songId)
     gUnk_03000490 = songId;
 }
 
-void sub_0800374c(s32 speed)
+void FadeOutBgm(s32 speed)
 {
     gUnk_03000B0C = 2;
     gUnk_03000FBC = 256;
     gUnk_03000FCC = -speed;
 }
 
-void sub_08003770(u16 volume)
+void SetBgmVolume(u16 volume)
 {
     if (volume > 256)
         volume = 256;
@@ -267,7 +267,7 @@ void sub_08003770(u16 volume)
         m4aMPlayVolumeControl(&gMPlayInfo_BGM, 0xFF, volume);
 }
 
-void sub_080037a4(u16 volume)
+void SetSfxVolume(u16 volume)
 {
     if (volume > 256)
         volume = 256;
@@ -280,28 +280,28 @@ void sub_080037a4(u16 volume)
     }
 }
 
-void sub_080037f8(u16 speed)
+void FadeInSfx(u16 speed)
 {
     gUnk_03000B0C = 3;
     gUnk_03000FBC = 0;
     gUnk_03000FCC = speed;
 }
 
-void sub_0800381c(s32 speed)
+void FadeOutSfx(s32 speed)
 {
     gUnk_03000B0C = 4;
     gUnk_03000FBC = 256;
     gUnk_03000FCC = -speed;
 }
 
-void sub_08003840(void)
+void DisableSoundDriver(void)
 {
     m4aSoundVSyncOff();
     gUnk_03000490 = -999;
     gUnk_03001EE4 = 0;
 }
 
-void sub_08003864(void)
+void EnableSoundDriver(void)
 {
     m4aSoundVSyncOn();
     gUnk_03000490 = -999;

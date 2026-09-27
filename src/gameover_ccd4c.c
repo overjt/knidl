@@ -26,10 +26,10 @@ extern u32 gUnk_08754908[];
 extern u32 gUnk_087548B8[];
 extern u32 gUnk_087548A8[];
 
-void TaskDispatchTrampoline(void);
+void TaskExitTrampoline(void);
 void TaskYieldTrampoline(s32 frames);
-void sub_08002e98(u32 idx, u32 count, void (**fns)(void));   /* if (idx < count) fns[idx](); */
-s32 sub_080031b8(s32 id);                                    /* play a sound effect */
+void CallTableEntry(u32 idx, u32 count, void (**fns)(void));   /* if (idx < count) fns[idx](); */
+s32 PlaySfx(s32 id);                                    /* play a sound effect */
 void TaskFree(s32 id);                                   /* kill task */
 void TaskSleepForever(void);                                     /* end the running task */
 void TaskSetMotionXFacing(s32 a, s32 b);
@@ -104,14 +104,14 @@ void sub_080ccec8(void)
         gUnk_03002490->unk14 = 1;
     else
         gUnk_03002490->unk14 = 0;
-    sub_08002e98(gUnk_03002490->unk14, 2, gUnk_08758324);
+    CallTableEntry(gUnk_03002490->unk14, 2, gUnk_08758324);
     TaskSleepForever();
 }
 
 /* Task type #264 variant 3's per-frame hook: handler gUnk_0875832C[Task.unk15]. */
 void sub_080ccf10(void)
 {
-    sub_08002e98(gUnk_03002490->unk15, 2, gUnk_0875832C);
+    CallTableEntry(gUnk_03002490->unk15, 2, gUnk_0875832C);
 }
 
 /* Task type #264 variant 3, sub-state 0. */
@@ -212,7 +212,7 @@ void sub_080cd0cc(void)
     TaskYieldTrampoline(2);
     gUnk_03002490->unk3C--;
     TaskYieldTrampoline(2);
-    TaskDispatchTrampoline();
+    TaskExitTrampoline();
 }
 
 void sub_080cd248(void)
@@ -246,7 +246,7 @@ void sub_080cd24c(void)
     gUnk_03002490->unk54 = 0x38000;
     gUnk_03002490->unk5C = -0x10000;
     TaskYieldTrampoline(6);
-    TaskDispatchTrampoline();
+    TaskExitTrampoline();
 }
 
 /* Task type #264 variant 5. */

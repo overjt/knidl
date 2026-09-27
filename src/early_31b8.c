@@ -41,7 +41,7 @@ extern vu8 gUnk_03001674[];
  * free one, else the allowed player with the lowest priority (the oldest
  * one on a tie).  Returns the player index, 0 when muted or out of range,
  * -1 when no player can take it. */
-s32 sub_080031b8(s32 id)
+s32 PlaySfx(s32 id)
 {
     const struct SongEntry *song;
     s32 slot;

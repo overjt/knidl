@@ -77,21 +77,21 @@ extern u16 gUnk_08731E1E[2][3];
 extern u8 *gUnk_08731E2C[2];
 
 void RequestCopy(u32 mode, u32 src, u32 dst, u32 size);
-void sub_08002028(void);
-void sub_080021dc(void);
+void ResetFadeAndBlend(void);
+void BeginFastFadeOutToWhite(void);
 void ResetTasksAndOam(void);
 void RunFrame(void);
 void sub_08002338(void);
 void RunFrames(s32 count);
-void sub_08002db4(void);
-void sub_08002e0c(void);
-void sub_08002f14(s16 n);
-s32 sub_08003110(s32 songId);
-void sub_0800374c(s32 speed);
+void RunFramesUntilFadeDone(void);
+void RunLinkFramesUntilFadeDone(void);
+void IntToDigits(s16 n);
+s32 PlayBgm(s32 songId);
+void FadeOutBgm(s32 speed);
 void sub_08003964(void);
 void sub_08004000(u16 a);
 s32 TaskCreateFrom(u32 type, s32 idx);
-void sub_08006868(void);
+void DisableSerial(void);
 void sub_08008c4c(s32 a0);
 void sub_08008c64(u16 a0);
 void sub_0800b4a8(void);
@@ -125,10 +125,10 @@ void sub_0800bf6c(s32 slot, s32 value, s32 mode);
 void sub_0800b920(void)
 {
     sub_08003964();
-    sub_08006868();
+    DisableSerial();
     gUnk_03004D70 = 0;
     ResetTasksAndOam();
-    sub_08002028();
+    ResetFadeAndBlend();
     ResetHBlankScroll();
     if (gCurSaveSlot == -1 || gCurSaveSlot == 3)
         SelectLatestSaveSlot();
@@ -173,7 +173,7 @@ void sub_0800b920(void)
         gUnk_02004B70 = 0;
         break;
     }
-    sub_08003110(40);
+    PlayBgm(40);
     gUnk_03001E90 = 10;
     gUnk_03000FB8 = 30;
     gUnk_030004A4 = -3;
@@ -181,7 +181,7 @@ void sub_0800b920(void)
     gUnk_03001E98 = 1;
     gUnk_03000048 = 1;
     gUnk_03001ED4 = 0;
-    sub_08002db4();
+    RunFramesUntilFadeDone();
     RunFrames(6);
     do
     {
@@ -216,10 +216,10 @@ void sub_0800b920(void)
             break;
         }
     } while (gUnk_020060D0 != 9 && gUnk_020060D0 != 10);
-    sub_080021dc();
+    BeginFastFadeOutToWhite();
     if (gUnk_0200EC48 == 2)
     {
-        sub_0800374c(16);
+        FadeOutBgm(16);
         while (gUnk_03001E90 != 0)
         {
             RunFrame();
@@ -232,7 +232,7 @@ void sub_0800b920(void)
     else
     {
         if (gUnk_030023D8 == 5 || gUnk_030023D8 == 3)
-            sub_0800374c(16);
+            FadeOutBgm(16);
         if (gUnk_030023AC > 1)
         {
             if (gUnk_030023D8 == 5)
@@ -241,12 +241,12 @@ void sub_0800b920(void)
                 sub_080b8918();
             }
             sub_08002338();
-            sub_08002e0c();
+            RunLinkFramesUntilFadeDone();
         }
         else
         {
             gUnk_0300244C = 1;
-            sub_08002db4();
+            RunFramesUntilFadeDone();
         }
     }
     sub_08010020(0, 0, 0, 0);
@@ -304,7 +304,7 @@ void sub_0800bda4(s32 slot)
     }
     else
     {
-        sub_08002f14(gSaveSlots[slot].unk12[0]);
+        IntToDigits(gSaveSlots[slot].unk12[0]);
         n = (gUnk_03001F08[1] + gUnk_03001F08[2] * 10) * 2;
         RequestCopy(3, (u32)&gUnk_08551110[n * 0x180], (u32)gUnk_06010000 + ((slot * 64 + 576) << 5), 0x180);
         n++;
@@ -337,7 +337,7 @@ s32 sub_0800bf10(s32 slot, u32 pal)
 
 void sub_0800bf6c(s32 slot, s32 value, s32 mode)
 {
-    sub_08002f14(value);
+    IntToDigits(value);
     if (value < 0 || value > 100)
     {
         gUnk_03001F08[1] = 10;

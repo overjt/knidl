@@ -35,10 +35,10 @@ extern u32 gUnk_08754914[];
 extern void (*gUnk_087582AC[])(void);
 extern void (*gUnk_087582B8[])(void);
 
-void TaskDispatchTrampoline(void);
+void TaskExitTrampoline(void);
 void TaskYieldTrampoline(s32 frames);
-void sub_08002e98(u32 idx, u32 count, void (**fns)(void));   /* if (idx < count) fns[idx](); */
-void sub_08003014(u16 *src, u16 *dst, s32 ratio, s32 count, u16 *out);
+void CallTableEntry(u32 idx, u32 count, void (**fns)(void));   /* if (idx < count) fns[idx](); */
+void BlendColors(u16 *src, u16 *dst, s32 ratio, s32 count, u16 *out);
 void TaskMove(void);
 void TaskDrawScreen(void);
 void TaskSleepForever(void);                                     /* end the running task */
@@ -109,7 +109,7 @@ void Task_GameOverPalette(void)
         gUnk_03002490->unk34 += 4;
         if (gUnk_03002490->unk34 > 256)
             gUnk_03002490->unk34 = 256;
-        sub_08003014(gUnk_08584BB0[gUnk_03002490->unk2C], gUnk_08584BB0[gUnk_03002490->unk30],
+        BlendColors(gUnk_08584BB0[gUnk_03002490->unk2C], gUnk_08584BB0[gUnk_03002490->unk30],
             (u16)gUnk_03002490->unk34, 4, gUnk_03001390);
         TaskYieldTrampoline(1);
     }
@@ -130,7 +130,7 @@ void Task_HalveScore(void)
         DrawScoreToBgMap(gUnk_03002490->unk28, 22, 18);
         TaskYieldTrampoline(1);
     }
-    TaskDispatchTrampoline();
+    TaskExitTrampoline();
 }
 
 /* Task type #264 (class 4): six variants, gGameOverObjectVariants[Task.unk73]. */
@@ -139,7 +139,7 @@ void Task_GameOverObject(void)
     gUnk_03002490->unk00 = (u32)TaskMove;
     gUnk_03002490->unk0C = (u32)TaskDrawScreen;
     gUnk_03002490->unk40 = 0x4800;
-    sub_08002e98(gUnk_03002490->unk73, 6, gGameOverObjectVariants);
+    CallTableEntry(gUnk_03002490->unk73, 6, gGameOverObjectVariants);
     TaskSleepForever();
 }
 
@@ -154,14 +154,14 @@ void sub_080cb5c4(void)
     gUnk_03002490->unk18 = 0;
     gUnk_03002490->unk43 = 1;
     gUnk_03002490->unk14 = 0;
-    sub_08002e98(gUnk_03002490->unk14, 3, gUnk_087582AC);
+    CallTableEntry(gUnk_03002490->unk14, 3, gUnk_087582AC);
     TaskSleepForever();
 }
 
 /* Task type #264 variant 0's per-frame hook: handler gUnk_087582B8[Task.unk15]. */
 void sub_080cb610(void)
 {
-    sub_08002e98(gUnk_03002490->unk15, 3, gUnk_087582B8);
+    CallTableEntry(gUnk_03002490->unk15, 3, gUnk_087582B8);
 }
 
 /* Re-enter task type #264 variant 0 (TaskSetEntry installs this as its
@@ -169,5 +169,5 @@ void sub_080cb610(void)
 void sub_080cb62c(void)
 {
     gUnk_03002490->unk24 = 1;
-    sub_08002e98(gUnk_03002490->unk14, 3, gUnk_087582AC);
+    CallTableEntry(gUnk_03002490->unk14, 3, gUnk_087582AC);
 }

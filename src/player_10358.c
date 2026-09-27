@@ -20,12 +20,12 @@ extern u32 gUnk_08731FC8[];
 extern u32 gUnk_08751C44[];
 extern u32 gUnk_08754A14[];
 
-void TaskDispatchTrampoline(void);
+void TaskExitTrampoline(void);
 void TaskYieldTrampoline(s32 frames);
 void RequestCopy(u32 mode, u32 src, u32 dst, u32 size);
-void sub_08002e98(u32 a, u32 b, u32 *c);
-void sub_08003110(u32 a);
-void sub_080034f0(s32 player, s32 songId);
+void CallTableEntry(u32 a, u32 b, u32 *c);
+void PlayBgm(u32 a);
+void StopSfxOnPlayer(s32 player, s32 songId);
 void TaskFree(s32 id);
 s32 TaskCreateInRange(u32 type, s32 start, s32 end);
 void TaskMove(void);
@@ -68,7 +68,7 @@ void Task_CutsceneDirector(void)
     u16 *q;
 
     gUnk_03002490->unk28 = 0;
-    sub_08002e98(*(s8 *)&gUnk_030023B8, 9, gUnk_08731FA8);
+    CallTableEntry(*(s8 *)&gUnk_030023B8, 9, gUnk_08731FA8);
     TaskYieldTrampoline(60);
     gUnk_03002490->unk04 = (u32)sub_08010480;
     gUnk_03002490->unk6C = 0;
@@ -98,7 +98,7 @@ void sub_08010480(void)
         {
             if (*(s8 *)&gUnk_030023B8 == 7 && gUnk_02007D00[0] != -1)
             {
-                sub_080034f0(gUnk_02007D00[0], 0x21B);
+                StopSfxOnPlayer(gUnk_02007D00[0], 0x21B);
                 gUnk_02007D00[0] = -1;
             }
             gUnk_030023D8 = 5;
@@ -109,12 +109,12 @@ void sub_08010480(void)
 
 void Task_CutsceneActor(void)
 {
-    sub_08002e98(gUnk_03002490->unk18, 63, gUnk_08731FC8);
+    CallTableEntry(gUnk_03002490->unk18, 63, gUnk_08731FC8);
 }
 
 void sub_0801050c(void)
 {
-    sub_08003110(0);
+    PlayBgm(0);
     sub_08010358(0, 0);
     sub_08010358(4, 32);
 }
@@ -298,5 +298,5 @@ void sub_08010834(void)
         TaskYieldTrampoline(1);
         gUnk_03002490->unk6C++;
     } while ((s16)gUnk_03002490->unk6C <= 8);
-    TaskDispatchTrampoline();
+    TaskExitTrampoline();
 }

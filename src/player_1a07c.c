@@ -10,12 +10,12 @@ extern struct Task *gUnk_03002490;
 extern u32 gUnk_0874CE90[];
 extern u8 gUnk_08757368[];
 
-void TaskDispatchTrampoline(void);
+void TaskExitTrampoline(void);
 void TaskYieldTrampoline(s32 frames);
 void RequestCopy(u32 mode, u32 src, u32 dst, u32 size);
 s32 QueueSprite(u32 a, u32 b, u32 c, u32 d, s32 e, s16 f);
-void sub_08003014(s32 a, s32 b, s32 c, s32 d, void *e);
-s32 sub_080031b8(s32 id);
+void BlendColors(s32 a, s32 b, s32 c, s32 d, void *e);
+s32 PlaySfx(s32 id);
 void TaskMoveRelativeToParent(void);
 void TaskDrawScreen(void);
 void TaskStop(void);
@@ -34,7 +34,7 @@ void sub_0801a07c(void)
     gUnk_03002490->unk4C = 0;
     gUnk_03002490->unk50 = 0;
     TaskStop();
-    sub_080031b8(0x242);
+    PlaySfx(0x242);
     gUnk_03002490->unk6C = 0;
     do
     {
@@ -84,7 +84,7 @@ void sub_0801a07c(void)
         TaskYieldTrampoline(1);
         gUnk_03002490->unk6C++;
     } while ((s16)gUnk_03002490->unk6C <= 5);
-    TaskDispatchTrampoline();
+    TaskExitTrampoline();
 }
 
 void sub_0801a1ec(void)
@@ -125,7 +125,7 @@ void sub_0801a1ec(void)
         w = gUnk_03002490;
         if (w->unk34 > 10)
             w->unk34 = 0;
-        sub_08003014(0x0859A0B0, 0x0859A0D0, gUnk_08757368[gUnk_03002490->unk34], 16,
+        BlendColors(0x0859A0B0, 0x0859A0D0, gUnk_08757368[gUnk_03002490->unk34], 16,
                      (void *)((u32)gUnk_03001470
                               + (((gUnk_03002490->unk40 >> 12) + 1) << 5)));
     }

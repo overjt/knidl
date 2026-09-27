@@ -6,9 +6,9 @@ extern struct Task *gUnk_03002490;
 extern struct Task gUnk_03002790[];
 extern u32 gUnk_0874C600[];
 
-void TaskDispatchTrampoline(void);
+void TaskExitTrampoline(void);
 void TaskYieldTrampoline(s32 frames);
-s32 sub_080031b8(s32 id);
+s32 PlaySfx(s32 id);
 void TaskMove(void);
 void TaskDrawScreen(void);
 void TaskSetMotion(s32 a, s32 b, s32 c, s32 d, s32 e, s32 f);
@@ -24,7 +24,7 @@ void sub_08018b84(void)
     if (v < 0)
         return;
     if (v == 0)
-        sub_080031b8(0x111);
+        PlaySfx(0x111);
     t = gUnk_03002490;
     v = t->unk20 + 1;
     t->unk20 = v;
@@ -110,5 +110,5 @@ void sub_08018d7c(void)
     TaskYieldTrampoline(2);
     gUnk_03002490->unk3C = 0;
     TaskYieldTrampoline(1);
-    TaskDispatchTrampoline();
+    TaskExitTrampoline();
 }

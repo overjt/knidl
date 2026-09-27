@@ -25,9 +25,9 @@ extern u32 gUnk_08753414[];
 
 /* Externals */
 extern void TaskYieldTrampoline(u32 a);
-extern void sub_08002e98(u32 a, u32 b, u32 *c);
-extern u32 sub_08002ee8(u32 range);
-extern s32 sub_080031b8(s32 id);
+extern void CallTableEntry(u32 a, u32 b, u32 *c);
+extern u32 RandomRange(u32 range);
+extern s32 PlaySfx(s32 id);
 extern void TaskIntegrateMotion(void);
 extern void TaskMove(void);
 extern void TaskSleepForever(void);
@@ -251,7 +251,7 @@ void sub_0809dc7c(void)
     sub_08063908((u32)gUnk_08747DB4);
     u = gUnk_03002490;
     u->unk24 = 0;
-    sub_08002e98(u->unk73, 3, gUnk_08747BCC);
+    CallTableEntry(u->unk73, 3, gUnk_08747BCC);
 }
 
 void sub_0809dcbc(void)
@@ -315,7 +315,7 @@ void sub_0809dd7c(void)
 
 void sub_0809dda0(void)
 {
-    sub_08002e98(gUnk_03002490->unk14, 2, gUnk_08747BD8);
+    CallTableEntry(gUnk_03002490->unk14, 2, gUnk_08747BD8);
 }
 
 void sub_0809ddbc(void)
@@ -330,7 +330,7 @@ void sub_0809ddbc(void)
     {
         if (sub_0809f994() != 0)
             sub_0809f930();
-        sub_08002e98(gUnk_03002490->unk15, 2, gUnk_08747BE0);
+        CallTableEntry(gUnk_03002490->unk15, 2, gUnk_08747BE0);
     }
     t = gUnk_03002490;
     if (t->unk24 > 0)
@@ -568,7 +568,7 @@ void sub_0809e284(void)
     t->unk38 = gUnk_08753404;
     sub_08064a60();
     u = gUnk_03002490;
-    sub_08002e98(u->unk73, 3, gUnk_08747BE8);
+    CallTableEntry(u->unk73, 3, gUnk_08747BE8);
 }
 
 void sub_0809e2c4(void)
@@ -595,7 +595,7 @@ void sub_0809e320(void)
     gUnk_03002490->unk6C = 0;
     do
     {
-        sub_080031b8(213);
+        PlaySfx(213);
         TaskSetFrame(1);
         TaskSetMotionXFacing(128 << 12, 0x5A5A5A5A);
         TaskYieldTrampoline(2);
@@ -609,7 +609,7 @@ void sub_0809e320(void)
         TaskYieldTrampoline(2);
         TaskSetMotionXFacing(0xFFF80000, 0x5A5A5A5A);
         TaskYieldTrampoline(2);
-        sub_080031b8(213);
+        PlaySfx(213);
         TaskSetFrame(2);
         TaskSetMotionXFacing(0xFFF80000, 0x5A5A5A5A);
         TaskYieldTrampoline(2);
@@ -624,7 +624,7 @@ void sub_0809e320(void)
         TaskSetMotionXFacing(128 << 12, 0x5A5A5A5A);
         TaskYieldTrampoline(2);
     } while ((s16)++gUnk_03002490->unk6C <= 1);
-    sub_080031b8(213);
+    PlaySfx(213);
     TaskSetFrame(1);
     TaskSetMotionXFacing(128 << 12, k = 0x5A5A5A5A);
     TaskYieldTrampoline(2);
@@ -638,7 +638,7 @@ void sub_0809e320(void)
     TaskYieldTrampoline(2);
     TaskSetMotionXFacing(0xFFF80000, k);
     TaskYieldTrampoline(2);
-    sub_080031b8(213);
+    PlaySfx(213);
     TaskSetFrame(2);
     TaskSetMotionXFacing(0xFFF80000, k);
     TaskYieldTrampoline(2);
@@ -664,7 +664,7 @@ void sub_0809e320(void)
     gUnk_03002490->unk58 = 192 << 10;
     TaskYieldTrampoline(1);
     TaskStop();
-    sub_080031b8(213);
+    PlaySfx(213);
     TaskSetMotionXFacing(192 << 10, 0x5A5A5A5A);
     TaskYieldTrampoline(10);
     TaskSetMotionXFacing(128 << 10, 0x5A5A5A5A);
@@ -717,7 +717,7 @@ void sub_0809e670(void)
     while (1)
     {
         gUnk_03002490->unk4C = 0;
-        sub_080031b8(213);
+        PlaySfx(213);
         TaskSetFrame(1);
         TaskSetMotionXFacing(128 << 12, 0x5A5A5A5A);
         TaskYieldTrampoline(2);
@@ -731,7 +731,7 @@ void sub_0809e670(void)
         TaskYieldTrampoline(2);
         TaskSetMotionXFacing(0xFFF80000, 0x5A5A5A5A);
         TaskYieldTrampoline(2);
-        sub_080031b8(213);
+        PlaySfx(213);
         TaskSetFrame(2);
         TaskSetMotionXFacing(0xFFF80000, 0x5A5A5A5A);
         TaskYieldTrampoline(2);
@@ -813,7 +813,7 @@ void sub_0809e824(void)
     sub_08063908((u32)gUnk_08747E0C);
     u = gUnk_03002490;
     u->unk24 = 0;
-    sub_08002e98(u->unk73, 4, gUnk_08747BF4);
+    CallTableEntry(u->unk73, 4, gUnk_08747BF4);
 }
 
 void sub_0809e864(void)
@@ -841,7 +841,7 @@ void sub_0809e874(void)
 
 void sub_0809e8b0(void)
 {
-    sub_08002e98(gUnk_03002490->unk14, 4, gUnk_08747C04);
+    CallTableEntry(gUnk_03002490->unk14, 4, gUnk_08747C04);
 }
 
 void sub_0809e8cc(void)
@@ -849,7 +849,7 @@ void sub_0809e8cc(void)
     struct Task *t;
 
     if (sub_080692fc() == 0)
-        sub_08002e98(gUnk_03002490->unk15, 5, gUnk_08747C14);
+        CallTableEntry(gUnk_03002490->unk15, 5, gUnk_08747C14);
     t = gUnk_03002490;
     if (t->unk24 > 0)
     {
@@ -1110,7 +1110,7 @@ void sub_0809ec84(void)
 void sub_0809ed08(void)
 {
     gUnk_03002490->unk2C = 60;
-    if (sub_08002ee8(2) == 0)
+    if (RandomRange(2) == 0)
     {
         if (abs(sub_08063cd0()) > 63)
         {
@@ -1420,7 +1420,7 @@ s32 sub_0809f29c(s32 a)
     struct ActorSpawn sp;
     s32 r;
 
-    sub_080031b8(214);
+    PlaySfx(214);
     sp.unk00 = 28;
     sp.unk04 = 131;
     sp.unk08 = a;

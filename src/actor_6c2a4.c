@@ -10,7 +10,7 @@
  * switch over Task.unk46, the gUnk_0873EAC0 speed table and the
  * gUnk_0873EAF0 drift table), and the short spawn-effect bodies that only
  * walk Task.unk3C through a gfx list (gUnk_0874C520 / gUnk_0874CBC8) before
- * TaskDispatchTrampoline.  sub_0806caa0 and sub_0806cc90 are the two helper
+ * TaskExitTrampoline.  sub_0806caa0 and sub_0806cc90 are the two helper
  * spawners that fix up Task.unk43 (facing) on the task they created.
  *
  * sub_0806c770 was the hardest function in M18: instruction-identical to the
@@ -25,7 +25,7 @@
 #include "task.h"
 
 extern void TaskYieldTrampoline(u32 a);
-extern void TaskDispatchTrampoline(void);
+extern void TaskExitTrampoline(void);
 extern void TaskSleepForever(void);
 extern void TaskSetEntry(void *fn, s32 i);
 extern void TaskMoveRelativeToParent(void);
@@ -56,7 +56,7 @@ extern s16 gUnk_030023E4;
 extern s32 QueueSprite(u32 a, u32 b, u32 c, u32 d, s32 e, s32 f);
 extern u32 IsWorldPosOnScreen(s16 x, s16 y);
 extern u32 gUnk_0874CC84[];
-extern void sub_080031b8(u32 a);
+extern void PlaySfx(u32 a);
 extern void sub_080261d4(u32 a);
 extern void sub_08030848(void *p, s16 v);
 extern void sub_080692fc(void);
@@ -72,8 +72,8 @@ extern void TaskFree(s32 i);
 extern s8 gUnk_0873EB30[];
 extern void TaskSetFrameByFacing(u32 a);
 extern void TaskStop(void);
-extern s16 sub_080064dc(s32 a, u32 b, u32 c);
-extern s32 sub_080064ac(s32 a, u32 b, u32 c);
+extern s16 RandomSpreadFacing(s32 a, u32 b, u32 c);
+extern s32 RandomSpread(s32 a, u32 b, u32 c);
 extern u32 gUnk_0874CB90[];
 extern s32 sub_08064c1c(u32 type, int xArg, int yArg, int prioArg);
 extern s32 sub_08064d6c(u32 type, s16 xArg, s16 yArg, u8 keepPrio);
@@ -290,7 +290,7 @@ void sub_0806c5d4(void)
             gUnk_03002490->unk30 = 2;
         if (gUnk_03005550[4] != 0)
             gUnk_03002490->unk30 = 2;
-        sub_080031b8(237);
+        PlaySfx(237);
         sub_080261d4(2);
         gUnk_03002490->unk08 = 0;
         sub_0806395c(7);
@@ -497,7 +497,7 @@ void sub_0806ca00(void)
     TaskYieldTrampoline(2);
     gUnk_03002490->unk3C++;
     TaskYieldTrampoline(2);
-    TaskDispatchTrampoline();
+    TaskExitTrampoline();
 }
 
 s16 sub_0806caa0(u8 kind, s32 dx, s32 dy)
@@ -541,7 +541,7 @@ void sub_0806cb10(void)
     TaskYieldTrampoline(2);
     gUnk_03002490->unk3C++;
     TaskYieldTrampoline(2);
-    TaskDispatchTrampoline();
+    TaskExitTrampoline();
 }
 
 void sub_0806cb64(void)
@@ -565,7 +565,7 @@ void sub_0806cb64(void)
         gUnk_03002490->unk3C++;
         TaskYieldTrampoline(2);
     } while (++*(s16 *)&gUnk_03002490->unk6C <= 7);
-    TaskDispatchTrampoline();
+    TaskExitTrampoline();
 }
 
 void sub_0806cbd4(void)

@@ -116,28 +116,28 @@ extern u32 gUnk_087566D8[];
 
 extern void TaskYieldTrampoline(u32 frames);
 
-extern void sub_08002e98(u32 a, u32 b, u32 *c);
-extern void sub_0800214c(void);
-extern void sub_080021dc(void);
+extern void CallTableEntry(u32 a, u32 b, u32 *c);
+extern void BeginFastFadeInFromWhite(void);
+extern void BeginFastFadeOutToWhite(void);
 extern s32 TaskCreateFrom(u32 type, s32 idx);
 extern void TaskSetEntry(void *a, u32 i);
 extern void TaskMoveRelativeToBg3(void);
 extern void TaskDrawScreen(void);
 extern void TaskMove(void);
-extern void TaskDispatchTrampoline(void);
+extern void TaskExitTrampoline(void);
 extern void sub_080bdf9c(u32 a);
 extern void sub_080c0ca4(void);
 extern void TaskSetFrame(s32 a);
-extern void sub_080031b8(u32 a);
+extern void PlaySfx(u32 a);
 extern void sub_080060c0(void);
 extern void sub_08009eb8(u32 a, u32 b);
 extern void RequestCopy(u32 mode, u32 src, u32 dst, u32 size);
 extern s32 QueueSprite(u32 a, u32 b, u32 c, u32 d, u32 e, u32 f);
 extern s32 DrawAffineSprite(s32 a, s16 b, s16 c, s32 d);
 extern void TaskStop(void);
-extern u32 sub_08002ee8(u32 range);
-extern void sub_08003110(u32 a);
-extern void sub_080034d0(void);
+extern u32 RandomRange(u32 range);
+extern void PlayBgm(u32 a);
+extern void StopBgm(void);
 extern void TaskSleepForever(void);
 extern void SubGameReplay(s32 a);
 extern void SubGameQuit(void);
@@ -221,7 +221,7 @@ void sub_080bf994(void)
         TaskYieldTrampoline(3);
         gUnk_03002490->unk3C++;
         TaskYieldTrampoline(3);
-        sub_080031b8(254);
+        PlaySfx(254);
         z = gUnk_03002490;
         sub_080bdf3c(z->unk4C + (gUnk_08756560[z->unk1C] << 16) * z->unk43,
                      z->unk50 + (gUnk_08756564[z->unk1C] << 16),
@@ -298,7 +298,7 @@ void sub_080bfbf4(void)
     t = gUnk_03002490;
     u = &gUnk_03002790[t->unk44];
     t->unk15 = 12;
-    if (sub_08002ee8(8) == 0) {
+    if (RandomRange(8) == 0) {
         if (u->unk28 <= 2)
             u->unk20 = u->unk28 + 3;
         else
@@ -342,7 +342,7 @@ void sub_080bfbf4(void)
     TaskYieldTrampoline(2);
     gUnk_03002490->unk3C++;
     TaskYieldTrampoline(2);
-    sub_080031b8(254);
+    PlaySfx(254);
     z = gUnk_03002490;
     sub_080bdf3c(z->unk4C + (gUnk_08756560[z->unk1C] << 16) * z->unk43,
                  z->unk50 + (gUnk_08756564[z->unk1C] << 16),
@@ -372,18 +372,18 @@ void sub_080bfd80(void)
     t = gUnk_03002490;
     t->unk04 = (u32)sub_080bfdb0;
     t->unk14 = 0;
-    sub_08002e98(gUnk_03002490->unk14, 3, gUnk_08756780);
+    CallTableEntry(gUnk_03002490->unk14, 3, gUnk_08756780);
     TaskSleepForever();
 }
 
 void sub_080bfdb0(void)
 {
-    sub_08002e98(gUnk_03002490->unk15, 3, gUnk_0875678C);
+    CallTableEntry(gUnk_03002490->unk15, 3, gUnk_0875678C);
 }
 
 void sub_080bfdcc(void)
 {
-    sub_08002e98(gUnk_03002490->unk14, 3, gUnk_08756780);
+    CallTableEntry(gUnk_03002490->unk14, 3, gUnk_08756780);
 }
 
 void sub_080bfde8(void)
@@ -667,7 +667,7 @@ void sub_080c0388(void)
     w = gUnk_03002490;
     w->unk4C = gUnk_0875672C[w->unk28] << 16;
     w->unk50 = (gUnk_08756734[w->unk28] + gUnk_0875673C[w->unk28]) << 16;
-    sub_080031b8(255);
+    PlaySfx(255);
     x = gUnk_03002490;
     sub_080bdf3c(x->unk4C, x->unk50, x->unk28, x->unk43);
     y = gUnk_03002490;
@@ -896,7 +896,7 @@ void sub_080c0c58(void)
     TaskYieldTrampoline(4);
     gUnk_03002490->unk3C++;
     TaskYieldTrampoline(6);
-    TaskDispatchTrampoline();
+    TaskExitTrampoline();
 }
 
 void sub_080c0ca4(void)
@@ -954,6 +954,6 @@ void sub_080c0d30(void)
     }
     u = gUnk_03002490;
     u->unk14 = u->unk74;
-    sub_08002e98(gUnk_03002490->unk14, 16, gUnk_087571F8);
+    CallTableEntry(gUnk_03002490->unk14, 16, gUnk_087571F8);
     TaskSleepForever();
 }

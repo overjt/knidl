@@ -27,10 +27,10 @@ extern s32 gUnk_03001F2C;
 extern s32 gUnk_03002448;
 extern u32 gUnk_080D2148[];
 
-void TaskDispatchTrampoline(void);
+void TaskExitTrampoline(void);
 void TaskYieldTrampoline(s32 frames);
 s32 QueueSprite(u32 a, u32 b, u32 c, u32 d, s32 e, s16 f);
-s32 sub_08002ee8(s32 n);
+s32 RandomRange(s32 n);
 
 void sub_08018e14(void)
 {
@@ -49,7 +49,7 @@ void sub_08018e14(void)
             if ((s16)gUnk_03002490->unk6C < 50 && gUnk_02006040[i] == 0)
             {
                 gUnk_02006040[i + 6] = 0;
-                r = sub_08002ee8(16);
+                r = RandomRange(16);
                 if ((s8)gUnk_03002490->unk43 == 1)
                     gUnk_02006040[i] = gUnk_08732150[0][r] << 16;
                 else
@@ -84,5 +84,5 @@ void sub_08018e14(void)
             break;
         TaskYieldTrampoline(1);
     }
-    TaskDispatchTrampoline();
+    TaskExitTrampoline();
 }

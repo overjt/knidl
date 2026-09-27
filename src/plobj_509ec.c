@@ -8,7 +8,7 @@
  * only it installs.  A variant body installs the sprite (TaskMove /
  * TaskDrawWorldInViewOrFree, Task.unk42 = 5, an animation table in Task.unk38) and runs
  * `switch (Task.unk18 & 15)` over its sub-states, each a yield script that
- * ends in TaskDispatchTrampoline; its per-frame callback (Task.unk04) runs
+ * ends in TaskExitTrampoline; its per-frame callback (Task.unk04) runs
  * the hit test sub_08030848 and the terrain checks and re-binds the body
  * in another sub-state, or the shared exit sub_08050814, on contact.
  * Variant 0 (sub_080509ec, callback sub_08050c48) spawns a copy of itself
@@ -56,7 +56,7 @@ extern u32 gUnk_0873BD8C[];
 
 /* M09's hit-box set (src/block_30804.c); only a pointer is passed here */
 struct HitBoxSet;
-void TaskDispatchTrampoline(void);
+void TaskExitTrampoline(void);
 void TaskYieldTrampoline(s32 frames);
 s32 QueueSprite(u32 a, u32 b, u32 c, u32 d, u32 e, s16 f);
 void TaskMove(void);
@@ -171,7 +171,7 @@ void sub_080509ec(void)
         }
         break;
     }
-    TaskDispatchTrampoline();
+    TaskExitTrampoline();
 }
 
 void sub_08050c48(void)

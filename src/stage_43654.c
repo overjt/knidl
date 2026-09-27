@@ -18,7 +18,7 @@ extern u32 gUnk_0873D044[];
 extern u32 gUnk_0873D04C[];
 
 void TaskYieldTrampoline(s32 frames);
-s32 sub_080031b8(s32 id);
+s32 PlaySfx(s32 id);
 void TaskSleepForever(void);
 void TaskSetEntry(void *a, u32 i);
 void TaskSetMotionXFacing(s32 a, s32 b);
@@ -115,7 +115,7 @@ Lloop:
             *(u32 *)((u8 *)t->unk88 + 108) = 0;
             t->unk73 = 0;
         }
-        sub_080031b8(266);
+        PlaySfx(266);
         TaskSetFrame(0x1212);
         TaskYieldTrampoline(4);
         {
@@ -184,7 +184,7 @@ Lloop:
     }
     if (gUnk_03002490->unk28 != 0)
         sub_0803e050(1);
-    sub_080031b8(0x10B);
+    PlaySfx(0x10B);
     TaskSetFrame(0x121B);
     TaskYieldTrampoline(4);
     {
@@ -320,7 +320,7 @@ void sub_08043b80(void)
             t->unk2C = -1;
             *(u32 *)((u8 *)t->unk88 + 108) = 0;
         }
-        sub_080031b8(266);
+        PlaySfx(266);
         gUnk_03002490->unk5C = 0;
         TaskSetFrame(0x120C);
         TaskYieldTrampoline(3);
@@ -374,7 +374,7 @@ void sub_08043b80(void)
         if (gUnk_03002490->unk30 == 0) {
             TaskYieldTrampoline(10);
         } else {
-            sub_080031b8(0x10B);
+            PlaySfx(0x10B);
             TaskSetFrame(0x121B);
             TaskYieldTrampoline(4);
             TaskSetMotionXFacing(-0x800, 0x800);
@@ -509,7 +509,7 @@ void sub_08043fa8(void)
     gUnk_03002490->unk3C--;
     TaskYieldTrampoline(2);
     gUnk_03002490->unk7A = 0;
-    sub_080031b8(0x10B);
+    PlaySfx(0x10B);
     TaskSetMotionY(-0x40000, 0x8000, 0x40000);
     TaskSetFrame(0x121E);
     TaskYieldTrampoline(1);
@@ -601,7 +601,7 @@ void sub_08044288(void)
                 u->unk2C = -1;
                 *(u32 *)((u8 *)u->unk88 + 108) = 0;
             }
-            sub_080031b8(0x10B);
+            PlaySfx(0x10B);
             gUnk_03002490->unk80 = 4;
         }
     }
@@ -636,7 +636,7 @@ void sub_08044288(void)
         break;
     case 1:
         sub_080261d4(2);
-        sub_080031b8(0x10F);
+        PlaySfx(0x10F);
         sub_0805afac(gUnk_03002490->unk88->unk00, 39, 0);
         sub_0805afac(gUnk_03002490->unk88->unk00, 39, 1);
         {

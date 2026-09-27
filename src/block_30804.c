@@ -24,7 +24,7 @@
  * gUnk_02004B40 (the player), gUnk_02004B48, gUnk_02006174 (the kind) and
  * gUnk_020061D0 (the collision byte); sub_08031374 then takes a free
  * record, points it at the BG map entry at 0x06002000, plays the sound
- * (sub_080031b8), awards points to the player (sub_0800a04c) and starts
+ * (PlaySfx), awards points to the player (sub_0800a04c) and starts
  * the animation script gUnk_0873A47C[kind].  sub_08030f78 (M08's map
  * events) and sub_08031738 (M07) break a block at a metatile directly;
  * sub_08030f1c tests a metatile for an unbroken block. */
@@ -108,7 +108,7 @@ extern s8 gUnk_0873A5D4[];
 extern s16 gUnk_03002158[];
 extern u8 gUnk_0200B078;
 
-s32 sub_080031b8(s32 id);
+s32 PlaySfx(s32 id);
 void sub_0800a04c(s32 a, u32 b);
 s32 sub_080261c0(s32 x, s32 y);
 void sub_080261d4(u16 a);
@@ -576,7 +576,7 @@ s32 sub_08031374(void)
     {
     case 0:
         sub_080261c0(gUnk_02007D68 * 16 + 8, gUnk_0200AEFC * 16 + 8);
-        sub_080031b8(159);
+        PlaySfx(159);
         if (gUnk_0873A5D4[gUnk_020061D0] != 0)
         {
             k = 4;
@@ -594,7 +594,7 @@ s32 sub_08031374(void)
         break;
     case 2:
         sub_080261c0(gUnk_02007D68 * 16 + 8, gUnk_0200AEFC * 16 + 8);
-        sub_080031b8(159);
+        PlaySfx(159);
         if (b->unk1C != -1)
             sub_0800a04c(10, b->unk1C);
         if (gUnk_0873A5D4[gUnk_020061D0] != 0)
@@ -615,7 +615,7 @@ s32 sub_08031374(void)
             sub_0800a04c(10, b->unk1C);
         if (gUnk_020061D0 == 51)
         {
-            sub_080031b8(159);
+            PlaySfx(159);
             k = 4;
             b->unk1A = 0x805;
             if (b->unk1C != -1)
@@ -625,9 +625,9 @@ s32 sub_08031374(void)
         {
             sub_080261c0(gUnk_02007D68 * 16 + 8, gUnk_0200AEFC * 16 + 8);
             if (gUnk_0200B078 == 1)
-                sub_080031b8(224);
+                PlaySfx(224);
             else
-                sub_080031b8(159);
+                PlaySfx(159);
             if (gUnk_0873A5D4[gUnk_020061D0] != 0)
             {
                 k = 4;
@@ -646,7 +646,7 @@ s32 sub_08031374(void)
         if (b->unk1C != -1)
             sub_0800a04c(10, b->unk1C);
         sub_080261c0(gUnk_02007D68 * 16 + 8, gUnk_0200AEFC * 16 + 8);
-        sub_080031b8(159);
+        PlaySfx(159);
         if (gUnk_0873A5D4[gUnk_020061D0] != 0)
         {
             k = 4;
@@ -662,7 +662,7 @@ s32 sub_08031374(void)
         break;
     case 5:
         sub_080261c0(gUnk_02007D68 * 16 + 8, gUnk_0200AEFC * 16 + 8);
-        sub_080031b8(159);
+        PlaySfx(159);
         if (b->unk1C != -1)
             sub_0800a04c(10, b->unk1C);
         if (gUnk_0873A5D4[gUnk_020061D0] != 0)
@@ -678,7 +678,7 @@ s32 sub_08031374(void)
         break;
     case 6:
         sub_080301e8(3, gUnk_02007D68 * 16 + 8, gUnk_0200AEFC * 16 + 20);
-        sub_080031b8(159);
+        PlaySfx(159);
         if (gUnk_0873A5D4[gUnk_020061D0] != 0)
             k = 3;
         else

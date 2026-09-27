@@ -123,9 +123,9 @@ extern struct MapTile *gUnk_03005660;
 extern void (*gMapEventVariants[])(void);
 
 void RequestCopy(u32 mode, u32 src, u32 dst, u32 size);
-void sub_08002e98(u32 idx, u32 count, void (**fns)(void));
-void sub_08003014(u16 *src, u16 *dst, s32 ratio, s32 count, u16 *out);
-void sub_080031b8(u32 a);
+void CallTableEntry(u32 idx, u32 count, void (**fns)(void));
+void BlendColors(u16 *src, u16 *dst, s32 ratio, s32 count, u16 *out);
+void PlaySfx(u32 a);
 s32 sub_0802621c(s32 type);
 void sub_08028948(void);
 void sub_08028b1c(void);
@@ -244,7 +244,7 @@ void sub_0802d188(void)
                 p->unk0++;
                 goto loop;
             case 6:
-                sub_080031b8(cmd->unk2);
+                PlaySfx(cmd->unk2);
                 p->unk0++;
                 goto loop;
             default:
@@ -278,7 +278,7 @@ void sub_0802d294(struct Unk02007D70 *p)
     t = (p->unk18 * (s16)p->unk8) >> 8;
     if (t > 0x100)
         t = 0x100;
-    sub_08003014(p->unkC, p->unk10, (u16)t, p->unk16, &gUnk_030012B0[p->unk14]);
+    BlendColors(p->unkC, p->unk10, (u16)t, p->unk16, &gUnk_030012B0[p->unk14]);
     if (t == 0x100)
         p->unk8 = -1;
 }
@@ -313,5 +313,5 @@ s32 sub_0802d344(s32 a)
 
 void Task_MapEvent(void)
 {
-    sub_08002e98(gUnk_03002490->unk14, 7, gMapEventVariants);
+    CallTableEntry(gUnk_03002490->unk14, 7, gMapEventVariants);
 }

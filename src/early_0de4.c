@@ -4,7 +4,7 @@
 /* Main per-frame driver / VBlank waiter (0x08000DE4-0x080010CB, issue #32).
  * agbcc -O2 -mthumb-interwork (game-code recipe).
  *
- * Runs the palette fade step (sub_08000934), advances the BGM/SE volume ramp
+ * Runs the palette fade step (UpdateFade), advances the BGM/SE volume ramp
  * state machine (gUnk_03000B0C mode, gUnk_03000FBC volume 0..256,
  * gUnk_03000FCC delta), calls the per-frame hook gUnk_0300003C, spins on the
  * VBlank flag gUnk_03001EC4 (cleared by the handler in src/early_10cc.c),
@@ -46,15 +46,15 @@ extern void m4aMPlayVolumeControl(struct MusicPlayerInfo *mplayInfo, u16 trackBi
 extern void m4aSoundVSync(void);
 extern void SoundDriverVSyncOff(void);
 extern void SoftReset(u32 resetFlags);
-extern void sub_08000934(void);
-extern void sub_08003484(void);
+extern void UpdateFade(void);
+extern void StopAllSound(void);
 extern void sub_08004734(void);
 
 void EndFrame(void)
 {
     s32 i;
     u16 keys;
-    sub_08000934();
+    UpdateFade();
 
     switch (gUnk_03000B0C)
     {
@@ -79,7 +79,7 @@ void EndFrame(void)
             gUnk_03000FCC = 0;
             gUnk_03000B0C = 0;
             if (gUnk_03000AF8 == 0)
-                sub_08003484();
+                StopAllSound();
         }
         if (gUnk_03000AF8 == 0)
             m4aMPlayVolumeControl(&gMPlayInfo_BGM, 0xFF, gUnk_03000FBC);

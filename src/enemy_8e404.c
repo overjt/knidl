@@ -72,8 +72,8 @@ extern u32 gUnk_087524E4[];
 
 /* Externals */
 extern void TaskYieldTrampoline(u32 a);
-extern void sub_08002e98(u32 a, u32 b, u32 *c);
-extern u32 sub_08002ee8(u32 range);
+extern void CallTableEntry(u32 a, u32 b, u32 *c);
+extern u32 RandomRange(u32 range);
 extern void TaskMove(void);
 extern void TaskSleepForever(void);
 extern void TaskSetEntry(void *a, u32 i);
@@ -175,19 +175,19 @@ void sub_0808e404(void)
     gUnk_03002490->unk04 = (u32)sub_0808e440;
     sub_08063e14();
     sub_0806395c(0);
-    sub_08002e98(gUnk_03002490->unk14, 4, gUnk_087431EC);
+    CallTableEntry(gUnk_03002490->unk14, 4, gUnk_087431EC);
 }
 
 void sub_0808e440(void)
 {
-    sub_08002e98(gUnk_03002490->unk15, 4, gUnk_087431FC);
+    CallTableEntry(gUnk_03002490->unk15, 4, gUnk_087431FC);
     sub_08068e04();
     sub_08069b44();
 }
 
 void sub_0808e464(void)
 {
-    sub_08002e98(gUnk_03002490->unk14, 4, gUnk_087431EC);
+    CallTableEntry(gUnk_03002490->unk14, 4, gUnk_087431EC);
 }
 
 void sub_0808e480(void)
@@ -279,7 +279,7 @@ void sub_0808e5cc(void)
     t = gUnk_03002490;
     t->unk30++;
     t->unk48 = t->unk2C;
-    if (t->unk30 > 5 && sub_08002ee8(2) != 0)
+    if (t->unk30 > 5 && RandomRange(2) != 0)
     {
         sub_0806395c(1);
         TaskSetEntry(sub_0808e464, gCurTaskIdx);
@@ -319,7 +319,7 @@ void sub_0808e610(void)
         u->unk6E++;
     } while ((s16)u->unk6E <= 7);
     gUnk_03002490->unk6C = 0;
-    while ((s16)gUnk_03002490->unk6C < sub_08002ee8(3) + 1)
+    while ((s16)gUnk_03002490->unk6C < RandomRange(3) + 1)
     {
         TaskSetFrame(6);
         TaskYieldTrampoline(2);
@@ -408,13 +408,13 @@ void sub_0808e804(void)
     sub_080639b4(gUnk_0873F500);
     gUnk_03002490->unk78 = 2;
     sub_0806395c(0);
-    sub_08002e98(gUnk_03002490->unk14, 1, gUnk_0874320C);
+    CallTableEntry(gUnk_03002490->unk14, 1, gUnk_0874320C);
 }
 
 void sub_0808e848(void)
 {
     sub_080692fc();
-    sub_08002e98(gUnk_03002490->unk15, 1, gUnk_08743210);
+    CallTableEntry(gUnk_03002490->unk15, 1, gUnk_08743210);
     sub_08068e04();
     sub_08069b44();
 }
@@ -457,7 +457,7 @@ void sub_0808e8d4(void)
     t->unk42 = 11;
     u = gUnk_03002490;
     u->unk38 = gUnk_087524A4;
-    sub_08002e98(u->unk73, 3, gUnk_08743224);
+    CallTableEntry(u->unk73, 3, gUnk_08743224);
 }
 
 void sub_0808e914(void)
@@ -476,20 +476,20 @@ void sub_0808e914(void)
         break;
     }
     sub_0806395c(0);
-    sub_08002e98(gUnk_03002490->unk14, 3, gUnk_08743230);
+    CallTableEntry(gUnk_03002490->unk14, 3, gUnk_08743230);
 }
 
 void sub_0808e964(void)
 {
     if (sub_08069888() == 0)
-        sub_08002e98(gUnk_03002490->unk15, 1, gUnk_0874323C);
+        CallTableEntry(gUnk_03002490->unk15, 1, gUnk_0874323C);
     sub_08068e04();
     sub_08069b44();
 }
 
 void sub_0808e994(void)
 {
-    sub_08002e98(gUnk_03002490->unk14, 3, gUnk_08743230);
+    CallTableEntry(gUnk_03002490->unk14, 3, gUnk_08743230);
 }
 
 void sub_0808e9b0(void)
@@ -570,13 +570,13 @@ void sub_0808eb24(void)
     sub_080639b4(gUnk_0873F500);
     gUnk_03002490->unk78 = 2;
     sub_0806395c(0);
-    sub_08002e98(gUnk_03002490->unk14, 1, gUnk_08743240);
+    CallTableEntry(gUnk_03002490->unk14, 1, gUnk_08743240);
 }
 
 void sub_0808eb64(void)
 {
     if (sub_08069888() == 0)
-        sub_08002e98(gUnk_03002490->unk15, 1, gUnk_08743244);
+        CallTableEntry(gUnk_03002490->unk15, 1, gUnk_08743244);
     sub_08068e04();
     sub_08069b44();
 }
@@ -971,7 +971,7 @@ void sub_0808f224(void)
     u = gUnk_03002490;
     u->unk38 = gUnk_087524E4;
     u->unk8C->unk1A = 4;
-    sub_08002e98(u->unk73, 6, gUnk_08743284);
+    CallTableEntry(u->unk73, 6, gUnk_08743284);
 }
 
 void sub_0808f26c(void)
@@ -979,12 +979,12 @@ void sub_0808f26c(void)
     gUnk_03002490->unk04 = (u32)sub_0808f2a0;
     sub_0806395c(0);
     sub_0808ef88();
-    sub_08002e98(gUnk_03002490->unk14, 3, gUnk_0874329C);
+    CallTableEntry(gUnk_03002490->unk14, 3, gUnk_0874329C);
 }
 
 void sub_0808f2a0(void)
 {
-    sub_08002e98(gUnk_03002490->unk15, 3, gUnk_087432A8);
+    CallTableEntry(gUnk_03002490->unk15, 3, gUnk_087432A8);
     sub_08068e04();
     sub_08069b44();
 }
@@ -994,12 +994,12 @@ void sub_0808f2c4(void)
     gUnk_03002490->unk04 = (u32)sub_0808f2fc;
     sub_0806395c(0);
     gUnk_03002490->unk43 = 255;
-    sub_08002e98(gUnk_03002490->unk14, 3, gUnk_087432B4);
+    CallTableEntry(gUnk_03002490->unk14, 3, gUnk_087432B4);
 }
 
 void sub_0808f2fc(void)
 {
-    sub_08002e98(gUnk_03002490->unk15, 3, gUnk_087432C0);
+    CallTableEntry(gUnk_03002490->unk15, 3, gUnk_087432C0);
     sub_08068e04();
     sub_08069b44();
 }
@@ -1010,29 +1010,29 @@ void sub_0808f320(void)
     sub_0806395c(0);
     sub_0808ef88();
     sub_08066b34(gUnk_087433E8);
-    sub_08002e98(gUnk_03002490->unk14, 3, gUnk_087432CC);
+    CallTableEntry(gUnk_03002490->unk14, 3, gUnk_087432CC);
 }
 
 void sub_0808f35c(void)
 {
-    sub_08002e98(gUnk_03002490->unk15, 3, gUnk_087432D8);
+    CallTableEntry(gUnk_03002490->unk15, 3, gUnk_087432D8);
     sub_08068e04();
     sub_08069b44();
 }
 
 void sub_0808f380(void)
 {
-    sub_08002e98(gUnk_03002490->unk14, 3, gUnk_0874329C);
+    CallTableEntry(gUnk_03002490->unk14, 3, gUnk_0874329C);
 }
 
 void sub_0808f39c(void)
 {
-    sub_08002e98(gUnk_03002490->unk14, 3, gUnk_087432B4);
+    CallTableEntry(gUnk_03002490->unk14, 3, gUnk_087432B4);
 }
 
 void sub_0808f3b8(void)
 {
-    sub_08002e98(gUnk_03002490->unk14, 3, gUnk_087432CC);
+    CallTableEntry(gUnk_03002490->unk14, 3, gUnk_087432CC);
 }
 
 void sub_0808f3d4(void)

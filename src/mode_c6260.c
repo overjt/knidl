@@ -10,7 +10,7 @@
  *   EndingMain   copies gUnk_03002360, gUnk_03001F38, gUnk_0300243C and
  *       gUnk_030023AC into EWRAM cells, runs the SIO teardown sub_0800293c
  *       (after sub_08002358/sub_08002668 when gUnk_03002150 is 20, the value
- *       AgbMain's state 20 leaves there), stops the sound (sub_08003484),
+ *       AgbMain's state 20 leaves there), stops the sound (StopAllSound),
  *       plays the two scenes below unless gUnk_03002150 is 20 or
  *       gUnk_03001F30 is 1, and ends with sub_080b8070(gCurSaveSlot).
  *   sub_080c62f0 / sub_080c6388   one scene each: preset and load a room
@@ -35,14 +35,14 @@ extern s32 gCurSaveSlot;
 extern u8 gEndingSceneActive;
 extern vu16 gUnk_03001ED8;
 
-void sub_0800214c(void);
-void sub_080021dc(void);
+void BeginFastFadeInFromWhite(void);
+void BeginFastFadeOutToWhite(void);
 void sub_08002358(void);
 void sub_08002668(void);
 void sub_0800293c(void);
 void RunLinkFrame(void);
-void sub_08002e0c(void);
-void sub_08003484(void);
+void RunLinkFramesUntilFadeDone(void);
+void StopAllSound(void);
 s32 TaskCreateFrom(u32 type, s32 idx);                         /* spawn a task */
 void sub_08008c4c(s32 a0);
 void sub_08024610(s32 x, s32 y);
@@ -65,12 +65,12 @@ void EndingMain(void)
         sub_08002668();
     }
     sub_0800293c();
-    sub_08003484();
+    StopAllSound();
     if (gUnk_03002150 != 20 && gUnk_03001F30 != 1) {
         sub_080c62f0();
         sub_080c6388();
     }
-    sub_08003484();
+    StopAllSound();
     sub_080b8070(gCurSaveSlot);
 }
 
@@ -82,12 +82,12 @@ void sub_080c62f0(void)
     gUnk_03001ED8 &= 0xE0FF;
     gUnk_03001ED8 |= 0x1D00;
     sub_080c6354();
-    sub_0800214c();
-    sub_08002e0c();
+    BeginFastFadeInFromWhite();
+    RunLinkFramesUntilFadeDone();
     while (gEndingSceneActive != 0)
         RunLinkFrame();
-    sub_080021dc();
-    sub_08002e0c();
+    BeginFastFadeOutToWhite();
+    RunLinkFramesUntilFadeDone();
     sub_08027178();
 }
 
@@ -110,12 +110,12 @@ void sub_080c6388(void)
     gUnk_03001ED8 &= 0xE0FF;
     gUnk_03001ED8 |= 0x1C00;
     sub_080c63ec();
-    sub_0800214c();
-    sub_08002e0c();
+    BeginFastFadeInFromWhite();
+    RunLinkFramesUntilFadeDone();
     while (gEndingSceneActive != 0)
         RunLinkFrame();
-    sub_080021dc();
-    sub_08002e0c();
+    BeginFastFadeOutToWhite();
+    RunLinkFramesUntilFadeDone();
     sub_08027178();
 }
 

@@ -50,15 +50,15 @@ extern vu16 gUnk_03001ED8;
 /* callees */
 extern s32 QueueSprite(u32 a, u32 b, u32 c, u32 d, u32 e, s16 f);
 extern s32 DrawAffineSprite(s32 a, s16 b, s16 c, s32 d);
-extern s32 sub_080031b8(u32 a);
+extern s32 PlaySfx(u32 a);
 extern s32 TaskCreateFrom(u32 type, s32 idx);
-extern u32 sub_08002ee8(u32 range);
+extern u32 RandomRange(u32 range);
 extern u32 TaskIsOnScreen(void);
-extern void TaskDispatchTrampoline(void);
+extern void TaskExitTrampoline(void);
 extern void TaskYieldTrampoline(u32 a);
 extern void RequestCopy(u32 mode, u32 src, u32 dst, u32 size);
-extern void sub_08002e98(u32 a, u32 b, u32 *c);
-extern void sub_08003014(void *src, void *dst, s32 ratio, s32 count, void *out);
+extern void CallTableEntry(u32 a, u32 b, u32 *c);
+extern void BlendColors(void *src, void *dst, s32 ratio, s32 count, void *out);
 extern void TaskMove(void);
 extern void TaskSleepForever(void);
 extern void TaskStop(void);
@@ -103,7 +103,7 @@ void sub_08074c0c(void)
             t->unk58 = gUnk_030023D4;
             t->unk38 = gUnk_0874C44C;
         }
-        gUnk_03002490->unk3C = sub_08002ee8(2) + 4;
+        gUnk_03002490->unk3C = RandomRange(2) + 4;
         TaskSleepForever();
         break;
     case 0:
@@ -115,7 +115,7 @@ void sub_08074c0c(void)
             t->unk58 = gUnk_030023D4;
             t->unk38 = gUnk_0874C500;
         }
-        gUnk_03002490->unk3C = sub_08002ee8(8);
+        gUnk_03002490->unk3C = RandomRange(8);
         TaskSleepForever();
         break;
     case 2:
@@ -158,10 +158,10 @@ void sub_08074c0c(void)
             TaskYieldTrampoline(1);
             gUnk_03002490->unk6C++;
         } while ((s16)gUnk_03002490->unk6C <= 9);
-        TaskDispatchTrampoline();
+        TaskExitTrampoline();
         break;
     default:
-        TaskDispatchTrampoline();
+        TaskExitTrampoline();
         break;
     }
 }
@@ -220,10 +220,10 @@ void sub_08074f48(u8 a)
         sub_08074ee0(0);
         break;
     }
-    sub_08003014(gUnk_02005E10, gUnk_0873FD98, v1, 128, gUnk_03001370);
-    sub_08003014(gUnk_02005E10 + 256, gUnk_0873FE98, v2, 128, gUnk_03001370 + 256);
-    sub_08003014(gUnk_0200AF20, gUnk_0873FE98, v2, 32, gUnk_03001370 + 576);
-    sub_08003014(gUnk_0200AF20 + 64, gUnk_0873FE98, v2, 32, gUnk_03001370 + 704);
+    BlendColors(gUnk_02005E10, gUnk_0873FD98, v1, 128, gUnk_03001370);
+    BlendColors(gUnk_02005E10 + 256, gUnk_0873FE98, v2, 128, gUnk_03001370 + 256);
+    BlendColors(gUnk_0200AF20, gUnk_0873FE98, v2, 32, gUnk_03001370 + 576);
+    BlendColors(gUnk_0200AF20 + 64, gUnk_0873FE98, v2, 32, gUnk_03001370 + 704);
 }
 
 void sub_08075000(void)
@@ -338,7 +338,7 @@ void sub_08075000(void)
     gUnk_03002490->unk54 = 0x40000;
     TaskYieldTrampoline(19);
     sub_08075290(2);
-    TaskDispatchTrampoline();
+    TaskExitTrampoline();
 }
 
 void sub_08075290(s32 a)
@@ -603,7 +603,7 @@ void sub_080752f4(void)
         TaskYieldTrampoline(5);
         gUnk_03002490->unk2C = -8;
         sub_0806d4e4(4, 256);
-        sub_080031b8(189);
+        PlaySfx(189);
         {
             struct Task *t = gUnk_03002490;
 
@@ -685,7 +685,7 @@ void sub_080752f4(void)
         TaskYieldTrampoline(6);
         gUnk_03002490->unk2C = -8;
         sub_0806d4e4(4, 256);
-        sub_080031b8(189);
+        PlaySfx(189);
         {
             struct Task *t = gUnk_03002490;
 
@@ -873,7 +873,7 @@ void sub_080752f4(void)
         TaskYieldTrampoline(4);
         gUnk_03002490->unk2C = -8;
         sub_0806d4e4(4, 256);
-        sub_080031b8(189);
+        PlaySfx(189);
         {
             struct Task *t = gUnk_03002490;
 
@@ -912,7 +912,7 @@ void sub_080752f4(void)
         TaskYieldTrampoline(12);
         gUnk_03002490->unk2C = -8;
         sub_0806d4e4(4, 256);
-        sub_080031b8(189);
+        PlaySfx(189);
         {
             struct Task *t = gUnk_03002490;
 
@@ -1136,7 +1136,7 @@ void sub_080752f4(void)
         TaskYieldTrampoline(12);
         gUnk_03002490->unk2C = 8;
         sub_0806d4e4(4, 256);
-        sub_080031b8(189);
+        PlaySfx(189);
         {
             struct Task *t = gUnk_03002490;
 
@@ -1202,7 +1202,7 @@ void sub_080752f4(void)
             t->unk2C = 8;
         }
         sub_0806d4e4(4, 256);
-        sub_080031b8(189);
+        PlaySfx(189);
         {
             struct Task *t = gUnk_03002490;
 
@@ -1233,7 +1233,7 @@ void sub_080752f4(void)
         break;
         }
     }
-    TaskDispatchTrampoline();
+    TaskExitTrampoline();
 }
 
 void sub_08076074(void)
@@ -1348,7 +1348,7 @@ void sub_080761b4(void)
         gUnk_03002490->unk6C++;
     } while ((s16)gUnk_03002490->unk6C <= 1);
     sub_080670f0((u32)&pal);
-    TaskDispatchTrampoline();
+    TaskExitTrampoline();
 }
 
 void sub_08076318(void)
@@ -1371,7 +1371,7 @@ void sub_08076318(void)
         struct Task *t = gUnk_03002490;
 
         t->unk88->unk42 &= 0xFFEF;
-        sub_08002e98(t->unk14, 6, gUnk_087400B0);
+        CallTableEntry(t->unk14, 6, gUnk_087400B0);
     }
 }
 
@@ -1380,7 +1380,7 @@ void sub_0807637c(void)
     u16 id;
     struct Task *t;
 
-    sub_08002e98(gUnk_03002490->unk15, 6, gUnk_087400C8);
+    CallTableEntry(gUnk_03002490->unk15, 6, gUnk_087400C8);
     id = gUnk_03002360;
     t = gUnk_03002490;
     if (id == t->unk88->unk00 && t->unk18 != 0)
@@ -1392,5 +1392,5 @@ void sub_080763c4(void)
     struct Task *t = gUnk_03002490;
 
     t->unk00 = (u32)TaskMove;
-    sub_08002e98(t->unk14, 6, gUnk_087400B0);
+    CallTableEntry(t->unk14, 6, gUnk_087400B0);
 }

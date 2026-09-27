@@ -14,7 +14,7 @@
  * gUnk_0200AF20) and calls M11's sub_0803f834/ sub_0803e3e4, M17's
  * sub_08065e6c and a VRAM transfer.  Its callbacks are sub_0805ab04, which
  * blends the saved palette towards gUnk_0873BC3E (while gUnk_03002444 is
- * set) or gUnk_0873BB7E with sub_08003014 (80 or 96 colours by
+ * set) or gUnk_0873BB7E with BlendColors (80 or 96 colours by
  * gUnk_02007D64), raising the ratio Task.unk2C by 10 up to 0x100 in state 1
  * (with the collider row gUnk_0873C2B4 at the player's camera position
  * gUnk_030055D0) and lowering it by 46 to 0 in state 2 (then calling M17's
@@ -60,13 +60,13 @@ extern u16 gUnk_03002458[];
 
 /* M09's hit-box set (src/block_30804.c); only a pointer is passed here */
 struct HitBoxSet;
-void TaskDispatchTrampoline(void);
+void TaskExitTrampoline(void);
 void TaskYieldTrampoline(s32 frames);
-u32 sub_080008e8(u16 steps, s16 delta, u16 *mask);   /* callers pass -4 as movs/negs (src/player_47fe8.c spells it s16 too) */
+u32 BeginFade(u16 steps, s16 delta, u16 *mask);   /* callers pass -4 as movs/negs (src/player_47fe8.c spells it s16 too) */
 void RequestCopy(u32 mode, void *src, void *dst, u32 size);   /* early_1518; effect_5afac's pointer spelling */
 s32 QueueSprite(u32 a, u32 b, u32 c, u32 d, u32 e, s16 f);   /* callers pass f sign-extended (lsls/asrs #16); the early_1518 definition says u16 */
 s32 DrawAffineSprite(s32 a, s16 b, s16 c, s32 d);
-void sub_08003014(u16 *src, u16 *dst, s32 ratio, s32 count, u16 *out);
+void BlendColors(u16 *src, u16 *dst, s32 ratio, s32 count, u16 *out);
 void TaskSetSkipMask(u8 val, s32 idx);
 void TaskFree(s32 id);                         /* kill task (M09+ spelling, 49 landed files) */
 void TaskMove(void);
@@ -78,8 +78,8 @@ void TaskSetMotionXFacing(s32 a, s32 b);
 void TaskStop(void);
 u32 IsWorldPosOnScreen(s16 a, s16 b);   /* the ROM tests r0 unnarrowed (src callers spell u32) */
 u32 IsInView(s16 x, s16 y);
-void sub_0800663c(u32 idx);
-void sub_08006664(u32 idx);
+void TaskRestoreSkipMask(u32 idx);
+void TaskSaveSkipMask(u32 idx);
 void sub_0801a828(u8 a, s16 x, s16 y, void *p);   /* M11's caller spelling */
 u16 sub_08030804(struct HitBoxSet *p, s32 x, s32 y, s32 e);
 void sub_0803dfc8(void);
@@ -175,7 +175,7 @@ void sub_0805a358(void)
         } while ((s16)gUnk_03002490->unk6C <= 5);
         break;
     }
-    TaskDispatchTrampoline();
+    TaskExitTrampoline();
 }
 
 void sub_0805a508(void)
@@ -279,7 +279,7 @@ void sub_0805a52c(void)
         do
         {
             if ((s16)gUnk_03002490->unk6C == 10)
-                sub_080008e8(6, 5, gUnk_02007F60);
+                BeginFade(6, 5, gUnk_02007F60);
             if ((s16)gUnk_03002490->unk6C == 4)
                 gUnk_03002490->unk28 = 1;
             TaskYieldTrampoline(4);
@@ -311,7 +311,7 @@ void sub_0805a52c(void)
         while ((s16)gUnk_0200B000[n] != -1 && n != 20)
         {
             gUnk_02006178 = 1;
-            sub_0800663c((s16)gUnk_0200B000[n++]);
+            TaskRestoreSkipMask((s16)gUnk_0200B000[n++]);
             m++;
         }
         TaskYieldTrampoline(1);
@@ -324,11 +324,11 @@ void sub_0805a52c(void)
             case 2:
             case 7:
             case 8:
-                sub_08006664((s16)gUnk_0200B000[n]);
+                TaskSaveSkipMask((s16)gUnk_0200B000[n]);
                 break;
             default:
                 gUnk_03002790[(s16)gUnk_0200B000[n]].unk13 = 0;
-                sub_08006664((s16)gUnk_0200B000[n]);
+                TaskSaveSkipMask((s16)gUnk_0200B000[n]);
                 break;
             }
             TaskSetSkipMask(15, (s16)gUnk_0200B000[n]);
@@ -356,7 +356,7 @@ void sub_0805a52c(void)
                 r = 0;
                 if (gUnk_03002790[i].unk76 == 2)
                 {
-                    sub_0800663c(i);
+                    TaskRestoreSkipMask(i);
                     TaskYieldTrampoline(1);
                     r = 1;
                 }
@@ -365,7 +365,7 @@ void sub_0805a52c(void)
                 r = 0;
                 if (gUnk_03002790[i].unk76 != 5)
                 {
-                    sub_0800663c(i);
+                    TaskRestoreSkipMask(i);
                     TaskYieldTrampoline(1);
                     r = 1;
                 }
@@ -374,7 +374,7 @@ void sub_0805a52c(void)
             case 3:
             case 4:
             case 9:
-                sub_0800663c(i);
+                TaskRestoreSkipMask(i);
                 TaskYieldTrampoline(2);
                 r = 2;
                 break;
@@ -383,7 +383,7 @@ void sub_0805a52c(void)
             }
             if (r != 0)
             {
-                sub_08006664(i);
+                TaskSaveSkipMask(i);
                 TaskSetSkipMask(15, i);
                 TaskYieldTrampoline(2);
                 gUnk_02006178 = 0;
@@ -395,14 +395,14 @@ void sub_0805a52c(void)
             TaskYieldTrampoline(1);
         TaskYieldTrampoline(10);
         gUnk_03002490->unk28 = 2;
-        sub_080008e8(7, -4, gUnk_02007F60);
+        BeginFade(7, -4, gUnk_02007F60);
         TaskYieldTrampoline(8);
         gUnk_03000FB8 = 0;
         sub_0803e3e4(0);
         gUnk_03001F34 = 0;
         break;
     }
-    TaskDispatchTrampoline();
+    TaskExitTrampoline();
 }
 
 void sub_0805ab04(void)
@@ -420,9 +420,9 @@ void sub_0805ab04(void)
         break;
     case 1:
         if (gUnk_03002444 != 0)
-            sub_08003014(gUnk_0200AF20, gUnk_0873BC3E, (u16)gUnk_03002490->unk2C, n << 4, gUnk_03001570);
+            BlendColors(gUnk_0200AF20, gUnk_0873BC3E, (u16)gUnk_03002490->unk2C, n << 4, gUnk_03001570);
         else
-            sub_08003014(gUnk_0200AF20, gUnk_0873BB7E, (u16)gUnk_03002490->unk2C, n << 4, gUnk_03001570);
+            BlendColors(gUnk_0200AF20, gUnk_0873BB7E, (u16)gUnk_03002490->unk2C, n << 4, gUnk_03001570);
         t = gUnk_03002490;
         if (t->unk2C != 0x100)
         {
@@ -435,9 +435,9 @@ void sub_0805ab04(void)
         break;
     case 2:
         if (gUnk_03002444 != 0)
-            sub_08003014(gUnk_0200AF20, gUnk_0873BC3E, (u16)gUnk_03002490->unk2C, n << 4, gUnk_03001570);
+            BlendColors(gUnk_0200AF20, gUnk_0873BC3E, (u16)gUnk_03002490->unk2C, n << 4, gUnk_03001570);
         else
-            sub_08003014(gUnk_0200AF20, gUnk_0873BB7E, (u16)gUnk_03002490->unk2C, n << 4, gUnk_03001570);
+            BlendColors(gUnk_0200AF20, gUnk_0873BB7E, (u16)gUnk_03002490->unk2C, n << 4, gUnk_03001570);
         u = gUnk_03002490;
         if (u->unk2C != 0)
         {
@@ -521,7 +521,7 @@ void sub_0805acec(void)
         t->unk08 = (u32)sub_0805ae00;
         TaskYieldTrampoline(6);
     }
-    TaskDispatchTrampoline();
+    TaskExitTrampoline();
 }
 
 void sub_0805ae00(void)
@@ -568,7 +568,7 @@ void sub_0805ae94(void)
     TaskYieldTrampoline(1);
     gUnk_03002490->unk3C++;
     TaskYieldTrampoline(1);
-    TaskDispatchTrampoline();
+    TaskExitTrampoline();
 }
 
 void sub_0805af44(void)

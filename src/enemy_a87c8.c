@@ -491,22 +491,22 @@ extern u32 gUnk_08756184[];
 extern u32 gHBlankScrollEffects[];
 
 /* External functions */
-extern void TaskDispatchTrampoline(void);
+extern void TaskExitTrampoline(void);
 extern void TaskYieldTrampoline(u32 frames);
 extern void RequestCopy(u32 mode, u32 src, u32 dst, u32 size);
 extern s32 QueueSprite(u32 a, u32 b, u32 c, u32 d, u32 e, s16 f);
 extern s32 DrawAffineSprite(s32 a, s16 b, s16 c, s32 d);
-extern void sub_08002028(void);
-extern void sub_08002e98(u32 a, u32 b, u32 *c);
-extern u32 sub_08002ee8(u32 range);
-extern void sub_08003014(u16 *src, u16 *dst, s32 ratio, s32 count, u16 *out);
-extern s32 sub_08003110(s32 songId);
+extern void ResetFadeAndBlend(void);
+extern void CallTableEntry(u32 a, u32 b, u32 *c);
+extern u32 RandomRange(u32 range);
+extern void BlendColors(u16 *src, u16 *dst, s32 ratio, s32 count, u16 *out);
+extern s32 PlayBgm(s32 songId);
 extern void sub_08003184(void);
-extern s32 sub_080031b8(s32 id);
-extern void sub_080034d0(void);
-extern void sub_080034f0(s32 player, s32 songId);
-extern void sub_0800374c(s32 speed);
-extern void sub_08003770(u16 volume);
+extern s32 PlaySfx(s32 id);
+extern void StopBgm(void);
+extern void StopSfxOnPlayer(s32 player, s32 songId);
+extern void FadeOutBgm(s32 speed);
+extern void SetBgmVolume(u16 volume);
 extern void TaskSetSkipMask(u8 val, s32 idx);
 extern void TaskFree(s32 id);
 extern void TaskIntegrateMotion(void);
@@ -1422,18 +1422,18 @@ void sub_080a87c8(void)
     else
         gUnk_03002490->unk30 = 1;
     sub_0806395c(0);
-    sub_08002e98(gUnk_03002490->unk14, 7, gUnk_08749168);
+    CallTableEntry(gUnk_03002490->unk14, 7, gUnk_08749168);
 }
 
 void sub_080a8834(void)
 {
-    sub_08002e98(gUnk_03002490->unk14, 7, gUnk_08749168);
+    CallTableEntry(gUnk_03002490->unk14, 7, gUnk_08749168);
 }
 
 void sub_080a8850(void)
 {
     sub_080a9738();
-    sub_08002e98(gUnk_03002490->unk15, 7, gUnk_08749184);
+    CallTableEntry(gUnk_03002490->unk15, 7, gUnk_08749184);
     sub_08068f68();
     sub_08069b44();
 }
@@ -1507,7 +1507,7 @@ void sub_080a8970(void)
                 gUnk_03002490->unk28 = 0;
                 goto pick;
             }
-            if ((sub_08002ee8(2) != 0 || gUnk_03002490->unk28 > 4)
+            if ((RandomRange(2) != 0 || gUnk_03002490->unk28 > 4)
                 && gUnk_02007D00[2] <= 1)
             {
                 gUnk_03002490->unk28 = 128;
@@ -1549,9 +1549,9 @@ pick:
             else
                 gUnk_03002344 = 2;
 sel:
-            gUnk_03002160 = gUnk_087490B4[gUnk_03002344][sub_08002ee8(8)];
+            gUnk_03002160 = gUnk_087490B4[gUnk_03002344][RandomRange(8)];
             if (gUnk_03002160 == 4 && gUnk_03002490->unk18 == 4)
-                gUnk_03002160 = gUnk_087490DC[sub_08002ee8(2)];
+                gUnk_03002160 = gUnk_087490DC[RandomRange(2)];
             sub_0806395c((u16)gUnk_03002160);
             gUnk_03002490->unk18 = gUnk_03002160;
 st3:
@@ -1691,7 +1691,7 @@ void sub_080a8d1c(void)
             {
                 if (--gUnk_03002490->unk24 == 0)
                 {
-                    sub_080031b8(138 << 2);
+                    PlaySfx(138 << 2);
                     gUnk_03002490->unk24 = 10;
                 }
                 TaskYieldTrampoline(1);
@@ -1746,7 +1746,7 @@ void sub_080a8f40(void)
     sp.unk0E = 16;
     sp.unk0A = 1;
     sub_08064b5c(&sp, 0);
-    sub_080031b8(506);
+    PlaySfx(506);
     gUnk_02007D00[0] = 0;
     gUnk_03002490->unk2C = 2;
     sub_0806395c(1);
@@ -1779,7 +1779,7 @@ void sub_080a8fdc(void)
     TaskSetMotionXFacing(0, 0x5A5A5A5A);
     gUnk_03002490->unk58 = 0;
     TaskYieldTrampoline(10);
-    sub_080031b8(0x229);
+    PlaySfx(0x229);
     TaskSetMotionXFacing(-0x40000, 0x5A5A5A5A);
     gUnk_03002490->unk58 = 128 << 8;
     TaskYieldTrampoline(8);

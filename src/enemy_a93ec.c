@@ -491,22 +491,22 @@ extern u32 gUnk_08756184[];
 extern u32 gHBlankScrollEffects[];
 
 /* External functions */
-extern void TaskDispatchTrampoline(void);
+extern void TaskExitTrampoline(void);
 extern void TaskYieldTrampoline(u32 frames);
 extern void RequestCopy(u32 mode, u32 src, u32 dst, u32 size);
 extern s32 QueueSprite(u32 a, u32 b, u32 c, u32 d, u32 e, s16 f);
 extern s32 DrawAffineSprite(s32 a, s16 b, s16 c, s32 d);
-extern void sub_08002028(void);
-extern void sub_08002e98(u32 a, u32 b, u32 *c);
-extern u32 sub_08002ee8(u32 range);
-extern void sub_08003014(u16 *src, u16 *dst, s32 ratio, s32 count, u16 *out);
-extern s32 sub_08003110(s32 songId);
+extern void ResetFadeAndBlend(void);
+extern void CallTableEntry(u32 a, u32 b, u32 *c);
+extern u32 RandomRange(u32 range);
+extern void BlendColors(u16 *src, u16 *dst, s32 ratio, s32 count, u16 *out);
+extern s32 PlayBgm(s32 songId);
 extern void sub_08003184(void);
-extern s32 sub_080031b8(s32 id);
-extern void sub_080034d0(void);
-extern void sub_080034f0(s32 player, s32 songId);
-extern void sub_0800374c(s32 speed);
-extern void sub_08003770(u16 volume);
+extern s32 PlaySfx(s32 id);
+extern void StopBgm(void);
+extern void StopSfxOnPlayer(s32 player, s32 songId);
+extern void FadeOutBgm(s32 speed);
+extern void SetBgmVolume(u16 volume);
 extern void TaskSetSkipMask(u8 val, s32 idx);
 extern void TaskFree(s32 id);
 extern void TaskIntegrateMotion(void);
@@ -1431,7 +1431,7 @@ void sub_080a9434(struct Task *pt)
     {
         gUnk_02007D00[3] = 1;
         gUnk_03002490->unk20 |= 15;
-        gUnk_02007D00[4] = (gUnk_02007D00[4] + gUnk_087490A8[sub_08002ee8(4)]) & 496;
+        gUnk_02007D00[4] = (gUnk_02007D00[4] + gUnk_087490A8[RandomRange(4)]) & 496;
     }
     else
         gUnk_02007D00[3] = 0;
@@ -1449,7 +1449,7 @@ void sub_080a94d4(void)
     else
         gUnk_03002448 = 1;
     gUnk_03002490->unk18 = gUnk_03002448;
-    if (sub_08002ee8(4) != 0)
+    if (RandomRange(4) != 0)
         gUnk_03002490->unk18 ^= 1;
     if (gUnk_03002490->unk18 == 0)
     {
@@ -1588,7 +1588,7 @@ void sub_080a9794(void)
 
 s32 sub_080a97d8(void)
 {
-    sub_08002028();
+    ResetFadeAndBlend();
     TaskStop();
     sub_080639a4((u32)gUnk_08749B48);
     gUnk_03002490->unk34 = 1;
@@ -1783,13 +1783,13 @@ void sub_080a9c28(void)
     gUnk_03002490->unk38 = gUnk_08754448;
     gUnk_03002490->unk04 = (u32)sub_080a9e14;
     gUnk_03002490->unk43 = 1;
-    gUnk_03002490->unk3C = sub_08002ee8(12);
-    gUnk_03002490->unk48 += sub_08002ee8(16) + (u16)(0xFFF8 + gUnk_087491E4[gUnk_03002490->unk3C]);
+    gUnk_03002490->unk3C = RandomRange(12);
+    gUnk_03002490->unk48 += RandomRange(16) + (u16)(0xFFF8 + gUnk_087491E4[gUnk_03002490->unk3C]);
     gUnk_03002490->unk4C = gUnk_03002490->unk48 << 16;
     gUnk_03002490->unk46 = sub_08064cdc(198, gUnk_087491FC[gUnk_03002490->unk3C], 16, 1);
     gUnk_03002790[gUnk_03002490->unk46].unk44 = gUnk_03002490->unk44;
     TaskYieldTrampoline(2);
-    TaskDispatchTrampoline();
+    TaskExitTrampoline();
 }
 
 void sub_080a9cf0(void)
@@ -1800,13 +1800,13 @@ void sub_080a9cf0(void)
     gUnk_03002490->unk38 = gUnk_08754448;
     gUnk_03002490->unk04 = (u32)sub_080a9e14;
     gUnk_03002490->unk43 = 1;
-    gUnk_03002490->unk3C = sub_08002ee8(12);
+    gUnk_03002490->unk3C = RandomRange(12);
     gUnk_03002490->unk48 += gUnk_087491E4[gUnk_03002490->unk3C];
     gUnk_03002490->unk4C = gUnk_03002490->unk48 << 16;
     gUnk_03002490->unk46 = sub_08064cdc(199, gUnk_087491FC[gUnk_03002490->unk3C], 12, 1);
     gUnk_03002790[gUnk_03002490->unk46].unk44 = gUnk_03002490->unk44;
     TaskYieldTrampoline(2);
-    TaskDispatchTrampoline();
+    TaskExitTrampoline();
 }
 
 void sub_080a9da4(void)
@@ -1819,11 +1819,11 @@ void sub_080a9da4(void)
     gUnk_03002490->unk38 = gUnk_08754448;
     gUnk_03002490->unk04 = (u32)sub_080a9e14;
     gUnk_03002490->unk43 = 1;
-    r = sub_08002ee8(3);
+    r = RandomRange(3);
     gUnk_03002490->unk4C = (gUnk_03002490->unk48 + gUnk_08749214[r]) << 16;
     gUnk_03002490->unk3C = 12;
     TaskYieldTrampoline(2);
-    TaskDispatchTrampoline();
+    TaskExitTrampoline();
 }
 
 void sub_080a9e14(void)
@@ -1903,10 +1903,10 @@ void sub_080a9ef4(void)
     gUnk_03001F2C <<= 3;
     switch (g->unk04[0]) {
     case 32:
-        sub_08003014(gUnk_08334480, gUnk_08334480 + 16, (u16)gUnk_03001F2C, 16, (u16 *)((pal << 5) + (u32)gUnk_03001470));
+        BlendColors(gUnk_08334480, gUnk_08334480 + 16, (u16)gUnk_03001F2C, 16, (u16 *)((pal << 5) + (u32)gUnk_03001470));
         break;
     case 96:
-        sub_08003014(gUnk_08334480, gUnk_08334480 + 16, (u16)gUnk_03001F2C, 16, (u16 *)(((pal + 2) << 5) + (u32)gUnk_03001470));
+        BlendColors(gUnk_08334480, gUnk_08334480 + 16, (u16)gUnk_03001F2C, 16, (u16 *)(((pal + 2) << 5) + (u32)gUnk_03001470));
         RequestCopy(2, (((gUnk_03001EA4 >> 1) & 1) << 5) + (u32)gUnk_083344C0, ((pal + 1) << 5) + (u32)gUnk_03001470, 32);
         RequestCopy(2, (u32)g->unk04 + 2, (pal << 5) + (u32)gUnk_03001470, 32);
         break;
@@ -1985,7 +1985,7 @@ void sub_080aa288(void)
 {
     struct Task *o;
 
-    sub_08003110(34);
+    PlayBgm(34);
     o = &gUnk_03002790[sub_08063b38()];
     if (gUnk_020069F0 == 2) {
         if (o->unk7A == 0) {
@@ -2005,5 +2005,5 @@ void sub_080aa288(void)
     gUnk_02007D00[3] = 1;
     gUnk_02007D00[4] = 0;
     sub_08064d34(208, 0);
-    sub_08002e98(gUnk_03002490->unk73, 1, gUnk_087493F4);
+    CallTableEntry(gUnk_03002490->unk73, 1, gUnk_087493F4);
 }

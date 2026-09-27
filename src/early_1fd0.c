@@ -7,10 +7,10 @@
  *   DrawAffineSprite  affine/rotscale OBJ emitter: walks a sprite template list,
  *                 converts each entry into the affine OAM staging buffer at
  *                 0x03001190 and fills one 0x03000050 affine matrix.
- *   sub_08001fd0  clears the eight BG scroll shadow cells.
- *   sub_08002028  clears the brightness/fade block and the blend/window
+ *   ResetBgScroll  clears the eight BG scroll shadow cells.
+ *   ResetFadeAndBlend  clears the brightness/fade block and the blend/window
  *                 shadow bytes.
- *   sub_080020b8 .. sub_08002220  the fade-request family: each one seeds the
+ *   BeginFadeInFromWhite .. BeginFadeOutToBlack  the fade-request family: each one seeds the
  *                 brightness state block (target/current level, step, flags).
  *   sub_08002268  compares and refreshes the 9 header bytes at 0x03000000
  *                 against the ROM copy at 0x0872EB2C; result cached in
@@ -24,7 +24,7 @@
  * no `push {lr}` at all, which agbcc always emits.
  *
  * Three functions in this range are dead exports with no in-ROM references
- * (lesson 2.13): sub_08002104, sub_08002220 and sub_08002358.  They sit
+ * (lesson 2.13): BeginFadeInFromBlack, BeginFadeOutToBlack and sub_08002358.  They sit
  * between evidenced functions and were recovered by disassembling the gaps.
  */
 
@@ -77,19 +77,19 @@ extern void EndFrame(void);
 extern void ResetSpriteQueue(void);
 extern void RunTasks(void);
 
-void sub_08001fd0(void)
+void ResetBgScroll(void)
 {
     gUnk_0300117C = gUnk_03001EE0 = gUnk_03000F8C = gUnk_03000B78 = 0;
     gUnk_03000010 = gUnk_03000FC0 = gUnk_03001E94 = gUnk_03000FA8 = 0;
 }
 
-void sub_08002028(void)
+void ResetFadeAndBlend(void)
 {
     gUnk_03000FB8 = gUnk_030004A4 = gUnk_03001174 = gUnk_03001E98 = gUnk_03001E90 = gUnk_03000048 = gUnk_03001ED4 = 0;
     gUnk_0300118C = gUnk_03000040 = gUnk_03000B08 = gUnk_03001EAC = gUnk_03001EEC = 0;
 }
 
-void sub_080020b8(void)
+void BeginFadeInFromWhite(void)
 {
     gUnk_03001E90 = gUnk_03000FB8 = 31;
     gUnk_030004A4 = -1;
@@ -99,7 +99,7 @@ void sub_080020b8(void)
     gUnk_03001ED4 = 0;
 }
 
-void sub_08002104(void)
+void BeginFadeInFromBlack(void)
 {
     gUnk_03001E90 = 31;
     gUnk_03000FB8 = -31;
@@ -110,7 +110,7 @@ void sub_08002104(void)
     gUnk_03001ED4 = 0;
 }
 
-void sub_0800214c(void)
+void BeginFastFadeInFromWhite(void)
 {
     gUnk_03001E90 = 16;
     gUnk_03000FB8 = 32;
@@ -121,7 +121,7 @@ void sub_0800214c(void)
     gUnk_03001ED4 = 0;
 }
 
-void sub_08002198(void)
+void BeginFadeOutToWhite(void)
 {
     gUnk_03001E90 = 31;
     gUnk_03000FB8 = 0;
@@ -132,7 +132,7 @@ void sub_08002198(void)
     gUnk_03001ED4 = 0;
 }
 
-void sub_080021dc(void)
+void BeginFastFadeOutToWhite(void)
 {
     gUnk_03001E90 = 16;
     gUnk_03000FB8 = 0;
@@ -143,7 +143,7 @@ void sub_080021dc(void)
     gUnk_03001ED4 = 0;
 }
 
-void sub_08002220(void)
+void BeginFadeOutToBlack(void)
 {
     gUnk_03001E90 = 31;
     gUnk_03000FB8 = 0;
@@ -184,7 +184,7 @@ void ResetTasksAndOam(void)
     ResetOamShadow();
 }
 
-void sub_080022bc(void)
+void ResetPlayTime(void)
 {
     gUnk_03000498[3] = 0;
     gUnk_03000498[2] = 0;

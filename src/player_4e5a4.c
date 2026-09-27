@@ -24,7 +24,7 @@ extern u32 gUnk_0873CF7C[];
 extern u32 gUnk_0873C28C[];
 
 /* task / sprite services (landed prototypes) */
-void sub_08002e98(u32 idx, u32 count, void (**fns)(void));   /* if (idx < count) fns[idx](); */
+void CallTableEntry(u32 idx, u32 count, void (**fns)(void));   /* if (idx < count) fns[idx](); */
 void TaskSetFrameNoFlip(s32 a);
 void TaskSetFrameFlip(s32 a);
 void sub_0801a828(u8 a, s16 x, s16 y, void *p);   /* M11's caller spelling */
@@ -41,7 +41,7 @@ void sub_0804e5a4(void)
     gUnk_03002490->unk24 = 0;
     gUnk_03002490->unk73 = 0;
     gUnk_03002490->unk80 = 18;
-    sub_08002e98(gUnk_03002490->unk73, 9, gUnk_0873B664);
+    CallTableEntry(gUnk_03002490->unk73, 9, gUnk_0873B664);
 }
 
 void sub_0804e600(void)
@@ -49,7 +49,7 @@ void sub_0804e600(void)
     gUnk_03002490->unk88->unk3D = 0;
     gUnk_03002490->unk88->unk05 = gUnk_03002490->unk88->unk04;
     gUnk_03002490->unk88->unk04 = 13;
-    sub_08002e98(gUnk_03002490->unk73, 9, gUnk_0873B664);
+    CallTableEntry(gUnk_03002490->unk73, 9, gUnk_0873B664);
 }
 
 void sub_0804e640(void)
@@ -85,5 +85,5 @@ void sub_0804e640(void)
     if (sub_0803fce4(0) != 0)
         gUnk_03002490->unk88->unk01 = 23;
     else
-        sub_08002e98(gUnk_03002490->unk73, 9, gUnk_0873B688);
+        CallTableEntry(gUnk_03002490->unk73, 9, gUnk_0873B688);
 }

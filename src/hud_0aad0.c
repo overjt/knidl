@@ -32,7 +32,7 @@ extern u16 gUnk_085A6FF8[];
 extern u16 gUnk_085A6FFC[];
 
 void RequestCopy(u32 mode, u32 src, u32 dst, u32 size);
-void sub_08002f14(s16 n);
+void IntToDigits(s16 n);
 void sub_08008e6c(s32 a0);
 void sub_0800b318(u16 *src, s32 x, s32 y, s32 n);
 void sub_0800b34c(s32 x, s32 y, s32 n);
@@ -78,7 +78,7 @@ void sub_0800ab64(s32 a)
 void sub_0800abc0(s32 n)
 {
     if (gUnk_02006014 == 1) {
-        sub_08002f14(n);
+        IntToDigits(n);
         sub_0800b318(&gUnk_085A6F34[0][gUnk_03001F08[1]], 10, 18, 1);
         sub_0800b318(&gUnk_085A6F34[1][gUnk_03001F08[1]], 10, 19, 1);
         sub_0800b318(&gUnk_085A6F34[0][gUnk_03001F08[0]], 11, 18, 1);

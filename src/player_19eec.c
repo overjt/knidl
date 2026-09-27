@@ -27,7 +27,7 @@ extern u16 gUnk_085E2A20[];
 extern u16 gUnk_085E2B20[];
 
 void TaskYieldTrampoline(s32 frames);
-void sub_08003014(u16 *src, u16 *dst, s32 ratio, s32 count, u16 *out);
+void BlendColors(u16 *src, u16 *dst, s32 ratio, s32 count, u16 *out);
 void TaskMove(void);
 void TaskSleepForever(void);
 
@@ -61,7 +61,7 @@ void sub_08019eec(void)
     gUnk_03002490->unk6C = 0;
     do
     {
-        sub_08003014(gUnk_085E2920, gUnk_085E2A20, (u16)((s16)gUnk_03002490->unk6C * 16), 128, gUnk_03001370);
+        BlendColors(gUnk_085E2920, gUnk_085E2A20, (u16)((s16)gUnk_03002490->unk6C * 16), 128, gUnk_03001370);
         TaskYieldTrampoline(1);
         gUnk_03002490->unk6C++;
     } while ((s16)gUnk_03002490->unk6C <= 15);
@@ -69,14 +69,14 @@ void sub_08019eec(void)
     gUnk_03002490->unk6C = 0;
     do
     {
-        sub_08003014(gUnk_085E2A20, gUnk_085E2920, (u16)((s16)gUnk_03002490->unk6C * 16), 128, gUnk_03001370);
+        BlendColors(gUnk_085E2A20, gUnk_085E2920, (u16)((s16)gUnk_03002490->unk6C * 16), 128, gUnk_03001370);
         TaskYieldTrampoline(1);
         gUnk_03002490->unk6C++;
     } while ((s16)gUnk_03002490->unk6C <= 15);
     gUnk_03002490->unk6C = 0;
     do
     {
-        sub_08003014(gUnk_085E2920, gUnk_085E2B20, (u16)((s16)gUnk_03002490->unk6C * 16), 128, gUnk_03001370);
+        BlendColors(gUnk_085E2920, gUnk_085E2B20, (u16)((s16)gUnk_03002490->unk6C * 16), 128, gUnk_03001370);
         TaskYieldTrampoline(1);
         gUnk_03002490->unk6C++;
     } while ((s16)gUnk_03002490->unk6C <= 15);

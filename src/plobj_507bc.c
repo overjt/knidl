@@ -13,17 +13,17 @@
  * contact: it installs the sprite (TaskDrawScreen for PlayerState.unk37 == 2,
  * TaskDrawWorldInViewOrFree otherwise, animation table gUnk_0874C650), registers the
  * collider row Task.unk24 if there is one and steps animation frames
- * 0-10 before TaskDispatchTrampoline.  sub_0805091c is a second, drifting burst
+ * 0-10 before TaskExitTrampoline.  sub_0805091c is a second, drifting burst
  * (gUnk_0874C7CC). */
 
 extern void (*gPlayerObjectVariants[])(void);   /* task type #6's 13 variants, indexed by Task.unk18 >> 24 */
 extern u32 gUnk_0874C650[];
 extern u32 gUnk_0874C7CC[];
 
-void TaskDispatchTrampoline(void);
+void TaskExitTrampoline(void);
 void TaskYieldTrampoline(s32 frames);
 /* task / sprite services (landed prototypes) */
-void sub_08002e98(u32 idx, u32 count, void (**fns)(void));   /* if (idx < count) fns[idx](); */
+void CallTableEntry(u32 idx, u32 count, void (**fns)(void));   /* if (idx < count) fns[idx](); */
 void TaskMove(void);
 void TaskDrawScreen(void);
 void TaskDrawWorldInViewOrFree(void);
@@ -40,7 +40,7 @@ void Task_PlayerObject(void)
         gUnk_03002490->unk78 = 1;
         gUnk_03002490->unk24 = 0;
     }
-    sub_08002e98(((u8 *)gUnk_03002490)[27], 13, gPlayerObjectVariants);
+    CallTableEntry(((u8 *)gUnk_03002490)[27], 13, gPlayerObjectVariants);
 }
 
 void sub_08050814(void)
@@ -84,7 +84,7 @@ void sub_08050814(void)
     TaskYieldTrampoline(1);
     gUnk_03002490->unk3C = 10;
     TaskYieldTrampoline(1);
-    TaskDispatchTrampoline();
+    TaskExitTrampoline();
 }
 
 void sub_0805091c(void)
@@ -122,5 +122,5 @@ void sub_0805091c(void)
     TaskYieldTrampoline(2);
     gUnk_03002490->unk3C += 2;
     TaskYieldTrampoline(1);
-    TaskDispatchTrampoline();
+    TaskExitTrampoline();
 }

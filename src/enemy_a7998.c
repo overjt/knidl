@@ -491,22 +491,22 @@ extern u32 gUnk_08756184[];
 extern u32 gHBlankScrollEffects[];
 
 /* External functions */
-extern void TaskDispatchTrampoline(void);
+extern void TaskExitTrampoline(void);
 extern void TaskYieldTrampoline(u32 frames);
 extern void RequestCopy(u32 mode, u32 src, u32 dst, u32 size);
 extern s32 QueueSprite(u32 a, u32 b, u32 c, u32 d, u32 e, s16 f);
 extern s32 DrawAffineSprite(s32 a, s16 b, s16 c, s32 d);
-extern void sub_08002028(void);
-extern void sub_08002e98(u32 a, u32 b, u32 *c);
-extern u32 sub_08002ee8(u32 range);
-extern void sub_08003014(u16 *src, u16 *dst, s32 ratio, s32 count, u16 *out);
-extern s32 sub_08003110(s32 songId);
+extern void ResetFadeAndBlend(void);
+extern void CallTableEntry(u32 a, u32 b, u32 *c);
+extern u32 RandomRange(u32 range);
+extern void BlendColors(u16 *src, u16 *dst, s32 ratio, s32 count, u16 *out);
+extern s32 PlayBgm(s32 songId);
 extern void sub_08003184(void);
-extern s32 sub_080031b8(s32 id);
-extern void sub_080034d0(void);
-extern void sub_080034f0(s32 player, s32 songId);
-extern void sub_0800374c(s32 speed);
-extern void sub_08003770(u16 volume);
+extern s32 PlaySfx(s32 id);
+extern void StopBgm(void);
+extern void StopSfxOnPlayer(s32 player, s32 songId);
+extern void FadeOutBgm(s32 speed);
+extern void SetBgmVolume(u16 volume);
 extern void TaskSetSkipMask(u8 val, s32 idx);
 extern void TaskFree(s32 id);
 extern void TaskIntegrateMotion(void);
@@ -1453,7 +1453,7 @@ void sub_080a7998(void)
     TaskYieldTrampoline(1);
     gUnk_03002490->unk3C = -1;
     TaskYieldTrampoline(2);
-    TaskDispatchTrampoline();
+    TaskExitTrampoline();
 }
 
 void sub_080a7ae4(void)
@@ -1527,7 +1527,7 @@ void sub_080a7b88(void)
             gUnk_03002490->unk6C++;
         } while ((s16)gUnk_03002490->unk6C <= 4);
     }
-    TaskDispatchTrampoline();
+    TaskExitTrampoline();
 }
 
 void sub_080a7c9c(void)
@@ -1548,7 +1548,7 @@ void sub_080a7c9c(void)
     TaskYieldTrampoline(1);
     gUnk_03002490->unk3C++;
     TaskYieldTrampoline(1);
-    TaskDispatchTrampoline();
+    TaskExitTrampoline();
 }
 
 s32 sub_080a7d20(void)
@@ -1569,7 +1569,7 @@ void sub_080a7d2c(void)
     t->unk38 = gUnk_087543E8;
     t->unk8C->unk3C = (u32)sub_080a9e88;
     t->unk40 |= 128 << 4;
-    sub_08002e98(t->unk73, 2, gUnk_08749150);
+    CallTableEntry(t->unk73, 2, gUnk_08749150);
 }
 
 void sub_080a7d98(void)
@@ -1586,18 +1586,18 @@ void sub_080a7d98(void)
     gUnk_02007D00[0] = 1;
     gUnk_03002490->unk46 = sub_08064d34(195, 1);
     sub_0806395c(0);
-    sub_08002e98(gUnk_03002490->unk14, 2, gUnk_08749158);
+    CallTableEntry(gUnk_03002490->unk14, 2, gUnk_08749158);
 }
 
 void sub_080a7df4(void)
 {
-    sub_08002e98(gUnk_03002490->unk14, 2, gUnk_08749158);
+    CallTableEntry(gUnk_03002490->unk14, 2, gUnk_08749158);
 }
 
 void sub_080a7e10(void)
 {
     sub_080a9738();
-    sub_08002e98(gUnk_03002490->unk15, 2, gUnk_08749160);
+    CallTableEntry(gUnk_03002490->unk15, 2, gUnk_08749160);
     if (gUnk_03002490->unk15 == 0)
         sub_08068e04();
     sub_08069b44();
@@ -1742,7 +1742,7 @@ void sub_080a8038(void)
     if (gUnk_03002490->unk2C > 63)
     {
         gUnk_03002490->unk2C = 0;
-        r = sub_08002ee8(4);
+        r = RandomRange(4);
         if (r == 0)
         {
             gUnk_03002490->unk54 = r;
@@ -1764,7 +1764,7 @@ next:
         gUnk_03002490->unk30 = w;
         if (w > 31 && !(w & 15))
         {
-            r = sub_08002ee8(32);
+            r = RandomRange(32);
             gUnk_02007D00[7] = r;
             if (gUnk_03002490->unk30 == 128)
             {
@@ -1841,7 +1841,7 @@ sw:
     case 3:
         if (pt->unk7A != 0)
         {
-            if (sub_08002ee8(8) <= 2)
+            if (RandomRange(8) <= 2)
                 goto retreat2;
             gUnk_03002490->unk54 = 0;
             gUnk_03002490->unk58 = 0;
@@ -1946,7 +1946,7 @@ sw:
                 v = gUnk_03002490->unk34 & (128 << 8);
                 if (v == 0)
                 {
-                    if ((u32)sub_08002ee8(16) <= 2)
+                    if ((u32)RandomRange(16) <= 2)
                     {
 retreat2:
                         sub_080a9434(pt);

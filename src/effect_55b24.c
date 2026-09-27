@@ -7,7 +7,7 @@
  * Task type #7 (the player's effect objects, see src/effect_53af4.c):
  * variants 22-25, spawned by M10's action 16 (sub_08037ed8) and by M11.
  * Each is a loop of short animations around its spawner (22-24 at random
- * offsets from sub_080064ac/sub_080064dc; tables gUnk_0874C718,
+ * offsets from RandomSpread/RandomSpreadFacing; tables gUnk_0874C718,
  * gUnk_0874C7A4, gUnk_0874C7B4, gUnk_0874C7CC) that ends once its companion
  * sets Task.unk28: sub_08055d24, sub_080560fc, sub_08056300 and sub_08056428
  * do so when the player leaves mode 17 (in sub-state 0 of 22 and 23 also
@@ -23,7 +23,7 @@ extern u32 gUnk_0874C7B4[];
 extern u32 gUnk_0874C7CC[];
 extern u16 gUnk_03001EA4;
 
-void TaskDispatchTrampoline(void);
+void TaskExitTrampoline(void);
 void TaskYieldTrampoline(s32 frames);
 void TaskMove(void);
 void TaskDrawWorld(void);
@@ -31,8 +31,8 @@ void TaskSetFrameByFacing(s16 a);
 void TaskSetMotionXFacing(s32 a, s32 b);
 void TaskSetMotion(s32 a, s32 b, s32 c, s32 d, s32 e, s32 f);
 void TaskStop(void);
-u16 sub_080064ac(s32 base, u8 scale, u8 amount);   /* base + ((rand(256) * amount) >> 8) * scale */
-s16 sub_080064dc(s32 base, u8 scale, u8 amount);   /* the same, negated when Task.unk43 != 1 */
+u16 RandomSpread(s32 base, u8 scale, u8 amount);   /* base + ((rand(256) * amount) >> 8) * scale */
+s16 RandomSpreadFacing(s32 base, u8 scale, u8 amount);   /* the same, negated when Task.unk43 != 1 */
 void sub_08055d24(void);
 void sub_080560fc(void);
 void sub_08056300(void);
@@ -57,8 +57,8 @@ void sub_08055b24(void)
             TaskSetMotionXFacing(0, -0x2000);
             gUnk_03002490->unk58 = 0;
             gUnk_03002490->unk60 = -0x2000;
-            gUnk_03002490->unk4C = (sub_080064dc(-8, 1, 16) + ((struct Task *)gUnk_03002490->unk8C)->unk48) << 16;
-            gUnk_03002490->unk50 = (sub_080064ac(-8, 1, 16) + ((struct Task *)gUnk_03002490->unk8C)->unk4A) << 16;
+            gUnk_03002490->unk4C = (RandomSpreadFacing(-8, 1, 16) + ((struct Task *)gUnk_03002490->unk8C)->unk48) << 16;
+            gUnk_03002490->unk50 = (RandomSpread(-8, 1, 16) + ((struct Task *)gUnk_03002490->unk8C)->unk4A) << 16;
             TaskSetFrameByFacing(0);
             TaskYieldTrampoline(1);
             gUnk_03002490->unk3C += 2;
@@ -83,8 +83,8 @@ void sub_08055b24(void)
     {
         do
         {
-            gUnk_03002490->unk4C = (sub_080064dc(-12, 1, 24) + ((struct Task *)gUnk_03002490->unk8C)->unk48) << 16;
-            gUnk_03002490->unk50 = (sub_080064ac(-12, 1, 24) + ((struct Task *)gUnk_03002490->unk8C)->unk4A) << 16;
+            gUnk_03002490->unk4C = (RandomSpreadFacing(-12, 1, 24) + ((struct Task *)gUnk_03002490->unk8C)->unk48) << 16;
+            gUnk_03002490->unk50 = (RandomSpread(-12, 1, 24) + ((struct Task *)gUnk_03002490->unk8C)->unk4A) << 16;
             gUnk_03002490->unk58 = -0x8000;
             TaskSetFrameByFacing(18);
             TaskYieldTrampoline(2);
@@ -104,7 +104,7 @@ void sub_08055b24(void)
             TaskYieldTrampoline(4);
         } while (gUnk_03002490->unk28 == 0);
     }
-    TaskDispatchTrampoline();
+    TaskExitTrampoline();
 }
 
 void sub_08055d24(void)
@@ -139,38 +139,38 @@ void sub_08055d74(void)
     {
         while (gUnk_03002490->unk28 == 0)
         {
-            gUnk_03002490->unk4C = (sub_080064dc(-16, 1, 32) + ((struct Task *)gUnk_03002490->unk8C)->unk48) << 16;
-            gUnk_03002490->unk50 = (sub_080064ac(-16, 1, 32) + ((struct Task *)gUnk_03002490->unk8C)->unk4A) << 16;
+            gUnk_03002490->unk4C = (RandomSpreadFacing(-16, 1, 32) + ((struct Task *)gUnk_03002490->unk8C)->unk48) << 16;
+            gUnk_03002490->unk50 = (RandomSpread(-16, 1, 32) + ((struct Task *)gUnk_03002490->unk8C)->unk4A) << 16;
             gUnk_03002490->unk3C = 0;
             TaskYieldTrampoline(2);
             gUnk_03002490->unk3C++;
             TaskYieldTrampoline(2);
             gUnk_03002490->unk3C--;
             TaskYieldTrampoline(2);
-            gUnk_03002490->unk4C = (sub_080064dc(-12, 1, 24) + ((struct Task *)gUnk_03002490->unk8C)->unk48) << 16;
-            gUnk_03002490->unk50 = (sub_080064ac(-12, 1, 24) + ((struct Task *)gUnk_03002490->unk8C)->unk4A) << 16;
+            gUnk_03002490->unk4C = (RandomSpreadFacing(-12, 1, 24) + ((struct Task *)gUnk_03002490->unk8C)->unk48) << 16;
+            gUnk_03002490->unk50 = (RandomSpread(-12, 1, 24) + ((struct Task *)gUnk_03002490->unk8C)->unk4A) << 16;
             gUnk_03002490->unk3C = 3;
             TaskYieldTrampoline(2);
-            gUnk_03002490->unk4C = (sub_080064dc(-12, 1, 24) + ((struct Task *)gUnk_03002490->unk8C)->unk48) << 16;
-            gUnk_03002490->unk50 = (sub_080064ac(-12, 1, 24) + ((struct Task *)gUnk_03002490->unk8C)->unk4A) << 16;
+            gUnk_03002490->unk4C = (RandomSpreadFacing(-12, 1, 24) + ((struct Task *)gUnk_03002490->unk8C)->unk48) << 16;
+            gUnk_03002490->unk50 = (RandomSpread(-12, 1, 24) + ((struct Task *)gUnk_03002490->unk8C)->unk4A) << 16;
             gUnk_03002490->unk3C = 2;
             TaskYieldTrampoline(2);
             ((volatile struct Task *)gUnk_03002490)->unk3C = 0xFFFF;
             TaskYieldTrampoline(4);
-            gUnk_03002490->unk4C = (sub_080064dc(-16, 1, 32) + ((struct Task *)gUnk_03002490->unk8C)->unk48) << 16;
-            gUnk_03002490->unk50 = (sub_080064ac(-16, 1, 32) + ((struct Task *)gUnk_03002490->unk8C)->unk4A) << 16;
+            gUnk_03002490->unk4C = (RandomSpreadFacing(-16, 1, 32) + ((struct Task *)gUnk_03002490->unk8C)->unk48) << 16;
+            gUnk_03002490->unk50 = (RandomSpread(-16, 1, 32) + ((struct Task *)gUnk_03002490->unk8C)->unk4A) << 16;
             gUnk_03002490->unk3C = 2;
             TaskYieldTrampoline(2);
             gUnk_03002490->unk3C++;
             TaskYieldTrampoline(2);
             gUnk_03002490->unk3C--;
             TaskYieldTrampoline(2);
-            gUnk_03002490->unk4C = (sub_080064dc(-12, 1, 24) + ((struct Task *)gUnk_03002490->unk8C)->unk48) << 16;
-            gUnk_03002490->unk50 = (sub_080064ac(-12, 1, 24) + ((struct Task *)gUnk_03002490->unk8C)->unk4A) << 16;
+            gUnk_03002490->unk4C = (RandomSpreadFacing(-12, 1, 24) + ((struct Task *)gUnk_03002490->unk8C)->unk48) << 16;
+            gUnk_03002490->unk50 = (RandomSpread(-12, 1, 24) + ((struct Task *)gUnk_03002490->unk8C)->unk4A) << 16;
             gUnk_03002490->unk3C = 1;
             TaskYieldTrampoline(2);
-            gUnk_03002490->unk4C = (sub_080064dc(-12, 1, 24) + ((struct Task *)gUnk_03002490->unk8C)->unk48) << 16;
-            gUnk_03002490->unk50 = (sub_080064ac(-12, 1, 24) + ((struct Task *)gUnk_03002490->unk8C)->unk4A) << 16;
+            gUnk_03002490->unk4C = (RandomSpreadFacing(-12, 1, 24) + ((struct Task *)gUnk_03002490->unk8C)->unk48) << 16;
+            gUnk_03002490->unk50 = (RandomSpread(-12, 1, 24) + ((struct Task *)gUnk_03002490->unk8C)->unk4A) << 16;
             gUnk_03002490->unk3C = 0;
             TaskYieldTrampoline(2);
             ((volatile struct Task *)gUnk_03002490)->unk3C = 0xFFFF;
@@ -181,21 +181,21 @@ void sub_08055d74(void)
     {
         while (gUnk_03002490->unk28 == 0)
         {
-            gUnk_03002490->unk4C = (sub_080064dc(-12, 1, 24) + ((struct Task *)gUnk_03002490->unk8C)->unk48) << 16;
-            gUnk_03002490->unk50 = (sub_080064ac(-12, 1, 24) + ((struct Task *)gUnk_03002490->unk8C)->unk4A) << 16;
+            gUnk_03002490->unk4C = (RandomSpreadFacing(-12, 1, 24) + ((struct Task *)gUnk_03002490->unk8C)->unk48) << 16;
+            gUnk_03002490->unk50 = (RandomSpread(-12, 1, 24) + ((struct Task *)gUnk_03002490->unk8C)->unk4A) << 16;
             gUnk_03002490->unk3C = 0;
             TaskYieldTrampoline(1);
             ((volatile struct Task *)gUnk_03002490)->unk3C = 0xFFFF;
             TaskYieldTrampoline(4);
-            gUnk_03002490->unk4C = (sub_080064dc(-12, 1, 24) + ((struct Task *)gUnk_03002490->unk8C)->unk48) << 16;
-            gUnk_03002490->unk50 = (sub_080064ac(-12, 1, 24) + ((struct Task *)gUnk_03002490->unk8C)->unk4A) << 16;
+            gUnk_03002490->unk4C = (RandomSpreadFacing(-12, 1, 24) + ((struct Task *)gUnk_03002490->unk8C)->unk48) << 16;
+            gUnk_03002490->unk50 = (RandomSpread(-12, 1, 24) + ((struct Task *)gUnk_03002490->unk8C)->unk4A) << 16;
             gUnk_03002490->unk3C = 3;
             TaskYieldTrampoline(1);
             ((volatile struct Task *)gUnk_03002490)->unk3C = 0xFFFF;
             TaskYieldTrampoline(2);
         }
     }
-    TaskDispatchTrampoline();
+    TaskExitTrampoline();
 }
 
 void sub_080560fc(void)
@@ -228,8 +228,8 @@ void sub_0805614c(void)
     TaskStop();
     for (gUnk_03002490->unk6C = 0; (s16)gUnk_03002490->unk6C <= 1 && gUnk_03002490->unk28 == 0; gUnk_03002490->unk6C++)
     {
-        gUnk_03002490->unk4C = (sub_080064ac(-12, 1, 24) + ((struct Task *)gUnk_03002490->unk8C)->unk48) << 16;
-        gUnk_03002490->unk50 = (sub_080064ac(-12, 1, 24) + ((struct Task *)gUnk_03002490->unk8C)->unk4A) << 16;
+        gUnk_03002490->unk4C = (RandomSpread(-12, 1, 24) + ((struct Task *)gUnk_03002490->unk8C)->unk48) << 16;
+        gUnk_03002490->unk50 = (RandomSpread(-12, 1, 24) + ((struct Task *)gUnk_03002490->unk8C)->unk4A) << 16;
         TaskSetMotion(0x4000, -0x700, 0x5A5A5A5A, -0x4000, -0x1000, 0x5A5A5A5A);
         gUnk_03002490->unk3C = 0;
         TaskYieldTrampoline(3);
@@ -242,8 +242,8 @@ void sub_0805614c(void)
         } while (gUnk_03002490->unk6E <= 4);
         if (gUnk_03002490->unk28 != 0)
             break;
-        gUnk_03002490->unk4C = (sub_080064ac(-12, 1, 24) + ((struct Task *)gUnk_03002490->unk8C)->unk48) << 16;
-        gUnk_03002490->unk50 = (sub_080064ac(-12, 1, 24) + ((struct Task *)gUnk_03002490->unk8C)->unk4A) << 16;
+        gUnk_03002490->unk4C = (RandomSpread(-12, 1, 24) + ((struct Task *)gUnk_03002490->unk8C)->unk48) << 16;
+        gUnk_03002490->unk50 = (RandomSpread(-12, 1, 24) + ((struct Task *)gUnk_03002490->unk8C)->unk4A) << 16;
         TaskSetMotion(-0x4000, 0x700, 0x5A5A5A5A, -0x4000, -0x1000, 0x5A5A5A5A);
         gUnk_03002490->unk3C = 0;
         TaskYieldTrampoline(3);
@@ -255,7 +255,7 @@ void sub_0805614c(void)
             gUnk_03002490->unk6E++;
         } while (gUnk_03002490->unk6E <= 4);
     }
-    TaskDispatchTrampoline();
+    TaskExitTrampoline();
 }
 
 void sub_08056300(void)
@@ -304,7 +304,7 @@ void sub_08056320(void)
         gUnk_03002490->unk3C += 2;
         TaskYieldTrampoline(1);
     }
-    TaskDispatchTrampoline();
+    TaskExitTrampoline();
 }
 
 void sub_08056428(void)

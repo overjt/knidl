@@ -8,7 +8,7 @@
  * sub_080656b4 as the draw hook (Task.unk00) and sub_08065438 as the
  * per-frame hook (Task.unk0C), points Task.unk38 at the graphics block
  * gUnk_08752ED8, counts the boss into gUnk_02007D00[0], spawns its helper
- * task with sub_08064d34(177, 1) and hands Task.unk73 to sub_08002e98, which
+ * task with sub_08064d34(177, 1) and hands Task.unk73 to CallTableEntry, which
  * jumps into the table.  sub_080900f4 is the per-frame body: it runs down
  * Task.unk18, asks sub_0806acf8 / sub_080692fc whether the player interrupted,
  * dispatches Task.unk15 through the same table, reloads the graphics through
@@ -66,7 +66,7 @@ extern void *gUnk_0826A668;
 
 /* Externals */
 extern void TaskYieldTrampoline(u32 a);
-extern void sub_08002e98(u32 a, u32 b, u32 *c);
+extern void CallTableEntry(u32 a, u32 b, u32 *c);
 extern u16 sub_08066088(u32 mode);
 extern void sub_08066ae0(void);
 extern void sub_08065438(void);
@@ -86,7 +86,7 @@ extern void sub_08068f68(void);
 extern s32 sub_08069b44(void);
 extern void TaskSetFrame(s32 a);
 extern void TaskSetMotionY(s32 a, s32 b, s32 c);
-extern void sub_080031b8(s32 id);
+extern void PlaySfx(s32 id);
 extern void TaskStop(void);
 extern void sub_080261d4(s32 a);
 extern void sub_08066580(void);
@@ -94,7 +94,7 @@ extern void TaskSleepForever(void);
 extern void TaskSetEntry(void *fn, s32 i);
 extern void sub_08063e14(void);
 extern void TaskSetMotionXFacing(s32 a, s32 b);
-extern u32 sub_08002ee8(u32 range);
+extern u32 RandomRange(u32 range);
 extern void TaskUpdateFlip(void);
 extern void sub_0806684c(void);
 extern void sub_080667c0(u8 a, u16 b);
@@ -146,7 +146,7 @@ void sub_0809000c(void)
     else
         gUnk_03002490->unk18 = 0;
     sub_08066ae0();
-    sub_08002e98(gUnk_03002490->unk73, 1, gUnk_08743848);
+    CallTableEntry(gUnk_03002490->unk73, 1, gUnk_08743848);
 }
 
 void sub_08090090(void)
@@ -161,12 +161,12 @@ void sub_08090090(void)
     t->unk34 = 0;
     sub_080666cc(gUnk_08743758);
     sub_0806395c(0);
-    sub_08002e98(gUnk_03002490->unk14, 11, gUnk_0874384C);
+    CallTableEntry(gUnk_03002490->unk14, 11, gUnk_0874384C);
 }
 
 void sub_080900d8(void)
 {
-    sub_08002e98(gUnk_03002490->unk14, 11, gUnk_0874384C);
+    CallTableEntry(gUnk_03002490->unk14, 11, gUnk_0874384C);
 }
 
 void sub_080900f4(void)
@@ -178,16 +178,16 @@ void sub_080900f4(void)
     if (t->unk18 != 0)
     {
         t->unk18--;
-        sub_08002e98(t->unk15, 11, gUnk_08743878);
+        CallTableEntry(t->unk15, 11, gUnk_08743878);
     }
     else if (sub_0806acf8() == 0)
     {
         if (sub_080692fc() == 0)
-            sub_08002e98(gUnk_03002490->unk15, 11, gUnk_08743878);
+            CallTableEntry(gUnk_03002490->unk15, 11, gUnk_08743878);
     }
     else
     {
-        sub_08002e98(gUnk_03002490->unk15, 11, gUnk_08743878);
+        CallTableEntry(gUnk_03002490->unk15, 11, gUnk_08743878);
     }
     u = gUnk_03002490;
     if (u->unk30 != 0)
@@ -222,7 +222,7 @@ void sub_080901e0(void)
         TaskSetMotionY(0, 5376, 196608);
         while (gUnk_03002490->unk7A == 0)
             TaskYieldTrampoline(1);
-        sub_080031b8(0x1F7);
+        PlaySfx(0x1F7);
         TaskStop();
         sub_080261d4(2);
         sub_08066580();
@@ -256,7 +256,7 @@ void sub_08090298(void)
     sub_08063e14();
     TaskSetMotionXFacing(gUnk_08743734[gUnk_03002490->unk74], 0x5A5A5A5A);
     TaskSetFrame(7);
-    gUnk_03002490->unk1C = (sub_08002ee8(3) + 2) * 4;
+    gUnk_03002490->unk1C = (RandomRange(3) + 2) * 4;
     gUnk_03002490->unk6C = zero;
     while ((s16)gUnk_03002490->unk6C < gUnk_03002490->unk1C)
     {
@@ -319,7 +319,7 @@ void sub_080903f0(void)
     while (gUnk_03002490->unk7A == 0)
         TaskYieldTrampoline(1);
     TaskStop();
-    sub_080031b8(0x1F7);
+    PlaySfx(0x1F7);
     sub_080261d4(2);
     sub_0806cffc(16, 6);
     gUnk_03002490->unk3C--;
@@ -344,7 +344,7 @@ void sub_080904d4(void)
     t->unk15 = 3;
     TaskStop();
     sub_08063e14();
-    gUnk_03002490->unk1C = gUnk_0874374E[sub_08002ee8(2)];
+    gUnk_03002490->unk1C = gUnk_0874374E[RandomRange(2)];
     gUnk_03002490->unk6C = zero;
     while ((s16)gUnk_03002490->unk6C < gUnk_03002490->unk1C)
     {
@@ -356,7 +356,7 @@ void sub_080904d4(void)
         while (gUnk_03002490->unk7A == 0)
             TaskYieldTrampoline(1);
         TaskStop();
-        sub_080031b8(0x1F7);
+        PlaySfx(0x1F7);
         sub_080261d4(2);
         sub_0806cffc(16, 6);
         sub_08063e14();
@@ -413,7 +413,7 @@ void sub_080905d8(void)
                 gUnk_03002490->unk1C = 1;
         }
     }
-    sub_080031b8(502);
+    PlaySfx(502);
     gUnk_03002490->unk20 = sub_080640dc(gUnk_087437C8[gUnk_03002490->unk74]);
     TaskSetMotionXFacing(gUnk_08743750[gUnk_03002490->unk74], 0x5A5A5A5A);
     y = gUnk_03002490;
@@ -465,7 +465,7 @@ void sub_0809074c(void)
         while (gUnk_03002490->unk7A == 0)
             TaskYieldTrampoline(1);
         TaskStop();
-        sub_080031b8(0x1F7);
+        PlaySfx(0x1F7);
         sub_080261d4(2);
         sub_0806cffc(16, 6);
     }
@@ -488,7 +488,7 @@ void sub_0809074c(void)
     spawn.unk10 = gUnk_03002490->unk8C->unk20;
     spawn.unk0A = 1;
     gUnk_03002490->unk46 = sub_08064b5c(&spawn, 1);
-    sub_080031b8(0x1FB);
+    PlaySfx(0x1FB);
     z = gUnk_03002490;
     sub_08064c1c(145, (s16)(z->unk48 - z->unk43 * 16), (s16)(z->unk4A + 8), 0);
     gUnk_03002490->unk3C++;
@@ -522,7 +522,7 @@ void sub_08090914(void)
     TaskYieldTrampoline(16);
     gUnk_03002490->unk3C++;
     TaskYieldTrampoline(2);
-    sub_080031b8(520);
+    PlaySfx(520);
     sub_080261d4(2);
     sub_08090e18();
     gUnk_03002490->unk3C++;
@@ -531,7 +531,7 @@ void sub_08090914(void)
     TaskYieldTrampoline(2);
     gUnk_03002490->unk3C--;
     TaskYieldTrampoline(15);
-    if (sub_08002ee8(4) == 0)
+    if (RandomRange(4) == 0)
     {
         sub_0806395c(8);
     }
@@ -574,8 +574,8 @@ void sub_080909d4(void)
         TaskYieldTrampoline(1);
     TaskStop();
     sub_080261d4(2);
-    sub_080031b8(520);
-    sub_080031b8(0x1F7);
+    PlaySfx(520);
+    PlaySfx(0x1F7);
     sub_08090e18();
     gUnk_03002490->unk3C++;
     TaskYieldTrampoline(8);
@@ -616,7 +616,7 @@ void sub_08090b40(void)
         gUnk_03002490->unk3C++;
         TaskYieldTrampoline(2);
         sub_080261d4(2);
-        sub_080031b8(520);
+        PlaySfx(520);
         if ((s16)gUnk_03002490->unk6C == 0)
             sub_08090e18();
         gUnk_03002490->unk3C++;
@@ -645,7 +645,7 @@ void sub_08090c18(void)
     t = gUnk_03002490;
     t->unk15 = 9;
     sub_080261d4(2);
-    sub_080031b8(0x1F7);
+    PlaySfx(0x1F7);
     gUnk_03002490->unk7A = 0;
     TaskSetMotionXFacing(0xFFFF0000, 0x5A5A5A5A);
     TaskSetMotionY(0xFFFD0000, 9472, 196608);
@@ -687,7 +687,7 @@ void sub_08090cd0(void)
         TaskYieldTrampoline(1);
     sub_0806caa0(0, 0, 10);
     sub_080261d4(4);
-    sub_080031b8(0x1F7);
+    PlaySfx(0x1F7);
     sub_0806cc90(0, 4, 16, 8);
     TaskStopY();
     TaskSetMotionXFacing(0xFFFF8000, 0x5A5A5A5A);
@@ -725,7 +725,7 @@ void sub_08090e54(void)
 
     sub_0806395c(gUnk_08743744[gUnk_03002490->unk28]);
     if (gUnk_03002490->unk14 == 2)
-        gUnk_03002490->unk14 += sub_08002ee8(2);
+        gUnk_03002490->unk14 += RandomRange(2);
     t = gUnk_03002490;
     if (--t->unk28 < 0)
         t->unk28 = 4;
@@ -854,5 +854,5 @@ void sub_080910c0(void)
         gUnk_03002490->unk18 = 0;
     sub_08063e14();
     sub_08066ae0();
-    sub_08002e98(gUnk_03002490->unk73, 1, gUnk_08743984);
+    CallTableEntry(gUnk_03002490->unk73, 1, gUnk_08743984);
 }

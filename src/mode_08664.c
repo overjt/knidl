@@ -38,21 +38,21 @@ extern s16 gUnk_0300244C;
 extern u16 gUnk_0857121C[][11];
 
 void RequestCopy(u32 mode, u32 src, u32 dst, u32 size);
-void sub_08002028(void);
-void sub_0800214c(void);
-void sub_080021dc(void);
+void ResetFadeAndBlend(void);
+void BeginFastFadeInFromWhite(void);
+void BeginFastFadeOutToWhite(void);
 void sub_080022fc(void);
 void sub_08002338(void);
 void sub_08002358(void);
 void sub_08002378(void);
 void RunLinkFrame(void);
 void RunLinkFrames(s32 count);
-void sub_08002e0c(void);
-void sub_080031b8(s32 id);
-void sub_080034f0(s32 player, s32 songId);
-void sub_08003688(void);
-void sub_080037f8(u16 speed);
-void sub_0800381c(s32 speed);
+void RunLinkFramesUntilFadeDone(void);
+void PlaySfx(s32 id);
+void StopSfxOnPlayer(s32 player, s32 songId);
+void StopAllSfx(void);
+void FadeInSfx(u16 speed);
+void FadeOutSfx(s32 speed);
 void TaskSetSkipMask(u8 val, s32 idx);
 void sub_080075b8(void);
 void sub_08008c4c(s32 a0);
@@ -82,14 +82,14 @@ void sub_08008664(void)
     u16 mode;
 
     id = gUnk_03002170[gUnk_03002360].unk0D;
-    sub_080031b8(232);
+    PlaySfx(232);
     for (i = 0; i < 64; i++)
         TaskSetSkipMask(15, i);
     sub_080271ec();
-    sub_080021dc();
+    BeginFastFadeOutToWhite();
     RunLinkFrames(8);
-    sub_0800381c(32);
-    sub_08002e0c();
+    FadeOutSfx(32);
+    RunLinkFramesUntilFadeDone();
     for (i = 0; i < 64; i++)
         TaskSetSkipMask(31, i);
     sub_080b6eec();
@@ -121,9 +121,9 @@ void sub_08008664(void)
     sub_08002358();
     sub_08002378();
     sub_080022fc();
-    sub_08002028();
-    sub_0800214c();
-    sub_08002e0c();
+    ResetFadeAndBlend();
+    BeginFastFadeInFromWhite();
+    RunLinkFramesUntilFadeDone();
     do {
         RunLinkFrame();
         pressed = 0;
@@ -133,16 +133,16 @@ void sub_08008664(void)
                     if (gUnk_03001EB8[i] & 9) {
                         if (sel != 0) {
                             gUnk_030023D8 = 5;
-                            sub_08003688();
+                            StopAllSfx();
                         }
-                        sub_080031b8(0x11F);
+                        PlaySfx(0x11F);
                         pressed++;
                     } else if (gUnk_03001EB8[i] & 2) {
-                        sub_080031b8(215);
+                        PlaySfx(215);
                         pressed++;
                     }
                     if (flag != 0 && (gUnk_03001EB8[i] & 0xC0)) {
-                        sub_080031b8(286);
+                        PlaySfx(286);
                         sel ^= 1;
                         sub_080089e0(sel);
                     }
@@ -150,27 +150,27 @@ void sub_08008664(void)
             }
         } else {
             if (flag != 0 && (gUnk_03001EB8[gUnk_02004B60] & 0xC0)) {
-                sub_080031b8(286);
+                PlaySfx(286);
                 sel ^= 1;
                 sub_080089e0(sel);
             }
             if (gUnk_03001EB8[gUnk_02004B60] & 9) {
                 if (sel != 0) {
                     gUnk_030023D8 = 5;
-                    sub_08003688();
+                    StopAllSfx();
                 }
-                sub_080031b8(0x11F);
+                PlaySfx(0x11F);
                 pressed++;
             } else if (gUnk_03001EB8[gUnk_02004B60] & 2) {
-                sub_080031b8(215);
+                PlaySfx(215);
                 pressed++;
             }
         }
     } while (pressed == 0);
     if (gUnk_03002444 != 0 || gUnk_030023D8 != 5) {
         sub_08002338();
-        sub_080021dc();
-        sub_08002e0c();
+        BeginFastFadeOutToWhite();
+        RunLinkFramesUntilFadeDone();
         sub_08008c4c(3);
         sub_08027240();
         for (i = 0; i < 64; i++)
@@ -179,9 +179,9 @@ void sub_08008664(void)
         sub_08002358();
         sub_08002378();
         sub_080022fc();
-        sub_080037f8(16);
-        sub_0800214c();
-        sub_08002e0c();
+        FadeInSfx(16);
+        BeginFastFadeInFromWhite();
+        RunLinkFramesUntilFadeDone();
         for (i = 0; i < 64; i++)
             TaskSetSkipMask(0, i);
         sub_08027210();
@@ -210,7 +210,7 @@ void sub_08008a00(void)
     sub_080022fc();
     gUnk_03001ED8 &= 0xE0FF;
     gUnk_03001ED8 |= 0x1D00;
-    sub_0800214c();
+    BeginFastFadeInFromWhite();
     while (gUnk_03001E90 != 0) {
         RunLinkFrame();
         InputRecorderUpdate();
@@ -250,7 +250,7 @@ void sub_08008a00(void)
         }
     } while (done == 0);
     sub_08002338();
-    sub_080021dc();
+    BeginFastFadeOutToWhite();
     while (gUnk_03001E90 != 0) {
         RunLinkFrame();
         InputRecorderUpdate();
@@ -258,7 +258,7 @@ void sub_08008a00(void)
     gUnk_03000048 = 0;
     for (i = 0; i < gUnk_030023AC; i++) {
         if (gUnk_03002170[i].unk2C != -1) {
-            sub_080034f0(gUnk_03002170[i].unk2C, gUnk_03002170[i].unk2E);
+            StopSfxOnPlayer(gUnk_03002170[i].unk2C, gUnk_03002170[i].unk2E);
             gUnk_03002170[i].unk2C = -1;
         }
     }

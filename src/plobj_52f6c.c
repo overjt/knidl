@@ -71,10 +71,10 @@ extern u32 gUnk_0873BE88[];
 
 /* M09's hit-box set (src/block_30804.c); only a pointer is passed here */
 struct HitBoxSet;
-void TaskDispatchTrampoline(void);
+void TaskExitTrampoline(void);
 void TaskYieldTrampoline(s32 frames);
 s32 QueueSprite(u32 a, u32 b, u32 c, u32 d, u32 e, s16 f);
-s32 sub_080031b8(s32 id);
+s32 PlaySfx(s32 id);
 s32 TaskCreateInRange(u32 type, s32 start, s32 end);
 void TaskMove(void);
 void TaskMoveRelativeToParent(void);
@@ -185,7 +185,7 @@ void sub_08052f6c(void)
                     u->unk58 = 0;
                 }
             }
-            TaskDispatchTrampoline();
+            TaskExitTrampoline();
         case 3:
         {
             struct Task *u = gUnk_03002490;
@@ -424,7 +424,7 @@ void sub_080536dc(void)
         sub_0801a828(gCurTaskIdx, gUnk_03002490->unk48, gUnk_03002490->unk4A, gUnk_0873BE74);
         break;
     case 6:
-        sub_080031b8(0x232);
+        PlaySfx(0x232);
         {
             struct Task *t = gUnk_03002490;
             t->unk08 = 0;

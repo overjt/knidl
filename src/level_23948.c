@@ -134,7 +134,7 @@ extern s16 gUnk_03002388;
 
 void RequestCopy(u32 mode, u32 src, u32 dst, u32 size);
 void ResetTasksAndOam(void);
-s32 sub_08003110(s32 songId);
+s32 PlayBgm(s32 songId);
 void TaskSleepForever(void);
 void sub_08008c64(u16 a0);
 void sub_08009b2c(s32 i);
@@ -491,7 +491,7 @@ void sub_08023fd4(void)
     sub_0802d0f4();
     gUnk_030023CC = 136;
     gUnk_03002388 = 928;
-    sub_08003110(1);
+    PlayBgm(1);
     gUnk_0200B050 = 0;
     gUnk_0200B078 = 0;
     gUnk_02000020 = 1;

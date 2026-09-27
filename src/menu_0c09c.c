@@ -56,12 +56,12 @@ extern u16 gUnk_030023D8;
 extern s32 gCurSaveSlot;
 extern u8 gExtraMode;
 
-void sub_0800214c(void);
-void sub_080021dc(void);
+void BeginFastFadeInFromWhite(void);
+void BeginFastFadeOutToWhite(void);
 void RunFrame(void);
 void RunFrames(s32 count);
-void sub_08002db4(void);
-s32 sub_080031b8(s32 id);
+void RunFramesUntilFadeDone(void);
+s32 PlaySfx(s32 id);
 s32 TaskCreateFrom(u32 type, s32 idx);
 void sub_08008c4c(s32 a0);
 void sub_08008c64(u16 a0);
@@ -96,7 +96,7 @@ void sub_0800c09c(void)
     {
         if (*keys & 9)
         {
-            sub_080031b8(102);
+            PlaySfx(102);
             gCurSaveSlot = gUnk_0200B074;
             if (gSaveSlots[gCurSaveSlot].unk04 == 0x99999999)
                 sub_080b798c(gCurSaveSlot);
@@ -109,8 +109,8 @@ void sub_0800c09c(void)
                 {
                     if (done == 0)
                     {
-                        sub_080021dc();
-                        sub_08002db4();
+                        BeginFastFadeOutToWhite();
+                        RunFramesUntilFadeDone();
                     }
                     sub_080c680c(i);
                     done = 1;
@@ -123,8 +123,8 @@ void sub_0800c09c(void)
                 sub_08008c64(19);
                 gUnk_03001ED8 &= 0xE0FF;
                 gUnk_03001ED8 |= 0x1C00;
-                sub_0800214c();
-                sub_08002db4();
+                BeginFastFadeInFromWhite();
+                RunFramesUntilFadeDone();
             }
             sub_0800fe54(0x80000);
             gUnk_02007E88 = *state;
@@ -134,7 +134,7 @@ void sub_0800c09c(void)
         }
         if (*keys & 2)
         {
-            sub_080031b8(215);
+            PlaySfx(215);
             *state = 10;
             gUnk_03002150 = 4;
             gUnk_030023D8 = 3;
@@ -142,13 +142,13 @@ void sub_0800c09c(void)
         }
         if (gUnk_03000B70 & 0x40)
         {
-            sub_080031b8(101);
+            PlaySfx(101);
             if (--gUnk_0200B074 < 0)
                 gUnk_0200B074 = 2;
         }
         else if (gUnk_03000B70 & 0x80)
         {
-            sub_080031b8(101);
+            PlaySfx(101);
             if (++gUnk_0200B074 > 2)
                 gUnk_0200B074 = 0;
         }
@@ -225,7 +225,7 @@ void sub_0800c34c(void)
         }
         if ((gUnk_03000038 & 9) || (gUnk_02004B70 & 9))
         {
-            sub_080031b8(102);
+            PlaySfx(102);
             switch (gUnk_020055E4)
             {
             case 0:
@@ -260,7 +260,7 @@ void sub_0800c34c(void)
         }
         if ((gUnk_03000038 & 2) || (gUnk_02004B70 & 2))
         {
-            sub_080031b8(215);
+            PlaySfx(215);
             gUnk_020060D0 = 0;
             sub_0800bcf0();
             sub_0800da9c(1);
@@ -276,13 +276,13 @@ void sub_0800c34c(void)
         {
             if (gUnk_03000B70 & 0x40)
             {
-                sub_080031b8(101);
+                PlaySfx(101);
                 if (--gUnk_020055E4 < 0)
                     gUnk_020055E4 = 3;
             }
             else if (gUnk_03000B70 & 0x80)
             {
-                sub_080031b8(101);
+                PlaySfx(101);
                 if (++gUnk_020055E4 > 3)
                     gUnk_020055E4 = 0;
             }
@@ -300,24 +300,24 @@ void sub_0800c558(void)
     {
         if (*keys & 2)
         {
-            sub_080031b8(215);
+            PlaySfx(215);
             *state = 1;
             RunFrames(10);
             return;
         }
         if ((gUnk_03001EF4 & 0x80) && gUnk_02007D34 == 0)
         {
-            sub_080031b8(101);
+            PlaySfx(101);
             gUnk_02007D34 = 1;
         }
         else if ((gUnk_03001EF4 & 0x40) && gUnk_02007D34 == 1)
         {
-            sub_080031b8(101);
+            PlaySfx(101);
             gUnk_02007D34 = 0;
         }
         RunFrame();
     }
-    sub_080031b8(102);
+    PlaySfx(102);
     gExtraMode = gUnk_02007D34;
     *state = 3;
     gUnk_02004B44 = 0;
@@ -357,7 +357,7 @@ void sub_0800c610(void)
         }
         if ((gUnk_03000038 & 9) || (gUnk_02004B70 & 9))
         {
-            sub_080031b8(102);
+            PlaySfx(102);
             if (gUnk_02004B44 == 0)
             {
                 gUnk_020060D0 = 9;
@@ -391,7 +391,7 @@ void sub_0800c610(void)
         }
         if ((gUnk_03000038 & 2) || (gUnk_02004B70 & 2))
         {
-            sub_080031b8(215);
+            PlaySfx(215);
             if (gSaveSlots[gCurSaveSlot].unk10 & 4)
                 gUnk_020060D0 = 2;
             else
@@ -403,12 +403,12 @@ void sub_0800c610(void)
         {
             if ((gUnk_03001EF4 & 0x80) && gUnk_02004B44 == 0)
             {
-                sub_080031b8(101);
+                PlaySfx(101);
                 gUnk_02004B44 = 1;
             }
             else if ((gUnk_03001EF4 & 0x40) && gUnk_02004B44 == 1)
             {
-                sub_080031b8(101);
+                PlaySfx(101);
                 gUnk_02004B44 = 0;
             }
         }
@@ -430,7 +430,7 @@ void sub_0800c8a0(void)
     {
         if ((gUnk_03000038 & 9) && gUnk_02007D34 == 0)
         {
-            sub_080031b8(102);
+            PlaySfx(102);
             if (++gUnk_0200618C == 1)
             {
                 sub_08008c64(30);
@@ -441,7 +441,7 @@ void sub_0800c8a0(void)
             {
                 TaskCreateFrom(244, 32);
                 RunFrames(10);
-                sub_080031b8(268);
+                PlaySfx(268);
                 EraseSaveSlot(gCurSaveSlot);
                 gUnk_020060D0 = 0;
                 sub_0800bcf0();
@@ -459,21 +459,21 @@ void sub_0800c8a0(void)
         else if (*keys & 11)
         {
             if (*keys & 9)
-                sub_080031b8(102);
+                PlaySfx(102);
             else
-                sub_080031b8(215);
+                PlaySfx(215);
             gUnk_020060D0 = 1;
             RunFrames(10);
             return;
         }
         if ((gUnk_03001EF4 & 0x20) && gUnk_02007D34 == 1)
         {
-            sub_080031b8(101);
+            PlaySfx(101);
             gUnk_02007D34 = 0;
         }
         else if ((gUnk_03001EF4 & 0x10) && gUnk_02007D34 == 0)
         {
-            sub_080031b8(101);
+            PlaySfx(101);
             gUnk_02007D34 = 1;
         }
         RunFrame();

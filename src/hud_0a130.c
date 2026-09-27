@@ -50,7 +50,7 @@ extern u8 gUnk_030023B0;
 extern s8 gUnk_03002444;
 extern s32 gUnk_03002448;
 
-void sub_080031b8(s32 id);
+void PlaySfx(s32 id);
 void sub_08008ebc(void);
 void sub_08008ed4(s32 a0);
 void sub_0800ab08(void);
@@ -369,7 +369,7 @@ void sub_0800a854(void)
             case 1:
                 if (--p->unk6 > 0)
                     break;
-                sub_080031b8(221);
+                PlaySfx(221);
                 v = p->unk4 + 1;
                 if (v > p->unk2)
                     v = p->unk2;
@@ -386,7 +386,7 @@ void sub_0800a854(void)
             case 2:
                 if (--p->unk6 > 0)
                     break;
-                sub_080031b8(221);
+                PlaySfx(221);
                 v = p->unk4 + 1;
                 if (v > p->unk2)
                     v = p->unk2;

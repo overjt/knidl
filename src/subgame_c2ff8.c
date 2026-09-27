@@ -6,7 +6,7 @@
  *
  * Sub-game 2: task type #96 (class 3) and its variant 0, the racers.
  * 
- *   Task_AirGrindObject   the body: sub_08002e98(Task.unk73, 5, gUnk_087572D4), the
+ *   Task_AirGrindObject   the body: CallTableEntry(Task.unk73, 5, gUnk_087572D4), the
  *       three variants sub_080c3018 / sub_080c46ec / sub_080c3f44 (entries
  *       2-4 of gUnk_087572CC; the two words after them are data).
  *   sub_080c3018   variant 0, one per player (Task.unk1C): resets the
@@ -144,7 +144,7 @@ extern vu16 gUnk_03000F98[];
 extern vu16 gUnk_03001EB8[];
 
 void TaskYieldTrampoline(s32 frames);
-void sub_08002e98(u32 idx, u32 count, void (**fns)(void));   /* if (idx < count) fns[idx](); */
+void CallTableEntry(u32 idx, u32 count, void (**fns)(void));   /* if (idx < count) fns[idx](); */
 void TaskSleepForever(void);                                     /* end the running task */
 void sub_080c3efc(void);
 void sub_080c3f20(void);
@@ -156,7 +156,7 @@ void sub_080c34ac(void);
 
 void Task_AirGrindObject(void)
 {
-    sub_08002e98(gUnk_03002490->unk73, 5, gUnk_087572D4);
+    CallTableEntry(gUnk_03002490->unk73, 5, gUnk_087572D4);
 }
 
 void sub_080c3018(void)

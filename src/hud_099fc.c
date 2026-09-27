@@ -61,10 +61,10 @@ extern u16 gUnk_08731CE6[];
 extern u32 gUnk_087555D8[];
 extern struct GfxHeader *gUnk_087555FC[];
 
-void TaskDispatchTrampoline(void);
+void TaskExitTrampoline(void);
 void TaskYieldTrampoline(s32 frames);
 void RequestCopy(u32 mode, u32 src, u32 dst, u32 size);
-s32 sub_080031b8(s32 id);
+s32 PlaySfx(s32 id);
 void TaskMove(void);
 void TaskDrawScreen(void);
 void sub_08008ebc(void);
@@ -107,7 +107,7 @@ void Task_IntroStoryPicture(void)
     RequestCopy(3, (u32)gUnk_02020000, (u32)gUnk_06010000, h->unk02 << 5);
     gUnk_03002490->unk3C = gUnk_03002490->unk18;
     TaskYieldTrampoline(gUnk_08731CE6[gUnk_03002490->unk18] + 67);
-    TaskDispatchTrampoline();
+    TaskExitTrampoline();
 }
 
 void sub_08009aa0(void)
@@ -303,7 +303,7 @@ s32 sub_08009ee8(s32 a, u32 b)
             if (gUnk_02005588[b] == 0)
                 gUnk_03001F34 = 1;
             else if (gUnk_02005588[b] == 8 && gUnk_03002360 == b)
-                sub_080031b8(262);
+                PlaySfx(262);
         }
         gUnk_03002790[b].unk78 = gUnk_02005588[b];
         if (b == gUnk_03002360 && gUnk_02006014 == 1)

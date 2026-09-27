@@ -8,7 +8,7 @@
  * sub_08045d34 (action 38, mode 13) spends one charge of the ability
  * counter PlayerState.unk0E (the HUD update sub_08009fcc) and plays one
  * of three sequences picked by the charges left (Task.unk73 = unk0E - 1),
- * each with its own song (sub_08003564) and sound; meanwhile it freezes
+ * each with its own song (StopSfx) and sound; meanwhile it freezes
  * the stage (gUnk_03001F34 = 1), switches the DISPCNT shadow
  * gUnk_03001ED8 to BG0, BG2, BG3 and OBJ unless BG2 is already on, raises
  * PlayerState.unk42 bits 8-10 and repeats the last loop until the effect
@@ -22,8 +22,8 @@ extern u8 gUnk_03001F34;
 extern u32 gUnk_0873CB1C[];
 
 void TaskYieldTrampoline(s32 frames);
-s32 sub_080031b8(s32 id);
-s32 sub_08003564(s32 songId);
+s32 PlaySfx(s32 id);
+s32 StopSfx(s32 songId);
 void TaskSleepForever(void);
 void TaskSetFrame(s32 a);
 s32 sub_08009fcc(s32 a, s32 b, u32 c);
@@ -89,7 +89,7 @@ void sub_08045d34(void)
         TaskYieldTrampoline(2);
         gUnk_03002490->unk3C++;
         TaskYieldTrampoline(2);
-        sub_080031b8(160);
+        PlaySfx(160);
         gUnk_03002490->unk88->unk16++;
         sub_080261d4(4);
         sub_08027204(2);
@@ -122,9 +122,9 @@ void sub_08045d34(void)
         } while ((s16)++gUnk_03002490->unk6C <= 5);
         gUnk_03002490->unk3C++;
         TaskYieldTrampoline(3);
-        sub_08003564(160);
+        StopSfx(160);
         TaskYieldTrampoline(1);
-        sub_080031b8(161);
+        PlaySfx(161);
         gUnk_03002490->unk88->unk16++;
         sub_080261d4(4);
         sub_08027204(2);
@@ -174,11 +174,11 @@ void sub_08045d34(void)
         TaskYieldTrampoline(4);
         gUnk_03002490->unk3C++;
         TaskYieldTrampoline(4);
-        sub_08003564(161);
+        StopSfx(161);
         TaskYieldTrampoline(1);
         gUnk_03002490->unk88->unk68 = (u32)gUnk_0873CB1C;
         sub_0803e050(2);
-        sub_080031b8(162);
+        PlaySfx(162);
         gUnk_03002490->unk88->unk16++;
         sub_080261d4(4);
         sub_08027204(2);

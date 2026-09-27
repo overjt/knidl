@@ -7,7 +7,7 @@
  * The reaction duel's round controller (sub-game 0 of src/subgame_b9d0c.c).
  * Task.unk14 is the requested state and Task.unk15 the running one; each of
  * the seven states is an <entry, per-frame check> pair dispatched through
- * sub_08002e98: 0x087562FC / 0x08756318 in link play (sub_080bace4 /
+ * CallTableEntry: 0x087562FC / 0x08756318 in link play (sub_080bace4 /
  * sub_080bab68) and 0x08756334 / 0x08756350 against the computer
  * (sub_080bb23c).  A check re-dispatches as soon as Task.unk14 changes.
  *
@@ -53,12 +53,12 @@ extern u32 gUnk_08756334[];
 extern u32 gUnk_08756350[];
 
 void TaskYieldTrampoline(u32 frames);
-void sub_0800214c(void);
-void sub_080021dc(void);
-void sub_08002e98(u32 a, u32 b, u32 *c);
-s32 sub_08003110(s32 songId);
-s32 sub_080031b8(s32 id);
-void sub_080034d0(void);
+void BeginFastFadeInFromWhite(void);
+void BeginFastFadeOutToWhite(void);
+void CallTableEntry(u32 a, u32 b, u32 *c);
+s32 PlayBgm(s32 songId);
+s32 PlaySfx(s32 id);
+void StopBgm(void);
 void TaskSetOthersSkipMask(u16 val, s32 idx);
 void TaskFree(s32 id);
 s32 TaskCreateFrom(u32 type, s32 idx);
@@ -92,7 +92,7 @@ u8 sub_080ba774(void)
 
 void sub_080ba78c(void)
 {
-    sub_080034d0();
+    StopBgm();
     sub_080ba900();
     TaskYieldTrampoline(120);
     gUnk_03002490->unk30 = 1;
@@ -103,7 +103,7 @@ void sub_080ba7b0(void)
 {
     while (gUnk_03002490->unk75 == 0)
         TaskYieldTrampoline(1);
-    sub_080034d0();
+    StopBgm();
     sub_080ba900();
     TaskYieldTrampoline(120);
     gUnk_03002490->unk30 = 1;
@@ -120,7 +120,7 @@ void sub_080ba7fc(u8 a0)
     gUnk_03001ED8 |= 0x1400;
     sub_080ba978();
     if (a0 == 1)
-        sub_080031b8(253);
+        PlaySfx(253);
     gUnk_03002490->unk30 = 0;
     gUnk_03002490->unk24 = 0;
 }
@@ -133,7 +133,7 @@ void sub_080ba860(void)
     TaskSetOthersSkipMask(0, gCurTaskIdx);
     gUnk_03001ED8 &= 0xE0FF;
     gUnk_03001ED8 |= 0x1400;
-    sub_080031b8(0x101);
+    PlaySfx(0x101);
     sub_080ba978();
     TaskYieldTrampoline(68);
     sub_080ba900();
@@ -275,13 +275,13 @@ void QuickDrawRound(void)
     if (gUnk_030023AC != 1)
     {
         gUnk_03002490->unk14 = 0;
-        sub_08002e98(gUnk_03002490->unk14, 7, gUnk_087562FC);
+        CallTableEntry(gUnk_03002490->unk14, 7, gUnk_087562FC);
     }
     else
     {
         sub_080bb074();
         gUnk_03002490->unk14 = 0;
-        sub_08002e98(gUnk_03002490->unk14, 7, gUnk_08756334);
+        CallTableEntry(gUnk_03002490->unk14, 7, gUnk_08756334);
     }
     TaskSleepForever();
 }
@@ -289,9 +289,9 @@ void QuickDrawRound(void)
 void sub_080bab68(void)
 {
     if (gUnk_030023AC != 1)
-        sub_08002e98(gUnk_03002490->unk15, 7, gUnk_08756318);
+        CallTableEntry(gUnk_03002490->unk15, 7, gUnk_08756318);
     else
-        sub_08002e98(gUnk_03002490->unk15, 7, gUnk_08756350);
+        CallTableEntry(gUnk_03002490->unk15, 7, gUnk_08756350);
     SubGameCheckEnd();
 }
 
@@ -351,13 +351,13 @@ void sub_080bacbc(s32 a0)
 
 void sub_080bace4(void)
 {
-    sub_08002e98(gUnk_03002490->unk14, 7, gUnk_087562FC);
+    CallTableEntry(gUnk_03002490->unk14, 7, gUnk_087562FC);
 }
 
 void sub_080bad00(void)
 {
     gUnk_03002490->unk15 = 0;
-    sub_08003110(0x823);
+    PlayBgm(0x823);
     while (gUnk_03002490->unk24 == 0)
         TaskYieldTrampoline(1);
     sub_080ba6b4();
@@ -466,11 +466,11 @@ void sub_080baf18(void)
 void sub_080baf40(void)
 {
     gUnk_03002490->unk15 = 6;
-    sub_080021dc();
+    BeginFastFadeOutToWhite();
     while (gUnk_03001E90 != 0)
         TaskYieldTrampoline(1);
     sub_080ba8cc();
-    sub_0800214c();
+    BeginFastFadeInFromWhite();
     while (gUnk_03001E90 != 0)
         TaskYieldTrampoline(1);
     gUnk_03002490->unk14 = 0;
@@ -601,13 +601,13 @@ u8 sub_080bb1ec(void)
 
 void sub_080bb23c(void)
 {
-    sub_08002e98(gUnk_03002490->unk14, 7, gUnk_08756334);
+    CallTableEntry(gUnk_03002490->unk14, 7, gUnk_08756334);
 }
 
 void sub_080bb258(void)
 {
     gUnk_03002490->unk15 = 0;
-    sub_08003110(0x823);
+    PlayBgm(0x823);
     while (gUnk_03002490->unk24 == 0)
         TaskYieldTrampoline(1);
     sub_080ba6b4();
@@ -717,14 +717,14 @@ void sub_080bb454(void)
 void sub_080bb47c(void)
 {
     gUnk_03002490->unk15 = 6;
-    sub_080021dc();
+    BeginFastFadeOutToWhite();
     while (gUnk_03001E90 != 0)
         TaskYieldTrampoline(1);
     sub_080bb120();
     TaskYieldTrampoline(1);
     gUnk_03001ED8 &= 0xE0FF;
     gUnk_03001ED8 |= 0x1400;
-    sub_0800214c();
+    BeginFastFadeInFromWhite();
     while (gUnk_03001E90 != 0)
         TaskYieldTrampoline(1);
     gUnk_03002490->unk14 = 0;

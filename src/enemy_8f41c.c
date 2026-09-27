@@ -59,8 +59,8 @@ extern u32 gUnk_08752A70[];
 
 /* Externals */
 extern void TaskYieldTrampoline(u32 a);
-extern void sub_08002e98(u32 a, u32 b, u32 *c);
-extern s32 sub_080031b8(s32 id);
+extern void CallTableEntry(u32 a, u32 b, u32 *c);
+extern s32 PlaySfx(s32 id);
 extern void TaskMove(void);
 extern void TaskSleepForever(void);
 extern void TaskSetEntry(void *a, u32 i);
@@ -164,7 +164,7 @@ void sub_0808f41c(void)
     t = gUnk_03002490;
     t->unk28 = 0;
     t->unk70 = 0;
-    sub_080031b8(190);
+    PlaySfx(190);
     sub_0808efdc();
     u = gUnk_03002490;
     u->unk6E = 0;
@@ -275,7 +275,7 @@ void sub_0808f5cc(void)
         do
         {
             gUnk_03002490->unk70 = 0;
-            sub_080031b8(190);
+            PlaySfx(190);
             sub_0808f058();
             u = gUnk_03002490;
             u->unk2C = 0;
@@ -376,7 +376,7 @@ void sub_0808f7ac(void)
     t = gUnk_03002490;
     t->unk28 = 0;
     t->unk70 = 0;
-    sub_080031b8(190);
+    PlaySfx(190);
     sub_0808efdc();
     u = gUnk_03002490;
     u->unk6E = 0;
@@ -445,12 +445,12 @@ void sub_0808f8e8(void)
     gUnk_03002490->unk78 = 2;
     sub_0806395c(0);
     gUnk_03002490->unk43 = 255;
-    sub_08002e98(gUnk_03002490->unk14, 1, gUnk_087432E4);
+    CallTableEntry(gUnk_03002490->unk14, 1, gUnk_087432E4);
 }
 
 void sub_0808f930(void)
 {
-    sub_08002e98(gUnk_03002490->unk15, 1, gUnk_087432E8);
+    CallTableEntry(gUnk_03002490->unk15, 1, gUnk_087432E8);
     sub_08068e04();
     sub_08069b44();
 }
@@ -521,7 +521,7 @@ void sub_0808fa10(void)
     t->unk42 = 11;
     u = gUnk_03002490;
     u->unk38 = gUnk_08752A70;
-    sub_08002e98(u->unk73, 2, gUnk_087432F4);
+    CallTableEntry(u->unk73, 2, gUnk_087432F4);
 }
 
 void sub_0808fa50(void)
@@ -529,7 +529,7 @@ void sub_0808fa50(void)
     gUnk_03002490->unk04 = (u32)sub_0808fa84;
     sub_08063e14();
     sub_0806395c(0);
-    sub_08002e98(gUnk_03002490->unk14, 3, gUnk_087432FC);
+    CallTableEntry(gUnk_03002490->unk14, 3, gUnk_087432FC);
 }
 
 void sub_0808fa84(void)
@@ -541,7 +541,7 @@ void sub_0808fa84(void)
 
 void sub_0808fa98(void)
 {
-    sub_08002e98(gUnk_03002490->unk14, 3, gUnk_087432FC);
+    CallTableEntry(gUnk_03002490->unk14, 3, gUnk_087432FC);
 }
 
 void sub_0808fab4(void)
@@ -589,7 +589,7 @@ void sub_0808fbac(void)
     sub_080639b4(gUnk_0873F500);
     gUnk_03002490->unk78 = 2;
     sub_0806395c(0);
-    sub_08002e98(gUnk_03002490->unk14, 1, gUnk_08743308);
+    CallTableEntry(gUnk_03002490->unk14, 1, gUnk_08743308);
 }
 
 void sub_0808fbf0(void)
@@ -628,22 +628,22 @@ void sub_0808fc40(void)
     gUnk_03002490->unk7A = 0;
     u = gUnk_03002490;
     u->unk28 = 0;
-    sub_08002e98(u->unk73, 1, gUnk_08743600);
+    CallTableEntry(u->unk73, 1, gUnk_08743600);
 }
 
 void sub_0808fc90(void)
 {
     gUnk_03002490->unk04 = (u32)sub_0808fcd4;
-    sub_080031b8(165);
+    PlaySfx(165);
     TaskSetMotionXFacing(128 << 12, 0x5A5A5A5A);
     sub_0806395c(1);
-    sub_08002e98(gUnk_03002490->unk14, 2, gUnk_08743604);
+    CallTableEntry(gUnk_03002490->unk14, 2, gUnk_08743604);
 }
 
 void sub_0808fcd4(void)
 {
     if (sub_08069604() == 0)
-        sub_08002e98(gUnk_03002490->unk15, 2, gUnk_0874360C);
+        CallTableEntry(gUnk_03002490->unk15, 2, gUnk_0874360C);
     else
     {
         sub_0806395c(0);
@@ -655,7 +655,7 @@ void sub_0808fcd4(void)
 
 void sub_0808fd1c(void)
 {
-    sub_08002e98(gUnk_03002490->unk14, 2, gUnk_08743604);
+    CallTableEntry(gUnk_03002490->unk14, 2, gUnk_08743604);
 }
 
 void sub_0808fd38(void)
@@ -702,20 +702,20 @@ void sub_0808fdb8(void)
     t->unk42 = 11;
     u = gUnk_03002490;
     u->unk38 = gUnk_08752520;
-    sub_08002e98(u->unk73, 4, gUnk_0874362C);
+    CallTableEntry(u->unk73, 4, gUnk_0874362C);
 }
 
 void sub_0808fdf8(void)
 {
     gUnk_03002490->unk04 = (u32)sub_0808fe28;
     sub_0806395c(0);
-    sub_08002e98(gUnk_03002490->unk14, 1, gUnk_0874363C);
+    CallTableEntry(gUnk_03002490->unk14, 1, gUnk_0874363C);
 }
 
 void sub_0808fe28(void)
 {
     if (sub_08069660() == 0)
-        sub_08002e98(gUnk_03002490->unk15, 1, gUnk_08743640);
+        CallTableEntry(gUnk_03002490->unk15, 1, gUnk_08743640);
     else
         TaskSetEntry(sub_0806a344, gCurTaskIdx);
     sub_08068e04();
@@ -724,7 +724,7 @@ void sub_0808fe28(void)
 
 void sub_0808fe6c(void)
 {
-    sub_08002e98(gUnk_03002490->unk14, 1, gUnk_0874363C);
+    CallTableEntry(gUnk_03002490->unk14, 1, gUnk_0874363C);
 }
 
 void sub_0808fe88(void)

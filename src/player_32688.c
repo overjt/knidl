@@ -12,7 +12,7 @@
  * M11's sub_0803ddc0), sets up the ability (PlayerState.unk0D) and the
  * stage entry mode (gUnk_02000020, gUnk_020069F0), and starts the first
  * action.  The actions are two tables of void (*)(void) dispatched
- * through sub_08002e98(index, count, table), entry 0 NULL: the "enter"
+ * through CallTableEntry(index, count, table), entry 0 NULL: the "enter"
  * coroutine of action PlayerState.unk02 from gUnk_0873A748[62] (M11's
  * gUnk_0873B42C[30] when gUnk_03001F30 != 0) and the "per-frame" handler
  * Task.unk15 from gUnk_0873A840[57] (M11's gUnk_0873B4A4[27]).  A handler requests
@@ -132,9 +132,9 @@ extern u16 gUnk_02008008[];
 extern u16 gUnk_02007FA8[];
 extern u16 gUnk_0200AF18[];
 
-void sub_08002e98(u32 idx, u32 count, void (**fns)(void));
-u32 sub_08002ee8(u32 range);
-s32 sub_08003110(s32 songId);
+void CallTableEntry(u32 idx, u32 count, void (**fns)(void));
+u32 RandomRange(u32 range);
+s32 PlayBgm(s32 songId);
 void TaskSetSkipMask(u8 val, s32 idx);
 void TaskSleepForever(void);
 void TaskSetEntry(void *a, u32 i);
@@ -336,13 +336,13 @@ void Task_Player(void)
     {
         struct PlayerState *p = gUnk_03002490->unk88;
         gUnk_03002490->unk14 = p->unk02;
-        sub_08002e98(p->unk02, 62, gUnk_0873A748);
+        CallTableEntry(p->unk02, 62, gUnk_0873A748);
     }
     else
     {
         struct PlayerState *p = gUnk_03002490->unk88;
         gUnk_03002490->unk14 = p->unk02;
-        sub_08002e98(p->unk02, 30, gUnk_0873B42C);
+        CallTableEntry(p->unk02, 30, gUnk_0873B42C);
     }
 }
 
@@ -387,13 +387,13 @@ void sub_08032bd0(void)
     {
         struct PlayerState *p = gUnk_03002490->unk88;
         gUnk_03002490->unk14 = p->unk02;
-        sub_08002e98(p->unk02, 62, gUnk_0873A748);
+        CallTableEntry(p->unk02, 62, gUnk_0873A748);
     }
     else
     {
         struct PlayerState *p = gUnk_03002490->unk88;
         gUnk_03002490->unk14 = p->unk02;
-        sub_08002e98(p->unk02, 30, gUnk_0873B42C);
+        CallTableEntry(p->unk02, 30, gUnk_0873B42C);
     }
 }
 
@@ -475,9 +475,9 @@ void sub_08032d48(void)
         sub_0801a828(gCurTaskIdx, x, y, (u8 *)p->unk64);
     }
     if (gUnk_03001F30 == 0)
-        sub_08002e98(gUnk_03002490->unk15, 57, gUnk_0873A840);
+        CallTableEntry(gUnk_03002490->unk15, 57, gUnk_0873A840);
     else
-        sub_08002e98(gUnk_03002490->unk15, 27, gUnk_0873B4A4);
+        CallTableEntry(gUnk_03002490->unk15, 27, gUnk_0873B4A4);
     sub_0803e2d4();
 post:
     gUnk_03002490->unk88->unk45 = 0;
@@ -505,7 +505,7 @@ post:
     {
         if (--gUnk_0200AFE8[gUnk_03002490->unk88->unk00] == 0)
         {
-            gUnk_0200AFE8[gUnk_03002490->unk88->unk00] = sub_08002ee8(90) + 120;
+            gUnk_0200AFE8[gUnk_03002490->unk88->unk00] = RandomRange(90) + 120;
             sub_0805b088(gUnk_03002490->unk88->unk00, 11, 0);
         }
     }
@@ -626,7 +626,7 @@ void sub_08033414(void)
         {
             sub_0803e1b8(5, 0, gUnk_03002490->unk88->unk00);
             gUnk_03002490->unk88->unk40 &= 0xFFBF;
-            sub_08003110(19);
+            PlayBgm(19);
             sub_08040894(gUnk_03002490->unk88->unk00, 3);
         }
         break;

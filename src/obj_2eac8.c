@@ -30,10 +30,10 @@ extern u32 gUnk_08755930[];
 extern u32 gUnk_0875593C[];
 extern u32 gUnk_08755944[];
 
-void TaskDispatchTrampoline(void);
+void TaskExitTrampoline(void);
 void TaskYieldTrampoline(u32 frames);
 void RequestCopy(u32 mode, u32 src, u32 dst, u32 size);
-void sub_080031b8(u32 a);
+void PlaySfx(u32 a);
 s32 TaskCreateInRange(u32 type, s32 start, s32 end);
 void TaskUpdatePixelPos(void);
 void TaskDrawWorld(void);
@@ -222,7 +222,7 @@ void sub_0802ede4(void)
     v = gUnk_03002490;
     v->unk28 = -1;
     v->unk04 = (u32)sub_0802ee88;
-    sub_080031b8(222);
+    PlaySfx(222);
     gUnk_03002490->unk28 = 0;
     TaskYieldTrampoline(3);
     gUnk_03002490->unk28 = 1;
@@ -233,12 +233,12 @@ void sub_0802ede4(void)
     do
         TaskYieldTrampoline(1);
     while (gUnk_03002490->unk1C == 0);
-    sub_080031b8(223);
+    PlaySfx(223);
     gUnk_03002490->unk28 = 2;
     TaskYieldTrampoline(3);
     gUnk_03002490->unk28 = 1;
     TaskYieldTrampoline(1);
-    TaskDispatchTrampoline();
+    TaskExitTrampoline();
 }
 
 void sub_0802ee88(void)
@@ -354,7 +354,7 @@ void sub_0802f0cc(void)
         sub_0802f1dc();
     else
         sub_0802f110();
-    TaskDispatchTrampoline();
+    TaskExitTrampoline();
 }
 
 void sub_0802f110(void)
@@ -438,7 +438,7 @@ void sub_0802f26c(void)
         sub_0802f2fc();
     else
         sub_0802f2b0();
-    TaskDispatchTrampoline();
+    TaskExitTrampoline();
 }
 
 void sub_0802f2b0(void)
@@ -504,7 +504,7 @@ void sub_0802f38c(void)
         sub_0802f400();
     else
         sub_0802f3d0();
-    TaskDispatchTrampoline();
+    TaskExitTrampoline();
 }
 
 void sub_0802f3d0(void)

@@ -22,9 +22,9 @@ extern u32 gUnk_08753290[];
 
 /* Externals */
 extern void TaskYieldTrampoline(u32 a);
-extern void sub_08002e98(u32 a, u32 b, u32 *c);
-extern u32 sub_08002ee8(u32 range);
-extern s32 sub_080031b8(s32 id);
+extern void CallTableEntry(u32 a, u32 b, u32 *c);
+extern u32 RandomRange(u32 range);
+extern s32 PlaySfx(s32 id);
 extern void TaskMove(void);
 extern void TaskSleepForever(void);
 extern void TaskSetEntry(void *fn, s32 i);
@@ -209,7 +209,7 @@ void sub_0809cf04(void)
     struct ActorSpawn sp;
     struct Task *t;
 
-    sub_080031b8(186);
+    PlaySfx(186);
     sp.unk00 = 26;
     sp.unk04 = 129;
     sp.unk08 = (t = gUnk_03002490)->unk73;
@@ -336,7 +336,7 @@ void sub_0809d13c(void)
     sub_08063908((u32)gUnk_08747E64);
     u = gUnk_03002490;
     u->unk24 = 0;
-    sub_08002e98(u->unk73, 2, gUnk_08747ADC);
+    CallTableEntry(u->unk73, 2, gUnk_08747ADC);
 }
 
 void sub_0809d17c(void)
@@ -363,7 +363,7 @@ void sub_0809d18c(void)
 
 void sub_0809d1c0(void)
 {
-    sub_08002e98(gUnk_03002490->unk14, 6, gUnk_08747AE4);
+    CallTableEntry(gUnk_03002490->unk14, 6, gUnk_08747AE4);
 }
 
 void sub_0809d1dc(void)
@@ -390,7 +390,7 @@ void sub_0809d1dc(void)
             t->unk50 = *p << 16;
             sub_0809dc3c();
         }
-        sub_08002e98(gUnk_03002490->unk15, 5, gUnk_08747AFC);
+        CallTableEntry(gUnk_03002490->unk15, 5, gUnk_08747AFC);
     }
     u = gUnk_03002490;
     if (u->unk24 > 0)
@@ -588,7 +588,7 @@ void sub_0809d56c(void)
     u->unk60 = 128 << 6;
     while (1)
     {
-        sub_080031b8(231);
+        PlaySfx(231);
         TaskSetFrame(17);
         TaskYieldTrampoline(2);
         TaskSetFrame(18);
@@ -695,7 +695,7 @@ void sub_0809d7a4(void)
     u->unk2C = 1;
     while (1)
     {
-        sub_080031b8(231);
+        PlaySfx(231);
         TaskSetFrame(17);
         TaskYieldTrampoline(2);
         TaskSetFrame(18);
@@ -767,7 +767,7 @@ void sub_0809d8f8(void)
     struct Task *t;
     u32 r;
 
-    r = (u8)sub_08002ee8(8);
+    r = (u8)RandomRange(8);
     TaskSetMotionXFacing(gUnk_08747B58[r >> 1], 0x5A5A5A5A);
     t = gUnk_03002490;
     t->unk58 = gUnk_08747B68[r];

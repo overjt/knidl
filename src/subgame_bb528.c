@@ -50,9 +50,9 @@ extern u32 gUnk_08756378[];
 extern u32 gUnk_08756394[];
 
 void TaskYieldTrampoline(u32 frames);
-void sub_08002e98(u32 a, u32 b, u32 *c);
-s32 sub_08003110(s32 songId);
-s32 sub_080031b8(s32 id);
+void CallTableEntry(u32 a, u32 b, u32 *c);
+s32 PlayBgm(s32 songId);
+s32 PlaySfx(s32 id);
 s32 TaskCreateFrom(u32 type, s32 idx);
 void TaskDrawScreen(void);
 void TaskSleepForever(void);
@@ -102,7 +102,7 @@ void sub_080bb554(void)
 void sub_080bb59c(s32 a0)
 {
     if (gUnk_03002360 == 0)
-        sub_080031b8(a0);
+        PlaySfx(a0);
 }
 
 void sub_080bb5b8(void)
@@ -552,26 +552,26 @@ void QuickDrawResults(void)
         TaskYieldTrampoline(1);
     t = gUnk_03002490;
     t->unk04 = (u32)sub_080bbde4;
-    sub_08002e98(t->unk14, 7, gUnk_08756378);
+    CallTableEntry(t->unk14, 7, gUnk_08756378);
     TaskSleepForever();
 }
 
 void sub_080bbde4(void)
 {
-    sub_08002e98(gUnk_03002490->unk15, 7, gUnk_08756394);
+    CallTableEntry(gUnk_03002490->unk15, 7, gUnk_08756394);
     SubGameCheckEnd();
 }
 
 void sub_080bbe04(void)
 {
-    sub_08002e98(gUnk_03002490->unk14, 7, gUnk_08756378);
+    CallTableEntry(gUnk_03002490->unk14, 7, gUnk_08756378);
 }
 
 void sub_080bbe20(void)
 {
     gUnk_03002490->unk15 = 0;
     TaskYieldTrampoline(30);
-    sub_08003110(gUnk_03002490->unk2C | 0x800);
+    PlayBgm(gUnk_03002490->unk2C | 0x800);
     TaskYieldTrampoline(180);
     gUnk_03002490->unk14 = gUnk_03002490->unk30;
     TaskSleepForever();

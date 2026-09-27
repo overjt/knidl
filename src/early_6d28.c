@@ -9,7 +9,7 @@
  * gUnk_030004B0[0] by src/early_6464.c and src/early_7004.c.  It records the
  * player id from SIOCNT, then by link state gLink.unk01: in state 4
  * (connected) it records the SIOCNT error bit and runs the receive step
- * DoRecv, the send step sub_08007004 and sub_080070e8; in state 2 it
+ * DoRecv, the send step DoSend and SendRecvDone; in state 2 it
  * runs the handshake: it sends 0x8FFF (master, unk10 == 1) or 0xCFF0, copies
  * the four SIOMULTI words into recv[], and on a master's 0x8FFF publishes the
  * player id, the master flag and the player count (gUnk_03002360,
@@ -69,8 +69,8 @@ extern vu16 gUnk_030023AC;
 extern u32 gUnk_03004D7C;
 extern u8 gUnk_03004D40;
 void DoRecv(void);
-void sub_08007004(void);
-void sub_080070e8(void);
+void DoSend(void);
+void SendRecvDone(void);
 
 /* The serial interrupt of the link session (pokeruby's SerialCB, with
  * DoHandshake written inline): state 4 runs the receive/send step, state 2
@@ -88,8 +88,8 @@ void SerialCB(void)
     case 4:
         gLink.unk12 = ((struct SioMultiCnt *)&gUnk_04000128)->error;
         DoRecv();
-        sub_08007004();
-        sub_080070e8();
+        DoSend();
+        SendRecvDone();
         break;
     case 2:
         if (gLink.unk10 == 1)

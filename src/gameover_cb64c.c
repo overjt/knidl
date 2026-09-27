@@ -23,8 +23,8 @@ extern u32 gUnk_08754914[];
 extern u32 gUnk_087548B8[];
 
 void TaskYieldTrampoline(s32 frames);
-s32 sub_080031b8(s32 id);                                    /* play a sound effect */
-void sub_080034f0(s32 player, s32 songId);
+s32 PlaySfx(s32 id);                                    /* play a sound effect */
+void StopSfxOnPlayer(s32 player, s32 songId);
 void TaskSleepForever(void);                                     /* end the running task */
 void TaskSetEntry(void *a, u32 i);
 void TaskSetMotion(s32 a, s32 b, s32 c, s32 d, s32 e, s32 f);
@@ -50,7 +50,7 @@ void sub_080cb64c(void)
         gUnk_03002490->unk3C--;
         TaskYieldTrampoline(12);
         if (gUnk_03002490->unk18 != 0)
-            sub_080031b8(180);
+            PlaySfx(180);
         gUnk_03002490->unk18 = 1;
         gUnk_03002490->unk3C--;
         TaskYieldTrampoline(12);
@@ -133,7 +133,7 @@ void sub_080cb70c(void)
     gUnk_03002490->unk3C++;
     TaskSetMotion(0, 0, 0x5A5A5A5A, 0, 0, 0x5A5A5A5A);
     TaskYieldTrampoline(2);
-    sub_080031b8(156);
+    PlaySfx(156);
     gUnk_03002490->unk3C = 17;
     TaskSetMotion(0x8000, 0x800, 0x5A5A5A5A, 0, 0, 0x5A5A5A5A);
     TaskYieldTrampoline(2);
@@ -146,7 +146,7 @@ void sub_080cb70c(void)
     gUnk_03002490->unk3C++;
     TaskSetMotion(0x18000, 0, 0x5A5A5A5A, 0, 0, 0x5A5A5A5A);
     TaskYieldTrampoline(2);
-    sub_080031b8(156);
+    PlaySfx(156);
     gUnk_03002490->unk3C++;
     TaskYieldTrampoline(2);
     gUnk_03002490->unk3C++;
@@ -157,7 +157,7 @@ void sub_080cb70c(void)
     TaskYieldTrampoline(4);
     gUnk_03002490->unk3C++;
     TaskYieldTrampoline(2);
-    sub_080031b8(156);
+    PlaySfx(156);
     gUnk_03002490->unk3C++;
     TaskYieldTrampoline(2);
     gUnk_03002490->unk3C++;
@@ -236,7 +236,7 @@ void sub_080cbac0(void)
     gUnk_03002490->unk58 = 0x14000;
     gUnk_03002490->unk60 = -0x4000;
     TaskYieldTrampoline(6);
-    gUnk_03002490->unk1C = sub_080031b8(103);
+    gUnk_03002490->unk1C = PlaySfx(103);
     gUnk_03002490->unk3C++;
     TaskYieldTrampoline(3);
     TaskStop();
@@ -248,8 +248,8 @@ void sub_080cbac0(void)
         TaskYieldTrampoline(3);
         gUnk_03002490->unk6C++;
     } while ((s16)gUnk_03002490->unk6C <= 12);
-    sub_080034f0(gUnk_03002490->unk1C, 0x67);
-    sub_080031b8(104);
+    StopSfxOnPlayer(gUnk_03002490->unk1C, 0x67);
+    PlaySfx(104);
     CreateGameOverObject(3);
     gUnk_03002490->unk3C++;
     gUnk_03002490->unk54 = -0x40000;
@@ -287,7 +287,7 @@ void sub_080cbac0(void)
     TaskYieldTrampoline(2);
     gUnk_03002490->unk3C--;
     TaskYieldTrampoline(20);
-    sub_080031b8(113);
+    PlaySfx(113);
     gUnk_03002490->unk3C = 13;
     TaskYieldTrampoline(2);
     gUnk_03002490->unk3C++;

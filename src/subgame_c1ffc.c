@@ -152,9 +152,9 @@ extern u32 gUnk_03000AF4;
 
 void TaskYieldTrampoline(s32 frames);
 void ClearHBlankIntr(void);
-s32 sub_08003110(s32 songId);
-void sub_080034d0(void);
-void sub_08003688(void);
+s32 PlayBgm(s32 songId);
+void StopBgm(void);
+void StopAllSfx(void);
 s32 TaskCreateFrom(u32 type, s32 idx);                         /* spawn a task */
 void TaskDrawScreen(void);
 void TaskSleepForever(void);                                     /* end the running task */
@@ -225,8 +225,8 @@ void sub_080c20b4(void)
     gAirGrindPtr->unk446 = gUnk_03002360;
     gAirGrindPtr->unk448 = gUnk_0300243C;
     gUnk_02017170 = 0;
-    sub_080034d0();
-    sub_08003688();
+    StopBgm();
+    StopAllSfx();
     sub_080c4c78();
     sub_080c51c0();
     for (i = 0; i < 4; i++) {
@@ -253,7 +253,7 @@ void AirGrindRace(void)
     gUnk_03002490->unk0C = (u32)TaskDrawScreen;
     gUnk_03002490->unk38 = gUnk_08755FEC;
     gUnk_03002490->unk3C = 0xFFFF;
-    sub_08003110(0x82B);
+    PlayBgm(0x82B);
     CreateAirGrindRacers();
     sub_080c2038(0);
     gUnk_03002490->unk04 = (u32)sub_080c241c;
@@ -269,7 +269,7 @@ void AirGrindRace(void)
     gUnk_03002490->unk4A = 80;
     gUnk_03002490->unk34 = sub_080c4974(gUnk_0860A042, 241, 10, 8, 15, 0);
     gUnk_03002490->unk3C = 0;
-    sub_08003110(0x82A);
+    PlayBgm(0x82A);
     while (gAirGrindCoursePtr->unk000 < gAirGrindCoursePtr->unk00C + 240)
         TaskYieldTrampoline(1);
     gUnk_03002490->unk08 = 0;
@@ -294,7 +294,7 @@ void AirGrindRace(void)
     gUnk_03002490->unk4A = 80;
     gUnk_03002490->unk34 = sub_080c4974(gUnk_0860A042, 241, 10, 8, 15, 0);
     gUnk_03002490->unk3C = 1;
-    sub_08003110(0x82C);
+    PlayBgm(0x82C);
     while (1) {
         n = 0;
         for (i = 0; i < 4; i++)
@@ -305,8 +305,8 @@ void AirGrindRace(void)
         TaskYieldTrampoline(1);
     }
     TaskYieldTrampoline(180);
-    sub_080034d0();
-    sub_08003688();
+    StopBgm();
+    StopAllSfx();
     ClearHBlankIntr();
     gUnk_03000AF4 = 0;
     gUnk_03002490->unk18 = 2;

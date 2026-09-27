@@ -5,8 +5,8 @@
  *
  * Two sibling blocking loops that drive the multiplayer handshake state
  * machine in gUnk_03005274 while pumping the link layer once per frame:
- * RunFrameNoTasks (frame wait), sub_08006914(&gUnk_03004D88, gUnk_03004D90,
- * gUnk_03004D50) (SIO transfer step), sub_080072e0 (abort poll) and
+ * RunFrameNoTasks (frame wait), LinkMain1(&gUnk_03004D88, gUnk_03004D90,
+ * gUnk_03004D50) (SIO transfer step), IsLinkError (abort poll) and
  * sub_08008b8c (error/reset path, taken after 31 frames without the counter
  * at gUnk_03004D7C moving).
  *
@@ -16,7 +16,7 @@
  *    gUnk_03001EA4, 0x2668 mirrors it to/from the record at gUnk_02006068.
  *    (sub_0800293c, the 0xAA00-series teardown twin, lives in src/early_293c.c.)
  *
- * gUnk_03004D50 is the 4x4 halfword mailbox shared with sub_08006914: row 0
+ * gUnk_03004D50 is the 4x4 halfword mailbox shared with LinkMain1: row 0
  * = per-player state word, row 1 = per-player payload byte, rows 2/3 = extra
  * payload halfwords.  gUnk_03004D90 is this console's outgoing 4-halfword
  * record, gUnk_0300243C the player count, gUnk_030023A8[] the per-player
@@ -77,8 +77,8 @@
  */
 
 extern void RunFrameNoTasks(void);
-extern void sub_08006914(void *, void *, void *);
-extern int sub_080072e0(void);
+extern void LinkMain1(void *, void *, void *);
+extern int IsLinkError(void);
 extern void sub_08008b8c(void);
 
 extern u16 gUnk_02006068[4];
@@ -162,8 +162,8 @@ void sub_08002668(void)
         }
         old = gUnk_03004D7C;
         RunFrameNoTasks();
-        sub_08006914(&gUnk_03004D88, gUnk_03004D90, gUnk_03004D50);
-        if (sub_080072e0() != 0)
+        LinkMain1(&gUnk_03004D88, gUnk_03004D90, gUnk_03004D50);
+        if (IsLinkError() != 0)
             sub_08008b8c();
         if (old == gUnk_03004D7C) {
             if (++b > 30)

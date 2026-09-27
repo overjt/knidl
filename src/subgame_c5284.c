@@ -120,7 +120,7 @@ extern s32 *gUnk_08757300[];
 extern s32 *gUnk_08757310[];
 extern u16 *gUnk_08757320[];
 
-u32 sub_08002ec0(void);                                      /* LCG step */
+u32 Random(void);                                      /* LCG step */
 void sub_080c5b84(void);
 
 s32 sub_080c5284(s32 angle)
@@ -283,7 +283,7 @@ void sub_080c5678(s32 a)
     s32 m;
     s32 v;
 
-    gUnk_0201BFC0 = sub_08002ec0();
+    gUnk_0201BFC0 = Random();
     for (i = 0; i < 4; i++)
     {
         for (j = 0; j < 500; j++)
@@ -317,11 +317,11 @@ void sub_080c5678(s32 a)
     {
         if (!(i & 1))
         {
-            gUnk_0201B690[i] = (sub_08002ec0() & 63) + 224;
+            gUnk_0201B690[i] = (Random() & 63) + 224;
             gUnk_0201B690[i] -= 200 * i / (n * 2);
         }
         else
-            gUnk_0201B690[i] = sub_08002ec0() % 320 + 96;
+            gUnk_0201B690[i] = Random() % 320 + 96;
         sums[i % 2] += gUnk_0201B690[i];
     }
     for (i = 0; i < n * 2 + 1; i++)

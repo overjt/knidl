@@ -32,8 +32,8 @@ extern u32 gUnk_08745CEC[];
 /* Externals */
 extern void TaskYieldTrampoline(u32 a);
 extern void RequestCopy(u32 mode, u32 src, u32 dst, u32 size);
-extern void sub_08002e98(u32 a, u32 b, u32 *c);
-extern void sub_08003014(void *src, void *dst, s32 ratio, s32 count, void *out);
+extern void CallTableEntry(u32 a, u32 b, u32 *c);
+extern void BlendColors(void *src, void *dst, s32 ratio, s32 count, void *out);
 extern void TaskSleepForever(void);
 extern void TaskSetEntry(void *fn, s32 i);
 extern void TaskStop(void);
@@ -69,14 +69,14 @@ void sub_0809ba44(void)
     t->unk04 = (u32)sub_0809ba94;
     t->unk2C = -gUnk_03002790[t->unk44].unk43;
     sub_0806395c(0);
-    sub_08002e98(gUnk_03002490->unk14, 2, gUnk_08745B20);
+    CallTableEntry(gUnk_03002490->unk14, 2, gUnk_08745B20);
 }
 
 void sub_0809ba94(void)
 {
     if (sub_0806951c() == 0)
     {
-        sub_08002e98(gUnk_03002490->unk15, 2, gUnk_08745B28);
+        CallTableEntry(gUnk_03002490->unk15, 2, gUnk_08745B28);
     }
     else
     {
@@ -90,7 +90,7 @@ void sub_0809ba94(void)
 
 void sub_0809baec(void)
 {
-    sub_08002e98(gUnk_03002490->unk14, 2, gUnk_08745B20);
+    CallTableEntry(gUnk_03002490->unk14, 2, gUnk_08745B20);
 }
 
 void sub_0809bb08(void)
@@ -228,13 +228,13 @@ void sub_0809bc1c(void)
     }
     if ((s16)gUnk_03002490->unk6C > 63)
     {
-        sub_08003014(gUnk_0827AC78, gUnk_0827AC7C,
+        BlendColors(gUnk_0827AC78, gUnk_0827AC7C,
                      (u16)(abs(72 - (s16)gUnk_03002490->unk6C) * 255 / 8), 1, gUnk_0300158E);
-        sub_08003014(gUnk_0827B90C, gUnk_0827B914,
+        BlendColors(gUnk_0827B90C, gUnk_0827B914,
                      (u16)(abs(72 - (s16)gUnk_03002490->unk6C) * 255 / 8), 3, gUnk_030015A0);
-        sub_08003014(gUnk_0827CA5C, gUnk_0827CA60,
+        BlendColors(gUnk_0827CA5C, gUnk_0827CA60,
                      (u16)(abs(72 - (s16)gUnk_03002490->unk6C) * 255 / 8), 1, gUnk_030015CE);
-        sub_08003014(gUnk_0827D81C, gUnk_0827D820,
+        BlendColors(gUnk_0827D81C, gUnk_0827D820,
                      (u16)(abs(72 - (s16)gUnk_03002490->unk6C) * 255 / 8), 1, gUnk_030015EC);
     }
     x = gUnk_03002490;

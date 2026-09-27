@@ -40,13 +40,13 @@ extern s8 gUnk_03002444;
 extern s16 gUnk_0873D7E4[][3];
 extern u16 gUnk_0873D632[][7];
 
-void TaskDispatchTrampoline(void);
+void TaskExitTrampoline(void);
 void TaskYieldTrampoline(s32 frames);
-s32 sub_08003110(s32 songId);
-s32 sub_080031b8(s32 id);
-void sub_08003484(void);
-s32 sub_080035f4(s32 songId);
-void sub_08003688(void);
+s32 PlayBgm(s32 songId);
+s32 PlaySfx(s32 id);
+void StopAllSound(void);
+s32 StopOtherSfx(s32 songId);
+void StopAllSfx(void);
 void TaskSetSkipMask(u8 val, s32 idx);
 void TaskSleepForever(void);
 void TaskSetEntry(void *a, u32 i);
@@ -117,8 +117,8 @@ void sub_0803919c(void)
     }
     if (n == 0)
     {
-        sub_08003484();
-        sub_08003688();
+        StopAllSound();
+        StopAllSfx();
         gUnk_03002490->unk42 = 4;
         gUnk_03002490->unk88->unk17 = n;
         gUnk_03002490->unk88->unk18 = n;
@@ -133,8 +133,8 @@ void sub_0803919c(void)
         gUnk_03002490->unk3C = anim[0];
         if (gUnk_030023AC == 1)
         {
-            sub_08003688();
-            sub_08003484();
+            StopAllSfx();
+            StopAllSound();
             sub_0803e3e4(15);
             sub_08027204(2);
             if (!(gUnk_03001ED8 & 0x400))
@@ -150,7 +150,7 @@ void sub_0803919c(void)
                 if (gUnk_03004CA0[i] != -1 && i != 63)
                     TaskSetSkipMask(15, i);
             }
-            sub_08003688();
+            StopAllSfx();
             sub_080271ec();
             sub_08027204(2);
             if (!(gUnk_03001ED8 & 0x400))
@@ -176,7 +176,7 @@ void sub_0803919c(void)
                 if (gUnk_03004CA0[i] != -1 && i != 63)
                     TaskSetSkipMask(15, i);
             }
-            sub_08003688();
+            StopAllSfx();
             sub_080271ec();
             sub_08027204(2);
             sub_080261d4(4);
@@ -193,7 +193,7 @@ void sub_0803919c(void)
     }
     TaskYieldTrampoline(1);
     if (gUnk_03002340 == 0)
-        sub_080031b8(158);
+        PlaySfx(158);
     else
         sub_0803e34c(158, gUnk_03002490->unk88->unk00);
     TaskYieldTrampoline(59);
@@ -203,9 +203,9 @@ void sub_0803919c(void)
     for (i = 0; i <= 3; i++)
         sub_0805afac(gUnk_03002490->unk88->unk00, 12, i);
     if (n == 0)
-        sub_08003110(3);
+        PlayBgm(3);
     else if (gUnk_02007CF0 != 1)
-        sub_080031b8(270);
+        PlaySfx(270);
     sub_080413a4(32);
     gUnk_03002490->unk46 = anim[1];
     do
@@ -239,7 +239,7 @@ void sub_0803919c(void)
     if (gUnk_0300234C == 0)
     {
         gUnk_03002438 = 6;
-        TaskDispatchTrampoline();
+        TaskExitTrampoline();
     }
     sub_080276cc(gUnk_03002490->unk88->unk00);
     if (gUnk_02007D48[gUnk_03002490->unk88->unk00] == 0)
@@ -350,9 +350,9 @@ void sub_080397f8(void)
             }
         }
         if (n != 0)
-            sub_080035f4(158);
+            StopOtherSfx(158);
         else
-            sub_08003688();
+            StopAllSfx();
     }
     switch (sub_080404e4())
     {
@@ -406,7 +406,7 @@ void sub_080397f8(void)
     if (gUnk_03002444 != 0)
         sub_080264b0();
     if (gUnk_03002444 == 0)
-        sub_080031b8(181);
+        PlaySfx(181);
     t = gUnk_03002490;
     if (!(t->unk7B & 1))
     {

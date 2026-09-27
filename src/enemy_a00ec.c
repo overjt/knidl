@@ -12,7 +12,7 @@ extern s16 gUnk_08748268[2][16];
 
 /* Externals */
 extern s32 QueueSprite(u32 a, u32 b, u32 c, u32 d, s32 e, s32 f);
-extern u32 sub_08002ee8(u32 range);
+extern u32 RandomRange(u32 range);
 
 void sub_080a00ec(void)
 {
@@ -31,7 +31,7 @@ void sub_080a00ec(void)
         if (gUnk_02006040[i] == 0)
         {
             gUnk_02006040[i + 6] = 0;
-            r = sub_08002ee8(16);
+            r = RandomRange(16);
             if (gUnk_03002490->unk43 == 1)
                 gUnk_02006040[i] = (gUnk_08748268[0][r] + 20) << 16;
             else

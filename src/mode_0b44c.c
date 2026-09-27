@@ -71,10 +71,10 @@ extern u16 gUnk_03002458[];
 extern u8 gExtraMode;
 extern vu16 gUnk_03005274;
 
-void sub_08001fd0(void);
-void sub_08002028(void);
+void ResetBgScroll(void);
+void ResetFadeAndBlend(void);
 void ResetTasksAndOam(void);
-void sub_080022bc(void);
+void ResetPlayTime(void);
 void sub_08008c64(u16 a0);
 void sub_08008c7c(void);
 void sub_08008cb8(void);
@@ -114,7 +114,7 @@ void sub_0800b4a8(void)
         gUnk_02006020[i] = 0;
         sub_0803d0a0(i);
     }
-    sub_080022bc();
+    ResetPlayTime();
     if (gUnk_03001F30 == 0) {
         if (gExtraMode == 1)
             gUnk_02005580 = 24;
@@ -191,8 +191,8 @@ void sub_0800b648(void)
     u8 *q4;
 
     gUnk_03001ED8 |= 0x80;
-    sub_08002028();
-    sub_08001fd0();
+    ResetFadeAndBlend();
+    ResetBgScroll();
     sub_0801a7b4();
     sub_08008c64(0);
     sub_08008c7c();
@@ -250,8 +250,8 @@ void sub_0800b788(void)
     s8 zero;
 
     gUnk_03001ED8 |= 0x80;
-    sub_08002028();
-    sub_08001fd0();
+    ResetFadeAndBlend();
+    ResetBgScroll();
     ResetTasksAndOam();
     gUnk_0300117C = gUnk_03001EE0 = gUnk_03000F8C = gUnk_03000B78 = 0;
     gUnk_03000010 = gUnk_03000FC0 = gUnk_03001E94 = gUnk_03000FA8 = 0;
@@ -282,8 +282,8 @@ void sub_0800b87c(void)
     s8 zero;
 
     gUnk_03001ED8 |= 0x80;
-    sub_08002028();
-    sub_08001fd0();
+    ResetFadeAndBlend();
+    ResetBgScroll();
     sub_08008c64(0);
     sub_08008c7c();
     sub_08023ca0();

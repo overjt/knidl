@@ -58,8 +58,8 @@ extern u16 gUnk_0873AEBC[][2];
 
 void TaskYieldTrampoline(s32 frames);
 s32 QueueSprite(u32 a, u32 b, u32 c, u32 d, u32 e, s16 f);
-u32 sub_08002ee8(u32 range);
-s32 sub_080031b8(s32 id);
+u32 RandomRange(u32 range);
+s32 PlaySfx(s32 id);
 void TaskSetSkipMask(u8 val, s32 idx);
 void TaskSleepForever(void);
 void TaskSetMotionY(s32 a, s32 b, s32 c);
@@ -216,7 +216,7 @@ void sub_0803bde8(void)
                     do
                     {
                         if (gUnk_03002360 == gUnk_03002490->unk88->unk00 || gUnk_03002360 == gUnk_03002490->unk18)
-                            sub_080031b8(221);
+                            PlaySfx(221);
                         gUnk_03002490->unk28 = sub_080b4204(gUnk_03002490->unk18);
                         TaskYieldTrampoline(8);
                     } while (gUnk_03002490->unk28 == 0);
@@ -233,7 +233,7 @@ void sub_0803bde8(void)
                     for (gUnk_03002490->unk6C = 0; (s16)gUnk_03002490->unk6C < n; gUnk_03002490->unk6C++)
                     {
                         if (gUnk_03002360 == gUnk_03002490->unk88->unk00 || gUnk_03002360 == gUnk_03002490->unk18)
-                            sub_080031b8(221);
+                            PlaySfx(221);
                         gUnk_03002490->unk28 = sub_080b4204(gUnk_03002490->unk18);
                         TaskYieldTrampoline(8);
                         if (gUnk_03002490->unk28 != 0)
@@ -285,7 +285,7 @@ void sub_0803bde8(void)
                     do
                     {
                         if (gUnk_03002360 == gUnk_03002490->unk88->unk00 || gUnk_03002360 == gUnk_03002490->unk18)
-                            sub_080031b8(221);
+                            PlaySfx(221);
                         gUnk_03002490->unk28 = sub_080b4204(gUnk_03002490->unk18);
                         for (gUnk_03002490->unk6C = 0; (s16)gUnk_03002490->unk6C <= 1; gUnk_03002490->unk6C++)
                         {
@@ -314,7 +314,7 @@ void sub_0803bde8(void)
                     for (gUnk_03002490->unk6C = 0; (s16)gUnk_03002490->unk6C < n; gUnk_03002490->unk6C++)
                     {
                         if (gUnk_03002360 == gUnk_03002490->unk88->unk00 || gUnk_03002360 == gUnk_03002490->unk18)
-                            sub_080031b8(221);
+                            PlaySfx(221);
                         gUnk_03002490->unk28 = sub_080b4204(gUnk_03002490->unk18);
                         for (gUnk_03002490->unk6E = 0; gUnk_03002490->unk6E <= 1; gUnk_03002490->unk6E++)
                         {
@@ -395,7 +395,7 @@ void sub_0803bde8(void)
                 do
                 {
                     if (gUnk_03002360 == gUnk_03002490->unk88->unk00 || gUnk_03002360 == gUnk_03002490->unk18)
-                        sub_080031b8(221);
+                        PlaySfx(221);
                     gUnk_03002490->unk28 = sub_080b4204(gUnk_03002490->unk18);
                     TaskYieldTrampoline(8);
                 } while (gUnk_03002490->unk28 == 0);
@@ -412,7 +412,7 @@ void sub_0803bde8(void)
                 for (gUnk_03002490->unk6C = 0; (s16)gUnk_03002490->unk6C < n; gUnk_03002490->unk6C++)
                 {
                     if (gUnk_03002360 == gUnk_03002490->unk88->unk00 || gUnk_03002360 == gUnk_03002490->unk18)
-                        sub_080031b8(221);
+                        PlaySfx(221);
                     gUnk_03002490->unk28 = sub_080b4204(gUnk_03002490->unk18);
                     TaskYieldTrampoline(8);
                     if (gUnk_03002490->unk28 != 0)
@@ -491,7 +491,7 @@ void sub_0803c9b4(s32 a)
             if (p->unk00 == 0)
             {
                 p->unk08 = 0;
-                n = sub_08002ee8(16);
+                n = RandomRange(16);
                 if (gUnk_03002490->unk43 == 1)
                     p->unk00 = gUnk_0873A924[0][n] << 16;
                 else

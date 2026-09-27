@@ -65,16 +65,16 @@ extern s32 gUnk_0201C1B4;           /* credits: scroll since the last page copy,
 extern u32 *gUnk_087583B4[];        /* credits: the 14 compressed text pages */
 extern u16 gUnk_02005600[];
 
-u32 sub_080008e8(u16 steps, s16 delta, u16 *mask);   /* delta passed as movs/negs (-2); early_08e8.c defines it u16, src/effect_5a358.c and src/player_47fe8.c spell it s16 too (lesson 3.428) */
+u32 BeginFade(u16 steps, s16 delta, u16 *mask);   /* delta passed as movs/negs (-2); early_08e8.c defines it u16, src/effect_5a358.c and src/player_47fe8.c spell it s16 too (lesson 3.428) */
 void RequestCopy(u32 mode, u32 src, u32 dst, u32 size);
-void sub_08001fd0(void);
+void ResetBgScroll(void);
 void ResetTasksAndOam(void);
 void RunLinkFrame(void);                                     /* run one frame */
 void RunFramesNoTasks(s32 count);
-s32 sub_08003110(s32 songId);
-void sub_08003484(void);
-void sub_0800374c(s32 speed);
-void sub_08003770(u16 volume);
+s32 PlayBgm(s32 songId);
+void StopAllSound(void);
+void FadeOutBgm(s32 speed);
+void SetBgmVolume(u16 volume);
 void sub_08008c4c(s32 a0);                                   /* load palette set */
 void sub_08008c64(u16 a0);                                   /* load screen graphics */
 void sub_0800b4a8(void);
@@ -123,7 +123,7 @@ void CreditsMain(void)
     gUnk_03001270[0] = 0;
     gInputRecorderMode = 3;
     gUnk_03001ED8 &= ~0x80;
-    sub_08003110(20);
+    PlayBgm(20);
     for (;;) {
         gUnk_0200EC50 = scenes[gUnk_0201C1B0];
         InputRecorderStart();
@@ -133,9 +133,9 @@ void CreditsMain(void)
         gUnk_03001ED8 &= 0xE0FF;
         gUnk_03001ED8 |= 0x1D00;
         if (gUnk_0201C1B0 == 0)
-            sub_080008e8(15, -2, gUnk_08758334);
+            BeginFade(15, -2, gUnk_08758334);
         else
-            sub_080008e8(15, 2, gUnk_08758334);
+            BeginFade(15, 2, gUnk_08758334);
         n = 15;
         while (n-- != 0) {
             RunLinkFrame();
@@ -161,7 +161,7 @@ void CreditsMain(void)
             sub_08040788();
         }
         if (scenes[++gUnk_0201C1B0] != 0) {
-            sub_080008e8(15, -2, gUnk_08758334);
+            BeginFade(15, -2, gUnk_08758334);
             n = 15;
             while (n-- != 0) {
                 RunLinkFrame();
@@ -176,9 +176,9 @@ void CreditsMain(void)
         }
         break;
     }
-    sub_0800374c(8);
+    FadeOutBgm(8);
     gUnk_03001270[0] = 0xFFFF;
-    sub_080008e8(30, 2, gUnk_08758374);
+    BeginFade(30, 2, gUnk_08758374);
     n = 30;
     while (n-- != 0) {
         RunLinkFrame();
@@ -188,10 +188,10 @@ void CreditsMain(void)
     gUnk_03001ED8 |= 0x80;
     gUnk_03000AF4 = 0;
     gUnk_03001EDC = 0;
-    sub_08003484();
+    StopAllSound();
     ResetTasksAndOam();
     RunFramesNoTasks(2);
-    sub_08003770(255);
+    SetBgmVolume(255);
     gUnk_02006020[gUnk_02000028] = gUnk_0201C1A4;
 }
 
@@ -204,7 +204,7 @@ void sub_080cd674(void)
     s8 *p;
     s8 zero;
 
-    sub_08001fd0();
+    ResetBgScroll();
     sub_0801a7b4();
     sub_08008c4c(17);
     sub_0802497c();

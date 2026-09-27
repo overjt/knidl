@@ -80,9 +80,9 @@ extern const struct SongEntry gUnk_0872EB38[];
 void RequestCopy(u32 mode, u32 src, u32 dst, u32 size);
 void RunFrame(void);
 void RunFrames(s32 count);
-void sub_08002f14(s16 n);
-s32 sub_080031b8(s32 id);
-void sub_0800374c(s32 speed);
+void IntToDigits(s16 n);
+s32 PlaySfx(s32 id);
+void FadeOutBgm(s32 speed);
 s32 TaskCreateFrom(u32 type, s32 idx);
 void sub_08008c64(u16 a0);
 void sub_0800c20c(void);
@@ -200,7 +200,7 @@ void sub_0800cd60(void)
         }
         if ((gUnk_03000038 & 9) || (gUnk_02004B70 & 9)) {
             gUnk_02004B70 = 0;
-            sub_080031b8(102);
+            PlaySfx(102);
             if (gUnk_0200B074 == 4) {
                 gUnk_020060D0 = 9;
                 gExtraMode = 0;
@@ -228,7 +228,7 @@ void sub_0800cd60(void)
         }
         if ((gUnk_03000038 & 2) || (gUnk_02004B70 & 2)) {
             gUnk_02004B70 = 0;
-            sub_080031b8(215);
+            PlaySfx(215);
             gUnk_02007E88 = gUnk_020060D0;
             gUnk_020060D0 = 1;
             gUnk_03001ED8 &= 0xE0FF;
@@ -248,11 +248,11 @@ void sub_0800cd60(void)
             return;
         }
         if (gUnk_03000B70 & 64) {
-            sub_080031b8(101);
+            PlaySfx(101);
             if (--gUnk_0200B074 < 0)
                 gUnk_0200B074 = gUnk_02000018 + 2;
         } else if (gUnk_03000B70 & 128) {
-            sub_080031b8(101);
+            PlaySfx(101);
             if (++gUnk_0200B074 >= gUnk_02000018 + 3)
                 gUnk_0200B074 = 0;
         }
@@ -314,7 +314,7 @@ void sub_0800d0f4(void)
         }
         if ((gUnk_03000038 & 9) || (gUnk_02004B70 & 9)) {
             gUnk_02004B70 = 0;
-            sub_080031b8(102);
+            PlaySfx(102);
             if (gUnk_02007D34 == 0) {
                 gUnk_020060D0 = 9;
                 gUnk_03001F30 = 0;
@@ -326,17 +326,17 @@ void sub_0800d0f4(void)
         }
         if ((gUnk_03000038 & 2) || (gUnk_02004B70 & 2)) {
             gUnk_02004B70 = 0;
-            sub_080031b8(215);
+            PlaySfx(215);
             gUnk_020060D0 = 4;
             RunFrames(8);
             return;
         }
         if (gUnk_02006180 == 0) {
             if ((gUnk_03001EF4 & 128) && gUnk_02007D34 == 0) {
-                sub_080031b8(101);
+                PlaySfx(101);
                 gUnk_02007D34 = 1;
             } else if ((gUnk_03001EF4 & 64) && gUnk_02007D34 == 1) {
-                sub_080031b8(101);
+                PlaySfx(101);
                 gUnk_02007D34 = 0;
             }
         }
@@ -350,7 +350,7 @@ void sub_0800d280(void)
     gUnk_03001ED8 &= 0xE0FF;
     gUnk_03001ED8 |= 0x1A00;
     RunFrame();
-    sub_0800374c(32);
+    FadeOutBgm(32);
     gUnk_020060D0 = 7;
     sub_08008c64(45);
     StartHBlankScroll(1);
@@ -375,7 +375,7 @@ void sub_0800d35c(s32 a)
 {
     s32 i;
 
-    sub_08002f14(gUnk_0200A6E0[a]);
+    IntToDigits(gUnk_0200A6E0[a]);
     if (gUnk_0200A6E0[a] < 100)
         gUnk_03001F08[2] = 10;
     if (gUnk_0200A6E0[a] < 10)
@@ -402,5 +402,5 @@ void sub_0800d404(void)
             i++;
         } while (i != 0x1DF);
     }
-    sub_080031b8(i + 100);
+    PlaySfx(i + 100);
 }

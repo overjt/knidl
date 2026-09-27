@@ -153,10 +153,10 @@ extern u16 gUnk_03005608[2];
 extern s32 gUnk_03005630;
 
 void RequestCopy(u32 mode, u32 src, u32 dst, u32 size);
-s32 sub_08003110(s32 songId);
-s32 sub_08003194(void);
-void sub_080031b8(s32 id);
-void sub_080034d0(void);
+s32 PlayBgm(s32 songId);
+s32 GetCurrentBgm(void);
+void PlaySfx(s32 id);
+void StopBgm(void);
 s32 sub_08021b2c(u32 x, u32 y);
 void sub_08028948(void);
 void sub_08028b1c(void);
@@ -390,27 +390,27 @@ void sub_08029110(void)
         bgm = gUnk_030055EC->unk04;
         if (bgm == -1)
         {
-            sub_080034d0();
+            StopBgm();
         }
         else if (gUnk_020055C8 == 0)
         {
-            sub_08003110(bgm);
+            PlayBgm(bgm);
             gUnk_020055C8 = 1;
         }
         else
         {
-            cur = sub_08003194();
+            cur = GetCurrentBgm();
             if (cur == -1 || cur != bgm)
             {
                 if (gUnk_087325A2[bgm] != -1)
-                    sub_08003110(gUnk_087325A2[bgm]);
+                    PlayBgm(gUnk_087325A2[bgm]);
                 else
-                    sub_08003110(bgm);
+                    PlayBgm(bgm);
             }
         }
     }
     if (gUnk_02007D64 == 4)
-        sub_080031b8(249);
+        PlaySfx(249);
 }
 
 void sub_08029194(void)
@@ -418,9 +418,9 @@ void sub_08029194(void)
     if (gUnk_0200AF04 == 0)
     {
         if (gUnk_030055EC->unk04 == -1)
-            sub_080034d0();
+            StopBgm();
         else
-            sub_08003110(gUnk_030055EC->unk04);
+            PlayBgm(gUnk_030055EC->unk04);
     }
     else
     {

@@ -10,7 +10,7 @@
  * Task.unk28 down and re-binds the coroutine to state 2 once B is no
  * longer held, and over the animation frames 0x36B-0x372 it blends the
  * player's palettes gUnk_081BE6BC[player] into the OBJ palette buffer
- * (sub_08003014, raising PlayerState.unk42 bit 4 while it does).
+ * (BlendColors, raising PlayerState.unk42 bit 4 while it does).
  * sub_08044b94 (action 34, mode 13) is a linear yield script (animation
  * 0x3E9, effect 28 on the ground, M14's sub_08053a44, sound 144); its
  * handler sub_08044c7c re-enters it on a newly-pressed B and requests
@@ -22,7 +22,7 @@ extern u8 gUnk_03001470[];              /* OBJ palette buffer (M11 spelling) */
 extern u16 gUnk_030023C0[];             /* newly-pressed keys, latched per player */
 
 void TaskYieldTrampoline(s32 frames);
-void sub_08003014(u16 *src, u16 *dst, s32 ratio, s32 count, u16 *out);
+void BlendColors(u16 *src, u16 *dst, s32 ratio, s32 count, u16 *out);
 void TaskSleepForever(void);
 void TaskSetEntry(void *a, u32 i);
 void TaskSetFrame(s32 a);
@@ -73,7 +73,7 @@ void sub_080449c8(void)
             }
             {
                 struct Task *u = gUnk_03002490;
-                sub_08003014((u16 *)&gUnk_081BE6BC[u->unk88->unk00 * 128],
+                BlendColors((u16 *)&gUnk_081BE6BC[u->unk88->unk00 * 128],
                              (u16 *)&gUnk_081BE6BC[u->unk88->unk00 * 128 + 32],
                              (u16)u->unk6E, 16,
                              (u16 *)(gUnk_03001470 + ((u->unk40 >> 12) << 5)));
@@ -89,7 +89,7 @@ void sub_080449c8(void)
             }
             {
                 struct Task *u = gUnk_03002490;
-                sub_08003014((u16 *)&gUnk_081BE6BC[u->unk88->unk00 * 128 + 64],
+                BlendColors((u16 *)&gUnk_081BE6BC[u->unk88->unk00 * 128 + 64],
                              (u16 *)&gUnk_081BE6BC[u->unk88->unk00 * 128 + 96],
                              u->unk70, 16,
                              (u16 *)(gUnk_03001470 + (((u->unk40 >> 12) + 1) << 5)));

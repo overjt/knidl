@@ -9,7 +9,7 @@
  * `push {lr}` / `pop {r0}; bx r0` even for leaves.
  *
  * Matching notes (see docs/lessons-learned.md §3):
- *  - The switch dispatch trees in sub_08002b04 / sub_08002b8c are NOT what
+ *  - The switch dispatch trees in FillSendCmd / UpdatePlayerKeys are NOT what
  *    gcc's balance_case_nodes produces for the same case values (it puts the
  *    middle case at the root).  The ROM's tree is "root = lowest case, empty
  *    left subtree", which only comes out of an explicit
@@ -27,15 +27,15 @@
  *  - sub_08002e38's first parameter read must be volatile (`*(vu16 *)p`);
  *    without it the address/temporary pseudos swap r1<->r2.  The remaining
  *    reads p[1..4] are plain (a volatile pointer re-reads them).
- *  - sub_08002f14 keeps the digit buffer in a function-scope `u8 *b` that
+ *  - IntToDigits keeps the digit buffer in a function-scope `u8 *b` that
  *    every branch assigns: that is what pins it to r4 in the zero branch too.
  *    `zero`/`e` in the zero branch reproduce the ROM's preheader order
  *    (base, bound copy, zero, base+5) and its signed pointer compare.
- *  - sub_08003014's ratio/count parameters are 32-bit; the u16 truncations
+ *  - BlendColors's ratio/count parameters are 32-bit; the u16 truncations
  *    belong to the LOCALS (`u16 r = ratio; u16 n = count; n--;`), which is
  *    what places `ldr r7,[sp,#32]` before them and keeps ratio in r6.
- *  - sub_080030b8 is a dead export hidden inside symbols.csv's 0xFC size for
- *    sub_08003014 (lesson 2.13 / zone lesson 14): nothing in ROM calls it.
+ *  - BlendColor is a dead export hidden inside symbols.csv's 0xFC size for
+ *    BlendColors (lesson 2.13 / zone lesson 14): nothing in ROM calls it.
  */
 
 extern vu16 gUnk_0300243C;      /* number of linked players */
@@ -68,17 +68,17 @@ extern u8 gUnk_03001F08[6];     /* decimal digit buffer, [5] = sign/flag */
 
 void sub_080b84f0(void);
 void sub_080b8694(void);
-void sub_08006914(u16 *a, u16 *b, u16 *c);
+void LinkMain1(u16 *a, u16 *b, u16 *c);
 void sub_08008b8c(void);
 void RunTasks(void);
 void RunBuildOamInIwram(void);
 void EndFrame(void);
 void ResetSpriteQueue(void);
-u32 sub_080072e0(void);
+u32 IsLinkError(void);
 void RunFrame(void);
 void RunFrameNoTasks(void);
 
-void sub_08002b04(void)
+void FillSendCmd(void)
 {
     s32 t;
 
@@ -107,7 +107,7 @@ void sub_08002b04(void)
     }
 }
 
-void sub_08002b8c(void)
+void UpdatePlayerKeys(void)
 {
     s32 i;
     s32 t;
@@ -120,7 +120,7 @@ void sub_08002b8c(void)
         return;
     }
 
-    sub_08006914(gUnk_03004D88, gUnk_03004D90, gUnk_03004D50[0]);
+    LinkMain1(gUnk_03004D88, gUnk_03004D90, gUnk_03004D50[0]);
     if ((gUnk_03005274 & 0xFF00) == 0x8800) {
         tries = 0;
         if (gLink[12] != 0) {
@@ -144,8 +144,8 @@ void sub_08002b8c(void)
                     if (tries > 29)
                         sub_08008b8c();
                 }
-                sub_08002b04();
-                sub_08006914(gUnk_03004D88, gUnk_03004D90, gUnk_03004D50[0]);
+                FillSendCmd();
+                LinkMain1(gUnk_03004D88, gUnk_03004D90, gUnk_03004D50[0]);
             }
             gUnk_03004D2C = 1;
         }
@@ -173,12 +173,12 @@ void RunLinkFrame(void)
     RunTasks();
     RunBuildOamInIwram();
     if (gUnk_03004D2C == 0)
-        sub_08002b04();
+        FillSendCmd();
     gUnk_03004D2C = 0;
     EndFrame();
     ResetSpriteQueue();
-    sub_08002b8c();
-    if (sub_080072e0() != 0)
+    UpdatePlayerKeys();
+    if (IsLinkError() != 0)
         sub_08008b8c();
 }
 
@@ -200,21 +200,21 @@ void RunLinkFrames(s32 count)
         RunLinkFrame();
 }
 
-void sub_08002db4(void)
+void RunFramesUntilFadeDone(void)
 {
     while (gUnk_03001E90 != 0)
         RunFrame();
     gUnk_03000048 = 0;
 }
 
-void sub_08002de0(void)
+void RunFramesNoTasksUntilFadeDone(void)
 {
     while (gUnk_03001E90 != 0)
         RunFrameNoTasks();
     gUnk_03000048 = 0;
 }
 
-void sub_08002e0c(void)
+void RunLinkFramesUntilFadeDone(void)
 {
     while (gUnk_03001E90 != 0)
         RunLinkFrame();
@@ -237,30 +237,30 @@ void sub_08002e38(u16 *p)
     }
 }
 
-void sub_08002e98(u32 idx, u32 count, void (**fns)(void))
+void CallTableEntry(u32 idx, u32 count, void (**fns)(void))
 {
     if (idx < count)
         fns[idx]();
 }
 
-void sub_08002eac(u32 seed)
+void SeedRandom(u32 seed)
 {
     gUnk_03000FB4 = seed & 0xFFF;
 }
 
-u32 sub_08002ec0(void)
+u32 Random(void)
 {
     gUnk_03000FB4 = (gUnk_03000FB4 * 61 + 0x579) & 0xFFF;
     return gUnk_03000FB4;
 }
 
-u32 sub_08002ee8(u32 range)
+u32 RandomRange(u32 range)
 {
     gUnk_03000FB4 = (gUnk_03000FB4 * 61 + 0x579) & 0xFFF;
     return (range * gUnk_03000FB4) >> 12;
 }
 
-void sub_08002f14(s16 n)
+void IntToDigits(s16 n)
 {
     u8 *b;
     s32 d;
@@ -313,7 +313,7 @@ void sub_08002f14(s16 n)
     b[0] = v;
 }
 
-void sub_08003014(u16 *src, u16 *dst, s32 ratio, s32 count, u16 *out)
+void BlendColors(u16 *src, u16 *dst, s32 ratio, s32 count, u16 *out)
 {
     u16 *p = out;
     u16 r = ratio;
@@ -331,7 +331,7 @@ void sub_08003014(u16 *src, u16 *dst, s32 ratio, s32 count, u16 *out)
     }
 }
 
-u16 sub_080030b8(u16 a, u16 b, u16 ratio)
+u16 BlendColor(u16 a, u16 b, u16 ratio)
 {
     return (((a & 31) + ((((b & 31) - (a & 31)) * ratio) >> 8)) & 31)
          | (((a & 0x3E0) + ((((b & 0x3E0) - (a & 0x3E0)) * ratio) >> 8)) & 0x3E0)

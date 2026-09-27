@@ -41,17 +41,17 @@ extern s32 gCurSaveSlot;
 extern s8 gUnk_03002438;
 extern u8 gExtraMode;
 
-void sub_0800214c(void);
-void sub_080021dc(void);
+void BeginFastFadeInFromWhite(void);
+void BeginFastFadeOutToWhite(void);
 void ResetTasksAndOam(void);
 void sub_080022fc(void);
 void sub_08002338(void);
 void sub_08002358(void);
 void sub_08002378(void);
 void RunLinkFrame(void);
-void sub_08002e0c(void);
-void sub_080034f0(s32 player, s32 songId);
-void sub_08003688(void);
+void RunLinkFramesUntilFadeDone(void);
+void StopSfxOnPlayer(s32 player, s32 songId);
+void StopAllSfx(void);
 void sub_08008664(void);
 void sub_08008c4c(s32 a0);
 void sub_0800b648(void);
@@ -97,8 +97,8 @@ void sub_08007624(void)
     sub_080022fc();
     gUnk_03001ED8 &= 0xE0FF;
     gUnk_03001ED8 |= 0x1F00;
-    sub_0800214c();
-    sub_08002e0c();
+    BeginFastFadeInFromWhite();
+    RunLinkFramesUntilFadeDone();
     do {
         sub_0801a7b4();
         RunLinkFrame();
@@ -160,11 +160,11 @@ void sub_08007624(void)
         }
     } while (done == 0);
     sub_08002338();
-    sub_080021dc();
-    sub_08002e0c();
+    BeginFastFadeOutToWhite();
+    RunLinkFramesUntilFadeDone();
     for (i = 0; i < gUnk_030023AC; i++) {
         if (gUnk_03002170[i].unk2C != -1) {
-            sub_080034f0(gUnk_03002170[i].unk2C, gUnk_03002170[i].unk2E);
+            StopSfxOnPlayer(gUnk_03002170[i].unk2C, gUnk_03002170[i].unk2E);
             gUnk_03002170[i].unk2C = -1;
         }
     }
@@ -182,8 +182,8 @@ void sub_0800783c(void)
     sub_080022fc();
     gUnk_03001ED8 &= 0xE0FF;
     gUnk_03001ED8 |= 0x1E00;
-    sub_0800214c();
-    sub_08002e0c();
+    BeginFastFadeInFromWhite();
+    RunLinkFramesUntilFadeDone();
     do {
         RunLinkFrame();
         switch (gUnk_03002438) {
@@ -210,8 +210,8 @@ void sub_0800783c(void)
         }
     } while (done == 0);
     sub_08002338();
-    sub_080021dc();
-    sub_08002e0c();
+    BeginFastFadeOutToWhite();
+    RunLinkFramesUntilFadeDone();
     sub_08027198();
     if (sub_080b8290() != 0 && gUnk_03001F30 == 0)
         sub_080c6750();
@@ -233,7 +233,7 @@ void sub_0800791c(void)
     sub_080022fc();
     gUnk_03001ED8 &= 0xE0FF;
     gUnk_03001ED8 |= 0x1D00;
-    sub_0800214c();
+    BeginFastFadeInFromWhite();
     while (gUnk_03001E90 != 0) {
         RunLinkFrame();
         InputRecorderUpdate();
@@ -314,7 +314,7 @@ void sub_0800791c(void)
         }
     } while (done == 0);
     sub_08002338();
-    sub_080021dc();
+    BeginFastFadeOutToWhite();
     while (gUnk_03001E90 != 0) {
         RunLinkFrame();
         InputRecorderUpdate();
@@ -326,7 +326,7 @@ void sub_0800791c(void)
         && !(gUnk_03002364 & (64 << gExtraMode))) {
         gUnk_03002364 |= 64 << gExtraMode;
         sub_080b7b7c(gCurSaveSlot);
-        sub_08003688();
+        StopAllSfx();
         ResetTasksAndOam();
         sub_080c6750();
     }

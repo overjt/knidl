@@ -5,7 +5,7 @@
  *
  * The send and receive queues of the SIO multi-play link driver
  * (src/early_6464.c, src/early_6cd4.c, src/early_6d18.c): the per-frame link
- * step sub_08006914 calls EnqueueSendCmd to queue the frame's four command
+ * step LinkMain1 calls EnqueueSendCmd to queue the frame's four command
  * words into the send ring gLink.ring[4][30] (the words are ORed into
  * gUnk_03004D84 first; an all-zero frame is not queued, a full ring sets the
  * overflow flag unk14) and DequeueRecvCmds to take the oldest four-player frame

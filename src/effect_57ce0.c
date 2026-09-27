@@ -12,8 +12,8 @@
  * tasks: it fills the 20-slot table gUnk_0200B000 with 0xFFFF, collects the
  * indices of the tasks of kinds 1, 2, 7 and 8 (Task.unk72) whose
  * gUnk_03004CA0 entry is not -1 (while gUnk_03002444 is clear), stops them
- * through the task skip mask (sub_0800663c, with gUnk_02006178 = 1), and
- * after the yield releases them (sub_08006664, TaskSetSkipMask(15, i)); then it
+ * through the task skip mask (TaskRestoreSkipMask, with gUnk_02006178 = 1), and
+ * after the yield releases them (TaskSaveSkipMask, TaskSetSkipMask(15, i)); then it
  * walks the tasks 32-62 of kinds 0, 3, 4, 6 and 9 one at a time the same
  * way.  Its callback sub_08058410 kills it once the player leaves mode 13
  * and otherwise, while PlayerState.unk16 is set, registers the collider row
@@ -41,7 +41,7 @@ extern u32 gUnk_08751DBC[];
 extern u16 gUnk_0873BAFC[];
 extern u32 gUnk_08751E00[];
 
-void TaskDispatchTrampoline(void);
+void TaskExitTrampoline(void);
 void TaskYieldTrampoline(s32 frames);
 void TaskSetSkipMask(u8 val, s32 idx);
 void TaskFree(s32 id);                         /* kill task (M09+ spelling, 49 landed files) */
@@ -51,8 +51,8 @@ void TaskDrawWorld(void);
 void TaskSetFrameByFacing(s16 a);
 void TaskSetMotionXFacing(s32 a, s32 b);
 void TaskSetFrame(s32 a);
-void sub_0800663c(u32 idx);
-void sub_08006664(u32 idx);
+void TaskRestoreSkipMask(u32 idx);
+void TaskSaveSkipMask(u32 idx);
 void sub_0801a828(u8 a, s16 x, s16 y, void *p);   /* M11's caller spelling */
 void sub_0803dfc8(void);
 void sub_080670f0(u32 src);
@@ -121,7 +121,7 @@ void sub_08057ce0(void)
         gUnk_03002490->unk3C += 2;
         TaskYieldTrampoline(2);
     }
-    TaskDispatchTrampoline();
+    TaskExitTrampoline();
 }
 
 void sub_08057e90(void)
@@ -169,7 +169,7 @@ void sub_08057e90(void)
     TaskYieldTrampoline(4);
     gUnk_03002490->unk3C++;
     TaskYieldTrampoline(5);
-    TaskDispatchTrampoline();
+    TaskExitTrampoline();
 }
 
 void sub_08057f90(void)
@@ -223,7 +223,7 @@ void sub_08057f90(void)
         while ((s16)gUnk_0200B000[n] != -1 && n != 20)
         {
             gUnk_02006178 = 1;
-            sub_0800663c((s16)gUnk_0200B000[n++]);
+            TaskRestoreSkipMask((s16)gUnk_0200B000[n++]);
             m++;
         }
         TaskYieldTrampoline(1);
@@ -236,11 +236,11 @@ void sub_08057f90(void)
             case 2:
             case 7:
             case 8:
-                sub_08006664((s16)gUnk_0200B000[n]);
+                TaskSaveSkipMask((s16)gUnk_0200B000[n]);
                 break;
             default:
                 gUnk_03002790[(s16)gUnk_0200B000[n]].unk13 = 0;
-                sub_08006664((s16)gUnk_0200B000[n]);
+                TaskSaveSkipMask((s16)gUnk_0200B000[n]);
                 break;
             }
             TaskSetSkipMask(15, (s16)gUnk_0200B000[n]);
@@ -270,7 +270,7 @@ void sub_08057f90(void)
                 r = 0;
                 if (gUnk_03002790[i].unk76 != 5)
                 {
-                    sub_0800663c(i);
+                    TaskRestoreSkipMask(i);
                     m++;
                     TaskYieldTrampoline(1);
                     r = 1;
@@ -280,7 +280,7 @@ void sub_08057f90(void)
             case 3:
             case 4:
             case 9:
-                sub_0800663c(i);
+                TaskRestoreSkipMask(i);
                 m++;
                 TaskYieldTrampoline(2);
                 r = 2;
@@ -290,7 +290,7 @@ void sub_08057f90(void)
             }
             if (r != 0)
             {
-                sub_08006664(i);
+                TaskSaveSkipMask(i);
                 TaskSetSkipMask(15, i);
                 TaskYieldTrampoline(2);
                 gUnk_02006178 = 0;
@@ -300,7 +300,7 @@ void sub_08057f90(void)
             TaskYieldTrampoline(1);
         gUnk_03002490->unk88->unk16--;
         gUnk_02006178 = 0;
-        TaskDispatchTrampoline();
+        TaskExitTrampoline();
     }
     pal = gUnk_03001270[0];
     gUnk_03002490->unk6C = 0;
@@ -347,7 +347,7 @@ void sub_08057f90(void)
         gUnk_03002490->unk6C++;
     } while ((s16)gUnk_03002490->unk6C <= 1);
     sub_080670f0((u32)&pal);
-    TaskDispatchTrampoline();
+    TaskExitTrampoline();
 }
 
 void sub_08058410(void)
@@ -447,7 +447,7 @@ void sub_08058460(void)
         } while ((s16)gUnk_03002490->unk6C <= 3);
         break;
     }
-    TaskDispatchTrampoline();
+    TaskExitTrampoline();
 }
 
 void sub_080586fc(void)
@@ -493,5 +493,5 @@ void sub_08058720(void)
     TaskYieldTrampoline(2);
     gUnk_03002490->unk3C += 2;
     TaskYieldTrampoline(1);
-    TaskDispatchTrampoline();
+    TaskExitTrampoline();
 }

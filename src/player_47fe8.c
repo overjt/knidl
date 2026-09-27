@@ -6,7 +6,7 @@
  *
  * Player action bodies, part 15: action 29 and per-frame handler 26.
  * sub_08047fe8 (action 29, mode 19) is the ability get: it freezes the
- * stage (gUnk_03001F34 = 1), starts the palette fade sub_080008e8 over
+ * stage (gUnk_03001F34 = 1), starts the palette fade BeginFade over
  * the rows gUnk_0873B534[player] selects (unless gUnk_030023B0 is set)
  * and, when the swallowed object gives a random ability
  * (PlayerState.unk0A > 1), spins the HUD roulette: PlayerState.unk0B
@@ -16,7 +16,7 @@
  * sub_08049738) and plays the ability's own pose - a 25-way switch on
  * PlayerState.unk0D - 1 whose arms install hit boxes, spawn effects
  * and load extra tiles (sub_08049a58) - before it restores the palette
- * and the mode (the fade back, sub_080008e8(4, 2, ...)) and unfreezes
+ * and the mode (the fade back, BeginFade(4, 2, ...)) and unfreezes
  * the stage.  Its handler sub_08049484 hands
  * over to the ability's own follow-up once Task.unk28 is set (action 42
  * for ability 11, 55 for 24, M11's sub_08040710 otherwise) and, while
@@ -55,9 +55,9 @@ extern u32 gUnk_0873CF4C[];             /* hit-box set, passed as (struct HitBox
 /* M09's hit-box set (src/block_30804.c); only a pointer is passed here */
 struct HitBoxSet;
 void TaskYieldTrampoline(s32 frames);
-u32 sub_080008e8(u16 steps, s16 delta, u16 *mask);   /* delta is signed: the ROM passes -2 as movs/negs */
-void sub_08003014(u16 *src, u16 *dst, s32 ratio, s32 count, u16 *out);
-s32 sub_080031b8(s32 id);
+u32 BeginFade(u16 steps, s16 delta, u16 *mask);   /* delta is signed: the ROM passes -2 as movs/negs */
+void BlendColors(u16 *src, u16 *dst, s32 ratio, s32 count, u16 *out);
+s32 PlaySfx(s32 id);
 void TaskSleepForever(void);
 void TaskSetFrame(s32 a);
 void TaskSetFrameNoFlip(s32 a);
@@ -104,7 +104,7 @@ void sub_08047fe8(void)
     }
     sub_0803e3e4(15);
     if (gUnk_030023B0 == 0)
-        sub_080008e8(4, -2, gUnk_0873B534[gUnk_03002490->unk88->unk00]);
+        BeginFade(4, -2, gUnk_0873B534[gUnk_03002490->unk88->unk00]);
     {
         struct PlayerState *p = gUnk_03002490->unk88;
         if (p->unk37 == 1) {
@@ -144,7 +144,7 @@ void sub_08047fe8(void)
                         while (1) {
                             if ((s8)++gUnk_03002490->unk88->unk0B > 24)
                                 gUnk_03002490->unk88->unk0B = 1;
-                            sub_080031b8(101);
+                            PlaySfx(101);
                             {
                                 struct PlayerState *r = gUnk_03002490->unk88;
                                 sub_0800a0dc((s8)r->unk0B, r->unk00);
@@ -181,7 +181,7 @@ void sub_08047fe8(void)
             sub_0805afac(gUnk_03002490->unk88->unk00, 14, 3);
             TaskSetFrame(68);
             TaskYieldTrampoline(2);
-            sub_080031b8(113);
+            PlaySfx(113);
             gUnk_03002490->unk3C++;
             TaskYieldTrampoline(2);
             gUnk_03002490->unk3C++;
@@ -207,7 +207,7 @@ void sub_08047fe8(void)
         }
     }
     gUnk_03002490->unk88->unk0B = 0;
-    sub_080031b8(108);
+    PlaySfx(108);
     sub_08049738();
     {
         struct Task *t = gUnk_03002490;
@@ -712,7 +712,7 @@ void sub_08047fe8(void)
     }
     gUnk_03002490->unk88->unk04 = 19;
     if (gUnk_030023B0 == 0) {
-        sub_080008e8(4, 2, gUnk_0873B534[0]);
+        BeginFade(4, 2, gUnk_0873B534[0]);
         TaskYieldTrampoline(4);
         gUnk_03000FB8 = 0;
     }
@@ -779,7 +779,7 @@ void sub_08049484(void)
                 }
                 {
                     struct Task *u = gUnk_03002490;
-                    sub_08003014((u16 *)&gUnk_081BE6BC[u->unk88->unk00 * 128],
+                    BlendColors((u16 *)&gUnk_081BE6BC[u->unk88->unk00 * 128],
                                  (u16 *)&gUnk_081BE6BC[u->unk88->unk00 * 128 + 32],
                                  (u16)u->unk6E, 16,
                                  (u16 *)(gUnk_03001470 + ((u->unk40 >> 12) << 5)));
@@ -795,7 +795,7 @@ void sub_08049484(void)
                 }
                 {
                     struct Task *u = gUnk_03002490;
-                    sub_08003014((u16 *)&gUnk_081BE6BC[u->unk88->unk00 * 128 + 64],
+                    BlendColors((u16 *)&gUnk_081BE6BC[u->unk88->unk00 * 128 + 64],
                                  (u16 *)&gUnk_081BE6BC[u->unk88->unk00 * 128 + 96],
                                  u->unk70, 16,
                                  (u16 *)(gUnk_03001470 + (((u->unk40 >> 12) + 1) << 5)));

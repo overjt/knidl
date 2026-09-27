@@ -25,7 +25,7 @@
  *   sub_080c3d58   the idle step used before the start and after the finish.
  *   sub_080c3e18   the racer's screen position from the course record and
  *       the scale sub_080c623c, and the computer racers' distance fade
- *       (sub_08003014 on their palette row gUnk_08609D42[pal]).
+ *       (BlendColors on their palette row gUnk_08609D42[pal]).
  *   sub_080c3648 / sub_080c3670 / sub_080c37b8   the speed floor 0x18000,
  *       the camera clamp (scroll = min(pos, finish line), the script cursor's
  *       unk2/unk4 into the course record), and player 0's engine sound
@@ -167,9 +167,9 @@ extern u16 gUnk_080CFF1C[];
 extern u16 gUnk_03001470[];
 
 void m4aMPlayPitchControl(struct MusicPlayerInfo *mplayInfo, u16 trackBits, s16 pitch);
-void sub_08003014(u16 *src, u16 *dst, s32 ratio, s32 count, u16 *out);
-s32 sub_080031b8(s32 id);
-void sub_080034f0(s32 player, s32 songId);
+void BlendColors(u16 *src, u16 *dst, s32 ratio, s32 count, u16 *out);
+s32 PlaySfx(s32 id);
+void StopSfxOnPlayer(s32 player, s32 songId);
 
 void sub_080c2078(s32 a, s32 b, s32 c);
 void sub_080c523c(u16 id);
@@ -230,13 +230,13 @@ void sub_080c37b8(s32 a, s32 on)
     if (a == 0) {
         if (on) {
             if (gAirGrindPtr->unk014 == -1)
-                gAirGrindPtr->unk014 = sub_080031b8(400);
+                gAirGrindPtr->unk014 = PlaySfx(400);
             else
                 m4aMPlayPitchControl(gMPlayTable[gAirGrindPtr->unk014].info, 0xFFFF,
                                      (gUnk_03002490->unk54 - 0x40000) >> 5);
         } else {
             if (gAirGrindPtr->unk014 != -1) {
-                sub_080034f0(gAirGrindPtr->unk014, 400);
+                StopSfxOnPlayer(gAirGrindPtr->unk014, 400);
                 gAirGrindPtr->unk014 = -1;
             }
         }
@@ -300,11 +300,11 @@ void sub_080c38c8(s32 player)
                 if (ret == 1) {
                     gAirGrindPtr->unk01C[player].unk0C = 6;
                     if (player == 0)
-                        sub_080031b8(149);
+                        PlaySfx(149);
                 } else if (ret == 2) {
                     gAirGrindPtr->unk01C[player].unk0C = 8;
                     if (player == 0)
-                        sub_080031b8(149);
+                        PlaySfx(149);
                 }
             }
             gAirGrindPtr->unk01C[player].unk00 = 1;
@@ -373,7 +373,7 @@ void sub_080c38c8(s32 player)
         if (gUnk_03002490->unk3C <= 8)
             gAirGrindPtr->unk01C[player].unk06 = 0;
         if (player == 0 && gAirGrindPtr->unk01C[0].unk06 == 0)
-            sub_080031b8(401);
+            PlaySfx(401);
         gUnk_03002490->unk3C = 9;
         if (++gAirGrindPtr->unk01C[player].unk06 > 23)
             gAirGrindPtr->unk01C[player].unk06 = 0;
@@ -419,7 +419,7 @@ void sub_080c3e18(s32 player)
             ratio = 256 - scale;
         /* colour 1 of palette pal: the ROM scales the whole index
            (pal * 16 + 1) by 2, so the offset is written in bytes */
-        sub_08003014(gUnk_08609D42[pal], gUnk_080CFF1C, ratio, 15,
+        BlendColors(gUnk_08609D42[pal], gUnk_080CFF1C, ratio, 15,
                      (u16 *)((u8 *)gUnk_03001470 + (pal * 16 + 1) * 2));
     }
 }

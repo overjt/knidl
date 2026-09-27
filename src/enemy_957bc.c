@@ -51,10 +51,10 @@ extern u32 gUnk_08753718[];
 /* Externals */
 extern void sub_08065438(void);
 extern void sub_080656b4(void);
-extern void sub_08002e98(u32 a, u32 b, u32 *c);
-extern u32 sub_08002ee8(u32 range);
-extern void sub_08003014(void *src, void *dst, s32 ratio, s32 count, void *out);
-extern s32 sub_080031b8(s32 id);
+extern void CallTableEntry(u32 a, u32 b, u32 *c);
+extern u32 RandomRange(u32 range);
+extern void BlendColors(void *src, void *dst, s32 ratio, s32 count, void *out);
+extern s32 PlaySfx(s32 id);
 extern void TaskFree(s32 id);
 extern void TaskSleepForever(void);
 extern void TaskSetEntry(void *fn, s32 i);
@@ -222,7 +222,7 @@ void sub_08095834(void)
 
 void sub_08095940(void)
 {
-    sub_08002e98(gUnk_03002490->unk14, 12, gUnk_087444E4);
+    CallTableEntry(gUnk_03002490->unk14, 12, gUnk_087444E4);
 }
 
 void sub_0809595c(void)
@@ -266,7 +266,7 @@ void sub_080959ec(void)
     gUnk_03002490->unk28 = sub_080640dc(gUnk_08744510);
     sub_08066580();
     TaskYieldTrampoline(gUnk_08744524[gUnk_03002490->unk74]);
-    gUnk_03002490->unk6E = sub_08002ee8(8);
+    gUnk_03002490->unk6E = RandomRange(8);
     sub_0806395c(2);
     gUnk_03002490->unk15 = 12;
     TaskSleepForever();
@@ -311,7 +311,7 @@ void sub_08095aec(void)
     TaskYieldTrampoline(6);
     TaskSetFrame(16);
     TaskYieldTrampoline(8);
-    r = sub_08002ee8(2);
+    r = RandomRange(2);
     n = 1;
     if (r != 0)
         n = 3;
@@ -333,7 +333,7 @@ void sub_08095aec(void)
     TaskSetFrame(7);
     TaskYieldTrampoline(8);
     if (gUnk_03002490->unk14 == 3)
-        sub_0806395c(gUnk_08744608[sub_08002ee8(8)]);
+        sub_0806395c(gUnk_08744608[RandomRange(8)]);
     else
         sub_0806395c(8);
     gUnk_03002490->unk15 = 12;
@@ -369,7 +369,7 @@ void sub_08095be8(void)
         v = gUnk_03002490;
         v->unk6C++;
     } while ((s16)v->unk6C <= 1);
-    if (gUnk_03002490->unk74 == 1 && sub_08002ee8(2) != 0) {
+    if (gUnk_03002490->unk74 == 1 && RandomRange(2) != 0) {
         sub_08063e14();
         gUnk_03002490->unk7A = 0;
         TaskSetMotionY(-0x30000, 0x2000, 0x30000);
@@ -380,7 +380,7 @@ void sub_08095be8(void)
         if (gUnk_03002490->unk14 == 5)
             sub_0806395c(2);
         else
-            sub_0806395c(gUnk_08744608[sub_08002ee8(8)]);
+            sub_0806395c(gUnk_08744608[RandomRange(8)]);
     } else {
         gUnk_03002490->unk6C = 0;
         do {
@@ -513,7 +513,7 @@ void sub_08095eac(void)
     do {
         TaskSetFrame(26);
         TaskYieldTrampoline(4);
-        sub_080031b8(0x23B);
+        PlaySfx(0x23B);
         TaskSetFrame(27);
         TaskYieldTrampoline(1);
         TaskSetFrame(28);
@@ -593,7 +593,7 @@ void sub_0809619c(void)
     struct Task *u;
 
     gUnk_03002490->unk15 = 6;
-    sub_080031b8(500);
+    PlaySfx(500);
     gUnk_03002490->unk2C = 0;
     TaskSetMotionXFacing(0x30000, 0x5A5A5A5A);
     gUnk_03002490->unk28 = sub_080640dc(gUnk_0874453C);
@@ -664,7 +664,7 @@ void sub_08096320(void)
     gUnk_03002490->unk15 = 9;
     zero = 0;
     gUnk_03002490->unk2C = zero;
-    sub_080031b8(504);
+    PlaySfx(504);
     sub_080261d4(2);
     gUnk_03002490->unk7A = zero;
     TaskSetMotionXFacing(-0x10000, 0x5A5A5A5A);
@@ -775,7 +775,7 @@ rest:
             TaskYieldTrampoline(1);
         } while (gUnk_03002490->unk34 == 0);
     }
-    sub_080031b8(0x1F7);
+    PlaySfx(0x1F7);
     sub_080261d4(2);
     sub_08097088();
     gUnk_03002490->unk28 = sub_080640dc(gUnk_08744550);
@@ -835,7 +835,7 @@ void sub_08096680(void)
     t = gUnk_03002490;
     zero = 0;
     t->unk30 = zero;
-    sub_080031b8(0x236);
+    PlaySfx(0x236);
     TaskSetFrame(34);
     u = gUnk_03002490;
     if (u->unk7A == 0) {
@@ -872,7 +872,7 @@ void sub_08096680(void)
     gUnk_03002490->unk6C = 0;
     do {
         if (gUnk_03002360 == gUnk_03002490->unk18)
-            sub_080031b8(0x237);
+            PlaySfx(0x237);
         sub_08064cdc(141, 24, 0, 0);
         TaskSetFrame(30);
         TaskYieldTrampoline(4);
@@ -975,7 +975,7 @@ void sub_08096924(void)
 void sub_0809699c(void)
 {
     sub_08096e9c();
-    sub_08002e98(gUnk_03002490->unk15, 13, gUnk_08744564);
+    CallTableEntry(gUnk_03002490->unk15, 13, gUnk_08744564);
     sub_08097024();
     sub_08068f68();
     sub_08069b44();
@@ -987,9 +987,9 @@ void sub_080969c8(void)
     sub_08096a40();
     if (sub_0806acf8() == 0) {
         if (sub_080692fc() == 0)
-            sub_08002e98(gUnk_03002490->unk15, 13, gUnk_08744564);
+            CallTableEntry(gUnk_03002490->unk15, 13, gUnk_08744564);
     } else {
-        sub_08002e98(gUnk_03002490->unk15, 13, gUnk_08744564);
+        CallTableEntry(gUnk_03002490->unk15, 13, gUnk_08744564);
     }
     sub_08097024();
     sub_08068f68();
@@ -1086,7 +1086,7 @@ void sub_08096b7c(void)
     sub_08063a00(gUnk_08745120);
     sub_080639f0(gUnk_087447B8[gUnk_03002490->unk3C]);
     sub_080261d4(4);
-    sub_080031b8(0x1F7);
+    PlaySfx(0x1F7);
     sub_08064d34(141, 0);
     gUnk_03002490->unk20 = 0;
     TaskSetMotionXFacing(-0x10000, 0x600);
@@ -1121,7 +1121,7 @@ s32 sub_08096d64(void)
     case 3:
     case 4:
         TaskStopY();
-        sub_080031b8(0x1F7);
+        PlaySfx(0x1F7);
         sub_080261d4(2);
         gUnk_03002490->unk34 = 1;
         return 0;
@@ -1197,18 +1197,18 @@ void sub_08096e9c(void)
         u = gUnk_03002490;
         q = (s16 *)&u->unk70;
         if (*q <= 3) {
-            sub_08003014(gUnk_08744598[u->unk8C->unk0C][0],
+            BlendColors(gUnk_08744598[u->unk8C->unk0C][0],
                          gUnk_08744598[u->unk8C->unk0C][1],
                          gUnk_087445D8[*q], 16,
                          &gUnk_03001470[(u->unk40 >> 12) * 32]);
         } else {
-            sub_08003014(gUnk_08744598[u->unk8C->unk0C][0],
+            BlendColors(gUnk_08744598[u->unk8C->unk0C][0],
                          gUnk_082B07BC,
                          gUnk_087445D8[*q], 16,
                          &gUnk_03001470[(u->unk40 >> 12) * 32]);
         }
     } else {
-        sub_08003014(gUnk_08744598[t->unk8C->unk0C][0],
+        BlendColors(gUnk_08744598[t->unk8C->unk0C][0],
                      gUnk_08744598[t->unk8C->unk0C][1],
                      gUnk_087445D8[(s16)t->unk70], 16,
                      &gUnk_03001470[(t->unk40 >> 12) * 32]);
@@ -1231,7 +1231,7 @@ void sub_08096fc0(void)
         t->unk6E = 0;
     v = gUnk_087445E8[gUnk_03002490->unk6E + gUnk_03002490->unk74 * 8];
     if (gUnk_087445E8[gUnk_03002490->unk6E + gUnk_03002490->unk74 * 8] == 11)
-        v = gUnk_08744608[sub_08002ee8(8)];
+        v = gUnk_08744608[RandomRange(8)];
     sub_0806395c(v);
 }
 

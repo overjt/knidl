@@ -57,15 +57,15 @@ extern void m4aSoundVSync(void);
 extern void m4aSoundMain(void);
 extern void SoundDriverVSyncOff(void);
 extern void SoftReset(u32 resetFlags);
-extern void sub_08003484(void);
+extern void StopAllSound(void);
 extern void sub_08004734(void);
-extern void sub_08006cd4(void);
+extern void LinkVSync(void);
 extern void ReadKeys(void);
 extern void FlushDisplayRegs(void);
 extern void CopyOamAndPalette(void);
 extern void ProcessCopyQueue(void);
 
-void sub_08000934(void);
+void UpdateFade(void);
 
 void VBlankIntr(void)
 {
@@ -83,7 +83,7 @@ void VBlankIntr(void)
     }
 
     if (gUnk_0200EBA0 == 1)
-        sub_08006cd4();
+        LinkVSync();
 
     if (gUnk_03000FA4 != 0)
         gUnk_03000FA4();

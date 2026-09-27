@@ -38,15 +38,15 @@ extern u8 gEndingSceneActive;
 extern s16 gUnk_0873FF98[];
 extern u32 gUnk_0874CF28[];
 
-void TaskDispatchTrampoline(void);
+void TaskExitTrampoline(void);
 void TaskYieldTrampoline(s32 frames);
 void RequestCopy(u32 mode, u32 src, u32 dst, u32 size);
 s32 QueueSprite(u32 a, u32 b, u32 c, u32 d, u32 e, s16 f);  /* sprite draw; callers pass f sign-extended (lsls/asrs #16), the early_1518 definition says u16 (lesson 3.428) */
 s32 DrawAffineSprite(s32 a, s16 b, s16 c, s32 d);
-void sub_08002e98(u32 idx, u32 count, void (**fns)(void));   /* if (idx < count) fns[idx](); */
-u32 sub_08002ee8(u32 range);                                 /* random 0 .. range-1 */
-s32 sub_08003110(s32 songId);
-s32 sub_080031b8(s32 id);                                    /* play a sound effect */
+void CallTableEntry(u32 idx, u32 count, void (**fns)(void));   /* if (idx < count) fns[idx](); */
+u32 RandomRange(u32 range);                                 /* random 0 .. range-1 */
+s32 PlayBgm(s32 songId);
+s32 PlaySfx(s32 id);                                    /* play a sound effect */
 s32 TaskCreateFrom(u32 type, s32 idx);                         /* spawn a task */
 void TaskMove(void);
 void TaskMoveRelativeToParent(void);
@@ -70,9 +70,9 @@ void sub_080c6c64(void)
         sub_080c6ca0();
         sub_080c6d38();
     } else {
-        sub_08002e98(gUnk_03002490->unk73, 11, gUnk_08757330);
+        CallTableEntry(gUnk_03002490->unk73, 11, gUnk_08757330);
     }
-    TaskDispatchTrampoline();
+    TaskExitTrampoline();
 }
 
 /* Task type #100's graphics: two sprite sheets, the first one's palette and,
@@ -150,7 +150,7 @@ void sub_080c6d84(void)
     TaskYieldTrampoline(1);
     TaskYieldTrampoline(16);
     gUnk_03002490->unk3C = 62;
-    sub_080031b8(281);
+    PlaySfx(281);
     gUnk_03002490->unk18 = 0x30000;
     gUnk_03002490->unk28 = 0x1000;
     TaskStop();
@@ -179,7 +179,7 @@ void sub_080c6d84(void)
     gUnk_03002490->unk54 = -0x6000;
     gUnk_03002490->unk58 = 0x4000;
     TaskYieldTrampoline(32);
-    sub_08003110(24);
+    PlayBgm(24);
     gUnk_03002490->unk3C = 62;
     gUnk_03002490->unk54 = 0x8000;
     gUnk_03002490->unk58 = 0x4000;
@@ -569,8 +569,8 @@ void sub_080c7810(void)
         case 1:
             TaskStop();
             gUnk_03002490->unk42 = 13;
-            gUnk_03002490->unk4C = (sub_08002ee8(12) + 8) << 16;
-            gUnk_03002490->unk50 = (sub_08002ee8(8) - 4) << 16;
+            gUnk_03002490->unk4C = (RandomRange(12) + 8) << 16;
+            gUnk_03002490->unk50 = (RandomRange(8) - 4) << 16;
             TaskSetMotion(0x10000, 0x4000, 0x5A5A5A5A, 0x8000, -0x800, 0x5A5A5A5A);
             gUnk_03002490->unk3C = 4;
             TaskYieldTrampoline(2);
@@ -582,8 +582,8 @@ void sub_080c7810(void)
             TaskYieldTrampoline(2);
             gUnk_03002490->unk3C = 8;
             TaskYieldTrampoline(2);
-            gUnk_03002490->unk4C = (sub_08002ee8(12) + 10) << 16;
-            gUnk_03002490->unk50 = (sub_08002ee8(8) - 4) << 16;
+            gUnk_03002490->unk4C = (RandomRange(12) + 10) << 16;
+            gUnk_03002490->unk50 = (RandomRange(8) - 4) << 16;
             TaskSetMotion(0x10000, 0x4000, 0x5A5A5A5A, -0x8000, 0x800, 0x5A5A5A5A);
             gUnk_03002490->unk3C = 4;
             TaskYieldTrampoline(2);
@@ -599,8 +599,8 @@ void sub_080c7810(void)
         case 2:
             TaskStop();
             gUnk_03002490->unk42 = 10;
-            gUnk_03002490->unk4C = (sub_08002ee8(32) + 8) << 16;
-            gUnk_03002490->unk50 = (sub_08002ee8(32) - 16) << 16;
+            gUnk_03002490->unk4C = (RandomRange(32) + 8) << 16;
+            gUnk_03002490->unk50 = (RandomRange(32) - 16) << 16;
             gUnk_03002490->unk3C = 9;
             TaskYieldTrampoline(1);
             gUnk_03002490->unk3C = 10;
@@ -613,8 +613,8 @@ void sub_080c7810(void)
             TaskYieldTrampoline(1);
             gUnk_03002490->unk3C = 14;
             TaskYieldTrampoline(1);
-            gUnk_03002490->unk4C = (sub_08002ee8(32) + 8) << 16;
-            gUnk_03002490->unk50 = (sub_08002ee8(32) - 16) << 16;
+            gUnk_03002490->unk4C = (RandomRange(32) + 8) << 16;
+            gUnk_03002490->unk50 = (RandomRange(32) - 16) << 16;
             gUnk_03002490->unk3C = 9;
             TaskYieldTrampoline(1);
             gUnk_03002490->unk3C = 10;
@@ -629,8 +629,8 @@ void sub_080c7810(void)
             TaskYieldTrampoline(1);
             gUnk_03002490->unk3C = 0xFFFF;
             TaskYieldTrampoline(15);
-            gUnk_03002490->unk4C = (sub_08002ee8(32) + 8) << 16;
-            gUnk_03002490->unk50 = (sub_08002ee8(32) - 16) << 16;
+            gUnk_03002490->unk4C = (RandomRange(32) + 8) << 16;
+            gUnk_03002490->unk50 = (RandomRange(32) - 16) << 16;
             gUnk_03002490->unk3C = 9;
             TaskYieldTrampoline(1);
             gUnk_03002490->unk3C = 10;
@@ -683,7 +683,7 @@ void sub_080c7cc0(void)
     gUnk_03002490->unk38 = gUnk_0874CF28;
     gUnk_03002490->unk40 = 0;
     gUnk_03002490->unk4C = gUnk_03002790[gUnk_03002490->unk44].unk48 << 16;
-    gUnk_03002490->unk50 = (gUnk_03002790[gUnk_03002490->unk44].unk4A + sub_08002ee8(16) - 8) << 16;
+    gUnk_03002490->unk50 = (gUnk_03002790[gUnk_03002490->unk44].unk4A + RandomRange(16) - 8) << 16;
     gUnk_03002490->unk54 = 0x10000;
     gUnk_03002490->unk5C = 0x2000;
     switch (gUnk_03002490->unk74) {
@@ -730,5 +730,5 @@ void sub_080c7cc0(void)
         } while ((s16)gUnk_03002490->unk6C <= 4);
         break;
     }
-    TaskDispatchTrampoline();
+    TaskExitTrampoline();
 }

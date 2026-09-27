@@ -42,12 +42,12 @@ extern s16 gUnk_08731F48[][4];
 extern u32 gUnk_08755620[];
 extern u32 gUnk_08755688[];
 
-void TaskDispatchTrampoline(void);
+void TaskExitTrampoline(void);
 void TaskYieldTrampoline(s32 frames);
 void RequestCopy(u32 mode, u32 src, u32 dst, u32 size);
 s32 QueueSprite(u32 a, u32 b, u32 c, u32 d, u32 e, s16 f);
 s32 DrawAffineSprite(s32 a, s16 b, s16 c, s32 d);
-void sub_08003014(u16 *src, u16 *dst, s32 ratio, s32 count, u16 *out);
+void BlendColors(u16 *src, u16 *dst, s32 ratio, s32 count, u16 *out);
 s32 TaskCreateFrom(u32 type, s32 idx);
 void TaskMove(void);
 void TaskDrawScreen(void);
@@ -117,7 +117,7 @@ void sub_0800f180(void)
         }
         TaskYieldTrampoline(1);
     }
-    TaskDispatchTrampoline();
+    TaskExitTrampoline();
 }
 
 void sub_0800f2b4(void)
@@ -145,9 +145,9 @@ void sub_0800f2b4(void)
     if (n > 256)
         v->unk34 = 256;
     w = gUnk_03002490;
-    sub_08003014(gUnk_08562FE4[w->unk2C], gUnk_08562FE4[w->unk30], (u16)w->unk34, 8, gUnk_03001612);
+    BlendColors(gUnk_08562FE4[w->unk2C], gUnk_08562FE4[w->unk30], (u16)w->unk34, 8, gUnk_03001612);
     y = gUnk_03002490;
-    sub_08003014(gUnk_08563024[y->unk2C], gUnk_08563024[y->unk30], (u16)y->unk34, 13, &gUnk_03001612[16]);
+    BlendColors(gUnk_08563024[y->unk2C], gUnk_08563024[y->unk30], (u16)y->unk34, 13, &gUnk_03001612[16]);
     x = gUnk_03002490;
     if (x->unk20 == 0 && x->unk24 != 0 && gUnk_0200EBC0[0] == 0 && gUnk_02007FC8 == 0)
         x->unk3C = 17;
@@ -167,7 +167,7 @@ void sub_0800f390(void)
     gUnk_03002490->unk2C = 0;
     while (gUnk_020060D0 == 8 || gUnk_020060D0 == 9)
         TaskYieldTrampoline(1);
-    TaskDispatchTrampoline();
+    TaskExitTrampoline();
 }
 
 void sub_0800f408(void)
@@ -253,7 +253,7 @@ void sub_0800f5ec(void)
         }
         TaskYieldTrampoline(1);
     }
-    TaskDispatchTrampoline();
+    TaskExitTrampoline();
 }
 
 void sub_0800f698(void)
@@ -446,15 +446,15 @@ void sub_0800fa30(void)
         x = gUnk_03002490;
         switch (x->unk20) {
         case 0:
-            sub_08003014(gUnk_08731D28[x->unk18] + x->unk2C * 16, gUnk_08731D28[x->unk18] + x->unk30 * 16, (u16)x->unk34, 16, gUnk_03001430 - 176);
+            BlendColors(gUnk_08731D28[x->unk18] + x->unk2C * 16, gUnk_08731D28[x->unk18] + x->unk30 * 16, (u16)x->unk34, 16, gUnk_03001430 - 176);
             break;
         case 1:
-            sub_08003014(gUnk_08731D28[x->unk1C] + x->unk2C * 16, gUnk_08731D28[x->unk1C] + x->unk30 * 16, (u16)x->unk34, 16, gUnk_03001430);
+            BlendColors(gUnk_08731D28[x->unk1C] + x->unk2C * 16, gUnk_08731D28[x->unk1C] + x->unk30 * 16, (u16)x->unk34, 16, gUnk_03001430);
             y = gUnk_03002490;
-            sub_08003014(gUnk_08731D28[y->unk18] + y->unk2C * 16, gUnk_08731D28[y->unk18] + y->unk30 * 16, (u16)y->unk34, 16, gUnk_03001430 + 16);
+            BlendColors(gUnk_08731D28[y->unk18] + y->unk2C * 16, gUnk_08731D28[y->unk18] + y->unk30 * 16, (u16)y->unk34, 16, gUnk_03001430 + 16);
             z = gUnk_03002490;
             z->unk24 += 16;
-            sub_08003014(gUnk_03001430, gUnk_03001430 + 16, (u16)z->unk24, 16, gUnk_03001430 - 176);
+            BlendColors(gUnk_03001430, gUnk_03001430 + 16, (u16)z->unk24, 16, gUnk_03001430 - 176);
             a = gUnk_03002490;
             if (a->unk24 == 256) {
                 a->unk20 = 0;
@@ -493,7 +493,7 @@ void sub_0800fb94(void)
             u->unk24 += 32;
             switch (u->unk20) {
             case 1:
-                sub_08003014(gUnk_08731CF8[u->unk1C], gUnk_085563C8, (u16)u->unk24, 16, gUnk_030012B0);
+                BlendColors(gUnk_08731CF8[u->unk1C], gUnk_085563C8, (u16)u->unk24, 16, gUnk_030012B0);
                 w = gUnk_03002490;
                 if (w->unk24 == 256) {
                     w->unk24 = 0;
@@ -502,7 +502,7 @@ void sub_0800fb94(void)
                 }
                 break;
             case 2:
-                sub_08003014(gUnk_085563C8, gUnk_08731CF8[u->unk18], (u16)u->unk24, 16, gUnk_030012B0);
+                BlendColors(gUnk_085563C8, gUnk_08731CF8[u->unk18], (u16)u->unk24, 16, gUnk_030012B0);
                 w = gUnk_03002490;
                 if (w->unk24 == 256) {
                     w->unk24 = 0;

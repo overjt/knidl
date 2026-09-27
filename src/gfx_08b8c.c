@@ -63,27 +63,27 @@ extern u32 gUnk_08731BA0[][2];
 void SoftReset(u32 resetFlags);
 void RequestCopyList(struct TransferNode *node);
 void RequestCopy(u32 mode, u32 src, u32 dst, u32 size);
-void sub_08002028(void);
-void sub_0800214c(void);
-void sub_080021dc(void);
+void ResetFadeAndBlend(void);
+void BeginFastFadeInFromWhite(void);
+void BeginFastFadeOutToWhite(void);
 void ResetTasksAndOam(void);
 void RunFrameNoTasks(void);
 void RunFramesNoTasks(s32 count);
-void sub_08002de0(void);
+void RunFramesNoTasksUntilFadeDone(void);
 void sub_08002e38(u16 *p);
-void sub_080031b8(s32 id);
-void sub_08003484(void);
-void sub_08006868(void);
+void PlaySfx(s32 id);
+void StopAllSound(void);
+void DisableSerial(void);
 void StopHBlankScroll(void);
 void sub_08008c4c(s32 a0);
 void sub_08008c64(u16 a0);
 
 void sub_08008b8c(void)
 {
-    sub_08002028();
+    ResetFadeAndBlend();
     ResetTasksAndOam();
-    sub_08003484();
-    sub_08006868();
+    StopAllSound();
+    DisableSerial();
     StopHBlankScroll();
     gUnk_03000014 = 0;
     gUnk_03000FB8 = 31;
@@ -93,22 +93,22 @@ void sub_08008b8c(void)
     gUnk_03000B78 = gUnk_03000FA8 = 0;
     gUnk_03001ED8 &= 0xE0FF;
     gUnk_03001ED8 |= 0x800;
-    sub_0800214c();
+    BeginFastFadeInFromWhite();
     RunFramesNoTasks(32);
     gUnk_03000048 = 0;
     for (;;) {
         if (gUnk_03000038 & 9) {
-            sub_080031b8(102);
+            PlaySfx(102);
             break;
         }
         if (gUnk_03000038 & 2) {
-            sub_080031b8(215);
+            PlaySfx(215);
             break;
         }
         RunFrameNoTasks();
     }
-    sub_080021dc();
-    sub_08002de0();
+    BeginFastFadeOutToWhite();
+    RunFramesNoTasksUntilFadeDone();
     SoftReset(0x1C);
 }
 

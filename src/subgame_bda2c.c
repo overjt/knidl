@@ -6,7 +6,7 @@
  *
  * Head of M36, the sub-game task bank the game-mode flow module (M35)
  * starts as task type #95.  The 41-entry anchor table at 0x08756668 that
- * sub_08002e98 dispatches on Task.unk14/unk15 lives here, and every state
+ * CallTableEntry dispatches on Task.unk14/unk15 lives here, and every state
  * below is one of its entries.
  *
  * The mode is a four-slot round-robin: Task.unk34 is the slot 0-3 that the
@@ -76,23 +76,23 @@ extern u32 gUnk_087566D8[];
 
 extern void TaskYieldTrampoline(u32 frames);
 
-extern void sub_08002e98(u32 a, u32 b, u32 *c);
-extern void sub_0800214c(void);
-extern void sub_080021dc(void);
+extern void CallTableEntry(u32 a, u32 b, u32 *c);
+extern void BeginFastFadeInFromWhite(void);
+extern void BeginFastFadeOutToWhite(void);
 extern s32 TaskCreateFrom(u32 type, s32 idx);
 extern void TaskSetEntry(void *a, u32 i);
 extern void TaskMoveRelativeToBg3(void);
 extern void TaskSetFrame(s32 a);
-extern void sub_080031b8(u32 a);
+extern void PlaySfx(u32 a);
 extern void sub_080060c0(void);
 extern void sub_08009eb8(u32 a, u32 b);
 extern void RequestCopy(u32 mode, u32 src, u32 dst, u32 size);
 extern s32 QueueSprite(u32 a, u32 b, u32 c, u32 d, u32 e, u32 f);
 extern s32 DrawAffineSprite(s32 a, s16 b, s16 c, s32 d);
 extern void TaskStop(void);
-extern u32 sub_08002ee8(u32 range);
-extern void sub_08003110(u32 a);
-extern void sub_080034d0(void);
+extern u32 RandomRange(u32 range);
+extern void PlayBgm(u32 a);
+extern void StopBgm(void);
 extern void TaskSleepForever(void);
 extern void SubGameReplay(s32 a);
 extern void SubGameQuit(void);
@@ -127,21 +127,21 @@ void sub_080bda2c(void)
     sub_080bddb8();
     sub_080be04c();
     gUnk_03002490->unk28 = -3;
-    sub_08003110(0x82E);
+    PlayBgm(0x82E);
     gUnk_03002490->unk14 = 0;
-    sub_08002e98(gUnk_03002490->unk14, 2, gUnk_08756668);
+    CallTableEntry(gUnk_03002490->unk14, 2, gUnk_08756668);
     TaskSleepForever();
 }
 
 void sub_080bda78(void)
 {
-    sub_08002e98(gUnk_03002490->unk15, 2, gUnk_08756670);
+    CallTableEntry(gUnk_03002490->unk15, 2, gUnk_08756670);
     SubGameCheckEnd();
 }
 
 void sub_080bda98(void)
 {
-    sub_08002e98(gUnk_03002490->unk14, 2, gUnk_08756668);
+    CallTableEntry(gUnk_03002490->unk14, 2, gUnk_08756668);
 }
 
 void sub_080bdab4(void)
@@ -197,7 +197,7 @@ void sub_080bdab4(void)
     }
     gUnk_03002490->unk28 = 6;
     if (sub_080bdd28())
-        sub_080034d0();
+        StopBgm();
     TaskYieldTrampoline(120);
     gUnk_03002490->unk14 = 1;
     TaskSleepForever();
@@ -226,11 +226,11 @@ void sub_080bdc40(void)
         }
         gUnk_03002490->unk18 = 2;
     } else {
-        sub_080021dc();
+        BeginFastFadeOutToWhite();
         while (gUnk_03001E90 != 0)
             TaskYieldTrampoline(1);
         sub_080bde0c();
-        sub_0800214c();
+        BeginFastFadeInFromWhite();
         while (gUnk_03001E90 != 0)
             TaskYieldTrampoline(1);
     }
@@ -389,14 +389,14 @@ void sub_080be04c(void)
     mask = 0;
     for (i = 0; i <= 3; i++) {
         do {
-            r = sub_08002ee8(4);
+            r = RandomRange(4);
         } while ((mask >> r) & 1);
         mask |= 1 << r;
         arr[i] = r;
         if (r == gUnk_03002360)
             slot = i;
     }
-    r = sub_08002ee8(gUnk_030023AC);
+    r = RandomRange(gUnk_030023AC);
     for (i = 0; i <= 3; i++) {
         gUnk_02006A10[i] = arr[(slot + i) & 3];
         if (gUnk_02006A10[i] == r)
@@ -428,19 +428,19 @@ void sub_080be164(void)
     gUnk_03000B78 = 0x780000;
     gUnk_03000FA8 = 0;
     gUnk_03002490->unk14 = 0;
-    sub_08002e98(gUnk_03002490->unk14, 2, gUnk_08756678);
+    CallTableEntry(gUnk_03002490->unk14, 2, gUnk_08756678);
     TaskSleepForever();
 }
 
 void sub_080be1b0(void)
 {
-    sub_08002e98(gUnk_03002490->unk15, 2, gUnk_08756680);
+    CallTableEntry(gUnk_03002490->unk15, 2, gUnk_08756680);
     SubGameCheckEnd();
 }
 
 void sub_080be1d0(void)
 {
-    sub_08002e98(gUnk_03002490->unk14, 2, gUnk_08756678);
+    CallTableEntry(gUnk_03002490->unk14, 2, gUnk_08756678);
 }
 
 void sub_080be1ec(void)
@@ -455,14 +455,14 @@ void sub_080be1ec(void)
     sub_080be5fc();
     switch (gUnk_0200B044[gUnk_03002360]) {
     case 3:
-        sub_08003110(29);
+        PlayBgm(29);
         break;
     case 1:
     case 2:
-        sub_08003110(28);
+        PlayBgm(28);
         break;
     case 0:
-        sub_08003110(23);
+        PlayBgm(23);
         break;
     }
     x = 0;
@@ -745,12 +745,12 @@ void sub_080be774(void)
 void sub_080be7c0(u32 a)
 {
     if (gUnk_03002360 == 0)
-        sub_080031b8(a);
+        PlaySfx(a);
 }
 
 void Task_BombRallyObject(void)
 {
-    sub_08002e98(gUnk_03002490->unk73, 7, gUnk_08756688);
+    CallTableEntry(gUnk_03002490->unk73, 7, gUnk_08756688);
 }
 
 void sub_080be7fc(void)
@@ -765,7 +765,7 @@ void sub_080be7fc(void)
     else
         t->unk42 = 9;
     gUnk_03002490->unk14 = 0;
-    sub_08002e98(gUnk_03002490->unk14, 13, gUnk_087566A4);
+    CallTableEntry(gUnk_03002490->unk14, 13, gUnk_087566A4);
     TaskSleepForever();
 }
 
@@ -777,7 +777,7 @@ void sub_080be850(void)
 
     t = gUnk_03002490;
     u = &gUnk_03002790[t->unk44];
-    sub_08002e98(t->unk15, 13, gUnk_087566D8);
+    CallTableEntry(t->unk15, 13, gUnk_087566D8);
     w = gUnk_03002490;
     if (w->unk14 != 9 && u->unk28 == 6) {
         w->unk14 = 9;
@@ -787,7 +787,7 @@ void sub_080be850(void)
 
 void sub_080be8a8(void)
 {
-    sub_08002e98(gUnk_03002490->unk14, 13, gUnk_087566A4);
+    CallTableEntry(gUnk_03002490->unk14, 13, gUnk_087566A4);
 }
 
 void sub_080be8c4(void)
@@ -841,7 +841,7 @@ void sub_080be8c4(void)
                 TaskYieldTrampoline(2);
                 gUnk_03002490->unk3C++;
                 TaskYieldTrampoline(2);
-                sub_080031b8(254);
+                PlaySfx(254);
                 z = gUnk_03002490;
                 sub_080bdf3c(z->unk4C + (gUnk_08756560[z->unk1C] << 16) * z->unk43,
                              z->unk50 + (gUnk_08756564[z->unk1C] << 16),
@@ -1091,7 +1091,7 @@ void sub_080bed08(void)
         } else {
             h->unk3C++;
         }
-        sub_080031b8(254);
+        PlaySfx(254);
         z = gUnk_03002490;
         sub_080bdf3c(z->unk4C + (gUnk_08756560[z->unk1C] << 16) * z->unk43,
                      z->unk50 + (gUnk_08756564[z->unk1C] << 16),
@@ -1242,7 +1242,7 @@ void sub_080bf1cc(void)
     t = gUnk_03002490;
     t->unk15 = 5;
     gUnk_03002490->unk20 = 0;
-    n = sub_08002ee8(4);
+    n = RandomRange(4);
     u = gUnk_03002490;
     u->unk28 = (n + 1) * 20;
     if (u->unk1C == 0 || u->unk1C == 2)
@@ -1268,11 +1268,11 @@ void sub_080bf214(void)
         w = gUnk_03002490;
         w->unk28--;
         if (w->unk28 == 0) {
-            if (sub_08002ee8(8) == 0) {
+            if (RandomRange(8) == 0) {
                 gUnk_03002490->unk14 = 6;
                 TaskSetEntry(sub_080be8a8, gCurTaskIdx);
             } else {
-                n = sub_08002ee8(4);
+                n = RandomRange(4);
                 gUnk_03002490->unk28 = (n + 1) * 20;
             }
         }
@@ -1349,10 +1349,10 @@ void sub_080bf394(void)
     tbl = gUnk_087565F4[u->unk28];
     gUnk_03002490->unk15 = 7;
     k = gUnk_08756650[gUnk_02006168][u->unk2C * 3 + gUnk_0200AFF0];
-    if (gUnk_020061DC == 0 && sub_08002ee8(k) == 0) {
+    if (gUnk_020061DC == 0 && RandomRange(k) == 0) {
         u->unk20 = 6;
     } else {
-        q = sub_08002ee8(36);
+        q = RandomRange(36);
         for (i = 0; i <= 1; i++) {
             if (q < gUnk_087565E0[i + u->unk28 * 3])
                 break;
@@ -1450,7 +1450,7 @@ void sub_080bf394(void)
         } else {
             h->unk3C++;
         }
-        sub_080031b8(254);
+        PlaySfx(254);
         z = gUnk_03002490;
         sub_080bdf3c(z->unk4C + (gUnk_08756560[z->unk1C] << 16) * z->unk43,
                      z->unk50 + (gUnk_08756564[z->unk1C] << 16),

@@ -88,9 +88,9 @@ extern s16 gUnk_087562F6[];
 void TaskYieldTrampoline(u32 frames);
 void EndFrame(void);
 void RequestCopy(u32 mode, u32 src, u32 dst, u32 size);
-void sub_08002028(void);
-void sub_0800214c(void);
-void sub_080021dc(void);
+void ResetFadeAndBlend(void);
+void BeginFastFadeInFromWhite(void);
+void BeginFastFadeOutToWhite(void);
 void ResetTasksAndOam(void);
 void RunFrameNoTasks(void);
 void RunFrame(void);
@@ -99,21 +99,21 @@ void sub_08002338(void);
 void sub_08002358(void);
 void sub_08002378(void);
 void RunLinkFrame(void);
-void sub_08002e98(u32 a, u32 b, u32 *c);
-u32 sub_08002ec0(void);
-u32 sub_08002ee8(u32 range);
-s32 sub_080031b8(s32 id);
-void sub_080034d0(void);
+void CallTableEntry(u32 a, u32 b, u32 *c);
+u32 Random(void);
+u32 RandomRange(u32 range);
+s32 PlaySfx(s32 id);
+void StopBgm(void);
 void TaskSetSkipMask(u8 val, s32 idx);
 void TaskSetOthersSkipMask(u16 val, s32 idx);
 void TaskFree(s32 id);
 s32 TaskCreateFrom(u32 type, s32 idx);
 void TaskSleepForever(void);
 void TaskSetEntry(void *fn, u32 i);
-void sub_08006868(void);
-void sub_08006914(void *cmd, void *send, void *recv);
-u32 sub_080071dc(void);
-u32 sub_080072e0(void);
+void DisableSerial(void);
+void LinkMain1(void *cmd, void *send, void *recv);
+u32 ConnectLink(void);
+u32 IsLinkError(void);
 void sub_08008b8c(void);
 void sub_08008c4c(u32 a);
 void sub_08008c64(u16 a);
@@ -246,7 +246,7 @@ void sub_080b9f34(s32 a0)
 {
     s32 i;
 
-    sub_08002028();
+    ResetFadeAndBlend();
     sub_080b9e50(a0);
     if (a0 != 0 || gUnk_02007FCC != 2)
     {
@@ -270,7 +270,7 @@ void sub_080b9f34(s32 a0)
     sub_080b9ea0(a0);
     if (gUnk_02007FCC != 2)
     {
-        sub_0800214c();
+        BeginFastFadeInFromWhite();
         while (gUnk_03001E90 != 0)
             sub_080ba118();
         goto wait;
@@ -308,7 +308,7 @@ tail:
     sub_08002338();
     if (gUnk_02007FCC != 2)
     {
-        sub_080021dc();
+        BeginFastFadeOutToWhite();
         while (gUnk_03001E90 != 0)
             sub_080ba118();
     }
@@ -320,7 +320,7 @@ tail:
             gUnk_03001EEC = i;
             sub_080ba118();
         }
-        sub_08002028();
+        ResetFadeAndBlend();
         gUnk_03001ED8 |= 0x80;
         EndFrame();
     }
@@ -387,8 +387,8 @@ void sub_080ba150(void)
         }
         old = gUnk_03004D7C;
         RunFrame();
-        sub_08006914(gUnk_03004D88, gUnk_03004D90, gUnk_03004D50);
-        if (sub_080072e0() != 0)
+        LinkMain1(gUnk_03004D88, gUnk_03004D90, gUnk_03004D50);
+        if (IsLinkError() != 0)
             sub_08008b8c();
         if (old == gUnk_03004D7C && ++stall > 30)
             sub_08008b8c();
@@ -427,7 +427,7 @@ done:
         gUnk_0200EBA0 = 0;
     for (i = 4; i >= 0; i--)
         sub_080ba134();
-    sub_08006868();
+    DisableSerial();
     gUnk_03004D70 = 0;
 }
 
@@ -447,14 +447,14 @@ void SubGameMain(void)
     s32 i;
 
     ResetTasksAndOam();
-    if (gUnk_0200EC48 == 2 && sub_080071dc() != 0)
+    if (gUnk_0200EC48 == 2 && ConnectLink() != 0)
         return;
     RunFrameNoTasks();
     RunFrameNoTasks();
     if (gUnk_03002360 == 0)
     {
         for (i = 0; i < (gUnk_03000FAC & 0xFF); i++)
-            sub_08002ec0();
+            Random();
     }
     sub_08002358();
     sub_08002378();
@@ -507,7 +507,7 @@ void QuickDrawInit(void)
 void QuickDrawMain(void)
 {
     gUnk_03002490->unk04 = 0;
-    sub_08002e98(gSubGamePhase, 2, gUnk_087562E8);
+    CallTableEntry(gSubGamePhase, 2, gUnk_087562E8);
     TaskSleepForever();
 }
 
@@ -593,8 +593,8 @@ void sub_080ba688(void)
 {
     struct Task *t;
 
-    sub_080031b8(234);
-    sub_080034d0();
+    PlaySfx(234);
+    StopBgm();
     t = &gUnk_03002790[gUnk_03002490->unk28];
     t->unk1C = 1;
 }
@@ -605,7 +605,7 @@ void sub_080ba6b4(void)
 
     t->unk70 = 0;
     t->unk6E = 0;
-    TaskYieldTrampoline(sub_08002ee8(gUnk_087562F6[gUnk_02006168]) + gUnk_087562F0[gUnk_02006168]);
+    TaskYieldTrampoline(RandomRange(gUnk_087562F6[gUnk_02006168]) + gUnk_087562F0[gUnk_02006168]);
     sub_080ba63c();
 }
 

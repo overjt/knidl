@@ -94,9 +94,9 @@ extern u8 gUnk_020069F0;
 extern u8 gUnk_03001F20;
 
 void RequestCopy(u32 mode, u32 src, u32 dst, u32 size);
-s32 sub_08003110(s32 songId);
-void sub_080034d0(void);
-void sub_08003688(void);
+s32 PlayBgm(s32 songId);
+void StopBgm(void);
+void StopAllSfx(void);
 void TaskSetOthersSkipMask(u16 val, s32 idx);
 void TaskFree(s32 id);
 void sub_0800ab08(void);
@@ -118,16 +118,16 @@ void sub_080270d0(void)
 
     if (bgm == -1)
     {
-        sub_080034d0();
+        StopBgm();
     }
     else if (gUnk_087325A2[bgm] != -1)
     {
         v = gUnk_087325A2[bgm] | 0x800;
-        sub_08003110(v);
+        PlayBgm(v);
     }
     else
     {
-        sub_08003110(bgm | 0x800);
+        PlayBgm(bgm | 0x800);
     }
 }
 
@@ -139,7 +139,7 @@ void sub_08027128(void)
     if (gUnk_02007FB0 & 1)
         sub_08026998();
     if (gUnk_02007FB0 & 2)
-        sub_08003688();
+        StopAllSfx();
     if (gUnk_02007FB0 & 4)
         TaskSetOthersSkipMask(31, 63);
     gUnk_02007FB0 = 0;

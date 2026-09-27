@@ -44,15 +44,15 @@ extern u16 gUnk_080DC628[][16];
 extern struct GfxHeader *const gUnk_08731F78[];
 
 void RequestCopy(u32 mode, u32 src, u32 dst, u32 size);
-void sub_0800214c(void);
-void sub_080021dc(void);
+void BeginFastFadeInFromWhite(void);
+void BeginFastFadeOutToWhite(void);
 void ResetTasksAndOam(void);
 void sub_080022fc(void);
 void sub_08002338(void);
 void sub_08002358(void);
 void sub_08002378(void);
 void RunLinkFrame(void);
-void sub_08002e0c(void);
+void RunLinkFramesUntilFadeDone(void);
 s32 TaskCreateFrom(u32 type, s32 idx);
 void sub_08008c4c(s32 a0);
 void sub_08008c64(u16 a0);
@@ -108,15 +108,15 @@ void sub_080100ac(void)
         sub_08002358();
         sub_08002378();
         sub_080022fc();
-        sub_0800214c();
-        sub_08002e0c();
+        BeginFastFadeInFromWhite();
+        RunLinkFramesUntilFadeDone();
         gUnk_03005274 = 0x8800;
         do
             RunLinkFrame();
         while (gUnk_030023D8 == 7);
         sub_08002338();
-        sub_080021dc();
-        sub_08002e0c();
+        BeginFastFadeOutToWhite();
+        RunLinkFramesUntilFadeDone();
         gUnk_03001ED8 &= 0xDFFF;
         gUnk_03000FD4 = gUnk_03000044 = gUnk_03000B18 = gUnk_03000F7C = 0;
         gUnk_0300118C = gUnk_03000040 = gUnk_03000B08 = gUnk_03001EAC = 0;

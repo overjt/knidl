@@ -34,7 +34,7 @@ extern u8 gUnk_03001F34;
 
 void TaskYieldTrampoline(s32 frames);
 void RequestCopy(u32 mode, u32 src, u32 dst, u32 size);
-s32 sub_080031b8(s32 id);
+s32 PlaySfx(s32 id);
 void TaskSetSkipMask(u8 val, s32 idx);
 void TaskSleepForever(void);
 void TaskSetFrame(s32 a);
@@ -373,7 +373,7 @@ void sub_08039c24(void)
         sub_0805afac(gUnk_03002490->unk88->unk00, 20, 0);
         sub_0805afac(gUnk_03002490->unk88->unk00, 20, 1);
         sub_0803e650(14);
-        sub_080031b8(238);
+        PlaySfx(238);
         {
             struct Task *t = gUnk_03002490;
 

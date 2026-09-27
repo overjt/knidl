@@ -19,7 +19,7 @@ extern u32 gUnk_0874CB90[];
 extern vs16 gUnk_03004CA0[];
 
 extern void TaskYieldTrampoline(u32 a);
-extern void TaskDispatchTrampoline(void);
+extern void TaskExitTrampoline(void);
 extern void sub_080656b4(void);
 extern void sub_0806523c(void);
 extern void TaskSetMotionXFacing(s32 a, s32 b);
@@ -28,8 +28,8 @@ extern void TaskStop(void);
 extern void sub_0806cd30(void);
 extern u8 sub_08065f2c(s32 i);
 extern void sub_08064a60(void);
-extern s16 sub_080064dc(s32 base, u8 scale, u8 amount);
-extern u16 sub_080064ac(s32 base, u8 scale, u8 amount);
+extern s16 RandomSpreadFacing(s32 base, u8 scale, u8 amount);
+extern u16 RandomSpread(s32 base, u8 scale, u8 amount);
 extern s32 sub_08064c1c(u32 type, int xArg, int yArg, int prioArg);
 extern s32 sub_08064d6c(u32 type, s16 xArg, s16 yArg, u8 keepPrio);
 extern void TaskSetFrame(s32 a);
@@ -80,7 +80,7 @@ void sub_0806cd40(void)
         u = gUnk_03002490;
         u->unk18--;
     }
-    TaskDispatchTrampoline();
+    TaskExitTrampoline();
 }
 
 void sub_0806ceb8(void)
@@ -95,8 +95,8 @@ void sub_0806ceb8(void)
     u = gUnk_03002490;
     u->unk38 = gUnk_0874CB90;
     sub_08064a60();
-    gUnk_03002490->unk4C = (sub_080064dc(-8, 1, 8) + gUnk_03002490->unk48) << 16;
-    gUnk_03002490->unk50 = (sub_080064ac(-8, 1, 8) + gUnk_03002490->unk4A) << 16;
+    gUnk_03002490->unk4C = (RandomSpreadFacing(-8, 1, 8) + gUnk_03002490->unk48) << 16;
+    gUnk_03002490->unk50 = (RandomSpread(-8, 1, 8) + gUnk_03002490->unk4A) << 16;
     TaskSetMotionXFacing(0x5A5A5A5A, 0x4000);
     gUnk_03002490->unk60 = -0x4000;
     TaskSetFrameByFacing(4);
@@ -105,7 +105,7 @@ void sub_0806ceb8(void)
     TaskYieldTrampoline(2);
     gUnk_03002490->unk3C -= 2;
     TaskYieldTrampoline(1);
-    TaskDispatchTrampoline();
+    TaskExitTrampoline();
 }
 
 void sub_0806cf70(void)
@@ -133,7 +133,7 @@ void sub_0806cf70(void)
     TaskYieldTrampoline(2);
     gUnk_03002490->unk3C += 2;
     TaskYieldTrampoline(1);
-    TaskDispatchTrampoline();
+    TaskExitTrampoline();
 }
 void sub_0806cffc(s16 dx, s16 dy)
 {
@@ -195,7 +195,7 @@ void sub_0806d148(void)
     TaskYieldTrampoline(2);
     gUnk_03002490->unk3C += 2;
     TaskYieldTrampoline(1);
-    TaskDispatchTrampoline();
+    TaskExitTrampoline();
 }
 
 s32 sub_0806d1e8(s16 a, s16 b)

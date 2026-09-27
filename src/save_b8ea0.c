@@ -10,9 +10,9 @@ struct Unk02005E00
 };
 
 extern vu16 gUnk_03001EB8[];    /* per-player keys pressed */
-extern void sub_08002e98(u32 a, u32 b, u32 *c);
+extern void CallTableEntry(u32 a, u32 b, u32 *c);
 extern struct Task *gUnk_03002490;
-extern void TaskDispatchTrampoline(void);
+extern void TaskExitTrampoline(void);
 extern void sub_08009cb0(s32 a);
 extern void TaskFree(s32 a);
 extern void sub_08009e60(s32 a, s32 b);
@@ -51,7 +51,7 @@ extern u16 gUnk_08756268[];
 extern u32 gUnk_08756270[];
 extern u32 gUnk_0875628C[];
 extern void TaskSetEntry(void *fn, s32 i);
-extern s32 sub_08002f14(s16 n);
+extern s32 IntToDigits(s16 n);
 extern void RequestCopy(u32 mode, u32 src, u32 dst, u32 size);
 extern void TaskSleepForever(void);
 extern void sub_0800b3a8(void);
@@ -223,7 +223,7 @@ void sub_080b90c8(void)
 {
     if (gUnk_03002360 == gUnk_03002490->unk88->unk00)
         sub_08009cb0(gUnk_03002360);
-    TaskDispatchTrampoline();
+    TaskExitTrampoline();
 }
 void sub_080b90f8(void)
 {
@@ -502,15 +502,15 @@ void sub_080b9610(void)
 {
     gUnk_03002490->unk04 = (u32)sub_080b963c;
     sub_080b8ef4();
-    sub_08002e98(gUnk_03002490->unk14, 7, gUnk_08756270);
+    CallTableEntry(gUnk_03002490->unk14, 7, gUnk_08756270);
 }
 void sub_080b963c(void)
 {
-    sub_08002e98(gUnk_03002490->unk15, 7, gUnk_0875628C);
+    CallTableEntry(gUnk_03002490->unk15, 7, gUnk_0875628C);
 }
 void sub_080b9658(void)
 {
-    sub_08002e98(gUnk_03002490->unk14, 7, gUnk_08756270);
+    CallTableEntry(gUnk_03002490->unk14, 7, gUnk_08756270);
 }
 void sub_080b9674(void)
 {
@@ -701,7 +701,7 @@ void sub_080b99e8(s32 a, s32 b, s32 c)
 {
     if (gUnk_03002360 == gUnk_03002490->unk88->unk00)
     {
-        sub_08002f14(c);
+        IntToDigits(c);
         sub_0800b318(&gUnk_085B0AD4[gUnk_03001F08[1] * 2], 6, b * 2 + 4, 1);
         sub_0800b318(&gUnk_085B0AD4[20 + gUnk_03001F08[1] * 2], 6, b * 2 + 5, 1);
         sub_0800b318(&gUnk_085B0AD4[gUnk_03001F08[0] * 2], 7, b * 2 + 4, 1);

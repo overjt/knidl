@@ -18,9 +18,9 @@ extern u32 gUnk_08748974[];
 extern u32 gUnk_087538E0[];
 
 /* Externals */
-extern void sub_08002e98(u32 a, u32 b, u32 *c);
-extern s32 sub_080031b8(s32 id);
-extern void sub_080034f0(s32 player, s32 songId);
+extern void CallTableEntry(u32 a, u32 b, u32 *c);
+extern s32 PlaySfx(s32 id);
+extern void StopSfxOnPlayer(s32 player, s32 songId);
 extern void TaskSetSkipMask(u32 a, u32 b);
 extern void TaskFree(s32 id);
 extern void TaskMove(void);
@@ -83,7 +83,7 @@ void sub_0809fc44(void)
     t->unk0C = (u32)sub_08065438;
     t->unk42 = 11;
     gUnk_03002490->unk38 = gUnk_087538E0;
-    sub_08002e98(gUnk_03002490->unk73, 1, gUnk_08748264);
+    CallTableEntry(gUnk_03002490->unk73, 1, gUnk_08748264);
 }
 
 void sub_0809fca4(void)
@@ -150,7 +150,7 @@ u8 sub_0809fd64(void)
     }
     if (gUnk_02007D00[9] != -1)
     {
-        sub_080034f0(gUnk_02007D00[9], 0x21B);
+        StopSfxOnPlayer(gUnk_02007D00[9], 0x21B);
         gUnk_02007D00[9] = -1;
     }
     if (gUnk_03001F30 == 1)
@@ -294,7 +294,7 @@ void sub_080a0028(void)
     sp.unk0E = 16;
     sp.unk0A = 0;
     sub_08064b5c(&sp, 1);
-    sub_080031b8(0x21D);
+    PlaySfx(0x21D);
 }
 
 void sub_080a0098(void)
@@ -319,5 +319,5 @@ void sub_080a0098(void)
     (*tp)->unk34 = 90;
     r[0] = -1;
     (*tp)->unk46 = sub_08064cdc(183, 38, 10, 0);
-    r[9] = sub_080031b8(0x21B);
+    r[9] = PlaySfx(0x21B);
 }

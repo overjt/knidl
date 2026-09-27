@@ -52,9 +52,9 @@ extern u32 gUnk_085E5BC4[];
 extern u16 gUnk_030014F0[];
 
 void RequestCopy(u32 mode, u32 src, u32 dst, u32 size);
-void sub_08002028(void);
-void sub_0800214c(void);
-void sub_080021dc(void);
+void ResetFadeAndBlend(void);
+void BeginFastFadeInFromWhite(void);
+void BeginFastFadeOutToWhite(void);
 void ResetTasksAndOam(void);
 void sub_080022fc(void);
 void sub_08002338(void);
@@ -64,9 +64,9 @@ void sub_08002668(void);
 void sub_0800293c(void);
 void RunLinkFrame(void);                                     /* run one frame */
 void RunLinkFrames(s32 count);
-void sub_08002e0c(void);
-s32 sub_08003110(s32 songId);
-s32 sub_080031b8(s32 id);                                    /* play a sound effect */
+void RunLinkFramesUntilFadeDone(void);
+s32 PlayBgm(s32 songId);
+s32 PlaySfx(s32 id);                                    /* play a sound effect */
 s32 TaskCreateFrom(u32 type, s32 idx);                         /* spawn a task */
 void sub_08008c4c(s32 a0);                                   /* load palette set */
 void sub_08008c64(u16 a0);                                   /* load screen graphics */
@@ -102,8 +102,8 @@ void GameOverMain(void)
         sub_080cb058();
     }
     sub_08002338();
-    sub_080021dc();
-    sub_08002e0c();
+    BeginFastFadeOutToWhite();
+    RunLinkFramesUntilFadeDone();
     if (gUnk_030023D8 == 5) {
         gUnk_02007FC0 = 1;
         sub_0800b514();
@@ -135,9 +135,9 @@ void sub_080cad8c(void)
     sub_08002358();
     sub_08002378();
     sub_080022fc();
-    sub_08003110(16);
-    sub_08002028();
-    sub_0800214c();
+    PlayBgm(16);
+    ResetFadeAndBlend();
+    BeginFastFadeInFromWhite();
     while (gUnk_03000F8C != 0) {
         gUnk_03000F8C -= 0x78000;
         if (gUnk_03000B78 != 180 << 16) {
@@ -183,9 +183,9 @@ void sub_080caeec(void)
     sub_080022fc();
     gUnk_03001ED8 &= 0xE0FF;
     gUnk_03001ED8 |= 0x1D00;
-    sub_08003110(16);
-    sub_08002028();
-    sub_0800214c();
+    PlayBgm(16);
+    ResetFadeAndBlend();
+    BeginFastFadeInFromWhite();
     while (gUnk_03000F8C != 0) {
         gUnk_03000F8C -= 0x78000;
         if (gUnk_03000B78 != 180 << 16) {
@@ -237,10 +237,10 @@ void sub_080cb058(void)
     DrawClockToBgMap(gUnk_02006068, 22, 18);
     gUnk_03001ED8 &= 0xE0FF;
     gUnk_03001ED8 |= 0x900;
-    sub_08003110(16);
-    sub_08002028();
-    sub_0800214c();
-    sub_08002e0c();
+    PlayBgm(16);
+    ResetFadeAndBlend();
+    BeginFastFadeInFromWhite();
+    RunLinkFramesUntilFadeDone();
     sub_080cb2b0();
     do {
         RunLinkFrame();
@@ -257,7 +257,7 @@ void sub_080cb0e8(void)
 u8 sub_080cb108(void)
 {
     if (gUnk_03001EB8[0] & 0xC0) {
-        sub_080031b8(101);
+        PlaySfx(101);
         return 1;
     }
     return 0;
@@ -269,7 +269,7 @@ u8 sub_080cb12c(void)
 
     for (i = 0; i < gUnk_030023AC; i++) {
         if (gUnk_03001EB8[i] & 9) {
-            sub_080031b8(102);
+            PlaySfx(102);
             gGameOverDone = 1;
             return 1;
         }

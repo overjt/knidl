@@ -35,7 +35,7 @@ extern s16 gUnk_02005588[];             /* per-player health (M02's HUD) */
 
 void TaskYieldTrampoline(s32 frames);
 /* task / sprite services (landed prototypes) */
-void sub_08002e98(u32 idx, u32 count, void (**fns)(void));   /* if (idx < count) fns[idx](); */
+void CallTableEntry(u32 idx, u32 count, void (**fns)(void));   /* if (idx < count) fns[idx](); */
 void TaskSleepForever(void);
 void TaskSetEntry(void *a, u32 i);
 void TaskSetFrame(s32 a);
@@ -281,19 +281,19 @@ void sub_0804fe68(void)
         gUnk_03002490->unk88->unk68 = 0;
         gUnk_03002490->unk88->unk6C = 0;
     }
-    sub_08002e98(gUnk_03002490->unk73, 4, gUnk_0873B6AC);
+    CallTableEntry(gUnk_03002490->unk73, 4, gUnk_0873B6AC);
 }
 
 void sub_0804fee8(void)
 {
     gUnk_03002490->unk88->unk05 = gUnk_03002490->unk88->unk04;
     gUnk_03002490->unk88->unk04 = 13;
-    sub_08002e98(gUnk_03002490->unk73, 4, gUnk_0873B6AC);
+    CallTableEntry(gUnk_03002490->unk73, 4, gUnk_0873B6AC);
 }
 
 void sub_0804ff1c(void)
 {
-    sub_08002e98(gUnk_03002490->unk73, 4, gUnk_0873B6BC);
+    CallTableEntry(gUnk_03002490->unk73, 4, gUnk_0873B6BC);
     sub_080506dc();
     {
         struct Task *t = gUnk_03002490;

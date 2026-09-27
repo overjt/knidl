@@ -10,26 +10,26 @@
  *
  * Contents in ROM order.  Two functions have no symbols.csv entry of their
  * own (lesson 2.13 dead exports hidden inside a neighbour's size):
- * sub_08007004 lives inside the declared 0x21C of DoRecv, and
- * sub_080070e8 inside the declared 0x4A of sub_080070b8 -- see the report;
- * symbols.csv's sub_08007102/0x22 entry is a mis-split of sub_080070e8.
+ * DoSend lives inside the declared 0x21C of DoRecv, and
+ * SendRecvDone inside the declared 0x4A of StopTimer -- see the report;
+ * symbols.csv's sub_08007102/0x22 entry is a mis-split of SendRecvDone.
  *
- *   sub_08006d18  serial IRQ: stop the timeout timer, re-arm SIOCNT.
+ *   Timer3Intr  serial IRQ: stop the timeout timer, re-arm SIOCNT.
  *   SerialCB  VBlank IRQ for the link session: snapshots SIOCNT, then
  *                 either runs the transfer step (state 4) or the connect/ID
  *                 handshake (state 2).            [src/early_6d28.c]
- *   sub_08006e8c  re-arm the SIOCNT start bit.
+ *   StartTransfer  re-arm the SIOCNT start bit.
  *   DoRecv  per-frame receive step: copies the four SIOMULTI words to
  *                 gUnk_03004D38 and folds them into the per-player buffer.
  *                                                 [src/early_6e9c.c]
- *   sub_08007004  send step: pushes the next ring slot into SIOMLT_SEND.
- *   sub_080070b8  stop the link timeout timer (TM3).
- *   sub_080070e8  end-of-round bookkeeping / re-arm.
- *   sub_08007124  clear the 4x30 halfword ring at +0x1C and its two cursors.
- *   sub_08007174  clear the 4x4x30 halfword buffer at +0x110 and its cursors.
- *   sub_080071dc  blocking link bring-up loop; returns 1 on timeout (60
+ *   DoSend  send step: pushes the next ring slot into SIOMLT_SEND.
+ *   StopTimer  stop the link timeout timer (TM3).
+ *   SendRecvDone  end-of-round bookkeeping / re-arm.
+ *   ResetSendBuffer  clear the 4x30 halfword ring at +0x1C and its two cursors.
+ *   ResetRecvBuffer  clear the 4x4x30 halfword buffer at +0x110 and its cursors.
+ *   ConnectLink  blocking link bring-up loop; returns 1 on timeout (60
  *                 frames without reaching state 4), 0 on success.
- *   sub_080072e0  poll gUnk_03004D70 against the mask in gUnk_03004D24.
+ *   IsLinkError  poll gUnk_03004D70 against the mask in gUnk_03004D24.
  *
  * gLink is the link work area (0x4D2 bytes, ending just below
  * gUnk_03005274).  Byte offsets used here:
@@ -61,7 +61,7 @@ struct Link {
 
 extern u8 gLink[];      /* link work area */
 extern vu16 gUnk_03004D38[];    /* receive staging, 4 halfwords */
-extern u16 gUnk_03004D88[];     /* send/receive mailbox (sub_08006914) */
+extern u16 gUnk_03004D88[];     /* send/receive mailbox (LinkMain1) */
 extern u16 gUnk_03004D90[4];
 extern u16 gUnk_03004D50[3][4];
 extern u32 gUnk_03004D24;
@@ -91,20 +91,20 @@ extern vu16 gUnk_04000128;      /* REG_SIOCNT */
 extern vu16 gUnk_0400012A;      /* REG_SIOMLT_SEND */
 extern vu16 gUnk_04000208;      /* REG_IME */
 
-void sub_08006724(void);
-void sub_08006868(void);
-void sub_08006914(u16 *a, u16 *b, u16 *c);
+void EnableSerial(void);
+void DisableSerial(void);
+void LinkMain1(u16 *a, u16 *b, u16 *c);
 void RunFrame(void);
 
-void sub_08006d18(void);
+void Timer3Intr(void);
 void SerialCB(void);
-void sub_08006e8c(void);
+void StartTransfer(void);
 void DoRecv(void);
-void sub_08007004(void);
-void sub_080070b8(void);
-void sub_080070e8(void);
+void DoSend(void);
+void StopTimer(void);
+void SendRecvDone(void);
 
-void sub_08007004(void)
+void DoSend(void)
 {
     if (gLink[24] == 4) {
         gUnk_0400012A = *(u16 *)&gLink[22];
@@ -132,7 +132,7 @@ void sub_08007004(void)
     }
 }
 
-void sub_080070b8(void)
+void StopTimer(void)
 {
     if (gLink[0] != 0) {
         gUnk_0400010E &= 0xFF7F;
@@ -140,7 +140,7 @@ void sub_080070b8(void)
     }
 }
 
-void sub_080070e8(void)
+void SendRecvDone(void)
 {
     if (gLink[25] == 4) {
         if ((u32)gLink == 0x53F3) {
@@ -154,7 +154,7 @@ void sub_080070e8(void)
     }
 }
 
-void sub_08007124(void)
+void ResetSendBuffer(void)
 {
     u8 *buf;
     u16 fill;
@@ -175,7 +175,7 @@ void sub_08007124(void)
     } while (i <= 3);
 }
 
-void sub_08007174(void)
+void ResetRecvBuffer(void)
 {
     u8 *buf;
     u16 fill;
@@ -204,16 +204,16 @@ void sub_08007174(void)
     } while (k <= 3);
 }
 
-u32 sub_080071dc(void)
+u32 ConnectLink(void)
 {
     gUnk_03004D78 = 0;
-    sub_08006868();
+    DisableSerial();
     gUnk_03001EF8 = (gUnk_04000208 &= 0xFFFE, gUnk_04000208);
     gUnk_030004B0[0] = SerialCB;
-    gUnk_030004B0[1] = sub_08006d18;
+    gUnk_030004B0[1] = Timer3Intr;
     gUnk_04000208 |= 1;
     gUnk_03001EF8 = gUnk_04000208;
-    sub_08006724();
+    EnableSerial();
     gLink[1] = 2;
     gUnk_0200EBA0 = 1;
     gUnk_03004D70 = 0;
@@ -229,14 +229,14 @@ u32 sub_080071dc(void)
                 *(u8 *)gUnk_03004D88 = 1;
             break;
         }
-        sub_08006914(gUnk_03004D88, gUnk_03004D90, gUnk_03004D50[0]);
+        LinkMain1(gUnk_03004D88, gUnk_03004D90, gUnk_03004D50[0]);
         if (++gUnk_03004D78 > 59)
             return 1;
     }
     return 0;
 }
 
-u32 sub_080072e0(void)
+u32 IsLinkError(void)
 {
     if ((gUnk_03004D70 & gUnk_03004D24) != 0)
         return 1;

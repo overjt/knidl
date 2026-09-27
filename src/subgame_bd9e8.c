@@ -22,7 +22,7 @@ extern u8 gUnk_0200AFF0;
 extern u8 gUnk_0200B044[];
 extern u32 gUnk_08756568[];
 
-void sub_08002e98(u32 a, u32 b, u32 *c);
+void CallTableEntry(u32 a, u32 b, u32 *c);
 void TaskSleepForever(void);
 
 void BombRallyInit(void)
@@ -37,6 +37,6 @@ void BombRallyInit(void)
 
 void BombRallyMain(void)
 {
-    sub_08002e98(gSubGamePhase, 2, gUnk_08756568);
+    CallTableEntry(gSubGamePhase, 2, gUnk_08756568);
     TaskSleepForever();
 }

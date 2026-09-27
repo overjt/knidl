@@ -68,15 +68,15 @@ extern u32 gUnk_08755440[];
 extern u32 gUnk_0875546C[];
 extern u32 gUnk_08755484[];
 
-void TaskDispatchTrampoline(void);
+void TaskExitTrampoline(void);
 void TaskYieldTrampoline(s32 frames);
 void RequestCopy(u32 mode, u32 src, u32 dst, u32 size);
 s32 QueueSprite(u32 a, u32 b, u32 c, u32 d, u32 e, s16 f);  /* sprite draw; callers pass f sign-extended (lsls/asrs #16), the early_1518 definition says u16 (lesson 3.428) */
-void sub_08002e98(u32 idx, u32 count, void (**fns)(void));   /* if (idx < count) fns[idx](); */
-u32 sub_08002ee8(u32 range);                                 /* random 0 .. range-1 */
-void sub_08003014(u16 *src, u16 *dst, s32 ratio, s32 count, u16 *out);
-s32 sub_080031b8(s32 id);                                    /* play a sound effect */
-void sub_08003770(u16 volume);
+void CallTableEntry(u32 idx, u32 count, void (**fns)(void));   /* if (idx < count) fns[idx](); */
+u32 RandomRange(u32 range);                                 /* random 0 .. range-1 */
+void BlendColors(u16 *src, u16 *dst, s32 ratio, s32 count, u16 *out);
+s32 PlaySfx(s32 id);                                    /* play a sound effect */
+void SetBgmVolume(u16 volume);
 s32 TaskCreateFrom(u32 type, s32 idx);                         /* spawn a task */
 void TaskMove(void);
 u32 TaskIsOnScreen(void);
@@ -107,9 +107,9 @@ void sub_080c9004(void)
         sub_080c9040();
         sub_080c90c8();
     } else {
-        sub_08002e98(gUnk_03002490->unk73, 12, gUnk_087573F4);
+        CallTableEntry(gUnk_03002490->unk73, 12, gUnk_087573F4);
     }
-    TaskDispatchTrampoline();
+    TaskExitTrampoline();
 }
 
 /* Task type #101's graphics. */
@@ -199,36 +199,36 @@ void sub_080c9114(void)
     gUnk_03002490->unk3C = 23;
     TaskYieldTrampoline(3);
     TaskStop();
-    sub_080031b8(238);
+    PlaySfx(238);
     gUnk_03002490->unk0C = (u32)sub_080c9418;
     gUnk_03002490->unk4C = (gUnk_03002490->unk48 - gUnk_03002348 + (gUnk_03000B78 >> 16)) << 16;
     gUnk_03002490->unk50 = (gUnk_03002490->unk4A - gUnk_030023E4 + (gUnk_03000FA8 >> 16)) << 16;
     gUnk_03002490->unk6C = 0;
     do {
-        sub_08003014(gUnk_0859A0B0, gUnk_0859A0D0, 0, 16,
+        BlendColors(gUnk_0859A0B0, gUnk_0859A0D0, 0, 16,
                      gUnk_03001470 + ((gUnk_03002490->unk40 >> 12) + 1) * 16);
         TaskYieldTrampoline(5);
-        sub_08003014(gUnk_0859A0B0, gUnk_0859A0D0, 255, 16,
+        BlendColors(gUnk_0859A0B0, gUnk_0859A0D0, 255, 16,
                      gUnk_03001470 + ((gUnk_03002490->unk40 >> 12) + 1) * 16);
         TaskYieldTrampoline(5);
         gUnk_03002490->unk6C++;
     } while ((s16)gUnk_03002490->unk6C <= 11);
     gUnk_03002490->unk6C = 0;
     do {
-        sub_08003014(gUnk_0859A0B0, gUnk_0859A0D0, 0, 16,
+        BlendColors(gUnk_0859A0B0, gUnk_0859A0D0, 0, 16,
                      gUnk_03001470 + ((gUnk_03002490->unk40 >> 12) + 1) * 16);
         TaskYieldTrampoline(4);
-        sub_08003014(gUnk_0859A0B0, gUnk_0859A0D0, 255, 16,
+        BlendColors(gUnk_0859A0B0, gUnk_0859A0D0, 255, 16,
                      gUnk_03001470 + ((gUnk_03002490->unk40 >> 12) + 1) * 16);
         TaskYieldTrampoline(4);
         gUnk_03002490->unk6C++;
     } while ((s16)gUnk_03002490->unk6C <= 11);
     gUnk_03002490->unk6C = 0;
     do {
-        sub_08003014(gUnk_0859A0B0, gUnk_0859A0D0, 0, 16,
+        BlendColors(gUnk_0859A0B0, gUnk_0859A0D0, 0, 16,
                      gUnk_03001470 + ((gUnk_03002490->unk40 >> 12) + 1) * 16);
         TaskYieldTrampoline(3);
-        sub_08003014(gUnk_0859A0B0, gUnk_0859A0D0, 255, 16,
+        BlendColors(gUnk_0859A0B0, gUnk_0859A0D0, 255, 16,
                      gUnk_03001470 + ((gUnk_03002490->unk40 >> 12) + 1) * 16);
         TaskYieldTrampoline(3);
         gUnk_03002490->unk6C++;
@@ -282,7 +282,7 @@ void sub_080c94cc(void)
     gUnk_03002490->unk28 = 1;
     gUnk_03002490->unk4C = (gUnk_03002348 + 255) << 16;
     gUnk_03002490->unk50 = (gUnk_030023E4 + 80) << 16;
-    sub_080031b8(290);
+    PlaySfx(290);
     gUnk_03002490->unk3C = 5;
     gUnk_03002490->unk54 = -0x80000;
     gUnk_03002490->unk58 = 0x10000;
@@ -307,7 +307,7 @@ void sub_080c94cc(void)
     TaskYieldTrampoline(200);
     TaskYieldTrampoline(97);
     TaskYieldTrampoline(210);
-    sub_080031b8(291);
+    PlaySfx(291);
     gUnk_03002490->unk4C = (gUnk_03002348 - 16) << 16;
     gUnk_03002490->unk50 = (gUnk_030023E4 + 176) << 16;
     gUnk_03002490->unk54 = 0x80000;
@@ -383,7 +383,7 @@ void sub_080c97a0(void)
         gUnk_03002490->unk34 -= gUnk_03002490->unk24;
         if (gUnk_03002490->unk34 < 0)
             gUnk_03002490->unk34 = 0;
-        sub_08003770(gUnk_03002490->unk34);
+        SetBgmVolume(gUnk_03002490->unk34);
     }
 }
 
@@ -395,10 +395,10 @@ void sub_080c9884(void)
     gUnk_03002490->unk42 = 12;
     gUnk_03002490->unk38 = gUnk_0874C500;
     gUnk_03002490->unk40 = 0;
-    gUnk_03002490->unk3C = sub_08002ee8(4) + 4;
+    gUnk_03002490->unk3C = RandomRange(4) + 4;
     gUnk_03002490->unk58 = 0x40000;
     TaskYieldTrampoline(24);
-    TaskDispatchTrampoline();
+    TaskExitTrampoline();
 }
 
 /* Task type #101 variant 5: a sprite drawn at another task's position
@@ -461,19 +461,19 @@ void sub_080c9a28(void)
     TaskYieldTrampoline(99);
     gUnk_03002490->unk6C = 0;
     do {
-        sub_08003014(gUnk_085E2920, gUnk_085E2B20, (u16)((s16)gUnk_03002490->unk6C * 32), 128, gUnk_03001370);
+        BlendColors(gUnk_085E2920, gUnk_085E2B20, (u16)((s16)gUnk_03002490->unk6C * 32), 128, gUnk_03001370);
         TaskYieldTrampoline(1);
         gUnk_03002490->unk6C++;
     } while ((s16)gUnk_03002490->unk6C <= 7);
     gUnk_03002490->unk6C = 0;
     do {
-        sub_08003014(gUnk_085E2B20, gUnk_085E2920, (u16)((s16)gUnk_03002490->unk6C * 32), 128, gUnk_03001370);
+        BlendColors(gUnk_085E2B20, gUnk_085E2920, (u16)((s16)gUnk_03002490->unk6C * 32), 128, gUnk_03001370);
         TaskYieldTrampoline(1);
         gUnk_03002490->unk6C++;
     } while ((s16)gUnk_03002490->unk6C <= 7);
     gUnk_03002490->unk6C = 0;
     do {
-        sub_08003014(gUnk_085E2920, gUnk_085E2A20, (u16)((s16)gUnk_03002490->unk6C * 16), 128, gUnk_03001370);
+        BlendColors(gUnk_085E2920, gUnk_085E2A20, (u16)((s16)gUnk_03002490->unk6C * 16), 128, gUnk_03001370);
         TaskYieldTrampoline(1);
         gUnk_03002490->unk6C++;
     } while ((s16)gUnk_03002490->unk6C <= 15);
@@ -491,7 +491,7 @@ void sub_080c9a28(void)
         gUnk_03002790[gUnk_03002490->unk46].unk74 = gUnk_03002490->unk6C;
         gUnk_03002490->unk6C++;
     } while ((s16)gUnk_03002490->unk6C <= 10);
-    sub_080031b8(288);
+    PlaySfx(288);
     gUnk_03002490->unk58 = -0x30000;
     TaskYieldTrampoline(16);
     gUnk_03002490->unk58 = -0x20000;
@@ -588,7 +588,7 @@ void sub_080c9d10(void)
         TaskYieldTrampoline(1);
         gUnk_03002490->unk6C++;
     } while ((s16)gUnk_03002490->unk6C <= 5);
-    TaskDispatchTrampoline();
+    TaskExitTrampoline();
 }
 
 /* Task type #101 variant 9: one of eleven sprites that burst out of the
@@ -780,7 +780,7 @@ void sub_080c9e8c(void)
         TaskYieldTrampoline(8);
         break;
     }
-    TaskDispatchTrampoline();
+    TaskExitTrampoline();
 }
 
 /* Task type #101 variant 10: one of sixteen falling sprites; Task.unk74
@@ -896,7 +896,7 @@ void sub_080ca344(void)
 void sub_080ca570(void)
 {
     gUnk_03002490->unk38 = gUnk_0874C44C;
-    gUnk_03002490->unk3C = sub_08002ee8(2) * 2 + 4;
+    gUnk_03002490->unk3C = RandomRange(2) * 2 + 4;
     gUnk_03002490->unk50 = -0x80000;
     gUnk_03002490->unk58 = 0x8000;
     gUnk_03002490->unk6C = 0;
@@ -930,7 +930,7 @@ void sub_080ca570(void)
 void sub_080ca640(void)
 {
     gUnk_03002490->unk38 = gUnk_0874C500;
-    gUnk_03002490->unk3C = sub_08002ee8(4) + 4;
+    gUnk_03002490->unk3C = RandomRange(4) + 4;
     gUnk_03002490->unk50 = -0x80000;
     gUnk_03002490->unk58 = 0x4000;
     gUnk_03002490->unk6C = 0;

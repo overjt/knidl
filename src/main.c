@@ -37,7 +37,7 @@ void sub_0805b110(void);
 void sub_08007f9c(void);
 void GameOverMain(void);
 void SubGameMain(void);
-void sub_080022bc(void);
+void ResetPlayTime(void);
 void sub_08022f50(void);
 void sub_08008a00(void);
 void EndingMain(void);
@@ -142,7 +142,7 @@ void AgbMain(void)
                 gUnk_02007D48[i] = 1;
                 gUnk_02005588[i] = 0;
             }
-            sub_080022bc();
+            ResetPlayTime();
             sub_08022f50();
             while (gUnk_030023D8 == 20)
                 sub_08008a00();

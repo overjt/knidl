@@ -20,7 +20,7 @@ extern u32 gUnk_087537E8[];
 /* Externals */
 extern void TaskMove(void);
 extern void TaskDrawWorld(void);
-extern u32 sub_08002ee8(u32 range);
+extern u32 RandomRange(u32 range);
 extern void TaskSetMotionXFacing(s32 a, s32 b);
 extern void TaskSetFrame(s32 a);
 extern void TaskYieldTrampoline(u32 frames);
@@ -82,7 +82,7 @@ void sub_080970c4(void)
     u = gUnk_03002490;
     u->unk38 = gUnk_087537E8;
     u->unk40 = gUnk_0200D120[u->unk44 - 32].unk20;
-    if (sub_08002ee8(2) != 0)
+    if (RandomRange(2) != 0)
         gUnk_03002490->unk43 = 1;
     else
         gUnk_03002490->unk43 = -1;
@@ -91,7 +91,7 @@ void sub_080970c4(void)
     v->unk04 = (u32)sub_080974c8;
     while (1) {
         gUnk_03002490->unk3C = 0xFFFF;
-        TaskYieldTrampoline(sub_08002ee8(8));
+        TaskYieldTrampoline(RandomRange(8));
         w = gUnk_03002490;
         switch (w->unk73) {
         case 0:
@@ -144,11 +144,11 @@ void sub_080970c4(void)
         }
         ia = gUnk_03002490->unk44;
         pa = gUnk_0200D120[ia - 32].unk48;
-        n = sub_08002ee8(abs(pa[4] - pa[2]) >> 1);
+        n = RandomRange(abs(pa[4] - pa[2]) >> 1);
         ib = gUnk_03002490->unk44;
         x = x + n * gUnk_03002790[ib].unk43;
         pb = gUnk_0200D120[ib - 32].unk48;
-        y = y + sub_08002ee8(abs(pb[5] - pb[3]) >> 1);
+        y = y + RandomRange(abs(pb[5] - pb[3]) >> 1);
         z = gUnk_03002490;
         z->unk4C = x << 16;
         z->unk50 = y << 16;

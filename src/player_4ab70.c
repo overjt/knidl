@@ -19,7 +19,7 @@
  * gUnk_03001ED8 to windowed BG1-BG3, remembers the height Task.unk50 in
  * Task.unk2C, shakes the screen (sub_080261d4(5), sub_08027204(2)),
  * flashes the player's palette gUnk_080DC628[player] towards
- * gUnk_082030B8 twice (sub_08003014, presets 51/52), waits for the
+ * gUnk_082030B8 twice (BlendColors, presets 51/52), waits for the
  * blast task through PlayerState.unk16 and TaskSetSkipMask, restores the
  * default script gUnk_0873CB1C and resets the HUD ability panel
  * (sub_0800a008(0, -1, player)).  Its handler sub_0804b474 fades the
@@ -58,8 +58,8 @@ extern u32 gUnk_0873CB1C[];
 extern u16 gUnk_08203098[];
 
 void TaskYieldTrampoline(s32 frames);
-void sub_08003014(u16 *src, u16 *dst, s32 ratio, s32 count, u16 *out);
-s32 sub_080031b8(s32 id);
+void BlendColors(u16 *src, u16 *dst, s32 ratio, s32 count, u16 *out);
+s32 PlaySfx(s32 id);
 void TaskSetSkipMask(u8 val, s32 idx);
 void TaskSleepForever(void);
 void TaskSetFrame(s32 a);
@@ -237,7 +237,7 @@ void sub_0804af54(void)
     gUnk_03002490->unk73 = 0;
     sub_080261d4(5);
     sub_08027204(2);
-    sub_080031b8(248);
+    PlaySfx(248);
     gUnk_03002490->unk6C = 0;
     do {
         TaskSetFrame(0xDE7);
@@ -263,7 +263,7 @@ void sub_0804af54(void)
     gUnk_03002490->unk88->unk42 |= 16;
     gUnk_03002490->unk6C = 0;
     do {
-        sub_08003014(gUnk_080DC628[gUnk_03002490->unk88->unk00], gUnk_082030B8,
+        BlendColors(gUnk_080DC628[gUnk_03002490->unk88->unk00], gUnk_082030B8,
                      (u16)gUnk_03002490->unk28, 16,
                      (u16 *)(gUnk_03001470 + ((gUnk_03002490->unk40 >> 12) << 5)));
         gUnk_03002490->unk28 += 85;
@@ -282,7 +282,7 @@ void sub_0804af54(void)
     gUnk_03002490->unk88->unk42 |= 16;
     gUnk_03002490->unk6C = 0;
     do {
-        sub_08003014(gUnk_080DC628[gUnk_03002490->unk88->unk00], gUnk_082030B8,
+        BlendColors(gUnk_080DC628[gUnk_03002490->unk88->unk00], gUnk_082030B8,
                      (u16)gUnk_03002490->unk28, 16,
                      (u16 *)(gUnk_03001470 + ((gUnk_03002490->unk40 >> 12) << 5)));
         gUnk_03002490->unk28 += 85;
@@ -374,7 +374,7 @@ void sub_0804b474(void)
 
     switch (t->unk73) {
     case 1:
-        sub_08003014(gUnk_080DC628[t->unk88->unk00], gUnk_08203098, (u16)t->unk28, 16,
+        BlendColors(gUnk_080DC628[t->unk88->unk00], gUnk_08203098, (u16)t->unk28, 16,
                      (u16 *)(gUnk_03001470 + ((t->unk40 >> 12) << 5)));
         {
             struct Task *u = gUnk_03002490;
@@ -388,7 +388,7 @@ void sub_0804b474(void)
         }
         break;
     case 2:
-        sub_08003014(gUnk_080DC628[t->unk88->unk00], gUnk_08203098, (u16)t->unk28, 16,
+        BlendColors(gUnk_080DC628[t->unk88->unk00], gUnk_08203098, (u16)t->unk28, 16,
                      (u16 *)(gUnk_03001470 + ((t->unk40 >> 12) << 5)));
         {
             struct Task *u = gUnk_03002490;

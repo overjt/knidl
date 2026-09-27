@@ -73,8 +73,8 @@ extern void TaskYieldTrampoline(u32 a);
 extern void RequestCopy(u32 mode, void *src, void *dst, u32 size);
 extern void QueueSprite(u32 a, s32 b, u32 c, u32 d, s16 e, s16 f);
 extern s32 DrawAffineSprite(s32 a, s16 b, s16 c, s32 d);
-extern void sub_08002e98(u32 a, u32 b, u32 *c);
-extern void sub_080031b8(s32 a);
+extern void CallTableEntry(u32 a, u32 b, u32 *c);
+extern void PlaySfx(s32 a);
 extern void TaskMove(void);
 extern void TaskSleepForever(void);
 extern void TaskSetEntry(u32 fn, u32 a);
@@ -361,7 +361,7 @@ void sub_080703a8(void)
             if (u->unk34 == 1)
             {
                 if (gUnk_02006094 == -1)
-                    sub_080031b8(153);
+                    PlaySfx(153);
                 gUnk_02006094 = 0;
             }
             sub_080261d4(4);
@@ -501,12 +501,12 @@ void sub_08070648(void)
         v->unk43 = gUnk_0873FAE8[gUnk_03002790[i].unk74];
     w = gUnk_03002490;
     w->unk14 = 2;
-    sub_08002e98(gUnk_03002490->unk14, 7, gUnk_0873FB44);
+    CallTableEntry(gUnk_03002490->unk14, 7, gUnk_0873FB44);
 }
 
 void sub_0807073c(void)
 {
-    sub_08002e98(gUnk_03002490->unk15, 7, gUnk_0873FB60);
+    CallTableEntry(gUnk_03002490->unk15, 7, gUnk_0873FB60);
 }
 
 void sub_08070758(void)
@@ -515,7 +515,7 @@ void sub_08070758(void)
 
     t = gUnk_03002490;
     t->unk00 = (u32)TaskMove;
-    sub_08002e98(t->unk14, 7, gUnk_0873FB44);
+    CallTableEntry(t->unk14, 7, gUnk_0873FB44);
 }
 
 void sub_0807077c(void)

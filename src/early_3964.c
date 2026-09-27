@@ -73,8 +73,8 @@ extern u32 gUnk_030004B0[];
 extern vu16 gUnk_03000018;
 extern vu16 gUnk_03001EF8;
 
-extern void sub_08003484(void);
-extern void sub_08003840(void);
+extern void StopAllSound(void);
+extern void DisableSoundDriver(void);
 extern void sub_08004068(void);
 extern void MultiBootInit(struct MultiBootParam *);
 extern u32 MultiBootMain(struct MultiBootParam *);
@@ -336,8 +336,8 @@ next:
     if (gUnk_0200EBC0.unk2B == 1 && gUnk_0200EBC0.unk0A == 16 && gMultiBootParam.probe_count == 0
      && (gMultiBootParam.client_bit & 14) != 0)
     {
-        sub_08003484();
-        sub_08003840();
+        StopAllSound();
+        DisableSoundDriver();
         gUnk_0200EBC0.unk0A = 17;
         gUnk_0200EBC0.unk2A = 2;
     }

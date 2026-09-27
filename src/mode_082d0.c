@@ -6,7 +6,7 @@
  *
  * Task type #265, the two decorations of the state-13 title screen:
  * sub_080082d0 spawns them, sub_08008348 is the body (it dispatches one of
- * two scripts from the anchor table at 0x0873078C through sub_08002e98),
+ * two scripts from the anchor table at 0x0873078C through CallTableEntry),
  * and sub_080083b0/sub_08008460/sub_080084dc/sub_08008558 are the four
  * script bodies (a sprite pair, a BG scroll plus palette cycle, a sprite
  * loop and a palette pulse). */
@@ -34,8 +34,8 @@ extern u32 gUnk_08756054[];
 void TaskYieldTrampoline(u32 frames);
 s32 QueueSprite(u32 a, u32 b, u32 c, u32 d, u32 e, u16 f);
 s32 DrawAffineSprite(s32 a, s16 b, s16 c, s32 d);
-void sub_08002e98(u32 idx, u32 count, void (**fns)(void));
-void sub_08003014(u16 *src, u16 *dst, s32 ratio, s32 count, u16 *out);
+void CallTableEntry(u32 idx, u32 count, void (**fns)(void));
+void BlendColors(u16 *src, u16 *dst, s32 ratio, s32 count, u16 *out);
 s32 TaskCreateFrom(u32 type, s32 idx);
 void TaskSleepForever(void);
 void sub_08008394(void);
@@ -75,13 +75,13 @@ void sub_08008348(void)
         t->unk14 = 0;
     else
         t->unk14 = 1;
-    sub_08002e98(gUnk_03002490->unk14, 2, gUnk_0873078C);
+    CallTableEntry(gUnk_03002490->unk14, 2, gUnk_0873078C);
     TaskSleepForever();
 }
 
 void sub_08008394(void)
 {
-    sub_08002e98(gUnk_03002490->unk15, 2, gUnk_08730794);
+    CallTableEntry(gUnk_03002490->unk15, 2, gUnk_08730794);
 }
 
 void sub_080083b0(void)
@@ -112,7 +112,7 @@ void sub_08008460(void)
             gUnk_0300117C -= 0x2000000;
     }
     if (gUnk_03005280 == 2) {
-        sub_08003014(gUnk_085B6F98, gUnk_085B6F98 + 16, gUnk_0873079C[gUnk_03002490->unk2C], 16, gUnk_03001470);
+        BlendColors(gUnk_085B6F98, gUnk_085B6F98 + 16, gUnk_0873079C[gUnk_03002490->unk2C], 16, gUnk_03001470);
         gUnk_03002490->unk2C = (gUnk_03002490->unk2C + 1) & 15;
     }
 }
@@ -149,7 +149,7 @@ void sub_08008558(void)
         } else {
             r <<= 6;
         }
-        sub_08003014(gUnk_085B6E78[gUnk_02006168][0], gUnk_085B6E78[gUnk_02006168][2], (u16)r, 16, gUnk_03001490);
+        BlendColors(gUnk_085B6E78[gUnk_02006168][0], gUnk_085B6E78[gUnk_02006168][2], (u16)r, 16, gUnk_03001490);
     } else if (gUnk_03005280 == 3) {
         r = gUnk_03001EA4 & 15;
         if (r > 7) {
@@ -158,7 +158,7 @@ void sub_08008558(void)
         } else {
             r <<= 5;
         }
-        sub_08003014(gUnk_085B6E78[gUnk_02006168][0], gUnk_085B6E78[gUnk_02006168][1], (u16)r, 16, gUnk_03001490);
+        BlendColors(gUnk_085B6E78[gUnk_02006168][0], gUnk_085B6E78[gUnk_02006168][1], (u16)r, 16, gUnk_03001490);
     } else {
         for (i = 0; i < 16; i++)
             gUnk_03001270[0x110 + i] = gUnk_085B6E78[0][0][i];

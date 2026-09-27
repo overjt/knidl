@@ -15,9 +15,9 @@ extern u32 gUnk_08753510[];
 
 /* Externals */
 extern void TaskYieldTrampoline(u32 a);
-extern void sub_08002e98(u32 a, u32 b, u32 *c);
-extern u32 sub_08002ee8(u32 range);
-extern s32 sub_080031b8(s32 id);
+extern void CallTableEntry(u32 a, u32 b, u32 *c);
+extern u32 RandomRange(u32 range);
+extern s32 PlaySfx(s32 id);
 extern void TaskMove(void);
 extern void TaskSleepForever(void);
 extern void TaskSetEntry(void *fn, s32 i);
@@ -288,7 +288,7 @@ void sub_0809c490(void)
     sub_08063908((u32)gUnk_08747D5C);
     u = gUnk_03002490;
     u->unk24 = 0;
-    sub_08002e98(u->unk73, 4, gUnk_08747AA4);
+    CallTableEntry(u->unk73, 4, gUnk_08747AA4);
 }
 
 void sub_0809c4d0(void)
@@ -309,7 +309,7 @@ void sub_0809c4d0(void)
 
 void sub_0809c50c(void)
 {
-    sub_08002e98(gUnk_03002490->unk14, 5, gUnk_08747AB4);
+    CallTableEntry(gUnk_03002490->unk14, 5, gUnk_08747AB4);
 }
 
 void sub_0809c528(void)
@@ -317,7 +317,7 @@ void sub_0809c528(void)
     struct Task *t;
 
     if (sub_080692fc() == 0)
-        sub_08002e98(gUnk_03002490->unk15, 5, gUnk_08747AC8);
+        CallTableEntry(gUnk_03002490->unk15, 5, gUnk_08747AC8);
     t = gUnk_03002490;
     if (t->unk24 > 0)
     {
@@ -396,7 +396,7 @@ void sub_0809c638(void)
         return;
     n = 90;
     u->unk30 = n;
-    if (sub_08063d2c() < 0 && sub_08002ee8(3) == 0)
+    if (sub_08063d2c() < 0 && RandomRange(3) == 0)
         goto stumble;
     if (sub_08063d2c() > 47)
     {
@@ -412,7 +412,7 @@ void sub_0809c638(void)
         TaskSetEntry(sub_0809c880, gCurTaskIdx);
         return;
     }
-    if (sub_08002ee8(3) != 0)
+    if (RandomRange(3) != 0)
         sub_0806395c(2);
     else
         sub_0806395c(4);
@@ -445,7 +445,7 @@ void sub_0809c74c(void)
     b = 26;
     t->unk3C = b;
     TaskYieldTrampoline(2);
-    sub_080031b8(196);
+    PlaySfx(196);
     TaskSetMotionXFacing(128 << 11, k = 0x5A5A5A5A);
     t = gUnk_03002490;
     c = 22;
@@ -631,7 +631,7 @@ void sub_0809cab0(void)
         t = gUnk_03002490;
         t->unk3C = 26;
         TaskYieldTrampoline(2);
-        sub_080031b8(196);
+        PlaySfx(196);
         TaskSetMotionXFacing(128 << 11, 0x5A5A5A5A);
         t = gUnk_03002490;
         t->unk3C = 22;

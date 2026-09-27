@@ -122,9 +122,9 @@ extern vu32 gUnk_03000B00;
 extern void m4aSoundInit(void);
 extern void ResetOamShadow(void);
 extern void BuildOam(void);
-extern void sub_08002028(void);
+extern void ResetFadeAndBlend(void);
 extern void sub_08002268(void);
-extern void sub_08002eac(u32 arg);
+extern void SeedRandom(u32 arg);
 
 void AgbInit(void)
 {
@@ -285,7 +285,7 @@ void AgbInit(void)
 
     CpuSet((const void *)((u32)BuildOam & ~1), (void *)0x03001F40, 0x100);
 
-    sub_08002028();
+    ResetFadeAndBlend();
 
     /* Dead store, eliminated by the compiler.  It invalidates the compiler's
      * knowledge that zeroC == 0, which is what forces the fresh `movs rN, #0`
@@ -320,5 +320,5 @@ void AgbInit(void)
     sub_08002268();
 
     if (gUnk_03000B00 == 0)
-        sub_08002eac(0xDEFBC);
+        SeedRandom(0xDEFBC);
 }

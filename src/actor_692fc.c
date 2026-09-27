@@ -62,8 +62,8 @@ extern u16 gUnk_0873E58C[];
 extern s16 gUnk_0873E5A4[];
 extern u32 gUnk_0873F910[];
 
-extern u32 sub_08002ee8(u32 range);
-extern void sub_080031b8(s32 id);
+extern u32 RandomRange(u32 range);
+extern void PlaySfx(s32 id);
 extern void TaskSetSkipMask(s32 a, s32 b);
 extern void TaskSetEntry(void *fn, s32 i);
 extern void TaskSetFrame(s32 a);
@@ -646,20 +646,20 @@ void sub_08069c8c(void)
         switch (u->unk80)
         {
         case 3:
-            sub_080031b8(145);
+            PlaySfx(145);
             break;
         case 4:
-            sub_080031b8(146);
+            PlaySfx(146);
             break;
         case 9:
-            sub_080031b8(132);
+            PlaySfx(132);
             break;
         case 12:
-            sub_080031b8(139);
+            PlaySfx(139);
             break;
         case 13:
         case 14:
-            sub_080031b8(142);
+            PlaySfx(142);
             break;
         case 0:
         case 1:
@@ -699,11 +699,11 @@ void sub_08069d78(void)
     case 3:
     case 4:
     case 5:
-        sub_080031b8(127);
+        PlaySfx(127);
         break;
     case 1:
     case 2:
-        sub_080031b8(508);
+        PlaySfx(508);
         break;
     }
 }
@@ -869,7 +869,7 @@ void sub_0806a0cc(void)
 {
     u32 v;
 
-    switch (sub_08002ee8(3))
+    switch (RandomRange(3))
     {
     default:
         v = 167;
@@ -918,25 +918,25 @@ void sub_0806a158(void)
     {
     case 1:
         if (gUnk_03002360 == t->unk7E)
-            sub_080031b8(220);
+            PlaySfx(220);
         sub_08009e60(1, gUnk_03002490->unk7E);
         sub_08063fe0();
         break;
     case 3:
         if (gUnk_03002360 == t->unk7E)
-            sub_080031b8(198);
+            PlaySfx(198);
         sub_0804087c(gUnk_03002490->unk7E);
         sub_08063fe0();
         break;
     case 2:
         if (gUnk_03002360 == t->unk7E)
-            sub_080031b8(198);
+            PlaySfx(198);
         sub_0806395c(0);
         TaskSetEntry(sub_080b4240, gCurTaskIdx);
         break;
     case 4:
         if (gUnk_03002360 == t->unk7E)
-            sub_080031b8(198);
+            PlaySfx(198);
         sub_0806395c(1);
         TaskSetEntry(sub_080b4240, gCurTaskIdx);
         break;
@@ -976,9 +976,9 @@ u32 sub_0806a25c(void)
             if (gUnk_03002490->unk72 == 1)
             {
                 if (gUnk_030023D8 != 19)
-                    sub_080031b8(510);
+                    PlaySfx(510);
                 else
-                    sub_080031b8(514);
+                    PlaySfx(514);
             }
             if (p->unk08 != 0)
                 r = ((u8 (*)(void))p->unk08)();

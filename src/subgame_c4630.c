@@ -18,7 +18,7 @@
  *   sub_080c4974 / sub_080c4890 / sub_080c4a20 / sub_080c495c   four palette
  *       fades (gUnk_020170A0[]): start one (source rows, destination in
  *       gUnk_03001470, period, steps, colour count, repeats), step them every
- *       frame with sub_08003014, free one, free all.
+ *       frame with BlendColors, free one, free all.
  *   sub_080c4a48 ... sub_080c4c30   the HUD sprites: the digit palette, a
  *       digit, a symbol, a frame count as ss:cc, a number with leading blanks
  *       (a goto loop over the divisors gUnk_080CFF70), a ratio capped at 1000,
@@ -167,8 +167,8 @@ extern s16 gUnk_080CFF70[];
 extern u16 *gUnk_08755F54[];
 
 s32 QueueSprite(u32 a, u32 b, u32 c, u32 d, u32 e, s16 f);  /* sprite draw; callers pass f sign-extended (lsls/asrs #16), the early_1518 definition says u16 */
-u32 sub_08002ec0(void);                                      /* LCG step */
-void sub_08003014(u16 *src, u16 *dst, s32 ratio, s32 count, u16 *out);
+u32 Random(void);                                      /* LCG step */
+void BlendColors(u16 *src, u16 *dst, s32 ratio, s32 count, u16 *out);
 void TaskSetSkipMask(u8 val, s32 idx);
 void TaskDrawScreen(void);
 void TaskSleepForever(void);                                     /* end the running task */
@@ -304,7 +304,7 @@ void sub_080c4890(void)
             s32 k1 = k + 1;
             s32 r = (gUnk_020170A0[i].unk08 - gUnk_020170A0[i].unk04) * gUnk_020170A0[i].unk14;
             u16 *pal = (u16 *)gUnk_020170A0[i].unk1C;
-            sub_08003014(pal + k * 16, pal + k1 * 16, (u16)r, (u16)gUnk_020170A0[i].unk18, (u16 *)gUnk_020170A0[i].unk20);
+            BlendColors(pal + k * 16, pal + k1 * 16, (u16)r, (u16)gUnk_020170A0[i].unk18, (u16 *)gUnk_020170A0[i].unk20);
         }
         }
     }
@@ -436,7 +436,7 @@ void sub_080c4c78(void)
     u32 seed;
     s32 i;
 
-    seed = sub_08002ec0();
+    seed = Random();
     for (i = 0; i <= 4; i++)
         gAirGrindPtr->unk1A4[i] = seed;
 }

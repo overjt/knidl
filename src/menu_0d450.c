@@ -43,17 +43,17 @@ extern u8 gUnk_0876F690[];
 
 void RunFrame(void);
 void RunFrames(s32 count);
-s32 sub_08003110(s32 songId);
-s32 sub_080031b8(s32 id);
-void sub_08003688(void);
-void sub_0800374c(s32 speed);
+s32 PlayBgm(s32 songId);
+s32 PlaySfx(s32 id);
+void StopAllSfx(void);
+void FadeOutBgm(s32 speed);
 void sub_08003888(void);
 void sub_08003964(void);
 void sub_08003a34(u8 *start, u8 *end);
 void sub_08003a98(void);
 void sub_08004000(u16 a);
 s32 TaskCreateFrom(u32 type, s32 idx);
-u32 sub_080071dc(void);
+u32 ConnectLink(void);
 void sub_08008b8c(void);
 void sub_08008c64(u16 a0);
 void sub_0800c20c(void);
@@ -97,11 +97,11 @@ void sub_0800d450(void)
                     m4aSongNumStop(gUnk_03001F2C);
                     sub_08008c64(49);
                 } else {
-                    sub_08003110(gUnk_03001F2C | 0x800);
+                    PlayBgm(gUnk_03001F2C | 0x800);
                     sub_08008c64(48);
                 }
             } else {
-                sub_08003688();
+                StopAllSfx();
                 sub_0800d404();
                 sub_08008c64(48);
             }
@@ -110,8 +110,8 @@ void sub_0800d450(void)
         } else if (gUnk_03000038 & 2) {
             gUnk_03000FC8 = 10;
             gUnk_03001ECC = 6;
-            sub_08003688();
-            sub_080031b8(215);
+            StopAllSfx();
+            PlaySfx(215);
             sub_08008c64(50);
             RunFrames(3);
             sub_08008c64(47);
@@ -123,9 +123,9 @@ void sub_0800d450(void)
             gUnk_020060D0 = 1;
             if (gUnk_03001F2C != 40
                 && (s32)gMPlayTable[gSongTable[gUnk_03001F2C].ms].info->status >= 0)
-                sub_0800374c(32);
+                FadeOutBgm(32);
             RunFrames(8);
-            sub_08003110(40);
+            PlayBgm(40);
             sub_0800c20c();
             return;
         }
@@ -187,7 +187,7 @@ void sub_0800d85c(void)
     RunFrames(4);
     while (1) {
         if (gUnk_03000038 & 2) {
-            sub_080031b8(215);
+            PlaySfx(215);
             sub_08003964();
             gUnk_03001ED8 &= 0xE0FF;
             gUnk_03001ED8 |= 0x1A00;
@@ -218,7 +218,7 @@ void sub_0800d85c(void)
                     gUnk_030023D8 = 5;
                 else
                     gUnk_030023D8 = 13;
-                if (sub_080071dc())
+                if (ConnectLink())
                     sub_08008b8c();
                 return;
             }
