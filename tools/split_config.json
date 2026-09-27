@@ -16904,6 +16904,7 @@
     "0x08249B32": "gUnk_08249B32",
     "0x08249B62": "gUnk_08249B62",
     "0x08249B82": "gUnk_08249B82",
+    "0x08249BAC": "gUnk_08249BAC",
     "0x0824A9CC": "gUnk_0824A9CC",
     "0x0824A9E4": "gUnk_0824A9E4",
     "0x0824A9F8": "gUnk_0824A9F8",
@@ -17819,6 +17820,7 @@
     "0x0825DBEC": "gUnk_0825DBEC",
     "0x0825DBF4": "gUnk_0825DBF4",
     "0x0825DBFC": "gUnk_0825DBFC",
+    "0x0825DC10": "gUnk_0825DC10",
     "0x0825DD2C": "gUnk_0825DD2C",
     "0x0825DD34": "gUnk_0825DD34",
     "0x0825DD3C": "gUnk_0825DD3C",
@@ -17990,6 +17992,8 @@
     "0x0826A4E0": "gUnk_0826A4E0",
     "0x0826A4EC": "gUnk_0826A4EC",
     "0x0826A4F8": "gUnk_0826A4F8",
+    "0x0826A50C": "gUnk_0826A50C",
+    "0x0826A52C": "gUnk_0826A52C",
     "0x0826A614": "gUnk_0826A614",
     "0x0826A634": "gUnk_0826A634",
     "0x0826A654": "gBonkersGfx",
@@ -18082,6 +18086,8 @@
     "0x0826F190": "gUnk_0826F190",
     "0x0826F1B0": "gUnk_0826F1B0",
     "0x0826F1D0": "gUnk_0826F1D0",
+    "0x0826F1F0": "gUnk_0826F1F0",
+    "0x0826F210": "gUnk_0826F210",
     "0x0826F538": "gUnk_0826F538",
     "0x0826F558": "gUnk_0826F558",
     "0x0826F578": "gUnk_0826F578",
@@ -18171,6 +18177,8 @@
     "0x08274840": "gUnk_08274840",
     "0x08274860": "gUnk_08274860",
     "0x08274880": "gUnk_08274880",
+    "0x082748A0": "gUnk_082748A0",
+    "0x082748E0": "gUnk_082748E0",
     "0x0827548C": "gUnk_0827548C",
     "0x08275494": "gUnk_08275494",
     "0x0827549C": "gUnk_0827549C",
@@ -18251,6 +18259,8 @@
     "0x082797C8": "gUnk_082797C8",
     "0x082797E8": "gUnk_082797E8",
     "0x08279808": "gUnk_08279808",
+    "0x08279828": "gUnk_08279828",
+    "0x08279848": "gUnk_08279848",
     "0x08279BE0": "gUnk_08279BE0",
     "0x08279C00": "gUnk_08279C00",
     "0x08279C40": "gUnk_08279C40",
@@ -18686,6 +18696,8 @@
     "0x08295428": "gUnk_08295428",
     "0x08295434": "gUnk_08295434",
     "0x08295440": "gUnk_08295440",
+    "0x08295454": "gUnk_08295454",
+    "0x08295494": "gUnk_08295494",
     "0x08295954": "gUnk_08295954",
     "0x0829595C": "gUnk_0829595C",
     "0x08295964": "gUnk_08295964",
@@ -18863,6 +18875,8 @@
     "0x082B077C": "gUnk_082B077C",
     "0x082B079C": "gUnk_082B079C",
     "0x082B07BC": "gUnk_082B07BC",
+    "0x082B07DC": "gUnk_082B07DC",
+    "0x082B07FC": "gUnk_082B07FC",
     "0x082B091C": "gUnk_082B091C",
     "0x082B0924": "gUnk_082B0924",
     "0x082B092C": "gUnk_082B092C",
@@ -19004,6 +19018,8 @@
     "0x082BFB64": "gUnk_082BFB64",
     "0x082BFB84": "gUnk_082BFB84",
     "0x082BFBA4": "gUnk_082BFBA4",
+    "0x082BFBC4": "gUnk_082BFBC4",
+    "0x082BFBE4": "gUnk_082BFBE4",
     "0x082BFD8C": "gUnk_082BFD8C",
     "0x082BFDAC": "gUnk_082BFDAC",
     "0x082BFDCC": "gUnk_082BFDCC",
@@ -19142,6 +19158,8 @@
     "0x082D8514": "gUnk_082D8514",
     "0x082D8520": "gUnk_082D8520",
     "0x082D852C": "gUnk_082D852C",
+    "0x082D8540": "gUnk_082D8540",
+    "0x082D8560": "gUnk_082D8560",
     "0x082D8604": "gUnk_082D8604",
     "0x082D8624": "gKingDededeGfx",
     "0x082D8638": "gUnk_082D8638",
@@ -19286,6 +19304,8 @@
     "0x082DEBA4": "gUnk_082DEBA4",
     "0x082DEBB0": "gUnk_082DEBB0",
     "0x082DEBBC": "gUnk_082DEBBC",
+    "0x082DEBD0": "gUnk_082DEBD0",
+    "0x082DEC10": "gUnk_082DEC10",
     "0x082DF964": "gUnk_082DF964",
     "0x082DF9A4": "gUnk_082DF9A4",
     "0x082DF9D4": "gUnk_082DF9D4",
@@ -19735,6 +19755,8 @@
     "0x082F3214": "gUnk_082F3214",
     "0x082F3220": "gUnk_082F3220",
     "0x082F322C": "gUnk_082F322C",
+    "0x082F3240": "gUnk_082F3240",
+    "0x082F32A0": "gUnk_082F32A0",
     "0x082F4098": "gUnk_082F4098",
     "0x082F40A8": "gUnk_082F40A8",
     "0x082F40B8": "gUnk_082F40B8",
@@ -19776,6 +19798,8 @@
     "0x082F4260": "gUnk_082F4260",
     "0x082F4268": "gMetaKnightGfx",
     "0x082F427C": "gUnk_082F427C",
+    "0x082F429C": "gUnk_082F429C",
+    "0x082F433C": "gUnk_082F433C",
     "0x082F58C8": "gUnk_082F58C8",
     "0x082F58E8": "gUnk_082F58E8",
     "0x082F5908": "gUnk_082F5908",
@@ -19965,6 +19989,8 @@
     "0x082F65A8": "gUnk_082F65A8",
     "0x082F65C0": "gHeavyMoleGfx",
     "0x082F65D4": "gUnk_082F65D4",
+    "0x082F6614": "gUnk_082F6614",
+    "0x082F6674": "gUnk_082F6674",
     "0x082F751C": "gUnk_082F751C",
     "0x082F7594": "gUnk_082F7594",
     "0x082F760C": "gUnk_082F760C",
@@ -20076,6 +20102,8 @@
     "0x082FB1F0": "gUnk_082FB1F0",
     "0x082FB210": "gUnk_082FB210",
     "0x082FB230": "gUnk_082FB230",
+    "0x082FB250": "gUnk_082FB250",
+    "0x082FB290": "gUnk_082FB290",
     "0x082FB724": "gUnk_082FB724",
     "0x082FB75C": "gUnk_082FB75C",
     "0x082FB77C": "gUnk_082FB77C",
@@ -20135,6 +20163,8 @@
     "0x082FBDBC": "gUnk_082FBDBC",
     "0x082FBDCC": "gUnk_082FBDCC",
     "0x082FBDE4": "gWhispyWoodsGfx",
+    "0x082FBDF8": "gUnk_082FBDF8",
+    "0x082FBE78": "gUnk_082FBE78",
     "0x082FCD8C": "gUnk_082FCD8C",
     "0x082FCDBC": "gUnk_082FCDBC",
     "0x082FCDEC": "gUnk_082FCDEC",
@@ -20183,6 +20213,8 @@
     "0x082FD404": "gUnk_082FD404",
     "0x082FD424": "gKrackoGfx",
     "0x082FD438": "gUnk_082FD438",
+    "0x082FD498": "gUnk_082FD498",
+    "0x082FD4D8": "gUnk_082FD4D8",
     "0x082FDD80": "gUnk_082FDD80",
     "0x082FDDA0": "gUnk_082FDDA0",
     "0x082FDDC0": "gUnk_082FDDC0",
@@ -20202,6 +20234,7 @@
     "0x082FE0D0": "gNightmarePowerOrbGfx",
     "0x082FE0E4": "gUnk_082FE0E4",
     "0x082FE104": "gUnk_082FE104",
+    "0x082FE124": "gUnk_082FE124",
     "0x082FEF04": "gUnk_082FEF04",
     "0x082FEF0C": "gUnk_082FEF0C",
     "0x082FEF14": "gUnk_082FEF14",
@@ -20226,6 +20259,7 @@
     "0x082FEFDC": "gUnk_082FEFDC",
     "0x082FEFE4": "gUnk_082FEFE4",
     "0x082FEFF4": "gUnk_082FEFF4",
+    "0x082FF008": "gUnk_082FF008",
     "0x082FFDC8": "gUnk_082FFDC8",
     "0x082FFDE8": "gUnk_082FFDE8",
     "0x082FFDF0": "gUnk_082FFDF0",
@@ -20587,6 +20621,8 @@
     "0x08333848": "gUnk_08333848",
     "0x08333854": "gUnk_08333854",
     "0x08333860": "gUnk_08333860",
+    "0x08333874": "gUnk_08333874",
+    "0x083338B4": "gUnk_083338B4",
     "0x0833428C": "gUnk_0833428C",
     "0x08334294": "gUnk_08334294",
     "0x0833429C": "gUnk_0833429C",
@@ -20608,6 +20644,7 @@
     "0x0833446C": "gNightmareWizardGfx",
     "0x08334480": "gUnk_08334480",
     "0x083344C0": "gUnk_083344C0",
+    "0x08334500": "gUnk_08334500",
     "0x08334CA0": "gUnk_08334CA0",
     "0x08334CB0": "gUnk_08334CB0",
     "0x08334CC0": "gUnk_08334CC0",
@@ -24839,26 +24876,36 @@
     "0x085EB698": "gUnk_085EB698",
     "0x085EBC5C": "gUnk_085EBC5C",
     "0x085ECE00": "gUnk_085ECE00",
+    "0x085EE4AC": "gUnk_085EE4AC",
+    "0x085EE4EC": "gUnk_085EE4EC",
     "0x085EED98": "gUnk_085EED98",
     "0x085EEDB0": "gUnk_085EEDB0",
     "0x085EEDE8": "gUnk_085EEDE8",
     "0x085EEE08": "gUnk_085EEE08",
     "0x085EEE20": "gUnk_085EEE20",
+    "0x085EEE34": "gUnk_085EEE34",
+    "0x085EEE74": "gUnk_085EEE74",
     "0x085EF7C4": "gUnk_085EF7C4",
     "0x085EF7EC": "gUnk_085EF7EC",
     "0x085EF83C": "gUnk_085EF83C",
     "0x085EF85C": "gUnk_085EF85C",
     "0x085EF874": "gUnk_085EF874",
+    "0x085EF888": "gUnk_085EF888",
+    "0x085EF8C8": "gUnk_085EF8C8",
     "0x085F072C": "gUnk_085F072C",
     "0x085F075C": "gUnk_085F075C",
     "0x085F07BC": "gUnk_085F07BC",
     "0x085F07DC": "gUnk_085F07DC",
     "0x085F07FC": "gUnk_085F07FC",
+    "0x085F0810": "gUnk_085F0810",
+    "0x085F0850": "gUnk_085F0850",
     "0x085F1460": "gUnk_085F1460",
     "0x085F1488": "gUnk_085F1488",
     "0x085F14E0": "gUnk_085F14E0",
     "0x085F1500": "gUnk_085F1500",
     "0x085F1520": "gUnk_085F1520",
+    "0x085F1534": "gUnk_085F1534",
+    "0x085F1574": "gUnk_085F1574",
     "0x085F29F8": "gUnk_085F29F8",
     "0x085F2A38": "gUnk_085F2A38",
     "0x085F2AA0": "gUnk_085F2AA0",
@@ -39036,6 +39083,288 @@
         "0x4"
       ],
       "why": "HitBoxSet passed to TaskBreakBlocksNoPlayer (src/enemy_ae3bc.c:3755, src/block_30804.c:161): struct HitBoxSet {u16 unk0; s8 offsetX, offsetY; s8 (*boxes)[4];} (include/player.h:18), boxes walked until box[0] == 127 (src/block_30804.c:204)"
+    },
+    {
+      "start": "0x0824A9EC",
+      "count": 1,
+      "proof": "format",
+      "why": "format only: sheet header 0x0824A9E4 (trailer-bearing): .palette = 1 banks * 32 bytes ending at .tiles (no code reads this header)"
+    },
+    {
+      "start": "0x0825DF68",
+      "count": 1,
+      "proof": "format",
+      "why": "format only: sheet header 0x0825DF5C (trailer-bearing): .tiles = LZ77 stream (283 bytes) decoding to tileCount 18 * 32 bytes (no code reads this header)"
+    },
+    {
+      "start": "0x0826A65C",
+      "count": 1,
+      "proof": "format",
+      "why": "format only: sheet header 0x0826A654 (trailer-bearing): .palette = 1 banks * 32 bytes ending at .tiles (no code reads this header)"
+    },
+    {
+      "start": "0x0826A660",
+      "count": 1,
+      "proof": "format",
+      "why": "format only: sheet header 0x0826A654 (trailer-bearing): .tiles = LZ77 stream (230 bytes) decoding to tileCount 19 * 32 bytes (no code reads this header)"
+    },
+    {
+      "start": "0x0826F638",
+      "count": 1,
+      "proof": "format",
+      "why": "format only: sheet header 0x0826F630 (trailer-bearing): .palette = 1 banks * 32 bytes ending at .tiles (no code reads this header)"
+    },
+    {
+      "start": "0x0826F63C",
+      "count": 1,
+      "proof": "format",
+      "why": "format only: sheet header 0x0826F630 (trailer-bearing): .tiles = LZ77 stream (806 bytes) decoding to tileCount 57 * 32 bytes (no code reads this header)"
+    },
+    {
+      "start": "0x08275664",
+      "count": 1,
+      "proof": "format",
+      "why": "format only: sheet header 0x0827565C (trailer-bearing): .palette = 2 banks * 32 bytes ending at .tiles (no code reads this header)"
+    },
+    {
+      "start": "0x08275668",
+      "count": 1,
+      "proof": "format",
+      "why": "format only: sheet header 0x0827565C (trailer-bearing): .tiles = LZ77 stream (2988 bytes) decoding to tileCount 217 * 32 bytes (no code reads this header)"
+    },
+    {
+      "start": "0x08279E48",
+      "count": 1,
+      "proof": "format",
+      "why": "format only: sheet header 0x08279E40 (trailer-bearing): .palette = 1 banks * 32 bytes ending at .tiles (no code reads this header)"
+    },
+    {
+      "start": "0x08279E4C",
+      "count": 1,
+      "proof": "format",
+      "why": "format only: sheet header 0x08279E40 (trailer-bearing): .tiles = LZ77 stream (919 bytes) decoding to tileCount 72 * 32 bytes (no code reads this header)"
+    },
+    {
+      "start": "0x0829599C",
+      "count": 1,
+      "proof": "format",
+      "why": "format only: sheet header 0x08295994 (trailer-bearing): .palette = 2 banks * 32 bytes ending at .tiles (no code reads this header)"
+    },
+    {
+      "start": "0x082959A0",
+      "count": 1,
+      "proof": "format",
+      "why": "format only: sheet header 0x08295994 (trailer-bearing): .tiles = LZ77 stream (1215 bytes) decoding to tileCount 62 * 32 bytes (no code reads this header)"
+    },
+    {
+      "start": "0x082B095C",
+      "count": 1,
+      "proof": "format",
+      "why": "format only: sheet header 0x082B0954 (trailer-bearing): .palette = 1 banks * 32 bytes ending at .tiles (no code reads this header)"
+    },
+    {
+      "start": "0x082B0960",
+      "count": 1,
+      "proof": "format",
+      "why": "format only: sheet header 0x082B0954 (trailer-bearing): .tiles = LZ77 stream (288 bytes) decoding to tileCount 22 * 32 bytes (no code reads this header)"
+    },
+    {
+      "start": "0x082BFE94",
+      "count": 1,
+      "proof": "format",
+      "why": "format only: sheet header 0x082BFE8C (trailer-bearing): .palette = 1 banks * 32 bytes ending at .tiles (no code reads this header)"
+    },
+    {
+      "start": "0x082BFE98",
+      "count": 1,
+      "proof": "format",
+      "why": "format only: sheet header 0x082BFE8C (trailer-bearing): .tiles = LZ77 stream (422 bytes) decoding to tileCount 27 * 32 bytes (no code reads this header)"
+    },
+    {
+      "start": "0x082D862C",
+      "count": 1,
+      "proof": "format",
+      "why": "format only: sheet header 0x082D8624 (trailer-bearing): .palette = 1 banks * 32 bytes ending at .tiles (no code reads this header)"
+    },
+    {
+      "start": "0x082D8630",
+      "count": 1,
+      "proof": "format",
+      "why": "format only: sheet header 0x082D8624 (trailer-bearing): .tiles = LZ77 stream (163 bytes) decoding to tileCount 19 * 32 bytes (no code reads this header)"
+    },
+    {
+      "start": "0x082DFF9C",
+      "count": 1,
+      "proof": "format",
+      "why": "format only: sheet header 0x082DFF94 (trailer-bearing): .palette = 2 banks * 32 bytes ending at .tiles (no code reads this header)"
+    },
+    {
+      "start": "0x082DFFA0",
+      "count": 1,
+      "proof": "format",
+      "why": "format only: sheet header 0x082DFF94 (trailer-bearing): .tiles = LZ77 stream (3412 bytes) decoding to tileCount 223 * 32 bytes (no code reads this header)"
+    },
+    {
+      "start": "0x082F4270",
+      "count": 1,
+      "proof": "format",
+      "why": "format only: sheet header 0x082F4268 (trailer-bearing): .palette = 3 banks * 32 bytes ending at .tiles (no code reads this header)"
+    },
+    {
+      "start": "0x082F4274",
+      "count": 1,
+      "proof": "format",
+      "why": "format only: sheet header 0x082F4268 (trailer-bearing): .tiles = LZ77 stream (3576 bytes) decoding to tileCount 219 * 32 bytes (no code reads this header)"
+    },
+    {
+      "start": "0x082F65C8",
+      "count": 1,
+      "proof": "format",
+      "why": "format only: sheet header 0x082F65C0 (trailer-bearing): .palette = 5 banks * 32 bytes ending at .tiles (no code reads this header)"
+    },
+    {
+      "start": "0x082F65CC",
+      "count": 1,
+      "proof": "format",
+      "why": "format only: sheet header 0x082F65C0 (trailer-bearing): .tiles = LZ77 stream (5515 bytes) decoding to tileCount 372 * 32 bytes (no code reads this header)"
+    },
+    {
+      "start": "0x082F821C",
+      "count": 1,
+      "proof": "format",
+      "why": "format only: sheet header 0x082F8214 (trailer-bearing): .palette = 3 banks * 32 bytes ending at .tiles (no code reads this header)"
+    },
+    {
+      "start": "0x082F8220",
+      "count": 1,
+      "proof": "format",
+      "why": "format only: sheet header 0x082F8214 (trailer-bearing): .tiles = LZ77 stream (3751 bytes) decoding to tileCount 250 * 32 bytes (no code reads this header)"
+    },
+    {
+      "start": "0x082FBDEC",
+      "count": 1,
+      "proof": "format",
+      "why": "format only: sheet header 0x082FBDE4 (trailer-bearing): .palette = 2 banks * 32 bytes ending at .tiles (no code reads this header)"
+    },
+    {
+      "start": "0x082FBDF0",
+      "count": 1,
+      "proof": "format",
+      "why": "format only: sheet header 0x082FBDE4 (trailer-bearing): .tiles = LZ77 stream (1171 bytes) decoding to tileCount 70 * 32 bytes (no code reads this header)"
+    },
+    {
+      "start": "0x082FD42C",
+      "count": 1,
+      "proof": "format",
+      "why": "format only: sheet header 0x082FD424 (trailer-bearing): .palette = 4 banks * 32 bytes ending at .tiles (no code reads this header)"
+    },
+    {
+      "start": "0x082FD430",
+      "count": 1,
+      "proof": "format",
+      "why": "format only: sheet header 0x082FD424 (trailer-bearing): .tiles = LZ77 stream (3859 bytes) decoding to tileCount 222 * 32 bytes (no code reads this header)"
+    },
+    {
+      "start": "0x082FE0D8",
+      "count": 1,
+      "proof": "format",
+      "why": "format only: sheet header 0x082FE0D0 (trailer-bearing): .palette = 2 banks * 32 bytes ending at .tiles (no code reads this header)"
+    },
+    {
+      "start": "0x082FE0DC",
+      "count": 1,
+      "proof": "format",
+      "why": "format only: sheet header 0x082FE0D0 (trailer-bearing): .tiles = LZ77 stream (2214 bytes) decoding to tileCount 122 * 32 bytes (no code reads this header)"
+    },
+    {
+      "start": "0x082FEFFC",
+      "count": 1,
+      "proof": "format",
+      "why": "format only: sheet header 0x082FEFF4 (trailer-bearing): .palette = 1 banks * 32 bytes ending at .tiles (no code reads this header)"
+    },
+    {
+      "start": "0x082FFDF8",
+      "count": 1,
+      "proof": "format",
+      "why": "format only: sheet header 0x082FFDF0 (trailer-bearing): .palette = 2 banks * 32 bytes ending at .tiles (no code reads this header)"
+    },
+    {
+      "start": "0x08334474",
+      "count": 1,
+      "proof": "format",
+      "why": "format only: sheet header 0x0833446C (trailer-bearing): .palette = 2 banks * 32 bytes ending at .tiles (no code reads this header)"
+    },
+    {
+      "start": "0x08334478",
+      "count": 1,
+      "proof": "format",
+      "why": "format only: sheet header 0x0833446C (trailer-bearing): .tiles = LZ77 stream (2518 bytes) decoding to tileCount 147 * 32 bytes (no code reads this header)"
+    },
+    {
+      "start": "0x08334DC8",
+      "count": 1,
+      "proof": "format",
+      "why": "format only: sheet header 0x08334DC0 (trailer-bearing): .palette = 1 banks * 32 bytes ending at .tiles (no code reads this header)"
+    },
+    {
+      "start": "0x085EEE28",
+      "count": 1,
+      "proof": "format",
+      "why": "format only: sheet header 0x085EEE20 (trailer-bearing): .palette = 2 banks * 32 bytes ending at .tiles (no code reads this header)"
+    },
+    {
+      "start": "0x085EEE2C",
+      "count": 1,
+      "proof": "format",
+      "why": "format only: sheet header 0x085EEE20 (trailer-bearing): .tiles = LZ77 stream (2219 bytes) decoding to tileCount 127 * 32 bytes (no code reads this header)"
+    },
+    {
+      "start": "0x085EF87C",
+      "count": 1,
+      "proof": "format",
+      "why": "format only: sheet header 0x085EF874 (trailer-bearing): .palette = 2 banks * 32 bytes ending at .tiles (no code reads this header)"
+    },
+    {
+      "start": "0x085EF880",
+      "count": 1,
+      "proof": "format",
+      "why": "format only: sheet header 0x085EF874 (trailer-bearing): .tiles = LZ77 stream (2381 bytes) decoding to tileCount 157 * 32 bytes (no code reads this header)"
+    },
+    {
+      "start": "0x085F0804",
+      "count": 1,
+      "proof": "format",
+      "why": "format only: sheet header 0x085F07FC (trailer-bearing): .palette = 2 banks * 32 bytes ending at .tiles (no code reads this header)"
+    },
+    {
+      "start": "0x085F0808",
+      "count": 1,
+      "proof": "format",
+      "why": "format only: sheet header 0x085F07FC (trailer-bearing): .tiles = LZ77 stream (3683 bytes) decoding to tileCount 210 * 32 bytes (no code reads this header)"
+    },
+    {
+      "start": "0x085F1528",
+      "count": 1,
+      "proof": "format",
+      "why": "format only: sheet header 0x085F1520 (trailer-bearing): .palette = 2 banks * 32 bytes ending at .tiles (no code reads this header)"
+    },
+    {
+      "start": "0x085F152C",
+      "count": 1,
+      "proof": "format",
+      "why": "format only: sheet header 0x085F1520 (trailer-bearing): .tiles = LZ77 stream (3087 bytes) decoding to tileCount 179 * 32 bytes (no code reads this header)"
+    },
+    {
+      "start": "0x085F2B20",
+      "count": 1,
+      "proof": "format",
+      "why": "format only: sheet header 0x085F2B18 (trailer-bearing): .palette = 2 banks * 32 bytes ending at .tiles (no code reads this header)"
+    },
+    {
+      "start": "0x085F2B24",
+      "count": 1,
+      "proof": "format",
+      "why": "format only: sheet header 0x085F2B18 (trailer-bearing): .tiles = LZ77 stream (5252 bytes) decoding to tileCount 277 * 32 bytes (no code reads this header)"
     }
   ],
   "m4a": {

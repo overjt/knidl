@@ -247,8 +247,11 @@ def provide(rom, cfg, segs):
             coincidence.append((o, e, "oam", "BuildOam template stream (src/early_1b08.c), %s"
                                 % ("the .oamTemplate of a TaskGfx record" if o in oam_rec
                                    else "frame table 0x%08X, chained" % oam_direct[o])))
-    fmt_ptr, fmt_coin = _frame_lists(rom, cfg, segs, labels, pointer, oam_rec,
-                                     oam_direct, rec_why)
+    fmt_ptr, fmt_coin, sheet_hdrs = _frame_lists(rom, cfg, segs, labels, pointer,
+                                                 oam_rec, oam_direct, rec_why)
+    hp, hc = _sheet_headers(rom, sheet_hdrs)
+    fmt_ptr.update(hp)
+    fmt_coin.extend(hc)
     for a, why in fmt_ptr.items():
         pointer.setdefault(a, why)
     for s, e, k, why in fmt_coin:
@@ -295,6 +298,7 @@ def _frame_lists(rom, cfg, segs, labels, pointer, oam_rec, oam_direct, rec_why):
     proven_rec = set(rec_why)
     ptrs = {}
     coin = []
+    sheet_hdrs = []
     starts = sorted(holders)
     for i, s in enumerate(starts):
         if len(holders[s]) != 1:
@@ -346,6 +350,8 @@ def _frame_lists(rom, cfg, segs, labels, pointer, oam_rec, oam_direct, rec_why):
                     for j, (slot, sv) in enumerate(taskgfx(rom, v, False)):
                         if sv:
                             ptrs[slot] = tag + ", struct TaskGfx field +0x%X" % (4 * j)
+        if kept and oam_sheet:
+            sheet_hdrs.append(end_blk)
         if kept:
             ptrs[h] = ("format only: trailer word of the sheet ending 0x%08X, "
                        "the start of frame list 0x%08X (%d entries = its count)"
@@ -362,6 +368,70 @@ def _frame_lists(rom, cfg, segs, labels, pointer, oam_rec, oam_direct, rec_why):
                                  tag + ": record .palette"))
                 coin.append((f[2], f[2] + tiles_len(rom, f[2]), "tiles",
                              tag + ": record .tiles"))
+    return ptrs, coin, sheet_hdrs
+
+
+# ---- round 3: the sheet headers' palette/tiles fields (format only) -------
+#
+# The 85 trailer-bearing headers of the OAM sheets above, shaped like
+# struct Unk0873EEA0 (include/enemy.h:13) {u16 paletteBankCount; u16
+# tileCount; u16 frameCount; u16 tilesCompressed; palette; tiles}.  A field
+# is a pointer when its target parses exactly:
+#   .palette: paletteBankCount * 32 bytes that end exactly at .tiles;
+#   .tiles (tilesCompressed != 0): a BIOS LZ77 (type 0x10) stream whose
+#     header size and decoded length are both tileCount * 32.
+# Raw tiles (tilesCompressed == 0) are not accepted: in all four such sheets
+# the tileCount * 32 bytes are followed by tileCount * 32 zero bytes before
+# the frame block, so they do not end at the next proven object.
+
+
+def lz77_len(rom, a):
+    """(stream bytes, decoded bytes) of the LZ77 stream at a, or None."""
+    o = a - ROM_BASE
+    if not 0 <= o < len(rom) - 4 or rom[o] != 0x10:
+        return None
+    size = rom[o + 1] | rom[o + 2] << 8 | rom[o + 3] << 16
+    p = o + 4
+    out = 0
+    while out < size:
+        if p >= len(rom):
+            return None
+        flags = rom[p]
+        p += 1
+        for bit in range(8):
+            if out >= size:
+                break
+            if flags & (0x80 >> bit):
+                b0, b1 = rom[p], rom[p + 1]
+                p += 2
+                if ((b0 & 0xF) << 8 | b1) + 1 > out:
+                    return None
+                out += (b0 >> 4) + 3
+            else:
+                p += 1
+                out += 1
+    if out != size:
+        return None
+    return p - o, size
+
+
+def _sheet_headers(rom, hdrs):
+    ptrs = {}
+    coin = []
+    for hdr in sorted(set(hdrs)):
+        banks, tcount = _u16(rom, hdr), _u16(rom, hdr + 2)
+        comp = _u16(rom, hdr + 6)
+        pal, til = _u32(rom, hdr + 8), _u32(rom, hdr + 12)
+        tag = "format only: sheet header 0x%08X (trailer-bearing)" % hdr
+        if pal and banks and pal + banks * 32 == til:
+            ptrs[hdr + 8] = tag + ": .palette = %d banks * 32 bytes ending at .tiles" % banks
+            coin.append((pal, til, "palette", tag + ": palette banks"))
+        if comp and tcount:
+            r = lz77_len(rom, til)
+            if r is not None and r[1] == tcount * 32:
+                ptrs[hdr + 12] = (tag + ": .tiles = LZ77 stream (%d bytes) decoding "
+                                  "to tileCount %d * 32 bytes" % (r[0], tcount))
+                coin.append((til, til + r[0], "lz77", tag + ": LZ77 tile stream"))
     return ptrs, coin
 
 
