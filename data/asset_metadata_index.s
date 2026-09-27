@@ -10755,24 +10755,24 @@ gUnk_087562F0:
 	.global	gUnk_087562F6
 gUnk_087562F6:
 	.incbin	"baserom.gba", 0x7562F6, 0x6
-	.global	gUnk_087562FC
-gUnk_087562FC:
-	.word	sub_080bad00+1
-	.word	sub_080bad80+1
-	.word	sub_080bade4+1
-	.word	sub_080bae34+1
-	.word	sub_080bae84+1
-	.word	sub_080baef0+1
-	.word	sub_080baf40+1
-	.global	gUnk_08756318
-gUnk_08756318:
-	.word	sub_080bad44+1
-	.word	sub_080bad9c+1
-	.word	sub_080bae0c+1
-	.word	sub_080bae5c+1
-	.word	sub_080baeb0+1
-	.word	sub_080baf18+1
-	.word	sub_080baf9c+1
+	.global	gQuickDrawStates
+gQuickDrawStates:
+	.word	QuickDrawRoundWait+1
+	.word	QuickDrawRoundSignal+1
+	.word	QuickDrawRoundTimeUp+1
+	.word	QuickDrawRoundAllFalseStart+1
+	.word	QuickDrawRoundWin+1
+	.word	QuickDrawRoundTie+1
+	.word	QuickDrawRoundNext+1
+	.global	gQuickDrawStateUpdates
+gQuickDrawStateUpdates:
+	.word	QuickDrawRoundWaitUpdate+1
+	.word	QuickDrawRoundSignalUpdate+1
+	.word	QuickDrawRoundTimeUpUpdate+1
+	.word	QuickDrawRoundAllFalseStartUpdate+1
+	.word	QuickDrawRoundWinUpdate+1
+	.word	QuickDrawRoundTieUpdate+1
+	.word	QuickDrawRoundNextUpdate+1
 	.global	gUnk_08756334
 gUnk_08756334:
 	.word	sub_080bb258+1
