@@ -556,22 +556,19 @@ u8 sub_080783e0(s16 x, s16 y)
 
 void sub_0807840c(struct M19Particle *p, u8 a)
 {
-    register u8 *tab asm("r3");
-    register s32 q asm("r0");
     s32 i;
 
     p->unk01++;
-    tab = (u8 *)gUnk_087404A0;
-    i = p->unk01 * 4 + p->unk00 * 96;
-    if (*(u8 *)(i + (s32)tab) == 255)
+    if (gUnk_087404A0[p->unk00][p->unk01].unk00 == 255)
         p->unk01 = 0;
     switch (a)
     {
     case 0:
         {
             s32 i = p->unk01 * 4 + p->unk00 * 96;
+            u8 *tab = (u8 *)gUnk_087404A0;
+            s32 q = (s32)tab + 3;
 
-            q = (s32)tab + 3;
             p->unk03 -= *(u8 *)(i + q);
         }
         if (p->unk03 <= 7)
@@ -583,8 +580,9 @@ void sub_0807840c(struct M19Particle *p, u8 a)
     case 2:
         {
             s32 i = p->unk01 * 4 + p->unk00 * 96;
+            u8 *tab = (u8 *)gUnk_087404A0;
+            s32 q = (s32)tab + 3;
 
-            q = (s32)tab + 3;
             p->unk03 -= *(u8 *)(i + q);
         }
         if (p->unk03 <= 7)
@@ -600,8 +598,9 @@ void sub_0807840c(struct M19Particle *p, u8 a)
     case 1:
         {
             s32 i = p->unk01 * 4 + p->unk00 * 96;
+            u8 *tab = (u8 *)gUnk_087404A0;
+            s32 q = (s32)tab + 3;
 
-            q = (s32)tab + 3;
             p->unk03 -= *(u8 *)(i + q);
         }
         if (p->unk03 <= 7)
@@ -617,8 +616,9 @@ void sub_0807840c(struct M19Particle *p, u8 a)
     case 3:
         {
             s32 i = p->unk01 * 4 + p->unk00 * 96;
+            u8 *tab = (u8 *)gUnk_087404A0;
+            s32 q = (s32)tab + 3;
 
-            q = (s32)tab + 3;
             p->unk03 -= *(u8 *)(i + q);
         }
         if (p->unk03 <= 7)
@@ -634,8 +634,9 @@ void sub_0807840c(struct M19Particle *p, u8 a)
     case 4:
         {
             s32 i = p->unk01 * 4 + p->unk00 * 96;
+            u8 *tab = (u8 *)gUnk_087404A0;
+            s32 q = (s32)tab + 3;
 
-            q = (s32)tab + 3;
             p->unk03 += *(u8 *)(i + q);
         }
         if (p->unk03 > 160)

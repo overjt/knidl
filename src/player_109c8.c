@@ -38,10 +38,6 @@ void sub_080109c8(void)
     s32 x;
     s32 y;
     s32 n;
-    /* Pin (3.229): without it the RNG result coalesces into r0 and the whole
-       block's r0/r1/r2 assignment rotates.  Pinning the table temp to r0 is
-       what forces the ROM's `adds r1, r0, #0` copy of the call result. */
-    register s16 *tp asm("r0");
 
     i = 0;
     do
@@ -51,8 +47,7 @@ void sub_080109c8(void)
         {
             p->unk08 = 0;
             n = sub_08002ee8(16);
-            tp = &gUnk_087320C4[0][n];
-            p->unk00 = -(*tp << 16);
+            p->unk00 = -(gUnk_087320C4[0][n] << 16);
             p->unk04 = gUnk_087320C4[1][n] << 16;
         }
         if (abs(p->unk00) <= 0xF0000)
@@ -72,9 +67,9 @@ void sub_080109c8(void)
                instead of reusing the value it already holds, and a plain read
                is folded into the earlier one. */
             p->unk00 = *(volatile s32 *)&p->unk00 + p->unk08;
-            sh = (abs(p->unk00) >> 20) + 1;
+            n = (abs(p->unk00) >> 20) + 1;
             u = *(volatile s32 *)&p->unk04;
-            t = (abs(u) & 0xFFFF0000) >> sh;
+            t = (abs(u) & 0xFFFF0000) >> n;
             if (p->unk04 > 0)
                 t = -t;
             p->unk04 += t;
