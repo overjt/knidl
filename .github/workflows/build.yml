@@ -29,8 +29,8 @@ jobs:
 
       # ----- Checks that never require baserom.gba (always run) -----
 
-      - name: Python tooling check (tools/gbafix.py, tools/symdb.py, tools/symdb_check.py, tools/split.py, tools/modmap.py, tools/datastats.py, tools/check_data_policy.py, tools/rename.py)
-        run: docker run --rm -v "$PWD":/src -w /src knidl-builder python3 -m py_compile tools/gbafix.py tools/symdb.py tools/symdb_check.py tools/split.py tools/modmap.py tools/datastats.py tools/check_data_policy.py tools/rename.py tools/rename_field.py tools/carve_data.py tools/resegment.py
+      - name: Python tooling check (tools/*.py)
+        run: docker run --rm -v "$PWD":/src -w /src knidl-builder python3 -m py_compile tools/gbafix.py tools/symdb.py tools/symdb_check.py tools/split.py tools/modmap.py tools/datastats.py tools/check_data_policy.py tools/rename.py tools/rename_field.py tools/carve_data.py tools/resegment.py tools/ldblocks.py tools/shiftcheck.py tools/ptrcensus.py
 
       - name: Perl tooling check (tools/calcrom.pl)
         run: docker run --rm -v "$PWD":/src -w /src knidl-builder perl -c tools/calcrom.pl
@@ -167,6 +167,22 @@ jobs:
             echo
             echo '```'
             make datastats
+            echo '```'
+          } | tee -a "$GITHUB_STEP_SUMMARY"
+
+      # The shift test (issue #36, docs/data.md section 8): relink with
+      # padding at a few section boundaries and count the pointer-like
+      # words that did not move; ptrcensus.py sorts them into proven
+      # pointers, coincidences and unknowns.  Fails only on a word that
+      # moved wrongly (a symbol+offset across the insertion point).
+      - name: Shift test and pointer census (make shifttest)
+        if: steps.baserom.outputs.have == 'true'
+        run: |
+          {
+            echo "### Shift test and pointer census"
+            echo
+            echo '```'
+            make shifttest
             echo '```'
           } | tee -a "$GITHUB_STEP_SUMMARY"
 

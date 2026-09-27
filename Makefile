@@ -188,7 +188,8 @@ datastats: baserom.gba tools/datastats.py tools/split_config.json docs/analysis/
 # again with padding inserted at a few section boundaries and count, per
 # zone, the pointer-like words that did not move with their targets.
 shifttest: $(ELF)
-	python3 tools/shiftcheck.py --elf $(ELF) --by-target --json $(BUILD_DIR)/shifttest.json --objs $(ALL_OBJS)
+	python3 tools/shiftcheck.py --elf $(ELF) --json $(BUILD_DIR)/shifttest.json --objs $(ALL_OBJS)
+	python3 tools/ptrcensus.py --elf $(ELF) --shift $(BUILD_DIR)/shifttest.json --by-target --unknown $(BUILD_DIR)/ptrcensus_unknown.json
 
 # Data policy (AGENTS.md, docs/data.md): assets are never committed, and
 # data/ may hold only labels, symbolic .words and .incbin slices of

@@ -360,7 +360,9 @@ def main():
               for _v, _n, _l, r in results)
     if bad:
         print()
-        print("note: %d broken or wrongly moved word(s); see --json" % bad)
+        sys.exit("error: %d broken or wrongly moved word(s): a symbol whose "
+                 "base and target lie on different sides of an insertion "
+                 "point; see --json" % bad)
 
 
 if __name__ == "__main__":
