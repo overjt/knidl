@@ -34,7 +34,7 @@
  *     `0x08741E7C` has two rows (`0x08741E84`/`0x08741E88` and
  *     `0x08741E8C`/`0x08741E90`);
  *   * the class-2 task #176 one-shot `sub_080843fc` and the class-3 task #10
- *     entry `sub_08084484`, whose script continues in src/enemy_844c4.c.
+ *     entry `Task_Noddy`, whose script continues in src/enemy_844c4.c.
  *
  * `sub_080839d0`, `sub_08083ee8`, `sub_080840d4` and `sub_0808429c` are dead
  * exports: each is a copy of its host's tail dispatch that nothing in the ROM
@@ -69,9 +69,9 @@ extern u32 gUnk_08741F64[];
 extern u32 gUnk_08741E90[];
 extern s32 gUnk_08741E94[];
 extern s32 gUnk_08741EA4[];
-extern u32 gUnk_08741F70[];
-extern u32 gUnk_08752150[];
-extern u32 gUnk_08752AB4[];
+extern u32 gNoddyVariants[];
+extern u32 gNoddyFrames[];
+extern u32 gFlamerFrames[];
 extern s16 gUnk_08741E70[];
 extern u32 gUnk_08741E7C[];
 extern u32 gUnk_08741E84[];
@@ -1115,7 +1115,7 @@ void sub_080843fc(void)
     t->moveCallback = (u32)ActorMove;
     t->drawCallback = (u32)ActorDrawWorldInViewOrDestroy;
     t->layer = 3;
-    gCurTask->frameTable = gUnk_08752AB4;
+    gCurTask->frameTable = gFlamerFrames;
     TaskFaceLikeParent();
     TaskSetMotionXFacing(0x10000, 0);
     u = gCurTask;
@@ -1132,7 +1132,7 @@ void sub_080843fc(void)
     TaskExitTrampoline();
 }
 
-void sub_08084484(void)
+void Task_Noddy(void)
 {
     struct Task *t;
     struct Task *u;
@@ -1142,6 +1142,6 @@ void sub_08084484(void)
     t->drawCallback = (u32)ActorDrawWorldInViewOrDestroy;
     t->layer = 11;
     u = gCurTask;
-    u->frameTable = gUnk_08752150;
-    CallTableEntry(u->unk73, 2, gUnk_08741F70);
+    u->frameTable = gNoddyFrames;
+    CallTableEntry(u->unk73, 2, gNoddyVariants);
 }

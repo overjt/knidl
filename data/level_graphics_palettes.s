@@ -104,8 +104,8 @@ gUnk_0825088C:
 	.global	gUnk_082530C8
 gUnk_082530C8:
 	.incbin	"baserom.gba", 0x2530C8, 0x8288
-	.global	gUnk_0825B350
-gUnk_0825B350:
+	.global	gUFOGfx
+gUFOGfx:
 	.incbin	"baserom.gba", 0x25B350, 0x16F4
 	.global	gUnk_0825CA44
 gUnk_0825CA44:

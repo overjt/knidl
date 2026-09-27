@@ -49,7 +49,7 @@ extern u32 gUnk_08742104[];
 extern u32 gUnk_08742108[];
 extern u32 gUnk_0874212C[];
 extern u32 gUnk_08742138[];
-extern u32 gUnk_08742570[];
+extern u32 gTwizzyVariants[];
 extern u32 gUnk_087425B0[];
 extern u32 gUnk_087425B4[];
 extern u32 gUnk_087425D0[];
@@ -65,7 +65,7 @@ extern u32 gUnk_08742648[];
 extern u32 gUnk_08742654[];
 extern u32 gUnk_08742660[];
 extern u32 gUnk_0874266C[];
-extern u32 gUnk_08752560[];
+extern u32 gTwizzyFrames[];
 
 /* Externals */
 extern s32 TaskFindNearestPlayer(void);
@@ -821,19 +821,19 @@ s32 sub_08086f54(void)
     return 1;
 }
 
-void sub_0808705c(void)
+void Task_Twizzy(void)
 {
     gCurTask->moveCallback = (u32)ActorMove;
     gCurTask->drawCallback = (u32)ActorDrawWorldInViewOrDestroy;
     gCurTask->layer = 11;
-    gCurTask->frameTable = gUnk_08752560;
+    gCurTask->frameTable = gTwizzyFrames;
     TaskFaceNearestPlayer();
-    CallTableEntry(gCurTask->unk73, 10, gUnk_08742570);
+    CallTableEntry(gCurTask->unk73, 10, gTwizzyVariants);
 }
 
 void sub_080870a4(void)
 {
-    CallTableEntry(gCurTask->unk73, 10, gUnk_08742570);
+    CallTableEntry(gCurTask->unk73, 10, gTwizzyVariants);
 }
 
 void sub_080870c4(void)

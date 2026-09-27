@@ -43,38 +43,38 @@ gTaskTypes:
 	.incbin	"baserom.gba", 0x72FF68, 0x4
 	.word	Task_PlayerEffect+1
 	.incbin	"baserom.gba", 0x72FF70, 0x4
-	.word	sub_0807893c+1
+	.word	Task_WaddleDee+1
 	.incbin	"baserom.gba", 0x72FF78, 0x4
-	.word	sub_0807d684+1
+	.word	Task_Rocky+1
 	.incbin	"baserom.gba", 0x72FF80, 0x4
-	.word	sub_08084484+1
+	.word	Task_Noddy+1
 	.incbin	"baserom.gba", 0x72FF88, 0x4
-	.word	sub_0808d4e8+1
+	.word	Task_BroomHatter+1
 	.incbin	"baserom.gba", 0x72FF90, 0x4
-	.word	sub_08079440+1
+	.word	Task_Pengy+1
 	.incbin	"baserom.gba", 0x72FF98, 0x4
-	.word	sub_0808e3a8+1
+	.word	Task_LaserBall+1
 	.incbin	"baserom.gba", 0x72FFA0, 0x4
-	.word	sub_08084cd4+1
+	.word	Task_Chilly+1
 	.incbin	"baserom.gba", 0x72FFA8, 0x4
-	.word	sub_0807de98+1
+	.word	Task_SirKibble+1
 	.incbin	"baserom.gba", 0x72FFB0, 0x4
-	.word	sub_0807e530+1
+	.word	Task_Cappy+1
 	.incbin	"baserom.gba", 0x72FFB8, 0x4
-	.word	sub_08085450+1
+	.word	Task_WaddleDoo+1
 	.incbin	"baserom.gba", 0x72FFC0, 0x4
-	.word	sub_0807e9d8+1
+	.word	Task_Gordo+1
 	.incbin	"baserom.gba", 0x72FFC8, 0x4
-	.word	sub_0807edb4+1
+	.word	Task_CoolSpook+1
 	.incbin	"baserom.gba", 0x72FFD0, 0x4
-	.word	sub_08086090+1
+	.word	Task_BrontoBurt+1
 	.incbin	"baserom.gba", 0x72FFD8, 0x4
-	.word	sub_0807effc+1
+	.word	Task_Kabu+1
 	.incbin	"baserom.gba", 0x72FFE0, 0x4
-	.word	sub_080799e0+1
+	.word	Task_Bomber+1
 	.incbin	"baserom.gba", 0x72FFE8, 0x4
 	.word	sub_0808e8d4+1
 	.incbin	"baserom.gba", 0x72FFF0, 0x4
-	.word	sub_0808705c+1
+	.word	Task_Twizzy+1
 	.incbin	"baserom.gba", 0x72FFF8, 0x4
-	.word	sub_0808f224+1
+	.word	Task_Shotzo+1

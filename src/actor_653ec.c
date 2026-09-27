@@ -106,7 +106,7 @@ extern void TaskUpdateFlip(void);
 extern void ActorDrawWorldInViewOrDestroy(void);
 extern void sub_08066e88(u8 a);
 extern void sub_080637cc(void);
-extern u32 gUnk_08752BA8[];
+extern u32 gParasolFrames[];
 extern s16 gUnk_0873E1E8[];
 extern s16 gUnk_0873E220[];
 extern u8 gUnk_02006178;
@@ -1711,7 +1711,7 @@ void sub_08066c74(void)
         t = gCurTask;
         x = t->pixelX - gSpriteCameraX + gUnk_030023B4;
         y = t->pixelY - gSpriteCameraY + gUnk_030023D4;
-        QueueSprite(t->layer, gUnk_08752BA8[t->unk8C->extraFrame], t->spriteFlags, 0,
+        QueueSprite(t->layer, gParasolFrames[t->unk8C->extraFrame], t->spriteFlags, 0,
                      x, y);
         a = gCurTask->unk8C;
         a->unk16--;
@@ -1792,7 +1792,7 @@ void sub_08066e88(u8 a)
             u->unk73 = 3;
             u->drawCallback = (u32)ActorDrawWorldInViewOrDestroy;
             u->layer = 11;
-            u->frameTable = gUnk_08752BA8;
+            u->frameTable = gParasolFrames;
             u->frame = 0;
         }
     }

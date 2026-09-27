@@ -21,7 +21,7 @@
  *     that walks Task.posX/unk50 with RandomSpread and waits on the room byte
  *     gTaskSlotTypes[Task.parent] through `sub_0808cfec`) and `sub_0808d014`,
  *     plus the smaller `sub_0808d148` and `sub_0808d218`;
- *   * script 1: entry `sub_0808d4e8` (Task.unk73 -> `0x08743188`, 3 rows) with
+ *   * script 1: entry `Task_BroomHatter` (Task.unk73 -> `0x08743188`, 3 rows) with
  *     the row bodies `sub_0808d558` / `sub_0808da00` / `sub_0808df58`, the
  *     body tables `0x08743194` / `0x087431AC` / `0x087431C4` and the guard
  *     tables `0x087431A0` / `0x087431B8` / `0x087431C8`;
@@ -30,7 +30,7 @@
  *     table `gUnk_0874313C`, `sub_0808d460` flips the sprite through
  *     Task.spriteFlags and `sub_0808d494` / `sub_0808d4a8` / `sub_0808d4bc` /
  *     `sub_0808d4d0` set the animation id in Actor.extraFrame;
- *   * script 2's entry `sub_0808e3a8` (Task.unk73 -> `0x087431E4`) and its
+ *   * script 2's entry `Task_LaserBall` (Task.unk73 -> `0x087431E4`) and its
  *     aiming half: `sub_0808e070` / `sub_0808e0d0` / `sub_0808e174` turn the
  *     vector to the target into a heading with ArcTan2, `sub_0808e254` spawns
  *     actor 103, `sub_0808e2b4` is the GetDistSq proximity test and
@@ -59,7 +59,7 @@ extern s16 gUnk_08742FAC[];
 extern u8 gUnk_0874313C[];
 extern u32 gUnk_08743144[];
 extern u32 gUnk_08743158[];
-extern u32 gUnk_08743188[];
+extern u32 gBroomHatterVariants[];
 extern u32 gUnk_08743194[];
 extern u32 gUnk_087431A0[];
 extern u32 gUnk_087431AC[];
@@ -68,9 +68,9 @@ extern u32 gUnk_087431C4[];
 extern u32 gUnk_087431C8[];
 extern u32 gUnk_087431CC[];
 extern u32 gUnk_087431D8[];
-extern u32 gUnk_087431E4[];
-extern u32 gUnk_087521D8[];
-extern u32 gUnk_08752248[];
+extern u32 gLaserBallVariants[];
+extern u32 gBroomHatterFrames[];
+extern u32 gLaserBallFrames[];
 extern u32 gUnk_087522B4[];
 extern u32 gUnk_087523E4[];
 extern u32 gUnk_08752808[];
@@ -144,7 +144,7 @@ void sub_0808d494(void);
 void sub_0808d4a8(void);
 void sub_0808d4bc(void);
 void sub_0808d4d0(void);
-void sub_0808d4e8(void);
+void Task_BroomHatter(void);
 void sub_0808d558(void);
 void sub_0808d58c(void);
 void sub_0808d624(void);
@@ -175,7 +175,7 @@ void sub_0808e254(void);
 void sub_0808e2b4(void);
 void sub_0808e33c(void);
 void sub_0808e36c(void);
-void sub_0808e3a8(void);
+void Task_LaserBall(void);
 
 void sub_0808cce8(void)
 {
@@ -529,7 +529,7 @@ void sub_0808d4d0(void)
     gCurTask->unk8C->extraFrame = -1;
 }
 
-void sub_0808d4e8(void)
+void Task_BroomHatter(void)
 {
     struct Task *t;
     struct Task *u;
@@ -543,8 +543,8 @@ void sub_0808d4e8(void)
     t->drawCallback = (u32)sub_08065640;
     t->layer = 11;
     u = gCurTask;
-    u->frameTable = gUnk_087521D8;
-    CallTableEntry(u->unk73, 3, gUnk_08743188);
+    u->frameTable = gBroomHatterFrames;
+    CallTableEntry(u->unk73, 3, gBroomHatterVariants);
 }
 
 void sub_0808d558(void)
@@ -1230,7 +1230,7 @@ void sub_0808e36c(void)
         TaskAccelerateInDir(gUnk_087431CC[t->unk74], gUnk_087431D8[t->unk74], (u16)t->unk34);
 }
 
-void sub_0808e3a8(void)
+void Task_LaserBall(void)
 {
     struct Task *t;
 
@@ -1238,9 +1238,9 @@ void sub_0808e3a8(void)
     t->moveCallback = (u32)TaskMove;
     t->drawCallback = (u32)ActorDrawWorldInViewOrDestroy;
     t->layer = 11;
-    gCurTask->frameTable = gUnk_08752248;
+    gCurTask->frameTable = gLaserBallFrames;
     AcquirePaletteAnim(3, 1);
     SetPaletteAnimSource(1, 0, gCurTask->unk8C->paletteVariant);
-    CallTableEntry(gCurTask->unk73, 2, gUnk_087431E4);
+    CallTableEntry(gCurTask->unk73, 2, gLaserBallVariants);
 }
 

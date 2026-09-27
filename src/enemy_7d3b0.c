@@ -45,7 +45,7 @@ extern u32 gUnk_087410C0[];
 extern u32 gUnk_087410D8[];
 extern u32 gUnk_08741158[];
 extern u32 gUnk_08741174[];
-extern u32 gUnk_087411C0[];
+extern u32 gRockyVariants[];
 extern u32 gUnk_087411CC[];
 extern u32 gUnk_087411E0[];
 extern u32 gUnk_087411F4[];
@@ -54,14 +54,14 @@ extern u32 gUnk_087411FC[];
 extern u32 gUnk_08741208[];
 extern u32 gUnk_08741218[];
 extern u32 gUnk_08741220[];
-extern u32 gUnk_08741228[];
+extern u32 gSirKibbleVariants[];
 extern u32 gUnk_08741234[];
 extern u32 gUnk_08741240[];
 extern u32 gUnk_0874124C[];
 extern u32 gUnk_08741258[];
 extern u32 gUnk_08741264[];
 extern u32 gUnk_08741268[];
-extern u32 gUnk_0874126C[];
+extern u32 gCappyVariants[];
 extern u32 gUnk_08741278[];
 extern u32 gUnk_0874127C[];
 extern u32 gUnk_08741280[];
@@ -70,7 +70,7 @@ extern u32 gUnk_08741290[];
 extern u32 gUnk_08741294[];
 extern u32 gUnk_08741298[];
 extern u32 gUnk_087412A0[];
-extern u32 gUnk_087412BC[];
+extern u32 gGordoVariants[];
 extern u32 gUnk_087412CC[];
 extern u32 gUnk_087412D0[];
 extern u32 gUnk_087412D4[];
@@ -79,21 +79,21 @@ extern u32 gUnk_087412DC[];
 extern u32 gUnk_087412E0[];
 extern u32 gUnk_087412E4[];
 extern u32 gUnk_087412E8[];
-extern u32 gUnk_08741300[];
+extern u32 gCoolSpookVariants[];
 extern u32 gUnk_08741308[];
 extern u32 gUnk_0874130C[];
 extern u32 gUnk_08741310[];
 extern u32 gUnk_08741314[];
-extern u32 gUnk_08741380[];
+extern u32 gKabuVariants[];
 extern u32 gUnk_0874183C[];
-extern u32 gUnk_08752108[];
-extern u32 gUnk_08752194[];
+extern u32 gGordoFrames[];
+extern u32 gRockyFrames[];
 extern u32 gUnk_08752234[];
-extern u32 gUnk_0875230C[];
-extern u32 gUnk_0875235C[];
-extern u32 gUnk_0875237C[];
-extern u32 gUnk_087523EC[];
-extern u32 gUnk_08752438[];
+extern u32 gSirKibbleFrames[];
+extern u32 gCappyFrames[];
+extern u32 gCappyCaplessFrames[];
+extern u32 gCoolSpookFrames[];
+extern u32 gKabuFrames[];
 extern u8 gUnk_08741214[];
 extern u8 gUnk_08741216[];
 
@@ -311,13 +311,13 @@ void sub_0807d510(void)
     TaskExitTrampoline();
 }
 
-void sub_0807d684(void)
+void Task_Rocky(void)
 {
     gCurTask->moveCallback = (u32)ActorMove;
     gCurTask->drawCallback = (u32)ActorDrawWorldInViewOrDestroy;
     gCurTask->layer = 11;
-    gCurTask->frameTable = gUnk_08752194;
-    CallTableEntry(gCurTask->unk73, 3, gUnk_087411C0);
+    gCurTask->frameTable = gRockyFrames;
+    CallTableEntry(gCurTask->unk73, 3, gRockyVariants);
 }
 
 void sub_0807d6c4(void)
@@ -703,18 +703,18 @@ s32 sub_0807de88(void)
     return 1;
 }
 
-void sub_0807de98(void)
+void Task_SirKibble(void)
 {
     gCurTask->moveCallback = (u32)ActorMove;
     gCurTask->drawCallback = (u32)ActorDrawWorldInViewOrDestroy;
     gCurTask->layer = 11;
-    gCurTask->frameTable = gUnk_0875230C;
+    gCurTask->frameTable = gSirKibbleFrames;
     TaskFaceNearestPlayer();
     {
         struct Task *t = gCurTask;
 
         t->unk2C = 0;
-        CallTableEntry(t->unk73, 3, gUnk_08741228);
+        CallTableEntry(t->unk73, 3, gSirKibbleVariants);
     }
 }
 
@@ -1041,12 +1041,12 @@ s32 sub_0807e520(void)
     return 1;
 }
 
-void sub_0807e530(void)
+void Task_Cappy(void)
 {
     gCurTask->moveCallback = (u32)ActorMove;
     gCurTask->drawCallback = (u32)ActorDrawWorldInViewOrDestroy;
     gCurTask->layer = 11;
-    CallTableEntry(gCurTask->unk73, 3, gUnk_0874126C);
+    CallTableEntry(gCurTask->unk73, 3, gCappyVariants);
 }
 
 void sub_0807e568(void)
@@ -1054,7 +1054,7 @@ void sub_0807e568(void)
     struct Task *t = gCurTask;
 
     t->updateCallback = (u32)sub_0807e5bc;
-    t->frameTable = gUnk_0875235C;
+    t->frameTable = gCappyFrames;
     ActorSetState(0);
     CallTableEntry(gCurTask->state, 1, gUnk_08741278);
 }
@@ -1116,7 +1116,7 @@ void sub_0807e6d4(void)
     struct Task *t = gCurTask;
 
     t->updateCallback = (u32)sub_0807e730;
-    t->frameTable = gUnk_0875237C;
+    t->frameTable = gCappyCaplessFrames;
     ActorLoadDef(gUnk_0874183C);
     ActorSetState(1);
     CallTableEntry(gCurTask->state, 2, gUnk_08741280);
@@ -1208,7 +1208,7 @@ void sub_0807e8b8(void)
     struct Task *t = gCurTask;
 
     t->updateCallback = (u32)sub_0807e920;
-    t->frameTable = gUnk_0875235C;
+    t->frameTable = gCappyFrames;
     TaskFaceNearestPlayer();
     ActorSetAttackBox(gUnk_0873F500);
     gCurTask->health = 2;
@@ -1266,7 +1266,7 @@ s32 sub_0807e9c8(void)
     return 1;
 }
 
-void sub_0807e9d8(void)
+void Task_Gordo(void)
 {
     gCurTask->moveCallback = (u32)ActorMove;
     gCurTask->drawCallback = (u32)ActorDrawWorldInViewOrDestroy;
@@ -1274,12 +1274,12 @@ void sub_0807e9d8(void)
     {
         struct Task *t = gCurTask;
 
-        t->frameTable = gUnk_08752108;
+        t->frameTable = gGordoFrames;
         t->onGround = 0;
     }
     TaskFaceNearestPlayer();
     gCurTask->unk28 = ActorStartAnim(gUnk_087412A8);
-    CallTableEntry(gCurTask->unk73, 4, gUnk_087412BC);
+    CallTableEntry(gCurTask->unk73, 4, gGordoVariants);
 }
 
 void sub_0807ea30(void)
@@ -1453,16 +1453,16 @@ void sub_0807ed98(void)
     gCurTask->unk28 = ActorTickAnim(gCurTask->unk28);
 }
 
-void sub_0807edb4(void)
+void Task_CoolSpook(void)
 {
     gCurTask->moveCallback = (u32)ActorMove;
     gCurTask->drawCallback = (u32)ActorDrawWorldInViewOrDestroy;
     gCurTask->layer = 11;
-    gCurTask->frameTable = gUnk_087523EC;
+    gCurTask->frameTable = gCoolSpookFrames;
     AcquirePaletteAnim(0, 0);
     gCurTask->facing = 255;
     gCurTask->unk28 = ActorStartAnim(gUnk_087412EC);
-    CallTableEntry(gCurTask->unk73, 2, gUnk_08741300);
+    CallTableEntry(gCurTask->unk73, 2, gCoolSpookVariants);
 }
 
 void sub_0807ee14(void)
@@ -1557,12 +1557,12 @@ void sub_0807efec(void)
     gUnk_02007FB8[0]--;
 }
 
-void sub_0807effc(void)
+void Task_Kabu(void)
 {
     gCurTask->moveCallback = (u32)ActorMove;
     gCurTask->drawCallback = (u32)ActorDrawWorldInViewOrDestroy;
     gCurTask->layer = 11;
-    gCurTask->frameTable = gUnk_08752438;
+    gCurTask->frameTable = gKabuFrames;
     TaskFaceNearestPlayer();
-    CallTableEntry(gCurTask->unk73, 4, gUnk_08741380);
+    CallTableEntry(gCurTask->unk73, 4, gKabuVariants);
 }

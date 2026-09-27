@@ -10,31 +10,31 @@
 	.global	asset_metadata_index
 asset_metadata_index:
 	.incbin	"baserom.gba", 0x730000, 0x4
-	.word	sub_08079e24+1
+	.word	Task_Sparky+1
 	.incbin	"baserom.gba", 0x730008, 0x4
-	.word	sub_0807fcbc+1
+	.word	Task_Twister+1
 	.incbin	"baserom.gba", 0x730010, 0x4
-	.word	sub_08088610+1
+	.word	Task_Squishy+1
 	.incbin	"baserom.gba", 0x730018, 0x4
-	.word	sub_0807a898+1
+	.word	Task_Scarfy+1
 	.incbin	"baserom.gba", 0x730020, 0x4
 	.word	sub_08089180+1
 	.incbin	"baserom.gba", 0x730028, 0x4
-	.word	sub_08080dd0+1
+	.word	Task_Starman+1
 	.incbin	"baserom.gba", 0x730030, 0x4
-	.word	sub_08080400+1
+	.word	Task_HotHead+1
 	.incbin	"baserom.gba", 0x730038, 0x4
-	.word	sub_08089848+1
+	.word	Task_Glunk+1
 	.incbin	"baserom.gba", 0x730040, 0x4
 	.word	sub_08089c58+1
 	.incbin	"baserom.gba", 0x730048, 0x4
-	.word	sub_0808aa68+1
+	.word	Task_Blipper+1
 	.incbin	"baserom.gba", 0x730050, 0x4
 	.word	sub_0807af58+1
 	.incbin	"baserom.gba", 0x730058, 0x4
 	.word	sub_0807af98+1
 	.incbin	"baserom.gba", 0x730060, 0x4
-	.word	sub_080819b4+1
+	.word	Task_PoppyBrosJr+1
 	.incbin	"baserom.gba", 0x730068, 0x4
 	.word	sub_08081f60+1
 	.incbin	"baserom.gba", 0x730070, 0x4
@@ -42,15 +42,15 @@ asset_metadata_index:
 	.incbin	"baserom.gba", 0x730078, 0x4
 	.word	sub_0808fa10+1
 	.incbin	"baserom.gba", 0x730080, 0x4
-	.word	sub_080826d8+1
+	.word	Task_Wheelie+1
 	.incbin	"baserom.gba", 0x730088, 0x4
-	.word	sub_08082de4+1
+	.word	Task_Flamer+1
 	.incbin	"baserom.gba", 0x730090, 0x4
-	.word	sub_0807bd20+1
+	.word	Task_Togezo+1
 	.incbin	"baserom.gba", 0x730098, 0x4
-	.word	sub_0807c444+1
+	.word	Task_UFO+1
 	.incbin	"baserom.gba", 0x7300A0, 0x4
-	.word	sub_0807cbb4+1
+	.word	Task_Parasol+1
 	.incbin	"baserom.gba", 0x7300A8, 0x4
 	.word	sub_0808bdb4+1
 	.incbin	"baserom.gba", 0x7300B0, 0x4
@@ -4323,8 +4323,8 @@ gUnk_087404A0:
 	.global	gUnk_08740620
 gUnk_08740620:
 	.incbin	"baserom.gba", 0x740620, 0x10
-	.global	gUnk_08740630
-gUnk_08740630:
+	.global	gWaddleDeeVariants
+gWaddleDeeVariants:
 	.word	sub_08078be0+1
 	.word	sub_08078ce8+1
 	.word	sub_08078e3c+1
@@ -4397,8 +4397,8 @@ gUnk_08740708:
 gUnk_08740710:
 	.word	sub_080793c4+1
 	.word	sub_08079424+1
-	.global	gUnk_08740718
-gUnk_08740718:
+	.global	gPengyVariants
+gPengyVariants:
 	.word	sub_080794dc+1
 	.word	sub_08079918+1
 	.global	gUnk_08740720
@@ -4431,8 +4431,8 @@ gUnk_08740778:
 	.global	gUnk_0874077C
 gUnk_0874077C:
 	.word	sub_080799dc+1
-	.global	gUnk_08740780
-gUnk_08740780:
+	.global	gBomberVariants
+gBomberVariants:
 	.word	sub_08079a9c+1
 	.word	sub_08079d30+1
 	.global	gUnk_08740788
@@ -4453,8 +4453,8 @@ gUnk_087407A8:
 	.global	gUnk_087407AC
 gUnk_087407AC:
 	.word	sub_08079e20+1
-	.global	gUnk_087407B0
-gUnk_087407B0:
+	.global	gSparkyVariants
+gSparkyVariants:
 	.word	sub_0807a06c+1
 	.word	sub_0807a45c+1
 	.word	sub_0807a578+1
@@ -4529,21 +4529,21 @@ gUnk_0874094C:
 	.global	gUnk_08740950
 gUnk_08740950:
 	.incbin	"baserom.gba", 0x740950, 0x10
-	.global	gUnk_08740960
-gUnk_08740960:
+	.global	gScarfyStates
+gScarfyStates:
 	.word	sub_0807ab8c+1
 	.word	sub_0807abdc+1
 	.word	sub_0807ab54+1
-	.word	sub_0807ac58+1
-	.word	sub_0807ae1c+1
+	.word	ScarfyTransform+1
+	.word	ScarfyChase+1
 	.word	sub_0807aecc+1
-	.global	gUnk_08740978
-gUnk_08740978:
+	.global	gScarfyStateUpdates
+gScarfyStateUpdates:
 	.word	sub_0807abb4+1
 	.word	sub_0807ac08+1
 	.word	sub_0807ab70+1
 	.word	sub_0807adcc+1
-	.word	sub_0807ae7c+1
+	.word	ScarfyChaseUpdate+1
 	.word	sub_0807af3c+1
 	.global	gUnk_08740990
 gUnk_08740990:
@@ -4604,8 +4604,8 @@ gUnk_08740A5C:
 	.global	gUnk_08740A74
 gUnk_08740A74:
 	.word	sub_0807bcec+1
-	.global	gUnk_08740A78
-gUnk_08740A78:
+	.global	gTogezoVariants
+gTogezoVariants:
 	.word	sub_0807c080+1
 	.word	sub_0807c350+1
 	.global	gUnk_08740A80
@@ -4645,8 +4645,8 @@ gUnk_08740AF8:
 	.global	gUnk_08740AFC
 gUnk_08740AFC:
 	.word	sub_0807c440+1
-	.global	gUnk_08740B00
-gUnk_08740B00:
+	.global	gUFOVariants
+gUFOVariants:
 	.word	sub_0807c684+1
 	.word	sub_0807ca50+1
 	.global	gUnk_08740B08
@@ -4676,8 +4676,8 @@ gUnk_08740BA4:
 	.global	gUnk_08740BA8
 gUnk_08740BA8:
 	.word	sub_0807cbb0+1
-	.global	gUnk_08740BAC
-gUnk_08740BAC:
+	.global	gParasolVariants
+gParasolVariants:
 	.word	sub_0807cc68+1
 	.word	sub_0807cd64+1
 	.word	sub_0807cedc+1
@@ -4874,8 +4874,8 @@ gUnk_08741174:
 	.incbin	"baserom.gba", 0x741174, 0x44
 	.word	sub_0807d1bc+1
 	.word	sub_0807d1dc+1
-	.global	gUnk_087411C0
-gUnk_087411C0:
+	.global	gRockyVariants
+gRockyVariants:
 	.word	sub_0807d6c4+1
 	.word	sub_0807daac+1
 	.word	sub_0807db48+1
@@ -4922,8 +4922,8 @@ gUnk_08741218:
 gUnk_08741220:
 	.word	sub_0807df14+1
 	.word	sub_0807e044+1
-	.global	gUnk_08741228
-gUnk_08741228:
+	.global	gSirKibbleVariants
+gSirKibbleVariants:
 	.word	sub_0807dee4+1
 	.word	sub_0807e014+1
 	.word	sub_0807e3e4+1
@@ -4953,8 +4953,8 @@ gUnk_08741264:
 	.global	gUnk_08741268
 gUnk_08741268:
 	.word	sub_0807e480+1
-	.global	gUnk_0874126C
-gUnk_0874126C:
+	.global	gCappyVariants
+gCappyVariants:
 	.word	sub_0807e568+1
 	.word	sub_0807e6d4+1
 	.word	sub_0807e8b8+1
@@ -4987,8 +4987,8 @@ gUnk_087412A0:
 	.global	gUnk_087412A8
 gUnk_087412A8:
 	.incbin	"baserom.gba", 0x7412A8, 0x14
-	.global	gUnk_087412BC
-gUnk_087412BC:
+	.global	gGordoVariants
+gGordoVariants:
 	.word	sub_0807ea30+1
 	.word	sub_0807eaf0+1
 	.word	sub_0807ebe0+1
@@ -5020,8 +5020,8 @@ gUnk_087412E8:
 	.global	gUnk_087412EC
 gUnk_087412EC:
 	.incbin	"baserom.gba", 0x7412EC, 0x14
-	.global	gUnk_08741300
-gUnk_08741300:
+	.global	gCoolSpookVariants
+gCoolSpookVariants:
 	.word	sub_0807ee14+1
 	.word	sub_0807eec4+1
 	.global	gUnk_08741308
@@ -5072,8 +5072,8 @@ gUnk_0874136D:
 	.global	gUnk_08741378
 gUnk_08741378:
 	.incbin	"baserom.gba", 0x741378, 0x8
-	.global	gUnk_08741380
-gUnk_08741380:
+	.global	gKabuVariants
+gKabuVariants:
 	.word	sub_0807f044+1
 	.word	sub_0807f380+1
 	.word	sub_0807f88c+1
@@ -5133,8 +5133,8 @@ gUnk_08741420:
 	.global	gUnk_08741454
 gUnk_08741454:
 	.incbin	"baserom.gba", 0x741454, 0x34
-	.global	gUnk_08741488
-gUnk_08741488:
+	.global	gTwisterVariants
+gTwisterVariants:
 	.word	sub_0807fd34+1
 	.word	sub_080802bc+1
 	.global	gUnk_08741490
@@ -5156,8 +5156,8 @@ gUnk_087414AC:
 	.global	gUnk_087414B0
 gUnk_087414B0:
 	.incbin	"baserom.gba", 0x7414B0, 0x4
-	.global	gUnk_087414B4
-gUnk_087414B4:
+	.global	gHotHeadVariants
+gHotHeadVariants:
 	.word	sub_0808044c+1
 	.word	sub_0808076c+1
 	.word	sub_08080818+1
@@ -5208,8 +5208,8 @@ gUnk_0874151C:
 	.global	gUnk_08741524
 gUnk_08741524:
 	.incbin	"baserom.gba", 0x741524, 0x20
-	.global	gUnk_08741544
-gUnk_08741544:
+	.global	gStarmanVariants
+gStarmanVariants:
 	.word	sub_08080e10+1
 	.word	sub_08081408+1
 	.word	sub_08081614+1
@@ -5255,8 +5255,8 @@ gUnk_087415A8:
 	.global	gUnk_087415AC
 gUnk_087415AC:
 	.incbin	"baserom.gba", 0x7415AC, 0xC
-	.global	gUnk_087415B8
-gUnk_087415B8:
+	.global	gPoppyBrosJrVariants
+gPoppyBrosJrVariants:
 	.word	sub_080819f4+1
 	.word	sub_080819f4+1
 	.word	sub_08081d24+1
@@ -5323,8 +5323,8 @@ gUnk_08741638:
 	.global	gUnk_0874163B
 gUnk_0874163B:
 	.incbin	"baserom.gba", 0x74163B, 0x5
-	.global	gUnk_08741640
-gUnk_08741640:
+	.global	gWheelieVariants
+gWheelieVariants:
 	.word	sub_08082718+1
 	.word	sub_08082718+1
 	.word	sub_08082bb8+1
@@ -5419,8 +5419,8 @@ gUnk_08741744:
 	.global	gUnk_08741758
 gUnk_08741758:
 	.incbin	"baserom.gba", 0x741758, 0x14
-	.global	gUnk_0874176C
-gUnk_0874176C:
+	.global	gFlamerVariants
+gFlamerVariants:
 	.word	sub_08082e68+1
 	.word	sub_08082e68+1
 	.word	sub_0808398c+1
@@ -5654,8 +5654,8 @@ gUnk_08741EE0:
 	.global	gUnk_08741F64
 gUnk_08741F64:
 	.incbin	"baserom.gba", 0x741F64, 0xC
-	.global	gUnk_08741F70
-gUnk_08741F70:
+	.global	gNoddyVariants
+gNoddyVariants:
 	.word	sub_080844c4+1
 	.word	sub_08084a74+1
 	.global	gUnk_08741F78
@@ -5683,8 +5683,8 @@ gUnk_08741FAC:
 	.global	gUnk_08741FB4
 gUnk_08741FB4:
 	.incbin	"baserom.gba", 0x741FB4, 0x4
-	.global	gUnk_08741FB8
-gUnk_08741FB8:
+	.global	gChillyVariants
+gChillyVariants:
 	.word	sub_08084d14+1
 	.word	sub_080852cc+1
 	.global	gUnk_08741FC0
@@ -5701,8 +5701,8 @@ gUnk_08741FD4:
 	.word	sub_08085158+1
 	.word	sub_08085274+1
 	.word	sub_080852c8+1
-	.global	gUnk_08741FE8
-gUnk_08741FE8:
+	.global	gWaddleDooVariants
+gWaddleDooVariants:
 	.word	sub_08085498+1
 	.word	sub_08085858+1
 	.word	sub_08085c2c+1
@@ -5747,8 +5747,8 @@ gUnk_08742040:
 	.global	gUnk_08742050
 gUnk_08742050:
 	.incbin	"baserom.gba", 0x742050, 0x14
-	.global	gUnk_08742064
-gUnk_08742064:
+	.global	gBrontoBurtVariants
+gBrontoBurtVariants:
 	.word	sub_080860f8+1
 	.word	sub_080862cc+1
 	.word	sub_080864ec+1
@@ -5829,8 +5829,8 @@ gUnk_08742144:
 	.global	gUnk_08742150
 gUnk_08742150:
 	.incbin	"baserom.gba", 0x742150, 0x420
-	.global	gUnk_08742570
-gUnk_08742570:
+	.global	gTwizzyVariants
+gTwizzyVariants:
 	.word	sub_080870c4+1
 	.word	sub_08087268+1
 	.word	sub_08087458+1
@@ -5949,8 +5949,8 @@ gUnk_087426AC:
 	.global	gUnk_087426B0
 gUnk_087426B0:
 	.word	sub_08088478+1
-	.global	gUnk_087426B4
-gUnk_087426B4:
+	.global	gSquishyVariants
+gSquishyVariants:
 	.word	sub_08088658+1
 	.word	sub_08088a64+1
 	.word	sub_08088ce8+1
@@ -6022,8 +6022,8 @@ gUnk_0874276C:
 	.global	gUnk_08742778
 gUnk_08742778:
 	.incbin	"baserom.gba", 0x742778, 0x20
-	.global	gUnk_08742798
-gUnk_08742798:
+	.global	gGlunkVariants
+gGlunkVariants:
 	.word	sub_08089888+1
 	.word	sub_08089b44+1
 	.global	gUnk_087427A0
@@ -6112,8 +6112,8 @@ gUnk_08742894:
 	.global	gUnk_087428A8
 gUnk_087428A8:
 	.incbin	"baserom.gba", 0x7428A8, 0x18
-	.global	gUnk_087428C0
-gUnk_087428C0:
+	.global	gBlipperVariants
+gBlipperVariants:
 	.word	sub_0808aad8+1
 	.word	sub_0808adec+1
 	.word	sub_0808af34+1
@@ -6386,8 +6386,8 @@ gUnk_08743144:
 	.global	gUnk_08743158
 gUnk_08743158:
 	.incbin	"baserom.gba", 0x743158, 0x30
-	.global	gUnk_08743188
-gUnk_08743188:
+	.global	gBroomHatterVariants
+gBroomHatterVariants:
 	.word	sub_0808d558+1
 	.word	sub_0808da00+1
 	.word	sub_0808df58+1
@@ -6423,8 +6423,8 @@ gUnk_087431CC:
 	.global	gUnk_087431D8
 gUnk_087431D8:
 	.incbin	"baserom.gba", 0x7431D8, 0xC
-	.global	gUnk_087431E4
-gUnk_087431E4:
+	.global	gLaserBallVariants
+gLaserBallVariants:
 	.word	sub_0808e404+1
 	.word	sub_0808e804+1
 	.global	gUnk_087431EC
@@ -6485,8 +6485,8 @@ gUnk_08743256:
 	.global	gUnk_0874325A
 gUnk_0874325A:
 	.incbin	"baserom.gba", 0x74325A, 0x2A
-	.global	gUnk_08743284
-gUnk_08743284:
+	.global	gShotzoVariants
+gShotzoVariants:
 	.word	sub_0808f26c+1
 	.word	sub_0808f2c4+1
 	.word	sub_0808f2c4+1
@@ -9853,77 +9853,77 @@ gUnk_08752090:
 	.global	gUnk_087520A8
 gUnk_087520A8:
 	.incbin	"baserom.gba", 0x7520A8, 0x60
-	.global	gUnk_08752108
-gUnk_08752108:
+	.global	gGordoFrames
+gGordoFrames:
 	.incbin	"baserom.gba", 0x752108, 0x10
-	.global	gUnk_08752118
-gUnk_08752118:
+	.global	gWaddleDeeFrames
+gWaddleDeeFrames:
 	.incbin	"baserom.gba", 0x752118, 0x38
-	.global	gUnk_08752150
-gUnk_08752150:
+	.global	gNoddyFrames
+gNoddyFrames:
 	.incbin	"baserom.gba", 0x752150, 0x40
 	.global	gUnk_08752190
 gUnk_08752190:
 	.incbin	"baserom.gba", 0x752190, 0x4
-	.global	gUnk_08752194
-gUnk_08752194:
+	.global	gRockyFrames
+gRockyFrames:
 	.incbin	"baserom.gba", 0x752194, 0x44
-	.global	gUnk_087521D8
-gUnk_087521D8:
+	.global	gBroomHatterFrames
+gBroomHatterFrames:
 	.incbin	"baserom.gba", 0x7521D8, 0x2C
-	.global	gUnk_08752204
-gUnk_08752204:
+	.global	gPengyFrames
+gPengyFrames:
 	.incbin	"baserom.gba", 0x752204, 0x30
 	.global	gUnk_08752234
 gUnk_08752234:
 	.incbin	"baserom.gba", 0x752234, 0x14
-	.global	gUnk_08752248
-gUnk_08752248:
+	.global	gLaserBallFrames
+gLaserBallFrames:
 	.incbin	"baserom.gba", 0x752248, 0x34
 	.global	gUnk_0875227C
 gUnk_0875227C:
 	.incbin	"baserom.gba", 0x75227C, 0x8
-	.global	gUnk_08752284
-gUnk_08752284:
+	.global	gChillyFrames
+gChillyFrames:
 	.incbin	"baserom.gba", 0x752284, 0x30
 	.global	gUnk_087522B4
 gUnk_087522B4:
 	.incbin	"baserom.gba", 0x7522B4, 0x58
-	.global	gUnk_0875230C
-gUnk_0875230C:
+	.global	gSirKibbleFrames
+gSirKibbleFrames:
 	.incbin	"baserom.gba", 0x75230C, 0x30
 	.global	gUnk_0875233C
 gUnk_0875233C:
 	.incbin	"baserom.gba", 0x75233C, 0x20
-	.global	gUnk_0875235C
-gUnk_0875235C:
+	.global	gCappyFrames
+gCappyFrames:
 	.incbin	"baserom.gba", 0x75235C, 0x20
-	.global	gUnk_0875237C
-gUnk_0875237C:
+	.global	gCappyCaplessFrames
+gCappyCaplessFrames:
 	.incbin	"baserom.gba", 0x75237C, 0x24
-	.global	gUnk_087523A0
-gUnk_087523A0:
+	.global	gWaddleDooFrames
+gWaddleDooFrames:
 	.incbin	"baserom.gba", 0x7523A0, 0x44
 	.global	gUnk_087523E4
 gUnk_087523E4:
 	.incbin	"baserom.gba", 0x7523E4, 0x8
-	.global	gUnk_087523EC
-gUnk_087523EC:
+	.global	gCoolSpookFrames
+gCoolSpookFrames:
 	.incbin	"baserom.gba", 0x7523EC, 0x20
-	.global	gUnk_0875240C
-gUnk_0875240C:
+	.global	gBrontoBurtFrames
+gBrontoBurtFrames:
 	.incbin	"baserom.gba", 0x75240C, 0x2C
-	.global	gUnk_08752438
-gUnk_08752438:
+	.global	gKabuFrames
+gKabuFrames:
 	.incbin	"baserom.gba", 0x752438, 0x34
-	.global	gUnk_0875246C
-gUnk_0875246C:
+	.global	gBomberFrames
+gBomberFrames:
 	.incbin	"baserom.gba", 0x75246C, 0x38
 	.global	gUnk_087524A4
 gUnk_087524A4:
 	.incbin	"baserom.gba", 0x7524A4, 0x40
-	.global	gUnk_087524E4
-gUnk_087524E4:
+	.global	gShotzoFrames
+gShotzoFrames:
 	.incbin	"baserom.gba", 0x7524E4, 0x3C
 	.global	gUnk_08752520
 gUnk_08752520:
@@ -9931,38 +9931,38 @@ gUnk_08752520:
 	.global	gUnk_08752548
 gUnk_08752548:
 	.incbin	"baserom.gba", 0x752548, 0x18
-	.global	gUnk_08752560
-gUnk_08752560:
+	.global	gTwizzyFrames
+gTwizzyFrames:
 	.incbin	"baserom.gba", 0x752560, 0x24
-	.global	gUnk_08752584
-gUnk_08752584:
+	.global	gSparkyFrames
+gSparkyFrames:
 	.incbin	"baserom.gba", 0x752584, 0x60
-	.global	gUnk_087525E4
-gUnk_087525E4:
+	.global	gTwisterFrames
+gTwisterFrames:
 	.incbin	"baserom.gba", 0x7525E4, 0x48
-	.global	gUnk_0875262C
-gUnk_0875262C:
+	.global	gSquishyFrames
+gSquishyFrames:
 	.incbin	"baserom.gba", 0x75262C, 0x30
-	.global	gUnk_0875265C
-gUnk_0875265C:
+	.global	gScarfyFrames
+gScarfyFrames:
 	.incbin	"baserom.gba", 0x75265C, 0x24
-	.global	gUnk_08752680
-gUnk_08752680:
+	.global	gScarfyAngryFrames
+gScarfyAngryFrames:
 	.incbin	"baserom.gba", 0x752680, 0x28
 	.global	gUnk_087526A8
 gUnk_087526A8:
 	.incbin	"baserom.gba", 0x7526A8, 0x60
-	.global	gUnk_08752708
-gUnk_08752708:
+	.global	gStarmanFrames
+gStarmanFrames:
 	.incbin	"baserom.gba", 0x752708, 0x54
-	.global	gUnk_0875275C
-gUnk_0875275C:
+	.global	gHotHeadFrames
+gHotHeadFrames:
 	.incbin	"baserom.gba", 0x75275C, 0x38
 	.global	gUnk_08752794
 gUnk_08752794:
 	.incbin	"baserom.gba", 0x752794, 0x48
-	.global	gUnk_087527DC
-gUnk_087527DC:
+	.global	gGlunkFrames
+gGlunkFrames:
 	.incbin	"baserom.gba", 0x7527DC, 0x2C
 	.global	gUnk_08752808
 gUnk_08752808:
@@ -9970,14 +9970,14 @@ gUnk_08752808:
 	.global	gUnk_08752828
 gUnk_08752828:
 	.incbin	"baserom.gba", 0x752828, 0x30
-	.global	gUnk_08752858
-gUnk_08752858:
+	.global	gBlipperFrames
+gBlipperFrames:
 	.incbin	"baserom.gba", 0x752858, 0x70
 	.global	gUnk_087528C8
 gUnk_087528C8:
 	.incbin	"baserom.gba", 0x7528C8, 0x8
-	.global	gUnk_087528D0
-gUnk_087528D0:
+	.global	gPoppyBrosJrFrames
+gPoppyBrosJrFrames:
 	.incbin	"baserom.gba", 0x7528D0, 0x20
 	.global	gUnk_087528F0
 gUnk_087528F0:
@@ -10000,23 +10000,23 @@ gUnk_08752A24:
 	.global	gUnk_08752A70
 gUnk_08752A70:
 	.incbin	"baserom.gba", 0x752A70, 0x1C
-	.global	gUnk_08752A8C
-gUnk_08752A8C:
+	.global	gWheelieFrames
+gWheelieFrames:
 	.incbin	"baserom.gba", 0x752A8C, 0x28
-	.global	gUnk_08752AB4
-gUnk_08752AB4:
+	.global	gFlamerFrames
+gFlamerFrames:
 	.incbin	"baserom.gba", 0x752AB4, 0x54
-	.global	gUnk_08752B08
-gUnk_08752B08:
+	.global	gTogezoFrames
+gTogezoFrames:
 	.incbin	"baserom.gba", 0x752B08, 0x44
-	.global	gUnk_08752B4C
-gUnk_08752B4C:
+	.global	gUFOFrames
+gUFOFrames:
 	.incbin	"baserom.gba", 0x752B4C, 0x40
 	.global	gUnk_08752B8C
 gUnk_08752B8C:
 	.incbin	"baserom.gba", 0x752B8C, 0x1C
-	.global	gUnk_08752BA8
-gUnk_08752BA8:
+	.global	gParasolFrames
+gParasolFrames:
 	.incbin	"baserom.gba", 0x752BA8, 0x2C
 	.global	gUnk_08752BD4
 gUnk_08752BD4:

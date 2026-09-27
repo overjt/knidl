@@ -5,7 +5,7 @@
  *
  * The middle third of enemy/object behaviour bank 1 (see src/enemy_78b68.c for
  * the bank's three-table script pattern).  Twelve more scripts, among them:
- *   * the class-6 "swinging platform" pair `sub_0807aab8`+`sub_0807aae4` with
+ *   * the class-6 "swinging platform" pair `sub_0807aab8`+`ScarfyUpdate` with
  *     its five-state `sub_0807a8fc` dispatch and `sub_0807aa5c`'s two-table
  *     velocity ramp;
  *   * task #12's eight-state script (`sub_0807b300`+`sub_0807b32c`) whose hook
@@ -50,15 +50,15 @@ extern struct AnimCmd gUnk_0874099C[];
 extern struct AnimCmd gUnk_087409C0[];
 extern struct AnimCmd gUnk_08740A98[];
 extern struct AnimCmd gUnk_08740AAC[];
-extern u32 gUnk_0825B350[];
+extern u32 gUFOGfx[];
 extern u32 gUnk_0873F500[];
 extern u32 gUnk_0873F720[];
 extern u32 gUnk_08740864[];
 extern u32 gUnk_087408AC[];
 extern u32 gUnk_08740934[];
 extern u32 gUnk_08740950[];
-extern u32 gUnk_08740960[];
-extern u32 gUnk_08740978[];
+extern u32 gScarfyStates[];
+extern u32 gScarfyStateUpdates[];
 extern u32 gUnk_08740990[];
 extern u32 gUnk_087409E4[];
 extern u32 gUnk_087409FC[];
@@ -68,7 +68,7 @@ extern u32 gUnk_08740A40[];
 extern u32 gUnk_08740A44[];
 extern u32 gUnk_08740A5C[];
 extern u32 gUnk_08740A74[];
-extern u32 gUnk_08740A78[];
+extern u32 gTogezoVariants[];
 extern u32 gUnk_08740A80[];
 extern u32 gUnk_08740A88[];
 extern u32 gUnk_08740A90[];
@@ -76,13 +76,13 @@ extern u32 gUnk_08740AC8[];
 extern u32 gUnk_08740AE0[];
 extern u32 gUnk_08740AF8[];
 extern u32 gUnk_08740AFC[];
-extern u32 gUnk_08740B00[];
+extern u32 gUFOVariants[];
 extern u32 gUnk_08740B08[];
 extern u32 gUnk_08740B84[];
 extern u32 gUnk_08740B94[];
 extern u32 gUnk_08740BA4[];
 extern u32 gUnk_08740BA8[];
-extern u32 gUnk_08740BAC[];
+extern u32 gParasolVariants[];
 extern u32 gUnk_08740BBC[];
 extern u32 gUnk_08740BC0[];
 extern u32 gUnk_08740BC4[];
@@ -103,13 +103,13 @@ extern u32 gUnk_087410B0[];
 extern u32 gUnk_087410B8[];
 extern u32 gUnk_0874CB5C[];
 extern u32 gUnk_08752234[];
-extern u32 gUnk_08752680[];
+extern u32 gScarfyAngryFrames[];
 extern u32 gUnk_087529D8[];
 extern u32 gUnk_08752A24[];
-extern u32 gUnk_08752B08[];
-extern u32 gUnk_08752B4C[];
+extern u32 gTogezoFrames[];
+extern u32 gUFOFrames[];
 extern u32 gUnk_08752B8C[];
-extern u32 gUnk_08752BA8[];
+extern u32 gParasolFrames[];
 
 /* Externals */
 extern s16 sub_0806cc90(u8 flag, u16 vx, s32 c, s32 d);
@@ -175,7 +175,7 @@ extern s32 sub_0807a8d4();
 extern s32 sub_0807a8fc();
 extern s32 sub_0807a968();
 extern s32 sub_0807aa0c();
-void sub_0807aae4(void);
+void ScarfyUpdate(void);
 void sub_0807b32c(void);
 void sub_0807b3dc(void);
 void sub_0807b844(void);
@@ -219,14 +219,14 @@ void sub_0807aa5c(void)
 
 void sub_0807aab8(void)
 {
-    gCurTask->updateCallback = (u32)sub_0807aae4;
+    gCurTask->updateCallback = (u32)ScarfyUpdate;
     sub_0807a8d4();
-    CallTableEntry(gCurTask->state, 6, gUnk_08740960);
+    CallTableEntry(gCurTask->state, 6, gScarfyStates);
 }
 
-void sub_0807aae4(void)
+void ScarfyUpdate(void)
 {
-    CallTableEntry(gCurTask->updateState, 6, gUnk_08740978);
+    CallTableEntry(gCurTask->updateState, 6, gScarfyStateUpdates);
     if (gTaskSlotTypes[gCurTaskIdx] != -1 && gCurTask->state != 0)
     {
         ActorCheckHits();
@@ -235,9 +235,9 @@ void sub_0807aae4(void)
     }
 }
 
-void sub_0807ab38(void)
+void ScarfyEnterState(void)
 {
-    CallTableEntry(gCurTask->state, 6, gUnk_08740960);
+    CallTableEntry(gCurTask->state, 6, gScarfyStates);
 }
 
 void sub_0807ab54(void)
@@ -265,7 +265,7 @@ void sub_0807abb4(void)
     if (sub_08064984(10) != 0)
     {
         ActorSetState(1);
-        TaskSetEntry(sub_0807ab38, gCurTaskIdx);
+        TaskSetEntry(ScarfyEnterState, gCurTaskIdx);
     }
 }
 
@@ -283,18 +283,18 @@ void sub_0807ac08(void)
     if (abs(TaskGetNearestPlayerDy()) <= 4)
     {
         ActorSetState(2);
-        TaskSetEntry(sub_0807ab38, gCurTaskIdx);
+        TaskSetEntry(ScarfyEnterState, gCurTaskIdx);
     }
 }
 
-void sub_0807ac58(void)
+void ScarfyTransform(void)
 {
     struct Task *t;
     s32 v;
 
     gCurTask->updateState = 3;
     TaskStop();
-    gCurTask->frameTable = gUnk_08752680;
+    gCurTask->frameTable = gScarfyAngryFrames;
     ActorSetHitReactions(gUnk_08740F50);
     t = gCurTask;
     t->unk28 = 2;
@@ -359,7 +359,7 @@ void sub_0807adcc(void)
 
     if (t->state != 3)
     {
-        TaskSetEntry(sub_0807ab38, gCurTaskIdx);
+        TaskSetEntry(ScarfyEnterState, gCurTaskIdx);
     }
     else if (--t->unk28 <= 0)
     {
@@ -369,7 +369,7 @@ void sub_0807adcc(void)
     }
 }
 
-void sub_0807ae1c(void)
+void ScarfyChase(void)
 {
     struct Task *t;
     s32 i;
@@ -387,7 +387,7 @@ void sub_0807ae1c(void)
     TaskSleepForever();
 }
 
-void sub_0807ae7c(void)
+void ScarfyChaseUpdate(void)
 {
     struct Task *t;
     s32 n;
@@ -399,7 +399,7 @@ void sub_0807ae7c(void)
     if (n <= 0)
     {
         ActorSetState(5);
-        TaskSetEntry(sub_0807ab38, gCurTaskIdx);
+        TaskSetEntry(ScarfyEnterState, gCurTaskIdx);
     }
     else if ((n & 7) == 0)
     {
@@ -1077,13 +1077,13 @@ void sub_0807bd14(void)
     ActorAttachToHitter();
 }
 
-void sub_0807bd20(void)
+void Task_Togezo(void)
 {
     gCurTask->moveCallback = (u32)ActorMove;
     gCurTask->drawCallback = (u32)ActorDrawWorldInViewOrDestroy;
     gCurTask->layer = 11;
-    gCurTask->frameTable = gUnk_08752B08;
-    CallTableEntry(gCurTask->unk73, 2, gUnk_08740A78);
+    gCurTask->frameTable = gTogezoFrames;
+    CallTableEntry(gCurTask->unk73, 2, gTogezoVariants);
 }
 
 void sub_0807bd60(void)
@@ -1438,13 +1438,13 @@ void sub_0807c440(void)
 {
 }
 
-void sub_0807c444(void)
+void Task_UFO(void)
 {
     gCurTask->moveCallback = (u32)ActorMove;
     gCurTask->drawCallback = (u32)ActorDrawWorldInViewOrDestroy;
     gCurTask->layer = 11;
-    gCurTask->frameTable = gUnk_08752B4C;
-    CallTableEntry(gCurTask->unk73, 2, gUnk_08740B00);
+    gCurTask->frameTable = gUFOFrames;
+    CallTableEntry(gCurTask->unk73, 2, gUFOVariants);
 }
 
 void sub_0807c484(void)
@@ -1461,7 +1461,7 @@ void sub_0807c4a0(void)
     AcquirePaletteAnim(1, 0);
     v = a->palette;
     if (v == 0)
-        v = gUnk_0825B350[2];
+        v = gUFOGfx[2];
     SetPaletteAnimSource(0, v, a->paletteVariant);
 }
 
@@ -1787,13 +1787,13 @@ void sub_0807cbb0(void)
 {
 }
 
-void sub_0807cbb4(void)
+void Task_Parasol(void)
 {
     gCurTask->moveCallback = (u32)ActorMove;
     gCurTask->drawCallback = (u32)ActorDrawWorldInViewOrDestroy;
     gCurTask->layer = 11;
-    gCurTask->frameTable = gUnk_08752BA8;
-    CallTableEntry(gCurTask->unk73, 4, gUnk_08740BAC);
+    gCurTask->frameTable = gParasolFrames;
+    CallTableEntry(gCurTask->unk73, 4, gParasolVariants);
 }
 
 void sub_0807cbf4(void)

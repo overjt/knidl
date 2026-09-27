@@ -25,7 +25,7 @@ extern struct AnimCmd gUnk_087428A8[];
 extern u32 gCollisionTilePushRight[];
 extern u32 gCollisionTilePushLeft[];
 extern u32 gUnk_0873F500[];
-extern u32 gUnk_087428C0[];
+extern u32 gBlipperVariants[];
 extern u32 gUnk_087428D8[];
 extern u32 gUnk_087428E0[];
 extern u32 gUnk_08742908[];
@@ -38,7 +38,7 @@ extern u32 gUnk_08742940[];
 extern u32 gUnk_08742948[];
 extern u32 gUnk_08742978[];
 extern u32 gUnk_087522B4[];
-extern u32 gUnk_08752858[];
+extern u32 gBlipperFrames[];
 extern u32 gUnk_087528C8[];
 extern u32 gUnk_08752BD4[];
 extern u8 *gUnk_08742998[];
@@ -115,18 +115,18 @@ s32 sub_0808ca00(s32 a, s32 b);
 s32 sub_0808cab8(s32 a, s32 b);
 void sub_0808cc14(void);
 
-void sub_0808aa68(void)
+void Task_Blipper(void)
 {
     gCurTask->moveCallback = (u32)ActorMove;
     gCurTask->drawCallback = (u32)ActorDrawWorldInViewOrDestroy;
     gCurTask->layer = 11;
-    gCurTask->frameTable = gUnk_08752858;
+    gCurTask->frameTable = gBlipperFrames;
     gCurTask->onGround = 0;
     if (gCurTask->unk73 == 5)
         sub_0808bb24();
     TaskInitWaterFlags();
     if (gCurTask->waterFlags == 3)
-        CallTableEntry(gCurTask->unk73, 6, gUnk_087428C0);
+        CallTableEntry(gCurTask->unk73, 6, gBlipperVariants);
     sub_0808b5b4();
 }
 

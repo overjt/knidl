@@ -24,7 +24,7 @@
  *     AngleToVector, `sub_0808efdc` / `sub_0808f058` fire actor 109 through
  *     CreateActorFromDescAtOffsetFacing + CreateChildTaskAtOffsetFacing, and `sub_0808f0d0` / `sub_0808f1b4` are the
  *     per-frame drivers;
- *   * script 4's entry `sub_0808f224` (Task.unk73 -> `0x08743284`, 6 rows) and
+ *   * script 4's entry `Task_Shotzo` (Task.unk73 -> `0x08743284`, 6 rows) and
  *     its three <body, guard> table pairs `0x0874329C`/`0x087432A8`,
  *     `0x087432B4`/`0x087432C0` and `0x087432CC`/`0x087432D8`.  Its bodies
  *     continue in src/enemy_8f41c.c.
@@ -57,7 +57,7 @@ extern u8 gUnk_08743248[];
 extern s8 gUnk_0874324C[];
 extern s8 gUnk_08743251[];
 extern s8 gUnk_08743256[];
-extern u32 gUnk_08743284[];
+extern u32 gShotzoVariants[];
 extern u32 gUnk_0874329C[];
 extern u32 gUnk_087432A8[];
 extern u32 gUnk_087432B4[];
@@ -68,7 +68,7 @@ extern u32 gUnk_08743390[];
 extern u32 gUnk_087433E8[];
 extern u32 gUnk_08743558[];
 extern u32 gUnk_087524A4[];
-extern u32 gUnk_087524E4[];
+extern u32 gShotzoFrames[];
 
 /* Externals */
 extern void TaskYieldTrampoline(u32 a);
@@ -156,7 +156,7 @@ void sub_0808efdc(void);
 void sub_0808f058(void);
 void sub_0808f0d0(void);
 void sub_0808f1b4(u16 a, void *b);
-void sub_0808f224(void);
+void Task_Shotzo(void);
 void sub_0808f26c(void);
 void sub_0808f2a0(void);
 void sub_0808f2c4(void);
@@ -959,7 +959,7 @@ void sub_0808f1b4(u16 a, void *b)
     }
 }
 
-void sub_0808f224(void)
+void Task_Shotzo(void)
 {
     struct Task *t;
     struct Task *u;
@@ -969,9 +969,9 @@ void sub_0808f224(void)
     t->drawCallback = (u32)ActorDrawWorldInViewOrDestroy;
     t->layer = 11;
     u = gCurTask;
-    u->frameTable = gUnk_087524E4;
+    u->frameTable = gShotzoFrames;
     u->unk8C->extraFrame = 4;
-    CallTableEntry(u->unk73, 6, gUnk_08743284);
+    CallTableEntry(u->unk73, 6, gShotzoVariants);
 }
 
 void sub_0808f26c(void)

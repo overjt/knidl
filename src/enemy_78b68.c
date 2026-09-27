@@ -82,19 +82,19 @@ extern u32 gUnk_08740700[];
 extern u32 gUnk_08740704[];
 extern u32 gUnk_08740708[];
 extern u32 gUnk_08740710[];
-extern u32 gUnk_08740718[];
+extern u32 gPengyVariants[];
 extern u32 gUnk_08740720[];
 extern u32 gUnk_08740728[];
 extern u32 gUnk_08740758[];
 extern u32 gUnk_08740768[];
 extern u32 gUnk_08740778[];
 extern u32 gUnk_0874077C[];
-extern u32 gUnk_08740780[];
+extern u32 gBomberVariants[];
 extern u32 gUnk_08740788[];
 extern u32 gUnk_08740798[];
 extern u32 gUnk_087407A8[];
 extern u32 gUnk_087407AC[];
-extern u32 gUnk_087407B0[];
+extern u32 gSparkyVariants[];
 extern u32 gUnk_087407C4[];
 extern u32 gUnk_087407D0[];
 extern u32 gUnk_087407DC[];
@@ -110,10 +110,10 @@ extern u32 gUnk_08740C00[];
 extern u32 gUnk_08740DE4[];
 extern u32 gUnk_08740E1C[];
 extern u32 gUnk_08740F2C[];
-extern u32 gUnk_08752204[];
-extern u32 gUnk_0875246C[];
-extern u32 gUnk_08752584[];
-extern u32 gUnk_0875265C[];
+extern u32 gPengyFrames[];
+extern u32 gBomberFrames[];
+extern u32 gSparkyFrames[];
+extern u32 gScarfyFrames[];
 
 /* Externals */
 extern s32 RandomRange(s32 a);
@@ -180,7 +180,7 @@ void sub_0807a10c(void);
 void sub_0807a4a0(void);
 void sub_0807a5a8(void);
 void sub_0807a618(void);
-extern s32 sub_0807ab38();
+extern s32 ScarfyEnterState();
 
 void sub_08078b68(void)
 {
@@ -600,13 +600,13 @@ void sub_08079424(void)
     gCurTask->unk34 = ActorTickAnimFacingNearestPlayer(gCurTask->unk34);
 }
 
-void sub_08079440(void)
+void Task_Pengy(void)
 {
     gCurTask->moveCallback = (u32)ActorMove;
     gCurTask->drawCallback = (u32)ActorDrawWorldInViewOrDestroy;
     gCurTask->layer = 11;
-    gCurTask->frameTable = gUnk_08752204;
-    CallTableEntry(gCurTask->unk73, 2, gUnk_08740718);
+    gCurTask->frameTable = gPengyFrames;
+    CallTableEntry(gCurTask->unk73, 2, gPengyVariants);
 }
 
 s32 sub_08079480(void)
@@ -917,13 +917,13 @@ void sub_080799dc(void)
 {
 }
 
-void sub_080799e0(void)
+void Task_Bomber(void)
 {
     gCurTask->moveCallback = (u32)ActorMove;
     gCurTask->drawCallback = (u32)ActorDrawWorldInViewOrDestroy;
     gCurTask->layer = 11;
-    gCurTask->frameTable = gUnk_0875246C;
-    CallTableEntry(gCurTask->unk73, 2, gUnk_08740780);
+    gCurTask->frameTable = gBomberFrames;
+    CallTableEntry(gCurTask->unk73, 2, gBomberVariants);
 }
 
 s32 sub_08079a20(void)
@@ -1139,14 +1139,14 @@ void sub_08079e20(void)
 {
 }
 
-void sub_08079e24(void)
+void Task_Sparky(void)
 {
     gCurTask->moveCallback = (u32)ActorMove;
     gCurTask->drawCallback = (u32)ActorDrawWorldInViewOrDestroy;
     gCurTask->layer = 11;
-    gCurTask->frameTable = gUnk_08752584;
+    gCurTask->frameTable = gSparkyFrames;
     AcquirePaletteAnim(2, 0);
-    CallTableEntry(gCurTask->unk73, 3, gUnk_087407B0);
+    CallTableEntry(gCurTask->unk73, 3, gSparkyVariants);
 }
 
 void sub_08079e70(void)
@@ -1621,12 +1621,12 @@ void sub_0807a87c(void)
         sub_08079f54(1);
 }
 
-void sub_0807a898(void)
+void Task_Scarfy(void)
 {
     gCurTask->moveCallback = (u32)ActorMove;
     gCurTask->drawCallback = (u32)ActorDrawWorldInViewOrDestroy;
     gCurTask->layer = 11;
-    gCurTask->frameTable = gUnk_0875265C;
+    gCurTask->frameTable = gScarfyFrames;
     CallTableEntry(0, 1, gUnk_08740820);
 }
 
@@ -1690,6 +1690,6 @@ void sub_0807aa0c(void)
     {
         ActorSetAttackBox(gUnk_08740E1C);
         ActorSetState(3);
-        TaskSetEntry(sub_0807ab38, gCurTaskIdx);
+        TaskSetEntry(ScarfyEnterState, gCurTaskIdx);
     }
 }

@@ -5,8 +5,8 @@
  *
  * Last third of enemy/object behaviour bank 2 (pattern: src/enemy_7f044.c).
  * It holds:
- *   * task #42's dispatcher `sub_080826d8` (`0x08741640`) and task #43's
- *     `sub_08082de4` (`0x0874176C`), plus the unk73 quartets at
+ *   * task #42's dispatcher `Task_Wheelie` (`0x08741640`) and task #43's
+ *     `Task_Flamer` (`0x0874176C`), plus the unk73 quartets at
  *     `0x08741C44` (`sub_08082678` / `sub_080826a0` / `sub_080826bc` /
  *     `sub_080826c8`) and `0x08741C64` (`sub_08082d14` / `sub_08082d4c` /
  *     `sub_08082db0` / `sub_08082dd4`);
@@ -53,15 +53,15 @@ extern s32 gUnk_08741628[];
 extern s32 gUnk_08741630[];
 extern u8 gUnk_08741638[];
 extern u8 gUnk_0874163B[];
-extern u32 gUnk_08741640[];
+extern u32 gWheelieVariants[];
 extern u32 gUnk_0874164C[];
 extern u32 gUnk_08741664[];
 extern u32 gUnk_0874167C[];
 extern u32 gUnk_08741680[];
-extern u32 gUnk_0874176C[];
-extern u32 gUnk_087528D0[];
-extern u32 gUnk_08752A8C[];
-extern u32 gUnk_08752AB4[];
+extern u32 gFlamerVariants[];
+extern u32 gPoppyBrosJrFrames[];
+extern u32 gWheelieFrames[];
+extern u32 gFlamerFrames[];
 
 /* Externals */
 extern s32 RandomRange(s32 a);
@@ -145,7 +145,7 @@ void sub_08082108(void)
         u = gCurTask;
         u->tileWord = u->unk2C;
         if (gUnk_0300244C != 0)
-            u->frameTable = gUnk_087528D0;
+            u->frameTable = gPoppyBrosJrFrames;
         TaskSetFrame(1);
         break;
     case 1:
@@ -414,15 +414,15 @@ s32 sub_080826c8(void)
     return 1;
 }
 
-void sub_080826d8(void)
+void Task_Wheelie(void)
 {
     struct Task *t = gCurTask;
 
     t->moveCallback = (u32)ActorMove;
     t->drawCallback = (u32)ActorDrawWorldInViewOrDestroy;
     t->layer = 11;
-    gCurTask->frameTable = gUnk_08752A8C;
-    CallTableEntry(gCurTask->unk73, 3, gUnk_08741640);
+    gCurTask->frameTable = gWheelieFrames;
+    CallTableEntry(gCurTask->unk73, 3, gWheelieVariants);
 }
 
 void sub_08082718(void)
@@ -786,7 +786,7 @@ s32 sub_08082dd4(void)
     return 1;
 }
 
-void sub_08082de4(void)
+void Task_Flamer(void)
 {
     struct Task *t;
     struct Task *u;
@@ -798,7 +798,7 @@ void sub_08082de4(void)
     t->drawCallback = (u32)ActorDrawWorldInViewOrDestroy;
     t->layer = 11;
     u = gCurTask;
-    u->frameTable = gUnk_08752AB4;
+    u->frameTable = gFlamerFrames;
     switch (u->unk73)
     {
     case 0:
@@ -818,5 +818,5 @@ void sub_08082de4(void)
     w->unk2C = 0;
     w->unk30 = 0;
     w->unk34 = 1;
-    CallTableEntry(w->unk73, 3, gUnk_0874176C);
+    CallTableEntry(w->unk73, 3, gFlamerVariants);
 }

@@ -3,7 +3,7 @@
  * RECIPE: agbcc -O2 -mthumb-interwork -fprologue-bugfix
  *   ./tools/fnmatch.sh 0x080844C4 0x08084D14 src/enemy_844c4.c --newpb
  *
- * The body of the class-3 task #10 script whose entry (`sub_08084484`) is at
+ * The body of the class-3 task #10 script whose entry (`Task_Noddy`) is at
  * the end of src/enemy_82e68.c: `sub_080844c4` / `sub_080844f8` are the two
  * unk73 rows of `0x08741F70`, the six coroutine bodies hang off `0x08741F78`
  * and the six per-frame guards off `0x08741F90`, and `sub_0808451c` is the
@@ -16,7 +16,7 @@
  * shared `sub_08084c84` are the four class-3 hook rows at `0x08742CF0` /
  * `0x08742D00`: each returns 1 when it has handed the task to a new state and
  * 0 otherwise, and all four open with the same `Task.unk73 == 1` bail-out.
- * `sub_08084cd4` is the class-3 task #14 entry; its script is in
+ * `Task_Chilly` is the class-3 task #14 entry; its script is in
  * src/enemy_84d14.c.
  *
  * `sub_08084a50` is a leaf the census could not propose (no `push`, lesson
@@ -38,8 +38,8 @@ extern s32 gUnk_08741FAC[];
 extern s8 gUnk_08741FB4[];
 extern u32 gUnk_08741F90[];
 extern u32 gUnk_08752190[];
-extern u32 gUnk_08752284[];
-extern u32 gUnk_08741FB8[];
+extern u32 gChillyFrames[];
+extern u32 gChillyVariants[];
 
 /* Externals */
 extern void TaskYieldTrampoline(u32 frames);
@@ -538,7 +538,7 @@ s32 sub_08084cb8(void)
     return 0;
 }
 
-void sub_08084cd4(void)
+void Task_Chilly(void)
 {
     struct Task *t;
     struct Task *u;
@@ -548,6 +548,6 @@ void sub_08084cd4(void)
     t->drawCallback = (u32)ActorDrawWorldInViewOrDestroy;
     t->layer = 11;
     u = gCurTask;
-    u->frameTable = gUnk_08752284;
-    CallTableEntry(u->unk73, 2, gUnk_08741FB8);
+    u->frameTable = gChillyFrames;
+    CallTableEntry(u->unk73, 2, gChillyVariants);
 }

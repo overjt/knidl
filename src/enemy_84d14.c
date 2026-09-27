@@ -4,14 +4,14 @@
  *   ./tools/fnmatch.sh 0x08084D14 0x080860F8 src/enemy_84d14.c --newpb
  *
  * Three more scripts in the same three-table shape as src/enemy_82e68.c:
- *   * class-3 task #14 (entry `sub_08084cd4` in the previous file): unk73 rows
+ *   * class-3 task #14 (entry `Task_Chilly` in the previous file): unk73 rows
  *     `0x08741FB8`, bodies `0x08741FC0`, guards `0x08741FD4`, per-frame hook
  *     `sub_08084d90`;
- *   * class-3 task #17 (`sub_08085450`): `0x08741FE8` / `0x08741FF8` /
+ *   * class-3 task #17 (`Task_WaddleDoo`): `0x08741FE8` / `0x08741FF8` /
  *     `0x08742004`, per-frame hook `sub_08085500`;
  *   * the `sub_08085858` script: `0x08742030` / `0x08742040`, per-frame hook
  *     `sub_080858cc`;
- *   * class-3 task #20 (`sub_08086090` / `sub_080860d8`), whose seven unk73
+ *   * class-3 task #20 (`Task_BrontoBurt` / `sub_080860d8`), whose seven unk73
  *     rows at `0x08742064` all point INTO module M23 - the first cross-module
  *     dispatch found in the behaviour banks.
  *
@@ -32,20 +32,20 @@
 
 /* ROM tables */
 extern u32 gUnk_0873F500[];
-extern u32 gUnk_087523A0[];
+extern u32 gWaddleDooFrames[];
 extern s32 gUnk_08742010[];
 extern u8 gUnk_08742020[];
 extern u8 gUnk_08742028[];
 extern struct AnimCmd gUnk_08742050[];
 extern u32 gUnk_08742A40[];
-extern u32 gUnk_08742064[];
-extern u32 gUnk_0875240C[];
+extern u32 gBrontoBurtVariants[];
+extern u32 gBrontoBurtFrames[];
 extern u32 gUnk_08742030[];
 extern u32 gUnk_08742040[];
 extern u32 gUnk_08742A6C[];
 extern u8 gUnk_0874202C[];
 extern u8 gUnk_08742024[];
-extern u32 gUnk_08741FE8[];
+extern u32 gWaddleDooVariants[];
 extern u32 gUnk_08741FF8[];
 extern u32 gUnk_08742004[];
 extern u32 gUnk_08741FC0[];
@@ -484,7 +484,7 @@ s32 sub_0808542c(void)
     return 0;
 }
 
-void sub_08085450(void)
+void Task_WaddleDoo(void)
 {
     struct Task *t;
     struct Task *u;
@@ -494,9 +494,9 @@ void sub_08085450(void)
     t->drawCallback = (u32)ActorDrawWorldInViewOrDestroy;
     t->layer = 11;
     u = gCurTask;
-    u->frameTable = gUnk_087523A0;
+    u->frameTable = gWaddleDooFrames;
     u->unk8C->extraFrame = 4;
-    CallTableEntry(u->unk73, 4, gUnk_08741FE8);
+    CallTableEntry(u->unk73, 4, gWaddleDooVariants);
 }
 
 void sub_08085498(void)
@@ -1173,7 +1173,7 @@ void sub_0808606c(void)
     TaskSetEntry(ActorDie, gCurTaskIdx);
 }
 
-void sub_08086090(void)
+void Task_BrontoBurt(void)
 {
     struct Task *t;
 
@@ -1181,12 +1181,12 @@ void sub_08086090(void)
     t->moveCallback = (u32)ActorMove;
     t->drawCallback = (u32)ActorDrawWorldInViewOrDestroy;
     t->layer = 11;
-    gCurTask->frameTable = gUnk_0875240C;
+    gCurTask->frameTable = gBrontoBurtFrames;
     TaskFaceNearestPlayer();
-    CallTableEntry(gCurTask->unk73, 7, gUnk_08742064);
+    CallTableEntry(gCurTask->unk73, 7, gBrontoBurtVariants);
 }
 
 void sub_080860d8(void)
 {
-    CallTableEntry(gCurTask->unk73, 7, gUnk_08742064);
+    CallTableEntry(gCurTask->unk73, 7, gBrontoBurtVariants);
 }

@@ -9,8 +9,8 @@
  *     coroutine itself (it re-seats the actor next to gTasks[unk44]
  *     every cycle) with per-frame hook `sub_08080d58`, and `sub_08080b70` /
  *     `sub_08080bcc` are its unk73 handlers (`0x08741BF4`);
- *   * task #31's dispatcher `sub_08080dd0` (`0x08741544`, four rows) and
- *     task #38's `sub_080819b4` (`0x087415B8`, three rows);
+ *   * task #31's dispatcher `Task_Starman` (`0x08741544`, four rows) and
+ *     task #38's `Task_PoppyBrosJr` (`0x087415B8`, three rows);
  *   * six scripts in the entry/hook shape: `sub_08080e10`+`sub_08080e5c`
  *     (`0x08741554`/`0x0874156C`, six states), `sub_08081408`+`sub_0808145c`
  *     (`0x08741584`), `sub_08081614`+`sub_08081668` (`0x0874159C`),
@@ -47,7 +47,7 @@ extern s32 gUnk_08741504[];
 extern u8 gUnk_0874150C[];
 extern s32 gUnk_0874151C[];
 extern s32 gUnk_08741524[];
-extern u32 gUnk_08741544[];
+extern u32 gStarmanVariants[];
 extern u32 gUnk_08741554[];
 extern u32 gUnk_0874156C[];
 extern u32 gUnk_08741584[];
@@ -57,7 +57,7 @@ extern u32 gUnk_087415A0[];
 extern u32 gUnk_087415A4[];
 extern u32 gUnk_087415A8[];
 extern s32 gUnk_087415AC[];
-extern u32 gUnk_087415B8[];
+extern u32 gPoppyBrosJrVariants[];
 extern u32 gUnk_087415C4[];
 extern u32 gUnk_087415D0[];
 extern u32 gUnk_087415DC[];
@@ -68,8 +68,8 @@ extern u32 gUnk_08741A20[];
 extern u32 gUnk_08741B3C[];
 extern u32 gUnk_08741B44[];
 extern u32 gUnk_0874CBD0[];
-extern u32 gUnk_08752708[];
-extern u32 gUnk_087528D0[];
+extern u32 gStarmanFrames[];
+extern u32 gPoppyBrosJrFrames[];
 extern u32 gUnk_087528F0[];
 extern u32 gUnk_08752934[];
 extern u32 gUnk_08752978[];
@@ -243,7 +243,7 @@ void sub_08080d58(void)
     }
 }
 
-void sub_08080dd0(void)
+void Task_Starman(void)
 {
     struct Task *t = gCurTask;
     struct Task *u;
@@ -252,8 +252,8 @@ void sub_08080dd0(void)
     t->drawCallback = (u32)ActorDrawWorldInViewOrDestroy;
     t->layer = 11;
     u = gCurTask;
-    u->frameTable = gUnk_08752708;
-    CallTableEntry(u->unk73, 4, gUnk_08741544);
+    u->frameTable = gStarmanFrames;
+    CallTableEntry(u->unk73, 4, gStarmanVariants);
 }
 
 void sub_08080e10(void)
@@ -915,15 +915,15 @@ s32 sub_080819a4(void)
     return 1;
 }
 
-void sub_080819b4(void)
+void Task_PoppyBrosJr(void)
 {
     struct Task *t = gCurTask;
 
     t->moveCallback = (u32)ActorMove;
     t->drawCallback = (u32)ActorDrawWorldInViewOrDestroy;
     t->layer = 11;
-    gCurTask->frameTable = gUnk_087528D0;
-    CallTableEntry(gCurTask->unk73, 3, gUnk_087415B8);
+    gCurTask->frameTable = gPoppyBrosJrFrames;
+    CallTableEntry(gCurTask->unk73, 3, gPoppyBrosJrVariants);
 }
 
 void sub_080819f4(void)

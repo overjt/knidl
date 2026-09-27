@@ -16,10 +16,10 @@
  *   unk73 table -> the class-3 dispatch a task type's body selects with.
  *
  * This batch holds:
- *   * task #27's class-3 dispatcher `sub_0807fcbc` (`0x08741488`, two rows)
+ *   * task #27's class-3 dispatcher `Task_Twister` (`0x08741488`, two rows)
  *     and its unk73 quartet `sub_0807fbd0` / `sub_0807fc20` / `sub_0807fc70` /
  *     `sub_0807fcac` (`0x08741BB8`);
- *   * task #32's dispatcher `sub_08080400` (`0x087414B4`, three rows);
+ *   * task #32's dispatcher `Task_HotHead` (`0x087414B4`, three rows);
  *   * nine scripts in the entry/hook shape: `sub_0807f044`+`sub_0807f094`
  *     (`0x08741390`/`0x0874139C`), `sub_0807f380`+`sub_0807f3d4`
  *     (`0x087413A8`/`0x087413B4`), `sub_0807f88c`+`sub_0807f8d8`
@@ -80,13 +80,13 @@ extern s32 gUnk_087413E4[];
 extern struct AnimCmd gUnk_087413EC[];
 extern struct AnimCmd gUnk_08741420[];
 extern struct AnimCmd gUnk_08741454[];
-extern u32 gUnk_08741488[];
+extern u32 gTwisterVariants[];
 extern u32 gUnk_08741490[];
 extern u32 gUnk_0874149C[];
 extern u32 gUnk_087414A8[];
 extern u32 gUnk_087414AC[];
 extern u8 gUnk_087414B0[];
-extern u32 gUnk_087414B4[];
+extern u32 gHotHeadVariants[];
 extern u32 gUnk_087414C0[];
 extern u32 gUnk_087414CC[];
 extern u32 gUnk_087414D8[];
@@ -95,8 +95,8 @@ extern u32 gUnk_087414E0[];
 extern u32 gUnk_087414EC[];
 extern u32 gUnk_08741ADC[];
 extern u32 gUnk_08741CE0[];
-extern u32 gUnk_087525E4[];
-extern u32 gUnk_0875275C[];
+extern u32 gTwisterFrames[];
+extern u32 gHotHeadFrames[];
 
 /* Externals */
 extern s32 RandomRange(s32 a);
@@ -873,7 +873,7 @@ s32 sub_0807fcac(void)
     return 1;
 }
 
-void sub_0807fcbc(void)
+void Task_Twister(void)
 {
     struct Task *t;
     struct Task *u;
@@ -882,7 +882,7 @@ void sub_0807fcbc(void)
     t->moveCallback = (u32)ActorMove;
     t->drawCallback = (u32)ActorDrawWorldInViewOrDestroy;
     t->layer = 11;
-    gCurTask->frameTable = gUnk_087525E4;
+    gCurTask->frameTable = gTwisterFrames;
     TaskFaceNearestPlayer();
     u = gCurTask;
     u->unk28 = 0;
@@ -893,7 +893,7 @@ void sub_0807fcbc(void)
         gCurTask->unk30 = 1;
     else
         gCurTask->unk30 = 3;
-    CallTableEntry(gCurTask->unk73, 2, gUnk_08741488);
+    CallTableEntry(gCurTask->unk73, 2, gTwisterVariants);
 }
 
 void sub_0807fd34(void)
@@ -1275,16 +1275,16 @@ s32 sub_080803cc(void)
     return 1;
 }
 
-void sub_08080400(void)
+void Task_HotHead(void)
 {
     struct Task *t = gCurTask;
 
     t->moveCallback = (u32)ActorMove;
     t->drawCallback = (u32)ActorDrawWorldInViewOrDestroy;
     t->layer = 11;
-    gCurTask->frameTable = gUnk_0875275C;
+    gCurTask->frameTable = gHotHeadFrames;
     CreateChildTaskHere(175, 0);
-    CallTableEntry(gCurTask->unk73, 3, gUnk_087414B4);
+    CallTableEntry(gCurTask->unk73, 3, gHotHeadVariants);
 }
 
 void sub_0808044c(void)

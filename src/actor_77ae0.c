@@ -5,7 +5,7 @@
  *
  * M19 batch 5: task types #77 (sub_08077c64), #78 (sub_08077f0c), #79
  * (sub_08078598, the credits particle system over gUnk_03000FE0) and #8
- * (sub_0807893c), whose states hand off to module M20.
+ * (Task_WaddleDee), whose states hand off to module M20.
  */
 #include "gba/gba.h"
 #include "global.h"
@@ -53,9 +53,9 @@ extern u32 gUnk_087402F0[];
 extern u32 gUnk_087402F4[];
 extern u32 gUnk_087402F8[];
 extern u32 gUnk_087402FC[];
-extern u32 gUnk_08740630[];
+extern u32 gWaddleDeeVariants[];
 extern u32 gUnk_08740BD4[];
-extern u32 gUnk_08752118[];
+extern u32 gWaddleDeeFrames[];
 extern u32 gUnk_08752D40[];
 extern u32 gUnk_08752D48[];
 extern u32 gUnk_08752DB8[];
@@ -847,7 +847,7 @@ void sub_080788e0(void)
     } while (gCurTask->unk28 <= 5);
 }
 
-void sub_0807893c(void)
+void Task_WaddleDee(void)
 {
     {
         struct Task *t = gCurTask;
@@ -859,9 +859,9 @@ void sub_0807893c(void)
     {
         struct Task *t = gCurTask;
 
-        t->frameTable = gUnk_08752118;
+        t->frameTable = gWaddleDeeFrames;
         t->unk8C->extraFrame = 4;
-        CallTableEntry(t->unk73, 6, gUnk_08740630);
+        CallTableEntry(t->unk73, 6, gWaddleDeeVariants);
     }
 }
 

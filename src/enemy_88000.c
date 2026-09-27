@@ -29,7 +29,7 @@ extern u32 gUnk_0874266C[];
 extern u32 gUnk_08742684[];
 extern u32 gUnk_087426AC[];
 extern u32 gUnk_087426B0[];
-extern u32 gUnk_087426B4[];
+extern u32 gSquishyVariants[];
 extern u32 gUnk_087426C4[];
 extern u32 gUnk_087426D8[];
 extern u32 gUnk_087426F4[];
@@ -40,7 +40,7 @@ extern u32 gUnk_08742728[];
 extern u32 gUnk_0874273C[];
 extern u32 gUnk_08742744[];
 extern u32 gUnk_08742758[];
-extern u32 gUnk_08742798[];
+extern u32 gGlunkVariants[];
 extern u32 gUnk_087427A0[];
 extern u32 gUnk_087427A8[];
 extern u32 gUnk_087427B4[];
@@ -55,9 +55,9 @@ extern u32 gUnk_08742CA0[];
 extern u32 gUnk_08742CBC[];
 extern u32 gUnk_08742E50[];
 extern u32 gUnk_08742E5C[];
-extern u32 gUnk_0875262C[];
+extern u32 gSquishyFrames[];
 extern u32 gUnk_087526A8[];
-extern u32 gUnk_087527DC[];
+extern u32 gGlunkFrames[];
 extern u32 gUnk_08752808[];
 extern u32 gUnk_08752828[];
 extern u8 gUnk_08742778[];
@@ -107,7 +107,7 @@ extern void AngleToVector(s16 t, s16 mag);
 extern void ActorDrawWorldInViewOrDestroy(void);
 extern void ActorMove(void);
 extern void sub_0806a0f0(s32 a);
-void sub_0808705c(void);
+void Task_Twizzy(void);
 void sub_08087e60(void);
 
 /* Defined below */
@@ -263,7 +263,7 @@ void sub_080882f0(void)
     if (gCurTask->unk73 != 7)
     {
         gCurTask->updateCallback = 0;
-        TaskSetEntry(sub_0808705c, gCurTaskIdx);
+        TaskSetEntry(Task_Twizzy, gCurTaskIdx);
     }
 }
 
@@ -433,7 +433,7 @@ s32 sub_080885c0(void)
             if (gCurTask->state == 4)
             {
                 gCurTask->unk73 = 4;
-                TaskSetEntry(sub_0808705c, gCurTaskIdx);
+                TaskSetEntry(Task_Twizzy, gCurTaskIdx);
                 return 1;
             }
             break;
@@ -444,14 +444,14 @@ s32 sub_080885c0(void)
     }
 }
 
-void sub_08088610(void)
+void Task_Squishy(void)
 {
     gCurTask->moveCallback = (u32)ActorMove;
     gCurTask->drawCallback = (u32)ActorDrawWorldInViewOrDestroy;
     gCurTask->layer = 11;
-    gCurTask->frameTable = gUnk_0875262C;
+    gCurTask->frameTable = gSquishyFrames;
     TaskFaceNearestPlayer();
-    CallTableEntry(gCurTask->unk73, 4, gUnk_087426B4);
+    CallTableEntry(gCurTask->unk73, 4, gSquishyVariants);
 }
 
 void sub_08088658(void)
@@ -806,7 +806,7 @@ void sub_08088ea4(void)
 void sub_08088ed4(void)
 {
     if (gCurTask->unk73 != 2)
-        TaskSetEntry(sub_08088610, gCurTaskIdx);
+        TaskSetEntry(Task_Squishy, gCurTaskIdx);
 }
 
 void sub_08088efc(void)
@@ -1309,13 +1309,13 @@ void sub_08089808(u8 a)
         gCurTask->spriteFlags = gCurTask->spriteFlags & 0x7FFF;
 }
 
-void sub_08089848(void)
+void Task_Glunk(void)
 {
     gCurTask->moveCallback = (u32)ActorMove;
     gCurTask->drawCallback = (u32)ActorDrawWorldInViewOrDestroy;
     gCurTask->layer = 11;
-    gCurTask->frameTable = gUnk_087527DC;
-    CallTableEntry(gCurTask->unk73, 2, gUnk_08742798);
+    gCurTask->frameTable = gGlunkFrames;
+    CallTableEntry(gCurTask->unk73, 2, gGlunkVariants);
 }
 
 void sub_08089888(void)
