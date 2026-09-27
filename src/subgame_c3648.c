@@ -7,14 +7,14 @@
  * Sub-game 2: the racers' movement (task type #96 variant 0's callbacks).
  * 
  *   sub_080c3efc / sub_080c3f20   the two per-frame bodies variant 0 installs
- *       in Task.unk08 (racing / before the start and after the finish): run
+ *       in Task.lateUpdateCallback (racing / before the start and after the finish): run
  *       sub_080c383c, then sub_080c38c8 or sub_080c3d58, then sub_080c3e18.
  *   sub_080c383c   player 0 drives the camera (sub_080c3670) and rebuilds the
  *       course view (AirGrindDrawCourse) and keeps the leader's position in
  *       M37Game.unk1B8; every racer sets Task.layer/unk3E from the course
  *       record's unk18 and Task.unk28 from its unk08.
  *   sub_080c38c8   the racing step: holding A (M37Player.unk02 & 1) on the
- *       course (record unk14 != 0) accelerates Task.unk54 by the level's
+ *       course (record unk14 != 0) accelerates Task.velX by the level's
  *       thresholds gUnk_080CFE3C[level][], a well-timed press gives a boost
  *       (sub_080c3698, capped by gUnk_080CFE3C[level][0]), and holding A
  *       while the record's unk14 is 0 starts a 24-frame penalty
@@ -180,10 +180,10 @@ void sub_080c3648(void)
 {
     struct Task *t = gCurTask;
 
-    t->unk5C = -0x3800;
-    if (t->unk54 < 0x18000) {
-        t->unk5C = 0;
-        t->unk54 = 0x18000;
+    t->accelX = -0x3800;
+    if (t->velX < 0x18000) {
+        t->accelX = 0;
+        t->velX = 0x18000;
     }
 }
 
@@ -198,7 +198,7 @@ void sub_080c3670(s32 pos)
 
 s32 sub_080c3698(s32 player)
 {
-    s32 speed = gCurTask->unk54;
+    s32 speed = gCurTask->velX;
     s32 ret = 0;
 
     if (gAirGrindCoursePtr->unk018[player].unk00 > gAirGrindCoursePtr->unk010 - 50)
@@ -208,16 +208,16 @@ s32 sub_080c3698(s32 player)
             if (player == 0)
                 sub_080c2078(0, gCurTask->unk18, 6);
             gAirGrindPtr->unk01C[player].unk01++;
-            gCurTask->unk54 += 0x10000;
-            if (gCurTask->unk54 > gUnk_080CFE3C[gAirGrindPtr->unk000][0])
-                gCurTask->unk54 = gUnk_080CFE3C[gAirGrindPtr->unk000][0];
+            gCurTask->velX += 0x10000;
+            if (gCurTask->velX > gUnk_080CFE3C[gAirGrindPtr->unk000][0])
+                gCurTask->velX = gUnk_080CFE3C[gAirGrindPtr->unk000][0];
             ret = 2;
         } else {
             if (player == 0)
                 sub_080c2078(0, gCurTask->unk18, 7);
-            gCurTask->unk54 += 0x8000;
-            if (gCurTask->unk54 > gUnk_080CFE3C[gAirGrindPtr->unk000][0])
-                gCurTask->unk54 = gUnk_080CFE3C[gAirGrindPtr->unk000][0];
+            gCurTask->velX += 0x8000;
+            if (gCurTask->velX > gUnk_080CFE3C[gAirGrindPtr->unk000][0])
+                gCurTask->velX = gUnk_080CFE3C[gAirGrindPtr->unk000][0];
             ret = 1;
         }
         gAirGrindPtr->unk01C[player].unk0A = 5;
@@ -233,7 +233,7 @@ void sub_080c37b8(s32 a, s32 on)
                 gAirGrindPtr->unk014 = PlaySfx(400);
             else
                 m4aMPlayPitchControl(gMPlayTable[gAirGrindPtr->unk014].info, 0xFFFF,
-                                     (gCurTask->unk54 - 0x40000) >> 5);
+                                     (gCurTask->velX - 0x40000) >> 5);
         } else {
             if (gAirGrindPtr->unk014 != -1) {
                 StopSfxOnPlayer(gAirGrindPtr->unk014, 400);
@@ -263,7 +263,7 @@ void sub_080c383c(s32 player)
     gCurTask->layer = rank + 4;
     if (rank > 2)
         rank = 2;
-    gCurTask->unk3E = (rank << 13) & 0x6000;
+    gCurTask->spriteFlags = (rank << 13) & 0x6000;
     gCurTask->unk28 = gAirGrindCoursePtr->unk018[player].unk08;
 }
 
@@ -279,12 +279,12 @@ void sub_080c38c8(s32 player)
         if (gAirGrindCoursePtr->unk018[player].unk14 != 0) {
             ret = 0;
             sub_080c37b8(player, 1);
-            if (gCurTask->unk54 > gUnk_080CFE3C[gAirGrindPtr->unk000][1])
-                gCurTask->unk5C = 0x200;
-            else if (gCurTask->unk54 > gUnk_080CFE3C[gAirGrindPtr->unk000][2])
-                gCurTask->unk5C = 0xA00;
+            if (gCurTask->velX > gUnk_080CFE3C[gAirGrindPtr->unk000][1])
+                gCurTask->accelX = 0x200;
+            else if (gCurTask->velX > gUnk_080CFE3C[gAirGrindPtr->unk000][2])
+                gCurTask->accelX = 0xA00;
             else
-                gCurTask->unk5C = 0x8000;
+                gCurTask->accelX = 0x8000;
             if (player == 0) {
                 if ((gAirGrindFrame & 3) == 0)
                     sub_080c2078(0, gCurTask->unk18, 0);
@@ -324,11 +324,11 @@ void sub_080c38c8(s32 player)
     } else {
         gAirGrindPtr->unk01C[player].unk0C = 0;
         sub_080c37b8(player, 0);
-        if (gCurTask->unk54 < 0x18000) {
-            gCurTask->unk5C = 0;
-            gCurTask->unk54 = 0x18000;
+        if (gCurTask->velX < 0x18000) {
+            gCurTask->accelX = 0;
+            gCurTask->velX = 0x18000;
         } else {
-            gCurTask->unk5C = -0x800;
+            gCurTask->accelX = -0x800;
         }
         gAirGrindPtr->unk01C[player].unk14 += 0x20000;
         if (gAirGrindPtr->unk01C[player].unk14 > 0x80000)
@@ -385,7 +385,7 @@ void sub_080c38c8(s32 player)
 void sub_080c3d58(s32 player)
 {
     sub_080c37b8(player, 0);
-    if (gCurTask->unk14 == 0) {
+    if (gCurTask->state == 0) {
         gAirGrindPtr->unk01C[player].unk14 -= 0x20000;
         if (gAirGrindPtr->unk01C[player].unk14 < 0)
             gAirGrindPtr->unk01C[player].unk14 = 0;
@@ -398,7 +398,7 @@ void sub_080c3d58(s32 player)
         gCurTask->frame = 6;
     else
         gCurTask->frame = 3;
-    if (gCurTask->unk14 == 0)
+    if (gCurTask->state == 0)
         gAirGrindPtr->unk01C[player].unk06 = 3;
     gCurTask->frame += gUnk_080CFEE4[gAirGrindPtr->unk01C[player].unk06];
 }
@@ -410,8 +410,8 @@ void sub_080c3e18(s32 player)
     u16 ratio;
 
     scale = sub_080c623c(gAirGrindCoursePtr->unk018[player].unk08);
-    gCurTask->unk48 = gAirGrindCoursePtr->unk018[player].unk0C + ((scale * gAirGrindPtr->unk01C[player].unk18) >> 24);
-    gCurTask->unk4A = gAirGrindCoursePtr->unk018[player].unk10 - ((scale * gAirGrindPtr->unk01C[player].unk14) >> 24);
+    gCurTask->pixelX = gAirGrindCoursePtr->unk018[player].unk0C + ((scale * gAirGrindPtr->unk01C[player].unk18) >> 24);
+    gCurTask->pixelY = gAirGrindCoursePtr->unk018[player].unk10 - ((scale * gAirGrindPtr->unk01C[player].unk14) >> 24);
     if (player != 0) {
         pal = gUnk_080CFE2C[gAirGrindPtr->unk446][player];
         ratio = 0;

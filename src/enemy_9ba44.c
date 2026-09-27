@@ -66,45 +66,45 @@ void sub_0809ba44(void)
 {
     struct Task *t = gCurTask;
 
-    t->unk04 = (u32)sub_0809ba94;
-    t->unk2C = -gTasks[t->unk44].facing;
+    t->updateCallback = (u32)sub_0809ba94;
+    t->unk2C = -gTasks[t->parent].facing;
     ActorSetState(0);
-    CallTableEntry(gCurTask->unk14, 2, gUnk_08745B20);
+    CallTableEntry(gCurTask->state, 2, gUnk_08745B20);
 }
 
 void sub_0809ba94(void)
 {
     if (sub_0806951c() == 0)
     {
-        CallTableEntry(gCurTask->unk15, 2, gUnk_08745B28);
+        CallTableEntry(gCurTask->updateState, 2, gUnk_08745B28);
     }
     else
     {
         ActorSetState(1);
         TaskSetEntry(sub_0809baec, gCurTaskIdx);
     }
-    if (gCurTask->unk14 != 1)
+    if (gCurTask->state != 1)
         ActorCheckHits();
     ActorReactToHit();
 }
 
 void sub_0809baec(void)
 {
-    CallTableEntry(gCurTask->unk14, 2, gUnk_08745B20);
+    CallTableEntry(gCurTask->state, 2, gUnk_08745B20);
 }
 
 void sub_0809bb08(void)
 {
     struct Task *t;
 
-    gCurTask->unk15 = 0;
-    gCurTask->unk7A = 0;
+    gCurTask->updateState = 0;
+    gCurTask->onGround = 0;
     t = gCurTask;
     t->unk28 = 0;
-    t->unk54 = gUnk_08745B0C[t->unk74] * t->unk2C;
-    t->unk58 = 0xFFFD0000;
-    t->unk60 = 0xC0 << 6;
-    t->unk68 = 0xC0 << 10;
+    t->velX = gUnk_08745B0C[t->unk74] * t->unk2C;
+    t->velY = 0xFFFD0000;
+    t->accelY = 0xC0 << 6;
+    t->speedLimitY = 0xC0 << 10;
     TaskSetFrameNoFlip(4);
     TaskYieldTrampoline(6);
     TaskSetFrameNoFlip(5);
@@ -119,14 +119,14 @@ void sub_0809bb6c(void)
 {
     struct Task *t;
 
-    gCurTask->unk15 = 1;
-    gCurTask->unk7A = 0;
+    gCurTask->updateState = 1;
+    gCurTask->onGround = 0;
     gCurTask->unk28 = 0;
     TaskStop();
     t = gCurTask;
-    t->unk58 = 0xFFFD0000;
-    t->unk60 = 0xC0 << 6;
-    t->unk68 = 0xC0 << 10;
+    t->velY = 0xFFFD0000;
+    t->accelY = 0xC0 << 6;
+    t->speedLimitY = 0xC0 << 10;
     t->frame = 6;
     TaskYieldTrampoline(2);
     t = gCurTask;
@@ -156,8 +156,8 @@ void sub_0809bbd8(void)
     sub_0809bfac();
     sub_08067114();
     t = gCurTask;
-    t->unk04 = (u32)sub_0809bc1c;
-    t->unk08 = (u32)sub_0809bf2c;
+    t->updateCallback = (u32)sub_0809bc1c;
+    t->lateUpdateCallback = (u32)sub_0809bf2c;
     TaskSleepForever();
 }
 
@@ -254,13 +254,13 @@ void sub_0809bc1c(void)
 void sub_0809bf2c(void)
 {
     if (gUnk_02007D00[5] & 1)
-        gCurTask->unk78 -= gUnk_02007D00[4];
+        gCurTask->health -= gUnk_02007D00[4];
     if (gUnk_02007D00[5] & 2)
-        gCurTask->unk78 -= gUnk_02007D00[4];
+        gCurTask->health -= gUnk_02007D00[4];
     if (gUnk_02007D00[5] & 4)
-        gCurTask->unk78 -= gUnk_02007D00[4];
+        gCurTask->health -= gUnk_02007D00[4];
     if (gUnk_02007D00[5] & 8)
-        gCurTask->unk78 -= gUnk_02007D00[4];
+        gCurTask->health -= gUnk_02007D00[4];
     if (gUnk_02007D00[5] != 0)
         HudAnimateTaskHpBar();
     gUnk_02007D00[5] = 0;

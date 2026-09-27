@@ -10,7 +10,7 @@
  * (sub_08058720) are animations in world space (gUnk_08751D88,
  * gUnk_08751DB0, gUnk_08751E00).  Variant 37 (sub_08057f90) stops other
  * tasks: it fills the 20-slot table gUnk_0200B000 with 0xFFFF, collects the
- * indices of the tasks of kinds 1, 2, 7 and 8 (Task.unk72) whose
+ * indices of the tasks of kinds 1, 2, 7 and 8 (Task.actorKind) whose
  * gTaskSlotTypes entry is not -1 (while gUnk_03002444 is clear), stops them
  * through the task skip mask (TaskRestoreSkipMask, with gUnk_02006178 = 1), and
  * after the yield releases them (TaskSaveSkipMask, TaskSetSkipMask(15, i)); then it
@@ -64,36 +64,36 @@ void sub_08057ce0(void)
     struct Task *t;
     struct Task *u;
 
-    gCurTask->unk00 = (u32)TaskMove;
-    gCurTask->unk0C = (u32)TaskDrawWorld;
+    gCurTask->moveCallback = (u32)TaskMove;
+    gCurTask->drawCallback = (u32)TaskDrawWorld;
     gCurTask->layer = 5;
     t = gCurTask;
-    t->unk38 = gUnk_08751D88;
-    t->unk40 = (((struct Task *)t->unk8C)->unk40 + 0x1800) | 12;
+    t->frameTable = gUnk_08751D88;
+    t->tileWord = (((struct Task *)t->unk8C)->tileWord + 0x1800) | 12;
     switch (t->unk18 & 15)
     {
     case 0:
         if (t->facing == 1)
-            t->posX = (t->unk48 + 32) << 16;
+            t->posX = (t->pixelX + 32) << 16;
         else
-            t->posX = (t->unk48 - 20) << 16;
+            t->posX = (t->pixelX - 20) << 16;
         gCurTask->facing = 1;
         break;
     case 1:
         if (t->facing == 1)
-            t->posX = (t->unk48 + 22) << 16;
+            t->posX = (t->pixelX + 22) << 16;
         else
-            t->posX = (t->unk48 - 32) << 16;
+            t->posX = (t->pixelX - 32) << 16;
         gCurTask->facing = -1;
         break;
     }
     u = gCurTask;
-    u->posY = u->unk4A << 16;
-    if (!(((struct Task *)u->unk8C)->unk7B & 1))
+    u->posY = u->pixelY << 16;
+    if (!(((struct Task *)u->unk8C)->waterFlags & 1))
     {
         TaskSetMotionXFacing(0x30000, -0x2800);
-        gCurTask->unk58 = 0;
-        gCurTask->unk60 = -0x2000;
+        gCurTask->velY = 0;
+        gCurTask->accelY = -0x2000;
         TaskSetFrameByFacing(0);
         TaskYieldTrampoline(1);
         gCurTask->frame += 2;
@@ -108,8 +108,8 @@ void sub_08057ce0(void)
     else
     {
         TaskSetMotionXFacing(0x18000, -0x1400);
-        gCurTask->unk58 = 0;
-        gCurTask->unk60 = -0x1000;
+        gCurTask->velY = 0;
+        gCurTask->accelY = -0x1000;
         TaskSetFrameByFacing(0);
         TaskYieldTrampoline(2);
         gCurTask->frame += 2;
@@ -134,21 +134,21 @@ void sub_08057e90(void)
     s32 c;
     s32 d;
 
-    gCurTask->unk00 = (u32)TaskMove;
-    gCurTask->unk0C = (u32)TaskDrawWorld;
+    gCurTask->moveCallback = (u32)TaskMove;
+    gCurTask->drawCallback = (u32)TaskDrawWorld;
     gCurTask->layer = 5;
     t = gCurTask;
-    t->unk38 = gUnk_08751DB0;
-    t->unk40 = ((struct Task *)t->unk8C)->unk40 | 0xF00C;
+    t->frameTable = gUnk_08751DB0;
+    t->tileWord = ((struct Task *)t->unk8C)->tileWord | 0xF00C;
     if (t->facing == 1)
     {
-        t->posX = (((struct Task *)t->unk8C)->unk48 + 40) << 16;
-        t->posY = (((struct Task *)t->unk8C)->unk4A + 4) << 16;
+        t->posX = (((struct Task *)t->unk8C)->pixelX + 40) << 16;
+        t->posY = (((struct Task *)t->unk8C)->pixelY + 4) << 16;
     }
     else
     {
-        t->posX = (((struct Task *)t->unk8C)->unk48 - 40) << 16;
-        t->posY = (((struct Task *)t->unk8C)->unk4A + 4) << 16;
+        t->posX = (((struct Task *)t->unk8C)->pixelX - 40) << 16;
+        t->posY = (((struct Task *)t->unk8C)->pixelY + 4) << 16;
     }
     p = &gUnk_0873BAEE[(gCurTask->unk18 & 3) * 2];
     a = p[0];
@@ -161,8 +161,8 @@ void sub_08057e90(void)
     d = c << 8;
     if (c & 0x8000)
         d |= 0xFF000000;
-    u->unk58 = d;
-    u->unk60 = 0;
+    u->velY = d;
+    u->accelY = 0;
     u->frame = 0;
     TaskYieldTrampoline(3);
     gCurTask->frame++;
@@ -190,15 +190,15 @@ void sub_08057f90(void)
     t = gCurTask;
     if ((t->unk18 & 15) != 1)
     {
-        t->unk00 = 0;
-        t->unk0C = 0;
-        t->unk04 = (u32)sub_08058410;
+        t->moveCallback = 0;
+        t->drawCallback = 0;
+        t->updateCallback = (u32)sub_08058410;
         t->unk80 = 7;
-        while ((s8)gCurTask->unk88->unk16 == 0)
+        while ((s8)gCurTask->player->unk16 == 0)
             TaskYieldTrampoline(1);
         u = gCurTask;
-        u->unk28 = gPlayerCameraPos[u->unk44].x;
-        u->unk2C = gPlayerCameraPos[u->unk44].y;
+        u->unk28 = gPlayerCameraPos[u->parent].x;
+        u->unk2C = gPlayerCameraPos[u->parent].y;
         gUnk_02006178 = 0;
         for (i = 0; i < 20; i++)
             gUnk_0200B000[i] |= 0xFFFF;
@@ -207,7 +207,7 @@ void sub_08057f90(void)
         {
             if (gUnk_03002444 == 0 && gTaskSlotTypes[i] != -1)
             {
-                switch (gTasks[i].unk72)
+                switch (gTasks[i].actorKind)
                 {
                 case 1:
                 case 2:
@@ -230,7 +230,7 @@ void sub_08057f90(void)
         while (n != 0)
         {
             n--;
-            switch (gTasks[(s16)gUnk_0200B000[n]].unk72)
+            switch (gTasks[(s16)gUnk_0200B000[n]].actorKind)
             {
             case 1:
             case 2:
@@ -248,8 +248,8 @@ void sub_08057f90(void)
         if (m != 0)
             TaskYieldTrampoline(3);
         gUnk_02006178 = 0;
-        x0 = gPlayerCameraPos[gCurTask->unk44].x - 120;
-        y0 = gPlayerCameraPos[gCurTask->unk44].y - 80;
+        x0 = gPlayerCameraPos[gCurTask->parent].x - 120;
+        y0 = gPlayerCameraPos[gCurTask->parent].y - 80;
         for (i = 32; i <= 62; i++)
         {
             if (gUnk_03002444 != 0)
@@ -259,12 +259,12 @@ void sub_08057f90(void)
             q = &gTasks[i];
             if (q->skipMask == 0)
                 continue;
-            if (q->unk0C == 0)
+            if (q->drawCallback == 0)
                 continue;
-            if (q->unk48 >= (s16)x0 && q->unk48 < (s16)x0 + 240
-                && q->unk4A >= (s16)y0 && q->unk4A < (s16)y0 + 160)
+            if (q->pixelX >= (s16)x0 && q->pixelX < (s16)x0 + 240
+                && q->pixelY >= (s16)y0 && q->pixelY < (s16)y0 + 160)
                 gUnk_02006178 = 1;
-            switch (gTasks[i].unk72)
+            switch (gTasks[i].actorKind)
             {
             case 6:
                 r = 0;
@@ -298,7 +298,7 @@ void sub_08057f90(void)
         }
         if (m == 0)
             TaskYieldTrampoline(1);
-        gCurTask->unk88->unk16--;
+        gCurTask->player->unk16--;
         gUnk_02006178 = 0;
         TaskExitTrampoline();
     }
@@ -354,9 +354,9 @@ void sub_08058410(void)
 {
     struct Task *t = gCurTask;
 
-    if (t->unk88->unk04 != 13)
+    if (t->player->mode != 13)
         TaskFree(gCurTaskIdx);
-    else if ((s8)t->unk88->unk16 != 0)
+    else if ((s8)t->player->unk16 != 0)
         RegisterCollider((u8)gCurTaskIdx, t->unk28, t->unk2C, gUnk_0873C04C);
 }
 
@@ -368,18 +368,18 @@ void sub_08058460(void)
     u16 *p;
 
     t = gCurTask;
-    t->unk04 = (u32)sub_080586fc;
+    t->updateCallback = (u32)sub_080586fc;
     switch (t->unk18 & 15)
     {
     case 0:
     case 1:
     case 2:
-        t->unk00 = (u32)TaskMoveRelativeToParent;
-        t->unk0C = (u32)TaskDrawWorld;
+        t->moveCallback = (u32)TaskMoveRelativeToParent;
+        t->drawCallback = (u32)TaskDrawWorld;
         t->layer = 5;
         u = gCurTask;
-        u->unk38 = gUnk_08751DD0;
-        u->unk40 = (((struct Task *)u->unk8C)->unk40 + 0x1800) | 8;
+        u->frameTable = gUnk_08751DD0;
+        u->tileWord = (((struct Task *)u->unk8C)->tileWord + 0x1800) | 8;
         if (u->facing == 1)
             u->posX = 0x60000;
         else
@@ -389,8 +389,8 @@ void sub_08058460(void)
         TaskSetMotionXFacing((p[0] & 0x8000) ? (p[0] << 8) | 0xFF000000 : p[0] << 8,
                      (p[1] & 0x8000) ? (p[1] << 8) | 0xFF000000 : p[1] << 8);
         v = gCurTask;
-        v->unk58 = -0x8000;
-        v->unk60 = 0x200;
+        v->velY = -0x8000;
+        v->accelY = 0x200;
         v->unk6C = 0;
         do
         {
@@ -418,16 +418,16 @@ void sub_08058460(void)
         TaskYieldTrampoline(4);
         break;
     case 3:
-        t->unk00 = (u32)TaskMoveRelativeToParent;
-        t->unk0C = (u32)sub_0803dfc8;
+        t->moveCallback = (u32)TaskMoveRelativeToParent;
+        t->drawCallback = (u32)sub_0803dfc8;
         t->layer = 8;
         u = gCurTask;
-        u->unk38 = gUnk_08751DBC;
-        u->unk40 = (((struct Task *)u->unk8C)->unk40 + 0x1800) | 12;
+        u->frameTable = gUnk_08751DBC;
+        u->tileWord = (((struct Task *)u->unk8C)->tileWord + 0x1800) | 12;
         u->posX = 0;
         u->posY = -0x80000;
-        u->unk58 = -0x20000;
-        u->unk60 = 0x2000;
+        u->velY = -0x20000;
+        u->accelY = 0x2000;
         TaskSetFrame(0);
         TaskYieldTrampoline(6);
         gCurTask->frame++;
@@ -452,7 +452,7 @@ void sub_08058460(void)
 
 void sub_080586fc(void)
 {
-    if (gCurTask->unk88->unk04 != 13)
+    if (gCurTask->player->mode != 13)
         TaskFree(gCurTaskIdx);
 }
 
@@ -460,11 +460,11 @@ void sub_08058720(void)
 {
     struct Task *t;
 
-    gCurTask->unk00 = (u32)TaskMove;
-    gCurTask->unk0C = (u32)TaskDrawWorld;
+    gCurTask->moveCallback = (u32)TaskMove;
+    gCurTask->drawCallback = (u32)TaskDrawWorld;
     gCurTask->layer = 5;
     t = gCurTask;
-    t->unk38 = gUnk_08751E00;
+    t->frameTable = gUnk_08751E00;
     if ((t->unk18 & 15) == 0)
     {
         t->facing = 1;
@@ -475,7 +475,7 @@ void sub_08058720(void)
         t->facing = -1;
         gCurTask->frame = 0;
     }
-    gCurTask->posY = (gCurTask->unk4A + 4) << 16;
+    gCurTask->posY = (gCurTask->pixelY + 4) << 16;
     TaskSetMotionXFacing(0x80000, 0x5A5A5A5A);
     TaskYieldTrampoline(1);
     gCurTask->frame += 2;

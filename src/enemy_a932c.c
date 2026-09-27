@@ -1409,25 +1409,25 @@ void sub_080a932c(void)
     struct Task *t = gCurTask;
     struct Task *u;
 
-    if (t->unk4A < gViewRect[2] + gUnk_0874909C[0])
+    if (t->pixelY < gViewRect[2] + gUnk_0874909C[0])
     {
-        t->unk4A = gViewRect[2] + gUnk_0874909C[0];
-        t->posY = t->unk4A << 16;
+        t->pixelY = gViewRect[2] + gUnk_0874909C[0];
+        t->posY = t->pixelY << 16;
     }
-    else if (t->unk4A > gViewRect[3] + gUnk_0874909C[1])
+    else if (t->pixelY > gViewRect[3] + gUnk_0874909C[1])
     {
-        t->unk4A = gViewRect[3] + gUnk_0874909C[1];
-        t->posY = t->unk4A << 16;
+        t->pixelY = gViewRect[3] + gUnk_0874909C[1];
+        t->posY = t->pixelY << 16;
     }
     u = gCurTask;
-    if (u->unk48 < gViewRect[0] + gUnk_0874909C[2])
+    if (u->pixelX < gViewRect[0] + gUnk_0874909C[2])
     {
-        u->unk48 = gViewRect[0] + gUnk_0874909C[2];
-        u->posX = u->unk48 << 16;
+        u->pixelX = gViewRect[0] + gUnk_0874909C[2];
+        u->posX = u->pixelX << 16;
     }
-    else if (u->unk48 > gViewRect[1] + gUnk_0874909C[3])
+    else if (u->pixelX > gViewRect[1] + gUnk_0874909C[3])
     {
-        u->unk48 = gViewRect[1] + gUnk_0874909C[3];
-        u->posX = u->unk48 << 16;
+        u->pixelX = gViewRect[1] + gUnk_0874909C[3];
+        u->posX = u->pixelX << 16;
     }
 }

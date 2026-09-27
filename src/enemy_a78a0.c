@@ -1409,19 +1409,19 @@ void sub_080a78a0(void)
     struct Task *t;
     struct Task *o;
 
-    if (gTaskSlotTypes[gCurTask->unk44] != -1)
+    if (gTaskSlotTypes[gCurTask->parent] != -1)
     {
         t = gCurTask;
-        o = &gTasks[t->unk44];
-        if (o->unk76 == 2 && o->unk78 > 0)
+        o = &gTasks[t->parent];
+        if (o->unk76 == 2 && o->health > 0)
         {
             if ((u16)(o->frame - 88) <= 33)
             {
                 t->unk28 = (s16)o->frame - 88;
                 if (gUnk_08748F8C[t->unk28] != 0)
                 {
-                    t->unk48 = o->unk48 + gUnk_08749014[t->unk28] * o->facing;
-                    t->unk4A = o->unk4A + gUnk_08749058[t->unk28];
+                    t->pixelX = o->pixelX + gUnk_08749014[t->unk28] * o->facing;
+                    t->pixelY = o->pixelY + gUnk_08749058[t->unk28];
                     t->facing = o->facing;
                     ActorCheckHitsWithBox(gUnk_08748F8C[gCurTask->unk28]);
                 }

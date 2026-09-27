@@ -82,7 +82,7 @@ void UpdatePlayerGroupCenter(void)
         switch (gPlayerCameraMode[i])
         {
         case 0:
-            y = gTasks[i].unk48;
+            y = gTasks[i].pixelX;
             if (y < gCameraBounds[0])
                 y = gCameraBounds[0];
             if (gCameraBounds[1] < y)
@@ -91,7 +91,7 @@ void UpdatePlayerGroupCenter(void)
                 x0 = y;
             if (x1 < y)
                 x1 = y;
-            y = gTasks[i].unk4A;
+            y = gTasks[i].pixelY;
             if (y < gCameraBounds[2])
                 y = gCameraBounds[2];
             if (gCameraBounds[3] < y)
@@ -213,7 +213,7 @@ void sub_08029ef4(void)
         case 0:
             if ((gScrollLock.unk0 >> i) & 1)
                 break;
-            x = gTasks[i].unk48;
+            x = gTasks[i].pixelX;
             if (x < gCameraBounds[0])
                 x = gCameraBounds[0];
             if (gCameraBounds[1] < x)
@@ -222,7 +222,7 @@ void sub_08029ef4(void)
                 x0 = x;
             if (x1 < x)
                 x1 = x;
-            y = gTasks[i].unk4A;
+            y = gTasks[i].pixelY;
             if (y < gCameraBounds[2])
                 y = gCameraBounds[2];
             if (gCameraBounds[3] < y)
@@ -318,12 +318,12 @@ void UpdatePlayerCameras(void)
         switch (gPlayerCameraMode[i])
         {
         case 0:
-            gPlayerCameraPos[i].x = gTasks[i].unk48;
+            gPlayerCameraPos[i].x = gTasks[i].pixelX;
             if (gPlayerCameraPos[i].x < gCameraBounds[0])
                 gPlayerCameraPos[i].x = gCameraBounds[0];
             if (gCameraBounds[1] < gPlayerCameraPos[i].x)
                 gPlayerCameraPos[i].x = gCameraBounds[1];
-            gPlayerCameraPos[i].y = gTasks[i].unk4A;
+            gPlayerCameraPos[i].y = gTasks[i].pixelY;
             if (gPlayerCameraPos[i].y < gCameraBounds[2])
                 gPlayerCameraPos[i].y = gCameraBounds[2];
             if (gCameraBounds[3] < gPlayerCameraPos[i].y)
@@ -351,12 +351,12 @@ void sub_0802a260(void)
         case 0:
             if ((gScrollLock.unk0 >> i) & 1)
                 break;
-            gPlayerCameraPos[i].x = gTasks[i].unk48;
+            gPlayerCameraPos[i].x = gTasks[i].pixelX;
             if (gPlayerCameraPos[i].x < gCameraBounds[0])
                 gPlayerCameraPos[i].x = gCameraBounds[0];
             if (gCameraBounds[1] < gPlayerCameraPos[i].x)
                 gPlayerCameraPos[i].x = gCameraBounds[1];
-            gPlayerCameraPos[i].y = gTasks[i].unk4A;
+            gPlayerCameraPos[i].y = gTasks[i].pixelY;
             if (gPlayerCameraPos[i].y < gCameraBounds[2])
                 gPlayerCameraPos[i].y = gCameraBounds[2];
             if (gCameraBounds[3] < gPlayerCameraPos[i].y)
@@ -385,7 +385,7 @@ void sub_0802a340(void)
     {
         if ((gActivePlayerMask >> i) & 1)
         {
-            v = gTasks[i].unk48;
+            v = gTasks[i].pixelX;
             if (v < gCameraBounds[0])
                 v = gCameraBounds[0];
             if (gCameraBounds[1] < v)
@@ -394,7 +394,7 @@ void sub_0802a340(void)
                 x0 = v;
             if (x1 < v)
                 x1 = v;
-            v = gTasks[i].unk4A;
+            v = gTasks[i].pixelY;
             if (v < gCameraBounds[2])
                 v = gCameraBounds[2];
             if (gCameraBounds[3] < v)

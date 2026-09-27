@@ -118,26 +118,26 @@ void sub_08070ec0(void)
     s16 y;
 
     t = gCurTask;
-    dx = t->unk48 - gSpriteCameraX;
-    dy = t->unk4A - gSpriteCameraY;
-    v = gTasks[t->unk44].unk18;
+    dx = t->pixelX - gSpriteCameraX;
+    dy = t->pixelY - gSpriteCameraY;
+    v = gTasks[t->parent].unk18;
     t->unk18 = v;
     if (v <= -2)
         return;
     if (v == -1)
-        t->unk40 |= 0xC00;
+        t->tileWord |= 0xC00;
     else
-        t->unk40 &= 0xF3FF;
+        t->tileWord &= 0xF3FF;
     u = gCurTask;
     if (u->unk18 > 0)
     {
-        sign = (u->unk3E & 0x8000) ? -1 : 1;
-        u->unk3E &= 0x7FFF;
+        sign = (u->spriteFlags & 0x8000) ? -1 : 1;
+        u->spriteFlags &= 0x7FFF;
         gfx = DrawAffineSprite((s32)gUnk_0824A9CC,
                            (u16)gUnk_0873FF98[u->unk18 >> 16] * sign,
                            gUnk_0873FF98[u->unk18 >> 16], 0);
         if (sign < 0)
-            gCurTask->unk3E |= 0x8000;
+            gCurTask->spriteFlags |= 0x8000;
     }
     else
     {
@@ -147,8 +147,8 @@ void sub_08070ec0(void)
     y = dy;
     if (IsOnScreen(x, y) == 0)
         return;
-    QueueSprite(gCurTask->layer, gfx, gCurTask->unk3E,
-                 gCurTask->unk40 | 0x800, x, y);
+    QueueSprite(gCurTask->layer, gfx, gCurTask->spriteFlags,
+                 gCurTask->tileWord | 0x800, x, y);
 }
 
 void sub_08070ffc(void)
@@ -156,13 +156,13 @@ void sub_08070ffc(void)
     {
         struct Task *t = gCurTask;
 
-        t->unk00 = (u32)sub_08070454;
+        t->moveCallback = (u32)sub_08070454;
         t->taskClass = 4;
     }
     {
         struct Task *t = gCurTask;
 
-        t->unk08 = 0;
+        t->lateUpdateCallback = 0;
         t->posY = 0;
         t->posX = 0;
         t->layer = 7;
@@ -176,29 +176,29 @@ void sub_08071030(void)
         struct Task *t = gCurTask;
 
         if (t->unk74 != 23)
-            t->unk00 = (u32)ActorMove;
+            t->moveCallback = (u32)ActorMove;
         else
-            t->unk00 = (u32)TaskMoveRelativeToView;
+            t->moveCallback = (u32)TaskMoveRelativeToView;
     }
     {
         struct Task *t = gCurTask;
 
-        t->unk0C = (u32)ActorDrawWorldInView;
+        t->drawCallback = (u32)ActorDrawWorldInView;
         t->layer = 11;
     }
     {
         struct Task *t = gCurTask;
 
-        t->unk38 = gUnk_08752D50;
-        t->unk04 = (u32)sub_08071098;
+        t->frameTable = gUnk_08752D50;
+        t->updateCallback = (u32)sub_08071098;
     }
     ActorSetState(0);
-    CallTableEntry(gCurTask->unk14, 3, gUnk_0873FBAC);
+    CallTableEntry(gCurTask->state, 3, gUnk_0873FBAC);
 }
 
 void sub_08071098(void)
 {
-    CallTableEntry(gCurTask->unk15, 3, gUnk_0873FBB8);
+    CallTableEntry(gCurTask->updateState, 3, gUnk_0873FBB8);
     if (gUnk_02006160 == -1 || gUnk_02006160 == gCurTaskIdx)
     {
         if (ActorCheckHits())
@@ -208,7 +208,7 @@ void sub_08071098(void)
 
 void sub_080710e0(void)
 {
-    CallTableEntry(gCurTask->unk14, 3, gUnk_0873FBAC);
+    CallTableEntry(gCurTask->state, 3, gUnk_0873FBAC);
 }
 
 void sub_080710fc(void)
@@ -218,7 +218,7 @@ void sub_080710fc(void)
     {
         struct Task *t = gCurTask;
 
-        if (t->unk38 != gUnk_08752D50)
+        if (t->frameTable != gUnk_08752D50)
             return;
         t->unk6E++;
         if (t->unk6E > 5)
@@ -230,7 +230,7 @@ void sub_080710fc(void)
         u32 dst;
 
         t->frame = 13;
-        off = (t->unk40 & 0x7FF) << 5;
+        off = (t->tileWord & 0x7FF) << 5;
         dst = 0x06010000 + off;
         RequestCopy(1, gUnk_0873FB7C[t->unk6E], dst, 128);
     }
@@ -241,7 +241,7 @@ void sub_080710fc(void)
 
 void sub_080711d0(void)
 {
-    if (gUnk_0300244C != 0 && gPlayerHealth[gCurTask->unk7E] <= 0)
+    if (gUnk_0300244C != 0 && gPlayerHealth[gCurTask->hitterSlot] <= 0)
         return;
     if (gUnk_020061E0 == 0)
     {
@@ -251,21 +251,21 @@ void sub_080711d0(void)
         t->frame = 13;
         if (t->unk74 != 23)
         {
-            t->unk4A -= 16;
-            t->posX = t->unk48 << 16;
-            t->posY = t->unk4A << 16;
+            t->pixelY -= 16;
+            t->posX = t->pixelX << 16;
+            t->posY = t->pixelY << 16;
         }
         else
         {
-            t->unk4A -= 8;
-            t->posX = (t->unk48 - gViewRect[0]) << 16;
-            t->posY = (t->unk4A - gViewRect[2]) << 16;
+            t->pixelY -= 8;
+            t->posX = (t->pixelX - gViewRect[0]) << 16;
+            t->posY = (t->pixelY - gViewRect[2]) << 16;
         }
-        f = sub_08071360(gCurTask->unk7E);
+        f = sub_08071360(gCurTask->hitterSlot);
         {
             struct Task *t2 = gCurTask;
 
-            t2->unk40 = f;
+            t2->tileWord = f;
             gUnk_02006160 = gCurTaskIdx;
             gUnk_02007CF0 = 2;
             if (t2->unk46 != -1)
@@ -276,12 +276,12 @@ void sub_080711d0(void)
         }
         ActorSetAttackBox((u32)gUnk_0873F554);
     }
-    gPlayerStates[gCurTask->unk7E].unk04 = 16;
-    sub_08040934(gCurTask->unk7E);
+    gPlayerStates[gCurTask->hitterSlot].mode = 16;
+    sub_08040934(gCurTask->hitterSlot);
     gCurTask->unk28++;
-    sub_08070498(gCurTask->unk7E, gCurTaskIdx);
+    sub_08070498(gCurTask->hitterSlot, gCurTaskIdx);
     sub_0806d4e4(0, 0);
-    if (gLocalPlayer == gCurTask->unk7E)
+    if (gLocalPlayer == gCurTask->hitterSlot)
         PlaySfx(219);
     if (gUnk_030023B8 == 7)
         gUnk_02007D00[9] = 1;
@@ -291,7 +291,7 @@ void sub_080711d0(void)
 
 u16 sub_08071360(s32 idx)
 {
-    u16 v = gTasks[idx].unk40 & 0x7FF;
+    u16 v = gTasks[idx].tileWord & 0x7FF;
     u32 off = v << 5;
 
     RequestCopy(1, (u32)gUnk_0825D2C8, 0x06010180 + off, 128);
@@ -309,7 +309,7 @@ void sub_080713f8(int x, int y, int c)
 
 void sub_08071418(void)
 {
-    gCurTask->unk15 = 0;
+    gCurTask->updateState = 0;
     {
         struct Task *t = gCurTask;
 
@@ -392,7 +392,7 @@ void sub_0807156c(void)
 
             if (t->unk2C <= 0)
             {
-                t->unk58 = gUnk_0873FB94[t->unk30];
+                t->velY = gUnk_0873FB94[t->unk30];
                 t->unk30++;
                 if (t->unk30 > 5)
                     t->unk30 = 0;
@@ -405,13 +405,13 @@ void sub_0807156c(void)
 
 void sub_0807160c(void)
 {
-    gCurTask->unk15 = 1;
+    gCurTask->updateState = 1;
     TaskStop();
     while (1)
     {
-        gCurTask->unk58 = 0x4000;
+        gCurTask->velY = 0x4000;
         TaskYieldTrampoline(18);
-        gCurTask->unk58 = -0x4000;
+        gCurTask->velY = -0x4000;
         TaskYieldTrampoline(18);
     }
 }
@@ -429,19 +429,19 @@ void sub_08071640(void)
             v = sub_08025e88(gCurTaskIdx);
             t = gCurTask;
         }
-        t->unk14 = v;
+        t->state = v;
         TaskSetEntry(sub_08071778, gCurTaskIdx);
     }
 }
 
 void sub_08071694(void)
 {
-    gCurTask->unk04 = 0;
+    gCurTask->updateCallback = 0;
     TaskStop();
     {
         struct Task *t = gCurTask;
 
-        t->unk38 = gUnk_08752D8C;
+        t->frameTable = gUnk_08752D8C;
         t->frame = 0;
     }
     TaskYieldTrampoline(2);
@@ -485,33 +485,33 @@ void sub_08071778(void)
     {
         struct Task *u = gCurTask;
 
-        u->unk0C = (u32)sub_080719a0;
+        u->drawCallback = (u32)sub_080719a0;
         u->layer = 10;
     }
     t = gCurTask;
-    t->unk38 = gUnk_08752D50;
-    t->unk04 = (u32)sub_08071830;
+    t->frameTable = gUnk_08752D50;
+    t->updateCallback = (u32)sub_08071830;
     t->unk18 = 0;
     t->unk28 = 0;
-    t->unk78 = 0xFFFF;
+    t->health = 0xFFFF;
     t->unk70 = 0;
     if (t->unk74 == 0)
         gCurTask->facing = gUnk_0873FAE8[sub_08025e88(gCurTaskIdx)];
     else
         t->facing = gUnk_0873FAE8[t->unk74];
     CreateChildTaskAt(97, gViewRect[0] + 120, gViewRect[2] + 80, 0);
-    CallTableEntry(gCurTask->unk14, 26, gUnk_0873FBC4);
+    CallTableEntry(gCurTask->state, 26, gUnk_0873FBC4);
 }
 
 void sub_08071830(void)
 {
     sub_080710fc();
-    CallTableEntry(gCurTask->unk15, 26, gUnk_0873FC2C);
+    CallTableEntry(gCurTask->updateState, 26, gUnk_0873FC2C);
 }
 
 void sub_08071850(void)
 {
-    CallTableEntry(gCurTask->unk14, 26, gUnk_0873FBC4);
+    CallTableEntry(gCurTask->state, 26, gUnk_0873FBC4);
 }
 
 void sub_0807186c(int a, int b, int c, int d)
@@ -519,10 +519,10 @@ void sub_0807186c(int a, int b, int c, int d)
     {
         struct Task *t = gCurTask;
 
-        t->unk78 = (s8)a;
+        t->health = (s8)a;
         t->unk74 = b;
     }
-    gCurTask->unk75 = c;
+    gCurTask->hitTimer = c;
     gCurTask->unk34 = (s16)d;
 }
 
@@ -531,10 +531,10 @@ void sub_08071898(void)
     {
         struct Task *t = gCurTask;
 
-        t->unk78 = 0xFFFF;
+        t->health = 0xFFFF;
         t->unk74 = 0;
     }
-    gCurTask->unk75 = 0;
+    gCurTask->hitTimer = 0;
     gCurTask->unk34 = 0;
 }
 
@@ -544,16 +544,16 @@ void sub_080718c0(void)
     u32 v;
     s32 r;
 
-    if (t->unk78 == -1)
+    if (t->health == -1)
         return;
     t->unk70--;
     if ((s16)t->unk70 > 0)
         return;
-    if ((s8)t->unk75 == -1)
+    if ((s8)t->hitTimer == -1)
     {
-        if (t->unk78 == 2 || t->unk78 == 0)
+        if (t->health == 2 || t->health == 0)
         {
-            v = (u8)(u16)t->unk78;
+            v = (u8)(u16)t->health;
         }
         else
         {
@@ -563,7 +563,7 @@ void sub_080718c0(void)
                 v = 0;
         }
         sub_08074bb0(gCurTask->unk74 << 5, (s16)gCurTask->unk34, v);
-        gCurTask->unk78 = 0xFFFF;
+        gCurTask->health = 0xFFFF;
     }
     else
     {
@@ -577,10 +577,10 @@ void sub_080718c0(void)
 
             v = RandomRange(3);
             /* r (the other branch's RNG result) carries the byte, so regmove keeps the AND on v */
-            r = (u8)gCurTask->unk78;
+            r = (u8)gCurTask->health;
             sub_08074bb0(a1, a2, v & r);
         }
-        gCurTask->unk70 = (s8)gCurTask->unk75;
+        gCurTask->unk70 = (s8)gCurTask->hitTimer;
     }
 }
 
@@ -598,15 +598,15 @@ void sub_080719a0(void)
     {
         if (gUnk_03001F30 != 0)
             return;
-        g = t->unk38;
-        QueueSprite(t->layer, g[t->frame], t->unk3E, t->unk40,
-                     t->unk48 - gSpriteCameraX, t->unk4A - gSpriteCameraY);
+        g = t->frameTable;
+        QueueSprite(t->layer, g[t->frame], t->spriteFlags, t->tileWord,
+                     t->pixelX - gSpriteCameraX, t->pixelY - gSpriteCameraY);
         return;
     }
     if (v == -1)
-        t->unk40 |= 0xC00;
+        t->tileWord |= 0xC00;
     else
-        t->unk40 &= 0xF3FF;
+        t->tileWord &= 0xF3FF;
     {
         struct Task *w = gCurTask;
 
@@ -621,7 +621,7 @@ void sub_080719a0(void)
     }
     if (gUnk_03001F30 != 0)
         return;
-    if (gCurTask->unk38 == NULL)
+    if (gCurTask->frameTable == NULL)
         return;
     if (gCurTask->frame == -1)
         return;
@@ -630,27 +630,27 @@ void sub_080719a0(void)
     if (TaskIsOnScreen() == 0)
         return;
     u = gCurTask;
-    g = u->unk38;
+    g = u->frameTable;
     if (u->unk18 > 0)
     {
-        sign = (u->unk3E & 0x8000) ? -1 : 1;
-        u->unk3E &= 0x7FFF;
+        sign = (u->spriteFlags & 0x8000) ? -1 : 1;
+        u->spriteFlags &= 0x7FFF;
         gfx = DrawAffineSprite(g[u->frame],
                            (u16)gUnk_0873FF98[u->unk18 >> 16] * sign,
                            gUnk_0873FF98[u->unk18 >> 16], 0);
         {
             struct Task *x = gCurTask;
 
-            QueueSprite(x->layer, gfx, x->unk3E, x->unk40,
-                         x->unk48 - gSpriteCameraX, x->unk4A - gSpriteCameraY);
+            QueueSprite(x->layer, gfx, x->spriteFlags, x->tileWord,
+                         x->pixelX - gSpriteCameraX, x->pixelY - gSpriteCameraY);
         }
         if (sign < 0)
-            gCurTask->unk3E |= 0x8000;
+            gCurTask->spriteFlags |= 0x8000;
     }
     else
     {
-        QueueSprite(u->layer, g[u->frame], u->unk3E, u->unk40,
-                     u->unk48 - gSpriteCameraX, u->unk4A - gSpriteCameraY);
+        QueueSprite(u->layer, g[u->frame], u->spriteFlags, u->tileWord,
+                     u->pixelX - gSpriteCameraX, u->pixelY - gSpriteCameraY);
     }
 }
 
@@ -668,9 +668,9 @@ void sub_08071bb0(u16 a)
             struct Task *t = &gTasks[i];
 
             t->facing = gCurTask->facing;
-            t->posX = t->unk48 << 16;
-            t->posY = t->unk4A << 16;
-            t->unk14 = a;
+            t->posX = t->pixelX << 16;
+            t->posY = t->pixelY << 16;
+            t->state = a;
             TaskSetEntry(sub_0806ef38, i);
         }
     }
@@ -690,9 +690,9 @@ void sub_08071c38(u16 a)
             struct Task *t = &gTasks[i];
 
             t->facing = gCurTask->facing;
-            t->posX = t->unk48 << 16;
-            t->posY = t->unk4A << 16;
-            t->unk14 = a;
+            t->posX = t->pixelX << 16;
+            t->posY = t->pixelY << 16;
+            t->state = a;
             TaskSetEntry(sub_08070758, i);
         }
     }
@@ -706,9 +706,9 @@ void sub_08071cc0(int x, int y, int c)
     {
         struct Task *t = &gTasks[id];
 
-        t->unk14 = c;
+        t->state = c;
         TaskSetEntry(sub_08071778, id);
-        t->unk40 = sub_08071360(gCurTaskIdx);
+        t->tileWord = sub_08071360(gCurTaskIdx);
     }
     gUnk_020055C0 = id;
     sub_08067108();
@@ -727,12 +727,12 @@ void sub_08071d60(void)
 {
     struct Task *t;
 
-    gCurTask->unk15 = 0;
+    gCurTask->updateState = 0;
     t = gCurTask;
     {
-        t->posX = (t->unk48 - gViewRect[0]) << 16;
-        t->posY = (t->unk4A - gViewRect[2]) << 16;
-        t->unk00 = (u32)TaskMoveRelativeToView;
+        t->posX = (t->pixelX - gViewRect[0]) << 16;
+        t->posY = (t->pixelY - gViewRect[2]) << 16;
+        t->moveCallback = (u32)TaskMoveRelativeToView;
         t->unk24 = 0;
     }
     {
@@ -742,23 +742,23 @@ void sub_08071d60(void)
         r = PlaySfx(216);
         gUnk_02004B4C = r;
     }
-    gCurTask->unk58 = 0x8000;
+    gCurTask->velY = 0x8000;
     TaskYieldTrampoline(8);
-    gCurTask->unk58 = Div(0x780000 - gCurTask->posY, 32);
+    gCurTask->velY = Div(0x780000 - gCurTask->posY, 32);
     TaskYieldTrampoline(32);
-    gCurTask->unk58 = 0x8000;
+    gCurTask->velY = 0x8000;
     TaskYieldTrampoline(8);
-    CreateChildTaskAt(148, gCurTask->unk48, gCurTask->unk4A + 16, 0);
+    CreateChildTaskAt(148, gCurTask->pixelX, gCurTask->pixelY + 16, 0);
     RequestScreenShake(2);
     PlaySfx(272);
-    gCurTask->unk58 = 0x8000;
+    gCurTask->velY = 0x8000;
     TaskYieldTrampoline(32);
     sub_0807186c(1, 4, 4, 0x400);
-    gCurTask->unk58 = -0x8000;
+    gCurTask->velY = -0x8000;
     TaskYieldTrampoline(8);
-    gCurTask->unk58 = -0x14000;
+    gCurTask->velY = -0x14000;
     TaskYieldTrampoline(8);
-    gCurTask->unk58 = -0x28000;
+    gCurTask->velY = -0x28000;
     TaskYieldTrampoline(40);
     sub_08025f00();
     gCurTask->unk24 = 1;
@@ -772,11 +772,11 @@ void sub_08071e74(void)
 
 void sub_08071e80(void)
 {
-    gCurTask->unk15 = 1;
-    gCurTask->unk00 = (u32)TaskMove;
+    gCurTask->updateState = 1;
+    gCurTask->moveCallback = (u32)TaskMove;
     TaskStop();
     TaskSetMotionXFacing(0x10000, 0x5A5A5A5A);
-    gCurTask->unk58 = 0x20000;
+    gCurTask->velY = 0x20000;
     TaskSleepForever();
 }
 
@@ -787,9 +787,9 @@ void sub_08071ebc(void)
     sub_080718c0();
     sub_0801bcac(gUnk_0873F5CC);
     t = gCurTask;
-    if (t->unk7A & 1)
+    if (t->onGround & 1)
     {
-        sub_080277f0(t->unk48, t->unk4A);
+        sub_080277f0(t->pixelX, t->pixelY);
         RequestScreenShake(4);
         StopSfxOnPlayer(gUnk_02004B4C, gUnk_02005584);
         PlaySfx(219);
@@ -808,18 +808,18 @@ void sub_08071f54(void)
 {
     struct Task *t;
 
-    gCurTask->unk15 = 5;
+    gCurTask->updateState = 5;
     t = gCurTask;
-    t->posX = (t->unk48 - gViewRect[0]) << 16;
-    t->posY = (t->unk4A - gViewRect[2]) << 16;
-    t->unk00 = (u32)TaskMoveRelativeToView;
+    t->posX = (t->pixelX - gViewRect[0]) << 16;
+    t->posY = (t->pixelY - gViewRect[2]) << 16;
+    t->moveCallback = (u32)TaskMoveRelativeToView;
     t->unk24 = 0;
     TaskStop();
-    gCurTask->unk58 = 0x10000;
+    gCurTask->velY = 0x10000;
     TaskYieldTrampoline(8);
-    gCurTask->unk58 = 0x20000;
+    gCurTask->velY = 0x20000;
     TaskYieldTrampoline(8);
-    gCurTask->unk58 = 0x10000;
+    gCurTask->velY = 0x10000;
     TaskYieldTrampoline(8);
     {
         s32 r;
@@ -828,33 +828,33 @@ void sub_08071f54(void)
         r = PlaySfx(126);
         gUnk_02004B4C = r;
     }
-    gCurTask->unk54 = -0x8000;
+    gCurTask->velX = -0x8000;
     sub_0807186c(1, 4, 4, 0x600);
-    gCurTask->unk58 = -0x80000;
+    gCurTask->velY = -0x80000;
     TaskYieldTrampoline(6);
     sub_0807186c(1, 5, 4, 0x600);
-    gCurTask->unk58 = -0x40000;
+    gCurTask->velY = -0x40000;
     TaskYieldTrampoline(6);
     sub_0807186c(1, 6, 4, 0x600);
-    gCurTask->unk58 = -0x10000;
+    gCurTask->velY = -0x10000;
     TaskYieldTrampoline(6);
     sub_0807186c(1, 7, 6, 0x600);
-    gCurTask->unk58 = -0x8000;
+    gCurTask->velY = -0x8000;
     TaskYieldTrampoline(6);
     sub_0807186c(-1, 0, 0, 0);
-    gCurTask->unk58 = 0x10000;
+    gCurTask->velY = 0x10000;
     TaskYieldTrampoline(6);
-    gCurTask->unk58 = 0x20000;
+    gCurTask->velY = 0x20000;
     TaskYieldTrampoline(6);
-    gCurTask->unk58 = 0x40000;
+    gCurTask->velY = 0x40000;
     TaskYieldTrampoline(6);
     PlaySfx(272);
     sub_0807186c(1, 4, 4, 0x600);
     {
         struct Task *u = gCurTask;
 
-        u->unk54 = -0x20000;
-        u->unk58 = -0x80000;
+        u->velX = -0x20000;
+        u->velY = -0x80000;
     }
     TaskYieldTrampoline(12);
     TaskStop();
@@ -872,106 +872,106 @@ void sub_080720e8(void)
 {
     struct Task *t;
 
-    gCurTask->unk15 = 6;
+    gCurTask->updateState = 6;
     t = gCurTask;
-    t->posX = (t->unk48 - gViewRect[0]) << 16;
-    t->posY = (t->unk4A - gViewRect[2]) << 16;
-    t->unk00 = (u32)TaskMoveRelativeToView;
+    t->posX = (t->pixelX - gViewRect[0]) << 16;
+    t->posY = (t->pixelY - gViewRect[2]) << 16;
+    t->moveCallback = (u32)TaskMoveRelativeToView;
     t->unk24 = 0;
     sub_0807186c(1, 4, 4, 0x300);
     {
         struct Task *u = gCurTask;
 
-        u->unk54 = -0x40000;
-        u->unk58 = -0x80000;
+        u->velX = -0x40000;
+        u->velY = -0x80000;
     }
     TaskYieldTrampoline(4);
     sub_0807186c(1, 2, 4, 0x300);
-    gCurTask->unk58 = -0x60000;
+    gCurTask->velY = -0x60000;
     TaskYieldTrampoline(4);
-    gCurTask->unk58 = -0x40000;
+    gCurTask->velY = -0x40000;
     TaskYieldTrampoline(3);
-    gCurTask->unk58 = -0x20000;
+    gCurTask->velY = -0x20000;
     TaskYieldTrampoline(3);
-    gCurTask->unk58 = 0x20000;
+    gCurTask->velY = 0x20000;
     TaskYieldTrampoline(3);
     sub_0807186c(-1, 0, 0, 0);
-    gCurTask->unk58 = 0x40000;
+    gCurTask->velY = 0x40000;
     TaskYieldTrampoline(4);
-    gCurTask->unk58 = 0x60000;
+    gCurTask->velY = 0x60000;
     TaskYieldTrampoline(4);
     PlaySfx(272);
-    gCurTask->unk54 = 0;
+    gCurTask->velX = 0;
     TaskYieldTrampoline(2);
     sub_0807186c(1, 7, 4, 0x300);
     {
         struct Task *u = gCurTask;
 
-        u->unk54 = 0x10000;
-        u->unk58 = -0x80000;
+        u->velX = 0x10000;
+        u->velY = -0x80000;
     }
     TaskYieldTrampoline(4);
-    gCurTask->unk54 = 0x20000;
+    gCurTask->velX = 0x20000;
     TaskYieldTrampoline(3);
     {
         struct Task *u = gCurTask;
 
-        u->unk54 = 0x40000;
-        u->unk58 = -0x60000;
+        u->velX = 0x40000;
+        u->velY = -0x60000;
     }
     TaskYieldTrampoline(4);
-    gCurTask->unk58 = -0x40000;
+    gCurTask->velY = -0x40000;
     TaskYieldTrampoline(4);
-    gCurTask->unk58 = -0x20000;
+    gCurTask->velY = -0x20000;
     TaskYieldTrampoline(4);
-    gCurTask->unk58 = 0x20000;
+    gCurTask->velY = 0x20000;
     TaskYieldTrampoline(4);
     sub_0807186c(-1, 0, 0, 0);
-    gCurTask->unk58 = 0x40000;
+    gCurTask->velY = 0x40000;
     TaskYieldTrampoline(4);
-    gCurTask->unk58 = 0x60000;
+    gCurTask->velY = 0x60000;
     TaskYieldTrampoline(8);
     PlaySfx(272);
     {
         struct Task *u = gCurTask;
 
-        u->unk54 = 0;
-        u->unk58 = -0x60000;
+        u->velX = 0;
+        u->velY = -0x60000;
     }
     TaskYieldTrampoline(2);
     sub_0807186c(1, 1, 4, 0x300);
-    gCurTask->unk54 = -0x60000;
+    gCurTask->velX = -0x60000;
     TaskYieldTrampoline(3);
-    gCurTask->unk58 = -0x40000;
+    gCurTask->velY = -0x40000;
     TaskYieldTrampoline(3);
-    gCurTask->unk58 = -0x20000;
+    gCurTask->velY = -0x20000;
     TaskYieldTrampoline(3);
-    gCurTask->unk58 = 0x40000;
+    gCurTask->velY = 0x40000;
     TaskYieldTrampoline(3);
     sub_0807186c(-1, 0, 0, 0);
-    gCurTask->unk58 = 0x60000;
+    gCurTask->velY = 0x60000;
     TaskYieldTrampoline(3);
-    gCurTask->unk58 = 0x80000;
+    gCurTask->velY = 0x80000;
     TaskYieldTrampoline(3);
     PlaySfx(272);
     TaskStop();
-    gCurTask->unk58 = -0x60000;
+    gCurTask->velY = -0x60000;
     TaskYieldTrampoline(2);
     sub_0807186c(1, 7, 4, 0x300);
     {
         struct Task *u = gCurTask;
 
-        u->unk54 = 0x40000;
-        u->unk58 = -0x20000;
+        u->velX = 0x40000;
+        u->velY = -0x20000;
     }
     TaskYieldTrampoline(14);
-    gCurTask->unk58 = -0x10000;
+    gCurTask->velY = -0x10000;
     TaskYieldTrampoline(10);
     sub_0807186c(1, 6, 8, 0x300);
-    gCurTask->unk58 = -0x8000;
+    gCurTask->velY = -0x8000;
     TaskYieldTrampoline(8);
     sub_0807186c(1, 6, 10, 0x300);
-    gCurTask->unk58 = 0x8000;
+    gCurTask->velY = 0x8000;
     TaskYieldTrampoline(8);
     sub_08025f00();
     gCurTask->unk24 = 1;
@@ -987,11 +987,11 @@ void sub_08072388(void)
 {
     struct Task *t;
 
-    gCurTask->unk15 = 8;
+    gCurTask->updateState = 8;
     t = gCurTask;
-    t->posX = (t->unk48 - gViewRect[0]) << 16;
-    t->posY = (t->unk4A - gViewRect[2]) << 16;
-    t->unk00 = (u32)TaskMoveRelativeToView;
+    t->posX = (t->pixelX - gViewRect[0]) << 16;
+    t->posY = (t->pixelY - gViewRect[2]) << 16;
+    t->moveCallback = (u32)TaskMoveRelativeToView;
     t->unk24 = 0;
     {
         s32 r;
@@ -1006,129 +1006,129 @@ void sub_08072388(void)
     {
         struct Task *u = gCurTask;
 
-        u->unk54 = 0x60000;
-        u->unk58 = -0x30000;
+        u->velX = 0x60000;
+        u->velY = -0x30000;
     }
     TaskYieldTrampoline(6);
     {
         struct Task *u = gCurTask;
 
-        u->unk54 = 0x20000;
-        u->unk58 = -0x20000;
+        u->velX = 0x20000;
+        u->velY = -0x20000;
     }
     TaskYieldTrampoline(6);
     {
         struct Task *u = gCurTask;
 
-        u->unk54 = 0x10000;
-        u->unk58 = -0x10000;
+        u->velX = 0x10000;
+        u->velY = -0x10000;
     }
     TaskYieldTrampoline(6);
     {
         struct Task *u = gCurTask;
 
-        u->unk54 = -0x10000;
-        u->unk58 = -0x8000;
+        u->velX = -0x10000;
+        u->velY = -0x8000;
     }
     TaskYieldTrampoline(6);
-    gCurTask->unk54 = -0x20000;
+    gCurTask->velX = -0x20000;
     TaskYieldTrampoline(6);
     {
         struct Task *u = gCurTask;
 
-        u->unk54 = -0x40000;
-        u->unk58 = 0x2000;
-    }
-    TaskYieldTrampoline(6);
-    {
-        struct Task *u = gCurTask;
-
-        u->unk54 = -0x60000;
-        u->unk58 = 0x8000;
+        u->velX = -0x40000;
+        u->velY = 0x2000;
     }
     TaskYieldTrampoline(6);
     {
         struct Task *u = gCurTask;
 
-        u->unk54 = -0x40000;
-        u->unk58 = 0x10000;
+        u->velX = -0x60000;
+        u->velY = 0x8000;
     }
     TaskYieldTrampoline(6);
     {
         struct Task *u = gCurTask;
 
-        u->unk54 = -0x20000;
-        u->unk58 = 0x20000;
+        u->velX = -0x40000;
+        u->velY = 0x10000;
     }
     TaskYieldTrampoline(6);
     {
         struct Task *u = gCurTask;
 
-        u->unk54 = -0x10000;
-        u->unk58 = 0x30000;
+        u->velX = -0x20000;
+        u->velY = 0x20000;
     }
     TaskYieldTrampoline(6);
     {
         struct Task *u = gCurTask;
 
-        u->unk54 = 0x8000;
-        u->unk58 = 0x20000;
+        u->velX = -0x10000;
+        u->velY = 0x30000;
     }
     TaskYieldTrampoline(6);
     {
         struct Task *u = gCurTask;
 
-        u->unk54 = 0x10000;
-        u->unk58 = 0x10000;
+        u->velX = 0x8000;
+        u->velY = 0x20000;
     }
     TaskYieldTrampoline(6);
     {
         struct Task *u = gCurTask;
 
-        u->unk54 = 0x20000;
-        u->unk58 = 0x8000;
+        u->velX = 0x10000;
+        u->velY = 0x10000;
     }
     TaskYieldTrampoline(6);
-    gCurTask->unk54 = 0x40000;
+    {
+        struct Task *u = gCurTask;
+
+        u->velX = 0x20000;
+        u->velY = 0x8000;
+    }
     TaskYieldTrampoline(6);
-    gCurTask->unk54 = 0x20000;
+    gCurTask->velX = 0x40000;
     TaskYieldTrampoline(6);
-    gCurTask->unk54 = 0x10000;
+    gCurTask->velX = 0x20000;
+    TaskYieldTrampoline(6);
+    gCurTask->velX = 0x10000;
     TaskYieldTrampoline(12);
-    CreateChildTaskAt(148, gCurTask->unk48, gCurTask->unk4A + 16, 0);
+    CreateChildTaskAt(148, gCurTask->pixelX, gCurTask->pixelY + 16, 0);
     RequestScreenShake(2);
     PlaySfx(272);
     gCurTask->unk28 = -0x2600;
     sub_0807186c(1, 4, 3, 0x400);
-    gCurTask->unk58 = 0x10000;
+    gCurTask->velY = 0x10000;
     TaskYieldTrampoline(8);
-    gCurTask->unk54 = 0x8000;
+    gCurTask->velX = 0x8000;
     TaskYieldTrampoline(8);
-    gCurTask->unk54 = 0x2000;
+    gCurTask->velX = 0x2000;
     TaskYieldTrampoline(8);
-    gCurTask->unk54 = -0x2000;
+    gCurTask->velX = -0x2000;
     TaskYieldTrampoline(8);
-    gCurTask->unk54 = -0x8000;
+    gCurTask->velX = -0x8000;
     TaskYieldTrampoline(8);
-    gCurTask->unk54 = -0x10000;
+    gCurTask->velX = -0x10000;
     TaskYieldTrampoline(8);
     {
         struct Task *u = gCurTask;
 
-        u->unk54 = -0x8000;
-        u->unk58 = 0x8000;
+        u->velX = -0x8000;
+        u->velY = 0x8000;
     }
     TaskYieldTrampoline(8);
     TaskStop();
-    gCurTask->unk58 = -0x20000;
+    gCurTask->velY = -0x20000;
     TaskYieldTrampoline(10);
-    gCurTask->unk58 = -0x40000;
+    gCurTask->velY = -0x40000;
     TaskYieldTrampoline(10);
-    gCurTask->unk58 = -0x60000;
+    gCurTask->velY = -0x60000;
     TaskYieldTrampoline(16);
     sub_0807186c(-1, 0, 0, 0);
     TaskStop();
-    gCurTask->unk54 = 0xC000;
+    gCurTask->velX = 0xC000;
     TaskYieldTrampoline(48);
     {
         struct Task *u = gCurTask;
@@ -1145,15 +1145,15 @@ void sub_08072388(void)
         gUnk_02004B4C = r;
     }
     TaskStop();
-    gCurTask->unk58 = 0x8000;
+    gCurTask->velY = 0x8000;
     TaskYieldTrampoline(40);
-    gCurTask->unk58 = 0x6000;
+    gCurTask->velY = 0x6000;
     TaskYieldTrampoline(40);
-    gCurTask->unk58 = 0x4000;
+    gCurTask->velY = 0x4000;
     TaskYieldTrampoline(40);
-    gCurTask->unk58 = 0x2000;
+    gCurTask->velY = 0x2000;
     TaskYieldTrampoline(40);
-    gCurTask->unk58 = 0x1000;
+    gCurTask->velY = 0x1000;
     TaskYieldTrampoline(40);
     sub_08025f00();
     gCurTask->unk24 = 1;
@@ -1169,11 +1169,11 @@ void sub_08072684(void)
 {
     struct Task *t;
 
-    gCurTask->unk15 = 10;
+    gCurTask->updateState = 10;
     t = gCurTask;
-    t->posX = (t->unk48 - gViewRect[0]) << 16;
-    t->posY = (t->unk4A - gViewRect[2]) << 16;
-    t->unk00 = (u32)TaskMoveRelativeToView;
+    t->posX = (t->pixelX - gViewRect[0]) << 16;
+    t->posY = (t->pixelY - gViewRect[2]) << 16;
+    t->moveCallback = (u32)TaskMoveRelativeToView;
     t->unk24 = 0;
     {
         s32 r;
@@ -1184,55 +1184,55 @@ void sub_08072684(void)
     }
     sub_08071898();
     TaskStop();
-    gCurTask->unk58 = 0x8000;
+    gCurTask->velY = 0x8000;
     TaskYieldTrampoline(6);
-    gCurTask->unk58 = 0x10000;
+    gCurTask->velY = 0x10000;
     TaskYieldTrampoline(6);
-    gCurTask->unk58 = 0x8000;
+    gCurTask->velY = 0x8000;
     TaskYieldTrampoline(6);
     {
         struct Task *u = gCurTask;
 
-        u->unk54 = -0x8000;
-        u->unk58 = -0x8000;
+        u->velX = -0x8000;
+        u->velY = -0x8000;
     }
     TaskYieldTrampoline(4);
     {
         struct Task *u = gCurTask;
 
-        u->unk54 = -0x10000;
-        u->unk58 = -0x10000;
+        u->velX = -0x10000;
+        u->velY = -0x10000;
     }
     TaskYieldTrampoline(4);
     {
         struct Task *u = gCurTask;
 
-        u->unk54 = -0x30000;
-        u->unk58 = -0x40000;
+        u->velX = -0x30000;
+        u->velY = -0x40000;
     }
     TaskYieldTrampoline(4);
-    gCurTask->unk58 = -0x20000;
+    gCurTask->velY = -0x20000;
     TaskYieldTrampoline(4);
-    gCurTask->unk58 = -0x10000;
+    gCurTask->velY = -0x10000;
     TaskYieldTrampoline(4);
-    gCurTask->unk58 = 0x10000;
+    gCurTask->velY = 0x10000;
     TaskYieldTrampoline(4);
-    gCurTask->unk58 = 0x20000;
+    gCurTask->velY = 0x20000;
     TaskYieldTrampoline(4);
-    gCurTask->unk54 = -0x20000;
+    gCurTask->velX = -0x20000;
     TaskYieldTrampoline(8);
     {
         struct Task *u = gCurTask;
 
-        u->unk54 = -0x10000;
-        u->unk58 = 0x10000;
+        u->velX = -0x10000;
+        u->velY = 0x10000;
     }
     TaskYieldTrampoline(8);
     {
         struct Task *u = gCurTask;
 
-        u->unk54 = -0x8000;
-        u->unk58 = 0x8000;
+        u->velX = -0x8000;
+        u->velY = 0x8000;
     }
     TaskYieldTrampoline(8);
     sub_0807186c(1, 6, 4, 0x300);
@@ -1242,48 +1242,48 @@ void sub_08072684(void)
         {
             struct Task *u = gCurTask;
 
-            u->unk54 = 0x20000;
-            u->unk58 = -0x20000;
+            u->velX = 0x20000;
+            u->velY = -0x20000;
         }
         TaskYieldTrampoline(2);
         {
             struct Task *u = gCurTask;
 
-            u->unk54 = -0x20000;
-            u->unk58 = 0x20000;
+            u->velX = -0x20000;
+            u->velY = 0x20000;
         }
         TaskYieldTrampoline(2);
         gCurTask->unk6C++;
     } while ((s16)gCurTask->unk6C <= 7);
-    CreateChildTaskAt(148, gCurTask->unk48, gCurTask->unk4A + 16, 0);
+    CreateChildTaskAt(148, gCurTask->pixelX, gCurTask->pixelY + 16, 0);
     RequestScreenShake(2);
     PlaySfx(272);
     {
         struct Task *u = gCurTask;
 
-        u->unk54 = 0x20000;
-        u->unk58 = -0x20000;
+        u->velX = 0x20000;
+        u->velY = -0x20000;
     }
     TaskYieldTrampoline(2);
     {
         struct Task *u = gCurTask;
 
-        u->unk54 = -0x20000;
-        u->unk58 = 0x20000;
+        u->velX = -0x20000;
+        u->velY = 0x20000;
     }
     TaskYieldTrampoline(2);
     {
         struct Task *u = gCurTask;
 
-        u->unk54 = 0x80000;
-        u->unk58 = -0x60000;
+        u->velX = 0x80000;
+        u->velY = -0x60000;
     }
     TaskYieldTrampoline(12);
-    gCurTask->unk54 = 0x60000;
+    gCurTask->velX = 0x60000;
     TaskYieldTrampoline(4);
-    gCurTask->unk54 = 0x40000;
+    gCurTask->velX = 0x40000;
     TaskYieldTrampoline(4);
-    gCurTask->unk54 = 0x30000;
+    gCurTask->velX = 0x30000;
     TaskYieldTrampoline(4);
     TaskStop();
     sub_08025f00();
@@ -1300,15 +1300,15 @@ void sub_080728b0(void)
 {
     struct Task *t;
 
-    gCurTask->unk15 = 11;
+    gCurTask->updateState = 11;
     t = gCurTask;
-    t->posX = (t->unk48 - gViewRect[0]) << 16;
-    t->posY = (t->unk4A - gViewRect[2]) << 16;
-    t->unk00 = (u32)TaskMoveRelativeToView;
+    t->posX = (t->pixelX - gViewRect[0]) << 16;
+    t->posY = (t->pixelY - gViewRect[2]) << 16;
+    t->moveCallback = (u32)TaskMoveRelativeToView;
     t->unk24 = 0;
     sub_08071898();
     TaskStop();
-    gCurTask->unk54 = 0x80000;
+    gCurTask->velX = 0x80000;
     TaskYieldTrampoline(1);
     gCurTask->unk6C = 0;
     while (1)
@@ -1317,74 +1317,74 @@ void sub_080728b0(void)
         {
             struct Task *u = gCurTask;
 
-            u->unk54 = 0x80000;
-            u->unk58 = -0x20000;
+            u->velX = 0x80000;
+            u->velY = -0x20000;
         }
         TaskYieldTrampoline(12);
-        gCurTask->unk54 = 0x60000;
+        gCurTask->velX = 0x60000;
         TaskYieldTrampoline(6);
-        gCurTask->unk54 = 0x40000;
+        gCurTask->velX = 0x40000;
         TaskYieldTrampoline(6);
         sub_0807186c(1, 5, -1, 0x300);
-        gCurTask->unk54 = 0x20000;
+        gCurTask->velX = 0x20000;
         TaskYieldTrampoline(4);
-        gCurTask->unk54 = 0x10000;
+        gCurTask->velX = 0x10000;
         TaskYieldTrampoline(4);
-        gCurTask->unk54 = 0x8000;
+        gCurTask->velX = 0x8000;
         TaskYieldTrampoline(4);
         gCurTask->unk18 = -1;
         sub_0807186c(1, 1, 4, 0x300);
         {
             struct Task *u = gCurTask;
 
-            u->unk54 = -0x10000;
-            u->unk58 = -0x14000;
+            u->velX = -0x10000;
+            u->velY = -0x14000;
         }
         TaskYieldTrampoline(4);
         {
             struct Task *u = gCurTask;
 
-            u->unk54 = -0x20000;
-            u->unk58 = -0x10000;
+            u->velX = -0x20000;
+            u->velY = -0x10000;
         }
         TaskYieldTrampoline(4);
         {
             struct Task *u = gCurTask;
 
-            u->unk54 = -0x40000;
-            u->unk58 = -0x8000;
+            u->velX = -0x40000;
+            u->velY = -0x8000;
         }
         TaskYieldTrampoline(4);
         {
             struct Task *u = gCurTask;
 
-            u->unk54 = -0x80000;
-            u->unk58 = 0x30000;
+            u->velX = -0x80000;
+            u->velY = 0x30000;
         }
         TaskYieldTrampoline(18);
         {
             struct Task *u = gCurTask;
 
-            u->unk54 = -0x40000;
-            u->unk58 = 0x10000;
+            u->velX = -0x40000;
+            u->velY = 0x10000;
         }
         TaskYieldTrampoline(4);
-        gCurTask->unk54 = -0x20000;
+        gCurTask->velX = -0x20000;
         TaskYieldTrampoline(2);
         gCurTask->unk18 = 0;
         sub_0807186c(1, 7, 4, 0x300);
         {
             struct Task *u = gCurTask;
 
-            u->unk54 = 0x20000;
-            u->unk58 = -0x8000;
+            u->velX = 0x20000;
+            u->velY = -0x8000;
         }
         TaskYieldTrampoline(2);
         {
             struct Task *u = gCurTask;
 
-            u->unk54 = 0x40000;
-            u->unk58 = -0x10000;
+            u->velX = 0x40000;
+            u->velY = -0x10000;
         }
         TaskYieldTrampoline(4);
         gCurTask->unk6C++;
@@ -1394,17 +1394,17 @@ void sub_080728b0(void)
     {
         struct Task *u = gCurTask;
 
-        u->unk54 = 0x80000;
-        u->unk58 = -0x20000;
+        u->velX = 0x80000;
+        u->velY = -0x20000;
     }
     TaskYieldTrampoline(4);
-    gCurTask->unk58 = -0x30000;
+    gCurTask->velY = -0x30000;
     TaskYieldTrampoline(4);
     sub_0807186c(1, 5, -1, 0x300);
-    gCurTask->unk58 = -0x60000;
+    gCurTask->velY = -0x60000;
     TaskYieldTrampoline(4);
     sub_0807186c(1, 4, -1, 0x300);
-    gCurTask->unk58 = -0x80000;
+    gCurTask->velY = -0x80000;
     TaskYieldTrampoline(8);
     TaskStop();
     TaskYieldTrampoline(4);
@@ -1422,11 +1422,11 @@ void sub_08072b00(void)
 {
     struct Task *t;
 
-    gCurTask->unk15 = 12;
+    gCurTask->updateState = 12;
     t = gCurTask;
-    t->posX = (t->unk48 - gViewRect[0]) << 16;
-    t->posY = (t->unk4A - gViewRect[2]) << 16;
-    t->unk00 = (u32)TaskMoveRelativeToView;
+    t->posX = (t->pixelX - gViewRect[0]) << 16;
+    t->posY = (t->pixelY - gViewRect[2]) << 16;
+    t->moveCallback = (u32)TaskMoveRelativeToView;
     {
         s32 r;
 
@@ -1439,14 +1439,14 @@ void sub_08072b00(void)
     {
         struct Task *u = gCurTask;
 
-        u->unk54 = 0x60000;
-        u->unk58 = -0x30000;
+        u->velX = 0x60000;
+        u->velY = -0x30000;
     }
     TaskYieldTrampoline(14);
     sub_0807186c(1, 5, 4, 0x300);
-    gCurTask->unk58 = -0x40000;
+    gCurTask->velY = -0x40000;
     TaskYieldTrampoline(4);
-    gCurTask->unk58 = -0x60000;
+    gCurTask->velY = -0x60000;
     TaskYieldTrampoline(4);
     sub_0807186c(1, 4, 4, 0x300);
     gCurTask->unk6C = 0;
@@ -1455,15 +1455,15 @@ void sub_08072b00(void)
         {
             struct Task *u = gCurTask;
 
-            u->unk54 = 0x60000;
-            u->unk58 = -0x60000;
+            u->velX = 0x60000;
+            u->velY = -0x60000;
         }
         TaskYieldTrampoline(2);
         {
             struct Task *u = gCurTask;
 
-            u->unk54 = -0x60000;
-            u->unk58 = 0x60000;
+            u->velX = -0x60000;
+            u->velY = 0x60000;
         }
         TaskYieldTrampoline(1);
         gCurTask->unk6C++;
@@ -1472,18 +1472,18 @@ void sub_08072b00(void)
     gCurTask->unk6C = 0;
     do
     {
-        gCurTask->unk58 = -0x60000;
+        gCurTask->velY = -0x60000;
         TaskYieldTrampoline(2);
-        gCurTask->unk58 = 0x60000;
+        gCurTask->velY = 0x60000;
         TaskYieldTrampoline(1);
         gCurTask->unk6C++;
     } while ((s16)gCurTask->unk6C <= 2);
     gCurTask->unk6C = 0;
     do
     {
-        gCurTask->unk58 = -0x20000;
+        gCurTask->velY = -0x20000;
         TaskYieldTrampoline(1);
-        gCurTask->unk58 = 0x20000;
+        gCurTask->velY = 0x20000;
         TaskYieldTrampoline(1);
         gCurTask->unk6C++;
     } while ((s16)gCurTask->unk6C <= 2);
@@ -1493,49 +1493,49 @@ void sub_08072b00(void)
     {
         struct Task *u = gCurTask;
 
-        u->unk54 = -0x800;
-        u->unk58 = 0x800;
+        u->velX = -0x800;
+        u->velY = 0x800;
     }
     TaskYieldTrampoline(4);
     {
         struct Task *u = gCurTask;
 
-        u->unk54 = -0x2000;
-        u->unk58 = 0x2000;
+        u->velX = -0x2000;
+        u->velY = 0x2000;
     }
     TaskYieldTrampoline(4);
     {
         struct Task *u = gCurTask;
 
-        u->unk54 = -0x8000;
-        u->unk58 = 0x8000;
+        u->velX = -0x8000;
+        u->velY = 0x8000;
     }
     TaskYieldTrampoline(4);
     {
         struct Task *u = gCurTask;
 
-        u->unk54 = -0x10000;
-        u->unk58 = 0x10000;
+        u->velX = -0x10000;
+        u->velY = 0x10000;
     }
     TaskYieldTrampoline(4);
     {
         struct Task *u = gCurTask;
 
-        u->unk54 = -0x20000;
-        u->unk58 = 0x20000;
+        u->velX = -0x20000;
+        u->velY = 0x20000;
     }
     TaskYieldTrampoline(4);
     {
         struct Task *u = gCurTask;
 
-        u->unk54 = -0x40000;
-        u->unk58 = 0x40000;
+        u->velX = -0x40000;
+        u->velY = 0x40000;
     }
     TaskYieldTrampoline(6);
-    gCurTask->unk54 = -0x80000;
+    gCurTask->velX = -0x80000;
     TaskYieldTrampoline(6);
     gCurTask->facing = 255;
-    sub_080277f0(gCurTask->unk48, gCurTask->unk4A);
+    sub_080277f0(gCurTask->pixelX, gCurTask->pixelY);
     RequestScreenShake(4);
     StopSfxOnPlayer(gUnk_02004B4C, gUnk_02005584);
     PlaySfx(219);

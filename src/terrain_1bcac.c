@@ -8,7 +8,7 @@
  * Six per-frame entry points sharing one body: load the actor's terrain box
  * (TerrainProbeBegin), derive the actor's room-relative position from
  * Task.posX/unk50 (16.16 fixed point) and the room origin in
- * Task.unk54/unk58, form the box corners in gTerrainPrevBoxLeft/gTerrainPrevBoxRight
+ * Task.velX/unk58, form the box corners in gTerrainPrevBoxLeft/gTerrainPrevBoxRight
  * (x) and gTerrainPrevBoxTop/gTerrainPrevBoxBottom (y), then dispatch the probe set by
  * the actor's movement direction (the sign of gTerrainVelX) and finish with
  * the room probe TerrainProbeWater and the write-back TerrainProbeEnd.
@@ -169,8 +169,8 @@ void sub_0801bcac(const s8 *p)
     s32 v;
 
     TerrainProbeBegin(p);
-    gTerrainVelX = gCurTask->unk54;
-    gTerrainVelY = gCurTask->unk58;
+    gTerrainVelX = gCurTask->velX;
+    gTerrainVelY = gCurTask->velY;
     gTerrainPrevX = ((gTerrainProbeX << 16) + (gCurTask->posX & 0xFFFF) - gTerrainVelX) >> 16;
     gTerrainPrevY = ((gTerrainProbeY << 16) + (gCurTask->posY & 0xFFFF) - gTerrainVelY) >> 16;
     gTerrainPrevBoxLeft = gTerrainPrevX + gTerrainBoxLeft;
@@ -217,8 +217,8 @@ void sub_0801bde0(const s8 *p)
     s32 v;
 
     TerrainProbeBegin(p);
-    gTerrainVelX = gCurTask->unk54;
-    gTerrainVelY = gCurTask->unk58;
+    gTerrainVelX = gCurTask->velX;
+    gTerrainVelY = gCurTask->velY;
     gTerrainPrevX = ((gTerrainProbeX << 16) + (gCurTask->posX & 0xFFFF) - gTerrainVelX) >> 16;
     gTerrainPrevY = ((gTerrainProbeY << 16) + (gCurTask->posY & 0xFFFF) - gTerrainVelY) >> 16;
     gTerrainPrevBoxLeft = gTerrainPrevX + gTerrainBoxLeft;
@@ -267,8 +267,8 @@ void sub_0801bf1c(const s8 *p)
     s32 v;
 
     TerrainProbeBegin(p);
-    gTerrainVelX = gCurTask->unk54;
-    gTerrainVelY = gCurTask->unk58;
+    gTerrainVelX = gCurTask->velX;
+    gTerrainVelY = gCurTask->velY;
     gTerrainPrevX = ((gTerrainProbeX << 16) + (gCurTask->posX & 0xFFFF) - gTerrainVelX) >> 16;
     gTerrainPrevY = ((gTerrainProbeY << 16) + (gCurTask->posY & 0xFFFF) - gTerrainVelY) >> 16;
     gTerrainPrevBoxLeft = gTerrainPrevX + gTerrainBoxLeft;
@@ -295,8 +295,8 @@ void sub_0801bf1c(const s8 *p)
 void sub_0801c030(const s8 *p)
 {
     TerrainProbeBegin(p);
-    gTerrainVelX = gCurTask->unk54;
-    gTerrainVelY = gCurTask->unk58;
+    gTerrainVelX = gCurTask->velX;
+    gTerrainVelY = gCurTask->velY;
     gTerrainPrevX = ((gTerrainProbeX << 16) + (gCurTask->posX & 0xFFFF) - gTerrainVelX) >> 16;
     gTerrainPrevY = ((gTerrainProbeY << 16) + (gCurTask->posY & 0xFFFF) - gTerrainVelY) >> 16;
     gTerrainPrevBoxLeft = gTerrainPrevX + gTerrainBoxLeft;
@@ -317,8 +317,8 @@ void sub_0801c030(const s8 *p)
 void sub_0801c12c(const s8 *p)
 {
     TerrainProbeBegin(p);
-    gTerrainVelX = gCurTask->unk54;
-    gTerrainVelY = gCurTask->unk58;
+    gTerrainVelX = gCurTask->velX;
+    gTerrainVelY = gCurTask->velY;
     gTerrainPrevX = ((gTerrainProbeX << 16) + (gCurTask->posX & 0xFFFF) - gTerrainVelX) >> 16;
     gTerrainPrevY = ((gTerrainProbeY << 16) + (gCurTask->posY & 0xFFFF) - gTerrainVelY) >> 16;
     gTerrainPrevBoxLeft = gTerrainPrevX + gTerrainBoxLeft;
@@ -341,8 +341,8 @@ void sub_0801c12c(const s8 *p)
 void sub_0801c230(const s8 *p)
 {
     TerrainProbeBegin(p);
-    gTerrainVelX = gCurTask->unk54;
-    gTerrainVelY = gCurTask->unk58;
+    gTerrainVelX = gCurTask->velX;
+    gTerrainVelY = gCurTask->velY;
     gTerrainPrevX = ((gTerrainProbeX << 16) + (gCurTask->posX & 0xFFFF) - gTerrainVelX) >> 16;
     gTerrainPrevY = ((gTerrainProbeY << 16) + (gCurTask->posY & 0xFFFF) - gTerrainVelY) >> 16;
     gTerrainPrevBoxLeft = gTerrainPrevX + gTerrainBoxLeft;

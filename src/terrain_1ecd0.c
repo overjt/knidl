@@ -42,7 +42,7 @@ extern s8 gUnk_087339F0[];
 extern u16 gUnk_08735018[];         /* indexed by the cell's byte 2 */
 extern u16 gTerrainPixelIndex;           /* pixel offset inside the queried cell */
 extern s16 gTerrainPrevBoxLeft;           /* box left (room-relative) */
-extern s32 gTerrainVelY;           /* Task.unk58 */
+extern s32 gTerrainVelY;           /* Task.velY */
 extern s16 gTerrainBoxLeft;           /* box left offset */
 extern struct Unk03005530 gTerrainProbeResult;
 extern s16 gTerrainProbeX;           /* probe x */

@@ -120,16 +120,16 @@ void PlayerPlayBump(void)
     u8 v;
     s16 *p;
 
-    v = gCurTask->unk88->unk3E;
+    v = gCurTask->player->bumpKind;
     if (v == 0)
         return;
-    gCurTask->unk88->unk3E = 0;
+    gCurTask->player->bumpKind = 0;
     if (gUnk_03001F30 == 0)
-        p = &gUnk_0873D210[gCurTask->unk88->unk0D * 4];
+        p = &gUnk_0873D210[gCurTask->player->ability * 4];
     else
         p = gUnk_0873D2E0;
-    CreatePlayerEffect(gCurTask->unk88->unk00, 4, 0);
-    if (gCurTask->unk88->unk06 == 1) {
+    CreatePlayerEffect(gCurTask->player->playerIndex, 4, 0);
+    if (gCurTask->player->mouthState == 1) {
         if (v == 2) {
             TaskSetFrame(0x15F);
             TaskYieldTrampoline(2);
@@ -137,7 +137,7 @@ void PlayerPlayBump(void)
     } else {
         switch (v) {
         case 1:
-            PlaySfxIfLocalPlayer(107, (u16)gCurTask->unk88->unk00);
+            PlaySfxIfLocalPlayer(107, (u16)gCurTask->player->playerIndex);
             TaskSetFrame(p[0]);
             TaskYieldTrampoline(4);
             break;
@@ -147,13 +147,13 @@ void PlayerPlayBump(void)
             break;
         case 3:
         case 5:
-            PlaySfxIfLocalPlayer(107, (u16)gCurTask->unk88->unk00);
+            PlaySfxIfLocalPlayer(107, (u16)gCurTask->player->playerIndex);
             TaskSetFrame(p[1]);
             TaskYieldTrampoline(4);
             break;
         case 4:
         case 6:
-            PlaySfxIfLocalPlayer(107, (u16)gCurTask->unk88->unk00);
+            PlaySfxIfLocalPlayer(107, (u16)gCurTask->player->playerIndex);
             TaskSetFrame(p[2]);
             TaskYieldTrampoline(4);
             break;
@@ -167,35 +167,35 @@ void sub_0803ce98(void)
     struct PlayerState *ps2;
     s32 v, c;
 
-    ps = gCurTask->unk88;
-    if (ps->unk04 != 0 && ps->unk04 != 6)
+    ps = gCurTask->player;
+    if (ps->mode != 0 && ps->mode != 6)
         return;
     if (ps->unk35 != 0) {
         ps->unk35--;
     } else {
         if (gUnk_0873AF20[ps->unk34][0] == 0)
             ps->unk34 = 0;
-        gCurTask->unk88->unk35 = gUnk_0873AF20[gCurTask->unk88->unk34][0];
-        gCurTask->unk88->unk32 = gUnk_0873AF20[gCurTask->unk88->unk34++][1];
+        gCurTask->player->unk35 = gUnk_0873AF20[gCurTask->player->unk34][0];
+        gCurTask->player->unk32 = gUnk_0873AF20[gCurTask->player->unk34++][1];
     }
-    ps2 = gCurTask->unk88;
+    ps2 = gCurTask->player;
     if (ps2->unk32 == 0)
         return;
-    c = (ps2->unk04 != 0);
+    c = (ps2->mode != 0);
     v = gUnk_0873AF0C[ps2->unk33][c];
-    if (ps2->unk06 == 1)
+    if (ps2->mouthState == 1)
         v += 10;
-    if (gLocalPlayer != ps2->unk00 || gUnk_03002444 != 0) {
-        if (IsWorldPosOnScreen(gCurTask->unk48, gCurTask->unk4A) == 0)
+    if (gLocalPlayer != ps2->playerIndex || gUnk_03002444 != 0) {
+        if (IsWorldPosOnScreen(gCurTask->pixelX, gCurTask->pixelY) == 0)
             return;
     }
     if (sub_0803d010() != 0)
         return;
     QueueSprite(gCurTask->layer, gUnk_08751990[v],
-                 (u16)(gCurTask->unk3E & 0x8000),
-                 gCurTask->unk40 & 0xF000,
-                 gCurTask->unk48 - gSpriteCameraX,
-                 gCurTask->unk4A - gSpriteCameraY);
+                 (u16)(gCurTask->spriteFlags & 0x8000),
+                 gCurTask->tileWord & 0xF000,
+                 gCurTask->pixelX - gSpriteCameraX,
+                 gCurTask->pixelY - gSpriteCameraY);
 }
 
 /* True while the running task's unk3C (state id) is one of 1511..1515. */
@@ -213,8 +213,8 @@ void CreatePlayer(s32 a0)
     t = &gTasks[TaskCreateFrom(5, 0)];
     t->posX = gRoomEntryX << 16;
     t->posY = gRoomEntryY << 16;
-    t->unk48 = t->posX >> 16;
-    t->unk4A = t->posY >> 16;
+    t->pixelX = t->posX >> 16;
+    t->pixelY = t->posY >> 16;
     if ((u8)(gUnk_02000020 - 2) <= 1)
         SetPlayerAbilityNoHud(25, -1, a0);
 }
@@ -225,24 +225,24 @@ void InitPlayerState(s32 a0)
     struct PlayerState *p;
 
     p = &gPlayerStates[a0];
-    p->unk00 = a0;
-    p->unk03 = 0;
-    p->unk02 = 0;
-    p->unk01 = 0;
-    p->unk05 = 255;
-    p->unk04 = -1;
-    p->unk06 = 0;
+    p->playerIndex = a0;
+    p->prevAction = 0;
+    p->action = 0;
+    p->requestedAction = 0;
+    p->prevMode = 255;
+    p->mode = -1;
+    p->mouthState = 0;
     p->unk08 = 0;
     p->unk07 = 0;
     p->unk09 = 0;
-    p->unk0B = 0;
+    p->pendingAbility = 0;
     p->unk0A = 0;
     p->unk0C = -1;
-    p->unk0D = gPlayerAbilities[a0];
+    p->ability = gPlayerAbilities[a0];
     p->unk0E = gUnk_0200AF18[a0];
     p->unk10 = 0;
     p->unk0F = 0;
-    p->unk12 = 0;
+    p->invulnerabilityTimer = 0;
     p->unk14 = 0;
     p->unk17 = 0;
     p->unk18 = 0;
@@ -251,13 +251,13 @@ void InitPlayerState(s32 a0)
     p->unk22 = 0;
     p->unk20 = 0;
     p->unk1E = 0;
-    p->unk26 = 0;
-    p->unk24 = 0;
+    p->pixelOffsetY = 0;
+    p->pixelOffsetX = 0;
     p->unk2B = 0;
-    p->unk29 = 0;
-    p->unk28 = 0;
-    p->unk2C = 0xFFFF;
-    p->unk2E = 0;
+    p->offsetScriptDelay = 0;
+    p->offsetScriptStep = 0;
+    p->sfxPlayer = 0xFFFF;
+    p->sfxId = 0;
     p->unk30 = 0;
     p->unk31 = 0;
     p->unk36 = 0;
@@ -267,12 +267,12 @@ void InitPlayerState(s32 a0)
     p->unk3A = 0;
     p->unk3C = 0;
     p->unk48 = 0;
-    p->unk3D = 0;
-    p->unk3E = 0;
-    p->unk3F = 0;
+    p->running = 0;
+    p->bumpKind = 0;
+    p->invulnerability = 0;
     p->unk40 = 0;
     p->unk42 = 0;
-    p->unk44 = 0;
+    p->blocksBroken = 0;
     p->unk45 = 0;
     p->unk50 = 0;
     p->unk46 = 0;
@@ -285,12 +285,12 @@ void InitPlayerState(s32 a0)
     p->unk4E = -1;
     p->unk58 = 0;
     p->unk54 = 0;
-    p->unk60 = 0;
-    p->unk5E = 0;
-    p->unk64 = 0;
-    p->unk68 = 0;
-    p->unk6C = 0;
-    p->unk70 = gPlayerDefaultTerrainBox;
+    p->prevPixelY = 0;
+    p->prevPixelX = 0;
+    p->bodyBox = 0;
+    p->terrainBox = 0;
+    p->hitBoxSet = 0;
+    p->prevTerrainBox = gPlayerDefaultTerrainBox;
     gPlayerBubbleTimers[a0] = 45;
 }
 
@@ -300,35 +300,35 @@ void sub_0803d1c4(s32 a0)
     struct PlayerState *p;
 
     p = &gPlayerStates[a0];
-    p->unk00 = a0;
-    p->unk03 = 0;
-    p->unk02 = 0;
-    p->unk01 = 0;
-    p->unk05 = 255;
-    p->unk04 = -1;
-    p->unk06 = 0;
+    p->playerIndex = a0;
+    p->prevAction = 0;
+    p->action = 0;
+    p->requestedAction = 0;
+    p->prevMode = 255;
+    p->mode = -1;
+    p->mouthState = 0;
     p->unk08 = 0;
     p->unk07 = 0;
     p->unk09 = 0;
-    p->unk0B = 0;
+    p->pendingAbility = 0;
     p->unk0A = 0;
     p->unk0C = -1;
-    p->unk0D = gPlayerAbilities[a0];
+    p->ability = gPlayerAbilities[a0];
     p->unk0E = gUnk_0200AF18[a0];
     p->unk10 = 0;
     p->unk0F = 0;
-    p->unk12 = 0;
+    p->invulnerabilityTimer = 0;
     p->unk14 = 0;
     p->unk22 = 0;
     p->unk20 = 0;
     p->unk1E = 0;
-    p->unk26 = 0;
-    p->unk24 = 0;
+    p->pixelOffsetY = 0;
+    p->pixelOffsetX = 0;
     p->unk2B = 0;
-    p->unk29 = 0;
-    p->unk28 = 0;
-    p->unk2C = 0xFFFF;
-    p->unk2E = 0;
+    p->offsetScriptDelay = 0;
+    p->offsetScriptStep = 0;
+    p->sfxPlayer = 0xFFFF;
+    p->sfxId = 0;
     p->unk30 = 0;
     p->unk31 = 0;
     p->unk36 = 0;
@@ -337,12 +337,12 @@ void sub_0803d1c4(s32 a0)
     p->unk3A = 0;
     p->unk3C = 0;
     p->unk48 = 0;
-    p->unk3D = 0;
-    p->unk3E = 0;
-    p->unk3F = 0;
+    p->running = 0;
+    p->bumpKind = 0;
+    p->invulnerability = 0;
     p->unk40 = 0;
     p->unk42 = 0;
-    p->unk44 = 0;
+    p->blocksBroken = 0;
     p->unk45 = 0;
     p->unk50 = 0;
     p->unk46 = 0;
@@ -355,10 +355,10 @@ void sub_0803d1c4(s32 a0)
     p->unk4E = -1;
     p->unk58 = 0;
     p->unk54 = 0;
-    p->unk64 = 0;
-    p->unk68 = 0;
-    p->unk6C = 0;
-    p->unk70 = gPlayerDefaultTerrainBox;
+    p->bodyBox = 0;
+    p->terrainBox = 0;
+    p->hitBoxSet = 0;
+    p->prevTerrainBox = gPlayerDefaultTerrainBox;
     gPlayerBubbleTimers[a0] = 45;
 }
 
@@ -368,17 +368,17 @@ void sub_0803d2d4(s32 a0)
     struct PlayerState *p;
 
     p = &gPlayerStates[a0];
-    p->unk00 = a0;
-    p->unk03 = 0;
-    p->unk02 = 0;
-    p->unk01 = 0;
-    p->unk05 = 255;
-    p->unk04 = -1;
-    p->unk0D = gPlayerAbilities[a0];
+    p->playerIndex = a0;
+    p->prevAction = 0;
+    p->action = 0;
+    p->requestedAction = 0;
+    p->prevMode = 255;
+    p->mode = -1;
+    p->ability = gPlayerAbilities[a0];
     p->unk0E = gUnk_0200AF18[a0];
     p->unk10 = 0;
     p->unk0F = 0;
-    p->unk12 = 0;
+    p->invulnerabilityTimer = 0;
     p->unk14 = 0;
     p->unk17 = 0;
     p->unk18 = 0;
@@ -387,24 +387,24 @@ void sub_0803d2d4(s32 a0)
     p->unk22 = 0;
     p->unk20 = 0;
     p->unk1E = 0;
-    p->unk26 = 0;
-    p->unk24 = 0;
+    p->pixelOffsetY = 0;
+    p->pixelOffsetX = 0;
     p->unk2B = 0;
-    p->unk29 = 0;
-    p->unk28 = 0;
-    p->unk2C = 0xFFFF;
-    p->unk2E = 0;
+    p->offsetScriptDelay = 0;
+    p->offsetScriptStep = 0;
+    p->sfxPlayer = 0xFFFF;
+    p->sfxId = 0;
     p->unk36 = 0;
     p->unk38 = 0;
     p->unk3B = 0;
     p->unk3A = 0;
     p->unk48 = 0;
-    p->unk3D = 0;
-    p->unk3E = 0;
-    p->unk3F = 0;
+    p->running = 0;
+    p->bumpKind = 0;
+    p->invulnerability = 0;
     p->unk40 = 0;
     p->unk42 = 0;
-    p->unk44 = 0;
+    p->blocksBroken = 0;
     p->unk45 = 0;
     p->unk50 = 0;
     p->unk46 = 0;
@@ -417,10 +417,10 @@ void sub_0803d2d4(s32 a0)
     p->unk4E = -1;
     p->unk58 = 0;
     p->unk54 = 0;
-    p->unk64 = 0;
-    p->unk68 = 0;
-    p->unk6C = 0;
-    p->unk70 = gPlayerDefaultTerrainBox;
+    p->bodyBox = 0;
+    p->terrainBox = 0;
+    p->hitBoxSet = 0;
+    p->prevTerrainBox = gPlayerDefaultTerrainBox;
     gPlayerBubbleTimers[a0] = 45;
 }
 
@@ -489,29 +489,29 @@ void PlayerMove(void)
     struct Task *u;
 
     t = gCurTask;
-    sub_0803d3d4(t->unk54, t->unk5C, t->unk64);
+    sub_0803d3d4(t->velX, t->accelX, t->speedLimitX);
     t = gCurTask;
-    t->unk54 = gUnk_03001F2C;
-    t->unk64 = gUnk_03002344;
-    t->unk54 += gUnk_03002448;
-    sub_0803d3d4(t->unk58, t->unk60, t->unk68);
+    t->velX = gUnk_03001F2C;
+    t->speedLimitX = gUnk_03002344;
+    t->velX += gUnk_03002448;
+    sub_0803d3d4(t->velY, t->accelY, t->speedLimitY);
     t = gCurTask;
-    t->unk58 = gUnk_03001F2C;
-    t->unk68 = gUnk_03002344;
-    t->unk58 += gUnk_03002448;
-    if ((t->unk88->unk42 & 0x100) == 0) {
-        t->posX += t->unk88->unk54;
-        if ((t->unk7A & 1) == 0) {
-            t->posY += t->unk88->unk58;
-            if (t->unk88->unk58 < 0)
-                t->unk7A = 0;
+    t->velY = gUnk_03001F2C;
+    t->speedLimitY = gUnk_03002344;
+    t->velY += gUnk_03002448;
+    if ((t->player->unk42 & 0x100) == 0) {
+        t->posX += t->player->unk54;
+        if ((t->onGround & 1) == 0) {
+            t->posY += t->player->unk58;
+            if (t->player->unk58 < 0)
+                t->onGround = 0;
         }
     }
     u = gCurTask;
-    u->posX += u->unk54;
-    u->posY += u->unk58;
-    u->unk48 = u->posX >> 16;
-    u->unk4A = u->posY >> 16;
+    u->posX += u->velX;
+    u->posY += u->velY;
+    u->pixelX = u->posX >> 16;
+    u->pixelY = u->posY >> 16;
 }
 
 /* Upload the frame's graphics for gfx script entry unk3C+a0 and return its
@@ -528,14 +528,14 @@ s32 PlayerLoadFrameTilesAndPalette(s32 a0)
     u32 *tbl;
 
     t = gCurTask;
-    prio = t->unk40;
-    tbl = t->unk38;
+    prio = t->tileWord;
+    tbl = t->frameTable;
     g = (struct TaskGfx *)tbl[t->frame + a0];
-    if ((g->unk00 & 1) != 0) {
-        p = &g->unk04;
-        if ((t->unk88->unk42 & 16) == 0 && g->unk04 != NULL)
-            RequestCopy(2, (u32)(g->unk04 + 1),
-                         (u32)gObjPalette + ((prio >> 12) << 5), *g->unk04);
+    if ((g->oamTemplate & 1) != 0) {
+        p = &g->palette;
+        if ((t->player->unk42 & 16) == 0 && g->palette != NULL)
+            RequestCopy(2, (u32)(g->palette + 1),
+                         (u32)gObjPalette + ((prio >> 12) << 5), *g->palette);
         p++;
         s = *p;
         dst = ((prio & 0x7FF) << 5) + 0x06010000;
@@ -548,7 +548,7 @@ s32 PlayerLoadFrameTilesAndPalette(s32 a0)
             } while (*s != 0xFFFF);
         }
         p++;
-        if ((gCurTask->unk88->unk42 & 16) == 0 && *p != NULL)
+        if ((gCurTask->player->unk42 & 16) == 0 && *p != NULL)
             RequestCopy(2, (u32)(*p + 1),
                          (u32)gUnk_03001490 + ((prio >> 12) << 5), **p);
         q = p[1];
@@ -565,10 +565,10 @@ s32 PlayerLoadFrameTilesAndPalette(s32 a0)
             }
         }
     } else {
-        if ((t->unk88->unk42 & 16) == 0 && *g->unk04 != 0)
-            RequestCopy(2, (u32)(g->unk04 + 1),
-                         (u32)gObjPalette + ((prio >> 12) << 5), *g->unk04);
-        s = g->unk08;
+        if ((t->player->unk42 & 16) == 0 && *g->palette != 0)
+            RequestCopy(2, (u32)(g->palette + 1),
+                         (u32)gObjPalette + ((prio >> 12) << 5), *g->palette);
+        s = g->tiles;
         dst = ((prio & 0x7FF) << 5) + 0x06010000;
         if (*s != 0xFFFF) {
             do {
@@ -579,7 +579,7 @@ s32 PlayerLoadFrameTilesAndPalette(s32 a0)
             } while (*s != 0xFFFF);
         }
     }
-    return g->unk00 & ~1;
+    return g->oamTemplate & ~1;
 }
 
 void sub_0803d710(void)
@@ -591,21 +591,21 @@ void sub_0803d710(void)
     u16 *w;
 
     t = gCurTask;
-    tbl = t->unk38;
+    tbl = t->frameTable;
     p = (u16 **)tbl[t->frame];
     g = (struct TaskGfx *)p;
     p++;
-    w = g->unk04;
+    w = g->palette;
     if (((u32)w & 1) != 0) {
         RequestCopy(2, (u32)(p[0] + 1),
-                     (u32)gObjPalette + ((t->unk40 & 0xF000) >> 7), *p[0]);
+                     (u32)gObjPalette + ((t->tileWord & 0xF000) >> 7), *p[0]);
         if (p[2] != NULL)
             RequestCopy(2, (u32)(p[2] + 1),
                          (u32)gObjPalette + 32
-                             + ((gCurTask->unk40 & 0xF000) >> 7), *p[2]);
+                             + ((gCurTask->tileWord & 0xF000) >> 7), *p[2]);
     } else {
         RequestCopy(2, (u32)(w + 1),
-                     (u32)gObjPalette + ((t->unk40 & 0xF000) >> 7), *w);
+                     (u32)gObjPalette + ((t->tileWord & 0xF000) >> 7), *w);
     }
     if (gUnk_03001F30 == 0) {
         if (gPlayerCount > 1)
@@ -618,14 +618,14 @@ void sub_0803d7c4(void)
 {
     s32 idx;
 
-    if (gCurTask->unk88->unk00 == 0)
+    if (gCurTask->player->playerIndex == 0)
         return;
     idx = sub_0803d870();
     if (idx == -1)
         return;
     RequestCopy(2, (idx << 1) + (u32)gPlayerPalettes
-                    + (gCurTask->unk88->unk00 << 5),
-                 (u32)gObjPalette + ((gCurTask->unk40 >> 12) << 5), 32);
+                    + (gCurTask->player->playerIndex << 5),
+                 (u32)gObjPalette + ((gCurTask->tileWord >> 12) << 5), 32);
 }
 
 void sub_0803d824(void)
@@ -636,7 +636,7 @@ void sub_0803d824(void)
     if (idx == -1)
         return;
     RequestCopy(2, (idx << 1) + (u32)gPlayerPalettes + (gUnk_02000028 << 5),
-                 (u32)gObjPalette + ((gCurTask->unk40 >> 12) << 5), 32);
+                 (u32)gObjPalette + ((gCurTask->tileWord >> 12) << 5), 32);
 }
 
 /* Pick the HUD/status graphics slot for the running task's state, or -1 for
@@ -662,13 +662,13 @@ s32 sub_0803d870(void)
         return -1;
     if (v >= 4551 && v <= 4554)
         return 64;
-    ps = t->unk88;
-    if (ps->unk0D == 12 || ps->unk0D == 13) {
-        if ((t->unk7B & 1) == 0)
+    ps = t->player;
+    if (ps->ability == 12 || ps->ability == 13) {
+        if ((t->waterFlags & 1) == 0)
             return -1;
         if ((ps->unk40 & 0x100) != 0)
             return -1;
-        if (ps->unk06 == 2)
+        if (ps->mouthState == 2)
             return -1;
         if (v >= 173 && v <= 242)
             return 0;
@@ -677,7 +677,7 @@ s32 sub_0803d870(void)
         return -1;
     }
     if ((ps->unk42 & 16) == 0) {
-        switch (ps->unk0D) {
+        switch (ps->ability) {
         case 9:
             return 320;
         case 18:
@@ -688,14 +688,14 @@ s32 sub_0803d870(void)
             return 512;
         case 17:
             u = gCurTask;
-            ps = u->unk88;
-            if (ps->unk04 == 13)
+            ps = u->player;
+            if (ps->mode == 13)
                 goto second;
-            if ((u->unk7B & 1) == 0)
+            if ((u->waterFlags & 1) == 0)
                 return -1;
             if ((ps->unk40 & 0x100) != 0)
                 return -1;
-            if (ps->unk06 == 2)
+            if (ps->mouthState == 2)
                 return -1;
             w = u->frame;
             if (w >= 173 && w <= 242)
@@ -705,10 +705,10 @@ s32 sub_0803d870(void)
             return -1;
         }
     }
-    q = gCurTask->unk88;
-    if (q->unk04 == 13) {
+    q = gCurTask->player;
+    if (q->mode == 13) {
     second:
-        switch (gCurTask->unk88->unk0D) {
+        switch (gCurTask->player->ability) {
         case 5:
             x = gCurTask;
             w = x->frame;
@@ -728,7 +728,7 @@ s32 sub_0803d870(void)
                 return 256;
             break;
         case 14:
-            if ((gCurTask->unk88->unk42 & 16) != 0)
+            if ((gCurTask->player->unk42 & 16) != 0)
                 return -1;
             return 704;
         case 17:
@@ -739,7 +739,7 @@ s32 sub_0803d870(void)
             return -1;
         case 24:
             y = gCurTask;
-            if ((y->unk88->unk42 & 16) != 0)
+            if ((y->player->unk42 & 16) != 0)
                 return -1;
             w = y->frame;
             if (w >= 3976 && w <= 4068)
@@ -747,13 +747,13 @@ s32 sub_0803d870(void)
             break;
         }
     } else {
-        if (q->unk0D == 24) {
+        if (q->ability == 24) {
             if ((q->unk42 & 16) != 0)
                 goto ret_m1;
             return 576;
         }
     }
-    if ((gCurTask->unk88->unk42 & 16) != 0)
+    if ((gCurTask->player->unk42 & 16) != 0)
         goto ret_m1;
     return 0;
 ret_m1:
@@ -769,33 +769,33 @@ void sub_0803db74(void)
     struct PlayerState *ps2;
 
     t = gCurTask;
-    ps = t->unk88;
+    ps = t->player;
     if ((u8)(ps->unk37 - 2) <= 1) {
         switch (ps->unk3C++) {
         case 0:
         case 1:
             u = gCurTask;
-            if ((u->unk88->unk42 & 16) == 0)
+            if ((u->player->unk42 & 16) == 0)
                 RequestCopy(2, (u32)gUnk_08226254,
-                             (u32)gObjPalette + (((u->unk40 >> 12) + 1) << 5),
+                             (u32)gObjPalette + (((u->tileWord >> 12) + 1) << 5),
                              32);
             break;
         case 2:
             u = gCurTask;
-            if ((u->unk88->unk42 & 16) == 0)
+            if ((u->player->unk42 & 16) == 0)
                 BlendColors(gUnk_08226254, gUnk_08226254 - 16, 128, 16,
                              (u16 *)((u32)gObjPalette
-                                     + (((u->unk40 >> 12) + 1) << 5)));
+                                     + (((u->tileWord >> 12) + 1) << 5)));
             break;
         case 3:
             u3 = gCurTask;
-            if ((u3->unk88->unk42 & 16) == 0)
+            if ((u3->player->unk42 & 16) == 0)
                 BlendColors(gUnk_08226254, gUnk_08226254 - 16, 256, 16,
                              (u16 *)((u32)gObjPalette
-                                     + (((u3->unk40 >> 12) + 1) << 5)));
+                                     + (((u3->tileWord >> 12) + 1) << 5)));
             break;
         case 9:
-            gCurTask->unk88->unk3C = 0;
+            gCurTask->player->unk3C = 0;
             break;
         }
         return;
@@ -803,24 +803,24 @@ void sub_0803db74(void)
     if ((u16)(t->frame - 655) <= 218 || (u16)(t->frame - 4369) <= 23) {
         if ((ps->unk42 & 16) == 0)
             RequestCopy(2, (u32)gUnk_081BC050,
-                         (u32)gObjPalette + (((t->unk40 >> 12) + 1) << 5), 32);
+                         (u32)gObjPalette + (((t->tileWord >> 12) + 1) << 5), 32);
         return;
     }
     if ((u16)(t->frame - 874) <= 8) {
         if ((ps->unk42 & 16) == 0)
-            RequestCopy(2, (u32)&gUnk_081BE6BC[ps->unk00 * 128],
-                         (u32)gObjPalette + ((t->unk40 >> 12) << 5), 32);
+            RequestCopy(2, (u32)&gUnk_081BE6BC[ps->playerIndex * 128],
+                         (u32)gObjPalette + ((t->tileWord >> 12) << 5), 32);
     }
     u = gCurTask;
     if ((u16)(u->frame - 3821) <= 128 || (u16)(u->frame - 4525) <= 5) {
-        ps2 = u->unk88;
+        ps2 = u->player;
         if ((ps2->unk42 & 16) == 0) {
             if (gUnk_030023B0 == 0)
-                RequestCopy(2, (u32)&gUnk_080DCA28[ps2->unk00 * 32],
-                             (u32)gObjPalette + ((u->unk40 >> 12) << 5), 32);
+                RequestCopy(2, (u32)&gUnk_080DCA28[ps2->playerIndex * 32],
+                             (u32)gObjPalette + ((u->tileWord >> 12) << 5), 32);
             else
                 RequestCopy(2, (u32)&gUnk_080DCA28[gUnk_02000028 * 32],
-                             (u32)gObjPalette + ((u->unk40 >> 12) << 5), 32);
+                             (u32)gObjPalette + ((u->tileWord >> 12) << 5), 32);
         }
     }
 }
@@ -844,38 +844,38 @@ void sub_0803ddc0(void)
     u16 y;
     s32 pal;
 
-    if (gCurTask->unk08 != 0 && (gCurTask->skipMask & 8) == 0)
+    if (gCurTask->lateUpdateCallback != 0 && (gCurTask->skipMask & 8) == 0)
         sub_08033414();
-    if ((gLocalPlayer != gCurTask->unk88->unk00
+    if ((gLocalPlayer != gCurTask->player->playerIndex
          || gUnk_03002444 != 0)
-     && gCurTask->unk88->unk37 != 2
-     && IsWorldPosOnScreen(gCurTask->unk48, gCurTask->unk4A) == 0)
+     && gCurTask->player->unk37 != 2
+     && IsWorldPosOnScreen(gCurTask->pixelX, gCurTask->pixelY) == 0)
     {
-        if (gCurTask->unk38 == 0)
+        if (gCurTask->frameTable == 0)
             return;
         if (gCurTask->frame == -1)
             return;
         sub_0803d710();
         return;
     }
-    if (gCurTask->unk38 == 0)
+    if (gCurTask->frameTable == 0)
         return;
     if (gCurTask->frame == -1)
         return;
     speed = 0;
-    if ((gCurTask->unk88->unk37 == 2
-      || gCurTask->unk88->unk37 == 3)
+    if ((gCurTask->player->unk37 == 2
+      || gCurTask->player->unk37 == 3)
      && gCurTask->frame > 0xFEC && (gFrameCount & 3) == 0)
         speed = 131;
-    if (gCurTask->unk88->unk37 == 2)
+    if (gCurTask->player->unk37 == 2)
     {
-        x = gCurTask->unk48;
-        y = gCurTask->unk4A;
+        x = gCurTask->pixelX;
+        y = gCurTask->pixelY;
     }
     else
     {
-        x = gCurTask->unk48 - gSpriteCameraX;
-        y = gCurTask->unk4A - gSpriteCameraY;
+        x = gCurTask->pixelX - gSpriteCameraX;
+        y = gCurTask->pixelY - gSpriteCameraY;
     }
     pal = PlayerLoadFrameTilesAndPalette(speed);
     if (gUnk_03001F30 == 0)
@@ -894,84 +894,84 @@ void sub_0803ddc0(void)
     if (IsOnScreen((s16)x, (s16)y) == 0)
         return;
     sub_08040a44((s16)x, (s16)y);
-    QueueSprite(gCurTask->layer, pal, gCurTask->unk3E,
-                 2048 | gCurTask->unk40, (s16)x, (s16)y);
-    if ((gCurTask->unk88->unk40 & 128) == 0)
+    QueueSprite(gCurTask->layer, pal, gCurTask->spriteFlags,
+                 2048 | gCurTask->tileWord, (s16)x, (s16)y);
+    if ((gCurTask->player->unk40 & 128) == 0)
         return;
-    QueueSprite(gCurTask->layer, pal, gCurTask->unk3E,
-                 2048 | gCurTask->unk40, (s16)x - 48, (s16)y);
-    QueueSprite(gCurTask->layer, pal, gCurTask->unk3E,
-                 2048 | gCurTask->unk40, (s16)x + 48, (s16)y);
+    QueueSprite(gCurTask->layer, pal, gCurTask->spriteFlags,
+                 2048 | gCurTask->tileWord, (s16)x - 48, (s16)y);
+    QueueSprite(gCurTask->layer, pal, gCurTask->spriteFlags,
+                 2048 | gCurTask->tileWord, (s16)x + 48, (s16)y);
 }
 
 void sub_0803dfc8(void)
 {
-    if (gCurTask->unk38 == 0)
+    if (gCurTask->frameTable == 0)
         return;
     if (gCurTask->frame == -1)
         return;
-    if (IsWorldPosOnScreen(gCurTask->unk48, gCurTask->unk4A) == 0)
+    if (IsWorldPosOnScreen(gCurTask->pixelX, gCurTask->pixelY) == 0)
         return;
-    QueueSprite(gCurTask->layer, PlayerLoadFrameTilesAndPalette(0), gCurTask->unk3E,
-                 gCurTask->unk40,
-                 gCurTask->unk48 - gSpriteCameraX,
-                 gCurTask->unk4A - gSpriteCameraY);
+    QueueSprite(gCurTask->layer, PlayerLoadFrameTilesAndPalette(0), gCurTask->spriteFlags,
+                 gCurTask->tileWord,
+                 gCurTask->pixelX - gSpriteCameraX,
+                 gCurTask->pixelY - gSpriteCameraY);
 }
 
 void PlayerStopAxes(s32 a0)
 {
     if (a0 & 1)
     {
-        gCurTask->unk64 = 0;
-        gCurTask->unk5C = 0;
-        gCurTask->unk54 = 0;
+        gCurTask->speedLimitX = 0;
+        gCurTask->accelX = 0;
+        gCurTask->velX = 0;
     }
     if (a0 & 2)
     {
-        gCurTask->unk68 = 0;
-        gCurTask->unk60 = 0;
-        gCurTask->unk58 = 0;
+        gCurTask->speedLimitY = 0;
+        gCurTask->accelY = 0;
+        gCurTask->velY = 0;
     }
 }
 
 void sub_0803e080(void)
 {
     struct Task *t = gCurTask;
-    struct PlayerState *p = t->unk88;
+    struct PlayerState *p = t->player;
 
     switch ((s8)p->unk22)
     {
     case 1:
         p->unk42 &= ~0x10;
         {
-            struct PlayerState *q = t->unk88;
+            struct PlayerState *q = t->player;
 
-            if ((s16)q->unk12 == 0)
+            if ((s16)q->invulnerabilityTimer == 0)
             {
                 struct PlayerState *r;
 
                 q->unk22 = 0;
-                r = gCurTask->unk88;
+                r = gCurTask->player;
                 r->unk20 = 0;
                 r->unk1E = 0;
                 break;
             }
             if ((gFrameCount & 7) > 3)
                 break;
-            RequestCopy(2, (u32)&gUnk_080DC728[q->unk00 * 8],
-                (u32)&gObjPalette[(t->unk40 >> 12) << 5], 32);
+            RequestCopy(2, (u32)&gUnk_080DC728[q->playerIndex * 8],
+                (u32)&gObjPalette[(t->tileWord >> 12) << 5], 32);
         }
-        gCurTask->unk88->unk42 |= 16;
+        gCurTask->player->unk42 |= 16;
         break;
     case 2:
         p->unk42 &= ~0x10;
         {
-            struct PlayerState *q = t->unk88;
+            struct PlayerState *q = t->player;
             u32 src;
 
             if (q->unk17 != 0)
                 break;
-            if (q->unk0D != 7 && q->unk0D != 20 && q->unk0D != 21)
+            if (q->ability != 7 && q->ability != 20 && q->ability != 21)
             {
                 q->unk22 = 0;
                 return;
@@ -989,9 +989,9 @@ void sub_0803e080(void)
                 break;
             }
             RequestCopy(2, src,
-                (u32)&gObjPalette[(gCurTask->unk40 >> 12) << 5], 24);
+                (u32)&gObjPalette[(gCurTask->tileWord >> 12) << 5], 24);
         }
-        gCurTask->unk88->unk42 |= 16;
+        gCurTask->player->unk42 |= 16;
         break;
     }
     sub_0803e8ec();
@@ -1009,34 +1009,34 @@ void SetPlayerInvulnerability(s32 a0, s32 a1, s32 a2)
     {
     default:
         sub_0803e28c((s32)p);
-        p->unk3F = 0;
-        p->unk12 = 0;
+        p->invulnerability = 0;
+        p->invulnerabilityTimer = 0;
         p->unk22 = 0;
         break;
     case 0:
         sub_0803e28c((s32)p);
-        p->unk12 = a1;
+        p->invulnerabilityTimer = a1;
         break;
     case 1:
-        p->unk3F = 1;
-        p->unk12 = a1;
+        p->invulnerability = 1;
+        p->invulnerabilityTimer = a1;
         p->unk22 = 1;
         break;
     case 2:
         sub_0803e28c((s32)p);
-        p->unk3F = 2;
-        p->unk12 = 0x8000;
+        p->invulnerability = 2;
+        p->invulnerabilityTimer = 0x8000;
         p->unk22 = 0;
         break;
     case 3:
         sub_0803e28c((s32)p);
-        p->unk3F = 3;
-        p->unk12 = 0x8000;
+        p->invulnerability = 3;
+        p->invulnerabilityTimer = 0x8000;
         p->unk22 = 0;
         break;
     case 4:
-        p->unk3F = 3;
-        p->unk12 = a1;
+        p->invulnerability = 3;
+        p->invulnerabilityTimer = a1;
         break;
     case 5:
         sub_0803e28c((s32)p);
@@ -1044,8 +1044,8 @@ void SetPlayerInvulnerability(s32 a0, s32 a1, s32 a2)
         p->unk18 = 960;
         break;
     case 6:
-        p->unk3F = 6;
-        p->unk12 = 0x8000;
+        p->invulnerability = 6;
+        p->invulnerabilityTimer = 0x8000;
         p->unk22 = 3;
         break;
     }
@@ -1059,10 +1059,10 @@ void sub_0803e28c(s32 a0)
         struct Task *t = gCurTask;
         struct PlayerState *p;
 
-        if (t->unk88->unk42 & 0x200)
+        if (t->player->unk42 & 0x200)
             mask |= 0x200;
-        t->unk88->unk42 &= ~mask;
-        p = t->unk88;
+        t->player->unk42 &= ~mask;
+        p = t->player;
         /* task.h has no fields at PlayerState+0x1E / +0x20 yet */
         ((u16 *)p)[16] = 0;
         ((u16 *)p)[15] = 0;
@@ -1071,7 +1071,7 @@ void sub_0803e28c(s32 a0)
 
 void PlayerUpdateInvulnerability(void)
 {
-    struct PlayerState *p = gCurTask->unk88;
+    struct PlayerState *p = gCurTask->player;
 
     if ((p->unk42 & 32) == 0)
     {
@@ -1080,11 +1080,11 @@ void PlayerUpdateInvulnerability(void)
         {
             if (((s16 *)p)[9] != 0)
                 ((s16 *)p)[9]--;
-            else if (p->unk3F != 0)
+            else if (p->invulnerability != 0)
             {
-                if (p->unk3F == 1 && (p->unk42 & 0x200))
+                if (p->invulnerability == 1 && (p->unk42 & 0x200))
                     p->unk42 &= ~0x200;
-                gCurTask->unk88->unk3F = 0;
+                gCurTask->player->invulnerability = 0;
             }
         }
     }
@@ -1104,17 +1104,17 @@ void PlayerStartSfx(s32 a0, u16 a1)
 {
     if (gLocalPlayer == a1)
     {
-        gCurTask->unk88->unk2E = a0;
-        gCurTask->unk88->unk2C = PlaySfx((s16)a0);
+        gCurTask->player->sfxId = a0;
+        gCurTask->player->sfxPlayer = PlaySfx((s16)a0);
     }
 }
 
 void PlayerStopSfx(void)
 {
-    if (gCurTask->unk88->unk2C != -1)
+    if (gCurTask->player->sfxPlayer != -1)
     {
-        StopSfxOnPlayer(gCurTask->unk88->unk2C, gCurTask->unk88->unk2E);
-        gCurTask->unk88->unk2C = -1;
+        StopSfxOnPlayer(gCurTask->player->sfxPlayer, gCurTask->player->sfxId);
+        gCurTask->player->sfxPlayer = -1;
     }
 }
 
@@ -1135,15 +1135,15 @@ void FreezeOtherTasks(s32 a0)
 void PlayerUpdateFlip(void)
 {
     if (gCurTask->facing == 1)
-        gCurTask->unk3E &= 0x7FFF;
+        gCurTask->spriteFlags &= 0x7FFF;
     else
-        gCurTask->unk3E |= 0x8000;
+        gCurTask->spriteFlags |= 0x8000;
 }
 
 s32 PlayerFaceHeldDirection(void)
 {
     u16 *tbl = gLatchedHeldKeys;
-    s32 i = (s8)gCurTask->unk88->unk00;
+    s32 i = (s8)gCurTask->player->playerIndex;
 
     if (tbl[i] & 48)
     {
@@ -1169,16 +1169,16 @@ s32 PlayerFaceHeldDirection(void)
 
 void PlayerSetWaterMotionY(void)
 {
-    if (gCurTask->unk88->unk06 == 0)
+    if (gCurTask->player->mouthState == 0)
     {
-        if ((u32)gCurTask->unk58 > 0xE000)
-            gCurTask->unk58 = 0xE000;
+        if ((u32)gCurTask->velY > 0xE000)
+            gCurTask->velY = 0xE000;
         PlayerSetMotionYPreset(13);
     }
     else
     {
-        if ((u32)gCurTask->unk58 > 0x18000)
-            gCurTask->unk58 = 0x18000;
+        if ((u32)gCurTask->velY > 0x18000)
+            gCurTask->velY = 0x18000;
         PlayerSetMotionYPreset(16);
     }
 }
@@ -1187,11 +1187,11 @@ s32 PlayerLand(s32 a0)
 {
     if (PlayerCheckLanding())
     {
-        if ((gCurTask->unk7B & 1) == 0)
+        if ((gCurTask->waterFlags & 1) == 0)
         {
-            PlaySfxIfLocalPlayer(107, (u16)gCurTask->unk88->unk00);
-            if ((gCurTask->unk58 & 0xFFFF0000) != 0 && a0 != 0)
-                CreatePlayerEffect(gCurTask->unk88->unk00, 4, 0);
+            PlaySfxIfLocalPlayer(107, (u16)gCurTask->player->playerIndex);
+            if ((gCurTask->velY & 0xFFFF0000) != 0 && a0 != 0)
+                CreatePlayerEffect(gCurTask->player->playerIndex, 4, 0);
         }
         PlayerStopAxes(2);
         return 1;
@@ -1204,7 +1204,7 @@ s32 sub_0803e55c(void)
     PlayerStopAtCeilingAndWall();
     if (PlayerHasCrossedWaterSurface(0) == 0)
     {
-        if (gCurTask->unk7A & 1)
+        if (gCurTask->onGround & 1)
         {
             PlayerLand(1);
             PlayerSetMotionXPreset(0, 72);
@@ -1217,9 +1217,9 @@ s32 sub_0803e55c(void)
     }
     else
     {
-        gCurTask->unk88->unk01 = 23;
+        gCurTask->player->requestedAction = 23;
     }
-    return gCurTask->unk88->unk01;
+    return gCurTask->player->requestedAction;
 }
 
 s32 LoadPlayerBodyBoxRect(s32 playerIdx, u8 *src6)
@@ -1274,10 +1274,10 @@ s32 LoadPlayerHitBoxSet(s32 a0, s32 a1)
 
 void PlayerStartOffsetScript(s32 a0)
 {
-    gCurTask->unk88->filler2A = a0;
-    gCurTask->unk88->unk28 = 0;
-    gCurTask->unk88->unk29 = 1;
-    gCurTask->unk88->unk40 |= 1;
+    gCurTask->player->offsetScript = a0;
+    gCurTask->player->offsetScriptStep = 0;
+    gCurTask->player->offsetScriptDelay = 1;
+    gCurTask->player->unk40 |= 1;
 }
 
 void sub_0803e68c(s32 a0)
@@ -1286,43 +1286,43 @@ void sub_0803e68c(s32 a0)
     struct Task *t = &gTasks[a0];
     s32 v;
 
-    if (gLocalPlayer == p->unk00)
+    if (gLocalPlayer == p->playerIndex)
         t->layer = 6;
     else
         t->layer = 7;
-    if (t->unk7A != 0)
+    if (t->onGround != 0)
     {
-        t->unk64 = 0;
+        t->speedLimitX = 0;
         if (t->facing == 1)
-            t->unk5C = 3584;
+            t->accelX = 3584;
         else
-            t->unk5C = -3584;
-        t->unk68 = 0;
-        t->unk60 = 0;
-        t->unk58 = 0;
+            t->accelX = -3584;
+        t->speedLimitY = 0;
+        t->accelY = 0;
+        t->velY = 0;
     }
     else
     {
-        t->unk64 = 0;
+        t->speedLimitX = 0;
         if (t->facing == 1)
-            t->unk5C = 2048;
+            t->accelX = 2048;
         else
-            t->unk5C = -2048;
-        t->unk60 = 9728;
-        t->unk68 = 163840;
+            t->accelX = -2048;
+        t->accelY = 9728;
+        t->speedLimitY = 163840;
     }
     p->unk42 = 64;
     v = 0;
-    if (p->unk06 == 1)
+    if (p->mouthState == 1)
     {
         v = 14;
     }
-    else if (p->unk04 == 14)
+    else if (p->mode == 14)
     {
         t->unk73 = 4;
         v = 9;
     }
-    else if (p->unk04 == 10)
+    else if (p->mode == 10)
     {
         if ((s8)p->unk07 != 0 && (s8)p->unk07 == (s8)p->unk08)
         {
@@ -1333,27 +1333,27 @@ void sub_0803e68c(s32 a0)
         {
             p->unk08 = 0;
             p->unk07 = 0;
-            v = t->unk7A != 0 ? 1 : 7;
+            v = t->onGround != 0 ? 1 : 7;
         }
     }
-    else if (p->unk04 == 13)
+    else if (p->mode == 13)
     {
-        if (t->unk7A != 0)
+        if (t->onGround != 0)
         {
-            if (t->unk54 != 0)
+            if (t->velX != 0)
             {
-                s32 d = t->unk54;
+                s32 d = t->velX;
 
                 if (d < 0)
                     d = -d;
                 if ((u32)d > 0x0001CBFF)
                 {
-                    p->unk3D = 1;
+                    p->running = 1;
                     v = 3;
                 }
                 else
                 {
-                    p->unk3D = 0;
+                    p->running = 0;
                     v = 2;
                 }
             }
@@ -1368,12 +1368,12 @@ void sub_0803e68c(s32 a0)
             v = 7;
         }
     }
-    p->unk01 = v;
+    p->requestedAction = v;
 }
 
 s32 sub_0803e7d8(void)
 {
-    struct PlayerState *p = gCurTask->unk88;
+    struct PlayerState *p = gCurTask->player;
     s32 i;
 
     if (p->unk42 & 32)
@@ -1386,15 +1386,15 @@ s32 sub_0803e7d8(void)
     p->unk18--;
     if (gPlayerCount == 1)
     {
-        if ((s16)gCurTask->unk88->unk18 == 240)
+        if ((s16)gCurTask->player->unk18 == 240)
             sub_080270d0();
         return;
     }
-    if ((s16)gCurTask->unk88->unk18 != 240)
+    if ((s16)gCurTask->player->unk18 != 240)
         return;
     for (i = 0; i < gPlayerCount; i++)
     {
-        if (i != gCurTask->unk88->unk00
+        if (i != gCurTask->player->playerIndex
          && gPlayerStates[i].unk17 != 0
          && (s16)gPlayerStates[i].unk18 > 240)
             return;
@@ -1407,22 +1407,22 @@ void sub_0803e868(void)
     s32 i;
     s32 ok;
 
-    if ((s16)gCurTask->unk88->unk18 == 0)
+    if ((s16)gCurTask->player->unk18 == 0)
         return;
     ok = 1;
     for (i = 0; i < gPlayerCount; i++)
     {
-        if (i != gCurTask->unk88->unk00
+        if (i != gCurTask->player->playerIndex
          && gPlayerStates[i].unk17 != 0
          && (s16)gPlayerStates[i].unk18 > 240)
             ok = 0;
     }
     if (ok != 0 && gCurrentBgm == 19)
         sub_080270d0();
-    gCurTask->unk88->unk17 = 0;
-    gCurTask->unk88->unk18 = 0;
+    gCurTask->player->unk17 = 0;
+    gCurTask->player->unk18 = 0;
     {
-        struct PlayerState *r = gCurTask->unk88;
+        struct PlayerState *r = gCurTask->player;
 
         r->unk1C = 0;
         r->unk1A = 0;
@@ -1431,22 +1431,22 @@ void sub_0803e868(void)
 
 void sub_0803e8ec(void)
 {
-    struct PlayerState *p = gCurTask->unk88;
+    struct PlayerState *p = gCurTask->player;
     s32 needBig;
     s32 needSmall;
 
     if (p->unk17 == 0)
         return;
-    if (p->unk04 == 13)
+    if (p->mode == 13)
     {
-        if (p->unk0D == 2)
+        if (p->ability == 2)
             return;
-        if (p->unk0D == 20 && (p->unk42 & 16))
+        if (p->ability == 20 && (p->unk42 & 16))
             return;
     }
-    gCurTask->unk88->unk42 &= ~0x10;
+    gCurTask->player->unk42 &= ~0x10;
     {
-        struct PlayerState *q = gCurTask->unk88;
+        struct PlayerState *q = gCurTask->player;
 
         if ((s16)q->unk18 == 0)
         {
@@ -1456,14 +1456,14 @@ void sub_0803e8ec(void)
         }
         needBig = 0;
         needSmall = 0;
-        if (q->unk0D != 0)
-            needBig = q->unk04 != 13;
-        if (!(q->unk04 == 13 && q->unk0D == 2))
+        if (q->ability != 0)
+            needBig = q->mode != 13;
+        if (!(q->mode == 13 && q->ability == 2))
             needSmall = 1;
     }
     {
         struct Task *t = gCurTask;
-        struct PlayerState *q = t->unk88;
+        struct PlayerState *q = t->player;
 
         if ((s16)q->unk18 <= 239)
         {
@@ -1471,21 +1471,21 @@ void sub_0803e8ec(void)
                 return;
             if ((gFrameCount & 7) > 3)
                 return;
-            RequestCopy(2, (u32)&gUnk_080DC728[q->unk00 * 8],
-                (u32)&gObjPalette[(t->unk40 >> 12) << 5], 24);
-            gCurTask->unk88->unk42 |= 16;
+            RequestCopy(2, (u32)&gUnk_080DC728[q->playerIndex * 8],
+                (u32)&gObjPalette[(t->tileWord >> 12) << 5], 24);
+            gCurTask->player->unk42 |= 16;
             return;
         }
         if (needSmall != 0 && (gFrameCount & 15) == 0)
-            CreatePlayerEffectHighSlot(q->unk00, 4, 0);
+            CreatePlayerEffectHighSlot(q->playerIndex, 4, 0);
     }
     {
-        struct PlayerState *r = gCurTask->unk88;
+        struct PlayerState *r = gCurTask->player;
 
         if ((s16)r->unk1A != 0)
         {
             r->unk1A--;
-            gCurTask->unk88->unk42 |= 16;
+            gCurTask->player->unk42 |= 16;
             return;
         }
         switch ((s16)r->unk1C)
@@ -1495,32 +1495,32 @@ void sub_0803e8ec(void)
             if (needSmall)
             {
                 RequestCopy(2, (u32)gUnk_080DCC48,
-                    (u32)&gObjPalette[(gCurTask->unk40 >> 12) << 5], 24);
-                gCurTask->unk88->unk42 |= 16;
+                    (u32)&gObjPalette[(gCurTask->tileWord >> 12) << 5], 24);
+                gCurTask->player->unk42 |= 16;
             }
             if (needBig)
             {
                 RequestCopy(2, (u32)gUnk_080DCC48,
-                    (u32)&gObjPalette[((gCurTask->unk40 >> 12) + 1) << 5], 32);
-                gCurTask->unk88->unk42 |= 16;
+                    (u32)&gObjPalette[((gCurTask->tileWord >> 12) + 1) << 5], 32);
+                gCurTask->player->unk42 |= 16;
             }
-            gCurTask->unk88->unk1A = 1;
-            gCurTask->unk88->unk1C++;
+            gCurTask->player->unk1A = 1;
+            gCurTask->player->unk1C++;
             break;
         case 1:
             sub_0803d710();
             if (needSmall)
             {
                 RequestCopy(2, (u32)gUnk_080DCC28,
-                    (u32)&gObjPalette[(gCurTask->unk40 >> 12) << 5], 24);
-                gCurTask->unk88->unk42 |= 16;
+                    (u32)&gObjPalette[(gCurTask->tileWord >> 12) << 5], 24);
+                gCurTask->player->unk42 |= 16;
             }
-            gCurTask->unk88->unk1A = 2;
-            gCurTask->unk88->unk1C++;
+            gCurTask->player->unk1A = 2;
+            gCurTask->player->unk1C++;
             break;
         case 2:
             r->unk1A = 4;
-            gCurTask->unk88->unk1C = 0;
+            gCurTask->player->unk1C = 0;
             break;
         }
     }
@@ -1529,7 +1529,7 @@ void sub_0803e8ec(void)
 /* CENSUS: one function, 0x0803EAF8-0x0803F5FC (2820 bytes).  Returns the
    packed pair (hi << 16) | lo; `pop {r1}` at 0x0803F5E8 is lesson 3.94's
    not-void marker.  The body is three near-identical if/else-if chains over
-   Task.frame (one per PlayerState.unk0D value 1/2/5) whose arms are all
+   Task.frame (one per PlayerState.ability value 1/2/5) whose arms are all
    cross-jumped into one shared set of tails at 0x0803F16C-0x0803F5C2. */
 s32 sub_0803eaf8(s32 a0)
 {
@@ -1539,7 +1539,7 @@ s32 sub_0803eaf8(s32 a0)
 
     lo = 0;
     hi = 0;
-    switch (gPlayerStates[a0].unk0D)
+    switch (gPlayerStates[a0].ability)
     {
     case 1:
         t = &gTasks[a0];
@@ -1550,7 +1550,7 @@ s32 sub_0803eaf8(s32 a0)
         }
         else if ((u16)t->frame >= 486 && (u16)t->frame <= 487)
         {
-            if ((t->unk3E & 0x8000) == 0)
+            if ((t->spriteFlags & 0x8000) == 0)
                 hi = -12;
             else
                 hi = 12;
@@ -1639,7 +1639,7 @@ s32 sub_0803eaf8(s32 a0)
                 lo = 4;
             else
                 lo = 8;
-            if ((t->unk3E & 0x8000) == 0)
+            if ((t->spriteFlags & 0x8000) == 0)
                 hi = -8;
             else
                 hi = 8;
@@ -1652,14 +1652,14 @@ s32 sub_0803eaf8(s32 a0)
                 hi = 0;
                 break;
             case 584:
-                if ((t->unk3E & 0x8000) == 0)
+                if ((t->spriteFlags & 0x8000) == 0)
                     hi = 6;
                 else
                     hi = -6;
                 lo = 0;
                 break;
             case 585:
-                if ((t->unk3E & 0x8000) == 0)
+                if ((t->spriteFlags & 0x8000) == 0)
                     hi = -8;
                 else
                     hi = 8;
@@ -1740,14 +1740,14 @@ s32 sub_0803eaf8(s32 a0)
             {
                 hi = -8;
                 lo = -12;
-                if (gUnk_0300244C != 0 && (t->unk3E & 0x8000))
+                if (gUnk_0300244C != 0 && (t->spriteFlags & 0x8000))
                     hi = 8;
             }
             else if ((u16)t->frame >= 4349 && (u16)t->frame <= 4352)
             {
                 hi = 8;
                 lo = -12;
-                if (gUnk_0300244C != 0 && (t->unk3E & 0x8000))
+                if (gUnk_0300244C != 0 && (t->spriteFlags & 0x8000))
                     hi = -8;
             }
             else if ((u16)t->frame >= 4353 && (u16)t->frame <= 4356)
@@ -1759,21 +1759,21 @@ s32 sub_0803eaf8(s32 a0)
             {
                 hi = 12;
                 lo = -12;
-                if (gUnk_0300244C != 0 && (t->unk3E & 0x8000))
+                if (gUnk_0300244C != 0 && (t->spriteFlags & 0x8000))
                     hi = lo;
             }
             else if ((u16)t->frame >= 4361 && (u16)t->frame <= 4364)
             {
                 hi = -16;
                 lo = 0;
-                if (gUnk_0300244C != 0 && (t->unk3E & 0x8000))
+                if (gUnk_0300244C != 0 && (t->spriteFlags & 0x8000))
                     hi = 16;
             }
             else
             {
                 hi = 16;
                 lo = 0;
-                if (gUnk_0300244C != 0 && (t->unk3E & 0x8000))
+                if (gUnk_0300244C != 0 && (t->spriteFlags & 0x8000))
                     hi = -16;
             }
         }
@@ -1787,7 +1787,7 @@ s32 sub_0803eaf8(s32 a0)
         }
         else if ((u16)t->frame >= 727 && (u16)t->frame <= 728)
         {
-            if ((t->unk3E & 0x8000) == 0)
+            if ((t->spriteFlags & 0x8000) == 0)
                 hi = -12;
             else
                 hi = 12;
@@ -1867,7 +1867,7 @@ s32 sub_0803eaf8(s32 a0)
                 lo = 4;
             else
                 lo = 8;
-            if ((t->unk3E & 0x8000) == 0)
+            if ((t->spriteFlags & 0x8000) == 0)
                 hi = -8;
             else
                 hi = 8;
@@ -1880,14 +1880,14 @@ s32 sub_0803eaf8(s32 a0)
                 hi = 0;
                 break;
             case 825:
-                if ((t->unk3E & 0x8000) == 0)
+                if ((t->spriteFlags & 0x8000) == 0)
                     hi = 6;
                 else
                     hi = -6;
                 lo = 0;
                 break;
             case 826:
-                if ((t->unk3E & 0x8000) == 0)
+                if ((t->spriteFlags & 0x8000) == 0)
                     hi = -8;
                 else
                     hi = 8;
@@ -1968,14 +1968,14 @@ s32 sub_0803eaf8(s32 a0)
             {
                 hi = -8;
                 lo = -12;
-                if (gUnk_0300244C != 0 && (t->unk3E & 0x8000))
+                if (gUnk_0300244C != 0 && (t->spriteFlags & 0x8000))
                     hi = 8;
             }
             else if ((u16)t->frame >= 4373 && (u16)t->frame <= 4376)
             {
                 hi = 8;
                 lo = -12;
-                if (gUnk_0300244C != 0 && (t->unk3E & 0x8000))
+                if (gUnk_0300244C != 0 && (t->spriteFlags & 0x8000))
                     hi = -8;
             }
             else if ((u16)t->frame >= 4377 && (u16)t->frame <= 4380)
@@ -1987,31 +1987,31 @@ s32 sub_0803eaf8(s32 a0)
             {
                 hi = 12;
                 lo = -12;
-                if (gUnk_0300244C != 0 && (t->unk3E & 0x8000))
+                if (gUnk_0300244C != 0 && (t->spriteFlags & 0x8000))
                     hi = lo;
             }
             else if ((u16)t->frame >= 4385 && (u16)t->frame <= 4388)
             {
                 hi = -16;
                 lo = 0;
-                if (gUnk_0300244C != 0 && (t->unk3E & 0x8000))
+                if (gUnk_0300244C != 0 && (t->spriteFlags & 0x8000))
                     hi = 16;
             }
             else
             {
                 hi = 16;
                 lo = 0;
-                if (gUnk_0300244C != 0 && (t->unk3E & 0x8000))
+                if (gUnk_0300244C != 0 && (t->spriteFlags & 0x8000))
                     hi = -16;
             }
         }
         else if ((u16)t->frame >= 843 && (u16)t->frame <= 853)
         {
-            gCurTask->unk40 = (gCurTask->unk40 & ~15) | 12;
+            gCurTask->tileWord = (gCurTask->tileWord & ~15) | 12;
         }
         else
         {
-            gCurTask->unk40 = (gCurTask->unk40 & ~15) | 8;
+            gCurTask->tileWord = (gCurTask->tileWord & ~15) | 8;
         }
         break;
     case 5:
@@ -2023,7 +2023,7 @@ s32 sub_0803eaf8(s32 a0)
         }
         else if ((u16)t->frame >= 1336 && (u16)t->frame <= 1337)
         {
-            if ((t->unk3E & 0x8000) == 0)
+            if ((t->spriteFlags & 0x8000) == 0)
                 hi = -12;
             else
                 hi = 12;
@@ -2103,7 +2103,7 @@ s32 sub_0803eaf8(s32 a0)
                 lo = 4;
             else
                 lo = 8;
-            if ((t->unk3E & 0x8000) == 0)
+            if ((t->spriteFlags & 0x8000) == 0)
                 hi = -8;
             else
                 hi = 8;
@@ -2116,14 +2116,14 @@ s32 sub_0803eaf8(s32 a0)
                 hi = 0;
                 break;
             case 1434:
-                if ((t->unk3E & 0x8000) == 0)
+                if ((t->spriteFlags & 0x8000) == 0)
                     hi = 6;
                 else
                     hi = -6;
                 lo = 0;
                 break;
             case 1435:
-                if ((t->unk3E & 0x8000) == 0)
+                if ((t->spriteFlags & 0x8000) == 0)
                     hi = -8;
                 else
                     hi = 8;
@@ -2204,14 +2204,14 @@ s32 sub_0803eaf8(s32 a0)
             {
                 hi = -8;
                 lo = -12;
-                if (gUnk_0300244C != 0 && (t->unk3E & 0x8000))
+                if (gUnk_0300244C != 0 && (t->spriteFlags & 0x8000))
                     hi = 8;
             }
             else if ((u16)t->frame >= 4409 && (u16)t->frame <= 4412)
             {
                 hi = 8;
                 lo = -12;
-                if (gUnk_0300244C != 0 && (t->unk3E & 0x8000))
+                if (gUnk_0300244C != 0 && (t->spriteFlags & 0x8000))
                     hi = -8;
             }
             else if ((u16)t->frame >= 4413 && (u16)t->frame <= 4416)
@@ -2223,21 +2223,21 @@ s32 sub_0803eaf8(s32 a0)
             {
                 hi = 12;
                 lo = -12;
-                if (gUnk_0300244C != 0 && (t->unk3E & 0x8000))
+                if (gUnk_0300244C != 0 && (t->spriteFlags & 0x8000))
                     hi = lo;
             }
             else if ((u16)t->frame >= 4421 && (u16)t->frame <= 4424)
             {
                 hi = -16;
                 lo = 0;
-                if (gUnk_0300244C != 0 && (t->unk3E & 0x8000))
+                if (gUnk_0300244C != 0 && (t->spriteFlags & 0x8000))
                     hi = 16;
             }
             else
             {
                 hi = 16;
                 lo = 0;
-                if (gUnk_0300244C != 0 && (t->unk3E & 0x8000))
+                if (gUnk_0300244C != 0 && (t->spriteFlags & 0x8000))
                     hi = -16;
             }
         }
@@ -2334,7 +2334,7 @@ u16 sub_0803f7e0(u16 a0)
 {
     s32 k;
 
-    switch (gCurTask->unk88->unk0D)
+    switch (gCurTask->player->ability)
     {
     default:
         k = 0;
@@ -2370,10 +2370,10 @@ void PlayerTurnToHeldDirection(void)
 
 s32 PlayerGetHeldDirection(void)
 {
-    if (gLatchedHeldKeys[gCurTask->unk88->unk00] & 48)
+    if (gLatchedHeldKeys[gCurTask->player->playerIndex] & 48)
     {
-        if (((gLatchedHeldKeys[gCurTask->unk88->unk00] & 16) && gCurTask->facing == 1)
-         || ((gLatchedHeldKeys[gCurTask->unk88->unk00] & 32) && gCurTask->facing == -1))
+        if (((gLatchedHeldKeys[gCurTask->player->playerIndex] & 16) && gCurTask->facing == 1)
+         || ((gLatchedHeldKeys[gCurTask->player->playerIndex] & 32) && gCurTask->facing == -1))
             return 1;
         return 2;
     }
@@ -2384,36 +2384,36 @@ void PlayerCheckBump(void)
 {
     u32 v;
 
-    if (gCurTask->unk7A & 1)
+    if (gCurTask->onGround & 1)
     {
-        if (gCurTask->unk58 > 45823)
+        if (gCurTask->velY > 45823)
         {
-            gCurTask->unk88->unk3E = 2;
+            gCurTask->player->bumpKind = 2;
             return;
         }
     }
     else if (gTerrainResult[1] != 0)
     {
-        if (gCurTask->unk58 < 0 && gCurTask->unk58 <= 0xFFFF4D00)
-            gCurTask->unk88->unk3E = 1;
+        if (gCurTask->velY < 0 && gCurTask->velY <= 0xFFFF4D00)
+            gCurTask->player->bumpKind = 1;
         return;
     }
     if (gTerrainResult[0] != 0)
     {
-        v = (gCurTask->unk54 < 0) ? -gCurTask->unk54 : gCurTask->unk54;
+        v = (gCurTask->velX < 0) ? -gCurTask->velX : gCurTask->velX;
         if (v > 45823)
         {
             if (gTerrainResult[0] == 1)
             {
                 if (gCurTask->facing == 1)
-                    gCurTask->unk88->unk3E = 3;
+                    gCurTask->player->bumpKind = 3;
                 else
-                    gCurTask->unk88->unk3E = 4;
+                    gCurTask->player->bumpKind = 4;
             }
             else if (gCurTask->facing == -1)
-                gCurTask->unk88->unk3E = 5;
+                gCurTask->player->bumpKind = 5;
             else
-                gCurTask->unk88->unk3E = 6;
+                gCurTask->player->bumpKind = 6;
         }
     }
 }
@@ -2422,8 +2422,8 @@ void PlayerStopAtCeilingAndWall(void)
 {
     struct Task *t = gCurTask;
 
-    if (t->unk58 < 0 && gTerrainResult[1] != 0)
-        t->unk58 = 0;
+    if (t->velY < 0 && gTerrainResult[1] != 0)
+        t->velY = 0;
     PlayerStopAtWall();
 }
 
@@ -2431,7 +2431,7 @@ s32 PlayerStopAtWall(void)
 {
     if (gTerrainResult[0] == 0)
         return 0;
-    if (((s32 *)gCurTask->unk88)[21] == 0
+    if (((s32 *)gCurTask->player)[21] == 0
      || (gTerrainResult[0] == 1 && gCurTask->facing == 1)
      || (gTerrainResult[0] == 2 && gCurTask->facing == -1))
     {
@@ -2445,7 +2445,7 @@ s32 PlayerCheckLanding(void)
 {
     struct Task *t = gCurTask;
 
-    if ((t->unk7A & 1) && t->unk58 != 0)
+    if ((t->onGround & 1) && t->velY != 0)
     {
         PlayerStopAxes(2);
         return 1;
@@ -2455,91 +2455,91 @@ s32 PlayerCheckLanding(void)
 
 s32 sub_0803fa74(void)
 {
-    if (gCurTask->unk78 != 0
-     && ((gCurTask->unk88->unk42 & 1024)
+    if (gCurTask->health != 0
+     && ((gCurTask->player->unk42 & 1024)
       || (IsTaskBelowPlayerBounds(gCurTask) == 0
-       && (gUnk_02005574[0] == 0 || (gCurTask->unk7A & 1) == 0
-           || (gCurTask->unk88->unk48 & 4) == 0)
-       && (gTerrainResult[0] != 1 || (gCurTask->unk88->unk48 & 1) == 0)
-       && (gTerrainResult[0] != 2 || (gCurTask->unk88->unk48 & 2) == 0))))
+       && (gUnk_02005574[0] == 0 || (gCurTask->onGround & 1) == 0
+           || (gCurTask->player->unk48 & 4) == 0)
+       && (gTerrainResult[0] != 1 || (gCurTask->player->unk48 & 1) == 0)
+       && (gTerrainResult[0] != 2 || (gCurTask->player->unk48 & 2) == 0))))
         return 0;
-    AddPlayerHealth(-gPlayerHealth[gCurTask->unk88->unk00], gCurTask->unk88->unk00);
-    gCurTask->unk7C = 1;
-    gCurTask->unk88->unk01 = 17;
-    return gCurTask->unk88->unk01;
+    AddPlayerHealth(-gPlayerHealth[gCurTask->player->playerIndex], gCurTask->player->playerIndex);
+    gCurTask->hitKind = 1;
+    gCurTask->player->requestedAction = 17;
+    return gCurTask->player->requestedAction;
 }
 
 void sub_0803fb54(void)
 {
     u16 v;
 
-    if (gCurTask->unk7B & 1)
+    if (gCurTask->waterFlags & 1)
     {
-        if (gCurTask->unk88->unk40 & 16)
+        if (gCurTask->player->unk40 & 16)
         {
-            gCurTask->unk88->unk40 &= ~16;
-            gCurTask->unk88->unk3D = 0;
-            gCurTask->unk88->unk0F = 0;
+            gCurTask->player->unk40 &= ~16;
+            gCurTask->player->running = 0;
+            gCurTask->player->unk0F = 0;
         }
         return;
     }
-    v = gCurTask->unk88->unk40 & 16;
+    v = gCurTask->player->unk40 & 16;
     if (v == 0)
     {
-        if (gCurTask->unk88->unk3D != 0)
-            gCurTask->unk88->unk0F = 0;
-        else if ((gLatchedHeldKeys[gCurTask->unk88->unk00] & 48) == 0)
+        if (gCurTask->player->running != 0)
+            gCurTask->player->unk0F = 0;
+        else if ((gLatchedHeldKeys[gCurTask->player->playerIndex] & 48) == 0)
         {
-            if ((s8)gCurTask->unk88->unk0F <= 16)
-                gCurTask->unk88->unk0F++;
+            if ((s8)gCurTask->player->unk0F <= 16)
+                gCurTask->player->unk0F++;
         }
-        else if (gCurTask->unk88->unk17 != 0)
+        else if (gCurTask->player->unk17 != 0)
         {
-            gCurTask->unk88->unk3D = 1;
-            gCurTask->unk88->unk40 |= 16;
-            gCurTask->unk88->unk0F = 10;
+            gCurTask->player->running = 1;
+            gCurTask->player->unk40 |= 16;
+            gCurTask->player->unk0F = 10;
         }
-        else if ((s8)gCurTask->unk88->unk0F != 0
-              && (s8)gCurTask->unk88->unk0F <= 16)
+        else if ((s8)gCurTask->player->unk0F != 0
+              && (s8)gCurTask->player->unk0F <= 16)
         {
-            if (((gLatchedHeldKeys[gCurTask->unk88->unk00] & 16)
+            if (((gLatchedHeldKeys[gCurTask->player->playerIndex] & 16)
                  && gCurTask->facing == 1)
-             || ((gLatchedHeldKeys[gCurTask->unk88->unk00] & 32)
+             || ((gLatchedHeldKeys[gCurTask->player->playerIndex] & 32)
                  && gCurTask->facing == -1))
             {
-                gCurTask->unk88->unk3D = 1;
-                gCurTask->unk88->unk40 |= 16;
-                gCurTask->unk88->unk0F = 10;
+                gCurTask->player->running = 1;
+                gCurTask->player->unk40 |= 16;
+                gCurTask->player->unk0F = 10;
             }
         }
         else
-            gCurTask->unk88->unk0F = 0;
+            gCurTask->player->unk0F = 0;
     }
-    else if (gCurTask->unk88->unk04 == 2)
+    else if (gCurTask->player->mode == 2)
     {
-        gCurTask->unk88->unk40 &= ~16;
-        gCurTask->unk88->unk0F = 0;
+        gCurTask->player->unk40 &= ~16;
+        gCurTask->player->unk0F = 0;
     }
-    else if ((s8)gCurTask->unk88->unk0F != 0)
-        gCurTask->unk88->unk0F--;
+    else if ((s8)gCurTask->player->unk0F != 0)
+        gCurTask->player->unk0F--;
     else
     {
-        gCurTask->unk88->unk3D = 0;
-        gCurTask->unk88->unk40 &= ~16;
-        gCurTask->unk88->unk0F = 0;
+        gCurTask->player->running = 0;
+        gCurTask->player->unk40 &= ~16;
+        gCurTask->player->unk0F = 0;
     }
 }
 
 s32 PlayerHasCrossedWaterSurface(s32 a)
 {
-    if (gCurTask->unk7B & 128)
+    if (gCurTask->waterFlags & 128)
     {
         if (a == 0)
         {
-            if (gCurTask->unk7B & 1)
+            if (gCurTask->waterFlags & 1)
                 return 1;
         }
-        else if ((gCurTask->unk7B & 1) == 0)
+        else if ((gCurTask->waterFlags & 1) == 0)
             return 1;
     }
     return 0;
@@ -2547,7 +2547,7 @@ s32 PlayerHasCrossedWaterSurface(s32 a)
 
 s32 sub_0803fd20(s32 a0)
 {
-    if (gTasks[a0].unk7A == 0)
+    if (gTasks[a0].onGround == 0)
         return 0;
     if (gTasks[a0].facing == 1)
         return gUnk_0873AF30[gPlayerStates[a0].unk4B][0];
@@ -2556,87 +2556,87 @@ s32 sub_0803fd20(s32 a0)
 
 s32 PlayerCheckSkid(void)
 {
-    if (gLatchedHeldKeys[gCurTask->unk88->unk00] & 16)
+    if (gLatchedHeldKeys[gCurTask->player->playerIndex] & 16)
     {
         if (gCurTask->facing == -1)
-            gCurTask->unk88->unk01 = 4;
+            gCurTask->player->requestedAction = 4;
     }
-    else if ((gLatchedHeldKeys[gCurTask->unk88->unk00] & 32) && gCurTask->facing == 1)
-        gCurTask->unk88->unk01 = 4;
-    return gCurTask->unk88->unk01;
+    else if ((gLatchedHeldKeys[gCurTask->player->playerIndex] & 32) && gCurTask->facing == 1)
+        gCurTask->player->requestedAction = 4;
+    return gCurTask->player->requestedAction;
 }
 
 s32 PlayerCheckJump(void)
 {
-    if ((gCurTask->unk7A & 1)
-     && (gLatchedHeldKeys[gCurTask->unk88->unk00] & 128) == 0
-     && (gLatchedPressedKeys[gCurTask->unk88->unk00] & 1)
-     && gCurTask->unk88->unk37 != 2)
+    if ((gCurTask->onGround & 1)
+     && (gLatchedHeldKeys[gCurTask->player->playerIndex] & 128) == 0
+     && (gLatchedPressedKeys[gCurTask->player->playerIndex] & 1)
+     && gCurTask->player->unk37 != 2)
     {
-        if (gCurTask->unk88->unk37 != 3)
-            gCurTask->unk88->unk01 = 5;
+        if (gCurTask->player->unk37 != 3)
+            gCurTask->player->requestedAction = 5;
         else
-            gCurTask->unk88->unk01 = 57;
+            gCurTask->player->requestedAction = 57;
     }
-    return gCurTask->unk88->unk01;
+    return gCurTask->player->requestedAction;
 }
 
 s32 sub_0803fe68(void)
 {
     struct Task *t = gCurTask;
 
-    if ((t->unk7A & 1) == 0)
-        t->unk88->unk01 = 7;
-    else if (t->unk7B & 1)
+    if ((t->onGround & 1) == 0)
+        t->player->requestedAction = 7;
+    else if (t->waterFlags & 1)
     {
-        if (t->unk54 != 0)
-            t->unk88->unk01 = 25;
+        if (t->velX != 0)
+            t->player->requestedAction = 25;
         else
-            t->unk88->unk01 = 24;
+            t->player->requestedAction = 24;
     }
-    return gCurTask->unk88->unk01;
+    return gCurTask->player->requestedAction;
 }
 
 s32 PlayerCheckDuckOrSwallow(void)
 {
-    if (gLatchedHeldKeys[gCurTask->unk88->unk00] & 128)
+    if (gLatchedHeldKeys[gCurTask->player->playerIndex] & 128)
     {
-        if (gCurTask->unk88->unk06 == 1 && gUnk_02007CF0 != 1)
+        if (gCurTask->player->mouthState == 1 && gUnk_02007CF0 != 1)
         {
-            if (((s8 *)gCurTask->unk88)[11] != 0)
-                gCurTask->unk88->unk01 = 29;
-            else if ((gCurTask->unk7B & 1) == 0)
-                gCurTask->unk88->unk01 = 15;
+            if (((s8 *)gCurTask->player)[11] != 0)
+                gCurTask->player->requestedAction = 29;
+            else if ((gCurTask->waterFlags & 1) == 0)
+                gCurTask->player->requestedAction = 15;
             else
-                gCurTask->unk88->unk01 = 26;
-            if (gCurTask->unk88->unk31 != 0)
+                gCurTask->player->requestedAction = 26;
+            if (gCurTask->player->unk31 != 0)
             {
-                if (gCurTask->unk88->unk30 <= 2)
-                    gCurTask->unk88->unk30++;
-                gCurTask->unk88->unk31 = 0;
+                if (gCurTask->player->unk30 <= 2)
+                    gCurTask->player->unk30++;
+                gCurTask->player->unk31 = 0;
             }
             else
-                gCurTask->unk88->unk30 = 0;
+                gCurTask->player->unk30 = 0;
         }
-        else if ((gCurTask->unk7B & 1) == 0)
-            gCurTask->unk88->unk01 = 10;
+        else if ((gCurTask->waterFlags & 1) == 0)
+            gCurTask->player->requestedAction = 10;
     }
-    return gCurTask->unk88->unk01;
+    return gCurTask->player->requestedAction;
 }
 
 s32 PlayerCheckLadder(void)
 {
-    if (gCurTask->unk88->unk06 == 0 && gTerrainResult[6] != 0)
+    if (gCurTask->player->mouthState == 0 && gTerrainResult[6] != 0)
     {
         if (gTerrainResult[6] & 1)
         {
-            if (gLatchedPressedKeys[gCurTask->unk88->unk00] & 64)
-                gCurTask->unk88->unk01 = 12;
+            if (gLatchedPressedKeys[gCurTask->player->playerIndex] & 64)
+                gCurTask->player->requestedAction = 12;
         }
-        else if (gLatchedPressedKeys[gCurTask->unk88->unk00] & 128)
-            gCurTask->unk88->unk01 = 12;
+        else if (gLatchedPressedKeys[gCurTask->player->playerIndex] & 128)
+            gCurTask->player->requestedAction = 12;
     }
-    return gCurTask->unk88->unk01;
+    return gCurTask->player->requestedAction;
 }
 
 s32 PlayerCheckFloat(void)
@@ -2645,37 +2645,37 @@ s32 PlayerCheckFloat(void)
 
     if (gUnk_03001F30 == 1)
         return 0;
-    if (gCurTask->unk88->unk06 != 1)
+    if (gCurTask->player->mouthState != 1)
     {
-        v = gLatchedHeldKeys[gCurTask->unk88->unk00] & 64;
+        v = gLatchedHeldKeys[gCurTask->player->playerIndex] & 64;
         if (v != 0)
         {
-            if (gCurTask->unk7A & 1)
+            if (gCurTask->onGround & 1)
             {
-                if (++((s8 *)gCurTask->unk88)[16] == 9)
+                if (++((s8 *)gCurTask->player)[16] == 9)
                 {
-                    ((s8 *)gCurTask->unk88)[16] = 0;
-                    gCurTask->unk88->unk01 = 9;
+                    ((s8 *)gCurTask->player)[16] = 0;
+                    gCurTask->player->requestedAction = 9;
                 }
             }
-            else if ((gCurTask->unk7B & 1) == 0)
+            else if ((gCurTask->waterFlags & 1) == 0)
             {
-                ((s8 *)gCurTask->unk88)[16] = 0;
-                gCurTask->unk88->unk01 = 9;
+                ((s8 *)gCurTask->player)[16] = 0;
+                gCurTask->player->requestedAction = 9;
             }
         }
         else
-            ((s8 *)gCurTask->unk88)[16] = v;
+            ((s8 *)gCurTask->player)[16] = v;
     }
-    return gCurTask->unk88->unk01;
+    return gCurTask->player->requestedAction;
 }
 
 s32 PlayerCheckAirFloat(void)
 {
-    if (gCurTask->unk88->unk06 == 0
-     && (gLatchedPressedKeys[gCurTask->unk88->unk00] & 1))
-        gCurTask->unk88->unk01 = 9;
-    return gCurTask->unk88->unk01;
+    if (gCurTask->player->mouthState == 0
+     && (gLatchedPressedKeys[gCurTask->player->playerIndex] & 1))
+        gCurTask->player->requestedAction = 9;
+    return gCurTask->player->requestedAction;
 }
 
 s32 PlayerCheckBButton(void)
@@ -2684,137 +2684,137 @@ s32 PlayerCheckBButton(void)
 
     if (gUnk_03001F30 == 1)
     {
-        if ((gLatchedPressedKeys[gCurTask->unk88->unk00] & 2) == 0)
+        if ((gLatchedPressedKeys[gCurTask->player->playerIndex] & 2) == 0)
             goto out;
-        if (gCurTask->unk7A & 1)
+        if (gCurTask->onGround & 1)
         {
-            if (gCurTask->unk88->unk3D != 0)
-                gCurTask->unk88->unk01 = 27;
-            else if (gLatchedHeldKeys[gCurTask->unk88->unk00] & 64)
-                gCurTask->unk88->unk01 = 28;
+            if (gCurTask->player->running != 0)
+                gCurTask->player->requestedAction = 27;
+            else if (gLatchedHeldKeys[gCurTask->player->playerIndex] & 64)
+                gCurTask->player->requestedAction = 28;
             else
-                gCurTask->unk88->unk01 = 26;
+                gCurTask->player->requestedAction = 26;
         }
         else
         {
-            if (gLatchedHeldKeys[gCurTask->unk88->unk00] & 128)
-                gCurTask->unk88->unk01 = 29;
-            else if (gLatchedHeldKeys[gCurTask->unk88->unk00] & 64)
-                gCurTask->unk88->unk01 = 28;
+            if (gLatchedHeldKeys[gCurTask->player->playerIndex] & 128)
+                gCurTask->player->requestedAction = 29;
+            else if (gLatchedHeldKeys[gCurTask->player->playerIndex] & 64)
+                gCurTask->player->requestedAction = 28;
             else
-                gCurTask->unk88->unk01 = 26;
+                gCurTask->player->requestedAction = 26;
         }
-        gCurTask->unk88->unk3D = 0;
+        gCurTask->player->running = 0;
         goto out;
     }
-    if (gCurTask->unk88->unk0D == 15
-     && ((gCurTask->unk7A & 1) || (gCurTask->unk7B & 1)))
-        gCurTask->unk88->unk47 = 1;
-    if ((gLatchedPressedKeys[gCurTask->unk88->unk00] & 2) == 0)
+    if (gCurTask->player->ability == 15
+     && ((gCurTask->onGround & 1) || (gCurTask->waterFlags & 1)))
+        gCurTask->player->unk47 = 1;
+    if ((gLatchedPressedKeys[gCurTask->player->playerIndex] & 2) == 0)
         goto out;
-    gCurTask->unk88->unk3D = 0;
-    v = gAbilityBButtonActions[(gCurTask->unk7B & 1) + gCurTask->unk88->unk0D * 2];
-    if (gCurTask->unk88->unk06 == 1)
+    gCurTask->player->running = 0;
+    v = gAbilityBButtonActions[(gCurTask->waterFlags & 1) + gCurTask->player->ability * 2];
+    if (gCurTask->player->mouthState == 1)
     {
-        if ((gCurTask->unk7B & 1) == 0)
-            gCurTask->unk88->unk01 = 14;
+        if ((gCurTask->waterFlags & 1) == 0)
+            gCurTask->player->requestedAction = 14;
         else
-            gCurTask->unk88->unk01 = 27;
+            gCurTask->player->requestedAction = 27;
         goto out;
     }
-    if (gCurTask->unk88->unk0D == 15 && (gCurTask->unk88->unk42 & 4) == 0
-     && (gCurTask->unk7B & 1) == 0)
+    if (gCurTask->player->ability == 15 && (gCurTask->player->unk42 & 4) == 0
+     && (gCurTask->waterFlags & 1) == 0)
     {
-        if (gCurTask->unk88->unk47 == 0)
+        if (gCurTask->player->unk47 == 0)
             goto out;
-        gCurTask->unk88->unk47--;
-        if (gCurTask->unk88->unk04 == 5)
-            gCurTask->unk88->unk04 = 4;
+        gCurTask->player->unk47--;
+        if (gCurTask->player->mode == 5)
+            gCurTask->player->mode = 4;
     }
-    if ((gCurTask->unk88->unk42 & 4) == 0 || v == 13)
-        gCurTask->unk88->unk01 = v;
+    if ((gCurTask->player->unk42 & 4) == 0 || v == 13)
+        gCurTask->player->requestedAction = v;
 out:
-    return gCurTask->unk88->unk01;
+    return gCurTask->player->requestedAction;
 }
 
 s32 PlayerCheckEnterWater(void)
 {
-    if (gCurTask->unk58 > 0 && PlayerHasCrossedWaterSurface(0) != 0)
-        gCurTask->unk88->unk01 = 23;
-    return gCurTask->unk88->unk01;
+    if (gCurTask->velY > 0 && PlayerHasCrossedWaterSurface(0) != 0)
+        gCurTask->player->requestedAction = 23;
+    return gCurTask->player->requestedAction;
 }
 
 s32 PlayerCheckEnterDoor(void)
 {
-    if ((gLatchedHeldKeys[gCurTask->unk88->unk00] & 64) && gUnk_02007CF0 == 0
-     && gCurTask->unk88->unk4C != 0
-     && (gCurTask->unk88->unk42 & 1) == 0
-     && FindDoorAt(gCurTask->unk48, gCurTask->unk4A) != 0)
+    if ((gLatchedHeldKeys[gCurTask->player->playerIndex] & 64) && gUnk_02007CF0 == 0
+     && gCurTask->player->unk4C != 0
+     && (gCurTask->player->unk42 & 1) == 0
+     && FindDoorAt(gCurTask->pixelX, gCurTask->pixelY) != 0)
     {
         gUnk_02007CF0 = 1;
         gUnk_03001F34 = 1;
-        gCurTask->unk88->unk42 |= 2;
-        SetPlayerInvulnerability(3, 0, gCurTask->unk88->unk00);
-        gCurTask->unk88->unk01 = 20;
+        gCurTask->player->unk42 |= 2;
+        SetPlayerInvulnerability(3, 0, gCurTask->player->playerIndex);
+        gCurTask->player->requestedAction = 20;
     }
-    return gCurTask->unk88->unk01;
+    return gCurTask->player->requestedAction;
 }
 
 s32 PlayerCheckDropAbility(void)
 {
     if (gUnk_03001F30 == 1)
         return 0;
-    if ((gCurTask->unk88->unk42 & 2) == 0
-     && gCurTask->unk88->unk37 == 0
-     && (gLatchedPressedKeys[gCurTask->unk88->unk00] & 4)
-     && gCurTask->unk88->unk0D != 0)
+    if ((gCurTask->player->unk42 & 2) == 0
+     && gCurTask->player->unk37 == 0
+     && (gLatchedPressedKeys[gCurTask->player->playerIndex] & 4)
+     && gCurTask->player->ability != 0)
     {
-        sub_08064eb8(gCurTask->unk88->unk30);
-        PlaySfxIfLocalPlayer(182, (u16)gCurTask->unk88->unk00);
-        SetPlayerAbility(0, -1, gCurTask->unk88->unk00);
-        gCurTask->unk88->unk01 = gCurTask->unk88->unk02;
+        sub_08064eb8(gCurTask->player->unk30);
+        PlaySfxIfLocalPlayer(182, (u16)gCurTask->player->playerIndex);
+        SetPlayerAbility(0, -1, gCurTask->player->playerIndex);
+        gCurTask->player->requestedAction = gCurTask->player->action;
     }
-    return gCurTask->unk88->unk01;
+    return gCurTask->player->requestedAction;
 }
 
 s32 PlayerCheckStartSwim(void)
 {
-    if ((gLatchedPressedKeys[gCurTask->unk88->unk00] & 65) || (gCurTask->unk7A & 1) == 0)
-        gCurTask->unk88->unk01 = 23;
-    return gCurTask->unk88->unk01;
+    if ((gLatchedPressedKeys[gCurTask->player->playerIndex] & 65) || (gCurTask->onGround & 1) == 0)
+        gCurTask->player->requestedAction = 23;
+    return gCurTask->player->requestedAction;
 }
 
 s32 PlayerRequestLocomotion(void)
 {
-    if ((gCurTask->unk7B & 1) == 0)
+    if ((gCurTask->waterFlags & 1) == 0)
     {
-        if ((gCurTask->unk7A & 1) == 0)
-            gCurTask->unk88->unk01 = 7;
-        else if (gCurTask->unk54 == 0)
-            gCurTask->unk88->unk01 = 1;
-        else if (gCurTask->unk88->unk3D == 0)
-            gCurTask->unk88->unk01 = 2;
+        if ((gCurTask->onGround & 1) == 0)
+            gCurTask->player->requestedAction = 7;
+        else if (gCurTask->velX == 0)
+            gCurTask->player->requestedAction = 1;
+        else if (gCurTask->player->running == 0)
+            gCurTask->player->requestedAction = 2;
         else
-            gCurTask->unk88->unk01 = 3;
+            gCurTask->player->requestedAction = 3;
     }
-    else if ((gCurTask->unk7A & 1) == 0)
-        gCurTask->unk88->unk01 = 23;
-    else if (gLatchedHeldKeys[gCurTask->unk88->unk00] & 65)
-        gCurTask->unk88->unk01 = 23;
-    else if (gCurTask->unk54 == 0)
-        gCurTask->unk88->unk01 = 24;
+    else if ((gCurTask->onGround & 1) == 0)
+        gCurTask->player->requestedAction = 23;
+    else if (gLatchedHeldKeys[gCurTask->player->playerIndex] & 65)
+        gCurTask->player->requestedAction = 23;
+    else if (gCurTask->velX == 0)
+        gCurTask->player->requestedAction = 24;
     else
-        gCurTask->unk88->unk01 = 25;
-    return gCurTask->unk88->unk01;
+        gCurTask->player->requestedAction = 25;
+    return gCurTask->player->requestedAction;
 }
 
 s32 sub_080404e4(void)
 {
     if (gUnk_03001F30 == 1)
         return 0;
-    if (gCurTask->unk88->unk06 == 2)
+    if (gCurTask->player->mouthState == 2)
         return 1;
-    if (gCurTask->unk88->unk06 == 1)
+    if (gCurTask->player->mouthState == 1)
         return 2;
     return 0;
 }
@@ -2832,91 +2832,91 @@ s32 sub_08040514(void)
     struct PlayerState *q;
     s32 i;
 
-    if (CTR(gCurTask->unk88) == 0)
+    if (CTR(gCurTask->player) == 0)
         return 0;
-    if (--CTR(gCurTask->unk88) == 0)
+    if (--CTR(gCurTask->player) == 0)
     {
-        gCurTask->unk88->unk3A = 0;
-        gCurTask->unk88->unk3B = 0;
+        gCurTask->player->unk3A = 0;
+        gCurTask->player->unk3B = 0;
         return 0;
     }
     if (gUnk_02007CF0 != 0)
         return 0;
     if (gActivePlayerCount == 1)
         return 0;
-    if (gCurTask->unk88->unk04 == 10 || gCurTask->unk88->unk04 == 11
-     || gCurTask->unk88->unk04 == 12 || gCurTask->unk88->unk04 == 16
-     || gCurTask->unk88->unk04 == 17 || gCurTask->unk88->unk04 == 18
-     || gCurTask->unk88->unk04 == 19 || gCurTask->unk88->unk04 == 22
-     || gCurTask->unk88->unk04 == 23 || gCurTask->unk88->unk01 == 19
-     || gCurTask->unk7C == 1 || gCurTask->unk7C == 2
-     || (gCurTask->unk88->unk04 == 13
-         && (gCurTask->unk88->unk0D != 24 || gCurTask->unk73 <= 6)))
+    if (gCurTask->player->mode == 10 || gCurTask->player->mode == 11
+     || gCurTask->player->mode == 12 || gCurTask->player->mode == 16
+     || gCurTask->player->mode == 17 || gCurTask->player->mode == 18
+     || gCurTask->player->mode == 19 || gCurTask->player->mode == 22
+     || gCurTask->player->mode == 23 || gCurTask->player->requestedAction == 19
+     || gCurTask->hitKind == 1 || gCurTask->hitKind == 2
+     || (gCurTask->player->mode == 13
+         && (gCurTask->player->ability != 24 || gCurTask->unk73 <= 6)))
         return 0;
     for (i = 0; i < gPlayerCount; i++)
     {
-        if (i == gCurTask->unk88->unk00)
+        if (i == gCurTask->player->playerIndex)
             continue;
-        if ((gCurTask->unk88->unk3B >> i) & 1)
+        if ((gCurTask->player->unk3B >> i) & 1)
             continue;
         if (gPlayerHealth[i] == 0)
             continue;
         u = &gTasks[i];
         if (u->skipMask != 0)
             continue;
-        if (u->unk48 - gCurTask->unk48 >= 0)
+        if (u->pixelX - gCurTask->pixelX >= 0)
         {
-            if (u->unk48 - gCurTask->unk48 > 10)
+            if (u->pixelX - gCurTask->pixelX > 10)
                 continue;
         }
-        else if (gCurTask->unk48 - u->unk48 > 10)
+        else if (gCurTask->pixelX - u->pixelX > 10)
             continue;
-        if (u->unk4A - gCurTask->unk4A >= 0)
+        if (u->pixelY - gCurTask->pixelY >= 0)
         {
-            if (u->unk4A - gCurTask->unk4A > 5)
+            if (u->pixelY - gCurTask->pixelY > 5)
                 continue;
         }
-        else if (gCurTask->unk4A - u->unk4A > 5)
+        else if (gCurTask->pixelY - u->pixelY > 5)
             continue;
         q = &gPlayerStates[i];
-        if (q->unk04 == 10 || q->unk04 == 11 || q->unk04 == 12 || q->unk04 == 16
-         || q->unk04 == 17 || q->unk04 == 18 || q->unk04 == 19 || q->unk04 == 22
-         || q->unk04 == 23 || q->unk01 == 19 || u->unk7C == 1 || u->unk7C == 2)
+        if (q->mode == 10 || q->mode == 11 || q->mode == 12 || q->mode == 16
+         || q->mode == 17 || q->mode == 18 || q->mode == 19 || q->mode == 22
+         || q->mode == 23 || q->requestedAction == 19 || u->hitKind == 1 || u->hitKind == 2)
             continue;
-        if (q->unk04 == 13)
+        if (q->mode == 13)
         {
-            if (q->unk0D != 24)
+            if (q->ability != 24)
                 return 0;
             if (u->unk73 <= 6)
                 continue;
         }
-        gCurTask->unk88->unk01 = 19;
-        q->unk01 = 19;
+        gCurTask->player->requestedAction = 19;
+        q->requestedAction = 19;
         gCurTask->unk18 = u->unk18 = i;
         u->taskClass++;
         u->unk1C = gCurTaskIdx;
         break;
     }
-    return gCurTask->unk88->unk01;
+    return gCurTask->player->requestedAction;
 }
 
 void sub_08040710(void)
 {
     struct Task *t = gCurTask;
 
-    if ((t->unk7B & 1) == 0)
+    if ((t->waterFlags & 1) == 0)
     {
-        if (t->unk7A & 1)
-            t->unk88->unk01 = 1;
+        if (t->onGround & 1)
+            t->player->requestedAction = 1;
         else
-            t->unk88->unk01 = 7;
+            t->player->requestedAction = 7;
     }
     else
     {
-        if (!(t->unk7A & 1) || (gLatchedHeldKeys[t->unk88->unk00] & 65))
-            t->unk88->unk01 = 23;
+        if (!(t->onGround & 1) || (gLatchedHeldKeys[t->player->playerIndex] & 65))
+            t->player->requestedAction = 23;
         else
-            t->unk88->unk01 = 24;
+            t->player->requestedAction = 24;
     }
 }
 
@@ -2944,8 +2944,8 @@ void sub_08040808(s32 a0)
     if (gPlayerCount != 1 && a0 == gLocalPlayer)
     {
         t = CreatePlayerEffectHighSlot((s8)a0, 21, 0);
-        gTasks[t].unk44 = a0;
-        gTasks[t].unk88 = gTasks[a0].unk88;
+        gTasks[t].parent = a0;
+        gTasks[t].player = gTasks[a0].player;
     }
 }
 
@@ -3026,7 +3026,7 @@ void sub_080409b8(s32 a0)
 {
     s32 n;
 
-    switch (gPlayerStates[a0].unk0D)
+    switch (gPlayerStates[a0].ability)
     {
     case 1:
     case 2:
@@ -3037,12 +3037,12 @@ void sub_080409b8(s32 a0)
             struct Task *d = &gTasks[n];
 
             d->posX = s->posX;
-            d->unk48 = s->unk48;
+            d->pixelX = s->pixelX;
             d->posY = s->posY;
-            d->unk4A = s->unk4A;
+            d->pixelY = s->pixelY;
             d->facing = s->facing;
-            d->unk88 = s->unk88;
-            d->unk44 = a0;
+            d->player = s->player;
+            d->parent = a0;
         }
         break;
     }
@@ -3056,15 +3056,15 @@ void sub_08040a44(s16 p0, s16 p1)
     s32 idx;
     s32 v;
 
-    if ((t->unk7B & 1) == 0)
+    if ((t->waterFlags & 1) == 0)
     {
-        idx = gUnk_0873DB44[t->unk88->unk0D][1];
-        v = t->frame - gUnk_0873DB44[t->unk88->unk0D][0];
+        idx = gUnk_0873DB44[t->player->ability][1];
+        v = t->frame - gUnk_0873DB44[t->player->ability][0];
     }
     else
     {
         idx = 0;
-        switch (t->unk88->unk0D)
+        switch (t->player->ability)
         {
         default:
             v = gCurTask->frame - 138;
@@ -3086,6 +3086,6 @@ void sub_08040a44(s16 p0, s16 p1)
         v = gUnk_0873AF42[v + idx * 11];
 
         if (v != 255)
-            QueueSprite(6, gUnk_087519CC[v], gCurTask->unk3E & 0xA000, 0, (s16)a0, (s16)a1);
+            QueueSprite(6, gUnk_087519CC[v], gCurTask->spriteFlags & 0xA000, 0, (s16)a0, (s16)a1);
     }
 }

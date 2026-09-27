@@ -7,7 +7,7 @@
  * Player action body, part 8: action 21 (PlayerActionExitDoor, 3612 bytes), the
  * walk through a door the player entered with action 20.  It plays the
  * ability's door animations (gPlayerDoorAnims[ability][1..6], or
- * sub_0803f7e0 for the form with Task.unk7B bit 0 set), moves the player
+ * sub_0803f7e0 for the form with Task.waterFlags bit 0 set), moves the player
  * by the door side kept in Task.unk2C, drives the door's M08 stage
  * objects through M07's helpers (sub_080264b0 ... sub_08026704) and the
  * cameras through sub_08027850/sub_08027908/sub_08027a30/sub_08027a60;
@@ -69,9 +69,9 @@ void PlayerActionExitDoor(void)
     s32 i;
     s32 r;
 
-    gCurTask->unk88->unk05 = gCurTask->unk88->unk04;
-    gCurTask->unk88->unk04 = 19;
-    gCurTask->unk15 = 19;
+    gCurTask->player->prevMode = gCurTask->player->mode;
+    gCurTask->player->mode = 19;
+    gCurTask->updateState = 19;
     gCurTask->facing = 1;
     gCurTask->frame = 0xFFFF;
     TaskInitWaterFlags();
@@ -95,7 +95,7 @@ void PlayerActionExitDoor(void)
         if (t->unk2C == 1 || t->unk2C == 3)
         {
             t->facing = -1;
-            gCurTask->posX = (gCurTask->unk48 - 10) << 16;
+            gCurTask->posX = (gCurTask->pixelX - 10) << 16;
         }
     }
     while (gFadeSteps != 0)
@@ -106,10 +106,10 @@ void PlayerActionExitDoor(void)
     {
         struct Task *t = gCurTask;
 
-        if (!(t->unk7B & 1))
+        if (!(t->waterFlags & 1))
         {
-            t->unk46 = gPlayerDoorAnims[t->unk88->unk0D][1];
-            switch (t->unk88->unk0D)
+            t->unk46 = gPlayerDoorAnims[t->player->ability][1];
+            switch (t->player->ability)
             {
             case 0:
             default:
@@ -171,7 +171,7 @@ void PlayerActionExitDoor(void)
 
             PlayerSetMotionXPreset(10, 9);
             t = gCurTask;
-            t->unk54 += t->unk2C << 13;
+            t->velX += t->unk2C << 13;
             break;
         }
         case 1:
@@ -181,15 +181,15 @@ void PlayerActionExitDoor(void)
 
             PlayerSetMotionXPreset(10, 10);
             t = gCurTask;
-            t->unk54 -= (t->unk2C - 1) << 13;
+            t->velX -= (t->unk2C - 1) << 13;
             break;
         }
         }
         {
             struct Task *t = gCurTask;
 
-            if (!(t->unk7B & 1))
-                t->unk46 = gPlayerDoorAnims[t->unk88->unk0D][2];
+            if (!(t->waterFlags & 1))
+                t->unk46 = gPlayerDoorAnims[t->player->ability][2];
             else
                 gCurTask->unk46 = sub_0803f7e0(2);
         }
@@ -208,7 +208,7 @@ void PlayerActionExitDoor(void)
         if (gCurTask->unk2C == 0)
         {
             sub_08026584();
-            sub_08040808(gCurTask->unk88->unk00);
+            sub_08040808(gCurTask->player->playerIndex);
         }
         break;
     case 1:
@@ -226,7 +226,7 @@ void PlayerActionExitDoor(void)
                 gCurTask->facing = 1;
                 PlayerSetMotionXPreset(10, 9);
                 t = gCurTask;
-                t->unk54 += t->unk2C << 13;
+                t->velX += t->unk2C << 13;
                 break;
             }
             case 1:
@@ -237,15 +237,15 @@ void PlayerActionExitDoor(void)
                 gCurTask->facing = -1;
                 PlayerSetMotionXPreset(10, 10);
                 t = gCurTask;
-                t->unk54 -= (t->unk2C - 1) << 13;
+                t->velX -= (t->unk2C - 1) << 13;
                 break;
             }
             }
             {
                 struct Task *t = gCurTask;
 
-                if (!(t->unk7B & 1))
-                    t->unk46 = gPlayerDoorAnims[t->unk88->unk0D][2];
+                if (!(t->waterFlags & 1))
+                    t->unk46 = gPlayerDoorAnims[t->player->ability][2];
                 else
                     gCurTask->unk46 = sub_0803f7e0(2);
             }
@@ -259,18 +259,18 @@ void PlayerActionExitDoor(void)
             {
                 struct Task *t = gCurTask;
 
-                if (!(t->unk7B & 1))
+                if (!(t->waterFlags & 1))
                 {
-                    TaskSetFrame((s16)gUnk_0873D0F8[t->unk88->unk0D][0]);
+                    TaskSetFrame((s16)gUnk_0873D0F8[t->player->ability][0]);
                     TaskYieldTrampoline(1);
                 }
                 else
                 {
-                    if (t->unk88->unk0D == 4)
+                    if (t->player->ability == 4)
                         t->unk46 = 0x4A0;
-                    else if (t->unk88->unk0D == 9)
+                    else if (t->player->ability == 9)
                         t->unk46 = 0x7C1;
-                    else if (t->unk88->unk0D == 10)
+                    else if (t->player->ability == 10)
                         t->unk46 = 0x8C1;
                     else
                         t->unk46 = 221;
@@ -279,7 +279,7 @@ void PlayerActionExitDoor(void)
                 }
             }
             PlayerStopAxes(1);
-            gCurTask->unk88->unk42 &= 0xFFEF;
+            gCurTask->player->unk42 &= 0xFFEF;
             TaskSetSkipMask(15, gCurTaskIdx);
             break;
         }
@@ -289,11 +289,11 @@ void PlayerActionExitDoor(void)
         {
             struct Task *t = gCurTask;
 
-            t->unk3E = 0x2000;
-            if (!(t->unk7B & 1))
+            t->spriteFlags = 0x2000;
+            if (!(t->waterFlags & 1))
             {
-                t->unk46 = gPlayerDoorAnims[t->unk88->unk0D][3];
-                switch (t->unk88->unk0D)
+                t->unk46 = gPlayerDoorAnims[t->player->ability][3];
+                switch (t->player->ability)
                 {
                 case 0:
                 default:
@@ -331,13 +331,13 @@ void PlayerActionExitDoor(void)
             }
         }
         PlayerSetMotionXPreset(10, 13);
-        if (!(gCurTask->unk7B & 1))
+        if (!(gCurTask->waterFlags & 1))
         {
             struct Task *t;
 
             PlayerSetMotionYPreset(20);
             t = gCurTask;
-            t->unk46 = gPlayerDoorAnims[t->unk88->unk0D][4];
+            t->unk46 = gPlayerDoorAnims[t->player->ability][4];
         }
         else
         {
@@ -370,17 +370,17 @@ void PlayerActionExitDoor(void)
         PlayerStopAxes(3);
         i = sub_0802653c();
         RequestScreenShake(2);
-        CreatePlayerEffect(gCurTask->unk88->unk00, 20, 0);
-        CreatePlayerEffect(gCurTask->unk88->unk00, 20, 1);
+        CreatePlayerEffect(gCurTask->player->playerIndex, 20, 0);
+        CreatePlayerEffect(gCurTask->player->playerIndex, 20, 1);
         PlayerStartOffsetScript(14);
         PlaySfx(238);
         {
             struct Task *t = gCurTask;
 
-            if (!(t->unk7B & 1))
+            if (!(t->waterFlags & 1))
             {
-                t->unk46 = gPlayerDoorAnims[t->unk88->unk0D][5];
-                switch (t->unk88->unk0D)
+                t->unk46 = gPlayerDoorAnims[t->player->ability][5];
+                switch (t->player->ability)
                 {
                 case 0:
                 default:
@@ -409,15 +409,15 @@ void PlayerActionExitDoor(void)
                 TaskYieldTrampoline(24);
             }
         }
-        gCurTask->unk88->unk42 &= 0xFFEF;
+        gCurTask->player->unk42 &= 0xFFEF;
         TaskSetSkipMask(14, gCurTaskIdx);
         sub_0802672c();
         {
             struct Task *t = gCurTask;
 
-            if (!(t->unk7B & 1))
+            if (!(t->waterFlags & 1))
             {
-                switch (t->unk88->unk0D)
+                switch (t->player->ability)
                 {
                 case 0:
                 default:
@@ -457,19 +457,19 @@ void PlayerActionExitDoor(void)
             }
         }
         TaskSetSkipMask(0, gCurTaskIdx);
-        gCurTask->unk3E = 0x4000;
+        gCurTask->spriteFlags = 0x4000;
         sub_08026704(i);
         RequestCopy(3, (u32)gUnk_02020000, 0x06014000, 0x400);
         sub_08027908();
         PlayerSetMotionXPreset(10, 14);
-        if (!(gCurTask->unk7B & 1))
+        if (!(gCurTask->waterFlags & 1))
         {
             struct Task *t;
 
             PlayerSetMotionYPreset(20);
             t = gCurTask;
-            t->unk46 = gUnk_0873D3B8[t->unk88->unk0D][1];
-            switch (t->unk88->unk0D)
+            t->unk46 = gUnk_0873D3B8[t->player->ability][1];
+            switch (t->player->ability)
             {
             case 0:
             case 7:
@@ -481,7 +481,7 @@ void PlayerActionExitDoor(void)
                 gCurTask->frame = gCurTask->unk46;
                 TaskYieldTrampoline(2);
                 u = gCurTask;
-                u->frame = gPlayerDoorAnims[u->unk88->unk0D][6];
+                u->frame = gPlayerDoorAnims[u->player->ability][6];
                 TaskYieldTrampoline(2);
                 for (gCurTask->unk6C = 0; (s16)gCurTask->unk6C <= 4; gCurTask->unk6C++)
                 {
@@ -518,17 +518,17 @@ void PlayerActionExitDoor(void)
             {
                 gCurTask->frame = gCurTask->unk46;
                 TaskYieldTrampoline(1);
-                if (gCurTask->unk7A & 1)
+                if (gCurTask->onGround & 1)
                     break;
                 TaskYieldTrampoline(1);
-                if (gCurTask->unk7A & 1)
+                if (gCurTask->onGround & 1)
                     break;
                 gCurTask->frame++;
                 TaskYieldTrampoline(1);
-                if (gCurTask->unk7A & 1)
+                if (gCurTask->onGround & 1)
                     break;
                 TaskYieldTrampoline(1);
-                if (gCurTask->unk7A & 1)
+                if (gCurTask->onGround & 1)
                     break;
             }
         }
@@ -538,12 +538,12 @@ void PlayerActionExitDoor(void)
             gCurTask->frame = sub_0803f7e0(6);
             TaskYieldTrampoline(14);
             PlayerSetMotionXPreset(10, 15);
-            while (!(gCurTask->unk7A & 1))
+            while (!(gCurTask->onGround & 1))
                 TaskYieldTrampoline(1);
         }
         PlayerStopAxes(3);
-        gCurTask->unk88->unk3E = 2;
-        if (!(gCurTask->unk7B & 1))
+        gCurTask->player->bumpKind = 2;
+        if (!(gCurTask->waterFlags & 1))
             PlayerPlayBump();
         sub_08026584();
         while (sub_08027a30() == 0)

@@ -13,8 +13,8 @@
  *       multiple of ten) and count the displayed score down to it.
  *   Task_GameOverObject   #264: six variants gGameOverObjectVariants[Task.unk73]; variant 0
  *       (GameOverPlayer, the player character) is a small state machine of
- *       sub-states gUnk_087582AC[Task.unk14] and per-frame handlers
- *       gUnk_087582B8[Task.unk15] (GameOverPlayerUpdate), re-entered through
+ *       sub-states gUnk_087582AC[Task.state] and per-frame handlers
+ *       gUnk_087582B8[Task.updateState] (GameOverPlayerUpdate), re-entered through
  *       GameOverPlayerEnterState. */
 
 extern u8 gUnk_03001F30;            /* link-play mode */
@@ -49,10 +49,10 @@ void GameOverPlayerUpdate(void);
    Task.unk18. */
 void Task_GameOverSprite(void)
 {
-    gCurTask->unk00 = (u32)TaskMove;
-    gCurTask->unk0C = (u32)TaskDrawScreen;
+    gCurTask->moveCallback = (u32)TaskMove;
+    gCurTask->drawCallback = (u32)TaskDrawScreen;
     gCurTask->layer = 9;
-    gCurTask->unk38 = gUnk_087556E0;
+    gCurTask->frameTable = gUnk_087556E0;
     gCurTask->frame = gCurTask->unk18;
     gCurTask->posX = gUnk_08758274[gCurTask->unk18] << 16;
     gCurTask->posY = gUnk_08758284[gCurTask->unk18] << 16;
@@ -62,10 +62,10 @@ void Task_GameOverSprite(void)
 /* Task type #261 (class 4): the cursor; its frame follows gGameOverCursor. */
 void Task_GameOverCursor(void)
 {
-    gCurTask->unk00 = (u32)TaskMove;
-    gCurTask->unk0C = (u32)TaskDrawScreen;
+    gCurTask->moveCallback = (u32)TaskMove;
+    gCurTask->drawCallback = (u32)TaskDrawScreen;
     gCurTask->layer = 8;
-    gCurTask->unk38 = gUnk_087556E0;
+    gCurTask->frameTable = gUnk_087556E0;
     if (gUnk_03001F30 == 0) {
         gCurTask->posX = 184 << 16;
         gCurTask->posY = 94 << 16;
@@ -119,8 +119,8 @@ void Task_GameOverPalette(void)
    multiple of 10 and count the displayed score down to it. */
 void Task_HalveScore(void)
 {
-    gCurTask->unk00 = 0;
-    gCurTask->unk0C = 0;
+    gCurTask->moveCallback = 0;
+    gCurTask->drawCallback = 0;
     gCurTask->unk28 = gPlayerScores[gLocalPlayer];
     gPlayerScores[gLocalPlayer] >>= 1;
     gCurTask->unk2C = Mod(gPlayerScores[gLocalPlayer], 10);
@@ -136,38 +136,38 @@ void Task_HalveScore(void)
 /* Task type #264 (class 4): six variants, gGameOverObjectVariants[Task.unk73]. */
 void Task_GameOverObject(void)
 {
-    gCurTask->unk00 = (u32)TaskMove;
-    gCurTask->unk0C = (u32)TaskDrawScreen;
-    gCurTask->unk40 = 0x4800;
+    gCurTask->moveCallback = (u32)TaskMove;
+    gCurTask->drawCallback = (u32)TaskDrawScreen;
+    gCurTask->tileWord = 0x4800;
     CallTableEntry(gCurTask->unk73, 6, gGameOverObjectVariants);
     TaskSleepForever();
 }
 
-/* Task type #264 variant 0: sub-states gUnk_087582AC[Task.unk14], per-frame
-   handlers gUnk_087582B8[Task.unk15] (GameOverPlayerUpdate). */
+/* Task type #264 variant 0: sub-states gUnk_087582AC[Task.state], per-frame
+   handlers gUnk_087582B8[Task.updateState] (GameOverPlayerUpdate). */
 void GameOverPlayer(void)
 {
-    gCurTask->unk04 = (u32)GameOverPlayerUpdate;
+    gCurTask->updateCallback = (u32)GameOverPlayerUpdate;
     gCurTask->layer = 8;
-    gCurTask->unk38 = gUnk_08754914;
+    gCurTask->frameTable = gUnk_08754914;
     gCurTask->unk24 = 0;
     gCurTask->unk18 = 0;
     gCurTask->facing = 1;
-    gCurTask->unk14 = 0;
-    CallTableEntry(gCurTask->unk14, 3, gUnk_087582AC);
+    gCurTask->state = 0;
+    CallTableEntry(gCurTask->state, 3, gUnk_087582AC);
     TaskSleepForever();
 }
 
-/* Task type #264 variant 0's per-frame hook: handler gUnk_087582B8[Task.unk15]. */
+/* Task type #264 variant 0's per-frame hook: handler gUnk_087582B8[Task.updateState]. */
 void GameOverPlayerUpdate(void)
 {
-    CallTableEntry(gCurTask->unk15, 3, gUnk_087582B8);
+    CallTableEntry(gCurTask->updateState, 3, gUnk_087582B8);
 }
 
 /* Re-enter task type #264 variant 0 (TaskSetEntry installs this as its
-   body): Task.unk24 = 1, then sub-state gUnk_087582AC[Task.unk14]. */
+   body): Task.unk24 = 1, then sub-state gUnk_087582AC[Task.state]. */
 void GameOverPlayerEnterState(void)
 {
     gCurTask->unk24 = 1;
-    CallTableEntry(gCurTask->unk14, 3, gUnk_087582AC);
+    CallTableEntry(gCurTask->state, 3, gUnk_087582AC);
 }

@@ -139,8 +139,8 @@ void sub_0801c444(const s8 *p)
     TerrainProbeBegin(p);
     if (gTerrainProbeResult.unkB & 0x80)
         gTerrainProbeResult.unkB = 0;
-    gTerrainVelX = gCurTask->unk54;
-    gTerrainVelY = gCurTask->unk58;
+    gTerrainVelX = gCurTask->velX;
+    gTerrainVelY = gCurTask->velY;
     gTerrainPrevX = ((gTerrainProbeX << 16) + (gCurTask->posX & 0xFFFF) - gTerrainVelX) >> 16;
     gTerrainPrevY = ((gTerrainProbeY << 16) + (gCurTask->posY & 0xFFFF) - gTerrainVelY) >> 16;
     gTerrainPrevBoxLeft = gTerrainPrevX + gTerrainBoxLeft;

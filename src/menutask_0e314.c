@@ -74,11 +74,11 @@ void sub_0800e8c0(void);
 
 void sub_0800e314(void)
 {
-    gCurTask->unk00 = (u32)TaskMove;
-    gCurTask->unk0C = (u32)TaskDrawScreen;
-    gCurTask->unk04 = (u32)sub_0800e390;
+    gCurTask->moveCallback = (u32)TaskMove;
+    gCurTask->drawCallback = (u32)TaskDrawScreen;
+    gCurTask->updateCallback = (u32)sub_0800e390;
     gCurTask->layer = 6;
-    gCurTask->unk38 = gUnk_08755650;
+    gCurTask->frameTable = gUnk_08755650;
     gCurTask->frame = 7;
     gCurTask->unk2C = 0;
     gCurTask->unk30 = 1;
@@ -119,11 +119,11 @@ void sub_0800e390(void)
 
 void sub_0800e46c(void)
 {
-    gCurTask->unk00 = (u32)TaskMove;
-    gCurTask->unk0C = (u32)TaskDrawScreen;
-    gCurTask->unk04 = (u32)sub_0800e518;
+    gCurTask->moveCallback = (u32)TaskMove;
+    gCurTask->drawCallback = (u32)TaskDrawScreen;
+    gCurTask->updateCallback = (u32)sub_0800e518;
     gCurTask->layer = 5;
-    gCurTask->unk38 = gUnk_08755650;
+    gCurTask->frameTable = gUnk_08755650;
     gCurTask->frame = 6;
     gCurTask->unk2C = 0;
     gCurTask->unk30 = 1;
@@ -165,10 +165,10 @@ void sub_0800e518(void)
 
 void Task_ModeListCursor(void)
 {
-    gCurTask->unk00 = (u32)TaskMove;
-    gCurTask->unk0C = 0;
-    gCurTask->unk04 = (u32)sub_0800e674;
-    gCurTask->unk38 = gUnk_08755650;
+    gCurTask->moveCallback = (u32)TaskMove;
+    gCurTask->drawCallback = 0;
+    gCurTask->updateCallback = (u32)sub_0800e674;
+    gCurTask->frameTable = gUnk_08755650;
     LoadGfxSet(32);
     sub_0800e7b0();
     if (gMenuScreen == 4)
@@ -219,8 +219,8 @@ void sub_0800e674(void)
     }
     if (TaskIsOnScreenNoCamera()) {
         tbl = gUnk_08755650;
-        QueueSprite(6, tbl[13], 0, 0, gCurTask->unk48, gCurTask->unk4A);
-        QueueSprite(10, tbl[12], 0, 0, gCurTask->unk48, gCurTask->unk4A);
+        QueueSprite(6, tbl[13], 0, 0, gCurTask->pixelX, gCurTask->pixelY);
+        QueueSprite(10, tbl[12], 0, 0, gCurTask->pixelX, gCurTask->pixelY);
     }
 }
 
@@ -240,11 +240,11 @@ void sub_0800e7b0(void)
 
 void sub_0800e81c(void)
 {
-    gCurTask->unk00 = (u32)TaskMove;
-    gCurTask->unk0C = (u32)TaskDrawScreen;
-    gCurTask->unk04 = (u32)sub_0800e8c0;
+    gCurTask->moveCallback = (u32)TaskMove;
+    gCurTask->drawCallback = (u32)TaskDrawScreen;
+    gCurTask->updateCallback = (u32)sub_0800e8c0;
     gCurTask->layer = 5;
-    gCurTask->unk38 = gUnk_08755650;
+    gCurTask->frameTable = gUnk_08755650;
     gCurTask->frame = 6;
     gCurTask->unk2C = 0;
     gCurTask->unk30 = 1;
@@ -285,10 +285,10 @@ void sub_0800e8c0(void)
 
 void sub_0800e9a4(void)
 {
-    gCurTask->unk00 = (u32)TaskMove;
-    gCurTask->unk0C = 0;
-    gCurTask->unk04 = (u32)sub_0800ea0c;
-    gCurTask->unk38 = gUnk_08755650;
+    gCurTask->moveCallback = (u32)TaskMove;
+    gCurTask->drawCallback = 0;
+    gCurTask->updateCallback = (u32)sub_0800ea0c;
+    gCurTask->frameTable = gUnk_08755650;
     gCurTask->unk2C = 0;
     gCurTask->unk30 = 1;
     gCurTask->unk34 = 0;

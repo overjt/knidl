@@ -5,8 +5,8 @@
  *
  * The last third of enemy/object behaviour bank 1 (see src/enemy_78b68.c for
  * the bank's three-table script pattern).  Mostly "moving scenery": scripts
- * that drive Task.unk54/unk58 (the 16.16 x/y velocity pair) and Task.unk60
- * from ROM tables, then wait on the collision flag Task.unk7A:
+ * that drive Task.velX/unk58 (the 16.16 x/y velocity pair) and Task.accelY
+ * from ROM tables, then wait on the collision flag Task.onGround:
  *   * the two class-8 platform intros `sub_0807d490` and `sub_0807d510`
  *     (the latter a seventeen-step cue script over `0x087410C0`);
  *   * task #216's rider `sub_0807d6c4`+`sub_0807d718`, whose per-frame
@@ -18,7 +18,7 @@
  *     `sub_0807e3b0` hooks dispatch through;
  *   * the two 0x120/0xA8-byte cutscene coroutines `sub_0807e290` and
  *     `sub_0807e768`, which spawn a companion with `CreateActorFromDescAtOffsetFacing` and then
- *     bounce between velocity presets until Task.unk7A fires;
+ *     bounce between velocity presets until Task.onGround fires;
  *   * the swing/orbit loops `sub_0807ea84`, `sub_0807eb60`, `sub_0807ec4c`,
  *     `sub_0807ed20` and `sub_0807ef7c`, each an infinite eight-step ramp.
  *
@@ -168,21 +168,21 @@ void sub_0807d3b0(void)
 {
     s32 v;
 
-    if (gTaskSlotTypes[gCurTask->unk44] == -1)
+    if (gTaskSlotTypes[gCurTask->parent] == -1)
         goto kill1;
-    v = (u8)TaskHasSameSerial(gCurTask->unk44);
+    v = (u8)TaskHasSameSerial(gCurTask->parent);
     if (v != 1)
         goto kill1;
     {
         struct Task *t = gCurTask;
-        struct Task *o = &gTasks[t->unk44];
+        struct Task *o = &gTasks[t->parent];
         s16 *s;
 
         if ((u16)(o->unk76 - 28) > 1)
             goto kill2;
-        s = &o->unk48;
-        t->unk48 = o->unk2C * 20 + *s;
-        t->unk4A = o->unk4A;
+        s = &o->pixelX;
+        t->pixelX = o->unk2C * 20 + *s;
+        t->pixelY = o->pixelY;
         if (t->unk18 != 0)
         {
             ActorCheckHitsWithBox(gUnk_08741174);
@@ -191,7 +191,7 @@ void sub_0807d3b0(void)
     }
     if (ActorCheckHitsWithBox(gUnk_08741158) != 0)
     {
-        if (gCurTask->unk7C == 6)
+        if (gCurTask->hitKind == 6)
         {
             PlaySfx(243);
             gCurTask->unk18 = v;
@@ -211,18 +211,18 @@ void sub_0807d490(void)
 {
     struct Task *t;
 
-    gCurTask->unk00 = (u32)TaskMove;
-    gCurTask->unk0C = (u32)ActorDrawWorldInView;
+    gCurTask->moveCallback = (u32)TaskMove;
+    gCurTask->drawCallback = (u32)ActorDrawWorldInView;
     gCurTask->layer = 8;
     t = gCurTask;
-    t->unk38 = gUnk_08752234;
-    t->unk40 = (0xFFF & t->unk40) | 0xF000;
+    t->frameTable = gUnk_08752234;
+    t->tileWord = (0xFFF & t->tileWord) | 0xF000;
     TaskFaceLikeParent();
     TaskSetMotionXFacing(0x30000, -0x5000);
     {
         struct Task *u = gCurTask;
 
-        u->unk60 = -0x4000;
+        u->accelY = -0x4000;
         u->frame = 2;
     }
     TaskYieldTrampoline(4);
@@ -238,14 +238,14 @@ void sub_0807d510(void)
     s32 i;
     s32 j;
 
-    gCurTask->unk00 = (u32)TaskMove;
-    gCurTask->unk0C = (u32)ActorDrawWorldInView;
+    gCurTask->moveCallback = (u32)TaskMove;
+    gCurTask->drawCallback = (u32)ActorDrawWorldInView;
     gCurTask->layer = 8;
     {
         struct Task *t = gCurTask;
 
-        t->unk38 = gUnk_08752234;
-        t->unk40 = (0xFFF & t->unk40) | 0xF000;
+        t->frameTable = gUnk_08752234;
+        t->tileWord = (0xFFF & t->tileWord) | 0xF000;
     }
     TaskFaceLikeParent();
     i = gCurTask->unk74;
@@ -259,7 +259,7 @@ void sub_0807d510(void)
     {
         struct Task *t = gCurTask;
 
-        t->unk58 = b;
+        t->velY = b;
         t->frame = -1;
     }
     TaskYieldTrampoline(1);
@@ -270,7 +270,7 @@ void sub_0807d510(void)
     {
         struct Task *t = gCurTask;
 
-        t->unk58 = b;
+        t->velY = b;
         t->frame = 4;
     }
     TaskYieldTrampoline(1);
@@ -281,7 +281,7 @@ void sub_0807d510(void)
     {
         struct Task *t = gCurTask;
 
-        t->unk58 = b;
+        t->velY = b;
         t->frame = 4;
     }
     TaskYieldTrampoline(1);
@@ -292,7 +292,7 @@ void sub_0807d510(void)
     {
         struct Task *t = gCurTask;
 
-        t->unk58 = b;
+        t->velY = b;
         t->frame = 4;
     }
     TaskYieldTrampoline(1);
@@ -300,7 +300,7 @@ void sub_0807d510(void)
     {
         struct Task *t = gCurTask;
 
-        t->unk58 = gUnk_087410D8[t->unk74];
+        t->velY = gUnk_087410D8[t->unk74];
         t->frame--;
     }
     TaskYieldTrampoline(1);
@@ -313,38 +313,38 @@ void sub_0807d510(void)
 
 void sub_0807d684(void)
 {
-    gCurTask->unk00 = (u32)ActorMove;
-    gCurTask->unk0C = (u32)ActorDrawWorldInViewOrDestroy;
+    gCurTask->moveCallback = (u32)ActorMove;
+    gCurTask->drawCallback = (u32)ActorDrawWorldInViewOrDestroy;
     gCurTask->layer = 11;
-    gCurTask->unk38 = gUnk_08752194;
+    gCurTask->frameTable = gUnk_08752194;
     CallTableEntry(gCurTask->unk73, 3, gUnk_087411C0);
 }
 
 void sub_0807d6c4(void)
 {
-    gCurTask->unk04 = (u32)sub_0807d718;
+    gCurTask->updateCallback = (u32)sub_0807d718;
     TaskFaceNearestPlayer();
     gCurTask->unk28 = 0;
     ActorSetState(0);
-    CallTableEntry(gCurTask->unk14, 5, gUnk_087411CC);
+    CallTableEntry(gCurTask->state, 5, gUnk_087411CC);
 }
 
 void sub_0807d6fc(void)
 {
-    CallTableEntry(gCurTask->unk14, 5, gUnk_087411CC);
+    CallTableEntry(gCurTask->state, 5, gUnk_087411CC);
 }
 
 void sub_0807d718(void)
 {
     if ((u8)ActorCollideTerrain() == 0)
-        CallTableEntry(gCurTask->unk15, 5, gUnk_087411E0);
+        CallTableEntry(gCurTask->updateState, 5, gUnk_087411E0);
     ActorCheckHits();
     ActorReactToHit();
 }
 
 void sub_0807d748(void)
 {
-    gCurTask->unk15 = 0;
+    gCurTask->updateState = 0;
     gCurTask->unk6C = 0;
     do
     {
@@ -359,7 +359,7 @@ void sub_0807d748(void)
         {
             struct Task *t = gCurTask;
 
-            t->unk54 = 0;
+            t->velX = 0;
             t->frame++;
         }
         TaskYieldTrampoline(8);
@@ -374,12 +374,12 @@ void sub_0807d748(void)
         {
             struct Task *t = gCurTask;
 
-            t->unk54 = 0;
+            t->velX = 0;
             t->frame++;
         }
         TaskYieldTrampoline(8);
     } while ((s16)++gCurTask->unk6C <= 1);
-    gCurTask->unk54 = 0;
+    gCurTask->velX = 0;
     ActorSetState(1);
     TaskSleepForever();
 }
@@ -406,13 +406,13 @@ void sub_0807d82c(void)
             }
         }
     }
-    if (gCurTask->unk14 != 0)
+    if (gCurTask->state != 0)
         TaskSetEntry(sub_0807d6fc, gCurTaskIdx);
 }
 
 void sub_0807d8f8(void)
 {
-    gCurTask->unk15 = 1;
+    gCurTask->updateState = 1;
     sub_0807dd10();
     ActorSetState(0);
     TaskSleepForever();
@@ -426,20 +426,20 @@ void sub_0807d918(void)
         if (abs(TaskGetDyTo(gCurTask->unk2C)) <= 15)
             TaskFaceToward(gCurTask->unk2C);
     }
-    if (gCurTask->unk14 != 1)
+    if (gCurTask->state != 1)
         TaskSetEntry(sub_0807d6fc, gCurTaskIdx);
 }
 
 void sub_0807d9ac(void)
 {
-    gCurTask->unk7A = 0;
-    gCurTask->unk15 = 2;
+    gCurTask->onGround = 0;
+    gCurTask->updateState = 2;
     TaskSetMotionXFacing(0x18000, 0);
     {
         struct Task *t = gCurTask;
 
-        t->unk58 = -0x2E800;
-        t->unk60 = 0x2000;
+        t->velY = -0x2E800;
+        t->accelY = 0x2000;
     }
     TaskSetFrame(14);
     TaskYieldTrampoline(24);
@@ -452,13 +452,13 @@ void sub_0807d9ac(void)
 
 void sub_0807da08(void)
 {
-    if (gCurTask->unk14 != 2)
+    if (gCurTask->state != 2)
         TaskSetEntry(sub_0807d6fc, gCurTaskIdx);
 }
 
 void sub_0807da30(void)
 {
-    gCurTask->unk15 = 3;
+    gCurTask->updateState = 3;
     TaskSetFrame(12);
     TaskStop();
     TaskYieldTrampoline(16);
@@ -468,14 +468,14 @@ void sub_0807da30(void)
 
 void sub_0807da5c(void)
 {
-    if (gCurTask->unk14 != 3)
+    if (gCurTask->state != 3)
         TaskSetEntry(sub_0807d6fc, gCurTaskIdx);
 }
 
 void sub_0807da84(void)
 {
-    gCurTask->unk15 = 4;
-    gCurTask->unk58 = 0x80000;
+    gCurTask->updateState = 4;
+    gCurTask->velY = 0x80000;
     TaskSetFrame(12);
     TaskSleepForever();
 }
@@ -486,29 +486,29 @@ void sub_0807daa8(void)
 
 void sub_0807daac(void)
 {
-    gCurTask->unk04 = (u32)sub_0807db0c;
+    gCurTask->updateCallback = (u32)sub_0807db0c;
     TaskFaceNearestPlayer();
     ActorSetAttackBox(gUnk_0873F500);
-    gCurTask->unk78 = 2;
+    gCurTask->health = 2;
     ActorSetState(0);
-    CallTableEntry(gCurTask->unk14, 1, gUnk_087411F4);
+    CallTableEntry(gCurTask->state, 1, gUnk_087411F4);
 }
 
 void sub_0807daf0(void)
 {
-    CallTableEntry(gCurTask->unk14, 1, gUnk_087411F4);
+    CallTableEntry(gCurTask->state, 1, gUnk_087411F4);
 }
 
 void sub_0807db0c(void)
 {
-    CallTableEntry(gCurTask->unk15, 1, gUnk_087411F8);
+    CallTableEntry(gCurTask->updateState, 1, gUnk_087411F8);
     ActorCheckHits();
     ActorReactToHit();
 }
 
 void sub_0807db30(void)
 {
-    gCurTask->unk15 = 0;
+    gCurTask->updateState = 0;
     while (1)
         sub_0807dd10();
 }
@@ -519,33 +519,33 @@ void sub_0807db44(void)
 
 void sub_0807db48(void)
 {
-    gCurTask->unk04 = (u32)sub_0807db9c;
+    gCurTask->updateCallback = (u32)sub_0807db9c;
     TaskFaceNearestPlayer();
     gCurTask->unk28 = 0;
     ActorSetState(0);
-    CallTableEntry(gCurTask->unk14, 3, gUnk_087411FC);
+    CallTableEntry(gCurTask->state, 3, gUnk_087411FC);
 }
 
 void sub_0807db80(void)
 {
-    CallTableEntry(gCurTask->unk14, 3, gUnk_087411FC);
+    CallTableEntry(gCurTask->state, 3, gUnk_087411FC);
 }
 
 void sub_0807db9c(void)
 {
     if ((u8)ActorCollideTerrain() == 0)
-        CallTableEntry(gCurTask->unk15, 3, gUnk_08741208);
+        CallTableEntry(gCurTask->updateState, 3, gUnk_08741208);
     ActorCheckHits();
     ActorReactToHit();
 }
 
 void sub_0807dbcc(void)
 {
-    gCurTask->unk15 = 0;
+    gCurTask->updateState = 0;
     {
         struct Task *t = gCurTask;
 
-        t->unk54 = 0;
+        t->velX = 0;
         t->unk6C = 0;
     }
     do
@@ -574,13 +574,13 @@ void sub_0807dbcc(void)
 
 void sub_0807dc78(void)
 {
-    if (gCurTask->unk14 != 0)
+    if (gCurTask->state != 0)
         TaskSetEntry(sub_0807db80, gCurTaskIdx);
 }
 
 void sub_0807dca0(void)
 {
-    gCurTask->unk15 = 1;
+    gCurTask->updateState = 1;
     sub_0807dd10();
     ActorSetState(0);
     TaskSleepForever();
@@ -588,14 +588,14 @@ void sub_0807dca0(void)
 
 void sub_0807dcc0(void)
 {
-    if (gCurTask->unk14 != 1)
+    if (gCurTask->state != 1)
         TaskSetEntry(sub_0807db80, gCurTaskIdx);
 }
 
 void sub_0807dce8(void)
 {
-    gCurTask->unk15 = 2;
-    gCurTask->unk58 = 0x80000;
+    gCurTask->updateState = 2;
+    gCurTask->velY = 0x80000;
     TaskSetFrame(12);
     TaskSleepForever();
 }
@@ -627,8 +627,8 @@ s32 sub_0807dd70(void)
     {
         struct Task *t = gCurTask;
 
-        t->unk54 = 0;
-        t->unk58 = 0;
+        t->velX = 0;
+        t->velY = 0;
     }
     RequestScreenShake(1);
     PlaySfx(163);
@@ -690,8 +690,8 @@ s32 sub_0807de64(void)
 {
     struct Task *t = gCurTask;
 
-    if (t->unk14 == 2)
-        t->unk54 = 0;
+    if (t->state == 2)
+        t->velX = 0;
     else
         TaskTurnAroundAndReverseX();
     return 0;
@@ -705,10 +705,10 @@ s32 sub_0807de88(void)
 
 void sub_0807de98(void)
 {
-    gCurTask->unk00 = (u32)ActorMove;
-    gCurTask->unk0C = (u32)ActorDrawWorldInViewOrDestroy;
+    gCurTask->moveCallback = (u32)ActorMove;
+    gCurTask->drawCallback = (u32)ActorDrawWorldInViewOrDestroy;
     gCurTask->layer = 11;
-    gCurTask->unk38 = gUnk_0875230C;
+    gCurTask->frameTable = gUnk_0875230C;
     TaskFaceNearestPlayer();
     {
         struct Task *t = gCurTask;
@@ -720,20 +720,20 @@ void sub_0807de98(void)
 
 void sub_0807dee4(void)
 {
-    gCurTask->unk04 = (u32)sub_0807df30;
+    gCurTask->updateCallback = (u32)sub_0807df30;
     ActorSetState(0);
-    CallTableEntry(gCurTask->unk14, 3, gUnk_08741234);
+    CallTableEntry(gCurTask->state, 3, gUnk_08741234);
 }
 
 void sub_0807df14(void)
 {
-    CallTableEntry(gCurTask->unk14, 3, gUnk_08741234);
+    CallTableEntry(gCurTask->state, 3, gUnk_08741234);
 }
 
 void sub_0807df30(void)
 {
     if ((u8)ActorCollideTerrain() == 0)
-        CallTableEntry(gCurTask->unk15, 3, gUnk_08741240);
+        CallTableEntry(gCurTask->updateState, 3, gUnk_08741240);
     ActorCheckHits();
     ActorReactToHit();
 }
@@ -742,7 +742,7 @@ void sub_0807df60(void)
 {
     struct Task *t;
 
-    gCurTask->unk15 = 0;
+    gCurTask->updateState = 0;
     t = gCurTask;
     t->unk28 = gUnk_08741216[t->unk74];
     sub_0807e484();
@@ -765,27 +765,27 @@ void sub_0807df8c(void)
         {
             ActorSetState(1);
         }
-        gCurTask->unk54 = 0;
+        gCurTask->velX = 0;
         TaskSetEntry(sub_0807df14, gCurTaskIdx);
     }
 }
 
 void sub_0807e014(void)
 {
-    gCurTask->unk04 = (u32)sub_0807e060;
+    gCurTask->updateCallback = (u32)sub_0807e060;
     ActorSetState(0);
-    CallTableEntry(gCurTask->unk14, 3, gUnk_0874124C);
+    CallTableEntry(gCurTask->state, 3, gUnk_0874124C);
 }
 
 void sub_0807e044(void)
 {
-    CallTableEntry(gCurTask->unk14, 3, gUnk_0874124C);
+    CallTableEntry(gCurTask->state, 3, gUnk_0874124C);
 }
 
 void sub_0807e060(void)
 {
     if ((u8)ActorCollideTerrain() == 0)
-        CallTableEntry(gCurTask->unk15, 3, gUnk_08741258);
+        CallTableEntry(gCurTask->updateState, 3, gUnk_08741258);
     ActorCheckHits();
     ActorReactToHit();
 }
@@ -794,7 +794,7 @@ void sub_0807e090(void)
 {
     struct Task *t;
 
-    gCurTask->unk15 = 0;
+    gCurTask->updateState = 0;
     t = gCurTask;
     t->unk28 = gUnk_08741216[t->unk74];
     TaskSetMotionXFacing(gUnk_08741218[t->unk74], 0x5A5A5A5A);
@@ -828,7 +828,7 @@ void sub_0807e100(void)
         {
             ActorSetState(1);
         }
-        gCurTask->unk54 = 0;
+        gCurTask->velX = 0;
         TaskSetEntry(sub_0807e044, gCurTaskIdx);
     }
 }
@@ -837,7 +837,7 @@ void sub_0807e188(void)
 {
     struct ActorSpawn spawn;
 
-    gCurTask->unk15 = 1;
+    gCurTask->updateState = 1;
     TaskFaceNearestPlayer();
     TaskSetFrame(5);
     TaskYieldTrampoline(6);
@@ -880,13 +880,13 @@ void sub_0807e244(void)
     {
         struct Task *t = gCurTask;
 
-        if (t->unk7A != 0 && t->unk28 > 0)
+        if (t->onGround != 0 && t->unk28 > 0)
             t->unk28--;
     }
     {
         struct Task *t = gCurTask;
 
-        if (t->unk14 != 1)
+        if (t->state != 1)
             TaskSetEntry((void *)gUnk_08741220[t->unk73], gCurTaskIdx);
     }
 }
@@ -895,7 +895,7 @@ void sub_0807e290(void)
 {
     struct ActorSpawn spawn;
 
-    gCurTask->unk15 = 2;
+    gCurTask->updateState = 2;
     {
         struct Task *t;
         s32 r = TaskGetFacingTowardNearestPlayer();
@@ -933,23 +933,23 @@ void sub_0807e290(void)
     {
         struct Task *t = gCurTask;
 
-        if (t->unk7A != 0)
+        if (t->onGround != 0)
         {
             struct Task *u;
 
-            t->unk7A = 0;
+            t->onGround = 0;
             u = gCurTask;
-            u->unk58 = -0x40000;
-            u->unk60 = 0x4000;
-            while (gCurTask->unk7A == 0)
+            u->velY = -0x40000;
+            u->accelY = 0x4000;
+            while (gCurTask->onGround == 0)
                 TaskYieldTrampoline(1);
         }
     }
     {
         struct Task *t = gCurTask;
 
-        t->unk58 = 0;
-        t->unk60 = 0;
+        t->velY = 0;
+        t->accelY = 0;
         t->facing = t->unk30;
     }
     ActorSetState(0);
@@ -960,35 +960,35 @@ void sub_0807e3b0(void)
 {
     struct Task *t = gCurTask;
 
-    if (t->unk14 != 2)
+    if (t->state != 2)
         TaskSetEntry((void *)gUnk_08741220[t->unk73], gCurTaskIdx);
 }
 
 void sub_0807e3e4(void)
 {
-    gCurTask->unk04 = (u32)sub_0807e444;
+    gCurTask->updateCallback = (u32)sub_0807e444;
     TaskFaceNearestPlayer();
     ActorSetAttackBox(gUnk_0873F500);
-    gCurTask->unk78 = 2;
+    gCurTask->health = 2;
     ActorSetState(0);
-    CallTableEntry(gCurTask->unk14, 1, gUnk_08741264);
+    CallTableEntry(gCurTask->state, 1, gUnk_08741264);
 }
 
 void sub_0807e428(void)
 {
-    CallTableEntry(gCurTask->unk14, 1, gUnk_08741264);
+    CallTableEntry(gCurTask->state, 1, gUnk_08741264);
 }
 
 void sub_0807e444(void)
 {
-    CallTableEntry(gCurTask->unk15, 1, gUnk_08741268);
+    CallTableEntry(gCurTask->updateState, 1, gUnk_08741268);
     ActorCheckHits();
     ActorReactToHit();
 }
 
 void sub_0807e468(void)
 {
-    gCurTask->unk15 = 0;
+    gCurTask->updateState = 0;
     sub_0807e484();
 }
 
@@ -1019,7 +1019,7 @@ s32 sub_0807e4cc(void)
     TaskFaceNearestPlayer();
     TaskSetFrame((s16)gCurTask->frame);
     t = gCurTask;
-    TaskSetMotionX(-t->unk54, -t->unk5C, t->unk64);
+    TaskSetMotionX(-t->velX, -t->accelX, t->speedLimitX);
     return 0;
 }
 
@@ -1043,8 +1043,8 @@ s32 sub_0807e520(void)
 
 void sub_0807e530(void)
 {
-    gCurTask->unk00 = (u32)ActorMove;
-    gCurTask->unk0C = (u32)ActorDrawWorldInViewOrDestroy;
+    gCurTask->moveCallback = (u32)ActorMove;
+    gCurTask->drawCallback = (u32)ActorDrawWorldInViewOrDestroy;
     gCurTask->layer = 11;
     CallTableEntry(gCurTask->unk73, 3, gUnk_0874126C);
 }
@@ -1053,29 +1053,29 @@ void sub_0807e568(void)
 {
     struct Task *t = gCurTask;
 
-    t->unk04 = (u32)sub_0807e5bc;
-    t->unk38 = gUnk_0875235C;
+    t->updateCallback = (u32)sub_0807e5bc;
+    t->frameTable = gUnk_0875235C;
     ActorSetState(0);
-    CallTableEntry(gCurTask->unk14, 1, gUnk_08741278);
+    CallTableEntry(gCurTask->state, 1, gUnk_08741278);
 }
 
 void sub_0807e5a0(void)
 {
-    CallTableEntry(gCurTask->unk14, 1, gUnk_08741278);
+    CallTableEntry(gCurTask->state, 1, gUnk_08741278);
 }
 
 void sub_0807e5bc(void)
 {
     if ((u8)ActorCollideTerrain() == 0)
-        CallTableEntry(gCurTask->unk15, 1, gUnk_0874127C);
+        CallTableEntry(gCurTask->updateState, 1, gUnk_0874127C);
     ActorCheckHits();
     {
         struct Task *t = gCurTask;
 
-        if (t->unk7C == 3)
+        if (t->hitKind == 3)
         {
-            gCurTask->unk46 = CreateActorByKind(0, 8, 1, 0, t->unk48, t->unk4A,
-                                                t->unk40);
+            gCurTask->unk46 = CreateActorByKind(0, 8, 1, 0, t->pixelX, t->pixelY,
+                                                t->tileWord);
             sub_080b5540(gCurTaskIdx, gCurTask->unk46);
         }
     }
@@ -1084,7 +1084,7 @@ void sub_0807e5bc(void)
 
 void sub_0807e640(void)
 {
-    gCurTask->unk15 = 0;
+    gCurTask->updateState = 0;
     gCurTask->frame = 4;
     while (1)
     {
@@ -1093,16 +1093,16 @@ void sub_0807e640(void)
         TaskSetMotionXFacing(0x4000, 0x5A5A5A5A);
         while (--gCurTask->unk28 >= 0)
         {
-            gCurTask->unk7A = 0;
+            gCurTask->onGround = 0;
             {
                 struct Task *u = gCurTask;
 
-                u->unk58 = -0x10000;
-                u->unk60 = 0x1000;
+                u->velY = -0x10000;
+                u->accelY = 0x1000;
             }
-            while (gCurTask->unk7A == 0)
+            while (gCurTask->onGround == 0)
                 TaskYieldTrampoline(1);
-            gCurTask->unk3E ^= 0x8000;
+            gCurTask->spriteFlags ^= 0x8000;
         }
     }
 }
@@ -1115,30 +1115,30 @@ void sub_0807e6d4(void)
 {
     struct Task *t = gCurTask;
 
-    t->unk04 = (u32)sub_0807e730;
-    t->unk38 = gUnk_0875237C;
+    t->updateCallback = (u32)sub_0807e730;
+    t->frameTable = gUnk_0875237C;
     ActorLoadDef(gUnk_0874183C);
     ActorSetState(1);
-    CallTableEntry(gCurTask->unk14, 2, gUnk_08741280);
+    CallTableEntry(gCurTask->state, 2, gUnk_08741280);
 }
 
 void sub_0807e714(void)
 {
-    CallTableEntry(gCurTask->unk14, 2, gUnk_08741280);
+    CallTableEntry(gCurTask->state, 2, gUnk_08741280);
 }
 
 void sub_0807e730(void)
 {
     if ((u8)ActorCollideTerrain() == 0)
-        CallTableEntry(gCurTask->unk15, 2, gUnk_08741288);
-    if (gCurTask->unk15 != 1)
+        CallTableEntry(gCurTask->updateState, 2, gUnk_08741288);
+    if (gCurTask->updateState != 1)
         ActorCheckHits();
     ActorReactToHit();
 }
 
 void sub_0807e768(void)
 {
-    gCurTask->unk15 = 0;
+    gCurTask->updateState = 0;
     TaskSetFrame(4);
     while (1)
     {
@@ -1148,14 +1148,14 @@ void sub_0807e768(void)
         TaskSetFrame((s16)gCurTask->frame);
         while (--gCurTask->unk28 >= 0)
         {
-            gCurTask->unk7A = 0;
+            gCurTask->onGround = 0;
             {
                 struct Task *u = gCurTask;
 
-                u->unk58 = -0x10000;
-                u->unk60 = 0x1000;
+                u->velY = -0x10000;
+                u->accelY = 0x1000;
             }
-            while (gCurTask->unk7A == 0)
+            while (gCurTask->onGround == 0)
                 TaskYieldTrampoline(1);
             if ((s16)gCurTask->frame == 6)
                 TaskSetFrame(4);
@@ -1171,15 +1171,15 @@ void sub_0807e810(void)
 
 void sub_0807e814(void)
 {
-    gCurTask->unk15 = 1;
+    gCurTask->updateState = 1;
     TaskFaceNearestPlayer();
-    gCurTask->unk7A = 0;
+    gCurTask->onGround = 0;
     TaskSetMotionXFacing(-0x8000, 0);
     {
         struct Task *t = gCurTask;
 
-        t->unk58 = -0x20000;
-        t->unk60 = 0x2000;
+        t->velY = -0x20000;
+        t->accelY = 0x2000;
     }
     while (1)
     {
@@ -1196,7 +1196,7 @@ void sub_0807e814(void)
 
 void sub_0807e884(void)
 {
-    if (gCurTask->unk7A != 0)
+    if (gCurTask->onGround != 0)
     {
         ActorSetState(0);
         TaskSetEntry(sub_0807e714, gCurTaskIdx);
@@ -1207,44 +1207,44 @@ void sub_0807e8b8(void)
 {
     struct Task *t = gCurTask;
 
-    t->unk04 = (u32)sub_0807e920;
-    t->unk38 = gUnk_0875235C;
+    t->updateCallback = (u32)sub_0807e920;
+    t->frameTable = gUnk_0875235C;
     TaskFaceNearestPlayer();
     ActorSetAttackBox(gUnk_0873F500);
-    gCurTask->unk78 = 2;
+    gCurTask->health = 2;
     ActorSetState(0);
-    CallTableEntry(gCurTask->unk14, 1, gUnk_08741290);
+    CallTableEntry(gCurTask->state, 1, gUnk_08741290);
 }
 
 void sub_0807e904(void)
 {
-    CallTableEntry(gCurTask->unk14, 1, gUnk_08741290);
+    CallTableEntry(gCurTask->state, 1, gUnk_08741290);
 }
 
 void sub_0807e920(void)
 {
     if ((u8)ActorCollideTerrain() == 0)
-        CallTableEntry(gCurTask->unk15, 1, gUnk_08741294);
+        CallTableEntry(gCurTask->updateState, 1, gUnk_08741294);
     ActorCheckHits();
     ActorReactToHit();
 }
 
 void sub_0807e950(void)
 {
-    gCurTask->unk15 = 0;
+    gCurTask->updateState = 0;
     gCurTask->frame = 4;
     while (1)
     {
-        gCurTask->unk7A = 0;
+        gCurTask->onGround = 0;
         {
             struct Task *t = gCurTask;
 
-            t->unk58 = -0x10000;
-            t->unk60 = 0x1000;
+            t->velY = -0x10000;
+            t->accelY = 0x1000;
         }
-        while (gCurTask->unk7A == 0)
+        while (gCurTask->onGround == 0)
             TaskYieldTrampoline(1);
-        gCurTask->unk3E ^= 0x8000;
+        gCurTask->spriteFlags ^= 0x8000;
     }
 }
 
@@ -1256,7 +1256,7 @@ s32 sub_0807e9b4(void)
 {
     struct Task *t = gCurTask;
 
-    t->unk54 = -t->unk54;
+    t->velX = -t->velX;
     return 0;
 }
 
@@ -1268,14 +1268,14 @@ s32 sub_0807e9c8(void)
 
 void sub_0807e9d8(void)
 {
-    gCurTask->unk00 = (u32)ActorMove;
-    gCurTask->unk0C = (u32)ActorDrawWorldInViewOrDestroy;
+    gCurTask->moveCallback = (u32)ActorMove;
+    gCurTask->drawCallback = (u32)ActorDrawWorldInViewOrDestroy;
     gCurTask->layer = 11;
     {
         struct Task *t = gCurTask;
 
-        t->unk38 = gUnk_08752108;
-        t->unk7A = 0;
+        t->frameTable = gUnk_08752108;
+        t->onGround = 0;
     }
     TaskFaceNearestPlayer();
     gCurTask->unk28 = ActorStartAnim(gUnk_087412A8);
@@ -1284,30 +1284,30 @@ void sub_0807e9d8(void)
 
 void sub_0807ea30(void)
 {
-    gCurTask->unk04 = (u32)sub_0807ea60;
+    gCurTask->updateCallback = (u32)sub_0807ea60;
     ActorSetState(0);
-    CallTableEntry(gCurTask->unk14, 1, gUnk_087412CC);
+    CallTableEntry(gCurTask->state, 1, gUnk_087412CC);
 }
 
 void sub_0807ea60(void)
 {
-    CallTableEntry(gCurTask->unk15, 1, gUnk_087412D0);
+    CallTableEntry(gCurTask->updateState, 1, gUnk_087412D0);
     ActorCheckHits();
     ActorReactToHit();
 }
 
 void sub_0807ea84(void)
 {
-    gCurTask->unk15 = 0;
+    gCurTask->updateState = 0;
     while (1)
     {
-        gCurTask->unk58 = -0x4000;
+        gCurTask->velY = -0x4000;
         TaskYieldTrampoline(8);
-        gCurTask->unk58 = -0x8000;
+        gCurTask->velY = -0x8000;
         TaskYieldTrampoline(8);
-        gCurTask->unk58 = 0x8000;
+        gCurTask->velY = 0x8000;
         TaskYieldTrampoline(8);
-        gCurTask->unk58 = 0x4000;
+        gCurTask->velY = 0x4000;
         TaskYieldTrampoline(8);
     }
 }
@@ -1319,9 +1319,9 @@ void sub_0807ead4(void)
 
 void sub_0807eaf0(void)
 {
-    gCurTask->unk04 = (u32)sub_0807eb20;
+    gCurTask->updateCallback = (u32)sub_0807eb20;
     ActorSetState(0);
-    CallTableEntry(gCurTask->unk14, 1, gUnk_087412D4);
+    CallTableEntry(gCurTask->state, 1, gUnk_087412D4);
 }
 
 void sub_0807eb20(void)
@@ -1330,31 +1330,31 @@ void sub_0807eb20(void)
     {
         struct Task *t = gCurTask;
 
-        t->unk58 = -t->unk58;
-        t->unk7A = 0;
+        t->velY = -t->velY;
+        t->onGround = 0;
     }
-    CallTableEntry(gCurTask->unk15, 1, gUnk_087412D8);
+    CallTableEntry(gCurTask->updateState, 1, gUnk_087412D8);
     ActorCheckHits();
     ActorReactToHit();
 }
 
 void sub_0807eb60(void)
 {
-    gCurTask->unk15 = 0;
+    gCurTask->updateState = 0;
     {
         struct Task *t = gCurTask;
 
-        t->unk58 = gUnk_08741298[t->unk74];
+        t->velY = gUnk_08741298[t->unk74];
     }
     while (1)
     {
-        gCurTask->unk54 = -0x10000;
+        gCurTask->velX = -0x10000;
         TaskYieldTrampoline(2);
-        gCurTask->unk54 = -0x8000;
+        gCurTask->velX = -0x8000;
         TaskYieldTrampoline(2);
-        gCurTask->unk54 = 0x8000;
+        gCurTask->velX = 0x8000;
         TaskYieldTrampoline(2);
-        gCurTask->unk54 = 0x10000;
+        gCurTask->velX = 0x10000;
         TaskYieldTrampoline(2);
     }
 }
@@ -1366,9 +1366,9 @@ void sub_0807ebc4(void)
 
 void sub_0807ebe0(void)
 {
-    gCurTask->unk04 = (u32)sub_0807ec10;
+    gCurTask->updateCallback = (u32)sub_0807ec10;
     ActorSetState(0);
-    CallTableEntry(gCurTask->unk14, 1, gUnk_087412DC);
+    CallTableEntry(gCurTask->state, 1, gUnk_087412DC);
 }
 
 void sub_0807ec10(void)
@@ -1377,30 +1377,30 @@ void sub_0807ec10(void)
     {
         struct Task *t = gCurTask;
 
-        t->unk54 = -t->unk54;
+        t->velX = -t->velX;
     }
-    CallTableEntry(gCurTask->unk15, 1, gUnk_087412E0);
+    CallTableEntry(gCurTask->updateState, 1, gUnk_087412E0);
     ActorCheckHits();
     ActorReactToHit();
 }
 
 void sub_0807ec4c(void)
 {
-    gCurTask->unk15 = 0;
+    gCurTask->updateState = 0;
     {
         struct Task *t = gCurTask;
 
-        t->unk54 = gUnk_087412A0[t->unk74];
+        t->velX = gUnk_087412A0[t->unk74];
     }
     while (1)
     {
-        gCurTask->unk58 = -0x10000;
+        gCurTask->velY = -0x10000;
         TaskYieldTrampoline(2);
-        gCurTask->unk58 = -0x8000;
+        gCurTask->velY = -0x8000;
         TaskYieldTrampoline(2);
-        gCurTask->unk58 = 0x8000;
+        gCurTask->velY = 0x8000;
         TaskYieldTrampoline(2);
-        gCurTask->unk58 = 0x10000;
+        gCurTask->velY = 0x10000;
         TaskYieldTrampoline(2);
     }
 }
@@ -1412,38 +1412,38 @@ void sub_0807ecb0(void)
 
 void sub_0807eccc(void)
 {
-    gCurTask->unk04 = (u32)sub_0807ecfc;
+    gCurTask->updateCallback = (u32)sub_0807ecfc;
     ActorSetState(0);
-    CallTableEntry(gCurTask->unk14, 1, gUnk_087412E4);
+    CallTableEntry(gCurTask->state, 1, gUnk_087412E4);
 }
 
 void sub_0807ecfc(void)
 {
-    CallTableEntry(gCurTask->unk15, 1, gUnk_087412E8);
+    CallTableEntry(gCurTask->updateState, 1, gUnk_087412E8);
     ActorCheckHits();
     ActorReactToHit();
 }
 
 void sub_0807ed20(void)
 {
-    gCurTask->unk15 = 0;
+    gCurTask->updateState = 0;
     while (1)
     {
-        gCurTask->unk58 = -0x8000;
+        gCurTask->velY = -0x8000;
         TaskYieldTrampoline(16);
-        gCurTask->unk58 = -0xC000;
+        gCurTask->velY = -0xC000;
         TaskYieldTrampoline(96);
-        gCurTask->unk58 = -0x8000;
+        gCurTask->velY = -0x8000;
         TaskYieldTrampoline(16);
-        gCurTask->unk58 = 0;
+        gCurTask->velY = 0;
         TaskYieldTrampoline(16);
-        gCurTask->unk58 = 0x8000;
+        gCurTask->velY = 0x8000;
         TaskYieldTrampoline(16);
-        gCurTask->unk58 = 0xC000;
+        gCurTask->velY = 0xC000;
         TaskYieldTrampoline(96);
-        gCurTask->unk58 = 0x8000;
+        gCurTask->velY = 0x8000;
         TaskYieldTrampoline(16);
-        gCurTask->unk58 = 0;
+        gCurTask->velY = 0;
         TaskYieldTrampoline(16);
     }
 }
@@ -1455,10 +1455,10 @@ void sub_0807ed98(void)
 
 void sub_0807edb4(void)
 {
-    gCurTask->unk00 = (u32)ActorMove;
-    gCurTask->unk0C = (u32)ActorDrawWorldInViewOrDestroy;
+    gCurTask->moveCallback = (u32)ActorMove;
+    gCurTask->drawCallback = (u32)ActorDrawWorldInViewOrDestroy;
     gCurTask->layer = 11;
-    gCurTask->unk38 = gUnk_087523EC;
+    gCurTask->frameTable = gUnk_087523EC;
     AcquirePaletteAnim(0, 0);
     gCurTask->facing = 255;
     gCurTask->unk28 = ActorStartAnim(gUnk_087412EC);
@@ -1467,26 +1467,26 @@ void sub_0807edb4(void)
 
 void sub_0807ee14(void)
 {
-    gCurTask->unk04 = (u32)sub_0807ee60;
+    gCurTask->updateCallback = (u32)sub_0807ee60;
     ActorSetState(0);
-    CallTableEntry(gCurTask->unk14, 1, gUnk_08741308);
+    CallTableEntry(gCurTask->state, 1, gUnk_08741308);
 }
 
 void sub_0807ee44(void)
 {
-    CallTableEntry(gCurTask->unk14, 1, gUnk_08741308);
+    CallTableEntry(gCurTask->state, 1, gUnk_08741308);
 }
 
 void sub_0807ee60(void)
 {
-    CallTableEntry(gCurTask->unk15, 1, gUnk_0874130C);
+    CallTableEntry(gCurTask->updateState, 1, gUnk_0874130C);
     ActorCheckHits();
     ActorReactToHit();
 }
 
 void sub_0807ee84(void)
 {
-    gCurTask->unk15 = 0;
+    gCurTask->updateState = 0;
     TaskSetMotionXFacing(0x8000, 0x5A5A5A5A);
     sub_0807ef7c();
 }
@@ -1498,29 +1498,29 @@ void sub_0807eea8(void)
 
 void sub_0807eec4(void)
 {
-    gCurTask->unk04 = (u32)sub_0807ef24;
+    gCurTask->updateCallback = (u32)sub_0807ef24;
     TaskFaceNearestPlayer();
     ActorSetAttackBox(gUnk_0873F500);
-    gCurTask->unk78 = 2;
+    gCurTask->health = 2;
     ActorSetState(0);
-    CallTableEntry(gCurTask->unk14, 1, gUnk_08741310);
+    CallTableEntry(gCurTask->state, 1, gUnk_08741310);
 }
 
 void sub_0807ef08(void)
 {
-    CallTableEntry(gCurTask->unk14, 1, gUnk_08741310);
+    CallTableEntry(gCurTask->state, 1, gUnk_08741310);
 }
 
 void sub_0807ef24(void)
 {
-    CallTableEntry(gCurTask->unk15, 1, gUnk_08741314);
+    CallTableEntry(gCurTask->updateState, 1, gUnk_08741314);
     ActorCheckHits();
     ActorReactToHit();
 }
 
 void sub_0807ef48(void)
 {
-    gCurTask->unk15 = 0;
+    gCurTask->updateState = 0;
     sub_0807ef7c();
 }
 
@@ -1533,21 +1533,21 @@ void sub_0807ef7c(void)
 {
     while (1)
     {
-        gCurTask->unk58 = -0x10000;
+        gCurTask->velY = -0x10000;
         TaskYieldTrampoline(8);
-        gCurTask->unk58 = -0x8000;
+        gCurTask->velY = -0x8000;
         TaskYieldTrampoline(8);
-        gCurTask->unk58 = 0;
+        gCurTask->velY = 0;
         TaskYieldTrampoline(8);
-        gCurTask->unk58 = 0x8000;
+        gCurTask->velY = 0x8000;
         TaskYieldTrampoline(8);
-        gCurTask->unk58 = 0x10000;
+        gCurTask->velY = 0x10000;
         TaskYieldTrampoline(8);
-        gCurTask->unk58 = 0x8000;
+        gCurTask->velY = 0x8000;
         TaskYieldTrampoline(8);
-        gCurTask->unk58 = 0;
+        gCurTask->velY = 0;
         TaskYieldTrampoline(8);
-        gCurTask->unk58 = -0x8000;
+        gCurTask->velY = -0x8000;
         TaskYieldTrampoline(8);
     }
 }
@@ -1559,10 +1559,10 @@ void sub_0807efec(void)
 
 void sub_0807effc(void)
 {
-    gCurTask->unk00 = (u32)ActorMove;
-    gCurTask->unk0C = (u32)ActorDrawWorldInViewOrDestroy;
+    gCurTask->moveCallback = (u32)ActorMove;
+    gCurTask->drawCallback = (u32)ActorDrawWorldInViewOrDestroy;
     gCurTask->layer = 11;
-    gCurTask->unk38 = gUnk_08752438;
+    gCurTask->frameTable = gUnk_08752438;
     TaskFaceNearestPlayer();
     CallTableEntry(gCurTask->unk73, 4, gUnk_08741380);
 }

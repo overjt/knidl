@@ -6,7 +6,7 @@
  *
  * The middle of M36: the four per-slot tasks and the geometry the whole
  * module places sprites with.  A slot task carries its own index in
- * Task.unk1C and the id of the task that spawned it in Task.unk44, so
+ * Task.unk1C and the id of the task that spawned it in Task.parent, so
  * `&gTasks[t->unk44]` is the mode task whose Task.unk34 says whose
  * turn it is.
  *
@@ -193,20 +193,20 @@ void sub_080bf994(void)
     struct Task *z;
 
     t = gCurTask;
-    t->unk00 = (u32)TaskMoveRelativeToBg3;
-    t->unk15 = 10;
+    t->moveCallback = (u32)TaskMoveRelativeToBg3;
+    t->updateState = 10;
     v = gCurTask;
     v->posX = gUnk_0875674C[v->unk1C] << 16;
     v->posY = gUnk_0875675C[v->unk1C] << 16;
-    v->unk38 = gUnk_0875671C[v->unk1C];
-    v->unk40 = 0;
+    v->frameTable = gUnk_0875671C[v->unk1C];
+    v->tileWord = 0;
     if (v->unk1C == 3)
         v->facing = -1;
     else
         v->facing = 1;
     TaskSetFrame(0);
     w = gCurTask;
-    u = &gTasks[w->unk44];
+    u = &gTasks[w->parent];
     w->unk20 = 0;
     if (u->unk34 == w->unk1C) {
         TaskYieldTrampoline(30);
@@ -240,13 +240,13 @@ void sub_080bf994(void)
         while (u->unk28 < 0)
             TaskYieldTrampoline(1);
     }
-    gCurTask->unk14 = 11;
+    gCurTask->state = 11;
     TaskSleepForever();
 }
 
 void sub_080bfb24(void)
 {
-    if (gCurTask->unk14 != 10)
+    if (gCurTask->state != 10)
         TaskSetEntry(sub_080be8a8, gCurTaskIdx);
 }
 
@@ -255,7 +255,7 @@ void sub_080bfb4c(void)
     struct Task *t;
 
     t = gCurTask;
-    t->unk15 = 11;
+    t->updateState = 11;
     while (1) {
         gCurTask->frame = 0;
         TaskYieldTrampoline(6);
@@ -274,10 +274,10 @@ void sub_080bfb94(void)
     struct Task *u;
 
     t = gCurTask;
-    u = &gTasks[t->unk44];
+    u = &gTasks[t->parent];
     if ((u->unk34 == ((t->unk1C + 3) & 3) && u->unk28 <= 2)
      || (u->unk34 == ((t->unk1C + 1) & 3) && u->unk28 > 2)) {
-        gCurTask->unk14 = 12;
+        gCurTask->state = 12;
         TaskSetEntry(sub_080be8a8, gCurTaskIdx);
     }
 }
@@ -296,8 +296,8 @@ void sub_080bfbf4(void)
     struct Task **gp;
 
     t = gCurTask;
-    u = &gTasks[t->unk44];
-    t->unk15 = 12;
+    u = &gTasks[t->parent];
+    t->updateState = 12;
     if (RandomRange(8) == 0) {
         if (u->unk28 <= 2)
             u->unk20 = u->unk28 + 3;
@@ -355,13 +355,13 @@ void sub_080bfbf4(void)
     TaskYieldTrampoline(2);
     gCurTask->frame--;
     TaskYieldTrampoline(2);
-    gCurTask->unk14 = 11;
+    gCurTask->state = 11;
     TaskSleepForever();
 }
 
 void sub_080bfd58(void)
 {
-    if (gCurTask->unk14 != 12)
+    if (gCurTask->state != 12)
         TaskSetEntry(sub_080be8a8, gCurTaskIdx);
 }
 
@@ -370,20 +370,20 @@ void sub_080bfd80(void)
     struct Task *t;
 
     t = gCurTask;
-    t->unk04 = (u32)sub_080bfdb0;
-    t->unk14 = 0;
-    CallTableEntry(gCurTask->unk14, 3, gUnk_08756780);
+    t->updateCallback = (u32)sub_080bfdb0;
+    t->state = 0;
+    CallTableEntry(gCurTask->state, 3, gUnk_08756780);
     TaskSleepForever();
 }
 
 void sub_080bfdb0(void)
 {
-    CallTableEntry(gCurTask->unk15, 3, gUnk_0875678C);
+    CallTableEntry(gCurTask->updateState, 3, gUnk_0875678C);
 }
 
 void sub_080bfdcc(void)
 {
-    CallTableEntry(gCurTask->unk14, 3, gUnk_08756780);
+    CallTableEntry(gCurTask->state, 3, gUnk_08756780);
 }
 
 void sub_080bfde8(void)
@@ -394,10 +394,10 @@ void sub_080bfde8(void)
     struct Task *w;
 
     t = gCurTask;
-    u = &gTasks[t->unk44];
-    t->unk0C = 0;
-    t->unk00 = (u32)TaskMoveRelativeToBg3;
-    t->unk15 = 0;
+    u = &gTasks[t->parent];
+    t->drawCallback = 0;
+    t->moveCallback = (u32)TaskMoveRelativeToBg3;
+    t->updateState = 0;
     sub_080be010();
     v = gCurTask;
     v->unk30 = 0;
@@ -408,10 +408,10 @@ void sub_080bfde8(void)
     sub_080c0b18(gCurTask->unk24);
     sub_080c0704(gCurTask->unk24);
     w = gCurTask;
-    w->unk38 = 0;
+    w->frameTable = 0;
     TaskYieldTrampoline(30);
     u->unk28 = -2;
-    gCurTask->unk14 = 1;
+    gCurTask->state = 1;
     TaskSleepForever();
 }
 
@@ -426,7 +426,7 @@ void sub_080bfe64(void)
     t = gCurTask;
     n = t->unk30 + 1;
     t->unk30 = n;
-    if (t->unk48 >= -63 && t->unk48 <= 303 && t->unk4A > -64 && t->unk4A <= 223
+    if (t->pixelX >= -63 && t->pixelX <= 303 && t->pixelY > -64 && t->pixelY <= 223
      && (n & 8)) {
         m = n & 7;
         k = 0;
@@ -438,10 +438,10 @@ void sub_080bfe64(void)
         QueueSprite(8, DrawAffineSprite(gUnk_08755E00[k],
                                     gUnk_08756770[gCurTask->unk24],
                                     gUnk_08756770[gCurTask->unk24], 0),
-                     gCurTask->unk3E, gCurTask->unk40,
-                     gCurTask->unk48, gCurTask->unk4A);
+                     gCurTask->spriteFlags, gCurTask->tileWord,
+                     gCurTask->pixelX, gCurTask->pixelY);
     }
-    if (gCurTask->unk14 != 0)
+    if (gCurTask->state != 0)
         TaskSetEntry(sub_080bfdcc, gCurTaskIdx);
 }
 
@@ -463,13 +463,13 @@ void sub_080bff28(void)
     s16 *tb;
 
     t = gCurTask;
-    u = &gTasks[t->unk44];
-    t->unk0C = 0;
-    t->unk00 = (u32)TaskMoveRelativeToBg3;
-    t->unk15 = 1;
+    u = &gTasks[t->parent];
+    t->drawCallback = 0;
+    t->moveCallback = (u32)TaskMoveRelativeToBg3;
+    t->updateState = 1;
     gCurTask->layer = 8;
     v = gCurTask;
-    v->unk38 = gUnk_08755E00;
+    v->frameTable = gUnk_08755E00;
     v->unk28 = 0;
     v->unk2C = 0;
     v->unk30 = 0;
@@ -482,8 +482,8 @@ void sub_080bff28(void)
     w->frame = (u->unk34 * 3) << 1;
     sub_080c05f0(u->unk34);
     x = gCurTask;
-    x->unk58 = 0xFFFBC000;
-    x->unk60 = 128 << 7;
+    x->velY = 0xFFFBC000;
+    x->accelY = 128 << 7;
     x->unk28 = 1;
     while (u->unk28 < 0) {
         tb = gUnk_087567A0;
@@ -499,7 +499,7 @@ void sub_080bff28(void)
     while (1) {
         z = gCurTask;
         tb = gUnk_08756770;
-        u = &gTasks[z->unk44];
+        u = &gTasks[z->parent];
         if (z->unk24 != u->unk34) {
             sub_080c05f0(u->unk34);
             sub_080c0704(u->unk34);
@@ -541,11 +541,11 @@ void sub_080c0074(void)
     s32 y;
 
     t = gCurTask;
-    u = &gTasks[t->unk44];
+    u = &gTasks[t->parent];
     n = t->unk30 + 1;
     t->unk30 = n;
     if (u->unk28 == 6) {
-        t->unk14 = 2;
+        t->state = 2;
         TaskSetEntry(sub_080bfdcc, gCurTaskIdx);
         return;
     }
@@ -638,7 +638,7 @@ void sub_080c0074(void)
                     (s16)(gUnk_08756770[gCurTask->unk24]
                           + ((gCurTask->unk2C * u->unk30) >> 4)),
                     (s16)gCurTask->unk34),
-                gCurTask->unk3E, gCurTask->unk40, x, y);
+                gCurTask->spriteFlags, gCurTask->tileWord, x, y);
     }
 }
 
@@ -653,9 +653,9 @@ void sub_080c0388(void)
     struct Task *z;
 
     t = gCurTask;
-    u = &gTasks[t->unk44];
-    t->unk0C = (u32)TaskDrawScreen;
-    t->unk15 = 2;
+    u = &gTasks[t->parent];
+    t->drawCallback = (u32)TaskDrawScreen;
+    t->updateState = 2;
     gBgPalette[0] = 0x7FFF;
     v = gCurTask;
     v->unk28 = u->unk34;
@@ -672,11 +672,11 @@ void sub_080c0388(void)
     sub_080bdf3c(x->posX, x->posY, x->unk28, x->facing);
     y = gCurTask;
     if (y->unk28 == 0)
-        y->unk38 = gUnk_08755E0C;
+        y->frameTable = gUnk_08755E0C;
     else if (y->unk28 == 2)
-        y->unk38 = gUnk_08755E7C;
+        y->frameTable = gUnk_08755E7C;
     else
-        y->unk38 = gUnk_08755E44;
+        y->frameTable = gUnk_08755E44;
     gCurTask->frame = 0;
     TaskYieldTrampoline(1);
     gCurTask->frame++;
@@ -720,7 +720,7 @@ void sub_080c0540(void)
     s32 n;
 
     t = gCurTask;
-    u = &gTasks[t->unk44];
+    u = &gTasks[t->parent];
     n = sub_080c1ebc(t->unk28, t->unk2C);
     v = gCurTask;
     v->unk2C = n;
@@ -735,7 +735,7 @@ void sub_080c0540(void)
         gCurTask->unk30++;
     }
     if (u->unk28 == -4) {
-        gCurTask->unk14 = 1;
+        gCurTask->state = 1;
         TaskSetEntry(sub_080bfdcc, gCurTaskIdx);
     }
 }
@@ -887,9 +887,9 @@ void sub_080c0c58(void)
     struct Task *t;
 
     t = gCurTask;
-    t->unk0C = 0;
-    t->unk00 = (u32)TaskMove;
-    t->unk04 = (u32)sub_080c0ca4;
+    t->drawCallback = 0;
+    t->moveCallback = (u32)TaskMove;
+    t->updateCallback = (u32)sub_080c0ca4;
     t->frame = 0;
     TaskYieldTrampoline(2);
     gCurTask->frame++;
@@ -927,10 +927,10 @@ void sub_080c0d30(void)
     struct Task *u;
 
     t = gCurTask;
-    t->unk0C = (u32)TaskDrawScreen;
-    t->unk00 = (u32)TaskMoveRelativeToBg3;
-    t->unk04 = 0;
-    t->unk38 = gUnk_08755EC4;
+    t->drawCallback = (u32)TaskDrawScreen;
+    t->moveCallback = (u32)TaskMoveRelativeToBg3;
+    t->updateCallback = 0;
+    t->frameTable = gUnk_08755EC4;
     switch (t->unk74) {
     case 0:
         sub_080bdf9c(4);
@@ -953,7 +953,7 @@ void sub_080c0d30(void)
         break;
     }
     u = gCurTask;
-    u->unk14 = u->unk74;
-    CallTableEntry(gCurTask->unk14, 16, gUnk_087571F8);
+    u->state = u->unk74;
+    CallTableEntry(gCurTask->state, 16, gUnk_087571F8);
     TaskSleepForever();
 }

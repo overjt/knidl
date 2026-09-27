@@ -280,7 +280,7 @@ s32 sub_080275cc(s32 a)
 
 s32 sub_080276ac(s32 a)
 {
-    gPlayerCameraMode[gCurTask->unk88->unk00] = 1;
+    gPlayerCameraMode[gCurTask->player->playerIndex] = 1;
     return a;
 }
 
@@ -295,7 +295,7 @@ s32 sub_080276cc(s32 i)
         if (i == gLocalPlayer)
         {
             if (gPlayerLives[i] != 0)
-                HudShowAbilityAnimated(26, gCurTask->unk88->unk00);
+                HudShowAbilityAnimated(26, gCurTask->player->playerIndex);
             else
                 sub_08009e2c(i);
         }

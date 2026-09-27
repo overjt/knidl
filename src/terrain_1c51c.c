@@ -134,25 +134,25 @@ void TerrainProbeBegin(const s8 *p)
     gTerrainBoxRight = p[5];
     gTerrainFacing = gCurTask->facing;
     gTerrainProbeResult.unk0 = gTerrainProbeResult.unk1 = gTerrainProbeResult.unk2 = gTerrainProbeResult.unk3 = gTerrainProbeResult.unk4 = gTerrainProbeResult.unk5 = gTerrainProbeResult.unkE = gTerrainProbeResult.unkF = gTerrainProbeResult.unk10 = 0;
-    gTerrainProbeResult.unk6 = gCurTask->unk7A;
-    gTerrainProbeResult.unk7 = gCurTask->unk7B;
+    gTerrainProbeResult.unk6 = gCurTask->onGround;
+    gTerrainProbeResult.unk7 = gCurTask->waterFlags;
     gTerrainProbeResult.unkB = gCurTask->unk84;
     gTerrainProbeResult.unkC = gCurTask->unk84 >> 8;
 }
 
 void TerrainProbeEnd(const s8 *p)
 {
-    gCurTask->unk7A = gTerrainProbeResult.unk6;
-    gCurTask->unk7B = gTerrainProbeResult.unk7;
+    gCurTask->onGround = gTerrainProbeResult.unk6;
+    gCurTask->waterFlags = gTerrainProbeResult.unk7;
     if (gCurTask->posX >> 16 != gTerrainProbeX - p[0])
     {
         gCurTask->posX = ((gTerrainProbeX - p[0]) << 16) + 0x8000;
-        gCurTask->unk48 = gTerrainProbeX - p[0];
+        gCurTask->pixelX = gTerrainProbeX - p[0];
     }
     if (gCurTask->posY >> 16 != gTerrainProbeY - p[1])
     {
         gCurTask->posY = ((gTerrainProbeY - p[1]) << 16) + 0x8000;
-        gCurTask->unk4A = gTerrainProbeY - p[1];
+        gCurTask->pixelY = gTerrainProbeY - p[1];
     }
     gTerrainResult.unk0 = gTerrainProbeResult.unk0;
     gTerrainResult.unk1 = gTerrainProbeResult.unk1;

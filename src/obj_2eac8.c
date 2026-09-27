@@ -8,9 +8,9 @@
  * type a spawner (s32 f(x, y, ...) -> TaskCreateInRange(type, 32, 63), which
  * stores the position and the object's parameters and returns the task
  * id or -1), the type's body (sets the update/draw callbacks, the
- * graphics table Task.unk38 and the palette, then runs its animation as
+ * graphics table Task.frameTable and the palette, then runs its animation as
  * a TaskYieldTrampoline coroutine) and its callbacks.  The animated ones
- * keep the frame to upload in Task.unk28 and a Task.unk04 callback
+ * keep the frame to upload in Task.unk28 and a Task.updateCallback callback
  * (sub_0802eba4, sub_0802ed20, sub_0802ee88) that DMAs that frame's tiles
  * into OBJ VRAM with RequestCopy and resets unk28 to -1.  The last three
  * spawners are the three variants of type #229 (obj_2f62c.c). */
@@ -60,12 +60,12 @@ s32 sub_0802eac8(s32 x, s32 y, s32 a)
     if (id != -1)
     {
         t = &gTasks[id];
-        t->unk48 = x;
-        t->posX = t->unk48 << 16;
-        t->unk4A = y - 28;
-        t->posY = t->unk4A << 16;
-        t->unk54 = x;
-        t->unk58 = y;
+        t->pixelX = x;
+        t->posX = t->pixelX << 16;
+        t->pixelY = y - 28;
+        t->posY = t->pixelY << 16;
+        t->velX = x;
+        t->velY = y;
         t->unk20 = 1;
         t->unk76 = a;
     }
@@ -78,15 +78,15 @@ void sub_0802eb28(void)
     struct Task *u;
 
     t = gCurTask;
-    t->unk00 = (u32)TaskUpdatePixelPos;
-    t->unk0C = (u32)DoorObjectDraw;
-    t->unk38 = gUnk_087558BC;
+    t->moveCallback = (u32)TaskUpdatePixelPos;
+    t->drawCallback = (u32)DoorObjectDraw;
+    t->frameTable = gUnk_087558BC;
     t->layer = 15;
     u = gCurTask;
-    u->unk40 = 0x8800;
+    u->tileWord = 0x8800;
     u->unk28 = -1;
     u->frame = 0;
-    u->unk04 = (u32)sub_0802eba4;
+    u->updateCallback = (u32)sub_0802eba4;
     for (;;)
     {
         gCurTask->unk28 = 0;
@@ -123,12 +123,12 @@ s32 sub_0802ec1c(s32 x, s32 y, s32 a)
     if (id != -1)
     {
         t = &gTasks[id];
-        t->unk48 = x;
-        t->posX = t->unk48 << 16;
-        t->unk4A = y - 28;
-        t->posY = t->unk4A << 16;
-        t->unk54 = x;
-        t->unk58 = y;
+        t->pixelX = x;
+        t->posX = t->pixelX << 16;
+        t->pixelY = y - 28;
+        t->posY = t->pixelY << 16;
+        t->velX = x;
+        t->velY = y;
         t->unk20 = 2;
         t->unk76 = a;
     }
@@ -141,17 +141,17 @@ void sub_0802ec7c(void)
     struct Task *u;
 
     t = gCurTask;
-    t->unk00 = (u32)TaskUpdatePixelPos;
-    t->unk0C = (u32)sub_0802f718;
-    t->unk38 = gUnk_087558C0;
+    t->moveCallback = (u32)TaskUpdatePixelPos;
+    t->drawCallback = (u32)sub_0802f718;
+    t->frameTable = gUnk_087558C0;
     t->layer = 15;
     u = gCurTask;
-    u->unk40 = 0x8800;
+    u->tileWord = 0x8800;
     u->unk2C = -1;
     u->unk34 = (s32)gUnk_087558DC;
     u->unk28 = 0;
     u->frame = 0;
-    u->unk04 = (u32)sub_0802ed20;
+    u->updateCallback = (u32)sub_0802ed20;
     for (;;)
     {
         gCurTask->unk2C = 0;
@@ -194,10 +194,10 @@ s32 sub_0802ed94(s32 x, s32 y, s32 a)
     if (id != -1)
     {
         t = &gTasks[id];
-        t->unk48 = x;
-        t->unk4A = y;
-        t->posX = t->unk48 << 16;
-        t->posY = t->unk4A << 16;
+        t->pixelX = x;
+        t->pixelY = y;
+        t->posX = t->pixelX << 16;
+        t->posY = t->pixelY << 16;
         t->unk18 = a;
     }
     return id;
@@ -211,17 +211,17 @@ void sub_0802ede4(void)
     struct Task *w;
 
     t = gCurTask;
-    t->unk00 = (u32)TaskUpdatePixelPos;
-    t->unk0C = (u32)TaskDrawWorld;
-    t->unk38 = gUnk_087558E8;
+    t->moveCallback = (u32)TaskUpdatePixelPos;
+    t->drawCallback = (u32)TaskDrawWorld;
+    t->frameTable = gUnk_087558E8;
     t->frame = 0;
     t->layer = 14;
     u = gCurTask;
-    u->unk40 = 0x8800;
+    u->tileWord = 0x8800;
     u->taskClass = 4;
     v = gCurTask;
     v->unk28 = -1;
-    v->unk04 = (u32)sub_0802ee88;
+    v->updateCallback = (u32)sub_0802ee88;
     PlaySfx(222);
     gCurTask->unk28 = 0;
     TaskYieldTrampoline(3);
@@ -285,12 +285,12 @@ s32 sub_0802ef90(s32 x, s32 y, s32 a, s32 b)
     if (id != -1)
     {
         t = &gTasks[id];
-        t->unk48 = x + 26;
-        t->unk4A = y;
-        t->posX = t->unk48 << 16;
-        t->posY = t->unk4A << 16;
+        t->pixelX = x + 26;
+        t->pixelY = y;
+        t->posX = t->pixelX << 16;
+        t->posY = t->pixelY << 16;
         t->layer = a;
-        t->unk3E = b;
+        t->spriteFlags = b;
     }
     return id;
 }
@@ -300,10 +300,10 @@ void sub_0802eff8(void)
     struct Task *t;
 
     t = gCurTask;
-    t->unk00 = (u32)TaskUpdatePixelPos;
-    t->unk0C = (u32)TaskDrawWorld;
-    t->unk38 = gUnk_087558EC;
-    t->unk40 = 0x8800;
+    t->moveCallback = (u32)TaskUpdatePixelPos;
+    t->drawCallback = (u32)TaskDrawWorld;
+    t->frameTable = gUnk_087558EC;
+    t->tileWord = 0x8800;
     for (;;)
     {
         gCurTask->frame = 0;
@@ -326,12 +326,12 @@ s32 sub_0802f05c(s32 x, s32 y, s32 a, s32 b)
     if (id != -1)
     {
         t = &gTasks[id];
-        t->unk48 = x;
-        t->posX = t->unk48 << 16;
-        t->unk4A = y - 25;
-        t->posY = t->unk4A << 16;
-        t->unk54 = x;
-        t->unk58 = y;
+        t->pixelX = x;
+        t->posX = t->pixelX << 16;
+        t->pixelY = y - 25;
+        t->posY = t->pixelY << 16;
+        t->velX = x;
+        t->velY = y;
         t->unk1C = a;
         t->unk20 = 1;
         t->unk76 = b;
@@ -345,11 +345,11 @@ void sub_0802f0cc(void)
     struct Task *u;
 
     t = gCurTask;
-    t->unk00 = (u32)TaskUpdatePixelPos;
-    t->unk38 = gUnk_087558FC;
+    t->moveCallback = (u32)TaskUpdatePixelPos;
+    t->frameTable = gUnk_087558FC;
     t->layer = 15;
     u = gCurTask;
-    u->unk40 = 0x8800;
+    u->tileWord = 0x8800;
     if (u->unk1C == 0)
         sub_0802f1dc();
     else
@@ -359,7 +359,7 @@ void sub_0802f0cc(void)
 
 void sub_0802f110(void)
 {
-    gCurTask->unk0C = (u32)DoorObjectDraw;
+    gCurTask->drawCallback = (u32)DoorObjectDraw;
     for (;;)
     {
         gCurTask->frame = 0;
@@ -396,7 +396,7 @@ void sub_0802f1dc(void)
     struct Task *t;
 
     t = gCurTask;
-    t->unk0C = (u32)sub_0802ff70;
+    t->drawCallback = (u32)sub_0802ff70;
     t->frame = 0;
     TaskSleepForever();
 }
@@ -410,12 +410,12 @@ s32 sub_0802f1fc(s32 x, s32 y, s32 a, s32 b)
     if (id != -1)
     {
         t = &gTasks[id];
-        t->unk48 = x;
-        t->posX = t->unk48 << 16;
-        t->unk4A = y - 25;
-        t->posY = t->unk4A << 16;
-        t->unk54 = x;
-        t->unk58 = y;
+        t->pixelX = x;
+        t->posX = t->pixelX << 16;
+        t->pixelY = y - 25;
+        t->posY = t->pixelY << 16;
+        t->velX = x;
+        t->velY = y;
         t->unk1C = a;
         t->unk20 = 1;
         t->unk76 = b;
@@ -429,11 +429,11 @@ void sub_0802f26c(void)
     struct Task *u;
 
     t = gCurTask;
-    t->unk00 = (u32)TaskUpdatePixelPos;
-    t->unk38 = gUnk_08755930;
+    t->moveCallback = (u32)TaskUpdatePixelPos;
+    t->frameTable = gUnk_08755930;
     t->layer = 15;
     u = gCurTask;
-    u->unk40 = 0x8800;
+    u->tileWord = 0x8800;
     if (u->unk1C == 0)
         sub_0802f2fc();
     else
@@ -443,7 +443,7 @@ void sub_0802f26c(void)
 
 void sub_0802f2b0(void)
 {
-    gCurTask->unk0C = (u32)DoorObjectDraw;
+    gCurTask->drawCallback = (u32)DoorObjectDraw;
     for (;;)
     {
         gCurTask->frame = 0;
@@ -462,7 +462,7 @@ void sub_0802f2fc(void)
     struct Task *t;
 
     t = gCurTask;
-    t->unk0C = (u32)sub_0802ff70;
+    t->drawCallback = (u32)sub_0802ff70;
     t->frame = 0;
     TaskSleepForever();
 }
@@ -476,12 +476,12 @@ s32 sub_0802f31c(s32 x, s32 y, s32 a, s32 b)
     if (id != -1)
     {
         t = &gTasks[id];
-        t->unk48 = x;
-        t->posX = t->unk48 << 16;
-        t->unk4A = y - 25;
-        t->posY = t->unk4A << 16;
-        t->unk54 = x;
-        t->unk58 = y;
+        t->pixelX = x;
+        t->posX = t->pixelX << 16;
+        t->pixelY = y - 25;
+        t->posY = t->pixelY << 16;
+        t->velX = x;
+        t->velY = y;
         t->unk1C = a;
         t->unk20 = 1;
         t->unk76 = b;
@@ -495,11 +495,11 @@ void sub_0802f38c(void)
     struct Task *u;
 
     t = gCurTask;
-    t->unk00 = (u32)TaskUpdatePixelPos;
-    t->unk38 = gUnk_0875593C;
+    t->moveCallback = (u32)TaskUpdatePixelPos;
+    t->frameTable = gUnk_0875593C;
     t->layer = 15;
     u = gCurTask;
-    u->unk40 = 0x8800;
+    u->tileWord = 0x8800;
     if (u->unk1C == 0)
         sub_0802f400();
     else
@@ -509,7 +509,7 @@ void sub_0802f38c(void)
 
 void sub_0802f3d0(void)
 {
-    gCurTask->unk0C = (u32)DoorObjectDraw;
+    gCurTask->drawCallback = (u32)DoorObjectDraw;
     for (;;)
     {
         gCurTask->frame = 0;
@@ -524,7 +524,7 @@ void sub_0802f400(void)
     struct Task *t;
 
     t = gCurTask;
-    t->unk0C = (u32)sub_0802ff70;
+    t->drawCallback = (u32)sub_0802ff70;
     t->frame = 0;
     TaskSleepForever();
 }
@@ -538,12 +538,12 @@ s32 sub_0802f420(s32 x, s32 y, s32 a)
     if (id != -1)
     {
         t = &gTasks[id];
-        t->unk48 = x;
-        t->posX = t->unk48 << 16;
-        t->unk4A = y - 28;
-        t->posY = t->unk4A << 16;
-        t->unk54 = x;
-        t->unk58 = y;
+        t->pixelX = x;
+        t->posX = t->pixelX << 16;
+        t->pixelY = y - 28;
+        t->posY = t->pixelY << 16;
+        t->velX = x;
+        t->velY = y;
         t->unk20 = 1;
         t->unk76 = a;
     }
@@ -556,12 +556,12 @@ void sub_0802f480(void)
     struct Task *u;
 
     t = gCurTask;
-    t->unk00 = (u32)TaskUpdatePixelPos;
-    t->unk0C = (u32)DoorObjectDraw;
-    t->unk38 = gUnk_08755944;
+    t->moveCallback = (u32)TaskUpdatePixelPos;
+    t->drawCallback = (u32)DoorObjectDraw;
+    t->frameTable = gUnk_08755944;
     t->layer = 15;
     u = gCurTask;
-    u->unk40 = 0x8800;
+    u->tileWord = 0x8800;
     u->frame = 0;
     TaskYieldTrampoline(20);
     TaskSleepForever();
@@ -576,12 +576,12 @@ s32 sub_0802f4c8(s32 x, s32 y, s32 a, s32 b)
     if (id != -1)
     {
         t = &gTasks[id];
-        t->unk48 = x;
-        t->posX = t->unk48 << 16;
-        t->unk4A = y - 24;
-        t->posY = t->unk4A << 16;
-        t->unk54 = x;
-        t->unk58 = y;
+        t->pixelX = x;
+        t->posX = t->pixelX << 16;
+        t->pixelY = y - 24;
+        t->posY = t->pixelY << 16;
+        t->velX = x;
+        t->velY = y;
         t->unk18 = a;
         t->unk1C = 1;
         t->unk20 = 2;
@@ -599,12 +599,12 @@ s32 sub_0802f53c(s32 x, s32 y, s32 a, s32 b)
     if (id != -1)
     {
         t = &gTasks[id];
-        t->unk48 = x;
-        t->posX = t->unk48 << 16;
-        t->unk4A = y - 24;
-        t->posY = t->unk4A << 16;
-        t->unk54 = x;
-        t->unk58 = y;
+        t->pixelX = x;
+        t->posX = t->pixelX << 16;
+        t->pixelY = y - 24;
+        t->posY = t->pixelY << 16;
+        t->velX = x;
+        t->velY = y;
         t->unk18 = a;
         t->unk1C = 0;
         t->unk20 = 2;
@@ -622,12 +622,12 @@ s32 sub_0802f5b4(s32 x, s32 y, s32 a, s32 b)
     if (id != -1)
     {
         t = &gTasks[id];
-        t->unk48 = x;
-        t->posX = t->unk48 << 16;
-        t->unk4A = y - 24;
-        t->posY = t->unk4A << 16;
-        t->unk54 = x;
-        t->unk58 = y;
+        t->pixelX = x;
+        t->posX = t->pixelX << 16;
+        t->pixelY = y - 24;
+        t->posY = t->pixelY << 16;
+        t->velX = x;
+        t->velY = y;
         t->unk18 = a;
         t->unk1C = 0;
         t->unk20 = 0;

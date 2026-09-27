@@ -13,7 +13,7 @@
  * Task.unk28), applies the motion presets of PlayerSetMotionXPreset and PlayerSetMotionYPreset
  * in state 3, re-binds the coroutine sub_08043014 when the state changed
  * and then, unless M11's predicates PlayerCheckBButton/PlayerCheckEnterDoor take over,
- * requests the next action through PlayerState.unk01 (9 or 5 on the ground,
+ * requests the next action through PlayerState.requestedAction (9 or 5 on the ground,
  * 24 or 25 in the air).
  *
  * Matching notes (issue #85): case 1 sits in a zero-code do/while (0) (lesson
@@ -71,11 +71,11 @@ void sub_0804335c(void)
     switch (*st)
     {
     case 0:
-        if (gLatchedHeldKeys[t->unk88->unk00] & 0x30)
+        if (gLatchedHeldKeys[t->player->playerIndex] & 0x30)
             goto Lset3;
-        if (gLatchedHeldKeys[t->unk88->unk00] & 0x41)
+        if (gLatchedHeldKeys[t->player->playerIndex] & 0x41)
             goto Lset1;
-        if (!(gLatchedHeldKeys[t->unk88->unk00] & 0x80))
+        if (!(gLatchedHeldKeys[t->player->playerIndex] & 0x80))
             break;
         goto Lset2;
     case 1:
@@ -83,26 +83,26 @@ void sub_0804335c(void)
            deeper so the key mask wins r3 over the switch value (3.383) */
         do
         {
-            if ((gLatchedHeldKeys[t->unk88->unk00] & 0xC1) == 0x80)
+            if ((gLatchedHeldKeys[t->player->playerIndex] & 0xC1) == 0x80)
                 goto Lset2;
-            if (gLatchedPressedKeys[t->unk88->unk00] & 0x30)
+            if (gLatchedPressedKeys[t->player->playerIndex] & 0x30)
                 goto Lset3;
             if (t->unk28 == -1)
                 goto Lset0;
-            if (gLatchedPressedKeys[t->unk88->unk00] & 0x41)
+            if (gLatchedPressedKeys[t->player->playerIndex] & 0x41)
                 t->unk28 = 1;
         } while (0);
         break;
     case 2:
-        if (gLatchedHeldKeys[t->unk88->unk00] & 0x41)
+        if (gLatchedHeldKeys[t->player->playerIndex] & 0x41)
             goto Lset1;
-        if (gLatchedHeldKeys[t->unk88->unk00] & 0x30)
+        if (gLatchedHeldKeys[t->player->playerIndex] & 0x30)
             goto Lset3;
-        k = gLatchedHeldKeys[t->unk88->unk00] & 0xF0;
+        k = gLatchedHeldKeys[t->player->playerIndex] & 0xF0;
         if (k == 0)
             goto Lstore;
-        if ((s16)t->unk88->unk14 != 0)
-            t->unk88->unk14--;
+        if ((s16)t->player->unk14 != 0)
+            t->player->unk14--;
         break;
     Lc3set1:
         *st = 1;
@@ -114,18 +114,18 @@ void sub_0804335c(void)
         u->unk14--;
         goto Lmerge;
     case 3:
-        if (gLatchedHeldKeys[(u = t->unk88)->unk00] & 0x30)
+        if (gLatchedHeldKeys[(u = t->player)->playerIndex] & 0x30)
             goto Lb403;
-        if (gLatchedHeldKeys[u->unk00] & 0x41)
+        if (gLatchedHeldKeys[u->playerIndex] & 0x41)
             goto Lc3set1;
-        if (gLatchedHeldKeys[u->unk00] & 0x80)
+        if (gLatchedHeldKeys[u->playerIndex] & 0x80)
             goto Lc3set2;
         if ((s16)u->unk14 != 0)
             goto Lc3dec;
-        if ((gLatchedHeldKeys[u->unk00] & 0xF1) == 0 && t->unk58 >= 0)
+        if ((gLatchedHeldKeys[u->playerIndex] & 0xF1) == 0 && t->velY >= 0)
             *st = 0;
     Lmerge:
-        if (gLatchedHeldKeys[gCurTask->unk88->unk00] & 0x30)
+        if (gLatchedHeldKeys[gCurTask->player->playerIndex] & 0x30)
         {
         Lb403:
             PlayerSetMotionXPreset(11, 3);
@@ -136,7 +136,7 @@ void sub_0804335c(void)
         }
         if (gCurTask->unk28 != 0)
             goto Ldec28;
-        if (gLatchedHeldKeys[gCurTask->unk88->unk00] & 0x41)
+        if (gLatchedHeldKeys[gCurTask->player->playerIndex] & 0x41)
             PlayerSetMotionYPreset(12);
         else
             PlayerSetMotionYPreset(13);
@@ -156,7 +156,7 @@ void sub_0804335c(void)
         k = 3;
         goto Lstore;
     L25:
-        gCurTask->unk88->unk01 = 25;
+        gCurTask->player->requestedAction = 25;
         goto L2a;
     Ldec28:
         gCurTask->unk28--;
@@ -167,33 +167,33 @@ void sub_0804335c(void)
         TaskSetEntry(sub_08043014, gCurTaskIdx);
     if (!PlayerCheckBButton() && !PlayerCheckEnterDoor())
     {
-        m = gCurTask->unk7B & 1;
+        m = gCurTask->waterFlags & 1;
         tp = &gCurTask;
         if (m == 0)
         {
-            if (gLatchedHeldKeys[gCurTask->unk88->unk00] & 0x40)
-                gCurTask->unk88->unk01 = 9;
+            if (gLatchedHeldKeys[gCurTask->player->playerIndex] & 0x40)
+                gCurTask->player->requestedAction = 9;
             else
-                gCurTask->unk88->unk01 = 5;
-            (*tp)->unk88->unk3D = 0;
-            ((u8 *)(*tp)->unk88)[15] = 0;
+                gCurTask->player->requestedAction = 5;
+            (*tp)->player->running = 0;
+            ((u8 *)(*tp)->player)[15] = 0;
         }
         else
         {
             if (gCurTask->unk73 != 1
-             || !(gLatchedHeldKeys[gCurTask->unk88->unk00] & 0x41))
+             || !(gLatchedHeldKeys[gCurTask->player->playerIndex] & 0x41))
             {
-                if (gCurTask->unk58 != 0 && (gCurTask->unk7A & 1))
+                if (gCurTask->velY != 0 && (gCurTask->onGround & 1))
                 {
-                    if (gCurTask->unk54 != 0)
+                    if (gCurTask->velX != 0)
                         goto L25;
-                    gCurTask->unk88->unk01 = 24;
+                    gCurTask->player->requestedAction = 24;
                 L2a: ;
                 }
             }
         }
     }
     PlayerStopAtCeilingAndWall();
-    if (gCurTask->unk7A & 1)
+    if (gCurTask->onGround & 1)
         PlayerLand(0);
 }

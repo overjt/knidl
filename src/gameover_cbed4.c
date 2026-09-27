@@ -5,8 +5,8 @@
 /* gameover_cbed4.c (0x080CBED4-0x080CCD4B, issue #100).
  *
  * The game-over screen, task type #264 variant 1: the cursor.  Its
- * sub-states gUnk_087582C4[Task.unk14] and per-frame handlers
- * gUnk_087582DC[Task.unk15] (GameOverChoice starts it, GameOverChoiceEnterState re-enters
+ * sub-states gUnk_087582C4[Task.state] and per-frame handlers
+ * gUnk_087582DC[Task.updateState] (GameOverChoice starts it, GameOverChoiceEnterState re-enters
  * it), plus the helpers the whole screen uses:
  *   CreateGameOverObject   spawn task type #264 with Task.unk73 = variant.
  *   sub_080cbf68 / sub_080cbfac   re-enter variant 0 (its task index is
@@ -38,24 +38,24 @@ u8 GameOverIsUpDownPressed(void);
 void GameOverPlayerEnterState(void);
 void GameOverChoiceUpdate(void);
 
-/* Task type #264 variant 1: sub-states gUnk_087582C4[Task.unk14], per-frame
-   handlers gUnk_087582DC[Task.unk15] (GameOverChoiceUpdate). */
+/* Task type #264 variant 1: sub-states gUnk_087582C4[Task.state], per-frame
+   handlers gUnk_087582DC[Task.updateState] (GameOverChoiceUpdate). */
 void GameOverChoice(void)
 {
-    gCurTask->unk04 = (u32)GameOverChoiceUpdate;
+    gCurTask->updateCallback = (u32)GameOverChoiceUpdate;
     gCurTask->layer = 6;
-    gCurTask->unk38 = gUnk_087549B0;
+    gCurTask->frameTable = gUnk_087549B0;
     gCurTask->unk24 = 0;
     gCurTask->unk20 = 0;
-    gCurTask->unk14 = 0;
-    CallTableEntry(gCurTask->unk14, 6, gUnk_087582C4);
+    gCurTask->state = 0;
+    CallTableEntry(gCurTask->state, 6, gUnk_087582C4);
     TaskSleepForever();
 }
 
-/* Task type #264 variant 1's per-frame hook: handler gUnk_087582DC[Task.unk15]. */
+/* Task type #264 variant 1's per-frame hook: handler gUnk_087582DC[Task.updateState]. */
 void GameOverChoiceUpdate(void)
 {
-    CallTableEntry(gCurTask->unk15, 6, gUnk_087582DC);
+    CallTableEntry(gCurTask->updateState, 6, gUnk_087582DC);
 }
 
 /* Spawn task type #264 with Task.unk73 = variant. */
@@ -77,9 +77,9 @@ void sub_080cbf68(void)
     struct Task *t = &gTasks[gGameOverPlayerTask];
 
     if (gCurTask->unk24 != 0)
-        t->unk14 = 2;
+        t->state = 2;
     else
-        t->unk14 = 1;
+        t->state = 1;
     TaskSetEntry(GameOverPlayerEnterState, gGameOverPlayerTask);
 }
 
@@ -91,16 +91,16 @@ void sub_080cbfac(void)
     CreateGameOverObject(3);
 }
 
-/* Re-enter task type #264 variant 1: sub-state gUnk_087582C4[Task.unk14]. */
+/* Re-enter task type #264 variant 1: sub-state gUnk_087582C4[Task.state]. */
 void GameOverChoiceEnterState(void)
 {
-    CallTableEntry(gCurTask->unk14, 6, gUnk_087582C4);
+    CallTableEntry(gCurTask->state, 6, gUnk_087582C4);
 }
 
 /* Task type #264 variant 1, sub-state 0. */
 void sub_080cbfe4(void)
 {
-    gCurTask->unk15 = 0;
+    gCurTask->updateState = 0;
     if (gCurTask->unk24 != 0) {
         gCurTask->posX = 128 << 16;
         gCurTask->posY = 110 << 16;
@@ -117,45 +117,45 @@ void sub_080cc024(void)
 {
     if (GameOverIsUpDownPressed()) {
         gCurTask->unk24 ^= 1;
-        gCurTask->unk14 = 1;
+        gCurTask->state = 1;
     } else if (gPlayerPressedKeys[0] & 9) {
         PlaySfx(102);
         if (gCurTask->unk24 != 0) {
-            gCurTask->unk14 = 4;
+            gCurTask->state = 4;
         } else {
             TaskCreateFrom(263, 32);
-            gCurTask->unk14 = 2;
+            gCurTask->state = 2;
         }
     }
-    if (gCurTask->unk14 != 0)
+    if (gCurTask->state != 0)
         TaskSetEntry(GameOverChoiceEnterState, gCurTaskIdx);
 }
 
 /* Task type #264 variant 1, sub-state 1. */
 void sub_080cc0a4(void)
 {
-    gCurTask->unk15 = 1;
+    gCurTask->updateState = 1;
     if (gCurTask->unk24 != 0) {
         TaskSetMotion(-0xA000, 0x1000, 0x5A5A5A5A, 0, 0x5000, 0x5A5A5A5A);
         TaskYieldTrampoline(9);
-        gCurTask->unk60 = -0x5000;
+        gCurTask->accelY = -0x5000;
         TaskYieldTrampoline(9);
     } else {
         TaskSetMotion(-0xA000, 0x1000, 0x5A5A5A5A, 0, -0x5000, 0x5A5A5A5A);
         TaskYieldTrampoline(9);
-        gCurTask->unk60 = 0x5000;
+        gCurTask->accelY = 0x5000;
         TaskYieldTrampoline(9);
     }
     TaskStop();
     TaskYieldTrampoline(5);
-    gCurTask->unk14 = 0;
+    gCurTask->state = 0;
     TaskSleepForever();
 }
 
 /* Task type #264 variant 1, handler 1. */
 void sub_080cc14c(void)
 {
-    if (gCurTask->unk14 != 1) {
+    if (gCurTask->state != 1) {
         TaskSetEntry(GameOverChoiceEnterState, gCurTaskIdx);
         gGameOverCursor ^= 1;
     }
@@ -164,11 +164,11 @@ void sub_080cc14c(void)
 /* Task type #264 variant 1, sub-state 2. */
 void sub_080cc180(void)
 {
-    gCurTask->unk15 = 2;
+    gCurTask->updateState = 2;
     TaskStop();
     gCurTask->frame = 1;
-    gCurTask->unk54 = -0xA000;
-    gCurTask->unk5C = 0x2000;
+    gCurTask->velX = -0xA000;
+    gCurTask->accelX = 0x2000;
     TaskYieldTrampoline(2);
     gCurTask->frame = 10;
     TaskYieldTrampoline(3);
@@ -176,7 +176,7 @@ void sub_080cc180(void)
     gCurTask->frame = 1;
     TaskYieldTrampoline(2);
     gCurTask->frame--;
-    gCurTask->unk54 = 0x18000;
+    gCurTask->velX = 0x18000;
     TaskYieldTrampoline(2);
     gCurTask->frame = 2;
     TaskSetMotion(0x18000, -0x4800, 0x5A5A5A5A, 0x8400, -0x1800, 0x5A5A5A5A);
@@ -194,26 +194,26 @@ void sub_080cc180(void)
     gCurTask->frame--;
     TaskYieldTrampoline(10);
     gCurTask->frame = 3;
-    gCurTask->unk60 = -0x800;
+    gCurTask->accelY = -0x800;
     TaskYieldTrampoline(2);
     gCurTask->frame++;
     TaskYieldTrampoline(8);
     TaskStop();
-    gCurTask->unk14 = 3;
+    gCurTask->state = 3;
     TaskSleepForever();
 }
 
 /* Task type #264 variant 1, handler 2. */
 void sub_080cc2b8(void)
 {
-    if (gCurTask->unk14 != 2)
+    if (gCurTask->state != 2)
         TaskSetEntry(GameOverChoiceEnterState, gCurTaskIdx);
 }
 
 /* Task type #264 variant 1, sub-state 3. */
 void sub_080cc2e0(void)
 {
-    gCurTask->unk15 = 3;
+    gCurTask->updateState = 3;
     TaskStop();
     gCurTask->frame = 4;
     TaskSetMotion(0x20000, 0, 0x5A5A5A5A, 0x20000, 0, 0x5A5A5A5A);
@@ -244,45 +244,45 @@ void sub_080cc2e0(void)
     gCurTask->frame = 4;
     TaskSetMotion(0x20000, -0x1900, 0x5A5A5A5A, 0, 0, 0x5A5A5A5A);
     TaskYieldTrampoline(10);
-    gCurTask->unk5C = -0x2000;
+    gCurTask->accelX = -0x2000;
     TaskYieldTrampoline(8);
     TaskStop();
     TaskYieldTrampoline(10);
     PlaySfx(279);
     TaskSetMotion(0x20000, -0x1900, 0x5A5A5A5A, 0, 0, 0x5A5A5A5A);
     TaskYieldTrampoline(10);
-    gCurTask->unk5C = -0x2000;
+    gCurTask->accelX = -0x2000;
     TaskYieldTrampoline(8);
     TaskStop();
     TaskYieldTrampoline(10);
     PlaySfx(279);
     TaskSetMotion(0x20000, -0x1900, 0x5A5A5A5A, 0, 0, 0x5A5A5A5A);
     TaskYieldTrampoline(10);
-    gCurTask->unk5C = -0x2000;
+    gCurTask->accelX = -0x2000;
     TaskYieldTrampoline(8);
     TaskStop();
     TaskYieldTrampoline(16);
-    gCurTask->unk54 = -0x10000;
+    gCurTask->velX = -0x10000;
     TaskYieldTrampoline(6);
-    gCurTask->unk5C = 0x1000;
+    gCurTask->accelX = 0x1000;
     TaskYieldTrampoline(16);
     TaskSetMotion(-0x10000, 0x4000, 0x5A5A5A5A, 0, 0, 0x5A5A5A5A);
     TaskYieldTrampoline(4);
     TaskSetMotion(0x20000, -0x800, 0x5A5A5A5A, 0, 0, 0x5A5A5A5A);
     TaskYieldTrampoline(14);
-    gCurTask->unk5C = -0x2000;
+    gCurTask->accelX = -0x2000;
     TaskYieldTrampoline(8);
     TaskSetMotion(-0x10000, 0x4000, 0x5A5A5A5A, 0, 0, 0x5A5A5A5A);
     TaskYieldTrampoline(4);
     TaskSetMotion(0x20000, -0x800, 0x5A5A5A5A, 0, 0, 0x5A5A5A5A);
     TaskYieldTrampoline(14);
-    gCurTask->unk5C = -0x2000;
+    gCurTask->accelX = -0x2000;
     TaskYieldTrampoline(8);
     TaskSetMotion(-0x10000, 0x4000, 0x5A5A5A5A, 0, 0, 0x5A5A5A5A);
     TaskYieldTrampoline(4);
     TaskSetMotion(0x20000, -0x800, 0x5A5A5A5A, 0, 0, 0x5A5A5A5A);
     TaskYieldTrampoline(14);
-    gCurTask->unk5C = -0x2000;
+    gCurTask->accelX = -0x2000;
     TaskYieldTrampoline(8);
     TaskSleepForever();
 }
@@ -290,7 +290,7 @@ void sub_080cc2e0(void)
 /* Task type #264 variant 1, handler 3. */
 void sub_080cc5d4(void)
 {
-    if (gCurTask->unk14 != 3)
+    if (gCurTask->state != 3)
         TaskSetEntry(GameOverChoiceEnterState, gCurTaskIdx);
     if (gCurTask->unk20 != 0)
         sub_080cbfac();
@@ -299,11 +299,11 @@ void sub_080cc5d4(void)
 /* Task type #264 variant 1, sub-state 4. */
 void sub_080cc608(void)
 {
-    gCurTask->unk15 = 4;
+    gCurTask->updateState = 4;
     TaskStop();
     gCurTask->frame = 1;
-    gCurTask->unk54 = -0xA000;
-    gCurTask->unk5C = 0x2000;
+    gCurTask->velX = -0xA000;
+    gCurTask->accelX = 0x2000;
     TaskYieldTrampoline(2);
     gCurTask->frame = 10;
     TaskYieldTrampoline(3);
@@ -311,7 +311,7 @@ void sub_080cc608(void)
     gCurTask->frame = 1;
     TaskYieldTrampoline(2);
     gCurTask->frame--;
-    gCurTask->unk54 = 0x18000;
+    gCurTask->velX = 0x18000;
     TaskYieldTrampoline(2);
     gCurTask->frame = 2;
     TaskSetMotion(0x18000, -0x4800, 0x5A5A5A5A, 0x8400, -0x1800, 0x5A5A5A5A);
@@ -331,21 +331,21 @@ void sub_080cc608(void)
     TaskSetMotion(0x20000, 0, 0x5A5A5A5A, 0x10000, 0, 0x5A5A5A5A);
     TaskYieldTrampoline(3);
     TaskStop();
-    gCurTask->unk14 = 5;
+    gCurTask->state = 5;
     TaskSleepForever();
 }
 
 /* Task type #264 variant 1, handler 4. */
 void sub_080cc740(void)
 {
-    if (gCurTask->unk14 != 4)
+    if (gCurTask->state != 4)
         TaskSetEntry(GameOverChoiceEnterState, gCurTaskIdx);
 }
 
 /* Task type #264 variant 1, sub-state 5. */
 void sub_080cc768(void)
 {
-    gCurTask->unk15 = 5;
+    gCurTask->updateState = 5;
     TaskStop();
     PlaySfx(278);
     gCurTask->frame = 2;
@@ -491,7 +491,7 @@ void sub_080cc768(void)
 /* Task type #264 variant 1, handler 5. */
 void sub_080ccd10(void)
 {
-    if (gCurTask->unk14 != 5)
+    if (gCurTask->state != 5)
         TaskSetEntry(GameOverChoiceEnterState, gCurTaskIdx);
     if (gCurTask->unk20 != 0) {
         sub_080cbf68();

@@ -29,16 +29,16 @@ struct ActorAux;
 
 struct Task
 {
-    /*0x00*/ u32 unk00;
-    /*0x04*/ u32 unk04;
-    /*0x08*/ u32 unk08;
-    /*0x0C*/ u32 unk0C;
+    /*0x00*/ u32 moveCallback;
+    /*0x04*/ u32 updateCallback;
+    /*0x08*/ u32 lateUpdateCallback;
+    /*0x0C*/ u32 drawCallback;
     /*0x10*/ u16 sleepFrames;
     /*0x12*/ s8 taskClass;
     /*0x13*/ u8 skipMask;
-    /*0x14*/ u8 unk14;
-    /*0x15*/ u8 unk15;
-    /*0x16*/ u16 unk16;
+    /*0x14*/ u8 state;
+    /*0x15*/ u8 updateState;
+    /*0x16*/ u16 serial;
     /*0x18*/ s32 unk18;
     /*0x1C*/ s32 unk1C;
     /*0x20*/ s32 unk20;
@@ -47,42 +47,42 @@ struct Task
     /*0x2C*/ s32 unk2C;
     /*0x30*/ s32 unk30;
     /*0x34*/ s32 unk34;
-    /*0x38*/ u32 *unk38;
+    /*0x38*/ u32 *frameTable;
     /*0x3C*/ s16 frame;
-    /*0x3E*/ u16 unk3E;
-    /*0x40*/ u16 unk40;
+    /*0x3E*/ u16 spriteFlags;
+    /*0x40*/ u16 tileWord;
     /*0x42*/ u8 layer;
     /*0x43*/ s8 facing;
-    /*0x44*/ s16 unk44;
+    /*0x44*/ s16 parent;
     /*0x46*/ s16 unk46;
-    /*0x48*/ s16 unk48;
-    /*0x4A*/ s16 unk4A;
+    /*0x48*/ s16 pixelX;
+    /*0x4A*/ s16 pixelY;
     /*0x4C*/ s32 posX;
     /*0x50*/ s32 posY;
-    /*0x54*/ s32 unk54;
-    /*0x58*/ s32 unk58;
-    /*0x5C*/ s32 unk5C;
-    /*0x60*/ s32 unk60;
-    /*0x64*/ s32 unk64;
-    /*0x68*/ s32 unk68;
+    /*0x54*/ s32 velX;
+    /*0x58*/ s32 velY;
+    /*0x5C*/ s32 accelX;
+    /*0x60*/ s32 accelY;
+    /*0x64*/ s32 speedLimitX;
+    /*0x68*/ s32 speedLimitY;
     /* 0x6C and 0x70 are read with `ldrsh`/`(s16)` casts throughout M18
        (issue #64) but unsigned in M17's src/actor_673ec.c, so they stay u16
        and the signed sites cast. 0x6E is signed everywhere. */
     /*0x6C*/ u16 unk6C;
     /*0x6E*/ s16 unk6E;
     /*0x70*/ u16 unk70;
-    /*0x72*/ u8 unk72;
+    /*0x72*/ u8 actorKind;
     /*0x73*/ u8 unk73;
     /*0x74*/ u8 unk74;
-    /*0x75*/ s8 unk75;
+    /*0x75*/ s8 hitTimer;
     /*0x76*/ u16 unk76;
-    /*0x78*/ s16 unk78;
-    /*0x7A*/ s8 unk7A;
-    /*0x7B*/ s8 unk7B;
-    /*0x7C*/ s8 unk7C;
-    /*0x7D*/ u8 unk7D;
-    /*0x7E*/ s8 unk7E;
-    /*0x7F*/ s8 unk7F;
+    /*0x78*/ s16 health;
+    /*0x7A*/ s8 onGround;
+    /*0x7B*/ s8 waterFlags;
+    /*0x7C*/ s8 hitKind;
+    /*0x7D*/ u8 hitDirection;
+    /*0x7E*/ s8 hitterSlot;
+    /*0x7F*/ s8 hitterPlayer;
     /*0x80*/ s8 unk80;
     /*0x81*/ u8 unk81;
     /*0x82*/ u16 unk82;
@@ -90,7 +90,7 @@ struct Task
     /*0x86*/ u16 unk86;
     /* Context pointer: the player record for actor tasks (0x08064EB8), but
        task-class specific - sub_08063A9C stores another task here. */
-    /*0x88*/ struct PlayerState *unk88;
+    /*0x88*/ struct PlayerState *player;
     /*0x8C*/ struct Actor *unk8C;
 };
 
@@ -102,12 +102,12 @@ struct TaskType
     /*0x04*/ u32 entry;
 };
 
-/* Per-task graphics descriptor reached through Task.unk38[Task.frame]. */
+/* Per-task graphics descriptor reached through Task.frameTable[Task.frame]. */
 struct TaskGfx
 {
-    /*0x00*/ u32 unk00;
-    /*0x04*/ u16 *unk04;
-    /*0x08*/ u16 *unk08;
+    /*0x00*/ u32 oamTemplate;
+    /*0x04*/ u16 *palette;
+    /*0x08*/ u16 *tiles;
 };
 
 /* ROM descriptor an actor is bound to (Actor.def). */
@@ -212,29 +212,29 @@ struct AnimCmd
     /*0x02*/ s16 delay;
 };
 
-/* 116-byte per-player record at gPlayerStates (0x08064EB8); Task.unk88 points
+/* 116-byte per-player record at gPlayerStates (0x08064EB8); Task.player points
    at the record of the player the task belongs to (0x08064EB8). */
 struct PlayerState
 {
-    /*0x00*/ s8 unk00;
-    /*0x01*/ u8 unk01;
-    /*0x02*/ u8 unk02;
-    /*0x03*/ u8 unk03;
-    /*0x04*/ u8 unk04;
-    /*0x05*/ u8 unk05;
-    /*0x06*/ u8 unk06;
+    /*0x00*/ s8 playerIndex;
+    /*0x01*/ u8 requestedAction;
+    /*0x02*/ u8 action;
+    /*0x03*/ u8 prevAction;
+    /*0x04*/ u8 mode;
+    /*0x05*/ u8 prevMode;
+    /*0x06*/ u8 mouthState;
     /*0x07*/ u8 unk07;
     /*0x08*/ u8 unk08;
     /*0x09*/ u8 unk09;
     /*0x0A*/ u8 unk0A;
-    /*0x0B*/ u8 unk0B;
+    /*0x0B*/ u8 pendingAbility;
     /*0x0C*/ u8 unk0C;
-    /*0x0D*/ s8 unk0D;
+    /*0x0D*/ s8 ability;
     /*0x0E*/ s8 unk0E;
     /*0x0F*/ u8 unk0F;
     /*0x10*/ s8 unk10;
     /*0x11*/ u8 filler11;
-    /*0x12*/ u16 unk12;
+    /*0x12*/ u16 invulnerabilityTimer;
     /*0x14*/ u16 unk14;
     /*0x16*/ u8 unk16;
     /*0x17*/ u8 unk17;
@@ -245,14 +245,14 @@ struct PlayerState
     /*0x20*/ u16 unk20;
     /*0x22*/ u8 unk22;
     /*0x23*/ u8 filler23;
-    /*0x24*/ u16 unk24;
-    /*0x26*/ u16 unk26;
-    /*0x28*/ u8 unk28;
-    /*0x29*/ u8 unk29;
-    /*0x2A*/ u8 filler2A;
+    /*0x24*/ u16 pixelOffsetX;
+    /*0x26*/ u16 pixelOffsetY;
+    /*0x28*/ u8 offsetScriptStep;
+    /*0x29*/ u8 offsetScriptDelay;
+    /*0x2A*/ u8 offsetScript;
     /*0x2B*/ u8 unk2B;
-    /*0x2C*/ s16 unk2C;
-    /*0x2E*/ s16 unk2E;
+    /*0x2C*/ s16 sfxPlayer;
+    /*0x2E*/ s16 sfxId;
     /*0x30*/ u8 unk30;
     /*0x31*/ u8 unk31;
     /*0x32*/ s8 unk32;
@@ -266,12 +266,12 @@ struct PlayerState
     /*0x3B*/ u8 unk3B;
     /*0x3C*/ u8 unk3C;
     /* M11's sub_08043e28 writes 0/1 here (issue #85). */
-    /*0x3D*/ u8 unk3D;
-    /*0x3E*/ u8 unk3E;
-    /*0x3F*/ u8 unk3F;
+    /*0x3D*/ u8 running;
+    /*0x3E*/ u8 bumpKind;
+    /*0x3F*/ u8 invulnerability;
     /*0x40*/ u16 unk40;
     /*0x42*/ u16 unk42;
-    /*0x44*/ u8 unk44;
+    /*0x44*/ u8 blocksBroken;
     /*0x45*/ u8 unk45;
     /*0x46*/ u8 unk46;
     /*0x47*/ u8 unk47;
@@ -286,19 +286,19 @@ struct PlayerState
     /*0x51*/ u8 filler51[3];
     /*0x54*/ s32 unk54;
     /*0x58*/ s32 unk58;
-    /* M09's player task copies Task.unk7B here and tests bit 0 (issue #92). */
-    /*0x5C*/ u8 unk5C;
+    /* M09's player task copies Task.waterFlags here and tests bit 0 (issue #92). */
+    /*0x5C*/ u8 prevWaterFlags;
     /*0x5D*/ u8 filler5D;
-    /*0x5E*/ u16 unk5E;
-    /*0x60*/ u16 unk60;
+    /*0x5E*/ u16 prevPixelX;
+    /*0x60*/ u16 prevPixelY;
     /*0x62*/ u8 filler62[2];
     /* M16's sub_0805e15c zeroes unk64/unk68/unk6C per player when a run
        starts (issue #83); they were inside filler62 before M11 named them. */
-    /*0x64*/ u32 unk64;
-    /*0x68*/ u32 unk68;
+    /*0x64*/ u32 bodyBox;
+    /*0x68*/ u32 terrainBox;
     /* M11 keeps &gPlayerHitBoxSets[unk00] here and clears it to 0 (issue #85). */
-    /*0x6C*/ void *unk6C;
-    /*0x70*/ u32 *unk70;
+    /*0x6C*/ void *hitBoxSet;
+    /*0x70*/ u32 *prevTerrainBox;
 };
 
 /* Spawn descriptor sub_08064A78 turns into a class-4 task. */

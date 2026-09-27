@@ -288,7 +288,7 @@ void sub_08026308(void)
             if (gTaskSlotTypes[i] != -1)
             {
                 gTasks[i].posX &= 0x1FFFFFF;
-                gTasks[i].unk48 &= 0x1FF;
+                gTasks[i].pixelX &= 0x1FF;
             }
         }
     }
@@ -389,7 +389,7 @@ void sub_08026704(s32 i)
     {
         t = &gTasks[i];
         t->layer = 15;
-        t->unk3E = 0x4000;
+        t->spriteFlags = 0x4000;
     }
 }
 
@@ -414,8 +414,8 @@ s32 sub_0802672c(void)
         }
         else
         {
-            gCameraAnchorX = gTasks[gUnk_02007D38].unk48;
-            gCameraAnchorY = gTasks[gUnk_02007D38].unk4A;
+            gCameraAnchorX = gTasks[gUnk_02007D38].pixelX;
+            gCameraAnchorY = gTasks[gUnk_02007D38].pixelY;
         }
         if (gCameraAnchorX < gRoomBounds[0])
             gCameraAnchorX = gRoomBounds[0];

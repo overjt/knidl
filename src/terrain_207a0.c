@@ -40,14 +40,14 @@ extern u8 gUnk_08732DF0[];
 extern s8 gUnk_087336F0[];
 extern s8 gUnk_087338F0[];
 extern u16 gTerrainTileRight;
-extern s32 gTerrainVelY;           /* Task.unk58 */
+extern s32 gTerrainVelY;           /* Task.velY */
 extern struct Unk03005530 gTerrainProbeResult;
 extern s16 gTerrainProbeX;           /* probe x */
 extern s16 gTerrainProbeY;           /* probe y */
 extern u16 gTerrainTile;           /* queried cell: tile set */
 extern u16 gTerrainTileBelow;           /* cell below: tile set */
 extern u16 gTerrainTileLeft;           /* cell to the left: tile set */
-extern s32 gTerrainVelX;           /* Task.unk54 */
+extern s32 gTerrainVelX;           /* Task.velX */
 
 s32 TerrainQueryPixel(u32 x, u32 y);
 s32 TerrainQueryPixelAndBelow(u32 x, u32 y);
@@ -59,8 +59,8 @@ s32 GetTilePushLeft(u16 a);
 
 /* Slope-follow probe of sub_0801c30c (src/terrain_1c30c.c): when the pixel
    under the probe point is solid, step the point along its cell -
-   horizontally by the sign of Task.unk54 (gTerrainVelX), else vertically
-   by the sign of Task.unk58 (gTerrainVelY) - up to two cells, mapping a
+   horizontally by the sign of Task.velX (gTerrainVelX), else vertically
+   by the sign of Task.velY (gTerrainVelY) - up to two cells, mapping a
    passable cell to its step tile (gUnk_087338F0) while unkB bit 0 is set;
    otherwise remember in unkB bit 0 whether the cell below is passable. */
 void sub_080207a0(void)

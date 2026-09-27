@@ -42,25 +42,25 @@ void sub_0806cd40(void)
     s32 j;
 
     t = gCurTask;
-    t->unk00 = (u32)ActorMove;
-    t->unk0C = (u32)ActorDrawWorldInViewOrDestroy;
+    t->moveCallback = (u32)ActorMove;
+    t->drawCallback = (u32)ActorDrawWorldInViewOrDestroy;
     t->layer = 10;
     u = gCurTask;
-    u->unk38 = gUnk_0874CB90;
-    while (u->unk18 != 0 && gTaskSlotTypes[u->unk44] != -1)
+    u->frameTable = gUnk_0874CB90;
+    while (u->unk18 != 0 && gTaskSlotTypes[u->parent] != -1)
     {
-        if (TaskHasSameSerial(gCurTask->unk44) != 1)
+        if (TaskHasSameSerial(gCurTask->parent) != 1)
             break;
-        if ((s8)gTasks[j = gCurTask->unk44].unk7C == 3
+        if ((s8)gTasks[j = gCurTask->parent].hitKind == 3
          && gTasks[j].unk82 == 1)
             break;
-        if ((s8)gTasks[j].unk7C == 4
+        if ((s8)gTasks[j].hitKind == 4
          && (u16)(gTasks[j].unk82 - 2) <= 1)
             break;
         v = gCurTask;
-        v->posX = (gTasks[j].unk48 + v->unk1C) << 16;
-        v->posY = (gTasks[j].unk4A + v->unk20) << 16;
-        v->unk60 = -0x2000;
+        v->posX = (gTasks[j].pixelX + v->unk1C) << 16;
+        v->posY = (gTasks[j].pixelY + v->unk20) << 16;
+        v->accelY = -0x2000;
         TaskSetMotionXFacing(0xFFFD0000, 0x5A5A5A5A);
         TaskSetFrameByFacing(0);
         TaskYieldTrampoline(2);
@@ -89,16 +89,16 @@ void sub_0806ceb8(void)
     struct Task *u;
 
     t = gCurTask;
-    t->unk00 = (u32)ActorMove;
-    t->unk0C = (u32)ActorDrawWorldInViewOrDestroy;
+    t->moveCallback = (u32)ActorMove;
+    t->drawCallback = (u32)ActorDrawWorldInViewOrDestroy;
     t->layer = 10;
     u = gCurTask;
-    u->unk38 = gUnk_0874CB90;
+    u->frameTable = gUnk_0874CB90;
     TaskFaceLikeParent();
-    gCurTask->posX = (RandomSpreadFacing(-8, 1, 8) + gCurTask->unk48) << 16;
-    gCurTask->posY = (RandomSpread(-8, 1, 8) + gCurTask->unk4A) << 16;
+    gCurTask->posX = (RandomSpreadFacing(-8, 1, 8) + gCurTask->pixelX) << 16;
+    gCurTask->posY = (RandomSpread(-8, 1, 8) + gCurTask->pixelY) << 16;
     TaskSetMotionXFacing(0x5A5A5A5A, 0x4000);
-    gCurTask->unk60 = -0x4000;
+    gCurTask->accelY = -0x4000;
     TaskSetFrameByFacing(4);
     TaskYieldTrampoline(2);
     gCurTask->frame -= 2;
@@ -115,16 +115,16 @@ void sub_0806cf70(void)
     struct Task *v;
 
     t = gCurTask;
-    t->unk00 = (u32)ActorMove;
-    t->unk0C = (u32)ActorDrawWorldInViewOrDestroy;
+    t->moveCallback = (u32)ActorMove;
+    t->drawCallback = (u32)ActorDrawWorldInViewOrDestroy;
     t->layer = 10;
     u = gCurTask;
-    u->unk38 = gUnk_0874CB90;
+    u->frameTable = gUnk_0874CB90;
     TaskFaceLikeParent();
     TaskSetMotionXFacing(0xFFFDC000, 0x1800);
     v = gCurTask;
-    v->unk58 = -0x4000;
-    v->unk60 = -0x2000;
+    v->velY = -0x4000;
+    v->accelY = -0x2000;
     TaskSetFrameByFacing(0);
     TaskYieldTrampoline(2);
     gCurTask->frame += 2;
@@ -142,11 +142,11 @@ void sub_0806cffc(s16 dx, s16 dy)
     s32 i;
 
     t = gCurTask;
-    i = (s16)CreateChildTask(146, (s16)(dx + t->unk48), (s16)(dy + t->unk4A), 0);
+    i = (s16)CreateChildTask(146, (s16)(dx + t->pixelX), (s16)(dy + t->pixelY), 0);
     if (i != -1)
         gTasks[i].facing = 1;
     u = gCurTask;
-    i = (s16)CreateChildTask(146, (s16)(u->unk48 - dx), (s16)(dy + u->unk4A), 0);
+    i = (s16)CreateChildTask(146, (s16)(u->pixelX - dx), (s16)(dy + u->pixelY), 0);
     if (i != -1)
         gTasks[i].facing = 0xFF;
 }
@@ -158,13 +158,13 @@ void sub_0806d08c(s16 a, s16 b, s16 c)
     s32 i;
 
     t = gCurTask;
-    i = (s16)CreateChildTask(146, (s16)(t->unk48 + t->facing * a),
-                          (s16)(c + t->unk4A), 0);
+    i = (s16)CreateChildTask(146, (s16)(t->pixelX + t->facing * a),
+                          (s16)(c + t->pixelY), 0);
     if (i != -1)
         gTasks[i].facing = gCurTask->facing;
     u = gCurTask;
-    i = (s16)CreateChildTask(146, (s16)(u->unk48 - b * u->facing),
-                          (s16)(c + u->unk4A), 0);
+    i = (s16)CreateChildTask(146, (s16)(u->pixelX - b * u->facing),
+                          (s16)(c + u->pixelY), 0);
     if (i != -1)
         gTasks[i].facing = -gCurTask->facing;
 }
@@ -176,17 +176,17 @@ void sub_0806d148(void)
     struct Task *v;
 
     t = gCurTask;
-    t->unk00 = (u32)ActorMove;
-    t->unk0C = (u32)ActorDrawWorldInViewOrDestroy;
+    t->moveCallback = (u32)ActorMove;
+    t->drawCallback = (u32)ActorDrawWorldInViewOrDestroy;
     t->layer = 10;
     u = gCurTask;
-    u->unk38 = gUnk_0874CB90;
+    u->frameTable = gUnk_0874CB90;
     if (u->facing != 1 && u->facing != -1)
         u->facing = 1;
     TaskSetMotionXFacing(0x24000, 0xFFFFE800);
     v = gCurTask;
-    v->unk58 = -0x4000;
-    v->unk60 = -0x2000;
+    v->velY = -0x4000;
+    v->accelY = -0x2000;
     TaskSetFrame(1);
     TaskYieldTrampoline(2);
     gCurTask->frame += 2;

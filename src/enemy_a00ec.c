@@ -55,8 +55,8 @@ void sub_080a00ec(void)
             v = -v;
         gUnk_02006040[i + 3] += v;
         t = gCurTask;
-        gUnk_03001F2C = t->unk48 + (gUnk_02006040[i] >> 16) - gViewRect[0];
-        uy = t->unk4A;
+        gUnk_03001F2C = t->pixelX + (gUnk_02006040[i] >> 16) - gViewRect[0];
+        uy = t->pixelY;
         sh = gUnk_02006040[i + 3] >> 16;
         sh += 16;
         *pb = uy + sh - gViewRect[2];

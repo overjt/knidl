@@ -201,8 +201,8 @@ void sub_0802c680(void)
     {
         s32 i;
 
-        x = gTasks[gUnk_02007D38].unk48;
-        y = gTasks[gUnk_02007D38].unk4A;
+        x = gTasks[gUnk_02007D38].pixelX;
+        y = gTasks[gUnk_02007D38].pixelY;
         if (x < gCameraBounds[0])
             x = gCameraBounds[0];
         if (x > gCameraBounds[1])
@@ -300,8 +300,8 @@ void sub_0802c7f4(void)
         {
             if ((gActivePlayerMask >> i) & 1)
             {
-                x = gTasks[i].unk48;
-                y = gTasks[i].unk4A;
+                x = gTasks[i].pixelX;
+                y = gTasks[i].pixelY;
                 if (x < gCameraBounds[0])
                     x = gCameraBounds[0];
                 if (gCameraBounds[1] < x)

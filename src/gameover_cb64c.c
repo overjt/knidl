@@ -5,8 +5,8 @@
 /* gameover_cb64c.c (0x080CB64C-0x080CBED3, issue #100).
  *
  * The game-over screen, task type #264 variant 0: the player character.
- * Its sub-states gUnk_087582AC[Task.unk14] and per-frame handlers
- * gUnk_087582B8[Task.unk15] (GameOverPlayer starts it, GameOverPlayerEnterState re-enters
+ * Its sub-states gUnk_087582AC[Task.state] and per-frame handlers
+ * gUnk_087582B8[Task.updateState] (GameOverPlayer starts it, GameOverPlayerEnterState re-enters
  * it with Task.unk24 = 1):
  *   sub_080cb64c / sub_080cb6d8   sub-state 0, the idle loop; once re-entered
  *       (Task.unk24) the handler counts Task.unk20 down and then ends the
@@ -36,8 +36,8 @@ void CreateGameOverObject(u8 variant);
 /* Task type #264 variant 0, sub-state 0. */
 void sub_080cb64c(void)
 {
-    gCurTask->unk38 = gUnk_08754914;
-    gCurTask->unk15 = 0;
+    gCurTask->frameTable = gUnk_08754914;
+    gCurTask->updateState = 0;
     gCurTask->posX = 120 << 16;
     gCurTask->posY = 129 << 16;
     for (;;) {
@@ -74,7 +74,7 @@ void sub_080cb6d8(void)
 /* Task type #264 variant 0, sub-state 1. */
 void sub_080cb70c(void)
 {
-    gCurTask->unk15 = 1;
+    gCurTask->updateState = 1;
     TaskStop();
     gCurTask->frame = 3;
     TaskYieldTrampoline(2);
@@ -176,45 +176,45 @@ void sub_080cbabc(void)
 /* Task type #264 variant 0, sub-state 2. */
 void sub_080cbac0(void)
 {
-    gCurTask->unk15 = 2;
-    gCurTask->unk38 = gUnk_087548B8;
+    gCurTask->updateState = 2;
+    gCurTask->frameTable = gUnk_087548B8;
     TaskStop();
     gCurTask->frame = 0;
-    gCurTask->unk54 = 0x10000;
+    gCurTask->velX = 0x10000;
     TaskYieldTrampoline(2);
-    gCurTask->unk54 = -0x10000;
+    gCurTask->velX = -0x10000;
     TaskYieldTrampoline(2);
-    gCurTask->unk54 = 0x8000;
+    gCurTask->velX = 0x8000;
     TaskYieldTrampoline(2);
-    gCurTask->unk54 = -0x8000;
+    gCurTask->velX = -0x8000;
     TaskYieldTrampoline(2);
-    gCurTask->unk54 = 0;
+    gCurTask->velX = 0;
     TaskYieldTrampoline(12);
-    gCurTask->unk54 = 0x10000;
+    gCurTask->velX = 0x10000;
     TaskYieldTrampoline(2);
-    gCurTask->unk54 = -0x10000;
+    gCurTask->velX = -0x10000;
     TaskYieldTrampoline(2);
-    gCurTask->unk54 = 0x8000;
+    gCurTask->velX = 0x8000;
     TaskYieldTrampoline(2);
-    gCurTask->unk54 = -0x8000;
+    gCurTask->velX = -0x8000;
     TaskYieldTrampoline(2);
-    gCurTask->unk54 = 0;
+    gCurTask->velX = 0;
     TaskYieldTrampoline(12);
-    gCurTask->unk54 = 0xC000;
-    gCurTask->unk5C = -0x4000;
+    gCurTask->velX = 0xC000;
+    gCurTask->accelX = -0x4000;
     TaskYieldTrampoline(5);
-    gCurTask->unk54 = -0xC000;
-    gCurTask->unk5C = 0x4000;
+    gCurTask->velX = -0xC000;
+    gCurTask->accelX = 0x4000;
     TaskYieldTrampoline(5);
-    gCurTask->unk54 = 0xC000;
-    gCurTask->unk5C = -0x4000;
+    gCurTask->velX = 0xC000;
+    gCurTask->accelX = -0x4000;
     TaskYieldTrampoline(5);
-    gCurTask->unk54 = -0xC000;
-    gCurTask->unk5C = 0x4000;
+    gCurTask->velX = -0xC000;
+    gCurTask->accelX = 0x4000;
     TaskYieldTrampoline(5);
     gCurTask->frame++;
-    gCurTask->unk54 = 0;
-    gCurTask->unk5C = 0;
+    gCurTask->velX = 0;
+    gCurTask->accelX = 0;
     TaskYieldTrampoline(10);
     gCurTask->frame++;
     TaskYieldTrampoline(10);
@@ -233,8 +233,8 @@ void sub_080cbac0(void)
     gCurTask->frame--;
     TaskYieldTrampoline(3);
     gCurTask->frame = 7;
-    gCurTask->unk58 = 0x14000;
-    gCurTask->unk60 = -0x4000;
+    gCurTask->velY = 0x14000;
+    gCurTask->accelY = -0x4000;
     TaskYieldTrampoline(6);
     gCurTask->unk1C = PlaySfx(103);
     gCurTask->frame++;
@@ -252,18 +252,18 @@ void sub_080cbac0(void)
     PlaySfx(104);
     CreateGameOverObject(3);
     gCurTask->frame++;
-    gCurTask->unk54 = -0x40000;
+    gCurTask->velX = -0x40000;
     TaskYieldTrampoline(2);
-    gCurTask->unk54 = 0x60000;
+    gCurTask->velX = 0x60000;
     TaskYieldTrampoline(2);
-    gCurTask->unk54 = -0x30000;
+    gCurTask->velX = -0x30000;
     TaskYieldTrampoline(2);
-    gCurTask->unk54 = 0x20000;
+    gCurTask->velX = 0x20000;
     TaskYieldTrampoline(2);
-    gCurTask->unk54 = -0x10000;
+    gCurTask->velX = -0x10000;
     TaskYieldTrampoline(2);
     gCurTask->frame++;
-    gCurTask->unk54 = 0;
+    gCurTask->velX = 0;
     TaskYieldTrampoline(2);
     CreateGameOverObject(4);
     gCurTask->frame = 11;
@@ -305,14 +305,14 @@ void sub_080cbac0(void)
     gCurTask->frame++;
     TaskYieldTrampoline(4);
     gCurTask->facing = -1;
-    gCurTask->unk14 = 0;
+    gCurTask->state = 0;
     TaskSleepForever();
 }
 
 /* Task type #264 variant 0, handler 2. */
 void sub_080cbea4(void)
 {
-    if (gCurTask->unk14 != 2) {
+    if (gCurTask->state != 2) {
         gCurTask->unk20 = 120;
         CreateGameOverObject(2);
         TaskSetEntry(GameOverPlayerEnterState, gCurTaskIdx);

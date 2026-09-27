@@ -171,8 +171,8 @@ void Task_BootLogo(void)
 {
     struct Task *t = gCurTask;
 
-    t->unk00 = 0;
-    t->unk0C = 0;
+    t->moveCallback = 0;
+    t->drawCallback = 0;
     for (;;) {
         BootLogoUpdateObjects();
         TaskYieldTrampoline(1);
@@ -185,8 +185,8 @@ void Task_TitlePalette(void)
     s32 *p;
     u16 *q;
 
-    t->unk00 = 0;
-    t->unk0C = 0;
+    t->moveCallback = 0;
+    t->drawCallback = 0;
     for (t->unk6C = 0; (s16)gCurTask->unk6C <= 10; gCurTask->unk6C++) {
         RequestCopy(2, (u32)gUnk_08541D98[(s16)gCurTask->unk6C], (u32)gUnk_03001430, 32);
         TaskYieldTrampoline(1);
@@ -253,9 +253,9 @@ void sub_08009640(void)
     struct Task *t, *u, *v;
 
     t = gCurTask;
-    t->unk00 = (u32)TaskMove;
-    t->unk0C = (u32)TaskDrawScreen;
-    t->unk38 = gUnk_087555B4;
+    t->moveCallback = (u32)TaskMove;
+    t->drawCallback = (u32)TaskDrawScreen;
+    t->frameTable = gUnk_087555B4;
     t->layer = 8;
     u = gCurTask;
     if (u->unk18 <= 4) {

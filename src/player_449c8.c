@@ -44,7 +44,7 @@ void sub_080449c8(void)
         break;
     case 1:
         if (t->unk28 == 0) {
-            if ((gLatchedHeldKeys[t->unk88->unk00] & 2) == 0) {
+            if ((gLatchedHeldKeys[t->player->playerIndex] & 2) == 0) {
                 *st = 2;
                 TaskSetEntry(sub_08044878, gCurTaskIdx);
             }
@@ -58,7 +58,7 @@ void sub_080449c8(void)
         case 0x370:
             {
                 struct Task *u = gCurTask;
-                u->unk88->unk42 &= 0xFFEF;
+                u->player->unk42 &= 0xFFEF;
                 u->unk70 = 0;
                 u->unk6E = 0;
             }
@@ -73,10 +73,10 @@ void sub_080449c8(void)
             }
             {
                 struct Task *u = gCurTask;
-                BlendColors((u16 *)&gUnk_081BE6BC[u->unk88->unk00 * 128],
-                             (u16 *)&gUnk_081BE6BC[u->unk88->unk00 * 128 + 32],
+                BlendColors((u16 *)&gUnk_081BE6BC[u->player->playerIndex * 128],
+                             (u16 *)&gUnk_081BE6BC[u->player->playerIndex * 128 + 32],
                              (u16)u->unk6E, 16,
-                             (u16 *)(gObjPalette + ((u->unk40 >> 12) << 5)));
+                             (u16 *)(gObjPalette + ((u->tileWord >> 12) << 5)));
             }
             /* fallthrough */
         case 0x36D:
@@ -89,12 +89,12 @@ void sub_080449c8(void)
             }
             {
                 struct Task *u = gCurTask;
-                BlendColors((u16 *)&gUnk_081BE6BC[u->unk88->unk00 * 128 + 64],
-                             (u16 *)&gUnk_081BE6BC[u->unk88->unk00 * 128 + 96],
+                BlendColors((u16 *)&gUnk_081BE6BC[u->player->playerIndex * 128 + 64],
+                             (u16 *)&gUnk_081BE6BC[u->player->playerIndex * 128 + 96],
                              u->unk70, 16,
-                             (u16 *)(gObjPalette + (((u->unk40 >> 12) + 1) << 5)));
+                             (u16 *)(gObjPalette + (((u->tileWord >> 12) + 1) << 5)));
             }
-            gCurTask->unk88->unk42 |= 16;
+            gCurTask->player->unk42 |= 16;
             break;
         }
         break;
@@ -106,17 +106,17 @@ void sub_080449c8(void)
     }
     sub_0803e55c();
     {
-        struct PlayerState *p = gCurTask->unk88;
-        if (p->unk01 != 0)
+        struct PlayerState *p = gCurTask->player;
+        if (p->requestedAction != 0)
             p->unk42 &= 0xFFEF;
     }
 }
 
 void sub_08044b94(void)
 {
-    gCurTask->unk88->unk05 = gCurTask->unk88->unk04;
-    gCurTask->unk88->unk04 = 13;
-    gCurTask->unk15 = 31;
+    gCurTask->player->prevMode = gCurTask->player->mode;
+    gCurTask->player->mode = 13;
+    gCurTask->updateState = 31;
     gCurTask->unk28 = 0;
     gCurTask->unk80 = 0;
     TaskSetFrame(0x3E9);
@@ -125,11 +125,11 @@ void sub_08044b94(void)
     TaskYieldTrampoline(10);
     gCurTask->frame++;
     TaskYieldTrampoline(2);
-    if (gCurTask->unk7A & 1)
-        CreatePlayerEffect(gCurTask->unk88->unk00, 28, 3);
-    sub_08053a44(gCurTask->unk88->unk00, 5, 0);
+    if (gCurTask->onGround & 1)
+        CreatePlayerEffect(gCurTask->player->playerIndex, 28, 3);
+    sub_08053a44(gCurTask->player->playerIndex, 5, 0);
     gCurTask->unk28++;
-    PlaySfxIfLocalPlayer(144, gCurTask->unk88->unk00);
+    PlaySfxIfLocalPlayer(144, gCurTask->player->playerIndex);
     gCurTask->frame++;
     TaskYieldTrampoline(4);
     gCurTask->frame++;
@@ -146,12 +146,12 @@ void sub_08044c7c(void)
 
     if (t->unk28 != 0) {
         if (t->unk28 == 1) {
-            if (gLatchedPressedKeys[t->unk88->unk00] & 2) {
+            if (gLatchedPressedKeys[t->player->playerIndex] & 2) {
                 TaskSetEntry(sub_08044b94, gCurTaskIdx);
-            } else if (t->unk7A & 1) {
-                if (gLatchedHeldKeys[t->unk88->unk00] & 48) {
+            } else if (t->onGround & 1) {
+                if (gLatchedHeldKeys[t->player->playerIndex] & 48) {
                     PlayerTurnToHeldDirection();
-                    gCurTask->unk88->unk01 = 2;
+                    gCurTask->player->requestedAction = 2;
                 }
             }
         } else {

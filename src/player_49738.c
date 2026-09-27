@@ -7,12 +7,12 @@
  * The player's ability sprite-tile loaders, called by M09's player task
  * (Task_Player, PlayerStartRequestedAction), M10's actions 13 and 21, M13's action
  * 29, M14 and M18's ability objects (src/actor_6ef5c.c).  LoadAbilityTiles
- * uploads the tiles of the ability PlayerState.unk0D (a 25-way switch:
+ * uploads the tiles of the ability PlayerState.ability (a 25-way switch:
  * abilities 0, 1, 3, 5, 6, 8-11, 13, 14, 16, 19, 20 and 24 have tiles)
  * from its ROM table into the player's OBJ tiles at
- * 0x06010000 + (Task.unk40 & 0x7FF) * 32, four 1D rows queued with the
+ * 0x06010000 + (Task.tileWord & 0x7FF) * 32, four 1D rows queued with the
  * VRAM transfer queue RequestCopy; ability 0 also queues its palette
- * gUnk_081AC358 into OBJ palette slot (Task.unk40 >> 12) + 1.  Cases
+ * gUnk_081AC358 into OBJ palette slot (Task.tileWord >> 12) + 1.  Cases
  * with the same row layout share one body in the ROM (cross-jumping).
  * sub_08049a58 uploads ability 2's tiles gUnk_081BE45C at +0x100, and
  * again at +0x180 when gUnk_03002444 is set. */
@@ -42,16 +42,16 @@ void RequestCopy(u32 mode, void *src, void *dst, u32 size);   /* early_1518; eff
 
 void LoadAbilityTiles(void)
 {
-    u8 *vram = gObjVram + ((gCurTask->unk40 & 0x7FF) << 5);
+    u8 *vram = gObjVram + ((gCurTask->tileWord & 0x7FF) << 5);
 
-    switch (gCurTask->unk88->unk0D) {
+    switch (gCurTask->player->ability) {
     case 0:
         RequestCopy(1, gUnk_081AC378, vram + 0x180, 128);
         RequestCopy(1, gUnk_081AC378 + 128, vram + 0x580, 128);
         RequestCopy(1, gUnk_081AC378 + 256, vram + 0x980, 128);
         RequestCopy(1, gUnk_081AC378 + 384, vram + 0xD80, 128);
         RequestCopy(2, gUnk_081AC358,
-                     gObjPalette + (((gCurTask->unk40 >> 12) + 1) << 5), 32);
+                     gObjPalette + (((gCurTask->tileWord >> 12) + 1) << 5), 32);
         break;
     case 1:
         RequestCopy(1, gUnk_081BBD70, vram + 0x180, 128);
@@ -141,9 +141,9 @@ void LoadAbilityTiles(void)
 void sub_08049a58(void)
 {
     struct Task *t = gCurTask;
-    u32 off = (t->unk40 & 0x7FF) << 5;
+    u32 off = (t->tileWord & 0x7FF) << 5;
 
-    if (t->unk88->unk0D == 2) {
+    if (t->player->ability == 2) {
         u8 *src = gUnk_081BE45C;
         RequestCopy(1, src, (void *)(off + 0x06010100), 128);
         RequestCopy(1, src + 128, (void *)(off + 0x06010500), 128);

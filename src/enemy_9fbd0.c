@@ -79,10 +79,10 @@ void sub_0809fc44(void)
     v = (v * 85) >> 8;
     t = gCurTask;
     t->unk70 = v;
-    t->unk00 = (u32)TaskMove;
-    t->unk0C = (u32)sub_08065438;
+    t->moveCallback = (u32)TaskMove;
+    t->drawCallback = (u32)sub_08065438;
     t->layer = 11;
-    gCurTask->unk38 = gUnk_087538E0;
+    gCurTask->frameTable = gUnk_087538E0;
     CallTableEntry(gCurTask->unk73, 1, gUnk_08748264);
 }
 
@@ -100,9 +100,9 @@ void sub_0809fcb4(void)
     RequestScreenShake(4);
     TaskSetSkipMask(7, gCurTaskIdx);
     t = gCurTask;
-    t->unk08 = (u32)sub_080a0a84;
-    gUnk_02006190[0] = t->unk48;
-    gUnk_02006190[1] = t->unk4A;
+    t->lateUpdateCallback = (u32)sub_080a0a84;
+    gUnk_02006190[0] = t->pixelX;
+    gUnk_02006190[1] = t->pixelY;
     gUnk_02006190[2] = t->frame;
     one = 1;
     gUnk_02006190[7] = one;
@@ -121,9 +121,9 @@ void sub_0809fd20(void)
     TaskSetSkipMask(0, gCurTaskIdx);
     t = gCurTask;
     z = 0;
-    t->unk08 = z;
-    t->unk48 = gUnk_02006190[0];
-    t->unk4A = gUnk_02006190[1];
+    t->lateUpdateCallback = z;
+    t->pixelX = gUnk_02006190[0];
+    t->pixelY = gUnk_02006190[1];
     t->frame = gUnk_02006190[2];
     gUnk_02006190[7] = z;
     sub_08066468();
@@ -176,13 +176,13 @@ u8 sub_0809fe10(void)
 
     t = gCurTask;
     a = t->unk8C;
-    s0 = t->unk14;
+    s0 = t->state;
     sub_0809fcb4();
-    switch (gCurTask->unk14)
+    switch (gCurTask->state)
     {
     case 3:
         u = gCurTask;
-        if ((u->unk7A & 1) == 0)
+        if ((u->onGround & 1) == 0)
         {
             gUnk_02006190[2] = 43;
             ActorSetState(10);
@@ -197,7 +197,7 @@ u8 sub_0809fe10(void)
         goto install;
     case 4:
         v = gCurTask;
-        if ((v->unk7A & 1) == 0)
+        if ((v->onGround & 1) == 0)
         {
             if (gUnk_0300244C != 0)
                 gUnk_02006190[2] = 43;
@@ -244,12 +244,12 @@ u8 sub_0809fe10(void)
     case 9:
         TaskSetSkipMask(0, gCurTaskIdx);
         y = gCurTask;
-        y->unk08 = 0;
+        y->lateUpdateCallback = 0;
         y->frame = gUnk_02006190[2];
         gUnk_02006190[5] = 14;
         break;
     case 0:
-        gCurTask->unk14 = 1;
+        gCurTask->state = 1;
     case 1:
         z = gCurTask;
         z->unk2C = 1;
@@ -261,7 +261,7 @@ u8 sub_0809fe10(void)
     case 6:
         break;
     }
-    if (s0 == gCurTask->unk14)
+    if (s0 == gCurTask->state)
         return 0;
     return 1;
 }
@@ -271,8 +271,8 @@ void sub_0809ffec(void)
     struct Task *t;
 
     t = gCurTask;
-    if (t->unk7C == 6 && t->unk82 == 4)
-        gPlayerStates[t->unk7E].unk01 = 18;
+    if (t->hitKind == 6 && t->unk82 == 4)
+        gPlayerStates[t->hitterSlot].requestedAction = 18;
 }
 
 void sub_080a0028(void)

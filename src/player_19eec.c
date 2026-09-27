@@ -35,8 +35,8 @@ void sub_08019eec(void)
 {
     struct Task *t = gCurTask;
 
-    t->unk00 = (u32)TaskMove;
-    t->unk0C = 0;
+    t->moveCallback = (u32)TaskMove;
+    t->drawCallback = 0;
     gBldCntTarget1 = 66;
     gBldCntTarget2 = 29;
     gBldAlphaEva = 16;

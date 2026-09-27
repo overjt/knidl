@@ -163,9 +163,9 @@ void sub_08007624(void)
     BeginFastFadeOutToWhite();
     RunLinkFramesUntilFadeDone();
     for (i = 0; i < gPlayerCount; i++) {
-        if (gPlayerStates[i].unk2C != -1) {
-            StopSfxOnPlayer(gPlayerStates[i].unk2C, gPlayerStates[i].unk2E);
-            gPlayerStates[i].unk2C = -1;
+        if (gPlayerStates[i].sfxPlayer != -1) {
+            StopSfxOnPlayer(gPlayerStates[i].sfxPlayer, gPlayerStates[i].sfxId);
+            gPlayerStates[i].sfxPlayer = -1;
         }
     }
     sub_08027178();

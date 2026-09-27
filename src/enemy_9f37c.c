@@ -54,21 +54,21 @@ void sub_0809f37c(void)
     s32 z;
 
     t = gCurTask;
-    t->unk00 = (u32)ActorMove;
-    t->unk0C = (u32)ActorDrawWorldInViewOrDestroy;
+    t->moveCallback = (u32)ActorMove;
+    t->drawCallback = (u32)ActorDrawWorldInViewOrDestroy;
     p = &t->layer;
     z = 0;
     *p = 9;
     u = gCurTask;
-    u->unk38 = gUnk_087534E0;
-    u->unk04 = (u32)sub_0809f3e0;
+    u->frameTable = gUnk_087534E0;
+    u->updateCallback = (u32)sub_0809f3e0;
     TaskFaceLikeParent();
     v = gCurTask;
     v->unk28 = z;
     CallTableEntry(v->unk73, 5, gUnk_08747C6C);
     w = gCurTask;
-    w->unk60 = 148 << 6;
-    w->unk68 = 192 << 10;
+    w->accelY = 148 << 6;
+    w->speedLimitY = 192 << 10;
     TaskSleepForever();
 }
 
@@ -81,22 +81,22 @@ void sub_0809f3e0(void)
     u16 h;
 
     t = gCurTask;
-    if (t->unk4A > gViewRect[2] + 196)
+    if (t->pixelY > gViewRect[2] + 196)
     {
         ActorDestroy();
         return;
     }
-    vy = t->unk58;
+    vy = t->velY;
     if (vy < 0)
     {
-        if (abs(t->unk54) >= -vy)
+        if (abs(t->velX) >= -vy)
             TaskSetFrame(8);
         else
             TaskSetFrame(4);
     }
     else
     {
-        if (abs(t->unk54) >= vy)
+        if (abs(t->velX) >= vy)
             TaskSetFrame(10);
         else
             TaskSetFrame(6);
@@ -116,31 +116,31 @@ void sub_0809f3e0(void)
 void sub_0809f478(void)
 {
     TaskSetMotionXFacing(128 << 10, 0x5A5A5A5A);
-    gCurTask->unk58 = 0xFFFE0000;
+    gCurTask->velY = 0xFFFE0000;
 }
 
 void sub_0809f49c(void)
 {
     TaskSetMotionXFacing(128 << 9, 0x5A5A5A5A);
-    gCurTask->unk58 = 0xFFFE0000;
+    gCurTask->velY = 0xFFFE0000;
 }
 
 void sub_0809f4c0(void)
 {
     TaskSetMotionXFacing(208 << 9, 0x5A5A5A5A);
-    gCurTask->unk58 = 0xFFFE0000;
+    gCurTask->velY = 0xFFFE0000;
 }
 
 void sub_0809f4e4(void)
 {
     TaskSetMotionXFacing(136 << 10, 0x5A5A5A5A);
-    gCurTask->unk58 = 0xFFFE0000;
+    gCurTask->velY = 0xFFFE0000;
 }
 
 void sub_0809f508(void)
 {
     TaskSetMotionXFacing(128 << 8, 0x5A5A5A5A);
-    gCurTask->unk58 = 0xFFFF0000;
+    gCurTask->velY = 0xFFFF0000;
 }
 
 u8 sub_0809f52c(void)
@@ -154,8 +154,8 @@ u8 sub_0809f52c(void)
         return 0;
     case 0:
         TaskStopY();
-        gCurTask->unk15 = 0;
-        if (gCurTask->unk14 == 0)
+        gCurTask->updateState = 0;
+        if (gCurTask->state == 0)
             goto zero;
         sub_0809f90c();
         gCurTask->unk28 = 1;
@@ -181,13 +181,13 @@ u8 sub_0809f588(void)
         p = &t->facing;
         *p = -*p;
         u = gCurTask;
-        vx = -u->unk54;
-        u->unk54 = vx;
+        vx = -u->velX;
+        u->velX = vx;
         if (u->facing == 1 && vx > 0)
             goto zero;
         break;
     case 0:
-        if (t->unk14 == 0)
+        if (t->state == 0)
             sub_0809ec84();
         else
             TaskStopX();
@@ -199,7 +199,7 @@ u8 sub_0809f588(void)
         goto end;
     }
     v = gCurTask;
-    if (v->facing == -1 && v->unk54 < 0)
+    if (v->facing == -1 && v->velX < 0)
     {
     zero:
         gCurTask->unk28 = 0;
@@ -244,14 +244,14 @@ void sub_0809f61c(void)
         break;
     case 5:
         t = gCurTask;
-        t->unk00 = (u32)TaskMove;
-        t->unk0C = (u32)ActorDrawWorldInViewOrDestroy;
+        t->moveCallback = (u32)TaskMove;
+        t->drawCallback = (u32)ActorDrawWorldInViewOrDestroy;
         p = &t->layer;
         z = 0;
         *p = 11;
         u = gCurTask;
-        u->unk38 = gUnk_087535A8;
-        u->unk40 = z;
+        u->frameTable = gUnk_087535A8;
+        u->tileWord = z;
         PlaySfx(142 << 1);
         gCurTask->frame = z;
         TaskYieldTrampoline(1);
@@ -393,7 +393,7 @@ void sub_0809f930(void)
     TaskUpdateFlip();
     gCurTask->facing = -f;
     t = gCurTask;
-    t->unk54 = -t->unk54;
+    t->velX = -t->velX;
 }
 
 void sub_0809f960(void)
@@ -408,7 +408,7 @@ void sub_0809f970(void)
 
     gCurTask->facing = -gCurTask->facing;
     t = gCurTask;
-    t->unk54 = -t->unk54;
+    t->velX = -t->velX;
     TaskUpdateFlip();
 }
 
@@ -421,18 +421,18 @@ s32 sub_0809f994(void)
     s32 h;
 
     t = gCurTask;
-    p = &t->unk48;
+    p = &t->pixelX;
     h = *p;
     a = t->unk8C;
     q = (s8 *)a->terrainBox;
     if (h < q[4] + 24)
     {
-        if (t->unk54 < 0)
+        if (t->velX < 0)
             return 1;
     }
     else if (h > 288 - q[5])
     {
-        if (t->unk54 > 0)
+        if (t->velX > 0)
             return 1;
     }
     return 0;

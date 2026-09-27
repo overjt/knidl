@@ -1411,7 +1411,7 @@ void sub_080a860c(void)
     switch (gCurTask->unk28)
     {
     case 0:
-        if (gCurTask->unk4A < gViewRect[2] - 62)
+        if (gCurTask->pixelY < gViewRect[2] - 62)
         {
             TaskStopY();
             gUnk_02007D00[0] = 4;

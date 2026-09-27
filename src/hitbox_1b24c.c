@@ -134,12 +134,12 @@ u8 sub_0801b24c(void)
     {
         gColliderSlot = e->unk00;
         t = &gTasks[gColliderSlot];
-        gColliderPlayerState = t->unk88;
+        gColliderPlayerState = t->player;
         gColliderBodyBox = e->unk08;
         if (gColliderPlayerState == NULL)
             gColliderPlayer = 4;
         else
-            gColliderPlayer = gColliderPlayerState->unk00;
+            gColliderPlayer = gColliderPlayerState->playerIndex;
         if (gColliderBodyBox->unk10 & 0x8000)
         {
             s32 x;
@@ -184,7 +184,7 @@ u8 sub_0801b24c(void)
                 continue;
             m = gUnk_08732278[k] | 0x4000;
             if (!(a->unk18 & m) && !(b->unk10 & 8))
-                t->unk7C = 6;
+                t->hitKind = 6;
             if (k == 4)
                 continue;
             if (k == 5 && (gAttackBox->unk1A & 0x80))
@@ -241,7 +241,7 @@ u8 sub_0801b24c(void)
                 break;
             default:
                 if (!(gColliderBodyBox->unk10 & 0x10))
-                    t->unk7C = 7;
+                    t->hitKind = 7;
                 gHitKind = gUnk_08732230[k];
                 sub_0801b8e4();
                 break;
@@ -258,7 +258,7 @@ u8 sub_0801b24c(void)
         {
             m = gUnk_08732278[k] | 0x4000;
             if (!(gAttackBox->unk18 & m) && !(gColliderBodyBox->unk10 & 8))
-                t->unk7C = 6;
+                t->hitKind = 6;
         }
         m = gUnk_0873229C[k];
         if (gAttackBox->unk14 & m)

@@ -94,11 +94,11 @@ void Task_IntroStoryPicture(void)
 {
     struct GfxHeader *h;
 
-    gCurTask->unk00 = (u32)TaskMove;
-    gCurTask->unk0C = (u32)TaskDrawScreen;
+    gCurTask->moveCallback = (u32)TaskMove;
+    gCurTask->drawCallback = (u32)TaskDrawScreen;
     gCurTask->layer = 8;
-    gCurTask->unk38 = gUnk_087555D8;
-    gCurTask->unk40 = 0x800;
+    gCurTask->frameTable = gUnk_087555D8;
+    gCurTask->tileWord = 0x800;
     gCurTask->posX = 0x300000;
     gCurTask->posY = 0x780000;
     h = gUnk_087555FC[gCurTask->unk18];
@@ -305,10 +305,10 @@ s32 AddPlayerHealth(s32 a, u32 b)
             else if (gPlayerHealth[b] == 8 && gLocalPlayer == b)
                 PlaySfx(262);
         }
-        gTasks[b].unk78 = gPlayerHealth[b];
+        gTasks[b].health = gPlayerHealth[b];
         if (b == gLocalPlayer && gHudMode == 1)
             sub_0800acbc(old >> 3, delta >> 3);
-        return gTasks[b].unk78;
+        return gTasks[b].health;
     }
 }
 
@@ -319,9 +319,9 @@ s32 SetPlayerAbilityNoHud(s32 a, s32 b, u32 c)
         gPlayerAbilities[c] = a;
         gUnk_0200AF18[c] = b;
         p = &gPlayerStates[c];
-        p->unk0D = a;
+        p->ability = a;
         p->unk0E = b;
-        return p->unk0D;
+        return p->ability;
     }
 }
 
@@ -332,10 +332,10 @@ s32 SetPlayerAbility(s32 a, s32 b, u32 c)
         gPlayerAbilities[c] = a;
         gUnk_0200AF18[c] = b;
         p = &gPlayerStates[c];
-        p->unk0D = a;
+        p->ability = a;
         p->unk0E = b;
         HudShowAbility(a, c);
-        return p->unk0D;
+        return p->ability;
     }
 }
 

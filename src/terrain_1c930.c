@@ -52,7 +52,7 @@ extern u16 gTerrainTile;           /* queried cell: tile set */
 extern s16 gTerrainBoxBottom;           /* box bottom offset */
 extern u16 gTerrainTileBelow;           /* cell below: tile set */
 extern u16 gTerrainTileLeft;           /* cell to the left: tile set */
-extern s32 gTerrainVelX;           /* Task.unk54 */
+extern s32 gTerrainVelX;           /* Task.velX */
 extern s16 gTerrainBoxRight;           /* box right offset */
 extern u16 gUnk_030055AC;           /* cell below: byte 2 */
 extern u8 gUnk_02005574[];

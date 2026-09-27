@@ -5,15 +5,15 @@
 /* player_34f8c.c (0x08034F8C-0x0803627F, issue #92).
  *
  * Player mode bodies, part 3: modes 5, 8 and 14.  Each action has an
- * "enter" coroutine (gPlayerActions[], by PlayerState.unk02) and a
- * "per-frame" handler (gPlayerActionHandlers[], by Task.unk15).  An enter
+ * "enter" coroutine (gPlayerActions[], by PlayerState.action) and a
+ * "per-frame" handler (gPlayerActionHandlers[], by Task.updateState).  An enter
  * coroutine records the previous mode
- * (PlayerState.unk05 = unk04), sets the new one and the task's animation
- * set (Task.unk15), then plays the animation of the current ability
- * (PlayerState.unk0D, 0..25) out of a per-mode table (gUnk_0873D3B8,
+ * (PlayerState.prevMode = unk04), sets the new one and the task's animation
+ * set (Task.updateState), then plays the animation of the current ability
+ * (PlayerState.ability, 0..25) out of a per-mode table (gUnk_0873D3B8,
  * gUnk_0873D420, gUnk_0873D7E4) with TaskSetFrame and TaskYieldTrampoline;
  * the per-frame handler runs M11's transition predicates in order and
- * writes the next mode request into PlayerState.unk01, or re-binds the
+ * writes the next mode request into PlayerState.requestedAction, or re-binds the
  * task to another coroutine with TaskSetEntry.  PlayerActionFall/PlayerActionFallUpdate
  * are mode 5, sub_080355d8/sub_08035848 mode 8 (Task.unk73 is its
  * sub-state) and PlayerActionFloat mode 14, a six-state loop over Task.unk73
@@ -45,7 +45,7 @@ extern struct Unk03005550 gTerrainResult;
 extern s16 gUnk_0873D420[][3];
 extern u32 gUnk_0873CC74[];
 extern u8 gUnk_0873BEB0[];
-extern u32 gPlayerDefaultBodyBox[];               /* stored to PlayerState.unk64 as (u32)gPlayerDefaultBodyBox */
+extern u32 gPlayerDefaultBodyBox[];               /* stored to PlayerState.bodyBox as (u32)gPlayerDefaultBodyBox */
 extern u32 gPlayerDefaultTerrainBox[];
 extern u32 gUnk_0873BD14[];
 extern s16 gUnk_0873D7E4[][3];
@@ -81,26 +81,26 @@ s32 CreatePlayerEffect(s32 a0, s32 a1, s32 a2);
 
 void PlayerActionFall(void)
 {
-    gCurTask->unk88->unk05 = gCurTask->unk88->unk04;
-    gCurTask->unk88->unk04 = 5;
-    gCurTask->unk15 = 7;
+    gCurTask->player->prevMode = gCurTask->player->mode;
+    gCurTask->player->mode = 5;
+    gCurTask->updateState = 7;
     PlayerSetMotionYPreset(2);
     gCurTask->unk30 = 0;
-    if (gCurTask->unk88->unk05 != 5)
-        gCurTask->unk88->unk14 = 300;
-    if (gCurTask->unk88->unk3E & 1)
+    if (gCurTask->player->prevMode != 5)
+        gCurTask->player->unk14 = 300;
+    if (gCurTask->player->bumpKind & 1)
         gCurTask->unk30 = 1;
-    if (gCurTask->unk88->unk0D == 10)
+    if (gCurTask->player->ability == 10)
     {
         gCurTask->unk2C = 0;
         gCurTask->unk28 = 0;
     }
     PlayerPlayBump();
-    gCurTask->unk88->unk14 = 30;
-    if (gCurTask->unk88->unk05 == 4)
+    gCurTask->player->unk14 = 30;
+    if (gCurTask->player->prevMode == 4)
     {
-        gCurTask->unk88->unk14 = 300;
-        if (gCurTask->unk88->unk06 == 1)
+        gCurTask->player->unk14 = 300;
+        if (gCurTask->player->mouthState == 1)
         {
             TaskSetFrame(346);
             TaskYieldTrampoline(2);
@@ -108,16 +108,16 @@ void PlayerActionFall(void)
             TaskYieldTrampoline(3);
             gCurTask->frame++;
             TaskYieldTrampoline(2);
-            gCurTask->unk88->unk14 = 0;
+            gCurTask->player->unk14 = 0;
         }
         else if (gCurTask->unk30 != 0)
         {
-            gCurTask->unk88->unk14 = 30;
+            gCurTask->player->unk14 = 30;
         }
         else
         {
-            gCurTask->unk46 = gUnk_0873D3B8[gCurTask->unk88->unk0D][0];
-            switch (gCurTask->unk88->unk0D)
+            gCurTask->unk46 = gUnk_0873D3B8[gCurTask->player->ability][0];
+            switch (gCurTask->player->ability)
             {
             case 0:
             default:
@@ -128,7 +128,7 @@ void PlayerActionFall(void)
                     gCurTask->frame++;
                     TaskYieldTrampoline(2);
                 }
-                gCurTask->unk88->unk14 = 20;
+                gCurTask->player->unk14 = 20;
                 break;
             case 4:
             case 9:
@@ -136,13 +136,13 @@ void PlayerActionFall(void)
             case 25:
                 TaskSetFrame(gCurTask->unk46);
                 TaskYieldTrampoline(4);
-                gCurTask->unk88->unk14 = 28;
+                gCurTask->player->unk14 = 28;
                 break;
             }
         }
     }
     gCurTask->unk30 = 0;
-    if (gCurTask->unk88->unk06 == 1)
+    if (gCurTask->player->mouthState == 1)
     {
         while (1)
         {
@@ -152,8 +152,8 @@ void PlayerActionFall(void)
             TaskYieldTrampoline(4);
         }
     }
-    gCurTask->unk46 = gUnk_0873D3B8[gCurTask->unk88->unk0D][1];
-    switch (gCurTask->unk88->unk0D)
+    gCurTask->unk46 = gUnk_0873D3B8[gCurTask->player->ability][1];
+    switch (gCurTask->player->ability)
     {
     case 0:
     default:
@@ -165,15 +165,15 @@ void PlayerActionFall(void)
             TaskYieldTrampoline(2);
         }
     case 10:
-        if (gCurTask->unk88->unk05 != 8)
-            gCurTask->unk88->unk14 = 0;
+        if (gCurTask->player->prevMode != 8)
+            gCurTask->player->unk14 = 0;
         do
         {
             TaskSetFrame(0x841);
             TaskYieldTrampoline(2);
             gCurTask->frame++;
             TaskYieldTrampoline(2);
-        } while ((s16)gCurTask->unk88->unk14 != 0 || gCurTask->unk58 <= 0x1FFFF);
+        } while ((s16)gCurTask->player->unk14 != 0 || gCurTask->velY <= 0x1FFFF);
         while (1)
         {
             if (gCurTask->facing == 1)
@@ -263,41 +263,41 @@ void PlayerActionFallUpdate(void)
            && PlayerCheckFloat() == 0 && PlayerCheckAirFloat() == 0 && PlayerCheckBButton() == 0
            && PlayerCheckDropAbility() == 0)
     {
-        if (gCurTask->unk7A & 1)
+        if (gCurTask->onGround & 1)
         {
             PlayerCheckBump();
             PlayerLand(0);
             PlayerRequestLocomotion();
             break;
         }
-        if (gUnk_03001F30 == 0 && gCurTask->unk88->unk0D != 10
-            && gCurTask->unk88->unk06 == 0 && gCurTask->unk58 > 0
-            && --gCurTask->unk88->unk14 == 0)
+        if (gUnk_03001F30 == 0 && gCurTask->player->ability != 10
+            && gCurTask->player->mouthState == 0 && gCurTask->velY > 0
+            && --gCurTask->player->unk14 == 0)
         {
-            gCurTask->unk88->unk01 = 8;
+            gCurTask->player->requestedAction = 8;
             break;
         }
-        if (gCurTask->unk88->unk0D != 10 && gTerrainResult.unk0 != 0)
+        if (gCurTask->player->ability != 10 && gTerrainResult.unk0 != 0)
         {
             PlayerCheckBump();
-            if (gCurTask->unk88->unk3E & 7)
+            if (gCurTask->player->bumpKind & 7)
                 TaskSetEntry(PlayerActionFall, gCurTaskIdx);
         }
-        if (gCurTask->unk88->unk0D == 10)
+        if (gCurTask->player->ability == 10)
         {
-            if ((s16)gCurTask->unk88->unk14 != 0)
-                gCurTask->unk88->unk14--;
+            if ((s16)gCurTask->player->unk14 != 0)
+                gCurTask->player->unk14--;
             if (gCurTask->unk28 != 0
-                && (gLatchedHeldKeys[gCurTask->unk88->unk00] & 128))
+                && (gLatchedHeldKeys[gCurTask->player->playerIndex] & 128))
             {
                 PlayerStopAxes(1);
-                gCurTask->unk88->unk01 = 8;
+                gCurTask->player->requestedAction = 8;
             }
         }
         break;
     }
     PlayerSetMotionXPreset(7, 72);
-    if (gCurTask->unk7A & 1)
+    if (gCurTask->onGround & 1)
         PlayerLand(1);
     PlayerStopAtCeilingAndWall();
 }
@@ -306,22 +306,22 @@ void sub_080355d8(void)
 {
     s16 *anim;
 
-    gCurTask->unk88->unk05 = gCurTask->unk88->unk04;
-    gCurTask->unk88->unk04 = 8;
-    gCurTask->unk15 = 8;
-    if (gCurTask->unk88->unk05 != 8)
+    gCurTask->player->prevMode = gCurTask->player->mode;
+    gCurTask->player->mode = 8;
+    gCurTask->updateState = 8;
+    if (gCurTask->player->prevMode != 8)
     {
         gCurTask->unk73 = 0;
-        gCurTask->unk88->unk40 &= 0xFFFD;
+        gCurTask->player->unk40 &= 0xFFFD;
     }
-    gCurTask->unk88->unk6C = 0;
+    gCurTask->player->hitBoxSet = 0;
     gCurTask->unk28 = 0;
-    anim = gUnk_0873D420[gCurTask->unk88->unk0D];
+    anim = gUnk_0873D420[gCurTask->player->ability];
     switch (gCurTask->unk73)
     {
     case 0:
-        gCurTask->unk88->unk6C = gUnk_0873CC74;
-        switch (gCurTask->unk88->unk0D)
+        gCurTask->player->hitBoxSet = gUnk_0873CC74;
+        switch (gCurTask->player->ability)
         {
         case 10:
             PlayerSetMotionYPreset(2);
@@ -358,14 +358,14 @@ void sub_080355d8(void)
             }
         }
     case 2:
-        gCurTask->unk88->unk42 |= 0x100;
-        CreatePlayerEffect(gCurTask->unk88->unk00, 4, 0);
-        gCurTask->unk88->unk3E = 0;
+        gCurTask->player->unk42 |= 0x100;
+        CreatePlayerEffect(gCurTask->player->playerIndex, 4, 0);
+        gCurTask->player->bumpKind = 0;
         TaskSetFrame(anim[2]);
         TaskYieldTrampoline(2);
         gCurTask->unk73 = 1;
     case 1:
-        gCurTask->unk88->unk3E = 0;
+        gCurTask->player->bumpKind = 0;
         PlayerSetMotionYPreset(3);
         TaskSetFrame((s16)(anim[2] + 1));
         TaskYieldTrampoline(2);
@@ -392,9 +392,9 @@ void sub_08035848(void)
     if (PlayerCheckLadder() == 0 && PlayerCheckEnterDoor() == 0 && PlayerCheckEnterWater() == 0
         && PlayerCheckFloat() == 0 && PlayerCheckAirFloat() == 0 && PlayerCheckBButton() == 0)
         PlayerCheckDropAbility();
-    if (gCurTask->unk88->unk01 != 0)
+    if (gCurTask->player->requestedAction != 0)
     {
-        gCurTask->unk88->unk42 &= 0xFEFF;
+        gCurTask->player->unk42 &= 0xFEFF;
     }
     else
     {
@@ -406,15 +406,15 @@ void sub_08035848(void)
             if (PlayerCheckLanding() != 0)
             {
                 PlayerCheckBump();
-                PlaySfxIfLocalPlayer(116, gCurTask->unk88->unk00);
+                PlaySfxIfLocalPlayer(116, gCurTask->player->playerIndex);
                 gCurTask->unk73 = 2;
                 TaskSetEntry(sub_080355d8, gCurTaskIdx);
             }
             else
             {
-                if (gCurTask->unk88->unk44 != 0)
-                    gCurTask->unk88->unk40 |= 2;
-                if (gCurTask->unk88->unk40 & 2)
+                if (gCurTask->player->blocksBroken != 0)
+                    gCurTask->player->unk40 |= 2;
+                if (gCurTask->player->unk40 & 2)
                 {
                     gCurTask->unk73 = 1;
                     TaskSetEntry(sub_080355d8, gCurTaskIdx);
@@ -424,28 +424,28 @@ void sub_08035848(void)
                     if (gTerrainResult.unk0 != 0)
                     {
                         PlayerCheckBump();
-                        if (gCurTask->unk88->unk3E & 7)
+                        if (gCurTask->player->bumpKind & 7)
                             TaskSetEntry(PlayerActionFall, gCurTaskIdx);
                     }
                     if (gCurTask->unk28 != 0)
-                        RegisterCollider(gCurTaskIdx, gCurTask->unk48, gCurTask->unk4A, gUnk_0873BEB0);
+                        RegisterCollider(gCurTaskIdx, gCurTask->pixelX, gCurTask->pixelY, gUnk_0873BEB0);
                 }
             }
             break;
         case 1:
-            if (gCurTask->unk7A & 1)
+            if (gCurTask->onGround & 1)
             {
                 PlayerCheckBump();
                 PlayerLand(0);
                 PlayerRequestLocomotion();
-                gCurTask->unk88->unk42 &= 0xFEFF;
+                gCurTask->player->unk42 &= 0xFEFF;
                 break;
             }
         case 2:
             if (gCurTask->unk28 != 0)
             {
-                gCurTask->unk88->unk01 = 7;
-                gCurTask->unk88->unk42 &= 0xFEFF;
+                gCurTask->player->requestedAction = 7;
+                gCurTask->player->unk42 &= 0xFEFF;
             }
             break;
         }
@@ -455,22 +455,22 @@ void sub_08035848(void)
 
 void PlayerActionFloat(void)
 {
-    gCurTask->unk88->unk05 = gCurTask->unk88->unk04;
-    gCurTask->unk88->unk04 = 14;
-    gCurTask->unk15 = 9;
-    if (gCurTask->unk88->unk05 != 14)
+    gCurTask->player->prevMode = gCurTask->player->mode;
+    gCurTask->player->mode = 14;
+    gCurTask->updateState = 9;
+    if (gCurTask->player->prevMode != 14)
     {
-        gCurTask->unk88->unk3D = 0;
+        gCurTask->player->running = 0;
         gCurTask->unk73 = 0;
     }
-    gCurTask->unk88->unk64 = (u32)gUnk_0873BD14;
+    gCurTask->player->bodyBox = (u32)gUnk_0873BD14;
     while (1)
     {
         switch (gCurTask->unk73)
         {
         case 0:
-            PlaySfxIfLocalPlayer(228, gCurTask->unk88->unk00);
-            TaskSetFrame(gUnk_0873D7E4[gCurTask->unk88->unk0D][0]);
+            PlaySfxIfLocalPlayer(228, gCurTask->player->playerIndex);
+            TaskSetFrame(gUnk_0873D7E4[gCurTask->player->ability][0]);
             TaskYieldTrampoline(2);
             for (gCurTask->unk6C = 0; (s16)gCurTask->unk6C <= 3; gCurTask->unk6C++)
             {
@@ -478,12 +478,12 @@ void PlayerActionFloat(void)
                 TaskYieldTrampoline(2);
             }
             gCurTask->unk73 = 2;
-            gCurTask->unk88->unk06 = 2;
+            gCurTask->player->mouthState = 2;
             break;
         case 1:
-            PlaySfxIfLocalPlayer(115, gCurTask->unk88->unk00);
-            gCurTask->unk46 = gUnk_0873D7E4[gCurTask->unk88->unk0D][1];
-            switch (gCurTask->unk88->unk0D)
+            PlaySfxIfLocalPlayer(115, gCurTask->player->playerIndex);
+            gCurTask->unk46 = gUnk_0873D7E4[gCurTask->player->ability][1];
+            switch (gCurTask->player->ability)
             {
             case 0:
             default:
@@ -501,10 +501,10 @@ void PlayerActionFloat(void)
                     TaskYieldTrampoline(4);
                     gCurTask->frame -= 2;
                     TaskYieldTrampoline(2);
-                    if (!(gLatchedHeldKeys[gCurTask->unk88->unk00] & 65))
+                    if (!(gLatchedHeldKeys[gCurTask->player->playerIndex] & 65))
                         break;
-                    if (gLatchedHeldKeys[gCurTask->unk88->unk00] & 1)
-                        PlaySfxIfLocalPlayer(115, gCurTask->unk88->unk00);
+                    if (gLatchedHeldKeys[gCurTask->player->playerIndex] & 1)
+                        PlaySfxIfLocalPlayer(115, gCurTask->player->playerIndex);
                 }
                 break;
             case 1:
@@ -529,18 +529,18 @@ void PlayerActionFloat(void)
                     TaskYieldTrampoline(2);
                     TaskSetFrame((s16)(gCurTask->unk46 + 5));
                     TaskYieldTrampoline(2);
-                    if (!(gLatchedHeldKeys[gCurTask->unk88->unk00] & 65))
+                    if (!(gLatchedHeldKeys[gCurTask->player->playerIndex] & 65))
                         break;
-                    if (gLatchedHeldKeys[gCurTask->unk88->unk00] & 1)
-                        PlaySfxIfLocalPlayer(115, gCurTask->unk88->unk00);
+                    if (gLatchedHeldKeys[gCurTask->player->playerIndex] & 1)
+                        PlaySfxIfLocalPlayer(115, gCurTask->player->playerIndex);
                 }
                 break;
             }
             gCurTask->unk73 = 2;
             break;
         case 2:
-            gCurTask->unk46 = gUnk_0873D7E4[gCurTask->unk88->unk0D][1];
-            switch (gCurTask->unk88->unk0D)
+            gCurTask->unk46 = gUnk_0873D7E4[gCurTask->player->ability][1];
+            switch (gCurTask->player->ability)
             {
             case 0:
             default:
@@ -576,8 +576,8 @@ void PlayerActionFloat(void)
                 }
             }
         case 3:
-            gCurTask->unk46 = gUnk_0873D7E4[gCurTask->unk88->unk0D][1];
-            switch (gCurTask->unk88->unk0D)
+            gCurTask->unk46 = gUnk_0873D7E4[gCurTask->player->ability][1];
+            switch (gCurTask->player->ability)
             {
             case 0:
             default:
@@ -617,30 +617,30 @@ void PlayerActionFloat(void)
                 }
             }
         case 4:
-            if (gCurTask->unk88->unk06 == 2)
+            if (gCurTask->player->mouthState == 2)
             {
-                gCurTask->unk88->unk06 = 0;
-                gCurTask->unk88->unk64 = (u32)gPlayerDefaultBodyBox;
-                gCurTask->unk88->unk68 = (u32)gPlayerDefaultTerrainBox;
-                CreatePlayerObject(gCurTask->unk88->unk00, 0, 0);
+                gCurTask->player->mouthState = 0;
+                gCurTask->player->bodyBox = (u32)gPlayerDefaultBodyBox;
+                gCurTask->player->terrainBox = (u32)gPlayerDefaultTerrainBox;
+                CreatePlayerObject(gCurTask->player->playerIndex, 0, 0);
                 gCurTask->unk28++;
                 PlayerSetMotionYPreset(2);
-                TaskSetFrame(gUnk_0873D7E4[gCurTask->unk88->unk0D][2]);
+                TaskSetFrame(gUnk_0873D7E4[gCurTask->player->ability][2]);
                 TaskYieldTrampoline(6);
                 gCurTask->frame--;
                 TaskYieldTrampoline(2);
             }
             else
             {
-                TaskSetFrame(gUnk_0873D7E4[gCurTask->unk88->unk0D][2]);
+                TaskSetFrame(gUnk_0873D7E4[gCurTask->player->ability][2]);
                 gCurTask->frame--;
                 TaskYieldTrampoline(2);
             }
             if (PlayerCheckEnterDoor() == 0)
             {
-                if ((gLatchedHeldKeys[gCurTask->unk88->unk00] & 64) && !(gCurTask->unk7B & 1))
+                if ((gLatchedHeldKeys[gCurTask->player->playerIndex] & 64) && !(gCurTask->waterFlags & 1))
                 {
-                    gCurTask->unk88->unk64 = (u32)gUnk_0873BD14;
+                    gCurTask->player->bodyBox = (u32)gUnk_0873BD14;
                     gCurTask->unk73 = 0;
                     break;
                 }
@@ -648,8 +648,8 @@ void PlayerActionFloat(void)
             }
             TaskSleepForever();
         case 5:
-            gCurTask->unk46 = gUnk_0873D7E4[gCurTask->unk88->unk0D][1];
-            switch (gCurTask->unk88->unk0D)
+            gCurTask->unk46 = gUnk_0873D7E4[gCurTask->player->ability][1];
+            switch (gCurTask->player->ability)
             {
             case 0:
             default:
@@ -694,7 +694,7 @@ void PlayerActionFloat(void)
                         gCurTask->frame--;
                         TaskYieldTrampoline(2);
                     }
-                    gCurTask->unk58 = 0;
+                    gCurTask->velY = 0;
                     gCurTask->frame--;
                     TaskYieldTrampoline(2);
                 }

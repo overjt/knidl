@@ -23,7 +23,7 @@
  * gTaskCursor (wrapping at 64; -1 when the table is full) for task type
  * `type`: the class byte and the entry address come from the task-type table
  * gTaskTypes[type], the stack is the slot's 256 bytes at 0x0203BFE0, the
- * parent (Task.unk44) is the running task gCurTaskIdx, and the slot is
+ * parent (Task.parent) is the running task gCurTaskIdx, and the slot is
  * appended to its class list when the lists are live.  The cursor moves past
  * the slot, whose index is returned.  src/early_58e4.c's allocation wrappers
  * call it.
@@ -57,22 +57,22 @@ void TaskFree(s32 id)
     gTaskResumeAddrs[id] = 0;
     t = &gTasks[id];
     t->taskClass = -1;
-    t->unk00 = 0;
-    t->unk04 = 0;
-    t->unk08 = 0;
-    t->unk0C = 0;
-    t->unk16 = 0;
-    t->unk15 = 0;
-    t->unk14 = 0;
+    t->moveCallback = 0;
+    t->updateCallback = 0;
+    t->lateUpdateCallback = 0;
+    t->drawCallback = 0;
+    t->serial = 0;
+    t->updateState = 0;
+    t->state = 0;
     t->skipMask = 0;
     t->frame = -1;
     t->layer = 0;
-    t->unk38 = 0;
+    t->frameTable = 0;
     t->facing = 0;
-    t->unk40 = 0;
-    t->unk3E = 0;
+    t->tileWord = 0;
+    t->spriteFlags = 0;
     t->unk46 = -1;
-    t->unk44 = -1;
+    t->parent = -1;
     t->unk34 = 0;
     t->unk30 = 0;
     t->unk2C = 0;
@@ -83,31 +83,31 @@ void TaskFree(s32 id)
     t->unk18 = 0;
     t->posY = 0;
     t->posX = 0;
-    t->unk4A = 0;
-    t->unk48 = 0;
-    t->unk60 = 0;
-    t->unk5C = 0;
-    t->unk58 = 0;
-    t->unk54 = 0;
-    t->unk68 = 0x80000000;
-    t->unk64 = 0x80000000;
+    t->pixelY = 0;
+    t->pixelX = 0;
+    t->accelY = 0;
+    t->accelX = 0;
+    t->velY = 0;
+    t->velX = 0;
+    t->speedLimitY = 0x80000000;
+    t->speedLimitX = 0x80000000;
     t->unk70 = 0;
     t->unk6E = 0;
     t->unk6C = 0;
-    t->unk88 = (struct PlayerState *)(t->unk8C = 0);
+    t->player = (struct PlayerState *)(t->unk8C = 0);
     t->unk76 = 0;
     t->unk74 = 0;
     t->unk73 = 0;
-    t->unk72 = 0;
-    t->unk75 = 0;
-    t->unk78 = 0;
-    t->unk7B = 0;
-    t->unk7A = 0;
-    t->unk7D = 0;
+    t->actorKind = 0;
+    t->hitTimer = 0;
+    t->health = 0;
+    t->waterFlags = 0;
+    t->onGround = 0;
+    t->hitDirection = 0;
     t->unk82 = 0;
-    t->unk7C = 0;
-    t->unk7E = -1;
-    t->unk7F = -1;
+    t->hitKind = 0;
+    t->hitterSlot = -1;
+    t->hitterPlayer = -1;
     t->unk80 = -1;
     if (gTaskRunPhase >= 0)
     {
@@ -146,7 +146,7 @@ s32 TaskCreate(u32 type)
     gTaskResumeAddrs[gTaskCursor] = gTaskTypes[type].entry;
     t->sleepFrames = 0;
     t->skipMask = 0;
-    t->unk44 = gCurTaskIdx;
+    t->parent = gCurTaskIdx;
     if (gTaskRunPhase >= 0)
     {
         cls = t->taskClass;

@@ -35,24 +35,24 @@ void sub_0804e3a0(void)
         if (PlayerHasCrossedWaterSurface(0) != 0)
         {
             PlayerSetWaterMotionY();
-            if ((s8)gCurTask->unk88->unk07 != 0)
-                gCurTask->unk88->unk16 = 0xFF;
-            gCurTask->unk88->unk01 = 23;
+            if ((s8)gCurTask->player->unk07 != 0)
+                gCurTask->player->unk16 = 0xFF;
+            gCurTask->player->requestedAction = 23;
             break;
         }
         t = gCurTask;
         switch (t->unk73)
         {
         case 1:
-            p = t->unk88;
+            p = t->player;
             if (p->unk09 == 0)
             {
                 if (t->unk28 == 0)
                 {
-                    if (sub_08030898(gUnk_0873CC54, p->unk00) != 0)
+                    if (sub_08030898(gUnk_0873CC54, p->playerIndex) != 0)
                     {
                         sub_08065100(gUnk_02007FA0[0] + 8, gUnk_02004B6C[0] + 8, gCurTaskIdx, 4, 2);
-                        gCurTask->unk88->unk09 = 2;
+                        gCurTask->player->unk09 = 2;
                     }
                 }
                 else
@@ -60,15 +60,15 @@ void sub_0804e3a0(void)
                     t->unk28--;
                 }
                 u = gCurTask;
-                if (u->unk88->unk09 == 0)
-                    RegisterCollider(gCurTaskIdx, u->unk48, u->unk4A, gUnk_0873BEEC);
+                if (u->player->unk09 == 0)
+                    RegisterCollider(gCurTaskIdx, u->pixelX, u->pixelY, gUnk_0873BEEC);
             }
             v = gCurTask;
-            if ((s8)v->unk88->unk07 == 0)
+            if ((s8)v->player->unk07 == 0)
             {
                 if (v->unk2C == 0)
                 {
-                    if (!(gLatchedHeldKeys[v->unk88->unk00] & 2))
+                    if (!(gLatchedHeldKeys[v->player->playerIndex] & 2))
                     {
                         v->unk73 = 2;
                         TaskSetEntry(sub_0804e0e0, gCurTaskIdx);
@@ -89,30 +89,30 @@ void sub_0804e3a0(void)
         case 2:
             break;
         case 3:
-            r = t->unk88;
+            r = t->player;
             if ((s8)r->unk07 != 0)
-                r->unk01 = 54;
-            else if (t->unk7A & 1)
-                r->unk01 = 1;
+                r->requestedAction = 54;
+            else if (t->onGround & 1)
+                r->requestedAction = 1;
             else
-                r->unk01 = 7;
+                r->requestedAction = 7;
             break;
         }
         break;
     }
     w = gCurTask;
-    if (w->unk7A & 1)
+    if (w->onGround & 1)
     {
-        if (w->unk54 != 0)
+        if (w->velX != 0)
         {
-            if (w->unk7B & 1)
+            if (w->waterFlags & 1)
                 PlayerSetMotionXPreset(8, 72);
             else
                 PlayerSetMotionXPreset(0, 72);
         }
         PlayerLand(1);
     }
-    else if (!(w->unk7B & 1))
+    else if (!(w->waterFlags & 1))
     {
         PlayerSetMotionYPreset(2);
         PlayerSetMotionXPreset(11, 2);

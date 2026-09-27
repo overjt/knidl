@@ -43,7 +43,7 @@ extern s8 gUnk_087336F0[];
 extern s8 gUnk_087338F0[];
 extern s8 gUnk_087339F0[];
 extern u16 gTerrainTileRight;
-extern s32 gTerrainVelY;           /* Task.unk58 */
+extern s32 gTerrainVelY;           /* Task.velY */
 extern s16 gTerrainBoxLeft;           /* box left offset */
 extern s16 gTerrainPrevY;           /* actor y (room-relative) */
 extern struct Unk03005530 gTerrainProbeResult;
@@ -54,7 +54,7 @@ extern s16 gTerrainBoxTop;           /* box top offset */
 extern s16 gTerrainBoxBottom;           /* box bottom offset */
 extern u16 gTerrainTileBelow;           /* cell below: tile set */
 extern u16 gTerrainTileLeft;           /* cell to the left: tile set */
-extern s32 gTerrainVelX;           /* Task.unk54 */
+extern s32 gTerrainVelX;           /* Task.velX */
 extern s16 gTerrainBoxRight;           /* box right offset */
 
 s32 TerrainQueryPixel(u32 x, u32 y);

@@ -49,13 +49,13 @@ void sub_080082d0(void)
         idx = TaskCreateFrom(0x109, 32);
         if (idx != -1) {
             t = &gTasks[idx];
-            t->unk44 = gCurTaskIdx;
+            t->parent = gCurTaskIdx;
             t->unk73 = 0;
         }
         idx = TaskCreateFrom(0x109, 32);
         if (idx != -1) {
             t = &gTasks[idx];
-            t->unk44 = gCurTaskIdx;
+            t->parent = gCurTaskIdx;
             t->unk73 = 1;
         }
     }
@@ -65,28 +65,28 @@ void sub_08008348(void)
 {
     struct Task *t = gCurTask;
 
-    t->unk00 = 0;
-    t->unk0C = 0;
-    t->unk04 = (u32)sub_08008394;
+    t->moveCallback = 0;
+    t->drawCallback = 0;
+    t->updateCallback = (u32)sub_08008394;
     t->unk2C = 0;
     t->unk30 = 1;
     t->unk34 = 0;
     if (t->unk73 == 0)
-        t->unk14 = 0;
+        t->state = 0;
     else
-        t->unk14 = 1;
-    CallTableEntry(gCurTask->unk14, 2, gUnk_0873078C);
+        t->state = 1;
+    CallTableEntry(gCurTask->state, 2, gUnk_0873078C);
     TaskSleepForever();
 }
 
 void sub_08008394(void)
 {
-    CallTableEntry(gCurTask->unk15, 2, gUnk_08730794);
+    CallTableEntry(gCurTask->updateState, 2, gUnk_08730794);
 }
 
 void sub_080083b0(void)
 {
-    gCurTask->unk15 = 0;
+    gCurTask->updateState = 0;
     gCurTask->unk2C = 0;
     for (;;) {
         if (gUnk_03005280 == 0) {
@@ -119,7 +119,7 @@ void sub_08008460(void)
 
 void sub_080084dc(void)
 {
-    gCurTask->unk15 = 1;
+    gCurTask->updateState = 1;
     for (;;) {
         if (gPrevGameState == 4 && gLocalPlayer == 0)
             QueueSprite(8, gUnk_08756054[gSubGameLevel + 4], 0, 0, 120, 144);

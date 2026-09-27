@@ -8,7 +8,7 @@
  * sub_08049f98 (action 46, mode 13) is a five-state move whose states
  * fall into each other; a fresh entry starts in state 0, or in state 4
  * when it comes from mode 5.  State 0 starts it (effect 42, animation
- * 0xB2D), state 1 points PlayerState.unk6C at the block hit-box set
+ * 0xB2D), state 1 points PlayerState.hitBoxSet at the block hit-box set
  * gUnk_0873CF5C with effects 42 x4 and sound 174 and runs velocity
  * presets 38, 0 and 1, and states 3-4 hand the player over to mode 5
  * with handler 7 (animation 0xAD2, then the ability's loop from
@@ -17,7 +17,7 @@
  * RequestCopy) in state 1, re-binds state 3 on a newly-pressed B after
  * the PlayerState.unk14 frames, registers the collider gUnk_0873C228,
  * steers with the held left/right keys, picks one of five animation
- * rows 0xB2E-0xB3E by |Task.unk54| and cycles Task.unk46 through them,
+ * rows 0xB2E-0xB3E by |Task.velX| and cycles Task.unk46 through them,
  * ends the move on landing and re-binds state 4 on a ceiling hit. */
 
 /* gTerrainResult: M06's collision result block (src/terrain_1bcac.c spells it
@@ -73,13 +73,13 @@ s32 CreatePlayerEffect(s32 a0, s32 a1, s32 a2);
 
 void sub_08049f98(void)
 {
-    gCurTask->unk88->unk05 = gCurTask->unk88->unk04;
-    gCurTask->unk88->unk04 = 13;
-    gCurTask->unk15 = 43;
+    gCurTask->player->prevMode = gCurTask->player->mode;
+    gCurTask->player->mode = 13;
+    gCurTask->updateState = 43;
     {
         struct Task *t = gCurTask;
-        if (t->unk88->unk05 != 13) {
-            if (t->unk88->unk05 == 5)
+        if (t->player->prevMode != 13) {
+            if (t->player->prevMode == 5)
                 t->unk73 = 4;
             else
                 t->unk73 = 0;
@@ -88,23 +88,23 @@ void sub_08049f98(void)
     }
     switch (gCurTask->unk73) {
     case 0:
-        CreatePlayerEffect(gCurTask->unk88->unk00, 42, 5);
+        CreatePlayerEffect(gCurTask->player->playerIndex, 42, 5);
         PlayerStopAxes(2);
         PlayerStartOffsetScript(5);
         TaskSetFrame(0xB2D);
         TaskYieldTrampoline(4);
         gCurTask->unk73 = 1;
-        gCurTask->unk88->unk14 = 4;
+        gCurTask->player->unk14 = 4;
         /* fallthrough */
     case 1:
         PlayerSetMotionYPreset(38);
-        SetPlayerInvulnerability(3, 0, gCurTask->unk88->unk00);
-        gCurTask->unk88->unk6C = gUnk_0873CF5C;
-        PlayerStartSfx(174, gCurTask->unk88->unk00);
-        CreatePlayerEffect(gCurTask->unk88->unk00, 42, 0);
-        CreatePlayerEffect(gCurTask->unk88->unk00, 42, 1);
-        CreatePlayerEffect(gCurTask->unk88->unk00, 42, 2);
-        CreatePlayerEffect(gCurTask->unk88->unk00, 42, 4);
+        SetPlayerInvulnerability(3, 0, gCurTask->player->playerIndex);
+        gCurTask->player->hitBoxSet = gUnk_0873CF5C;
+        PlayerStartSfx(174, gCurTask->player->playerIndex);
+        CreatePlayerEffect(gCurTask->player->playerIndex, 42, 0);
+        CreatePlayerEffect(gCurTask->player->playerIndex, 42, 1);
+        CreatePlayerEffect(gCurTask->player->playerIndex, 42, 2);
+        CreatePlayerEffect(gCurTask->player->playerIndex, 42, 4);
         gCurTask->unk46 = 0;
         gCurTask->unk28 = 2;
         TaskYieldTrampoline(23);
@@ -115,8 +115,8 @@ void sub_08049f98(void)
     case 2:
         {
             struct Task *t = gCurTask;
-            t->unk88->unk42 &= 0xFFEF;
-            SetPlayerInvulnerability(255, 0, t->unk88->unk00);
+            t->player->unk42 &= 0xFFEF;
+            SetPlayerInvulnerability(255, 0, t->player->playerIndex);
         }
         TaskYieldTrampoline(13);
         PlayerSetMotionYPreset(1);
@@ -124,14 +124,14 @@ void sub_08049f98(void)
         gCurTask->unk73 = 3;
         /* fallthrough */
     case 3:
-        gCurTask->unk88->unk42 &= 0xFFEF;
+        gCurTask->player->unk42 &= 0xFFEF;
         PlayerSetMotionYPreset(2);
-        gCurTask->unk88->unk05 = gCurTask->unk88->unk04;
-        gCurTask->unk88->unk04 = 5;
-        gCurTask->unk15 = 7;
-        gCurTask->unk88->unk6C = 0;
+        gCurTask->player->prevMode = gCurTask->player->mode;
+        gCurTask->player->mode = 5;
+        gCurTask->updateState = 7;
+        gCurTask->player->hitBoxSet = 0;
         gCurTask->unk73 = 4;
-        gCurTask->unk88->unk14 = 300;
+        gCurTask->player->unk14 = 300;
         TaskSetFrame(0xAD2);
         TaskYieldTrampoline(2);
         gCurTask->unk6C = 0;
@@ -144,20 +144,20 @@ void sub_08049f98(void)
         {
             struct Task *t = gCurTask;
             struct PlayerState *p;
-            t->unk88->unk42 &= 0xFFEF;
-            p = t->unk88;
-            if (p->unk04 != 5) {
-                p->unk05 = p->unk04;
-                gCurTask->unk88->unk04 = 5;
-                gCurTask->unk15 = 7;
-                gCurTask->unk88->unk6C = 0;
+            t->player->unk42 &= 0xFFEF;
+            p = t->player;
+            if (p->mode != 5) {
+                p->prevMode = p->mode;
+                gCurTask->player->mode = 5;
+                gCurTask->updateState = 7;
+                gCurTask->player->hitBoxSet = 0;
                 PlayerSetMotionYPreset(2);
             }
         }
         {
             struct Task *t = gCurTask;
-            t->unk88->unk14 = 30;
-            t->unk46 = gUnk_0873D3B8[t->unk88->unk0D][1];
+            t->player->unk14 = 30;
+            t->unk46 = gUnk_0873D3B8[t->player->ability][1];
         }
         while (1) {
             TaskSetFrame(gCurTask->unk46);
@@ -174,23 +174,23 @@ void sub_0804a258(void)
 
     switch (t->unk73) {
     case 1:
-        t->unk88->unk42 &= 0xFFEF;
+        t->player->unk42 &= 0xFFEF;
         if ((gFrameCount & 7) <= 3) {
-            RequestCopy(2, gUnk_081F59F0, gObjPalette + (t->unk40 >> 12) * 32, 64);
-            gCurTask->unk88->unk42 |= 16;
+            RequestCopy(2, gUnk_081F59F0, gObjPalette + (t->tileWord >> 12) * 32, 64);
+            gCurTask->player->unk42 |= 16;
         }
         /* fallthrough */
     case 2:
         {
             struct Task *u = gCurTask;
-            struct PlayerState *p = u->unk88;
+            struct PlayerState *p = u->player;
             if ((s16)p->unk14 == 0) {
-                if (gLatchedPressedKeys[p->unk00] & 2) {
+                if (gLatchedPressedKeys[p->playerIndex] & 2) {
                     u->unk73 = 3;
                     TaskSetEntry(sub_08049f98, gCurTaskIdx);
-                    SetPlayerInvulnerability(255, 0, gCurTask->unk88->unk00);
+                    SetPlayerInvulnerability(255, 0, gCurTask->player->playerIndex);
                     PlayerStopSfx();
-                    CreatePlayerEffect(gCurTask->unk88->unk00, 42, 3);
+                    CreatePlayerEffect(gCurTask->player->playerIndex, 42, 3);
                     PlayerStopAxes(2);
                 }
             } else {
@@ -206,8 +206,8 @@ void sub_0804a258(void)
                 u->unk28 = 2;
             }
         }
-        RegisterCollider(gCurTaskIdx, gCurTask->unk48, gCurTask->unk4A, gUnk_0873C228);
-        if (gLatchedHeldKeys[gCurTask->unk88->unk00] & 48) {
+        RegisterCollider(gCurTaskIdx, gCurTask->pixelX, gCurTask->pixelY, gUnk_0873C228);
+        if (gLatchedHeldKeys[gCurTask->player->playerIndex] & 48) {
             PlayerFaceHeldDirection();
             PlayerSetMotionXPreset(11, 60);
         } else {
@@ -219,21 +219,21 @@ void sub_0804a258(void)
             struct Task *u = gCurTask;
             if ((u8)(u->unk73 - 1) <= 1) {
                 s32 a;
-                if (abs(u->unk54) <= 0x4000)
+                if (abs(u->velX) <= 0x4000)
                     a = 0xB2E;
-                else if (abs(u->unk54) <= 0x10000)
+                else if (abs(u->velX) <= 0x10000)
                     a = 0xB32;
-                else if (abs(u->unk54) <= 0x14000)
+                else if (abs(u->velX) <= 0x14000)
                     a = 0xB36;
-                else if (abs(u->unk54) <= 0x1C000)
+                else if (abs(u->velX) <= 0x1C000)
                     a = 0xB3A;
                 else
                     a = 0xB3E;
                 {
                     struct Task *w = gCurTask;
-                    if (w->unk54 == 0)
+                    if (w->velX == 0)
                         TaskSetFrame((s16)(w->unk46 + a));
-                    else if (w->unk54 < 0)
+                    else if (w->velX < 0)
                         TaskSetFrameFlip(w->unk46 + a);
                     else
                         TaskSetFrameNoFlip((s16)(w->unk46 + a));
@@ -242,17 +242,17 @@ void sub_0804a258(void)
         }
         {
             struct Task *w = gCurTask;
-            if (w->unk7A & 1) {
+            if (w->onGround & 1) {
                 PlayerCheckBump();
                 PlayerLand(1);
                 PlayerRequestLocomotion();
                 break;
             }
-            if (w->unk58 < 0 && (gTerrainResult.unk1 != 0 || (w->unk88->unk48 & 4))) {
-                w->unk58 = 0;
+            if (w->velY < 0 && (gTerrainResult.unk1 != 0 || (w->player->unk48 & 4))) {
+                w->velY = 0;
                 w->unk73 = 4;
                 TaskSetEntry(sub_08049f98, gCurTaskIdx);
-                SetPlayerInvulnerability(255, 0, gCurTask->unk88->unk00);
+                SetPlayerInvulnerability(255, 0, gCurTask->player->playerIndex);
                 PlayerStopSfx();
                 return;
             }
@@ -261,8 +261,8 @@ void sub_0804a258(void)
         break;
     }
     {
-        struct PlayerState *p = gCurTask->unk88;
-        if (p->unk01 != 0)
+        struct PlayerState *p = gCurTask->player;
+        if (p->requestedAction != 0)
             p->unk42 &= 0xFFEF;
     }
 }

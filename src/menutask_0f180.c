@@ -67,12 +67,12 @@ void Task_LinkPlayPlayerList(void)
     struct Task *u;
     struct Task *x;
 
-    gCurTask->unk00 = (u32)TaskMove;
-    gCurTask->unk0C = (u32)TaskDrawScreen;
-    gCurTask->unk04 = (u32)sub_0800f2b4;
+    gCurTask->moveCallback = (u32)TaskMove;
+    gCurTask->drawCallback = (u32)TaskDrawScreen;
+    gCurTask->updateCallback = (u32)sub_0800f2b4;
     gCurTask->layer = 7;
     t = gCurTask;
-    t->unk38 = gUnk_08755688;
+    t->frameTable = gUnk_08755688;
     t->posX = 0xC40000;
     t->posY = 0x340000;
     t->unk6C = 0;
@@ -80,12 +80,12 @@ void Task_LinkPlayPlayerList(void)
         gCurTask->unk28 = TaskCreateFrom(252, 32);
         u = gCurTask;
         x = &gTasks[u->unk28];
-        x->unk44 = gCurTaskIdx;
+        x->parent = gCurTaskIdx;
         x->unk18 = (s16)u->unk6C;
         gCurTask->unk28 = TaskCreateFrom(253, 32);
         u = gCurTask;
         x = &gTasks[u->unk28];
-        x->unk44 = gCurTaskIdx;
+        x->parent = gCurTaskIdx;
         x->unk18 = (s16)u->unk6C;
     } while ((s16)++u->unk6C <= 3);
     s = gCurTask;
@@ -157,11 +157,11 @@ void sub_0800f2b4(void)
 
 void sub_0800f390(void)
 {
-    gCurTask->unk00 = (u32)TaskMove;
-    gCurTask->unk0C = (u32)TaskDrawScreen;
-    gCurTask->unk04 = (u32)sub_0800f408;
+    gCurTask->moveCallback = (u32)TaskMove;
+    gCurTask->drawCallback = (u32)TaskDrawScreen;
+    gCurTask->updateCallback = (u32)sub_0800f408;
     gCurTask->layer = gCurTask->unk18 * 2 + 9;
-    gCurTask->unk38 = gUnk_08755688;
+    gCurTask->frameTable = gUnk_08755688;
     gCurTask->posX = 0x780000;
     gCurTask->posY = 0x480000;
     gCurTask->unk2C = 0;
@@ -173,7 +173,7 @@ void sub_0800f390(void)
 void sub_0800f408(void)
 {
     struct Task *t = gCurTask;
-    struct Task *p = &gTasks[t->unk44];
+    struct Task *p = &gTasks[t->parent];
     struct Task *u;
     struct Task *v;
     struct Task *w;
@@ -193,23 +193,23 @@ void sub_0800f408(void)
             t->unk28 = p->unk1C + 1;
         }
         u = gCurTask;
-        u->unk54 = gUnk_08731E58[u->unk28][u->unk18] * p->unk18;
-        u->unk58 = gUnk_08731E98[u->unk28] * p->unk18;
+        u->velX = gUnk_08731E58[u->unk28][u->unk18] * p->unk18;
+        u->velY = gUnk_08731E98[u->unk28] * p->unk18;
     } else {
-        t->unk54 = 0;
-        t->unk58 = 0;
+        t->velX = 0;
+        t->velY = 0;
     }
     if (gUnk_02007FC8 == 0) {
         v = gCurTask;
         v->frame = gUnk_08731EA8[p->unk1C];
         if (TaskIsOnScreenNoCamera()) {
             w = gCurTask;
-            tbl = w->unk38;
-            QueueSprite(w->layer - 1, tbl[gUnk_08731EB0[p->unk1C]], 0, 0, w->unk48, w->unk4A);
+            tbl = w->frameTable;
+            QueueSprite(w->layer - 1, tbl[gUnk_08731EB0[p->unk1C]], 0, 0, w->pixelX, w->pixelY);
             if (gMultiBootStruct[0] == (gCurTask->unk18 & 0xFF) && sub_0800ffd8() != 0) {
                 x = gCurTask;
                 if (p->unk1C >= x->unk18)
-                    QueueSprite(x->layer - 1, tbl[gMultiBootStruct[0] + 13], 0, 0, x->unk48, x->unk4A + 16);
+                    QueueSprite(x->layer - 1, tbl[gMultiBootStruct[0] + 13], 0, 0, x->pixelX, x->pixelY + 16);
             }
             y = gCurTask;
             if (y->unk2C != 0 && --y->unk2C <= 17) {
@@ -218,9 +218,9 @@ void sub_0800f408(void)
                     y->unk30 = k;
                     g = DrawAffineSprite(tbl[18], k, k, 0);
                     z = gCurTask;
-                    QueueSprite(z->layer - 1, g, 0, 0, z->unk48, z->unk4A + 28 + z->unk2C);
+                    QueueSprite(z->layer - 1, g, 0, 0, z->pixelX, z->pixelY + 28 + z->unk2C);
                 } else {
-                    QueueSprite(y->layer - 1, tbl[18], 0, 0, y->unk48, y->unk4A + 32);
+                    QueueSprite(y->layer - 1, tbl[18], 0, 0, y->pixelX, y->pixelY + 32);
                 }
             }
         }
@@ -233,12 +233,12 @@ void sub_0800f5ec(void)
 {
     struct Task *t;
 
-    gCurTask->unk00 = (u32)TaskMove;
-    gCurTask->unk0C = (u32)TaskDrawScreen;
-    gCurTask->unk04 = (u32)sub_0800f698;
+    gCurTask->moveCallback = (u32)TaskMove;
+    gCurTask->drawCallback = (u32)TaskDrawScreen;
+    gCurTask->updateCallback = (u32)sub_0800f698;
     gCurTask->layer = gCurTask->unk18 * 2 + 9;
     t = gCurTask;
-    t->unk38 = gUnk_08755688;
+    t->frameTable = gUnk_08755688;
     t->posX = gUnk_08731EB8[t->unk18] << 16;
     t->posY = gUnk_08731EC0[t->unk18] << 16;
     t->unk28 = 1;
@@ -249,7 +249,7 @@ void sub_0800f5ec(void)
         if (u->unk18 == 0 && --u->unk28 == 0) {
             u->unk28 = 16;
             u->unk2C = -u->unk2C;
-            u->unk58 = u->unk2C << 16;
+            u->velY = u->unk2C << 16;
         }
         TaskYieldTrampoline(1);
     }
@@ -259,7 +259,7 @@ void sub_0800f5ec(void)
 void sub_0800f698(void)
 {
     struct Task *t = gCurTask;
-    struct Task *p = &gTasks[t->unk44];
+    struct Task *p = &gTasks[t->parent];
     struct Task *u;
     s16 a;
     s16 b;
@@ -275,8 +275,8 @@ void sub_0800f698(void)
         else
             t->unk1C = p->unk1C;
         u = gCurTask;
-        u->unk54 = gUnk_08731EC8[u->unk1C][u->unk18] * p->unk18;
-        u->unk58 = gUnk_08731F08[u->unk1C][u->unk18] * p->unk18;
+        u->velX = gUnk_08731EC8[u->unk1C][u->unk18] * p->unk18;
+        u->velY = gUnk_08731F08[u->unk1C][u->unk18] * p->unk18;
         a = gUnk_08731F48[p->unk1C][u->unk18];
         if (a == -1 || (b = gUnk_08731F48[p->unk1C - p->unk18][u->unk18]) == -1)
             u->frame = 0xFFFF;
@@ -286,8 +286,8 @@ void sub_0800f698(void)
             u->frame = a;
     } else {
         t->frame = gUnk_08731F48[p->unk1C][t->unk18];
-        t->unk54 = 0;
-        t->unk58 = 0;
+        t->velX = 0;
+        t->velY = 0;
     }
     if (gUnk_02007FC8 == 1)
         gCurTask->frame = 0xFFFF;
@@ -297,10 +297,10 @@ void Task_MenuScreenTitle(void)
 {
     struct Task *t;
 
-    gCurTask->unk00 = (u32)TaskMove;
-    gCurTask->unk0C = (u32)TaskDrawScreen;
-    gCurTask->unk04 = (u32)sub_0800f840;
-    gCurTask->unk38 = gUnk_08755620;
+    gCurTask->moveCallback = (u32)TaskMove;
+    gCurTask->drawCallback = (u32)TaskDrawScreen;
+    gCurTask->updateCallback = (u32)sub_0800f840;
+    gCurTask->frameTable = gUnk_08755620;
     gCurTask->layer = 7;
     t = gCurTask;
     t->unk28 = gMenuScreen;
@@ -336,19 +336,19 @@ void sub_0800f840(void)
                 t->posX = 0x600000;
                 t->posY = 0x200000;
                 t->frame = 11;
-                t->unk54 = 0xFFE00000;
+                t->velX = 0xFFE00000;
             } else {
                 t->posX = 0x640000;
                 t->posY = 0xE0000;
                 t->frame = 10;
-                t->unk54 = 0x200000;
+                t->velX = 0x200000;
             }
         } else {
             t->unk30 = (old == 11) ? 1 : 7;
             u = gCurTask;
             u->posX = 0x640000;
             u->posY = 0xE0000;
-            u->unk54 = 0;
+            u->velX = 0;
             if (gUnk_08731D70[gMenuScreen])
                 u->unk2C = 2;
             else
@@ -366,13 +366,13 @@ void sub_0800f840(void)
                 u->posX = 0xFFE00000;
                 u->posY = 0x200000;
                 u->frame = 11;
-                u->unk54 = 0x100000;
+                u->velX = 0x100000;
             } else {
                 u = gCurTask;
                 u->posX = 0xE40000;
                 u->posY = 0xE0000;
                 u->frame = 10;
-                u->unk54 = 0xFFF00000;
+                u->velX = 0xFFF00000;
             }
             u = gCurTask;
             u->unk30 = 8;
@@ -402,7 +402,7 @@ void sub_0800f840(void)
                 v->posY = 0xE0000;
             }
             gCurTask->unk2C = 3;
-            gCurTask->unk54 = 0;
+            gCurTask->velX = 0;
         }
         break;
     }

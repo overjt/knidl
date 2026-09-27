@@ -7,7 +7,7 @@
  * Player action bodies, part 16: action 40 and per-frame handler 37.
  * sub_08046c00 (action 40, mode 13) is sub_08044d04's sibling: the same
  * opening, a ground form (Task.unk73 = 0) and an air form (1) in two
- * variants (Task.unk30 = Task.unk7B bit 0), the collider record
+ * variants (Task.unk30 = Task.waterFlags bit 0), the collider record
  * gUnk_0873C060 and the block hit-box sets gUnk_0873CDB4 (ground) /
  * gUnk_0873CDF4 (air) whose rows gUnk_0873CDBC, gUnk_0873CDFC and
  * gUnk_0873CE64 it steps with LoadPlayerHitBoxSet.  On the ground it probes the
@@ -54,57 +54,57 @@ s32 CreatePlayerEffect(s32 a0, s32 a1, s32 a2);
 
 void sub_08046c00(void)
 {
-    gCurTask->unk88->unk05 = gCurTask->unk88->unk04;
-    gCurTask->unk88->unk04 = 13;
-    gCurTask->unk15 = 37;
+    gCurTask->player->prevMode = gCurTask->player->mode;
+    gCurTask->player->mode = 13;
+    gCurTask->updateState = 37;
     {
         struct Task *t = gCurTask;
         t->unk28 = 0;
         t->unk2C = -1;
-        if (t->unk7B & 1)
+        if (t->waterFlags & 1)
             t->unk30 = 1;
         else
             t->unk30 = 0;
     }
     gCurTask->unk34 = gCurTask->facing;
     gCurTask->unk80 = 9;
-    if (gCurTask->unk7A & 1)
+    if (gCurTask->onGround & 1)
         gCurTask->unk73 = 0;
     else
         gCurTask->unk73 = 1;
     switch (gCurTask->unk73) {
     case 0:
-        PlaySfxIfLocalPlayer(130, gCurTask->unk88->unk00);
-        gPlayerBodyBoxes[gCurTask->unk88->unk00] = *(struct M11R20 *)gUnk_0873C060;
-        gPlayerHitBoxSets[gCurTask->unk88->unk00] = *(struct M11R8 *)gUnk_0873CDB4;
-        gCurTask->unk88->unk6C = &gPlayerHitBoxSets[gCurTask->unk88->unk00];
-        LoadPlayerHitBoxSet(gCurTask->unk88->unk00, (s32)gUnk_0873CDBC);
+        PlaySfxIfLocalPlayer(130, gCurTask->player->playerIndex);
+        gPlayerBodyBoxes[gCurTask->player->playerIndex] = *(struct M11R20 *)gUnk_0873C060;
+        gPlayerHitBoxSets[gCurTask->player->playerIndex] = *(struct M11R8 *)gUnk_0873CDB4;
+        gCurTask->player->hitBoxSet = &gPlayerHitBoxSets[gCurTask->player->playerIndex];
+        LoadPlayerHitBoxSet(gCurTask->player->playerIndex, (s32)gUnk_0873CDBC);
         if (gCurTask->unk30 == 0) {
             gCurTask->unk2C++;
             TaskSetFrame(0x7D2);
             TaskYieldTrampoline(8);
-            CreatePlayerEffect(gCurTask->unk88->unk00, 28, 3);
+            CreatePlayerEffect(gCurTask->player->playerIndex, 28, 3);
             for (gCurTask->unk6C = 0; (s16)gCurTask->unk6C <= 4; gCurTask->unk6C++) {
                 gCurTask->unk2C++;
-                LoadPlayerHitBoxSet(gCurTask->unk88->unk00, (s32)((u8 *)gUnk_0873CDBC + gCurTask->unk2C * 8));
+                LoadPlayerHitBoxSet(gCurTask->player->playerIndex, (s32)((u8 *)gUnk_0873CDBC + gCurTask->unk2C * 8));
                 gCurTask->frame++;
                 TaskYieldTrampoline(1);
             }
             gCurTask->unk2C++;
-            LoadPlayerHitBoxSet(gCurTask->unk88->unk00, (s32)((u8 *)gUnk_0873CDBC + gCurTask->unk2C * 8));
+            LoadPlayerHitBoxSet(gCurTask->player->playerIndex, (s32)((u8 *)gUnk_0873CDBC + gCurTask->unk2C * 8));
             {
                 u16 x;
                 s16 r;
                 if (gCurTask->facing == 1)
-                    x = gCurTask->unk48 + 20;
+                    x = gCurTask->pixelX + 20;
                 else
-                    x = gCurTask->unk48 - 20;
-                r = sub_0802259c(x, gCurTask->unk4A + 13);
+                    x = gCurTask->pixelX - 20;
+                r = sub_0802259c(x, gCurTask->pixelY + 13);
                 if (r & 3) {
-                    PlaySfxIfLocalPlayer(241, gCurTask->unk88->unk00);
+                    PlaySfxIfLocalPlayer(241, gCurTask->player->playerIndex);
                     RequestScreenShake(2);
-                    CreatePlayerEffect(gCurTask->unk88->unk00, 35, 0);
-                    CreatePlayerEffect(gCurTask->unk88->unk00, 35, 1);
+                    CreatePlayerEffect(gCurTask->player->playerIndex, 35, 0);
+                    CreatePlayerEffect(gCurTask->player->playerIndex, 35, 1);
                     gCurTask->frame++;
                     TaskYieldTrampoline(1);
                     gCurTask->frame++;
@@ -119,7 +119,7 @@ void sub_08046c00(void)
                 }
             }
             gCurTask->unk2C = -1;
-            gCurTask->unk88->unk6C = 0;
+            gCurTask->player->hitBoxSet = 0;
             TaskSetFrame(0x7DD);
             TaskYieldTrampoline(2);
             TaskSetFrame(0x7DA);
@@ -132,32 +132,32 @@ void sub_08046c00(void)
             gCurTask->unk2C++;
             TaskSetFrame(0x7DE);
             TaskYieldTrampoline(10);
-            CreatePlayerEffect(gCurTask->unk88->unk00, 28, 3);
+            CreatePlayerEffect(gCurTask->player->playerIndex, 28, 3);
             for (gCurTask->unk6C = 0; (s16)gCurTask->unk6C <= 3; gCurTask->unk6C++) {
                 gCurTask->unk2C++;
-                LoadPlayerHitBoxSet(gCurTask->unk88->unk00, (s32)((u8 *)gUnk_0873CDBC + gCurTask->unk2C * 8));
+                LoadPlayerHitBoxSet(gCurTask->player->playerIndex, (s32)((u8 *)gUnk_0873CDBC + gCurTask->unk2C * 8));
                 gCurTask->frame++;
                 TaskYieldTrampoline(2);
             }
             gCurTask->unk2C++;
-            LoadPlayerHitBoxSet(gCurTask->unk88->unk00, (s32)((u8 *)gUnk_0873CDBC + gCurTask->unk2C * 8));
+            LoadPlayerHitBoxSet(gCurTask->player->playerIndex, (s32)((u8 *)gUnk_0873CDBC + gCurTask->unk2C * 8));
             gCurTask->frame++;
             TaskYieldTrampoline(1);
             gCurTask->unk2C++;
-            LoadPlayerHitBoxSet(gCurTask->unk88->unk00, (s32)((u8 *)gUnk_0873CDBC + gCurTask->unk2C * 8));
+            LoadPlayerHitBoxSet(gCurTask->player->playerIndex, (s32)((u8 *)gUnk_0873CDBC + gCurTask->unk2C * 8));
             {
                 u16 x;
                 s16 r;
                 if (gCurTask->facing == 1)
-                    x = gCurTask->unk48 + 20;
+                    x = gCurTask->pixelX + 20;
                 else
-                    x = gCurTask->unk48 - 20;
-                r = sub_0802259c(x, gCurTask->unk4A + 13);
+                    x = gCurTask->pixelX - 20;
+                r = sub_0802259c(x, gCurTask->pixelY + 13);
                 if (r & 3) {
-                    PlaySfxIfLocalPlayer(241, gCurTask->unk88->unk00);
+                    PlaySfxIfLocalPlayer(241, gCurTask->player->playerIndex);
                     RequestScreenShake(2);
-                    CreatePlayerEffect(gCurTask->unk88->unk00, 35, 0);
-                    CreatePlayerEffect(gCurTask->unk88->unk00, 35, 1);
+                    CreatePlayerEffect(gCurTask->player->playerIndex, 35, 0);
+                    CreatePlayerEffect(gCurTask->player->playerIndex, 35, 1);
                     gCurTask->frame++;
                     TaskYieldTrampoline(1);
                     gCurTask->frame++;
@@ -172,7 +172,7 @@ void sub_08046c00(void)
                 }
             }
             gCurTask->unk2C = -1;
-            gCurTask->unk88->unk6C = 0;
+            gCurTask->player->hitBoxSet = 0;
             TaskSetFrame(0x7E9);
             TaskYieldTrampoline(4);
             TaskSetFrame(0x7E6);
@@ -184,23 +184,23 @@ void sub_08046c00(void)
         }
         break;
     case 1:
-        PlaySfxIfLocalPlayer(131, gCurTask->unk88->unk00);
-        gPlayerBodyBoxes[gCurTask->unk88->unk00] = *(struct M11R20 *)gUnk_0873C060;
-        gPlayerHitBoxSets[gCurTask->unk88->unk00] = *(struct M11R8 *)gUnk_0873CDF4;
-        gCurTask->unk88->unk6C = &gPlayerHitBoxSets[gCurTask->unk88->unk00];
-        LoadPlayerHitBoxSet(gCurTask->unk88->unk00, (s32)gUnk_0873CDFC);
+        PlaySfxIfLocalPlayer(131, gCurTask->player->playerIndex);
+        gPlayerBodyBoxes[gCurTask->player->playerIndex] = *(struct M11R20 *)gUnk_0873C060;
+        gPlayerHitBoxSets[gCurTask->player->playerIndex] = *(struct M11R8 *)gUnk_0873CDF4;
+        gCurTask->player->hitBoxSet = &gPlayerHitBoxSets[gCurTask->player->playerIndex];
+        LoadPlayerHitBoxSet(gCurTask->player->playerIndex, (s32)gUnk_0873CDFC);
         if (gCurTask->unk30 == 0) {
             gCurTask->unk2C++;
             TaskSetFrame(0x7EA);
             TaskYieldTrampoline(1);
             for (gCurTask->unk6C = 0; (s16)gCurTask->unk6C <= 10; gCurTask->unk6C++) {
                 gCurTask->unk2C++;
-                LoadPlayerHitBoxSet(gCurTask->unk88->unk00, (s32)((u8 *)gUnk_0873CDFC + gCurTask->unk2C * 8));
+                LoadPlayerHitBoxSet(gCurTask->player->playerIndex, (s32)((u8 *)gUnk_0873CDFC + gCurTask->unk2C * 8));
                 gCurTask->frame++;
                 TaskYieldTrampoline(1);
             }
             gCurTask->unk2C++;
-            LoadPlayerHitBoxSet(gCurTask->unk88->unk00, (s32)((u8 *)gUnk_0873CDFC + gCurTask->unk2C * 8));
+            LoadPlayerHitBoxSet(gCurTask->player->playerIndex, (s32)((u8 *)gUnk_0873CDFC + gCurTask->unk2C * 8));
             gCurTask->facing = gCurTask->unk34;
             TaskSetFrame(0x7F6);
             TaskYieldTrampoline(1);
@@ -210,12 +210,12 @@ void sub_08046c00(void)
             TaskYieldTrampoline(1);
             for (gCurTask->unk6C = 0; (s16)gCurTask->unk6C <= 14; gCurTask->unk6C++) {
                 gCurTask->unk2C++;
-                LoadPlayerHitBoxSet(gCurTask->unk88->unk00, (s32)((u8 *)gUnk_0873CE64 + gCurTask->unk2C * 8));
+                LoadPlayerHitBoxSet(gCurTask->player->playerIndex, (s32)((u8 *)gUnk_0873CE64 + gCurTask->unk2C * 8));
                 gCurTask->frame++;
                 TaskYieldTrampoline(1);
             }
             gCurTask->unk2C++;
-            LoadPlayerHitBoxSet(gCurTask->unk88->unk00, (s32)((u8 *)gUnk_0873CE64 + gCurTask->unk2C * 8));
+            LoadPlayerHitBoxSet(gCurTask->player->playerIndex, (s32)((u8 *)gUnk_0873CE64 + gCurTask->unk2C * 8));
             gCurTask->facing = gCurTask->unk34;
             TaskSetFrame(0x807);
             TaskYieldTrampoline(1);
@@ -234,47 +234,47 @@ void sub_08047270(void)
     case 0:
         if (t->unk28 != 0)
             PlayerRequestLocomotion();
-        else if (t->unk58 > 0 && PlayerHasCrossedWaterSurface(0) != 0)
-            gCurTask->unk88->unk01 = 23;
+        else if (t->velY > 0 && PlayerHasCrossedWaterSurface(0) != 0)
+            gCurTask->player->requestedAction = 23;
         {
             struct Task *u = gCurTask;
             if (u->unk2C != -1) {
-                LoadPlayerBodyBoxRect(u->unk88->unk00, (u8 *)gUnk_0873C074 + u->unk2C * 8);
-                RegisterCollider(gCurTaskIdx, gCurTask->unk48, gCurTask->unk4A,
-                             (u8 *)gPlayerBodyBoxes + gCurTask->unk88->unk00 * 20);
+                LoadPlayerBodyBoxRect(u->player->playerIndex, (u8 *)gUnk_0873C074 + u->unk2C * 8);
+                RegisterCollider(gCurTaskIdx, gCurTask->pixelX, gCurTask->pixelY,
+                             (u8 *)gPlayerBodyBoxes + gCurTask->player->playerIndex * 20);
             }
         }
         PlayerSetMotionXPreset(0, 72);
         break;
     case 1:
-        if (gLatchedHeldKeys[t->unk88->unk00] & 48) {
-            if (gLatchedHeldKeys[t->unk88->unk00] & 16)
+        if (gLatchedHeldKeys[t->player->playerIndex] & 48) {
+            if (gLatchedHeldKeys[t->player->playerIndex] & 16)
                 t->unk34 = 1;
             else
                 t->unk34 = -1;
         }
         {
             struct Task *u = gCurTask;
-            if ((u->unk7A & 1) || u->unk28 != 0) {
-                u->unk88->unk6C = 0;
+            if ((u->onGround & 1) || u->unk28 != 0) {
+                u->player->hitBoxSet = 0;
                 PlayerRequestLocomotion();
-            } else if (u->unk58 > 0 && PlayerHasCrossedWaterSurface(0) != 0) {
-                gCurTask->unk88->unk01 = 23;
+            } else if (u->velY > 0 && PlayerHasCrossedWaterSurface(0) != 0) {
+                gCurTask->player->requestedAction = 23;
             }
         }
         {
             struct Task *u = gCurTask;
             if (u->unk2C != -1) {
                 if (u->unk30 == 0)
-                    LoadPlayerBodyBoxRect(u->unk88->unk00, (u8 *)gUnk_0873C0C0 + u->unk2C * 8);
+                    LoadPlayerBodyBoxRect(u->player->playerIndex, (u8 *)gUnk_0873C0C0 + u->unk2C * 8);
                 else
-                    LoadPlayerBodyBoxRect(u->unk88->unk00, (u8 *)gUnk_0873C128 + u->unk2C * 8);
-                RegisterCollider(gCurTaskIdx, gCurTask->unk48, gCurTask->unk4A,
-                             (u8 *)gPlayerBodyBoxes + gCurTask->unk88->unk00 * 20);
+                    LoadPlayerBodyBoxRect(u->player->playerIndex, (u8 *)gUnk_0873C128 + u->unk2C * 8);
+                RegisterCollider(gCurTaskIdx, gCurTask->pixelX, gCurTask->pixelY,
+                             (u8 *)gPlayerBodyBoxes + gCurTask->player->playerIndex * 20);
             }
         }
-        if (gLatchedHeldKeys[gCurTask->unk88->unk00] & 48) {
-            if (gLatchedHeldKeys[gCurTask->unk88->unk00] & 16) {
+        if (gLatchedHeldKeys[gCurTask->player->playerIndex] & 48) {
+            if (gLatchedHeldKeys[gCurTask->player->playerIndex] & 16) {
                 if (gCurTask->unk30 == 0)
                     PlayerSetMotionXPreset(10, 52);
                 else
@@ -295,8 +295,8 @@ void sub_08047270(void)
     }
     {
         struct Task *u = gCurTask;
-        if ((u->unk7A & 1) == 0) {
-            if ((u->unk7B & 1) == 0)
+        if ((u->onGround & 1) == 0) {
+            if ((u->waterFlags & 1) == 0)
                 PlayerSetMotionYPreset(2);
             else
                 PlayerSetMotionYPreset(13);

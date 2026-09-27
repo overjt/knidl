@@ -83,10 +83,10 @@
  */
 
 struct Task {
-    /* 0x00 */ void (*f00)(void);
-    /* 0x04 */ void (*f04)(void);
-    /* 0x08 */ void (*f08)(void);
-    /* 0x0C */ void (*f0C)(void);
+    /* 0x00 */ void (*moveCallback)(void);
+    /* 0x04 */ void (*updateCallback)(void);
+    /* 0x08 */ void (*lateUpdateCallback)(void);
+    /* 0x0C */ void (*drawCallback)(void);
     /* 0x10 */ s16 sleepFrames;
     /* 0x12 */ u8  taskClass;
     /* 0x13 */ u8  skipMask;

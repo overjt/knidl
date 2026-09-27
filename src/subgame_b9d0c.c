@@ -474,9 +474,9 @@ void Task_SubGame(void)
 {
     struct Task *t = gCurTask;
 
-    t->unk00 = 0;
-    t->unk0C = 0;
-    t->unk04 = (u32)SubGameStartBody;
+    t->moveCallback = 0;
+    t->drawCallback = 0;
+    t->updateCallback = (u32)SubGameStartBody;
     t->unk18 = 0;
     FreeOtherTasks();
     TaskSleepForever();
@@ -506,7 +506,7 @@ void QuickDrawInit(void)
 
 void QuickDrawMain(void)
 {
-    gCurTask->unk04 = 0;
+    gCurTask->updateCallback = 0;
     CallTableEntry(gSubGamePhase, 2, gUnk_087562E8);
     TaskSleepForever();
 }
@@ -532,7 +532,7 @@ void CreateQuickDrawTimer(void)
     {
         struct Task *t = &gTasks[idx];
 
-        t->unk44 = gCurTaskIdx;
+        t->parent = gCurTaskIdx;
         t->unk73 = 2;
         gCurTask->unk28 = idx;
     }
@@ -550,7 +550,7 @@ void CreateQuickDrawPlayers(s32 a0)
         {
             struct Task *t = &gTasks[idx];
 
-            t->unk44 = gCurTaskIdx;
+            t->parent = gCurTaskIdx;
             t->unk18 = idx;
             t->unk73 = 0;
             t->unk74 = a0;
@@ -567,7 +567,7 @@ void sub_080ba61c(void)
     CreateQuickDrawTimer();
     t = gCurTask;
     t->unk24 = 0;
-    t->unk75 = 0;
+    t->hitTimer = 0;
 }
 
 void CreateQuickDrawSignal(void)
@@ -583,8 +583,8 @@ void CreateQuickDrawSignal(void)
         t->unk1C = 3;
         t->unk20 = 16;
         t->unk24 = -1;
-        t->unk48 = 120;
-        t->unk4A = 88;
+        t->pixelX = 120;
+        t->pixelY = 88;
         t->unk34 = 0;
     }
 }

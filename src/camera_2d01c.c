@@ -17,7 +17,7 @@
  * palette buffer gUnk_030012B0), 2 waits, 3 loops, 5 sets a metatile's
  * solid flag (sub_0802d2f0), 6 plays a sound effect, anything else stops
  * the slot (sub_0802d32c).  CreateMapEvent spawns task type #4 through M07's
- * TaskCreateHighSlot; Task_MapEvent, the type's body, dispatches on Task.unk14
+ * TaskCreateHighSlot; Task_MapEvent, the type's body, dispatches on Task.state
  * into the seven camera tasks of the anchor table gMapEventVariants. */
 
 struct Unk03005680
@@ -306,12 +306,12 @@ s32 CreateMapEvent(s32 a)
     if (id != -1)
     {
         t = &gTasks[id];
-        t->unk14 = a;
+        t->state = a;
     }
     return id;
 }
 
 void Task_MapEvent(void)
 {
-    CallTableEntry(gCurTask->unk14, 7, gMapEventVariants);
+    CallTableEntry(gCurTask->state, 7, gMapEventVariants);
 }

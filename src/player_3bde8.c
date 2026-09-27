@@ -15,8 +15,8 @@
  * sub_08033414, the twin of M04's sub_080109c8) steps and draws the
  * three spark records gUnk_02007E90[player][]; sub_0803cbd8 (M09's
  * sub_0803332c) steps the knock-back script
- * gUnk_0873A994[PlayerState.filler2A][PlayerState.unk28] into the 8.8
- * offsets PlayerState.unk24/unk26; sub_0803ccd8 (M09's PlayerActionFall)
+ * gUnk_0873A994[PlayerState.offsetScript][PlayerState.offsetScriptStep] into the 8.8
+ * offsets PlayerState.pixelOffsetX/unk26; sub_0803ccd8 (M09's PlayerActionFall)
  * applies step n of the 8.8 motion table gUnk_0873AEBC. */
 
 /* gUnk_02007E90[4][3]: M04's per-player spark records (src/player_10358.c) */
@@ -74,7 +74,7 @@ s32 sub_080b4204(u32 a);
 /* Action 19 enter (mode 23, per-frame handler 18), aimed at the player
    Task.unk18 names.  With itself as the target it only plays the ability's
    animation (gUnk_0873DA62[ability][1], or gUnk_0873DACA[k][1] when
-   Task.unk7B bit 0 is set) and ends; otherwise it turns to face the target
+   Task.waterFlags bit 0 is set) and ends; otherwise it turns to face the target
    task gTasks[unk18], plays gUnk_0873DA62[ability][0] (or
    gUnk_0873DACA[k][0]) and, by PlayerState.unk3A, raises the target's
    health gPlayerHealth[] through sub_080b4204 while it is below the maximum
@@ -93,26 +93,26 @@ void sub_0803bde8(void)
     u8 a42;
     u8 b42;
 
-    gCurTask->unk88->unk05 = gCurTask->unk88->unk04;
-    gCurTask->unk88->unk04 = 23;
-    gCurTask->unk15 = 18;
-    if (gCurTask->unk88->unk06 == 2)
-        gCurTask->unk88->unk06 = 0;
-    PlaySfxIfLocalPlayer(292, gCurTask->unk88->unk00);
-    if (gCurTask->unk18 == gCurTask->unk88->unk00)
+    gCurTask->player->prevMode = gCurTask->player->mode;
+    gCurTask->player->mode = 23;
+    gCurTask->updateState = 18;
+    if (gCurTask->player->mouthState == 2)
+        gCurTask->player->mouthState = 0;
+    PlaySfxIfLocalPlayer(292, gCurTask->player->playerIndex);
+    if (gCurTask->unk18 == gCurTask->player->playerIndex)
     {
         gCurTask->layer = 5;
         TaskSetSkipMask(14, gCurTaskIdx);
         t = gCurTask;
-        t->unk88->unk42 |= 0x100;
-        t->unk88->unk42 &= 0xFFEF;
-        if (!(t->unk7B & 1))
+        t->player->unk42 |= 0x100;
+        t->player->unk42 &= 0xFFEF;
+        if (!(t->waterFlags & 1))
         {
-            t->unk46 = gUnk_0873DA62[t->unk88->unk0D][1];
-            switch (t->unk88->unk0D)
+            t->unk46 = gUnk_0873DA62[t->player->ability][1];
+            switch (t->player->ability)
             {
             case 0:
-                if (gCurTask->unk88->unk06 == 1)
+                if (gCurTask->player->mouthState == 1)
                     gCurTask->unk46 = 324;
             default:
                 TaskSetFrame(gCurTask->unk46);
@@ -138,10 +138,10 @@ void sub_0803bde8(void)
         }
         else
         {
-            switch (gCurTask->unk88->unk0D)
+            switch (gCurTask->player->ability)
             {
             default:
-                if (gCurTask->unk88->unk06 == 1)
+                if (gCurTask->player->mouthState == 1)
                     TaskSetFrame(326);
                 else
                     TaskSetFrame(gUnk_0873DACA[0][1]);
@@ -170,30 +170,30 @@ void sub_0803bde8(void)
     a42 = gCurTask->layer;
     PlayerStopAxes(3);
     t = gCurTask;
-    t->unk88->unk42 |= 0x100;
-    t->unk88->unk42 &= 0xFFEF;
-    if (u->unk48 - t->unk48 > 0)
+    t->player->unk42 |= 0x100;
+    t->player->unk42 &= 0xFFEF;
+    if (u->pixelX - t->pixelX > 0)
         t->facing = 1;
     else
         t->facing = -1;
     gCurTask->layer = 4;
     b43 = u->facing;
     b42 = u->layer;
-    u->unk54 = u->unk5C = u->unk64 = 0;
-    u->unk58 = u->unk60 = u->unk68 = 0;
+    u->velX = u->accelX = u->speedLimitX = 0;
+    u->velY = u->accelY = u->speedLimitY = 0;
     if ((u->facing = -gCurTask->facing) == 1)
-        u->unk3E &= 0x7FFF;
+        u->spriteFlags &= 0x7FFF;
     else
-        u->unk3E |= 0x8000;
+        u->spriteFlags |= 0x8000;
     t = gCurTask;
-    if (!(t->unk7B & 1))
+    if (!(t->waterFlags & 1))
     {
-        t->unk46 = gUnk_0873DA62[t->unk88->unk0D][0];
-        switch (t->unk88->unk0D)
+        t->unk46 = gUnk_0873DA62[t->player->ability][0];
+        switch (t->player->ability)
         {
         default:
         case 0:
-            if (gCurTask->unk88->unk06 == 1)
+            if (gCurTask->player->mouthState == 1)
             {
                 TaskSetFrame(325);
                 TaskYieldTrampoline(2);
@@ -208,14 +208,14 @@ void sub_0803bde8(void)
                 TaskYieldTrampoline(2);
                 gCurTask->frame++;
             }
-            switch (gCurTask->unk88->unk3A)
+            switch (gCurTask->player->unk3A)
             {
             case 1:
                 if (gPlayerHealth[gCurTask->unk18] < gMaxHealth)
                 {
                     do
                     {
-                        if (gLocalPlayer == gCurTask->unk88->unk00 || gLocalPlayer == gCurTask->unk18)
+                        if (gLocalPlayer == gCurTask->player->playerIndex || gLocalPlayer == gCurTask->unk18)
                             PlaySfx(221);
                         gCurTask->unk28 = sub_080b4204(gCurTask->unk18);
                         TaskYieldTrampoline(8);
@@ -232,7 +232,7 @@ void sub_0803bde8(void)
                         n = 1;
                     for (gCurTask->unk6C = 0; (s16)gCurTask->unk6C < n; gCurTask->unk6C++)
                     {
-                        if (gLocalPlayer == gCurTask->unk88->unk00 || gLocalPlayer == gCurTask->unk18)
+                        if (gLocalPlayer == gCurTask->player->playerIndex || gLocalPlayer == gCurTask->unk18)
                             PlaySfx(221);
                         gCurTask->unk28 = sub_080b4204(gCurTask->unk18);
                         TaskYieldTrampoline(8);
@@ -245,12 +245,12 @@ void sub_0803bde8(void)
             case 3:
                 if ((s8)q->unk22 != 0)
                     q->unk1E = q->unk20 = 0;
-                q->unk17 = gCurTask->unk88->unk17;
-                q->unk18 = gCurTask->unk88->unk18;
+                q->unk17 = gCurTask->player->unk17;
+                q->unk18 = gCurTask->player->unk18;
                 TaskYieldTrampoline(32);
                 break;
             }
-            if (gCurTask->unk88->unk06 == 1)
+            if (gCurTask->player->mouthState == 1)
             {
                 TaskSetFrame(319);
                 TaskYieldTrampoline(2);
@@ -277,14 +277,14 @@ void sub_0803bde8(void)
             TaskYieldTrampoline(2);
             gCurTask->frame++;
             TaskYieldTrampoline(2);
-            switch (gCurTask->unk88->unk3A)
+            switch (gCurTask->player->unk3A)
             {
             case 1:
                 if (gPlayerHealth[gCurTask->unk18] < gMaxHealth)
                 {
                     do
                     {
-                        if (gLocalPlayer == gCurTask->unk88->unk00 || gLocalPlayer == gCurTask->unk18)
+                        if (gLocalPlayer == gCurTask->player->playerIndex || gLocalPlayer == gCurTask->unk18)
                             PlaySfx(221);
                         gCurTask->unk28 = sub_080b4204(gCurTask->unk18);
                         for (gCurTask->unk6C = 0; (s16)gCurTask->unk6C <= 1; gCurTask->unk6C++)
@@ -313,7 +313,7 @@ void sub_0803bde8(void)
                         n = 1;
                     for (gCurTask->unk6C = 0; (s16)gCurTask->unk6C < n; gCurTask->unk6C++)
                     {
-                        if (gLocalPlayer == gCurTask->unk88->unk00 || gLocalPlayer == gCurTask->unk18)
+                        if (gLocalPlayer == gCurTask->player->playerIndex || gLocalPlayer == gCurTask->unk18)
                             PlaySfx(221);
                         gCurTask->unk28 = sub_080b4204(gCurTask->unk18);
                         for (gCurTask->unk6E = 0; gCurTask->unk6E <= 1; gCurTask->unk6E++)
@@ -338,8 +338,8 @@ void sub_0803bde8(void)
             case 3:
                 if ((s8)q->unk22 != 0)
                     q->unk1E = q->unk20 = 0;
-                q->unk17 = gCurTask->unk88->unk17;
-                q->unk18 = gCurTask->unk88->unk18;
+                q->unk17 = gCurTask->player->unk17;
+                q->unk18 = gCurTask->player->unk18;
                 for (gCurTask->unk6C = 0; (s16)gCurTask->unk6C <= 7; gCurTask->unk6C++)
                 {
                     TaskSetFrame((s16)(gCurTask->unk46 + 3));
@@ -362,7 +362,7 @@ void sub_0803bde8(void)
     }
     else
     {
-        switch (t->unk88->unk0D)
+        switch (t->player->ability)
         {
         default:
             gCurTask->unk46 = gUnk_0873DACA[0][0];
@@ -387,14 +387,14 @@ void sub_0803bde8(void)
         gCurTask->frame++;
         TaskYieldTrampoline(2);
         gCurTask->frame++;
-        switch (gCurTask->unk88->unk3A)
+        switch (gCurTask->player->unk3A)
         {
         case 1:
             if (gPlayerHealth[gCurTask->unk18] < gMaxHealth)
             {
                 do
                 {
-                    if (gLocalPlayer == gCurTask->unk88->unk00 || gLocalPlayer == gCurTask->unk18)
+                    if (gLocalPlayer == gCurTask->player->playerIndex || gLocalPlayer == gCurTask->unk18)
                         PlaySfx(221);
                     gCurTask->unk28 = sub_080b4204(gCurTask->unk18);
                     TaskYieldTrampoline(8);
@@ -411,7 +411,7 @@ void sub_0803bde8(void)
                     n = 1;
                 for (gCurTask->unk6C = 0; (s16)gCurTask->unk6C < n; gCurTask->unk6C++)
                 {
-                    if (gLocalPlayer == gCurTask->unk88->unk00 || gLocalPlayer == gCurTask->unk18)
+                    if (gLocalPlayer == gCurTask->player->playerIndex || gLocalPlayer == gCurTask->unk18)
                         PlaySfx(221);
                     gCurTask->unk28 = sub_080b4204(gCurTask->unk18);
                     TaskYieldTrampoline(8);
@@ -424,8 +424,8 @@ void sub_0803bde8(void)
         case 3:
             if ((s8)q->unk22 != 0)
                 q->unk1E = q->unk20 = 0;
-            q->unk17 = gCurTask->unk88->unk17;
-            q->unk18 = gCurTask->unk88->unk18;
+            q->unk17 = gCurTask->player->unk17;
+            q->unk18 = gCurTask->player->unk18;
             TaskYieldTrampoline(32);
             break;
         }
@@ -438,25 +438,25 @@ void sub_0803bde8(void)
     }
     gCurTask->facing = a43;
     gCurTask->layer = a42;
-    gCurTask->unk88->unk42 &= 0xFEFF;
+    gCurTask->player->unk42 &= 0xFEFF;
     u->facing = b43;
     u->layer = b42;
     gPlayerStates[gCurTask->unk18].unk42 &= 0xFEFF;
     u->taskClass--;
     FreezeOtherTasks(0);
     TaskSetSkipMask(0, gCurTaskIdx);
-    gCurTask->unk88->unk3B |= 1 << gCurTask->unk18;
+    gCurTask->player->unk3B |= 1 << gCurTask->unk18;
     TaskSleepForever();
 }
 
 void sub_0803c990(void)
 {
-    struct PlayerState *p = gCurTask->unk88;
+    struct PlayerState *p = gCurTask->player;
 
-    if (p->unk0D != 24)
+    if (p->ability != 24)
         sub_08040710();
     else
-        p->unk01 = 55;
+        p->requestedAction = 55;
 }
 
 /* M09's sub_08033414: step and draw the player's three sparks (twin of M04's
@@ -476,12 +476,12 @@ void sub_0803c9b4(s32 a)
 
     for (i = 0; i <= 2; i++)
     {
-        p = &gUnk_02007E90[gCurTask->unk88->unk00][i];
+        p = &gUnk_02007E90[gCurTask->player->playerIndex][i];
         if (gCurTask->skipMask & 1)
         {
             k = 0;
             if (a == 0)
-                k = gCurTask->unk40 + 0x180C;
+                k = gCurTask->tileWord + 0x180C;
             d = p->unk0D;
             if (a == 0 && d == 0)
                 d = (gCurTask->facing == 1) ? 2 : 3;
@@ -538,11 +538,11 @@ void sub_0803c9b4(s32 a)
                     p->unk0C = 1;
                 }
                 d = p->unk0D;
-                k = gCurTask->unk40 + 0x180C;
+                k = gCurTask->tileWord + 0x180C;
             }
         }
-        x = gCurTask->unk48 + ((s16 *)&p->unk00)[1];
-        y = gCurTask->unk4A + ((s16 *)&p->unk04)[1] + 4;
+        x = gCurTask->pixelX + ((s16 *)&p->unk00)[1];
+        y = gCurTask->pixelY + ((s16 *)&p->unk04)[1] + 4;
         if (IsWorldPosOnScreen(x, y))
         {
             x -= gSpriteCameraX;
@@ -555,13 +555,13 @@ void sub_0803c9b4(s32 a)
 void sub_0803cbd8(void)
 {
     struct Unk0873A994 *e;
-    if ((s8)--gCurTask->unk88->unk29 > 0)
+    if ((s8)--gCurTask->player->offsetScriptDelay > 0)
     {
-        gCurTask->unk88->unk29--;
+        gCurTask->player->offsetScriptDelay--;
         return;
     }
-    e = gUnk_0873A994[(s8)gCurTask->unk88->filler2A];
-    e += (s8)gCurTask->unk88->unk28;
+    e = gUnk_0873A994[(s8)gCurTask->player->offsetScript];
+    e += (s8)gCurTask->player->offsetScriptStep;
     if (e->unk4 != 0)
     {
         if (e->unk4 & 128)
@@ -569,22 +569,22 @@ void sub_0803cbd8(void)
         if (e->unk4 & 64)
         {
             if (gCurTask->facing == 1)
-                gCurTask->unk88->unk24 = e->unk0;
+                gCurTask->player->pixelOffsetX = e->unk0;
             else
-                gCurTask->unk88->unk24 = -e->unk0;
+                gCurTask->player->pixelOffsetX = -e->unk0;
         }
         else
         {
-            gCurTask->unk88->unk24 = e->unk0;
+            gCurTask->player->pixelOffsetX = e->unk0;
         }
-        gCurTask->unk88->unk26 = e->unk2;
-        gCurTask->unk88->unk29 = e->unk4 & 15;
-        gCurTask->unk88->unk28++;
+        gCurTask->player->pixelOffsetY = e->unk2;
+        gCurTask->player->offsetScriptDelay = e->unk4 & 15;
+        gCurTask->player->offsetScriptStep++;
     }
     else
     {
-        gCurTask->unk88->unk24 = gCurTask->unk88->unk26 = 0;
-        gCurTask->unk88->unk40 &= 0xFFFE;
+        gCurTask->player->pixelOffsetX = gCurTask->player->pixelOffsetY = 0;
+        gCurTask->player->unk40 &= 0xFFFE;
         TaskSetSkipMask(0, gCurTaskIdx);
     }
 }

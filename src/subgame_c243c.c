@@ -205,9 +205,9 @@ void AirGrindResults(void)
     gAirGrindResults.unk00 = 0;
     gAirGrindResults.unk01 = 0;
     gAirGrindResults.unk02 = 0;
-    gCurTask->unk04 = (u32)sub_080c2b8c;
+    gCurTask->updateCallback = (u32)sub_080c2b8c;
     gCurTask->frame = 0xFFFF;
-    gCurTask->unk0C = (u32)sub_080c25c4;
+    gCurTask->drawCallback = (u32)sub_080c25c4;
     x = gAirGrindCoursePtr->unk014 * 2;
     for (i = 0; i < 4; i++) {
         if (gAirGrindPtr->unk01C[i].unk01 == x && gAirGrindPtr->unk01C[i].unk0E == x + 1)
@@ -368,11 +368,11 @@ void sub_080c2740(void)
                 t->unk28 = 0;
                 t->unk2C = gAirGrind.unk000;
                 if (gAirGrindPtr->unk446 == 0) {
-                    t->unk48 = 120;
-                    t->unk4A = 80;
-                    t->unk38 = gUnk_0875602C;
+                    t->pixelX = 120;
+                    t->pixelY = 80;
+                    t->frameTable = gUnk_0875602C;
                     t->frame = 1;
-                    t->unk3E = 0x2000;
+                    t->spriteFlags = 0x2000;
                     t->layer = 1;
                     sub_080c2ccc(-1);
                     PlaySfx(102);
@@ -497,11 +497,11 @@ void sub_080c2ba8(void)
     BlendColors(gUnk_08609F40[6], gUnk_08609F40[7], (u16)(step2 * 32), 16, &gUnk_03001510[16]);
     if (gAirGrindPtr->unk446 == 0) {
         t = gCurTask;
-        tbl = t->unk38;
+        tbl = t->frameTable;
         if (tbl != NULL && t->frame != -1) {
-            QueueSprite(t->layer, tbl[t->frame + 2], t->unk3E, 0x6000, t->unk48, t->unk4A);
+            QueueSprite(t->layer, tbl[t->frame + 2], t->spriteFlags, 0x6000, t->pixelX, t->pixelY);
             t = gCurTask;
-            QueueSprite(t->layer, tbl[t->frame], t->unk3E, 0x5000, t->unk48, t->unk4A);
+            QueueSprite(t->layer, tbl[t->frame], t->spriteFlags, 0x5000, t->pixelX, t->pixelY);
         }
     }
 }

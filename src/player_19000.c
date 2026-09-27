@@ -35,13 +35,13 @@ void SetCameraFocus(s32 x, s32 y);
 void sub_08019000(void)
 {
 
-    gCurTask->unk00 = (u32)TaskMove;
-    gCurTask->unk0C = (u32)TaskDrawScreen;
+    gCurTask->moveCallback = (u32)TaskMove;
+    gCurTask->drawCallback = (u32)TaskDrawScreen;
     gCurTask->layer = 12;
-    gCurTask->unk38 = gUnk_087553DC;
-    gCurTask->unk04 = (u32)sub_08019590;
+    gCurTask->frameTable = gUnk_087553DC;
+    gCurTask->updateCallback = (u32)sub_08019590;
     gCurTask->unk70 = 0;
-    gCurTask->unk40 = 0x9210;
+    gCurTask->tileWord = 0x9210;
     LZ77UnCompWram((const void *)gUnk_082FE0D0[3], (void *)0x02026000);
     RequestCopy(4, 0x02026000, 0x06014000, 128 << 6);
     RequestCopy(2, gUnk_082FE0D0[2], 0x03001590, 32);
@@ -75,8 +75,8 @@ void sub_08019000(void)
     TaskYieldTrampoline(2);
     gCurTask->frame = 5;
     TaskYieldTrampoline(2);
-    gCurTask->unk58 = 0xFFFA0000;
-    gCurTask->unk60 = 160 << 7;
+    gCurTask->velY = 0xFFFA0000;
+    gCurTask->accelY = 160 << 7;
     gCurTask->frame = 4;
     TaskYieldTrampoline(2);
     gCurTask->frame = 3;
@@ -91,8 +91,8 @@ void sub_08019000(void)
     gCurTask->unk6C = 0;
     do
     {
-        gCurTask->unk58 = 128 << 9;
-        gCurTask->unk60 = 0xFFFFF000;
+        gCurTask->velY = 128 << 9;
+        gCurTask->accelY = 0xFFFFF000;
         gCurTask->frame = 3;
         TaskYieldTrampoline(2);
         gCurTask->frame = 0;
@@ -117,8 +117,8 @@ void sub_08019000(void)
         TaskYieldTrampoline(2);
         gCurTask->frame = 2;
         TaskYieldTrampoline(2);
-        gCurTask->unk58 = 0xFFFF0000;
-        gCurTask->unk60 = 128 << 5;
+        gCurTask->velY = 0xFFFF0000;
+        gCurTask->accelY = 128 << 5;
         gCurTask->frame = 3;
         TaskYieldTrampoline(2);
         gCurTask->frame = 0;
@@ -167,7 +167,7 @@ void sub_08019000(void)
         TaskYieldTrampoline(2);
         gCurTask->unk6C++;
     } while ((s16)gCurTask->unk6C <= 1);
-    gCurTask->unk60 = 0xFFFFFD00;
+    gCurTask->accelY = 0xFFFFFD00;
     gCurTask->frame = 3;
     TaskYieldTrampoline(2);
     gCurTask->frame = 0;
@@ -176,7 +176,7 @@ void sub_08019000(void)
     TaskYieldTrampoline(2);
     gCurTask->frame = 2;
     TaskYieldTrampoline(2);
-    gCurTask->unk5C = 0xFFFFF000;
+    gCurTask->accelX = 0xFFFFF000;
     gCurTask->frame = 3;
     TaskYieldTrampoline(2);
     gCurTask->frame = 0;
@@ -193,8 +193,8 @@ void sub_08019000(void)
     TaskYieldTrampoline(2);
     gCurTask->frame = 2;
     TaskYieldTrampoline(2);
-    gCurTask->unk54 = 0;
-    gCurTask->unk60 = 0;
+    gCurTask->velX = 0;
+    gCurTask->accelY = 0;
     gCurTask->frame = 3;
     TaskYieldTrampoline(2);
     gCurTask->frame = 0;
@@ -217,7 +217,7 @@ void sub_08019000(void)
         gCurTask->unk6C++;
     } while ((s16)gCurTask->unk6C <= 1);
     PlaySfx(144 << 2);
-    gCurTask->unk5C = 128 << 9;
+    gCurTask->accelX = 128 << 9;
     gCurTask->frame = 3;
     TaskYieldTrampoline(2);
     gCurTask->frame = 0;
@@ -226,7 +226,7 @@ void sub_08019000(void)
     TaskYieldTrampoline(2);
     gCurTask->frame = 2;
     TaskYieldTrampoline(2);
-    gCurTask->unk60 = 0xFFFFB000;
+    gCurTask->accelY = 0xFFFFB000;
     gCurTask->frame = 3;
     TaskYieldTrampoline(2);
     gCurTask->frame = 0;
@@ -282,11 +282,11 @@ void sub_080195ec(void)
 {
     struct Task *t = gCurTask;
 
-    t->unk00 = (u32)TaskMove;
-    t->unk0C = (u32)sub_0801a310;
+    t->moveCallback = (u32)TaskMove;
+    t->drawCallback = (u32)sub_0801a310;
     t->layer = 6;
-    gCurTask->unk38 = gUnk_087553FC;
-    gCurTask->unk40 = 0xA310;
+    gCurTask->frameTable = gUnk_087553FC;
+    gCurTask->tileWord = 0xA310;
     gCurTask->posX = 240 << 15;
     gCurTask->posY = 192 << 14;
     TaskStop();
@@ -430,8 +430,8 @@ void sub_080195ec(void)
     gCurTask->frame = 11;
     TaskYieldTrampoline(1);
     PlaySfx(0x00000115);
-    gCurTask->unk58 = 0xFFFCB000;
-    gCurTask->unk60 = 160 << 7;
+    gCurTask->velY = 0xFFFCB000;
+    gCurTask->accelY = 160 << 7;
     gCurTask->frame = 9;
     TaskYieldTrampoline(1);
     gCurTask->frame = 7;
@@ -477,15 +477,15 @@ void sub_080195ec(void)
     TaskYieldTrampoline(255);
     gCurTask->frame = 0;
     TaskYieldTrampoline(190);
-    gCurTask->unk54 = 160 << 11;
-    gCurTask->unk58 = 0xFFFB0000;
+    gCurTask->velX = 160 << 11;
+    gCurTask->velY = 0xFFFB0000;
     gCurTask->frame = 0;
     TaskYieldTrampoline(1);
     gCurTask->frame = 2;
     TaskYieldTrampoline(1);
     gCurTask->frame = 4;
     TaskYieldTrampoline(1);
-    gCurTask->unk58 = 0;
+    gCurTask->velY = 0;
     gCurTask->frame = 6;
     TaskYieldTrampoline(1);
     gCurTask->frame = 8;
@@ -499,11 +499,11 @@ void sub_08019b30(void)
 {
     struct Task *t = gCurTask;
 
-    t->unk00 = (u32)TaskMove;
-    t->unk0C = (u32)sub_0801a3e4;
+    t->moveCallback = (u32)TaskMove;
+    t->drawCallback = (u32)sub_0801a3e4;
     t->layer = 15;
-    gCurTask->unk38 = gUnk_08755440;
-    gCurTask->unk40 = 0xD350;
+    gCurTask->frameTable = gUnk_08755440;
+    gCurTask->tileWord = 0xD350;
     RequestCopy(2, 0x085E0070, (u32)gUnk_03001610, 32);
     gCurTask->posX = 160 << 17;
     gCurTask->posY = 160 << 15;
@@ -544,11 +544,11 @@ void sub_08019c44(void)
 {
     struct Task *t = gCurTask;
 
-    t->unk00 = (u32)TaskMove;
-    t->unk0C = (u32)sub_0801a3e4;
+    t->moveCallback = (u32)TaskMove;
+    t->drawCallback = (u32)sub_0801a3e4;
     t->layer = 15;
-    gCurTask->unk38 = gUnk_0875546C;
-    gCurTask->unk40 = 0xD350;
+    gCurTask->frameTable = gUnk_0875546C;
+    gCurTask->tileWord = 0xD350;
     RequestCopy(2, 0x085E0070, (u32)gUnk_03001610, 32);
     gCurTask->posX = 160 << 17;
     gCurTask->posY = 160 << 15;
@@ -584,11 +584,11 @@ void sub_08019d30(void)
 {
     struct Task *t = gCurTask;
 
-    t->unk00 = (u32)TaskMove;
-    t->unk0C = (u32)sub_0801a3e4;
+    t->moveCallback = (u32)TaskMove;
+    t->drawCallback = (u32)sub_0801a3e4;
     t->layer = 14;
-    gCurTask->unk38 = gUnk_08755484;
-    gCurTask->unk40 = 0xD350;
+    gCurTask->frameTable = gUnk_08755484;
+    gCurTask->tileWord = 0xD350;
     RequestCopy(2, 0x085E0070, (u32)gUnk_03001610, 32);
     gCurTask->posX = 160 << 17;
     gCurTask->posY = 160 << 15;
@@ -633,9 +633,9 @@ void sub_08019e48(void)
     struct Task *u;
     s32 v;
 
-    t->unk00 = (u32)TaskMove;
-    t->unk0C = 0;
-    t->unk04 = (u32)sub_08019ecc;
+    t->moveCallback = (u32)TaskMove;
+    t->drawCallback = 0;
+    t->updateCallback = (u32)sub_08019ecc;
     t->posX = ((s16)gSpriteCameraX + 120) << 16;
     t->posY = ((s16)gSpriteCameraY + 90) << 16;
     TaskStop();
@@ -643,12 +643,12 @@ void sub_08019e48(void)
     TaskYieldTrampoline(40);
     u = gCurTask;
     v = 0x10000;
-    u->unk54 = v;
+    u->velX = v;
     TaskYieldTrampoline(255);
     TaskYieldTrampoline(20);
     TaskStop();
     TaskYieldTrampoline(190);
-    gCurTask->unk54 = v;
+    gCurTask->velX = v;
     TaskYieldTrampoline(237);
     TaskStop();
     TaskSleepForever();
@@ -658,5 +658,5 @@ void sub_08019ecc(void)
 {
     struct Task *t = gCurTask;
 
-    SetCameraFocus(t->unk48, t->unk4A);
+    SetCameraFocus(t->pixelX, t->pixelY);
 }

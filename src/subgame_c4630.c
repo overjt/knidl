@@ -217,12 +217,12 @@ void sub_080c46ec(void)
     s32 x;
     s32 *p;
 
-    gCurTask->unk0C = (u32)TaskDrawScreen;
-    gCurTask->unk3E &= 0x7FFF;
+    gCurTask->drawCallback = (u32)TaskDrawScreen;
+    gCurTask->spriteFlags &= 0x7FFF;
     gCurTask->layer = 3;
-    gCurTask->unk3E = 0;
-    gCurTask->unk4A = 40;
-    gCurTask->unk38 = gUnk_08755FBC;
+    gCurTask->spriteFlags = 0;
+    gCurTask->pixelY = 40;
+    gCurTask->frameTable = gUnk_08755FBC;
     gCurTask->frame = 0xFFFF;
     g->unk0EC.unk74 = 0;
     for (i = 0, p = &g->unk0EC.unk04[0].unk8, x = 0; i <= 6; i++) {
@@ -232,7 +232,7 @@ void sub_080c46ec(void)
         x += 0x340000;
     }
     *last = gAirGrindCoursePtr->unk000;
-    gCurTask->unk04 = (u32)sub_080c4790;
+    gCurTask->updateCallback = (u32)sub_080c4790;
     TaskSetSkipMask(1, gCurTaskIdx);
     TaskSleepForever();
 }
@@ -266,11 +266,11 @@ void sub_080c4818(void)
 {
     struct Task *t = gCurTask;
 
-    t->unk48 = (t->posX >> 16) - gAirGrindCoursePtr->unk000 + 120;
+    t->pixelX = (t->posX >> 16) - gAirGrindCoursePtr->unk000 + 120;
     t->frame = gAirGrindFrame & 1;
-    if (t->unk48 < -120) {
+    if (t->pixelX < -120) {
         t->frame = 0xFFFF;
-        t->unk08 = 0;
+        t->lateUpdateCallback = 0;
     }
 }
 
@@ -279,7 +279,7 @@ void sub_080c4860(s32 y)
     struct Task *t = &gTasks[gAirGrindPtr->unk44C];
 
     t->posX = y << 16;
-    t->unk08 = (u32)sub_080c4818;
+    t->lateUpdateCallback = (u32)sub_080c4818;
 }
 
 void AirGrindStepPaletteFades(void)

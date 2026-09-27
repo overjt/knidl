@@ -7,7 +7,7 @@
  *
  * Two per-frame entry points that load the actor's terrain box (TerrainProbeBegin),
  * derive the actor's position relative to the room from Task.posX/unk50 and
- * Task.unk54/unk58, run the probes and write the results back (TerrainProbeEnd).
+ * Task.velX/unk58, run the probes and write the results back (TerrainProbeEnd).
  */
 
 
@@ -134,8 +134,8 @@ void sub_0801c30c(const s8 *p)
 {
 
     TerrainProbeBegin(p);
-    gTerrainVelX = gCurTask->unk54;
-    gTerrainVelY = gCurTask->unk58;
+    gTerrainVelX = gCurTask->velX;
+    gTerrainVelY = gCurTask->velY;
     gTerrainPrevX = ((gTerrainProbeX << 16) + (gCurTask->posX & 0xFFFF) - gTerrainVelX) >> 16;
     gTerrainPrevY = ((gTerrainProbeY << 16) + (gCurTask->posY & 0xFFFF) - gTerrainVelY) >> 16;
     if (gTerrainProbeResult.unkB & 0x80)
@@ -150,8 +150,8 @@ u16 sub_0801c3a4(const s8 *p)
     u16 r;
 
     TerrainProbeBegin(p);
-    gTerrainVelX = gCurTask->unk54;
-    gTerrainVelY = gCurTask->unk58;
+    gTerrainVelX = gCurTask->velX;
+    gTerrainVelY = gCurTask->velY;
     gTerrainPrevX = ((gTerrainProbeX << 16) + (gCurTask->posX & 0xFFFF) - gTerrainVelX) >> 16;
     gTerrainPrevY = ((gTerrainProbeY << 16) + (gCurTask->posY & 0xFFFF) - gTerrainVelY) >> 16;
     if (gTerrainProbeResult.unkB & 0x80)

@@ -11,7 +11,7 @@
  * gUnk_0873E6A0/gUnk_0873E6D0 blend-and-offset table. sub_0806b070
  * dispatches through gUnk_0873E734[Task.unk76], sub_0806b098 is the
  * transition body proper, and sub_0806b12c is the entry point that saves and
- * restores Task.unk40 around it. The tail (0x0806B12C-0x0806B2E4) is the
+ * restores Task.tileWord around it. The tail (0x0806B12C-0x0806B2E4) is the
  * small task-field setters and their gUnk_0873E7xx descriptor tables.
  */
 
@@ -82,22 +82,22 @@ void sub_0806ad18(void)
 
     t = gCurTask;
     t->unk8C->extraFrame = 0;
-    t->posY = (t->unk4A + 1) << 16;
+    t->posY = (t->pixelY + 1) << 16;
     TaskYieldTrampoline(2);
     gCurTask->unk6C = 0;
     do
     {
         t = gCurTask;
-        t->posY = (t->unk4A - 2) << 16;
+        t->posY = (t->pixelY - 2) << 16;
         TaskYieldTrampoline(2);
         t = gCurTask;
-        t->posY = (t->unk4A + 2) << 16;
+        t->posY = (t->pixelY + 2) << 16;
         TaskYieldTrampoline(2);
         t = gCurTask;
         t->unk6C++;
     } while ((s16)t->unk6C <= 11);
     t = gCurTask;
-    t->posY = (t->unk4A - 1) << 16;
+    t->posY = (t->pixelY - 1) << 16;
     TaskYieldTrampoline(2);
     gCurTask->unk8C->extraFrame = 0xFFFF;
 }
@@ -158,16 +158,16 @@ void sub_0806aec0(void)
     {
         TaskSetMotionXFacing(gUnk_0873E6A0[(s16)gCurTask->unk6C], 0x5A5A5A5A);
         t = gCurTask;
-        t->unk58 = gUnk_0873E6D0[(s16)t->unk6C];
+        t->velY = gUnk_0873E6D0[(s16)t->unk6C];
         TaskYieldTrampoline(1);
         t = gCurTask;
         t->unk6C++;
     } while ((s16)t->unk6C <= 5);
     TaskStop();
     t = gCurTask;
-    t->unk0C = (u32)ActorDrawWorldInViewOrDestroy;
-    t->unk38 = gUnk_0874CA78;
-    t->unk40 = 0;
+    t->drawCallback = (u32)ActorDrawWorldInViewOrDestroy;
+    t->frameTable = gUnk_0874CA78;
+    t->tileWord = 0;
     RequestScreenShake(4);
     ActorPlaySfx(0x1F9, 0);
     sub_0806d4e4(1, 0);
@@ -263,12 +263,12 @@ s32 sub_0806b0f0(void)
 
 void sub_0806b12c(void)
 {
-    gUnk_02007D00[9] = gCurTask->unk40;
+    gUnk_02007D00[9] = gCurTask->tileWord;
     HudRemoveHpBar();
     sub_0806b0f0();
     sub_0806b05c();
     sub_0806b098();
-    gCurTask->unk40 = gUnk_02007D00[9];
+    gCurTask->tileWord = gUnk_02007D00[9];
     sub_08066f78();
     CallTableEntry(gCurTask->unk76, 9, gUnk_0873E758);
 }
@@ -298,8 +298,8 @@ void sub_0806b1c4(void)
     TaskStop();
     TaskSetFrame(0);
     t = gCurTask;
-    t->unk38 = gUnk_0874C9D8;
-    t->unk40 = 0;
+    t->frameTable = gUnk_0874C9D8;
+    t->tileWord = 0;
     ActorPlaySfx(212, 0);
     sub_08069fc8();
 }
@@ -311,8 +311,8 @@ void sub_0806b1f4(void)
     TaskStop();
     TaskSetFrame(0);
     t = gCurTask;
-    t->unk38 = gUnk_0874C9D8;
-    t->unk40 = 0;
+    t->frameTable = gUnk_0874C9D8;
+    t->tileWord = 0;
     ActorPlaySfx(212, 0);
     sub_08069fc8();
 }
@@ -327,8 +327,8 @@ void sub_0806b230(void)
     struct Task *t;
 
     t = gCurTask;
-    t->unk04 = 0;
-    t->unk78 = 127;
+    t->updateCallback = 0;
+    t->health = 127;
     sub_0806ed9c();
 }
 
@@ -344,19 +344,19 @@ void sub_0806b26c(void)
     struct Task *t;
 
     t = gCurTask;
-    t->unk00 = (u32)ActorMove;
-    t->unk0C = (u32)ActorDrawWorldInViewOrDestroy;
-    t->unk04 = (u32)sub_0806b2ac;
-    t->unk78 = 1;
-    t->unk08 = 0;
-    CallTableEntry(t->unk14, 3, gUnk_0873E78C);
+    t->moveCallback = (u32)ActorMove;
+    t->drawCallback = (u32)ActorDrawWorldInViewOrDestroy;
+    t->updateCallback = (u32)sub_0806b2ac;
+    t->health = 1;
+    t->lateUpdateCallback = 0;
+    CallTableEntry(t->state, 3, gUnk_0873E78C);
 }
 
 void sub_0806b2ac(void)
 {
     if (ActorCollideTerrain() == 0)
-        CallTableEntry(gCurTask->unk15, 3, gUnk_0873E798);
-    if (gCurTask->unk14 != 2)
+        CallTableEntry(gCurTask->updateState, 3, gUnk_0873E798);
+    if (gCurTask->state != 2)
     {
         ActorCheckHits();
         ActorReactToHit();

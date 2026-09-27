@@ -37,12 +37,12 @@ s32 CreatePlayerEffect(s32 a0, s32 a1, s32 a2);
 
 void sub_08049b48(void)
 {
-    gCurTask->unk88->unk05 = gCurTask->unk88->unk04;
-    gCurTask->unk88->unk04 = 13;
-    gCurTask->unk15 = 41;
+    gCurTask->player->prevMode = gCurTask->player->mode;
+    gCurTask->player->mode = 13;
+    gCurTask->updateState = 41;
     {
         struct Task *t = gCurTask;
-        if (t->unk88->unk05 != 13) {
+        if (t->player->prevMode != 13) {
             struct Task *u;
             t->unk73 = 0;
             u = gCurTask;
@@ -68,16 +68,16 @@ void sub_08049b48(void)
         /* fallthrough */
     case 1:
         {
-            struct PlayerState *p = gCurTask->unk88;
+            struct PlayerState *p = gCurTask->player;
             if ((p->unk42 & 128) == 0)
-                PlayerStartSfx(140, p->unk00);
+                PlayerStartSfx(140, p->playerIndex);
         }
-        CreatePlayerObject(gCurTask->unk88->unk00, 7, 0);
-        CreatePlayerObject(gCurTask->unk88->unk00, 7, 1);
-        CreatePlayerEffect(gCurTask->unk88->unk00, 40, 0);
-        CreatePlayerEffect(gCurTask->unk88->unk00, 40, 1);
-        CreatePlayerEffect(gCurTask->unk88->unk00, 40, 2);
-        CreatePlayerEffect(gCurTask->unk88->unk00, 28, 4);
+        CreatePlayerObject(gCurTask->player->playerIndex, 7, 0);
+        CreatePlayerObject(gCurTask->player->playerIndex, 7, 1);
+        CreatePlayerEffect(gCurTask->player->playerIndex, 40, 0);
+        CreatePlayerEffect(gCurTask->player->playerIndex, 40, 1);
+        CreatePlayerEffect(gCurTask->player->playerIndex, 40, 2);
+        CreatePlayerEffect(gCurTask->player->playerIndex, 28, 4);
         while (1) {
             TaskSetFrame(0x9FA);
             TaskYieldTrampoline(2);
@@ -109,7 +109,7 @@ void sub_08049d1c(void)
     case 1:
         if (t->unk28 == 0) {
             u16 *p = (u16 *)gLatchedHeldKeys;
-            if ((p[t->unk88->unk00] & 2) == 0) {
+            if ((p[t->player->playerIndex] & 2) == 0) {
                 t->unk73 = 2;
                 TaskSetEntry(sub_08049b48, gCurTaskIdx);
             }
@@ -128,12 +128,12 @@ void sub_08049d1c(void)
 
 void sub_08049d94(void)
 {
-    gCurTask->unk88->unk05 = gCurTask->unk88->unk04;
-    gCurTask->unk88->unk04 = 13;
-    gCurTask->unk15 = 42;
+    gCurTask->player->prevMode = gCurTask->player->mode;
+    gCurTask->player->mode = 13;
+    gCurTask->updateState = 42;
     {
         struct Task *t = gCurTask;
-        if (t->unk88->unk05 != 13) {
+        if (t->player->prevMode != 13) {
             struct Task *u;
             t->unk73 = 0;
             u = gCurTask;
@@ -148,11 +148,11 @@ void sub_08049d94(void)
         gCurTask->unk73 = 1;
         /* fallthrough */
     case 1:
-        CreatePlayerEffect(gCurTask->unk88->unk00, 41, 0);
-        CreatePlayerEffect(gCurTask->unk88->unk00, 41, 1);
-        CreatePlayerEffect(gCurTask->unk88->unk00, 41, 2);
-        CreatePlayerEffect(gCurTask->unk88->unk00, 41, 3);
-        PlayerStartSfx(141, gCurTask->unk88->unk00);
+        CreatePlayerEffect(gCurTask->player->playerIndex, 41, 0);
+        CreatePlayerEffect(gCurTask->player->playerIndex, 41, 1);
+        CreatePlayerEffect(gCurTask->player->playerIndex, 41, 2);
+        CreatePlayerEffect(gCurTask->player->playerIndex, 41, 3);
+        PlayerStartSfx(141, gCurTask->player->playerIndex);
         while (1) {
             TaskSetFrame(0xA86);
             TaskYieldTrampoline(1);
@@ -181,16 +181,16 @@ void sub_08049edc(void)
         break;
     case 1:
         if (t->unk28 == 0) {
-            if ((gLatchedHeldKeys[t->unk88->unk00] & 2) == 0) {
+            if ((gLatchedHeldKeys[t->player->playerIndex] & 2) == 0) {
                 t->unk73 = 2;
                 TaskSetEntry(sub_08049d94, gCurTaskIdx);
             }
         } else {
             t->unk28--;
         }
-        RegisterCollider((u8)gCurTaskIdx, gCurTask->unk48, gCurTask->unk4A,
+        RegisterCollider((u8)gCurTaskIdx, gCurTask->pixelX, gCurTask->pixelY,
                      gUnk_0873C214);
-        TaskBreakBlocks((struct HitBoxSet *)gUnk_0873CF4C, gCurTask->unk88->unk00);
+        TaskBreakBlocks((struct HitBoxSet *)gUnk_0873CF4C, gCurTask->player->playerIndex);
         break;
     case 2:
         break;

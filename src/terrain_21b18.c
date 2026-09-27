@@ -17,7 +17,7 @@
  * in gTerrainProbeResult) and writes the corrected position back;
  * sub_0802205c and sub_0802233c do the same for walls, sub_080222b0 probes
  * the ground and TaskInitWaterFlags/TaskInitWaterFlagsSlot set a task's in-wall state
- * (Task.unk7B).  The rest clamp a body or a task to the per-player bounds
+ * (Task.waterFlags).  The rest clamp a body or a task to the per-player bounds
  * gPlayerBounds, the camera bounds gCameraBounds or the room bounds
  * gRoomBounds and return which edges were hit. */
 
@@ -310,19 +310,19 @@ clear:
     gTerrainProbeResult.unkB = 0;
 
 done:
-    t->unk7A = gTerrainProbeResult.unk6;
+    t->onGround = gTerrainProbeResult.unk6;
     t->unk84 = (gTerrainProbeResult.unkC << 8) | gTerrainProbeResult.unkB;
     n = gTerrainProbeX - box[0];
     if ((t->posX >> 16) != n)
     {
         t->posX = (n << 16) + 0x8000;
-        t->unk48 = n;
+        t->pixelX = n;
     }
     n = gTerrainProbeY - box[1];
     if ((t->posY >> 16) != n)
     {
         t->posY = (n << 16) + 0x8000;
-        t->unk4A = n;
+        t->pixelY = n;
     }
 }
 
@@ -427,9 +427,9 @@ void TaskInitWaterFlags(void)
 {
     TerrainQueryPixel(gCurTask->posX >> 16, gCurTask->posY >> 16);
     if (gTerrainTile > 127)
-        gCurTask->unk7B = 3;
+        gCurTask->waterFlags = 3;
     else
-        gCurTask->unk7B = 0;
+        gCurTask->waterFlags = 0;
     gCurTask->unk84 = 128;
 }
 
@@ -439,9 +439,9 @@ void TaskInitWaterFlagsSlot(s32 id)
 
     TerrainQueryPixel(t->posX >> 16, t->posY >> 16);
     if (gTerrainTile > 127)
-        t->unk7B = 3;
+        t->waterFlags = 3;
     else
-        t->unk7B = 0;
+        t->waterFlags = 0;
     t->unk84 = 128;
 }
 
@@ -522,7 +522,7 @@ void sub_08022650(void)
 
 s32 IsTaskBelowPlayerBounds(struct Task *t)
 {
-    if (gPlayerBounds[gCurTaskIdx].y1 < t->unk4A)
+    if (gPlayerBounds[gCurTaskIdx].y1 < t->pixelY)
         return 1;
     return 0;
 }
@@ -540,23 +540,23 @@ s32 ClampTaskToRoom(struct Task *t)
     s32 lo = gRoomBounds[0] - 111;
     s32 hi = gRoomBounds[1] + 111;
 
-    if (lo > t->unk48)
+    if (lo > t->pixelX)
     {
         t->posX = lo << 16;
-        t->unk48 = lo;
+        t->pixelX = lo;
         r = 1;
     }
-    else if (hi < t->unk48)
+    else if (hi < t->pixelX)
     {
         t->posX = hi << 16;
-        t->unk48 = hi;
+        t->pixelX = hi;
         r = 2;
     }
     lo = gRoomBounds[2] - 72;
-    if (lo > t->unk4A)
+    if (lo > t->pixelY)
     {
         t->posY = lo << 16;
-        t->unk4A = lo;
+        t->pixelY = lo;
         r |= 4;
     }
     return r;
@@ -594,31 +594,31 @@ s32 sub_080228c4(struct Task *t)
     s32 lo = gCameraBounds[0] - 111;
     s32 hi = gCameraBounds[1] + 111;
 
-    if (t->unk48 < lo)
+    if (t->pixelX < lo)
     {
-        if (lo - t->unk48 <= 11)
+        if (lo - t->pixelX <= 11)
         {
             t->posX = lo << 16;
-            t->unk48 = lo;
+            t->pixelX = lo;
             r = 1;
         }
     }
-    else if (hi < t->unk48)
+    else if (hi < t->pixelX)
     {
-        if (t->unk48 - lo > 12)
+        if (t->pixelX - lo > 12)
         {
             t->posX = hi << 16;
-            t->unk48 = hi;
+            t->pixelX = hi;
             r = 2;
         }
     }
     lo = gCameraBounds[2] - 72;
-    if (lo > t->unk4A)
+    if (lo > t->pixelY)
     {
-        if (lo - t->unk48 <= 11)
+        if (lo - t->pixelX <= 11)
         {
             t->posY = lo << 16;
-            t->unk4A = lo;
+            t->pixelY = lo;
             r |= 4;
         }
     }
@@ -627,7 +627,7 @@ s32 sub_080228c4(struct Task *t)
 
 s32 sub_0802294c(struct Task *t)
 {
-    if (gRoomBounds[3] + 104 < t->unk4A)
+    if (gRoomBounds[3] + 104 < t->pixelY)
         return 1;
     return 0;
 }

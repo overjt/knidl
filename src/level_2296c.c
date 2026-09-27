@@ -669,6 +669,6 @@ void CreateRoomTask(s32 a)
     if (id != -1)
     {
         t = &gTasks[id];
-        t->unk14 = a;
+        t->state = a;
     }
 }

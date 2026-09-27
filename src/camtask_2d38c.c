@@ -4,7 +4,7 @@
 
 /* camtask_2d38c.c (0x0802D38C-0x0802EAC7, issue #86).
  *
- * The seven bodies of task type #4 (Task_MapEvent dispatches Task.unk14
+ * The seven bodies of task type #4 (Task_MapEvent dispatches Task.state
  * into the anchor table gMapEventVariants), the level's scripted map events:
  * sub_0802d38c waits for camera mode 3 and M07's sub_08027750, raises
  * gUnk_0200D080 until it drops, then by Task.unk18 spawns a type-#4
@@ -114,8 +114,8 @@ void sub_0802d38c(void)
     struct Task *t;
 
     t = gCurTask;
-    t->unk00 = 0;
-    t->unk0C = 0;
+    t->moveCallback = 0;
+    t->drawCallback = 0;
     if (t->unk24 != 0)
     {
         while (gCameraMode != 3)
@@ -155,28 +155,28 @@ s32 sub_0802d478(s32 x, s32 y)
     if (id != -1)
     {
         t = &gTasks[id];
-        t->unk14 = 2;
+        t->state = 2;
         t->posX = x << 16;
         t->posY = y << 16;
-        t->unk48 = x;
-        t->unk4A = y;
+        t->pixelX = x;
+        t->pixelY = y;
     }
     return id;
 }
 
 void sub_0802d4bc(void)
 {
-    gCurTask->unk00 = 0;
-    gCurTask->unk0C = 0;
+    gCurTask->moveCallback = 0;
+    gCurTask->drawCallback = 0;
     PlaySfx(159);
-    CreateStageEffect(2, gCurTask->unk48, gCurTask->unk4A - 8);
-    if ((gCurTask->unk46 = CreateStageEffect(1, gCurTask->unk48, gCurTask->unk4A - 8)) == -1)
+    CreateStageEffect(2, gCurTask->pixelX, gCurTask->pixelY - 8);
+    if ((gCurTask->unk46 = CreateStageEffect(1, gCurTask->pixelX, gCurTask->pixelY - 8)) == -1)
         TaskExitTrampoline();
     gTasks[gCurTask->unk46].unk18 = 0;
     while (gTasks[gCurTask->unk46].unk18 == 0)
         TaskYieldTrampoline(1);
-    BreakBlockAt(gCurTask->unk48 >> 4, gCurTask->unk4A >> 4);
-    BreakBlockAt(gCurTask->unk48 >> 4, (gCurTask->unk4A - 16) >> 4);
+    BreakBlockAt(gCurTask->pixelX >> 4, gCurTask->pixelY >> 4);
+    BreakBlockAt(gCurTask->pixelX >> 4, (gCurTask->pixelY - 16) >> 4);
     TaskYieldTrampoline(1);
     TaskFree(gCurTask->unk46);
     TaskExitTrampoline();
@@ -191,30 +191,30 @@ s32 sub_0802d5b4(s32 x, s32 y)
     if (id != -1)
     {
         t = &gTasks[id];
-        t->unk14 = 3;
+        t->state = 3;
         t->posX = x << 16;
         t->posY = y << 16;
-        t->unk48 = x;
-        t->unk4A = y;
+        t->pixelX = x;
+        t->pixelY = y;
     }
     return id;
 }
 
 void sub_0802d5f8(void)
 {
-    gCurTask->unk00 = 0;
-    gCurTask->unk0C = 0;
-    CreateStageEffect(5, gCurTask->unk48 + 2, gCurTask->unk4A);
+    gCurTask->moveCallback = 0;
+    gCurTask->drawCallback = 0;
+    CreateStageEffect(5, gCurTask->pixelX + 2, gCurTask->pixelY);
     TaskYieldTrampoline(2);
-    BreakBlockAt(gCurTask->unk48 >> 4, gCurTask->unk4A >> 4);
+    BreakBlockAt(gCurTask->pixelX >> 4, gCurTask->pixelY >> 4);
     TaskYieldTrampoline(4);
-    CreateStageEffect(5, gCurTask->unk48 + 2, gCurTask->unk4A - 12);
+    CreateStageEffect(5, gCurTask->pixelX + 2, gCurTask->pixelY - 12);
     TaskYieldTrampoline(2);
-    BreakBlockAt(gCurTask->unk48 >> 4, (gCurTask->unk4A - 16) >> 4);
+    BreakBlockAt(gCurTask->pixelX >> 4, (gCurTask->pixelY - 16) >> 4);
     TaskYieldTrampoline(4);
-    CreateStageEffect(5, gCurTask->unk48 + 2, gCurTask->unk4A - 24);
+    CreateStageEffect(5, gCurTask->pixelX + 2, gCurTask->pixelY - 24);
     TaskYieldTrampoline(2);
-    BreakBlockAt(gCurTask->unk48 >> 4, (gCurTask->unk4A - 32) >> 4);
+    BreakBlockAt(gCurTask->pixelX >> 4, (gCurTask->pixelY - 32) >> 4);
     TaskYieldTrampoline(4);
     TaskExitTrampoline();
 }
@@ -233,14 +233,14 @@ void sub_0802d6cc(void)
     u16 *p28;
 
     t = gCurTask;
-    t->unk00 = 0;
-    t->unk0C = 0;
+    t->moveCallback = 0;
+    t->drawCallback = 0;
     m = gCurRoomDef;
     p18 = m->bg2Palette;
-    t->unk54 = *p18 >> 1;
+    t->velX = *p18 >> 1;
     p28 = m->bg3Palette;
-    t->unk58 = *p28 >> 1;
-    t->unk60 = (s32)((u8 *)(gBgPalette + 0x100) - *p28);
+    t->velY = *p28 >> 1;
+    t->accelY = (s32)((u8 *)(gBgPalette + 0x100) - *p28);
     t->unk28 = (s32)(p18 + 1);
     t->unk2C = (s32)(p28 + 1);
     t->unk30 = (s32)(gRoomTable[gLevelIndex][gStageIndex][gRoomIndex + 1]->bg2Palette + 1);
@@ -249,9 +249,9 @@ void sub_0802d6cc(void)
     do
     {
         t1 = gCurTask;
-        BlendColors((u16 *)t1->unk28, (u16 *)t1->unk30, (u16)((s16)t1->unk6C * 8), (u16)t1->unk54, gBgPalette + 0x20);
+        BlendColors((u16 *)t1->unk28, (u16 *)t1->unk30, (u16)((s16)t1->unk6C * 8), (u16)t1->velX, gBgPalette + 0x20);
         u1 = gCurTask;
-        BlendColors((u16 *)u1->unk2C, (u16 *)u1->unk34, (u16)((s16)u1->unk6C * 8), (u16)u1->unk58, (u16 *)u1->unk60);
+        BlendColors((u16 *)u1->unk2C, (u16 *)u1->unk34, (u16)((s16)u1->unk6C * 8), (u16)u1->velY, (u16 *)u1->accelY);
         BlendColors(gUnk_02005E10 + 0x80, gUnk_02005E10, (u16)((s16)gCurTask->unk6C * 8), 96, gBgPalette + 0x180);
         TaskYieldTrampoline(1);
     } while ((s16)++gCurTask->unk6C <= 32);
@@ -263,9 +263,9 @@ void sub_0802d6cc(void)
         do
         {
             t2 = gCurTask;
-            BlendColors((u16 *)t2->unk30, (u16 *)t2->unk28, (u16)((s16)t2->unk6C * 64), (u16)t2->unk54, gBgPalette + 0x20);
+            BlendColors((u16 *)t2->unk30, (u16 *)t2->unk28, (u16)((s16)t2->unk6C * 64), (u16)t2->velX, gBgPalette + 0x20);
             u2 = gCurTask;
-            BlendColors((u16 *)u2->unk34, (u16 *)u2->unk2C, (u16)((s16)u2->unk6C * 64), (u16)u2->unk58, (u16 *)u2->unk60);
+            BlendColors((u16 *)u2->unk34, (u16 *)u2->unk2C, (u16)((s16)u2->unk6C * 64), (u16)u2->velY, (u16 *)u2->accelY);
             BlendColors(gUnk_02005E10, gUnk_02005E10 + 0x80, (u16)((s16)gCurTask->unk6C * 64), 96, gBgPalette + 0x180);
             TaskYieldTrampoline(1);
         } while ((s16)++gCurTask->unk6C <= 4);
@@ -273,9 +273,9 @@ void sub_0802d6cc(void)
         do
         {
             t3 = gCurTask;
-            BlendColors((u16 *)t3->unk28, (u16 *)t3->unk30, (u16)((s16)t3->unk6C * 64), (u16)t3->unk54, gBgPalette + 0x20);
+            BlendColors((u16 *)t3->unk28, (u16 *)t3->unk30, (u16)((s16)t3->unk6C * 64), (u16)t3->velX, gBgPalette + 0x20);
             u3 = gCurTask;
-            BlendColors((u16 *)u3->unk2C, (u16 *)u3->unk34, (u16)((s16)u3->unk6C * 64), (u16)u3->unk58, (u16 *)u3->unk60);
+            BlendColors((u16 *)u3->unk2C, (u16 *)u3->unk34, (u16)((s16)u3->unk6C * 64), (u16)u3->velY, (u16 *)u3->accelY);
             BlendColors(gUnk_02005E10 + 0x80, gUnk_02005E10, (u16)((s16)gCurTask->unk6C * 64), 96, gBgPalette + 0x180);
             TaskYieldTrampoline(1);
         } while ((s16)++gCurTask->unk6C <= 4);
@@ -291,17 +291,17 @@ void sub_0802d96c(void)
     struct RoomDef *m;
 
     t = gCurTask;
-    t->unk00 = 0;
-    t->unk0C = 0;
+    t->moveCallback = 0;
+    t->drawCallback = 0;
     m = gCurRoomDef;
-    t->unk64 = *m->bg2Palette >> 1;
-    t->unk68 = *m->bg3Palette >> 1;
-    t->unk60 = (s32)(gObjPalette - *m->bg3Palette);
+    t->speedLimitX = *m->bg2Palette >> 1;
+    t->speedLimitY = *m->bg3Palette >> 1;
+    t->accelY = (s32)(gObjPalette - *m->bg3Palette);
     t->unk28 = (s32)(gRoomTable[gLevelIndex][gStageIndex][gUnk_087328BC[gUnk_02006098[1]]]->bg2Palette + 1);
     t->unk2C = (s32)(gRoomTable[gLevelIndex][gStageIndex][gUnk_087328BC[gUnk_02006098[1]]]->bg3Palette + 1);
     t->unk30 = (s32)(gRoomTable[gLevelIndex][gStageIndex][gUnk_087328BC[gUnk_02006098[2]]]->bg2Palette + 1);
     t->unk34 = (s32)(gRoomTable[gLevelIndex][gStageIndex][gUnk_087328BC[gUnk_02006098[2]]]->bg3Palette + 1);
-    t->unk04 = (u32)sub_0802da8c;
+    t->updateCallback = (u32)sub_0802da8c;
     if (gUnk_02006098[4] > 0)
         t->unk6C = 0;
     else
@@ -329,7 +329,7 @@ void sub_0802da8c(void)
             gCurTask->unk6C = 0;
     }
     t = gCurTask;
-    BlendColors((u16 *)t->unk2C, (u16 *)t->unk34, t->unk6C, (u16)t->unk68, (u16 *)t->unk60);
+    BlendColors((u16 *)t->unk2C, (u16 *)t->unk34, t->unk6C, (u16)t->speedLimitY, (u16 *)t->accelY);
     if (gUnk_02006098[4] > 0 && (s16)(u = gCurTask)->unk6C == 0x100)
     {
         if (gUnk_02006098[3] != -1)
@@ -393,10 +393,10 @@ void sub_0802dcb4(void)
     s32 d4;
 
     t1 = gCurTask;
-    t1->unk00 = 0;
-    t1->unk0C = 0;
+    t1->moveCallback = 0;
+    t1->drawCallback = 0;
     t1->unk1C = gStageIndex * 6 + gUnk_0200001C - 1;
-    t1->unk54 = t1->unk28 = gUnk_08732428[t1->unk1C][1];
+    t1->velX = t1->unk28 = gUnk_08732428[t1->unk1C][1];
     if (t1->unk28 > 0)
         t1->unk2C = 4;
     else if (t1->unk28 < 0)
@@ -405,7 +405,7 @@ void sub_0802dcb4(void)
         t1->unk2C = -4;
     }
     t2 = gCurTask;
-    t2->unk58 = t2->unk30 = gUnk_08732428[t2->unk1C][2];
+    t2->velY = t2->unk30 = gUnk_08732428[t2->unk1C][2];
     if (t2->unk30 > 0)
         t2->unk34 = 4;
     else if (t2->unk30 < 0)
@@ -414,14 +414,14 @@ void sub_0802dcb4(void)
         t2->unk34 = -4;
     }
     t3 = gCurTask;
-    t3->unk48 = gCameraAnchorX;
-    t3->unk4A = gCameraAnchorY;
+    t3->pixelX = gCameraAnchorX;
+    t3->pixelY = gCameraAnchorY;
     if (gUnk_08732428[t3->unk1C][0] == 0)
     {
         for (t3->unk6C = 0; (s16)gCurTask->unk6C < gCurTask->unk28; gCurTask->unk6C++)
         {
             t4 = gCurTask;
-            if ((t4->unk54 > 0 && gCameraAnchorX >= gRoomBounds[1]) || (t4->unk54 < 0 && gCameraAnchorX <= gRoomBounds[0]))
+            if ((t4->velX > 0 && gCameraAnchorX >= gRoomBounds[1]) || (t4->velX < 0 && gCameraAnchorX <= gRoomBounds[0]))
                 break;
             gCameraAnchorX += t4->unk2C;
             TaskYieldTrampoline(1);
@@ -429,7 +429,7 @@ void sub_0802dcb4(void)
         for (gCurTask->unk6C = 0; (s16)gCurTask->unk6C < gCurTask->unk30; gCurTask->unk6C++)
         {
             t5 = gCurTask;
-            if ((t5->unk58 > 0 && gCameraAnchorY >= gRoomBounds[3]) || (t5->unk58 < 0 && gCameraAnchorY <= gRoomBounds[2]))
+            if ((t5->velY > 0 && gCameraAnchorY >= gRoomBounds[3]) || (t5->velY < 0 && gCameraAnchorY <= gRoomBounds[2]))
                 break;
             gCameraAnchorY += t5->unk34;
             TaskYieldTrampoline(1);
@@ -440,7 +440,7 @@ void sub_0802dcb4(void)
         for (t3->unk6C = 0; (s16)gCurTask->unk6C < gCurTask->unk30; gCurTask->unk6C++)
         {
             t6 = gCurTask;
-            if ((t6->unk54 > 0 && gCameraAnchorX == gRoomBounds[1]) || (t6->unk54 < 0 && gCameraAnchorX == gRoomBounds[0]))
+            if ((t6->velX > 0 && gCameraAnchorX == gRoomBounds[1]) || (t6->velX < 0 && gCameraAnchorX == gRoomBounds[0]))
                 break;
             gCameraAnchorY += t6->unk34;
             TaskYieldTrampoline(1);
@@ -448,7 +448,7 @@ void sub_0802dcb4(void)
         for (gCurTask->unk6C = 0; (s16)gCurTask->unk6C < gCurTask->unk28; gCurTask->unk6C++)
         {
             t7 = gCurTask;
-            if ((t7->unk58 > 0 && gCameraAnchorY == gRoomBounds[3]) || (t7->unk58 < 0 && gCameraAnchorY == gRoomBounds[2]))
+            if ((t7->velY > 0 && gCameraAnchorY == gRoomBounds[3]) || (t7->velY < 0 && gCameraAnchorY == gRoomBounds[2]))
                 break;
             gCameraAnchorX += t7->unk2C;
             TaskYieldTrampoline(1);
@@ -469,13 +469,13 @@ void sub_0802dcb4(void)
         {
             t8->posX = gUnk_087323C6[gUnk_030023B8][0];
             t8->posY = gUnk_087323C6[gUnk_030023B8][1];
-            t8->unk5C = gRoomWidth * t8->posY + t8->posX;
+            t8->accelX = gRoomWidth * t8->posY + t8->posX;
             for (t8->unk6C = 0; (s16)gCurTask->unk6C <= 1; gCurTask->unk6C++)
             {
                 for (gCurTask->unk6E = 0; gCurTask->unk6E <= 1; gCurTask->unk6E++)
                 {
                     t9 = gCurTask;
-                    if (gBg1MetatileMap[t9->unk5C + (s16)t9->unk6C + gRoomWidth * t9->unk6E] != 0)
+                    if (gBg1MetatileMap[t9->accelX + (s16)t9->unk6C + gRoomWidth * t9->unk6E] != 0)
                         goto skip;
                 }
             }
@@ -506,42 +506,42 @@ void sub_0802dcb4(void)
     gUnk_0200AF08 = 0;
     if (gUnk_08732428[gCurTask->unk1C][0] == 0)
     {
-        for (gCurTask->unk6C = 0; (s16)gCurTask->unk6C < gCurTask->unk28 && gCameraAnchorX != gCurTask->unk48; gCurTask->unk6C++)
+        for (gCurTask->unk6C = 0; (s16)gCurTask->unk6C < gCurTask->unk28 && gCameraAnchorX != gCurTask->pixelX; gCurTask->unk6C++)
         {
             t11 = gCurTask;
             gCameraAnchorX -= t11->unk2C;
-            d1 = t11->unk54;
-            if ((d1 > 0 && gCameraAnchorX < t11->unk48) || (d1 < 0 && gCameraAnchorX > t11->unk48))
-                gCameraAnchorX = gCurTask->unk48;
+            d1 = t11->velX;
+            if ((d1 > 0 && gCameraAnchorX < t11->pixelX) || (d1 < 0 && gCameraAnchorX > t11->pixelX))
+                gCameraAnchorX = gCurTask->pixelX;
             TaskYieldTrampoline(1);
         }
-        for (gCurTask->unk6C = 0; (s16)gCurTask->unk6C < gCurTask->unk30 && gCameraAnchorX != gCurTask->unk4A; gCurTask->unk6C++)
+        for (gCurTask->unk6C = 0; (s16)gCurTask->unk6C < gCurTask->unk30 && gCameraAnchorX != gCurTask->pixelY; gCurTask->unk6C++)
         {
             t12 = gCurTask;
             gCameraAnchorY -= t12->unk34;
-            d2 = t12->unk58;
-            if ((d2 > 0 && gCameraAnchorY < t12->unk4A) || (d2 < 0 && gCameraAnchorY > t12->unk4A))
-                gCameraAnchorY = gCurTask->unk4A;
+            d2 = t12->velY;
+            if ((d2 > 0 && gCameraAnchorY < t12->pixelY) || (d2 < 0 && gCameraAnchorY > t12->pixelY))
+                gCameraAnchorY = gCurTask->pixelY;
             TaskYieldTrampoline(1);
         }
     }
     else
     {
-        for (gCurTask->unk6C = 0; (s16)gCurTask->unk6C < gCurTask->unk30 && gCameraAnchorX != gCurTask->unk4A; gCurTask->unk6C++)
+        for (gCurTask->unk6C = 0; (s16)gCurTask->unk6C < gCurTask->unk30 && gCameraAnchorX != gCurTask->pixelY; gCurTask->unk6C++)
         {
             gCameraAnchorY -= gCurTask->unk34;
-            d3 = gCurTask->unk58;
-            if ((d3 > 0 && gCameraAnchorY < gCurTask->unk4A) || (d3 < 0 && gCameraAnchorY > gCurTask->unk4A))
-                gCameraAnchorY = gCurTask->unk4A;
+            d3 = gCurTask->velY;
+            if ((d3 > 0 && gCameraAnchorY < gCurTask->pixelY) || (d3 < 0 && gCameraAnchorY > gCurTask->pixelY))
+                gCameraAnchorY = gCurTask->pixelY;
             TaskYieldTrampoline(1);
         }
-        for (gCurTask->unk6C = 0; (s16)gCurTask->unk6C < gCurTask->unk28 && gCameraAnchorX != gCurTask->unk48; gCurTask->unk6C++)
+        for (gCurTask->unk6C = 0; (s16)gCurTask->unk6C < gCurTask->unk28 && gCameraAnchorX != gCurTask->pixelX; gCurTask->unk6C++)
         {
             t13 = gCurTask;
             gCameraAnchorX -= t13->unk2C;
-            d4 = t13->unk54;
-            if ((d4 > 0 && gCameraAnchorX < t13->unk48) || (d4 < 0 && gCameraAnchorX > t13->unk48))
-                gCameraAnchorX = gCurTask->unk48;
+            d4 = t13->velX;
+            if ((d4 > 0 && gCameraAnchorX < t13->pixelX) || (d4 < 0 && gCameraAnchorX > t13->pixelX))
+                gCameraAnchorX = gCurTask->pixelX;
             TaskYieldTrampoline(1);
         }
     }
@@ -575,10 +575,10 @@ void sub_0802e3ac(void)
     s32 d4;
 
     t1 = gCurTask;
-    t1->unk00 = 0;
-    t1->unk0C = 0;
+    t1->moveCallback = 0;
+    t1->drawCallback = 0;
     t1->unk1C = (u8)gUnk_0200001C;
-    t1->unk54 = t1->unk28 = gUnk_087324A6[t1->unk1C][1];
+    t1->velX = t1->unk28 = gUnk_087324A6[t1->unk1C][1];
     if (t1->unk28 > 0)
         t1->unk2C = 4;
     else if (t1->unk28 < 0)
@@ -587,7 +587,7 @@ void sub_0802e3ac(void)
         t1->unk2C = -4;
     }
     t2 = gCurTask;
-    t2->unk58 = t2->unk30 = gUnk_087324A6[t2->unk1C][2];
+    t2->velY = t2->unk30 = gUnk_087324A6[t2->unk1C][2];
     if (t2->unk30 > 0)
         t2->unk34 = 4;
     else if (t2->unk30 < 0)
@@ -596,8 +596,8 @@ void sub_0802e3ac(void)
         t2->unk34 = -4;
     }
     t3 = gCurTask;
-    t3->unk48 = gCameraAnchorX;
-    t3->unk4A = gCameraAnchorY;
+    t3->pixelX = gCameraAnchorX;
+    t3->pixelY = gCameraAnchorY;
     while (gBrightness != 0)
         TaskYieldTrampoline(1);
     TaskYieldTrampoline(20);
@@ -606,7 +606,7 @@ void sub_0802e3ac(void)
         for (gCurTask->unk6C = 0; (s16)gCurTask->unk6C < gCurTask->unk28; gCurTask->unk6C++)
         {
             t4 = gCurTask;
-            if ((t4->unk54 > 0 && gCameraAnchorX >= gRoomBounds[1]) || (t4->unk54 < 0 && gCameraAnchorX <= gRoomBounds[0]))
+            if ((t4->velX > 0 && gCameraAnchorX >= gRoomBounds[1]) || (t4->velX < 0 && gCameraAnchorX <= gRoomBounds[0]))
                 break;
             gCameraAnchorX += t4->unk2C;
             TaskYieldTrampoline(1);
@@ -614,7 +614,7 @@ void sub_0802e3ac(void)
         for (gCurTask->unk6C = 0; (s16)gCurTask->unk6C < gCurTask->unk30; gCurTask->unk6C++)
         {
             t5 = gCurTask;
-            if ((t5->unk58 > 0 && gCameraAnchorY >= gRoomBounds[3]) || (t5->unk58 < 0 && gCameraAnchorY <= gRoomBounds[2]))
+            if ((t5->velY > 0 && gCameraAnchorY >= gRoomBounds[3]) || (t5->velY < 0 && gCameraAnchorY <= gRoomBounds[2]))
                 break;
             gCameraAnchorY += t5->unk34;
             TaskYieldTrampoline(1);
@@ -625,7 +625,7 @@ void sub_0802e3ac(void)
         for (gCurTask->unk6C = 0; (s16)gCurTask->unk6C < gCurTask->unk30; gCurTask->unk6C++)
         {
             t6 = gCurTask;
-            if ((t6->unk58 > 0 && gCameraAnchorY >= gRoomBounds[3]) || (t6->unk58 < 0 && gCameraAnchorY <= gRoomBounds[2]))
+            if ((t6->velY > 0 && gCameraAnchorY >= gRoomBounds[3]) || (t6->velY < 0 && gCameraAnchorY <= gRoomBounds[2]))
                 break;
             gCameraAnchorY += t6->unk34;
             TaskYieldTrampoline(1);
@@ -633,7 +633,7 @@ void sub_0802e3ac(void)
         for (gCurTask->unk6C = 0; (s16)gCurTask->unk6C < gCurTask->unk28; gCurTask->unk6C++)
         {
             t7 = gCurTask;
-            if ((t7->unk54 > 0 && gCameraAnchorX >= gRoomBounds[1]) || (t7->unk54 < 0 && gCameraAnchorX <= gRoomBounds[0]))
+            if ((t7->velX > 0 && gCameraAnchorX >= gRoomBounds[1]) || (t7->velX < 0 && gCameraAnchorX <= gRoomBounds[0]))
                 break;
             gCameraAnchorX += t7->unk2C;
             TaskYieldTrampoline(1);
@@ -654,13 +654,13 @@ void sub_0802e3ac(void)
         {
             t8->posX = gUnk_087323C6[gUnk_030023B8][0];
             t8->posY = gUnk_087323C6[gUnk_030023B8][1];
-            t8->unk5C = gRoomWidth * t8->posY + t8->posX;
+            t8->accelX = gRoomWidth * t8->posY + t8->posX;
             for (t8->unk6C = 0; (s16)gCurTask->unk6C <= 1; gCurTask->unk6C++)
             {
                 for (gCurTask->unk6E = 0; gCurTask->unk6E <= 1; gCurTask->unk6E++)
                 {
                     t9 = gCurTask;
-                    if (gBg1MetatileMap[t9->unk5C + (s16)t9->unk6C + gRoomWidth * t9->unk6E] != 0)
+                    if (gBg1MetatileMap[t9->accelX + (s16)t9->unk6C + gRoomWidth * t9->unk6E] != 0)
                         goto skip;
                 }
             }
@@ -690,43 +690,43 @@ void sub_0802e3ac(void)
     gUnk_0200AF08 = 0;
     if (gUnk_087324A6[gCurTask->unk1C][0] == 0)
     {
-        for (gCurTask->unk6C = 0; (s16)gCurTask->unk6C < gCurTask->unk28 && gCameraAnchorX != gCurTask->unk48; gCurTask->unk6C++)
+        for (gCurTask->unk6C = 0; (s16)gCurTask->unk6C < gCurTask->unk28 && gCameraAnchorX != gCurTask->pixelX; gCurTask->unk6C++)
         {
             t13 = gCurTask;
             gCameraAnchorX -= t13->unk2C;
-            d1 = t13->unk54;
-            if ((d1 > 0 && gCameraAnchorX < t13->unk48) || (d1 < 0 && gCameraAnchorX > t13->unk48))
-                gCameraAnchorX = gCurTask->unk48;
+            d1 = t13->velX;
+            if ((d1 > 0 && gCameraAnchorX < t13->pixelX) || (d1 < 0 && gCameraAnchorX > t13->pixelX))
+                gCameraAnchorX = gCurTask->pixelX;
             TaskYieldTrampoline(1);
         }
-        for (gCurTask->unk6C = 0; (s16)gCurTask->unk6C < gCurTask->unk30 && gCameraAnchorX != gCurTask->unk4A; gCurTask->unk6C++)
+        for (gCurTask->unk6C = 0; (s16)gCurTask->unk6C < gCurTask->unk30 && gCameraAnchorX != gCurTask->pixelY; gCurTask->unk6C++)
         {
             t14 = gCurTask;
             gCameraAnchorY -= t14->unk34;
-            d2 = t14->unk58;
-            if ((d2 > 0 && gCameraAnchorY < t14->unk4A) || (d2 < 0 && gCameraAnchorY > t14->unk4A))
-                gCameraAnchorY = gCurTask->unk4A;
+            d2 = t14->velY;
+            if ((d2 > 0 && gCameraAnchorY < t14->pixelY) || (d2 < 0 && gCameraAnchorY > t14->pixelY))
+                gCameraAnchorY = gCurTask->pixelY;
             TaskYieldTrampoline(1);
         }
     }
     else
     {
-        for (gCurTask->unk6C = 0; (s16)gCurTask->unk6C < gCurTask->unk30 && gCameraAnchorX != gCurTask->unk4A; gCurTask->unk6C++)
+        for (gCurTask->unk6C = 0; (s16)gCurTask->unk6C < gCurTask->unk30 && gCameraAnchorX != gCurTask->pixelY; gCurTask->unk6C++)
         {
             t15 = gCurTask;
             gCameraAnchorY -= t15->unk34;
-            d3 = t15->unk58;
-            if ((d3 > 0 && gCameraAnchorY < t15->unk4A) || (d3 < 0 && gCameraAnchorY > t15->unk4A))
-                gCameraAnchorY = gCurTask->unk4A;
+            d3 = t15->velY;
+            if ((d3 > 0 && gCameraAnchorY < t15->pixelY) || (d3 < 0 && gCameraAnchorY > t15->pixelY))
+                gCameraAnchorY = gCurTask->pixelY;
             TaskYieldTrampoline(1);
         }
-        for (gCurTask->unk6C = 0; (s16)gCurTask->unk6C < gCurTask->unk28 && gCameraAnchorX != gCurTask->unk48; gCurTask->unk6C++)
+        for (gCurTask->unk6C = 0; (s16)gCurTask->unk6C < gCurTask->unk28 && gCameraAnchorX != gCurTask->pixelX; gCurTask->unk6C++)
         {
             t16 = gCurTask;
             gCameraAnchorX -= t16->unk2C;
-            d4 = t16->unk54;
-            if ((d4 > 0 && gCameraAnchorX < t16->unk48) || (d4 < 0 && gCameraAnchorX > t16->unk48))
-                gCameraAnchorX = gCurTask->unk48;
+            d4 = t16->velX;
+            if ((d4 > 0 && gCameraAnchorX < t16->pixelX) || (d4 < 0 && gCameraAnchorX > t16->pixelX))
+                gCameraAnchorX = gCurTask->pixelX;
             TaskYieldTrampoline(1);
         }
     }

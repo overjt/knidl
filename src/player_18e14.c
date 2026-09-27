@@ -6,7 +6,7 @@
  *
  * Animation script 52 of the sequence bank (entry 60 of gUnk_08731FA8, run by
  * task type #92, src/player_10358.c): three sparkles that close in on the
- * anchor task gTasks[Task.unk44].  The particle array gUnk_02006040
+ * anchor task gTasks[Task.parent].  The particle array gUnk_02006040
  * holds per sparkle i an x offset [i], a y offset [i + 3] and an x
  * acceleration [i + 6], all 16.16.  For the first 50 frames a free slot is
  * refilled from the 16-entry start tables gUnk_08732150[0] (x, mirrored by the
@@ -74,8 +74,8 @@ void sub_08018e14(void)
             gUnk_02006040[i + 3] += v;
             if (gUnk_02006040[i] != 0)
             {
-                gUnk_03001F2C = gTasks[gCurTask->unk44].unk48 + (gUnk_02006040[i] >> 16) - 8;
-                gUnk_03002448 = gTasks[gCurTask->unk44].unk4A + (gUnk_02006040[i + 3] >> 16) + 16;
+                gUnk_03001F2C = gTasks[gCurTask->parent].pixelX + (gUnk_02006040[i] >> 16) - 8;
+                gUnk_03002448 = gTasks[gCurTask->parent].pixelY + (gUnk_02006040[i + 3] >> 16) + 16;
                 QueueSprite(gCurTask->layer, (u32)gUnk_080D2148, 0, 0, gUnk_03001F2C, gUnk_03002448);
             }
         }

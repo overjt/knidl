@@ -7,11 +7,11 @@
  * Sub-game 2: the racers' motion and drawing, the sprite scaler and the
  * script cursor.
  * 
- *   sub_080c4ea8   a racer's Task.unk00 callback: Task.unk54 (speed) +=
- *       Task.unk5C (acceleration), with a catch-up bonus for the computer
+ *   sub_080c4ea8   a racer's Task.moveCallback callback: Task.velX (speed) +=
+ *       Task.accelX (acceleration), with a catch-up bonus for the computer
  *       racers behind the leader (M37Game.unk1B8), capped by the level's
  *       gUnk_080CFE3C[level][0]; then Task.posX += speed.
- *   sub_080c4d08 / sub_080c4e10   the Task.unk0C draw callbacks of the
+ *   sub_080c4d08 / sub_080c4e10   the Task.drawCallback draw callbacks of the
  *       racers (with a blinking extra sprite for three poses) and of the
  *       effect sprites (which end themselves off screen), both drawn scaled
  *       through sub_080c4f60.
@@ -133,12 +133,12 @@ u32 sub_080c4f60(u16 *src, s16 scale);                    /* callers pass scale 
 void sub_080c4d08(void)
 {
     struct Task *t = gCurTask;
-    u32 *tbl = t->unk38;
+    u32 *tbl = t->frameTable;
     u32 *p;
     s32 n;
 
-    if (tbl != NULL && t->frame != -1 && (u16)(t->unk48 + 63) <= 366
-        && t->unk4A > -64 && t->unk4A < 224) {
+    if (tbl != NULL && t->frame != -1 && (u16)(t->pixelX + 63) <= 366
+        && t->pixelY > -64 && t->pixelY < 224) {
         p = tbl;
         if (gAirGrindFrame & 2) {
             n = 0;
@@ -155,22 +155,22 @@ void sub_080c4d08(void)
             }
             if (n != 0)
                 QueueSprite(gCurTask->layer, sub_080c4f60((u16 *)p[n], gCurTask->unk28),
-                             gCurTask->unk3E, gCurTask->unk40, gCurTask->unk48, gCurTask->unk4A);
+                             gCurTask->spriteFlags, gCurTask->tileWord, gCurTask->pixelX, gCurTask->pixelY);
         }
         QueueSprite(gCurTask->layer, sub_080c4f60((u16 *)p[gCurTask->frame], gCurTask->unk28),
-                     gCurTask->unk3E, gCurTask->unk40, gCurTask->unk48, gCurTask->unk4A);
+                     gCurTask->spriteFlags, gCurTask->tileWord, gCurTask->pixelX, gCurTask->pixelY);
     }
 }
 
 void sub_080c4e10(void)
 {
     struct Task *t = gCurTask;
-    u32 *tbl = t->unk38;
+    u32 *tbl = t->frameTable;
 
     if (tbl != NULL && t->frame != -1) {
-        if ((u16)(t->unk48 + 63) <= 366 && t->unk4A > -64 && t->unk4A < 224)
+        if ((u16)(t->pixelX + 63) <= 366 && t->pixelY > -64 && t->pixelY < 224)
             QueueSprite(gCurTask->layer, sub_080c4f60((u16 *)tbl[t->frame], t->unk28),
-                         gCurTask->unk3E, gCurTask->unk40, gCurTask->unk48, gCurTask->unk4A);
+                         gCurTask->spriteFlags, gCurTask->tileWord, gCurTask->pixelX, gCurTask->pixelY);
         else
             TaskFree(gCurTaskIdx);
     }
@@ -185,26 +185,26 @@ void sub_080c4ea8(void)
     s32 d;
 
     if (n <= 1 || gUnk_080CFE2C[g->unk446][gCurTask->unk1C] >= n) {
-        gCurTask->unk54 += gCurTask->unk5C;
+        gCurTask->velX += gCurTask->accelX;
     } else {
         t = gCurTask;
-        v = t->unk5C;
+        v = t->accelX;
         if (v > 0) {
             d = g->unk1B8 - (t->posX >> 16);
             if (d > 256)
                 d = 256;
-            t->unk54 += v + ((v * d) >> 8);
+            t->velX += v + ((v * d) >> 8);
         } else {
-            t->unk54 += v;
+            t->velX += v;
         }
     }
-    if (gCurTask->unk54 > 0) {
-        if (gCurTask->unk54 > gUnk_080CFE3C[gAirGrindPtr->unk000][0])
-            gCurTask->unk54 = gUnk_080CFE3C[gAirGrindPtr->unk000][0];
-    } else if (gCurTask->unk54 < 0) {
-        gCurTask->unk54 = 0;
+    if (gCurTask->velX > 0) {
+        if (gCurTask->velX > gUnk_080CFE3C[gAirGrindPtr->unk000][0])
+            gCurTask->velX = gUnk_080CFE3C[gAirGrindPtr->unk000][0];
+    } else if (gCurTask->velX < 0) {
+        gCurTask->velX = 0;
     }
-    gCurTask->posX += gCurTask->unk54;
+    gCurTask->posX += gCurTask->velX;
 }
 
 u32 sub_080c4f60(u16 *src, s16 scale)

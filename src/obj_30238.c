@@ -4,11 +4,11 @@
 
 /* obj_30238.c (0x08030238-0x080306B3, issue #86).
  *
- * Task type #236 (class 4): Task_StageEffect dispatches on Task.unk14 into the
+ * Task type #236 (class 4): Task_StageEffect dispatches on Task.state into the
  * six bodies of the anchor table gUnk_087328D8 (CreateStageEffect spawns it).
  * They are short sprite animations that step Task.frame, the frame of the
- * Task.unk38 graphics table, every one to four frames; sub_08030404 also
- * falls (Task.unk60 = -0x400) and sub_080304ec rises (Task.unk58 =
+ * Task.frameTable graphics table, every one to four frames; sub_08030404 also
+ * falls (Task.accelY = -0x400) and sub_080304ec rises (Task.velY =
  * -0x10000). */
 
 extern void (*gUnk_087328D8[])(void);
@@ -29,7 +29,7 @@ void TaskStop(void);
 
 void Task_StageEffect(void)
 {
-    CallTableEntry(gCurTask->unk14, 6, gUnk_087328D8);
+    CallTableEntry(gCurTask->state, 6, gUnk_087328D8);
 }
 
 void sub_08030254(void)
@@ -38,11 +38,11 @@ void sub_08030254(void)
     struct Task *u;
 
     t = gCurTask;
-    t->unk00 = (u32)TaskUpdatePixelPos;
-    t->unk0C = (u32)TaskDrawWorld;
+    t->moveCallback = (u32)TaskUpdatePixelPos;
+    t->drawCallback = (u32)TaskDrawWorld;
     t->layer = 12;
     u = gCurTask;
-    u->unk38 = gUnk_0874CD54;
+    u->frameTable = gUnk_0874CD54;
     u->frame = 0;
     TaskYieldTrampoline(2);
     gCurTask->frame++;
@@ -63,11 +63,11 @@ void sub_080302cc(void)
     struct Task *v;
 
     t = gCurTask;
-    t->unk00 = (u32)TaskMove;
-    t->unk0C = (u32)TaskDrawWorld;
+    t->moveCallback = (u32)TaskMove;
+    t->drawCallback = (u32)TaskDrawWorld;
     t->layer = 12;
     u = gCurTask;
-    u->unk38 = gUnk_0874CD68;
+    u->frameTable = gUnk_0874CD68;
     TaskStop();
     gCurTask->frame = 0;
     TaskYieldTrampoline(2);
@@ -117,14 +117,14 @@ void sub_08030404(void)
     struct Task *v;
 
     t = gCurTask;
-    t->unk00 = (u32)TaskMove;
-    t->unk0C = (u32)TaskDrawWorld;
+    t->moveCallback = (u32)TaskMove;
+    t->drawCallback = (u32)TaskDrawWorld;
     t->layer = 11;
     u = gCurTask;
-    u->unk38 = gUnk_0874CD68;
+    u->frameTable = gUnk_0874CD68;
     TaskStop();
     v = gCurTask;
-    v->unk60 = -0x400;
+    v->accelY = -0x400;
     v->frame = 18;
     TaskYieldTrampoline(4);
     gCurTask->frame++;
@@ -159,14 +159,14 @@ void sub_080304ec(void)
     struct Task *v;
 
     t = gCurTask;
-    t->unk00 = (u32)TaskMove;
-    t->unk0C = (u32)TaskDrawWorld;
+    t->moveCallback = (u32)TaskMove;
+    t->drawCallback = (u32)TaskDrawWorld;
     t->layer = 12;
     u = gCurTask;
-    u->unk38 = gUnk_08752548;
+    u->frameTable = gUnk_08752548;
     TaskStop();
     v = gCurTask;
-    v->unk58 = -0x10000;
+    v->velY = -0x10000;
     v->frame = 0;
     TaskYieldTrampoline(2);
     gCurTask->frame++;
@@ -188,11 +188,11 @@ void sub_08030580(void)
     struct Task *u;
 
     t = gCurTask;
-    t->unk00 = (u32)TaskUpdatePixelPos;
-    t->unk0C = (u32)TaskDrawWorld;
+    t->moveCallback = (u32)TaskUpdatePixelPos;
+    t->drawCallback = (u32)TaskDrawWorld;
     t->layer = 12;
     u = gCurTask;
-    u->unk38 = gUnk_0874CDE0;
+    u->frameTable = gUnk_0874CDE0;
     u->frame = 0;
     TaskYieldTrampoline(2);
     gCurTask->frame++;
@@ -214,11 +214,11 @@ void sub_08030604(void)
     struct Task *u;
 
     t = gCurTask;
-    t->unk00 = (u32)TaskUpdatePixelPos;
-    t->unk0C = (u32)TaskDrawWorld;
+    t->moveCallback = (u32)TaskUpdatePixelPos;
+    t->drawCallback = (u32)TaskDrawWorld;
     t->layer = 12;
     u = gCurTask;
-    u->unk38 = gUnk_0874C804;
+    u->frameTable = gUnk_0874C804;
     u->frame = 0;
     TaskYieldTrampoline(1);
     gCurTask->frame++;

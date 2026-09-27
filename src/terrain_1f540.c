@@ -41,7 +41,7 @@ extern s8 gCollisionTileShapeClass[];
 extern s8 gUnk_087336F0[];
 extern s8 gUnk_087339F0[];
 extern u16 gTerrainTileRight;
-extern s32 gTerrainVelY;           /* Task.unk58 */
+extern s32 gTerrainVelY;           /* Task.velY */
 extern s16 gTerrainBoxLeft;           /* box left offset */
 extern struct Unk03005530 gTerrainProbeResult;
 extern s16 gTerrainProbeX;           /* probe x */
@@ -193,7 +193,7 @@ void sub_0801f800(void)
     }
 }
 
-/* Floor probe (none while gTerrainVelY, Task.unk58, is negative): land
+/* Floor probe (none while gTerrainVelY, Task.velY, is negative): land
    the box's bottom on the floor cell under it, else on a slope under one
    of its bottom corners.  Bits 0-2 of gTerrainProbeResult.unkB record, for the
    centre and the two corners, whether the cell below is a

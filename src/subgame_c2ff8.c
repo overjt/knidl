@@ -164,14 +164,14 @@ void AirGrindRacer(void)
     s32 player = gCurTask->unk1C;
     s32 src;
 
-    gCurTask->unk0C = (u32)sub_080c4d08;
-    gCurTask->unk00 = (u32)sub_080c4ea8;
-    gCurTask->unk38 = (u32 *)gUnk_08755F54;
-    gCurTask->unk3E &= 0x7FFF;
-    gCurTask->unk40 = gUnk_080CFE2C[gAirGrindPtr->unk446][player] << 12;
-    gCurTask->unk04 = (u32)AirGrindRacerUpdate;
-    gCurTask->unk08 = (u32)sub_080c3f20;
-    gCurTask->unk14 = 0;
+    gCurTask->drawCallback = (u32)sub_080c4d08;
+    gCurTask->moveCallback = (u32)sub_080c4ea8;
+    gCurTask->frameTable = (u32 *)gUnk_08755F54;
+    gCurTask->spriteFlags &= 0x7FFF;
+    gCurTask->tileWord = gUnk_080CFE2C[gAirGrindPtr->unk446][player] << 12;
+    gCurTask->updateCallback = (u32)AirGrindRacerUpdate;
+    gCurTask->lateUpdateCallback = (u32)sub_080c3f20;
+    gCurTask->state = 0;
     gCurTask->unk28 = 256;
     gAirGrindPtr->unk01C[player].unk14 = 0x80000;
     gAirGrindPtr->unk01C[player].unk18 = 0;
@@ -187,8 +187,8 @@ void AirGrindRacer(void)
     gAirGrindPtr->unk01C[player].unk0E = 0;
     gAirGrindPtr->unk01C[player].unk01 = 0;
     gCurTask->posX = gAirGrindCoursePtr->unk000 << 16;
-    gCurTask->unk54 = 0x28000;
-    gCurTask->unk5C = 0;
+    gCurTask->velX = 0x28000;
+    gCurTask->accelX = 0;
     gAirGrindPtr->unk004[player] = 0;
     gAirGrindPtr->unk01C[player].unk20 = 0;
     if (gAirGrindPtr->unk448 <= 1) {
@@ -248,18 +248,18 @@ void AirGrindRacer(void)
     gAirGrindPtr->unk01C[player].unk21 = 1;
     while (gAirGrindCoursePtr->unk000 < gAirGrindCoursePtr->unk00C)
         TaskYieldTrampoline(1);
-    gCurTask->unk14 = 1;
-    gCurTask->unk08 = (u32)sub_080c3efc;
+    gCurTask->state = 1;
+    gCurTask->lateUpdateCallback = (u32)sub_080c3efc;
     while (gAirGrindCoursePtr->unk018[player].unk00 < gAirGrindCoursePtr->unk010) {
         gAirGrindPtr->unk004[player]++;
         TaskYieldTrampoline(1);
     }
-    gCurTask->unk14 = 2;
-    gCurTask->unk08 = (u32)sub_080c3f20;
-    gCurTask->unk5C = 0;
+    gCurTask->state = 2;
+    gCurTask->lateUpdateCallback = (u32)sub_080c3f20;
+    gCurTask->accelX = 0;
     while (gAirGrindCoursePtr->unk018[player].unk00 < gAirGrindCoursePtr->unk010 + 240)
         TaskYieldTrampoline(1);
-    gCurTask->unk54 = 0;
+    gCurTask->velX = 0;
     TaskSleepForever();
 }
 
@@ -322,7 +322,7 @@ void AirGrindRacerUpdate(void)
         gAirGrindPtr->unk01C[player].unk0C--;
     if (pos > gAirGrindCoursePtr->unk010 + 240)
         pos = gAirGrindCoursePtr->unk010 + 240;
-    if (gCurTask->unk14 == 1) {
+    if (gCurTask->state == 1) {
         if (gAirGrindPtr->unk448 <= 1) {
             if (player == 0) {
                 gAirGrindPtr->unk01C[0].unk02 = gPlayerHeldKeys[0];

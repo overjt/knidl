@@ -44,7 +44,7 @@ extern s8 gUnk_087339F0[];
 extern u16 gUnk_08735018[];         /* indexed by the cell's byte 2 */
 extern u16 gTerrainPixelIndex;           /* pixel offset inside the queried cell */
 extern s16 gTerrainPrevBoxLeft;           /* box left (room-relative) */
-extern s32 gTerrainVelY;           /* Task.unk58 */
+extern s32 gTerrainVelY;           /* Task.velY */
 extern s16 gTerrainBoxLeft;           /* box left offset */
 extern struct Unk03005530 gTerrainProbeResult;
 extern s16 gTerrainProbeX;           /* probe x */
@@ -55,7 +55,7 @@ extern u16 gTerrainTile;           /* queried cell: tile set */
 extern s16 gTerrainBoxBottom;           /* box bottom offset */
 extern u16 gTerrainTileBelow;           /* cell below: tile set */
 extern s16 gTerrainPrevBoxRight;           /* box right (room-relative) */
-extern s32 gTerrainVelX;           /* Task.unk54 */
+extern s32 gTerrainVelX;           /* Task.velX */
 extern s16 gTerrainBoxRight;           /* box right offset */
 extern u16 gUnk_030055AC;           /* cell below: byte 2 */
 extern s16 gTerrainPrevBoxBottom;           /* box bottom (room-relative) */

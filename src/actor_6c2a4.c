@@ -4,7 +4,7 @@
  *   ./tools/fnmatch.sh 0x0806C2A4 0x0806CD40 src/actor_6c2a4.c --newpb
  *
  * Class-1 task bodies for the vehicle/ride actors: the launch-and-fall pair
- * (sub_0806c2a4 / sub_0806c930 set Task.unk54/unk58 from the sign in unk43
+ * (sub_0806c2a4 / sub_0806c930 set Task.velX/unk58 from the sign in unk43
  * and hand control to ActorMove), the star-ride state machine
  * (sub_0806c4a0 / sub_0806c5d4 / sub_0806c770 - a nine-step animation
  * switch over Task.unk46, the gUnk_0873EAC0 speed table and the
@@ -112,19 +112,19 @@ void sub_0806c2a4(void)
     s32 w;
 
     t = gCurTask;
-    t->unk00 = (u32)ActorMove;
-    t->unk04 = (u32)sub_0806c30c;
-    t->unk08 = 0;
+    t->moveCallback = (u32)ActorMove;
+    t->updateCallback = (u32)sub_0806c30c;
+    t->lateUpdateCallback = 0;
     t->unk34 = 0;
-    v = t->unk54 >> 1;
+    v = t->velX >> 1;
     if (v < 0)
         v = -v;
-    t->unk54 = t->facing * v;
-    w = t->unk58 >> 1;
+    t->velX = t->facing * v;
+    w = t->velY >> 1;
     if (w < 0)
         w = -w;
-    t->unk58 = -w;
-    t->unk7C = 0;
+    t->velY = -w;
+    t->hitKind = 0;
     gCurTask->unk80 = 0;
     TaskYieldTrampoline(12);
     gCurTask->unk34 = 1;
@@ -143,8 +143,8 @@ void sub_0806c324(void)
     struct Task *u;
 
     t = gCurTask;
-    t->unk00 = (u32)TaskMoveRelativeToParent;
-    t->unk08 = (u32)sub_0806c384;
+    t->moveCallback = (u32)TaskMoveRelativeToParent;
+    t->lateUpdateCallback = (u32)sub_0806c384;
     ActorSetTerrainHandlers((u32)gUnk_0873F8F4);
     sub_0806ba9c();
     u = gCurTask;
@@ -169,7 +169,7 @@ void sub_0806c384(void)
     t = gCurTask;
     if (t->unk18 == 1)
         sub_0806b8bc();
-    else if (t->unk14 != 4)
+    else if (t->state != 4)
         TaskSetEntry(sub_0806bf38, gCurTaskIdx);
     sub_0806be84();
 }
@@ -179,13 +179,13 @@ void sub_0806c3c4(void)
     struct Task *t;
 
     t = gCurTask;
-    t->unk00 = (u32)TaskMoveRelativeToParent;
-    t->unk04 = (u32)sub_0806c418;
-    t->unk08 = (u32)sub_0806c490;
+    t->moveCallback = (u32)TaskMoveRelativeToParent;
+    t->updateCallback = (u32)sub_0806c418;
+    t->lateUpdateCallback = (u32)sub_0806c490;
     t->posY = 0;
     t->posX = 0;
-    t->unk20 = t->unk48;
-    t->unk1C = t->unk4A;
+    t->unk20 = t->pixelX;
+    t->unk1C = t->pixelY;
     t->taskClass = 1;
     ActorSetTerrainHandlers((u32)gUnk_0873F8F4);
     TaskSleepForever();
@@ -195,14 +195,14 @@ void sub_0806c418(void)
 {
     struct Task *t;
 
-    gCurTask->unk78 = 127;
+    gCurTask->health = 127;
     sub_0806b878();
     sub_0806b410();
     t = gCurTask;
-    if (t->unk72 == 1)
-        RegisterCollider((u8)gCurTaskIdx, t->unk48, t->unk4A, gUnk_0873F86C);
+    if (t->actorKind == 1)
+        RegisterCollider((u8)gCurTaskIdx, t->pixelX, t->pixelY, gUnk_0873F86C);
     else
-        RegisterCollider((u8)gCurTaskIdx, t->unk48, t->unk4A, gUnk_0873F858);
+        RegisterCollider((u8)gCurTaskIdx, t->pixelX, t->pixelY, gUnk_0873F858);
 }
 
 void sub_0806c490(void)
@@ -221,9 +221,9 @@ void sub_0806c4a0(void)
     s32 i;
 
     t = gCurTask;
-    t->unk00 = (u32)ActorMove;
-    t->unk04 = (u32)sub_0806c5d4;
-    t->unk08 = (u32)sub_0806c770;
+    t->moveCallback = (u32)ActorMove;
+    t->updateCallback = (u32)sub_0806c5d4;
+    t->lateUpdateCallback = (u32)sub_0806c770;
     t->layer = 11;
     if (gUnk_0300244C != 0 && gCurTask->unk8C->terrainBox == 0)
         ActorSetTerrainBox((u32)gUnk_0873F894);
@@ -233,29 +233,29 @@ void sub_0806c4a0(void)
     u->unk24 = 0;
     TaskSetMotionXFacing(gUnk_0873EAC0[i].unk00, 0x5A5A5A5A);
     v = gCurTask;
-    v->unk58 = gUnk_0873EAC0[i].unk04;
-    v->unk7C = 0;
+    v->velY = gUnk_0873EAC0[i].unk04;
+    v->hitKind = 0;
     gCurTask->unk80 = 0;
     w = gCurTask;
     w->unk46 = 0;
     w->unk34 = 0;
     w->unk20 = 0;
-    if (w->unk72 != 1)
+    if (w->actorKind != 1)
     {
         while (1)
         {
-        gCurTask->unk3E |= 0x8000;
+        gCurTask->spriteFlags |= 0x8000;
         CreateChildTaskHere(158, 0);
         gCurTask->frame = 2;
         TaskYieldTrampoline(4);
-        gCurTask->unk3E &= 0x7FFF;
+        gCurTask->spriteFlags &= 0x7FFF;
         CreateChildTaskHere(158, 0);
         TaskYieldTrampoline(4);
-        gCurTask->unk3E &= 0x7FFF;
+        gCurTask->spriteFlags &= 0x7FFF;
         CreateChildTaskHere(158, 0);
         gCurTask->frame = 3;
         TaskYieldTrampoline(4);
-        gCurTask->unk3E |= 0x8000;
+        gCurTask->spriteFlags |= 0x8000;
         CreateChildTaskHere(158, 0);
         TaskYieldTrampoline(4);
         }
@@ -274,11 +274,11 @@ void sub_0806c5d4(void)
     struct Task *v;
 
     t = gCurTask;
-    t->unk78 = 127;
-    if (t->unk72 == 1)
-        TaskBreakBlocks(gUnk_0873F8DC, t->unk44);
+    t->health = 127;
+    if (t->actorKind == 1)
+        TaskBreakBlocks(gUnk_0873F8DC, t->parent);
     else
-        TaskBreakBlocks(gUnk_0873F8CC, t->unk44);
+        TaskBreakBlocks(gUnk_0873F8CC, t->parent);
     ActorCollideTerrain();
     if ((*(u32 *)gTerrainResult & 0x00FFFFFF) != 0)
     {
@@ -292,31 +292,31 @@ void sub_0806c5d4(void)
             gCurTask->unk30 = 2;
         PlaySfx(237);
         RequestScreenShake(2);
-        gCurTask->unk08 = 0;
+        gCurTask->lateUpdateCallback = 0;
         ActorSetState(7);
         TaskSetEntry(sub_0806bf38, gCurTaskIdx);
     }
     else
     {
         u = gCurTask;
-        if ((u->unk7B & 1) != 0)
+        if ((u->waterFlags & 1) != 0)
         {
-            if ((u->unk54 & 0xFFFF0000) != 0)
+            if ((u->velX & 0xFFFF0000) != 0)
                 TaskSetMotionXFacing(0x5A5A5A5A, 0xFFFFE800);
-            gCurTask->unk60 = 0x1000;
+            gCurTask->accelY = 0x1000;
         }
         v = gCurTask;
-        if (v->unk72 != 1)
+        if (v->actorKind != 1)
         {
-            v->unk48 += gUnk_0873EAF0[v->unk24 * 2];
-            v->unk4A += (&gUnk_0873EAF0[1])[v->unk24 * 2];
+            v->pixelX += gUnk_0873EAF0[v->unk24 * 2];
+            v->pixelY += (&gUnk_0873EAF0[1])[v->unk24 * 2];
             v->unk24 = (v->unk24 + 1) & 15;
         }
-        if (v->unk72 == 1)
-            RegisterCollider((u8)gCurTaskIdx, gCurTask->unk48,
-                         gCurTask->unk4A, gUnk_0873F86C);
+        if (v->actorKind == 1)
+            RegisterCollider((u8)gCurTaskIdx, gCurTask->pixelX,
+                         gCurTask->pixelY, gUnk_0873F86C);
         else
-            RegisterCollider((u8)gCurTaskIdx, v->unk48, v->unk4A, gUnk_0873F858);
+            RegisterCollider((u8)gCurTaskIdx, v->pixelX, v->pixelY, gUnk_0873F858);
     }
 }
 
@@ -343,7 +343,7 @@ void sub_0806c770(void)
         t = gCurTask;
         dx = t->posX >> 16;
         dy = t->posY >> 16;
-        if (t->unk72 == 1)
+        if (t->actorKind == 1)
             k = 8;
         else
             k = 0;
@@ -427,37 +427,37 @@ void sub_0806c930(void)
     s32 w;
 
     t = gCurTask;
-    t->unk00 = (u32)ActorMove;
-    t->unk04 = (u32)sub_0806c9e8;
-    t->unk08 = 0;
+    t->moveCallback = (u32)ActorMove;
+    t->updateCallback = (u32)sub_0806c9e8;
+    t->lateUpdateCallback = 0;
     t->unk34 = 0;
-    v = t->unk54 >> 1;
+    v = t->velX >> 1;
     if (v < 0)
         v = -v;
-    t->unk54 = t->facing * v;
+    t->velX = t->facing * v;
     switch (t->unk30)
     {
     case 0:
-        w = t->unk58 >> 1;
+        w = t->velY >> 1;
         if (w < 0)
             w = -w;
-        t->unk58 = w;
+        t->velY = w;
         break;
     case 1:
-        w = t->unk58 >> 1;
+        w = t->velY >> 1;
         if (w < 0)
             w = -w;
-        t->unk58 = -w;
+        t->velY = -w;
         break;
     case 2:
-        v = t->unk54 >> 1;
+        v = t->velX >> 1;
         if (v < 0)
             v = -v;
-        t->unk54 = -t->facing * v;
+        t->velX = -t->facing * v;
         TaskSetMotionY(0xFFFE0000, 0x4000, 0x20000);
         break;
     }
-    gCurTask->unk7C = 0;
+    gCurTask->hitKind = 0;
     gCurTask->unk80 = 0;
     TaskYieldTrampoline(12);
     gCurTask->unk34 = 1;
@@ -476,11 +476,11 @@ void sub_0806ca00(void)
     struct Task *u;
 
     t = gCurTask;
-    t->unk00 = (u32)ActorMove;
-    t->unk0C = (u32)ActorDrawWorldInViewOrDestroy;
+    t->moveCallback = (u32)ActorMove;
+    t->drawCallback = (u32)ActorDrawWorldInViewOrDestroy;
     t->layer = 10;
     u = gCurTask;
-    u->unk38 = gUnk_0874C520;
+    u->frameTable = gUnk_0874C520;
     u->frame = 11;
     TaskYieldTrampoline(2);
     gCurTask->frame++;
@@ -531,11 +531,11 @@ void sub_0806cb10(void)
     struct Task *u;
 
     t = gCurTask;
-    t->unk00 = (u32)ActorMove;
-    t->unk0C = (u32)ActorDrawWorldInViewOrDestroy;
+    t->moveCallback = (u32)ActorMove;
+    t->drawCallback = (u32)ActorDrawWorldInViewOrDestroy;
     t->layer = 10;
     u = gCurTask;
-    u->unk38 = gUnk_0874CBC8;
+    u->frameTable = gUnk_0874CBC8;
     TaskFaceLikeParent();
     gCurTask->frame = 0;
     TaskYieldTrampoline(2);
@@ -550,12 +550,12 @@ void sub_0806cb64(void)
     struct Task *u;
 
     t = gCurTask;
-    t->unk00 = 0;
-    t->unk0C = (u32)ActorDrawWorldInViewOrDestroy;
+    t->moveCallback = 0;
+    t->drawCallback = (u32)ActorDrawWorldInViewOrDestroy;
     t->layer = 10;
     u = gCurTask;
-    u->unk38 = gUnk_0874CBC8;
-    u->unk04 = (u32)sub_0806cbd4;
+    u->frameTable = gUnk_0874CBC8;
+    u->updateCallback = (u32)sub_0806cbd4;
     TaskFaceLikeParent();
     gCurTask->unk6C = 0;
     do
@@ -574,13 +574,13 @@ void sub_0806cbd4(void)
     struct Task *p;
     s32 i;
 
-    if (gTaskSlotTypes[i = gCurTask->unk44] != -1 && TaskHasSameSerial(i) == 1)
+    if (gTaskSlotTypes[i = gCurTask->parent] != -1 && TaskHasSameSerial(i) == 1)
     {
         t = gCurTask;
-        p = &gTasks[t->unk44];
-        t->unk48 = p->unk48 + t->unk18
+        p = &gTasks[t->parent];
+        t->pixelX = p->pixelX + t->unk18
                  + gUnk_0873EB30[*(s16 *)&t->unk6C] * t->facing;
-        t->unk4A = p->unk4A + t->unk1C + gUnk_0873EB38[*(s16 *)&t->unk6C];
+        t->pixelY = p->pixelY + t->unk1C + gUnk_0873EB38[*(s16 *)&t->unk6C];
     }
     else
     {

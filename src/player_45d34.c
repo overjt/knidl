@@ -41,16 +41,16 @@ s32 CreatePlayerEffect(s32 a0, s32 a1, s32 a2);
 
 void sub_08045d34(void)
 {
-    gCurTask->unk88->unk05 = gCurTask->unk88->unk04;
-    gCurTask->unk88->unk04 = 13;
-    gCurTask->unk15 = 35;
-    gCurTask->unk73 = gCurTask->unk88->unk0E - 1;
-    gCurTask->unk88->unk42 &= 0xFFEF;
-    if (--gCurTask->unk88->unk0E == 0) {
-        SetPlayerAbilityNoHud(0, -1, gCurTask->unk88->unk00);
+    gCurTask->player->prevMode = gCurTask->player->mode;
+    gCurTask->player->mode = 13;
+    gCurTask->updateState = 35;
+    gCurTask->unk73 = gCurTask->player->unk0E - 1;
+    gCurTask->player->unk42 &= 0xFFEF;
+    if (--gCurTask->player->unk0E == 0) {
+        SetPlayerAbilityNoHud(0, -1, gCurTask->player->playerIndex);
     } else {
-        struct PlayerState *p = gCurTask->unk88;
-        SetPlayerAbilityNoHud(p->unk0D, p->unk0E, p->unk00);
+        struct PlayerState *p = gCurTask->player;
+        SetPlayerAbilityNoHud(p->ability, p->unk0E, p->playerIndex);
     }
     gUnk_03001F34 = 1;
     PlayerStopAxes(3);
@@ -59,11 +59,11 @@ void sub_08045d34(void)
         gDispCnt &= 0xE0FF;
         gDispCnt |= 0x1D00;
     }
-    gCurTask->unk88->unk16 = 0;
-    CreatePlayerEffect(gCurTask->unk88->unk00, 37, 0);
+    gCurTask->player->unk16 = 0;
+    CreatePlayerEffect(gCurTask->player->playerIndex, 37, 0);
     gCurTask->unk28 = 0;
-    SetPlayerInvulnerability(3, 0, gCurTask->unk88->unk00);
-    gCurTask->unk88->unk42 |= 0x700;
+    SetPlayerInvulnerability(3, 0, gCurTask->player->playerIndex);
+    gCurTask->player->unk42 |= 0x700;
     switch (gCurTask->unk73) {
     case 2:
         PlayerSetMotionXPreset(11, 42);
@@ -90,10 +90,10 @@ void sub_08045d34(void)
         gCurTask->frame++;
         TaskYieldTrampoline(2);
         PlaySfx(160);
-        gCurTask->unk88->unk16++;
+        gCurTask->player->unk16++;
         RequestScreenShake(4);
         SetRoomUpdateFlags(2);
-        CreatePlayerEffect(gCurTask->unk88->unk00, 37, 1);
+        CreatePlayerEffect(gCurTask->player->playerIndex, 37, 1);
         gCurTask->unk6C = 0;
         do {
             PlayerStartOffsetScript(4);
@@ -102,7 +102,7 @@ void sub_08045d34(void)
             gCurTask->frame++;
             TaskYieldTrampoline(2);
         } while ((s16)++gCurTask->unk6C <= 7);
-        while ((s8)gCurTask->unk88->unk16 != 0) {
+        while ((s8)gCurTask->player->unk16 != 0) {
             PlayerStartOffsetScript(4);
             TaskSetFrame(0x674);
             TaskYieldTrampoline(2);
@@ -125,10 +125,10 @@ void sub_08045d34(void)
         StopSfx(160);
         TaskYieldTrampoline(1);
         PlaySfx(161);
-        gCurTask->unk88->unk16++;
+        gCurTask->player->unk16++;
         RequestScreenShake(4);
         SetRoomUpdateFlags(2);
-        CreatePlayerEffect(gCurTask->unk88->unk00, 37, 1);
+        CreatePlayerEffect(gCurTask->player->playerIndex, 37, 1);
         gCurTask->unk6C = 0;
         do {
             PlayerStartOffsetScript(4);
@@ -137,7 +137,7 @@ void sub_08045d34(void)
             gCurTask->frame++;
             TaskYieldTrampoline(2);
         } while ((s16)++gCurTask->unk6C <= 7);
-        while ((s8)gCurTask->unk88->unk16 != 0) {
+        while ((s8)gCurTask->player->unk16 != 0) {
             PlayerStartOffsetScript(4);
             TaskSetFrame(0x67D);
             TaskYieldTrampoline(2);
@@ -158,7 +158,7 @@ void sub_08045d34(void)
         TaskYieldTrampoline(2);
         gCurTask->frame++;
         TaskYieldTrampoline(5);
-        gCurTask->unk88->unk68 = 0;
+        gCurTask->player->terrainBox = 0;
         PlayerSetMotionYPreset(35);
         gCurTask->frame--;
         TaskYieldTrampoline(4);
@@ -176,13 +176,13 @@ void sub_08045d34(void)
         TaskYieldTrampoline(4);
         StopSfx(161);
         TaskYieldTrampoline(1);
-        gCurTask->unk88->unk68 = (u32)gPlayerDefaultTerrainBox;
+        gCurTask->player->terrainBox = (u32)gPlayerDefaultTerrainBox;
         PlayerStopAxes(2);
         PlaySfx(162);
-        gCurTask->unk88->unk16++;
+        gCurTask->player->unk16++;
         RequestScreenShake(4);
         SetRoomUpdateFlags(2);
-        CreatePlayerEffect(gCurTask->unk88->unk00, 37, 1);
+        CreatePlayerEffect(gCurTask->player->playerIndex, 37, 1);
         gCurTask->unk6C = 0;
         do {
             PlayerStartOffsetScript(4);
@@ -191,7 +191,7 @@ void sub_08045d34(void)
             gCurTask->frame++;
             TaskYieldTrampoline(2);
         } while ((s16)++gCurTask->unk6C <= 7);
-        while ((s8)gCurTask->unk88->unk16 != 0) {
+        while ((s8)gCurTask->player->unk16 != 0) {
             PlayerStartOffsetScript(4);
             TaskSetFrame(0x689);
             TaskYieldTrampoline(2);
@@ -202,18 +202,18 @@ void sub_08045d34(void)
         TaskYieldTrampoline(4);
         break;
     }
-    SetPlayerInvulnerability(255, 0, gCurTask->unk88->unk00);
+    SetPlayerInvulnerability(255, 0, gCurTask->player->playerIndex);
     FreezeOtherTasks(0);
     {
-        struct PlayerState *p = gCurTask->unk88;
-        if (p->unk0D != 7)
-            HudShowAbility(p->unk0D, p->unk00);
+        struct PlayerState *p = gCurTask->player;
+        if (p->ability != 7)
+            HudShowAbility(p->ability, p->playerIndex);
         else
             p->unk22 = 2;
     }
     gCurTask->unk28++;
     gUnk_03001F34 = 0;
-    gCurTask->unk88->unk42 &= 0xF8FF;
+    gCurTask->player->unk42 &= 0xF8FF;
     TaskSleepForever();
 }
 
@@ -222,10 +222,10 @@ void sub_080462f0(void)
     struct Task *t = gCurTask;
 
     if (t->unk28 != 0) {
-        if (t->unk7A & 1)
-            t->unk88->unk01 = 1;
+        if (t->onGround & 1)
+            t->player->requestedAction = 1;
         else
-            t->unk88->unk01 = 7;
+            t->player->requestedAction = 7;
     }
     PlayerStopAtCeilingAndWall();
 }

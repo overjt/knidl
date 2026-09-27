@@ -29,12 +29,12 @@ void sub_0801a76c(s32 i)
 {
     struct Task *t = gCurTask;
 
-    t->unk00 = (u32)TaskMove;
-    t->unk0C = (u32)sub_0803ddc0;
+    t->moveCallback = (u32)TaskMove;
+    t->drawCallback = (u32)sub_0803ddc0;
     t->layer = 7;
-    gCurTask->unk38 = gUnk_0874CFEC;
-    gCurTask->unk40 = (i << 13) | (i << 7);
-    gCurTask->unk88 = &gPlayerStates[i];
+    gCurTask->frameTable = gUnk_0874CFEC;
+    gCurTask->tileWord = (i << 13) | (i << 7);
+    gCurTask->player = &gPlayerStates[i];
 }
 
 void ClearColliderLists(void)

@@ -158,7 +158,7 @@ void sub_0801b9e4(void)
     gUnk_030023DC = gColliderSlot;
     gUnk_03001F24 = gColliderPlayer;
     if (gHitKind == 6 || gHitKind == 8)
-        gUnk_03002354 = gCurTask->unk75;
+        gUnk_03002354 = gCurTask->hitTimer;
     else
         gUnk_03002354 = gAttackHitDuration;
     /* gAttackX/gAttackY are read signed here (ldrsh) */

@@ -142,7 +142,7 @@ u16 TaskBreakBlocks(struct HitBoxSet *p, s32 e)
         dir = gCurTask->facing;
     else
         dir = 1;
-    return BreakBlocksInHitBoxes(p, gCurTask->unk48, gCurTask->unk4A, dir, e);
+    return BreakBlocksInHitBoxes(p, gCurTask->pixelX, gCurTask->pixelY, dir, e);
 }
 
 u16 sub_08030898(struct HitBoxSet *p, s32 e)
@@ -153,7 +153,7 @@ u16 sub_08030898(struct HitBoxSet *p, s32 e)
         dir = gCurTask->facing;
     else
         dir = 1;
-    return sub_08030b14(p, gCurTask->unk48, gCurTask->unk4A, dir, e);
+    return sub_08030b14(p, gCurTask->pixelX, gCurTask->pixelY, dir, e);
 }
 
 u16 TaskBreakBlocksNoPlayer(struct HitBoxSet *p)
@@ -164,7 +164,7 @@ u16 TaskBreakBlocksNoPlayer(struct HitBoxSet *p)
         dir = gCurTask->facing;
     else
         dir = 1;
-    return BreakBlocksInHitBoxes(p, gCurTask->unk48, gCurTask->unk4A, dir, -1);
+    return BreakBlocksInHitBoxes(p, gCurTask->pixelX, gCurTask->pixelY, dir, -1);
 }
 
 u16 sub_0803093c(struct HitBoxSet *p, s32 x, s32 y)
@@ -358,7 +358,7 @@ u16 sub_08030db8(struct HitBoxSet *p)
         dir = gCurTask->facing;
     else
         dir = 1;
-    return sub_08030e00(p, gCurTask->unk48, gCurTask->unk4A, dir);
+    return sub_08030e00(p, gCurTask->pixelX, gCurTask->pixelY, dir);
 }
 
 u16 sub_08030e00(struct HitBoxSet *p, s32 x, s32 y, s32 dir)

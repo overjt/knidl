@@ -60,10 +60,10 @@ void sub_0800ea0c(void)
 
     if (TaskIsOnScreenNoCamera()) {
         struct Task *s = gCurTask;
-        u32 *tbl = s->unk38;
+        u32 *tbl = s->frameTable;
 
-        QueueSprite(3, tbl[8], 0, 0, s->unk48, s->unk4A);
-        QueueSprite(2, tbl[9], 0, 0, gCurTask->unk48, gCurTask->unk4A);
+        QueueSprite(3, tbl[8], 0, 0, s->pixelX, s->pixelY);
+        QueueSprite(2, tbl[9], 0, 0, gCurTask->pixelX, gCurTask->pixelY);
     }
     t = gCurTask;
     if (t->unk34 == 256) {
@@ -88,10 +88,10 @@ void sub_0800eae4(void)
 {
     struct Task *t = gCurTask;
 
-    t->unk00 = (u32)TaskMove;
-    t->unk0C = 0;
-    t->unk04 = (u32)sub_0800ec08;
-    t->unk38 = gUnk_08755650;
+    t->moveCallback = (u32)TaskMove;
+    t->drawCallback = 0;
+    t->updateCallback = (u32)sub_0800ec08;
+    t->frameTable = gUnk_08755650;
     t->unk28 = 0;
     t->unk2C = 0;
     for (t->unk6C = 0; (s16)gCurTask->unk6C <= 9; gCurTask->unk6C++) {
@@ -124,7 +124,7 @@ void sub_0800ec08(void)
 {
     if (TaskIsOnScreenNoCamera()) {
         struct Task *t = gCurTask;
-        u32 *tbl = t->unk38;
+        u32 *tbl = t->frameTable;
 
         QueueSprite(1, tbl[10], 0, 0, (t->unk28 >> 16) - 127, (t->unk2C >> 16) + 144);
         QueueSprite(1, tbl[11], 0, 0, 0x16F - (gCurTask->unk28 >> 16), (gCurTask->unk2C >> 16) + 144);
@@ -135,9 +135,9 @@ void Task_SoundTestCursors(void)
 {
     struct Task *t = gCurTask;
 
-    t->unk00 = 0;
-    t->unk0C = 0;
-    t->unk04 = (u32)sub_0800ecb8;
+    t->moveCallback = 0;
+    t->drawCallback = 0;
+    t->updateCallback = (u32)sub_0800ecb8;
     t->unk2C = 0;
     t->unk30 = 1;
     t->unk34 = 0;

@@ -354,13 +354,13 @@ void sub_08023e34(void)
 {
     struct Task *t = gCurTask;
 
-    t->unk00 = 0;
-    t->unk0C = (u32)RoomTaskDraw;
-    t->unk04 = (u32)sub_08023ea0;
+    t->moveCallback = 0;
+    t->drawCallback = (u32)RoomTaskDraw;
+    t->updateCallback = (u32)sub_08023ea0;
     if (gUnk_0200AF08 != 0)
-        t->unk08 = (u32)sub_08023f5c;
+        t->lateUpdateCallback = (u32)sub_08023f5c;
     else
-        t->unk08 = (u32)sub_08023f18;
+        t->lateUpdateCallback = (u32)sub_08023f18;
     TaskSleepForever();
 }
 
@@ -368,10 +368,10 @@ void sub_08023e78(void)
 {
     struct Task *t = gCurTask;
 
-    t->unk00 = 0;
-    t->unk0C = 0;
-    t->unk04 = (u32)sub_08023efc;
-    t->unk08 = (u32)sub_08023fa0;
+    t->moveCallback = 0;
+    t->drawCallback = 0;
+    t->updateCallback = (u32)sub_08023efc;
+    t->lateUpdateCallback = (u32)sub_08023fa0;
     TaskSleepForever();
 }
 

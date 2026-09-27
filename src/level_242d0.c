@@ -289,10 +289,10 @@ void sub_080242d0(void)
 {
     struct Task *t = gCurTask;
 
-    t->unk00 = 0;
-    t->unk0C = (u32)RoomTaskDraw;
-    t->unk04 = (u32)sub_0802457c;
-    t->unk08 = (u32)sub_080245d0;
+    t->moveCallback = 0;
+    t->drawCallback = (u32)RoomTaskDraw;
+    t->updateCallback = (u32)sub_0802457c;
+    t->lateUpdateCallback = (u32)sub_080245d0;
     TaskSleepForever();
 }
 
@@ -376,13 +376,13 @@ void sub_08024540(void)
 {
     struct Task *t = gCurTask;
 
-    t->unk00 = 0;
-    t->unk0C = 0;
-    t->unk04 = (u32)sub_0802457c;
+    t->moveCallback = 0;
+    t->drawCallback = 0;
+    t->updateCallback = (u32)sub_0802457c;
     if (gBg3MapShape != 0)
-        t->unk08 = (u32)sub_080245d0;
+        t->lateUpdateCallback = (u32)sub_080245d0;
     else
-        t->unk08 = (u32)sub_08024598;
+        t->lateUpdateCallback = (u32)sub_08024598;
     TaskSleepForever();
 }
 
@@ -534,23 +534,23 @@ void sub_08024904(void)
 {
     struct Task *t = gCurTask;
 
-    t->unk00 = 0;
-    t->unk0C = 0;
-    t->unk04 = (u32)sub_0802457c;
+    t->moveCallback = 0;
+    t->drawCallback = 0;
+    t->updateCallback = (u32)sub_0802457c;
     switch (gRoomBgLayout)
     {
     case 1:
-        gCurTask->unk08 = (u32)sub_080237fc;
+        gCurTask->lateUpdateCallback = (u32)sub_080237fc;
         break;
     case 4:
-        gCurTask->unk08 = (u32)sub_0802385c;
+        gCurTask->lateUpdateCallback = (u32)sub_0802385c;
         break;
     default:
     case 0:
     case 2:
     case 3:
     case 5:
-        gCurTask->unk08 = (u32)sub_08023748;
+        gCurTask->lateUpdateCallback = (u32)sub_08023748;
         break;
     }
     TaskSleepForever();
@@ -708,29 +708,29 @@ void sub_08024da4(void)
 {
     struct Task *t = gCurTask;
 
-    t->unk00 = 0;
-    t->unk0C = 0;
-    t->unk04 = (u32)RoomTaskUpdateCamera;
+    t->moveCallback = 0;
+    t->drawCallback = 0;
+    t->updateCallback = (u32)RoomTaskUpdateCamera;
     switch (gRoomBgLayout)
     {
     default:
     case 0:
-        gCurTask->unk08 = (u32)sub_08023748;
+        gCurTask->lateUpdateCallback = (u32)sub_08023748;
         break;
     case 1:
-        gCurTask->unk08 = (u32)sub_080237fc;
+        gCurTask->lateUpdateCallback = (u32)sub_080237fc;
         break;
     case 2:
-        gCurTask->unk08 = (u32)sub_080238ec;
+        gCurTask->lateUpdateCallback = (u32)sub_080238ec;
         break;
     case 3:
-        gCurTask->unk08 = (u32)sub_080237a4;
+        gCurTask->lateUpdateCallback = (u32)sub_080237a4;
         break;
     case 4:
-        gCurTask->unk08 = (u32)sub_0802385c;
+        gCurTask->lateUpdateCallback = (u32)sub_0802385c;
         break;
     case 5:
-        gCurTask->unk08 = (u32)sub_080238a4;
+        gCurTask->lateUpdateCallback = (u32)sub_080238a4;
         break;
     }
     TaskSleepForever();

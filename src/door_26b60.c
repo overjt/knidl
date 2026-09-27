@@ -176,8 +176,8 @@ void UpdateDoors(void)
                 {
                     struct Task *t = &gTasks[j];
 
-                    gUnk_03001F2C = x - t->unk48;
-                    gUnk_03002448 = y - t->unk4A;
+                    gUnk_03001F2C = x - t->pixelX;
+                    gUnk_03002448 = y - t->pixelY;
                     if (gUnk_03002344 * gUnk_03002344 >= gUnk_03001F2C * gUnk_03001F2C + gUnk_03002448 * gUnk_03002448)
                         gUnk_03002160++;
                 }

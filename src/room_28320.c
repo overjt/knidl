@@ -365,7 +365,7 @@ void CameraResetBoundsToGroup(void)
     {
         if ((gActivePlayerMask >> i) & 1)
         {
-            v = gTasks[i].unk48;
+            v = gTasks[i].pixelX;
             if (v < gRoomBounds[0])
                 v = gRoomBounds[0];
             if (gRoomBounds[1] < v)
@@ -374,7 +374,7 @@ void CameraResetBoundsToGroup(void)
                 x0 = v;
             if (x1 < v)
                 x1 = v;
-            v = gTasks[i].unk4A;
+            v = gTasks[i].pixelY;
             if (v < gRoomBounds[2])
                 v = gRoomBounds[2];
             if (gRoomBounds[3] < v)
