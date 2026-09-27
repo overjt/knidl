@@ -1278,7 +1278,6 @@ void sub_0809ad6c(void)
 {
     struct Task *t;
     struct Task *u;
-    u16 v;
 
     t = gUnk_03002490;
     if (--t->unk30 < 0)
@@ -1288,17 +1287,14 @@ void sub_0809ad6c(void)
             u = gUnk_03002490;
             if (sub_08021a40(u->unk48 - ((s8)u->unk43 << 4), u->unk4A) != 0)
             {
-                /* The empty asm keeps agbcc from if-converting the two
-                   constant arms into a preload + conditional overwrite. */
-                BLOCK_CROSS_JUMP
-                v = 18;
+                sub_0806395c(18);
+                sub_08006148(sub_0809a1f4, gCurTaskIdx);
             }
             else
             {
-                v = 17;
+                sub_0806395c(17);
+                sub_08006148(sub_0809a1f4, gCurTaskIdx);
             }
-            sub_0806395c(v);
-            sub_08006148(sub_0809a1f4, gCurTaskIdx);
         }
         else
         {

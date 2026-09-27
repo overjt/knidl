@@ -223,7 +223,7 @@ extern u32 gUnk_08748F1C[];
 extern u32 gUnk_08748F7C[];
 extern u32 gUnk_08748F84[];
 extern u32 gUnk_08748F8C[];
-extern u16 gUnk_08749014[];
+extern s16 gUnk_08749014[];
 extern u16 gUnk_08749058[];
 extern s16 gUnk_0874909C[];
 extern u8 gUnk_087490A4[];
@@ -1406,99 +1406,30 @@ void sub_080b60e8();
 extern void CpuSet(const void *src, void *dst, u32 control);
 void sub_080a78a0(void)
 {
-    vs16 *arr;
-    register struct Task *t asm("r4");
-    register struct Task **c asm("r6");
-    register struct Task *o asm("ip");
-    register u32 *tb asm("r5");
-    s32 i;
-    register s32 v asm("r3");
-    u16 m;
-    register s32 prod asm("r7");
-    u8 *oc;
-    s32 w0;
-    register s32 vv asm("r0");
-    u8 *psrc;
-    u8 *pm;
-    u8 *paddr;
-    register s32 mw asm("r0");
-    register s32 sum asm("r0");
-    register u8 *pmb asm("r1");
-    register s32 vsh asm("r0");
-    register u8 *pt43 asm("r0");
-    register s32 w43b asm("r1");
-    s32 w43;
-    u32 t2;
-    register s32 x1 asm("r1");
-    register s32 x2 asm("r2");
-    register s32 x3 asm("r3");
-    register s32 x5 asm("r5");
+    struct Task *t;
+    struct Task *o;
 
-    arr = gUnk_03004CA0;
-    c = &gUnk_03002490;
-    t = *c;
-    i = t->unk44;
-    if ((s16)arr[i] != -1)
+    if (gUnk_03004CA0[gUnk_03002490->unk44] != -1)
     {
-        o = &gUnk_03002790[i];
-        if (o->unk76 == 2)
+        t = gUnk_03002490;
+        o = &gUnk_03002790[t->unk44];
+        if (o->unk76 == 2 && o->unk78 > 0)
         {
-            asm("" : "=r"(x1), "=r"(x2), "=r"(x3), "=r"(x5));
-            if (o->unk78 > 0)
+            if ((u16)(o->unk3C - 88) <= 33)
             {
-                asm("" : : "r"(x1), "r"(x2), "r"(x3), "r"(x5));
-                oc = (u8 *)o;
-                asm("" : "+r"(oc));
-                w0 = *(u16 *)(oc + 60);
-                if ((u16)(w0 - 88) <= 33)
+                t->unk28 = (s16)o->unk3C - 88;
+                if (gUnk_08748F8C[t->unk28] != 0)
                 {
-                    vv = *(s16 *)(oc + 60);
-                    asm("" : "+r"(vv));
-                    v = vv - 88;
-                    t->unk28 = v;
-                    tb = gUnk_08748F8C;
-                    if (tb[v] != 0)
-                    {
-                        psrc = (u8 *)o + 72;
-                        pmb = (u8 *)gUnk_08749014;
-                        asm("" : "+r"(pmb));
-                        vsh = v << 1;
-                        pm = (u8 *)((u32)vsh + (u32)pmb);
-                        paddr = (u8 *)o + 67;
-                        w43 = *(s8 *)paddr;
-                        mw = *(u16 *)pm;
-                        asm("" : "+r"(mw));
-                        prod = mw;
-                        prod *= w43;
-                        sum = prod;
-                        asm("" : "+r"(sum));
-                        t2 = (u32)psrc;
-                        asm("" : "+r"(t2));
-                        t2 = *(u16 *)t2;
-                        sum += t2;
-                        t->unk48 = sum;
-                        t->unk4A = o->unk4A + gUnk_08749058[t->unk28];
-                        asm("" ::: "memory");
-                        w43b = *paddr;
-                        pt43 = (u8 *)t + 67;
-                        *pt43 = w43b;
-                        sub_08068cf8((s32)tb[(*c)->unk28]);
-                    }
+                    t->unk48 = o->unk48 + gUnk_08749014[t->unk28] * o->unk43;
+                    t->unk4A = o->unk4A + gUnk_08749058[t->unk28];
+                    t->unk43 = o->unk43;
+                    sub_08068cf8(gUnk_08748F8C[gUnk_03002490->unk28]);
                 }
-            }
-            else
-            {
-                sub_08005654(gCurTaskIdx);
             }
         }
         else
-        {
             sub_08005654(gCurTaskIdx);
-        }
     }
     else
-    {
-        BLOCK_CROSS_JUMP;
         sub_08005654(gCurTaskIdx);
-    }
 }
