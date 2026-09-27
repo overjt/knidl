@@ -83,7 +83,7 @@ void Task_KingDedede(void)
     t->drawCallback = (u32)sub_08065438;
     t->layer = 11;
     gCurTask->frameTable = gKingDededeFrames;
-    CallTableEntry(gCurTask->unk73, 1, gKingDededeVariants);
+    CallTableEntry(gCurTask->variant, 1, gKingDededeVariants);
 }
 
 void sub_0809fca4(void)
@@ -287,8 +287,8 @@ void sub_080a0028(void)
     TaskSetFrame(29);
     sp.subtype = 10;
     sp.taskType = 112;
-    sp.unk08 = 0;
-    sp.unk09 = 0;
+    sp.variant = 0;
+    sp.spawnArg = 0;
     sp.tileWord = 0;
     sp.x = 32;
     sp.y = 16;

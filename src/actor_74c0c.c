@@ -354,7 +354,7 @@ void sub_08075290(s32 a)
         if (id != -1)
         {
             t = &gTasks[id];
-            t->unk73 = a;
+            t->variant = a;
         }
         a++;
         if (a <= 10)
@@ -366,7 +366,7 @@ void sub_08075290(s32 a)
         if (id != -1)
         {
             t = &gTasks[id];
-            t->unk73 = a;
+            t->variant = a;
         }
     }
 }
@@ -393,7 +393,7 @@ void sub_080752f4(void)
         t->frame = 0xFFFF;
         t->unk18 = 0;
         t->unk1C = -1;
-        switch (t->unk73)
+        switch (t->variant)
         {
     case 0:
         {

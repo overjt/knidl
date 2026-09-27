@@ -10,7 +10,7 @@
  * 0xCCA-0xCDA and effect 44 four times; sub_0804eca4: sound 119,
  * effect 6 and camera preset PlayerSetMotionXPreset(11, 62)); the sub-handlers read
  * the keys and the ground flag Task.onGround, pick the next sub-action
- * (Task.unk73) and re-bind it through sub_0804e600, most of them through
+ * (Task.variant) and re-bind it through sub_0804e600, most of them through
  * the helper sub_0804f7f8's four key probes. */
 
 /* gTerrainResult: M06's collision result block (src/terrain_1bcac.c spells it
@@ -113,12 +113,12 @@ void sub_0804e8f4(void)
         if (t->onGround & 1)
         {
             if (gLatchedHeldKeys[t->player->playerIndex] & 1)
-                t->unk73 = 4;
+                t->variant = 4;
             else
-                t->unk73 = 1;
+                t->variant = 1;
         }
         else
-            t->unk73 = 6;
+            t->variant = 6;
         gCurTask->unk46 = 0;
         TaskSetEntry(sub_0804e600, gCurTaskIdx);
     }
@@ -185,11 +185,11 @@ void sub_0804ea7c(void)
                 break;
             if ((gLatchedHeldKeys[gCurTask->player->playerIndex] & 32) && gCurTask->unk28 == 2)
                 break;
-            gCurTask->unk73 = 2;
+            gCurTask->variant = 2;
         }
         break;
     }
-    if (gCurTask->unk73 != 1)
+    if (gCurTask->variant != 1)
     {
         struct Task *t = gCurTask;
         t->unk24 = 0;
@@ -230,18 +230,18 @@ void sub_0804eb60(void)
         {
             if (gCurTask->facing == -1)
             {
-                gCurTask->unk73 = 3;
+                gCurTask->variant = 3;
                 break;
             }
         }
         else if ((gLatchedHeldKeys[gCurTask->player->playerIndex] & 32) && gCurTask->facing == 1)
         {
-            gCurTask->unk73 = 3;
+            gCurTask->variant = 3;
             break;
         }
         if (gCurTask->velX == 0 && gCurTask->speedLimitX == 0)
         {
-            gCurTask->unk73 = 1;
+            gCurTask->variant = 1;
             break;
         }
         if (gCurTask->unk2C != gCurTask->player->slope)
@@ -251,7 +251,7 @@ void sub_0804eb60(void)
         }
         break;
     }
-    if (gCurTask->unk73 != 2)
+    if (gCurTask->variant != 2)
     {
         struct Task *t = gCurTask;
         t->unk24 = 0;
@@ -281,7 +281,7 @@ void sub_0804ecec(void)
             t->velX = -t->velX;
             t->accelX = -t->accelX;
             t->facing = -t->facing;
-            gCurTask->unk73 = 2;
+            gCurTask->variant = 2;
             break;
         }
         if (gCurTask->velX == 0)
@@ -297,14 +297,14 @@ void sub_0804ecec(void)
                     gCurTask->facing = 1;
                 PlayerUpdateFlip();
                 gCurTask->accelX = 0;
-                gCurTask->unk73 = 2;
+                gCurTask->variant = 2;
             }
             else
-                gCurTask->unk73 = 1;
+                gCurTask->variant = 1;
         }
         break;
     }
-    if (gCurTask->unk73 != 3)
+    if (gCurTask->variant != 3)
     {
         TaskSetEntry(sub_0804e600, gCurTaskIdx);
         gTasks[gCurTask->unk34].unk28 = -1;

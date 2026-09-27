@@ -288,7 +288,7 @@ void sub_0809c490(void)
     ActorLoadDef((u32)gUnk_08747D5C);
     u = gCurTask;
     u->unk24 = 0;
-    CallTableEntry(u->unk73, 4, gAxeKnightVariants);
+    CallTableEntry(u->variant, 4, gAxeKnightVariants);
 }
 
 void sub_0809c4d0(void)

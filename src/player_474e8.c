@@ -301,11 +301,11 @@ void PlayerActionNeedle(void)
     {
         struct Task *t = gCurTask;
         if (t->player->prevMode != 13) {
-            t->unk73 = 0;
+            t->variant = 0;
             gCurTask->unk80 = 12;
         }
     }
-    switch (gCurTask->unk73) {
+    switch (gCurTask->variant) {
     case 0:
         {
             struct Task *t = gCurTask;
@@ -328,7 +328,7 @@ void PlayerActionNeedle(void)
         gCurTask->unk2C++;
         gCurTask->unk46 = 4;
         TaskYieldTrampoline(2);
-        gCurTask->unk73 = 1;
+        gCurTask->variant = 1;
         if (gCurTask->onGround & 1) {
             CreatePlayerEffect(gCurTask->player->playerIndex, 39, 0);
             CreatePlayerEffect(gCurTask->player->playerIndex, 39, 1);
@@ -350,7 +350,7 @@ void PlayerActionNeedle(void)
         gCurTask->unk46 = 10;
         while (gLatchedHeldKeys[gCurTask->player->playerIndex] & 2)
             TaskYieldTrampoline(1);
-        gCurTask->unk73 = 2;
+        gCurTask->variant = 2;
         /* fallthrough */
     case 2:
         gCurTask->unk2C = 1;
@@ -358,7 +358,7 @@ void PlayerActionNeedle(void)
         TaskYieldTrampoline(2);
         gCurTask->unk46 = 0;
         TaskYieldTrampoline(3);
-        gCurTask->unk73 = 3;
+        gCurTask->variant = 3;
         break;
     }
     TaskSleepForever();
@@ -371,7 +371,7 @@ void PlayerActionNeedleUpdate(void)
     sub_0803e55c();
     if (gCurTask->player->requestedAction != 0)
         return;
-    switch (gCurTask->unk73) {
+    switch (gCurTask->variant) {
     case 1:
         if (gCurTask->unk28 != gCurTask->onGround)
             TaskSetEntry(PlayerActionNeedle, gCurTaskIdx);

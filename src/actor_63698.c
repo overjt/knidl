@@ -205,8 +205,8 @@ void sub_080637e4(u32 i)
     a->savedPaletteBits = t->tileWord & 0xF000;
     a->paletteColorCount = 16;
     a->palette = 0;
-    a->paletteVariant = t->unk73 >> 4;
-    t->unk73 = t->unk73 & 15;
+    a->paletteVariant = t->variant >> 4;
+    t->variant = t->variant & 15;
     if (a->paletteVariant != 0)
         sub_08065ce0(i);
     t->serial = gNextActorSerial;
@@ -1338,8 +1338,8 @@ s32 sub_08064a78(struct ActorSpawn *p)
         t = &gTasks[i];
         t->actorKind = 4;
         t->unk76 = p->subtype;
-        t->unk73 = p->unk08;
-        t->unk74 = p->unk09;
+        t->variant = p->variant;
+        t->unk74 = p->spawnArg;
         t->pixelX = p->x;
         t->pixelY = p->y;
         t->posX = p->x << 16;
@@ -1526,7 +1526,7 @@ s32 sub_08064d9c(u32 sub, u32 type, int p2Arg, int xArg, int yArg,
         else
             t->actorKind = 5;
         t->unk76 = sub;
-        t->unk73 = 0;
+        t->variant = 0;
         t->unk74 = p2;
         t->pixelX = x;
         t->pixelY = y;
@@ -1591,7 +1591,7 @@ s32 CreateActor(u8 cls, u32 sub, u32 type, u8 p3, u8 p4, int x, int y,
         t = &gTasks[i];
         t->actorKind = cls;
         t->unk76 = sub;
-        t->unk73 = p3;
+        t->variant = p3;
         t->unk74 = p4;
         t->pixelX = x;
         t->pixelY = y;

@@ -333,7 +333,7 @@ void sub_0805b370(void)
         do
         {
             gUnk_02007D00[(s16)gCurTask->unk6C] = TaskCreateFrom(85, 32);
-            (gTasks + gUnk_02007D00[(s16)gCurTask->unk6C])->unk73 = gCurTask->unk6C;
+            (gTasks + gUnk_02007D00[(s16)gCurTask->unk6C])->variant = gCurTask->unk6C;
             gCurTask->unk6C++;
         } while ((s16)gCurTask->unk6C <= 6);
         TaskCreateFrom(90, 32);
@@ -342,11 +342,11 @@ void sub_0805b370(void)
     gCurTask->posY = 232 << 18;
     TaskCreateFrom(88, 32);
     gCurTask->unk28 = TaskCreateFrom(84, 32);
-    (gTasks + gCurTask->unk28)->unk73 = gCurTask->player->playerIndex;
+    (gTasks + gCurTask->unk28)->variant = gCurTask->player->playerIndex;
     if (gActivePlayerCount > 1)
     {
         gCurTask->unk46 = TaskCreateFrom(87, 32);
-        (gTasks + gCurTask->unk46)->unk73 = gCurTask->player->playerIndex;
+        (gTasks + gCurTask->unk46)->variant = gCurTask->player->playerIndex;
     }
 }
 
@@ -1173,7 +1173,7 @@ void sub_0805cb30(void)
     if (gActivePlayerCount == 1)
         gCurTask->frameTable = gUnk_08754850;
     else
-        gCurTask->frameTable = (u32 *)gUnk_0873DD4C[gCurTask->unk73];
+        gCurTask->frameTable = (u32 *)gUnk_0873DD4C[gCurTask->variant];
     gCurTask->tileWord = 0x00009010;
     {
         s16 *tbl = (s16 *)gUnk_0873DBAC;
@@ -1198,14 +1198,14 @@ void sub_0805cbec(void)
     gCurTask->frameTable = gUnk_0875488C;
     gCurTask->updateCallback = (u32)sub_0805cc54;
     gCurTask->tileWord = 0x0000A010;
-    if (gLocalPlayer == gCurTask->unk73)
+    if (gLocalPlayer == gCurTask->variant)
     {
         gCurTask->frame = 4;
     }
     else
     {
         u16 *tbl = (u16 *)gUnk_0873DD5C;
-        gCurTask->frame = tbl[gCurTask->unk73];
+        gCurTask->frame = tbl[gCurTask->variant];
     }
     TaskYieldTrampoline(27);
     TaskExitTrampoline();
@@ -1222,12 +1222,12 @@ void sub_0805cca0(void)
     gCurTask->moveCallback = (u32)TaskMove;
     gCurTask->drawCallback = (u32)TaskDrawWorld;
     gCurTask->layer = 9;
-    gCurTask->frameTable = (u32 *)gUnk_0873DD64[gCurTask->unk73];
+    gCurTask->frameTable = (u32 *)gUnk_0873DD64[gCurTask->variant];
     gCurTask->posX = 200 << 16;
     {
         s16 *t = (s16 *)gUnk_0873DBD4;
 
-        gCurTask->posY = (t[gCurTask->unk73] - 8) << 16;
+        gCurTask->posY = (t[gCurTask->variant] - 8) << 16;
     }
     gCurTask->tileWord = 0x00008010;
     gCurTask->unk28 = 1;
@@ -1238,10 +1238,10 @@ void sub_0805cca0(void)
         TaskYieldTrampoline(1);
     } while (gCurTask->unk28 != 0 || gCurTask->unk2C != 0);
     gCurTask->unk46 = TaskCreateFrom(86, 32);
-    (gTasks + gCurTask->unk46)->unk74 = gCurTask->unk73;
+    (gTasks + gCurTask->unk46)->unk74 = gCurTask->variant;
     (gTasks + gCurTask->unk46)->unk28 = gUnk_02007D00[7];
     gUnk_02007D00[7]++;
-    if (gCurTask->unk73 == 0)
+    if (gCurTask->variant == 0)
     {
         TaskYieldTrampoline(24);
         gCurTask->updateCallback = (u32)sub_0805ceec;
@@ -1323,12 +1323,12 @@ void sub_0805cf3c(void)
     gCurTask->unk30 = 0;
     gCurTask->unk24 = 0;
     if (gCurTask->unk74 == 0)
-        gCurTask->unk73 = 1;
+        gCurTask->variant = 1;
     else
-        gCurTask->unk73 = 0;
-    sub_0805d994(gCurTask->unk28, gCurTask->unk73);
+        gCurTask->variant = 0;
+    sub_0805d994(gCurTask->unk28, gCurTask->variant);
     gCurTask->layer = 8;
-    switch (gCurTask->unk73)
+    switch (gCurTask->variant)
     {
     case 1:
         if (((gActivePlayerMask >> gLocalPlayer) & 1)
@@ -1441,7 +1441,7 @@ void sub_0805cf3c(void)
                         gCurTask->unk46 = TaskCreateFrom(89, 32);
                         (gTasks + gCurTask->unk46)->unk2C
                             = gCurTask->unk6E;
-                        (gTasks + gCurTask->unk46)->unk73 = 1;
+                        (gTasks + gCurTask->unk46)->variant = 1;
                     }
                 }
                 TaskYieldTrampoline(11);
@@ -1508,7 +1508,7 @@ void sub_0805d420(void)
                 (gTasks + gCurTask->unk46)->unk2C = (s16)gCurTask->unk6C;
                 (gTasks + gCurTask->unk46)->unk30 = gCurTask->unk30;
                 (gTasks + gCurTask->unk46)->unk34 = gCurTask->unk34;
-                (gTasks + gCurTask->unk46)->unk73 = 0;
+                (gTasks + gCurTask->unk46)->variant = 0;
             }
             gCurTask->unk2C &= ~(1 << (s16)gCurTask->unk6C);
             gCurTask->unk34--;
@@ -1560,7 +1560,7 @@ void sub_0805d668(void)
     gCurTask->frameTable = gUnk_0874CCF4;
     gCurTask->tileWord = 240 << 8;
     gCurTask->frame = 4;
-    switch (gCurTask->unk73)
+    switch (gCurTask->variant)
     {
     case 0:
         gCurTask->posX = (gUnk_0873DBAC[(gCurTask->unk30 << 2)

@@ -198,7 +198,7 @@ void sub_080502f0(void)
 
     if ((s16)t->unk70 != 0)
     {
-        t->unk73 = 1;
+        t->variant = 1;
         gCurTask->updateCallback = (u32)PlayerUpdate;
         gCurTask->lateUpdateCallback = (u32)sub_0803332c;
         TaskSetEntry(sub_0804fee8, gCurTaskIdx);
@@ -278,7 +278,7 @@ void sub_080504d4(void)
 
     if ((s16)t->unk70 != 0)
     {
-        t->unk73 = 1;
+        t->variant = 1;
         TaskSetEntry(PlayerActionStarRodFlight, gCurTaskIdx);
     }
 }
@@ -328,7 +328,7 @@ void sub_08050630(void)
 
     if ((s16)t->unk70 != 0)
     {
-        t->unk73 = 1;
+        t->variant = 1;
         TaskSetEntry(sub_0804fee8, gCurTaskIdx);
     }
 }
@@ -340,7 +340,7 @@ s32 sub_08050664(void)
             || (s16)++gCurTask->player->unk14 != 10))
         return 0;
     gCurTask->player->unk14 = 0;
-    gCurTask->unk73 = 2;
+    gCurTask->variant = 2;
     TaskSetEntry(sub_0804fee8, gCurTaskIdx);
     return 1;
 }

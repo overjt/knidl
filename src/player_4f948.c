@@ -10,11 +10,11 @@
  * task type #6's variant 11 through sub_08053a44; its handler PlayerActionStarRodUpdate
  * re-binds it and requests action 2 once the animation ends.
  * PlayerActionStarRodJump (action 57, mode 13) plays animation 0xFE5 with the collider
- * row gUnk_0873C304; its handler PlayerActionStarRodJumpUpdate is a `switch (Task.unk73)`
+ * row gUnk_0873C304; its handler PlayerActionStarRodJumpUpdate is a `switch (Task.variant)`
  * with M11's steering and camera presets.  Action 58 is a second move set
- * one level down: PlayerActionStarRodFlight (mode 13) dispatches Task.unk73 through its
+ * one level down: PlayerActionStarRodFlight (mode 13) dispatches Task.variant through its
  * four sub-actions gUnk_0873B6AC and sub_0804fee8 is the re-entry callback;
- * its handler PlayerActionStarRodFlightUpdate runs the sub-handler Task.unk73 of
+ * its handler PlayerActionStarRodFlightUpdate runs the sub-handler Task.variant of
  * gUnk_0873B6BC, the steering helper sub_080506dc, clamps the player to
  * 16-224 x 18-132 and, once gSpriteCameraY passes 888, subtracts the
  * player's whole health (AddPlayerHealth) and requests action 17. */
@@ -154,7 +154,7 @@ void PlayerActionStarRodJump(void)
     gCurTask->player->prevMode = gCurTask->player->mode;
     gCurTask->player->mode = 13;
     gCurTask->updateState = 54;
-    gCurTask->unk73 = 0;
+    gCurTask->variant = 0;
     gCurTask->player->unk14 = 23;
     PlayerSetMotionYPreset(0);
     PlaySfxIfLocalPlayer(100, (u16)gCurTask->player->playerIndex);
@@ -192,12 +192,12 @@ void PlayerActionStarRodJumpUpdate(void)
 {
     struct Task *t = gCurTask;
 
-    switch (t->unk73)
+    switch (t->variant)
     {
     case 0:
         if (--t->player->unk14 == 0 || !(gLatchedHeldKeys[t->player->playerIndex] & 1))
         {
-            t->unk73 = 1;
+            t->variant = 1;
             PlayerSetMotionYPreset(1);
             gCurTask->player->unk14 = 5;
         }
@@ -207,7 +207,7 @@ void PlayerActionStarRodJumpUpdate(void)
         {
             PlayerStopAxes(2);
             PlayerSetMotionYPreset(2);
-            gCurTask->unk73 = 2;
+            gCurTask->variant = 2;
         }
         break;
     case 2:
@@ -274,26 +274,26 @@ void PlayerActionStarRodFlight(void)
         gCurTask->player->unk14 = 0;
         gCurTask->player->unk10 = 0;
         PlayerStopAxes(3);
-        gCurTask->unk73 = 0;
+        gCurTask->variant = 0;
         gCurTask->unk80 = 0;
         gCurTask->lateUpdateCallback = 0;
         gCurTask->player->bodyBox = 0;
         gCurTask->player->terrainBox = 0;
         gCurTask->player->hitBoxSet = 0;
     }
-    CallTableEntry(gCurTask->unk73, 4, gUnk_0873B6AC);
+    CallTableEntry(gCurTask->variant, 4, gUnk_0873B6AC);
 }
 
 void sub_0804fee8(void)
 {
     gCurTask->player->prevMode = gCurTask->player->mode;
     gCurTask->player->mode = 13;
-    CallTableEntry(gCurTask->unk73, 4, gUnk_0873B6AC);
+    CallTableEntry(gCurTask->variant, 4, gUnk_0873B6AC);
 }
 
 void PlayerActionStarRodFlightUpdate(void)
 {
-    CallTableEntry(gCurTask->unk73, 4, gUnk_0873B6BC);
+    CallTableEntry(gCurTask->variant, 4, gUnk_0873B6BC);
     sub_080506dc();
     {
         struct Task *t = gCurTask;

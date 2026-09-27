@@ -6,7 +6,7 @@
  *
  * Player action bodies, part 13: actions 36-37 and per-frame handlers
  * 33-34.  PlayerActionBurning (action 36, mode 13) is a four-state machine over
- * Task.unk73: state 0 starts the move (velocity preset 34, effect 32,
+ * Task.variant: state 0 starts the move (velocity preset 34, effect 32,
  * animation 0x5CB) and installs the attack box gUnk_0873CCA4 in
  * PlayerState.hitBoxSet, state 1 swaps in the scripts gUnk_0873CB2C /
  * gUnk_0873BD3C (PlayerState.terrainBox/unk64) and cycles the hit-box row
@@ -86,12 +86,12 @@ void PlayerActionBurning(void)
     {
         struct Task *t = gCurTask;
         if (t->player->prevMode != 13) {
-            t->unk73 = 0;
+            t->variant = 0;
             gCurTask->unk80 = 5;
             gCurTask->unk28 = 0;
         }
     }
-    switch (gCurTask->unk73) {
+    switch (gCurTask->variant) {
     case 0:
         gCurTask->onGround = 0;
         PlayerSetMotionXPreset(11, 38);
@@ -111,7 +111,7 @@ void PlayerActionBurning(void)
         PlayerSetMotionXPreset(11, 40);
         gCurTask->frame++;
         TaskYieldTrampoline(2);
-        gCurTask->unk73 = 1;
+        gCurTask->variant = 1;
         /* fallthrough */
     case 1:
         PlayerStartSfx(137, gCurTask->player->playerIndex);
@@ -179,7 +179,7 @@ void PlayerActionBurning(void)
         gCurTask->frame++;
         TaskYieldTrampoline(2);
         PlayerStopSfx();
-        gCurTask->unk73 = 2;
+        gCurTask->variant = 2;
         /* fallthrough */
     case 2:
         gCurTask->player->hitBoxSet = 0;
@@ -205,7 +205,7 @@ void PlayerActionBurning(void)
         gCurTask->frame++;
         TaskYieldTrampoline(2);
         TaskSetFrame(0x544);
-        gCurTask->unk73 = 4;
+        gCurTask->variant = 4;
         break;
     case 3:
         gCurTask->player->hitBoxSet = 0;
@@ -225,7 +225,7 @@ void PlayerActionBurning(void)
 
 void PlayerActionBurningUpdate(void)
 {
-    switch (gCurTask->unk73) {
+    switch (gCurTask->variant) {
     case 0:
         gCurTask->onGround = 0;
         {
@@ -254,7 +254,7 @@ void PlayerActionBurningUpdate(void)
                 }
             } else if (*(u16 *)&gTerrainResult != 0 || t->unk28 != 0
                        || (t->player->boundsClamp & 11) != 0) {
-                gCurTask->unk73 = 3;
+                gCurTask->variant = 3;
                 TaskSetEntry(PlayerActionBurning, gCurTaskIdx);
             }
         }

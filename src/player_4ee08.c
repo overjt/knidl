@@ -122,7 +122,7 @@ void sub_0804ef00(void)
                 t->velY = -t->velY;
                 t->speedLimitY = 0x50000;
             }
-            gCurTask->unk73 = 6;
+            gCurTask->variant = 6;
         }
         else
         {
@@ -134,11 +134,11 @@ void sub_0804ef00(void)
                 t->facing = -t->facing;
             }
             if ((s16)gCurTask->unk70 != 0)
-                gCurTask->unk73 = 6;
+                gCurTask->variant = 6;
         }
         break;
     }
-    if (gCurTask->unk73 != 4)
+    if (gCurTask->variant != 4)
         TaskSetEntry(sub_0804e600, gCurTaskIdx);
     PlayerSetMotionXPreset(12, 0);
 }
@@ -212,7 +212,7 @@ void sub_0804f124(void)
                 t->velY = -t->velY;
                 t->speedLimitY = 0x50000;
             }
-            gCurTask->unk73 = 6;
+            gCurTask->variant = 6;
         }
         else
         {
@@ -226,11 +226,11 @@ void sub_0804f124(void)
                 t->facing = -t->facing;
             }
             if (gCurTask->velY >= 0)
-                gCurTask->unk73 = 6;
+                gCurTask->variant = 6;
         }
         break;
     }
-    if (gCurTask->unk73 != 5)
+    if (gCurTask->variant != 5)
     {
         struct Task *t = gCurTask;
         t->unk24 = 0;
@@ -259,7 +259,7 @@ void sub_0804f258(void)
         if (PlayerHasCrossedWaterSurface(0) != 0)
             gCurTask->player->requestedAction = 23;
         else if (gCurTask->onGround & 1)
-            gCurTask->unk73 = 7;
+            gCurTask->variant = 7;
         else if (gTerrainResult.unk0 != 0)
         {
             struct Task *t;
@@ -270,7 +270,7 @@ void sub_0804f258(void)
             t->facing = -t->facing;
         }
     }
-    if (gCurTask->unk73 != 6)
+    if (gCurTask->variant != 6)
     {
         struct Task *t = gCurTask;
         t->unk24 = 0;
@@ -337,16 +337,16 @@ void sub_0804f3e4(void)
         t->unk24 = 0;
         if (t->unk28 != 0)
         {
-            t->unk73 = 5;
+            t->variant = 5;
             if ((u32)gCurTask->unk28 > 0x80000)
                 gCurTask->unk28 = 0x80000;
             gCurTask->velY = -gCurTask->unk28;
             gCurTask->speedLimitY = 0x80000;
         }
         else if (t->velX != 0)
-            t->unk73 = 2;
+            t->variant = 2;
         else
-            t->unk73 = 1;
+            t->variant = 1;
         TaskSetEntry(sub_0804e600, gCurTaskIdx);
     }
 }

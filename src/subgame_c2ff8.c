@@ -6,7 +6,7 @@
  *
  * Sub-game 2: task type #96 (class 3) and its variant 0, the racers.
  * 
- *   Task_AirGrindObject   the body: CallTableEntry(Task.unk73, 5, gUnk_087572D4), the
+ *   Task_AirGrindObject   the body: CallTableEntry(Task.variant, 5, gUnk_087572D4), the
  *       three variants AirGrindRacer / sub_080c46ec / sub_080c3f44 (entries
  *       2-4 of gUnk_087572CC; the two words after them are data).
  *   AirGrindRacer   variant 0, one per player (Task.unk1C): resets the
@@ -156,7 +156,7 @@ void AirGrindRacerUpdate(void);
 
 void Task_AirGrindObject(void)
 {
-    CallTableEntry(gCurTask->unk73, 5, gUnk_087572D4);
+    CallTableEntry(gCurTask->variant, 5, gUnk_087572D4);
 }
 
 void AirGrindRacer(void)

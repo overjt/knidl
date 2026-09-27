@@ -430,7 +430,7 @@ void sub_0806d928(void)
         if (j != -1)
         {
             p = &gTasks[j];
-            p->unk73 = i;
+            p->variant = i;
         }
     }
 }
@@ -452,7 +452,7 @@ void sub_0806d95c(void)
     u->updateCallback = (u32)sub_0806d9d4;
     u->unk24 = 2;
     u->frame = 0;
-    k = u->unk73 * 4;
+    k = u->variant * 4;
     for (i = 0; i < 4; i++)
     {
         v = gCurTask;
@@ -517,7 +517,7 @@ void sub_0806da3c(u32 a, u32 b)
     if (i != -1)
     {
         p = &gTasks[i];
-        p->unk73 = a;
+        p->variant = a;
         p->unk74 = b;
     }
 }
@@ -529,7 +529,7 @@ void sub_0806da74(void)
     s32 j;
 
     t = gCurTask;
-    if (t->unk73 != 0)
+    if (t->variant != 0)
     {
         m = t->unk74;
         j = m * 2;
@@ -537,7 +537,7 @@ void sub_0806da74(void)
         t->pixelY += gUnk_0873ECA0[j + 1];
         t->posX = t->pixelX << 16;
         t->posY = t->pixelY << 16;
-        if (t->unk73 == 1)
+        if (t->variant == 1)
         {
             t->velX = gUnk_0873ECC0[m * 2];
             t->velY = gUnk_0873ECC0[j + 1];
@@ -558,7 +558,7 @@ void sub_0806daec(void)
     gCurTask->tileWord = 0;
     sub_0806da74();
     u = gCurTask;
-    switch (u->unk73)
+    switch (u->variant)
     {
     case 0:
         u->frame = 8;

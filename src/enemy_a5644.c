@@ -1503,8 +1503,8 @@ void sub_080a57d4(void)
         {
             sp.subtype = 18;
             sp.taskType = 120;
-            sp.unk08 = 0;
-            sp.unk09 = i;
+            sp.variant = 0;
+            sp.spawnArg = i;
             sp.x = gUnk_08748D28[i + (gActivePlayerCount - 1) * 4] + gViewRect[0];
             sp.y = gViewRect[2];
             sp.tileWord = gCurTask->unk8C->savedTileWord;
@@ -2727,8 +2727,8 @@ void sub_080a7438(void)
         TaskYieldTrampoline(1);
     sp.subtype = 18;
     sp.taskType = 120;
-    sp.unk08 = 1;
-    sp.unk09 = 0;
+    sp.variant = 1;
+    sp.spawnArg = 0;
     sp.x = 0;
     sp.y = 0;
     sp.tileWord = gCurTask->unk8C->savedTileWord + (128 << 5);

@@ -5,7 +5,7 @@
 /* player_4b858.c (0x0804B858-0x0804C64B, issue #88).
  *
  * Player action bodies, part 21: action 53 and per-frame handler 50.
- * PlayerActionBackdropHold (action 53, mode 13) is `loop: switch (Task.unk73)` over
+ * PlayerActionBackdropHold (action 53, mode 13) is `loop: switch (Task.variant)` over
  * eight states, a stance with six moves.  A fresh entry starts in
  * state 6 with the 120-frame timer PlayerState.unk14 and Task.unk80 =
  * 22: the stance (animation 0xE84, effect 28 on the ground) picks the
@@ -63,14 +63,14 @@ void PlayerActionBackdropHold(void)
     {
         struct Task *u;
 
-        h->unk73 = 6;
+        h->variant = 6;
         u = gCurTask;
         u->player->unk14 = 120;
         u->unk28 = 0;
         u->unk80 = 22;
     }
 loop:
-    switch (gCurTask->unk73)
+    switch (gCurTask->variant)
     {
     case 6:
         {
@@ -101,17 +101,17 @@ loop:
             b = gCurTask;
             if (--b->player->unk14 == 0)
             {
-                gCurTask->unk73 = gUnk_0873B65E[RandomRange(4)];
+                gCurTask->variant = gUnk_0873B65E[RandomRange(4)];
                 goto loop;
             }
             if (!(b->onGround & 1))
             {
-                b->unk73 = 5;
+                b->variant = 5;
                 goto loop;
             }
             if (gLatchedHeldKeys[b->player->playerIndex] & 1)
             {
-                b->unk73 = 4;
+                b->variant = 4;
                 goto loop;
             }
             k = PlayerGetHeldDirection();
@@ -120,10 +120,10 @@ loop:
             {
                 if (k == 1)
                 {
-                    gCurTask->unk73 = 2;
+                    gCurTask->variant = 2;
                     goto loop;
                 }
-                gCurTask->unk73 = 1;
+                gCurTask->variant = 1;
                 goto loop;
             }
             c = gCurTask;
@@ -132,14 +132,14 @@ loop:
             {
                 if (gLatchedHeldKeys[p->playerIndex] & 0x40)
                 {
-                    c->unk73 = 0;
+                    c->variant = 0;
                     goto loop;
                 }
-                c->unk73 = 3;
+                c->variant = 3;
                 goto loop;
             }
             if ((s8)p->heldCount == 0)
-                c->unk73 = 7;
+                c->variant = 7;
             TaskYieldTrampoline(1);
         }
     case 7:
@@ -187,7 +187,7 @@ loop:
         TaskSetFrame(0xEBB);
         TaskYieldTrampoline(20);
         gCurTask->player->unk16 = 255;
-        gCurTask->unk73 = 7;
+        gCurTask->variant = 7;
         goto loop;
     case 1:
         gCurTask->player->unk16 = 1;
@@ -241,7 +241,7 @@ loop:
         } while ((s16)++gCurTask->unk6C <= 4);
         gCurTask->frame++;
         TaskYieldTrampoline(3);
-        gCurTask->unk73 = 7;
+        gCurTask->variant = 7;
         goto loop;
     case 3:
         gCurTask->player->unk16 = 1;
@@ -310,7 +310,7 @@ loop:
         } while ((s16)++gCurTask->unk6C <= 4);
         gCurTask->frame++;
         TaskYieldTrampoline(3);
-        gCurTask->unk73 = 7;
+        gCurTask->variant = 7;
         goto loop;
     case 4:
         gCurTask->unk28 = 0;
@@ -370,7 +370,7 @@ loop:
         } while ((s16)++gCurTask->unk6C <= 7);
         gCurTask->frame++;
         TaskYieldTrampoline(3);
-        gCurTask->unk73 = 7;
+        gCurTask->variant = 7;
         goto loop;
     case 2:
         PlayerSetMotionXPreset(11, 68);
@@ -426,7 +426,7 @@ loop:
         } while ((s16)++gCurTask->unk6C <= 4);
         gCurTask->frame++;
         TaskYieldTrampoline(3);
-        gCurTask->unk73 = 7;
+        gCurTask->variant = 7;
         goto loop;
     case 5:
         PlayerStopAxes(3);
@@ -459,7 +459,7 @@ loop:
         gCurTask->frame++;
         TaskYieldTrampoline(8);
         gCurTask->player->unk16 = 255;
-        gCurTask->unk73 = 7;
+        gCurTask->variant = 7;
         goto loop;
     }
     goto loop;
@@ -467,7 +467,7 @@ loop:
 
 void PlayerActionBackdropHoldUpdate(void)
 {
-    switch (gCurTask->unk73) {
+    switch (gCurTask->variant) {
     case 7:
         if (gCurTask->onGround & 1)
             PlayerStopAxes(2);
@@ -516,7 +516,7 @@ void PlayerActionBackdropHoldUpdate(void)
                     PlayerSetMotionYPreset(2);
                 }
                 PlayerStopAxes(1);
-                gCurTask->unk73 = 7;
+                gCurTask->variant = 7;
                 TaskSetEntry(PlayerActionBackdropHold, gCurTaskIdx);
             }
         }

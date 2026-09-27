@@ -805,7 +805,7 @@ s32 sub_0807fbd0(void)
     struct Task *t;
     s32 r = 0;
 
-    switch (gCurTask->unk73)
+    switch (gCurTask->variant)
     {
     case 0:
     case 2:
@@ -826,7 +826,7 @@ s32 sub_0807fc20(void)
 {
     s32 r = 0;
 
-    switch (gCurTask->unk73)
+    switch (gCurTask->variant)
     {
     case 0:
         ActorSetState(2);
@@ -845,7 +845,7 @@ s32 sub_0807fc20(void)
 
 s32 sub_0807fc70(void)
 {
-    switch (gCurTask->unk73)
+    switch (gCurTask->variant)
     {
     case 0:
         break;
@@ -862,7 +862,7 @@ s32 sub_0807fc94(void)
 {
     struct Task *t = gCurTask;
 
-    if (t->unk73 == 0)
+    if (t->variant == 0)
         t->velY = 0;
     return 0;
 }
@@ -893,7 +893,7 @@ void Task_Twister(void)
         gCurTask->unk30 = 1;
     else
         gCurTask->unk30 = 3;
-    CallTableEntry(gCurTask->unk73, 2, gTwisterVariants);
+    CallTableEntry(gCurTask->variant, 2, gTwisterVariants);
 }
 
 void sub_0807fd34(void)
@@ -1284,7 +1284,7 @@ void Task_HotHead(void)
     t->layer = 11;
     gCurTask->frameTable = gHotHeadFrames;
     CreateChildTaskHere(175, 0);
-    CallTableEntry(gCurTask->unk73, 3, gHotHeadVariants);
+    CallTableEntry(gCurTask->variant, 3, gHotHeadVariants);
 }
 
 void sub_0808044c(void)
@@ -1363,8 +1363,8 @@ void sub_08080570(void)
     {
         sp.subtype = 6;
         sp.taskType = 108;
-        sp.unk08 = 0;
-        sp.unk09 = 0;
+        sp.variant = 0;
+        sp.spawnArg = 0;
         sp.tileWord = (gCurTask->tileWord & 0xFFF) | 0xF000;
         sp.checkTerrain = 0;
         *(s16 *)&gCurTask->unk6C = 0;
@@ -1385,8 +1385,8 @@ void sub_08080570(void)
     {
         sp.subtype = 6;
         sp.taskType = 108;
-        sp.unk08 = 1;
-        sp.unk09 = 0;
+        sp.variant = 1;
+        sp.spawnArg = 0;
         sp.tileWord = (gCurTask->tileWord & 0xFFF) | 0xF000;
         gCurTask->unk46 = CreateActorFromDescHere(&sp, 1);
         *(s16 *)&gCurTask->unk6C = 0;
@@ -1541,8 +1541,8 @@ void sub_08080930(void)
     {
         sp.subtype = 6;
         sp.taskType = 108;
-        sp.unk08 = 0;
-        sp.unk09 = 0;
+        sp.variant = 0;
+        sp.spawnArg = 0;
         sp.tileWord = (gCurTask->tileWord & 0xFFF) | 0xF000;
         sp.checkTerrain = 0;
         *(s16 *)&gCurTask->unk6C = 0;
@@ -1563,8 +1563,8 @@ void sub_08080930(void)
     {
         sp.subtype = 6;
         sp.taskType = 108;
-        sp.unk08 = 1;
-        sp.unk09 = 0;
+        sp.variant = 1;
+        sp.spawnArg = 0;
         sp.tileWord = (gCurTask->tileWord & 0xFFF) | 0xF000;
         sp.checkTerrain = 1;
         gCurTask->unk46 = CreateActorFromDescHere(&sp, 1);

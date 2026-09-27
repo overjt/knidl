@@ -65,7 +65,7 @@ void sub_0809f37c(void)
     TaskFaceLikeParent();
     v = gCurTask;
     v->unk28 = z;
-    CallTableEntry(v->unk73, 5, gUnk_08747C6C);
+    CallTableEntry(v->variant, 5, gUnk_08747C6C);
     w = gCurTask;
     w->accelY = 148 << 6;
     w->speedLimitY = 192 << 10;
@@ -145,7 +145,7 @@ void sub_0809f508(void)
 
 u8 sub_0809f52c(void)
 {
-    switch (gCurTask->unk73)
+    switch (gCurTask->variant)
     {
     case 1:
     case 2:
@@ -174,7 +174,7 @@ u8 sub_0809f588(void)
     s32 vx;
 
     t = gCurTask;
-    switch (t->unk73)
+    switch (t->variant)
     {
     case 2:
     case 3:
@@ -225,7 +225,7 @@ void sub_0809f61c(void)
     u8 *p;
     s32 z;
 
-    switch (gCurTask->unk73)
+    switch (gCurTask->variant)
     {
     case 0:
         TaskYieldTrampoline(30);

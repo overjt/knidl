@@ -274,11 +274,11 @@ void PlayerActionWalk(void)
         gCurTask->unk28 = 0;
         PlayerPlayBump();
         if (sub_0803fd20(gCurTask->player->playerIndex) == 4)
-            gCurTask->unk73 = 1;
+            gCurTask->variant = 1;
         else
-            gCurTask->unk73 = 0;
+            gCurTask->variant = 0;
     }
-    if (gCurTask->unk73 == 0)
+    if (gCurTask->variant == 0)
     {
         if (gCurTask->player->mouthState == 1)
         {
@@ -446,17 +446,17 @@ void PlayerActionWalkUpdate(void)
                 {
                     t2->unk28 = v;
                 }
-                if (gCurTask->unk73 == 0)
+                if (gCurTask->variant == 0)
                 {
                     if (sub_0803fd20(gCurTask->player->playerIndex) == 4)
                     {
-                        gCurTask->unk73 = 1;
+                        gCurTask->variant = 1;
                         TaskSetEntry(PlayerActionWalk, gCurTaskIdx);
                     }
                 }
                 else if (sub_0803fd20(gCurTask->player->playerIndex) != 4)
                 {
-                    gCurTask->unk73 = 0;
+                    gCurTask->variant = 0;
                     TaskSetEntry(PlayerActionWalk, gCurTaskIdx);
                 }
             }

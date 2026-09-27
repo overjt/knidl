@@ -7,7 +7,7 @@
  * Player action bodies, part 14: action 38 and per-frame handler 35.
  * PlayerActionMike (action 38, mode 13) spends one charge of the ability
  * counter PlayerState.abilityUses (the HUD update SetPlayerAbilityNoHud) and plays one
- * of three sequences picked by the charges left (Task.unk73 = unk0E - 1),
+ * of three sequences picked by the charges left (Task.variant = unk0E - 1),
  * each with its own song (StopSfx) and sound; meanwhile it freezes
  * the stage (gUnk_03001F34 = 1), switches the DISPCNT shadow
  * gDispCnt to BG0, BG2, BG3 and OBJ unless BG2 is already on, raises
@@ -44,7 +44,7 @@ void PlayerActionMike(void)
     gCurTask->player->prevMode = gCurTask->player->mode;
     gCurTask->player->mode = 13;
     gCurTask->updateState = 35;
-    gCurTask->unk73 = gCurTask->player->abilityUses - 1;
+    gCurTask->variant = gCurTask->player->abilityUses - 1;
     gCurTask->player->unk42 &= 0xFFEF;
     if (--gCurTask->player->abilityUses == 0) {
         SetPlayerAbilityNoHud(0, -1, gCurTask->player->playerIndex);
@@ -64,7 +64,7 @@ void PlayerActionMike(void)
     gCurTask->unk28 = 0;
     SetPlayerInvulnerability(3, 0, gCurTask->player->playerIndex);
     gCurTask->player->unk42 |= 0x700;
-    switch (gCurTask->unk73) {
+    switch (gCurTask->variant) {
     case 2:
         PlayerSetMotionXPreset(11, 42);
         TaskSetFrame(0x66B);

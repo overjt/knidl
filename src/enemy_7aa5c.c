@@ -435,7 +435,7 @@ void sub_0807af58(void)
     gCurTask->drawCallback = (u32)ActorDrawWorldInViewOrDestroy;
     gCurTask->layer = 11;
     gCurTask->frameTable = gUnk_087529D8;
-    CallTableEntry(gCurTask->unk73, 3, gUnk_08740990);
+    CallTableEntry(gCurTask->variant, 3, gUnk_08740990);
 }
 
 void sub_0807af98(void)
@@ -444,12 +444,12 @@ void sub_0807af98(void)
     gCurTask->drawCallback = (u32)ActorDrawWorldInViewOrDestroy;
     gCurTask->layer = 11;
     gCurTask->frameTable = gUnk_08752A24;
-    CallTableEntry(gCurTask->unk73, 3, gUnk_08740990);
+    CallTableEntry(gCurTask->variant, 3, gUnk_08740990);
 }
 
 s32 sub_0807afd8(void)
 {
-    if (gCurTask->unk73 != 0)
+    if (gCurTask->variant != 0)
         return 0;
     ActorSetState(7);
     TaskSetEntry(sub_0807b3dc, gCurTaskIdx);
@@ -458,7 +458,7 @@ s32 sub_0807afd8(void)
 
 s32 sub_0807b010(void)
 {
-    if (gCurTask->unk73 != 0)
+    if (gCurTask->variant != 0)
         return 0;
     ActorSetState(0);
     TaskSetEntry(sub_0807b3dc, gCurTaskIdx);
@@ -1061,7 +1061,7 @@ void sub_0807bcac(void)
     gCurTask->drawCallback = (u32)ActorDrawWorldInViewOrDestroy;
     gCurTask->layer = 11;
     gCurTask->frameTable = gUnk_0874CB5C;
-    CallTableEntry(gCurTask->unk73, 1, gUnk_08740A74);
+    CallTableEntry(gCurTask->variant, 1, gUnk_08740A74);
 }
 
 void sub_0807bcec(void)
@@ -1083,7 +1083,7 @@ void Task_Togezo(void)
     gCurTask->drawCallback = (u32)ActorDrawWorldInViewOrDestroy;
     gCurTask->layer = 11;
     gCurTask->frameTable = gTogezoFrames;
-    CallTableEntry(gCurTask->unk73, 2, gTogezoVariants);
+    CallTableEntry(gCurTask->variant, 2, gTogezoVariants);
 }
 
 void sub_0807bd60(void)
@@ -1444,7 +1444,7 @@ void Task_UFO(void)
     gCurTask->drawCallback = (u32)ActorDrawWorldInViewOrDestroy;
     gCurTask->layer = 11;
     gCurTask->frameTable = gUFOFrames;
-    CallTableEntry(gCurTask->unk73, 2, gUFOVariants);
+    CallTableEntry(gCurTask->variant, 2, gUFOVariants);
 }
 
 void sub_0807c484(void)
@@ -1540,8 +1540,8 @@ void sub_0807c618(void)
     {
         spawn.subtype = 31;
         spawn.taskType = 134;
-        spawn.unk08 = 0;
-        spawn.unk09 = 0;
+        spawn.variant = 0;
+        spawn.spawnArg = 0;
         spawn.x = 8;
         spawn.y = 0;
         spawn.checkTerrain = 1;
@@ -1793,7 +1793,7 @@ void Task_Parasol(void)
     gCurTask->drawCallback = (u32)ActorDrawWorldInViewOrDestroy;
     gCurTask->layer = 11;
     gCurTask->frameTable = gParasolFrames;
-    CallTableEntry(gCurTask->unk73, 4, gParasolVariants);
+    CallTableEntry(gCurTask->variant, 4, gParasolVariants);
 }
 
 void sub_0807cbf4(void)
@@ -1997,7 +1997,7 @@ void sub_0807d008(void)
     t = gCurTask;
     t->frameTable = gUnk_08752234;
     t->tileWord = (0xFFF & t->tileWord) | 0xF000;
-    CallTableEntry(t->unk73, 1, gUnk_08741088);
+    CallTableEntry(t->variant, 1, gUnk_08741088);
 }
 
 void sub_0807d060(void)
@@ -2057,7 +2057,7 @@ void sub_0807d17c(void)
     gCurTask->layer = 9;
     t = gCurTask;
     t->frameTable = gUnk_08752B8C;
-    CallTableEntry(t->unk73, 1, gUnk_087410AC);
+    CallTableEntry(t->variant, 1, gUnk_087410AC);
 }
 
 s32 sub_0807d1bc(void)

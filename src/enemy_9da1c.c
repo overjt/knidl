@@ -150,7 +150,7 @@ u8 sub_0809db48(void)
     u8 s;
     s32 n;
 
-    switch (gCurTask->unk73)
+    switch (gCurTask->variant)
     {
     case 0:
         TaskStopY();
@@ -197,7 +197,7 @@ u8 sub_0809dbc4(void)
     struct Task *t;
 
     t = gCurTask;
-    switch (t->unk73)
+    switch (t->variant)
     {
     case 0:
         if (t->state == 1)
@@ -225,7 +225,7 @@ u8 sub_0809dc3c(void)
     struct Task *u;
 
     t = gCurTask;
-    switch (t->unk73)
+    switch (t->variant)
     {
     case 0:
         if (t->state == 3)
@@ -251,7 +251,7 @@ void sub_0809dc7c(void)
     ActorLoadDef((u32)gUnk_08747DB4);
     u = gCurTask;
     u->unk24 = 0;
-    CallTableEntry(u->unk73, 3, gMaceKnightVariants);
+    CallTableEntry(u->variant, 3, gMaceKnightVariants);
 }
 
 void sub_0809dcbc(void)
@@ -544,9 +544,9 @@ s32 sub_0809e214(void)
 
     sp.subtype = 27;
     sp.taskType = 130;
-    sp.unk08 = (t = gCurTask)->unk73;
+    sp.variant = (t = gCurTask)->variant;
     z = 0;
-    sp.unk09 = t->unk74;
+    sp.spawnArg = t->unk74;
     sp.x = z;
     sp.y = 0xFFF0;
     sp.tileWord = gUnk_08745CEC[2];
@@ -568,7 +568,7 @@ void sub_0809e284(void)
     t->frameTable = gUnk_08753404;
     TaskFaceLikeParent();
     u = gCurTask;
-    CallTableEntry(u->unk73, 3, gUnk_08747BE8);
+    CallTableEntry(u->variant, 3, gUnk_08747BE8);
 }
 
 void sub_0809e2c4(void)
@@ -782,7 +782,7 @@ u8 sub_0809e7e8(void)
     struct Task *t;
 
     t = gCurTask;
-    switch (t->unk73)
+    switch (t->variant)
     {
     case 0:
         break;
@@ -813,7 +813,7 @@ void sub_0809e824(void)
     ActorLoadDef((u32)gUnk_08747E0C);
     u = gCurTask;
     u->unk24 = 0;
-    CallTableEntry(u->unk73, 4, gTridentKnightVariants);
+    CallTableEntry(u->variant, 4, gTridentKnightVariants);
 }
 
 void sub_0809e864(void)
@@ -1302,7 +1302,7 @@ void sub_0809efc8(void)
     TaskYieldTrampoline(8);
     TaskSetMotionXFacing(128 << 7, k);
     TaskYieldTrampoline(8);
-    gCurTask->unk73 = z;
+    gCurTask->variant = z;
     ActorSetState(0);
     v = gCurTask;
     v->updateCallback = (u32)sub_0809e8cc;
@@ -1386,7 +1386,7 @@ void sub_0809f120(void)
     TaskYieldTrampoline(8);
     TaskSetMotionXFacing(128 << 7, k);
     TaskYieldTrampoline(8);
-    gCurTask->unk73 = z;
+    gCurTask->variant = z;
     ActorSetState(0);
     v = gCurTask;
     v->updateCallback = (u32)sub_0809e8cc;
@@ -1423,8 +1423,8 @@ s32 sub_0809f29c(s32 a)
     PlaySfx(214);
     sp.subtype = 28;
     sp.taskType = 131;
-    sp.unk08 = a;
-    sp.unk09 = gCurTask->unk74;
+    sp.variant = a;
+    sp.spawnArg = gCurTask->unk74;
     sp.x = 12;
     sp.y = 0xFFEC;
     sp.tileWord = 0xF310;

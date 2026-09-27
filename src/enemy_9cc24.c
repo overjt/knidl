@@ -102,7 +102,7 @@ void sub_0809cc24(void)
     TaskYieldTrampoline(5);
     gCurTask->frame--;
     TaskYieldTrampoline(3);
-    gCurTask->unk73 = 0;
+    gCurTask->variant = 0;
     ActorSetState(0);
     t = gCurTask;
     t->updateCallback = (u32)sub_0809c528;
@@ -170,7 +170,7 @@ void sub_0809cd8c(void)
     TaskYieldTrampoline(3);
     gCurTask->frame--;
     TaskYieldTrampoline(5);
-    gCurTask->unk73 = 0;
+    gCurTask->variant = 0;
     ActorSetState(0);
     t = gCurTask;
     t->updateCallback = (u32)sub_0809c528;
@@ -212,8 +212,8 @@ void sub_0809cf04(void)
     PlaySfx(186);
     sp.subtype = 26;
     sp.taskType = 129;
-    sp.unk08 = (t = gCurTask)->unk73;
-    sp.unk09 = t->unk74;
+    sp.variant = (t = gCurTask)->variant;
+    sp.spawnArg = t->unk74;
     sp.x = 20;
     sp.y = 0;
     sp.tileWord = gUnk_08745CEC[0];
@@ -279,7 +279,7 @@ u8 sub_0809d0a0(void)
 {
     u8 r;
 
-    if (gCurTask->unk73 != 0)
+    if (gCurTask->variant != 0)
         r = 0;
     else
     {
@@ -297,7 +297,7 @@ u8 sub_0809d0dc(void)
     struct Task *u;
 
     t = gCurTask;
-    if (t->unk73 == 0 && t->state == 1)
+    if (t->variant == 0 && t->state == 1)
     {
         t->posX -= t->velX;
         t->pixelX = t->posX >> 16;
@@ -306,7 +306,7 @@ u8 sub_0809d0dc(void)
     else
     {
         u = gCurTask;
-        if (u->unk73 != 1)
+        if (u->variant != 1)
         {
             sub_0809f930();
         }
@@ -336,7 +336,7 @@ void sub_0809d13c(void)
     ActorLoadDef((u32)gUnk_08747E64);
     u = gCurTask;
     u->unk24 = 0;
-    CallTableEntry(u->unk73, 2, gJavelinKnightVariants);
+    CallTableEntry(u->variant, 2, gJavelinKnightVariants);
 }
 
 void sub_0809d17c(void)
@@ -782,8 +782,8 @@ void sub_0809d944(void)
 
     sp.subtype = 29;
     sp.taskType = 132;
-    sp.unk08 = (t = gCurTask)->unk73;
-    sp.unk09 = t->unk74;
+    sp.variant = (t = gCurTask)->variant;
+    sp.spawnArg = t->unk74;
     sp.x = 0;
     sp.y = 0;
     sp.tileWord = 0xF110;

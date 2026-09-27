@@ -404,14 +404,14 @@ void sub_08041940(void)
         }
         else
         {
-            t->unk73 = 0;
+            t->variant = 0;
             TaskSetFrame(0x11ED);
             TaskYieldTrampoline(3);
             gCurTask->player->unk14 = 20;
         }
         PlayerSetMotionYPreset(4);
         PlaySfx(264);
-        gCurTask->unk73 = 1;
+        gCurTask->variant = 1;
         ((s8 *)gCurTask->player)[16] = 10;
     }
     PlayerPlayBump();
@@ -446,7 +446,7 @@ void sub_08041a2c(void)
         if (PlayerCheckEnterDoor() != 0)
             break;
         t = gCurTask;
-        k = t->unk73;
+        k = t->variant;
         if (k == 0)
             return;
         if (t->onGround & 1)
@@ -469,7 +469,7 @@ void sub_08041a2c(void)
             p->unk14--;
             if (p->unk14 == 0 || (k &= gLatchedHeldKeys[t->player->playerIndex]) == 0)
             {
-                t->unk73 = 2;
+                t->variant = 2;
                 PlayerSetMotionYPreset(5);
             }
         }
@@ -509,7 +509,7 @@ void sub_08041b8c(void)
         PlaySfx(264);
         ((s8 *)gCurTask->player)[16] = 10;
     }
-    gCurTask->unk73 = 1;
+    gCurTask->variant = 1;
     TaskSetFrame(0x11E4);
     TaskSleepForever();
 }
@@ -669,9 +669,9 @@ void sub_08041f10(void)
     if (t->player->prevMode != 7)
     {
         t->unk28 = 0;
-        t->unk73 = 0;
+        t->variant = 0;
     }
-    switch (gCurTask->unk73)
+    switch (gCurTask->variant)
     {
     case 0:
         PlayerSetMotionXPreset(11, 1);
@@ -680,7 +680,7 @@ void sub_08041f10(void)
         PlayerStopAxes(1);
         gCurTask->frame++;
         TaskYieldTrampoline(2);
-        gCurTask->unk73 = 1;
+        gCurTask->variant = 1;
         /* fallthrough */
     case 1:
         gCurTask->unk80 = 4;
@@ -694,7 +694,7 @@ void sub_08041f10(void)
         gCurTask->frame++;
         while ((u32)abs(gCurTask->velX) > 0x7FFF)
             TaskYieldTrampoline(1);
-        gCurTask->unk73 = 2;
+        gCurTask->variant = 2;
         /* fallthrough */
     case 2:
         gCurTask->player->hitBoxSet = 0;
@@ -718,7 +718,7 @@ void sub_08042050(void)
     if (v == 0)
     {
         t = gCurTask;
-        k = t->unk73;
+        k = t->variant;
         switch (k)
         {
         case 0:
@@ -810,12 +810,12 @@ void sub_08042128(void)
         h2 = gCurTask;
         if (q[h2->player->playerIndex] & 64)
         {
-            h2->unk73 = 1;
+            h2->variant = 1;
             gCurTask->unk28 = 0;
         }
         else
         {
-            h2->unk73 = 2;
+            h2->variant = 2;
             gCurTask->unk28 = 10;
         }
         h3 = gCurTask;
@@ -824,7 +824,7 @@ void sub_08042128(void)
     }
     d = gCurTask;
     d->unk46 = 0x11F4;
-    k = d->unk73;
+    k = d->variant;
     switch (k)
     {
     case 1:
@@ -854,7 +854,7 @@ void sub_08042128(void)
         }
     case 2:
         c2 = gCurTask;
-        c2->unk30 = c2->unk73;
+        c2->unk30 = c2->variant;
         c2->player->unk14 = 0;
         PlaySfx(124);
         for (;;)
@@ -915,7 +915,7 @@ void sub_08042328(void)
     s32 n;
 
     t = gCurTask;
-    k = t->unk73;
+    k = t->variant;
     switch (k)
     {
     case 1:
@@ -924,10 +924,10 @@ void sub_08042328(void)
         qa = gLatchedHeldKeys;
         ta = gCurTask;
         if ((qa[ta->player->playerIndex] & 192) == 0)
-            ta->unk73 = 0;
+            ta->variant = 0;
         else if ((qa[ta->player->playerIndex] & 128) != 0)
-            ta->unk73 = 2;
-        if (gCurTask->unk73 == 1)
+            ta->variant = 2;
+        if (gCurTask->variant == 1)
             break;
         TaskSetEntry(sub_08042128, gCurTaskIdx);
         break;
@@ -946,10 +946,10 @@ void sub_08042328(void)
         qb = gLatchedHeldKeys;
         tb = gCurTask;
         if ((qb[tb->player->playerIndex] & 192) == 0)
-            tb->unk73 = 0;
+            tb->variant = 0;
         else if ((qb[tb->player->playerIndex] & 64) != 0)
-            tb->unk73 = 1;
-        if (gCurTask->unk73 == 2)
+            tb->variant = 1;
+        if (gCurTask->variant == 2)
             break;
         TaskSetEntry(sub_08042128, gCurTaskIdx);
         break;
@@ -961,7 +961,7 @@ void sub_08042328(void)
         {
             if ((gLatchedPressedKeys[t->player->playerIndex] & 64) != 0)
             {
-                t->unk73 = n;
+                t->variant = n;
                 tc = gCurTask;
                 tc->unk28++;
                 if (tc->unk28 > 9)
@@ -969,13 +969,13 @@ void sub_08042328(void)
             }
             else
             {
-                t->unk73 = 2;
+                t->variant = 2;
                 gCurTask->unk28 = 10;
             }
         }
         else if ((gLatchedPressedKeys[t->player->playerIndex] & 64) != 0)
         {
-            t->unk73 = 1;
+            t->variant = 1;
             gCurTask->unk28 = k;
         }
         else
@@ -988,7 +988,7 @@ void sub_08042328(void)
         tg->player->requestedAction = 1;
         return;
     arm3:
-        t->unk73 = 2;
+        t->variant = 2;
         td = gCurTask;
         td->unk28++;
         if (td->unk28 > 13)
@@ -1012,7 +1012,7 @@ void sub_08042328(void)
     {
         te->facing = te->unk2C;
         tg = gCurTask;
-        if (tg->unk73 == 1)
+        if (tg->variant == 1)
             goto set5;
         if (tg->onGround & 1)
             goto set1;
@@ -1036,20 +1036,20 @@ void sub_08042580(void)
     if (p->prevMode != 17)
     {
         p->unk42 &= 0xFFEF;
-        t->unk73 = 5;
+        t->variant = 5;
     }
     while (1)
     {
-        switch (gCurTask->unk73)
+        switch (gCurTask->variant)
         {
         case 5:
             gCurTask->player->running = 0;
             RequestScreenShake(2);
             t5 = gCurTask;
             if (t5->unk82 & 128)
-                t5->unk73 = 4;
+                t5->variant = 4;
             else
-                t5->unk73 = t5->unk82 & 15;
+                t5->variant = t5->unk82 & 15;
             ((u8 *)gCurTask->player)[63] = 1;
             gCurTask->player->invulnerabilityTimer = 0x8000;
             PlayerStopAxes(3);
@@ -1167,13 +1167,13 @@ void sub_08042580(void)
         }
         PlayerStopAxes(3);
     again:
-        gCurTask->unk73 = 6;
+        gCurTask->variant = 6;
     }
 }
 
 void sub_08042980(void)
 {
-    switch (gCurTask->unk73)
+    switch (gCurTask->variant)
     {
     case 6:
         sub_08040710();
@@ -1188,7 +1188,7 @@ void sub_08042980(void)
     case 3:
         if (PlayerHasCrossedWaterSurface(0))
         {
-            gCurTask->unk73 = 6;
+            gCurTask->variant = 6;
             TaskSetEntry(sub_08042580, gCurTaskIdx);
         }
         break;
@@ -1248,7 +1248,7 @@ void sub_080429fc(void)
         sub_08027548();
     gCurTask->player->unk40 |= 8;
     gCurTask->player->unk42 |= 0x100;
-    gCurTask->unk73 = 0;
+    gCurTask->variant = 0;
     gCurTask->player->unk42 &= 0xFFEF;
     SetPlayerInvulnerability(255, 0, gCurTask->player->playerIndex);
     ((u8 *)gCurTask->player)[23] = 0;
@@ -1274,7 +1274,7 @@ void sub_080429fc(void)
     TaskYieldTrampoline(1);
     PlaySfx(158);
     TaskYieldTrampoline(59);
-    gCurTask->unk73 = 1;
+    gCurTask->variant = 1;
     for (i = 0; i < 4; i++)
         CreatePlayerEffect(gCurTask->player->playerIndex, 12, i);
     CreatePlayerEffect(gCurTask->player->playerIndex, 13, 0);
@@ -1318,7 +1318,7 @@ void sub_080429fc(void)
 
 void sub_08042c50(void)
 {
-    switch (gCurTask->unk73)
+    switch (gCurTask->variant)
     {
     case 0:
         break;
@@ -1330,7 +1330,7 @@ void sub_08042c50(void)
             {
                 PlayerStopAxes(2);
                 gCurTask->player->unk14 = 90;
-                gCurTask->unk73 = 2;
+                gCurTask->variant = 2;
             }
         }
         if ((gCurTask->player->unk42 & 32) == 0)
@@ -1475,18 +1475,18 @@ void sub_08043014(void)
     if (gCurTask->player->prevMode != 15)
     {
         if (gLatchedHeldKeys[gCurTask->player->playerIndex] & 0x30)
-            gCurTask->unk73 = 3;
+            gCurTask->variant = 3;
         else if (gLatchedHeldKeys[gCurTask->player->playerIndex] & 0x41)
-            gCurTask->unk73 = 1;
+            gCurTask->variant = 1;
         else if (gLatchedHeldKeys[gCurTask->player->playerIndex] & 0x80)
-            gCurTask->unk73 = 2;
+            gCurTask->variant = 2;
         else
-            gCurTask->unk73 = 0;
-        gCurTask->unk2C = gCurTask->unk73;
+            gCurTask->variant = 0;
+        gCurTask->unk2C = gCurTask->variant;
         PlayerSetWaterMotionY();
         ((u8 *)gCurTask->player)[61] = 0;
     }
-    switch (gCurTask->unk73)
+    switch (gCurTask->variant)
     {
     case 0:
         PlayerSetMotionYPreset(13);

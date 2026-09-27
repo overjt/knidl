@@ -15,7 +15,7 @@
  * hooks TaskDrawWorldTilesLoaded and M11's sub_0803dfc8.  Variant 44 (sub_08059d7c)
  * selects on the second byte of Task.unk18 (0x100-0x500), queues a VRAM
  * transfer (RequestCopy) and installs sub_0805a320, which kills it when the
- * spawner's Task.unk73 is 8 or the player is in neither mode 13 nor mode 3. */
+ * spawner's Task.variant is 8 or the player is in neither mode 13 nor mode 3. */
 
 extern u32 gUnk_08751F0C[];
 extern u32 gUnk_0874C804[];
@@ -523,6 +523,6 @@ void sub_0805a320(void)
 {
     struct Task *t = gCurTask;
 
-    if (((struct Task *)t->unk8C)->unk73 == 8 || (t->player->mode != 13 && t->player->mode != 3))
+    if (((struct Task *)t->unk8C)->variant == 8 || (t->player->mode != 13 && t->player->mode != 3))
         TaskFree(gCurTaskIdx);
 }

@@ -6,7 +6,7 @@
  *
  * Player action bodies, part 22: action 54 and per-frame handler 51.
  * PlayerActionThrowHold (action 54, mode 13) is a charged three-way move, a
- * `while (1) switch (Task.unk73)` state machine.  A fresh entry starts
+ * `while (1) switch (Task.variant)` state machine.  A fresh entry starts
  * in state 3 with the 120-frame timer PlayerState.unk14 and
  * Task.unk80 = 23: state 3 winds up (animation 0xF73, the frame index
  * PlayerState.unk16 stepping 0-1-2-1-2, effect 28 on the ground) and
@@ -53,14 +53,14 @@ void PlayerActionThrowHold(void)
         struct Task *t = gCurTask;
         if (t->player->prevMode != 13) {
             struct Task *u;
-            t->unk73 = 3;
+            t->variant = 3;
             u = gCurTask;
             u->player->unk14 = 120;
             u->unk80 = 23;
         }
     }
     while (1) {
-        switch (gCurTask->unk73) {
+        switch (gCurTask->variant) {
         case 3:
             SetPlayerInvulnerability(3, 0, gCurTask->player->playerIndex);
             PlayerStartOffsetScript(13);
@@ -92,7 +92,7 @@ void PlayerActionThrowHold(void)
                 gCurTask->unk28 = 2;
             else
                 gCurTask->unk28 = 1;
-            gCurTask->unk73 = 4;
+            gCurTask->variant = 4;
             /* fallthrough */
         case 4:
             CreatePlayerEffect(gCurTask->player->playerIndex, 47, 0);
@@ -101,7 +101,7 @@ void PlayerActionThrowHold(void)
                 {
                     struct Task *t = gCurTask;
                     if ((s8)t->player->heldCount == 0)
-                        t->unk73 = 5;
+                        t->variant = 5;
                 }
                 if ((u16)--gCurTask->player->unk14 == 0)
                     goto done;
@@ -110,7 +110,7 @@ void PlayerActionThrowHold(void)
                 TaskYieldTrampoline(1);
             }
         done:
-            gCurTask->unk73 = gCurTask->unk28;
+            gCurTask->variant = gCurTask->unk28;
             break;
         case 5:
             gCurTask->player->unk42 &= 0xFDFF;
@@ -139,7 +139,7 @@ void PlayerActionThrowHold(void)
             TaskYieldTrampoline(2);
             gCurTask->frame++;
             TaskYieldTrampoline(2);
-            gCurTask->unk73 = 5;
+            gCurTask->variant = 5;
             break;
         case 1:
             PlayerStartOffsetScript(10);
@@ -161,7 +161,7 @@ void PlayerActionThrowHold(void)
             TaskYieldTrampoline(2);
             gCurTask->frame++;
             TaskYieldTrampoline(2);
-            gCurTask->unk73 = 5;
+            gCurTask->variant = 5;
             break;
         case 2:
             PlayerStartOffsetScript(11);
@@ -183,7 +183,7 @@ void PlayerActionThrowHold(void)
             TaskYieldTrampoline(2);
             gCurTask->frame++;
             TaskYieldTrampoline(2);
-            gCurTask->unk73 = 5;
+            gCurTask->variant = 5;
             break;
         }
     }
@@ -193,7 +193,7 @@ void PlayerActionThrowHoldUpdate(void)
 {
     struct Task *t = gCurTask;
 
-    switch (t->unk73) {
+    switch (t->variant) {
     case 4:
         PlayerTurnToHeldDirection();
         if (PlayerHasCrossedWaterSurface(0) != 0) {
@@ -252,7 +252,7 @@ void PlayerActionThrowHoldUpdate(void)
     rebind:
         do {
             do {
-                t->unk73 = 5;
+                t->variant = 5;
             } while (0);
         } while (0);
         TaskSetEntry(PlayerActionThrowHold, gCurTaskIdx);

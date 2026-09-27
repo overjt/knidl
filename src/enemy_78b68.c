@@ -33,7 +33,7 @@
  *     `sub_0807a634` (identical: a seventeen-step frame script followed by an
  *     eight-iteration palette flip between `0x08740DE4` and `0x0873F774`);
  *   * `sub_0807a8fc`, the bank's only `mov pc` jump table (five states over
- *     Task.unk73), and `sub_0807a968`, which clamps a spawn point from
+ *     Task.variant), and `sub_0807a968`, which clamps a spawn point from
  *     `0x08740824` into the camera box `gViewRect[0..3]`.
  *
  * `sub_0807927c`, `sub_080794d0`, `sub_080799a0`, `sub_08079db8` and
@@ -606,7 +606,7 @@ void Task_Pengy(void)
     gCurTask->drawCallback = (u32)ActorDrawWorldInViewOrDestroy;
     gCurTask->layer = 11;
     gCurTask->frameTable = gPengyFrames;
-    CallTableEntry(gCurTask->unk73, 2, gPengyVariants);
+    CallTableEntry(gCurTask->variant, 2, gPengyVariants);
 }
 
 s32 sub_08079480(void)
@@ -823,12 +823,12 @@ void sub_080797ec(void)
     i = 0;
     spawn.subtype = 0;
     spawn.taskType = 102;
-    spawn.unk08 = 0;
+    spawn.variant = 0;
     spawn.checkTerrain = 0;
     gCurTask->unk6C = 0;
     do
     {
-        spawn.unk09 = i;
+        spawn.spawnArg = i;
         spawn.x = 10;
         spawn.y = 0;
         PlaySfx(164);
@@ -923,7 +923,7 @@ void Task_Bomber(void)
     gCurTask->drawCallback = (u32)ActorDrawWorldInViewOrDestroy;
     gCurTask->layer = 11;
     gCurTask->frameTable = gBomberFrames;
-    CallTableEntry(gCurTask->unk73, 2, gBomberVariants);
+    CallTableEntry(gCurTask->variant, 2, gBomberVariants);
 }
 
 s32 sub_08079a20(void)
@@ -1146,7 +1146,7 @@ void Task_Sparky(void)
     gCurTask->layer = 11;
     gCurTask->frameTable = gSparkyFrames;
     AcquirePaletteAnim(2, 0);
-    CallTableEntry(gCurTask->unk73, 3, gSparkyVariants);
+    CallTableEntry(gCurTask->variant, 3, gSparkyVariants);
 }
 
 void sub_08079e70(void)
@@ -1196,7 +1196,7 @@ void sub_08079f54(u16 a)
 {
     TaskFaceNearestPlayer();
     sub_08079f18(a);
-    switch (gCurTask->unk73)
+    switch (gCurTask->variant)
     {
     case 0:
         TaskSetEntry(sub_0807a10c, gCurTaskIdx);
@@ -1218,7 +1218,7 @@ void sub_08079fa8(u16 a)
 
 s32 sub_08079fd0(void)
 {
-    if (gCurTask->unk73 != 0)
+    if (gCurTask->variant != 0)
         return 0;
     ActorSetState(3);
     TaskSetEntry(sub_0807a10c, gCurTaskIdx);
@@ -1227,7 +1227,7 @@ s32 sub_08079fd0(void)
 
 s32 sub_0807a008(void)
 {
-    if (gCurTask->unk73 != 0)
+    if (gCurTask->variant != 0)
         return 0;
     ActorSetState(1);
     TaskSetEntry(sub_0807a10c, gCurTaskIdx);
@@ -1632,7 +1632,7 @@ void Task_Scarfy(void)
 
 void sub_0807a8d4(void)
 {
-    if (gCurTask->unk73 == 0)
+    if (gCurTask->variant == 0)
         ActorSetState(2);
     else
         ActorSetState(0);
@@ -1640,7 +1640,7 @@ void sub_0807a8d4(void)
 
 void sub_0807a8fc(void)
 {
-    switch (gCurTask->unk73)
+    switch (gCurTask->variant)
     {
     case 0:
         gCurTask->unk28 = -1;
@@ -1662,7 +1662,7 @@ void sub_0807a8fc(void)
 void sub_0807a968(void)
 {
     struct Task *t = gCurTask;
-    s32 i = (t->unk73 - 1) * 3;
+    s32 i = (t->variant - 1) * 3;
     s32 x;
     s32 y;
 

@@ -128,13 +128,13 @@ void PlayerActionStone(void)
         struct Task *t = gCurTask;
         if (t->player->prevMode != 13) {
             struct Task *u;
-            t->unk73 = 0;
+            t->variant = 0;
             u = gCurTask;
             u->unk28 = 15;
             u->unk80 = 17;
         }
     }
-    switch (gCurTask->unk73) {
+    switch (gCurTask->variant) {
     case 0:
         PlaySfxIfLocalPlayer(152, gCurTask->player->playerIndex);
         if ((gLatchedHeldKeys[gCurTask->player->playerIndex] & 48) == 0)
@@ -160,7 +160,7 @@ void PlayerActionStone(void)
         gCurTask->frame++;
         TaskYieldTrampoline(2);
         gCurTask->layer = 13;
-        gCurTask->unk73 = 1;
+        gCurTask->variant = 1;
         /* fallthrough */
     case 1:
         PlayerStopAxes(1);
@@ -174,7 +174,7 @@ void PlayerActionStone(void)
             }
             TaskYieldTrampoline(1);
         }
-        gCurTask->unk73 = 2;
+        gCurTask->variant = 2;
         /* fallthrough */
     case 2:
         gCurTask->layer = 7;
@@ -204,7 +204,7 @@ void PlayerActionStone(void)
         } while ((s16)++gCurTask->unk6C <= 3);
         gCurTask->frame++;
         TaskYieldTrampoline(1);
-        gCurTask->unk73 = 3;
+        gCurTask->variant = 3;
         SetPlayerInvulnerability(255, 0, gCurTask->player->playerIndex);
     }
     TaskSleepForever();
@@ -214,7 +214,7 @@ void PlayerActionStoneUpdate(void)
 {
     struct Task *t = gCurTask;
 
-    switch (t->unk73) {
+    switch (t->variant) {
     case 0:
         if ((t->onGround & 1) == 0) {
             PlayerTurnToHeldDirection();

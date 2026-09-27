@@ -37,7 +37,7 @@ s32 CreatePlayerEffect(s32 a0, s32 a1, s32 a2);
 void PlayerActionSparkUpdate(void)
 {
     struct Task *t = gCurTask;
-    u8 *st = &t->unk73;
+    u8 *st = &t->variant;
 
     switch (*st) {
     case 0:

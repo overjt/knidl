@@ -29,7 +29,7 @@
  * the draw and per-frame hooks, points Task.frameTable at gBugzzyFrames, counts the
  * boss into gUnk_02007D00[7], seeds the state block (Task.unk28 = -1,
  * Task.unk34 = 1, Task.unk1C = -1, Task.unk24 = Actor.palette) and dispatches
- * Task.unk73 through the 27-entry anchor table at 0x08743ADC.
+ * Task.variant through the 27-entry anchor table at 0x08743ADC.
  *
  * The one empty `asm` in sub_08091e18 is load-bearing and emits no code; see
  * lessons-learned 3.156 for why the register allocation needs it.
@@ -620,8 +620,8 @@ void sub_08091b6c(void)
     v->unk1C = zero;
     spawn.subtype = 9;
     spawn.taskType = 111;
-    spawn.unk08 = v->unk18;
-    spawn.unk09 = v->unk74;
+    spawn.variant = v->unk18;
+    spawn.spawnArg = v->unk74;
     spawn.x = zero;
     spawn.y = zero;
     spawn.checkTerrain = 1;
@@ -820,5 +820,5 @@ void Task_Bugzzy(void)
     else
         gCurTask->unk20 = 0;
     sub_08066ae0();
-    CallTableEntry(gCurTask->unk73, 1, gBugzzyVariants);
+    CallTableEntry(gCurTask->variant, 1, gBugzzyVariants);
 }

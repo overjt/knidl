@@ -8,7 +8,7 @@
  *
  *   entry       -> installs the draw hook in Task.moveCallback (TaskMove or
  *                  ActorMove) and the per-frame hook in Task.drawCallback, points
- *                  Task.frameTable at a TaskGfx block, and hands Task.unk73 to
+ *                  Task.frameTable at a TaskGfx block, and hands Task.variant to
  *                  CallTableEntry with the script's entry table;
  *   unk14 table -> the coroutine BODIES: each installs its own resume function
  *                  in Task.updateCallback and then runs a chain of TaskYieldTrampoline
@@ -21,7 +21,7 @@
  *     that walks Task.posX/unk50 with RandomSpread and waits on the room byte
  *     gTaskSlotTypes[Task.parent] through `sub_0808cfec`) and `sub_0808d014`,
  *     plus the smaller `sub_0808d148` and `sub_0808d218`;
- *   * script 1: entry `Task_BroomHatter` (Task.unk73 -> `0x08743188`, 3 rows) with
+ *   * script 1: entry `Task_BroomHatter` (Task.variant -> `0x08743188`, 3 rows) with
  *     the row bodies `sub_0808d558` / `sub_0808da00` / `sub_0808df58`, the
  *     body tables `0x08743194` / `0x087431AC` / `0x087431C4` and the guard
  *     tables `0x087431A0` / `0x087431B8` / `0x087431C8`;
@@ -30,7 +30,7 @@
  *     table `gUnk_0874313C`, `sub_0808d460` flips the sprite through
  *     Task.spriteFlags and `sub_0808d494` / `sub_0808d4a8` / `sub_0808d4bc` /
  *     `sub_0808d4d0` set the animation id in Actor.extraFrame;
- *   * script 2's entry `Task_LaserBall` (Task.unk73 -> `0x087431E4`) and its
+ *   * script 2's entry `Task_LaserBall` (Task.variant -> `0x087431E4`) and its
  *     aiming half: `sub_0808e070` / `sub_0808e0d0` / `sub_0808e174` turn the
  *     vector to the target into a heading with ArcTan2, `sub_0808e254` spawns
  *     actor 103, `sub_0808e2b4` is the GetDistSq proximity test and
@@ -399,7 +399,7 @@ void sub_0808d2a8(void)
 
 s32 sub_0808d2b8(void)
 {
-    switch (gCurTask->unk73)
+    switch (gCurTask->variant)
     {
     case 0:
         ActorSetState(2);
@@ -420,7 +420,7 @@ s32 sub_0808d304(void)
     t = gCurTask;
     t->unk30 = 1;
     t->unk34 = 1;
-    switch (t->unk73)
+    switch (t->variant)
     {
     case 0:
         ActorSetState(0);
@@ -544,7 +544,7 @@ void Task_BroomHatter(void)
     t->layer = 11;
     u = gCurTask;
     u->frameTable = gBroomHatterFrames;
-    CallTableEntry(u->unk73, 3, gBroomHatterVariants);
+    CallTableEntry(u->variant, 3, gBroomHatterVariants);
 }
 
 void sub_0808d558(void)
@@ -1178,8 +1178,8 @@ void sub_0808e254(void)
     {
         sp.subtype = 1;
         sp.taskType = 103;
-        sp.unk08 = 0;
-        sp.unk09 = gCurTask->unk34;
+        sp.variant = 0;
+        sp.spawnArg = gCurTask->unk34;
         sp.x = 16;
         sp.y = 0;
         sp.checkTerrain = 1;
@@ -1241,6 +1241,6 @@ void Task_LaserBall(void)
     gCurTask->frameTable = gLaserBallFrames;
     AcquirePaletteAnim(3, 1);
     SetPaletteAnimSource(1, 0, gCurTask->unk8C->paletteVariant);
-    CallTableEntry(gCurTask->unk73, 2, gLaserBallVariants);
+    CallTableEntry(gCurTask->variant, 2, gLaserBallVariants);
 }
 

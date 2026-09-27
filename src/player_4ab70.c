@@ -87,9 +87,9 @@ void PlayerActionTornado(void)
     gCurTask->updateState = 47;
     gCurTask->unk28 = 0;
     gCurTask->unk2C = 0;
-    gCurTask->unk73 = 0;
+    gCurTask->variant = 0;
     gCurTask->unk80 = 19;
-    switch (gCurTask->unk73) {
+    switch (gCurTask->variant) {
     case 0:
         PlaySfxIfLocalPlayer(150, gCurTask->player->playerIndex);
         SetPlayerInvulnerability(3, 0, gCurTask->player->playerIndex);
@@ -102,7 +102,7 @@ void PlayerActionTornado(void)
             gCurTask->frame += 2;
             TaskYieldTrampoline(2);
         } while ((s16)++gCurTask->unk6C <= 10);
-        gCurTask->unk73 = 1;
+        gCurTask->variant = 1;
         /* fallthrough */
     case 1:
         CreatePlayerEffect(gCurTask->player->playerIndex, 28, 0);
@@ -118,7 +118,7 @@ void PlayerActionTornado(void)
                 TaskYieldTrampoline(2);
             } while (++gCurTask->unk6E <= 6);
         } while ((s16)++gCurTask->unk6C <= 5);
-        gCurTask->unk73 = 2;
+        gCurTask->variant = 2;
         /* fallthrough */
     case 2:
         gCurTask->player->unk16 = 255;
@@ -144,14 +144,14 @@ void PlayerActionTornado(void)
         } while ((s16)++gCurTask->unk6C <= 10);
         TaskSetFrame(0xDE5);
         TaskYieldTrampoline(1);
-        gCurTask->unk73 = 3;
+        gCurTask->variant = 3;
     }
     TaskSleepForever();
 }
 
 void PlayerActionTornadoUpdate(void)
 {
-    switch (gCurTask->unk73) {
+    switch (gCurTask->variant) {
     case 1:
         if (gLatchedHeldKeys[gCurTask->player->playerIndex] & 2) {
             gCurTask->onGround = 0;
@@ -199,7 +199,7 @@ void PlayerActionTornadoUpdate(void)
             if (w->velY < 0 && gTerrainResult.unk1 != 0)
                 w->velY = 0;
         }
-        if (gCurTask->unk73 != 2)
+        if (gCurTask->variant != 2)
             RegisterCollider(gCurTaskIdx, gCurTask->pixelX, gCurTask->pixelY,
                          gUnk_0873C2A0);
         break;
@@ -234,7 +234,7 @@ void PlayerActionCrash(void)
     gCurTask->unk2C = gCurTask->posY;
     CreatePlayerEffect(gCurTask->player->playerIndex, 46, 0);
     gCurTask->player->terrainBox = 0;
-    gCurTask->unk73 = 0;
+    gCurTask->variant = 0;
     RequestScreenShake(5);
     SetRoomUpdateFlags(2);
     PlaySfx(248);
@@ -300,7 +300,7 @@ void PlayerActionCrash(void)
     TaskSetFrame(0xDE7);
     TaskYieldTrampoline(3);
     gCurTask->player->unk42 |= 16;
-    gCurTask->unk73 = 1;
+    gCurTask->variant = 1;
     gCurTask->unk28 = 0;
     gCurTask->player->unk16 = 1;
     {
@@ -355,7 +355,7 @@ void PlayerActionCrash(void)
     PlayerStopAxes(2);
     gCurTask->player->terrainBox = (u32)gPlayerDefaultTerrainBox;
     SetPlayerAbility(0, -1, gCurTask->player->playerIndex);
-    gCurTask->unk73 = 2;
+    gCurTask->variant = 2;
     gCurTask->frame++;
     for (gCurTask->unk6C = 0; (s16)gCurTask->unk6C <= 31; gCurTask->unk6C++) {
         if (gUnk_03001F34 == 0)
@@ -364,7 +364,7 @@ void PlayerActionCrash(void)
     }
     SetPlayerInvulnerability(255, 0, gCurTask->player->playerIndex);
     gCurTask->player->unk42 &= 0xFCFF;
-    gCurTask->unk73 = 3;
+    gCurTask->variant = 3;
     TaskSleepForever();
 }
 
@@ -372,14 +372,14 @@ void PlayerActionCrashUpdate(void)
 {
     struct Task *t = gCurTask;
 
-    switch (t->unk73) {
+    switch (t->variant) {
     case 1:
         BlendColors(gPlayerPalettes[t->player->playerIndex], gUnk_08203098, (u16)t->unk28, 16,
                      (u16 *)(gObjPalette + ((t->tileWord >> 12) << 5)));
         {
             struct Task *u = gCurTask;
             if (u->unk28 == 256) {
-                u->unk73 = 0;
+                u->variant = 0;
             } else {
                 u->unk28 += 10;
                 if (u->unk28 > 255)
@@ -393,7 +393,7 @@ void PlayerActionCrashUpdate(void)
         {
             struct Task *u = gCurTask;
             if (u->unk28 == 0) {
-                u->unk73 = 0;
+                u->variant = 0;
                 RequestScreenShake(0);
                 gCurTask->player->unk42 &= 0xFFEF;
             } else {

@@ -1447,7 +1447,7 @@ void sub_080b3050(void)
     u = *c;
     u->frameTable = gUnk_08754308;
     u->unk28 = 1;
-    CallTableEntry(u->unk73, 1, gUnk_0874C21C);
+    CallTableEntry(u->variant, 1, gUnk_0874C21C);
 }
 
 void sub_080b3090(void)
@@ -1671,7 +1671,7 @@ void sub_080b3318(void)
     u->tileWord = z;
     u->facing = 255;
     u2 = *c;
-    CallTableEntry(u2->unk73, 1, gUnk_0874C254);
+    CallTableEntry(u2->variant, 1, gUnk_0874C254);
 }
 
 void sub_080b3368(void)
@@ -2360,7 +2360,7 @@ void sub_080b4100(void)
 {
     s32 v;
 
-    if (gCurTask->unk73 == 0 && (u8)sub_08069888() == 0)
+    if (gCurTask->variant == 0 && (u8)sub_08069888() == 0)
         CallTableEntry(gCurTask->updateState, 3, gUnk_087560AC);
     v = gCurTask->unk34;
     gCurTask->unk34 = ActorTickAnim(v);

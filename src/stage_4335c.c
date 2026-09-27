@@ -7,7 +7,7 @@
  * Per-frame player handler 20 of gUnk_0873B4A4[27], the handler table M09's
  * player task uses instead of gPlayerActionHandlers while gUnk_03001F30 is non-zero,
  * and the copy of M10's handler 20 PlayerActionSwimUpdate (src/player_3aa64.c): it
- * re-picks the four-way state Task.unk73 from the latched held keys
+ * re-picks the four-way state Task.variant from the latched held keys
  * gLatchedHeldKeys[] (left or right = 3, A or up = 1, down = 2, else 0; state 1
  * also looks at the newly pressed keys gLatchedPressedKeys[] and the counter
  * Task.unk28), applies the motion presets of PlayerSetMotionXPreset and PlayerSetMotionYPreset
@@ -66,7 +66,7 @@ void sub_0804335c(void)
 
     PlayerTurnToHeldDirection();
     t = gCurTask;
-    st = &t->unk73;
+    st = &t->variant;
     t->unk2C = *st;
     switch (*st)
     {
@@ -163,7 +163,7 @@ void sub_0804335c(void)
         PlayerSetMotionYPreset(13);
         break;
     }
-    if (gCurTask->unk2C != gCurTask->unk73)
+    if (gCurTask->unk2C != gCurTask->variant)
         TaskSetEntry(sub_08043014, gCurTaskIdx);
     if (!PlayerCheckBButton() && !PlayerCheckEnterDoor())
     {
@@ -180,7 +180,7 @@ void sub_0804335c(void)
         }
         else
         {
-            if (gCurTask->unk73 != 1
+            if (gCurTask->variant != 1
              || !(gLatchedHeldKeys[gCurTask->player->playerIndex] & 0x41))
             {
                 if (gCurTask->velY != 0 && (gCurTask->onGround & 1))

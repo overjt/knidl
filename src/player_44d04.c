@@ -6,7 +6,7 @@
  *
  * Player action bodies, part 12: action 35 and per-frame handler 32.
  * PlayerActionSword (action 35, mode 13) is an attack with a ground form
- * (Task.unk73 = 0) and an air form (1), each in two variants picked by
+ * (Task.variant = 0) and an air form (1), each in two variants picked by
  * Task.waterFlags bit 0 (Task.unk30).  It installs the player's collider
  * record gPlayerBodyBoxes[] (registered with M05's RegisterCollider) and
  * block hit-box set gPlayerHitBoxSets[] (tested by M09's TaskBreakBlocks) from
@@ -72,10 +72,10 @@ void PlayerActionSword(void)
     gCurTask->unk34 = gCurTask->facing;
     gCurTask->unk80 = 4;
     if (gCurTask->onGround & 1)
-        gCurTask->unk73 = 0;
+        gCurTask->variant = 0;
     else
-        gCurTask->unk73 = 1;
-    switch (gCurTask->unk73) {
+        gCurTask->variant = 1;
+    switch (gCurTask->variant) {
     case 0:
         gPlayerBodyBoxes[gCurTask->player->playerIndex] = *(struct M11R20 *)gUnk_0873BF28;
         gPlayerHitBoxSets[gCurTask->player->playerIndex] = *(struct M11R8 *)gUnk_0873CCAC;
@@ -247,7 +247,7 @@ void PlayerActionSwordUpdate(void)
 {
     struct Task *t = gCurTask;
 
-    switch (t->unk73) {
+    switch (t->variant) {
     case 0:
         if (t->unk28 != 0) {
             PlayerRequestLocomotion();

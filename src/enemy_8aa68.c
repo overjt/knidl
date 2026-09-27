@@ -122,11 +122,11 @@ void Task_Blipper(void)
     gCurTask->layer = 11;
     gCurTask->frameTable = gBlipperFrames;
     gCurTask->onGround = 0;
-    if (gCurTask->unk73 == 5)
+    if (gCurTask->variant == 5)
         sub_0808bb24();
     TaskInitWaterFlags();
     if (gCurTask->waterFlags == 3)
-        CallTableEntry(gCurTask->unk73, 6, gBlipperVariants);
+        CallTableEntry(gCurTask->variant, 6, gBlipperVariants);
     sub_0808b5b4();
 }
 
@@ -309,7 +309,7 @@ void sub_0808aeec(void)
             gCurTask->unk28 = ActorStepAnim();
         gCurTask->unk28--;
     }
-    if (gCurTask->unk73 == 3 || gCurTask->unk73 == 4)
+    if (gCurTask->variant == 3 || gCurTask->variant == 4)
         sub_0808b4d0();
 }
 
@@ -495,7 +495,7 @@ void sub_0808b2fc(void)
 void sub_0808b368(void)
 {
     gCurTask->updateState = 1;
-    if (gCurTask->unk73 == 3)
+    if (gCurTask->variant == 3)
         gCurTask->unk2C = 0;
     else
         gCurTask->unk2C = 1;
@@ -719,7 +719,7 @@ void sub_0808b8c4(void)
                          (u16)gCurTask->pixelY
                              + ((s8 *)gCurTask->unk8C->terrainBox)[2]) != 0)
     {
-        switch (gCurTask->unk73)
+        switch (gCurTask->variant)
         {
         case 0:
             TaskStop();
@@ -751,7 +751,7 @@ void sub_0808b8c4(void)
 void sub_0808b99c(s32 a)
 {
     gCurTask->unk46 = CreateChildTaskHere(218, 1);
-    gTasks[gCurTask->unk46].unk73 = a;
+    gTasks[gCurTask->unk46].variant = a;
 }
 
 void sub_0808b9d0(void)
@@ -764,7 +764,7 @@ void sub_0808b9d0(void)
     gCurTask->frameTable = gUnk_087528C8;
     gCurTask->facing = TaskGetParentFacing();
     t = gCurTask;
-    switch (t->unk73)
+    switch (t->variant)
     {
     case 0:
         t->posX = (t->pixelX - t->facing * 12) << 16;
@@ -819,14 +819,14 @@ void sub_0808bb5c(void)
 
 s32 sub_0808bb70(void)
 {
-    if (gCurTask->unk73 != 5)
+    if (gCurTask->variant != 5)
     {
         if ((u8)IsWaterAtPixel(gCurTask->pixelX, gCurTask->pixelY) == 0)
         {
             TaskSetEntry(sub_0808b5b4, gCurTaskIdx);
             return 1;
         }
-        switch (gCurTask->unk73)
+        switch (gCurTask->variant)
         {
         case 0:
             gCurTask->velY = -gCurTask->velY;
@@ -846,7 +846,7 @@ s32 sub_0808bb70(void)
 
 s32 sub_0808bc18(void)
 {
-    if (gCurTask->unk73 != 5)
+    if (gCurTask->variant != 5)
     {
         if ((u8)IsWaterAtPixel(gCurTask->pixelX, gCurTask->pixelY) == 0)
         {
@@ -858,11 +858,11 @@ s32 sub_0808bc18(void)
 
 s32 sub_0808bc60(void)
 {
-    if (gCurTask->unk73 != 5)
+    if (gCurTask->variant != 5)
     {
         if ((u8)IsWaterAtPixel(gCurTask->pixelX, gCurTask->pixelY) == 0)
             goto stop;
-        switch (gCurTask->unk73)
+        switch (gCurTask->variant)
         {
         case 0:
             gCurTask->velX = -gCurTask->velX;
@@ -888,7 +888,7 @@ s32 sub_0808bd04(void)
 {
     u8 r;
 
-    if (gCurTask->unk73 != 5)
+    if (gCurTask->variant != 5)
     {
         r = IsWaterAtPixel(gCurTask->pixelX, gCurTask->pixelY);
         if (r == 0)
@@ -896,7 +896,7 @@ s32 sub_0808bd04(void)
             gCurTask->velY = r;
             return 0;
         }
-        switch (gCurTask->unk73)
+        switch (gCurTask->variant)
         {
         case 0:
             gCurTask->velY = -gCurTask->velY;
@@ -920,7 +920,7 @@ void sub_0808bdb4(void)
     gCurTask->drawCallback = (u32)ActorDrawWorldInViewOrDestroy;
     gCurTask->layer = 11;
     gCurTask->frameTable = gUnk_08752BD4;
-    CallTableEntry(gCurTask->unk73, 2, gUnk_08742940);
+    CallTableEntry(gCurTask->variant, 2, gUnk_08742940);
 }
 
 void sub_0808bdf4(void)
@@ -1347,7 +1347,7 @@ void sub_0808c708(void)
 
 s32 sub_0808c71c(void)
 {
-    if (gCurTask->unk73 != 1)
+    if (gCurTask->variant != 1)
     {
         ActorSetState(0);
         TaskSetEntry(sub_0808be3c, gCurTaskIdx);
@@ -1357,7 +1357,7 @@ s32 sub_0808c71c(void)
 
 s32 sub_0808c74c(void)
 {
-    if (gCurTask->unk73 != 1)
+    if (gCurTask->variant != 1)
     {
         ActorSetState(7);
         TaskSetEntry(sub_0808be3c, gCurTaskIdx);
@@ -1367,7 +1367,7 @@ s32 sub_0808c74c(void)
 
 s32 sub_0808c77c(void)
 {
-    if (gCurTask->unk73 != 1)
+    if (gCurTask->variant != 1)
     {
         sub_0806a0f0(-2);
         return 1;
@@ -1376,7 +1376,7 @@ s32 sub_0808c77c(void)
 
 s32 sub_0808c79c(void)
 {
-    if (gCurTask->unk73 != 1)
+    if (gCurTask->variant != 1)
     {
         switch (gCurTask->state)
         {
@@ -1396,7 +1396,7 @@ s32 sub_0808c79c(void)
 
 s32 sub_0808c7ec(void)
 {
-    if (gCurTask->unk73 != 1)
+    if (gCurTask->variant != 1)
     {
         if (gCurTask->state != 4)
         {
@@ -1464,8 +1464,8 @@ void sub_0808c934(void)
 
     sp.subtype = 34;
     sp.taskType = 137;
-    sp.unk08 = gCurTask->unk73;
-    sp.unk09 = gCurTask->unk74;
+    sp.variant = gCurTask->variant;
+    sp.spawnArg = gCurTask->unk74;
     zero = 0;
     sp.x = 6;
     sp.y = -6;

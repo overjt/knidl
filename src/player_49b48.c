@@ -44,13 +44,13 @@ void PlayerActionIce(void)
         struct Task *t = gCurTask;
         if (t->player->prevMode != 13) {
             struct Task *u;
-            t->unk73 = 0;
+            t->variant = 0;
             u = gCurTask;
             u->unk28 = 15;
             u->unk80 = 13;
         }
     }
-    switch (gCurTask->unk73) {
+    switch (gCurTask->variant) {
     case 0:
         TaskSetFrame(0xA0A);
         TaskYieldTrampoline(2);
@@ -64,7 +64,7 @@ void PlayerActionIce(void)
         TaskYieldTrampoline(1);
         gCurTask->frame++;
         TaskYieldTrampoline(1);
-        gCurTask->unk73 = 1;
+        gCurTask->variant = 1;
         /* fallthrough */
     case 1:
         {
@@ -93,7 +93,7 @@ void PlayerActionIce(void)
         PlayerStopSfx();
         gCurTask->frame++;
         TaskYieldTrampoline(3);
-        gCurTask->unk73 = 3;
+        gCurTask->variant = 3;
         break;
     }
     TaskSleepForever();
@@ -103,14 +103,14 @@ void PlayerActionIceUpdate(void)
 {
     struct Task *t = gCurTask;
 
-    switch (t->unk73) {
+    switch (t->variant) {
     case 0:
         break;
     case 1:
         if (t->unk28 == 0) {
             u16 *p = (u16 *)gLatchedHeldKeys;
             if ((p[t->player->playerIndex] & 2) == 0) {
-                t->unk73 = 2;
+                t->variant = 2;
                 TaskSetEntry(PlayerActionIce, gCurTaskIdx);
             }
         } else {
@@ -135,17 +135,17 @@ void PlayerActionFreeze(void)
         struct Task *t = gCurTask;
         if (t->player->prevMode != 13) {
             struct Task *u;
-            t->unk73 = 0;
+            t->variant = 0;
             u = gCurTask;
             u->unk28 = 15;
             u->unk80 = 14;
         }
     }
-    switch (gCurTask->unk73) {
+    switch (gCurTask->variant) {
     case 0:
         TaskSetFrame(0xA8E);
         TaskYieldTrampoline(2);
-        gCurTask->unk73 = 1;
+        gCurTask->variant = 1;
         /* fallthrough */
     case 1:
         CreatePlayerEffect(gCurTask->player->playerIndex, 41, 0);
@@ -166,7 +166,7 @@ void PlayerActionFreeze(void)
         PlayerStopSfx();
         TaskSetFrame(0xA8E);
         TaskYieldTrampoline(1);
-        gCurTask->unk73 = 3;
+        gCurTask->variant = 3;
         break;
     }
     TaskSleepForever();
@@ -176,13 +176,13 @@ void PlayerActionFreezeUpdate(void)
 {
     struct Task *t = gCurTask;
 
-    switch (t->unk73) {
+    switch (t->variant) {
     case 0:
         break;
     case 1:
         if (t->unk28 == 0) {
             if ((gLatchedHeldKeys[t->player->playerIndex] & 2) == 0) {
-                t->unk73 = 2;
+                t->variant = 2;
                 TaskSetEntry(PlayerActionFreeze, gCurTaskIdx);
             }
         } else {

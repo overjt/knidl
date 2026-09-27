@@ -6,7 +6,7 @@
  *
  * Player action bodies, part 16: action 40 and per-frame handler 37.
  * PlayerActionHammer (action 40, mode 13) is PlayerActionSword's sibling: the same
- * opening, a ground form (Task.unk73 = 0) and an air form (1) in two
+ * opening, a ground form (Task.variant = 0) and an air form (1) in two
  * variants (Task.unk30 = Task.waterFlags bit 0), the collider record
  * gUnk_0873C060 and the block hit-box sets gUnk_0873CDB4 (ground) /
  * gUnk_0873CDF4 (air) whose rows gUnk_0873CDBC, gUnk_0873CDFC and
@@ -69,10 +69,10 @@ void PlayerActionHammer(void)
     gCurTask->unk34 = gCurTask->facing;
     gCurTask->unk80 = 9;
     if (gCurTask->onGround & 1)
-        gCurTask->unk73 = 0;
+        gCurTask->variant = 0;
     else
-        gCurTask->unk73 = 1;
-    switch (gCurTask->unk73) {
+        gCurTask->variant = 1;
+    switch (gCurTask->variant) {
     case 0:
         PlaySfxIfLocalPlayer(130, gCurTask->player->playerIndex);
         gPlayerBodyBoxes[gCurTask->player->playerIndex] = *(struct M11R20 *)gUnk_0873C060;
@@ -230,7 +230,7 @@ void PlayerActionHammerUpdate(void)
 {
     struct Task *t = gCurTask;
 
-    switch (t->unk73) {
+    switch (t->variant) {
     case 0:
         if (t->unk28 != 0)
             PlayerRequestLocomotion();

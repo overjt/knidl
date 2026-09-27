@@ -8,7 +8,7 @@
  * sub-states gUnk_087582C4[Task.state] and per-frame handlers
  * gUnk_087582DC[Task.updateState] (GameOverChoice starts it, GameOverChoiceEnterState re-enters
  * it), plus the helpers the whole screen uses:
- *   CreateGameOverObject   spawn task type #264 with Task.unk73 = variant.
+ *   CreateGameOverObject   spawn task type #264 with Task.variant = variant.
  *   sub_080cbf68 / sub_080cbfac   re-enter variant 0 (its task index is
  *       gGameOverPlayerTask) in sub-state 2 or 1 by this cursor's Task.unk24.
  *   sub_080cbfe4 / sub_080cc024   sub-state 0, the cursor at rest; up or down
@@ -58,7 +58,7 @@ void GameOverChoiceUpdate(void)
     CallTableEntry(gCurTask->updateState, 6, gUnk_087582DC);
 }
 
-/* Spawn task type #264 with Task.unk73 = variant. */
+/* Spawn task type #264 with Task.variant = variant. */
 void CreateGameOverObject(u8 variant)
 {
     s32 id = TaskCreateFrom(264, 32);
@@ -66,7 +66,7 @@ void CreateGameOverObject(u8 variant)
 
     if (id != -1) {
         t = &gTasks[id];
-        t->unk73 = variant;
+        t->variant = variant;
     }
 }
 

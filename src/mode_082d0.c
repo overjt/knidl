@@ -50,13 +50,13 @@ void sub_080082d0(void)
         if (idx != -1) {
             t = &gTasks[idx];
             t->parent = gCurTaskIdx;
-            t->unk73 = 0;
+            t->variant = 0;
         }
         idx = TaskCreateFrom(0x109, 32);
         if (idx != -1) {
             t = &gTasks[idx];
             t->parent = gCurTaskIdx;
-            t->unk73 = 1;
+            t->variant = 1;
         }
     }
 }
@@ -71,7 +71,7 @@ void sub_08008348(void)
     t->unk2C = 0;
     t->unk30 = 1;
     t->unk34 = 0;
-    if (t->unk73 == 0)
+    if (t->variant == 0)
         t->state = 0;
     else
         t->state = 1;

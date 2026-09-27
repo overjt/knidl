@@ -14,7 +14,7 @@
  * draw hook TaskDrawWorldLoadTiles (sub-state 0) or TaskDrawWorldTilesLoaded and re-rolls its
  * position every two frames from the {base, scale, amount} rows
  * gUnk_0873BA8C[][2][3]; its callback sub_080573a4 kills it when the player
- * leaves mode 13 or the spawner's Task.unk73 is not 1, and otherwise, while
+ * leaves mode 13 or the spawner's Task.variant is not 1, and otherwise, while
  * Task.unk28 is clear, registers the collider row gUnk_0873C038 (M05's
  * RegisterCollider) and tests the block hit-box set gUnk_0873CC94 (M09's
  * TaskBreakBlocksAt) at the spawner's position.  Variant 31 (sub_08057430, M12)
@@ -219,7 +219,7 @@ void sub_080573a4(void)
     struct Task *t = gCurTask;
     struct Task *p;
 
-    if (t->player->mode != 13 || (p = (struct Task *)t->unk8C)->unk73 != 1)
+    if (t->player->mode != 13 || (p = (struct Task *)t->unk8C)->variant != 1)
     {
         TaskFree(gCurTaskIdx);
     }

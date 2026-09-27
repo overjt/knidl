@@ -15,7 +15,7 @@
  * `sub_08084bc0` / `sub_08084c0c` / `sub_08084c5c` / `sub_08084cb8` plus the
  * shared `sub_08084c84` are the four class-3 hook rows at `0x08742CF0` /
  * `0x08742D00`: each returns 1 when it has handed the task to a new state and
- * 0 otherwise, and all four open with the same `Task.unk73 == 1` bail-out.
+ * 0 otherwise, and all four open with the same `Task.variant == 1` bail-out.
  * `Task_Chilly` is the class-3 task #14 entry; its script is in
  * src/enemy_84d14.c.
  *
@@ -443,7 +443,7 @@ void sub_08084b7c(void)
     struct Task *t;
 
     t = gTasks + (s16)gCurTask->parent;
-    if (t->unk73 != 1 && t->state != 2 && t->state != 4)
+    if (t->variant != 1 && t->state != 2 && t->state != 4)
         TaskFree(gCurTaskIdx);
 }
 
@@ -453,7 +453,7 @@ u8 sub_08084bc0(void)
     s32 v;
 
     t = gCurTask;
-    if (t->unk73 != 1)
+    if (t->variant != 1)
     {
         switch (t->state)
         {
@@ -481,7 +481,7 @@ u8 sub_08084c0c(void)
     s32 v;
 
     t = gCurTask;
-    if (t->unk73 != 1)
+    if (t->variant != 1)
     {
         switch (t->state)
         {
@@ -506,7 +506,7 @@ out:
 
 u8 sub_08084c5c(void)
 {
-    if (gCurTask->unk73 == 1)
+    if (gCurTask->variant == 1)
         return 0;
     sub_0806a0f0(-2);
     return 1;
@@ -518,7 +518,7 @@ s32 sub_08084c84(void)
     u8 r;
 
     t = gCurTask;
-    if (t->unk73 == 1)
+    if (t->variant == 1)
         return 0;
     if (t->velX != 0)
     {
@@ -533,7 +533,7 @@ s32 sub_08084c84(void)
 
 s32 sub_08084cb8(void)
 {
-    if (gCurTask->unk73 != 1)
+    if (gCurTask->variant != 1)
         TaskTurnAroundAndReverseX();
     return 0;
 }
@@ -549,5 +549,5 @@ void Task_Chilly(void)
     t->layer = 11;
     u = gCurTask;
     u->frameTable = gChillyFrames;
-    CallTableEntry(u->unk73, 2, gChillyVariants);
+    CallTableEntry(u->variant, 2, gChillyVariants);
 }

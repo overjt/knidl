@@ -126,7 +126,7 @@ void sub_08081d84(void);
 
 s32 sub_08080b70(void)
 {
-    switch (gCurTask->unk73)
+    switch (gCurTask->variant)
     {
     case 0:
         ActorSetState(2);
@@ -145,7 +145,7 @@ s32 sub_08080b70(void)
 s32 sub_08080bcc(void)
 {
     TaskStopY();
-    switch (gCurTask->unk73)
+    switch (gCurTask->variant)
     {
     case 0:
         ActorSetState(0);
@@ -253,7 +253,7 @@ void Task_Starman(void)
     t->layer = 11;
     u = gCurTask;
     u->frameTable = gStarmanFrames;
-    CallTableEntry(u->unk73, 4, gStarmanVariants);
+    CallTableEntry(u->variant, 4, gStarmanVariants);
 }
 
 void sub_08080e10(void)
@@ -829,7 +829,7 @@ s32 sub_08081884(void)
 {
     struct Task *t = gCurTask;
 
-    if (t->unk73 == 1 && t->unk30 != 0)
+    if (t->variant == 1 && t->unk30 != 0)
         TaskTurnAroundAndReverseX();
     return 0;
 }
@@ -839,7 +839,7 @@ s32 sub_080818a8(void)
     s32 r = 0;
     struct Task *t = gCurTask;
 
-    switch (t->unk73)
+    switch (t->variant)
     {
     case 0:
         if (t->state == 1)
@@ -866,7 +866,7 @@ s32 sub_08081900(void)
     s32 r = 0;
     struct Task *t = gCurTask;
 
-    switch (t->unk73)
+    switch (t->variant)
     {
     case 0:
         if (t->state == 0 || t->state == 4)
@@ -892,14 +892,14 @@ s32 sub_08081960(void)
 {
     struct Task *t = gCurTask;
 
-    if (t->unk73 == 0 && t->state == 1)
+    if (t->variant == 0 && t->state == 1)
         t->onGround = 0;
     return 0;
 }
 
 s32 sub_08081984(void)
 {
-    s32 n = gCurTask->unk73;
+    s32 n = gCurTask->variant;
 
     if (n >= 0)
     {
@@ -923,7 +923,7 @@ void Task_PoppyBrosJr(void)
     t->drawCallback = (u32)ActorDrawWorldInViewOrDestroy;
     t->layer = 11;
     gCurTask->frameTable = gPoppyBrosJrFrames;
-    CallTableEntry(gCurTask->unk73, 3, gPoppyBrosJrVariants);
+    CallTableEntry(gCurTask->variant, 3, gPoppyBrosJrVariants);
 }
 
 void sub_080819f4(void)
@@ -938,14 +938,14 @@ void sub_080819f4(void)
     t->unk2C = 0;
     t->onGround = 0;
     u = gCurTask;
-    if (u->unk73 == 0)
+    if (u->variant == 0)
     {
         u->unk30 = 0;
         ActorSetState(0);
     }
     else
     {
-        u->unk73 = 0;
+        u->variant = 0;
         gCurTask->unk30 = 30;
         ActorSetState(2);
     }
@@ -1256,7 +1256,7 @@ void sub_08081f60(void)
     s->moveCallback = (u32)ActorMove;
     s->layer = 11;
     t = gCurTask;
-    switch (t->unk73)
+    switch (t->variant)
     {
     case 0:
     case 2:
@@ -1274,7 +1274,7 @@ void sub_08081f60(void)
     v->unk28 = 0;
     v->unk2C = v->tileWord;
     v->tileWord = (v->tileWord & 0xFFF) | 0xF000;
-    CallTableEntry(v->unk73, 3, gUnk_08741604);
+    CallTableEntry(v->variant, 3, gUnk_08741604);
 }
 
 void sub_08082008(void)
@@ -1288,7 +1288,7 @@ void sub_08082008(void)
     s->moveCallback = (u32)ActorMove;
     s->layer = 11;
     t = gCurTask;
-    switch (t->unk73)
+    switch (t->variant)
     {
     case 0:
     case 2:
@@ -1307,5 +1307,5 @@ void sub_08082008(void)
     v->unk2C = v->tileWord;
     v->unk28 = 1;
     v->tileWord = (v->tileWord & 0xFFF) | 0xF000;
-    CallTableEntry(v->unk73, 3, gUnk_08741604);
+    CallTableEntry(v->variant, 3, gUnk_08741604);
 }

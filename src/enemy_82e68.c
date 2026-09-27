@@ -7,7 +7,7 @@
  * three-table pattern (rom-map section 9):
  *
  *   entry     -> installs Task.updateCallback (the per-frame hook) and hands
- *                Task.unk73 / Task.state to CallTableEntry, which indexes the
+ *                Task.variant / Task.state to CallTableEntry, which indexes the
  *                script's table;
  *   unk14 table -> the coroutine BODIES: each sets Task.updateState to its own state
  *                number and then runs a chain of TaskYieldTrampoline waits;
@@ -859,7 +859,7 @@ void sub_08083e6c(void)
     t->layer = 9;
     gCurTask->frameTable = gUnk_0875233C;
     PlaySfx(186);
-    CallTableEntry(gCurTask->unk73, 1, gUnk_08741E64);
+    CallTableEntry(gCurTask->variant, 1, gUnk_08741E64);
 }
 
 void sub_08083eb4(void)
@@ -944,7 +944,7 @@ void sub_08084050(void)
     u->onGround = 0;
     TaskFaceLikeParent();
     PlaySfx(194);
-    CallTableEntry(gCurTask->unk73, 2, gUnk_08741E7C);
+    CallTableEntry(gCurTask->variant, 2, gUnk_08741E7C);
 }
 
 void sub_080840a4(void)
@@ -1143,5 +1143,5 @@ void Task_Noddy(void)
     t->layer = 11;
     u = gCurTask;
     u->frameTable = gNoddyFrames;
-    CallTableEntry(u->unk73, 2, gNoddyVariants);
+    CallTableEntry(u->variant, 2, gNoddyVariants);
 }

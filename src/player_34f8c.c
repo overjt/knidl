@@ -15,8 +15,8 @@
  * the per-frame handler runs M11's transition predicates in order and
  * writes the next mode request into PlayerState.requestedAction, or re-binds the
  * task to another coroutine with TaskSetEntry.  PlayerActionFall/PlayerActionFallUpdate
- * are mode 5, sub_080355d8/sub_08035848 mode 8 (Task.unk73 is its
- * sub-state) and PlayerActionFloat mode 14, a six-state loop over Task.unk73
+ * are mode 5, sub_080355d8/sub_08035848 mode 8 (Task.variant is its
+ * sub-state) and PlayerActionFloat mode 14, a six-state loop over Task.variant
  * whose per-frame handler is M10's PlayerActionFloatUpdate. */
 
 /* gTerrainResult: M06's collision result block (src/terrain_1bcac.c spells it
@@ -311,13 +311,13 @@ void sub_080355d8(void)
     gCurTask->updateState = 8;
     if (gCurTask->player->prevMode != 8)
     {
-        gCurTask->unk73 = 0;
+        gCurTask->variant = 0;
         gCurTask->player->unk40 &= 0xFFFD;
     }
     gCurTask->player->hitBoxSet = 0;
     gCurTask->unk28 = 0;
     anim = gUnk_0873D420[gCurTask->player->ability];
-    switch (gCurTask->unk73)
+    switch (gCurTask->variant)
     {
     case 0:
         gCurTask->player->hitBoxSet = gUnk_0873CC74;
@@ -363,7 +363,7 @@ void sub_080355d8(void)
         gCurTask->player->bumpKind = 0;
         TaskSetFrame(anim[2]);
         TaskYieldTrampoline(2);
-        gCurTask->unk73 = 1;
+        gCurTask->variant = 1;
     case 1:
         gCurTask->player->bumpKind = 0;
         PlayerSetMotionYPreset(3);
@@ -400,14 +400,14 @@ void sub_08035848(void)
     {
         PlayerTurnToHeldDirection();
         PlayerSetMotionXPreset(7, 72);
-        switch (gCurTask->unk73)
+        switch (gCurTask->variant)
         {
         case 0:
             if (PlayerCheckLanding() != 0)
             {
                 PlayerCheckBump();
                 PlaySfxIfLocalPlayer(116, gCurTask->player->playerIndex);
-                gCurTask->unk73 = 2;
+                gCurTask->variant = 2;
                 TaskSetEntry(sub_080355d8, gCurTaskIdx);
             }
             else
@@ -416,7 +416,7 @@ void sub_08035848(void)
                     gCurTask->player->unk40 |= 2;
                 if (gCurTask->player->unk40 & 2)
                 {
-                    gCurTask->unk73 = 1;
+                    gCurTask->variant = 1;
                     TaskSetEntry(sub_080355d8, gCurTaskIdx);
                 }
                 else
@@ -461,12 +461,12 @@ void PlayerActionFloat(void)
     if (gCurTask->player->prevMode != 14)
     {
         gCurTask->player->running = 0;
-        gCurTask->unk73 = 0;
+        gCurTask->variant = 0;
     }
     gCurTask->player->bodyBox = (u32)gUnk_0873BD14;
     while (1)
     {
-        switch (gCurTask->unk73)
+        switch (gCurTask->variant)
         {
         case 0:
             PlaySfxIfLocalPlayer(228, gCurTask->player->playerIndex);
@@ -477,7 +477,7 @@ void PlayerActionFloat(void)
                 gCurTask->frame++;
                 TaskYieldTrampoline(2);
             }
-            gCurTask->unk73 = 2;
+            gCurTask->variant = 2;
             gCurTask->player->mouthState = 2;
             break;
         case 1:
@@ -536,7 +536,7 @@ void PlayerActionFloat(void)
                 }
                 break;
             }
-            gCurTask->unk73 = 2;
+            gCurTask->variant = 2;
             break;
         case 2:
             gCurTask->unk46 = gUnk_0873D7E4[gCurTask->player->ability][1];
@@ -641,10 +641,10 @@ void PlayerActionFloat(void)
                 if ((gLatchedHeldKeys[gCurTask->player->playerIndex] & 64) && !(gCurTask->waterFlags & 1))
                 {
                     gCurTask->player->bodyBox = (u32)gUnk_0873BD14;
-                    gCurTask->unk73 = 0;
+                    gCurTask->variant = 0;
                     break;
                 }
-                gCurTask->unk73 = 6;
+                gCurTask->variant = 6;
             }
             TaskSleepForever();
         case 5:

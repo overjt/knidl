@@ -644,7 +644,7 @@ void sub_08033414(void)
         else
         {
             gCurTask->player->requestedAction = 58;
-            gCurTask->unk73 = 3;
+            gCurTask->variant = 3;
         }
         gCurTask->player->unk22 = 0;
         gCurTask->player->unk1E = gCurTask->player->unk20 = 0;
@@ -673,7 +673,7 @@ void sub_08033414(void)
         if (gCurTask->unk76 & 2)
         {
             gCurTask->player->unk40 |= 2;
-            gCurTask->unk73 = 1;
+            gCurTask->variant = 1;
             gCurTask->player->requestedAction = 8;
             gCurTask->unk76 &= 0xFFFD;
         }

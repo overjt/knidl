@@ -245,7 +245,7 @@ void sub_0809bc1c(void)
     if (gUnk_02007D00[0] < 0 && gUnk_02007D00[1] < 0 && gUnk_02007D00[2] < 0
         && gUnk_02007D00[3] < 0)
     {
-        sub_080262e8(gCurTask->unk73);
+        sub_080262e8(gCurTask->variant);
         HudRemoveHpBar();
         ActorDestroy();
     }

@@ -304,7 +304,7 @@ void sub_080bde78(u32 a)
         struct Task *t = &gTasks[i];
 
         t->parent = gCurTaskIdx;
-        t->unk73 = 1;
+        t->variant = 1;
         t->unk18 = a;
     }
 }
@@ -317,7 +317,7 @@ void sub_080bdebc(s32 a, s32 b, u16 c, s32 d)
         struct Task *t = &gTasks[i];
 
         t->parent = gCurTaskIdx;
-        t->unk73 = 2;
+        t->variant = 2;
         t->unk18 = (s16)c;
         t->unk1C = d;
         t->posX = a + (gCurTask->facing << 19);
@@ -335,7 +335,7 @@ void sub_080bdf3c(s32 a, s32 b, u32 c, u32 d)
         struct Task *t = &gTasks[i];
 
         t->parent = gCurTaskIdx;
-        t->unk73 = 3;
+        t->variant = 3;
         t->unk74 = c;
         t->facing = d;
         t->posX = a;
@@ -353,7 +353,7 @@ void sub_080bdf9c(u32 a)
         struct Task *t = &gTasks[i];
 
         t->parent = gCurTaskIdx;
-        t->unk73 = 3;
+        t->variant = 3;
         t->unk74 = a;
         t->facing = gCurTask->facing;
         t->posX = gCurTask->posX;
@@ -372,7 +372,7 @@ void sub_080be010(void)
         struct Task *t = &gTasks[i];
 
         t->parent = gCurTaskIdx;
-        t->unk73 = 4;
+        t->variant = 4;
     }
 }
 
@@ -414,7 +414,7 @@ void sub_080be04c(void)
             struct Task *t = &gTasks[k];
 
             t->parent = gCurTaskIdx;
-            t->unk73 = 0;
+            t->variant = 0;
             t->unk18 = i;
             t->unk1C = j;
         }
@@ -595,7 +595,7 @@ void sub_080be4a4(void)
         if (k != -1) {
             t = &gTasks[k];
             t->parent = gCurTaskIdx;
-            t->unk73 = 5;
+            t->variant = 5;
             t->unk18 = 0;
             t->unk1C = 0;
             t->unk20 = 0;
@@ -606,7 +606,7 @@ void sub_080be4a4(void)
             if (k != -1) {
                 t = &gTasks[k];
                 t->parent = gCurTaskIdx;
-                t->unk73 = 5;
+                t->variant = 5;
                 t->unk18 = i;
                 t->unk1C = 0;
                 t->unk20 = gUnk_02006A10[i];
@@ -626,7 +626,7 @@ void sub_080be550(void)
         if (k != -1) {
             t = &gTasks[k];
             t->parent = gCurTaskIdx;
-            t->unk73 = 5;
+            t->variant = 5;
             t->unk18 = 0;
             t->unk1C = 2;
             t->unk20 = 0;
@@ -637,7 +637,7 @@ void sub_080be550(void)
             if (k != -1) {
                 t = &gTasks[k];
                 t->parent = gCurTaskIdx;
-                t->unk73 = 5;
+                t->variant = 5;
                 t->unk18 = i;
                 t->unk1C = 2;
                 t->unk20 = gUnk_02006A10[i];
@@ -658,7 +658,7 @@ void sub_080be5fc(void)
             if (k != -1) {
                 t = &gTasks[k];
                 t->parent = gCurTaskIdx;
-                t->unk73 = 5;
+                t->variant = 5;
                 t->unk18 = 0;
                 t->unk1C = 1;
                 t->unk20 = 0;
@@ -669,7 +669,7 @@ void sub_080be5fc(void)
                 if (k != -1) {
                     t = &gTasks[k];
                     t->parent = gCurTaskIdx;
-                    t->unk73 = 5;
+                    t->variant = 5;
                     t->unk18 = i;
                     t->unk1C = 1;
                     t->unk20 = gUnk_02006A10[i];
@@ -691,7 +691,7 @@ void sub_080be6b4(u32 a)
             if (k != -1) {
                 t = &gTasks[k];
                 t->parent = gCurTaskIdx;
-                t->unk73 = 6;
+                t->variant = 6;
                 t->unk74 = 0;
                 t->unk18 = i;
                 t->unk1C = a;
@@ -712,7 +712,7 @@ void sub_080be714(u32 a)
             if (k != -1) {
                 t = &gTasks[k];
                 t->parent = gCurTaskIdx;
-                t->unk73 = 6;
+                t->variant = 6;
                 t->unk74 = 1;
                 t->unk18 = i;
                 t->unk1C = a;
@@ -750,7 +750,7 @@ void sub_080be7c0(u32 a)
 
 void Task_BombRallyObject(void)
 {
-    CallTableEntry(gCurTask->unk73, 7, gUnk_08756688);
+    CallTableEntry(gCurTask->variant, 7, gUnk_08756688);
 }
 
 void sub_080be7fc(void)

@@ -1319,7 +1319,7 @@ void sub_0803e68c(s32 a0)
     }
     else if (p->mode == 14)
     {
-        t->unk73 = 4;
+        t->variant = 4;
         v = 9;
     }
     else if (p->mode == 10)
@@ -2851,7 +2851,7 @@ s32 sub_08040514(void)
      || gCurTask->player->mode == 23 || gCurTask->player->requestedAction == 19
      || gCurTask->hitKind == 1 || gCurTask->hitKind == 2
      || (gCurTask->player->mode == 13
-         && (gCurTask->player->ability != 24 || gCurTask->unk73 <= 6)))
+         && (gCurTask->player->ability != 24 || gCurTask->variant <= 6)))
         return 0;
     for (i = 0; i < gPlayerCount; i++)
     {
@@ -2887,7 +2887,7 @@ s32 sub_08040514(void)
         {
             if (q->ability != 24)
                 return 0;
-            if (u->unk73 <= 6)
+            if (u->variant <= 6)
                 continue;
         }
         gCurTask->player->requestedAction = 19;

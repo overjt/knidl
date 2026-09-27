@@ -6,7 +6,7 @@
  *
  * Player action bodies, part 24: actions 30 and 31 and per-frame handler
  * 27 (handler 28, the pair of action 31, is PR #133's src/sub_0804e3a0.c).
- * PlayerActionBackdrop (action 30, mode 10) is a three-state `switch (Task.unk73)`
+ * PlayerActionBackdrop (action 30, mode 10) is a three-state `switch (Task.variant)`
  * whose states fall into each other: state 0 winds up (animation 0xE79,
  * camera preset PlayerSetMotionXPreset(11, 5)), state 1 plays sound 200 and effect 6
  * and loops animations 0xE7C/0xE85 four times, and state 2 either swings
@@ -94,7 +94,7 @@ void PlayerActionBackdrop(void)
     if (gCurTask->player->prevMode != 10)
     {
         gCurTask->unk28 = 0;
-        gCurTask->unk73 = 0;
+        gCurTask->variant = 0;
         gCurTask->player->unk16 = 0;
         {
             struct PlayerState *p = gCurTask->player;
@@ -104,7 +104,7 @@ void PlayerActionBackdrop(void)
             p->attachedCount = 0;
         }
     }
-    switch (gCurTask->unk73)
+    switch (gCurTask->variant)
     {
     case 0:
         PlayerStopAxes(2);
@@ -115,7 +115,7 @@ void PlayerActionBackdrop(void)
         TaskYieldTrampoline(4);
         PlayerStopAxes(1);
         TaskYieldTrampoline(2);
-        gCurTask->unk73 = 1;
+        gCurTask->variant = 1;
     case 1:
         PlaySfxIfLocalPlayer(200, gCurTask->player->playerIndex);
         CreatePlayerEffect(gCurTask->player->playerIndex, 6, 260);
@@ -127,7 +127,7 @@ void PlayerActionBackdrop(void)
             TaskSetFrame(0xE85);
             TaskYieldTrampoline(2);
         }
-        gCurTask->unk73 = 2;
+        gCurTask->variant = 2;
     case 2:
         if ((s8)gCurTask->player->attachedCount == 0)
         {
@@ -194,14 +194,14 @@ void PlayerActionBackdropUpdate(void)
     struct PlayerState *p;
 
     t = gCurTask;
-    switch (t->unk73)
+    switch (t->variant)
     {
     case 0:
         break;
     case 1:
         if ((s8)t->player->attachedCount != 0)
         {
-            t->unk73 = 2;
+            t->variant = 2;
             TaskSetEntry(PlayerActionBackdrop, gCurTaskIdx);
         }
         else if (t->player->unk09 == 0)
@@ -280,10 +280,10 @@ void PlayerActionThrow(void)
     if (t->player->prevMode != 10)
     {
         t->unk30 = 0;
-        t->unk73 = 0;
+        t->variant = 0;
     }
     u = gCurTask;
-    switch (u->unk73)
+    switch (u->variant)
     {
     case 0:
         u->unk28 = 1;
@@ -308,7 +308,7 @@ void PlayerActionThrow(void)
             gUnk_02007E90[gCurTask->player->playerIndex][gUnk_03001F2C].unk0D = 0;
             gUnk_03001F2C++;
         } while (gUnk_03001F2C <= 2);
-        gCurTask->unk73 = 1;
+        gCurTask->variant = 1;
         TaskSetFrame(0xF6E);
         TaskYieldTrampoline(2);
         gCurTask->frame++;
@@ -317,7 +317,7 @@ void PlayerActionThrow(void)
         gCurTask->player->unk40 |= 4;
         gCurTask->frame++;
         TaskYieldTrampoline(2);
-        gCurTask->unk73 = 1;
+        gCurTask->variant = 1;
     case 1:
         while (1)
         {
@@ -337,7 +337,7 @@ void PlayerActionThrow(void)
             }
         }
     hit:
-        gCurTask->unk73 = 2;
+        gCurTask->variant = 2;
     case 2:
         gCurTask->player->unk40 &= 0xFFFB;
         PlayerStopSfx();
@@ -354,7 +354,7 @@ void PlayerActionThrow(void)
             TaskSetFrame(0xF73);
             TaskYieldTrampoline(1);
         }
-        gCurTask->unk73 = 3;
+        gCurTask->variant = 3;
     }
     TaskSleepForever();
 }

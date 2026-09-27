@@ -90,8 +90,8 @@ void sub_080a028c(void)
     a = gCurTask->unk8C;
     sp.subtype = 11;
     sp.taskType = 113;
-    sp.unk08 = 0;
-    sp.unk09 = 0;
+    sp.variant = 0;
+    sp.spawnArg = 0;
     sp.x = 32;
     sp.y = 16;
     sp.tileWord = a->savedTileWord;

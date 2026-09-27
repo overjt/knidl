@@ -838,8 +838,8 @@ void sub_08098450(void)
     sp.taskType = 138;
     p = &sp;
     t = gCurTask;
-    p->unk08 = t->unk73;
-    p->unk09 = t->unk74;
+    p->variant = t->variant;
+    p->spawnArg = t->unk74;
     p->tileWord = t->unk8C->savedTileWord;
     p->x = 12;
     p->y = 8;

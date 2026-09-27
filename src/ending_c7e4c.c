@@ -309,7 +309,7 @@ void sub_080c8468(void)
 
     id = TaskCreateFrom(100, 32);
     t = &gTasks[id];
-    t->unk73 = 5;
+    t->variant = 5;
     t->parent = gCurTaskIdx;
 }
 
@@ -493,7 +493,7 @@ void sub_080c8924(void)
     for (i = 0; i <= 8; i++) {
         id = TaskCreateFrom(100, 32);
         t = &gTasks[id];
-        t->unk73 = 8;
+        t->variant = 8;
         t->unk74 = i;
     }
 }

@@ -286,7 +286,7 @@ void PlayerActionGetAbility(void)
             gCurTask->unk2C = 1;
             TaskSetFrame(0x36A);
             TaskYieldTrampoline(2);
-            gCurTask->unk73 = 1;
+            gCurTask->variant = 1;
             CreatePlayerEffect(gCurTask->player->playerIndex, 30, 0);
             CreatePlayerEffect(gCurTask->player->playerIndex, 30, 1);
             CreatePlayerEffect(gCurTask->player->playerIndex, 30, 2);
@@ -299,7 +299,7 @@ void PlayerActionGetAbility(void)
                     TaskYieldTrampoline(2);
                 } while ((s16)++gCurTask->unk6C <= 6);
             }
-            gCurTask->unk73 = 0xFF;
+            gCurTask->variant = 0xFF;
             PlayerStopSfx();
             TaskSetFrame(0x36A);
             TaskYieldTrampoline(2);

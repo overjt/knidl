@@ -6,18 +6,18 @@
  *
  * Player action bodies, part 25: action 49, its re-entry callback and
  * per-frame handler 46.  Action 49 is a move set one level down: its enter
- * body PlayerActionBall (mode 13, Task.unk80 = 18) clears Task.unk73/unk74/
- * unk24 and PlayerState.bumpKind and dispatches Task.unk73 through its own
+ * body PlayerActionBall (mode 13, Task.unk80 = 18) clears Task.variant/unk74/
+ * unk24 and PlayerState.bumpKind and dispatches Task.variant through its own
  * table of nine sub-actions gUnk_0873B664; sub_0804e600, the callback the
  * sub-handlers re-bind, does the same after clearing PlayerState.running.
  * Its handler PlayerActionBallUpdate plays the animation gUnk_0873DB0A[Task.unk46]
  * mirrored by Task.unk6E, registers the body collider (gUnk_0873C28C, and
  * the block hit-box set gUnk_0873CF7C while moving) when the vertical
  * speed exceeds 2 pixels a frame, requests action 23 through M11's
- * PlayerHasCrossedWaterSurface and otherwise runs the sub-handler Task.unk73 of
+ * PlayerHasCrossedWaterSurface and otherwise runs the sub-handler Task.variant of
  * gUnk_0873B688. */
 
-extern void (*gUnk_0873B664[])(void);   /* enter 49's sub-actions [9], indexed by Task.unk73 */
+extern void (*gUnk_0873B664[])(void);   /* enter 49's sub-actions [9], indexed by Task.variant */
 extern void (*gUnk_0873B688[])(void);   /* handler 46's per-frame sub-handlers [9] */
 extern u16 gUnk_0873DB0A[];
 extern u32 gUnk_0873CF7C[];
@@ -39,9 +39,9 @@ void PlayerActionBall(void)
     gCurTask->unk74 = 0;
     gCurTask->player->bumpKind = 0;
     gCurTask->unk24 = 0;
-    gCurTask->unk73 = 0;
+    gCurTask->variant = 0;
     gCurTask->unk80 = 18;
-    CallTableEntry(gCurTask->unk73, 9, gUnk_0873B664);
+    CallTableEntry(gCurTask->variant, 9, gUnk_0873B664);
 }
 
 void sub_0804e600(void)
@@ -49,7 +49,7 @@ void sub_0804e600(void)
     gCurTask->player->running = 0;
     gCurTask->player->prevMode = gCurTask->player->mode;
     gCurTask->player->mode = 13;
-    CallTableEntry(gCurTask->unk73, 9, gUnk_0873B664);
+    CallTableEntry(gCurTask->variant, 9, gUnk_0873B664);
 }
 
 void PlayerActionBallUpdate(void)
@@ -85,5 +85,5 @@ void PlayerActionBallUpdate(void)
     if (PlayerHasCrossedWaterSurface(0) != 0)
         gCurTask->player->requestedAction = 23;
     else
-        CallTableEntry(gCurTask->unk73, 9, gUnk_0873B688);
+        CallTableEntry(gCurTask->variant, 9, gUnk_0873B688);
 }

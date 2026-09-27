@@ -331,8 +331,8 @@ s32 sub_08099e9c(void)
     a = t->unk8C;
     sp.subtype = 16;
     sp.taskType = 118;
-    sp.unk08 = 0;
-    sp.unk09 = t->facing;
+    sp.variant = 0;
+    sp.spawnArg = t->facing;
     sp.x = 0;
     sp.y = 0;
     sp.tileWord = a->savedTileWord;
@@ -368,8 +368,8 @@ void sub_08099ee4(u8 a)
     gCurTask->unk6C = (s8)gUnk_087456CC[(s16)gCurTask->unk70];
     sp.subtype = 17;
     sp.taskType = 119;
-    sp.unk08 = zero;
-    sp.unk09 = a;
+    sp.variant = zero;
+    sp.spawnArg = a;
     sp.x = gCurTask->unk6C;
     sp.y = 0xFFF0;
     sp.tileWord = act->savedTileWord;
@@ -486,7 +486,7 @@ void Task_MrTickTock(void)
     u->unk46 = zero;
     sub_080666cc(gUnk_08745744);
     sub_08066ae0();
-    CallTableEntry(gCurTask->unk73, 1, gMrTickTockVariants);
+    CallTableEntry(gCurTask->variant, 1, gMrTickTockVariants);
 }
 
 void sub_0809a118(void)
@@ -1759,7 +1759,7 @@ void sub_0809b528(void)
     u->unk70 = u->tileWord;
     u->frameTable = gUnk_0874CB7C;
     u->tileWord = zero;
-    CallTableEntry(u->unk73, 1, gUnk_08745AE4);
+    CallTableEntry(u->variant, 1, gUnk_08745AE4);
 }
 
 void sub_0809b57c(void)
@@ -1925,7 +1925,7 @@ void sub_0809b7f0(void)
     t->layer = 9;
     u = gCurTask;
     u->frameTable = gUnk_087531C4;
-    CallTableEntry(u->unk73, 1, gUnk_08745B00);
+    CallTableEntry(u->variant, 1, gUnk_08745B00);
 }
 
 void sub_0809b830(void)
@@ -2030,5 +2030,5 @@ void sub_0809ba00(void)
     u = gCurTask;
     u->frameTable = gUnk_087531DC;
     u->facing = 1;
-    CallTableEntry(gCurTask->unk73, 1, gUnk_08745B1C);
+    CallTableEntry(gCurTask->variant, 1, gUnk_08745B1C);
 }

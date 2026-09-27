@@ -183,7 +183,7 @@ void CreateAirGrindRacers(void)
             t = &gTasks[id];
             t->unk18 = id;
             t->unk1C = i;
-            t->unk73 = 0;
+            t->variant = 0;
         }
     }
 }
@@ -196,7 +196,7 @@ void sub_080c2038(s32 unused)
     id = TaskCreateFrom(96, 32);
     if (id != -1) {
         t = &gTasks[id];
-        t->unk73 = 1;
+        t->variant = 1;
         gAirGrindPtr->unk44C = id;
     }
 }
@@ -211,7 +211,7 @@ void sub_080c2078(s32 a, s32 b, s32 c)
         t = &gTasks[id];
         t->unk18 = b;
         t->unk1C = a;
-        t->unk73 = 2;
+        t->variant = 2;
         t->unk20 = c;
     }
 }

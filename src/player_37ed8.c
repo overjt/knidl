@@ -6,7 +6,7 @@
  *
  * Player action body, part 6: action 16 and per-frame handler 16.
  * PlayerActionHurt (action 16, mode 17, 4368 bytes) is the twin of M11's
- * sub_08042580: a goto loop around a seven-state switch over Task.unk73.
+ * sub_08042580: a goto loop around a seven-state switch over Task.variant.
  * State 5, the entry, picks the next state from Task.unk82 (its low
  * nibble, or 4 when bit 7 is set) and, for a player holding an ability
  * (PlayerState.ability) with bit 1 of PlayerState.unk42 clear, releases it
@@ -55,19 +55,19 @@ void PlayerActionHurt(void)
     if (p->prevMode != 17)
     {
         p->unk42 &= 0xFEEF;
-        t->unk73 = 5;
+        t->variant = 5;
         if (gCurTask->player->mouthState == 2)
             gCurTask->player->mouthState = 0;
     }
 loop:
-    switch (gCurTask->unk73)
+    switch (gCurTask->variant)
     {
     case 5:
         gCurTask->unk28 = 0;
         gCurTask->player->running = 0;
         if (gCurTask->player->unk37 == 2 || gCurTask->player->unk37 == 3)
         {
-            gCurTask->unk73 = gCurTask->unk82 & 15;
+            gCurTask->variant = gCurTask->unk82 & 15;
         }
         else
         {
@@ -78,9 +78,9 @@ loop:
             }
             u = gCurTask;
             if (u->unk82 & 128)
-                u->unk73 = 4;
+                u->variant = 4;
             else
-                u->unk73 = u->unk82 & 15;
+                u->variant = u->unk82 & 15;
             if (!(gCurTask->player->unk42 & 2) && gCurTask->player->unk37 == 0)
             {
                 if (gCurTask->player->ability != 0)
@@ -225,13 +225,13 @@ loop:
             }
         }
         PlayerStopAxes(1);
-        gCurTask->unk73 = 6;
+        gCurTask->variant = 6;
         goto loop;
     case 1:
     case 2:
         if (gCurTask->unk28 == 0)
         {
-            if (gCurTask->unk73 == 1)
+            if (gCurTask->variant == 1)
             {
                 if (gCurTask->player->mouthState == 0)
                     PlaySfxIfLocalPlayer(0x125, gCurTask->player->playerIndex);
@@ -262,7 +262,7 @@ loop:
             {
             case 0:
                 gCurTask->unk28 = 1;
-                if (gCurTask->unk73 == 1)
+                if (gCurTask->variant == 1)
                 {
                     CreatePlayerEffect(gCurTask->player->playerIndex, 22, 0);
                     while (1)
@@ -289,7 +289,7 @@ loop:
                     TaskYieldTrampoline(2);
                 }
             case 1:
-                if (gCurTask->unk73 == 1)
+                if (gCurTask->variant == 1)
                     CreatePlayerEffect(gCurTask->player->playerIndex, 22, 1);
                 else
                     CreatePlayerEffect(gCurTask->player->playerIndex, 23, 1);
@@ -335,7 +335,7 @@ loop:
             {
             case 0:
                 gCurTask->unk28++;
-                if (gCurTask->unk73 == 1)
+                if (gCurTask->variant == 1)
                 {
                     CreatePlayerEffect(gCurTask->player->playerIndex, 22, 0);
                     while (1)
@@ -362,7 +362,7 @@ loop:
                     TaskYieldTrampoline(2);
                 }
             case 1:
-                if (gCurTask->unk73 == 1)
+                if (gCurTask->variant == 1)
                     CreatePlayerEffect(gCurTask->player->playerIndex, 22, 1);
                 else
                     CreatePlayerEffect(gCurTask->player->playerIndex, 23, 1);
@@ -653,7 +653,7 @@ loop:
             gCurTask->frame--;
             TaskYieldTrampoline(4);
         }
-        gCurTask->unk73 = 6;
+        gCurTask->variant = 6;
         goto loop;
     case 6:
         if (gCurTask->waterFlags & 1)
@@ -669,12 +669,12 @@ void PlayerActionHurtUpdate(void)
 {
     struct Task *t;
 
-    switch (gCurTask->unk73)
+    switch (gCurTask->variant)
     {
     case 0:
         if (PlayerHasCrossedWaterSurface(0) != 0)
         {
-            gCurTask->unk73 = 6;
+            gCurTask->variant = 6;
             TaskSetEntry(PlayerActionHurt, gCurTaskIdx);
         }
         break;
@@ -689,11 +689,11 @@ void PlayerActionHurtUpdate(void)
             t = gCurTask;
             if (--t->player->unk14 != 0)
                 break;
-            t->unk73 = 6;
+            t->variant = 6;
             TaskSetEntry(PlayerActionHurt, gCurTaskIdx);
             break;
         }
-        gCurTask->unk73 = 6;
+        gCurTask->variant = 6;
         TaskSetEntry(PlayerActionHurt, gCurTaskIdx);
         break;
     case 3:
@@ -723,13 +723,13 @@ void PlayerActionHurtUpdate(void)
             {
                 if (t->unk28 <= 2)
                     goto s2;
-                t->unk73 = 6;
+                t->variant = 6;
                 TaskSetEntry(PlayerActionHurt, gCurTaskIdx);
                 break;
             }
             if (t->unk28 <= 3)
                 goto s3;
-            t->unk73 = 6;
+            t->variant = 6;
             TaskSetEntry(PlayerActionHurt, gCurTaskIdx);
             break;
         }
@@ -741,13 +741,13 @@ void PlayerActionHurtUpdate(void)
         do
         {
         } while (0);
-        gCurTask->unk73 = 6;
+        gCurTask->variant = 6;
         TaskSetEntry(PlayerActionHurt, gCurTaskIdx);
         break;
     case 4:
         if (PlayerHasCrossedWaterSurface(0) != 0)
         {
-            gCurTask->unk73 = 6;
+            gCurTask->variant = 6;
             TaskSetEntry(PlayerActionHurt, gCurTaskIdx);
         }
         PlayerSetMotionXPreset(7, 72);

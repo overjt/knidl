@@ -98,7 +98,7 @@ struct Task {
     /* 0x6E */ u16 h6E;
     /* 0x70 */ u16 h70;
     /* 0x72 */ u8  actorKind;
-    /* 0x73 */ u8  b73;
+    /* 0x73 */ u8  variant;
     /* 0x74 */ u8  b74;
     /* 0x75 */ u8  hitTimer;
     /* 0x76 */ u16 h76;
@@ -217,7 +217,7 @@ void InitTasks(void)
         p->player = p->w8C = 0;
         p->h76 = 0;
         p->b74 = 0;
-        p->b73 = 0;
+        p->variant = 0;
         p->actorKind = 0;
         p->hitTimer = 0;
         p->health = 0;

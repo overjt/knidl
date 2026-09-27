@@ -205,7 +205,7 @@ void sub_080bb718(u16 a0, u16 a1, u16 a2)
     {
         struct Task *t = &gTasks[i];
 
-        t->unk73 = 7;
+        t->variant = 7;
         t->frame = a0;
         t->pixelX = a1;
         t->pixelY = a2;
@@ -237,7 +237,7 @@ void sub_080bb7cc(u8 a0, s16 a1, s16 a2, s8 a3)
     {
         struct Task *t = &gTasks[i];
 
-        t->unk73 = 8;
+        t->variant = 8;
         t->unk18 = a0;
         t->pixelX = a1;
         t->pixelY = a2;
@@ -255,7 +255,7 @@ void sub_080bb820(u8 a0, s16 a1, s16 a2, s8 a3)
 
         t->pixelX = a1;
         t->pixelY = a2;
-        t->unk73 = 9;
+        t->variant = 9;
         t->unk18 = a0;
         t->unk1C = a3;
         t->frame = a0;
@@ -482,7 +482,7 @@ void sub_080bbc70(void)
     {
         struct Task *t = &gTasks[id];
 
-        t->unk73 = 1;
+        t->variant = 1;
         t->unk18 = gUnk_0200B048;
         t->unk1C = 4;
         t->unk20 = -1;
@@ -506,7 +506,7 @@ void sub_080bbcdc(void)
         s32 v;
         s32 n;
 
-        t->unk73 = 1;
+        t->variant = 1;
         t->unk1C = 5;
         t->unk20 = -1;
         t->pixelX = 172;
@@ -537,7 +537,7 @@ void sub_080bbd4c(void)
 
         t->parent = gCurTaskIdx;
         t->unk18 = id;
-        t->unk73 = 0;
+        t->variant = 0;
         t->unk74 = 2;
         t->unk28 = 0;
     }

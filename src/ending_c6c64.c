@@ -6,7 +6,7 @@
  *
  * The first ending scene, part 1: task type #100 (class 3), which M37's
  * sub_080c62f0 spawns in AgbMain state 11 and waits on (gEndingSceneActive).
- *   sub_080c6c64   the body: variant 0 (Task.unk73 == 0) loads the graphics
+ *   sub_080c6c64   the body: variant 0 (Task.variant == 0) loads the graphics
  *       (sub_080c6ca0) and spawns variants 1, 6, 7, 9 and 10 from the list
  *       gUnk_0875735C (sub_080c6d38); variants 1-10 run gUnk_08757330[unk73].
  *   sub_080c6d84 / sub_080c769c   variant 1, the scene's main sprite, and its
@@ -66,11 +66,11 @@ void sub_080c6c64(void)
 {
     gCurTask->moveCallback = 0;
     gCurTask->drawCallback = 0;
-    if (gCurTask->unk73 == 0) {
+    if (gCurTask->variant == 0) {
         sub_080c6ca0();
         sub_080c6d38();
     } else {
-        CallTableEntry(gCurTask->unk73, 11, gUnk_08757330);
+        CallTableEntry(gCurTask->variant, 11, gUnk_08757330);
     }
     TaskExitTrampoline();
 }
@@ -108,7 +108,7 @@ void sub_080c6d38(void)
             for (;;)
                 ;
         t = &gTasks[id];
-        t->unk73 = v;
+        t->variant = v;
     }
 }
 
@@ -124,7 +124,7 @@ void sub_080c6d84(void)
     gCurTask->frameTable = gUnk_08755708;
     gCurTask->tileWord = 0x8810;
     gCurTask->unk46 = TaskCreateFrom(100, 32);
-    gTasks[gCurTask->unk46].unk73 = 4;
+    gTasks[gCurTask->unk46].variant = 4;
     gTasks[gCurTask->unk46].parent = gCurTaskIdx;
     sub_080c77cc();
     gCurTask->unk34 = 0;
@@ -513,7 +513,7 @@ void sub_080c77cc(void)
     for (i = 0; i <= 3; i++) {
         id = TaskCreateFrom(100, 32);
         t = &gTasks[id];
-        t->unk73 = 2;
+        t->variant = 2;
         t->unk74 = i;
         t->parent = gCurTaskIdx;
     }
@@ -648,22 +648,22 @@ void sub_080c7810(void)
             break;
         case 3:
             gCurTask->unk46 = TaskCreateFrom(100, 32);
-            gTasks[gCurTask->unk46].unk73 = 3;
+            gTasks[gCurTask->unk46].variant = 3;
             gTasks[gCurTask->unk46].unk74 = 2;
             gTasks[gCurTask->unk46].parent = gCurTaskIdx;
             TaskYieldTrampoline(16);
             gCurTask->unk46 = TaskCreateFrom(100, 32);
-            gTasks[gCurTask->unk46].unk73 = 3;
+            gTasks[gCurTask->unk46].variant = 3;
             gTasks[gCurTask->unk46].unk74 = 1;
             gTasks[gCurTask->unk46].parent = gCurTaskIdx;
             TaskYieldTrampoline(16);
             gCurTask->unk46 = TaskCreateFrom(100, 32);
-            gTasks[gCurTask->unk46].unk73 = 3;
+            gTasks[gCurTask->unk46].variant = 3;
             gTasks[gCurTask->unk46].unk74 = 0;
             gTasks[gCurTask->unk46].parent = gCurTaskIdx;
             TaskYieldTrampoline(8);
             gCurTask->unk46 = TaskCreateFrom(100, 32);
-            gTasks[gCurTask->unk46].unk73 = 3;
+            gTasks[gCurTask->unk46].variant = 3;
             gTasks[gCurTask->unk46].unk74 = 0;
             gTasks[gCurTask->unk46].parent = gCurTaskIdx;
             TaskYieldTrampoline(8);

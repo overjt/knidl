@@ -410,19 +410,19 @@ void sub_080865c0(void)
     if (k == 0)
     {
         TaskYieldTrampoline(16);
-        gCurTask->unk73 = k;
+        gCurTask->variant = k;
     }
     else
     {
         TaskYieldTrampoline(11);
-        gCurTask->unk73 = 1;
+        gCurTask->variant = 1;
     }
     TaskSleepForever();
 }
 
 void sub_080867b8(void)
 {
-    if (gCurTask->unk73 != 2)
+    if (gCurTask->variant != 2)
     {
         TaskSetEntry(sub_080860d8, gCurTaskIdx);
         return;
@@ -828,12 +828,12 @@ void Task_Twizzy(void)
     gCurTask->layer = 11;
     gCurTask->frameTable = gTwizzyFrames;
     TaskFaceNearestPlayer();
-    CallTableEntry(gCurTask->unk73, 10, gTwizzyVariants);
+    CallTableEntry(gCurTask->variant, 10, gTwizzyVariants);
 }
 
 void sub_080870a4(void)
 {
-    CallTableEntry(gCurTask->unk73, 10, gTwizzyVariants);
+    CallTableEntry(gCurTask->variant, 10, gTwizzyVariants);
 }
 
 void sub_080870c4(void)
@@ -1104,19 +1104,19 @@ void sub_0808752c(void)
     if (k == 0)
     {
         TaskYieldTrampoline(16);
-        gCurTask->unk73 = k;
+        gCurTask->variant = k;
     }
     else
     {
         TaskYieldTrampoline(11);
-        gCurTask->unk73 = 1;
+        gCurTask->variant = 1;
     }
     TaskSleepForever();
 }
 
 void sub_08087724(void)
 {
-    if (gCurTask->unk73 != 2)
+    if (gCurTask->variant != 2)
     {
         TaskSetEntry(sub_080870a4, gCurTaskIdx);
         return;

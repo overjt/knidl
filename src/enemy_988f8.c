@@ -8,7 +8,7 @@
  * (Task.moveCallback) and sub_08065438 as the per-frame hook (Task.drawCallback), points
  * Task.frameTable at the graphics block gMrFrostyFrames, counts the enemy into
  * gUnk_02007D00[0], loads the animation script gUnk_08745624 and hands
- * Task.unk73 to CallTableEntry with the one-word table gMrFrostyVariants, whose only
+ * Task.variant to CallTableEntry with the one-word table gMrFrostyVariants, whose only
  * entry is sub_08098ed4.
  *
  * sub_08098ed4 installs sub_08098f38 as the per-frame body and dispatches
@@ -327,8 +327,8 @@ void sub_08098d58(void)
     a = t->unk8C;
     sp.subtype = 13;
     sp.taskType = 115;
-    sp.unk08 = 0;
-    sp.unk09 = t->facing;
+    sp.variant = 0;
+    sp.spawnArg = t->facing;
     sp.x = 0;
     sp.y = 0;
     sp.tileWord = a->savedTileWord;
@@ -395,7 +395,7 @@ void Task_MrFrosty(void)
     u->unk18 = 1;
     u->unk46 = zero;
     sub_08066ae0();
-    CallTableEntry(gCurTask->unk73, 1, gMrFrostyVariants);
+    CallTableEntry(gCurTask->variant, 1, gMrFrostyVariants);
 }
 
 void sub_08098ed4(void)

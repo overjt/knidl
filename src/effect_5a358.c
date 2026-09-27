@@ -21,7 +21,7 @@
  * sub_08065ed0), and the draw hook sub_0805ac50.  Variant 47 (sub_0805acec,
  * M13) is an animation in world space; its callback sub_0805ae00 clears
  * Task.unk28 in sub-state 0 when the player leaves mode 13 or the spawner's
- * Task.unk73 is not 4 (and copies the spawner's facing), and in the other
+ * Task.variant is not 4 (and copies the spawner's facing), and in the other
  * sub-states tests the block hit-box set gUnk_0873CF8C (TaskBreakBlocksAt) at the
  * spawner's position offset by PlayerState.pixelOffsetX/unk26 (8.8).  Variant 48
  * (sub_0805ae94, M14's action 55) rides on its spawner with the draw hook
@@ -531,7 +531,7 @@ void sub_0805ae00(void)
 
     if (s == 0)
     {
-        if (t->unk28 != 0 && (t->player->mode != 13 || ((struct Task *)t->unk8C)->unk73 != 4))
+        if (t->unk28 != 0 && (t->player->mode != 13 || ((struct Task *)t->unk8C)->variant != 4))
             t->unk28 = 0;
         gCurTask->facing = ((struct Task *)gCurTask->unk8C)->facing;
     }

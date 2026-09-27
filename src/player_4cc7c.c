@@ -6,7 +6,7 @@
  *
  * Player action bodies, part 23: action 55 and per-frame handler 52.
  * PlayerActionUFO (action 55, mode 13) is an eleven-state `switch
- * (Task.unk73)` (jump table at 0x0804CCE4) over one stance: states 7-10
+ * (Task.variant)` (jump table at 0x0804CCE4) over one stance: states 7-10
  * turn between the stance's four postures, each through a nested `switch
  * (Task.unk24)` on the posture it comes from (animations 0xF88-0xF9E);
  * states 2-6 are its attacks (animations 0xFA0-0xFD3, sounds 208-210 and
@@ -57,17 +57,17 @@ void PlayerActionUFO(void)
         t->unk70 = 0;
         t->unk34 = 0;
         t->unk74 = 0;
-        gCurTask->unk73 = 0;
+        gCurTask->variant = 0;
         gCurTask->unk80 = 24;
     }
-    switch (gCurTask->unk73)
+    switch (gCurTask->variant)
     {
     case 0:
         {
             struct Task *u = gCurTask;
 
             u->unk46 = 0;
-            u->unk73 = 7;
+            u->variant = 7;
         }
         gCurTask->unk24 = -1;
     case 7:
@@ -457,7 +457,7 @@ void PlayerActionUFO(void)
 
 void PlayerActionUFOUpdate(void)
 {
-    s32 old = gCurTask->unk73;
+    s32 old = gCurTask->variant;
 
     switch (old)
     {
@@ -505,19 +505,19 @@ void PlayerActionUFOUpdate(void)
             }
             else if (gLatchedHeldKeys[gCurTask->player->playerIndex] & 48)
             {
-                gCurTask->unk73 = 10;
+                gCurTask->variant = 10;
                 gCurTask->unk24 = 7;
                 break;
             }
         }
         if (gLatchedHeldKeys[gCurTask->player->playerIndex] & 64)
         {
-            gCurTask->unk73 = 8;
+            gCurTask->variant = 8;
             gCurTask->unk24 = 7;
         }
         else if (gLatchedHeldKeys[gCurTask->player->playerIndex] & 128)
         {
-            gCurTask->unk73 = 9;
+            gCurTask->variant = 9;
             gCurTask->unk24 = 7;
         }
         break;
@@ -525,7 +525,7 @@ void PlayerActionUFOUpdate(void)
         PlayerSetMotionXPreset(13, 72);
         if (gLatchedHeldKeys[gCurTask->player->playerIndex] & 128)
         {
-            gCurTask->unk73 = 9;
+            gCurTask->variant = 9;
             break;
         }
         goto moving;
@@ -533,7 +533,7 @@ void PlayerActionUFOUpdate(void)
         PlayerSetMotionXPreset(13, 72);
         if (gLatchedHeldKeys[gCurTask->player->playerIndex] & 64)
         {
-            gCurTask->unk73 = 8;
+            gCurTask->variant = 8;
             break;
         }
     moving:
@@ -542,11 +542,11 @@ void PlayerActionUFOUpdate(void)
 
             if ((t->velX | t->accelX | t->velY | t->accelY) == 0)
             {
-                t->unk73 = 7;
+                t->variant = 7;
                 break;
             }
             if (gLatchedHeldKeys[t->player->playerIndex] & 48)
-                t->unk73 = 10;
+                t->variant = 10;
         }
         break;
     case 10:
@@ -560,11 +560,11 @@ void PlayerActionUFOUpdate(void)
             {
                 if (gLatchedHeldKeys[t->player->playerIndex] & 128)
                 {
-                    t->unk73 = 9;
+                    t->variant = 9;
                     break;
                 }
                 if (gLatchedHeldKeys[t->player->playerIndex] & 64)
-                    t->unk73 = 8;
+                    t->variant = 8;
             }
         }
         {
@@ -572,7 +572,7 @@ void PlayerActionUFOUpdate(void)
 
             if ((t->velX | t->accelX | t->velY | t->accelY) == 0)
             {
-                t->unk73 = 7;
+                t->variant = 7;
                 break;
             }
         }
@@ -593,13 +593,13 @@ void PlayerActionUFOUpdate(void)
                     s16 n = t->player->unk14;
 
                     if (n == 0)
-                        t->unk73 = 3;
+                        t->variant = 3;
                     else if (n <= 3)
-                        t->unk73 = 4;
+                        t->variant = 4;
                     else if (n <= 8)
-                        t->unk73 = 5;
+                        t->variant = 5;
                     else
-                        t->unk73 = 6;
+                        t->variant = 6;
                 }
                 else if ((--t->unk30 & 0xFFFF) == 0 && (u32)(t->unk30 & 0xFFFF0000) <= 0xCFFFF)
                 {
@@ -639,11 +639,11 @@ void PlayerActionUFOUpdate(void)
             if (m != 0)
             {
                 if (gLatchedPressedKeys[t->player->playerIndex] & 3)
-                    t->unk73 = 2;
+                    t->variant = 2;
                 else if ((gLatchedHeldKeys[t->player->playerIndex] & 240) || m == 2)
                 {
                     t->unk24 = -1;
-                    t->unk73 = 7;
+                    t->variant = 7;
                 }
             }
         }
@@ -655,26 +655,26 @@ void PlayerActionUFOUpdate(void)
         struct Task *t = gCurTask;
 
         t->unk34 = (t->unk34 + 1) & 7;
-        switch (t->unk73)
+        switch (t->variant)
         {
         case 7:
         case 8:
         case 9:
         case 10:
             if (gLatchedPressedKeys[t->player->playerIndex] & 3)
-                t->unk73 = 2;
+                t->variant = 2;
             else if (PlayerCheckDropAbility() != 0)
-                gCurTask->unk73 = 1;
+                gCurTask->variant = 1;
             break;
         }
     }
     if (gCurTask->unk74 == 0 && PlayerCheckEnterDoor() != 0)
     {
         gCurTask->unk74++;
-        gCurTask->unk73 = 1;
+        gCurTask->variant = 1;
     }
     PlayerStopAtCeilingAndWall();
     PlayerCheckLanding();
-    if (old != gCurTask->unk73)
+    if (old != gCurTask->variant)
         TaskSetEntry(PlayerActionUFO, gCurTaskIdx);
 }

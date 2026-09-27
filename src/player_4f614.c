@@ -131,7 +131,7 @@ s32 sub_0804f7f8(s32 a)
         if ((t->onGround & 1) && !(gLatchedHeldKeys[t->player->playerIndex] & 0x80)
             && (gLatchedPressedKeys[t->player->playerIndex] & 1))
         {
-            t->unk73 = 4;
+            t->variant = 4;
             r = 4;
         }
         break;
@@ -141,7 +141,7 @@ s32 sub_0804f7f8(s32 a)
         struct Task *t = gCurTask;
         if (!(t->onGround & 1))
         {
-            t->unk73 = 6;
+            t->variant = 6;
             r = 6;
         }
         break;
@@ -149,7 +149,7 @@ s32 sub_0804f7f8(s32 a)
     case 2:
         if (gLatchedPressedKeys[gCurTask->player->playerIndex] & 2)
         {
-            gCurTask->unk73 = 8;
+            gCurTask->variant = 8;
             r = 8;
         }
         break;
@@ -158,7 +158,7 @@ s32 sub_0804f7f8(s32 a)
         {
             gCurTask->player->requestedAction = 0;
             gCurTask->unk74 = 1;
-            gCurTask->unk73 = 8;
+            gCurTask->variant = 8;
             r = 8;
         }
         break;

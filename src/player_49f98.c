@@ -80,20 +80,20 @@ void PlayerActionHiJump(void)
         struct Task *t = gCurTask;
         if (t->player->prevMode != 13) {
             if (t->player->prevMode == 5)
-                t->unk73 = 4;
+                t->variant = 4;
             else
-                t->unk73 = 0;
+                t->variant = 0;
             gCurTask->unk80 = 15;
         }
     }
-    switch (gCurTask->unk73) {
+    switch (gCurTask->variant) {
     case 0:
         CreatePlayerEffect(gCurTask->player->playerIndex, 42, 5);
         PlayerStopAxes(2);
         PlayerStartOffsetScript(5);
         TaskSetFrame(0xB2D);
         TaskYieldTrampoline(4);
-        gCurTask->unk73 = 1;
+        gCurTask->variant = 1;
         gCurTask->player->unk14 = 4;
         /* fallthrough */
     case 1:
@@ -110,7 +110,7 @@ void PlayerActionHiJump(void)
         TaskYieldTrampoline(23);
         PlayerSetMotionYPreset(0);
         TaskYieldTrampoline(10);
-        gCurTask->unk73 = 2;
+        gCurTask->variant = 2;
         /* fallthrough */
     case 2:
         {
@@ -121,7 +121,7 @@ void PlayerActionHiJump(void)
         TaskYieldTrampoline(13);
         PlayerSetMotionYPreset(1);
         TaskYieldTrampoline(5);
-        gCurTask->unk73 = 3;
+        gCurTask->variant = 3;
         /* fallthrough */
     case 3:
         gCurTask->player->unk42 &= 0xFFEF;
@@ -130,7 +130,7 @@ void PlayerActionHiJump(void)
         gCurTask->player->mode = 5;
         gCurTask->updateState = 7;
         gCurTask->player->hitBoxSet = 0;
-        gCurTask->unk73 = 4;
+        gCurTask->variant = 4;
         gCurTask->player->unk14 = 300;
         TaskSetFrame(0xAD2);
         TaskYieldTrampoline(2);
@@ -172,7 +172,7 @@ void PlayerActionHiJumpUpdate(void)
 {
     struct Task *t = gCurTask;
 
-    switch (t->unk73) {
+    switch (t->variant) {
     case 1:
         t->player->unk42 &= 0xFFEF;
         if ((gFrameCount & 7) <= 3) {
@@ -186,7 +186,7 @@ void PlayerActionHiJumpUpdate(void)
             struct PlayerState *p = u->player;
             if ((s16)p->unk14 == 0) {
                 if (gLatchedPressedKeys[p->playerIndex] & 2) {
-                    u->unk73 = 3;
+                    u->variant = 3;
                     TaskSetEntry(PlayerActionHiJump, gCurTaskIdx);
                     SetPlayerInvulnerability(255, 0, gCurTask->player->playerIndex);
                     PlayerStopSfx();
@@ -217,7 +217,7 @@ void PlayerActionHiJumpUpdate(void)
             PlayerStopAxes(1);
         {
             struct Task *u = gCurTask;
-            if ((u8)(u->unk73 - 1) <= 1) {
+            if ((u8)(u->variant - 1) <= 1) {
                 s32 a;
                 if (abs(u->velX) <= 0x4000)
                     a = 0xB2E;
@@ -250,7 +250,7 @@ void PlayerActionHiJumpUpdate(void)
             }
             if (w->velY < 0 && (gTerrainResult.unk1 != 0 || (w->player->boundsClamp & 4))) {
                 w->velY = 0;
-                w->unk73 = 4;
+                w->variant = 4;
                 TaskSetEntry(PlayerActionHiJump, gCurTaskIdx);
                 SetPlayerInvulnerability(255, 0, gCurTask->player->playerIndex);
                 PlayerStopSfx();

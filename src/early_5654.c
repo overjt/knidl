@@ -97,7 +97,7 @@ void TaskFree(s32 id)
     t->player = (struct PlayerState *)(t->unk8C = 0);
     t->unk76 = 0;
     t->unk74 = 0;
-    t->unk73 = 0;
+    t->variant = 0;
     t->actorKind = 0;
     t->hitTimer = 0;
     t->health = 0;

@@ -1740,8 +1740,8 @@ void sub_080a8f40(void)
     TaskYieldTrampoline(36);
     sp.subtype = 25;
     sp.taskType = 128;
-    sp.unk08 = 0;
-    sp.unk09 = 0;
+    sp.variant = 0;
+    sp.spawnArg = 0;
     sp.x = 0;
     sp.y = 16;
     sp.checkTerrain = 1;

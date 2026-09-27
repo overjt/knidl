@@ -9,7 +9,7 @@
  *   * script 4's bodies and guards (tables `0x0874329C`/`0x087432A8`,
  *     `0x087432B4`/`0x087432C0`, `0x087432CC`/`0x087432D8` and the
  *     single-row `0x087432E4`/`0x087432E8`); the bodies walk the `s16[][4]`
- *     aim table `gUnk_0874325A` one row per Task.unk34 / Task.unk73 through
+ *     aim table `gUnk_0874325A` one row per Task.unk34 / Task.variant through
  *     `sub_0808eec4`;
  *   * the class-3 hook row `0x08743518` — `sub_0808f9b8`, `sub_0808f978`,
  *     `sub_0808f9d8` and `sub_0808f9f8`;
@@ -216,7 +216,7 @@ void sub_0808f528(void)
 {
     gCurTask->updateState = 0;
     TaskStopY();
-    switch (gCurTask->unk73)
+    switch (gCurTask->variant)
     {
     case 1:
         TaskSetFrameNoFlip(7);
@@ -238,7 +238,7 @@ void sub_0808f578(void)
     if (sub_08069888() == 0)
     {
         t = gCurTask;
-        switch (t->unk73)
+        switch (t->variant)
         {
         case 1:
             t->unk34 = 2;
@@ -283,7 +283,7 @@ void sub_0808f5cc(void)
             do
             {
                 v = gCurTask;
-                sub_0808eec4(gUnk_0874325A[v->unk73][v->unk2C]);
+                sub_0808eec4(gUnk_0874325A[v->variant][v->unk2C]);
                 w = gCurTask;
                 w->unk2C++;
                 TaskYieldTrampoline(2);
@@ -314,7 +314,7 @@ void sub_0808f6c0(void)
 {
     struct Task *t;
 
-    switch (gCurTask->unk73)
+    switch (gCurTask->variant)
     {
     case 1:
         TaskSetFrameNoFlip(7);
@@ -521,7 +521,7 @@ void sub_0808fa10(void)
     t->layer = 11;
     u = gCurTask;
     u->frameTable = gUnk_08752A70;
-    CallTableEntry(u->unk73, 2, gUnk_087432F4);
+    CallTableEntry(u->variant, 2, gUnk_087432F4);
 }
 
 void sub_0808fa50(void)
@@ -628,7 +628,7 @@ void sub_0808fc40(void)
     gCurTask->onGround = 0;
     u = gCurTask;
     u->unk28 = 0;
-    CallTableEntry(u->unk73, 1, gUnk_08743600);
+    CallTableEntry(u->variant, 1, gUnk_08743600);
 }
 
 void sub_0808fc90(void)
@@ -702,7 +702,7 @@ void sub_0808fdb8(void)
     t->layer = 11;
     u = gCurTask;
     u->frameTable = gUnk_08752520;
-    CallTableEntry(u->unk73, 4, gUnk_0874362C);
+    CallTableEntry(u->variant, 4, gUnk_0874362C);
 }
 
 void sub_0808fdf8(void)

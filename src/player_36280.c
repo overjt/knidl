@@ -6,7 +6,7 @@
  *
  * Player action bodies, part 4: per-frame handler 9 and actions 10 and
  * 11.  PlayerActionFloatUpdate (handler 9) is the other half of M09's mode-14
- * coroutine PlayerActionFloat: a seven-state switch over Task.unk73 that
+ * coroutine PlayerActionFloat: a seven-state switch over Task.variant that
  * re-binds the coroutine with the next state (1 on a held A or up, 4 on
  * a newly-pressed B, 2/3/5 from the ground flags Task.onGround/unk7B).
  * PlayerActionDuck (action 10, mode 6) installs the scripts
@@ -83,14 +83,14 @@ void PlayerActionFloatUpdate(void)
     struct Task *w;
     struct Task *x;
 
-    if (gCurTask->unk73 != 6 && PlayerCheckDropAbility() != 0)
+    if (gCurTask->variant != 6 && PlayerCheckDropAbility() != 0)
     {
-        if (gCurTask->unk73 == 5)
-            gCurTask->unk73 = 2;
+        if (gCurTask->variant == 5)
+            gCurTask->variant = 2;
         return;
     }
     PlayerTurnToHeldDirection();
-    switch (gCurTask->unk73)
+    switch (gCurTask->variant)
     {
     case 0:
         if (PlayerCheckEnterDoor() != 0)
@@ -105,7 +105,7 @@ void PlayerActionFloatUpdate(void)
         }
         else if (gCurTask->waterFlags & 1)
         {
-            gCurTask->unk73 = 4;
+            gCurTask->variant = 4;
             TaskSetEntry(PlayerActionFloat, gCurTaskIdx);
             break;
         }
@@ -128,7 +128,7 @@ void PlayerActionFloatUpdate(void)
             PlayerStopAxes(2);
         if (gLatchedPressedKeys[gCurTask->player->playerIndex] & 2)
         {
-            gCurTask->unk73 = 4;
+            gCurTask->variant = 4;
             TaskSetEntry(PlayerActionFloat, gCurTaskIdx);
             break;
         }
@@ -145,20 +145,20 @@ void PlayerActionFloatUpdate(void)
         t = gCurTask;
         if (t->onGround & 1)
         {
-            t->unk73 = 3;
+            t->variant = 3;
             TaskSetEntry(PlayerActionFloat, gCurTaskIdx);
             PlayerStopAxes(2);
             break;
         }
         if (gLatchedHeldKeys[t->player->playerIndex] & 65)
         {
-            t->unk73 = 1;
+            t->variant = 1;
             TaskSetEntry(PlayerActionFloat, gCurTaskIdx);
             break;
         }
         if (gLatchedPressedKeys[t->player->playerIndex] & 2)
         {
-            t->unk73 = 4;
+            t->variant = 4;
             TaskSetEntry(PlayerActionFloat, gCurTaskIdx);
             break;
         }
@@ -166,7 +166,7 @@ void PlayerActionFloatUpdate(void)
             break;
         PlayerStopAxes(2);
         gCurTask->unk28 = -1;
-        gCurTask->unk73 = 5;
+        gCurTask->variant = 5;
         TaskSetEntry(PlayerActionFloat, gCurTaskIdx);
         break;
     case 3:
@@ -181,19 +181,19 @@ void PlayerActionFloatUpdate(void)
         u = gCurTask;
         if (!(u->onGround & 1))
         {
-            u->unk73 = 2;
+            u->variant = 2;
             TaskSetEntry(PlayerActionFloat, gCurTaskIdx);
             break;
         }
         if (gLatchedHeldKeys[u->player->playerIndex] & 65)
         {
-            u->unk73 = 1;
+            u->variant = 1;
             TaskSetEntry(PlayerActionFloat, gCurTaskIdx);
             break;
         }
         if (gLatchedPressedKeys[u->player->playerIndex] & 2)
         {
-            u->unk73 = 4;
+            u->variant = 4;
             TaskSetEntry(PlayerActionFloat, gCurTaskIdx);
             break;
         }
@@ -229,13 +229,13 @@ void PlayerActionFloatUpdate(void)
         if (gLatchedHeldKeys[gCurTask->player->playerIndex] & 65)
         {
             PlayerStopAxes(2);
-            gCurTask->unk73 = 1;
+            gCurTask->variant = 1;
             TaskSetEntry(PlayerActionFloat, gCurTaskIdx);
         }
         else if (gLatchedPressedKeys[gCurTask->player->playerIndex] & 2)
         {
             PlayerStopAxes(2);
-            gCurTask->unk73 = 4;
+            gCurTask->variant = 4;
             TaskSetEntry(PlayerActionFloat, gCurTaskIdx);
         }
         break;
@@ -375,14 +375,14 @@ void PlayerActionSlide(void)
     if (t->player->prevMode != 7)
     {
         t->unk28 = 0;
-        t->unk73 = 0;
+        t->variant = 0;
         gCurTask->player->unk14 = 10;
         PlayerStartSfx(118, gCurTask->player->playerIndex);
         gCurTask->player->hitBoxSet = gUnk_0873CC84;
         PlayerSetMotionXPreset(11, 0);
         CreatePlayerEffect(gCurTask->player->playerIndex, 8, 0);
     }
-    switch (gCurTask->unk73)
+    switch (gCurTask->variant)
     {
     case 0:
         gCurTask->unk46 = gUnk_0873D5CA[gCurTask->player->ability][0];
@@ -459,7 +459,7 @@ void PlayerActionSlideUpdate(void)
         {
             if (abs(t->velX) <= 0x7FFF)
             {
-                t->unk73 = 1;
+                t->variant = 1;
                 TaskSetEntry(PlayerActionSlide, gCurTaskIdx);
             }
             if (abs(gCurTask->velX) > 0xE000)

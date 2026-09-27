@@ -1175,7 +1175,7 @@ void sub_08068a8c(s32 i, u8 flag)
     t->updateState = 0;
     t->sleepFrames = 0;
     t->unk76 = 0;
-    t->unk73 = 0;
+    t->variant = 0;
     t->hitKind = 0;
     if (p->unk40 & 1)
     {

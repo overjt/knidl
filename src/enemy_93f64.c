@@ -197,12 +197,12 @@ void sub_08093f64(void)
     gCurTask->frameTable = gUnk_087536FC;
     TaskFaceLikeParent();
     u = gCurTask;
-    u->unk28 = gUnk_087441BC[u->unk73] * (s8)u->facing + 384;
+    u->unk28 = gUnk_087441BC[u->variant] * (s8)u->facing + 384;
     u->unk2C = zero;
     u->unk30 = 384;
     u->unk34 = 2;
-    u->unk73 = zero;
-    CallTableEntry(gCurTask->unk73, 1, gUnk_087441CC);
+    u->variant = zero;
+    CallTableEntry(gCurTask->variant, 1, gUnk_087441CC);
 }
 
 void sub_08093fe0(void)
@@ -315,7 +315,7 @@ void Task_GrandWheelie(void)
     ActorCollideTerrain();
     sub_080666cc(gUnk_0874433C);
     sub_08066ae0();
-    CallTableEntry(gCurTask->unk73, 1, gGrandWheelieVariants);
+    CallTableEntry(gCurTask->variant, 1, gGrandWheelieVariants);
 }
 
 void sub_08094220(void)
@@ -1021,8 +1021,8 @@ void sub_0809513c(void)
     a = t->unk8C;
     sp.subtype = 12;
     sp.taskType = 114;
-    sp.unk08 = t->unk73;
-    sp.unk09 = t->unk74;
+    sp.variant = t->variant;
+    sp.spawnArg = t->unk74;
     sp.x = 0;
     sp.y = 0;
     sp.tileWord = a->savedTileWord;

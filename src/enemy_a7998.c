@@ -1569,7 +1569,7 @@ void Task_Kracko(void)
     t->frameTable = gKrackoFrames;
     t->unk8C->unk3C = (u32)sub_080a9e88;
     t->tileWord |= 128 << 4;
-    CallTableEntry(t->unk73, 2, gKrackoVariants);
+    CallTableEntry(t->variant, 2, gKrackoVariants);
 }
 
 void sub_080a7d98(void)

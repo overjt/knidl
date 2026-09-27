@@ -2005,5 +2005,5 @@ void Task_NightmareWizard(void)
     gUnk_02007D00[3] = 1;
     gUnk_02007D00[4] = 0;
     CreateChildTaskHere(208, 0);
-    CallTableEntry(gCurTask->unk73, 1, gNightmareWizardVariants);
+    CallTableEntry(gCurTask->variant, 1, gNightmareWizardVariants);
 }

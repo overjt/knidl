@@ -164,7 +164,7 @@ void sub_080ba900(void)
     if (i != -1)
     {
         struct Task *t = &gTasks[i];
-        t->unk73 = 1;
+        t->variant = 1;
         t->unk18 = 0;
         t->unk1C = 1;
         t->unk20 = 120;
@@ -183,7 +183,7 @@ void sub_080ba94c(void)
     if (i != -1)
     {
         t = &gTasks[i];
-        t->unk73 = 3;
+        t->variant = 3;
     }
 }
 
@@ -195,7 +195,7 @@ void sub_080ba978(void)
     if (i != -1)
     {
         t = &gTasks[i];
-        t->unk73 = 4;
+        t->variant = 4;
     }
 }
 
@@ -524,7 +524,7 @@ void CreateQuickDrawOpponent(void)
     {
         t = &gTasks[i];
         t->parent = gCurTaskIdx;
-        t->unk73 = 5;
+        t->variant = 5;
         t->unk74 = gSubGameLevel;
         t->unk76 = 0;
         gCurTask->unk46 = i;

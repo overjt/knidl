@@ -219,7 +219,7 @@ void Task_BigSwitch(void)
         struct Task *t = gCurTask;
 
         t->frameTable = gBigSwitchFrames;
-        CallTableEntry(t->unk73, 1, gBigSwitchVariants);
+        CallTableEntry(t->variant, 1, gBigSwitchVariants);
     }
 }
 
@@ -359,7 +359,7 @@ void Task_Stake(void)
         struct Task *t = gCurTask;
 
         t->frameTable = gStakeFrames;
-        CallTableEntry(t->unk73, 1, gStakeVariants);
+        CallTableEntry(t->variant, 1, gStakeVariants);
     }
 }
 
@@ -652,7 +652,7 @@ void sub_0807840c(struct M19Particle *p, u8 a)
 
 void sub_08078598(void)
 {
-    switch (gCurTask->unk73)
+    switch (gCurTask->variant)
     {
     case 0:
         {
@@ -703,7 +703,7 @@ void sub_08078598(void)
         struct Task *t = gCurTask;
 
         t->tileWord = 0xF000 | t->tileWord;
-        CallTableEntry(t->unk73, 5, gUnk_087402FC);
+        CallTableEntry(t->variant, 5, gUnk_087402FC);
     }
 }
 
@@ -861,7 +861,7 @@ void Task_WaddleDee(void)
 
         t->frameTable = gWaddleDeeFrames;
         t->unk8C->extraFrame = 4;
-        CallTableEntry(t->unk73, 6, gWaddleDeeVariants);
+        CallTableEntry(t->variant, 6, gWaddleDeeVariants);
     }
 }
 
@@ -876,7 +876,7 @@ s32 sub_080789ac(void)
 {
     s32 r = 0;
 
-    switch (gCurTask->unk73)
+    switch (gCurTask->variant)
     {
     case 0:
         ActorSetState(1);
@@ -911,7 +911,7 @@ s32 sub_08078a48(void)
 {
     s32 r = 0;
 
-    switch (gCurTask->unk73)
+    switch (gCurTask->variant)
     {
     case 0:
         ActorSetState(0);
@@ -952,7 +952,7 @@ s32 sub_08078a48(void)
 
 s32 sub_08078b08(void)
 {
-    u8 v = gCurTask->unk73;
+    u8 v = gCurTask->variant;
 
     if (v == 3 || v == 5)
         sub_08066c08(gUnk_08740BD4, 0);
@@ -964,7 +964,7 @@ s32 sub_08078b38(void)
 {
     struct Task *t = gCurTask;
 
-    if (t->unk73 == 3 && t->state == 1)
+    if (t->variant == 3 && t->state == 1)
         sub_08066b70();
     else
         TaskTurnAroundAndReverseX();

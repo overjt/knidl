@@ -13,7 +13,7 @@
  *     handlers `sub_0807d82c` / `sub_0807d918` re-centre on the nearest
  *     player when `|TaskGetNearestPlayerDx()| <= 49` and `|TaskGetDyTo()| <= 15`;
  *   * the class-3 three-way branch pair `sub_0807dd70` / `sub_0807dddc`
- *     (`switch (Task.unk73)` with an empty `case 1`);
+ *     (`switch (Task.variant)` with an empty `case 1`);
  *   * the `0x08741220` function-pointer table the three `sub_0807e244` /
  *     `sub_0807e3b0` hooks dispatch through;
  *   * the two 0x120/0xA8-byte cutscene coroutines `sub_0807e290` and
@@ -317,7 +317,7 @@ void Task_Rocky(void)
     gCurTask->drawCallback = (u32)ActorDrawWorldInViewOrDestroy;
     gCurTask->layer = 11;
     gCurTask->frameTable = gRockyFrames;
-    CallTableEntry(gCurTask->unk73, 3, gRockyVariants);
+    CallTableEntry(gCurTask->variant, 3, gRockyVariants);
 }
 
 void sub_0807d6c4(void)
@@ -633,7 +633,7 @@ s32 sub_0807dd70(void)
     RequestScreenShake(1);
     PlaySfx(163);
     r = 0;
-    switch (gCurTask->unk73)
+    switch (gCurTask->variant)
     {
     case 0:
         ActorSetState(1);
@@ -655,7 +655,7 @@ s32 sub_0807dddc(void)
 {
     s32 r = 0;
 
-    switch (gCurTask->unk73)
+    switch (gCurTask->variant)
     {
     case 0:
         ActorSetState(4);
@@ -677,7 +677,7 @@ s32 sub_0807de30(void)
 {
     s32 r = 0;
 
-    if (gCurTask->unk73 == 0)
+    if (gCurTask->variant == 0)
     {
         ActorSetState(3);
         TaskSetEntry(sub_0807d6fc, gCurTaskIdx);
@@ -714,7 +714,7 @@ void Task_SirKibble(void)
         struct Task *t = gCurTask;
 
         t->unk2C = 0;
-        CallTableEntry(t->unk73, 3, gSirKibbleVariants);
+        CallTableEntry(t->variant, 3, gSirKibbleVariants);
     }
 }
 
@@ -849,8 +849,8 @@ void sub_0807e188(void)
     TaskYieldTrampoline(4);
     spawn.subtype = 3;
     spawn.taskType = 105;
-    spawn.unk08 = 0;
-    spawn.unk09 = 0;
+    spawn.variant = 0;
+    spawn.spawnArg = 0;
     spawn.x = 16;
     spawn.y = 0;
     spawn.checkTerrain = 0;
@@ -887,7 +887,7 @@ void sub_0807e244(void)
         struct Task *t = gCurTask;
 
         if (t->state != 1)
-            TaskSetEntry((void *)gUnk_08741220[t->unk73], gCurTaskIdx);
+            TaskSetEntry((void *)gUnk_08741220[t->variant], gCurTaskIdx);
     }
 }
 
@@ -917,8 +917,8 @@ void sub_0807e290(void)
     TaskYieldTrampoline(4);
     spawn.subtype = 3;
     spawn.taskType = 105;
-    spawn.unk08 = 0;
-    spawn.unk09 = 1;
+    spawn.variant = 0;
+    spawn.spawnArg = 1;
     spawn.x = 16;
     spawn.y = 0;
     spawn.checkTerrain = 0;
@@ -961,7 +961,7 @@ void sub_0807e3b0(void)
     struct Task *t = gCurTask;
 
     if (t->state != 2)
-        TaskSetEntry((void *)gUnk_08741220[t->unk73], gCurTaskIdx);
+        TaskSetEntry((void *)gUnk_08741220[t->variant], gCurTaskIdx);
 }
 
 void sub_0807e3e4(void)
@@ -1046,7 +1046,7 @@ void Task_Cappy(void)
     gCurTask->moveCallback = (u32)ActorMove;
     gCurTask->drawCallback = (u32)ActorDrawWorldInViewOrDestroy;
     gCurTask->layer = 11;
-    CallTableEntry(gCurTask->unk73, 3, gCappyVariants);
+    CallTableEntry(gCurTask->variant, 3, gCappyVariants);
 }
 
 void sub_0807e568(void)
@@ -1279,7 +1279,7 @@ void Task_Gordo(void)
     }
     TaskFaceNearestPlayer();
     gCurTask->unk28 = ActorStartAnim(gUnk_087412A8);
-    CallTableEntry(gCurTask->unk73, 4, gGordoVariants);
+    CallTableEntry(gCurTask->variant, 4, gGordoVariants);
 }
 
 void sub_0807ea30(void)
@@ -1462,7 +1462,7 @@ void Task_CoolSpook(void)
     AcquirePaletteAnim(0, 0);
     gCurTask->facing = 255;
     gCurTask->unk28 = ActorStartAnim(gUnk_087412EC);
-    CallTableEntry(gCurTask->unk73, 2, gCoolSpookVariants);
+    CallTableEntry(gCurTask->variant, 2, gCoolSpookVariants);
 }
 
 void sub_0807ee14(void)
@@ -1564,5 +1564,5 @@ void Task_Kabu(void)
     gCurTask->layer = 11;
     gCurTask->frameTable = gKabuFrames;
     TaskFaceNearestPlayer();
-    CallTableEntry(gCurTask->unk73, 4, gKabuVariants);
+    CallTableEntry(gCurTask->variant, 4, gKabuVariants);
 }

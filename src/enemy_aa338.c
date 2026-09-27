@@ -1738,7 +1738,7 @@ void sub_080aa998(void)
     {
         sp.subtype = 33;
         sp.taskType = 136;
-        sp.unk09 = 0;
+        sp.spawnArg = 0;
         sp.x = 48;
         sp.y = 16;
         sp.tileWord = gCurTask->unk8C->savedTileWord;
@@ -1746,14 +1746,14 @@ void sub_080aa998(void)
         d = (s16)gCurTask->health;
         if (d <= Div(gCurTask->unk1C, 3) && (gCurTask->unk6C & 1))
         {
-            sp.unk08 = 1;
+            sp.variant = 1;
             CreateActorFromDescAtOffsetFacing(&sp, 1);
-            sp.unk08 = 2;
+            sp.variant = 2;
             CreateActorFromDescAtOffsetFacing(&sp, 1);
         }
         else
         {
-            sp.unk08 = 0;
+            sp.variant = 0;
             CreateActorFromDescAtOffsetFacing(&sp, 1);
         }
         TaskYieldTrampoline(8);
@@ -1823,12 +1823,12 @@ void sub_080aab80(void)
             gCurTask->unk20 -= 5;
         sp.subtype = 33;
         sp.taskType = 136;
-        sp.unk08 = 3;
+        sp.variant = 3;
         sp.x = 0;
         sp.y = 8;
         sp.tileWord = gCurTask->unk8C->savedTileWord;
         sp.checkTerrain = 1;
-        sp.unk09 = gCurTask->unk20;
+        sp.spawnArg = gCurTask->unk20;
         CreateActorFromDescAtOffsetFacing(&sp, 1);
     }
     TaskYieldTrampoline(4);
@@ -1872,39 +1872,39 @@ void sub_080aad98(void)
     CreateChildTask(206, gCurTask->pixelX, gCurTask->pixelY, 0xD310);
     sp.subtype = 33;
     sp.taskType = 136;
-    sp.unk08 = 4;
+    sp.variant = 4;
     sp.tileWord = gCurTask->unk8C->savedTileWord;
     sp.checkTerrain = 1;
     if (gCurTask->unk30 & 1)
     {
         TaskYieldTrampoline(20);
-        sp.unk09 = 0;
+        sp.spawnArg = 0;
         CreateActorFromDescHere(&sp, 1);
-        sp.unk09 = 1;
-        CreateActorFromDescHere(&sp, 1);
-        TaskYieldTrampoline(16);
-        sp.unk09 = 2;
-        CreateActorFromDescHere(&sp, 1);
-        sp.unk09 = 3;
+        sp.spawnArg = 1;
         CreateActorFromDescHere(&sp, 1);
         TaskYieldTrampoline(16);
-        sp.unk09 = 4;
+        sp.spawnArg = 2;
+        CreateActorFromDescHere(&sp, 1);
+        sp.spawnArg = 3;
+        CreateActorFromDescHere(&sp, 1);
+        TaskYieldTrampoline(16);
+        sp.spawnArg = 4;
         CreateActorFromDescHere(&sp, 1);
     }
     else
     {
         TaskYieldTrampoline(20);
-        sp.unk09 = 4;
+        sp.spawnArg = 4;
         CreateActorFromDescHere(&sp, 1);
         TaskYieldTrampoline(16);
-        sp.unk09 = 2;
+        sp.spawnArg = 2;
         CreateActorFromDescHere(&sp, 1);
-        sp.unk09 = 3;
+        sp.spawnArg = 3;
         CreateActorFromDescHere(&sp, 1);
         TaskYieldTrampoline(16);
-        sp.unk09 = 0;
+        sp.spawnArg = 0;
         CreateActorFromDescHere(&sp, 1);
-        sp.unk09 = 1;
+        sp.spawnArg = 1;
         CreateActorFromDescHere(&sp, 1);
     }
     gCurTask->unk30++;
@@ -2897,7 +2897,7 @@ void sub_080ac684(void)
     t->frameTable = gUnk_08753DA0;
     TaskFaceLikeParent();
     t = gCurTask;
-    switch (t->unk73)
+    switch (t->variant)
     {
     case 0:
         t->layer = 12;
@@ -2937,7 +2937,7 @@ void sub_080ac72c(void)
             {
                 if (gPlayerStates[k].ability == 24)
                 {
-                    if (gTasks[k].unk73 > 6)
+                    if (gTasks[k].variant > 6)
                     {
                         sub_08040858(k);
                         gUnk_02007D00[2]++;
@@ -3002,8 +3002,8 @@ void sub_080ac868(void)
     {
         sp.subtype = 18;
         sp.taskType = 120;
-        sp.unk08 = 2;
-        sp.unk09 = v74;
+        sp.variant = 2;
+        sp.spawnArg = v74;
         sp.x = gViewRect[0] + 120;
         sp.y = gViewRect[2] + 72;
         sp.tileWord = (128 << 5) + gCurTask->tileWord;
@@ -3203,7 +3203,7 @@ void sub_080acd38(void)
     gCurTask->unk30 = ActorStartAnim((struct AnimCmd *)gUnk_08749BD0);
     gCurTask->onGround = 0;
     t = gCurTask;
-    if (t->unk73 == 3)
+    if (t->variant == 3)
     {
         a2 = gUnk_08749BB1[t->unk74] + (160 << 2);
         t->unk2C = (a2 - (t->facing << 7)) & 0x1FF;
@@ -3213,7 +3213,7 @@ void sub_080acd38(void)
         u->velY = gUnk_030023D4;
         PlaySfx(0x22F);
     }
-    else if (t->unk73 == 4)
+    else if (t->variant == 4)
     {
         AngleToVector(gUnk_08749BAC[t->unk74], 128 << 3);
         u = gCurTask;
@@ -3223,9 +3223,9 @@ void sub_080acd38(void)
     }
     else
     {
-        TaskSetMotionXFacing(gUnk_08749BB8[t->unk73], 0x5A5A5A5A);
+        TaskSetMotionXFacing(gUnk_08749BB8[t->variant], 0x5A5A5A5A);
         u2 = gCurTask;
-        u2->velY = gUnk_08749BC4[u2->unk73];
+        u2->velY = gUnk_08749BC4[u2->variant];
     }
     TaskYieldTrampoline(255);
     c = &gCurTask;
@@ -3499,8 +3499,8 @@ void sub_080ad3e8(void)
     a = t->unk8C;
     sp.subtype = 14;
     sp.taskType = 116;
-    sp.unk08 = t->unk73;
-    sp.unk09 = t->unk74;
+    sp.variant = t->variant;
+    sp.spawnArg = t->unk74;
     sp.x = gUnk_0874AAE4[gUnk_02007D00[0]];
     sp.y = gUnk_0874AAEC[gUnk_02007D00[0]];
     sp.tileWord = a->savedTileWord;
@@ -3559,14 +3559,14 @@ void Task_HeavyMole(void)
     gUnk_02007D00[9] = ActorComputeHealth();
     sp.subtype = 19;
     sp.taskType = 121;
-    sp.unk08 = gCurTask->unk73;
-    sp.unk09 = gCurTask->unk74;
+    sp.variant = gCurTask->variant;
+    sp.spawnArg = gCurTask->unk74;
     sp.checkTerrain = 0;
     CreateActorFromDescHere(&sp, 0);
     sp.subtype = 19;
     sp.taskType = 122;
-    sp.unk08 = gCurTask->unk73;
-    sp.unk09 = gCurTask->unk74;
+    sp.variant = gCurTask->variant;
+    sp.spawnArg = gCurTask->unk74;
     sp.checkTerrain = 0;
     CreateActorFromDescHere(&sp, 0);
     CreateChildTaskHere(190, 1);
@@ -4000,8 +4000,8 @@ void sub_080addf8(void)
         gUnk_02007D00[4] = 1;
         sp.subtype = 21;
         sp.taskType = 124;
-        sp.unk08 = gCurTask->unk73;
-        sp.unk09 = gCurTask->unk74;
+        sp.variant = gCurTask->variant;
+        sp.spawnArg = gCurTask->unk74;
         sp.checkTerrain = 1;
         CreateActorFromDescHere(&sp, 0);
     }
@@ -4009,8 +4009,8 @@ void sub_080addf8(void)
     {
         sp.subtype = 20;
         sp.taskType = 123;
-        sp.unk08 = gCurTask->unk73;
-        sp.unk09 = gCurTask->unk74;
+        sp.variant = gCurTask->variant;
+        sp.spawnArg = gCurTask->unk74;
         CreateActorFromDescHere(&sp, 0);
     }
 }

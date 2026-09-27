@@ -448,7 +448,7 @@ void AcquirePaletteAnim(u32 p0, s32 idx)
         {
             t = &gTasks[i];
             t->unk18 = gCurTask->tileWord >> 12;
-            t->unk73 = p0;
+            t->variant = p0;
             t->unk74 = idx;
             gPaletteAnimTasks[idx] = i;
         }
@@ -458,7 +458,7 @@ void AcquirePaletteAnim(u32 p0, s32 idx)
 
 void sub_080658b8(void)
 {
-    CallTableEntry(gCurTask->unk73, 5, gUnk_0873DF24);
+    CallTableEntry(gCurTask->variant, 5, gUnk_0873DF24);
 }
 
 /* Task body: cross-fade two palettes while the helper's refcount holds. */
@@ -1557,7 +1557,7 @@ void sub_08066ae0(void)
 
     t = gCurTask;
     a = t->unk8C;
-    if (t->unk73 != 0)
+    if (t->variant != 0)
     {
         switch (gActivePlayerCount)
         {
@@ -1575,7 +1575,7 @@ void sub_08066ae0(void)
             a->healthBonus = 10;
             break;
         }
-        gCurTask->unk73 = 0;
+        gCurTask->variant = 0;
     }
     sub_080637cc();
 }
@@ -1789,7 +1789,7 @@ void sub_08066e88(u8 a)
         if (gUnk_02006178 == 1)
         {
             gCurTask->unk8C->unk0D = 1;
-            u->unk73 = 3;
+            u->variant = 3;
             u->drawCallback = (u32)ActorDrawWorldInViewOrDestroy;
             u->layer = 11;
             u->frameTable = gParasolFrames;
@@ -1825,12 +1825,12 @@ void sub_08066fc0(u8 p3, s16 x, s16 y)
         t = &gTasks[i];
         if (gGameState == 8 && gUnk_03001F30 == 0)
         {
-            t->unk73 = p3;
+            t->variant = p3;
             PlayBgm(1);
         }
         else
         {
-            t->unk73 = 2;
+            t->variant = 2;
             t->unk74 = gCurTask->unk76;
         }
     }
@@ -1900,8 +1900,8 @@ s32 sub_08067120(s16 x, s16 y, u16 dir, u8 p8)
 
     sp.subtype = 36;
     sp.taskType = 139;
-    sp.unk08 = p8;
-    sp.unk09 = 0;
+    sp.variant = p8;
+    sp.spawnArg = 0;
     sp.x = x;
     sp.y = y;
     sp.tileWord = 0;
@@ -1919,7 +1919,7 @@ void sub_08067170(void)
 {
     s32 v;
 
-    v = gCurTask->unk73;
+    v = gCurTask->variant;
     switch (v)
     {
     case 1:

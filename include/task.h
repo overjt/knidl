@@ -72,7 +72,7 @@ struct Task
     /*0x6E*/ s16 unk6E;
     /*0x70*/ u16 unk70;
     /*0x72*/ u8 actorKind;
-    /*0x73*/ u8 unk73;
+    /*0x73*/ u8 variant;
     /*0x74*/ u8 unk74;
     /*0x75*/ s8 hitTimer;
     /*0x76*/ u16 unk76;
@@ -312,8 +312,8 @@ struct ActorSpawn
 {
     /*0x00*/ u32 subtype;
     /*0x04*/ u32 taskType;
-    /*0x08*/ u8 unk08;
-    /*0x09*/ u8 unk09;
+    /*0x08*/ u8 variant;
+    /*0x09*/ u8 spawnArg;
     /*0x0A*/ u8 checkTerrain;
     /*0x0B*/ u8 unk0B;
     /*0x0C*/ s16 x;

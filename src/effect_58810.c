@@ -14,7 +14,7 @@
  * spawner's Task.waterFlags bit 0 is set.  Variant 41 (sub_08058f10, 1488 bytes)
  * is four sub-states in world space (gUnk_08751E7C); its callback
  * sub_080594e0 sets Task.unk28 when the player leaves mode 13 (or, while
- * PlayerState.unk40 bit 8 is clear, when the spawner's Task.unk73 is not 1)
+ * PlayerState.unk40 bit 8 is clear, when the spawner's Task.variant is not 1)
  * and kills it on the same unk40/unk7B test. */
 
 extern u32 gUnk_08751E5C[];
@@ -428,7 +428,7 @@ void sub_080594e0(void)
 
     if (!(p->unk40 & 0x100))
     {
-        if (t->unk28 == 0 && (p->mode != 13 || ((struct Task *)t->unk8C)->unk73 != 1))
+        if (t->unk28 == 0 && (p->mode != 13 || ((struct Task *)t->unk8C)->variant != 1))
             t->unk28 = 1;
     }
     else

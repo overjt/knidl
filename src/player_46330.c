@@ -6,7 +6,7 @@
  *
  * Player action bodies, part 15: action 39 and per-frame handler 36.
  * PlayerActionWheel (action 39, mode 13) is a re-entrant five-state machine
- * over Task.unk73: state 0 winds up (animation 0x701, effect 6, sound
+ * over Task.variant: state 0 winds up (animation 0x701, effect 6, sound
  * 154), state 1 installs the script gUnk_0873CB34 and the block hit-box
  * set gUnk_0873CDAC and spins in an endless yield loop, state 2 turns
  * round (it negates the facing Task.facing) and goes back to state 1,
@@ -82,14 +82,14 @@ void PlayerActionWheel(void)
             gCurTask->unk30 = 0;
             CreatePlayerEffect(gCurTask->player->playerIndex, 34, 0);
             gCurTask->unk80 = 8;
-            gCurTask->unk73 = 0;
+            gCurTask->variant = 0;
         }
     }
 again:
     {
         struct Task *t = gCurTask;
         t->player->hitBoxSet = 0;
-        switch (t->unk73) {
+        switch (t->variant) {
         case 0:
             PlayerSetMotionXPreset(11, 44);
             TaskSetFrame(0x701);
@@ -102,7 +102,7 @@ again:
                 TaskYieldTrampoline(1);
             } while ((s16)++gCurTask->unk6C <= 7);
             PlayerStartSfx(154, gCurTask->player->playerIndex);
-            gCurTask->unk73 = 1;
+            gCurTask->variant = 1;
             PlayerSetMotionXPreset(11, 46);
             /* fallthrough */
         case 1:
@@ -163,7 +163,7 @@ again:
                     PlayerSetMotionXPreset(11, 46);
                 }
             }
-            gCurTask->unk73 = 1;
+            gCurTask->variant = 1;
             goto again;
         case 3:
             PlayerStopSfx();
@@ -181,7 +181,7 @@ again:
                 TaskYieldTrampoline(1);
             } while ((s16)++gCurTask->unk6C <= 6);
             TaskSetFrame(0x701);
-            gCurTask->unk73 = 5;
+            gCurTask->variant = 5;
             break;
         case 4:
             {
@@ -237,7 +237,7 @@ void PlayerActionWheelUpdate(void)
             t->player->unk14 = 0;
         }
     }
-    switch (gCurTask->unk73) {
+    switch (gCurTask->variant) {
     case 0:
     case 3:
         if (gCurTask->onGround & 1) {
@@ -251,7 +251,7 @@ void PlayerActionWheelUpdate(void)
             break;
         {
             struct Task *t = gCurTask;
-            if (t->unk73 == 0)
+            if (t->variant == 0)
                 t->velX = 0;
             else
                 PlayerStopAxes(1);
@@ -262,7 +262,7 @@ void PlayerActionWheelUpdate(void)
             u16 k = gLatchedPressedKeys[gCurTask->player->playerIndex] & 2;
             struct Task *t = gCurTask;
             if (k) {
-                t->unk73 = 3;
+                t->variant = 3;
                 TaskSetEntry(PlayerActionWheel, gCurTaskIdx);
             } else {
                 if (t->onGround & 1) {
@@ -292,7 +292,7 @@ void PlayerActionWheelUpdate(void)
                 }
                 if ((gLatchedHeldKeys[gCurTask->player->playerIndex] & 16 && gCurTask->facing == -1)
                     || (gLatchedHeldKeys[gCurTask->player->playerIndex] & 32 && gCurTask->facing == 1)) {
-                    gCurTask->unk73 = 2;
+                    gCurTask->variant = 2;
                     TaskSetEntry(PlayerActionWheel, gCurTaskIdx);
                 } else if (*(u16 *)&gTerrainResult != 0
                            || ((gCurTask->player->boundsClamp & 3)
@@ -301,7 +301,7 @@ void PlayerActionWheelUpdate(void)
                         gCurTask->velY = 0;
                     else
                         PlayerStopAxes(1);
-                    gCurTask->unk73 = 4;
+                    gCurTask->variant = 4;
                     TaskSetEntry(PlayerActionWheel, gCurTaskIdx);
                 }
             }
@@ -322,7 +322,7 @@ void PlayerActionWheelUpdate(void)
         {
             u16 k = gLatchedPressedKeys[gCurTask->player->playerIndex] & 2;
             if (k) {
-                gCurTask->unk73 = 3;
+                gCurTask->variant = 3;
                 TaskSetEntry(PlayerActionWheel, gCurTaskIdx);
                 break;
             }
@@ -331,7 +331,7 @@ void PlayerActionWheelUpdate(void)
                     gCurTask->velY = 0;
                 else
                     PlayerStopAxes(1);
-                gCurTask->unk73 = 4;
+                gCurTask->variant = 4;
                 TaskSetEntry(PlayerActionWheel, gCurTaskIdx);
             }
         }

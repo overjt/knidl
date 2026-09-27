@@ -11,7 +11,7 @@
  *     with `sub_0808e480` / `sub_0808e54c` / `sub_0808e610` / `sub_0808e730`
  *     as the bodies and `sub_0808e510` / `sub_0808e5cc` / `sub_0808e704` /
  *     `sub_0808e800` as their guards;
- *   * script 3: entry `sub_0808e8d4` (Task.unk73 -> `0x08743224`, 3 rows),
+ *   * script 3: entry `sub_0808e8d4` (Task.variant -> `0x08743224`, 3 rows),
  *     rows `sub_0808e914` / `sub_0808eb24`, bodies `0x08743230` (3) and
  *     `0x08743240`, guards `0x0874323C` and `0x08743244`;
  *   * the class-3 hook row `0x087434FC` — `sub_0808ec34`, `sub_0808ebe0`,
@@ -24,7 +24,7 @@
  *     AngleToVector, `sub_0808efdc` / `sub_0808f058` fire actor 109 through
  *     CreateActorFromDescAtOffsetFacing + CreateChildTaskAtOffsetFacing, and `sub_0808f0d0` / `sub_0808f1b4` are the
  *     per-frame drivers;
- *   * script 4's entry `Task_Shotzo` (Task.unk73 -> `0x08743284`, 6 rows) and
+ *   * script 4's entry `Task_Shotzo` (Task.variant -> `0x08743284`, 6 rows) and
  *     its three <body, guard> table pairs `0x0874329C`/`0x087432A8`,
  *     `0x087432B4`/`0x087432C0` and `0x087432CC`/`0x087432D8`.  Its bodies
  *     continue in src/enemy_8f41c.c.
@@ -457,7 +457,7 @@ void sub_0808e8d4(void)
     t->layer = 11;
     u = gCurTask;
     u->frameTable = gUnk_087524A4;
-    CallTableEntry(u->unk73, 3, gUnk_08743224);
+    CallTableEntry(u->variant, 3, gUnk_08743224);
 }
 
 void sub_0808e914(void)
@@ -466,7 +466,7 @@ void sub_0808e914(void)
 
     t = gCurTask;
     t->updateCallback = (u32)sub_0808e964;
-    switch (t->unk73)
+    switch (t->variant)
     {
     case 0:
         t->facing = 1;
@@ -604,7 +604,7 @@ void sub_0808ebdc(void)
 
 s32 sub_0808ebe0(void)
 {
-    switch (gCurTask->unk73)
+    switch (gCurTask->variant)
     {
     default:
         ActorSetState(1);
@@ -623,7 +623,7 @@ s32 sub_0808ebe0(void)
 
 s32 sub_0808ec34(void)
 {
-    switch (gCurTask->unk73)
+    switch (gCurTask->variant)
     {
     default:
         ActorSetState(0);
@@ -646,14 +646,14 @@ s32 sub_0808ec90(void)
     struct Task *t;
 
     t = gCurTask;
-    if (t->unk73 == 4 && t->state == 2)
+    if (t->variant == 4 && t->state == 2)
         sub_08066b70();
     return 0;
 }
 
 s32 sub_0808ecb4(void)
 {
-    if (gCurTask->unk73 == 4)
+    if (gCurTask->variant == 4)
         sub_08066c08(gUnk_08743390, 0);
     sub_0806a0f0(-2);
     return 1;
@@ -783,7 +783,7 @@ void sub_0808eec4(s32 a)
 
     b = a;
 
-    switch (gCurTask->unk73)
+    switch (gCurTask->variant)
     {
     case 0:
     case 4:
@@ -858,8 +858,8 @@ void sub_0808efdc(void)
 
     sp.subtype = 7;
     sp.taskType = 109;
-    sp.unk08 = 0;
-    sp.unk09 = gCurTask->unk74;
+    sp.variant = 0;
+    sp.spawnArg = gCurTask->unk74;
     sp.x = gUnk_0874324C[gCurTask->unk30];
     sp.y = gUnk_08743251[gCurTask->unk30];
     sp.checkTerrain = 1;
@@ -873,8 +873,8 @@ void sub_0808f058(void)
 
     sp.subtype = 7;
     sp.taskType = 109;
-    sp.unk08 = 0;
-    sp.unk09 = 4;
+    sp.variant = 0;
+    sp.spawnArg = 4;
     sp.x = gUnk_08743256[gCurTask->unk34];
     sp.y = gUnk_08743251[gCurTask->unk34];
     sp.checkTerrain = 1;
@@ -971,7 +971,7 @@ void Task_Shotzo(void)
     u = gCurTask;
     u->frameTable = gShotzoFrames;
     u->unk8C->extraFrame = 4;
-    CallTableEntry(u->unk73, 6, gShotzoVariants);
+    CallTableEntry(u->variant, 6, gShotzoVariants);
 }
 
 void sub_0808f26c(void)

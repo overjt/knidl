@@ -761,7 +761,7 @@ void Task_Cannon(void)
 
         t->frameTable = gCannonFrames;
         t->unk18 = 0;
-        CallTableEntry(t->unk73, 1, gCannonVariants);
+        CallTableEntry(t->variant, 1, gCannonVariants);
     }
 }
 
@@ -1108,7 +1108,7 @@ void Task_CannonFuse(void)
         struct Task *t = gCurTask;
 
         t->frameTable = gCannonFuseFrames;
-        CallTableEntry(t->unk73, 1, gCannonFuseVariants);
+        CallTableEntry(t->variant, 1, gCannonFuseVariants);
     }
 }
 

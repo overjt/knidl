@@ -8,7 +8,7 @@
  * 17 and 20-25.  gLatchedHeldKeys[player] is the held-keys mask the bodies
  * test (0x30 left/right, 0x41 A or up, 0x80 down; gLatchedPressedKeys[] is the
  * newly-pressed one).  PlayerActionSwim (action 23) is the twin of M11's
- * sub_08043014: a four-state machine over Task.unk73 picked from the keys
+ * sub_08043014: a four-state machine over Task.variant picked from the keys
  * (left/right = 3, A/up = 1, down = 2, else 0) that plays a row of
  * gUnk_0873D9DA[4][4] chosen by the ability; its per-frame handler 20,
  * PlayerActionSwimUpdate, re-picks the state and re-binds the coroutine when the
@@ -58,7 +58,7 @@ void PlayerActionSwim(void)
     {
         if (t->player->prevMode != 15)
         {
-            t->unk73 = 0;
+            t->variant = 0;
             u = gCurTask;
             u->player->unk14 = 1;
             if (gLatchedHeldKeys[u->player->playerIndex] & 65)
@@ -92,13 +92,13 @@ void PlayerActionSwim(void)
     if (v->player->prevMode != 15)
     {
         if (gLatchedHeldKeys[v->player->playerIndex] & 48)
-            v->unk73 = 3;
+            v->variant = 3;
         else if (gLatchedHeldKeys[v->player->playerIndex] & 65)
-            v->unk73 = 1;
+            v->variant = 1;
         else if (gLatchedHeldKeys[v->player->playerIndex] & 128)
-            v->unk73 = 2;
+            v->variant = 2;
         else
-            v->unk73 = 0;
+            v->variant = 0;
         PlayerSetWaterMotionY();
         gCurTask->unk2C = 0;
     }
@@ -118,7 +118,7 @@ void PlayerActionSwim(void)
         anim = gUnk_0873D9DA[3];
         break;
     }
-    switch (gCurTask->unk73)
+    switch (gCurTask->variant)
     {
     case 0:
         PlayerSetMotionYPreset(13);
@@ -293,7 +293,7 @@ void PlayerActionSwimUpdate(void)
     }
     else
     {
-        st = &t->unk73;
+        st = &t->variant;
         switch (*st)
         {
         case 0:
@@ -432,7 +432,7 @@ void PlayerActionSwimUpdate(void)
         else
         {
             q = x->player;
-            if (q->mouthState != 0 || x->unk73 != 1 || !(gLatchedHeldKeys[q->playerIndex] & 65))
+            if (q->mouthState != 0 || x->variant != 1 || !(gLatchedHeldKeys[q->playerIndex] & 65))
             {
                 w = gCurTask;
                 if (w->velY != 0 && (w->onGround & 1))
@@ -719,7 +719,7 @@ void sub_0803b9a0(void)
         {
             t->unk28 = 2;
         }
-        gCurTask->unk73 = 0;
+        gCurTask->variant = 0;
         {
             struct Task *u = gCurTask;
 
@@ -742,7 +742,7 @@ void sub_0803b9a0(void)
     switch (gCurTask->unk28)
     {
     case 3:
-        if (gCurTask->unk73 == 0)
+        if (gCurTask->variant == 0)
         {
             CreatePlayerObject(gCurTask->player->playerIndex, 3, 0);
             while (1)
@@ -761,7 +761,7 @@ void sub_0803b9a0(void)
         gCurTask->unk2C++;
         break;
     case 1:
-        if (gCurTask->unk73 == 0)
+        if (gCurTask->variant == 0)
         {
             CreatePlayerObject(gCurTask->player->playerIndex, 3, 0);
             while (1)
@@ -780,7 +780,7 @@ void sub_0803b9a0(void)
         gCurTask->unk2C++;
         break;
     case 0:
-        if (gCurTask->unk73 == 0)
+        if (gCurTask->variant == 0)
         {
             gCurTask->facing = 1;
             CreatePlayerObject(gCurTask->player->playerIndex, 3, 0);
@@ -800,7 +800,7 @@ void sub_0803b9a0(void)
         gCurTask->unk2C++;
         break;
     case 2:
-        if (gCurTask->unk73 == 0)
+        if (gCurTask->variant == 0)
         {
             gCurTask->facing = -1;
             CreatePlayerObject(gCurTask->player->playerIndex, 3, 0);
@@ -826,7 +826,7 @@ void sub_0803b9a0(void)
 void sub_0803bbf0(void)
 {
     struct Task *t = gCurTask;
-    u8 *st = &t->unk73;
+    u8 *st = &t->variant;
 
     if (*st == 0)
     {

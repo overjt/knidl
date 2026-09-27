@@ -11,7 +11,7 @@
  *       colours between two rows of gUnk_08584BB0.
  *   Task_HalveScore   #263, halve this player's score (rounded down to a
  *       multiple of ten) and count the displayed score down to it.
- *   Task_GameOverObject   #264: six variants gGameOverObjectVariants[Task.unk73]; variant 0
+ *   Task_GameOverObject   #264: six variants gGameOverObjectVariants[Task.variant]; variant 0
  *       (GameOverPlayer, the player character) is a small state machine of
  *       sub-states gUnk_087582AC[Task.state] and per-frame handlers
  *       gUnk_087582B8[Task.updateState] (GameOverPlayerUpdate), re-entered through
@@ -133,13 +133,13 @@ void Task_HalveScore(void)
     TaskExitTrampoline();
 }
 
-/* Task type #264 (class 4): six variants, gGameOverObjectVariants[Task.unk73]. */
+/* Task type #264 (class 4): six variants, gGameOverObjectVariants[Task.variant]. */
 void Task_GameOverObject(void)
 {
     gCurTask->moveCallback = (u32)TaskMove;
     gCurTask->drawCallback = (u32)TaskDrawScreen;
     gCurTask->tileWord = 0x4800;
-    CallTableEntry(gCurTask->unk73, 6, gGameOverObjectVariants);
+    CallTableEntry(gCurTask->variant, 6, gGameOverObjectVariants);
     TaskSleepForever();
 }
 

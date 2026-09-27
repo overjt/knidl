@@ -8,7 +8,7 @@
  * sub_080c6388 spawns in AgbMain state 11 and waits on (gEndingSceneActive).
  *   sub_080c9004   the body: variant 0 loads the graphics (sub_080c9040) and
  *       spawns variants 1, 3, 6, 7, 8 and 11 from the list gUnk_08757424
- *       (sub_080c90c8); variants 1-11 run gUnk_087573F4[Task.unk73].
+ *       (sub_080c90c8); variants 1-11 run gUnk_087573F4[Task.variant].
  *   sub_080c9114 / sub_080c9418   variant 1, a sprite that falls in, then
  *       rides the BG3 layer and flashes its palette.
  *   sub_080c9d10   variant 2, a 22-frame animation played six times.
@@ -103,11 +103,11 @@ void sub_080c9004(void)
 {
     gCurTask->moveCallback = 0;
     gCurTask->drawCallback = 0;
-    if (gCurTask->unk73 == 0) {
+    if (gCurTask->variant == 0) {
         sub_080c9040();
         sub_080c90c8();
     } else {
-        CallTableEntry(gCurTask->unk73, 12, gUnk_087573F4);
+        CallTableEntry(gCurTask->variant, 12, gUnk_087573F4);
     }
     TaskExitTrampoline();
 }
@@ -141,7 +141,7 @@ void sub_080c90c8(void)
             for (;;)
                 ;
         t = &gTasks[id];
-        t->unk73 = v;
+        t->variant = v;
     }
 }
 
@@ -273,7 +273,7 @@ void sub_080c94cc(void)
     gCurTask->unk34 = 255;
     gCurTask->unk24 = 0;
     gCurTask->unk46 = TaskCreateFrom(101, 32);
-    gTasks[gCurTask->unk46].unk73 = 5;
+    gTasks[gCurTask->unk46].variant = 5;
     gTasks[gCurTask->unk46].parent = gCurTaskIdx;
     TaskStop();
     gCurTask->frame = 0xFFFF;
@@ -348,7 +348,7 @@ void sub_080c972c(void)
         if (--gCurTask->unk18 <= 0) {
             id = TaskCreateFrom(101, 32);
             t = &gTasks[id];
-            t->unk73 = 4;
+            t->variant = 4;
             t->pixelX = gCurTask->pixelX;
             t->pixelY = gCurTask->pixelY;
             t->posX = t->pixelX << 16;
@@ -480,14 +480,14 @@ void sub_080c9a28(void)
     TaskYieldTrampoline(68);
     TaskYieldTrampoline(80);
     gCurTask->unk46 = TaskCreateFrom(101, 32);
-    gTasks[gCurTask->unk46].unk73 = 2;
+    gTasks[gCurTask->unk46].variant = 2;
     TaskYieldTrampoline(60);
     TaskYieldTrampoline(60);
     TaskYieldTrampoline(30);
     gCurTask->unk6C = 0;
     do {
         gCurTask->unk46 = TaskCreateFrom(101, 32);
-        gTasks[gCurTask->unk46].unk73 = 9;
+        gTasks[gCurTask->unk46].variant = 9;
         gTasks[gCurTask->unk46].unk74 = gCurTask->unk6C;
         gCurTask->unk6C++;
     } while ((s16)gCurTask->unk6C <= 10);
@@ -513,7 +513,7 @@ void sub_080c9a28(void)
     gCurTask->unk6C = 0;
     do {
         gCurTask->unk46 = TaskCreateFrom(101, 32);
-        gTasks[gCurTask->unk46].unk73 = 10;
+        gTasks[gCurTask->unk46].variant = 10;
         gTasks[gCurTask->unk46].unk74 = gCurTask->unk6C;
         gCurTask->unk6C++;
     } while ((s16)gCurTask->unk6C <= 15);

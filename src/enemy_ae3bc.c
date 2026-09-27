@@ -2339,8 +2339,8 @@ void sub_080af20c(u8 a)
     {
         sp.subtype = 32;
         sp.taskType = 135;
-        sp.unk08 = a;
-        sp.unk09 = gCurTask->unk74;
+        sp.variant = a;
+        sp.spawnArg = gCurTask->unk74;
         sp.tileWord = 0xA110;
         sp.x = gCurTask->posX >> 16;
         sp.y = gCurTask->posY >> 16;
@@ -2409,7 +2409,7 @@ void sub_080af30c(void)
     u->facing = 1;
     v = *c;
     v->unk2C = z;
-    CallTableEntry(v->unk73, 12, gUnk_0874B1DC);
+    CallTableEntry(v->variant, 12, gUnk_0874B1DC);
 }
 
 void sub_080af358(void)
@@ -3274,7 +3274,7 @@ void sub_080b0338(void)
     else
         w = v + gTasks[x->parent].velY;
     x->velY = w;
-    switch (gTasks[gCurTask->parent].unk73)
+    switch (gTasks[gCurTask->parent].variant)
     {
     case 0:
     case 1:
@@ -3962,8 +3962,8 @@ void sub_080b1264(void)
         PlaySfx(0x222);
         sp.subtype = 15;
         sp.taskType = 117;
-        sp.unk08 = gCurTask->unk73;
-        sp.unk09 = gCurTask->unk74;
+        sp.variant = gCurTask->variant;
+        sp.spawnArg = gCurTask->unk74;
         sp.checkTerrain = 1;
         gCurTask->unk46 = CreateActorFromDescHere(&sp, 0);
         gCurTask->unk6C = 0;
@@ -5249,8 +5249,8 @@ void sub_080b2768(void)
     PlaySfx(0x223);
     sp.subtype = 23;
     sp.taskType = 126;
-    sp.unk08 = 0;
-    sp.unk09 = 0;
+    sp.variant = 0;
+    sp.spawnArg = 0;
     z = 0;
     sp.x = 24;
     sp.y = 40;
@@ -5266,8 +5266,8 @@ void sub_080b27b0(void)
 
     sp.subtype = 22;
     sp.taskType = 125;
-    sp.unk08 = 0;
-    sp.unk09 = 0;
+    sp.variant = 0;
+    sp.spawnArg = 0;
     sp.x = (u8)sub_080b2804();
     z = 0;
     sp.y = 224;
@@ -5415,7 +5415,7 @@ void Task_WhispyWoods(void)
     sub_080666f8(k4);
     sub_080664e0(k4);
     u3 = *c;
-    CallTableEntry(u3->unk73, 1, gWhispyWoodsVariants);
+    CallTableEntry(u3->variant, 1, gWhispyWoodsVariants);
 }
 
 void sub_080b2a74(void)

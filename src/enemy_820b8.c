@@ -390,14 +390,14 @@ void sub_080825ec(void)
 
 s32 sub_08082678(void)
 {
-    if (gCurTask->unk73 == 0)
+    if (gCurTask->variant == 0)
         TaskSetMotionY(0, 0x1500, 0x30000);
     return 0;
 }
 
 s32 sub_080826a0(void)
 {
-    if (gCurTask->unk73 == 0)
+    if (gCurTask->variant == 0)
         TaskStopY();
     return 0;
 }
@@ -422,7 +422,7 @@ void Task_Wheelie(void)
     t->drawCallback = (u32)ActorDrawWorldInViewOrDestroy;
     t->layer = 11;
     gCurTask->frameTable = gWheelieFrames;
-    CallTableEntry(gCurTask->unk73, 3, gWheelieVariants);
+    CallTableEntry(gCurTask->variant, 3, gWheelieVariants);
 }
 
 void sub_08082718(void)
@@ -693,7 +693,7 @@ void sub_08082c5c(void)
 {
     struct Task *t = gCurTask;
 
-    if (t->unk73 != 0)
+    if (t->variant != 0)
         return;
     if (--t->unk28 != 0)
         return;
@@ -799,13 +799,13 @@ void Task_Flamer(void)
     t->layer = 11;
     u = gCurTask;
     u->frameTable = gFlamerFrames;
-    switch (u->unk73)
+    switch (u->variant)
     {
     case 0:
         u->unk28 = 20;
         break;
     case 1:
-        u->unk73 = 0;
+        u->variant = 0;
         v = gCurTask;
         if (++v->unk74 > 2)
             gCurTask->unk74 = 2;
@@ -818,5 +818,5 @@ void Task_Flamer(void)
     w->unk2C = 0;
     w->unk30 = 0;
     w->unk34 = 1;
-    CallTableEntry(w->unk73, 3, gFlamerVariants);
+    CallTableEntry(w->variant, 3, gFlamerVariants);
 }

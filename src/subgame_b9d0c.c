@@ -533,7 +533,7 @@ void CreateQuickDrawTimer(void)
         struct Task *t = &gTasks[idx];
 
         t->parent = gCurTaskIdx;
-        t->unk73 = 2;
+        t->variant = 2;
         gCurTask->unk28 = idx;
     }
 }
@@ -552,7 +552,7 @@ void CreateQuickDrawPlayers(s32 a0)
 
             t->parent = gCurTaskIdx;
             t->unk18 = idx;
-            t->unk73 = 0;
+            t->variant = 0;
             t->unk74 = a0;
             t->unk28 = 0;
         }
@@ -578,7 +578,7 @@ void CreateQuickDrawSignal(void)
     {
         struct Task *t = &gTasks[idx];
 
-        t->unk73 = 1;
+        t->variant = 1;
         t->unk18 = 0;
         t->unk1C = 3;
         t->unk20 = 16;

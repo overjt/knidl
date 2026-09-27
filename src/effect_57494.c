@@ -313,7 +313,7 @@ void sub_08057ad4(void)
             u->tileWord = (((struct Task *)u->unk8C)->tileWord + 0x1800) | 4;
             u->frame = 0xFFFF;
         }
-        while (((struct Task *)gCurTask->unk8C)->unk73 == 0)
+        while (((struct Task *)gCurTask->unk8C)->variant == 0)
             TaskYieldTrampoline(1);
         for (;;)
         {
@@ -330,11 +330,11 @@ void sub_08057ad4(void)
             {
                 struct Task *w = gCurTask;
 
-                if (((struct Task *)w->unk8C)->unk73 == 2)
+                if (((struct Task *)w->unk8C)->variant == 2)
                 {
                     w->velX = 0;
                     w->frame = 0xFFFF;
-                    while (((struct Task *)gCurTask->unk8C)->unk73 == 2)
+                    while (((struct Task *)gCurTask->unk8C)->variant == 2)
                         TaskYieldTrampoline(1);
                 }
             }
@@ -381,7 +381,7 @@ void sub_08057c98(void)
     struct Task *t = gCurTask;
     u8 s;
 
-    if (t->player->mode != 13 || (s = ((struct Task *)t->unk8C)->unk73) == 3 || s == 4)
+    if (t->player->mode != 13 || (s = ((struct Task *)t->unk8C)->variant) == 3 || s == 4)
         TaskFree(gCurTaskIdx);
     else
         t->facing = ((struct Task *)t->unk8C)->facing;

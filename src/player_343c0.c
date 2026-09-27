@@ -100,11 +100,11 @@ void PlayerActionRun(void)
         PlayerStartSfx(117, gCurTask->player->playerIndex);
         CreatePlayerEffect(gCurTask->player->playerIndex, 7, 0);
         if (sub_0803fd20(gCurTask->player->playerIndex) == 4)
-            gCurTask->unk73 = 1;
+            gCurTask->variant = 1;
         else
-            gCurTask->unk73 = 0;
+            gCurTask->variant = 0;
     }
-    if (gCurTask->unk73 == 0)
+    if (gCurTask->variant == 0)
     {
         if (gCurTask->player->mouthState == 1)
         {
@@ -261,17 +261,17 @@ void PlayerActionRunUpdate(void)
             gCurTask->player->requestedAction = 1;
             goto end;
         }
-        if (gCurTask->unk73 == 0)
+        if (gCurTask->variant == 0)
         {
             if (sub_0803fd20(gCurTask->player->playerIndex) == 4)
             {
-                gCurTask->unk73 = 1;
+                gCurTask->variant = 1;
                 TaskSetEntry(PlayerActionRun, gCurTaskIdx);
             }
         }
         else if (sub_0803fd20(gCurTask->player->playerIndex) != 4)
         {
-            gCurTask->unk73 = m5;
+            gCurTask->variant = m5;
             TaskSetEntry(PlayerActionRun, gCurTaskIdx);
         }
         goto end;
@@ -367,7 +367,7 @@ void PlayerActionJump(void)
             gCurTask->player->unk14 = 23;
         PlayerSetMotionYPreset(0);
         PlaySfxIfLocalPlayer(100, gCurTask->player->playerIndex);
-        gCurTask->unk73 = 0;
+        gCurTask->variant = 0;
     }
     PlayerPlayBump();
     if (gCurTask->player->mouthState == 1)
@@ -425,13 +425,13 @@ void PlayerActionJumpUpdate(void)
             gCurTask->player->requestedAction = 7;
             break;
         }
-        switch (gCurTask->unk73)
+        switch (gCurTask->variant)
         {
         case 0:
             if (--gCurTask->player->unk14 == 0
                 || (gLatchedHeldKeys[gCurTask->player->playerIndex] & 1) == 0)
             {
-                gCurTask->unk73 = 1;
+                gCurTask->variant = 1;
                 PlayerSetMotionYPreset(1);
                 gCurTask->player->unk14 = 6;
             }
@@ -465,7 +465,7 @@ void sub_08034d34(void)
     gCurTask->updateState = 6;
     if (gCurTask->player->prevMode != 4)
     {
-        gCurTask->unk73 = 0;
+        gCurTask->variant = 0;
         PlayerSetMotionYPreset(0);
         PlaySfxIfLocalPlayer(100, gCurTask->player->playerIndex);
     }
@@ -517,12 +517,12 @@ void sub_08034e60(void)
             gCurTask->player->requestedAction = 7;
             break;
         }
-        switch (gCurTask->unk73)
+        switch (gCurTask->variant)
         {
         case 0:
             if (--gCurTask->player->unk14 == 0)
             {
-                gCurTask->unk73 = 1;
+                gCurTask->variant = 1;
                 PlayerSetMotionYPreset(1);
                 gCurTask->player->unk14 = 5;
             }

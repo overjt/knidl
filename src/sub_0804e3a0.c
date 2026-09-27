@@ -41,7 +41,7 @@ void PlayerActionThrowUpdate(void)
             break;
         }
         t = gCurTask;
-        switch (t->unk73)
+        switch (t->variant)
         {
         case 1:
             p = t->player;
@@ -70,7 +70,7 @@ void PlayerActionThrowUpdate(void)
                 {
                     if (!(gLatchedHeldKeys[v->player->playerIndex] & 2))
                     {
-                        v->unk73 = 2;
+                        v->variant = 2;
                         TaskSetEntry(PlayerActionThrow, gCurTaskIdx);
                     }
                 }

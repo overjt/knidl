@@ -254,13 +254,13 @@ void sub_0808827c(void)
         gCurTask->frame++;
         TaskYieldTrampoline(4);
     }
-    gCurTask->unk73 = 4;
+    gCurTask->variant = 4;
     TaskSleepForever();
 }
 
 void sub_080882f0(void)
 {
-    if (gCurTask->unk73 != 7)
+    if (gCurTask->variant != 7)
     {
         gCurTask->updateCallback = 0;
         TaskSetEntry(Task_Twizzy, gCurTaskIdx);
@@ -366,9 +366,9 @@ void sub_080884d0(void)
 
 s32 sub_080884e4(void)
 {
-    if (gCurTask->unk73 != 9)
+    if (gCurTask->variant != 9)
     {
-        switch (gCurTask->unk73)
+        switch (gCurTask->variant)
         {
         case 6:
             ActorSetState(0);
@@ -387,9 +387,9 @@ s32 sub_08088540(void)
 {
     u8 s;
 
-    if (gCurTask->unk73 != 9)
+    if (gCurTask->variant != 9)
     {
-        switch (gCurTask->unk73)
+        switch (gCurTask->variant)
         {
         case 7:
             s = gCurTask->state;
@@ -407,9 +407,9 @@ s32 sub_08088540(void)
 
 s32 sub_08088590(void)
 {
-    if (gCurTask->unk73 != 9)
+    if (gCurTask->variant != 9)
     {
-        switch (gCurTask->unk73)
+        switch (gCurTask->variant)
         {
         case 7:
             if (gCurTask->state == 1)
@@ -422,9 +422,9 @@ s32 sub_08088590(void)
 
 s32 sub_080885c0(void)
 {
-    if (gCurTask->unk73 != 9)
+    if (gCurTask->variant != 9)
     {
-        switch (gCurTask->unk73)
+        switch (gCurTask->variant)
         {
         case 6:
             gCurTask->velY = 0;
@@ -432,7 +432,7 @@ s32 sub_080885c0(void)
         case 7:
             if (gCurTask->state == 4)
             {
-                gCurTask->unk73 = 4;
+                gCurTask->variant = 4;
                 TaskSetEntry(Task_Twizzy, gCurTaskIdx);
                 return 1;
             }
@@ -451,7 +451,7 @@ void Task_Squishy(void)
     gCurTask->layer = 11;
     gCurTask->frameTable = gSquishyFrames;
     TaskFaceNearestPlayer();
-    CallTableEntry(gCurTask->unk73, 4, gSquishyVariants);
+    CallTableEntry(gCurTask->variant, 4, gSquishyVariants);
 }
 
 void sub_08088658(void)
@@ -731,7 +731,7 @@ void sub_08088ce8(void)
     TaskInitWaterFlags();
     if (gCurTask->waterFlags == 3)
     {
-        gCurTask->unk73 = 0;
+        gCurTask->variant = 0;
         gCurTask->updateCallback = (u32)sub_080886d8;
         gCurTask->onGround = 0;
         ActorSetState(3);
@@ -799,13 +799,13 @@ void sub_08088ea4(void)
     TaskStop();
     TaskSetFrame(5);
     TaskYieldTrampoline(10);
-    gCurTask->unk73 = 0;
+    gCurTask->variant = 0;
     TaskSleepForever();
 }
 
 void sub_08088ed4(void)
 {
-    if (gCurTask->unk73 != 2)
+    if (gCurTask->variant != 2)
         TaskSetEntry(Task_Squishy, gCurTaskIdx);
 }
 
@@ -852,9 +852,9 @@ void sub_08088fac(void)
 
 s32 sub_08088fc0(void)
 {
-    if (gCurTask->unk73 != 3)
+    if (gCurTask->variant != 3)
     {
-        switch (gCurTask->unk73)
+        switch (gCurTask->variant)
         {
         case 0:
             gCurTask->unk28 = 1;
@@ -874,9 +874,9 @@ s32 sub_08088fc0(void)
 
 s32 sub_08089024(void)
 {
-    if (gCurTask->unk73 != 3)
+    if (gCurTask->variant != 3)
     {
-        switch (gCurTask->unk73)
+        switch (gCurTask->variant)
         {
         default:
             return 0;
@@ -890,17 +890,17 @@ s32 sub_08089024(void)
 
 s32 sub_08089064(void)
 {
-    if (gCurTask->unk73 != 3)
+    if (gCurTask->variant != 3)
     {
         gCurTask->unk8C->hitReactions = (u32)gUnk_08742E5C;
-        switch (gCurTask->unk73)
+        switch (gCurTask->variant)
         {
         case 0:
             ActorSetState(3);
             TaskSetEntry(sub_080886b4, gCurTaskIdx);
             return 1;
         case 2:
-            gCurTask->unk73 = 0;
+            gCurTask->variant = 0;
             ActorSetState(3);
             TaskSetEntry(sub_080886b4, gCurTaskIdx);
             return 1;
@@ -911,10 +911,10 @@ s32 sub_08089064(void)
 
 s32 sub_080890d4(void)
 {
-    if (gCurTask->unk73 != 3)
+    if (gCurTask->variant != 3)
     {
         gCurTask->unk8C->hitReactions = (u32)gUnk_08742E50;
-        if (gCurTask->unk73 != 0)
+        if (gCurTask->variant != 0)
             return 0;
         ActorSetState(4);
         TaskSetEntry(sub_080886b4, gCurTaskIdx);
@@ -924,7 +924,7 @@ s32 sub_080890d4(void)
 
 s32 sub_08089120(void)
 {
-    if (gCurTask->unk73 != 3)
+    if (gCurTask->variant != 3)
     {
         TaskTurnAroundAndReverseX();
         return 0;
@@ -933,10 +933,10 @@ s32 sub_08089120(void)
 
 s32 sub_0808913c(void)
 {
-    if (gCurTask->unk73 != 3)
+    if (gCurTask->variant != 3)
     {
         gCurTask->velY = 0;
-        if (gCurTask->unk73 != 2)
+        if (gCurTask->variant != 2)
             return 0;
         ActorSetState(1);
         TaskSetEntry(sub_08088d58, gCurTaskIdx);
@@ -950,7 +950,7 @@ void sub_08089180(void)
     gCurTask->drawCallback = (u32)ActorDrawWorldInViewOrDestroy;
     gCurTask->layer = 11;
     gCurTask->frameTable = gUnk_087526A8;
-    CallTableEntry(gCurTask->unk73, 2, gUnk_0874273C);
+    CallTableEntry(gCurTask->variant, 2, gUnk_0874273C);
 }
 
 void sub_080891c0(void)
@@ -1244,7 +1244,7 @@ void sub_080896dc(void)
 
 s32 sub_080896ec(void)
 {
-    if (gCurTask->unk73 != 1)
+    if (gCurTask->variant != 1)
     {
         if (gCurTask->state == 3)
             return 0;
@@ -1256,7 +1256,7 @@ s32 sub_080896ec(void)
 
 s32 sub_0808972c(void)
 {
-    if (gCurTask->unk73 != 1)
+    if (gCurTask->variant != 1)
     {
         if (gCurTask->state != 3)
             return 0;
@@ -1268,7 +1268,7 @@ s32 sub_0808972c(void)
 
 s32 sub_0808976c(void)
 {
-    if (gCurTask->unk73 != 1)
+    if (gCurTask->variant != 1)
     {
         sub_0806a0f0(-2);
         return 1;
@@ -1277,7 +1277,7 @@ s32 sub_0808976c(void)
 
 s32 sub_0808978c(void)
 {
-    if (gCurTask->unk73 != 1)
+    if (gCurTask->variant != 1)
     {
         if (gCurTask->velX != 0 && gCurTask->velY != 0)
         {
@@ -1291,7 +1291,7 @@ s32 sub_0808978c(void)
 
 s32 sub_080897d0(void)
 {
-    if (gCurTask->unk73 != 1)
+    if (gCurTask->variant != 1)
     {
         gCurTask->velY = -gCurTask->velY;
         ActorSetState(2);
@@ -1315,7 +1315,7 @@ void Task_Glunk(void)
     gCurTask->drawCallback = (u32)ActorDrawWorldInViewOrDestroy;
     gCurTask->layer = 11;
     gCurTask->frameTable = gGlunkFrames;
-    CallTableEntry(gCurTask->unk73, 2, gGlunkVariants);
+    CallTableEntry(gCurTask->variant, 2, gGlunkVariants);
 }
 
 void sub_08089888(void)
@@ -1386,8 +1386,8 @@ void sub_080899fc(void)
         {
             sp.subtype = 5;
             sp.taskType = 107;
-            sp.unk08 = zero = 0;
-            sp.unk09 = gCurTask->unk74;
+            sp.variant = zero = 0;
+            sp.spawnArg = gCurTask->unk74;
             sp.x = zero;
             sp.y = -8;
             sp.checkTerrain = 1;
@@ -1461,7 +1461,7 @@ void sub_08089bdc(void)
 
 s32 sub_08089bf0(void)
 {
-    if (gCurTask->unk73 != 1)
+    if (gCurTask->variant != 1)
     {
         TaskStop();
         return 0;
@@ -1470,7 +1470,7 @@ s32 sub_08089bf0(void)
 
 s32 sub_08089c0c(void)
 {
-    if (gCurTask->unk73 != 1)
+    if (gCurTask->variant != 1)
     {
         gCurTask->accelY = 0x1500;
         gCurTask->speedLimitY = 0x30000;
@@ -1480,7 +1480,7 @@ s32 sub_08089c0c(void)
 
 s32 sub_08089c30(void)
 {
-    if (gCurTask->unk73 != 1)
+    if (gCurTask->variant != 1)
     {
         TaskStop();
         gCurTask->velY = 0x4000;
@@ -1494,7 +1494,7 @@ void sub_08089c58(void)
     gCurTask->drawCallback = (u32)ActorDrawWorldInViewOrDestroy;
     gCurTask->layer = 11;
     gCurTask->frameTable = gUnk_08752828;
-    CallTableEntry(gCurTask->unk73, 2, gUnk_087427B4);
+    CallTableEntry(gCurTask->variant, 2, gUnk_087427B4);
 }
 
 void sub_08089c98(void)
@@ -2028,7 +2028,7 @@ void sub_0808a880(s32 a)
 
 s32 sub_0808a8d4(void)
 {
-    if (gCurTask->unk73 != 1)
+    if (gCurTask->variant != 1)
     {
         switch (gCurTask->state)
         {
@@ -2057,7 +2057,7 @@ s32 sub_0808a8d4(void)
 
 s32 sub_0808a964(void)
 {
-    if (gCurTask->unk73 != 1)
+    if (gCurTask->variant != 1)
     {
         switch (gCurTask->state)
         {
@@ -2073,7 +2073,7 @@ s32 sub_0808a964(void)
 
 s32 sub_0808a9a8(void)
 {
-    if (gCurTask->unk73 != 1)
+    if (gCurTask->variant != 1)
     {
         ActorSetState(5);
         TaskSetEntry(sub_08089d20, gCurTaskIdx);
@@ -2085,7 +2085,7 @@ s32 sub_0808a9d8(void)
 {
     s32 n;
 
-    if (gCurTask->unk73 != 1)
+    if (gCurTask->variant != 1)
     {
         switch (gCurTask->state)
         {
@@ -2114,7 +2114,7 @@ s32 sub_0808a9d8(void)
 
 s32 sub_0808aa28(void)
 {
-    if (gCurTask->unk73 != 1)
+    if (gCurTask->variant != 1)
     {
         switch (gCurTask->state)
         {

@@ -19,7 +19,7 @@
  * `sub_08085e74` / `sub_08085ef0` / `sub_08085fa0` / `sub_08086024` /
  * `sub_08085fec` are the class-3 hook rows at `0x08742D0C` / `0x08742D1C` and
  * `0x08742D28` / `0x08742D38` / `0x08742D40`; the second group switches on
- * Task.unk73 (0 = plain, 1 = riding a carrier, 2-3 = ignore) instead of only
+ * Task.variant (0 = plain, 1 = riding a carrier, 2-3 = ignore) instead of only
  * bailing out on 1.
  *
  * `sub_08085fec` is the second leaf the prologue scan missed (lesson 4.30):
@@ -358,8 +358,8 @@ void sub_08085180(void)
     } while ((s16)u->unk6C <= 14);
     sp.subtype = 2;
     sp.taskType = 104;
-    sp.unk08 = zero2 = 0;
-    sp.unk09 = u->unk74;
+    sp.variant = zero2 = 0;
+    sp.spawnArg = u->unk74;
     sp.checkTerrain = zero2;
     gCurTask->unk46 = CreateActorFromDescHere(&sp, 0);
     gCurTask->unk6C = zero2;
@@ -446,7 +446,7 @@ u8 sub_08085390(void)
     struct Task *t;
 
     t = gCurTask;
-    if (t->unk73 == 1)
+    if (t->variant == 1)
         return 0;
     ActorSetState((u16)t->unk28);
     TaskSetEntry(sub_08084d6c, gCurTaskIdx);
@@ -458,7 +458,7 @@ u8 sub_080853c8(void)
     struct Task *t;
 
     t = gCurTask;
-    if (t->unk73 == 1)
+    if (t->variant == 1)
         return 0;
     t->unk28 = t->state;
     ActorSetState(4);
@@ -468,7 +468,7 @@ u8 sub_080853c8(void)
 
 u8 sub_08085404(void)
 {
-    if (gCurTask->unk73 == 1)
+    if (gCurTask->variant == 1)
         return 0;
     sub_0806a0f0(-2);
     return 1;
@@ -479,7 +479,7 @@ s32 sub_0808542c(void)
     struct Task *t;
 
     t = gCurTask;
-    if (t->unk73 != 1 && t->state == 2)
+    if (t->variant != 1 && t->state == 2)
         TaskTurnAroundAndReverseX();
     return 0;
 }
@@ -496,7 +496,7 @@ void Task_WaddleDoo(void)
     u = gCurTask;
     u->frameTable = gWaddleDooFrames;
     u->unk8C->extraFrame = 4;
-    CallTableEntry(u->unk73, 4, gWaddleDooVariants);
+    CallTableEntry(u->variant, 4, gWaddleDooVariants);
 }
 
 void sub_08085498(void)
@@ -664,9 +664,9 @@ void sub_080856e0(void)
     {
         sp.subtype = 4;
         sp.taskType = 106;
-        sp.unk08 = 0;
+        sp.variant = 0;
         w = gCurTask;
-        sp.unk09 = w->unk74;
+        sp.spawnArg = w->unk74;
         sp.x = 8;
         sp.y = 3;
         sp.checkTerrain = 1;
@@ -859,8 +859,8 @@ void sub_08085a84(void)
     {
         sp.subtype = 4;
         sp.taskType = 106;
-        sp.unk08 = 0;
-        sp.unk09 = 1;
+        sp.variant = 0;
+        sp.spawnArg = 1;
         sp.x = 8;
         sp.y = 3;
         sp.checkTerrain = 1;
@@ -1020,8 +1020,8 @@ void sub_08085cd8(void)
         {
             sp.subtype = 4;
             sp.taskType = 106;
-            sp.unk08 = 0;
-            sp.unk09 = 0;
+            sp.variant = 0;
+            sp.spawnArg = 0;
             sp.x = 8;
             sp.y = 3;
             sp.checkTerrain = 1;
@@ -1052,7 +1052,7 @@ u8 sub_08085e74(void)
     struct Task *t;
 
     t = gCurTask;
-    switch (t->unk73)
+    switch (t->variant)
     {
     case 2:
     case 3:
@@ -1078,7 +1078,7 @@ u8 sub_08085ef0(void)
     struct Task *t;
 
     t = gCurTask;
-    switch (t->unk73)
+    switch (t->variant)
     {
     case 2:
     case 3:
@@ -1110,7 +1110,7 @@ u8 sub_08085ef0(void)
 
 u8 sub_08085fa0(void)
 {
-    switch (gCurTask->unk73)
+    switch (gCurTask->variant)
     {
     case 2:
     case 3:
@@ -1130,7 +1130,7 @@ s32 sub_08085fec(void)
     struct Task *t;
 
     t = gCurTask;
-    switch (t->unk73)
+    switch (t->variant)
     {
     case 2:
     case 3:
@@ -1150,7 +1150,7 @@ s32 sub_08086024(void)
     struct Task *t;
 
     t = gCurTask;
-    switch (t->unk73)
+    switch (t->variant)
     {
     case 2:
     case 3:
@@ -1183,10 +1183,10 @@ void Task_BrontoBurt(void)
     t->layer = 11;
     gCurTask->frameTable = gBrontoBurtFrames;
     TaskFaceNearestPlayer();
-    CallTableEntry(gCurTask->unk73, 7, gBrontoBurtVariants);
+    CallTableEntry(gCurTask->variant, 7, gBrontoBurtVariants);
 }
 
 void sub_080860d8(void)
 {
-    CallTableEntry(gCurTask->unk73, 7, gBrontoBurtVariants);
+    CallTableEntry(gCurTask->variant, 7, gBrontoBurtVariants);
 }

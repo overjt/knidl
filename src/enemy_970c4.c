@@ -93,7 +93,7 @@ void sub_080970c4(void)
         gCurTask->frame = 0xFFFF;
         TaskYieldTrampoline(RandomRange(8));
         w = gCurTask;
-        switch (w->unk73) {
+        switch (w->variant) {
         case 0:
             i0 = w->parent;
             q0 = &gTasks[i0];

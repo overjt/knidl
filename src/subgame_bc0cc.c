@@ -5,7 +5,7 @@
  *   ./tools/fnmatch.sh 0x080BC0CC 0x080BD9E8 src/subgame_bc0cc.c --newpb
  *
  * Task type #94, the duel's sprite objects.  Task_QuickDrawObject dispatches the
- * table 0x087563B0 on Task.unk73, the kind its spawner wrote (ten function
+ * table 0x087563B0 on Task.variant, the kind its spawner wrote (ten function
  * pointers; the call passes 12):
  *
  *   0  QuickDrawPlayer  a player: a six-state machine over 0x08756468 (entry
@@ -123,7 +123,7 @@ void QuickDrawOpponentUpdate(void);
 
 void Task_QuickDrawObject(void)
 {
-    CallTableEntry(gCurTask->unk73, 12, gQuickDrawObjectKinds);
+    CallTableEntry(gCurTask->variant, 12, gQuickDrawObjectKinds);
 }
 
 void sub_080bc0ec(void)
@@ -352,7 +352,7 @@ void sub_080bc4b0(void)
         struct Task *t = &gTasks[id];
         struct Task *p;
 
-        t->unk73 = 1;
+        t->variant = 1;
         p = gCurTask;
         t->unk18 = p->unk20;
         t->unk1C = 6;
@@ -374,7 +374,7 @@ void sub_080bc54c(void)
         struct Task *t = &gTasks[id];
         struct Task *p;
 
-        t->unk73 = 6;
+        t->variant = 6;
         p = gCurTask;
         t->unk18 = p->unk20;
         t->pixelX = p->pixelX + gUnk_08756458[p->unk20];
@@ -408,7 +408,7 @@ void sub_080bc5cc(void)
             break;
         }
         n = &gTasks[idx];
-        n->unk73 = 1;
+        n->variant = 1;
         u = gCurTask;
         n->unk18 = u->unk18;
         n->unk1C = 0;
@@ -457,7 +457,7 @@ void sub_080bc680(void)
             break;
         }
         n = &gTasks[idx];
-        n->unk73 = 1;
+        n->variant = 1;
         n->unk18 = gQuickDrawWins[gCurTask->unk18];
         n->unk1C = 2;
         n->unk20 = 60;
@@ -1062,7 +1062,7 @@ void sub_080bd370(void)
             break;
         }
         n = &gTasks[idx];
-        n->unk73 = 5;
+        n->variant = 5;
         n->unk76 = 1;
         n->pixelX = x;
         n->pixelY = y;

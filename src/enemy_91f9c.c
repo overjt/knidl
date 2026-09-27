@@ -483,8 +483,8 @@ void sub_080925b8(void)
     TaskYieldTrampoline(5);
     spawn.subtype = 30;
     spawn.taskType = 133;
-    spawn.unk08 = 0;
-    spawn.unk09 = gCurTask->unk74;
+    spawn.variant = 0;
+    spawn.spawnArg = gCurTask->unk74;
     spawn.x = 0xFFFE;
     spawn.y = 0;
     spawn.tileWord = sub_0806660c(1);
@@ -493,8 +493,8 @@ void sub_080925b8(void)
     TaskYieldTrampoline(24);
     spawn.subtype = 30;
     spawn.taskType = 133;
-    spawn.unk08 = 1;
-    spawn.unk09 = gCurTask->unk74;
+    spawn.variant = 1;
+    spawn.spawnArg = gCurTask->unk74;
     spawn.x = 0xFFFE;
     spawn.y = 0;
     spawn.tileWord = sub_0806660c(1);
@@ -1386,7 +1386,7 @@ void sub_08093a24(void)
     t->layer = 9;
     u = gCurTask;
     u->frameTable = gUnk_08752F60;
-    CallTableEntry(u->unk73, 1, gUnk_08744170);
+    CallTableEntry(u->variant, 1, gUnk_08744170);
 }
 
 void sub_08093a64(void)
@@ -1462,7 +1462,7 @@ void sub_08093bd4(void)
     v = gCurTask;
     v->unk8C->sfxOverride = 0x20E;
     v->onGround = 0;
-    CallTableEntry(gCurTask->unk73, 2, gUnk_087441A4);
+    CallTableEntry(gCurTask->variant, 2, gUnk_087441A4);
 }
 
 void sub_08093c30(void)
@@ -1570,8 +1570,8 @@ void sub_08093dcc(void)
     u->layer = 9;
     v = gCurTask;
     v->unk28 = 3;
-    TaskSetMotionXFacing(gUnk_0874417C[v->unk73][v->unk74], 0x5A5A5A5A);
-    TaskSetMotionY(gUnk_0874418C[gCurTask->unk73][gCurTask->unk74],
+    TaskSetMotionXFacing(gUnk_0874417C[v->variant][v->unk74], 0x5A5A5A5A);
+    TaskSetMotionY(gUnk_0874418C[gCurTask->variant][gCurTask->unk74],
                  8192, 458752);
     gCurTask->onGround = 0;
     while (1)

@@ -441,7 +441,7 @@ s32 sub_0806e9b4(u8 a, s16 x, s16 y)
     if (i != -1)
     {
         t = &gTasks[i];
-        t->unk73 = a;
+        t->variant = a;
         t->unk24 = x;
         t->unk20 = y;
     }
@@ -463,7 +463,7 @@ void sub_0806e9fc(void)
     u->pixelY += u->unk20;
     u->posX = u->pixelX << 16;
     u->posY = u->pixelY << 16;
-    CallTableEntry(u->unk73, 3, gUnk_0873ECE0);
+    CallTableEntry(u->variant, 3, gUnk_0873ECE0);
     TaskSleepForever();
 }
 

@@ -113,7 +113,7 @@ Lloop:
             g8[t->player->playerIndex] = *(struct M11R8 *)gUnk_0873D044;
             t->unk2C = -1;
             *(u32 *)((u8 *)t->player + 108) = 0;
-            t->unk73 = 0;
+            t->variant = 0;
         }
         PlaySfx(266);
         TaskSetFrame(0x1212);
@@ -180,7 +180,7 @@ Lloop:
             goto Lend;
         t->unk30 = 0;
         t->player->unk14 = 0;
-        t->unk73 = 1;
+        t->variant = 1;
     }
     if (gCurTask->unk28 != 0)
         PlayerStopAxes(1);
@@ -246,7 +246,7 @@ Lloop:
         goto Lend;
     goto Lloop;
 Lend:
-    gCurTask->unk73 = 2;
+    gCurTask->variant = 2;
     TaskSleepForever();
 }
 
@@ -258,7 +258,7 @@ void sub_08043a88(void)
     struct Task *v;
     struct PlayerState *p;
 
-    if (t->unk73 != 2) {
+    if (t->variant != 2) {
         p = t->player;
         if ((s16)p->unk14 != 0) {
             p->unk14--;
@@ -589,7 +589,7 @@ void sub_08044288(void)
     {
         struct Task *t = gCurTask;
         if (t->player->prevMode != 13) {
-            t->unk73 = 0;
+            t->variant = 0;
             {
                 struct M11R20 *d = (struct M11R20 *)gPlayerBodyBoxes;
                 d[gCurTask->player->playerIndex] = *(struct M11R20 *)gUnk_0873CA90;
@@ -605,7 +605,7 @@ void sub_08044288(void)
             gCurTask->unk80 = 4;
         }
     }
-    switch (gCurTask->unk73) {
+    switch (gCurTask->variant) {
     case 0:
         PlayerStopAxes(3);
         {
@@ -648,7 +648,7 @@ void sub_08044288(void)
         }
         TaskSetFrame(0x1227);
         TaskYieldTrampoline(8);
-        gCurTask->unk73 = 2;
+        gCurTask->variant = 2;
         break;
     }
     TaskSleepForever();
@@ -659,11 +659,11 @@ void sub_08044470(void)
 {
     struct Task *t = gCurTask;
 
-    switch (t->unk73) {
+    switch (t->variant) {
     case 0:
         if (PlayerCheckLanding() != 0) {
             PlayerStopAxes(3);
-            gCurTask->unk73 = 1;
+            gCurTask->variant = 1;
             TaskSetEntry(sub_08044288, gCurTaskIdx);
             break;
         }
@@ -743,13 +743,13 @@ void PlayerActionFire(void)
         struct Task *t = gCurTask;
         if (t->player->prevMode != 13) {
             struct Task *u;
-            t->unk73 = 0;
+            t->variant = 0;
             u = gCurTask;
             u->unk28 = 15;
             u->unk80 = 1;
         }
     }
-    switch (gCurTask->unk73) {
+    switch (gCurTask->variant) {
     case 0:
         TaskSetFrame(0x289);
         TaskYieldTrampoline(2);
@@ -763,7 +763,7 @@ void PlayerActionFire(void)
         TaskYieldTrampoline(1);
         gCurTask->frame++;
         TaskYieldTrampoline(1);
-        gCurTask->unk73 = 1;
+        gCurTask->variant = 1;
         /* fallthrough */
     case 1:
         {
@@ -792,7 +792,7 @@ void PlayerActionFire(void)
         PlayerStopSfx();
         gCurTask->frame++;
         TaskYieldTrampoline(3);
-        gCurTask->unk73 = 3;
+        gCurTask->variant = 3;
         break;
     }
     TaskSleepForever();
@@ -803,14 +803,14 @@ void PlayerActionFireUpdate(void)
 {
     struct Task *t = gCurTask;
 
-    switch (t->unk73) {
+    switch (t->variant) {
     case 0:
         break;
     case 1:
         if (t->unk28 == 0) {
             u16 *p = (u16 *)gLatchedHeldKeys;
             if ((p[t->player->playerIndex] & 2) == 0) {
-                t->unk73 = 2;
+                t->variant = 2;
                 TaskSetEntry(PlayerActionFire, gCurTaskIdx);
             }
         } else {
@@ -836,17 +836,17 @@ void PlayerActionSpark(void)
         struct Task *t = gCurTask;
         if (t->player->prevMode != 13) {
             struct Task *u;
-            t->unk73 = 0;
+            t->variant = 0;
             u = gCurTask;
             u->unk28 = 15;
             u->unk80 = 2;
         }
     }
-    switch (gCurTask->unk73) {
+    switch (gCurTask->variant) {
     case 0:
         TaskSetFrame(0x36A);
         TaskYieldTrampoline(4);
-        gCurTask->unk73 = 1;
+        gCurTask->variant = 1;
         /* fallthrough */
     case 1:
         {
@@ -872,7 +872,7 @@ void PlayerActionSpark(void)
         PlayerStopSfx();
         TaskSetFrame(0x36A);
         TaskYieldTrampoline(2);
-        gCurTask->unk73 = 3;
+        gCurTask->variant = 3;
         break;
     }
     TaskSleepForever();

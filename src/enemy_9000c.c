@@ -8,7 +8,7 @@
  * ActorMove as the draw hook (Task.moveCallback) and sub_08065438 as the
  * per-frame hook (Task.drawCallback), points Task.frameTable at the graphics block
  * gBonkersFrames, counts the boss into gUnk_02007D00[0], spawns its helper
- * task with CreateChildTaskHere(177, 1) and hands Task.unk73 to CallTableEntry, which
+ * task with CreateChildTaskHere(177, 1) and hands Task.variant to CallTableEntry, which
  * jumps into the table.  sub_080900f4 is the per-frame body: it runs down
  * Task.unk18, asks sub_0806acf8 / ActorCollideTerrain whether the player interrupted,
  * dispatches Task.updateState through the same table, reloads the graphics through
@@ -146,7 +146,7 @@ void Task_Bonkers(void)
     else
         gCurTask->unk18 = 0;
     sub_08066ae0();
-    CallTableEntry(gCurTask->unk73, 1, gBonkersVariants);
+    CallTableEntry(gCurTask->variant, 1, gBonkersVariants);
 }
 
 void sub_08090090(void)
@@ -481,8 +481,8 @@ void sub_0809074c(void)
     TaskYieldTrampoline(4);
     spawn.subtype = 8;
     spawn.taskType = 110;
-    spawn.unk08 = 0;
-    spawn.unk09 = 0;
+    spawn.variant = 0;
+    spawn.spawnArg = 0;
     spawn.x = 24;
     spawn.y = 0;
     spawn.tileWord = gCurTask->unk8C->savedTileWord;
@@ -854,5 +854,5 @@ void Task_PoppyBrosSr(void)
         gCurTask->unk18 = 0;
     TaskFaceNearestPlayer();
     sub_08066ae0();
-    CallTableEntry(gCurTask->unk73, 1, gPoppyBrosSrVariants);
+    CallTableEntry(gCurTask->variant, 1, gPoppyBrosSrVariants);
 }

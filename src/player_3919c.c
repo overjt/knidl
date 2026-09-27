@@ -11,7 +11,7 @@
  * the results screen), counts the players whose health gPlayerHealth[] is
  * not 0, plays the lost-life or game-over music, loops the fall animation
  * until the callback reaches state 3, and when gUnk_0300234C drops to 0
- * raises M02's stage request gStageRequest = 6; Task.unk73 = 4 or 5 then
+ * raises M02's stage request gStageRequest = 6; Task.variant = 4 or 5 then
  * says whether the player has lives left (gPlayerLives[]).
  * PlayerActionEnterDoor (action 20) enters a door: it stops the player, plays the
  * landing or crouch animation picked by M11's sub_080404e4, calls M07's
@@ -100,7 +100,7 @@ void PlayerActionDie(void)
     u = gCurTask;
     u->player->unk40 |= 8;
     u->player->unk42 |= 0x100;
-    u->unk73 = 0;
+    u->variant = 0;
     gCurTask->player->unk42 &= 0xFFEF;
     SetPlayerInvulnerability(255, 0, gCurTask->player->playerIndex);
     PlayerStopAxes(3);
@@ -197,7 +197,7 @@ void PlayerActionDie(void)
     else
         PlaySfxIfLocalPlayer(158, gCurTask->player->playerIndex);
     TaskYieldTrampoline(59);
-    gCurTask->unk73 = 1;
+    gCurTask->variant = 1;
     gCurTask->player->unk22 = 1;
     gCurTask->player->invulnerabilityTimer = 0x8000;
     for (i = 0; i <= 3; i++)
@@ -230,7 +230,7 @@ void PlayerActionDie(void)
             gCurTask->frame--;
             TaskYieldTrampoline(1);
         }
-    } while (gCurTask->unk73 != 3);
+    } while (gCurTask->variant != 3);
     gUnk_0300234C--;
     t2 = gCurTask;
     t2->moveCallback = 0;
@@ -243,16 +243,16 @@ void PlayerActionDie(void)
     }
     sub_080276cc(gCurTask->player->playerIndex);
     if (gPlayerLives[gCurTask->player->playerIndex] == 0)
-        gCurTask->unk73 = 4;
+        gCurTask->variant = 4;
     else
-        gCurTask->unk73 = 5;
+        gCurTask->variant = 5;
     gUnk_03001F34 = 0;
     TaskSleepForever();
 }
 
 void sub_080396a4(void)
 {
-    switch (gCurTask->unk73)
+    switch (gCurTask->variant)
     {
     case 4:
     {
@@ -287,7 +287,7 @@ void sub_080396a4(void)
                 struct PlayerState *q;
 
                 gCurTask->player->unk14 = 90;
-                gCurTask->unk73 = 2;
+                gCurTask->variant = 2;
                 PlayerStopAxes(2);
                 u = gCurTask;
                 q = u->player;
@@ -305,7 +305,7 @@ void sub_080396a4(void)
         struct Task *t = gCurTask;
 
         if (--t->player->unk14 == 0)
-            t->unk73 = 3;
+            t->variant = 3;
         break;
     }
     case 0:
