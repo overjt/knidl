@@ -41,8 +41,8 @@ extern u32 gUnk_0874273C[];
 extern u32 gUnk_08742744[];
 extern u32 gUnk_08742758[];
 extern u32 gGlunkVariants[];
-extern u32 gUnk_087427A0[];
-extern u32 gUnk_087427A8[];
+extern u32 gGlunkStates[];
+extern u32 gGlunkStateUpdates[];
 extern u32 gUnk_087427B4[];
 extern u32 gUnk_087427BC[];
 extern u32 gUnk_087427E8[];
@@ -121,7 +121,7 @@ void sub_08088fac(void);
 void sub_0808921c(void);
 void sub_080896dc(void);
 void sub_08089808(u8 a);
-void sub_080898dc(void);
+void GlunkUpdate(void);
 void sub_08089bdc(void);
 void sub_08089d44(void);
 void sub_0808a7e0(void);
@@ -1318,23 +1318,23 @@ void Task_Glunk(void)
     CallTableEntry(gCurTask->variant, 2, gGlunkVariants);
 }
 
-void sub_08089888(void)
+void GlunkInit(void)
 {
-    gCurTask->updateCallback = (u32)sub_080898dc;
+    gCurTask->updateCallback = (u32)GlunkUpdate;
     ActorSetState(0);
-    CallTableEntry(gCurTask->state, 2, gUnk_087427A0);
+    CallTableEntry(gCurTask->state, 2, gGlunkStates);
 }
 
-void sub_080898b8(void)
+void GlunkEnterState(void)
 {
-    gCurTask->updateCallback = (u32)sub_080898dc;
-    CallTableEntry(gCurTask->state, 2, gUnk_087427A0);
+    gCurTask->updateCallback = (u32)GlunkUpdate;
+    CallTableEntry(gCurTask->state, 2, gGlunkStates);
 }
 
-void sub_080898dc(void)
+void GlunkUpdate(void)
 {
     if ((u8)sub_08069888() == 0)
-        CallTableEntry(gCurTask->updateState, 2, gUnk_087427A8);
+        CallTableEntry(gCurTask->updateState, 2, gGlunkStateUpdates);
     ActorCheckHits();
     ActorReactToHit();
 }
@@ -1370,7 +1370,7 @@ void sub_0808990c(void)
 void sub_080899d4(void)
 {
     if (gCurTask->state != 0)
-        TaskSetEntry(sub_080898b8, gCurTaskIdx);
+        TaskSetEntry(GlunkEnterState, gCurTaskIdx);
 }
 
 void sub_080899fc(void)
@@ -1406,7 +1406,7 @@ void sub_080899fc(void)
 void sub_08089aac(void)
 {
     if (gCurTask->state != 1)
-        TaskSetEntry(sub_080898b8, gCurTaskIdx);
+        TaskSetEntry(GlunkEnterState, gCurTaskIdx);
 }
 
 void sub_08089ad4(void)

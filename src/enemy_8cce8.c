@@ -120,7 +120,7 @@ extern u32 ActorReactToHit(void);
 extern void sub_0806a0f0(s32 a);
 extern void ActorDie(void);
 extern void sub_0806ee2c(void);
-extern void sub_0808e464(void);
+extern void LaserBallEnterState(void);
 
 /* Forward declarations */
 void sub_0808cce8(void);
@@ -1200,7 +1200,7 @@ void sub_0808e2b4(void)
     if (GetDistSq(&p) <= 16)
     {
         ActorSetState(1);
-        TaskSetEntry(sub_0808e464, gCurTaskIdx);
+        TaskSetEntry(LaserBallEnterState, gCurTaskIdx);
     }
 }
 

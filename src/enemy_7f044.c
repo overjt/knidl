@@ -24,7 +24,7 @@
  *     (`0x08741390`/`0x0874139C`), `sub_0807f380`+`sub_0807f3d4`
  *     (`0x087413A8`/`0x087413B4`), `sub_0807f88c`+`sub_0807f8d8`
  *     (`0x087413C0`/`0x087413C8`), `sub_0807fb00`+`sub_0807fb60`
- *     (`0x087413D0`/`0x087413D4`), `sub_0807fd34`+`sub_0807fd80`
+ *     (`0x087413D0`/`0x087413D4`), `TwisterInit`+`TwisterUpdate`
  *     (`0x08741490`/`0x0874149C`), `sub_080802bc`+`sub_0808031c`
  *     (`0x087414A8`), `sub_0808044c`+`sub_080804c0` (`0x087414C0`),
  *     `sub_0808076c`+`sub_080807d8` (`0x087414D8`) and `sub_08080818`+
@@ -81,8 +81,8 @@ extern struct AnimCmd gUnk_087413EC[];
 extern struct AnimCmd gUnk_08741420[];
 extern struct AnimCmd gUnk_08741454[];
 extern u32 gTwisterVariants[];
-extern u32 gUnk_08741490[];
-extern u32 gUnk_0874149C[];
+extern u32 gTwisterStates[];
+extern u32 gTwisterStateUpdates[];
 extern u32 gUnk_087414A8[];
 extern u32 gUnk_087414AC[];
 extern u8 gUnk_087414B0[];
@@ -144,7 +144,7 @@ void sub_0807f3d4(void);
 s32 sub_0807f6a8(int px, int py, s8 *p);
 void sub_0807f8d8(void);
 void sub_0807fb60(void);
-void sub_0807fd80(void);
+void TwisterUpdate(void);
 void sub_08080374(s32 a, s32 b);
 void sub_0808031c(void);
 void sub_080804c0(void);
@@ -896,30 +896,30 @@ void Task_Twister(void)
     CallTableEntry(gCurTask->variant, 2, gTwisterVariants);
 }
 
-void sub_0807fd34(void)
+void TwisterInit(void)
 {
-    gCurTask->updateCallback = (u32)sub_0807fd80;
+    gCurTask->updateCallback = (u32)TwisterUpdate;
     ActorSetState(0);
-    CallTableEntry(gCurTask->state, 3, gUnk_08741490);
+    CallTableEntry(gCurTask->state, 3, gTwisterStates);
 }
 
-void sub_0807fd64(void)
+void TwisterEnterState(void)
 {
-    CallTableEntry(gCurTask->state, 3, gUnk_08741490);
+    CallTableEntry(gCurTask->state, 3, gTwisterStates);
 }
 
-void sub_0807fd80(void)
+void TwisterUpdate(void)
 {
     struct Task *t = gCurTask;
 
     if (t->state == 0)
     {
         if ((u8)ActorCollideTerrain() == 0)
-            CallTableEntry(gCurTask->updateState, 3, gUnk_0874149C);
+            CallTableEntry(gCurTask->updateState, 3, gTwisterStateUpdates);
     }
     else
     {
-        CallTableEntry(t->updateState, 3, gUnk_0874149C);
+        CallTableEntry(t->updateState, 3, gTwisterStateUpdates);
     }
     ActorCheckHits();
     ActorReactToHit();
@@ -1038,7 +1038,7 @@ void sub_0807fe18(void)
         if ((--g->unk2C & 28) == 0)
         {
             ActorSetState(1);
-            TaskSetEntry(sub_0807fd64, gCurTaskIdx);
+            TaskSetEntry(TwisterEnterState, gCurTaskIdx);
         }
         break;
     }
@@ -1101,7 +1101,7 @@ void sub_0808003c(void)
         if (m == 2)
         {
             ActorSetState(2);
-            TaskSetEntry(sub_0807fd64, gCurTaskIdx);
+            TaskSetEntry(TwisterEnterState, gCurTaskIdx);
             return;
         }
         if (abs(TaskGetDyTo(gCurTask->unk20)) <= 23)
@@ -1193,7 +1193,7 @@ void sub_08080278(void)
         sub_08080374(gCurTask->unk34, 8);
     }
     if (gCurTask->state != 2)
-        TaskSetEntry(sub_0807fd64, gCurTaskIdx);
+        TaskSetEntry(TwisterEnterState, gCurTaskIdx);
 }
 
 void sub_080802bc(void)

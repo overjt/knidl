@@ -4,9 +4,9 @@
  *   ./tools/fnmatch.sh 0x080844C4 0x08084D14 src/enemy_844c4.c --newpb
  *
  * The body of the class-3 task #10 script whose entry (`Task_Noddy`) is at
- * the end of src/enemy_82e68.c: `sub_080844c4` / `sub_080844f8` are the two
+ * the end of src/enemy_82e68.c: `NoddyInit` / `NoddyEnterState` are the two
  * unk73 rows of `0x08741F70`, the six coroutine bodies hang off `0x08741F78`
- * and the six per-frame guards off `0x08741F90`, and `sub_0808451c` is the
+ * and the six per-frame guards off `0x08741F90`, and `NoddyUpdate` is the
  * per-frame hook - it keeps the low half of Task.unk24 (the 16.16 vertical
  * offset the draw helper reads) while Task.onGround bit 0 says the object is
  * still attached, and or-s in 0x10000 while `gTerrainResult[4]` (the room's
@@ -32,11 +32,11 @@ extern u8 gTerrainResult[];
 
 /* ROM tables */
 extern u32 gUnk_0873F500[];
-extern u32 gUnk_08741F78[];
+extern u32 gNoddyStates[];
 extern s16 gUnk_08741FA8[];
 extern s32 gUnk_08741FAC[];
 extern s8 gUnk_08741FB4[];
-extern u32 gUnk_08741F90[];
+extern u32 gNoddyStateUpdates[];
 extern u32 gUnk_08752190[];
 extern u32 gChillyFrames[];
 extern u32 gChillyVariants[];
@@ -68,32 +68,32 @@ extern u8 ActorCollideTerrain(void);
 extern void ActorReactToHit(void);
 
 /* Defined below */
-void sub_0808451c(void);
+void NoddyUpdate(void);
 void sub_08084ae8(void);
 void sub_08084b7c(void);
 s32 sub_08084c84(void);
 
-void sub_080844c4(void)
+void NoddyInit(void)
 {
     struct Task *t;
 
     t = gCurTask;
-    t->updateCallback = (u32)sub_0808451c;
+    t->updateCallback = (u32)NoddyUpdate;
     t->onGround = 1;
     ActorSetState(0);
-    CallTableEntry(gCurTask->state, 6, gUnk_08741F78);
+    CallTableEntry(gCurTask->state, 6, gNoddyStates);
 }
 
-void sub_080844f8(void)
+void NoddyEnterState(void)
 {
     struct Task *t;
 
     t = gCurTask;
-    t->updateCallback = (u32)sub_0808451c;
-    CallTableEntry(t->state, 6, gUnk_08741F78);
+    t->updateCallback = (u32)NoddyUpdate;
+    CallTableEntry(t->state, 6, gNoddyStates);
 }
 
-void sub_0808451c(void)
+void NoddyUpdate(void)
 {
     struct Task *t;
     struct Task *u;
@@ -115,7 +115,7 @@ skip:
     if (r == 0)
     {
         sub_08084c84();
-        CallTableEntry(gCurTask->updateState, 6, gUnk_08741F90);
+        CallTableEntry(gCurTask->updateState, 6, gNoddyStateUpdates);
     }
     v = gCurTask;
     v->unk24 = (v->unk24 & 0xFFFF0000) | v->pixelY;
@@ -123,7 +123,7 @@ skip:
     ActorReactToHit();
 }
 
-void sub_080845b4(void)
+void NoddyWalk(void)
 {
     struct Task *t;
     struct Task *u1;
@@ -173,7 +173,7 @@ void sub_080846c4(void)
     if (--gCurTask->unk30 == 0)
     {
         ActorSetState(1);
-        TaskSetEntry(sub_080844f8, gCurTaskIdx);
+        TaskSetEntry(NoddyEnterState, gCurTaskIdx);
     }
 }
 
@@ -256,7 +256,7 @@ void sub_080847fc(void)
 void sub_08084854(void)
 {
     if (gCurTask->state != 1)
-        TaskSetEntry(sub_080844f8, gCurTaskIdx);
+        TaskSetEntry(NoddyEnterState, gCurTaskIdx);
 }
 
 void sub_0808487c(void)
@@ -299,13 +299,13 @@ void sub_080848e4(void)
     if (u->unk34 == 0 && u->unk30 == 0)
     {
         ActorSetState(3);
-        TaskSetEntry(sub_080844f8, gCurTaskIdx);
+        TaskSetEntry(NoddyEnterState, gCurTaskIdx);
     }
     v = gCurTask;
     if (v->unk74 != 0 && v->unk34 != 0 && v->unk30 <= 119 && TaskGetNearestPlayerDistSq() <= 0xFFF)
     {
         ActorSetState(3);
-        TaskSetEntry(sub_080844f8, gCurTaskIdx);
+        TaskSetEntry(NoddyEnterState, gCurTaskIdx);
     }
 }
 
@@ -332,7 +332,7 @@ void sub_08084960(void)
 void sub_080849b4(void)
 {
     if (gCurTask->state != 3)
-        TaskSetEntry(sub_080844f8, gCurTaskIdx);
+        TaskSetEntry(NoddyEnterState, gCurTaskIdx);
 }
 
 void sub_080849dc(void)
@@ -467,7 +467,7 @@ u8 sub_08084bc0(void)
             goto def;
         }
         ActorSetState(v);
-        TaskSetEntry(sub_080844f8, gCurTaskIdx);
+        TaskSetEntry(NoddyEnterState, gCurTaskIdx);
         return 1;
 def:
         TaskStop();
@@ -497,7 +497,7 @@ u8 sub_08084c0c(void)
             goto out;
         }
         ActorSetState(v);
-        TaskSetEntry(sub_080844f8, gCurTaskIdx);
+        TaskSetEntry(NoddyEnterState, gCurTaskIdx);
         return 1;
     }
 out:

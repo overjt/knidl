@@ -14,8 +14,8 @@
  *     (`0x08741610`/`0x08741614`; its hook is the one that spawns the
  *     class-0 sub-actors 30/31/32 through CreateActorByKind and hands them to
  *     sub_080b5540), `sub_080822b0`+`sub_08082300` (`0x08741618`),
- *     `sub_0808248c`+`sub_080824ec` (`0x08741620`), `sub_08082718`+
- *     `sub_0808276c` (`0x0874164C`/`0x08741664`, six states) and
+ *     `sub_0808248c`+`sub_080824ec` (`0x08741620`), `WheelieInit`+
+ *     `WheelieUpdate` (`0x0874164C`/`0x08741664`, six states) and
  *     `sub_08082bb8`+`sub_08082c18` (`0x0874167C`);
  *   * `sub_08082554` / `sub_080825ec`, the hop cycle that drives the actor
  *     record's unk16/unk18/unk1A/unk1E straight from the task, and
@@ -54,8 +54,8 @@ extern s32 gUnk_08741630[];
 extern u8 gUnk_08741638[];
 extern u8 gUnk_0874163B[];
 extern u32 gWheelieVariants[];
-extern u32 gUnk_0874164C[];
-extern u32 gUnk_08741664[];
+extern u32 gWheelieStates[];
+extern u32 gWheelieStateUpdates[];
 extern u32 gUnk_0874167C[];
 extern u32 gUnk_08741680[];
 extern u32 gFlamerVariants[];
@@ -102,7 +102,7 @@ void sub_08082554(void);
 void sub_080825ec(void);
 void sub_08082300(void);
 void sub_080824ec(void);
-void sub_0808276c(void);
+void WheelieUpdate(void);
 void sub_08082c5c(void);
 void sub_08082cc4(void);
 void sub_08082c18(void);
@@ -425,24 +425,24 @@ void Task_Wheelie(void)
     CallTableEntry(gCurTask->variant, 3, gWheelieVariants);
 }
 
-void sub_08082718(void)
+void WheelieInit(void)
 {
-    gCurTask->updateCallback = (u32)sub_0808276c;
+    gCurTask->updateCallback = (u32)WheelieUpdate;
     TaskFaceNearestPlayer();
     gCurTask->unk28 = 30;
     ActorSetState(0);
-    CallTableEntry(gCurTask->state, 6, gUnk_0874164C);
+    CallTableEntry(gCurTask->state, 6, gWheelieStates);
 }
 
-void sub_08082750(void)
+void WheelieEnterState(void)
 {
-    CallTableEntry(gCurTask->state, 6, gUnk_0874164C);
+    CallTableEntry(gCurTask->state, 6, gWheelieStates);
 }
 
-void sub_0808276c(void)
+void WheelieUpdate(void)
 {
     if ((u8)ActorCollideTerrain() == 0)
-        CallTableEntry(gCurTask->updateState, 6, gUnk_08741664);
+        CallTableEntry(gCurTask->updateState, 6, gWheelieStateUpdates);
     ActorCheckHits();
     ActorReactToHit();
 }
@@ -471,7 +471,7 @@ void sub_08082818(void)
 {
     sub_08082c5c();
     if (gCurTask->state != 0)
-        TaskSetEntry(sub_08082750, gCurTaskIdx);
+        TaskSetEntry(WheelieEnterState, gCurTaskIdx);
 }
 
 void sub_08082844(void)
@@ -486,7 +486,7 @@ void sub_0808287c(void)
 {
     sub_08082c5c();
     if (gCurTask->state != 1)
-        TaskSetEntry(sub_08082750, gCurTaskIdx);
+        TaskSetEntry(WheelieEnterState, gCurTaskIdx);
 }
 
 void sub_080828a8(void)
@@ -535,7 +535,7 @@ void sub_08082908(void)
     if (--v->unk30 == 0)
     {
         ActorSetState(3);
-        TaskSetEntry(sub_08082750, gCurTaskIdx);
+        TaskSetEntry(WheelieEnterState, gCurTaskIdx);
     }
 }
 
@@ -567,7 +567,7 @@ void sub_080829d4(void)
     {
         t->unk28 = 30;
         ActorSetState(1);
-        TaskSetEntry(sub_08082750, gCurTaskIdx);
+        TaskSetEntry(WheelieEnterState, gCurTaskIdx);
     }
 }
 
@@ -619,7 +619,7 @@ void sub_08082a08(void)
 void sub_08082aec(void)
 {
     if (gCurTask->state != 4)
-        TaskSetEntry(sub_08082750, gCurTaskIdx);
+        TaskSetEntry(WheelieEnterState, gCurTaskIdx);
 }
 
 void sub_08082b14(void)
@@ -650,7 +650,7 @@ void sub_08082b48(void)
             ActorSetState(2);
         else
             ActorSetState(1);
-        TaskSetEntry(sub_08082750, gCurTaskIdx);
+        TaskSetEntry(WheelieEnterState, gCurTaskIdx);
     }
 }
 
@@ -735,7 +735,7 @@ s32 sub_08082d14(void)
     case 1:
     case 2:
         ActorSetState(5);
-        TaskSetEntry(sub_08082750, gCurTaskIdx);
+        TaskSetEntry(WheelieEnterState, gCurTaskIdx);
         r = 1;
         break;
     }
@@ -752,7 +752,7 @@ s32 sub_08082d4c(void)
     case 0:
     case 1:
         ActorSetState(4);
-        TaskSetEntry(sub_08082750, gCurTaskIdx);
+        TaskSetEntry(WheelieEnterState, gCurTaskIdx);
         r = 1;
         break;
     case 5:

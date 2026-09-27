@@ -6,7 +6,7 @@
  * See src/enemy_8cce8.c for the three-table pattern all of M24 is built on.
  *
  * This batch holds:
- *   * script 2's rows `sub_0808e404` / `sub_0808e804` (bodies `0x087431EC`
+ *   * script 2's rows `LaserBallInit` / `sub_0808e804` (bodies `0x087431EC`
  *     (4) and `0x0874320C` (1), guards `0x087431FC` (4) and `0x08743210`),
  *     with `sub_0808e480` / `sub_0808e54c` / `sub_0808e610` / `sub_0808e730`
  *     as the bodies and `sub_0808e510` / `sub_0808e5cc` / `sub_0808e704` /
@@ -42,8 +42,8 @@ extern s32 gUnk_030023D4;
 
 /* ROM tables */
 extern u32 gUnk_0873F500[];
-extern u32 gUnk_087431EC[];
-extern u32 gUnk_087431FC[];
+extern u32 gLaserBallStates[];
+extern u32 gLaserBallStateUpdates[];
 extern u32 gUnk_0874320C[];
 extern u32 gUnk_08743210[];
 extern u32 gUnk_08743214[];
@@ -112,9 +112,9 @@ extern void sub_0808e33c(void);
 extern void sub_0808e36c(void);
 
 /* Forward declarations */
-void sub_0808e404(void);
-void sub_0808e440(void);
-void sub_0808e464(void);
+void LaserBallInit(void);
+void LaserBallUpdate(void);
+void LaserBallEnterState(void);
 void sub_0808e480(void);
 void sub_0808e510(void);
 void sub_0808e54c(void);
@@ -169,25 +169,25 @@ void sub_0808f3b8(void);
 void sub_0808f3d4(void);
 void sub_0808f400(void);
 
-void sub_0808e404(void)
+void LaserBallInit(void)
 {
     gCurTask->onGround = 0;
-    gCurTask->updateCallback = (u32)sub_0808e440;
+    gCurTask->updateCallback = (u32)LaserBallUpdate;
     TaskFaceNearestPlayer();
     ActorSetState(0);
-    CallTableEntry(gCurTask->state, 4, gUnk_087431EC);
+    CallTableEntry(gCurTask->state, 4, gLaserBallStates);
 }
 
-void sub_0808e440(void)
+void LaserBallUpdate(void)
 {
-    CallTableEntry(gCurTask->updateState, 4, gUnk_087431FC);
+    CallTableEntry(gCurTask->updateState, 4, gLaserBallStateUpdates);
     ActorCheckHits();
     ActorReactToHit();
 }
 
-void sub_0808e464(void)
+void LaserBallEnterState(void)
 {
-    CallTableEntry(gCurTask->state, 4, gUnk_087431EC);
+    CallTableEntry(gCurTask->state, 4, gLaserBallStates);
 }
 
 void sub_0808e480(void)
@@ -282,7 +282,7 @@ void sub_0808e5cc(void)
     if (t->unk30 > 5 && RandomRange(2) != 0)
     {
         ActorSetState(1);
-        TaskSetEntry(sub_0808e464, gCurTaskIdx);
+        TaskSetEntry(LaserBallEnterState, gCurTaskIdx);
     }
 }
 
@@ -342,7 +342,7 @@ void sub_0808e704(void)
     if (gCurTask->unk30 != 0)
     {
         ActorSetState(3);
-        TaskSetEntry(sub_0808e464, gCurTaskIdx);
+        TaskSetEntry(LaserBallEnterState, gCurTaskIdx);
     }
 }
 

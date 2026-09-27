@@ -19,8 +19,8 @@
  * `count` argument is what separates them (`0x08741778` + 7*4 = `0x08741794`).
  *
  * This batch holds:
- *   * the walker script `sub_08082e68` (7 states, tables `0x08741778` /
- *     `0x08741794`, per-frame hook `sub_08082eb4`, re-arm `sub_08082e98`);
+ *   * the walker script `FlamerInit` (7 states, tables `0x08741778` /
+ *     `0x08741794`, per-frame hook `FlamerUpdate`, re-arm `FlamerEnterState`);
  *   * its terrain library: `sub_08083a48` / `sub_08083ad4` / `sub_08083bbc` /
  *     `sub_08083cb8` probe the room with GetCollisionTileAtPixel/GetCollisionTileAtOffset and turn the
  *     `gUnk_087339F0` / `gCollisionTileSlope` / `gUnk_087416A4` index chain into a
@@ -56,8 +56,8 @@ extern u8 gCollisionTileSlope[];
 extern u32 gUnk_0873F500[];
 extern u32 gUnk_0873F720[];
 extern u32 gUnk_0873F758[];
-extern u32 gUnk_08741778[];
-extern u32 gUnk_08741794[];
+extern u32 gFlamerStates[];
+extern u32 gFlamerStateUpdates[];
 extern u8 gUnk_087416AD[];
 extern s32 gUnk_087416B0[];
 extern u8 gUnk_087416CC[];
@@ -144,7 +144,7 @@ extern u8 ActorCollideTerrain(void);
 extern void ActorReactToHit(void);
 
 /* Defined below */
-void sub_08082eb4(void);
+void FlamerUpdate(void);
 void sub_080839ec(void);
 u8 sub_08083a48(s32 dir);
 u8 sub_08083ad4(s32 dir);
@@ -156,19 +156,19 @@ void sub_08083f04(void);
 void sub_080840f0(void);
 void sub_080842b8(void);
 
-void sub_08082e68(void)
+void FlamerInit(void)
 {
-    gCurTask->updateCallback = (u32)sub_08082eb4;
+    gCurTask->updateCallback = (u32)FlamerUpdate;
     ActorSetState(0);
-    CallTableEntry(gCurTask->state, 7, gUnk_08741778);
+    CallTableEntry(gCurTask->state, 7, gFlamerStates);
 }
 
-void sub_08082e98(void)
+void FlamerEnterState(void)
 {
-    CallTableEntry(gCurTask->state, 7, gUnk_08741778);
+    CallTableEntry(gCurTask->state, 7, gFlamerStates);
 }
 
-void sub_08082eb4(void)
+void FlamerUpdate(void)
 {
     switch (gCurTask->updateState)
     {
@@ -176,13 +176,13 @@ void sub_08082eb4(void)
     case 1:
     case 2:
         if (ActorCollideTerrain() == 0)
-            CallTableEntry(gCurTask->updateState, 7, gUnk_08741794);
+            CallTableEntry(gCurTask->updateState, 7, gFlamerStateUpdates);
         break;
     case 3:
     case 4:
     case 5:
     case 6:
-        CallTableEntry(gCurTask->updateState, 7, gUnk_08741794);
+        CallTableEntry(gCurTask->updateState, 7, gFlamerStateUpdates);
         break;
     }
     ActorCheckHits();
@@ -239,7 +239,7 @@ done:
 void sub_08082fb4(void)
 {
     if (gCurTask->state != 0)
-        TaskSetEntry(sub_08082e98, gCurTaskIdx);
+        TaskSetEntry(FlamerEnterState, gCurTaskIdx);
 }
 
 void sub_08082fdc(void)
@@ -364,7 +364,7 @@ void sub_08083020(void)
         gCurTask->unk28 = 20;
     }
     if (gCurTask->state != 1)
-        TaskSetEntry(sub_08082e98, gCurTaskIdx);
+        TaskSetEntry(FlamerEnterState, gCurTaskIdx);
 }
 
 void sub_080832d0(void)
@@ -396,7 +396,7 @@ void sub_0808330c(void)
             gCurTask->unk34 = 1;
         gCurTask->unk1C = 0;
         ActorSetState(1);
-        TaskSetEntry(sub_08082e98, gCurTaskIdx);
+        TaskSetEntry(FlamerEnterState, gCurTaskIdx);
     }
 }
 
@@ -427,7 +427,7 @@ void sub_08083370(void)
 void sub_08083400(void)
 {
     if (gCurTask->state != 3)
-        TaskSetEntry(sub_08082e98, gCurTaskIdx);
+        TaskSetEntry(FlamerEnterState, gCurTaskIdx);
 }
 
 void sub_08083428(void)
@@ -487,7 +487,7 @@ void sub_08083488(void)
         if (GetDistSq(&p) <= 99)
         {
             ActorSetState(5);
-            TaskSetEntry(sub_08082e98, gCurTaskIdx);
+            TaskSetEntry(FlamerEnterState, gCurTaskIdx);
         }
         else
         {
@@ -561,7 +561,7 @@ void sub_0808379c(void)
 {
     gCurTask->unk20 = ActorTickAnim(gCurTask->unk20);
     if (gCurTask->state != 5)
-        TaskSetEntry(sub_08082e98, gCurTaskIdx);
+        TaskSetEntry(FlamerEnterState, gCurTaskIdx);
 }
 
 void sub_080837d0(void)
@@ -642,7 +642,7 @@ void sub_080838bc(void)
         }
     }
     if (gCurTask->state != 6)
-        TaskSetEntry(sub_08082e98, gCurTaskIdx);
+        TaskSetEntry(FlamerEnterState, gCurTaskIdx);
 }
 
 void sub_0808398c(void)

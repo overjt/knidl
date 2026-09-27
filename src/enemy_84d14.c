@@ -6,7 +6,7 @@
  * Three more scripts in the same three-table shape as src/enemy_82e68.c:
  *   * class-3 task #14 (entry `Task_Chilly` in the previous file): unk73 rows
  *     `0x08741FB8`, bodies `0x08741FC0`, guards `0x08741FD4`, per-frame hook
- *     `sub_08084d90`;
+ *     `ChillyUpdate`;
  *   * class-3 task #17 (`Task_WaddleDoo`): `0x08741FE8` / `0x08741FF8` /
  *     `0x08742004`, per-frame hook `sub_08085500`;
  *   * the `sub_08085858` script: `0x08742030` / `0x08742040`, per-frame hook
@@ -48,8 +48,8 @@ extern u8 gUnk_08742024[];
 extern u32 gWaddleDooVariants[];
 extern u32 gUnk_08741FF8[];
 extern u32 gUnk_08742004[];
-extern u32 gUnk_08741FC0[];
-extern u32 gUnk_08741FD4[];
+extern u32 gChillyStates[];
+extern u32 gChillyStateUpdates[];
 
 /* Externals */
 extern void TaskYieldTrampoline(u32 frames);
@@ -91,18 +91,18 @@ extern u8 ActorCollideTerrain(void);
 extern void ActorReactToHit(void);
 
 /* Defined below */
-void sub_08084d90(void);
+void ChillyUpdate(void);
 void sub_0808537c(void);
 void sub_08085500(void);
 void sub_080858cc(void);
 void sub_08085cc4(void);
 void sub_08085e60(void);
 
-void sub_08084d14(void)
+void ChillyInit(void)
 {
     u32 v;
 
-    gCurTask->updateCallback = (u32)sub_08084d90;
+    gCurTask->updateCallback = (u32)ChillyUpdate;
     v = RandomRange(4);
     switch (v)
     {
@@ -117,22 +117,22 @@ void sub_08084d14(void)
         ActorSetState(3);
         break;
     }
-    CallTableEntry(gCurTask->state, 5, gUnk_08741FC0);
+    CallTableEntry(gCurTask->state, 5, gChillyStates);
 }
 
-void sub_08084d6c(void)
+void ChillyEnterState(void)
 {
     struct Task *t;
 
     t = gCurTask;
-    t->updateCallback = (u32)sub_08084d90;
-    CallTableEntry(t->state, 5, gUnk_08741FC0);
+    t->updateCallback = (u32)ChillyUpdate;
+    CallTableEntry(t->state, 5, gChillyStates);
 }
 
-void sub_08084d90(void)
+void ChillyUpdate(void)
 {
     if (ActorCollideTerrain() == 0)
-        CallTableEntry(gCurTask->updateState, 5, gUnk_08741FD4);
+        CallTableEntry(gCurTask->updateState, 5, gChillyStateUpdates);
     ActorCheckHits();
     ActorReactToHit();
 }
@@ -187,7 +187,7 @@ void sub_08084dc0(void)
 void sub_08084e74(void)
 {
     if (gCurTask->state != 0)
-        TaskSetEntry(sub_08084d6c, gCurTaskIdx);
+        TaskSetEntry(ChillyEnterState, gCurTaskIdx);
 }
 
 void sub_08084e9c(void)
@@ -237,7 +237,7 @@ void sub_08084e9c(void)
 void sub_08084f50(void)
 {
     if (gCurTask->state != 1)
-        TaskSetEntry(sub_08084d6c, gCurTaskIdx);
+        TaskSetEntry(ChillyEnterState, gCurTaskIdx);
 }
 
 void sub_08084f78(void)
@@ -328,7 +328,7 @@ void sub_08084f78(void)
 void sub_08085158(void)
 {
     if (gCurTask->state != 2)
-        TaskSetEntry(sub_08084d6c, gCurTaskIdx);
+        TaskSetEntry(ChillyEnterState, gCurTaskIdx);
 }
 
 void sub_08085180(void)
@@ -382,10 +382,10 @@ void sub_08085180(void)
 void sub_08085274(void)
 {
     if (gCurTask->state != 3)
-        TaskSetEntry(sub_08084d6c, gCurTaskIdx);
+        TaskSetEntry(ChillyEnterState, gCurTaskIdx);
 }
 
-void sub_0808529c(void)
+void ChillyFall(void)
 {
     struct Task *t;
 
@@ -449,7 +449,7 @@ u8 sub_08085390(void)
     if (t->variant == 1)
         return 0;
     ActorSetState((u16)t->unk28);
-    TaskSetEntry(sub_08084d6c, gCurTaskIdx);
+    TaskSetEntry(ChillyEnterState, gCurTaskIdx);
     return 1;
 }
 
@@ -462,7 +462,7 @@ u8 sub_080853c8(void)
         return 0;
     t->unk28 = t->state;
     ActorSetState(4);
-    TaskSetEntry(sub_08084d6c, gCurTaskIdx);
+    TaskSetEntry(ChillyEnterState, gCurTaskIdx);
     return 1;
 }
 

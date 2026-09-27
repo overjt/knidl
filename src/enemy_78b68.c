@@ -20,10 +20,10 @@
  *     the bank's idle bodies tail-call;
  *   * the `0x08740648` / `0x08740668` cue+delay pair the door/lift scripts
  *     index by Task.unk74 (`sub_08078c80`, `sub_08078d88`);
- *   * task #9's four-state script `sub_080794dc`+`sub_0807950c` with its
+ *   * task #9's four-state script `PengyInit`+`PengyUpdate` with its
  *     `0x08740758` class-4 dispatch and the `sub_080795d8` state machine
  *     (a screen-shake amplitude test plus a 120-frame timer);
- *   * `sub_080797ec`, which spawns three class-4 actors from a stack
+ *   * `PengyShoot`, which spawns three class-4 actors from a stack
  *     `struct ActorSpawn` and clears Task.unk74 on the companion it gets
  *     back from CreateChildTaskAtOffsetFacing;
  *   * the `sub_08079eec` / `sub_08079f18` / `sub_08079f54` sound-cue chain
@@ -85,13 +85,13 @@ extern u32 gUnk_08740710[];
 extern u32 gPengyVariants[];
 extern u32 gUnk_08740720[];
 extern u32 gUnk_08740728[];
-extern u32 gUnk_08740758[];
-extern u32 gUnk_08740768[];
+extern u32 gPengyStates[];
+extern u32 gPengyStateUpdates[];
 extern u32 gUnk_08740778[];
 extern u32 gUnk_0874077C[];
 extern u32 gBomberVariants[];
-extern u32 gUnk_08740788[];
-extern u32 gUnk_08740798[];
+extern u32 gBomberStates[];
+extern u32 gBomberStateUpdates[];
 extern u32 gUnk_087407A8[];
 extern u32 gUnk_087407AC[];
 extern u32 gSparkyVariants[];
@@ -165,15 +165,15 @@ void sub_08078e9c(void);
 void sub_08079128(void);
 void sub_08079298(void);
 void sub_0807933c(void);
-void sub_0807950c(void);
-void sub_0807955c(void);
+void PengyUpdate(void);
+void PengyEnterState(void);
 void sub_08079578(void);
 void sub_0807964c(void);
 void sub_0807968c(void);
 void sub_080796d8(void);
 void sub_0807995c(void);
-void sub_08079ad4(void);
-void sub_08079b24(void);
+void BomberUpdate(void);
+void BomberEnterState(void);
 void sub_08079d74(void);
 void sub_0807a09c(void);
 void sub_0807a10c(void);
@@ -612,14 +612,14 @@ void Task_Pengy(void)
 s32 sub_08079480(void)
 {
     ActorSetState(3);
-    TaskSetEntry(sub_0807955c, gCurTaskIdx);
+    TaskSetEntry(PengyEnterState, gCurTaskIdx);
     return 1;
 }
 
 s32 sub_080794a0(void)
 {
     ActorSetState(1);
-    TaskSetEntry(sub_0807955c, gCurTaskIdx);
+    TaskSetEntry(PengyEnterState, gCurTaskIdx);
     return 1;
 }
 
@@ -635,18 +635,18 @@ s32 sub_080794d0(void)
     return 0;
 }
 
-void sub_080794dc(void)
+void PengyInit(void)
 {
-    gCurTask->updateCallback = (u32)sub_0807950c;
+    gCurTask->updateCallback = (u32)PengyUpdate;
     TaskFaceNearestPlayer();
     sub_08079578();
-    CallTableEntry(gCurTask->state, 4, gUnk_08740758);
+    CallTableEntry(gCurTask->state, 4, gPengyStates);
 }
 
-void sub_0807950c(void)
+void PengyUpdate(void)
 {
     if ((u8)ActorCollideTerrain() == 0)
-        CallTableEntry(gCurTask->updateState, 4, gUnk_08740768);
+        CallTableEntry(gCurTask->updateState, 4, gPengyStateUpdates);
     if (gTaskSlotTypes[gCurTaskIdx] != -1)
     {
         ActorCheckHits();
@@ -654,9 +654,9 @@ void sub_0807950c(void)
     }
 }
 
-void sub_0807955c(void)
+void PengyEnterState(void)
 {
-    CallTableEntry(gCurTask->state, 4, gUnk_08740758);
+    CallTableEntry(gCurTask->state, 4, gPengyStates);
 }
 
 void sub_08079578(void)
@@ -679,7 +679,7 @@ void sub_08079578(void)
     }
 }
 
-void sub_080795b4(void)
+void PengyWait(void)
 {
     gCurTask->updateState = 0;
     TaskStop();
@@ -722,13 +722,13 @@ void sub_080795d8(void)
 void sub_0807964c(void)
 {
     ActorSetState(2);
-    TaskSetEntry(sub_0807955c, gCurTaskIdx);
+    TaskSetEntry(PengyEnterState, gCurTaskIdx);
 }
 
 void sub_0807966c(void)
 {
     ActorSetState(1);
-    TaskSetEntry(sub_0807955c, gCurTaskIdx);
+    TaskSetEntry(PengyEnterState, gCurTaskIdx);
 }
 
 void sub_0807968c(void)
@@ -764,7 +764,7 @@ void sub_080796d8(void)
     }
 }
 
-void sub_08079710(void)
+void PengyWalk(void)
 {
     struct Task *t = gCurTask;
     s16 *delay;
@@ -808,11 +808,11 @@ void sub_080797b4(void)
     if (gCurTask->state != 1)
     {
         gCurTask->unk30 = 0;
-        TaskSetEntry(sub_0807955c, gCurTaskIdx);
+        TaskSetEntry(PengyEnterState, gCurTaskIdx);
     }
 }
 
-void sub_080797ec(void)
+void PengyShoot(void)
 {
     struct ActorSpawn spawn;
     s32 i;
@@ -864,11 +864,11 @@ void sub_080798b8(void)
         t->unk28 = 240;
         t->unk2C = 0;
         t->unk30 = 0;
-        TaskSetEntry(sub_0807955c, gCurTaskIdx);
+        TaskSetEntry(PengyEnterState, gCurTaskIdx);
     }
 }
 
-void sub_080798e8(void)
+void PengyFall(void)
 {
     gCurTask->updateState = 3;
     TaskSetFrame(5);
@@ -929,14 +929,14 @@ void Task_Bomber(void)
 s32 sub_08079a20(void)
 {
     ActorSetState(1);
-    TaskSetEntry(sub_08079b24, gCurTaskIdx);
+    TaskSetEntry(BomberEnterState, gCurTaskIdx);
     return 1;
 }
 
 s32 sub_08079a40(void)
 {
     ActorSetState(3);
-    TaskSetEntry(sub_08079b24, gCurTaskIdx);
+    TaskSetEntry(BomberEnterState, gCurTaskIdx);
     return 1;
 }
 
@@ -949,7 +949,7 @@ s32 sub_08079a60(void)
 s32 sub_08079a70(void)
 {
     ActorSetState(2);
-    TaskSetEntry(sub_08079b24, gCurTaskIdx);
+    TaskSetEntry(BomberEnterState, gCurTaskIdx);
     return 1;
 }
 
@@ -959,19 +959,19 @@ s32 sub_08079a90(void)
     return 0;
 }
 
-void sub_08079a9c(void)
+void BomberInit(void)
 {
-    gCurTask->updateCallback = (u32)sub_08079ad4;
+    gCurTask->updateCallback = (u32)BomberUpdate;
     TaskFaceNearestPlayer();
     ActorSetState(0);
     gCurTask->unk28 = 0;
-    CallTableEntry(gCurTask->state, 4, gUnk_08740788);
+    CallTableEntry(gCurTask->state, 4, gBomberStates);
 }
 
-void sub_08079ad4(void)
+void BomberUpdate(void)
 {
     if ((u8)ActorCollideTerrain() == 0)
-        CallTableEntry(gCurTask->updateState, 4, gUnk_08740798);
+        CallTableEntry(gCurTask->updateState, 4, gBomberStateUpdates);
     if (gTaskSlotTypes[gCurTaskIdx] != -1)
     {
         ActorCheckHits();
@@ -979,12 +979,12 @@ void sub_08079ad4(void)
     }
 }
 
-void sub_08079b24(void)
+void BomberEnterState(void)
 {
-    CallTableEntry(gCurTask->state, 4, gUnk_08740788);
+    CallTableEntry(gCurTask->state, 4, gBomberStates);
 }
 
-void sub_08079b40(void)
+void BomberWalk(void)
 {
     gCurTask->updateState = 0;
     TaskStop();

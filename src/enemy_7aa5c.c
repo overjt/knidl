@@ -5,7 +5,7 @@
  *
  * The middle third of enemy/object behaviour bank 1 (see src/enemy_78b68.c for
  * the bank's three-table script pattern).  Twelve more scripts, among them:
- *   * the class-6 "swinging platform" pair `sub_0807aab8`+`ScarfyUpdate` with
+ *   * the class-6 "swinging platform" pair `ScarfyInit`+`ScarfyUpdate` with
  *     its five-state `sub_0807a8fc` dispatch and `sub_0807aa5c`'s two-table
  *     velocity ramp;
  *   * task #12's eight-state script (`sub_0807b300`+`sub_0807b32c`) whose hook
@@ -14,7 +14,7 @@
  *   * the eight-state class-8 rider `sub_0807b3f8`..`sub_0807b8ec`, which
  *     probes for a partner with `TaskIsInRectSlot` over a stack `struct PointPair`
  *     and reacts through the shared `sub_0807b294` state entry;
- *   * the class-4 "conveyor" script `sub_0807c684`+`sub_0807c6b0` with the
+ *   * the class-4 "conveyor" script `UFOInit`+`UFOUpdate` with the
  *     `sub_0807c5ac` box test (`struct Rect` + GetDistSq) and the
  *     `sub_0807c530` aim helper that clamps into `0x08740B3C`/`0x08740B60`;
  *   * `sub_0807c828`, which walks a sixteen-entry cue ring through
@@ -72,14 +72,14 @@ extern u32 gTogezoVariants[];
 extern u32 gUnk_08740A80[];
 extern u32 gUnk_08740A88[];
 extern u32 gUnk_08740A90[];
-extern u32 gUnk_08740AC8[];
-extern u32 gUnk_08740AE0[];
+extern u32 gTogezoStates[];
+extern u32 gTogezoStateUpdates[];
 extern u32 gUnk_08740AF8[];
 extern u32 gUnk_08740AFC[];
 extern u32 gUFOVariants[];
 extern u32 gUnk_08740B08[];
-extern u32 gUnk_08740B84[];
-extern u32 gUnk_08740B94[];
+extern u32 gUFOStates[];
+extern u32 gUFOStateUpdates[];
 extern u32 gUnk_08740BA4[];
 extern u32 gUnk_08740BA8[];
 extern u32 gParasolVariants[];
@@ -181,11 +181,11 @@ void sub_0807b3dc(void);
 void sub_0807b844(void);
 void sub_0807b918(void);
 void sub_0807bd14(void);
-void sub_0807c0ac(void);
-void sub_0807c0fc(void);
+void TogezoUpdate(void);
+void TogezoEnterState(void);
 void sub_0807c394(void);
 s32 sub_0807c5ac(struct Rect *r);
-void sub_0807c6b0(void);
+void UFOUpdate(void);
 void sub_0807ca98(void);
 void sub_0807cc9c(void);
 void sub_0807cd9c(void);
@@ -217,7 +217,7 @@ void sub_0807aa5c(void)
     }
 }
 
-void sub_0807aab8(void)
+void ScarfyInit(void)
 {
     gCurTask->updateCallback = (u32)ScarfyUpdate;
     sub_0807a8d4();
@@ -1089,7 +1089,7 @@ void Task_Togezo(void)
 void sub_0807bd60(void)
 {
     TaskFaceNearestPlayer();
-    TaskSetEntry(sub_0807c0fc, gCurTaskIdx);
+    TaskSetEntry(TogezoEnterState, gCurTaskIdx);
 }
 
 void sub_0807bd7c(void)
@@ -1120,7 +1120,7 @@ s32 sub_0807bdb8(void)
         TaskSetMotionXFacing(gUnk_08740A90[t->unk74], 0x5A5A5A5A);
     }
     ActorSetState(1);
-    TaskSetEntry(sub_0807c0fc, gCurTaskIdx);
+    TaskSetEntry(TogezoEnterState, gCurTaskIdx);
     return 1;
 }
 
@@ -1148,7 +1148,7 @@ s32 sub_0807be08(void)
         break;
     }
     if (gCurTask->state != st)
-        TaskSetEntry(sub_0807c0fc, gCurTaskIdx);
+        TaskSetEntry(TogezoEnterState, gCurTaskIdx);
     return 1;
 }
 
@@ -1254,17 +1254,17 @@ void sub_0807c030(void)
     }
 }
 
-void sub_0807c080(void)
+void TogezoInit(void)
 {
-    gCurTask->updateCallback = (u32)sub_0807c0ac;
+    gCurTask->updateCallback = (u32)TogezoUpdate;
     sub_0807bd7c();
-    CallTableEntry(gCurTask->state, 6, gUnk_08740AC8);
+    CallTableEntry(gCurTask->state, 6, gTogezoStates);
 }
 
-void sub_0807c0ac(void)
+void TogezoUpdate(void)
 {
     if ((u8)ActorCollideTerrain() == 0)
-        CallTableEntry(gCurTask->updateState, 6, gUnk_08740AE0);
+        CallTableEntry(gCurTask->updateState, 6, gTogezoStateUpdates);
     if (gTaskSlotTypes[gCurTaskIdx] != -1)
     {
         ActorCheckHits();
@@ -1272,9 +1272,9 @@ void sub_0807c0ac(void)
     }
 }
 
-void sub_0807c0fc(void)
+void TogezoEnterState(void)
 {
-    CallTableEntry(gCurTask->state, 6, gUnk_08740AC8);
+    CallTableEntry(gCurTask->state, 6, gTogezoStates);
 }
 
 void sub_0807c118(void)
@@ -1302,7 +1302,7 @@ void sub_0807c138(void)
 
     reset:
         ActorSetState(2);
-        TaskSetEntry(sub_0807c0fc, gCurTaskIdx);
+        TaskSetEntry(TogezoEnterState, gCurTaskIdx);
         return;
     }
     gCurTask->unk1C = gUnk_08740A88[gCurTask->unk74];
@@ -1382,7 +1382,7 @@ void sub_0807c2e0(void)
         if (--t->unk20 <= 0)
         {
             ActorSetState(0);
-            TaskSetEntry(sub_0807c0fc, gCurTaskIdx);
+            TaskSetEntry(TogezoEnterState, gCurTaskIdx);
         }
     }
     else if (--t->unk1C <= 0)
@@ -1550,16 +1550,16 @@ void sub_0807c618(void)
     }
 }
 
-void sub_0807c684(void)
+void UFOInit(void)
 {
-    gCurTask->updateCallback = (u32)sub_0807c6b0;
+    gCurTask->updateCallback = (u32)UFOUpdate;
     sub_0807c4d4();
-    CallTableEntry(gCurTask->state, 4, gUnk_08740B84);
+    CallTableEntry(gCurTask->state, 4, gUFOStates);
 }
 
-void sub_0807c6b0(void)
+void UFOUpdate(void)
 {
-    CallTableEntry(gCurTask->updateState, 4, gUnk_08740B94);
+    CallTableEntry(gCurTask->updateState, 4, gUFOStateUpdates);
     if (gTaskSlotTypes[gCurTaskIdx] != -1)
     {
         ActorCheckHits();
@@ -1567,9 +1567,9 @@ void sub_0807c6b0(void)
     }
 }
 
-void sub_0807c6f4(void)
+void UFOEnterState(void)
 {
-    CallTableEntry(gCurTask->state, 4, gUnk_08740B84);
+    CallTableEntry(gCurTask->state, 4, gUFOStates);
 }
 
 void sub_0807c710(void)
@@ -1607,7 +1607,7 @@ void sub_0807c7d8(void)
 {
     gCurTask->unk18 = ActorTickAnim(gCurTask->unk18);
     if (gCurTask->state != 0)
-        TaskSetEntry(sub_0807c6f4, gCurTaskIdx);
+        TaskSetEntry(UFOEnterState, gCurTaskIdx);
 }
 
 void sub_0807c80c(void)
@@ -1646,7 +1646,7 @@ void sub_0807c828(void)
     }
     sub_0807c530(v);
     ActorSetState(2);
-    TaskSetEntry(sub_0807c6f4, gCurTaskIdx);
+    TaskSetEntry(UFOEnterState, gCurTaskIdx);
 }
 
 void sub_0807c8b0(void)
@@ -1670,7 +1670,7 @@ void sub_0807c8d0(void)
         {
             t->unk20 = 0;
             ActorSetState(3);
-            TaskSetEntry(sub_0807c6f4, gCurTaskIdx);
+            TaskSetEntry(UFOEnterState, gCurTaskIdx);
         }
         else
         {
@@ -1691,7 +1691,7 @@ void sub_0807c8d0(void)
                     gCurTask->unk1C = 0;
             }
             ActorSetState(0);
-            TaskSetEntry(sub_0807c6f4, gCurTaskIdx);
+            TaskSetEntry(UFOEnterState, gCurTaskIdx);
         }
     }
 }
@@ -1720,7 +1720,7 @@ void sub_0807ca18(void)
     if (gCurTask->state != 3)
     {
         gCurTask->unk18 = ActorStartAnimNoFlip(gUnk_08740B08);
-        TaskSetEntry(sub_0807c6f4, gCurTaskIdx);
+        TaskSetEntry(UFOEnterState, gCurTaskIdx);
     }
 }
 

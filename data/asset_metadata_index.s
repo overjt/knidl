@@ -4399,7 +4399,7 @@ gUnk_08740710:
 	.word	sub_08079424+1
 	.global	gPengyVariants
 gPengyVariants:
-	.word	sub_080794dc+1
+	.word	PengyInit+1
 	.word	sub_08079918+1
 	.global	gUnk_08740720
 gUnk_08740720:
@@ -4413,14 +4413,14 @@ gUnk_08740740:
 	.global	gUnk_0874074C
 gUnk_0874074C:
 	.incbin	"baserom.gba", 0x74074C, 0xC
-	.global	gUnk_08740758
-gUnk_08740758:
-	.word	sub_080795b4+1
-	.word	sub_08079710+1
-	.word	sub_080797ec+1
-	.word	sub_080798e8+1
-	.global	gUnk_08740768
-gUnk_08740768:
+	.global	gPengyStates
+gPengyStates:
+	.word	PengyWait+1
+	.word	PengyWalk+1
+	.word	PengyShoot+1
+	.word	PengyFall+1
+	.global	gPengyStateUpdates
+gPengyStateUpdates:
 	.word	sub_080795d8+1
 	.word	sub_080797b4+1
 	.word	sub_080798b8+1
@@ -4433,16 +4433,16 @@ gUnk_0874077C:
 	.word	sub_080799dc+1
 	.global	gBomberVariants
 gBomberVariants:
-	.word	sub_08079a9c+1
+	.word	BomberInit+1
 	.word	sub_08079d30+1
-	.global	gUnk_08740788
-gUnk_08740788:
-	.word	sub_08079b40+1
+	.global	gBomberStates
+gBomberStates:
+	.word	BomberWalk+1
 	.word	sub_08079bac+1
 	.word	sub_08079be4+1
 	.word	sub_08079cac+1
-	.global	gUnk_08740798
-gUnk_08740798:
+	.global	gBomberStateUpdates
+gBomberStateUpdates:
 	.word	sub_08079b98+1
 	.word	sub_08079be0+1
 	.word	sub_08079c84+1
@@ -4504,7 +4504,7 @@ gUnk_08740818:
 	.word	sub_0807a87c+1
 	.global	gUnk_08740820
 gUnk_08740820:
-	.word	sub_0807aab8+1
+	.word	ScarfyInit+1
 	.global	gUnk_08740824
 gUnk_08740824:
 	.incbin	"baserom.gba", 0x740824, 0x30
@@ -4606,7 +4606,7 @@ gUnk_08740A74:
 	.word	sub_0807bcec+1
 	.global	gTogezoVariants
 gTogezoVariants:
-	.word	sub_0807c080+1
+	.word	TogezoInit+1
 	.word	sub_0807c350+1
 	.global	gUnk_08740A80
 gUnk_08740A80:
@@ -4623,16 +4623,16 @@ gUnk_08740A98:
 	.global	gUnk_08740AAC
 gUnk_08740AAC:
 	.incbin	"baserom.gba", 0x740AAC, 0x1C
-	.global	gUnk_08740AC8
-gUnk_08740AC8:
+	.global	gTogezoStates
+gTogezoStates:
 	.word	sub_0807c118+1
 	.word	sub_0807c1d0+1
 	.word	sub_0807c210+1
 	.word	sub_0807c248+1
 	.word	sub_0807c280+1
 	.word	sub_0807c2b8+1
-	.global	gUnk_08740AE0
-gUnk_08740AE0:
+	.global	gTogezoStateUpdates
+gTogezoStateUpdates:
 	.word	sub_0807c138+1
 	.word	sub_0807c1f4+1
 	.word	sub_0807c22c+1
@@ -4647,7 +4647,7 @@ gUnk_08740AFC:
 	.word	sub_0807c440+1
 	.global	gUFOVariants
 gUFOVariants:
-	.word	sub_0807c684+1
+	.word	UFOInit+1
 	.word	sub_0807ca50+1
 	.global	gUnk_08740B08
 gUnk_08740B08:
@@ -4658,14 +4658,14 @@ gUnk_08740B3C:
 	.global	gUnk_08740B60
 gUnk_08740B60:
 	.incbin	"baserom.gba", 0x740B60, 0x24
-	.global	gUnk_08740B84
-gUnk_08740B84:
+	.global	gUFOStates
+gUFOStates:
 	.word	sub_0807c710+1
 	.word	sub_0807c80c+1
 	.word	sub_0807c8b0+1
 	.word	sub_0807c9b4+1
-	.global	gUnk_08740B94
-gUnk_08740B94:
+	.global	gUFOStateUpdates
+gUFOStateUpdates:
 	.word	sub_0807c7d8+1
 	.word	sub_0807c828+1
 	.word	sub_0807c8d0+1
@@ -5135,15 +5135,15 @@ gUnk_08741454:
 	.incbin	"baserom.gba", 0x741454, 0x34
 	.global	gTwisterVariants
 gTwisterVariants:
-	.word	sub_0807fd34+1
+	.word	TwisterInit+1
 	.word	sub_080802bc+1
-	.global	gUnk_08741490
-gUnk_08741490:
+	.global	gTwisterStates
+gTwisterStates:
 	.word	sub_0807fdc8+1
 	.word	sub_0807ffa0+1
 	.word	sub_080801cc+1
-	.global	gUnk_0874149C
-gUnk_0874149C:
+	.global	gTwisterStateUpdates
+gTwisterStateUpdates:
 	.word	sub_0807fe18+1
 	.word	sub_0808003c+1
 	.word	sub_08080278+1
@@ -5325,19 +5325,19 @@ gUnk_0874163B:
 	.incbin	"baserom.gba", 0x74163B, 0x5
 	.global	gWheelieVariants
 gWheelieVariants:
-	.word	sub_08082718+1
-	.word	sub_08082718+1
+	.word	WheelieInit+1
+	.word	WheelieInit+1
 	.word	sub_08082bb8+1
-	.global	gUnk_0874164C
-gUnk_0874164C:
+	.global	gWheelieStates
+gWheelieStates:
 	.word	sub_0808279c+1
 	.word	sub_08082844+1
 	.word	sub_080828a8+1
 	.word	sub_08082980+1
 	.word	sub_08082a08+1
 	.word	sub_08082b14+1
-	.global	gUnk_08741664
-gUnk_08741664:
+	.global	gWheelieStateUpdates
+gWheelieStateUpdates:
 	.word	sub_08082818+1
 	.word	sub_0808287c+1
 	.word	sub_08082908+1
@@ -5421,11 +5421,11 @@ gUnk_08741758:
 	.incbin	"baserom.gba", 0x741758, 0x14
 	.global	gFlamerVariants
 gFlamerVariants:
-	.word	sub_08082e68+1
-	.word	sub_08082e68+1
+	.word	FlamerInit+1
+	.word	FlamerInit+1
 	.word	sub_0808398c+1
-	.global	gUnk_08741778
-gUnk_08741778:
+	.global	gFlamerStates
+gFlamerStates:
 	.word	sub_08082f04+1
 	.word	sub_08082fdc+1
 	.word	sub_080832d0+1
@@ -5433,8 +5433,8 @@ gUnk_08741778:
 	.word	sub_08083428+1
 	.word	sub_08083614+1
 	.word	sub_080837d0+1
-	.global	gUnk_08741794
-gUnk_08741794:
+	.global	gFlamerStateUpdates
+gFlamerStateUpdates:
 	.word	sub_08082fb4+1
 	.word	sub_08083020+1
 	.word	sub_0808330c+1
@@ -5656,18 +5656,18 @@ gUnk_08741F64:
 	.incbin	"baserom.gba", 0x741F64, 0xC
 	.global	gNoddyVariants
 gNoddyVariants:
-	.word	sub_080844c4+1
+	.word	NoddyInit+1
 	.word	sub_08084a74+1
-	.global	gUnk_08741F78
-gUnk_08741F78:
-	.word	sub_080845b4+1
+	.global	gNoddyStates
+gNoddyStates:
+	.word	NoddyWalk+1
 	.word	sub_080847fc+1
 	.word	sub_0808487c+1
 	.word	sub_08084960+1
 	.word	sub_080849dc+1
 	.word	sub_080846f4+1
-	.global	gUnk_08741F90
-gUnk_08741F90:
+	.global	gNoddyStateUpdates
+gNoddyStateUpdates:
 	.word	sub_080846c4+1
 	.word	sub_08084854+1
 	.word	sub_080848e4+1
@@ -5685,17 +5685,17 @@ gUnk_08741FB4:
 	.incbin	"baserom.gba", 0x741FB4, 0x4
 	.global	gChillyVariants
 gChillyVariants:
-	.word	sub_08084d14+1
+	.word	ChillyInit+1
 	.word	sub_080852cc+1
-	.global	gUnk_08741FC0
-gUnk_08741FC0:
+	.global	gChillyStates
+gChillyStates:
 	.word	sub_08084dc0+1
 	.word	sub_08084e9c+1
 	.word	sub_08084f78+1
 	.word	sub_08085180+1
-	.word	sub_0808529c+1
-	.global	gUnk_08741FD4
-gUnk_08741FD4:
+	.word	ChillyFall+1
+	.global	gChillyStateUpdates
+gChillyStateUpdates:
 	.word	sub_08084e74+1
 	.word	sub_08084f50+1
 	.word	sub_08085158+1
@@ -6024,14 +6024,14 @@ gUnk_08742778:
 	.incbin	"baserom.gba", 0x742778, 0x20
 	.global	gGlunkVariants
 gGlunkVariants:
-	.word	sub_08089888+1
+	.word	GlunkInit+1
 	.word	sub_08089b44+1
-	.global	gUnk_087427A0
-gUnk_087427A0:
+	.global	gGlunkStates
+gGlunkStates:
 	.word	sub_0808990c+1
 	.word	sub_080899fc+1
-	.global	gUnk_087427A8
-gUnk_087427A8:
+	.global	gGlunkStateUpdates
+gGlunkStateUpdates:
 	.word	sub_080899d4+1
 	.word	sub_08089aac+1
 	.global	gUnk_087427B0
@@ -6425,16 +6425,16 @@ gUnk_087431D8:
 	.incbin	"baserom.gba", 0x7431D8, 0xC
 	.global	gLaserBallVariants
 gLaserBallVariants:
-	.word	sub_0808e404+1
+	.word	LaserBallInit+1
 	.word	sub_0808e804+1
-	.global	gUnk_087431EC
-gUnk_087431EC:
+	.global	gLaserBallStates
+gLaserBallStates:
 	.word	sub_0808e480+1
 	.word	sub_0808e610+1
 	.word	sub_0808e54c+1
 	.word	sub_0808e730+1
-	.global	gUnk_087431FC
-gUnk_087431FC:
+	.global	gLaserBallStateUpdates
+gLaserBallStateUpdates:
 	.word	sub_0808e510+1
 	.word	sub_0808e704+1
 	.word	sub_0808e5cc+1
