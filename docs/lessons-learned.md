@@ -604,6 +604,12 @@ identical source shape reproduces them exactly when the accumulator happens to
 root in a parameter. Recognise it and take the documented exception rather than
 burning days.
 
+**Correction (issue #63, lesson 3.479):** the function this was written on,
+`sub_08001cc8`, matched from plain source: its residue was a goto loop,
+arithmetic written in place and a 3-D table, not the operand-2 tie.  The
+regmove rule the micro-lab measured stands, but it is no evidence that a ROM
+assignment is unreachable - test the rest of the source first.
+
 ### 3.36 A comma expression reverses RTL operand order without reordering emission
 `((var = acc), ext) | var` is the only construct that makes `ext` operand 1
 while still emitting `acc` first. Reach for it whenever the ROM emits A before B
@@ -781,6 +787,12 @@ can never be loop-hoisted at all** — `scan_loop` silently omits such a set fro
 the movable list (`! reg_in_basic_block_p && maybe_never`), so "the movable is
 not in the `.loop` list at all" is a stronger signal than "not desirable".
 
+**Correction (issue #63, lesson 3.488):** in `sub_08002378`, the function
+behind this paragraph and rom-map's "GCSE/PRE insertion" row, the preheader
+load IS a loop.c movable: two pool loads that cse1 never merged, because the
+goto's target block was spliced in behind the handler only after cse1.  The
+`maybe_never` rule is what blocked the merged load in every plain spelling.
+
 ### 3.56 Count pool loads per pass to find which pass merged two mentions
 `grep -c 'symbol_ref/u:SI ("\*\.LCn")' x.{rtl,jump,cse,gcse,loop,cse2}` pins
 exactly which pass collapsed two mentions of one symbol (in one case: 5 loads in
@@ -839,6 +851,14 @@ function's allocation by one hard register (98 bytes off, immovable). Declaring
 it `extern vu16 gUnk_04000208;` gives it its own pool word and the function
 matched instantly. **Diagnostic: the ROM pools an I/O address that your
 candidate derives with an `adds` off a neighbouring register.**
+
+**Note (issue #63, lessons 3.481, 3.482, 3.486):** the opposite also happens.
+In the link library's queue functions, in MultiBootMain and in TaskCreate the
+original spelled the I/O and EWRAM addresses as io_reg.h constants or plain
+numbers, and a symbol there is what goes wrong: gcse PREs symbol loads (never
+a CONST_INT, `want_to_gcse_p`) and keeps the address alive in a register.
+Decide per function from the pool reloads; the landed files' symbols are no
+evidence either way.
 
 ### 3.63 A cycle-exact delay loop is unreachable from pure C
 The ROM's `subs r0,r0,r1; bgt` has no `cmp`; old_agbcc ALWAYS emits
@@ -922,6 +942,12 @@ extension and you unavoidably get `adds rD, rLoaded, rPtr`. Verified with a
 four-case micro-lab (1 use → load first in all three spellings; 2 uses → other
 operand first). No single-use spelling reproduces it, including the comma
 expression of 3.36, `u8 *`/`u32` temps, `q[-1]`, or const/volatile pointees.
+
+**Correction (issue #63, lesson 3.485):** the two functions this was written
+on, `sub_08005bc4` and `sub_08005b20`, matched with a single use:
+`p = (u16 *)((u8 *)q + *p);` - pointer arithmetic puts the pointer first by
+itself (3.54).  The canonicalisation above holds for an integer add of a
+loaded halfword, not for a pointer sum.
 
 ### 3.74 Assorted levers confirmed on the task/draw helpers
 - 3.50's OR quirk applies in HImode too: two or more stores of the SAME 16-bit
@@ -3254,6 +3280,11 @@ one more long-lived value nobody found.  Best sources on #84.  (The straggler
 campaign's plain rewrite gives the same 44 bytes and locates the `p`
 block's cause in cse1/cse2, lesson 3.478.)
 
+**Note (issue #63, lesson 3.487):** SerialCB (`sub_08006d28`) is a second
+function with this residue: three user variables ranked by live lengths that
+update_equiv_regs doubled once per constant set, where the ROM behaves as if
+one doubling were missing.
+
 ### 3.465 The four-loop family's preheader order is agbcc's SECOND loop pass: write the store the plain way and the cell's address is hoisted last
 The answer to M34's "HImode constant" question, which 3.336, 3.344, 3.347,
 3.348 and 3.353 each declared unreachable or mode-exclusive.  The ROM's outer
@@ -3560,6 +3591,240 @@ surviving copy for the multiply, `adds r1, r7, #0`).  Ruled out: `p` as
 arm (44; both 1420).  The next step is an instrumented cse (prints at
 `make_regs_eqv` and at the path boundaries of `cse_end_of_basic_block`);
 the reload trace cannot see either residue.  Best source on #84.
+
+### 3.479 `sub_08001cc8`: a goto loop, arithmetic in place, a real 3-D table - not a regmove tie
+The affine sprite emitter (776 bytes, now `src/early_1cc8.c`) was parked by
+issue #32 at 8 bytes with a proof sketch that the ROM's operand tie is
+unreachable (3.35: regmove only re-targets to operand 2 when the chain roots
+in a hard register).  A fresh draft from the listing was 569 bytes off at
+the exact size, and six source facts took it to zero (early-c), none of them
+about regmove:
+* the template walk is 3.21's goto loop (`loop: { ... } if (!(a0 & 0x1000))
+  goto loop;`): a do/while hoists the pool words and the sx/sy extensions
+  the ROM redoes on every pass;
+* the position arithmetic is written in place, `v >>= 8; v -= h; v &= 0xFF;`:
+  as one expression `v = ((v >> 8) - h) & 0xFF` the result is a fresh
+  block-local pseudo, which moved the store's base into r4 and freed v from
+  its callee-saved register (569 -> 177 bytes in one step);
+* the half-size table is `const u8 gUnk_0872EB14[4][4][2]` indexed
+  `[a0 >> 14][a1 >> 14][0/1]`: get_inner_reference expands the base first,
+  the ROM's `ldr tbl` before the index shifts (a flat `tbl[k]` with a k local
+  computes k first);
+* `if (both) dbl = 0; else dbl = 0x200;` (not `dbl = 0x200; if (both) ...`);
+* `u16 dbl` and the attr0 store as `(s16)dbl | (s16)((a0 & 0xFF00) | v |
+  0x100)`: with `s16 dbl` the test and the OR share one `dbl << 16`, and
+  without the second cast fold re-associates the 0x100 or drops dbl's
+  extension;
+* the matrix entries as `(sx * *(gUnk_0872FB30 + rot)) >> 8` and
+  `*(gUnk_0872FB30 - 128 + rot)`, `sy *` first in the last two (pointer
+  arithmetic scales rot before the load, as in `src/actor_63698.c`).
+**Corrects** 3.35's closing claim that this function's ROM assignment is
+"structurally unreachable from its environment" and rom-map §6.4's "Group B"
+row: the premise (a regmove operand choice) was never the residue.
+
+### 3.480 One scratch variable with five jobs is one pseudo: `sub_080031b8`
+The sound-effect allocator (716 bytes, `src/early_31b8.c`) sat at 36 bytes
+under `--old2` and 444 under the real recipe, diagnosed as "a pure register
+permutation over the last third".  It was one source difference (early-c):
+the original reuses a single `s32 t` as the move mask
+(`t = tbl[song].chans & free`), both swap temporaries (`t =
+(s8)gUnk_03001674[j]`, then the `gUnk_03001180` one), the running priority
+(`t = song->prio; if (t > ...)`, which is also why that compare is the signed
+`ble`) and both ages.  The ROM keeps all five in r4; separate locals are
+separate pseudos that global allocation ranks apart.  Diagnostic: one hard
+register holding several short-lived values of unrelated meaning across the
+whole function is one reused variable (compare the `-da` pseudo list with the
+ROM's per-value registers).  The other fixes were plain: three separate
+`if (...) return 0;` guards (an `||` chain lets reload inherit the first
+`ldr [sp]` of the spilled id; the ROM re-loads it), `song->chans` read
+directly instead of an `allowed` local, and no local for the first mask
+(loop.c hoists `song->chans & free` and cse2 turns it into the ROM's
+`adds r1, r0, #0`).
+
+### 3.481 MultiBootMain is an older SDK revision, and its SIOMULTI is the io_reg.h constant
+`sub_08004984` (1000 bytes, `src/early_4984.c`) is the SDK's MultiBootMain
+(pokeemerald's `src/multiboot.c` is a later revision of the same source).
+Issue #32 left it with "gcc keeps 0x04000120 in a callee-saved register
+where the ROM re-loads the pool word".  From pokeemerald's source it took
+four facts to match:
+* this revision has no `mp->server_type == MULTIBOOT_SERVER_TYPE_QUICK &&` in
+  the `probe_count >= 0xE0` branch, and it stores `mp->response_bit = k = 0;`
+  on a client-info mismatch in case 0 (the listing shows both);
+* SIOMULTI is the io_reg.h constant `REG_SIOMULTI(i)`: gcse's PRE only
+  handles symbol loads (`want_to_gcse_p` rejects a CONST_INT, 3.482), so the
+  symbol `gUnk_04000120` #32 used is exactly what kept the base alive in a
+  callee-saved register;
+* case 0's first loop tests SIOMULTI3 once in front of a do/while
+  (`i = 3; if (REG_SIOMULTI(i) == 0xFFFF) do { k >>= 1; if (--i == 0)
+  break; } while (REG_SIOMULTI(i) == 0xFFFF);`).  pokeemerald's
+  `for (i = 3; i != 0; i--) { if (REG_SIOMULTI(i) != 0xffff) break; k >>= 1; }`
+  compiles to the same instructions except that loop.c builds the walking
+  pointer's start from the rotated test's base register (`adds r1, r6, #6`,
+  jump.c's copy `(set 95 524)` makes it a register, not a constant) where
+  the ROM loads its own pool word 0x04000126; while/for forms without the
+  rotation are 12 bytes shorter;
+* `masterp` is a plain `u8 *` (the MultiBootParam of `src/early_3964.c`);
+  the `vu8 *` of `src/early_4734.c` ties the header bytes' OR to the other
+  operand (4 bytes).
+The MultiBoot SWI returns an int (`adds r5, r0, #0; cmp r5, #0`, no
+truncation): `include/gba/syscall.h` now declares it that way.
+
+### 3.482 The link library's I/O registers are the io_reg.h macros: gcse keeps a symbol's address alive, never a constant's
+EnqueueSendCmd/DequeueRecvCmds (`sub_08006ac8`/`sub_08006bb4`,
+`src/early_6ac8.c`, pokeruby's `link.c` in an older revision) matched from
+pokeruby's source once `REG_IME` was the io_reg.h macro instead of the
+`gUnk_04000208` symbol the landed link files use (early-b).  gcse's PRE
+only handles symbol loads (`want_to_gcse_p` rejects CONST_INT), so a symbol
+REG_IME referenced at entry and exit gets a reaching register at the end of
+the entry block: its address lives across the function (into r9 in
+`sub_08006ac8`, where the ROM re-loads it at the end) or across the first
+reload (0x4D1 went to r4 instead of r2 in `sub_08006bb4`).  The macro took
+`sub_08006bb4` from 16 to 0 and `sub_08006ac8` from 156 to 0 with no other
+change; the same swap (`REG_VCOUNT`) was part of `sub_08006e9c` (3.483) and
+of MultiBootMain (3.481).  Diagnostic: the ROM re-loads an I/O address from
+the pool where your build keeps it in a callee-saved register, or the ROM's
+first reload register is lower than yours.  3.62's opposite hazard (cse
+deriving one constant I/O address from another) did not appear in these
+functions, so the choice is per function, and the landed files' symbols are
+not evidence for either.  **Corrects** #32's diagnoses of the pair ("the
+hoisted zero lands after the giv init; giv-discovery order decides which
+counter spills") and answers L7 of the run: the address loaded into sl
+before the loop was the symbol's reaching register.
+
+### 3.483 DoRecv walks its buffer with a pointer: the ROM steps the register that holds the buffer's address
+`sub_08006e9c` (360 bytes, `src/early_6e9c.c`) was "three extra base
+pseudos in high registers" (#32, 271 bytes).  In this revision the staging
+buffer is walked with a pointer (early-b): `p = gUnk_03004D38;` right after
+the 8-byte copy (which still says `*(struct Pair *)gUnk_03004D38`), `*p++` in
+the checksum test and in the ring store, `*p` for the other reads.  The ROM's
+loops step the very register that holds `&gUnk_03004D38` (`ldrh r0, [r2];
+adds r2, #2` right after the load: a flushed post-increment, not loop.c's
+giv increment, which would land at the biv increment); `gUnk_03004D38[i]`
+makes a strength-reduced copy in a second register, and setting p before the
+copy costs 25 bytes.  gcse's copy propagation cannot fold the two: agbcc's
+`compute_cprop_avinout` passes `cprop_absaltered` (initialised to all ones
+by compute_local_properties) as the kill set, so a copy is available only at
+a block all of whose predecessors end with it, never at a loop header.
+
+### 3.484 LinkInit's "missing movhi scratch" was a chained assignment
+`sub_08003888` (`src/early_3888.c`) stores 0xFF to one u8 byte, -1 to three
+s8 bytes of `gUnk_030023A8` and -1 to the s16 cell `gUnk_0300244C`, the
+last through `movs r0,#1; negs r0,r0; ... adds r1, r0, #0; adds r0, r1,
+#0; strh`.  Issue #32 read that as a missing `*movhi_insn` scratch and parked
+the function at 4 bytes (`--old2`) / 125 (`--newpb`).  The source is one
+chain, `gUnk_0300244C = gUnk_030023A8.unk00[0] = gUnk_030023A8.unk00[1] =
+gUnk_030023A8.unk00[2] = gUnk_030023A8.unk03 = 0xFF;`: the u8 byte gets 0xFF,
+each assignment's value converts to s8 -1 and then to the s16 cell, and the
+chain loads the cell's address first (3.69), which is the ROM's
+`ldr r2, =gUnk_0300244C` ahead of the struct's.  It matched on the first
+build; the rest of the function is a plain transcription in the style of its
+neighbour `sub_08003964`.
+
+### 3.485 Three more #32 verdicts that were plain source: TaskFree, the on-screen test, the "Group B" upload pair
+* `sub_08005654` (TaskFree): a field-by-field reset in the ROM's order matched
+  except its tail, `cls = gUnk_03002710[id] >> 8;
+  gUnk_030024A0[cls][gUnk_03002710[id] & 0xFF] = 0xFF;` - `= 0xFF`, not
+  `|= 0xFF` (the OR quirk of 3.50/3.469 gives the ROM's `ldrb; orrs; strb`
+  with the -1 the reset already holds in r5), a `vu8 [][64]` table, and the
+  class as its own statement so `>> 8` comes before the table's address.
+  #32's "SImode -1 re-materialised at three sites" was the draft's shape.
+* `sub_08005acc` (on-screen test): the spelling of its landed sibling
+  `sub_0800641c` (`s16 x, y; u16 t; ...; t = x + 63; if (t > 366)`).
+* `sub_08005bc4` and `sub_08005b20` (graphics upload): 3.73's "proof" that
+  the ROM's `adds rD, rPtr, rLoaded` needs a loaded value with two uses was
+  tested in a micro-lab of single-statement spellings; the chunk walk is
+  `p = (u16 *)((u8 *)q + *p);` with `q = p + 1`, which gives the ROM's
+  operand order with one use.  The rest was the descriptor read as
+  `tbl = t->unk38; g = tbl[t->unk3C];` (table first, 3.79) and a separate
+  `pal` local for the palette pointer.
+**Corrects** 3.73 (see its note).
+
+### 3.486 TaskCreate: an integer literal is reloaded, a symbol is a local quantity
+`sub_0800579c` (TaskCreate, `src/early_5654.c`) had the ROM's instruction
+stream but every register of its found block one step off: the ROM loads the
+EWRAM stack base as `ldr r7, =0x0203BFE0` straight before its only use, in
+the register `type` has just vacated, while the draft's
+`(u32)gUnk_0203BFE0` became a pool-load pseudo that local allocation served
+first (priority 10000) and pushed the address, table, `type * 8` and zero
+temporaries up by one (the LA print showed it).  The source spells the base
+as the plain number, as the landed `sub_08006148` (`src/early_5d9c.c`)
+already does: `gUnk_03004B90[slot] = 0x0203BFE0 + (slot << 8);`.  A CONST_INT
+operand survives in the addsi3 until reload, which materialises it in a
+reload register, so it never competes in local allocation (early-c).  The
+other two facts were variable roles again (3.480): the search's start slot
+and the returned slot are ONE variable (it then outranks the loop's hoisted
+copies and lands in r4, pushing `type` to r7), and the class list is
+TaskFree's `vu8 [][64]` indexed `[cls][gUnk_03002700[cls]]`.  Diagnostic
+for the literal: a pool constant loaded into a register that is dead
+everywhere else, right before its only use, while the neighbouring locals
+pack as if it did not exist (the listing's pool word is the bare number;
+only `data_symbols` gave it a name).  With 3.481 and 3.482 this is the third
+function of the zone where the constant, not the symbol, was the original
+spelling: the landed files' `gUnk_` names for I/O and RAM addresses are
+harness conventions, not evidence.
+
+### 3.487 SerialCB (`sub_08006d28`): 66 -> 15 bytes, parked on a doubled live length
+The serial interrupt (356 bytes; pokeruby's SerialCB with its DoHandshake
+written inline) is the one function of the zone left in asm.  Two source
+facts took the fresh draft from 66 to 15 bytes (early-b): the handshake
+loop reads through a `u16 *recv` set just before the 8-byte copy and used as
+its destination (`recv = gUnk_03004DA0.recv; *(struct Pair *)recv = ...`),
+while the 0x8FFF test keeps the struct spelling (the ROM's `[r2, #4]` off
+`subs r2, r4, #4`); and the success block's two stores are
+`gUnk_0300243C = gUnk_03004DA0.count; gUnk_030023AC = gUnk_0300243C;`.
+The residue is a pure permutation of three user variables: ours has
+minRecv/recv/playerCount in r4/r5/r6, the ROM recv/playerCount/minRecv.
+The `.greg` priorities are minRecv 3*8/168 = 1428, recv 2*5/80 = 1250,
+playerCount 3*8/304 = 789: playerCount's live length is doubled twice by
+update_equiv_regs (local-alloc.c: once per set carrying cse's `REG_EQUAL 0`
+that comes before its non-constant `++` in insn order - the entry init and
+the loop's reset, which jump1's swap puts before the increment), minRecv's
+once.  The ROM's order is reachable only if minRecv is doubled twice or if
+playerCount is doubled once and recv outranks it; a second `minRecv =
+0xFFFF` that cse1 cannot delete makes the entry init dead (4 bytes short),
+a reset from a `zero` variable doubles playerCount once but puts `zero` in
+r8, and nothing natural raises recv (early-b, round two).  This is the same
+pattern as 3.464/3.478 in `sub_0801b24c` ("the ROM behaves as if one set had
+no REG_EQUIV"): two functions now, which points at the doubling itself -
+for instance at when cse attaches `REG_EQUAL` to a constant set of a
+multiply-set register - rather than at their sources.  Best source on
+issue #63.
+
+### 3.488 `sub_08002378`: merge_blocks splices a goto's target back in, and WHEN it does decides cse1's view
+The 0x7700-series link handshake (752 bytes, `src/early_2378.c`) is the twin
+of the landed `sub_08002668`, whose source reaches its negotiation clamp by
+a goto into a trailing do/while.  #32 diagnosed its 20 bytes as "the ROM's
+`&gUnk_0300244C` preheader load is a GCSE/PRE insertion; ours lands one
+block later" (3.55).  It is a loop.c movable (early-a, from the `-da`
+dumps): the ROM hoists the pool loads of the `== -1` test and of the `= 1`
+store together into sl (`combine_movables`: savings 2, life 3, enough
+against the loop's 98 insns), which is only possible while they are two
+pseudos, each in its own block; in every plain spelling cse1 sees the test
+and the store in one extended basic block and merges the loads, and the
+merged pseudo, live across the `bne`, is not a movable at all (3.55's
+`maybe_never` rule).  The source that matches puts the tail after the
+`for (;;)` (`negotiate: gUnk_0300244C = 1; for (i = 0; i < gUnk_0300243C;
+i++) { ... }`) and reaches it from the 0x7706 handler with a goto.
+agbcc's Cygnus `merge_blocks` (flow.c, run after each jump pass, gcse and
+cse2) splices a single-predecessor block that follows a one-successor block
+back in behind it, which is how the store, `i = 0` and the entry test end
+up inside the handler and the clamp body at the end; the twin's
+goto-into-do/while is another way of writing the same layout.  When it
+splices is what matters: with `if (gUnk_0300244C != -1) return; goto
+negotiate;` it happens before cse1 and cse1 merges the loads (#32's
+residue); a conjunct cse1 can fold keeps the handler's last block two-way
+until cse1 has run, so the loads stay separate and loop.c hoists them.  The
+landed source uses `if (gUnk_0300244C == -1 && gUnk_03001EFC == 0) goto
+negotiate;` - the handler has just cleared `gUnk_03001EFC`, so the test is
+always true and costs no code.  It is documented at the site as a
+STAND-IN: any cse1-foldable conjunct works (a repeated `gUnk_0300244C ==
+-1` too), and what the original tested cannot be read from the ROM.  A loop
+note (`do { } while (0)` around the test) also splits cse1's view but
+costs the i-loop its constant biv reset (`i = 0` is a biv set only when
+loops_enclosed == 1), 61 bytes.  Diagnostic: when the ROM hoists a pair of loads
+your build keeps merged across a branch, look for a cse1 block boundary a
+later pass removed.  **Corrects** 3.55's "the ROM's preheader load must
+come from GCSE's PRE" for this function.
 
 ## 4. Splitting ROM ranges into asm (tools/split.py)
 
@@ -9104,6 +9369,42 @@ installed as a callback by `sub_080cd70c`) and a 4.40 phantom
   body contains a `;`; the M11 draft's `SX()` sign-extension macro was
   expanded textually before landing (the preprocessor's own output, so the
   bytes cannot change), which also removed a macro that declared a local.
+
+### 4.112 Harness notes from #63 (the engine zone's last fourteen functions)
+- The census took minutes: the fourteen rows tiled the ten asm holes (13
+  chunk files; the brief's "13 holes" counted chunk files), every size was a
+  multiple of 4, no pool word crossed a row, and a whole-ROM `bl`/pointer
+  scan found only the known entries plus coincidental Thumb-bit words in
+  graphics data; `sub_08005b20` has no reference at all (a dead export,
+  curated).  No census row changed.
+- #32's candidates were long gone (`build/scratch/` is wiped by `make
+  clean`); every function was redrafted from the listing in about an hour
+  and a half, and the five small ones matched within a few builds each.
+  The drafts' residue table, not #32's, was the plan: its "Group B"
+  functions were among the first to fall.
+- Two thirds of the zone's hard functions are library code with public
+  reference sources: MultiBootMain is the SDK's (pokeemerald
+  `src/multiboot.c`) and the link driver is pokeruby's `src/link.c`
+  (EnqueueSendCmd, DequeueRecvCmds, SerialCB with DoHandshake inlined,
+  DoRecv); both are older revisions, so the reference is a draft to diff
+  against the listing, not an answer.  Fetch them before drafting.
+- The fan-out was three agents by subsystem (the link handshake plus
+  MultiBootMain; the four link queue/IRQ functions; the affine emitter plus
+  the SE allocator) after the coordinator had matched the five small ones.
+  The coordinator took MultiBootMain over by message once the agent was
+  busy with its other function, and finished agents took the coordinator's
+  open function (plain transfer) and raced the last big one through
+  `variants.sh`.
+- The RRTRACE agbcc of 4.77 with the `LA` print was rebuilt from a fresh
+  clone at `59b966e` in about five minutes; the `LA` print located
+  TaskCreate's cascade (3.486) in one run.
+- Result: 13 of 14 functions landed in about three hours from the census
+  (all but SerialCB, 3.487), twelve from plain source and one
+  (`sub_08002378`) with a commented zero-code stand-in conjunct (3.488).
+  Every one of #32's diagnoses turned out to describe the old candidate,
+  not the function; the recurring real causes were constant-versus-symbol
+  spellings (3.481, 3.482, 3.486), variable roles (3.480, 3.486) and
+  library revisions (3.481, 3.483).
 
 ## 5. Workflow that worked
 
