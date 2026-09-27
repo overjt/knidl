@@ -294,6 +294,7 @@
     "sub_08006bb4",
     "sub_08006cd4",
     "sub_08006d18",
+    "sub_08006d28",
     "sub_08006e8c",
     "sub_08006e9c",
     "sub_08007004",
@@ -8236,10 +8237,6 @@
     "0x087E1F20": "gUnk_087E1F20"
   },
   "segments": [
-    {
-      "name": "game_code_early_080011ac_08002378_08003110_08003888_08004000_08004fec_08005654_08005acc_08005d9c_08006d18",
-      "chunk_bytes": 65536
-    },
     {
       "name": "game_code_and_rodata_08018b84_08019eec_0801a3e4_0801a8c8",
       "chunk_bytes": 65536
