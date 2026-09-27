@@ -15336,6 +15336,23 @@
       "why": "include/ending.h:95 `u32 gUnk_087583CC[][8]`: CreditsMain stores scenes[i] in gUnk_0200EC50 (src/credits_cd330.c:90), which InputRecorderStart copies to gInputRecordingPtr (src/save_b6f38.c:139); extent: up to the label gUnk_0875841E (0x0875841C-0x08758424, the rest of row 2, need that label moved, see REPORT)"
     }
   ],
+  "m4a": {
+    "why": "the m4a song structure (tools/m4a_struct.py): every song header, track stream, voicegroup, drum kit, WaveData and 4-bit wave the two song tables reach, walked with this ROM's engine (asm/m4a_1.s MPlayMain/ply_*, src/m4a_c1.c MPlayStart/MPlayExtender, src/m4a_ctrl.c ply_memacc/ply_xcmd, src/m4a_cgb.c CgbSound) and re-encoded byte for byte; split.py labels every pointer target (gSong_, gSongTrack_, gSongLoc_, gVoiceGroup_, gWave_, gProgWave_ + address, config names win) and emits every pointer field as a .word at any alignment",
+    "song_tables": [
+      {
+        "start": "0x0860B460",
+        "count": 579,
+        "stride": 8,
+        "why": "gSongTable[579] (struct Song {SongHeader *header; u16 ms, me}, include/gba/m4a_internal.h): m4aSongNumStart and siblings (src/m4a_c1.c) pass gSongTable[n].header to MPlayStart; 579 entries end at the first song header 0x0860C678 (rom-map section 8.3)"
+      },
+      {
+        "start": "0x0872EB38",
+        "count": 479,
+        "stride": 8,
+        "why": "gSfxTable[479] (struct SongEntry {SongHeader *header; u8 prio, chans, pad[2]}, include/sound.h): PlaySfx (src/early_31b8.c) takes id 100..578 and passes gSfxTable[id - 100].header to MPlayStart; sub_0800d404 (src/menu_0ca10.c) scans indices up to 0x1DF; the table ends at gUnk_0872FA30"
+      }
+    ]
+  },
   "segments": [
     {
       "name": "m4a_1"

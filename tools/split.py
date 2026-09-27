@@ -1061,7 +1061,7 @@ class DataPlan(object):
     """
 
     def __init__(self, rom, segments, db_rows, data_symbols, extra_labels,
-                 pointer_tables, not_pointers, c_ranges=()):
+                 pointer_tables, not_pointers, c_ranges=(), m4a=None):
         self.rom = rom
         self.c_ranges = list(c_ranges)  # [(start, end)] of c_data segments
         self.segments = segments  # [(name, start, end, asset)]
@@ -1078,9 +1078,26 @@ class DataPlan(object):
         # Slots of "extent": "next-label" tables (docs/data.md 5.1), kept
         # apart so the metrics can count them separately.
         self.heuristic_slots = set()
+        # The m4a song structure (config "m4a", tools/m4a_struct.py,
+        # docs/data.md 3.4): a label at every song header, track position,
+        # voicegroup and wave, and a pointer slot at every pointer field,
+        # at ANY alignment (track operands are unaligned; gas and ld handle
+        # an unaligned R_ARM_ABS32).  Config names win over the generated
+        # ones at the same address.
+        self.m4a_labels = {}
+        self.m4a_slots = {}
+        if m4a:
+            import m4a_struct
+            try:
+                self.m4a_labels, self.m4a_slots = m4a_struct.split_plan(
+                    rom, {"m4a": m4a},
+                    set(data_symbols) | set(extra_labels))
+            except m4a_struct.M4AError as e:
+                raise ConfigError("m4a: %s" % e)
         self._build_labels()
         self.slots = self._build_slots(pointer_tables)
         self._build_words()
+        self._build_unaligned_words()
 
     # ---- helpers -------------------------------------------------------
 
@@ -1131,6 +1148,9 @@ class DataPlan(object):
                 names = self.labels.setdefault(addr, [])
                 if name not in names:
                     names.append(name)
+        for addr, name in sorted(self.m4a_labels.items()):
+            if self.segment_of(addr) is not None:
+                self.labels.setdefault(addr, []).append(name)
 
     def _table_slots(self, table, index):
         """[(slot addr, why)] for one "pointer_tables" entry."""
@@ -1239,6 +1259,9 @@ class DataPlan(object):
                     continue
                 for off in loffs:
                     add(target + off, lwhy)
+        for addr, (_target, why) in sorted(self.m4a_slots.items()):
+            if addr % 4 == 0:
+                add(addr, why)
         return slots
 
     def _build_words(self):
@@ -1281,6 +1304,36 @@ class DataPlan(object):
         if operand is not None:
             self.words[addr] = operand
             self.kinds[addr] = "code"
+
+    def _build_unaligned_words(self):
+        """The m4a slots that are not 4-aligned (track operands)."""
+        for addr, (target, why) in sorted(self.m4a_slots.items()):
+            if addr % 4 == 0:
+                continue
+            seg = self.segment_of(addr)
+            if seg is None or addr + 4 > seg[2]:
+                raise ConfigError("m4a slot 0x%08X is not inside a data "
+                                  "segment" % addr)
+            if u32(self.rom, vma_off(addr)) != target:
+                raise ConfigError("m4a slot 0x%08X does not hold 0x%08X"
+                                  % (addr, target))
+            clash = [a for a in range((addr & ~3) - 4, addr + 4)
+                     if a in self.words and a < addr + 4 and a + 4 > addr]
+            inside = [a for a in (addr + 1, addr + 2, addr + 3)
+                      if a in self.labels]
+            if clash or inside:
+                self.errors.append(
+                    "m4a slot 0x%08X (%s) overlaps %s" % (
+                        addr, why, "the word at 0x%08X" % clash[0] if clash
+                        else "the label at 0x%08X" % inside[0]))
+                continue
+            operand = self.label_operand(target)
+            if operand is None:
+                self.missing.setdefault(target, []).append((addr, why))
+                continue
+            self.words[addr] = operand
+            self.kinds[addr] = "data"
+            self.why[addr] = why
 
     def missing_label_entries(self):
         """data_symbols entries that would resolve every missing target."""
@@ -1728,7 +1781,7 @@ def main():
                 rom,
                 [(n, s, e, a) for n, s, e, _k, a in data_entries],
                 rows, data_symbols, extra_labels, pointer_tables,
-                not_pointers, c_ranges,
+                not_pointers, c_ranges, m4a=cfg.get("m4a"),
             )
         except ConfigError as e:
             sys.exit("error: %s" % e)

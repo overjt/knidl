@@ -230,7 +230,12 @@ def main():
     for name, mod in load_providers(tools_dir):
         results.append((name, mod.provide(rom, cfg, segs)))
 
-    coin = Ranges([c for _n, r in results for c in r["coincidence"]])
+    # proven coincidences and next-label-extent ones in separate unions, so
+    # a heuristic range never hides the kind of a proven one it overlaps
+    coin = Ranges([c for _n, r in results for c in r["coincidence"]
+                   if not c[2].endswith("-nextlabel")])
+    heur = Ranges([c for _n, r in results for c in r["coincidence"]
+                   if c[2].endswith("-nextlabel")])
     proven = {}
     for name, r in results:
         for a, why in r["pointer"]:
@@ -264,7 +269,7 @@ def main():
             cls = "pointer"
         else:
             c = coin.covering(a, a + 4)
-            if c and not c[0].endswith("-nextlabel"):
+            if c:
                 cls = "coincidence"
                 kinds_total[c[0]] = kinds_total.get(c[0], 0) + 1
             else:
@@ -272,7 +277,7 @@ def main():
                 # extent is only the span to the next label (docs/data.md
                 # 5.1) is counted apart and not treated as proven
                 cls = "unknown"
-                if c:
+                if heur.covering(a, a + 4):
                     row["heuristic"] += 1
                 unknown.append(("0x%08X" % a, "0x%08X" % v))
         row[cls] += 1

@@ -3,7 +3,7 @@
 @ Segment m4a_song_table: 0x0860B430-0x0860C678 (data, 0x1248 bytes)
 @ Structure only (docs/data.md): labels, symbolic pointer words and
 @ .incbin slices of the user's baserom.gba; no ROM bytes are committed.
-@ 2 label(s), 0 code pointer(s), 8 data pointer(s), 5 .incbin slice(s) (0x1228 bytes).
+@ 2 label(s), 0 code pointer(s), 587 data pointer(s), 583 .incbin slice(s) (0x91C bytes).
 
 	.section .m4a_song_table, "a"
 	.global	m4a_song_table
@@ -24,4 +24,1161 @@ gMPlayTable:
 	.incbin	"baserom.gba", 0x60B45C, 0x4
 	.global	gSongTable
 gSongTable:
-	.incbin	"baserom.gba", 0x60B460, 0x1218
+	.word	gSong_0870F504
+	.incbin	"baserom.gba", 0x60B464, 0x4
+	.word	gSong_0870F7D8
+	.incbin	"baserom.gba", 0x60B46C, 0x4
+	.word	gSong_0870FF7C
+	.incbin	"baserom.gba", 0x60B474, 0x4
+	.word	gSong_08710060
+	.incbin	"baserom.gba", 0x60B47C, 0x4
+	.word	gSong_08710370
+	.incbin	"baserom.gba", 0x60B484, 0x4
+	.word	gSong_087104F0
+	.incbin	"baserom.gba", 0x60B48C, 0x4
+	.word	gSong_087106A4
+	.incbin	"baserom.gba", 0x60B494, 0x4
+	.word	gSong_087109E8
+	.incbin	"baserom.gba", 0x60B49C, 0x4
+	.word	gSong_08710B90
+	.incbin	"baserom.gba", 0x60B4A4, 0x4
+	.word	gSong_08710DB8
+	.incbin	"baserom.gba", 0x60B4AC, 0x4
+	.word	gSong_087110D0
+	.incbin	"baserom.gba", 0x60B4B4, 0x4
+	.word	gSong_08711BE4
+	.incbin	"baserom.gba", 0x60B4BC, 0x4
+	.word	gSong_087124E4
+	.incbin	"baserom.gba", 0x60B4C4, 0x4
+	.word	gSong_087127DC
+	.incbin	"baserom.gba", 0x60B4CC, 0x4
+	.word	gSong_08712988
+	.incbin	"baserom.gba", 0x60B4D4, 0x4
+	.word	gSong_087130D0
+	.incbin	"baserom.gba", 0x60B4DC, 0x4
+	.word	gSong_087131E4
+	.incbin	"baserom.gba", 0x60B4E4, 0x4
+	.word	gSong_087139CC
+	.incbin	"baserom.gba", 0x60B4EC, 0x4
+	.word	gSong_0871485C
+	.incbin	"baserom.gba", 0x60B4F4, 0x4
+	.word	gSong_08714B38
+	.incbin	"baserom.gba", 0x60B4FC, 0x4
+	.word	gSong_08715120
+	.incbin	"baserom.gba", 0x60B504, 0x4
+	.word	gSong_087160A4
+	.incbin	"baserom.gba", 0x60B50C, 0x4
+	.word	gSong_08716B88
+	.incbin	"baserom.gba", 0x60B514, 0x4
+	.word	gSong_08716C5C
+	.incbin	"baserom.gba", 0x60B51C, 0x4
+	.word	gSong_087176B4
+	.incbin	"baserom.gba", 0x60B524, 0x4
+	.word	gSong_087178A8
+	.incbin	"baserom.gba", 0x60B52C, 0x4
+	.word	gSong_08717F68
+	.incbin	"baserom.gba", 0x60B534, 0x4
+	.word	gSong_08718CA4
+	.incbin	"baserom.gba", 0x60B53C, 0x4
+	.word	gSong_08718D54
+	.incbin	"baserom.gba", 0x60B544, 0x4
+	.word	gSong_08718E24
+	.incbin	"baserom.gba", 0x60B54C, 0x4
+	.word	gSong_0871962C
+	.incbin	"baserom.gba", 0x60B554, 0x4
+	.word	gSong_08719B4C
+	.incbin	"baserom.gba", 0x60B55C, 0x4
+	.word	gSong_08719D0C
+	.incbin	"baserom.gba", 0x60B564, 0x4
+	.word	gSong_0871A1D4
+	.incbin	"baserom.gba", 0x60B56C, 0x4
+	.word	gSong_0871AB94
+	.incbin	"baserom.gba", 0x60B574, 0x4
+	.word	gSong_0871C76C
+	.incbin	"baserom.gba", 0x60B57C, 0x4
+	.word	gSong_0860C678
+	.incbin	"baserom.gba", 0x60B584, 0x4
+	.word	gSong_0871CAF4
+	.incbin	"baserom.gba", 0x60B58C, 0x4
+	.word	gSong_0871D83C
+	.incbin	"baserom.gba", 0x60B594, 0x4
+	.word	gSong_0871DCC0
+	.incbin	"baserom.gba", 0x60B59C, 0x4
+	.word	gSong_0871DF64
+	.incbin	"baserom.gba", 0x60B5A4, 0x4
+	.word	gSong_0871F3F0
+	.incbin	"baserom.gba", 0x60B5AC, 0x4
+	.word	gSong_0871FB34
+	.incbin	"baserom.gba", 0x60B5B4, 0x4
+	.word	gSong_0871FE04
+	.incbin	"baserom.gba", 0x60B5BC, 0x4
+	.word	gSong_0871FFE4
+	.incbin	"baserom.gba", 0x60B5C4, 0x4
+	.word	gSong_0860C678
+	.incbin	"baserom.gba", 0x60B5CC, 0x4
+	.word	gSong_08720488
+	.incbin	"baserom.gba", 0x60B5D4, 0x4
+	.word	gSong_08720D04
+	.incbin	"baserom.gba", 0x60B5DC, 0x4
+	.word	gSong_087216CC
+	.incbin	"baserom.gba", 0x60B5E4, 0x4
+	.word	gSong_08721EF4
+	.incbin	"baserom.gba", 0x60B5EC, 0x4
+	.word	gSong_087225CC
+	.incbin	"baserom.gba", 0x60B5F4, 0x4
+	.word	gSong_087232AC
+	.incbin	"baserom.gba", 0x60B5FC, 0x4
+	.word	gSong_087238E0
+	.incbin	"baserom.gba", 0x60B604, 0x4
+	.word	gSong_08724918
+	.incbin	"baserom.gba", 0x60B60C, 0x4
+	.word	gSong_087252E4
+	.incbin	"baserom.gba", 0x60B614, 0x4
+	.word	gSong_08725ADC
+	.incbin	"baserom.gba", 0x60B61C, 0x4
+	.word	gSong_08725C84
+	.incbin	"baserom.gba", 0x60B624, 0x4
+	.word	gSong_0860C678
+	.incbin	"baserom.gba", 0x60B62C, 0x4
+	.word	gSong_0860C678
+	.incbin	"baserom.gba", 0x60B634, 0x4
+	.word	gSong_0860C678
+	.incbin	"baserom.gba", 0x60B63C, 0x4
+	.word	gSong_0860C678
+	.incbin	"baserom.gba", 0x60B644, 0x4
+	.word	gSong_0860C678
+	.incbin	"baserom.gba", 0x60B64C, 0x4
+	.word	gSong_0860C678
+	.incbin	"baserom.gba", 0x60B654, 0x4
+	.word	gSong_0860C678
+	.incbin	"baserom.gba", 0x60B65C, 0x4
+	.word	gSong_0860C678
+	.incbin	"baserom.gba", 0x60B664, 0x4
+	.word	gSong_0860C678
+	.incbin	"baserom.gba", 0x60B66C, 0x4
+	.word	gSong_0860C678
+	.incbin	"baserom.gba", 0x60B674, 0x4
+	.word	gSong_0860C678
+	.incbin	"baserom.gba", 0x60B67C, 0x4
+	.word	gSong_0860C678
+	.incbin	"baserom.gba", 0x60B684, 0x4
+	.word	gSong_0860C678
+	.incbin	"baserom.gba", 0x60B68C, 0x4
+	.word	gSong_0860C678
+	.incbin	"baserom.gba", 0x60B694, 0x4
+	.word	gSong_0860C678
+	.incbin	"baserom.gba", 0x60B69C, 0x4
+	.word	gSong_0860C678
+	.incbin	"baserom.gba", 0x60B6A4, 0x4
+	.word	gSong_0860C678
+	.incbin	"baserom.gba", 0x60B6AC, 0x4
+	.word	gSong_0860C678
+	.incbin	"baserom.gba", 0x60B6B4, 0x4
+	.word	gSong_0860C678
+	.incbin	"baserom.gba", 0x60B6BC, 0x4
+	.word	gSong_0860C678
+	.incbin	"baserom.gba", 0x60B6C4, 0x4
+	.word	gSong_0860C678
+	.incbin	"baserom.gba", 0x60B6CC, 0x4
+	.word	gSong_0860C678
+	.incbin	"baserom.gba", 0x60B6D4, 0x4
+	.word	gSong_0860C678
+	.incbin	"baserom.gba", 0x60B6DC, 0x4
+	.word	gSong_0860C678
+	.incbin	"baserom.gba", 0x60B6E4, 0x4
+	.word	gSong_0860C678
+	.incbin	"baserom.gba", 0x60B6EC, 0x4
+	.word	gSong_0860C678
+	.incbin	"baserom.gba", 0x60B6F4, 0x4
+	.word	gSong_0860C678
+	.incbin	"baserom.gba", 0x60B6FC, 0x4
+	.word	gSong_0860C678
+	.incbin	"baserom.gba", 0x60B704, 0x4
+	.word	gSong_0860C678
+	.incbin	"baserom.gba", 0x60B70C, 0x4
+	.word	gSong_0860C678
+	.incbin	"baserom.gba", 0x60B714, 0x4
+	.word	gSong_0860C678
+	.incbin	"baserom.gba", 0x60B71C, 0x4
+	.word	gSong_0860C678
+	.incbin	"baserom.gba", 0x60B724, 0x4
+	.word	gSong_0860C678
+	.incbin	"baserom.gba", 0x60B72C, 0x4
+	.word	gSong_0860C678
+	.incbin	"baserom.gba", 0x60B734, 0x4
+	.word	gSong_0860C678
+	.incbin	"baserom.gba", 0x60B73C, 0x4
+	.word	gSong_0860C678
+	.incbin	"baserom.gba", 0x60B744, 0x4
+	.word	gSong_0860C678
+	.incbin	"baserom.gba", 0x60B74C, 0x4
+	.word	gSong_0860C678
+	.incbin	"baserom.gba", 0x60B754, 0x4
+	.word	gSong_0860C678
+	.incbin	"baserom.gba", 0x60B75C, 0x4
+	.word	gSong_0860C678
+	.incbin	"baserom.gba", 0x60B764, 0x4
+	.word	gSong_0860C678
+	.incbin	"baserom.gba", 0x60B76C, 0x4
+	.word	gSong_0860C678
+	.incbin	"baserom.gba", 0x60B774, 0x4
+	.word	gSong_0860C678
+	.incbin	"baserom.gba", 0x60B77C, 0x4
+	.word	gSong_08725CAC
+	.incbin	"baserom.gba", 0x60B784, 0x4
+	.word	gSong_08725CCC
+	.incbin	"baserom.gba", 0x60B78C, 0x4
+	.word	gSong_08725CF0
+	.incbin	"baserom.gba", 0x60B794, 0x4
+	.word	gSong_08725DFC
+	.incbin	"baserom.gba", 0x60B79C, 0x4
+	.word	gSong_08725E1C
+	.incbin	"baserom.gba", 0x60B7A4, 0x4
+	.word	gSong_08725E68
+	.incbin	"baserom.gba", 0x60B7AC, 0x4
+	.word	gSong_08725EB4
+	.incbin	"baserom.gba", 0x60B7B4, 0x4
+	.word	gSong_08725EDC
+	.incbin	"baserom.gba", 0x60B7BC, 0x4
+	.word	gSong_08725F50
+	.incbin	"baserom.gba", 0x60B7C4, 0x4
+	.word	gSong_08725F78
+	.incbin	"baserom.gba", 0x60B7CC, 0x4
+	.word	gSong_08725FE0
+	.incbin	"baserom.gba", 0x60B7D4, 0x4
+	.word	gSong_08726070
+	.incbin	"baserom.gba", 0x60B7DC, 0x4
+	.word	gSong_087260DC
+	.incbin	"baserom.gba", 0x60B7E4, 0x4
+	.word	gSong_08726104
+	.incbin	"baserom.gba", 0x60B7EC, 0x4
+	.word	gSong_08726138
+	.incbin	"baserom.gba", 0x60B7F4, 0x4
+	.word	gSong_0872616C
+	.incbin	"baserom.gba", 0x60B7FC, 0x4
+	.word	gSong_0872618C
+	.incbin	"baserom.gba", 0x60B804, 0x4
+	.word	gSong_087261B4
+	.incbin	"baserom.gba", 0x60B80C, 0x4
+	.word	gSong_087261D4
+	.incbin	"baserom.gba", 0x60B814, 0x4
+	.word	gSong_08726210
+	.incbin	"baserom.gba", 0x60B81C, 0x4
+	.word	gSong_08726234
+	.incbin	"baserom.gba", 0x60B824, 0x4
+	.word	gSong_0872631C
+	.incbin	"baserom.gba", 0x60B82C, 0x4
+	.word	gSong_087263FC
+	.incbin	"baserom.gba", 0x60B834, 0x4
+	.word	gSong_0872643C
+	.incbin	"baserom.gba", 0x60B83C, 0x4
+	.word	gSong_08726474
+	.incbin	"baserom.gba", 0x60B844, 0x4
+	.word	gSong_087264A4
+	.incbin	"baserom.gba", 0x60B84C, 0x4
+	.word	gSong_087267F4
+	.incbin	"baserom.gba", 0x60B854, 0x4
+	.word	gSong_08726820
+	.incbin	"baserom.gba", 0x60B85C, 0x4
+	.word	gSong_087268B0
+	.incbin	"baserom.gba", 0x60B864, 0x4
+	.word	gSong_087268F0
+	.incbin	"baserom.gba", 0x60B86C, 0x4
+	.word	gSong_0872692C
+	.incbin	"baserom.gba", 0x60B874, 0x4
+	.word	gSong_08726970
+	.incbin	"baserom.gba", 0x60B87C, 0x4
+	.word	gSong_08726994
+	.incbin	"baserom.gba", 0x60B884, 0x4
+	.word	gSong_087269C8
+	.incbin	"baserom.gba", 0x60B88C, 0x4
+	.word	gSong_08726A14
+	.incbin	"baserom.gba", 0x60B894, 0x4
+	.word	gSong_08726A34
+	.incbin	"baserom.gba", 0x60B89C, 0x4
+	.word	gSong_08726A64
+	.incbin	"baserom.gba", 0x60B8A4, 0x4
+	.word	gSong_08726AC4
+	.incbin	"baserom.gba", 0x60B8AC, 0x4
+	.word	gSong_08726AF0
+	.incbin	"baserom.gba", 0x60B8B4, 0x4
+	.word	gSong_08726B20
+	.incbin	"baserom.gba", 0x60B8BC, 0x4
+	.word	gSong_08726B84
+	.incbin	"baserom.gba", 0x60B8C4, 0x4
+	.word	gSong_08726C30
+	.incbin	"baserom.gba", 0x60B8CC, 0x4
+	.word	gSong_08726C54
+	.incbin	"baserom.gba", 0x60B8D4, 0x4
+	.word	gSong_08726C78
+	.incbin	"baserom.gba", 0x60B8DC, 0x4
+	.word	gSong_08726C9C
+	.incbin	"baserom.gba", 0x60B8E4, 0x4
+	.word	gSong_08726CC4
+	.incbin	"baserom.gba", 0x60B8EC, 0x4
+	.word	gSong_08726CE8
+	.incbin	"baserom.gba", 0x60B8F4, 0x4
+	.word	gSong_08726D08
+	.incbin	"baserom.gba", 0x60B8FC, 0x4
+	.word	gSong_08726D28
+	.incbin	"baserom.gba", 0x60B904, 0x4
+	.word	gSong_08726DC8
+	.incbin	"baserom.gba", 0x60B90C, 0x4
+	.word	gSong_08726E94
+	.incbin	"baserom.gba", 0x60B914, 0x4
+	.word	gSong_08726ED8
+	.incbin	"baserom.gba", 0x60B91C, 0x4
+	.word	gSong_08726EFC
+	.incbin	"baserom.gba", 0x60B924, 0x4
+	.word	gSong_08726F30
+	.incbin	"baserom.gba", 0x60B92C, 0x4
+	.word	gSong_08726FC4
+	.incbin	"baserom.gba", 0x60B934, 0x4
+	.word	gSong_08727040
+	.incbin	"baserom.gba", 0x60B93C, 0x4
+	.word	gSong_08727060
+	.incbin	"baserom.gba", 0x60B944, 0x4
+	.word	gSong_08727084
+	.incbin	"baserom.gba", 0x60B94C, 0x4
+	.word	gSong_087270D4
+	.incbin	"baserom.gba", 0x60B954, 0x4
+	.word	gSong_08727104
+	.incbin	"baserom.gba", 0x60B95C, 0x4
+	.word	gSong_08727280
+	.incbin	"baserom.gba", 0x60B964, 0x4
+	.word	gSong_08727464
+	.incbin	"baserom.gba", 0x60B96C, 0x4
+	.word	gSong_08727638
+	.incbin	"baserom.gba", 0x60B974, 0x4
+	.word	gSong_0872766C
+	.incbin	"baserom.gba", 0x60B97C, 0x4
+	.word	gSong_087276F4
+	.incbin	"baserom.gba", 0x60B984, 0x4
+	.word	gSong_08727724
+	.incbin	"baserom.gba", 0x60B98C, 0x4
+	.word	gSong_08727744
+	.incbin	"baserom.gba", 0x60B994, 0x4
+	.word	gSong_08727774
+	.incbin	"baserom.gba", 0x60B99C, 0x4
+	.word	gSong_087277E0
+	.incbin	"baserom.gba", 0x60B9A4, 0x4
+	.word	gSong_08727834
+	.incbin	"baserom.gba", 0x60B9AC, 0x4
+	.word	gSong_0872786C
+	.incbin	"baserom.gba", 0x60B9B4, 0x4
+	.word	gSong_08727894
+	.incbin	"baserom.gba", 0x60B9BC, 0x4
+	.word	gSong_087278D0
+	.incbin	"baserom.gba", 0x60B9C4, 0x4
+	.word	gSong_08727914
+	.incbin	"baserom.gba", 0x60B9CC, 0x4
+	.word	gSong_087279BC
+	.incbin	"baserom.gba", 0x60B9D4, 0x4
+	.word	gSong_08727AF8
+	.incbin	"baserom.gba", 0x60B9DC, 0x4
+	.word	gSong_08727B18
+	.incbin	"baserom.gba", 0x60B9E4, 0x4
+	.word	gSong_08727B38
+	.incbin	"baserom.gba", 0x60B9EC, 0x4
+	.word	gSong_08727B64
+	.incbin	"baserom.gba", 0x60B9F4, 0x4
+	.word	gSong_08727B8C
+	.incbin	"baserom.gba", 0x60B9FC, 0x4
+	.word	gSong_08727C2C
+	.incbin	"baserom.gba", 0x60BA04, 0x4
+	.word	gSong_08727C4C
+	.incbin	"baserom.gba", 0x60BA0C, 0x4
+	.word	gSong_08727C74
+	.incbin	"baserom.gba", 0x60BA14, 0x4
+	.word	gSong_08727CC8
+	.incbin	"baserom.gba", 0x60BA1C, 0x4
+	.word	gSong_08727D10
+	.incbin	"baserom.gba", 0x60BA24, 0x4
+	.word	gSong_08727D40
+	.incbin	"baserom.gba", 0x60BA2C, 0x4
+	.word	gSong_08727D80
+	.incbin	"baserom.gba", 0x60BA34, 0x4
+	.word	gSong_08727DD0
+	.incbin	"baserom.gba", 0x60BA3C, 0x4
+	.word	gSong_08727DF0
+	.incbin	"baserom.gba", 0x60BA44, 0x4
+	.word	gSong_08727E3C
+	.incbin	"baserom.gba", 0x60BA4C, 0x4
+	.word	gSong_08727E78
+	.incbin	"baserom.gba", 0x60BA54, 0x4
+	.word	gSong_08727E98
+	.incbin	"baserom.gba", 0x60BA5C, 0x4
+	.word	gSong_08727EB8
+	.incbin	"baserom.gba", 0x60BA64, 0x4
+	.word	gSong_08727F00
+	.incbin	"baserom.gba", 0x60BA6C, 0x4
+	.word	gSong_08727F48
+	.incbin	"baserom.gba", 0x60BA74, 0x4
+	.word	gSong_08727F74
+	.incbin	"baserom.gba", 0x60BA7C, 0x4
+	.word	gSong_08727F94
+	.incbin	"baserom.gba", 0x60BA84, 0x4
+	.word	gSong_08727FB4
+	.incbin	"baserom.gba", 0x60BA8C, 0x4
+	.word	gSong_08727FD4
+	.incbin	"baserom.gba", 0x60BA94, 0x4
+	.word	gSong_08728028
+	.incbin	"baserom.gba", 0x60BA9C, 0x4
+	.word	gSong_087280B4
+	.incbin	"baserom.gba", 0x60BAA4, 0x4
+	.word	gSong_087280D4
+	.incbin	"baserom.gba", 0x60BAAC, 0x4
+	.word	gSong_08728104
+	.incbin	"baserom.gba", 0x60BAB4, 0x4
+	.word	gSong_08728148
+	.incbin	"baserom.gba", 0x60BABC, 0x4
+	.word	gSong_0872818C
+	.incbin	"baserom.gba", 0x60BAC4, 0x4
+	.word	gSong_087281D0
+	.incbin	"baserom.gba", 0x60BACC, 0x4
+	.word	gSong_08728214
+	.incbin	"baserom.gba", 0x60BAD4, 0x4
+	.word	gSong_0872824C
+	.incbin	"baserom.gba", 0x60BADC, 0x4
+	.word	gSong_087282BC
+	.incbin	"baserom.gba", 0x60BAE4, 0x4
+	.word	gSong_08728364
+	.incbin	"baserom.gba", 0x60BAEC, 0x4
+	.word	gSong_08728420
+	.incbin	"baserom.gba", 0x60BAF4, 0x4
+	.word	gSong_08728448
+	.incbin	"baserom.gba", 0x60BAFC, 0x4
+	.word	gSong_0872847C
+	.incbin	"baserom.gba", 0x60BB04, 0x4
+	.word	gSong_0872849C
+	.incbin	"baserom.gba", 0x60BB0C, 0x4
+	.word	gSong_087284D4
+	.incbin	"baserom.gba", 0x60BB14, 0x4
+	.word	gSong_087284F8
+	.incbin	"baserom.gba", 0x60BB1C, 0x4
+	.word	gSong_0872871C
+	.incbin	"baserom.gba", 0x60BB24, 0x4
+	.word	gSong_08728A6C
+	.incbin	"baserom.gba", 0x60BB2C, 0x4
+	.word	gSong_08728B44
+	.incbin	"baserom.gba", 0x60BB34, 0x4
+	.word	gSong_08728B74
+	.incbin	"baserom.gba", 0x60BB3C, 0x4
+	.word	gSong_08728C1C
+	.incbin	"baserom.gba", 0x60BB44, 0x4
+	.word	gSong_08728C48
+	.incbin	"baserom.gba", 0x60BB4C, 0x4
+	.word	gSong_08728C68
+	.incbin	"baserom.gba", 0x60BB54, 0x4
+	.word	gSong_08728C88
+	.incbin	"baserom.gba", 0x60BB5C, 0x4
+	.word	gSong_08728CB4
+	.incbin	"baserom.gba", 0x60BB64, 0x4
+	.word	gSong_08728D30
+	.incbin	"baserom.gba", 0x60BB6C, 0x4
+	.word	gSong_08728D54
+	.incbin	"baserom.gba", 0x60BB74, 0x4
+	.word	gSong_08728DE0
+	.incbin	"baserom.gba", 0x60BB7C, 0x4
+	.word	gSong_08728E50
+	.incbin	"baserom.gba", 0x60BB84, 0x4
+	.word	gSong_08728EA8
+	.incbin	"baserom.gba", 0x60BB8C, 0x4
+	.word	gSong_08728ECC
+	.incbin	"baserom.gba", 0x60BB94, 0x4
+	.word	gSong_08728EEC
+	.incbin	"baserom.gba", 0x60BB9C, 0x4
+	.word	gSong_08728F2C
+	.incbin	"baserom.gba", 0x60BBA4, 0x4
+	.word	gSong_08728F50
+	.incbin	"baserom.gba", 0x60BBAC, 0x4
+	.word	gSong_08728F70
+	.incbin	"baserom.gba", 0x60BBB4, 0x4
+	.word	gSong_08729084
+	.incbin	"baserom.gba", 0x60BBBC, 0x4
+	.word	gSong_0872912C
+	.incbin	"baserom.gba", 0x60BBC4, 0x4
+	.word	gSong_08729150
+	.incbin	"baserom.gba", 0x60BBCC, 0x4
+	.word	gSong_08729188
+	.incbin	"baserom.gba", 0x60BBD4, 0x4
+	.word	gSong_087291CC
+	.incbin	"baserom.gba", 0x60BBDC, 0x4
+	.word	gSong_08729240
+	.incbin	"baserom.gba", 0x60BBE4, 0x4
+	.word	gSong_0872926C
+	.incbin	"baserom.gba", 0x60BBEC, 0x4
+	.word	gSong_087292B8
+	.incbin	"baserom.gba", 0x60BBF4, 0x4
+	.word	gSong_087292EC
+	.incbin	"baserom.gba", 0x60BBFC, 0x4
+	.word	gSong_0872958C
+	.incbin	"baserom.gba", 0x60BC04, 0x4
+	.word	gSong_087295D8
+	.incbin	"baserom.gba", 0x60BC0C, 0x4
+	.word	gSong_08729640
+	.incbin	"baserom.gba", 0x60BC14, 0x4
+	.word	gSong_087296BC
+	.incbin	"baserom.gba", 0x60BC1C, 0x4
+	.word	gSong_08729C20
+	.incbin	"baserom.gba", 0x60BC24, 0x4
+	.word	gSong_08729D48
+	.incbin	"baserom.gba", 0x60BC2C, 0x4
+	.word	gSong_0872A168
+	.incbin	"baserom.gba", 0x60BC34, 0x4
+	.word	gSong_0872A59C
+	.incbin	"baserom.gba", 0x60BC3C, 0x4
+	.word	gSong_0872A7D4
+	.incbin	"baserom.gba", 0x60BC44, 0x4
+	.word	gSong_0872A858
+	.incbin	"baserom.gba", 0x60BC4C, 0x4
+	.word	gSong_0872A8A4
+	.incbin	"baserom.gba", 0x60BC54, 0x4
+	.word	gSong_0872A9AC
+	.incbin	"baserom.gba", 0x60BC5C, 0x4
+	.word	gSong_0872A9D4
+	.incbin	"baserom.gba", 0x60BC64, 0x4
+	.word	gSong_0872AA50
+	.incbin	"baserom.gba", 0x60BC6C, 0x4
+	.word	gSong_0872AAD4
+	.incbin	"baserom.gba", 0x60BC74, 0x4
+	.word	gSong_0872AB58
+	.incbin	"baserom.gba", 0x60BC7C, 0x4
+	.word	gSong_0872ABC4
+	.incbin	"baserom.gba", 0x60BC84, 0x4
+	.word	gSong_0872AC04
+	.incbin	"baserom.gba", 0x60BC8C, 0x4
+	.word	gSong_0872AC3C
+	.incbin	"baserom.gba", 0x60BC94, 0x4
+	.word	gSong_0872AC8C
+	.incbin	"baserom.gba", 0x60BC9C, 0x4
+	.word	gSong_0872ACD4
+	.incbin	"baserom.gba", 0x60BCA4, 0x4
+	.word	gSong_0872AD0C
+	.incbin	"baserom.gba", 0x60BCAC, 0x4
+	.word	gSong_0872AD2C
+	.incbin	"baserom.gba", 0x60BCB4, 0x4
+	.word	gSong_0872AD4C
+	.incbin	"baserom.gba", 0x60BCBC, 0x4
+	.word	gSong_0872AD7C
+	.incbin	"baserom.gba", 0x60BCC4, 0x4
+	.word	gSong_0872AE34
+	.incbin	"baserom.gba", 0x60BCCC, 0x4
+	.word	gSong_0872AEC8
+	.incbin	"baserom.gba", 0x60BCD4, 0x4
+	.word	gSong_0872AF04
+	.incbin	"baserom.gba", 0x60BCDC, 0x4
+	.word	gSong_0872AFBC
+	.incbin	"baserom.gba", 0x60BCE4, 0x4
+	.word	gSong_0872AFE0
+	.incbin	"baserom.gba", 0x60BCEC, 0x4
+	.word	gSong_0872B024
+	.incbin	"baserom.gba", 0x60BCF4, 0x4
+	.word	gSong_0872B070
+	.incbin	"baserom.gba", 0x60BCFC, 0x4
+	.word	gSong_0872B0C0
+	.incbin	"baserom.gba", 0x60BD04, 0x4
+	.word	gSong_0872B0E4
+	.incbin	"baserom.gba", 0x60BD0C, 0x4
+	.word	gSong_0872B118
+	.incbin	"baserom.gba", 0x60BD14, 0x4
+	.word	gSong_0872B158
+	.incbin	"baserom.gba", 0x60BD1C, 0x4
+	.word	gSong_0872B1B4
+	.incbin	"baserom.gba", 0x60BD24, 0x4
+	.word	gSong_0872B6BC
+	.incbin	"baserom.gba", 0x60BD2C, 0x4
+	.word	gSong_0872B774
+	.incbin	"baserom.gba", 0x60BD34, 0x4
+	.word	gSong_0872B7D0
+	.incbin	"baserom.gba", 0x60BD3C, 0x4
+	.word	gSong_0872B860
+	.incbin	"baserom.gba", 0x60BD44, 0x4
+	.word	gSong_0872B8C8
+	.incbin	"baserom.gba", 0x60BD4C, 0x4
+	.word	gSong_0872B8E8
+	.incbin	"baserom.gba", 0x60BD54, 0x4
+	.word	gSong_0872B90C
+	.incbin	"baserom.gba", 0x60BD5C, 0x4
+	.word	gSong_0872BC0C
+	.incbin	"baserom.gba", 0x60BD64, 0x4
+	.word	gSong_0872BCD8
+	.incbin	"baserom.gba", 0x60BD6C, 0x4
+	.word	gSong_0872BD58
+	.incbin	"baserom.gba", 0x60BD74, 0x4
+	.word	gSong_0872BFCC
+	.incbin	"baserom.gba", 0x60BD7C, 0x4
+	.word	gSong_0872C048
+	.incbin	"baserom.gba", 0x60BD84, 0x4
+	.word	gSong_0872C16C
+	.incbin	"baserom.gba", 0x60BD8C, 0x4
+	.word	gSong_0872C260
+	.incbin	"baserom.gba", 0x60BD94, 0x4
+	.word	gSong_0872C320
+	.incbin	"baserom.gba", 0x60BD9C, 0x4
+	.word	gSong_0872C348
+	.incbin	"baserom.gba", 0x60BDA4, 0x4
+	.word	gSong_0860C678
+	.incbin	"baserom.gba", 0x60BDAC, 0x4
+	.word	gSong_0860C678
+	.incbin	"baserom.gba", 0x60BDB4, 0x4
+	.word	gSong_0860C678
+	.incbin	"baserom.gba", 0x60BDBC, 0x4
+	.word	gSong_0860C678
+	.incbin	"baserom.gba", 0x60BDC4, 0x4
+	.word	gSong_0860C678
+	.incbin	"baserom.gba", 0x60BDCC, 0x4
+	.word	gSong_0860C678
+	.incbin	"baserom.gba", 0x60BDD4, 0x4
+	.word	gSong_0860C678
+	.incbin	"baserom.gba", 0x60BDDC, 0x4
+	.word	gSong_0860C678
+	.incbin	"baserom.gba", 0x60BDE4, 0x4
+	.word	gSong_0860C678
+	.incbin	"baserom.gba", 0x60BDEC, 0x4
+	.word	gSong_0860C678
+	.incbin	"baserom.gba", 0x60BDF4, 0x4
+	.word	gSong_0860C678
+	.incbin	"baserom.gba", 0x60BDFC, 0x4
+	.word	gSong_0860C678
+	.incbin	"baserom.gba", 0x60BE04, 0x4
+	.word	gSong_0860C678
+	.incbin	"baserom.gba", 0x60BE0C, 0x4
+	.word	gSong_0860C678
+	.incbin	"baserom.gba", 0x60BE14, 0x4
+	.word	gSong_0860C678
+	.incbin	"baserom.gba", 0x60BE1C, 0x4
+	.word	gSong_0860C678
+	.incbin	"baserom.gba", 0x60BE24, 0x4
+	.word	gSong_0860C678
+	.incbin	"baserom.gba", 0x60BE2C, 0x4
+	.word	gSong_0860C678
+	.incbin	"baserom.gba", 0x60BE34, 0x4
+	.word	gSong_0860C678
+	.incbin	"baserom.gba", 0x60BE3C, 0x4
+	.word	gSong_0860C678
+	.incbin	"baserom.gba", 0x60BE44, 0x4
+	.word	gSong_0860C678
+	.incbin	"baserom.gba", 0x60BE4C, 0x4
+	.word	gSong_0860C678
+	.incbin	"baserom.gba", 0x60BE54, 0x4
+	.word	gSong_0860C678
+	.incbin	"baserom.gba", 0x60BE5C, 0x4
+	.word	gSong_0860C678
+	.incbin	"baserom.gba", 0x60BE64, 0x4
+	.word	gSong_0860C678
+	.incbin	"baserom.gba", 0x60BE6C, 0x4
+	.word	gSong_0860C678
+	.incbin	"baserom.gba", 0x60BE74, 0x4
+	.word	gSong_0860C678
+	.incbin	"baserom.gba", 0x60BE7C, 0x4
+	.word	gSong_0860C678
+	.incbin	"baserom.gba", 0x60BE84, 0x4
+	.word	gSong_0860C678
+	.incbin	"baserom.gba", 0x60BE8C, 0x4
+	.word	gSong_0860C678
+	.incbin	"baserom.gba", 0x60BE94, 0x4
+	.word	gSong_0860C678
+	.incbin	"baserom.gba", 0x60BE9C, 0x4
+	.word	gSong_0860C678
+	.incbin	"baserom.gba", 0x60BEA4, 0x4
+	.word	gSong_0860C678
+	.incbin	"baserom.gba", 0x60BEAC, 0x4
+	.word	gSong_0860C678
+	.incbin	"baserom.gba", 0x60BEB4, 0x4
+	.word	gSong_0860C678
+	.incbin	"baserom.gba", 0x60BEBC, 0x4
+	.word	gSong_0860C678
+	.incbin	"baserom.gba", 0x60BEC4, 0x4
+	.word	gSong_0860C678
+	.incbin	"baserom.gba", 0x60BECC, 0x4
+	.word	gSong_0860C678
+	.incbin	"baserom.gba", 0x60BED4, 0x4
+	.word	gSong_0860C678
+	.incbin	"baserom.gba", 0x60BEDC, 0x4
+	.word	gSong_0860C678
+	.incbin	"baserom.gba", 0x60BEE4, 0x4
+	.word	gSong_0860C678
+	.incbin	"baserom.gba", 0x60BEEC, 0x4
+	.word	gSong_0860C678
+	.incbin	"baserom.gba", 0x60BEF4, 0x4
+	.word	gSong_0860C678
+	.incbin	"baserom.gba", 0x60BEFC, 0x4
+	.word	gSong_0860C678
+	.incbin	"baserom.gba", 0x60BF04, 0x4
+	.word	gSong_0860C678
+	.incbin	"baserom.gba", 0x60BF0C, 0x4
+	.word	gSong_0860C678
+	.incbin	"baserom.gba", 0x60BF14, 0x4
+	.word	gSong_0860C678
+	.incbin	"baserom.gba", 0x60BF1C, 0x4
+	.word	gSong_0860C678
+	.incbin	"baserom.gba", 0x60BF24, 0x4
+	.word	gSong_0860C678
+	.incbin	"baserom.gba", 0x60BF2C, 0x4
+	.word	gSong_0860C678
+	.incbin	"baserom.gba", 0x60BF34, 0x4
+	.word	gSong_0860C678
+	.incbin	"baserom.gba", 0x60BF3C, 0x4
+	.word	gSong_0860C678
+	.incbin	"baserom.gba", 0x60BF44, 0x4
+	.word	gSong_0860C678
+	.incbin	"baserom.gba", 0x60BF4C, 0x4
+	.word	gSong_0860C678
+	.incbin	"baserom.gba", 0x60BF54, 0x4
+	.word	gSong_0860C678
+	.incbin	"baserom.gba", 0x60BF5C, 0x4
+	.word	gSong_0860C678
+	.incbin	"baserom.gba", 0x60BF64, 0x4
+	.word	gSong_0860C678
+	.incbin	"baserom.gba", 0x60BF6C, 0x4
+	.word	gSong_0860C678
+	.incbin	"baserom.gba", 0x60BF74, 0x4
+	.word	gSong_0860C678
+	.incbin	"baserom.gba", 0x60BF7C, 0x4
+	.word	gSong_0860C678
+	.incbin	"baserom.gba", 0x60BF84, 0x4
+	.word	gSong_0860C678
+	.incbin	"baserom.gba", 0x60BF8C, 0x4
+	.word	gSong_0860C678
+	.incbin	"baserom.gba", 0x60BF94, 0x4
+	.word	gSong_0860C678
+	.incbin	"baserom.gba", 0x60BF9C, 0x4
+	.word	gSong_0860C678
+	.incbin	"baserom.gba", 0x60BFA4, 0x4
+	.word	gSong_0860C678
+	.incbin	"baserom.gba", 0x60BFAC, 0x4
+	.word	gSong_0860C678
+	.incbin	"baserom.gba", 0x60BFB4, 0x4
+	.word	gSong_0860C678
+	.incbin	"baserom.gba", 0x60BFBC, 0x4
+	.word	gSong_0860C678
+	.incbin	"baserom.gba", 0x60BFC4, 0x4
+	.word	gSong_0860C678
+	.incbin	"baserom.gba", 0x60BFCC, 0x4
+	.word	gSong_0860C678
+	.incbin	"baserom.gba", 0x60BFD4, 0x4
+	.word	gSong_0860C678
+	.incbin	"baserom.gba", 0x60BFDC, 0x4
+	.word	gSong_0860C678
+	.incbin	"baserom.gba", 0x60BFE4, 0x4
+	.word	gSong_0860C678
+	.incbin	"baserom.gba", 0x60BFEC, 0x4
+	.word	gSong_0860C678
+	.incbin	"baserom.gba", 0x60BFF4, 0x4
+	.word	gSong_0860C678
+	.incbin	"baserom.gba", 0x60BFFC, 0x4
+	.word	gSong_0860C678
+	.incbin	"baserom.gba", 0x60C004, 0x4
+	.word	gSong_0860C678
+	.incbin	"baserom.gba", 0x60C00C, 0x4
+	.word	gSong_0860C678
+	.incbin	"baserom.gba", 0x60C014, 0x4
+	.word	gSong_0860C678
+	.incbin	"baserom.gba", 0x60C01C, 0x4
+	.word	gSong_0860C678
+	.incbin	"baserom.gba", 0x60C024, 0x4
+	.word	gSong_0860C678
+	.incbin	"baserom.gba", 0x60C02C, 0x4
+	.word	gSong_0860C678
+	.incbin	"baserom.gba", 0x60C034, 0x4
+	.word	gSong_0860C678
+	.incbin	"baserom.gba", 0x60C03C, 0x4
+	.word	gSong_0860C678
+	.incbin	"baserom.gba", 0x60C044, 0x4
+	.word	gSong_0860C678
+	.incbin	"baserom.gba", 0x60C04C, 0x4
+	.word	gSong_0860C678
+	.incbin	"baserom.gba", 0x60C054, 0x4
+	.word	gSong_0860C678
+	.incbin	"baserom.gba", 0x60C05C, 0x4
+	.word	gSong_0860C678
+	.incbin	"baserom.gba", 0x60C064, 0x4
+	.word	gSong_0860C678
+	.incbin	"baserom.gba", 0x60C06C, 0x4
+	.word	gSong_0860C678
+	.incbin	"baserom.gba", 0x60C074, 0x4
+	.word	gSong_0860C678
+	.incbin	"baserom.gba", 0x60C07C, 0x4
+	.word	gSong_0860C678
+	.incbin	"baserom.gba", 0x60C084, 0x4
+	.word	gSong_0860C678
+	.incbin	"baserom.gba", 0x60C08C, 0x4
+	.word	gSong_0860C678
+	.incbin	"baserom.gba", 0x60C094, 0x4
+	.word	gSong_0860C678
+	.incbin	"baserom.gba", 0x60C09C, 0x4
+	.word	gSong_0860C678
+	.incbin	"baserom.gba", 0x60C0A4, 0x4
+	.word	gSong_0860C678
+	.incbin	"baserom.gba", 0x60C0AC, 0x4
+	.word	gSong_0860C678
+	.incbin	"baserom.gba", 0x60C0B4, 0x4
+	.word	gSong_0860C678
+	.incbin	"baserom.gba", 0x60C0BC, 0x4
+	.word	gSong_0860C678
+	.incbin	"baserom.gba", 0x60C0C4, 0x4
+	.word	gSong_0860C678
+	.incbin	"baserom.gba", 0x60C0CC, 0x4
+	.word	gSong_0860C678
+	.incbin	"baserom.gba", 0x60C0D4, 0x4
+	.word	gSong_0860C678
+	.incbin	"baserom.gba", 0x60C0DC, 0x4
+	.word	gSong_0872C374
+	.incbin	"baserom.gba", 0x60C0E4, 0x4
+	.word	gSong_0872C490
+	.incbin	"baserom.gba", 0x60C0EC, 0x4
+	.word	gSong_0872C4E4
+	.incbin	"baserom.gba", 0x60C0F4, 0x4
+	.word	gSong_0860C678
+	.incbin	"baserom.gba", 0x60C0FC, 0x4
+	.word	gSong_0860C678
+	.incbin	"baserom.gba", 0x60C104, 0x4
+	.word	gSong_0860C678
+	.incbin	"baserom.gba", 0x60C10C, 0x4
+	.word	gSong_0860C678
+	.incbin	"baserom.gba", 0x60C114, 0x4
+	.word	gSong_0860C678
+	.incbin	"baserom.gba", 0x60C11C, 0x4
+	.word	gSong_0860C678
+	.incbin	"baserom.gba", 0x60C124, 0x4
+	.word	gSong_0860C678
+	.incbin	"baserom.gba", 0x60C12C, 0x4
+	.word	gSong_0860C678
+	.incbin	"baserom.gba", 0x60C134, 0x4
+	.word	gSong_0860C678
+	.incbin	"baserom.gba", 0x60C13C, 0x4
+	.word	gSong_0860C678
+	.incbin	"baserom.gba", 0x60C144, 0x4
+	.word	gSong_0860C678
+	.incbin	"baserom.gba", 0x60C14C, 0x4
+	.word	gSong_0860C678
+	.incbin	"baserom.gba", 0x60C154, 0x4
+	.word	gSong_0860C678
+	.incbin	"baserom.gba", 0x60C15C, 0x4
+	.word	gSong_0860C678
+	.incbin	"baserom.gba", 0x60C164, 0x4
+	.word	gSong_0860C678
+	.incbin	"baserom.gba", 0x60C16C, 0x4
+	.word	gSong_0860C678
+	.incbin	"baserom.gba", 0x60C174, 0x4
+	.word	gSong_0860C678
+	.incbin	"baserom.gba", 0x60C17C, 0x4
+	.word	gSong_0860C678
+	.incbin	"baserom.gba", 0x60C184, 0x4
+	.word	gSong_0860C678
+	.incbin	"baserom.gba", 0x60C18C, 0x4
+	.word	gSong_0860C678
+	.incbin	"baserom.gba", 0x60C194, 0x4
+	.word	gSong_0860C678
+	.incbin	"baserom.gba", 0x60C19C, 0x4
+	.word	gSong_0860C678
+	.incbin	"baserom.gba", 0x60C1A4, 0x4
+	.word	gSong_0860C678
+	.incbin	"baserom.gba", 0x60C1AC, 0x4
+	.word	gSong_0860C678
+	.incbin	"baserom.gba", 0x60C1B4, 0x4
+	.word	gSong_0860C678
+	.incbin	"baserom.gba", 0x60C1BC, 0x4
+	.word	gSong_0860C678
+	.incbin	"baserom.gba", 0x60C1C4, 0x4
+	.word	gSong_0860C678
+	.incbin	"baserom.gba", 0x60C1CC, 0x4
+	.word	gSong_0860C678
+	.incbin	"baserom.gba", 0x60C1D4, 0x4
+	.word	gSong_0860C678
+	.incbin	"baserom.gba", 0x60C1DC, 0x4
+	.word	gSong_0860C678
+	.incbin	"baserom.gba", 0x60C1E4, 0x4
+	.word	gSong_0860C678
+	.incbin	"baserom.gba", 0x60C1EC, 0x4
+	.word	gSong_0860C678
+	.incbin	"baserom.gba", 0x60C1F4, 0x4
+	.word	gSong_0860C678
+	.incbin	"baserom.gba", 0x60C1FC, 0x4
+	.word	gSong_0860C678
+	.incbin	"baserom.gba", 0x60C204, 0x4
+	.word	gSong_0860C678
+	.incbin	"baserom.gba", 0x60C20C, 0x4
+	.word	gSong_0860C678
+	.incbin	"baserom.gba", 0x60C214, 0x4
+	.word	gSong_0860C678
+	.incbin	"baserom.gba", 0x60C21C, 0x4
+	.word	gSong_0860C678
+	.incbin	"baserom.gba", 0x60C224, 0x4
+	.word	gSong_0860C678
+	.incbin	"baserom.gba", 0x60C22C, 0x4
+	.word	gSong_0860C678
+	.incbin	"baserom.gba", 0x60C234, 0x4
+	.word	gSong_0860C678
+	.incbin	"baserom.gba", 0x60C23C, 0x4
+	.word	gSong_0860C678
+	.incbin	"baserom.gba", 0x60C244, 0x4
+	.word	gSong_0860C678
+	.incbin	"baserom.gba", 0x60C24C, 0x4
+	.word	gSong_0860C678
+	.incbin	"baserom.gba", 0x60C254, 0x4
+	.word	gSong_0860C678
+	.incbin	"baserom.gba", 0x60C25C, 0x4
+	.word	gSong_0860C678
+	.incbin	"baserom.gba", 0x60C264, 0x4
+	.word	gSong_0860C678
+	.incbin	"baserom.gba", 0x60C26C, 0x4
+	.word	gSong_0860C678
+	.incbin	"baserom.gba", 0x60C274, 0x4
+	.word	gSong_0860C678
+	.incbin	"baserom.gba", 0x60C27C, 0x4
+	.word	gSong_0860C678
+	.incbin	"baserom.gba", 0x60C284, 0x4
+	.word	gSong_0860C678
+	.incbin	"baserom.gba", 0x60C28C, 0x4
+	.word	gSong_0860C678
+	.incbin	"baserom.gba", 0x60C294, 0x4
+	.word	gSong_0860C678
+	.incbin	"baserom.gba", 0x60C29C, 0x4
+	.word	gSong_0860C678
+	.incbin	"baserom.gba", 0x60C2A4, 0x4
+	.word	gSong_0860C678
+	.incbin	"baserom.gba", 0x60C2AC, 0x4
+	.word	gSong_0860C678
+	.incbin	"baserom.gba", 0x60C2B4, 0x4
+	.word	gSong_0860C678
+	.incbin	"baserom.gba", 0x60C2BC, 0x4
+	.word	gSong_0860C678
+	.incbin	"baserom.gba", 0x60C2C4, 0x4
+	.word	gSong_0860C678
+	.incbin	"baserom.gba", 0x60C2CC, 0x4
+	.word	gSong_0860C678
+	.incbin	"baserom.gba", 0x60C2D4, 0x4
+	.word	gSong_0860C678
+	.incbin	"baserom.gba", 0x60C2DC, 0x4
+	.word	gSong_0860C678
+	.incbin	"baserom.gba", 0x60C2E4, 0x4
+	.word	gSong_0860C678
+	.incbin	"baserom.gba", 0x60C2EC, 0x4
+	.word	gSong_0860C678
+	.incbin	"baserom.gba", 0x60C2F4, 0x4
+	.word	gSong_0860C678
+	.incbin	"baserom.gba", 0x60C2FC, 0x4
+	.word	gSong_0860C678
+	.incbin	"baserom.gba", 0x60C304, 0x4
+	.word	gSong_0860C678
+	.incbin	"baserom.gba", 0x60C30C, 0x4
+	.word	gSong_0860C678
+	.incbin	"baserom.gba", 0x60C314, 0x4
+	.word	gSong_0860C678
+	.incbin	"baserom.gba", 0x60C31C, 0x4
+	.word	gSong_0860C678
+	.incbin	"baserom.gba", 0x60C324, 0x4
+	.word	gSong_0860C678
+	.incbin	"baserom.gba", 0x60C32C, 0x4
+	.word	gSong_0860C678
+	.incbin	"baserom.gba", 0x60C334, 0x4
+	.word	gSong_0860C678
+	.incbin	"baserom.gba", 0x60C33C, 0x4
+	.word	gSong_0860C678
+	.incbin	"baserom.gba", 0x60C344, 0x4
+	.word	gSong_0860C678
+	.incbin	"baserom.gba", 0x60C34C, 0x4
+	.word	gSong_0860C678
+	.incbin	"baserom.gba", 0x60C354, 0x4
+	.word	gSong_0860C678
+	.incbin	"baserom.gba", 0x60C35C, 0x4
+	.word	gSong_0860C678
+	.incbin	"baserom.gba", 0x60C364, 0x4
+	.word	gSong_0860C678
+	.incbin	"baserom.gba", 0x60C36C, 0x4
+	.word	gSong_0860C678
+	.incbin	"baserom.gba", 0x60C374, 0x4
+	.word	gSong_0860C678
+	.incbin	"baserom.gba", 0x60C37C, 0x4
+	.word	gSong_0860C678
+	.incbin	"baserom.gba", 0x60C384, 0x4
+	.word	gSong_0860C678
+	.incbin	"baserom.gba", 0x60C38C, 0x4
+	.word	gSong_0860C678
+	.incbin	"baserom.gba", 0x60C394, 0x4
+	.word	gSong_0860C678
+	.incbin	"baserom.gba", 0x60C39C, 0x4
+	.word	gSong_0860C678
+	.incbin	"baserom.gba", 0x60C3A4, 0x4
+	.word	gSong_0860C678
+	.incbin	"baserom.gba", 0x60C3AC, 0x4
+	.word	gSong_0860C678
+	.incbin	"baserom.gba", 0x60C3B4, 0x4
+	.word	gSong_0860C678
+	.incbin	"baserom.gba", 0x60C3BC, 0x4
+	.word	gSong_0860C678
+	.incbin	"baserom.gba", 0x60C3C4, 0x4
+	.word	gSong_0860C678
+	.incbin	"baserom.gba", 0x60C3CC, 0x4
+	.word	gSong_0860C678
+	.incbin	"baserom.gba", 0x60C3D4, 0x4
+	.word	gSong_0860C678
+	.incbin	"baserom.gba", 0x60C3DC, 0x4
+	.word	gSong_0860C678
+	.incbin	"baserom.gba", 0x60C3E4, 0x4
+	.word	gSong_0860C678
+	.incbin	"baserom.gba", 0x60C3EC, 0x4
+	.word	gSong_0860C678
+	.incbin	"baserom.gba", 0x60C3F4, 0x4
+	.word	gSong_0860C678
+	.incbin	"baserom.gba", 0x60C3FC, 0x4
+	.word	gSong_0872C50C
+	.incbin	"baserom.gba", 0x60C404, 0x4
+	.word	gSong_0872C534
+	.incbin	"baserom.gba", 0x60C40C, 0x4
+	.word	gSong_0872C560
+	.incbin	"baserom.gba", 0x60C414, 0x4
+	.word	gSong_0872C5B0
+	.incbin	"baserom.gba", 0x60C41C, 0x4
+	.word	gSong_0872C5F4
+	.incbin	"baserom.gba", 0x60C424, 0x4
+	.word	gSong_0872C61C
+	.incbin	"baserom.gba", 0x60C42C, 0x4
+	.word	gSong_0872C658
+	.incbin	"baserom.gba", 0x60C434, 0x4
+	.word	gSong_0872C6D8
+	.incbin	"baserom.gba", 0x60C43C, 0x4
+	.word	gSong_0872C720
+	.incbin	"baserom.gba", 0x60C444, 0x4
+	.word	gSong_0872CB18
+	.incbin	"baserom.gba", 0x60C44C, 0x4
+	.word	gSong_0872CB98
+	.incbin	"baserom.gba", 0x60C454, 0x4
+	.word	gSong_0872CD0C
+	.incbin	"baserom.gba", 0x60C45C, 0x4
+	.word	gSong_0872CE7C
+	.incbin	"baserom.gba", 0x60C464, 0x4
+	.word	gSong_0872CEAC
+	.incbin	"baserom.gba", 0x60C46C, 0x4
+	.word	gSong_0872D020
+	.incbin	"baserom.gba", 0x60C474, 0x4
+	.word	gSong_0860C678
+	.incbin	"baserom.gba", 0x60C47C, 0x4
+	.word	gSong_0860C678
+	.incbin	"baserom.gba", 0x60C484, 0x4
+	.word	gSong_0860C678
+	.incbin	"baserom.gba", 0x60C48C, 0x4
+	.word	gSong_0860C678
+	.incbin	"baserom.gba", 0x60C494, 0x4
+	.word	gSong_0860C678
+	.incbin	"baserom.gba", 0x60C49C, 0x4
+	.word	gSong_0872D048
+	.incbin	"baserom.gba", 0x60C4A4, 0x4
+	.word	gSong_0872D1B4
+	.incbin	"baserom.gba", 0x60C4AC, 0x4
+	.word	gSong_0872D1EC
+	.incbin	"baserom.gba", 0x60C4B4, 0x4
+	.word	gSong_0872D24C
+	.incbin	"baserom.gba", 0x60C4BC, 0x4
+	.word	gSong_0872D278
+	.incbin	"baserom.gba", 0x60C4C4, 0x4
+	.word	gSong_0872D2B8
+	.incbin	"baserom.gba", 0x60C4CC, 0x4
+	.word	gSong_0872D2E0
+	.incbin	"baserom.gba", 0x60C4D4, 0x4
+	.word	gSong_0872D360
+	.incbin	"baserom.gba", 0x60C4DC, 0x4
+	.word	gSong_0872D390
+	.incbin	"baserom.gba", 0x60C4E4, 0x4
+	.word	gSong_0872D3BC
+	.incbin	"baserom.gba", 0x60C4EC, 0x4
+	.word	gSong_0872D3E8
+	.incbin	"baserom.gba", 0x60C4F4, 0x4
+	.word	gSong_0872D434
+	.incbin	"baserom.gba", 0x60C4FC, 0x4
+	.word	gSong_0872D480
+	.incbin	"baserom.gba", 0x60C504, 0x4
+	.word	gSong_0872D4CC
+	.incbin	"baserom.gba", 0x60C50C, 0x4
+	.word	gSong_0872D558
+	.incbin	"baserom.gba", 0x60C514, 0x4
+	.word	gSong_0872D580
+	.incbin	"baserom.gba", 0x60C51C, 0x4
+	.word	gSong_0872D5AC
+	.incbin	"baserom.gba", 0x60C524, 0x4
+	.word	gSong_0872D5DC
+	.incbin	"baserom.gba", 0x60C52C, 0x4
+	.word	gSong_0872D60C
+	.incbin	"baserom.gba", 0x60C534, 0x4
+	.word	gSong_0872D730
+	.incbin	"baserom.gba", 0x60C53C, 0x4
+	.word	gSong_0872D750
+	.incbin	"baserom.gba", 0x60C544, 0x4
+	.word	gSong_0872D7BC
+	.incbin	"baserom.gba", 0x60C54C, 0x4
+	.word	gSong_0872D878
+	.incbin	"baserom.gba", 0x60C554, 0x4
+	.word	gSong_0872D8D0
+	.incbin	"baserom.gba", 0x60C55C, 0x4
+	.word	gSong_0872D8F4
+	.incbin	"baserom.gba", 0x60C564, 0x4
+	.word	gSong_0872D924
+	.incbin	"baserom.gba", 0x60C56C, 0x4
+	.word	gSong_0872D95C
+	.incbin	"baserom.gba", 0x60C574, 0x4
+	.word	gSong_0872D98C
+	.incbin	"baserom.gba", 0x60C57C, 0x4
+	.word	gSong_0872D9AC
+	.incbin	"baserom.gba", 0x60C584, 0x4
+	.word	gSong_0872D9CC
+	.incbin	"baserom.gba", 0x60C58C, 0x4
+	.word	gSong_0872DA1C
+	.incbin	"baserom.gba", 0x60C594, 0x4
+	.word	gSong_0872DA78
+	.incbin	"baserom.gba", 0x60C59C, 0x4
+	.word	gSong_0872DAA0
+	.incbin	"baserom.gba", 0x60C5A4, 0x4
+	.word	gSong_0872DB08
+	.incbin	"baserom.gba", 0x60C5AC, 0x4
+	.word	gSong_0872DB4C
+	.incbin	"baserom.gba", 0x60C5B4, 0x4
+	.word	gSong_0872DBDC
+	.incbin	"baserom.gba", 0x60C5BC, 0x4
+	.word	gSong_0872DC7C
+	.incbin	"baserom.gba", 0x60C5C4, 0x4
+	.word	gSong_0872DD00
+	.incbin	"baserom.gba", 0x60C5CC, 0x4
+	.word	gSong_0872DD2C
+	.incbin	"baserom.gba", 0x60C5D4, 0x4
+	.word	gSong_0872DD70
+	.incbin	"baserom.gba", 0x60C5DC, 0x4
+	.word	gSong_0872DDD4
+	.incbin	"baserom.gba", 0x60C5E4, 0x4
+	.word	gSong_0872DE4C
+	.incbin	"baserom.gba", 0x60C5EC, 0x4
+	.word	gSong_0872DE80
+	.incbin	"baserom.gba", 0x60C5F4, 0x4
+	.word	gSong_0872DEB4
+	.incbin	"baserom.gba", 0x60C5FC, 0x4
+	.word	gSong_0872DEE8
+	.incbin	"baserom.gba", 0x60C604, 0x4
+	.word	gSong_0872DF2C
+	.incbin	"baserom.gba", 0x60C60C, 0x4
+	.word	gSong_0872DF50
+	.incbin	"baserom.gba", 0x60C614, 0x4
+	.word	gSong_0872DF78
+	.incbin	"baserom.gba", 0x60C61C, 0x4
+	.word	gSong_0872DF9C
+	.incbin	"baserom.gba", 0x60C624, 0x4
+	.word	gSong_0872DFBC
+	.incbin	"baserom.gba", 0x60C62C, 0x4
+	.word	gSong_0872E03C
+	.incbin	"baserom.gba", 0x60C634, 0x4
+	.word	gSong_0872E060
+	.incbin	"baserom.gba", 0x60C63C, 0x4
+	.word	gSong_0872E35C
+	.incbin	"baserom.gba", 0x60C644, 0x4
+	.word	gSong_0872E384
+	.incbin	"baserom.gba", 0x60C64C, 0x4
+	.word	gSong_0872E690
+	.incbin	"baserom.gba", 0x60C654, 0x4
+	.word	gSong_0872E6CC
+	.incbin	"baserom.gba", 0x60C65C, 0x4
+	.word	gSong_0872E73C
+	.incbin	"baserom.gba", 0x60C664, 0x4
+	.word	gSong_0872E7F0
+	.incbin	"baserom.gba", 0x60C66C, 0x4
+	.word	gSong_0872E9EC
+	.incbin	"baserom.gba", 0x60C674, 0x4
