@@ -1598,22 +1598,22 @@ nextit:
 
 s32 sub_080b5338(s32 i)
 {
-    register s32 i6 asm("r6");
-    register s32 res5 asm("r5");
-    register u8 *e4 asm("r4");
+    s32 i6;
+    s32 res5;
+    u8 *e4;
     u8 *b;
     u8 *pw2;
-    register s32 w8 asm("r1");
-    register u32 w9 asm("r0");
+    s32 w8;
+    u32 w9;
     s32 vb;
     u8 *pw;
     u8 *pd;
-    register u8 *pz asm("r0");
+    u8 *pz;
     u32 *pw3;
     s32 m;
-    register u8 *e2 asm("r1");
+    u8 *e2;
     s32 w3;
-    register s32 w4 asm("r0");
+    s32 w4;
     s32 r;
 
     i6 = i;
@@ -1621,10 +1621,8 @@ s32 sub_080b5338(s32 i)
     if (((u8 *)gUnk_02008020)[i6] != 0)
         goto fail;
     pd = (u8 *)gUnk_020055D8;
-    asm("" : "+r"(pd));
     w8 = i6 << 3;
     w9 = (u32)*(u8 **)(pd + 4);
-    asm("" : "+r"(w9));
     e4 = (u8 *)(w9 + w8);
     switch (*(s8 *)e4)
     {
@@ -1675,7 +1673,6 @@ fail:
 ok:
     e2 = (u8 *)gUnk_02005590;
     w4 = res5;
-    asm("" : "+r"(w4));
     w4 -= 32;
     *(u8 *)(w4 + (u32)e2) = i6;
     r = 1;
@@ -1706,14 +1703,14 @@ void sub_080b54a4(s32 a)
 
 void sub_080b54d0(s32 a)
 {
-    register s32 av asm("r2");
+    s32 av;
     u8 *pbase;
-    register u8 *pd asm("r1");
+    u8 *pd;
     u8 *pb2;
-    register s32 wi asm("r0");
+    s32 wi;
     s8 *e3;
     u8 *p2;
-    register s32 w asm("r0");
+    s32 w;
     s32 k;
     s32 w9;
     u8 **wdp;
@@ -1724,9 +1721,7 @@ void sub_080b54d0(s32 a)
     if ((s8)*(u8 *)gUnk_02007D64 == 4)
         return;
     pbase = (u8 *)gUnk_02005590;
-    asm("" : "+r"(pbase));
     w = av;
-    asm("" : "+r"(w));
     w -= 32;
     e3 = (s8 *)(w + (u32)pbase);
     if (*e3 == -1)
@@ -1734,11 +1729,9 @@ void sub_080b54d0(s32 a)
     pb2 = (u8 *)gUnk_02007BF0;
     p2 = (u8 *)((((s32)*(s8 *)gUnk_030023EC << 2) + ((s32)gUnk_0300238C << 5)) + (u32)pb2);
     pd = (u8 *)gUnk_020055D8;
-    asm("" : "+r"(pd));
     wi = *e3;
     wd = *(u8 **)(pd + 4);
     w9 = *(u8 *)(((wi << 3) + (u32)wd) + 3);
-    asm("" : "+r"(w9));
     k = (s8)w9;
     m = 1 << k;
     *(u32 *)p2 = *(u32 *)p2 | m;
@@ -1751,7 +1744,6 @@ void sub_080b5540(s32 a, s32 b)
     u8 *pb;
 
     pbase = (u8 *)gUnk_02005590;
-    asm("" : "+r"(pbase));
     b -= 32;
     pb = (u8 *)(b + (u32)pbase);
     a -= 32;

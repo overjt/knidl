@@ -1703,8 +1703,8 @@ void sub_080b33d8(void)
     struct Task **c;
     struct Task *t;
     struct Task *u;
-    register s32 v5 asm("r5");
-    register s32 v6 asm("r6");
+    s32 v5;
+    s32 v6;
     s32 z;
     struct Task *u0;
     struct Task *u1;
@@ -1723,7 +1723,6 @@ void sub_080b33d8(void)
     u = gUnk_03002490;
     u->unk7A = z;
     c = &gUnk_03002490;
-    asm("" : "+r"(c));
     v5 = 128 << 9;
     v6 = 0xFFFD0000;
 top:
@@ -1891,7 +1890,7 @@ top:
 void sub_080b3758(void)
 {
     struct Task *t;
-    register struct Task *t6 asm("r6");
+    struct Task *t6;
     s16 *a;
     u32 h;
     s32 w;
@@ -2503,7 +2502,7 @@ void sub_080b3fcc(void)
     struct Task **c;
     struct Task *t;
     struct Actor *a;
-    register s32 u asm("r0");
+    s32 u;
 
     c = &gUnk_03002490;
     t = *c;
@@ -3002,7 +3001,7 @@ s32 sub_080b45c0(void)
 
 void sub_080b460c(void)
 {
-    register u8 *q0 asm("r0");
+    u8 *q0;
     s32 w;
     s32 w2;
 
@@ -3217,12 +3216,12 @@ void sub_080b48e0(void)
 void sub_080b48f8(void)
 {
     s32 i;
-    register s32 k asm("r3");
+    s32 k;
     s32 n;
-    register u16 *pa asm("ip");
+    u16 *pa;
     s32 n2;
     s32 one;
-    register u16 *pb asm("r1");
+    u16 *pb;
     s32 m5;
     u8 *p2;
     u8 *pc7;
@@ -3259,10 +3258,10 @@ void sub_080b48f8(void)
 
 void sub_080b4968(void)
 {
-    register s32 i asm("r5");
-    register s32 o asm("r9");
-    register s32 one asm("r8");
-    register s32 b asm("r4");
+    s32 i;
+    s32 o;
+    s32 one;
+    s32 b;
     struct Task **c;
     struct Task *t;
     struct Task *t3;
@@ -3358,8 +3357,8 @@ void sub_080b4b18(void)
 {
     struct Task **c;
     struct Task *t;
-    register s32 v6 asm("r6");
-    register s32 v5 asm("r5");
+    s32 v6;
+    s32 v5;
     s32 r;
 
     c = &gUnk_03002490;
@@ -3492,8 +3491,8 @@ void sub_080b4d50(void)
 {
     struct Task **c;
     struct Task *t;
-    register s32 v6 asm("r6");
-    register s32 v5 asm("r5");
+    s32 v6;
+    s32 v5;
     s32 r;
 
     c = &gUnk_03002490;
@@ -3566,9 +3565,9 @@ void sub_080b4e04(void)
 
 void sub_080b4e40(void)
 {
-    register u8 *p1 asm("r1");
-    register u8 *q asm("r1");
-    register s32 w asm("r0");
+    u8 *p1;
+    u8 *q;
+    s32 w;
     s32 m5;
     s32 z4;
     s32 z3;
@@ -3576,11 +3575,8 @@ void sub_080b4e40(void)
     s32 i2;
 
     m5 = 255;
-    asm("" : "+r"(m5));
     z4 = 0;
-    asm("" : "+r"(z4));
     z3 = 0;
-    asm("" : "+r"(z3));
     p1 = (u8 *)gUnk_020060A0;
     k2 = 9;
     do

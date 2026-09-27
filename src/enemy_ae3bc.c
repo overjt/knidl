@@ -2151,11 +2151,11 @@ void sub_080aed5c(void)
 {
     struct Task **c;
     s32 z;
-    register s32 va asm("r4");
-    register s32 vb asm("r9");
-    register s32 vc asm("r6");
-    register s32 vd asm("sl");
-    register s32 ve asm("r8");
+    s32 va;
+    s32 vb;
+    s32 vc;
+    s32 vd;
+    s32 ve;
     struct Task *t;
     struct Task *q1;
     struct Task *q2;
@@ -3821,7 +3821,7 @@ void sub_080b0338(void)
 void sub_080b0570(void)
 {
     struct Task *t1;
-    register struct Task *t asm("ip");
+    struct Task *t;
     struct Task *tb;
     s16 *a;
     struct Task *tt;
@@ -3852,9 +3852,9 @@ void sub_080b05e8(void)
     struct Task **c;
     s32 *p;
     s32 z;
-    register s32 vA asm("r8");
-    register s32 vB asm("sl");
-    register s32 vC asm("r9");
+    s32 vA;
+    s32 vB;
+    s32 vC;
     s32 vD;
     s32 vE;
     s32 vF;
@@ -5088,11 +5088,11 @@ void sub_080b1770(void)
 
 void sub_080b17d0(void)
 {
-    register struct Task *t asm("ip");
-    register struct Task *t4 asm("r4");
+    struct Task *t;
+    struct Task *t4;
     struct Task *tt;
     struct Task *tt2;
-    register s16 *a asm("r3");
+    s16 *a;
     u32 o;
     u16 *e;
     u16 *e2;
@@ -5114,11 +5114,11 @@ void sub_080b17d0(void)
 
 void sub_080b1830(void)
 {
-    register struct Task *t asm("ip");
-    register struct Task *t4 asm("r4");
+    struct Task *t;
+    struct Task *t4;
     struct Task *tt;
     struct Task *tt2;
-    register s16 *a asm("r3");
+    s16 *a;
     u32 o;
     u16 *e;
     u16 *e2;
@@ -5402,7 +5402,7 @@ end:
 void sub_080b1c04(void)
 {
     struct Task **c;
-    register struct Task *t asm("r1");
+    struct Task *t;
     struct Task *u;
     struct Task *u1;
     struct Task *u2;
@@ -5412,11 +5412,11 @@ void sub_080b1c04(void)
     struct Task *q2;
     struct Task *q3;
     struct Task *q4;
-    register struct Task *q4b asm("r0");
+    struct Task *q4b;
     s32 zz;
     u8 *tj;
     u8 *tj2;
-    register s32 k asm("r1");
+    s32 k;
     s32 x;
     s32 x2;
 
@@ -5536,9 +5536,9 @@ void sub_080b1d2c(void)
 
 void sub_080b1d98(void)
 {
-    register struct Task **c asm("r5");
+    struct Task **c;
     struct Task **c2;
-    register s32 z asm("r4");
+    s32 z;
     struct Task *t;
     struct Task *u;
     struct Task *u2;
@@ -5631,9 +5631,9 @@ void sub_080b1e20(void)
 
 void sub_080b1ef8(void)
 {
-    register struct Task **c asm("r5");
+    struct Task **c;
     struct Task **c2;
-    register s32 z asm("r4");
+    s32 z;
     struct Task *t;
     struct Task *u;
     struct Task *u2;
@@ -5779,7 +5779,7 @@ xbody2:
 void sub_080b20d4(void)
 {
     struct Task **c;
-    register u32 *t40 asm("r5");
+    u32 *t40;
     struct Task *t;
     struct Task *t2;
     struct Task *u;
@@ -6329,8 +6329,8 @@ void sub_080b2890(void)
 {
     struct Task **c;
     struct Task *t0;
-    register struct Task *t asm("ip");
-    register u16 *a asm("ip");
+    struct Task *t;
+    u16 *a;
     struct Task *u;
     struct Task *u2;
     struct Task *t2;
@@ -6402,7 +6402,7 @@ void sub_080b2890(void)
 void sub_080b2a00(void)
 {
     struct Task **c;
-    register struct AnimCmd *k4 asm("r4");
+    struct AnimCmd *k4;
     struct Task *t;
     struct Task *u;
     struct Task *u2;
