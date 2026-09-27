@@ -79,19 +79,19 @@ extern s16 *gCurTileDrifts;
 struct Unk03005530
 {
     /*0x00*/ u8 unk0;
-    /*0x01*/ u8 unk1;
+    /*0x01*/ u8 ceilingHits;
     /*0x02*/ u8 unk2;
     /*0x03*/ u8 unk3;
     /*0x04*/ u8 slope;
     /*0x05*/ u8 unk5;
     /*0x06*/ u8 onGround;
-    /*0x07*/ u8 unk7;
+    /*0x07*/ u8 waterFlags;
     /*0x08*/ u16 unk8;
-    /*0x0A*/ u8 unkA;
+    /*0x0A*/ u8 atDoor;
     /*0x0B*/ u8 unkB;
     /*0x0C*/ u8 unkC;
     /*0x0D*/ u8 unkD;
-    /*0x0E*/ u8 unkE;
+    /*0x0E*/ u8 onSlipperyFloor;
     /*0x0F*/ u8 unkF;
     /*0x10*/ u8 unk10;
 };
@@ -100,7 +100,7 @@ extern struct Unk03005530 gTerrainProbeResult;
 struct Unk03005550
 {
     /*0x00*/ u8 unk0;
-    /*0x01*/ u8 unk1;
+    /*0x01*/ u8 ceilingHits;
     /*0x02*/ u8 unk2;
     /*0x03*/ u8 unk3;
     /*0x04*/ u8 slope;
@@ -108,8 +108,8 @@ struct Unk03005550
     /*0x06*/ u8 unk6;
     /*0x07*/ u8 unk7;
     /*0x08*/ u16 unk8;
-    /*0x0A*/ u8 unkA;
-    /*0x0B*/ u8 unkB;
+    /*0x0A*/ u8 atDoor;
+    /*0x0B*/ u8 onSlipperyFloor;
     /*0x0C*/ u8 unkC;
     /*0x0D*/ u8 unkD;
 };
@@ -133,9 +133,9 @@ void TerrainProbeBegin(const s8 *p)
     gTerrainBoxLeft = p[4];
     gTerrainBoxRight = p[5];
     gTerrainFacing = gCurTask->facing;
-    gTerrainProbeResult.unk0 = gTerrainProbeResult.unk1 = gTerrainProbeResult.unk2 = gTerrainProbeResult.unk3 = gTerrainProbeResult.slope = gTerrainProbeResult.unk5 = gTerrainProbeResult.unkE = gTerrainProbeResult.unkF = gTerrainProbeResult.unk10 = 0;
+    gTerrainProbeResult.unk0 = gTerrainProbeResult.ceilingHits = gTerrainProbeResult.unk2 = gTerrainProbeResult.unk3 = gTerrainProbeResult.slope = gTerrainProbeResult.unk5 = gTerrainProbeResult.onSlipperyFloor = gTerrainProbeResult.unkF = gTerrainProbeResult.unk10 = 0;
     gTerrainProbeResult.onGround = gCurTask->onGround;
-    gTerrainProbeResult.unk7 = gCurTask->waterFlags;
+    gTerrainProbeResult.waterFlags = gCurTask->waterFlags;
     gTerrainProbeResult.unkB = gCurTask->unk84;
     gTerrainProbeResult.unkC = gCurTask->unk84 >> 8;
 }
@@ -143,7 +143,7 @@ void TerrainProbeBegin(const s8 *p)
 void TerrainProbeEnd(const s8 *p)
 {
     gCurTask->onGround = gTerrainProbeResult.onGround;
-    gCurTask->waterFlags = gTerrainProbeResult.unk7;
+    gCurTask->waterFlags = gTerrainProbeResult.waterFlags;
     if (gCurTask->posX >> 16 != gTerrainProbeX - p[0])
     {
         gCurTask->posX = ((gTerrainProbeX - p[0]) << 16) + 0x8000;
@@ -155,13 +155,13 @@ void TerrainProbeEnd(const s8 *p)
         gCurTask->pixelY = gTerrainProbeY - p[1];
     }
     gTerrainResult.unk0 = gTerrainProbeResult.unk0;
-    gTerrainResult.unk1 = gTerrainProbeResult.unk1;
+    gTerrainResult.ceilingHits = gTerrainProbeResult.ceilingHits;
     gTerrainResult.unk2 = gTerrainProbeResult.unk2;
     gTerrainResult.unk3 = gTerrainProbeResult.unk3;
     gTerrainResult.slope = gTerrainProbeResult.slope;
     gTerrainResult.unk5 = gTerrainProbeResult.unk5;
     gTerrainResult.unk8 = gTerrainProbeResult.unk8;
-    gTerrainResult.unkB = gTerrainProbeResult.unkE;
+    gTerrainResult.onSlipperyFloor = gTerrainProbeResult.onSlipperyFloor;
     gTerrainResult.unkC = gTerrainProbeResult.unkF;
     gTerrainResult.unkD = gTerrainProbeResult.unk10;
     gCurTask->unk84 = (gTerrainProbeResult.unkC << 8) | gTerrainProbeResult.unkB;

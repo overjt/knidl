@@ -23,7 +23,7 @@
 struct Unk03005550
 {
     /*0x00*/ u8 unk0;
-    /*0x01*/ u8 unk1;
+    /*0x01*/ u8 ceilingHits;
     /*0x02*/ u8 unk2;
     /*0x03*/ u8 unk3;
     /*0x04*/ u8 slope;
@@ -31,8 +31,8 @@ struct Unk03005550
     /*0x06*/ u8 unk6;
     /*0x07*/ u8 unk7;
     /*0x08*/ s16 unk8;
-    /*0x0A*/ u8 unkA;
-    /*0x0B*/ u8 unkB;
+    /*0x0A*/ u8 atDoor;
+    /*0x0B*/ u8 onSlipperyFloor;
     /*0x0C*/ u8 unkC;
     /*0x0D*/ u8 unkD;
 };
@@ -418,7 +418,7 @@ void PlayerActionJumpUpdate(void)
             PlayerRequestLocomotion();
             goto end;
         }
-        if (gTerrainResult.unk1 != 0)
+        if (gTerrainResult.ceilingHits != 0)
         {
             PlayerCheckBump();
             PlayerStopAxes(2);
@@ -510,7 +510,7 @@ void sub_08034e60(void)
             PlayerRequestLocomotion();
             break;
         }
-        if (gTerrainResult.unk1 != 0)
+        if (gTerrainResult.ceilingHits != 0)
         {
             PlayerCheckBump();
             PlayerStopAxes(2);

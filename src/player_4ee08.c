@@ -18,7 +18,7 @@
 struct Unk03005550
 {
     /*0x00*/ u8 unk0;
-    /*0x01*/ u8 unk1;
+    /*0x01*/ u8 ceilingHits;
     /*0x02*/ u8 unk2;
     /*0x03*/ u8 unk3;
     /*0x04*/ u8 slope;
@@ -26,8 +26,8 @@ struct Unk03005550
     /*0x06*/ u8 unk6;
     /*0x07*/ u8 unk7;
     /*0x08*/ s16 unk8;
-    /*0x0A*/ u8 unkA;
-    /*0x0B*/ u8 unkB;
+    /*0x0A*/ u8 atDoor;
+    /*0x0B*/ u8 onSlipperyFloor;
     /*0x0C*/ u8 unkC;
     /*0x0D*/ u8 unkD;
 };
@@ -107,7 +107,7 @@ void sub_0804ef00(void)
     PlayerTurnToHeldDirection();
     while (!sub_0804f7f8(3) && !sub_0804f7f8(2))
     {
-        if (gTerrainResult.unk1 != 0 || (gCurTask->player->boundsClamp & 4))
+        if (gTerrainResult.ceilingHits != 0 || (gCurTask->player->boundsClamp & 4))
         {
             struct Task *t;
             PlayerCheckBump();
@@ -195,7 +195,7 @@ void sub_0804f124(void)
     PlayerTurnToHeldDirection();
     while (!sub_0804f7f8(3) && !sub_0804f7f8(2))
     {
-        if (gTerrainResult.unk1 != 0 || (gCurTask->player->boundsClamp & 4))
+        if (gTerrainResult.ceilingHits != 0 || (gCurTask->player->boundsClamp & 4))
         {
             struct Task *t;
             PlayerCheckBump();

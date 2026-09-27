@@ -77,19 +77,19 @@ extern struct MapCell *gRoomMap;
 struct Unk03005530
 {
     /*0x00*/ u8 unk0;
-    /*0x01*/ u8 unk1;
+    /*0x01*/ u8 ceilingHits;
     /*0x02*/ u8 unk2;
     /*0x03*/ u8 unk3;
     /*0x04*/ u8 slope;
     /*0x05*/ u8 unk5;
     /*0x06*/ u8 onGround;
-    /*0x07*/ u8 unk7;
+    /*0x07*/ u8 waterFlags;
     /*0x08*/ u16 unk8;
-    /*0x0A*/ u8 unkA;
+    /*0x0A*/ u8 atDoor;
     /*0x0B*/ u8 unkB;
     /*0x0C*/ u8 unkC;
     /*0x0D*/ u8 unkD;
-    /*0x0E*/ u8 unkE;
+    /*0x0E*/ u8 onSlipperyFloor;
     /*0x0F*/ u8 unkF;
 };
 extern struct Unk03005530 gTerrainProbeResult;
@@ -107,22 +107,22 @@ void sub_080214e0(void)
 
     TerrainQueryPixelAndBelow(gTerrainProbeX, gTerrainProbeY);
     gTerrainProbeResult.unk8 = 0xFFFF;
-    gTerrainProbeResult.unk7 = 0;
+    gTerrainProbeResult.waterFlags = 0;
     y = gTerrainProbeY;
     h = gRoomHeight << 4;
     if (y >= h)
     {
         TerrainQueryPixel(gTerrainProbeX, h - 16);
         if (gTerrainTile & 0x80)
-            gTerrainProbeResult.unk7 = 11;
+            gTerrainProbeResult.waterFlags = 11;
     }
     else
     {
         TerrainQueryPixel(gTerrainProbeX, y);
         if (gTerrainTile > 127)
-            gTerrainProbeResult.unk7 = 129;
+            gTerrainProbeResult.waterFlags = 129;
         else
-            gTerrainProbeResult.unk7 = 0;
+            gTerrainProbeResult.waterFlags = 0;
     }
 }
 
@@ -276,7 +276,7 @@ void sub_08021a10(u16 a)
 {
     gTerrainProbeResult.slope = gCollisionTileSlope[a];
     gTerrainProbeResult.unk5 = gUnk_087337F0[a];
-    gTerrainProbeResult.unkE = gCollisionTileSlippery[a];
+    gTerrainProbeResult.onSlipperyFloor = gCollisionTileSlippery[a];
 }
 
 s32 sub_08021a40(u32 x, u32 y)

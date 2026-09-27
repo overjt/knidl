@@ -48,7 +48,7 @@ struct HitBoxSet
 struct Unk03005550
 {
     /*0x00*/ u8 unk0;
-    /*0x01*/ u8 unk1;
+    /*0x01*/ u8 ceilingHits;
     /*0x02*/ u8 unk2;
     /*0x03*/ u8 unk3;
     /*0x04*/ u8 slope;
@@ -56,8 +56,8 @@ struct Unk03005550
     /*0x06*/ u8 unk6;
     /*0x07*/ u8 unk7;
     /*0x08*/ s16 unk8;
-    /*0x0A*/ u8 unkA;
-    /*0x0B*/ u8 unkB;
+    /*0x0A*/ u8 atDoor;
+    /*0x0B*/ u8 onSlipperyFloor;
     /*0x0C*/ u8 unkC;
     /*0x0D*/ u8 unkD;
 };
@@ -65,19 +65,19 @@ struct Unk03005550
 struct Unk03005530
 {
     /*0x00*/ u8 unk0;
-    /*0x01*/ u8 unk1;
+    /*0x01*/ u8 ceilingHits;
     /*0x02*/ u8 unk2;
     /*0x03*/ u8 unk3;
     /*0x04*/ u8 slope;
     /*0x05*/ u8 unk5;
     /*0x06*/ u8 onGround;
-    /*0x07*/ u8 unk7;
+    /*0x07*/ u8 waterFlags;
     /*0x08*/ u16 unk8;
-    /*0x0A*/ u8 unkA;
+    /*0x0A*/ u8 atDoor;
     /*0x0B*/ u8 unkB;
     /*0x0C*/ u8 unkC;
     /*0x0D*/ u8 unkD;
-    /*0x0E*/ u8 unkE;
+    /*0x0E*/ u8 onSlipperyFloor;
     /*0x0F*/ u8 unkF;
     /*0x10*/ u8 unk10;
 };
@@ -450,16 +450,16 @@ void PlayerUpdate(void)
     }
     else
     {
-        gTerrainResult.unk0 = gTerrainResult.unk1 = gTerrainResult.unk2 = 0;
+        gTerrainResult.unk0 = gTerrainResult.ceilingHits = gTerrainResult.unk2 = 0;
         gTerrainResult.unk3 = gTerrainResult.slope = gTerrainResult.unk5 = 0;
-        gTerrainResult.unk8 = gTerrainResult.unkB = gTerrainResult.unkC = 0;
-        gTerrainResult.unkA = 0;
-        gTerrainProbeResult.unkE = 0;
+        gTerrainResult.unk8 = gTerrainResult.onSlipperyFloor = gTerrainResult.unkC = 0;
+        gTerrainResult.atDoor = 0;
+        gTerrainProbeResult.onSlipperyFloor = 0;
     }
     gCurTask->player->wallSide = gTerrainResult.unk0;
     gCurTask->player->slope = gTerrainResult.slope;
-    gCurTask->player->onSlipperyFloor = gTerrainProbeResult.unkE;
-    gCurTask->player->atDoor = gTerrainResult.unkA;
+    gCurTask->player->onSlipperyFloor = gTerrainProbeResult.onSlipperyFloor;
+    gCurTask->player->atDoor = gTerrainResult.atDoor;
     if (sub_0803fa74() != 0)
         goto tail;
     p = gCurTask->player;
