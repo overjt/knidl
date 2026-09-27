@@ -136,42 +136,26 @@ void sub_080b8ebc(void)
 }
 void sub_080b8ef4(void)
 {
-    register vs32 *ip asm("r5");
-    struct Unk02005E00 *s;
     struct Task *t;
-    u8 *f;
-    u8 *g;
-    u8 *e;
     s32 i;
     s32 n;
-    s32 v;
-
     t = gUnk_03002490;
     t->unk00 = 0;
     t->unk0C = 0;
-    s = &gUnk_02005E00;
-    ip = &gCurTaskIdx;
-    g = (u8 *)s + 8;
-    if (g[*ip] != 0)
+    if (gUnk_02005E00.unk08[gCurTaskIdx] != 0)
     {
         t->unk14 = 6;
     }
     else
     {
-        i = 0;
-        n = 0;
-        f = (u8 *)s + 4;
-        do
+        for (i = 0, n = 0; i < 4; i++)
         {
-            e = (u8 *)(i + (u32)f);
-            v = *e << 24;
-            if (v != 0 && (u32)v >> 28 == *ip)
+            if (gUnk_02005E00.unk04[i] != 0 && gUnk_02005E00.unk04[i] >> 4 == gCurTaskIdx)
             {
                 gUnk_03002490->unk1C = i;
                 n++;
             }
-            i++;
-        } while (i <= 3);
+        }
         if (n != 0)
         {
             sub_080b8f8c(1);

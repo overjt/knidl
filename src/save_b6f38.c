@@ -88,10 +88,6 @@ void sub_080b6f38(void)
 {
     s32 i;
     s32 j;
-    s32 n;
-    u32 *src;
-    u8 *d;
-    s32 off;
 
     gUnk_0200EC54 = 1;
     switch (gUnk_0200EC58)
@@ -116,21 +112,12 @@ void sub_080b6f38(void)
         gUnk_0200EC6C->unk11E = gUnk_03001F30;
         for (i = 0; i <= 7; i++)
         {
-            asm("" ::: "r4");
             gUnk_0200EC6C->unk38[i] = gUnk_02007D58[i];
         }
         for (i = 0; i <= 7; i++)
         {
-            d = (u8 *)gUnk_0200EC6C->unk40;
-            src = gUnk_02007BF0[i];
-            off = i * 16;
-            n = 7;
-            do
-            {
-                d = (u8 *)gUnk_0200EC6C->unk40;
-                *(u16 *)(d + off) = *src++;
-                off += 2;
-            } while (--n >= 0);
+            for (j = 0; j <= 7; j++)
+                gUnk_0200EC6C->unk40[i][j] = gUnk_02007BF0[i][j];
         }
         for (i = 0; i < gUnk_030023AC; i++)
         {
@@ -163,10 +150,9 @@ void sub_080b6f38(void)
         }
         gUnk_0200EC6C->unkC2 = gUnk_0300235C;
         sub_080b8374();
-        n = Div(0x3B6A, gUnk_030023AC);
-        asm("" ::: "r3");
+        j = Div(0x3B6A, gUnk_030023AC);
         for (i = 0; i < gUnk_030023AC; i++)
-            gUnk_0200EC70[i] = n - 4;
+            gUnk_0200EC70[i] = j - 4;
         break;
     case 2:
         sub_080b8348();

@@ -1967,45 +1967,33 @@ void sub_080a2164(void)
 /* sub_080a21a0 (0x080A21A0-0x080A2224) */
 void sub_080a21a0(void *a)
 {
-    register struct Task *t asm("r3");
-    register s16 *p asm("r2");
-    s32 d;
-    u16 y;
-    u16 m3;
-    u16 z;
-    u16 x2;
-    s16 *q2;
+    struct Task *t = gUnk_03002490;
+    u16 d = t->unk4A - gUnk_03002158[2];
 
-    t = gUnk_03002490;
-    p = &t->unk4A;
-    q2 = gUnk_03002158;
-    x2 = *p;
-    d = (u16)(x2 - (y = q2[2]));
     if (t->unk58 < 0)
     {
         if ((s16)d > 16)
             return;
+        t->unk4A = gUnk_03002158[2] + 17;
+        t->unk50 = t->unk4A << 16;
+        t->unk58 = 0;
+    }
+    else if ((s16)d <= (s32)gUnk_02006040[4])
+    {
+        if ((s16)d > 16)
+            return;
+        t->unk4A = gUnk_03002158[2] + 17;
+        t->unk50 = t->unk4A << 16;
+        t->unk58 = 0;
     }
     else
     {
-        d = (s16)d;
-        if (d > (s32)gUnk_02006040[4])
-            goto snap;
-        if (d > 16)
-            return;
+        t->unk4A = gUnk_03002158[2] + gUnk_02006040[4];
+        t->unk50 = t->unk4A << 16;
+        sub_080062c4();
+        sub_0806395c(3);
+        sub_08006148(a, gCurTaskIdx);
     }
-    m3 = y + 17;
-    z = 0;
-    *p = m3;
-    t->unk50 = *p << 16;
-    t->unk58 = z;
-    return;
-snap:
-    *p = y + gUnk_02006040[4];
-    t->unk50 = *p << 16;
-    sub_080062c4();
-    sub_0806395c(3);
-    sub_08006148(a, gCurTaskIdx);
 }
 
 /* sub_080a2224 (0x080A2224-0x080A2274) */
@@ -2055,7 +2043,7 @@ void sub_080a22d4(void)
     struct Task *t;
     s32 ofs;
     s32 r;
-    register s32 acc asm("r2");
+    s32 acc;
     s32 i;
 
     t = gUnk_03002490;
@@ -2073,14 +2061,20 @@ void sub_080a22d4(void)
             goto sel;
     }
 dec:
-    i--;
-    if (i < 0)
-        goto sel;
-    if (gUnk_03002490->unk24 == i)
-        goto dec;
-    acc += gUnk_087484EC[i + ofs];
-    if (acc < r)
-        goto dec;
+    /* Zero-code stand-in: the loop note of this do/while (0) weights the
+       refs of acc inside it, so global allocation ranks acc (r2) above r
+       (r3); acc's constant `= 0` set halves its priority otherwise. */
+    do
+    {
+        i--;
+        if (i < 0)
+            goto sel;
+        if (gUnk_03002490->unk24 == i)
+            goto dec;
+        acc += gUnk_087484EC[i + ofs];
+        if (acc < r)
+            goto dec;
+    } while (0);
 sel:
     if (gUnk_02007D00[4] != 0 && !(i & 1))
     {
@@ -3959,24 +3953,22 @@ void sub_080a4808(void)
 void sub_080a4814(void)
 {
     struct Task *pt = &gUnk_03002790[gUnk_02007D00[0]];
-    register struct Task *t asm("r4") = gUnk_03002490;
+    struct Task *t = gUnk_03002490;
     struct Actor *myact = t->unk8C;
     struct Actor *pact = gUnk_03002790[gUnk_02007D00[0]].unk8C;
-    u32 *v;
 
     switch (pt->unk3C)
     {
     case 13:
-        v = gUnk_087541E0;
+        t->unk38 = gUnk_087541E0;
         break;
     case 12:
-        v = gUnk_087541B0;
+        t->unk38 = gUnk_087541B0;
         break;
     default:
-        v = gUnk_08754180;
+        t->unk38 = gUnk_08754180;
         break;
     }
-    t->unk38 = v;
     if (pt->unk3C > 15)
         gUnk_03002490->unk3C = 0xFFFF;
     gUnk_03002490->unk43 = pt->unk43;

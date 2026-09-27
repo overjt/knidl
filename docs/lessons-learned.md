@@ -1433,6 +1433,8 @@ its tail differs and survives.  Six natural spellings (locals, operand order,
 allocation.  When a size delta is exactly one shared tail, look for the merge
 before looking for a missing statement.
 
+**Note (natural-C campaign, #154):** `sub_08009640` needs no clobber: the shared `u->unk50` store written in both arms gives the ROM's allocation, and jump2 merges the copies (lesson 3.506).
+
 ### 3.371 An integer-literal RAM address is re-materialised; a symbol is kept
 The mirror of 4.56.  `sub_08008f10` passes `0x02020000 + off` to four
 `sub_080017e4` calls, and the ROM reloads the buffer address from the pool
@@ -4036,6 +4038,420 @@ PRE (556 bytes).  The natural best, the plain store with the dead
 initializers (40 differing bytes, 564 of 568), is on #100: the function is
 "matched with two levers, natural form pending".
 
+### 3.495 The natural-C campaign: the pins described the candidates, and a strip test finds the dead ones
+Issue #154 set out to remove every `register ... asm("rN")` pin and every
+zero-byte `asm("")` lever from the 133 functions (45 files) that still
+carried them, most of them in M28-M33, landed before the plainest-source
+discipline (3.468).  Nearly all fell to plain source; the ones that did
+not are listed in the AGENTS.md status bullet and on #154.  Three
+observations for any later campaign of this kind:
+* **Delete first.**  A mechanical strip (drop the `asm("rN")` labels and the
+  empty `asm` statements of ONE function, turning `asm("" : "=r"(x) :
+  "0"(y))` into `x = y;`, and re-test the whole file) matched 36 functions
+  as they stood: 8 in `enemy_aa338.c`, 11 in `enemy_ae3bc.c`, 9 in
+  `hud_b2fe8.c`, 3 in `hud_b5024.c`, 2 in `hud_b5840.c`, and
+  `sub_0809bc1c`, `sub_08012fe0`, `sub_080b6290`.  Their pins no longer did
+  anything.  The residue table of the rest (bytes of that function only,
+  from a per-symbol comparison of the whole-file build) was the plan.
+* **Redraft, do not unpin.**  Stripping the pins of the others left 1-693
+  differing bytes; a fresh draft from the listing in the style of the
+  file's plain neighbours usually matched within a few builds, often on
+  the first.  The pinned sources carried shapes built around the pins
+  (staging pairs, pointer locals, `goto` loops, `(u32)` casts, block temps).
+* **The census must include macros.**  `include/global.h`'s
+  `#define BLOCK_CROSS_JUMP asm("");` is a zero-byte lever too; the brief's
+  scan missed its nine uses in three functions outside the list (added with
+  the owner's approval, 3.503).
+
+### 3.496 Ties are broken by declaration order and statement order, not by a pin
+3.229 recommended `register asm` as "the practical tie-break for a
+global-alloc priority tie".  The plain tie-breaks exist:
+* `sub_080b63a4` (the `sub_080b6474` grid with `-g << 4` / `g << 4`) swapped
+  its two pointer locals `pe`/`pc` between r8 and r9: equal priorities, and
+  `allocno_compare` breaks the tie by pseudo number, which is declaration
+  order; `u32 *pc; vs32 *pe;` matches.
+* `sub_080b8ef4` zeroed `n` before `i`; `for (i = 0, n = 0; i < 4; i++)`
+  gives the ROM's order (its r4/r5 pin went with plain struct reads).
+* `sub_0807840c` (M19) had `tab` and the u8 parameter `a` swapped (r5/r3):
+  a pointer local holding the constant table address has its live length
+  doubled by update_equiv_regs (a constant REG_EQUAL set, 3.491), which
+  drops it below `a`.  The first test is written against the 2-D table
+  (`gUnk_087404A0[p->unk00][p->unk01].unk00 == 255`, no `tab`), and each
+  case uses a block-local `u8 *q = (u8 *)gUnk_087404A0; q += 3; p->unk03 -=
+  q[i];`: cse reuses the first test's register for the table (the ROM's
+  r3) and q lands in r0.  A function-scope `q` adds in place (15 bytes), a
+  plain `gUnk_087404A0 + 3` folds into its own `sym+3` pool word.
+**Corrects** 3.229's recommendation (see its note).
+
+### 3.497 A `u32` function with no return statement stores a copy of the value
+`sub_080b7df4` (the checksum store) returns r0 (`pop {r1}`) but stores a copy
+of the call result (`adds r2, r0, #0; ... str r2, [r4]`); a pinned `d` faked
+the copy.  The source has no return statement at all
+(`gUnk_0200E600[a].unk70 = sub_080b7dd0(a);` in a `u32` function, 3.94):
+with `return c;`, or declared `void`, the store takes r0.
+
+### 3.498 A pointer local dropped by global allocation loads the address AFTER the value
+`sub_080b6d04` ends with `ldr r0, =0x04000018; ldr r1, =gUnk_0300101C; str r0,
+[r1]` (value first) and carried a clobber, an r0 pin and a raw
+`*(u32 *)0x0300101C` store for it.  The source is its sibling
+`sub_080b6154`'s: `pc = &gUnk_0300101C;` assigned with the other pointer
+locals before the loop and `*pc = 0x04000018;` at the end.  Every register
+is taken in the loop, global allocation drops `pc`, and reload re-loads the
+address right before the store - after the value (3.258's address reload).
+The fixed BG2VOFS value is a plain `u32 w` that spills (3.467); the `u16
+w[2]` written through `*(u32 *)w` was not needed.  **Corrects** the three
+placeholders `src/save_b6d04.c` documented (3.341's `asm("" ::: "r8",
+"ip")` lever; see 3.341's note).
+
+### 3.499 One variable for the inner loop counters and a later `Div()` result
+`sub_080b6f38` and `sub_080b72bc` (the link record copy and restore) had one
+or two clobbers around `n = Div(0x3B6A, gUnk_030023AC); for (...)
+gUnk_0200EC70[i] = n - 4;`.  The ROM keeps the quotient in r4, the register
+of the inner loop counters: the source reuses the same `j`
+(`j = Div(...); ... = j - 4;`, 3.480), and the 8x8 table copy is the plain
+`gUnk_0200EC6C->unk40[i][j] = gUnk_02007BF0[i][j];`.
+
+### 3.500 A pre-increment in the test is the HImode `ldr =0xFFFF; adds rD, rS, #0` mask
+`sub_08000de4` (the per-frame driver) ticks its play-time clock with `ands
+r0, r2` against a 0xFFFF loaded as `ldr r5, =0xFFFF; adds r2, r5, #0`, the
+HImode-constant-plus-copy shape (3.24), which #32 reproduced with `register
+u16 mask asm("r2")`.  The source is `if (++gUnk_03000498[1] > 59)`: the
+value of a pre-increment of a `u16` element is the HImode sum, and its
+zero-extension for the compare is that constant and AND.  The same counter
+incremented as a statement and then tested is 4 bytes short.
+
+### 3.501 A halfword read that stays apart from its address add and its extension is a volatile read
+`sub_0807777c` (M19) ends each path with `adds r0, r0, r1; ldrh r0, [r0];
+lsls #16; asrs #16`, which combine folds into `ldrsh r0, [r0, r1]` from any
+plain spelling.  A pinned `v asm("r0")` blocked combine; so does a volatile
+read, `v = *(vu16 *)q;`, because combine never merges an insn with a
+volatile memory reference.  Its other pin (the index in r1) was arithmetic
+in place, `i = t->unk1C; i *= 2;` (3.479).
+
+### 3.502 MultiBoot: the `vu8 *masterp` declaration again, and MultiBootWaitCycles is asm
+`sub_08004eac` (MultiBootHandShake) pinned both operands of `masterp[0xAC] |
+(masterp[0xAD] << 8)` to get the ROM's `orrs r1, r0`.  3.481 found the same
+tie in MultiBootMain: `masterp` is a plain `u8 *`.  With the file's struct
+fixed, the pokeemerald spelling matches.  `sub_08004f98`
+(MultiBootWaitCycles) was C with two pins around one `asm`; the SDK's body
+is all asm, and pokeruby's one-instruction-per-statement version (real
+instructions, no pins, no levers) matches.
+
+### 3.503 `BLOCK_CROSS_JUMP`: two full arms, a redundant barrier, and real duplicated tails
+The macro (`asm("");`, as in pokeemerald's `global.h`) stops jump2 from
+cross-jumping identical tails.  Of its thirteen uses on `master`:
+* the four in M28's `sub_0809c028`, `sub_0809d994`, `sub_0809f2f4` and M30's
+  `sub_080a78a0` went with their rewrites;
+* `sub_08096d64`'s was redundant (deleting it matches);
+* `sub_0809ad6c`'s ("keeps agbcc from if-converting the two constant arms")
+  is two FULL call arms, `sub_0806395c(18); sub_08006148(...);` and
+  `sub_0806395c(17); sub_08006148(...);`, which jump2 merges into the ROM's
+  shared tail (the rule of 3.506);
+* `sub_0809fe10` (seven) lost three: its result tail is `if (s0 ==
+  G->unk14) return 0; return 1;`, and of the six arm barriers exactly one
+  case's pair can go - with two cases unbarred jump2 merges their identical
+  `t->unk2C = 1; g[2] = 4; sub_0806395c(1); goto install;` arms.  The four
+  that stay mark tails the ROM really duplicates, the accepted pret use of
+  the macro.
+
+### 3.504 Constants and zeros in callee-saved registers across calls are cse's, and a halfword store's own
+Many pins held a constant: a zero or one in r8/r9, `0x5A5A5A5A` in r5, 0xFFFF
+in r5, a store value in r3 set before its test.  Almost all were the
+compiler's own sharing, reproduced by writing every literal at its use:
+* calls do not end cse's extended blocks, so a literal stored before and
+  after `TaskYieldTrampoline` is one pseudo that global allocation puts in
+  a callee-saved register (M32's `sub_080ae8e0`, `sub_080aec00`,
+  `sub_080b09ac`: 29 pins, all written as plain literals);
+* a halfword store expands as a bit-field store (3.469), and its HImode mask
+  pseudo plus the SImode subreg copy are the zeros that appear in r8/r9
+  right after the task pointer's load in `sub_0809cc24`/`sub_0809cd8c`
+  (natc-d); `x = G->unk3C; G->unk3C = x | 0xFFFF;` with a pinned `x` is
+  plain `gUnk_03002490->unk3C = -1;` (`sub_080ab93c`);
+* a u16/s16 store of a literal gets 3.475's HImode reload copy
+  (`G->unk48 = 288 - x`, `sub_0809cb90`; `(x & 0xFFF) | 0xF000`,
+  `sub_080b09ac`);
+* an AND mask of an index is a constant pseudo that cse reuses later as a
+  subtraction's first operand (`gUnk_02007D00[0] & 255` for `(u8)...`,
+  `sub_080ada20`).
+**Corrects** 3.234 (the `k = 0x5A5A5A5A` variable) and 3.245 (the
+`asm("" : "+r")` staging in `sub_0809cb90`); see their notes.
+
+### 3.505 A table element read twice inline, and tables declared as what they are
+The draw-callback guard `if (tbl[i] != -1) f(..., gfx[tbl[i]], ...)` was
+pinned and kept alive in five functions (`sub_0809d994`/`sub_0809f2f4`,
+3.246; `sub_080b1890`, 3.270; `sub_080b3a64`).  The source reads the element
+twice, with the index expression inline (`gUnk_03002490->unk3C` at every
+use, or a `u8 j` for a computed index), and the tables are declared with
+their real element types (`s8 []`, `u8 []`, `s16 []`) instead of the old
+shared header's `u32 []` plus casts: an ARRAY_REF loads its base BEFORE the
+index shift, a cast pointer `((s16 *)T)[i]` after.  The second read's
+`ldrb; lsls #24; asrs #24` is the index use re-loading in QImode (cse's
+LOAD_EXTEND_OP lookup finds a ZERO_EXTEND, the compare's load was a
+SIGN_EXTEND).  **Corrects** 3.246 and 3.270 (with 3.267/3.268's
+"phantom reservation" reading for `sub_080b1890`); see their notes.
+
+### 3.506 An address or value the ROM loads in two arms is two full arms that cross-jump
+Several pins and barriers faked a register that is loaded on two paths and
+used by a shared tail:
+* `sub_0809c028` (3.244): `ldr r2, =A; b join / ldr r2, =B; join:` is
+  `if (c) p = A[expr]; else p = B[expr];` with the same index expression in
+  both arms, not a `tab = c ? A : B;` local, and no pinned `struct Task **`;
+* `sub_080a4814`: `case 13: t->unk38 = A; break; ...` per arm, not `v = A;
+  ... t->unk38 = v;` (the per-arm stores are refs of `t`, which put `t` in
+  r4);
+* `sub_080ac72c`: the hit block `sub_08040858(k); gUnk_02007D00[2]++; break;`
+  written in full in both arms of a loop; the two copies of the
+  `gUnk_02007D00` load are two movables that `combine_movables` adds
+  (savings 2), which is what makes loop.c hoist that load and not its
+  siblings; jump2 then merges the copies;
+* `sub_080a21a0`: `y` (`gUnk_03002158[2]`) and `&t->unk4A` look inherited by
+  a tail reached from two arms; the sibling `sub_080a2164`'s three
+  statements written in EACH arm put every copy in an extended basic block
+  with the entry, cse reuses the registers, and jump2 merges the copies
+  into the ROM's `b tail` (a single shared tail is a new cse block and
+  needed the old pins or stand-ins);
+* `sub_08009640` (#96's documented `asm("" ::: "r0")`, 3.370): the shared
+  `u->unk50 = 0x800000;` store after the if is written in BOTH arms; the
+  else arm's product then lands in r1 as in the ROM (without the copy the
+  product's quantity, priority 30000, beats `unk18 - 5`, 7500, for r0) and
+  jump2 merges the two stores back into the join;
+* `sub_0809ad6c` (3.503).
+**Corrects** 3.244, 3.248 and 3.370; see their notes.
+
+### 3.507 The M32 quartet: two task pointers and arms that re-read the cell
+`sub_080afdf0`, `sub_080aff40`, `sub_080b0144` and `sub_080b0338` (74 pins and
+6 levers, 3.264's family) are plain once two roles are right:
+* two task locals: `u = gUnk_03002490;` for the `unk54` statement and a
+  second `x = gUnk_03002490;` loaded before the `unk58` computation, with
+  the `unk58` store once after the if/else.  cse makes `x` canonical, `u`
+  stays block-local and `x` coalesces into its register; one task local or
+  stores inside the arms put `&u->unk44` in r4 and push a fifth callee-saved
+  register;
+* in `sub_080afdf0`/`sub_080b0338` the arms re-read the cell: `w = P58; if (w
+  >= 0) w = P58 - v; else w = v + P58;`.  jump.c turns `if (c) x = a; else
+  x = b` with a separate result variable and single-insn arms into `x = b;
+  if (c) x = a`, and `w = v + w` is swapped by expand_binop into `adds r0,
+  r0, r2`; the re-read keeps the arms and the ROM's `adds r0, r2, r0`.  The
+  other two have `+ K` arms (two insns) and take a separate result variable.
+`(u32)` casts were not needed: `gUnk_03002790[i].unk54` gives the ROM's
+base+84/+88.  The rule that held across the file: when the ROM loads
+`gUnk_03002790` AFTER the `* 144`, the source is the integer form
+`(struct Task *)(i * 144 + (u32)gUnk_03002790)`; when before, a subscript.
+The same agent's other M32 shapes: an `s32 d` local for a copied `s8` field
+(`ldrb; lsls #24; asrs #24; strb`), `if (c) ofs = 8; else ofs = 0;` for a
+zero set after the compare, `vu16 gUnk_03001EA4`, `while` loops for goto
+loops, and `sub_080b0b50` written like its landed twin in
+`src/actor_70ec0.c` (`s8 sign = c ? -1 : 1;` ... `(u16)tbl[i] * sign`).
+**Corrects** 3.260, 3.261 (`sub_080b09ac`), 3.262 and the recipe (not the
+rule) of 3.264; see their notes.
+
+### 3.508 Narrowing decides operand types: a same-signedness multiply, `* 2` against `<< 1`, and a u32 local before a u16 store
+Three functions that looked like allocator puzzles were convert.c's
+narrowing of an expression to a 16-bit context:
+* **`sub_080a78a0`** (17 pins, 10 levers; the r7 spill-enrollment
+  function of 3.271-3.275): the ROM's `movs r7, #0; ldrsh r0, [r0, r7]` and
+  `adds r7, r0, #0; muls r7, r1; adds r0, r7, #0` are a NARROWED 16-bit
+  multiply, `t->unk48 = o->unk48 + gUnk_08749014[t->unk28] * o->unk43;` with
+  `s16 gUnk_08749014[]` (the old header had `u16`).  convert_to_integer
+  narrows `(s16)(a * b)` only when both operands have the same signedness;
+  narrowed, the table load is widened late with a bare `ldrh`, and the
+  earlyclobber product needs a fresh register with r0-r6 live: r7, pushed.
+  Diagnostic: an r7 temporary around a `muls` - check the operand types;
+* **`sub_080b5bdc`** (13 pins, 6 levers): an OAM attribute passed to a `u16`
+  parameter is `(slot.unk1 << 12) | ((slot.unk2 * 2) + 16)`: convert.c
+  narrows LSHIFT but not a multiply, so `* 2` keeps the ROM's `ldrsh` where
+  `<< 1` reads the s16 field with `ldrh` (the old candidates used a comma
+  expression, which is not narrowed either);
+* **`sub_080b5628`/`sub_080b5654`**: `cell = ((r + a) & 0xFFF0) + 16;` stored
+  straight into a `u16` is a HImode AND with a reload copy of the mask; the
+  ROM's SImode `ldr r2, =0xFFF0; ands` needs the value in a `u32` local
+  first.
+**Corrects** 3.271's and 3.275's reading of `sub_080a78a0`; see their
+notes.
+
+### 3.509 Volatility is a declaration question in both directions
+3.472 found a residue that was a missing `volatile`; this campaign found the
+opposite as well:
+* `sub_0800f408` (#99's documented `asm("" ::: "r6")`, "about 30 natural
+  shapes") matched once its file declared `gUnk_0200EBC0` plain `u8` instead
+  of `vu8`: a volatile QImode read cannot use `zero_extendqisi2` at expand
+  (general_operand rejects volatile MEMs), so it is a `movqi` plus two
+  shifts, three pre-combine insns instead of one, which lengthened the
+  address pseudo's range until its priority (3 refs / 46) fell under the
+  hoisted copy of `&gUnk_03002490` (7 / 208);
+* `sub_080b1e20`/`sub_080b1f80` needed `gUnk_03001EA4` declared `vu16`
+  (every other use in the file was a `(vu16 *)&` cast).
+When two pseudos' `.greg` priorities are within a few percent, count the
+pre-combine insns in the shorter range: a volatile byte or halfword read
+costs two per read.  **Corrects** 3.341 for `sub_0800f408`; see its note.
+
+### 3.510 Which load loop.c hoists: a base read before an inline index, a load written twice, `for` nests
+The M30/M31 loop functions were pinned to reproduce preheader contents; the
+sources are plain loops (natc-c):
+* `sub_080a860c` keeps `gUnk_02007D48` in r7 and the task pointer's address
+  in r8: the index is read inline, `gUnk_02007D48[(s16)gUnk_03002490->unk6C]`.
+  The ARRAY_REF loads its base before the index, the base's register lives
+  across the index computation (lifetime 2 -> ~5), and `threshold * savings
+  * lifetime >= insn_count` becomes true for that load only; an `i` local
+  or a pointer local set before the loop gets the hoist in the wrong place;
+* `sub_080ac72c`: a load written twice in the loop is hoisted (3.506);
+* `sub_080a8d1c`: a triple nest over `t->unk6C/unk6E/unk70` is three `for
+  (t->f = 0; (s16)t->f <= N; t->f++)` loops, not do-whiles (20 bytes
+  short: the outer latch's reload of the task pointer is a copy made in the
+  outer preheader);
+* `sub_080a6aac`: the goto loop with two exits was `for (t->unk6C = 0;
+  (s16)t->unk6C <= 2 && D00[7] >= tbl[(s16)t->unk6C]; t->unk6C++) ;`.
+Diagnostic: a single pool load hoisted by loop.c while its siblings are
+not is either written twice in the loop or a table base read before an
+inline index.  **Corrects** 3.270's and 3.278's reading of `sub_080a860c`
+("four independent rotation phases") and 3.273's of `sub_080ada20`; see
+their notes.
+
+### 3.511 M33's pinned functions: bit-fields, I/O macros, listed empty cases, and nothing for r7
+natc-b's M33 results:
+* `sub_080b4524`: `u32 buf[2]` with 0xFFFF0000/0xFFFF masks around
+  `sub_08063eb0` is `struct PointPair box;` (task.h's bit-fields): the ROM's
+  `ldr [sp]; ands; orrs; str [sp]` word RMW and the HImode `-640`/`640`
+  copies are the bit-field stores (per-file `extern s32
+  sub_08063eb0(struct PointPair *box, s32 i);`, as `src/enemy_7aa5c.c`
+  declares it);
+* `sub_080b603c`: `ldr r1, =0x040000B0; str; adds r1, #4; str; adds r1, #4;
+  str` is `REG_DMA0SAD = a; REG_DMA0DAD = b; REG_DMA0CNT = c;` (cse derives
+  each address from the previous one, 3.62), and `a = b = c = 0` on vu32
+  cells gives the store-then-reload chain;
+* `sub_080b5024` (23 pins, 7 levers): both switches list their empty values
+  (`case 0: case 1: case 2: case 4: case 6: case 7: break;`): with only the
+  real cases agbcc builds a compare tree (CASE_VALUES_THRESHOLD 5); the
+  inner arms are in the ROM's block order (3.259);
+* `sub_080b4ea8` (13 pins including the file-scope r9-r11 globals, 9
+  levers; the r7 web-split function): `for (i = 0; i < n; e++, i++) switch
+  (e->unk0) { ... case 1: if (sub_080b5670(e, i, k) != 0) k++; break; ...
+  }` with a plain `s32 k`; the ROM's per-arm recomputes of `e + 8`/`i + 1`
+  and the counter in r7 are what agbcc does with the for-increment, and the
+  comma order `e++, i++` decides which recompute comes first;
+* `sub_080b5d84` (51 pins, 5 levers) matched on the first build from a
+  plain draft with the real cell types and one `i` for its three loops;
+  `sub_080b59d8` and `sub_080b5a94` are `sub_080b5670`'s loader shape
+  (3.474).
+* the smaller ones: `sub_080b3c68` (9 pins, 10 levers) has two constant
+  locals set before its do-while, `m = 0x8000; z = 0;` (3.471's rule for
+  constants a calling loop keeps in callee-saved registers); `sub_080b37ec`
+  writes one mask redundantly, `((u32)(x & 0xFFFF0000) >> 16) << 16`, which
+  places the ROM's early `0xFFFF0000` load (combine then drops the AND
+  before the shift); `sub_080b3ffc` is `if (t->unk3C != 5) { ... } else
+  ...` (arm order); `sub_080b55d8` keeps one commented stand-in, a
+  volatile read of `gUnk_02007D40` that gives the ROM's second load.
+* `sub_080b38f0` keeps its pins: the best plain attempt (7 bytes, one
+  stand-in, a dead read of `unk70` that gives the early `adds r3, #112`) is
+  a pure r3/r4 swap: local allocation ranks the address pseudo (2 refs,
+  life 68, priority 294) below the pool pseudo of `&gUnk_03002490` (4 refs,
+  life 100, 800), and the ROM allocated the address first.
+**Corrects** 3.261's and 3.263's claims about M33's second-order temps,
+3.262's `sub_080B5A94` count, 3.266's `sub_080b5d84` note, 3.272's M33
+floors, 3.274 and 3.279-3.281 (the `sub_080b4ea8` levers; caller-save
+exists, but the source never had to arrange it); see their notes.
+
+### 3.512 Small shapes that replaced a pin
+* A sign flip of an `s8` field with the address in r1 and the value in r0:
+  `gUnk_03002490->unk43 *= -1;` (plain `= -x` is shortened to `ldrb`).
+* `x + 1 + f()` reassociates to `(x + f()) + 1`; the ROM's `adds r1, #1;
+  adds r0, r1, r0` is `gUnk_03002490->unk20 += sub_08002ee8(4) + 1;`.
+* Store a field and pass the SAME field again: `t->unk28 = t->unk14;
+  f(t->unk14, ...)` (the argument's re-read becomes a copy of the loaded
+  value; passing `unk28` gives the value the r0 suggestion).
+* `abs(a - b)` is the ROM's `subs r0, r3, r2; bge; subs r0, r2, r3` (fold
+  turns `-(a - b)` into `b - a`).
+* ONE task pointer reassigned in every block that re-reads `gUnk_03002490`
+  can be what raises its priority above a short address temp
+  (`sub_080a0358`), the opposite of 3.231's per-block locals; read `.greg`
+  before choosing.  Likewise one variable for a call result and its scaled
+  value (`v = f(); v = (v * 85) >> 8;`, `sub_0809fc44`, 3.480).
+* SDK functions are diffed against today's pret master: `FadeOutBody`'s r2
+  pin was pokeemerald's old NONMATCHING workaround, and today's
+  `src/m4a.c` pasted verbatim matches under old_agbcc -O2.
+**Corrects** 3.231 for `sub_080a0358`; see its note.
+
+### 3.513 The hardest pinned functions: operand order, one `u16` value, a twin transcription and one stand-in
+* `sub_080a932c` (22 pins, 14 levers; 3.277's `ldrh rX, [rX]` qty-tie recipe
+  and the reload windows): a plain clamp with a SECOND task local `u =
+  gUnk_03002490;` for the unk48/unk4C half (one reassigned `t` keeps r5;
+  the ROM's `ldr r4, [r4]` is a fresh pseudo tied to the dying address), and
+  the stores' sums as `cell + tbl` (11 bytes the other way round); the r7
+  zero temporary and the hi-register reload chains come out by themselves.
+* `sub_080b79b8` (3 pins): a plain `for` loop over `gUnk_030023C8[0] & (1 <<
+  i)` gives the hoisted mask, the `movs r6, #1` and the fresh `ldr r4,
+  =gUnk_0300235C` (the coordinator's "gcse reaching register" reading was
+  wrong), and the arm sum is ONE expression whose constant fold
+  reassociates into the ROM's `((e - 2) * 12 + 14) + e`:
+  `gUnk_03002384 * 2 + ((gUnk_030023E0 - 2) * 12 + (gUnk_030023E0 + 14))`.
+  When the ROM adds a constant at an odd point of a sum, move the constant
+  to the other operand in the source: fold's split_tree moves it back.
+* `sub_08001b08` (#32's OAM shadow builder: one pin and four zero-code
+  stand-ins - dead stores, a `b = 0`, block temps): one `u16 v` carries both
+  record-header words AND every template word (`v = *p++; flip = v &
+  0x8000; ... v = *p++; pal = v & 0xF800; ...`), which is why the ROM keeps
+  all of them in r3; the HImode arithmetic gives the in-place ANDs and the
+  separate 255 loads the stand-ins faked.  A `u32 v` is 4-12 bytes off.
+  Diagnostic: one register holding several unrelated halfword reads is one
+  `u16` variable (3.480, with the width mattering).
+* `sub_080a22d4` keeps ONE commented zero-code stand-in.  Its search loop
+  must stay a goto loop (a real loop gets hoists and strength reduction the
+  ROM lacks); then `acc = 0` is a constant set before acc's first
+  non-constant set in insn order, update_equiv_regs doubles its live length
+  (26 -> 52, 3.491), and global allocation ranks it below `r` (r2/r3, 8
+  bytes; the old pin faked the order).  A `do { } while (0)` around the
+  loop body after the `dec:` label weights acc's loop references (6 -> 9)
+  without moving the other pseudos.
+* `sub_080a00ec` (M28's last function in #74, ~2,000 sweeps and the RRTRACE
+  build, 3.258): a transcription of its landed twin `sub_08018e14` (3.473)
+  - the random index reused as the shift amount, a 2-D `s16
+  gUnk_08748268[2][16]` read `[0][r]`/`[1][r]`, 3.255's temporaries on the
+  y line, one task local for the draw block and a pointer local for ONE of
+  the two globals (`s32 *pb = &gUnk_03002448;`; pointers for both, 3.258's
+  recipe, miss by 8-24 bytes).
+**Corrects** 3.249, 3.251, 3.253, 3.254 and the pointer recipe of 3.258 for
+`sub_080a00ec`, and 3.277 for `sub_080a932c`; see their notes.
+
+### 3.514 regmove's replacement quality, a flag-bit spelling, and what still resists
+The coordinator's leftovers (natc-a, natc-d):
+* **`sub_080718c0`** (M19): for `r & c`, an AND of a call result with a
+  freshly loaded byte, regmove ties the result to the operand with the
+  better "replacement quality": a call result counts as copied from a hard
+  register (quality 1), a fresh load as never copied (3), so the byte wins
+  and no spelling of the expression reaches the ROM's `adds r2, r0, #0; ...
+  ands r2, r0`.  The source puts the byte in a variable whose first
+  recorded copy was also a call result - the other branch's random value
+  `r` (`v = sub_08002ee8(3); r = (u8)gUnk_03002490->unk78; sub_08074bb0(a1,
+  a2, v & r);`) - which makes both quality 1 and keeps the tie on `v`.
+* **`sub_08074c0c`** (M19; 387 bytes after the strip): `t->unk40 = 0; if
+  (c) t->unk40 |= 0xC00; else t->unk40 &= 0xF3FF;`, the spelling its
+  sibling in `src/actor_70ec0.c` uses.  The literal `= 0xC00` / `= 0` form
+  gives the same instructions but a different set of pseudos (the zero of
+  a literal store against a copied `&gUnk_03002490`, priorities 789/1111),
+  and that alone was the whole cascade.
+* **`sub_080109c8`** (M04): the random index `n` reused as the shift count,
+  as its landed twin `sub_0803c9b4` does (3.473).  Its two `*(volatile s32
+  *)` placeholder re-reads stay: gcse's load PRE (which checks aliasing,
+  so the stores of the arms do not block it) treats the plain re-reads as
+  redundant, and the ROM keeps one at the join after the `unk08` arms and
+  one after `abs(unk04)`; the same placeholders sit in the twin in
+  `src/player_3bde8.c`, so one natural source would free both.
+* **`sub_0804e3a0`** (M14): its twin `sub_08037914`'s style (`while (1) {
+  ...; break; }`, task locals per block, `!(gUnk_03002458[...] & 2)`
+  inline) gives the shared constant 2; the old staging locals were the
+  residue.
+* **Still pinned or levered** (#154's comment has each best attempt):
+  `sub_080b38f0` keeps its 10 pins and 6 levers (3.511: the best plain
+  attempt is 7 bytes, a pure local-alloc order; with the pool value of
+  `&gUnk_03002490` at 4 references the ROM's order needs the `unk70`
+  address to have at least 4 references at counting time, or the pool value
+  not to be block-local, and no source that leaves no trace in the code was
+  found); `sub_08091e18` keeps its one `asm("")` (3.156 holds: cse folds every use
+  of the decremented value inside its `== 0` block, so nothing plain keeps
+  it live into the frame test, 9 bytes); `sub_080caab8` keeps #152's two
+  approved levers (3.494); `sub_0809fe10` keeps four `BLOCK_CROSS_JUMP`s
+  (3.503).
+
 ## 4. Splitting ROM ranges into asm (tools/split.py)
 
 ### 4.1 objdump text only round-trips under `.syntax unified`
@@ -6225,6 +6641,8 @@ into a variable (`register s32 z asm("r5"); z = 0; t->unk40 = z;`) so the
 three had a real source-shape bug in front of it (a mis-ordered switch, a folded
 constant, a wrong load width) that the pin would have hidden.
 
+**Note (natural-C campaign, #154):** the plain tie-breaks are declaration order (pseudo numbers) and statement order (lesson 3.496); no function of the natural-C campaign (#154) needed a pin for a tie.
+
 ### 3.230 A `u16` load feeding a sign-extension becomes `ldrsh`; the ROM's `ldrh` + shifts needs a second use
 combine merges `(sign_extend (zero_extend (mem:HI)))` into one `ldrsh` (with a
 zero index register, 3.218) no matter how the source spells the cast - a `u16`
@@ -6245,6 +6663,8 @@ way round).  Two locals - one per arm - fix it with no extra instructions,
 because the arms never live at the same time.  Same lever in `sub_0809c404`,
 `sub_0809c490` and `sub_0809c4d0`.
 
+**Note (natural-C campaign, #154):** per-block locals can also be the defect: `sub_080a0358` matched with ONE `t` reassigned in every block, which raises its priority above a short address temp (lesson 3.512); read `.greg` before choosing.
+
 ### 3.232 A constant VARIABLE's `movs` must land after the block's pointer load
 `t = gUnk_03002490; v = 12; t->unk3C = v;` puts `movs r5, #12` AFTER
 `ldr r0, [r4, #0]`; a declaration initializer puts it before (`sub_0809c984`,
@@ -6259,6 +6679,8 @@ keep the priority (`sub_0809ca10`).
 `sub_080061c0(128 << 11, k = 0x5A5A5A5A)` puts `ldr r5, =0x5A5A5A5A` after the
 first argument's `movs`/`lsls`, where a preceding `k = ...;` statement puts it
 before (`sub_0809c74c`, `sub_0809cc24`).
+
+**Note (natural-C campaign, #154):** in `sub_0809cc24`/`sub_0809cd8c` the constant is a literal at every call, and the zeros the old candidates held in variables are a halfword store's expansion temporaries (lesson 3.504).
 
 ### 3.235 `abs()` on a VARIABLE folds to ABS_EXPR; on a CALL it does not
 `abs(vx)` with a local operand gives `expand_abs`'s shape - copy, then
@@ -6338,6 +6760,8 @@ r0 cannot survive the call, so agbcc must reload - and both reloads reference
 the one `symbol_ref` pool entry.  r1/r3 score 4 differing bytes, r2 scores 14:
 the register matters, so try the call-clobbered four.
 
+**Note (natural-C campaign, #154):** `sub_0809c028` needs no pin: the two reloads are two full if/else arms, `p = A[expr]` / `p = B[expr]`, that jump2 cross-jumps (lesson 3.506).
+
 ### 3.245 `asm("" : "+r"(x))` makes a value opaque to cse/gcse - two distinct uses
 An empty asm with a read-write register operand emits nothing but tells gcc the
 value is both used and redefined there.  M28 needed it twice in one function
@@ -6358,6 +6782,8 @@ value is both used and redefined there.  M28 needed it twice in one function
 Pinning a second `register` variable to a hard register another live variable
 already owns is NOT an alternative - agbcc silently emits wrong code.
 
+**Note (natural-C campaign, #154):** `sub_0809cb90`'s "288 copied into the accumulator" is 3.475's HImode reload copy of a literal and its fresh reload after the store comes for free with `gUnk_03002490->` at every use (lesson 3.504); no `asm` staging.
+
 ### 3.246 `asm("" :: "r"(a), "r"(b))` after an add stops the destination reusing either operand
 `adds rD, rN, rM` where both operands die at that insn lets global-alloc pick
 the lowest free hard register for rD, which is almost always rN's.  When the
@@ -6374,6 +6800,8 @@ with `register s16 *pp asm("r2")`.  Naming ONE operand moves rD one register
 (r0 -> r1); naming both moves it two.  Splitting the base into its own local is
 part of the fix: a bare `&gUnk_08747B88[t->unk3C]` with a pointer local moves
 the base's pool load AFTER the first `ldrsh`, and the ROM loads it first.
+
+**Note (natural-C campaign, #154):** `sub_0809d994`/`sub_0809f2f4` read the table element twice inline, with `gUnk_03002490->` at every use and no pins or keep-alives (lesson 3.505).
 
 ### 3.247 The ROM's extra dead `movs rN, #0` means a field is read INLINE at each use, not cached
 `sub_0809f9dc` has `movs r4, #0` and `movs r5, #0` that nothing reads.  They are
@@ -6394,6 +6822,8 @@ the shared exit, a 1-byte residue.  Once the two arms had their own
 `struct Task *` locals (3.231) the cross-jump stopped happening on its own and
 the barrier could be deleted.  Always retry with the barrier REMOVED after a
 structural fix lands.
+
+**Note (natural-C campaign, #154):** the macro's remaining uses and the full-arm rule are in lessons 3.503 and 3.506.
 
 ### 3.249 `agbcc -da`'s `.loop` dump names the giv threshold: it is the loop's insn count
 `Insn 244: giv reg 129 src reg 23 benefit 4 lifetime 1 replaceable mult 4
@@ -6419,6 +6849,8 @@ by then), which no source shape, pin, declaration-order permutation or
 statement reordering moved - roughly 1,400 compilations of systematic sweeps
 and two 250-step randomised hill-climbs.
 
+**Note (natural-C campaign, #154):** `sub_080a00ec` needs none of the offset locals: see lesson 3.513.
+
 ### 3.251 A ROM `(base + K) + index` where you emit `(index + base)` with K in the ldrsh's index register
 `gUnk_08748268[r + 16]` compiles to `adds r0, r2, #0; adds r0, #16; lsls r0, #1;
 adds r0, r0, r1` - the `+16` inside the scaling.  The ROM shares the `r * 2`
@@ -6430,6 +6862,8 @@ instead; what reproduces the ROM is a base LOCAL assigned in BOTH arms
 `+32` a runtime add on a live register, and the two arm assignments are what
 cse leaves available in the shared tail.  Worth 2 bytes and it unblocked
 everything downstream.
+
+**Note (natural-C campaign, #154):** `sub_080a00ec`'s `tb + 32` comes from a 2-D `s16 [2][16]` table read `[0][r]`/`[1][r]` with no locals (lesson 3.513).
 
 ### 3.252 A constant that is a source VARIABLE is a global-alloc pseudo; inline it and it becomes a RELOAD
 The two arms of `if (x > 0) g[i+6] += A; else g[i+6] += B;` only cross-jump
@@ -6449,6 +6883,8 @@ empty asm that merely *reads* `i` inside the body restores the ROM's
 `adds r7, #1; cmp r7, #2; bgt`, costs no instructions, and also moves `i` from
 a high register back to a low one (3.215 is the same pass from the other side).
 
+**Note (natural-C campaign, #154):** `sub_080a00ec` needs no `asm` keep-alive (lesson 3.513).
+
 ### 3.254 A store to a global whose address register the ROM picks is a pinned `T *` local
 `gUnk_03001F2C = x;` leaves the address in whatever register reload hands out
 (r0 for us, r5 in the ROM).  There is nothing to pin - until you write the
@@ -6460,6 +6896,8 @@ every later reload's rotation phase shifts - if the residue then moves to a
 scratch register downstream, the ROM's store was an address reload from an
 UNALLOCATED pseudo, and the un-pinned hoisted-pointer shape in 3.258 is the
 one that matches both.
+
+**Note (natural-C campaign, #154):** `sub_080a00ec` needs no pinned pointer: one plain pointer local for ONE global (lesson 3.513).
 
 ### 3.257 decomp-permuter's scorer is unusable on this target: verify the base score before trusting a run
 Set up for `sub_080A00EC` (a function 3 bytes from matching) the permuter
@@ -6545,6 +6983,8 @@ What finally closed `sub_080A00EC` (392 bytes, the last function of M28) after
   survives two informed shape attempts AND the `-da` dumps, instrument the
   compiler - it is the same escalation 3.75/4.35 recommend, one level deeper.
 
+**Note (natural-C campaign, #154):** the address-reload mechanism is real, but `sub_080a00ec` is plain C with a pointer local for ONE of its two globals; pointers for both miss by 8-24 bytes (lesson 3.513).
+
 ### 3.281 caller-save IS on (-fcaller-saves at -O2): a natural call-clobbered pseudo live across a call gets the ROM's `str rN, [sp]` / `ldr rN, [sp]` pair for free
 
 b4ea8's case-6 loop keeps `n3` (r3, call-clobbered) alive across an inner
@@ -6556,6 +6996,8 @@ slot at [sp, #0] once no other frame object competes. The volatile-slot hack
 (3.274 trap 2) is obsolete: it emits the same bytes but at the WRONG position
 (expand_call precomputes side-effect args before all argument moves).
 
+**Note (natural-C campaign, #154):** caller-save is real, but the M33 source never had to arrange it (lesson 3.511).
+
 ### 3.280 File-scope `register s32 gR9 asm("r9")` globals exclude r9-r11 at zero prologue cost
 
 A function-local pin on r9-r11 gets the register SAVED in the prologue
@@ -6566,6 +7008,8 @@ otherwise prefer r9 (b4ea8's n7, 3.274's "web-split" residue - which was
 never a web problem: with r9-r11 fixed and the cse temp broken up, n7 lands
 r7 naturally). Only for carved single-function modules - the register is
 reserved for the whole file.
+
+**Note (natural-C campaign, #154):** `src/hud_b4ea8.c` has no file-scope register globals any more (lesson 3.511).
 
 ### 3.279 asm insns block cross-jump entirely; a DELIBERATE duplicate arm that merges post-reload is a zero-byte rotation advance
 
@@ -6588,6 +7032,8 @@ Three facts that compose into the strongest phase lever found so far:
   place). It also closed the 3.270 gap: advances no longer need a deletable
   redundant read.
 
+**Note (natural-C campaign, #154):** `sub_080b4ea8` needs no barriers and no duplicate tail (lesson 3.511).
+
 ### 3.278 Pinned staging copies emit the ROM's bytes but not its rotation advances: de-stage to real reloads
 
 The recurring root cause behind a860c/a932c/b5670's "non-uniform rotation"
@@ -6605,6 +7051,8 @@ match needed exactly two zero-byte live-range extensions (`asm("" ::
 live at the chain is skipped by both the per-chain spill pick and the
 rotation, which RETARDS every later pick past it.
 
+**Note (natural-C campaign, #154):** `sub_080a860c` and `sub_080a932c` are plain C (lessons 3.510, 3.513).
+
 ### 3.277 `ldrh rX, [rX]` (dest == base) is a qty tie: copy + self-load
 
 The ROM shape `ldrh r2, [r2, #0]` where r2 held a dying pointer is
@@ -6615,6 +7063,8 @@ the self-load lands dest == base. Also works through the variable itself
 when it dies on that path: `bS = (u8 *)(u32)*(u16 *)bS;` (a932c's arms).
 Needed because a fresh load temp always gets the lowest free call-used reg
 (r1 when r0 is busy), never the base.
+
+**Note (natural-C campaign, #154):** `sub_080a932c` needs no qty-tie copy: a second task local and `cell + tbl` sums (lesson 3.513).
 
 ### 3.276 global_alloc STRIPS eliminable regs from every allocno's hard-reg conflicts: pins can never keep a pseudo out of r7
 
@@ -6657,6 +7107,8 @@ scratch where the ROM has it. Key mechanics (read from reload1.c):
 a78a0 (parked "unreachable from C" since 3.271) matched with exactly one
 def/use window plus the 3.277 tie. The family verdict in 3.274 is now
 obsolete: all five M30/M33 functions were reachable.
+
+**Note (natural-C campaign, #154):** `sub_080a78a0` (narrowed multiply, lesson 3.508) and `sub_080a860c` (inline table index, lesson 3.510) are plain C; the x-var windows described the pinned candidates.
 
 ### 3.274 SOLVED for b4ea8 by 3.279-3.281 - r7 IS reachable via global_alloc pressure, refining 3.271: natural loop-carried pseudos push r7 correctly; the residual blocker was web-splitting, not enrollment
 
@@ -6735,6 +7187,8 @@ r7 (`push {r4,r5,r6,r7,lr}; mov r7,r8; push {r7}`).
   reproduces the same bytes. Here it did, and the spill-set reading cost the
   function several sessions of blind sweeps.
 
+**Note (natural-C campaign, #154):** `sub_080b4ea8` is plain C: a `for (...; e++, i++)` switch with its empty cases listed and a plain counter (lesson 3.511); none of the six levers was needed.
+
 ### 3.273 SOLVED (ada20, M31's last straggler): the extendhisi2 zero-temp lands in r4 when the store-cell pointer is a dropped-pseudo address reload, not a pin
 
 `sub_080ADA20`'s 3-byte residue was `movs r4,#0; ldrsh r1,[r0,r4]` (ROM) vs
@@ -6771,6 +7225,8 @@ has a zero-byte fix, found with the RRTRACE-instrumented compiler:
   keeping the enrolling load from happening, so reload adds the reg itself.
   ada20 went 3B → MATCH and carved all of M31.
 
+**Note (natural-C campaign, #154):** `sub_080ada20` is plain C: cells read at every use and `gUnk_02007D00[0] & 255` for the `(u8)` cast (lesson 3.504); no address-reload lever.
+
 ### 3.272 The combined structural+pin annealing permuter reduces but cannot zero the r7/coalescing residues
 
 Built three permuter generations (all in pending/): permute2 (pin/natural/
@@ -6799,6 +7255,8 @@ enrollment (§3.271) and r4/pointer coalescing + retard-rotation (§3.268b/
 a permuter that scores against the target ROM at the allocation level;
 pending/permute4.py is the scaffold for it.
 
+**Note (natural-C campaign, #154):** the M30/M33 floors were the pins': `sub_080a78a0`, `sub_080a860c`, `sub_080a932c`, `sub_080b4ea8` and `sub_080b5670` are plain C (lessons 3.508-3.513, 3.474).
+
 ### 3.271 PROBE-CONFIRMED: r7 cannot be forced into the prologue-saved set from C at all
 
 Two direct probes settle the r7-enrollment cases (a78a0, b4ea8) definitively:
@@ -6818,6 +7276,8 @@ this proof, not a guess.  **Both have since matched** - a78a0 via 3.275's
 pinned x-var windows, b4ea8 via 3.274's SOLVED note - so read this lesson as
 "a pin/clobber cannot push r7", which stays true, and NOT as "the ROM's r7
 shape is unreachable", which was an over-generalisation from it.
+
+**Note (natural-C campaign, #154):** `sub_080a78a0`'s r7 is a narrowed 16-bit multiply over an `s16` table the old header declared `u16` (lesson 3.508); `sub_080b4ea8` is plain C (lesson 3.511).
 
 ### 3.270 SOLVED (rotation-advance sub-case): a redundant reg-offset read forces the reload reload_cse later deletes, reproducing the phantom reservation
 
@@ -6844,6 +7304,8 @@ r7 - those need §3.267 enrollment, and forcing a deletable reload onto the
 appended slot disturbs the low-index rotation), nor when divergences are
 non-uniform per-site (a860c's four independent phases).
 
+**Note (natural-C campaign, #154):** the redundant re-read plus keep-alive is the SOURCE reading the element twice, with typed tables (lesson 3.505); no lever.
+
 ### 3.259 A switch with case ranges keeps exact compare constants, and SOURCE ARM ORDER picks the block layout
 
 combine canonicalizes if-chain compares (`LT C` -> `LE C-1`), so a ROM tree
@@ -6868,6 +7330,8 @@ sources have no asm, so on any function where the diff shows a lone
 `beq far` vs `bne+b` pair: count the barriers between branch and target and
 replace them with fully-pinned staging (3.261), which needs no asm at all.
 
+**Note (natural-C campaign, #154):** `sub_080b0b50` needs neither barriers nor pinned staging: it is written like its landed twin in `src/actor_70ec0.c` (lesson 3.507).
+
 ### 3.261 The volatile-staged pinned copy: how to place a hi-reg reload temp in a chosen register
 
 ROM code that reads `mov r4, r9; strh r4, ...` where we emit `mov r0, r9` is
@@ -6885,12 +7349,16 @@ forces a hard-to-hard copy that CANNOT coalesce - no asm needed at all when
 the source register is itself pinned.  Closed sub_080B09AC (344B residue),
 sub_080AE1F0 (278B) and most of the M32/M33 second-order temps.
 
+**Note (natural-C campaign, #154):** `sub_080b09ac` (plain literals, lesson 3.504), `sub_080ae1f0` (plain on the first build) and `sub_080b5bdc` (`* 2`, lesson 3.508) need no staged copies: the "closed by" claims described the pinned candidates.
+
 ### 3.262 Pointer arithmetic canonicalizes base-first; the `(u32)` cast form keeps source operand order
 
 `p3 = i1 + b7` (int + pointer) canonicalizes to `adds rP, rB7, rI1` - base
 first - no matter which order the source writes.  The ROM's `adds r3, r1, r7`
 (index first) comes from INTEGER addition: `(u8 *)((u32)i1 + (u32)b7)`.
 Zero-byte lever, fires constantly (sub_080B5A94 x3, afdf0 family x6).
+
+**Note (natural-C campaign, #154):** the M32 quartet needs no `(u32)` casts and `sub_080B5A94` uses subscripts (lessons 3.507, 3.511); the rule for `gUnk_03002790` is in 3.507.
 
 ### 3.263 A pinned base register blocks EVERY addressing fold; natural homes come from forced copies, not pins
 
@@ -6903,6 +7371,8 @@ the pseudo's priority with `asm("" :: "r"(x))` dummy refs (2 suffice), or
 (c) the hard-to-hard copy of 3.261.  A pin is the LAST resort for a base reg
 that is dereferenced.
 
+**Note (natural-C campaign, #154):** M33's "second-order temps" needed no forced copies (lesson 3.511).
+
 ### 3.264 Match one family member, then transcribe the recipe: the afdf0/aff40/b0144/b0338 quartet
 
 Four adjacent M32 functions (322/393/467/502 differing bytes) shared one
@@ -6913,6 +7383,8 @@ split), `pa`/`nv` with one volatile barrier (separate ABS loads), per-arm
 `asm("" : "+r"(a44) :: "memory")` re-read.  sub_080B0338 matched FIRST TRY.
 When a module has sibling functions, always finish one completely before
 touching the next.
+
+**Note (natural-C campaign, #154):** the rule holds, the recipe does not: the quartet is two task pointers and arms that re-read the cell, with no pins, no memory clobber and no casts (lesson 3.507).
 
 ### 3.265 The pin permuter finds byte-optimal WRONG code: audit every pin it adds
 
@@ -6940,6 +7412,8 @@ if global insists on r9/spill (b4ea8's n7), exclude the r9-r11 bank with
 file-scope register globals (3.280) - that was the fix there - and only then
 suspect the allocation order.
 
+**Note (natural-C campaign, #154):** `sub_080B5D84` matched on its first plain build with the real cell types and no locals for that value (lesson 3.511).
+
 ### 3.267 The reload SPILLSET is the missing half of the rotation: pinned registers can never enter it
 
 Extending the RRTRACE build with a `SPILLSET` print (finish_spills) showed
@@ -6952,6 +7426,8 @@ address reloads both advanced the rotation and enrolled r4.  Unpinning is
 necessary but not sufficient - the natural allocation must also fail to home
 the variable, which needs the multi-block/call-crossing/2-3-refs shape.
 sub_080ADA20 (3B) and sub_080B1890 (2B) are parked on exactly this.
+
+**Note (natural-C campaign, #154):** `sub_080b1890` is plain C (lesson 3.505); the spill-set reading described the pinned candidate.
 
 ### 3.268 The rotation is two-pass and starts at last_spill_reg+1: the TRY trace settles any scratch-register residue
 
@@ -6967,6 +7443,8 @@ was later deleted (reload_cse / inheritance), leaving only the phantom
 reservation and the r5 save in the prologue.  No source shape reproduces a
 deleted-but-reserving reload yet; sub_080B1890 (2B), sub_080ADA20 (3B),
 sub_080A78A0 (7B) and sub_080A860C (8B) are all parked on this class.
+
+**Note (natural-C campaign, #154):** `sub_080b1890` is plain C: the "deleted reload" is the table element read twice (lesson 3.505).
 
 ### 3.269 SOLVED: the `mov rX, sp; strb rV, [rX, #4]` byte-slot form is a frame-offset-0 struct accessed through per-site barrier'd byte pointers
 
@@ -7022,6 +7500,8 @@ mostly cascading +-2 shifts) hangs on this plus ~15 rotation temps.
 a declared variable: a cse-held array byte that spills is a QImode pseudo
 (PROMOTE_MODE only promotes declared variables), and `sub_080B5670` matched
 in plain pin-free C.
+
+**Note (natural-C campaign, #154):** the functions this lesson lists (`sub_080b1890`, `sub_080a860c`, `sub_080ada20`) are plain C (lessons 3.505, 3.510, 3.504): none wanted its pins.
 
 ### 3.255 fold hoists a constant addend out of `A + (B + K)`; a temp for A pins it back
 `y = t->unk4A + ((o >> 16) + 16) - cam[2]` comes out as `adds r1, #16;
@@ -8809,6 +9289,8 @@ function and blocks the ROM's reuse of it after the variable dies, which is
 exactly how `sub_080b72bc` got stuck at 10 differing bytes before the clobber
 form took it to zero.
 
+**Note (natural-C campaign, #154):** the three functions this lesson cites need no clobber: `sub_080b72bc`/`sub_080b6f38` reuse one variable for the loop counter and the `Div()` result (lesson 3.499), `sub_080b6d04` stores through a dropped pointer local (3.498), and `sub_0800f408`'s clobber was a `vu8` declaration (3.509).
+
 ### 3.342 A redundant reload of a base pointer reorders the hoisted pool loads
 `sub_080b6f38` copies `gUnk_02007BF0[i]` into the link-save buffer through a
 nested loop.  Everything matched except the order of the two pool loads hoisted
@@ -9676,6 +10158,44 @@ table, the IRQ table, the sub-game rodata) as code, about 6 KiB.  It now
 takes the kind from `segments.txt`, so `data`/`pool` segments count as
 data, as `tools/gen_report.py` always did.  And the asm kept by design has
 to be listed as excluded, or "remaining to be decompiled" never reaches 0.
+
+### 4.115 Harness notes from the natural-C campaign (#154)
+- The unit was a landed FILE, not an asm hole, so the harness was small
+  and new (`pending/natc/`): `count.py` (a comment-stripping, brace-matching
+  census of pins, empty `asm` statements and `BLOCK_CROSS_JUMP` per
+  function), `tryfile.sh <file> [variant]` (one Docker run: fnmatch over the
+  file's whole range, then `nm` of the candidate so `fncmp.py` can compare
+  every FUNCTION by its own symbol range - fnmatch's diff stops at 80 lines,
+  and a size change in one function shifts the rest; on a match it saves to
+  `good/` only if the count is strictly lower), `strip.py` (the mechanical
+  strip, positions found on a comment-blanked copy so comments cannot
+  swallow code), `fdiff.py` (one function's aligned register-masked diff or
+  a raw side-by-side), `ann.py` (an annotated ROM listing straight from
+  `baserom.gba`: pool words and jump tables found by a fixpoint over `ldr
+  [pc]` targets, the code between them decoded piecewise, plus an m2c
+  input), `da.sh` (the `-da` dumps, or the RRTRACE compiler of 4.77 with
+  `RR=1`), `scope.py`/`headscope.py` (which functions a landing changes,
+  flagging unlisted ones) and `land.sh`.  Everything was keyed by file name,
+  one owner per file.
+- Phase A (strip test, 36 matches, and the first plain rewrites) took about
+  an hour; four agents by module (M32; M33; M29-M31; M28 plus the tail)
+  then did the rest, landing by file as `good/` improved.  The coordinator
+  re-derived the state from `good/` with `status.py` before every landing,
+  and polled the agents' `FINDINGS.md` files with a Monitor script to relay
+  idioms between files: a finding in one module usually freed its twins in
+  another (the table read twice, typed declarations, literals at every use).
+- All four agents died at once on the account's session limit and were
+  resumed by SendMessage with open lists re-derived from `good/`; their
+  work in `cand/` and `good/` survived intact.
+- `count.py` must count macros: `BLOCK_CROSS_JUMP` hid nine levers in three
+  functions the brief's census did not list (3.503).
+- The coordinator's own parked readings of five functions (register swaps
+  "measured" in `.greg`, a gcse reaching register, a pointer local that
+  looked required) were wrong every time: finished agents closed all five
+  by drafting from the function's landed sibling or twin first
+  (`sub_08037914`, `sub_0803c9b4`, `src/actor_70ec0.c`) and measuring
+  second.  A measured residue says what the candidate does, not what the
+  original was.
 
 ## 5. Workflow that worked
 

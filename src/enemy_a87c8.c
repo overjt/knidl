@@ -1658,13 +1658,6 @@ void sub_080a8c84(void)
 
 void sub_080a8d1c(void)
 {
-    register s32 z asm("r8");
-    struct Task **c;
-    register struct Task *u asm("r6");
-    u32 *tbl;
-    register s32 w asm("r4");
-    s32 n;
-
     gUnk_03002490->unk15 = 4;
     gUnk_02007D00[0] = 1;
     sub_080062c4();
@@ -1688,59 +1681,45 @@ void sub_080a8d1c(void)
     TaskYieldTrampoline(1);
     gUnk_03002490->unk24 = 1;
     sub_080061c0(160 << 9, 0x5A5A5A5A);
-    gUnk_03002490->unk6C = 0;
-    tbl = gUnk_08749100;
-    c = &gUnk_03002490;
-    do
+    for (gUnk_03002490->unk6C = 0; (s16)gUnk_03002490->unk6C <= 8; gUnk_03002490->unk6C++)
     {
-        gUnk_03002490->unk6E = 0;
-        do
+        for (gUnk_03002490->unk6E = 0; (s16)gUnk_03002490->unk6E <= 3; gUnk_03002490->unk6E++)
         {
             sub_08064cdc(197, 0, 32, 1);
-            gUnk_03002490->unk58 = tbl[(s16)gUnk_03002490->unk6E];
-            gUnk_03002490->unk70 = 0;
-            do
+            gUnk_03002490->unk58 = gUnk_08749100[(s16)gUnk_03002490->unk6E];
+            for (gUnk_03002490->unk70 = 0; (s16)gUnk_03002490->unk70 <= 3; gUnk_03002490->unk70++)
             {
-                gUnk_03002490->unk24--;
-                if (gUnk_03002490->unk24 == 0)
+                if (--gUnk_03002490->unk24 == 0)
                 {
                     sub_080031b8(138 << 2);
                     gUnk_03002490->unk24 = 10;
                 }
                 TaskYieldTrampoline(1);
-                gUnk_03002490->unk70++;
-            } while ((s16)gUnk_03002490->unk70 <= 3);
-            gUnk_03002490->unk6E++;
-        } while ((s16)gUnk_03002490->unk6E <= 3);
-        n = (*c)->unk6C + 1;
-        (*c)->unk6C = n;
-    } while ((s16)n <= 8);
+            }
+        }
+    }
     sub_08064cdc(197, 0, 32, 1);
-    c = &gUnk_03002490;
-    (*c)->unk58 = (z = 0);
+    gUnk_03002490->unk58 = 0;
     TaskYieldTrampoline(6);
     sub_080657cc(8);
     sub_080061c0(144 << 9, 0x5A5A5A5A);
-    (*c)->unk58 = z;
+    gUnk_03002490->unk58 = 0;
     TaskYieldTrampoline(4);
-    w = -0x8000;
-    sub_080061c0(w, 0x5A5A5A5A);
-    (*c)->unk58 = w;
+    sub_080061c0(-0x8000, 0x5A5A5A5A);
+    gUnk_03002490->unk58 = -0x8000;
     TaskYieldTrampoline(8);
-    w = -0x10000;
-    sub_080061c0(w, 0x5A5A5A5A);
-    (*c)->unk58 = w;
+    sub_080061c0(-0x10000, 0x5A5A5A5A);
+    gUnk_03002490->unk58 = -0x10000;
     TaskYieldTrampoline(12);
     sub_080061c0(-0x20000, 0x5A5A5A5A);
-    (*c)->unk58 = w;
+    gUnk_03002490->unk58 = -0x10000;
     TaskYieldTrampoline(16);
-    u = *c;
-    u->unk54 = z;
-    u->unk58 = z;
-    gUnk_02007D00[0] = z;
-    u->unk30 ^= 1;
-    if (u->unk2C != 0)
-        u->unk2C = 2;
+    gUnk_03002490->unk54 = 0;
+    gUnk_03002490->unk58 = 0;
+    gUnk_02007D00[0] = 0;
+    gUnk_03002490->unk30 ^= 1;
+    if (gUnk_03002490->unk2C != 0)
+        gUnk_03002490->unk2C = 2;
     sub_0806395c(1);
     sub_08006138();
 }

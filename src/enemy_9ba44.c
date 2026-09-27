@@ -177,7 +177,6 @@ void sub_0809bc1c(void)
     s16 *p2;
     s32 r;
     s32 n;
-    register u16 *p3 asm("r1");
 
     if (gUnk_02007D00[0] == 0)
     {

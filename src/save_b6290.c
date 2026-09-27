@@ -12,12 +12,7 @@ extern vu16 gUnk_03001ED8;
 extern vu8 gUnk_03001EAC;
 extern vs32 gUnk_03001EE0;
 
-/* `register u32 wv asm("r0")` for the final `*pc = 0x04000014;` is a placeholder
-   for a source shape nobody has identified (lesson 4.11): without it the pair
-   comes out `ldr r1, =0x4000014; mov r0, r9` instead of the ROM's
-   `ldr r0, =0x4000014; mov r1, r9`.  The same lever closed `sub_080b6d04`.
-
-   The two loop counters are NOT interchangeable (lesson 4.55): `n` covers the
+/* The two loop counters are NOT interchangeable (lesson 4.55): `n` covers the
    first two loops and the third loop's outer index, which never overlap, while
    `n2` covers the third loop's inner body, which is live where the index is.
    Sharing one counter invents a conflict the ROM does not have and rotates
@@ -34,7 +29,6 @@ s32 sub_080b6290(void)
     s32 v1;
     s32 v2;
     s32 vt;
-    register u32 wv asm("r0");
     u16 *base;
     u16 *p;
     u16 *q;
@@ -86,8 +80,7 @@ s32 sub_080b6290(void)
         }
         vt = base[0] << 16;
         *pe = vt;
-        wv = 0x04000014;
-        *pc = wv;
+        *pc = 0x04000014;
         return 1;
     }
 }

@@ -48,7 +48,7 @@ struct MultiBootParam
     /*0x1F*/ u8 reserved1;
     /*0x20*/ u8 *boot_srcp;
     /*0x24*/ u8 *boot_endp;
-    /*0x28*/ vu8 *masterp;
+    /*0x28*/ u8 *masterp;   /* plain u8 * (lesson 3.481) */
     /*0x2C*/ u8 *reserved2[3];
     /*0x38*/ u32 system_work2[4];
     /*0x48*/ u8 sendflag;
@@ -57,10 +57,8 @@ struct MultiBootParam
     /*0x4B*/ u8 server_type;
 };
 
-/* REG_SIOMULTI0..3 as an array.  UNRESOLVED (see the report): sub_08004eac
- * only reproduces the ROM through the cast literal (gcc rematerialises the
- * pool word at every mention), while sub_08004984 only reproduces the ROM's
- * instruction *count* through a symbol reference.  Both spell 0x04000120. */
+/* REG_SIOMULTI0..3 as an array: sub_08004eac reads the io_reg.h constant
+ * (gcc rematerialises the pool word at every mention, lesson 3.482). */
 #define SIOMULTI  ((vu16 *)REG_ADDR_SIOMULTI0)
 extern vu16 gUnk_04000120[];
 #define SIOMULTI2 gUnk_04000120
@@ -200,7 +198,6 @@ int sub_08004e9c(struct MultiBootParam *mp)
 int sub_08004eac(struct MultiBootParam *mp)
 {
     int i;
-    u32 hi;
     u32 v;
 
     switch (mp->probe_count)
@@ -225,18 +222,8 @@ int sub_08004eac(struct MultiBootParam *mp)
         mp->system_work[1] = (u16)mp->system_work[0];
         if (mp->system_work[0] == 0)
         {
-            {
-                register u32 lo asm("r1");
-                register u32 h2 asm("r0");
-
-                lo = mp->masterp[0xAC];
-                h2 = mp->masterp[0xAD];
-                h2 <<= 8;
-                lo |= h2;
-                mp->system_work[1] = lo;
-                lo <<= 5;
-                mp->system_work[0] = lo;
-            }
+            mp->system_work[1] = mp->masterp[0xAC] | (mp->masterp[0xAD] << 8);
+            mp->system_work[0] = mp->system_work[1] << 5;
         }
         mp->system_work[0] >>= 5;
       send:
@@ -255,16 +242,7 @@ int sub_08004eac(struct MultiBootParam *mp)
         mp->probe_count++;
         if (mp->probe_count == 0xE9)
             goto done;
-        {
-            register u32 lo asm("r1");
-            register u32 h2 asm("r0");
-
-            lo = mp->masterp[0xAE];
-            h2 = mp->masterp[0xAF];
-            h2 <<= 8;
-            lo |= h2;
-            mp->system_work[1] = mp->system_work[0] = lo;
-        }
+        mp->system_work[1] = mp->system_work[0] = mp->masterp[0xAE] | (mp->masterp[0xAF] << 8);
         goto send;
     }
   fail:
@@ -278,19 +256,21 @@ int sub_08004eac(struct MultiBootParam *mp)
 /*FN sub_08004f98*/
 void sub_08004f98(s32 cycles)
 {
-    register s32 gap asm("r1");
-    register u32 region asm("r2");
+    asm("mov r2, pc");
+    asm("lsr r2, #24");
+    asm("mov r1, #12");
+    asm("cmp r2, #0x02");
+    asm("beq MultiBootWaitCyclesLoop");
 
-    asm("mov %0, pc" : "=r" (region));
-    region >>= 24;
-    gap = 12;
-    if (region != 2) {
-        gap = 13;
-        if (region != 8)
-            gap = 4;
-    }
-    asm volatile ("1:\n\tsub %0, %0, %2\n\tbgt 1b"
-                  : "=r" (cycles) : "0" (cycles), "r" (gap));
+    asm("mov r1, #13");
+    asm("cmp r2, #0x08");
+    asm("beq MultiBootWaitCyclesLoop");
+
+    asm("mov r1, #4");
+
+    asm("MultiBootWaitCyclesLoop:");
+    asm("sub r0, r1");
+    asm("bgt MultiBootWaitCyclesLoop");
 }
 
 

@@ -1600,7 +1600,7 @@ void sub_08012e6c(void)
 void sub_08012fe0(void)
 {
     struct Task *t1;
-    register struct Task *t asm("ip");
+    struct Task *t;
     struct Task *tb;
     s16 *a;
     struct Task *tt;

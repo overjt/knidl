@@ -1583,17 +1583,22 @@ child issues of #35 are created from it. Findings that belong in this document:
 - **M32 (`0x080AE3BC-0x080B2FE7`) is enemy/object behaviour bank 13.**
   Decompiled in #73 into `src/enemy_ae3bc.c` (135 functions, all
   byte-matched, ROM identical). The last straggler `sub_080b1890` was
-  closed with the redundant-read reload lever (a dead reg-offset re-read
-  that reload_cse deletes but whose rotation advance persists; lessons
-  3.270).
+  first closed with the redundant-read reload lever (lesson 3.270); the
+  natural-C campaign (#154) rewrote all 37 functions that carried pins or
+  levers as plain C (for `sub_080b1890`: the table element read twice with
+  typed tables, lesson 3.505), so the file has no pin and no `asm`
+  statement left.
 - **M30 (`0x080A5644-0x080AA337`) is enemy/object behaviour bank 11.**
   Decompiled in #72 (complete, 130/130) into `src/enemy_a5644.c`,
   `enemy_a78a0.c`, `enemy_a7998.c`, `enemy_a860c.c`, `enemy_a87c8.c`,
   `enemy_a932c.c`, `enemy_a93ec.c`; ROM-identical, zero asm bytes in the
   range. Anchor tables `0x08748EB8` (53) and `0x08749150` (20); 12 task
   types. The 3 former reload-allocator terminals (`sub_080A78A0`,
-  `sub_080A860C`, `sub_080A932C`) fell to the zero-byte hard-liveness
-  levers (lessons 3.275-3.278).
+  `sub_080A860C`, `sub_080A932C`) first fell to the zero-byte hard-liveness
+  levers (lessons 3.275-3.278); the natural-C campaign (#154) made them and
+  the range's other pinned functions plain C (the r7 of `sub_080A78A0` is a
+  narrowed 16-bit multiply over an `s16` table, lesson 3.508; the "rotation
+  phases" of `sub_080A860C` were the pins, 3.510).
 - **M06 (`0x0801A8C8-0x08021B17`) is the box-vs-terrain collision engine
   and the actor-vs-collider hit tests.** Decompiled in #84: PR #131 landed
   28 functions, the second run 26 more, and the final campaign the last
@@ -1662,9 +1667,11 @@ child issues of #35 are created from it. Findings that belong in this document:
 - **M33 (`0x080B2FE8-0x080B6153`) is HUD / overlay effects (candidate).**
   Decompiled in #97 into `src/hud_b2fe8.c`, `hud_b4ea8.c`, `hud_b5024.c`,
   `hud_b5670.c` and `hud_b5840.c` (all 108 functions; no asm left in the
-  range). `sub_080B4EA8` (the 3.274 terminal) matched with the zero-byte
-  allocator levers (lessons 3.275-3.281); the last one, `sub_080b5670`,
-  fell in the straggler campaign as plain pin-free C.  It is the room-object
+  range). `sub_080B4EA8` (the 3.274 terminal) first matched with the
+  zero-byte allocator levers (lessons 3.275-3.281); the last one,
+  `sub_080b5670`, fell in the straggler campaign as plain pin-free C, and the
+  natural-C campaign (#154) made 33 of the 34 pinned functions plain C as
+  well (all but `sub_080b38f0`, lessons 3.511 and 3.514).  It is the room-object
   graphics loader `sub_080b4ea8` calls for every kind-1 entry of the object
   list `gUnk_020055D8`: it shares the slot of an earlier entry with the same
   descriptor `gUnk_0873EEA0[kind]` (the per-entry slot byte
@@ -1679,9 +1686,10 @@ child issues of #35 are created from it. Findings that belong in this document:
   `0x080AA338-0x080AB46C`) and `0x08749B8C` (8 entries ->
   `0x080AC868-0x080ACC18`); 18 task types, Div x5. The last straggler
   `sub_080ADA20` (3 bytes) was closed with the dropped-pseudo
-  address-reload form: the store-cell pointer written as a plain
-  multi-block un-pinned local so reload rematerializes it and the
-  `movs r4,#0` extendhisi2 zero-temp lands in r4 (lessons 3.258/3.273).
+  address-reload form (lessons 3.258/3.273); in the natural-C campaign
+  (#154) it and the file's other 17 pinned functions became plain C (for
+  `sub_080ADA20` the cells read at every use and an `& 255` index mask,
+  lesson 3.504), so the file has no pin and no `asm` statement left.
 - **M04 (`0x08010358-0x08017667`) is the driver half of the same scripted
   sequence bank M05 holds the scripts for.** Decompiled in #82 into
   `src/player_10358.c`, `src/player_109c8.c` and `src/player_10b38.c` (all 65
@@ -1849,10 +1857,14 @@ child issues of #35 are created from it. Findings that belong in this document:
   shape over the 80-entry anchor table `0x08748624` (plus the smaller
   `0x087484C4`/`0x087489D4`/`0x08748A28`/`0x08748A54` tables); per-lane
   state in `gUnk_02007D00[]` and companion actors through
-  `gUnk_03002790[Task.unk44]`, both shared with M28.
+  `gUnk_03002790[Task.unk44]`, both shared with M28.  Its three pinned
+  functions are plain C since the natural-C campaign (#154).
 - **M28 (`0x0809BA44-0x080A158F`) is NOT one behaviour bank.** Decompiled in
   #74 into thirteen `src/enemy_9*.c` / `src/enemy_a*.c` files (all 204
-  functions, no asm left in the range). Four unrelated things share its
+  functions, no asm left in the range); since the natural-C campaign (#154)
+  they carry no `register` pin and no `asm("")` lever, `sub_080A00EC`
+  included (lesson 3.513), and only four `BLOCK_CROSS_JUMP`s in
+  `sub_0809fe10` remain (lesson 3.503). Four unrelated things share its
   table cluster `0x08747AA4-0x087484D4`, the `TaskGfx` blocks
   `0x08753204`/`0x08753270`/`0x08753290`/`0x08753354`/`0x08753378`/`0x08753404`/
   `0x08753414`/`0x087534E0`/`0x08753510`/`0x087535A8`/`0x087538E0` and the

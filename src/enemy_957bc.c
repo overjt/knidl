@@ -1136,7 +1136,6 @@ s32 sub_08096d64(void)
     case 10:
         sub_080062c4();
         gUnk_03002490->unk34 = 1;
-        BLOCK_CROSS_JUMP
         return 0;
     }
 }

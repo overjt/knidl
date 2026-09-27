@@ -76,26 +76,21 @@ void sub_0807637c(void);
 
 void sub_08074c0c(void)
 {
-    register s32 z asm("r5");
-
     {
         struct Task *t = gUnk_03002490;
-        u8 *a;
 
         t->unk00 = (u32)sub_080059d8;
         t->unk0C = (u32)sub_0806523c;
-        a = (u8 *)&t->unk42;
-        z = 0;
-        *a = 12;
+        t->unk42 = 12;
     }
     {
         struct Task *t = gUnk_03002490;
 
-        t->unk40 = z;
+        t->unk40 = 0;
         if (gUnk_03002790[t->unk44].unk18 < 0)
-            t->unk40 = 0xC00;
+            t->unk40 |= 0xC00;
         else
-            t->unk40 = z;
+            t->unk40 &= 0xF3FF;
     }
     switch (gUnk_03002490->unk14)
     {

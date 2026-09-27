@@ -16,7 +16,10 @@
 extern s8 gUnk_020060D0;
 extern s8 gUnk_02007E88;
 extern s8 gUnk_02007FC8;
-extern vu8 gUnk_0200EBC0[];
+/* Plain u8 here (vu8 elsewhere): a volatile byte load expands to a load plus
+   two shifts, which lengthens this address's live range in sub_0800f408 enough
+   to lose r6 to the hoisted copy of &gUnk_03002490. */
+extern u8 gUnk_0200EBC0[];
 extern u16 gUnk_030012B0[];
 extern u16 gUnk_03001430[];
 extern u16 gUnk_03001612[];
@@ -196,11 +199,6 @@ void sub_0800f408(void)
         t->unk54 = 0;
         t->unk58 = 0;
     }
-    /* Zero-byte clobber: the hoisted copy of &gUnk_03002490 (7 refs over
-       208 insns) outranks the gUnk_0200EBC0 address (3 refs over 46) in
-       global-alloc and takes r6; the ROM gives r6 to the latter.  About
-       30 natural shapes did not flip them (lessons-learned 3.341). */
-    asm("" ::: "r6");
     if (gUnk_02007FC8 == 0) {
         v = gUnk_03002490;
         v->unk3C = gUnk_08731EA8[p->unk1C];

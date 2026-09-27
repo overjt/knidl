@@ -59,7 +59,7 @@ extern u32 gUnk_03001184[];
 extern u8 gUnk_03001470[];
 extern u32 gUnk_03001570[];
 extern u32 gUnk_030015B0[];
-extern u16 gUnk_03001EA4;
+extern vu16 gUnk_03001EA4;
 extern vu8 gUnk_03001EB0;
 extern vu16 gUnk_03001EB4;
 extern u32 gUnk_03001EF0[];
@@ -366,14 +366,14 @@ extern u32 gUnk_0874B590[];
 extern u32 gUnk_0874B5A4[];
 extern u32 gUnk_0874B5E4[];
 extern u32 gUnk_0874B5FC[];
-extern u32 gUnk_0874B614[];
-extern u32 gUnk_0874B63E[];
+extern s16 gUnk_0874B614[];
+extern u8 gUnk_0874B63E[];
 extern u32 gUnk_0874B6BC[];
 extern u32 gUnk_0874B6D4[];
 extern u32 gUnk_0874B77C[];
-extern u32 gUnk_0874B824[];
-extern u32 gUnk_0874B82A[];
-extern u32 gUnk_0874B82E[];
+extern u8 gUnk_0874B824[];
+extern u8 gUnk_0874B82A[];
+extern u8 gUnk_0874B82E[];
 extern u32 gUnk_0874B831[];
 extern u32 gUnk_0874B835[];
 extern u32 gUnk_0874B838[];
@@ -381,10 +381,10 @@ extern u32 gUnk_0874B83B[];
 extern u32 gUnk_0874B840[];
 extern u32 gUnk_0874B86C[];
 extern u32 gUnk_0874B898[];
-extern u32 gUnk_0874B8C4[];
-extern u32 gUnk_0874B8C8[];
-extern u32 gUnk_0874B8F8[];
-extern u32 gUnk_0874B928[];
+extern u8 gUnk_0874B8C4[];
+extern s16 gUnk_0874B8C8[];
+extern s16 gUnk_0874B8F8[];
+extern u8 gUnk_0874B928[];
 extern u32 gUnk_0874B96C[];
 extern u32 gUnk_0874B998[];
 extern u32 gUnk_0874B9C4[];
@@ -1790,237 +1790,128 @@ void sub_080ae870(void)
 
 void sub_080ae8e0(void)
 {
-    struct Task **c;
-    struct Task *q1;
-    struct Task *q2;
-    struct Task *q3;
-    struct Task *q4;
-    struct Task *q5;
-    struct Task *q6;
-    struct Task *q7;
-    struct Task *q8;
-    struct Task *q9;
-    struct Task *q10;
-    struct Task *q11;
-    struct Task *q12;
-    struct Task *q13;
-    struct Task *q14;
-    struct Task *q15;
-    struct Task *q16;
-    struct Task *q17;
-    struct Task *q18;
-    struct Task *q19;
-    struct Task *q20;
-    struct Task *q21;
-    struct Task *q22;
-    struct Task *q23;
-    struct Task *q24;
-    struct Task *q25;
-    struct Task *q26;
-    struct Task *q27;
-    struct Task *q28;
-    struct Task *q29;
-    struct Task *q30;
-    struct Task *q31;
-    struct Task *q32;
-    struct Task *q33;
-    struct Task *q34;
-    struct Task *q35;
-    struct Task *q36;
-    struct Task *q37;
-    struct Task *q38;
-    struct Task *q39;
-    struct Task *q40;
-    register s32 v9 asm("r9");
-    register s32 vA asm("sl");
-    register s32 vB asm("r8");
-    register s32 vC asm("r6");
-    register s32 vD asm("r4");
-    register s32 vE asm("r5");
-    register s32 vF asm("r6");
-    register s32 vG asm("r8");
-    register s32 vH asm("r5");
-    register s32 vI asm("sl");
-    register s32 vJ asm("r4");
-    register s32 vK asm("r9");
-
     sub_0806395c(4);
     sub_080aefd4((u32)gUnk_0874AF90);
-    c = &gUnk_03002490;
-    (*c)->unk15 = 3;
+    gUnk_03002490->unk15 = 3;
     switch ((u8)sub_080aeeb0())
     {
     case 0:
-        q1 = *c;
-        q1->unk54 = 0xFFFD0000;
+        gUnk_03002490->unk54 = 0xFFFD0000;
         TaskYieldTrampoline(8);
-        q2 = *c;
-        q2->unk54 = 192 << 10;
+        gUnk_03002490->unk54 = 192 << 10;
         TaskYieldTrampoline(8);
-        q3 = *c;
-        q3->unk54 = 128 << 10;
+        gUnk_03002490->unk54 = 128 << 10;
         TaskYieldTrampoline(8);
-        q4 = *c;
-        q4->unk54 = 128 << 9;
+        gUnk_03002490->unk54 = 128 << 9;
         TaskYieldTrampoline(8);
-        q5 = *c;
-        q5->unk54 = 128 << 8;
+        gUnk_03002490->unk54 = 128 << 8;
         TaskYieldTrampoline(8);
-        q6 = *c;
-        q6->unk54 = 128 << 6;
+        gUnk_03002490->unk54 = 128 << 6;
         TaskYieldTrampoline(8);
-        q7 = *c;
-        q7->unk54 = 0;
+        gUnk_03002490->unk54 = 0;
         TaskYieldTrampoline(4);
         sub_080031b8(144 << 2);
-        q8 = *c;
-        q8->unk54 = 0xFFFA8000;
+        gUnk_03002490->unk54 = 0xFFFA8000;
         TaskYieldTrampoline(32);
-        q9 = *c;
-        q9->unk54 = 0xFFFE0000;
+        gUnk_03002490->unk54 = 0xFFFE0000;
         TaskYieldTrampoline(8);
-        q10 = *c;
-        q10->unk54 = 0xFFFF0000;
+        gUnk_03002490->unk54 = 0xFFFF0000;
         TaskYieldTrampoline(8);
-        q11 = *c;
-        q11->unk54 = 0xFFFF8000;
+        gUnk_03002490->unk54 = 0xFFFF8000;
         TaskYieldTrampoline(8);
-        q12 = *c;
-        q12->unk54 = 0;
+        gUnk_03002490->unk54 = 0;
         TaskYieldTrampoline(32);
         sub_080aec00();
         break;
     case 1:
-        q13 = *c;
-        q13->unk54 = 128 << 10;
-        q13->unk58 = 128 << 10;
+        gUnk_03002490->unk54 = 128 << 10;
+        gUnk_03002490->unk58 = 128 << 10;
         TaskYieldTrampoline(8);
-        q14 = *c;
-        v9 = 128 << 9;
-        q14->unk54 = v9;
-        q14->unk58 = v9;
+        gUnk_03002490->unk54 = 128 << 9;
+        gUnk_03002490->unk58 = 128 << 9;
         TaskYieldTrampoline(8);
-        q15 = *c;
-        q15->unk54 = 128 << 8;
-        q15->unk58 = 128 << 8;
+        gUnk_03002490->unk54 = 128 << 8;
+        gUnk_03002490->unk58 = 128 << 8;
         TaskYieldTrampoline(8);
-        q16 = *c;
-        q16->unk54 = 128 << 6;
-        q16->unk58 = 128 << 6;
+        gUnk_03002490->unk54 = 128 << 6;
+        gUnk_03002490->unk58 = 128 << 6;
         TaskYieldTrampoline(8);
-        q17 = *c;
-        q17->unk54 = 0;
-        q17->unk58 = 0;
+        gUnk_03002490->unk54 = 0;
+        gUnk_03002490->unk58 = 0;
         TaskYieldTrampoline(16);
         sub_080031b8(144 << 2);
-        q18 = *c;
-        vA = 0xFFFF8000;
-        q18->unk54 = vA;
-        vB = 0xFFFC0000;
-        q18->unk58 = vB;
+        gUnk_03002490->unk54 = 0xFFFF8000;
+        gUnk_03002490->unk58 = 0xFFFC0000;
         TaskYieldTrampoline(8);
-        q19 = *c;
-        vC = 0xFFFF0000;
-        q19->unk54 = vC;
-        vD = 0xFFFD0000;
-        q19->unk58 = vD;
+        gUnk_03002490->unk54 = 0xFFFF0000;
+        gUnk_03002490->unk58 = 0xFFFD0000;
         TaskYieldTrampoline(8);
-        q20 = *c;
-        vE = 0xFFFE0000;
-        q20->unk54 = vE;
-        q20->unk58 = vE;
+        gUnk_03002490->unk54 = 0xFFFE0000;
+        gUnk_03002490->unk58 = 0xFFFE0000;
         TaskYieldTrampoline(8);
-        q21 = *c;
-        q21->unk54 = vD;
-        q21->unk58 = vC;
+        gUnk_03002490->unk54 = 0xFFFD0000;
+        gUnk_03002490->unk58 = 0xFFFF0000;
         TaskYieldTrampoline(8);
-        q22 = *c;
-        q22->unk54 = vB;
-        q22->unk58 = vA;
+        gUnk_03002490->unk54 = 0xFFFC0000;
+        gUnk_03002490->unk58 = 0xFFFF8000;
         TaskYieldTrampoline(8);
-        q23 = *c;
-        q23->unk54 = 0xFFFA0000;
-        q23->unk58 = 0xFFFFE000;
+        gUnk_03002490->unk54 = 0xFFFA0000;
+        gUnk_03002490->unk58 = 0xFFFFE000;
         TaskYieldTrampoline(12);
-        q24 = *c;
-        q24->unk54 = vD;
-        q24->unk58 = v9;
+        gUnk_03002490->unk54 = 0xFFFD0000;
+        gUnk_03002490->unk58 = 128 << 9;
         TaskYieldTrampoline(8);
-        q25 = *c;
-        q25->unk54 = vE;
-        q25->unk58 = 128 << 10;
+        gUnk_03002490->unk54 = 0xFFFE0000;
+        gUnk_03002490->unk58 = 128 << 10;
         TaskYieldTrampoline(8);
-        q26 = *c;
-        q26->unk54 = vC;
-        q26->unk58 = 128 << 11;
+        gUnk_03002490->unk54 = 0xFFFF0000;
+        gUnk_03002490->unk58 = 128 << 11;
         TaskYieldTrampoline(8);
         sub_080aec00();
         break;
     case 2:
-        q27 = *c;
-        q27->unk54 = 128 << 10;
-        vF = 0xFFFE0000;
-        q27->unk58 = vF;
+        gUnk_03002490->unk54 = 128 << 10;
+        gUnk_03002490->unk58 = 0xFFFE0000;
         TaskYieldTrampoline(8);
-        q28 = *c;
-        vG = 128 << 9;
-        q28->unk54 = vG;
-        vH = 0xFFFF0000;
-        q28->unk58 = vH;
+        gUnk_03002490->unk54 = 128 << 9;
+        gUnk_03002490->unk58 = 0xFFFF0000;
         TaskYieldTrampoline(8);
-        q29 = *c;
-        vI = 128 << 8;
-        q29->unk54 = vI;
-        vJ = 0xFFFF8000;
-        q29->unk58 = vJ;
+        gUnk_03002490->unk54 = 128 << 8;
+        gUnk_03002490->unk58 = 0xFFFF8000;
         TaskYieldTrampoline(8);
-        q30 = *c;
-        vK = 128 << 6;
-        q30->unk54 = vK;
-        q30->unk58 = 0xFFFFE000;
+        gUnk_03002490->unk54 = 128 << 6;
+        gUnk_03002490->unk58 = 0xFFFFE000;
         TaskYieldTrampoline(8);
-        q31 = *c;
-        q31->unk54 = 0;
-        q31->unk58 = 0;
+        gUnk_03002490->unk54 = 0;
+        gUnk_03002490->unk58 = 0;
         TaskYieldTrampoline(16);
         sub_080031b8(144 << 2);
-        q32 = *c;
-        q32->unk54 = vJ;
-        q32->unk58 = 128 << 11;
+        gUnk_03002490->unk54 = 0xFFFF8000;
+        gUnk_03002490->unk58 = 128 << 11;
         TaskYieldTrampoline(8);
-        q33 = *c;
-        q33->unk54 = vH;
-        q33->unk58 = 192 << 10;
+        gUnk_03002490->unk54 = 0xFFFF0000;
+        gUnk_03002490->unk58 = 192 << 10;
         TaskYieldTrampoline(8);
-        q34 = *c;
-        q34->unk54 = vF;
-        q34->unk58 = 128 << 10;
+        gUnk_03002490->unk54 = 0xFFFE0000;
+        gUnk_03002490->unk58 = 128 << 10;
         TaskYieldTrampoline(8);
-        q35 = *c;
-        vJ = 0xFFFD0000;
-        q35->unk54 = vJ;
-        q35->unk58 = vG;
+        gUnk_03002490->unk54 = 0xFFFD0000;
+        gUnk_03002490->unk58 = 128 << 9;
         TaskYieldTrampoline(8);
-        q36 = *c;
-        vG = 0xFFFC0000;
-        q36->unk54 = vG;
-        q36->unk58 = vI;
+        gUnk_03002490->unk54 = 0xFFFC0000;
+        gUnk_03002490->unk58 = 128 << 8;
         TaskYieldTrampoline(8);
-        q37 = *c;
-        q37->unk54 = 0xFFFA0000;
-        q37->unk58 = vK;
+        gUnk_03002490->unk54 = 0xFFFA0000;
+        gUnk_03002490->unk58 = 128 << 6;
         TaskYieldTrampoline(12);
-        q38 = *c;
-        q38->unk54 = vJ;
-        q38->unk58 = vH;
+        gUnk_03002490->unk54 = 0xFFFD0000;
+        gUnk_03002490->unk58 = 0xFFFF0000;
         TaskYieldTrampoline(8);
-        q39 = *c;
-        q39->unk54 = vF;
-        q39->unk58 = vF;
+        gUnk_03002490->unk54 = 0xFFFE0000;
+        gUnk_03002490->unk58 = 0xFFFE0000;
         TaskYieldTrampoline(8);
-        q40 = *c;
-        q40->unk54 = vH;
-        q40->unk58 = vG;
+        gUnk_03002490->unk54 = 0xFFFF0000;
+        gUnk_03002490->unk58 = 0xFFFC0000;
         TaskYieldTrampoline(8);
         sub_080aed5c();
         break;
@@ -2030,118 +1921,64 @@ void sub_080ae8e0(void)
 
 void sub_080aec00(void)
 {
-    struct Task **c;
-    register s32 z asm("sl");
-    register s32 va asm("r5");
-    register s32 vb asm("r9");
-    register s32 vc asm("r6");
-    register s32 vd asm("r8");
-    struct Task *t;
-    struct Task *q1;
-    struct Task *q2;
-    struct Task *q3;
-    struct Task *q4;
-    struct Task *q5;
-    struct Task *q6;
-    struct Task *q7;
-    struct Task *q8;
-    struct Task *q9;
-    struct Task *q10;
-    struct Task *q11;
-    struct Task *q12;
-    struct Task *q13;
-    struct Task *q14;
-    struct Task *q15;
-    struct Task *q16;
-    struct Task *q17;
-    struct Task *q18;
-    struct Task *q19;
-
     sub_080aefd4((u32)gUnk_0874B0A0);
-    c = &gUnk_03002490;
-    t = *c;
-    z = 0;
-    t->unk15 = 3;
-    q1 = *c;
-    va = 128 << 10;
-    q1->unk54 = va;
-    q1->unk58 = va;
+    gUnk_03002490->unk15 = 3;
+    gUnk_03002490->unk54 = 128 << 10;
+    gUnk_03002490->unk58 = 128 << 10;
     TaskYieldTrampoline(8);
-    q2 = *c;
-    q2->unk54 = va;
-    vb = 128 << 9;
-    q2->unk58 = vb;
+    gUnk_03002490->unk54 = 128 << 10;
+    gUnk_03002490->unk58 = 128 << 9;
     TaskYieldTrampoline(8);
-    q3 = *c;
-    q3->unk54 = va;
-    vc = 0xFFFF0000;
-    q3->unk58 = vc;
+    gUnk_03002490->unk54 = 128 << 10;
+    gUnk_03002490->unk58 = 0xFFFF0000;
     TaskYieldTrampoline(8);
-    q4 = *c;
-    q4->unk54 = va;
-    vd = 0xFFFE0000;
-    q4->unk58 = vd;
+    gUnk_03002490->unk54 = 128 << 10;
+    gUnk_03002490->unk58 = 0xFFFE0000;
     TaskYieldTrampoline(8);
-    q5 = *c;
-    q5->unk54 = va;
-    q5->unk58 = vd;
+    gUnk_03002490->unk54 = 128 << 10;
+    gUnk_03002490->unk58 = 0xFFFE0000;
     TaskYieldTrampoline(8);
-    q6 = *c;
-    q6->unk54 = va;
-    q6->unk58 = vc;
+    gUnk_03002490->unk54 = 128 << 10;
+    gUnk_03002490->unk58 = 0xFFFF0000;
     TaskYieldTrampoline(8);
-    q7 = *c;
-    q7->unk54 = va;
-    q7->unk58 = vb;
+    gUnk_03002490->unk54 = 128 << 10;
+    gUnk_03002490->unk58 = 128 << 9;
     TaskYieldTrampoline(8);
-    q8 = *c;
-    q8->unk54 = va;
-    q8->unk58 = va;
+    gUnk_03002490->unk54 = 128 << 10;
+    gUnk_03002490->unk58 = 128 << 10;
     TaskYieldTrampoline(8);
-    q9 = *c;
-    q9->unk54 = va;
-    q9->unk58 = va;
+    gUnk_03002490->unk54 = 128 << 10;
+    gUnk_03002490->unk58 = 128 << 10;
     TaskYieldTrampoline(8);
-    q10 = *c;
-    q10->unk54 = va;
-    q10->unk58 = vb;
+    gUnk_03002490->unk54 = 128 << 10;
+    gUnk_03002490->unk58 = 128 << 9;
     TaskYieldTrampoline(8);
-    q11 = *c;
-    q11->unk54 = 128 << 11;
-    q11->unk58 = z;
+    gUnk_03002490->unk54 = 128 << 11;
+    gUnk_03002490->unk58 = 0;
     TaskYieldTrampoline(6);
-    q12 = *c;
-    q12->unk54 = va;
-    q12->unk58 = 0xFFFF8000;
+    gUnk_03002490->unk54 = 128 << 10;
+    gUnk_03002490->unk58 = 0xFFFF8000;
     TaskYieldTrampoline(6);
-    q13 = *c;
-    q13->unk54 = vb;
-    q13->unk58 = vc;
+    gUnk_03002490->unk54 = 128 << 9;
+    gUnk_03002490->unk58 = 0xFFFF0000;
     TaskYieldTrampoline(6);
-    q14 = *c;
-    va = 128 << 8;
-    q14->unk54 = va;
-    q14->unk58 = vd;
+    gUnk_03002490->unk54 = 128 << 8;
+    gUnk_03002490->unk58 = 0xFFFE0000;
     TaskYieldTrampoline(6);
-    q15 = *c;
-    q15->unk54 = vc;
-    q15->unk58 = vd;
+    gUnk_03002490->unk54 = 0xFFFF0000;
+    gUnk_03002490->unk58 = 0xFFFE0000;
     TaskYieldTrampoline(6);
-    q16 = *c;
-    q16->unk54 = vd;
-    q16->unk58 = vc;
+    gUnk_03002490->unk54 = 0xFFFE0000;
+    gUnk_03002490->unk58 = 0xFFFF0000;
     TaskYieldTrampoline(6);
-    q17 = *c;
-    q17->unk54 = vc;
-    q17->unk58 = va;
+    gUnk_03002490->unk54 = 0xFFFF0000;
+    gUnk_03002490->unk58 = 128 << 8;
     TaskYieldTrampoline(6);
-    q18 = *c;
-    q18->unk54 = vc;
-    q18->unk58 = vb;
+    gUnk_03002490->unk54 = 0xFFFF0000;
+    gUnk_03002490->unk58 = 128 << 9;
     TaskYieldTrampoline(6);
-    q19 = *c;
-    q19->unk54 = z;
-    q19->unk58 = vb;
+    gUnk_03002490->unk54 = 0;
+    gUnk_03002490->unk58 = 128 << 9;
     TaskYieldTrampoline(6);
     sub_080062c4();
     TaskYieldTrampoline(32);
@@ -2151,11 +1988,11 @@ void sub_080aed5c(void)
 {
     struct Task **c;
     s32 z;
-    register s32 va asm("r4");
-    register s32 vb asm("r9");
-    register s32 vc asm("r6");
-    register s32 vd asm("sl");
-    register s32 ve asm("r8");
+    s32 va;
+    s32 vb;
+    s32 vc;
+    s32 vd;
+    s32 ve;
     struct Task *t;
     struct Task *q1;
     struct Task *q2;
@@ -2497,30 +2334,18 @@ void sub_080af1d4(void)
 void sub_080af20c(u8 a)
 {
     struct ActorSpawn sp;
-    struct Task **c;
-    register struct Task *t asm("r2");
-    struct Task *u;
-    s32 z;
-    register struct ActorSpawn *ps asm("r1");
-    s32 r;
 
     if (gUnk_02007D00[0] == 0)
     {
         sp.unk00 = 32;
         sp.unk04 = 135;
         sp.unk08 = a;
-        ps = &sp;
-        c = &gUnk_03002490;
-        t = *c;
-        ps->unk09 = t->unk74;
-        z = 0;
-        ps->unk10 = 0xA110;
-        ps->unk0C = t->unk4C >> 16;
-        ps->unk0E = t->unk50 >> 16;
-        sp.unk0A = z;
-        r = sub_08064ba8(&sp, 1);
-        u = *c;
-        u->unk46 = r;
+        sp.unk09 = gUnk_03002490->unk74;
+        sp.unk10 = 0xA110;
+        sp.unk0C = gUnk_03002490->unk4C >> 16;
+        sp.unk0E = gUnk_03002490->unk50 >> 16;
+        sp.unk0A = 0;
+        gUnk_03002490->unk46 = sub_08064ba8(&sp, 1);
     }
 }
 
@@ -2919,54 +2744,40 @@ void sub_080af7d4(void)
 
 void sub_080af844(void)
 {
-    s32 *p;
-    s32 k;
-    struct Task **c6;
     struct Task *t;
-    struct Task *t2;
     struct Task *u;
-    struct Task *u2;
-    s16 *a;
-    s16 *a2;
 
-    p = gUnk_02007D00;
-    switch (p[4])
+    switch (gUnk_02007D00[4])
     {
     case 0:
-        k = 0x22A;
-        sub_080031b8(k);
+        sub_080031b8(0x22A);
         sub_080af20c(5);
         TaskYieldTrampoline(16);
-        c6 = &gUnk_03002490;
-        u = *c6;
-        a = &u->unk44;
-        u->unk4C = ((struct Task *)((u8 *)gUnk_03002790 + *a * 144))->unk4C;
-        asm("" ::: "memory");
-        u->unk50 = ((struct Task *)((u8 *)gUnk_03002790 + *a * 144))->unk50;
-        sub_080031b8(k);
+        t = gUnk_03002490;
+        t->unk4C = ((struct Task *)(t->unk44 * 144 + (u32)gUnk_03002790))->unk4C;
+        t->unk50 = ((struct Task *)(t->unk44 * 144 + (u32)gUnk_03002790))->unk50;
+        sub_080031b8(0x22A);
         sub_080af20c(5);
         TaskYieldTrampoline(16);
-        u2 = *c6;
-        a2 = &u2->unk44;
-        u2->unk4C = ((struct Task *)((u8 *)gUnk_03002790 + *a2 * 144))->unk4C;
-        asm("" ::: "memory");
-        u2->unk50 = ((struct Task *)((u8 *)gUnk_03002790 + *a2 * 144))->unk50;
-        sub_080031b8(k);
+        u = gUnk_03002490;
+        u->unk4C = ((struct Task *)(u->unk44 * 144 + (u32)gUnk_03002790))->unk4C;
+        u->unk50 = ((struct Task *)(u->unk44 * 144 + (u32)gUnk_03002790))->unk50;
+        sub_080031b8(0x22A);
         sub_080af20c(5);
-        p[4] = 1;
+        gUnk_02007D00[4] = 1;
         break;
     case 1:
         sub_080031b8(0x22B);
         sub_080af20c(6);
         sub_080af20c(7);
         sub_080af20c(8);
-        p[4] = 2;
+        gUnk_02007D00[4] = 2;
         break;
     case 2:
         sub_080031b8(0x22B);
         sub_080af20c(9);
         sub_080af20c(10);
-        p[4] = 0;
+        gUnk_02007D00[4] = 0;
         break;
     }
     TaskDispatchTrampoline();
@@ -3245,534 +3056,243 @@ top:
 
 void sub_080afdf0(void)
 {
-    register struct Task **c asm("r4");
-    struct Task **c2;
     struct Task *t;
     struct Task *u;
-    register struct Task *t4 asm("r4");
-    struct Task *t5;
-    struct Task *q1;
-    struct Task *q2s;
-    struct Task *q3;
-    struct Task *q4;
-    struct Task *q5;
-    u8 *p5;
-    register u8 *p6 asm("r6");
-    u8 *p7;
-    register s32 i asm("r1");
-    s32 i2;
-    register s32 o asm("r2");
-    s32 o2;
-    s32 q;
-    s32 q2;
-    s32 v2;
-    register s32 v3 asm("r2");
-    register s32 w58 asm("r0");
+    s32 v;
     s32 w;
-    s32 w2;
-    register s16 *a44 asm("r5");
-    s32 *a2;
-    register s32 *pa asm("r1");
-    register s32 *pa7 asm("r0");
-    register s32 nv asm("r0");
-    register s32 i9 asm("r0");
-    register s32 yv asm("r1");
-    register s32 zv asm("r0");
-    register s32 num asm("r3");
-    s32 ya;
-    s32 za;
-    s32 num2;
-    s32 yb;
-    s32 zb;
+    struct Task *x;
 
-    c = &gUnk_03002490;
-    t = *c;
+    t = gUnk_03002490;
     t->unk00 = (u32)sub_0806572c;
     t->unk0C = (u32)sub_08005d9c;
     t->unk42 = 12;
-    u = *c;
-    u->unk38 = gUnk_08754504;
-    u->unk43 = 1;
-    p5 = (u8 *)gUnk_03002790;
-    i = (*c)->unk44;
-    i9 = i * 9;
-    o = i9 << 4;
-    p6 = p5 + 84;
-    pa = (s32 *)(o + (u32)p6);
-    nv = *pa;
-    asm volatile("" : "+r"(nv));
-    num = abs(nv) << 4;
-    yv = *pa;
-    ya = abs(yv);
-    p7 = p5 + 88;
-    pa7 = (s32 *)(o + (u32)p7);
-    zv = *pa7;
-    za = abs(zv);
-    q = Div(num, ya + za);
-    a2 = (s32 *)&gUnk_030023B4;
-    *a2 = q;
-    i2 = (*c)->unk44;
-    o2 = i2 * 144;
-    num2 = abs(*(s32 *)(o2 + (u32)p7)) << 4;
-    yb = abs(*(s32 *)(o2 + (u32)p6));
-    zb = abs(*(s32 *)(o2 + (u32)p7));
-    q2 = Div(num2, yb + zb);
-    gUnk_030023D4 = q2;
-    t4 = *c;
-    v2 = (*a2 << 17) >> 4;
-    a44 = &t4->unk44;
-    w = *(s32 *)(*a44 * 144 + (u32)p6);
-    t4->unk54 = v2 + w;
-    v3 = (q2 << 17) >> 4;
-    asm("" : "+r"(a44) : : "memory");
-    w2 = *(s32 *)(*a44 * 144 + (u32)p7);
-    if (w2 >= 0)
-        w58 = w2 - v3;
+    gUnk_03002490->unk38 = gUnk_08754504;
+    gUnk_03002490->unk43 = 1;
+    gUnk_030023B4 = Div(abs(gUnk_03002790[gUnk_03002490->unk44].unk54) << 4,
+                        abs(gUnk_03002790[gUnk_03002490->unk44].unk54) + abs(gUnk_03002790[gUnk_03002490->unk44].unk58));
+    gUnk_030023D4 = Div(abs(gUnk_03002790[gUnk_03002490->unk44].unk58) << 4,
+                        abs(gUnk_03002790[gUnk_03002490->unk44].unk54) + abs(gUnk_03002790[gUnk_03002490->unk44].unk58));
+    u = gUnk_03002490;
+    u->unk54 = ((gUnk_030023B4 << 17) >> 4) + gUnk_03002790[u->unk44].unk54;
+    /* a second task pointer: the unk58 store after the if goes through it */
+    x = gUnk_03002490;
+    v = (gUnk_030023D4 << 17) >> 4;
+    w = gUnk_03002790[x->unk44].unk58;
+    /* the arms re-read the cell: `v + cell` keeps the ROM's operand order */
+    if (w >= 0)
+        w = gUnk_03002790[x->unk44].unk58 - v;
     else
-        w58 = v3 + w2;
-    t4->unk58 = w58;
-    t5 = gUnk_03002490;
-    t5->unk6C = 0;
-    c2 = &gUnk_03002490;
+        w = v + gUnk_03002790[x->unk44].unk58;
+    x->unk58 = w;
+    gUnk_03002490->unk6C = 0;
     do
     {
-        q1 = *c2;
-        q1->unk3C = 19;
+        gUnk_03002490->unk3C = 19;
         TaskYieldTrampoline(2);
-        q2s = *c2;
-        q2s->unk3C = 20;
+        gUnk_03002490->unk3C = 20;
         TaskYieldTrampoline(2);
-        q3 = *c2;
-        q3->unk3C = 21;
+        gUnk_03002490->unk3C = 21;
         TaskYieldTrampoline(2);
-        q4 = *c2;
-        q4->unk3C = 22;
+        gUnk_03002490->unk3C = 22;
         TaskYieldTrampoline(2);
-        q5 = *c2;
-        q5->unk6C++;
-    } while ((s16)q5->unk6C <= 1);
+        gUnk_03002490->unk6C++;
+    } while ((s16)gUnk_03002490->unk6C <= 1);
     TaskDispatchTrampoline();
 }
 
 void sub_080aff40(void)
 {
-    register struct Task **c asm("r4");
-    struct Task **c2;
     struct Task *t;
     struct Task *u;
-    register struct Task *t4 asm("r2");
-    register struct Task *t5 asm("r5");
-    struct Task *t6;
-    struct Task *q1;
-    struct Task *q2s;
-    struct Task *q3;
-    struct Task *q4;
-    struct Task *q5;
-    u8 *p5;
-    register u8 *p6 asm("r6");
-    u8 *p7;
-    register s32 i asm("r1");
-    s32 i2;
-    s32 o2;
-    s32 q;
-    register s32 q2 asm("r3");
-    register s32 v3 asm("r2");
-    register s32 v3t asm("r0");
-    register s32 w58 asm("r0");
-    register s32 o3 asm("r1");
-    register s32 av asm("r1");
-    register s32 o9 asm("r0");
-    s32 w0;
-    s32 w2;
-    register s16 *a44 asm("r4");
-    register s32 num asm("r3");
-    register s32 o asm("r2");
-    register s32 *pa asm("r1");
-    register s32 *pa7 asm("r0");
-    register s32 nv asm("r0");
-    register s32 yv asm("r1");
-    register s32 zv asm("r0");
-    register s32 i9 asm("r0");
-    s32 *a2;
-    register s32 *a23d asm("r0");
-    s32 ya;
-    s32 za;
-    s32 num2;
-    s32 yb;
-    s32 zb;
+    s32 v;
+    s32 w;
+    s32 y;
+    struct Task *x;
 
-    c = &gUnk_03002490;
-    t = *c;
+    t = gUnk_03002490;
     t->unk00 = (u32)sub_0806572c;
     t->unk0C = (u32)sub_08005d9c;
     t->unk42 = 12;
-    u = *c;
-    u->unk38 = gUnk_08754504;
-    u->unk43 = 1;
-    p5 = (u8 *)gUnk_03002790;
-    i = (*c)->unk44;
-    i9 = i * 9;
-    o = i9 << 4;
-    p6 = p5 + 84;
-    pa = (s32 *)(o + (u32)p6);
-    nv = *pa;
-    asm volatile("" : "+r"(nv));
-    num = abs(nv) << 4;
-    yv = *pa;
-    ya = abs(yv);
-    p7 = p5 + 88;
-    pa7 = (s32 *)(o + (u32)p7);
-    zv = *pa7;
-    za = abs(zv);
-    q = Div(num, ya + za);
-    a2 = (s32 *)&gUnk_030023B4;
-    *a2 = q;
-    i2 = (*c)->unk44;
-    o2 = i2 * 144;
-    num2 = abs(*(s32 *)(o2 + (u32)p7)) << 4;
-    yb = abs(*(s32 *)(o2 + (u32)p6));
-    zb = abs(*(s32 *)(o2 + (u32)p7));
-    q2 = Div(num2, yb + zb);
-    a23d = (s32 *)&gUnk_030023D4;
-    *a23d = q2;
-    t4 = *c;
-    a44 = &t4->unk44;
-    av = *a44;
-    o9 = av * 9;
-    o3 = o9 << 4;
-    w0 = *(s32 *)(o3 + (u32)p7);
-    if (w0 > 0)
+    gUnk_03002490->unk38 = gUnk_08754504;
+    gUnk_03002490->unk43 = 1;
+    gUnk_030023B4 = Div(abs(gUnk_03002790[gUnk_03002490->unk44].unk54) << 4,
+                        abs(gUnk_03002790[gUnk_03002490->unk44].unk54) + abs(gUnk_03002790[gUnk_03002490->unk44].unk58));
+    gUnk_030023D4 = Div(abs(gUnk_03002790[gUnk_03002490->unk44].unk58) << 4,
+                        abs(gUnk_03002790[gUnk_03002490->unk44].unk54) + abs(gUnk_03002790[gUnk_03002490->unk44].unk58));
+    /* u for unk54, a second pointer x per arm for the single unk58 store */
+    u = gUnk_03002490;
+    w = gUnk_03002790[u->unk44].unk58;
+    if (w > 0)
     {
-        t4->unk54 = ((gUnk_030023B4 << 17) >> 4) + *(s32 *)(o3 + (u32)p6) + 0xFFFEE000;
-        t5 = t4;
-        v3t = q2 << 17;
-        v3 = v3t >> 4;
-        w2 = *(s32 *)(*a44 * 144 + (u32)p7);
-        if (w2 >= 0)
-            w58 = w2 - v3 + 0xFFFFC000;
+        u->unk54 = ((gUnk_030023B4 << 17) >> 4) + gUnk_03002790[u->unk44].unk54 + 0xFFFEE000;
+        x = gUnk_03002490;
+        v = (gUnk_030023D4 << 17) >> 4;
+        w = gUnk_03002790[x->unk44].unk58;
+        if (w >= 0)
+            y = w - v + 0xFFFFC000;
         else
-            w58 = v3 + w2 + 0xFFFFC000;
-        t5->unk58 = w58;
+            y = v + w + 0xFFFFC000;
     }
-    else if (w0 < 0)
+    else if (w < 0)
     {
-        t4->unk54 = ((gUnk_030023B4 << 17) >> 4) + *(s32 *)(o3 + (u32)p6) + (128 << 7);
-        t5 = t4;
-        v3t = q2 << 17;
-        v3 = v3t >> 4;
-        w2 = *(s32 *)(*a44 * 144 + (u32)p7);
-        if (w2 >= 0)
-            w58 = w2 - v3 + 0xFFFF4000;
+        u->unk54 = ((gUnk_030023B4 << 17) >> 4) + gUnk_03002790[u->unk44].unk54 + (128 << 7);
+        x = gUnk_03002490;
+        v = (gUnk_030023D4 << 17) >> 4;
+        w = gUnk_03002790[x->unk44].unk58;
+        if (w >= 0)
+            y = w - v + 0xFFFF4000;
         else
-            w58 = v3 + w2 + 0xFFFF4000;
-        t5->unk58 = w58;
+            y = v + w + 0xFFFF4000;
     }
     else
     {
-        t4->unk54 = ((gUnk_030023B4 << 17) >> 4) + *(s32 *)(o3 + (u32)p6) + 0xFFFF0000;
-        t5 = t4;
-        v3t = q2 << 17;
-        v3 = v3t >> 4;
-        w2 = *(s32 *)(*a44 * 144 + (u32)p7);
-        if (w2 >= 0)
-            w58 = w2 - v3 + 0xFFFF8000;
+        u->unk54 = ((gUnk_030023B4 << 17) >> 4) + gUnk_03002790[u->unk44].unk54 + 0xFFFF0000;
+        x = gUnk_03002490;
+        v = (gUnk_030023D4 << 17) >> 4;
+        w = gUnk_03002790[x->unk44].unk58;
+        if (w >= 0)
+            y = w - v + 0xFFFF8000;
         else
-            w58 = v3 + w2 + 0xFFFF8000;
-        t5->unk58 = w58;
+            y = v + w + 0xFFFF8000;
     }
-    t6 = gUnk_03002490;
-    t6->unk6C = 0;
-    c2 = &gUnk_03002490;
+    x->unk58 = y;
+    gUnk_03002490->unk6C = 0;
     do
     {
-        q1 = *c2;
-        q1->unk3C = 19;
+        gUnk_03002490->unk3C = 19;
         TaskYieldTrampoline(2);
-        q2s = *c2;
-        q2s->unk3C = 20;
+        gUnk_03002490->unk3C = 20;
         TaskYieldTrampoline(2);
-        q3 = *c2;
-        q3->unk3C = 21;
+        gUnk_03002490->unk3C = 21;
         TaskYieldTrampoline(2);
-        q4 = *c2;
-        q4->unk3C = 22;
+        gUnk_03002490->unk3C = 22;
         TaskYieldTrampoline(2);
-        q5 = *c2;
-        q5->unk6C++;
-    } while ((s16)q5->unk6C <= 1);
+        gUnk_03002490->unk6C++;
+    } while ((s16)gUnk_03002490->unk6C <= 1);
     TaskDispatchTrampoline();
 }
 
 void sub_080b0144(void)
 {
-    register struct Task **c asm("r4");
-    struct Task **c2;
     struct Task *t;
     struct Task *u;
-    register struct Task *t4 asm("r2");
-    register struct Task *t5 asm("r5");
-    struct Task *t6;
-    struct Task *q1;
-    struct Task *q2s;
-    struct Task *q3;
-    struct Task *q4;
-    struct Task *q5;
-    u8 *p5;
-    register u8 *p6 asm("r6");
-    u8 *p7;
-    register s32 i asm("r1");
-    s32 i2;
-    register s32 o asm("r2");
-    s32 o2;
-    s32 q;
-    register s32 q2 asm("r3");
-    register s32 v3 asm("r2");
-    register s32 v3t asm("r0");
-    register s32 w58 asm("r0");
-    register s32 o3 asm("r1");
-    register s32 av asm("r1");
-    register s32 o9 asm("r0");
-    s32 w0;
-    s32 w2;
-    register s16 *a44 asm("r4");
-    register s32 num asm("r3");
-    register s32 *pa asm("r1");
-    register s32 *pa7 asm("r0");
-    register s32 nv asm("r0");
-    register s32 yv asm("r1");
-    register s32 zv asm("r0");
-    register s32 i9 asm("r0");
-    s32 *a2;
-    register s32 *a23d asm("r0");
-    s32 ya;
-    s32 za;
-    s32 num2;
-    s32 yb;
-    s32 zb;
+    s32 v;
+    s32 w;
+    s32 y;
+    struct Task *x;
 
-    c = &gUnk_03002490;
-    t = *c;
+    t = gUnk_03002490;
     t->unk00 = (u32)sub_0806572c;
     t->unk0C = (u32)sub_08005d9c;
     t->unk42 = 12;
-    u = *c;
-    u->unk38 = gUnk_08754504;
-    u->unk43 = 1;
-    p5 = (u8 *)gUnk_03002790;
-    i = (*c)->unk44;
-    i9 = i * 9;
-    o = i9 << 4;
-    p6 = p5 + 84;
-    pa = (s32 *)(o + (u32)p6);
-    nv = *pa;
-    asm volatile("" : "+r"(nv));
-    num = abs(nv) << 4;
-    yv = *pa;
-    ya = abs(yv);
-    p7 = p5 + 88;
-    pa7 = (s32 *)(o + (u32)p7);
-    zv = *pa7;
-    za = abs(zv);
-    q = Div(num, ya + za);
-    a2 = (s32 *)&gUnk_030023B4;
-    *a2 = q;
-    i2 = (*c)->unk44;
-    o2 = i2 * 144;
-    num2 = abs(*(s32 *)(o2 + (u32)p7)) << 4;
-    yb = abs(*(s32 *)(o2 + (u32)p6));
-    zb = abs(*(s32 *)(o2 + (u32)p7));
-    q2 = Div(num2, yb + zb);
-    a23d = (s32 *)&gUnk_030023D4;
-    *a23d = q2;
-    t4 = *c;
-    a44 = &t4->unk44;
-    av = *a44;
-    o9 = av * 9;
-    o3 = o9 << 4;
-    w0 = *(s32 *)(o3 + (u32)p7);
-    if (w0 > 0)
+    gUnk_03002490->unk38 = gUnk_08754504;
+    gUnk_03002490->unk43 = 1;
+    gUnk_030023B4 = Div(abs(gUnk_03002790[gUnk_03002490->unk44].unk54) << 4,
+                        abs(gUnk_03002790[gUnk_03002490->unk44].unk54) + abs(gUnk_03002790[gUnk_03002490->unk44].unk58));
+    gUnk_030023D4 = Div(abs(gUnk_03002790[gUnk_03002490->unk44].unk58) << 4,
+                        abs(gUnk_03002790[gUnk_03002490->unk44].unk54) + abs(gUnk_03002790[gUnk_03002490->unk44].unk58));
+    /* u for unk54, a second pointer x per arm for the single unk58 store */
+    u = gUnk_03002490;
+    w = gUnk_03002790[u->unk44].unk58;
+    if (w > 0)
     {
-        t4->unk54 = ((gUnk_030023B4 << 17) >> 4) + *(s32 *)(o3 + (u32)p6) + (128 << 7);
-        t5 = t4;
-        v3t = q2 << 17;
-        v3 = v3t >> 4;
-        w2 = *(s32 *)(*a44 * 144 + (u32)p7);
-        if (w2 >= 0)
-            w58 = w2 - v3 + (192 << 8);
+        u->unk54 = ((gUnk_030023B4 << 17) >> 4) + gUnk_03002790[u->unk44].unk54 + (128 << 7);
+        x = gUnk_03002490;
+        v = (gUnk_030023D4 << 17) >> 4;
+        w = gUnk_03002790[x->unk44].unk58;
+        if (w >= 0)
+            y = w - v + (192 << 8);
         else
-            w58 = v3 + w2 + (192 << 8);
-        t5->unk58 = w58;
+            y = v + w + (192 << 8);
     }
-    else if (w0 < 0)
+    else if (w < 0)
     {
-        t4->unk54 = ((gUnk_030023B4 << 17) >> 4) + *(s32 *)(o3 + (u32)p6) + 0xFFFEE000;
-        t5 = t4;
-        v3t = q2 << 17;
-        v3 = v3t >> 4;
-        w2 = *(s32 *)(*a44 * 144 + (u32)p7);
-        if (w2 >= 0)
-            w58 = w2 - v3 + (128 << 7);
+        u->unk54 = ((gUnk_030023B4 << 17) >> 4) + gUnk_03002790[u->unk44].unk54 + 0xFFFEE000;
+        x = gUnk_03002490;
+        v = (gUnk_030023D4 << 17) >> 4;
+        w = gUnk_03002790[x->unk44].unk58;
+        if (w >= 0)
+            y = w - v + (128 << 7);
         else
-            w58 = v3 + w2 + (128 << 7);
-        t5->unk58 = w58;
+            y = v + w + (128 << 7);
     }
     else
     {
-        t4->unk54 = ((gUnk_030023B4 << 17) >> 4) + *(s32 *)(o3 + (u32)p6) + 0xFFFF0000;
-        t5 = t4;
-        v3t = q2 << 17;
-        v3 = v3t >> 4;
-        w2 = *(s32 *)(*a44 * 144 + (u32)p7);
-        if (w2 >= 0)
-            w58 = w2 - v3 + (128 << 8);
+        u->unk54 = ((gUnk_030023B4 << 17) >> 4) + gUnk_03002790[u->unk44].unk54 + 0xFFFF0000;
+        x = gUnk_03002490;
+        v = (gUnk_030023D4 << 17) >> 4;
+        w = gUnk_03002790[x->unk44].unk58;
+        if (w >= 0)
+            y = w - v + (128 << 8);
         else
-            w58 = v3 + w2 + (128 << 8);
-        t5->unk58 = w58;
+            y = v + w + (128 << 8);
     }
-    t6 = gUnk_03002490;
-    t6->unk6C = 0;
-    c2 = &gUnk_03002490;
+    x->unk58 = y;
+    gUnk_03002490->unk6C = 0;
     do
     {
-        q1 = *c2;
-        q1->unk3C = 19;
+        gUnk_03002490->unk3C = 19;
         TaskYieldTrampoline(2);
-        q2s = *c2;
-        q2s->unk3C = 20;
+        gUnk_03002490->unk3C = 20;
         TaskYieldTrampoline(2);
-        q3 = *c2;
-        q3->unk3C = 21;
+        gUnk_03002490->unk3C = 21;
         TaskYieldTrampoline(2);
-        q4 = *c2;
-        q4->unk3C = 22;
+        gUnk_03002490->unk3C = 22;
         TaskYieldTrampoline(2);
-        q5 = *c2;
-        q5->unk6C++;
-    } while ((s16)q5->unk6C <= 1);
+        gUnk_03002490->unk6C++;
+    } while ((s16)gUnk_03002490->unk6C <= 1);
     TaskDispatchTrampoline();
 }
 
 void sub_080b0338(void)
 {
-    register struct Task **c asm("r4");
     struct Task *t;
     struct Task *u;
-    register struct Task *t4 asm("r4");
-    struct Task *t6;
-    struct Task *b1;
-    struct Task *b2;
-    struct Task *b3;
-    struct Task *b4;
-    struct Task *b5;
-    struct Task *b6;
-    struct Task *b7;
-    struct Task *q1;
-    struct Task *q2s;
-    struct Task *q3;
-    struct Task *q4;
-    struct Task *q5;
-    u8 *p5;
-    s32 *pb;
-    register u8 *p6 asm("r6");
-    u8 *p7;
-    struct Task *tb3;
-    register s32 i asm("r1");
-    s32 i2;
-    register s32 o asm("r2");
-    s32 o2;
-    s32 q;
-    s32 q2;
-    s32 v2;
-    register s32 v3 asm("r2");
-    register s32 w58 asm("r0");
+    s32 v;
     s32 w;
-    s32 w2;
-    register s16 *a44 asm("r5");
-    register s32 *pa asm("r1");
-    register s32 *pa7 asm("r0");
-    register s32 nv asm("r0");
-    register s32 i9 asm("r0");
-    register s32 yv asm("r1");
-    register s32 zv asm("r0");
-    register s32 num asm("r3");
-    s32 ya;
-    s32 za;
-    s32 num2;
-    s32 yb;
-    s32 zb;
+    struct Task *x;
 
-    c = &gUnk_03002490;
-    t = *c;
+    t = gUnk_03002490;
     t->unk00 = (u32)sub_0806572c;
     t->unk0C = (u32)sub_08005d9c;
     t->unk42 = 13;
-    u = *c;
-    u->unk38 = gUnk_08754504;
-    u->unk43 = 1;
-    p5 = (u8 *)gUnk_03002790;
-    i = (*c)->unk44;
-    i9 = i * 9;
-    o = i9 << 4;
-    p6 = p5 + 84;
-    pa = (s32 *)(o + (u32)p6);
-    nv = *pa;
-    asm volatile("" : "+r"(nv));
-    num = abs(nv) << 4;
-    yv = *pa;
-    ya = abs(yv);
-    p7 = p5 + 88;
-    pa7 = (s32 *)(o + (u32)p7);
-    zv = *pa7;
-    za = abs(zv);
-    q = Div(num, ya + za);
-    pb = &gUnk_030023B4;
-    *pb = q;
-    i2 = (*c)->unk44;
-    o2 = i2 * 144;
-    num2 = abs(*(s32 *)(o2 + (u32)p7)) << 4;
-    yb = abs(*(s32 *)(o2 + (u32)p6));
-    zb = abs(*(s32 *)(o2 + (u32)p7));
-    q2 = Div(num2, yb + zb);
-    gUnk_030023D4 = q2;
-    t4 = *c;
-    v2 = (*pb << 16) >> 4;
-    a44 = &t4->unk44;
-    w = *(s32 *)(*a44 * 144 + (u32)p6);
-    t4->unk54 = v2 + w;
-    v3 = (q2 << 16) >> 4;
-    asm("" : "+r"(a44) : : "memory");
-    w2 = *(s32 *)(*a44 * 144 + (u32)p7);
-    if (w2 >= 0)
-        w58 = w2 - v3;
+    gUnk_03002490->unk38 = gUnk_08754504;
+    gUnk_03002490->unk43 = 1;
+    gUnk_030023B4 = Div(abs(gUnk_03002790[gUnk_03002490->unk44].unk54) << 4,
+                        abs(gUnk_03002790[gUnk_03002490->unk44].unk54) + abs(gUnk_03002790[gUnk_03002490->unk44].unk58));
+    gUnk_030023D4 = Div(abs(gUnk_03002790[gUnk_03002490->unk44].unk58) << 4,
+                        abs(gUnk_03002790[gUnk_03002490->unk44].unk54) + abs(gUnk_03002790[gUnk_03002490->unk44].unk58));
+    u = gUnk_03002490;
+    u->unk54 = ((gUnk_030023B4 << 16) >> 4) + gUnk_03002790[u->unk44].unk54;
+    /* a second task pointer: the unk58 store after the if goes through it */
+    x = gUnk_03002490;
+    v = (gUnk_030023D4 << 16) >> 4;
+    w = gUnk_03002790[x->unk44].unk58;
+    /* the arms re-read the cell: `v + cell` keeps the ROM's operand order */
+    if (w >= 0)
+        w = gUnk_03002790[x->unk44].unk58 - v;
     else
-        w58 = v3 + w2;
-    t4->unk58 = w58;
-    tb3 = gUnk_03002790;
-    switch (tb3[gUnk_03002490->unk44].unk73)
+        w = v + gUnk_03002790[x->unk44].unk58;
+    x->unk58 = w;
+    switch (gUnk_03002790[gUnk_03002490->unk44].unk73)
     {
     case 0:
     case 1:
     case 2:
     case 3:
-        t6 = gUnk_03002490;
-        t6->unk6C = 0;
+        gUnk_03002490->unk6C = 0;
         do
         {
-            q1 = gUnk_03002490;
-            q1->unk3C = 17;
+            gUnk_03002490->unk3C = 17;
             TaskYieldTrampoline(2);
-            q2s = gUnk_03002490;
-            q2s->unk3C = 16;
+            gUnk_03002490->unk3C = 16;
             TaskYieldTrampoline(2);
-            q3 = gUnk_03002490;
-            q3->unk3C = 15;
+            gUnk_03002490->unk3C = 15;
             TaskYieldTrampoline(2);
-            q4 = gUnk_03002490;
-            q4->unk3C = 14;
+            gUnk_03002490->unk3C = 14;
             TaskYieldTrampoline(2);
-            q5 = gUnk_03002490;
-            q5->unk6C++;
-        } while ((s16)q5->unk6C <= 1);
+            gUnk_03002490->unk6C++;
+        } while ((s16)gUnk_03002490->unk6C <= 1);
         break;
     case 5:
     case 6:
@@ -3780,33 +3300,26 @@ void sub_080b0338(void)
     case 8:
     case 9:
     case 10:
-        b1 = gUnk_03002490;
-        if (tb3[b1->unk44].unk3C == 3)
+        if (gUnk_03002790[gUnk_03002490->unk44].unk3C == 3)
         {
-            b1->unk3C = 13;
+            gUnk_03002490->unk3C = 13;
             TaskYieldTrampoline(4);
-            b2 = gUnk_03002490;
-            b2->unk3C = 12;
+            gUnk_03002490->unk3C = 12;
             TaskYieldTrampoline(4);
-            b3 = gUnk_03002490;
-            b3->unk3C = 11;
+            gUnk_03002490->unk3C = 11;
             TaskYieldTrampoline(4);
-            b4 = gUnk_03002490;
-            b4->unk3C = 10;
+            gUnk_03002490->unk3C = 10;
             TaskYieldTrampoline(4);
         }
         else
         {
-            b1->unk3C = 11;
+            gUnk_03002490->unk3C = 11;
             TaskYieldTrampoline(4);
-            b5 = gUnk_03002490;
-            b5->unk3C = 10;
+            gUnk_03002490->unk3C = 10;
             TaskYieldTrampoline(4);
-            b6 = gUnk_03002490;
-            b6->unk3C = 13;
+            gUnk_03002490->unk3C = 13;
             TaskYieldTrampoline(4);
-            b7 = gUnk_03002490;
-            b7->unk3C = 12;
+            gUnk_03002490->unk3C = 12;
             TaskYieldTrampoline(4);
         }
         break;
@@ -3821,7 +3334,7 @@ void sub_080b0338(void)
 void sub_080b0570(void)
 {
     struct Task *t1;
-    register struct Task *t asm("ip");
+    struct Task *t;
     struct Task *tb;
     s16 *a;
     struct Task *tt;
@@ -3852,9 +3365,9 @@ void sub_080b05e8(void)
     struct Task **c;
     s32 *p;
     s32 z;
-    register s32 vA asm("r8");
-    register s32 vB asm("sl");
-    register s32 vC asm("r9");
+    s32 vA;
+    s32 vB;
+    s32 vC;
     s32 vD;
     s32 vE;
     s32 vF;
@@ -4053,173 +3566,76 @@ void sub_080b08a0(void)
 
 void sub_080b08e4(void)
 {
-    struct Task **c;
-    register struct Task *t asm("ip");
-    register struct Task *t3 asm("r3");
+    struct Task *t;
     struct Task *u;
-    struct Task *u2;
-    struct Task *u3;
-    struct Task *u4;
-    struct Task *u5;
-    struct Task *u6;
-    struct Task *tb;
-    struct Task *tt;
-    struct Task *tt2;
-    s16 *a;
-    register s32 m asm("r3");
-    register u32 *vp asm("r0");
-    register s32 x2 asm("r0");
-    s32 w4;
-    s32 w5;
-    register s32 w asm("r1");
-    u32 o;
-    u32 o2;
 
-    c = &gUnk_03002490;
-    u = *c;
-    u->unk00 = (u32)sub_080059d8;
-    u->unk0C = (u32)sub_08005d9c;
-    u->unk42 = 10;
-    t = *c;
-    vp = gUnk_087544B4;
-    t->unk38 = vp;
-    a = (s16 *)&t->unk40;
-    w = (u16)*a;
-    m = 128 << 4;
-    asm("" : "+r"(m));
-    x2 = m;
-    x2 |= w;
-    *a = x2;
-    tb = gUnk_03002790;
-    a += 2;
-    o = *a * 144;
-    tt = (struct Task *)((u8 *)tb + o);
-    w4 = (tt->unk48 - 16) << 16;
-    t->unk4C = w4;
-    o2 = *a * 144;
-    tt2 = (struct Task *)((u8 *)tb + o2);
-    w5 = tt2->unk4A << 16;
-    t3 = t;
-    t3->unk50 = w5;
-    t3->unk3C = 14;
+    t = gUnk_03002490;
+    t->unk00 = (u32)sub_080059d8;
+    t->unk0C = (u32)sub_08005d9c;
+    t->unk42 = 10;
+    u = gUnk_03002490;
+    u->unk38 = gUnk_087544B4;
+    u->unk40 |= 0x800;
+    u->unk4C = (gUnk_03002790[u->unk44].unk48 - 16) << 16;
+    u->unk50 = gUnk_03002790[u->unk44].unk4A << 16;
+    u->unk3C = 14;
     TaskYieldTrampoline(2);
-    u2 = *c;
-    u2->unk3C = 15;
+    gUnk_03002490->unk3C = 15;
     TaskYieldTrampoline(1);
-    u3 = *c;
-    u3->unk3C = 16;
+    gUnk_03002490->unk3C = 16;
     TaskYieldTrampoline(1);
-    u4 = *c;
-    u4->unk3C = 17;
+    gUnk_03002490->unk3C = 17;
     TaskYieldTrampoline(2);
-    u5 = *c;
-    u5->unk3C = 18;
+    gUnk_03002490->unk3C = 18;
     TaskYieldTrampoline(2);
-    u6 = *c;
-    u6->unk3C = 19;
+    gUnk_03002490->unk3C = 19;
     TaskYieldTrampoline(2);
     TaskDispatchTrampoline();
 }
 
 void sub_080b09ac(void)
 {
-    register struct Task **c asm("r5");
-    s16 *pk;
-    register s32 z asm("r8");
-    register s32 one asm("r9");
-    register s32 v5 asm("r6");
-    register s32 v6 asm("r4");
-    s32 y;
-    struct Task *t;
-    struct Task *u;
-    struct Task *u2;
-    struct Task *u3;
-    register struct Task *u4 asm("r0");
-    register struct Task *u5 asm("r0");
-    struct Task *u6;
-    struct Task *t2;
-    register s32 wv6 asm("r1");
-    register s32 onet asm("r4");
-    register s32 wob asm("r1");
-    register s32 wone asm("r4");
-    register s32 wz asm("r0");
-    u8 *b43;
-
     sub_080062c4();
-    if (gUnk_03002158[2] > 8)
-    {
-        pk = gUnk_03002158;
-        do
-        {
-            TaskYieldTrampoline(1);
-        } while (pk[2] > 8);
-    }
-    c = &gUnk_03002490;
-    t = *c;
-    z = 0;
-    t->unk04 = z;
-    t->unk0C = (u32)sub_080b0b50;
+    while (gUnk_03002158[2] > 8)
+        TaskYieldTrampoline(1);
+    gUnk_03002490->unk04 = 0;
+    gUnk_03002490->unk0C = (u32)sub_080b0b50;
     sub_080b0b04();
-    u = *c;
-    b43 = &u->unk43;
-    onet = 1;
-    asm volatile("" : "+r"(onet));
-    one = onet;
-    wob = one;
-    asm volatile("" : "+r"(wob));
-    *b43 = wob;
+    gUnk_03002490->unk43 = 1;
     sub_08006338(0);
-    u2 = *c;
-    u2->unk18 = 128 << 13;
-    u2->unk28 = 0xFFFFF300;
-    u2->unk4C = 138 << 16;
-    u2->unk50 = 0xFFF00000;
-    u2->unk54 = 0xFFFF0000;
-    u2->unk58 = 128 << 8;
+    gUnk_03002490->unk18 = 128 << 13;
+    gUnk_03002490->unk28 = 0xFFFFF300;
+    gUnk_03002490->unk4C = 138 << 16;
+    gUnk_03002490->unk50 = 0xFFF00000;
+    gUnk_03002490->unk54 = 0xFFFF0000;
+    gUnk_03002490->unk58 = 128 << 8;
     TaskYieldTrampoline(28);
-    (*c)->unk54 = 0xFFFF4000;
+    gUnk_03002490->unk54 = 0xFFFF4000;
     TaskYieldTrampoline(28);
-    (*c)->unk54 = 0xFFFF8000;
+    gUnk_03002490->unk54 = 0xFFFF8000;
     TaskYieldTrampoline(28);
-    (*c)->unk54 = 0xFFFFC000;
+    gUnk_03002490->unk54 = 0xFFFFC000;
     TaskYieldTrampoline(14);
-    u3 = *c;
-    u3->unk54 = 0xFFFFF000;
-    u3->unk58 = 128 << 7;
+    gUnk_03002490->unk54 = 0xFFFFF000;
+    gUnk_03002490->unk58 = 128 << 7;
     TaskYieldTrampoline(14);
-    (*c)->unk54 = 0xFFFFF800;
+    gUnk_03002490->unk54 = 0xFFFFF800;
     TaskYieldTrampoline(14);
-    u4 = *c;
-    v5 = 128 << 5;
-    u4->unk54 = v5;
+    gUnk_03002490->unk54 = 128 << 5;
     TaskYieldTrampoline(14);
-    u5 = *c;
-    v6 = 128 << 6;
-    u5->unk54 = v6;
+    gUnk_03002490->unk54 = 128 << 6;
     TaskYieldTrampoline(14);
-    (*c)->unk58 = v6;
+    gUnk_03002490->unk58 = 128 << 6;
     TaskYieldTrampoline(62);
-    t2 = *c;
-    wone = one;
-    asm volatile("" : "+r"(wone));
-    t2->unk3C = wone;
-    y = 0xFFF & *(u16 *)((u8 *)t2 + 64);
-    v6 = 240 << 8;
-    asm volatile("" : "+r"(v6));
-    wv6 = v6;
-    asm volatile("" : "+r"(wv6));
-    y |= wv6;
-    *(u16 *)((u8 *)t2 + 64) = y;
-    wz = z;
-    asm volatile("" : "+r"(wz));
-    t2->unk18 = wz;
-    t2->unk28 = wz;
+    gUnk_03002490->unk3C = 1;
+    gUnk_03002490->unk40 = (gUnk_03002490->unk40 & 0xFFF) | 0xF000;
+    gUnk_03002490->unk18 = 0;
+    gUnk_03002490->unk28 = 0;
     TaskYieldTrampoline(48);
-    (*c)->unk58 = v5;
+    gUnk_03002490->unk58 = 128 << 5;
     TaskYieldTrampoline(84);
-    u6 = *c;
-    u6->unk54 = 128 << 4;
-    u6->unk58 = 128 << 3;
+    gUnk_03002490->unk54 = 128 << 4;
+    gUnk_03002490->unk58 = 128 << 3;
     sub_08006138();
 }
 
@@ -4238,215 +3654,121 @@ void sub_080b0b04(void)
 
 void sub_080b0b50(void)
 {
-    struct Task **c;
-    register struct Task *t asm("r1");
-    register struct Task **c4 asm("r4");
-    struct Task *u2;
-    register struct Task *u3 asm("r1");
-    register struct Task *t2 asm("r4");
-    struct Task *t2ip;
-    register struct Task *u4 asm("r2");
-    register u32 *tbl asm("r3");
-    register s32 x asm("r3");
-    register s32 w asm("r0");
-    s32 k;
-    s32 wv;
-    register s32 x2 asm("r2");
-    register s32 h asm("r1");
-    register s32 m8 asm("r8");
-    s32 sign;
-    register u8 *t6c asm("r6");
-    register s32 w6 asm("r0");
-    s32 w7;
-    s16 *e;
-    s16 *tf;
-    register struct Task *t5 asm("r5");
-    s32 g;
-    s16 w2;
+    struct Task *t;
+    u32 *tbl;
+    s8 sign;
     s32 r;
-    register s32 wm asm("r0");
-    register s32 wv3 asm("r1");
 
-    t = gUnk_03002490;
-    x = t->unk18;
-    c = &gUnk_03002490;
-    if (x > 0)
+    if (gUnk_03002490->unk18 > 0)
     {
-        w = x + t->unk28;
-        t->unk18 = w;
-        if (w < 0)
-            t->unk18 = 0;
-        u2 = *c;
-        wv = u2->unk18;
-        k = 252 << 14;
-        if (wv > k)
-            u2->unk18 = k;
+        gUnk_03002490->unk18 += gUnk_03002490->unk28;
+        if (gUnk_03002490->unk18 < 0)
+            gUnk_03002490->unk18 = 0;
+        if (gUnk_03002490->unk18 > (252 << 14))
+            gUnk_03002490->unk18 = 252 << 14;
     }
-    c4 = c;
-    asm("" : "+r"(c4));
-    u3 = *c4;
-    if (u3->unk38 == 0)
+    if (gUnk_03002490->unk38 == 0)
         return;
-    if (u3->unk3C == -1)
+    if (gUnk_03002490->unk3C == -1)
         return;
-    if ((u8)sub_08065160() == 0)
+    if (sub_08065160() == 0)
         return;
     if (sub_08005acc() != 0)
     {
-        t2 = *c4;
-        t2ip = t2;
-        tbl = t2->unk38;
-        x2 = t2->unk18;
-        if (x2 > 0)
+        t = gUnk_03002490;
+        tbl = t->unk38;
+        if (t->unk18 > 0)
         {
-            h = t2->unk3E;
-            m8 = 128 << 8;
-            w6 = m8 & h;
-            sign = 1;
-            if (w6 != 0)
-                sign = 255;
-            w7 = h & 0x7FFF;
-            t5 = t2ip;
-            t5->unk3E = w7;
-            g = tbl[t5->unk3C];
-            tf = gUnk_0873FF98;
-            e = &tf[x2 >> 16];
-            w2 = (u16)*e * (s8)sign;
-            r = sub_08001cc8(g, w2, *e, 0);
-            t2ip = *c;
-            sub_08001a94(t2ip->unk42, r, (t5 = t2ip)->unk3E, t2ip->unk40,
-                         t2ip->unk48 - gUnk_03002348,
-                         (s16)((u16)t2ip->unk4A - (u16)gUnk_030023E4));
-            if ((s8)sign < 0)
-            {
-                u4 = *c;
-                wv3 = u4->unk3E;
-                wm = m8;
-                wm |= wv3;
-                u4->unk3E = wm;
-            }
+            sign = (t->unk3E & 0x8000) ? -1 : 1;
+            t->unk3E &= 0x7FFF;
+            r = sub_08001cc8(tbl[t->unk3C], (u16)gUnk_0873FF98[t->unk18 >> 16] * sign, gUnk_0873FF98[t->unk18 >> 16], 0);
+            sub_08001a94(gUnk_03002490->unk42, r, gUnk_03002490->unk3E, gUnk_03002490->unk40,
+                         gUnk_03002490->unk48 - gUnk_03002348,
+                         (s16)(gUnk_03002490->unk4A - gUnk_030023E4));
+            if (sign < 0)
+                gUnk_03002490->unk3E |= 0x8000;
         }
         else
         {
-            sub_08001a94(t2ip->unk42, tbl[*(s16 *)((t6c = (u8 *)t2ip) + 60)], *(u16 *)(t6c + 62), t2ip->unk40,
-                         t2ip->unk48 - gUnk_03002348,
-                         (s16)((u16)t2ip->unk4A - (u16)gUnk_030023E4));
+            sub_08001a94(t->unk42, tbl[t->unk3C], t->unk3E, t->unk40, t->unk48 - gUnk_03002348,
+                         (s16)(t->unk4A - gUnk_030023E4));
         }
     }
 }
 
 void sub_080b0cc8(void)
 {
-    register struct Task **c asm("r5");
-    s32 z;
-    register s32 neg asm("r4");
-    s32 w9;
     struct Task *t;
-    struct Task *t2;
-    struct Task *tt;
-    struct Task *u3;
-    struct Task *u4;
-    struct Task *u5;
-    struct Task *q5;
-    u8 *b42;
-    u32 o;
+    s32 d; /* an int: the ROM sign-extends the copied byte before the strb */
 
-    c = &gUnk_03002490;
-    t = *c;
+    t = gUnk_03002490;
     t->unk00 = (u32)sub_080656b4;
     t->unk0C = (u32)sub_0806523c;
     t->unk38 = gUnk_08753BA4;
-    b42 = &t->unk42;
-    z = 0;
-    *b42 = 9;
-    t2 = *c;
-    o = t2->unk44 * 144;
-    tt = (struct Task *)((u8 *)gUnk_03002790 + o);
-    w9 = (s8)*(u8 *)&tt->unk43;
-    t2->unk43 = w9;
-    u3 = *c;
-    u3->unk7A = z;
+    t->unk42 = 9;
+    d = ((struct Task *)(gUnk_03002490->unk44 * 144 + (u32)gUnk_03002790))->unk43;
+    gUnk_03002490->unk43 = d;
+    gUnk_03002490->unk7A = 0;
     sub_08006338(0);
     TaskYieldTrampoline(2);
-    neg = -1;
-    sub_08006338(neg);
+    sub_08006338(-1);
     TaskYieldTrampoline(2);
     sub_08006338(1);
     TaskYieldTrampoline(2);
-    sub_08006338(neg);
+    sub_08006338(-1);
     TaskYieldTrampoline(2);
     sub_08006338(0);
     TaskYieldTrampoline(2);
-    sub_08006338(neg);
+    sub_08006338(-1);
     TaskYieldTrampoline(2);
     sub_08006338(1);
     TaskYieldTrampoline(2);
-    sub_08006338(neg);
+    sub_08006338(-1);
     TaskYieldTrampoline(2);
-    u4 = *c;
-    u4->unk6C = z;
+    gUnk_03002490->unk6C = 0;
     do
     {
         sub_08006338(2);
         TaskYieldTrampoline(2);
-        sub_08006338(neg);
+        sub_08006338(-1);
         TaskYieldTrampoline(2);
         sub_08006338(3);
         TaskYieldTrampoline(2);
-        sub_08006338(neg);
+        sub_08006338(-1);
         TaskYieldTrampoline(2);
-        q5 = gUnk_03002490;
-        q5->unk6C++;
-    } while ((s16)q5->unk6C <= 2);
+        gUnk_03002490->unk6C++;
+    } while ((s16)gUnk_03002490->unk6C <= 2);
     sub_080b15c0();
-    u5 = gUnk_03002490;
-    sub_08002e98(u5->unk14, 8, gUnk_0874B540);
+    sub_08002e98(gUnk_03002490->unk14, 8, gUnk_0874B540);
 }
 
 void sub_080b0de4(void)
 {
-    register struct Task **c asm("r4");
-    struct Task *t;
-    struct Task *u;
-    s32 v5;
-    register s32 m asm("r2");
-    register s32 x2 asm("r0");
-    s32 w9;
-    register u16 *a asm("r1");
-
-    c = &gUnk_03002490;
-    (*c)->unk38 = gUnk_08753AAC;
+    gUnk_03002490->unk38 = gUnk_08753AAC;
     sub_08063908((struct ActorDef *)gUnk_0874B96C);
-    t = *c;
-    a = &t->unk40;
-    m = 128 << 5;
-    asm("" : "+r"(m));
-    x2 = m;
-    asm("" : "+r"(x2));
-    x2 += *a;
-    *a = x2;
+    gUnk_03002490->unk40 += 0x1000;
     sub_08006338(4);
     TaskYieldTrampoline(60);
-    (*c)->unk04 = (u32)sub_080b1564;
+    gUnk_03002490->unk04 = (u32)sub_080b1564;
     sub_08063e14();
-    v5 = 192 << 10;
-    sub_080061c0(v5, 0x5A5A5A5A);
-    u = *c;
-    u->unk60 = 168 << 5;
-    u->unk68 = v5;
-top:
-    w9 = (s8)*(u8 *)&gUnk_03002490->unk7A;
-    if (w9 != 0)
+    sub_080061c0(192 << 10, 0x5A5A5A5A);
+    gUnk_03002490->unk60 = 168 << 5;
+    gUnk_03002490->unk68 = 192 << 10;
+    while (1)
     {
-        sub_08006338(5);
-        TaskYieldTrampoline(4);
-        sub_08006338(6);
-        TaskYieldTrampoline(4);
-        goto top;
+        if (gUnk_03002490->unk7A != 0)
+        {
+            sub_08006338(5);
+            TaskYieldTrampoline(4);
+            sub_08006338(6);
+            TaskYieldTrampoline(4);
+        }
+        else
+        {
+            sub_08006338(4);
+            TaskYieldTrampoline(1);
+        }
     }
-    sub_08006338(4);
-    TaskYieldTrampoline(1);
-    goto top;
 }
 
 void sub_080b0e80(void)
@@ -4479,206 +3801,110 @@ top:
 
 void sub_080b0f04(void)
 {
-    register struct Task **c asm("r4");
-    struct Task *t;
-    struct Task *u;
-    register s32 m asm("r2");
-    register s32 x2 asm("r0");
-    register u16 *a asm("r1");
-
-    c = &gUnk_03002490;
-    (*c)->unk38 = gUnk_08753B68;
+    gUnk_03002490->unk38 = gUnk_08753B68;
     sub_08063908((struct ActorDef *)gUnk_0874B9C4);
-    t = *c;
-    a = &t->unk40;
-    m = 128 << 5;
-    asm("" : "+r"(m));
-    x2 = m;
-    asm("" : "+r"(x2));
-    x2 += *a;
-    *a = x2;
+    gUnk_03002490->unk40 += 0x1000;
     sub_08006338(4);
     TaskYieldTrampoline(60);
-    (*c)->unk04 = (u32)sub_080b1564;
+    gUnk_03002490->unk04 = (u32)sub_080b1564;
     sub_08063e14();
     sub_080061c0(128 << 10, 0x5A5A5A5A);
-    u = *c;
-    u->unk60 = 168 << 5;
-    u->unk68 = 192 << 10;
-top:
-    sub_08006338(5);
-    TaskYieldTrampoline(6);
-    sub_08006338(6);
-    TaskYieldTrampoline(4);
-    sub_08006338(7);
-    TaskYieldTrampoline(6);
-    sub_08006338(6);
-    TaskYieldTrampoline(4);
-    goto top;
+    gUnk_03002490->unk60 = 168 << 5;
+    gUnk_03002490->unk68 = 192 << 10;
+    while (1)
+    {
+        sub_08006338(5);
+        TaskYieldTrampoline(6);
+        sub_08006338(6);
+        TaskYieldTrampoline(4);
+        sub_08006338(7);
+        TaskYieldTrampoline(6);
+        sub_08006338(6);
+        TaskYieldTrampoline(4);
+    }
 }
 
 void sub_080b0f98(void)
 {
-    register struct Task **c asm("r4");
-    struct Task *t;
-    struct Task *u;
-    register s32 m asm("r2");
-    register s32 x2 asm("r0");
-    register u16 *a asm("r1");
-
-    c = &gUnk_03002490;
-    (*c)->unk38 = gUnk_08753B48;
+    gUnk_03002490->unk38 = gUnk_08753B48;
     sub_08063908((struct ActorDef *)gUnk_0874B9F0);
-    t = *c;
-    a = &t->unk40;
-    m = 128 << 5;
-    asm("" : "+r"(m));
-    x2 = m;
-    asm("" : "+r"(x2));
-    x2 += *a;
-    *a = x2;
+    gUnk_03002490->unk40 += 0x1000;
     sub_08006338(4);
     TaskYieldTrampoline(60);
-    (*c)->unk04 = (u32)sub_080b1564;
+    gUnk_03002490->unk04 = (u32)sub_080b1564;
     sub_08063e14();
     sub_080061c0(128 << 9, 0x5A5A5A5A);
-    u = *c;
-    u->unk60 = 168 << 5;
-    u->unk68 = 192 << 10;
-top:
-    sub_08006338(5);
-    TaskYieldTrampoline(6);
-    sub_08006338(6);
-    TaskYieldTrampoline(4);
-    sub_08006338(7);
-    TaskYieldTrampoline(6);
-    sub_08006338(6);
-    TaskYieldTrampoline(4);
-    goto top;
+    gUnk_03002490->unk60 = 168 << 5;
+    gUnk_03002490->unk68 = 192 << 10;
+    while (1)
+    {
+        sub_08006338(5);
+        TaskYieldTrampoline(6);
+        sub_08006338(6);
+        TaskYieldTrampoline(4);
+        sub_08006338(7);
+        TaskYieldTrampoline(6);
+        sub_08006338(6);
+        TaskYieldTrampoline(4);
+    }
 }
 
 void sub_080b102c(void)
 {
-    register struct Task **c asm("r4");
-    struct Task *t;
-    struct Task *u;
-    register s32 m asm("r2");
-    register s32 x2 asm("r0");
-    register u16 *a asm("r1");
-
-    c = &gUnk_03002490;
-    (*c)->unk38 = gUnk_08753A8C;
+    gUnk_03002490->unk38 = gUnk_08753A8C;
     sub_08063908((struct ActorDef *)gUnk_0874BA1C);
-    t = *c;
-    a = &t->unk40;
-    m = 128 << 5;
-    asm("" : "+r"(m));
-    x2 = m;
-    asm("" : "+r"(x2));
-    x2 += *a;
-    *a = x2;
+    gUnk_03002490->unk40 += 0x1000;
     sub_08006338(4);
     TaskYieldTrampoline(60);
-    (*c)->unk04 = (u32)sub_080b1578;
+    gUnk_03002490->unk04 = (u32)sub_080b1578;
     sub_0806421c(sub_08064314(3), 128 << 2);
-    u = *c;
-    u->unk54 = gUnk_030023B4;
-    u->unk58 = gUnk_030023D4;
-top:
-    sub_08006338(4);
-    TaskYieldTrampoline(10);
-    sub_08006338(5);
-    TaskYieldTrampoline(10);
-    sub_08006338(6);
-    TaskYieldTrampoline(10);
-    sub_08006338(7);
-    TaskYieldTrampoline(10);
-    goto top;
+    gUnk_03002490->unk54 = gUnk_030023B4;
+    gUnk_03002490->unk58 = gUnk_030023D4;
+    while (1)
+    {
+        sub_08006338(4);
+        TaskYieldTrampoline(10);
+        sub_08006338(5);
+        TaskYieldTrampoline(10);
+        sub_08006338(6);
+        TaskYieldTrampoline(10);
+        sub_08006338(7);
+        TaskYieldTrampoline(10);
+    }
 }
 
 void sub_080b10c8(void)
 {
-    struct Task **c;
-    struct Task **c4;
-    struct Task **c5;
-    struct Task **c6;
-    s32 v4;
-    s32 w9;
-    s32 w9b;
-    s32 w9c;
-    s32 r;
-    s32 r2;
-    s32 r3;
-    struct Task *u;
-    struct Task *u2;
-    struct Task *t;
-    struct Task *u3;
-    struct Task *u4;
-    struct Task *u5;
-    register struct Task *u6 asm("r0");
-    s32 v10;
-    struct Task *t7;
-
-    c = &gUnk_03002490;
-    (*c)->unk38 = gUnk_08753B04;
+    gUnk_03002490->unk38 = gUnk_08753B04;
     sub_08063908((struct ActorDef *)gUnk_0874BA48);
     sub_08006338(4);
     TaskYieldTrampoline(60);
-    (*c)->unk04 = (u32)sub_080b123c;
-    r = sub_080640dc((struct AnimCmd *)gUnk_0874B560);
-    u = *c;
-    u->unk28 = r;
+    gUnk_03002490->unk04 = (u32)sub_080b123c;
+    gUnk_03002490->unk28 = sub_080640dc((struct AnimCmd *)gUnk_0874B560);
     sub_08063e14();
-    v4 = 128 << 8;
-    sub_080061c0(v4, 0x5A5A5A5A);
-    (*c)->unk58 = v4;
+    sub_080061c0(128 << 8, 0x5A5A5A5A);
+    gUnk_03002490->unk58 = 128 << 8;
     TaskYieldTrampoline(6);
-    (*c)->unk58 = 128 << 9;
+    gUnk_03002490->unk58 = 128 << 9;
     TaskYieldTrampoline(6);
-    u2 = *c;
-    u2->unk58 = 128 << 10;
-    w9 = (s8)*(u8 *)&u2->unk7A;
-    if (w9 == 0)
-    {
-        c4 = c;
-        do
-        {
-            TaskYieldTrampoline(1);
-            w9b = (s8)*(u8 *)&(*c4)->unk7A;
-        } while (w9b == 0);
-    }
-    c5 = &gUnk_03002490;
-    t = *c5;
-    t->unk7A = 0;
-    u3 = *c5;
-    u3->unk58 = 0xFFFE0000;
+    gUnk_03002490->unk58 = 128 << 10;
+    while (gUnk_03002490->unk7A == 0)
+        TaskYieldTrampoline(1);
+    gUnk_03002490->unk7A = 0;
+    gUnk_03002490->unk58 = 0xFFFE0000;
     TaskYieldTrampoline(6);
-    (*c5)->unk58 = 0xFFFF8000;
+    gUnk_03002490->unk58 = 0xFFFF8000;
     TaskYieldTrampoline(6);
-    (*c5)->unk58 = 128 << 8;
+    gUnk_03002490->unk58 = 128 << 8;
     TaskYieldTrampoline(6);
-    u6 = *c5;
-    v10 = 128 << 10;
-    u6->unk58 = v10;
-    t7 = u6;
-    goto wtest;
-wbody:
-    TaskYieldTrampoline(1);
-    t7 = *c5;
-wtest:
-    w9c = (s8)*(u8 *)&t7->unk7A;
-    if (w9c == 0)
-        goto wbody;
+    gUnk_03002490->unk58 = 128 << 10;
+    while (gUnk_03002490->unk7A == 0)
+        TaskYieldTrampoline(1);
     sub_080062c4();
     TaskYieldTrampoline(10);
-    r2 = sub_080640dc((struct AnimCmd *)gUnk_0874B568);
-    c6 = &gUnk_03002490;
-    u4 = *c6;
-    u4->unk28 = r2;
+    gUnk_03002490->unk28 = sub_080640dc((struct AnimCmd *)gUnk_0874B568);
     TaskYieldTrampoline(44);
-    r3 = sub_080640dc(0);
-    u5 = *c6;
-    u5->unk28 = r3;
+    gUnk_03002490->unk28 = sub_080640dc(0);
     sub_08006338(6);
     TaskYieldTrampoline(2);
     sub_08006338(4);
@@ -4713,77 +3939,51 @@ void sub_080b123c(void)
 void sub_080b1264(void)
 {
     struct ActorSpawn sp;
-    struct Task **c;
-    register struct ActorSpawn *ps asm("r6");
-    register s32 z asm("r8");
-    register s32 vX asm("r5");
-    s32 v7;
-    struct Task *u;
-    struct Task *u2;
-    struct Task *u3;
-    register struct Task *t asm("r1");
-    struct Task *u4;
-    struct Task *q;
-    s16 w;
-    s32 r;
 
-    c = &gUnk_03002490;
-    (*c)->unk38 = gUnk_08753AE8;
+    gUnk_03002490->unk38 = gUnk_08753AE8;
     sub_08063908((struct ActorDef *)gUnk_0874BA74);
     sub_08006338(4);
     TaskYieldTrampoline(60);
-    u = *c;
-    u->unk04 = (u32)sub_080b1398;
-    u->unk58 = 0xFFFE0000;
+    gUnk_03002490->unk04 = (u32)sub_080b1398;
+    gUnk_03002490->unk58 = 0xFFFE0000;
     TaskYieldTrampoline(4);
-    (*c)->unk58 = 0xFFFF0000;
+    gUnk_03002490->unk58 = 0xFFFF0000;
     TaskYieldTrampoline(8);
-    u2 = *c;
-    vX = 0xFFFF8000;
-    u2->unk58 = vX;
+    gUnk_03002490->unk58 = 0xFFFF8000;
     TaskYieldTrampoline(8);
     sub_080062c4();
     TaskYieldTrampoline(16);
-    r = sub_080640dc((struct AnimCmd *)gUnk_0874B574);
-    u3 = *c;
-    u3->unk28 = r;
+    gUnk_03002490->unk28 = sub_080640dc((struct AnimCmd *)gUnk_0874B574);
     TaskYieldTrampoline(16);
     sub_08063e14();
     sub_080061c0(128 << 9, 0x5A5A5A5A);
-    ps = &sp;
-    z = 0;
-    v7 = vX;
-    vX = 128 << 8;
-top:
-    sub_080031b8(0x222);
-    sp.unk00 = 15;
-    sp.unk04 = 117;
-    t = *c;
-    ps->unk08 = t->unk73;
-    ps->unk09 = t->unk74;
-    ps->unk0A = 1;
-    w = sub_08064b28(&sp, 0);
-    u4 = *c;
-    u4->unk46 = w;
-    u4->unk6C = z;
-inner:
-    (*c)->unk58 = v7;
-    TaskYieldTrampoline(6);
-    (*c)->unk58 = 0xFFFF0000;
-    TaskYieldTrampoline(6);
-    (*c)->unk58 = v7;
-    TaskYieldTrampoline(6);
-    (*c)->unk58 = vX;
-    TaskYieldTrampoline(6);
-    (*c)->unk58 = 128 << 9;
-    TaskYieldTrampoline(6);
-    (*c)->unk58 = vX;
-    TaskYieldTrampoline(6);
-    q = *c;
-    q->unk6C++;
-    if ((s16)q->unk6C <= 1)
-        goto inner;
-    goto top;
+    while (1)
+    {
+        sub_080031b8(0x222);
+        sp.unk00 = 15;
+        sp.unk04 = 117;
+        sp.unk08 = gUnk_03002490->unk73;
+        sp.unk09 = gUnk_03002490->unk74;
+        sp.unk0A = 1;
+        gUnk_03002490->unk46 = sub_08064b28(&sp, 0);
+        gUnk_03002490->unk6C = 0;
+        do
+        {
+            gUnk_03002490->unk58 = 0xFFFF8000;
+            TaskYieldTrampoline(6);
+            gUnk_03002490->unk58 = 0xFFFF0000;
+            TaskYieldTrampoline(6);
+            gUnk_03002490->unk58 = 0xFFFF8000;
+            TaskYieldTrampoline(6);
+            gUnk_03002490->unk58 = 128 << 8;
+            TaskYieldTrampoline(6);
+            gUnk_03002490->unk58 = 128 << 9;
+            TaskYieldTrampoline(6);
+            gUnk_03002490->unk58 = 128 << 8;
+            TaskYieldTrampoline(6);
+            gUnk_03002490->unk6C++;
+        } while ((s16)gUnk_03002490->unk6C <= 1);
+    }
 }
 
 void sub_080b1398(void)
@@ -4802,53 +4002,28 @@ void sub_080b1398(void)
 
 void sub_080b13bc(void)
 {
-    struct Task **c;
-    s32 z;
     struct Task *t;
-    struct Task *t2;
-    struct Task *tt;
-    struct Task *u3;
-    register struct Task *u2 asm("r0");
-    register struct Task *t7 asm("r0");
-    struct Task *u4;
-    u8 *b42;
-    u32 o;
-    s32 w9;
-    s32 w9c;
+    s32 d; /* an int: the ROM sign-extends the copied byte before the strb */
 
-    c = &gUnk_03002490;
-    t = *c;
+    t = gUnk_03002490;
     t->unk00 = (u32)sub_080656b4;
     t->unk0C = (u32)sub_0806523c;
-    b42 = &t->unk42;
-    z = 0;
-    *b42 = 10;
-    t2 = *c;
-    t2->unk38 = gUnk_08753B88;
-    o = t2->unk44 * 144;
-    tt = (struct Task *)((u8 *)gUnk_03002790 + o);
-    w9 = (s8)*(u8 *)&tt->unk43;
-    t2->unk43 = w9;
-    u3 = *c;
-    u3->unk7A = z;
+    t->unk42 = 10;
+    gUnk_03002490->unk38 = gUnk_08753B88;
+    d = ((struct Task *)(gUnk_03002490->unk44 * 144 + (u32)gUnk_03002790))->unk43;
+    gUnk_03002490->unk43 = d;
+    gUnk_03002490->unk7A = 0;
     sub_08063908((struct ActorDef *)gUnk_0874BACC);
-    u2 = *c;
-    u2->unk04 = (u32)sub_080b1564;
-    u2->unk58 = 128 << 11;
-    t7 = u2;
-    goto wtest;
-wbody:
-    sub_08006338(0);
-    TaskYieldTrampoline(4);
-    sub_08006338(1);
-    TaskYieldTrampoline(4);
-    t7 = gUnk_03002490;
-wtest:
-    w9c = (s8)*(u8 *)&t7->unk7A;
-    if (w9c == 0)
-        goto wbody;
-    u4 = gUnk_03002490;
-    u4->unk04 = 0;
+    gUnk_03002490->unk04 = (u32)sub_080b1564;
+    gUnk_03002490->unk58 = 128 << 11;
+    while (gUnk_03002490->unk7A == 0)
+    {
+        sub_08006338(0);
+        TaskYieldTrampoline(4);
+        sub_08006338(1);
+        TaskYieldTrampoline(4);
+    }
+    gUnk_03002490->unk04 = 0;
     sub_080062c4();
     sub_08006338(2);
     TaskYieldTrampoline(4);
@@ -4947,53 +4122,25 @@ s32 sub_080b15b4(void)
 
 void sub_080b15c0(void)
 {
-    register s32 *p asm("r6");
     s32 ofs;
-    s32 e;
-    s32 w1;
-    s32 *pd;
-    register u32 *tb asm("r5");
-    vs32 *pb;
-    s32 w8;
-    s32 x3;
-    s16 *pq;
-    register s32 x asm("r1");
-    s32 x2;
-    s32 w;
-    u32 o;
-    struct Task *tt;
 
-    o = gUnk_03002490->unk44 * 144;
-    tt = (struct Task *)((u8 *)gUnk_03002790 + o);
-    e = (s16)tt->unk78;
-    p = gUnk_02007D00;
-    w1 = p[9] >> 1;
-    ofs = 0;
-    if (e >= w1)
+    if (((struct Task *)(gUnk_03002490->unk44 * 144 + (u32)gUnk_03002790))->unk78 >= gUnk_02007D00[9] >> 1)
         ofs = 8;
-    pd = &gUnk_030023D4;
-    tb = gUnk_0874B5A4;
-    x = p[3];
-    w = 255 - tb[ofs + (x >> 16)];
-    *pd = w;
-    x &= 0xFFFF;
-    w = w - tb[ofs + x];
-    *pd = w;
-    *pd = sub_08002ee8(w);
+    else
+        ofs = 0;
+    gUnk_030023D4 = 255 - gUnk_0874B5A4[ofs + (gUnk_02007D00[3] >> 16)];
+    gUnk_030023D4 -= gUnk_0874B5A4[ofs + (gUnk_02007D00[3] & 0xFFFF)];
+    gUnk_030023D4 = sub_08002ee8(gUnk_030023D4);
     gUnk_030023B4 = 7;
-    pb = (vs32 *)&gUnk_030023B4;
-loop:
-    if (*pb < 0)
-        for (;;);
-    x2 = p[3];
-    x3 = x2 >> 16;
-    w8 = *pb;
-    if (w8 != x3 && w8 != (x2 & 0xFFFF))
-        *pd -= tb[ofs + w8];
-    if (*pd > 0)
+    while (1)
     {
-        *pb -= 1;
-        goto loop;
+        if (gUnk_030023B4 < 0)
+            while (1);
+        if (gUnk_030023B4 != gUnk_02007D00[3] >> 16 && gUnk_030023B4 != (gUnk_02007D00[3] & 0xFFFF))
+            gUnk_030023D4 -= gUnk_0874B5A4[ofs + gUnk_030023B4];
+        if (gUnk_030023D4 <= 0)
+            break;
+        gUnk_030023B4--;
     }
     switch (gUnk_030023B4)
     {
@@ -5022,8 +4169,7 @@ loop:
         sub_0806395c(7);
         break;
     }
-    pq = (s16 *)gUnk_02007D00;
-    ((s32 *)pq)[3] = pq[7] + (gUnk_030023B4 << 16);
+    gUnk_02007D00[3] = ((s16 *)gUnk_02007D00)[7] + (gUnk_030023B4 << 16);
 }
 
 void sub_080b1710(void)
@@ -5088,11 +4234,11 @@ void sub_080b1770(void)
 
 void sub_080b17d0(void)
 {
-    register struct Task *t asm("ip");
-    register struct Task *t4 asm("r4");
+    struct Task *t;
+    struct Task *t4;
     struct Task *tt;
     struct Task *tt2;
-    register s16 *a asm("r3");
+    s16 *a;
     u32 o;
     u16 *e;
     u16 *e2;
@@ -5114,11 +4260,11 @@ void sub_080b17d0(void)
 
 void sub_080b1830(void)
 {
-    register struct Task *t asm("ip");
-    register struct Task *t4 asm("r4");
+    struct Task *t;
+    struct Task *t4;
     struct Task *tt;
     struct Task *tt2;
-    register s16 *a asm("r3");
+    s16 *a;
     u32 o;
     u16 *e;
     u16 *e2;
@@ -5140,38 +4286,17 @@ void sub_080b1830(void)
 
 void sub_080b1890(void)
 {
-    register struct Task *t asm("ip");
+    struct Task *t;
     u32 *tbl;
-    s32 k;
-    s32 kdummy;
-    register s32 j asm("r0");
-    register s32 k2 asm("r0");
-    u8 *t63;
-    register s16 *t61 asm("r1");
-    register s16 *e asm("r2");
+    u8 j;
 
-    k = 0;
-    j = 0;
-    t63 = 0;
     sub_08005d9c();
     t = gUnk_03002490;
     tbl = t->unk38;
-    t63 = (u8 *)gUnk_0874B63E;
-    j = t63[t->unk3C];
-    asm("" : "+r"(j));
-    t61 = (s16 *)gUnk_0874B614;
-    e = (s16 *)(j * 2 + (u32)t61);
-    k = *e;
-    if (k != -1)
-    {
-        k2 = k;
-        asm("" : "+r"(k2));
-        kdummy = *e;
-        asm("" : : "r"(kdummy));
-        sub_08001a94(11, *(u32 *)((k2 << 2) + (u32)tbl), t->unk3E, t->unk40,
-                     *(s16 *)((u8 *)t + 72) - *(s16 *)&gUnk_03002348,
-                     (s16)(*(u16 *)((u8 *)t + 74) - (u16)gUnk_030023E4));
-    }
+    j = gUnk_0874B63E[t->unk3C];
+    if (gUnk_0874B614[j] != -1)
+        sub_08001a94(11, tbl[gUnk_0874B614[j]], t->unk3E, t->unk40, t->unk48 - gUnk_03002348,
+                     (s16)(t->unk4A - gUnk_030023E4));
 }
 
 void sub_080b1910(void)
@@ -5240,160 +4365,83 @@ void sub_080b1a00(void)
 
 void sub_080b1a1c(void)
 {
-    register struct Task **c asm("r5");
-    struct Task **c2;
-    struct Task *t;
-    struct Task *t2;
-    register struct Task *t3 asm("r3");
-    struct Task *u1;
-    struct Task *u2;
-    struct Task *u3;
-    struct Task *u4;
-    struct Task *q1;
-    struct Task *q2;
-    struct Task *q3;
-    struct Task *q4;
-    register s8 *b43 asm("r4");
-    s32 z;
-    s32 zz;
-    s32 *pd;
-    u8 *tj;
-    u8 *tb24;
-    s32 w6;
-    u8 *tj2;
-    s32 w;
-    s32 k;
-    s32 k2;
-
-    c = &gUnk_03002490;
-    t = *c;
-    z = 0;
-    t->unk15 = z;
-    t2 = *c;
-    w = t2->unk28;
-    if (w >> 16 > 2)
-        t2->unk28 = (w & 0xFFFF) + (128 << 10);
-    pd = &gUnk_030023D4;
-    *pd = z;
-    t3 = *c;
-    b43 = &t3->unk43;
-    k = *b43;
-    if (k == 1)
-        *pd = k;
-    tb24 = (u8 *)gUnk_0874B824;
-    w6 = *pd * 2;
-    t3->unk2C = tb24[w6 + gUnk_02007D00[3]];
-    k2 = *b43;
-    if (k2 == -1)
+    gUnk_03002490->unk15 = 0;
+    if (gUnk_03002490->unk28 >> 16 > 2)
+        gUnk_03002490->unk28 = (gUnk_03002490->unk28 & 0xFFFF) + (128 << 10);
+    gUnk_030023D4 = 0;
+    if (gUnk_03002490->unk43 == 1)
+        gUnk_030023D4 = 1;
+    gUnk_03002490->unk2C = gUnk_0874B824[gUnk_030023D4 * 2 + gUnk_02007D00[3]];
+    if (gUnk_03002490->unk43 == -1)
     {
-        zz = 0;
-        tj = (u8 *)gUnk_0874B82A;
-        for (;;)
+        while (1)
         {
-            u1 = *c;
-            u1->unk3C = 3;
-            TaskYieldTrampoline(*(u8 *)(*(s16 *)((u8 *)u1 + 42) + (u32)tj));
-            u2 = *c;
-            u2->unk3C = 2;
-            TaskYieldTrampoline(*(u8 *)(*(s16 *)((u8 *)u2 + 42) + (u32)tj));
-            u3 = *c;
-            u3->unk3C = 1;
-            TaskYieldTrampoline(*(u8 *)(*(s16 *)((u8 *)u3 + 42) + (u32)tj));
-            u4 = *c;
-            u4->unk3C = zz;
-            TaskYieldTrampoline(*(u8 *)(*(s16 *)((u8 *)u4 + 42) + (u32)tj));
+            gUnk_03002490->unk3C = 3;
+            TaskYieldTrampoline(gUnk_0874B82A[((s16 *)&gUnk_03002490->unk28)[1]]);
+            gUnk_03002490->unk3C = 2;
+            TaskYieldTrampoline(gUnk_0874B82A[((s16 *)&gUnk_03002490->unk28)[1]]);
+            gUnk_03002490->unk3C = 1;
+            TaskYieldTrampoline(gUnk_0874B82A[((s16 *)&gUnk_03002490->unk28)[1]]);
+            gUnk_03002490->unk3C = 0;
+            TaskYieldTrampoline(gUnk_0874B82A[((s16 *)&gUnk_03002490->unk28)[1]]);
         }
     }
     else
     {
-        c2 = &gUnk_03002490;
-        tj2 = (u8 *)gUnk_0874B82A;
-        for (;;)
+        while (1)
         {
-            q1 = *c2;
-            q1->unk3C = 0;
-            TaskYieldTrampoline(*(u8 *)(*(s16 *)((u8 *)q1 + 42) + (u32)tj2));
-            q2 = *c2;
-            q2->unk3C = 1;
-            TaskYieldTrampoline(*(u8 *)(*(s16 *)((u8 *)q2 + 42) + (u32)tj2));
-            q3 = *c2;
-            q3->unk3C = 2;
-            TaskYieldTrampoline(*(u8 *)(*(s16 *)((u8 *)q3 + 42) + (u32)tj2));
-            q4 = *c2;
-            q4->unk3C = 3;
-            TaskYieldTrampoline(*(u8 *)(*(s16 *)((u8 *)q4 + 42) + (u32)tj2));
+            gUnk_03002490->unk3C = 0;
+            TaskYieldTrampoline(gUnk_0874B82A[((s16 *)&gUnk_03002490->unk28)[1]]);
+            gUnk_03002490->unk3C = 1;
+            TaskYieldTrampoline(gUnk_0874B82A[((s16 *)&gUnk_03002490->unk28)[1]]);
+            gUnk_03002490->unk3C = 2;
+            TaskYieldTrampoline(gUnk_0874B82A[((s16 *)&gUnk_03002490->unk28)[1]]);
+            gUnk_03002490->unk3C = 3;
+            TaskYieldTrampoline(gUnk_0874B82A[((s16 *)&gUnk_03002490->unk28)[1]]);
         }
     }
 }
 
 void sub_080b1b2c(void)
 {
-    register struct Task **c asm("ip");
     struct Task *t;
-    struct Task *u;
-    struct Task *u2;
-    struct Task *tt;
-    struct Task *tt2;
-    s16 *a;
-    s32 *pd;
     s32 v;
-    s32 v2;
-    s32 w;
-    u32 o;
-    u32 o2;
-    u32 lo;
-    u8 *t8e;
-    register struct Task **cx asm("r1");
 
     t = gUnk_03002490;
     v = t->unk28;
-    lo = *(u16 *)&t->unk28;
-    c = &gUnk_03002490;
-    if (lo != 0)
+    if (*(u16 *)&t->unk28 != 0)
     {
-        v2 = v - 1;
-        t->unk28 = v2;
-        if ((v2 & 15) == 0)
+        t->unk28 = v - 1;
+        if ((t->unk28 & 15) == 0)
         {
-            pd = &gUnk_030023D4;
-            a = &t->unk44;
-            o = *a * 144;
-            tt = (struct Task *)((u8 *)gUnk_03002790 + o);
-            w = tt->unk54;
-            *pd = w;
-            if (w > 0)
-                goto pos;
-            if (w < 0)
+            gUnk_030023D4 = ((struct Task *)(t->unk44 * 144 + (u32)gUnk_03002790))->unk54;
+            if (gUnk_030023D4 > 0)
             {
-                if (v2 >> 16 == 0)
-                    goto end;
-                t->unk28 = v + 0xFFFEFFFF;
-                goto end;
+                if (t->unk28 >> 16 <= 1)
+                    t->unk28 += 0x10000;
             }
-            o2 = *a * 144;
-            tt2 = (struct Task *)((u8 *)gUnk_03002790 + o2);
-            if (tt2->unk58 == 0)
-                goto end;
-pos:
-            if (v2 >> 16 <= 1)
-                t->unk28 = v + 0xFFFF;
+            else if (gUnk_030023D4 < 0)
+            {
+                if (t->unk28 >> 16 != 0)
+                    t->unk28 -= 0x10000;
+            }
+            else if (((struct Task *)(t->unk44 * 144 + (u32)gUnk_03002790))->unk58 != 0)
+            {
+                if (t->unk28 >> 16 <= 1)
+                    t->unk28 += 0x10000;
+            }
         }
     }
     else
     {
-        if ((v & 0xFFFF0000) != 0)
-            t->unk28 = v + 0xFFFF0000;
-        u = *c;
-        u->unk28 += 120;
+        if (v & 0xFFFF0000)
+            t->unk28 = v - 0x10000;
+        gUnk_03002490->unk28 += 120;
     }
-end:
-    cx = c;
-    u2 = *cx;
-    u2->unk2C--;
-    if (u2->unk2C == 0)
+    gUnk_03002490->unk2C--;
+    if (gUnk_03002490->unk2C == 0)
     {
-        t8e = (u8 *)gUnk_0874B82E;
-        u2->unk2C = t8e[gUnk_02007D00[3]];
+        gUnk_03002490->unk2C = gUnk_0874B82E[gUnk_02007D00[3]];
         sub_0806395c(1);
         sub_08006148(sub_080b1a00, gCurTaskIdx);
     }
@@ -5402,7 +4450,7 @@ end:
 void sub_080b1c04(void)
 {
     struct Task **c;
-    register struct Task *t asm("r1");
+    struct Task *t;
     struct Task *u;
     struct Task *u1;
     struct Task *u2;
@@ -5412,11 +4460,11 @@ void sub_080b1c04(void)
     struct Task *q2;
     struct Task *q3;
     struct Task *q4;
-    register struct Task *q4b asm("r0");
+    struct Task *q4b;
     s32 zz;
     u8 *tj;
     u8 *tj2;
-    register s32 k asm("r1");
+    s32 k;
     s32 x;
     s32 x2;
 
@@ -5536,9 +4584,9 @@ void sub_080b1d2c(void)
 
 void sub_080b1d98(void)
 {
-    register struct Task **c asm("r5");
+    struct Task **c;
     struct Task **c2;
-    register s32 z asm("r4");
+    s32 z;
     struct Task *t;
     struct Task *u;
     struct Task *u2;
@@ -5583,26 +4631,15 @@ void sub_080b1d98(void)
 
 void sub_080b1e20(void)
 {
-    register struct Task *t asm("ip");
-    struct Task **c;
-    struct Task *t2;
-    struct Task *t3;
-    vu16 *pm;
-    register struct Task *t1 asm("r1");
-    register s32 k1 asm("r1");
-    register struct Task *t5 asm("r2");
+    struct Task *t;
 
-    t1 = gUnk_03002490;
-    t = t1;
-    k1 = t1->unk14;
-    c = &gUnk_03002490;
-    if (k1 != 2)
+    t = gUnk_03002490;
+    if (t->unk14 != 2)
     {
         sub_08006148(sub_080b1a00, gCurTaskIdx);
         return;
     }
-    t5 = t;
-    if (t5->unk30 == 0)
+    if (t->unk30 == 0)
     {
         if (t->unk43 == -1)
             gUnk_030023D4 = t->unk34 * 6 + 36;
@@ -5616,24 +4653,17 @@ void sub_080b1e20(void)
         else
             gUnk_030023D4 = t->unk34 * 6 + 66;
     }
-    pm = (vu16 *)&gUnk_03001EA4;
-    if (*pm & 1)
-    {
-        t2 = *c;
-        t2->unk3C = gUnk_030023D4 + (((*pm >> 1) & 1) + 4);
-    }
+    if (gUnk_03001EA4 & 1)
+        gUnk_03002490->unk3C = gUnk_030023D4 + (((gUnk_03001EA4 >> 1) & 1) + 4);
     else
-    {
-        t3 = *c;
-        t3->unk3C = gUnk_030023D4 + (*pm & 3);
-    }
+        gUnk_03002490->unk3C = gUnk_030023D4 + (gUnk_03001EA4 & 3);
 }
 
 void sub_080b1ef8(void)
 {
-    register struct Task **c asm("r5");
+    struct Task **c;
     struct Task **c2;
-    register s32 z asm("r4");
+    s32 z;
     struct Task *t;
     struct Task *u;
     struct Task *u2;
@@ -5678,26 +4708,15 @@ void sub_080b1ef8(void)
 
 void sub_080b1f80(void)
 {
-    register struct Task *t asm("ip");
-    struct Task **c;
-    struct Task *t2;
-    struct Task *t3;
-    vu16 *pm;
-    register struct Task *t1 asm("r1");
-    register s32 k1 asm("r1");
-    register struct Task *t5 asm("r2");
+    struct Task *t;
 
-    t1 = gUnk_03002490;
-    t = t1;
-    k1 = t1->unk14;
-    c = &gUnk_03002490;
-    if (k1 != 3)
+    t = gUnk_03002490;
+    if (t->unk14 != 3)
     {
         sub_08006148(sub_080b1a00, gCurTaskIdx);
         return;
     }
-    t5 = t;
-    if (t5->unk30 == 0)
+    if (t->unk30 == 0)
     {
         if (t->unk43 == -1)
             gUnk_030023D4 = t->unk34 * 6 + 36;
@@ -5711,17 +4730,10 @@ void sub_080b1f80(void)
         else
             gUnk_030023D4 = t->unk34 * 6 + 66;
     }
-    pm = (vu16 *)&gUnk_03001EA4;
-    if (*pm & 1)
-    {
-        t2 = *c;
-        t2->unk3C = gUnk_030023D4 + (((*pm >> 1) & 1) + 4);
-    }
+    if (gUnk_03001EA4 & 1)
+        gUnk_03002490->unk3C = gUnk_030023D4 + (((gUnk_03001EA4 >> 1) & 1) + 4);
     else
-    {
-        t3 = *c;
-        t3->unk3C = gUnk_030023D4 + (*pm & 3);
-    }
+        gUnk_03002490->unk3C = gUnk_030023D4 + (gUnk_03001EA4 & 3);
 }
 
 void sub_080b2058(u8 a)
@@ -5779,7 +4791,7 @@ xbody2:
 void sub_080b20d4(void)
 {
     struct Task **c;
-    register u32 *t40 asm("r5");
+    u32 *t40;
     struct Task *t;
     struct Task *t2;
     struct Task *u;
@@ -5841,43 +4853,21 @@ void sub_080b214c(void)
 
 void sub_080b21a0(void)
 {
-    struct Task **c;
-    register s32 neg asm("r6");
-    register u8 *t28 asm("r5");
     struct Task *t;
-    register struct Task *t2 asm("r3");
-    register struct Task *u asm("r2");
-    register s32 v asm("r1");
-    register s32 w0 asm("r0");
-    register s16 *e asm("r0");
-    u8 *tb;
 
+    gUnk_03002490->unk15 = 4;
     t = gUnk_03002490;
-    t->unk15 = 4;
-    t2 = gUnk_03002490;
-    t2->unk2C = 24;
-    tb = (u8 *)gUnk_0874B8C4;
-    t2->unk30 = tb[gUnk_02007D00[3]];
-    c = &gUnk_03002490;
-    asm("" : "+r"(c));
-    neg = -1;
-    t28 = (u8 *)gUnk_0874B928;
-loop:
-    u = *c;
-    w0 = u->unk2C;
-    v = w0 - 1;
-    u->unk2C = v;
-    if ((s8)*(u8 *)&u->unk43 == neg)
+    t->unk2C = 24;
+    t->unk30 = gUnk_0874B8C4[gUnk_02007D00[3]];
+    do
     {
-        e = (s16 *)gUnk_0874B8C8;
-        goto join;
-    }
-    e = (s16 *)gUnk_0874B8F8;
-join:
-    u->unk34 = e[v];
-    TaskYieldTrampoline(*(u8 *)((*c)->unk2C + (u32)t28));
-    if ((*c)->unk2C > 0)
-        goto loop;
+        gUnk_03002490->unk2C--;
+        if (gUnk_03002490->unk43 == -1)
+            gUnk_03002490->unk34 = gUnk_0874B8C8[gUnk_03002490->unk2C];
+        else
+            gUnk_03002490->unk34 = gUnk_0874B8F8[gUnk_03002490->unk2C];
+        TaskYieldTrampoline(gUnk_0874B928[gUnk_03002490->unk2C]);
+    } while (gUnk_03002490->unk2C > 0);
     sub_0806395c(0);
     sub_08006138();
 }
@@ -6329,8 +5319,8 @@ void sub_080b2890(void)
 {
     struct Task **c;
     struct Task *t0;
-    register struct Task *t asm("ip");
-    register u16 *a asm("ip");
+    struct Task *t;
+    u16 *a;
     struct Task *u;
     struct Task *u2;
     struct Task *t2;
@@ -6402,7 +5392,7 @@ void sub_080b2890(void)
 void sub_080b2a00(void)
 {
     struct Task **c;
-    register struct AnimCmd *k4 asm("r4");
+    struct AnimCmd *k4;
     struct Task *t;
     struct Task *u;
     struct Task *u2;

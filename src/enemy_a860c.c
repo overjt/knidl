@@ -1406,105 +1406,51 @@ void sub_080b60e8();
 extern void CpuSet(const void *src, void *dst, u32 control);
 void sub_080a860c(void)
 {
-    register struct Task **c asm("r8");
-    struct Task *t;
-    register s32 w28 asm("r2");
-    register struct Task *th asm("r3");
-    struct Task *u;
-    s16 *d48;
-    register u16 *pAa asm("r0");
-    register u16 *pA asm("r6");
-    register struct Task **c5 asm("r5");
-    struct Task *u3;
-    register struct Task **cB asm("r1");
-    struct Task *uB;
-    register struct Task *u1b asm("r1");
-    register struct Task **cw2 asm("r2");
-    register u16 *h6c asm("r1");
     s32 n;
-    s32 i;
 
-    th = gUnk_03002490;
-    w28 = th->unk28;
-    c = &gUnk_03002490;
-    t = th;
-    switch (w28)
+    switch (gUnk_03002490->unk28)
     {
     case 0:
-        if (t->unk4A < gUnk_03002158[2] - 62)
+        if (gUnk_03002490->unk4A < gUnk_03002158[2] - 62)
         {
             sub_08006244();
             gUnk_02007D00[0] = 4;
-            u = *c;
-            u->unk28++;
+            gUnk_03002490->unk28++;
         }
         sub_08066718();
         break;
     case 1:
-        t->unk50 = (gUnk_03002158[2] - 62) << 16;
+        gUnk_03002490->unk50 = (gUnk_03002158[2] - 62) << 16;
         if (sub_08066718() == 1)
-        {
-            cw2 = c;
-            u1b = *cw2;
-            u1b->unk28++;
-        }
+            gUnk_03002490->unk28++;
         break;
     case 2:
         if (gUnk_03002158[3] <= 229)
         {
-            asm("" : : "r"(w28));
             n = 0;
-            t->unk6C = n;
-            pAa = &gUnk_030023AC;
-            asm("" : "+r"(pAa));
-            pA = pAa;
-            if (n < *pA)
+            for (gUnk_03002490->unk6C = 0; (s16)gUnk_03002490->unk6C < gUnk_030023AC; gUnk_03002490->unk6C++)
             {
-                d48 = gUnk_02007D48;
-                c5 = c;
-                do
+                if ((gUnk_02007D48[(s16)gUnk_03002490->unk6C] != 0 || gUnk_02005588[(s16)gUnk_03002490->unk6C] != 0) && ((gUnk_03002340 >> (s16)gUnk_03002490->unk6C) & 1))
                 {
-                    i = (s16)(*c5)->unk6C;
-                    if ((d48[i] != 0 || gUnk_02005588[i] != 0)
-                        && ((gUnk_03002340 >> i) & 1))
-                    {
-                        sub_08063d4c(i);
-                        if (gUnk_030023D4 > 151)
-                            goto skip;
-                    }
-                    n++;
-skip:
-                    u3 = *c5;
-                    h6c = (u16 *)((u8 *)u3 + 108);
-                    *h6c = *h6c + 1;
-                } while (*(s16 *)h6c < gUnk_030023AC);
+                    sub_08063d4c((s16)gUnk_03002490->unk6C);
+                    if (gUnk_030023D4 > 151)
+                        continue;
+                }
+                n++;
             }
-            if (n == *pA)
+            if (n == gUnk_030023AC)
             {
                 sub_0806493c();
                 if (gUnk_030023B4 == 128)
                     gUnk_03002490->unk4C = (gUnk_087490E4[sub_08002ee8(2)] + gUnk_03002158[0]) << 16;
                 if (gUnk_030023B4 <= 127)
-                {
-                    cB = &gUnk_03002490;
-                    uB = *cB;
-                    uB->unk4C = (gUnk_03002158[0] + 168) << 16;
-                }
+                    gUnk_03002490->unk4C = (gUnk_03002158[0] + 168) << 16;
                 else
-                {
-                    cB = &gUnk_03002490;
-                    uB = *cB;
-                    uB->unk4C = (gUnk_03002158[0] + 72) << 16;
-                }
-                c = cB;
-                asm("" : "+r"(c));
-                u = *c;
-                u->unk28++;
+                    gUnk_03002490->unk4C = (gUnk_03002158[0] + 72) << 16;
+                gUnk_03002490->unk28++;
             }
         }
-        cw2 = c;
-        (*cw2)->unk50 = (gUnk_03002158[2] - 62) << 16;
-        asm("" : : "r"(cw2));
+        gUnk_03002490->unk50 = (gUnk_03002158[2] - 62) << 16;
         break;
     case 3:
         sub_08006148(sub_080a87c8, gCurTaskIdx);

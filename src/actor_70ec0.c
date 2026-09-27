@@ -542,6 +542,7 @@ void sub_080718c0(void)
 {
     struct Task *t = gUnk_03002490;
     u32 v;
+    s32 r;
 
     if (t->unk78 == -1)
         return;
@@ -556,8 +557,7 @@ void sub_080718c0(void)
         }
         else
         {
-            s32 r = sub_08002ee8(3);
-
+            r = sub_08002ee8(3);
             v = 1;
             if (r != 0)
                 v = 0;
@@ -574,13 +574,11 @@ void sub_080718c0(void)
         {
             u16 a1 = gUnk_030023D4;
             s32 a2 = (s16)gUnk_03002490->unk34;
-            register s32 r asm("r2");
-            register s32 c asm("r0");
 
-            r = sub_08002ee8(3);
-            c = (u8)gUnk_03002490->unk78;
-            r &= c;
-            sub_08074bb0(a1, a2, r);
+            v = sub_08002ee8(3);
+            /* r (the other branch's RNG result) carries the byte, so regmove keeps the AND on v */
+            r = (u8)gUnk_03002490->unk78;
+            sub_08074bb0(a1, a2, v & r);
         }
         gUnk_03002490->unk70 = (s8)gUnk_03002490->unk75;
     }

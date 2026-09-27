@@ -36,12 +36,5 @@ u32 sub_080b7df4(s32 a);
 
 u32 sub_080b7df4(s32 a)
 {
-    u32 c;
-    register u32 d asm("r2");
-
-    c = sub_080b7dd0(a);
-    d = c;
-    asm("" : "+r"(d));
-    gUnk_0200E600[a].unk70 = d;
-    return c;
+    gUnk_0200E600[a].unk70 = sub_080b7dd0(a);
 }

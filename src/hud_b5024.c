@@ -3,35 +3,56 @@
 #include "task.h"
 
 /* RAM cells / ROM tables */
-extern u32 gUnk_0200000C[];
-extern u32 gUnk_02000034[];
+extern u16 gUnk_0200000C;
+extern u8 gUnk_02000034;
 extern u32 gUnk_02004C90;
 extern u32 gUnk_02005580[];
 extern s16 gUnk_02005588[];
-extern u32 gUnk_02005590[];
-extern u32 gUnk_020055D0[];
-extern u32 gUnk_020055D8[];
+extern s8 gUnk_02005590[];
+extern u8 gUnk_020055D0;
+struct Unk020055D8Entry
+{
+    /*0x00*/ s8 unk0;
+    /*0x01*/ s8 unk1;
+    /*0x02*/ s8 unk2;
+    /*0x03*/ s8 unk3;
+    /*0x04*/ u16 unk4;
+    /*0x06*/ u16 unk6;
+};
+struct Unk020055D8
+{
+    /*0x00*/ s16 unk0;
+    /*0x02*/ s16 unk2;
+    /*0x04*/ struct Unk020055D8Entry *unk4;
+};
+extern struct Unk020055D8 gUnk_020055D8;
 extern u8 gUnk_02005E10[];
 extern u32 gUnk_02005F10[];
 extern u32 gUnk_02006040[];
-extern u32 gUnk_020060A0[];
-extern u32 gUnk_02006130[];
+struct Unk020060A0
+{
+    /*0x00*/ s8 unk0;
+    /*0x01*/ s8 unk1;
+    /*0x02*/ s16 unk2;
+};
+extern struct Unk020060A0 gUnk_020060A0[];
+extern s8 gUnk_02006130[];
 extern s32 gUnk_02006190[];
 extern u8 gUnk_020069F0;
 extern u32 gUnk_02007BF0[];
 extern s32 gUnk_02007D00[];
-extern u32 gUnk_02007D40[];
+extern u16 gUnk_02007D40;
 extern s16 gUnk_02007D48[];
 extern u16 gUnk_02007D60;
 extern u32 gUnk_02007D64[];
 extern s8 gUnk_02007FB8[];
-extern u32 gUnk_02008014[];
-extern u32 gUnk_02008020[];
+extern u16 gUnk_02008014[];
+extern u8 gUnk_02008020[];
 extern u32 gUnk_0200AF0C[];
 extern u8 gUnk_0200AFF8;
 extern u8 gUnk_0200B030;
-extern u32 gUnk_0200B04C[];
-extern u32 gUnk_0200B078[];
+extern u8 gUnk_0200B04C;
+extern u8 gUnk_0200B078;
 extern u8 gUnk_0200D080;
 struct Unk0200D120
 {
@@ -119,14 +140,23 @@ extern u32 gUnk_082FEFF4[];
 extern u32 gUnk_082FFDF0[];
 extern u16 gUnk_08334480[];
 extern u32 gUnk_083344C0[];
-extern u32 gUnk_087324DA[];
+extern u16 gUnk_087324DA[][4];
 extern u32 gUnk_0873CB1C[];
 extern u32 gUnk_0873EEA0[];
 extern u32 gUnk_0873EF48[];
 extern u32 *gUnk_0873F0E4[];
 extern u32 gUnk_0873F104[];
 extern u32 *gUnk_0873F15C[];
-extern u32 gUnk_0873F180[];
+struct Unk0873EEA0
+{
+    /*0x00*/ u16 unk0;
+    /*0x02*/ u16 unk2;
+    /*0x04*/ u16 unk4;
+    /*0x06*/ u16 unk6;
+    /*0x08*/ u32 unk8;
+    /*0x0C*/ u32 unkC;
+};
+extern struct Unk0873EEA0 *gUnk_0873F180[];
 extern s16 gUnk_0873FF98[];
 extern struct AnimCmd gUnk_087484A4[];
 extern u32 gUnk_087484D4[];
@@ -486,7 +516,7 @@ extern u32 gUnk_08756150[];
 extern u32 gUnk_08756158[];
 extern u32 gUnk_08756160[];
 extern u32 gUnk_0875616C[];
-extern u32 gUnk_08756178[];
+extern s8 gUnk_08756178[];
 extern u32 gUnk_08756184[];
 extern u32 gUnk_08756198[];
 
@@ -1407,224 +1437,118 @@ extern void CpuSet(const void *src, void *dst, u32 control);
 
 void sub_080b5024(void)
 {
-    register u8 *e5 asm("r5");
-    register s32 i6 asm("r6");
-    u8 *p7;
-    s32 k4;
-    s32 w1;
-    s32 w;
-    s32 w2;
-    s32 w3;
-    s32 wq;
-    register s32 n1 asm("r1");
-    register s32 n1b asm("r0");
-    register s32 res asm("r3");
-    s32 op;
-    s32 a1;
-    s32 a2;
-    s32 a3;
-    s32 x;
-    s32 y;
-    s32 va;
-    s32 vb;
-    s8 *q;
-    register s8 *qb asm("r1");
-    register s32 qv asm("r0");
-    register u8 *tb1 asm("r1");
-    u32 z0;
-    u8 *b;
-    u8 *pw2;
-    register u8 *pw2a asm("r4");
-    register u8 *pw2b asm("r1");
-    register s8 *q2 asm("r2");
-    u8 *pc1;
-    u8 *pc2;
-    u32 attr;
-    register u8 *pw2c asm("r3");
-    register s8 *qb2 asm("r1");
-    register u8 *pw2d asm("r1");
-    u8 *t3b;
-    register s32 sh3 asm("r0");
-    register u8 *tp2 asm("r1");
-    register u8 *tp4 asm("r1");
-    register u8 *tp6 asm("r1");
-    register s32 w4 asm("r0");
-    register u8 *e2 asm("r1");
-    u16 wh;
-    register s32 bv asm("r1");
-    register s32 bw asm("r1");
-    register s32 m1c asm("r0");
+    struct Unk020055D8Entry *e;
+    struct Unk0873EEA0 *d;
+    s32 i;
+    s32 r;
 
-    w1 = *(s16 *)gUnk_020055D8;
-    p7 = (u8 *)gUnk_020055D8;
-    if (w1 == 0)
+    if (gUnk_020055D8.unk0 == 0)
         return;
-    e5 = *(u8 **)(p7 + 4);
-    i6 = 0;
-    asm("" ::: "memory");
-    if (i6 >= *(s16 *)p7)
-        return;
-xbody:
-    w = *(s8 *)e5;
-    n1 = -1;
-    if (w == n1)
-        return;
-    res = n1;
-    switch (w)
+    e = gUnk_020055D8.unk4;
+    for (i = 0; i < gUnk_020055D8.unk0; e++, i++)
     {
-    case 0:
-    case 1:
-    case 2:
-    case 4:
-    case 6:
-    case 7:
-        break;
-    case 3:
-        a1 = *(s8 *)(e5 + 1);
-        res = sub_08064fc4(2, a1, e5[2], e5[3], *(u16 *)(e5 + 4), *(u16 *)(e5 + 6), (pw2a = (u8 *)gUnk_020060A0, (((s32)*(s8 *)((b = (u8 *)(((s32)(s8)*((u8 *)gUnk_02006130 + i6) << 2) + (u32)pw2a)) + 1) << 12) | ((*(s16 *)(b + 2) << 1) + 16))));
-        *(u16 *)gUnk_02008014 = res;
-        pc2 = (u8 *)gUnk_020055D0;
-        pc1 = (u8 *)gUnk_02000034;
-        *pc1 = 1;
-        *pc2 = 1;
-        break;
-    case 8:
-        res = sub_08064fc4(3, 8, e5[2], e5[3], *(u16 *)(e5 + 4), *(u16 *)(e5 + 6), (pw2b = (u8 *)gUnk_020060A0, (((s32)*(s8 *)((b = (u8 *)(((s32)(s8)*((u8 *)gUnk_02006130 + i6) << 2) + (u32)pw2b)) + 1) << 12) | ((*(s16 *)(b + 2) << 1) + 16))));
-        *(u16 *)gUnk_02008014 = res;
-        pc2 = (u8 *)gUnk_020055D0;
-        pc1 = (u8 *)gUnk_02000034;
-        *pc1 = 1;
-        *pc2 = 1;
-        break;
-    case 5:
-        qb = (s8 *)gUnk_08756178;
-        qv = *(s8 *)(e5 + 1);
-        q2 = (s8 *)(qv + (u32)qb);
-        wq = *q2;
-        if (wq == -1)
-            goto nextit;
-        tb1 = (u8 *)gUnk_0873F180;
-        asm("" : "+r"(q2) : : "memory");
-        k4 = *(u32 *)(((s32)*q2 << 2) + (u32)tb1);
-        asm("" :: "r"(k4));
-        asm("" :: "r"(k4));
-        gUnk_03001F2C = 0;
-        switch ((s8)(*(u8 *)(e5 + 1) - 1))
+        if (e->unk0 == -1)
+            return;
+        r = -1;
+        switch (e->unk0)
         {
-        case 3:
-            if (*(u8 *)gUnk_0200B078 == 3)
-            {
-                bv = *(u8 *)gUnk_0200B04C;
-                w3 = *(s8 *)(e5 + 3) - 1;
-                bw = bv >> w3;
-                m1c = 1;
-                if (!(bw & m1c))
-                    goto nextit;
-                sub_0802ffe8(w3, *(u16 *)(e5 + 4), *(u16 *)(e5 + 6));
-            }
-            else
-            {
-                t3b = (u8 *)gUnk_087324DA;
-                wh = *(u16 *)((*(s8 *)(e5 + 2) << 3) + (u32)t3b);
-                if (wh != 0xFFFF)
-                    gUnk_03005628[0] = wh;
-                sh3 = *(s8 *)(e5 + 2) << 3;
-                tp2 = t3b + 2;
-                asm("" : "+r"(tp2));
-                wh = *(u16 *)(sh3 + (u32)tp2);
-                if (wh != 0xFFFF)
-                    gUnk_03005628[1] = wh;
-                sh3 = *(s8 *)(e5 + 2) << 3;
-                tp4 = t3b + 4;
-                asm("" : "+r"(tp4));
-                wh = *(u16 *)(sh3 + (u32)tp4);
-                if (wh != 0xFFFF)
-                    gUnk_03005628[2] = wh;
-                sh3 = *(s8 *)(e5 + 2) << 3;
-                tp6 = t3b + 6;
-                asm("" : "+r"(tp6));
-                wh = *(u16 *)(sh3 + (u32)tp6);
-                if (wh != 0xFFFF)
-                    gUnk_03005628[3] = wh;
-            }
-            break;
         case 0:
-            if (gUnk_030023C8[0] & (1 << *(s8 *)(e5 + 2)))
-                goto nextit;
-            break;
-        case 7:
-            gUnk_03001F2C = *(s8 *)(e5 + 2);
-            break;
         case 1:
-            if (*(s8 *)(e5 + 2) == 1)
-            {
-                pw2d = (u8 *)gUnk_020060A0;
-                b = (u8 *)(((s32)(s8)*((u8 *)gUnk_02006130 + i6) << 2) + (u32)pw2d);
-                sub_08065dfc((s8)*(u8 *)(b + 1));
-            }
-            break;
         case 2:
         case 4:
-        case 5:
         case 6:
+        case 7:
+            break;
+        case 3:
+            r = sub_08064fc4(2, e->unk1, e->unk2, e->unk3, e->unk4, e->unk6,
+                             (gUnk_020060A0[gUnk_02006130[i]].unk1 << 12) | ((gUnk_020060A0[gUnk_02006130[i]].unk2 * 2) + 16));
+            gUnk_02008014[0] = r;
+            gUnk_020055D0 = gUnk_02000034 = 1;
+            break;
+        case 8:
+            r = sub_08064fc4(3, 8, e->unk2, e->unk3, e->unk4, e->unk6,
+                             (gUnk_020060A0[gUnk_02006130[i]].unk1 << 12) | ((gUnk_020060A0[gUnk_02006130[i]].unk2 * 2) + 16));
+            gUnk_02008014[0] = r;
+            gUnk_020055D0 = gUnk_02000034 = 1;
+            break;
+        case 5:
+            if (gUnk_08756178[e->unk1] == -1)
+                continue;
+            d = gUnk_0873F180[gUnk_08756178[e->unk1]];
+            gUnk_03001F2C = 0;
+            switch (e->unk1)
+            {
+            case 4:
+                if (gUnk_0200B078 == 3)
+                {
+                    if (!((gUnk_0200B04C >> (e->unk3 - 1)) & 1))
+                        continue;
+                    sub_0802ffe8(e->unk3 - 1, e->unk4, e->unk6);
+                }
+                else
+                {
+                    if (gUnk_087324DA[e->unk2][0] != 0xFFFF)
+                        gUnk_03005628[0] = gUnk_087324DA[e->unk2][0];
+                    if (gUnk_087324DA[e->unk2][1] != 0xFFFF)
+                        gUnk_03005628[1] = gUnk_087324DA[e->unk2][1];
+                    if (gUnk_087324DA[e->unk2][2] != 0xFFFF)
+                        gUnk_03005628[2] = gUnk_087324DA[e->unk2][2];
+                    if (gUnk_087324DA[e->unk2][3] != 0xFFFF)
+                        gUnk_03005628[3] = gUnk_087324DA[e->unk2][3];
+                }
+                break;
+            case 1:
+                if (gUnk_030023C8[0] & (1 << e->unk2))
+                    continue;
+                break;
+            case 8:
+                gUnk_03001F2C = e->unk2;
+                break;
+            case 2:
+                if (e->unk2 == 1)
+                    sub_08065dfc(gUnk_020060A0[gUnk_02006130[i]].unk1);
+                break;
+            case 3:
+            }
+            if (d != NULL)
+                r = sub_08064fc4(5, gUnk_08756178[e->unk1], gUnk_03001F2C, 0, e->unk4, e->unk6,
+                                 (gUnk_020060A0[gUnk_02006130[i]].unk1 << 12) | ((gUnk_020060A0[gUnk_02006130[i]].unk2 * 2) + 16));
+            else
+                r = sub_08064fc4(5, gUnk_08756178[e->unk1], gUnk_03001F2C, 0, e->unk4, e->unk6, 0);
             break;
         }
-        if (k4 != 0)
-        {
-            res = sub_08064fc4(5, (qb2 = (s8 *)gUnk_08756178, *(s8 *)(*(s8 *)(e5 + 1) + (u32)qb2)), *(u8 *)&gUnk_03001F2C, 0, *(u16 *)(e5 + 4), *(u16 *)(e5 + 6),
-                (pw2c = (u8 *)gUnk_020060A0, b = (u8 *)(((s32)(s8)*((u8 *)gUnk_02006130 + i6) << 2) + (u32)pw2c), (((s32)*(s8 *)(b + 1) << 12) | ((*(s16 *)(b + 2) << 1) + 16))));
-        }
-        else
-        {
-            res = sub_08064fc4(5, (qb2 = (s8 *)gUnk_08756178, *(s8 *)(*(s8 *)(e5 + 1) + (u32)qb2)), *(u8 *)&gUnk_03001F2C, 0, *(u16 *)(e5 + 4), *(u16 *)(e5 + 6), k4);
-        }
-        break;
+        if (r != -1)
+            gUnk_02005590[r - 32] = i;
     }
-    n1b = -1;
-    p7 = (u8 *)gUnk_020055D8;
-    if (res != n1b)
-    {
-        e2 = (u8 *)gUnk_02005590;
-        w4 = res;
-        w4 -= 32;
-        *(u8 *)(w4 + (u32)e2) = i6;
-    }
-nextit:
-    e5 += 8;
-    i6 += 1;
-    if (i6 < *(s16 *)p7)
-        goto xbody;
 }
 
 s32 sub_080b5338(s32 i)
 {
-    register s32 i6 asm("r6");
-    register s32 res5 asm("r5");
-    register u8 *e4 asm("r4");
+    s32 i6;
+    s32 res5;
+    u8 *e4;
     u8 *b;
     u8 *pw2;
-    register s32 w8 asm("r1");
-    register u32 w9 asm("r0");
+    s32 w8;
+    u32 w9;
     s32 vb;
     u8 *pw;
     u8 *pd;
-    register u8 *pz asm("r0");
+    u8 *pz;
     u32 *pw3;
     s32 m;
-    register u8 *e2 asm("r1");
+    u8 *e2;
     s32 w3;
-    register s32 w4 asm("r0");
+    s32 w4;
     s32 r;
 
     i6 = i;
     res5 = -1;
     if (((u8 *)gUnk_02008020)[i6] != 0)
         goto fail;
-    pd = (u8 *)gUnk_020055D8;
-    asm("" : "+r"(pd));
+    pd = (u8 *)&gUnk_020055D8;
     w8 = i6 << 3;
     w9 = (u32)*(u8 **)(pd + 4);
-    asm("" : "+r"(w9));
     e4 = (u8 *)(w9 + w8);
     switch (*(s8 *)e4)
     {
@@ -1675,7 +1599,6 @@ fail:
 ok:
     e2 = (u8 *)gUnk_02005590;
     w4 = res5;
-    asm("" : "+r"(w4));
     w4 -= 32;
     *(u8 *)(w4 + (u32)e2) = i6;
     r = 1;
@@ -1685,35 +1608,23 @@ out:
 
 void sub_080b54a4(s32 a)
 {
-    u8 *pbase;
-    u8 *p8;
-    s8 *e;
-    s32 w;
-
-    pbase = (u8 *)gUnk_02005590;
-    asm("" : "+r"(pbase));
-    a -= 32;
-    e = (s8 *)(a + (u32)pbase);
-    w = *e;
-    if (w != -1)
+    if (gUnk_02005590[a - 32] != -1)
     {
-        asm("" : "+r"(e) : : "memory");
-        p8 = (u8 *)gUnk_02008020;
-        *(u8 *)(*e + (u32)p8) = 0;
-        *(u8 *)e = 255;
+        gUnk_02008020[gUnk_02005590[a - 32]] = 0;
+        gUnk_02005590[a - 32] = -1;
     }
 }
 
 void sub_080b54d0(s32 a)
 {
-    register s32 av asm("r2");
+    s32 av;
     u8 *pbase;
-    register u8 *pd asm("r1");
+    u8 *pd;
     u8 *pb2;
-    register s32 wi asm("r0");
+    s32 wi;
     s8 *e3;
     u8 *p2;
-    register s32 w asm("r0");
+    s32 w;
     s32 k;
     s32 w9;
     u8 **wdp;
@@ -1724,21 +1635,17 @@ void sub_080b54d0(s32 a)
     if ((s8)*(u8 *)gUnk_02007D64 == 4)
         return;
     pbase = (u8 *)gUnk_02005590;
-    asm("" : "+r"(pbase));
     w = av;
-    asm("" : "+r"(w));
     w -= 32;
     e3 = (s8 *)(w + (u32)pbase);
     if (*e3 == -1)
         return;
     pb2 = (u8 *)gUnk_02007BF0;
     p2 = (u8 *)((((s32)*(s8 *)gUnk_030023EC << 2) + ((s32)gUnk_0300238C << 5)) + (u32)pb2);
-    pd = (u8 *)gUnk_020055D8;
-    asm("" : "+r"(pd));
+    pd = (u8 *)&gUnk_020055D8;
     wi = *e3;
     wd = *(u8 **)(pd + 4);
     w9 = *(u8 *)(((wi << 3) + (u32)wd) + 3);
-    asm("" : "+r"(w9));
     k = (s8)w9;
     m = 1 << k;
     *(u32 *)p2 = *(u32 *)p2 | m;
@@ -1751,7 +1658,6 @@ void sub_080b5540(s32 a, s32 b)
     u8 *pb;
 
     pbase = (u8 *)gUnk_02005590;
-    asm("" : "+r"(pbase));
     b -= 32;
     pb = (u8 *)(b + (u32)pbase);
     a -= 32;
@@ -1762,122 +1668,62 @@ void sub_080b5540(s32 a, s32 b)
 
 void sub_080b5558(void)
 {
-    register s32 m5 asm("r5");
-    register s32 i6 asm("r6");
-    s32 one7;
-    register s32 n8 asm("r8");
-    s8 *e4;
-    s32 w;
-    s32 n1;
-    s32 j;
+    u16 mask;
+    s32 i;
 
-    m5 = 0;
+    mask = 0;
     CpuSet(gUnk_03001570, gUnk_02005E10, 96);
-    i6 = 0;
-    w = *(s8 *)gUnk_020060A0;
-    n1 = -1;
-    if (w != n1)
+    for (i = 0; i < 10 && gUnk_020060A0[i].unk0 != -1; i++)
     {
-        one7 = 1;
-        n8 = n1;
-        e4 = (s8 *)gUnk_020060A0;
-        do
+        if (!((mask >> gUnk_020060A0[i].unk1) & 1))
         {
-            j = *(s8 *)(e4 + 1);
-            if (!((m5 >> j) & one7))
-            {
-                sub_08065dd0(j, *e4);
-                m5 |= one7 << i6;
-                w = m5 << 16;
-                m5 = (u32)w >> 16;
-            }
-            e4 += 4;
-            i6 += 1;
-        } while (i6 <= 9 && *e4 != n8);
+            sub_08065dd0(gUnk_020060A0[i].unk1, gUnk_020060A0[i].unk0);
+            mask |= 1 << i;
+        }
     }
-    CpuSet(gUnk_03001570, (void *)gUnk_02005F10, 96);
+    CpuSet(gUnk_03001570, gUnk_02005F10, 96);
 }
 
 s32 sub_080b55d8(u32 a, u32 b)
 {
-    u32 av;
-    u32 wt2;
-    u32 bv;
-    register vu16 *p4 asm("r4");
-    vu16 *p3;
-    register s32 w2 asm("r2");
-    register s32 wt asm("r0");
-    register s32 wu asm("r1");
-    register s32 m0 asm("r1");
-    s32 w0;
+    s32 r;
+    u32 n;
 
-    av = a;
-    bv = b;
-    p4 = (vu16 *)gUnk_0200000C;
-    wt = *p4;
-    asm("" : "+r"(wt));
-    if (av + wt > 512)
-        *p4 = 0;
-    p3 = (vu16 *)gUnk_02007D40;
-    wt = *p3;
-    asm("" : "+r"(wt));
-    if (bv + wt > 14)
-        *p3 = 8;
-    w2 = *p4;
-    w0 = (w2 << 16) | *p3;
-    w2 = w2 + av;
-    wu = *p3;
-    wu = wu + bv;
-    *p3 = wu;
-    m0 = 0xFFF0;
-    w2 &= m0;
-    w2 += 16;
-    *p4 = w2;
-    return w0;
+    if (a + gUnk_0200000C > 512)
+        gUnk_0200000C = 0;
+    if (b + gUnk_02007D40 > 14)
+        gUnk_02007D40 = 8;
+    /* stand-in: the volatile read keeps cse from reusing this load for the
+       `+= b` below (the ROM loads the palette cursor twice) */
+    r = (gUnk_0200000C << 16) | *(vu16 *)&gUnk_02007D40;
+    n = gUnk_0200000C + a;
+    gUnk_02007D40 += b;
+    n &= 0xFFF0;
+    n += 16;
+    gUnk_0200000C = n;
+    return r;
 }
 
 s32 sub_080b5628(u32 a)
 {
-    register u32 av asm("r2");
-    register vu16 *p asm("r3");
-    register u32 w asm("r1");
-    register u32 wc asm("r0");
-    u32 wt;
+    s32 r;
+    u32 n;
 
-    av = a;
-    p = (vu16 *)gUnk_0200000C;
-    wt = *p;
-    asm("" : "+r"(wt));
-    wc = av + wt;
-    if (wc > 512)
-        *p = 0;
-    wc = *p;
-    asm("" : "+r"(wc));
-    w = wc + av;
-    av = 0xFFF0;
-    asm("" : "+r"(av));
-    w &= av;
-    w += 16;
-    *p = w;
-    return wc;
+    if (a + gUnk_0200000C > 512)
+        gUnk_0200000C = 0;
+    r = gUnk_0200000C;
+    n = ((r + a) & 0xFFF0) + 16;
+    gUnk_0200000C = n;
+    return r;
 }
 
 s32 sub_080b5654(u32 a)
 {
-    register u32 av asm("r1");
-    register vu16 *p asm("r2");
-    register u32 w asm("r1");
-    u32 wt;
-    register u32 wt2 asm("r0");
+    s32 r;
 
-    av = a;
-    p = (vu16 *)gUnk_02007D40;
-    wt = *p;
-    asm("" : "+r"(wt));
-    if (av + wt > 14)
-        *p = 8;
-    wt2 = *p;
-    w = wt2 + av;
-    *p = w;
-    return wt2;
+    if (a + gUnk_02007D40 > 14)
+        gUnk_02007D40 = 8;
+    r = gUnk_02007D40;
+    gUnk_02007D40 = r + a;
+    return r;
 }
