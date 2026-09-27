@@ -64,6 +64,8 @@ DATA_LINE_RES = [
     re.compile(r'^\.incbin\s+"baserom\.gba"\s*,\s*%s\s*,\s*%s$'
                % (NUMBER, NUMBER)),
     re.compile(r"^\.word\s+%s(?:\s*\+\s*%s)?$" % (SYMBOL, NUMBER)),
+    # a label inside the pointer word before it (docs/data.md 3.2)
+    re.compile(r"^\.set\s+%s\s*,\s*\.\s*-\s*[123]$" % SYMBOL),
     re.compile(r"^\.(?:align|balign|p2align)\s+%s(?:\s*,\s*%s)*$"
                % (NUMBER, NUMBER)),
 ]

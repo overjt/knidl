@@ -1297,12 +1297,10 @@ class DataPlan(object):
         if slot_why is not None:
             if v == 0:
                 return  # NULL stays inside the .incbin
-            if inside:
-                self.errors.append(
-                    "pointer slot 0x%08X (%s) has a label inside it at 0x%08X"
-                    % (addr, slot_why, inside[0])
-                )
-                return
+            # a label strictly inside the word (a table the C declares
+            # from a mid-word address, gUnk_0875841E) is emitted after the
+            # word as `.set name, . - k` (emit_data_segment), so it stays a
+            # section-relative symbol
             if addr in self.tagged_slots and v & 1:
                 # a flagged data pointer: the label is at v & ~1
                 operand = self.label_operand(v & ~1)
@@ -1389,8 +1387,14 @@ def emit_data_segment(plan, name, start, end, kind, asset):
     cur = start
     for addr in sorted(set(labels) | set(words)):
         if addr < cur:
-            raise ConfigError("%s: 0x%08X falls inside the symbolic word "
-                              "before it" % (name, addr))
+            # a label inside the pointer word just emitted: a symbol
+            # relative to the location counter, `k` bytes back from the
+            # word's end (DataPlan._plan_word allows it only in a slot)
+            for label in labels.get(addr, []):
+                body.append("\t.global\t%s" % label)
+                body.append("\t.set\t%s, . - %d" % (label, cur - addr))
+                stats["labels"] += 1
+            continue
         if addr > cur:
             incbin(cur, addr - cur)
             cur = addr
