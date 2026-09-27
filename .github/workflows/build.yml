@@ -55,9 +55,9 @@ jobs:
         shell: bash
         run: |
           objects=(build/asm/crt0.o)
-          for c in src/*.c; do
+          for c in src/*.c src/data/*.c; do
             [ -e "$c" ] || continue
-            objects+=("build/src/$(basename "$c" .c).o")
+            objects+=("build/${c%.c}.o")
           done
           docker run --rm -v "$PWD":/src -w /src knidl-builder make "${objects[@]}" INSIDE_DOCKER=1
 

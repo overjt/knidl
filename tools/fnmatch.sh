@@ -12,6 +12,9 @@
 #   --newpb  compile with agbcc -O2 -fprologue-bugfix (game-code zone: that
 #            flag suppresses agbcc's spurious leaf `push {lr}`, issue #32).
 #   --no-werror  drop -Werror while iterating (warnings won't abort).
+#   --rodata compare the object's .rodata instead of .text: a functional
+#            table defined in C (src/data/*.c, issue #36 phase 2), checked
+#            against its ROM range before tools/carve_data.py lands it.
 #
 # What it does:
 #   1. Compiles file.c through the exact Makefile pipeline (cpp | agbcc |
@@ -44,13 +47,14 @@ if [[ $# -lt 3 ]]; then
 fi
 
 START_RAW="$1"; END_RAW="$2"; CFILE="$3"; shift 3
-RECIPE="new"; WERROR="-Werror"
+RECIPE="new"; WERROR="-Werror"; SECTION=".text"
 for a in "$@"; do
     case "$a" in
         --old) RECIPE="old" ;;
         --old2) RECIPE="old2" ;;
         --newpb) RECIPE="newpb" ;;
         --no-werror) WERROR="" ;;
+        --rodata) SECTION=".rodata" ;;
         *) echo "unknown flag: $a" >&2; exit 2 ;;
     esac
 done
@@ -65,7 +69,8 @@ if [[ "${INSIDE_DOCKER:-0}" != "1" ]]; then
         $( [[ "$RECIPE" == "old" ]] && echo --old ) \
         $( [[ "$RECIPE" == "old2" ]] && echo --old2 ) \
         $( [[ "$RECIPE" == "newpb" ]] && echo --newpb ) \
-        $( [[ -z "$WERROR" ]] && echo --no-werror )
+        $( [[ -z "$WERROR" ]] && echo --no-werror ) \
+        $( [[ "$SECTION" == ".rodata" ]] && echo --rodata )
 fi
 
 START=$((START_RAW)); END=$((END_RAW)); SIZE=$((END - START))
@@ -92,10 +97,10 @@ cpp -P -I include "$CFILE" \
 # ── 2. auto stand-ins + linker script for undefined symbols ─────────────────
 arm-none-eabi-nm -u "$D/cand.o" | awk '{print $NF}' | sort -u > "$D/undef.txt"
 
-python3 - "$D" "$START" <<'PYEOF'
+python3 - "$D" "$START" "$SECTION" <<'PYEOF'
 import csv, json, re, sys
 
-d, start = sys.argv[1], int(sys.argv[2])
+d, start, section = sys.argv[1], int(sys.argv[2]), sys.argv[3]
 undef = [l.strip() for l in open(d + '/undef.txt') if l.strip()]
 
 db = {}
@@ -143,7 +148,7 @@ with open(d + '/standins.s', 'w') as f:
 
 with open(d + '/link.ld', 'w') as f:
     f.write("MEMORY { ROM : ORIGIN = 0x08000000, LENGTH = 8M }\nSECTIONS\n{\n")
-    f.write("    .cand 0x%08X : { %s/cand.o(.text) } > ROM\n" % (start, d))
+    f.write("    .cand 0x%08X : { %s/cand.o(%s) } > ROM\n" % (start, d, section))
     for name, addr, mode in labels:
         f.write("    .st_%s 0x%08X : { *(.st_%s) } > ROM\n" % (name, addr, name))
     f.write("    /DISCARD/ : { *(*) }\n}\n")

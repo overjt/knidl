@@ -122,6 +122,10 @@ CODE_KINDS = ("arm_code", "thumb_code")
 # the user-supplied ROM lives under exactly this name.
 BASEROM_NAME = "baserom.gba"
 STRUCTURE_KINDS = ("data",)
+# A functional table carved into C (tools/carve_data.py, issue #36 phase 2):
+# src/data/<name>.c defines it, so its labels are C symbols, not asm labels
+# or rom_syms.s absolutes, and a pointer table inside it emits no words.
+C_DATA_KIND = "c_data"
 
 
 class FallbackNeeded(Exception):
@@ -1041,8 +1045,9 @@ class DataPlan(object):
     """
 
     def __init__(self, rom, segments, db_rows, data_symbols, extra_labels,
-                 pointer_tables, not_pointers):
+                 pointer_tables, not_pointers, c_ranges=()):
         self.rom = rom
+        self.c_ranges = list(c_ranges)  # [(start, end)] of c_data segments
         self.segments = segments  # [(name, start, end, asset)]
         self.db_rows = db_rows  # vma -> (name, isa)
         self.data_symbols = data_symbols  # value -> name
@@ -1181,7 +1186,17 @@ class DataPlan(object):
 
         for index, table in enumerate(pointer_tables):
             base, layout = self._table_slots(table, index)
+            in_c = [r for r in self.c_ranges
+                    if r[0] <= base[0][0] < r[1]] if base else []
             for addr, why in base:
+                if in_c:
+                    # the table itself is C now (src/data/): its words are
+                    # not emitted, but its "targets" still are records here
+                    if not in_c[0][0] <= addr < in_c[0][1]:
+                        raise ConfigError(
+                            "pointer_tables[%d] straddles the C-defined range "
+                            "0x%08X-0x%08X" % (index, in_c[0][0], in_c[0][1]))
+                    continue
                 add(addr, why)
             if not layout:
                 continue
@@ -1647,6 +1662,24 @@ def main():
             if any(s <= vma < e for s, e in split_ranges)
         )
 
+        # Functional tables defined in C (c_data rows, tools/carve_data.py):
+        # their data_symbols are C symbols.  They leave rom_syms.s and get
+        # absolute stand-ins for the verification link only.
+        c_ranges = sorted(
+            (s, e) for _n, (s, e, k) in segdefs.items() if k == C_DATA_KIND
+        )
+        c_defined = dict(
+            (v, n) for v, n in data_symbols.items()
+            if any(s <= v < e for s, e in c_ranges)
+        )
+        for addr, label in sorted(extra_labels.items()):
+            if any(s <= addr < e for s, e in c_ranges):
+                sys.exit(
+                    "error: extra label %s at 0x%08X is inside a c_data "
+                    "segment: C defines it, so it belongs in data_symbols"
+                    % (label, addr)
+                )
+
         # Structure-only data segments: one plan for all of them, since a
         # pointer in one names a label in another.
         try:
@@ -1654,7 +1687,7 @@ def main():
                 rom,
                 [(n, s, e, a) for n, s, e, _k, a in data_entries],
                 rows, data_symbols, extra_labels, pointer_tables,
-                not_pointers,
+                not_pointers, c_ranges,
             )
         except ConfigError as e:
             sys.exit("error: %s" % e)
@@ -1678,7 +1711,8 @@ def main():
             n for names in plan.labels.values() for n in names
         )
         unlabeled_symbols = dict(
-            (v, n) for v, n in data_symbols.items() if n not in labeled_names
+            (v, n) for v, n in data_symbols.items()
+            if n not in labeled_names and v not in c_defined
         )
 
         exclude = set(cfg.get("external_defined", [])) | in_split
@@ -1688,8 +1722,17 @@ def main():
         )
         print("wrote %s (%d absolute symbols)" % (syms_path, count))
         syms_obj = os.path.join(tmpdir, "rom_syms.o")
+        verify_syms = syms_path
+        if c_defined:
+            verify_syms = os.path.join(tmpdir, "verify_syms.s")
+            with open(syms_path) as src, open(verify_syms, "w") as dst:
+                dst.write(src.read())
+                dst.write("\n@ verification only: data defined by src/data/*.c\n")
+                for v in sorted(c_defined):
+                    dst.write("\t.global\t%s\n%s = 0x%08X\n"
+                              % (c_defined[v], c_defined[v], v))
         run_checked(
-            [AS, "-mcpu=arm7tdmi", "-o", syms_obj, syms_path], "as (rom_syms.s)"
+            [AS, "-mcpu=arm7tdmi", "-o", syms_obj, verify_syms], "as (rom_syms.s)"
         )
 
         # Verification stand-ins for symbols that real code defines

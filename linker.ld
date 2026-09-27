@@ -1708,8 +1708,13 @@ SECTIONS
         KEEP(*(.gap_sram_driver_fn_table_asset_metadata_index)) KEEP(*(.gap_sram_driver_fn_table_asset_metadata_index.tail))
     } > ROM
 
+    /* task_types - functional table in C (src/data/task_types.c, carved by tools/carve_data.py) */
+    .task_types 0x0872FF30 : {
+        build/src/data/task_types.o(.rodata)
+    } > ROM
+
     /* Asset metadata / index zone */
-    .asset_metadata_index 0x08730000 : {
+    .asset_metadata_index 0x08730780 : {
         KEEP(*(.asset_metadata_index)) KEEP(*(.asset_metadata_index.tail))
     } > ROM
 

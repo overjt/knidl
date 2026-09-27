@@ -178,6 +178,7 @@ def main():
     # ---- which proof symbolized a word (tools/split.py's plan) ----------
     rows_db = split.load_symbol_db("docs/analysis/symbols.csv")
     seg_cfg = dict((c["name"], c) for c in cfg.get("segments", []))
+    c_segs = [(s, e, n) for s, e, k, n in segs if k == split.C_DATA_KIND]
     plan = split.DataPlan(
         rom,
         [(n, s, e, bool(seg_cfg.get(n, {}).get("asset", False)))
@@ -186,7 +187,21 @@ def main():
         dict((int(a, 16), n) for a, n in cfg.get("extra_labels", {}).items()),
         cfg.get("pointer_tables", []),
         dict((int(a, 16), r) for a, r in cfg.get("not_pointers", {}).items()),
+        [(s, e) for s, e, _n in c_segs],
     )
+
+    # ---- functional tables defined in C (c_data rows, src/data/*.c) ------
+    # Every pointer word of such a table is a C initializer, so it is
+    # symbolic by construction (make compare proves the bytes).
+    c_words = {"pointer": 0, "other": 0}
+    c_labels = 0
+    for s, e, _n in c_segs:
+        c_labels += sum(1 for a in data_symbols if s <= a < e)
+        a = (s + 3) & ~3
+        while a + 4 <= e:
+            v = struct.unpack_from("<I", rom, a - ROM_BASE)[0]
+            c_words["pointer" if PTR_LO <= v < PTR_HI else "other"] += 1
+            a += 4
 
     # ---- metric 2: pointer-like words in data segments -------------------
     data_segs = [
@@ -264,6 +279,10 @@ def main():
     print("    %d not symbolic, points at data" % total["data"])
     print("symbolic words pointing at RAM (outside the count above): %d"
           % proof["ram"])
+    print("functional tables in C (src/data/): %d segment(s), %d ROM symbols,"
+          " 0x%X bytes, %d pointer-like words"
+          % (len(c_segs), c_labels, sum(e - s for s, e, _n in c_segs),
+             c_words["pointer"]))
     if args.verbose:
         print()
         print("%-46s %9s %9s %9s" % ("segment", "symbolic", "code", "data"))

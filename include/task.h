@@ -392,6 +392,6 @@ extern vu32 gTaskBaseSp;
 extern vs16 gTaskSlotTypes[];
 
 /* ROM */
-extern struct TaskType gTaskTypes[];
+extern const struct TaskType gTaskTypes[];
 
 #endif // GUARD_TASK_H

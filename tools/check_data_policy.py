@@ -109,8 +109,9 @@ def tracked_files():
 
 
 def strip_c_comments(text):
-    text = re.sub(r"/\*.*?\*/", lambda m: " " * len(m.group(0)), text,
-                  flags=re.S)
+    # keep the newlines, so offsets in the result map to the right lines
+    text = re.sub(r"/\*.*?\*/", lambda m: re.sub(r"[^\n]", " ", m.group(0)),
+                  text, flags=re.S)
     return re.sub(r"//[^\n]*", "", text)
 
 

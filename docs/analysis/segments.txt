@@ -342,8 +342,9 @@
 0x0872E9F8 0x0872EA02 data sram_v112_string
 0x0872EA02 0x0872EA04 data gap_sram_v112_string_sram_driver_fn_table
 0x0872EA04 0x0872EA14 data sram_driver_fn_table
-0x0872EA14 0x08730000 data gap_sram_driver_fn_table_asset_metadata_index
-0x08730000 0x08760000 data asset_metadata_index
+0x0872EA14 0x0872FF30 data gap_sram_driver_fn_table_asset_metadata_index
+0x0872FF30 0x08730780 c_data task_types # src/data/task_types.c (carved by tools/carve_data.py)
+0x08730780 0x08760000 data asset_metadata_index
 0x08760000 0x087E1D58 data song_tail_misc_audio
 0x087E1D58 0x087E3088 data sample_set_index # really the room table gUnk_087E1D58[level][stage][room] (M07, rom-map seg 20); name kept until #36 restructures the zone
 0x087E3088 0x08800000 data zero_padding
