@@ -28,7 +28,11 @@ A name lives in these places, and the tool updates all of them:
 It never edits generated files.  After --write, regenerate and prove the ROM:
     make symbols && make split && make modmap
     make clean && make compare
-(--regen runs exactly that and stops at the first failure.)
+(--regen runs exactly that and stops at the first failure.)  Then
+    tools/rename.py --verify-diff master
+proves the branch is a pure rename: every name renames.csv gained since the
+ref is mapped back, and the code (outside comments), the generated files
+and the config must come out identical to the ref's.
 
 Validation, per rename: OLD resolves (a symbols.csv function, a
 data_symbols / extra_labels name or an abs_symbols constant); the kind
@@ -420,6 +424,114 @@ def run(state, renames, write):
           "modmap && make clean && make compare" % len(renames))
 
 
+def verify_diff(ref):
+    """Prove that every change since the git ref REF is a logged rename.
+
+    Maps each name renames.csv gained since REF back to its old name and
+    compares with REF's copy: C/asm code outside comments must be identical
+    (comment edits are listed for review), generated files identical,
+    split_config.json and tools/symdb.py identical as line multisets except
+    for the KNOWN_SYMBOLS entries of the renamed functions."""
+    def git(*args):
+        res = subprocess.run(["git"] + list(args), cwd=ROOT,
+                             stdout=subprocess.PIPE, stderr=subprocess.PIPE,
+                             universal_newlines=True)
+        if res.returncode != 0:
+            raise RenameError("git %s: %s" % (" ".join(args), res.stderr.strip()))
+        return res.stdout
+
+    renames_rel = rel(RENAMES)
+    try:
+        before = list(csv.DictReader(io.StringIO(git("show", "%s:%s" % (ref, renames_rel)))))
+    except RenameError:
+        before = []
+    with open(RENAMES, encoding="utf-8") as f:
+        now = list(csv.DictReader(f))
+    if now[:len(before)] != before:
+        raise RenameError("%s: rows before %s were edited, not appended" % (renames_rel, ref))
+    added = now[len(before):]
+    rev = {}
+    for r in added:
+        rev[r["new"]] = r["old"]
+
+    def origin(name):
+        seen = set()
+        while name in rev and name not in seen:
+            seen.add(name)
+            name = rev[name]
+        return name
+
+    def norm(s):
+        return re.sub(r"\b(sub|gUnk)_([0-9A-Fa-f]{8})\b",
+                      lambda m: "%s_%s" % (m.group(1), m.group(2).lower()), s)
+
+    if rev:
+        rev_re = re.compile(r"(?<![A-Za-z0-9_])(?:%s)(?![A-Za-z0-9_])" % "|".join(
+            re.escape(n) for n in sorted(rev, key=len, reverse=True)))
+        unmap = lambda s: norm(rev_re.sub(lambda m: origin(m.group(0)), s))
+    else:
+        unmap = norm
+    block_re = re.compile(r'^    0x([0-9A-F]{8}): "(sub_[0-9a-f]{8})",$')
+    status = git("diff", "--name-status", ref, "--").split("\n")
+    status += ["A\t" + p for p in git("ls-files", "--others", "--exclude-standard").split("\n") if p]
+    surface = ("src/", "include/", "asm/", "data/", "docs/analysis/symbols.csv",
+               "docs/analysis/callgraph.csv", "docs/analysis/module-map.csv",
+               rel(CONFIG), rel(SYMDB)) + TEXT_FILES
+    comment_only, checked, problems, outside = [], 0, [], []
+    for line in status:
+        if not line.strip():
+            continue
+        code, path = line.split("\t", 1)
+        if path == renames_rel:
+            continue
+        if not path.startswith(surface):
+            outside.append(path)
+            continue
+        if code != "M":
+            problems.append("%s: %s (only modified files are expected)" % (path, code))
+            continue
+        checked += 1
+        old = norm(git("show", "%s:%s" % (ref, path)))
+        with open(os.path.join(ROOT, path), encoding="utf-8") as f:
+            new = unmap(f.read())
+        if path in (rel(SYMDB), rel(CONFIG)):
+            a = sorted(old.split("\n"))
+            b = sorted(new.split("\n"))
+            extra = []
+            for ln in b:
+                if ln in a:
+                    a.remove(ln)
+                else:
+                    extra.append(ln)
+            bad = [ln for ln in extra if not (
+                (block_re.match(ln) and block_re.match(ln).group(2)
+                 == "sub_" + block_re.match(ln).group(1).lower())
+                or ln in (BLOCK_BEGIN, BLOCK_END) or ln in BLOCK_NOTE.split("\n"))]
+            if a or bad:
+                problems.append("%s: lines beyond the renames: -%d +%d (%s)" % (
+                    path, len(a), len(bad), (a + bad)[:3]))
+            continue
+        if path.endswith((".c", ".h", ".s", ".inc")):
+            is_asm = path.endswith(".s")
+            if strip_comments(old, is_asm) != strip_comments(new, is_asm):
+                problems.append("%s: code differs beyond the renames" % path)
+            elif old != new:
+                comment_only.append(path)
+            continue
+        if old != new:
+            problems.append("%s: differs beyond the renames" % path)
+    print("verify-diff %s: %d renames, %d files checked" % (ref, len(added), checked))
+    for p in comment_only:
+        print("  comment edits (review them): %s" % p)
+    for p in outside:
+        print("  outside the rename surface (docs/tooling, not checked): %s" % p)
+    for p in problems:
+        print("  PROBLEM: %s" % p)
+    if problems:
+        raise RenameError("the diff since %s is not a pure rename" % ref)
+    print("verify-diff: OK - code and generated files differ only by the renames")
+
+
 def regen():
     for cmd in (["make", "symbols"], ["make", "split"], ["make", "modmap"],
                 ["make", "clean"], ["make", "compare"]):
@@ -447,7 +559,16 @@ def main():
     ap.add_argument("--regen", action="store_true",
                     help="after --write, run make symbols/split/modmap, "
                          "make clean and make compare")
+    ap.add_argument("--verify-diff", metavar="REF",
+                    help="check that every change since git REF is a rename "
+                         "logged in renames.csv (nothing else)")
     args = ap.parse_args()
+    if args.verify_diff:
+        try:
+            verify_diff(args.verify_diff)
+        except RenameError as e:
+            sys.exit("rename.py: error: %s" % e)
+        return
     if args.csv:
         if args.old or args.new:
             ap.error("give either OLD NEW or --csv, not both")

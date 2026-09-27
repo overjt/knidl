@@ -152,6 +152,7 @@ tools/rename.py --csv batch.csv            # dry run of a batch
 tools/rename.py --csv batch.csv --write    # apply
 make symbols && make split && make modmap  # regenerate (tools/rename.py --regen
 make clean && make compare                 #  runs these five for you)
+tools/rename.py --verify-diff master       # the branch is a pure rename
 ```
 
 A batch CSV has the header `old,new,kind,evidence` (optional `issue`);
@@ -167,6 +168,13 @@ ARM code), `tools/split_config.json` (`data_symbols`, `extra_labels`,
 appends to `docs/analysis/renames.csv`.  It never edits generated files:
 `docs/analysis/symbols.csv`, `asm/rom_syms.s`, the generated `asm/*.s` and
 `data/*.s` come from `make symbols` and `make split`.
+
+`--verify-diff REF` maps every name `renames.csv` gained since the git ref
+back to its old name and compares the tree with the ref: the C and asm must
+be identical outside comments (comment edits are listed for review), and
+the generated files, the config and `tools/symdb.py` identical except for
+the new `KNOWN_SYMBOLS` entries.  It is the proof that a rename branch
+changed nothing but names.
 
 `docs/analysis/renames.csv` is the alias table.  The lessons, the rom-map
 and the module-map keep the names of their time; a reader maps an old name
