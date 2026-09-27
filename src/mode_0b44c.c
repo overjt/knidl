@@ -42,7 +42,7 @@ extern u16 gUnk_02008008[];
 extern s8 gUnk_02008010;
 extern vu16 gUnk_0200AF18[];
 extern u32 gUnk_0200EC50;
-extern s16 gUnk_0200EC58;
+extern s16 gInputRecorderMode;
 extern vs32 gUnk_03000010;
 extern vu16 gUnk_03000B24;
 extern vs32 gUnk_03000B78;
@@ -68,7 +68,7 @@ extern s8 gUnk_03002438;
 extern u16 gUnk_0300243C;
 extern s16 gUnk_0300244C;
 extern u16 gUnk_03002458[];
-extern u8 gUnk_03002464;
+extern u8 gExtraMode;
 extern vu16 gUnk_03005274;
 
 void sub_08001fd0(void);
@@ -100,7 +100,7 @@ void sub_0800b44c(void)
     gUnk_0300243C = 1;
     gUnk_030023AC = 1;
     gUnk_03001F30 = 0;
-    gUnk_0200EC58 = 0;
+    gInputRecorderMode = 0;
     gUnk_030023B0 = 0;
     gUnk_0200EC50 = 0;
 }
@@ -116,7 +116,7 @@ void sub_0800b4a8(void)
     }
     sub_080022bc();
     if (gUnk_03001F30 == 0) {
-        if (gUnk_03002464 == 1)
+        if (gExtraMode == 1)
             gUnk_02005580 = 24;
         else
             gUnk_02005580 = 48;

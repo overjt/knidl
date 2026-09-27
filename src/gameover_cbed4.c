@@ -8,19 +8,19 @@
  * sub-states gUnk_087582C4[Task.unk14] and per-frame handlers
  * gUnk_087582DC[Task.unk15] (sub_080cbed4 starts it, sub_080cbfc8 re-enters
  * it), plus the helpers the whole screen uses:
- *   sub_080cbf34   spawn task type #264 with Task.unk73 = variant.
+ *   CreateGameOverObject   spawn task type #264 with Task.unk73 = variant.
  *   sub_080cbf68 / sub_080cbfac   re-enter variant 0 (its task index is
  *       gUnk_02007D28) in sub-state 2 or 1 by this cursor's Task.unk24.
  *   sub_080cbfe4 / sub_080cc024   sub-state 0, the cursor at rest; up or down
  *       (sub_080cb108) moves it (sub-state 1), A or START picks: with
  *       Task.unk24 set sub-state 4, otherwise task type #263 and sub-state 2.
  *   sub_080cc0a4 / sub_080cc14c   sub-state 1, the move, which flips
- *       gUnk_02006164.
+ *       gGameOverCursor.
  *   sub_080cc180 ... sub_080cc768 / sub_080ccd10   sub-states 2-5, the cursor's
  *       animations after a choice; handlers 3 and 5 hand over to variant 0. */
 
 extern vu16 gUnk_03001EB8[];        /* keys pressed per player */
-extern s8 gUnk_02006164;            /* game-over screen: cursor (continue = 0?) */
+extern s8 gGameOverCursor;            /* game-over screen: cursor (continue = 0?) */
 extern s16 gUnk_02007D28;           /* game-over screen: the #264 variant-0 task's index */
 extern u32 gUnk_087549B0[];
 extern void (*gUnk_087582C4[])(void);
@@ -59,7 +59,7 @@ void sub_080cbf18(void)
 }
 
 /* Spawn task type #264 with Task.unk73 = variant. */
-void sub_080cbf34(u8 variant)
+void CreateGameOverObject(u8 variant)
 {
     s32 id = sub_080058e4(264, 32);
     struct Task *t;
@@ -88,7 +88,7 @@ void sub_080cbfac(void)
 {
     sub_080cbf68();
     gUnk_03002490->unk20 = 0;
-    sub_080cbf34(3);
+    CreateGameOverObject(3);
 }
 
 /* Re-enter task type #264 variant 1: sub-state gUnk_087582C4[Task.unk14]. */
@@ -157,7 +157,7 @@ void sub_080cc14c(void)
 {
     if (gUnk_03002490->unk14 != 1) {
         sub_08006148(sub_080cbfc8, gCurTaskIdx);
-        gUnk_02006164 ^= 1;
+        gGameOverCursor ^= 1;
     }
 }
 

@@ -13,7 +13,7 @@ extern u16 gUnk_02004B60;
 extern s16 gUnk_02005588[];
 extern s16 gUnk_02007D48[];
 extern s8 gUnk_02007D64;
-extern s16 gUnk_0200EC58;
+extern s16 gInputRecorderMode;
 extern vu16 gUnk_03000048;
 extern vs32 gUnk_03000B78;
 extern vs32 gUnk_03000F8C;
@@ -68,8 +68,8 @@ void sub_0803d0a0(s32 a0);
 void sub_08040788(void);
 void sub_080b6eec(void);
 void sub_080b6f04(void);
-void sub_080b6f38(void);
-void sub_080b77d4(void);
+void InputRecorderStart(void);
+void InputRecorderUpdate(void);
 void sub_080089e0(s32 n);
 
 void sub_08008664(void)
@@ -200,8 +200,8 @@ void sub_08008a00(void)
 
     gUnk_02004B60 = 0;
     sub_08008c4c(3);
-    gUnk_0200EC58 = 0;
-    sub_080b6f38();
+    gInputRecorderMode = 0;
+    InputRecorderStart();
     sub_0800b648();
     for (i = 0; i < gUnk_030023AC; i++)
         sub_0803d0a0(i);
@@ -213,13 +213,13 @@ void sub_08008a00(void)
     sub_0800214c();
     while (gUnk_03001E90 != 0) {
         sub_08002d18();
-        sub_080b77d4();
+        InputRecorderUpdate();
     }
     gUnk_03000048 = 0;
     do {
         sub_0801a7b4();
         sub_08002d18();
-        sub_080b77d4();
+        InputRecorderUpdate();
         sub_08040788();
         sub_080075b8();
         switch (gUnk_03002438) {
@@ -253,7 +253,7 @@ void sub_08008a00(void)
     sub_080021dc();
     while (gUnk_03001E90 != 0) {
         sub_08002d18();
-        sub_080b77d4();
+        InputRecorderUpdate();
     }
     gUnk_03000048 = 0;
     for (i = 0; i < gUnk_030023AC; i++) {

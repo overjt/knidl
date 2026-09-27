@@ -76,10 +76,10 @@ struct M37Player
     /*0x30*/ s32 unk30;
 };
 
-/* gUnk_02016C40, the game's state; always used through gUnk_02017094 */
+/* gAirGrind, the game's state; always used through gAirGrindPtr */
 struct M37Game
 {
-    /*0x000*/ s32 unk000;       /* the level (M36's sub_080c1f9c copies gUnk_02006168) */
+    /*0x000*/ s32 unk000;       /* the level (M36's AirGrindInit copies gUnk_02006168) */
     /*0x004*/ s32 unk004[4];
     /*0x014*/ s32 unk014;
     /*0x018*/ s32 unk018;
@@ -117,7 +117,7 @@ struct M37Timer
     /*0x24*/ s32 unk24;
 };
 
-/* per-player records of gUnk_0201B0E0, M37Course.unk018[4] (0x3C bytes) */
+/* per-player records of gAirGrindCourse, M37Course.unk018[4] (0x3C bytes) */
 struct M37CoursePlayer
 {
     /*0x00*/ s32 unk00;
@@ -137,7 +137,7 @@ struct M37CoursePlayer
     /*0x38*/ s32 unk38;
 };
 
-/* gUnk_0201B0E0, reached through gUnk_0201716C (and directly by the
+/* gAirGrindCourse, reached through gAirGrindCoursePtr (and directly by the
    0x080C5284-0x080C623C builder) */
 struct M37Course
 {
@@ -153,9 +153,9 @@ struct M37Course
     /*0x110*/ s32 unk110;
 };
 
-extern struct M37Game *gUnk_02017094;
+extern struct M37Game *gAirGrindPtr;
 extern struct M37Timer gUnk_020170A0[4];
-extern struct M37Course *gUnk_0201716C;
+extern struct M37Course *gAirGrindCoursePtr;
 extern u16 gUnk_02017170;
 extern u32 gUnk_08755FA8[];
 extern s16 gUnk_080CFF60[];
@@ -187,7 +187,7 @@ void sub_080c4630(s32 idx, s32 x, s32 y, u16 attr)
 
 void sub_080c4664(s32 i)
 {
-    struct M37Game *g = gUnk_02017094;
+    struct M37Game *g = gAirGrindPtr;
     struct M37ObjSet *set = &g->unk0EC;
     struct M37Obj *o = &set->unk04[i];
     u32 r;
@@ -211,7 +211,7 @@ void sub_080c4664(s32 i)
 
 void sub_080c46ec(void)
 {
-    struct M37Game *g = gUnk_02017094;
+    struct M37Game *g = gAirGrindPtr;
     s32 *last = &g->unk0EC.unk00;
     s32 i;
     s32 x;
@@ -231,7 +231,7 @@ void sub_080c46ec(void)
         p += 4;
         x += 0x340000;
     }
-    *last = gUnk_0201716C->unk000;
+    *last = gAirGrindCoursePtr->unk000;
     gUnk_03002490->unk04 = (u32)sub_080c4790;
     sub_080055b0(1, gCurTaskIdx);
     sub_08006138();
@@ -239,13 +239,13 @@ void sub_080c46ec(void)
 
 void sub_080c4790(void)
 {
-    struct M37Game *g = gUnk_02017094;
+    struct M37Game *g = gAirGrindPtr;
     s32 *last = &g->unk0EC.unk00;
     s32 i;
     struct M37Obj *o;
 
     for (i = 0, o = g->unk0EC.unk04; i <= 6; o++, i++) {
-        struct M37Course *c = gUnk_0201716C;
+        struct M37Course *c = gAirGrindCoursePtr;
         s32 x;
 
         o->unkC = o->unk4 - ((c->unk018[0].unk10 - 160) << 16) / 4;
@@ -259,14 +259,14 @@ void sub_080c4790(void)
         }
         sub_080c4630(o->unk0, o->unk8 >> 16, o->unkC >> 16, o->unk2);
     }
-    *last = gUnk_0201716C->unk000;
+    *last = gAirGrindCoursePtr->unk000;
 }
 
 void sub_080c4818(void)
 {
     struct Task *t = gUnk_03002490;
 
-    t->unk48 = (t->unk4C >> 16) - gUnk_0201716C->unk000 + 120;
+    t->unk48 = (t->unk4C >> 16) - gAirGrindCoursePtr->unk000 + 120;
     t->unk3C = gUnk_02017170 & 1;
     if (t->unk48 < -120) {
         t->unk3C = 0xFFFF;
@@ -276,7 +276,7 @@ void sub_080c4818(void)
 
 void sub_080c4860(s32 y)
 {
-    struct Task *t = &gUnk_03002790[gUnk_02017094->unk44C];
+    struct Task *t = &gUnk_03002790[gAirGrindPtr->unk44C];
 
     t->unk4C = y << 16;
     t->unk08 = (u32)sub_080c4818;
@@ -351,12 +351,12 @@ void sub_080c4a20(s32 i)
 
 void sub_080c4a48(s32 pal)
 {
-    gUnk_02017094->unk018 = (pal << 12) & 0xF000;
+    gAirGrindPtr->unk018 = (pal << 12) & 0xF000;
 }
 
 void sub_080c4a5c(s32 digit, s32 x, s32 y)
 {
-    sub_08001a94(2, gUnk_08755FEC[digit], 0x2000, gUnk_02017094->unk018, x, y);
+    sub_08001a94(2, gUnk_08755FEC[digit], 0x2000, gAirGrindPtr->unk018, x, y);
 }
 
 void sub_080c4a94(s32 idx, s32 x, s32 y)
@@ -438,18 +438,18 @@ void sub_080c4c78(void)
 
     seed = sub_08002ec0();
     for (i = 0; i <= 4; i++)
-        gUnk_02017094->unk1A4[i] = seed;
+        gAirGrindPtr->unk1A4[i] = seed;
 }
 
 u32 sub_080c4ca4(s32 i)
 {
-    return gUnk_02017094->unk1A4[i] = (gUnk_02017094->unk1A4[i] * 61 + 0x579) & 0xFFF;
+    return gAirGrindPtr->unk1A4[i] = (gAirGrindPtr->unk1A4[i] * 61 + 0x579) & 0xFFF;
 }
 
 u32 sub_080c4cd4(s32 i, u32 range)
 {
     u32 x;
 
-    gUnk_02017094->unk1A4[i] = x = (gUnk_02017094->unk1A4[i] * 61 + 0x579) & 0xFFF;
+    gAirGrindPtr->unk1A4[i] = x = (gAirGrindPtr->unk1A4[i] * 61 + 0x579) & 0xFFF;
     return (x * range) >> 12;
 }

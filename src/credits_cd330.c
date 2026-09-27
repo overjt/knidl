@@ -7,9 +7,9 @@
  * AgbMain state 12, part 1: the staff credits (skipped in link play and
  * after AgbMain state 20).  The credits text scrolls up BG0 over a run of
  * recorded demos of the game, one per scene.
- *   sub_080cd330   the sequence: per scene of gUnk_087583CC[n] (n by
- *       gUnk_03002464), load the recorded input (gUnk_0200EC50,
- *       sub_080b6f38) and the room (sub_080cd674), fade in, play it for
+ *   CreditsMain   the sequence: per scene of gUnk_087583CC[n] (n by
+ *       gExtraMode), load the recorded input (gUnk_0200EC50,
+ *       InputRecorderStart) and the room (sub_080cd674), fade in, play it for
  *       gUnk_0875841E[n][scene] frames and fade out; then fade the music and
  *       the screen and put back the player's score the demos overwrote.
  *   sub_080cd674   load a scene's room and reset the per-scene state (a twin
@@ -22,7 +22,7 @@ extern vu16 gUnk_03001ED8;          /* DISPCNT shadow */
 extern vs32 gUnk_03000010;          /* BG0 16.16 scroll shadows ... */
 extern vs32 gUnk_0300117C;
 extern u16 gUnk_03002360;           /* this player's index */
-extern u8 gUnk_03002464;
+extern u8 gExtraMode;
 extern u16 gUnk_02000028;
 extern s32 gUnk_02006020[];         /* score per player */
 extern vu16 gUnk_03001EB8[];        /* keys pressed per player */
@@ -38,7 +38,7 @@ extern u8 gUnk_0201C1B0;            /* credits: current demo scene */
 extern u32 gUnk_087583CC[][8];      /* credits: per variant, the scenes' recorded demos, 0-terminated */
 extern u16 gUnk_0875841E[][7];      /* credits: per variant, the scenes' lengths in frames */
 extern vu16 gUnk_03001270[];
-extern s16 gUnk_0200EC58;
+extern s16 gInputRecorderMode;
 extern u32 gUnk_0200EC50;
 extern u16 gUnk_02008008[];
 extern u16 gUnk_02007FA8[];
@@ -83,8 +83,8 @@ void sub_0801a7b4(void);
 void sub_0802497c(void);
 void sub_08040788(void);
 void sub_08066144(void);
-void sub_080b6f38(void);
-void sub_080b77d4(void);
+void InputRecorderStart(void);
+void InputRecorderUpdate(void);
 void sub_080cd674(void);
 void sub_080cd70c(void);
 void sub_080cd75c(void);
@@ -92,11 +92,11 @@ void sub_080cd828(void);
 
 /* AgbMain state 12, part 1: the staff credits.  The credits text scrolls up
    BG0 (sub_080cd70c, sub_080cd75c) over a run of recorded demos, one per
-   scene of gUnk_087583CC[n] (n = 2 when gUnk_03002464 is 1, else 1), each
+   scene of gUnk_087583CC[n] (n = 2 when gExtraMode is 1, else 1), each
    faded in, played for its length gUnk_0875841E[n][scene] and faded out;
    then the music and the screen fade out and the player's score, which the
    demos overwrite, is put back. */
-void sub_080cd330(void)
+void CreditsMain(void)
 {
     u32 *scenes;
     u16 *frames;
@@ -109,7 +109,7 @@ void sub_080cd330(void)
     gUnk_03001EDC = 1;
     gUnk_0201C1A4 = gUnk_02006020[gUnk_02000028];
     gUnk_03002360 = 0;
-    if (gUnk_03002464 == 1)
+    if (gExtraMode == 1)
         gUnk_030023B0 = 2;
     else
         gUnk_030023B0 = 1;
@@ -121,12 +121,12 @@ void sub_080cd330(void)
     sub_0800b514();
     sub_08008c64(0);
     gUnk_03001270[0] = 0;
-    gUnk_0200EC58 = 3;
+    gInputRecorderMode = 3;
     gUnk_03001ED8 &= ~0x80;
     sub_08003110(20);
     for (;;) {
         gUnk_0200EC50 = scenes[gUnk_0201C1B0];
-        sub_080b6f38();
+        InputRecorderStart();
         gUnk_02008008[gUnk_03002360] = 0;
         gUnk_02007FA8[gUnk_03002360] = 0xFFFF;
         sub_080cd674();
@@ -149,7 +149,7 @@ void sub_080cd330(void)
                 gUnk_03000FB8 = -5;
             }
             sub_080cd75c();
-            sub_080b77d4();
+            InputRecorderUpdate();
         }
         gUnk_03000FB8 = -5;
         n = frames[gUnk_0201C1B0];
@@ -157,7 +157,7 @@ void sub_080cd330(void)
             sub_0801a7b4();
             sub_08002d18();
             sub_080cd75c();
-            sub_080b77d4();
+            InputRecorderUpdate();
             sub_08040788();
         }
         if (scenes[++gUnk_0201C1B0] != 0) {
@@ -166,7 +166,7 @@ void sub_080cd330(void)
             while (n-- != 0) {
                 sub_08002d18();
                 sub_080cd75c();
-                sub_080b77d4();
+                InputRecorderUpdate();
             }
             gUnk_03001ED8 &= 0xE0FF;
             gUnk_03001ED8 |= 0x100;
@@ -182,7 +182,7 @@ void sub_080cd330(void)
     n = 30;
     while (n-- != 0) {
         sub_08002d18();
-        sub_080b77d4();
+        InputRecorderUpdate();
         sub_08040788();
     }
     gUnk_03001ED8 |= 0x80;

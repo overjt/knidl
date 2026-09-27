@@ -2,12 +2,12 @@
 #include "global.h"
 #include "task.h"
 
-extern u8 gUnk_02016490;
-extern s32 gUnk_02016494;
-extern u16 gUnk_020164A0[];
+extern u8 gHBlankScrollState;
+extern s32 gHBlankScrollTimer;
+extern u16 gHBlankScrollTable[];
 extern s32 gUnk_02016C30;
 extern void (*gUnk_0300003C)(void);
-extern u32 gUnk_0300101C;
+extern u32 gHBlankDmaDest;
 extern vs32 gUnk_03000B78;
 extern vs32 gUnk_03000F8C;
 extern vu32 gUnk_03001E94;
@@ -39,31 +39,31 @@ s32 sub_080b6d04(void)
     s32 d;
     u32 *pc;
 
-    if (gUnk_02016490 == 3)
+    if (gHBlankScrollState == 3)
     {
-        gUnk_03000F8C = gUnk_020164A0[0] << 16;
-        gUnk_03000B78 = gUnk_020164A0[2] << 16;
-        gUnk_0300101C = 0x04000018;
+        gUnk_03000F8C = gHBlankScrollTable[0] << 16;
+        gUnk_03000B78 = gHBlankScrollTable[2] << 16;
+        gHBlankDmaDest = 0x04000018;
         return 3;
     }
-    if (gUnk_02016490 == 2)
+    if (gHBlankScrollState == 2)
     {
         gUnk_0300003C = NULL;
-        gUnk_02016494 = 0;
+        gHBlankScrollTimer = 0;
     }
     else
     {
-        if (gUnk_02016494 > 0x1FF)
-            gUnk_02016494 = 0;
-        d = 512 - gUnk_02016494;
+        if (gHBlankScrollTimer > 0x1FF)
+            gHBlankScrollTimer = 0;
+        d = 512 - gHBlankScrollTimer;
         i = gUnk_030023E4;
         w = gUnk_03001E94 >> 16;
         pt = gUnk_087561CC;
         v = ((d * pt[i >> 3]) >> 1) + *(pc2 = &gUnk_02016C30);
         pf = &gUnk_03000F8C;
-        base = gUnk_020164A0;
+        base = gHBlankScrollTable;
         pb = &gUnk_03000B78;
-        pc = &gUnk_0300101C;
+        pc = &gHBlankDmaDest;
         pc3 = pc2;
         pt2 = pt;
         p = base;

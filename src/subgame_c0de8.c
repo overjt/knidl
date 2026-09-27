@@ -19,9 +19,9 @@
  *   sub_080c1be8 / sub_080c1cec / sub_080c1d84   the three ranking markers.
  *   sub_080c1ebc   walks the 4-direction path script at gUnk_08757280 in
  *       6.0 steps, writing gUnk_03000B78/gUnk_03000FA8 (terminator 128).
- *   sub_080c1f88 / sub_080c1f9c / sub_080c1fdc   the score-record reset:
- *       four 60-byte records at gUnk_0201B0E0 + 0x18, the player count into
- *       gUnk_02016C40, and the final dispatcher hand-off.
+ *   sub_080c1f88 / AirGrindInit / AirGrindMain   the score-record reset:
+ *       four 60-byte records at gAirGrindCourse + 0x18, the player count into
+ *       gAirGrind, and the final dispatcher hand-off.
  */
 #include "gba/gba.h"
 #include "global.h"
@@ -68,9 +68,9 @@ extern u32 gUnk_08757270[];
 extern u32 gUnk_08757278[];
 extern u8 gUnk_08757280[];
 extern u32 gUnk_087572CC[];
-extern u8 gUnk_02016C40[];
-extern s32 gUnk_0201B0E0[];
-extern u8 gUnk_02007D2C;
+extern u8 gAirGrind[];
+extern s32 gAirGrindCourse[];
+extern u8 gSubGamePhase;
 extern u32 gUnk_08755EB8[];
 extern u32 gUnk_08755EC4[];
 extern u32 gUnk_087571F8[];
@@ -149,9 +149,9 @@ extern u32 sub_08002ee8(u32 range);
 extern void sub_08003110(u32 a);
 extern void sub_080034d0(void);
 extern void sub_08006138(void);
-extern void sub_080b9d0c(s32 a);
-extern void sub_080b9d24(void);
-extern void sub_080b9e30(void);
+extern void SubGameReplay(s32 a);
+extern void SubGameQuit(void);
+extern void SubGameCheckEnd(void);
 
 extern void sub_080bda78(void);
 extern void sub_080bda98(void);
@@ -1043,11 +1043,11 @@ void sub_080c1f88(void)
 {
     u8 *p;
 
-    p = gUnk_02016C40;
+    p = gAirGrind;
     *(u16 *)(p + 772) = 0;
 }
 
-void sub_080c1f9c(void)
+void AirGrindInit(void)
 {
     s32 i;
     s32 zero;
@@ -1056,9 +1056,9 @@ void sub_080c1f9c(void)
     s8 *q;
     s32 *r;
 
-    p = gUnk_02016C40;
+    p = gAirGrind;
     q = &gUnk_02006168;
-    r = gUnk_0201B0E0;
+    r = gAirGrindCourse;
     zero = 0;
     j = 51;
     for (i = 3; i >= 0; i--) {
@@ -1070,9 +1070,9 @@ void sub_080c1f9c(void)
     p[1105] = 0;
 }
 
-void sub_080c1fdc(void)
+void AirGrindMain(void)
 {
-    sub_08002e98(gUnk_02007D2C, 2, gUnk_087572CC);
+    sub_08002e98(gSubGamePhase, 2, gUnk_087572CC);
     sub_08006138();
 }
 

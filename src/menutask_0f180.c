@@ -8,7 +8,7 @@
  * screens 8 and 9) and the menu's background tasks.  Task type #251
  * (sub_0800f180, body sub_0800f2b4) spawns a #252 (sub_0800f390, body
  * sub_0800f408) and a #253 (sub_0800f5ec, body sub_0800f698) per player
- * and slides them as partners join (sub_0800ffd8); #256 (sub_0800f7b0,
+ * and slides them as partners join (sub_0800ffd8); #256 (Task_MenuScreenTitle,
  * body sub_0800f840) is the menu screen's title sprite; #259
  * (sub_0800fa30) and #258 (sub_0800fb94) cycle and cross-fade the
  * background palettes when the menu screen changes. */
@@ -293,7 +293,7 @@ void sub_0800f698(void)
         gUnk_03002490->unk3C = 0xFFFF;
 }
 
-void sub_0800f7b0(void)
+void Task_MenuScreenTitle(void)
 {
     struct Task *t;
 

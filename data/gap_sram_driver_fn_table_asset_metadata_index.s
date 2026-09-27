@@ -27,21 +27,21 @@ gUnk_0872FB30:
 	.global	gUnk_0872FF30
 gUnk_0872FF30:
 	.incbin	"baserom.gba", 0x72FF30, 0x4
-	.word	sub_080093fc+1
+	.word	Task_BootLogo+1
 	.incbin	"baserom.gba", 0x72FF38, 0x4
-	.word	sub_08009418+1
+	.word	Task_TitlePalette+1
 	.incbin	"baserom.gba", 0x72FF40, 0x4
-	.word	sub_080095c0+1
+	.word	Task_TitleSprites+1
 	.incbin	"baserom.gba", 0x72FF48, 0x4
-	.word	sub_08023618+1
+	.word	Task_Room+1
 	.incbin	"baserom.gba", 0x72FF50, 0x4
-	.word	sub_0802d370+1
+	.word	Task_MapEvent+1
 	.incbin	"baserom.gba", 0x72FF58, 0x4
-	.word	sub_08032688+1
+	.word	Task_Player+1
 	.incbin	"baserom.gba", 0x72FF60, 0x4
-	.word	sub_080507bc+1
+	.word	Task_PlayerObject+1
 	.incbin	"baserom.gba", 0x72FF68, 0x4
-	.word	sub_08053af4+1
+	.word	Task_PlayerEffect+1
 	.incbin	"baserom.gba", 0x72FF70, 0x4
 	.word	sub_0807893c+1
 	.incbin	"baserom.gba", 0x72FF78, 0x4

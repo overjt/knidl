@@ -20,7 +20,7 @@ extern u8 gUnk_03001F30;
 extern u16 gUnk_02005588[4];
 extern u16 gUnk_02007D48[4];
 
-void sub_080b7800(void);
+void InitSaveSlots(void);
 void sub_0800b44c(void);
 void sub_080091ac(void);
 void sub_080096e0(void);
@@ -35,13 +35,13 @@ void sub_0800791c(void);
 void sub_0800783c(void);
 void sub_0805b110(void);
 void sub_08007f9c(void);
-void sub_080cacf0(void);
-void sub_080ba354(void);
+void GameOverMain(void);
+void SubGameMain(void);
 void sub_080022bc(void);
 void sub_08022f50(void);
 void sub_08008a00(void);
-void sub_080c6260(void);
-void sub_080cd330(void);
+void EndingMain(void);
+void CreditsMain(void);
 void sub_080c6420(void);
 
 void AgbMain(void)
@@ -49,7 +49,7 @@ void AgbMain(void)
     s32 i;
 
     gUnk_030023D8 = 0;
-    sub_080b7800();
+    InitSaveSlots();
     while (1) {
         switch (gUnk_030023D8) {
         case 0:
@@ -130,12 +130,12 @@ void AgbMain(void)
                 sub_0800791c();
             break;
         case 22:
-            sub_080cacf0();
+            GameOverMain();
             break;
         case 14:
         case 15:
         case 16:
-            sub_080ba354();
+            SubGameMain();
             break;
         case 20:
             for (i = 0; i < 4; i++) {
@@ -154,12 +154,12 @@ void AgbMain(void)
             gUnk_030023D8 = 5;
             break;
         case 11:
-            sub_080c6260();
+            EndingMain();
             gUnk_030023D8 = 12;
             break;
         case 12:
             if (gUnk_03001F30 != 1 && gUnk_03002150 != 20)
-                sub_080cd330();
+                CreditsMain();
             sub_080c6420();
             gUnk_030023D8 = 0;
             break;

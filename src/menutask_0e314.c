@@ -39,12 +39,12 @@ extern s8 gUnk_020060D0;
 extern u8 gUnk_0200618C;
 extern s8 gUnk_02007D34;
 extern s8 gUnk_0200B074;
-extern struct SaveSlot gUnk_0200E600[];
+extern struct SaveSlot gSaveSlots[];
 extern u16 gUnk_030012F0[][16];
 extern u16 gUnk_0300153C[];
 extern u16 gUnk_03001550[];
 extern u16 gUnk_03001570[];
-extern s32 gUnk_030023E8;
+extern s32 gCurSaveSlot;
 extern u16 gUnk_08559C24[][16];
 extern u16 gUnk_08559CE6[];
 extern u16 gUnk_08559CEC[];
@@ -128,7 +128,7 @@ void sub_0800e46c(void)
     gUnk_03002490->unk2C = 0;
     gUnk_03002490->unk30 = 1;
     gUnk_03002490->unk34 = 0;
-    if (gUnk_0200E600[gUnk_030023E8].unk10 & 4) {
+    if (gSaveSlots[gCurSaveSlot].unk10 & 4) {
         gUnk_03002490->unk4C = 0xB00000;
         gUnk_03002490->unk50 = (gUnk_02007D34 << 20) + 0x280000;
     } else {

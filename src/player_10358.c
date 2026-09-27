@@ -14,7 +14,7 @@ extern struct Task gUnk_03002790[];
 extern u32 gUnk_081AC358[];
 extern u32 gUnk_081AC378[];
 extern u32 gUnk_08731F78[];
-extern u32 gUnk_08731F98[];
+extern u32 gCutsceneDurations[];
 extern u32 gUnk_08731FA8[];
 extern u32 gUnk_08731FC8[];
 extern u32 gUnk_08751C44[];
@@ -62,7 +62,7 @@ s32 sub_08010358(s32 a, s32 b)
 
 void sub_08010480(void);   /* hdr.c lacks this in-module prototype */
 
-void sub_080103f0(void)
+void Task_CutsceneDirector(void)
 {
     u16 *p;
     u16 *q;
@@ -72,10 +72,10 @@ void sub_080103f0(void)
     TaskYieldTrampoline(60);
     gUnk_03002490->unk04 = (u32)sub_08010480;
     gUnk_03002490->unk6C = 0;
-    p = (u16 *)gUnk_08731F98;
+    p = (u16 *)gCutsceneDurations;
     if ((s16)gUnk_03002490->unk6C < p[*(s8 *)&gUnk_030023B8] - 60)
     {
-        q = (u16 *)gUnk_08731F98;
+        q = (u16 *)gCutsceneDurations;
         do
         {
             TaskYieldTrampoline(1);
@@ -107,7 +107,7 @@ void sub_08010480(void)
     }
 }
 
-void sub_080104f0(void)
+void Task_CutsceneActor(void)
 {
     sub_08002e98(gUnk_03002490->unk18, 63, gUnk_08731FC8);
 }

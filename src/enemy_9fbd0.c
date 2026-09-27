@@ -11,7 +11,7 @@ extern u8 gUnk_03001F30;
 extern struct PlayerState gUnk_03002170[];
 extern u8 gUnk_03002340;
 extern s32 gUnk_030023B4;
-extern u32 gUnk_030023E8[];
+extern u32 gCurSaveSlot[];
 extern s16 gUnk_0300244C;
 extern u32 gUnk_08748264[];
 extern u32 gUnk_08748974[];
@@ -156,7 +156,7 @@ u8 sub_0809fd64(void)
     if (gUnk_03001F30 == 1)
     {
         sub_0800a698();
-        sub_080b7c00(gUnk_030023E8[0]);
+        sub_080b7c00(gCurSaveSlot[0]);
     }
     sub_08006148(sub_0806a344, gCurTaskIdx);
     return 1;

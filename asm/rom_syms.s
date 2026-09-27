@@ -165,8 +165,8 @@ gUnk_020060E0 = 0x020060E0
 gUnk_02006130 = 0x02006130
 	.global	gUnk_02006160
 gUnk_02006160 = 0x02006160
-	.global	gUnk_02006164
-gUnk_02006164 = 0x02006164
+	.global	gGameOverCursor
+gGameOverCursor = 0x02006164
 	.global	gUnk_02006168
 gUnk_02006168 = 0x02006168
 	.global	gUnk_0200616C
@@ -215,8 +215,8 @@ gUnk_02006A20 = 0x02006A20
 gUnk_02006A80 = 0x02006A80
 	.global	gUnk_02006AA0
 gUnk_02006AA0 = 0x02006AA0
-	.global	gUnk_02007BE0
-gUnk_02007BE0 = 0x02007BE0
+	.global	gGameOverDone
+gGameOverDone = 0x02007BE0
 	.global	gUnk_02007BF0
 gUnk_02007BF0 = 0x02007BF0
 	.global	gUnk_02007CF0
@@ -227,8 +227,8 @@ gUnk_02007CF4 = 0x02007CF4
 gUnk_02007D00 = 0x02007D00
 	.global	gUnk_02007D28
 gUnk_02007D28 = 0x02007D28
-	.global	gUnk_02007D2C
-gUnk_02007D2C = 0x02007D2C
+	.global	gSubGamePhase
+gSubGamePhase = 0x02007D2C
 	.global	gUnk_02007D30
 gUnk_02007D30 = 0x02007D30
 	.global	gUnk_02007D34
@@ -297,8 +297,8 @@ gUnk_02008008 = 0x02008008
 gUnk_02008010 = 0x02008010
 	.global	gUnk_02008014
 gUnk_02008014 = 0x02008014
-	.global	gUnk_02008018
-gUnk_02008018 = 0x02008018
+	.global	gEndingSceneActive
+gEndingSceneActive = 0x02008018
 	.global	gUnk_0200801C
 gUnk_0200801C = 0x0200801C
 	.global	gUnk_02008020
@@ -389,8 +389,8 @@ gUnk_0200D090 = 0x0200D090
 gUnk_0200D110 = 0x0200D110
 	.global	gUnk_0200D120
 gUnk_0200D120 = 0x0200D120
-	.global	gUnk_0200E600
-gUnk_0200E600 = 0x0200E600
+	.global	gSaveSlots
+gSaveSlots = 0x0200E600
 	.global	gUnk_0200E900
 gUnk_0200E900 = 0x0200E900
 	.global	gUnk_0200EA00
@@ -435,16 +435,16 @@ gUnk_0200EC48 = 0x0200EC48
 gUnk_0200EC4C = 0x0200EC4C
 	.global	gUnk_0200EC50
 gUnk_0200EC50 = 0x0200EC50
-	.global	gUnk_0200EC54
-gUnk_0200EC54 = 0x0200EC54
-	.global	gUnk_0200EC58
-gUnk_0200EC58 = 0x0200EC58
+	.global	gInputRecorderRunning
+gInputRecorderRunning = 0x0200EC54
+	.global	gInputRecorderMode
+gInputRecorderMode = 0x0200EC58
 	.global	gUnk_0200EC60
 gUnk_0200EC60 = 0x0200EC60
 	.global	gUnk_0200EC68
 gUnk_0200EC68 = 0x0200EC68
-	.global	gUnk_0200EC6C
-gUnk_0200EC6C = 0x0200EC6C
+	.global	gInputRecordingPtr
+gInputRecordingPtr = 0x0200EC6C
 	.global	gUnk_0200EC70
 gUnk_0200EC70 = 0x0200EC70
 	.global	gUnk_0200EC78
@@ -453,28 +453,28 @@ gUnk_0200EC78 = 0x0200EC78
 gUnk_0200EC80 = 0x0200EC80
 	.global	gUnk_02016480
 gUnk_02016480 = 0x02016480
-	.global	gUnk_02016490
-gUnk_02016490 = 0x02016490
-	.global	gUnk_02016494
-gUnk_02016494 = 0x02016494
-	.global	gUnk_020164A0
-gUnk_020164A0 = 0x020164A0
-	.global	gUnk_02016860
-gUnk_02016860 = 0x02016860
-	.global	gUnk_02016870
-gUnk_02016870 = 0x02016870
+	.global	gHBlankScrollState
+gHBlankScrollState = 0x02016490
+	.global	gHBlankScrollTimer
+gHBlankScrollTimer = 0x02016494
+	.global	gHBlankScrollTable
+gHBlankScrollTable = 0x020164A0
+	.global	gHBlankScrollEffect
+gHBlankScrollEffect = 0x02016860
+	.global	gHBlankScrollDmaTable
+gHBlankScrollDmaTable = 0x02016870
 	.global	gUnk_02016C30
 gUnk_02016C30 = 0x02016C30
-	.global	gUnk_02016C40
-gUnk_02016C40 = 0x02016C40
-	.global	gUnk_02017094
-gUnk_02017094 = 0x02017094
+	.global	gAirGrind
+gAirGrind = 0x02016C40
+	.global	gAirGrindPtr
+gAirGrindPtr = 0x02017094
 	.global	gUnk_020170A0
 gUnk_020170A0 = 0x020170A0
 	.global	gUnk_02017140
 gUnk_02017140 = 0x02017140
-	.global	gUnk_0201716C
-gUnk_0201716C = 0x0201716C
+	.global	gAirGrindCoursePtr
+gAirGrindCoursePtr = 0x0201716C
 	.global	gUnk_02017170
 gUnk_02017170 = 0x02017170
 	.global	gUnk_02017180
@@ -487,8 +487,8 @@ gUnk_02018920 = 0x02018920
 gUnk_02019140 = 0x02019140
 	.global	gUnk_0201A0E0
 gUnk_0201A0E0 = 0x0201A0E0
-	.global	gUnk_0201B0E0
-gUnk_0201B0E0 = 0x0201B0E0
+	.global	gAirGrindCourse
+gAirGrindCourse = 0x0201B0E0
 	.global	gUnk_0201B1F4
 gUnk_0201B1F4 = 0x0201B1F4
 	.global	gUnk_0201B200
@@ -651,8 +651,8 @@ gUnk_03001010 = 0x03001010
 gUnk_03001014 = 0x03001014
 	.global	gUnk_03001018
 gUnk_03001018 = 0x03001018
-	.global	gUnk_0300101C
-gUnk_0300101C = 0x0300101C
+	.global	gHBlankDmaDest
+gHBlankDmaDest = 0x0300101C
 	.global	gUnk_03001020
 gUnk_03001020 = 0x03001020
 	.global	gUnk_03001170
@@ -665,8 +665,8 @@ gUnk_03001178 = 0x03001178
 gUnk_0300117C = 0x0300117C
 	.global	gUnk_03001180
 gUnk_03001180 = 0x03001180
-	.global	gUnk_03001184
-gUnk_03001184 = 0x03001184
+	.global	gHBlankDmaCnt
+gHBlankDmaCnt = 0x03001184
 	.global	gUnk_03001188
 gUnk_03001188 = 0x03001188
 	.global	gUnk_0300118C
@@ -747,8 +747,8 @@ gUnk_03001E9C = 0x03001E9C
 gUnk_03001EA0 = 0x03001EA0
 	.global	gUnk_03001EA4
 gUnk_03001EA4 = 0x03001EA4
-	.global	gUnk_03001EA8
-gUnk_03001EA8 = 0x03001EA8
+	.global	gSramAvailable
+gSramAvailable = 0x03001EA8
 	.global	gUnk_03001EAC
 gUnk_03001EAC = 0x03001EAC
 	.global	gUnk_03001EB0
@@ -779,8 +779,8 @@ gUnk_03001EE4 = 0x03001EE4
 gUnk_03001EE8 = 0x03001EE8
 	.global	gUnk_03001EEC
 gUnk_03001EEC = 0x03001EEC
-	.global	gUnk_03001EF0
-gUnk_03001EF0 = 0x03001EF0
+	.global	gHBlankDmaSrc
+gHBlankDmaSrc = 0x03001EF0
 	.global	gUnk_03001EF4
 gUnk_03001EF4 = 0x03001EF4
 	.global	gUnk_03001EF8
@@ -839,8 +839,8 @@ gUnk_03002350 = 0x03002350
 gUnk_03002354 = 0x03002354
 	.global	gUnk_03002358
 gUnk_03002358 = 0x03002358
-	.global	gUnk_0300235C
-gUnk_0300235C = 0x0300235C
+	.global	gCompletionPercent
+gCompletionPercent = 0x0300235C
 	.global	gUnk_03002360
 gUnk_03002360 = 0x03002360
 	.global	gUnk_03002364
@@ -897,8 +897,8 @@ gUnk_030023DC = 0x030023DC
 gUnk_030023E0 = 0x030023E0
 	.global	gUnk_030023E4
 gUnk_030023E4 = 0x030023E4
-	.global	gUnk_030023E8
-gUnk_030023E8 = 0x030023E8
+	.global	gCurSaveSlot
+gCurSaveSlot = 0x030023E8
 	.global	gUnk_030023EC
 gUnk_030023EC = 0x030023EC
 	.global	gUnk_030023F0
@@ -923,8 +923,8 @@ gUnk_03002450 = 0x03002450
 gUnk_03002458 = 0x03002458
 	.global	gUnk_03002460
 gUnk_03002460 = 0x03002460
-	.global	gUnk_03002464
-gUnk_03002464 = 0x03002464
+	.global	gExtraMode
+gExtraMode = 0x03002464
 	.global	gUnk_03002468
 gUnk_03002468 = 0x03002468
 	.global	gTaskSavedSp

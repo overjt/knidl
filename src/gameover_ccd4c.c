@@ -9,13 +9,13 @@
  *       (gUnk_02007D28) through three motion sets gUnk_087582F4[] and ends
  *       once variant 0 leaves sub-state 0.
  *   sub_080ccec8   variant 3: sub-state gUnk_08758324[Task.unk14] (1 when the
- *       cursor gUnk_02006164 is set), handlers gUnk_0875832C[Task.unk15]
+ *       cursor gGameOverCursor is set), handlers gUnk_0875832C[Task.unk15]
  *       (sub_080ccf10): sub_080ccf2c / sub_080cd0c8 and sub_080cd0cc /
  *       sub_080cd248, two scripted sprites with empty handlers.
  *   sub_080cd24c / sub_080cd2f8   variants 4 and 5. */
 
 extern u16 gUnk_030023AC;           /* number of players */
-extern s8 gUnk_02006164;            /* game-over screen: cursor (continue = 0?) */
+extern s8 gGameOverCursor;            /* game-over screen: cursor (continue = 0?) */
 extern s16 gUnk_02007D28;           /* game-over screen: the #264 variant-0 task's index */
 extern u32 gUnk_087549FC[];
 extern s32 gUnk_087582F4[];
@@ -95,12 +95,12 @@ void sub_080cce98(void)
 }
 
 /* Task type #264 variant 3: sub-state gUnk_08758324[Task.unk14], 1 when
-   gUnk_02006164 is set, per-frame handlers gUnk_0875832C[Task.unk15]
+   gGameOverCursor is set, per-frame handlers gUnk_0875832C[Task.unk15]
    (sub_080ccf10). */
 void sub_080ccec8(void)
 {
     gUnk_03002490->unk04 = (u32)sub_080ccf10;
-    if (gUnk_02006164 != 0)
+    if (gGameOverCursor != 0)
         gUnk_03002490->unk14 = 1;
     else
         gUnk_03002490->unk14 = 0;

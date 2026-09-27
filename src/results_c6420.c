@@ -11,9 +11,9 @@
  *   sub_080c6600   the clock drawn with large digit tiles.
  *   sub_080c6750 / sub_080c680c   a full-screen picture (screen 57 or 59) held
  *       until A or START; M02's game-state bodies and M03's file menu show it.
- *   sub_080c68b0 / sub_080c6ab4   draw an 8-digit score / a clock into the BG
+ *   DrawScoreToBgMap / DrawClockToBgMap   draw an 8-digit score / a clock into the BG
  *       map at 0x06001000 (M02's src/hud_0aad0.c renderers, drawn to VRAM);
- *       M02's sub_08007f9c calls sub_080c6ab4 too.
+ *       M02's sub_08007f9c calls DrawClockToBgMap too.
  *   sub_080c6c3c   copy n map entries to column x, row y of that BG map. */
 
 extern vu16 gUnk_03001ED8;          /* DISPCNT shadow */
@@ -26,7 +26,7 @@ extern vs32 gUnk_03000B78;          /* ... BG3 */
 extern u8 gUnk_03001F30;            /* link-play mode */
 extern u16 gUnk_03002150;           /* previous game state */
 extern u16 gUnk_030023AC;           /* number of players */
-extern u8 gUnk_03002464;
+extern u8 gExtraMode;
 extern u16 gUnk_03002364;
 extern u16 gUnk_02000028;
 extern s32 gUnk_02006020[];         /* score per player */
@@ -66,8 +66,8 @@ void sub_08003770(u16 volume);
 void sub_08008c4c(s32 a0);                                   /* load palette set */
 void sub_08008c64(u16 a0);                                   /* load screen graphics */
 void sub_080c6600(void);
-void sub_080c68b0(s32 v, s32 x, s32 y);
-void sub_080c6ab4(u16 *time, s32 x, s32 y);
+void DrawScoreToBgMap(s32 v, s32 x, s32 y);
+void DrawClockToBgMap(u16 *time, s32 x, s32 y);
 
 void sub_080c6c3c(u16 *src, s32 x, s32 y, s32 n);
 
@@ -80,14 +80,14 @@ void sub_080c6420(void)
     if (gUnk_03002150 != 20) {
         sub_08008c64(4);
         if (gUnk_03001F30 == 0) {
-            if (gUnk_03002464 == 0)
+            if (gExtraMode == 0)
                 sub_08008c64(56);
             else
                 sub_08008c64(58);
-            sub_080c68b0(gUnk_02006020[gUnk_02000028], 22, 0);
+            DrawScoreToBgMap(gUnk_02006020[gUnk_02000028], 22, 0);
         } else {
             sub_08008c64(55);
-            sub_080c6ab4(gUnk_02006068, 22, 18);
+            DrawClockToBgMap(gUnk_02006068, 22, 18);
         }
     } else {
         sub_08008c64(54);
@@ -105,7 +105,7 @@ void sub_080c6420(void)
     } else if (gUnk_03001F30 == 1) {
         gUnk_03001ED8 &= 0xE0FF;
         gUnk_03001ED8 |= 0x900;
-    } else if (gUnk_03002364 & (16 << gUnk_03002464)) {
+    } else if (gUnk_03002364 & (16 << gExtraMode)) {
         gUnk_03001ED8 &= 0xE0FF;
         gUnk_03001ED8 |= 0x900;
     } else {
@@ -157,7 +157,7 @@ void sub_080c6600(void)
     sub_080017e4(1, (u32)gUnk_02020000 + ((gUnk_03001F08[0] + 48) << 5), 0x0600B180, 32);
 }
 
-/* A full-screen picture (screen 57 or 59, by gUnk_03002464) shown until a
+/* A full-screen picture (screen 57 or 59, by gExtraMode) shown until a
    player presses A or START; M02's game-state bodies show it once, after a
    stage when sub_080b8290() says so. */
 void sub_080c6750(void)
@@ -166,7 +166,7 @@ void sub_080c6750(void)
 
     sub_08002028();
     sub_08008c4c(7);
-    if (gUnk_03002464 == 0)
+    if (gExtraMode == 0)
         sub_08008c64(57);
     else
         sub_08008c64(59);
@@ -224,7 +224,7 @@ void sub_080c680c(s32 slot)
 }
 
 /* Draw an 8-digit decimal score at column x, rows y and y + 1 of the BG map. */
-void sub_080c68b0(s32 v, s32 x, s32 y)
+void DrawScoreToBgMap(s32 v, s32 x, s32 y)
 {
     s32 d;
 
@@ -299,7 +299,7 @@ void sub_080c68b0(s32 v, s32 x, s32 y)
 
 /* Draw a clock (time[3] : time[2] : time[1], two digits each) at column x,
    rows y and y + 1 of the BG map. */
-void sub_080c6ab4(u16 *time, s32 x, s32 y)
+void DrawClockToBgMap(u16 *time, s32 x, s32 y)
 {
     s32 v;
     s32 d;

@@ -7,7 +7,7 @@
  * Sub-game 2: the results screen (phase 1, gUnk_087572CC entry 1) and the
  * race screen's sky.
  * 
- *   sub_080c243c   the results task body: ranks the four racers by their
+ *   AirGrindResults   the results task body: ranks the four racers by their
  *       frame counts M37Game.unk004[] (a bubble sort into gUnk_02017140.unk04,
  *       ties share a place in unk0C), picks each one's score (course record
  *       unk20 or unk24) and installs sub_080c25c4 / sub_080c2b8c.
@@ -18,9 +18,9 @@
  *   sub_080c2740   the results state machine (gUnk_02017140.unk00): a place
  *       jingle (songs 0x81D/0x81C/0x817), in the extra mode (gUnk_03002150 ==
  *       5) the stars counted up and handed to the linked players
- *       (sub_08009eb8) before M35's sub_080b9d24 ends the screen, otherwise a
+ *       (sub_08009eb8) before M35's SubGameQuit ends the screen, otherwise a
  *       retry/quit choice and a three-way level choice passed to M35's
- *       sub_080b9d0c.
+ *       SubGameReplay.
  *   sub_080c2b8c / sub_080c2ba8 / sub_080c2ccc   the per-frame callback, the
  *       two palette cycles through gUnk_08609F40 with the cursor sprite, and
  *       the cycle's start row for a menu choice.
@@ -82,10 +82,10 @@ struct M37Player
     /*0x30*/ s32 unk30;
 };
 
-/* gUnk_02016C40, the game's state; always used through gUnk_02017094 */
+/* gAirGrind, the game's state; always used through gAirGrindPtr */
 struct M37Game
 {
-    /*0x000*/ s32 unk000;       /* the level (M36's sub_080c1f9c copies gUnk_02006168) */
+    /*0x000*/ s32 unk000;       /* the level (M36's AirGrindInit copies gUnk_02006168) */
     /*0x004*/ s32 unk004[4];
     /*0x014*/ s32 unk014;
     /*0x018*/ s32 unk018;
@@ -108,7 +108,7 @@ struct M37Game
     /*0x452*/ u8 pad452[2];
 };
 
-/* per-player records of gUnk_0201B0E0, M37Course.unk018[4] (0x3C bytes) */
+/* per-player records of gAirGrindCourse, M37Course.unk018[4] (0x3C bytes) */
 struct M37CoursePlayer
 {
     /*0x00*/ s32 unk00;
@@ -128,7 +128,7 @@ struct M37CoursePlayer
     /*0x38*/ s32 unk38;
 };
 
-/* gUnk_0201B0E0, reached through gUnk_0201716C (and directly by the
+/* gAirGrindCourse, reached through gAirGrindCoursePtr (and directly by the
    0x080C5284-0x080C623C builder) */
 struct M37Course
 {
@@ -144,7 +144,7 @@ struct M37Course
     /*0x110*/ s32 unk110;
 };
 
-/* the results screen's state (sub_080c243c, sub_080c25c4, sub_080c2740) */
+/* the results screen's state (AirGrindResults, sub_080c25c4, sub_080c2740) */
 struct M37Results
 {
     /*0x00*/ s8 unk00;          /* state */
@@ -160,9 +160,9 @@ struct M37Results
     /*0x1C*/ s32 unk1C[4];
 };
 
-extern struct M37Game gUnk_02016C40;
-extern struct M37Game *gUnk_02017094;
-extern struct M37Course *gUnk_0201716C;
+extern struct M37Game gAirGrind;
+extern struct M37Game *gAirGrindPtr;
+extern struct M37Course *gAirGrindCoursePtr;
 extern u16 gUnk_02017170;
 extern struct M37Results gUnk_02017140;
 extern u8 gUnk_080CFE2C[][4];
@@ -182,9 +182,9 @@ s32 sub_08003110(s32 songId);
 s32 sub_080031b8(s32 id);
 void sub_08006138(void);                                     /* end the running task */
 s32 sub_08009eb8(s32 a, u32 b);
-void sub_080b9d0c(s32 a0);
-void sub_080b9d24(void);
-void sub_080b9e30(void);
+void SubGameReplay(s32 a0);
+void SubGameQuit(void);
+void SubGameCheckEnd(void);
 void sub_080c4a48(s32 pal);
 void sub_080c4a94(s32 idx, s32 x, s32 y);
 void sub_080c4ac4(s32 t, s32 x, s32 y);                   /* draw a frame count as ss:cc */
@@ -195,7 +195,7 @@ void sub_080c2b8c(void);
 void sub_080c2ba8(void);
 void sub_080c2ccc(s32 mode);
 
-void sub_080c243c(void)
+void AirGrindResults(void)
 {
     s32 x;
     s32 i;
@@ -208,18 +208,18 @@ void sub_080c243c(void)
     gUnk_03002490->unk04 = (u32)sub_080c2b8c;
     gUnk_03002490->unk3C = 0xFFFF;
     gUnk_03002490->unk0C = (u32)sub_080c25c4;
-    x = gUnk_0201716C->unk014 * 2;
+    x = gAirGrindCoursePtr->unk014 * 2;
     for (i = 0; i < 4; i++) {
-        if (gUnk_02017094->unk01C[i].unk01 == x && gUnk_02017094->unk01C[i].unk0E == x + 1)
-            gUnk_02017140.unk1C[i] = gUnk_0201716C->unk018[i].unk20;
+        if (gAirGrindPtr->unk01C[i].unk01 == x && gAirGrindPtr->unk01C[i].unk0E == x + 1)
+            gUnk_02017140.unk1C[i] = gAirGrindCoursePtr->unk018[i].unk20;
         else
-            gUnk_02017140.unk1C[i] = gUnk_0201716C->unk018[i].unk24;
+            gUnk_02017140.unk1C[i] = gAirGrindCoursePtr->unk018[i].unk24;
     }
     for (i = 0; i < 4; i++)
-        gUnk_02017140.unk04[gUnk_080CFE2C[gUnk_02017094->unk446][i]] = i;
+        gUnk_02017140.unk04[gUnk_080CFE2C[gAirGrindPtr->unk446][i]] = i;
     for (j = 3; j > 0; j--) {
         for (i = 0; i < j; i++) {
-            if (gUnk_02017094->unk004[gUnk_02017140.unk04[i]] > gUnk_02017094->unk004[gUnk_02017140.unk04[i + 1]]) {
+            if (gAirGrindPtr->unk004[gUnk_02017140.unk04[i]] > gAirGrindPtr->unk004[gUnk_02017140.unk04[i + 1]]) {
                 t = gUnk_02017140.unk04[i];
                 gUnk_02017140.unk04[i] = gUnk_02017140.unk04[i + 1];
                 gUnk_02017140.unk04[i + 1] = t;
@@ -230,7 +230,7 @@ void sub_080c243c(void)
         gUnk_02017140.unk08[gUnk_02017140.unk04[i]] = i;
     j = 0;
     for (i = 0; i < 3; i++) {
-        if (gUnk_02017094->unk004[gUnk_02017140.unk04[i]] < gUnk_02017094->unk004[gUnk_02017140.unk04[i + 1]]) {
+        if (gAirGrindPtr->unk004[gUnk_02017140.unk04[i]] < gAirGrindPtr->unk004[gUnk_02017140.unk04[i + 1]]) {
             gUnk_02017140.unk0C[i] = j;
             j = i + 1;
             gUnk_02017140.unk0C[i + 1] = j;
@@ -260,9 +260,9 @@ void sub_080c25c4(void)
         if (p == 0)
             scale = gUnk_02017140.unk10;
         sub_080c4a48(8);
-        sub_080c4ac4(gUnk_02017094->unk004[p], 114, y);
-        sub_080c4bec(gUnk_02017140.unk1C[p], gUnk_0201716C->unk018[p].unk20, 180, y);
-        pal = gUnk_080CFE2C[gUnk_02017094->unk446][p];
+        sub_080c4ac4(gAirGrindPtr->unk004[p], 114, y);
+        sub_080c4bec(gUnk_02017140.unk1C[p], gAirGrindCoursePtr->unk018[p].unk20, 180, y);
+        pal = gUnk_080CFE2C[gAirGrindPtr->unk446][p];
         layer = 4;
         if (p == 0)
             layer = 3;
@@ -366,8 +366,8 @@ void sub_080c2740(void)
             if (gUnk_03002150 != 5) {
                 t = gUnk_03002490;
                 t->unk28 = 0;
-                t->unk2C = gUnk_02016C40.unk000;
-                if (gUnk_02017094->unk446 == 0) {
+                t->unk2C = gAirGrind.unk000;
+                if (gAirGrindPtr->unk446 == 0) {
                     t->unk48 = 120;
                     t->unk4A = 80;
                     t->unk38 = gUnk_0875602C;
@@ -380,8 +380,8 @@ void sub_080c2740(void)
                 gUnk_02017140.unk00++;
             } else {
                 for (i = 0; i < 4; i++) {
-                    pal = gUnk_080CFE2C[gUnk_02017094->unk446][i];
-                    if (pal < gUnk_02017094->unk448) {
+                    pal = gUnk_080CFE2C[gAirGrindPtr->unk446][i];
+                    if (pal < gAirGrindPtr->unk448) {
                         switch (gUnk_02017140.unk0C[gUnk_02017140.unk08[i]]) {
                         case 0:
                             sub_08009eb8(3, pal);
@@ -396,7 +396,7 @@ void sub_080c2740(void)
                     }
                 }
                 gUnk_02017140.unk00 = 99;
-                sub_080b9d24();
+                SubGameQuit();
             }
         }
         break;
@@ -404,7 +404,7 @@ void sub_080c2740(void)
         if (gUnk_03001EB8[0] & 64) {
             if (--gUnk_03002490->unk28 < 0)
                 gUnk_03002490->unk28 = 1;
-            if (gUnk_02017094->unk446 == 0) {
+            if (gAirGrindPtr->unk446 == 0) {
                 sub_080c2ccc(gUnk_03002490->unk28);
                 sub_080031b8(101);
             }
@@ -412,24 +412,24 @@ void sub_080c2740(void)
         if (gUnk_03001EB8[0] & 128) {
             if (++gUnk_03002490->unk28 > 1)
                 gUnk_03002490->unk28 = 0;
-            if (gUnk_02017094->unk446 == 0) {
+            if (gAirGrindPtr->unk446 == 0) {
                 sub_080c2ccc(gUnk_03002490->unk28);
                 sub_080031b8(101);
             }
         }
         if (gUnk_03001EB8[0] & 9) {
             if (gUnk_03002490->unk28 == 0) {
-                gUnk_03002490->unk2C = gUnk_02016C40.unk000;
-                if (gUnk_02017094->unk446 == 0) {
+                gUnk_03002490->unk2C = gAirGrind.unk000;
+                if (gAirGrindPtr->unk446 == 0) {
                     gUnk_03002490->unk3C = 0;
                     sub_080c2ccc(gUnk_03002490->unk2C);
                 }
                 gUnk_02017140.unk00++;
             } else {
-                sub_080b9d24();
+                SubGameQuit();
                 gUnk_02017140.unk00 = 99;
             }
-            if (gUnk_02017094->unk446 == 0)
+            if (gAirGrindPtr->unk446 == 0)
                 sub_080031b8(102);
         }
         break;
@@ -437,7 +437,7 @@ void sub_080c2740(void)
         if (gUnk_03001EB8[0] & 64) {
             if (--gUnk_03002490->unk2C < 0)
                 gUnk_03002490->unk2C = 2;
-            if (gUnk_02017094->unk446 == 0) {
+            if (gAirGrindPtr->unk446 == 0) {
                 sub_080c2ccc(gUnk_03002490->unk2C);
                 sub_080031b8(101);
             }
@@ -445,18 +445,18 @@ void sub_080c2740(void)
         if (gUnk_03001EB8[0] & 128) {
             if (++gUnk_03002490->unk2C > 2)
                 gUnk_03002490->unk2C = 0;
-            if (gUnk_02017094->unk446 == 0) {
+            if (gAirGrindPtr->unk446 == 0) {
                 sub_080c2ccc(gUnk_03002490->unk2C);
                 sub_080031b8(101);
             }
         }
         if (gUnk_03001EB8[0] & 9) {
-            sub_080b9d0c(gUnk_03002490->unk2C);
+            SubGameReplay(gUnk_03002490->unk2C);
             gUnk_02017140.unk00 = 99;
-            if (gUnk_02017094->unk446 == 0)
+            if (gAirGrindPtr->unk446 == 0)
                 sub_080031b8(102);
         } else if (gUnk_03001EB8[0] & 2) {
-            if (gUnk_02017094->unk446 == 0) {
+            if (gAirGrindPtr->unk446 == 0) {
                 gUnk_03002490->unk3C = 1;
                 sub_080c2ccc(gUnk_03002490->unk28);
                 sub_080031b8(215);
@@ -471,7 +471,7 @@ void sub_080c2b8c(void)
 {
     sub_080c2740();
     gUnk_02017170++;
-    sub_080b9e30();
+    SubGameCheckEnd();
 }
 
 void sub_080c2ba8(void)
@@ -495,7 +495,7 @@ void sub_080c2ba8(void)
         gUnk_03002490->unk70 = 8;
     step2 = 8 - (s16)gUnk_03002490->unk70;
     sub_08003014(gUnk_08609F40[6], gUnk_08609F40[7], (u16)(step2 * 32), 16, &gUnk_03001510[16]);
-    if (gUnk_02017094->unk446 == 0) {
+    if (gAirGrindPtr->unk446 == 0) {
         t = gUnk_03002490;
         tbl = t->unk38;
         if (tbl != NULL && t->unk3C != -1) {
@@ -536,13 +536,13 @@ void sub_080c2d38(void)
     u32 g;
     u32 b;
 
-    if (gUnk_02017094->unk300 <= 0x4AF)
+    if (gAirGrindPtr->unk300 <= 0x4AF)
         t = 0;
-    else if (gUnk_02017094->unk300 <= 0x8AF)
-        t = (gUnk_02017094->unk300 - 0x4B0) / 4;
+    else if (gAirGrindPtr->unk300 <= 0x8AF)
+        t = (gAirGrindPtr->unk300 - 0x4B0) / 4;
     else
         t = 0x100;
-    if (gUnk_02016C40.unk000 != 2) {
+    if (gAirGrind.unk000 != 2) {
         for (i = 0; i < 11; i++) {
             col[i][0] = t * (gUnk_080CFEA2[i][0] - gUnk_080CFE60[i][0]) + (gUnk_080CFE60[i][0] << 8);
             col[i][1] = t * (gUnk_080CFEA2[i][1] - gUnk_080CFE60[i][1]) + (gUnk_080CFE60[i][1] << 8);
@@ -555,7 +555,7 @@ void sub_080c2d38(void)
             col[i][2] = t * (gUnk_080CFEC3[i][2] - gUnk_080CFE81[i][2]) + (gUnk_080CFE81[i][2] << 8);
         }
     }
-    gUnk_02017094->unk2FC = 0x7DC1;
+    gAirGrindPtr->unk2FC = 0x7DC1;
     for (i = 0; i <= 10; i++) {
         delta[i][0] = (col[i + 1][0] - col[i][0]) / 16;
         delta[i][1] = (col[i + 1][1] - col[i][1]) / 16;
@@ -565,12 +565,12 @@ void sub_080c2d38(void)
     g = col[0][1];
     b = col[0][2];
     for (i = 0; i < 160; i++) {
-        gUnk_02017094->unk1BC[i] = ((b & 0xF800) >> 1) | ((g & 0xF800) >> 6) | ((r & 0xF800) >> 11);
+        gAirGrindPtr->unk1BC[i] = ((b & 0xF800) >> 1) | ((g & 0xF800) >> 6) | ((r & 0xF800) >> 11);
         r += delta[i / 16][0];
         g += delta[i / 16][1];
         b += delta[i / 16][2];
     }
-    gUnk_02017094->unk300++;
+    gAirGrindPtr->unk300++;
 }
 
 void sub_080c2fb8(void)
@@ -578,8 +578,8 @@ void sub_080c2fb8(void)
     vu32 *dma = (vu32 *)0x040000B0;
 
     REG_DMA0CNT_H = 0;
-    *(vu16 *)0x05000000 = gUnk_02017094->unk2FC;
-    dma[0] = (u32)gUnk_02017094->unk1BC;
+    *(vu16 *)0x05000000 = gAirGrindPtr->unk2FC;
+    dma[0] = (u32)gAirGrindPtr->unk1BC;
     dma[1] = 0x05000000;
     dma[2] = 0xA2400001;
 }

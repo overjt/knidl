@@ -14,7 +14,7 @@
  * the fixed room gUnk_087E1D58[8][7][0] with the player at (136, 928) and
  * BGM 1.  Every loader ends with the per-player loop that refills health,
  * rebuilds the player mask gUnk_03002340 and restarts the player tasks
- * (sub_0803d034 and sub_0803d0a0/sub_0803d1c4). */
+ * (CreatePlayer and sub_0803d0a0/sub_0803d1c4). */
 
 struct MapCell
 {
@@ -177,7 +177,7 @@ void sub_0802cd24(void);
 void sub_0802cd38(void);
 void sub_0802d0f4(void);
 void sub_08030724(void);
-void sub_0803d034(s32 a0);
+void CreatePlayer(s32 a0);
 void sub_0803d0a0(s32 a0);
 void sub_0803d1c4(s32 a0);
 void sub_08040788(void);
@@ -263,7 +263,7 @@ void sub_08023948(void)
         {
             gUnk_0300560C[i] = 3;
         }
-        sub_0803d034(i);
+        CreatePlayer(i);
         sub_0803d1c4(i);
         gUnk_03000F98[i] = gUnk_03001EB8[i] = 0;
         gUnk_03002458[i] = gUnk_030023C0[i] = 0;
@@ -524,7 +524,7 @@ void sub_08023fd4(void)
         {
             gUnk_0300560C[i] = 0;
         }
-        sub_0803d034(i);
+        CreatePlayer(i);
         sub_0803d0a0(i);
         gUnk_03000F98[i] = gUnk_03001EB8[i] = 0;
         gUnk_03002458[i] = gUnk_030023C0[i] = 0;

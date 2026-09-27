@@ -56,7 +56,7 @@ extern s8 gUnk_02007E88;
 extern u8 gUnk_02007FCC;
 extern s16 gUnk_0200A6E0[];
 extern s8 gUnk_0200B074;
-extern struct SaveSlot gUnk_0200E600[];
+extern struct SaveSlot gSaveSlots[];
 extern vu16 gUnk_03000038;
 extern vu16 gUnk_03000B70;
 extern vs32 gUnk_03000B78;
@@ -69,8 +69,8 @@ extern vu16 gUnk_03001EF4;
 extern s8 gUnk_03001F08[];
 extern u8 gUnk_03001F30;
 extern u16 gUnk_030023D8;
-extern s32 gUnk_030023E8;
-extern u8 gUnk_03002464;
+extern s32 gCurSaveSlot;
+extern u8 gExtraMode;
 extern u32 gUnk_06010000[];
 extern const u8 gUnk_0855A5F8[];
 extern u16 gUnk_08564F34[];
@@ -91,8 +91,8 @@ s32 sub_0800fe54(s32 speed);
 void sub_0800fe94(void);
 void sub_08010020(s32 a, s32 b, s32 c, s32 d);
 void sub_08010048(s32 in, s32 out, s32 h, s32 v, s32 win);
-void sub_080b6e60(void);
-void sub_080b6e6c(s32 a);
+void StopHBlankScroll(void);
+void StartHBlankScroll(s32 a);
 void sub_0800cc30(void);
 
 void sub_0800ca10(void)
@@ -114,12 +114,12 @@ void sub_0800ca10(void)
         gUnk_020060D0 = 4;
         sub_0800fe54(0x80000);
         sub_08008c64(25);
-        sub_080b6e6c(2);
+        StartHBlankScroll(2);
         sub_08002d54(8);
         gUnk_02004B70 = 0;
         for (i = 0; i < 8; i++) {
             if (gUnk_03000038 & 11) {
-                sub_080b6e60();
+                StopHBlankScroll();
                 sub_0800fe94();
                 gUnk_02004B70 = gUnk_03000038;
                 sub_08010048(61, 63, 255, 136, 0x2000);
@@ -137,7 +137,7 @@ void sub_0800ca10(void)
         gUnk_03001ED8 |= 0x1F00;
     } else {
         gUnk_020060D0 = 5;
-        sub_080b6e6c(7);
+        StartHBlankScroll(7);
         sub_08002d54(8);
         gUnk_03001E94 = gUnk_03000FA8 = 0;
         sub_0800fd24(0x100000, 256, 2);
@@ -148,9 +148,9 @@ void sub_0800ca10(void)
         gUnk_03001ED8 |= 0x1A00;
     }
     sub_08008c64(31);
-    if (gUnk_0200E600[gUnk_030023E8].unk10 & 2)
+    if (gSaveSlots[gCurSaveSlot].unk10 & 2)
         gUnk_02000018 = 2;
-    else if (gUnk_0200E600[gUnk_030023E8].unk10 & 1)
+    else if (gSaveSlots[gCurSaveSlot].unk10 & 1)
         gUnk_02000018 = 1;
     else
         gUnk_02000018 = 0;
@@ -203,7 +203,7 @@ void sub_0800cd60(void)
             sub_080031b8(102);
             if (gUnk_0200B074 == 4) {
                 gUnk_020060D0 = 9;
-                gUnk_03002464 = 0;
+                gExtraMode = 0;
                 gUnk_03001F30 = 1;
                 gUnk_030023D8 = 13;
                 gUnk_02006090 = 7;
@@ -215,7 +215,7 @@ void sub_0800cd60(void)
                 gUnk_02007FCC = gUnk_0200B074;
             } else if (gUnk_0200B074 == 3) {
                 gUnk_03001F30 = 0;
-                gUnk_03002464 = 0;
+                gExtraMode = 0;
                 gUnk_02006090 = 6;
                 gUnk_02007FCC = 6;
             }
@@ -274,7 +274,7 @@ void sub_0800cff4(void)
     sub_0800fd24(0xFFF00000, 256, 3);
     sub_080058e4(250, 32);
     sub_08008c64(33);
-    sub_080b6e6c(5);
+    StartHBlankScroll(5);
     for (i = 0; i < 16; i++) {
         if (i != 0)
             sub_08010048(60, 63, (0x10000 - (i << 12)) | 0xFF, 135, 0x2000);
@@ -298,7 +298,7 @@ void sub_0800d0f4(void)
         if (gUnk_02006180 != 0) {
             if (--gUnk_02006180 != 0 && (gUnk_03000038 & 11)) {
                 gUnk_02006180 = 0;
-                sub_080b6e60();
+                StopHBlankScroll();
                 sub_0800fe94();
                 gUnk_02004B70 = gUnk_03000038;
             }
@@ -353,7 +353,7 @@ void sub_0800d280(void)
     sub_0800374c(32);
     gUnk_020060D0 = 7;
     sub_08008c64(45);
-    sub_080b6e6c(1);
+    StartHBlankScroll(1);
     sub_08008c64(25);
     gUnk_03000FA8 = gUnk_03000B78 = 0;
     sub_0800fd24(0xFFF00000, 256, 3);

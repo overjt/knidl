@@ -17,8 +17,8 @@
  * palette buffer gUnk_030012B0), 2 waits, 3 loops, 5 sets a metatile's
  * solid flag (sub_0802d2f0), 6 plays a sound effect, anything else stops
  * the slot (sub_0802d32c).  sub_0802d344 spawns task type #4 through M07's
- * sub_0802621c; sub_0802d370, the type's body, dispatches on Task.unk14
- * into the seven camera tasks of the anchor table gUnk_087328A0. */
+ * sub_0802621c; Task_MapEvent, the type's body, dispatches on Task.unk14
+ * into the seven camera tasks of the anchor table gMapEventVariants. */
 
 struct Unk03005680
 {
@@ -120,7 +120,7 @@ extern u16 gUnk_030012B0[];
 extern s16 gUnk_0300561C;
 extern s16 gUnk_03005620;
 extern struct MapTile *gUnk_03005660;
-extern void (*gUnk_087328A0[])(void);
+extern void (*gMapEventVariants[])(void);
 
 void sub_080017e4(u32 mode, u32 src, u32 dst, u32 size);
 void sub_08002e98(u32 idx, u32 count, void (**fns)(void));
@@ -311,7 +311,7 @@ s32 sub_0802d344(s32 a)
     return id;
 }
 
-void sub_0802d370(void)
+void Task_MapEvent(void)
 {
-    sub_08002e98(gUnk_03002490->unk14, 7, gUnk_087328A0);
+    sub_08002e98(gUnk_03002490->unk14, 7, gMapEventVariants);
 }

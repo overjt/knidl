@@ -362,7 +362,7 @@ void sub_0809f874(void)
     }
 }
 
-void sub_0809f8d4(void)
+void TaskFaceScreenCenter(void)
 {
     sub_08064970();
     if (gUnk_030023B4 <= 119)

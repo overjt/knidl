@@ -94,9 +94,9 @@ extern u32 sub_08002ee8(u32 range);
 extern void sub_08003110(u32 a);
 extern void sub_080034d0(void);
 extern void sub_08006138(void);
-extern void sub_080b9d0c(s32 a);
-extern void sub_080b9d24(void);
-extern void sub_080b9e30(void);
+extern void SubGameReplay(s32 a);
+extern void SubGameQuit(void);
+extern void SubGameCheckEnd(void);
 
 extern void sub_080bda78(void);
 extern void sub_080bda98(void);
@@ -136,7 +136,7 @@ void sub_080bda2c(void)
 void sub_080bda78(void)
 {
     sub_08002e98(gUnk_03002490->unk15, 2, gUnk_08756670);
-    sub_080b9e30();
+    SubGameCheckEnd();
 }
 
 void sub_080bda98(void)
@@ -435,7 +435,7 @@ void sub_080be164(void)
 void sub_080be1b0(void)
 {
     sub_08002e98(gUnk_03002490->unk15, 2, gUnk_08756680);
-    sub_080b9e30();
+    SubGameCheckEnd();
 }
 
 void sub_080be1d0(void)
@@ -494,7 +494,7 @@ void sub_080be1ec(void)
         wait:
             ;
         } while ((*p & m) == 0);
-        sub_080b9d24();
+        SubGameQuit();
     }
     sub_08006138();
 }
@@ -529,7 +529,7 @@ void sub_080be318(void)
                     t->unk28 = 1;
                     TaskYieldTrampoline(16);
                 } else {
-                    sub_080b9d24();
+                    SubGameQuit();
                     sub_08006138();
                 }
             } else if (gUnk_03001EB8[0] & 0xF0) {
@@ -550,7 +550,7 @@ void sub_080be318(void)
             a = gUnk_03001EB8[0] & 9;
             if (a) {
                 sub_080be7c0(102);
-                sub_080b9d0c(gUnk_03002490->unk2C);
+                SubGameReplay(gUnk_03002490->unk2C);
                 sub_08006138();
             } else {
                 b = gUnk_03001EB8[0] & 2;
@@ -748,7 +748,7 @@ void sub_080be7c0(u32 a)
         sub_080031b8(a);
 }
 
-void sub_080be7dc(void)
+void Task_BombRallyObject(void)
 {
     sub_08002e98(gUnk_03002490->unk73, 7, gUnk_08756688);
 }

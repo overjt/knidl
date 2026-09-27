@@ -206,7 +206,7 @@ s32 sub_0803d010(void)
     return 0;
 }
 
-void sub_0803d034(s32 a0)
+void CreatePlayer(s32 a0)
 {
     struct Task *t;
 

@@ -4,7 +4,7 @@
 
 /* hud_099fc.c (0x080099FC-0x0800A12F, issue #96).
  *
- * Task type #237 (sub_080099fc, one intro-story picture) and the
+ * Task type #237 (Task_IntroStoryPicture, one intro-story picture) and the
  * HUD/score interface other modules call: HUD init/redraw
  * (sub_08009b2c/sub_08009cb0), lives (sub_08009e60), health
  * (sub_08009ee8, returns the new value), score (sub_08009fcc/sub_0800a008/
@@ -90,7 +90,7 @@ void sub_0800b3f8(void);
 void sub_0800b428(void);
 void sub_0800a0dc(s32 a, s32 b);
 
-void sub_080099fc(void)
+void Task_IntroStoryPicture(void)
 {
     struct GfxHeader *h;
 

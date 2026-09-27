@@ -9,10 +9,10 @@
  * (src/effect_5afac.c), and by M14's sub_08053940 when its type-6 bands are
  * full, with Task.unk18 = variant << 24 | arg and the spawner's position,
  * facing Task.unk43 and PlayerState Task.unk88 copied in.  The body
- * sub_08053af4 links the task to its spawner the first time (Task.unk8C =
+ * Task_PlayerEffect links the task to its spawner the first time (Task.unk8C =
  * &gUnk_03002790[Task.unk44], read back as a struct Task) and dispatches the
  * variant, the top byte of Task.unk18, through the 49 entries of
- * gUnk_0873B928, which fill this file and the eleven effect_*.c files after
+ * gPlayerEffectVariants, which fill this file and the eleven effect_*.c files after
  * it.  A variant installs a motion hook in Task.unk00 (sub_080059d8 moves in
  * world space, sub_080059fc keeps the position relative to the spawner's
  * task, sub_08005a74 stays put), a draw hook in Task.unk0C, often a
@@ -37,7 +37,7 @@
  * Task.unk18, when the spawner's Task.unk7A clears, a countdown in
  * Task.unk30 runs out or M11's sub_0803fd20 no longer returns 4. */
 
-extern void (*gUnk_0873B928[])(void);   /* task type #7's 49 variants, indexed by Task.unk18 >> 24 */
+extern void (*gPlayerEffectVariants[])(void);   /* task type #7's 49 variants, indexed by Task.unk18 >> 24 */
 extern u32 gUnk_08751C44[];
 extern u32 gUnk_0874C600[];
 extern u32 gUnk_08751CEC[];
@@ -69,14 +69,14 @@ void sub_08053c1c(void);
 void sub_08053e34(void);
 void sub_08054298(void);
 
-void sub_08053af4(void)
+void Task_PlayerEffect(void)
 {
     if (gUnk_03002490->unk8C == NULL)
     {
         gUnk_03002490->unk80 = 0;
         gUnk_03002490->unk8C = (struct Actor *)&gUnk_03002790[gUnk_03002490->unk44];
     }
-    sub_08002e98(((u8 *)gUnk_03002490)[27], 49, gUnk_0873B928);
+    sub_08002e98(((u8 *)gUnk_03002490)[27], 49, gPlayerEffectVariants);
 }
 
 void sub_08053b40(void)

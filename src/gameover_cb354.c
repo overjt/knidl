@@ -5,13 +5,13 @@
 /* gameover_cb354.c (0x080CB354-0x080CB64B, issue #100).
  *
  * The game-over screen's object task types, all class 4.
- *   sub_080cb354   #260, a still sprite picked by Task.unk18.
- *   sub_080cb3a8   #261, the cursor, its frame following gUnk_02006164.
- *   sub_080cb418   #262, a palette effect: fade the blend in, then cycle four
+ *   Task_GameOverSprite   #260, a still sprite picked by Task.unk18.
+ *   Task_GameOverCursor   #261, the cursor, its frame following gGameOverCursor.
+ *   Task_GameOverPalette   #262, a palette effect: fade the blend in, then cycle four
  *       colours between two rows of gUnk_08584BB0.
- *   sub_080cb4f4   #263, halve this player's score (rounded down to a
+ *   Task_HalveScore   #263, halve this player's score (rounded down to a
  *       multiple of ten) and count the displayed score down to it.
- *   sub_080cb588   #264: six variants gUnk_08758294[Task.unk73]; variant 0
+ *   Task_GameOverObject   #264: six variants gGameOverObjectVariants[Task.unk73]; variant 0
  *       (sub_080cb5c4, the player character) is a small state machine of
  *       sub-states gUnk_087582AC[Task.unk14] and per-frame handlers
  *       gUnk_087582B8[Task.unk15] (sub_080cb610), re-entered through
@@ -20,7 +20,7 @@
 extern u8 gUnk_03001F30;            /* link-play mode */
 extern u16 gUnk_03002360;           /* this player's index */
 extern s32 gUnk_02006020[];         /* score per player */
-extern s8 gUnk_02006164;            /* game-over screen: cursor (continue = 0?) */
+extern s8 gGameOverCursor;            /* game-over screen: cursor (continue = 0?) */
 extern u32 gUnk_087556E0[];
 extern u16 gUnk_08758274[];
 extern u16 gUnk_08758284[];
@@ -30,7 +30,7 @@ extern vu8 gUnk_03000B08;
 extern vu8 gUnk_03001EAC;
 extern u16 gUnk_08584BB0[][4];
 extern u16 gUnk_03001390[];
-extern void (*gUnk_08758294[])(void);
+extern void (*gGameOverObjectVariants[])(void);
 extern u32 gUnk_08754914[];
 extern void (*gUnk_087582AC[])(void);
 extern void (*gUnk_087582B8[])(void);
@@ -42,12 +42,12 @@ void sub_08003014(u16 *src, u16 *dst, s32 ratio, s32 count, u16 *out);
 void sub_080059d8(void);
 void sub_08005ca0(void);
 void sub_08006138(void);                                     /* end the running task */
-void sub_080c68b0(s32 v, s32 x, s32 y);
+void DrawScoreToBgMap(s32 v, s32 x, s32 y);
 void sub_080cb610(void);
 
 /* Task type #260 (class 4): a still sprite, frame and position picked by
    Task.unk18. */
-void sub_080cb354(void)
+void Task_GameOverSprite(void)
 {
     gUnk_03002490->unk00 = (u32)sub_080059d8;
     gUnk_03002490->unk0C = (u32)sub_08005ca0;
@@ -59,8 +59,8 @@ void sub_080cb354(void)
     sub_08006138();
 }
 
-/* Task type #261 (class 4): the cursor; its frame follows gUnk_02006164. */
-void sub_080cb3a8(void)
+/* Task type #261 (class 4): the cursor; its frame follows gGameOverCursor. */
+void Task_GameOverCursor(void)
 {
     gUnk_03002490->unk00 = (u32)sub_080059d8;
     gUnk_03002490->unk0C = (u32)sub_08005ca0;
@@ -74,14 +74,14 @@ void sub_080cb3a8(void)
         gUnk_03002490->unk50 = 96 << 16;
     }
     for (;;) {
-        gUnk_03002490->unk3C = gUnk_02006164 + 8;
+        gUnk_03002490->unk3C = gGameOverCursor + 8;
         TaskYieldTrampoline(1);
     }
 }
 
 /* Task type #262 (class 4): fade the blend in over 32 frames, then cycle
    four colours between two palettes of gUnk_08584BB0. */
-void sub_080cb418(void)
+void Task_GameOverPalette(void)
 {
     gUnk_03002490->unk28 = 0;
     gUnk_03002490->unk2C = 0;
@@ -117,7 +117,7 @@ void sub_080cb418(void)
 
 /* Task type #263 (class 4): halve this player's score, round it down to a
    multiple of 10 and count the displayed score down to it. */
-void sub_080cb4f4(void)
+void Task_HalveScore(void)
 {
     gUnk_03002490->unk00 = 0;
     gUnk_03002490->unk0C = 0;
@@ -127,19 +127,19 @@ void sub_080cb4f4(void)
     gUnk_02006020[gUnk_03002360] -= gUnk_03002490->unk2C;
     while (gUnk_03002490->unk28 != gUnk_02006020[gUnk_03002360]) {
         gUnk_03002490->unk28 -= 10;
-        sub_080c68b0(gUnk_03002490->unk28, 22, 18);
+        DrawScoreToBgMap(gUnk_03002490->unk28, 22, 18);
         TaskYieldTrampoline(1);
     }
     TaskDispatchTrampoline();
 }
 
-/* Task type #264 (class 4): six variants, gUnk_08758294[Task.unk73]. */
-void sub_080cb588(void)
+/* Task type #264 (class 4): six variants, gGameOverObjectVariants[Task.unk73]. */
+void Task_GameOverObject(void)
 {
     gUnk_03002490->unk00 = (u32)sub_080059d8;
     gUnk_03002490->unk0C = (u32)sub_08005ca0;
     gUnk_03002490->unk40 = 0x4800;
-    sub_08002e98(gUnk_03002490->unk73, 6, gUnk_08758294);
+    sub_08002e98(gUnk_03002490->unk73, 6, gGameOverObjectVariants);
     sub_08006138();
 }
 

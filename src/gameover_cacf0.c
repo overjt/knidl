@@ -5,7 +5,7 @@
 /* gameover_cacf0.c (0x080CACF0-0x080CB353, issue #100).
  *
  * AgbMain state 22, the game-over / continue screen.
- *   sub_080cacf0   the state body: one of three screens - sub_080cad8c
+ *   GameOverMain   the state body: one of three screens - sub_080cad8c
  *       outside link play, sub_080caeec in link play, sub_080cb058 after
  *       AgbMain state 20 - then, when the choice set game state 5 (continue),
  *       back into the stage (state 6 unless gUnk_03002438 is 1), else the SIO
@@ -14,9 +14,9 @@
  *       one player task type #261 and #264 variants 0-2 (variant 0's task
  *       index goes to gUnk_02007D28), else #264 variant 5.
  *   sub_080cb030   redraw the clock for n frames.
- *   sub_080cb0e8 / sub_080cb108   up or down flips the cursor gUnk_02006164.
+ *   sub_080cb0e8 / sub_080cb108   up or down flips the cursor gGameOverCursor.
  *   sub_080cb12c / sub_080cb178 / sub_080cb1d8   A or START (or the end of
- *       the 480-frame count gUnk_0200557C) ends the screen (gUnk_02007BE0)
+ *       the 480-frame count gUnk_0200557C) ends the screen (gGameOverDone)
  *       and picks the next game state.
  *   sub_080cb2b0   reset the done flag and the count. */
 
@@ -36,9 +36,9 @@ extern s32 gUnk_02006020[];         /* score per player */
 extern u16 gUnk_02006068[];         /* clock (four fields) */
 extern vu16 gUnk_03001EB8[];        /* keys pressed per player */
 extern u32 gUnk_02020000[];         /* decompression buffer */
-extern u8 gUnk_02007BE0;            /* game-over screen: done flag */
+extern u8 gGameOverDone;            /* game-over screen: done flag */
 extern s16 gUnk_0200557C;           /* game-over screen: frames left */
-extern s8 gUnk_02006164;            /* game-over screen: cursor (continue = 0?) */
+extern s8 gGameOverCursor;            /* game-over screen: cursor (continue = 0?) */
 extern s16 gUnk_02007D28;           /* game-over screen: the #264 variant-0 task's index */
 extern u32 gUnk_06010000[];         /* OBJ VRAM */
 extern vu16 gUnk_03000FC8;
@@ -72,8 +72,8 @@ void sub_08008c4c(s32 a0);                                   /* load palette set
 void sub_08008c64(u16 a0);                                   /* load screen graphics */
 void sub_0800b514(void);
 void sub_08022c3c(void);
-void sub_080c68b0(s32 v, s32 x, s32 y);
-void sub_080c6ab4(u16 *time, s32 x, s32 y);
+void DrawScoreToBgMap(s32 v, s32 x, s32 y);
+void DrawClockToBgMap(u16 *time, s32 x, s32 y);
 void sub_080cad8c(void);
 void sub_080caeec(void);
 void sub_080cb030(s32 n);
@@ -87,12 +87,12 @@ void sub_080cb2b0(void);
 void sub_080cb2cc(void);
 
 /* AgbMain state 22: the game-over / continue screen. */
-void sub_080cacf0(void)
+void GameOverMain(void)
 {
     sub_080022ac();
     gUnk_03000FC8 = 10;
     gUnk_03001ECC = 6;
-    gUnk_02006164 = 0;
+    gGameOverCursor = 0;
     if (gUnk_03002150 != 20) {
         if (gUnk_03001F30 == 0)
             sub_080cad8c();
@@ -128,7 +128,7 @@ void sub_080cad8c(void)
     sub_08008c4c(6);
     sub_08008c64(4);
     sub_08008c64(51);
-    sub_080c68b0(gUnk_02006020[gUnk_03002360], 22, 18);
+    DrawScoreToBgMap(gUnk_02006020[gUnk_03002360], 22, 18);
     gUnk_03001ED8 &= 0xE0FF;
     gUnk_03001ED8 |= 0x1D00;
     sub_080cb21c();
@@ -162,7 +162,7 @@ void sub_080cad8c(void)
         sub_08002d18();
         if (gUnk_030023AC != 1)
             sub_080cb178();
-    } while (gUnk_02007BE0 == 0);
+    } while (gGameOverDone == 0);
 }
 
 /* The game-over screen in link play (gUnk_03001F30 != 0): scroll the
@@ -210,7 +210,7 @@ void sub_080caeec(void)
         sub_080cb030(1);
         sub_080cb0e8();
         sub_080cb1d8();
-    } while (gUnk_02007BE0 == 0);
+    } while (gGameOverDone == 0);
 }
 
 void sub_080cb030(s32 n)
@@ -218,7 +218,7 @@ void sub_080cb030(s32 n)
     s32 i;
 
     for (i = 0; i < n; i++) {
-        sub_080c6ab4(gUnk_02006068, 22, 18);
+        DrawClockToBgMap(gUnk_02006068, 22, 18);
         sub_08002d18();
     }
 }
@@ -234,7 +234,7 @@ void sub_080cb058(void)
     sub_08002358();
     sub_08002668();
     sub_080022fc();
-    sub_080c6ab4(gUnk_02006068, 22, 18);
+    DrawClockToBgMap(gUnk_02006068, 22, 18);
     gUnk_03001ED8 &= 0xE0FF;
     gUnk_03001ED8 |= 0x900;
     sub_08003110(16);
@@ -245,13 +245,13 @@ void sub_080cb058(void)
     do {
         sub_08002d18();
         sub_080cb178();
-    } while (gUnk_02007BE0 == 0);
+    } while (gGameOverDone == 0);
 }
 
 void sub_080cb0e8(void)
 {
     if (sub_080cb108() == 1)
-        gUnk_02006164 ^= 1;
+        gGameOverCursor ^= 1;
 }
 
 u8 sub_080cb108(void)
@@ -270,7 +270,7 @@ u8 sub_080cb12c(void)
     for (i = 0; i < gUnk_030023AC; i++) {
         if (gUnk_03001EB8[i] & 9) {
             sub_080031b8(102);
-            gUnk_02007BE0 = 1;
+            gGameOverDone = 1;
             return 1;
         }
     }
@@ -280,11 +280,11 @@ u8 sub_080cb12c(void)
 void sub_080cb178(void)
 {
     if (gUnk_0200557C <= 0)
-        gUnk_02007BE0 = 1;
+        gGameOverDone = 1;
     else
         sub_080cb12c();
     gUnk_0200557C--;
-    if (gUnk_02007BE0 != 0) {
+    if (gGameOverDone != 0) {
         if (gUnk_03002150 == 20)
             gUnk_030023D8 = 4;
         else
@@ -295,7 +295,7 @@ void sub_080cb178(void)
 void sub_080cb1d8(void)
 {
     if (sub_080cb12c()) {
-        if (gUnk_02006164 == 0 && gUnk_030023AC == 1)
+        if (gGameOverCursor == 0 && gUnk_030023AC == 1)
             gUnk_030023D8 = 5;
         else
             gUnk_030023D8 = 1;
@@ -320,7 +320,7 @@ void sub_080cb21c(void)
 
 void sub_080cb2b0(void)
 {
-    gUnk_02007BE0 = 0;
+    gGameOverDone = 0;
     gUnk_0200557C = 480;
 }
 

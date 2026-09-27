@@ -24,42 +24,42 @@ struct SaveSlot
     /*0x74*/ u8 filler74[0x8C];
 };
 
-extern struct SaveSlot gUnk_0200E600[];
+extern struct SaveSlot gSaveSlots[];
 extern u32 gUnk_0200E900[];
-extern s16 gUnk_0200EC58;
-extern s32 gUnk_03001EA8;
-extern s16 gUnk_0300235C;
+extern s16 gInputRecorderMode;
+extern s32 gSramAvailable;
+extern s16 gCompletionPercent;
 extern u16 gUnk_03002364;
 extern s8 gUnk_03002384;
 extern s32 gUnk_030023C8[];
 extern s8 gUnk_030023E0;
-extern s32 gUnk_030023E8;
+extern s32 gCurSaveSlot;
 
-void sub_080b75a4(void);
-void sub_080b76a8(void);
-void sub_080b78e4(void);
-s32 sub_080b7918(s32 a, s32 b);
+void InputRecorderRecordFrame(void);
+void InputRecorderPlayFrame(void);
+void SelectLatestSaveSlot(void);
+s32 ReadSaveSlot(s32 a, s32 b);
 void sub_080b7b20(s32 a);
-void sub_080b7d94(s32 a);
-u32 sub_080b7dd0(s32 a);
+void ClearSaveSlot(s32 a);
+u32 CalcSaveSlotChecksum(s32 a);
 void sub_080b8200(void);
 
-void sub_080b77d4(void)
+void InputRecorderUpdate(void)
 {
-    switch (gUnk_0200EC58)
+    switch (gInputRecorderMode)
     {
     default:
         break;
     case 1:
-        sub_080b75a4();
+        InputRecorderRecordFrame();
         break;
     case 2:
     case 3:
-        sub_080b76a8();
+        InputRecorderPlayFrame();
         break;
     }
 }
-void sub_080b7800(void)
+void InitSaveSlots(void)
 {
     s32 i;
     s32 j;
@@ -68,21 +68,21 @@ void sub_080b7800(void)
     u32 mask;
     u32 *p;
 
-    gUnk_03001EA8 = 1;
+    gSramAvailable = 1;
     for (i = 0; i <= 2; i++)
-        sub_080b7d94(i);
+        ClearSaveSlot(i);
     mask = 0;
     i = 0;
     p = gUnk_0200E900;
     for (; i <= 2; i++)
     {
-        r = sub_080b7918(3, i);
+        r = ReadSaveSlot(3, i);
         if (*p != 0x99999999 || r != 0)
             mask |= 1 << i;
     }
-    if (mask != 0 && gUnk_03001EA8 != 0)
+    if (mask != 0 && gSramAvailable != 0)
     {
-        sub_080b7d94(3);
+        ClearSaveSlot(3);
         for (i = 0, off = 0; i <= 3; i++)
         {
             if (((mask >> i) & 1) != 0)
@@ -96,42 +96,42 @@ void sub_080b7800(void)
     mask = 0;
     for (i = 0; i <= 2; i++)
     {
-        if (sub_080b7918(i, i) != 0)
+        if (ReadSaveSlot(i, i) != 0)
         {
-            sub_080b7d94(i);
+            ClearSaveSlot(i);
             mask += 1;
         }
     }
     if (mask != 0)
-        gUnk_03001EA8 = 0;
-    sub_080b78e4();
+        gSramAvailable = 0;
+    SelectLatestSaveSlot();
 }
-void sub_080b78e4(void)
+void SelectLatestSaveSlot(void)
 {
     s32 i;
     u32 best;
 
     best = 0;
-    gUnk_030023E8 = 0;
+    gCurSaveSlot = 0;
     for (i = 0; i <= 2; i++)
     {
-        if (gUnk_0200E600[i].unk08 > best)
+        if (gSaveSlots[i].unk08 > best)
         {
-            best = gUnk_0200E600[i].unk08;
-            gUnk_030023E8 = i;
+            best = gSaveSlots[i].unk08;
+            gCurSaveSlot = i;
         }
     }
 }
-s32 sub_080b7918(s32 a, s32 b)
+s32 ReadSaveSlot(s32 a, s32 b)
 {
     s32 i;
 
-    if (gUnk_03001EA8 != 0)
+    if (gSramAvailable != 0)
     {
         for (i = 0; i <= 1; i++)
         {
-            ReadSram((u8 *)((((b * 2) + i) << 8) + 0x0E000200), (u8 *)&gUnk_0200E600[a], 256);
-            if (sub_080b7dd0(a) == gUnk_0200E600[a].unk70)
+            ReadSram((u8 *)((((b * 2) + i) << 8) + 0x0E000200), (u8 *)&gSaveSlots[a], 256);
+            if (CalcSaveSlotChecksum(a) == gSaveSlots[a].unk70)
                 break;
         }
         if (i == 2)
@@ -143,8 +143,8 @@ one:
 }
 void sub_080b798c(s32 a)
 {
-    gUnk_0200E600[a].unk04 = a;
-    gUnk_0200E600[a].unk0C = 0;
+    gSaveSlots[a].unk04 = a;
+    gSaveSlots[a].unk0C = 0;
     sub_080b8200();
     sub_080b7b20(a);
 }

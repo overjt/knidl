@@ -65,25 +65,25 @@ struct Unk0200D120
     /*0x4C*/ u8 filler4C[0x24];
 };
 extern struct Unk0200D120 gUnk_0200D120[];
-extern u32 gUnk_02016494[];
-extern u32 gUnk_020164A0[];
-extern u32 gUnk_02016860[];
-extern u32 gUnk_02016870[];
+extern u32 gHBlankScrollTimer[];
+extern u32 gHBlankScrollTable[];
+extern u32 gHBlankScrollEffect[];
+extern u32 gHBlankScrollDmaTable[];
 extern u32 gUnk_02020000[];
 extern u32 gUnk_0300003C;
 extern vu16 gUnk_03000B10;
 extern u32 gUnk_03000B74;
 extern u16 gUnk_03000F98[];
 extern u32 gUnk_03000FA4;
-extern u32 gUnk_0300101C[];
-extern u32 gUnk_03001184[];
+extern u32 gHBlankDmaDest[];
+extern u32 gHBlankDmaCnt[];
 extern u8 gUnk_03001470[];
 extern u32 gUnk_03001570[];
 extern u32 gUnk_030015B0[];
 extern u16 gUnk_03001EA4;
 extern vu8 gUnk_03001EB0;
 extern vu16 gUnk_03001EB4;
-extern u32 gUnk_03001EF0[];
+extern u32 gHBlankDmaSrc[];
 extern s16 gUnk_03001F00;
 extern s32 gUnk_03001F2C;
 extern u8 gUnk_03001F30;
@@ -104,11 +104,11 @@ extern u32 gUnk_030023C8[];
 extern s32 gUnk_030023D4;
 extern u16 gUnk_030023D8;
 extern s16 gUnk_030023E4;
-extern u32 gUnk_030023E8[];
+extern u32 gCurSaveSlot[];
 extern s8 gUnk_030023EC;
 extern u32 gUnk_03002448;
 extern s16 gUnk_0300244C;
-extern u32 gUnk_03002464[];
+extern u32 gExtraMode[];
 extern s8 gUnk_03002468;
 extern u32 gUnk_030027A8[];
 extern vs16 gUnk_03004CA0[];
@@ -529,7 +529,7 @@ extern u32 gUnk_08756160[];
 extern u32 gUnk_0875616C[];
 extern s8 gUnk_08756178[];
 extern u32 gUnk_08756184[];
-extern u32 gUnk_08756198[];
+extern u32 gHBlankScrollEffects[];
 
 /* External functions */
 extern void TaskDispatchTrampoline(void);
@@ -1442,7 +1442,7 @@ void sub_080b59d8();
 s32 sub_080b5a94();
 s32 sub_080b5bdc();
 s32 sub_080b5d84();
-void sub_080b603c();
+void HBlankScrollVBlankCallback();
 void sub_080b60e8();
 extern void CpuSet(const void *src, void *dst, u32 control);
 
@@ -1753,27 +1753,27 @@ s32 sub_080b5d84(struct Unk020055D8Entry *e)
     return slot;
 }
 
-void sub_080b603c(void)
+void HBlankScrollVBlankCallback(void)
 {
     REG_DMA0CNT_H = 0;
     if (gUnk_0300003C == 0)
     {
         gUnk_03000FA4 = 0;
-        *(vu32 *)gUnk_0300101C = *(vu32 *)gUnk_03001EF0 = *(vu32 *)gUnk_03001184 = 0;
+        *(vu32 *)gHBlankDmaDest = *(vu32 *)gHBlankDmaSrc = *(vu32 *)gHBlankDmaCnt = 0;
         gUnk_03000B74 = 0;
     }
     else
     {
         if (gUnk_03000B74 & 1)
         {
-            CpuSet(gUnk_020164A0, gUnk_02016870, 0x040000F0);
+            CpuSet(gHBlankScrollTable, gHBlankScrollDmaTable, 0x040000F0);
             gUnk_03000B74 = 2;
         }
         if (gUnk_03000B74 & 2)
         {
-            REG_DMA0SAD = gUnk_03001EF0[0];
-            REG_DMA0DAD = gUnk_0300101C[0];
-            REG_DMA0CNT = gUnk_03001184[0];
+            REG_DMA0SAD = gHBlankDmaSrc[0];
+            REG_DMA0DAD = gHBlankDmaDest[0];
+            REG_DMA0CNT = gHBlankDmaCnt[0];
         }
     }
 }
@@ -1785,13 +1785,13 @@ void sub_080b60e8(void)
     vu32 *p;
     s32 w1;
 
-    w = (s16)((s32 (*)(void))gUnk_08756198[*(s16 *)gUnk_02016860])();
-    *(vu32 *)gUnk_03001EF0 = (w << 1) + (u32)gUnk_02016870;
+    w = (s16)((s32 (*)(void))gHBlankScrollEffects[*(s16 *)gHBlankScrollEffect])();
+    *(vu32 *)gHBlankDmaSrc = (w << 1) + (u32)gHBlankScrollDmaTable;
     m = 0xA2600000;
     m |= w;
-    *(vu32 *)gUnk_03001184 = m;
-    *(vu32 *)&gUnk_03000FA4 = (u32)sub_080b603c;
-    p = (vu32 *)gUnk_02016494;
+    *(vu32 *)gHBlankDmaCnt = m;
+    *(vu32 *)&gUnk_03000FA4 = (u32)HBlankScrollVBlankCallback;
+    p = (vu32 *)gHBlankScrollTimer;
     w1 = *p;
     if (w1 <= 0xFFFF)
         *p = w1 + 1;

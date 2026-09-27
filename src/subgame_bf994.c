@@ -139,9 +139,9 @@ extern u32 sub_08002ee8(u32 range);
 extern void sub_08003110(u32 a);
 extern void sub_080034d0(void);
 extern void sub_08006138(void);
-extern void sub_080b9d0c(s32 a);
-extern void sub_080b9d24(void);
-extern void sub_080b9e30(void);
+extern void SubGameReplay(s32 a);
+extern void SubGameQuit(void);
+extern void SubGameCheckEnd(void);
 
 extern void sub_080bda78(void);
 extern void sub_080bda98(void);

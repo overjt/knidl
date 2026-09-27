@@ -140,17 +140,17 @@ asset_metadata_index:
 	.incbin	"baserom.gba", 0x730200, 0x4
 	.word	sub_0805c5fc+1
 	.incbin	"baserom.gba", 0x730208, 0x4
-	.word	sub_080103f0+1
+	.word	Task_CutsceneDirector+1
 	.incbin	"baserom.gba", 0x730210, 0x4
-	.word	sub_080104f0+1
+	.word	Task_CutsceneActor+1
 	.incbin	"baserom.gba", 0x730218, 0x4
-	.word	sub_080ba404+1
+	.word	Task_SubGame+1
 	.incbin	"baserom.gba", 0x730220, 0x4
-	.word	sub_080bc0cc+1
+	.word	Task_QuickDrawObject+1
 	.incbin	"baserom.gba", 0x730228, 0x4
-	.word	sub_080be7dc+1
+	.word	Task_BombRallyObject+1
 	.incbin	"baserom.gba", 0x730230, 0x4
-	.word	sub_080c2ff8+1
+	.word	Task_AirGrindObject+1
 	.incbin	"baserom.gba", 0x730238, 0x4
 	.word	sub_0807450c+1
 	.incbin	"baserom.gba", 0x730240, 0x4
@@ -432,17 +432,17 @@ asset_metadata_index:
 	.incbin	"baserom.gba", 0x730690, 0x4
 	.word	sub_08030238+1
 	.incbin	"baserom.gba", 0x730698, 0x4
-	.word	sub_080099fc+1
+	.word	Task_IntroStoryPicture+1
 	.incbin	"baserom.gba", 0x7306A0, 0x4
 	.word	sub_0800daf8+1
 	.incbin	"baserom.gba", 0x7306A8, 0x4
 	.word	sub_0800db64+1
 	.incbin	"baserom.gba", 0x7306B0, 0x4
-	.word	sub_0800dcd8+1
+	.word	Task_FileSelectCursor+1
 	.incbin	"baserom.gba", 0x7306B8, 0x4
 	.word	sub_0800de6c+1
 	.incbin	"baserom.gba", 0x7306C0, 0x4
-	.word	sub_0800e0c0+1
+	.word	Task_FileMenuHighlight+1
 	.incbin	"baserom.gba", 0x7306C8, 0x4
 	.word	sub_0800e9a4+1
 	.incbin	"baserom.gba", 0x7306D0, 0x4
@@ -470,23 +470,23 @@ asset_metadata_index:
 	.incbin	"baserom.gba", 0x730728, 0x4
 	.word	sub_0800ed78+1
 	.incbin	"baserom.gba", 0x730730, 0x4
-	.word	sub_0800f7b0+1
+	.word	Task_MenuScreenTitle+1
 	.incbin	"baserom.gba", 0x730738, 0x4
-	.word	sub_0800ff00+1
+	.word	Task_BgScroll+1
 	.incbin	"baserom.gba", 0x730740, 0x4
 	.word	sub_0800fb94+1
 	.incbin	"baserom.gba", 0x730748, 0x4
 	.word	sub_0800fa30+1
 	.incbin	"baserom.gba", 0x730750, 0x4
-	.word	sub_080cb354+1
+	.word	Task_GameOverSprite+1
 	.incbin	"baserom.gba", 0x730758, 0x4
-	.word	sub_080cb3a8+1
+	.word	Task_GameOverCursor+1
 	.incbin	"baserom.gba", 0x730760, 0x4
-	.word	sub_080cb418+1
+	.word	Task_GameOverPalette+1
 	.incbin	"baserom.gba", 0x730768, 0x4
-	.word	sub_080cb4f4+1
+	.word	Task_HalveScore+1
 	.incbin	"baserom.gba", 0x730770, 0x4
-	.word	sub_080cb588+1
+	.word	Task_GameOverObject+1
 	.incbin	"baserom.gba", 0x730778, 0x4
 	.word	sub_08008348+1
 	.incbin	"baserom.gba", 0x730780, 0xC
@@ -934,8 +934,8 @@ gUnk_08731F48:
 	.global	gUnk_08731F78
 gUnk_08731F78:
 	.incbin	"baserom.gba", 0x731F78, 0x20
-	.global	gUnk_08731F98
-gUnk_08731F98:
+	.global	gCutsceneDurations
+gCutsceneDurations:
 	.incbin	"baserom.gba", 0x731F98, 0x10
 	.global	gUnk_08731FA8
 gUnk_08731FA8:
@@ -1102,8 +1102,8 @@ gUnk_087324DA:
 	.global	gUnk_087325A2
 gUnk_087325A2:
 	.incbin	"baserom.gba", 0x7325A2, 0x72
-	.global	gUnk_08732614
-gUnk_08732614:
+	.global	gRoomTaskVariants
+gRoomTaskVariants:
 	.word	sub_08023634+1
 	.word	sub_08023e34+1
 	.word	sub_08023e78+1
@@ -1151,8 +1151,8 @@ gUnk_08732880:
 	.word	gUnk_087327A8
 	.word	gUnk_087327F0
 	.word	gUnk_08732824
-	.global	gUnk_087328A0
-gUnk_087328A0:
+	.global	gMapEventVariants
+gMapEventVariants:
 	.word	sub_0802d38c+1
 	.word	sub_0802d6cc+1
 	.word	sub_0802d4bc+1
@@ -2722,8 +2722,8 @@ gUnk_0873B6E8:
 	.global	gUnk_0873B724
 gUnk_0873B724:
 	.incbin	"baserom.gba", 0x73B724, 0x58
-	.global	gUnk_0873B77C
-gUnk_0873B77C:
+	.global	gPlayerObjectVariants
+gPlayerObjectVariants:
 	.word	sub_080509ec+1
 	.word	sub_08050d00+1
 	.word	sub_08051124+1
@@ -2758,8 +2758,8 @@ gUnk_0873B88A:
 	.global	gUnk_0873B8C6
 gUnk_0873B8C6:
 	.incbin	"baserom.gba", 0x73B8C6, 0x62
-	.global	gUnk_0873B928
-gUnk_0873B928:
+	.global	gPlayerEffectVariants
+gPlayerEffectVariants:
 	.word	sub_08053b40+1
 	.word	sub_08053c48+1
 	.word	sub_08053d08+1
@@ -10683,8 +10683,8 @@ gUnk_08756178:
 	.global	gUnk_08756184
 gUnk_08756184:
 	.incbin	"baserom.gba", 0x756184, 0x14
-	.global	gUnk_08756198
-gUnk_08756198:
+	.global	gHBlankScrollEffects
+gHBlankScrollEffects:
 	.word	sub_080b6154+1
 	.word	sub_080b6290+1
 	.word	sub_080b63a4+1
@@ -10732,23 +10732,23 @@ gUnk_087562A8:
 	.global	gUnk_087562C0
 gUnk_087562C0:
 	.incbin	"baserom.gba", 0x7562C0, 0xC
-	.global	gUnk_087562CC
-gUnk_087562CC:
-	.word	sub_080ba454+1
-	.word	sub_080bd9e8+1
-	.word	sub_080c1f9c+1
-	.global	gUnk_087562D8
-gUnk_087562D8:
-	.word	sub_080ba4e0+1
-	.word	sub_080bda0c+1
-	.word	sub_080c1fdc+1
+	.global	gSubGameInitHooks
+gSubGameInitHooks:
+	.word	QuickDrawInit+1
+	.word	BombRallyInit+1
+	.word	AirGrindInit+1
+	.global	gSubGameBodies
+gSubGameBodies:
+	.word	QuickDrawMain+1
+	.word	BombRallyMain+1
+	.word	AirGrindMain+1
 	.global	gUnk_087562E4
 gUnk_087562E4:
 	.incbin	"baserom.gba", 0x7562E4, 0x4
 	.global	gUnk_087562E8
 gUnk_087562E8:
-	.word	sub_080bab08+1
-	.word	sub_080bbd9c+1
+	.word	QuickDrawRound+1
+	.word	QuickDrawResults+1
 	.global	gUnk_087562F0
 gUnk_087562F0:
 	.incbin	"baserom.gba", 0x7562F0, 0x6
@@ -11221,8 +11221,8 @@ gUnk_08757280:
 	.incbin	"baserom.gba", 0x757280, 0x4C
 	.global	gUnk_087572CC
 gUnk_087572CC:
-	.word	sub_080c21b0+1
-	.word	sub_080c243c+1
+	.word	AirGrindRace+1
+	.word	AirGrindResults+1
 	.global	gUnk_087572D4
 gUnk_087572D4:
 	.word	sub_080c3018+1
@@ -11322,8 +11322,8 @@ gUnk_08758274:
 	.global	gUnk_08758284
 gUnk_08758284:
 	.incbin	"baserom.gba", 0x758284, 0x10
-	.global	gUnk_08758294
-gUnk_08758294:
+	.global	gGameOverObjectVariants
+gGameOverObjectVariants:
 	.word	sub_080cb5c4+1
 	.word	sub_080cbed4+1
 	.word	sub_080ccd4c+1

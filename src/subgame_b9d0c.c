@@ -5,25 +5,25 @@
  *   ./tools/fnmatch.sh 0x080B9D0C 0x080BA774 src/subgame_b9d0c.c --newpb
  *
  * The sub-game framework: the code AgbMain enters for its sub-game state
- * (sub_080ba354) and that every sub-game shares.  gUnk_02007FCC selects the
+ * (SubGameMain) and that every sub-game shares.  gUnk_02007FCC selects the
  * sub-game (0 = the reaction duel in this module, 1 = the four-slot
  * bomb-pass game of M36, 2 = the game whose body is in M37) and indexes the
  * per-game tables 0x087562A8 (graphics set), 0x087562C0 (BGM), 0x087562CC
- * (init hook) and 0x087562D8 (task body).  gUnk_02007D2C is the sub-game's
+ * (init hook) and 0x087562D8 (task body).  gSubGamePhase is the sub-game's
  * phase (0/1 running, 2-4 finished; the per-game body dispatches on it).
  *
- *   sub_080ba354   entry from AgbMain: link handshake, RNG warm-up, spawn
+ *   SubGameMain   entry from AgbMain: link handshake, RNG warm-up, spawn
  *                  the task type #93 controller, run both screens
  *   sub_080b9f34   one screen: load, fade in, wait for the phase to leave
  *                  0/1, optional link resync (sub_080ba150), fade out, stop
- *                  DMA0 and hand the task over to sub_080ba404
+ *                  DMA0 and hand the task over to Task_SubGame
  *   sub_080ba150   the SIO handshake: 0x7755 / 0xAA00 / 0xAA01 / 0xAA02
  *                  exchanged through gUnk_03005274 and the send/receive
  *                  buffers gUnk_03004D90 / gUnk_03004D50 until every
  *                  linked player reports 0xAA02
- *   sub_080ba404   task type #93: kill every other task, then run the
+ *   Task_SubGame   task type #93: kill every other task, then run the
  *                  per-game body from 0x087562D8
- *   sub_080ba454.. the reaction duel's set-up and the helpers its round
+ *   QuickDrawInit.. the reaction duel's set-up and the helpers its round
  *                  controller (next file) calls.
  */
 #include "gba/gba.h"
@@ -35,7 +35,7 @@ extern u8 gUnk_02004B5C;
 extern s16 gUnk_020055EC;
 extern s8 gUnk_02006168;
 extern u8 gUnk_02006184;
-extern u8 gUnk_02007D2C;
+extern u8 gSubGamePhase;
 extern u8 gUnk_02007FCC;
 extern u8 gUnk_0200B03C[];
 extern u8 gUnk_0200B048;
@@ -78,8 +78,8 @@ extern u16 gUnk_03004D90[];
 extern u16 gUnk_03005274;     /* SIO handshake word; see sub_080ba150 */
 extern u32 gUnk_087562A8[][2];
 extern u16 gUnk_087562C0[];
-extern s32 (*const gUnk_087562CC[])(void);
-extern void *gUnk_087562D8[];
+extern s32 (*const gSubGameInitHooks[])(void);
+extern void *gSubGameBodies[];
 extern u16 gUnk_087562E4[];
 extern u32 gUnk_087562E8[];
 extern s16 gUnk_087562F0[];
@@ -124,16 +124,16 @@ void sub_080c59d8(s32 a, s32 b);
 void sub_080ba134(void);
 void sub_080ba118(void);
 void sub_080ba150(void);
-void sub_080ba404(void);
+void Task_SubGame(void);
 void sub_080ba42c(void);
 
-void sub_080b9d0c(s32 a0)
+void SubGameReplay(s32 a0)
 {
     gUnk_02006168 = a0;
     gUnk_03002490->unk18 = 3;
 }
 
-void sub_080b9d24(void)
+void SubGameQuit(void)
 {
     if (gUnk_03002150 == 4)
         gUnk_03004D24 = 0;
@@ -142,7 +142,7 @@ void sub_080b9d24(void)
 
 s32 sub_080b9d48(void)
 {
-    return gUnk_087562CC[gUnk_02007FCC]();
+    return gSubGameInitHooks[gUnk_02007FCC]();
 }
 
 u8 sub_080b9d68(void)
@@ -193,13 +193,13 @@ void sub_080b9de8(void)
         sub_080ba134();
 }
 
-void sub_080b9e30(void)
+void SubGameCheckEnd(void)
 {
-    if (gUnk_02007D2C <= 1)
+    if (gSubGamePhase <= 1)
     {
         s32 v = gUnk_03002490->unk18;
         if (v != 0)
-            gUnk_02007D2C = v;
+            gSubGamePhase = v;
     }
 }
 
@@ -212,7 +212,7 @@ void sub_080b9e50(s32 a0)
     if (gUnk_087562C0[m] != 0)
         sub_08008c64(gUnk_087562C0[m]);
     sub_08008d10(gUnk_02007FCC, a0);
-    gUnk_02007D2C = a0;
+    gSubGamePhase = a0;
 }
 
 void sub_080b9ea0(s32 a0)
@@ -296,9 +296,9 @@ wait:
        iteration, and a loop note would hoist it (lesson 3.21). */
 loop:
     sub_080ba118();
-    if (gUnk_02007D2C <= 1)
+    if (gSubGamePhase <= 1)
         goto loop;
-    if (gUnk_02007D2C == 4 && gUnk_03002150 == 4)
+    if (gSubGamePhase == 4 && gUnk_03002150 == 4)
     {
         if (gUnk_0200EC48 == 2)
             goto de8;
@@ -327,7 +327,7 @@ tail:
     gUnk_03000048 = 0;
     gUnk_0300003C = gUnk_03000FA4 = 0;
     REG_DMA0CNT_L = REG_DMA0CNT_H = 0;
-    sub_08006148(sub_080ba404, gUnk_020055EC);
+    sub_08006148(Task_SubGame, gUnk_020055EC);
 }
 
 void sub_080ba118(void)
@@ -431,7 +431,7 @@ done:
     gUnk_03004D70 = 0;
 }
 
-s32 sub_080ba31c(void)
+s32 FreeOtherTasks(void)
 {
     s32 i;
 
@@ -442,7 +442,7 @@ s32 sub_080ba31c(void)
     }
 }
 
-void sub_080ba354(void)
+void SubGameMain(void)
 {
     s32 i;
 
@@ -463,14 +463,14 @@ void sub_080ba354(void)
     sub_080b9f34(0);
     sub_080b9f34(1);
     sub_080022ac();
-    if (gUnk_02007D2C != 3)
+    if (gSubGamePhase != 3)
     {
         gUnk_030023D8 = gUnk_03002150;
         gUnk_03002150 = gUnk_02007FCC + 14;
     }
 }
 
-void sub_080ba404(void)
+void Task_SubGame(void)
 {
     struct Task *t = gUnk_03002490;
 
@@ -478,16 +478,16 @@ void sub_080ba404(void)
     t->unk0C = 0;
     t->unk04 = (u32)sub_080ba42c;
     t->unk18 = 0;
-    sub_080ba31c();
+    FreeOtherTasks();
     sub_08006138();
 }
 
 void sub_080ba42c(void)
 {
-    sub_08006148(gUnk_087562D8[gUnk_02007FCC], gCurTaskIdx);
+    sub_08006148(gSubGameBodies[gUnk_02007FCC], gCurTaskIdx);
 }
 
-void sub_080ba454(void)
+void QuickDrawInit(void)
 {
     struct Task *t = &gUnk_03002790[gUnk_020055EC];
     s32 i;
@@ -504,10 +504,10 @@ void sub_080ba454(void)
     sub_080017e4(2, (u32)gUnk_087562E4, (u32)gUnk_03001270, 2);
 }
 
-void sub_080ba4e0(void)
+void QuickDrawMain(void)
 {
     gUnk_03002490->unk04 = 0;
-    sub_08002e98(gUnk_02007D2C, 2, gUnk_087562E8);
+    sub_08002e98(gSubGamePhase, 2, gUnk_087562E8);
     sub_08006138();
 }
 

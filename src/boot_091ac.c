@@ -7,9 +7,9 @@
  * The boot and title sequence.  AgbMain state 1 (sub_080091ac) runs the
  * skippable logo sequence sub_08009200, whose frame waits sub_08009398(n)
  * return 1 on A/B/START (sub_080093cc is a dead twin) and whose task type
- * #0 (sub_080093fc) runs every frame.  State 3 (sub_080096e0) alternates
- * the title screen sub_0800973c - task type #1 (sub_08009418) animates the
- * title palette, task type #2 (sub_080095c0) spawns ten sprite children
+ * #0 (Task_BootLogo) runs every frame.  State 3 (sub_080096e0) alternates
+ * the title screen sub_0800973c - task type #1 (Task_TitlePalette) animates the
+ * title palette, task type #2 (Task_TitleSprites) spawns ten sprite children
  * (sub_08009640) - with the nine-scene intro story sub_080098a8. */
 
 extern vs32 gUnk_03000010;
@@ -72,8 +72,8 @@ void sub_08005ca0(void);
 void sub_08006138(void);
 void sub_08008c4c(s32 a0);
 void sub_08008c64(u16 a0);
-void sub_080caa3c(void);
-void sub_080caab8(void);
+void BootLogoInitObjects(void);
+void BootLogoUpdateObjects(void);
 s32 sub_08009200(void);
 s32 sub_08009398(s32 n);
 void sub_080095e4(void);
@@ -107,7 +107,7 @@ s32 sub_08009200(void)
     s32 i;
 
     sub_080022ac();
-    sub_080caa3c();
+    BootLogoInitObjects();
     gUnk_0300243C = 0x9999;
     sub_08008c4c(0);
     sub_08008c64(6);
@@ -167,19 +167,19 @@ s32 sub_080093cc(void)
     return 0;
 }
 
-void sub_080093fc(void)
+void Task_BootLogo(void)
 {
     struct Task *t = gUnk_03002490;
 
     t->unk00 = 0;
     t->unk0C = 0;
     for (;;) {
-        sub_080caab8();
+        BootLogoUpdateObjects();
         TaskYieldTrampoline(1);
     }
 }
 
-void sub_08009418(void)
+void Task_TitlePalette(void)
 {
     struct Task *t = gUnk_03002490;
     s32 *p;
@@ -224,7 +224,7 @@ void sub_08009418(void)
     }
 }
 
-void sub_080095c0(void)
+void Task_TitleSprites(void)
 {
     if (gUnk_03002490->unk18 == -1)
         sub_080095e4();

@@ -5,7 +5,7 @@
 /* ending_c6c64.c (0x080C6C64-0x080C7E4B, issue #100).
  *
  * The first ending scene, part 1: task type #100 (class 3), which M37's
- * sub_080c62f0 spawns in AgbMain state 11 and waits on (gUnk_02008018).
+ * sub_080c62f0 spawns in AgbMain state 11 and waits on (gEndingSceneActive).
  *   sub_080c6c64   the body: variant 0 (Task.unk73 == 0) loads the graphics
  *       (sub_080c6ca0) and spawns variants 1, 6, 7, 9 and 10 from the list
  *       gUnk_0875735C (sub_080c6d38); variants 1-10 run gUnk_08757330[unk73].
@@ -34,7 +34,7 @@ extern u32 gUnk_080DBF08[];
 extern u32 gUnk_080DBF18[];
 extern u32 gUnk_080DBF28[];
 extern u32 gUnk_080DBF30[];
-extern u8 gUnk_02008018;
+extern u8 gEndingSceneActive;
 extern s16 gUnk_0873FF98[];
 extern u32 gUnk_0874CF28[];
 
@@ -115,7 +115,7 @@ void sub_080c6d38(void)
 /* Task type #100 variant 1, the scene's main sprite: spawns variant 4 and
    the four variant-2 helpers (sub_080c77cc), draws itself through the
    scaling callback sub_080c769c, runs its timed motion phases and ends the
-   scene by clearing gUnk_02008018, which M37's sub_080c62f0 waits for. */
+   scene by clearing gEndingSceneActive, which M37's sub_080c62f0 waits for. */
 void sub_080c6d84(void)
 {
     gUnk_03002490->unk00 = (u32)sub_080059d8;
@@ -462,7 +462,7 @@ void sub_080c6d84(void)
     TaskYieldTrampoline(2);
     sub_080062c4();
     TaskYieldTrampoline(46);
-    gUnk_02008018 = 0;
+    gEndingSceneActive = 0;
     sub_08006138();
 }
 

@@ -80,10 +80,10 @@ struct M37Player
     /*0x30*/ s32 unk30;
 };
 
-/* gUnk_02016C40, the game's state; always used through gUnk_02017094 */
+/* gAirGrind, the game's state; always used through gAirGrindPtr */
 struct M37Game
 {
-    /*0x000*/ s32 unk000;       /* the level (M36's sub_080c1f9c copies gUnk_02006168) */
+    /*0x000*/ s32 unk000;       /* the level (M36's AirGrindInit copies gUnk_02006168) */
     /*0x004*/ s32 unk004[4];
     /*0x014*/ s32 unk014;
     /*0x018*/ s32 unk018;
@@ -106,7 +106,7 @@ struct M37Game
     /*0x452*/ u8 pad452[2];
 };
 
-/* per-player records of gUnk_0201B0E0, M37Course.unk018[4] (0x3C bytes) */
+/* per-player records of gAirGrindCourse, M37Course.unk018[4] (0x3C bytes) */
 struct M37CoursePlayer
 {
     /*0x00*/ s32 unk00;
@@ -126,7 +126,7 @@ struct M37CoursePlayer
     /*0x38*/ s32 unk38;
 };
 
-/* gUnk_0201B0E0, reached through gUnk_0201716C (and directly by the
+/* gAirGrindCourse, reached through gAirGrindCoursePtr (and directly by the
    0x080C5284-0x080C623C builder) */
 struct M37Course
 {
@@ -153,8 +153,8 @@ struct M37Script
     /*0x04*/ s16 unk4;
 };
 
-extern struct M37Game *gUnk_02017094;
-extern struct M37Course *gUnk_0201716C;
+extern struct M37Game *gAirGrindPtr;
+extern struct M37Course *gAirGrindCoursePtr;
 extern u16 gUnk_02017170;
 extern struct M37Script gUnk_03006928;
 extern s32 gUnk_080CFE3C[][3];
@@ -189,7 +189,7 @@ void sub_080c3648(void)
 
 void sub_080c3670(s32 pos)
 {
-    struct M37Course *c = gUnk_0201716C;
+    struct M37Course *c = gAirGrindCoursePtr;
 
     c->unk000 = pos > c->unk010 ? c->unk010 : pos;
     c->unk004 = gUnk_03006928.unk4;
@@ -201,26 +201,26 @@ s32 sub_080c3698(s32 player)
     s32 speed = gUnk_03002490->unk54;
     s32 ret = 0;
 
-    if (gUnk_0201716C->unk018[player].unk00 > gUnk_0201716C->unk010 - 50)
+    if (gAirGrindCoursePtr->unk018[player].unk00 > gAirGrindCoursePtr->unk010 - 50)
         return 0;
-    if (abs(gUnk_02017094->unk01C[player].unk10) <= abs((speed * 3) >> 16)) {
-        if (abs(gUnk_02017094->unk01C[player].unk10) <= abs(speed >> 16)) {
+    if (abs(gAirGrindPtr->unk01C[player].unk10) <= abs((speed * 3) >> 16)) {
+        if (abs(gAirGrindPtr->unk01C[player].unk10) <= abs(speed >> 16)) {
             if (player == 0)
                 sub_080c2078(0, gUnk_03002490->unk18, 6);
-            gUnk_02017094->unk01C[player].unk01++;
+            gAirGrindPtr->unk01C[player].unk01++;
             gUnk_03002490->unk54 += 0x10000;
-            if (gUnk_03002490->unk54 > gUnk_080CFE3C[gUnk_02017094->unk000][0])
-                gUnk_03002490->unk54 = gUnk_080CFE3C[gUnk_02017094->unk000][0];
+            if (gUnk_03002490->unk54 > gUnk_080CFE3C[gAirGrindPtr->unk000][0])
+                gUnk_03002490->unk54 = gUnk_080CFE3C[gAirGrindPtr->unk000][0];
             ret = 2;
         } else {
             if (player == 0)
                 sub_080c2078(0, gUnk_03002490->unk18, 7);
             gUnk_03002490->unk54 += 0x8000;
-            if (gUnk_03002490->unk54 > gUnk_080CFE3C[gUnk_02017094->unk000][0])
-                gUnk_03002490->unk54 = gUnk_080CFE3C[gUnk_02017094->unk000][0];
+            if (gUnk_03002490->unk54 > gUnk_080CFE3C[gAirGrindPtr->unk000][0])
+                gUnk_03002490->unk54 = gUnk_080CFE3C[gAirGrindPtr->unk000][0];
             ret = 1;
         }
-        gUnk_02017094->unk01C[player].unk0A = 5;
+        gAirGrindPtr->unk01C[player].unk0A = 5;
     }
     return ret;
 }
@@ -229,15 +229,15 @@ void sub_080c37b8(s32 a, s32 on)
 {
     if (a == 0) {
         if (on) {
-            if (gUnk_02017094->unk014 == -1)
-                gUnk_02017094->unk014 = sub_080031b8(400);
+            if (gAirGrindPtr->unk014 == -1)
+                gAirGrindPtr->unk014 = sub_080031b8(400);
             else
-                m4aMPlayPitchControl(gMPlayTable[gUnk_02017094->unk014].info, 0xFFFF,
+                m4aMPlayPitchControl(gMPlayTable[gAirGrindPtr->unk014].info, 0xFFFF,
                                      (gUnk_03002490->unk54 - 0x40000) >> 5);
         } else {
-            if (gUnk_02017094->unk014 != -1) {
-                sub_080034f0(gUnk_02017094->unk014, 400);
-                gUnk_02017094->unk014 = -1;
+            if (gAirGrindPtr->unk014 != -1) {
+                sub_080034f0(gAirGrindPtr->unk014, 400);
+                gAirGrindPtr->unk014 = -1;
             }
         }
     }
@@ -254,34 +254,34 @@ void sub_080c383c(s32 player)
         sub_080c5b84();
         max = 0;
         for (i = 0; i < 4; i++) {
-            if (gUnk_0201716C->unk018[i].unk00 > max)
-                max = gUnk_0201716C->unk018[i].unk00;
+            if (gAirGrindCoursePtr->unk018[i].unk00 > max)
+                max = gAirGrindCoursePtr->unk018[i].unk00;
         }
-        gUnk_02017094->unk1B8 = max;
+        gAirGrindPtr->unk1B8 = max;
     }
-    rank = (u16)gUnk_0201716C->unk018[player].unk18;
+    rank = (u16)gAirGrindCoursePtr->unk018[player].unk18;
     gUnk_03002490->unk42 = rank + 4;
     if (rank > 2)
         rank = 2;
     gUnk_03002490->unk3E = (rank << 13) & 0x6000;
-    gUnk_03002490->unk28 = gUnk_0201716C->unk018[player].unk08;
+    gUnk_03002490->unk28 = gAirGrindCoursePtr->unk018[player].unk08;
 }
 
 void sub_080c38c8(s32 player)
 {
     s32 ret;
 
-    if (gUnk_02017094->unk01C[player].unk08 != 0) {
+    if (gAirGrindPtr->unk01C[player].unk08 != 0) {
         sub_080c3648();
-        if (player == 0 && gUnk_02017094->unk01C[0].unk08 > 19)
-            sub_080c2078(0, gUnk_03002490->unk18, (gUnk_02017094->unk01C[0].unk08 & 1) ? 3 : 4);
-    } else if (gUnk_02017094->unk01C[player].unk02 & 1) {
-        if (gUnk_0201716C->unk018[player].unk14 != 0) {
+        if (player == 0 && gAirGrindPtr->unk01C[0].unk08 > 19)
+            sub_080c2078(0, gUnk_03002490->unk18, (gAirGrindPtr->unk01C[0].unk08 & 1) ? 3 : 4);
+    } else if (gAirGrindPtr->unk01C[player].unk02 & 1) {
+        if (gAirGrindCoursePtr->unk018[player].unk14 != 0) {
             ret = 0;
             sub_080c37b8(player, 1);
-            if (gUnk_03002490->unk54 > gUnk_080CFE3C[gUnk_02017094->unk000][1])
+            if (gUnk_03002490->unk54 > gUnk_080CFE3C[gAirGrindPtr->unk000][1])
                 gUnk_03002490->unk5C = 0x200;
-            else if (gUnk_03002490->unk54 > gUnk_080CFE3C[gUnk_02017094->unk000][2])
+            else if (gUnk_03002490->unk54 > gUnk_080CFE3C[gAirGrindPtr->unk000][2])
                 gUnk_03002490->unk5C = 0xA00;
             else
                 gUnk_03002490->unk5C = 0x8000;
@@ -291,38 +291,38 @@ void sub_080c38c8(s32 player)
                 if ((gUnk_02017170 & 7) == 1)
                     sub_080c2078(0, gUnk_03002490->unk18, 1);
             }
-            if (gUnk_02017094->unk01C[player].unk0A == 0 && gUnk_02017094->unk01C[player].unk00 == 0)
+            if (gAirGrindPtr->unk01C[player].unk0A == 0 && gAirGrindPtr->unk01C[player].unk00 == 0)
                 ret = sub_080c3698(player);
-            if (gUnk_02017094->unk01C[player].unk04 & 1) {
-                if (player == 0 && gUnk_02017094->unk450 == 0)
+            if (gAirGrindPtr->unk01C[player].unk04 & 1) {
+                if (player == 0 && gAirGrindPtr->unk450 == 0)
                     sub_080c2078(0, gUnk_03002490->unk18, 2);
-                gUnk_02017094->unk01C[player].unk0C = 4;
+                gAirGrindPtr->unk01C[player].unk0C = 4;
                 if (ret == 1) {
-                    gUnk_02017094->unk01C[player].unk0C = 6;
+                    gAirGrindPtr->unk01C[player].unk0C = 6;
                     if (player == 0)
                         sub_080031b8(149);
                 } else if (ret == 2) {
-                    gUnk_02017094->unk01C[player].unk0C = 8;
+                    gAirGrindPtr->unk01C[player].unk0C = 8;
                     if (player == 0)
                         sub_080031b8(149);
                 }
             }
-            gUnk_02017094->unk01C[player].unk00 = 1;
+            gAirGrindPtr->unk01C[player].unk00 = 1;
         } else {
-            gUnk_02017094->unk01C[player].unk0C = 0;
+            gAirGrindPtr->unk01C[player].unk0C = 0;
             sub_080c37b8(player, 0);
             sub_080c3648();
-            gUnk_02017094->unk01C[player].unk08 = 24;
+            gAirGrindPtr->unk01C[player].unk08 = 24;
             if (player == 0)
                 sub_080c523c(3);
             sub_080c2078(player, gUnk_03002490->unk18, 8);
-            gUnk_02017094->unk01C[player].unk00 = 0;
+            gAirGrindPtr->unk01C[player].unk00 = 0;
         }
-        gUnk_02017094->unk01C[player].unk14 -= 0x20000;
-        if (gUnk_02017094->unk01C[player].unk14 < 0)
-            gUnk_02017094->unk01C[player].unk14 = 0;
+        gAirGrindPtr->unk01C[player].unk14 -= 0x20000;
+        if (gAirGrindPtr->unk01C[player].unk14 < 0)
+            gAirGrindPtr->unk01C[player].unk14 = 0;
     } else {
-        gUnk_02017094->unk01C[player].unk0C = 0;
+        gAirGrindPtr->unk01C[player].unk0C = 0;
         sub_080c37b8(player, 0);
         if (gUnk_03002490->unk54 < 0x18000) {
             gUnk_03002490->unk5C = 0;
@@ -330,55 +330,55 @@ void sub_080c38c8(s32 player)
         } else {
             gUnk_03002490->unk5C = -0x800;
         }
-        gUnk_02017094->unk01C[player].unk14 += 0x20000;
-        if (gUnk_02017094->unk01C[player].unk14 > 0x80000)
-            gUnk_02017094->unk01C[player].unk14 = 0x80000;
-        if (gUnk_02017094->unk01C[player].unk00 == 1) {
-            if (player == 0 && gUnk_02017094->unk451 == 0)
+        gAirGrindPtr->unk01C[player].unk14 += 0x20000;
+        if (gAirGrindPtr->unk01C[player].unk14 > 0x80000)
+            gAirGrindPtr->unk01C[player].unk14 = 0x80000;
+        if (gAirGrindPtr->unk01C[player].unk00 == 1) {
+            if (player == 0 && gAirGrindPtr->unk451 == 0)
                 sub_080c2078(0, gUnk_03002490->unk18, 5);
-            if (gUnk_02017094->unk01C[player].unk0A == 0)
+            if (gAirGrindPtr->unk01C[player].unk0A == 0)
                 sub_080c3698(player);
         }
-        gUnk_02017094->unk01C[player].unk00 = 0;
+        gAirGrindPtr->unk01C[player].unk00 = 0;
     }
 
-    if (gUnk_02017094->unk01C[player].unk0C != 0) {
-        gUnk_02017094->unk01C[player].unk18 += 0x20000;
+    if (gAirGrindPtr->unk01C[player].unk0C != 0) {
+        gAirGrindPtr->unk01C[player].unk18 += 0x20000;
     } else {
-        gUnk_02017094->unk01C[player].unk18 -= 0x20000;
-        if (gUnk_02017094->unk01C[player].unk18 < 0)
-            gUnk_02017094->unk01C[player].unk18 = 0;
+        gAirGrindPtr->unk01C[player].unk18 -= 0x20000;
+        if (gAirGrindPtr->unk01C[player].unk18 < 0)
+            gAirGrindPtr->unk01C[player].unk18 = 0;
     }
-    if (gUnk_02017094->unk01C[player].unk10 < -20)
-        gUnk_02017094->unk01C[player].unk1C = gUnk_0201716C->unk018[player].unk28;
-    gUnk_02017094->unk01C[player].unk10 = gUnk_02017094->unk01C[player].unk1C - gUnk_0201716C->unk018[player].unk00;
-    if (gUnk_02017094->unk01C[player].unk08 == 0) {
+    if (gAirGrindPtr->unk01C[player].unk10 < -20)
+        gAirGrindPtr->unk01C[player].unk1C = gAirGrindCoursePtr->unk018[player].unk28;
+    gAirGrindPtr->unk01C[player].unk10 = gAirGrindPtr->unk01C[player].unk1C - gAirGrindCoursePtr->unk018[player].unk00;
+    if (gAirGrindPtr->unk01C[player].unk08 == 0) {
         if (gUnk_03002490->unk3C > 8)
-            gUnk_02017094->unk01C[player].unk06 = 0;
-        if (gUnk_0201716C->unk018[player].unk1C > 16)
+            gAirGrindPtr->unk01C[player].unk06 = 0;
+        if (gAirGrindCoursePtr->unk018[player].unk1C > 16)
             gUnk_03002490->unk3C = 0;
-        else if (gUnk_0201716C->unk018[player].unk1C < -16)
+        else if (gAirGrindCoursePtr->unk018[player].unk1C < -16)
             gUnk_03002490->unk3C = 6;
         else
             gUnk_03002490->unk3C = 3;
-        if (gUnk_02017094->unk01C[player].unk02 & 1) {
-            if (gUnk_02017094->unk01C[player].unk06 > 0)
-                gUnk_02017094->unk01C[player].unk06--;
+        if (gAirGrindPtr->unk01C[player].unk02 & 1) {
+            if (gAirGrindPtr->unk01C[player].unk06 > 0)
+                gAirGrindPtr->unk01C[player].unk06--;
         } else {
-            if (gUnk_02017094->unk01C[player].unk06 <= 3)
-                gUnk_02017094->unk01C[player].unk06++;
+            if (gAirGrindPtr->unk01C[player].unk06 <= 3)
+                gAirGrindPtr->unk01C[player].unk06++;
         }
-        gUnk_03002490->unk3C += gUnk_080CFEE4[gUnk_02017094->unk01C[player].unk06];
+        gUnk_03002490->unk3C += gUnk_080CFEE4[gAirGrindPtr->unk01C[player].unk06];
     } else {
         if (gUnk_03002490->unk3C <= 8)
-            gUnk_02017094->unk01C[player].unk06 = 0;
-        if (player == 0 && gUnk_02017094->unk01C[0].unk06 == 0)
+            gAirGrindPtr->unk01C[player].unk06 = 0;
+        if (player == 0 && gAirGrindPtr->unk01C[0].unk06 == 0)
             sub_080031b8(401);
         gUnk_03002490->unk3C = 9;
-        if (++gUnk_02017094->unk01C[player].unk06 > 23)
-            gUnk_02017094->unk01C[player].unk06 = 0;
-        gUnk_03002490->unk3C += gUnk_080CFEE9[gUnk_02017094->unk01C[player].unk06];
-        gUnk_02017094->unk01C[player].unk14 = gUnk_080CFF01[gUnk_02017094->unk01C[player].unk06] << 16;
+        if (++gAirGrindPtr->unk01C[player].unk06 > 23)
+            gAirGrindPtr->unk01C[player].unk06 = 0;
+        gUnk_03002490->unk3C += gUnk_080CFEE9[gAirGrindPtr->unk01C[player].unk06];
+        gAirGrindPtr->unk01C[player].unk14 = gUnk_080CFF01[gAirGrindPtr->unk01C[player].unk06] << 16;
     }
 }
 
@@ -386,21 +386,21 @@ void sub_080c3d58(s32 player)
 {
     sub_080c37b8(player, 0);
     if (gUnk_03002490->unk14 == 0) {
-        gUnk_02017094->unk01C[player].unk14 -= 0x20000;
-        if (gUnk_02017094->unk01C[player].unk14 < 0)
-            gUnk_02017094->unk01C[player].unk14 = 0;
+        gAirGrindPtr->unk01C[player].unk14 -= 0x20000;
+        if (gAirGrindPtr->unk01C[player].unk14 < 0)
+            gAirGrindPtr->unk01C[player].unk14 = 0;
     }
     if (gUnk_03002490->unk3C > 8)
-        gUnk_02017094->unk01C[player].unk06 = 0;
-    if (gUnk_0201716C->unk018[player].unk1C > 16)
+        gAirGrindPtr->unk01C[player].unk06 = 0;
+    if (gAirGrindCoursePtr->unk018[player].unk1C > 16)
         gUnk_03002490->unk3C = 0;
-    else if (gUnk_0201716C->unk018[player].unk1C < -16)
+    else if (gAirGrindCoursePtr->unk018[player].unk1C < -16)
         gUnk_03002490->unk3C = 6;
     else
         gUnk_03002490->unk3C = 3;
     if (gUnk_03002490->unk14 == 0)
-        gUnk_02017094->unk01C[player].unk06 = 3;
-    gUnk_03002490->unk3C += gUnk_080CFEE4[gUnk_02017094->unk01C[player].unk06];
+        gAirGrindPtr->unk01C[player].unk06 = 3;
+    gUnk_03002490->unk3C += gUnk_080CFEE4[gAirGrindPtr->unk01C[player].unk06];
 }
 
 void sub_080c3e18(s32 player)
@@ -409,11 +409,11 @@ void sub_080c3e18(s32 player)
     u8 pal;
     u16 ratio;
 
-    scale = sub_080c623c(gUnk_0201716C->unk018[player].unk08);
-    gUnk_03002490->unk48 = gUnk_0201716C->unk018[player].unk0C + ((scale * gUnk_02017094->unk01C[player].unk18) >> 24);
-    gUnk_03002490->unk4A = gUnk_0201716C->unk018[player].unk10 - ((scale * gUnk_02017094->unk01C[player].unk14) >> 24);
+    scale = sub_080c623c(gAirGrindCoursePtr->unk018[player].unk08);
+    gUnk_03002490->unk48 = gAirGrindCoursePtr->unk018[player].unk0C + ((scale * gAirGrindPtr->unk01C[player].unk18) >> 24);
+    gUnk_03002490->unk4A = gAirGrindCoursePtr->unk018[player].unk10 - ((scale * gAirGrindPtr->unk01C[player].unk14) >> 24);
     if (player != 0) {
-        pal = gUnk_080CFE2C[gUnk_02017094->unk446][player];
+        pal = gUnk_080CFE2C[gAirGrindPtr->unk446][player];
         ratio = 0;
         if (scale < 256)
             ratio = 256 - scale;

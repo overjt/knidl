@@ -4,7 +4,7 @@
  * RECIPE: agbcc -O2 -mthumb-interwork -fprologue-bugfix
  *   ./tools/fnmatch.sh 0x080BB528 0x080BC0CC src/subgame_bb528.c --newpb
  *
- * The duel's results screen (sub-game 0, screen 1).  sub_080bbd9c is its
+ * The duel's results screen (sub-game 0, screen 1).  QuickDrawResults is its
  * task: sub_080bb528 builds the screen, then seven <entry, check> states
  * run through the anchor tables 0x08756378 / 0x08756394 (sub_080bbe04 /
  * sub_080bbde4):
@@ -14,11 +14,11 @@
  *   2  count the markers in (sub_080bb760 / sub_080bb7a0)
  *   3  place the per-player markers (sub_080bb8f8 -> sub_080bb874)
  *   4  two-option cursor (sub_080bb554, sub_080bb5b8): option 0 goes to
- *      state 5, option 1 quits (sub_080b9d24)
+ *      state 5, option 1 quits (SubGameQuit)
  *   5  three-option cursor (sub_080bb63c, sub_080bb66c): the choice goes to
- *      sub_080b9d0c, i.e. into gUnk_02006168, the row sub_080ba6b4 picks
+ *      SubGameReplay, i.e. into gUnk_02006168, the row sub_080ba6b4 picks
  *      the signal delay from
- *   6  idle until A/Start, then quit (sub_080b9d24)
+ *   6  idle until A/Start, then quit (SubGameQuit)
  *
  * sub_080bb718 / sub_080bb7cc / sub_080bb820 spawn task type #94 objects of
  * kinds 7, 8 and 9; sub_080bbc70 / sub_080bbcdc / sub_080bbd4c (kinds 1
@@ -57,10 +57,10 @@ s32 sub_080058e4(u32 type, s32 idx);
 void sub_08005ca0(void);
 void sub_08006138(void);
 void sub_08006148(void *fn, u32 i);
-void sub_080b9d0c(s32 a0);
-void sub_080b9d24(void);
+void SubGameReplay(s32 a0);
+void SubGameQuit(void);
 u8 sub_080b9d68(void);
-void sub_080b9e30(void);
+void SubGameCheckEnd(void);
 void sub_080ba5bc(s32 a0);
 
 void sub_080bbb70(void);
@@ -117,7 +117,7 @@ void sub_080bb5b8(void)
         if (t->unk1C == 0)
             t->unk14 = 5;
         else
-            sub_080b9d24();
+            SubGameQuit();
     }
     else if (gUnk_03001EB8[0] & 0x30)
     {
@@ -164,7 +164,7 @@ void sub_080bb66c(void)
     if (gUnk_03001EB8[0] & 9)
     {
         sub_080bb59c(102);
-        sub_080b9d0c(gUnk_03002490->unk1C);
+        SubGameReplay(gUnk_03002490->unk1C);
         gUnk_03002490->unk28 = 0;
     }
     else if (gUnk_03001EB8[0] & 2)
@@ -543,7 +543,7 @@ void sub_080bbd4c(void)
     }
 }
 
-void sub_080bbd9c(void)
+void QuickDrawResults(void)
 {
     struct Task *t;
 
@@ -559,7 +559,7 @@ void sub_080bbd9c(void)
 void sub_080bbde4(void)
 {
     sub_08002e98(gUnk_03002490->unk15, 7, gUnk_08756394);
-    sub_080b9e30();
+    SubGameCheckEnd();
 }
 
 void sub_080bbe04(void)
@@ -698,5 +698,5 @@ void sub_080bc0a0(void)
 void sub_080bc0b8(void)
 {
     if (sub_080b9d68())
-        sub_080b9d24();
+        SubGameQuit();
 }

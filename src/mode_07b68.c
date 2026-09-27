@@ -96,7 +96,7 @@ void sub_080082d0(void);
 void sub_08008c4c(s32 a0);
 void sub_08008c64(u16 a0);
 void sub_08008e1c(s32 a0);
-void sub_080c6ab4(u16 *a, s32 b, s32 c);
+void DrawClockToBgMap(u16 *a, s32 b, s32 c);
 
 s32 sub_08007b68(u32 *src, u32 *dst, u32 size)
 {
@@ -293,14 +293,14 @@ void sub_08007f9c(void)
         if (gUnk_02006090 == 6) {
             if (gUnk_03001F18[0] != 0 || gUnk_03001F18[1] != 0
                 || gUnk_03001F18[2] != 0 || gUnk_03001F18[3] != 0) {
-                sub_080c6ab4(gUnk_03001F18, 22, 18);
+                DrawClockToBgMap(gUnk_03001F18, 22, 18);
                 gUnk_03001ED8 &= 0xE0FF;
                 gUnk_03001ED8 |= 0x1900;
             }
         } else {
             if (gUnk_03002378[0] != 0 || gUnk_03002378[1] != 0
                 || gUnk_03002378[2] != 0 || gUnk_03002378[3] != 0) {
-                sub_080c6ab4(gUnk_03002378, 22, 18);
+                DrawClockToBgMap(gUnk_03002378, 22, 18);
                 gUnk_03001ED8 &= 0xE0FF;
                 gUnk_03001ED8 |= 0x1900;
             }

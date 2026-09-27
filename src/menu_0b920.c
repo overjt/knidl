@@ -44,7 +44,7 @@ extern s8 gUnk_02006180;
 extern u8 gUnk_02007FC0;
 extern s16 gUnk_0200A6E0[];
 extern s8 gUnk_0200B074;
-extern struct SaveSlot gUnk_0200E600[];
+extern struct SaveSlot gSaveSlots[];
 extern u32 gUnk_0200EC48;
 extern vu16 gUnk_03000048;
 extern vs16 gUnk_030004A4;
@@ -63,7 +63,7 @@ extern u8 gUnk_03001F30;
 extern u16 gUnk_03002150;
 extern u16 gUnk_030023AC;
 extern u16 gUnk_030023D8;
-extern s32 gUnk_030023E8;
+extern s32 gCurSaveSlot;
 extern s16 gUnk_0300244C;
 extern u32 gUnk_03004D70;
 extern u32 gUnk_06010000[];
@@ -109,8 +109,8 @@ void sub_0800da9c(s32 mode);
 void sub_0800fcbc(void);
 void sub_0800fdb8(s32 speed, s32 dist, s32 bg);
 void sub_08010020(s32 a, s32 b, s32 c, s32 d);
-void sub_080b6e44(void);
-void sub_080b78e4(void);
+void ResetHBlankScroll(void);
+void SelectLatestSaveSlot(void);
 void sub_080b8070(s32 a);
 void sub_080b81a0(s32 a);
 s32 sub_080b8290(void);
@@ -129,9 +129,9 @@ void sub_0800b920(void)
     gUnk_03004D70 = 0;
     sub_080022ac();
     sub_08002028();
-    sub_080b6e44();
-    if (gUnk_030023E8 == -1 || gUnk_030023E8 == 3)
-        sub_080b78e4();
+    ResetHBlankScroll();
+    if (gCurSaveSlot == -1 || gCurSaveSlot == 3)
+        SelectLatestSaveSlot();
     gUnk_0200A6E0[0] = 0;
     gUnk_0200A6E0[1] = 0;
     gUnk_03000FC8 = 10;
@@ -256,7 +256,7 @@ void sub_0800b920(void)
     case 3: /* empty but load-bearing: it adds the `cmp #5; ble` split */
         break;
     case 5:
-        sub_080b8070(gUnk_030023E8);
+        sub_080b8070(gCurSaveSlot);
         sub_080b8290();
         sub_0800b4a8();
         gUnk_02007FC0 = 1;
@@ -264,10 +264,10 @@ void sub_0800b920(void)
     case 13:
         if (gUnk_02006090 == 6 || gUnk_02006090 == 7)
         {
-            sub_080b8070(gUnk_030023E8);
+            sub_080b8070(gCurSaveSlot);
             sub_080b8290();
             if (gUnk_02006090 == 7)
-                sub_080b81a0(gUnk_030023E8);
+                sub_080b81a0(gCurSaveSlot);
         }
         gUnk_03002150 = 4;
         break;
@@ -278,13 +278,13 @@ void sub_0800bcf0(void)
 {
     s32 i;
 
-    gUnk_0200B074 = gUnk_030023E8;
+    gUnk_0200B074 = gCurSaveSlot;
     sub_08008c64(18);
     for (i = 0; i < 3; i++)
     {
         sub_0800bda4(i);
-        sub_0800be8c(i, (s8)gUnk_0200E600[i].unk16[gUnk_0200E600[i].unk12[1] ? (gUnk_0200E600[i].unk04 != 0x99999999) : 0]);
-        sub_0800bf6c(i, gUnk_0200E600[i].unk12[gUnk_0200E600[i].unk12[1] ? (gUnk_0200E600[i].unk04 != 0x99999999) : 0], 0);
+        sub_0800be8c(i, (s8)gSaveSlots[i].unk16[gSaveSlots[i].unk12[1] ? (gSaveSlots[i].unk04 != 0x99999999) : 0]);
+        sub_0800bf6c(i, gSaveSlots[i].unk12[gSaveSlots[i].unk12[1] ? (gSaveSlots[i].unk04 != 0x99999999) : 0], 0);
     }
 }
 
@@ -292,19 +292,19 @@ void sub_0800bda4(s32 slot)
 {
     s32 n;
 
-    if (gUnk_0200E600[slot].unk04 == 0x99999999)
+    if (gSaveSlots[slot].unk04 == 0x99999999)
     {
         sub_080017e4(3, (u32)gUnk_08553510, (u32)gUnk_06010000 + ((slot * 64 + 576) << 5), 0x180);
         sub_080017e4(3, (u32)&gUnk_08553510[0x180], (u32)gUnk_06010000 + ((slot * 64 + 608) << 5), 0x180);
     }
-    else if (gUnk_0200E600[slot].unk10 & 2)
+    else if (gSaveSlots[slot].unk10 & 2)
     {
         sub_080017e4(3, (u32)gUnk_08553210, (u32)gUnk_06010000 + ((slot * 64 + 576) << 5), 0x180);
         sub_080017e4(3, (u32)&gUnk_08553210[0x180], (u32)gUnk_06010000 + ((slot * 64 + 608) << 5), 0x180);
     }
     else
     {
-        sub_08002f14(gUnk_0200E600[slot].unk12[0]);
+        sub_08002f14(gSaveSlots[slot].unk12[0]);
         n = (gUnk_03001F08[1] + gUnk_03001F08[2] * 10) * 2;
         sub_080017e4(3, (u32)&gUnk_08551110[n * 0x180], (u32)gUnk_06010000 + ((slot * 64 + 576) << 5), 0x180);
         n++;

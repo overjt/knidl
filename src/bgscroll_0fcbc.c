@@ -11,7 +11,7 @@
  * shadow cells are reached through the pointer tables gUnk_08731DB0 and
  * gUnk_08731DA0.  sub_0800fcbc resets it, sub_0800fcfc/sub_0800fd24/
  * sub_0800fdb8/sub_0800fe54 start scrolls, sub_0800fe94 snaps them to
- * their targets and task type #257 (sub_0800ff00) steps them every frame.
+ * their targets and task type #257 (Task_BgScroll) steps them every frame.
  * Also: sub_0800ffd8 (link work byte 1 minus one, floored at 0),
  * sub_0800ffe8 (is the current task on screen), sub_08010020 (the four
  * blend shadow bytes) and sub_08010048 (window 0/1 setup). */
@@ -129,7 +129,7 @@ void sub_0800fe94(void)
     }
 }
 
-void sub_0800ff00(void)
+void Task_BgScroll(void)
 {
     s32 i;
     s32 v;

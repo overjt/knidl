@@ -51,7 +51,7 @@ extern void sub_0809c5a4(void);
 extern void sub_0809d994(void);
 extern u8 sub_0809dbc4(void);
 extern u8 sub_0809dc3c(void);
-extern void sub_0809f8d4(void);
+extern void TaskFaceScreenCenter(void);
 extern void sub_0809f90c(void);
 extern void sub_0809f930(void);
 extern void sub_0809f970(void);
@@ -77,7 +77,7 @@ void sub_0809cc24(void)
     struct Task *t;
 
     gUnk_03002490->unk04 = (u32)sub_0809cd4c;
-    sub_0809f8d4();
+    TaskFaceScreenCenter();
     sub_080061c0(128 << 10, 0x5A5A5A5A);
     t = gUnk_03002490;
     t->unk3C = 4;
@@ -142,7 +142,7 @@ void sub_0809cd8c(void)
     struct Task *t;
 
     gUnk_03002490->unk04 = (u32)sub_0809cec4;
-    sub_0809f8d4();
+    TaskFaceScreenCenter();
     sub_080061c0(128 << 10, 0x5A5A5A5A);
     t = gUnk_03002490;
     t->unk3C = 4;
@@ -688,7 +688,7 @@ void sub_0809d7a4(void)
     struct Task *u;
 
     gUnk_03002490->unk04 = (u32)sub_0809d83c;
-    sub_0809f8d4();
+    TaskFaceScreenCenter();
     sub_080061c0(128 << 10, 0x5A5A5A5A);
     u = gUnk_03002490;
     u->unk28 = 4;

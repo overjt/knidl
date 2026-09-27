@@ -22,7 +22,7 @@ extern u8 gUnk_02006090;
 extern s16 gUnk_02007D48[];
 extern u8 gUnk_02007FCC;
 extern u16 gUnk_0200AF18[];
-extern s16 gUnk_0200EC58;
+extern s16 gInputRecorderMode;
 extern vu16 gUnk_03000048;
 extern vu16 gUnk_03001E90;
 extern vu16 gUnk_03001EB8[];
@@ -37,9 +37,9 @@ extern u16 gUnk_03002360;
 extern u16 gUnk_03002364;
 extern u16 gUnk_030023AC;
 extern u16 gUnk_030023D8;
-extern s32 gUnk_030023E8;
+extern s32 gCurSaveSlot;
 extern s8 gUnk_03002438;
-extern u8 gUnk_03002464;
+extern u8 gExtraMode;
 
 void sub_0800214c(void);
 void sub_080021dc(void);
@@ -64,8 +64,8 @@ void sub_08027198(void);
 void sub_080272dc(void);
 void sub_080273a0(void);
 void sub_08040788(void);
-void sub_080b6f38(void);
-void sub_080b77d4(void);
+void InputRecorderStart(void);
+void InputRecorderUpdate(void);
 void sub_080b7b7c(s32 a);
 s32 sub_080b8290(void);
 void sub_080c6750(void);
@@ -224,8 +224,8 @@ void sub_0800791c(void)
     s32 n;
 
     gUnk_02004B60 = 0;
-    gUnk_0200EC58 = 0;
-    sub_080b6f38();
+    gInputRecorderMode = 0;
+    InputRecorderStart();
     sub_08008c4c(3);
     sub_0800b648();
     sub_08002358();
@@ -236,13 +236,13 @@ void sub_0800791c(void)
     sub_0800214c();
     while (gUnk_03001E90 != 0) {
         sub_08002d18();
-        sub_080b77d4();
+        InputRecorderUpdate();
     }
     gUnk_03000048 = 0;
     do {
         sub_0801a7b4();
         sub_08002d18();
-        sub_080b77d4();
+        InputRecorderUpdate();
         sub_08040788();
         sub_080075b8();
         switch (gUnk_03002438) {
@@ -317,15 +317,15 @@ void sub_0800791c(void)
     sub_080021dc();
     while (gUnk_03001E90 != 0) {
         sub_08002d18();
-        sub_080b77d4();
+        InputRecorderUpdate();
     }
     gUnk_03000048 = 0;
     sub_08027128();
     if (gUnk_03001F30 == 0 && gUnk_030023D8 != 9
-        && (gUnk_03002364 & (4 << gUnk_03002464))
-        && !(gUnk_03002364 & (64 << gUnk_03002464))) {
-        gUnk_03002364 |= 64 << gUnk_03002464;
-        sub_080b7b7c(gUnk_030023E8);
+        && (gUnk_03002364 & (4 << gExtraMode))
+        && !(gUnk_03002364 & (64 << gExtraMode))) {
+        gUnk_03002364 |= 64 << gExtraMode;
+        sub_080b7b7c(gCurSaveSlot);
         sub_08003688();
         sub_080022ac();
         sub_080c6750();

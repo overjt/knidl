@@ -4,8 +4,8 @@
 
 /* camtask_2d38c.c (0x0802D38C-0x0802EAC7, issue #86).
  *
- * The seven bodies of task type #4 (sub_0802d370 dispatches Task.unk14
- * into the anchor table gUnk_087328A0), the level's scripted map events:
+ * The seven bodies of task type #4 (Task_MapEvent dispatches Task.unk14
+ * into the anchor table gMapEventVariants), the level's scripted map events:
  * sub_0802d38c waits for camera mode 3 and M07's sub_08027750, raises
  * gUnk_0200D080 until it drops, then by Task.unk18 spawns a type-#4
  * child (sub_0802d478/sub_0802d5b4) or updates two metatiles through

@@ -5,25 +5,25 @@
 /* subgame_c1ffc.c (0x080C1FFC-0x080C243B, issue #98).
  *
  * Sub-game 2 (gUnk_02007FCC == 2), the race screen: phase 0 of M35's
- * framework (M36's sub_080c1fdc dispatches gUnk_02007D2C through
- * gUnk_087572CC; entry 0 is sub_080c21b0).
+ * framework (M36's AirGrindMain dispatches gSubGamePhase through
+ * gUnk_087572CC; entry 0 is AirGrindRace).
  * 
- *   sub_080c1ffc / sub_080c2038 / sub_080c2078   spawn task type #96:
+ *   CreateAirGrindRacers / sub_080c2038 / sub_080c2078   spawn task type #96:
  *       variant 0 once per player (Task.unk1C = the player), variant 1 (its
  *       task index kept in M37Game.unk44C) and variant 2 (Task.unk18/unk1C/
  *       unk20 from the caller).
- *   sub_080c20b4   the state set-up: gUnk_02017094 = &gUnk_02016C40,
- *       gUnk_0201716C = &gUnk_0201B0E0, the linked-player count and mode
+ *   sub_080c20b4   the state set-up: gAirGrindPtr = &gAirGrind,
+ *       gAirGrindCoursePtr = &gAirGrindCourse, the linked-player count and mode
  *       cells, the four players' course records, the per-frame hook
  *       sub_080c2d38 (gUnk_0300003C, called by the frame driver sub_08000de4)
  *       and the VBlank hook sub_080c2fb8 (gUnk_03000FA4, called by the VBlank
  *       handler), and two 16-colour rows of gUnk_08609E40.
- *   sub_080c21b0   the screen's task body: waits for the scroll position
- *       gUnk_0201716C->unk000 to reach the two course lines unk00C and unk010
+ *   AirGrindRace   the screen's task body: waits for the scroll position
+ *       gAirGrindCoursePtr->unk000 to reach the two course lines unk00C and unk010
  *       (a sign sprite and songs 0x82B/0x82A/0x82C at each), then for all
  *       four players to pass unk010, and ends the screen (Task.unk18 = 2).
  *   sub_080c241c   its per-frame callback: the frame counter gUnk_02017170,
- *       the script cursor, the palette fades and M35's sub_080b9e30. */
+ *       the script cursor, the palette fades and M35's SubGameCheckEnd. */
 
 /* 16-byte object records, M37ObjSet.unk04[7] (sub_080c4664, sub_080c4790) */
 struct M37Obj
@@ -74,10 +74,10 @@ struct M37Player
     /*0x30*/ s32 unk30;
 };
 
-/* gUnk_02016C40, the game's state; always used through gUnk_02017094 */
+/* gAirGrind, the game's state; always used through gAirGrindPtr */
 struct M37Game
 {
-    /*0x000*/ s32 unk000;       /* the level (M36's sub_080c1f9c copies gUnk_02006168) */
+    /*0x000*/ s32 unk000;       /* the level (M36's AirGrindInit copies gUnk_02006168) */
     /*0x004*/ s32 unk004[4];
     /*0x014*/ s32 unk014;
     /*0x018*/ s32 unk018;
@@ -100,7 +100,7 @@ struct M37Game
     /*0x452*/ u8 pad452[2];
 };
 
-/* per-player records of gUnk_0201B0E0, M37Course.unk018[4] (0x3C bytes) */
+/* per-player records of gAirGrindCourse, M37Course.unk018[4] (0x3C bytes) */
 struct M37CoursePlayer
 {
     /*0x00*/ s32 unk00;
@@ -120,7 +120,7 @@ struct M37CoursePlayer
     /*0x38*/ s32 unk38;
 };
 
-/* gUnk_0201B0E0, reached through gUnk_0201716C (and directly by the
+/* gAirGrindCourse, reached through gAirGrindCoursePtr (and directly by the
    0x080C5284-0x080C623C builder) */
 struct M37Course
 {
@@ -136,10 +136,10 @@ struct M37Course
     /*0x110*/ s32 unk110;
 };
 
-extern struct M37Game gUnk_02016C40;
-extern struct M37Game *gUnk_02017094;
-extern struct M37Course gUnk_0201B0E0;
-extern struct M37Course *gUnk_0201716C;
+extern struct M37Game gAirGrind;
+extern struct M37Game *gAirGrindPtr;
+extern struct M37Course gAirGrindCourse;
+extern struct M37Course *gAirGrindCoursePtr;
 extern u16 gUnk_02017170;
 extern u16 gUnk_03002360;
 extern u16 gUnk_0300243C;
@@ -158,7 +158,7 @@ void sub_08003688(void);
 s32 sub_080058e4(u32 type, s32 idx);                         /* spawn a task */
 void sub_08005ca0(void);
 void sub_08006138(void);                                     /* end the running task */
-void sub_080b9e30(void);
+void SubGameCheckEnd(void);
 void sub_080c2d38(void);
 void sub_080c2fb8(void);
 void sub_080c4860(s32 y);
@@ -171,7 +171,7 @@ void sub_080c51c0(void);
 void sub_080c51d4(void);                                  /* step the gUnk_03006928 script */
 void sub_080c241c(void);
 
-void sub_080c1ffc(void)
+void CreateAirGrindRacers(void)
 {
     s32 i;
     s32 id;
@@ -197,7 +197,7 @@ void sub_080c2038(s32 unused)
     if (id != -1) {
         t = &gUnk_03002790[id];
         t->unk73 = 1;
-        gUnk_02017094->unk44C = id;
+        gAirGrindPtr->unk44C = id;
     }
 }
 
@@ -220,31 +220,31 @@ void sub_080c20b4(void)
 {
     s32 i;
 
-    gUnk_02017094 = &gUnk_02016C40;
-    gUnk_0201716C = &gUnk_0201B0E0;
-    gUnk_02017094->unk446 = gUnk_03002360;
-    gUnk_02017094->unk448 = gUnk_0300243C;
+    gAirGrindPtr = &gAirGrind;
+    gAirGrindCoursePtr = &gAirGrindCourse;
+    gAirGrindPtr->unk446 = gUnk_03002360;
+    gAirGrindPtr->unk448 = gUnk_0300243C;
     gUnk_02017170 = 0;
     sub_080034d0();
     sub_08003688();
     sub_080c4c78();
     sub_080c51c0();
     for (i = 0; i < 4; i++) {
-        gUnk_0201716C->unk018[i].unk00 = gUnk_0201716C->unk000;
-        gUnk_0201716C->unk018[i].unk04 = 0;
+        gAirGrindCoursePtr->unk018[i].unk00 = gAirGrindCoursePtr->unk000;
+        gAirGrindCoursePtr->unk018[i].unk04 = 0;
     }
-    gUnk_02017094->unk014 = -1;
-    gUnk_02017094->unk300 = 0;
+    gAirGrindPtr->unk014 = -1;
+    gAirGrindPtr->unk300 = 0;
     gUnk_0300003C = (u32)sub_080c2d38;
     gUnk_03000FA4 = (u32)sub_080c2fb8;
     sub_080c495c();
     for (i = 0; i < 16; i++) {
-        gUnk_02017094->unk0EC.unk76[i] = gUnk_08609E40[32 + i];
-        gUnk_02017094->unk0EC.unk96[i] = gUnk_08609E40[64 + i];
+        gAirGrindPtr->unk0EC.unk76[i] = gUnk_08609E40[32 + i];
+        gAirGrindPtr->unk0EC.unk96[i] = gUnk_08609E40[64 + i];
     }
 }
 
-void sub_080c21b0(void)
+void AirGrindRace(void)
 {
     s32 n;
     s32 i;
@@ -254,14 +254,14 @@ void sub_080c21b0(void)
     gUnk_03002490->unk38 = gUnk_08755FEC;
     gUnk_03002490->unk3C = 0xFFFF;
     sub_08003110(0x82B);
-    sub_080c1ffc();
+    CreateAirGrindRacers();
     sub_080c2038(0);
     gUnk_03002490->unk04 = (u32)sub_080c241c;
-    while (gUnk_0201716C->unk000 < gUnk_0201716C->unk00C - 240)
+    while (gAirGrindCoursePtr->unk000 < gAirGrindCoursePtr->unk00C - 240)
         TaskYieldTrampoline(1);
-    sub_080c4860(gUnk_0201716C->unk00C);
+    sub_080c4860(gAirGrindCoursePtr->unk00C);
     while (1) {
-        if (gUnk_0201716C->unk000 >= gUnk_0201716C->unk00C)
+        if (gAirGrindCoursePtr->unk000 >= gAirGrindCoursePtr->unk00C)
             break;
         TaskYieldTrampoline(1);
     }
@@ -270,25 +270,25 @@ void sub_080c21b0(void)
     gUnk_03002490->unk34 = sub_080c4974(gUnk_0860A042, 241, 10, 8, 15, 0);
     gUnk_03002490->unk3C = 0;
     sub_08003110(0x82A);
-    while (gUnk_0201716C->unk000 < gUnk_0201716C->unk00C + 240)
+    while (gAirGrindCoursePtr->unk000 < gAirGrindCoursePtr->unk00C + 240)
         TaskYieldTrampoline(1);
     gUnk_03002490->unk08 = 0;
     gUnk_03002490->unk3C = 0xFFFF;
     sub_080c4a20(gUnk_03002490->unk34);
-    if (gUnk_0300003C != 0 && gUnk_02016C40.unk000 != 2) {
-        while (gUnk_02017094->unk300 <= 0x4AF)
+    if (gUnk_0300003C != 0 && gAirGrind.unk000 != 2) {
+        while (gAirGrindPtr->unk300 <= 0x4AF)
             TaskYieldTrampoline(1);
-        sub_080c4974(&gUnk_02017094->unk0EC.unk76[1], 161, 256, 2, 6, 1);
+        sub_080c4974(&gAirGrindPtr->unk0EC.unk76[1], 161, 256, 2, 6, 1);
     }
-    while (gUnk_0201716C->unk000 < gUnk_0201716C->unk010 - 240)
+    while (gAirGrindCoursePtr->unk000 < gAirGrindCoursePtr->unk010 - 240)
         TaskYieldTrampoline(1);
-    sub_080c4860(gUnk_0201716C->unk010);
+    sub_080c4860(gAirGrindCoursePtr->unk010);
     while (1) {
-        if (gUnk_0201716C->unk000 >= gUnk_0201716C->unk010)
+        if (gAirGrindCoursePtr->unk000 >= gAirGrindCoursePtr->unk010)
             break;
         TaskYieldTrampoline(1);
     }
-    while (gUnk_0201716C->unk018[0].unk00 < gUnk_0201716C->unk010)
+    while (gAirGrindCoursePtr->unk018[0].unk00 < gAirGrindCoursePtr->unk010)
         TaskYieldTrampoline(1);
     gUnk_03002490->unk48 = 112;
     gUnk_03002490->unk4A = 80;
@@ -298,7 +298,7 @@ void sub_080c21b0(void)
     while (1) {
         n = 0;
         for (i = 0; i < 4; i++)
-            if (gUnk_0201716C->unk018[i].unk00 > gUnk_0201716C->unk010)
+            if (gAirGrindCoursePtr->unk018[i].unk00 > gAirGrindCoursePtr->unk010)
                 n++;
         if (n > 3)
             break;
@@ -318,5 +318,5 @@ void sub_080c241c(void)
     gUnk_02017170++;
     sub_080c51d4();
     sub_080c4890();
-    sub_080b9e30();
+    SubGameCheckEnd();
 }

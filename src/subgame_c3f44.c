@@ -71,10 +71,10 @@ struct M37Player
     /*0x30*/ s32 unk30;
 };
 
-/* gUnk_02016C40, the game's state; always used through gUnk_02017094 */
+/* gAirGrind, the game's state; always used through gAirGrindPtr */
 struct M37Game
 {
-    /*0x000*/ s32 unk000;       /* the level (M36's sub_080c1f9c copies gUnk_02006168) */
+    /*0x000*/ s32 unk000;       /* the level (M36's AirGrindInit copies gUnk_02006168) */
     /*0x004*/ s32 unk004[4];
     /*0x014*/ s32 unk014;
     /*0x018*/ s32 unk018;
@@ -97,7 +97,7 @@ struct M37Game
     /*0x452*/ u8 pad452[2];
 };
 
-/* per-player records of gUnk_0201B0E0, M37Course.unk018[4] (0x3C bytes) */
+/* per-player records of gAirGrindCourse, M37Course.unk018[4] (0x3C bytes) */
 struct M37CoursePlayer
 {
     /*0x00*/ s32 unk00;
@@ -117,7 +117,7 @@ struct M37CoursePlayer
     /*0x38*/ s32 unk38;
 };
 
-/* gUnk_0201B0E0, reached through gUnk_0201716C (and directly by the
+/* gAirGrindCourse, reached through gAirGrindCoursePtr (and directly by the
    0x080C5284-0x080C623C builder) */
 struct M37Course
 {
@@ -133,8 +133,8 @@ struct M37Course
     /*0x110*/ s32 unk110;
 };
 
-extern struct M37Game *gUnk_02017094;
-extern struct M37Course *gUnk_0201716C;
+extern struct M37Game *gAirGrindPtr;
+extern struct M37Course *gAirGrindCoursePtr;
 extern u32 gUnk_08755FC4[];
 extern u32 gUnk_08755FEC[];
 extern u32 gUnk_087572E0[];
@@ -182,7 +182,7 @@ void sub_080c3f44(void)
         gUnk_03002490->unk0C = (u32)sub_080c4e10;
         gUnk_03002490->unk38 = gUnk_08755FC4;
         gUnk_03002490->unk04 = (u32)sub_080c44f0;
-        gUnk_02017094->unk450 = 1;
+        gAirGrindPtr->unk450 = 1;
         break;
     case 5:
         gUnk_03002490->unk6C = 2;
@@ -193,10 +193,10 @@ void sub_080c3f44(void)
         gUnk_03002490->unk38 = gUnk_087572E0;
         gUnk_03002490->unk3C = 0;
         gUnk_03002490->unk04 = (u32)sub_080c4568;
-        gUnk_02017094->unk451 = 1;
+        gAirGrindPtr->unk451 = 1;
         break;
     case 0:
-        scale = sub_080c623c(gUnk_0201716C->unk018[gUnk_03002490->unk18].unk08);
+        scale = sub_080c623c(gAirGrindCoursePtr->unk018[gUnk_03002490->unk18].unk08);
         gUnk_03002490->unk0C = (u32)sub_080c4e10;
         gUnk_03002490->unk42 = u->unk42;
         gUnk_03002490->unk3E = u->unk3E & 0x6000;
@@ -215,7 +215,7 @@ void sub_080c3f44(void)
         break;
     case 3:
     case 4:
-        scale = sub_080c623c(gUnk_0201716C->unk018[gUnk_03002490->unk18].unk08);
+        scale = sub_080c623c(gAirGrindCoursePtr->unk018[gUnk_03002490->unk18].unk08);
         gUnk_03002490->unk0C = (u32)sub_080c4e10;
         gUnk_03002490->unk00 = (u32)sub_080059d8;
         gUnk_03002490->unk42 = u->unk42;
@@ -278,8 +278,8 @@ void sub_080c42dc(s32 layer)
         gUnk_03002490->unk48 = u->unk48;
         gUnk_03002490->unk4A = u->unk4A;
     } else {
-        gUnk_03002490->unk48 = gUnk_0201716C->unk018[gUnk_03002490->unk18].unk0C;
-        gUnk_03002490->unk4A = gUnk_0201716C->unk018[gUnk_03002490->unk18].unk10;
+        gUnk_03002490->unk48 = gAirGrindCoursePtr->unk018[gUnk_03002490->unk18].unk0C;
+        gUnk_03002490->unk4A = gAirGrindCoursePtr->unk018[gUnk_03002490->unk18].unk10;
     }
 }
 
@@ -344,7 +344,7 @@ void sub_080c44f0(void)
         if (gUnk_080CFF52[++t->unk6E] != -1) {
             t->unk3C = gUnk_080CFF52[t->unk6E];
         } else {
-            gUnk_02017094->unk450 = 0;
+            gAirGrindPtr->unk450 = 0;
             sub_08005654(gCurTaskIdx);
             return;
         }
@@ -357,7 +357,7 @@ void sub_080c4568(void)
     if ((s16)gUnk_03002490->unk6C <= 0) {
         gUnk_03002490->unk6C = 2;
         if (++gUnk_03002490->unk3C > gUnk_03002490->unk6E) {
-            gUnk_02017094->unk451 = 0;
+            gAirGrindPtr->unk451 = 0;
             sub_08005654(gCurTaskIdx);
             return;
         }

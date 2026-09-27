@@ -4,7 +4,7 @@
  * RECIPE: agbcc -O2 -mthumb-interwork -fprologue-bugfix
  *   ./tools/fnmatch.sh 0x080BC0CC 0x080BD9E8 src/subgame_bc0cc.c --newpb
  *
- * Task type #94, the duel's sprite objects.  sub_080bc0cc dispatches the
+ * Task type #94, the duel's sprite objects.  Task_QuickDrawObject dispatches the
  * table 0x087563B0 on Task.unk73, the kind its spawner wrote (ten function
  * pointers; the call passes 12):
  *
@@ -121,7 +121,7 @@ void sub_080bd524(void);
 void sub_080bd290(void);
 void sub_080bd508(void);
 
-void sub_080bc0cc(void)
+void Task_QuickDrawObject(void)
 {
     sub_08002e98(gUnk_03002490->unk73, 12, gUnk_087563B0);
 }

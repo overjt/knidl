@@ -44,25 +44,25 @@ struct Unk0200D120
     /*0x4C*/ u8 filler4C[0x24];
 };
 extern struct Unk0200D120 gUnk_0200D120[];
-extern u32 gUnk_02016494[];
-extern u32 gUnk_020164A0[];
-extern u32 gUnk_02016860[];
-extern u32 gUnk_02016870[];
+extern u32 gHBlankScrollTimer[];
+extern u32 gHBlankScrollTable[];
+extern u32 gHBlankScrollEffect[];
+extern u32 gHBlankScrollDmaTable[];
 extern u32 gUnk_02020000[];
 extern u32 gUnk_0300003C;
 extern vu16 gUnk_03000B10;
 extern u32 gUnk_03000B74;
 extern u16 gUnk_03000F98[];
 extern u32 gUnk_03000FA4;
-extern u32 gUnk_0300101C[];
-extern u32 gUnk_03001184[];
+extern u32 gHBlankDmaDest[];
+extern u32 gHBlankDmaCnt[];
 extern u8 gUnk_03001470[];
 extern u32 gUnk_03001570[];
 extern u32 gUnk_030015B0[];
 extern u16 gUnk_03001EA4;
 extern vu8 gUnk_03001EB0;
 extern vu16 gUnk_03001EB4;
-extern u32 gUnk_03001EF0[];
+extern u32 gHBlankDmaSrc[];
 extern s16 gUnk_03001F00;
 extern s32 gUnk_03001F2C;
 extern u8 gUnk_03001F30;
@@ -83,11 +83,11 @@ extern u32 gUnk_030023C8[];
 extern s32 gUnk_030023D4;
 extern u16 gUnk_030023D8;
 extern s16 gUnk_030023E4;
-extern u32 gUnk_030023E8[];
+extern u32 gCurSaveSlot[];
 extern u32 gUnk_030023EC[];
 extern u32 gUnk_03002448;
 extern s16 gUnk_0300244C;
-extern u32 gUnk_03002464[];
+extern u32 gExtraMode[];
 extern u32 gUnk_03002468[];
 extern u32 gUnk_030027A8[];
 extern vs16 gUnk_03004CA0[];
@@ -488,7 +488,7 @@ extern u32 gUnk_08756160[];
 extern u32 gUnk_0875616C[];
 extern u32 gUnk_08756178[];
 extern u32 gUnk_08756184[];
-extern u32 gUnk_08756198[];
+extern u32 gHBlankScrollEffects[];
 
 /* External functions */
 extern void TaskDispatchTrampoline(void);
@@ -1401,7 +1401,7 @@ void sub_080b59d8();
 s32 sub_080b5a94();
 s32 sub_080b5bdc();
 s32 sub_080b5d84();
-void sub_080b603c();
+void HBlankScrollVBlankCallback();
 void sub_080b60e8();
 extern void CpuSet(const void *src, void *dst, u32 control);
 
@@ -2290,7 +2290,7 @@ s32 sub_080ab8a8(void)
     if (gUnk_030023D8 == 20)
     {
         sub_0800a698();
-        sub_080b7cb4(gUnk_030023E8[0]);
+        sub_080b7cb4(gCurSaveSlot[0]);
     }
     if (gUnk_02007D00[1] != 0)
     {

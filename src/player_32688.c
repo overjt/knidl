@@ -5,7 +5,7 @@
 /* player_32688.c (0x08032688-0x080337F3, issue #92).
  *
  * Task type #5 (class 1), the player task, and its callbacks.
- * sub_08032688 is the body: it binds the task to its player record
+ * Task_Player is the body: it binds the task to its player record
  * (Task.unk88 = &gUnk_03002170[gCurTaskIdx]), kills it when the player
  * has no lives and no health left, installs the callbacks (Task.unk00 =
  * M11's sub_0803d494, unk04 = sub_08032d48, unk08 = sub_0803332c, unk0C =
@@ -180,7 +180,7 @@ void sub_080b9610(void);
 void sub_08032d48(void);
 void sub_0803332c(void);
 
-void sub_08032688(void)
+void Task_Player(void)
 {
     struct Task *t;
 

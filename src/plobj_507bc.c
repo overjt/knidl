@@ -6,17 +6,17 @@
  *
  * Task type #6 (the objects the player's actions spawn through
  * sub_08053940/sub_08053a44): the body and two shared callbacks.  The body
- * sub_080507bc links the task to its spawner (Task.unk8C =
+ * Task_PlayerObject links the task to its spawner (Task.unk8C =
  * &gUnk_03002790[Task.unk44], the first time only) and dispatches the
  * variant, the top byte of Task.unk18, through the 13 variant bodies
- * gUnk_0873B77C.  sub_08050814 is the common exit most variants re-bind on
+ * gPlayerObjectVariants.  sub_08050814 is the common exit most variants re-bind on
  * contact: it installs the sprite (sub_08005ca0 for PlayerState.unk37 == 2,
  * sub_08005f30 otherwise, animation table gUnk_0874C650), registers the
  * collider row Task.unk24 if there is one and steps animation frames
  * 0-10 before TaskDispatchTrampoline.  sub_0805091c is a second, drifting burst
  * (gUnk_0874C7CC). */
 
-extern void (*gUnk_0873B77C[])(void);   /* task type #6's 13 variants, indexed by Task.unk18 >> 24 */
+extern void (*gPlayerObjectVariants[])(void);   /* task type #6's 13 variants, indexed by Task.unk18 >> 24 */
 extern u32 gUnk_0874C650[];
 extern u32 gUnk_0874C7CC[];
 
@@ -31,7 +31,7 @@ void sub_0800617c(s16 a);
 void sub_080062c4(void);
 void sub_0801a828(u8 a, s16 x, s16 y, void *p);   /* M11's caller spelling */
 
-void sub_080507bc(void)
+void Task_PlayerObject(void)
 {
     if (gUnk_03002490->unk8C == NULL)
     {
@@ -40,7 +40,7 @@ void sub_080507bc(void)
         gUnk_03002490->unk78 = 1;
         gUnk_03002490->unk24 = 0;
     }
-    sub_08002e98(((u8 *)gUnk_03002490)[27], 13, gUnk_0873B77C);
+    sub_08002e98(((u8 *)gUnk_03002490)[27], 13, gPlayerObjectVariants);
 }
 
 void sub_08050814(void)

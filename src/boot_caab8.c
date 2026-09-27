@@ -4,9 +4,9 @@
 
 /* boot_caab8.c (0x080CAAB8-0x080CACEF, issue #100).
  *
- * sub_080caab8, the per-frame interpreter of the boot logo's 115 sprite
+ * BootLogoUpdateObjects, the per-frame interpreter of the boot logo's 115 sprite
  * objects that src/boot_caa3c.c seeds (called by M02's task type #0,
- * sub_080093fc).  Each active object (unk04 != -1) waits out unk0A frames,
+ * Task_BootLogo).  Each active object (unk04 != -1) waits out unk0A frames,
  * then runs its s16 command stream until it waits or is switched off: a
  * command is a bit mask and one argument, and bits 0-5 take one more word
  * each (x/y velocity, x/y acceleration, sprite id, wait; the word is skipped
@@ -29,7 +29,7 @@
  * No natural spelling that keeps the ROM's OR was found; the natural best
  * (the plain store, 40 differing bytes) is recorded on #100. */
 
-/* One boot-logo sprite object: a command script (sub_080caab8) moving a
+/* One boot-logo sprite object: a command script (BootLogoUpdateObjects) moving a
    sprite in 24.8 fixed point. */
 struct M38LogoObj
 {
@@ -58,7 +58,7 @@ s32 sub_080031b8(s32 id);
 /* Run the 115 boot-logo objects one frame: interpret each active object's
    script until it waits or ends, move it and draw it, switching it off
    once it leaves the screen. */
-void sub_080caab8(void)
+void BootLogoUpdateObjects(void)
 {
     struct M38LogoObj *obj = gUnk_02030000;
     s32 i;

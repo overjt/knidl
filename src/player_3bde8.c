@@ -47,7 +47,7 @@ extern struct PlayerState gUnk_03002170[];
 extern s16 gUnk_02005588[];             /* health per player (M02's HUD) */
 extern s16 gUnk_02005580;
 extern u16 gUnk_03002360;
-extern u8 gUnk_03002464;
+extern u8 gExtraMode;
 extern struct M04Spark gUnk_02007E90[][3];
 extern s16 gUnk_030023E4;
 extern s16 gUnk_03002348;
@@ -78,7 +78,7 @@ s32 sub_080b4204(u32 a);
    task gUnk_03002790[unk18], plays gUnk_0873DA62[ability][0] (or
    gUnk_0873DACA[k][0]) and, by PlayerState.unk3A, raises the target's
    health gUnk_02005588[] through sub_080b4204 while it is below the maximum
-   gUnk_02005580 (1: until full, 2: at most 1 or 2 steps by gUnk_03002464)
+   gUnk_02005580 (1: until full, 2: at most 1 or 2 steps by gExtraMode)
    or copies its own unk17/unk18 to the target (3); then it restores both
    tasks' Task.unk42/unk43 (saved on the stack), clears PlayerState.unk42
    bit 8 on both players and sets the target's bit in PlayerState.unk3B. */
@@ -226,7 +226,7 @@ void sub_0803bde8(void)
             case 2:
                 if (gUnk_02005588[gUnk_03002490->unk18] < gUnk_02005580)
                 {
-                    if (gUnk_03002464 == 0)
+                    if (gExtraMode == 0)
                         n = 2;
                     else
                         n = 1;
@@ -307,7 +307,7 @@ void sub_0803bde8(void)
             case 2:
                 if (gUnk_02005588[gUnk_03002490->unk18] < gUnk_02005580)
                 {
-                    if (gUnk_03002464 == 0)
+                    if (gExtraMode == 0)
                         n = 2;
                     else
                         n = 1;
@@ -405,7 +405,7 @@ void sub_0803bde8(void)
         case 2:
             if (gUnk_02005588[gUnk_03002490->unk18] < gUnk_02005580)
             {
-                if (gUnk_03002464 == 0)
+                if (gExtraMode == 0)
                     n = 2;
                 else
                     n = 1;

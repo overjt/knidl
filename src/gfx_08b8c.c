@@ -74,7 +74,7 @@ void sub_08002e38(u16 *p);
 void sub_080031b8(s32 id);
 void sub_08003484(void);
 void sub_08006868(void);
-void sub_080b6e60(void);
+void StopHBlankScroll(void);
 void sub_08008c4c(s32 a0);
 void sub_08008c64(u16 a0);
 
@@ -84,7 +84,7 @@ void sub_08008b8c(void)
     sub_080022ac();
     sub_08003484();
     sub_08006868();
-    sub_080b6e60();
+    StopHBlankScroll();
     gUnk_03000014 = 0;
     gUnk_03000FB8 = 31;
     sub_080022d0();

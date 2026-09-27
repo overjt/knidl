@@ -10,7 +10,7 @@
  * it with Task.unk24 = 1):
  *   sub_080cb64c / sub_080cb6d8   sub-state 0, the idle loop; once re-entered
  *       (Task.unk24) the handler counts Task.unk20 down and then ends the
- *       screen (gUnk_02007BE0 = 1) with game state 1.
+ *       screen (gGameOverDone = 1) with game state 1.
  *   sub_080cb70c / sub_080cbabc   sub-state 1, the "continue" animation, which
  *       ends the screen with game state 5 (back into the game).
  *   sub_080cbac0 / sub_080cbea4   sub-state 2, the "give up" animation (it
@@ -18,7 +18,7 @@
  *       120-frame count and spawns variant 2. */
 
 extern u16 gUnk_030023D8;           /* game state (AgbMain dispatch) */
-extern u8 gUnk_02007BE0;            /* game-over screen: done flag */
+extern u8 gGameOverDone;            /* game-over screen: done flag */
 extern u32 gUnk_08754914[];
 extern u32 gUnk_087548B8[];
 
@@ -31,7 +31,7 @@ void sub_0800625c(s32 a, s32 b, s32 c, s32 d, s32 e, s32 f);
 void sub_080062c4(void);
 void sub_08006338(s32 a);
 void sub_080cb62c(void);
-void sub_080cbf34(u8 variant);
+void CreateGameOverObject(u8 variant);
 
 /* Task type #264 variant 0, sub-state 0. */
 void sub_080cb64c(void)
@@ -64,7 +64,7 @@ void sub_080cb6d8(void)
 {
     if (gUnk_03002490->unk24 != 0) {
         if (gUnk_03002490->unk20 <= 0) {
-            gUnk_02007BE0 = 1;
+            gGameOverDone = 1;
             gUnk_030023D8 = 1;
         }
         gUnk_03002490->unk20--;
@@ -164,7 +164,7 @@ void sub_080cb70c(void)
     TaskYieldTrampoline(4);
     gUnk_03002490->unk3C++;
     TaskYieldTrampoline(8);
-    gUnk_02007BE0 = 1;
+    gGameOverDone = 1;
     gUnk_030023D8 = 5;
     sub_08006138();
 }
@@ -250,7 +250,7 @@ void sub_080cbac0(void)
     } while ((s16)gUnk_03002490->unk6C <= 12);
     sub_080034f0(gUnk_03002490->unk1C, 0x67);
     sub_080031b8(104);
-    sub_080cbf34(3);
+    CreateGameOverObject(3);
     gUnk_03002490->unk3C++;
     gUnk_03002490->unk54 = -0x40000;
     TaskYieldTrampoline(2);
@@ -265,7 +265,7 @@ void sub_080cbac0(void)
     gUnk_03002490->unk3C++;
     gUnk_03002490->unk54 = 0;
     TaskYieldTrampoline(2);
-    sub_080cbf34(4);
+    CreateGameOverObject(4);
     gUnk_03002490->unk3C = 11;
     sub_0800625c(0, 0, 0x5A5A5A5A, -0x38000, 0x10000, 0x5A5A5A5A);
     TaskYieldTrampoline(6);
@@ -314,7 +314,7 @@ void sub_080cbea4(void)
 {
     if (gUnk_03002490->unk14 != 2) {
         gUnk_03002490->unk20 = 120;
-        sub_080cbf34(2);
+        CreateGameOverObject(2);
         sub_08006148(sub_080cb62c, gCurTaskIdx);
     }
 }

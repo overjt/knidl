@@ -77,10 +77,10 @@ struct M37Player
     /*0x30*/ s32 unk30;
 };
 
-/* gUnk_02016C40, the game's state; always used through gUnk_02017094 */
+/* gAirGrind, the game's state; always used through gAirGrindPtr */
 struct M37Game
 {
-    /*0x000*/ s32 unk000;       /* the level (M36's sub_080c1f9c copies gUnk_02006168) */
+    /*0x000*/ s32 unk000;       /* the level (M36's AirGrindInit copies gUnk_02006168) */
     /*0x004*/ s32 unk004[4];
     /*0x014*/ s32 unk014;
     /*0x018*/ s32 unk018;
@@ -114,7 +114,7 @@ struct M37Script
     /*0x04*/ s16 unk4;
 };
 
-extern struct M37Game *gUnk_02017094;
+extern struct M37Game *gAirGrindPtr;
 extern u16 gUnk_02017170;
 extern struct M37Script gUnk_03006928;
 extern u8 gUnk_080CFE2C[][4];
@@ -178,7 +178,7 @@ void sub_080c4e10(void)
 
 void sub_080c4ea8(void)
 {
-    struct M37Game *g = gUnk_02017094;
+    struct M37Game *g = gAirGrindPtr;
     u16 n = g->unk448;
     struct Task *t;
     s32 v;
@@ -199,8 +199,8 @@ void sub_080c4ea8(void)
         }
     }
     if (gUnk_03002490->unk54 > 0) {
-        if (gUnk_03002490->unk54 > gUnk_080CFE3C[gUnk_02017094->unk000][0])
-            gUnk_03002490->unk54 = gUnk_080CFE3C[gUnk_02017094->unk000][0];
+        if (gUnk_03002490->unk54 > gUnk_080CFE3C[gAirGrindPtr->unk000][0])
+            gUnk_03002490->unk54 = gUnk_080CFE3C[gAirGrindPtr->unk000][0];
     } else if (gUnk_03002490->unk54 < 0) {
         gUnk_03002490->unk54 = 0;
     }
@@ -218,7 +218,7 @@ u32 sub_080c4f60(u16 *src, s16 scale)
     s32 k;
     s32 v;
 
-    ret = (u32)&gUnk_02017094->unk306[gUnk_02017094->unk304];
+    ret = (u32)&gAirGrindPtr->unk306[gAirGrindPtr->unk304];
 loop:
     a = *src++;
     b = *src++;
@@ -245,7 +245,7 @@ loop:
     v >>= 8;
     v -= h;
     v &= 0xFF;
-    gUnk_02017094->unk306[gUnk_02017094->unk304++] = (s16)((a & 0xFF00) | v | 0x100) | (s16)dbl;
+    gAirGrindPtr->unk306[gAirGrindPtr->unk304++] = (s16)((a & 0xFF00) | v | 0x100) | (s16)dbl;
     v = b & 0x1FF;
     if (v & 0x100)
         v |= 0xFFFFFF00;
@@ -261,10 +261,10 @@ loop:
     v >>= 8;
     v -= w;
     v &= 0x1FF;
-    gUnk_02017094->unk306[gUnk_02017094->unk304++] = (b & 0xC000) | v | (gUnk_03000B1C << 9);
-    gUnk_02017094->unk306[gUnk_02017094->unk304++] = 0;
+    gAirGrindPtr->unk306[gAirGrindPtr->unk304++] = (b & 0xC000) | v | (gUnk_03000B1C << 9);
+    gAirGrindPtr->unk306[gAirGrindPtr->unk304++] = 0;
     src++;
-    gUnk_02017094->unk306[gUnk_02017094->unk304++] = *src++ & 0xF3FF;
+    gAirGrindPtr->unk306[gAirGrindPtr->unk304++] = *src++ & 0xF3FF;
     if (!(a & 0x1000))
         goto loop;
     gUnk_03000050[(s16)gUnk_03000B1C * 16 + 3] = half;

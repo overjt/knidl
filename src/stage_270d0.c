@@ -106,7 +106,7 @@ void sub_0802b460(u16 a);
 void sub_0802b49c(u16 a);
 void sub_08030758(void);
 void sub_080307a4(void);
-void sub_080b6e60(void);
+void StopHBlankScroll(void);
 void sub_080b6ed4(void);
 void sub_080b6f04(void);
 void sub_080b6f20(void);
@@ -134,7 +134,7 @@ void sub_080270d0(void)
 void sub_08027128(void)
 {
     sub_080307a4();
-    sub_080b6e60();
+    StopHBlankScroll();
     sub_08005654(63);
     if (gUnk_02007FB0 & 1)
         sub_08026998();
@@ -148,7 +148,7 @@ void sub_08027128(void)
 void sub_08027178(void)
 {
     sub_080307a4();
-    sub_080b6e60();
+    StopHBlankScroll();
     sub_08005654(63);
     gUnk_02007FB0 = 0;
 }

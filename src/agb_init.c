@@ -78,7 +78,7 @@ extern vu16 gUnk_03001EEC;
 extern vu16 gUnk_0300100C;
 extern vu16 gUnk_03000FD8;
 extern vu16 gUnk_03001EA0;
-extern vu32 gUnk_03001EA8;
+extern vu32 gSramAvailable;
 extern vu16 gUnk_03001EE4;
 extern vu16 gUnk_03000B0C;
 extern vu16 gUnk_03000FCC;
@@ -253,7 +253,7 @@ void AgbInit(void)
     REG_KEYCNT = gUnk_03000FD8 = zeroB;
 
     gUnk_03001EA0 = zeroB;
-    gUnk_03001EA8 = zeroB;
+    gSramAvailable = zeroB;
 
     m4aSoundInit();
 

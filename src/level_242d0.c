@@ -206,7 +206,7 @@ extern u16 gUnk_0200AFF4;
 extern s8 gUnk_0200B034;
 extern s8 gUnk_02006168;
 extern u8 gUnk_02007FC0;
-extern u8 gUnk_03002464;
+extern u8 gExtraMode;
 extern u16 gUnk_02007FF0;
 extern u16 gUnk_02007FB0;
 extern s8 gUnk_02004C98;
@@ -276,7 +276,7 @@ void sub_0802cd38(void);
 void sub_0802d0f4(void);
 void sub_0802d188(void);
 void sub_08030724(void);
-void sub_0803d034(s32 a0);
+void CreatePlayer(s32 a0);
 void sub_0803d0a0(s32 a0);
 void sub_080b4e40(void);
 void sub_080b5024(void);
@@ -651,7 +651,7 @@ void sub_0802497c(void)
         {
             gUnk_0300560C[i] = 3;
         }
-        sub_0803d034(i);
+        CreatePlayer(i);
         sub_0803d0a0(i);
         gUnk_03000F98[i] = gUnk_03001EB8[i] = 0;
         gUnk_03002458[i] = gUnk_030023C0[i] = 0;
@@ -901,7 +901,7 @@ s32 sub_08025024(void)
                 gUnk_0200AF00 = 0;
                 break;
             case 3:
-                gUnk_02006168 = gUnk_087323E2[gUnk_030023B8][0][gUnk_03002464];
+                gUnk_02006168 = gUnk_087323E2[gUnk_030023B8][0][gExtraMode];
                 gUnk_02007D58[gUnk_030023EC] |= 1;
                 gUnk_020055E0 = d->unk2 * 16 + 22;
                 gUnk_0200AEF0 = d->unk4 * 16 + 5;
@@ -911,7 +911,7 @@ s32 sub_08025024(void)
                 gUnk_0200AF00 = 2;
                 break;
             case 4:
-                gUnk_02006168 = gUnk_087323E2[gUnk_030023B8][1][gUnk_03002464];
+                gUnk_02006168 = gUnk_087323E2[gUnk_030023B8][1][gExtraMode];
                 gUnk_02007D58[gUnk_030023EC] |= 2;
                 gUnk_020055E0 = d->unk2 * 16 + 22;
                 gUnk_0200AEF0 = d->unk4 * 16 + 5;
@@ -921,7 +921,7 @@ s32 sub_08025024(void)
                 gUnk_0200AF00 = 2;
                 break;
             case 5:
-                gUnk_02006168 = gUnk_087323E2[gUnk_030023B8][2][gUnk_03002464];
+                gUnk_02006168 = gUnk_087323E2[gUnk_030023B8][2][gExtraMode];
                 gUnk_02007D58[gUnk_030023EC] |= 4;
                 gUnk_020055E0 = d->unk2 * 16 + 22;
                 gUnk_0200AEF0 = d->unk4 * 16 + 5;
@@ -1145,7 +1145,7 @@ void sub_08025b5c(void)
 {
     if (gUnk_030023D8 == 8)
     {
-        if (gUnk_03002464 != 0)
+        if (gExtraMode != 0)
             gUnk_03002364 |= 2;
         else
             gUnk_03002364 |= 1;

@@ -4,9 +4,9 @@
 
 /* roomtask_23618.c (0x08023618-0x08023947, issue #93).
  *
- * Task type #3 (class 4), the room's per-frame driver.  sub_08023618, the
+ * Task type #3 (class 4), the room's per-frame driver.  Task_Room, the
  * type's body, dispatches Task.unk14 through the anchor table
- * gUnk_08732614: sub_08023634 (index 0), sub_08023e34 (1), sub_08023e78
+ * gRoomTaskVariants: sub_08023634 (index 0), sub_08023e34 (1), sub_08023e78
  * (2), sub_08024540 (3), sub_080242d0 (4), sub_08024904 (5) and
  * sub_08024da4 (6); every room loader spawns the task with its own index
  * through sub_080235ec.  Each variant installs the task callbacks: unk0C
@@ -17,7 +17,7 @@
  * cell gUnk_03005624: 1 = camera, BG animation and BG streaming, 2 =
  * screen shake, 8 = HUD, 16 = door objects (sub_08026ca4). */
 
-extern void (*gUnk_08732614[])(void);
+extern void (*gRoomTaskVariants[])(void);
 extern u8 gUnk_0200B050;
 extern u16 gUnk_03005624;
 extern u16 gUnk_030055C0;
@@ -56,9 +56,9 @@ void sub_0802385c(void);
 void sub_080238a4(void);
 void sub_080238ec(void);
 
-void sub_08023618(void)
+void Task_Room(void)
 {
-    sub_08002e98(gUnk_03002490->unk14, 7, gUnk_08732614);
+    sub_08002e98(gUnk_03002490->unk14, 7, gRoomTaskVariants);
 }
 
 void sub_08023634(void)

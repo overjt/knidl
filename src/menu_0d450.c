@@ -36,7 +36,7 @@ extern vu16 gUnk_03001EF4;
 extern s32 gUnk_03001F2C;
 extern u8 gUnk_03001F30;
 extern u16 gUnk_030023D8;
-extern u8 gUnk_03002464;
+extern u8 gExtraMode;
 extern const s16 gUnk_08731DC0[];
 extern u8 gUnk_0876B1FC[];
 extern u8 gUnk_0876F690[];
@@ -63,8 +63,8 @@ void sub_0800d35c(s32 a);
 void sub_0800d404(void);
 void sub_0800fd24(s32 speed, s32 dist, s32 bg);
 void sub_0800fe94(void);
-void sub_080b6e60(void);
-void sub_080b6e6c(s32 a);
+void StopHBlankScroll(void);
+void StartHBlankScroll(s32 a);
 void sub_080b83b8(void);
 void sub_0800da18(void);
 s32 sub_0800da74(void);
@@ -75,7 +75,7 @@ void sub_0800d450(void)
         if (gUnk_02006180 != 0) {
             if (--gUnk_02006180 != 0 && (gUnk_03000038 & 2)) {
                 gUnk_02006180 = 0;
-                sub_080b6e60();
+                StopHBlankScroll();
                 sub_0800fe94();
             }
             if (gUnk_02006180 == 0) {
@@ -200,7 +200,7 @@ void sub_0800d85c(void)
                 gUnk_03001E94 = gUnk_03000FA8 = 0;
                 sub_0800fd24(0x100000, 256, 2);
                 sub_0800fd24(0x100000, 256, 3);
-                sub_080b6e6c(6);
+                StartHBlankScroll(6);
                 sub_08002d54(8);
                 sub_0800c20c();
                 return;
@@ -242,7 +242,7 @@ void sub_0800d85c(void)
 void sub_0800da18(void)
 {
     if (gUnk_02007E88 == 3) {
-        if (gUnk_03002464 == 0)
+        if (gExtraMode == 0)
             gUnk_02000004 = 1;
         else
             gUnk_02000004 = 2;

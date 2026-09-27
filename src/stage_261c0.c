@@ -148,7 +148,7 @@ extern s8 gUnk_03002384;
 extern u8 gUnk_03001F20;
 extern u16 gUnk_02007FB0;
 extern u8 gUnk_03001F30;
-extern s32 gUnk_030023E8;
+extern s32 gCurSaveSlot;
 extern u8 gUnk_02005578;
 extern s8 gUnk_02007FF8;
 extern struct Unk03005680 gUnk_03005680;
@@ -489,7 +489,7 @@ void sub_08026994(void)
 void sub_08026998(void)
 {
     if (gUnk_03001F30 == 0)
-        sub_080b7b7c(gUnk_030023E8);
+        sub_080b7b7c(gCurSaveSlot);
     gUnk_02005578 = gUnk_030023B8;
     gUnk_02007FF8 = gUnk_03001F20;
 }

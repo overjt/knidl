@@ -8,9 +8,9 @@
  * and #239 (sub_0800daf8, sub_0800db64 with body sub_0800dbdc; three of
  * each, spawned by sub_0800da9c) slide the three save-slot sprites in with
  * sub_0800dc98 and recolour a slot when the cursor moves; #240
- * (sub_0800dcd8, body sub_0800dda0) is the cursor; #241 (sub_0800de6c,
+ * (Task_FileSelectCursor, body sub_0800dda0) is the cursor; #241 (sub_0800de6c,
  * body sub_0800dfdc) a sprite group that slides with the screen; #242
- * (sub_0800e0c0, body sub_0800e148) the file-menu highlight, which
+ * (Task_FileMenuHighlight, body sub_0800e148) the file-menu highlight, which
  * marks the selected entry (sub_0800e28c) and loads its picture
  * (sub_0800e2dc: LZ77 into 0x02020000, one 2 KiB part to 0x06004200). */
 
@@ -38,12 +38,12 @@ struct SaveSlot
 extern s8 gUnk_020055E4;
 extern s8 gUnk_020060D0;
 extern s8 gUnk_0200B074;
-extern struct SaveSlot gUnk_0200E600[];
+extern struct SaveSlot gSaveSlots[];
 extern u32 gUnk_02020000[];
 extern u16 gUnk_03001270[];
 extern u16 gUnk_0300153C[];
 extern u16 gUnk_03001668[];
-extern s32 gUnk_030023E8;
+extern s32 gCurSaveSlot;
 extern u8 gUnk_08550B9C[];
 extern u16 gUnk_08554B60[][4];
 extern u16 gUnk_08554D7A[];
@@ -113,15 +113,15 @@ void sub_0800dbdc(void)
 
     if (gUnk_0200B074 != gUnk_03002490->unk28) {
         slot = gUnk_03002490->unk1C;
-        s = gUnk_0200E600;
+        s = gSaveSlots;
         i = slot * 256;
-        if (gUnk_0200E600[slot].unk12[1] != 0 && gUnk_0200E600[slot].unk04 != 0x99999999)
+        if (gSaveSlots[slot].unk12[1] != 0 && gSaveSlots[slot].unk04 != 0x99999999)
             i++;
         sub_0800bf10(slot, (s8)s->unk16[i]);
         gUnk_03002490->unk28 = gUnk_0200B074;
     }
 
-    if (gUnk_0200E600[gUnk_03002490->unk1C].unk12[1] != 0 && gUnk_0200E600[gUnk_03002490->unk1C].unk04 != 0x99999999) {
+    if (gSaveSlots[gUnk_03002490->unk1C].unk12[1] != 0 && gSaveSlots[gUnk_03002490->unk1C].unk04 != 0x99999999) {
         t = gUnk_03002490;
         sub_08001a94(t->unk42 - 1, gUnk_08755620[t->unk1C + 6], t->unk3E, t->unk40, t->unk48, t->unk4A);
     }
@@ -141,7 +141,7 @@ void sub_0800dc98(void)
     gUnk_03002490->unk54 = 0;
 }
 
-void sub_0800dcd8(void)
+void Task_FileSelectCursor(void)
 {
     gUnk_03002490->unk00 = (u32)sub_080059d8;
     gUnk_03002490->unk0C = (u32)sub_08005ca0;
@@ -278,12 +278,12 @@ void sub_0800dfdc(void)
         t = gUnk_03002490;
         if (t->unk28 == 0) {
             tbl = gUnk_08755620;
-            sub_08001a94(11, tbl[gUnk_030023E8 + 3], t->unk3E, 0, (t->unk18 >> 16) + 234, (t->unk1C >> 16) + 13);
+            sub_08001a94(11, tbl[gCurSaveSlot + 3], t->unk3E, 0, (t->unk18 >> 16) + 234, (t->unk1C >> 16) + 13);
         }
     }
 }
 
-void sub_0800e0c0(void)
+void Task_FileMenuHighlight(void)
 {
     s8 s;
 

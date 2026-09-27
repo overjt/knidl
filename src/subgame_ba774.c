@@ -64,7 +64,7 @@ void sub_08005654(s32 id);
 s32 sub_080058e4(u32 type, s32 idx);
 void sub_08006138(void);
 void sub_08006148(void *fn, u32 i);
-void sub_080b9e30(void);
+void SubGameCheckEnd(void);
 void sub_080ba50c(void);
 void sub_080ba61c(void);
 void sub_080ba688(void);
@@ -268,7 +268,7 @@ void sub_080baabc(void)
     }
 }
 
-void sub_080bab08(void)
+void QuickDrawRound(void)
 {
     gUnk_03002490->unk04 = (u32)sub_080bab68;
     sub_080ba61c();
@@ -292,7 +292,7 @@ void sub_080bab68(void)
         sub_08002e98(gUnk_03002490->unk15, 7, gUnk_08756318);
     else
         sub_08002e98(gUnk_03002490->unk15, 7, gUnk_08756350);
-    sub_080b9e30();
+    SubGameCheckEnd();
 }
 
 void sub_080babb0(s32 a0)

@@ -5,7 +5,7 @@
 /* ending_c9004.c (0x080C9004-0x080CAA3B, issue #100).
  *
  * The second ending scene: task type #101 (class 3), which M37's
- * sub_080c6388 spawns in AgbMain state 11 and waits on (gUnk_02008018).
+ * sub_080c6388 spawns in AgbMain state 11 and waits on (gEndingSceneActive).
  *   sub_080c9004   the body: variant 0 loads the graphics (sub_080c9040) and
  *       spawns variants 1, 3, 6, 7, 8 and 11 from the list gUnk_08757424
  *       (sub_080c90c8); variants 1-11 run gUnk_087573F4[Task.unk73].
@@ -15,7 +15,7 @@
  *   sub_080c94cc / sub_080c972c / sub_080c97a0   variant 3, which spawns its
  *       variant-5 companion, crosses the screen twice leaving variant-4
  *       tasks behind, fades the music out and ends the scene (clearing
- *       gUnk_02008018).
+ *       gEndingSceneActive).
  *   sub_080c9884, sub_080c98d8 / sub_080c9974   variants 4 and 5.
  *   sub_080ca71c, sub_080ca830, sub_080ca8f0   variants 6-8, scripted
  *       sprites drawn by M05's sub_0801a3e4.
@@ -45,7 +45,7 @@ extern u32 gUnk_0875585C[];
 extern u16 gUnk_0859A0B0[];
 extern u16 gUnk_0859A0D0[];
 extern u16 gUnk_03001470[];
-extern u8 gUnk_02008018;
+extern u8 gEndingSceneActive;
 extern u16 gUnk_08757432[];
 extern u32 gUnk_0874C500[];
 extern u16 gUnk_085E2920[];
@@ -261,7 +261,7 @@ void sub_080c9418(void)
 /* Task type #101 variant 3: spawns its variant-5 companion (which follows
    it), flies across the screen twice leaving a trail of variant-4 tasks
    (sub_080c972c while Task.unk28 is set), then fades the music out
-   (sub_080c97a0) and clears gUnk_02008018. */
+   (sub_080c97a0) and clears gEndingSceneActive. */
 void sub_080c94cc(void)
 {
     gUnk_03002490->unk00 = (u32)sub_080059d8;
@@ -333,7 +333,7 @@ void sub_080c94cc(void)
     TaskYieldTrampoline(82);
     gUnk_03002490->unk24 = 2;
     TaskYieldTrampoline(128);
-    gUnk_02008018 = 0;
+    gEndingSceneActive = 0;
     sub_08006138();
 }
 

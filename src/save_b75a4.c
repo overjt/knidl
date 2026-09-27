@@ -5,14 +5,14 @@
 /* save_b75a4.c (0x080B75A4-0x080B77D3, issue #94).
  *
  * The input recorder and its playback, one step per frame for each player
- * (src/save_b77d4.c runs one or the other by the mode gUnk_0200EC58; both
- * clear the running flag gUnk_0200EC54 when a player reaches the end).  The
- * recording lives in gUnk_0200EC6C->unk12C[] as 16-bit entries, held keys
+ * (src/save_b77d4.c runs one or the other by the mode gInputRecorderMode; both
+ * clear the running flag gInputRecorderRunning when a player reaches the end).  The
+ * recording lives in gInputRecordingPtr->unk12C[] as 16-bit entries, held keys
  * in the low 10 bits and a frame count (1-63) above them, the players'
  * entries interleaved: gUnk_0200EC78[i] is player i's next position and
  * steps by the player count gUnk_030023AC, gUnk_0200EC70[i] its end.
- * sub_080b75a4 records gUnk_03000F98[i] (the held keys), extending the
- * current entry while the keys stay the same; sub_080b76a8 plays it back into
+ * InputRecorderRecordFrame records gUnk_03000F98[i] (the held keys), extending the
+ * current entry while the keys stay the same; InputRecorderPlayFrame plays it back into
  * gUnk_03000F98[i] and the newly pressed keys gUnk_03001EB8[i], and an entry
  * of 0x3FF ends the playback for everyone.
  *
@@ -60,10 +60,10 @@ struct LinkSave
     /*0x12C*/ u16 unk12C[0x3B6A];
 };
 
-extern u8 gUnk_0200EC54;
+extern u8 gInputRecorderRunning;
 extern u16 gUnk_0200EC60[];
 extern u8 gUnk_0200EC68[];
-extern struct LinkSave *gUnk_0200EC6C;
+extern struct LinkSave *gInputRecordingPtr;
 extern u16 gUnk_0200EC70[];
 extern u16 gUnk_0200EC78[];
 extern u16 gUnk_02016480[];
@@ -73,7 +73,7 @@ extern u16 gUnk_030023AC;
 
 u32 sub_080b83a0(u8 *src, s32 i);
 
-void sub_080b75a4(void)
+void InputRecorderRecordFrame(void)
 {
     s32 i;
     u16 key;
@@ -83,7 +83,7 @@ void sub_080b75a4(void)
     {
         if (gUnk_0200EC78[i] >= gUnk_0200EC70[i])
         {
-            gUnk_0200EC54 = 0;
+            gInputRecorderRunning = 0;
             return;
         }
         key = gUnk_03000F98[i] & 0x3FF;
@@ -102,12 +102,12 @@ void sub_080b75a4(void)
             gUnk_0200EC60[i] = 0xFFFF;
         }
         gUnk_0200EC68[i] = count;
-        gUnk_0200EC6C->unk12C[pos] = key | (count << 10);
-        sub_080b83a0((u8 *)&gUnk_0200EC6C->unk12C[pos], pos);
+        gInputRecordingPtr->unk12C[pos] = key | (count << 10);
+        sub_080b83a0((u8 *)&gInputRecordingPtr->unk12C[pos], pos);
     }
 }
 
-void sub_080b76a8(void)
+void InputRecorderPlayFrame(void)
 {
     s32 i;
     s32 j;
@@ -117,15 +117,15 @@ void sub_080b76a8(void)
         gUnk_03000F98[i] = gUnk_03001EB8[i] = 0;
         if (gUnk_0200EC78[i] >= gUnk_0200EC70[i])
         {
-            gUnk_0200EC54 = 0;
+            gInputRecorderRunning = 0;
             return;
         }
         if ((s8)--gUnk_0200EC68[i] <= 0)
         {
             gUnk_02016480[i] = gUnk_0200EC78[i];
             gUnk_0200EC78[i] += gUnk_030023AC;
-            key = gUnk_0200EC6C->unk12C[gUnk_02016480[i]] & 0x3FF;
-            gUnk_0200EC68[i] = gUnk_0200EC6C->unk12C[gUnk_02016480[i]] >> 10;
+            key = gInputRecordingPtr->unk12C[gUnk_02016480[i]] & 0x3FF;
+            gUnk_0200EC68[i] = gInputRecordingPtr->unk12C[gUnk_02016480[i]] >> 10;
             if (key == 0x3FF)
             {
                 for (j = 0; j < gUnk_030023AC; j++)

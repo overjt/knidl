@@ -209,7 +209,7 @@ void sub_0802cd24(void);
 void sub_0802d0f4(void);
 void sub_08030724(void);
 void sub_080307b0(void);
-void sub_0803d034(s32 a0);
+void CreatePlayer(s32 a0);
 void sub_0803d1c4(s32 a0);
 void sub_08077d38(s32 id);
 void sub_080b4e40(void);
@@ -530,7 +530,7 @@ void sub_08022fa8(void)
         {
             gUnk_0300560C[i] = 3;
         }
-        sub_0803d034(i);
+        CreatePlayer(i);
         sub_0803d1c4(i);
         gUnk_03000F98[i] = gUnk_03001EB8[i] = 0;
         gUnk_03002458[i] = gUnk_030023C0[i] = 0;
