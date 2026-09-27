@@ -251,7 +251,6 @@ void sub_080095e4(void)
 void sub_08009640(void)
 {
     struct Task *t, *u, *v;
-    s32 m;
 
     t = gUnk_03002490;
     t->unk00 = (u32)sub_080059d8;
@@ -261,14 +260,11 @@ void sub_08009640(void)
     u = gUnk_03002490;
     if (u->unk18 <= 4) {
         u->unk4C = u->unk18 * 0x140000 + 0x180000;
+        u->unk50 = 0x800000;
     } else {
-        m = (u->unk18 - 5) * 0x140000;
-        /* Zero-byte clobber: keeps the product out of r0 so the else arm
-         * allocates like the ROM (and is not cross-jumped into the then arm). */
-        asm("" ::: "r0");
-        u->unk4C = m + 0x880000;
+        u->unk4C = (u->unk18 - 5) * 0x140000 + 0x880000;
+        u->unk50 = 0x800000;
     }
-    u->unk50 = 0x800000;
     gUnk_03002490->unk3C = 8;
     TaskYieldTrampoline(1);
     gUnk_03002490->unk3C--;
