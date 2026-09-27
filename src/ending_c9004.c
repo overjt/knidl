@@ -1,6 +1,11 @@
 #include "gba/gba.h"
 #include "global.h"
 #include "task.h"
+#include "room.h"
+#include "player.h"
+#include "effect.h"
+#include "enemy.h"
+#include "ending.h"
 
 /* ending_c9004.c (0x080C9004-0x080CAA3B, issue #100).
  *
@@ -25,48 +30,22 @@
  *   sub_080c9a28 / sub_080c9cf0   variant 11, the finale: palette flashes,
  *       variants 2, 9 and 10, a fade to an OBJ-only display. */
 
+/* Not from main.h: this file's view of gObjPalette differs (lesson 3.517). */
 extern vu16 gDispCnt;          /* DISPCNT shadow */
 extern vs32 gBg3ScrollY;
 extern vs32 gBg3ScrollX;          /* ... BG3 */
-extern u16 gUnk_02000028;
-extern u16 gUnk_02004C94;
 extern s16 gSpriteCameraX;
 extern s16 gSpriteCameraY;
-extern u32 gUnk_02020000[];         /* decompression buffer */
-extern u16 gUnk_03001570[];         /* palette buffer */
-extern u32 gObjVram[];         /* OBJ VRAM */
-extern u16 gPlayerPalettes[][16];     /* per-player palettes */
-extern void (*gUnk_087573F4[])(void);
-extern struct GfxHeader gUnk_0859A09C;
-extern u16 gUnk_085E0070[];
-extern u32 gUnk_085E0090[];
-extern u16 gUnk_08757424[];
-extern u32 gUnk_0875585C[];
-extern u16 gUnk_0859A0B0[];
-extern u16 gUnk_0859A0D0[];
+extern u8 gObjVram[];         /* OBJ VRAM */
 extern u16 gObjPalette[];
-extern u8 gEndingSceneActive;
-extern u16 gUnk_08757432[];
-extern u32 gUnk_0874C500[];
-extern u16 gUnk_085E2920[];
-extern u16 gUnk_085E2A20[];
-extern u16 gUnk_085E2B20[];
-extern u16 gUnk_0875743E[];
-extern u16 gUnk_03001370[];
-extern vu16 gBgPalette[];
+extern u16 gBgPalette[];
 extern vu16 gFadeSteps;
 extern vs16 gBrightness;
-extern vu16 gFadeStep;
+extern vs16 gFadeStep;
 extern vu16 gFadeTimer;
 extern vu16 gFadeInterval;
 extern vu16 gFadeBlankAtWhite;
 extern u16 *gFadeKeepMask;
-extern u32 gUnk_0874CF94[];
-extern u32 gUnk_0874C44C[];
-extern u32 gUnk_0874CF28[];
-extern u32 gUnk_08755440[];
-extern u32 gUnk_0875546C[];
-extern u32 gUnk_08755484[];
 
 void TaskExitTrampoline(void);
 void TaskYieldTrampoline(s32 frames);

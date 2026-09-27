@@ -1,6 +1,9 @@
 #include "gba/gba.h"
 #include "global.h"
 #include "task.h"
+#include "link.h"
+#include "room.h"
+#include "camera.h"
 
 /* camera_2c42c.c (0x0802C42C-0x0802D01B, issue #86).
  *
@@ -18,56 +21,6 @@
  * list, 0x9999 restarts it).  StartScrollLock(x0, x1, y0, y1) arms the scroll
  * lock of gScrollLock for a room region, 0xFFFF meaning no limit on
  * that axis (also called from M33, src/hud_b5840.c). */
-
-struct CamPos { u16 x, y; };
-
-struct CamRect { s16 x0, x1, y0, y1; };
-
-struct Unk03005670
-{
-    /*0x00*/ u8 unk0;
-    /*0x01*/ u8 filler01;
-    /*0x02*/ s16 unk2;
-    /*0x04*/ s16 unk4;
-    /*0x06*/ u8 unk6;
-};
-
-struct Unk03005680
-{
-    /*0x00*/ u8 unk0;
-    /*0x01*/ u8 lockedAxes;
-    /*0x02*/ u16 x0;
-    /*0x04*/ u16 x1;
-    /*0x06*/ u16 y0;
-    /*0x08*/ u16 y1;
-    /*0x0A*/ u16 unkA;
-    /*0x0C*/ u16 unkC;
-};
-
-extern u8 gActivePlayerCount;
-extern s16 gCameraAnchorX;
-extern s16 gCameraAnchorY;
-extern s16 gRoomBounds[4];
-extern s16 gCameraBounds[4];
-extern u16 gPlayerCount;
-extern s16 gViewRect[4];
-extern struct CamRect gPlayerBounds[4];
-extern struct CamPos gPlayerCameraPos[4];
-extern s32 gCameraCenterX;
-extern s32 gCameraCenterY;
-extern s16 gCameraFocusX;
-extern s16 gCameraFocusY;
-extern u16 gLocalPlayer;
-extern u8 gActivePlayerMask;
-extern u8 gUnk_02007D38;
-extern u8 gPlayerCameraMode[];
-extern u16 gPlayerGroupCenter[2];
-extern struct Unk03005670 gScreenShake;
-extern u16 *gScreenShakePatterns[];
-extern struct Unk03005680 gScrollLock;
-extern s32 gScrollLockSpeedX;
-extern s32 gScrollLockSpeedY;
-extern u16 gCameraMode;
 
 void UpdatePlayerGroupCenter(void);
 void UpdatePlayerCameras(void);

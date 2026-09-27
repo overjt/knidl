@@ -47,6 +47,7 @@ struct MapTile
     /*0x03*/ u8 collisionTile;
 };
 
+/* Not from room.h: this file's view of gRoomMap differs (lesson 3.517). */
 extern s16 gRoomHeight;
 extern s16 gRoomWidth;
 extern struct RoomDef *gCurRoomDef;

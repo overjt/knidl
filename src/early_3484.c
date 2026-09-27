@@ -1,5 +1,7 @@
 #include "gba/gba.h"
 #include "global.h"
+#include "main.h"
+#include "sound.h"
 
 /* Early game-code block 0x08003110-0x08003887 (issue #32, batch D1): the
  * BGM/SE front end that sits on top of the m4a driver.
@@ -69,38 +71,6 @@
  * there (it is a single AND in the ROM) probably also explains the register
  * permutation above.
  */
-
-extern struct MusicPlayerInfo gMPlayInfo_BGM;
-extern struct MusicPlayerInfo gMPlayInfo_SE1;
-extern struct MusicPlayerInfo gMPlayInfo_SE2;
-extern struct MusicPlayerInfo gMPlayInfo_SE3;
-
-struct SongEntry
-{
-    struct SongHeader *header;
-    u8 prio;
-    u8 chans;
-    u8 pad[2];
-};
-
-extern const struct SongEntry gSfxTable[];
-
-extern vs16 gCurrentBgm;
-extern vu16 gSoundDisabled;
-extern vu16 gVolumeRampMode;
-extern vu16 gVolumeRampLevel;
-extern vu16 gVolumeRampSpeed;
-extern vu16 gSfxDisabled;
-extern vu16 gSoundDriverOn;
-
-extern vu16 gSfxSlotSongs[];
-extern vu8 gSfxPlayerSlots[];
-extern vu8 gSfxSlotPlayers[];
-extern vu8 gSfxSlotAges[];
-
-
-
-
 
 void StopAllSound(void)
 {

@@ -1,6 +1,7 @@
 #include "gba/gba.h"
 #include "global.h"
 #include "task.h"
+#include "player.h"
 
 /* block_318b4.c (0x080318B4-0x08032687, issue #92).
  *
@@ -67,23 +68,16 @@ struct RoomDef
     /*0x10*/ struct MapTile *unk10;
 };
 
+/* Not from room.h: this file's view of gRoomMap differs (lesson 3.517). */
 extern struct Unk020061F0 gBreakingBlocks[];
 extern u16 gBlockLayer[];             /* per-cell block layer: low byte = replacement index, 0x8000 = being broken */
 extern s16 gRoomHeight;               /* map height in metatiles */
 extern s16 gRoomWidth;               /* map width in metatiles */
 extern struct RoomDef *gCurRoomDef;   /* the current room header */
-extern struct Unk020061F0 gUnk_02007FD0;
 extern struct MapTile *gRoomMap;   /* the room's metatile map */
 extern s16 gUnk_020055B8[4];
 extern u16 gMetatileTiles[];
-extern u16 gUnk_0200B060[];
-extern u16 gUnk_0873A6D4[][3];
-extern u16 gUnk_0873A6EC[][3][3];
-extern s8 gUnk_0873A734[][2];
 extern u16 gUnk_080D71A0[];
-extern u16 gBlockCursorX;               /* the block CanBreakBlock accepted: x */
-extern u16 gBlockCursorY;               /*   y */
-extern u16 gBlockCursorIndex;               /*   map index */
 extern s32 gCameraCenterX;
 extern s32 gCameraCenterY;
 extern u16 gBg1MetatileMap[];
@@ -92,7 +86,6 @@ extern struct RoomDef **gRoomTable[][8];
 extern s8 gStageIndex;
 extern s8 gLevelIndex;
 extern s8 gRoomIndex;
-extern u16 gUnk_0873A458[];
 
 s32 PlaySfx(s32 id);
 void sub_08026308(void);

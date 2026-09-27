@@ -1,6 +1,9 @@
 #include "gba/gba.h"
 #include "global.h"
 #include "task.h"
+#include "main.h"
+#include "link.h"
+#include "room.h"
 
 /* level_2296c.c (0x0802296C-0x08023617, issue #93).
  *
@@ -15,160 +18,12 @@
  * setup sub_0800b648 (see level_242d0.c); CreateRoomTask spawns task type
  * #3 with its variant index. */
 
-struct BgMap
-{
-    /*0x00*/ u16 unk0;
-    /*0x02*/ u16 width;
-    /*0x04*/ u16 height;
-    /*0x06*/ u16 unk6[0];
-};
-
-struct Door
-{
-    /*0x00*/ s16 unk0;
-    /*0x02*/ u16 unk2;
-    /*0x04*/ u16 unk4;
-    /*0x06*/ u16 unk6;
-    /*0x08*/ u16 unk8;
-    /*0x0A*/ u16 unkA;
-};
-
-struct RoomDef
-{
-    /*0x00*/ u8 filler00[4];
-    /*0x04*/ s8 bgm;
-    /*0x05*/ u8 mapsCompressed;
-    /*0x06*/ u8 filler06[2];
-    /*0x08*/ void *metatileMap;
-    /*0x0C*/ void *blockLayer;
-    /*0x10*/ void *unk10;
-    /*0x14*/ u16 width;
-    /*0x16*/ u16 height;
-    /*0x18*/ u16 *bg2Palette;
-    /*0x1C*/ void *bg2Tiles;
-    /*0x20*/ void *metatileTiles;
-    /*0x24*/ u16 borderX;
-    /*0x26*/ u16 borderY;
-    /*0x28*/ u16 *bg3Palette;
-    /*0x2C*/ void *bg3Tiles;
-    /*0x30*/ struct BgMap *bg3Map;
-    /*0x34*/ u16 bg3BorderX;
-    /*0x36*/ u16 bg3BorderY;
-    /*0x38*/ u16 unk38;
-    /*0x3A*/ u16 doorCount;
-    /*0x3C*/ u16 objectCount;
-    /*0x3E*/ u16 objectsSortedByY;
-    /*0x40*/ u16 bgAnimSet;
-    /*0x42*/ u16 unk42;
-    /*0x44*/ struct Door *doors;
-    /*0x48*/ void *objects;
-    /*0x4C*/ u8 filler4C[4];
-    /*0x50*/ u16 entryX;
-    /*0x52*/ u16 entryY;
-    /*0x54*/ u8 unk54;
-    /*0x55*/ u8 unk55;
-    /*0x56*/ u8 unk56;
-    /*0x57*/ u8 unk57;
-};
-
-struct MapCell
-{
-    /*0x00*/ u8 unk0;
-    /*0x01*/ u8 unk1;
-    /*0x02*/ u8 unk2;
-    /*0x03*/ u8 collisionTile;
-};
-
 struct Unk020055D8Entry
 {
     /*0x00*/ u8 filler0[4];
     /*0x04*/ u16 x;
     /*0x06*/ u16 y;
 };
-
-struct Unk020055D8
-{
-    /*0x00*/ s16 count;
-    /*0x02*/ s16 sortedByY;
-    /*0x04*/ struct Unk020055D8Entry *entries;
-};
-
-extern struct RoomDef **gRoomTable[][8];
-extern s8 gLevelIndex;
-extern s8 gStageIndex;
-extern s8 gRoomIndex;
-extern s8 gUnk_030023B8;
-extern u8 gUnk_03001F20;
-extern s8 gUnk_030023E0;
-extern s8 gUnk_03002384;
-extern u16 gUnk_0200001C;
-extern s8 gUnk_02004C98;
-extern u8 gUnk_02005578;
-extern s16 gRoomEntryX;
-extern u8 gRoomEntrySet;
-extern u8 gUnk_020069F0;
-extern u8 gUsedSubGameDoors[];
-extern u16 gUnk_02007D60;
-extern u8 gCutscenePending;
-extern u16 gUnk_02007FF0;
-extern s8 gUnk_02007FF8;
-extern s16 gRoomEntryY;
-extern u8 gUnk_0200AF00;
-extern u8 gUnk_0200AF04;
-extern u8 gUnk_0200AF08;
-extern s8 gUnk_0200B038;
-extern u8 gUnk_0200B04C;
-extern u8 gUnk_03001F30;
-extern u32 gBigSwitchFlags[];
-extern u8 gUnk_03002400[8][7];
-extern u16 gUnk_08732348[][9];
-extern u8 gUnk_02004B64;
-extern s16 gUnk_0200AF0C;
-extern u32 gUnk_02007BF0[8][8];
-extern s8 gStageRequest;
-extern u8 gUnk_08334EB4[];
-extern u8 gUnk_020055C8;
-extern s8 gUnk_03002444;
-extern u16 gCameraMode;
-extern struct RoomDef *gCurRoomDef;
-extern s8 gUnk_02007D64;
-extern s8 gUnk_02000000;
-extern s16 gRoomWidth;
-extern s16 gRoomHeight;
-extern s16 gRoomMetatileCount;
-extern u16 gRoomBorder[2];
-extern u16 gBg3Border[2];
-extern struct Unk020055D8 gRoomObjectList;
-extern struct MapCell *gRoomMap;
-extern struct MapCell gRoomMapBuffer[];
-extern u16 gBlockLayer[];
-extern u16 gMetatileTiles[];
-extern u8 gUnk_02000020;
-extern u8 gUnk_0200B078;
-extern u8 gHBlankScrollStarted;
-extern u16 gRoomUpdateFlags;
-extern u8 gActivePlayerMask;
-extern u8 gActivePlayerCount;
-extern u8 gUnk_0300234C;
-extern u16 gPlayerCount;
-extern s16 gPlayerLives[];
-extern s16 gPlayerHealth[];
-extern s16 gMaxHealth;
-extern u16 gSavedPlayerAbilities[];
-extern u16 gSavedPlayerAbilityUses[];
-extern u16 gPlayerAbilities[];
-extern u16 gPlayerAbilityUses[];
-extern u8 gPlayerCameraMode[];
-extern vu16 gPlayerHeldKeys[];
-extern vu16 gPlayerPressedKeys[];
-extern u16 gLatchedHeldKeys[];
-extern u16 gLatchedPressedKeys[];
-extern u16 gLocalPlayer;
-extern u8 gRoomBgLayout;
-extern u16 gCameraPos[2];
-extern u16 gBg3Pos[2];
-extern u16 gUnk_02004B80;
-extern u8 gUnk_02007E8C;
 
 void RequestCopy(u32 mode, u32 src, u32 dst, u32 size);
 void ResetTasksAndOam(void);

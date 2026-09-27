@@ -1,5 +1,7 @@
 #include "gba/gba.h"
 #include "global.h"
+#include "main.h"
+#include "link.h"
 
 /* Early subsystem: link-play frame driver, wait helpers, RNG, decimal digit
  * split and 15bpp colour blending (0x08002B04-0x0800310F, issue #32 batch C2).
@@ -37,34 +39,6 @@
  *  - BlendColor is a dead export hidden inside symbols.csv's 0xFC size for
  *    BlendColors (lesson 2.13 / zone lesson 14): nothing in ROM calls it.
  */
-
-extern vu16 gLinkPlayerCount;      /* number of linked players */
-extern u32 gLinkPauseFrames;
-extern vu16 gLinkCommand;      /* link session state, high byte = command */
-extern u16 gSendCmd[4];    /* link send buffer */
-extern vu16 gHeldKeys;      /* keys held last frame */
-extern vu16 gPressedKeys;      /* keys newly pressed */
-extern u8 gLastRecvQueueCount;
-
-extern vu16 gPlayerHeldKeys[];    /* per-player keys held */
-extern vu16 gPlayerPressedKeys[];    /* per-player keys pressed */
-extern u16 gShouldAdvanceLinkState[];
-extern u16 gRecvCmds[3][4]; /* [0]=state [1]=keys held [2]=keys pressed */
-extern u8 gLink[];
-extern u32 gLinkRecvVCount;
-extern vu16 gWaitingForVBlank;      /* VBlank wait flag */
-extern u32 gSerialIntrCount;       /* frame counter */
-extern u32 gSendCmdFilled;
-
-extern vu16 gFadeSteps;      /* frames left to wait */
-extern u16 gFadeBlankAtWhite;
-extern vu16 gDispCnt;      /* display/mode flags */
-extern u16 gBg0Cnt;
-extern u16 gBg1Cnt;
-extern u16 gBg2Cnt;
-extern u16 gBg3Cnt;
-extern vu32 gRngValue;      /* RNG state */
-extern u8 gDigits[6];     /* decimal digit buffer, [5] = sign/flag */
 
 void FillSendCmdWithSaveSlot(void);
 void ReceiveLinkSaveSlots(void);

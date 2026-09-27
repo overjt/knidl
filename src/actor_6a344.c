@@ -20,29 +20,12 @@
 #include "gba/gba.h"
 #include "global.h"
 #include "task.h"
+#include "link.h"
+#include "actor.h"
 
-extern u32 gUnk_0873E5BC[];
-extern u32 gActorDefeatsByEffect[];
-extern u16 gUnk_0873E610[];
-extern s16 gUnk_0873E5F8[];
-extern u32 gUnk_0874CB7C[];
-extern s16 gUnk_0300244C;
-extern struct ActorDef gUnk_0873F6BC;
-extern struct PlayerState gPlayerStates[];
-extern u32 gUnk_0873E670[];
-extern u32 gUnk_0873E67C[];
-extern vs16 gTaskSlotTypes[];
-extern u8 gUnk_0873F880[];
-extern u32 gUnk_0874C9D8[];
-extern u32 gUnk_0873E688[];
+/* Not from main.h: this file's view of gBgPalette differs (lesson 3.517). */
 extern u16 gBgPalette;
 extern vu16 gDispCnt;
-extern u16 gUnk_0873E698[];
-extern struct ActorDef gUnk_0873F6E8;
-extern u8 gUnk_0873F81C[];
-extern struct ActorDef gUnk_0873F704;
-extern s32 gUnk_030023B4;
-extern s32 gUnk_030023D4;
 
 extern void CallTableEntry(u32 a, u32 b, u32 *c);
 extern void TaskFree(s32 a);

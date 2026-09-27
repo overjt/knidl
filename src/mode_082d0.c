@@ -1,6 +1,10 @@
 #include "gba/gba.h"
 #include "global.h"
 #include "task.h"
+#include "link.h"
+#include "mode.h"
+#include "room.h"
+#include "player.h"
 
 /* mode_082d0.c (0x080082D0-0x08008663, issue #96).
  *
@@ -11,25 +15,11 @@
  * script bodies (a sprite pair, a BG scroll plus palette cycle, a sprite
  * loop and a palette pulse). */
 
-extern u8 gUnk_02006090;
-extern s8 gSubGameLevel;
+/* Not from main.h: this file's view of gBgPalette differs (lesson 3.517). */
 extern vs32 gBg0ScrollX;
 extern vu16 gBgPalette[];
 extern u16 gObjPalette[];
-extern u16 gUnk_03001490[];
-extern u16 gFrameCount;
-extern u16 gPrevGameState;
-extern u16 gLocalPlayer;
-extern s32 gUnk_03005280;
-extern u8 gUnk_085B6A90[];
-extern u8 gUnk_085B6AC0[];
-extern u8 gUnk_085B6AC8[];
-extern u16 gUnk_085B6E78[][3][16];
-extern u16 gUnk_085B6F98[];
-extern void (*gUnk_0873078C[])(void);
-extern void (*gUnk_08730794[])(void);
-extern u8 gUnk_0873079C[];
-extern u32 gUnk_08756054[];
+extern vu16 gFrameCount;
 
 void TaskYieldTrampoline(u32 frames);
 s32 QueueSprite(u32 a, u32 b, u32 c, u32 d, u32 e, u16 f);

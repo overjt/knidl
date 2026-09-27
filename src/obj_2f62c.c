@@ -1,6 +1,8 @@
 #include "gba/gba.h"
 #include "global.h"
 #include "task.h"
+#include "room.h"
+#include "camera.h"
 
 /* obj_2f62c.c (0x0802F62C-0x08030237, issue #86).
  *
@@ -14,29 +16,6 @@
  * sub_0802ffe8 is also called from M33 (src/hud_b5024.c), and
  * sub_08030100 spawns up to two #235 objects from the table
  * gUnk_087328C0. */
-
-struct Unk02004B90
-{
-    /*0x00*/ u8 unk0;
-    /*0x01*/ u8 unk1;
-    /*0x02*/ u8 filler02[6];
-};
-
-extern u32 gUnk_08755948[];
-extern u32 gUnk_087558DC[];
-extern u32 gUnk_087558C4[];
-extern struct Unk02004B90 gDoorStates[];
-extern u32 gUnk_08755978[];
-extern u8 gUnk_085A2DF8[][32];
-extern s16 gUnk_020055D4;
-extern u32 gUnk_087558D0[];
-extern u8 gUnk_02007FC4;
-extern u32 gUnk_0875597C[];
-extern u32 gUnk_0875599C[];
-extern u32 gUnk_087559A4[];
-extern u32 gUnk_087559C0[];
-extern s16 gUnk_087328C0[][2];
-extern u32 gUnk_087559DC[];
 
 void TaskExitTrampoline(void);
 void TaskYieldTrampoline(u32 frames);

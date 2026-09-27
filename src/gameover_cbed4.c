@@ -1,6 +1,8 @@
 #include "gba/gba.h"
 #include "global.h"
 #include "task.h"
+#include "main.h"
+#include "ending.h"
 
 /* gameover_cbed4.c (0x080CBED4-0x080CCD4B, issue #100).
  *
@@ -18,13 +20,6 @@
  *       gGameOverCursor.
  *   sub_080cc180 ... sub_080cc768 / sub_080ccd10   sub-states 2-5, the cursor's
  *       animations after a choice; handlers 3 and 5 hand over to variant 0. */
-
-extern vu16 gPlayerPressedKeys[];        /* keys pressed per player */
-extern s8 gGameOverCursor;            /* game-over screen: cursor (continue = 0?) */
-extern s16 gGameOverPlayerTask;           /* game-over screen: the #264 variant-0 task's index */
-extern u32 gUnk_087549B0[];
-extern void (*gUnk_087582C4[])(void);
-extern void (*gUnk_087582DC[])(void);
 
 void TaskYieldTrampoline(s32 frames);
 void CallTableEntry(u32 idx, u32 count, void (**fns)(void));   /* if (idx < count) fns[idx](); */

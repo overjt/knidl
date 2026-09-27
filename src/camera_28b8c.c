@@ -1,6 +1,10 @@
 #include "gba/gba.h"
 #include "global.h"
 #include "task.h"
+#include "main.h"
+#include "link.h"
+#include "room.h"
+#include "camera.h"
 
 /* camera_28b8c.c (0x08028B8C-0x0802969F, issue #93).
  *
@@ -23,134 +27,12 @@
  * gBg3MapShape from the map size) and InitDoors builds the door
  * objects. */
 
-struct CamPos { u16 x, y; };
-
-struct CamRect { s16 x0, x1, y0, y1; };
-
-struct BgMap
-{
-    /*0x00*/ u16 unk0;
-    /*0x02*/ u16 width;
-    /*0x04*/ u16 height;
-    /*0x06*/ u16 unk6[0];
-};
-
-struct Door
-{
-    /*0x00*/ s16 unk0;
-    /*0x02*/ u16 unk2;
-    /*0x04*/ u16 unk4;
-    /*0x06*/ u16 unk6;
-    /*0x08*/ u16 unk8;
-    /*0x0A*/ u16 unkA;
-};
-
-struct RoomDef
-{
-    /*0x00*/ u8 filler00[4];
-    /*0x04*/ s8 bgm;
-    /*0x05*/ u8 mapsCompressed;
-    /*0x06*/ u8 filler06[2];
-    /*0x08*/ void *metatileMap;
-    /*0x0C*/ void *blockLayer;
-    /*0x10*/ void *unk10;
-    /*0x14*/ u16 width;
-    /*0x16*/ u16 height;
-    /*0x18*/ u16 *bg2Palette;
-    /*0x1C*/ void *bg2Tiles;
-    /*0x20*/ void *metatileTiles;
-    /*0x24*/ u16 borderX;
-    /*0x26*/ u16 borderY;
-    /*0x28*/ u16 *bg3Palette;
-    /*0x2C*/ void *bg3Tiles;
-    /*0x30*/ struct BgMap *bg3Map;
-    /*0x34*/ u16 bg3BorderX;
-    /*0x36*/ u16 bg3BorderY;
-    /*0x38*/ u16 unk38;
-    /*0x3A*/ u16 doorCount;
-    /*0x3C*/ u16 objectCount;
-    /*0x3E*/ u16 objectsSortedByY;
-    /*0x40*/ u16 bgAnimSet;
-    /*0x42*/ u16 unk42;
-    /*0x44*/ struct Door *doors;
-    /*0x48*/ void *objects;
-    /*0x4C*/ u8 filler4C[4];
-    /*0x50*/ u16 entryX;
-    /*0x52*/ u16 entryY;
-    /*0x54*/ u8 unk54;
-    /*0x55*/ u8 unk55;
-    /*0x56*/ u8 unk56;
-    /*0x57*/ u8 unk57;
-};
-
-struct Unk02004B90
-{
-    /*0x00*/ u8 unk0;
-    /*0x01*/ u8 unk1;
-    /*0x02*/ u8 filler02[2];
-    /*0x04*/ u8 unk4_0:4;
-    /*0x04*/ u8 unk4_4:4;
-    /*0x05*/ u8 filler05[3];
-};
-
 struct Unk020055D8Entry
 {
     /*0x00*/ u8 filler0[4];
     /*0x04*/ u16 x;
     /*0x06*/ u16 y;
 };
-
-struct Unk020055D8
-{
-    /*0x00*/ s16 count;
-    /*0x02*/ s16 sortedByY;
-    /*0x04*/ struct Unk020055D8Entry *entries;
-};
-
-extern u16 gCameraMode;
-extern s8 gUnk_03002444;
-extern u16 gPlayerCount;
-extern s16 gCameraBounds[4];
-extern s16 gRoomBounds[4];
-extern struct CamRect gPlayerBounds[4];
-extern u16 gLocalPlayer;
-extern s16 gCameraFocusX;
-extern s16 gCameraFocusY;
-extern struct CamPos gPlayerCameraPos[4];
-extern s32 gCameraCenterX;
-extern s32 gCameraCenterY;
-extern s16 gViewRect[4];
-extern u8 gActivePlayerMask;
-extern s16 gCameraAnchorX;
-extern s16 gCameraAnchorY;
-extern u8 gRoomEntrySet;
-extern s16 gRoomEntryX;
-extern s16 gRoomEntryY;
-extern struct RoomDef *gCurRoomDef;
-extern s8 gUnk_0200B038;
-extern u16 gUnk_02008054;
-extern s8 gRoomIndex;
-extern u8 gUnk_020069F0;
-extern u16 gUnk_0200AFF4;
-extern u16 gUnk_02008050;
-extern u16 gCameraStreamPos[2];
-extern u16 gCameraPos[2];
-extern u16 gBg3StreamPos[2];
-extern u16 gBg3Pos[2];
-extern u8 gUnk_020055C8;
-extern s16 gUnk_087325A2[];
-extern s8 gUnk_02007D64;
-extern u8 gUnk_0200AF04;
-extern u16 gUnk_030012B0[];
-extern u8 gObjPalette[];
-extern u8 gBg3MapShape;
-extern struct Unk020055D8 gRoomObjectList;
-extern s16 gObjectSpawnViewRect[4];
-extern struct Unk02004B90 gDoorStates[];
-extern u16 gRoomBorder[2];
-extern s32 gBg3ParallaxX;
-extern u16 gBg3Border[2];
-extern s32 gBg3ParallaxY;
 
 void RequestCopy(u32 mode, u32 src, u32 dst, u32 size);
 s32 PlayBgm(s32 songId);

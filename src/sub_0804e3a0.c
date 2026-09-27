@@ -2,6 +2,8 @@
 #include "global.h"
 #include "task.h"
 
+/* Not from room.h or player.h: this file's view of gUnk_02007FA0 and
+   gUnk_0873CC54 differs (lesson 3.517). */
 extern s16 gUnk_02004B6C[];
 extern s16 gUnk_02007FA0[];
 extern u16 gLatchedHeldKeys[];

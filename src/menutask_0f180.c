@@ -1,6 +1,9 @@
 #include "gba/gba.h"
 #include "global.h"
 #include "task.h"
+#include "mode.h"
+#include "menu.h"
+#include "room.h"
 
 /* menutask_0f180.c (0x0800F180-0x0800FCBB, issue #99).
  *
@@ -13,34 +16,12 @@
  * (sub_0800fa30) and #258 (sub_0800fb94) cycle and cross-fade the
  * background palettes when the menu screen changes. */
 
-extern s8 gMenuScreen;
-extern s8 gPrevMenuScreen;
-extern s8 gUnk_02007FC8;
 /* Plain u8 here (vu8 elsewhere): a volatile byte load expands to a load plus
    two shifts, which lengthens this address's live range in sub_0800f408 enough
    to lose r6 to the hoisted copy of &gCurTask. */
+/* Not from link.h: this file's view of gMultiBootStruct differs (lesson
+   3.517). */
 extern u8 gMultiBootStruct[];
-extern u16 gUnk_030012B0[];
-extern u16 gUnk_03001430[];
-extern u16 gUnk_03001612[];
-extern u16 gUnk_085563C8[];
-extern u16 gUnk_08562FE4[][8];
-extern u16 gUnk_08563024[][13];
-extern u16 *gUnk_08731CF8[];
-extern u16 *gUnk_08731D28[];
-extern u16 gUnk_08731D58[];
-extern u32 gUnk_08731D70[];
-extern s32 gUnk_08731E58[][4];
-extern s32 gUnk_08731E98[];
-extern u16 gUnk_08731EA8[];
-extern s16 gUnk_08731EB0[];
-extern s16 gUnk_08731EB8[];
-extern s16 gUnk_08731EC0[];
-extern s32 gUnk_08731EC8[][4];
-extern s32 gUnk_08731F08[][4];
-extern s16 gUnk_08731F48[][4];
-extern u32 gUnk_08755620[];
-extern u32 gUnk_08755688[];
 
 void TaskExitTrampoline(void);
 void TaskYieldTrampoline(s32 frames);

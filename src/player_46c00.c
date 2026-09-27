@@ -1,6 +1,8 @@
 #include "gba/gba.h"
 #include "global.h"
 #include "task.h"
+#include "room.h"
+#include "player.h"
 
 /* player_46c00.c (0x08046C00-0x080474E7, issue #87).
  *
@@ -16,24 +18,6 @@
  * Its handler PlayerActionHammerUpdate is PlayerActionSwordUpdate's twin with the collider rows
  * gUnk_0873C074, gUnk_0873C0C0 and gUnk_0873C128, and in the air it
  * records the held left/right direction in Task.unk34. */
-
-/* M11's per-player records (src/stage_43654.c spells them the same way) */
-struct M11R8 { u8 unk00; u8 unk01; u8 offsetX; u8 offsetY; u8 *boxes; };
-
-struct M11R20 { u32 w[5]; };
-
-extern struct M11R20 gPlayerBodyBoxes[];
-extern struct M11R8 gPlayerHitBoxSets[];
-extern u32 gUnk_0873C060[];
-extern u32 gUnk_0873CDB4[];
-extern u32 gUnk_0873CDBC[];
-extern u32 gUnk_0873CDF4[];
-extern u32 gUnk_0873CDFC[];
-extern u32 gUnk_0873CE64[];
-extern u16 gLatchedHeldKeys[];             /* held keys, latched per player (M11) */
-extern u32 gUnk_0873C074[];
-extern u32 gUnk_0873C0C0[];
-extern u32 gUnk_0873C128[];
 
 void TaskYieldTrampoline(s32 frames);
 void TaskSleepForever(void);

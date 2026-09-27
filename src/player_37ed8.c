@@ -1,6 +1,8 @@
 #include "gba/gba.h"
 #include "global.h"
 #include "task.h"
+#include "main.h"
+#include "link.h"
 
 /* player_37ed8.c (0x08037ED8-0x0803919B, issue #91).
  *
@@ -14,9 +16,6 @@
  * (SetPlayerAbility); states 0-4 play the ability's animations and state 6
  * leaves.  PlayerActionHurtUpdate, handler 16, steers every state into state 6 and
  * re-binds the coroutine. */
-
-extern u16 gLocalPlayer;
-extern u16 gFrameCount;
 
 void TaskYieldTrampoline(s32 frames);
 void TaskSleepForever(void);

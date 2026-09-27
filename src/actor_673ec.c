@@ -11,22 +11,19 @@
 #include "gba/gba.h"
 #include "global.h"
 #include "task.h"
+#include "main.h"
+#include "link.h"
+#include "room.h"
+#include "player.h"
+#include "actor.h"
 
-extern u8 gUnk_03001F30;
-extern u16 gLocalPlayer;
-extern s8 gUnk_0873E1F8[];
-extern u32 gUnk_0873E2F0[];
-extern u32 gUnk_0873E31C[];
-extern vs16 gTaskSlotTypes[];
-extern u32 gUnk_02007D00[];
-extern struct PlayerState gPlayerStates[];
-extern s16 gPlayerHealth[];
+/* Not from collision.h: this file's view of gAttackBox differs (lesson
+   3.517). */
 extern u16 gAttackX;
 extern u16 gAttackY;
 extern u16 gAttackHealth;
 extern u8 gAttackLastHitterSlot;
 extern u8 gAttackLastHitter;
-extern u8 gUnk_030023F0;
 extern s16 gAttackFacing;
 extern s8 gAttackHitDuration;
 extern u8 gUnk_03002460;
@@ -82,20 +79,15 @@ extern void sub_0806896c(void);
 extern void TaskSetFrame(s32 a);
 extern s32 sub_080684a4(void);
 extern void TaskYieldTrampoline(u32 a);
-extern u16 gFrameCount;
 extern s32 sub_08068a2c(s32 a, s32 b);
 extern void SetPlayerInvulnerability(u32 a, u32 b, s32 c);
 extern void PlaySfx(u32 a);
 extern void TaskSetMotionXFacing(s32 a, s32 b);
 extern void TaskSetMotionY(s32 a, s32 b, s32 c);
 extern void TaskSetFrameFlip(s32 a);
-extern u32 gPlayerDefaultTerrainBox[];
 extern u8 gTerrainResult;
-extern s32 gUnk_0873E348[];
-extern s32 gUnk_0873E388[];
 extern void ClampTaskToRoom(struct Task *t);
 extern void sub_0801bcac(u32 *p);
-extern u16 gUnk_0873E3C8[];
 extern void RequestScreenShake(u32 a);
 extern void sub_080682a8(void);
 extern void TaskSetEntry(void *fn, s32 i);

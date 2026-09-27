@@ -1,6 +1,7 @@
 #include "gba/gba.h"
 #include "global.h"
 #include "task.h"
+#include "camera.h"
 
 /* obj_2eac8.c (0x0802EAC8-0x0802F62B, issue #86).
  *
@@ -14,21 +15,6 @@
  * (sub_0802eba4, sub_0802ed20, sub_0802ee88) that DMAs that frame's tiles
  * into OBJ VRAM with RequestCopy and resets unk28 to -1.  The last three
  * spawners are the three variants of type #229 (obj_2f62c.c). */
-
-extern u32 gUnk_087558BC[];
-extern u8 gUnk_085A0638[];
-extern u32 gUnk_087558C0[];
-extern u32 gUnk_087558DC[];
-extern u8 gUnk_085A0C38[][32];
-extern u32 gUnk_087558E8[];
-extern u8 gUnk_085A12F8[];
-extern u8 gUnk_085A1BF8[];
-extern u8 gUnk_085A24F8[];
-extern u32 gUnk_087558EC[];
-extern u32 gUnk_087558FC[];
-extern u32 gUnk_08755930[];
-extern u32 gUnk_0875593C[];
-extern u32 gUnk_08755944[];
 
 void TaskExitTrampoline(void);
 void TaskYieldTrampoline(u32 frames);

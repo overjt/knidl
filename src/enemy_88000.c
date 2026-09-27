@@ -6,70 +6,8 @@
 #include "gba/gba.h"
 #include "global.h"
 #include "task.h"
-
-/* RAM cells */
-extern s32 gUnk_030023B4;
-extern s32 gUnk_030023D4;
-extern struct Task *gCurTask;
-extern struct Task gTasks[];
-
-/* ROM tables */
-extern s16 gUnk_08742824[];
-extern s16 gUnk_08742834[];
-extern s16 gUnk_08742844[];
-extern s32 gUnk_0874269C[];
-extern s32 gUnk_087426A4[];
-extern s32 gUnk_087426EC[];
-extern s32 gUnk_08742734[];
-extern s32 gUnk_0874276C[];
-extern s32 gUnk_08742818[];
-extern u16 gUnk_08742862[];
-extern u32 gUnk_0873F500[];
-extern u32 gUnk_0874266C[];
-extern u32 gUnk_08742684[];
-extern u32 gUnk_087426AC[];
-extern u32 gUnk_087426B0[];
-extern u32 gSquishyVariants[];
-extern u32 gUnk_087426C4[];
-extern u32 gUnk_087426D8[];
-extern u32 gUnk_087426F4[];
-extern u32 gUnk_08742704[];
-extern u32 gUnk_08742710[];
-extern u32 gUnk_0874271C[];
-extern u32 gUnk_08742728[];
-extern u32 gUnk_0874273C[];
-extern u32 gUnk_08742744[];
-extern u32 gUnk_08742758[];
-extern u32 gGlunkVariants[];
-extern u32 gGlunkStates[];
-extern u32 gGlunkStateUpdates[];
-extern u32 gUnk_087427B4[];
-extern u32 gUnk_087427BC[];
-extern u32 gUnk_087427E8[];
-extern u32 gUnk_08742C14[];
-extern u32 gUnk_08742C30[];
-extern u32 gUnk_08742C4C[];
-extern u32 gUnk_08742C68[];
-extern u32 gUnk_08742C84[];
-extern u32 gUnk_08742CA0[];
-extern u32 gUnk_08742CBC[];
-extern u32 gUnk_08742E50[];
-extern u32 gUnk_08742E5C[];
-extern u32 gSquishyFrames[];
-extern u32 gUnk_087526A8[];
-extern u32 gGlunkFrames[];
-extern u32 gGlunkShotFrames[];
-extern u32 gUnk_08752828[];
-extern u8 gUnk_08742778[];
-extern u8 gUnk_087427B0[];
-extern u8 gUnk_087427B2[];
-extern u8 gUnk_08742814[];
-extern u8 gUnk_08742820[];
-extern u8 gUnk_08742822[];
-extern u8 gUnk_08742830[];
-extern u8 gUnk_08742854[];
-extern u8 gUnk_08742856[];
-extern u8 gUnk_0874285C[];
+#include "actor.h"
+#include "enemy.h"
 
 /* Externals */
 extern s32 TaskFindNearestPlayer(void);

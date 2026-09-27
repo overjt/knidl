@@ -1,6 +1,10 @@
 #include "gba/gba.h"
 #include "global.h"
 #include "task.h"
+#include "menu.h"
+#include "room.h"
+#include "effect.h"
+#include "save.h"
 
 /* menutask_0e314.c (0x0800E314-0x0800EA0B, issue #99).
  *
@@ -11,49 +15,6 @@
  * highlight (sub_0800e7b0); #248 (sub_0800e81c, body sub_0800e8c0) the
  * picture of screen 5; and sub_0800e9a4 is the entry of #243, whose
  * body sub_0800ea0c is in menutask_0ea0c.c. */
-
-struct SaveSlot
-{
-    /*0x00*/ u32 unk00;
-    /*0x04*/ s32 unk04;
-    /*0x08*/ u32 generation;
-    /*0x0C*/ s32 saveCount;
-    /*0x10*/ u16 milestoneFlags;
-    /*0x12*/ u16 completionPercent[2];
-    /*0x16*/ u8 unk16[2];
-    /*0x18*/ u8 unk18[2];
-    /*0x1A*/ u8 unk1A[2];
-    /*0x1C*/ u8 unk1C[2];
-    /*0x1E*/ u8 pad1E[2];
-    /*0x20*/ u32 unk20[2];
-    /*0x28*/ u8 unk28[8][7];
-    /*0x60*/ u16 unk60[4];
-    /*0x68*/ u16 unk68[4];
-    /*0x70*/ u32 checksum;
-    /*0x74*/ u8 filler74[0x8C];
-};
-
-extern s8 gModeListExtraRows;
-extern s8 gUnk_02004B44;
-extern s8 gMenuScreen;
-extern u8 gEraseConfirmCount;
-extern s8 gMenuChoiceCursor;
-extern s8 gMenuCursor;
-extern struct SaveSlot gSaveSlots[];
-extern u16 gUnk_030012F0[][16];
-extern u16 gUnk_0300153C[];
-extern u16 gUnk_03001550[];
-extern u16 gUnk_03001570[];
-extern s32 gCurSaveSlot;
-extern u16 gUnk_08559C24[][16];
-extern u16 gUnk_08559CE6[];
-extern u16 gUnk_08559CEC[];
-extern u16 gUnk_0855D2F8[][10];
-extern u16 gUnk_0855D320[];
-extern u16 gUnk_0855D334[][16];
-extern u16 gUnk_08731E4C[];
-extern u16 gUnk_08731E52[];
-extern u32 gUnk_08755650[];
 
 void TaskExitTrampoline(void);
 void TaskYieldTrampoline(s32 frames);

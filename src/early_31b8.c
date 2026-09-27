@@ -1,5 +1,6 @@
 #include "gba/gba.h"
 #include "global.h"
+#include "sound.h"
 
 /* early_31b8.c (0x080031B8-0x08003483, issue #63).
  *
@@ -20,21 +21,6 @@
  * mask, both swap temporaries, the running priority and both ages (the ROM
  * keeps all of them in r4), and the three range guards are separate `if`s;
  * lesson 3.480.  Issue #32 had called the residue a register permutation. */
-
-struct SongEntry
-{
-    struct SongHeader *header;
-    u8 prio;
-    u8 chans;
-    u8 pad[2];
-};
-
-extern const struct SongEntry gSfxTable[];
-extern vu16 gSfxDisabled;
-extern vu16 gSfxSlotSongs[];
-extern vu8 gSfxPlayerSlots[];
-extern vu8 gSfxSlotPlayers[];
-extern vu8 gSfxSlotAges[];
 
 /* Start sound effect `id` (100-578) on one of the three SE players: a free
  * player the song allows, else a player freed by moving its song to a

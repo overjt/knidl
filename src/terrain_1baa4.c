@@ -1,6 +1,8 @@
 #include "gba/gba.h"
 #include "global.h"
 #include "task.h"
+#include "collision.h"
+#include "room.h"
 
 /* terrain_1baa4.c (0x0801BAA4-0x0801BCAB, issue #84).
  *
@@ -11,64 +13,6 @@
  * both wall probes run (in the order the facing gTerrainFacing picks), and
  * the probes' 8.8 push gTerrainDriftX/gTerrainDriftY is written back to
  * PlayerState.driftVelX/unk58 on top of gRoomDriftVelX/gRoomDriftVelY. */
-
-/* The probe result block, filled by the terrain probes and mirrored into
-   gTerrainResult by TerrainProbeEnd. */
-struct Unk03005530
-{
-    /*0x00*/ u8 unk0;
-    /*0x01*/ u8 ceilingHits;
-    /*0x02*/ u8 unk2;
-    /*0x03*/ u8 unk3;
-    /*0x04*/ u8 slope;
-    /*0x05*/ u8 unk5;
-    /*0x06*/ u8 onGround;
-    /*0x07*/ u8 waterFlags;
-    /*0x08*/ u16 unk8;
-    /*0x0A*/ u8 atDoor;
-    /*0x0B*/ u8 unkB;
-    /*0x0C*/ u8 unkC;
-    /*0x0D*/ u8 unkD;
-    /*0x0E*/ u8 onSlipperyFloor;
-    /*0x0F*/ u8 unkF;
-    /*0x10*/ u8 unk10;
-};
-
-struct Unk03005550
-{
-    /*0x00*/ u8 unk0;
-    /*0x01*/ u8 ceilingHits;
-    /*0x02*/ u8 unk2;
-    /*0x03*/ u8 unk3;
-    /*0x04*/ u8 slope;
-    /*0x05*/ u8 unk5;
-    /*0x06*/ u8 unk6;
-    /*0x07*/ u8 unk7;
-    /*0x08*/ u16 unk8;
-    /*0x0A*/ u8 atDoor;
-    /*0x0B*/ u8 onSlipperyFloor;
-    /*0x0C*/ u8 unkC;
-    /*0x0D*/ u8 unkD;
-};
-
-extern s16 gTerrainPrevBoxLeft;           /* box left (room-relative) */
-extern s32 gTerrainVelY;           /* Task.velY */
-extern s16 gTerrainPrevX;           /* actor x (room-relative) */
-extern s16 gTerrainPrevY;           /* actor y (room-relative) */
-extern struct Unk03005530 gTerrainProbeResult;
-extern struct Unk03005550 gTerrainResult;
-extern s16 gTerrainProbeX;           /* probe x */
-extern u8 gTerrainFacing;            /* Task.facing */
-extern s16 gTerrainProbeY;           /* probe y */
-extern s32 gTerrainDriftY;
-extern s16 gTerrainBoxBottom;           /* box bottom offset */
-extern s16 gTerrainPrevBoxRight;           /* box right (room-relative) */
-extern s32 gTerrainVelX;           /* Task.velX */
-extern s16 gTerrainPrevBoxTop;           /* box top (room-relative) */
-extern s32 gTerrainDriftX;
-extern s16 gTerrainPrevBoxBottom;           /* box bottom (room-relative) */
-extern s32 gRoomDriftVelX;
-extern s32 gRoomDriftVelY;
 
 void TerrainProbeBegin(const s8 *p);
 void TerrainProbeEnd(const s8 *p);

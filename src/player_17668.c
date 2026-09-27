@@ -1,11 +1,8 @@
 #include "gba/gba.h"
 #include "global.h"
 #include "task.h"
-
-extern s32 gUnk_02007D00[];
-extern struct Task *gCurTask;
-extern u32 gUnk_08755068[];
-extern u32 gUnk_08755378[];
+#include "player.h"
+#include "actor.h"
 
 void TaskYieldTrampoline(s32 frames);
 void PlayBgm(u32 a);

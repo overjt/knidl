@@ -1,5 +1,6 @@
 #include "gba/gba.h"
 #include "global.h"
+#include "main.h"
 
 /* early_6d28.c (0x08006D28-0x08006E8B, issues #32/#63).
  *
@@ -58,14 +59,13 @@ struct SioMultiCnt
     u16 data;
 };
 
+/* Not from link.h: this file's view of gLink differs (lesson 3.517). */
 extern struct Link gLink;
 extern vu16 gUnk_04000120;      /* REG_SIOMULTI0 */
 extern vu16 gUnk_04000128;      /* REG_SIOCNT */
 extern vu16 gUnk_0400012A;      /* REG_SIOMLT_SEND */
-extern vu16 gLocalPlayer;
-extern vu16 gLinkIsMaster;
-extern u16 gLinkPlayerCount;
-extern vu16 gPlayerCount;
+extern u16 gLocalPlayer;
+extern u16 gPlayerCount;
 extern u32 gSerialIntrCount;
 extern u8 gLastRecvQueueCount;
 void DoRecv(void);

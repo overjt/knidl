@@ -1,6 +1,7 @@
 #include "gba/gba.h"
 #include "global.h"
 #include "task.h"
+#include "player.h"
 
 /* player_4e5a4.c (0x0804E5A4-0x0804E78B, issue #90).
  *
@@ -16,12 +17,6 @@
  * speed exceeds 2 pixels a frame, requests action 23 through M11's
  * PlayerHasCrossedWaterSurface and otherwise runs the sub-handler Task.variant of
  * gUnk_0873B688. */
-
-extern void (*gUnk_0873B664[])(void);   /* enter 49's sub-actions [9], indexed by Task.variant */
-extern void (*gUnk_0873B688[])(void);   /* handler 46's per-frame sub-handlers [9] */
-extern u16 gUnk_0873DB0A[];
-extern u32 gUnk_0873CF7C[];
-extern u32 gUnk_0873C28C[];
 
 /* task / sprite services (landed prototypes) */
 void CallTableEntry(u32 idx, u32 count, void (**fns)(void));   /* if (idx < count) fns[idx](); */

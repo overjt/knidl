@@ -1,6 +1,10 @@
 #include "gba/gba.h"
 #include "global.h"
 #include "task.h"
+#include "main.h"
+#include "room.h"
+#include "effect.h"
+#include "actor.h"
 
 /* effect_57ce0.c (0x08057CE0-0x0805880F, issue #89).
  *
@@ -20,26 +24,6 @@
  * gUnk_0873C04C (RegisterCollider).  Variant 38 (sub_08058460) rides on its
  * spawner through four sub-states and draws through M11's sub_0803dfc8;
  * sub_080586fc kills it once the player leaves mode 13. */
-
-/* M08's per-player camera positions (src/camera_28b8c.c) */
-struct CamPos { u16 x, y; };
-
-extern u32 gUnk_08751D88[];
-extern u32 gUnk_08751DB0[];
-extern u16 gUnk_0873BAEE[];
-extern struct CamPos gPlayerCameraPos[4];
-extern u8 gUnk_02006178;
-extern s8 gUnk_03002444;
-extern vs16 gTaskSlotTypes[];
-extern vu16 gDispCnt;              /* DISPCNT shadow */
-extern u16 gUnk_0200B000[];
-extern u16 gBgPalette[];
-extern u8 gUnk_0873BAFA[];
-extern u8 gUnk_0873C04C[];
-extern u32 gUnk_08751DD0[];
-extern u32 gUnk_08751DBC[];
-extern u16 gUnk_0873BAFC[];
-extern u32 gUnk_08751E00[];
 
 void TaskExitTrampoline(void);
 void TaskYieldTrampoline(s32 frames);

@@ -1,6 +1,9 @@
 #include "gba/gba.h"
 #include "global.h"
 #include "task.h"
+#include "player.h"
+#include "enemy.h"
+#include "ending.h"
 
 /* ending_c7e4c.c (0x080C7E4C-0x080C9003, issue #100).
  *
@@ -22,25 +25,12 @@
  *       4 KiB of BG tiles from the decompression buffer, blend them in, hold
  *       and blend them out; then turn BG0 off. */
 
+/* Not from main.h: this file's view of gObjPalette differs (lesson 3.517). */
 extern vu16 gDispCnt;          /* DISPCNT shadow */
 extern s16 gSpriteCameraX;
 extern s16 gSpriteCameraY;
-extern u32 gUnk_02020000[];         /* decompression buffer */
-extern u32 gUnk_08755708[];
 extern u16 gObjPalette[];
-extern u16 gFrameCount;
-extern u16 gUnk_0859A0B0[];
-extern u16 gUnk_0859A0D0[];
-extern u8 gUnk_08757368[];
-extern s16 gUnk_0873FF98[];
-extern u32 gUnk_0875581C[];
-extern u16 gUnk_0859A0F0[];
-extern u16 gUnk_0859A110[];
-extern u32 gUnk_0874CEE8[];
-extern s32 gUnk_08757374[];
-extern s32 gUnk_08757394[];
-extern s32 gUnk_087573B4[];
-extern s32 gUnk_087573D4[];
+extern vu16 gFrameCount;
 extern vs16 gBrightness;
 extern vu8 gBldCntTarget1;
 extern vu8 gBldCntTarget2;

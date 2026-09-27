@@ -1,6 +1,8 @@
 #include "gba/gba.h"
 #include "global.h"
 #include "task.h"
+#include "main.h"
+#include "player.h"
 
 /* plobj_5239c.c (0x0805239C-0x08052F6B, issue #90).
  *
@@ -23,22 +25,6 @@
  * screen over 30 frames (Div) leaving sub-state-1 sparkles of itself,
  * plays sounds 175 and 176 and calls M07's race-record hook sub_08027588;
  * sub-state 1 is the three-frame sparkle. */
-
-extern u32 gUnk_08751B40[];
-extern u32 gUnk_08751E5C[];
-extern u32 gUnk_0873BE24[];
-extern u32 gUnk_0873CC1C[];
-extern u32 gUnk_08751BB0[];
-extern u16 gUnk_0873B7C0[][2][6];
-extern u8 gUnk_0873B808[][6][5];
-extern u32 gUnk_0873BE38[];
-extern u32 gUnk_0873CC2C[];
-extern u8 gObjPalette[];              /* OBJ palette buffer (M11 spelling) */
-extern s16 gSpriteCameraX;               /* scalar, read with ldrsh (33 landed files) */
-extern s16 gSpriteCameraY;               /* scalar, read with ldrsh (32 landed files) */
-extern u32 gUnk_0875204C[];
-extern u8 gUnk_08204B98[];
-extern u8 gUnk_08204B78[];
 
 /* M09's hit-box set (src/block_30804.c); only a pointer is passed here */
 struct HitBoxSet;

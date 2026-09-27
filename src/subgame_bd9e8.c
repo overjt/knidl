@@ -15,12 +15,7 @@
 #include "gba/gba.h"
 #include "global.h"
 #include "task.h"
-
-extern u8 gSubGamePhase;
-extern u8 gBombRallyOutMask;
-extern u8 gBombRallyOutCount;
-extern u8 gBombRallyFinishOrder[];
-extern u32 gBombRallyPhases[];
+#include "subgame.h"
 
 void CallTableEntry(u32 a, u32 b, u32 *c);
 void TaskSleepForever(void);

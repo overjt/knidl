@@ -33,24 +33,10 @@
 #include "gba/gba.h"
 #include "global.h"
 #include "task.h"
-
-extern s32 gCurTaskIdx;
-extern u8 gUnk_02004B5C;
-extern s8 gSubGameLevel;
-extern u8 gQuickDrawBestTime;
-extern u8 gQuickDrawWins[];
-extern u8 gUnk_0200B048;
-extern u8 gQuickDrawRanking[];
-extern vu16 gFadeSteps;
-extern vu16 gDispCnt;
-extern u16 gPlayerCount;
-extern struct Task *gCurTask;
-extern struct Task gTasks[];
-extern vs16 gTaskSlotTypes[];
-extern u32 gQuickDrawStates[];
-extern u32 gQuickDrawStateUpdates[];
-extern u32 gUnk_08756334[];
-extern u32 gUnk_08756350[];
+#include "main.h"
+#include "link.h"
+#include "room.h"
+#include "subgame.h"
 
 void TaskYieldTrampoline(u32 frames);
 void BeginFastFadeInFromWhite(void);

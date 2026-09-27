@@ -1,36 +1,14 @@
 #include "gba/gba.h"
 #include "global.h"
 #include "task.h"
+#include "main.h"
+#include "room.h"
+#include "player.h"
+#include "actor.h"
 
-struct M11R8 { u8 unk00; u8 unk01; u8 offsetX; u8 offsetY; u8 *boxes; };
-struct M11Buf { u8 unk00[4]; u8 unk04[4]; };
-struct M11R20 { u32 w[5]; };
-
-extern u8 gUnk_020055E8;
-extern u8 gUnk_0200AF00;
-extern vu16 gFadeSteps;
-extern vu16 gFrameCount;
-extern vu16 gDispCnt;
-extern u8 gUnk_03001F34;
-extern u8 gActivePlayerMask;
-extern s16 gSpriteCameraX;
-extern u8 gActivePlayerCount;
-extern u16 gLatchedPressedKeys[];
-extern s16 gSpriteCameraY;
-extern u8 gStageRequest;
-extern s8 gUnk_03002444;
-extern u16 gLatchedHeldKeys[];
-extern struct Task *gCurTask;
+/* Not from collision.h: this file's view of gTerrainResult differs (lesson
+   3.517). */
 extern u8 gTerrainResult[];
-extern u32 gPlayerMotionYPresets[];
-extern u32 gUnk_0873BD28[];
-extern u32 gUnk_0873CA68[];
-extern u32 gPlayerDefaultTerrainBox[];
-extern u32 gUnk_0873CB24[];
-extern u32 gUnk_0873D03C[];
-extern s16 gUnk_0873D206[];
-extern s16 gUnk_0873D5C0[];
-extern u32 gUnk_0873D986[];
 
 void TaskYieldTrampoline(s32 frames);
 u32 RandomRange(u32 range);

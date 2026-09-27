@@ -1,6 +1,12 @@
 #include "gba/gba.h"
 #include "global.h"
 #include "task.h"
+#include "main.h"
+#include "link.h"
+#include "mode.h"
+#include "hud.h"
+#include "room.h"
+#include "ending.h"
 
 /* gameover_cb354.c (0x080CB354-0x080CB64B, issue #100).
  *
@@ -16,24 +22,6 @@
  *       sub-states gUnk_087582AC[Task.state] and per-frame handlers
  *       gUnk_087582B8[Task.updateState] (GameOverPlayerUpdate), re-entered through
  *       GameOverPlayerEnterState. */
-
-extern u8 gUnk_03001F30;            /* link-play mode */
-extern u16 gLocalPlayer;           /* this player's index */
-extern s32 gPlayerScores[];         /* score per player */
-extern s8 gGameOverCursor;            /* game-over screen: cursor (continue = 0?) */
-extern u32 gUnk_087556E0[];
-extern u16 gUnk_08758274[];
-extern u16 gUnk_08758284[];
-extern vu8 gBldCntTarget1;
-extern vu8 gBldCntTarget2;
-extern vu8 gBldAlphaEva;
-extern vu8 gBldAlphaEvb;
-extern u16 gUnk_08584BB0[][4];
-extern u16 gUnk_03001390[];
-extern void (*gGameOverObjectVariants[])(void);
-extern u32 gUnk_08754914[];
-extern void (*gUnk_087582AC[])(void);
-extern void (*gUnk_087582B8[])(void);
 
 void TaskExitTrampoline(void);
 void TaskYieldTrampoline(s32 frames);

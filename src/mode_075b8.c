@@ -1,6 +1,12 @@
 #include "gba/gba.h"
 #include "global.h"
 #include "task.h"
+#include "main.h"
+#include "link.h"
+#include "mode.h"
+#include "room.h"
+#include "actor.h"
+#include "save.h"
 
 /* mode_075b8.c (0x080075B8-0x08007B67, issue #96).
  *
@@ -12,34 +18,6 @@
  * has lives left), 7/8/12 go to states 11/10/17 and 9-14 enter the six
  * extra modes.  CheckPauseButton raises request 5 when a present, living
  * player presses START and records that player in gPausingPlayer. */
-
-extern u16 gPlayerAbilities[];
-extern u16 gPausingPlayer;
-extern s16 gMaxHealth;
-extern s16 gPlayerHealth[];
-extern u8 gUnk_020055CC;
-extern u8 gUnk_02006090;
-extern s16 gPlayerLives[];
-extern u8 gUnk_02007FCC;
-extern u16 gPlayerAbilityUses[];
-extern s16 gInputRecorderMode;
-extern vu16 gFadeBlankAtWhite;
-extern vu16 gFadeSteps;
-extern vu16 gPlayerPressedKeys[];
-extern vu16 gDispCnt;
-extern s32 gUnk_03001F2C;
-extern u8 gUnk_03001F30;
-extern u8 gUnk_03001F34;
-extern u16 gPrevGameState;
-extern struct PlayerState gPlayerStates[];
-extern u8 gActivePlayerMask;
-extern u16 gLocalPlayer;
-extern u16 gMilestoneFlags;
-extern u16 gPlayerCount;
-extern u16 gGameState;
-extern s32 gCurSaveSlot;
-extern s8 gStageRequest;
-extern u8 gExtraMode;
 
 void BeginFastFadeInFromWhite(void);
 void BeginFastFadeOutToWhite(void);

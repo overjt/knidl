@@ -1,16 +1,8 @@
 #include "gba/gba.h"
 #include "global.h"
 #include "task.h"
-
-extern u8 gHBlankScrollState;
-extern s32 gHBlankScrollTimer;
-extern u16 gHBlankScrollTable[];
-extern void (*gFrameCallback)(void);
-extern u32 gHBlankDmaDest;
-extern vu8 gBldAlphaEva;
-extern vu16 gDispCnt;
-extern vu8 gBldAlphaEvb;
-extern vs32 gBg1ScrollX;
+#include "main.h"
+#include "save.h"
 
 /* The two loop counters are NOT interchangeable (lesson 4.55): `n` covers the
    first two loops and the third loop's outer index, which never overlap, while

@@ -10,46 +10,15 @@
 #include "gba/gba.h"
 #include "global.h"
 #include "task.h"
-
-
-/* RAM cells and ROM tables */
-extern s16 gPlayerHealth[];
-extern s16 gViewRect[];
-extern s16 gSpriteCameraX;
-extern s16 gSpriteCameraY;
-extern s16 gUnk_0300244C;
-extern s16 gUnk_0873FF98[];
-extern s32 gUnk_030023D4;
-extern s32 gUnk_0873FB94[];
-extern s8 gUnk_02006160;
-extern s8 gUnk_030023B8;
-extern struct PlayerState gPlayerStates[];
-extern struct Task * gCurTask;
-extern struct Task gTasks[];
-extern u16 gUnk_020055C0;
-extern u16 gLocalPlayer;
-extern u16 gPlayerCount;
-extern u32 gUnk_02004B4C;
-extern u32 gUnk_02005584;
-extern u32 gUnk_02007D00[];
-extern u32 gUnk_0824A9CC[];
-extern u32 gUnk_0825D2C8[];
-extern u32 gUnk_0873F554[];
-extern u32 gUnk_0873F5CC[];
-extern u32 gUnk_0873FB7C[];
-extern u32 gWarpStarStates[];
-extern u32 gWarpStarStateUpdates[];
-extern u32 gUnk_0873FBC4[];
-extern u32 gUnk_0873FC2C[];
-extern u32 gWarpStarFrames[];
-extern u32 gUnk_08752D8C[];
-extern u8 gUnk_020061E0;
-extern u8 gUnk_02007CF0;
-extern u8 gUnk_03001F30;
-extern u8 gActivePlayerMask;
-extern u8 gActivePlayerCount;
-extern u8 gUnk_0873FAE8[];
-extern vs32 gCurTaskIdx;
+#include "main.h"
+#include "link.h"
+#include "mode.h"
+#include "cutscene.h"
+#include "room.h"
+#include "camera.h"
+#include "player.h"
+#include "actor.h"
+#include "enemy.h"
 
 /* callees */
 extern s32 QueueSprite(u32 a, u32 b, u32 c, u32 d, u32 e, s16 f);

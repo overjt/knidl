@@ -1,6 +1,9 @@
 #include "gba/gba.h"
 #include "global.h"
 #include "task.h"
+#include "main.h"
+#include "room.h"
+#include "player.h"
 
 /* player_4f948.c (0x0804F948-0x0804FFDB, issue #90).
  *
@@ -18,20 +21,6 @@
  * gUnk_0873B6BC, the steering helper sub_080506dc, clamps the player to
  * 16-224 x 18-132 and, once gSpriteCameraY passes 888, subtracts the
  * player's whole health (AddPlayerHealth) and requests action 17. */
-
-struct M11R20 { u32 w[5]; };
-
-extern struct M11R20 gPlayerBodyBoxes[];
-extern u32 gUnk_0873C2C8[];
-extern u16 gLatchedHeldKeys[];             /* held keys, latched per player (M11) */
-extern u16 gLatchedPressedKeys[];             /* newly-pressed keys, latched per player */
-extern u32 gUnk_0873C2DC[];
-extern u32 gUnk_0873C304[];
-extern u32 gUnk_0873C318[];
-extern void (*gUnk_0873B6AC[])(void);   /* enter 58's sub-actions [4] */
-extern void (*gUnk_0873B6BC[])(void);   /* handler 55's per-frame sub-handlers [4] */
-extern s16 gSpriteCameraY;               /* scalar, read with ldrsh (32 landed files) */
-extern s16 gPlayerHealth[];             /* per-player health (M02's HUD) */
 
 void TaskYieldTrampoline(s32 frames);
 /* task / sprite services (landed prototypes) */

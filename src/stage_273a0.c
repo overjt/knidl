@@ -1,6 +1,8 @@
 #include "gba/gba.h"
 #include "global.h"
 #include "task.h"
+#include "link.h"
+#include "room.h"
 
 /* stage_273a0.c (0x080273A0-0x08027A6B, issue #93).
  *
@@ -12,101 +14,6 @@
  * camera modes gPlayerCameraMode, and sub_08027798, sub_080277f0,
  * sub_08027850 and sub_08027908 set the camera mode and target
  * (gCameraAnchorX/gCameraAnchorY) for one or all players. */
-
-struct Door
-{
-    /*0x00*/ s16 unk0;
-    /*0x02*/ u16 unk2;
-    /*0x04*/ u16 unk4;
-    /*0x06*/ u16 unk6;
-    /*0x08*/ u16 unk8;
-    /*0x0A*/ u16 unkA;
-};
-
-struct BgMap
-{
-    /*0x00*/ u16 unk0;
-    /*0x02*/ u16 width;
-    /*0x04*/ u16 height;
-    /*0x06*/ u16 unk6[0];
-};
-
-struct RoomDef
-{
-    /*0x00*/ u8 filler00[4];
-    /*0x04*/ s8 bgm;
-    /*0x05*/ u8 mapsCompressed;
-    /*0x06*/ u8 filler06[2];
-    /*0x08*/ void *metatileMap;
-    /*0x0C*/ void *blockLayer;
-    /*0x10*/ void *unk10;
-    /*0x14*/ u16 width;
-    /*0x16*/ u16 height;
-    /*0x18*/ u16 *bg2Palette;
-    /*0x1C*/ void *bg2Tiles;
-    /*0x20*/ void *metatileTiles;
-    /*0x24*/ u16 borderX;
-    /*0x26*/ u16 borderY;
-    /*0x28*/ u16 *bg3Palette;
-    /*0x2C*/ void *bg3Tiles;
-    /*0x30*/ struct BgMap *bg3Map;
-    /*0x34*/ u16 bg3BorderX;
-    /*0x36*/ u16 bg3BorderY;
-    /*0x38*/ u16 unk38;
-    /*0x3A*/ u16 doorCount;
-    /*0x3C*/ u16 objectCount;
-    /*0x3E*/ u16 objectsSortedByY;
-    /*0x40*/ u16 bgAnimSet;
-    /*0x42*/ u16 unk42;
-    /*0x44*/ struct Door *doors;
-    /*0x48*/ void *objects;
-    /*0x4C*/ u8 filler4C[4];
-    /*0x50*/ u16 entryX;
-    /*0x52*/ u16 entryY;
-    /*0x54*/ u8 unk54;
-    /*0x55*/ u8 unk55;
-    /*0x56*/ u8 unk56;
-    /*0x57*/ u8 unk57;
-};
-
-struct CamPos { u16 x, y; };
-
-extern struct RoomDef *gCurRoomDef;
-extern struct RoomDef **gRoomTable[][8];
-extern u16 gUnk_02008054;
-extern s8 gStageIndex;
-extern s8 gLevelIndex;
-extern s8 gRoomIndex;
-extern u16 gUnk_02007FF0;
-extern u16 gGameState;
-extern s16 gRoomEntryX;
-extern s16 gRoomEntryY;
-extern u8 gRoomEntrySet;
-extern u8 gUnk_0200AF00;
-extern u8 gUnk_020069F0;
-extern s8 gUnk_030023B8;
-extern u16 gUnk_0200AFF4;
-extern u16 gUnk_02008050;
-extern s8 gUnk_02007D64;
-extern u16 gUnk_02007D60;
-extern u8 gUnk_0200B078;
-extern s8 gUnk_02006098[];
-extern u8 gPlayerCameraMode[];
-extern u16 gPlayerCount;
-extern u8 gActivePlayerMask;
-extern u16 gCameraMode;
-extern u16 gLocalPlayer;
-extern s16 gPlayerLives[];
-extern s16 gCameraAnchorX;
-extern s16 gCameraAnchorY;
-extern s32 gCameraCenterX;
-extern s32 gCameraCenterY;
-extern s8 gUnk_03002444;
-extern s16 gCameraFocusX;
-extern s16 gCameraFocusY;
-extern u8 gUnk_02007D38;
-extern s16 gCameraBounds[4];
-extern struct CamPos gPlayerCameraPos[4];
 
 void sub_08009e2c(s32 a);
 void HudShowAbilityAnimated(s32 a, s32 b);

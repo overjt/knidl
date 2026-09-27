@@ -26,21 +26,18 @@
 #include "gba/gba.h"
 #include "global.h"
 #include "task.h"
+#include "main.h"
+#include "link.h"
+#include "mode.h"
+#include "room.h"
 
-extern s8 gSubGameLevel;
+/* Not from subgame.h: this file's view of gAirGrind differs (lesson 3.517).
+   */
 extern u8 gUnk_020061DC;
 extern s8 gBombRallySeats[];
 extern u8 gBombRallyOutMask;
 extern u8 gBombRallyOutCount;
 extern u8 gBombRallyFinishOrder[];
-extern u16 gFadeSteps;
-extern u8 gObjPalette[];
-extern vs32 gBg3ScrollX;
-extern vs32 gBg3ScrollY;
-extern vu16 gPlayerPressedKeys[];
-extern u16 gPrevGameState;
-extern u16 gLocalPlayer;
-extern u16 gPlayerCount;
 
 extern s8 gUnk_08756560[];
 extern s8 gUnk_08756564[];
@@ -48,8 +45,6 @@ extern u32 gUnk_08755E00[];
 extern u32 gUnk_08755E0C[];
 extern u32 gUnk_08755E44[];
 extern u32 gUnk_08755E7C[];
-extern vu16 gBgPalette[];
-extern vu16 gDispCnt;
 extern s32 gUnk_08756540[];
 extern s32 gUnk_08756550[];
 extern s16 gUnk_08756798[];
@@ -193,8 +188,6 @@ extern void sub_080c0a10(s32 a, s32 b, s32 c, s32 d, s16 e);
 extern void sub_080bdebc(s32 a, s32 b, s32 c, s32 d);
 extern void sub_080bdf3c(s32 a, s32 b, u32 c, u32 d);
 extern void sub_080be7c0(u32 a);
-
-
 
 void sub_080c0de8(void)
 {
@@ -1075,4 +1068,3 @@ void AirGrindMain(void)
     CallTableEntry(gSubGamePhase, 2, gAirGrindPhases);
     TaskSleepForever();
 }
-

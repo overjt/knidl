@@ -10,61 +10,11 @@
 #include "gba/gba.h"
 #include "global.h"
 #include "task.h"
-
-
-/* The eight 4-byte records at 0x03000FE0 that M19's credits tasks animate:
-   a frame table index (unk00), the frame within it (unk01), the timer
-   (unk02) and the countdown sub_080782b4 draws on (unk03). */
-struct M19Particle
-{
-    /*0x00*/ u8 unk00;
-    /*0x01*/ u8 unk01;
-    /*0x02*/ u8 unk02;
-    /*0x03*/ u8 unk03;
-};
-
-/* The 24-entry animation rows at 0x08740320 / 0x087404A0 the credits
-   particles walk: `unk00` indexes the gfx pointer table, `unk02` is the
-   step's delay. */
-struct M19Frame
-{
-    /*0x00*/ u8 unk00;
-    /*0x01*/ u8 unk01;
-    /*0x02*/ u8 unk02;
-    /*0x03*/ u8 unk03;
-};
-
-
-/* RAM cells and ROM tables */
-extern s16 gSpriteCameraX;
-extern s16 gSpriteCameraY;
-extern s8 gCannonFuseState;
-extern struct AnimCmd gUnk_087406A0[];
-extern struct M19Frame gUnk_08740320[][24];
-extern struct M19Frame gUnk_087404A0[][24];
-extern struct M19Particle gUnk_03000FE0[];
-extern struct PlayerState gPlayerStates[];
-extern struct Task * gCurTask;
-extern u16 gPlayerCount;
-extern u32 gBigSwitchVariants[];
-extern u32 gBigSwitchStates[];
-extern u32 gBigSwitchStateUpdates[];
-extern u32 gStakeVariants[];
-extern u32 gStakeStates[];
-extern u32 gStakeStateUpdates[];
-extern u32 gUnk_087402FC[];
-extern u32 gWaddleDeeVariants[];
-extern u32 gUnk_08740BD4[];
-extern u32 gWaddleDeeFrames[];
-extern u32 gBigSwitchFrames[];
-extern u32 gStakeFrames[];
-extern u32 gUnk_08752DB8[];
-extern u32 gUnk_08752E00[];
-extern u8 gUnk_02004B64;
-extern u8 gActivePlayerMask;
-extern u8 gUnk_08740620[];
-extern vs16 gBrightness;
-extern vs32 gCurTaskIdx;
+#include "main.h"
+#include "link.h"
+#include "cutscene.h"
+#include "room.h"
+#include "actor.h"
 
 /* callees */
 extern s32 QueueSprite(u32 a, u32 b, u32 c, u32 d, u32 e, s16 f);

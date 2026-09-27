@@ -1,6 +1,9 @@
 #include "gba/gba.h"
 #include "global.h"
 #include "task.h"
+#include "main.h"
+#include "room.h"
+#include "camera.h"
 
 /* obj_306b4.c (0x080306B4-0x08030803, issue #86).
  *
@@ -16,19 +19,6 @@
  * unit, ResetBlockAnims swaps r3/r4, because gcse orders its hash table by
  * the addresses of the .LC pool-label strings, which depend on every pool
  * constant compiled earlier in the unit. */
-
-struct Unk020061F0
-{
-    /*0x00*/ u8 filler00[6];
-    /*0x06*/ u16 unk6;
-    /*0x08*/ u8 filler08[0x18];
-};
-
-extern s16 gSpriteCameraX;
-extern s16 gSpriteCameraY;
-extern struct Unk020061F0 gBreakingBlocks[];
-extern u32 gBlockAnimHook;
-extern u8 gBlockAnimHookId;
 
 s32 QueueSprite(u32 a, u32 b, u32 c, u32 d, s32 e, s32 f);
 void UpdateBlockAnims(void);

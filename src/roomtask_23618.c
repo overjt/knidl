@@ -1,6 +1,7 @@
 #include "gba/gba.h"
 #include "global.h"
 #include "task.h"
+#include "room.h"
 
 /* roomtask_23618.c (0x08023618-0x08023947, issue #93).
  *
@@ -16,11 +17,6 @@
  * (sub_08023748 ... sub_080238ec here).  The bodies are gated by the flag
  * cell gRoomUpdateFlags: 1 = camera, BG animation and BG streaming, 2 =
  * screen shake, 8 = HUD, 16 = door objects (UpdateDoors). */
-
-extern void (*gRoomTaskVariants[])(void);
-extern u8 gRoomBgLayout;
-extern u16 gRoomUpdateFlags;
-extern u16 gCameraMode;
 
 void CallTableEntry(u32 idx, u32 count, void (**fns)(void));
 void TaskSleepForever(void);

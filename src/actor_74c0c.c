@@ -10,42 +10,20 @@
 #include "gba/gba.h"
 #include "global.h"
 #include "task.h"
-
+#include "main.h"
+#include "link.h"
+#include "cutscene.h"
+#include "actor.h"
+#include "enemy.h"
 
 /* RAM cells and ROM tables */
+/* Not from room.h or effect.h: this file's view of gUnk_0200AF20 and
+   gUnk_03001370 differs (lesson 3.517). */
 extern s16 gViewRect[];
-extern s16 gSpriteCameraX;
-extern s16 gSpriteCameraY;
-extern s16 gUnk_0873FCF8[];
-extern s16 gUnk_0873FD20[];
-extern s16 gUnk_0873FD48[];
-extern s16 gUnk_0873FD70[];
-extern s16 gUnk_0873FF98[];
-extern s32 gUnk_030023B4;
-extern s32 gUnk_030023D4;
-extern struct PlayerState gPlayerStates[];
-extern struct Task * gCurTask;
-extern struct Task gTasks[];
-extern u16 gLocalPlayer;
-extern u16 gPlayerCount;
-extern u32 gUnk_080D21C8[];
-extern u32 gUnk_085E6FA4[];
-extern u32 gUnk_085E6FE4[];
-extern u32 gUnk_085E72D4[];
-extern u32 gUnk_0873FD98[];
-extern u32 gUnk_0873FE98[];
-extern u32 gUnk_08740098[];
-extern u32 gUnk_087400B0[];
-extern u32 gUnk_087400C8[];
-extern u32 gUnk_0874C44C[];
-extern u32 gUnk_0874C500[];
-extern u32 gUnk_0875549C[];
 extern u8 gUnk_02005E10[];
 extern u8 gUnk_0200AF20[];
-extern u8 gBgPalette[];
 extern u8 gUnk_03001370[];
 extern u8 gActivePlayerMask;
-extern vu16 gDispCnt;
 
 /* callees */
 extern s32 QueueSprite(u32 a, u32 b, u32 c, u32 d, u32 e, s16 f);

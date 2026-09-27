@@ -1,44 +1,24 @@
 #include "gba/gba.h"
 #include "global.h"
 #include "task.h"
+#include "main.h"
+#include "link.h"
+#include "player.h"
+#include "actor.h"
+#include "enemy.h"
 
+/* Not from room.h or effect.h: this file's view of gUnk_02000020 and
+   gUnk_02008010 differs (lesson 3.517). */
 extern u32 gUnk_02000020[];
 extern u32 gUnk_020060CC[];
 extern u8 gUnk_02006A14[];
 extern u8 gUnk_02007CF0;
-extern s32 gUnk_02007D00[];
-extern s8 gUnk_02007FB8[];
 extern u32 gUnk_02008010[];
-extern u32 gUnk_02020000[];
-extern u32 gBg0ScrollY;
-extern vs32 gBg3ScrollX;
-extern vs32 gBg2ScrollX;
-extern vs32 gBg3ScrollY;
-extern vs32 gBg1ScrollY;
-extern u32 gBg0ScrollX;
-extern u8 gObjPalette[];
-extern u32 gUnk_03001570[];
-extern vs32 gBg2ScrollY;
-extern u16 gFrameCount;
-extern vu16 gDispCnt;
-extern vs32 gBg1ScrollX;
-extern u8 gUnk_03001F34;
-extern struct PlayerState gPlayerStates[];
+extern u16 gUnk_03001570[];
 extern u8 gActivePlayerMask;
-extern s16 gSpriteCameraX;
 extern u8 gActivePlayerCount;
-extern u16 gLocalPlayer;
-extern u16 gPlayerCount;
-extern s32 gUnk_030023B4;
-extern u32 gLatchedPressedKeys[];
-extern s32 gUnk_030023D4;
-extern s16 gSpriteCameraY;
+extern u16 gLatchedPressedKeys[];
 extern u32 gStageRequest[];
-extern s16 gUnk_0300244C;
-extern struct Task *gCurTask;
-extern struct Task gTasks[];
-extern vs16 gTaskSlotTypes[];
-extern u32 gObjVram[];
 extern u32 gUnk_085B9B6C[];
 extern s16 gUnk_0873DBAC[];
 extern s16 gUnk_0873DBD4[];
@@ -67,9 +47,7 @@ extern u32 gUnk_0873DEA0[];
 extern u16 gUnk_0873DEA8[];
 extern u32 gUnk_0873DEDC[];
 extern u32 gUnk_0874C890[];
-extern u32 gOneUpFrames[];
 extern u32 gUnk_0874CDF8[];
-extern u32 gUnk_0874CFEC[];
 extern u32 gUnk_08754850[];
 extern u32 gUnk_0875488C[];
 extern u32 gUnk_087548A0[];

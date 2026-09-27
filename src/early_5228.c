@@ -118,9 +118,9 @@ struct Task {
     /* 0x8C */ u32 w8C;
 };
 
-
+/* Not from task.h: this file's view of struct Task differs (lesson 3.517). */
 extern struct Task gTasks[];
-extern vu16 gTaskSlotTypes[];
+extern vs16 gTaskSlotTypes[];
 extern vu32 gTaskCount;
 extern vs32 gTaskRunPhase;
 extern vu32 gTaskSavedLr;
@@ -130,7 +130,7 @@ extern vu8  gTaskClassPassEnd[];
 extern vu32 gCurTaskListPos;
 extern vs32 gCurTaskIdx;
 extern struct Task *gCurTask;
-extern vu32 gTaskCursor;
+extern vs32 gTaskCursor;
 extern vu8  gTaskClassLists[5][64];
 extern s32  gTaskSavedR0;
 extern u32  gTaskResumeAddrs[];
@@ -140,10 +140,9 @@ extern vu16 gTaskListRefs[];
 extern u32  gTaskStackPtrs[];
 extern vs32 gCurTaskClass;
 extern vu32 gTaskBaseSp;
-extern vu8  gTaskSkipMaskDepth;
+extern u8  gTaskSkipMaskDepth;
 
 void TaskSwitchTrampoline(s32 id, u32 fn, u32 stack);
-
 
 void RunTasks(void)
 {
@@ -263,6 +262,3 @@ void RunTasks(void)
 
     gCurTaskIdx = gTaskRunPhase = -1;
 }
-
-
-

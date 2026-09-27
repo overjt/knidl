@@ -1,6 +1,8 @@
 #include "gba/gba.h"
 #include "global.h"
 #include "task.h"
+#include "player.h"
+#include "effect.h"
 
 /* effect_57494.c (0x08057494-0x08057CDF, issue #89).
  *
@@ -14,15 +16,6 @@
  * animation from gUnk_08751BF4.  Variant 34 (sub_08057ad4, M12) has two
  * sub-states with the draw hooks TaskDrawWorldInViewOrFree and sub_0805af80 (shared with
  * variant 48) and the kill test sub_08057c98 (player mode 13). */
-
-extern u32 gUnk_08751CF0[];
-extern u16 gUnk_0873BAB0[][3];   /* per sub-state: 8.8 x velocity, 8.8 y acceleration, frame */
-extern u32 gUnk_0874C600[];
-extern u32 gUnk_0874C718[];
-extern u32 gUnk_08751BF4[];
-extern u16 gUnk_0873BAE6[];
-extern u32 gUnk_08751D80[];
-extern u32 gUnk_08751D50[];
 
 void TaskExitTrampoline(void);
 void TaskYieldTrampoline(s32 frames);

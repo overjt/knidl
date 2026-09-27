@@ -12,23 +12,11 @@
 #include "gba/gba.h"
 #include "global.h"
 #include "task.h"
-
-extern u8 gUnk_02006178;
-extern u8 gTaskSkipMaskStack[][64];
-extern u32 gUnk_02007F50;
-extern u16 gNextActorSerial;
-extern u8 gActivePlayerMask;
-extern vs16 gTaskSlotTypes[];
-extern u16 gPlayerCount;
-extern s32 gUnk_030023B4;
-extern s32 gUnk_030023D4;
-
-extern struct ActorDef *gUnk_0873ECEC[];
-extern struct ActorDef *gMidBossDefs[];
-extern struct ActorDef *gBossDefs[];
-extern struct ActorDef *gUnk_0873EDDC[];
-extern struct ActorDef *gUnk_0873EE70[];
-extern struct ActorDef *gUnk_0873EE88[];
+#include "main.h"
+#include "link.h"
+#include "room.h"
+#include "camera.h"
+#include "actor.h"
 
 extern s32 TaskCreateInRange(u32 type, s32 start, s32 end);
 extern void sub_08065ce0(u32 i);
@@ -40,22 +28,6 @@ extern void TaskFree(s32 id);
 extern void TaskSetFrame(s32 a);
 extern void TaskSetMotionX(s32 a, s32 b, s32 c);
 extern void TaskExitTrampoline(void);
-extern s32 gTaskRunPhase;
-extern s16 gCosTable[];
-extern u8 gActivePlayerCount;
-extern s16 gSpriteCameraX;
-extern s16 gSpriteCameraY;
-extern s16 gViewRect[];
-extern u16 gGameState;
-extern u16 gFrameCount;
-extern s32 gUnk_0873DF14[];
-extern struct Actor gActors[];
-extern struct PlayerState gPlayerStates[];
-extern u32 gUnk_0873F198[];
-extern u32 gMidBossTaskTypes[];
-extern u32 gBossTaskTypes[];
-extern u32 gUnk_0873F288[];
-extern u32 gUnk_0873F2A0[];
 extern void AddPlayerScore(s32 a, u32 b);
 extern s32 sub_08021a40(s16 x, s16 y);
 extern u32 TaskIsOnScreen(void);

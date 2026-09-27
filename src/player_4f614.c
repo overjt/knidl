@@ -1,6 +1,7 @@
 #include "gba/gba.h"
 #include "global.h"
 #include "task.h"
+#include "room.h"
 
 /* player_4f614.c (0x0804F614-0x0804F947, issue #90).
  *
@@ -12,9 +13,6 @@
  * four key probes the sub-handlers share (mode 0-3 -> next sub-action 4, 6
  * or 8) and sub_0804f8ec the landing check (M11's PlayerCheckLanding, effect 4
  * on a fast landing). */
-
-extern u16 gLatchedHeldKeys[];             /* held keys, latched per player (M11) */
-extern u16 gLatchedPressedKeys[];             /* newly-pressed keys, latched per player */
 
 void TaskYieldTrampoline(s32 frames);
 void TaskSetFrameNoFlip(s32 a);

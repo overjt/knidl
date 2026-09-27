@@ -1,5 +1,8 @@
 #include "gba/gba.h"
 #include "global.h"
+#include "main.h"
+#include "mode.h"
+#include "room.h"
 
 /* AgbMain (0x08007300-0x080075B7, issue #33): the game's main loop, entered
  * from crt0 (`Start`) via `bx 0x08007301` after AgbInit (rom-map.md §4).  An
@@ -11,14 +14,6 @@
  * Case bodies appear in source order (this order reproduces the ROM layout);
  * the compiler cross-jumps identical tails (e.g. the "state = 3" stores of
  * cases 1/3 and the "state = 5" tails of cases 10/21). */
-
-extern u16 gGameState; /* current game state (main dispatch) */
-extern u16 gPrevGameState; /* requested/next game state */
-extern u8 gCutscenePending;
-extern vu32 gWarmBoot;
-extern u8 gUnk_03001F30;
-extern u16 gPlayerHealth[4];
-extern u16 gPlayerLives[4];
 
 void InitSaveSlots(void);
 void sub_0800b44c(void);

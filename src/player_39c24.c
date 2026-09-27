@@ -1,6 +1,11 @@
 #include "gba/gba.h"
 #include "global.h"
 #include "task.h"
+#include "main.h"
+#include "link.h"
+#include "room.h"
+#include "player.h"
+#include "actor.h"
 
 /* player_39c24.c (0x08039C24-0x0803AA63, issue #91).
  *
@@ -15,22 +20,6 @@
  * (LZ77UnCompWram of gUnk_080D07C8 into gUnk_02020000, then 0x06014000).
  * PlayerActionExitDoorUpdate, per-frame handler 19, only releases the player once
  * Task.unk28 is set. */
-
-extern u32 gPlayerDefaultTerrainBox[];
-extern u8 gUnk_020055C4;
-extern u16 gPlayerCount;               /* number of players */
-extern u8 gUnk_0200AF00;
-extern s16 gPlayerHealth[];             /* health per player (M02's HUD) */
-extern vu16 gFadeSteps;
-extern u16 gPlayerDoorAnims[][7];
-extern struct PlayerState gPlayerStates[];
-extern u16 gUnk_0873D0F8[][5];
-extern u8 gUnk_080D07C8[];
-extern u32 gUnk_02020000[];
-extern u8 gUnk_080DCC68[];
-extern u8 gUnk_020055E8;
-extern s16 gUnk_0873D3B8[][2];
-extern u8 gUnk_03001F34;
 
 void TaskYieldTrampoline(s32 frames);
 void RequestCopy(u32 mode, u32 src, u32 dst, u32 size);

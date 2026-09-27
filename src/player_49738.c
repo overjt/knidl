@@ -1,6 +1,9 @@
 #include "gba/gba.h"
 #include "global.h"
 #include "task.h"
+#include "main.h"
+#include "room.h"
+#include "player.h"
 
 /* player_49738.c (0x08049738-0x08049B47, issue #88).
  *
@@ -16,27 +19,6 @@
  * with the same row layout share one body in the ROM (cross-jumping).
  * sub_08049a58 uploads ability 2's tiles gUnk_081BE45C at +0x100, and
  * again at +0x180 when gUnk_03002444 is set. */
-
-extern u8 gObjVram[];              /* OBJ tile VRAM (M13's LoadAbilityTiles) */
-extern u8 gObjPalette[];              /* OBJ palette buffer (M11 spelling) */
-extern u8 gUnk_081AC378[];
-extern u8 gUnk_081AC358[];
-extern u8 gUnk_081BBD70[];
-extern u8 gUnk_081BFE38[];
-extern u8 gUnk_081CC328[];
-extern u8 gUnk_081CF260[];
-extern u8 gUnk_081D5B04[];
-extern u8 gUnk_081DCDFC[];
-extern u8 gUnk_081E1D0C[];
-extern u8 gUnk_081E43B4[];
-extern u8 gUnk_081EFD60[];
-extern u8 gUnk_081F1AE0[];
-extern u8 gUnk_081F6CEC[];
-extern u8 gUnk_08200D08[];
-extern u8 gUnk_082036D8[];
-extern u8 gUnk_082181F0[];
-extern s8 gUnk_03002444;
-extern u8 gUnk_081BE45C[];
 
 void RequestCopy(u32 mode, void *src, void *dst, u32 size);   /* early_1518; effect_5afac's pointer spelling */
 

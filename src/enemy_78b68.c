@@ -46,77 +46,10 @@
 #include "gba/gba.h"
 #include "global.h"
 #include "task.h"
-
-/* RAM cells */
-extern s16 gViewRect[];
-extern s32 gUnk_030023B4;
-extern s32 gUnk_030023D4;
-extern s8 gUnk_02007FB8[];
-extern struct Task *gCurTask;
-extern struct Task gTasks[];
-extern u8 gUnk_02006178;
-extern vs16 gTaskSlotTypes[];
-
-/* ROM tables */
-extern s16 gUnk_08740668[];
-extern s16 gUnk_08740740[];
-extern s16 gUnk_087407BC[];
-extern s16 gUnk_087407C0[];
-extern s16 gUnk_0874080C[];
-extern struct AnimCmd gUnk_087406A0[];
-extern struct AnimCmd gUnk_087406EC[];
-extern struct AnimCmd gUnk_0874074C[];
-extern struct AnimCmd gUnk_08740854[];
-extern u32 gUnk_0873F500[];
-extern u32 gUnk_0873F774[];
-extern u32 gUnk_0873F7AC[];
-extern u32 gUnk_08740648[];
-extern u32 gWaddleDeeWalkStates[];
-extern u32 gWaddleDeeWalkStateUpdates[];
-extern u32 gWaddleDeePaceStates[];
-extern u32 gWaddleDeePaceStateUpdates[];
-extern u32 gUnk_08740680[];
-extern u32 gUnk_08740690[];
-extern u32 gWaddleDeeJumpStates[];
-extern u32 gWaddleDeeJumpStateUpdates[];
-extern u32 gParasolWaddleDeeWalkStates[];
-extern u32 gParasolWaddleDeeWalkStateUpdates[];
-extern u32 gUnk_08740700[];
-extern u32 gUnk_08740704[];
-extern u32 gParasolWaddleDeeStandStates[];
-extern u32 gParasolWaddleDeeStandStateUpdates[];
-extern u32 gPengyVariants[];
-extern u32 gUnk_08740720[];
-extern u32 gUnk_08740728[];
-extern u32 gPengyStates[];
-extern u32 gPengyStateUpdates[];
-extern u32 gUnk_08740778[];
-extern u32 gUnk_0874077C[];
-extern u32 gBomberVariants[];
-extern u32 gBomberStates[];
-extern u32 gBomberStateUpdates[];
-extern u32 gUnk_087407A8[];
-extern u32 gUnk_087407AC[];
-extern u32 gSparkyVariants[];
-extern u32 gUnk_087407C4[];
-extern u32 gUnk_087407D0[];
-extern u32 gUnk_087407DC[];
-extern u32 gUnk_087407E4[];
-extern u32 gUnk_087407F4[];
-extern u32 gUnk_08740804[];
-extern u32 gUnk_08740808[];
-extern u32 gUnk_08740810[];
-extern u32 gUnk_08740818[];
-extern u32 gUnk_08740820[];
-extern u32 gUnk_08740824[];
-extern u32 gUnk_08740C00[];
-extern u32 gUnk_08740DE4[];
-extern u32 gUnk_08740E1C[];
-extern u32 gUnk_08740F2C[];
-extern u32 gPengyFrames[];
-extern u32 gBomberFrames[];
-extern u32 gSparkyFrames[];
-extern u32 gScarfyFrames[];
+#include "cutscene.h"
+#include "camera.h"
+#include "actor.h"
+#include "enemy.h"
 
 /* Externals */
 extern s32 RandomRange(s32 a);

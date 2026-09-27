@@ -30,50 +30,14 @@
 #include "gba/gba.h"
 #include "global.h"
 #include "task.h"
+#include "camera.h"
+#include "actor.h"
+#include "enemy.h"
 
 /* RAM cells */
-extern s16 gViewRect[];
-extern struct Task *gCurTask;
-extern struct Task gTasks[];
-extern vu16 gTaskSlotTypes[];
+/* Not from collision.h: this file's view of gTerrainResult differs (lesson
+   3.517). */
 extern u8 gTerrainResult[];
-
-/* ROM tables */
-extern u32 gUnk_0873F500[];
-extern s32 gUnk_087414F8[];
-extern u8 gUnk_08741500[];
-extern u8 gUnk_08741502[];
-extern s32 gUnk_08741504[];
-extern u8 gUnk_0874150C[];
-extern s32 gUnk_0874151C[];
-extern s32 gUnk_08741524[];
-extern u32 gStarmanVariants[];
-extern u32 gUnk_08741554[];
-extern u32 gUnk_0874156C[];
-extern u32 gUnk_08741584[];
-extern u32 gUnk_08741590[];
-extern u32 gStarmanFlyStates[];
-extern u32 gStarmanFlyStateUpdates[];
-extern u32 gUnk_087415A4[];
-extern u32 gUnk_087415A8[];
-extern s32 gUnk_087415AC[];
-extern u32 gPoppyBrosJrVariants[];
-extern u32 gUnk_087415C4[];
-extern u32 gUnk_087415D0[];
-extern u32 gUnk_087415DC[];
-extern u32 gUnk_087415E0[];
-extern u32 gUnk_08741604[];
-extern u32 gUnk_087419F4[];
-extern u32 gUnk_08741A20[];
-extern u32 gUnk_08741B3C[];
-extern u32 gUnk_08741B44[];
-extern u32 gUnk_0874CBD0[];
-extern u32 gStarmanFrames[];
-extern u32 gPoppyBrosJrFrames[];
-extern u32 gUnk_087528F0[];
-extern u32 gUnk_08752934[];
-extern u32 gUnk_08752978[];
-extern u32 gUnk_087529A8[];
 
 /* Externals */
 extern s32 RandomRange(s32 a);

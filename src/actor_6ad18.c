@@ -18,13 +18,14 @@
 #include "gba/gba.h"
 #include "global.h"
 #include "task.h"
+#include "room.h"
+#include "actor.h"
 
 extern void TaskYieldTrampoline(u32 a);
 
+/* Not from main.h: this file's view of gBgPalette differs (lesson 3.517). */
 extern vu16 gDispCnt; /* DISPCNT shadow */
 extern u16 gBgPalette;
-extern u16 gUnk_0873E69A;
-extern u16 gUnk_0873E69C;
 
 extern void RequestScreenShake(u32);
 extern void SetRoomUpdateFlags(u32);
@@ -40,15 +41,6 @@ extern void CreateChildTaskHere(u32, u32);
 extern void ActorPlaySfx(u32, u32);
 extern void ActorDrawWorldInViewOrDestroy(void);
 extern void CreateBurstEffect(u32, u32);
-
-
-extern u32 gUnk_0873E6A0[];
-extern u32 gUnk_0873E6D0[];
-extern u32 gUnk_0874CA78[];
-extern u16 gUnk_0873E72E;
-extern u16 gUnk_0873E730;
-extern u32 gUnk_0873E734[];
-extern u16 gGameState;
 
 extern void StopBgm(void);
 extern void sub_080668c8(void);
@@ -68,13 +60,6 @@ extern u8 ActorCollideTerrain(void);
 extern void ActorMove(void);
 extern void sub_0806b2e4(void);
 extern void sub_0806ed9c(void);
-
-extern u32 gUnk_02007D00[];
-extern u8 gUnk_0873E758[];
-extern u8 gUnk_0873E77C[];
-extern u8 gUnk_0873E78C[];
-extern u8 gUnk_0873E798[];
-extern u32 gUnk_0874C9D8[];
 
 void sub_0806ad18(void)
 {

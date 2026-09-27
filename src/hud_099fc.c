@@ -1,6 +1,12 @@
 #include "gba/gba.h"
 #include "global.h"
 #include "task.h"
+#include "main.h"
+#include "link.h"
+#include "hud.h"
+#include "room.h"
+#include "player.h"
+#include "actor.h"
 
 /* hud_099fc.c (0x080099FC-0x0800A12F, issue #96).
  *
@@ -10,56 +16,6 @@
  * (AddPlayerHealth, returns the new value), score (SetPlayerAbilityNoHud/SetPlayerAbility/
  * AddPlayerScore/AddPlayerScoreNoHud, clamped to 99999999) and the clock mode
  * (HudShowScore/HudShowClock). */
-
-struct HudBar
-{
-    /*0x00*/ u8 unk0;
-    /*0x01*/ u8 unk1;
-    /*0x02*/ s16 unk2;
-    /*0x04*/ s16 unk4;
-    /*0x06*/ s16 unk6;
-};
-
-struct Unk02005E00
-{
-    /*0x00*/ s32 unk00;
-    /*0x04*/ u8 unk04[4];
-    /*0x08*/ u8 unk08[4];
-};
-
-extern u16 gPlayerAbilities[];
-extern s8 gHudHpBarIndex;
-extern s16 gHudHpBarMaxHp;
-extern s16 gMaxHealth;
-extern s16 gPlayerHealth[];
-extern s8 gUnk_020055F0[];
-extern struct Unk02005E00 gUnk_02005E00;
-extern u8 gHudMode;
-extern s32 gPlayerScores[];
-extern u8 gHudShowsClock;
-extern u16 gHudClock[];
-extern s8 gUnk_0200617C;
-extern s8 gHudAbilityPanelState;
-extern struct HudBar gHudHpBars[];
-extern s16 gUnk_02007D30;
-extern s16 gPlayerLives[];
-extern s16 gHudHpBarValues[];
-extern s16 gUnk_0200801C;
-extern u16 gPlayerAbilityUses[];
-extern u8 gHudShowsHpBar;
-extern u32 gUnk_02020000[];
-extern void (*gFrameEndCallback)(void);
-extern u16 gObjPalette[];
-extern u8 gUnk_03001F34;
-extern struct PlayerState gPlayerStates[];
-extern u8 gActivePlayerMask;
-extern u16 gLocalPlayer;
-extern s8 gUnk_03002444;
-extern u8 gPlayerCameraMode[];
-extern u32 gObjVram[];
-extern u16 gUnk_08731CE6[];
-extern u32 gUnk_087555D8[];
-extern struct GfxHeader *gUnk_087555FC[];
 
 void TaskExitTrampoline(void);
 void TaskYieldTrampoline(s32 frames);

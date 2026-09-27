@@ -2,13 +2,10 @@
 #include "gba/gba.h"
 #include "global.h"
 #include "task.h"
-
-/* RAM cells / ROM tables */
-extern s32 gUnk_02007D00[];
-extern u8 gActivePlayerCount;
-extern s16 gUnk_0300244C;
-extern u32 * gUnk_08745CFC[];
-extern u32 * gUnk_08745D4C[];
+#include "link.h"
+#include "room.h"
+#include "actor.h"
+#include "enemy.h"
 
 /* Externals */
 extern void ActorLoadDef(u32 def);

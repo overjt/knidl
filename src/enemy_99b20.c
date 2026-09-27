@@ -33,49 +33,9 @@
 #include "gba/gba.h"
 #include "global.h"
 #include "task.h"
-
-/* RAM cells */
-extern s32 gUnk_02007D00[];
-extern u8 gDigits[6];
-extern vu16 gTaskSlotTypes[];
-
-/* ROM tables */
-extern u8 gUnk_087456D0[];
-extern u8 gUnk_087456D2[];
-extern u8 gUnk_087456D4[];
-extern u8 gUnk_087456E4[];
-extern u8 gUnk_087456F4[];
-extern u8 gUnk_08745704[];
-extern u8 gUnk_08745714[];
-extern u8 gUnk_087456CC[];
-extern u32 gUnk_08745964[];
-extern u32 gUnk_08745980[];
-extern u32 gUnk_087459D4[];
-extern u32 gUnk_087459F0[];
-extern struct AnimCmd gUnk_08745744[];
-extern u32 gMrTickTockVariants[];
-extern u32 gMrTickTockStates[];
-extern u32 gMrTickTockStateUpdates[];
-extern u32 gUnk_08745A1C[];
-extern u32 gUnk_08745A24[];
-extern u32 gUnk_08745A98[];
-extern u32 gUnk_08745AE4[];
-extern u32 gUnk_08745B00[];
-extern u32 gUnk_08745B04[];
-extern u32 gUnk_08745B1C[];
-extern u32 gUnk_08745B08[];
-extern u32 gUnk_08745BD0[];
-extern u32 gUnk_08745BEC[];
-extern u32 gUnk_08745C08[];
-extern u32 gUnk_08745C24[];
-extern u32 gUnk_08745C40[];
-extern u32 gUnk_08745AE8[];
-extern u32 gUnk_08745AF4[];
-extern u32 gUnk_0874CB7C[];
-extern u32 gMrTickTockFrames[];
-extern u32 gMrTickTockRingFrames[];
-extern u32 gMrTickTockNoteFrames[];
-extern void *gUnk_082797C8;
+#include "main.h"
+#include "actor.h"
+#include "enemy.h"
 
 /* Externals */
 extern void TaskYieldTrampoline(u32 a);

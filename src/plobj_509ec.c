@@ -1,6 +1,11 @@
 #include "gba/gba.h"
 #include "global.h"
 #include "task.h"
+#include "main.h"
+#include "collision.h"
+#include "room.h"
+#include "player.h"
+#include "enemy.h"
 
 /* plobj_509ec.c (0x080509EC-0x080514F7, issue #90).
  *
@@ -17,42 +22,6 @@
  * (sound 125 on contact) and the Task.lateUpdateCallback callbacks sub_08050f80/
  * sub_080513d4, which draw a six-step trail behind the object
  * (sub_08050f80 is also installed by variants 11 and 12). */
-
-/* gTerrainResult: M06's collision result block (src/terrain_1bcac.c spells it
-   the same way except unk8, which M09 reads with ldrsh).  A 16-bit test of
-   unk0/unk1 together is `*(u16 *)&gTerrainResult` (M12's PlayerActionBurningUpdate). */
-struct Unk03005550
-{
-    /*0x00*/ u8 unk0;
-    /*0x01*/ u8 ceilingHits;
-    /*0x02*/ u8 unk2;
-    /*0x03*/ u8 unk3;
-    /*0x04*/ u8 slope;
-    /*0x05*/ u8 unk5;
-    /*0x06*/ u8 unk6;
-    /*0x07*/ u8 unk7;
-    /*0x08*/ s16 unk8;
-    /*0x0A*/ u8 atDoor;
-    /*0x0B*/ u8 onSlipperyFloor;
-    /*0x0C*/ u8 unkC;
-    /*0x0D*/ u8 unkD;
-};
-
-extern u32 gUnk_0874C568[];
-extern s8 gUnk_0873CB44[];              /* collision box passed to sub_0802205c / sub_0801c230 */
-extern u32 gUnk_0873BD64[];             /* collider row passed to RegisterCollider (4th arg) */
-extern struct Unk03005550 gTerrainResult;
-extern u32 gUnk_0873CB84[];
-extern u32 gUnk_0874C44C[];
-extern s8 gUnk_0873CB4C[];
-extern u32 gUnk_0873CB94[];
-extern u32 gUnk_0873BD78[];
-extern u8 gUnk_02000020;
-extern s16 gSpriteCameraX;               /* scalar, read with ldrsh (33 landed files) */
-extern s16 gSpriteCameraY;               /* scalar, read with ldrsh (32 landed files) */
-extern u32 gUnk_0874C478[];
-extern u32 gUnk_0873CBA4[];
-extern u32 gUnk_0873BD8C[];
 
 /* M09's hit-box set (src/block_30804.c); only a pointer is passed here */
 struct HitBoxSet;

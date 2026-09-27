@@ -1,6 +1,9 @@
 #include "gba/gba.h"
 #include "global.h"
 #include "task.h"
+#include "main.h"
+#include "collision.h"
+#include "player.h"
 
 /* plobj_52f6c.c (0x08052F6C-0x08053AF3, issue #90).
  *
@@ -28,46 +31,6 @@
  * PlayerState into it, with Task.unk18 = variant << 24 | arg.  They
  * return the task index or -1; the landed callers outside M14 declare
  * them `void (s32, s32, s32)`. */
-
-/* gTerrainResult: M06's collision result block (src/terrain_1bcac.c spells it
-   the same way except unk8, which M09 reads with ldrsh).  A 16-bit test of
-   unk0/unk1 together is `*(u16 *)&gTerrainResult` (M12's PlayerActionBurningUpdate). */
-struct Unk03005550
-{
-    /*0x00*/ u8 unk0;
-    /*0x01*/ u8 ceilingHits;
-    /*0x02*/ u8 unk2;
-    /*0x03*/ u8 unk3;
-    /*0x04*/ u8 slope;
-    /*0x05*/ u8 unk5;
-    /*0x06*/ u8 unk6;
-    /*0x07*/ u8 unk7;
-    /*0x08*/ s16 unk8;
-    /*0x0A*/ u8 atDoor;
-    /*0x0B*/ u8 onSlipperyFloor;
-    /*0x0C*/ u8 unkC;
-    /*0x0D*/ u8 unkD;
-};
-
-extern u32 gUnk_08751BF4[];
-extern u16 gUnk_0873B862[][2];
-extern u8 gUnk_0873B872[][8];
-extern u8 gUnk_0873B88A[][5];
-extern u16 gUnk_0873B8C6[][2][8];
-extern s8 gUnk_0873CB5C[];
-extern s8 gUnk_0873CB6C[];
-extern struct Unk03005550 gTerrainResult;
-extern u32 gUnk_0873CC3C[];
-extern u32 gUnk_0873CC44[];
-extern u32 gUnk_0873BE4C[];
-extern u32 gUnk_0873BE60[];
-extern s16 gSpriteCameraX;               /* scalar, read with ldrsh (33 landed files) */
-extern s16 gSpriteCameraY;               /* scalar, read with ldrsh (32 landed files) */
-extern u32 gUnk_087520A8[];
-extern u32 gUnk_0874C4E4[];
-extern s8 gUnk_0873CB4C[];
-extern u32 gUnk_0873BE74[];
-extern u32 gUnk_0873BE88[];
 
 /* M09's hit-box set (src/block_30804.c); only a pointer is passed here */
 struct HitBoxSet;

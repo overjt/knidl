@@ -1,5 +1,7 @@
 #include "gba/gba.h"
 #include "global.h"
+#include "main.h"
+#include "camera.h"
 
 /*
  * Cooperative task system, user side (issue #32, batch F2:
@@ -101,26 +103,22 @@ struct TaskGfx
     /*0x08*/ u16 *tiles;
 };
 
+/* Not from task.h: this file's view of struct TaskType differs (lesson
+   3.517). */
 extern struct Task *gCurTask;
 extern struct Task gTasks[];
 extern struct TaskType gTaskTypes[];
 extern vs32 gTaskCursor;
 extern vs16 gTaskSlotTypes[];
-extern s32 gTaskCount;
-extern s32 gTaskRunPhase;
+extern vu32 gTaskCount;
+extern vs32 gTaskRunPhase;
 extern u32 gTaskStackPtrs[];
 extern u8 gUnk_0203BFE0[];
 extern u32 gTaskResumeAddrs[];
-extern s32 gCurTaskIdx;
-extern vu8 gTaskClassLists[];
+extern vs32 gCurTaskIdx;
+extern vu8  gTaskClassLists[5][64];
 extern vu8 gTaskClassListLen[];
 extern vu16 gTaskListRefs[];
-extern vs32 gBg3ScrollX;
-extern vs32 gBg3ScrollY;
-extern u16 gSpriteCameraX;
-extern u16 gSpriteCameraY;
-extern s16 gViewRect[];
-extern u8 gObjPalette[];
 
 extern void RequestCopy(u32 mode, u32 src, u32 dst, u32 size);
 /* NOTE: src/early_1518.c declares the last parameter `u16 f`; the two call

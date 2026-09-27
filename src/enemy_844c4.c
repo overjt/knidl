@@ -26,20 +26,12 @@
 #include "gba/gba.h"
 #include "global.h"
 #include "task.h"
+#include "enemy.h"
 
 /* RAM cells */
+/* Not from collision.h: this file's view of gTerrainResult differs (lesson
+   3.517). */
 extern u8 gTerrainResult[];
-
-/* ROM tables */
-extern u32 gUnk_0873F500[];
-extern u32 gNoddyStates[];
-extern s16 gUnk_08741FA8[];
-extern s32 gUnk_08741FAC[];
-extern s8 gUnk_08741FB4[];
-extern u32 gNoddyStateUpdates[];
-extern u32 gNoddyBubbleFrames[];
-extern u32 gChillyFrames[];
-extern u32 gChillyVariants[];
 
 /* Externals */
 extern void TaskYieldTrampoline(u32 frames);

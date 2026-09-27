@@ -1,5 +1,7 @@
 #include "gba/gba.h"
 #include "global.h"
+#include "main.h"
+#include "link.h"
 
 /* early_2378.c (0x08002378-0x08002667, issue #63).
  *
@@ -21,20 +23,6 @@
  * cleared that cell) that keeps the branch two-way until the first cse pass;
  * see the comment at the site and lesson 3.488.  Issue #32 had called the
  * residue a gcse insertion one block late (lesson 3.55). */
-
-extern vu32 gRngValue;
-extern u16 gFrameCount;
-extern u32 gUnk_03001EFC;
-extern u16 gLinkIsMaster;
-extern s8 gUnk_030023A8[];
-extern u16 gLocalPlayer;
-extern u16 gLinkPlayerCount;
-extern s16 gUnk_0300244C;
-extern u16 gRecvCmds[4][4];
-extern u32 gSerialIntrCount;
-extern u16 gShouldAdvanceLinkState;
-extern u16 gSendCmd[4];
-extern u16 gLinkCommand;
 
 void RunFrameNoTasks(void);
 void LinkMain1(void *, void *, void *);

@@ -1,6 +1,8 @@
 #include "gba/gba.h"
 #include "global.h"
 #include "task.h"
+#include "main.h"
+#include "save.h"
 
 /* save_b6474.c (0x080B6474-0x080B6A8F, issue #94).
  *
@@ -21,21 +23,6 @@
  * every use (lesson 3.465); in the pair, one counter n for every flat loop
  * and for the band loop's outer index, and the zero of the calling loop in a
  * variable (3.471). */
-
-extern u8 gHBlankScrollState;
-extern s32 gHBlankScrollTimer;
-extern u16 gHBlankScrollTable[];
-extern void (*gFrameCallback)(void);
-extern u32 gHBlankDmaDest;
-extern vu16 gDispCnt;
-extern vs32 gBg1ScrollX;
-extern s16 gHBlankScrollEffect;
-extern vu8 gBldCntTarget2;
-extern vu8 gBldAlphaEva;
-extern vs32 gBg1ScrollY;
-extern vu8 gBldCntTarget1;
-extern vu8 gBldAlphaEvb;
-extern u8 gUnk_087561C4[];
 
 void SetWindow(s32 in, s32 out, s32 h, s32 v, s32 win);
 

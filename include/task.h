@@ -361,8 +361,37 @@ struct PointPair
     u32 y1:16;
 };
 
-extern struct Task *gCurTask;
-extern struct Task gTasks[];
+
+
+/* EWRAM */
+extern u8  gTaskSkipMaskStack[2][64];
+extern u8  gTaskSkipMaskDepth;
+extern u8 gUnk_0203BFE0[];
+
+/* IWRAM */
+extern vu32 gTaskSavedSp;
+extern vu8  gTaskClassListPos[];
+extern vu8  gTaskClassPassEnd[];
+extern vu32 gCurTaskListPos;
 extern vs32 gCurTaskIdx;
+extern struct Task *gCurTask;
+extern vs32 gTaskCursor;
+extern vu8  gTaskClassLists[5][64];
+extern s32  gTaskSavedR0;
+extern u32  gTaskResumeAddrs[];
+extern vu32 gTaskCount;
+extern vs32 gTaskRunPhase;
+extern vu32 gTaskSavedLr;
+extern vu8  gTaskClassListLen[];
+extern vu8  gTaskClassPassStart[];
+extern vu16 gTaskListRefs[];
+extern struct Task gTasks[];
+extern u32 gTaskStackPtrs[];
+extern vs32 gCurTaskClass;
+extern vu32 gTaskBaseSp;
+extern vs16 gTaskSlotTypes[];
+
+/* ROM */
+extern struct TaskType gTaskTypes[];
 
 #endif // GUARD_TASK_H

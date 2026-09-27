@@ -1,6 +1,8 @@
 #include "gba/gba.h"
 #include "global.h"
 #include "task.h"
+#include "room.h"
+#include "player.h"
 
 /* player_474e8.c (0x080474E8-0x08047FE7, issue #87).
  *
@@ -23,22 +25,6 @@
  * gUnk_0873DADE[Task.unk46][Task.unk28] (Task.unk28 = the ground flag
  * Task.onGround of the previous frame), registers the matching boxes and
  * re-binds the coroutine when the ground flag changes. */
-
-/* M11's per-player records (src/stage_43654.c spells them the same way) */
-struct M11R8 { u8 unk00; u8 unk01; u8 offsetX; u8 offsetY; u8 *boxes; };
-
-struct M11R20 { u32 w[5]; };
-
-extern struct M11R8 gPlayerHitBoxSets[];
-extern struct M11R20 gPlayerBodyBoxes[];
-extern u16 gLatchedHeldKeys[];             /* held keys, latched per player (M11) */
-extern u32 gUnk_0873C1B0[];
-extern u32 gUnk_0873CEEC[];
-extern u16 gUnk_0873DADE[][2];
-extern u32 gUnk_0873C1C4[];
-extern u32 gUnk_0873C1EC[];
-extern u32 gUnk_0873CEF4[];
-extern u32 gUnk_0873CF1C[];
 
 /* M09's hit-box set (src/block_30804.c); only a pointer is passed here */
 struct HitBoxSet;

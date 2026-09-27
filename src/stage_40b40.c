@@ -1,6 +1,8 @@
 #include "gba/gba.h"
 #include "global.h"
 #include "task.h"
+#include "room.h"
+#include "player.h"
 
 /* stage_40b40.c (0x08040B40-0x080413A3, issue #85).
  *
@@ -19,12 +21,9 @@
  * cached s32 mask let regmove AND in place and pushed case 13's task pointer
  * into ip, lessons 4.62/4.63 and 3.476). */
 
-extern u8 gUnk_03001F30;
+/* Not from collision.h: this file's view of gTerrainResult differs (lesson
+   3.517). */
 extern u8 gTerrainResult[];
-extern u16 gLatchedHeldKeys[];   /* held keys, latched per player */
-extern u16 gUnk_0873AF58[][2];
-extern u32 gUnk_0873AF6C[];
-extern u32 gPlayerMotionXPresets[];
 
 void TaskSetMotionXFacing(s32 a, s32 b);
 void PlayerStopAxes(s32 a0);

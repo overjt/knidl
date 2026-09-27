@@ -1,6 +1,9 @@
 #include "gba/gba.h"
 #include "global.h"
 #include "task.h"
+#include "collision.h"
+#include "room.h"
+#include "player.h"
 
 /* player_337f4.c (0x080337F4-0x080343BF, issue #92).
  *
@@ -12,33 +15,6 @@
  * and PlayerActionWalk mode 1 (handler 2, PlayerActionWalkUpdate).  Their animations
  * come from gUnk_0873D0F8[ability][5] (column picked by M11's
  * sub_0803fd20, row 26 when PlayerState.mouthState == 1) and gUnk_0873D2E8. */
-
-/* gTerrainResult: M06's collision result block (src/terrain_1bcac.c spells it
-   the same way except unk8, which M09 reads with ldrsh). */
-struct Unk03005550
-{
-    /*0x00*/ u8 unk0;
-    /*0x01*/ u8 ceilingHits;
-    /*0x02*/ u8 unk2;
-    /*0x03*/ u8 unk3;
-    /*0x04*/ u8 slope;
-    /*0x05*/ u8 unk5;
-    /*0x06*/ u8 unk6;
-    /*0x07*/ u8 unk7;
-    /*0x08*/ s16 unk8;
-    /*0x0A*/ u8 atDoor;
-    /*0x0B*/ u8 onSlipperyFloor;
-    /*0x0C*/ u8 unkC;
-    /*0x0D*/ u8 unkD;
-};
-
-extern u16 gUnk_0873D0F8[][5];
-extern u16 gLatchedHeldKeys[];             /* latched state mask per player (M11) */
-extern u8 gUnk_03001F30;
-extern s16 gUnk_0873D206[];
-extern u16 gUnk_0873D2E8[];
-extern u16 gUnk_0873D350[];
-extern struct Unk03005550 gTerrainResult;
 
 void TaskYieldTrampoline(s32 frames);
 void TaskSleepForever(void);

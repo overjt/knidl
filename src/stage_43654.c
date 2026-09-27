@@ -1,21 +1,8 @@
 #include "gba/gba.h"
 #include "global.h"
 #include "task.h"
-
-struct M11R8 { u8 unk00; u8 unk01; u8 offsetX; u8 offsetY; u8 *boxes; };
-struct M11Buf { u8 unk00[4]; u8 unk04[4]; };
-struct M11R20 { u32 w[5]; };
-
-extern struct M11R8 gPlayerHitBoxSets[];
-extern struct M11R20 gPlayerBodyBoxes[];
-extern u16 gLatchedPressedKeys[];
-extern u16 gLatchedHeldKeys[];
-extern struct Task *gCurTask;
-extern u32 gUnk_0873CA7C[];
-extern u32 gUnk_0873CA90[];
-extern u32 gUnk_0873CAA4[];
-extern u32 gUnk_0873D044[];
-extern u32 gUnk_0873D04C[];
+#include "room.h"
+#include "player.h"
 
 void TaskYieldTrampoline(s32 frames);
 s32 PlaySfx(s32 id);
@@ -250,7 +237,6 @@ Lend:
     TaskSleepForever();
 }
 
-
 void sub_08043a88(void)
 {
     struct Task *t = gCurTask;
@@ -288,7 +274,6 @@ void sub_08043a88(void)
     }
     PlayerStopAtWall();
 }
-
 
 /* NOTE: fwd.h gives this four s32 args; that is an arity.py artifact -
    the script does not model `ldmia rN!, {r2, r3, r4}` (the 20-byte struct
@@ -407,7 +392,6 @@ void sub_08043b80(void)
     TaskSleepForever();
 }
 
-
 void sub_08043e28(void)
 {
     if (gCurTask->unk28 != 0) {
@@ -460,7 +444,6 @@ void sub_08043e28(void)
     else
         PlayerLand(1);
 }
-
 
 /* NOTE: fwd.h gives this four s32 args; that is an arity.py artifact -
    the script does not model `ldmia rN!, {r2, r3, r4}` (the 20-byte struct
@@ -548,7 +531,6 @@ void sub_08043fa8(void)
     TaskSleepForever();
 }
 
-
 void sub_080441cc(void)
 {
     struct Task *t = gCurTask;
@@ -572,7 +554,6 @@ void sub_080441cc(void)
     }
     PlayerStopAtWall();
 }
-
 
 /* NOTE: fwd.h gives this four s32 args; that is an arity.py artifact -
    the script does not model `ldmia rN!, {r2, r3, r4}` (the 20-byte struct
@@ -654,7 +635,6 @@ void sub_08044288(void)
     TaskSleepForever();
 }
 
-
 void sub_08044470(void)
 {
     struct Task *t = gCurTask;
@@ -733,7 +713,6 @@ void sub_08044470(void)
     PlayerStopAtWall();
 }
 
-
 void PlayerActionFire(void)
 {
     gCurTask->player->prevMode = gCurTask->player->mode;
@@ -798,7 +777,6 @@ void PlayerActionFire(void)
     TaskSleepForever();
 }
 
-
 void PlayerActionFireUpdate(void)
 {
     struct Task *t = gCurTask;
@@ -825,7 +803,6 @@ void PlayerActionFireUpdate(void)
     }
     sub_0803e55c();
 }
-
 
 void PlayerActionSpark(void)
 {

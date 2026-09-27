@@ -39,73 +39,17 @@
 #include "gba/gba.h"
 #include "global.h"
 #include "task.h"
-
-/* RAM cells */
-extern s32 gUnk_02007D00[];
-extern s32 gUnk_03001F2C;
-extern u16 gFrameCount;
-extern struct PlayerState gPlayerStates[];
-extern s32 gUnk_030023B4;
-extern s32 gUnk_030023D4;
-extern u16 gLocalPlayer;
-extern vs16 gTaskSlotTypes[];
+#include "main.h"
+#include "link.h"
+#include "room.h"
+#include "actor.h"
+#include "enemy.h"
 
 /* ROM tables */
-extern u8 gUnk_08743A70[];
-extern u8 gUnk_08743A8E[];
-extern s32 gUnk_08743A9C[];
-extern u32 gUnk_08743AA4[];
-extern u32 gUnk_08743AAC[];
-extern u8 gUnk_08743AB4[];
-extern s8 gUnk_08743AB8[];
-extern s8 gUnk_08743AC2[];
+/* Not from collision.h: this file's view of gTerrainResult differs (lesson
+   3.517). */
 extern s8 gUnk_087339F0[];
-extern u32 gUnk_0874410C[];
-extern u32 gUnk_08744170[];
-extern u32 gUnk_08744174[];
-extern u32 gUnk_08744178[];
-extern u32 gBonkersNutFrames[];
-extern u32 gUnk_0874430C[];
-extern u32 gPoppyBrosSrBombFrames[];
-extern u32 gUnk_087441A4[];
-extern u32 gUnk_087441AC[];
-extern u32 gUnk_0874417C[][2];
-extern u32 gUnk_0874418C[][2];
-extern u32 gUnk_08744324[];
-extern u32 gUnk_0874419C[];
-extern u32 gUnk_087441B4[];
-extern u8 gUnk_08743B48[];
-extern u32 gUnk_087536FC[];
 extern vu8 gTerrainResult;
-extern u32 gUnk_08743A94[];
-extern u32 gUnk_08743A74[];
-extern u8 gUnk_08743A7C[];
-extern u8 gUnk_08743A82[];
-extern u8 gUnk_08743A88[];
-extern u32 gUnk_08743A10[];
-extern u32 gUnk_08743A28[];
-extern u32 gUnk_08743A40[];
-extern u32 gUnk_08743A58[];
-extern u32 gBugzzyStateUpdates[];
-extern void *gUnk_082959A8;
-extern struct AnimCmd gUnk_08743AC8[];
-extern u32 gBugzzyStates[];
-extern struct AnimCmd gUnk_0874397C[];
-extern u32 gPoppyBrosSrStates[];
-extern u32 gPoppyBrosSrStateUpdates[];
-extern u32 gUnk_087440F4[];
-extern struct AnimCmd *gUnk_08743A00[];
-extern u32 gBugzzyVariants[];
-extern u32 gBugzzyFrames[];
-extern u32 gUnk_08753128[];
-extern u32 gUnk_08753148[];
-extern u8 gUnk_087438DC[];
-extern u32 gUnk_087438E4[];
-extern u32 gUnk_087438EC[];
-extern u32 gUnk_0874391C[];
-extern u32 gUnk_0874394C[];
-extern struct GfxHeader gPoppyBrosSrGfx;
-extern u32 gUnk_08275670;
 
 /* Externals */
 extern void ClampTaskToRoom(struct Task *t);

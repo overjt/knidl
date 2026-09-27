@@ -1,6 +1,8 @@
 #include "gba/gba.h"
 #include "global.h"
 #include "task.h"
+#include "player.h"
+#include "actor.h"
 
 /* player_4b5b4.c (0x0804B5B4-0x0804B857, issue #88).
  *
@@ -14,9 +16,6 @@
  * requests action 1 (on the ground) or 7 once Task.unk28 is set; the
  * ROM keeps a dead `ldr [t, #84]` of a test whose two arms were
  * merged. */
-
-extern u8 gUnk_03001F34;
-extern u32 gPlayerDefaultTerrainBox[];
 
 void TaskYieldTrampoline(s32 frames);
 void TaskSleepForever(void);

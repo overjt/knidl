@@ -1,17 +1,13 @@
 #include "gba/gba.h"
 #include "global.h"
 #include "task.h"
+#include "main.h"
+#include "link.h"
+#include "room.h"
+#include "player.h"
+#include "save.h"
 
-struct Unk02005E00
-{
-    /*0x00*/ s32 unk00;
-    /*0x04*/ u8 unk04[4];
-    /*0x08*/ u8 unk08[4];
-};
-
-extern vu16 gPlayerPressedKeys[];    /* per-player keys pressed */
 extern void CallTableEntry(u32 a, u32 b, u32 *c);
-extern struct Task *gCurTask;
 extern void TaskExitTrampoline(void);
 extern void HudRedraw(s32 a);
 extern void TaskFree(s32 a);
@@ -19,37 +15,6 @@ extern void AddPlayerLives(s32 a, s32 b);
 extern void HudDrawTiles(u8 *s, s32 a, s32 b, s32 c);
 extern void HudClearTiles(s32 a, s32 b, s32 c);
 extern void TaskYieldTrampoline(u32 frames);
-extern s32 gCurTaskIdx;
-extern u16 gUnk_02000010[];
-extern struct Unk02005E00 gUnk_02005E00;
-extern s16 gPlayerLives[];
-extern u32 gBgPalette[];
-extern s8 gDigits[];
-extern u8 gActivePlayerMask;
-extern u16 gLocalPlayer;
-extern u16 gPlayerCount;
-extern u8 gUnk_085ADD1C[];
-extern u8 gUnk_085B09BC[];
-extern u8 gUnk_085B09DC[];
-extern u8 gUnk_085B0A10[];
-extern u8 gUnk_085B0A30[];
-extern u8 gUnk_085B0A64[];
-extern u8 gUnk_085B0AB0[];
-extern u8 gUnk_085B0AD0[];
-extern u8 gUnk_085B0AD4[];
-extern u8 gUnk_085B0AFC[];
-extern u8 gUnk_085B0B00[];
-extern u8 gUnk_085B0B08[];
-extern u8 gUnk_085B0B10[];
-extern u8 gUnk_085B0B28[];
-extern u8 gUnk_085B0B5C[];
-extern u8 gUnk_085B0BB4[];
-extern u8 gUnk_085B0BD4[];
-extern u8 gUnk_085B0C2C[];
-extern u32 gUnk_0875625C[];
-extern u16 gUnk_08756268[];
-extern u32 gUnk_08756270[];
-extern u32 gUnk_0875628C[];
 extern void TaskSetEntry(void *fn, s32 i);
 extern s32 IntToDigits(s16 n);
 extern void RequestCopy(u32 mode, u32 src, u32 dst, u32 size);

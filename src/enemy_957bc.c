@@ -1,52 +1,11 @@
 #include "gba/gba.h"
 #include "global.h"
 #include "task.h"
-
-/* RAM cells */
-extern s32 gUnk_02007D00[];
-extern s32 gUnk_030023D4;
-extern u16 gLocalPlayer;
-extern struct PlayerState gPlayerStates[];
-extern s16 gViewRect[];
-extern u8 gObjPalette[];
-
-/* ROM tables */
-extern u32 gUnk_082B07BC[];
-extern u32 gUnk_087444E4[];
-extern struct AnimCmd gUnk_08744510[];
-extern u8 gUnk_08744524[];
-extern u8 gUnk_08744526[];
-extern u32 gUnk_0874452C[];
-extern u32 gUnk_08744534[];
-extern struct AnimCmd gUnk_0874453C[];
-extern struct AnimCmd gUnk_08744550[];
-extern u8 gUnk_08744562[];
-extern u32 gUnk_08744564[];
-extern void *gUnk_08744598[][4];
-extern u16 gUnk_087445D8[];
-extern s16 gUnk_087445E8[];
-extern u16 gUnk_08744608[];
-extern void *gUnk_08744618[];
-extern void *gUnk_087446E8[];
-extern void *gUnk_087447B8[];
-extern u32 gUnk_08744F0C[];
-extern u32 gUnk_08745040[];
-extern u32 gUnk_087450CC[];
-extern u32 gUnk_087450E8[];
-extern u32 gUnk_08745104[];
-extern u32 gUnk_08745120[];
-extern u32 gUnk_0874513C[];
-extern u32 gUnk_08745158[];
-extern u32 gUnk_08745174[];
-extern u32 gUnk_08745190[];
-extern u32 gUnk_087451AC[];
-extern u32 gUnk_087451C8[];
-extern u32 gUnk_087451E4[];
-extern u32 gUnk_08745200[];
-extern u32 gUnk_08745304[];
-extern u32 gUnk_0874530C[];
-extern u32 gUnk_08745434[];
-extern u32 gFireLionFrames[];
+#include "main.h"
+#include "link.h"
+#include "camera.h"
+#include "actor.h"
+#include "enemy.h"
 
 /* Externals */
 extern void sub_08065438(void);

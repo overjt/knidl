@@ -30,38 +30,9 @@
 #include "gba/gba.h"
 #include "global.h"
 #include "task.h"
-
-/* RAM cells */
-extern u8 gUnk_02006178;
-extern s32 gUnk_030023B4;
-extern s16 gUnk_0300244C;
-extern struct Task *gCurTask;
-
-/* ROM tables */
-extern u32 gUnk_0873F500[];
-extern s32 gUnk_087415E4[];
-extern u8 gUnk_087415F0[];
-extern s32 gUnk_087415F4[];
-extern s32 gUnk_087415FC[];
-extern u32 gUnk_08741610[];
-extern u32 gUnk_08741614[];
-extern u32 gUnk_08741618[];
-extern u32 gUnk_0874161C[];
-extern u32 gUnk_08741620[];
-extern u32 gUnk_08741624[];
-extern s32 gUnk_08741628[];
-extern s32 gUnk_08741630[];
-extern u8 gUnk_08741638[];
-extern u8 gUnk_0874163B[];
-extern u32 gWheelieVariants[];
-extern u32 gWheelieStates[];
-extern u32 gWheelieStateUpdates[];
-extern u32 gUnk_0874167C[];
-extern u32 gUnk_08741680[];
-extern u32 gFlamerVariants[];
-extern u32 gPoppyBrosJrFrames[];
-extern u32 gWheelieFrames[];
-extern u32 gFlamerFrames[];
+#include "link.h"
+#include "actor.h"
+#include "enemy.h"
 
 /* Externals */
 extern s32 RandomRange(s32 a);

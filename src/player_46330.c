@@ -1,6 +1,9 @@
 #include "gba/gba.h"
 #include "global.h"
 #include "task.h"
+#include "collision.h"
+#include "room.h"
+#include "player.h"
 
 /* player_46330.c (0x08046330-0x08046BFF, issue #87).
  *
@@ -18,34 +21,6 @@
  * collision block gTerrainResult reports a hit; it keeps the player on
  * slopes and ledges with M06's terrain probes IsFullBlockAtPixel and
  * IsWaterAtPixel and registers the collider gUnk_0873BF14. */
-
-/* gTerrainResult: M06's collision result block (src/terrain_1bcac.c spells it
-   the same way except unk8, which M09 reads with ldrsh).  A 16-bit test of
-   unk0/unk1 together is `*(u16 *)&gTerrainResult` (good/PlayerActionBurningUpdate.c). */
-struct Unk03005550
-{
-    /*0x00*/ u8 unk0;
-    /*0x01*/ u8 ceilingHits;
-    /*0x02*/ u8 unk2;
-    /*0x03*/ u8 unk3;
-    /*0x04*/ u8 slope;
-    /*0x05*/ u8 unk5;
-    /*0x06*/ u8 unk6;
-    /*0x07*/ u8 unk7;
-    /*0x08*/ s16 unk8;
-    /*0x0A*/ u8 atDoor;
-    /*0x0B*/ u8 onSlipperyFloor;
-    /*0x0C*/ u8 unkC;
-    /*0x0D*/ u8 unkD;
-};
-
-extern u32 gPlayerDefaultTerrainBox[];
-extern u32 gUnk_0873CB34[];
-extern u32 gUnk_0873CDAC[];
-extern u16 gLatchedHeldKeys[];             /* held keys, latched per player (M11) */
-extern u16 gLatchedPressedKeys[];             /* newly-pressed keys, latched per player */
-extern struct Unk03005550 gTerrainResult;
-extern u32 gUnk_0873BF14[];
 
 void TaskYieldTrampoline(s32 frames);
 void TaskSleepForever(void);

@@ -1,17 +1,14 @@
 #include "gba/gba.h"
 #include "global.h"
 #include "task.h"
+#include "hud.h"
+#include "room.h"
 
 /* hud_0b318.c (0x0800B318-0x0800B44B, issue #96).
  *
  * The HUD tilemap buffer gHudTilemap (32 tiles per row): tile copy and
  * clear at (x, y), whole-buffer clears, and the flush to 0x06001000 when
  * the dirty flag gHudTilemapDirty is set. */
-
-extern u8 gHudTilemapDirty;
-extern u16 gHudTilemap[];
-extern u8 gUnk_03001F30;
-extern s8 gUnk_03002444;
 
 void RequestCopy(u32 mode, u32 src, u32 dst, u32 size);
 void LoadGfxSet(u16 a0);

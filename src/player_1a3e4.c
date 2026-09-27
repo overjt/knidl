@@ -1,6 +1,8 @@
 #include "gba/gba.h"
 #include "global.h"
 #include "task.h"
+#include "main.h"
+#include "player.h"
 
 /* player_1a3e4.c (0x0801A3E4-0x0801A76B, issue #125).
  *
@@ -19,20 +21,6 @@
  * literal `0x800 | Task.tileWord` of the other two needs a reload register and a
  * HImode copy, and that one missing copy is what keeps the ROM's cross-jump
  * to four instructions (lesson 3.475). */
-
-extern u32 gUnk_08755440[];
-extern u32 gUnk_0875546C[];
-extern u32 gUnk_08755484[];
-extern u32 gUnk_02020000[];
-extern vs32 gBg3ScrollX; /* BG3HOFS shadow (16.16) */
-extern vs32 gBg3ScrollY; /* BG3VOFS shadow (16.16) */
-extern s16 gUnk_08732190[];
-extern s16 gUnk_087321A6[];
-extern s16 gUnk_087321B2[];
-extern u32 gUnk_087321C0[];
-extern u32 gUnk_087321EC[];
-extern u32 gUnk_085E24D8[];
-extern u32 gUnk_085E26E8[];
 
 void RequestCopy(u32 mode, u32 src, u32 dst, u32 size);
 s32 QueueSprite(u32 a, u32 b, u32 c, u32 d, s32 e, s16 f);

@@ -1,6 +1,10 @@
 #include "gba/gba.h"
 #include "global.h"
 #include "task.h"
+#include "main.h"
+#include "room.h"
+#include "player.h"
+#include "actor.h"
 
 /* player_47fe8.c (0x08047FE8-0x08049737, issue #88).
  *
@@ -24,33 +28,6 @@
  * gUnk_081BE6BC[] over the animation frames 0x36B-0x372 (the twin of
  * M12's PlayerActionSparkUpdate), abilities 4, 12 and 14 register their collider
  * and block hit-box rows. */
-
-/* M11's per-player records (src/stage_43654.c spells them the same way) */
-struct M11R8 { u8 unk00; u8 unk01; u8 offsetX; u8 offsetY; u8 *boxes; };
-
-struct M11R20 { u32 w[5]; };
-
-extern u8 gUnk_03001F34;
-extern u8 gUnk_030023B0;
-extern u16 gUnk_0873B534[][32];
-extern u16 gLatchedHeldKeys[];             /* held keys, latched per player (M11) */
-extern u8 gUnk_0873B634[];
-extern s32 gUnk_02007D00[];
-extern u32 gUnk_0873CCA4[];
-extern struct M11R20 gPlayerBodyBoxes[];
-extern u32 gUnk_0873C358[];
-extern struct M11R8 gPlayerHitBoxSets[];
-extern u32 gUnk_0873CF94[];
-extern u32 gUnk_0873C1B0[];
-extern u32 gUnk_0873CEEC[];
-extern vs16 gBrightness;
-extern u8 gUnk_081BE6BC[];              /* per-player palettes, 128 bytes each */
-extern u8 gObjPalette[];              /* OBJ palette buffer (M11 spelling) */
-extern u32 gUnk_0873BF64[];
-extern u32 gUnk_0873C1C4[];
-extern u32 gUnk_0873CEF4[];
-extern u32 gUnk_0873C214[];             /* collider row passed to RegisterCollider (4th arg) */
-extern u32 gUnk_0873CF4C[];             /* hit-box set, passed as (struct HitBoxSet *) */
 
 /* M09's hit-box set (src/block_30804.c); only a pointer is passed here */
 struct HitBoxSet;

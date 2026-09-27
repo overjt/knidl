@@ -17,33 +17,9 @@
 #include "gba/gba.h"
 #include "global.h"
 #include "task.h"
-
-extern u32 gUnk_0874CB90[];
-extern u32 gUnk_0874C9D8[];
-extern u32 gUnk_0874CA78[];
-extern u32 gUnk_0874CA1C[];
-extern u32 gUnk_0874CAD8[];
-extern u16 gUnk_0873E620[];
-extern u16 gUnk_0873E634[];
-extern u16 gUnk_0873E700[];
-extern u16 gUnk_0873E640[];
-extern vs16 gTaskSlotTypes[];
-extern u32 gUnk_0874C500[];
-extern s16 gUnk_0873EB40[];
-extern s16 gUnk_0873EB60[];
-extern s16 gUnk_0873EB80[];
-extern u32 gUnk_0874CC60[];
-extern u32 gUnk_0873EBA0[];
-extern u32 gUnk_0873EC20[];
-extern s32 gUnk_0873ECA0[];
-extern s32 gUnk_0873ECC0[];
-extern u32 gUnk_08752E48[];
-extern u32 gUnk_08752D20[];
-extern u16 gUnk_0873ECD0[];
-extern s16 gSpriteCameraX;
-extern s16 gSpriteCameraY;
-extern u32 gUnk_0874CC84[];
-extern u32 gUnk_0874CC48[];
+#include "main.h"
+#include "actor.h"
+#include "enemy.h"
 
 extern void TaskYieldTrampoline(u32 a);
 extern void TaskExitTrampoline(void);

@@ -1,10 +1,7 @@
 #include "gba/gba.h"
 #include "global.h"
 #include "task.h"
-
-extern struct Task *gCurTask;
-extern struct Task gTasks[];
-extern u32 gUnk_0874C600[];
+#include "effect.h"
 
 void TaskExitTrampoline(void);
 void TaskYieldTrampoline(s32 frames);

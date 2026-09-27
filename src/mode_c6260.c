@@ -1,6 +1,12 @@
 #include "gba/gba.h"
 #include "global.h"
 #include "task.h"
+#include "main.h"
+#include "link.h"
+#include "mode.h"
+#include "room.h"
+#include "player.h"
+#include "ending.h"
 
 /* mode_c6260.c (0x080C6260-0x080C641F, issue #98).
  *
@@ -20,20 +26,6 @@
  *       then tear the level down (sub_08027178).
  *   sub_080c6354 / sub_080c63ec   spawn M38's task type #100 / #101,
  *       retrying every frame until a slot is free, with Task.variant = 0. */
-
-extern u16 gUnk_02000028;
-extern u16 gLocalPlayer;
-extern u16 gUnk_02007D3C;
-extern u16 gLinkIsMaster;
-extern u16 gUnk_0200616C;
-extern u16 gLinkPlayerCount;
-extern u16 gUnk_02004C94;
-extern u16 gPlayerCount;
-extern u16 gPrevGameState;
-extern u8 gUnk_03001F30;
-extern s32 gCurSaveSlot;
-extern u8 gEndingSceneActive;
-extern vu16 gDispCnt;
 
 void BeginFastFadeInFromWhite(void);
 void BeginFastFadeOutToWhite(void);

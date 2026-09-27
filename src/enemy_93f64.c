@@ -1,78 +1,14 @@
 #include "gba/gba.h"
 #include "global.h"
 #include "task.h"
+#include "main.h"
+#include "actor.h"
+#include "enemy.h"
 
 /* RAM cells */
-extern s32 gUnk_02007D00[];
-extern s32 gUnk_030023D4;
-extern vu16 gTaskSlotTypes[];
-extern vu16 gFrameCount;
-extern s32 gUnk_030023B4;
+/* Not from collision.h: this file's view of gTerrainResult differs (lesson
+   3.517). */
 extern u8 gTerrainResult[];
-
-/* ROM tables */
-extern u32 gUnk_087536FC[];
-extern u32 gUnk_0826F170[];
-extern u32 gUnk_087441BC[];
-extern u32 gUnk_087441C4[];
-extern u32 gUnk_087441CC[];
-extern u32 gUnk_087441D0[];
-extern u32 gUnk_087441D4[];
-extern struct AnimCmd gUnk_0874433C[];
-extern struct AnimCmd gUnk_08744360[];
-extern struct AnimCmd gUnk_08744384[];
-extern struct AnimCmd gUnk_087443A8[];
-extern struct AnimCmd gUnk_087443BC[];
-extern struct AnimCmd gUnk_087443D0[];
-extern struct AnimCmd gUnk_087443E4[];
-extern struct AnimCmd gUnk_08744408[];
-extern struct AnimCmd gUnk_0874441C[];
-extern u32 gGrandWheelieVariants[];
-extern u32 gGrandWheelieStates[];
-extern u32 gGrandWheelieStateUpdates[];
-extern u16 gUnk_0874449C[];
-extern u32 gUnk_087444A4[];
-extern u32 gUnk_087444AC[];
-extern u32 gUnk_087444B4[];
-extern u32 gUnk_087444BC[];
-extern u32 gUnk_087444C4[];
-extern u32 gUnk_087444CC[];
-extern u32 gUnk_087449E8[];
-extern u32 gUnk_08744A04[];
-extern u32 gUnk_08744A20[];
-extern u32 gUnk_08744A3C[];
-extern u32 gUnk_08744A58[];
-extern u32 gUnk_08744A74[];
-extern u32 gUnk_08744A90[];
-extern u32 gUnk_08744AAC[];
-extern u32 gUnk_08744AC8[];
-extern u32 gUnk_08744AE4[];
-extern u32 gUnk_08744B00[];
-extern u32 gUnk_08744B1C[];
-extern u32 gUnk_08744B38[];
-extern u32 gUnk_08744B54[];
-extern u32 gUnk_08744B70[];
-extern u32 gUnk_08744B8C[];
-extern u32 gUnk_08744BA8[];
-extern u32 gUnk_08744BC4[];
-extern u32 gUnk_08744BE0[];
-extern u32 gUnk_08744BFC[];
-extern u32 gUnk_08744C18[];
-extern u32 gUnk_08744C34[];
-extern u32 gUnk_08744C50[];
-extern u32 gUnk_08744C6C[];
-extern u32 gUnk_08744C88[];
-extern u32 gUnk_08744CA4[];
-extern u32 gUnk_08744CC0[];
-extern u32 gUnk_0874531C[];
-extern u32 gUnk_08745324[];
-extern u32 gUnk_0874532C[];
-extern u32 gUnk_08745334[];
-extern u32 gUnk_0874533C[];
-extern u32 gUnk_08745344[];
-extern u32 gUnk_0874534C[];
-extern u32 gUnk_0874541C[];
-extern u32 gGrandWheelieFrames[];
 
 /* Externals */
 extern void ActorDrawWorldInViewOrDestroy(void);

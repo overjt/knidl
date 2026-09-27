@@ -32,47 +32,11 @@
 #include "gba/gba.h"
 #include "global.h"
 #include "task.h"
-
-extern s8 gSubGameLevel;
-extern u8 gUnk_020061DC;
-extern s8 gBombRallySeats[];
-extern u8 gBombRallyOutMask;
-extern u8 gBombRallyOutCount;
-extern u8 gBombRallyFinishOrder[];
-extern u16 gFadeSteps;
-extern u8 gObjPalette[];
-extern vs32 gBg3ScrollX;
-extern vs32 gBg3ScrollY;
-extern vu16 gPlayerPressedKeys[];
-extern u16 gPrevGameState;
-extern u16 gLocalPlayer;
-extern u16 gPlayerCount;
-
-extern s8 gUnk_08756560[];
-extern s8 gUnk_08756564[];
-extern u32 gUnk_08756528[];
-extern u8 gUnk_08756570[];
-extern u8 gUnk_0875665C[];
-extern u8 gUnk_0875665F[];
-extern u8 gUnk_08756662[];
-extern u32 gBombRallyStates[];
-extern u32 gBombRallyStateUpdates[];
-extern u32 gBombRallyResultsStates[];
-extern u32 gBombRallyResultsStateUpdates[];
-extern u32 gBombRallyObjectVariants[];
-extern u32 gUnk_08755DC0;
-extern u16 gUnk_08756538[];
-extern u8 gUnk_087565E0[];
-extern u8 *gUnk_08756650[];
-extern u8 *gUnk_087565F4[];
-extern u32 *gUnk_0875670C[];
-extern s16 gUnk_0875672C[];
-extern s16 gUnk_08756734[];
-extern s8 gUnk_08756740[];
-extern s8 gUnk_08756744[];
-extern s8 gUnk_08756748[];
-extern u32 gBombRallyPlayerStates[];
-extern u32 gBombRallyPlayerStateUpdates[];
+#include "main.h"
+#include "link.h"
+#include "mode.h"
+#include "room.h"
+#include "subgame.h"
 
 extern void TaskYieldTrampoline(u32 frames);
 

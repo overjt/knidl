@@ -1,6 +1,11 @@
 #include "gba/gba.h"
 #include "global.h"
 #include "task.h"
+#include "main.h"
+#include "collision.h"
+#include "room.h"
+#include "player.h"
+#include "actor.h"
 
 /* player_4ab70.c (0x0804AB70-0x0804B5B3, issue #88).
  *
@@ -25,37 +30,6 @@
  * (SetPlayerAbility(0, -1, player)).  Its handler PlayerActionCrashUpdate fades the
  * palette in and back out (gUnk_08203098, Task.unk28 in steps of 10 and
  * 16) and keeps the player under the height Task.unk2C. */
-
-/* gTerrainResult: M06's collision result block (src/terrain_1bcac.c spells it
-   the same way except unk8, which M09 reads with ldrsh).  A 16-bit test of
-   unk0/unk1 together is `*(u16 *)&gTerrainResult` (M12's PlayerActionBurningUpdate). */
-struct Unk03005550
-{
-    /*0x00*/ u8 unk0;
-    /*0x01*/ u8 ceilingHits;
-    /*0x02*/ u8 unk2;
-    /*0x03*/ u8 unk3;
-    /*0x04*/ u8 slope;
-    /*0x05*/ u8 unk5;
-    /*0x06*/ u8 unk6;
-    /*0x07*/ u8 unk7;
-    /*0x08*/ s16 unk8;
-    /*0x0A*/ u8 atDoor;
-    /*0x0B*/ u8 onSlipperyFloor;
-    /*0x0C*/ u8 unkC;
-    /*0x0D*/ u8 unkD;
-};
-
-extern u16 gLatchedHeldKeys[];             /* held keys, latched per player (M11) */
-extern struct Unk03005550 gTerrainResult;
-extern u32 gUnk_0873C2A0[];
-extern u8 gUnk_03001F34;
-extern vu16 gDispCnt;              /* DISPCNT shadow */
-extern u16 gPlayerPalettes[][16];         /* per-player palettes (M03 spelling) */
-extern u8 gObjPalette[];              /* OBJ palette buffer (M11 spelling) */
-extern u16 gUnk_082030B8[];
-extern u32 gPlayerDefaultTerrainBox[];
-extern u16 gUnk_08203098[];
 
 void TaskYieldTrampoline(s32 frames);
 void BlendColors(u16 *src, u16 *dst, s32 ratio, s32 count, u16 *out);

@@ -6,66 +6,13 @@
 #include "gba/gba.h"
 #include "global.h"
 #include "task.h"
+#include "actor.h"
+#include "enemy.h"
 
 /* RAM cells */
-extern s32 gUnk_030023B4;
-extern s32 gUnk_030023D4;
-extern struct Task *gCurTask;
-extern struct Task gTasks[];
+/* Not from collision.h: this file's view of gTerrainResult differs (lesson
+   3.517). */
 extern u8 gTerrainResult[];
-
-/* ROM tables */
-extern s16 gUnk_08742150[];
-extern s32 gUnk_08742088[];
-extern s32 gUnk_08742090[];
-extern s32 gUnk_08742098[];
-extern s32 gUnk_087420A8[];
-extern s32 gUnk_087420AC[];
-extern s32 gUnk_087420F4[];
-extern s32 gUnk_0874210C[];
-extern s32 gUnk_087425B8[];
-extern s32 gUnk_087425C0[];
-extern s32 gUnk_087425C8[];
-extern s32 gUnk_087425D8[];
-extern s32 gUnk_087425DC[];
-extern s32 gUnk_08742600[];
-extern s32 gUnk_08742614[];
-extern struct AnimCmd gUnk_087420C0[];
-extern struct AnimCmd gUnk_087420D4[];
-extern struct AnimCmd gUnk_08742144[];
-extern struct AnimCmd gUnk_08742598[];
-extern struct AnimCmd gUnk_087425A4[];
-extern struct AnimCmd gUnk_08742634[];
-extern u32 gUnk_0873F500[];
-extern u32 gBrontoBurtWaveStates[];
-extern u32 gBrontoBurtWaveStateUpdates[];
-extern u32 gUnk_087420A0[];
-extern u32 gUnk_087420A4[];
-extern u32 gUnk_087420BC[];
-extern u32 gUnk_087420E8[];
-extern u32 gBrontoBurtDiagonalStates[];
-extern u32 gBrontoBurtDiagonalStateUpdates[];
-extern u32 gBrontoBurtChaseStates[];
-extern u32 gBrontoBurtChaseStateUpdates[];
-extern u32 gBrontoBurtTakeOffStates[];
-extern u32 gBrontoBurtTakeOffStateUpdates[];
-extern u32 gTwizzyVariants[];
-extern u32 gTwizzyWaveStates[];
-extern u32 gTwizzyWaveStateUpdates[];
-extern u32 gUnk_087425D0[];
-extern u32 gUnk_087425D4[];
-extern u32 gUnk_087425EC[];
-extern u32 gUnk_087425F0[];
-extern u32 gTwizzyDiagonalStates[];
-extern u32 gTwizzyDiagonalStateUpdates[];
-extern u32 gTwizzyChaseStates[];
-extern u32 gTwizzyChaseStateUpdates[];
-extern u32 gTwizzyTakeOffStates[];
-extern u32 gTwizzyTakeOffStateUpdates[];
-extern u32 gUnk_08742654[];
-extern u32 gUnk_08742660[];
-extern u32 gUnk_0874266C[];
-extern u32 gTwizzyFrames[];
 
 /* Externals */
 extern s32 TaskFindNearestPlayer(void);

@@ -1,51 +1,13 @@
 #include "gba/gba.h"
 #include "global.h"
 #include "task.h"
+#include "collision.h"
 
 /* terrain_1d394.c (0x0801D394-0x0801D9C7, issue #84).
  *
  * The floor probe sub_0801bcac runs for a box standing on the ground
  * (gTerrainProbeResult.unk6 != 0), the simpler sibling of sub_0801c930 in
  * src/terrain_1c930.c. */
-
-/* The probe result block, filled by the terrain probes and mirrored into
-   gTerrainResult by TerrainProbeEnd. */
-struct Unk03005530
-{
-    /*0x00*/ u8 unk0;
-    /*0x01*/ u8 ceilingHits;
-    /*0x02*/ u8 unk2;
-    /*0x03*/ u8 unk3;
-    /*0x04*/ u8 slope;
-    /*0x05*/ u8 unk5;
-    /*0x06*/ u8 onGround;
-    /*0x07*/ u8 waterFlags;
-    /*0x08*/ u16 unk8;
-    /*0x0A*/ u8 atDoor;
-    /*0x0B*/ u8 unkB;
-    /*0x0C*/ u8 unkC;
-    /*0x0D*/ u8 unkD;
-    /*0x0E*/ u8 onSlipperyFloor;
-    /*0x0F*/ u8 unkF;
-    /*0x10*/ u8 unk10;
-};
-
-extern u8 gCollisionTileSlope[];
-extern s8 gCollisionTileShapeClass[];
-extern s8 gUnk_087336F0[];
-extern u16 gUnk_08735018[];         /* indexed by the cell's byte 2 */
-extern u16 gTerrainPixelIndex;           /* pixel offset inside the queried cell */
-extern s16 gTerrainBoxLeft;           /* box left offset */
-extern struct Unk03005530 gTerrainProbeResult;
-extern s16 gTerrainProbeX;           /* probe x */
-extern s16 gTerrainProbeY;           /* probe y */
-extern u16 gUnk_03005574;           /* queried cell: byte 2 */
-extern u16 gTerrainTile;           /* queried cell: tile set */
-extern s16 gTerrainBoxBottom;           /* box bottom offset */
-extern u16 gTerrainTileBelow;           /* cell below: tile set */
-extern s32 gTerrainVelX;           /* Task.velX */
-extern s16 gTerrainBoxRight;           /* box right offset */
-extern u16 gUnk_030055AC;           /* cell below: byte 2 */
 
 s32 TerrainQueryPixel(u32 x, u32 y);
 s32 TerrainQueryPixelAndBelow(u32 x, u32 y);

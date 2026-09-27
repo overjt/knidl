@@ -1,6 +1,9 @@
 #include "gba/gba.h"
 #include "global.h"
 #include "task.h"
+#include "link.h"
+#include "room.h"
+#include "camera.h"
 
 /* camera_2b4bc.c (0x0802B4BC-0x0802C42B, issue #86).
  *
@@ -14,41 +17,6 @@
  * gScrollLockSpeedX (x) / gScrollLockSpeedY (y) pixels a frame and stop on
  * arrival.  All of them end by writing the 16.16 target
  * gCameraCenterX/gCameraCenterY and the visible rectangle gViewRect. */
-
-struct CamRect { s16 x0, x1, y0, y1; };
-
-struct CamPos { u16 x, y; };
-
-struct Unk03005680
-{
-    /*0x00*/ u8 unk0;
-    /*0x01*/ u8 lockedAxes;
-    /*0x02*/ u16 x0;
-    /*0x04*/ u16 x1;
-    /*0x06*/ u16 y0;
-    /*0x08*/ u16 y1;
-    /*0x0A*/ u16 unkA;
-    /*0x0C*/ u16 unkC;
-};
-
-extern u8 gActivePlayerCount;
-extern u16 gPlayerCount;
-extern s16 gCameraFocusX;
-extern s16 gCameraFocusY;
-extern u8 gUnk_0200B078;
-extern s16 gCameraBounds[4];
-extern u16 gLocalPlayer;
-extern struct CamRect gPlayerBounds[4];
-extern struct CamPos gPlayerCameraPos[4];
-extern s32 gCameraCenterX;
-extern s32 gCameraCenterY;
-extern s16 gViewRect[4];
-extern u8 gActivePlayerMask;
-extern struct Unk03005680 gScrollLock;
-extern s32 gScrollLockSpeedX;
-extern s32 gScrollLockSpeedY;
-extern u16 gCameraMode;
-extern s16 gRoomBounds[4];
 
 void UpdatePlayerGroupCenter(void);
 void SetCameraBoundsToGroup(void);

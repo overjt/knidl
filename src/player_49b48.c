@@ -1,6 +1,8 @@
 #include "gba/gba.h"
 #include "global.h"
 #include "task.h"
+#include "room.h"
+#include "player.h"
 
 /* player_49b48.c (0x08049B48-0x08049F97, issue #88).
  *
@@ -15,10 +17,6 @@
  * 0xA86/0xA8E, effect 41 x4, sound 141); its handler PlayerActionFreezeUpdate also
  * registers the collider gUnk_0873C214 and tests the block hit-box set
  * gUnk_0873CF4C every frame in state 1. */
-
-extern u16 gLatchedHeldKeys[];             /* held keys, latched per player (M11) */
-extern u32 gUnk_0873C214[];             /* collider row passed to RegisterCollider (4th arg) */
-extern u32 gUnk_0873CF4C[];             /* hit-box set, passed as (struct HitBoxSet *) */
 
 /* M09's hit-box set (src/block_30804.c); only a pointer is passed here */
 struct HitBoxSet;

@@ -33,17 +33,6 @@
  * start slot and the returned slot are one variable and the stack base is the
  * plain number the landed TaskSetEntry uses (lesson 3.486). */
 
-extern vs16 gTaskSlotTypes[];
-extern s32 gTaskCount;
-extern s32 gTaskRunPhase;
-extern u32 gTaskResumeAddrs[];
-extern vu16 gTaskListRefs[];
-extern vu8 gTaskClassLists[][64];
-extern vs32 gTaskCursor;
-extern u32 gTaskStackPtrs[];
-extern struct TaskType gTaskTypes[];
-extern vu8 gTaskClassListLen[];
-
 /* Free the task in slot `id`. */
 void TaskFree(s32 id)
 {

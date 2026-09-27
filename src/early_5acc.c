@@ -1,6 +1,7 @@
 #include "gba/gba.h"
 #include "global.h"
 #include "task.h"
+#include "main.h"
 
 /* early_5acc.c (0x08005ACC-0x08005C4B, issue #63).
  *
@@ -22,11 +23,6 @@
  * and the descriptor is read as `tbl = t->unk38; tbl[t->unk3C]` (table first,
  * lesson 3.79).  Issue #32 had declared both upload functions unreachable
  * (lesson 3.73); plain C matches them. */
-
-extern u16 gSpriteCameraX;
-extern u16 gSpriteCameraY;
-extern u8 gObjVram[];
-extern u16 gObjPalette[];
 
 void RequestCopy(u32 mode, u32 src, u32 dst, u32 size);
 

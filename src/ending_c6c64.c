@@ -1,6 +1,11 @@
 #include "gba/gba.h"
 #include "global.h"
 #include "task.h"
+#include "main.h"
+#include "player.h"
+#include "effect.h"
+#include "enemy.h"
+#include "ending.h"
 
 /* ending_c6c64.c (0x080C6C64-0x080C7E4B, issue #100).
  *
@@ -16,27 +21,6 @@
  *       bursts, four variant-3 sprites).
  *   sub_080c7cc0   variant 3: a sprite that drifts right from its spawner and
  *       plays one of three animations five times. */
-
-extern u16 gUnk_02000028;
-extern u16 gUnk_02004C94;
-extern u32 gUnk_02020000[];         /* decompression buffer */
-extern u16 gUnk_03001570[];         /* palette buffer */
-extern u32 gObjVram[];         /* OBJ VRAM */
-extern u16 gPlayerPalettes[][16];     /* per-player palettes */
-extern void (*gUnk_08757330[])(void);
-extern struct GfxHeader gUnk_085995AC;
-extern struct GfxHeader gUnk_0859990C;
-extern u16 gUnk_0875735C[];
-extern u32 gUnk_08755708[];
-extern u32 gUnk_080DBEF8[];
-extern u32 gUnk_080DBF00[];
-extern u32 gUnk_080DBF08[];
-extern u32 gUnk_080DBF18[];
-extern u32 gUnk_080DBF28[];
-extern u32 gUnk_080DBF30[];
-extern u8 gEndingSceneActive;
-extern s16 gUnk_0873FF98[];
-extern u32 gUnk_0874CF28[];
 
 void TaskExitTrampoline(void);
 void TaskYieldTrampoline(s32 frames);

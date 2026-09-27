@@ -1,6 +1,8 @@
 #include "gba/gba.h"
 #include "global.h"
 #include "task.h"
+#include "player.h"
+#include "effect.h"
 
 /* effect_58810.c (0x08058810-0x0805956F, issue #89).
  *
@@ -16,9 +18,6 @@
  * sub_080594e0 sets Task.unk28 when the player leaves mode 13 (or, while
  * PlayerState.unk40 bit 8 is clear, when the spawner's Task.variant is not 1)
  * and kills it on the same unk40/unk7B test. */
-
-extern u32 gUnk_08751E5C[];
-extern u32 gUnk_08751E7C[];
 
 void TaskExitTrampoline(void);
 void TaskYieldTrampoline(s32 frames);

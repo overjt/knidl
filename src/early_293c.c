@@ -1,5 +1,7 @@
 #include "gba/gba.h"
 #include "global.h"
+#include "main.h"
+#include "link.h"
 
 extern void RunFrameNoTasks(void);
 extern void LinkMain1(void *, void *, void *);
@@ -7,16 +9,6 @@ extern int IsLinkError(void);
 extern void LinkErrorScreen(void);
 extern void RunFrames(int);
 extern void DisableSerial(void);
-
-extern u16 gLinkIsMaster;
-extern u16 gLinkCommand;
-extern u16 gLinkPlayerCount;
-extern u16 gRecvCmds[4][4];
-extern u32 gLinkStatus;
-extern u32 gSerialIntrCount;
-extern u16 gShouldAdvanceLinkState;
-extern u16 gSendCmd[4];
-extern u32 gLinkDriverMode;
 
 void DisconnectLink(void)
 {

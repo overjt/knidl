@@ -1,6 +1,7 @@
 #include "gba/gba.h"
 #include "global.h"
 #include "task.h"
+#include "room.h"
 
 /* stage_4335c.c (0x0804335C-0x08043653, issue #85).
  *
@@ -20,9 +21,6 @@
  * 3.383, as in the M10 twin) and reads the key mask inline; the tail's `m`
  * and `tp` locals are stand-ins for an address copy agbcc's gcse cannot
  * produce across the calls (lesson 3.477). */
-
-extern u16 gLatchedPressedKeys[];   /* newly pressed keys, latched per player */
-extern u16 gLatchedHeldKeys[];   /* held keys, latched per player */
 
 void TaskSetEntry(void *a, u32 i);
 s32 PlayerLand(s32 a0);

@@ -1,6 +1,8 @@
 #include "gba/gba.h"
 #include "global.h"
 #include "task.h"
+#include "room.h"
+#include "player.h"
 
 /* player_4cc7c.c (0x0804CC7C-0x0804DC07, issue #90).
  *
@@ -18,10 +20,6 @@
  * frame, re-binds action 55 with the next state (sounds 203-206 and 239,
  * camera preset PlayerSetMotionXPreset(13, 72)), steps the posture timer through
  * gUnk_0873DB34 and hands over to M11's transitions. */
-
-extern u16 gLatchedHeldKeys[];             /* held keys, latched per player (M11) */
-extern u16 gLatchedPressedKeys[];             /* newly-pressed keys, latched per player */
-extern s16 gUnk_0873DB34[];
 
 void TaskYieldTrampoline(s32 frames);
 void TaskSleepForever(void);

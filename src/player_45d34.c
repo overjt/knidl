@@ -1,6 +1,9 @@
 #include "gba/gba.h"
 #include "global.h"
 #include "task.h"
+#include "main.h"
+#include "player.h"
+#include "actor.h"
 
 /* player_45d34.c (0x08045D34-0x0804632F, issue #87).
  *
@@ -16,10 +19,6 @@
  * drops the ability (HudShowAbility) unless the ability is 7.  Its handler
  * PlayerActionMikeUpdate requests action 1 or 7 (on the ground or in the air) once
  * it has finished. */
-
-extern vu16 gDispCnt;              /* DISPCNT shadow */
-extern u8 gUnk_03001F34;
-extern u32 gPlayerDefaultTerrainBox[];
 
 void TaskYieldTrampoline(s32 frames);
 s32 PlaySfx(s32 id);

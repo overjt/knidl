@@ -1,6 +1,8 @@
 #include "gba/gba.h"
 #include "global.h"
 #include "task.h"
+#include "main.h"
+#include "effect.h"
 
 /* effect_59570.c (0x08059570-0x0805A357, issue #89).
  *
@@ -16,18 +18,6 @@
  * selects on the second byte of Task.unk18 (0x100-0x500), queues a VRAM
  * transfer (RequestCopy) and installs sub_0805a320, which kills it when the
  * spawner's Task.variant is 8 or the player is in neither mode 13 nor mode 3. */
-
-extern u32 gUnk_08751F0C[];
-extern u32 gUnk_0874C804[];
-extern u32 gUnk_0874C828[];
-extern u32 gUnk_0873C23C[];
-extern u32 gUnk_0873C250[];
-extern s16 gSpriteCameraX;               /* scalar, read with ldrsh (33 landed files) */
-extern s16 gSpriteCameraY;               /* scalar, read with ldrsh (32 landed files) */
-extern u32 gUnk_08751ECC[];
-extern u32 gUnk_08751F84[];
-extern u8 gUnk_081FD870[];
-extern u16 gUnk_0873BB0E[][3];   /* per sub-state: 8.8 x velocity, 8.8 y velocity, frame */
 
 void TaskExitTrampoline(void);
 void TaskYieldTrampoline(s32 frames);

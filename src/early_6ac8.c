@@ -40,6 +40,7 @@ struct Link {
     /*0x4D0*/ u8 unk4D0, unk4D1;
 };
 
+/* Not from link.h: this file's view of gLink differs (lesson 3.517). */
 extern struct Link gLink;
 extern u16 gLinkSavedIme;       /* saved REG_IME */
 extern u16 gSendNonzeroCheck;       /* OR of the frame's send words */

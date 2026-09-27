@@ -2,30 +2,10 @@
 #include "gba/gba.h"
 #include "global.h"
 #include "task.h"
-
-/* RAM cells / ROM tables */
-extern s32 gUnk_02006190[];
-extern s32 gUnk_02007D00[];
-extern s16 gViewRect[];
-extern s32 gUnk_030023B4;
-extern s32 gUnk_030023D4;
-extern vu16 gTaskSlotTypes[];
-extern s16 gRoomBounds[];
-extern u32 gUnk_082D8638[];
-extern u16 * gUnk_087482A8[];
-extern s16 gUnk_08748374[];
-extern struct AnimCmd gUnk_08748384[];
-extern struct AnimCmd gUnk_08748398[];
-extern s32 gUnk_087483B8[];
-extern s32 gUnk_08748410[];
-extern u16 gUnk_08748420[];
-extern s16 gUnk_08748430[];
-extern u32 gKingDededeStates[];
-extern u32 gKingDededeStateUpdates[];
-extern u32 gUnk_087484C4[];
-extern u32 gUnk_087484CC[];
-extern u32 gUnk_08748820[];
-extern u32 gKingDededeFrames[];
+#include "room.h"
+#include "camera.h"
+#include "actor.h"
+#include "enemy.h"
 
 /* Externals */
 extern void TaskYieldTrampoline(u32 a);

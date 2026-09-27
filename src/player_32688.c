@@ -1,6 +1,12 @@
 #include "gba/gba.h"
 #include "global.h"
 #include "task.h"
+#include "main.h"
+#include "link.h"
+#include "collision.h"
+#include "room.h"
+#include "player.h"
+#include "actor.h"
 
 /* player_32688.c (0x08032688-0x080337F3, issue #92).
  *
@@ -26,111 +32,6 @@
  * event Task.hitKind and the status bits PlayerState.unk40 into an action
  * request, re-binds the task to PlayerStartRequestedAction when one is pending and
  * adds the 8.8 offsets PlayerState.pixelOffsetX/unk26 to the 16.16 position. */
-
-struct M11R8 { u8 unk00; u8 unk01; u8 offsetX; u8 offsetY; u8 *boxes; };
-
-struct M11R20 { u32 w[5]; };
-
-/* A hit-box set: unk0 & 0x8000 = mirror with the task's facing, unk0 & 0xFFF
-   = the attack id passed to CanBreakBlock; unk2/unk3 = (x, y) offset of the
-   set; unk4 = the boxes, {y0, y1, x0, x1} each (x mirrored as -x1..-x0),
-   terminated by y0 == 127. */
-struct HitBoxSet
-{
-    /*0x00*/ u16 unk0;
-    /*0x02*/ s8 offsetX;
-    /*0x03*/ s8 offsetY;
-    /*0x04*/ s8 (*boxes)[4];
-};
-
-/* gTerrainResult: M06's collision result block (src/terrain_1bcac.c spells it
-   the same way except unk8, which M09 reads with ldrsh). */
-struct Unk03005550
-{
-    /*0x00*/ u8 unk0;
-    /*0x01*/ u8 ceilingHits;
-    /*0x02*/ u8 unk2;
-    /*0x03*/ u8 unk3;
-    /*0x04*/ u8 slope;
-    /*0x05*/ u8 unk5;
-    /*0x06*/ u8 unk6;
-    /*0x07*/ u8 unk7;
-    /*0x08*/ s16 unk8;
-    /*0x0A*/ u8 atDoor;
-    /*0x0B*/ u8 onSlipperyFloor;
-    /*0x0C*/ u8 unkC;
-    /*0x0D*/ u8 unkD;
-};
-
-struct Unk03005530
-{
-    /*0x00*/ u8 unk0;
-    /*0x01*/ u8 ceilingHits;
-    /*0x02*/ u8 unk2;
-    /*0x03*/ u8 unk3;
-    /*0x04*/ u8 slope;
-    /*0x05*/ u8 unk5;
-    /*0x06*/ u8 onGround;
-    /*0x07*/ u8 waterFlags;
-    /*0x08*/ u16 unk8;
-    /*0x0A*/ u8 atDoor;
-    /*0x0B*/ u8 unkB;
-    /*0x0C*/ u8 unkC;
-    /*0x0D*/ u8 unkD;
-    /*0x0E*/ u8 onSlipperyFloor;
-    /*0x0F*/ u8 unkF;
-    /*0x10*/ u8 unk10;
-};
-
-struct Unk02005E00
-{
-    /*0x00*/ s32 unk00;
-    /*0x04*/ u8 unk04[4];
-    /*0x08*/ u8 unk08[4];
-};
-
-extern struct PlayerState gPlayerStates[];
-extern s16 gPlayerLives[];
-extern s16 gPlayerHealth[];
-extern u8 gUnk_030023B0;
-extern u16 gGameState;
-extern u32 gUnk_0874CFEC[];
-extern u16 gPlayerCount;
-extern u16 gLocalPlayer;
-extern u8 gUnk_03001F30;
-extern u32 gPlayerDefaultBodyBox[];               /* stored to PlayerState.bodyBox as (u32)gPlayerDefaultBodyBox */
-extern u32 gUnk_0873CA54[];
-extern u32 gPlayerDefaultTerrainBox[];
-extern struct M11R20 gPlayerBodyBoxes[];
-extern u32 gUnk_0873C358[];
-extern struct M11R8 gPlayerHitBoxSets[];
-extern u32 gUnk_0873CF94[];
-extern u8 gUnk_02000020;
-extern u8 gUnk_020069F0;
-extern u8 gUnk_020061E0;
-extern u8 gUnk_03001F34;
-extern void (*gPlayerActions[])(void);
-extern void (*gUnk_0873B42C[])(void);
-extern u8 gTerrainBoundsClamp;
-extern u8 gUnk_02005574[];
-extern struct Unk03005550 gTerrainResult;
-extern u16 gUnk_03005544;
-extern struct Unk03005530 gTerrainProbeResult;
-extern s16 gSpriteCameraX;
-extern s16 gSpriteCameraY;
-extern void (*gPlayerActionHandlers[])(void);
-extern void (*gUnk_0873B4A4[])(void);
-extern s16 gUnk_0300244C;
-extern u16 gPlayerBubbleTimers[];
-extern u32 gUnk_0873C36C[];
-extern u32 gUnk_0873CF9C[];
-extern struct Unk02005E00 gUnk_02005E00;
-extern u16 gPlayerHeldKeys[];
-extern u8 gUnk_02007CF0;
-extern u16 gPlayerAbilities[];
-extern u16 gSavedPlayerAbilities[];
-extern u16 gSavedPlayerAbilityUses[];
-extern u16 gPlayerAbilityUses[];
 
 void CallTableEntry(u32 idx, u32 count, void (**fns)(void));
 u32 RandomRange(u32 range);

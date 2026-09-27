@@ -30,32 +30,8 @@
 #include "gba/gba.h"
 #include "global.h"
 #include "task.h"
-
-/* RAM cells */
-extern s32 gUnk_030023B4;
-extern s32 gUnk_030023D4;
-
-/* ROM tables */
-extern u32 gUnk_0873F500[];
-extern u8 gUnk_08743248[];
-extern s16 gUnk_0874325A[][4];
-extern u32 gUnk_087432E4[];
-extern u32 gUnk_087432E8[];
-extern u8 gUnk_087432EC[][4];
-extern u32 gUnk_087432F4[];
-extern u32 gUnk_087432FC[];
-extern u32 gUnk_08743308[];
-extern u32 gUnk_08743600[];
-extern u32 gUnk_08743604[];
-extern u32 gUnk_0874360C[];
-extern u8 gUnk_08743614[];
-extern s16 gUnk_0874361A[];
-extern u32 gUnk_0874362C[];
-extern u32 gUnk_0874363C[];
-extern u32 gUnk_08743640[];
-extern u32 gLaserBallLaserFrames[];
-extern u32 gShotzoCannonballFrames[];
-extern u32 gUnk_08752A70[];
+#include "actor.h"
+#include "enemy.h"
 
 /* Externals */
 extern void TaskYieldTrampoline(u32 a);
@@ -785,4 +761,3 @@ void sub_0808ffe0(void)
     if (--t->unk28 < 0)
         TaskSetEntry(ActorDie, gCurTaskIdx);
 }
-

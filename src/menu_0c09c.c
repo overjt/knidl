@@ -1,6 +1,11 @@
 #include "gba/gba.h"
 #include "global.h"
 #include "task.h"
+#include "main.h"
+#include "mode.h"
+#include "menu.h"
+#include "room.h"
+#include "save.h"
 
 /* menu_0c09c.c (0x0800C09C-0x0800CA0F, issue #99).
  *
@@ -12,49 +17,6 @@
  * sub_0800c558 and sub_0800c610 run the two-choice screens 2/3 that
  * lead into a game, and sub_0800c8a0 the two-step erase confirmation
  * that clears the slot with EraseSaveSlot. */
-
-struct SaveSlot
-{
-    /*0x00*/ u32 unk00;
-    /*0x04*/ s32 unk04;
-    /*0x08*/ u32 generation;
-    /*0x0C*/ s32 saveCount;
-    /*0x10*/ u16 milestoneFlags;
-    /*0x12*/ u16 completionPercent[2];
-    /*0x16*/ u8 unk16[2];
-    /*0x18*/ u8 unk18[2];
-    /*0x1A*/ u8 unk1A[2];
-    /*0x1C*/ u8 unk1C[2];
-    /*0x1E*/ u8 pad1E[2];
-    /*0x20*/ u32 unk20[2];
-    /*0x28*/ u8 unk28[8][7];
-    /*0x60*/ u16 unk60[4];
-    /*0x68*/ u16 unk68[4];
-    /*0x70*/ u32 checksum;
-    /*0x74*/ u8 filler74[0x8C];
-};
-
-extern s8 gUnk_02004B44;
-extern u32 gMenuBufferedKeys;
-extern s8 gFileMenuCursor;
-extern s8 gMenuScreen;
-extern s8 gMenuTransitionTimer;
-extern u8 gEraseConfirmCount;
-extern s8 gMenuChoiceCursor;
-extern s8 gPrevMenuScreen;
-extern s8 gMenuCursor;
-extern struct SaveSlot gSaveSlots[];
-extern vu16 gPressedKeys;
-extern vu16 gRepeatedKeys;
-extern vs32 gBg3ScrollY;
-extern vs32 gBg2ScrollY;
-extern vu16 gDispCnt;
-extern vu16 gHeldKeys;
-extern u8 gUnk_03001F30;
-extern u16 gPrevGameState;
-extern u16 gGameState;
-extern s32 gCurSaveSlot;
-extern u8 gExtraMode;
 
 void BeginFastFadeInFromWhite(void);
 void BeginFastFadeOutToWhite(void);

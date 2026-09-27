@@ -2,26 +2,13 @@
 #include "gba/gba.h"
 #include "global.h"
 #include "task.h"
+#include "camera.h"
+#include "enemy.h"
 
 /* RAM cells / ROM tables */
-extern s16 gViewRect[];
-extern struct Task gTasks[];
+/* Not from collision.h: this file's view of gTerrainResult differs (lesson
+   3.517). */
 extern u8 gTerrainResult[];
-extern u32 gUnk_08745CEC[];
-extern u32 gMaceKnightVariants[];
-extern u32 gUnk_08747BD8[];
-extern u32 gUnk_08747BE0[];
-extern u32 gUnk_08747BE8[];
-extern u32 gTridentKnightVariants[];
-extern u32 gUnk_08747C04[];
-extern u32 gUnk_08747C14[];
-extern u8 gUnk_08747C28[];
-extern u32 gUnk_08747DB4[];
-extern u32 gUnk_08747E0C[];
-extern u32 gJavelinKnightJavelinFrames[];
-extern u32 gMaceKnightFrames[];
-extern u32 gMaceKnightMaceFrames[];
-extern u32 gTridentKnightFrames[];
 
 /* Externals */
 extern void TaskYieldTrampoline(u32 a);

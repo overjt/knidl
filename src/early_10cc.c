@@ -8,11 +8,13 @@
  * and palette shadows via CopyOamAndPalette, pumps the copy queue, and clears the
  * frame flag gWaitingForVBlank that EndFrame spins on. */
 
+/* Not from main.h: this file's view of gVBlankCallback differs (lesson
+   3.517). */
 extern vu16 gFadeTimer;
 extern vu16 gFadeInterval;
 extern vu16 gFadeSteps;
 extern vs16 gBrightness;
-extern vu16 gFadeStep;
+extern vs16 gFadeStep;
 extern u16 *gFadeKeepMask;
 extern vu32 gPaletteSource;
 extern vu16 gFadeBlankAtWhite;
@@ -31,9 +33,9 @@ extern vu16 gWaitingForVBlank;
 extern vu16 gFrameInProgress;
 extern vu16 gHeldKeys;
 extern vu16 gPressedKeys;
-extern vu16 gLinkPlayerCount;
+extern u16 gLinkPlayerCount;
 extern vu16 gIntrMasterEnable;
-extern vu32 gLinkDriverMode;
+extern u32 gLinkDriverMode;
 extern vu16 gFrameCount;
 extern u16 gPlayTime[4];
 extern void (*gFrameEndCallback)(void);

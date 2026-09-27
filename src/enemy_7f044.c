@@ -43,60 +43,9 @@
 #include "gba/gba.h"
 #include "global.h"
 #include "task.h"
-
-/* RAM cells */
-extern u16 gFrameCount;
-extern struct PlayerState gPlayerStates[];
-extern struct Task *gCurTask;
-extern struct Task gTasks[];
-
-/* ROM tables */
-extern u32 gUnk_0873F500[];
-extern u32 gUnk_0873F720[];
-extern u8 gUnk_08741318[];
-extern u8 gUnk_0874131A[];
-extern u8 gUnk_0874131C[];
-extern s32 gUnk_08741328[];
-extern s32 gUnk_0874133C[];
-extern u8 gUnk_08741350[];
-extern u8 gUnk_08741355[];
-extern u8 gUnk_08741357[];
-extern u8 gUnk_08741365[];
-extern u8 gUnk_08741367[];
-extern u8 gUnk_0874136D[];
-extern s32 gUnk_08741378[];
-extern u32 gUnk_08741390[];
-extern u32 gUnk_0874139C[];
-extern u32 gUnk_087413A8[];
-extern u32 gUnk_087413B4[];
-extern u32 gUnk_087413C0[];
-extern u32 gUnk_087413C8[];
-extern u32 gUnk_087413D0[];
-extern u32 gUnk_087413D4[];
-extern u8 gUnk_087413D8[];
-extern u8 gUnk_087413DA[];
-extern s32 gUnk_087413DC[];
-extern s32 gUnk_087413E4[];
-extern struct AnimCmd gUnk_087413EC[];
-extern struct AnimCmd gUnk_08741420[];
-extern struct AnimCmd gUnk_08741454[];
-extern u32 gTwisterVariants[];
-extern u32 gTwisterStates[];
-extern u32 gTwisterStateUpdates[];
-extern u32 gUnk_087414A8[];
-extern u32 gUnk_087414AC[];
-extern u8 gUnk_087414B0[];
-extern u32 gHotHeadVariants[];
-extern u32 gHotHeadWalkStates[];
-extern u32 gHotHeadWalkStateUpdates[];
-extern u32 gUnk_087414D8[];
-extern u32 gUnk_087414DC[];
-extern u32 gHotHeadStandStates[];
-extern u32 gHotHeadStandStateUpdates[];
-extern u32 gUnk_08741ADC[];
-extern u32 gUnk_08741CE0[];
-extern u32 gTwisterFrames[];
-extern u32 gHotHeadFrames[];
+#include "main.h"
+#include "actor.h"
+#include "enemy.h"
 
 /* Externals */
 extern s32 RandomRange(s32 a);

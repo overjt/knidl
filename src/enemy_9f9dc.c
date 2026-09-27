@@ -2,11 +2,7 @@
 #include "gba/gba.h"
 #include "global.h"
 #include "task.h"
-
-/* RAM cells / ROM tables */
-extern u16 gFrameCount;
-extern struct Task gTasks[];
-extern vu16 gTaskSlotTypes[];
+#include "main.h"
 
 void sub_0809f9dc(void)
 {

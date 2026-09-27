@@ -1,6 +1,7 @@
 #include "gba/gba.h"
 #include "global.h"
 #include "task.h"
+#include "effect.h"
 
 /* effect_56448.c (0x08056448-0x08056DD3, issue #89).
  *
@@ -13,10 +14,6 @@
  * some in world space, respawning variant 28 in other sub-states; its
  * per-frame callback sub_08056da8 sets Task.unk28 in sub-state 4 once the
  * player leaves mode 13. */
-
-extern u32 gUnk_0874C930[];
-extern u32 gUnk_0874C828[];
-extern u32 gUnk_0874C600[];
 
 void TaskExitTrampoline(void);
 void TaskYieldTrampoline(s32 frames);

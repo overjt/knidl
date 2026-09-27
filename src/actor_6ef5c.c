@@ -35,12 +35,9 @@
 #include "gba/gba.h"
 #include "global.h"
 #include "task.h"
-
-
-extern u16 gLocalPlayer;
-extern u8 gUnk_0873F5D4[];
-extern s16 gUnk_0873D3B8[][2];
-extern u16 gUnk_0873D384[];
+#include "link.h"
+#include "player.h"
+#include "actor.h"
 
 extern void TaskYieldTrampoline(u32 a);
 

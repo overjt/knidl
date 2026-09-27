@@ -23,6 +23,9 @@
 #include "gba/gba.h"
 #include "global.h"
 #include "task.h"
+#include "main.h"
+#include "link.h"
+#include "actor.h"
 
 extern void TaskYieldTrampoline(u32 a);
 extern void TaskExitTrampoline(void);
@@ -45,17 +48,15 @@ extern void sub_0806bc9c(void);
 extern void sub_0806be84(void);
 extern void sub_0806bf38(void);
 
-extern s16 gUnk_0300244C;
 extern void TaskSetMotionXFacing(s32 a, s32 b);
 extern void ActorSetTerrainBox(u32 v);
 extern s32 CreateChildTaskHere(u32 type, u8 keepPrio);
 
+/* Not from collision.h: this file's view of gTerrainResult differs (lesson
+   3.517). */
 extern u8 gTerrainResult[];
-extern s16 gSpriteCameraX;
-extern s16 gSpriteCameraY;
 extern s32 QueueSprite(u32 a, u32 b, u32 c, u32 d, s32 e, s32 f);
 extern u32 IsWorldPosOnScreen(s16 x, s16 y);
-extern u32 gUnk_0874CC84[];
 extern void PlaySfx(u32 a);
 extern void RequestScreenShake(u32 a);
 extern void TaskBreakBlocks(void *p, s16 v);
@@ -63,37 +64,16 @@ extern void ActorCollideTerrain(void);
 extern void TaskSetMotionY(s32 a, s32 b, s32 c);
 extern void ActorDrawWorldInViewOrDestroy(void);
 extern s32 CreateChildTaskAtOffsetFacing(u32 type, s16 dx, s16 dy, u8 keepPrio);
-extern u32 gUnk_0874C520[];
-extern u32 gUnk_0874CBC8[];
-extern vs16 gTaskSlotTypes[];
 extern void TaskFaceLikeParent(void);
 extern u8 TaskHasSameSerial(u32 i);
 extern void TaskFree(s32 i);
-extern s8 gUnk_0873EB30[];
 extern void TaskSetFrameByFacing(u32 a);
 extern void TaskStop(void);
 extern s16 RandomSpreadFacing(s32 a, u32 b, u32 c);
 extern s32 RandomSpread(s32 a, u32 b, u32 c);
-extern u32 gUnk_0874CB90[];
 extern s32 CreateChildTask(u32 type, int xArg, int yArg, int prioArg);
 extern s32 CreateChildTaskAt(u32 type, s16 xArg, s16 yArg, u8 keepPrio);
 extern void TaskSetFrame(s32 a);
-extern s8 gUnk_0873EB38[];
-
-struct Unk0873EAC0
-{
-    /*0x00*/ s32 unk00;
-    /*0x04*/ s32 unk04;
-};
-
-extern struct Unk0873EAC0 gUnk_0873EAC0[];
-extern s16 gUnk_0873EAF0[];
-extern u32 gUnk_0873F8CC[];
-extern u32 gUnk_0873F8DC[];
-extern u32 gUnk_0873F894[];
-extern u32 gUnk_0873F858[];
-extern u32 gUnk_0873F86C[];
-extern u32 gUnk_0873F8F4[];
 
 void sub_0806c30c(void);
 void sub_0806c384(void);

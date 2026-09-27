@@ -1,6 +1,8 @@
 #include "gba/gba.h"
 #include "global.h"
 #include "task.h"
+#include "mode.h"
+#include "ending.h"
 
 /* boot_caab8.c (0x080CAAB8-0x080CACEF, issue #100).
  *
@@ -29,29 +31,6 @@
  * No natural spelling that keeps the ROM's OR was found; the natural best
  * (the plain store, 40 differing bytes) is recorded on #100. */
 
-/* One boot-logo sprite object: a command script (BootLogoUpdateObjects) moving a
-   sprite in 24.8 fixed point. */
-struct M38LogoObj
-{
-    /*0x00*/ s16 *scriptPos;    /* script cursor */
-    /*0x04*/ s16 scriptId;     /* script id, -1 = off */
-    /*0x06*/ s16 spriteId;     /* sprite id (gUnk_087554B8), -1 = none */
-    /*0x08*/ s16 layer;     /* layer */
-    /*0x0A*/ s16 sleepFrames;     /* frames to wait */
-    /*0x0C*/ s32 posX;     /* x << 8 */
-    /*0x10*/ s32 posY;     /* y << 8 */
-    /*0x14*/ s16 velX;     /* x velocity */
-    /*0x16*/ s16 velY;     /* y velocity */
-    /*0x18*/ s16 accelX;     /* x acceleration */
-    /*0x1A*/ s16 accelY;     /* y acceleration */
-    /*0x1C*/ s16 loopCount;     /* loop count */
-    /*0x1E*/ u16 unk1E;
-};
-
-extern struct M38LogoObj gUnk_02030000[];
-extern s16 *gUnk_0201BFD0[];
-extern s16 *gUnk_087577D8[];
-extern u32 gUnk_087554B8[];
 s32 QueueSprite(u32 a, u32 b, u32 c, u32 d, u32 e, s16 f);
 s32 PlaySfx(s32 id);
 
@@ -67,7 +46,6 @@ void BootLogoUpdateObjects(void)
     s16 arg = 0;
     s32 j = 0;
     s32 x = 0, y = 0;
-
 
     for (i = 0; i < 115; obj++, i++) {
         if (obj->scriptId == -1)

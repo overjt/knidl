@@ -1,6 +1,12 @@
 #include "gba/gba.h"
 #include "global.h"
 #include "task.h"
+#include "main.h"
+#include "link.h"
+#include "mode.h"
+#include "room.h"
+#include "actor.h"
+#include "save.h"
 
 /* mode_08664.c (0x08008664-0x08008B8B, issue #96).
  *
@@ -8,34 +14,6 @@
  * picture (sub_08008fc4), waits for A/START or B and, when the stage
  * allows it, toggles a Continue/Exit choice drawn by sub_080089e0.  Also
  * the per-frame body of AgbMain state 20, sub_08008a00. */
-
-extern u16 gPausingPlayer;
-extern s16 gPlayerHealth[];
-extern s16 gPlayerLives[];
-extern s8 gUnk_02007D64;
-extern s16 gInputRecorderMode;
-extern vu16 gFadeBlankAtWhite;
-extern vs32 gBg3ScrollX;
-extern vs32 gBg2ScrollX;
-extern vs32 gBg3ScrollY;
-extern u8 gUnk_03001390[];
-extern vu16 gFadeSteps;
-extern vs32 gBg2ScrollY;
-extern vu16 gPlayerPressedKeys[];
-extern vu16 gDispCnt;
-extern s8 gUnk_03001F20;
-extern u8 gUnk_03001F30;
-extern struct PlayerState gPlayerStates[];
-extern u8 gActivePlayerMask;
-extern u16 gLocalPlayer;
-extern u16 gPlayerCount;
-extern s8 gUnk_030023B8;
-extern u16 gGameState;
-extern u8 gUnk_03002400[8][7];
-extern s8 gStageRequest;
-extern s8 gUnk_03002444;
-extern s16 gUnk_0300244C;
-extern u16 gUnk_0857121C[][11];
 
 void RequestCopy(u32 mode, u32 src, u32 dst, u32 size);
 void ResetFadeAndBlend(void);

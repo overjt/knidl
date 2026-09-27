@@ -1,6 +1,8 @@
 #include "gba/gba.h"
 #include "global.h"
 #include "task.h"
+#include "player.h"
+#include "effect.h"
 
 /* effect_56dd4.c (0x08056DD4-0x08057493, issue #89).
  *
@@ -19,13 +21,6 @@
  * RegisterCollider) and tests the block hit-box set gUnk_0873CC94 (M09's
  * TaskBreakBlocksAt) at the spawner's position.  Variant 31 (sub_08057430, M12)
  * is a single animation on its spawner (gUnk_08751CEC). */
-
-extern u32 gUnk_08751CA4[];
-extern u32 gUnk_08751CBC[];
-extern s16 gUnk_0873BA8C[][2][3];   /* {base, scale, amount} rows for RandomSpreadFacing */
-extern u32 gUnk_0873C038[];
-extern u32 gUnk_0873CC94[];
-extern u32 gUnk_08751CEC[];
 
 /* M09's hit-box set (src/block_30804.c); only a pointer is passed here */
 struct HitBoxSet;

@@ -1,6 +1,10 @@
 #include "gba/gba.h"
 #include "global.h"
 #include "task.h"
+#include "main.h"
+#include "mode.h"
+#include "hud.h"
+#include "room.h"
 
 /* boot_091ac.c (0x080091AC-0x080099FB, issue #96).
  *
@@ -11,43 +15,6 @@
  * the title screen TitleScreen - task type #1 (Task_TitlePalette) animates the
  * title palette, task type #2 (Task_TitleSprites) spawns ten sprite children
  * (sub_08009640) - with the nine-scene intro story IntroStory. */
-
-extern vs32 gBg0ScrollY;
-extern vu16 gPressedKeys;
-extern vu8 gBldCntTarget2;
-extern vu16 gWin0V;
-extern vu16 gFadeBlankAtWhite;
-extern vu16 gFadeStep;
-extern vu8 gBldAlphaEva;
-extern vu8 gWinIn0;
-extern vs32 gBg3ScrollX;
-extern vu8 gWinOut;
-extern vs32 gBg2ScrollX;
-extern vs32 gBg3ScrollY;
-extern vs16 gBrightness;
-extern vs32 gBg1ScrollY;
-extern vu16 gWin0H;
-extern vu16 gFadeTimer;
-extern vs32 gBg0ScrollX;
-extern vu8 gBldCntTarget1;
-extern u16 gUnk_03001430[];
-extern vu16 gFadeSteps;
-extern vs32 gBg2ScrollY;
-extern vu16 gFadeInterval;
-extern vu8 gBldAlphaEvb;
-extern u16 *gFadeKeepMask;
-extern vu16 gDispCnt;
-extern vs32 gBg1ScrollX;
-extern s32 gUnk_03001F2C;
-extern u16 gPrevGameState;
-extern u16 gLinkPlayerCount;
-extern u16 gUnk_08541D98[][16];
-extern u16 gUnk_08541F58[];
-extern u16 gUnk_08731C88[];
-extern u16 gUnk_08731CC8[];
-extern u8 gUnk_08731CDC[];
-extern u16 gUnk_08731CE6[];
-extern u32 gUnk_087555B4[];
 
 void TaskExitTrampoline(void);
 void TaskYieldTrampoline(s32 frames);

@@ -1,6 +1,11 @@
 #include "gba/gba.h"
 #include "global.h"
 #include "task.h"
+#include "main.h"
+#include "link.h"
+#include "room.h"
+#include "player.h"
+#include "actor.h"
 
 /* player_3919c.c (0x0803919C-0x08039C23, issue #91).
  *
@@ -17,28 +22,6 @@
  * landing or crouch animation picked by M11's sub_080404e4, calls M07's
  * door code EnterDoor and plays the ability's door animation
  * (gPlayerDoorAnims[ability][0]). */
-
-struct CamPos { u16 x, y; };
-
-extern u8 gActivePlayerCount;
-extern u8 gActivePlayerMask;
-extern u16 gUnk_0873D9FA[][2];
-extern u16 gPlayerCount;               /* number of players */
-extern s16 gPlayerHealth[];             /* health per player (M02's HUD) */
-extern u16 gLocalPlayer;
-extern vu16 gDispCnt;              /* DISPCNT shadow */
-extern vs16 gTaskSlotTypes[];
-extern u8 gUnk_02007CF0;
-extern u8 gUnk_0300234C;
-extern s8 gStageRequest;                /* stage request (M02) */
-extern s16 gPlayerLives[];
-extern u8 gUnk_03001F34;
-extern u16 gGameState;
-extern struct CamPos gPlayerCameraPos[4];
-extern s16 gSpriteCameraY;
-extern s8 gUnk_03002444;
-extern s16 gUnk_0873D7E4[][3];
-extern u16 gPlayerDoorAnims[][7];
 
 void TaskExitTrampoline(void);
 void TaskYieldTrampoline(s32 frames);

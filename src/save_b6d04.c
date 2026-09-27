@@ -1,18 +1,15 @@
 #include "gba/gba.h"
 #include "global.h"
 #include "task.h"
+#include "camera.h"
+#include "save.h"
 
-extern u8 gHBlankScrollState;
-extern s32 gHBlankScrollTimer;
-extern u16 gHBlankScrollTable[];
-extern s32 gUnk_02016C30;
+/* Not from main.h: this file's view of gBg2ScrollY differs (lesson 3.517). */
 extern void (*gFrameCallback)(void);
-extern u32 gHBlankDmaDest;
 extern vs32 gBg3ScrollX;
 extern vs32 gBg2ScrollX;
 extern vu32 gBg2ScrollY;
-extern u16 gSpriteCameraY;
-extern s8 gUnk_087561CC[];
+extern s16 gSpriteCameraY;
 
 /* The fixed BG2VOFS value `w` is a plain u32 local that global allocation
    spills (the ROM's `str r0, [sp]` ... `mov r0, sp; ldrh`, lesson 3.467), and

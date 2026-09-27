@@ -1,6 +1,9 @@
 #include "gba/gba.h"
 #include "global.h"
 #include "task.h"
+#include "collision.h"
+#include "effect.h"
+#include "actor.h"
 
 /* effect_54330.c (0x08054330-0x08054A7F, issue #89).
  *
@@ -21,32 +24,6 @@
  * companion sub_08054a44 (the collision box gUnk_0873CB74 through
  * sub_0801c3a4) kills it once its Task.waterFlags is clear or gTerrainResult.unk1
  * is set. */
-
-/* gTerrainResult: M06's collision result block (src/terrain_1bcac.c spells it
-   the same way except unk8, which M09 reads with ldrsh).  A 16-bit test of
-   unk0/unk1 together is `*(u16 *)&gTerrainResult` (M12's PlayerActionBurningUpdate). */
-struct Unk03005550
-{
-    /*0x00*/ u8 unk0;
-    /*0x01*/ u8 ceilingHits;
-    /*0x02*/ u8 unk2;
-    /*0x03*/ u8 unk3;
-    /*0x04*/ u8 slope;
-    /*0x05*/ u8 unk5;
-    /*0x06*/ u8 unk6;
-    /*0x07*/ u8 unk7;
-    /*0x08*/ s16 unk8;
-    /*0x0A*/ u8 atDoor;
-    /*0x0B*/ u8 onSlipperyFloor;
-    /*0x0C*/ u8 unkC;
-    /*0x0D*/ u8 unkD;
-};
-
-extern u32 gUnk_0874C600[];
-extern u32 gUnk_0874C520[];
-extern u32 gUnk_0874C648[];
-extern s8 gUnk_0873CB74[];              /* collision box passed to sub_0801c3a4 */
-extern struct Unk03005550 gTerrainResult;
 
 void TaskExitTrampoline(void);
 void TaskYieldTrampoline(s32 frames);

@@ -1,6 +1,8 @@
 #include "gba/gba.h"
 #include "global.h"
 #include "task.h"
+#include "link.h"
+#include "ending.h"
 
 /* gameover_ccd4c.c (0x080CCD4C-0x080CD32F, issue #100).
  *
@@ -13,18 +15,6 @@
  *       (sub_080ccf10): sub_080ccf2c / sub_080cd0c8 and sub_080cd0cc /
  *       sub_080cd248, two scripted sprites with empty handlers.
  *   sub_080cd24c / sub_080cd2f8   variants 4 and 5. */
-
-extern u16 gPlayerCount;           /* number of players */
-extern s8 gGameOverCursor;            /* game-over screen: cursor (continue = 0?) */
-extern s16 gGameOverPlayerTask;           /* game-over screen: the #264 variant-0 task's index */
-extern u32 gUnk_087549FC[];
-extern s32 gUnk_087582F4[];
-extern void (*gUnk_08758324[])(void);
-extern void (*gUnk_0875832C[])(void);
-extern u32 gUnk_08754984[];
-extern u32 gUnk_08754908[];
-extern u32 gUnk_087548B8[];
-extern u32 gUnk_087548A8[];
 
 void TaskExitTrampoline(void);
 void TaskYieldTrampoline(s32 frames);

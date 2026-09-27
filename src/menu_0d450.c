@@ -1,6 +1,12 @@
 #include "gba/gba.h"
 #include "global.h"
 #include "task.h"
+#include "main.h"
+#include "link.h"
+#include "sound.h"
+#include "mode.h"
+#include "menu.h"
+#include "room.h"
 
 /* menu_0d450.c (0x0800D450-0x0800DAF7, issue #99).
  *
@@ -11,35 +17,6 @@
  * multi-play session for the mode sub_0800da18 picks, waits for the
  * partners (sub_0800da74) and leaves for game state 5 or 13.
  * CreateFileSelectSprites spawns the file-select sprite tasks #238-#240. */
-
-extern s8 gLinkSessionMode;
-extern s8 gSoundTestRepeatCount;
-extern s8 gMenuScreen;
-extern s8 gMenuTransitionTimer;
-extern s8 gPrevMenuScreen;
-extern s8 gUnk_02007FC8;
-extern u8 gUnk_02007FCC;
-extern s16 gSoundTestSelection[];
-extern s8 gMenuCursor;
-extern vu8 gMultiBootStruct[];
-extern u32 gLinkSetupMode;
-extern vu16 gPressedKeys;
-extern vs16 gCurrentBgm;
-extern vu16 gRepeatedKeys;
-extern vs32 gBg2ScrollX;
-extern vs32 gBg3ScrollY;
-extern vu16 gKeyRepeatDelay;
-extern vs32 gBg2ScrollY;
-extern vu16 gKeyRepeatInterval;
-extern vu16 gDispCnt;
-extern vu16 gHeldKeys;
-extern s32 gUnk_03001F2C;
-extern u8 gUnk_03001F30;
-extern u16 gGameState;
-extern u8 gExtraMode;
-extern const s16 gUnk_08731DC0[];
-extern u8 gUnk_0876B1FC[];
-extern u8 gUnk_0876F690[];
 
 void RunFrame(void);
 void RunFrames(s32 count);

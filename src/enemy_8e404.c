@@ -35,40 +35,8 @@
 #include "gba/gba.h"
 #include "global.h"
 #include "task.h"
-
-/* RAM cells */
-extern s32 gUnk_030023B4;
-extern s32 gUnk_030023D4;
-
-/* ROM tables */
-extern u32 gUnk_0873F500[];
-extern u32 gLaserBallStates[];
-extern u32 gLaserBallStateUpdates[];
-extern u32 gUnk_0874320C[];
-extern u32 gUnk_08743210[];
-extern u32 gUnk_08743214[];
-extern u32 gUnk_0874321C[];
-extern u32 gUnk_08743224[];
-extern u32 gUnk_08743230[];
-extern u32 gUnk_0874323C[];
-extern u32 gUnk_08743240[];
-extern u32 gUnk_08743244[];
-extern u8 gUnk_08743248[];
-extern s8 gUnk_0874324C[];
-extern s8 gUnk_08743251[];
-extern s8 gUnk_08743256[];
-extern u32 gShotzoVariants[];
-extern u32 gUnk_0874329C[];
-extern u32 gUnk_087432A8[];
-extern u32 gUnk_087432B4[];
-extern u32 gUnk_087432C0[];
-extern u32 gUnk_087432CC[];
-extern u32 gUnk_087432D8[];
-extern u32 gUnk_08743390[];
-extern u32 gUnk_087433E8[];
-extern u32 gUnk_08743558[];
-extern u32 gUnk_087524A4[];
-extern u32 gShotzoFrames[];
+#include "actor.h"
+#include "enemy.h"
 
 /* Externals */
 extern void TaskYieldTrampoline(u32 a);
@@ -1052,4 +1020,3 @@ void sub_0808f400(void)
     if (sub_08069888() == 0)
         sub_0808f1b4(2, sub_0808f380);
 }
-

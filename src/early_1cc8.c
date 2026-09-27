@@ -1,5 +1,6 @@
 #include "gba/gba.h"
 #include "global.h"
+#include "main.h"
 
 /* early_1cc8.c (0x08001CC8-0x08001FCF, issue #63).
  *
@@ -25,13 +26,6 @@
  * on v (`v >>= 8; v -= h; v &= 0xFF;`), a real 3-D size table, and the attr0
  * store as `(s16)dbl | (s16)(...)`; lesson 3.479.  Issue #32 had called the
  * last 8 bytes an unreachable regmove tie (lesson 3.35). */
-
-extern vs16 gAffineSpriteBuffer[];       /* affine OBJ staging buffer */
-extern vu16 gAffineSpriteBufferPos;         /* staging buffer write index */
-extern vu16 gOamBuffer[];       /* OAM shadow (attrs + affine params) */
-extern vu16 gOamAffineCount;         /* affine matrix index */
-extern const u8 gUnk_0872EB14[4][4][2];   /* [shape][size] -> {w,h} */
-extern s16 gCosTable[];  /* trig table (mid pointer) */
 
 /* Emit an affine sprite: copy the OAM template stream at `p` into the
  * staging buffer with every entry scaled by 256/sx, 256/sy around its

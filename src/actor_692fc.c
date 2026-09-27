@@ -16,6 +16,9 @@
 #include "gba/gba.h"
 #include "global.h"
 #include "task.h"
+#include "link.h"
+#include "room.h"
+#include "actor.h"
 
 /* The 6-byte directional record ActorGetTerrainBox fills on the stack: three raw
    bytes copied from Actor.terrainBox plus three that are negated when the task
@@ -54,13 +57,9 @@ struct ActorVt
     /*0x08*/ u32 unk08;
 };
 
-extern vs16 gTaskSlotTypes[];
+/* Not from collision.h: this file's view of gTerrainResult differs (lesson
+   3.517). */
 extern u8 gTerrainResult[];
-extern u16 gLocalPlayer;
-extern u16 gGameState;
-extern u16 gUnk_0873E58C[];
-extern s16 gUnk_0873E5A4[];
-extern u32 gUnk_0873F910[];
 
 extern u32 RandomRange(u32 range);
 extern void PlaySfx(s32 id);

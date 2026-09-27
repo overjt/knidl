@@ -1,21 +1,8 @@
 #include "gba/gba.h"
 #include "global.h"
 #include "task.h"
-
-struct Unk0200D120
-{
-    /*0x00*/ u8 filler00[0x20];
-    /*0x20*/ u16 savedTileWord;
-    /*0x22*/ u8 filler22[0x26];
-    /*0x48*/ s8 *attackBox;
-    /*0x4C*/ u8 filler4C[0x24];
-};
-
-/* RAM cells */
-extern struct Unk0200D120 gUnk_0200D120[];
-
-/* ROM tables */
-extern u32 gUnk_087537E8[];
+#include "hud.h"
+#include "enemy.h"
 
 /* Externals */
 extern void TaskMove(void);

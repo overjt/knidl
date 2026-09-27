@@ -11,56 +11,23 @@
 #include "gba/gba.h"
 #include "global.h"
 #include "task.h"
+#include "main.h"
+#include "link.h"
+#include "room.h"
+#include "camera.h"
+#include "actor.h"
+#include "enemy.h"
 
-extern s16 gSpriteCameraX;
-extern s16 gViewRect[];
-extern s8 gPaletteAnimTasks[];
-extern struct Actor gActors[];
-extern s8 gUnk_02007FB8[];
-extern u32 gUnk_030012B0[];
-extern u32 gUnk_02005E10[];
-extern u32 gPaletteAnimVariants[];
-extern u8 gUnk_0825088C[];
-extern u8 gObjPalette[];
-extern u32 gUnk_0873DF38[][4];
-extern u8 gUnk_0873DF78[];
-extern u8 gUnk_082530C8[];
-extern u32 gUnk_0873DF7C[][3];
-extern u8 gUnk_0873DFAC[];
-extern u32 *gUnk_0873EF74[];
-extern u32 *gUnk_0873F118[];
-extern u32 gUnk_0873F01C[];
-extern u8 gUnk_0825CA44[];
-extern vs16 gTaskSlotTypes[];
 extern void PlaySfx(u32 a);
-extern u16 gUnk_02007D60;
-extern u16 gUnk_02007FF0;
-extern u32 *gUnk_0873F0C4[];
-extern u32 *gUnk_0873F138[];
-extern u32 *gMidBossGfx[];
-extern u32 *gBossGfx[];
-extern u32 gUnk_0200AEF4;
-extern u32 gUnk_02004C90;
-extern u32 gUnk_02007D00[];
-extern u32 gUnk_02006190[];
-extern u32 gUnk_02006040[];
-extern u8 gActivePlayerCount;
 extern void TaskSetSkipMask(u32 a, u32 b);
 extern void sub_080662d8(void);
 extern u32 sub_080b5628(u32 a);
 extern u32 sub_080b55d8(u32 a, u32 b);
-extern s16 gUnk_0873E184[];
-extern u16 gUnk_0873E16C[];
-extern s16 gPlayerHealth[];
-extern u16 gPlayerCount;
-extern u8 gActivePlayerMask;
 extern void sub_08066468(void);
 extern void ActorLoadHeaderPalette(struct GfxHeader *h);
 extern void sub_08068f68(void);
 extern void ActorReactToHit(void);
 extern void sub_08066480(struct GfxHeader *h, u32 b, u32 c);
-extern u16 gFrameCount;
-extern u8 gUnk_0200AFF8;
 extern void HudShowHpBar(void);
 extern void sub_0800a340(s16 a, s16 b);
 extern void HudStartHpBar(s16 a, s16 b);
@@ -78,9 +45,6 @@ void sub_08067170(void);
 extern void ActorStopAnim(void);
 extern s32 ActorStartAnim(struct AnimCmd *p);
 extern void ActorSetAttackBox(u32 v);
-extern u8 gUnk_0200D080;
-extern s8 gUnk_0873E1B4[];
-extern u16 gGameState;
 extern u32 sub_08026a0c(void);
 extern u32 sub_08026a80(void);
 extern u32 sub_08026aec(void);
@@ -97,7 +61,6 @@ extern void sub_0806be4c(u32 i);
 extern void TaskSetEntry(void *fn, u32 i);
 extern void ActorDie(void);
 extern void ActorDestroySlot(s32 i);
-extern s32 gUnk_0873E1B8[];
 extern void sub_08066c74(void);
 extern void ActorLoadDef(u32 def);
 extern void TaskTurnAroundAndReverseX(void);
@@ -106,29 +69,11 @@ extern void TaskUpdateFlip(void);
 extern void ActorDrawWorldInViewOrDestroy(void);
 extern void sub_08066e88(u8 a);
 extern void sub_080637cc(void);
-extern u32 gParasolFrames[];
-extern s16 gUnk_0873E1E8[];
-extern s16 gUnk_0873E220[];
-extern u8 gUnk_02006178;
 extern void sub_0806ee2c(void);
 extern s32 CreateActorByKind(u8 cls, u32 sub, u8 p3, u8 p4, int x, int y, u16 prio);
 extern s32 TaskFindNearestPlayer(void);
-extern s32 gUnk_030023B4;
-extern s32 gUnk_030023D4;
-extern u32 gUnk_08334DC0[];
-extern u32 gUnk_0873E264[];
-extern s8 gLevelIndex;
-extern u8 gUnk_03001610[];
-extern u8 gUnk_03001F30;
 extern void sub_080713f8(s32 a, s32 b, u32 c);
 extern void PlayBgm(u32 a);
-extern u8 gUnk_0200B030;
-extern u8 gUnk_03001F34;
-extern u8 gBgPalette[];
-extern struct ActorDef gUnk_0873F690;
-extern u8 gUnk_0873F7E4[];
-extern u32 gUnk_0874CCBC[];
-extern u32 gUnk_0873E280[];
 extern void TaskFreezeOrThawOthers(u16 a, s32 b);
 extern void PauseRoom(void);
 extern void ResumeRoom(void);
@@ -137,8 +82,6 @@ extern void TaskFaceLikeParent(void);
 extern void ActorSetState(u8 v);
 extern void sub_08067214(void);
 extern void ActorMove(void);
-extern u32 gUnk_0873E284[];
-extern u32 gUnk_0873E2F0[];
 extern void ActorCheckHits(void);
 extern void TaskSetMotionXFacing(s32 a, s32 b);
 extern void TaskStop(void);
@@ -146,7 +89,6 @@ extern void sub_08067408(void);
 extern void TaskMoveRelativeToParent(void);
 extern s32 sub_08064d9c(u32 sub, u32 type, int p2Arg, int xArg, int yArg,
                         int prioArg, int altArg);
-extern s16 gSpriteCameraY;
 
 extern u32 TaskIsOnScreen(void);
 extern s32 QueueSprite(u32 a, u32 b, u32 c, u32 d, s32 e, s32 f);

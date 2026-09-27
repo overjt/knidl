@@ -10,55 +10,11 @@
 #include "gba/gba.h"
 #include "global.h"
 #include "task.h"
-
-
-/* The 0x087401E4 script records M19's ending-sequence tasks walk: a pointer
-   table indexed by Task.unk20, each entry a header plus two `s16` step lists
-   (the "forward" list at +6 and the "reverse" one at +18) that
-   sub_0807777c picks between on Task.unk18/unk24. */
-struct M19Script
-{
-    /*0x00*/ u8 unk00[4];
-    /*0x04*/ u16 unk04;
-    /*0x06*/ u16 unk06[6];
-    /*0x12*/ u16 unk12[1];
-};
-
-
-/* RAM cells and ROM tables */
-extern s16 gPlayerHealth[];
-extern s16 gUnk_0300244C;
-extern s16 gUnk_0873D384[];
-extern s32 gUnk_030023B4;
-extern s32 gUnk_030023D4;
-extern s8 gCannonFuseState;
-extern s8 gLevelIndex;
-extern s8 gUnk_087401CC[];
-extern struct M19Script *gUnk_087401E4[];
-extern struct PlayerState gPlayerStates[];
-extern struct Task * gCurTask;
-extern struct Task gTasks[];
-extern u16 gLocalPlayer;
-extern u16 gPlayerCount;
-extern u16 gUnk_0874009C[];
-extern u16 gUnk_087400A6[];
-extern u16 gUnk_087400E4[];
-extern u16 gUnk_08740124[];
-extern u32 gUnk_0873F5E4[];
-extern u32 gCannonVariants[];
-extern u32 gCannonStates[];
-extern u32 gCannonStateUpdates[];
-extern u32 gCannonFuseVariants[];
-extern u32 gCannonFuseStates[];
-extern u32 gCannonFuseStateUpdates[];
-extern u32 gCannonFrames[];
-extern u32 gCannonFuseFrames[];
-extern u8 gUnk_03001F30;
-extern u8 gActivePlayerMask;
-extern u8 gActivePlayerCount;
-extern vs32 gCurTaskIdx;
-extern vu16 gPlayerHeldKeys[4];
-extern vu16 gPlayerPressedKeys[4];
+#include "main.h"
+#include "link.h"
+#include "cutscene.h"
+#include "room.h"
+#include "actor.h"
 
 /* callees */
 extern s32 PlaySfx(u32 a);

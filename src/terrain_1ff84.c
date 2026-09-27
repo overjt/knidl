@@ -1,6 +1,7 @@
 #include "gba/gba.h"
 #include "global.h"
 #include "task.h"
+#include "collision.h"
 
 /* terrain_1ff84.c (0x0801FF84-0x0802069B, issue #84).
  *
@@ -14,48 +15,6 @@
  * Matching note: a tile attribute read for a test (`gCollisionTileSlope[t] != 0 &&
  * (gCollisionTileSlope[t] & 1)`) is written as two table reads, not a local: the
  * local's AND is tied in place by regmove, the cse'd read is not. */
-
-/* The probe result block, filled by the terrain probes and mirrored into
-   gTerrainResult by TerrainProbeEnd. */
-struct Unk03005530
-{
-    /*0x00*/ u8 unk0;
-    /*0x01*/ u8 ceilingHits;
-    /*0x02*/ u8 unk2;
-    /*0x03*/ u8 unk3;
-    /*0x04*/ u8 slope;
-    /*0x05*/ u8 unk5;
-    /*0x06*/ u8 onGround;
-    /*0x07*/ u8 waterFlags;
-    /*0x08*/ u16 unk8;
-    /*0x0A*/ u8 atDoor;
-    /*0x0B*/ u8 unkB;
-    /*0x0C*/ u8 unkC;
-    /*0x0D*/ u8 unkD;
-    /*0x0E*/ u8 onSlipperyFloor;
-    /*0x0F*/ u8 unkF;
-    /*0x10*/ u8 unk10;
-};
-
-extern u8 gCollisionTileSlope[];
-extern u8 gUnk_08732DF0[];
-extern s8 gUnk_087336F0[];
-extern s8 gUnk_087338F0[];
-extern s8 gUnk_087339F0[];
-extern u16 gTerrainTileRight;
-extern s32 gTerrainVelY;           /* Task.velY */
-extern s16 gTerrainBoxLeft;           /* box left offset */
-extern s16 gTerrainPrevY;           /* actor y (room-relative) */
-extern struct Unk03005530 gTerrainProbeResult;
-extern s16 gTerrainProbeX;           /* probe x */
-extern s16 gTerrainProbeY;           /* probe y */
-extern u16 gTerrainTile;           /* queried cell: tile set */
-extern s16 gTerrainBoxTop;           /* box top offset */
-extern s16 gTerrainBoxBottom;           /* box bottom offset */
-extern u16 gTerrainTileBelow;           /* cell below: tile set */
-extern u16 gTerrainTileLeft;           /* cell to the left: tile set */
-extern s32 gTerrainVelX;           /* Task.velX */
-extern s16 gTerrainBoxRight;           /* box right offset */
 
 s32 TerrainQueryPixel(u32 x, u32 y);
 s32 TerrainQueryPixelAndBelow(u32 x, u32 y);

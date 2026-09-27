@@ -1,6 +1,11 @@
 #include "gba/gba.h"
 #include "global.h"
 #include "task.h"
+#include "main.h"
+#include "room.h"
+#include "player.h"
+#include "effect.h"
+#include "actor.h"
 
 /* effect_5a358.c (0x0805A358-0x0805AFAB, issue #89).
  *
@@ -28,35 +33,6 @@
  * sub_0805af80 (shared with variant 34: M11's sub_0803dfc8 in player mode
  * 13, otherwise the task dies) and the callback sub_0805af44, which kills it
  * once the player leaves mode 13 or releases both A and B. */
-
-/* M08's per-player camera positions (src/camera_28b8c.c) */
-struct CamPos { u16 x, y; };
-
-extern u32 gUnk_08751FCC[];
-extern struct CamPos gPlayerCameraPos[4];
-extern s16 gSpriteCameraX;               /* scalar, read with ldrsh (33 landed files) */
-extern s16 gSpriteCameraY;               /* scalar, read with ldrsh (32 landed files) */
-extern s8 gUnk_03002444;
-extern u8 gUnk_02006178;
-extern vs16 gTaskSlotTypes[];
-extern u32 gUnk_08752020[];
-extern u8 gUnk_082030D8[];
-extern u8 gUnk_0873BB3E[];
-extern s8 gUnk_02007D64;
-extern u16 gUnk_02007F60[];
-extern u16 gUnk_03001570[];
-extern u16 gUnk_0200AF20[];
-extern u16 gUnk_0200B000[];             /* 20 task indices, 0xFFFF = empty; non-volatile, signed reads cast (s16) (variant 37 in effect_57ce0.c) */
-extern vs16 gBrightness;
-extern u8 gUnk_03001F34;
-extern u16 gUnk_0873BC3E[];
-extern u16 gUnk_0873BB7E[];
-extern u8 gUnk_0873C2B4[];
-extern s16 gUnk_0873BB26[];
-extern u32 gUnk_0874C600[];
-extern u32 gUnk_0873CF8C[];             /* hit-box set, passed as (struct HitBoxSet *) */
-extern u32 gUnk_08752090[];
-extern u16 gLatchedHeldKeys[];
 
 /* M09's hit-box set (src/block_30804.c); only a pointer is passed here */
 struct HitBoxSet;

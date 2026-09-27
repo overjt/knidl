@@ -1,6 +1,12 @@
 #include "gba/gba.h"
 #include "global.h"
 #include "task.h"
+#include "main.h"
+#include "link.h"
+#include "mode.h"
+#include "hud.h"
+#include "room.h"
+#include "player.h"
 
 /* results_c6420.c (0x080C6420-0x080C6C63, issue #100).
  *
@@ -15,29 +21,6 @@
  *       map at 0x06001000 (M02's src/hud_0aad0.c renderers, drawn to VRAM);
  *       M02's sub_08007f9c calls DrawClockToBgMap too.
  *   CopyToBgMap   copy n map entries to column x, row y of that BG map. */
-
-extern vu16 gDispCnt;          /* DISPCNT shadow */
-extern vs32 gBg0ScrollY;          /* BG0 16.16 scroll shadows ... */
-extern vs32 gBg0ScrollX;
-extern vs32 gBg2ScrollY;
-extern vs32 gBg2ScrollX;
-extern vs32 gBg3ScrollY;
-extern vs32 gBg3ScrollX;          /* ... BG3 */
-extern u8 gUnk_03001F30;            /* set only by the mode list's fifth row
-                                       (src/menu_0ca10.c); not link play */
-extern u16 gPrevGameState;           /* previous game state */
-extern u16 gPlayerCount;           /* number of players */
-extern u8 gExtraMode;
-extern u16 gMilestoneFlags;
-extern u16 gUnk_02000028;
-extern s32 gPlayerScores[];         /* score per player */
-extern u16 gHudClock[];         /* clock (four fields) */
-extern vu16 gPlayerPressedKeys[];        /* keys pressed per player */
-extern u32 gUnk_02020000[];         /* decompression buffer */
-extern u16 gHudDigitTiles[2][10];    /* digit tiles, top and bottom rows */
-extern u16 gUnk_085A6F5C[];         /* the clock's colon tiles */
-extern s8 gDigits[];
-extern vu16 gPressedKeys;
 
 void RequestCopy(u32 mode, u32 src, u32 dst, u32 size);
 void ResetFadeAndBlend(void);

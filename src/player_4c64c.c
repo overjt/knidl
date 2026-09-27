@@ -1,6 +1,7 @@
 #include "gba/gba.h"
 #include "global.h"
 #include "task.h"
+#include "room.h"
 
 /* player_4c64c.c (0x0804C64C-0x0804CC7B, issue #88).
  *
@@ -22,9 +23,6 @@
  * every frame in state 4 and cycles the charge animation through
  * Task.unk46 (0xF7A/0xF82/0xF74 and 0xF7B/0xF83/0xF75), and requests
  * action 23 through PlayerHasCrossedWaterSurface. */
-
-extern u16 gLatchedHeldKeys[];             /* held keys, latched per player (M11) */
-extern u16 gLatchedPressedKeys[];             /* newly-pressed keys, latched per player */
 
 void TaskYieldTrampoline(s32 frames);
 void TaskSleepForever(void);

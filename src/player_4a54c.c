@@ -1,6 +1,9 @@
 #include "gba/gba.h"
 #include "global.h"
 #include "task.h"
+#include "collision.h"
+#include "room.h"
+#include "player.h"
 
 /* player_4a54c.c (0x0804A54C-0x0804AB6F, issue #88).
  *
@@ -20,34 +23,6 @@
  * and the terrain animation gUnk_0873B654[gTerrainResult.unk4] on the
  * ground, or the rising presets 40/41 and the collider gUnk_0873C278 in
  * the air, and it stops a rise on a ceiling hit (gTerrainResult.unk1). */
-
-/* gTerrainResult: M06's collision result block (src/terrain_1bcac.c spells it
-   the same way except unk8, which M09 reads with ldrsh).  A 16-bit test of
-   unk0/unk1 together is `*(u16 *)&gTerrainResult` (M12's PlayerActionBurningUpdate). */
-struct Unk03005550
-{
-    /*0x00*/ u8 unk0;
-    /*0x01*/ u8 ceilingHits;
-    /*0x02*/ u8 unk2;
-    /*0x03*/ u8 unk3;
-    /*0x04*/ u8 slope;
-    /*0x05*/ u8 unk5;
-    /*0x06*/ u8 unk6;
-    /*0x07*/ u8 unk7;
-    /*0x08*/ s16 unk8;
-    /*0x0A*/ u8 atDoor;
-    /*0x0B*/ u8 onSlipperyFloor;
-    /*0x0C*/ u8 unkC;
-    /*0x0D*/ u8 unkD;
-};
-
-extern u16 gLatchedHeldKeys[];             /* held keys, latched per player (M11) */
-extern u16 gLatchedPressedKeys[];             /* newly-pressed keys, latched per player */
-extern struct Unk03005550 gTerrainResult;
-extern u32 gUnk_0873C264[];
-extern u32 gUnk_0873C278[];
-extern u32 gUnk_0873CF6C[];
-extern s16 gUnk_0873B654[];
 
 /* M09's hit-box set (src/block_30804.c); only a pointer is passed here */
 struct HitBoxSet;

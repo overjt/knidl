@@ -1,6 +1,9 @@
 #include "gba/gba.h"
 #include "global.h"
 #include "task.h"
+#include "collision.h"
+#include "room.h"
+#include "player.h"
 
 /* player_36280.c (0x08036280-0x08036C93, issue #91).
  *
@@ -18,36 +21,6 @@
  * PlayerActionSlideUpdate registers the box gUnk_0873BE9C with M09's collision
  * registry RegisterCollider while the player moves faster than 0xE000 and
  * drops to state 1 below 0x8000. */
-
-/* gTerrainResult: M06's collision result block (src/terrain_1bcac.c spells it
-   the same way except unk8, which M09 reads with ldrsh). */
-struct Unk03005550
-{
-    /*0x00*/ u8 unk0;
-    /*0x01*/ u8 ceilingHits;
-    /*0x02*/ u8 unk2;
-    /*0x03*/ u8 unk3;
-    /*0x04*/ u8 slope;
-    /*0x05*/ u8 unk5;
-    /*0x06*/ u8 unk6;
-    /*0x07*/ u8 unk7;
-    /*0x08*/ s16 unk8;
-    /*0x0A*/ u8 atDoor;
-    /*0x0B*/ u8 onSlipperyFloor;
-    /*0x0C*/ u8 unkC;
-    /*0x0D*/ u8 unkD;
-};
-
-extern u16 gLatchedHeldKeys[];             /* held keys, latched per player (M11) */
-extern u16 gLatchedPressedKeys[];             /* newly-pressed keys, latched per player */
-extern struct Unk03005550 gTerrainResult;
-extern u32 gUnk_0873BD28[];
-extern u32 gUnk_0873CB24[];
-extern u16 gUnk_0873D4BC[][5];
-extern u8 gUnk_03001F30;
-extern u32 gUnk_0873CC84[];
-extern s16 gUnk_0873D5CA[][2];
-extern u8 gUnk_0873BE9C[];
 
 void TaskYieldTrampoline(s32 frames);
 void TaskSleepForever(void);

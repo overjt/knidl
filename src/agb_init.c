@@ -1,5 +1,7 @@
 #include "gba/gba.h"
 #include "global.h"
+#include "mode.h"
+#include "save.h"
 
 /* AgbInit (0x08000310-0x080008E7, issue #28): boot-time initializer called
  * from crt0 before main.  Clears EWRAM/IWRAM/VRAM/OAM/palette via CpuFastSet,
@@ -23,6 +25,8 @@
  *    block-local (single region, allocated r4 by local-alloc), and re-using
  *    one variable across regions would change the whole allocation. */
 
+/* Not from main.h, link.h or sound.h: this file's view of gSfxSlotSongs,
+   gUnk_03000F90 and gUnk_030023A8 differs (lesson 3.517). */
 extern vu16 gUnk_03001004;
 extern vu32 gUnk_03000FA0;
 extern vu16 gFrameCount;
@@ -39,12 +43,12 @@ extern vu16 gPressedKeys;
 extern vu16 gKeyRepeatDelay;
 extern vu16 gKeyRepeatInterval;
 extern vu16 gKeyRepeatTimer;
-extern vu16 gPlayerPressedKeys[4];
-extern vu16 gPlayerHeldKeys[4];
+extern vu16 gPlayerPressedKeys[];
+extern vu16 gPlayerHeldKeys[];
 extern vu32 gRngValue;
-extern vu32 gVBlankEndCallback;
+extern u32 gVBlankEndCallback;
 extern vu32 gUnk_03000F90;
-extern vu32 gBlockAnimHook;
+extern u32 gBlockAnimHook;
 extern vu32 gFrameEndCallback;
 extern vu16 gDispCnt;
 extern vu16 gDispStat;
@@ -78,34 +82,32 @@ extern vu16 gBldY;
 extern vu16 gUnk_0300100C;
 extern vu16 gUnk_03000FD8;
 extern vu16 gUnk_03001EA0;
-extern vu32 gSramAvailable;
 extern vu16 gSoundDriverOn;
-extern vu16 gVolumeRampMode;
+extern vs16 gVolumeRampMode;
 extern vu16 gVolumeRampSpeed;
-extern vu16 gVolumeRampLevel;
+extern vs16 gVolumeRampLevel;
 extern vs16 gCurrentBgm;
 extern vu16 gSfxDisabled;
 extern vu16 gSoundDisabled;
 extern u16 gSfxSlotSongs[4];
-extern vu8 gSfxSlotAges[4];
-extern vu8 gSfxSlotPlayers[4];
-extern vu8 gSfxPlayerSlots[4];
+extern vu8 gSfxSlotAges[];
+extern vu8 gSfxSlotPlayers[];
+extern vu8 gSfxPlayerSlots[];
 extern vu32 gPaletteSource;
 extern u32 gVBlankCallback;
 extern u32 gFrameCallback;
 extern u32 gUnk_03000B74;
-extern u16 gUnk_03001014;
+extern vu16 gUnk_03001014;
 extern vu16 gUnk_03001170;
 extern vu16 gUnk_03000B7C;
 extern vu16 gUnk_03001178;
 extern vu16 gUnk_03001020;
 extern vu16 gUnk_03000B20;
 extern vu16 gUnk_03001008;
-extern vu16 gUnk_03000B24;
 extern vu16 gIntrEnable;
 extern vu16 gIntrMasterEnable;
-extern vu32 gLinkSetupMode;
-extern vu32 gLinkDriverMode;
+extern vs32 gLinkSetupMode;
+extern u32 gLinkDriverMode;
 extern u16 gPlayerCount;
 extern u16 gLinkPlayerCount;
 struct Unk_030023A8
@@ -116,7 +118,7 @@ struct Unk_030023A8
     u8 unk3;
 };
 extern struct Unk_030023A8 gUnk_030023A8;
-extern vs16 gUnk_0300244C;
+extern s16 gUnk_0300244C;
 extern vu32 gWarmBoot;
 
 extern void m4aSoundInit(void);

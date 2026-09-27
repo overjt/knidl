@@ -1,6 +1,10 @@
 #include "gba/gba.h"
 #include "global.h"
 #include "task.h"
+#include "main.h"
+#include "room.h"
+#include "effect.h"
+#include "actor.h"
 
 /* effect_54a80.c (0x08054A80-0x0805545F, issue #89).
  *
@@ -24,18 +28,6 @@
  * (0x5A5A5A5A) or the player is in mode 20 with the spawner's Task.unk18
  * set, adding that offset to its position; sub_080553d4 (Task.lateUpdateCallback) draws
  * it with QueueSprite when on screen. */
-
-extern u32 gUnk_0874C6F4[];
-extern u16 gUnk_0873BA4C[][4];          /* [8 + 4][4]: 8.8 velocity x, y, acceleration x, y */
-extern s16 gSpriteCameraX;               /* scalar, read with ldrsh (33 landed files) */
-extern s16 gSpriteCameraY;               /* scalar, read with ldrsh (32 landed files) */
-extern u32 gUnk_0874CA1C[];
-extern u16 gUnk_0873E640[];
-extern u32 gUnk_0874C67C[];
-extern u32 gUnk_0874C718[];
-extern u32 gUnk_08751C74[];
-extern u8 gUnk_02007CF0;
-extern u8 gUnk_02000020;
 
 void TaskExitTrampoline(void);
 void TaskYieldTrampoline(s32 frames);

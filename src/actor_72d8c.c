@@ -12,21 +12,13 @@
 #include "gba/gba.h"
 #include "global.h"
 #include "task.h"
-
-
-/* RAM cells and ROM tables */
-extern s16 gViewRect[];
-extern s32 gUnk_030023D4;
-extern struct Task * gCurTask;
-extern struct Task gTasks[];
-extern u16 gLocalPlayer;
-extern u32 gUnk_02004B4C;
-extern u32 gUnk_02005584;
-extern u32 gUnk_0873F5CC[];
-extern u32 gUnk_0873FC94[];
-extern u32 gUnk_08754560[];
-extern u8 gUnk_020061E0;
-extern u8 gUnk_03001F30;
+#include "link.h"
+#include "cutscene.h"
+#include "room.h"
+#include "camera.h"
+#include "player.h"
+#include "actor.h"
+#include "enemy.h"
 
 /* callees */
 extern s32 PlayBgm(s32 songId);

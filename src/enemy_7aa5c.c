@@ -33,86 +33,14 @@
 #include "gba/gba.h"
 #include "global.h"
 #include "task.h"
+#include "link.h"
+#include "actor.h"
+#include "enemy.h"
 
 /* RAM cells */
-extern s16 gUnk_0300244C;
-extern s32 gUnk_030023B4;
-extern s32 gUnk_030023D4;
-extern s8 gUnk_02007FB8[];
-extern struct Task *gCurTask;
+/* Not from collision.h: this file's view of gTerrainResult differs (lesson
+   3.517). */
 extern u8 gTerrainResult[];
-extern vs16 gTaskSlotTypes[];
-
-/* ROM tables */
-extern s16 gUnk_0874094C[];
-extern s16 gUnk_08740B3C[];
-extern s16 gUnk_08740B60[];
-extern struct AnimCmd gUnk_08740854[];
-extern struct AnimCmd gUnk_0874093C[];
-extern struct AnimCmd gUnk_0874099C[];
-extern struct AnimCmd gUnk_087409C0[];
-extern struct AnimCmd gUnk_08740A98[];
-extern struct AnimCmd gUnk_08740AAC[];
-extern u32 gUFOGfx[];
-extern u32 gUnk_0873F500[];
-extern u32 gUnk_0873F720[];
-extern u32 gUnk_08740864[];
-extern u32 gUnk_087408AC[];
-extern u32 gUnk_08740934[];
-extern u32 gUnk_08740950[];
-extern u32 gScarfyStates[];
-extern u32 gScarfyStateUpdates[];
-extern u32 gUnk_08740990[];
-extern u32 gUnk_087409E4[];
-extern u32 gUnk_087409FC[];
-extern u32 gUnk_08740A1C[];
-extern u32 gUnk_08740A3C[];
-extern u32 gUnk_08740A40[];
-extern u32 gUnk_08740A44[];
-extern u32 gUnk_08740A5C[];
-extern u32 gUnk_08740A74[];
-extern u32 gTogezoVariants[];
-extern u32 gUnk_08740A80[];
-extern u32 gUnk_08740A88[];
-extern u32 gUnk_08740A90[];
-extern u32 gTogezoStates[];
-extern u32 gTogezoStateUpdates[];
-extern u32 gUnk_08740AF8[];
-extern u32 gUnk_08740AFC[];
-extern u32 gUFOVariants[];
-extern u32 gUnk_08740B08[];
-extern u32 gUFOStates[];
-extern u32 gUFOStateUpdates[];
-extern u32 gUnk_08740BA4[];
-extern u32 gUnk_08740BA8[];
-extern u32 gParasolVariants[];
-extern u32 gUnk_08740BBC[];
-extern u32 gUnk_08740BC0[];
-extern u32 gParasolChaseStates[];
-extern u32 gParasolChaseStateUpdates[];
-extern u32 gUnk_08740BCC[];
-extern u32 gUnk_08740BD0[];
-extern u32 gUnk_08740E38[];
-extern u32 gUnk_08740F50[];
-extern u32 gUnk_08740F5C[];
-extern u32 gUnk_08740FA4[];
-extern u32 gUnk_08741088[];
-extern u32 gUnk_0874108C[];
-extern u32 gUnk_08741090[];
-extern u32 gUnk_08741094[];
-extern u32 gUnk_087410A0[];
-extern u32 gUnk_087410AC[];
-extern u32 gUnk_087410B0[];
-extern u32 gUnk_087410B8[];
-extern u32 gUnk_0874CB5C[];
-extern u32 gPengyIceBreathFrames[];
-extern u32 gScarfyAngryFrames[];
-extern u32 gUnk_087529D8[];
-extern u32 gUnk_08752A24[];
-extern u32 gTogezoFrames[];
-extern u32 gUFOFrames[];
-extern u32 gUFOLaserFrames[];
-extern u32 gParasolFrames[];
 
 /* Externals */
 extern s16 CreateDustTrail(u8 flag, u16 vx, s32 c, s32 d);

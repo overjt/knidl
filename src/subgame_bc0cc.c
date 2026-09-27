@@ -36,65 +36,12 @@
 #include "gba/gba.h"
 #include "global.h"
 #include "task.h"
-
-struct GfxDesc
-{
-    u16 unk00;
-    u16 unk02;
-    u32 unk04;
-    u32 unk08;
-    const void *unk0C;
-};
-
-extern s32 gCurTaskIdx;
-extern u8 gQuickDrawWins[];
-extern u8 gUnk_0200B048;
-extern u32 gUnk_02020000[];
-extern vs16 gBrightness;
-extern u32 gUnk_03001570[];
-extern u16 gPrevGameState;
-extern u16 gLocalPlayer;
-extern u16 gPlayerCount;
-extern struct Task *gCurTask;
-extern struct Task gTasks[];
-extern u32 gUnk_087559E4[];
-extern u32 gUnk_087559F4[];
-extern u32 gUnk_08755A04[];
-extern u32 gUnk_08755A14[];
-extern u32 gUnk_08755A24[];
-extern u32 gUnk_08755A34[];
-extern u32 gUnk_08755A5C[];
-extern u32 gUnk_08755A68[];
-extern u32 gUnk_08755A78[];
-extern u32 gUnk_08755A7C[];
-extern u32 gUnk_08755A88[];
-extern u32 gUnk_08755AA4[];
-extern u32 gUnk_08755AB8[];
-extern u32 gUnk_08755AC8[];
-extern u32 gUnk_08755AD8[];
-extern u32 gUnk_08755ADC[];
-extern u32 gUnk_08755AF0[];
-extern u32 gUnk_08755B18[];
-extern u32 gUnk_08755B40[];
-extern u32 gUnk_08755B68[];
-extern u32 gUnk_08755B90[];
-extern u32 gQuickDrawObjectKinds[];
-extern u16 gUnk_087563D8[];
-extern u16 gUnk_08756410[];
-extern s16 gUnk_08756448[];
-extern s16 gUnk_08756450[];
-extern s16 gUnk_08756458[];
-extern s16 gUnk_08756460[];
-extern u32 gUnk_08756468[];
-extern u32 gUnk_08756480[];
-extern u16 gUnk_08756498[];
-extern u32 gUnk_087564A0[];
-extern s16 gUnk_087564B0[];
-extern struct GfxDesc *const gUnk_087564D0[];
-extern u32 gUnk_087564E4[];
-extern u32 gUnk_087564FC[];
-extern u16 gUnk_08756514[];
-extern u16 gUnk_0875651C[];
+#include "main.h"
+#include "link.h"
+#include "mode.h"
+#include "player.h"
+#include "effect.h"
+#include "subgame.h"
 
 void TaskExitTrampoline(void);
 void TaskYieldTrampoline(u32 frames);

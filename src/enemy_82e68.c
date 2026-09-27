@@ -43,65 +43,10 @@
 #include "gba/gba.h"
 #include "global.h"
 #include "task.h"
-
-/* RAM cells */
-extern s32 gUnk_030023B4;
-extern s32 gUnk_030023D4;
-extern vu16 gTaskSlotTypes[];
-extern s32 gUnk_03001F2C;
-
-/* ROM tables */
-extern s8 gUnk_087339F0[];
-extern u8 gCollisionTileSlope[];
-extern u32 gUnk_0873F500[];
-extern u32 gUnk_0873F720[];
-extern u32 gUnk_0873F758[];
-extern u32 gFlamerStates[];
-extern u32 gFlamerStateUpdates[];
-extern u8 gUnk_087416AD[];
-extern s32 gUnk_087416B0[];
-extern u8 gUnk_087416CC[];
-extern u32 gSirKibbleCutterFrames[];
-extern u32 gHotHeadFireFrames[];
-extern s32 gUnk_08741E54[];
-extern s32 gUnk_08741E5C[];
-extern u32 gUnk_08741F64[];
-extern u32 gUnk_08741E90[];
-extern s32 gUnk_08741E94[];
-extern s32 gUnk_08741EA4[];
-extern u32 gNoddyVariants[];
-extern u32 gNoddyFrames[];
-extern u32 gFlamerFrames[];
-extern s16 gUnk_08741E70[];
-extern u32 gHotHeadFireVariants[];
-extern u32 gUnk_08741E84[];
-extern u32 gUnk_08741E88[];
-extern u32 gUnk_08741E8C[];
-extern u32 gUnk_08741E64[];
-extern u32 gUnk_08741E68[];
-extern u32 gUnk_08741E6C[];
-extern s8 gUnk_08741684[];
-extern s8 gUnk_08741688[];
-extern s8 gUnk_0874168C[];
-extern s8 gUnk_08741690[];
-extern s8 gUnk_08741694[];
-extern s8 gUnk_08741698[];
-extern s8 gUnk_0874169C[];
-extern s8 gUnk_087416A0[];
-extern u8 gUnk_087416A4[];
-extern u16 gUnk_087416D4[];
-extern u16 gUnk_087416E4[];
-extern s16 gUnk_087416EC[][2];
-extern s32 gUnk_087416F8[];
-extern s32 gUnk_08741708[];
-extern s32 gUnk_08741718[];
-extern s32 gUnk_08741728[];
-extern struct AnimCmd gUnk_08741744[];
-extern struct AnimCmd gUnk_08741758[];
-extern u8 gUnk_08741738[];
-extern s16 gUnk_0874173C[];
-extern u32 gUnk_087417B0[];
-extern u32 gUnk_087417B4[];
+#include "collision.h"
+#include "room.h"
+#include "actor.h"
+#include "enemy.h"
 
 /* Externals */
 extern void TaskYieldTrampoline(u32 frames);

@@ -1,56 +1,29 @@
 #include "gba/gba.h"
 #include "global.h"
 #include "task.h"
+#include "main.h"
+#include "link.h"
+#include "sound.h"
+#include "room.h"
+#include "actor.h"
 
 struct M11R8 { u8 unk00; u8 unk01; u8 offsetX; u8 offsetY; u8 *boxes; };
 struct M11Buf { u8 unk00[4]; u8 unk04[4]; };
 struct M11R20 { u32 w[5]; };
 
-extern u8 gUnk_02000020;
+/* Not from collision.h or player.h: this file's view of gTerrainResult and
+   gUnk_020055C4 differs (lesson 3.517). */
 extern u16 gUnk_02000028;
-extern u16 gPlayerAbilities[];
 extern struct M11R8 gPlayerHitBoxSets[];
-extern u8 gUnk_02005574[];
-extern s16 gPlayerHealth[];
 extern u8 gUnk_020055C4[];
-extern s16 gRoomEntryX;
 extern struct M11R20 gPlayerBodyBoxes[];
 extern struct M11Buf gUnk_02006A80[];
-extern u8 gUnk_02007CF0;
 extern u16 gUnk_02007F60[];
-extern s16 gRoomEntryY;
-extern u16 gPlayerAbilityUses[];
 extern u16 gPlayerBubbleTimers[];
-extern vs16 gCurrentBgm;
-extern u16 gPlayerHeldKeys[];
-extern u8 gObjPalette[];
-extern u32 gUnk_03001490[];
-extern vu16 gFrameCount;
-extern vu16 gPlayerPressedKeys[];
-extern u32 gUnk_03001F10;
-extern s32 gUnk_03001F2C;
-extern u8 gUnk_03001F30;
-extern u8 gUnk_03001F34;
-extern u32 gUnk_03002160;
-extern struct PlayerState gPlayerStates[];
-extern u8 gActivePlayerMask;
-extern s32 gUnk_03002344;
-extern s16 gSpriteCameraX;
-extern u8 gActivePlayerCount;
-extern u16 gLocalPlayer;
-extern u16 gPlayerCount;
+extern u16 gUnk_03001490[];
 extern u8 gUnk_030023B0;
-extern u16 gLatchedPressedKeys[];
-extern s16 gSpriteCameraY;
-extern s8 gUnk_03002444;
-extern u32 gUnk_03002448;
-extern s16 gUnk_0300244C;
-extern u16 gLatchedHeldKeys[];
-extern struct Task *gCurTask;
-extern struct Task gTasks[];
-extern vs16 gTaskSlotTypes[];
 extern u8 gTerrainResult[];
-extern u16 gPlayerPalettes[];
+extern u16 gPlayerPalettes[][16];
 extern u32 gUnk_080DC728[];
 extern u8 gUnk_080DCA28[];
 extern u32 gUnk_080DCC28[];

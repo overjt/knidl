@@ -44,37 +44,14 @@
 #include "gba/gba.h"
 #include "global.h"
 #include "task.h"
+#include "main.h"
+#include "actor.h"
+#include "enemy.h"
 
 /* RAM cells */
-extern s8 gUnk_02007FB8[];
-extern s8 gDigits[];
-extern s32 gUnk_030023B4;
-extern s32 gUnk_030023D4;
-extern vu16 gTaskSlotTypes[];
+/* Not from collision.h: this file's view of gTerrainResult differs (lesson
+   3.517). */
 extern u8 gTerrainResult[];
-
-/* ROM tables */
-extern u32 gUnk_0873F500[];
-extern s16 gUnk_08742FAC[];
-extern u8 gUnk_0874313C[];
-extern u32 gUnk_08743144[];
-extern u32 gUnk_08743158[];
-extern u32 gBroomHatterVariants[];
-extern u32 gUnk_08743194[];
-extern u32 gUnk_087431A0[];
-extern u32 gUnk_087431AC[];
-extern u32 gUnk_087431B8[];
-extern u32 gUnk_087431C4[];
-extern u32 gUnk_087431C8[];
-extern u32 gUnk_087431CC[];
-extern u32 gUnk_087431D8[];
-extern u32 gLaserBallVariants[];
-extern u32 gBroomHatterFrames[];
-extern u32 gLaserBallFrames[];
-extern u32 gChillyFreezeFrames[];
-extern u32 gWaddleDooBeamFrames[];
-extern u32 gGlunkShotFrames[];
-extern u32 gUnk_08752C18[];
 
 /* Externals */
 extern void TaskExitTrampoline(void);
@@ -1243,4 +1220,3 @@ void Task_LaserBall(void)
     SetPaletteAnimSource(1, 0, gCurTask->unk8C->paletteVariant);
     CallTableEntry(gCurTask->variant, 2, gLaserBallVariants);
 }
-

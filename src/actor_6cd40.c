@@ -14,9 +14,7 @@
 #include "gba/gba.h"
 #include "global.h"
 #include "task.h"
-
-extern u32 gUnk_0874CB90[];
-extern vs16 gTaskSlotTypes[];
+#include "actor.h"
 
 extern void TaskYieldTrampoline(u32 a);
 extern void TaskExitTrampoline(void);

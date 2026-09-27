@@ -28,26 +28,11 @@
 #include "gba/gba.h"
 #include "global.h"
 #include "task.h"
-
-extern s32 gCurTaskIdx;
-extern s8 gSubGameLevel;
-extern u8 gQuickDrawBestTime;
-extern u8 gQuickDrawWins[];
-extern u8 gUnk_0200B048;
-extern u8 gQuickDrawRanking[];
-extern vs16 gBrightness;
-extern vu16 gPlayerPressedKeys[];
-extern u16 gPrevGameState;
-extern u16 gLocalPlayer;
-extern u16 gPlayerCount;
-extern struct Task *gCurTask;
-extern struct Task gTasks[];
-extern u32 gUnk_08755A34[];
-extern u32 gUnk_08755A88[];
-extern u32 gUnk_08755BAC[];
-extern s16 gUnk_0875636C[];
-extern u32 gUnk_08756378[];
-extern u32 gUnk_08756394[];
+#include "main.h"
+#include "link.h"
+#include "mode.h"
+#include "room.h"
+#include "subgame.h"
 
 void TaskYieldTrampoline(u32 frames);
 void CallTableEntry(u32 a, u32 b, u32 *c);

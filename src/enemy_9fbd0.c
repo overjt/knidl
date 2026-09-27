@@ -2,20 +2,16 @@
 #include "gba/gba.h"
 #include "global.h"
 #include "task.h"
+#include "link.h"
+#include "actor.h"
+#include "enemy.h"
 
 /* RAM cells / ROM tables */
-extern u32 gUnk_02006040[];
-extern s32 gUnk_02006190[];
-extern s32 gUnk_02007D00[];
+/* Not from room.h: this file's view of gCurSaveSlot differs (lesson 3.517).
+   */
 extern u8 gUnk_03001F30;
-extern struct PlayerState gPlayerStates[];
 extern u8 gActivePlayerMask;
-extern s32 gUnk_030023B4;
 extern u32 gCurSaveSlot[];
-extern s16 gUnk_0300244C;
-extern u32 gKingDededeVariants[];
-extern u32 gUnk_08748974[];
-extern u32 gKingDededeFrames[];
 
 /* Externals */
 extern void CallTableEntry(u32 a, u32 b, u32 *c);

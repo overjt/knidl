@@ -1,6 +1,9 @@
 #include "gba/gba.h"
 #include "global.h"
 #include "task.h"
+#include "main.h"
+#include "player.h"
+#include "effect.h"
 
 /* effect_55b24.c (0x08055B24-0x08056447, issue #89).
  *
@@ -16,12 +19,6 @@
  * (sub_08056320) stays on the spawner's position, with Task.facing = 1 when
  * gFrameCount bit 0 is set and the inherited facing flipped otherwise;
  * variant 23 (sub_08055d74, 904 bytes) is the longest. */
-
-extern u32 gUnk_0874C718[];
-extern u32 gUnk_0874C7A4[];
-extern u32 gUnk_0874C7B4[];
-extern u32 gUnk_0874C7CC[];
-extern u16 gFrameCount;
 
 void TaskExitTrampoline(void);
 void TaskYieldTrampoline(s32 frames);

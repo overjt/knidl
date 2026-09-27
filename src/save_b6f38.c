@@ -1,6 +1,9 @@
 #include "gba/gba.h"
 #include "global.h"
 #include "task.h"
+#include "main.h"
+#include "link.h"
+#include "room.h"
 
 struct LinkSave
 {
@@ -40,19 +43,11 @@ struct LinkSave
     /*0x12C*/ u16 unk12C[0x3B6A];
 };
 
+/* Not from save.h: this file's view of gUnk_0200EC50 differs (lesson 3.517).
+   */
 extern struct LinkSave *gUnk_0200EC50;
 extern struct LinkSave *gInputRecordingPtr;
 extern s32 Div(s32 a, s32 b);
-extern u8 gUnk_02000020;
-extern u16 gPlayerAbilities[];
-extern u16 gMaxHealth;
-extern u16 gPlayerHealth[];
-extern u8 gUnk_020069F0;
-extern u32 gUnk_02007BF0[8][8];
-extern u16 gPlayerLives[];
-extern u8 gUsedSubGameDoors[];
-extern u16 gPlayerAbilityUses[];
-extern u8 gUnk_0200B04C;
 extern u8 gInputRecorderRunning;
 extern s16 gInputRecorderMode;
 extern u16 gUnk_0200EC60[];
@@ -60,26 +55,9 @@ extern u8 gUnk_0200EC68[];
 extern u16 gUnk_0200EC70[];
 extern u16 gUnk_0200EC78[];
 extern struct LinkSave gInputRecording;
-extern u16 gVBlankCount;
-extern u32 gRngValue;
-extern u16 gFrameCount;
 extern u16 gUnk_03001F18[];
-extern u8 gUnk_03001F20;
-extern u8 gUnk_03001F30;
 extern u16 gCompletionPercent;
-extern u16 gLocalPlayer;
-extern u16 gMilestoneFlags;
 extern u16 gUnk_03002378[];
-extern u8 gUnk_03002384;
-extern u8 gLevelIndex;
-extern u16 gPlayerCount;
-extern u8 gUnk_030023B8;
-extern u32 gBigSwitchFlags[];
-extern u8 gUnk_030023E0;
-extern u8 gStageIndex;
-extern u8 gUnk_03002400[8][7];
-extern u8 gExtraMode;
-extern u8 gRoomIndex;
 extern void sub_080b72bc(void);
 extern void ReadInputRecording(void);
 extern void WriteInputRecording(void);

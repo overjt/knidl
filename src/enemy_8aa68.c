@@ -6,44 +6,9 @@
 #include "gba/gba.h"
 #include "global.h"
 #include "task.h"
-
-/* RAM cells */
-extern s32 gUnk_030023B4;
-extern s32 gUnk_030023D4;
-extern struct Task *gCurTask;
-extern struct Task gTasks[];
-
-/* ROM tables */
-extern s32 gUnk_087428E8[];
-extern s32 gUnk_08742930[];
-extern s8 gUnk_08732FF0[];
-extern s8 gUnk_087336F0[];
-extern s8 gUnk_087337F0[];
-extern s8 gUnk_087339F0[];
-extern struct AnimCmd gUnk_08742894[];
-extern struct AnimCmd gUnk_087428A8[];
-extern u32 gCollisionTilePushRight[];
-extern u32 gCollisionTilePushLeft[];
-extern u32 gUnk_0873F500[];
-extern u32 gBlipperVariants[];
-extern u32 gUnk_087428D8[];
-extern u32 gUnk_087428E0[];
-extern u32 gUnk_08742908[];
-extern u32 gUnk_0874290C[];
-extern u32 gUnk_08742910[];
-extern u32 gUnk_08742918[];
-extern u32 gUnk_08742920[];
-extern u32 gUnk_08742928[];
-extern u32 gUnk_08742940[];
-extern u32 gUnk_08742948[];
-extern u32 gUnk_08742978[];
-extern u32 gChillyFreezeFrames[];
-extern u32 gBlipperFrames[];
-extern u32 gBlipperDropletFrames[];
-extern u32 gUnk_08752BD4[];
-extern u8 *gUnk_08742998[];
-extern u8 gCollisionTileSlope[];
-extern u8 gUnk_08742938[];
+#include "collision.h"
+#include "actor.h"
+#include "enemy.h"
 
 /* Externals */
 extern s32 Div(s32 numerator, s32 denominator);

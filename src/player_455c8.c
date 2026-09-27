@@ -1,6 +1,9 @@
 #include "gba/gba.h"
 #include "global.h"
 #include "task.h"
+#include "main.h"
+#include "collision.h"
+#include "player.h"
 
 /* player_455c8.c (0x080455C8-0x08045D33, issue #87).
  *
@@ -19,44 +22,6 @@
  * PlayerActionLaser (action 37) is a linear script (animations
  * 0x658/0x65A, M14's CreatePlayerObject, sound 172); its handler PlayerActionLaserUpdate
  * waits for it to finish. */
-
-/* gTerrainResult: M06's collision result block (src/terrain_1bcac.c spells it
-   the same way except unk8, which M09 reads with ldrsh).  A 16-bit test of
-   unk0/unk1 together is `*(u16 *)&gTerrainResult` (good/PlayerActionBurningUpdate.c). */
-struct Unk03005550
-{
-    /*0x00*/ u8 unk0;
-    /*0x01*/ u8 ceilingHits;
-    /*0x02*/ u8 unk2;
-    /*0x03*/ u8 unk3;
-    /*0x04*/ u8 slope;
-    /*0x05*/ u8 unk5;
-    /*0x06*/ u8 unk6;
-    /*0x07*/ u8 unk7;
-    /*0x08*/ s16 unk8;
-    /*0x0A*/ u8 atDoor;
-    /*0x0B*/ u8 onSlipperyFloor;
-    /*0x0C*/ u8 unkC;
-    /*0x0D*/ u8 unkD;
-};
-
-/* gUnk_0873B510[]: a palette fade, src/dst palettes and the blend step */
-struct M12Fade
-{
-    /*0x00*/ u16 *unk0;
-    /*0x04*/ u16 *unk4;
-    /*0x08*/ s32 unk8;
-};
-
-extern u32 gPlayerDefaultTerrainBox[];
-extern u32 gPlayerDefaultBodyBox[];             /* stored to PlayerState.bodyBox as (u32)gPlayerDefaultBodyBox */
-extern u32 gUnk_0873CCA4[];
-extern u32 gUnk_0873CB2C[];
-extern u32 gUnk_0873BD3C[];
-extern struct Unk03005550 gTerrainResult;
-extern struct M12Fade gUnk_0873B510[];
-extern u8 gObjPalette[];              /* OBJ palette buffer (M11 spelling) */
-extern u32 gUnk_0873BF00[];
 
 void TaskYieldTrampoline(s32 frames);
 void BlendColors(u16 *src, u16 *dst, s32 ratio, s32 count, u16 *out);

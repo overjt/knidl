@@ -2,16 +2,8 @@
 #include "gba/gba.h"
 #include "global.h"
 #include "task.h"
-
-/* RAM cells / ROM tables */
-extern s16 gViewRect[];
-extern u32 gAxeKnightVariants[];
-extern u32 gUnk_08747AB4[];
-extern u32 gUnk_08747AC8[];
-extern u32 gUnk_08747D5C[];
-extern u32 gUnk_08747EF4[];
-extern u32 gAxeKnightFrames[];
-extern u32 gUnk_08753510[];
+#include "camera.h"
+#include "enemy.h"
 
 /* Externals */
 extern void TaskYieldTrampoline(u32 a);

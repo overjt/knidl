@@ -29,20 +29,15 @@
 #include "gba/gba.h"
 #include "global.h"
 #include "task.h"
+#include "mode.h"
+#include "room.h"
+#include "subgame.h"
 
-extern s32 gCurTaskIdx;
-extern u8 gUnk_02004B5C;
-extern s16 gUnk_020055EC;
-extern s8 gSubGameLevel;
-extern u8 gQuickDrawBestTime;
-extern u8 gSubGamePhase;
-extern u8 gUnk_02007FCC;
-extern u8 gQuickDrawWins[];
-extern u8 gUnk_0200B048;
-extern u8 gQuickDrawRanking[];
+/* Not from main.h or link.h: this file's view of gFrameCallback and gRecvCmds
+   differs (lesson 3.517). */
 extern u32 gLinkDriverMode;
-extern u32 gLinkSetupMode;
-extern u32 gBg0ScrollY;
+extern vs32 gLinkSetupMode;
+extern vs32 gBg0ScrollY;
 extern u32 gFrameCallback;
 extern vu16 gFadeBlankAtWhite;
 extern vs32 gBg3ScrollX;
@@ -51,7 +46,7 @@ extern u32 gVBlankCallback;
 extern vs32 gBg3ScrollY;
 extern vu16 gVBlankCount;
 extern vs32 gBg1ScrollY;
-extern u32 gBg0ScrollX;
+extern vs32 gBg0ScrollX;
 extern vu8 gBldCntTarget1;
 extern u16 gBgPalette[];
 extern vu16 gFadeSteps;
@@ -60,30 +55,17 @@ extern vu16 gPlayerPressedKeys[];
 extern vu16 gDispCnt;
 extern vs32 gBg1ScrollX;
 extern vu16 gBldY;
-extern vu16 gLinkIsMaster;
-extern u16 gPrevGameState;
+extern u16 gLinkIsMaster;
 extern u16 gLocalPlayer;
 extern u16 gPlayerCount;
-extern u16 gGameState;
 extern vu16 gLinkPlayerCount;
-extern struct Task *gCurTask;
-extern struct Task gTasks[];
-extern vs16 gTaskSlotTypes[];
 extern u32 gLinkErrorMask;
 extern u16 gRecvCmds[];
 extern u32 gLinkStatus;
 extern u32 gSerialIntrCount;
 extern u16 gShouldAdvanceLinkState[];
-extern u16 gSendCmd[];
+extern u16 gSendCmd[4];
 extern u16 gLinkCommand;     /* SIO handshake word; see SubGameSyncLink */
-extern u32 gUnk_087562A8[][2];
-extern u16 gUnk_087562C0[];
-extern s32 (*const gSubGameInitHooks[])(void);
-extern void *gSubGameBodies[];
-extern u16 gUnk_087562E4[];
-extern u32 gQuickDrawPhases[];
-extern s16 gUnk_087562F0[];
-extern s16 gUnk_087562F6[];
 
 void TaskYieldTrampoline(u32 frames);
 void EndFrame(void);

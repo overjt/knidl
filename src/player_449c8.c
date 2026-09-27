@@ -1,6 +1,9 @@
 #include "gba/gba.h"
 #include "global.h"
 #include "task.h"
+#include "main.h"
+#include "room.h"
+#include "player.h"
 
 /* player_449c8.c (0x080449C8-0x08044D03, issue #87).
  *
@@ -15,11 +18,6 @@
  * 0x3E9, effect 28 on the ground, M14's sub_08053a44, sound 144); its
  * handler PlayerActionCutterUpdate re-enters it on a newly-pressed B and requests
  * action 2 when left or right is held on the ground. */
-
-extern u16 gLatchedHeldKeys[];             /* held keys, latched per player (M11) */
-extern u8 gUnk_081BE6BC[];              /* per-player palettes, 128 bytes each */
-extern u8 gObjPalette[];              /* OBJ palette buffer (M11 spelling) */
-extern u16 gLatchedPressedKeys[];             /* newly-pressed keys, latched per player */
 
 void TaskYieldTrampoline(s32 frames);
 void BlendColors(u16 *src, u16 *dst, s32 ratio, s32 count, u16 *out);

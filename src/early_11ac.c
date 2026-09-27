@@ -1,5 +1,6 @@
 #include "gba/gba.h"
 #include "global.h"
+#include "main.h"
 
 /* Early subsystem helpers (0x080011AC-0x08001517, issue #32 batch A2):
  * per-frame OAM/palette DMA-less flush, key input polling, display I/O
@@ -21,50 +22,6 @@
  *    handler) are dead exports inside the census sizes of ProcessCopyQueue and
  *    ClearHBlankIntr respectively (lesson 2.13 pattern: nothing in ROM calls
  *    them, but they sit between live functions of the same unit). */
-
-extern vu16 gUnk_0300100C; /* keys currently held */
-extern vu16 gHeldKeys; /* keys held last frame */
-extern vu16 gPressedKeys; /* keys newly pressed */
-extern vu16 gRepeatedKeys; /* keys pressed w/ auto-repeat */
-extern vu16 gKeyRepeatTimer; /* auto-repeat countdown */
-extern vu16 gKeyRepeatInterval; /* auto-repeat interval (4) */
-extern vu16 gKeyRepeatDelay; /* auto-repeat first delay (14) */
-
-extern vu16 gDispCnt; /* DISPCNT shadow */
-extern vu16 gDispStat; /* DISPSTAT shadow */
-extern vu16 gBg0Cnt; /* BG0CNT shadow */
-extern vu16 gBg1Cnt; /* BG1CNT shadow */
-extern vu16 gBg2Cnt; /* BG2CNT shadow */
-extern vu16 gBg3Cnt; /* BG3CNT shadow */
-extern vs32 gBg0ScrollY; /* BG0VOFS shadow (16.16) */
-extern vs32 gBg0ScrollX; /* BG0HOFS shadow (16.16) */
-extern vs32 gBg1ScrollY; /* BG1VOFS shadow (16.16) */
-extern vs32 gBg1ScrollX; /* BG1HOFS shadow (16.16) */
-extern vs32 gBg2ScrollY; /* BG2VOFS shadow (16.16) */
-extern vs32 gBg2ScrollX; /* BG2HOFS shadow (16.16) */
-extern vs32 gBg3ScrollY; /* BG3VOFS shadow (16.16) */
-extern vs32 gBg3ScrollX; /* BG3HOFS shadow (16.16) */
-extern vu16 gWin0H; /* WIN0H shadow */
-extern vu16 gWin1H; /* WIN1H shadow */
-extern vu16 gWin0V; /* WIN0V shadow */
-extern vu16 gWin1V; /* WIN1V shadow */
-extern vu8 gWinIn1;  /* WININ hi shadow */
-extern vu8 gWinIn0;  /* WININ lo shadow */
-extern vu8 gWinObj;  /* WINOUT hi shadow */
-extern vu8 gWinOut;  /* WINOUT lo shadow; also end of copy queue */
-extern vu8 gObjMosaic;  /* MOSAIC hi shadow */
-extern vu8 gBgMosaic;  /* MOSAIC lo shadow */
-extern vu8 gBldCntTarget2;  /* BLDCNT hi shadow */
-extern vu8 gBldCntTarget1;  /* BLDCNT lo shadow */
-extern vu8 gBldAlphaEvb;  /* BLDALPHA hi shadow */
-extern vu8 gBldAlphaEva;  /* BLDALPHA lo shadow */
-extern vu16 gBldY; /* BLDY shadow */
-
-extern vu32 gPaletteSource; /* palette source buffer ptr (0x03001270) */
-extern u32 gCopyQueueRead;  /* copy-request queue read pointer */
-extern u32 gCopyQueueWrite;  /* copy-request queue write pointer */
-extern vu16 gIntrEnable; /* IE shadow */
-extern u32 gIntrTable[]; /* IRQ dispatch table (copied from 0x080CFDE8) */
 
 extern void IntrDummy(void); /* no-op IRQ handler (bx lr) */
 

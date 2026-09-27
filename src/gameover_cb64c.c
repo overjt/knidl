@@ -1,6 +1,8 @@
 #include "gba/gba.h"
 #include "global.h"
 #include "task.h"
+#include "room.h"
+#include "ending.h"
 
 /* gameover_cb64c.c (0x080CB64C-0x080CBED3, issue #100).
  *
@@ -16,11 +18,6 @@
  *   sub_080cbac0 / sub_080cbea4   sub-state 2, the "give up" animation (it
  *       spawns variants 3 and 4); its handler re-enters sub-state 0 with a
  *       120-frame count and spawns variant 2. */
-
-extern u16 gGameState;           /* game state (AgbMain dispatch) */
-extern u8 gGameOverDone;            /* game-over screen: done flag */
-extern u32 gUnk_08754914[];
-extern u32 gUnk_087548B8[];
 
 void TaskYieldTrampoline(s32 frames);
 s32 PlaySfx(s32 id);                                    /* play a sound effect */

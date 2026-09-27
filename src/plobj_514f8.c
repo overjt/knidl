@@ -1,6 +1,9 @@
 #include "gba/gba.h"
 #include "global.h"
 #include "task.h"
+#include "main.h"
+#include "collision.h"
+#include "player.h"
 
 /* plobj_514f8.c (0x080514F8-0x0805239B, issue #90).
  *
@@ -20,57 +23,6 @@
  * the collision result gTerrainResult.unk4, sounds 173 and 211) turn the
  * object into variant 10's body sub_08052f6c or the burst sub_0805091c on
  * contact. */
-
-/* M11's per-player records (src/stage_43654.c spells them the same way) */
-struct M11R8 { u8 unk00; u8 unk01; u8 offsetX; u8 offsetY; u8 *boxes; };
-
-struct M11R20 { u32 w[5]; };
-
-/* gTerrainResult: M06's collision result block (src/terrain_1bcac.c spells it
-   the same way except unk8, which M09 reads with ldrsh).  A 16-bit test of
-   unk0/unk1 together is `*(u16 *)&gTerrainResult` (M12's PlayerActionBurningUpdate). */
-struct Unk03005550
-{
-    /*0x00*/ u8 unk0;
-    /*0x01*/ u8 ceilingHits;
-    /*0x02*/ u8 unk2;
-    /*0x03*/ u8 unk3;
-    /*0x04*/ u8 slope;
-    /*0x05*/ u8 unk5;
-    /*0x06*/ u8 unk6;
-    /*0x07*/ u8 unk7;
-    /*0x08*/ s16 unk8;
-    /*0x0A*/ u8 atDoor;
-    /*0x0B*/ u8 onSlipperyFloor;
-    /*0x0C*/ u8 unkC;
-    /*0x0D*/ u8 unkD;
-};
-
-extern struct M11R8 gPlayerHitBoxSets[];
-extern struct M11R20 gPlayerBodyBoxes[];
-extern u32 gUnk_087519E8[];
-extern u32 gUnk_0873BDA0[];
-extern u32 gUnk_0873BDB4[];
-extern u32 gUnk_0873CBAC[];
-extern u32 gUnk_0873CBB4[];
-extern u32 gUnk_08751A28[];
-extern u32 gUnk_08751CA4[];
-extern u32 gUnk_0873BDD4[];
-extern u32 gUnk_0873CBDC[];
-extern u32 gUnk_08751A98[];
-extern s8 gUnk_0873CB54[];
-extern struct Unk03005550 gTerrainResult;
-extern u16 gFrameCount;
-extern u32 gUnk_0873CBEC[];
-extern u32 gUnk_0873BDE8[];
-extern u32 gUnk_08751AF8[];
-extern u16 gUnk_0873B7B0[][2];
-extern s8 gUnk_0873CB5C[];
-extern u32 gUnk_0873CBFC[];
-extern u32 gUnk_0873CC0C[];
-extern s8 gUnk_0873CB64[];
-extern u32 gUnk_0873BDFC[];
-extern u32 gUnk_0873BE10[];
 
 /* M09's hit-box set (src/block_30804.c); only a pointer is passed here */
 struct HitBoxSet;

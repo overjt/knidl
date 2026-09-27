@@ -1,6 +1,9 @@
 #include "gba/gba.h"
 #include "global.h"
 #include "task.h"
+#include "link.h"
+#include "room.h"
+#include "player.h"
 
 /* player_3aa64.c (0x0803AA64-0x0803BDE7, issue #91).
  *
@@ -17,11 +20,6 @@
  * four-way directional pick; handlers 21-25 run M11's predicates and
  * request the next action through PlayerState.requestedAction.  sub_0803bd90
  * (action 18) installs handler 17, the leaf sub_0803bdd4. */
-
-extern u16 gLatchedHeldKeys[];             /* held keys, latched per player (M11) */
-extern s16 gUnk_0873D9DA[4][4];
-extern u16 gLatchedPressedKeys[];             /* newly-pressed keys, latched per player */
-extern s16 gUnk_0300244C;
 
 void TaskYieldTrampoline(s32 frames);
 void TaskSleepForever(void);

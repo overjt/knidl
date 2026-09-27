@@ -1,50 +1,10 @@
 #include "gba/gba.h"
 #include "global.h"
 #include "task.h"
-
-/* RAM cells */
-extern s32 gUnk_02007D00[];
-extern s32 gUnk_030023D4;
-extern vu16 gTaskSlotTypes[];
-extern u16 gLocalPlayer;
-extern struct PlayerState gPlayerStates[];
-extern s16 gViewRect[];
-
-/* ROM tables */
-extern u32 gUnk_082BFBA4[];
-extern struct AnimCmd gUnk_08744888[];
-extern u32 gUnk_0874489C[];
-extern u32 gUnk_087448C0[];
-extern u8 gUnk_087448E4[];
-extern s16 gUnk_087448E6[];
-extern s32 gUnk_087448EC[];
-extern u8 gUnk_087448F4[];
-extern s32 gUnk_087448F8[];
-extern struct AnimCmd gUnk_08744900[];
-extern u32 gUnk_08744924[];
-extern u8 gUnk_0874492C[];
-extern s32 gUnk_08744934[];
-extern s32 gUnk_0874494C[];
-extern u32 gUnk_0874521C[];
-extern u32 gUnk_08745238[];
-extern u32 gUnk_08745254[];
-extern u32 gUnk_08745270[];
-extern u32 gUnk_0874528C[];
-extern u32 gUnk_087452A8[];
-extern u32 gUnk_087452C4[];
-extern u32 gUnk_087452E0[];
-extern u32 gUnk_0874544C[];
-extern struct AnimCmd gUnk_087454B8[];
-extern struct AnimCmd gUnk_087454C4[];
-extern s32 gUnk_087454D8[];
-extern s32 gUnk_087454EC[];
-extern s32 gUnk_087454F4[];
-extern s32 gUnk_087454FC[];
-extern s32 gUnk_08745504[];
-extern struct AnimCmd gUnk_0874550C[];
-extern u32 gGrandWheelieMiniWheelieFrames[];
-extern u32 gPhanPhanFrames[];
-extern u32 gUnk_087538B0[];
+#include "link.h"
+#include "camera.h"
+#include "actor.h"
+#include "enemy.h"
 
 /* Externals */
 extern void ActorDrawWorldInViewOrDestroy(void);

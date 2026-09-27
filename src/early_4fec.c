@@ -118,7 +118,8 @@ struct Task {
     /* 0x8C */ u32 w8C;
 };
 
-
+/* Not from task.h: this file's view of gTaskSlotTypes differs (lesson 3.517).
+   */
 extern struct Task gTasks[];
 extern vu16 gTaskSlotTypes[];
 extern vu32 gTaskCount;
@@ -140,7 +141,7 @@ extern vu16 gTaskListRefs[];
 extern u32  gTaskStackPtrs[];
 extern vs32 gCurTaskClass;
 extern vu32 gTaskBaseSp;
-extern vu8  gTaskSkipMaskDepth;
+extern u8  gTaskSkipMaskDepth;
 
 void TaskSwitchTrampoline(s32 id, u32 fn, u32 stack);
 
@@ -234,7 +235,3 @@ void InitTasks(void)
 
     gTaskSkipMaskDepth = 0xFF;
 }
-
-
-
-

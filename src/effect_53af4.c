@@ -1,6 +1,8 @@
 #include "gba/gba.h"
 #include "global.h"
 #include "task.h"
+#include "effect.h"
+#include "enemy.h"
 
 /* effect_53af4.c (0x08053AF4-0x0805432F, issue #89).
  *
@@ -36,13 +38,6 @@
  * from the one saved at the start or is 16, or, by the second byte of
  * Task.unk18, when the spawner's Task.onGround clears, a countdown in
  * Task.unk30 runs out or M11's sub_0803fd20 no longer returns 4. */
-
-extern void (*gPlayerEffectVariants[])(void);   /* task type #7's 49 variants, indexed by Task.unk18 >> 24 */
-extern u32 gUnk_08751C44[];
-extern u32 gUnk_0874C600[];
-extern u32 gUnk_08751CEC[];
-extern u32 gUnk_0874C500[];
-extern s16 gUnk_0873B9EC[];             /* [6][8]: s16 x, y offsets, 8.8 velocities */
 
 void TaskExitTrampoline(void);
 void TaskYieldTrampoline(s32 frames);

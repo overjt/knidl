@@ -1,5 +1,6 @@
 #include "gba/gba.h"
 #include "global.h"
+#include "main.h"
 
 /* Main per-frame driver / VBlank waiter (0x08000DE4-0x080010CB, issue #32).
  * agbcc -O2 -mthumb-interwork (game-code recipe).
@@ -18,30 +19,7 @@
  * `ands r0, r2` truncations.
  */
 
-extern vs16 gVolumeRampMode;
-extern vs16 gVolumeRampLevel;
-extern vu16 gVolumeRampSpeed;
-extern vu16 gSoundDisabled;
-extern void (*gFrameCallback)(void);
-extern vu16 gUnk_03001014;
-extern u32 gUnk_03000B74;
-extern vu16 gWaitingForVBlank;
-extern vu16 gFrameInProgress;
-extern vu16 gHeldKeys;
-extern vu16 gFadeSteps;
-extern vu16 gPressedKeys;
-extern vu16 gLinkPlayerCount;
-extern vu16 gIntrMasterEnable;
-extern vu32 gLinkDriverMode;
-extern vu16 gFrameCount;
-extern u16 gPlayTime[4];
-extern void (*gFrameEndCallback)(void);
-
 struct MusicPlayerInfo;
-extern struct MusicPlayerInfo gMPlayInfo_BGM;
-extern struct MusicPlayerInfo gMPlayInfo_SE1;
-extern struct MusicPlayerInfo gMPlayInfo_SE2;
-extern struct MusicPlayerInfo gMPlayInfo_SE3;
 extern void m4aMPlayVolumeControl(struct MusicPlayerInfo *mplayInfo, u16 trackBits, u16 volume);
 extern void m4aSoundVSync(void);
 extern void SoundDriverVSyncOff(void);

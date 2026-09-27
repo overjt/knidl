@@ -1,9 +1,7 @@
 #include "gba/gba.h"
 #include "global.h"
 #include "task.h"
-
-/* RAM cells / ROM tables */
-extern u32 gUnk_08747EF4[];
+#include "enemy.h"
 
 /* Externals */
 extern u8 ActorCollideTerrain(void);

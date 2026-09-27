@@ -1,6 +1,9 @@
 #include "gba/gba.h"
 #include "global.h"
 #include "task.h"
+#include "room.h"
+#include "player.h"
+#include "actor.h"
 
 /* player_18e14.c (0x08018E14-0x08018FFF, issue #125).
  *
@@ -20,12 +23,6 @@
  * row 1 from the row-0 register plus 32), the outer loop is `while (1)`, and
  * the shift amount of the y step is its own statement reusing the dead index
  * variable r (lesson 3.473). */
-
-extern s32 gUnk_02006040[];
-extern s16 gUnk_08732150[][16];
-extern s32 gUnk_03001F2C;
-extern s32 gUnk_03002448;
-extern u32 gUnk_080D2148[];
 
 void TaskExitTrampoline(void);
 void TaskYieldTrampoline(s32 frames);

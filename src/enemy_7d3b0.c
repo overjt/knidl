@@ -35,72 +35,8 @@
 #include "gba/gba.h"
 #include "global.h"
 #include "task.h"
-
-/* RAM cells */
-extern s8 gUnk_02007FB8[];
-extern struct Task *gCurTask;
-extern struct Task gTasks[];
-extern vs16 gTaskSlotTypes[];
-
-/* ROM tables */
-extern struct AnimCmd gUnk_087412A8[];
-extern struct AnimCmd gUnk_087412EC[];
-extern u32 gUnk_0873F500[];
-extern u32 gUnk_087410C0[];
-extern u32 gUnk_087410D8[];
-extern u32 gUnk_08741158[];
-extern u32 gUnk_08741174[];
-extern u32 gRockyVariants[];
-extern u32 gRockyWalkStates[];
-extern u32 gRockyWalkStateUpdates[];
-extern u32 gUnk_087411F4[];
-extern u32 gUnk_087411F8[];
-extern u32 gRockyStandStates[];
-extern u32 gRockyStandStateUpdates[];
-extern u32 gUnk_08741218[];
-extern u32 gUnk_08741220[];
-extern u32 gSirKibbleVariants[];
-extern u32 gSirKibbleStandStates[];
-extern u32 gSirKibbleStandStateUpdates[];
-extern u32 gSirKibbleWalkStates[];
-extern u32 gSirKibbleWalkStateUpdates[];
-extern u32 gUnk_08741264[];
-extern u32 gUnk_08741268[];
-extern u32 gCappyVariants[];
-extern u32 gCappyCappedStates[];
-extern u32 gCappyCappedStateUpdates[];
-extern u32 gCappyCaplessStates[];
-extern u32 gCappyCaplessStateUpdates[];
-extern u32 gUnk_08741290[];
-extern u32 gUnk_08741294[];
-extern u32 gUnk_08741298[];
-extern u32 gUnk_087412A0[];
-extern u32 gGordoVariants[];
-extern u32 gGordoBobStates[];
-extern u32 gGordoBobStateUpdates[];
-extern u32 gGordoBounceVerticalStates[];
-extern u32 gGordoBounceVerticalStateUpdates[];
-extern u32 gGordoBounceHorizontalStates[];
-extern u32 gGordoBounceHorizontalStateUpdates[];
-extern u32 gGordoSweepStates[];
-extern u32 gGordoSweepStateUpdates[];
-extern u32 gCoolSpookVariants[];
-extern u32 gUnk_08741308[];
-extern u32 gUnk_0874130C[];
-extern u32 gUnk_08741310[];
-extern u32 gUnk_08741314[];
-extern u32 gKabuVariants[];
-extern u32 gUnk_0874183C[];
-extern u32 gGordoFrames[];
-extern u32 gRockyFrames[];
-extern u32 gPengyIceBreathFrames[];
-extern u32 gSirKibbleFrames[];
-extern u32 gCappyFrames[];
-extern u32 gCappyCaplessFrames[];
-extern u32 gCoolSpookFrames[];
-extern u32 gKabuFrames[];
-extern u8 gUnk_08741214[];
-extern u8 gUnk_08741216[];
+#include "actor.h"
+#include "enemy.h"
 
 /* Externals */
 extern s32 RandomRange(s32 a);

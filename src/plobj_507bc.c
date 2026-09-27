@@ -1,6 +1,7 @@
 #include "gba/gba.h"
 #include "global.h"
 #include "task.h"
+#include "player.h"
 
 /* plobj_507bc.c (0x080507BC-0x080509EB, issue #90).
  *
@@ -15,10 +16,6 @@
  * collider row Task.unk24 if there is one and steps animation frames
  * 0-10 before TaskExitTrampoline.  sub_0805091c is a second, drifting burst
  * (gUnk_0874C7CC). */
-
-extern void (*gPlayerObjectVariants[])(void);   /* task type #6's 13 variants, indexed by Task.unk18 >> 24 */
-extern u32 gUnk_0874C650[];
-extern u32 gUnk_0874C7CC[];
 
 void TaskExitTrampoline(void);
 void TaskYieldTrampoline(s32 frames);

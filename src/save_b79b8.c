@@ -1,12 +1,8 @@
 #include "gba/gba.h"
 #include "global.h"
 #include "task.h"
-
-extern u16 gCompletionPercent;
-extern u16 gMilestoneFlags;
-extern s8 gUnk_03002384;
-extern u32 gBigSwitchFlags[];
-extern s8 gUnk_030023E0;
+#include "room.h"
+#include "save.h"
 
 s32 CalcCompletionPercent(s32 a)
 {

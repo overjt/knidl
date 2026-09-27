@@ -1,6 +1,10 @@
 #include "gba/gba.h"
 #include "global.h"
 #include "task.h"
+#include "collision.h"
+#include "room.h"
+#include "player.h"
+#include "actor.h"
 
 /* player_34f8c.c (0x08034F8C-0x0803627F, issue #92).
  *
@@ -18,37 +22,6 @@
  * are mode 5, sub_080355d8/sub_08035848 mode 8 (Task.variant is its
  * sub-state) and PlayerActionFloat mode 14, a six-state loop over Task.variant
  * whose per-frame handler is M10's PlayerActionFloatUpdate. */
-
-/* gTerrainResult: M06's collision result block (src/terrain_1bcac.c spells it
-   the same way except unk8, which M09 reads with ldrsh). */
-struct Unk03005550
-{
-    /*0x00*/ u8 unk0;
-    /*0x01*/ u8 ceilingHits;
-    /*0x02*/ u8 unk2;
-    /*0x03*/ u8 unk3;
-    /*0x04*/ u8 slope;
-    /*0x05*/ u8 unk5;
-    /*0x06*/ u8 unk6;
-    /*0x07*/ u8 unk7;
-    /*0x08*/ s16 unk8;
-    /*0x0A*/ u8 atDoor;
-    /*0x0B*/ u8 onSlipperyFloor;
-    /*0x0C*/ u8 unkC;
-    /*0x0D*/ u8 unkD;
-};
-
-extern s16 gUnk_0873D3B8[][2];
-extern u16 gLatchedHeldKeys[];             /* latched state mask per player (M11) */
-extern u8 gUnk_03001F30;
-extern struct Unk03005550 gTerrainResult;
-extern s16 gUnk_0873D420[][3];
-extern u32 gUnk_0873CC74[];
-extern u8 gUnk_0873BEB0[];
-extern u32 gPlayerDefaultBodyBox[];               /* stored to PlayerState.bodyBox as (u32)gPlayerDefaultBodyBox */
-extern u32 gPlayerDefaultTerrainBox[];
-extern u32 gUnk_0873BD14[];
-extern s16 gUnk_0873D7E4[][3];
 
 void TaskYieldTrampoline(s32 frames);
 void TaskSleepForever(void);

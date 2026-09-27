@@ -1,6 +1,8 @@
 #include "gba/gba.h"
 #include "global.h"
 #include "task.h"
+#include "room.h"
+#include "player.h"
 
 /* player_4b858.c (0x0804B858-0x0804C64B, issue #88).
  *
@@ -24,10 +26,6 @@
  * for the direction in gUnk_03001F2C), re-binds state 7 from the other
  * moves once PlayerState.unk16 >= 0 and unk08 == 0, and requests action
  * 23 through PlayerHasCrossedWaterSurface. */
-
-extern u16 gLatchedHeldKeys[];             /* held keys, latched per player (M11) */
-extern s32 gUnk_03001F2C;               /* boot_091ac.c spelling */
-extern u8 gUnk_0873B65E[];
 
 void TaskYieldTrampoline(s32 frames);
 u32 RandomRange(u32 range);

@@ -1,6 +1,14 @@
 #include "gba/gba.h"
 #include "global.h"
 #include "task.h"
+#include "link.h"
+#include "sound.h"
+#include "hud.h"
+#include "room.h"
+#include "player.h"
+#include "actor.h"
+#include "save.h"
+#include "ending.h"
 
 /* credits_cd330.c (0x080CD330-0x080CD89B, issue #100).
  *
@@ -18,52 +26,22 @@
  *       stream the 14 compressed pages gUnk_087583B4[] into the two BG0 map
  *       halves, and scroll BG0 from the per-frame callback gVBlankEndCallback. */
 
+/* Not from main.h: this file's view of gBgPalette differs (lesson 3.517). */
 extern vu16 gDispCnt;          /* DISPCNT shadow */
 extern vs32 gBg0ScrollY;          /* BG0 16.16 scroll shadows ... */
 extern vs32 gBg0ScrollX;
-extern u16 gLocalPlayer;           /* this player's index */
-extern u8 gExtraMode;
-extern u16 gUnk_02000028;
-extern s32 gPlayerScores[];         /* score per player */
 extern vu16 gPlayerPressedKeys[];        /* keys pressed per player */
 extern vu8 gBldCntTarget1;
 extern vu8 gBldCntTarget2;
 extern vu8 gBldAlphaEva;
 extern vu8 gBldAlphaEvb;
-extern u16 gBldY;
-extern vu16 gSfxDisabled;
-extern s32 gUnk_0201C1A4;           /* credits: the score saved over the demos */
-extern u8 gUnk_030023B0;
-extern u8 gUnk_0201C1B0;            /* credits: current demo scene */
-extern u32 gUnk_087583CC[][8];      /* credits: per variant, the scenes' recorded demos, 0-terminated */
-extern u16 gUnk_0875841E[][7];      /* credits: per variant, the scenes' lengths in frames */
+extern vu16 gBldY;
 extern vu16 gBgPalette[];
-extern s16 gInputRecorderMode;
-extern u32 gUnk_0200EC50;
-extern u16 gSavedPlayerAbilities[];
-extern u16 gSavedPlayerAbilityUses[];
-extern u16 gUnk_08758334[];
-extern u16 gUnk_08758374[];
-extern vu16 gFadeStep;
+extern vs16 gFadeStep;
 extern vs16 gBrightness;
 extern vu16 gFadeSteps;
 extern u32 gVBlankEndCallback;
-extern u8 gUnk_020061E0;
-extern u16 gNextActorSerial;
-extern u8 gUnk_02006178;
-extern u8 gUnk_02007CF0;
-extern s8 gUnk_02007FB8[];
 extern vu16 gPlayerHeldKeys[];
-extern u8 gUnk_03001F34;
-extern u16 gLatchedPressedKeys[];
-extern u16 gLatchedHeldKeys[];
-extern s32 gUnk_0201C1A0;           /* credits: BG0 vertical scroll, 16.16 */
-extern s32 gUnk_0201C1AC;           /* credits: BG0 horizontal scroll, 16.16 */
-extern u8 gUnk_0201C1A8;
-extern u8 gUnk_0201C19C;
-extern s32 gUnk_0201C1B4;           /* credits: scroll since the last page copy, 1/16 pixel */
-extern u32 *gUnk_087583B4[];        /* credits: the 14 compressed text pages */
-extern u16 gHudTilemap[];
 
 u32 BeginFade(u16 steps, s16 delta, u16 *mask);   /* delta passed as movs/negs (-2); early_08e8.c defines it u16, src/effect_5a358.c and src/player_47fe8.c spell it s16 too (lesson 3.428) */
 void RequestCopy(u32 mode, u32 src, u32 dst, u32 size);

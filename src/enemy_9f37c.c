@@ -2,14 +2,9 @@
 #include "gba/gba.h"
 #include "global.h"
 #include "task.h"
-
-/* RAM cells / ROM tables */
-extern s32 gUnk_02007D00[];
-extern s16 gViewRect[];
-extern s32 gUnk_030023B4;
-extern u32 gUnk_08747C6C[];
-extern u32 gTridentKnightTridentFrames[];
-extern u32 gUnk_087535A8[];
+#include "camera.h"
+#include "actor.h"
+#include "enemy.h"
 
 /* Externals */
 extern void TaskExitTrampoline(void);

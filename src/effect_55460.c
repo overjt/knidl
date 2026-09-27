@@ -1,6 +1,9 @@
 #include "gba/gba.h"
 #include "global.h"
 #include "task.h"
+#include "main.h"
+#include "link.h"
+#include "effect.h"
 
 /* effect_55460.c (0x08055460-0x08055B23, issue #89).
  *
@@ -16,16 +19,6 @@
  * shared body) spawn its sub-state 2; 21 (sub_08055a40) rides on its
  * spawner, and sub_08055abc kills it (or, while gUnk_0300244C is set, hides
  * it) when the player is in mode 13, 16, 18 or 20. */
-
-extern u32 gUnk_0874C960[];
-extern u32 gUnk_0874C980[];
-extern u32 gUnk_0874C804[];
-extern u32 gUnk_0874C784[];
-extern s16 gSpriteCameraX;               /* scalar, read with ldrsh (33 landed files) */
-extern s16 gSpriteCameraY;               /* scalar, read with ldrsh (32 landed files) */
-extern u32 gUnk_0874C600[];
-extern u32 gUnk_0874C780[];
-extern s16 gUnk_0300244C;
 
 void TaskExitTrampoline(void);
 void TaskYieldTrampoline(s32 frames);

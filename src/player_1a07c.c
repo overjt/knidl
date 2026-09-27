@@ -1,14 +1,9 @@
 #include "gba/gba.h"
 #include "global.h"
 #include "task.h"
-
-extern u8 gObjPalette[];
-extern u16 gFrameCount;
-extern u16 gLocalPlayer;
-extern u16 gPlayerCount;
-extern struct Task *gCurTask;
-extern u32 gUnk_0874CE90[];
-extern u8 gUnk_08757368[];
+#include "main.h"
+#include "link.h"
+#include "player.h"
 
 void TaskExitTrampoline(void);
 void TaskYieldTrampoline(s32 frames);

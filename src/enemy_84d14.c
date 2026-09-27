@@ -29,27 +29,7 @@
 #include "gba/gba.h"
 #include "global.h"
 #include "task.h"
-
-/* ROM tables */
-extern u32 gUnk_0873F500[];
-extern u32 gWaddleDooFrames[];
-extern s32 gUnk_08742010[];
-extern u8 gUnk_08742020[];
-extern u8 gUnk_08742028[];
-extern struct AnimCmd gUnk_08742050[];
-extern u32 gUnk_08742A40[];
-extern u32 gBrontoBurtVariants[];
-extern u32 gBrontoBurtFrames[];
-extern u32 gUnk_08742030[];
-extern u32 gUnk_08742040[];
-extern u32 gUnk_08742A6C[];
-extern u8 gUnk_0874202C[];
-extern u8 gUnk_08742024[];
-extern u32 gWaddleDooVariants[];
-extern u32 gUnk_08741FF8[];
-extern u32 gUnk_08742004[];
-extern u32 gChillyStates[];
-extern u32 gChillyStateUpdates[];
+#include "enemy.h"
 
 /* Externals */
 extern void TaskYieldTrampoline(u32 frames);
