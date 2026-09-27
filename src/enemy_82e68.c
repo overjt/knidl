@@ -28,12 +28,12 @@
  *     a 16.16 velocity through AngleToVector, and `sub_08083dfc` is the
  *     five-times-four-frame animation wait;
  *   * the one-state script `sub_0808398c` (`0x087417B0` / `0x087417B4`);
- *   * the class-2 task #105 script `sub_08083e6c` (`0x08741E64` /
+ *   * the class-2 task #105 script `Task_SirKibbleCutter` (`0x08741E64` /
  *     `0x08741E68` / `0x08741E6C`);
- *   * the class-2 task #108 script `sub_08084050`, whose unk73 table
+ *   * the class-2 task #108 script `Task_HotHeadFire`, whose unk73 table
  *     `0x08741E7C` has two rows (`0x08741E84`/`0x08741E88` and
  *     `0x08741E8C`/`0x08741E90`);
- *   * the class-2 task #176 one-shot `sub_080843fc` and the class-3 task #10
+ *   * the class-2 task #176 one-shot `Task_FlamerFlame` and the class-3 task #10
  *     entry `Task_Noddy`, whose script continues in src/enemy_844c4.c.
  *
  * `sub_080839d0`, `sub_08083ee8`, `sub_080840d4` and `sub_0808429c` are dead
@@ -61,8 +61,8 @@ extern u32 gFlamerStateUpdates[];
 extern u8 gUnk_087416AD[];
 extern s32 gUnk_087416B0[];
 extern u8 gUnk_087416CC[];
-extern u32 gUnk_0875233C[];
-extern u32 gUnk_08752794[];
+extern u32 gSirKibbleCutterFrames[];
+extern u32 gHotHeadFireFrames[];
 extern s32 gUnk_08741E54[];
 extern s32 gUnk_08741E5C[];
 extern u32 gUnk_08741F64[];
@@ -73,7 +73,7 @@ extern u32 gNoddyVariants[];
 extern u32 gNoddyFrames[];
 extern u32 gFlamerFrames[];
 extern s16 gUnk_08741E70[];
-extern u32 gUnk_08741E7C[];
+extern u32 gHotHeadFireVariants[];
 extern u32 gUnk_08741E84[];
 extern u32 gUnk_08741E88[];
 extern u32 gUnk_08741E8C[];
@@ -849,7 +849,7 @@ u8 sub_08083e5c(void)
     return 1;
 }
 
-void sub_08083e6c(void)
+void Task_SirKibbleCutter(void)
 {
     struct Task *t;
 
@@ -857,7 +857,7 @@ void sub_08083e6c(void)
     t->moveCallback = (u32)ActorMove;
     t->drawCallback = (u32)ActorDrawWorldInViewOrDestroy;
     t->layer = 9;
-    gCurTask->frameTable = gUnk_0875233C;
+    gCurTask->frameTable = gSirKibbleCutterFrames;
     PlaySfx(186);
     CallTableEntry(gCurTask->variant, 1, gUnk_08741E64);
 }
@@ -930,7 +930,7 @@ void sub_08083fbc(void)
     }
 }
 
-void sub_08084050(void)
+void Task_HotHeadFire(void)
 {
     struct Task *t;
     struct Task *u;
@@ -940,11 +940,11 @@ void sub_08084050(void)
     t->drawCallback = (u32)ActorDrawWorldInViewOrDestroy;
     t->layer = 3;
     u = gCurTask;
-    u->frameTable = gUnk_08752794;
+    u->frameTable = gHotHeadFireFrames;
     u->onGround = 0;
     TaskFaceLikeParent();
     PlaySfx(194);
-    CallTableEntry(gCurTask->variant, 2, gUnk_08741E7C);
+    CallTableEntry(gCurTask->variant, 2, gHotHeadFireVariants);
 }
 
 void sub_080840a4(void)
@@ -1105,7 +1105,7 @@ void sub_080843f8(void)
 {
 }
 
-void sub_080843fc(void)
+void Task_FlamerFlame(void)
 {
     struct Task *t;
     struct Task *u;

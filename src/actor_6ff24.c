@@ -34,7 +34,7 @@
 #include "task.h"
 
 /* RAM cells */
-extern s8 gUnk_02006094;
+extern s8 gCannonFuseState;
 extern u16 gUnk_020055C0;
 extern u16 gObjPalette[];
 extern u8 gUnk_03001F30;
@@ -360,9 +360,9 @@ void sub_080703a8(void)
         case 1:
             if (u->unk34 == 1)
             {
-                if (gUnk_02006094 == -1)
+                if (gCannonFuseState == -1)
                     PlaySfx(153);
-                gUnk_02006094 = 0;
+                gCannonFuseState = 0;
             }
             RequestScreenShake(4);
             sub_0806d4e4(0, 0);

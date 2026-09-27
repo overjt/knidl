@@ -43,7 +43,7 @@ extern u32 ActorReactToHit(void);
 extern void ActorDie(void);
 extern s16 sub_0806caa0(u8 kind, s32 dx, s32 dy);
 extern void sub_080a0a84(void);
-extern void sub_080a0b10(void);
+extern void KingDededeEnterState(void);
 extern void sub_080b7c00(u32 a);
 
 void sub_0809fbd0(void)
@@ -238,7 +238,7 @@ u8 sub_0809fe10(void)
         ActorSetState(1);
         a->prevState = gCurTask->unk1C;
     install:
-        TaskSetEntry(sub_080a0b10, gCurTaskIdx);
+        TaskSetEntry(KingDededeEnterState, gCurTaskIdx);
         break;
     case 8:
     case 9:
@@ -255,7 +255,7 @@ u8 sub_0809fe10(void)
         z->unk2C = 1;
         gUnk_02006190[2] = 4;
         ActorSetState(1);
-        TaskSetEntry(sub_080a0b10, gCurTaskIdx);
+        TaskSetEntry(KingDededeEnterState, gCurTaskIdx);
         break;
     case 5:
     case 6:

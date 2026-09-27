@@ -17,7 +17,7 @@ extern u32 gUnk_08747B38[];
 extern u32 gUnk_08747B58[];
 extern u32 gUnk_08747B68[];
 extern u32 gUnk_08747E64[];
-extern u32 gUnk_08753270[];
+extern u32 gAxeKnightAxeFrames[];
 extern u32 gJavelinKnightFrames[];
 
 /* Externals */
@@ -221,7 +221,7 @@ void sub_0809cf04(void)
     gCurTask->unk46 = CreateActorFromDescAtOffsetFacing(&sp, 1);
 }
 
-void sub_0809cf60(void)
+void Task_AxeKnightAxe(void)
 {
     struct Task *t;
     struct Task *u;
@@ -231,7 +231,7 @@ void sub_0809cf60(void)
     t->drawCallback = (u32)ActorDrawWorldInViewOrDestroy;
     t->layer = 11;
     u = gCurTask;
-    u->frameTable = gUnk_08753270;
+    u->frameTable = gAxeKnightAxeFrames;
     u->updateCallback = (u32)sub_0809cfe0;
     TaskFaceLikeParent();
     TaskSetMotionXFacing(224 << 10, 0xFFFFDB00);

@@ -79,7 +79,7 @@ extern s16 gCameraAnchorX;
 extern u16 gPlayerCount;
 extern u8 gUnk_030023B0;
 extern s32 gUnk_030023B4;
-extern u32 gUnk_030023C8[];
+extern u32 gBigSwitchFlags[];
 extern s32 gUnk_030023D4;
 extern u16 gGameState;
 extern s16 gSpriteCameraY;
@@ -149,12 +149,12 @@ extern struct AnimCmd gUnk_087485EC[];
 extern struct AnimCmd gUnk_087485FC[];
 extern s32 gUnk_08748604[];
 extern s32 gUnk_08748614[];
-extern u32 gUnk_08748624[];
-extern u32 gUnk_08748634[];
-extern u32 gUnk_08748644[];
-extern u32 gUnk_0874868C[];
-extern u32 gUnk_087486D4[];
-extern u32 gUnk_0874871C[];
+extern u32 gMrShineAndMrBrightStates[];
+extern u32 gMrShineAndMrBrightStateUpdates[];
+extern u32 gMrShineStates[];
+extern u32 gMrShineStateUpdates[];
+extern u32 gMrBrightStates[];
+extern u32 gMrBrightStateUpdates[];
 extern struct ActorDef gUnk_087487BC[];
 extern u32 gUnk_0874883C[];
 extern u32 gUnk_08748858[];
@@ -218,8 +218,8 @@ extern u16 gUnk_08748E98[];
 extern u16 gUnk_08748EA8[];
 extern u8 gUnk_08748EAC[];
 extern u32 gMetaKnightVariants[];
-extern u32 gUnk_08748EBC[];
-extern u32 gUnk_08748F1C[];
+extern u32 gMetaKnightStates[];
+extern u32 gMetaKnightStateUpdates[];
 extern u32 gUnk_08748F7C[];
 extern u32 gUnk_08748F84[];
 extern u32 gUnk_08748F8C[];
@@ -270,8 +270,8 @@ extern u32 gUnk_0874936C[];
 extern s8 gUnk_08749380[];
 extern s8 gUnk_087493A4[];
 extern u32 gNightmareWizardVariants[];
-extern u32 gUnk_087493F8[];
-extern u32 gUnk_08749428[];
+extern u32 gNightmareWizardStates[];
+extern u32 gNightmareWizardStateUpdates[];
 extern u32 gUnk_08749458[];
 extern u32 gUnk_08749490[];
 extern s8 gUnk_087494C8[];
@@ -399,8 +399,8 @@ extern u32 gUnk_0874BFD4[];
 extern u32 gUnk_0874C108[];
 extern u32 gUnk_0874C110[];
 extern u32 gWhispyWoodsVariants[];
-extern u32 gUnk_0874C130[];
-extern u32 gUnk_0874C140[];
+extern u32 gWhispyWoodsStates[];
+extern u32 gWhispyWoodsStateUpdates[];
 extern u32 gUnk_0874C150[];
 extern u32 gUnk_0874C154[];
 extern u32 gUnk_0874C210[];
@@ -420,11 +420,11 @@ extern u32 gUnk_0874C332[];
 extern u32 gUnk_0874C44C[];
 extern u32 gUnk_0874C500[];
 extern u32 gUnk_0874C568[];
-extern u32 gUnk_0874CAEC[];
-extern u32 gUnk_0874CCF4[];
-extern u32 gUnk_0874CD0C[];
-extern u32 gUnk_0874CD24[];
-extern u32 gUnk_0874CD3C[];
+extern u32 gAbilityStarFrames[];
+extern u32 gOneUpFrames[];
+extern u32 gMaximTomatoFrames[];
+extern u32 gInvincibleCandyFrames[];
+extern u32 gEnergyDrinkFrames[];
 extern u32 gUnk_0874CE68[];
 extern u32 gUnk_08753990[];
 extern u32 gPaintRollerFrames[];
@@ -454,7 +454,7 @@ extern u32 gUnk_08754280[];
 extern u32 gUnk_08754290[];
 extern u32 gUnk_087542A8[];
 extern u32 gWhispyWoodsFrames[];
-extern u32 gUnk_08754308[];
+extern u32 gWhispyWoodsAppleFrames[];
 extern u32 gUnk_08754358[];
 extern u32 gUnk_087543A0[];
 extern u32 gKrackoFrames[];
@@ -472,10 +472,10 @@ extern u32 gUnk_08754708[];
 extern u32 gUnk_08754718[];
 extern u32 gUnk_08754738[];
 extern u32 gUnk_08754780[];
-extern u32 gUnk_0875607C[];
+extern u32 gPickupVariants[];
 extern u32 gUnk_08756084[];
-extern u32 gUnk_087560A0[];
-extern u32 gUnk_087560AC[];
+extern u32 gPickupStates[];
+extern u32 gPickupStateUpdates[];
 extern u32 gUnk_087560B8[];
 extern u32 gUnk_087560C0[];
 extern u32 gUnk_087560D0[];
@@ -692,7 +692,7 @@ void sub_080a18d4();
 void sub_080a1980();
 void Task_MrShineAndMrBright();
 void sub_080a19ec();
-void sub_080a1ad0();
+void CreateMrShineAndMrBright();
 void sub_080a1b94();
 void sub_080a1bd8(u16 a, u16 b);
 void sub_080a1c1c();
@@ -754,9 +754,9 @@ void sub_080a3000();
 void sub_080a301c();
 void sub_080a306c();
 void sub_080a30d0();
-void sub_080a3114();
-void sub_080a314c();
-void sub_080a3168();
+void MrShineAndMrBrightInit();
+void MrShineAndMrBrightUpdate();
+void MrShineAndMrBrightEnterState();
 void sub_080a3184();
 void sub_080a31a4();
 void sub_080a31d0();
@@ -766,9 +766,9 @@ void sub_080a3238();
 void sub_080a3250();
 void sub_080a3268();
 void sub_080a3280();
-void sub_080a3298();
-void sub_080a32c4();
-void sub_080a332c();
+void MrShineInit();
+void MrShineUpdate();
+void MrShineEnterState();
 void sub_080a3348();
 void sub_080a33a4();
 void sub_080a33dc();
@@ -805,9 +805,9 @@ void sub_080a3b7c();
 void sub_080a3ba0();
 void sub_080a3bc0();
 void sub_080a3c08();
-void sub_080a3c28();
-void sub_080a3c54();
-void sub_080a3cbc();
+void MrBrightInit();
+void MrBrightUpdate();
+void MrBrightEnterState();
 void sub_080a3cd8();
 void sub_080a3d3c();
 void sub_080a3d84();
@@ -850,7 +850,7 @@ void sub_080a472c();
 void sub_080a4808();
 void sub_080a4814();
 void sub_080a488c();
-void sub_080a498c();
+void Task_KingDededeStar();
 void sub_080a49cc();
 void sub_080a4a1c();
 void sub_080a4a60();
@@ -904,9 +904,9 @@ void sub_080a5524();
 void sub_080a556c();
 void sub_080a55ac();
 void Task_MetaKnight();
-void sub_080a5644();
-void sub_080a5694();
-void sub_080a56b0();
+void MetaKnightInit();
+void MetaKnightEnterState();
+void MetaKnightUpdate();
 void sub_080a57d4();
 void sub_080a5a78();
 void sub_080a5aa0();
@@ -1035,9 +1035,9 @@ void sub_080a9ef4();
 void sub_080aa16c();
 void sub_080aa188();
 void Task_NightmareWizard();
-void sub_080aa338();
-void sub_080aa38c();
-void sub_080aa3a8();
+void NightmareWizardInit();
+void NightmareWizardEnterState();
+void NightmareWizardUpdate();
 void sub_080aa47c();
 void sub_080aa52c();
 void sub_080aa560();
@@ -1274,9 +1274,9 @@ s32 sub_080b2804();
 void sub_080b2884();
 void sub_080b2890();
 void Task_WhispyWoods();
-void sub_080b2a74();
-void sub_080b2aa4();
-void sub_080b2ac8();
+void WhispyWoodsInit();
+void WhispyWoodsUpdate();
+void WhispyWoodsEnterState();
 void sub_080b2ae4();
 void sub_080b2b28();
 void sub_080b2b40();
@@ -1295,7 +1295,7 @@ void sub_080b2f78();
 void sub_080b2fb0();
 void sub_080b2fe8();
 void sub_080b3010(u8 a);
-void sub_080b3050();
+void Task_WhispyWoodsApple();
 void sub_080b3090();
 void sub_080b30c8();
 void sub_080b3110();
@@ -1307,7 +1307,7 @@ void sub_080b3214();
 void sub_080b3258();
 void sub_080b328c();
 void sub_080b32d0();
-void sub_080b3318();
+void Task_WhispyWoodsAirPuff();
 void sub_080b3368();
 void sub_080b3398();
 void sub_080b33bc();
@@ -1319,19 +1319,19 @@ void sub_080b3a00();
 void sub_080b3a64();
 void sub_080b3c68();
 void sub_080b3e30();
-void sub_080b3e54();
-void sub_080b3e94();
-void sub_080b3ed4();
-void sub_080b3f14();
+void Task_OneUp();
+void Task_MaximTomato();
+void Task_InvincibleCandy();
+void Task_EnergyDrink();
 void sub_080b3f54();
 void sub_080b3fcc();
 void sub_080b3ffc();
 s32 sub_080b404c();
 s32 sub_080b406c();
 s32 sub_080b408c();
-void sub_080b40a4();
-void sub_080b4100();
-void sub_080b4158();
+void PickupInit();
+void PickupUpdate();
+void PickupEnterState();
 void sub_080b4174();
 void sub_080b4190();
 void sub_080b4194();
@@ -1339,9 +1339,9 @@ void sub_080b41c8();
 void sub_080b41cc();
 void sub_080b4200();
 s32 sub_080b4204();
-void sub_080b4240();
-void sub_080b429c();
-void sub_080b42f8();
+void PickupHeal();
+void MaximTomatoHeal();
+void EnergyDrinkHeal();
 s32 sub_080b4390();
 s32 sub_080b43d4();
 s32 sub_080b43f4();
@@ -1405,12 +1405,12 @@ void HBlankScrollVBlankCallback();
 void UpdateHBlankScroll();
 extern void CpuSet(const void *src, void *dst, u32 control);
 
-void sub_080a5644(void)
+void MetaKnightInit(void)
 {
     struct Task *t;
 
     t = gCurTask;
-    t->updateCallback = (u32)sub_080a56b0;
+    t->updateCallback = (u32)MetaKnightUpdate;
     t->unk28 = 0;
     t->unk2C = -1;
     t->unk30 = -1;
@@ -1418,22 +1418,22 @@ void sub_080a5644(void)
     gUnk_02007D00[2] = 0;
     gUnk_02007D00[3] = (s16)ActorComputeHealth();
     ActorSetState(0);
-    CallTableEntry(gCurTask->state, 24, gUnk_08748EBC);
+    CallTableEntry(gCurTask->state, 24, gMetaKnightStates);
 }
 
-void sub_080a5694(void)
+void MetaKnightEnterState(void)
 {
-    CallTableEntry(gCurTask->state, 24, gUnk_08748EBC);
+    CallTableEntry(gCurTask->state, 24, gMetaKnightStates);
 }
 
-void sub_080a56b0(void)
+void MetaKnightUpdate(void)
 {
     struct Task *t;
     u32 rr;
     u32 *q;
 
     if ((u8)ActorCollideTerrain() == 0)
-        CallTableEntry(gCurTask->updateState, 24, gUnk_08748F1C);
+        CallTableEntry(gCurTask->updateState, 24, gMetaKnightStateUpdates);
     if (gCurTask->unk30 != -1)
     {
         ActorSetAttackBox(gUnk_08748D38[gCurTask->unk30]);
@@ -1581,7 +1581,7 @@ void sub_080a57d4(void)
 void sub_080a5a78(void)
 {
     if (gCurTask->state != 0)
-        TaskSetEntry(sub_080a5694, gCurTaskIdx);
+        TaskSetEntry(MetaKnightEnterState, gCurTaskIdx);
 }
 
 void sub_080a5aa0(void)
@@ -1758,7 +1758,7 @@ void sub_080a5e30(void)
 {
     ClampTaskToRoom(gCurTask);
     if (gCurTask->state != 2)
-        TaskSetEntry(sub_080a5694, gCurTaskIdx);
+        TaskSetEntry(MetaKnightEnterState, gCurTaskIdx);
 }
 
 void sub_080a5e60(void)
@@ -1778,7 +1778,7 @@ void sub_080a5e9c(void)
 {
     ClampTaskToRoom(gCurTask);
     if (gCurTask->state != 3)
-        TaskSetEntry(sub_080a5694, gCurTaskIdx);
+        TaskSetEntry(MetaKnightEnterState, gCurTaskIdx);
 }
 
 void sub_080a5ecc(void)
@@ -1793,7 +1793,7 @@ void sub_080a5ef0(void)
 {
     ClampTaskToRoom(gCurTask);
     if (gCurTask->state != 4)
-        TaskSetEntry(sub_080a5694, gCurTaskIdx);
+        TaskSetEntry(MetaKnightEnterState, gCurTaskIdx);
 }
 
 void sub_080a5f20(void)
@@ -1820,7 +1820,7 @@ void sub_080a5f7c(void)
 {
     ClampTaskToRoom(gCurTask);
     if (gCurTask->state != 5)
-        TaskSetEntry(sub_080a5694, gCurTaskIdx);
+        TaskSetEntry(MetaKnightEnterState, gCurTaskIdx);
 }
 
 void sub_080a5fac(void)
@@ -2368,7 +2368,7 @@ void sub_080a6c3c(void)
             {
                 TaskStop();
                 ActorSetState(10);
-                TaskSetEntry(sub_080a5694, gCurTaskIdx);
+                TaskSetEntry(MetaKnightEnterState, gCurTaskIdx);
             }
             else
             {
@@ -2432,7 +2432,7 @@ void sub_080a6d60(void)
                 gCurTask->unk30 = 1;
                 v = gUnk_08748EA8[RandomRange(2)];
                 ActorSetState(v);
-                TaskSetEntry(sub_080a5694, gCurTaskIdx);
+                TaskSetEntry(MetaKnightEnterState, gCurTaskIdx);
             }
         }
     } else {
@@ -2444,7 +2444,7 @@ void sub_080a6d60(void)
                 v = 2;
             }
             ActorSetState(v);
-            TaskSetEntry(sub_080a5694, gCurTaskIdx);
+            TaskSetEntry(MetaKnightEnterState, gCurTaskIdx);
         } else {
             TaskSetFrame(70);
         }
@@ -2609,7 +2609,7 @@ void sub_080a7080(void)
 void sub_080a7168(void)
 {
     gCurTask->unk28 |= 128;
-    TaskSetEntry(sub_080a5694, gCurTaskIdx);
+    TaskSetEntry(MetaKnightEnterState, gCurTaskIdx);
 }
 
 void sub_080a7190(void)

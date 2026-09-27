@@ -74,7 +74,7 @@ extern u8 gUnk_03002384;
 extern u8 gLevelIndex;
 extern u16 gPlayerCount;
 extern u8 gUnk_030023B8;
-extern u32 gUnk_030023C8[];
+extern u32 gBigSwitchFlags[];
 extern u8 gUnk_030023E0;
 extern u8 gStageIndex;
 extern u8 gUnk_03002400[8][7];
@@ -134,7 +134,7 @@ void InputRecorderStart(void)
         gInputRecordingPtr->unkC6[gExtraMode] = gUnk_03001F20;
         gInputRecordingPtr->unkC8[gExtraMode] = gUnk_030023E0;
         gInputRecordingPtr->unkCA[gExtraMode] = gUnk_03002384;
-        gInputRecordingPtr->unkCC[gExtraMode] = gUnk_030023C8[0];
+        gInputRecordingPtr->unkCC[gExtraMode] = gBigSwitchFlags[0];
         for (i = 0; i <= 7; i++)
         {
             for (j = 0; j <= 6; j++)

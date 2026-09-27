@@ -16,9 +16,9 @@
  *   * script 5: entry `sub_0808fa10` (`0x087432F4`, 2 rows), rows
  *     `sub_0808fa50` / `sub_0808fbac`, bodies `0x087432FC` (3) and
  *     `0x08743308` (1);
- *   * script 6: entry `sub_0808fc40` (`0x08743600`, 1 row), row
+ *   * script 6: entry `Task_LaserBallLaser` (`0x08743600`, 1 row), row
  *     `sub_0808fc90`, bodies `0x08743604` (2), guards `0x0874360C` (2);
- *   * script 7: entry `sub_0808fdb8` (`0x0874362C`, 4 identical rows), row
+ *   * script 7: entry `Task_ShotzoCannonball` (`0x0874362C`, 4 identical rows), row
  *     `sub_0808fdf8`, body `0x0874363C` (`sub_0808fe88`, the class-2 wanderer
  *     that picks its heading from gTasks[Task.parent].unk34) and guard
  *     `0x08743640` (`sub_0808ffe0`).
@@ -53,8 +53,8 @@ extern s16 gUnk_0874361A[];
 extern u32 gUnk_0874362C[];
 extern u32 gUnk_0874363C[];
 extern u32 gUnk_08743640[];
-extern u32 gUnk_0875227C[];
-extern u32 gUnk_08752520[];
+extern u32 gLaserBallLaserFrames[];
+extern u32 gShotzoCannonballFrames[];
 extern u32 gUnk_08752A70[];
 
 /* Externals */
@@ -135,7 +135,7 @@ void sub_0808fb80(void);
 void sub_0808fbac(void);
 void sub_0808fbf0(void);
 void sub_0808fc00(void);
-void sub_0808fc40(void);
+void Task_LaserBallLaser(void);
 void sub_0808fc90(void);
 void sub_0808fcd4(void);
 void sub_0808fd1c(void);
@@ -143,7 +143,7 @@ void sub_0808fd38(void);
 void sub_0808fd5c(void);
 void sub_0808fd60(void);
 void sub_0808fdb4(void);
-void sub_0808fdb8(void);
+void Task_ShotzoCannonball(void);
 void sub_0808fdf8(void);
 void sub_0808fe28(void);
 void sub_0808fe6c(void);
@@ -614,7 +614,7 @@ void sub_0808fc00(void)
     }
 }
 
-void sub_0808fc40(void)
+void Task_LaserBallLaser(void)
 {
     struct Task *t;
     struct Task *u;
@@ -623,7 +623,7 @@ void sub_0808fc40(void)
     t->moveCallback = (u32)TaskMove;
     t->drawCallback = (u32)ActorDrawWorldInViewOrDestroy;
     t->layer = 11;
-    gCurTask->frameTable = gUnk_0875227C;
+    gCurTask->frameTable = gLaserBallLaserFrames;
     TaskFaceLikeParent();
     gCurTask->onGround = 0;
     u = gCurTask;
@@ -691,7 +691,7 @@ void sub_0808fdb4(void)
 {
 }
 
-void sub_0808fdb8(void)
+void Task_ShotzoCannonball(void)
 {
     struct Task *t;
     struct Task *u;
@@ -701,7 +701,7 @@ void sub_0808fdb8(void)
     t->drawCallback = (u32)ActorDrawWorldInViewOrDestroy;
     t->layer = 11;
     u = gCurTask;
-    u->frameTable = gUnk_08752520;
+    u->frameTable = gShotzoCannonballFrames;
     CallTableEntry(u->variant, 4, gUnk_0874362C);
 }
 

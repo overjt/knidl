@@ -4,9 +4,9 @@
  *   ./tools/fnmatch.sh 0x08091F9C 0x08093F64 src/enemy_91f9c.c --newpb
  *
  * M25's third and fourth boss scripts.  The third (entry Task_Bugzzy in
- * src/enemy_91f08.c, table 0x08743ADC) starts here with sub_08091f9c, which
- * installs the per-frame body sub_08091ffc and the animation script
- * gUnk_08743AC8.  sub_08091ffc is the busiest body in the module: besides the
+ * src/enemy_91f08.c, table 0x08743ADC) starts here with BugzzyInit, which
+ * installs the per-frame body BugzzyUpdate and the animation script
+ * gUnk_08743AC8.  BugzzyUpdate is the busiest body in the module: besides the
  * usual Task.updateState dispatch it calls ClampTaskToRoom (the camera/room hook) on
  * entry, and when the row gUnk_08743A58[Task.unk34] is non-null it runs the
  * "hit the wall" transition - sub_0806914c, then Task.unk1C = Task.hitterSlot,
@@ -28,10 +28,10 @@
  * sub_080937d0 the hit hook, sub_08093858 the four-instruction "stop moving"
  * leaf the census had missed, and sub_0809397c the companion body.
  *
- * The fourth boss starts at sub_08093a24 (table 0x087441A4, graphics
- * gUnk_08752F60): sub_08093a64 installs sub_08093a98 as its body,
- * sub_08093ac8 is its one state, sub_08093bd4 / sub_08093c30 are the second
- * entry pair (graphics gUnk_08753160, Actor.sfxOverride = 0x20E), sub_08093ccc and
+ * The fourth boss starts at Task_BonkersNut (table 0x087441A4, graphics
+ * gBonkersNutFrames): sub_08093a64 installs sub_08093a98 as its body,
+ * sub_08093ac8 is its one state, Task_PoppyBrosSrBomb / sub_08093c30 are the second
+ * entry pair (graphics gPoppyBrosSrBombFrames, Actor.sfxOverride = 0x20E), sub_08093ccc and
  * sub_08093dcc are the endless spawners that call CreateChildTaskAtOffsetFacing(181, -8, -8, 1)
  * every six frames, and sub_08093cf8 / sub_08093e58 / sub_08093f00 are the
  * companions that copy the boss's 16.16 position (±8 rows) and expire with it.
@@ -64,9 +64,9 @@ extern u32 gUnk_0874410C[];
 extern u32 gUnk_08744170[];
 extern u32 gUnk_08744174[];
 extern u32 gUnk_08744178[];
-extern u32 gUnk_08752F60[];
+extern u32 gBonkersNutFrames[];
 extern u32 gUnk_0874430C[];
-extern u32 gUnk_08753160[];
+extern u32 gPoppyBrosSrBombFrames[];
 extern u32 gUnk_087441A4[];
 extern u32 gUnk_087441AC[];
 extern u32 gUnk_0874417C[][2];
@@ -86,13 +86,13 @@ extern u32 gUnk_08743A10[];
 extern u32 gUnk_08743A28[];
 extern u32 gUnk_08743A40[];
 extern u32 gUnk_08743A58[];
-extern u32 gUnk_08743B14[];
+extern u32 gBugzzyStateUpdates[];
 extern void *gUnk_082959A8;
 extern struct AnimCmd gUnk_08743AC8[];
-extern u32 gUnk_08743AE0[];
+extern u32 gBugzzyStates[];
 extern struct AnimCmd gUnk_0874397C[];
-extern u32 gUnk_08743988[];
-extern u32 gUnk_087439A4[];
+extern u32 gPoppyBrosSrStates[];
+extern u32 gPoppyBrosSrStateUpdates[];
 extern u32 gUnk_087440F4[];
 extern struct AnimCmd *gUnk_08743A00[];
 extern u32 gBugzzyVariants[];
@@ -186,8 +186,8 @@ extern void sub_0806cffc(s16 dx, s16 dy);
 extern s32 Div(s32 numerator, s32 denominator);
 
 /* Defined below */
-void sub_08091fe0(void);
-void sub_08091ffc(void);
+void BugzzyEnterState(void);
+void BugzzyUpdate(void);
 void sub_080934b8(void);
 void sub_080934f8(void);
 void sub_0809364c(void);
@@ -198,26 +198,26 @@ void sub_0809397c(void);
 void sub_08093a98(void);
 void sub_08093c7c(void);
 void sub_08093c60(void);
-void sub_08091f9c(void)
+void BugzzyInit(void)
 {
     struct Task *t;
     struct Task *u;
 
     t = gCurTask;
-    t->updateCallback = (u32)sub_08091ffc;
+    t->updateCallback = (u32)BugzzyUpdate;
     sub_080666cc(gUnk_08743AC8);
     u = gCurTask;
     u->unk24 = u->unk8C->palette;
     ActorSetState(0);
-    CallTableEntry(gCurTask->state, 13, gUnk_08743AE0);
+    CallTableEntry(gCurTask->state, 13, gBugzzyStates);
 }
 
-void sub_08091fe0(void)
+void BugzzyEnterState(void)
 {
-    CallTableEntry(gCurTask->state, 13, gUnk_08743AE0);
+    CallTableEntry(gCurTask->state, 13, gBugzzyStates);
 }
 
-void sub_08091ffc(void)
+void BugzzyUpdate(void)
 {
     struct Task *t;
     struct Task *u;
@@ -232,16 +232,16 @@ void sub_08091ffc(void)
     if (t->unk20 != 0)
     {
         t->unk20--;
-        CallTableEntry(t->updateState, 13, gUnk_08743B14);
+        CallTableEntry(t->updateState, 13, gBugzzyStateUpdates);
     }
     else if (sub_0806acf8() == 0)
     {
         if (ActorCollideTerrain() == 0)
-            CallTableEntry(gCurTask->updateState, 13, gUnk_08743B14);
+            CallTableEntry(gCurTask->updateState, 13, gBugzzyStateUpdates);
     }
     else
     {
-        CallTableEntry(gCurTask->updateState, 13, gUnk_08743B14);
+        CallTableEntry(gCurTask->updateState, 13, gBugzzyStateUpdates);
     }
     u = gCurTask;
     if (u->unk30 == 1)
@@ -283,7 +283,7 @@ void sub_08091ffc(void)
                 PlaySfx(0x23D);
             sub_080685ec(gCurTask->unk1C, gCurTaskIdx, 3);
             ActorSetState(10);
-            TaskSetEntry(sub_08091fe0, gCurTaskIdx);
+            TaskSetEntry(BugzzyEnterState, gCurTaskIdx);
         }
     }
 }
@@ -321,7 +321,7 @@ void sub_08092198(void)
 void sub_08092228(void)
 {
     if (gCurTask->state != 0)
-        TaskSetEntry(sub_08091fe0, gCurTaskIdx);
+        TaskSetEntry(BugzzyEnterState, gCurTaskIdx);
 }
 void sub_08092250(void)
 {
@@ -462,7 +462,7 @@ void sub_08092250(void)
 void sub_08092590(void)
 {
     if (gCurTask->state != 1)
-        TaskSetEntry(sub_08091fe0, gCurTaskIdx);
+        TaskSetEntry(BugzzyEnterState, gCurTaskIdx);
 }
 
 void sub_080925b8(void)
@@ -514,7 +514,7 @@ void sub_080925b8(void)
 void sub_080926d4(void)
 {
     if (gCurTask->state != 2)
-        TaskSetEntry(sub_08091fe0, gCurTaskIdx);
+        TaskSetEntry(BugzzyEnterState, gCurTaskIdx);
 }
 void sub_080926fc(void)
 {
@@ -630,7 +630,7 @@ void sub_080926fc(void)
 void sub_080929ec(void)
 {
     if (gCurTask->state != 3)
-        TaskSetEntry(sub_08091fe0, gCurTaskIdx);
+        TaskSetEntry(BugzzyEnterState, gCurTaskIdx);
 }
 
 void sub_08092a14(void)
@@ -686,7 +686,7 @@ void sub_08092a14(void)
 void sub_08092b30(void)
 {
     if (gCurTask->state != 4)
-        TaskSetEntry(sub_08091fe0, gCurTaskIdx);
+        TaskSetEntry(BugzzyEnterState, gCurTaskIdx);
 }
 
 void sub_08092b58(void)
@@ -712,7 +712,7 @@ void sub_08092b58(void)
 void sub_08092bd8(void)
 {
     if (gCurTask->state != 5)
-        TaskSetEntry(sub_08091fe0, gCurTaskIdx);
+        TaskSetEntry(BugzzyEnterState, gCurTaskIdx);
 }
 
 void sub_08092c00(void)
@@ -750,7 +750,7 @@ void sub_08092c00(void)
 void sub_08092cb4(void)
 {
     if (gCurTask->state != 6)
-        TaskSetEntry(sub_08091fe0, gCurTaskIdx);
+        TaskSetEntry(BugzzyEnterState, gCurTaskIdx);
 }
 void sub_08092cdc(void)
 {
@@ -811,7 +811,7 @@ void sub_08092cdc(void)
 void sub_08092e40(void)
 {
     if (gCurTask->state != 7)
-        TaskSetEntry(sub_08091fe0, gCurTaskIdx);
+        TaskSetEntry(BugzzyEnterState, gCurTaskIdx);
 }
 
 void sub_08092e68(void)
@@ -848,7 +848,7 @@ void sub_08092e68(void)
 void sub_08092f04(void)
 {
     if (gCurTask->state != 8)
-        TaskSetEntry(sub_08091fe0, gCurTaskIdx);
+        TaskSetEntry(BugzzyEnterState, gCurTaskIdx);
 }
 
 void sub_08092f2c(void)
@@ -888,7 +888,7 @@ void sub_08092f2c(void)
 void sub_08092ff4(void)
 {
     if (gCurTask->state != 9)
-        TaskSetEntry(sub_08091fe0, gCurTaskIdx);
+        TaskSetEntry(BugzzyEnterState, gCurTaskIdx);
 }
 
 void sub_0809301c(void)
@@ -917,7 +917,7 @@ void sub_0809301c(void)
 void sub_08093084(void)
 {
     if (gCurTask->state != 11)
-        TaskSetEntry(sub_08091fe0, gCurTaskIdx);
+        TaskSetEntry(BugzzyEnterState, gCurTaskIdx);
 }
 void sub_080930ac(void)
 {
@@ -1039,7 +1039,7 @@ void sub_08093354(void)
     if (t->state != 10)
     {
         t->unk1C = -1;
-        TaskSetEntry(sub_08091fe0, gCurTaskIdx);
+        TaskSetEntry(BugzzyEnterState, gCurTaskIdx);
     }
 }
 
@@ -1265,7 +1265,7 @@ s32 sub_080937d0(void)
             u->unk18 = 0;
             u->unk34 = 2;
             ActorSetState(9);
-            TaskSetEntry(sub_08091fe0, gCurTaskIdx);
+            TaskSetEntry(BugzzyEnterState, gCurTaskIdx);
             r = 1;
         }
         break;
@@ -1306,7 +1306,7 @@ s32 sub_0809388c(void)
     }
     ActorSetHitReactions(gUnk_0874410C);
     ActorSetState(12);
-    TaskSetEntry(sub_08091fe0, gCurTaskIdx);
+    TaskSetEntry(BugzzyEnterState, gCurTaskIdx);
     return 1;
 }
 
@@ -1375,7 +1375,7 @@ void sub_08093a00(s32 a)
         PlaySfx(a);
 }
 
-void sub_08093a24(void)
+void Task_BonkersNut(void)
 {
     struct Task *t;
     struct Task *u;
@@ -1385,7 +1385,7 @@ void sub_08093a24(void)
     t->drawCallback = (u32)ActorDrawWorldInViewOrDestroy;
     t->layer = 9;
     u = gCurTask;
-    u->frameTable = gUnk_08752F60;
+    u->frameTable = gBonkersNutFrames;
     CallTableEntry(u->variant, 1, gUnk_08744170);
 }
 
@@ -1446,7 +1446,7 @@ s32 sub_08093bb0(void)
     return 1;
 }
 
-void sub_08093bd4(void)
+void Task_PoppyBrosSrBomb(void)
 {
     struct Task *t;
     struct Task *u;
@@ -1457,7 +1457,7 @@ void sub_08093bd4(void)
     t->drawCallback = (u32)ActorDrawWorldInViewOrDestroy;
     t->layer = 13;
     u = gCurTask;
-    u->frameTable = gUnk_08753160;
+    u->frameTable = gPoppyBrosSrBombFrames;
     TaskFaceLikeParent();
     v = gCurTask;
     v->unk8C->sfxOverride = 0x20E;
@@ -1593,7 +1593,7 @@ void sub_08093e58(void)
     t = gCurTask;
     t->moveCallback = (u32)ActorMove;
     t->drawCallback = (u32)ActorDrawWorldInViewOrDestroy;
-    t->frameTable = gUnk_08753160;
+    t->frameTable = gPoppyBrosSrBombFrames;
     t->layer = gTasks[t->parent].layer - 1;
     TaskFaceLikeParent();
     u = gCurTask;

@@ -27,7 +27,7 @@ extern u8 gUnk_020055C4;
 extern u8 gUnk_020055CC;
 extern struct Unk02005E00 gUnk_02005E00;
 extern s32 gPlayerScores[];
-extern s8 gUnk_02006094;
+extern s8 gCannonFuseState;
 extern u8 gUnk_020060CC;
 extern s8 gUnk_02006160;
 extern u8 gUnk_02006178;
@@ -207,7 +207,7 @@ void sub_0800b648(void)
      * pointer locals assigned here reproduce that order. */
     q1 = &gUnk_020061E0;
     q2 = &gUnk_02006160;
-    q3 = &gUnk_02006094;
+    q3 = &gCannonFuseState;
     q4 = &gUnk_020060CC;
     b = gUnk_02007FB8;
     zero = 0;

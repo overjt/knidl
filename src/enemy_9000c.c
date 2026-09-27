@@ -9,7 +9,7 @@
  * per-frame hook (Task.drawCallback), points Task.frameTable at the graphics block
  * gBonkersFrames, counts the boss into gUnk_02007D00[0], spawns its helper
  * task with CreateChildTaskHere(177, 1) and hands Task.variant to CallTableEntry, which
- * jumps into the table.  sub_080900f4 is the per-frame body: it runs down
+ * jumps into the table.  BonkersUpdate is the per-frame body: it runs down
  * Task.unk18, asks sub_0806acf8 / ActorCollideTerrain whether the player interrupted,
  * dispatches Task.updateState through the same table, reloads the graphics through
  * ActorFlashPalette / sub_08066468 and drives the three animation calls from the
@@ -19,7 +19,7 @@
  * sub_08090270, sub_08090298 / sub_080903c8, ...): the body is a run of
  * TaskYieldTrampoline waits that steps Task.frame, clears and then waits on
  * Task.onGround (set when the boss lands) and pushes 16.16 velocities through
- * TaskSetMotionXFacing / TaskSetMotionY, and the guard re-arms sub_080900d8 through
+ * TaskSetMotionXFacing / TaskSetMotionY, and the guard re-arms BonkersEnterState through
  * TaskSetEntry whenever Task.state leaves the state.  State 4 aims with
  * Div(|TaskGetNearestPlayerDx()|, 3), state 5 spawns the actors 8 and 145, and state 10
  * is the defeat sequence (sub_0806684c, sub_0806caa0, sub_0806ad18).
@@ -59,8 +59,8 @@ extern u32 gUnk_08743810[];
 extern u32 gUnk_0874382C[];
 extern u32 gBonkersVariants[];
 extern struct AnimCmd gUnk_08743758[];
-extern u32 gUnk_0874384C[];
-extern u32 gUnk_08743878[];
+extern u32 gBonkersStates[];
+extern u32 gBonkersStateUpdates[];
 extern u32 gBonkersFrames[];
 extern void *gUnk_0826A668;
 
@@ -120,8 +120,8 @@ extern s32 CreateActorFromDescAtOffsetFacing(struct ActorSpawn *p, u8 keepPrio);
 extern s32 CreateChildTask(u32 type, int xArg, int yArg, int prioArg);
 
 /* Defined below */
-void sub_080900d8(void);
-void sub_080900f4(void);
+void BonkersEnterState(void);
+void BonkersUpdate(void);
 void sub_08090e18(void);
 void sub_08090e9c(void);
 void sub_08090fe0(void);
@@ -149,27 +149,27 @@ void Task_Bonkers(void)
     CallTableEntry(gCurTask->variant, 1, gBonkersVariants);
 }
 
-void sub_08090090(void)
+void BonkersInit(void)
 {
     struct Task *t;
 
     t = gCurTask;
-    t->updateCallback = (u32)sub_080900f4;
+    t->updateCallback = (u32)BonkersUpdate;
     t->unk28 = 4;
     t->unk2C = 2;
     t->unk30 = 0;
     t->unk34 = 0;
     sub_080666cc(gUnk_08743758);
     ActorSetState(0);
-    CallTableEntry(gCurTask->state, 11, gUnk_0874384C);
+    CallTableEntry(gCurTask->state, 11, gBonkersStates);
 }
 
-void sub_080900d8(void)
+void BonkersEnterState(void)
 {
-    CallTableEntry(gCurTask->state, 11, gUnk_0874384C);
+    CallTableEntry(gCurTask->state, 11, gBonkersStates);
 }
 
-void sub_080900f4(void)
+void BonkersUpdate(void)
 {
     struct Task *t;
     struct Task *u;
@@ -178,16 +178,16 @@ void sub_080900f4(void)
     if (t->unk18 != 0)
     {
         t->unk18--;
-        CallTableEntry(t->updateState, 11, gUnk_08743878);
+        CallTableEntry(t->updateState, 11, gBonkersStateUpdates);
     }
     else if (sub_0806acf8() == 0)
     {
         if (ActorCollideTerrain() == 0)
-            CallTableEntry(gCurTask->updateState, 11, gUnk_08743878);
+            CallTableEntry(gCurTask->updateState, 11, gBonkersStateUpdates);
     }
     else
     {
-        CallTableEntry(gCurTask->updateState, 11, gUnk_08743878);
+        CallTableEntry(gCurTask->updateState, 11, gBonkersStateUpdates);
     }
     u = gCurTask;
     if (u->unk30 != 0)
@@ -240,7 +240,7 @@ void sub_080901e0(void)
 void sub_08090270(void)
 {
     if (gCurTask->state != 0)
-        TaskSetEntry(sub_080900d8, gCurTaskIdx);
+        TaskSetEntry(BonkersEnterState, gCurTaskIdx);
 }
 
 void sub_08090298(void)
@@ -297,7 +297,7 @@ void sub_08090298(void)
 void sub_080903c8(void)
 {
     if (gCurTask->state != 1)
-        TaskSetEntry(sub_080900d8, gCurTaskIdx);
+        TaskSetEntry(BonkersEnterState, gCurTaskIdx);
 }
 
 void sub_080903f0(void)
@@ -331,7 +331,7 @@ void sub_080903f0(void)
 void sub_080904ac(void)
 {
     if (gCurTask->state != 2)
-        TaskSetEntry(sub_080900d8, gCurTaskIdx);
+        TaskSetEntry(BonkersEnterState, gCurTaskIdx);
 }
 
 void sub_080904d4(void)
@@ -371,7 +371,7 @@ void sub_080904d4(void)
 void sub_080905b0(void)
 {
     if (gCurTask->state != 3)
-        TaskSetEntry(sub_080900d8, gCurTaskIdx);
+        TaskSetEntry(BonkersEnterState, gCurTaskIdx);
 }
 
 void sub_080905d8(void)
@@ -443,7 +443,7 @@ void sub_080905d8(void)
 void sub_08090724(void)
 {
     if (gCurTask->state != 4)
-        TaskSetEntry(sub_080900d8, gCurTaskIdx);
+        TaskSetEntry(BonkersEnterState, gCurTaskIdx);
 }
 
 void sub_0809074c(void)
@@ -506,7 +506,7 @@ void sub_0809074c(void)
 void sub_080908ec(void)
 {
     if (gCurTask->state != 5)
-        TaskSetEntry(sub_080900d8, gCurTaskIdx);
+        TaskSetEntry(BonkersEnterState, gCurTaskIdx);
 }
 
 void sub_08090914(void)
@@ -547,7 +547,7 @@ void sub_08090914(void)
 void sub_080909ac(void)
 {
     if (gCurTask->state != 6)
-        TaskSetEntry(sub_080900d8, gCurTaskIdx);
+        TaskSetEntry(BonkersEnterState, gCurTaskIdx);
 }
 
 void sub_080909d4(void)
@@ -597,7 +597,7 @@ void sub_080909d4(void)
 void sub_08090b18(void)
 {
     if (gCurTask->state != 7)
-        TaskSetEntry(sub_080900d8, gCurTaskIdx);
+        TaskSetEntry(BonkersEnterState, gCurTaskIdx);
 }
 
 void sub_08090b40(void)
@@ -635,7 +635,7 @@ void sub_08090b40(void)
 void sub_08090bf0(void)
 {
     if (gCurTask->state != 8)
-        TaskSetEntry(sub_080900d8, gCurTaskIdx);
+        TaskSetEntry(BonkersEnterState, gCurTaskIdx);
 }
 
 void sub_08090c18(void)
@@ -662,7 +662,7 @@ void sub_08090c18(void)
 void sub_08090ca8(void)
 {
     if (gCurTask->state != 9)
-        TaskSetEntry(sub_080900d8, gCurTaskIdx);
+        TaskSetEntry(BonkersEnterState, gCurTaskIdx);
 }
 
 void sub_08090cd0(void)
@@ -758,7 +758,7 @@ s32 sub_08090f14(void)
     ActorSetHitReactions(gUnk_087440DC);
     gCurTask->unk34 = 1;
     ActorSetState(10);
-    TaskSetEntry(sub_080900d8, gCurTaskIdx);
+    TaskSetEntry(BonkersEnterState, gCurTaskIdx);
     return 1;
 }
 

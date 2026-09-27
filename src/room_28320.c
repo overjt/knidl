@@ -91,7 +91,7 @@ extern s16 gRoomEntryY;
 extern struct RoomDef *gCurRoomDef;
 extern u16 gUnk_08732348[][9];
 extern s8 gUnk_030023B8;
-extern u32 gUnk_030023C8[];
+extern u32 gBigSwitchFlags[];
 extern u8 gUnk_03002400[8][7];
 extern s8 gUnk_030023E0;
 extern s8 gUnk_03002384;
@@ -181,7 +181,7 @@ void SpawnDoorObjects(void)
         {
             if (v & 0x100)
             {
-                if (!(gUnk_030023C8[0] & (1 << (v & 0xFF))))
+                if (!(gBigSwitchFlags[0] & (1 << (v & 0xFF))))
                     continue;
             }
             else

@@ -147,8 +147,8 @@ gHudClock = 0x02006068
 gBgScrollSpeeds = 0x02006070
 	.global	gUnk_02006090
 gUnk_02006090 = 0x02006090
-	.global	gUnk_02006094
-gUnk_02006094 = 0x02006094
+	.global	gCannonFuseState
+gCannonFuseState = 0x02006094
 	.global	gUnk_02006098
 gUnk_02006098 = 0x02006098
 	.global	gUnk_020060A0
@@ -881,8 +881,8 @@ gUnk_030023B4 = 0x030023B4
 gUnk_030023B8 = 0x030023B8
 	.global	gLatchedPressedKeys
 gLatchedPressedKeys = 0x030023C0
-	.global	gUnk_030023C8
-gUnk_030023C8 = 0x030023C8
+	.global	gBigSwitchFlags
+gBigSwitchFlags = 0x030023C8
 	.global	gCameraFocusX
 gCameraFocusX = 0x030023CC
 	.global	gUnk_030023D0

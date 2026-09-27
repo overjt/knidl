@@ -31,7 +31,7 @@ extern s16 gUnk_0300244C;
 extern s16 gUnk_0873D384[];
 extern s32 gUnk_030023B4;
 extern s32 gUnk_030023D4;
-extern s8 gUnk_02006094;
+extern s8 gCannonFuseState;
 extern s8 gLevelIndex;
 extern s8 gUnk_087401CC[];
 extern struct M19Script *gUnk_087401E4[];
@@ -49,8 +49,8 @@ extern u32 gCannonVariants[];
 extern u32 gCannonStates[];
 extern u32 gCannonStateUpdates[];
 extern u32 gCannonFuseVariants[];
-extern u32 gUnk_087402BC[];
-extern u32 gUnk_087402C8[];
+extern u32 gCannonFuseStates[];
+extern u32 gCannonFuseStateUpdates[];
 extern u32 gCannonFrames[];
 extern u32 gCannonFuseFrames[];
 extern u8 gUnk_03001F30;
@@ -111,7 +111,7 @@ void CannonEnterState(void);
 void CannonUpdate(void);
 void sub_08077898(struct M19Script *p);
 void sub_080779dc(void);
-void sub_08077aa8(void);
+void CannonFuseUpdate(void);
 
 void sub_080763e8(void)
 {
@@ -843,7 +843,7 @@ void sub_080771d8(void)
     TaskSetEntry(CannonEnterState, gCurTaskIdx);
 }
 
-void sub_08077224(void)
+void CannonInit(void)
 {
     gCurTask->updateCallback = (u32)CannonUpdate;
     ActorSetState(0);
@@ -878,7 +878,7 @@ void sub_080772b0(void)
 {
     if ((u8)ActorCollideTerrain() == 0)
     {
-        if (gUnk_02006094 == 1)
+        if (gCannonFuseState == 1)
         {
             sub_080771d8();
         }
@@ -924,7 +924,7 @@ void sub_08077308(void)
     gCurTask->velY = 0x20000;
     TaskYieldTrampoline(2);
     TaskStop();
-    gUnk_02006094 = 0;
+    gCannonFuseState = 0;
     ActorSetState(0);
     TaskSleepForever();
 }
@@ -1253,13 +1253,13 @@ void sub_08077898(struct M19Script *p)
 
         if (u->unk24 == 1)
         {
-            gUnk_02006094 = u->unk24;
+            gCannonFuseState = u->unk24;
             TaskFree(u->unk46);
         }
         else
         {
             sub_080269d8(u->pixelX, u->pixelY, 1);
-            gUnk_02006094 = id;
+            gCannonFuseState = id;
             gCurTask->frame = 42;
             ActorSetState(0);
         }
@@ -1316,23 +1316,23 @@ void sub_08077a48(void)
     gCurTask->unk46 = CreateChildTaskHere(157, 1);
 }
 
-void sub_08077a64(void)
+void CannonFuseInit(void)
 {
     struct Task *t = gCurTask;
 
-    t->updateCallback = (u32)sub_08077aa8;
+    t->updateCallback = (u32)CannonFuseUpdate;
     t->unk30 = t->pixelX;
     t->unk2C = t->pixelY;
     ActorSetState(0);
-    CallTableEntry(gCurTask->state, 3, gUnk_087402BC);
+    CallTableEntry(gCurTask->state, 3, gCannonFuseStates);
 }
 
-void sub_08077aa8(void)
+void CannonFuseUpdate(void)
 {
-    CallTableEntry(gCurTask->updateState, 3, gUnk_087402C8);
+    CallTableEntry(gCurTask->updateState, 3, gCannonFuseStateUpdates);
 }
 
-void sub_08077ac4(void)
+void CannonFuseEnterState(void)
 {
-    CallTableEntry(gCurTask->state, 3, gUnk_087402BC);
+    CallTableEntry(gCurTask->state, 3, gCannonFuseStates);
 }

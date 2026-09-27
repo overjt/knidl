@@ -39,7 +39,7 @@ extern u16 gUnk_03002378[];
 extern s8 gUnk_03002384;
 extern u16 gPlayerCount;
 extern u8 gUnk_030023B8;
-extern s32 gUnk_030023C8[];
+extern s32 gBigSwitchFlags[];
 extern s8 gUnk_030023E0;
 extern s32 gCurSaveSlot;
 extern u8 gUnk_03002400[8][7];
@@ -61,7 +61,7 @@ void StoreProgressInSaveSlot(s32 a)
     gSaveSlots[a].unk18[gExtraMode] = gUnk_03001F20;
     gSaveSlots[a].unk1A[gExtraMode] = gUnk_030023E0;
     gSaveSlots[a].unk1C[gExtraMode] = gUnk_03002384;
-    gSaveSlots[a].unk20[gExtraMode] = gUnk_030023C8[0];
+    gSaveSlots[a].unk20[gExtraMode] = gBigSwitchFlags[0];
     for (i = 0; i <= 7; i++)
     {
         for (j = 0; j <= 6; j++)
@@ -90,7 +90,7 @@ void StoreProgressInBothHalves(s32 a)
         gSaveSlots[a].unk18[i] = gUnk_03001F20;
         gSaveSlots[a].unk1A[i] = gUnk_030023E0;
         gSaveSlots[a].unk1C[i] = gUnk_03002384;
-        gSaveSlots[a].unk20[i] = gUnk_030023C8[0];
+        gSaveSlots[a].unk20[i] = gBigSwitchFlags[0];
         CalcCompletionPercent(i);
         gSaveSlots[a].completionPercent[i] = gCompletionPercent;
     }
@@ -120,7 +120,7 @@ void LoadSaveSlot(s32 a)
     gUnk_03001F20 = gSaveSlots[a].unk18[gExtraMode];
     gUnk_030023E0 = gSaveSlots[a].unk1A[gExtraMode];
     gUnk_03002384 = gSaveSlots[a].unk1C[gExtraMode];
-    gUnk_030023C8[0] = gSaveSlots[a].unk20[gExtraMode];
+    gBigSwitchFlags[0] = gSaveSlots[a].unk20[gExtraMode];
     for (i = 0; i <= 7; i++)
     {
         for (j = 0; j <= 6; j++)
@@ -142,7 +142,7 @@ void sub_080b81a0(void)
     gUnk_03001F20 = 0;
     gUnk_030023E0 = 0;
     gUnk_03002384 = 0;
-    gUnk_030023C8[0] = 0;
+    gBigSwitchFlags[0] = 0;
     for (i = 0; i <= 7; i++)
     {
         for (j = 0; j <= 6; j++)
@@ -163,7 +163,7 @@ void ResetProgress(void)
     gUnk_03001F20 = 0;
     gUnk_030023E0 = 0;
     gUnk_03002384 = 0;
-    gUnk_030023C8[0] = 0;
+    gBigSwitchFlags[0] = 0;
     gCompletionPercent = 0;
     for (i = 0; i <= 7; i++)
     {

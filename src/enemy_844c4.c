@@ -37,7 +37,7 @@ extern s16 gUnk_08741FA8[];
 extern s32 gUnk_08741FAC[];
 extern s8 gUnk_08741FB4[];
 extern u32 gNoddyStateUpdates[];
-extern u32 gUnk_08752190[];
+extern u32 gNoddyBubbleFrames[];
 extern u32 gChillyFrames[];
 extern u32 gChillyVariants[];
 
@@ -418,7 +418,7 @@ void sub_08084ae8(void)
     ActorReactToHit();
 }
 
-void sub_08084afc(void)
+void Task_NoddyBubble(void)
 {
     struct Task *t;
     struct Task *u;
@@ -426,7 +426,7 @@ void sub_08084afc(void)
     t = gCurTask;
     t->moveCallback = (u32)TaskMove;
     t->drawCallback = (u32)TaskDrawWorld;
-    t->frameTable = gUnk_08752190;
+    t->frameTable = gNoddyBubbleFrames;
     t->layer = 10;
     u = gCurTask;
     u->updateCallback = (u32)sub_08084b7c;

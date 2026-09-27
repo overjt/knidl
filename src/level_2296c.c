@@ -119,7 +119,7 @@ extern u8 gUnk_0200AF08;
 extern s8 gUnk_0200B038;
 extern u8 gUnk_0200B04C;
 extern u8 gUnk_03001F30;
-extern u32 gUnk_030023C8[];
+extern u32 gBigSwitchFlags[];
 extern u8 gUnk_03002400[8][7];
 extern u16 gUnk_08732348[][9];
 extern u8 gUnk_02004B64;
@@ -244,7 +244,7 @@ void sub_0802296c(void)
             gUsedSubGameDoors[i] = 0;
         if (gUnk_08732348[i][6] & 0x100)
         {
-            if (gUnk_030023C8[0] & (1 << (gUnk_08732348[i][6] & 0xFF)))
+            if (gBigSwitchFlags[0] & (1 << (gUnk_08732348[i][6] & 0xFF)))
                 gUnk_0200B04C |= 1 << i;
         }
         else if (gUnk_03002400[i][gUnk_08732348[i][6]] != 0)
@@ -334,7 +334,7 @@ void sub_08022c3c(void)
             gUsedSubGameDoors[i] = 0;
         if (gUnk_08732348[i][6] & 0x100)
         {
-            if (gUnk_030023C8[0] & (1 << (gUnk_08732348[i][6] & 0xFF)))
+            if (gBigSwitchFlags[0] & (1 << (gUnk_08732348[i][6] & 0xFF)))
                 gUnk_0200B04C |= 1 << i;
         }
         else if (gUnk_03002400[i][gUnk_08732348[i][6]] != 0)

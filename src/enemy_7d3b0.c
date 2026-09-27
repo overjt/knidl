@@ -9,7 +9,7 @@
  * Task_Kabu) and their helper tasks (#155 run 2; an older reading called them
  * moving scenery): scripts that drive Task.velX/velY and Task.accelY from ROM
  * tables and wait on Task.onGround:
- *   * task types #216 and #217 (`sub_0807d490`, `sub_0807d510`, the latter a
+ *   * task types #216 and #217 (`Task_PengyIceBreathPuff`, `Task_PengyIceBreathSparkle`, the latter a
  *     seventeen-step cue script over `0x087410C0`), the effect tasks Pengy's
  *     breath state PengyShoot spawns with CreateChildTaskAtOffsetFacing;
  *   * Task_Rocky's (#9) row 0 `sub_0807d6c4`+`sub_0807d718`, whose per-frame
@@ -19,7 +19,7 @@
  *     (`switch (Task.variant)` with an empty `case 1`);
  *   * Task_SirKibble's `0x08741220` function-pointer table the three
  *     `sub_0807e244` / `sub_0807e3b0` hooks dispatch through;
- *   * Sir Kibble's jump-and-throw state `sub_0807e290` (rows 0/1, state 2)
+ *   * Sir Kibble's jump-and-throw state `SirKibbleJump` (rows 0/1, state 2)
  *     and the capless Cappy's hop `sub_0807e768` (row 1, state 0), which
  *     spawn a companion with `CreateActorFromDescAtOffsetFacing` and then
  *     bounce between velocity presets until Task.onGround fires;
@@ -60,10 +60,10 @@ extern u32 gUnk_08741208[];
 extern u32 gUnk_08741218[];
 extern u32 gUnk_08741220[];
 extern u32 gSirKibbleVariants[];
-extern u32 gUnk_08741234[];
-extern u32 gUnk_08741240[];
-extern u32 gUnk_0874124C[];
-extern u32 gUnk_08741258[];
+extern u32 gSirKibbleStandStates[];
+extern u32 gSirKibbleStandStateUpdates[];
+extern u32 gSirKibbleWalkStates[];
+extern u32 gSirKibbleWalkStateUpdates[];
 extern u32 gUnk_08741264[];
 extern u32 gUnk_08741268[];
 extern u32 gCappyVariants[];
@@ -93,7 +93,7 @@ extern u32 gKabuVariants[];
 extern u32 gUnk_0874183C[];
 extern u32 gGordoFrames[];
 extern u32 gRockyFrames[];
-extern u32 gUnk_08752234[];
+extern u32 gPengyIceBreathFrames[];
 extern u32 gSirKibbleFrames[];
 extern u32 gCappyFrames[];
 extern u32 gCappyCaplessFrames[];
@@ -154,8 +154,8 @@ void sub_0807d718(void);
 void sub_0807db0c(void);
 void sub_0807db9c(void);
 void sub_0807dd10(void);
-void sub_0807df30(void);
-void sub_0807e060(void);
+void SirKibbleStandUpdate(void);
+void SirKibbleWalkUpdate(void);
 void sub_0807e444(void);
 void sub_0807e484(void);
 void sub_0807e5bc(void);
@@ -212,7 +212,7 @@ kill1:
     TaskFree(gCurTaskIdx);
 }
 
-void sub_0807d490(void)
+void Task_PengyIceBreathPuff(void)
 {
     struct Task *t;
 
@@ -220,7 +220,7 @@ void sub_0807d490(void)
     gCurTask->drawCallback = (u32)ActorDrawWorldInView;
     gCurTask->layer = 8;
     t = gCurTask;
-    t->frameTable = gUnk_08752234;
+    t->frameTable = gPengyIceBreathFrames;
     t->tileWord = (0xFFF & t->tileWord) | 0xF000;
     TaskFaceLikeParent();
     TaskSetMotionXFacing(0x30000, -0x5000);
@@ -236,7 +236,7 @@ void sub_0807d490(void)
     TaskExitTrampoline();
 }
 
-void sub_0807d510(void)
+void Task_PengyIceBreathSparkle(void)
 {
     u32 a;
     u32 b;
@@ -249,7 +249,7 @@ void sub_0807d510(void)
     {
         struct Task *t = gCurTask;
 
-        t->frameTable = gUnk_08752234;
+        t->frameTable = gPengyIceBreathFrames;
         t->tileWord = (0xFFF & t->tileWord) | 0xF000;
     }
     TaskFaceLikeParent();
@@ -723,27 +723,27 @@ void Task_SirKibble(void)
     }
 }
 
-void sub_0807dee4(void)
+void SirKibbleStandInit(void)
 {
-    gCurTask->updateCallback = (u32)sub_0807df30;
+    gCurTask->updateCallback = (u32)SirKibbleStandUpdate;
     ActorSetState(0);
-    CallTableEntry(gCurTask->state, 3, gUnk_08741234);
+    CallTableEntry(gCurTask->state, 3, gSirKibbleStandStates);
 }
 
-void sub_0807df14(void)
+void SirKibbleStandEnterState(void)
 {
-    CallTableEntry(gCurTask->state, 3, gUnk_08741234);
+    CallTableEntry(gCurTask->state, 3, gSirKibbleStandStates);
 }
 
-void sub_0807df30(void)
+void SirKibbleStandUpdate(void)
 {
     if ((u8)ActorCollideTerrain() == 0)
-        CallTableEntry(gCurTask->updateState, 3, gUnk_08741240);
+        CallTableEntry(gCurTask->updateState, 3, gSirKibbleStandStateUpdates);
     ActorCheckHits();
     ActorReactToHit();
 }
 
-void sub_0807df60(void)
+void SirKibbleWait(void)
 {
     struct Task *t;
 
@@ -771,31 +771,31 @@ void sub_0807df8c(void)
             ActorSetState(1);
         }
         gCurTask->velX = 0;
-        TaskSetEntry(sub_0807df14, gCurTaskIdx);
+        TaskSetEntry(SirKibbleStandEnterState, gCurTaskIdx);
     }
 }
 
-void sub_0807e014(void)
+void SirKibbleWalkInit(void)
 {
-    gCurTask->updateCallback = (u32)sub_0807e060;
+    gCurTask->updateCallback = (u32)SirKibbleWalkUpdate;
     ActorSetState(0);
-    CallTableEntry(gCurTask->state, 3, gUnk_0874124C);
+    CallTableEntry(gCurTask->state, 3, gSirKibbleWalkStates);
 }
 
-void sub_0807e044(void)
+void SirKibbleWalkEnterState(void)
 {
-    CallTableEntry(gCurTask->state, 3, gUnk_0874124C);
+    CallTableEntry(gCurTask->state, 3, gSirKibbleWalkStates);
 }
 
-void sub_0807e060(void)
+void SirKibbleWalkUpdate(void)
 {
     if ((u8)ActorCollideTerrain() == 0)
-        CallTableEntry(gCurTask->updateState, 3, gUnk_08741258);
+        CallTableEntry(gCurTask->updateState, 3, gSirKibbleWalkStateUpdates);
     ActorCheckHits();
     ActorReactToHit();
 }
 
-void sub_0807e090(void)
+void SirKibbleWalk(void)
 {
     struct Task *t;
 
@@ -834,11 +834,11 @@ void sub_0807e100(void)
             ActorSetState(1);
         }
         gCurTask->velX = 0;
-        TaskSetEntry(sub_0807e044, gCurTaskIdx);
+        TaskSetEntry(SirKibbleWalkEnterState, gCurTaskIdx);
     }
 }
 
-void sub_0807e188(void)
+void SirKibbleShoot(void)
 {
     struct ActorSpawn spawn;
 
@@ -896,7 +896,7 @@ void sub_0807e244(void)
     }
 }
 
-void sub_0807e290(void)
+void SirKibbleJump(void)
 {
     struct ActorSpawn spawn;
 

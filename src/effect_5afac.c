@@ -67,7 +67,7 @@ extern u32 gUnk_0873DEA0[];
 extern u16 gUnk_0873DEA8[];
 extern u32 gUnk_0873DEDC[];
 extern u32 gUnk_0874C890[];
-extern u32 gUnk_0874CCF4[];
+extern u32 gOneUpFrames[];
 extern u32 gUnk_0874CDF8[];
 extern u32 gUnk_0874CFEC[];
 extern u32 gUnk_08754850[];
@@ -1557,7 +1557,7 @@ void sub_0805d668(void)
     gCurTask->moveCallback = (u32)TaskMove;
     gCurTask->drawCallback = (u32)TaskDrawWorld;
     gCurTask->layer = 10;
-    gCurTask->frameTable = gUnk_0874CCF4;
+    gCurTask->frameTable = gOneUpFrames;
     gCurTask->tileWord = 240 << 8;
     gCurTask->frame = 4;
     switch (gCurTask->variant)

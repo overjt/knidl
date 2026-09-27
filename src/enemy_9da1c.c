@@ -18,9 +18,9 @@ extern u32 gUnk_08747C14[];
 extern u8 gUnk_08747C28[];
 extern u32 gUnk_08747DB4[];
 extern u32 gUnk_08747E0C[];
-extern u32 gUnk_08753354[];
+extern u32 gJavelinKnightJavelinFrames[];
 extern u32 gMaceKnightFrames[];
-extern u32 gUnk_08753404[];
+extern u32 gMaceKnightMaceFrames[];
 extern u32 gTridentKnightFrames[];
 
 /* Externals */
@@ -84,7 +84,7 @@ void sub_0809f0f0(void);
 void sub_0809f26c(void);
 s32 sub_0809f29c(s32 a);
 
-void sub_0809da1c(void)
+void Task_JavelinKnightJavelin(void)
 {
     struct Task *t;
     struct Task *u;
@@ -94,7 +94,7 @@ void sub_0809da1c(void)
     t->drawCallback = (u32)ActorDrawWorldInViewOrDestroy;
     t->layer = 9;
     u = gCurTask;
-    u->frameTable = gUnk_08753354;
+    u->frameTable = gJavelinKnightJavelinFrames;
     u->updateCallback = (u32)sub_0809da9c;
     TaskFaceLikeParent();
     TaskSetMotionXFacing(128 << 10, 0x5A5A5A5A);
@@ -557,7 +557,7 @@ s32 sub_0809e214(void)
     ((struct Task *)(*p * 144 + (s32)gTasks))->unk2C = z;
 }
 
-void sub_0809e284(void)
+void Task_MaceKnightMace(void)
 {
     struct Task *t;
     struct Task *u;
@@ -565,7 +565,7 @@ void sub_0809e284(void)
     t = gCurTask;
     t->moveCallback = (u32)sub_0809e2c4;
     t->drawCallback = (u32)ActorDrawWorldInViewOrDestroy;
-    t->frameTable = gUnk_08753404;
+    t->frameTable = gMaceKnightMaceFrames;
     TaskFaceLikeParent();
     u = gCurTask;
     CallTableEntry(u->variant, 3, gUnk_08747BE8);

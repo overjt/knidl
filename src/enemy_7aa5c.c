@@ -105,13 +105,13 @@ extern u32 gUnk_087410AC[];
 extern u32 gUnk_087410B0[];
 extern u32 gUnk_087410B8[];
 extern u32 gUnk_0874CB5C[];
-extern u32 gUnk_08752234[];
+extern u32 gPengyIceBreathFrames[];
 extern u32 gScarfyAngryFrames[];
 extern u32 gUnk_087529D8[];
 extern u32 gUnk_08752A24[];
 extern u32 gTogezoFrames[];
 extern u32 gUFOFrames[];
-extern u32 gUnk_08752B8C[];
+extern u32 gUFOLaserFrames[];
 extern u32 gParasolFrames[];
 
 /* Externals */
@@ -1990,7 +1990,7 @@ void sub_0807cff0(void)
     TaskSetEntry(ActorDie, gCurTaskIdx);
 }
 
-void sub_0807d008(void)
+void Task_PengyIceBreath(void)
 {
     struct Task *t;
 
@@ -1998,7 +1998,7 @@ void sub_0807d008(void)
     gCurTask->drawCallback = (u32)ActorDrawWorldInViewOrDestroy;
     gCurTask->layer = 9;
     t = gCurTask;
-    t->frameTable = gUnk_08752234;
+    t->frameTable = gPengyIceBreathFrames;
     t->tileWord = (0xFFF & t->tileWord) | 0xF000;
     CallTableEntry(t->variant, 1, gUnk_08741088);
 }
@@ -2051,7 +2051,7 @@ void sub_0807d178(void)
 {
 }
 
-void sub_0807d17c(void)
+void Task_UFOLaser(void)
 {
     struct Task *t;
 
@@ -2059,7 +2059,7 @@ void sub_0807d17c(void)
     gCurTask->drawCallback = (u32)ActorDrawWorldInViewOrDestroy;
     gCurTask->layer = 9;
     t = gCurTask;
-    t->frameTable = gUnk_08752B8C;
+    t->frameTable = gUFOLaserFrames;
     CallTableEntry(t->variant, 1, gUnk_087410AC);
 }
 

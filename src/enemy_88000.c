@@ -58,7 +58,7 @@ extern u32 gUnk_08742E5C[];
 extern u32 gSquishyFrames[];
 extern u32 gUnk_087526A8[];
 extern u32 gGlunkFrames[];
-extern u32 gUnk_08752808[];
+extern u32 gGlunkShotFrames[];
 extern u32 gUnk_08752828[];
 extern u8 gUnk_08742778[];
 extern u8 gUnk_087427B0[];
@@ -1409,12 +1409,12 @@ void sub_08089aac(void)
         TaskSetEntry(GlunkEnterState, gCurTaskIdx);
 }
 
-void sub_08089ad4(void)
+void Task_GlunkShotSpray(void)
 {
     gCurTask->moveCallback = (u32)TaskMove;
     gCurTask->drawCallback = (u32)TaskDrawWorld;
     gCurTask->layer = 12;
-    gCurTask->frameTable = gUnk_08752808;
+    gCurTask->frameTable = gGlunkShotFrames;
     gCurTask->facing = TaskGetParentFacing();
     gCurTask->posY = (gCurTask->pixelY - 8) << 16;
     gCurTask->velY = 0xFFFE0000;

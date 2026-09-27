@@ -189,7 +189,7 @@ extern s8 gStageRequest;
 extern u8 gUnk_08334EB4[];
 extern u16 gGameState;
 extern u8 gUnk_03001F30;
-extern u32 gUnk_030023C8[];
+extern u32 gBigSwitchFlags[];
 extern u8 gUnk_03002400[8][7];
 extern u16 gUnk_08732348[][9];
 extern s8 gUnk_08732302[][6];
@@ -983,7 +983,7 @@ s32 EnterDoor(void)
                     gUnk_0200B04C |= 1 << gLevelIndex;
                 }
                 if (gUnk_08732302[gLevelIndex][gStageIndex] == -1
-                    || (gUnk_030023C8[0] & (1 << gUnk_08732302[gLevelIndex][gStageIndex])))
+                    || (gBigSwitchFlags[0] & (1 << gUnk_08732302[gLevelIndex][gStageIndex])))
                     gUnk_03002400[gLevelIndex][gStageIndex] = 2;
                 else
                     gUnk_03002400[gLevelIndex][gStageIndex] = 1;
@@ -992,7 +992,7 @@ s32 EnterDoor(void)
                 break;
             case 1:
                 if (gUnk_08732302[gLevelIndex][gStageIndex] == -1
-                    || (gUnk_030023C8[0] & (1 << gUnk_08732302[gLevelIndex][gStageIndex])))
+                    || (gBigSwitchFlags[0] & (1 << gUnk_08732302[gLevelIndex][gStageIndex])))
                     gUnk_03002400[gLevelIndex][gStageIndex] = 2;
             case 2:
             default:
@@ -1184,7 +1184,7 @@ void sub_08025bc8(s32 id)
     gUnk_0200AF08 = 1;
     v = ((s8 *)gRoomObjectList.entries[gUnk_02005590[id - 32]].filler0)[2];
     gUnk_0200001C = v | 0x100;
-    gUnk_030023C8[0] |= 1 << v;
+    gBigSwitchFlags[0] |= 1 << v;
     if (gUnk_03002400[gUnk_030023B8][(s8)gUnk_03001F20] == 1)
         gUnk_03002400[gUnk_030023B8][(s8)gUnk_03001F20] = 2;
     lvl = gUnk_030023B8;

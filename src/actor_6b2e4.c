@@ -64,7 +64,7 @@ void sub_0806bfd8(void);
 void sub_0806c0c0(void);
 void sub_0806c148(void);
 void sub_0806c1d0(void);
-extern void sub_0806a158(void);
+extern void PickupCollect(void);
 extern void ActorMove(void);
 extern void ActorCollideTerrain(void);
 extern void RequestScreenShake(u32 a);
@@ -810,7 +810,7 @@ void sub_0806bfd8(void)
         {
             if (u->actorKind == 6)
             {
-                sub_0806a158();
+                PickupCollect();
                 return;
             }
         }

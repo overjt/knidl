@@ -5,9 +5,9 @@
  *
  * M25's second boss script, dispatched through the 15-entry anchor table at
  * 0x08743984; its entry (Task_PoppyBrosSr) is the last function of
- * src/enemy_9000c.c.  Same skeleton as the first: sub_0809113c installs the
- * per-frame body sub_080911a8 and the animation script gUnk_0874397C,
- * sub_080911a8 dispatches Task.updateState and reloads the graphics record
+ * src/enemy_9000c.c.  Same skeleton as the first: PoppyBrosSrInit installs the
+ * per-frame body PoppyBrosSrUpdate and the animation script gUnk_0874397C,
+ * PoppyBrosSrUpdate dispatches Task.updateState and reloads the graphics record
  * gPoppyBrosSrGfx, and states 0-6 are <body, guard> pairs.  Two states shell out
  * to sub_08091954, which runs the boss's attack loop: it repeats Task.unk1C
  * times, flips Task.unk20 between the two step helpers sub_08091a30 and
@@ -43,8 +43,8 @@ extern vs16 gTaskSlotTypes[];
 
 /* ROM tables */
 extern struct AnimCmd gUnk_0874397C[];
-extern u32 gUnk_08743988[];
-extern u32 gUnk_087439A4[];
+extern u32 gPoppyBrosSrStates[];
+extern u32 gPoppyBrosSrStateUpdates[];
 extern u32 gUnk_087440F4[];
 extern struct AnimCmd *gUnk_08743A00[];
 extern u32 gBugzzyVariants[];
@@ -120,35 +120,35 @@ extern void sub_0806cffc(s16 dx, s16 dy);
 extern s32 Div(s32 numerator, s32 denominator);
 
 /* Defined below */
-void sub_0809118c(void);
-void sub_080911a8(void);
+void PoppyBrosSrEnterState(void);
+void PoppyBrosSrUpdate(void);
 void sub_08091954(void);
 void sub_08091a30(void);
 void sub_08091a98(void);
 void sub_08091d24(void);
 void sub_08091e18(void);
 
-void sub_0809113c(void)
+void PoppyBrosSrInit(void)
 {
     struct Task *t;
 
     t = gCurTask;
-    t->updateCallback = (u32)sub_080911a8;
+    t->updateCallback = (u32)PoppyBrosSrUpdate;
     t->unk2C = 0;
     t->unk30 = 0;
     t->unk34 = 0;
     gCurTask->unk46 = CreateChildTaskHere(179, 1);
     sub_080666cc(gUnk_0874397C);
     ActorSetState(0);
-    CallTableEntry(gCurTask->state, 7, gUnk_08743988);
+    CallTableEntry(gCurTask->state, 7, gPoppyBrosSrStates);
 }
 
-void sub_0809118c(void)
+void PoppyBrosSrEnterState(void)
 {
-    CallTableEntry(gCurTask->state, 7, gUnk_08743988);
+    CallTableEntry(gCurTask->state, 7, gPoppyBrosSrStates);
 }
 
-void sub_080911a8(void)
+void PoppyBrosSrUpdate(void)
 {
     struct Task *t;
     struct Task *u;
@@ -157,16 +157,16 @@ void sub_080911a8(void)
     if (t->unk18 != 0)
     {
         t->unk18--;
-        CallTableEntry(t->updateState, 7, gUnk_087439A4);
+        CallTableEntry(t->updateState, 7, gPoppyBrosSrStateUpdates);
     }
     else if (sub_0806acf8() == 0)
     {
         if (ActorCollideTerrain() == 0)
-            CallTableEntry(gCurTask->updateState, 7, gUnk_087439A4);
+            CallTableEntry(gCurTask->updateState, 7, gPoppyBrosSrStateUpdates);
     }
     else
     {
-        CallTableEntry(gCurTask->updateState, 7, gUnk_087439A4);
+        CallTableEntry(gCurTask->updateState, 7, gPoppyBrosSrStateUpdates);
     }
     u = gCurTask;
     if (u->unk34 != 0)
@@ -212,7 +212,7 @@ void sub_0809128c(void)
 void sub_080912f8(void)
 {
     if (gCurTask->state != 0)
-        TaskSetEntry(sub_0809118c, gCurTaskIdx);
+        TaskSetEntry(PoppyBrosSrEnterState, gCurTaskIdx);
 }
 
 void sub_08091320(void)
@@ -236,7 +236,7 @@ void sub_08091320(void)
 void sub_08091368(void)
 {
     if (gCurTask->state != 1)
-        TaskSetEntry(sub_0809118c, gCurTaskIdx);
+        TaskSetEntry(PoppyBrosSrEnterState, gCurTaskIdx);
 }
 
 void sub_08091390(void)
@@ -330,7 +330,7 @@ void sub_08091558(void)
     if (t->velY > 0 && t->unk30 == 2)
         t->unk30 = 3;
     if (gCurTask->state != 2)
-        TaskSetEntry(sub_0809118c, gCurTaskIdx);
+        TaskSetEntry(PoppyBrosSrEnterState, gCurTaskIdx);
 }
 
 void sub_080915a4(void)
@@ -353,7 +353,7 @@ void sub_080915a4(void)
 void sub_080915d0(void)
 {
     if (gCurTask->state != 3)
-        TaskSetEntry(sub_0809118c, gCurTaskIdx);
+        TaskSetEntry(PoppyBrosSrEnterState, gCurTaskIdx);
 }
 
 void sub_080915f8(void)
@@ -388,7 +388,7 @@ void sub_080915f8(void)
 void sub_080916c4(void)
 {
     if (gCurTask->state != 4)
-        TaskSetEntry(sub_0809118c, gCurTaskIdx);
+        TaskSetEntry(PoppyBrosSrEnterState, gCurTaskIdx);
 }
 
 void sub_080916ec(void)
@@ -433,7 +433,7 @@ void sub_080916ec(void)
 void sub_080917fc(void)
 {
     if (gCurTask->state != 5)
-        TaskSetEntry(sub_0809118c, gCurTaskIdx);
+        TaskSetEntry(PoppyBrosSrEnterState, gCurTaskIdx);
 }
 
 void sub_08091824(void)
@@ -577,7 +577,7 @@ s32 sub_08091b24(void)
     ActorSetHitReactions(gUnk_087440F4);
     gCurTask->unk2C = 1;
     ActorSetState(6);
-    TaskSetEntry(sub_0809118c, gCurTaskIdx);
+    TaskSetEntry(PoppyBrosSrEnterState, gCurTaskIdx);
     return 1;
 }
 

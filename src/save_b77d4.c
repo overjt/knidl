@@ -31,7 +31,7 @@ extern s32 gSramAvailable;
 extern s16 gCompletionPercent;
 extern u16 gMilestoneFlags;
 extern s8 gUnk_03002384;
-extern s32 gUnk_030023C8[];
+extern s32 gBigSwitchFlags[];
 extern s8 gUnk_030023E0;
 extern s32 gCurSaveSlot;
 

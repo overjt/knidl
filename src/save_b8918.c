@@ -54,7 +54,7 @@ extern u16 gUnk_03002378[];
 extern s8 gUnk_03002384;
 extern u16 gPlayerCount;
 extern u8 gUnk_030023B8;
-extern s32 gUnk_030023C8[];
+extern s32 gBigSwitchFlags[];
 extern s8 gUnk_030023E0;
 extern s32 gCurSaveSlot;
 extern u8 gUnk_03002400[8][7];
@@ -128,7 +128,7 @@ void MergeProgressIntoSaveSlot(s32 a)
     gSaveSlots[3].unk18[gExtraMode] = gUnk_03001F20;
     gSaveSlots[3].unk1A[gExtraMode] = gUnk_030023E0;
     gSaveSlots[3].unk1C[gExtraMode] = gUnk_03002384;
-    gSaveSlots[3].unk20[gExtraMode] = gUnk_030023C8[0];
+    gSaveSlots[3].unk20[gExtraMode] = gBigSwitchFlags[0];
     for (i = 0; i <= 7; i++)
     {
         for (j = 0; j <= 6; j++)

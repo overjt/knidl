@@ -38,7 +38,7 @@ struct M19Frame
 /* RAM cells and ROM tables */
 extern s16 gSpriteCameraX;
 extern s16 gSpriteCameraY;
-extern s8 gUnk_02006094;
+extern s8 gCannonFuseState;
 extern struct AnimCmd gUnk_087406A0[];
 extern struct M19Frame gUnk_08740320[][24];
 extern struct M19Frame gUnk_087404A0[][24];
@@ -50,8 +50,8 @@ extern u32 gBigSwitchVariants[];
 extern u32 gBigSwitchStates[];
 extern u32 gBigSwitchStateUpdates[];
 extern u32 gStakeVariants[];
-extern u32 gUnk_087402F4[];
-extern u32 gUnk_087402F8[];
+extern u32 gStakeStates[];
+extern u32 gStakeStateUpdates[];
 extern u32 gUnk_087402FC[];
 extern u32 gWaddleDeeVariants[];
 extern u32 gUnk_08740BD4[];
@@ -108,7 +108,7 @@ extern void sub_0807775c(void);
 extern void sub_08077830(void);
 extern void sub_08077980(void);
 extern void sub_08077a48(void);
-extern void sub_08077ac4(void);
+extern void CannonFuseEnterState(void);
 extern void sub_08078c64(void);
 extern void sub_08078d6c(void);
 extern void sub_08078e80(void);
@@ -118,7 +118,7 @@ extern void sub_0807938c(void);
 /* defined below */
 void BigSwitchEnterState(void);
 void BigSwitchUpdate(void);
-void sub_08077f7c(void);
+void StakeUpdate(void);
 void sub_080781fc(struct M19Particle *p);
 void sub_080782b4(struct M19Particle *p);
 void sub_0807831c(struct M19Particle *p);
@@ -134,7 +134,7 @@ void sub_08077ae0(void)
     gCurTask->updateState = 0;
     gCurTask->facing = 1;
     TaskStop();
-    gUnk_02006094 = -1;
+    gCannonFuseState = -1;
     {
         struct Task *t = gCurTask;
 
@@ -149,10 +149,10 @@ void sub_08077b24(void)
 {
     if (ActorCheckHits())
     {
-        gUnk_02006094 = 0;
+        gCannonFuseState = 0;
         gCurTask->unk24 = 1;
         ActorSetState(1);
-        TaskSetEntry(sub_08077ac4, gCurTaskIdx);
+        TaskSetEntry(CannonFuseEnterState, gCurTaskIdx);
     }
 }
 
@@ -162,7 +162,7 @@ void sub_08077b60(void)
     TaskStop();
     sub_0807775c();
     sub_08077a48();
-    while (gUnk_02006094 == 0)
+    while (gCannonFuseState == 0)
     {
         PlaySfx(230);
         TaskYieldTrampoline(3);
@@ -176,10 +176,10 @@ void sub_08077ba8(void)
     {
         sub_08077830();
     }
-    else if (gUnk_02006094 == 0)
+    else if (gCannonFuseState == 0)
     {
         ActorSetState(2);
-        TaskSetEntry(sub_08077ac4, gCurTaskIdx);
+        TaskSetEntry(CannonFuseEnterState, gCurTaskIdx);
     }
 }
 
@@ -203,7 +203,7 @@ void sub_08077c2c(void)
     if (gCurTask->unk20 != -1)
         sub_08077980();
     if (gCurTask->state != 2)
-        TaskSetEntry(sub_08077ac4, gCurTaskIdx);
+        TaskSetEntry(CannonFuseEnterState, gCurTaskIdx);
 }
 
 void Task_BigSwitch(void)
@@ -287,7 +287,7 @@ void sub_08077d54(void)
     ActorDie();
 }
 
-void sub_08077dd8(void)
+void BigSwitchInit(void)
 {
     gCurTask->updateCallback = (u32)BigSwitchUpdate;
     ActorSetState(0);
@@ -363,16 +363,16 @@ void Task_Stake(void)
     }
 }
 
-void sub_08077f4c(void)
+void StakeInit(void)
 {
-    gCurTask->updateCallback = (u32)sub_08077f7c;
+    gCurTask->updateCallback = (u32)StakeUpdate;
     ActorSetState(0);
-    CallTableEntry(gCurTask->state, 1, gUnk_087402F4);
+    CallTableEntry(gCurTask->state, 1, gStakeStates);
 }
 
-void sub_08077f7c(void)
+void StakeUpdate(void)
 {
-    CallTableEntry(gCurTask->updateState, 1, gUnk_087402F8);
+    CallTableEntry(gCurTask->updateState, 1, gStakeStateUpdates);
 }
 
 void sub_08077f98(void)

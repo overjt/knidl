@@ -17,10 +17,10 @@
  *                  TaskSetEntry(fn, gCurTaskIdx) when the state changes.
  *
  * This batch holds:
- *   * the two stand-alone class-2 bodies `sub_0808cce8` (a two-variant intro
+ *   * the two stand-alone class-2 bodies `Task_ChillyFreezeSparkle` (a two-variant intro
  *     that walks Task.posX/unk50 with RandomSpread and waits on the room byte
- *     gTaskSlotTypes[Task.parent] through `sub_0808cfec`) and `sub_0808d014`,
- *     plus the smaller `sub_0808d148` and `sub_0808d218`;
+ *     gTaskSlotTypes[Task.parent] through `sub_0808cfec`) and `Task_WaddleDooBeam`,
+ *     plus the smaller `Task_GlunkShot` and `sub_0808d218`;
  *   * script 1: entry `Task_BroomHatter` (Task.variant -> `0x08743188`, 3 rows) with
  *     the row bodies `sub_0808d558` / `sub_0808da00` / `sub_0808df58`, the
  *     body tables `0x08743194` / `0x087431AC` / `0x087431C4` and the guard
@@ -71,9 +71,9 @@ extern u32 gUnk_087431D8[];
 extern u32 gLaserBallVariants[];
 extern u32 gBroomHatterFrames[];
 extern u32 gLaserBallFrames[];
-extern u32 gUnk_087522B4[];
-extern u32 gUnk_087523E4[];
-extern u32 gUnk_08752808[];
+extern u32 gChillyFreezeFrames[];
+extern u32 gWaddleDooBeamFrames[];
+extern u32 gGlunkShotFrames[];
 extern u32 gUnk_08752C18[];
 
 /* Externals */
@@ -123,12 +123,12 @@ extern void sub_0806ee2c(void);
 extern void LaserBallEnterState(void);
 
 /* Forward declarations */
-void sub_0808cce8(void);
+void Task_ChillyFreezeSparkle(void);
 void sub_0808cfec(void);
-void sub_0808d014(void);
+void Task_WaddleDooBeam(void);
 void sub_0808d100(void);
 void sub_0808d130(void);
-void sub_0808d148(void);
+void Task_GlunkShot(void);
 void sub_0808d1d0(void);
 void sub_0808d200(void);
 void sub_0808d218(void);
@@ -177,13 +177,13 @@ void sub_0808e33c(void);
 void sub_0808e36c(void);
 void Task_LaserBall(void);
 
-void sub_0808cce8(void)
+void Task_ChillyFreezeSparkle(void)
 {
 
     gCurTask->moveCallback = (u32)TaskMove;
     gCurTask->drawCallback = (u32)TaskDrawWorld;
     gCurTask->layer = 10;
-    gCurTask->frameTable = gUnk_087522B4;
+    gCurTask->frameTable = gChillyFreezeFrames;
     switch (gCurTask->state)
     {
     case 0:
@@ -263,7 +263,7 @@ void sub_0808cfec(void)
         TaskExitTrampoline();
 }
 
-void sub_0808d014(void)
+void Task_WaddleDooBeam(void)
 {
     struct Task *t;
     struct Task *u;
@@ -276,7 +276,7 @@ void sub_0808d014(void)
     t->drawCallback = (u32)ActorDrawWorldInViewOrDestroy;
     t->layer = 11;
     u = gCurTask;
-    u->frameTable = gUnk_087523E4;
+    u->frameTable = gWaddleDooBeamFrames;
     u->updateCallback = (u32)sub_0808d100;
     u->onGround = 0;
     w = gCurTask;
@@ -319,7 +319,7 @@ void sub_0808d130(void)
     TaskSetEntry(ActorDie, gCurTaskIdx);
 }
 
-void sub_0808d148(void)
+void Task_GlunkShot(void)
 {
     struct Task *t;
 
@@ -328,7 +328,7 @@ void sub_0808d148(void)
     t->moveCallback = (u32)TaskMove;
     t->drawCallback = (u32)ActorDrawWorldInViewOrDestroy;
     t->layer = 11;
-    gCurTask->frameTable = gUnk_08752808;
+    gCurTask->frameTable = gGlunkShotFrames;
     gCurTask->facing = TaskGetParentFacing();
     gCurTask->onGround = 0;
     gCurTask->velY = 0xFFFA0000;

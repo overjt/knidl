@@ -54,7 +54,7 @@ extern u16 gUnk_03002378[];
 extern s8 gUnk_03002384;
 extern u16 gPlayerCount;
 extern u8 gUnk_030023B8;
-extern s32 gUnk_030023C8[];
+extern s32 gBigSwitchFlags[];
 extern s8 gUnk_030023E0;
 extern s32 gCurSaveSlot;
 extern u8 gUnk_03002400[8][7];

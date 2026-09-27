@@ -5,7 +5,7 @@
  *
  * Second third of enemy/object behaviour bank 2 (see src/enemy_7f044.c for
  * the three-table pattern all of M21 is built from).  It holds:
- *   * task #175, the only class-4 type in the bank: `sub_08080c48` is the
+ *   * task #175, the only class-4 type in the bank: `Task_HotHeadFlame` is the
  *     coroutine itself (it re-seats the actor next to gTasks[unk44]
  *     every cycle) with per-frame hook `sub_08080d58`, and `sub_08080b70` /
  *     `sub_08080bcc` are its unk73 handlers (`0x08741BF4`);
@@ -173,7 +173,7 @@ s32 sub_08080c38(void)
     return 1;
 }
 
-void sub_08080c48(void)
+void Task_HotHeadFlame(void)
 {
     struct Task *t;
     struct Task *u;

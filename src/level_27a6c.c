@@ -9,7 +9,7 @@
  * and its metatile map (+0x08) into gUnk_02006AA0 (or CpuSet-copies it when
  * +0x05 says the map is stored raw), then walks the map from row 1 with the
  * per-cell marker table gUnk_0873240C[gUnk_030023B8][cell]: a cell whose
- * marker names a flag that is still clear (a gUnk_030023C8 bit for markers
+ * marker names a flag that is still clear (a gBigSwitchFlags bit for markers
  * with bit 8 set, a gUnk_03002400[gUnk_030023B8][] byte otherwise) takes the
  * matching cell of the next room's 2x2 pattern (gRoomTable[level][stage]
  * [room + 1]'s map).  With gUnk_0200AF08 set it first clears the BG map at
@@ -102,7 +102,7 @@ extern s16 gRoomHeight;
 extern s8 gUnk_030023B8;
 extern u16 *gUnk_0873240C[];
 extern u16 gUnk_0200001C;
-extern u32 gUnk_030023C8[];
+extern u32 gBigSwitchFlags[];
 extern u8 gUnk_03002400[8][7];
 extern u32 gUnk_0873232C[];
 extern s8 gUnk_030023E0;
@@ -170,7 +170,7 @@ void sub_08027a6c(void)
                     {
                         if (gUnk_0200001C == v)
                             gBg1MetatileMap[idx] = *(u16 *)p;
-                        if (!(gUnk_030023C8[0] & (1 << (v & 0xFF7F))))
+                        if (!(gBigSwitchFlags[0] & (1 << (v & 0xFF7F))))
                             gUnk_02006AA0[idx] = *p;
                     }
                     else
@@ -192,7 +192,7 @@ void sub_08027a6c(void)
         {
             if (mask == 0)
                 return;
-            if ((gUnk_030023C8[0] & mask) == mask)
+            if ((gBigSwitchFlags[0] & mask) == mask)
                 return;
         }
         idx = gRoomWidth;
@@ -220,7 +220,7 @@ void sub_08027a6c(void)
                 {
                     if (v & 0x100)
                     {
-                        if (!(gUnk_030023C8[0] & (1 << (v & 0xFF))))
+                        if (!(gBigSwitchFlags[0] & (1 << (v & 0xFF))))
                             gUnk_02006AA0[idx] = *p;
                     }
                     else

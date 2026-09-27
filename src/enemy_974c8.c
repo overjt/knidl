@@ -50,7 +50,7 @@ extern u32 gUnk_087538B0[];
 extern void ActorDrawWorldInViewOrDestroy(void);
 extern void sub_08065438(void);
 extern void ActorMove(void);
-extern void sub_08098fb0(void);
+extern void MrFrostyEnterState(void);
 extern void CallTableEntry(u32 a, u32 b, u32 *c);
 extern u32 RandomRange(u32 range);
 extern s32 PlaySfx(s32 id);
@@ -1102,7 +1102,7 @@ s32 sub_080988c4(void)
 {
     if (gCurTask->state == 0) {
         ActorSetState(16);
-        TaskSetEntry(sub_08098fb0, gCurTaskIdx);
+        TaskSetEntry(MrFrostyEnterState, gCurTaskIdx);
         return 1;
     }
     return 0;

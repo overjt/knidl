@@ -16,15 +16,15 @@
  * state handlers nothing in the ROM points at.
  *
  * The second script starts at Task_MrTickTock (graphics gMrTickTockFrames, animation
- * gUnk_08745744, one-word table gMrTickTockVariants): sub_0809a118 installs
- * sub_0809a17c and dispatches Task.state through the 24-word guard table
- * gUnk_08745750, sub_0809a17c dispatches Task.updateState through the 24-word body
- * table gUnk_087457B0 that follows it, and sub_0809a1f4 is its re-arm hook.
+ * gUnk_08745744, one-word table gMrTickTockVariants): MrTickTockInit installs
+ * MrTickTockUpdate and dispatches Task.state through the 24-word guard table
+ * gMrTickTockStates, MrTickTockUpdate dispatches Task.updateState through the 24-word body
+ * table gMrTickTockStateUpdates that follows it, and MrTickTockEnterState is its re-arm hook.
  * States 0-23 follow as <body, guard> pairs; sub_0809b438 is the timer leaf
  * the table word at 0x0874580C points at.
  *
- * sub_0809b528, sub_0809b7f0 and sub_0809ba00 are the three companion tasks
- * (graphics gUnk_0874CB7C, gUnk_087531C4, gUnk_087531DC).  They use
+ * Task_MrFrostyIceCube, Task_MrTickTockRing and Task_MrTickTockNote are the three companion tasks
+ * (graphics gUnk_0874CB7C, gMrTickTockRingFrames, gMrTickTockNoteFrames).  They use
  * ActorDrawWorldInViewOrDestroy as the per-frame hook and Task.layer = 9; sub_0809b6ac and
  * sub_0809b964 read the parent's state out of gTasks[Task.parent], and
  * the third one's own states live in the next module - gUnk_08745B1C points at
@@ -54,8 +54,8 @@ extern u32 gUnk_087459D4[];
 extern u32 gUnk_087459F0[];
 extern struct AnimCmd gUnk_08745744[];
 extern u32 gMrTickTockVariants[];
-extern u32 gUnk_08745750[];
-extern u32 gUnk_087457B0[];
+extern u32 gMrTickTockStates[];
+extern u32 gMrTickTockStateUpdates[];
 extern u32 gUnk_08745A1C[];
 extern u32 gUnk_08745A24[];
 extern u32 gUnk_08745A98[];
@@ -73,8 +73,8 @@ extern u32 gUnk_08745AE8[];
 extern u32 gUnk_08745AF4[];
 extern u32 gUnk_0874CB7C[];
 extern u32 gMrTickTockFrames[];
-extern u32 gUnk_087531C4[];
-extern u32 gUnk_087531DC[];
+extern u32 gMrTickTockRingFrames[];
+extern u32 gMrTickTockNoteFrames[];
 extern void *gUnk_082797C8;
 
 /* Externals */
@@ -138,8 +138,8 @@ extern void sub_0809baec(void);
 
 /* Defined below */
 void sub_0809a080(u8 a);
-void sub_0809a17c(void);
-void sub_0809a1f4(void);
+void MrTickTockUpdate(void);
+void MrTickTockEnterState(void);
 void sub_0809b5b4(void);
 void sub_0809b868(void);
 void sub_0809b5ec(void);
@@ -152,12 +152,12 @@ u8 sub_08099b20(void)
         RequestScreenShake(1);
         PlaySfx(0x1F7);
         ActorSetState(10);
-        TaskSetEntry(sub_0809a1f4, gCurTaskIdx);
+        TaskSetEntry(MrTickTockEnterState, gCurTaskIdx);
         return 1;
     case 10:
         sub_0809a080(1);
         ActorSetState(11);
-        TaskSetEntry(sub_0809a1f4, gCurTaskIdx);
+        TaskSetEntry(MrTickTockEnterState, gCurTaskIdx);
         return 1;
     case 4:
         TaskSetFrame(4);
@@ -175,28 +175,28 @@ u8 sub_08099b20(void)
     case 22:
         sub_0809a080(1);
         ActorSetState(0);
-        TaskSetEntry(sub_0809a1f4, gCurTaskIdx);
+        TaskSetEntry(MrTickTockEnterState, gCurTaskIdx);
         return 1;
     case 7:
         sub_0809a080(1);
         ActorSetState(8);
-        TaskSetEntry(sub_0809a1f4, gCurTaskIdx);
+        TaskSetEntry(MrTickTockEnterState, gCurTaskIdx);
         return 1;
     case 15:
         sub_0809a080(1);
         ActorSetState(16);
-        TaskSetEntry(sub_0809a1f4, gCurTaskIdx);
+        TaskSetEntry(MrTickTockEnterState, gCurTaskIdx);
         return 1;
     case 19:
         sub_0809a080(0);
         ActorSetState(20);
-        TaskSetEntry(sub_0809a1f4, gCurTaskIdx);
+        TaskSetEntry(MrTickTockEnterState, gCurTaskIdx);
         return 1;
     case 23:
         sub_0809a080(0);
         sub_08066580();
         ActorSetState(0);
-        TaskSetEntry(sub_0809a1f4, gCurTaskIdx);
+        TaskSetEntry(MrTickTockEnterState, gCurTaskIdx);
         return 1;
     }
     return 0;
@@ -208,19 +208,19 @@ u8 sub_08099c4c(void)
     {
     case 17:
         ActorSetState(18);
-        TaskSetEntry(sub_0809a1f4, gCurTaskIdx);
+        TaskSetEntry(MrTickTockEnterState, gCurTaskIdx);
         return 1;
     case 4:
         gCurTask->velX = 0;
         return 0;
     case 5:
         ActorSetState(6);
-        TaskSetEntry(sub_0809a1f4, gCurTaskIdx);
+        TaskSetEntry(MrTickTockEnterState, gCurTaskIdx);
         return 1;
     case 6:
         ActorSetState(15);
         ActorSetTerrainBox(gUnk_08745A24);
-        TaskSetEntry(sub_0809a1f4, gCurTaskIdx);
+        TaskSetEntry(MrTickTockEnterState, gCurTaskIdx);
         return 1;
     case 3:
         gCurTask->velX = -gCurTask->velX;
@@ -228,7 +228,7 @@ u8 sub_08099c4c(void)
     case 12:
         ActorSetState(15);
         ActorSetTerrainBox(gUnk_08745A24);
-        TaskSetEntry(sub_0809a1f4, gCurTaskIdx);
+        TaskSetEntry(MrTickTockEnterState, gCurTaskIdx);
         return 1;
     case 16:
         TaskStop();
@@ -243,7 +243,7 @@ u8 sub_08099c4c(void)
         break;
     case 20:
         ActorSetState(21);
-        TaskSetEntry(sub_0809a1f4, gCurTaskIdx);
+        TaskSetEntry(MrTickTockEnterState, gCurTaskIdx);
         return 1;
     }
     return 0;
@@ -269,7 +269,7 @@ u8 sub_08099d64(void)
     u = gCurTask;
     u->unk18 = 0;
     ActorSetState(19);
-    TaskSetEntry(sub_0809a1f4, gCurTaskIdx);
+    TaskSetEntry(MrTickTockEnterState, gCurTaskIdx);
     return 1;
 }
 
@@ -282,7 +282,7 @@ u8 sub_08099db0(void)
     if (t->unk34 == 3)
     {
         ActorSetState(9);
-        TaskSetEntry(sub_0809a1f4, gCurTaskIdx);
+        TaskSetEntry(MrTickTockEnterState, gCurTaskIdx);
         return 1;
     }
     return 0;
@@ -318,7 +318,7 @@ void sub_08099dec(void)
     }
     if (gCurTask->state == 2)
         gCurTask->unk30 = gUnk_087456D0[RandomRange(2)];
-    TaskSetEntry(sub_0809a1f4, gCurTaskIdx);
+    TaskSetEntry(MrTickTockEnterState, gCurTaskIdx);
 }
 
 s32 sub_08099e9c(void)
@@ -489,14 +489,14 @@ void Task_MrTickTock(void)
     CallTableEntry(gCurTask->variant, 1, gMrTickTockVariants);
 }
 
-void sub_0809a118(void)
+void MrTickTockInit(void)
 {
     struct Task *t;
     struct Task *u;
     struct Task *v;
 
     t = gCurTask;
-    t->updateCallback = (u32)sub_0809a17c;
+    t->updateCallback = (u32)MrTickTockUpdate;
     if (sub_08067060() != 0)
     {
         u = gCurTask;
@@ -512,10 +512,10 @@ void sub_0809a118(void)
         ActorSetState(23);
         ActorSetState(0);
     }
-    CallTableEntry(gCurTask->state, 24, gUnk_08745750);
+    CallTableEntry(gCurTask->state, 24, gMrTickTockStates);
 }
 
-void sub_0809a17c(void)
+void MrTickTockUpdate(void)
 {
     struct Task *t;
     struct Task *u;
@@ -537,21 +537,21 @@ void sub_0809a17c(void)
     if (u->unk20 != 0)
     {
         if (ActorCollideTerrain() == 0)
-            CallTableEntry(gCurTask->updateState, 24, gUnk_087457B0);
+            CallTableEntry(gCurTask->updateState, 24, gMrTickTockStateUpdates);
     }
     else
     {
-        CallTableEntry(u->updateState, 24, gUnk_087457B0);
+        CallTableEntry(u->updateState, 24, gMrTickTockStateUpdates);
     }
     sub_0809a03c();
     sub_08068f68();
     ActorReactToHit();
 }
 
-void sub_0809a1f4(void)
+void MrTickTockEnterState(void)
 {
     sub_08098afc();
-    CallTableEntry(gCurTask->state, 24, gUnk_08745750);
+    CallTableEntry(gCurTask->state, 24, gMrTickTockStates);
 }
 
 void sub_0809a214(void)
@@ -590,7 +590,7 @@ void sub_0809a270(void)
     if (--t->unk30 < 0)
     {
         ActorSetState(1);
-        TaskSetEntry(sub_0809a1f4, gCurTaskIdx);
+        TaskSetEntry(MrTickTockEnterState, gCurTaskIdx);
     }
 }
 
@@ -658,7 +658,7 @@ void sub_0809a32c(void)
             ActorSetState(1);
         else
             ActorSetState(2);
-        TaskSetEntry(sub_0809a1f4, gCurTaskIdx);
+        TaskSetEntry(MrTickTockEnterState, gCurTaskIdx);
     }
 }
 
@@ -713,7 +713,7 @@ void sub_0809a434(void)
     if (--t->unk30 <= 0)
     {
         ActorSetState(1);
-        TaskSetEntry(sub_0809a1f4, gCurTaskIdx);
+        TaskSetEntry(MrTickTockEnterState, gCurTaskIdx);
     }
 }
 
@@ -765,7 +765,7 @@ void sub_0809a4f0(void)
         if (--t->unk30 < 0)
         {
             ActorSetState(1);
-            TaskSetEntry(sub_0809a1f4, gCurTaskIdx);
+            TaskSetEntry(MrTickTockEnterState, gCurTaskIdx);
         }
     }
 }
@@ -827,7 +827,7 @@ void sub_0809a624(void)
     if (--t->unk30 < 0)
     {
         ActorSetState(6);
-        TaskSetEntry(sub_0809a1f4, gCurTaskIdx);
+        TaskSetEntry(MrTickTockEnterState, gCurTaskIdx);
     }
 }
 
@@ -889,12 +889,12 @@ void sub_0809a744(void)
         if (v > 32)
         {
             ActorSetState(12);
-            TaskSetEntry(sub_0809a1f4, gCurTaskIdx);
+            TaskSetEntry(MrTickTockEnterState, gCurTaskIdx);
         }
         else
         {
             ActorSetState(7);
-            TaskSetEntry(sub_0809a1f4, gCurTaskIdx);
+            TaskSetEntry(MrTickTockEnterState, gCurTaskIdx);
         }
     }
 }
@@ -957,7 +957,7 @@ void sub_0809a82c(void)
         if (sub_08099db0() == 0)
         {
             ActorSetState(14);
-            TaskSetEntry(sub_0809a1f4, gCurTaskIdx);
+            TaskSetEntry(MrTickTockEnterState, gCurTaskIdx);
         }
     }
 }
@@ -1070,7 +1070,7 @@ void sub_0809a974(void)
         if (sub_08099db0() == 0)
         {
             ActorSetState(14);
-            TaskSetEntry(sub_0809a1f4, gCurTaskIdx);
+            TaskSetEntry(MrTickTockEnterState, gCurTaskIdx);
         }
         break;
     }
@@ -1126,7 +1126,7 @@ void sub_0809aaf0(void)
     if (--t->unk30 == 0)
     {
         ActorSetState(9);
-        TaskSetEntry(sub_0809a1f4, gCurTaskIdx);
+        TaskSetEntry(MrTickTockEnterState, gCurTaskIdx);
     }
     if (gCurTask->unk30 < 0)
     {
@@ -1136,7 +1136,7 @@ void sub_0809aaf0(void)
         if (v <= 32)
         {
             ActorSetState(7);
-            TaskSetEntry(sub_0809a1f4, gCurTaskIdx);
+            TaskSetEntry(MrTickTockEnterState, gCurTaskIdx);
         }
     }
     else
@@ -1147,7 +1147,7 @@ void sub_0809aaf0(void)
         if (v <= 32)
         {
             ActorSetState(13);
-            TaskSetEntry(sub_0809a1f4, gCurTaskIdx);
+            TaskSetEntry(MrTickTockEnterState, gCurTaskIdx);
         }
     }
 }
@@ -1226,7 +1226,7 @@ void sub_0809ac54(void)
         {
             sub_08099db0();
             ActorSetState(14);
-            TaskSetEntry(sub_0809a1f4, gCurTaskIdx);
+            TaskSetEntry(MrTickTockEnterState, gCurTaskIdx);
         }
     }
     v = gCurTask;
@@ -1288,18 +1288,18 @@ void sub_0809ad6c(void)
             if (sub_08021a40(u->pixelX - ((s8)u->facing << 4), u->pixelY) != 0)
             {
                 ActorSetState(18);
-                TaskSetEntry(sub_0809a1f4, gCurTaskIdx);
+                TaskSetEntry(MrTickTockEnterState, gCurTaskIdx);
             }
             else
             {
                 ActorSetState(17);
-                TaskSetEntry(sub_0809a1f4, gCurTaskIdx);
+                TaskSetEntry(MrTickTockEnterState, gCurTaskIdx);
             }
         }
         else
         {
             ActorSetState(1);
-            TaskSetEntry(sub_0809a1f4, gCurTaskIdx);
+            TaskSetEntry(MrTickTockEnterState, gCurTaskIdx);
         }
     }
 }
@@ -1391,7 +1391,7 @@ void sub_0809aefc(void)
         t->velY = 0x10000;
         ActorSetTerrainBox(gUnk_08745A1C);
         ActorSetState(14);
-        TaskSetEntry(sub_0809a1f4, gCurTaskIdx);
+        TaskSetEntry(MrTickTockEnterState, gCurTaskIdx);
         break;
     }
 }
@@ -1466,14 +1466,14 @@ void sub_0809b09c(void)
     if (--t->unk30 < 0)
     {
         ActorSetState(gUnk_08745714[RandomRange(16)]);
-        TaskSetEntry(sub_0809a1f4, gCurTaskIdx);
+        TaskSetEntry(MrTickTockEnterState, gCurTaskIdx);
     }
     if ((gCurTask->unk30 & 1) != 0)
     {
         if (sub_08099fb4() == 0)
         {
             ActorSetState(1);
-            TaskSetEntry(sub_0809a1f4, gCurTaskIdx);
+            TaskSetEntry(MrTickTockEnterState, gCurTaskIdx);
         }
     }
 }
@@ -1598,7 +1598,7 @@ void sub_0809b310(void)
     if (--t->unk30 < 0)
     {
         ActorSetState(21);
-        TaskSetEntry(sub_0809a1f4, gCurTaskIdx);
+        TaskSetEntry(MrTickTockEnterState, gCurTaskIdx);
     }
 }
 
@@ -1744,7 +1744,7 @@ void sub_0809b4fc(void)
         gCurTask->unk28 = 1;
 }
 
-void sub_0809b528(void)
+void Task_MrFrostyIceCube(void)
 {
     struct Task *t;
     struct Task *u;
@@ -1914,7 +1914,7 @@ void sub_0809b7ec(void)
 {
 }
 
-void sub_0809b7f0(void)
+void Task_MrTickTockRing(void)
 {
     struct Task *t;
     struct Task *u;
@@ -1924,7 +1924,7 @@ void sub_0809b7f0(void)
     t->drawCallback = (u32)ActorDrawWorldInViewOrDestroy;
     t->layer = 9;
     u = gCurTask;
-    u->frameTable = gUnk_087531C4;
+    u->frameTable = gMrTickTockRingFrames;
     CallTableEntry(u->variant, 1, gUnk_08745B00);
 }
 
@@ -2018,7 +2018,7 @@ u8 sub_0809b9e0(void)
     return 1;
 }
 
-void sub_0809ba00(void)
+void Task_MrTickTockNote(void)
 {
     struct Task *t;
     struct Task *u;
@@ -2028,7 +2028,7 @@ void sub_0809ba00(void)
     t->drawCallback = (u32)ActorDrawWorldInViewOrDestroy;
     t->layer = 9;
     u = gCurTask;
-    u->frameTable = gUnk_087531DC;
+    u->frameTable = gMrTickTockNoteFrames;
     u->facing = 1;
     CallTableEntry(gCurTask->variant, 1, gUnk_08745B1C);
 }

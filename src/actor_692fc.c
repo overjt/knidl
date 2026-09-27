@@ -95,7 +95,7 @@ extern void sub_0806d65c(void);
 extern void sub_0806d77c(void);
 extern void ActorAttachEffect(s32 a, s32 b);
 extern void sub_0806ee2c(void);
-extern void sub_080b4240(void);
+extern void PickupHeal(void);
 extern void sub_080b460c(void);
 extern void sub_080b54d0(s32 i);
 
@@ -111,7 +111,7 @@ u32 ActorReactToDamage(void);
 void sub_08069f0c(void);
 void sub_08069f70(void);
 void sub_08069fb0(void);
-void sub_0806a158(void);
+void PickupCollect(void);
 u32 ActorReactToDefeat(void);
 
 u32 ActorCollideTerrain(void)
@@ -587,11 +587,11 @@ u32 sub_08069bbc(void)
     case 2:
     case 5:
     case 7:
-        /* sub_0806a158 is void in the ROM but its result is consumed here:
+        /* PickupCollect is void in the ROM but its result is consumed here:
            the original had no prototype in scope at this point, so the
            implicit `int ()` declaration was used.  The cast reproduces the
            direct `bl` without tripping -Wimplicit -Werror. */
-        r = ((u32 (*)(void))sub_0806a158)();
+        r = ((u32 (*)(void))PickupCollect)();
         break;
     case 3:
     case 4:
@@ -907,7 +907,7 @@ void sub_0806a0f0(s32 a)
 /* No return value: the ROM's epilogue is `pop {r0}; bx r0`.  Its caller
    sub_08069bbc nevertheless propagates whatever r0 holds - see the comment
    there. */
-void sub_0806a158(void)
+void PickupCollect(void)
 {
     struct Task *t;
 
@@ -932,13 +932,13 @@ void sub_0806a158(void)
         if (gLocalPlayer == t->hitterSlot)
             PlaySfx(198);
         ActorSetState(0);
-        TaskSetEntry(sub_080b4240, gCurTaskIdx);
+        TaskSetEntry(PickupHeal, gCurTaskIdx);
         break;
     case 4:
         if (gLocalPlayer == t->hitterSlot)
             PlaySfx(198);
         ActorSetState(1);
-        TaskSetEntry(sub_080b4240, gCurTaskIdx);
+        TaskSetEntry(PickupHeal, gCurTaskIdx);
         break;
     default:
         ActorDestroy();

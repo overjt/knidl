@@ -8,7 +8,7 @@ extern s32 gUnk_02007D00[];
 extern s16 gViewRect[];
 extern s32 gUnk_030023B4;
 extern u32 gUnk_08747C6C[];
-extern u32 gUnk_087534E0[];
+extern u32 gTridentKnightTridentFrames[];
 extern u32 gUnk_087535A8[];
 
 /* Externals */
@@ -44,7 +44,7 @@ void sub_0809f874(void);
 void sub_0809f90c(void);
 void sub_0809f930(void);
 
-void sub_0809f37c(void)
+void Task_TridentKnightTrident(void)
 {
     struct Task *t;
     struct Task *u;
@@ -60,7 +60,7 @@ void sub_0809f37c(void)
     z = 0;
     *p = 9;
     u = gCurTask;
-    u->frameTable = gUnk_087534E0;
+    u->frameTable = gTridentKnightTridentFrames;
     u->updateCallback = (u32)sub_0809f3e0;
     TaskFaceLikeParent();
     v = gCurTask;

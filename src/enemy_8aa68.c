@@ -37,9 +37,9 @@ extern u32 gUnk_08742928[];
 extern u32 gUnk_08742940[];
 extern u32 gUnk_08742948[];
 extern u32 gUnk_08742978[];
-extern u32 gUnk_087522B4[];
+extern u32 gChillyFreezeFrames[];
 extern u32 gBlipperFrames[];
-extern u32 gUnk_087528C8[];
+extern u32 gBlipperDropletFrames[];
 extern u32 gUnk_08752BD4[];
 extern u8 *gUnk_08742998[];
 extern u8 gCollisionTileSlope[];
@@ -102,7 +102,7 @@ void sub_0808b704(void);
 void sub_0808b79c(void);
 void sub_0808b830(void);
 void sub_0808b8c4(void);
-void sub_0808b99c(s32 a);
+void CreateBlipperDroplet(s32 a);
 void sub_0808bb24(void);
 void sub_0808bb5c(void);
 void sub_0808be58(void);
@@ -113,7 +113,7 @@ void sub_0808c934(void);
 void sub_0808c980(void);
 s32 sub_0808ca00(s32 a, s32 b);
 s32 sub_0808cab8(s32 a, s32 b);
-void sub_0808cc14(void);
+void ChillyFreezeUpdate(void);
 
 void Task_Blipper(void)
 {
@@ -620,18 +620,18 @@ void sub_0808b650(void)
     TaskYieldTrampoline(3);
     TaskSetFrame(21);
     TaskYieldTrampoline(3);
-    sub_0808b99c(2);
+    CreateBlipperDroplet(2);
     TaskSetFrame(22);
     TaskYieldTrampoline(3);
     TaskSetFrame(21);
     TaskYieldTrampoline(3);
-    sub_0808b99c(3);
+    CreateBlipperDroplet(3);
     TaskSetFrame(20);
     TaskYieldTrampoline(4);
-    sub_0808b99c(2);
+    CreateBlipperDroplet(2);
     TaskSetFrame(21);
     TaskYieldTrampoline(4);
-    sub_0808b99c(3);
+    CreateBlipperDroplet(3);
     TaskSetFrame(18);
     TaskYieldTrampoline(3);
     TaskSetFrame(8);
@@ -646,17 +646,17 @@ void sub_0808b704(void)
 {
     gCurTask->onGround = 0;
     TaskSetMotionY(0xFFFE0000, 0x4000, 0x30000);
-    sub_0808b99c(0);
+    CreateBlipperDroplet(0);
     TaskSetFrame(22);
     TaskYieldTrampoline(4);
-    sub_0808b99c(1);
+    CreateBlipperDroplet(1);
     TaskSetFrame(18);
     TaskYieldTrampoline(4);
     TaskSetFrame(9);
     TaskYieldTrampoline(4);
     TaskSetFrame(5);
     TaskYieldTrampoline(4);
-    sub_0808b99c(0);
+    CreateBlipperDroplet(0);
     TaskSetFrame(4);
     TaskYieldTrampoline(4);
     TaskSetFrame(8);
@@ -748,20 +748,20 @@ void sub_0808b8c4(void)
     ActorReactToHit();
 }
 
-void sub_0808b99c(s32 a)
+void CreateBlipperDroplet(s32 a)
 {
     gCurTask->unk46 = CreateChildTaskHere(218, 1);
     gTasks[gCurTask->unk46].variant = a;
 }
 
-void sub_0808b9d0(void)
+void Task_BlipperDroplet(void)
 {
     struct Task *t;
 
     gCurTask->moveCallback = (u32)TaskMove;
     gCurTask->drawCallback = (u32)TaskDrawWorld;
     gCurTask->layer = 12;
-    gCurTask->frameTable = gUnk_087528C8;
+    gCurTask->frameTable = gBlipperDropletFrames;
     gCurTask->facing = TaskGetParentFacing();
     t = gCurTask;
     switch (t->variant)
@@ -1560,7 +1560,7 @@ minus1:
     return -1;
 }
 
-void sub_0808cb70(void)
+void Task_ChillyFreeze(void)
 {
     struct Task *t;
 
@@ -1568,9 +1568,9 @@ void sub_0808cb70(void)
     gCurTask->drawCallback = (u32)ActorDrawWorldInViewOrDestroy;
     gCurTask->layer = 12;
     t = gCurTask;
-    t->frameTable = gUnk_087522B4;
+    t->frameTable = gChillyFreezeFrames;
     t->tileWord = (t->tileWord & 0xFFF) | 0xF000;
-    t->updateCallback = (u32)sub_0808cc14;
+    t->updateCallback = (u32)ChillyFreezeUpdate;
     t->unk30 = 0;
     t->unk34 = 0;
     t->unk6C = 0;
@@ -1589,7 +1589,7 @@ void sub_0808cb70(void)
     ActorDestroy();
 }
 
-void sub_0808cc14(void)
+void ChillyFreezeUpdate(void)
 {
     struct Task *t;
     struct Task *u;
