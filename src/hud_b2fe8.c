@@ -1932,6 +1932,8 @@ void sub_080b37ec(void)
     gUnk_03002490->unk20 = (gUnk_03002490->unk20 & 0xFFFF) + (((u32)gUnk_03002490->unk34 >> 16) << 16);
     gUnk_03002490->unk34 = (gUnk_03002490->unk34 & 0xFFFF) + (((u32)gUnk_03002490->unk30 >> 16) << 16);
     gUnk_03002490->unk30 = (gUnk_03002490->unk30 & 0xFFFF) + (((u32)gUnk_03002490->unk2C >> 16) << 16);
+    /* the redundant mask is what loads 0xFFFF0000 here for the ANDs below
+       (combine drops the AND before the shift, the constant stays) */
     gUnk_03002490->unk2C = (gUnk_03002490->unk2C & 0xFFFF) + (((u32)(gUnk_03002490->unk28 & 0xFFFF0000) >> 16) << 16);
     gUnk_03002490->unk28 = (gUnk_03002490->unk28 & 0xFFFF) + (gUnk_03002490->unk48 << 16);
     gUnk_03002490->unk84 = gUnk_03002490->unk7F;
@@ -2114,6 +2116,7 @@ void sub_080b3c68(void)
     sub_080b3a00();
     gUnk_03002490->unk6C = 66;
     gUnk_03002490->unk6E = 0;
+    /* the two constants the loop keeps in r5/r8 are variables (lesson 3.471) */
     m = 0x8000;
     z = 0;
     do
