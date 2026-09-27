@@ -4498,6 +4498,67 @@ is the type, and a rename never touches it; the tool compares the whole
 error set of the renamed tree with the original's, so no access moved to
 another struct.
 
+### 3.517 One type per symbol per translation unit: a file whose view differs cannot include the header
+C allows one type per object in a translation unit (`extern u32 x;` after
+`extern vs32 x;` is "conflicting types"), so the moment a header declares
+a symbol, a file that needs another view of it cannot include that
+header at all.  #36 phase 2 measured how often the views are real.  Of
+the 2,890 data symbols the C declares, 201 had more than one spelling;
+every candidate type was tried in every file that spelled the symbol
+otherwise (3,640 single-declaration variants, compiled and compared as
+assembly, lesson 4.128), and for 128 symbols one type is byte-identical
+everywhere (`vu16` vs `u16` where each access is one load, `u16 x[4]` vs
+`u16 x[]`, `s32` vs `s32 []` read as `x[0]`...).  The other 73 are views
+the code depends on: AgbInit's `u32`/`vu32` spellings of the BG scroll
+shadows (the stores chain differently when the cells are volatile),
+`src/hud_b5840.c`'s `u32 []` views of the HBlank DMA cells
+(`*(vu32 *)gHBlankDmaCnt`), sixteen files that read `gTerrainResult` as
+`u8 []`, `u32` for a function pointer that is only stored, partial struct
+copies (`struct RoomDef { u8 filler00[0x10]; struct MapTile *unk10; }`).
+The header takes the type the most files accept; each of the 75 files
+with a view keeps its own declarations of that header's symbols (not just
+the one symbol: the header is all or nothing), respelled to the header's
+type wherever the file accepts it, under a one-line note.  Result:
+12,768 local data declarations -> 991 in 75 files, conflicting symbols
+201 -> 73.  Declarations and includes themselves never changed a byte:
+all 306 files compiled to identical assembly with 18 new headers in front
+of them, which confirms 4.79's "extern declaration order does not move
+it" for a whole tree.  The same holds for struct copies: 47 of 57 local
+struct tags had one layout, and 6 of the other 10 had a layout every copy
+accepts (a full struct where a file had a `filler` view), so only
+RoomDef, the HUD's room-object entry, MultiBootParam and the task
+engine's own `struct Task` still differ per file.
+
+### 3.518 An array declared with an incomplete struct type has byte alignment in agbcc
+`struct Foo; extern struct Foo gArr[];` followed later by `struct Foo {
+u16 a; u16 b; ... };` compiles, and `gArr[i].b` then loads as `ldrb;
+ldrb; lsl #8; orr` instead of one `ldrh`: the array type is laid out when
+it is declared, with the incomplete element's alignment (8 bits), and
+completing the struct later does not re-lay it out.  A scalar
+(`extern struct Foo gFoo;`) and a pointer (`struct Foo *p`) are not
+affected, and a word field happened to load aligned in the test.  Found
+when `include/camera.h` declared `gBg1BreakingBlocks[]` with the struct
+only forward-declared and `src/block_318b4.c` (which defines the struct
+itself) changed at two halfword loads.  Rule for headers: a header that
+declares an array of a struct includes the struct's definition (its home
+header); everything else may forward-declare.
+
+### 3.519 A prototype is codegen-neutral where the definition's signature fits the call
+The function half of the same experiment: 1,906 C functions are
+prototyped outside their own file (18,724 prototype lines in all), 897 of
+them with another signature somewhere.  Substituting the definition's
+prototype in each such file (10,276 variants) left the assembly identical
+for 1,807 functions in every file; the 99 others are 3.428's call-site
+views (a `u8` definition parameter that a caller passes unnarrowed, a
+pointer passed as `u32`, 108 byte differences and 333 compile errors in
+all).  The ten M29-M32 files each carry the same 729 unprototyped
+forward declarations (`void f();`): replacing them by the headers'
+prototypes changed nothing, except `sub_080a2b2c`, whose calls before its
+definition pass an integer for its pointer parameter (a `-Werror`
+warning, so it keeps its `f();`).  So prototypes went to the headers
+(5,128 of them, each the definition's own line) and the local ones from
+18,724 to 2,400.
+
 ## 4. Splitting ROM ranges into asm (tools/split.py)
 
 ### 4.1 objdump text only round-trips under `.syntax unified`
@@ -10519,6 +10580,89 @@ The pipeline, from the loaders' C (all under `pending/`, never committed):
   every access to its struct.  It built nothing, but AGENTS.md keeps
   compilers in Docker, so the coordinator stopped it; `rename_field.py`'s
   gcc-in-Docker pass is the sanctioned way to get the same map.
+
+### 4.128 A whole-tree assembly oracle: compile all 306 files to `.s` in 2.4 seconds
+For changes that only touch declarations (headers, includes, types), the
+agbcc assembly of a file is a complete oracle: identical `.s` means
+identical bytes, whatever the link does.  `pending/data2/oracle.sh`
+(kept with the harness, not committed) runs the Makefile's recipe
+(`cpp -P -I include | agbcc/old_agbcc`, per-file compiler) over a list of
+files with `xargs -P 8` inside one `docker run`: all 306 files take 2.4 s,
+3,640 variants 31 s, 10,276 variants two minutes.  A variant is the
+pristine file with one line changed, named `<file>__<symbol>__<k>.c` (the
+compiler choice keys on the part before `__`).  That made #36 phase 2 a
+census-and-oracle job rather than a per-range `fnmatch.sh` one: choose a
+type for every symbol, apply everything, compare 306 files, and bisect
+only what differs (one file, `block_318b4.c`, lesson 3.518).  Pitfalls:
+a generated C file left in `src/data/` is compiled by the Makefile's
+`src/**/*.c` glob (keep drafts in `pending/`); after
+a conversion, read the census's line numbers from the pristine copy, not
+from the converted file; and one transient "unterminated #ifndef" from
+cpp right after a write went away on the re-run (4.86's Docker glitch).
+
+### 4.129 `tools/carve_data.py`: a functional table as C, and what `c_data` means to split.py
+The data twin of `tools/carve.py`: `carve_data.py <start> <end> <name>
+[--write]` cuts a table's range out of the structure-only data segments
+(across adjacent segments too: `gTaskTypes` started in
+`gap_sram_driver_fn_table_asset_metadata_index` and ended in
+`asset_metadata_index`), adds a `c_data` row to `segments.txt`, pins
+`build/src/data/<name>.o(.rodata)` in `linker.ld`, refuses asset
+segments, and prints the labels the C must define in order (C objects are
+laid out in definition order; the room lists are 57 arrays back to back).
+`fnmatch.sh --rodata` checks the C against the ROM range first.  Inside
+`tools/split.py` a `c_data` row means: its `data_symbols` are C symbols,
+so they leave `asm/rom_syms.s` (they would collide with the C
+definitions) and get absolute stand-ins only in the verification link; a
+`pointer_tables` entry inside it emits no words but still follows its
+`targets` (the room lists' entry still symbolizes the 333 RoomDefs'
+3,574 pointer fields); a next-label extent inside it ends at the next
+C-defined symbol; and `datastats.py` counts the C tables on their own
+line.  The C side: `const` so the object is `.rodata`, the consumers'
+header spells it `const` too (all 306 files compile the same), a Thumb
+function pointer is `(u32)Task_X` (R_ARM_ABS32 against a `.thumb_func`
+sets bit 0, as the ROM's odd words need), and a record another file
+declares as `u32 []` is cast in the initializer.  Also found:
+`tools/check_data_policy.py` blanked the newlines of multi-line comments
+before counting lines, so the `data-policy: functional` note was looked
+for eight lines too high; it keeps the newlines now.
+
+### 4.130 `tools/resegment.py`, and why seg 13 had to be re-partitioned, not renamed
+Phase 1's census names were wrong twice over: `sound_samples_1/2` held no
+PCM, and the level data it was part of also filled
+`level_graphics_palettes_2` and `_3`, the tail of
+`level_graphics_palettes` and the head of `compressed_graphics`.  A
+content-true name therefore needed boundary moves.  `resegment.py --end
+<addr> --seg <start> <name> "<description>" ...` replaces a run of
+consecutive data segments by a new partition of the same bytes (rows,
+config entries with the inherited asset flag, linker blocks and their
+comments; the old `data/*.s` files are deleted and `make split` writes the
+new ones).  The survey method that settled the zones: walk `gSongTable`
+to every voicegroup and its WaveData (PCM lives only in `m4a_songs_2`),
+then delimit the level data by what the consumers read - LZ77 stream
+lengths, record counts times record sizes, palette and `BgMap` headers -
+until every byte of `0x08334EC0-0x083D0148` belongs to one record, with
+540 alignment bytes and 42 runs of object entries past `objectCount` as
+the only holes.  `make datastats` was identical before and after the
+move, the check that a re-partition of asset segments is structure only.
+
+### 4.131 Harness notes from #36 phase 2, run 1
+- The whole header conversion was scripted (census -> type and struct
+  experiments -> plan -> apply -> oracle) and applied to all 306 files at
+  once from pristine copies, so re-running it after a rule change was
+  idempotent and cost seconds; no conversion subagents were needed.  One
+  research subagent did the seg 13/20 survey read-only; the harness
+  refused its report file, so the report came back in its reply.
+- The owner rule matters for readability, not for bytes: "the zone with
+  the most users" put the collision result block in `player.h`; "the
+  lowest layer that uses it" puts it in `collision.h`, with a short list
+  of overrides for engine cells the sprite code touches.
+- A comment above a run of removed `extern`s describes the symbols:
+  move it to the header above the first of them, and a struct's comment
+  with the struct; drop only the generic ones (`/* RAM cells */`).  A few
+  moved comments spoke of "this file" and needed rewording.
+- `calcrom.pl` scans the whole checkout for `.incbin` lines: a katam
+  clone under `pending/` tripled `make progress`'s incbin count locally
+  (CI has no `pending/`).
 
 ## 5. Workflow that worked
 

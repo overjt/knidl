@@ -51,7 +51,7 @@ Matching decompilation of Kirby: The Amazing Mirror's predecessor, **Kirby: Nigh
   - `make progress` — parse `build/knidl.map` with `tools/calcrom.pl` into code/data byte counts and percentages.
   - `make datastats` — data-structure metrics (`tools/datastats.py`): ROM data symbols still defined by absolute address, and pointer-like data words not yet symbolic (docs/data.md §6).
   - `make check-data` — the no-ROM-bytes check (`tools/check_data_policy.py`): `data/*.s` may hold only labels, symbolic `.word`s and `.incbin` slices of `baserom.gba`; needs no baserom.
-  - `make check-headers` — compile-only smoke test of `include/gba/*.h` (`tools/header_smoke.c`) with agbcc + old_agbcc; never linked into the ROM.
+  - `make check-headers` — compile-only smoke test of `include/gba/*.h` (`tools/header_smoke.c`) with agbcc + old_agbcc, and of all the game headers `include/*.h` in one translation unit (`tools/header_smoke_game.c`); never linked into the ROM.
   - `make clean` — remove `build/` and `knidl.gba`.
 - Header fields for `gbafix`: title `AGB KIRBY DX`, code `A7KE`, maker `01`, version `0`. Internal ROM codes are `A7K*` (not `AKT*`).
 
@@ -762,14 +762,52 @@ Matching decompilation of Kirby: The Amazing Mirror's predecessor, **Kirby: Nigh
   (fields; actor records; kind-0 enemies; bosses and abilities) in five or
   six rounds each plus the coordinator, who alone applied names; new
   lessons 3.516, 4.125-4.127.
-- Next milestones: (1) #36 phase 2, typed C declarations in shared
-  headers (with #155's renames), and functional tables as C where their
-  consumers prove the layout (the data policy above), which will prove most of seg 18's
-  data-to-data tables, the seg 13 re-survey and the linker.ld pins that
-  still keep the ROM from shifting (docs/data.md §7); (2) #155 run 3:
-  the enemies' remaining rows and state verbs, the unidentified subtypes
-  (15, 22, 26, 28/29, 31-33, 39, 40), the boss children and the
-  per-family `Task` fields, and the remaining `gUnk_` cells; then #37's
-  final audit.
+- Data structure, phase 2, run 1 (issue #36): **shared headers**,
+  the first **functional tables as C** and the seg 13/20 re-partition.
+  Eighteen subsystem headers (`include/main.h`, `link.h`, `sound.h`,
+  `mode.h`, `hud.h`, `menu.h`, `cutscene.h`, `collision.h`, `room.h`,
+  `camera.h`, `player.h`, `effect.h`, `actor.h`, `enemy.h`, `save.h`,
+  `subgame.h`, `ending.h` and the task engine's part of `task.h`; the
+  conventions are `docs/header-conventions.md`'s last section) declare
+  each of the 3,383 RAM cells and ROM tables once with the type its
+  consumers prove (every candidate type was tried in every file, only
+  byte-identical assembly counted), carry the 55 shared struct
+  definitions, and hold the prototypes of 5,128 C functions (each the
+  definition's own line).  Local declarations in `src/`: 12,768 data
+  `extern`s -> 991 (75 files) and 18,724 prototypes -> 2,400; symbols
+  with conflicting types 201 -> 73.  What stays local is a genuine view:
+  a file whose code needs another type for a symbol keeps its own
+  declarations of that header (C allows one type per translation unit),
+  and 99 functions whose call sites need another signature keep their
+  per-file prototypes (lessons 3.428, 3.517, 3.519); both carry a
+  one-line note.  An array of a struct must see the struct's definition
+  (agbcc gives it byte alignment otherwise, lesson 3.518).
+  `tools/carve_data.py` (the data twin of `carve.py`: `c_data` rows,
+  `.rodata` pins, `fnmatch.sh --rodata` to verify) moved four tables to
+  `src/data/`: the task-type table `gTaskTypes[266]`, the six actor
+  definition tables by actor kind, the room table `gRoomTable[9][8]` and
+  its 57 stage room lists (763 pointer words; the RoomDefs and ActorDefs
+  they point at stay structure-only).  The re-survey found **no PCM in
+  seg 13** (all 100 samples are in `m4a_songs_2`) and a level-data zone
+  `0x08334EC0-0x083D0148` spanning six segments, now `room_bg_anims`,
+  `room_data`, `room_metatiles` and `room_bg3_maps` (with
+  `level_graphics_palettes` and `compressed_graphics` trimmed); seg 20
+  (`sample_set_index`) is `room_table`, `room_bg_anim_lists`,
+  `room_lists` and `sprite_frame_lists` (23 per-sheet frame lists with no
+  code reference).  `tools/resegment.py` re-partitions data segments
+  (structure only; `make datastats` unchanged by the move); the old ->
+  new names are `docs/data.md` §4.1.  Every file was verified by its
+  agbcc assembly (all 306 identical to master, lesson 4.128) and the ROM
+  by `make compare`.  New lessons 3.517-3.519 and 4.128-4.131.
+- Next milestones: (1) #36 phase 2, run 2: more functional tables as C
+  (the RoomDef and ActorDef records, the BG animation lists and script
+  records), the six mixed tables of docs/data.md §5.1 as next-label
+  tables now that the headers give each one type, and a per-target census
+  of the pointers still missing before the `linker.ld` pins can go
+  (docs/data.md §7); (2) #155 run 3: the enemies' remaining rows and
+  state verbs, the unidentified subtypes (15, 22, 26, 28/29, 31-33, 39,
+  40), the boss children and the per-family `Task` fields (the headers
+  now hold one declaration to rename), and the remaining `gUnk_` cells;
+  then #37's final audit.
   The three functions #154 left pinned or levered are listed in its
   bullet above.

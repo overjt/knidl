@@ -68,16 +68,16 @@ make progress
         0 bytes in 0 functions in asm/nonmatching
         4176 bytes excluded from decompilation tracking
 
-11065 total symbols
-    2132 symbols documented (19.2680%)
-    8933 symbols undocumented (80.7320%)
+11067 total symbols
+    2134 symbols documented (19.2826%)
+    8933 symbols undocumented (80.7174%)
 
 7537436 total bytes of data
-    16 bytes of data in src (0.0002%)
-    7537184 bytes of data in data (99.9967%)
+    4428 bytes of data in src (0.0587%)
+    7532772 bytes of data in data (99.9381%)
     236 bytes of data from asm (0.0031%)
 
-17372184 bytes of data in 35630 baserom incbins (230.4787%)
+7502324 bytes of data in 5964 baserom incbins (99.5342%)
 ```
 
 (Output from the current tree; run `make progress` for live values.)
