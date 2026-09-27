@@ -23,9 +23,9 @@
  *   sub_080bdebc   / sub_080bdf3c / sub_080bdf9c   sprite placement helpers
  *   BombRallySeatPlayers   seat the players at random (local player in seat 0) and pick the first turn
  *   BombRallyResultsShow   the vblank-flag wait (goto/do-while shape, lesson 6)
- *   sub_080bf0ac   the button-timing judgement against the 5-byte records
+ *   BombRallyPlayerJudgePress   the button-timing judgement against the 5-byte records
  *                  at 0x087565F4 (thresholds -> Task.unk20 = 2/1/0)
- *   sub_080bf394   the per-turn state advance: RNG over gUnk_087565E0,
+ *   BombRallyPlayerCpuThrow   the per-turn state advance: RNG over gUnk_087565E0,
  *                  the animation pick from gUnk_087565F4, the SE and the
  *                  eight TaskYield steps that fan the position out.
  */
@@ -111,12 +111,12 @@ extern void BombRallyResultsEnterState(void);
 extern void sub_080be4a4(void);
 extern void sub_080be550(void);
 extern void sub_080be5fc(void);
-extern void sub_080be6b4(u32 a);
-extern void sub_080be714(u32 a);
+extern void CreateBombRallyContinueItems(u32 a);
+extern void CreateBombRallyLevelItems(u32 a);
 extern void BombRallyAwardLives(void);
 extern void BombRallyPlayerUpdate(void);
-extern u32 sub_080bf0ac(void);
-extern void sub_080bf154(void);
+extern u32 BombRallyPlayerJudgePress(void);
+extern void BombRallyPlayerUpdatePose(void);
 extern void BombRallyPlayerEnterState(void);
 extern void sub_080bdf3c(s32 a, s32 b, u32 c, u32 d);
 extern void sub_080be7c0(u32 a);
@@ -519,7 +519,7 @@ void BombRallyResultsMenu(void)
     gCurTask->unk28 = 0;
     while (1) {
         gCurTask->unk2C = 0;
-        sub_080be6b4(0);
+        CreateBombRallyContinueItems(0);
         while (gCurTask->unk28 == 0) {
             TaskYieldTrampoline(1);
             if (gPlayerPressedKeys[0] & 9) {
@@ -544,7 +544,7 @@ void BombRallyResultsMenu(void)
             }
         }
         gCurTask->unk2C = c = gSubGameLevel;
-        sub_080be714(c);
+        CreateBombRallyLevelItems(c);
         while (gCurTask->unk28 == 1) {
             TaskYieldTrampoline(1);
             a = gPlayerPressedKeys[0] & 9;
@@ -679,7 +679,7 @@ void sub_080be5fc(void)
     }
 }
 
-void sub_080be6b4(u32 a)
+void CreateBombRallyContinueItems(u32 a)
 {
     struct Task *t;
     s32 i;
@@ -700,7 +700,7 @@ void sub_080be6b4(u32 a)
     }
 }
 
-void sub_080be714(u32 a)
+void CreateBombRallyLevelItems(u32 a)
 {
     struct Task *t;
     s32 i;
@@ -790,7 +790,7 @@ void BombRallyPlayerEnterState(void)
     CallTableEntry(gCurTask->state, 13, gBombRallyPlayerStates);
 }
 
-void sub_080be8c4(void)
+void BombRallyPlayerServe(void)
 {
     struct Task *t;
     struct Task *u;
@@ -875,13 +875,13 @@ void sub_080be8c4(void)
     TaskSleepForever();
 }
 
-void sub_080beae0(void)
+void BombRallyPlayerServeUpdate(void)
 {
     if (gCurTask->state != 0)
         TaskSetEntry(BombRallyPlayerEnterState, gCurTaskIdx);
 }
 
-void sub_080beb08(void)
+void BombRallyPlayerReady(void)
 {
     struct Task *t;
     struct Task *u;
@@ -903,19 +903,19 @@ void sub_080beb08(void)
     TaskSleepForever();
 }
 
-void sub_080beb54(void)
+void BombRallyPlayerReadyUpdate(void)
 {
     struct Task *t;
     struct Task *u;
     struct Task *v;
 
-    sub_080bf154();
+    BombRallyPlayerUpdatePose();
     t = gCurTask;
     if (t->unk24 != t->unk20) {
         t->state = 2;
         TaskSetEntry(BombRallyPlayerEnterState, gCurTaskIdx);
     } else if (gPlayerPressedKeys[t->unk18] & 1) {
-        if (sub_080bf0ac()) {
+        if (BombRallyPlayerJudgePress()) {
             u = gCurTask;
             u->unk24 = 0;
             u->state = 3;
@@ -929,7 +929,7 @@ void sub_080beb54(void)
     }
 }
 
-void sub_080bebd4(void)
+void BombRallyPlayerTurn(void)
 {
     struct Task *t;
     struct Task *u;
@@ -985,7 +985,7 @@ void sub_080bebd4(void)
     TaskSleepForever();
 }
 
-void sub_080becc0(void)
+void BombRallyPlayerTurnUpdate(void)
 {
     if (gPlayerPressedKeys[gCurTask->unk18] & 1)
         gCurTask->unk24 ^= 1;
@@ -993,7 +993,7 @@ void sub_080becc0(void)
         TaskSetEntry(BombRallyPlayerEnterState, gCurTaskIdx);
 }
 
-void sub_080bed08(void)
+void BombRallyPlayerThrow(void)
 {
     struct Task *t;
     struct Task *u;
@@ -1103,7 +1103,7 @@ void sub_080bed08(void)
     TaskSleepForever();
 }
 
-void sub_080bef1c(void)
+void BombRallyPlayerThrowUpdate(void)
 {
     if (gPlayerPressedKeys[gCurTask->unk18] & 1)
         gCurTask->unk24 ^= 1;
@@ -1111,7 +1111,7 @@ void sub_080bef1c(void)
         TaskSetEntry(BombRallyPlayerEnterState, gCurTaskIdx);
 }
 
-void sub_080bef64(void)
+void BombRallyPlayerFollowThrough(void)
 {
     struct Task *t;
     struct Task *u;
@@ -1157,13 +1157,13 @@ void sub_080bef64(void)
     TaskSleepForever();
 }
 
-void sub_080bf048(void)
+void BombRallyPlayerFollowThroughUpdate(void)
 {
     struct Task *t;
     struct Task *u;
 
     if (gPlayerPressedKeys[gCurTask->unk18] & 1) {
-        if (sub_080bf0ac()) {
+        if (BombRallyPlayerJudgePress()) {
             t = gCurTask;
             t->state = 3;
             gCurTask->unk24 = 0;
@@ -1176,7 +1176,7 @@ void sub_080bf048(void)
         TaskSetEntry(BombRallyPlayerEnterState, gCurTaskIdx);
 }
 
-u32 sub_080bf0ac(void)
+u32 BombRallyPlayerJudgePress(void)
 {
     struct Task *t;
     struct Task *u;
@@ -1212,7 +1212,7 @@ u32 sub_080bf0ac(void)
     return 1;
 }
 
-void sub_080bf154(void)
+void BombRallyPlayerUpdatePose(void)
 {
     struct Task *t;
     struct Task *u;
@@ -1233,7 +1233,7 @@ void sub_080bf154(void)
     }
 }
 
-void sub_080bf1cc(void)
+void BombRallyPlayerCpuReady(void)
 {
     struct Task *t;
     struct Task *u;
@@ -1251,7 +1251,7 @@ void sub_080bf1cc(void)
     TaskSleepForever();
 }
 
-void sub_080bf214(void)
+void BombRallyPlayerCpuReadyUpdate(void)
 {
     struct Task *t;
     struct Task *u;
@@ -1279,7 +1279,7 @@ void sub_080bf214(void)
     }
 }
 
-void sub_080bf2ac(void)
+void BombRallyPlayerCpuTurn(void)
 {
     struct Task *t;
     struct Task *u;
@@ -1309,7 +1309,7 @@ void sub_080bf2ac(void)
     TaskSleepForever();
 }
 
-void sub_080bf32c(void)
+void BombRallyPlayerCpuTurnUpdate(void)
 {
     struct Task *t;
     struct Task *u;
@@ -1323,7 +1323,7 @@ void sub_080bf32c(void)
         TaskSetEntry(BombRallyPlayerEnterState, gCurTaskIdx);
 }
 
-void sub_080bf394(void)
+void BombRallyPlayerCpuThrow(void)
 {
     struct Task *t;
     struct Task *u;
@@ -1461,13 +1461,13 @@ void sub_080bf394(void)
     TaskSleepForever();
 }
 
-void sub_080bf67c(void)
+void BombRallyPlayerCpuThrowUpdate(void)
 {
     if (gCurTask->state != 7)
         TaskSetEntry(BombRallyPlayerEnterState, gCurTaskIdx);
 }
 
-void sub_080bf6a4(void)
+void BombRallyPlayerCpuFollowThrough(void)
 {
     struct Task *t;
     struct Task *u;
@@ -1511,7 +1511,7 @@ void sub_080bf6a4(void)
     TaskSleepForever();
 }
 
-void sub_080bf788(void)
+void BombRallyPlayerCpuFollowThroughUpdate(void)
 {
     struct Task *t;
     struct Task *u;
@@ -1525,7 +1525,7 @@ void sub_080bf788(void)
         TaskSetEntry(BombRallyPlayerEnterState, gCurTaskIdx);
 }
 
-void sub_080bf7f0(void)
+void BombRallyPlayerBlownUp(void)
 {
     struct Task *t;
     struct Task *u;
@@ -1563,7 +1563,7 @@ void sub_080bf7f0(void)
     TaskSleepForever();
 }
 
-void sub_080bf934(void)
+void BombRallyPlayerBlownUpUpdate(void)
 {
     struct Task *t;
     struct Task *u;

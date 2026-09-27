@@ -6,7 +6,7 @@
  *
  * Sub-game 2 (gUnk_02007FCC == 2), the race screen: phase 0 of M35's
  * framework (M36's AirGrindMain dispatches gSubGamePhase through
- * gUnk_087572CC; entry 0 is AirGrindRace).
+ * gAirGrindPhases; entry 0 is AirGrindRace).
  * 
  *   CreateAirGrindRacers / sub_080c2038 / sub_080c2078   spawn task type #96:
  *       variant 0 once per player (Task.unk1C = the player), variant 1 (its

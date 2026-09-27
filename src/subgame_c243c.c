@@ -4,7 +4,7 @@
 
 /* subgame_c243c.c (0x080C243C-0x080C2FF7, issue #98).
  *
- * Sub-game 2: the results screen (phase 1, gUnk_087572CC entry 1) and the
+ * Sub-game 2: the results screen (phase 1, gAirGrindPhases entry 1) and the
  * race screen's sky.
  * 
  *   AirGrindResults   the results task body: ranks the four racers by their

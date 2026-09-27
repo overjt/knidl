@@ -10,12 +10,12 @@
  *       bodies, one per on-screen element; each sets Task.updateState/unk38 from
  *       its own gUnk_08755Exx animation script and walks a fixed 16.16
  *       position list with TaskYieldTrampoline.
- *   sub_080c17b0 / sub_080c183c    the two dispatch bodies (switch on
+ *   BombRallyResultsPlayer / sub_080c183c    the two dispatch bodies (switch on
  *       Task.unk1C / Task.unk20).
  *   sub_080c18c8 / sub_080c1950    slot placement: Task.posX/unk50 from
  *       gUnk_08757250/gUnk_08757260, and the per-slot horizontal offset
  *       switch over gBombRallyFinishOrder[Task.unk20].
- *   sub_080c1b30 / sub_080c1b78    the results task.
+ *   BombRallyMenuItem / sub_080c1b78    the results task.
  *   sub_080c1be8 / sub_080c1cec / sub_080c1d84   the three ranking markers.
  *   sub_080c1ebc   walks the 4-direction path script at gUnk_08757280 in
  *       6.0 steps, writing gBg3ScrollX/gBg3ScrollY (terminator 128).
@@ -67,7 +67,7 @@ extern s32 gUnk_08757260[];
 extern u32 gUnk_08757270[];
 extern u32 gUnk_08757278[];
 extern u8 gUnk_08757280[];
-extern u32 gUnk_087572CC[];
+extern u32 gAirGrindPhases[];
 extern u8 gAirGrind[];
 extern s32 gAirGrindCourse[];
 extern u8 gSubGamePhase;
@@ -166,12 +166,12 @@ extern void BombRallyResultsEnterState(void);
 extern void sub_080be4a4(void);
 extern void sub_080be550(void);
 extern void sub_080be5fc(void);
-extern void sub_080be6b4(u32 a);
-extern void sub_080be714(u32 a);
+extern void CreateBombRallyContinueItems(u32 a);
+extern void CreateBombRallyLevelItems(u32 a);
 extern void BombRallyAwardLives(void);
 extern void BombRallyPlayerUpdate(void);
-extern u32 sub_080bf0ac(void);
-extern void sub_080bf154(void);
+extern u32 BombRallyPlayerJudgePress(void);
+extern void BombRallyPlayerUpdatePose(void);
 extern void BombRallyPlayerEnterState(void);
 extern void sub_080bfdb0(void);
 extern void sub_080bfdcc(void);
@@ -641,7 +641,7 @@ void sub_080c17ac(void)
 {
 }
 
-void sub_080c17b0(void)
+void BombRallyResultsPlayer(void)
 {
     struct Task *t;
 
@@ -816,7 +816,7 @@ void sub_080c1b2c(void)
 {
 }
 
-void sub_080c1b30(void)
+void BombRallyMenuItem(void)
 {
     struct Task *t;
     s32 n;
@@ -1072,7 +1072,7 @@ void AirGrindInit(void)
 
 void AirGrindMain(void)
 {
-    CallTableEntry(gSubGamePhase, 2, gUnk_087572CC);
+    CallTableEntry(gSubGamePhase, 2, gAirGrindPhases);
     TaskSleepForever();
 }
 

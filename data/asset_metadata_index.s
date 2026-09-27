@@ -10745,8 +10745,8 @@ gSubGameBodies:
 	.global	gUnk_087562E4
 gUnk_087562E4:
 	.incbin	"baserom.gba", 0x7562E4, 0x4
-	.global	gUnk_087562E8
-gUnk_087562E8:
+	.global	gQuickDrawPhases
+gQuickDrawPhases:
 	.word	QuickDrawRound+1
 	.word	QuickDrawResults+1
 	.global	gUnk_087562F0
@@ -10973,38 +10973,38 @@ gBombRallyObjectVariants:
 	.word	sub_080c0c58+1
 	.word	sub_080c0d30+1
 	.word	sub_080c173c+1
-	.word	sub_080c17b0+1
-	.word	sub_080c1b30+1
+	.word	BombRallyResultsPlayer+1
+	.word	BombRallyMenuItem+1
 	.global	gBombRallyPlayerStates
 gBombRallyPlayerStates:
-	.word	sub_080be8c4+1
-	.word	sub_080beb08+1
-	.word	sub_080bebd4+1
-	.word	sub_080bed08+1
-	.word	sub_080bef64+1
-	.word	sub_080bf1cc+1
-	.word	sub_080bf2ac+1
-	.word	sub_080bf394+1
-	.word	sub_080bf6a4+1
-	.word	sub_080bf7f0+1
-	.word	sub_080bf994+1
-	.word	sub_080bfb4c+1
-	.word	sub_080bfbf4+1
+	.word	BombRallyPlayerServe+1
+	.word	BombRallyPlayerReady+1
+	.word	BombRallyPlayerTurn+1
+	.word	BombRallyPlayerThrow+1
+	.word	BombRallyPlayerFollowThrough+1
+	.word	BombRallyPlayerCpuReady+1
+	.word	BombRallyPlayerCpuTurn+1
+	.word	BombRallyPlayerCpuThrow+1
+	.word	BombRallyPlayerCpuFollowThrough+1
+	.word	BombRallyPlayerBlownUp+1
+	.word	BombRallyPlayerAutoServe+1
+	.word	BombRallyPlayerAutoWait+1
+	.word	BombRallyPlayerAutoThrow+1
 	.global	gBombRallyPlayerStateUpdates
 gBombRallyPlayerStateUpdates:
-	.word	sub_080beae0+1
-	.word	sub_080beb54+1
-	.word	sub_080becc0+1
-	.word	sub_080bef1c+1
-	.word	sub_080bf048+1
-	.word	sub_080bf214+1
-	.word	sub_080bf32c+1
-	.word	sub_080bf67c+1
-	.word	sub_080bf788+1
-	.word	sub_080bf934+1
-	.word	sub_080bfb24+1
-	.word	sub_080bfb94+1
-	.word	sub_080bfd58+1
+	.word	BombRallyPlayerServeUpdate+1
+	.word	BombRallyPlayerReadyUpdate+1
+	.word	BombRallyPlayerTurnUpdate+1
+	.word	BombRallyPlayerThrowUpdate+1
+	.word	BombRallyPlayerFollowThroughUpdate+1
+	.word	BombRallyPlayerCpuReadyUpdate+1
+	.word	BombRallyPlayerCpuTurnUpdate+1
+	.word	BombRallyPlayerCpuThrowUpdate+1
+	.word	BombRallyPlayerCpuFollowThroughUpdate+1
+	.word	BombRallyPlayerBlownUpUpdate+1
+	.word	BombRallyPlayerAutoServeUpdate+1
+	.word	BombRallyPlayerAutoWaitUpdate+1
+	.word	BombRallyPlayerAutoThrowUpdate+1
 	.global	gUnk_0875670C
 gUnk_0875670C:
 	.word	gUnk_08755BC0
@@ -11219,8 +11219,8 @@ gUnk_08757278:
 	.global	gUnk_08757280
 gUnk_08757280:
 	.incbin	"baserom.gba", 0x757280, 0x4C
-	.global	gUnk_087572CC
-gUnk_087572CC:
+	.global	gAirGrindPhases
+gAirGrindPhases:
 	.word	AirGrindRace+1
 	.word	AirGrindResults+1
 	.global	gUnk_087572D4

@@ -81,7 +81,7 @@ extern u16 gUnk_087562C0[];
 extern s32 (*const gSubGameInitHooks[])(void);
 extern void *gSubGameBodies[];
 extern u16 gUnk_087562E4[];
-extern u32 gUnk_087562E8[];
+extern u32 gQuickDrawPhases[];
 extern s16 gUnk_087562F0[];
 extern s16 gUnk_087562F6[];
 
@@ -507,7 +507,7 @@ void QuickDrawInit(void)
 void QuickDrawMain(void)
 {
     gCurTask->updateCallback = 0;
-    CallTableEntry(gSubGamePhase, 2, gUnk_087562E8);
+    CallTableEntry(gSubGamePhase, 2, gQuickDrawPhases);
     TaskSleepForever();
 }
 

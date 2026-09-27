@@ -10,11 +10,11 @@
  * `&gTasks[t->unk44]` is the mode task whose Task.unk34 says whose
  * turn it is.
  *
- *   sub_080bf994   slot-task entry: seat the sprite from the per-slot lists
+ *   BombRallyPlayerAutoServe   slot-task entry: seat the sprite from the per-slot lists
  *       gUnk_0875674C / gUnk_0875675C (16.16 x/y) and gUnk_0875671C
  *       (animation), then branch on whether this slot has the turn.
- *   sub_080bfb24 / sub_080bfb4c / sub_080bfb94   its three short states.
- *   sub_080bfbf4   the hand-off animation: six frames off gUnk_0875676C
+ *   BombRallyPlayerAutoServeUpdate / BombRallyPlayerAutoWait / BombRallyPlayerAutoWaitUpdate   its three short states.
+ *   BombRallyPlayerAutoThrow   the hand-off animation: six frames off gUnk_0875676C
  *       counted down in Task.unk30/unk34, then the position update through
  *       sub_080bdf3c.
  *   sub_080bfde8 / sub_080bfe64   the eliminated and winner states.
@@ -156,12 +156,12 @@ extern void BombRallyResultsEnterState(void);
 extern void sub_080be4a4(void);
 extern void sub_080be550(void);
 extern void sub_080be5fc(void);
-extern void sub_080be6b4(u32 a);
-extern void sub_080be714(u32 a);
+extern void CreateBombRallyContinueItems(u32 a);
+extern void CreateBombRallyLevelItems(u32 a);
 extern void BombRallyAwardLives(void);
 extern void BombRallyPlayerUpdate(void);
-extern u32 sub_080bf0ac(void);
-extern void sub_080bf154(void);
+extern u32 BombRallyPlayerJudgePress(void);
+extern void BombRallyPlayerUpdatePose(void);
 extern void BombRallyPlayerEnterState(void);
 extern void sub_080bfdb0(void);
 extern void sub_080bfdcc(void);
@@ -184,7 +184,7 @@ extern void sub_080bdf3c(s32 a, s32 b, u32 c, u32 d);
 extern void sub_080be7c0(u32 a);
 
 
-void sub_080bf994(void)
+void BombRallyPlayerAutoServe(void)
 {
     struct Task *t;
     struct Task *u;
@@ -244,13 +244,13 @@ void sub_080bf994(void)
     TaskSleepForever();
 }
 
-void sub_080bfb24(void)
+void BombRallyPlayerAutoServeUpdate(void)
 {
     if (gCurTask->state != 10)
         TaskSetEntry(BombRallyPlayerEnterState, gCurTaskIdx);
 }
 
-void sub_080bfb4c(void)
+void BombRallyPlayerAutoWait(void)
 {
     struct Task *t;
 
@@ -268,7 +268,7 @@ void sub_080bfb4c(void)
     }
 }
 
-void sub_080bfb94(void)
+void BombRallyPlayerAutoWaitUpdate(void)
 {
     struct Task *t;
     struct Task *u;
@@ -282,7 +282,7 @@ void sub_080bfb94(void)
     }
 }
 
-void sub_080bfbf4(void)
+void BombRallyPlayerAutoThrow(void)
 {
     struct Task *t;
     struct Task *u;
@@ -359,7 +359,7 @@ void sub_080bfbf4(void)
     TaskSleepForever();
 }
 
-void sub_080bfd58(void)
+void BombRallyPlayerAutoThrowUpdate(void)
 {
     if (gCurTask->state != 12)
         TaskSetEntry(BombRallyPlayerEnterState, gCurTaskIdx);
