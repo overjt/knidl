@@ -7,6 +7,7 @@
 #include "cutscene.h"
 #include "room.h"
 #include "player.h"
+#include "ending.h"
 #include "effect.h"
 
 /* mode_100ac.c (0x080100AC-0x08010357, issue #99).
@@ -95,5 +96,5 @@ void sub_080102c0(void)
             RequestCopy(2, (u32)gPlayerPalettes[gLocalPlayer], (u32)gUnk_03001570, 22);
     }
     if (gUnk_030023B8 == 7)
-        LZ77UnCompWram((void *)0x085E0090, gUnk_02020000);
+        LZ77UnCompWram(gUnk_085E0090, gUnk_02020000);
 }

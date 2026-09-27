@@ -21,6 +21,7 @@ extern u16 gUnk_03001570[]; /* palette buffer */
 /* ROM */
 extern u8 gUnk_081FD870[];
 extern u8 gUnk_082030D8[];
+extern u32 gUnk_085B9B2C[];
 extern u32 gUnk_085B9B6C[];
 extern void (*gPlayerEffectVariants[])(void); /* task type #7's 49 variants, indexed by Task.unk18 >> 24 */
 extern s16 gUnk_0873B9EC[]; /* [6][8]: s16 x, y offsets, 8.8 velocities */

@@ -3,12 +3,12 @@
 @ Segment sram_driver_fn_table: 0x0872EA04-0x0872EA14 (data, 0x10 bytes)
 @ Structure only (docs/data.md): labels, symbolic pointer words and
 @ .incbin slices of the user's baserom.gba; no ROM bytes are committed.
-@ 0 label(s), 2 code pointer(s), 0 data pointer(s), 2 .incbin slice(s) (0x8 bytes).
+@ 0 label(s), 4 code pointer(s), 0 data pointer(s), 0 .incbin slice(s) (0x0 bytes).
 
 	.section .sram_driver_fn_table, "a"
 	.global	sram_driver_fn_table
 sram_driver_fn_table:
-	.incbin	"baserom.gba", 0x72EA04, 0x4
+	.word	ReadSram_Core+1
 	.word	ReadSram+1
-	.incbin	"baserom.gba", 0x72EA0C, 0x4
+	.word	VerifySram_Core+1
 	.word	VerifySram+1

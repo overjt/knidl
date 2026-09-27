@@ -28,6 +28,7 @@
 /* Not from main.h, link.h or sound.h: this file's view of gSfxSlotSongs,
    gUnk_03000F90 and gUnk_030023A8 differs (lesson 3.517). */
 extern vu16 gUnk_03001004;
+extern const u32 gIntrTableTemplate[];
 extern vu32 gUnk_03000FA0;
 extern vu16 gFrameCount;
 extern vu16 gVBlankCount;
@@ -158,7 +159,7 @@ void AgbInit(void)
 
     gUnk_03000FA0 = zeroA;
 
-    CpuSet((const void *)0x080CFDE8, (void *)0x030004B0, 28);
+    CpuSet(gIntrTableTemplate, (void *)0x030004B0, 28);
     CpuSet((const void *)0x08000108, (void *)0x03001030, 160);
     INTR_VECTOR = (void (*)(void))0x03001030;
 

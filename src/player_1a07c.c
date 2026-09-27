@@ -4,6 +4,7 @@
 #include "main.h"
 #include "link.h"
 #include "player.h"
+#include "ending.h"
 
 void RequestCopy(u32 mode, u32 src, u32 dst, u32 size);
 /* Declared here, not through a header: the calls in this file pass other
@@ -116,12 +117,12 @@ void sub_0801a1ec(void)
         w = gCurTask;
         if (w->unk34 > 10)
             w->unk34 = 0;
-        BlendColors(0x0859A0B0, 0x0859A0D0, gUnk_08757368[gCurTask->unk34], 16,
+        BlendColors((u32)gUnk_0859A0B0, (u32)gUnk_0859A0D0, gUnk_08757368[gCurTask->unk34], 16,
                      (void *)((u32)gObjPalette
                               + (((gCurTask->tileWord >> 12) + 1) << 5)));
     }
     if (gPlayerCount > 1)
-        RequestCopy(2, (gLocalPlayer << 5) + 0x080DC628,
+        RequestCopy(2, (gLocalPlayer << 5) + (u32)gPlayerPalettes,
                      (u32)gObjPalette + ((gCurTask->tileWord >> 12) << 5), 22);
     x = dx;
     y = dy;

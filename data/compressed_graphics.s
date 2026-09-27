@@ -3,7 +3,7 @@
 @ Segment compressed_graphics: 0x083D0148-0x085C0000 (data, 0x1EFEB8 bytes)
 @ Structure only (docs/data.md): labels, symbolic pointer words and
 @ .incbin slices of the user's baserom.gba; no ROM bytes are committed.
-@ 393 label(s), 0 code pointer(s), 0 data pointer(s), 393 .incbin slice(s) (0x1EFEB8 bytes).
+@ 394 label(s), 0 code pointer(s), 0 data pointer(s), 394 .incbin slice(s) (0x1EFEB8 bytes).
 @ Asset segment: its bytes stay extracted from baserom.gba forever; only
 @ labels and consumer-proven pointer tables are structure.
 
@@ -1185,7 +1185,10 @@ gUnk_085B6E78:
 	.incbin	"baserom.gba", 0x5B6E78, 0x120
 	.global	gUnk_085B6F98
 gUnk_085B6F98:
-	.incbin	"baserom.gba", 0x5B6F98, 0x2BD4
+	.incbin	"baserom.gba", 0x5B6F98, 0x2B94
+	.global	gUnk_085B9B2C
+gUnk_085B9B2C:
+	.incbin	"baserom.gba", 0x5B9B2C, 0x40
 	.global	gUnk_085B9B6C
 gUnk_085B9B6C:
 	.incbin	"baserom.gba", 0x5B9B6C, 0x6494

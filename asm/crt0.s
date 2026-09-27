@@ -272,10 +272,10 @@ _isr_restore_done:
 	.word	0x03007FFC
 
 @ 0x08000218 — AgbInit Thumb interwork ptr (target of ldr r1 at 0x080000E4)
-	.word	0x08000311
+	.word	AgbInit	@ 0x08000311: R_ARM_ABS32 sets the Thumb bit (lesson 4.117)
 
 @ 0x0800021C — AgbMain Thumb interwork ptr (target of ldr r1 at 0x080000F0)
-	.word	0x08007301
+	.word	AgbMain	@ 0x08007301
 
 @ 0x08000220 — ISR stack guard threshold (target of ldr r1 at 0x080001A0)
 	.word	0x03007B80

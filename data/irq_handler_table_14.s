@@ -3,11 +3,13 @@
 @ Segment irq_handler_table_14: 0x080CFDE8-0x080CFE20 (data, 0x38 bytes)
 @ Structure only (docs/data.md): labels, symbolic pointer words and
 @ .incbin slices of the user's baserom.gba; no ROM bytes are committed.
-@ 0 label(s), 14 code pointer(s), 0 data pointer(s), 0 .incbin slice(s) (0x0 bytes).
+@ 1 label(s), 14 code pointer(s), 0 data pointer(s), 0 .incbin slice(s) (0x0 bytes).
 
 	.section .irq_handler_table_14, "a"
 	.global	irq_handler_table_14
 irq_handler_table_14:
+	.global	gIntrTableTemplate
+gIntrTableTemplate:
 	.word	IntrDummy+1
 	.word	IntrDummy+1
 	.word	VBlankIntr+1

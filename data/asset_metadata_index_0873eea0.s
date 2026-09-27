@@ -3,7 +3,7 @@
 @ Segment asset_metadata_index_0873eea0: 0x0873EEA0-0x08760000 (data, 0x21160 bytes)
 @ Structure only (docs/data.md): labels, symbolic pointer words and
 @ .incbin slices of the user's baserom.gba; no ROM bytes are committed.
-@ 1867 label(s), 1988 code pointer(s), 352 data pointer(s), 1526 .incbin slice(s) (0x1ECD0 bytes).
+@ 1868 label(s), 1988 code pointer(s), 352 data pointer(s), 1527 .incbin slice(s) (0x1ECD0 bytes).
 @ 355 of the pointers are in next-label tables (docs/data.md 5.1).
 
 	.section .asset_metadata_index_0873eea0, "a"
@@ -5491,7 +5491,10 @@ gUnk_0874AEAC:
 gUnk_0874AF90:
 	.incbin	"baserom.gba", 0x74AF90, 0xE4
 	.word	sub_080af1b8+1
-	.incbin	"baserom.gba", 0x74B078, 0x28
+	.incbin	"baserom.gba", 0x74B078, 0x4
+	.global	gUnk_0874B07C
+gUnk_0874B07C:
+	.incbin	"baserom.gba", 0x74B07C, 0x24
 	.global	gUnk_0874B0A0
 gUnk_0874B0A0:
 	.incbin	"baserom.gba", 0x74B0A0, 0x24
