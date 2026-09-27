@@ -12,7 +12,7 @@
  *   * task types #216 and #217 (`Task_PengyIceBreathPuff`, `Task_PengyIceBreathSparkle`, the latter a
  *     seventeen-step cue script over `0x087410C0`), the effect tasks Pengy's
  *     breath state PengyShoot spawns with CreateChildTaskAtOffsetFacing;
- *   * Task_Rocky's (#9) row 0 `sub_0807d6c4`+`sub_0807d718`, whose per-frame
+ *   * Task_Rocky's (#9) row 0 `RockyWalkInit`+`RockyWalkUpdate`, whose per-frame
  *     handlers `sub_0807d82c` / `sub_0807d918` re-centre on the nearest
  *     player when `|TaskGetNearestPlayerDx()| <= 49` and `|TaskGetDyTo()| <= 15`;
  *   * the class-3 three-way branch pair `sub_0807dd70` / `sub_0807dddc`
@@ -51,12 +51,12 @@ extern u32 gUnk_087410D8[];
 extern u32 gUnk_08741158[];
 extern u32 gUnk_08741174[];
 extern u32 gRockyVariants[];
-extern u32 gUnk_087411CC[];
-extern u32 gUnk_087411E0[];
+extern u32 gRockyWalkStates[];
+extern u32 gRockyWalkStateUpdates[];
 extern u32 gUnk_087411F4[];
 extern u32 gUnk_087411F8[];
-extern u32 gUnk_087411FC[];
-extern u32 gUnk_08741208[];
+extern u32 gRockyStandStates[];
+extern u32 gRockyStandStateUpdates[];
 extern u32 gUnk_08741218[];
 extern u32 gUnk_08741220[];
 extern u32 gSirKibbleVariants[];
@@ -67,10 +67,10 @@ extern u32 gSirKibbleWalkStateUpdates[];
 extern u32 gUnk_08741264[];
 extern u32 gUnk_08741268[];
 extern u32 gCappyVariants[];
-extern u32 gUnk_08741278[];
-extern u32 gUnk_0874127C[];
-extern u32 gUnk_08741280[];
-extern u32 gUnk_08741288[];
+extern u32 gCappyCappedStates[];
+extern u32 gCappyCappedStateUpdates[];
+extern u32 gCappyCaplessStates[];
+extern u32 gCappyCaplessStateUpdates[];
 extern u32 gUnk_08741290[];
 extern u32 gUnk_08741294[];
 extern u32 gUnk_08741298[];
@@ -150,16 +150,16 @@ extern void sub_0806a0f0(s32 a);
 extern void sub_080b5540(s32 a, s32 b);
 
 /* Forward declarations */
-void sub_0807d718(void);
+void RockyWalkUpdate(void);
 void sub_0807db0c(void);
-void sub_0807db9c(void);
+void RockyStandUpdate(void);
 void sub_0807dd10(void);
 void SirKibbleStandUpdate(void);
 void SirKibbleWalkUpdate(void);
 void sub_0807e444(void);
 void sub_0807e484(void);
-void sub_0807e5bc(void);
-void sub_0807e730(void);
+void CappyCappedUpdate(void);
+void CappyCaplessUpdate(void);
 void sub_0807e920(void);
 void GordoBobUpdate(void);
 void GordoBounceVerticalUpdate(void);
@@ -325,24 +325,24 @@ void Task_Rocky(void)
     CallTableEntry(gCurTask->variant, 3, gRockyVariants);
 }
 
-void sub_0807d6c4(void)
+void RockyWalkInit(void)
 {
-    gCurTask->updateCallback = (u32)sub_0807d718;
+    gCurTask->updateCallback = (u32)RockyWalkUpdate;
     TaskFaceNearestPlayer();
     gCurTask->unk28 = 0;
     ActorSetState(0);
-    CallTableEntry(gCurTask->state, 5, gUnk_087411CC);
+    CallTableEntry(gCurTask->state, 5, gRockyWalkStates);
 }
 
-void sub_0807d6fc(void)
+void RockyWalkEnterState(void)
 {
-    CallTableEntry(gCurTask->state, 5, gUnk_087411CC);
+    CallTableEntry(gCurTask->state, 5, gRockyWalkStates);
 }
 
-void sub_0807d718(void)
+void RockyWalkUpdate(void)
 {
     if ((u8)ActorCollideTerrain() == 0)
-        CallTableEntry(gCurTask->updateState, 5, gUnk_087411E0);
+        CallTableEntry(gCurTask->updateState, 5, gRockyWalkStateUpdates);
     ActorCheckHits();
     ActorReactToHit();
 }
@@ -412,7 +412,7 @@ void sub_0807d82c(void)
         }
     }
     if (gCurTask->state != 0)
-        TaskSetEntry(sub_0807d6fc, gCurTaskIdx);
+        TaskSetEntry(RockyWalkEnterState, gCurTaskIdx);
 }
 
 void sub_0807d8f8(void)
@@ -432,7 +432,7 @@ void sub_0807d918(void)
             TaskFaceToward(gCurTask->unk2C);
     }
     if (gCurTask->state != 1)
-        TaskSetEntry(sub_0807d6fc, gCurTaskIdx);
+        TaskSetEntry(RockyWalkEnterState, gCurTaskIdx);
 }
 
 void sub_0807d9ac(void)
@@ -458,7 +458,7 @@ void sub_0807d9ac(void)
 void sub_0807da08(void)
 {
     if (gCurTask->state != 2)
-        TaskSetEntry(sub_0807d6fc, gCurTaskIdx);
+        TaskSetEntry(RockyWalkEnterState, gCurTaskIdx);
 }
 
 void sub_0807da30(void)
@@ -474,7 +474,7 @@ void sub_0807da30(void)
 void sub_0807da5c(void)
 {
     if (gCurTask->state != 3)
-        TaskSetEntry(sub_0807d6fc, gCurTaskIdx);
+        TaskSetEntry(RockyWalkEnterState, gCurTaskIdx);
 }
 
 void sub_0807da84(void)
@@ -522,24 +522,24 @@ void sub_0807db44(void)
 {
 }
 
-void sub_0807db48(void)
+void RockyStandInit(void)
 {
-    gCurTask->updateCallback = (u32)sub_0807db9c;
+    gCurTask->updateCallback = (u32)RockyStandUpdate;
     TaskFaceNearestPlayer();
     gCurTask->unk28 = 0;
     ActorSetState(0);
-    CallTableEntry(gCurTask->state, 3, gUnk_087411FC);
+    CallTableEntry(gCurTask->state, 3, gRockyStandStates);
 }
 
-void sub_0807db80(void)
+void RockyStandEnterState(void)
 {
-    CallTableEntry(gCurTask->state, 3, gUnk_087411FC);
+    CallTableEntry(gCurTask->state, 3, gRockyStandStates);
 }
 
-void sub_0807db9c(void)
+void RockyStandUpdate(void)
 {
     if ((u8)ActorCollideTerrain() == 0)
-        CallTableEntry(gCurTask->updateState, 3, gUnk_08741208);
+        CallTableEntry(gCurTask->updateState, 3, gRockyStandStateUpdates);
     ActorCheckHits();
     ActorReactToHit();
 }
@@ -580,7 +580,7 @@ void sub_0807dbcc(void)
 void sub_0807dc78(void)
 {
     if (gCurTask->state != 0)
-        TaskSetEntry(sub_0807db80, gCurTaskIdx);
+        TaskSetEntry(RockyStandEnterState, gCurTaskIdx);
 }
 
 void sub_0807dca0(void)
@@ -594,7 +594,7 @@ void sub_0807dca0(void)
 void sub_0807dcc0(void)
 {
     if (gCurTask->state != 1)
-        TaskSetEntry(sub_0807db80, gCurTaskIdx);
+        TaskSetEntry(RockyStandEnterState, gCurTaskIdx);
 }
 
 void sub_0807dce8(void)
@@ -642,14 +642,14 @@ s32 sub_0807dd70(void)
     {
     case 0:
         ActorSetState(1);
-        TaskSetEntry(sub_0807d6fc, gCurTaskIdx);
+        TaskSetEntry(RockyWalkEnterState, gCurTaskIdx);
         r = 1;
         break;
     case 1:
         break;
     case 2:
         ActorSetState(1);
-        TaskSetEntry(sub_0807db80, gCurTaskIdx);
+        TaskSetEntry(RockyStandEnterState, gCurTaskIdx);
         r = 1;
         break;
     }
@@ -664,14 +664,14 @@ s32 sub_0807dddc(void)
     {
     case 0:
         ActorSetState(4);
-        TaskSetEntry(sub_0807d6fc, gCurTaskIdx);
+        TaskSetEntry(RockyWalkEnterState, gCurTaskIdx);
         r = 1;
         break;
     case 1:
         break;
     case 2:
         ActorSetState(2);
-        TaskSetEntry(sub_0807db80, gCurTaskIdx);
+        TaskSetEntry(RockyStandEnterState, gCurTaskIdx);
         r = 1;
         break;
     }
@@ -685,7 +685,7 @@ s32 sub_0807de30(void)
     if (gCurTask->variant == 0)
     {
         ActorSetState(3);
-        TaskSetEntry(sub_0807d6fc, gCurTaskIdx);
+        TaskSetEntry(RockyWalkEnterState, gCurTaskIdx);
         r = 1;
     }
     return r;
@@ -1054,25 +1054,25 @@ void Task_Cappy(void)
     CallTableEntry(gCurTask->variant, 3, gCappyVariants);
 }
 
-void sub_0807e568(void)
+void CappyCappedInit(void)
 {
     struct Task *t = gCurTask;
 
-    t->updateCallback = (u32)sub_0807e5bc;
+    t->updateCallback = (u32)CappyCappedUpdate;
     t->frameTable = gCappyFrames;
     ActorSetState(0);
-    CallTableEntry(gCurTask->state, 1, gUnk_08741278);
+    CallTableEntry(gCurTask->state, 1, gCappyCappedStates);
 }
 
 void sub_0807e5a0(void)
 {
-    CallTableEntry(gCurTask->state, 1, gUnk_08741278);
+    CallTableEntry(gCurTask->state, 1, gCappyCappedStates);
 }
 
-void sub_0807e5bc(void)
+void CappyCappedUpdate(void)
 {
     if ((u8)ActorCollideTerrain() == 0)
-        CallTableEntry(gCurTask->updateState, 1, gUnk_0874127C);
+        CallTableEntry(gCurTask->updateState, 1, gCappyCappedStateUpdates);
     ActorCheckHits();
     {
         struct Task *t = gCurTask;
@@ -1116,26 +1116,26 @@ void sub_0807e6d0(void)
 {
 }
 
-void sub_0807e6d4(void)
+void CappyCaplessInit(void)
 {
     struct Task *t = gCurTask;
 
-    t->updateCallback = (u32)sub_0807e730;
+    t->updateCallback = (u32)CappyCaplessUpdate;
     t->frameTable = gCappyCaplessFrames;
     ActorLoadDef(gUnk_0874183C);
     ActorSetState(1);
-    CallTableEntry(gCurTask->state, 2, gUnk_08741280);
+    CallTableEntry(gCurTask->state, 2, gCappyCaplessStates);
 }
 
-void sub_0807e714(void)
+void CappyCaplessEnterState(void)
 {
-    CallTableEntry(gCurTask->state, 2, gUnk_08741280);
+    CallTableEntry(gCurTask->state, 2, gCappyCaplessStates);
 }
 
-void sub_0807e730(void)
+void CappyCaplessUpdate(void)
 {
     if ((u8)ActorCollideTerrain() == 0)
-        CallTableEntry(gCurTask->updateState, 2, gUnk_08741288);
+        CallTableEntry(gCurTask->updateState, 2, gCappyCaplessStateUpdates);
     if (gCurTask->updateState != 1)
         ActorCheckHits();
     ActorReactToHit();
@@ -1204,7 +1204,7 @@ void sub_0807e884(void)
     if (gCurTask->onGround != 0)
     {
         ActorSetState(0);
-        TaskSetEntry(sub_0807e714, gCurTaskIdx);
+        TaskSetEntry(CappyCaplessEnterState, gCurTaskIdx);
     }
 }
 

@@ -88,8 +88,8 @@ extern u32 gUnk_08740BA8[];
 extern u32 gParasolVariants[];
 extern u32 gUnk_08740BBC[];
 extern u32 gUnk_08740BC0[];
-extern u32 gUnk_08740BC4[];
-extern u32 gUnk_08740BC8[];
+extern u32 gParasolChaseStates[];
+extern u32 gParasolChaseStateUpdates[];
 extern u32 gUnk_08740BCC[];
 extern u32 gUnk_08740BD0[];
 extern u32 gUnk_08740E38[];
@@ -191,7 +191,7 @@ s32 sub_0807c5ac(struct Rect *r);
 void UFOUpdate(void);
 void sub_0807ca98(void);
 void sub_0807cc9c(void);
-void sub_0807cd9c(void);
+void ParasolChaseUpdate(void);
 void sub_0807cf20(void);
 void sub_0807cff0(void);
 void sub_0807d094(void);
@@ -1864,18 +1864,18 @@ void sub_0807cd60(void)
 {
 }
 
-void sub_0807cd64(void)
+void ParasolChaseInit(void)
 {
-    gCurTask->updateCallback = (u32)sub_0807cd9c;
+    gCurTask->updateCallback = (u32)ParasolChaseUpdate;
     TaskFaceNearestPlayer();
     ActorSetState(0);
     gCurTask->unk24 = 255;
-    CallTableEntry(gCurTask->state, 1, gUnk_08740BC4);
+    CallTableEntry(gCurTask->state, 1, gParasolChaseStates);
 }
 
-void sub_0807cd9c(void)
+void ParasolChaseUpdate(void)
 {
-    CallTableEntry(gCurTask->updateState, 1, gUnk_08740BC8);
+    CallTableEntry(gCurTask->updateState, 1, gParasolChaseStateUpdates);
     if (gTaskSlotTypes[gCurTaskIdx] != -1 && gCurTask->unk18 != 0)
     {
         ActorCheckHits();
@@ -1885,7 +1885,7 @@ void sub_0807cd9c(void)
 
 void sub_0807cdec(void)
 {
-    CallTableEntry(gCurTask->state, 1, gUnk_08740BC4);
+    CallTableEntry(gCurTask->state, 1, gParasolChaseStates);
 }
 
 void sub_0807ce08(void)

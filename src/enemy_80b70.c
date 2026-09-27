@@ -13,7 +13,7 @@
  *     task #38's `Task_PoppyBrosJr` (`0x087415B8`, three rows);
  *   * six scripts in the entry/hook shape: `sub_08080e10`+`sub_08080e5c`
  *     (`0x08741554`/`0x0874156C`, six states), `sub_08081408`+`sub_0808145c`
- *     (`0x08741584`), `sub_08081614`+`sub_08081668` (`0x0874159C`),
+ *     (`0x08741584`), `StarmanFlyInit`+`StarmanFlyUpdate` (`0x0874159C`),
  *     `sub_08081774`+`sub_080817d4` (`0x087415A4`), `sub_080819f4`+
  *     `sub_08081a74` (`0x087415C4`) and `sub_08081d24`+`sub_08081d84`
  *     (`0x087415DC`);
@@ -52,8 +52,8 @@ extern u32 gUnk_08741554[];
 extern u32 gUnk_0874156C[];
 extern u32 gUnk_08741584[];
 extern u32 gUnk_08741590[];
-extern u32 gUnk_0874159C[];
-extern u32 gUnk_087415A0[];
+extern u32 gStarmanFlyStates[];
+extern u32 gStarmanFlyStateUpdates[];
 extern u32 gUnk_087415A4[];
 extern u32 gUnk_087415A8[];
 extern s32 gUnk_087415AC[];
@@ -118,7 +118,7 @@ void sub_08080d58(void);
 void sub_08080e5c(void);
 void sub_08081814(void);
 void sub_0808145c(void);
-void sub_08081668(void);
+void StarmanFlyUpdate(void);
 void sub_080817d4(void);
 void sub_08081a74(void);
 s32 sub_08081e64(void);
@@ -670,25 +670,25 @@ void sub_080815dc(void)
     }
 }
 
-void sub_08081614(void)
+void StarmanFlyInit(void)
 {
     struct Task *t = gCurTask;
 
-    t->updateCallback = (u32)sub_08081668;
+    t->updateCallback = (u32)StarmanFlyUpdate;
     t->onGround = 0;
     TaskFaceNearestPlayer();
     ActorSetState(0);
-    CallTableEntry(gCurTask->state, 1, gUnk_0874159C);
+    CallTableEntry(gCurTask->state, 1, gStarmanFlyStates);
 }
 
 void sub_0808164c(void)
 {
-    CallTableEntry(gCurTask->state, 1, gUnk_0874159C);
+    CallTableEntry(gCurTask->state, 1, gStarmanFlyStates);
 }
 
-void sub_08081668(void)
+void StarmanFlyUpdate(void)
 {
-    CallTableEntry(gCurTask->updateState, 1, gUnk_087415A0);
+    CallTableEntry(gCurTask->updateState, 1, gStarmanFlyStateUpdates);
     ActorCheckHits();
     ActorReactToHit();
 }

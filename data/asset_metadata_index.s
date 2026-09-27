@@ -4679,7 +4679,7 @@ gUnk_08740BA8:
 	.global	gParasolVariants
 gParasolVariants:
 	.word	sub_0807cc68+1
-	.word	sub_0807cd64+1
+	.word	ParasolChaseInit+1
 	.word	sub_0807cedc+1
 	.word	sub_0807cfd0+1
 	.global	gUnk_08740BBC
@@ -4688,11 +4688,11 @@ gUnk_08740BBC:
 	.global	gUnk_08740BC0
 gUnk_08740BC0:
 	.word	sub_0807cd60+1
-	.global	gUnk_08740BC4
-gUnk_08740BC4:
+	.global	gParasolChaseStates
+gParasolChaseStates:
 	.word	sub_0807ce08+1
-	.global	gUnk_08740BC8
-gUnk_08740BC8:
+	.global	gParasolChaseStateUpdates
+gParasolChaseStateUpdates:
 	.word	sub_0807ce68+1
 	.global	gUnk_08740BCC
 gUnk_08740BCC:
@@ -4876,18 +4876,18 @@ gUnk_08741174:
 	.word	sub_0807d1dc+1
 	.global	gRockyVariants
 gRockyVariants:
-	.word	sub_0807d6c4+1
+	.word	RockyWalkInit+1
 	.word	sub_0807daac+1
-	.word	sub_0807db48+1
-	.global	gUnk_087411CC
-gUnk_087411CC:
+	.word	RockyStandInit+1
+	.global	gRockyWalkStates
+gRockyWalkStates:
 	.word	sub_0807d748+1
 	.word	sub_0807d8f8+1
 	.word	sub_0807d9ac+1
 	.word	sub_0807da30+1
 	.word	sub_0807da84+1
-	.global	gUnk_087411E0
-gUnk_087411E0:
+	.global	gRockyWalkStateUpdates
+gRockyWalkStateUpdates:
 	.word	sub_0807d82c+1
 	.word	sub_0807d918+1
 	.word	sub_0807da08+1
@@ -4899,13 +4899,13 @@ gUnk_087411F4:
 	.global	gUnk_087411F8
 gUnk_087411F8:
 	.word	sub_0807db44+1
-	.global	gUnk_087411FC
-gUnk_087411FC:
+	.global	gRockyStandStates
+gRockyStandStates:
 	.word	sub_0807dbcc+1
 	.word	sub_0807dca0+1
 	.word	sub_0807dce8+1
-	.global	gUnk_08741208
-gUnk_08741208:
+	.global	gRockyStandStateUpdates
+gRockyStandStateUpdates:
 	.word	sub_0807dc78+1
 	.word	sub_0807dcc0+1
 	.word	sub_0807dd0c+1
@@ -4955,21 +4955,21 @@ gUnk_08741268:
 	.word	sub_0807e480+1
 	.global	gCappyVariants
 gCappyVariants:
-	.word	sub_0807e568+1
-	.word	sub_0807e6d4+1
+	.word	CappyCappedInit+1
+	.word	CappyCaplessInit+1
 	.word	sub_0807e8b8+1
-	.global	gUnk_08741278
-gUnk_08741278:
+	.global	gCappyCappedStates
+gCappyCappedStates:
 	.word	sub_0807e640+1
-	.global	gUnk_0874127C
-gUnk_0874127C:
+	.global	gCappyCappedStateUpdates
+gCappyCappedStateUpdates:
 	.word	sub_0807e6d0+1
-	.global	gUnk_08741280
-gUnk_08741280:
+	.global	gCappyCaplessStates
+gCappyCaplessStates:
 	.word	sub_0807e768+1
 	.word	sub_0807e814+1
-	.global	gUnk_08741288
-gUnk_08741288:
+	.global	gCappyCaplessStateUpdates
+gCappyCaplessStateUpdates:
 	.word	sub_0807e810+1
 	.word	sub_0807e884+1
 	.global	gUnk_08741290
@@ -5212,7 +5212,7 @@ gUnk_08741524:
 gStarmanVariants:
 	.word	sub_08080e10+1
 	.word	sub_08081408+1
-	.word	sub_08081614+1
+	.word	StarmanFlyInit+1
 	.word	sub_08081774+1
 	.global	gUnk_08741554
 gUnk_08741554:
@@ -5240,11 +5240,11 @@ gUnk_08741590:
 	.word	sub_080814b4+1
 	.word	sub_08081560+1
 	.word	sub_080815dc+1
-	.global	gUnk_0874159C
-gUnk_0874159C:
+	.global	gStarmanFlyStates
+gStarmanFlyStates:
 	.word	sub_0808168c+1
-	.global	gUnk_087415A0
-gUnk_087415A0:
+	.global	gStarmanFlyStateUpdates
+gStarmanFlyStateUpdates:
 	.word	sub_080816e8+1
 	.global	gUnk_087415A4
 gUnk_087415A4:
