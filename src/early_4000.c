@@ -281,40 +281,24 @@ void sub_08004390(u32 *src, u32 *dst, u32 size)
     gUnk_0200EB94[0] = gUnk_0200EB94[1] = gUnk_0200EB94[2] = gUnk_0200EB94[3] = 0;
 }
 
-/* Matching notes for sub_08004400:
- *  - The three handshake reads and the loop read must be VOLATILE (cast, so
- *    the shared u16 declaration stays plain): the ROM re-loads them and
- *    evaluates the low half of the address before the high half.  A plain read
- *    lets agbcc sink the low ldrh past the shift.
- *  - `(lo = ...) | (hi = ... << 16)` inside the assignment keeps the ldr of
- *    the store address ahead of both ldrh (expand_assignment does the LHS
- *    address first), and the two hard-register pins give the ROM's
- *    `orrs r1, r0`: with a volatile u16 source the OR operand is a paradoxical
- *    (subreg:SI (reg:HI)), which gcc's regmove refuses to tie to operand 0, so
- *    it would otherwise tie the result to the shift (`orrs r0, r1`).
- */
 /*FN sub_08004400*/
 u32 sub_08004400(void)
 {
     s32 i;
-    register u32 lo asm("r1");
-    register u32 hi asm("r0");
-    s32 v;
 
-    v = gUnk_03004D50[0];
-    if (v == 0x5502)
+    if (gUnk_03004D50[0] == 0x5502)
         return 1;
-    if (v == 0x5500)
+    if (gUnk_03004D50[0] == 0x5500)
     {
         gUnk_03004D90[0] = 0x5501;
-        gUnk_0200EBB4 = (u32 *)((lo = *(vu16 *)&gUnk_03004D50[4]) | (hi = *(vu16 *)&gUnk_03004D50[8] << 16));
-        gUnk_0200EBAC = *(vu16 *)&gUnk_03004D50[12] << 2;
+        gUnk_0200EBB4 = (u32 *)(gUnk_03004D50[4] | (gUnk_03004D50[8] << 16));
+        gUnk_0200EBAC = gUnk_03004D50[12] << 2;
     }
     if (gUnk_03001F38 != 0)
     {
         for (i = 0; i < 4; i++)
         {
-            if (*(vu16 *)&gUnk_03004D50[i] == 0x5501)
+            if (gUnk_03004D50[i] == 0x5501)
             {
                 gUnk_0200EB94[i] = 1;
                 gUnk_0200EBB8++;

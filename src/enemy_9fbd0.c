@@ -71,23 +71,19 @@ void sub_0809fc08(void)
 void sub_0809fc44(void)
 {
     struct Task *t;
-    struct Task *u;
-    register s32 n asm("r2");
-    register s32 v asm("r2");
-    s32 w;
+    s32 v;
+
     t = gUnk_03002490;
     sub_08066088(0);
-    n = sub_08065f5c();
-    w = n * 5;
-    v = (w + (w << 4)) >> 8;
+    v = sub_08065f5c();
+    v = (v * 85) >> 8;
     t = gUnk_03002490;
     t->unk70 = v;
     t->unk00 = (u32)sub_080059d8;
     t->unk0C = (u32)sub_08065438;
     t->unk42 = 11;
-    u = gUnk_03002490;
-    u->unk38 = gUnk_087538E0;
-    sub_08002e98(u->unk73, 1, gUnk_08748264);
+    gUnk_03002490->unk38 = gUnk_087538E0;
+    sub_08002e98(gUnk_03002490->unk73, 1, gUnk_08748264);
 }
 
 void sub_0809fca4(void)

@@ -127,18 +127,9 @@ void sub_080a02d4(u8 a)
 
 void sub_080a0358(void)
 {
-    register struct Task *t asm("r1");
-    struct Task *v;
-    struct Task *w;
-    struct Task *x;
-    struct Task *y;
-    struct Task *z;
+    struct Task *t;
     s32 n;
     s32 r;
-    s32 lo;
-    s32 hi;
-    s32 lo2;
-    s32 hi2;
 
     t = gUnk_03002490;
     switch (t->unk1C)
@@ -154,26 +145,22 @@ void sub_080a0358(void)
         break;
     case 8:
         sub_08063d7c();
-        v = gUnk_03002490;
-        v->unk20 = gUnk_030023B4;
-        lo = gUnk_03005628[0] - 87;
-        if (gUnk_030023B4 < lo)
-            v->unk20 = lo;
-        v = gUnk_03002490;
-        hi = gUnk_03005628[1] + 87;
-        if (v->unk20 > hi)
-            v->unk20 = hi;
+        gUnk_03002490->unk20 = gUnk_030023B4;
+        if (gUnk_030023B4 < gUnk_03005628[0] - 87)
+            gUnk_03002490->unk20 = gUnk_03005628[0] - 87;
+        if (gUnk_03002490->unk20 > gUnk_03005628[1] + 87)
+            gUnk_03002490->unk20 = gUnk_03005628[1] + 87;
         if (gUnk_03002490->unk48 == gUnk_030023B4)
             goto tail;
         if ((u8)sub_08064398() == 4)
         {
-            x = gUnk_03002490;
-            x->unk20 -= 16;
+            t = gUnk_03002490;
+            t->unk20 -= 16;
         }
         else
         {
-            x = gUnk_03002490;
-            x->unk20 += 16;
+            t = gUnk_03002490;
+            t->unk20 += 16;
         }
         t = gUnk_03002490;
         n = 8;
@@ -185,14 +172,10 @@ void sub_080a0358(void)
     }
     t->unk34 = n;
 tail:
-    y = gUnk_03002490;
-    lo2 = gUnk_03005628[0] - 87;
-    if (y->unk20 < lo2)
-        y->unk20 = lo2;
-    z = gUnk_03002490;
-    hi2 = gUnk_03005628[1] + 87;
-    if (z->unk20 > hi2)
-        z->unk20 = hi2;
+    if (gUnk_03002490->unk20 < gUnk_03005628[0] - 87)
+        gUnk_03002490->unk20 = gUnk_03005628[0] - 87;
+    if (gUnk_03002490->unk20 > gUnk_03005628[1] + 87)
+        gUnk_03002490->unk20 = gUnk_03005628[1] + 87;
 }
 
 void sub_080a043c(void)

@@ -3,30 +3,36 @@
 #include "task.h"
 
 /* RAM cells / ROM tables */
-extern u32 gUnk_0200000C[];
+extern u16 gUnk_0200000C;
 extern u32 gUnk_02000034[];
 extern u32 gUnk_02004C90;
 extern u32 gUnk_02005580[];
 extern s16 gUnk_02005588[];
-extern u32 gUnk_02005590[];
+extern s8 gUnk_02005590[];
 extern u32 gUnk_020055D0[];
 extern u32 gUnk_020055D8[];
 extern u8 gUnk_02005E10[];
 extern u32 gUnk_02005F10[];
 extern u32 gUnk_02006040[];
-extern u32 gUnk_020060A0[];
+struct Unk020060A0
+{
+    /*0x00*/ s8 unk0;
+    /*0x01*/ s8 unk1;
+    /*0x02*/ s16 unk2;
+};
+extern struct Unk020060A0 gUnk_020060A0[];
 extern u32 gUnk_02006130[];
 extern s32 gUnk_02006190[];
 extern u8 gUnk_020069F0;
 extern u32 gUnk_02007BF0[];
 extern s32 gUnk_02007D00[];
-extern u32 gUnk_02007D40[];
+extern u16 gUnk_02007D40;
 extern s16 gUnk_02007D48[];
 extern u16 gUnk_02007D60;
 extern u32 gUnk_02007D64[];
 extern s8 gUnk_02007FB8[];
 extern u32 gUnk_02008014[];
-extern u32 gUnk_02008020[];
+extern u8 gUnk_02008020[];
 extern u32 gUnk_0200AF0C[];
 extern u8 gUnk_0200AFF8;
 extern u8 gUnk_0200B030;
@@ -1682,22 +1688,10 @@ out:
 
 void sub_080b54a4(s32 a)
 {
-    u8 *pbase;
-    u8 *p8;
-    s8 *e;
-    s32 w;
-
-    pbase = (u8 *)gUnk_02005590;
-    asm("" : "+r"(pbase));
-    a -= 32;
-    e = (s8 *)(a + (u32)pbase);
-    w = *e;
-    if (w != -1)
+    if (gUnk_02005590[a - 32] != -1)
     {
-        asm("" : "+r"(e) : : "memory");
-        p8 = (u8 *)gUnk_02008020;
-        *(u8 *)(*e + (u32)p8) = 0;
-        *(u8 *)e = 255;
+        gUnk_02008020[gUnk_02005590[a - 32]] = 0;
+        gUnk_02005590[a - 32] = -1;
     }
 }
 
@@ -1754,40 +1748,20 @@ void sub_080b5540(s32 a, s32 b)
 
 void sub_080b5558(void)
 {
-    register s32 m5 asm("r5");
-    register s32 i6 asm("r6");
-    s32 one7;
-    register s32 n8 asm("r8");
-    s8 *e4;
-    s32 w;
-    s32 n1;
-    s32 j;
+    u16 mask;
+    s32 i;
 
-    m5 = 0;
+    mask = 0;
     CpuSet(gUnk_03001570, gUnk_02005E10, 96);
-    i6 = 0;
-    w = *(s8 *)gUnk_020060A0;
-    n1 = -1;
-    if (w != n1)
+    for (i = 0; i < 10 && gUnk_020060A0[i].unk0 != -1; i++)
     {
-        one7 = 1;
-        n8 = n1;
-        e4 = (s8 *)gUnk_020060A0;
-        do
+        if (!((mask >> gUnk_020060A0[i].unk1) & 1))
         {
-            j = *(s8 *)(e4 + 1);
-            if (!((m5 >> j) & one7))
-            {
-                sub_08065dd0(j, *e4);
-                m5 |= one7 << i6;
-                w = m5 << 16;
-                m5 = (u32)w >> 16;
-            }
-            e4 += 4;
-            i6 += 1;
-        } while (i6 <= 9 && *e4 != n8);
+            sub_08065dd0(gUnk_020060A0[i].unk1, gUnk_020060A0[i].unk0);
+            mask |= 1 << i;
+        }
     }
-    CpuSet(gUnk_03001570, (void *)gUnk_02005F10, 96);
+    CpuSet(gUnk_03001570, gUnk_02005F10, 96);
 }
 
 s32 sub_080b55d8(u32 a, u32 b)
@@ -1805,12 +1779,12 @@ s32 sub_080b55d8(u32 a, u32 b)
 
     av = a;
     bv = b;
-    p4 = (vu16 *)gUnk_0200000C;
+    p4 = (vu16 *)&gUnk_0200000C;
     wt = *p4;
     asm("" : "+r"(wt));
     if (av + wt > 512)
         *p4 = 0;
-    p3 = (vu16 *)gUnk_02007D40;
+    p3 = (vu16 *)&gUnk_02007D40;
     wt = *p3;
     asm("" : "+r"(wt));
     if (bv + wt > 14)
@@ -1830,46 +1804,24 @@ s32 sub_080b55d8(u32 a, u32 b)
 
 s32 sub_080b5628(u32 a)
 {
-    register u32 av asm("r2");
-    register vu16 *p asm("r3");
-    register u32 w asm("r1");
-    register u32 wc asm("r0");
-    u32 wt;
+    s32 r;
+    u32 n;
 
-    av = a;
-    p = (vu16 *)gUnk_0200000C;
-    wt = *p;
-    asm("" : "+r"(wt));
-    wc = av + wt;
-    if (wc > 512)
-        *p = 0;
-    wc = *p;
-    asm("" : "+r"(wc));
-    w = wc + av;
-    av = 0xFFF0;
-    asm("" : "+r"(av));
-    w &= av;
-    w += 16;
-    *p = w;
-    return wc;
+    if (a + gUnk_0200000C > 512)
+        gUnk_0200000C = 0;
+    r = gUnk_0200000C;
+    n = ((r + a) & 0xFFF0) + 16;
+    gUnk_0200000C = n;
+    return r;
 }
 
 s32 sub_080b5654(u32 a)
 {
-    register u32 av asm("r1");
-    register vu16 *p asm("r2");
-    register u32 w asm("r1");
-    u32 wt;
-    register u32 wt2 asm("r0");
+    s32 r;
 
-    av = a;
-    p = (vu16 *)gUnk_02007D40;
-    wt = *p;
-    asm("" : "+r"(wt));
-    if (av + wt > 14)
-        *p = 8;
-    wt2 = *p;
-    w = wt2 + av;
-    *p = w;
-    return wt2;
+    if (a + gUnk_02007D40 > 14)
+        gUnk_02007D40 = 8;
+    r = gUnk_02007D40;
+    gUnk_02007D40 = r + a;
+    return r;
 }

@@ -2444,57 +2444,18 @@ void sub_080b3f14(void)
 
 void sub_080b3f54(void)
 {
-    register struct Task **c asm("r4");
-    struct Task *t;
     struct Actor *a;
-    register u16 *h asm("r3");
-    register s32 k asm("r6");
-    register s32 w asm("r0");
-    register s32 w2 asm("r2");
-    s32 r;
-    register s32 u1 asm("r1");
-    register s32 u2 asm("r1");
-    register s32 z asm("r0");
-    register s32 v asm("r4");
 
-    c = &gUnk_03002490;
-    a = *(struct Actor **)((u8 *)*c + 140);
-    if (a->unk2C == 0)
-    {
-        r = sub_080640dc((struct AnimCmd *)gUnk_08756084);
-        (*c)->unk34 = r;
-    }
-    t = *c;
-    h = (u16 *)((u8 *)t + 64);
-    w = *h;
-    k = 0xFFF;
-    w2 = k;
-    asm("" : "+r"(w2));
-    w2 &= w;
-    v = 240 << 8;
-    asm("" : "+r"(v));
-    w = v;
-    v = 0;
-    asm volatile("" : "+r"(v));
-    w2 |= w;
-    *h = w2;
-    if (gUnk_03001F30 == 1 && *(u16 *)((u8 *)t + 118) == 1)
-    {
-        w2 &= k;
-        u1 = 224 << 8;
-        asm("" : "+r"(u1));
-        w = u1;
-        asm("" : "+r"(w));
-        w2 |= w;
-        *h = w2;
-    }
-    z = 0;
-    *(u8 *)((u8 *)a + 3) = 1;
-    u2 = 240 << 8;
-    asm("" : "+r"(u2));
-    *(u16 *)((u8 *)a + 30) = u2;
-    *(u16 *)((u8 *)a + 24) = z;
-    *(u16 *)((u8 *)a + 22) = z;
+    a = gUnk_03002490->unk8C;
+    if (a->unk2C == NULL)
+        gUnk_03002490->unk34 = sub_080640dc((struct AnimCmd *)gUnk_08756084);
+    gUnk_03002490->unk40 = (gUnk_03002490->unk40 & 0xFFF) | 0xF000;
+    if (gUnk_03001F30 == 1 && gUnk_03002490->unk76 == 1)
+        gUnk_03002490->unk40 = (gUnk_03002490->unk40 & 0xFFF) | 0xE000;
+    a->unk03 = 1;
+    a->unk1E = 0xF000;
+    a->unk18 = 0;
+    a->unk16 = 0;
 }
 
 void sub_080b3fcc(void)
@@ -2521,38 +2482,13 @@ void sub_080b3fcc(void)
 
 void sub_080b3ffc(void)
 {
-    struct Task **c;
-    register struct Task *t asm("r2");
-    register s32 wv asm("r1");
-    u16 *h;
-    register s32 w asm("r0");
-    register s32 m asm("r3");
-
-    c = &gUnk_03002490;
-    t = *c;
-    if (t->unk3C == 5)
-        goto arm5;
-    if (gUnk_03001F30 == 1 && *(u16 *)((u8 *)t + 118) == 1)
+    if (gUnk_03002490->unk3C != 5)
     {
-        h = (u16 *)((u8 *)t + 64);
-        wv = *h;
-        w = 0xFFF;
-        w &= wv;
-        m = 224 << 8;
-        goto join;
+        if (gUnk_03001F30 == 1 && gUnk_03002490->unk76 == 1)
+            gUnk_03002490->unk40 = (gUnk_03002490->unk40 & 0xFFF) | 0xE000;
     }
-    return;
-arm5:
-    h = (u16 *)((u8 *)t + 64);
-    wv = *h;
-    w = 0xFFF;
-    w &= wv;
-    m = 240 << 8;
-join:
-    wv = m;
-    asm("" : "+r"(wv));
-    w |= wv;
-    *h = w;
+    else
+        gUnk_03002490->unk40 = (gUnk_03002490->unk40 & 0xFFF) | 0xF000;
 }
 
 s32 sub_080b404c(void)
@@ -2601,19 +2537,12 @@ void sub_080b40a4(void)
 
 void sub_080b4100(void)
 {
-    register struct Task **c asm("r4");
-    struct Task *t;
-    s32 r;
     s32 v;
 
-    c = &gUnk_03002490;
-    if (*(u8 *)((u8 *)*c + 115) == 0 && (u8)sub_08069888() == 0)
-        sub_08002e98((*c)->unk15, 3, gUnk_087560AC);
-    c = &gUnk_03002490;
-    v = (*c)->unk34;
-    r = sub_08064188(v);
-    t = *c;
-    t->unk34 = r;
+    if (gUnk_03002490->unk73 == 0 && (u8)sub_08069888() == 0)
+        sub_08002e98(gUnk_03002490->unk15, 3, gUnk_087560AC);
+    v = gUnk_03002490->unk34;
+    gUnk_03002490->unk34 = sub_08064188(v);
     if (v <= 0)
     {
         sub_080b3fcc();

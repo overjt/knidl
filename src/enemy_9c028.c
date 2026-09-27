@@ -16,27 +16,15 @@ extern void sub_08063908(u32 def);
 void sub_0809c028(void)
 {
     struct Task *t;
-    struct Task *u;
-    register struct Task **tp asm("r0");
-    u32 **tab;
     u32 *p;
-    s32 i;
 
     if (gUnk_0300244C != 0)
-    {
-        tab = gUnk_08745D4C;
-        BLOCK_CROSS_JUMP
-    }
+        p = gUnk_08745D4C[gUnk_03002490->unk73 * 4 + gUnk_03002350 - 1];
     else
-        tab = gUnk_08745CFC;
-    tp = &gUnk_03002490;
-    u = *tp;
-    i = u->unk73 * 4 + gUnk_03002350 - 1;
-    p = tab[i];
+        p = gUnk_08745CFC[gUnk_03002490->unk73 * 4 + gUnk_03002350 - 1];
     sub_08063908(p[0]);
     gUnk_02007D00[4] = p[1];
-    tp = &gUnk_03002490;
-    t = *tp;
+    t = gUnk_03002490;
     t->unk28 = p[2];
     t->unk2C = p[3];
     t->unk30 = p[4];

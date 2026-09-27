@@ -16,22 +16,14 @@ s32 sub_080b63a4(void)
 {
     s32 i;
     s32 n;
-    s32 m;
-    u16 *base;
-    register vs32 *pe asm("r9");
-    u32 *pc;
-    u16 *p1;
-    u16 *p2;
-    u16 *p;
-    u16 *q;
-    u16 *e;
-    s32 z;
-    u8 *b;
-    s32 k;
-    s32 v1;
-    s32 v2;
-    s32 j;
+    s32 n2;
     s32 vt;
+    s32 z;
+    u16 *base;
+    u16 *p1;
+    u16 *e;
+    u32 *pc;
+    vs32 *pe;
 
     if (gUnk_02016490 == 2 || gUnk_02016494 == 16)
     {
@@ -52,27 +44,15 @@ s32 sub_080b63a4(void)
             *e = z;
             e--;
         } while ((s32)e >= (s32)p1);
-        for (m = 136; m < 152; m++)
-            gUnk_020164A0[m] = 0;
-        for (i = 0; i <= 6; i = j)
+        for (n = 136; n < 152; n++)
+            gUnk_020164A0[n] = 0;
+        for (i = 0; i < 7; i++)
         {
-            k = 2 * i;
-            j = i + 1;
-            v1 = k + 3;
-            v2 = k + 4;
-            b = (u8 *)gUnk_020164A0;
-            q = (u16 *)(b + (v2 << 4));
-            p = (u16 *)(b + (v1 << 4));
-            n = 7;
-            do
+            for (n2 = 0; n2 < 8; n2++)
             {
-                s32 t = gUnk_02016494;
-
-                *p = -t << 4;
-                *q = t << 4;
-                q++;
-                p++;
-            } while (--n >= 0);
+                gUnk_020164A0[(i * 2 + 3) * 8 + n2] = -gUnk_02016494 << 4;
+                gUnk_020164A0[(i * 2 + 4) * 8 + n2] = gUnk_02016494 << 4;
+            }
         }
         vt = base[0] << 16;
         *pe = vt;
