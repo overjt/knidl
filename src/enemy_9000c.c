@@ -16,7 +16,7 @@
  * per-frame row gUnk_087437D0[Task.frame].
  *
  * States 0-10 then follow as <body, guard> pairs (sub_080901e0 /
- * sub_08090270, sub_08090298 / sub_080903c8, ...): the body is a run of
+ * sub_08090270, BonkersWalk / sub_080903c8, ...): the body is a run of
  * TaskYieldTrampoline waits that steps Task.frame, clears and then waits on
  * Task.onGround (set when the boss lands) and pushes 16.16 velocities through
  * TaskSetMotionXFacing / TaskSetMotionY, and the guard re-arms BonkersEnterState through
@@ -243,7 +243,7 @@ void sub_08090270(void)
         TaskSetEntry(BonkersEnterState, gCurTaskIdx);
 }
 
-void sub_08090298(void)
+void BonkersWalk(void)
 {
     struct Task *t;
     struct Task *u;
@@ -300,7 +300,7 @@ void sub_080903c8(void)
         TaskSetEntry(BonkersEnterState, gCurTaskIdx);
 }
 
-void sub_080903f0(void)
+void BonkersJump(void)
 {
     struct Task *t;
     s32 zero;
@@ -334,7 +334,7 @@ void sub_080904ac(void)
         TaskSetEntry(BonkersEnterState, gCurTaskIdx);
 }
 
-void sub_080904d4(void)
+void BonkersHop(void)
 {
     struct Task *t;
     s32 zero;
@@ -374,7 +374,7 @@ void sub_080905b0(void)
         TaskSetEntry(BonkersEnterState, gCurTaskIdx);
 }
 
-void sub_080905d8(void)
+void BonkersDash(void)
 {
     struct Task *t;
     struct Task *u;
@@ -446,7 +446,7 @@ void sub_08090724(void)
         TaskSetEntry(BonkersEnterState, gCurTaskIdx);
 }
 
-void sub_0809074c(void)
+void BonkersThrow(void)
 {
     struct Task *t;
     struct Task *z;
@@ -509,7 +509,7 @@ void sub_080908ec(void)
         TaskSetEntry(BonkersEnterState, gCurTaskIdx);
 }
 
-void sub_08090914(void)
+void BonkersSlam(void)
 {
     struct Task *t;
     struct Task *u;
@@ -550,7 +550,7 @@ void sub_080909ac(void)
         TaskSetEntry(BonkersEnterState, gCurTaskIdx);
 }
 
-void sub_080909d4(void)
+void BonkersJumpSlam(void)
 {
     struct Task *t;
 
@@ -600,7 +600,7 @@ void sub_08090b18(void)
         TaskSetEntry(BonkersEnterState, gCurTaskIdx);
 }
 
-void sub_08090b40(void)
+void BonkersTripleSlam(void)
 {
     struct Task *t;
 

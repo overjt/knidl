@@ -710,7 +710,7 @@ void sub_080a0c28(void)
     }
 }
 
-void sub_080a0ccc(void)
+void KingDededeJump(void)
 {
     struct Task *t;
     struct Task *u;
@@ -969,7 +969,7 @@ void sub_080a11a0(void)
     }
 }
 
-void sub_080a11e0(void)
+void KingDededeInhale(void)
 {
     struct Task *t;
     struct Task *u;
@@ -1093,7 +1093,7 @@ void sub_080a12e0(void)
     }
 }
 
-void sub_080a13d4(void)
+void KingDededeSpit(void)
 {
     gCurTask->updateState = 9;
     TaskStop();
@@ -1129,7 +1129,7 @@ void sub_080a1400(void)
     }
 }
 
-void sub_080a146c(void)
+void KingDededeFall(void)
 {
     struct Task *t;
     struct Actor *a;

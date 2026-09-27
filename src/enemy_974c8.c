@@ -42,7 +42,7 @@ extern s32 gUnk_087454F4[];
 extern s32 gUnk_087454FC[];
 extern s32 gUnk_08745504[];
 extern struct AnimCmd gUnk_0874550C[];
-extern u32 gUnk_08753054[];
+extern u32 gGrandWheelieMiniWheelieFrames[];
 extern u32 gPhanPhanFrames[];
 extern u32 gUnk_087538B0[];
 
@@ -142,7 +142,7 @@ s32 sub_08098528(void);
 s32 sub_08098540(void);
 s32 sub_0809857c(void);
 s32 sub_08098594(void);
-void sub_080985e0(void);
+void Task_GrandWheelieMiniWheelie(void);
 void sub_0809869c(void);
 void sub_080986ec(void);
 void sub_08098708(void);
@@ -924,7 +924,7 @@ s32 sub_08098594(void)
     return 1;
 }
 
-void sub_080985e0(void)
+void Task_GrandWheelieMiniWheelie(void)
 {
     struct Task *t;
     struct Task *u;
@@ -936,7 +936,7 @@ void sub_080985e0(void)
     t->drawCallback = (u32)ActorDrawWorldInViewOrDestroy;
     t->layer = 9;
     zero = 0;
-    gCurTask->frameTable = gUnk_08753054;
+    gCurTask->frameTable = gGrandWheelieMiniWheelieFrames;
     TaskFaceNearestPlayer();
     TaskStop();
     TaskSetMotionXFacing(gUnk_087454D8[0] >> 1, 0x5A5A5A5A);

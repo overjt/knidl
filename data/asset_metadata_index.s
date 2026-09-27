@@ -186,7 +186,7 @@ asset_metadata_index:
 	.incbin	"baserom.gba", 0x7302B8, 0x4
 	.word	sub_080a4b68+1
 	.incbin	"baserom.gba", 0x7302C0, 0x4
-	.word	sub_080985e0+1
+	.word	Task_GrandWheelieMiniWheelie+1
 	.incbin	"baserom.gba", 0x7302C8, 0x4
 	.word	Task_MrFrostyIceCube+1
 	.incbin	"baserom.gba", 0x7302D0, 0x4
@@ -6685,14 +6685,14 @@ gBonkersVariants:
 	.global	gBonkersStates
 gBonkersStates:
 	.word	sub_080901e0+1
-	.word	sub_08090298+1
-	.word	sub_080903f0+1
-	.word	sub_080904d4+1
-	.word	sub_080905d8+1
-	.word	sub_0809074c+1
-	.word	sub_08090914+1
-	.word	sub_080909d4+1
-	.word	sub_08090b40+1
+	.word	BonkersWalk+1
+	.word	BonkersJump+1
+	.word	BonkersHop+1
+	.word	BonkersDash+1
+	.word	BonkersThrow+1
+	.word	BonkersSlam+1
+	.word	BonkersJumpSlam+1
+	.word	BonkersTripleSlam+1
 	.word	sub_08090c18+1
 	.word	sub_08090cd0+1
 	.global	gBonkersStateUpdates
@@ -8319,14 +8319,14 @@ gKingDededeStates:
 	.word	sub_080a0b30+1
 	.word	sub_080a0bb4+1
 	.word	sub_080a0c08+1
-	.word	sub_080a0ccc+1
+	.word	KingDededeJump+1
 	.word	sub_080a0e08+1
 	.word	sub_080a0f7c+1
 	.word	sub_080a1058+1
 	.word	sub_080a1168+1
-	.word	sub_080a11e0+1
-	.word	sub_080a13d4+1
-	.word	sub_080a146c+1
+	.word	KingDededeInhale+1
+	.word	KingDededeSpit+1
+	.word	KingDededeFall+1
 	.global	gKingDededeStateUpdates
 gKingDededeStateUpdates:
 	.word	sub_080a0b74+1
@@ -10063,8 +10063,8 @@ gBonkersNutFrames:
 	.global	gGrandWheelieFrames
 gGrandWheelieFrames:
 	.incbin	"baserom.gba", 0x752F74, 0xE0
-	.global	gUnk_08753054
-gUnk_08753054:
+	.global	gGrandWheelieMiniWheelieFrames
+gGrandWheelieMiniWheelieFrames:
 	.incbin	"baserom.gba", 0x753054, 0x3C
 	.global	gMrFrostyFrames
 gMrFrostyFrames:
