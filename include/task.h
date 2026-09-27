@@ -88,8 +88,11 @@ struct Task
     /*0x82*/ u16 unk82;
     /*0x84*/ u16 unk84;
     /*0x86*/ u16 unk86;
-    /* Context pointer: the player record for actor tasks (0x08064EB8), but
-       task-class specific - sub_08063A9C stores another task here. */
+    /* The record of the player the task belongs to: Task_Player binds
+       &gPlayerStates[slot] and the player's objects and effects copy it.
+       For actors, ActorInitSlot's sub_08063a9c and TaskFindNearestPlayer
+       store the nearest player's struct Task * here instead, which no actor
+       reads back; ActorAttachToHitter rebinds it to the hitter's record. */
     /*0x88*/ struct PlayerState *player;
     /*0x8C*/ struct Actor *unk8C;
 };
@@ -205,7 +208,8 @@ struct Actor
 };
 
 /* One entry of the actor animation script Actor.animScript walks (0x080640FC).
-   unk00 is the frame id, or -3 (loop) / -2 (stop); unk02 is the delay. */
+   frame is the frame id, or -3 (loop) / -2 (stop); delay is the number of
+   frames until the next entry. */
 struct AnimCmd
 {
     /*0x00*/ s16 frame;
@@ -213,7 +217,7 @@ struct AnimCmd
 };
 
 /* 116-byte per-player record at gPlayerStates (0x08064EB8); Task.player points
-   at the record of the player the task belongs to (0x08064EB8). */
+   at the record of the player the task belongs to. */
 struct PlayerState
 {
     /*0x00*/ s8 playerIndex;
@@ -292,16 +296,18 @@ struct PlayerState
     /*0x5E*/ u16 prevPixelX;
     /*0x60*/ u16 prevPixelY;
     /*0x62*/ u8 filler62[2];
-    /* M16's sub_0805e15c zeroes unk64/unk68/unk6C per player when a run
-       starts (issue #83); they were inside filler62 before M11 named them. */
+    /* M16's sub_0805e15c zeroes bodyBox/terrainBox/hitBoxSet per player
+       when a run starts (issue #83). */
     /*0x64*/ u32 bodyBox;
     /*0x68*/ u32 terrainBox;
-    /* M11 keeps &gPlayerHitBoxSets[unk00] here and clears it to 0 (issue #85). */
+    /* M11 keeps &gPlayerHitBoxSets[playerIndex] here and clears it to 0
+       (issue #85). */
     /*0x6C*/ void *hitBoxSet;
     /*0x70*/ u32 *prevTerrainBox;
 };
 
-/* Spawn descriptor sub_08064A78 turns into a class-4 task. */
+/* Spawn descriptor sub_08064A78 turns into a task of actor kind 4
+   (Task.actorKind). */
 struct ActorSpawn
 {
     /*0x00*/ u32 subtype;
