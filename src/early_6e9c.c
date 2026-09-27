@@ -54,7 +54,7 @@ extern u32 gUnk_0200EBA0;
  * buffer with a pointer (`*p++`): the ROM's loops step the register that
  * holds &gUnk_03004D38 itself, where `gUnk_03004D38[i]` makes a strength-
  * reduced copy of it.  REG_VCOUNT is the io_reg.h macro (a symbol would be
- * hoisted into a callee-saved register by gcse, lesson L7). */
+ * hoisted into a callee-saved register by gcse, lesson 3.482). */
 void sub_08006e9c(void)
 {
     u32 i;
