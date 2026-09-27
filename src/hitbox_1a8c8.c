@@ -14,7 +14,7 @@
  * gUnk_0300236C->unk06 & 7: 0 a damaging hit, 1 a hit the body box can
  * block, 2/3 a touch that marks the player in gUnk_03001F24);
  * sub_0801af14 tests the second list gUnk_030053A0.  The third list's test,
- * sub_0801b24c (0x0801B24C-0x0801B7DC), is still asm.
+ * sub_0801b24c, is src/hitbox_1b24c.c.
  * 
  * Matching notes: the class 2/3 case is the last case in the source, because
  * merge_blocks moves its head up behind the dispatch; hit paths end at an
