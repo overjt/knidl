@@ -285,6 +285,177 @@ SEG11 = [
      "s16 gUnk_080D0760[] / gUnk_080D0766[] (include/subgame.h:226-227, src/subgame_c5284.c:244/464): "
      "the word at 0x080D0764 straddles two s16 objects, so it is no pointer"),
 ]
+# ---- Round 2 (#36 phase 2 run 2): Huffman streams, TransferNode sizes, ---
+# ---- consumer-sized palettes and tile blocks in seg 14 / seg 11 ----------
+# GBA BIOS HuffUnComp stream parser (GBATEK "BIOS Decompression Functions"):
+# u32 header {bits 0-3 data size 4/8, bits 4-7 type 2, bits 8-31 size},
+# tree-size byte T, tree table of (T+1)*2 bytes from the size byte, then the
+# bit stream in 32-bit LE words (bit 31 first).
+
+
+def huffman(rom, a, base=0x08000000):
+    """(end VMA, declared size, output bytes) of the Huffman stream at VMA a,
+    or None when the header, tree or bit stream is malformed.  The stream
+    ends after the last 32-bit bit-stream word the decoder reads."""
+    off = a - base
+    if off < 0 or off + 8 > len(rom):
+        return None
+    hdr = struct.unpack_from("<I", rom, off)[0]
+    bits = hdr & 0xF
+    if (hdr >> 4) & 0xF != 2 or bits not in (4, 8):
+        return None
+    size = hdr >> 8
+    if size == 0:
+        return None
+    tree = off + 4                       # tree size byte
+    root = tree + 1
+    stream = tree + (rom[tree] + 1) * 2  # bit stream start
+    if stream % 4 or stream > len(rom):
+        return None
+    need = size * 8 // bits              # data units to produce
+    out = bytearray()
+    acc = 0
+    nacc = 0
+    units = 0
+    p = stream
+    node = root
+    word = 0
+    left = 0
+    while units < need:
+        if left == 0:
+            if p + 4 > len(rom):
+                return None
+            word = struct.unpack_from("<I", rom, p)[0]
+            p += 4
+            left = 32
+        bit = (word >> 31) & 1
+        word = (word << 1) & 0xFFFFFFFF
+        left -= 1
+        v = rom[node]
+        nxt = (node & ~1) + (v & 0x3F) * 2 + 2 + bit
+        if nxt >= stream:
+            return None                  # child outside the tree table
+        if v & (0x80 >> bit):            # bit 7: node0 is data, bit 6: node1
+            d = rom[nxt]
+            if d >> bits:
+                return None
+            acc |= d << nacc
+            nacc += bits
+            if nacc == 8:
+                out.append(acc)
+                acc = nacc = 0
+            units += 1
+            node = root
+        else:
+            node = nxt
+    return (p + base, size, bytes(out))
+
+
+# HuffUnComp sources (src/gfx_08b8c.c): four direct symbols and the
+# u32 gUnk_08731BA0[][2] rows (include/mode.h:109, gfx_08b8c.c:189/193).
+# Every stream's output is itself an LZ77 stream that the same function
+# hands to LZ77UnCompVram, which huffman_items() checks as well.
+HUFF_DIRECT = {
+    0x0856F308: "HuffUnComp(gUnk_0856F308) src/gfx_08b8c.c:161",
+    0x085707D4: "HuffUnComp(gUnk_085707D4) src/gfx_08b8c.c:163",
+    0x08570B28: "HuffUnComp(gUnk_08570B28) src/gfx_08b8c.c:176",
+    0x08571248: "HuffUnComp(gUnk_08571248) src/gfx_08b8c.c:191",
+}
+HUFF_TABLE = 0x08731BA0  # u32 [][2], rows up to the first all-NULL row
+
+
+def lz77_bytes(buf, off=0):
+    """Declared size when the LZ77 stream in buf decodes to it, else None."""
+    if len(buf) < off + 4 or buf[off] != 0x10:
+        return None
+    size = buf[off + 1] | buf[off + 2] << 8 | buf[off + 3] << 16
+    p, out = off + 4, 0
+    while out < size:
+        if p >= len(buf):
+            return None
+        flags = buf[p]
+        p += 1
+        for bit in range(8):
+            if out >= size:
+                break
+            if flags & (0x80 >> bit):
+                if p + 2 > len(buf):
+                    return None
+                b0, b1 = buf[p], buf[p + 1]
+                p += 2
+                if ((b0 & 0xF) << 8 | b1) + 1 > out:
+                    return None
+                out += (b0 >> 4) + 3
+            else:
+                p += 1
+                out += 1
+    return size if out - size < 18 else None
+
+
+def huffman_items(rom, u32):
+    srcs = dict(HUFF_DIRECT)
+    i = 0
+    while True:
+        a, b = u32(HUFF_TABLE + 8 * i), u32(HUFF_TABLE + 8 * i + 4)
+        if not a and not b:
+            break
+        for j, v in enumerate((a, b)):
+            if v:
+                srcs.setdefault(v, "gUnk_08731BA0[%d][%d], HuffUnComp src/gfx_08b8c.c:%d" % (i, j, 189 if j == 0 else 193))
+        i += 1
+    out = []
+    for a, why in sorted(srcs.items()):
+        x = huffman(rom, a)
+        if x and lz77_bytes(x[2]) is not None:
+            out.append((a, x[0], "huffman",
+                        "Huffman stream (%s): decodes to its declared 0x%X bytes, an LZ77 stream the same loader LZ77UnCompVram-s" % (why, x[1])))
+    return out
+
+
+def transfer_node_items(rom, u32, labels):
+    """Sources of the TransferNode lists behind gUnk_0873185C (LoadGfxSet,
+    src/gfx_08b8c.c:67 -> RequestCopyList, src/early_1518.c:104): a node is
+    {u32 cmd = size << 8 | mode, src, dst}, the list ends at cmd == 0; modes
+    1-5 copy `size` bytes from src, mode 8 LZ77-decompresses it (mode 6's src
+    is a fill value)."""
+    top = 0x0873185C
+    i = bisect.bisect_right(labels, top)
+    end = labels[i] if i < len(labels) else top + 4
+    lists = sorted(set(u32(a) for a in range(top, end, 4) if u32(a)))
+    out = []
+    for lst in lists:
+        a = lst
+        while u32(a):
+            cmd, src = u32(a), u32(a + 4)
+            mode, size = cmd & 0xF, cmd >> 8
+            if mode in (1, 2, 3, 4, 5) and size and ROM_BASE <= src < ROM_BASE + len(rom):
+                out.append((src, src + size, "raw-copy",
+                            "TransferNode 0x%08X {mode %d, 0x%X bytes} source (RequestCopyList, src/early_1518.c:104)" % (a, mode, size)))
+            a += 12
+    return out
+
+
+def consumer_sized_items(rom, u8, u32):
+    out = []
+    # sub_08008e1c (src/gfx_08b8c.c:118): RequestCopy(2, gUnk_08731A28[a0][0],
+    # .., gUnk_08731A88[a0] << 5) with u8 gUnk_08731A88[8] (include/mode.h:105)
+    for i in range(8):
+        pal = u32(0x08731A28 + 12 * i)
+        if pal:
+            out.append((pal, pal + (u8(0x08731A88 + i) << 5), "palette",
+                        "gUnk_08731A28[%d][0], gUnk_08731A88[%d] << 5 bytes (sub_08008e1c, src/gfx_08b8c.c:118)" % (i, i)))
+    # sub_0800bda4 (src/menu_0b920.c:208-209): two 0x180-byte RequestCopy(3)s
+    # from gUnk_08553210 and gUnk_08553210 + 0x180
+    out.append((0x08553210, 0x08553510, "raw-tiles",
+                "gUnk_08553210: RequestCopy(3, .., 0x180) at +0 and +0x180 (sub_0800bda4, src/menu_0b920.c:208-209)"))
+    # sub_0800f2b4 (src/menutask_0f180.c:106-121): u16 gUnk_08563024[][13]
+    # (include/menu.h:65) rows unk2C/unk30, set to 0/1 (l.63-64) and wrapped
+    # to 0..3 (l.106-110): 4 rows of 13 colours
+    out.append((0x08563024, 0x08563024 + 4 * 26, "palette",
+                "u16 gUnk_08563024[4][13]: BlendColors rows 0..3 (sub_0800f2b4, src/menutask_0f180.c:106-121)"))
+    return out
+
+
 SEG14_RANGE = (0x083D0148, 0x085C0000)
 SEG11_RANGE = (0x080D0000, 0x08120000)
 
@@ -369,10 +540,17 @@ def provide(rom, cfg, segs):
                     set(int(k, 16) for k in cfg.get("extra_labels", {})))
     for lo, hi in (SEG11_RANGE, SEG14_RANGE):
         zl = [a for a in labels if lo <= a < hi]
-        for i, a in enumerate(zl):
-            nxt = zl[i + 1] if i + 1 < len(zl) else hi
+        for a in zl:
+            # the next label anywhere in the ROM: a stream may run past its
+            # segment's end (gUnk_085BF484 ends at 0x085C122C, m4a_songs)
+            k = bisect.bisect_right(labels, a)
+            nxt = labels[k] if k < len(labels) else hi
             x = lz77(rom, a)
             if x and nxt - 3 <= x[0] <= nxt:
                 co.append((a, x[0], "lz77",
                            "LZ77 stream at label 0x%08X: decodes to its declared 0x%X bytes and ends at the next label" % (a, x[1])))
+    # 6. Round 2: Huffman streams, TransferNode sources, consumer sizes
+    co.extend(huffman_items(rom, u32))
+    co.extend(transfer_node_items(rom, u32, labels))
+    co.extend(consumer_sized_items(rom, u8, u32))
     return {"coincidence": co, "pointer": ptr}
