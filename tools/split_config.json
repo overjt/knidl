@@ -6134,35 +6134,258 @@
     "0x083344C0": "gUnk_083344C0",
     "0x08334DC0": "gUnk_08334DC0",
     "0x08334EB4": "gUnk_08334EB4",
+    "0x08334EC0": "gUnk_08334EC0",
+    "0x08334FC4": "gUnk_08334FC4",
+    "0x083350C8": "gUnk_083350C8",
+    "0x083351CC": "gUnk_083351CC",
+    "0x083352D0": "gUnk_083352D0",
+    "0x083353D4": "gUnk_083353D4",
+    "0x083354D8": "gUnk_083354D8",
+    "0x083355DC": "gUnk_083355DC",
     "0x083356E0": "gUnk_083356E0",
+    "0x08335728": "gUnk_08335728",
+    "0x083357AC": "gUnk_083357AC",
+    "0x08335830": "gUnk_08335830",
+    "0x083358B4": "gUnk_083358B4",
+    "0x08335938": "gUnk_08335938",
+    "0x083359BC": "gUnk_083359BC",
+    "0x08335A40": "gUnk_08335A40",
+    "0x08335AC4": "gUnk_08335AC4",
     "0x08335B48": "gUnk_08335B48",
+    "0x08335B90": "gUnk_08335B90",
+    "0x08335BD4": "gUnk_08335BD4",
+    "0x08335C18": "gUnk_08335C18",
+    "0x08335C5C": "gUnk_08335C5C",
+    "0x08335CA0": "gUnk_08335CA0",
+    "0x08335CE4": "gUnk_08335CE4",
+    "0x08335D28": "gUnk_08335D28",
+    "0x08335D6C": "gUnk_08335D6C",
     "0x08335DB0": "gUnk_08335DB0",
+    "0x08335DF8": "gUnk_08335DF8",
+    "0x08335EFC": "gUnk_08335EFC",
+    "0x08336000": "gUnk_08336000",
+    "0x08336104": "gUnk_08336104",
+    "0x08336208": "gUnk_08336208",
+    "0x0833630C": "gUnk_0833630C",
+    "0x08336410": "gUnk_08336410",
+    "0x08336514": "gUnk_08336514",
     "0x08336618": "gUnk_08336618",
+    "0x08336660": "gUnk_08336660",
+    "0x08336764": "gUnk_08336764",
+    "0x08336868": "gUnk_08336868",
+    "0x0833696C": "gUnk_0833696C",
+    "0x08336A70": "gUnk_08336A70",
+    "0x08336B74": "gUnk_08336B74",
+    "0x08336C78": "gUnk_08336C78",
+    "0x08336D7C": "gUnk_08336D7C",
     "0x08336E80": "gUnk_08336E80",
+    "0x08336EC8": "gUnk_08336EC8",
+    "0x08336FCC": "gUnk_08336FCC",
+    "0x083370D0": "gUnk_083370D0",
+    "0x083371D4": "gUnk_083371D4",
+    "0x083372D8": "gUnk_083372D8",
+    "0x083373DC": "gUnk_083373DC",
+    "0x083374E0": "gUnk_083374E0",
+    "0x083375E4": "gUnk_083375E4",
     "0x083376E8": "gUnk_083376E8",
+    "0x08337730": "gUnk_08337730",
+    "0x083377B4": "gUnk_083377B4",
+    "0x08337838": "gUnk_08337838",
+    "0x083378BC": "gUnk_083378BC",
+    "0x08337940": "gUnk_08337940",
+    "0x083379C4": "gUnk_083379C4",
+    "0x08337A48": "gUnk_08337A48",
+    "0x08337ACC": "gUnk_08337ACC",
     "0x08337B50": "gUnk_08337B50",
+    "0x08337B98": "gUnk_08337B98",
+    "0x08337EFC": "gUnk_08337EFC",
+    "0x08338260": "gUnk_08338260",
+    "0x083385C4": "gUnk_083385C4",
+    "0x08338928": "gUnk_08338928",
+    "0x08338C8C": "gUnk_08338C8C",
+    "0x08338FF0": "gUnk_08338FF0",
+    "0x08339354": "gUnk_08339354",
     "0x083396B8": "gUnk_083396B8",
+    "0x08339700": "gUnk_08339700",
+    "0x08339784": "gUnk_08339784",
+    "0x08339808": "gUnk_08339808",
+    "0x0833988C": "gUnk_0833988C",
+    "0x08339910": "gUnk_08339910",
+    "0x08339994": "gUnk_08339994",
+    "0x08339A18": "gUnk_08339A18",
+    "0x08339A9C": "gUnk_08339A9C",
     "0x08339B20": "gUnk_08339B20",
+    "0x08339B68": "gUnk_08339B68",
+    "0x08339BAC": "gUnk_08339BAC",
+    "0x08339BF0": "gUnk_08339BF0",
+    "0x08339C34": "gUnk_08339C34",
+    "0x08339C78": "gUnk_08339C78",
+    "0x08339CBC": "gUnk_08339CBC",
+    "0x08339D00": "gUnk_08339D00",
+    "0x08339D44": "gUnk_08339D44",
     "0x08339D88": "gUnk_08339D88",
+    "0x08339DD0": "gUnk_08339DD0",
+    "0x08339E54": "gUnk_08339E54",
+    "0x08339ED8": "gUnk_08339ED8",
+    "0x08339F5C": "gUnk_08339F5C",
+    "0x08339FE0": "gUnk_08339FE0",
+    "0x0833A064": "gUnk_0833A064",
     "0x0833A0E8": "gUnk_0833A0E8",
+    "0x0833A120": "gUnk_0833A120",
+    "0x0833A2E4": "gUnk_0833A2E4",
+    "0x0833A4A8": "gUnk_0833A4A8",
+    "0x0833A66C": "gUnk_0833A66C",
+    "0x0833A830": "gUnk_0833A830",
+    "0x0833A9F4": "gUnk_0833A9F4",
     "0x0833ABB8": "gUnk_0833ABB8",
+    "0x0833ABF0": "gUnk_0833ABF0",
+    "0x0833B3F4": "gUnk_0833B3F4",
+    "0x0833BBF8": "gUnk_0833BBF8",
+    "0x0833C3FC": "gUnk_0833C3FC",
+    "0x0833CC00": "gUnk_0833CC00",
+    "0x0833D404": "gUnk_0833D404",
+    "0x0833DC08": "gUnk_0833DC08",
+    "0x0833E40C": "gUnk_0833E40C",
     "0x0833EC10": "gUnk_0833EC10",
+    "0x0833EC58": "gUnk_0833EC58",
+    "0x0833ED3C": "gUnk_0833ED3C",
+    "0x0833EE20": "gUnk_0833EE20",
+    "0x0833EF04": "gUnk_0833EF04",
+    "0x0833EFE8": "gUnk_0833EFE8",
+    "0x0833F0CC": "gUnk_0833F0CC",
+    "0x0833F1B0": "gUnk_0833F1B0",
+    "0x0833F294": "gUnk_0833F294",
+    "0x0833F378": "gUnk_0833F378",
     "0x0833F45C": "gUnk_0833F45C",
+    "0x0833F4C4": "gUnk_0833F4C4",
+    "0x0833F5A8": "gUnk_0833F5A8",
+    "0x0833F68C": "gUnk_0833F68C",
+    "0x0833F770": "gUnk_0833F770",
+    "0x0833F854": "gUnk_0833F854",
+    "0x0833F938": "gUnk_0833F938",
+    "0x0833FA1C": "gUnk_0833FA1C",
+    "0x0833FB00": "gUnk_0833FB00",
+    "0x0833FBE4": "gUnk_0833FBE4",
     "0x0833FCC8": "gUnk_0833FCC8",
+    "0x0833FD30": "gUnk_0833FD30",
+    "0x0833FDB0": "gUnk_0833FDB0",
+    "0x0833FE30": "gUnk_0833FE30",
+    "0x0833FE40": "gUnk_0833FE40",
+    "0x0833FEC0": "gUnk_0833FEC0",
+    "0x0833FF40": "gUnk_0833FF40",
+    "0x0833FF50": "gUnk_0833FF50",
+    "0x0833FFD0": "gUnk_0833FFD0",
+    "0x08340050": "gUnk_08340050",
     "0x08340060": "gUnk_08340060",
+    "0x08340088": "gUnk_08340088",
+    "0x083400C8": "gUnk_083400C8",
+    "0x08340108": "gUnk_08340108",
+    "0x08340118": "gUnk_08340118",
+    "0x08340158": "gUnk_08340158",
+    "0x08340198": "gUnk_08340198",
+    "0x083401A8": "gUnk_083401A8",
+    "0x083401E8": "gUnk_083401E8",
+    "0x08340228": "gUnk_08340228",
     "0x08340238": "gUnk_08340238",
+    "0x08340260": "gUnk_08340260",
+    "0x083402E0": "gUnk_083402E0",
+    "0x08340360": "gUnk_08340360",
+    "0x08340370": "gUnk_08340370",
+    "0x083403F0": "gUnk_083403F0",
+    "0x08340470": "gUnk_08340470",
+    "0x08340480": "gUnk_08340480",
+    "0x08340500": "gUnk_08340500",
+    "0x08340580": "gUnk_08340580",
+    "0x08340590": "gUnk_08340590",
+    "0x08340610": "gUnk_08340610",
+    "0x08340690": "gUnk_08340690",
     "0x083406A0": "gUnk_083406A0",
+    "0x083406D0": "gUnk_083406D0",
+    "0x08340710": "gUnk_08340710",
+    "0x08340750": "gUnk_08340750",
+    "0x08340760": "gUnk_08340760",
+    "0x083407A0": "gUnk_083407A0",
+    "0x083407E0": "gUnk_083407E0",
+    "0x083407F0": "gUnk_083407F0",
+    "0x08340830": "gUnk_08340830",
+    "0x08340870": "gUnk_08340870",
+    "0x08340880": "gUnk_08340880",
+    "0x083408C0": "gUnk_083408C0",
+    "0x08340900": "gUnk_08340900",
     "0x08340910": "gUnk_08340910",
+    "0x08340940": "gUnk_08340940",
+    "0x083418E4": "gUnk_083418E4",
+    "0x08342888": "gUnk_08342888",
+    "0x0834382C": "gUnk_0834382C",
     "0x083447D0": "gUnk_083447D0",
+    "0x083447F8": "gUnk_083447F8",
+    "0x083448FC": "gUnk_083448FC",
+    "0x08344A00": "gUnk_08344A00",
+    "0x08344B04": "gUnk_08344B04",
     "0x08344C08": "gUnk_08344C08",
+    "0x08344C30": "gUnk_08344C30",
+    "0x08345534": "gUnk_08345534",
+    "0x08345E38": "gUnk_08345E38",
+    "0x0834673C": "gUnk_0834673C",
+    "0x08347040": "gUnk_08347040",
+    "0x08347944": "gUnk_08347944",
     "0x08348248": "gUnk_08348248",
+    "0x08348280": "gUnk_08348280",
+    "0x08348B84": "gUnk_08348B84",
+    "0x08349488": "gUnk_08349488",
+    "0x08349D8C": "gUnk_08349D8C",
+    "0x0834A690": "gUnk_0834A690",
+    "0x0834AF94": "gUnk_0834AF94",
     "0x0834B898": "gUnk_0834B898",
+    "0x0834B8D0": "gUnk_0834B8D0",
+    "0x0834C1D4": "gUnk_0834C1D4",
+    "0x0834CAD8": "gUnk_0834CAD8",
+    "0x0834D3DC": "gUnk_0834D3DC",
+    "0x0834DCE0": "gUnk_0834DCE0",
+    "0x0834E5E4": "gUnk_0834E5E4",
     "0x0834EEE8": "gUnk_0834EEE8",
+    "0x0834EF20": "gUnk_0834EF20",
+    "0x0834F3C4": "gUnk_0834F3C4",
+    "0x0834F868": "gUnk_0834F868",
+    "0x0834FD0C": "gUnk_0834FD0C",
+    "0x083501B0": "gUnk_083501B0",
+    "0x08350654": "gUnk_08350654",
     "0x08350AF8": "gUnk_08350AF8",
+    "0x08350B30": "gUnk_08350B30",
+    "0x083511B4": "gUnk_083511B4",
+    "0x08351838": "gUnk_08351838",
+    "0x08351EBC": "gUnk_08351EBC",
+    "0x08352540": "gUnk_08352540",
+    "0x08352BC4": "gUnk_08352BC4",
     "0x08353248": "gUnk_08353248",
+    "0x08353280": "gUnk_08353280",
+    "0x08353904": "gUnk_08353904",
+    "0x08353F88": "gUnk_08353F88",
+    "0x0835460C": "gUnk_0835460C",
+    "0x08354C90": "gUnk_08354C90",
+    "0x08355314": "gUnk_08355314",
     "0x08355998": "gUnk_08355998",
+    "0x083559D0": "gUnk_083559D0",
+    "0x08356054": "gUnk_08356054",
+    "0x083566D8": "gUnk_083566D8",
+    "0x08356D5C": "gUnk_08356D5C",
+    "0x083573E0": "gUnk_083573E0",
+    "0x08357A64": "gUnk_08357A64",
     "0x083580E8": "gUnk_083580E8",
+    "0x08358120": "gUnk_08358120",
+    "0x083588A4": "gUnk_083588A4",
+    "0x08359028": "gUnk_08359028",
+    "0x083597AC": "gUnk_083597AC",
+    "0x08359F30": "gUnk_08359F30",
+    "0x0835A6B4": "gUnk_0835A6B4",
+    "0x0835AE38": "gUnk_0835AE38",
     "0x0835B5BC": "gUnk_0835B5BC",
+    "0x0835B604": "gUnk_0835B604",
+    "0x0835BA48": "gUnk_0835BA48",
+    "0x0835BE8C": "gUnk_0835BE8C",
+    "0x0835C2D0": "gUnk_0835C2D0",
+    "0x0835C714": "gUnk_0835C714",
+    "0x0835CB58": "gUnk_0835CB58",
     "0x0835CF9C": "gUnk_0835CF9C",
     "0x0835CFD4": "gUnk_0835CFD4",
     "0x0835D048": "gUnk_0835D048",
@@ -8393,8 +8616,14 @@
     "0x0853E7EC": "gUnk_0853E7EC",
     "0x08541D98": "gUnk_08541D98",
     "0x08541F58": "gUnk_08541F58",
+    "0x0854A66C": "gUnk_0854A66C",
+    "0x0854A6EC": "gUnk_0854A6EC",
     "0x0854BB60": "gUnk_0854BB60",
+    "0x0854BB74": "gUnk_0854BB74",
+    "0x0854BBD4": "gUnk_0854BBD4",
     "0x0854D294": "gUnk_0854D294",
+    "0x0854D2A8": "gUnk_0854D2A8",
+    "0x0854D328": "gUnk_0854D328",
     "0x0854E838": "gUnk_0854E838",
     "0x0854E84C": "gUnk_0854E84C",
     "0x0854FBC0": "gUnk_0854FBC0",
@@ -8458,8 +8687,14 @@
     "0x08571D74": "gUnk_08571D74",
     "0x08572164": "gUnk_08572164",
     "0x08584BB0": "gUnk_08584BB0",
+    "0x08596D00": "gUnk_08596D00",
+    "0x08596DA0": "gUnk_08596DA0",
     "0x085995AC": "gUnk_085995AC",
+    "0x085995C0": "gUnk_085995C0",
+    "0x085995E0": "gUnk_085995E0",
     "0x0859990C": "gUnk_0859990C",
+    "0x08599920": "gUnk_08599920",
+    "0x08599980": "gUnk_08599980",
     "0x0859A09C": "gUnk_0859A09C",
     "0x0859A0B0": "gUnk_0859A0B0",
     "0x0859A0D0": "gUnk_0859A0D0",
@@ -8525,8 +8760,14 @@
     "0x085B6AC8": "gUnk_085B6AC8",
     "0x085B6E78": "gUnk_085B6E78",
     "0x085B6F98": "gUnk_085B6F98",
+    "0x085B8520": "gUnk_085B8520",
+    "0x085B85A0": "gUnk_085B85A0",
     "0x085B9B2C": "gUnk_085B9B2C",
     "0x085B9B6C": "gUnk_085B9B6C",
+    "0x085BA46C": "gUnk_085BA46C",
+    "0x085BA4CC": "gUnk_085BA4CC",
+    "0x085BD098": "gUnk_085BD098",
+    "0x085BD138": "gUnk_085BD138",
     "0x085CCB58": "gUnk_085CCB58",
     "0x085E0070": "gUnk_085E0070",
     "0x085E0090": "gUnk_085E0090",
@@ -9142,21 +9383,41 @@
     "0x0873F444": "gUnk_0873F444",
     "0x0873F470": "gUnk_0873F470",
     "0x0873F49C": "gUnk_0873F49C",
+    "0x0873F4C8": "gUnk_0873F4C8",
+    "0x0873F4E4": "gUnk_0873F4E4",
     "0x0873F500": "gUnk_0873F500",
+    "0x0873F51C": "gUnk_0873F51C",
+    "0x0873F538": "gUnk_0873F538",
     "0x0873F554": "gUnk_0873F554",
+    "0x0873F570": "gUnk_0873F570",
+    "0x0873F58C": "gUnk_0873F58C",
+    "0x0873F5A8": "gUnk_0873F5A8",
+    "0x0873F5C4": "gUnk_0873F5C4",
     "0x0873F5CC": "gUnk_0873F5CC",
     "0x0873F5D4": "gUnk_0873F5D4",
+    "0x0873F5DC": "gUnk_0873F5DC",
     "0x0873F5E4": "gUnk_0873F5E4",
+    "0x0873F5EC": "gUnk_0873F5EC",
+    "0x0873F5F4": "gUnk_0873F5F4",
+    "0x0873F5FC": "gUnk_0873F5FC",
+    "0x0873F618": "gUnk_0873F618",
+    "0x0873F634": "gUnk_0873F634",
+    "0x0873F640": "gUnk_0873F640",
+    "0x0873F64C": "gUnk_0873F64C",
+    "0x0873F658": "gUnk_0873F658",
     "0x0873F664": "gUnk_0873F664",
     "0x0873F690": "gUnk_0873F690",
     "0x0873F6BC": "gUnk_0873F6BC",
     "0x0873F6E8": "gUnk_0873F6E8",
     "0x0873F704": "gUnk_0873F704",
     "0x0873F720": "gUnk_0873F720",
+    "0x0873F73C": "gUnk_0873F73C",
     "0x0873F758": "gUnk_0873F758",
     "0x0873F774": "gUnk_0873F774",
     "0x0873F7AC": "gUnk_0873F7AC",
+    "0x0873F7C8": "gUnk_0873F7C8",
     "0x0873F7E4": "gUnk_0873F7E4",
+    "0x0873F800": "gUnk_0873F800",
     "0x0873F81C": "gUnk_0873F81C",
     "0x0873F830": "gUnk_0873F830",
     "0x0873F844": "gUnk_0873F844",
@@ -9164,14 +9425,19 @@
     "0x0873F86C": "gUnk_0873F86C",
     "0x0873F880": "gUnk_0873F880",
     "0x0873F894": "gUnk_0873F894",
+    "0x0873F89C": "gUnk_0873F89C",
+    "0x0873F8A4": "gUnk_0873F8A4",
     "0x0873F8B4": "gUnk_0873F8B4",
     "0x0873F8BC": "gUnk_0873F8BC",
     "0x0873F8CC": "gUnk_0873F8CC",
     "0x0873F8DC": "gUnk_0873F8DC",
+    "0x0873F8E4": "gUnk_0873F8E4",
+    "0x0873F8EC": "gUnk_0873F8EC",
     "0x0873F8F4": "gUnk_0873F8F4",
     "0x0873F910": "gUnk_0873F910",
     "0x0873F92C": "gUnk_0873F92C",
     "0x0873F938": "gUnk_0873F938",
+    "0x0873F944": "gUnk_0873F944",
     "0x0873F950": "gUnk_0873F950",
     "0x0873FAB4": "gUnk_0873FAB4",
     "0x0873FAE8": "gUnk_0873FAE8",
@@ -9324,11 +9590,29 @@
     "0x08740D8C": "gUnk_08740D8C",
     "0x08740DB8": "gUnk_08740DB8",
     "0x08740DE4": "gUnk_08740DE4",
+    "0x08740E00": "gUnk_08740E00",
     "0x08740E1C": "gUnk_08740E1C",
     "0x08740E38": "gUnk_08740E38",
+    "0x08740E54": "gUnk_08740E54",
+    "0x08740E70": "gUnk_08740E70",
+    "0x08740E8C": "gUnk_08740E8C",
+    "0x08740EA8": "gUnk_08740EA8",
+    "0x08740EC4": "gUnk_08740EC4",
+    "0x08740EE0": "gUnk_08740EE0",
+    "0x08740EFC": "gUnk_08740EFC",
+    "0x08740F08": "gUnk_08740F08",
+    "0x08740F14": "gUnk_08740F14",
+    "0x08740F20": "gUnk_08740F20",
     "0x08740F2C": "gUnk_08740F2C",
+    "0x08740F38": "gUnk_08740F38",
+    "0x08740F44": "gUnk_08740F44",
     "0x08740F50": "gUnk_08740F50",
     "0x08740F5C": "gUnk_08740F5C",
+    "0x08740F68": "gUnk_08740F68",
+    "0x08740F74": "gUnk_08740F74",
+    "0x08740F80": "gUnk_08740F80",
+    "0x08740F8C": "gUnk_08740F8C",
+    "0x08740F98": "gUnk_08740F98",
     "0x08740FA4": "gUnk_08740FA4",
     "0x08740FB0": "gUnk_08740FB0",
     "0x08740FC8": "gUnk_08740FC8",
@@ -9351,8 +9635,12 @@
     "0x087410D8": "gUnk_087410D8",
     "0x087410E4": "gUnk_087410E4",
     "0x08741110": "gUnk_08741110",
+    "0x0874113C": "gUnk_0874113C",
     "0x08741158": "gUnk_08741158",
     "0x08741174": "gUnk_08741174",
+    "0x08741190": "gUnk_08741190",
+    "0x087411AC": "gUnk_087411AC",
+    "0x087411B4": "gUnk_087411B4",
     "0x087411C0": "gRockyVariants",
     "0x087411CC": "gRockyWalkStates",
     "0x087411E0": "gRockyWalkStateUpdates",
@@ -9524,10 +9812,48 @@
     "0x08741A20": "gUnk_08741A20",
     "0x08741A4C": "gUnk_08741A4C",
     "0x08741A78": "gUnk_08741A78",
+    "0x08741AA4": "gUnk_08741AA4",
+    "0x08741AC0": "gUnk_08741AC0",
     "0x08741ADC": "gUnk_08741ADC",
+    "0x08741AF8": "gUnk_08741AF8",
+    "0x08741B14": "gUnk_08741B14",
+    "0x08741B1C": "gUnk_08741B1C",
+    "0x08741B24": "gUnk_08741B24",
+    "0x08741B2C": "gUnk_08741B2C",
+    "0x08741B34": "gUnk_08741B34",
     "0x08741B3C": "gUnk_08741B3C",
     "0x08741B44": "gUnk_08741B44",
+    "0x08741B4C": "gUnk_08741B4C",
+    "0x08741B54": "gUnk_08741B54",
+    "0x08741B5C": "gUnk_08741B5C",
+    "0x08741B64": "gUnk_08741B64",
+    "0x08741B80": "gUnk_08741B80",
+    "0x08741B9C": "gUnk_08741B9C",
+    "0x08741BB8": "gUnk_08741BB8",
+    "0x08741BD4": "gUnk_08741BD4",
+    "0x08741BF0": "gUnk_08741BF0",
+    "0x08741C0C": "gUnk_08741C0C",
+    "0x08741C28": "gUnk_08741C28",
+    "0x08741C44": "gUnk_08741C44",
+    "0x08741C60": "gUnk_08741C60",
+    "0x08741C7C": "gUnk_08741C7C",
+    "0x08741C98": "gUnk_08741C98",
+    "0x08741CA4": "gUnk_08741CA4",
+    "0x08741CB0": "gUnk_08741CB0",
+    "0x08741CBC": "gUnk_08741CBC",
+    "0x08741CC8": "gUnk_08741CC8",
+    "0x08741CD4": "gUnk_08741CD4",
     "0x08741CE0": "gUnk_08741CE0",
+    "0x08741CEC": "gUnk_08741CEC",
+    "0x08741CF8": "gUnk_08741CF8",
+    "0x08741D04": "gUnk_08741D04",
+    "0x08741D10": "gUnk_08741D10",
+    "0x08741D1C": "gUnk_08741D1C",
+    "0x08741D28": "gUnk_08741D28",
+    "0x08741D34": "gUnk_08741D34",
+    "0x08741D40": "gUnk_08741D40",
+    "0x08741D4C": "gUnk_08741D4C",
+    "0x08741D58": "gUnk_08741D58",
     "0x08741D64": "gUnk_08741D64",
     "0x08741D7C": "gUnk_08741D7C",
     "0x08741D94": "gUnk_08741D94",
@@ -9553,6 +9879,11 @@
     "0x08741EA4": "gUnk_08741EA4",
     "0x08741EB4": "gUnk_08741EB4",
     "0x08741EE0": "gUnk_08741EE0",
+    "0x08741F0C": "gUnk_08741F0C",
+    "0x08741F28": "gUnk_08741F28",
+    "0x08741F44": "gUnk_08741F44",
+    "0x08741F4C": "gUnk_08741F4C",
+    "0x08741F58": "gUnk_08741F58",
     "0x08741F64": "gUnk_08741F64",
     "0x08741F70": "gNoddyVariants",
     "0x08741F78": "gNoddyStates",
@@ -9694,6 +10025,7 @@
     "0x08742B74": "gUnk_08742B74",
     "0x08742BA0": "gUnk_08742BA0",
     "0x08742BCC": "gUnk_08742BCC",
+    "0x08742BF8": "gUnk_08742BF8",
     "0x08742C14": "gUnk_08742C14",
     "0x08742C30": "gUnk_08742C30",
     "0x08742C4C": "gUnk_08742C4C",
@@ -9701,8 +10033,32 @@
     "0x08742C84": "gUnk_08742C84",
     "0x08742CA0": "gUnk_08742CA0",
     "0x08742CBC": "gUnk_08742CBC",
+    "0x08742CD8": "gUnk_08742CD8",
+    "0x08742CE0": "gUnk_08742CE0",
+    "0x08742CE8": "gUnk_08742CE8",
+    "0x08742CF0": "gUnk_08742CF0",
+    "0x08742D0C": "gUnk_08742D0C",
+    "0x08742D28": "gUnk_08742D28",
+    "0x08742D44": "gUnk_08742D44",
+    "0x08742D60": "gUnk_08742D60",
+    "0x08742D7C": "gUnk_08742D7C",
+    "0x08742D98": "gUnk_08742D98",
+    "0x08742DB4": "gUnk_08742DB4",
+    "0x08742DD0": "gUnk_08742DD0",
+    "0x08742DEC": "gUnk_08742DEC",
+    "0x08742E08": "gUnk_08742E08",
+    "0x08742E14": "gUnk_08742E14",
+    "0x08742E20": "gUnk_08742E20",
+    "0x08742E2C": "gUnk_08742E2C",
+    "0x08742E38": "gUnk_08742E38",
+    "0x08742E44": "gUnk_08742E44",
     "0x08742E50": "gUnk_08742E50",
     "0x08742E5C": "gUnk_08742E5C",
+    "0x08742E68": "gUnk_08742E68",
+    "0x08742E74": "gUnk_08742E74",
+    "0x08742E80": "gUnk_08742E80",
+    "0x08742E8C": "gUnk_08742E8C",
+    "0x08742E98": "gUnk_08742E98",
     "0x08742EA4": "gUnk_08742EA4",
     "0x08742EBC": "gUnk_08742EBC",
     "0x08742ED4": "gUnk_08742ED4",
@@ -9719,6 +10075,16 @@
     "0x08742FE8": "gUnk_08742FE8",
     "0x08743014": "gUnk_08743014",
     "0x08743040": "gUnk_08743040",
+    "0x0874306C": "gUnk_0874306C",
+    "0x08743088": "gUnk_08743088",
+    "0x087430A4": "gUnk_087430A4",
+    "0x087430C0": "gUnk_087430C0",
+    "0x087430DC": "gUnk_087430DC",
+    "0x087430E4": "gUnk_087430E4",
+    "0x087430EC": "gUnk_087430EC",
+    "0x08743108": "gUnk_08743108",
+    "0x08743124": "gUnk_08743124",
+    "0x08743130": "gUnk_08743130",
     "0x0874313C": "gUnk_0874313C",
     "0x08743144": "gUnk_08743144",
     "0x08743158": "gUnk_08743158",
@@ -9767,7 +10133,20 @@
     "0x08743390": "gUnk_08743390",
     "0x087433BC": "gUnk_087433BC",
     "0x087433E8": "gUnk_087433E8",
+    "0x08743414": "gUnk_08743414",
+    "0x08743470": "gUnk_08743470",
+    "0x0874348C": "gUnk_0874348C",
+    "0x087434C4": "gUnk_087434C4",
+    "0x087434E0": "gUnk_087434E0",
+    "0x087434FC": "gUnk_087434FC",
+    "0x08743518": "gUnk_08743518",
+    "0x08743534": "gUnk_08743534",
+    "0x08743540": "gUnk_08743540",
+    "0x0874354C": "gUnk_0874354C",
     "0x08743558": "gUnk_08743558",
+    "0x08743564": "gUnk_08743564",
+    "0x08743570": "gUnk_08743570",
+    "0x0874357C": "gUnk_0874357C",
     "0x08743588": "gUnk_08743588",
     "0x087435A0": "gUnk_087435A0",
     "0x087435B8": "gUnk_087435B8",
@@ -9783,6 +10162,14 @@
     "0x08743640": "gUnk_08743640",
     "0x08743644": "gUnk_08743644",
     "0x08743670": "gUnk_08743670",
+    "0x0874369C": "gUnk_0874369C",
+    "0x087436B8": "gUnk_087436B8",
+    "0x087436D4": "gUnk_087436D4",
+    "0x087436DC": "gUnk_087436DC",
+    "0x087436E4": "gUnk_087436E4",
+    "0x08743700": "gUnk_08743700",
+    "0x0874371C": "gUnk_0874371C",
+    "0x08743728": "gUnk_08743728",
     "0x08743734": "gUnk_08743734",
     "0x0874373C": "gUnk_0874373C",
     "0x08743744": "gUnk_08743744",
@@ -9841,8 +10228,26 @@
     "0x08743B4C": "gBonkersDef",
     "0x08743B78": "gPoppyBrosSrDef",
     "0x08743BA4": "gBugzzyDef",
+    "0x08743BD0": "gUnk_08743BD0",
+    "0x08743BEC": "gUnk_08743BEC",
+    "0x08743DE4": "gUnk_08743DE4",
+    "0x08743E00": "gUnk_08743E00",
+    "0x08743EFC": "gUnk_08743EFC",
+    "0x08743F18": "gUnk_08743F18",
+    "0x08744014": "gUnk_08744014",
+    "0x0874401C": "gUnk_0874401C",
+    "0x08744024": "gUnk_08744024",
+    "0x0874402C": "gUnk_0874402C",
+    "0x08744054": "gUnk_08744054",
+    "0x0874406C": "gUnk_0874406C",
+    "0x0874407C": "gUnk_0874407C",
+    "0x08744098": "gUnk_08744098",
+    "0x087440B4": "gUnk_087440B4",
+    "0x087440D0": "gUnk_087440D0",
     "0x087440DC": "gUnk_087440DC",
+    "0x087440E8": "gUnk_087440E8",
     "0x087440F4": "gUnk_087440F4",
+    "0x08744100": "gUnk_08744100",
     "0x0874410C": "gUnk_0874410C",
     "0x08744118": "gUnk_08744118",
     "0x08744120": "gUnk_08744120",
@@ -9866,8 +10271,19 @@
     "0x087441D8": "gUnk_087441D8",
     "0x08744204": "gUnk_08744204",
     "0x08744230": "gUnk_08744230",
+    "0x0874425C": "gUnk_0874425C",
+    "0x08744278": "gUnk_08744278",
+    "0x08744294": "gUnk_08744294",
+    "0x087442B0": "gUnk_087442B0",
+    "0x087442B8": "gUnk_087442B8",
+    "0x087442C0": "gUnk_087442C0",
+    "0x087442C8": "gUnk_087442C8",
+    "0x087442E4": "gUnk_087442E4",
+    "0x08744300": "gUnk_08744300",
     "0x0874430C": "gUnk_0874430C",
+    "0x08744318": "gUnk_08744318",
     "0x08744324": "gUnk_08744324",
+    "0x08744330": "gUnk_08744330",
     "0x0874433C": "gUnk_0874433C",
     "0x08744360": "gUnk_08744360",
     "0x08744384": "gUnk_08744384",
@@ -9949,6 +10365,7 @@
     "0x08744CC0": "gUnk_08744CC0",
     "0x08744CDC": "gUnk_08744CDC",
     "0x08744CF8": "gUnk_08744CF8",
+    "0x08744D14": "gUnk_08744D14",
     "0x08744D30": "gUnk_08744D30",
     "0x08744D4C": "gUnk_08744D4C",
     "0x08744D84": "gUnk_08744D84",
@@ -9992,8 +10409,10 @@
     "0x087452A8": "gUnk_087452A8",
     "0x087452C4": "gUnk_087452C4",
     "0x087452E0": "gUnk_087452E0",
+    "0x087452FC": "gUnk_087452FC",
     "0x08745304": "gUnk_08745304",
     "0x0874530C": "gUnk_0874530C",
+    "0x08745314": "gUnk_08745314",
     "0x0874531C": "gUnk_0874531C",
     "0x08745324": "gUnk_08745324",
     "0x0874532C": "gUnk_0874532C",
@@ -10013,8 +10432,15 @@
     "0x0874539C": "gUnk_0874539C",
     "0x087453A4": "gUnk_087453A4",
     "0x087453AC": "gUnk_087453AC",
+    "0x087453B4": "gUnk_087453B4",
+    "0x087453BC": "gUnk_087453BC",
+    "0x087453D8": "gUnk_087453D8",
+    "0x087453F4": "gUnk_087453F4",
+    "0x08745410": "gUnk_08745410",
     "0x0874541C": "gUnk_0874541C",
+    "0x08745428": "gUnk_08745428",
     "0x08745434": "gUnk_08745434",
+    "0x08745440": "gUnk_08745440",
     "0x0874544C": "gUnk_0874544C",
     "0x08745458": "gUnk_08745458",
     "0x08745460": "gUnk_08745460",
@@ -10032,6 +10458,13 @@
     "0x0874550C": "gUnk_0874550C",
     "0x08745530": "gUnk_08745530",
     "0x0874555C": "gUnk_0874555C",
+    "0x08745588": "gUnk_08745588",
+    "0x087455A4": "gUnk_087455A4",
+    "0x087455C0": "gUnk_087455C0",
+    "0x087455C8": "gUnk_087455C8",
+    "0x087455E4": "gUnk_087455E4",
+    "0x08745600": "gUnk_08745600",
+    "0x0874560C": "gUnk_0874560C",
     "0x08745618": "gUnk_08745618",
     "0x0874561F": "gUnk_0874561F",
     "0x08745624": "gUnk_08745624",
@@ -10056,6 +10489,7 @@
     "0x08745884": "gUnk_08745884",
     "0x087458A0": "gUnk_087458A0",
     "0x087458BC": "gUnk_087458BC",
+    "0x087458D8": "gUnk_087458D8",
     "0x087458F4": "gUnk_087458F4",
     "0x08745910": "gUnk_08745910",
     "0x0874592C": "gUnk_0874592C",
@@ -10068,7 +10502,12 @@
     "0x08745A14": "gUnk_08745A14",
     "0x08745A1C": "gUnk_08745A1C",
     "0x08745A24": "gUnk_08745A24",
+    "0x08745A2C": "gUnk_08745A2C",
+    "0x08745A3C": "gUnk_08745A3C",
+    "0x08745A58": "gUnk_08745A58",
+    "0x08745A74": "gUnk_08745A74",
     "0x08745A80": "gUnk_08745A80",
+    "0x08745A8C": "gUnk_08745A8C",
     "0x08745A98": "gUnk_08745A98",
     "0x08745AA4": "gUnk_08745AA4",
     "0x08745AAC": "gUnk_08745AAC",
@@ -10087,11 +10526,19 @@
     "0x08745B30": "gUnk_08745B30",
     "0x08745B5C": "gUnk_08745B5C",
     "0x08745B88": "gUnk_08745B88",
+    "0x08745BB4": "gUnk_08745BB4",
     "0x08745BD0": "gUnk_08745BD0",
     "0x08745BEC": "gUnk_08745BEC",
     "0x08745C08": "gUnk_08745C08",
     "0x08745C24": "gUnk_08745C24",
     "0x08745C40": "gUnk_08745C40",
+    "0x08745C5C": "gUnk_08745C5C",
+    "0x08745C78": "gUnk_08745C78",
+    "0x08745C88": "gUnk_08745C88",
+    "0x08745C90": "gUnk_08745C90",
+    "0x08745CAC": "gUnk_08745CAC",
+    "0x08745CC8": "gUnk_08745CC8",
+    "0x08745CE0": "gUnk_08745CE0",
     "0x08745CEC": "gUnk_08745CEC",
     "0x08745CFC": "gUnk_08745CFC",
     "0x08745D4C": "gUnk_08745D4C",
@@ -10145,7 +10592,27 @@
     "0x08747E38": "gUnk_08747E38",
     "0x08747E64": "gUnk_08747E64",
     "0x08747E90": "gUnk_08747E90",
+    "0x08747EBC": "gUnk_08747EBC",
     "0x08747EF4": "gUnk_08747EF4",
+    "0x08747F10": "gUnk_08747F10",
+    "0x08747F2C": "gUnk_08747F2C",
+    "0x08747F48": "gUnk_08747F48",
+    "0x08747F64": "gUnk_08747F64",
+    "0x08748178": "gUnk_08748178",
+    "0x08748180": "gUnk_08748180",
+    "0x08748188": "gUnk_08748188",
+    "0x08748190": "gUnk_08748190",
+    "0x087481A0": "gUnk_087481A0",
+    "0x087481BC": "gUnk_087481BC",
+    "0x087481D8": "gUnk_087481D8",
+    "0x087481F4": "gUnk_087481F4",
+    "0x08748210": "gUnk_08748210",
+    "0x0874821C": "gUnk_0874821C",
+    "0x08748228": "gUnk_08748228",
+    "0x08748234": "gUnk_08748234",
+    "0x08748240": "gUnk_08748240",
+    "0x0874824C": "gUnk_0874824C",
+    "0x08748258": "gUnk_08748258",
     "0x08748264": "gKingDededeVariants",
     "0x08748268": "gUnk_08748268",
     "0x087482A8": "gUnk_087482A8",
@@ -10190,6 +10657,8 @@
     "0x08748764": "gKingDededeDef",
     "0x08748790": "gMrShineAndMrBrightDef",
     "0x087487BC": "gUnk_087487BC",
+    "0x087487E8": "gUnk_087487E8",
+    "0x08748804": "gUnk_08748804",
     "0x08748820": "gUnk_08748820",
     "0x0874883C": "gUnk_0874883C",
     "0x08748858": "gUnk_08748858",
@@ -10198,8 +10667,18 @@
     "0x087488AC": "gUnk_087488AC",
     "0x087488C8": "gUnk_087488C8",
     "0x087488E4": "gUnk_087488E4",
+    "0x08748900": "gUnk_08748900",
+    "0x08748908": "gUnk_08748908",
+    "0x08748910": "gUnk_08748910",
+    "0x08748918": "gUnk_08748918",
+    "0x08748920": "gUnk_08748920",
+    "0x08748930": "gUnk_08748930",
+    "0x0874894C": "gUnk_0874894C",
+    "0x08748968": "gUnk_08748968",
     "0x08748974": "gUnk_08748974",
+    "0x08748980": "gUnk_08748980",
     "0x0874898C": "gUnk_0874898C",
+    "0x08748998": "gUnk_08748998",
     "0x087489A4": "gUnk_087489A4",
     "0x087489AC": "gUnk_087489AC",
     "0x087489B4": "gUnk_087489B4",
@@ -10231,11 +10710,25 @@
     "0x08748B34": "gUnk_08748B34",
     "0x08748B60": "gUnk_08748B60",
     "0x08748B8C": "gUnk_08748B8C",
+    "0x08748BB8": "gUnk_08748BB8",
     "0x08748BD4": "gUnk_08748BD4",
+    "0x08748BF0": "gUnk_08748BF0",
     "0x08748C0C": "gUnk_08748C0C",
     "0x08748C28": "gUnk_08748C28",
     "0x08748C44": "gUnk_08748C44",
+    "0x08748C60": "gUnk_08748C60",
+    "0x08748C7C": "gUnk_08748C7C",
+    "0x08748C98": "gUnk_08748C98",
+    "0x08748CB4": "gUnk_08748CB4",
+    "0x08748CD0": "gUnk_08748CD0",
+    "0x08748CD8": "gUnk_08748CD8",
+    "0x08748CE0": "gUnk_08748CE0",
+    "0x08748CE8": "gUnk_08748CE8",
+    "0x08748CF0": "gUnk_08748CF0",
+    "0x08748CF8": "gUnk_08748CF8",
     "0x08748D04": "gUnk_08748D04",
+    "0x08748D10": "gUnk_08748D10",
+    "0x08748D1C": "gUnk_08748D1C",
     "0x08748D28": "gUnk_08748D28",
     "0x08748D38": "gUnk_08748D38",
     "0x08748D44": "gUnk_08748D44",
@@ -10321,17 +10814,30 @@
     "0x08749514": "gMetaKnightDef",
     "0x08749540": "gKrackoDef",
     "0x0874956C": "gNightmareWizardDef",
+    "0x08749598": "gUnk_08749598",
     "0x087495EC": "gUnk_087495EC",
+    "0x08749608": "gUnk_08749608",
+    "0x087496E8": "gUnk_087496E8",
     "0x08749704": "gUnk_08749704",
     "0x08749720": "gUnk_08749720",
+    "0x0874973C": "gUnk_0874973C",
     "0x08749758": "gUnk_08749758",
     "0x08749774": "gUnk_08749774",
+    "0x08749790": "gUnk_08749790",
     "0x08749870": "gUnk_08749870",
     "0x0874988C": "gUnk_0874988C",
+    "0x08749AD8": "gUnk_08749AD8",
+    "0x08749AE0": "gUnk_08749AE0",
+    "0x08749AE8": "gUnk_08749AE8",
+    "0x08749AF0": "gUnk_08749AF0",
     "0x08749AF8": "gUnk_08749AF8",
     "0x08749B00": "gUnk_08749B00",
+    "0x08749B08": "gUnk_08749B08",
+    "0x08749B24": "gUnk_08749B24",
     "0x08749B30": "gUnk_08749B30",
+    "0x08749B3C": "gUnk_08749B3C",
     "0x08749B48": "gUnk_08749B48",
+    "0x08749B54": "gUnk_08749B54",
     "0x08749B60": "gUnk_08749B60",
     "0x08749B6C": "gUnk_08749B6C",
     "0x08749B74": "gUnk_08749B74",
@@ -10350,6 +10856,13 @@
     "0x08749BEC": "gUnk_08749BEC",
     "0x08749C18": "gUnk_08749C18",
     "0x08749C44": "gUnk_08749C44",
+    "0x08749C70": "gUnk_08749C70",
+    "0x08749C8C": "gUnk_08749C8C",
+    "0x08749CA8": "gUnk_08749CA8",
+    "0x08749CC4": "gUnk_08749CC4",
+    "0x08749CCC": "gUnk_08749CCC",
+    "0x08749CD4": "gUnk_08749CD4",
+    "0x08749CE0": "gUnk_08749CE0",
     "0x08749CEC": "gUnk_08749CEC",
     "0x08749D10": "gUnk_08749D10",
     "0x08749D1C": "gUnk_08749D1C",
@@ -10405,13 +10918,24 @@
     "0x0874B308": "gHeavyMoleDef",
     "0x0874B334": "gNightmarePowerOrbDef",
     "0x0874B360": "gUnk_0874B360",
+    "0x0874B38C": "gUnk_0874B38C",
     "0x0874B3A8": "gUnk_0874B3A8",
+    "0x0874B3C4": "gUnk_0874B3C4",
+    "0x0874B3E0": "gUnk_0874B3E0",
     "0x0874B3FC": "gUnk_0874B3FC",
+    "0x0874B418": "gUnk_0874B418",
+    "0x0874B434": "gUnk_0874B434",
     "0x0874B450": "gUnk_0874B450",
     "0x0874B488": "gUnk_0874B488",
     "0x0874B4A4": "gUnk_0874B4A4",
+    "0x0874B4C0": "gUnk_0874B4C0",
+    "0x0874B4C8": "gUnk_0874B4C8",
+    "0x0874B4D0": "gUnk_0874B4D0",
+    "0x0874B4E0": "gUnk_0874B4E0",
     "0x0874B4EC": "gUnk_0874B4EC",
+    "0x0874B4F8": "gUnk_0874B4F8",
     "0x0874B504": "gUnk_0874B504",
+    "0x0874B510": "gUnk_0874B510",
     "0x0874B528": "gUnk_0874B528",
     "0x0874B538": "gUnk_0874B538",
     "0x0874B540": "gUnk_0874B540",
@@ -10454,8 +10978,23 @@
     "0x0874BAF8": "gUnk_0874BAF8",
     "0x0874BB24": "gUnk_0874BB24",
     "0x0874BB50": "gUnk_0874BB50",
+    "0x0874BB7C": "gUnk_0874BB7C",
     "0x0874BB98": "gUnk_0874BB98",
+    "0x0874BBB4": "gUnk_0874BBB4",
+    "0x0874BF34": "gUnk_0874BF34",
+    "0x0874BF50": "gUnk_0874BF50",
+    "0x0874BF58": "gUnk_0874BF58",
+    "0x0874BF74": "gUnk_0874BF74",
+    "0x0874BF80": "gUnk_0874BF80",
+    "0x0874BF8C": "gUnk_0874BF8C",
+    "0x0874BF98": "gUnk_0874BF98",
+    "0x0874BFA4": "gUnk_0874BFA4",
+    "0x0874BFB0": "gUnk_0874BFB0",
+    "0x0874BFBC": "gUnk_0874BFBC",
+    "0x0874BFC8": "gUnk_0874BFC8",
     "0x0874BFD4": "gUnk_0874BFD4",
+    "0x0874BFE0": "gUnk_0874BFE0",
+    "0x0874BFEC": "gUnk_0874BFEC",
     "0x0874C108": "gUnk_0874C108",
     "0x0874C110": "gUnk_0874C110",
     "0x0874C12C": "gWhispyWoodsVariants",
@@ -10464,6 +11003,11 @@
     "0x0874C150": "gUnk_0874C150",
     "0x0874C154": "gUnk_0874C154",
     "0x0874C158": "gWhispyWoodsDef",
+    "0x0874C184": "gUnk_0874C184",
+    "0x0874C1BC": "gUnk_0874C1BC",
+    "0x0874C1F4": "gUnk_0874C1F4",
+    "0x0874C1FC": "gUnk_0874C1FC",
+    "0x0874C204": "gUnk_0874C204",
     "0x0874C210": "gUnk_0874C210",
     "0x0874C21C": "gUnk_0874C21C",
     "0x0874C220": "gUnk_0874C220",
@@ -10480,6 +11024,13 @@
     "0x0874C332": "gUnk_0874C332",
     "0x0874C378": "gUnk_0874C378",
     "0x0874C3A4": "gUnk_0874C3A4",
+    "0x0874C3D0": "gUnk_0874C3D0",
+    "0x0874C3EC": "gUnk_0874C3EC",
+    "0x0874C408": "gUnk_0874C408",
+    "0x0874C410": "gUnk_0874C410",
+    "0x0874C418": "gUnk_0874C418",
+    "0x0874C434": "gUnk_0874C434",
+    "0x0874C440": "gUnk_0874C440",
     "0x0874C44C": "gUnk_0874C44C",
     "0x0874C478": "gUnk_0874C478",
     "0x0874C4E4": "gUnk_0874C4E4",
@@ -11058,7 +11609,10 @@
     "0x087E2550": "gUnk_087E2550",
     "0x087E2564": "gUnk_087E2564"
   },
-  "not_pointers": {},
+  "not_pointers": {
+    "0x0833F4B8": "BG animation op 5's ptr word is a VALUE: UpdateBgAnims (src/camera_2d01c.c) passes (u16)cmd->unk4 to sub_0802d2f0 as the metatile's new collision tile",
+    "0x0833FD24": "BG animation op 5's ptr word is a VALUE: UpdateBgAnims (src/camera_2d01c.c) passes (u16)cmd->unk4 to sub_0802d2f0 as the metatile's new collision tile"
+  },
   "raw_ranges": [
     {
       "start": "0x080CD93C",
@@ -11195,32 +11749,104 @@
     {
       "start": "0x0873ECEC",
       "extent": "next-label",
-      "why": "src/actor_63698.c:26 `extern struct ActorDef *gUnk_0873ECEC[];`; extent: the span up to the next label, every word NULL or a pointer (docs/data.md 5.1)"
+      "why": "src/actor_63698.c:26 `extern struct ActorDef *gUnk_0873ECEC[];`; extent: the span up to the next label, every word NULL or a pointer (docs/data.md 5.1)",
+      "targets": {
+        "pointers": [
+          "0x10",
+          "0x14",
+          "0x18",
+          "0x1C",
+          "0x20",
+          "0x24",
+          "0x28"
+        ],
+        "why": "struct ActorDef (0x2C bytes, include/task.h): sub_08063704 (src/actor_63698.c:64) binds table[Task.unk76], sub_080637e4 (l.154-168) copies the fields; unk10 = struct ActorAux * (src/actor_673ec.c:1313), attackBox = struct AttackBox * (gAttackBox, include/collision.h), terrainBox (bytes read at src/actor_692fc.c:479), terrainHandlers = struct ActorHandlers * (src/actor_692fc.c:120), hitReactions = struct ActorVt * (src/actor_692fc.c:730), unk24/teardown functions (l.165-167)"
+      }
     },
     {
       "start": "0x0873ED90",
       "extent": "next-label",
-      "why": "src/actor_63698.c:27 `extern struct ActorDef *gMidBossDefs[];`; extent: the span up to the next label, every word NULL or a pointer (docs/data.md 5.1)"
+      "why": "src/actor_63698.c:27 `extern struct ActorDef *gMidBossDefs[];`; extent: the span up to the next label, every word NULL or a pointer (docs/data.md 5.1)",
+      "targets": {
+        "pointers": [
+          "0x10",
+          "0x14",
+          "0x18",
+          "0x1C",
+          "0x20",
+          "0x24",
+          "0x28"
+        ],
+        "why": "struct ActorDef (0x2C bytes, include/task.h): sub_08063704 (src/actor_63698.c:64) binds table[Task.unk76], sub_080637e4 (l.154-168) copies the fields; unk10 = struct ActorAux * (src/actor_673ec.c:1313), attackBox = struct AttackBox * (gAttackBox, include/collision.h), terrainBox (bytes read at src/actor_692fc.c:479), terrainHandlers = struct ActorHandlers * (src/actor_692fc.c:120), hitReactions = struct ActorVt * (src/actor_692fc.c:730), unk24/teardown functions (l.165-167)"
+      }
     },
     {
       "start": "0x0873EDB8",
       "extent": "next-label",
-      "why": "src/actor_63698.c:28 `extern struct ActorDef *gBossDefs[];`; extent: the span up to the next label, every word NULL or a pointer (docs/data.md 5.1)"
+      "why": "src/actor_63698.c:28 `extern struct ActorDef *gBossDefs[];`; extent: the span up to the next label, every word NULL or a pointer (docs/data.md 5.1)",
+      "targets": {
+        "pointers": [
+          "0x10",
+          "0x14",
+          "0x18",
+          "0x1C",
+          "0x20",
+          "0x24",
+          "0x28"
+        ],
+        "why": "struct ActorDef (0x2C bytes, include/task.h): sub_08063704 (src/actor_63698.c:64) binds table[Task.unk76], sub_080637e4 (l.154-168) copies the fields; unk10 = struct ActorAux * (src/actor_673ec.c:1313), attackBox = struct AttackBox * (gAttackBox, include/collision.h), terrainBox (bytes read at src/actor_692fc.c:479), terrainHandlers = struct ActorHandlers * (src/actor_692fc.c:120), hitReactions = struct ActorVt * (src/actor_692fc.c:730), unk24/teardown functions (l.165-167)"
+      }
     },
     {
       "start": "0x0873EDDC",
       "extent": "next-label",
-      "why": "src/actor_63698.c:29 `extern struct ActorDef *gUnk_0873EDDC[];`; extent: the span up to the next label, every word NULL or a pointer (docs/data.md 5.1)"
+      "why": "src/actor_63698.c:29 `extern struct ActorDef *gUnk_0873EDDC[];`; extent: the span up to the next label, every word NULL or a pointer (docs/data.md 5.1)",
+      "targets": {
+        "pointers": [
+          "0x10",
+          "0x14",
+          "0x18",
+          "0x1C",
+          "0x20",
+          "0x24",
+          "0x28"
+        ],
+        "why": "struct ActorDef (0x2C bytes, include/task.h): sub_08063704 (src/actor_63698.c:64) binds table[Task.unk76], sub_080637e4 (l.154-168) copies the fields; unk10 = struct ActorAux * (src/actor_673ec.c:1313), attackBox = struct AttackBox * (gAttackBox, include/collision.h), terrainBox (bytes read at src/actor_692fc.c:479), terrainHandlers = struct ActorHandlers * (src/actor_692fc.c:120), hitReactions = struct ActorVt * (src/actor_692fc.c:730), unk24/teardown functions (l.165-167)"
+      }
     },
     {
       "start": "0x0873EE70",
       "extent": "next-label",
-      "why": "src/actor_63698.c:30 `extern struct ActorDef *gUnk_0873EE70[];`; extent: the span up to the next label, every word NULL or a pointer (docs/data.md 5.1)"
+      "why": "src/actor_63698.c:30 `extern struct ActorDef *gUnk_0873EE70[];`; extent: the span up to the next label, every word NULL or a pointer (docs/data.md 5.1)",
+      "targets": {
+        "pointers": [
+          "0x10",
+          "0x14",
+          "0x18",
+          "0x1C",
+          "0x20",
+          "0x24",
+          "0x28"
+        ],
+        "why": "struct ActorDef (0x2C bytes, include/task.h): sub_08063704 (src/actor_63698.c:64) binds table[Task.unk76], sub_080637e4 (l.154-168) copies the fields; unk10 = struct ActorAux * (src/actor_673ec.c:1313), attackBox = struct AttackBox * (gAttackBox, include/collision.h), terrainBox (bytes read at src/actor_692fc.c:479), terrainHandlers = struct ActorHandlers * (src/actor_692fc.c:120), hitReactions = struct ActorVt * (src/actor_692fc.c:730), unk24/teardown functions (l.165-167)"
+      }
     },
     {
       "start": "0x0873EE88",
       "extent": "next-label",
-      "why": "src/actor_63698.c:31 `extern struct ActorDef *gUnk_0873EE88[];`; extent: the span up to the next label, every word NULL or a pointer (docs/data.md 5.1)"
+      "why": "src/actor_63698.c:31 `extern struct ActorDef *gUnk_0873EE88[];`; extent: the span up to the next label, every word NULL or a pointer (docs/data.md 5.1)",
+      "targets": {
+        "pointers": [
+          "0x10",
+          "0x14",
+          "0x18",
+          "0x1C",
+          "0x20",
+          "0x24",
+          "0x28"
+        ],
+        "why": "struct ActorDef (0x2C bytes, include/task.h): sub_08063704 (src/actor_63698.c:64) binds table[Task.unk76], sub_080637e4 (l.154-168) copies the fields; unk10 = struct ActorAux * (src/actor_673ec.c:1313), attackBox = struct AttackBox * (gAttackBox, include/collision.h), terrainBox (bytes read at src/actor_692fc.c:479), terrainHandlers = struct ActorHandlers * (src/actor_692fc.c:120), hitReactions = struct ActorVt * (src/actor_692fc.c:730), unk24/teardown functions (l.165-167)"
+      }
     },
     {
       "start": "0x0873EF74",
@@ -11361,6 +11987,881 @@
       "start": "0x087583B4",
       "extent": "next-label",
       "why": "src/credits_cd330.c:65 `extern u32 *gUnk_087583B4[];`; extent: the span up to the next label, every word NULL or a pointer (docs/data.md 5.1)"
+    },
+    {
+      "start": "0x083356E0",
+      "count": 9,
+      "stride": 8,
+      "pointers": [
+        "0x4"
+      ],
+      "why": "a BG animation script of room_bg_anim_lists: struct Unk02007D70Cmd[9] {u16 op, u16 arg, void *ptr} (include/camera.h) that UpdateBgAnims (src/camera_2d01c.c) runs up to its op-3 terminator; ptr is a tile frame (op 0, sub_0802d25c) or a palette fade (op 1, sub_0802d278), NULL for ops 2/3/4/6"
+    },
+    {
+      "start": "0x08335B48",
+      "count": 9,
+      "stride": 8,
+      "pointers": [
+        "0x4"
+      ],
+      "why": "a BG animation script of room_bg_anim_lists: struct Unk02007D70Cmd[9] {u16 op, u16 arg, void *ptr} (include/camera.h) that UpdateBgAnims (src/camera_2d01c.c) runs up to its op-3 terminator; ptr is a tile frame (op 0, sub_0802d25c) or a palette fade (op 1, sub_0802d278), NULL for ops 2/3/4/6"
+    },
+    {
+      "start": "0x08335DB0",
+      "count": 9,
+      "stride": 8,
+      "pointers": [
+        "0x4"
+      ],
+      "why": "a BG animation script of room_bg_anim_lists: struct Unk02007D70Cmd[9] {u16 op, u16 arg, void *ptr} (include/camera.h) that UpdateBgAnims (src/camera_2d01c.c) runs up to its op-3 terminator; ptr is a tile frame (op 0, sub_0802d25c) or a palette fade (op 1, sub_0802d278), NULL for ops 2/3/4/6"
+    },
+    {
+      "start": "0x08336618",
+      "count": 9,
+      "stride": 8,
+      "pointers": [
+        "0x4"
+      ],
+      "why": "a BG animation script of room_bg_anim_lists: struct Unk02007D70Cmd[9] {u16 op, u16 arg, void *ptr} (include/camera.h) that UpdateBgAnims (src/camera_2d01c.c) runs up to its op-3 terminator; ptr is a tile frame (op 0, sub_0802d25c) or a palette fade (op 1, sub_0802d278), NULL for ops 2/3/4/6"
+    },
+    {
+      "start": "0x08336E80",
+      "count": 9,
+      "stride": 8,
+      "pointers": [
+        "0x4"
+      ],
+      "why": "a BG animation script of room_bg_anim_lists: struct Unk02007D70Cmd[9] {u16 op, u16 arg, void *ptr} (include/camera.h) that UpdateBgAnims (src/camera_2d01c.c) runs up to its op-3 terminator; ptr is a tile frame (op 0, sub_0802d25c) or a palette fade (op 1, sub_0802d278), NULL for ops 2/3/4/6"
+    },
+    {
+      "start": "0x083376E8",
+      "count": 9,
+      "stride": 8,
+      "pointers": [
+        "0x4"
+      ],
+      "why": "a BG animation script of room_bg_anim_lists: struct Unk02007D70Cmd[9] {u16 op, u16 arg, void *ptr} (include/camera.h) that UpdateBgAnims (src/camera_2d01c.c) runs up to its op-3 terminator; ptr is a tile frame (op 0, sub_0802d25c) or a palette fade (op 1, sub_0802d278), NULL for ops 2/3/4/6"
+    },
+    {
+      "start": "0x08337B50",
+      "count": 9,
+      "stride": 8,
+      "pointers": [
+        "0x4"
+      ],
+      "why": "a BG animation script of room_bg_anim_lists: struct Unk02007D70Cmd[9] {u16 op, u16 arg, void *ptr} (include/camera.h) that UpdateBgAnims (src/camera_2d01c.c) runs up to its op-3 terminator; ptr is a tile frame (op 0, sub_0802d25c) or a palette fade (op 1, sub_0802d278), NULL for ops 2/3/4/6"
+    },
+    {
+      "start": "0x083396B8",
+      "count": 9,
+      "stride": 8,
+      "pointers": [
+        "0x4"
+      ],
+      "why": "a BG animation script of room_bg_anim_lists: struct Unk02007D70Cmd[9] {u16 op, u16 arg, void *ptr} (include/camera.h) that UpdateBgAnims (src/camera_2d01c.c) runs up to its op-3 terminator; ptr is a tile frame (op 0, sub_0802d25c) or a palette fade (op 1, sub_0802d278), NULL for ops 2/3/4/6"
+    },
+    {
+      "start": "0x08339B20",
+      "count": 9,
+      "stride": 8,
+      "pointers": [
+        "0x4"
+      ],
+      "why": "a BG animation script of room_bg_anim_lists: struct Unk02007D70Cmd[9] {u16 op, u16 arg, void *ptr} (include/camera.h) that UpdateBgAnims (src/camera_2d01c.c) runs up to its op-3 terminator; ptr is a tile frame (op 0, sub_0802d25c) or a palette fade (op 1, sub_0802d278), NULL for ops 2/3/4/6"
+    },
+    {
+      "start": "0x08339D88",
+      "count": 9,
+      "stride": 8,
+      "pointers": [
+        "0x4"
+      ],
+      "why": "a BG animation script of room_bg_anim_lists: struct Unk02007D70Cmd[9] {u16 op, u16 arg, void *ptr} (include/camera.h) that UpdateBgAnims (src/camera_2d01c.c) runs up to its op-3 terminator; ptr is a tile frame (op 0, sub_0802d25c) or a palette fade (op 1, sub_0802d278), NULL for ops 2/3/4/6"
+    },
+    {
+      "start": "0x0833A0E8",
+      "count": 7,
+      "stride": 8,
+      "pointers": [
+        "0x4"
+      ],
+      "why": "a BG animation script of room_bg_anim_lists: struct Unk02007D70Cmd[7] {u16 op, u16 arg, void *ptr} (include/camera.h) that UpdateBgAnims (src/camera_2d01c.c) runs up to its op-3 terminator; ptr is a tile frame (op 0, sub_0802d25c) or a palette fade (op 1, sub_0802d278), NULL for ops 2/3/4/6"
+    },
+    {
+      "start": "0x0833ABB8",
+      "count": 7,
+      "stride": 8,
+      "pointers": [
+        "0x4"
+      ],
+      "why": "a BG animation script of room_bg_anim_lists: struct Unk02007D70Cmd[7] {u16 op, u16 arg, void *ptr} (include/camera.h) that UpdateBgAnims (src/camera_2d01c.c) runs up to its op-3 terminator; ptr is a tile frame (op 0, sub_0802d25c) or a palette fade (op 1, sub_0802d278), NULL for ops 2/3/4/6"
+    },
+    {
+      "start": "0x0833EC10",
+      "count": 9,
+      "stride": 8,
+      "pointers": [
+        "0x4"
+      ],
+      "why": "a BG animation script of room_bg_anim_lists: struct Unk02007D70Cmd[9] {u16 op, u16 arg, void *ptr} (include/camera.h) that UpdateBgAnims (src/camera_2d01c.c) runs up to its op-3 terminator; ptr is a tile frame (op 0, sub_0802d25c) or a palette fade (op 1, sub_0802d278), NULL for ops 2/3/4/6"
+    },
+    {
+      "start": "0x0833F45C",
+      "count": 13,
+      "stride": 8,
+      "pointers": [
+        "0x4"
+      ],
+      "why": "a BG animation script of room_bg_anim_lists: struct Unk02007D70Cmd[13] {u16 op, u16 arg, void *ptr} (include/camera.h) that UpdateBgAnims (src/camera_2d01c.c) runs up to its op-4 terminator; ptr is a tile frame (op 0, sub_0802d25c) or a palette fade (op 1, sub_0802d278), NULL for ops 2/3/4/6"
+    },
+    {
+      "start": "0x0833FCC8",
+      "count": 13,
+      "stride": 8,
+      "pointers": [
+        "0x4"
+      ],
+      "why": "a BG animation script of room_bg_anim_lists: struct Unk02007D70Cmd[13] {u16 op, u16 arg, void *ptr} (include/camera.h) that UpdateBgAnims (src/camera_2d01c.c) runs up to its op-4 terminator; ptr is a tile frame (op 0, sub_0802d25c) or a palette fade (op 1, sub_0802d278), NULL for ops 2/3/4/6"
+    },
+    {
+      "start": "0x08340060",
+      "count": 5,
+      "stride": 8,
+      "pointers": [
+        "0x4"
+      ],
+      "why": "a BG animation script of room_bg_anim_lists: struct Unk02007D70Cmd[5] {u16 op, u16 arg, void *ptr} (include/camera.h) that UpdateBgAnims (src/camera_2d01c.c) runs up to its op-4 terminator; ptr is a tile frame (op 0, sub_0802d25c) or a palette fade (op 1, sub_0802d278), NULL for ops 2/3/4/6",
+      "targets": {
+        "pointers": [
+          "0x0",
+          "0x4"
+        ],
+        "why": "struct Unk0802D278 (16 bytes, src/camera_2d01c.c sub_0802d278): {u16 *from, u16 *to, u16 index, u16 count, u32 rate}; sub_0802d294 blends from/to (count colours each) with BlendColors"
+      }
+    },
+    {
+      "start": "0x08340238",
+      "count": 5,
+      "stride": 8,
+      "pointers": [
+        "0x4"
+      ],
+      "why": "a BG animation script of room_bg_anim_lists: struct Unk02007D70Cmd[5] {u16 op, u16 arg, void *ptr} (include/camera.h) that UpdateBgAnims (src/camera_2d01c.c) runs up to its op-4 terminator; ptr is a tile frame (op 0, sub_0802d25c) or a palette fade (op 1, sub_0802d278), NULL for ops 2/3/4/6",
+      "targets": {
+        "pointers": [
+          "0x0",
+          "0x4"
+        ],
+        "why": "struct Unk0802D278 (16 bytes, src/camera_2d01c.c sub_0802d278): {u16 *from, u16 *to, u16 index, u16 count, u32 rate}; sub_0802d294 blends from/to (count colours each) with BlendColors"
+      }
+    },
+    {
+      "start": "0x083406A0",
+      "count": 6,
+      "stride": 8,
+      "pointers": [
+        "0x4"
+      ],
+      "why": "a BG animation script of room_bg_anim_lists: struct Unk02007D70Cmd[6] {u16 op, u16 arg, void *ptr} (include/camera.h) that UpdateBgAnims (src/camera_2d01c.c) runs up to its op-4 terminator; ptr is a tile frame (op 0, sub_0802d25c) or a palette fade (op 1, sub_0802d278), NULL for ops 2/3/4/6",
+      "targets": {
+        "pointers": [
+          "0x0",
+          "0x4"
+        ],
+        "why": "struct Unk0802D278 (16 bytes, src/camera_2d01c.c sub_0802d278): {u16 *from, u16 *to, u16 index, u16 count, u32 rate}; sub_0802d294 blends from/to (count colours each) with BlendColors"
+      }
+    },
+    {
+      "start": "0x08340910",
+      "count": 6,
+      "stride": 8,
+      "pointers": [
+        "0x4"
+      ],
+      "why": "a BG animation script of room_bg_anim_lists: struct Unk02007D70Cmd[6] {u16 op, u16 arg, void *ptr} (include/camera.h) that UpdateBgAnims (src/camera_2d01c.c) runs up to its op-4 terminator; ptr is a tile frame (op 0, sub_0802d25c) or a palette fade (op 1, sub_0802d278), NULL for ops 2/3/4/6",
+      "targets": {
+        "pointers": [
+          "0x0",
+          "0x4"
+        ],
+        "why": "struct Unk0802D278 (16 bytes, src/camera_2d01c.c sub_0802d278): {u16 *from, u16 *to, u16 index, u16 count, u32 rate}; sub_0802d294 blends from/to (count colours each) with BlendColors"
+      }
+    },
+    {
+      "start": "0x083447D0",
+      "count": 5,
+      "stride": 8,
+      "pointers": [
+        "0x4"
+      ],
+      "why": "a BG animation script of room_bg_anim_lists: struct Unk02007D70Cmd[5] {u16 op, u16 arg, void *ptr} (include/camera.h) that UpdateBgAnims (src/camera_2d01c.c) runs up to its op-3 terminator; ptr is a tile frame (op 0, sub_0802d25c) or a palette fade (op 1, sub_0802d278), NULL for ops 2/3/4/6"
+    },
+    {
+      "start": "0x08344C08",
+      "count": 5,
+      "stride": 8,
+      "pointers": [
+        "0x4"
+      ],
+      "why": "a BG animation script of room_bg_anim_lists: struct Unk02007D70Cmd[5] {u16 op, u16 arg, void *ptr} (include/camera.h) that UpdateBgAnims (src/camera_2d01c.c) runs up to its op-3 terminator; ptr is a tile frame (op 0, sub_0802d25c) or a palette fade (op 1, sub_0802d278), NULL for ops 2/3/4/6"
+    },
+    {
+      "start": "0x08348248",
+      "count": 7,
+      "stride": 8,
+      "pointers": [
+        "0x4"
+      ],
+      "why": "a BG animation script of room_bg_anim_lists: struct Unk02007D70Cmd[7] {u16 op, u16 arg, void *ptr} (include/camera.h) that UpdateBgAnims (src/camera_2d01c.c) runs up to its op-3 terminator; ptr is a tile frame (op 0, sub_0802d25c) or a palette fade (op 1, sub_0802d278), NULL for ops 2/3/4/6"
+    },
+    {
+      "start": "0x0834B898",
+      "count": 7,
+      "stride": 8,
+      "pointers": [
+        "0x4"
+      ],
+      "why": "a BG animation script of room_bg_anim_lists: struct Unk02007D70Cmd[7] {u16 op, u16 arg, void *ptr} (include/camera.h) that UpdateBgAnims (src/camera_2d01c.c) runs up to its op-3 terminator; ptr is a tile frame (op 0, sub_0802d25c) or a palette fade (op 1, sub_0802d278), NULL for ops 2/3/4/6"
+    },
+    {
+      "start": "0x0834EEE8",
+      "count": 7,
+      "stride": 8,
+      "pointers": [
+        "0x4"
+      ],
+      "why": "a BG animation script of room_bg_anim_lists: struct Unk02007D70Cmd[7] {u16 op, u16 arg, void *ptr} (include/camera.h) that UpdateBgAnims (src/camera_2d01c.c) runs up to its op-3 terminator; ptr is a tile frame (op 0, sub_0802d25c) or a palette fade (op 1, sub_0802d278), NULL for ops 2/3/4/6"
+    },
+    {
+      "start": "0x08350AF8",
+      "count": 7,
+      "stride": 8,
+      "pointers": [
+        "0x4"
+      ],
+      "why": "a BG animation script of room_bg_anim_lists: struct Unk02007D70Cmd[7] {u16 op, u16 arg, void *ptr} (include/camera.h) that UpdateBgAnims (src/camera_2d01c.c) runs up to its op-3 terminator; ptr is a tile frame (op 0, sub_0802d25c) or a palette fade (op 1, sub_0802d278), NULL for ops 2/3/4/6"
+    },
+    {
+      "start": "0x08353248",
+      "count": 7,
+      "stride": 8,
+      "pointers": [
+        "0x4"
+      ],
+      "why": "a BG animation script of room_bg_anim_lists: struct Unk02007D70Cmd[7] {u16 op, u16 arg, void *ptr} (include/camera.h) that UpdateBgAnims (src/camera_2d01c.c) runs up to its op-3 terminator; ptr is a tile frame (op 0, sub_0802d25c) or a palette fade (op 1, sub_0802d278), NULL for ops 2/3/4/6"
+    },
+    {
+      "start": "0x08355998",
+      "count": 7,
+      "stride": 8,
+      "pointers": [
+        "0x4"
+      ],
+      "why": "a BG animation script of room_bg_anim_lists: struct Unk02007D70Cmd[7] {u16 op, u16 arg, void *ptr} (include/camera.h) that UpdateBgAnims (src/camera_2d01c.c) runs up to its op-3 terminator; ptr is a tile frame (op 0, sub_0802d25c) or a palette fade (op 1, sub_0802d278), NULL for ops 2/3/4/6"
+    },
+    {
+      "start": "0x083580E8",
+      "count": 7,
+      "stride": 8,
+      "pointers": [
+        "0x4"
+      ],
+      "why": "a BG animation script of room_bg_anim_lists: struct Unk02007D70Cmd[7] {u16 op, u16 arg, void *ptr} (include/camera.h) that UpdateBgAnims (src/camera_2d01c.c) runs up to its op-3 terminator; ptr is a tile frame (op 0, sub_0802d25c) or a palette fade (op 1, sub_0802d278), NULL for ops 2/3/4/6"
+    },
+    {
+      "start": "0x0835B5BC",
+      "count": 9,
+      "stride": 8,
+      "pointers": [
+        "0x4"
+      ],
+      "why": "a BG animation script of room_bg_anim_lists: struct Unk02007D70Cmd[9] {u16 op, u16 arg, void *ptr} (include/camera.h) that UpdateBgAnims (src/camera_2d01c.c) runs up to its op-3 terminator; ptr is a tile frame (op 0, sub_0802d25c) or a palette fade (op 1, sub_0802d278), NULL for ops 2/3/4/6"
+    },
+    {
+      "start": "0x0835CF9C",
+      "count": 7,
+      "stride": 8,
+      "pointers": [
+        "0x4"
+      ],
+      "why": "a BG animation script of room_bg_anim_lists: struct Unk02007D70Cmd[7] {u16 op, u16 arg, void *ptr} (include/camera.h) that UpdateBgAnims (src/camera_2d01c.c) runs up to its op-3 terminator; ptr is a tile frame (op 0, sub_0802d25c) or a palette fade (op 1, sub_0802d278), NULL for ops 2/3/4/6"
+    },
+    {
+      "start": "0x0854BB60",
+      "count": 1,
+      "stride": 16,
+      "pointers": [
+        "0x8",
+        "0xC"
+      ],
+      "why": "struct GfxHeader (include/task.h) {paletteBankCount, tileCount, unk04, palette, tiles}: gUnk_087555FC[0-2] (include/hud.h struct GfxHeader *[]), read by Task_IntroStoryPicture (src/hud_099fc.c:35-38); palette = paletteBankCount * 32 bytes, tiles = an LZ77 stream of tileCount * 32 bytes"
+    },
+    {
+      "start": "0x0854D294",
+      "count": 1,
+      "stride": 16,
+      "pointers": [
+        "0x8",
+        "0xC"
+      ],
+      "why": "struct GfxHeader (include/task.h) {paletteBankCount, tileCount, unk04, palette, tiles}: gUnk_087555FC[3-5] (include/hud.h), Task_IntroStoryPicture (src/hud_099fc.c:35-38); palette = paletteBankCount * 32 bytes, tiles = an LZ77 stream of tileCount * 32 bytes"
+    },
+    {
+      "start": "0x0854E838",
+      "count": 1,
+      "stride": 16,
+      "pointers": [
+        "0x8",
+        "0xC"
+      ],
+      "why": "struct GfxHeader (include/task.h) {paletteBankCount, tileCount, unk04, palette, tiles}: gUnk_087555FC[6-8] (include/hud.h), Task_IntroStoryPicture (src/hud_099fc.c:35-38); palette = paletteBankCount * 32 bytes, tiles = an LZ77 stream of tileCount * 32 bytes"
+    },
+    {
+      "start": "0x085995AC",
+      "count": 1,
+      "stride": 16,
+      "pointers": [
+        "0x8",
+        "0xC"
+      ],
+      "why": "struct GfxHeader (include/task.h) {paletteBankCount, tileCount, unk04, palette, tiles}: gUnk_085995AC (include/ending.h extern struct GfxHeader), sub_080c6ca0 (src/ending_c6c64.c:57-62); palette = paletteBankCount * 32 bytes, tiles = an LZ77 stream of tileCount * 32 bytes"
+    },
+    {
+      "start": "0x0859990C",
+      "count": 1,
+      "stride": 16,
+      "pointers": [
+        "0x8",
+        "0xC"
+      ],
+      "why": "struct GfxHeader (include/task.h) {paletteBankCount, tileCount, unk04, palette, tiles}: gUnk_0859990C (include/ending.h extern struct GfxHeader), sub_080c6ca0 (src/ending_c6c64.c:65-67); palette = paletteBankCount * 32 bytes, tiles = an LZ77 stream of tileCount * 32 bytes"
+    },
+    {
+      "start": "0x0859A09C",
+      "count": 1,
+      "stride": 16,
+      "pointers": [
+        "0x8",
+        "0xC"
+      ],
+      "why": "struct GfxHeader (include/task.h) {paletteBankCount, tileCount, unk04, palette, tiles}: gUnk_0859A09C (include/ending.h extern struct GfxHeader), sub_080c9040 (src/ending_c9004.c:82-86); palette = paletteBankCount * 32 bytes, tiles = an LZ77 stream of tileCount * 32 bytes"
+    },
+    {
+      "start": "0x085B9B6C",
+      "count": 1,
+      "stride": 16,
+      "pointers": [
+        "0x8",
+        "0xC"
+      ],
+      "why": "struct GfxHeader (include/task.h) {paletteBankCount, tileCount, unk04, palette, tiles}: gUnk_085B9B6C (src/effect_5afac.c:25 u32[]), sub_0805b370 (src/effect_5afac.c:276-278) reads [0] << 5 palette bytes from [2] and LZ77-decompresses [3] ([1] << 5 tile bytes); palette = paletteBankCount * 32 bytes, tiles = an LZ77 stream of tileCount * 32 bytes"
+    },
+    {
+      "start": "0x085BC800",
+      "count": 1,
+      "stride": 16,
+      "pointers": [
+        "0x8",
+        "0xC"
+      ],
+      "why": "struct GfxHeader (include/task.h) {paletteBankCount, tileCount, unk04, palette, tiles}: gUnk_08731F78[0] (include/cutscene.h struct GfxHeader *const []), sub_080102c0 (src/mode_100ac.c:88-93); palette = paletteBankCount * 32 bytes, tiles = an LZ77 stream of tileCount * 32 bytes"
+    },
+    {
+      "start": "0x085BEB70",
+      "count": 1,
+      "stride": 16,
+      "pointers": [
+        "0x8",
+        "0xC"
+      ],
+      "why": "struct GfxHeader (include/task.h) {paletteBankCount, tileCount, unk04, palette, tiles}: gUnk_08731F78[1] (include/cutscene.h), sub_080102c0 (src/mode_100ac.c:88-93); palette = paletteBankCount * 32 bytes, tiles = an LZ77 stream of tileCount * 32 bytes"
+    },
+    {
+      "start": "0x0873F690",
+      "count": 1,
+      "stride": 44,
+      "pointers": [
+        "0x14",
+        "0x18",
+        "0x1C",
+        "0x20",
+        "0x24",
+        "0x28"
+      ],
+      "why": "struct ActorDef passed to ActorLoadDef (src/actor_653ec.c:1785); ActorLoadDefSlot (src/actor_63698.c:190-205) copies attackBox/terrainBox/terrainHandlers/hitReactions/teardown; unk10 NULL"
+    },
+    {
+      "start": "0x0873F6BC",
+      "count": 1,
+      "stride": 44,
+      "pointers": [
+        "0x10",
+        "0x14",
+        "0x18",
+        "0x1C",
+        "0x20",
+        "0x24",
+        "0x28"
+      ],
+      "why": "struct ActorDef passed to ActorLoadDef (src/actor_6a344.c:270); ActorLoadDefSlot (src/actor_63698.c:190-205) copies attackBox/terrainBox/terrainHandlers/hitReactions/teardown; unk10 is one of the ActorAux records the table ActorDefs use"
+    },
+    {
+      "start": "0x0873F8EC",
+      "count": 1,
+      "stride": 8,
+      "pointers": [
+        "0x4"
+      ],
+      "why": "struct ActorAux (8 bytes, include/task.h) that ActorDef.unk10 points at; altAttackBox (+4) is a struct AttackBox * that src/actor_673ec.c:1315 stores in gAttackBox and src/actor_653ec.c:1088 passes to ActorSetAttackBox"
+    },
+    {
+      "start": "0x08740C00",
+      "count": 1,
+      "stride": 44,
+      "pointers": [
+        "0x10",
+        "0x14",
+        "0x18",
+        "0x1C",
+        "0x20",
+        "0x24",
+        "0x28"
+      ],
+      "why": "struct ActorDef passed to sub_08066b34 (src/enemy_78b68.c:333); ActorLoadDefSlot (src/actor_63698.c:190-205) copies attackBox/terrainBox/terrainHandlers/hitReactions/teardown; unk10 is one of the ActorAux records the table ActorDefs use"
+    },
+    {
+      "start": "0x0874183C",
+      "count": 1,
+      "stride": 44,
+      "pointers": [
+        "0x10",
+        "0x14",
+        "0x18",
+        "0x1C",
+        "0x20",
+        "0x24",
+        "0x28"
+      ],
+      "why": "struct ActorDef passed to ActorLoadDef (src/enemy_7d3b0.c:1013); ActorLoadDefSlot (src/actor_63698.c:190-205) copies attackBox/terrainBox/terrainHandlers/hitReactions/teardown; unk10 is one of the ActorAux records the table ActorDefs use"
+    },
+    {
+      "start": "0x087419F4",
+      "count": 1,
+      "stride": 44,
+      "pointers": [
+        "0x10",
+        "0x14",
+        "0x18",
+        "0x1C",
+        "0x20",
+        "0x24",
+        "0x28"
+      ],
+      "why": "struct ActorDef passed to ActorLoadDef (src/enemy_80b70.c:1201); ActorLoadDefSlot (src/actor_63698.c:190-205) copies attackBox/terrainBox/terrainHandlers/hitReactions/teardown; unk10 is one of the ActorAux records the table ActorDefs use"
+    },
+    {
+      "start": "0x08741A20",
+      "count": 1,
+      "stride": 44,
+      "pointers": [
+        "0x10",
+        "0x14",
+        "0x18",
+        "0x1C",
+        "0x20",
+        "0x24",
+        "0x28"
+      ],
+      "why": "struct ActorDef passed to ActorLoadDef (src/enemy_80b70.c:1234); ActorLoadDefSlot (src/actor_63698.c:190-205) copies attackBox/terrainBox/terrainHandlers/hitReactions/teardown; unk10 is one of the ActorAux records the table ActorDefs use"
+    },
+    {
+      "start": "0x08742A6C",
+      "count": 1,
+      "stride": 44,
+      "pointers": [
+        "0x10",
+        "0x14",
+        "0x18",
+        "0x1C",
+        "0x20",
+        "0x24",
+        "0x28"
+      ],
+      "why": "struct ActorDef passed to sub_08066b34 (src/enemy_84d14.c:654); ActorLoadDefSlot (src/actor_63698.c:190-205) copies attackBox/terrainBox/terrainHandlers/hitReactions/teardown; unk10 is one of the ActorAux records the table ActorDefs use"
+    },
+    {
+      "start": "0x087433E8",
+      "count": 1,
+      "stride": 44,
+      "pointers": [
+        "0x10",
+        "0x14",
+        "0x18",
+        "0x1C",
+        "0x20",
+        "0x24",
+        "0x28"
+      ],
+      "why": "struct ActorDef passed to sub_08066b34 (src/enemy_8e404.c:900); ActorLoadDefSlot (src/actor_63698.c:190-205) copies attackBox/terrainBox/terrainHandlers/hitReactions/teardown; unk10 is one of the ActorAux records the table ActorDefs use"
+    },
+    {
+      "start": "0x0874402C",
+      "count": 1,
+      "stride": 8,
+      "pointers": [
+        "0x4"
+      ],
+      "why": "struct ActorAux (8 bytes, include/task.h) that ActorDef.unk10 points at; altAttackBox (+4) is a struct AttackBox * that src/actor_673ec.c:1315 stores in gAttackBox and src/actor_653ec.c:1088 passes to ActorSetAttackBox"
+    },
+    {
+      "start": "0x08744054",
+      "count": 1,
+      "stride": 8,
+      "pointers": [
+        "0x4"
+      ],
+      "why": "struct ActorAux (8 bytes, include/task.h) that ActorDef.unk10 points at; altAttackBox (+4) is a struct AttackBox * that src/actor_673ec.c:1315 stores in gAttackBox and src/actor_653ec.c:1088 passes to ActorSetAttackBox"
+    },
+    {
+      "start": "0x0874406C",
+      "count": 1,
+      "stride": 8,
+      "pointers": [
+        "0x4"
+      ],
+      "why": "struct ActorAux (8 bytes, include/task.h) that ActorDef.unk10 points at; altAttackBox (+4) is a struct AttackBox * that src/actor_673ec.c:1315 stores in gAttackBox and src/actor_653ec.c:1088 passes to ActorSetAttackBox"
+    },
+    {
+      "start": "0x0874531C",
+      "count": 1,
+      "stride": 8,
+      "pointers": [
+        "0x4"
+      ],
+      "why": "struct ActorAux (8 bytes, include/task.h) that ActorDef.unk10 points at; altAttackBox (+4) is a struct AttackBox * that src/actor_673ec.c:1315 stores in gAttackBox and src/actor_653ec.c:1088 passes to ActorSetAttackBox"
+    },
+    {
+      "start": "0x08745354",
+      "count": 1,
+      "stride": 8,
+      "pointers": [
+        "0x4"
+      ],
+      "why": "struct ActorAux (8 bytes, include/task.h) that ActorDef.unk10 points at; altAttackBox (+4) is a struct AttackBox * that src/actor_673ec.c:1315 stores in gAttackBox and src/actor_653ec.c:1088 passes to ActorSetAttackBox"
+    },
+    {
+      "start": "0x087453B4",
+      "count": 1,
+      "stride": 8,
+      "pointers": [
+        "0x4"
+      ],
+      "why": "struct ActorAux (8 bytes, include/task.h) that ActorDef.unk10 points at; altAttackBox (+4) is a struct AttackBox * that src/actor_673ec.c:1315 stores in gAttackBox and src/actor_653ec.c:1088 passes to ActorSetAttackBox"
+    },
+    {
+      "start": "0x08745A2C",
+      "count": 1,
+      "stride": 8,
+      "pointers": [
+        "0x4"
+      ],
+      "why": "struct ActorAux (8 bytes, include/task.h) that ActorDef.unk10 points at; altAttackBox (+4) is a struct AttackBox * that src/actor_673ec.c:1315 stores in gAttackBox and src/actor_653ec.c:1088 passes to ActorSetAttackBox"
+    },
+    {
+      "start": "0x08747D5C",
+      "count": 1,
+      "stride": 44,
+      "pointers": [
+        "0x14",
+        "0x18",
+        "0x1C",
+        "0x20",
+        "0x24",
+        "0x28"
+      ],
+      "why": "struct ActorDef passed to ActorLoadDef (src/enemy_9c0a8.c:248); ActorLoadDefSlot (src/actor_63698.c:190-205) copies attackBox/terrainBox/terrainHandlers/hitReactions/teardown; unk10 not read on this path, left unknown"
+    },
+    {
+      "start": "0x08747DB4",
+      "count": 1,
+      "stride": 44,
+      "pointers": [
+        "0x14",
+        "0x18",
+        "0x1C",
+        "0x20",
+        "0x24",
+        "0x28"
+      ],
+      "why": "struct ActorDef passed to ActorLoadDef (src/enemy_9da1c.c:192); ActorLoadDefSlot (src/actor_63698.c:190-205) copies attackBox/terrainBox/terrainHandlers/hitReactions/teardown; unk10 not read on this path, left unknown"
+    },
+    {
+      "start": "0x08747E0C",
+      "count": 1,
+      "stride": 44,
+      "pointers": [
+        "0x14",
+        "0x18",
+        "0x1C",
+        "0x20",
+        "0x24",
+        "0x28"
+      ],
+      "why": "struct ActorDef passed to ActorLoadDef (src/enemy_9da1c.c:754); ActorLoadDefSlot (src/actor_63698.c:190-205) copies attackBox/terrainBox/terrainHandlers/hitReactions/teardown; unk10 not read on this path, left unknown"
+    },
+    {
+      "start": "0x08747E64",
+      "count": 1,
+      "stride": 44,
+      "pointers": [
+        "0x14",
+        "0x18",
+        "0x1C",
+        "0x20",
+        "0x24",
+        "0x28"
+      ],
+      "why": "struct ActorDef passed to ActorLoadDef (src/enemy_9cc24.c:285); ActorLoadDefSlot (src/actor_63698.c:190-205) copies attackBox/terrainBox/terrainHandlers/hitReactions/teardown; unk10 not read on this path, left unknown"
+    },
+    {
+      "start": "0x087487BC",
+      "count": 1,
+      "stride": 44,
+      "pointers": [
+        "0x14",
+        "0x18",
+        "0x1C",
+        "0x20",
+        "0x24",
+        "0x28"
+      ],
+      "why": "struct ActorDef passed to ActorLoadDefSlot (src/enemy_a1590.c:457); ActorLoadDefSlot (src/actor_63698.c:190-205) copies attackBox/terrainBox/terrainHandlers/hitReactions/teardown; unk10 not read on this path, left unknown"
+    },
+    {
+      "start": "0x08748918",
+      "count": 1,
+      "stride": 8,
+      "pointers": [
+        "0x4"
+      ],
+      "why": "struct ActorAux (8 bytes, include/task.h) that ActorDef.unk10 points at; altAttackBox (+4) is a struct AttackBox * that src/actor_673ec.c:1315 stores in gAttackBox and src/actor_653ec.c:1088 passes to ActorSetAttackBox"
+    },
+    {
+      "start": "0x08748920",
+      "count": 1,
+      "stride": 8,
+      "pointers": [
+        "0x4"
+      ],
+      "why": "struct ActorAux (8 bytes, include/task.h) that ActorDef.unk10 points at; altAttackBox (+4) is a struct AttackBox * that src/actor_673ec.c:1315 stores in gAttackBox and src/actor_653ec.c:1088 passes to ActorSetAttackBox"
+    },
+    {
+      "start": "0x08748B34",
+      "count": 1,
+      "stride": 44,
+      "pointers": [
+        "0x14",
+        "0x18",
+        "0x1C",
+        "0x20",
+        "0x24",
+        "0x28"
+      ],
+      "why": "struct ActorDef passed to ActorLoadDef (src/enemy_a1590.c:3049); ActorLoadDefSlot (src/actor_63698.c:190-205) copies attackBox/terrainBox/terrainHandlers/hitReactions/teardown; unk10 NULL"
+    },
+    {
+      "start": "0x08748B60",
+      "count": 1,
+      "stride": 44,
+      "pointers": [
+        "0x14",
+        "0x18",
+        "0x1C",
+        "0x20",
+        "0x24",
+        "0x28"
+      ],
+      "why": "struct ActorDef passed to ActorLoadDef (src/enemy_a1590.c:3141); ActorLoadDefSlot (src/actor_63698.c:190-205) copies attackBox/terrainBox/terrainHandlers/hitReactions/teardown; unk10 NULL"
+    },
+    {
+      "start": "0x08748B8C",
+      "count": 1,
+      "stride": 44,
+      "pointers": [
+        "0x14",
+        "0x18",
+        "0x1C",
+        "0x20",
+        "0x24",
+        "0x28"
+      ],
+      "why": "struct ActorDef passed to ActorLoadDef (src/enemy_a1590.c:3217); ActorLoadDefSlot (src/actor_63698.c:190-205) copies attackBox/terrainBox/terrainHandlers/hitReactions/teardown; unk10 NULL"
+    },
+    {
+      "start": "0x08749AE8",
+      "count": 1,
+      "stride": 8,
+      "pointers": [
+        "0x4"
+      ],
+      "why": "struct ActorAux (8 bytes, include/task.h) that ActorDef.unk10 points at; altAttackBox (+4) is a struct AttackBox * that src/actor_673ec.c:1315 stores in gAttackBox and src/actor_653ec.c:1088 passes to ActorSetAttackBox"
+    },
+    {
+      "start": "0x08749AF0",
+      "count": 1,
+      "stride": 8,
+      "pointers": [
+        "0x4"
+      ],
+      "why": "struct ActorAux (8 bytes, include/task.h) that ActorDef.unk10 points at; altAttackBox (+4) is a struct AttackBox * that src/actor_673ec.c:1315 stores in gAttackBox and src/actor_653ec.c:1088 passes to ActorSetAttackBox"
+    },
+    {
+      "start": "0x08749AF8",
+      "count": 1,
+      "stride": 8,
+      "pointers": [
+        "0x4"
+      ],
+      "why": "struct ActorAux (8 bytes, include/task.h) that ActorDef.unk10 points at; altAttackBox (+4) is a struct AttackBox * that src/actor_673ec.c:1315 stores in gAttackBox and src/actor_653ec.c:1088 passes to ActorSetAttackBox"
+    },
+    {
+      "start": "0x0874B4C8",
+      "count": 1,
+      "stride": 8,
+      "pointers": [
+        "0x4"
+      ],
+      "why": "struct ActorAux (8 bytes, include/task.h) that ActorDef.unk10 points at; altAttackBox (+4) is a struct AttackBox * that src/actor_673ec.c:1315 stores in gAttackBox and src/actor_653ec.c:1088 passes to ActorSetAttackBox"
+    },
+    {
+      "start": "0x0874B4D0",
+      "count": 1,
+      "stride": 8,
+      "pointers": [
+        "0x4"
+      ],
+      "why": "struct ActorAux (8 bytes, include/task.h) that ActorDef.unk10 points at; altAttackBox (+4) is a struct AttackBox * that src/actor_673ec.c:1315 stores in gAttackBox and src/actor_653ec.c:1088 passes to ActorSetAttackBox"
+    },
+    {
+      "start": "0x0874B96C",
+      "count": 1,
+      "stride": 44,
+      "pointers": [
+        "0x14",
+        "0x18",
+        "0x1C",
+        "0x20",
+        "0x24",
+        "0x28"
+      ],
+      "why": "struct ActorDef passed to ActorLoadDef (src/enemy_ae3bc.c:2407); ActorLoadDefSlot (src/actor_63698.c:190-205) copies attackBox/terrainBox/terrainHandlers/hitReactions/teardown; unk10 NULL"
+    },
+    {
+      "start": "0x0874B998",
+      "count": 1,
+      "stride": 44,
+      "pointers": [
+        "0x14",
+        "0x18",
+        "0x1C",
+        "0x20",
+        "0x24",
+        "0x28"
+      ],
+      "why": "struct ActorDef passed to ActorLoadDef (src/enemy_ae3bc.c:2440); ActorLoadDefSlot (src/actor_63698.c:190-205) copies attackBox/terrainBox/terrainHandlers/hitReactions/teardown; unk10 NULL"
+    },
+    {
+      "start": "0x0874B9C4",
+      "count": 1,
+      "stride": 44,
+      "pointers": [
+        "0x14",
+        "0x18",
+        "0x1C",
+        "0x20",
+        "0x24",
+        "0x28"
+      ],
+      "why": "struct ActorDef passed to ActorLoadDef (src/enemy_ae3bc.c:2464); ActorLoadDefSlot (src/actor_63698.c:190-205) copies attackBox/terrainBox/terrainHandlers/hitReactions/teardown; unk10 NULL"
+    },
+    {
+      "start": "0x0874B9F0",
+      "count": 1,
+      "stride": 44,
+      "pointers": [
+        "0x14",
+        "0x18",
+        "0x1C",
+        "0x20",
+        "0x24",
+        "0x28"
+      ],
+      "why": "struct ActorDef passed to ActorLoadDef (src/enemy_ae3bc.c:2489); ActorLoadDefSlot (src/actor_63698.c:190-205) copies attackBox/terrainBox/terrainHandlers/hitReactions/teardown; unk10 NULL"
+    },
+    {
+      "start": "0x0874BA1C",
+      "count": 1,
+      "stride": 44,
+      "pointers": [
+        "0x14",
+        "0x18",
+        "0x1C",
+        "0x20",
+        "0x24",
+        "0x28"
+      ],
+      "why": "struct ActorDef passed to ActorLoadDef (src/enemy_ae3bc.c:2514); ActorLoadDefSlot (src/actor_63698.c:190-205) copies attackBox/terrainBox/terrainHandlers/hitReactions/teardown; unk10 NULL"
+    },
+    {
+      "start": "0x0874BA48",
+      "count": 1,
+      "stride": 44,
+      "pointers": [
+        "0x14",
+        "0x18",
+        "0x1C",
+        "0x20",
+        "0x24",
+        "0x28"
+      ],
+      "why": "struct ActorDef passed to ActorLoadDef (src/enemy_ae3bc.c:2538); ActorLoadDefSlot (src/actor_63698.c:190-205) copies attackBox/terrainBox/terrainHandlers/hitReactions/teardown; unk10 NULL"
+    },
+    {
+      "start": "0x0874BA74",
+      "count": 1,
+      "stride": 44,
+      "pointers": [
+        "0x14",
+        "0x18",
+        "0x1C",
+        "0x20",
+        "0x24",
+        "0x28"
+      ],
+      "why": "struct ActorDef passed to ActorLoadDef (src/enemy_ae3bc.c:2603); ActorLoadDefSlot (src/actor_63698.c:190-205) copies attackBox/terrainBox/terrainHandlers/hitReactions/teardown; unk10 NULL"
+    },
+    {
+      "start": "0x0874BAA0",
+      "count": 1,
+      "stride": 44,
+      "pointers": [
+        "0x14",
+        "0x18",
+        "0x1C",
+        "0x20",
+        "0x24",
+        "0x28"
+      ],
+      "why": "struct ActorDef passed to ActorLoadDef (src/enemy_ae3bc.c:2708); ActorLoadDefSlot (src/actor_63698.c:190-205) copies attackBox/terrainBox/terrainHandlers/hitReactions/teardown; unk10 NULL"
+    },
+    {
+      "start": "0x0874C1FC",
+      "count": 1,
+      "stride": 8,
+      "pointers": [
+        "0x4"
+      ],
+      "why": "struct ActorAux (8 bytes, include/task.h) that ActorDef.unk10 points at; altAttackBox (+4) is a struct AttackBox * that src/actor_673ec.c:1315 stores in gAttackBox and src/actor_653ec.c:1088 passes to ActorSetAttackBox"
     }
   ],
   "segments": [

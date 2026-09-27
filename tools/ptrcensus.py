@@ -147,12 +147,15 @@ def record_provider(rom, cfg, segs):
     of the record is a number to that consumer."""
     out = []
     ptr = []
+    notp = dict((int(a, 16), r) for a, r in cfg.get("not_pointers", {}).items())
+    for a, r in notp.items():
+        out.append((a, a + 4, "value field", "not_pointers: " + r))
 
     def fields(base, size, offs, why):
         for o in range(0, size - 3, 4):
-            if o in offs:
+            if o in offs and base + o not in notp:
                 ptr.append((base + o, why))
-            else:
+            elif o not in offs:
                 out.append((base + o, base + o + 4, "value field", why))
 
     for t in cfg.get("pointer_tables", []):
@@ -165,9 +168,8 @@ def record_provider(rom, cfg, segs):
             count = (int(str(t["end"]), 0) - start) // stride
         else:
             count = 0  # next-label: plain pointer arrays, no value fields
-        if stride > 4:
-            for k in range(count):
-                fields(start + k * stride, stride, offs, t["why"])
+        for k in range(count):
+            fields(start + k * stride, stride, offs, t["why"])
         tg = t.get("targets")
         if tg and "size" in tg:
             size = int(str(tg["size"]), 0)
