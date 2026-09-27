@@ -3,13 +3,17 @@
  * RECIPE: agbcc -O2 -mthumb-interwork -fprologue-bugfix
  *   ./tools/fnmatch.sh 0x0806A344 0x0806AD18 src/actor_6a344.c --newpb
  *
- * Class-1 task bodies for the "player is out of the level" states: the
- * warp-star / door exit animation driver (ActorDefeatKnockAway + its per-exit
- * entry points ActorDefeatPlain/530/568), the level-clear dance
- * (ActorDefeatFrozen/sub_0806a7f4 and the sub_0806a8d8 state dispatcher), the
- * death sequence (sub_0806a980/sub_0806a8f4), and a family of one-shot
- * bodies that re-arm the actor and hand control to PlayRayBurstAnim /
- * PlayExplosionAnim.  Every function here runs as gCurTask (the current
+ * Actor defeat bodies, the variants ActorDie (gUnk_0873E5BC) runs (an older
+ * reading called them warp-star exits, a level-clear dance and a death
+ * sequence): ActorDefeatByEffect dispatches the hit effect code Task.unk82
+ * through gActorDefeatsByEffect to the knock-away defeats
+ * ActorDefeatPlain/Burning/Shocked (the shake and launch
+ * ActorDefeatKnockAway, then ActorDefeatBlinkAndBurst) and to
+ * ActorDefeatFrozen, which turns the actor into a kickable ice block
+ * (ActorFreezeIntoIceBlock; per-frame sub_0806a7f4; states gUnk_0873E670:
+ * sub_0806a8f4 shakes, sub_0806a980 slides away when kicked), and a family
+ * of one-shot bodies that re-arm the actor and hand control to
+ * PlayRayBurstAnim / PlayExplosionAnim.  Every function here runs as gCurTask (the current
  * task), so almost all of them are a run of `gCurTask->field = K`
  * statements interleaved with TaskYieldTrampoline() waits.
  */

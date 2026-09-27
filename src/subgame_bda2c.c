@@ -19,9 +19,9 @@
  *
  *   BombRallyRound   entry: install the dispatchers and kick BGM 0x82E
  *   BombRallyRoundPass   the beat loop (states 0..6 in Task.unk28)
- *   BombRallyKnockOutTurnPlayer   "is this a record?" over gBombRallySeats[]
+ *   BombRallyKnockOutTurnPlayer   knock out the player in the turn seat and test for the end of the match
  *   sub_080bdebc   / sub_080bdf3c / sub_080bdf9c   sprite placement helpers
- *   BombRallySeatPlayers   the per-round randomiser (slot + winner)
+ *   BombRallySeatPlayers   seat the players at random (local player in seat 0) and pick the first turn
  *   BombRallyResultsShow   the vblank-flag wait (goto/do-while shape, lesson 6)
  *   sub_080bf0ac   the button-timing judgement against the 5-byte records
  *                  at 0x087565F4 (thresholds -> Task.unk20 = 2/1/0)
