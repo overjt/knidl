@@ -47,37 +47,48 @@ Full instructions, including `baserom.gba` placement and hash verification:
 ## Progress
 
 The project started as a full ROM split (30 address-pinned segments in
-`linker.ld`) and is being decompiled module by module into `src/`, following
-the pret conventions (see `AGENTS.md`). Current status at a glance:
+`linker.ld`) and was decompiled module by module into `src/`, following the
+pret conventions (see `AGENTS.md`). **All of the game's code is now matching
+C**: everything from `AgbInit` (`0x08000310`) to the sound engine's asm core
+is byte-exact C, and so is the sound engine's C driver. The only code left in
+assembly is kept there by design: crt0 and the ARM task switcher, the m4a
+engine's hand-scheduled core (`asm/m4a_1.s`, as in pret projects), the BIOS
+call thunks and the libgcc routines. Each one is justified in
+`docs/analysis/rom-map.md` section 2 and excluded in `tools/calcrom.pl`.
 
 ```sh
 make progress
 ```
 
 ```
-1124 total bytes of code
-    404 bytes of code in src (35.9431%)
-    720 bytes of code in asm (64.0569%)
-        156 bytes of code remaining to be decompiled
+851204 total bytes of code
+    847028 bytes of code in src (99.5094%)
+    4176 bytes of code in asm (0.4906%)
+        0 bytes of code remaining to be decompiled
         0 bytes in 0 functions in asm/nonmatching
-        564 bytes excluded from decompilation tracking
+        4176 bytes excluded from decompilation tracking
 
-5227 total symbols
-    49 symbols documented (0.9374%)
-    5178 symbols undocumented (99.0626%)
+8282 total symbols
+    184 symbols documented (2.2217%)
+    8098 symbols undocumented (97.7783%)
 
-8387520 total bytes of data
+7537436 total bytes of data
     16 bytes of data in src (0.0002%)
-    8387504 bytes of data in data (99.9998%)
+    7531236 bytes of data in data (99.9177%)
+    6184 bytes of data from asm (0.0820%)
 
-8387648 bytes of data in 27 baserom incbins (100.0015%)
+7531388 bytes of data in 19 baserom incbins (99.9198%)
 ```
 
-(Output from the current tree; run `make progress` for live values. The
-`baserom incbins` line is the real decompilation debt: ROM bytes still copied
-verbatim from `baserom.gba`. The tiny >100% overshoot comes from the
-copyrighted Nintendo logo, which is `.incbin`'d inside the hand-written
-cartridge header and thus also counted as excluded assembly.)
+(Output from the current tree; run `make progress` for live values.)
+
+What is left:
+
+- **Data.** The ROM's data is still `.incbin`'d from `baserom.gba` at build
+  time and is never committed. Issue #36 turns the structured tables into
+  labeled, typed symbols without committing their contents.
+- **Names.** Most functions and globals still have address-based names
+  (`sub_08XXXXXX`, `gUnk_XXXXXXXX`), shown as "symbols undocumented" above.
 
 ## CI
 

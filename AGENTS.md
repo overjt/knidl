@@ -17,6 +17,13 @@ Matching decompilation of Kirby: The Amazing Mirror's predecessor, **Kirby: Nigh
 
 - Builds require a user-supplied, legally-dumped `baserom.gba`. The ROM is **never committed**; it must always be gitignored.
 - Do not commit or link to ROM contents, extracted copyrighted assets, or other people's dumps.
+- Data policy (decided when #35 closed; applies to #36 and every later data
+  PR): the repository is public, so **no ROM bytes are ever committed, not
+  even as typed C arrays, `.word` lists or converted assets** (tables, text,
+  level data, graphics, audio). Data work commits *structure* only: labels at
+  table boundaries, struct types, pointer words rewritten as symbols, and
+  build-time extraction from `baserom.gba` (`.incbin` slices or tools run in
+  Docker at build time). Code stays C, as in every matching decompilation.
 
 ## Builds
 
@@ -614,6 +621,16 @@ Matching decompilation of Kirby: The Amazing Mirror's predecessor, **Kirby: Nigh
   to `0x080CD89B`, the start of `m4a_1`, is byte-exact C.  The asm left in the ROM is
   the sound engine's hand-written core `m4a_1`, crt0 and the ARM task
   switcher, and the SDK stubs (SWI thunks, SoftReset, lib1funcs and the
-  task trampolines, the interworking veneer).  `make progress`: 846924 of
-  857388 code bytes in `src/` (98.7795%).
-- Next milestones: decompile split/SDK modules to C using the validated per-zone compiler recipe (task system Thumb side, sound driver, then game code); grow `src/` one module at a time with `asmdiff.sh` on the module range.
+  task trampolines, the interworking veneer).  The #35 close-out moved
+  `MidiKeyToFreq` and `UnusedDummyFunc` (the head of pokeemerald's `m4a.c`,
+  wrongly inside the asm core's segment) into `src/m4a_c1.c`, listed the
+  by-design asm as excluded in `tools/calcrom.pl` and counted asm-split
+  tables as data (lesson 4.114).  `make progress`: 847028 of 851204 code
+  bytes in `src/` (99.5094%), **0 bytes of code remaining to be
+  decompiled**; 184 of 8282 symbols have real names.
+- Next milestones (after #35): (1) a "natural C" campaign that removes the
+  `register ... asm("rN")` pins and zero-byte `asm("")` levers left in the
+  early modules (133 functions in 45 files, mostly M28-M33); (2) #36, data
+  structure under the data policy above (labels, types and pointer symbols,
+  no ROM bytes committed); (3) names for functions, globals and struct
+  fields, then #37's final audit.

@@ -375,7 +375,7 @@ extern char gMaxLines[];
 #define NUM_MUSIC_PLAYERS ((u16)(u32)gNumMusicPlayers)
 #define MAX_LINES ((u32)gMaxLines)
 
-/* asm core (asm/m4a_1.s, 0x080CD89C-0x080CE51F) */
+/* asm core (asm/m4a_1.s, 0x080CD89C-0x080CE4B7) */
 u32 umul3232H32(u32 multiplier, u32 multiplicand);
 void SoundMain(void);
 void SoundMainBTM(void);
@@ -388,7 +388,9 @@ extern char SoundMainRAM[];
 /* SDK stubs outside the driver */
 void DummyFunc(void);                                   /* 0x080CFA4C */
 
-/* C driver (src/m4a.c, 0x080CE520-) */
+/* C driver (src/m4a_c1.c, m4a_cgb.c, m4a_ctrl.c, 0x080CE4B8-) */
+u32 MidiKeyToFreq(struct WaveData *wav, u8 key, u8 fineAdjust);
+void UnusedDummyFunc(void);
 void MPlayContinue(struct MusicPlayerInfo *mplayInfo);
 void MPlayFadeOut(struct MusicPlayerInfo *mplayInfo, u16 speed);
 void m4aSoundInit(void);

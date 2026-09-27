@@ -9659,6 +9659,24 @@ installed as a callback by `sub_080cd70c`) and a 4.40 phantom
   in `0x08007300-0x080CFA4C`; the asm left in the ROM is the sound engine
   core `m4a_1`, crt0 and the ARM task switcher, and the SDK stubs.
 
+### 4.114 Check a hand-written segment's edges against the upstream file order
+Everything in the m4a asm core's segment was labeled "stays asm forever",
+but its last 104 bytes were C.  pokeemerald's `src/m4a.c` opens with
+`MidiKeyToFreq` and an empty `UnusedDummyFunc`, and our first C part
+started one function later, at `MPlayContinue` (`0x080CE520`).  The asm
+matched the upstream C line by line: the `key > 178` clamp, the
+`gScaleTable`/`gFreqTable` pool words, two `umul3232H32` calls, then the
+trailing `bx lr`.  pokeemerald's source matched at the first try with
+old_agbcc -O2 as part of `src/m4a_c1.c`, whose range now starts at
+`0x080CE4B8`.  When a library is split into an asm part and a C part,
+compare the functions on each side of the seam with the upstream file
+order before you trust the "stays asm" label.  Two related progress-counter
+traps: `tools/calcrom.pl` used to count asm-split *tables* (the m4a song
+table, the IRQ table, the sub-game rodata) as code, about 6 KiB.  It now
+takes the kind from `segments.txt`, so `data`/`pool` segments count as
+data, as `tools/gen_report.py` always did.  And the asm kept by design has
+to be listed as excluded, or "remaining to be decompiled" never reaches 0.
+
 ## 5. Workflow that worked
 
 The canonical per-function loop (pick → m2c first pass → asmdiff iterate →

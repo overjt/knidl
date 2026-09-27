@@ -314,8 +314,8 @@
 0x080CBED4 0x080CCD4C c_code gameover_cbed4 # src/gameover_cbed4.c (carved by tools/carve.py)
 0x080CCD4C 0x080CD330 c_code gameover_ccd4c # src/gameover_ccd4c.c (carved by tools/carve.py)
 0x080CD330 0x080CD89C c_code credits_cd330 # src/credits_cd330.c (carved by tools/carve.py)
-0x080CD89C 0x080CE520 thumb_code m4a_1 [split] # m4a asm core (pret m4a_1.s equivalent): hand-scheduled SDK asm, stays asm forever; SoundMainRAM ROM image embeds an ARM-mode mixer loop (rom-map section 8.2, issue #52)
-0x080CE520 0x080CEFB4 c_code m4a_c1 # src/m4a_c1.c (carved by tools/carve.py): m4a C driver part 1, init/song-number/MPlay API (issue #53, old_agbcc -O2)
+0x080CD89C 0x080CE4B8 thumb_code m4a_1 [split] # m4a asm core (pret m4a_1.s equivalent): hand-scheduled SDK asm, stays asm forever (MidiKeyToFreq, the head of pret m4a.c, moved to src/m4a_c1.c); SoundMainRAM ROM image embeds an ARM-mode mixer loop (rom-map section 8.2, issue #52)
+0x080CE4B8 0x080CEFB4 c_code m4a_c1 # src/m4a_c1.c (carved by tools/carve.py): m4a C driver part 1, MidiKeyToFreq + init/song-number/MPlay API (issue #53, old_agbcc -O2)
 0x080CEFB4 0x080CF588 c_code m4a_cgb # src/m4a_cgb.c (carved by tools/carve.py)
 0x080CF588 0x080CFA4C c_code m4a_ctrl # src/m4a_ctrl.c (carved by tools/carve.py)
 0x080CFA4C 0x080CFA7F thumb_code sdk_swi_wrappers [split] # svc thunks named per include/gba/syscall.h; stays named asm by design (bare `svc N; bx lr` is not producible from C by agbcc — issue #29)
@@ -345,5 +345,5 @@
 0x0872EA14 0x08730000 data gap_sram_driver_fn_table_asset_metadata_index
 0x08730000 0x08760000 data asset_metadata_index
 0x08760000 0x087E1D58 data song_tail_misc_audio
-0x087E1D58 0x087E3088 data sample_set_index
+0x087E1D58 0x087E3088 data sample_set_index # really the room table gUnk_087E1D58[level][stage][room] (M07, rom-map seg 20); name kept until #36 restructures the zone
 0x087E3088 0x08800000 data zero_padding
