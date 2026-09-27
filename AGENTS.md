@@ -264,9 +264,9 @@ Matching decompilation of Kirby: The Amazing Mirror's predecessor, **Kirby: Nigh
   `src/stage_270d0.c`, `src/stage_273a0.c`, `src/room_27e28.c`,
   `src/room_28320.c` and `src/camera_28b8c.c` (**156 of 157 functions**,
   no `asm` statements and no `register` pins; the one hole is
-  `sub_08027a6c`, 956 bytes, parked at 234 differing bytes with its best
-  source on #93), so `0x08021B18-0x08030803` (M07+M08) is C except that
-  one function.  It is the half of the
+  `sub_08027a6c`, 956 bytes, parked at 234 differing bytes, which the
+  final campaign landed from plain source as `src/level_27a6c.c`), so
+  `0x08021B18-0x08030803` (M07+M08) is all C.  It is the half of the
   level engine that decides which room is on screen and drives M08's camera:
   the room table `gUnk_087E1D58[level][stage][room]` gives the room header
   `gUnk_030055EC` (`struct RoomDef`, 0x58 bytes: BGM, compressed maps,
@@ -316,7 +316,7 @@ Matching decompilation of Kirby: The Amazing Mirror's predecessor, **Kirby: Nigh
   `src/player_39c24.c`, `src/player_3aa64.c` and `src/player_3bde8.c`
   (**all 39 functions, no asm left in the range**, no `asm` statements and
   no `register` pins), so `0x08021B18-0x08040B3F` (M07 through the start of
-  M11) is C except M07's `sub_08027a6c`.  The census name "stage script
+  M11) is C (M07's last function landed in the final campaign).  The census name "stage script
   runner" was wrong: the range is the second half of M09's player action
   machine - "enter" coroutines 10-21 and 23-28 of `gUnk_0873A748[62]` and
   per-frame handlers 9-25 of `gUnk_0873A840[57]` - among them the player's
@@ -575,7 +575,8 @@ Matching decompilation of Kirby: The Amazing Mirror's predecessor, **Kirby: Nigh
   `src/early_3888.c`, `src/early_4984.c`, `src/early_5654.c`,
   `src/early_5acc.c`, `src/early_6ac8.c` and `src/early_6e9c.c`, so
   `0x080008E8-0x08007300` is C except `sub_08006d28` (SerialCB, 356 bytes,
-  parked at 15 differing bytes with its best source on #63; rom-map §6.4).
+  parked at 15 differing bytes; the final campaign landed it as
+  `src/early_6d28.c`, rom-map §6.4).
   Twelve are plain source and `sub_08002378` keeps one commented zero-code
   stand-in conjunct.  All fourteen were redrafted from the listings (#32's
   candidates were lost), and every #32 diagnosis turned out to describe

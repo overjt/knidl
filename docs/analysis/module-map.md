@@ -660,15 +660,16 @@ below is the pre-decompilation one, kept for the record.
 * **Pool references** IWRAM x1303, asset_metadata_index x334, EWRAM x3.
 * **Suggested batches** `0x0801A8C8` (7 fns), `0x0801BCAC` (17 fns), `0x0801DC88` (9 fns), `0x0801FC48` (23 fns).
 
-### M07 `0x08021B18-0x0802969F` - the level / room builder: room loaders, task type #3, doors, map queries and camera start-up - **landed (#93) except one function**
+### M07 `0x08021B18-0x0802969F` - the level / room builder: room loaders, task type #3, doors, map queries and camera start-up - **landed (#93 and the final campaign)**
 
 The range is decompiled and carved out of the split asm, so it now appears in
 `module-map.csv` as `c_code` rows instead of one clusterable module; the census
 below is the pre-decompilation one, kept for the record.
 
-* **Landed as** twelve files, 156 of the 157 functions byte-exact under
-  the `--newpb` recipe with no `asm` statements and no `register` pins,
-  48 new `split_config.json` `data_symbols`:
+* **Landed as** thirteen files, all 157 functions byte-exact under
+  the `--newpb` recipe with no `asm` statements and no `register` pins
+  (#93 landed 156 in twelve files with 48 new `split_config.json`
+  `data_symbols`; the final campaign added `src/level_27a6c.c`):
   `src/terrain_21b18.c` (`0x08021B18-0x0802296C`, 22 fns),
   `src/level_2296c.c` (`0x0802296C-0x08023618`, 8),
   `src/roomtask_23618.c` (`0x08023618-0x08023948`, 10),
@@ -678,6 +679,7 @@ below is the pre-decompilation one, kept for the record.
   `src/door_26b60.c` (`0x08026B60-0x080270D0`, 3),
   `src/stage_270d0.c` (`0x080270D0-0x080273A0`, 10),
   `src/stage_273a0.c` (`0x080273A0-0x08027A6C`, 13),
+  `src/level_27a6c.c` (`0x08027A6C-0x08027E28`, 1),
   `src/room_27e28.c` (`0x08027E28-0x08028320`, 4),
   `src/room_28320.c` (`0x08028320-0x08028B8C`, 5),
   `src/camera_28b8c.c` (`0x08028B8C-0x080296A0`, 20).
@@ -685,12 +687,13 @@ below is the pre-decompilation one, kept for the record.
   `0x08024E40`, `sub_08025024` and `sub_080258e0` only match with the
   loaders in front of them in the same translation unit, and `stage_270d0.c`
   / `stage_273a0.c` are two files for the opposite reason
-  (`docs/lessons-learned.md` 4.79, 4.86).  **One function is left in
-  asm:** `sub_08027a6c` (`0x08027A6C-0x08027E28`, 956 bytes), which builds
-  the second map buffer `gUnk_02006AA0` for `sub_08023948`/`sub_08023ca0`;
-  three agents took it from 675 to 234 differing bytes (948 of 956 bytes,
-  15 structural differences with registers masked, all loop-optimisation and
-  allocation), and the best source is recorded on #93.  Both neighbours,
+  (`docs/lessons-learned.md` 4.79, 4.86).  The last function,
+  `sub_08027a6c` (`0x08027A6C-0x08027E28`, 956 bytes), which builds the
+  second map buffer `gUnk_02006AA0` for `sub_08023948`/`sub_08023ca0`, was
+  parked by #93 at 234 differing bytes and matched in the final campaign
+  from plain source: a `u16` marker, whose `& 0x100` test is then an
+  HImode constant chain agbcc's second loop pass hoists, and a struct copy
+  for the map store (`docs/lessons-learned.md` 3.489).  Both neighbours,
   M06 and M08, are C (M06 partly).
 * **What it turned out to be** (`docs/analysis/rom-map.md` §9): the half of
   the level engine that decides WHICH room is on screen, one subsystem with
@@ -902,8 +905,8 @@ below is the pre-decompilation one, kept for the record.
   `src/player_39c24.c` (`0x08039C24-0x0803AA64`, 2),
   `src/player_3aa64.c` (`0x0803AA64-0x0803BDE8`, 14),
   `src/player_3bde8.c` (`0x0803BDE8-0x0803CD60`, 5).
-  With it `0x08021B18-0x08040B40` (M07 through the start of M11) is C except
-  M07's parked `sub_08027a6c`.
+  With it `0x08021B18-0x08040B40` (M07 through the start of M11) is C
+  (M07's last function landed in the final campaign).
 * **What it turned out to be** (`docs/analysis/rom-map.md` §9): not a "stage
   script runner" but the second half of M09's **player action machine**.
   The player task runs the "enter" coroutine of `PlayerState.unk02` from
