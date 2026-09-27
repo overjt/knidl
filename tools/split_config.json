@@ -8254,6 +8254,31 @@
     "0x087E1D58": "gUnk_087E1D58",
     "0x087E1F20": "gUnk_087E1F20"
   },
+  "not_pointers": {
+    "0x0872EA04": "sram_driver_fn_table[0] = ReadSram_Core+1, which src/agb_sram.c defines static (as the SDK source does), so no global symbol names it",
+    "0x0872EA0C": "sram_driver_fn_table[2] = VerifySram_Core+1, static in src/agb_sram.c like ReadSram_Core"
+  },
+  "pointer_tables": [
+    {
+      "start": "0x0872FF30",
+      "count": 266,
+      "stride": 8,
+      "pointers": [
+        "0x4"
+      ],
+      "why": "task-type table gUnk_0872FF30[266] {u8 class; entry}: TaskCreate (sub_0800579c, src/early_5654.c) copies .unk04 into the slot's resume address gTaskFlagsTable[], which the ARM switcher at 0x08000234 enters with bx (rom-map section 6)"
+    },
+    {
+      "start": "0x0860B430",
+      "count": 4,
+      "stride": 12,
+      "pointers": [
+        "0x0",
+        "0x4"
+      ],
+      "why": "gMPlayTable[4]: struct MusicPlayer {MusicPlayerInfo *info; MusicPlayerTrack *track; u8 unk_8; u16 unk_A} (include/gba/m4a_internal.h); m4aSoundInit (src/m4a_c1.c) opens each player from it"
+    }
+  ],
   "segments": [
     {
       "name": "m4a_1"
@@ -8289,10 +8314,74 @@
       "name": "lib_rodata_fir_tables"
     },
     {
+      "name": "level_object_tables"
+    },
+    {
+      "name": "level_graphics_palettes",
+      "asset": true
+    },
+    {
+      "name": "sound_samples_1",
+      "asset": true
+    },
+    {
+      "name": "level_graphics_palettes_2",
+      "asset": true
+    },
+    {
+      "name": "sound_samples_2",
+      "asset": true
+    },
+    {
+      "name": "level_graphics_palettes_3",
+      "asset": true
+    },
+    {
+      "name": "compressed_graphics",
+      "asset": true
+    },
+    {
+      "name": "m4a_songs",
+      "asset": true
+    },
+    {
       "name": "m4a_engine_rodata"
     },
     {
+      "name": "m4a_song_tracks",
+      "asset": true
+    },
+    {
       "name": "m4a_song_table"
+    },
+    {
+      "name": "m4a_songs_2",
+      "asset": true
+    },
+    {
+      "name": "sram_v112_string"
+    },
+    {
+      "name": "gap_sram_v112_string_sram_driver_fn_table"
+    },
+    {
+      "name": "sram_driver_fn_table"
+    },
+    {
+      "name": "gap_sram_driver_fn_table_asset_metadata_index"
+    },
+    {
+      "name": "asset_metadata_index"
+    },
+    {
+      "name": "song_tail_misc_audio",
+      "asset": true
+    },
+    {
+      "name": "sample_set_index"
+    },
+    {
+      "name": "zero_padding"
     }
   ]
 }

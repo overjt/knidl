@@ -69,6 +69,26 @@ baserom bytes.  If real instructions fail to round-trip, the whole segment
 falls back to raw `.short`/`.byte` emission (a verbatim byte copy), so the
 output is always byte-identical.  `make compare` remains the final proof.
 
+Data segments (kind `data` in segments.txt) use a different, structure-only
+emitter (issue #36, docs/data.md), because the repository commits no ROM
+bytes: `data/<name>.s` holds only labels, symbolic `.word`s and
+`.incbin "baserom.gba", <offset>, <length>` slices.  Its rules:
+
+  * a real `.global` label at every ROM `data_symbols` value and every
+    `extra_labels` address inside the segment (their absolute definitions
+    leave asm/rom_syms.s);
+  * `.word <fn>+1` (Thumb) / `.word <fn>` (ARM) for every 4-aligned word
+    whose value is a symbols.csv function entry, unless the segment is
+    marked `"asset": true` (graphics, samples, songs: a 0x08xxxxxx value
+    there is as likely pixels as a pointer) or the word is listed in
+    `"not_pointers"`;
+  * `.word <label>` for every word of a `"pointer_tables"` entry, the
+    tables whose layout a decompiled consumer proves: each non-NULL word
+    must resolve to a function, a ROM data label or a named RAM cell, and
+    an unresolved one stops the run (`--missing-labels` writes the
+    data_symbols entries it would need);
+  * `.incbin` for every other run of bytes, whatever its length.
+
 Run inside the knidl-builder image via `make split`, or directly:
 
   python3 tools/split.py --rom baserom.gba --config tools/split_config.json
@@ -94,6 +114,12 @@ DATA_PREFIX = "gUnk_"
 LOCAL_PREFIX = ".L_"
 
 CODE_KINDS = ("arm_code", "thumb_code")
+
+# Structure-only data emission (issue #36): the name every generated
+# `.incbin` line references.  The build runs from the repository root, where
+# the user-supplied ROM lives under exactly this name.
+BASEROM_NAME = "baserom.gba"
+STRUCTURE_KINDS = ("data",)
 
 
 class FallbackNeeded(Exception):
@@ -977,6 +1003,272 @@ class SegmentEmitter(object):
 
 
 # --------------------------------------------------------------------------
+# Structure-only data emission (issue #36, docs/data.md)
+# --------------------------------------------------------------------------
+
+
+class ConfigError(Exception):
+    """A pointer table or label that the data plan cannot honour."""
+
+
+def parse_int(text, what):
+    try:
+        return int(str(text), 0)
+    except ValueError:
+        raise ConfigError("%s: bad number %r" % (what, text))
+
+
+class DataPlan(object):
+    """Every label and symbolic word of the structure-only data segments.
+
+    Built once for all of them, because a pointer in one segment names a
+    label in another (the room table in seg 20 points at RoomDef headers in
+    seg 13).  `labels` maps an address to its names (data_symbols first,
+    then extra_labels); `words` maps a 4-aligned word address to the
+    operand of its `.word` line and `kinds` to "code" or "data"; `why`
+    keeps the pointer table that proved a data pointer.
+    """
+
+    def __init__(self, rom, segments, db_rows, data_symbols, extra_labels,
+                 pointer_tables, not_pointers):
+        self.rom = rom
+        self.segments = segments  # [(name, start, end, asset)]
+        self.db_rows = db_rows  # vma -> (name, isa)
+        self.data_symbols = data_symbols  # value -> name
+        self.extra_labels = extra_labels  # addr -> name
+        self.not_pointers = not_pointers  # addr -> reason
+        self.labels = {}
+        self.words = {}
+        self.kinds = {}
+        self.why = {}
+        self.missing = {}  # target addr -> [(slot addr, why)]
+        self.errors = []
+        self._build_labels()
+        self.slots = self._build_slots(pointer_tables)
+        self._build_words()
+
+    # ---- helpers -------------------------------------------------------
+
+    def segment_of(self, addr):
+        for seg in self.segments:
+            if seg[1] <= addr < seg[2]:
+                return seg
+        return None
+
+    def word(self, addr):
+        return u32(self.rom, vma_off(addr))
+
+    def function_operand(self, v):
+        """`.word` operand for a function-pointer value, or None.
+
+        Thumb pointers carry bit 0 (`name+1`); ARM entries are even.  An
+        even value equal to a Thumb entry is a `mov pc` jump-table target
+        (lesson 4.38), which an R_ARM_ABS32 against a C-defined Thumb
+        function would turn odd, so it is never symbolized.
+        """
+        if v & 1:
+            row = self.db_rows.get(v & ~1)
+            if row is not None and row[1] == "thumb":
+                return "%s+1" % row[0]
+            return None
+        row = self.db_rows.get(v)
+        if row is not None and row[1] == "arm":
+            return row[0]
+        return None
+
+    def label_operand(self, v):
+        """`.word` operand for a data-pointer value, or None: a label of a
+        structure-only segment, else any named cell (RAM, or a ROM table
+        still defined by absolute address)."""
+        names = self.labels.get(v)
+        if names:
+            return names[0]
+        return self.data_symbols.get(v)
+
+    # ---- planning --------------------------------------------------------
+
+    def _build_labels(self):
+        for value, name in sorted(self.data_symbols.items()):
+            if self.segment_of(value) is not None:
+                self.labels.setdefault(value, []).append(name)
+        for addr, name in sorted(self.extra_labels.items()):
+            if self.segment_of(addr) is not None:
+                names = self.labels.setdefault(addr, [])
+                if name not in names:
+                    names.append(name)
+
+    def _table_slots(self, table, index):
+        """[(slot addr, why)] for one "pointer_tables" entry."""
+        what = "pointer_tables[%d]" % index
+        why = table.get("why")
+        if not why:
+            raise ConfigError("%s needs a \"why\" (the consumer that proves "
+                              "its layout)" % what)
+        start = parse_int(table.get("start"), what + ".start")
+        stride = parse_int(table.get("stride", 4), what + ".stride")
+        offsets = [parse_int(o, what + ".pointers")
+                   for o in table.get("pointers", [0])]
+        if "count" in table:
+            count = parse_int(table["count"], what + ".count")
+        elif "end" in table:
+            end = parse_int(table["end"], what + ".end")
+            if (end - start) % stride:
+                raise ConfigError("%s: 0x%X bytes is not a multiple of the "
+                                  "stride 0x%X" % (what, end - start, stride))
+            count = (end - start) // stride
+        else:
+            raise ConfigError("%s needs \"count\" or \"end\"" % what)
+        slots = []
+        for i in range(count):
+            for off in offsets:
+                slots.append((start + i * stride + off, why))
+        return slots, table.get("targets")
+
+    def _build_slots(self, pointer_tables):
+        slots = {}
+
+        def add(addr, why):
+            if addr % 4:
+                raise ConfigError("pointer slot 0x%08X (%s) is not 4-aligned"
+                                  % (addr, why))
+            seg = self.segment_of(addr)
+            if seg is None or addr + 4 > seg[2]:
+                raise ConfigError("pointer slot 0x%08X (%s) is not inside a "
+                                  "data segment" % (addr, why))
+            slots.setdefault(addr, why)
+
+        for index, table in enumerate(pointer_tables):
+            base, layout = self._table_slots(table, index)
+            for addr, why in base:
+                add(addr, why)
+            if not layout:
+                continue
+            # "targets": every non-NULL word of the table points at one
+            # record of this layout, whose own pointer fields are slots too.
+            lwhy = layout.get("why")
+            if not lwhy:
+                raise ConfigError("pointer_tables[%d].targets needs a "
+                                  "\"why\"" % index)
+            loffs = [parse_int(o, "pointer_tables[%d].targets" % index)
+                     for o in layout.get("pointers", [])]
+            for addr, _why in base:
+                if addr in self.not_pointers:
+                    continue
+                target = self.word(addr)
+                if target == 0:
+                    continue
+                for off in loffs:
+                    add(target + off, lwhy)
+        return slots
+
+    def _build_words(self):
+        for name, start, end, asset in self.segments:
+            addr = (start + 3) & ~3
+            while addr + 4 <= end:
+                self._plan_word(addr, asset)
+                addr += 4
+
+    def _plan_word(self, addr, asset):
+        if addr in self.not_pointers:
+            return
+        inside = [a for a in (addr + 1, addr + 2, addr + 3) if a in self.labels]
+        slot_why = self.slots.get(addr)
+        v = self.word(addr)
+        if slot_why is not None:
+            if v == 0:
+                return  # NULL stays inside the .incbin
+            if inside:
+                self.errors.append(
+                    "pointer slot 0x%08X (%s) has a label inside it at 0x%08X"
+                    % (addr, slot_why, inside[0])
+                )
+                return
+            operand = self.function_operand(v)
+            kind = "code"
+            if operand is None:
+                operand = self.label_operand(v)
+                kind = "data"
+            if operand is None:
+                self.missing.setdefault(v, []).append((addr, slot_why))
+                return
+            self.words[addr] = operand
+            self.kinds[addr] = kind
+            self.why[addr] = slot_why
+            return
+        if asset or inside:
+            return
+        operand = self.function_operand(v)
+        if operand is not None:
+            self.words[addr] = operand
+            self.kinds[addr] = "code"
+
+    def missing_label_entries(self):
+        """data_symbols entries that would resolve every missing target."""
+        return dict(
+            ("0x%08X" % v, DATA_PREFIX + "%08X" % v)
+            for v in sorted(self.missing)
+        )
+
+
+def emit_data_segment(plan, name, start, end, kind, asset):
+    """Text of `data/<name>.s` for one structure-only segment."""
+    labels = dict(
+        (a, n) for a, n in plan.labels.items() if start <= a < end
+    )
+    words = dict((a, o) for a, o in plan.words.items() if start <= a < end)
+    body = []
+    stats = {"labels": 0, "code": 0, "data": 0, "incbins": 0,
+             "incbin_bytes": 0}
+
+    def incbin(a, length):
+        body.append('\t.incbin\t"%s", 0x%X, 0x%X'
+                    % (BASEROM_NAME, vma_off(a), length))
+        stats["incbins"] += 1
+        stats["incbin_bytes"] += length
+
+    cur = start
+    for addr in sorted(set(labels) | set(words)):
+        if addr < cur:
+            raise ConfigError("%s: 0x%08X falls inside the symbolic word "
+                              "before it" % (name, addr))
+        if addr > cur:
+            incbin(cur, addr - cur)
+            cur = addr
+        for label in labels.get(addr, []):
+            body.append("\t.global\t%s" % label)
+            body.append("%s:" % label)
+            stats["labels"] += 1
+        if addr in words:
+            body.append("\t.word\t%s" % words[addr])
+            stats[plan.kinds[addr]] += 1
+            cur = addr + 4
+    if cur < end:
+        incbin(cur, end - cur)
+
+    h = [
+        "@ Auto-generated by tools/split.py from baserom.gba - DO NOT EDIT.",
+        "@ Regenerate with: make split",
+        "@ Segment %s: 0x%08X-0x%08X (%s, 0x%X bytes)"
+        % (name, start, end, kind, end - start),
+        "@ Structure only (docs/data.md): labels, symbolic pointer words and",
+        "@ .incbin slices of the user's baserom.gba; no ROM bytes are committed.",
+        "@ %d label(s), %d code pointer(s), %d data pointer(s), %d .incbin"
+        " slice(s) (0x%X bytes)."
+        % (stats["labels"], stats["code"], stats["data"], stats["incbins"],
+           stats["incbin_bytes"]),
+    ]
+    if asset:
+        h.append("@ Asset segment: its bytes stay extracted from baserom.gba"
+                 " forever; only")
+        h.append("@ labels and consumer-proven pointer tables are structure.")
+    h.append("")
+    h.append('\t.section .%s, "a"' % name)
+    h.append("\t.global\t%s" % name)
+    h.append("%s:" % name)
+    return "\n".join(h + body) + "\n", stats
+
+
+# --------------------------------------------------------------------------
 # Verification: assemble every candidate, link the whole group at the real
 # ROM VMAs (plus rom_syms.o and --defsym stand-ins for symbols that real
 # code defines), and compare each section's bytes against baserom.
@@ -1024,13 +1316,16 @@ def run_checked(cmd, what):
     return proc
 
 
-def assemble_text(text, opath):
+def assemble_text(text, opath, incdirs=()):
     """Assemble `text` to `opath`; returns (ok, stderr)."""
     spath = opath[:-2] + ".s"
     with open(spath, "w") as f:
         f.write(text)
+    cmd = [AS, "-mcpu=arm7tdmi"]
+    for d in incdirs:
+        cmd += ["-I", d]
     proc = subprocess.run(
-        [AS, "-mcpu=arm7tdmi", "-o", opath, spath], capture_output=True, text=True
+        cmd + ["-o", opath, spath], capture_output=True, text=True
     )
     return proc.returncode == 0, proc.stderr
 
@@ -1098,11 +1393,11 @@ def verify_group(candidates, syms_obj, rom, tmpdir, helpers=None):
             )
         except RuntimeError as e:
             print("    %s" % e)
-            failing.add(sec)
+            failing[sec] = None
             continue
         if not os.path.exists(dump):
             print("    %s: section missing from verification ELF" % sec)
-            failing.add(sec)
+            failing[sec] = None
             continue
         with open(dump, "rb") as f:
             got = f.read()
@@ -1154,8 +1449,10 @@ def emit_rom_syms(db, exclude, path, data_symbols, abs_symbols=None):
         count += 1
     if data_symbols:
         lines.append("")
-        lines.append("@ Named non-ROM cells (tools/split_config.json \"data_symbols\"),")
-        lines.append("@ referenced symbolically from split literal pools / data words:")
+        lines.append("@ Named cells (tools/split_config.json \"data_symbols\") that no split")
+        lines.append("@ data segment defines as a real label: RAM and I/O cells, referenced")
+        lines.append("@ symbolically from split literal pools and pointer tables (a ROM")
+        lines.append("@ address here is a table still waiting for its label, docs/data.md):")
         for value in sorted(data_symbols):
             lines.append("\t.global\t%s" % data_symbols[value])
             lines.append("%s = 0x%08X" % (data_symbols[value], value))
@@ -1192,6 +1489,11 @@ def main():
         "--keep-tmp", action="store_true",
         help="keep the scratch directory for debugging link failures",
     )
+    parser.add_argument(
+        "--missing-labels", metavar="JSON",
+        help="when a pointer table points at unlabeled addresses, write the "
+             "data_symbols entries that would label them to this file",
+    )
     args = parser.parse_args()
 
     with open(args.rom, "rb") as f:
@@ -1222,10 +1524,15 @@ def main():
         )
     except (AttributeError, ValueError):
         sys.exit("error: abs_symbols must map names to \"0x...\" hex values")
+    not_pointers = parse_addr_map(cfg.get("not_pointers", {}), "not_pointers")
+    pointer_tables = cfg.get("pointer_tables", [])
+    if not isinstance(pointer_tables, list):
+        sys.exit("error: pointer_tables must be a list of tables")
 
     tmpdir = tempfile.mkdtemp(prefix="split_")
     try:
         entries = []
+        data_entries = []  # structure-only segments (issue #36)
         for seg_cfg in cfg["segments"]:
             name = seg_cfg["name"]
             if name not in segdefs:
@@ -1249,12 +1556,24 @@ def main():
                     )
                 if chunk_bytes <= 0:
                     sys.exit("error: chunk_bytes must be positive")
+            asset = bool(seg_cfg.get("asset", False))
+            if kind in STRUCTURE_KINDS:
+                if chunk_bytes is not None:
+                    sys.exit("error: data segment %r cannot be chunked" % name)
+                data_entries.append((name, start, end, kind, asset))
+                continue
+            if asset:
+                sys.exit("error: only data segments can be assets (%r)" % name)
             entries.append((name, start, end, kind, chunk_bytes))
+        all_ranges = (
+            [(s, e) for _n, s, e, _k, _c in entries]
+            + [(s, e) for _n, s, e, _k, _a in data_entries]
+        )
 
         # Config sanity: every extra label must live inside one configured
         # segment and must not shadow a database symbol defined elsewhere.
         for addr, label in sorted(extra_labels.items()):
-            if not any(s <= addr < e for _n, s, e, _k, _c in entries):
+            if not any(s <= addr < e for s, e in all_ranges):
                 sys.exit(
                     "error: extra label %s at 0x%08X is outside every "
                     "configured segment" % (label, addr)
@@ -1264,8 +1583,9 @@ def main():
                     "error: extra label %s at 0x%08X collides with "
                     "database symbol %s" % (label, addr, db[addr])
                 )
+        db_names = set(db.values())
         for value, label in sorted(data_symbols.items()):
-            if value in db.values():
+            if label in db_names:
                 sys.exit(
                     "error: data symbol %s collides with a database "
                     "function name" % label
@@ -1280,9 +1600,45 @@ def main():
             if any(s <= vma < e for s, e in split_ranges)
         )
 
+        # Structure-only data segments: one plan for all of them, since a
+        # pointer in one names a label in another.
+        try:
+            plan = DataPlan(
+                rom,
+                [(n, s, e, a) for n, s, e, _k, a in data_entries],
+                rows, data_symbols, extra_labels, pointer_tables,
+                not_pointers,
+            )
+        except ConfigError as e:
+            sys.exit("error: %s" % e)
+        if plan.errors:
+            sys.exit("error: data plan:\n  " + "\n  ".join(plan.errors))
+        if plan.missing:
+            print("error: %d pointer-table target(s) have no label:"
+                  % len(plan.missing))
+            for v in sorted(plan.missing)[:20]:
+                slot, why = plan.missing[v][0]
+                print("    0x%08X (word at 0x%08X, %s)" % (v, slot, why))
+            if args.missing_labels:
+                with open(args.missing_labels, "w") as f:
+                    json.dump(plan.missing_label_entries(), f, indent=2,
+                              sort_keys=True)
+                    f.write("\n")
+                print("wrote %s (add these to data_symbols)"
+                      % args.missing_labels)
+            sys.exit(1)
+        labeled_names = set(
+            n for names in plan.labels.values() for n in names
+        )
+        unlabeled_symbols = dict(
+            (v, n) for v, n in data_symbols.items() if n not in labeled_names
+        )
+
         exclude = set(cfg.get("external_defined", [])) | in_split
         syms_path = os.path.join(args.asm_dir, "rom_syms.s")
-        count = emit_rom_syms(db, exclude, syms_path, data_symbols, abs_symbols)
+        count = emit_rom_syms(
+            db, exclude, syms_path, unlabeled_symbols, abs_symbols
+        )
         print("wrote %s (%d absolute symbols)" % (syms_path, count))
         syms_obj = os.path.join(tmpdir, "rom_syms.o")
         run_checked(
@@ -1302,6 +1658,24 @@ def main():
             if name in name_to_row:
                 ext_defs[name] = name_to_row[name]
         helpers = emit_ext_standins(ext_defs, tmpdir)
+
+        # Structure-only data files never fall back: they hold no
+        # instructions, so a verification mismatch is a planning bug.
+        rom_dir = os.path.dirname(os.path.abspath(args.rom))
+        data_results = {}  # name -> (text, objpath, stats)
+        for name, start, end, kind, asset in data_entries:
+            try:
+                text, dstats = emit_data_segment(
+                    plan, name, start, end, kind, asset
+                )
+            except ConfigError as e:
+                sys.exit("error: %s" % e)
+            obj = os.path.join(tmpdir, "data_%s.o" % name)
+            ok, err = assemble_text(text, obj, incdirs=(rom_dir,))
+            if not ok:
+                sys.exit("error: data segment %s does not assemble:\n%s"
+                         % (name, err))
+            data_results[name] = (text, obj, dstats)
 
         # Plan emission units: one output file per unit. Flat segments are
         # a single unit owning section <name>; chunked segments (optional
@@ -1482,6 +1856,8 @@ def main():
                 candidates.append(
                     (u["section"], u["seg_start"], u["seg_end"], obj)
                 )
+            for name, start, end, _kind, _asset in data_entries:
+                candidates.append((name, start, end, data_results[name][1]))
             failing = verify_group(
                 candidates, syms_obj, rom, tmpdir, helpers=helpers
             )
@@ -1491,6 +1867,12 @@ def main():
                 sys.exit(
                     "error: group link failed even with every unit present\n%s"
                     % failing
+                )
+            bad_data = sorted(set(failing) & set(data_results))
+            if bad_data:
+                sys.exit(
+                    "error: structure-only data segment(s) do not match "
+                    "baserom: %s" % ", ".join(bad_data)
                 )
 
             # 3) Surgical repair: route each section's FIRST differing
@@ -1609,6 +1991,24 @@ def main():
                         stats["raw_instructions"],
                     )
                 )
+
+        # Structure-only data segments live in data/ (pret layout: asm/ is
+        # code); a value-list file an older split left in asm/ is removed.
+        for name, start, end, kind, asset in data_entries:
+            text, _obj, dstats = data_results[name]
+            old = os.path.join(args.asm_dir, "%s.s" % name)
+            if os.path.exists(old):
+                os.remove(old)
+                print("    removed %s (moved to %s/)" % (old, args.data_dir))
+            out_path = os.path.join(args.data_dir, "%s.s" % name)
+            with open(out_path, "w") as f:
+                f.write(text)
+            print(
+                "    wrote %s: %d labels, %d code + %d data pointers, "
+                "%d incbins%s"
+                % (out_path, dstats["labels"], dstats["code"], dstats["data"],
+                   dstats["incbins"], " [asset]" if asset else "")
+            )
     finally:
         if args.keep_tmp:
             print("kept scratch dir: %s" % tmpdir)
