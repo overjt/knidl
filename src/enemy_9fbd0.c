@@ -173,7 +173,6 @@ u8 sub_0809fe10(void)
     struct Task *z;
     struct Actor *a;
     u8 s0;
-    u8 res;
 
     t = gUnk_03002490;
     a = t->unk8C;
