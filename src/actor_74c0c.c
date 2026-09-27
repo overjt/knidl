@@ -90,7 +90,7 @@ void sub_08074c0c(void)
         if (gUnk_03002790[t->unk44].unk18 < 0)
             t->unk40 |= 0xC00;
         else
-            t->unk40 &= ~0xC00;
+            t->unk40 &= 0xF3FF;
     }
     switch (gUnk_03002490->unk14)
     {

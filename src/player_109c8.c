@@ -32,7 +32,6 @@ void sub_080109c8(void)
     struct M04Spark *p;
     s32 i;
     s32 u;
-    s32 sh;
     s32 t;
     s32 d;
     s32 x;
@@ -67,6 +66,7 @@ void sub_080109c8(void)
                instead of reusing the value it already holds, and a plain read
                is folded into the earlier one. */
             p->unk00 = *(volatile s32 *)&p->unk00 + p->unk08;
+            /* the shift count reuses n (twin sub_0803c9b4): its own local swaps r0/r1 at the RNG call */
             n = (abs(p->unk00) >> 20) + 1;
             u = *(volatile s32 *)&p->unk04;
             t = (abs(u) & 0xFFFF0000) >> n;

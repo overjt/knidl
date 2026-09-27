@@ -576,6 +576,7 @@ void sub_080718c0(void)
             s32 a2 = (s16)gUnk_03002490->unk34;
 
             v = sub_08002ee8(3);
+            /* r (the other branch's RNG result) carries the byte, so regmove keeps the AND on v */
             r = (u8)gUnk_03002490->unk78;
             sub_08074bb0(a1, a2, v & r);
         }
