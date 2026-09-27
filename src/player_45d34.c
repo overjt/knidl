@@ -19,7 +19,7 @@
 
 extern vu16 gDispCnt;              /* DISPCNT shadow */
 extern u8 gUnk_03001F34;
-extern u32 gUnk_0873CB1C[];
+extern u32 gPlayerDefaultTerrainBox[];
 
 void TaskYieldTrampoline(s32 frames);
 s32 PlaySfx(s32 id);
@@ -30,14 +30,14 @@ s32 sub_08009fcc(s32 a, s32 b, u32 c);
 void sub_0800a130(s32 a, s32 id);
 void sub_080261d4(u16 a);
 void sub_08027204(u32 a);
-void sub_0803e050(s32 a0);
-void sub_0803e1b8(s32 a0, s32 a1, s32 a2);
-void sub_0803e3e4(s32 a0);
-void sub_0803e650(s32 a0);
-void sub_0803f9c0(void);
-void sub_08040b40(s32 a0, s32 a1);           /* M11, still asm; M11's own spelling */
-void sub_080413a4(s32 a0);
-s32 sub_0805afac(s32 a0, s32 a1, s32 a2);
+void PlayerStopAxes(s32 a0);
+void SetPlayerInvulnerability(s32 a0, s32 a1, s32 a2);
+void FreezeOtherTasks(s32 a0);
+void PlayerStartOffsetScript(s32 a0);
+void PlayerStopAtCeilingAndWall(void);
+void PlayerSetMotionXPreset(s32 a0, s32 a1);           /* M11, still asm; M11's own spelling */
+void PlayerSetMotionYPreset(s32 a0);
+s32 CreatePlayerEffect(s32 a0, s32 a1, s32 a2);
 
 void sub_08045d34(void)
 {
@@ -53,30 +53,30 @@ void sub_08045d34(void)
         sub_08009fcc(p->unk0D, p->unk0E, p->unk00);
     }
     gUnk_03001F34 = 1;
-    sub_0803e050(3);
-    sub_0803e3e4(15);
+    PlayerStopAxes(3);
+    FreezeOtherTasks(15);
     if (!(gDispCnt & 0x400)) {
         gDispCnt &= 0xE0FF;
         gDispCnt |= 0x1D00;
     }
     gCurTask->unk88->unk16 = 0;
-    sub_0805afac(gCurTask->unk88->unk00, 37, 0);
+    CreatePlayerEffect(gCurTask->unk88->unk00, 37, 0);
     gCurTask->unk28 = 0;
-    sub_0803e1b8(3, 0, gCurTask->unk88->unk00);
+    SetPlayerInvulnerability(3, 0, gCurTask->unk88->unk00);
     gCurTask->unk88->unk42 |= 0x700;
     switch (gCurTask->unk73) {
     case 2:
-        sub_08040b40(11, 42);
+        PlayerSetMotionXPreset(11, 42);
         TaskSetFrame(0x66B);
         TaskYieldTrampoline(2);
         gCurTask->unk3C++;
         TaskYieldTrampoline(6);
-        sub_08040b40(11, 43);
+        PlayerSetMotionXPreset(11, 43);
         gCurTask->unk3C++;
         TaskYieldTrampoline(2);
         gCurTask->unk3C++;
         TaskYieldTrampoline(2);
-        sub_0803e050(1);
+        PlayerStopAxes(1);
         gCurTask->unk3C++;
         TaskYieldTrampoline(2);
         gCurTask->unk3C--;
@@ -93,17 +93,17 @@ void sub_08045d34(void)
         gCurTask->unk88->unk16++;
         sub_080261d4(4);
         sub_08027204(2);
-        sub_0805afac(gCurTask->unk88->unk00, 37, 1);
+        CreatePlayerEffect(gCurTask->unk88->unk00, 37, 1);
         gCurTask->unk6C = 0;
         do {
-            sub_0803e650(4);
+            PlayerStartOffsetScript(4);
             TaskSetFrame(0x674);
             TaskYieldTrampoline(2);
             gCurTask->unk3C++;
             TaskYieldTrampoline(2);
         } while ((s16)++gCurTask->unk6C <= 7);
         while ((s8)gCurTask->unk88->unk16 != 0) {
-            sub_0803e650(4);
+            PlayerStartOffsetScript(4);
             TaskSetFrame(0x674);
             TaskYieldTrampoline(2);
             gCurTask->unk3C++;
@@ -128,17 +128,17 @@ void sub_08045d34(void)
         gCurTask->unk88->unk16++;
         sub_080261d4(4);
         sub_08027204(2);
-        sub_0805afac(gCurTask->unk88->unk00, 37, 1);
+        CreatePlayerEffect(gCurTask->unk88->unk00, 37, 1);
         gCurTask->unk6C = 0;
         do {
-            sub_0803e650(4);
+            PlayerStartOffsetScript(4);
             TaskSetFrame(0x67D);
             TaskYieldTrampoline(2);
             gCurTask->unk3C++;
             TaskYieldTrampoline(2);
         } while ((s16)++gCurTask->unk6C <= 7);
         while ((s8)gCurTask->unk88->unk16 != 0) {
-            sub_0803e650(4);
+            PlayerStartOffsetScript(4);
             TaskSetFrame(0x67D);
             TaskYieldTrampoline(2);
             gCurTask->unk3C++;
@@ -159,7 +159,7 @@ void sub_08045d34(void)
         gCurTask->unk3C++;
         TaskYieldTrampoline(5);
         gCurTask->unk88->unk68 = 0;
-        sub_080413a4(35);
+        PlayerSetMotionYPreset(35);
         gCurTask->unk3C--;
         TaskYieldTrampoline(4);
         gCurTask->unk3C--;
@@ -176,23 +176,23 @@ void sub_08045d34(void)
         TaskYieldTrampoline(4);
         StopSfx(161);
         TaskYieldTrampoline(1);
-        gCurTask->unk88->unk68 = (u32)gUnk_0873CB1C;
-        sub_0803e050(2);
+        gCurTask->unk88->unk68 = (u32)gPlayerDefaultTerrainBox;
+        PlayerStopAxes(2);
         PlaySfx(162);
         gCurTask->unk88->unk16++;
         sub_080261d4(4);
         sub_08027204(2);
-        sub_0805afac(gCurTask->unk88->unk00, 37, 1);
+        CreatePlayerEffect(gCurTask->unk88->unk00, 37, 1);
         gCurTask->unk6C = 0;
         do {
-            sub_0803e650(4);
+            PlayerStartOffsetScript(4);
             TaskSetFrame(0x689);
             TaskYieldTrampoline(2);
             gCurTask->unk3C++;
             TaskYieldTrampoline(2);
         } while ((s16)++gCurTask->unk6C <= 7);
         while ((s8)gCurTask->unk88->unk16 != 0) {
-            sub_0803e650(4);
+            PlayerStartOffsetScript(4);
             TaskSetFrame(0x689);
             TaskYieldTrampoline(2);
             gCurTask->unk3C++;
@@ -202,8 +202,8 @@ void sub_08045d34(void)
         TaskYieldTrampoline(4);
         break;
     }
-    sub_0803e1b8(255, 0, gCurTask->unk88->unk00);
-    sub_0803e3e4(0);
+    SetPlayerInvulnerability(255, 0, gCurTask->unk88->unk00);
+    FreezeOtherTasks(0);
     {
         struct PlayerState *p = gCurTask->unk88;
         if (p->unk0D != 7)
@@ -227,5 +227,5 @@ void sub_080462f0(void)
         else
             t->unk88->unk01 = 7;
     }
-    sub_0803f9c0();
+    PlayerStopAtCeilingAndWall();
 }

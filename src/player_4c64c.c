@@ -15,34 +15,34 @@
  * B is pressed, switching to state 5 once PlayerState.unk08 is 0, and
  * then jumps to state unk28.  States 0-2 are the three releases
  * (animations 0xF7C/0xF76/0xF84, sound 236, then 0xF80), which end in
- * state 5: clear PlayerState.unk42 bit 9, sub_0803e1b8(255, 0, player)
+ * state 5: clear PlayerState.unk42 bit 9, SetPlayerInvulnerability(255, 0, player)
  * and end the action (TaskSleepForever, which falls into state 0,
  * lesson 3.403).  Its handler sub_0804ca84 re-binds state 5 from states
  * 0-2 once PlayerState.unk16 >= 0 and unk08 == 0, re-reads the direction
  * every frame in state 4 and cycles the charge animation through
  * Task.unk46 (0xF7A/0xF82/0xF74 and 0xF7B/0xF83/0xF75), and requests
- * action 23 through sub_0803fce4. */
+ * action 23 through PlayerHasCrossedWaterSurface. */
 
-extern u16 gUnk_03002458[];             /* held keys, latched per player (M11) */
-extern u16 gUnk_030023C0[];             /* newly-pressed keys, latched per player */
+extern u16 gLatchedHeldKeys[];             /* held keys, latched per player (M11) */
+extern u16 gLatchedPressedKeys[];             /* newly-pressed keys, latched per player */
 
 void TaskYieldTrampoline(s32 frames);
 void TaskSleepForever(void);
 void TaskSetEntry(void *a, u32 i);
 void TaskSetFrame(s32 a);
-void sub_0803e050(s32 a0);
-void sub_0803e1b8(s32 a0, s32 a1, s32 a2);
-s32 sub_0803e34c(s32 a0, u16 a1);
-void sub_0803e4a8(void);
-s32 sub_0803e4ec(s32 a0);
-void sub_0803e650(s32 a0);
-void sub_0803f870(void);
-void sub_0803f9c0(void);
-s32 sub_0803fce4(s32 a);
-s32 sub_0804042c(void);
-void sub_08040b40(s32 a0, s32 a1);           /* M11, still asm; M11's own spelling */
-void sub_080413a4(s32 a0);
-s32 sub_0805afac(s32 a0, s32 a1, s32 a2);
+void PlayerStopAxes(s32 a0);
+void SetPlayerInvulnerability(s32 a0, s32 a1, s32 a2);
+s32 PlaySfxIfLocalPlayer(s32 a0, u16 a1);
+void PlayerSetWaterMotionY(void);
+s32 PlayerLand(s32 a0);
+void PlayerStartOffsetScript(s32 a0);
+void PlayerTurnToHeldDirection(void);
+void PlayerStopAtCeilingAndWall(void);
+s32 PlayerHasCrossedWaterSurface(s32 a);
+s32 PlayerRequestLocomotion(void);
+void PlayerSetMotionXPreset(s32 a0, s32 a1);           /* M11, still asm; M11's own spelling */
+void PlayerSetMotionYPreset(s32 a0);
+s32 CreatePlayerEffect(s32 a0, s32 a1, s32 a2);
 
 void sub_0804c64c(void)
 {
@@ -62,14 +62,14 @@ void sub_0804c64c(void)
     while (1) {
         switch (gCurTask->unk73) {
         case 3:
-            sub_0803e1b8(3, 0, gCurTask->unk88->unk00);
-            sub_0803e650(13);
+            SetPlayerInvulnerability(3, 0, gCurTask->unk88->unk00);
+            PlayerStartOffsetScript(13);
             {
                 struct Task *t = gCurTask;
                 if (t->unk7A & 1)
-                    sub_0805afac(t->unk88->unk00, 28, 3);
+                    CreatePlayerEffect(t->unk88->unk00, 28, 3);
                 else
-                    sub_0803e050(2);
+                    PlayerStopAxes(2);
             }
             gCurTask->unk88->unk16 = 0;
             TaskSetFrame(0xF73);
@@ -86,16 +86,16 @@ void sub_0804c64c(void)
             gCurTask->unk88->unk16 = 2;
             gCurTask->unk3C++;
             TaskYieldTrampoline(2);
-            if (gUnk_03002458[gCurTask->unk88->unk00] & 64)
+            if (gLatchedHeldKeys[gCurTask->unk88->unk00] & 64)
                 gCurTask->unk28 = 0;
-            else if (gUnk_03002458[gCurTask->unk88->unk00] & 128)
+            else if (gLatchedHeldKeys[gCurTask->unk88->unk00] & 128)
                 gCurTask->unk28 = 2;
             else
                 gCurTask->unk28 = 1;
             gCurTask->unk73 = 4;
             /* fallthrough */
         case 4:
-            sub_0805afac(gCurTask->unk88->unk00, 47, 0);
+            CreatePlayerEffect(gCurTask->unk88->unk00, 47, 0);
             gCurTask->unk46 = 0;
             for (;;) {
                 {
@@ -105,7 +105,7 @@ void sub_0804c64c(void)
                 }
                 if ((u16)--gCurTask->unk88->unk14 == 0)
                     goto done;
-                if (gUnk_030023C0[gCurTask->unk88->unk00] & 2)
+                if (gLatchedPressedKeys[gCurTask->unk88->unk00] & 2)
                     goto done;
                 TaskYieldTrampoline(1);
             }
@@ -115,13 +115,13 @@ void sub_0804c64c(void)
         case 5:
             gCurTask->unk88->unk42 &= 0xFDFF;
             do {
-                sub_0803e1b8(255, 0, gCurTask->unk88->unk00);
+                SetPlayerInvulnerability(255, 0, gCurTask->unk88->unk00);
             } while (0);
             TaskSleepForever();
             /* fallthrough */
         case 0:
-            sub_0803e650(9);
-            sub_0805afac(gCurTask->unk88->unk00, 47, 1);
+            PlayerStartOffsetScript(9);
+            CreatePlayerEffect(gCurTask->unk88->unk00, 47, 1);
             gCurTask->unk88->unk16 = 8;
             TaskSetFrame(0xF7C);
             TaskYieldTrampoline(1);
@@ -131,7 +131,7 @@ void sub_0804c64c(void)
             gCurTask->unk88->unk16 = 10;
             gCurTask->unk3C++;
             TaskYieldTrampoline(1);
-            sub_0803e34c(236, gCurTask->unk88->unk00);
+            PlaySfxIfLocalPlayer(236, gCurTask->unk88->unk00);
             gCurTask->unk88->unk16 = 253;
             gCurTask->unk3C++;
             TaskYieldTrampoline(2);
@@ -142,8 +142,8 @@ void sub_0804c64c(void)
             gCurTask->unk73 = 5;
             break;
         case 1:
-            sub_0803e650(10);
-            sub_0805afac(gCurTask->unk88->unk00, 47, 1);
+            PlayerStartOffsetScript(10);
+            CreatePlayerEffect(gCurTask->unk88->unk00, 47, 1);
             gCurTask->unk88->unk16 = 3;
             TaskSetFrame(0xF76);
             TaskYieldTrampoline(1);
@@ -153,7 +153,7 @@ void sub_0804c64c(void)
             gCurTask->unk88->unk16 = 5;
             gCurTask->unk3C++;
             TaskYieldTrampoline(1);
-            sub_0803e34c(236, gCurTask->unk88->unk00);
+            PlaySfxIfLocalPlayer(236, gCurTask->unk88->unk00);
             gCurTask->unk88->unk16 = 252;
             gCurTask->unk3C++;
             TaskYieldTrampoline(2);
@@ -164,8 +164,8 @@ void sub_0804c64c(void)
             gCurTask->unk73 = 5;
             break;
         case 2:
-            sub_0803e650(11);
-            sub_0805afac(gCurTask->unk88->unk00, 47, 1);
+            PlayerStartOffsetScript(11);
+            CreatePlayerEffect(gCurTask->unk88->unk00, 47, 1);
             gCurTask->unk88->unk16 = 13;
             TaskSetFrame(0xF84);
             TaskYieldTrampoline(1);
@@ -175,7 +175,7 @@ void sub_0804c64c(void)
             gCurTask->unk88->unk16 = 15;
             gCurTask->unk3C++;
             TaskYieldTrampoline(1);
-            sub_0803e34c(236, gCurTask->unk88->unk00);
+            PlaySfxIfLocalPlayer(236, gCurTask->unk88->unk00);
             gCurTask->unk88->unk16 = 251;
             gCurTask->unk3C++;
             TaskYieldTrampoline(7);
@@ -195,15 +195,15 @@ void sub_0804ca84(void)
 
     switch (t->unk73) {
     case 4:
-        sub_0803f870();
-        if (sub_0803fce4(0) != 0) {
-            sub_0803e4a8();
+        PlayerTurnToHeldDirection();
+        if (PlayerHasCrossedWaterSurface(0) != 0) {
+            PlayerSetWaterMotionY();
             gCurTask->unk88->unk01 = 23;
             break;
         }
-        if (gUnk_03002458[gCurTask->unk88->unk00] & 64)
+        if (gLatchedHeldKeys[gCurTask->unk88->unk00] & 64)
             gCurTask->unk28 = 0;
-        else if (gUnk_03002458[gCurTask->unk88->unk00] & 128)
+        else if (gLatchedHeldKeys[gCurTask->unk88->unk00] & 128)
             gCurTask->unk28 = 2;
         else
             gCurTask->unk28 = 1;
@@ -258,19 +258,19 @@ void sub_0804ca84(void)
         TaskSetEntry(sub_0804c64c, gCurTaskIdx);
         break;
     case 5:
-        sub_0804042c();
+        PlayerRequestLocomotion();
         return;
     }
-    sub_0803f9c0();
-    if (sub_0803fce4(0) != 0) {
+    PlayerStopAtCeilingAndWall();
+    if (PlayerHasCrossedWaterSurface(0) != 0) {
         gCurTask->unk88->unk01 = 23;
         gCurTask->unk88->unk16 = 255;
-        sub_0803e1b8(255, 0, gCurTask->unk88->unk00);
+        SetPlayerInvulnerability(255, 0, gCurTask->unk88->unk00);
     } else if (!(gCurTask->unk7A & 1)) {
-        sub_080413a4(2);
-        sub_08040b40(11, 2);
+        PlayerSetMotionYPreset(2);
+        PlayerSetMotionXPreset(11, 2);
     } else {
-        sub_08040b40(0, 72);
-        sub_0803e4ec(0);
+        PlayerSetMotionXPreset(0, 72);
+        PlayerLand(0);
     }
 }

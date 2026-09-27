@@ -27,17 +27,17 @@ void TaskSetFrameFlip(s32 a);
 s32 sub_0800a008(s32 a, s32 b, u32 c);
 void sub_0800a130(s32 a, s32 id);
 void sub_080261d4(u16 a);
-void sub_0803e050(s32 a0);
-void sub_0803e1b8(s32 a0, s32 a1, s32 a2);
-s32 sub_0803e34c(s32 a0, u16 a1);
-void sub_0803e4a8(void);
-void sub_0803f9c0(void);
-s32 sub_0803fa44(void);
-s32 sub_0803fce4(s32 a);
+void PlayerStopAxes(s32 a0);
+void SetPlayerInvulnerability(s32 a0, s32 a1, s32 a2);
+s32 PlaySfxIfLocalPlayer(s32 a0, u16 a1);
+void PlayerSetWaterMotionY(void);
+void PlayerStopAtCeilingAndWall(void);
+s32 PlayerCheckLanding(void);
+s32 PlayerHasCrossedWaterSurface(s32 a);
 void sub_08040710(void);
-void sub_08040b40(s32 a0, s32 a1);           /* M11, still asm; M11's own spelling */
-void sub_080413a4(s32 a0);
-s32 sub_0805afac(s32 a0, s32 a1, s32 a2);
+void PlayerSetMotionXPreset(s32 a0, s32 a1);           /* M11, still asm; M11's own spelling */
+void PlayerSetMotionYPreset(s32 a0);
+s32 CreatePlayerEffect(s32 a0, s32 a1, s32 a2);
 s32 sub_08064eb8(u8 p2);
 
 void sub_08037ed8(void)
@@ -101,24 +101,24 @@ loop:
         gCurTask->unk88->unk12 = 0x8000;
         goto loop;
     case 0:
-        sub_0803e050(2);
+        PlayerStopAxes(2);
         if (gCurTask->unk88->unk06 == 1)
         {
-            sub_0803e34c(158, gCurTask->unk88->unk00);
+            PlaySfxIfLocalPlayer(158, gCurTask->unk88->unk00);
             if (!(gCurTask->unk7B & 1))
                 anim = 0x171;
             else
                 anim = 0x19B;
             if ((s8)gCurTask->unk7D == 0)
-                sub_08040b40(10, 24);
+                PlayerSetMotionXPreset(10, 24);
             else
-                sub_08040b40(10, 26);
+                PlayerSetMotionXPreset(10, 26);
             TaskSetFrame(anim + 1);
             TaskYieldTrampoline(3);
             if ((s8)gCurTask->unk7D == 0)
-                sub_08040b40(10, 25);
+                PlayerSetMotionXPreset(10, 25);
             else
-                sub_08040b40(10, 27);
+                PlayerSetMotionXPreset(10, 27);
             gCurTask->unk3C++;
             TaskYieldTrampoline(4);
             gCurTask->unk3C--;
@@ -139,9 +139,9 @@ loop:
         else
         {
             if (gFrameCount & 2)
-                sub_0803e34c(111, gCurTask->unk88->unk00);
+                PlaySfxIfLocalPlayer(111, gCurTask->unk88->unk00);
             else
-                sub_0803e34c(112, gCurTask->unk88->unk00);
+                PlaySfxIfLocalPlayer(112, gCurTask->unk88->unk00);
             switch (gCurTask->unk88->unk0D)
             {
             case 0:
@@ -162,15 +162,15 @@ loop:
                 || ((s8)gCurTask->unk7D == 4 && gCurTask->unk43 == 1))
             {
                 if ((s8)gCurTask->unk7D == 0)
-                    sub_08040b40(10, 18);
+                    PlayerSetMotionXPreset(10, 18);
                 else
-                    sub_08040b40(10, 21);
+                    PlayerSetMotionXPreset(10, 21);
                 TaskSetFrame(anim);
                 TaskYieldTrampoline(3);
                 if ((s8)gCurTask->unk7D == 0)
-                    sub_08040b40(10, 19);
+                    PlayerSetMotionXPreset(10, 19);
                 else
-                    sub_08040b40(10, 22);
+                    PlayerSetMotionXPreset(10, 22);
                 gCurTask->unk3C++;
                 TaskYieldTrampoline(2);
                 gCurTask->unk3C++;
@@ -178,9 +178,9 @@ loop:
                 gCurTask->unk3C++;
                 TaskYieldTrampoline(2);
                 if ((s8)gCurTask->unk7D == 0)
-                    sub_08040b40(10, 20);
+                    PlayerSetMotionXPreset(10, 20);
                 else
-                    sub_08040b40(10, 23);
+                    PlayerSetMotionXPreset(10, 23);
                 for (gCurTask->unk6C = 0; (s16)gCurTask->unk6C <= 4; gCurTask->unk6C++)
                 {
                     gCurTask->unk3C++;
@@ -190,9 +190,9 @@ loop:
             else
             {
                 if ((s8)gCurTask->unk7D == 0)
-                    sub_08040b40(10, 18);
+                    PlayerSetMotionXPreset(10, 18);
                 else
-                    sub_08040b40(10, 21);
+                    PlayerSetMotionXPreset(10, 21);
                 if (gCurTask->unk43 == 1)
                 {
                     TaskSetFrameFlip(anim);
@@ -204,9 +204,9 @@ loop:
                     TaskYieldTrampoline(3);
                 }
                 if ((s8)gCurTask->unk7D == 0)
-                    sub_08040b40(10, 19);
+                    PlayerSetMotionXPreset(10, 19);
                 else
-                    sub_08040b40(10, 22);
+                    PlayerSetMotionXPreset(10, 22);
                 TaskSetFrame(anim + 8);
                 TaskYieldTrampoline(2);
                 gCurTask->unk3C--;
@@ -214,9 +214,9 @@ loop:
                 gCurTask->unk3C--;
                 TaskYieldTrampoline(2);
                 if ((s8)gCurTask->unk7D == 0)
-                    sub_08040b40(10, 20);
+                    PlayerSetMotionXPreset(10, 20);
                 else
-                    sub_08040b40(10, 23);
+                    PlayerSetMotionXPreset(10, 23);
                 for (gCurTask->unk6C = 0; (s16)gCurTask->unk6C <= 4; gCurTask->unk6C++)
                 {
                     gCurTask->unk3C--;
@@ -224,7 +224,7 @@ loop:
                 }
             }
         }
-        sub_0803e050(1);
+        PlayerStopAxes(1);
         gCurTask->unk73 = 6;
         goto loop;
     case 1:
@@ -234,26 +234,26 @@ loop:
             if (gCurTask->unk73 == 1)
             {
                 if (gCurTask->unk88->unk06 == 0)
-                    sub_0803e34c(0x125, gCurTask->unk88->unk00);
+                    PlaySfxIfLocalPlayer(0x125, gCurTask->unk88->unk00);
                 else
-                    sub_0803e34c(0x126, gCurTask->unk88->unk00);
+                    PlaySfxIfLocalPlayer(0x126, gCurTask->unk88->unk00);
             }
             else if (gCurTask->unk88->unk06 == 0)
             {
                 if (gFrameCount & 2)
-                    sub_0803e34c(111, gCurTask->unk88->unk00);
+                    PlaySfxIfLocalPlayer(111, gCurTask->unk88->unk00);
                 else
-                    sub_0803e34c(112, gCurTask->unk88->unk00);
+                    PlaySfxIfLocalPlayer(112, gCurTask->unk88->unk00);
             }
             else
             {
-                sub_0803e34c(158, gCurTask->unk88->unk00);
+                PlaySfxIfLocalPlayer(158, gCurTask->unk88->unk00);
             }
             if ((s8)gCurTask->unk7D == 0)
-                sub_08040b40(10, 28);
+                PlayerSetMotionXPreset(10, 28);
             else
-                sub_08040b40(10, 30);
-            sub_080413a4(24);
+                PlayerSetMotionXPreset(10, 30);
+            PlayerSetMotionYPreset(24);
         }
         gCurTask->unk88->unk14 = 120;
         if (gCurTask->unk88->unk06 == 0)
@@ -264,7 +264,7 @@ loop:
                 gCurTask->unk28 = 1;
                 if (gCurTask->unk73 == 1)
                 {
-                    sub_0805afac(gCurTask->unk88->unk00, 22, 0);
+                    CreatePlayerEffect(gCurTask->unk88->unk00, 22, 0);
                     while (1)
                     {
                         TaskSetFrame(252);
@@ -276,7 +276,7 @@ loop:
                         }
                     }
                 }
-                sub_0805afac(gCurTask->unk88->unk00, 23, 0);
+                CreatePlayerEffect(gCurTask->unk88->unk00, 23, 0);
                 while (1)
                 {
                     TaskSetFrame(260);
@@ -290,18 +290,18 @@ loop:
                 }
             case 1:
                 if (gCurTask->unk73 == 1)
-                    sub_0805afac(gCurTask->unk88->unk00, 22, 1);
+                    CreatePlayerEffect(gCurTask->unk88->unk00, 22, 1);
                 else
-                    sub_0805afac(gCurTask->unk88->unk00, 23, 1);
-                sub_0805afac(gCurTask->unk88->unk00, 25, 0);
+                    CreatePlayerEffect(gCurTask->unk88->unk00, 23, 1);
+                CreatePlayerEffect(gCurTask->unk88->unk00, 25, 0);
                 gCurTask->unk28++;
                 TaskSetFrame(264);
                 TaskYieldTrampoline(3);
                 if ((s8)gCurTask->unk7D == 0)
-                    sub_08040b40(10, 29);
+                    PlayerSetMotionXPreset(10, 29);
                 else
-                    sub_08040b40(10, 31);
-                sub_080413a4(25);
+                    PlayerSetMotionXPreset(10, 31);
+                PlayerSetMotionYPreset(25);
                 while (1)
                 {
                     TaskSetFrame(0x109);
@@ -316,7 +316,7 @@ loop:
                 gCurTask->unk28++;
                 TaskSetFrame(43);
                 TaskYieldTrampoline(2);
-                sub_080413a4(26);
+                PlayerSetMotionYPreset(26);
                 for (gCurTask->unk6C = 0; (s16)gCurTask->unk6C <= 6; gCurTask->unk6C++)
                 {
                     gCurTask->unk3C++;
@@ -337,7 +337,7 @@ loop:
                 gCurTask->unk28++;
                 if (gCurTask->unk73 == 1)
                 {
-                    sub_0805afac(gCurTask->unk88->unk00, 22, 0);
+                    CreatePlayerEffect(gCurTask->unk88->unk00, 22, 0);
                     while (1)
                     {
                         TaskSetFrame(372);
@@ -349,7 +349,7 @@ loop:
                         }
                     }
                 }
-                sub_0805afac(gCurTask->unk88->unk00, 23, 0);
+                CreatePlayerEffect(gCurTask->unk88->unk00, 23, 0);
                 while (1)
                 {
                     TaskSetFrame(380);
@@ -363,18 +363,18 @@ loop:
                 }
             case 1:
                 if (gCurTask->unk73 == 1)
-                    sub_0805afac(gCurTask->unk88->unk00, 22, 1);
+                    CreatePlayerEffect(gCurTask->unk88->unk00, 22, 1);
                 else
-                    sub_0805afac(gCurTask->unk88->unk00, 23, 1);
-                sub_0805afac(gCurTask->unk88->unk00, 25, 0);
+                    CreatePlayerEffect(gCurTask->unk88->unk00, 23, 1);
+                CreatePlayerEffect(gCurTask->unk88->unk00, 25, 0);
                 gCurTask->unk28++;
                 TaskSetFrame(0x183);
                 TaskYieldTrampoline(3);
                 if ((s8)gCurTask->unk7D == 0)
-                    sub_08040b40(10, 29);
+                    PlayerSetMotionXPreset(10, 29);
                 else
-                    sub_08040b40(10, 31);
-                sub_080413a4(25);
+                    PlayerSetMotionXPreset(10, 31);
+                PlayerSetMotionYPreset(25);
                 while (1)
                 {
                     TaskSetFrame(0x181);
@@ -392,7 +392,7 @@ loop:
                 TaskYieldTrampoline(2);
                 gCurTask->unk3C++;
                 TaskYieldTrampoline(1);
-                sub_080413a4(26);
+                PlayerSetMotionYPreset(26);
                 while (1)
                 {
                     TaskSetFrame(0x183);
@@ -431,14 +431,14 @@ loop:
         if (gCurTask->unk28 == 0)
         {
             if (gCurTask->unk88->unk06 == 0)
-                sub_0803e34c(121, gCurTask->unk88->unk00);
+                PlaySfxIfLocalPlayer(121, gCurTask->unk88->unk00);
             else
-                sub_0803e34c(0x127, gCurTask->unk88->unk00);
+                PlaySfxIfLocalPlayer(0x127, gCurTask->unk88->unk00);
             if ((s8)gCurTask->unk7D == 0)
-                sub_08040b40(10, 28);
+                PlayerSetMotionXPreset(10, 28);
             else
-                sub_08040b40(10, 30);
-            sub_080413a4(24);
+                PlayerSetMotionXPreset(10, 30);
+            PlayerSetMotionYPreset(24);
         }
         gCurTask->unk88->unk14 = 120;
         if (gCurTask->unk88->unk06 == 0)
@@ -455,7 +455,7 @@ loop:
                     TaskYieldTrampoline(4);
                 }
                 gCurTask->unk3C++;
-                sub_0805afac(gCurTask->unk88->unk00, 24, 0);
+                CreatePlayerEffect(gCurTask->unk88->unk00, 24, 0);
                 break;
             case 1:
                 gCurTask->unk28 = 2;
@@ -471,7 +471,7 @@ loop:
                 TaskYieldTrampoline(4);
                 TaskSetFrame(0x117);
                 TaskYieldTrampoline(48);
-                sub_0805afac(gCurTask->unk88->unk00, 26, 0);
+                CreatePlayerEffect(gCurTask->unk88->unk00, 26, 0);
                 gCurTask->unk3C--;
                 TaskYieldTrampoline(2);
                 gCurTask->unk3C--;
@@ -480,7 +480,7 @@ loop:
                 TaskYieldTrampoline(2);
                 gCurTask->unk3C--;
                 TaskYieldTrampoline(2);
-                sub_080413a4(26);
+                PlayerSetMotionYPreset(26);
                 gCurTask->unk88->unk14 = 120;
             case 2:
                 gCurTask->unk28++;
@@ -521,7 +521,7 @@ loop:
                 break;
             case 1:
                 gCurTask->unk28++;
-                sub_080413a4(27);
+                PlayerSetMotionYPreset(27);
                 gCurTask->unk88->unk14 = 120;
             case 2:
                 gCurTask->unk28++;
@@ -555,13 +555,13 @@ loop:
                 TaskYieldTrampoline(1);
                 TaskSetFrame(402);
                 TaskYieldTrampoline(2);
-                sub_080413a4(28);
+                PlayerSetMotionYPreset(28);
                 gCurTask->unk88->unk14 = 120;
             case 3:
                 gCurTask->unk28++;
                 TaskSetFrame(398);
                 TaskYieldTrampoline(2);
-                sub_0805afac(gCurTask->unk88->unk00, 26, 0);
+                CreatePlayerEffect(gCurTask->unk88->unk00, 26, 0);
                 TaskSetFrame(0x193);
                 TaskYieldTrampoline(2);
                 gCurTask->unk3C++;
@@ -588,7 +588,7 @@ loop:
                 TaskYieldTrampoline(2);
                 if (gCurTask->unk7A & 1)
                 {
-                    sub_080413a4(29);
+                    PlayerSetMotionYPreset(29);
                     gCurTask->unk88->unk14 = 120;
                     TaskSetFrame(410);
                     while (!(gCurTask->unk7A & 1))
@@ -604,19 +604,19 @@ loop:
         if (gCurTask->unk88->unk06 == 0)
         {
             if (gFrameCount & 2)
-                sub_0803e34c(111, gCurTask->unk88->unk00);
+                PlaySfxIfLocalPlayer(111, gCurTask->unk88->unk00);
             else
-                sub_0803e34c(112, gCurTask->unk88->unk00);
+                PlaySfxIfLocalPlayer(112, gCurTask->unk88->unk00);
         }
         else
         {
-            sub_0803e34c(158, gCurTask->unk88->unk00);
+            PlaySfxIfLocalPlayer(158, gCurTask->unk88->unk00);
         }
-        sub_0803e050(3);
+        PlayerStopAxes(3);
         gCurTask->unk7A = 0;
         if (gCurTask->unk88->unk06 == 0)
         {
-            sub_080413a4(30);
+            PlayerSetMotionYPreset(30);
             if (!(gCurTask->unk7B & 1))
             {
                 TaskSetFrame(244);
@@ -635,7 +635,7 @@ loop:
         }
         else
         {
-            sub_080413a4(31);
+            PlayerSetMotionYPreset(31);
             if (!(gCurTask->unk7B & 1))
             {
                 TaskSetFrame(370);
@@ -657,8 +657,8 @@ loop:
         goto loop;
     case 6:
         if (gCurTask->unk7B & 1)
-            sub_0803e4a8();
-        sub_0803e1b8(1, 96, gCurTask->unk88->unk00);
+            PlayerSetWaterMotionY();
+        SetPlayerInvulnerability(1, 96, gCurTask->unk88->unk00);
         gCurTask->unk88->unk42 |= 0x200;
         break;
     }
@@ -672,7 +672,7 @@ void sub_08038fe8(void)
     switch (gCurTask->unk73)
     {
     case 0:
-        if (sub_0803fce4(0) != 0)
+        if (PlayerHasCrossedWaterSurface(0) != 0)
         {
             gCurTask->unk73 = 6;
             TaskSetEntry(sub_08037ed8, gCurTaskIdx);
@@ -681,10 +681,10 @@ void sub_08038fe8(void)
     case 1:
     case 2:
         if (gCurTask->unk58 > 0)
-            sub_080413a4(2);
-        if (sub_0803fce4(0) == 0)
+            PlayerSetMotionYPreset(2);
+        if (PlayerHasCrossedWaterSurface(0) == 0)
         {
-            if (sub_0803fa44() != 0)
+            if (PlayerCheckLanding() != 0)
                 goto e1;
             t = gCurTask;
             if (--t->unk88->unk14 != 0)
@@ -698,8 +698,8 @@ void sub_08038fe8(void)
         break;
     case 3:
         if (gCurTask->unk58 > 0)
-            sub_080413a4(2);
-        if (sub_0803fce4(0) == 0)
+            PlayerSetMotionYPreset(2);
+        if (PlayerHasCrossedWaterSurface(0) == 0)
         {
             t = gCurTask;
             if (t->unk58 != 0 && (t->unk7A & 1))
@@ -708,7 +708,7 @@ void sub_08038fe8(void)
                 {
                     if (t->unk28 <= 2)
                     {
-                        sub_0803e050(3);
+                        PlayerStopAxes(3);
                         TaskSetEntry(sub_08037ed8, gCurTaskIdx);
                         break;
                     }
@@ -734,7 +734,7 @@ void sub_08038fe8(void)
             break;
         }
         /* An empty loop (a compiled-out macro?): its NOTE_INSN_LOOP_END
-           stops the first cse pass from following the sub_0803fce4 jump
+           stops the first cse pass from following the PlayerHasCrossedWaterSurface jump
            into this block, so the task-address reload here is not chained
            to case 3's PRE copy; without it that copy outlives gcse's
            r4 pseudo and takes r5 (push {r4, r5}). */
@@ -745,19 +745,19 @@ void sub_08038fe8(void)
         TaskSetEntry(sub_08037ed8, gCurTaskIdx);
         break;
     case 4:
-        if (sub_0803fce4(0) != 0)
+        if (PlayerHasCrossedWaterSurface(0) != 0)
         {
             gCurTask->unk73 = 6;
             TaskSetEntry(sub_08037ed8, gCurTaskIdx);
         }
-        sub_08040b40(7, 72);
+        PlayerSetMotionXPreset(7, 72);
         break;
     e1:
-        sub_0803e050(1);
+        PlayerStopAxes(1);
         TaskSetEntry(sub_08037ed8, gCurTaskIdx);
         break;
     e3:
-        sub_0803e050(3);
+        PlayerStopAxes(3);
         TaskSetEntry(sub_08037ed8, gCurTaskIdx);
         break;
     s2:
@@ -772,5 +772,5 @@ void sub_08038fe8(void)
         sub_08040710();
         break;
     }
-    sub_0803f9c0();
+    PlayerStopAtCeilingAndWall();
 }

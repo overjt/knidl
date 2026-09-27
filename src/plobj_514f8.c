@@ -46,8 +46,8 @@ struct Unk03005550
     /*0x0D*/ u8 unkD;
 };
 
-extern struct M11R8 gUnk_02005550[];
-extern struct M11R20 gUnk_020060E0[];
+extern struct M11R8 gPlayerHitBoxSets[];
+extern struct M11R20 gPlayerBodyBoxes[];
 extern u32 gUnk_087519E8[];
 extern u32 gUnk_0873BDA0[];
 extern u32 gUnk_0873BDB4[];
@@ -100,9 +100,9 @@ void sub_080224b0(void);
 u16 sub_08030804(struct HitBoxSet *p, s32 x, s32 y);   /* this file's call passes only x and y: the ROM leaves r3 as it was (the definition in src/block_30804.c takes a fourth, `e`) */
 s32 sub_08030848(struct HitBoxSet *p, s32 e);   /* M14's callers test r0 unnarrowed (good/sub_08050c48.c); landed M09/M12/M13 files spell it u16 */
 void sub_0803dfc8(void);
-s32 sub_0803e34c(s32 a0, u16 a1);
-s32 sub_0803e5c0(s32 playerIdx, u8 *src6);
-s32 sub_0803e5f8(s32 a0, s32 a1);
+s32 PlaySfxIfLocalPlayer(s32 a0, u16 a1);
+s32 LoadPlayerBodyBoxRect(s32 playerIdx, u8 *src6);
+s32 LoadPlayerHitBoxSet(s32 a0, s32 a1);
 void sub_08050814(void);
 void sub_0805091c(void);
 void sub_08052f6c(void);
@@ -126,13 +126,13 @@ void sub_080514f8(void)
         t->unk40 = ((struct Task *)t->unk8C)->unk40 | 0xE006;
         t->unk28 = ((struct Task *)t->unk8C)->unk28;
         t->unk2C = 1;
-        gUnk_020060E0[t->unk88->unk00] = *(struct M11R20 *)gUnk_0873BDA0;
+        gPlayerBodyBoxes[t->unk88->unk00] = *(struct M11R20 *)gUnk_0873BDA0;
     }
-    sub_0803e5c0(gCurTask->unk88->unk00, (u8 *)gUnk_0873BDB4 + gCurTask->unk28 * 8);
+    LoadPlayerBodyBoxRect(gCurTask->unk88->unk00, (u8 *)gUnk_0873BDB4 + gCurTask->unk28 * 8);
     {
         struct Task *t;
-        gUnk_02005550[(t = gCurTask)->unk88->unk00] = *(struct M11R8 *)gUnk_0873CBAC;
-        sub_0803e5f8(t->unk88->unk00, (s32)((u8 *)gUnk_0873CBB4 + t->unk28 * 8));
+        gPlayerHitBoxSets[(t = gCurTask)->unk88->unk00] = *(struct M11R8 *)gUnk_0873CBAC;
+        LoadPlayerHitBoxSet(t->unk88->unk00, (s32)((u8 *)gUnk_0873CBB4 + t->unk28 * 8));
     }
     switch (gCurTask->unk28)
     {
@@ -243,11 +243,11 @@ void sub_0805176c(void)
     if (--t->unk2C == 0)
     {
         t->unk2C = 4;
-        sub_0803e34c(133, t->unk44);
+        PlaySfxIfLocalPlayer(133, t->unk44);
     }
     sub_0801a828(gCurTaskIdx, gCurTask->unk48, gCurTask->unk4A,
-                 (u8 *)gUnk_020060E0 + gCurTask->unk88->unk00 * 20);
-    sub_08030848((struct HitBoxSet *)&gUnk_02005550[gCurTask->unk88->unk00], gCurTask->unk44);
+                 (u8 *)gPlayerBodyBoxes + gCurTask->unk88->unk00 * 20);
+    sub_08030848((struct HitBoxSet *)&gPlayerHitBoxSets[gCurTask->unk88->unk00], gCurTask->unk44);
 }
 
 void sub_0805181c(void)
@@ -683,12 +683,12 @@ void sub_080520dc(void)
             if (t->unk88->unk0D == 6)
             {
                 if (!(t->unk88->unk42 & 128))
-                    sub_0803e34c(173, t->unk44);
+                    PlaySfxIfLocalPlayer(173, t->unk44);
             }
             else
             {
                 if (!(t->unk88->unk42 & 128))
-                    sub_0803e34c(211, t->unk44);
+                    PlaySfxIfLocalPlayer(211, t->unk44);
             }
         }
         switch (gCurTask->unk28)

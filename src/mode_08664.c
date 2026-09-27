@@ -25,7 +25,7 @@ extern vu16 gPlayerPressedKeys[];
 extern vu16 gDispCnt;
 extern s8 gUnk_03001F20;
 extern u8 gUnk_03001F30;
-extern struct PlayerState gUnk_03002170[];
+extern struct PlayerState gPlayerStates[];
 extern u8 gUnk_03002340;
 extern u16 gLocalPlayer;
 extern u16 gPlayerCount;
@@ -64,8 +64,8 @@ void sub_080271ec(void);
 void sub_08027210(void);
 void sub_08027228(void);
 void sub_08027240(void);
-void sub_0803d0a0(s32 a0);
-void sub_08040788(void);
+void InitPlayerState(s32 a0);
+void LatchPlayerKeys(void);
 void sub_080b6eec(void);
 void sub_080b6f04(void);
 void InputRecorderStart(void);
@@ -81,7 +81,7 @@ void sub_08008664(void)
     s32 pressed;
     u16 mode;
 
-    id = gUnk_03002170[gLocalPlayer].unk0D;
+    id = gPlayerStates[gLocalPlayer].unk0D;
     PlaySfx(232);
     for (i = 0; i < 64; i++)
         TaskSetSkipMask(15, i);
@@ -204,7 +204,7 @@ void sub_08008a00(void)
     InputRecorderStart();
     sub_0800b648();
     for (i = 0; i < gPlayerCount; i++)
-        sub_0803d0a0(i);
+        InitPlayerState(i);
     sub_08002358();
     sub_08002378();
     sub_080022fc();
@@ -220,7 +220,7 @@ void sub_08008a00(void)
         sub_0801a7b4();
         RunLinkFrame();
         InputRecorderUpdate();
-        sub_08040788();
+        LatchPlayerKeys();
         sub_080075b8();
         switch (gUnk_03002438) {
         case 0:
@@ -257,9 +257,9 @@ void sub_08008a00(void)
     }
     gUnk_03000048 = 0;
     for (i = 0; i < gPlayerCount; i++) {
-        if (gUnk_03002170[i].unk2C != -1) {
-            StopSfxOnPlayer(gUnk_03002170[i].unk2C, gUnk_03002170[i].unk2E);
-            gUnk_03002170[i].unk2C = -1;
+        if (gPlayerStates[i].unk2C != -1) {
+            StopSfxOnPlayer(gPlayerStates[i].unk2C, gPlayerStates[i].unk2E);
+            gPlayerStates[i].unk2C = -1;
         }
     }
     sub_08027128();

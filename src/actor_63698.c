@@ -50,7 +50,7 @@ extern u16 gGameState;
 extern u16 gFrameCount;
 extern s32 gUnk_0873DF14[];
 extern struct Actor gActors[];
-extern struct PlayerState gUnk_03002170[];
+extern struct PlayerState gPlayerStates[];
 extern u32 gUnk_0873F198[];
 extern u32 gUnk_0873F23C[];
 extern u32 gUnk_0873F264[];
@@ -1567,7 +1567,7 @@ s32 sub_08064eb8(u8 p2)
     if (i != -1)
     {
         t = &gTasks[i];
-        t->unk88 = p = &gUnk_03002170[gCurTaskIdx];
+        t->unk88 = p = &gPlayerStates[gCurTaskIdx];
         a = t->unk8C;
         t->unk18 = p->unk0D;
         t->unk1C = p->unk0E;

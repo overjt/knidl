@@ -38,7 +38,7 @@ void TaskSetFrame(s32 a);
 u16 RandomSpread(s32 base, u8 scale, u8 amount);   /* base + ((rand(256) * amount) >> 8) * scale */
 s16 RandomSpreadFacing(s32 base, u8 scale, u8 amount);   /* the same, negated when Task.unk43 != 1 */
 void sub_0805af80(void);
-s32 sub_0805afac(s32 a0, s32 a1, s32 a2);          /* M16's effect spawner (spawns task type #7) */
+s32 CreatePlayerEffect(s32 a0, s32 a1, s32 a2);          /* M16's effect spawner (spawns task type #7) */
 void sub_08057a10(void);
 void sub_08057c98(void);
 
@@ -103,7 +103,7 @@ void sub_08057494(void)
             TaskYieldTrampoline(2);
             gCurTask->unk3C += 2;
             TaskYieldTrampoline(1);
-            sub_0805afac(gCurTask->unk88->unk00, 32, 1);
+            CreatePlayerEffect(gCurTask->unk88->unk00, 32, 1);
             TaskYieldTrampoline(1);
             gCurTask->unk3C -= 2;
             TaskYieldTrampoline(2);

@@ -12,11 +12,11 @@
  * player leaves mode 2 or the spawner's Task.unk7A clears; 8 three puffs at
  * decreasing speeds, killed by sub_08054838 once the player leaves mode 7),
  * each spawning its own sub-state 1, a small rising puff.  Variants 9-11 are
- * M09's player task effects: 9 (sub_0805485c) and 10 (sub_080548f0) play
+ * M09's player task effects: 9 (PlayerEffectSplash) and 10 (sub_080548f0) play
  * short animations from gUnk_0874C520, 9 first calling M11's
- * sub_0803e34c(134, ...) when the spawner is moving down (Task.unk58 > 0)
+ * PlaySfxIfLocalPlayer(134, ...) when the spawner is moving down (Task.unk58 > 0)
  * and 10 placed at the height the spawner passes in the low half of
- * Task.unk18; 11 (sub_080549a4) asks M07's sub_08022624 about its position
+ * Task.unk18; 11 (PlayerEffectBubble) asks M07's sub_08022624 about its position
  * and, when that returns 0, rises while swaying left and right, until its
  * companion sub_08054a44 (the collision box gUnk_0873CB74 through
  * sub_0801c3a4) kills it once its Task.unk7B is clear or gUnk_03005550.unk1
@@ -61,8 +61,8 @@ u16 RandomSpread(s32 base, u8 scale, u8 amount);   /* base + ((rand(256) * amoun
 s16 RandomSpreadFacing(s32 base, u8 scale, u8 amount);   /* the same, negated when Task.unk43 != 1 */
 u16 sub_0801c3a4(const s8 *p);
 s32 sub_08022624(u16 x, u16 y);
-s32 sub_0803e34c(s32 a0, u16 a1);
-s32 sub_0805afac(s32 a0, s32 a1, s32 a2);          /* M16's effect spawner (spawns task type #7) */
+s32 PlaySfxIfLocalPlayer(s32 a0, u16 a1);
+s32 CreatePlayerEffect(s32 a0, s32 a1, s32 a2);          /* M16's effect spawner (spawns task type #7) */
 void sub_08054504(void);
 void sub_08054838(void);
 void sub_08054a44(void);
@@ -101,7 +101,7 @@ void sub_08054330(void)
             TaskYieldTrampoline(2);
             gCurTask->unk3C += 2;
             TaskYieldTrampoline(1);
-            sub_0805afac(gCurTask->unk88->unk00, 7, 1);
+            CreatePlayerEffect(gCurTask->unk88->unk00, 7, 1);
             TaskSetMotionXFacing(0x5A5A5A5A, 0);
             TaskYieldTrampoline(1);
             gCurTask->unk3C -= 2;
@@ -169,7 +169,7 @@ void sub_08054538(void)
         TaskYieldTrampoline(2);
         gCurTask->unk3C += 2;
         TaskYieldTrampoline(1);
-        sub_0805afac(gCurTask->unk88->unk00, 8, 1);
+        CreatePlayerEffect(gCurTask->unk88->unk00, 8, 1);
         TaskYieldTrampoline(1);
         gCurTask->unk3C -= 2;
         TaskYieldTrampoline(2);
@@ -240,7 +240,7 @@ void sub_08054838(void)
         TaskFree(gCurTaskIdx);
 }
 
-void sub_0805485c(void)
+void PlayerEffectSplash(void)
 {
     struct Task *t;
     struct Task *u;
@@ -251,7 +251,7 @@ void sub_0805485c(void)
     t = gCurTask;
     t->unk38 = gUnk_0874C520;
     if (((struct Task *)t->unk8C)->unk58 > 0)
-        sub_0803e34c(134, t->unk44);
+        PlaySfxIfLocalPlayer(134, t->unk44);
     u = gCurTask;
     u->unk4C = ((struct Task *)u->unk8C)->unk48 << 16;
     u->unk50 = (u16)u->unk18 << 16;
@@ -297,7 +297,7 @@ void sub_080548f0(void)
     TaskExitTrampoline();
 }
 
-void sub_080549a4(void)
+void PlayerEffectBubble(void)
 {
     struct Task *t;
 

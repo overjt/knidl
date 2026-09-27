@@ -38,7 +38,7 @@ extern s8 gUnk_02006094;
 extern u16 gUnk_020055C0;
 extern u16 gObjPalette[];
 extern u8 gUnk_03001F30;
-extern struct PlayerState gUnk_03002170[];
+extern struct PlayerState gPlayerStates[];
 extern u16 gSpriteCameraX;
 extern u16 gLocalPlayer;
 
@@ -87,7 +87,7 @@ extern void sub_0801bcac(u8 *a);
 extern u32 sub_08025e88(u32 i);
 extern void sub_080261d4(s32 a);
 extern void sub_08026264(s32 x, s32 y);
-extern s32 sub_0803d55c(s32 a);
+extern s32 PlayerLoadFrameTilesAndPalette(s32 a);
 extern void sub_0803d7c4(void);
 extern void sub_0803db74(void);
 extern void sub_0803ddc0(void);
@@ -160,7 +160,7 @@ void sub_0806ff7c(void)
     {
         sign = (u->unk3E & 0x8000) ? -1 : 1;
         u->unk3E &= 0x7FFF;
-        gfx = DrawAffineSprite(sub_0803d55c(0),
+        gfx = DrawAffineSprite(PlayerLoadFrameTilesAndPalette(0),
                            (u16)gUnk_0873FF98[((s16 *)gCurTask)[13]] * sign,
                            gUnk_0873FF98[((s16 *)gCurTask)[13]], 0);
         if (sign < 0)
@@ -168,7 +168,7 @@ void sub_0806ff7c(void)
     }
     else
     {
-        gfx = sub_0803d55c(0);
+        gfx = PlayerLoadFrameTilesAndPalette(0);
     }
     if (gPlayerCount > 1)
         sub_0803d7c4();
@@ -408,7 +408,7 @@ void sub_08070498(u32 a, s32 b)
     s16 *tbl;
     s32 k;
 
-    p = &gUnk_03002170[a];
+    p = &gPlayerStates[a];
     e = &gTasks[a];
     s = &gTasks[b];
     sub_08068a8c(a, 1);

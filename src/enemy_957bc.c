@@ -6,7 +6,7 @@
 extern s32 gUnk_02007D00[];
 extern s32 gUnk_030023D4;
 extern u16 gLocalPlayer;
-extern struct PlayerState gUnk_03002170[];
+extern struct PlayerState gPlayerStates[];
 extern s16 gViewRect[];
 extern u8 gObjPalette[];
 
@@ -1034,7 +1034,7 @@ void sub_08096a40(void)
     }
     u = gCurTask;
     if (u->unk7C == 8) {
-        p = gUnk_03002170;
+        p = gPlayerStates;
         i = u->unk7E;
         if (p[i].unk0D != 17) {
             u->unk18 = i;

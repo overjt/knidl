@@ -8,7 +8,7 @@ extern u32 gUnk_02006040[];
 extern s32 gUnk_02006190[];
 extern s32 gUnk_02007D00[];
 extern u8 gUnk_03001F30;
-extern struct PlayerState gUnk_03002170[];
+extern struct PlayerState gPlayerStates[];
 extern u8 gUnk_03002340;
 extern s32 gUnk_030023B4;
 extern u32 gCurSaveSlot[];
@@ -53,7 +53,7 @@ void sub_0809fbd0(void)
     for (i = 0; i <= 3; i++)
     {
         if (((gUnk_03002340 >> i) & 1) != 0)
-            gUnk_03002170[i].unk42 |= 64;
+            gPlayerStates[i].unk42 |= 64;
     }
 }
 
@@ -64,7 +64,7 @@ void sub_0809fc08(void)
     for (i = 0; i <= 3; i++)
     {
         if (((gUnk_03002340 >> i) & 1) != 0)
-            gUnk_03002170[i].unk42 &= 0xFFBF;
+            gPlayerStates[i].unk42 &= 0xFFBF;
     }
 }
 
@@ -272,7 +272,7 @@ void sub_0809ffec(void)
 
     t = gCurTask;
     if (t->unk7C == 6 && t->unk82 == 4)
-        gUnk_03002170[t->unk7E].unk01 = 18;
+        gPlayerStates[t->unk7E].unk01 = 18;
 }
 
 void sub_080a0028(void)

@@ -44,7 +44,7 @@
 extern s32 gUnk_02007D00[];
 extern s32 gUnk_03001F2C;
 extern u16 gFrameCount;
-extern struct PlayerState gUnk_03002170[];
+extern struct PlayerState gPlayerStates[];
 extern s32 gUnk_030023B4;
 extern s32 gUnk_030023D4;
 extern u16 gLocalPlayer;
@@ -437,7 +437,7 @@ void sub_08092250(void)
     }
     else
     {
-        gUnk_02007D00[6] = gUnk_03002170[gUnk_02007D00[4]].unk04;
+        gUnk_02007D00[6] = gPlayerStates[gUnk_02007D00[4]].unk04;
         if (gUnk_02007D00[6] == 14)
             gUnk_02007D00[5] = 2;
         else if (gUnk_02007D00[6] == 4)

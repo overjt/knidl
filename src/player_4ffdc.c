@@ -9,7 +9,7 @@
  * 25, and their two helpers.  sub_0804ffdc is a long yield script driven by
  * the 8.8 velocity pairs gUnk_0873B6CC; sub_08050418 spawns task type #6's
  * variant 12 through sub_08053a44; sub_08050508 switches the player to mode
- * 17 with camera presets sub_08040b40(10, 24-27).  sub_08050664 re-binds
+ * 17 with camera presets PlayerSetMotionXPreset(10, 24-27).  sub_08050664 re-binds
  * sub-action 2 when a direction is pressed or held for ten frames, and
  * sub_080506dc steers the player with the held direction (velocity pairs
  * gUnk_0873B724[Task.unk6E], PlayerState.unk10 counting the glide
@@ -22,11 +22,11 @@ extern s16 gUnk_02005580;
 extern u8 gUnk_020055C4;
 extern u16 gUnk_0873B6CC[][2];
 extern u32 gUnk_0873BD00[];             /* stored to PlayerState.unk64 as (u32)gUnk_0873BD00 */
-extern u16 gUnk_03002458[];             /* held keys, latched per player (M11) */
+extern u16 gLatchedHeldKeys[];             /* held keys, latched per player (M11) */
 extern u8 gUnk_0873B6DC[];
 extern u16 gUnk_0873B6E8[][6];
 extern u16 gFrameCount;
-extern u16 gUnk_030023C0[];             /* newly-pressed keys, latched per player */
+extern u16 gLatchedPressedKeys[];             /* newly-pressed keys, latched per player */
 extern u16 gUnk_0873B724[][4];
 
 void TaskYieldTrampoline(s32 frames);
@@ -35,11 +35,11 @@ void TaskSetEntry(void *a, u32 i);
 s32 sub_08009ee8(s32 a, s32 b);
 void sub_08032d48(void);
 void sub_0803332c(void);
-void sub_0803e050(s32 a0);
-void sub_0803e1b8(s32 a0, s32 a1, s32 a2);
-s32 sub_0803e34c(s32 a0, u16 a1);
+void PlayerStopAxes(s32 a0);
+void SetPlayerInvulnerability(s32 a0, s32 a1, s32 a2);
+s32 PlaySfxIfLocalPlayer(s32 a0, u16 a1);
 void sub_0803f6e0(void);
-void sub_08040b40(s32 a0, s32 a1);           /* M11, still asm; M11's own spelling */
+void PlayerSetMotionXPreset(s32 a0, s32 a1);           /* M11, still asm; M11's own spelling */
 void sub_0804fe68(void);
 void sub_0804fee8(void);
 s32 sub_08053a44(s8 player, u8 variant, s32 arg);
@@ -219,7 +219,7 @@ void sub_0805035c(void)
 {
     if (sub_08050664() == 0)
     {
-        u8 k = gUnk_0873B6DC[(gUnk_03002458[gCurTask->unk88->unk00] & 0xF0) >> 4];
+        u8 k = gUnk_0873B6DC[(gLatchedHeldKeys[gCurTask->unk88->unk00] & 0xF0) >> 4];
         struct Task *t = gCurTask;
         u16 *row = gUnk_0873B6E8[t->unk28];
 
@@ -251,7 +251,7 @@ void sub_08050418(void)
     {
         struct Task *t = gCurTask;
         t->unk70 = 0;
-        sub_0803e34c(155, (u16)t->unk88->unk00);
+        PlaySfxIfLocalPlayer(155, (u16)t->unk88->unk00);
     }
     gCurTask->unk3C = 0x1040;
     TaskYieldTrampoline(4);
@@ -296,28 +296,28 @@ void sub_08050508(void)
         struct Task *t = gCurTask;
         t->unk88->unk12 = 0x8000;
         if (gFrameCount & 1)
-            sub_0803e34c(111, (u16)t->unk88->unk00);
+            PlaySfxIfLocalPlayer(111, (u16)t->unk88->unk00);
         else
-            sub_0803e34c(112, (u16)t->unk88->unk00);
+            PlaySfxIfLocalPlayer(112, (u16)t->unk88->unk00);
     }
-    sub_0803e050(3);
+    PlayerStopAxes(3);
     if ((s8)gCurTask->unk7D == 0)
-        sub_08040b40(10, 24);
+        PlayerSetMotionXPreset(10, 24);
     else
-        sub_08040b40(10, 26);
+        PlayerSetMotionXPreset(10, 26);
     gCurTask->unk3C = 0x105D;
     TaskYieldTrampoline(4);
     if ((s8)gCurTask->unk7D == 0)
-        sub_08040b40(10, 25);
+        PlayerSetMotionXPreset(10, 25);
     else
-        sub_08040b40(10, 27);
+        PlayerSetMotionXPreset(10, 27);
     TaskYieldTrampoline(2);
     gCurTask->unk3C++;
     TaskYieldTrampoline(2);
     gCurTask->unk3C++;
     TaskYieldTrampoline(2);
-    sub_0803e050(1);
-    sub_0803e1b8(1, 96, gCurTask->unk88->unk00);
+    PlayerStopAxes(1);
+    SetPlayerInvulnerability(1, 96, gCurTask->unk88->unk00);
     gCurTask->unk70++;
     TaskSleepForever();
 }
@@ -335,8 +335,8 @@ void sub_08050630(void)
 
 s32 sub_08050664(void)
 {
-    if (!(gUnk_030023C0[gCurTask->unk88->unk00] & 3)
-        && (!(gUnk_03002458[gCurTask->unk88->unk00] & 3)
+    if (!(gLatchedPressedKeys[gCurTask->unk88->unk00] & 3)
+        && (!(gLatchedHeldKeys[gCurTask->unk88->unk00] & 3)
             || (s16)++gCurTask->unk88->unk14 != 10))
         return 0;
     gCurTask->unk88->unk14 = 0;
@@ -351,7 +351,7 @@ void sub_080506dc(void)
 
     if (t->unk88->unk04 == 13)
     {
-        u16 k = gUnk_03002458[t->unk88->unk00] & 0xF0;
+        u16 k = gLatchedHeldKeys[t->unk88->unk00] & 0xF0;
 
         if (k != 0)
         {

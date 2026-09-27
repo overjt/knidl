@@ -31,7 +31,7 @@ extern s32 gUnk_03001F2C;
 extern u8 gUnk_03001F30;
 extern u8 gUnk_03001F34;
 extern u16 gUnk_03002150;
-extern struct PlayerState gUnk_03002170[];
+extern struct PlayerState gPlayerStates[];
 extern u8 gUnk_03002340;
 extern u16 gLocalPlayer;
 extern u16 gUnk_03002364;
@@ -63,7 +63,7 @@ void sub_08027178(void);
 void sub_08027198(void);
 void sub_080272dc(void);
 void sub_080273a0(void);
-void sub_08040788(void);
+void LatchPlayerKeys(void);
 void InputRecorderStart(void);
 void InputRecorderUpdate(void);
 void sub_080b7b7c(s32 a);
@@ -102,7 +102,7 @@ void sub_08007624(void)
     do {
         sub_0801a7b4();
         RunLinkFrame();
-        sub_08040788();
+        LatchPlayerKeys();
         sub_080075b8();
         switch (gUnk_03002438) {
         case 0:
@@ -163,9 +163,9 @@ void sub_08007624(void)
     BeginFastFadeOutToWhite();
     RunLinkFramesUntilFadeDone();
     for (i = 0; i < gPlayerCount; i++) {
-        if (gUnk_03002170[i].unk2C != -1) {
-            StopSfxOnPlayer(gUnk_03002170[i].unk2C, gUnk_03002170[i].unk2E);
-            gUnk_03002170[i].unk2C = -1;
+        if (gPlayerStates[i].unk2C != -1) {
+            StopSfxOnPlayer(gPlayerStates[i].unk2C, gPlayerStates[i].unk2E);
+            gPlayerStates[i].unk2C = -1;
         }
     }
     sub_08027178();
@@ -243,7 +243,7 @@ void sub_0800791c(void)
         sub_0801a7b4();
         RunLinkFrame();
         InputRecorderUpdate();
-        sub_08040788();
+        LatchPlayerKeys();
         sub_080075b8();
         switch (gUnk_03002438) {
         case 0:

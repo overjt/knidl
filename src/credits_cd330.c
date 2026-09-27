@@ -55,8 +55,8 @@ extern u8 gUnk_02007CF0;
 extern s8 gUnk_02007FB8[];
 extern vu16 gPlayerHeldKeys[];
 extern u8 gUnk_03001F34;
-extern u16 gUnk_030023C0[];
-extern u16 gUnk_03002458[];
+extern u16 gLatchedPressedKeys[];
+extern u16 gLatchedHeldKeys[];
 extern s32 gUnk_0201C1A0;           /* credits: BG0 vertical scroll, 16.16 */
 extern s32 gUnk_0201C1AC;           /* credits: BG0 horizontal scroll, 16.16 */
 extern u8 gUnk_0201C1A8;
@@ -81,7 +81,7 @@ void sub_0800b4a8(void);
 void sub_0800b514(void);
 void sub_0801a7b4(void);
 void sub_0802497c(void);
-void sub_08040788(void);
+void LatchPlayerKeys(void);
 void sub_08066144(void);
 void InputRecorderStart(void);
 void InputRecorderUpdate(void);
@@ -158,7 +158,7 @@ void CreditsMain(void)
             RunLinkFrame();
             sub_080cd75c();
             InputRecorderUpdate();
-            sub_08040788();
+            LatchPlayerKeys();
         }
         if (scenes[++gUnk_0201C1B0] != 0) {
             BeginFade(15, -2, gUnk_08758334);
@@ -183,7 +183,7 @@ void CreditsMain(void)
     while (n-- != 0) {
         RunLinkFrame();
         InputRecorderUpdate();
-        sub_08040788();
+        LatchPlayerKeys();
     }
     gDispCnt |= 0x80;
     gUnk_03000AF4 = 0;
@@ -222,7 +222,7 @@ void sub_080cd674(void)
     gUnk_02007CF0 = 0;
     gUnk_03001F34 = 1;
     for (i = 0; i < 4; i++)
-        gPlayerHeldKeys[i] = gPlayerPressedKeys[i] = gUnk_03002458[i] = gUnk_030023C0[i] = 0;
+        gPlayerHeldKeys[i] = gPlayerPressedKeys[i] = gLatchedHeldKeys[i] = gLatchedPressedKeys[i] = 0;
 }
 
 /* Start the staff credits' text layer: load its screen, reset the BG0

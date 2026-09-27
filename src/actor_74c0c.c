@@ -23,7 +23,7 @@ extern s16 gUnk_0873FD70[];
 extern s16 gUnk_0873FF98[];
 extern s32 gUnk_030023B4;
 extern s32 gUnk_030023D4;
-extern struct PlayerState gUnk_03002170[];
+extern struct PlayerState gPlayerStates[];
 extern struct Task * gCurTask;
 extern struct Task gTasks[];
 extern u16 gLocalPlayer;
@@ -182,7 +182,7 @@ void sub_08074ee0(u32 flag)
     {
         if ((gUnk_03002340 >> i) & 1)
         {
-            struct PlayerState *p = &gUnk_03002170[i];
+            struct PlayerState *p = &gPlayerStates[i];
 
             if (flag)
                 p->unk42 |= 0x10;

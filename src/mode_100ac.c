@@ -59,7 +59,7 @@ void sub_08008c64(u16 a0);
 void sub_08008d98(s32 a0);
 void sub_08024300(void);
 void sub_08027178(void);
-void sub_0803d0a0(s32 a0);
+void InitPlayerState(s32 a0);
 void sub_080102c0(void);
 
 void sub_080100ac(void)
@@ -102,7 +102,7 @@ void sub_080100ac(void)
             gUnk_03000F7C = 47;
         }
         for (i = 0; i <= 3; i++)
-            sub_0803d0a0(i);
+            InitPlayerState(i);
         sub_080102c0();
         TaskCreateFrom(91, 32);
         sub_08002358();

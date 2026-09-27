@@ -63,11 +63,11 @@ extern u8 gUnk_03002350;
 extern u16 gLocalPlayer;
 extern u16 gPlayerCount;
 extern u8 gUnk_030023B0;
-extern u16 gUnk_030023C0[];
+extern u16 gLatchedPressedKeys[];
 extern s8 gUnk_03002438;
 extern u16 gLinkPlayerCount;
 extern s16 gUnk_0300244C;
-extern u16 gUnk_03002458[];
+extern u16 gLatchedHeldKeys[];
 extern u8 gExtraMode;
 extern vu16 gLinkCommand;
 
@@ -88,7 +88,7 @@ void sub_08022fa8(void);
 void sub_080233e0(void);
 void sub_08023948(void);
 void sub_08023ca0(void);
-void sub_0803d0a0(s32 a0);
+void InitPlayerState(s32 a0);
 void sub_08066144(void);
 
 void sub_0800b44c(void)
@@ -112,7 +112,7 @@ void sub_0800b4a8(void)
     ResetTasksAndOam();
     for (i = 0; i <= 3; i++) {
         gUnk_02006020[i] = 0;
-        sub_0803d0a0(i);
+        InitPlayerState(i);
     }
     ResetPlayTime();
     if (gUnk_03001F30 == 0) {
@@ -141,7 +141,7 @@ void sub_0800b514(void)
          * the two cells differ in signedness, so the chain stores the
          * constant twice instead of re-reading the inner cell (3.361). */
         gUnk_02007FA8[i] = gUnk_0200AF18[i] = 0xFFFF;
-        sub_0803d0a0(i);
+        InitPlayerState(i);
         gUnk_02005E00.unk04[i] = 0;
         gUnk_02005E00.unk08[i] = 0;
     }
@@ -161,7 +161,7 @@ void sub_0800b5dc(void)
     gUnk_02007CF0 = 0;
     for (i = 0; i < gPlayerCount; i++) {
         gUnk_02005E00.unk08[i] = 0;
-        sub_0803d0a0(i);
+        InitPlayerState(i);
     }
     gUnk_020055C4 = 0;
 }
@@ -173,7 +173,7 @@ void sub_0800b628(void)
     ResetTasksAndOam();
     sub_08022f9c();
     for (i = 0; i <= 3; i++)
-        sub_0803d0a0(i);
+        InitPlayerState(i);
 }
 
 void sub_0800b648(void)
@@ -229,7 +229,7 @@ void sub_0800b648(void)
     gUnk_02008010 = -1;
     gUnk_020055C4 = 0;
     for (i = 0; i < 4; i++)
-        gPlayerHeldKeys[i] = gPlayerPressedKeys[i] = gUnk_03002458[i] = gUnk_030023C0[i] = 0;
+        gPlayerHeldKeys[i] = gPlayerPressedKeys[i] = gLatchedHeldKeys[i] = gLatchedPressedKeys[i] = 0;
     gUnk_03002438 = 0;
     if (gUnk_0300244C != 0) {
         b2 = gUnk_02007CF4;
@@ -269,7 +269,7 @@ void sub_0800b788(void)
     gUnk_02007F50 = -1;
     sub_08066144();
     for (i = 0; i < 4; i++)
-        gPlayerHeldKeys[i] = gPlayerPressedKeys[i] = gUnk_03002458[i] = gUnk_030023C0[i] = 0;
+        gPlayerHeldKeys[i] = gPlayerPressedKeys[i] = gLatchedHeldKeys[i] = gLatchedPressedKeys[i] = 0;
     gLinkCommand = 0;
     gUnk_03002438 = 0;
 }
@@ -300,7 +300,7 @@ void sub_0800b87c(void)
     gUnk_02007F50 = -1;
     sub_08066144();
     for (i = 0; i < 4; i++)
-        gPlayerHeldKeys[i] = gPlayerPressedKeys[i] = gUnk_03002458[i] = gUnk_030023C0[i] = 0;
+        gPlayerHeldKeys[i] = gPlayerPressedKeys[i] = gLatchedHeldKeys[i] = gLatchedPressedKeys[i] = 0;
     gLinkCommand = 0;
     gUnk_03002438 = 0;
 }

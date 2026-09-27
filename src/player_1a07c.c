@@ -20,7 +20,7 @@ void TaskMoveRelativeToParent(void);
 void TaskDrawScreen(void);
 void TaskStop(void);
 s32 IsOnScreen(s16 x, s16 y);
-s32 sub_0803d55c(s32 mode);
+s32 PlayerLoadFrameTilesAndPalette(s32 mode);
 
 void sub_0801a07c(void)
 {
@@ -114,7 +114,7 @@ void sub_0801a1ec(void)
     u = gCurTask;
     dx = u->unk48;
     dy = u->unk4A;
-    anim = sub_0803d55c(mode);
+    anim = PlayerLoadFrameTilesAndPalette(mode);
     v = gCurTask;
     if (v->unk3C > 49)
     {

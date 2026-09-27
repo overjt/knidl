@@ -11,7 +11,7 @@
  * variant 37 (src/effect_57ce0.c): the same stop and release of the tasks of
  * kinds 1, 2, 7 and 8 through gUnk_0200B000 and the task skip mask, around a
  * palette effect - it saves the palette buffer (CpuSet of gUnk_03001570 into
- * gUnk_0200AF20) and calls M11's sub_0803f834/ sub_0803e3e4, M17's
+ * gUnk_0200AF20) and calls M11's sub_0803f834/ FreezeOtherTasks, M17's
  * sub_08065e6c and a VRAM transfer.  Its callbacks are sub_0805ab04, which
  * blends the saved palette towards gUnk_0873BC3E (while gUnk_03002444 is
  * set) or gUnk_0873BB7E with BlendColors (80 or 96 colours by
@@ -56,7 +56,7 @@ extern s16 gUnk_0873BB26[];
 extern u32 gUnk_0874C600[];
 extern u32 gUnk_0873CF8C[];             /* hit-box set, passed as (struct HitBoxSet *) */
 extern u32 gUnk_08752090[];
-extern u16 gUnk_03002458[];
+extern u16 gLatchedHeldKeys[];
 
 /* M09's hit-box set (src/block_30804.c); only a pointer is passed here */
 struct HitBoxSet;
@@ -83,7 +83,7 @@ void TaskSaveSkipMask(u32 idx);
 void sub_0801a828(u8 a, s16 x, s16 y, void *p);   /* M11's caller spelling */
 u16 sub_08030804(struct HitBoxSet *p, s32 x, s32 y, s32 e);
 void sub_0803dfc8(void);
-void sub_0803e3e4(s32 a0);
+void FreezeOtherTasks(s32 a0);
 void sub_0803f834(u16 a0, void *src);
 void sub_08065e6c(void);
 void sub_08065ed0(void);
@@ -398,7 +398,7 @@ void sub_0805a52c(void)
         BeginFade(7, -4, gUnk_02007F60);
         TaskYieldTrampoline(8);
         gBrightness = 0;
-        sub_0803e3e4(0);
+        FreezeOtherTasks(0);
         gUnk_03001F34 = 0;
         break;
     }
@@ -575,7 +575,7 @@ void sub_0805af44(void)
 {
     struct PlayerState *p = gCurTask->unk88;
 
-    if (p->unk04 != 13 || !(gUnk_03002458[p->unk00] & 3))
+    if (p->unk04 != 13 || !(gLatchedHeldKeys[p->unk00] & 3))
         TaskFree(gCurTaskIdx);
 }
 

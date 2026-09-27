@@ -24,7 +24,7 @@ extern s16 gUnk_0873E5F8[];
 extern u32 gUnk_0874CB7C[];
 extern s16 gUnk_0300244C;
 extern struct ActorDef gUnk_0873F6BC;
-extern struct PlayerState gUnk_03002170[];
+extern struct PlayerState gPlayerStates[];
 extern u32 gUnk_0873E670[];
 extern u32 gUnk_0873E67C[];
 extern vs16 gTaskSlotTypes[];
@@ -308,7 +308,7 @@ void sub_0806a638(void)
 
 void sub_0806a6a0(void)
 {
-    if ((u8)(gUnk_03002170[gCurTask->unk28].unk0D - 13) > 1)
+    if ((u8)(gPlayerStates[gCurTask->unk28].unk0D - 13) > 1)
     {
         ActorSetState(2);
         TaskSetEntry(sub_0806a8d8, gCurTaskIdx);
@@ -355,7 +355,7 @@ void sub_0806a6e0(void)
     }
     u = gCurTask;
     u->unk44 = u->unk7E;
-    u->unk88 = &gUnk_03002170[u->unk44];
+    u->unk88 = &gPlayerStates[u->unk44];
     ActorSetState(1);
     TaskSetEntry(sub_0806a8d8, gCurTaskIdx);
 }

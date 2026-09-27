@@ -212,7 +212,7 @@ struct AnimCmd
     /*0x02*/ s16 unk02;
 };
 
-/* 116-byte per-player record at gUnk_03002170 (0x08064EB8); Task.unk88 points
+/* 116-byte per-player record at gPlayerStates (0x08064EB8); Task.unk88 points
    at the record of the player the task belongs to (0x08064EB8). */
 struct PlayerState
 {
@@ -296,7 +296,7 @@ struct PlayerState
        starts (issue #83); they were inside filler62 before M11 named them. */
     /*0x64*/ u32 unk64;
     /*0x68*/ u32 unk68;
-    /* M11 keeps &gUnk_02005550[unk00] here and clears it to 0 (issue #85). */
+    /* M11 keeps &gPlayerHitBoxSets[unk00] here and clears it to 0 (issue #85). */
     /*0x6C*/ void *unk6C;
     /*0x70*/ u32 *unk70;
 };

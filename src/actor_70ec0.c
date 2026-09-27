@@ -23,7 +23,7 @@ extern s32 gUnk_030023D4;
 extern s32 gUnk_0873FB94[];
 extern s8 gUnk_02006160;
 extern s8 gUnk_030023B8;
-extern struct PlayerState gUnk_03002170[];
+extern struct PlayerState gPlayerStates[];
 extern struct Task * gCurTask;
 extern struct Task gTasks[];
 extern u16 gUnk_020055C0;
@@ -276,7 +276,7 @@ void sub_080711d0(void)
         }
         ActorSetAttackBox((u32)gUnk_0873F554);
     }
-    gUnk_03002170[gCurTask->unk7E].unk04 = 16;
+    gPlayerStates[gCurTask->unk7E].unk04 = 16;
     sub_08040934(gCurTask->unk7E);
     gCurTask->unk28++;
     sub_08070498(gCurTask->unk7E, gCurTaskIdx);

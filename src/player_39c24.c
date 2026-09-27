@@ -16,14 +16,14 @@
  * sub_0803aa40, per-frame handler 19, only releases the player once
  * Task.unk28 is set. */
 
-extern u32 gUnk_0873CB1C[];
+extern u32 gPlayerDefaultTerrainBox[];
 extern u8 gUnk_020055C4;
 extern u16 gPlayerCount;               /* number of players */
 extern u8 gUnk_0200AF00;
 extern s16 gUnk_02005588[];             /* health per player (M02's HUD) */
 extern vu16 gFadeSteps;
 extern u16 gUnk_0873D632[][7];
-extern struct PlayerState gUnk_03002170[];
+extern struct PlayerState gPlayerStates[];
 extern u16 gUnk_0873D0F8[][5];
 extern u8 gUnk_080D07C8[];
 extern u32 gUnk_02020000[];
@@ -51,18 +51,18 @@ void sub_08027850(s32 a);
 void sub_08027908(void);
 s32 sub_08027a30(void);
 void sub_08027a60(void);
-void sub_0803cd60(void);
-void sub_0803e050(s32 a0);
-void sub_0803e650(s32 a0);
+void PlayerPlayBump(void);
+void PlayerStopAxes(s32 a0);
+void PlayerStartOffsetScript(s32 a0);
 void sub_0803f6e0(void);
 u16 sub_0803f7e0(u16 a0);
-s32 sub_0804042c(void);
+s32 PlayerRequestLocomotion(void);
 void sub_08040808(s32 a0);
-void sub_08040b40(s32 a0, s32 a1);           /* M11, still asm; M11's own spelling */
-void sub_080413a4(s32 a0);
-void sub_08049738(void);                     /* M13, src/player_49738.c */
+void PlayerSetMotionXPreset(s32 a0, s32 a1);           /* M11, still asm; M11's own spelling */
+void PlayerSetMotionYPreset(s32 a0);
+void LoadAbilityTiles(void);                     /* M13, src/player_49738.c */
 void sub_08049a58(void);
-s32 sub_0805afac(s32 a0, s32 a1, s32 a2);
+s32 CreatePlayerEffect(s32 a0, s32 a1, s32 a2);
 
 void sub_08039c24(void)
 {
@@ -75,7 +75,7 @@ void sub_08039c24(void)
     gCurTask->unk43 = 1;
     gCurTask->unk3C = 0xFFFF;
     sub_080224b0();
-    sub_08021c74((s8 *)gUnk_0873CB1C, gCurTaskIdx);
+    sub_08021c74((s8 *)gPlayerDefaultTerrainBox, gCurTaskIdx);
     if (gUnk_020055C4 == 0)
     {
         sub_0803f6e0();
@@ -169,7 +169,7 @@ void sub_08039c24(void)
         {
             struct Task *t;
 
-            sub_08040b40(10, 9);
+            PlayerSetMotionXPreset(10, 9);
             t = gCurTask;
             t->unk54 += t->unk2C << 13;
             break;
@@ -179,7 +179,7 @@ void sub_08039c24(void)
         {
             struct Task *t;
 
-            sub_08040b40(10, 10);
+            PlayerSetMotionXPreset(10, 10);
             t = gCurTask;
             t->unk54 -= (t->unk2C - 1) << 13;
             break;
@@ -204,7 +204,7 @@ void sub_08039c24(void)
             gCurTask->unk3C++;
             TaskYieldTrampoline(2);
         }
-        sub_0803e050(1);
+        PlayerStopAxes(1);
         if (gCurTask->unk2C == 0)
         {
             sub_08026584();
@@ -213,7 +213,7 @@ void sub_08039c24(void)
         break;
     case 1:
         for (i = 0; i < gPlayerCount; i++)
-            gUnk_03002170[i].unk42 |= 64;
+            gPlayerStates[i].unk42 |= 64;
         if (gCurTask->unk2C != 0)
         {
             switch (gCurTask->unk2C)
@@ -224,7 +224,7 @@ void sub_08039c24(void)
                 struct Task *t;
 
                 gCurTask->unk43 = 1;
-                sub_08040b40(10, 9);
+                PlayerSetMotionXPreset(10, 9);
                 t = gCurTask;
                 t->unk54 += t->unk2C << 13;
                 break;
@@ -235,7 +235,7 @@ void sub_08039c24(void)
                 struct Task *t;
 
                 gCurTask->unk43 = -1;
-                sub_08040b40(10, 10);
+                PlayerSetMotionXPreset(10, 10);
                 t = gCurTask;
                 t->unk54 -= (t->unk2C - 1) << 13;
                 break;
@@ -278,7 +278,7 @@ void sub_08039c24(void)
                     TaskYieldTrampoline(1);
                 }
             }
-            sub_0803e050(1);
+            PlayerStopAxes(1);
             gCurTask->unk88->unk42 &= 0xFFEF;
             TaskSetSkipMask(15, gCurTaskIdx);
             break;
@@ -297,7 +297,7 @@ void sub_08039c24(void)
                 {
                 case 0:
                 default:
-                    sub_08040b40(10, 11);
+                    PlayerSetMotionXPreset(10, 11);
                     gCurTask->unk3C = gCurTask->unk46;
                     TaskYieldTrampoline(4);
                     gCurTask->unk3C++;
@@ -309,7 +309,7 @@ void sub_08039c24(void)
                 case 19:
                 case 22:
                 case 23:
-                    sub_08040b40(10, 12);
+                    PlayerSetMotionXPreset(10, 12);
                     gCurTask->unk3C = gCurTask->unk46;
                     TaskYieldTrampoline(2);
                     gCurTask->unk3C++;
@@ -323,25 +323,25 @@ void sub_08039c24(void)
             }
             else
             {
-                sub_08040b40(10, 11);
+                PlayerSetMotionXPreset(10, 11);
                 gCurTask->unk3C = gCurTask->unk46 = sub_0803f7e0(3);
                 TaskYieldTrampoline(4);
                 gCurTask->unk3C++;
                 TaskYieldTrampoline(2);
             }
         }
-        sub_08040b40(10, 13);
+        PlayerSetMotionXPreset(10, 13);
         if (!(gCurTask->unk7B & 1))
         {
             struct Task *t;
 
-            sub_080413a4(20);
+            PlayerSetMotionYPreset(20);
             t = gCurTask;
             t->unk46 = gUnk_0873D632[t->unk88->unk0D][4];
         }
         else
         {
-            sub_080413a4(21);
+            PlayerSetMotionYPreset(21);
             gCurTask->unk46 = sub_0803f7e0(4);
         }
         gCurTask->unk3C = gCurTask->unk46;
@@ -367,12 +367,12 @@ void sub_08039c24(void)
         TaskYieldTrampoline(2);
         gCurTask->unk3C--;
         TaskYieldTrampoline(2);
-        sub_0803e050(3);
+        PlayerStopAxes(3);
         i = sub_0802653c();
         sub_080261d4(2);
-        sub_0805afac(gCurTask->unk88->unk00, 20, 0);
-        sub_0805afac(gCurTask->unk88->unk00, 20, 1);
-        sub_0803e650(14);
+        CreatePlayerEffect(gCurTask->unk88->unk00, 20, 0);
+        CreatePlayerEffect(gCurTask->unk88->unk00, 20, 1);
+        PlayerStartOffsetScript(14);
         PlaySfx(238);
         {
             struct Task *t = gCurTask;
@@ -461,12 +461,12 @@ void sub_08039c24(void)
         sub_08026704(i);
         RequestCopy(3, (u32)gUnk_02020000, 0x06014000, 0x400);
         sub_08027908();
-        sub_08040b40(10, 14);
+        PlayerSetMotionXPreset(10, 14);
         if (!(gCurTask->unk7B & 1))
         {
             struct Task *t;
 
-            sub_080413a4(20);
+            PlayerSetMotionYPreset(20);
             t = gCurTask;
             t->unk46 = gUnk_0873D3B8[t->unk88->unk0D][1];
             switch (t->unk88->unk0D)
@@ -513,7 +513,7 @@ void sub_08039c24(void)
                 TaskYieldTrampoline(2);
                 break;
             }
-            sub_08040b40(10, 15);
+            PlayerSetMotionXPreset(10, 15);
             while (1)
             {
                 gCurTask->unk3C = gCurTask->unk46;
@@ -534,30 +534,30 @@ void sub_08039c24(void)
         }
         else
         {
-            sub_080413a4(21);
+            PlayerSetMotionYPreset(21);
             gCurTask->unk3C = sub_0803f7e0(6);
             TaskYieldTrampoline(14);
-            sub_08040b40(10, 15);
+            PlayerSetMotionXPreset(10, 15);
             while (!(gCurTask->unk7A & 1))
                 TaskYieldTrampoline(1);
         }
-        sub_0803e050(3);
+        PlayerStopAxes(3);
         gCurTask->unk88->unk3E = 2;
         if (!(gCurTask->unk7B & 1))
-            sub_0803cd60();
+            PlayerPlayBump();
         sub_08026584();
         while (sub_08027a30() == 0)
             TaskYieldTrampoline(1);
         sub_08027a60();
         for (i = 0; i < gPlayerCount; i++)
         {
-            gUnk_03002170[i].unk42 &= 0xFFBF;
+            gPlayerStates[i].unk42 &= 0xFFBF;
             if (gUnk_02005588[i] != 0)
                 sub_08040808(i);
             if (i != gCurTaskIdx)
                 TaskSetSkipMask(0, i);
         }
-        sub_08049738();
+        LoadAbilityTiles();
         break;
     }
     gCurTask->unk28++;
@@ -568,7 +568,7 @@ void sub_0803aa40(void)
 {
     if (gCurTask->unk28 != 0)
     {
-        sub_0804042c();
+        PlayerRequestLocomotion();
         gUnk_03001F34 = 0;
     }
 }

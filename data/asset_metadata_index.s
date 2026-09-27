@@ -2442,8 +2442,8 @@ gUnk_0873A6EC:
 	.global	gUnk_0873A734
 gUnk_0873A734:
 	.incbin	"baserom.gba", 0x73A734, 0x14
-	.global	gUnk_0873A748
-gUnk_0873A748:
+	.global	gPlayerActions
+gPlayerActions:
 	.incbin	"baserom.gba", 0x73A748, 0x4
 	.word	sub_0803380c+1
 	.word	sub_08033d0c+1
@@ -2506,8 +2506,8 @@ gUnk_0873A748:
 	.word	sub_080337f4+1
 	.word	sub_080337fc+1
 	.word	sub_08033804+1
-	.global	gUnk_0873A840
-gUnk_0873A840:
+	.global	gPlayerActionHandlers
+gPlayerActionHandlers:
 	.incbin	"baserom.gba", 0x73A840, 0x4
 	.word	sub_08033a2c+1
 	.word	sub_08034278+1
@@ -2598,11 +2598,11 @@ gUnk_0873AF58:
 	.global	gUnk_0873AF6C
 gUnk_0873AF6C:
 	.incbin	"baserom.gba", 0x73AF6C, 0x58
-	.global	gUnk_0873AFC4
-gUnk_0873AFC4:
+	.global	gPlayerMotionXPresets
+gPlayerMotionXPresets:
 	.incbin	"baserom.gba", 0x73AFC4, 0x240
-	.global	gUnk_0873B204
-gUnk_0873B204:
+	.global	gPlayerMotionYPresets
+gPlayerMotionYPresets:
 	.incbin	"baserom.gba", 0x73B204, 0x228
 	.global	gUnk_0873B42C
 gUnk_0873B42C:
@@ -2769,9 +2769,9 @@ gPlayerEffectVariants:
 	.word	sub_080540d0+1
 	.word	sub_08054330+1
 	.word	sub_08054538+1
-	.word	sub_0805485c+1
+	.word	PlayerEffectSplash+1
 	.word	sub_080548f0+1
-	.word	sub_080549a4+1
+	.word	PlayerEffectBubble+1
 	.word	sub_08054a80+1
 	.word	sub_08054d94+1
 	.word	sub_08054de8+1
@@ -3034,8 +3034,8 @@ gUnk_0873CA90:
 	.global	gUnk_0873CAA4
 gUnk_0873CAA4:
 	.incbin	"baserom.gba", 0x73CAA4, 0x78
-	.global	gUnk_0873CB1C
-gUnk_0873CB1C:
+	.global	gPlayerDefaultTerrainBox
+gPlayerDefaultTerrainBox:
 	.incbin	"baserom.gba", 0x73CB1C, 0x8
 	.global	gUnk_0873CB24
 gUnk_0873CB24:

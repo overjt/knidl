@@ -12,7 +12,7 @@ struct Collider
     /*0x08*/ u8 *unk08;
 };
 
-extern struct PlayerState gUnk_03002170[];
+extern struct PlayerState gPlayerStates[];
 extern struct Task *gCurTask;
 extern u8 gUnk_03005290;
 extern struct Collider gUnk_030052A0[];
@@ -34,7 +34,7 @@ void sub_0801a76c(s32 i)
     t->unk42 = 7;
     gCurTask->unk38 = gUnk_0874CFEC;
     gCurTask->unk40 = (i << 13) | (i << 7);
-    gCurTask->unk88 = &gUnk_03002170[i];
+    gCurTask->unk88 = &gPlayerStates[i];
 }
 
 void sub_0801a7b4(void)

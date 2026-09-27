@@ -15,7 +15,7 @@
 extern void TaskYieldTrampoline(u32 a);
 extern void TaskSetMotion(s32 a, s32 b, s32 c, s32 d, s32 e, s32 f);
 extern void TaskStop(void);
-extern void sub_0805afac(s32 a, s32 b, s32 c);
+extern void CreatePlayerEffect(s32 a, s32 b, s32 c);
 
 void sub_08062584(void)
 {
@@ -374,7 +374,7 @@ void sub_08062584(void)
     TaskStop();
     t = gCurTask;
     t->unk3E |= 0x8000;
-    sub_0805afac(t->unk88->unk00, 16, 0);
+    CreatePlayerEffect(t->unk88->unk00, 16, 0);
     gCurTask->unk3C = 0x92;
     TaskYieldTrampoline(0x15);
 }
@@ -634,7 +634,7 @@ void sub_08062f88(void)
     gCurTask->unk3C = 5;
     TaskYieldTrampoline(2);
     TaskStop();
-    sub_0805afac(gCurTask->unk88->unk00, 16, 0);
+    CreatePlayerEffect(gCurTask->unk88->unk00, 16, 0);
     gCurTask->unk3C = 0x92;
     TaskYieldTrampoline(0x15);
 }

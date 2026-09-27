@@ -41,7 +41,7 @@ s32 RandomSpread(s32 a, s32 b, s32 c);
 s16 RandomSpreadFacing(s32 a, u32 b, u32 c);
 s32 sub_08010358(s32 a, s32 b);
 void sub_080261d4(s32 a);
-s32 sub_0803d55c(s32 mode);
+s32 PlayerLoadFrameTilesAndPalette(s32 mode);
 void LoadBackdropColor(u16 *p);
 
 void sub_08010b38(void)
@@ -49,7 +49,7 @@ void sub_08010b38(void)
     if (gCurTask->unk38 != 0 && gCurTask->unk3C != -1
         && IsWorldPosOnScreen(gCurTask->unk48, gCurTask->unk4A) != 0)
     {
-        QueueSprite(gCurTask->unk42, sub_0803d55c(0),
+        QueueSprite(gCurTask->unk42, PlayerLoadFrameTilesAndPalette(0),
                      gCurTask->unk3E, gCurTask->unk40,
                      gCurTask->unk48 - 4,
                      (s16)(gCurTask->unk4A + 4));

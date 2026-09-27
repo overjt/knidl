@@ -11,13 +11,13 @@
  * PlayerState.unk6C, state 1 swaps in the scripts gUnk_0873CB2C /
  * gUnk_0873BD3C (PlayerState.unk68/unk64) and cycles the hit-box row
  * Task.unk2C through 0-2, state 2 restores the default scripts
- * gUnk_0873CB1C / gUnk_0873BD00 and lands (preset 2), and state 3 is the
+ * gPlayerDefaultTerrainBox / gUnk_0873BD00 and lands (preset 2), and state 3 is the
  * bounce-off (sound 153, sub_080261d4(4), preset 23).  Its handler
  * sub_08045a50 drives it from the collision block gUnk_03005550 -
  * re-binding state 3 on a hit, fading the palette of gUnk_0873B510[]
  * row Task.unk2C and registering the box gUnk_0873BF00.
  * sub_08045c40 (action 37) is a linear script (animations
- * 0x658/0x65A, M14's sub_08053940, sound 172); its handler sub_08045d18
+ * 0x658/0x65A, M14's CreatePlayerObject, sound 172); its handler sub_08045d18
  * waits for it to finish. */
 
 /* gUnk_03005550: M06's collision result block (src/terrain_1bcac.c spells it
@@ -48,7 +48,7 @@ struct M12Fade
     /*0x08*/ s32 unk8;
 };
 
-extern u32 gUnk_0873CB1C[];
+extern u32 gPlayerDefaultTerrainBox[];
 extern u32 gUnk_0873BD00[];             /* stored to PlayerState.unk64 as (u32)gUnk_0873BD00 */
 extern u32 gUnk_0873CCA4[];
 extern u32 gUnk_0873CB2C[];
@@ -65,18 +65,18 @@ void TaskSetEntry(void *a, u32 i);
 void TaskSetFrame(s32 a);
 void sub_0801a828(u8 a, s16 x, s16 y, void *p);   /* M11's caller spelling */
 void sub_080261d4(u16 a);
-void sub_0803e050(s32 a0);
-void sub_0803e1b8(s32 a0, s32 a1, s32 a2);
-s32 sub_0803e34c(s32 a0, u16 a1);
-void sub_0803e374(s32 a0, u16 a1);
-void sub_0803e3ac(void);
+void PlayerStopAxes(s32 a0);
+void SetPlayerInvulnerability(s32 a0, s32 a1, s32 a2);
+s32 PlaySfxIfLocalPlayer(s32 a0, u16 a1);
+void PlayerStartSfx(s32 a0, u16 a1);
+void PlayerStopSfx(void);
 s32 sub_0803e55c(void);
-s32 sub_0803fce4(s32 a);
-s32 sub_0804042c(void);
-void sub_08040b40(s32 a0, s32 a1);           /* M11, still asm; M11's own spelling */
-void sub_080413a4(s32 a0);
-void sub_08053940(s32 a, s32 b, s32 c);      /* M14, src/plobj_52f6c.c (defined s32 (s8, u8, s32); the result is unused here) */
-s32 sub_0805afac(s32 a0, s32 a1, s32 a2);
+s32 PlayerHasCrossedWaterSurface(s32 a);
+s32 PlayerRequestLocomotion(void);
+void PlayerSetMotionXPreset(s32 a0, s32 a1);           /* M11, still asm; M11's own spelling */
+void PlayerSetMotionYPreset(s32 a0);
+void CreatePlayerObject(s32 a, s32 b, s32 c);      /* M14, src/plobj_52f6c.c (defined s32 (s8, u8, s32); the result is unused here) */
+s32 CreatePlayerEffect(s32 a0, s32 a1, s32 a2);
 
 void sub_080455c8(void)
 {
@@ -94,30 +94,30 @@ void sub_080455c8(void)
     switch (gCurTask->unk73) {
     case 0:
         gCurTask->unk7A = 0;
-        sub_08040b40(11, 38);
-        sub_080413a4(34);
-        sub_0805afac(gCurTask->unk88->unk00, 32, 2);
-        sub_0805afac(gCurTask->unk88->unk00, 32, 0);
+        PlayerSetMotionXPreset(11, 38);
+        PlayerSetMotionYPreset(34);
+        CreatePlayerEffect(gCurTask->unk88->unk00, 32, 2);
+        CreatePlayerEffect(gCurTask->unk88->unk00, 32, 0);
         TaskSetFrame(0x5CB);
         TaskYieldTrampoline(2);
         gCurTask->unk3C++;
         TaskYieldTrampoline(1);
-        sub_0803e050(2);
+        PlayerStopAxes(2);
         TaskYieldTrampoline(3);
         gCurTask->unk88->unk6C = gUnk_0873CCA4;
-        sub_08040b40(11, 39);
+        PlayerSetMotionXPreset(11, 39);
         gCurTask->unk3C++;
         TaskYieldTrampoline(2);
-        sub_08040b40(11, 40);
+        PlayerSetMotionXPreset(11, 40);
         gCurTask->unk3C++;
         TaskYieldTrampoline(2);
         gCurTask->unk73 = 1;
         /* fallthrough */
     case 1:
-        sub_0803e374(137, gCurTask->unk88->unk00);
+        PlayerStartSfx(137, gCurTask->unk88->unk00);
         gCurTask->unk7A = 0;
         gCurTask->unk88->unk68 = (u32)gUnk_0873CB2C;
-        sub_0803e1b8(3, 0, gCurTask->unk88->unk00);
+        SetPlayerInvulnerability(3, 0, gCurTask->unk88->unk00);
         gCurTask->unk88->unk64 = (u32)gUnk_0873BD3C;
         gCurTask->unk88->unk42 |= 16;
         gCurTask->unk6C = 0;
@@ -126,8 +126,8 @@ void sub_080455c8(void)
         TaskYieldTrampoline(1);
         gCurTask->unk3C++;
         TaskYieldTrampoline(1);
-        sub_0805afac(gCurTask->unk88->unk00, 32, 3);
-        sub_0805afac(gCurTask->unk88->unk00, 32, 4);
+        CreatePlayerEffect(gCurTask->unk88->unk00, 32, 3);
+        CreatePlayerEffect(gCurTask->unk88->unk00, 32, 4);
         gCurTask->unk3C++;
         TaskYieldTrampoline(1);
         gCurTask->unk3C++;
@@ -178,20 +178,20 @@ void sub_080455c8(void)
         TaskYieldTrampoline(2);
         gCurTask->unk3C++;
         TaskYieldTrampoline(2);
-        sub_0803e3ac();
+        PlayerStopSfx();
         gCurTask->unk73 = 2;
         /* fallthrough */
     case 2:
         gCurTask->unk88->unk6C = 0;
-        sub_0803e1b8(255, 0, gCurTask->unk88->unk00);
-        gCurTask->unk88->unk68 = (u32)gUnk_0873CB1C;
+        SetPlayerInvulnerability(255, 0, gCurTask->unk88->unk00);
+        gCurTask->unk88->unk68 = (u32)gPlayerDefaultTerrainBox;
         gCurTask->unk88->unk64 = (u32)gUnk_0873BD00;
-        sub_08040b40(11, 41);
-        sub_080413a4(2);
-        sub_0805afac(gCurTask->unk88->unk00, 32, 5);
-        sub_0805afac(gCurTask->unk88->unk00, 32, 6);
-        sub_0805afac(gCurTask->unk88->unk00, 32, 7);
-        sub_0805afac(gCurTask->unk88->unk00, 32, 8);
+        PlayerSetMotionXPreset(11, 41);
+        PlayerSetMotionYPreset(2);
+        CreatePlayerEffect(gCurTask->unk88->unk00, 32, 5);
+        CreatePlayerEffect(gCurTask->unk88->unk00, 32, 6);
+        CreatePlayerEffect(gCurTask->unk88->unk00, 32, 7);
+        CreatePlayerEffect(gCurTask->unk88->unk00, 32, 8);
         TaskSetFrame(0x53C);
         TaskYieldTrampoline(2);
         gCurTask->unk3C++;
@@ -209,14 +209,14 @@ void sub_080455c8(void)
         break;
     case 3:
         gCurTask->unk88->unk6C = 0;
-        sub_0803e1b8(255, 0, gCurTask->unk88->unk00);
+        SetPlayerInvulnerability(255, 0, gCurTask->unk88->unk00);
         gCurTask->unk88->unk42 &= 0xFFEF;
-        sub_0803e3ac();
+        PlayerStopSfx();
         gCurTask->unk7A = 0;
-        sub_0803e34c(153, gCurTask->unk88->unk00);
+        PlaySfxIfLocalPlayer(153, gCurTask->unk88->unk00);
         sub_080261d4(4);
-        sub_08040b40(11, 17);
-        sub_080413a4(23);
+        PlayerSetMotionXPreset(11, 17);
+        PlayerSetMotionYPreset(23);
         TaskSetFrame(0x544);
         break;
     }
@@ -235,7 +235,7 @@ void sub_08045a50(void)
         }
         if (gUnk_03005550.unk0 == 0)
             break;
-        sub_0803e050(1);
+        PlayerStopAxes(1);
         {
             s8 d = gCurTask->unk43;
             if ((d == 1 && gUnk_03005550.unk0 == 1)
@@ -249,8 +249,8 @@ void sub_08045a50(void)
             if (t->unk7A & 1) {
                 if (gUnk_03005550.unk4 != 0) {
                     t->unk88->unk01 = 2;
-                    sub_08040b40(11, 41);
-                    sub_0803e1b8(255, 0, gCurTask->unk88->unk00);
+                    PlayerSetMotionXPreset(11, 41);
+                    SetPlayerInvulnerability(255, 0, gCurTask->unk88->unk00);
                 }
             } else if (*(u16 *)&gUnk_03005550 != 0 || t->unk28 != 0
                        || (t->unk88->unk48 & 11) != 0) {
@@ -277,10 +277,10 @@ void sub_08045a50(void)
         break;
     case 3:
     case 4:
-        sub_0804042c();
+        PlayerRequestLocomotion();
         break;
     }
-    if (sub_0803fce4(0) != 0)
+    if (PlayerHasCrossedWaterSurface(0) != 0)
         gCurTask->unk88->unk01 = 23;
     {
         struct PlayerState *p = gCurTask->unk88;
@@ -304,8 +304,8 @@ void sub_08045c40(void)
     TaskYieldTrampoline(2);
     TaskSetFrame(0x65A);
     TaskYieldTrampoline(2);
-    sub_08053940(gCurTask->unk88->unk00, 6, 0);
-    sub_0803e34c(172, gCurTask->unk88->unk00);
+    CreatePlayerObject(gCurTask->unk88->unk00, 6, 0);
+    PlaySfxIfLocalPlayer(172, gCurTask->unk88->unk00);
     gCurTask->unk6C = 0;
     do {
         gCurTask->unk3C++;
@@ -320,6 +320,6 @@ void sub_08045c40(void)
 void sub_08045d18(void)
 {
     if (gCurTask->unk28 != 0)
-        sub_0804042c();
+        PlayerRequestLocomotion();
     sub_0803e55c();
 }

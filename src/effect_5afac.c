@@ -23,14 +23,14 @@ extern u16 gFrameCount;
 extern vu16 gDispCnt;
 extern vs32 gBg1ScrollX;
 extern u8 gUnk_03001F34;
-extern struct PlayerState gUnk_03002170[];
+extern struct PlayerState gPlayerStates[];
 extern u8 gUnk_03002340;
 extern s16 gSpriteCameraX;
 extern u8 gUnk_03002350;
 extern u16 gLocalPlayer;
 extern u16 gPlayerCount;
 extern s32 gUnk_030023B4;
-extern u32 gUnk_030023C0[];
+extern u32 gLatchedPressedKeys[];
 extern s32 gUnk_030023D4;
 extern s16 gSpriteCameraY;
 extern u32 gUnk_03002438[];
@@ -120,7 +120,7 @@ void sub_08026264(s32 a, s32 b);
 void sub_08026998(void);
 void sub_08027178(void);
 void sub_08033d0c(void);
-void sub_08040788(void);
+void LatchPlayerKeys(void);
 void sub_0805b16c(void);
 void sub_0805b370(void);
 s32 sub_0805b4bc(void);
@@ -149,10 +149,10 @@ s32 sub_0805cc54(void);
 void sub_0805ceec(void);
 void sub_0805d420(void);
 void sub_0805d5fc(void);
-void sub_0805d8a4(s32 a0);
-void sub_0805d8c4(s32 a0);
-void sub_0805d8f4(void);
-void sub_0805d918(void);
+void TaskStartFrameScript(s32 a0);
+void TaskStartFrameScriptId(s32 a0);
+void TaskUpdateFrameScript(void);
+void TaskAdvanceFrameScript(void);
 void sub_0805d994(s32 a0, s32 a1);
 void sub_0805da2c(void);
 void sub_0805dd4c(void);
@@ -164,7 +164,7 @@ void ActorMove(void);
 void sub_08068a8c(u32 a, u8 flag);
 void sub_0806d4e4(s32 a, s32 b);
 
-s32 sub_0805afac(s32 a0, s32 a1, s32 a2)
+s32 CreatePlayerEffect(s32 a0, s32 a1, s32 a2)
 {
     s8 kind = a0;
     u8 param = a1;
@@ -211,7 +211,7 @@ s32 sub_0805afac(s32 a0, s32 a1, s32 a2)
     return idx;
 }
 
-s32 sub_0805b088(s32 a0, s32 a1, s32 a2)
+s32 CreatePlayerEffectHighSlot(s32 a0, s32 a1, s32 a2)
 {
     u8 param = a1;
     s32 idx;
@@ -246,7 +246,7 @@ void sub_0805b110(void)
     do
     {
         RunLinkFrame();
-        sub_08040788();
+        LatchPlayerKeys();
     } while (*(s8 *)0x03002438 == 0);
     sub_08002338();
     BeginFastFadeOutToWhite();
@@ -273,10 +273,10 @@ void sub_0805b16c(void)
     sub_08023fd4();
     for (i = 0; i < gPlayerCount; i++)
     {
-        if (gUnk_03002170[i].unk0D == 24)
+        if (gPlayerStates[i].unk0D == 24)
             sub_0800a008(0, -1, i);
         else
-            gUnk_03002170[i].unk0D = 0;
+            gPlayerStates[i].unk0D = 0;
     }
     gUnk_03001F34 = 1;
     gUnk_02007CF0 = 0;
@@ -358,7 +358,7 @@ s32 sub_0805b4bc(void)
 void sub_0805b4d8(void)
 {
     gCurTask->unk15 = 0;
-    sub_0805d8c4(0);
+    TaskStartFrameScriptId(0);
     gCurTask->unk60 = 128 << 7;
     TaskYieldTrampoline(27);
     gCurTask->unk14 = 1;
@@ -367,20 +367,20 @@ void sub_0805b4d8(void)
 
 void sub_0805b508(void)
 {
-    sub_0805d8f4();
+    TaskUpdateFrameScript();
 }
 
 void sub_0805b514(void)
 {
     gCurTask->unk15 = 1;
     TaskStop();
-    sub_0805d8c4(1);
+    TaskStartFrameScriptId(1);
     TaskSleepForever();
 }
 
 void sub_0805b534(void)
 {
-    sub_0805d8f4();
+    TaskUpdateFrameScript();
     if (sub_0805b5b0() == 0)
     {
         sub_0805c584();
@@ -406,7 +406,7 @@ void sub_0805b534(void)
 
 s32 sub_0805b5b0(void)
 {
-    u16 *p = (u16 *)gUnk_030023C0;
+    u16 *p = (u16 *)gLatchedPressedKeys;
     s32 n;
 
     if ((p[gCurTask->unk88->unk00] & 3) != 0)
@@ -446,7 +446,7 @@ void sub_0805b644(void)
 
 void sub_0805b660(void)
 {
-    sub_0805d8f4();
+    TaskUpdateFrameScript();
     sub_0805c584();
 }
 
@@ -458,7 +458,7 @@ void sub_0805b670(void)
 
 void sub_0805b688(void)
 {
-    sub_0805d8f4();
+    TaskUpdateFrameScript();
     sub_0805c584();
     gCurTask->unk30++;
     if (gCurTask->unk30 > 35)
@@ -475,7 +475,7 @@ void sub_0805b6c0(void)
     gCurTask->unk30 = gUnk_0873DC80[gCurTask->unk34];
     sub_0805b83c();
     sub_0805b8b8();
-    sub_0805d8c4(3);
+    TaskStartFrameScriptId(3);
     TaskCreateFrom(81, 32);
     gCurTask->unk24 = 0;
     if (gCurTask->unk88->unk00 == gLocalPlayer)
@@ -504,7 +504,7 @@ void sub_0805b6c0(void)
 void sub_0805b788(void)
 {
     gCurTask->unk70++;
-    sub_0805d8f4();
+    TaskUpdateFrameScript();
     gCurTask->unk24++;
     if (IsWorldPosOnScreen(gCurTask->unk48, gCurTask->unk4A) != 0)
         QueueSprite(14, gUnk_0873DC3C[gCurTask->unk24 & 3], 0, 0,
@@ -545,7 +545,7 @@ void sub_0805b8f8(void)
 {
     gCurTask->unk15 = 5;
     TaskStop();
-    sub_0805d8c4(4);
+    TaskStartFrameScriptId(4);
     gCurTask->unk4A -= 4;
     gCurTask->unk50 = gCurTask->unk4A << 16;
     TaskYieldTrampoline(60);
@@ -566,13 +566,13 @@ void sub_0805b8f8(void)
 
 void sub_0805b998(void)
 {
-    sub_0805d8f4();
+    TaskUpdateFrameScript();
 }
 
 void sub_0805b9a4(void)
 {
     gCurTask->unk15 = 6;
-    sub_0805d8c4(0);
+    TaskStartFrameScriptId(0);
     TaskSleepForever();
 }
 
@@ -581,7 +581,7 @@ void sub_0805b9c0(void)
     s32 v;
     s16 *tbl;
 
-    sub_0805d8f4();
+    TaskUpdateFrameScript();
     v = gCurTask->unk4A;
     tbl = (s16 *)gUnk_0873DBD4;
     if (v > tbl[gCurTask->unk30] - 2)
@@ -596,9 +596,9 @@ void sub_0805ba08(void)
     gCurTask->unk15 = 7;
     TaskStop();
     gCurTask->unk50 = (gUnk_0873DBD4[gCurTask->unk30] - 2) << 16;
-    sub_0805d8c4(5);
+    TaskStartFrameScriptId(5);
     TaskYieldTrampoline(2);
-    sub_0805d8c4(6);
+    TaskStartFrameScriptId(6);
     TaskYieldTrampoline(32);
     gUnk_030023D4 = 0;
     gUnk_030023B4 = 0;
@@ -630,7 +630,7 @@ void sub_0805ba08(void)
         sub_08033d0c();
     }
     TaskStop();
-    sub_0805d8c4(6);
+    TaskStartFrameScriptId(6);
     sub_0805bca4();
     gCurTask->unk14 = 9;
     sub_0805bce0();
@@ -638,7 +638,7 @@ void sub_0805ba08(void)
 
 void sub_0805bb84(void)
 {
-    sub_0805d8f4();
+    TaskUpdateFrameScript();
 }
 
 void sub_0805bb90(void)
@@ -673,14 +673,14 @@ void sub_0805bc1c(void)
     gCurTask->unk08 = (u32)sub_0805bc5c;
     gCurTask->unk43 = 1;
     TaskStop();
-    sub_0805d8c4(6);
+    TaskStartFrameScriptId(6);
     sub_0805bca4();
     TaskSleepForever();
 }
 
 void sub_0805bc50(void)
 {
-    sub_0805d8f4();
+    TaskUpdateFrameScript();
 }
 
 void sub_0805bc5c(void)
@@ -711,7 +711,7 @@ void sub_0805bce0(void)
         TaskYieldTrampoline(50);
     else
         TaskYieldTrampoline(30);
-    sub_0805d8c4(0);
+    TaskStartFrameScriptId(0);
     sub_0805e15c();
     gCurTask->unk14 = 10;
     sub_0805bd34();
@@ -719,7 +719,7 @@ void sub_0805bce0(void)
 
 void sub_0805bd28(void)
 {
-    sub_0805d8f4();
+    TaskUpdateFrameScript();
 }
 
 void sub_0805bd34(void)
@@ -730,7 +730,7 @@ void sub_0805bd34(void)
         gCurTask->unk43 = -1;
     else
         gCurTask->unk43 = 1;
-    sub_0805d8c4(7);
+    TaskStartFrameScriptId(7);
     if (gCurTask->unk30 == 0)
         TaskYieldTrampoline(30);
     else if (gCurTask->unk30 != 6)
@@ -757,7 +757,7 @@ void sub_0805bd34(void)
 
 void sub_0805be3c(void)
 {
-    sub_0805d8f4();
+    TaskUpdateFrameScript();
 }
 
 void sub_0805be48(void)
@@ -1336,7 +1336,7 @@ void sub_0805cf3c(void)
             gCurTask->unk0C = 0;
         gCurTask->unk4C = 244 << 16;
         gCurTask->unk50 = 196 << 16;
-        sub_0805d8a4((s32)gUnk_0873DDB4);
+        TaskStartFrameScript((s32)gUnk_0873DDB4);
         gCurTask->unk54 = 0xFFFB3300;
         gCurTask->unk58 = 0xFFFC6600;
         TaskYieldTrampoline(5);
@@ -1358,10 +1358,10 @@ void sub_0805cf3c(void)
         TaskYieldTrampoline(5);
         TaskStop();
         TaskYieldTrampoline(53);
-        sub_0805d8a4((s32)gUnk_0873DDA2);
+        TaskStartFrameScript((s32)gUnk_0873DDA2);
         gCurTask->unk54 = 0xFFFD6000;
         TaskYieldTrampoline(60);
-        sub_0805d8a4((s32)gUnk_0873DD80);
+        TaskStartFrameScript((s32)gUnk_0873DD80);
         TaskStop();
         (gTasks + gCurTask->unk44)->unk28 = 0;
         gCurTask->unk6C = 0;
@@ -1378,7 +1378,7 @@ void sub_0805cf3c(void)
             gCurTask->unk6C++;
         } while ((s16)gCurTask->unk6C <= 7);
         gCurTask->unk58 = 0;
-        sub_0805d8a4((s32)gUnk_0873DDA2);
+        TaskStartFrameScript((s32)gUnk_0873DDA2);
         gCurTask->unk54 = 0x00009A00;
         TaskYieldTrampoline(5);
         gCurTask->unk54 = 0x00013300;
@@ -1457,11 +1457,11 @@ void sub_0805cf3c(void)
 
             gCurTask->unk50 = (t[gCurTask->unk74] - 2) << 16;
         }
-        sub_0805d8a4((s32)gUnk_0873DDBE);
+        TaskStartFrameScript((s32)gUnk_0873DDBE);
         gCurTask->unk54 = 0xFFFE0000;
         TaskYieldTrampoline(23);
         TaskStop();
-        sub_0805d8a4(0);
+        TaskStartFrameScript(0);
         gCurTask->unk43 = 1;
         gCurTask->unk6C = 0;
         do
@@ -1491,7 +1491,7 @@ void sub_0805cf3c(void)
 
 void sub_0805d420(void)
 {
-    sub_0805d8f4();
+    TaskUpdateFrameScript();
     if (gCurTask->unk2C == 0)
         return;
     for (gCurTask->unk6C = gPlayerCount - 1;
@@ -1617,16 +1617,16 @@ void sub_0805d668(void)
     TaskExitTrampoline();
 }
 
-void sub_0805d8a4(s32 a0)
+void TaskStartFrameScript(s32 a0)
 {
     gCurTask->unk18 = a0;
     gCurTask->unk1C = 0;
     gCurTask->unk20 = 0;
     if (a0 != 0)
-        sub_0805d918();
+        TaskAdvanceFrameScript();
 }
 
-void sub_0805d8c4(s32 a0)
+void TaskStartFrameScriptId(s32 a0)
 {
     u32 i = (u8)a0;
 
@@ -1635,19 +1635,19 @@ void sub_0805d8c4(s32 a0)
     gCurTask->unk18 = *(gUnk_0873DDE8 + i);
     gCurTask->unk1C = 0;
     gCurTask->unk20 = 0;
-    sub_0805d918();
+    TaskAdvanceFrameScript();
 }
 
-void sub_0805d8f4(void)
+void TaskUpdateFrameScript(void)
 {
     if (gCurTask->unk18 != 0)
     {
         if (--gCurTask->unk20 <= 0)
-            sub_0805d918();
+            TaskAdvanceFrameScript();
     }
 }
 
-void sub_0805d918(void)
+void TaskAdvanceFrameScript(void)
 {
     struct Task *t;
     s32 i;
@@ -1677,7 +1677,7 @@ top:
     case -4:
         j = i + 1;
         t->unk1C = j;
-        sub_0805d8c4(*(u8 *)&p[j]);
+        TaskStartFrameScriptId(*(u8 *)&p[j]);
         return;
     }
     t2 = gCurTask;
@@ -1864,10 +1864,10 @@ void sub_0805ddb0(s32 a0)
     struct Task *t;
 
     t = &gTasks[a0];
-    t->unk46 = sub_0805b088((s8)a0, 19, 0);
+    t->unk46 = CreatePlayerEffectHighSlot((s8)a0, 19, 0);
     gTasks[t->unk46].unk44 = a0;
     gTasks[t->unk46].unk88 = t->unk88;
-    switch ((s8)gUnk_03002170[a0].unk0D)
+    switch ((s8)gPlayerStates[a0].unk0D)
     {
     case 0:
     case 7:
@@ -1876,11 +1876,11 @@ void sub_0805ddb0(s32 a0)
     case 21:
         break;
     default:
-        gTasks[sub_0805afac((s8)a0, 17, 0)].unk44 = a0;
+        gTasks[CreatePlayerEffect((s8)a0, 17, 0)].unk44 = a0;
         break;
     }
-    gUnk_03002170[a0].unk0D = 0;
-    gUnk_03002170[a0].unk04 = 22;
+    gPlayerStates[a0].unk0D = 0;
+    gPlayerStates[a0].unk04 = 22;
 }
 
 void sub_0805deac(void)
@@ -1893,7 +1893,7 @@ void sub_0805deac(void)
         {
             if (gPlayerCount != 1)
             {
-                switch ((s8)gUnk_03002170[i].unk0D)
+                switch ((s8)gPlayerStates[i].unk0D)
                 {
                 case 0:
                 case 7:
@@ -1902,11 +1902,11 @@ void sub_0805deac(void)
                 case 21:
                     break;
                 default:
-                    gTasks[sub_0805afac((s8)i, 17, 0)].unk44 = i;
+                    gTasks[CreatePlayerEffect((s8)i, 17, 0)].unk44 = i;
                     break;
                 }
-                gUnk_03002170[i].unk0D = 0;
-                gUnk_03002170[i].unk04 = 22;
+                gPlayerStates[i].unk0D = 0;
+                gPlayerStates[i].unk04 = 22;
             }
             TaskSetEntry(sub_0805e15c, i);
         }
@@ -1950,7 +1950,7 @@ void sub_0805e038(s32 a0)
     u16 v;
     s32 w;
 
-    ps = &gUnk_03002170[a0];
+    ps = &gPlayerStates[a0];
     t = &gTasks[a0];
     switch (gPlayerCount)
     {
@@ -1990,7 +1990,7 @@ void sub_0805e110(s32 a0)
     struct PlayerState *ps;
     struct Task *t;
 
-    ps = &gUnk_03002170[a0];
+    ps = &gPlayerStates[a0];
     t = &gTasks[a0];
     sub_08068a8c(a0, 1);
     sub_0805e038(a0);
@@ -2227,7 +2227,7 @@ void sub_0805e2d4(void)
     TaskYieldTrampoline(2);
     TaskStop();
     gCurTask->unk3E &= 0x7FFF;
-    sub_0805afac(gCurTask->unk88->unk00, 16, 0);
+    CreatePlayerEffect(gCurTask->unk88->unk00, 16, 0);
     gCurTask->unk3C = 0x92;
     TaskYieldTrampoline(0x15);
 }
@@ -2341,7 +2341,7 @@ void sub_0805e7b4(void)
     TaskYieldTrampoline(7);
     TaskStop();
     gCurTask->unk3E |= 128 << 8;
-    sub_0805afac(gCurTask->unk88->unk00, 16, 0);
+    CreatePlayerEffect(gCurTask->unk88->unk00, 16, 0);
     gCurTask->unk3C = 146;
     TaskYieldTrampoline(21);
 }
@@ -2436,7 +2436,7 @@ void sub_0805eb2c(s32 a0, s32 a1, s32 a2)
     TaskYieldTrampoline(2);
     TaskStop();
     gCurTask->unk3E |= 128 << 8;
-    sub_0805afac(gCurTask->unk88->unk00, 16, 0);
+    CreatePlayerEffect(gCurTask->unk88->unk00, 16, 0);
     gCurTask->unk3C = 146;
     TaskYieldTrampoline(21);
 }
@@ -2558,7 +2558,7 @@ void sub_0805ee90(void)
     TaskYieldTrampoline(1);
     TaskStop();
     gCurTask->unk3E |= 128 << 8;
-    sub_0805afac(gCurTask->unk88->unk00, 16, 0);
+    CreatePlayerEffect(gCurTask->unk88->unk00, 16, 0);
     gCurTask->unk3C = 146;
     TaskYieldTrampoline(21);
 }
@@ -2761,7 +2761,7 @@ void sub_0805f1bc(void)
     TaskYieldTrampoline(7);
     TaskStop();
     gCurTask->unk3E |= 128 << 8;
-    sub_0805afac(gCurTask->unk88->unk00, 16, 0);
+    CreatePlayerEffect(gCurTask->unk88->unk00, 16, 0);
     gCurTask->unk3C = 146;
     TaskYieldTrampoline(21);
 }
@@ -2898,7 +2898,7 @@ void sub_0805f778(void)
     TaskYieldTrampoline(2);
     TaskStop();
     gCurTask->unk3E |= 128 << 8;
-    sub_0805afac(gCurTask->unk88->unk00, 16, 0);
+    CreatePlayerEffect(gCurTask->unk88->unk00, 16, 0);
     gCurTask->unk3C = 146;
     TaskYieldTrampoline(21);
 }
@@ -3165,7 +3165,7 @@ void sub_0805fb88(void)
     TaskYieldTrampoline(2);
     TaskStop();
     gCurTask->unk3E |= 128 << 8;
-    sub_0805afac(gCurTask->unk88->unk00, 16, 0);
+    CreatePlayerEffect(gCurTask->unk88->unk00, 16, 0);
     gCurTask->unk3C = 146;
     TaskYieldTrampoline(21);
 }
@@ -3493,7 +3493,7 @@ void sub_08060308(void)
     TaskYieldTrampoline(2);
     gCurTask->unk58 = 0xFFFD0000;
     gCurTask->unk3E |= 128 << 8;
-    sub_0805afac(gCurTask->unk88->unk00, 16, 0);
+    CreatePlayerEffect(gCurTask->unk88->unk00, 16, 0);
     gCurTask->unk3C = 146;
     TaskYieldTrampoline(1);
     TaskStop();
@@ -3780,7 +3780,7 @@ void sub_08060c2c(void)
     gCurTask->unk3C = 5;
     TaskYieldTrampoline(2);
     TaskStop();
-    sub_0805afac(gCurTask->unk88->unk00, 16, 0);
+    CreatePlayerEffect(gCurTask->unk88->unk00, 16, 0);
     gCurTask->unk3C = 146;
     TaskYieldTrampoline(21);
 }
@@ -4089,7 +4089,7 @@ void sub_080613e4(void)
     TaskYieldTrampoline(2);
     TaskStop();
     gCurTask->unk3E |= 0x8000;
-    sub_0805afac(gCurTask->unk88->unk00, 16, 0);
+    CreatePlayerEffect(gCurTask->unk88->unk00, 16, 0);
     gCurTask->unk3C = 0x92;
     TaskYieldTrampoline(0x15);
 }
@@ -4420,7 +4420,7 @@ void sub_08061cac(void)
     gCurTask->unk3C = 5;
     TaskYieldTrampoline(2);
     TaskStop();
-    sub_0805afac(gCurTask->unk88->unk00, 16, 0);
+    CreatePlayerEffect(gCurTask->unk88->unk00, 16, 0);
     gCurTask->unk3C = 0x92;
     TaskYieldTrampoline(0x15);
 }

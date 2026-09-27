@@ -16,23 +16,23 @@
  * handler sub_08044c7c re-enters it on a newly-pressed B and requests
  * action 2 when left or right is held on the ground. */
 
-extern u16 gUnk_03002458[];             /* held keys, latched per player (M11) */
+extern u16 gLatchedHeldKeys[];             /* held keys, latched per player (M11) */
 extern u8 gUnk_081BE6BC[];              /* per-player palettes, 128 bytes each */
 extern u8 gObjPalette[];              /* OBJ palette buffer (M11 spelling) */
-extern u16 gUnk_030023C0[];             /* newly-pressed keys, latched per player */
+extern u16 gLatchedPressedKeys[];             /* newly-pressed keys, latched per player */
 
 void TaskYieldTrampoline(s32 frames);
 void BlendColors(u16 *src, u16 *dst, s32 ratio, s32 count, u16 *out);
 void TaskSleepForever(void);
 void TaskSetEntry(void *a, u32 i);
 void TaskSetFrame(s32 a);
-s32 sub_0803e34c(s32 a0, u16 a1);
+s32 PlaySfxIfLocalPlayer(s32 a0, u16 a1);
 s32 sub_0803e55c(void);
-void sub_0803f870(void);
-s32 sub_0804042c(void);
+void PlayerTurnToHeldDirection(void);
+s32 PlayerRequestLocomotion(void);
 void sub_08044878(void);
 void sub_08053a44(s32 a0, s32 a1, s32 a2);   /* M14, src/plobj_52f6c.c (defined s32 (s8, u8, s32); the result is unused here) */
-s32 sub_0805afac(s32 a0, s32 a1, s32 a2);
+s32 CreatePlayerEffect(s32 a0, s32 a1, s32 a2);
 
 void sub_080449c8(void)
 {
@@ -44,7 +44,7 @@ void sub_080449c8(void)
         break;
     case 1:
         if (t->unk28 == 0) {
-            if ((gUnk_03002458[t->unk88->unk00] & 2) == 0) {
+            if ((gLatchedHeldKeys[t->unk88->unk00] & 2) == 0) {
                 *st = 2;
                 TaskSetEntry(sub_08044878, gCurTaskIdx);
             }
@@ -101,7 +101,7 @@ void sub_080449c8(void)
     case 2:
         break;
     case 3:
-        sub_0804042c();
+        PlayerRequestLocomotion();
         break;
     }
     sub_0803e55c();
@@ -126,10 +126,10 @@ void sub_08044b94(void)
     gCurTask->unk3C++;
     TaskYieldTrampoline(2);
     if (gCurTask->unk7A & 1)
-        sub_0805afac(gCurTask->unk88->unk00, 28, 3);
+        CreatePlayerEffect(gCurTask->unk88->unk00, 28, 3);
     sub_08053a44(gCurTask->unk88->unk00, 5, 0);
     gCurTask->unk28++;
-    sub_0803e34c(144, gCurTask->unk88->unk00);
+    PlaySfxIfLocalPlayer(144, gCurTask->unk88->unk00);
     gCurTask->unk3C++;
     TaskYieldTrampoline(4);
     gCurTask->unk3C++;
@@ -146,16 +146,16 @@ void sub_08044c7c(void)
 
     if (t->unk28 != 0) {
         if (t->unk28 == 1) {
-            if (gUnk_030023C0[t->unk88->unk00] & 2) {
+            if (gLatchedPressedKeys[t->unk88->unk00] & 2) {
                 TaskSetEntry(sub_08044b94, gCurTaskIdx);
             } else if (t->unk7A & 1) {
-                if (gUnk_03002458[t->unk88->unk00] & 48) {
-                    sub_0803f870();
+                if (gLatchedHeldKeys[t->unk88->unk00] & 48) {
+                    PlayerTurnToHeldDirection();
                     gCurTask->unk88->unk01 = 2;
                 }
             }
         } else {
-            sub_0804042c();
+            PlayerRequestLocomotion();
         }
     }
     sub_0803e55c();

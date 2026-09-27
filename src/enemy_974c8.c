@@ -7,7 +7,7 @@ extern s32 gUnk_02007D00[];
 extern s32 gUnk_030023D4;
 extern vu16 gTaskSlotTypes[];
 extern u16 gLocalPlayer;
-extern struct PlayerState gUnk_03002170[];
+extern struct PlayerState gPlayerStates[];
 extern s16 gViewRect[];
 
 /* ROM tables */
@@ -803,7 +803,7 @@ void sub_080983a4(void)
         return;
     }
     k = 0;
-    gUnk_030023D4 = gUnk_03002170[TaskFindNearestPlayer()].unk04;
+    gUnk_030023D4 = gPlayerStates[TaskFindNearestPlayer()].unk04;
     switch (gUnk_030023D4) {
     case 14:
         k = 2;
@@ -857,7 +857,7 @@ void sub_080984b4(void)
     s32 i;
 
     if (sub_0806914c(gUnk_087452E0) != 0) {
-        p = gUnk_03002170;
+        p = gPlayerStates;
         t = gCurTask;
         i = t->unk7E;
         if (p[i].unk0D != 17 || p[i].unk04 != 13) {

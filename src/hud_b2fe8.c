@@ -68,7 +68,7 @@ extern s32 gUnk_03001F2C;
 extern u8 gUnk_03001F30;
 extern s16 gViewRect[];
 extern u32 gUnk_03002160;
-extern struct PlayerState gUnk_03002170[];
+extern struct PlayerState gPlayerStates[];
 extern u8 gUnk_03002340;
 extern s32 gUnk_03002344;
 extern s16 gSpriteCameraX;
@@ -120,7 +120,7 @@ extern u32 gUnk_082FFDF0[];
 extern u16 gUnk_08334480[];
 extern u32 gUnk_083344C0[];
 extern u32 gUnk_087324DA[];
-extern u32 gUnk_0873CB1C[];
+extern u32 gPlayerDefaultTerrainBox[];
 extern u32 gUnk_0873EEA0[];
 extern u32 gUnk_0873EF48[];
 extern u32 *gUnk_0873F0E4[];
@@ -2891,7 +2891,7 @@ void sub_080b4878(void)
     i = 0;
     if (i < gPlayerCount)
     {
-        b5 = (u8 *)gUnk_03002170;
+        b5 = (u8 *)gPlayerStates;
         do
         {
             if ((gUnk_03002340 >> i) & 1)
@@ -2941,7 +2941,7 @@ void sub_080b48f8(void)
         m5 = gUnk_03002340;
         n = n2;
         one = 1;
-        p2 = (u8 *)gUnk_03002170;
+        p2 = (u8 *)gPlayerStates;
         do
         {
             if (((m5 >> i) & one) && *(s8 *)(p2 + 22) == 2)
@@ -2989,7 +2989,7 @@ void sub_080b4968(void)
             {
                 t3 = (struct Task *)((u8 *)gTasks + o);
                 w1 = i * 116;
-                p1 = (u8 *)((u32)gUnk_03002170 + w1);
+                p1 = (u8 *)((u32)gPlayerStates + w1);
                 w2 = p1[4];
                 if (w2 == 0)
                 {
@@ -3009,7 +3009,7 @@ void sub_080b4968(void)
                 }
                 else if (*(u32 *)(p1 + 104) == 0 && *(s16 *)((u8 *)t3 + 74) > 116)
                 {
-                    *(u32 *)(p1 + 104) = (u32)gUnk_0873CB1C;
+                    *(u32 *)(p1 + 104) = (u32)gPlayerDefaultTerrainBox;
                 }
             }
         }

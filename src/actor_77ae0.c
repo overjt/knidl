@@ -43,7 +43,7 @@ extern struct AnimCmd gUnk_087406A0[];
 extern struct M19Frame gUnk_08740320[][24];
 extern struct M19Frame gUnk_087404A0[][24];
 extern struct M19Particle gUnk_03000FE0[];
-extern struct PlayerState gUnk_03002170[];
+extern struct PlayerState gPlayerStates[];
 extern struct Task * gCurTask;
 extern u16 gPlayerCount;
 extern u32 gUnk_087402D4[];
@@ -225,7 +225,7 @@ void sub_08077c64(void)
 
 s32 sub_08077ca4(void)
 {
-    struct PlayerState *p = &gUnk_03002170[gCurTask->unk7E];
+    struct PlayerState *p = &gPlayerStates[gCurTask->unk7E];
 
     if (p->unk0D == 7 && p->unk04 == 13)
         return 0;

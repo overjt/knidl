@@ -51,7 +51,7 @@ extern u32 gUnk_02020000[];
 extern void (*gFrameEndCallback)(void);
 extern u16 gObjPalette[];
 extern u8 gUnk_03001F34;
-extern struct PlayerState gUnk_03002170[];
+extern struct PlayerState gPlayerStates[];
 extern u8 gUnk_03002340;
 extern u16 gLocalPlayer;
 extern s8 gUnk_03002444;
@@ -318,7 +318,7 @@ s32 sub_08009fcc(s32 a, s32 b, u32 c)
         struct PlayerState *p;
         gUnk_02004B50[c] = a;
         gUnk_0200AF18[c] = b;
-        p = &gUnk_03002170[c];
+        p = &gPlayerStates[c];
         p->unk0D = a;
         p->unk0E = b;
         return p->unk0D;
@@ -331,7 +331,7 @@ s32 sub_0800a008(s32 a, s32 b, u32 c)
         struct PlayerState *p;
         gUnk_02004B50[c] = a;
         gUnk_0200AF18[c] = b;
-        p = &gUnk_03002170[c];
+        p = &gPlayerStates[c];
         p->unk0D = a;
         p->unk0E = b;
         sub_0800a130(a, c);

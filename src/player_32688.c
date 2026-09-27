@@ -6,16 +6,16 @@
  *
  * Task type #5 (class 1), the player task, and its callbacks.
  * Task_Player is the body: it binds the task to its player record
- * (Task.unk88 = &gUnk_03002170[gCurTaskIdx]), kills it when the player
+ * (Task.unk88 = &gPlayerStates[gCurTaskIdx]), kills it when the player
  * has no lives and no health left, installs the callbacks (Task.unk00 =
- * M11's sub_0803d494, unk04 = sub_08032d48, unk08 = sub_0803332c, unk0C =
+ * M11's PlayerMove, unk04 = sub_08032d48, unk08 = sub_0803332c, unk0C =
  * M11's sub_0803ddc0), sets up the ability (PlayerState.unk0D) and the
  * stage entry mode (gUnk_02000020, gUnk_020069F0), and starts the first
  * action.  The actions are two tables of void (*)(void) dispatched
  * through CallTableEntry(index, count, table), entry 0 NULL: the "enter"
- * coroutine of action PlayerState.unk02 from gUnk_0873A748[62] (M11's
+ * coroutine of action PlayerState.unk02 from gPlayerActions[62] (M11's
  * gUnk_0873B42C[30] when gUnk_03001F30 != 0) and the "per-frame" handler
- * Task.unk15 from gUnk_0873A840[57] (M11's gUnk_0873B4A4[27]).  A handler requests
+ * Task.unk15 from gPlayerActionHandlers[57] (M11's gUnk_0873B4A4[27]).  A handler requests
  * the next action in PlayerState.unk01; sub_08032bd0 is the coroutine
  * that switches to it (unk03 = previous, unk02 = new, unk01 = 0).
  * sub_08032d48 (Task.unk04) runs every frame: the attack hit-boxes
@@ -89,7 +89,7 @@ struct Unk02005E00
     /*0x08*/ u8 unk08[4];
 };
 
-extern struct PlayerState gUnk_03002170[];
+extern struct PlayerState gPlayerStates[];
 extern s16 gPlayerLives[];
 extern s16 gUnk_02005588[];
 extern u8 gUnk_030023B0;
@@ -100,16 +100,16 @@ extern u16 gLocalPlayer;
 extern u8 gUnk_03001F30;
 extern u32 gUnk_0873BD00[];               /* stored to PlayerState.unk64 as (u32)gUnk_0873BD00 */
 extern u32 gUnk_0873CA54[];
-extern u32 gUnk_0873CB1C[];
-extern struct M11R20 gUnk_020060E0[];
+extern u32 gPlayerDefaultTerrainBox[];
+extern struct M11R20 gPlayerBodyBoxes[];
 extern u32 gUnk_0873C358[];
-extern struct M11R8 gUnk_02005550[];
+extern struct M11R8 gPlayerHitBoxSets[];
 extern u32 gUnk_0873CF94[];
 extern u8 gUnk_02000020;
 extern u8 gUnk_020069F0;
 extern u8 gUnk_020061E0;
 extern u8 gUnk_03001F34;
-extern void (*gUnk_0873A748[])(void);
+extern void (*gPlayerActions[])(void);
 extern void (*gUnk_0873B42C[])(void);
 extern u8 gUnk_03005568;
 extern u8 gUnk_02005574[];
@@ -118,10 +118,10 @@ extern u16 gUnk_03005544;
 extern struct Unk03005530 gUnk_03005530;
 extern s16 gSpriteCameraX;
 extern s16 gSpriteCameraY;
-extern void (*gUnk_0873A840[])(void);
+extern void (*gPlayerActionHandlers[])(void);
 extern void (*gUnk_0873B4A4[])(void);
 extern s16 gUnk_0300244C;
-extern u16 gUnk_0200AFE8[];
+extern u16 gPlayerBubbleTimers[];
 extern u32 gUnk_0873C36C[];
 extern u32 gUnk_0873CF9C[];
 extern struct Unk02005E00 gUnk_02005E00;
@@ -151,25 +151,25 @@ u16 sub_08030848(struct HitBoxSet *p, s32 e);
 void sub_0803c9b4(s32 a);                     /* M10: mov r8, r0 on entry, void epilogue */
 void sub_0803cbd8(void);                      /* M10: no argument read, void epilogue */
 void sub_0803ce98(void);
-void sub_0803d494(void);
+void PlayerMove(void);
 void sub_0803ddc0(void);
 void sub_0803e080(void);
-void sub_0803e1b8(s32 a0, s32 a1, s32 a2);
+void SetPlayerInvulnerability(s32 a0, s32 a1, s32 a2);
 void sub_0803e2d4(void);
-void sub_0803e3ac(void);
-s32 sub_0803e5c0(s32 playerIdx, u8 *src6);
-s32 sub_0803e5f8(s32 a0, s32 a1);
-void sub_0803e650(s32 a0);
+void PlayerStopSfx(void);
+s32 LoadPlayerBodyBoxRect(s32 playerIdx, u8 *src6);
+s32 LoadPlayerHitBoxSet(s32 a0, s32 a1);
+void PlayerStartOffsetScript(s32 a0);
 s32 sub_0803fa74(void);
 void sub_0803fb54(void);
 s32 sub_08040514(void);
 void sub_08040808(s32 a0);
 void sub_08040894(s32 a0, u8 a1);
-void sub_08049738(void);
+void LoadAbilityTiles(void);
 void sub_08049a58(void);
 void sub_0804fe68(void);
-s32 sub_0805afac(s32 a0, s32 a1, s32 a2);
-s32 sub_0805b088(s32 a0, s32 a1, s32 a2);
+s32 CreatePlayerEffect(s32 a0, s32 a1, s32 a2);
+s32 CreatePlayerEffectHighSlot(s32 a0, s32 a1, s32 a2);
 void sub_0805b278(void);
 void sub_0806ee30(void);
 void sub_08071cc0(int x, int y, int c);
@@ -185,7 +185,7 @@ void Task_Player(void)
     struct Task *t;
 
     gCurTask->unk44 = gCurTaskIdx;
-    gCurTask->unk88 = &gUnk_03002170[gCurTaskIdx];
+    gCurTask->unk88 = &gPlayerStates[gCurTaskIdx];
     if (gPlayerLives[gCurTask->unk88->unk00] == 0 && gUnk_02005588[gCurTask->unk88->unk00] == 0)
     {
         gCurTask->unk04 = 0;
@@ -206,7 +206,7 @@ void Task_Player(void)
     }
     gCurTask->unk43 = 1;
     t = gCurTask;
-    t->unk00 = (u32)sub_0803d494;
+    t->unk00 = (u32)PlayerMove;
     t->unk0C = (u32)sub_0803ddc0;
     t->unk04 = (u32)sub_08032d48;
     t->unk08 = (u32)sub_0803332c;
@@ -222,28 +222,28 @@ void Task_Player(void)
         gCurTask->unk88->unk64 = (u32)gUnk_0873BD00;
     else
         gCurTask->unk88->unk64 = (u32)gUnk_0873CA54;
-    gCurTask->unk88->unk68 = (u32)gUnk_0873CB1C;
+    gCurTask->unk88->unk68 = (u32)gPlayerDefaultTerrainBox;
     gCurTask->unk88->unk6C = 0;
     gCurTask->unk88->unk5E = gCurTask->unk4C >> 16;
     gCurTask->unk88->unk60 = gCurTask->unk50 >> 16;
     gCurTask->unk78 = gUnk_02005588[gCurTask->unk88->unk00];
     if (gCurTask->unk88->unk0D != 0)
     {
-        sub_08049738();
+        LoadAbilityTiles();
         switch (gCurTask->unk88->unk0D)
         {
         case 1:
         case 2:
-            sub_0805afac(gCurTask->unk88->unk00, 15, 0);
+            CreatePlayerEffect(gCurTask->unk88->unk00, 15, 0);
             sub_08049a58();
             break;
         case 10:
             {
-                struct M11R20 *d = gUnk_020060E0;
+                struct M11R20 *d = gPlayerBodyBoxes;
 
                 d[gCurTask->unk88->unk00] = *(struct M11R20 *)gUnk_0873C358;
             }
-            gUnk_02005550[gCurTask->unk88->unk00] = *(struct M11R8 *)gUnk_0873CF94;
+            gPlayerHitBoxSets[gCurTask->unk88->unk00] = *(struct M11R8 *)gUnk_0873CF94;
             break;
         case 7:
         case 20:
@@ -310,7 +310,7 @@ void Task_Player(void)
     case 0:
     default:
         sub_080224b0();
-        sub_08021c74((s8 *)gUnk_0873CB1C, gCurTaskIdx);
+        sub_08021c74((s8 *)gPlayerDefaultTerrainBox, gCurTaskIdx);
         gCurTask->unk88->unk5C = gCurTask->unk7B;
         if (!(gCurTask->unk7B & 1))
         {
@@ -336,7 +336,7 @@ void Task_Player(void)
     {
         struct PlayerState *p = gCurTask->unk88;
         gCurTask->unk14 = p->unk02;
-        CallTableEntry(p->unk02, 62, gUnk_0873A748);
+        CallTableEntry(p->unk02, 62, gPlayerActions);
     }
     else
     {
@@ -361,7 +361,7 @@ void sub_08032bd0(void)
     if (gCurTask->unk88->unk06 == 1)
     {
         gCurTask->unk88->unk64 = (u32)gUnk_0873BD00;
-        gCurTask->unk88->unk68 = (u32)gUnk_0873CB1C;
+        gCurTask->unk88->unk68 = (u32)gPlayerDefaultTerrainBox;
         gCurTask->unk88->unk6C = 0;
     }
     else if (gCurTask->unk88->unk37 != 2)
@@ -370,16 +370,16 @@ void sub_08032bd0(void)
             gCurTask->unk88->unk64 = (u32)gUnk_0873BD00;
         else
             gCurTask->unk88->unk64 = (u32)gUnk_0873CA54;
-        gCurTask->unk88->unk68 = (u32)gUnk_0873CB1C;
+        gCurTask->unk88->unk68 = (u32)gPlayerDefaultTerrainBox;
         gCurTask->unk88->unk6C = 0;
     }
     gCurTask->unk88->unk24 = gCurTask->unk88->unk26 = 0;
     if (gCurTask->unk88->unk3F == 3 && (s16)gCurTask->unk88->unk12 == -0x8000)
-        sub_0803e1b8(255, 0, gCurTask->unk88->unk00);
+        SetPlayerInvulnerability(255, 0, gCurTask->unk88->unk00);
     if (gUnk_03001F30 == 0)
     {
         if (gCurTask->unk88->unk03 == 28 && gCurTask->unk88->unk0D != 0)
-            sub_08049738();
+            LoadAbilityTiles();
         if (gCurTask->unk88->unk0D != 0)
             gCurTask->unk88->unk36 = 1;
     }
@@ -387,7 +387,7 @@ void sub_08032bd0(void)
     {
         struct PlayerState *p = gCurTask->unk88;
         gCurTask->unk14 = p->unk02;
-        CallTableEntry(p->unk02, 62, gUnk_0873A748);
+        CallTableEntry(p->unk02, 62, gPlayerActions);
     }
     else
     {
@@ -475,7 +475,7 @@ void sub_08032d48(void)
         sub_0801a828(gCurTaskIdx, x, y, (u8 *)p->unk64);
     }
     if (gUnk_03001F30 == 0)
-        CallTableEntry(gCurTask->unk15, 57, gUnk_0873A840);
+        CallTableEntry(gCurTask->unk15, 57, gPlayerActionHandlers);
     else
         CallTableEntry(gCurTask->unk15, 27, gUnk_0873B4A4);
     sub_0803e2d4();
@@ -490,28 +490,28 @@ post:
     if (gCurTask->unk58 >= 0)
     {
         if (gCurTask->unk7B & 0x80)
-            sub_0805afac(gCurTask->unk88->unk00, 9, gUnk_03005550.unk8);
+            CreatePlayerEffect(gCurTask->unk88->unk00, 9, gUnk_03005550.unk8);
     }
     else if (gCurTask->unk88->unk06 == 2)
     {
         if (gCurTask->unk7B & 0x80)
-            sub_0805afac(gCurTask->unk88->unk00, 10, gUnk_03005550.unk8);
+            CreatePlayerEffect(gCurTask->unk88->unk00, 10, gUnk_03005550.unk8);
     }
     else if ((gCurTask->unk88->unk5C & 1) && !(gCurTask->unk7B & 1))
     {
-        sub_0805afac(gCurTask->unk88->unk00, 10, gUnk_03005550.unk8);
+        CreatePlayerEffect(gCurTask->unk88->unk00, 10, gUnk_03005550.unk8);
     }
     if ((gCurTask->unk7B & 65) == 1)
     {
-        if (--gUnk_0200AFE8[gCurTask->unk88->unk00] == 0)
+        if (--gPlayerBubbleTimers[gCurTask->unk88->unk00] == 0)
         {
-            gUnk_0200AFE8[gCurTask->unk88->unk00] = RandomRange(90) + 120;
-            sub_0805b088(gCurTask->unk88->unk00, 11, 0);
+            gPlayerBubbleTimers[gCurTask->unk88->unk00] = RandomRange(90) + 120;
+            CreatePlayerEffectHighSlot(gCurTask->unk88->unk00, 11, 0);
         }
     }
     else
     {
-        gUnk_0200AFE8[gCurTask->unk88->unk00] = 60;
+        gPlayerBubbleTimers[gCurTask->unk88->unk00] = 60;
     }
 check:
     if (gUnk_03001F30 == 0)
@@ -519,24 +519,24 @@ check:
         if (gCurTask->unk88->unk0D == 10)
         {
             x = gCurTask->unk3C - 0x808;
-            if (x >= 0 && sub_0803e5c0(gCurTask->unk88->unk00, (u8 *)gUnk_0873C36C + x * 8) != 0)
+            if (x >= 0 && LoadPlayerBodyBoxRect(gCurTask->unk88->unk00, (u8 *)gUnk_0873C36C + x * 8) != 0)
             {
                 if (gCurTask->unk3C <= 0x8D1)
                 {
-                    struct M11R20 *d = gUnk_020060E0;
+                    struct M11R20 *d = gPlayerBodyBoxes;
                     ((u8 *)&d[gCurTask->unk88->unk00])[12] = 2;
                 }
                 else
                 {
-                    struct M11R20 *d = gUnk_020060E0;
+                    struct M11R20 *d = gPlayerBodyBoxes;
                     ((u8 *)&d[gCurTask->unk88->unk00])[12] = 5;
                 }
                 sub_0801a828(gCurTaskIdx, gCurTask->unk48, gCurTask->unk4A,
-                             (u8 *)gUnk_020060E0 + gCurTask->unk88->unk00 * 20);
+                             (u8 *)gPlayerBodyBoxes + gCurTask->unk88->unk00 * 20);
             }
             x = gCurTask->unk3C - 0x8D2;
-            if (x >= 0 && sub_0803e5f8(gCurTask->unk88->unk00, (s32)((u8 *)gUnk_0873CF9C + x * 8)) != 0)
-                sub_08030848((struct HitBoxSet *)&gUnk_02005550[gCurTask->unk88->unk00], gCurTask->unk88->unk00);
+            if (x >= 0 && LoadPlayerHitBoxSet(gCurTask->unk88->unk00, (s32)((u8 *)gUnk_0873CF9C + x * 8)) != 0)
+                sub_08030848((struct HitBoxSet *)&gPlayerHitBoxSets[gCurTask->unk88->unk00], gCurTask->unk88->unk00);
         }
         if (gUnk_02005E00.unk04[gCurTaskIdx] & 1)
         {
@@ -571,7 +571,7 @@ void sub_0803332c(void)
             t->unk76 &= 0xFFFE;
             if ((s8)t->unk88->unk2B == 0)
             {
-                sub_0803e650(0);
+                PlayerStartOffsetScript(0);
                 gCurTask->unk88->unk2B = 10;
             }
         }
@@ -624,7 +624,7 @@ void sub_08033414(void)
         }
         else if (gCurTask->unk88->unk40 & 64)
         {
-            sub_0803e1b8(5, 0, gCurTask->unk88->unk00);
+            SetPlayerInvulnerability(5, 0, gCurTask->unk88->unk00);
             gCurTask->unk88->unk40 &= 0xFFBF;
             PlayBgm(19);
             sub_08040894(gCurTask->unk88->unk00, 3);
@@ -662,7 +662,7 @@ void sub_08033414(void)
             TaskSetSkipMask(0, gCurTaskIdx);
         }
         if (gCurTask->unk88->unk2C != -1)
-            sub_0803e3ac();
+            PlayerStopSfx();
         gCurTask->unk76 = 0;
         gCurTask->unk88->unk40 = 0;
         gCurTask->unk88->unk50 = 0;
@@ -697,7 +697,7 @@ void sub_08033414(void)
             {
             case 32:
             case 33:
-                sub_0805afac(gCurTask->unk88->unk00, 15, 0);
+                CreatePlayerEffect(gCurTask->unk88->unk00, 15, 0);
                 sub_08049a58();
                 break;
             }

@@ -14,7 +14,7 @@
  * the fixed room gUnk_087E1D58[8][7][0] with the player at (136, 928) and
  * BGM 1.  Every loader ends with the per-player loop that refills health,
  * rebuilds the player mask gUnk_03002340 and restarts the player tasks
- * (CreatePlayer and sub_0803d0a0/sub_0803d1c4). */
+ * (CreatePlayer and InitPlayerState/sub_0803d1c4). */
 
 struct MapCell
 {
@@ -122,8 +122,8 @@ extern u16 gUnk_0200AF18[];
 extern u8 gUnk_0300560C[];
 extern vu16 gPlayerHeldKeys[];
 extern vu16 gPlayerPressedKeys[];
-extern u16 gUnk_03002458[];
-extern u16 gUnk_030023C0[];
+extern u16 gLatchedHeldKeys[];
+extern u16 gLatchedPressedKeys[];
 extern u16 gLocalPlayer;
 extern u16 gUnk_03005604[2];
 extern struct MapCell gUnk_02000040[];
@@ -178,9 +178,9 @@ void sub_0802cd38(void);
 void sub_0802d0f4(void);
 void sub_08030724(void);
 void CreatePlayer(s32 a0);
-void sub_0803d0a0(s32 a0);
+void InitPlayerState(s32 a0);
 void sub_0803d1c4(s32 a0);
-void sub_08040788(void);
+void LatchPlayerKeys(void);
 void sub_08023ea0(void);
 void sub_08023efc(void);
 void sub_08023f18(void);
@@ -266,7 +266,7 @@ void sub_08023948(void)
         CreatePlayer(i);
         sub_0803d1c4(i);
         gPlayerHeldKeys[i] = gPlayerPressedKeys[i] = 0;
-        gUnk_03002458[i] = gUnk_030023C0[i] = 0;
+        gLatchedHeldKeys[i] = gLatchedPressedKeys[i] = 0;
     }
     sub_08028b1c();
     sub_08009b2c(gLocalPlayer);
@@ -525,11 +525,11 @@ void sub_08023fd4(void)
             gUnk_0300560C[i] = 0;
         }
         CreatePlayer(i);
-        sub_0803d0a0(i);
+        InitPlayerState(i);
         gPlayerHeldKeys[i] = gPlayerPressedKeys[i] = 0;
-        gUnk_03002458[i] = gUnk_030023C0[i] = 0;
+        gLatchedHeldKeys[i] = gLatchedPressedKeys[i] = 0;
     }
-    sub_08040788();
+    LatchPlayerKeys();
     sub_08028b1c();
     sub_08009b2c(gLocalPlayer);
     sub_0802cc90();

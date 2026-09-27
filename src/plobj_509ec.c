@@ -72,10 +72,10 @@ void sub_0801a828(u8 a, s16 x, s16 y, void *p);   /* M11's caller spelling */
 void sub_0801c230(const s8 *p);
 void sub_0802205c(s8 *box);
 s32 sub_08030848(struct HitBoxSet *p, s32 e);   /* M14's callers test r0 unnarrowed (good/sub_08050c48.c); landed M09/M12/M13 files spell it u16 */
-s32 sub_0803e34c(s32 a0, u16 a1);
+s32 PlaySfxIfLocalPlayer(s32 a0, u16 a1);
 void sub_08050814(void);
 
-s32 sub_08053940(s8 player, u8 variant, s32 arg);
+s32 CreatePlayerObject(s8 player, u8 variant, s32 arg);
 void sub_08050c48(void);
 void sub_08050e84(void);
 void sub_08050f80(void);
@@ -106,7 +106,7 @@ void sub_080509ec(void)
     {
         struct Task *t = gCurTask;
         t->unk50 = (t->unk4A + 2) << 16;
-        sub_0803e34c(114, t->unk44);
+        PlaySfxIfLocalPlayer(114, t->unk44);
     }
         TaskSetMotionXFacing(0x3C000, -0x2000);
         for (gCurTask->unk6C = 0; (s16)gCurTask->unk6C <= 1; gCurTask->unk6C++)
@@ -115,7 +115,7 @@ void sub_080509ec(void)
             TaskYieldTrampoline(2);
             gCurTask->unk3C += 2;
             TaskYieldTrampoline(1);
-            sub_08053940(gCurTask->unk88->unk00, 0, 1);
+            CreatePlayerObject(gCurTask->unk88->unk00, 0, 1);
             gCurTask->unk3C -= 2;
             TaskYieldTrampoline(2);
             TaskSetFrameByFacing(4);
@@ -209,7 +209,7 @@ void sub_08050d00(void)
         else
             t->unk4C = (t->unk48 - 8) << 16;
     }
-    sub_0803e34c(105, gCurTask->unk44);
+    PlaySfxIfLocalPlayer(105, gCurTask->unk44);
     {
         struct Task *t = gCurTask;
         if (!(t->unk7B & 1))
@@ -275,7 +275,7 @@ void sub_08050e84(void)
         t = gCurTask;
         t->unk24 = (s32)gUnk_0873BD78;
         if (gUnk_03005550.unk1 != 0 || (t->unk7A & 1) || gUnk_03005550.unk0 != 0)
-            sub_0803e34c(125, gCurTask->unk44);
+            PlaySfxIfLocalPlayer(125, gCurTask->unk44);
     }
     sub_0801a828(gCurTaskIdx, gCurTask->unk48, gCurTask->unk4A, gUnk_0873BD78);
 }
@@ -375,7 +375,7 @@ void sub_08051124(void)
         t->unk50 = (t->unk4A + 4) << 16;
         t->unk28 = 6;
         t->unk34 = 0;
-        sub_0803e34c(106, t->unk44);
+        PlaySfxIfLocalPlayer(106, t->unk44);
     }
     TaskSetMotionXFacing(0x40000, 0x5A5A5A5A);
     while (1)
@@ -443,7 +443,7 @@ void sub_080512f8(void)
         struct Task *t = gCurTask;
         if ((t->unk7A & 1) || *(u16 *)&gUnk_03005550 != 0)
         {
-            sub_0803e34c(125, t->unk44);
+            PlaySfxIfLocalPlayer(125, t->unk44);
             TaskSetEntry(sub_08050814, gCurTaskIdx);
             gCurTask->unk24 = (s32)gUnk_0873BD8C;
         }

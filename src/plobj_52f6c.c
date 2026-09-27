@@ -20,9 +20,9 @@
  * gUnk_0874C4E4, M14's shared callback sub_08050f80); their per-frame
  * callbacks sub_080536dc and sub_080538cc register the collider and hand
  * over to sub_08050814 on contact (variant 11 bounces back once on
- * collision result 6).  sub_08053940 and sub_08053a44 are the spawners
+ * collision result 6).  CreatePlayerObject and sub_08053a44 are the spawners
  * the player's actions call (M09-M14): they start a task of type 6 in
- * the slot band of player 0-3 (4-6, 7-9, 10-12, 13-15; sub_08053940
+ * the slot band of player 0-3 (4-6, 7-9, 10-12, 13-15; CreatePlayerObject
  * then retries a wider band and, last, a type-7 task in slots 32-62) and
  * copy the spawner's position, facing Task.unk43, Task.unk7B and
  * PlayerState into it, with Task.unk18 = variant << 24 | arg.  They
@@ -92,12 +92,12 @@ void sub_0801c230(const s8 *p);
 void sub_0802205c(s8 *box);
 void sub_0802233c(s8 *off);
 s32 sub_08030848(struct HitBoxSet *p, s32 e);   /* M14's callers test r0 unnarrowed (good/sub_08050c48.c); landed M09/M12/M13 files spell it u16 */
-s32 sub_0803e34c(s32 a0, u16 a1);
+s32 PlaySfxIfLocalPlayer(s32 a0, u16 a1);
 void sub_08050814(void);
 void sub_08050f80(void);
 void sub_080520dc(void);
 s32 sub_08052b08(void);
-s32 sub_0805afac(s32 a0, s32 a1, s32 a2);
+s32 CreatePlayerEffect(s32 a0, s32 a1, s32 a2);
 void sub_08053380(void);
 void sub_080534d0(void);
 void sub_080536dc(void);
@@ -115,7 +115,7 @@ void sub_08052f6c(void)
         switch (t->unk18 & 15)
         {
         case 0:
-            sub_0803e34c(207, gCurTask->unk44);
+            PlaySfxIfLocalPlayer(207, gCurTask->unk44);
             xs = gUnk_0873B8C6[0][0];
             ys = gUnk_0873B8C6[0][1];
             steps = gUnk_0873B872[0];
@@ -251,7 +251,7 @@ void sub_08052f6c(void)
         }
             while (1)
             {
-                sub_0805afac(gCurTask->unk88->unk00, 33, gCurTask->unk28);
+                CreatePlayerEffect(gCurTask->unk88->unk00, 33, gCurTask->unk28);
                 TaskYieldTrampoline(2);
             }
         case 4:
@@ -318,7 +318,7 @@ void sub_08053380(void)
         if (hit)
         {
             if (gUnk_03005550.unk1 != 0 || (gCurTask->unk7A & 1) || gUnk_03005550.unk0 != 0)
-                sub_0803e34c(125, gCurTask->unk44);
+                PlaySfxIfLocalPlayer(125, gCurTask->unk44);
             TaskSetEntry(sub_08050814, gCurTaskIdx);
             gCurTask->unk24 = (s32)gUnk_0873BE4C;
         }
@@ -448,7 +448,7 @@ void sub_080536dc(void)
         struct Task *t = gCurTask;
         if ((t->unk7A & 1) || *(u16 *)&gUnk_03005550 != 0)
         {
-            sub_0803e34c(125, t->unk44);
+            PlaySfxIfLocalPlayer(125, t->unk44);
             TaskSetEntry(sub_08050814, gCurTaskIdx);
         }
     }
@@ -505,7 +505,7 @@ void sub_080538cc(void)
         sub_0801a828(gCurTaskIdx, t->unk48 + gSpriteCameraX, t->unk4A + gSpriteCameraY, gUnk_0873BE88);
 }
 
-s32 sub_08053940(s8 player, u8 variant, s32 arg)
+s32 CreatePlayerObject(s8 player, u8 variant, s32 arg)
 {
     s32 prio;
     s32 idx;

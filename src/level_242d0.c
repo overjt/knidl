@@ -176,8 +176,8 @@ extern u16 gUnk_0200AF18[];
 extern u8 gUnk_0300560C[];
 extern vu16 gPlayerHeldKeys[];
 extern vu16 gPlayerPressedKeys[];
-extern u16 gUnk_03002458[];
-extern u16 gUnk_030023C0[];
+extern u16 gLatchedHeldKeys[];
+extern u16 gLatchedPressedKeys[];
 extern struct Unk02004B90 gUnk_02004B90[];
 extern u8 gUnk_02007D58[];
 extern s8 gUnk_0200B038;
@@ -277,7 +277,7 @@ void sub_0802d0f4(void);
 void sub_0802d188(void);
 void sub_08030724(void);
 void CreatePlayer(s32 a0);
-void sub_0803d0a0(s32 a0);
+void InitPlayerState(s32 a0);
 void sub_080b4e40(void);
 void sub_080b5024(void);
 void sub_0802457c(void);
@@ -652,9 +652,9 @@ void sub_0802497c(void)
             gUnk_0300560C[i] = 3;
         }
         CreatePlayer(i);
-        sub_0803d0a0(i);
+        InitPlayerState(i);
         gPlayerHeldKeys[i] = gPlayerPressedKeys[i] = 0;
-        gUnk_03002458[i] = gUnk_030023C0[i] = 0;
+        gLatchedHeldKeys[i] = gLatchedPressedKeys[i] = 0;
     }
     sub_080b5024();
     if (gPlayerCount == 1)

@@ -6,7 +6,7 @@
  *
  * The player's ability sprite-tile loaders, called by M09's player task
  * (Task_Player, sub_08032bd0), M10's actions 13 and 21, M13's action
- * 29, M14 and M18's ability objects (src/actor_6ef5c.c).  sub_08049738
+ * 29, M14 and M18's ability objects (src/actor_6ef5c.c).  LoadAbilityTiles
  * uploads the tiles of the ability PlayerState.unk0D (a 25-way switch:
  * abilities 0, 1, 3, 5, 6, 8-11, 13, 14, 16, 19, 20 and 24 have tiles)
  * from its ROM table into the player's OBJ tiles at
@@ -17,7 +17,7 @@
  * sub_08049a58 uploads ability 2's tiles gUnk_081BE45C at +0x100, and
  * again at +0x180 when gUnk_03002444 is set. */
 
-extern u8 gObjVram[];              /* OBJ tile VRAM (M13's sub_08049738) */
+extern u8 gObjVram[];              /* OBJ tile VRAM (M13's LoadAbilityTiles) */
 extern u8 gObjPalette[];              /* OBJ palette buffer (M11 spelling) */
 extern u8 gUnk_081AC378[];
 extern u8 gUnk_081AC358[];
@@ -40,7 +40,7 @@ extern u8 gUnk_081BE45C[];
 
 void RequestCopy(u32 mode, void *src, void *dst, u32 size);   /* early_1518; effect_5afac's pointer spelling */
 
-void sub_08049738(void)
+void LoadAbilityTiles(void)
 {
     u8 *vram = gObjVram + ((gCurTask->unk40 & 0x7FF) << 5);
 

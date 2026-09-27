@@ -62,9 +62,9 @@ s32 sub_08027588(void);
 u16 sub_08030804(struct HitBoxSet *p, s32 x, s32 y, s32 e);
 s32 sub_08030848(struct HitBoxSet *p, s32 e);   /* M14's callers test r0 unnarrowed (good/sub_08050c48.c); landed M09/M12/M13 files spell it u16 */
 void sub_0803dfc8(void);
-s32 sub_0803e34c(s32 a0, u16 a1);
+s32 PlaySfxIfLocalPlayer(s32 a0, u16 a1);
 
-s32 sub_08053940(s8 player, u8 variant, s32 arg);
+s32 CreatePlayerObject(s8 player, u8 variant, s32 arg);
 void sub_0805268c(void);
 s32 sub_08052b08(void);   /* returns a value: pop {r1} epilogue; plobj_52f6c.c spells it void */
 
@@ -257,7 +257,7 @@ s32 sub_080527a4(void)
         {
         case 0:
             if (!(t->unk88->unk42 & 0x80))
-                sub_0803e34c(129, t->unk44);
+                PlaySfxIfLocalPlayer(129, t->unk44);
             xs = gUnk_0873B7C0[0][0];
             ys = gUnk_0873B7C0[0][1];
             for (gCurTask->unk6C = 0; (s16)gCurTask->unk6C <= 5; gCurTask->unk6C++)
@@ -446,7 +446,7 @@ void sub_08052b88(void)
             TaskYieldTrampoline(1);
             gCurTask->unk3C++;
             TaskYieldTrampoline(1);
-            sub_08053940(gCurTask->unk88->unk00, 9, 1);
+            CreatePlayerObject(gCurTask->unk88->unk00, 9, 1);
         }
         PlaySfx(176);
         sub_08027588();

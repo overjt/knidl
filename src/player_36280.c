@@ -38,8 +38,8 @@ struct Unk03005550
     /*0x0D*/ u8 unkD;
 };
 
-extern u16 gUnk_03002458[];             /* held keys, latched per player (M11) */
-extern u16 gUnk_030023C0[];             /* newly-pressed keys, latched per player */
+extern u16 gLatchedHeldKeys[];             /* held keys, latched per player (M11) */
+extern u16 gLatchedPressedKeys[];             /* newly-pressed keys, latched per player */
 extern struct Unk03005550 gUnk_03005550;
 extern u32 gUnk_0873BD28[];
 extern u32 gUnk_0873CB24[];
@@ -55,25 +55,25 @@ void TaskSetEntry(void *a, u32 i);
 void TaskSetFrame(s32 a);
 u32 sub_0801a828(u8 idx, s16 x, s16 y, u8 *p);
 void sub_080359f8(void);
-void sub_0803e050(s32 a0);
-void sub_0803e374(s32 a0, u16 a1);
-s32 sub_0803e448(void);
-s32 sub_0803e4ec(s32 a0);
-void sub_0803f870(void);
-void sub_0803f8e8(void);
-void sub_0803f9c0(void);
-s32 sub_0803f9e8(void);
-s32 sub_0803fa44(void);
-s32 sub_0803fce4(s32 a);
+void PlayerStopAxes(s32 a0);
+void PlayerStartSfx(s32 a0, u16 a1);
+s32 PlayerFaceHeldDirection(void);
+s32 PlayerLand(s32 a0);
+void PlayerTurnToHeldDirection(void);
+void PlayerCheckBump(void);
+void PlayerStopAtCeilingAndWall(void);
+s32 PlayerStopAtWall(void);
+s32 PlayerCheckLanding(void);
+s32 PlayerHasCrossedWaterSurface(s32 a);
 s32 sub_0803fd20(s32 a0);
 s32 sub_0803fe68(void);
-s32 sub_08040298(void);
-s32 sub_08040340(void);
-s32 sub_0804042c(void);
-void sub_08040b40(s32 a0, s32 a1);           /* M11, still asm; M11's own spelling */
-void sub_080413a4(s32 a0);
+s32 PlayerCheckEnterDoor(void);
+s32 PlayerCheckDropAbility(void);
+s32 PlayerRequestLocomotion(void);
+void PlayerSetMotionXPreset(s32 a0, s32 a1);           /* M11, still asm; M11's own spelling */
+void PlayerSetMotionYPreset(s32 a0);
 void sub_08041e8c(void);
-s32 sub_0805afac(s32 a0, s32 a1, s32 a2);
+s32 CreatePlayerEffect(s32 a0, s32 a1, s32 a2);
 
 void sub_08036280(void)
 {
@@ -83,25 +83,25 @@ void sub_08036280(void)
     struct Task *w;
     struct Task *x;
 
-    if (gCurTask->unk73 != 6 && sub_08040340() != 0)
+    if (gCurTask->unk73 != 6 && PlayerCheckDropAbility() != 0)
     {
         if (gCurTask->unk73 == 5)
             gCurTask->unk73 = 2;
         return;
     }
-    sub_0803f870();
+    PlayerTurnToHeldDirection();
     switch (gCurTask->unk73)
     {
     case 0:
-        if (sub_08040298() != 0)
+        if (PlayerCheckEnterDoor() != 0)
             break;
-        if (gUnk_03002458[gCurTask->unk88->unk00] & 65)
+        if (gLatchedHeldKeys[gCurTask->unk88->unk00] & 65)
         {
-            sub_080413a4(8);
+            PlayerSetMotionYPreset(8);
         }
         else if (gCurTask->unk7A & 1)
         {
-            sub_0803e050(2);
+            PlayerStopAxes(2);
         }
         else if (gCurTask->unk7B & 1)
         {
@@ -111,22 +111,22 @@ void sub_08036280(void)
         }
         else
         {
-            sub_080413a4(7);
+            PlayerSetMotionYPreset(7);
         }
         gCurTask->unk7A = 0;
-        sub_08040b40(6, 72);
-        sub_0803f9c0();
+        PlayerSetMotionXPreset(6, 72);
+        PlayerStopAtCeilingAndWall();
         break;
     case 1:
-        if (sub_08040298() != 0)
+        if (PlayerCheckEnterDoor() != 0)
             break;
         gCurTask->unk7A = 0;
-        sub_080413a4(8);
-        sub_08040b40(6, 72);
-        sub_0803f9c0();
+        PlayerSetMotionYPreset(8);
+        PlayerSetMotionXPreset(6, 72);
+        PlayerStopAtCeilingAndWall();
         if (gCurTask->unk7A & 1)
-            sub_0803e050(2);
-        if (gUnk_030023C0[gCurTask->unk88->unk00] & 2)
+            PlayerStopAxes(2);
+        if (gLatchedPressedKeys[gCurTask->unk88->unk00] & 2)
         {
             gCurTask->unk73 = 4;
             TaskSetEntry(sub_080359f8, gCurTaskIdx);
@@ -134,29 +134,29 @@ void sub_08036280(void)
         }
         break;
     case 2:
-        if (sub_08040298() != 0)
+        if (PlayerCheckEnterDoor() != 0)
             break;
         if (!(gCurTask->unk7A & 1))
-            sub_080413a4(7);
+            PlayerSetMotionYPreset(7);
         else
-            sub_0803e050(2);
-        sub_08040b40(6, 72);
-        sub_0803f9c0();
+            PlayerStopAxes(2);
+        PlayerSetMotionXPreset(6, 72);
+        PlayerStopAtCeilingAndWall();
         t = gCurTask;
         if (t->unk7A & 1)
         {
             t->unk73 = 3;
             TaskSetEntry(sub_080359f8, gCurTaskIdx);
-            sub_0803e050(2);
+            PlayerStopAxes(2);
             break;
         }
-        if (gUnk_03002458[t->unk88->unk00] & 65)
+        if (gLatchedHeldKeys[t->unk88->unk00] & 65)
         {
             t->unk73 = 1;
             TaskSetEntry(sub_080359f8, gCurTaskIdx);
             break;
         }
-        if (gUnk_030023C0[t->unk88->unk00] & 2)
+        if (gLatchedPressedKeys[t->unk88->unk00] & 2)
         {
             t->unk73 = 4;
             TaskSetEntry(sub_080359f8, gCurTaskIdx);
@@ -164,20 +164,20 @@ void sub_08036280(void)
         }
         if (!(t->unk7B & 1))
             break;
-        sub_0803e050(2);
+        PlayerStopAxes(2);
         gCurTask->unk28 = -1;
         gCurTask->unk73 = 5;
         TaskSetEntry(sub_080359f8, gCurTaskIdx);
         break;
     case 3:
-        if (sub_08040298() != 0)
+        if (PlayerCheckEnterDoor() != 0)
             break;
         if (!(gCurTask->unk7A & 1))
-            sub_080413a4(7);
+            PlayerSetMotionYPreset(7);
         else
-            sub_0803e050(2);
-        sub_08040b40(6, 72);
-        sub_0803f9c0();
+            PlayerStopAxes(2);
+        PlayerSetMotionXPreset(6, 72);
+        PlayerStopAtCeilingAndWall();
         u = gCurTask;
         if (!(u->unk7A & 1))
         {
@@ -185,13 +185,13 @@ void sub_08036280(void)
             TaskSetEntry(sub_080359f8, gCurTaskIdx);
             break;
         }
-        if (gUnk_03002458[u->unk88->unk00] & 65)
+        if (gLatchedHeldKeys[u->unk88->unk00] & 65)
         {
             u->unk73 = 1;
             TaskSetEntry(sub_080359f8, gCurTaskIdx);
             break;
         }
-        if (gUnk_030023C0[u->unk88->unk00] & 2)
+        if (gLatchedPressedKeys[u->unk88->unk00] & 2)
         {
             u->unk73 = 4;
             TaskSetEntry(sub_080359f8, gCurTaskIdx);
@@ -203,11 +203,11 @@ void sub_08036280(void)
         if (!(v->unk7A & 1))
         {
             if (!(v->unk7B & 1))
-                sub_080413a4(2);
+                PlayerSetMotionYPreset(2);
             else
-                sub_080413a4(13);
+                PlayerSetMotionYPreset(13);
         }
-        sub_08040b40(7, 72);
+        PlayerSetMotionXPreset(7, 72);
         w = gCurTask;
         if (w->unk58 < 0)
         {
@@ -217,41 +217,41 @@ void sub_08036280(void)
         else if (w->unk7A & 1)
         {
             if ((u32)w->unk58 > 0xC000)
-                sub_0803e4ec(1);
+                PlayerLand(1);
             else
-                sub_0803fa44();
+                PlayerCheckLanding();
         }
-        sub_0803f9e8();
+        PlayerStopAtWall();
         break;
     case 5:
-        sub_08040b40(6, 72);
-        sub_0803f9e8();
-        if (gUnk_03002458[gCurTask->unk88->unk00] & 65)
+        PlayerSetMotionXPreset(6, 72);
+        PlayerStopAtWall();
+        if (gLatchedHeldKeys[gCurTask->unk88->unk00] & 65)
         {
-            sub_0803e050(2);
+            PlayerStopAxes(2);
             gCurTask->unk73 = 1;
             TaskSetEntry(sub_080359f8, gCurTaskIdx);
         }
-        else if (gUnk_030023C0[gCurTask->unk88->unk00] & 2)
+        else if (gLatchedPressedKeys[gCurTask->unk88->unk00] & 2)
         {
-            sub_0803e050(2);
+            PlayerStopAxes(2);
             gCurTask->unk73 = 4;
             TaskSetEntry(sub_080359f8, gCurTaskIdx);
         }
         break;
     case 6:
-        sub_0804042c();
+        PlayerRequestLocomotion();
         x = gCurTask;
         if (x->unk7A & 1)
         {
             if ((u32)x->unk58 > 0xC000)
-                sub_0803e4ec(1);
+                PlayerLand(1);
             else
-                sub_0803fa44();
+                PlayerCheckLanding();
         }
         break;
     }
-    if (sub_0803fce4(0) != 0)
+    if (PlayerHasCrossedWaterSurface(0) != 0)
     {
         gCurTask->unk88->unk06 = 0;
         gCurTask->unk88->unk01 = 23;
@@ -272,7 +272,7 @@ void sub_080366c4(void)
         t->unk88->unk64 = (u32)gUnk_0873BD28;
         t->unk88->unk68 = (u32)gUnk_0873CB24;
         t->unk2C = t->unk88->unk4B;
-        sub_08040b40(0, 72);
+        PlayerSetMotionXPreset(0, 72);
     }
     gCurTask->unk28 = 8;
     gCurTask->unk88->unk33 = sub_0803fd20(gCurTask->unk88->unk00);
@@ -318,10 +318,10 @@ void sub_08036888(void)
 {
     s32 dir = gCurTask->unk43;
 
-    sub_0803e448();
-    while (sub_0803fe68() == 0 && sub_08040340() == 0)
+    PlayerFaceHeldDirection();
+    while (sub_0803fe68() == 0 && PlayerCheckDropAbility() == 0)
     {
-        u16 *q = gUnk_030023C0;
+        u16 *q = gLatchedPressedKeys;
         struct Task *t = gCurTask;
 
         if (q[t->unk88->unk00] & 3)
@@ -329,9 +329,9 @@ void sub_08036888(void)
             t->unk88->unk01 = 11;
             break;
         }
-        if (!(gUnk_03002458[t->unk88->unk00] & 128))
+        if (!(gLatchedHeldKeys[t->unk88->unk00] & 128))
         {
-            sub_0804042c();
+            PlayerRequestLocomotion();
             break;
         }
         if (gUnk_03005550.unk5 != 0)
@@ -361,7 +361,7 @@ void sub_08036888(void)
     }
     gCurTask->unk2C = gCurTask->unk88->unk4B;
     if (gUnk_03005550.unk0 != 0)
-        sub_0803e050(1);
+        PlayerStopAxes(1);
 }
 
 void sub_080369b0(void)
@@ -377,10 +377,10 @@ void sub_080369b0(void)
         t->unk28 = 0;
         t->unk73 = 0;
         gCurTask->unk88->unk14 = 10;
-        sub_0803e374(118, gCurTask->unk88->unk00);
+        PlayerStartSfx(118, gCurTask->unk88->unk00);
         gCurTask->unk88->unk6C = gUnk_0873CC84;
-        sub_08040b40(11, 0);
-        sub_0805afac(gCurTask->unk88->unk00, 8, 0);
+        PlayerSetMotionXPreset(11, 0);
+        CreatePlayerEffect(gCurTask->unk88->unk00, 8, 0);
     }
     switch (gCurTask->unk73)
     {
@@ -439,10 +439,10 @@ void sub_08036b9c(void)
         if (sub_0803fe68() != 0)
         {
             if (gCurTask->unk5C == 0)
-                sub_08040b40(5, 72);
+                PlayerSetMotionXPreset(5, 72);
             break;
         }
-        if (sub_08040340() != 0)
+        if (PlayerCheckDropAbility() != 0)
             break;
         t = gCurTask;
         if (t->unk28 != 0)
@@ -451,8 +451,8 @@ void sub_08036b9c(void)
         }
         else if (gUnk_03005550.unk0 != 0)
         {
-            sub_0803f8e8();
-            sub_0803e050(1);
+            PlayerCheckBump();
+            PlayerStopAxes(1);
             gCurTask->unk88->unk01 = 1;
         }
         else
@@ -470,7 +470,7 @@ void sub_08036b9c(void)
     p = gCurTask->unk88;
     if ((s16)p->unk14 == 0)
     {
-        sub_08040b40(5, 72);
+        PlayerSetMotionXPreset(5, 72);
         gCurTask->unk88->unk14--;
     }
     else if ((s16)p->unk14 > 0)

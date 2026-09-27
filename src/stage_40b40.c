@@ -6,12 +6,12 @@
  *
  * The player's motion preset setter, called some 200 times from M09-M14's
  * action bodies: a0 picks one of 14 kinds of motion and a1 an entry of the
- * preset table gUnk_0873AFC4 (two halfword pairs).  Each kind writes the
+ * preset table gPlayerMotionXPresets (two halfword pairs).  Each kind writes the
  * 16.16 motion cells Task.unk54/unk5C (through TaskSetMotionXFacing, which mirrors
  * them by the facing and leaves a component alone when passed 0x5A5A5A5A)
- * and Task.unk64/unk68 from signed 8.8 halfwords of gUnk_0873AFC4[a1] or of
+ * and Task.unk64/unk68 from signed 8.8 halfwords of gPlayerMotionXPresets[a1] or of
  * the preset row gUnk_0873AF6C[gUnk_03001F30] (22 halfwords), some of them
- * chosen by PlayerState.unk49, the held keys gUnk_03002458[] or the
+ * chosen by PlayerState.unk49, the held keys gLatchedHeldKeys[] or the
  * collision block gUnk_03005550; kind 12 picks one of five rows of
  * gUnk_0873AF58 by the speed.
  *
@@ -21,15 +21,15 @@
 
 extern u8 gUnk_03001F30;
 extern u8 gUnk_03005550[];
-extern u16 gUnk_03002458[];   /* held keys, latched per player */
+extern u16 gLatchedHeldKeys[];   /* held keys, latched per player */
 extern u16 gUnk_0873AF58[][2];
 extern u32 gUnk_0873AF6C[];
-extern u32 gUnk_0873AFC4[];
+extern u32 gPlayerMotionXPresets[];
 
 void TaskSetMotionXFacing(s32 a, s32 b);
-void sub_0803e050(s32 a0);
+void PlayerStopAxes(s32 a0);
 
-/* Byte-exact.  The key-mask table gUnk_03002458[...] is read inline at every
+/* Byte-exact.  The key-mask table gLatchedHeldKeys[...] is read inline at every
    test (cse merges the repeats): a halfword read stays an HImode pseudo used
    through a subreg, which regmove does not retarget, so every mask test is
    the ROM's non-destructive `movs r0, #K; ands r0, rM`.  The old `s32 m`
@@ -44,10 +44,10 @@ void sub_0803e050(s32 a0);
    load-bearing (the ROM loads the task pointer before the value; without
    it 1833 bytes differ). */
 
-void sub_08040b40(s32 a0, s32 a1)
+void PlayerSetMotionXPreset(s32 a0, s32 a1)
 {
     u16 *q = (u16 *)(gUnk_0873AF6C + gUnk_03001F30 * 11);
-    u16 *r = (u16 *)(gUnk_0873AFC4 + a1 * 2);
+    u16 *r = (u16 *)(gPlayerMotionXPresets + a1 * 2);
 
     switch (a0)
     {
@@ -93,7 +93,7 @@ void sub_08040b40(s32 a0, s32 a1)
         }
         break;
     case 2:
-        if ((gUnk_03002458[gCurTask->unk88->unk00] & 48) != 0)
+        if ((gLatchedHeldKeys[gCurTask->unk88->unk00] & 48) != 0)
         {
             if (gCurTask->unk88->unk49 == 0)
             {
@@ -120,11 +120,11 @@ void sub_08040b40(s32 a0, s32 a1)
         }
         else
         {
-            sub_08040b40(0, 72);
+            PlayerSetMotionXPreset(0, 72);
         }
         break;
     case 3:
-        if ((gUnk_03002458[gCurTask->unk88->unk00] & 48) != 0)
+        if ((gLatchedHeldKeys[gCurTask->unk88->unk00] & 48) != 0)
         {
             if (gCurTask->unk88->unk49 == 0)
             {
@@ -151,7 +151,7 @@ void sub_08040b40(s32 a0, s32 a1)
         }
         else
         {
-            sub_08040b40(0, 72);
+            PlayerSetMotionXPreset(0, 72);
         }
         break;
     case 4:
@@ -179,7 +179,7 @@ void sub_08040b40(s32 a0, s32 a1)
         gCurTask->unk64 = 0;
         break;
     case 6:
-        if (gUnk_03002458[gCurTask->unk88->unk00] & 48)
+        if (gLatchedHeldKeys[gCurTask->unk88->unk00] & 48)
         {
             s32 v = q[17] << 8;
             if (q[17] & 0x8000)
@@ -197,7 +197,7 @@ void sub_08040b40(s32 a0, s32 a1)
         }
         break;
     case 7:
-        if ((gUnk_03002458[gCurTask->unk88->unk00] & 48) != 0)
+        if ((gLatchedHeldKeys[gCurTask->unk88->unk00] & 48) != 0)
         {
             if ((gCurTask->unk7B & 1) == 0)
             {
@@ -244,7 +244,7 @@ void sub_08040b40(s32 a0, s32 a1)
         gCurTask->unk64 = 0;
         break;
     case 9:
-        if (gUnk_03002458[gCurTask->unk88->unk00] & 48)
+        if (gLatchedHeldKeys[gCurTask->unk88->unk00] & 48)
         {
             {
                 s32 v = q[19] << 8;
@@ -330,7 +330,7 @@ void sub_08040b40(s32 a0, s32 a1)
 
             if (a1 == 1)
             {
-                if (gUnk_03002458[gCurTask->unk88->unk00] & 48)
+                if (gLatchedHeldKeys[gCurTask->unk88->unk00] & 48)
                 {
                     switch (gCurTask->unk88->unk4B)
                     {
@@ -383,7 +383,7 @@ void sub_08040b40(s32 a0, s32 a1)
             }
             else
             {
-                if (gUnk_03002458[gCurTask->unk88->unk00] & 48)
+                if (gLatchedHeldKeys[gCurTask->unk88->unk00] & 48)
                 {
                     TaskSetMotionXFacing(0x5A5A5A5A, 0xC00);
                     gCurTask->unk64 = 0x20000;
@@ -397,9 +397,9 @@ void sub_08040b40(s32 a0, s32 a1)
         }
         break;
     case 13:
-        if (gUnk_03002458[gCurTask->unk88->unk00] & 48)
+        if (gLatchedHeldKeys[gCurTask->unk88->unk00] & 48)
         {
-            if (gUnk_03002458[gCurTask->unk88->unk00] & 16)
+            if (gLatchedHeldKeys[gCurTask->unk88->unk00] & 16)
             {
                 if ((gCurTask->unk7B & 1) == 0)
                 {
@@ -429,7 +429,7 @@ void sub_08040b40(s32 a0, s32 a1)
                 if (gUnk_03005550[0] == 1)
                     gUnk_03005550[0] = 0;
             }
-            if (gUnk_03002458[gCurTask->unk88->unk00] & 192)
+            if (gLatchedHeldKeys[gCurTask->unk88->unk00] & 192)
             {
                 if ((gCurTask->unk7B & 1) == 0)
                     gCurTask->unk64 = 0x18000;
@@ -441,12 +441,12 @@ void sub_08040b40(s32 a0, s32 a1)
         {
             gCurTask->unk64 = 0;
             if (gCurTask->unk54 == 0)
-                sub_0803e050(1);
+                PlayerStopAxes(1);
         }
         gCurTask->unk7A = 0;
-        if (gUnk_03002458[gCurTask->unk88->unk00] & 192)
+        if (gLatchedHeldKeys[gCurTask->unk88->unk00] & 192)
         {
-            if (gUnk_03002458[gCurTask->unk88->unk00] & 64)
+            if (gLatchedHeldKeys[gCurTask->unk88->unk00] & 64)
             {
                 if ((gCurTask->unk7B & 1) == 0)
                 {
@@ -472,9 +472,9 @@ void sub_08040b40(s32 a0, s32 a1)
                     gCurTask->unk68 = 0x10000;
                 }
             }
-            if (gUnk_03002458[gCurTask->unk88->unk00] & 48)
+            if (gLatchedHeldKeys[gCurTask->unk88->unk00] & 48)
             {
-                u16 b = gUnk_03002458[gCurTask->unk88->unk00] & 16;
+                u16 b = gLatchedHeldKeys[gCurTask->unk88->unk00] & 16;
 
                 if (b != 0)
                 {
@@ -496,7 +496,7 @@ void sub_08040b40(s32 a0, s32 a1)
         {
             gCurTask->unk68 = 0;
             if (gCurTask->unk58 == 0)
-                sub_0803e050(2);
+                PlayerStopAxes(2);
         }
         break;
     }

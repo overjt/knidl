@@ -51,7 +51,7 @@ extern void TaskSetFrame(s32 a);
 extern void sub_0801bcac(u8 *);
 extern void sub_08026264(s32, s32);
 extern void sub_0803ddc0(void);
-extern void sub_08049738(void);
+extern void LoadAbilityTiles(void);
 extern void sub_08049a58(void);
 extern void sub_08070208(void);
 extern void sub_08070264(void);
@@ -106,7 +106,7 @@ void sub_0806efec(void)
     p = gCurTask->unk88;
     if (p->unk0D == 25)
         p->unk37 = 3;
-    sub_08049738();
+    LoadAbilityTiles();
     gCurTask->unk0C = (u32)sub_0803ddc0;
     gCurTask->unk42 = 7;
     gCurTask->unk3E &= 0x7FFF;
@@ -187,7 +187,7 @@ void sub_0806f1e0(void)
     p = gCurTask->unk88;
     if (p->unk0D == 25)
         p->unk37 = 3;
-    sub_08049738();
+    LoadAbilityTiles();
     gCurTask->unk0C = (u32)sub_0803ddc0;
     gCurTask->unk42 = 7;
     gCurTask->unk3E &= 0x7FFF;
@@ -268,7 +268,7 @@ void sub_0806f3d8(void)
     p = gCurTask->unk88;
     if (p->unk0D == 25)
         p->unk37 = 3;
-    sub_08049738();
+    LoadAbilityTiles();
     gCurTask->unk0C = (u32)sub_0803ddc0;
     gCurTask->unk42 = 7;
     gCurTask->unk43 = -1;
@@ -366,7 +366,7 @@ void sub_0806f638(void)
     p = gCurTask->unk88;
     if (p->unk0D == 25)
         p->unk37 = 3;
-    sub_08049738();
+    LoadAbilityTiles();
     gCurTask->unk0C = (u32)sub_0803ddc0;
     gCurTask->unk42 = 7;
     gCurTask->unk43 = 1;
@@ -538,7 +538,7 @@ void sub_0806fb0c(void)
     p = gCurTask->unk88;
     if (p->unk0D == 25)
         p->unk37 = 3;
-    sub_08049738();
+    LoadAbilityTiles();
     gCurTask->unk0C = (u32)sub_0803ddc0;
     gCurTask->unk42 = 7;
     gCurTask->unk3E &= 0x7FFF;
@@ -620,7 +620,7 @@ void sub_0806fd04(void)
     p = gCurTask->unk88;
     if (p->unk0D == 25)
         p->unk37 = 3;
-    sub_08049738();
+    LoadAbilityTiles();
     gCurTask->unk0C = (u32)sub_0803ddc0;
     gCurTask->unk42 = 7;
     gCurTask->unk3E &= 0x7FFF;

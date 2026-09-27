@@ -46,7 +46,7 @@
 
 /* RAM cells */
 extern u16 gFrameCount;
-extern struct PlayerState gUnk_03002170[];
+extern struct PlayerState gPlayerStates[];
 extern struct Task *gCurTask;
 extern struct Task gTasks[];
 
@@ -1406,7 +1406,7 @@ void sub_08080570(void)
 
 void sub_080806e8(void)
 {
-    struct PlayerState *p = &gUnk_03002170[TaskFindNearestPlayer()];
+    struct PlayerState *p = &gPlayerStates[TaskFindNearestPlayer()];
 
     if (*(s8 *)&p->unk0B == 1 || p->unk0D == 1)
     {
@@ -1585,7 +1585,7 @@ void sub_08080930(void)
 
 void sub_08080aa8(void)
 {
-    struct PlayerState *p = &gUnk_03002170[TaskFindNearestPlayer()];
+    struct PlayerState *p = &gPlayerStates[TaskFindNearestPlayer()];
 
     if (*(s8 *)&p->unk0B == 1 || p->unk0D == 1)
     {

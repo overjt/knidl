@@ -68,7 +68,7 @@ extern s32 gUnk_03001F2C;
 extern u8 gUnk_03001F30;
 extern s16 gViewRect[];
 extern u32 gUnk_03002160;
-extern struct PlayerState gUnk_03002170[];
+extern struct PlayerState gPlayerStates[];
 extern u8 gUnk_03002340;
 extern s32 gUnk_03002344;
 extern s16 gSpriteCameraX;
@@ -120,7 +120,7 @@ extern u32 gUnk_082FFDF0[];
 extern u16 gUnk_08334480[];
 extern u32 gUnk_083344C0[];
 extern u32 gUnk_087324DA[];
-extern u32 gUnk_0873CB1C[];
+extern u32 gPlayerDefaultTerrainBox[];
 extern u32 gUnk_0873EEA0[];
 extern u32 gUnk_0873EF48[];
 extern u32 *gUnk_0873F0E4[];
@@ -1449,7 +1449,7 @@ void sub_080a1624(void)
     for (i = 0; i < gPlayerCount; i++)
     {
         if ((gUnk_03002340 >> i) & 1)
-            gUnk_03002170[i].unk42 = 64;
+            gPlayerStates[i].unk42 = 64;
     }
 }
 
@@ -1472,8 +1472,8 @@ void sub_080a1668(s32 a)
         else
             t->unk43 = 1;
     }
-    gUnk_03002170[a].unk01 = 18;
-    gUnk_03002170[a].unk42 = 64;
+    gPlayerStates[a].unk01 = 18;
+    gPlayerStates[a].unk42 = 64;
     gUnk_02007D00[a] = -1;
 }
 
@@ -1510,11 +1510,11 @@ void sub_080a1790(void)
                 sub_080a1704(i);
                 break;
             case 0:
-                if (gUnk_03002170[i].unk04 <= 2)
+                if (gPlayerStates[i].unk04 <= 2)
                     sub_080a1740(i);
                 break;
             default:
-                if (gUnk_03002170[i].unk04 <= 2)
+                if (gPlayerStates[i].unk04 <= 2)
                     gUnk_02007D00[i + 3]--;
                 break;
             }
@@ -1552,7 +1552,7 @@ void sub_080a1864(void)
     {
         if ((gUnk_03002340 >> i) & 1)
         {
-            if (gUnk_03002170[i].unk04 <= 2)
+            if (gPlayerStates[i].unk04 <= 2)
                 gUnk_02007D00[i] = 1;
             else
                 gUnk_02007D00[i] = 0;

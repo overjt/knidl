@@ -5,8 +5,8 @@
 /* effect_53af4.c (0x08053AF4-0x0805432F, issue #89).
  *
  * Task type #7, the player's effect objects: the body and variants 0-6.
- * Task type #7 (class 1) is started by M16's sub_0805afac/sub_0805b088
- * (src/effect_5afac.c), and by M14's sub_08053940 when its type-6 bands are
+ * Task type #7 (class 1) is started by M16's CreatePlayerEffect/CreatePlayerEffectHighSlot
+ * (src/effect_5afac.c), and by M14's CreatePlayerObject when its type-6 bands are
  * full, with Task.unk18 = variant << 24 | arg and the spawner's position,
  * facing Task.unk43 and PlayerState Task.unk88 copied in.  The body
  * Task_PlayerEffect links the task to its spawner the first time (Task.unk8C =
@@ -63,7 +63,7 @@ u16 RandomSpread(s32 base, u8 scale, u8 amount);   /* base + ((rand(256) * amoun
 s16 RandomSpreadFacing(s32 base, u8 scale, u8 amount);   /* the same, negated when Task.unk43 != 1 */
 void sub_0803dfc8(void);
 s32 sub_0803fd20(s32 a0);
-s32 sub_0805afac(s32 a0, s32 a1, s32 a2);          /* M16's effect spawner (spawns task type #7) */
+s32 CreatePlayerEffect(s32 a0, s32 a1, s32 a2);          /* M16's effect spawner (spawns task type #7) */
 void sub_08053be0(void);
 void sub_08053c1c(void);
 void sub_08053e34(void);
@@ -360,7 +360,7 @@ void sub_080540d0(void)
             TaskYieldTrampoline(2);
             gCurTask->unk3C += 2;
             TaskYieldTrampoline(1);
-            sub_0805afac(gCurTask->unk88->unk00, 6, 0x10000);
+            CreatePlayerEffect(gCurTask->unk88->unk00, 6, 0x10000);
             TaskYieldTrampoline(1);
             gCurTask->unk3C -= 2;
             TaskYieldTrampoline(2);

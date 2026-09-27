@@ -5,8 +5,8 @@
 /* player_337f4.c (0x080337F4-0x080343BF, issue #92).
  *
  * Player mode bodies, part 1.  The six empty handlers sub_080337f4 ...
- * sub_08033808 are entries 59-61 of the action table gUnk_0873A748 and
- * entry 56 of the per-frame table gUnk_0873A840 (two of them, sub_080337f8
+ * sub_08033808 are entries 59-61 of the action table gPlayerActions and
+ * entry 56 of the per-frame table gPlayerActionHandlers (two of them, sub_080337f8
  * and sub_08033800, are dead exports nothing points at).  Then actions 1
  * and 2: sub_0803380c enters mode 0 (per-frame handler 1, sub_08033a2c)
  * and sub_08033d0c mode 1 (handler 2, sub_08034278).  Their animations
@@ -33,7 +33,7 @@ struct Unk03005550
 };
 
 extern u16 gUnk_0873D0F8[][5];
-extern u16 gUnk_03002458[];             /* latched state mask per player (M11) */
+extern u16 gLatchedHeldKeys[];             /* latched state mask per player (M11) */
 extern u8 gUnk_03001F30;
 extern s16 gUnk_0873D206[];
 extern u16 gUnk_0873D2E8[];
@@ -46,24 +46,24 @@ void TaskSetEntry(void *a, u32 i);
 void TaskSetFrame(s32 a);
 s32 sub_08022624(u16 x, u16 y);
 s32 sub_08022788(s32 y, s32 i);
-void sub_0803cd60(void);
-void sub_0803e050(s32 a0);
+void PlayerPlayBump(void);
+void PlayerStopAxes(s32 a0);
 void sub_0803e414(void);
-s32 sub_0803e448(void);
-void sub_0803f8e8(void);
+s32 PlayerFaceHeldDirection(void);
+void PlayerCheckBump(void);
 s32 sub_0803fd20(s32 a0);
 s32 sub_0803fd90(void);
-s32 sub_0803fdf4(void);
+s32 PlayerCheckJump(void);
 s32 sub_0803fe68(void);
-s32 sub_0803fec4(void);
-s32 sub_0803ff7c(void);
-s32 sub_0803ffe0(void);
+s32 PlayerCheckDuckOrSwallow(void);
+s32 PlayerCheckLadder(void);
+s32 PlayerCheckFloat(void);
 s32 sub_080400c0(void);
-s32 sub_08040298(void);
-s32 sub_08040340(void);
-void sub_08040b40(s32 a0, s32 a1);           /* M11, still asm; M11's own spelling */
+s32 PlayerCheckEnterDoor(void);
+s32 PlayerCheckDropAbility(void);
+void PlayerSetMotionXPreset(s32 a0, s32 a1);           /* M11, still asm; M11's own spelling */
 void sub_08041438(void);
-s32 sub_0805afac(s32 band, s32 id, s32 payload);
+s32 CreatePlayerEffect(s32 band, s32 id, s32 payload);
 
 void sub_080337f4(void)
 {
@@ -102,7 +102,7 @@ void sub_0803380c(void)
         struct Task *t;
         struct Task *t2;
 
-        sub_0803e050(3);
+        PlayerStopAxes(3);
         t = gCurTask;
         t->unk28 = (u16)t->unk88->unk4E;
         t->unk2C = t->unk88->unk4B;
@@ -112,7 +112,7 @@ void sub_0803380c(void)
         t2 = gCurTask;
         t2->unk88->unk40 &= 0xFFEF;
         t2->unk88->unk0F = 0;
-        sub_0803cd60();
+        PlayerPlayBump();
     }
     gCurTask->unk88->unk33 = sub_0803fd20(gCurTask->unk88->unk00);
     p = gCurTask->unk88;
@@ -163,15 +163,15 @@ void sub_08033a2c(void)
     s32 dir = gCurTask->unk43;
     s32 turn = 0;
 
-    if (sub_0803e448() != 0)
+    if (PlayerFaceHeldDirection() != 0)
         sub_0803e414();
-    while (sub_0803fdf4() == 0 && sub_0803fe68() == 0 && sub_08040298() == 0
-           && sub_0803ff7c() == 0 && sub_0803fec4() == 0 && sub_0803ffe0() == 0
+    while (PlayerCheckJump() == 0 && sub_0803fe68() == 0 && PlayerCheckEnterDoor() == 0
+           && PlayerCheckLadder() == 0 && PlayerCheckDuckOrSwallow() == 0 && PlayerCheckFloat() == 0
            && sub_080400c0() == 0)
     {
-        if (sub_08040340() != 0)
+        if (PlayerCheckDropAbility() != 0)
             goto end;
-        if (gUnk_03002458[gCurTask->unk88->unk00] & 48)
+        if (gLatchedHeldKeys[gCurTask->unk88->unk00] & 48)
         {
             if (gCurTask->unk88->unk46 != 0)
             {
@@ -192,9 +192,9 @@ void sub_08033a2c(void)
                         struct PlayerState *q = gCurTask->unk88;
                         u8 v = q->unk46;
 
-                        if (v == 1 && (gUnk_03002458[q->unk00] & 32))
+                        if (v == 1 && (gLatchedHeldKeys[q->unk00] & 32))
                             turn = 1;
-                        else if (v == 2 && (gUnk_03002458[q->unk00] & 16))
+                        else if (v == 2 && (gLatchedHeldKeys[q->unk00] & 16))
                             turn = 1;
                     }
                 }
@@ -219,7 +219,7 @@ void sub_08033a2c(void)
         if (turn != 0)
         {
             gCurTask->unk88->unk01 = 2;
-            if (gUnk_03002458[gCurTask->unk88->unk00] & 16)
+            if (gLatchedHeldKeys[gCurTask->unk88->unk00] & 16)
                 gCurTask->unk4C = (gCurTask->unk4C & 0xFFFF0000) | 0xF000;
             else
                 gCurTask->unk4C = (gCurTask->unk4C & 0xFFFF0000) | 0x1000;
@@ -264,7 +264,7 @@ void sub_08033d0c(void)
     gCurTask->unk88->unk04 = 1;
     gCurTask->unk15 = 2;
     gCurTask->unk2C = -1;
-    sub_08040b40(1, 72);
+    PlayerSetMotionXPreset(1, 72);
     p = gCurTask->unk88;
     if (p->unk05 != 1)
     {
@@ -272,7 +272,7 @@ void sub_08033d0c(void)
         gCurTask->unk88->unk0F = 0;
         gCurTask->unk88->unk46 = 0;
         gCurTask->unk28 = 0;
-        sub_0803cd60();
+        PlayerPlayBump();
         if (sub_0803fd20(gCurTask->unk88->unk00) == 4)
             gCurTask->unk73 = 1;
         else
@@ -376,7 +376,7 @@ void sub_08033d0c(void)
             }
         }
     }
-    sub_0805afac(gCurTask->unk88->unk00, 6, 0x200);
+    CreatePlayerEffect(gCurTask->unk88->unk00, 6, 0x200);
     if (gCurTask->unk88->unk06 == 1)
         gCurTask->unk46 = 0x15D;
     else
@@ -403,15 +403,15 @@ void sub_08033d0c(void)
 
 void sub_08034278(void)
 {
-    while (sub_0803fd90() == 0 && sub_0803fdf4() == 0 && sub_0803fe68() == 0
-           && sub_08040298() == 0 && sub_0803ff7c() == 0 && sub_0803fec4() == 0
-           && sub_0803ffe0() == 0)
+    while (sub_0803fd90() == 0 && PlayerCheckJump() == 0 && sub_0803fe68() == 0
+           && PlayerCheckEnterDoor() == 0 && PlayerCheckLadder() == 0 && PlayerCheckDuckOrSwallow() == 0
+           && PlayerCheckFloat() == 0)
     {
         struct Task *t;
 
         if (sub_080400c0() != 0)
             goto end;
-        if (sub_08040340() != 0)
+        if (PlayerCheckDropAbility() != 0)
             goto end;
         t = gCurTask;
         if (t->unk54 == 0 && t->unk64 == 0)
@@ -420,7 +420,7 @@ void sub_08034278(void)
         }
         else if (gUnk_03005550.unk0 != 0)
         {
-            sub_0803f8e8();
+            PlayerCheckBump();
             gCurTask->unk88->unk01 = 1;
         }
         else
@@ -435,7 +435,7 @@ void sub_08034278(void)
             }
             else
             {
-                if ((gUnk_03002458[p->unk00] & 48) == 0)
+                if ((gLatchedHeldKeys[p->unk00] & 48) == 0)
                 {
                     s32 d = abs(t2->unk54);
 
@@ -464,5 +464,5 @@ void sub_08034278(void)
         break;
     }
 end:
-    sub_08040b40(2, 72);
+    PlayerSetMotionXPreset(2, 72);
 }

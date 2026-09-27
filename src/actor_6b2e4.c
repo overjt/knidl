@@ -7,7 +7,7 @@
  * position integrators sub_0806b410 and sub_0806b670 that walk the two stride-5
  * offset tables at 0x0873E7C4 / 0x0873E864, the handover helpers that hand the
  * actor back to the generic task body (sub_0806b8bc), the player-record
- * bookkeeping around gUnk_03002170[] (sub_0806b9dc, sub_0806bd10, sub_0806be4c),
+ * bookkeeping around gPlayerStates[] (sub_0806b9dc, sub_0806bd10, sub_0806be4c),
  * and the class-1 task bodies sub_0806bf54 / sub_0806c05c / sub_0806c158 with
  * their per-frame callbacks.
  */
@@ -47,7 +47,7 @@ extern void ActorDie(void);
 extern void sub_08065640(void);
 extern void ActorSetHitReactions(u32 *p);
 extern u32 gUnk_0873F92C[];
-extern struct PlayerState gUnk_03002170[];
+extern struct PlayerState gPlayerStates[];
 extern void sub_08065d44(u32 a, u32 b, u32 c, u32 d, u32 e, u32 f);
 extern s32 TaskGetDxTo(s32 i);
 extern void ActorAwardScore(s32 a, s32 b);
@@ -427,7 +427,7 @@ void sub_0806b9dc(void)
     struct Task *s;
     t = gCurTask;
     t->unk44 = t->unk7E;
-    t->unk88 = p = &gUnk_03002170[t->unk44];
+    t->unk88 = p = &gPlayerStates[t->unk44];
     p->unk07++;
     u = gCurTask;
     s = &gTasks[u->unk44];

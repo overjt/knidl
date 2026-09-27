@@ -60,19 +60,19 @@ void sub_08027204(u32 a);
 void sub_08027548(void);
 s32 sub_080276ac(s32 a);
 s32 sub_080276cc(s32 i);
-void sub_0803e050(s32 a0);
+void PlayerStopAxes(s32 a0);
 void sub_0803e080(void);
-void sub_0803e1b8(s32 a0, s32 a1, s32 a2);
-s32 sub_0803e34c(s32 a0, u16 a1);
-void sub_0803e3e4(s32 a0);
+void SetPlayerInvulnerability(s32 a0, s32 a1, s32 a2);
+s32 PlaySfxIfLocalPlayer(s32 a0, u16 a1);
+void FreezeOtherTasks(s32 a0);
 void sub_0803e868(void);
 u16 sub_0803f7e0(u16 a0);
 s32 sub_080404e4(void);
 void sub_08040934(s32 a0);
-void sub_080413a4(s32 a0);
-void sub_08053940(s32 a, s32 b, s32 c);      /* M14, src/plobj_52f6c.c (defined s32 (s8, u8, s32); the result is unused here) */
-s32 sub_0805afac(s32 a0, s32 a1, s32 a2);
-s32 sub_0805b088(s32 a0, s32 a1, s32 a2);
+void PlayerSetMotionYPreset(s32 a0);
+void CreatePlayerObject(s32 a, s32 b, s32 c);      /* M14, src/plobj_52f6c.c (defined s32 (s8, u8, s32); the result is unused here) */
+s32 CreatePlayerEffect(s32 a0, s32 a1, s32 a2);
+s32 CreatePlayerEffectHighSlot(s32 a0, s32 a1, s32 a2);
 void sub_080b9118(void);
 void sub_080b9610(void);
 void sub_080396a4(void);
@@ -102,8 +102,8 @@ void sub_0803919c(void)
     u->unk88->unk42 |= 0x100;
     u->unk73 = 0;
     gCurTask->unk88->unk42 &= 0xFFEF;
-    sub_0803e1b8(255, 0, gCurTask->unk88->unk00);
-    sub_0803e050(3);
+    SetPlayerInvulnerability(255, 0, gCurTask->unk88->unk00);
+    PlayerStopAxes(3);
     gCurTask->unk88->unk06 = 0;
     sub_0800a008(0, -1, gCurTask->unk88->unk00);
     sub_080276ac(gCurTask->unk88->unk00);
@@ -135,7 +135,7 @@ void sub_0803919c(void)
         {
             StopAllSfx();
             StopAllSound();
-            sub_0803e3e4(15);
+            FreezeOtherTasks(15);
             sub_08027204(2);
             if (!(gDispCnt & 0x400))
             {
@@ -195,18 +195,18 @@ void sub_0803919c(void)
     if (gUnk_03002340 == 0)
         PlaySfx(158);
     else
-        sub_0803e34c(158, gCurTask->unk88->unk00);
+        PlaySfxIfLocalPlayer(158, gCurTask->unk88->unk00);
     TaskYieldTrampoline(59);
     gCurTask->unk73 = 1;
     gCurTask->unk88->unk22 = 1;
     gCurTask->unk88->unk12 = 0x8000;
     for (i = 0; i <= 3; i++)
-        sub_0805afac(gCurTask->unk88->unk00, 12, i);
+        CreatePlayerEffect(gCurTask->unk88->unk00, 12, i);
     if (n == 0)
         PlayBgm(3);
     else if (gUnk_02007CF0 != 1)
         PlaySfx(270);
-    sub_080413a4(32);
+    PlayerSetMotionYPreset(32);
     gCurTask->unk46 = anim[1];
     do
     {
@@ -214,7 +214,7 @@ void sub_0803919c(void)
         struct Task *x;
 
         if (w->unk0C != 0)
-            sub_0805b088(w->unk88->unk00, 5, 0);
+            CreatePlayerEffectHighSlot(w->unk88->unk00, 5, 0);
         gCurTask->unk3C = gCurTask->unk46;
         TaskYieldTrampoline(1);
         for (gCurTask->unk6C = 0; (s16)gCurTask->unk6C <= 6; gCurTask->unk6C++)
@@ -224,7 +224,7 @@ void sub_0803919c(void)
         }
         x = gCurTask;
         if (x->unk0C != 0)
-            sub_0805b088(x->unk88->unk00, 5, 0);
+            CreatePlayerEffectHighSlot(x->unk88->unk00, 5, 0);
         for (gCurTask->unk6C = 0; (s16)gCurTask->unk6C <= 7; gCurTask->unk6C++)
         {
             gCurTask->unk3C--;
@@ -288,11 +288,11 @@ void sub_080396a4(void)
 
                 gCurTask->unk88->unk14 = 90;
                 gCurTask->unk73 = 2;
-                sub_0803e050(2);
+                PlayerStopAxes(2);
                 u = gCurTask;
                 q = u->unk88;
                 if (q->unk37 != 2 && u->unk4A - gSpriteCameraY <= 183)
-                    sub_0805afac(q->unk00, 18, 0);
+                    CreatePlayerEffect(q->unk00, 18, 0);
                 gCurTask->unk0C = 0;
             }
         }
@@ -326,12 +326,12 @@ void sub_080397f8(void)
     gCurTask->unk04 = 0;
     gCurTask->unk08 = 0;
     gCurTask->unk88->unk3D = 0;
-    sub_0803e050(3);
+    PlayerStopAxes(3);
     gCurTask->unk88->unk42 |= 0x100;
     sub_080261d4(0);
     if (gUnk_03002444 == 0)
     {
-        sub_0803e3e4(15);
+        FreezeOtherTasks(15);
         if (!(gDispCnt & 0x400))
         {
             gDispCnt &= 0xE0FF;
@@ -358,7 +358,7 @@ void sub_080397f8(void)
     {
     case 1:
         gCurTask->unk88->unk06 = 0;
-        sub_08053940(gCurTask->unk88->unk00, 0, 0);
+        CreatePlayerObject(gCurTask->unk88->unk00, 0, 0);
         TaskSetFrame(gUnk_0873D7E4[gCurTask->unk88->unk0D][2]);
         TaskYieldTrampoline(6);
         gCurTask->unk3C--;
@@ -373,13 +373,13 @@ void sub_080397f8(void)
             gCurTask->unk3C++;
             TaskYieldTrampoline(1);
             if ((s8)gCurTask->unk88->unk07 > 1)
-                sub_08053940(gCurTask->unk88->unk00, 2, 0);
+                CreatePlayerObject(gCurTask->unk88->unk00, 2, 0);
             else
-                sub_08053940(gCurTask->unk88->unk00, 1, 0);
+                CreatePlayerObject(gCurTask->unk88->unk00, 1, 0);
             if (gCurTask->unk7A & 1)
             {
-                sub_0805afac(gCurTask->unk88->unk00, 2, 0);
-                sub_0805afac(gCurTask->unk88->unk00, 2, 1);
+                CreatePlayerEffect(gCurTask->unk88->unk00, 2, 0);
+                CreatePlayerEffect(gCurTask->unk88->unk00, 2, 1);
             }
             gCurTask->unk3C++;
             TaskYieldTrampoline(4);
@@ -395,9 +395,9 @@ void sub_080397f8(void)
         gCurTask->unk3C--;
         TaskYieldTrampoline(2);
         if ((s8)gCurTask->unk88->unk07 > 1)
-            sub_08053940(gCurTask->unk88->unk00, 2, 0);
+            CreatePlayerObject(gCurTask->unk88->unk00, 2, 0);
         else
-            sub_08053940(gCurTask->unk88->unk00, 1, 0);
+            CreatePlayerObject(gCurTask->unk88->unk00, 1, 0);
         gCurTask->unk3C--;
         TaskYieldTrampoline(2);
         break;

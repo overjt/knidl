@@ -79,8 +79,8 @@ gUnk_02004C94 = 0x02004C94
 gUnk_02004C98 = 0x02004C98
 	.global	gUnk_02004CA0
 gUnk_02004CA0 = 0x02004CA0
-	.global	gUnk_02005550
-gUnk_02005550 = 0x02005550
+	.global	gPlayerHitBoxSets
+gPlayerHitBoxSets = 0x02005550
 	.global	gUnk_02005574
 gUnk_02005574 = 0x02005574
 	.global	gUnk_02005578
@@ -159,8 +159,8 @@ gUnk_020060C8 = 0x020060C8
 gUnk_020060CC = 0x020060CC
 	.global	gUnk_020060D0
 gUnk_020060D0 = 0x020060D0
-	.global	gUnk_020060E0
-gUnk_020060E0 = 0x020060E0
+	.global	gPlayerBodyBoxes
+gPlayerBodyBoxes = 0x020060E0
 	.global	gUnk_02006130
 gUnk_02006130 = 0x02006130
 	.global	gUnk_02006160
@@ -337,8 +337,8 @@ gUnk_0200AF18 = 0x0200AF18
 gUnk_0200AF20 = 0x0200AF20
 	.global	gUnk_0200AFE0
 gUnk_0200AFE0 = 0x0200AFE0
-	.global	gUnk_0200AFE8
-gUnk_0200AFE8 = 0x0200AFE8
+	.global	gPlayerBubbleTimers
+gPlayerBubbleTimers = 0x0200AFE8
 	.global	gUnk_0200AFF0
 gUnk_0200AFF0 = 0x0200AFF0
 	.global	gUnk_0200AFF4
@@ -823,8 +823,8 @@ gUnk_03002150 = 0x03002150
 gViewRect = 0x03002158
 	.global	gUnk_03002160
 gUnk_03002160 = 0x03002160
-	.global	gUnk_03002170
-gUnk_03002170 = 0x03002170
+	.global	gPlayerStates
+gPlayerStates = 0x03002170
 	.global	gUnk_03002340
 gUnk_03002340 = 0x03002340
 	.global	gUnk_03002344
@@ -879,8 +879,8 @@ gUnk_030023B0 = 0x030023B0
 gUnk_030023B4 = 0x030023B4
 	.global	gUnk_030023B8
 gUnk_030023B8 = 0x030023B8
-	.global	gUnk_030023C0
-gUnk_030023C0 = 0x030023C0
+	.global	gLatchedPressedKeys
+gLatchedPressedKeys = 0x030023C0
 	.global	gUnk_030023C8
 gUnk_030023C8 = 0x030023C8
 	.global	gUnk_030023CC
@@ -919,8 +919,8 @@ gUnk_03002448 = 0x03002448
 gUnk_0300244C = 0x0300244C
 	.global	gUnk_03002450
 gUnk_03002450 = 0x03002450
-	.global	gUnk_03002458
-gUnk_03002458 = 0x03002458
+	.global	gLatchedHeldKeys
+gLatchedHeldKeys = 0x03002458
 	.global	gUnk_03002460
 gUnk_03002460 = 0x03002460
 	.global	gExtraMode

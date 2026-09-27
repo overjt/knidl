@@ -4,20 +4,20 @@
 
 extern s16 gUnk_02004B6C[];
 extern s16 gUnk_02007FA0[];
-extern u16 gUnk_03002458[];
+extern u16 gLatchedHeldKeys[];
 extern u8 gUnk_0873BEEC[];
 extern u8 gUnk_0873CC54[];
 
 void TaskSetEntry(void *func, u32 arg);
 void sub_0801a828(u8 a, s16 x, s16 y, void *p);
 u16 sub_08030898(void *table, s32 id);
-void sub_0803e4a8(void);
-s32 sub_0803e4ec(s32 a0);
-void sub_0803e650(s32 a0);
-void sub_0803f9c0(void);
-s32 sub_0803fce4(s32 a0);
-void sub_08040b40(s32 a0, s32 a1);
-void sub_080413a4(s32 a0);
+void PlayerSetWaterMotionY(void);
+s32 PlayerLand(s32 a0);
+void PlayerStartOffsetScript(s32 a0);
+void PlayerStopAtCeilingAndWall(void);
+s32 PlayerHasCrossedWaterSurface(s32 a0);
+void PlayerSetMotionXPreset(s32 a0, s32 a1);
+void PlayerSetMotionYPreset(s32 a0);
 void sub_0804e0e0(void);
 s32 sub_08065100(s32 x, s32 y, u32 p2, u8 p3, u8 p4);
 
@@ -32,9 +32,9 @@ void sub_0804e3a0(void)
 
     while (1)
     {
-        if (sub_0803fce4(0) != 0)
+        if (PlayerHasCrossedWaterSurface(0) != 0)
         {
-            sub_0803e4a8();
+            PlayerSetWaterMotionY();
             if ((s8)gCurTask->unk88->unk07 != 0)
                 gCurTask->unk88->unk16 = 0xFF;
             gCurTask->unk88->unk01 = 23;
@@ -68,7 +68,7 @@ void sub_0804e3a0(void)
             {
                 if (v->unk2C == 0)
                 {
-                    if (!(gUnk_03002458[v->unk88->unk00] & 2))
+                    if (!(gLatchedHeldKeys[v->unk88->unk00] & 2))
                     {
                         v->unk73 = 2;
                         TaskSetEntry(sub_0804e0e0, gCurTaskIdx);
@@ -81,7 +81,7 @@ void sub_0804e3a0(void)
             }
             else if (v->unk30 == 0)
             {
-                sub_0803e650(1);
+                PlayerStartOffsetScript(1);
                 gCurTask->unk30++;
             }
             break;
@@ -106,21 +106,21 @@ void sub_0804e3a0(void)
         if (w->unk54 != 0)
         {
             if (w->unk7B & 1)
-                sub_08040b40(8, 72);
+                PlayerSetMotionXPreset(8, 72);
             else
-                sub_08040b40(0, 72);
+                PlayerSetMotionXPreset(0, 72);
         }
-        sub_0803e4ec(1);
+        PlayerLand(1);
     }
     else if (!(w->unk7B & 1))
     {
-        sub_080413a4(2);
-        sub_08040b40(11, 2);
+        PlayerSetMotionYPreset(2);
+        PlayerSetMotionXPreset(11, 2);
     }
     else
     {
-        sub_080413a4(13);
-        sub_08040b40(11, 4);
+        PlayerSetMotionYPreset(13);
+        PlayerSetMotionXPreset(11, 4);
     }
-    sub_0803f9c0();
+    PlayerStopAtCeilingAndWall();
 }

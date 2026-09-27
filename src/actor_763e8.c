@@ -35,7 +35,7 @@ extern s8 gUnk_02006094;
 extern s8 gUnk_0300238C;
 extern s8 gUnk_087401CC[];
 extern struct M19Script *gUnk_087401E4[];
-extern struct PlayerState gUnk_03002170[];
+extern struct PlayerState gPlayerStates[];
 extern struct Task * gCurTask;
 extern struct Task gTasks[];
 extern u16 gLocalPlayer;
@@ -691,7 +691,7 @@ void sub_08076ec8(s32 id)
 void sub_08076f04(s32 id)
 {
     struct Task *t = &gTasks[id];
-    struct PlayerState *p = &gUnk_03002170[id];
+    struct PlayerState *p = &gPlayerStates[id];
 
     sub_08076ec8(id);
     t->unk7A = 0;
@@ -703,7 +703,7 @@ void sub_08076f04(s32 id)
 void sub_08076f50(s32 id)
 {
     struct Task *t = &gTasks[id];
-    struct PlayerState *p = &gUnk_03002170[id];
+    struct PlayerState *p = &gPlayerStates[id];
     struct Task *u = &gTasks[t->unk44];
 
     sub_08076ec8(id);
@@ -790,7 +790,7 @@ void sub_080770f0(s32 id)
     if (gUnk_0300244C == 0 || gUnk_02005588[id] > 0)
     {
         struct Task *t = &gTasks[id];
-        struct PlayerState *p = &gUnk_03002170[id];
+        struct PlayerState *p = &gPlayerStates[id];
 
         if (p->unk06 != 1 && t->unk58 > 0)
         {

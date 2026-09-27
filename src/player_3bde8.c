@@ -43,7 +43,7 @@ struct Unk0873A994
 
 extern u16 gUnk_0873DA62[][2];
 extern s16 gUnk_0873DACA[][2];
-extern struct PlayerState gUnk_03002170[];
+extern struct PlayerState gPlayerStates[];
 extern s16 gUnk_02005588[];             /* health per player (M02's HUD) */
 extern s16 gUnk_02005580;
 extern u16 gLocalPlayer;
@@ -65,9 +65,9 @@ void TaskSleepForever(void);
 void TaskSetMotionY(s32 a, s32 b, s32 c);
 void TaskSetFrame(s32 a);
 u32 IsWorldPosOnScreen(s16 a, s16 b);        /* u8 in early_5d9c.c; u32 as in player_109c8.c (u8 costs 78 bytes) */
-void sub_0803e050(s32 a0);
-s32 sub_0803e34c(s32 a0, u16 a1);
-void sub_0803e3e4(s32 a0);
+void PlayerStopAxes(s32 a0);
+s32 PlaySfxIfLocalPlayer(s32 a0, u16 a1);
+void FreezeOtherTasks(s32 a0);
 void sub_08040710(void);
 s32 sub_080b4204(u32 a);
 
@@ -98,7 +98,7 @@ void sub_0803bde8(void)
     gCurTask->unk15 = 18;
     if (gCurTask->unk88->unk06 == 2)
         gCurTask->unk88->unk06 = 0;
-    sub_0803e34c(292, gCurTask->unk88->unk00);
+    PlaySfxIfLocalPlayer(292, gCurTask->unk88->unk00);
     if (gCurTask->unk18 == gCurTask->unk88->unk00)
     {
         gCurTask->unk42 = 5;
@@ -161,14 +161,14 @@ void sub_0803bde8(void)
             TaskSleepForever();
         }
     }
-    q = &gUnk_03002170[gCurTask->unk18];
+    q = &gPlayerStates[gCurTask->unk18];
     u = &gTasks[gCurTask->unk18];
-    sub_0803e3e4(15);
+    FreezeOtherTasks(15);
     TaskSetSkipMask(12, gCurTaskIdx);
     TaskSetSkipMask(0, gCurTask->unk18);
     a43 = gCurTask->unk43;
     a42 = gCurTask->unk42;
-    sub_0803e050(3);
+    PlayerStopAxes(3);
     t = gCurTask;
     t->unk88->unk42 |= 0x100;
     t->unk88->unk42 &= 0xFFEF;
@@ -441,9 +441,9 @@ void sub_0803bde8(void)
     gCurTask->unk88->unk42 &= 0xFEFF;
     u->unk43 = b43;
     u->unk42 = b42;
-    gUnk_03002170[gCurTask->unk18].unk42 &= 0xFEFF;
+    gPlayerStates[gCurTask->unk18].unk42 &= 0xFEFF;
     u->unk12--;
-    sub_0803e3e4(0);
+    FreezeOtherTasks(0);
     TaskSetSkipMask(0, gCurTaskIdx);
     gCurTask->unk88->unk3B |= 1 << gCurTask->unk18;
     TaskSleepForever();

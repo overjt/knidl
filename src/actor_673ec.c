@@ -6,7 +6,7 @@
  * Task bodies for the carried/helper actor states (unk15 = 3..10) plus the
  * player-record plumbing: spawn/teardown (sub_080685EC/sub_0806865C), the
  * per-character animation-offset switch (sub_080684A4), and the
- * gUnk_03002170[] save/restore used when a player is picked up or dropped.
+ * gPlayerStates[] save/restore used when a player is picked up or dropped.
  */
 #include "gba/gba.h"
 #include "global.h"
@@ -19,7 +19,7 @@ extern u32 gUnk_0873E2F0[];
 extern u32 gUnk_0873E31C[];
 extern vs16 gTaskSlotTypes[];
 extern u32 gUnk_02007D00[];
-extern struct PlayerState gUnk_03002170[];
+extern struct PlayerState gPlayerStates[];
 extern s16 gUnk_02005588[];
 extern u16 gUnk_03002358;
 extern u16 gUnk_0300214C;
@@ -75,7 +75,7 @@ extern void sub_080687e0(void);
 extern void TaskSleepForever(void);
 extern void sub_080687fc(void);
 extern void sub_08068828(void);
-extern void sub_0803d494(void);
+extern void PlayerMove(void);
 extern void sub_08068840(void);
 extern void sub_0806865c(s32 i);
 extern void sub_0806896c(void);
@@ -84,12 +84,12 @@ extern s32 sub_080684a4(void);
 extern void TaskYieldTrampoline(u32 a);
 extern u16 gFrameCount;
 extern s32 sub_08068a2c(s32 a, s32 b);
-extern void sub_0803e1b8(u32 a, u32 b, s32 c);
+extern void SetPlayerInvulnerability(u32 a, u32 b, s32 c);
 extern void PlaySfx(u32 a);
 extern void TaskSetMotionXFacing(s32 a, s32 b);
 extern void TaskSetMotionY(s32 a, s32 b, s32 c);
 extern void TaskSetFrameFlip(s32 a);
-extern u32 gUnk_0873CB1C[];
+extern u32 gPlayerDefaultTerrainBox[];
 extern u8 gUnk_03005550;
 extern s32 gUnk_0873E348[];
 extern s32 gUnk_0873E388[];
@@ -162,7 +162,7 @@ void sub_080674f8(void)
     struct Task *t;
 
     t = gCurTask;
-    t->unk00 = (u32)sub_0803d494;
+    t->unk00 = (u32)PlayerMove;
     t->unk15 = 2;
     TaskStop();
     sub_08068840();
@@ -267,7 +267,7 @@ void sub_080676c0(void)
     struct Task *x;
 
     u = gCurTask;
-    u->unk00 = (u32)sub_0803d494;
+    u->unk00 = (u32)PlayerMove;
     u->unk15 = 4;
     TaskStop();
     sub_08068a2c(-8, 512);
@@ -298,7 +298,7 @@ void sub_080676c0(void)
             PlaySfx(0x107);
         }
     }
-    sub_0803e1b8(1, 96, gCurTaskIdx);
+    SetPlayerInvulnerability(1, 96, gCurTaskIdx);
     v = gCurTask;
     if (v->unk28 == 2)
         v->unk43 = -v->unk43;
@@ -349,7 +349,7 @@ void sub_080676c0(void)
 void sub_08067908(void)
 {
     sub_080227a4(gCurTask);
-    sub_0801bcac(gUnk_0873CB1C);
+    sub_0801bcac(gPlayerDefaultTerrainBox);
     if (gUnk_03005550 != 0)
         gCurTask->unk54 = 0;
     if (gCurTask->unk34 != 0)
@@ -450,7 +450,7 @@ void sub_08067b24(void)
     struct PlayerState *p;
 
     t = gCurTask;
-    t->unk00 = (u32)sub_0803d494;
+    t->unk00 = (u32)PlayerMove;
     t->unk15 = 6;
     TaskStop();
     t = gCurTask;
@@ -478,7 +478,7 @@ void sub_08067b24(void)
     {
         PlaySfx(0x107);
     }
-    sub_0803e1b8(1, 96, gCurTaskIdx);
+    SetPlayerInvulnerability(1, 96, gCurTaskIdx);
     gCurTask->unk7A = 0;
     TaskSetMotionXFacing(0x18000, 0x5A5A5A5A);
     TaskSetMotionY(0xFFFD8000, 0x2500, 0x30000);
@@ -545,7 +545,7 @@ void sub_08067b24(void)
 void sub_08067d30(void)
 {
     sub_080227a4(gCurTask);
-    sub_0801bcac(gUnk_0873CB1C);
+    sub_0801bcac(gPlayerDefaultTerrainBox);
     if (gUnk_03005550 != 0)
         gCurTask->unk54 = 0;
     if (gCurTask->unk34 != 0)
@@ -610,7 +610,7 @@ void sub_08067ea4(void)
     s32 f;
 
     gCurTask->unk15 = 8;
-    gCurTask->unk00 = (u32)sub_0803d494;
+    gCurTask->unk00 = (u32)PlayerMove;
     gCurTask->unk42 = 7;
     gCurTask->unk43 = gTasks[gCurTask->unk44].unk43;
     t = gCurTask;
@@ -667,7 +667,7 @@ void sub_08068028(void)
 {
     struct Task *t;
 
-    sub_0801bcac(gUnk_0873CB1C);
+    sub_0801bcac(gPlayerDefaultTerrainBox);
     if (gUnk_03005550 != 0)
     {
         CreateChildTaskHere(148, 0);
@@ -694,7 +694,7 @@ void sub_080680ac(void)
     s32 f;
 
     gCurTask->unk15 = 9;
-    gCurTask->unk00 = (u32)sub_0803d494;
+    gCurTask->unk00 = (u32)PlayerMove;
     gCurTask->unk42 = 7;
     gCurTask->unk43 = -gTasks[gCurTask->unk44].unk43;
     u = gCurTask;
@@ -747,7 +747,7 @@ void sub_08068224(void)
 {
     struct Task *t;
 
-    sub_0801bcac(gUnk_0873CB1C);
+    sub_0801bcac(gPlayerDefaultTerrainBox);
     if (gUnk_03005550 != 0)
     {
         CreateChildTaskHere(148, 0);
@@ -772,7 +772,7 @@ void sub_080682a8(void)
     struct Task *w;
 
     t = gCurTask;
-    t->unk00 = (u32)sub_0803d494;
+    t->unk00 = (u32)PlayerMove;
     t->unk15 = 10;
     TaskStop();
     sub_08068a2c(-8, 512);
@@ -796,7 +796,7 @@ void sub_080682a8(void)
     {
         PlaySfx(0x107);
     }
-    sub_0803e1b8(1, 96, gCurTaskIdx);
+    SetPlayerInvulnerability(1, 96, gCurTaskIdx);
     gCurTask->unk7A = 0;
     TaskSetMotionXFacing(0x18000, 0x5A5A5A5A);
     TaskSetMotionY(0xFFFD8000, 0x2500, 0x30000);
@@ -843,7 +843,7 @@ void sub_080682a8(void)
 void sub_08068460(void)
 {
     sub_080227a4(gCurTask);
-    sub_0801bcac(gUnk_0873CB1C);
+    sub_0801bcac(gPlayerDefaultTerrainBox);
     if (gUnk_03005550 != 0)
         gCurTask->unk54 = 0;
     if (gCurTask->unk34 != 0)
@@ -1082,7 +1082,7 @@ void sub_08068840(void)
     TaskSetMotionY(0xFFFD0000, 0x2000, 0x30000);
     gCurTask->unk7A = 0;
     if (sub_08068a2c(-8, 256) != 0)
-        sub_0803e1b8(1, 96, gCurTaskIdx);
+        SetPlayerInvulnerability(1, 96, gCurTaskIdx);
     v = gCurTask;
     if (v->unk78 != 0)
         v->unk34 = 48;
@@ -1133,7 +1133,7 @@ void sub_080689c8(s32 i, u8 d)
     struct PlayerState *p;
 
     t = &gTasks[i];
-    p = &gUnk_03002170[i];
+    p = &gPlayerStates[i];
     t->unk43 = d;
     t->unk7A = 0;
     t->unk4C = t->unk48 << 16;
@@ -1167,7 +1167,7 @@ void sub_08068a8c(s32 i, u8 flag)
     u8 b;
 
     t = &gTasks[i];
-    p = &gUnk_03002170[i];
+    p = &gPlayerStates[i];
     if (p->unk2C != -1)
         StopSfxOnPlayer(p->unk2C, p->unk2E);
     t->unk08 = 0;
@@ -1202,7 +1202,7 @@ void sub_08068a8c(s32 i, u8 flag)
         sub_0803d2d4(i);
     p->unk05 = a;
     p->unk04 = 16;
-    gUnk_03002170[i].unk45 = b;
+    gPlayerStates[i].unk45 = b;
     p->unk16 = 255;
     sub_08067108();
 }
@@ -1212,7 +1212,7 @@ void sub_08068b88(s32 i, u16 b, u8 c, u8 d)
     struct PlayerState *p;
 
     t = &gTasks[i];
-    p = &gUnk_03002170[i];
+    p = &gPlayerStates[i];
     if (c != 0)
         sub_0803d1c4(i);
     else
@@ -1220,7 +1220,7 @@ void sub_08068b88(s32 i, u16 b, u8 c, u8 d)
     t->unk12 = 1;
     t->unk42 = 7;
     t->unk44 = i;
-    t->unk00 = (u32)sub_0803d494;
+    t->unk00 = (u32)PlayerMove;
     t->unk04 = (u32)sub_08032d48;
     t->unk08 = (u32)sub_0803332c;
     if (b == 0)
@@ -1257,7 +1257,7 @@ void sub_08068b88(s32 i, u16 b, u8 c, u8 d)
     }
     TaskSetEntry(sub_08032bd0, i);
     if (d != 0)
-        sub_0803e1b8(1, 96, i);
+        SetPlayerInvulnerability(1, 96, i);
     p->unk5E = t->unk48;
     p->unk60 = t->unk4A;
     if (gUnk_02005588[i] != 0)
