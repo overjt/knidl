@@ -427,8 +427,8 @@ def run(state, renames, write):
 def verify_diff(ref):
     """Prove that every change since the git ref REF is a logged rename.
 
-    Maps each name renames.csv gained since REF back to its old name and
-    compares with REF's copy: C/asm code outside comments must be identical
+    Applies every rename renames.csv gained since REF to REF's copy of each
+    file and compares it with the tree: C/asm code outside comments must be identical
     (comment edits are listed for review), generated files identical,
     split_config.json and tools/symdb.py identical as line multisets except
     for the KNOWN_SYMBOLS entries of the renamed functions."""
@@ -450,28 +450,24 @@ def verify_diff(ref):
     if now[:len(before)] != before:
         raise RenameError("%s: rows before %s were edited, not appended" % (renames_rel, ref))
     added = now[len(before):]
-    rev = {}
+    # Compose the renames since REF into one forward map (old -> final name),
+    # following chains (A -> B, then B -> C), and apply it to REF's text the
+    # way the tool does.  Mapping back instead would be lossy wherever a new
+    # name already appeared in prose before the rename.
+    fwd = {}
     for r in added:
-        rev[r["new"]] = r["old"]
-
-    def origin(name):
-        seen = set()
-        while name in rev and name not in seen:
-            seen.add(name)
-            name = rev[name]
-        return name
-
-    def norm(s):
-        return re.sub(r"\b(sub|gUnk)_([0-9A-Fa-f]{8})\b",
-                      lambda m: "%s_%s" % (m.group(1), m.group(2).lower()), s)
-
-    if rev:
-        rev_re = re.compile(r"(?<![A-Za-z0-9_])(?:%s)(?![A-Za-z0-9_])" % "|".join(
-            re.escape(n) for n in sorted(rev, key=len, reverse=True)))
-        unmap = lambda s: norm(rev_re.sub(lambda m: origin(m.group(0)), s))
+        for k, v in list(fwd.items()):
+            if v == r["old"]:
+                fwd[k] = r["new"]
+        fwd.setdefault(key_of(r["old"]), r["new"])
+    if fwd:
+        pattern = name_pattern([r["old"] for r in added], file_stems())
+        remap = lambda s: pattern.sub(lambda m: fwd[key_of(m.group(0))], s)
     else:
-        unmap = norm
-    block_re = re.compile(r'^    0x([0-9A-F]{8}): "(sub_[0-9a-f]{8})",$')
+        remap = lambda s: s
+    fwd_names = set(fwd.values())
+    arm_re = re.compile(r'^    \(0x([0-9A-F]{8}), 0x[0-9A-Fa-f]+, (None|"\w+")\),')
+    block_re = re.compile(r'^    0x([0-9A-F]{8}): "(\w+)",$')
     status = git("diff", "--name-status", ref, "--").split("\n")
     status += ["A\t" + p for p in git("ls-files", "--others", "--exclude-standard").split("\n") if p]
     surface = ("src/", "include/", "asm/", "data/", "docs/analysis/symbols.csv",
@@ -491,9 +487,13 @@ def verify_diff(ref):
             problems.append("%s: %s (only modified files are expected)" % (path, code))
             continue
         checked += 1
-        old = norm(git("show", "%s:%s" % (ref, path)))
+        old = git("show", "%s:%s" % (ref, path))
+        if path != rel(SYMDB):
+            # tools/symdb.py: the tool edits only KNOWN_SYMBOLS/ARM_ENTRIES
+            # entries, never its comments, so compare it unmapped.
+            old = remap(old)
         with open(os.path.join(ROOT, path), encoding="utf-8") as f:
-            new = unmap(f.read())
+            new = f.read()
         if path in (rel(SYMDB), rel(CONFIG)):
             a = sorted(old.split("\n"))
             b = sorted(new.split("\n"))
@@ -503,10 +503,22 @@ def verify_diff(ref):
                     a.remove(ln)
                 else:
                     extra.append(ln)
-            bad = [ln for ln in extra if not (
-                (block_re.match(ln) and block_re.match(ln).group(2)
-                 == "sub_" + block_re.match(ln).group(1).lower())
-                or ln in (BLOCK_BEGIN, BLOCK_END) or ln in BLOCK_NOTE.split("\n"))]
+            def named_here(ln):
+                # A KNOWN_SYMBOLS entry or an ARM_ENTRIES tuple that gives a
+                # renamed address its new name.
+                m = block_re.match(ln) or arm_re.match(ln)
+                return bool(m) and m.group(2).strip('"') in fwd_names
+            bad = [ln for ln in extra if not (named_here(ln)
+                   or ln in (BLOCK_BEGIN, BLOCK_END) or ln in BLOCK_NOTE.split("\n"))]
+            def renamed_away(ln):
+                # The old form of a KNOWN_SYMBOLS entry or ARM_ENTRIES tuple
+                # the tool gave a new name.
+                m = block_re.match(ln) or arm_re.match(ln)
+                if not m:
+                    return False
+                key = "sub_" + m.group(1).lower()
+                return key in fwd or key_of(m.group(2).strip('"')) in fwd
+            a = [ln for ln in a if not renamed_away(ln)]
             if a or bad:
                 problems.append("%s: lines beyond the renames: -%d +%d (%s)" % (
                     path, len(a), len(bad), (a + bad)[:3]))
