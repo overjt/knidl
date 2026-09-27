@@ -281,6 +281,9 @@ struct PlayerState
     /*0x47*/ u8 unk47;
     /*0x48*/ u8 boundsClamp;
     /*0x49*/ u8 onSlipperyFloor;
+    /* gTerrainResult's byte 0 after the probes: 1 right wall, 2 left wall,
+       3 both (stuck inside a block); sub_0801c8dc adds 1 when the top of
+       the box is inside a solid tile on the ground. */
     /*0x4A*/ u8 wallSide;
     /*0x4B*/ u8 slope;
     /*0x4C*/ u8 atDoor;
