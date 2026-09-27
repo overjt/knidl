@@ -187,7 +187,6 @@ u8 sub_0809fe10(void)
         {
             gUnk_02006190[2] = 43;
             sub_0806395c(10);
-            BLOCK_CROSS_JUMP
             goto install;
         }
         else

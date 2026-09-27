@@ -3074,9 +3074,11 @@ void sub_080afdf0(void)
                         abs(gUnk_03002790[gUnk_03002490->unk44].unk54) + abs(gUnk_03002790[gUnk_03002490->unk44].unk58));
     u = gUnk_03002490;
     u->unk54 = ((gUnk_030023B4 << 17) >> 4) + gUnk_03002790[u->unk44].unk54;
+    /* a second task pointer: the unk58 store after the if goes through it */
     x = gUnk_03002490;
     v = (gUnk_030023D4 << 17) >> 4;
     w = gUnk_03002790[x->unk44].unk58;
+    /* the arms re-read the cell: `v + cell` keeps the ROM's operand order */
     if (w >= 0)
         w = gUnk_03002790[x->unk44].unk58 - v;
     else
@@ -3117,6 +3119,7 @@ void sub_080aff40(void)
                         abs(gUnk_03002790[gUnk_03002490->unk44].unk54) + abs(gUnk_03002790[gUnk_03002490->unk44].unk58));
     gUnk_030023D4 = Div(abs(gUnk_03002790[gUnk_03002490->unk44].unk58) << 4,
                         abs(gUnk_03002790[gUnk_03002490->unk44].unk54) + abs(gUnk_03002790[gUnk_03002490->unk44].unk58));
+    /* u for unk54, a second pointer x per arm for the single unk58 store */
     u = gUnk_03002490;
     w = gUnk_03002790[u->unk44].unk58;
     if (w > 0)
@@ -3188,6 +3191,7 @@ void sub_080b0144(void)
                         abs(gUnk_03002790[gUnk_03002490->unk44].unk54) + abs(gUnk_03002790[gUnk_03002490->unk44].unk58));
     gUnk_030023D4 = Div(abs(gUnk_03002790[gUnk_03002490->unk44].unk58) << 4,
                         abs(gUnk_03002790[gUnk_03002490->unk44].unk54) + abs(gUnk_03002790[gUnk_03002490->unk44].unk58));
+    /* u for unk54, a second pointer x per arm for the single unk58 store */
     u = gUnk_03002490;
     w = gUnk_03002790[u->unk44].unk58;
     if (w > 0)
@@ -3260,9 +3264,11 @@ void sub_080b0338(void)
                         abs(gUnk_03002790[gUnk_03002490->unk44].unk54) + abs(gUnk_03002790[gUnk_03002490->unk44].unk58));
     u = gUnk_03002490;
     u->unk54 = ((gUnk_030023B4 << 16) >> 4) + gUnk_03002790[u->unk44].unk54;
+    /* a second task pointer: the unk58 store after the if goes through it */
     x = gUnk_03002490;
     v = (gUnk_030023D4 << 16) >> 4;
     w = gUnk_03002790[x->unk44].unk58;
+    /* the arms re-read the cell: `v + cell` keeps the ROM's operand order */
     if (w >= 0)
         w = gUnk_03002790[x->unk44].unk58 - v;
     else
@@ -3693,7 +3699,7 @@ void sub_080b0b50(void)
 void sub_080b0cc8(void)
 {
     struct Task *t;
-    s32 d;
+    s32 d; /* an int: the ROM sign-extends the copied byte before the strb */
 
     t = gUnk_03002490;
     t->unk00 = (u32)sub_080656b4;
@@ -3997,7 +4003,7 @@ void sub_080b1398(void)
 void sub_080b13bc(void)
 {
     struct Task *t;
-    s32 d;
+    s32 d; /* an int: the ROM sign-extends the copied byte before the strb */
 
     t = gUnk_03002490;
     t->unk00 = (u32)sub_080656b4;
