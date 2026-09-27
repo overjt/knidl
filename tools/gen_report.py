@@ -58,6 +58,7 @@ ASM_FOREVER = {
     "lib_misc",
     "task_switch_helpers",
     "crt0_master_isr",
+    "interworking_veneer",
 }
 
 # Data/pool segments are not tracked as code.

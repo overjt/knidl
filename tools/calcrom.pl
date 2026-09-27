@@ -26,6 +26,9 @@
 #   * List::Util::zip is replaced by an explicit pairing loop so the script
 #     also runs on older perls.
 #   * decomp_excluded_asm lists this repo's intentionally-retained assembly.
+#   * asm objects whose segment is `data` or `pool` in
+#     docs/analysis/segments.txt (labeled tables such as the m4a song table)
+#     count as data, not code, matching tools/gen_report.py.
 
 use Getopt::Long;
 use List::Util qw[ sum0 ];
@@ -43,13 +46,45 @@ open(my $file, $ARGV[0])
 
 # These are intentionally retained as assembly and therefore do not count as
 # code remaining to be decompiled. They still count toward the total number
-# of bytes of code in asm.
-#   crt0:       master ISR / start-up code, stays in assembly by design.
-#   rom_header: the GBA cartridge header, hand-written assembly forever.
+# of bytes of code in asm. Each one is justified in docs/analysis/rom-map.md
+# section 2 and in its docs/analysis/segments.txt row.
+#   crt0:                master ISR / start-up code, stays in assembly by design.
+#   rom_header:          the GBA cartridge header, hand-written assembly forever.
+#   task_switch_helpers: the ARM coroutine switch; it saves and swaps sp,
+#                        which no C source can express.
+#   m4a_1:               the m4a engine's hand-scheduled asm core (pret keeps
+#                        m4a_1.s as asm too), with an embedded ARM mixer loop.
+#   sdk_swi_wrappers:    bare `svc N; bx lr` thunks agbcc cannot emit (#29).
+#   sdk_reset_helper:    SoftReset, the same SWI-thunk shape (#29).
+#   sdk_libc:            libgcc's lib1funcs.asm routines and _call_via_rN
+#                        (hand-written asm in gcc's own tree) plus the
+#                        Thumb->ARM task trampolines (#30).
+#   interworking_veneer: the linker-style `ldr ip, [pc]; bx ip` ARM veneer.
 my %decomp_excluded_asm = map { $_ => 1 } qw(
     crt0
     rom_header
+    task_switch_helpers
+    m4a_1
+    sdk_swi_wrappers
+    sdk_reset_helper
+    sdk_libc
+    interworking_veneer
 );
+
+# Segment kinds from docs/analysis/segments.txt, keyed by segment name (the
+# asm object's basename). A missing file leaves every asm object as code.
+my %segment_kind = ();
+my $repo_root = abs_path(dirname($0) . '/..');
+if (open(my $segs, '<', "$repo_root/docs/analysis/segments.txt"))
+{
+    while (my $line = <$segs>)
+    {
+        next if $line =~ /^\s*(?:#|$)/;
+        my @f = split(' ', $line);
+        $segment_kind{$f[3]} = $f[2] if @f >= 4;
+    }
+    close($segs);
+}
 
 my %code_by_origin = ();
 my %data_by_origin = ();
@@ -115,6 +150,12 @@ sub record_section
         # Both .rodata and initialized .data occupy bytes in the ROM
         # image when they are linked there. Track them identically as
         # ROM data, grouped only by their object-file origin.
+        $is_code = 0;
+    }
+    elsif ($origin eq 'asm'
+           and ($segment_kind{basename($object, ".o")} // '') =~ /^(?:data|pool)$/)
+    {
+        # A labeled table split to asm (see header comment).
         $is_code = 0;
     }
     elsif ($origin eq 'asm' or $origin eq 'src')
@@ -191,7 +232,6 @@ close($file);
 my @sorted = sort { $a->[1] <=> $b->[1] } @pairs;
 
 (my $elffname = $ARGV[0]) =~ s/\.map$/.elf/;
-my $repo_root = abs_path(dirname($0) . '/..');
 
 # Pick up nonmatching functions from asm/nonmatching filenames ending in .inc.
 # One .inc file corresponds to one fallback function in the current project
