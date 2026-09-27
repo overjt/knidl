@@ -171,8 +171,9 @@ SECTIONS
         build/src/early_55b0.o(.text)
     } > ROM
 
-    .game_code_early_080011ac_08002378_08003110_08003888_08004000_08004fec_08005654 0x08005654 : {
-        KEEP(*(.game_code_early_080011ac_08002378_08003110_08003888_08004000_08004fec_08005654)) KEEP(*(.game_code_early_080011ac_08002378_08003110_08003888_08004000_08004fec_08005654.tail))
+    /* early_5654 — decompiled to C (src/early_5654.c, carved by tools/carve.py) */
+    .early_5654 0x08005654 : {
+        build/src/early_5654.o(.text)
     } > ROM
 
     /* early_58e4 — decompiled to C (src/early_58e4.c, carved by tools/carve.py) */
