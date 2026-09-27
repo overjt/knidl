@@ -2,16 +2,16 @@
 #include "global.h"
 #include "task.h"
 
-/* subgame_c5284.c (0x080C5284-0x080C5B83, issue #98).
+/* subgame_c5284.c (0x080C5284-0x080C623B, issue #98).
  *
- * Sub-game 2: the course builder.
+ * Sub-game 2: the course builder and the course renderer.
  * 
  *   sub_080c59d8   called by M35's sub_080b9f34 as sub_080c59d8(level, 1)
  *       before the race screen loads: the BG control and scroll shadows, the
  *       course record gUnk_0201B0E0 (scroll 240, start line 1000, finish line
  *       6000/8500/12000 for levels 0-2, the four racers at 0), cleared VRAM,
  *       the BG palette from gUnk_080D0198, then sub_080c5678 and a first
- *       render by sub_080c5b84 (still asm, 0x080C5B84-0x080C623B).
+ *       render by sub_080c5b84.
  *   sub_080c5678   lays the course out: per lane the distance table
  *       gUnk_02017980[lane][500] (the running sum of 0x4000 / (depth + 512),
  *       scaled to 16000) and its inverse gUnk_02019140, then 2n + 1
@@ -27,7 +27,28 @@
  *       unk14), the next boundary after it, and the set/clear bit counts of
  *       gUnk_02018920 over a span (the racers' scores).
  *   sub_080c55d8 / sub_080c5628   linear interpolation in gUnk_02017980 /
- *       gUnk_02019140 at 32-pixel steps. */
+ *       gUnk_02019140 at 32-pixel steps.
+ *   sub_080c5b84   the course renderer (called every frame by player 0's
+ *       racer step sub_080c383c, src/subgame_c3648.c, and once by
+ *       sub_080c59d8): per lane, every course
+ *       column that scrolled into view since the last frame
+ *       (gUnk_0201B0E0.unk108 -> unk000) gets its BG map column at 0x0600E000
+ *       and a vertical strip in its tiles, sized by the depth (gUnk_080D059A)
+ *       and shaded by the segment it lies on; the strip's tile address,
+ *       height and segment flag go to gUnk_0201A0E0/gUnk_0201B7C0/
+ *       gUnk_02017180[lane][256].  Then the lane's racer record is updated
+ *       (position, depth, the scroll/scale words gUnk_08757300[lane]/
+ *       gUnk_08757310[lane]), the strips of the columns it passed are
+ *       brightened, its score counts the segment bits over the passed span
+ *       (sub_080c5580), and finally the four lanes are ranked by depth into
+ *       the racers' unk18 and the priority bits of *gUnk_08757320[lane].
+ *
+ * Matching note (issue #98's final campaign, lesson 3.493): sub_080c5b84
+ * only matches in this translation unit.  Its PRE spill slots follow
+ * gcse's hash buckets, which depend on its locals' pseudo numbers (the
+ * declaration order: lane first, p right after x, y, z) and on the pool
+ * label of &gUnk_0201B0E0, numbered after this file's 40 earlier ones; #98
+ * had parked it at 22 bytes (or byte-exact with 37 empty asm statements). */
 
 /* per-player records of gUnk_0201B0E0, M37Course.unk018[4] (0x3C bytes) */
 struct M37CoursePlayer
@@ -90,6 +111,14 @@ extern vs32 gUnk_03001E94;
 extern vs32 gUnk_03000FA8;
 extern u16 gUnk_03001270[];
 extern u16 gUnk_080D0198[];
+extern u32 gUnk_0201A0E0[4][256];
+extern s16 gUnk_0201B7C0[4][256];
+extern s16 gUnk_02017180[4][256];
+extern s16 gUnk_080D059A[];
+extern s16 gUnk_080D0766[];
+extern s32 *gUnk_08757300[];
+extern s32 *gUnk_08757310[];
+extern u16 *gUnk_08757320[];
 
 u32 sub_08002ec0(void);                                      /* LCG step */
 void sub_080c5b84(void);
@@ -390,4 +419,238 @@ void sub_080c59d8(s32 a, s32 b)
     *(u16 *)0x0600FC20 = 0x300;
     gUnk_0201B0E0.unk000 = 360;
     sub_080c5b84();
+}
+
+void sub_080c5b84(void)
+{
+    s32 depth[4];
+    s32 lane;
+    u16 zero;
+    s32 x, y, z;
+    struct M37CoursePlayer *p;
+    s32 flag;
+    s32 set, clear;
+    s32 k;
+    s32 pos;
+    s32 j;
+    s32 col;
+    s32 lo, hi;
+    s32 t;
+    s32 c32;
+    s32 rem;
+    u16 *vp;
+    s32 m;
+    s32 tile;
+    s32 base;
+    s32 w;
+    s32 s;
+    s32 h;
+    u32 addr;
+    s32 step;
+    s32 v;
+    s32 old;
+    s32 a, b;
+    s32 mark;
+    s32 sn;
+
+    for (lane = 0; lane < 4; lane++)
+    {
+        p = &gUnk_0201B0E0.unk018[lane];
+        lo = sub_080c55d8(lane, gUnk_0201B0E0.unk000) / 32;
+        hi = sub_080c55d8(lane, gUnk_0201B0E0.unk108) / 32;
+        for (k = 0; k < lo - hi; k++)
+        {
+            j = k + 120;
+            col = hi + j;
+            t = col / 8;
+            c32 = t % 32;
+            rem = col % 8;
+            sub_080c52c4(lane, col, &x, &y, &z);
+            sub_080c54a4(lane, &p->unk2C, col * 32, &flag);
+            if (x < -90)
+                x = -90;
+            if (x > 90)
+                x = 90;
+            if (rem == 0)
+            {
+                vp = (u16 *)0x0600E000 + (lane * 1024 + c32);
+                for (m = 0; m < 32; m++)
+                {
+                    *vp = 1;
+                    vp += 32;
+                }
+                vp += ((x + 80) / 8 - 28) * 32;
+                base = (lane * 32 + c32) * 5;
+                tile = base + 1;
+                if (x > -100 && x < 100)
+                {
+                    *vp = tile;
+                    vp += 32;
+                    *vp = tile + 1;
+                    vp += 32;
+                    *vp = tile + 2;
+                    vp += 32;
+                    *vp = tile + 3;
+                    vp += 32;
+                    *vp = tile + 4;
+                }
+                addr = 0x06000000 + tile * 64;
+                zero = 0;
+                CpuSet(&zero, (void *)addr, 0x010000A0);
+            }
+            w = sub_080c5628(lane, col);
+            if (flag != 0)
+            {
+                if (lane != 0)
+                    s = (y + 256) / 128 * 32 + 64;
+                else
+                    s = 32;
+                if (w & 0x200)
+                    s += 16;
+            }
+            else
+            {
+                s = 16;
+                if (lane == 0)
+                    s = 8;
+            }
+            h = gUnk_080D059A[(y + 512) / 4 - 32] * 6 / 256;
+            pos = lane * 1024 + c32;
+            vp = (u16 *)0x0600E180 + (pos + (x + 80) / 8 * 32);
+            addr = *vp * 64 + 0x06000000;
+            addr += rem + ((x + 80) % 8 - h / 2) * 8;
+            if (addr < 0x06000040)
+                addr = 0x06000040;
+            if (flag == 0 && (col / 2) & 1)
+            {
+                addr -= 16;
+                h += 4;
+            }
+            gUnk_0201A0E0[lane][col % 256] = addr;
+            gUnk_0201B7C0[lane][col % 256] = h + 1;
+            gUnk_02017180[lane][col % 256] = flag;
+            s <<= 8;
+            step = gUnk_080D0766[h];
+            if (addr & 1)
+            {
+                addr &= ~1;
+                for (m = 0; m < h + 1; m++)
+                {
+                    *(vu16 *)addr = (s / 256 << 8) | *(vu16 *)addr;
+                    addr += 8;
+                    s += step;
+                }
+            }
+            else
+            {
+                for (m = 0; m < h + 1; m++)
+                {
+                    *(vu16 *)addr = s / 256;
+                    addr += 8;
+                    s += step;
+                }
+            }
+        }
+        *gUnk_08757300[lane] = (lo - 120) << 16;
+        v = sub_080c55d8(lane, p->unk00);
+        sub_080c52c4(lane, v / 32, &p->unk10, &depth[lane], &p->unk1C);
+        p->unk38 = p->unk14;
+        sub_080c54a4(lane, &p->unk2C, v, &p->unk14);
+        p->unk28 = sub_080c553c(p->unk2C, p->unk00);
+        v /= 32;
+        p->unk08 = depth[lane] + 512;
+        sn = gUnk_080D059A[p->unk08 / 4 - 32];
+        *gUnk_08757310[lane] = (gUnk_0201B0E0.unk004 * sn << 8) + 0x300000;
+        sn = gUnk_080D059A[p->unk08 / 4 - 32];
+        *gUnk_08757300[lane] += sn * gUnk_0201B0E0.unk008 << 8;
+        old = p->unk0C;
+        p->unk0C = v - lo + 120;
+        p->unk10 += 128 - *gUnk_08757310[lane] / 65536;
+        if (gUnk_0201B0E0.unk10C != 0)
+        {
+            if (p->unk04 != 0 || p->unk30 != 0 || p->unk0C > 240)
+            {
+                a = old;
+                b = p->unk0C;
+                if (a > -8)
+                {
+                    if (a > 240)
+                        a = 240;
+                    if (b > 240)
+                        b = 240;
+                    j = a - 120;
+                    a = j + hi;
+                    j = b - 120;
+                    b = j + lo;
+                    mark = 0;
+                    if ((p->unk30 != 0 && p->unk38 != 0 && p->unk04 == 0 && p->unk14 == 0)
+                        || (p->unk30 == 0 && p->unk38 == 0 && p->unk04 != 0 && p->unk14 != 0))
+                        mark = 1;
+                    if (p->unk0C > 240)
+                        mark = 1;
+                    for (k = a; k < b; k++)
+                    {
+                        if (*(u8 *)gUnk_0201A0E0[lane][k % 256] != 0
+                            && (mark == 0 || gUnk_02017180[lane][k % 256] != 0))
+                        {
+                            addr = gUnk_0201A0E0[lane][k % 256];
+                            if (lane != 0)
+                                col = 8;
+                            else if (gUnk_02017180[0][k % 256] != 0)
+                                col = 8;
+                            else
+                                col = 16;
+                            if (addr & 1)
+                            {
+                                addr &= ~1;
+                                for (m = 0; m < gUnk_0201B7C0[lane][k % 256]; m++)
+                                {
+                                    *(vu16 *)addr += col << 8;
+                                    addr += 8;
+                                }
+                            }
+                            else
+                            {
+                                for (m = 0; m < gUnk_0201B7C0[lane][k % 256]; m++)
+                                {
+                                    *(vu16 *)addr += col;
+                                    addr += 8;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        if (gUnk_0201B0E0.unk00C <= p->unk00 && p->unk34 <= gUnk_0201B0E0.unk010)
+        {
+            k = p->unk34;
+            m = p->unk00;
+            if (k < gUnk_0201B0E0.unk00C)
+                k = gUnk_0201B0E0.unk00C;
+            if (m > gUnk_0201B0E0.unk010)
+                m = gUnk_0201B0E0.unk010;
+            sub_080c5580(k, m, &set, &clear);
+            if (p->unk04 != 0)
+                p->unk24 += set;
+            p->unk20 += set;
+        }
+        p->unk30 = p->unk04;
+        p->unk34 = p->unk00;
+    }
+    depth[1] += 256;
+    depth[2] += 304;
+    depth[3] += 352;
+    for (lane = 0; lane < 4; lane++)
+    {
+        m = 0;
+        for (k = 0; k < 4; k++)
+            if (depth[lane] > depth[k])
+                m++;
+        gUnk_0201B0E0.unk018[lane].unk18 = m;
+        if (m == 3)
+            m = 2;
+        *gUnk_08757320[lane] = (*gUnk_08757320[lane] & 0xFFFC) | m;
+    }
+    gUnk_0201B0E0.unk108 = gUnk_0201B0E0.unk000;
 }
