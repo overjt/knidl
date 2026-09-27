@@ -156,7 +156,7 @@ void sub_08094844(void);
 void sub_08094894(void);
 void sub_080948d4(void);
 void sub_08094908(void);
-void sub_08094930(void);
+void GrandWheelieCharge(void);
 void sub_080949e0(void);
 s32 sub_08094b94(void);
 void sub_08094bbc(void);
@@ -632,7 +632,7 @@ void sub_08094908(void)
         gUnk_030023D4 = 3;
 }
 
-void sub_08094930(void)
+void GrandWheelieCharge(void)
 {
     struct Task *t;
 

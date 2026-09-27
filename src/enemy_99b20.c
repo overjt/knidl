@@ -831,7 +831,7 @@ void sub_0809a624(void)
     }
 }
 
-void sub_0809a654(void)
+void MrTickTockDash(void)
 {
     struct Task *t;
     struct Task *u;

@@ -769,7 +769,7 @@ void sub_080a3280();
 void MrShineInit();
 void MrShineUpdate();
 void MrShineEnterState();
-void sub_080a3348();
+void MrShineFall();
 void sub_080a33a4();
 void sub_080a33dc();
 void sub_080a3424();
@@ -808,7 +808,7 @@ void sub_080a3c08();
 void MrBrightInit();
 void MrBrightUpdate();
 void MrBrightEnterState();
-void sub_080a3cd8();
+void MrBrightFall();
 void sub_080a3d3c();
 void sub_080a3d84();
 void sub_080a3dd0();
@@ -921,7 +921,7 @@ void sub_080a5f20();
 void sub_080a5f7c();
 void sub_080a5fac();
 void sub_080a6020();
-void sub_080a60d8();
+void MetaKnightRun();
 void sub_080a6130();
 void sub_080a61b4();
 void sub_080a6264();
@@ -2930,8 +2930,8 @@ void MrShineEnterState(void)
     CallTableEntry(gCurTask->state, 18, gMrShineStates);
 }
 
-/* sub_080a3348 (0x080A3348-0x080A33A4) */
-void sub_080a3348(void)
+/* MrShineFall (0x080A3348-0x080A33A4) */
+void MrShineFall(void)
 {
     gCurTask->updateState = 0;
     TaskSetFrame(10);
@@ -3412,8 +3412,8 @@ void MrBrightEnterState(void)
     CallTableEntry(gCurTask->state, 18, gMrBrightStates);
 }
 
-/* sub_080a3cd8 (0x080A3CD8-0x080A3D3C) */
-void sub_080a3cd8(void)
+/* MrBrightFall (0x080A3CD8-0x080A3D3C) */
+void MrBrightFall(void)
 {
     gCurTask->updateState = 0;
     gCurTask->unk1C = ActorStartAnim(gUnk_08748574);

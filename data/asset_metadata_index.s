@@ -7019,7 +7019,7 @@ gGrandWheelieStates:
 	.word	sub_0809465c+1
 	.word	sub_080946b0+1
 	.word	sub_08094844+1
-	.word	sub_08094930+1
+	.word	GrandWheelieCharge+1
 	.word	sub_08094da4+1
 	.word	sub_08094f28+1
 	.word	sub_08094fb0+1
@@ -7749,7 +7749,7 @@ gMrFrostyStates:
 	.word	sub_08098fd0+1
 	.word	sub_08099020+1
 	.word	sub_080990d4+1
-	.word	sub_080991ac+1
+	.word	MrFrostyDash+1
 	.word	sub_08099244+1
 	.word	sub_080992ac+1
 	.word	sub_08099350+1
@@ -7824,7 +7824,7 @@ gMrTickTockStates:
 	.word	sub_0809a36c+1
 	.word	sub_0809a464+1
 	.word	sub_0809a528+1
-	.word	sub_0809a654+1
+	.word	MrTickTockDash+1
 	.word	sub_0809a798+1
 	.word	sub_0809a7dc+1
 	.word	sub_0809a868+1
@@ -8428,7 +8428,7 @@ gMrShineAndMrBrightStateUpdates:
 	.word	sub_080a3280+1
 	.global	gMrShineStates
 gMrShineStates:
-	.word	sub_080a3348+1
+	.word	MrShineFall+1
 	.word	sub_080a33dc+1
 	.word	sub_080a346c+1
 	.word	sub_080a349c+1
@@ -8468,7 +8468,7 @@ gMrShineStateUpdates:
 	.word	sub_080a3c08+1
 	.global	gMrBrightStates
 gMrBrightStates:
-	.word	sub_080a3cd8+1
+	.word	MrBrightFall+1
 	.word	sub_080a3d84+1
 	.word	sub_080a3e10+1
 	.word	sub_080a3e60+1
@@ -8762,7 +8762,7 @@ gMetaKnightStates:
 	.word	sub_080a5ecc+1
 	.word	sub_080a5f20+1
 	.word	sub_080a5fac+1
-	.word	sub_080a60d8+1
+	.word	MetaKnightRun+1
 	.word	sub_080a6280+1
 	.word	sub_080a61b4+1
 	.word	sub_080a634c+1

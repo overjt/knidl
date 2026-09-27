@@ -769,7 +769,7 @@ void sub_080a3280();
 void MrShineInit();
 void MrShineUpdate();
 void MrShineEnterState();
-void sub_080a3348();
+void MrShineFall();
 void sub_080a33a4();
 void sub_080a33dc();
 void sub_080a3424();
@@ -808,7 +808,7 @@ void sub_080a3c08();
 void MrBrightInit();
 void MrBrightUpdate();
 void MrBrightEnterState();
-void sub_080a3cd8();
+void MrBrightFall();
 void sub_080a3d3c();
 void sub_080a3d84();
 void sub_080a3dd0();
@@ -921,7 +921,7 @@ void sub_080a5f20();
 void sub_080a5f7c();
 void sub_080a5fac();
 void sub_080a6020();
-void sub_080a60d8();
+void MetaKnightRun();
 void sub_080a6130();
 void sub_080a61b4();
 void sub_080a6264();
@@ -1864,7 +1864,7 @@ void sub_080a6020(void)
     }
 }
 
-void sub_080a60d8(void)
+void MetaKnightRun(void)
 {
     gCurTask->updateState = 7;
     TaskFaceNearestPlayer();

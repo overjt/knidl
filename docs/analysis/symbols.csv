@@ -3412,7 +3412,7 @@ vma,size,isa,evidence,name
 0x08094894,0x40,thumb,bl-target+rom-pointer,sub_08094894
 0x080948D4,0x34,thumb,rom-pointer,sub_080948d4
 0x08094908,0x28,thumb,bl-target,sub_08094908
-0x08094930,0xB0,thumb,rom-pointer,sub_08094930
+0x08094930,0xB0,thumb,rom-pointer,GrandWheelieCharge
 0x080949E0,0x1B4,thumb,rom-pointer,sub_080949e0
 0x08094B94,0x28,thumb,bl-target,sub_08094b94
 0x08094BBC,0x154,thumb,bl-target,sub_08094bbc
@@ -3557,7 +3557,7 @@ vma,size,isa,evidence,name
 0x08099080,0x54,thumb,rom-pointer,sub_08099080
 0x080990D4,0xAC,thumb,rom-pointer,sub_080990d4
 0x08099180,0x2C,thumb,rom-pointer,sub_08099180
-0x080991AC,0x8C,thumb,rom-pointer,sub_080991ac
+0x080991AC,0x8C,thumb,rom-pointer,MrFrostyDash
 0x08099238,0xC,thumb,rom-pointer,sub_08099238
 0x08099244,0x64,thumb,rom-pointer,sub_08099244
 0x080992A8,0x4,thumb,rom-pointer,sub_080992a8
@@ -3622,7 +3622,7 @@ vma,size,isa,evidence,name
 0x0809A4F0,0x38,thumb,rom-pointer,sub_0809a4f0
 0x0809A528,0xFC,thumb,rom-pointer,sub_0809a528
 0x0809A624,0x30,thumb,rom-pointer,sub_0809a624
-0x0809A654,0xF0,thumb,rom-pointer,sub_0809a654
+0x0809A654,0xF0,thumb,rom-pointer,MrTickTockDash
 0x0809A744,0x54,thumb,rom-pointer,sub_0809a744
 0x0809A798,0x40,thumb,rom-pointer,sub_0809a798
 0x0809A7D8,0x4,thumb,rom-pointer,sub_0809a7d8
@@ -3976,7 +3976,7 @@ vma,size,isa,evidence,name
 0x080A3298,0x2C,thumb,rom-pointer,MrShineInit
 0x080A32C4,0x68,thumb,rom-pointer,MrShineUpdate
 0x080A332C,0x1C,thumb,rom-pointer,MrShineEnterState
-0x080A3348,0x5C,thumb,rom-pointer,sub_080a3348
+0x080A3348,0x5C,thumb,rom-pointer,MrShineFall
 0x080A33A4,0x38,thumb,rom-pointer,sub_080a33a4
 0x080A33DC,0x48,thumb,rom-pointer,sub_080a33dc
 0x080A3424,0x48,thumb,rom-pointer,sub_080a3424
@@ -4015,7 +4015,7 @@ vma,size,isa,evidence,name
 0x080A3C28,0x2C,thumb,rom-pointer,MrBrightInit
 0x080A3C54,0x68,thumb,rom-pointer,MrBrightUpdate
 0x080A3CBC,0x1C,thumb,rom-pointer,MrBrightEnterState
-0x080A3CD8,0x64,thumb,rom-pointer,sub_080a3cd8
+0x080A3CD8,0x64,thumb,rom-pointer,MrBrightFall
 0x080A3D3C,0x48,thumb,rom-pointer,sub_080a3d3c
 0x080A3D84,0x4C,thumb,rom-pointer,sub_080a3d84
 0x080A3DD0,0x40,thumb,rom-pointer,sub_080a3dd0
@@ -4128,7 +4128,7 @@ vma,size,isa,evidence,name
 0x080A5F7C,0x30,thumb,rom-pointer,sub_080a5f7c
 0x080A5FAC,0x74,thumb,rom-pointer,sub_080a5fac
 0x080A6020,0xB8,thumb,rom-pointer,sub_080a6020
-0x080A60D8,0x58,thumb,rom-pointer,sub_080a60d8
+0x080A60D8,0x58,thumb,rom-pointer,MetaKnightRun
 0x080A6130,0x84,thumb,rom-pointer,sub_080a6130
 0x080A61B4,0xB0,thumb,rom-pointer,sub_080a61b4
 0x080A6264,0x1C,thumb,rom-pointer,sub_080a6264

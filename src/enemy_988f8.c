@@ -592,7 +592,7 @@ void sub_08099180(void)
     }
 }
 
-void sub_080991ac(void)
+void MrFrostyDash(void)
 {
     struct Task *t;
     struct Task *v;
