@@ -2920,73 +2920,39 @@ void sub_080ac684(void)
 
 void sub_080ac72c(void)
 {
-    struct PlayerState *p;
-    register struct Task **c asm("r4");
-    struct Task *u;
-    struct Task *u2;
-    u16 *pu;
-    u8 *pPb;
-    struct Task *u3;
-    register s32 *d asm("r4");
-    register u16 *ac asm("r6");
-    register u16 *acA asm("r0");
-    register struct Task **c5 asm("r5");
-    s32 n;
-    s32 dd;
+    s32 d;
     s32 k;
 
     sub_0806956c();
-    c = &gUnk_03002490;
-    sub_08002e98((*c)->unk15, 3, gUnk_08749B98);
-    if ((*c)->unk28 > 0)
+    sub_08002e98(gUnk_03002490->unk15, 3, gUnk_08749B98);
+    if (gUnk_03002490->unk28 > 0)
         sub_08068e04();
-    u2 = *c;
-    if (u2->unk7C == 7)
+    if (gUnk_03002490->unk7C == 7)
     {
-        pu = (u16 *)((u8 *)u2 + 112);
-        n = 0;
-        *pu = n;
-        acA = &gUnk_030023AC;
-        asm("" : "+r"(acA));
-        c5 = c;
-        ac = acA;
-        if (n >= *ac)
-            goto post;
-        d = gUnk_02007D00;
-lp:
-        asm("" ::: "memory");
-        u = *c5;
-        dd = u->unk7F;
-        k = (s16)u->unk70;
-        if ((dd >> k) & 1)
+        for (gUnk_03002490->unk70 = 0; (s16)gUnk_03002490->unk70 < gUnk_030023AC; gUnk_03002490->unk70++)
         {
-            pPb = (u8 *)gUnk_03002170;
-            asm("" : "+r"(pPb));
-            p = (struct PlayerState *)(116 * k + (u32)pPb);
-            if (p->unk0D == 24)
+            d = gUnk_03002490->unk7F;
+            k = (s16)gUnk_03002490->unk70;
+            if ((d >> k) & 1)
             {
-                if (gUnk_03002790[k].unk73 <= 6)
-                    goto skip;
+                if (gUnk_03002170[k].unk0D == 24)
+                {
+                    if (gUnk_03002790[k].unk73 > 6)
+                    {
+                        sub_08040858(k);
+                        gUnk_02007D00[2]++;
+                        break;
+                    }
+                }
+                else if (!(gUnk_03002170[k].unk42 & 2) && gUnk_03002170[k].unk04 != 13
+                         && gUnk_03002170[k].unk04 != 10)
+                {
+                    sub_08040858(k);
+                    gUnk_02007D00[2]++;
+                    break;
+                }
             }
-            else
-            {
-                if (p->unk42 & 2)
-                    goto skip;
-                if (p->unk04 == 13)
-                    goto skip;
-                if (p->unk04 == 10)
-                    goto skip;
-            }
-            sub_08040858(k);
-            d[2]++;
-            goto post;
         }
-skip:
-        u3 = *c5;
-        u3->unk70++;
-        if ((s16)u3->unk70 < *ac)
-            goto lp;
-post:
         if ((s16)gUnk_03002490->unk70 != gUnk_030023AC)
             sub_08063fe0();
     }
@@ -3321,13 +3287,9 @@ void sub_080acf3c(void)
 void sub_080acf48(void)
 {
     struct Task *t = gUnk_03002490;
-    register s32 v asm("r1");
-    register s32 v2 asm("r0");
 
-    v = t->unk14;
-    t->unk28 = v;
-    v2 = v;
-    sub_08002e98(v2, 3, gUnk_08749D10);
+    t->unk28 = t->unk14;
+    sub_08002e98(t->unk14, 3, gUnk_08749D10);
 }
 
 void sub_080acf68(void)

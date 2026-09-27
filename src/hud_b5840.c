@@ -4,13 +4,28 @@
 
 /* RAM cells / ROM tables */
 extern u32 gUnk_0200000C[];
-extern u32 gUnk_02000034[];
+extern u8 gUnk_02000034;
 extern u32 gUnk_02004C90;
 extern u32 gUnk_02005580[];
 extern s16 gUnk_02005588[];
-extern u32 gUnk_02005590[];
-extern u32 gUnk_020055D0[];
-extern u32 gUnk_020055D8[];
+extern s8 gUnk_02005590[];
+extern u8 gUnk_020055D0;
+struct Unk020055D8Entry
+{
+    /*0x00*/ s8 unk0;
+    /*0x01*/ s8 unk1;
+    /*0x02*/ s8 unk2;
+    /*0x03*/ s8 unk3;
+    /*0x04*/ u16 unk4;
+    /*0x06*/ u16 unk6;
+};
+struct Unk020055D8
+{
+    /*0x00*/ s16 unk0;
+    /*0x02*/ s16 unk2;
+    /*0x04*/ struct Unk020055D8Entry *unk4;
+};
+extern struct Unk020055D8 gUnk_020055D8;
 extern u8 gUnk_02005E10[];
 extern u32 gUnk_02005F10[];
 extern u32 gUnk_02006040[];
@@ -24,16 +39,16 @@ extern struct Unk020060A0 gUnk_020060A0[];
 extern s8 gUnk_02006130[];
 extern s32 gUnk_02006190[];
 extern u8 gUnk_020069F0;
-extern u32 gUnk_02007BF0[];
+extern u32 gUnk_02007BF0[8][8];
 extern s32 gUnk_02007D00[];
 extern u32 gUnk_02007D40[];
 extern s16 gUnk_02007D48[];
 extern u16 gUnk_02007D60;
-extern u32 gUnk_02007D64[];
+extern s8 gUnk_02007D64;
 extern s8 gUnk_02007FB8[];
-extern u32 gUnk_02008014[];
+extern u16 gUnk_02008014[];
 extern u32 gUnk_02008020[];
-extern u32 gUnk_0200AF0C[];
+extern s16 gUnk_0200AF0C;
 extern u8 gUnk_0200AFF8;
 extern u8 gUnk_0200B030;
 extern u32 gUnk_0200B04C[];
@@ -90,17 +105,28 @@ extern s32 gUnk_030023D4;
 extern u16 gUnk_030023D8;
 extern s16 gUnk_030023E4;
 extern u32 gUnk_030023E8[];
-extern u32 gUnk_030023EC[];
+extern s8 gUnk_030023EC;
 extern u32 gUnk_03002448;
 extern s16 gUnk_0300244C;
 extern u32 gUnk_03002464[];
-extern u32 gUnk_03002468[];
+extern s8 gUnk_03002468;
 extern u32 gUnk_030027A8[];
 extern vs16 gUnk_03004CA0[];
 extern u8 gUnk_03005550[];
 extern u32 gUnk_03005568[];
 extern s16 gUnk_03005628[];
-extern u32 gUnk_03005680[];
+struct Unk03005680
+{
+    /*0x00*/ u8 unk0;
+    /*0x01*/ u8 unk1;
+    /*0x02*/ u16 unk2;
+    /*0x04*/ u16 unk4;
+    /*0x06*/ u16 unk6;
+    /*0x08*/ u16 unk8;
+    /*0x0A*/ u16 unkA;
+    /*0x0C*/ u16 unkC;
+};
+extern struct Unk03005680 gUnk_03005680;
 extern u32 gUnk_080A7358[];
 extern u32 gUnk_080A81B8[];
 extern u32 gUnk_080AD86C[];
@@ -141,7 +167,7 @@ struct Unk0873EEA0
 };
 extern struct Unk0873EEA0 *gUnk_0873F104[];
 extern u32 *gUnk_0873F15C[];
-extern u32 gUnk_0873F180[];
+extern struct Unk0873EEA0 *gUnk_0873F180[];
 extern s16 gUnk_0873FF98[];
 extern struct AnimCmd gUnk_087484A4[];
 extern u32 gUnk_087484D4[];
@@ -501,7 +527,7 @@ extern u32 gUnk_08756150[];
 extern u32 gUnk_08756158[];
 extern u32 gUnk_08756160[];
 extern u32 gUnk_0875616C[];
-extern u32 gUnk_08756178[];
+extern s8 gUnk_08756178[];
 extern u32 gUnk_08756184[];
 extern u32 gUnk_08756198[];
 
@@ -1544,483 +1570,187 @@ void sub_080b59d8(u8 *e, s32 idx, s32 n)
     }
 }
 
-s32 sub_080b5a94(u8 *e, s32 n, s32 k)
+s32 sub_080b5a94(struct Unk020055D8Entry *e, s32 idx, s32 n)
 {
-    u8 *volatile ev;
-    register s32 k9 asm("r9");
-    u8 *b7;
-    register s32 nA asm("sl");
-    register u8 *b8 asm("r8");
-    register u8 *b3 asm("r3");
-    register u8 *bip asm("ip");
-    register s8 *q asm("r1");
-    register u8 *evb asm("r2");
-    register s32 nv6 asm("r6");
-    register s32 n4 asm("r4");
-    s32 nf;
-    s32 nf2;
-    register s8 *qb asm("r0");
-    s32 w0;
-    u8 *d5;
-    s32 i1;
-    register u8 *t4 asm("r4");
-    register u8 *p3 asm("r3");
-    u8 saved2;
-    s32 w;
-    u8 *p6;
-    u8 *pX;
-    register u8 *bA asm("r0");
-    u8 *pd;
-    register s32 o1 asm("r1");
-    register s32 k2 asm("r2");
-    s32 o7;
-    s32 w2;
-    s32 r;
-    s32 w9;
-    register u32 stq asm("r0");
-    register u32 stq2 asm("r0");
+    struct Unk0873EEA0 *d;
+    s32 i;
 
-    ev = e;
-    nv6 = n;
-    k9 = k;
-    qb = (s8 *)gUnk_08756178;
-    asm("" : "+r"(qb));
-    evb = ev;
-    asm("" : "+r"(evb) : : "memory");
-    q = (s8 *)(*(s8 *)(evb + 1) + (u32)qb);
-    w0 = *q;
-    n4 = -1;
-    if (w0 == n4)
-        goto ret0;
-    asm("" : "+r"(q) : : "memory");
-    b3 = (u8 *)gUnk_0873F180;
-    d5 = (u8 *)*(u32 *)(((s32)*q << 2) + (u32)b3);
-    if (d5 == 0)
-        goto ret0;
-    i1 = 0;
-    b7 = (u8 *)gUnk_02006130;
-    if (i1 >= nv6)
-        goto notfound;
-    pd = (u8 *)gUnk_020055D8;
-    asm("" : "+r"(pd));
-    nA = n4;
-    b8 = b3;
-    t4 = *(u8 **)(pd + 4);
-    bip = (u8 *)gUnk_020060A0;
-xbody1:
-    if (*(s8 *)t4 == 5)
+    if (gUnk_08756178[e->unk1] == -1)
+        return 0;
+    d = gUnk_0873F180[gUnk_08756178[e->unk1]];
+    if (d == NULL)
+        return 0;
+    for (i = 0; i < idx; i++)
     {
-        p3 = (u8 *)((u32)i1 + (u32)b7);
-        saved2 = p3[0];
-        asm("" : "+r"(p3) : : "memory");
-        w = *(s8 *)p3;
-        if (w != nA)
+        if (gUnk_020055D8.unk4[i].unk0 == 5)
         {
-            if ((u8 *)*(u32 *)(((s32)(s8)bip[w << 2] << 2) + (u32)b8) == d5)
-                goto found;
+            if (gUnk_02006130[i] != -1
+             && gUnk_0873F180[gUnk_020060A0[gUnk_02006130[i]].unk0] == d)
+            {
+                gUnk_02006130[idx] = gUnk_02006130[i];
+                return 0;
+            }
         }
     }
-    t4 += 8;
-    i1++;
-    if (i1 < nv6)
-        goto xbody1;
-notfound:
-    stq = (u32)nv6 + (u32)b7;
-    *(u8 *)stq = k9;
-    k2 = k9;
-    asm volatile("" : "+r"(k2));
-    o1 = k2 << 2;
-    bA = (u8 *)gUnk_020060A0;
-    asm("" : "+r"(bA));
-    p6 = (u8 *)(o1 + (u32)bA);
-    evb = ev;
-    asm("" : "+r"(evb) : : "memory");
-    p6[0] = evb[1];
-    w2 = *(u16 *)(d5 + 2);
-    o7 = o1;
-    if (w2 != 0)
+    gUnk_02006130[idx] = n;
+    gUnk_020060A0[n].unk0 = e->unk1;
+    if (d->unk2 != 0)
     {
-        *(u16 *)(p6 + 2) = sub_080b5628(w2);
-        if (*(u16 *)(d5 + 6) != 0)
+        gUnk_020060A0[n].unk2 = sub_080b5628(d->unk2);
+        if (d->unk6 != 0)
         {
-            LZ77UnCompVram((void *)*(u32 *)(d5 + 12), (void *)gUnk_02020000);
-            sub_080017e4(4, (u32)gUnk_02020000, (*(s16 *)(p6 + 2) << 6) + 0x06010000, *(u16 *)(d5 + 2) << 5);
-            goto join1;
+            LZ77UnCompVram((void *)d->unkC, gUnk_02020000);
+            sub_080017e4(4, (u32)gUnk_02020000, (gUnk_020060A0[n].unk2 << 6) + 0x06010000, d->unk2 << 5);
         }
-        goto lzelse;
+        else
+        {
+            sub_080017e4(4, d->unkC, (gUnk_020060A0[n].unk2 << 6) + 0x06010000, d->unk2 << 5);
+        }
     }
-    goto join1;
-found:
-    nf2 = nv6;
-    asm("" : "+r"(nf2));
-    stq2 = (u32)nf2 + (u32)b7;
-    *(u8 *)stq2 = saved2;
-ret0:
-    return 0;
-lzelse:
-    sub_080017e4(4, *(u32 *)(d5 + 12), (*(s16 *)(p6 + 2) << 6) + 0x06010000, *(u16 *)(d5 + 2) << 5);
-join1:
-    if (*(u16 *)d5 != 0)
+    if (d->unk0 != 0)
     {
-        r = sub_080b5654(*(u16 *)d5);
-        pX = (u8 *)((u32)gUnk_020060A0 + o7);
-        pX[1] = r;
-        asm("" : "+r"(pX) : : "memory");
-        w9 = pX[1];
-        sub_080017e4(2, *(u32 *)(d5 + 8), ((s8)w9 << 5) + (u32)gUnk_03001470, *(u16 *)d5 << 5);
+        gUnk_020060A0[n].unk1 = sub_080b5654(d->unk0);
+        sub_080017e4(2, d->unk8, (gUnk_020060A0[n].unk1 << 5) + (u32)gUnk_03001470, d->unk0 << 5);
     }
     return 1;
 }
 
-s32 sub_080b5bdc(u8 *e, s32 i)
+s32 sub_080b5bdc(struct Unk020055D8Entry *e, s32 i)
 {
-    s32 res;
-    register s8 *p5 asm("r5");
-    register s32 w asm("r0");
-    register u8 *pw asm("r1");
-    register u8 *pwB asm("sl");
-    register s8 *a23c asm("r9");
-    s8 *a38;
-    register s32 c31 asm("r8");
-    register s32 one6 asm("r6");
-    s8 *a23;
-    s8 *pE;
-    s8 *p38;
-    register u8 *pb6 asm("r0");
-    u32 *pw3;
-    s32 m;
-    register s32 mE asm("r1");
-    s32 mA;
-    s32 mA2;
-    register s32 oneC asm("r1");
-    register u32 *pw3r asm("r2");
-    register u8 *pw2 asm("r3");
-    register u8 *pw2d asm("r4");
-    u8 *b;
-    u8 *bd;
+    s32 res = -1;
 
-    res = -1;
-    pb6 = (u8 *)gUnk_02006130;
-    asm("" : "+r"(pb6));
-    p5 = (s8 *)(i + (u32)pb6);
-    if (*p5 == res)
-        goto slotempty;
-    w = *(s8 *)(e + 1);
-    if (w == 32)
+    if (gUnk_02006130[i] != -1)
     {
-        pw = (u8 *)gUnk_02007BF0;
-        pw3 = (u32 *)(((s32)*(s8 *)gUnk_030023EC << 2) + ((s32)gUnk_0300238C << 5) + (u32)pw);
-        m = 1 << (31 & e[3]);
-        if (*pw3 & m)
-            goto out;
-        asm("" ::: "memory");
-        res = sub_08064fc4(0, *(s8 *)(e + 1), e[2], 0, *(u16 *)(e + 4), *(u16 *)(e + 6),
-            (pw2 = (u8 *)gUnk_020060A0, (((s32)*(s8 *)((b = (u8 *)(((s32)*p5 << 2) + (u32)pw2)) + 1) << 12) | ((*(s16 *)(b + 2) << 1) + 16))));
-        goto out;
+        if (e->unk1 == 32)
+        {
+            if (!(gUnk_02007BF0[gUnk_0300238C][gUnk_030023EC] & (1 << (e->unk3 & 31))))
+                res = sub_08064fc4(0, e->unk1, e->unk2, 0, e->unk4, e->unk6,
+                                   (gUnk_020060A0[gUnk_02006130[i]].unk1 << 12) | ((gUnk_020060A0[gUnk_02006130[i]].unk2 * 2) + 16));
+        }
+        else if (e->unk1 == 37)
+        {
+            if (!(gUnk_02007BF0[gUnk_0300238C][gUnk_030023EC] & (1 << (e->unk3 & 31))))
+            {
+                res = sub_08064fc4(0, e->unk1, e->unk2, 0, e->unk4, e->unk6,
+                                   (gUnk_020060A0[gUnk_02006130[i]].unk1 << 12) | ((gUnk_020060A0[gUnk_02006130[i]].unk2 * 2) + 16));
+                gUnk_02007BF0[gUnk_0300238C][gUnk_030023EC] |= 1 << (e->unk3 & 31);
+            }
+        }
+        else
+        {
+            res = sub_08064fc4(0, e->unk1, e->unk2, e->unk3 & 31, e->unk4, e->unk6,
+                               (gUnk_020060A0[gUnk_02006130[i]].unk1 << 12) | ((gUnk_020060A0[gUnk_02006130[i]].unk2 * 2) + 16));
+        }
     }
-    if (w == 37)
+    else
     {
-        pwB = (u8 *)gUnk_02007BF0;
-        a23 = (s8 *)&gUnk_030023EC;
-        a23c = a23;
-        pw3r = (u32 *)(((s32)*a23 << 2) + ((s32)*(a38 = (s8 *)&gUnk_0300238C) << 5) + (u32)pwB);
-        mE = e[3];
-        c31 = 31;
-        mA = c31 & mE;
-        one6 = 1;
-        m = one6 << mA;
-        if (*pw3r & m)
-            goto out;
-        asm("" ::: "memory");
-        res = sub_08064fc4(0, *(s8 *)(e + 1), e[2], 0, *(u16 *)(e + 4), *(u16 *)(e + 6),
-            (pw2 = (u8 *)gUnk_020060A0, (((s32)*(s8 *)((b = (u8 *)(((s32)*p5 << 2) + (u32)pw2)) + 1) << 12) | ((*(s16 *)(b + 2) << 1) + 16))));
-        pw3r = (u32 *)(((s32)*a23c << 2) + ((s32)*a38 << 5) + (u32)pwB);
-        mE = e[3];
-        mA2 = c31 & mE;
-        oneC = one6;
-        asm volatile("" : "+r"(oneC));
-        *pw3r = *pw3r | (oneC << mA2);
-        goto out;
+        res = sub_08064fc4(0, e->unk1, e->unk2, e->unk3 & 31, e->unk4, e->unk6, 0);
     }
-    asm("" ::: "memory");
-    res = sub_08064fc4(0, *(s8 *)(e + 1), e[2], 31 & e[3], *(u16 *)(e + 4), *(u16 *)(e + 6),
-        (pw2d = (u8 *)gUnk_020060A0, (((s32)*(s8 *)((bd = (u8 *)(((s32)*p5 << 2) + (u32)pw2d)) + 1) << 12) | ((*(s16 *)(bd + 2) << 1) + 16))));
-    goto out;
-slotempty:
-    asm("" ::: "memory");
-    res = sub_08064fc4(0, *(s8 *)(e + 1), e[2], 31 & e[3], *(u16 *)(e + 4), *(u16 *)(e + 6), 0);
-out:
     return res;
 }
 
-s32 sub_080b5d84(u8 *e)
+s32 sub_080b5d84(struct Unk020055D8Entry *e)
 {
-    register u8 *e8 asm("r8");
-    u8 *t7;
-    register s32 cnt9 asm("r9");
-    register u8 *sB asm("sl");
-    register s32 y4 asm("r4");
-    volatile s32 slotv;
-    s32 w1;
-    register s32 nm1 asm("r0");
-    register s32 sv2 asm("r2");
-    register s32 s9 asm("r0");
-    s32 wa;
-    register u8 *pd0 asm("r0");
-    register u8 *ec1r asm("r1");
-    register s32 i6t asm("r2");
-    register s32 sh1 asm("r1");
-    register u8 *ec2r asm("r2");
-    register u8 *ec3r asm("r1");
-    register u8 *pd3 asm("r3");
-    register s32 m0 asm("r0");
-    register u8 *ec4r asm("r1");
-    register s32 i6t2 asm("r2");
-    register s32 sh2 asm("r1");
-    register u8 *e5b asm("r5");
-    register u8 *ec5r2 asm("r1");
-    register s32 lim1 asm("r0");
-    register u8 *tp0 asm("r0");
-    register s32 w2t asm("r0");
-    register s32 i6b asm("r6");
-    s32 w3c;
-    register s32 z9 asm("r3");
-    s32 w2b;
-    u8 *sBt0;
-    register s32 zD asm("r1");
-    u8 *pDa;
-    register u32 w36 asm("r0");
-    register s32 w1c asm("r0");
-    register u8 *sBc asm("r2");
-    register u8 *sBd asm("r3");
-    register u8 *sBc2 asm("r1");
-    register u32 a4v asm("ip");
-    s32 at4;
-    s32 w16b;
-    register u8 *e2b asm("r1");
-    register s32 w4r asm("r0");
-    register s32 res2 asm("r2");
-    register s32 i6 asm("r6");
-    register u8 *ec6r asm("r1");
-    register s32 wsum asm("r0");
-    register u8 *pt1 asm("r0");
-    register u8 *pt2 asm("r1");
-    register s32 cw asm("r2");
-    register u16 *p14 asm("r1");
-    s32 wb;
-    s32 wl;
-    s32 w2;
-    u8 *pd;
-    s32 z3;
-    s16 *p5;
-    s8 *p4;
-    u16 *p2;
-    register u8 *e5 asm("r5");
-    s32 lim;
-    s32 w;
-    s32 x2;
-    s32 mid;
-    register s32 g0 asm("r1");
-    register u16 *pg asm("r1");
-    register s32 xv asm("r0");
-    register u8 *e3 asm("r3");
-    register u8 *e0y asm("r0");
-    register u16 *pF asm("r1");
-    register s32 m asm("r2");
-    register s32 k6 asm("r6");
-    u8 *pw2;
-    u8 *b;
+    s32 slot;
+    struct Task *t;
+    struct Unk020055D8Entry *f;
+    s32 i;
+    s32 n;
+    s32 y;
+    s32 r;
 
-    e8 = e;
-    slotv = sub_0802d344(0);
-    nm1 = -1;
-    w1 = slotv;
-    if (w1 == nm1)
-        return w1;
-    sv2 = slotv;
-    s9 = sv2 * 9;
-    t7 = (u8 *)((s9 << 4) + (u32)gUnk_03002790);
-    z3 = 0;
-    *(u32 *)(t7 + 24) = z3;
-    *(u32 *)(t7 + 36) = z3;
-    if ((s8)*(u8 *)gUnk_02007D64 != 4)
+    slot = sub_0802d344(0);
+    if (slot == -1)
+        return slot;
+    t = &gUnk_03002790[slot];
+    t->unk18 = 0;
+    t->unk24 = 0;
+    if (gUnk_02007D64 != 4)
     {
-        p5 = (s16 *)gUnk_0200AF0C;
-        p4 = (s8 *)gUnk_03002468;
-        wa = *p5;
-        wb = *p4;
-        p2 = (u16 *)&gUnk_02007D60;
-        if (wa != wb)
+        if (gUnk_0200AF0C != gUnk_03002468)
         {
-            *p2 = z3;
-            *p5 = *p4;
+            gUnk_02007D60 = 0;
+            gUnk_0200AF0C = gUnk_03002468;
         }
-        *p2 = *(u8 *)p2;
+        gUnk_02007D60 &= 0xFF;
     }
-    pd0 = (u8 *)gUnk_020055D8;
-    ec1r = e8;
-    i6t = *(s8 *)(ec1r + 2);
-    sh1 = i6t << 3;
-    tp0 = *(u8 **)(pd0 + 4);
-    e5 = (u8 *)((u32)tp0 + sh1);
-    i6 = i6t;
-    ec2r = e8;
-    wl = *(s8 *)(ec2r + 3);
-    lim1 = i6 + wl;
-    if (i6 < lim1)
+    f = &gUnk_020055D8.unk4[e->unk2];
+    for (i = e->unk2; i < e->unk2 + e->unk3; f++, i++)
     {
-xbody1:
-        if (*(s8 *)e5 == 6)
+        if (f->unk0 == 6)
         {
-            switch ((s8)(e5[1] - 1))
+            switch (f->unk1)
             {
-            case 0:
-                break;
             case 1:
-                e3 = e8;
-                x2 = ((u16 *)e3)[2];
-                g0 = gUnk_03002158[0];
-                mid = (g0 + gUnk_03002158[1]) >> 1;
-                if (x2 < mid)
-                {
-                    pg = (u16 *)gUnk_03005680;
-                    xv = x2 + 156;
-                }
-                else
-                {
-                    pg = (u16 *)gUnk_03005680;
-                    xv = x2 - 156;
-                }
-                pg[5] = xv;
-                sub_0802cda0(*(u16 *)(e5 + 4), *(u16 *)(e5 + 4) + 240, 0xFFFF, 0xFFFF);
-                *(u32 *)(t7 + 36) = 1;
                 break;
             case 2:
-                e0y = e8;
-                x2 = ((u16 *)e0y)[3];
-                g0 = gUnk_03002158[3];
-                mid = (g0 + gUnk_03002158[2]) >> 1;
-                if (x2 < mid)
-                {
-                    pg = (u16 *)gUnk_03005680;
-                    xv = x2 + 120;
-                }
+                if (e->unk4 < (gUnk_03002158[0] + gUnk_03002158[1]) >> 1)
+                    gUnk_03005680.unkA = e->unk4 + 156;
                 else
-                {
-                    pg = (u16 *)gUnk_03005680;
-                    xv = x2 - 120;
-                }
-                pg[6] = xv;
-                sub_0802cda0(0xFFFF, 0xFFFF, *(u16 *)(e5 + 6), *(u16 *)(e5 + 6) + 160);
-                *(u32 *)(t7 + 36) = 1;
+                    gUnk_03005680.unkA = e->unk4 - 156;
+                sub_0802cda0(f->unk4, f->unk4 + 240, 0xFFFF, 0xFFFF);
+                t->unk24 = 1;
                 break;
             case 3:
-                *(u32 *)(t7 + 24) = 1;
-                goto common;
+                if (e->unk6 < (gUnk_03002158[3] + gUnk_03002158[2]) >> 1)
+                    gUnk_03005680.unkC = e->unk6 + 120;
+                else
+                    gUnk_03005680.unkC = e->unk6 - 120;
+                sub_0802cda0(0xFFFF, 0xFFFF, f->unk6, f->unk6 + 160);
+                t->unk24 = 1;
+                break;
             case 4:
-                *(u32 *)(t7 + 24) = 2;
-common:
-                *(u32 *)(t7 + 28) = *(u16 *)(e5 + 4);
-                *(u32 *)(t7 + 32) = *(u16 *)(e5 + 6);
+                t->unk18 = 1;
+                t->unk1C = f->unk4;
+                t->unk20 = f->unk6;
+                break;
+            case 5:
+                t->unk18 = 2;
+                t->unk1C = f->unk4;
+                t->unk20 = f->unk6;
                 break;
             }
         }
-        e5 += 8;
-        i6++;
-        ec3r = e8;
-        if (i6 < *(s8 *)(ec3r + 2) + (s8)ec3r[3])
-            goto xbody1;
     }
-    pd3 = (u8 *)gUnk_020055D8;
-    m0 = 0xFFFF;
-    asm volatile("" : "+r"(m0));
-    m = m0;
-    pF = (u16 *)gUnk_02008014;
-    k6 = 1;
-    do
+    for (i = 0; i < 2; i++)
+        gUnk_02008014[i] = 0xFFFF;
+    f = &gUnk_020055D8.unk4[e->unk2];
+    n = 0;
+    for (i = e->unk2; i < e->unk2 + e->unk3; f++, i++)
     {
-        *pF = *pF | m;
-        asm("" : "+r"(pF));
-        pF++;
-        k6--;
-    } while (k6 >= 0);
-    ec4r = e8;
-    i6t2 = *(s8 *)(ec4r + 2);
-    sh2 = i6t2 << 3;
-    tp0 = *(u8 **)(pd3 + 4);
-    e5b = (u8 *)((u32)tp0 + sh2);
-    z9 = 0;
-    asm volatile("" : "+r"(z9));
-    cnt9 = z9;
-    i6b = i6t2;
-    ec5r2 = e8;
-    w2t = *(s8 *)(ec5r2 + 3);
-    lim = i6b + w2t;
-    w3c = i6b;
-    w2b = w2t;
-    if (i6b < lim)
-    {
-        sBt0 = (u8 *)&gUnk_0200B030;
-        asm volatile("" : "+r"(sBt0));
-        sB = sBt0;
-xbody2:
-        if (*(s8 *)e5b == 7)
+        if (f->unk0 == 7)
         {
-            pDa = (u8 *)&gUnk_0200D080;
-            zD = 0;
-            *pDa = zD;
-            w36 = *(u32 *)(t7 + 36);
-            if (w36 != 0)
+            gUnk_0200D080 = 0;
+            if (t->unk24 != 0)
             {
-                if (gUnk_03002350 != 1)
-                    goto arm1x;
-                sBc = sB;
-                *sBc = zD;
-                goto ysh;
-arm1x:
-                w1c = 1;
-                sBd = sB;
-                *sBd = w1c;
-                y4 = -16;
-                goto aftery;
+                if (gUnk_03002350 == 1)
+                {
+                    gUnk_0200B030 = 0;
+                    y = f->unk6;
+                }
+                else
+                {
+                    gUnk_0200B030 = 1;
+                    y = -16;
+                }
             }
             else
             {
-                sBc2 = sB;
-                *sBc2 = w36;
-ysh:
-                y4 = *(u16 *)(e5b + 6);
+                gUnk_0200B030 = 0;
+                y = f->unk6;
             }
-aftery:;
-            res2 = sub_08064fc4(1, *(s8 *)(e5b + 1), e5b[2], (a4v = e5b[3], a4v), *(u16 *)(e5b + 4), y4,
-                (pw2 = (u8 *)gUnk_020060A0, b = (u8 *)((u32)pw2 + ((s32)(s8)((u8 *)gUnk_02006130)[i6b] << 2)), at4 = (s32)*(s8 *)(b + 1) << 12, at4 | ((*(s16 *)(b + 2) << 1) + 16)));
-            if (res2 != -1)
+            r = sub_08064fc4(1, f->unk1, f->unk2, f->unk3, f->unk4, y,
+                             (gUnk_020060A0[gUnk_02006130[i]].unk1 << 12) | ((gUnk_020060A0[gUnk_02006130[i]].unk2 * 2) + 16));
+            if (r != -1)
             {
-                e2b = (u8 *)gUnk_02005590;
-                w4r = res2;
-                w4r -= 32;
-                *(u8 *)(w4r + (u32)e2b) = cnt9;
-                p14 = (u16 *)gUnk_02008014;
-                p14[cnt9] = res2;
+                gUnk_02005590[r - 32] = n;
+                gUnk_02008014[n] = r;
             }
-            cnt9++;
-            ec6r = e8;
-            asm("" : "+r"(ec6r) : : "memory");
-            w3c = *(s8 *)(ec6r + 2);
-            w2b = *(s8 *)(ec6r + 3);
+            n++;
         }
-        e5b += 8;
-        i6b++;
-        wsum = w3c + w2b;
-        if (i6b < wsum)
-            goto xbody2;
     }
-    pt2 = (u8 *)gUnk_020055D0;
-    pt1 = (u8 *)gUnk_02000034;
-    cw = cnt9;
-    *pt1 = cw;
-    *pt2 = cw;
-    return slotv;
+    gUnk_020055D0 = gUnk_02000034 = n;
+    return slot;
 }
 
 void sub_080b603c(void)

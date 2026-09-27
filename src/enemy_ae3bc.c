@@ -3219,534 +3219,237 @@ top:
 
 void sub_080afdf0(void)
 {
-    register struct Task **c asm("r4");
-    struct Task **c2;
     struct Task *t;
     struct Task *u;
-    register struct Task *t4 asm("r4");
-    struct Task *t5;
-    struct Task *q1;
-    struct Task *q2s;
-    struct Task *q3;
-    struct Task *q4;
-    struct Task *q5;
-    u8 *p5;
-    register u8 *p6 asm("r6");
-    u8 *p7;
-    register s32 i asm("r1");
-    s32 i2;
-    register s32 o asm("r2");
-    s32 o2;
-    s32 q;
-    s32 q2;
-    s32 v2;
-    register s32 v3 asm("r2");
-    register s32 w58 asm("r0");
+    s32 v;
     s32 w;
-    s32 w2;
-    register s16 *a44 asm("r5");
-    s32 *a2;
-    register s32 *pa asm("r1");
-    register s32 *pa7 asm("r0");
-    register s32 nv asm("r0");
-    register s32 i9 asm("r0");
-    register s32 yv asm("r1");
-    register s32 zv asm("r0");
-    register s32 num asm("r3");
-    s32 ya;
-    s32 za;
-    s32 num2;
-    s32 yb;
-    s32 zb;
+    struct Task *x;
 
-    c = &gUnk_03002490;
-    t = *c;
+    t = gUnk_03002490;
     t->unk00 = (u32)sub_0806572c;
     t->unk0C = (u32)sub_08005d9c;
     t->unk42 = 12;
-    u = *c;
-    u->unk38 = gUnk_08754504;
-    u->unk43 = 1;
-    p5 = (u8 *)gUnk_03002790;
-    i = (*c)->unk44;
-    i9 = i * 9;
-    o = i9 << 4;
-    p6 = p5 + 84;
-    pa = (s32 *)(o + (u32)p6);
-    nv = *pa;
-    asm volatile("" : "+r"(nv));
-    num = abs(nv) << 4;
-    yv = *pa;
-    ya = abs(yv);
-    p7 = p5 + 88;
-    pa7 = (s32 *)(o + (u32)p7);
-    zv = *pa7;
-    za = abs(zv);
-    q = Div(num, ya + za);
-    a2 = (s32 *)&gUnk_030023B4;
-    *a2 = q;
-    i2 = (*c)->unk44;
-    o2 = i2 * 144;
-    num2 = abs(*(s32 *)(o2 + (u32)p7)) << 4;
-    yb = abs(*(s32 *)(o2 + (u32)p6));
-    zb = abs(*(s32 *)(o2 + (u32)p7));
-    q2 = Div(num2, yb + zb);
-    gUnk_030023D4 = q2;
-    t4 = *c;
-    v2 = (*a2 << 17) >> 4;
-    a44 = &t4->unk44;
-    w = *(s32 *)(*a44 * 144 + (u32)p6);
-    t4->unk54 = v2 + w;
-    v3 = (q2 << 17) >> 4;
-    asm("" : "+r"(a44) : : "memory");
-    w2 = *(s32 *)(*a44 * 144 + (u32)p7);
-    if (w2 >= 0)
-        w58 = w2 - v3;
+    gUnk_03002490->unk38 = gUnk_08754504;
+    gUnk_03002490->unk43 = 1;
+    gUnk_030023B4 = Div(abs(gUnk_03002790[gUnk_03002490->unk44].unk54) << 4,
+                        abs(gUnk_03002790[gUnk_03002490->unk44].unk54) + abs(gUnk_03002790[gUnk_03002490->unk44].unk58));
+    gUnk_030023D4 = Div(abs(gUnk_03002790[gUnk_03002490->unk44].unk58) << 4,
+                        abs(gUnk_03002790[gUnk_03002490->unk44].unk54) + abs(gUnk_03002790[gUnk_03002490->unk44].unk58));
+    u = gUnk_03002490;
+    u->unk54 = ((gUnk_030023B4 << 17) >> 4) + gUnk_03002790[u->unk44].unk54;
+    x = gUnk_03002490;
+    v = (gUnk_030023D4 << 17) >> 4;
+    w = gUnk_03002790[x->unk44].unk58;
+    if (w >= 0)
+        w = gUnk_03002790[x->unk44].unk58 - v;
     else
-        w58 = v3 + w2;
-    t4->unk58 = w58;
-    t5 = gUnk_03002490;
-    t5->unk6C = 0;
-    c2 = &gUnk_03002490;
+        w = v + gUnk_03002790[x->unk44].unk58;
+    x->unk58 = w;
+    gUnk_03002490->unk6C = 0;
     do
     {
-        q1 = *c2;
-        q1->unk3C = 19;
+        gUnk_03002490->unk3C = 19;
         TaskYieldTrampoline(2);
-        q2s = *c2;
-        q2s->unk3C = 20;
+        gUnk_03002490->unk3C = 20;
         TaskYieldTrampoline(2);
-        q3 = *c2;
-        q3->unk3C = 21;
+        gUnk_03002490->unk3C = 21;
         TaskYieldTrampoline(2);
-        q4 = *c2;
-        q4->unk3C = 22;
+        gUnk_03002490->unk3C = 22;
         TaskYieldTrampoline(2);
-        q5 = *c2;
-        q5->unk6C++;
-    } while ((s16)q5->unk6C <= 1);
+        gUnk_03002490->unk6C++;
+    } while ((s16)gUnk_03002490->unk6C <= 1);
     TaskDispatchTrampoline();
 }
 
 void sub_080aff40(void)
 {
-    register struct Task **c asm("r4");
-    struct Task **c2;
     struct Task *t;
     struct Task *u;
-    register struct Task *t4 asm("r2");
-    register struct Task *t5 asm("r5");
-    struct Task *t6;
-    struct Task *q1;
-    struct Task *q2s;
-    struct Task *q3;
-    struct Task *q4;
-    struct Task *q5;
-    u8 *p5;
-    register u8 *p6 asm("r6");
-    u8 *p7;
-    register s32 i asm("r1");
-    s32 i2;
-    s32 o2;
-    s32 q;
-    register s32 q2 asm("r3");
-    register s32 v3 asm("r2");
-    register s32 v3t asm("r0");
-    register s32 w58 asm("r0");
-    register s32 o3 asm("r1");
-    register s32 av asm("r1");
-    register s32 o9 asm("r0");
-    s32 w0;
-    s32 w2;
-    register s16 *a44 asm("r4");
-    register s32 num asm("r3");
-    register s32 o asm("r2");
-    register s32 *pa asm("r1");
-    register s32 *pa7 asm("r0");
-    register s32 nv asm("r0");
-    register s32 yv asm("r1");
-    register s32 zv asm("r0");
-    register s32 i9 asm("r0");
-    s32 *a2;
-    register s32 *a23d asm("r0");
-    s32 ya;
-    s32 za;
-    s32 num2;
-    s32 yb;
-    s32 zb;
+    s32 v;
+    s32 w;
+    s32 y;
+    struct Task *x;
 
-    c = &gUnk_03002490;
-    t = *c;
+    t = gUnk_03002490;
     t->unk00 = (u32)sub_0806572c;
     t->unk0C = (u32)sub_08005d9c;
     t->unk42 = 12;
-    u = *c;
-    u->unk38 = gUnk_08754504;
-    u->unk43 = 1;
-    p5 = (u8 *)gUnk_03002790;
-    i = (*c)->unk44;
-    i9 = i * 9;
-    o = i9 << 4;
-    p6 = p5 + 84;
-    pa = (s32 *)(o + (u32)p6);
-    nv = *pa;
-    asm volatile("" : "+r"(nv));
-    num = abs(nv) << 4;
-    yv = *pa;
-    ya = abs(yv);
-    p7 = p5 + 88;
-    pa7 = (s32 *)(o + (u32)p7);
-    zv = *pa7;
-    za = abs(zv);
-    q = Div(num, ya + za);
-    a2 = (s32 *)&gUnk_030023B4;
-    *a2 = q;
-    i2 = (*c)->unk44;
-    o2 = i2 * 144;
-    num2 = abs(*(s32 *)(o2 + (u32)p7)) << 4;
-    yb = abs(*(s32 *)(o2 + (u32)p6));
-    zb = abs(*(s32 *)(o2 + (u32)p7));
-    q2 = Div(num2, yb + zb);
-    a23d = (s32 *)&gUnk_030023D4;
-    *a23d = q2;
-    t4 = *c;
-    a44 = &t4->unk44;
-    av = *a44;
-    o9 = av * 9;
-    o3 = o9 << 4;
-    w0 = *(s32 *)(o3 + (u32)p7);
-    if (w0 > 0)
+    gUnk_03002490->unk38 = gUnk_08754504;
+    gUnk_03002490->unk43 = 1;
+    gUnk_030023B4 = Div(abs(gUnk_03002790[gUnk_03002490->unk44].unk54) << 4,
+                        abs(gUnk_03002790[gUnk_03002490->unk44].unk54) + abs(gUnk_03002790[gUnk_03002490->unk44].unk58));
+    gUnk_030023D4 = Div(abs(gUnk_03002790[gUnk_03002490->unk44].unk58) << 4,
+                        abs(gUnk_03002790[gUnk_03002490->unk44].unk54) + abs(gUnk_03002790[gUnk_03002490->unk44].unk58));
+    u = gUnk_03002490;
+    w = gUnk_03002790[u->unk44].unk58;
+    if (w > 0)
     {
-        t4->unk54 = ((gUnk_030023B4 << 17) >> 4) + *(s32 *)(o3 + (u32)p6) + 0xFFFEE000;
-        t5 = t4;
-        v3t = q2 << 17;
-        v3 = v3t >> 4;
-        w2 = *(s32 *)(*a44 * 144 + (u32)p7);
-        if (w2 >= 0)
-            w58 = w2 - v3 + 0xFFFFC000;
+        u->unk54 = ((gUnk_030023B4 << 17) >> 4) + gUnk_03002790[u->unk44].unk54 + 0xFFFEE000;
+        x = gUnk_03002490;
+        v = (gUnk_030023D4 << 17) >> 4;
+        w = gUnk_03002790[x->unk44].unk58;
+        if (w >= 0)
+            y = w - v + 0xFFFFC000;
         else
-            w58 = v3 + w2 + 0xFFFFC000;
-        t5->unk58 = w58;
+            y = v + w + 0xFFFFC000;
     }
-    else if (w0 < 0)
+    else if (w < 0)
     {
-        t4->unk54 = ((gUnk_030023B4 << 17) >> 4) + *(s32 *)(o3 + (u32)p6) + (128 << 7);
-        t5 = t4;
-        v3t = q2 << 17;
-        v3 = v3t >> 4;
-        w2 = *(s32 *)(*a44 * 144 + (u32)p7);
-        if (w2 >= 0)
-            w58 = w2 - v3 + 0xFFFF4000;
+        u->unk54 = ((gUnk_030023B4 << 17) >> 4) + gUnk_03002790[u->unk44].unk54 + (128 << 7);
+        x = gUnk_03002490;
+        v = (gUnk_030023D4 << 17) >> 4;
+        w = gUnk_03002790[x->unk44].unk58;
+        if (w >= 0)
+            y = w - v + 0xFFFF4000;
         else
-            w58 = v3 + w2 + 0xFFFF4000;
-        t5->unk58 = w58;
+            y = v + w + 0xFFFF4000;
     }
     else
     {
-        t4->unk54 = ((gUnk_030023B4 << 17) >> 4) + *(s32 *)(o3 + (u32)p6) + 0xFFFF0000;
-        t5 = t4;
-        v3t = q2 << 17;
-        v3 = v3t >> 4;
-        w2 = *(s32 *)(*a44 * 144 + (u32)p7);
-        if (w2 >= 0)
-            w58 = w2 - v3 + 0xFFFF8000;
+        u->unk54 = ((gUnk_030023B4 << 17) >> 4) + gUnk_03002790[u->unk44].unk54 + 0xFFFF0000;
+        x = gUnk_03002490;
+        v = (gUnk_030023D4 << 17) >> 4;
+        w = gUnk_03002790[x->unk44].unk58;
+        if (w >= 0)
+            y = w - v + 0xFFFF8000;
         else
-            w58 = v3 + w2 + 0xFFFF8000;
-        t5->unk58 = w58;
+            y = v + w + 0xFFFF8000;
     }
-    t6 = gUnk_03002490;
-    t6->unk6C = 0;
-    c2 = &gUnk_03002490;
+    x->unk58 = y;
+    gUnk_03002490->unk6C = 0;
     do
     {
-        q1 = *c2;
-        q1->unk3C = 19;
+        gUnk_03002490->unk3C = 19;
         TaskYieldTrampoline(2);
-        q2s = *c2;
-        q2s->unk3C = 20;
+        gUnk_03002490->unk3C = 20;
         TaskYieldTrampoline(2);
-        q3 = *c2;
-        q3->unk3C = 21;
+        gUnk_03002490->unk3C = 21;
         TaskYieldTrampoline(2);
-        q4 = *c2;
-        q4->unk3C = 22;
+        gUnk_03002490->unk3C = 22;
         TaskYieldTrampoline(2);
-        q5 = *c2;
-        q5->unk6C++;
-    } while ((s16)q5->unk6C <= 1);
+        gUnk_03002490->unk6C++;
+    } while ((s16)gUnk_03002490->unk6C <= 1);
     TaskDispatchTrampoline();
 }
 
 void sub_080b0144(void)
 {
-    register struct Task **c asm("r4");
-    struct Task **c2;
     struct Task *t;
     struct Task *u;
-    register struct Task *t4 asm("r2");
-    register struct Task *t5 asm("r5");
-    struct Task *t6;
-    struct Task *q1;
-    struct Task *q2s;
-    struct Task *q3;
-    struct Task *q4;
-    struct Task *q5;
-    u8 *p5;
-    register u8 *p6 asm("r6");
-    u8 *p7;
-    register s32 i asm("r1");
-    s32 i2;
-    register s32 o asm("r2");
-    s32 o2;
-    s32 q;
-    register s32 q2 asm("r3");
-    register s32 v3 asm("r2");
-    register s32 v3t asm("r0");
-    register s32 w58 asm("r0");
-    register s32 o3 asm("r1");
-    register s32 av asm("r1");
-    register s32 o9 asm("r0");
-    s32 w0;
-    s32 w2;
-    register s16 *a44 asm("r4");
-    register s32 num asm("r3");
-    register s32 *pa asm("r1");
-    register s32 *pa7 asm("r0");
-    register s32 nv asm("r0");
-    register s32 yv asm("r1");
-    register s32 zv asm("r0");
-    register s32 i9 asm("r0");
-    s32 *a2;
-    register s32 *a23d asm("r0");
-    s32 ya;
-    s32 za;
-    s32 num2;
-    s32 yb;
-    s32 zb;
+    s32 v;
+    s32 w;
+    s32 y;
+    struct Task *x;
 
-    c = &gUnk_03002490;
-    t = *c;
+    t = gUnk_03002490;
     t->unk00 = (u32)sub_0806572c;
     t->unk0C = (u32)sub_08005d9c;
     t->unk42 = 12;
-    u = *c;
-    u->unk38 = gUnk_08754504;
-    u->unk43 = 1;
-    p5 = (u8 *)gUnk_03002790;
-    i = (*c)->unk44;
-    i9 = i * 9;
-    o = i9 << 4;
-    p6 = p5 + 84;
-    pa = (s32 *)(o + (u32)p6);
-    nv = *pa;
-    asm volatile("" : "+r"(nv));
-    num = abs(nv) << 4;
-    yv = *pa;
-    ya = abs(yv);
-    p7 = p5 + 88;
-    pa7 = (s32 *)(o + (u32)p7);
-    zv = *pa7;
-    za = abs(zv);
-    q = Div(num, ya + za);
-    a2 = (s32 *)&gUnk_030023B4;
-    *a2 = q;
-    i2 = (*c)->unk44;
-    o2 = i2 * 144;
-    num2 = abs(*(s32 *)(o2 + (u32)p7)) << 4;
-    yb = abs(*(s32 *)(o2 + (u32)p6));
-    zb = abs(*(s32 *)(o2 + (u32)p7));
-    q2 = Div(num2, yb + zb);
-    a23d = (s32 *)&gUnk_030023D4;
-    *a23d = q2;
-    t4 = *c;
-    a44 = &t4->unk44;
-    av = *a44;
-    o9 = av * 9;
-    o3 = o9 << 4;
-    w0 = *(s32 *)(o3 + (u32)p7);
-    if (w0 > 0)
+    gUnk_03002490->unk38 = gUnk_08754504;
+    gUnk_03002490->unk43 = 1;
+    gUnk_030023B4 = Div(abs(gUnk_03002790[gUnk_03002490->unk44].unk54) << 4,
+                        abs(gUnk_03002790[gUnk_03002490->unk44].unk54) + abs(gUnk_03002790[gUnk_03002490->unk44].unk58));
+    gUnk_030023D4 = Div(abs(gUnk_03002790[gUnk_03002490->unk44].unk58) << 4,
+                        abs(gUnk_03002790[gUnk_03002490->unk44].unk54) + abs(gUnk_03002790[gUnk_03002490->unk44].unk58));
+    u = gUnk_03002490;
+    w = gUnk_03002790[u->unk44].unk58;
+    if (w > 0)
     {
-        t4->unk54 = ((gUnk_030023B4 << 17) >> 4) + *(s32 *)(o3 + (u32)p6) + (128 << 7);
-        t5 = t4;
-        v3t = q2 << 17;
-        v3 = v3t >> 4;
-        w2 = *(s32 *)(*a44 * 144 + (u32)p7);
-        if (w2 >= 0)
-            w58 = w2 - v3 + (192 << 8);
+        u->unk54 = ((gUnk_030023B4 << 17) >> 4) + gUnk_03002790[u->unk44].unk54 + (128 << 7);
+        x = gUnk_03002490;
+        v = (gUnk_030023D4 << 17) >> 4;
+        w = gUnk_03002790[x->unk44].unk58;
+        if (w >= 0)
+            y = w - v + (192 << 8);
         else
-            w58 = v3 + w2 + (192 << 8);
-        t5->unk58 = w58;
+            y = v + w + (192 << 8);
     }
-    else if (w0 < 0)
+    else if (w < 0)
     {
-        t4->unk54 = ((gUnk_030023B4 << 17) >> 4) + *(s32 *)(o3 + (u32)p6) + 0xFFFEE000;
-        t5 = t4;
-        v3t = q2 << 17;
-        v3 = v3t >> 4;
-        w2 = *(s32 *)(*a44 * 144 + (u32)p7);
-        if (w2 >= 0)
-            w58 = w2 - v3 + (128 << 7);
+        u->unk54 = ((gUnk_030023B4 << 17) >> 4) + gUnk_03002790[u->unk44].unk54 + 0xFFFEE000;
+        x = gUnk_03002490;
+        v = (gUnk_030023D4 << 17) >> 4;
+        w = gUnk_03002790[x->unk44].unk58;
+        if (w >= 0)
+            y = w - v + (128 << 7);
         else
-            w58 = v3 + w2 + (128 << 7);
-        t5->unk58 = w58;
+            y = v + w + (128 << 7);
     }
     else
     {
-        t4->unk54 = ((gUnk_030023B4 << 17) >> 4) + *(s32 *)(o3 + (u32)p6) + 0xFFFF0000;
-        t5 = t4;
-        v3t = q2 << 17;
-        v3 = v3t >> 4;
-        w2 = *(s32 *)(*a44 * 144 + (u32)p7);
-        if (w2 >= 0)
-            w58 = w2 - v3 + (128 << 8);
+        u->unk54 = ((gUnk_030023B4 << 17) >> 4) + gUnk_03002790[u->unk44].unk54 + 0xFFFF0000;
+        x = gUnk_03002490;
+        v = (gUnk_030023D4 << 17) >> 4;
+        w = gUnk_03002790[x->unk44].unk58;
+        if (w >= 0)
+            y = w - v + (128 << 8);
         else
-            w58 = v3 + w2 + (128 << 8);
-        t5->unk58 = w58;
+            y = v + w + (128 << 8);
     }
-    t6 = gUnk_03002490;
-    t6->unk6C = 0;
-    c2 = &gUnk_03002490;
+    x->unk58 = y;
+    gUnk_03002490->unk6C = 0;
     do
     {
-        q1 = *c2;
-        q1->unk3C = 19;
+        gUnk_03002490->unk3C = 19;
         TaskYieldTrampoline(2);
-        q2s = *c2;
-        q2s->unk3C = 20;
+        gUnk_03002490->unk3C = 20;
         TaskYieldTrampoline(2);
-        q3 = *c2;
-        q3->unk3C = 21;
+        gUnk_03002490->unk3C = 21;
         TaskYieldTrampoline(2);
-        q4 = *c2;
-        q4->unk3C = 22;
+        gUnk_03002490->unk3C = 22;
         TaskYieldTrampoline(2);
-        q5 = *c2;
-        q5->unk6C++;
-    } while ((s16)q5->unk6C <= 1);
+        gUnk_03002490->unk6C++;
+    } while ((s16)gUnk_03002490->unk6C <= 1);
     TaskDispatchTrampoline();
 }
 
 void sub_080b0338(void)
 {
-    register struct Task **c asm("r4");
     struct Task *t;
     struct Task *u;
-    register struct Task *t4 asm("r4");
-    struct Task *t6;
-    struct Task *b1;
-    struct Task *b2;
-    struct Task *b3;
-    struct Task *b4;
-    struct Task *b5;
-    struct Task *b6;
-    struct Task *b7;
-    struct Task *q1;
-    struct Task *q2s;
-    struct Task *q3;
-    struct Task *q4;
-    struct Task *q5;
-    u8 *p5;
-    s32 *pb;
-    register u8 *p6 asm("r6");
-    u8 *p7;
-    struct Task *tb3;
-    register s32 i asm("r1");
-    s32 i2;
-    register s32 o asm("r2");
-    s32 o2;
-    s32 q;
-    s32 q2;
-    s32 v2;
-    register s32 v3 asm("r2");
-    register s32 w58 asm("r0");
+    s32 v;
     s32 w;
-    s32 w2;
-    register s16 *a44 asm("r5");
-    register s32 *pa asm("r1");
-    register s32 *pa7 asm("r0");
-    register s32 nv asm("r0");
-    register s32 i9 asm("r0");
-    register s32 yv asm("r1");
-    register s32 zv asm("r0");
-    register s32 num asm("r3");
-    s32 ya;
-    s32 za;
-    s32 num2;
-    s32 yb;
-    s32 zb;
+    struct Task *x;
 
-    c = &gUnk_03002490;
-    t = *c;
+    t = gUnk_03002490;
     t->unk00 = (u32)sub_0806572c;
     t->unk0C = (u32)sub_08005d9c;
     t->unk42 = 13;
-    u = *c;
-    u->unk38 = gUnk_08754504;
-    u->unk43 = 1;
-    p5 = (u8 *)gUnk_03002790;
-    i = (*c)->unk44;
-    i9 = i * 9;
-    o = i9 << 4;
-    p6 = p5 + 84;
-    pa = (s32 *)(o + (u32)p6);
-    nv = *pa;
-    asm volatile("" : "+r"(nv));
-    num = abs(nv) << 4;
-    yv = *pa;
-    ya = abs(yv);
-    p7 = p5 + 88;
-    pa7 = (s32 *)(o + (u32)p7);
-    zv = *pa7;
-    za = abs(zv);
-    q = Div(num, ya + za);
-    pb = &gUnk_030023B4;
-    *pb = q;
-    i2 = (*c)->unk44;
-    o2 = i2 * 144;
-    num2 = abs(*(s32 *)(o2 + (u32)p7)) << 4;
-    yb = abs(*(s32 *)(o2 + (u32)p6));
-    zb = abs(*(s32 *)(o2 + (u32)p7));
-    q2 = Div(num2, yb + zb);
-    gUnk_030023D4 = q2;
-    t4 = *c;
-    v2 = (*pb << 16) >> 4;
-    a44 = &t4->unk44;
-    w = *(s32 *)(*a44 * 144 + (u32)p6);
-    t4->unk54 = v2 + w;
-    v3 = (q2 << 16) >> 4;
-    asm("" : "+r"(a44) : : "memory");
-    w2 = *(s32 *)(*a44 * 144 + (u32)p7);
-    if (w2 >= 0)
-        w58 = w2 - v3;
+    gUnk_03002490->unk38 = gUnk_08754504;
+    gUnk_03002490->unk43 = 1;
+    gUnk_030023B4 = Div(abs(gUnk_03002790[gUnk_03002490->unk44].unk54) << 4,
+                        abs(gUnk_03002790[gUnk_03002490->unk44].unk54) + abs(gUnk_03002790[gUnk_03002490->unk44].unk58));
+    gUnk_030023D4 = Div(abs(gUnk_03002790[gUnk_03002490->unk44].unk58) << 4,
+                        abs(gUnk_03002790[gUnk_03002490->unk44].unk54) + abs(gUnk_03002790[gUnk_03002490->unk44].unk58));
+    u = gUnk_03002490;
+    u->unk54 = ((gUnk_030023B4 << 16) >> 4) + gUnk_03002790[u->unk44].unk54;
+    x = gUnk_03002490;
+    v = (gUnk_030023D4 << 16) >> 4;
+    w = gUnk_03002790[x->unk44].unk58;
+    if (w >= 0)
+        w = gUnk_03002790[x->unk44].unk58 - v;
     else
-        w58 = v3 + w2;
-    t4->unk58 = w58;
-    tb3 = gUnk_03002790;
-    switch (tb3[gUnk_03002490->unk44].unk73)
+        w = v + gUnk_03002790[x->unk44].unk58;
+    x->unk58 = w;
+    switch (gUnk_03002790[gUnk_03002490->unk44].unk73)
     {
     case 0:
     case 1:
     case 2:
     case 3:
-        t6 = gUnk_03002490;
-        t6->unk6C = 0;
+        gUnk_03002490->unk6C = 0;
         do
         {
-            q1 = gUnk_03002490;
-            q1->unk3C = 17;
+            gUnk_03002490->unk3C = 17;
             TaskYieldTrampoline(2);
-            q2s = gUnk_03002490;
-            q2s->unk3C = 16;
+            gUnk_03002490->unk3C = 16;
             TaskYieldTrampoline(2);
-            q3 = gUnk_03002490;
-            q3->unk3C = 15;
+            gUnk_03002490->unk3C = 15;
             TaskYieldTrampoline(2);
-            q4 = gUnk_03002490;
-            q4->unk3C = 14;
+            gUnk_03002490->unk3C = 14;
             TaskYieldTrampoline(2);
-            q5 = gUnk_03002490;
-            q5->unk6C++;
-        } while ((s16)q5->unk6C <= 1);
+            gUnk_03002490->unk6C++;
+        } while ((s16)gUnk_03002490->unk6C <= 1);
         break;
     case 5:
     case 6:
@@ -3754,33 +3457,26 @@ void sub_080b0338(void)
     case 8:
     case 9:
     case 10:
-        b1 = gUnk_03002490;
-        if (tb3[b1->unk44].unk3C == 3)
+        if (gUnk_03002790[gUnk_03002490->unk44].unk3C == 3)
         {
-            b1->unk3C = 13;
+            gUnk_03002490->unk3C = 13;
             TaskYieldTrampoline(4);
-            b2 = gUnk_03002490;
-            b2->unk3C = 12;
+            gUnk_03002490->unk3C = 12;
             TaskYieldTrampoline(4);
-            b3 = gUnk_03002490;
-            b3->unk3C = 11;
+            gUnk_03002490->unk3C = 11;
             TaskYieldTrampoline(4);
-            b4 = gUnk_03002490;
-            b4->unk3C = 10;
+            gUnk_03002490->unk3C = 10;
             TaskYieldTrampoline(4);
         }
         else
         {
-            b1->unk3C = 11;
+            gUnk_03002490->unk3C = 11;
             TaskYieldTrampoline(4);
-            b5 = gUnk_03002490;
-            b5->unk3C = 10;
+            gUnk_03002490->unk3C = 10;
             TaskYieldTrampoline(4);
-            b6 = gUnk_03002490;
-            b6->unk3C = 13;
+            gUnk_03002490->unk3C = 13;
             TaskYieldTrampoline(4);
-            b7 = gUnk_03002490;
-            b7->unk3C = 12;
+            gUnk_03002490->unk3C = 12;
             TaskYieldTrampoline(4);
         }
         break;

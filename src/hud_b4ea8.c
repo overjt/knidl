@@ -3,14 +3,29 @@
 #include "task.h"
 
 /* RAM cells / ROM tables */
-extern u32 gUnk_0200000C[];
+extern u16 gUnk_0200000C;
 extern u32 gUnk_02000034[];
 extern u32 gUnk_02004C90;
 extern u32 gUnk_02005580[];
 extern s16 gUnk_02005588[];
 extern u32 gUnk_02005590[];
 extern u32 gUnk_020055D0[];
-extern u32 gUnk_020055D8[];
+struct Unk020055D8Entry
+{
+    /*0x00*/ s8 unk0;
+    /*0x01*/ s8 unk1;
+    /*0x02*/ s8 unk2;
+    /*0x03*/ s8 unk3;
+    /*0x04*/ u16 unk4;
+    /*0x06*/ u16 unk6;
+};
+struct Unk020055D8
+{
+    /*0x00*/ s16 unk0;
+    /*0x02*/ s16 unk2;
+    /*0x04*/ struct Unk020055D8Entry *unk4;
+};
+extern struct Unk020055D8 gUnk_020055D8;
 extern u8 gUnk_02005E10[];
 extern u32 gUnk_02005F10[];
 extern u32 gUnk_02006040[];
@@ -20,7 +35,7 @@ extern s32 gUnk_02006190[];
 extern u8 gUnk_020069F0;
 extern u32 gUnk_02007BF0[];
 extern s32 gUnk_02007D00[];
-extern u32 gUnk_02007D40[];
+extern u16 gUnk_02007D40;
 extern s16 gUnk_02007D48[];
 extern u16 gUnk_02007D60;
 extern u32 gUnk_02007D64[];
@@ -31,7 +46,7 @@ extern u32 gUnk_0200AF0C[];
 extern u8 gUnk_0200AFF8;
 extern u8 gUnk_0200B030;
 extern u32 gUnk_0200B04C[];
-extern u32 gUnk_0200B078[];
+extern u8 gUnk_0200B078;
 extern u8 gUnk_0200D080;
 struct Unk0200D120
 {
@@ -1404,140 +1419,62 @@ s32 sub_080b5d84();
 void sub_080b603c();
 void sub_080b60e8();
 extern void CpuSet(const void *src, void *dst, u32 control);
-register s32 gR9 asm("r9");
-register s32 gR10 asm("r10");
-register s32 gR11 asm("r11");
 
 void sub_080b4ea8(void)
 {
-    register s32 k8 asm("r8");
-    register u8 *p6 asm("r6");
-    register u8 *e5 asm("r5");
-    register s32 i4 asm("r4");
-    u8 *n3;
-    s32 n7;
-    register u8 *pw0 asm("r0");
-    register u8 *q6 asm("r6");
-    register s32 j2 asm("r2");
-    register s32 jsh asm("r1");
-    register u8 *qb asm("r0");
-    register s32 w1b asm("r1");
-    s32 w1;
-    s32 w;
-    s32 r;
-    s32 w0;
-    s32 w6t;
+    s32 n;
+    s32 i;
+    s32 j;
+    struct Unk020055D8Entry *e;
+    struct Unk020055D8Entry *f;
 
-    k8 = 0;
-    pw0 = (u8 *)gUnk_020055D8;
-    asm("" : "+r"(pw0));
-    w1 = *(s16 *)pw0;
-    p6 = pw0;
-    if (w1 == 0)
-        goto end;
-    *(u16 *)gUnk_0200000C = k8;
-    *(u16 *)gUnk_02007D40 = 8;
-    e5 = *(u8 **)(p6 + 4);
-    i4 = 0;
-    if (i4 >= *(s16 *)p6)
-        goto tail;
-xbody:
-    w = *(s8 *)e5;
-    n3 = e5 + 8;
-    n7 = i4 + 1;
-    switch (w)
+    n = 0;
+    if (gUnk_020055D8.unk0 == 0)
+        return;
+    gUnk_0200000C = n;
+    gUnk_02007D40 = 8;
+    e = gUnk_020055D8.unk4;
+    for (i = 0; i < gUnk_020055D8.unk0; e++, i++)
     {
-    case 0:
-    case 4:
-    case 7:
-        break;
-    case 1:
-        r = sub_080b5670(e5, i4, k8);
-        asm(" " : "+r"(e5), "+r"(i4));
-        n3 = e5 + 8;
-        n7 = i4 + 1;
-        if (r != 0)
+        switch (e->unk0)
         {
-            k8 += 1;
-        }
-        break;
-    case 5:
-        r = sub_080b5a94(e5, i4, k8);
-        asm("    " : "+r"(e5), "+r"(i4));
-        n3 = e5 + 8;
-        n7 = i4 + 1;
-        if (r != 0)
-        {
-            k8 += 1;
-        }
-        break;
-    case 2:
-        r = sub_080b5840(e5, i4, k8);
-        asm("  " : "+r"(e5), "+r"(i4));
-        n3 = e5 + 8;
-        n7 = i4 + 1;
-        if (r != 0)
-        {
-            k8 += 1;
-        }
-        break;
-    case 6:
-        w6t = *(s8 *)(e5 + 1);
-        asm("   " : "+r"(e5), "+r"(i4));
-        n3 = e5 + 8;
-        n7 = i4 + 1;
-        if (w6t != 0)
+        case 0:
+        case 4:
+        case 7:
             break;
-        j2 = *(s8 *)(e5 + 2);
-        jsh = j2 << 3;
-        qb = *(u8 **)(p6 + 4);
-        q6 = qb + jsh;
-        i4 = j2;
-        w0 = i4 + *(s8 *)(e5 + 3);
-        if (i4 >= w0)
+        case 1:
+            if (sub_080b5670(e, i, n) != 0)
+                n++;
             break;
-        do
-        {
-            if (*(s8 *)q6 == 7)
+        case 5:
+            if (sub_080b5a94(e, i, n) != 0)
+                n++;
+            break;
+        case 2:
+            if (sub_080b5840(e, i, n) != 0)
+                n++;
+            break;
+        case 6:
+            if (e->unk1 == 0)
             {
-                r = sub_080b5840(q6, i4, k8);
-                if (r != 0)
-                    k8 += 1;
+                f = &gUnk_020055D8.unk4[e->unk2];
+                for (j = e->unk2; j < e->unk2 + e->unk3; f++, j++)
+                {
+                    if (f->unk0 == 7 && sub_080b5840(f, j, n) != 0)
+                        n++;
+                }
             }
-            q6 += 8;
-            i4 += 1;
-            asm("" : : : "memory");
-        } while (i4 < *(s8 *)(e5 + 2) + *(s8 *)(e5 + 3));
-        break;
-    case 3:
-        r = sub_080b590c(e5, i4, k8);
-common:
-        asm("    " : "+r"(e5), "+r"(i4));
-        n3 = e5 + 8;
-        n7 = i4 + 1;
-        if (r != 0)
-        {
-            k8 += 1;
+            break;
+        case 3:
+            if (sub_080b590c(e, i, n) != 0)
+                n++;
+            break;
+        case 8:
+            sub_080b59d8(e, i, n);
+            n++;
+            break;
         }
-        break;
-    case 8:
-        sub_080b59d8(e5, i4, k8);
-        k8 += 1;
-        asm("     " : "+r"(e5), "+r"(i4));
-        n3 = e5 + 8;
-        n7 = i4 + 1;
-        break;
     }
-    e5 = n3;
-    i4 = n7;
-    pw0 = (u8 *)gUnk_020055D8;
-    asm("" : "+r"(pw0));
-    w1b = *(s16 *)pw0;
-    p6 = pw0;
-    if (i4 < w1b)
-        goto xbody;
-tail:
-    if (*(u8 *)gUnk_0200B078 == 4)
+    if (gUnk_0200B078 == 4)
         sub_080b5558();
-end:;
 }
