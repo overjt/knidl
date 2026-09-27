@@ -3,12 +3,18 @@
 @ Segment level_object_tables: 0x080D0000-0x08120000 (data, 0x50000 bytes)
 @ Structure only (docs/data.md): labels, symbolic pointer words and
 @ .incbin slices of the user's baserom.gba; no ROM bytes are committed.
-@ 24 label(s), 0 code pointer(s), 0 data pointer(s), 25 .incbin slice(s) (0x50000 bytes).
+@ 33 label(s), 0 code pointer(s), 0 data pointer(s), 34 .incbin slice(s) (0x50000 bytes).
 
 	.section .level_object_tables, "a"
 	.global	level_object_tables
 level_object_tables:
-	.incbin	"baserom.gba", 0xD0000, 0x198
+	.incbin	"baserom.gba", 0xD0000, 0x62
+	.global	gUnk_080D0062
+gUnk_080D0062:
+	.incbin	"baserom.gba", 0xD0062, 0x94
+	.global	gUnk_080D00F6
+gUnk_080D00F6:
+	.incbin	"baserom.gba", 0xD00F6, 0xA2
 	.global	gUnk_080D0198
 gUnk_080D0198:
 	.incbin	"baserom.gba", 0xD0198, 0x200
@@ -44,7 +50,28 @@ gUnk_080D2AD0:
 	.incbin	"baserom.gba", 0xD2AD0, 0x46D0
 	.global	gUnk_080D71A0
 gUnk_080D71A0:
-	.incbin	"baserom.gba", 0xD71A0, 0x4D58
+	.incbin	"baserom.gba", 0xD71A0, 0x28
+	.global	gUnk_080D71C8
+gUnk_080D71C8:
+	.incbin	"baserom.gba", 0xD71C8, 0x580
+	.global	gUnk_080D7748
+gUnk_080D7748:
+	.incbin	"baserom.gba", 0xD7748, 0x8A0
+	.global	gUnk_080D7FE8
+gUnk_080D7FE8:
+	.incbin	"baserom.gba", 0xD7FE8, 0x5E0
+	.global	gUnk_080D85C8
+gUnk_080D85C8:
+	.incbin	"baserom.gba", 0xD85C8, 0x8A0
+	.global	gUnk_080D8E68
+gUnk_080D8E68:
+	.incbin	"baserom.gba", 0xD8E68, 0x8A0
+	.global	gUnk_080D9708
+gUnk_080D9708:
+	.incbin	"baserom.gba", 0xD9708, 0x8A0
+	.global	gUnk_080D9FA8
+gUnk_080D9FA8:
+	.incbin	"baserom.gba", 0xD9FA8, 0x1F50
 	.global	gUnk_080DBEF8
 gUnk_080DBEF8:
 	.incbin	"baserom.gba", 0xDBEF8, 0x8

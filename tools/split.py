@@ -1011,6 +1011,15 @@ class ConfigError(Exception):
     """A pointer table or label that the data plan cannot honour."""
 
 
+def pointer_valued(v):
+    """True for a value that can be an address: ROM, EWRAM or IWRAM."""
+    return (
+        ROM_BASE <= v < 0x0A000000
+        or 0x02000000 <= v < 0x02040000
+        or 0x03000000 <= v < 0x03008000
+    )
+
+
 def parse_int(text, what):
     try:
         return int(str(text), 0)
@@ -1043,6 +1052,9 @@ class DataPlan(object):
         self.why = {}
         self.missing = {}  # target addr -> [(slot addr, why)]
         self.errors = []
+        # Slots of "extent": "next-label" tables (docs/data.md 5.1), kept
+        # apart so the metrics can count them separately.
+        self.heuristic_slots = set()
         self._build_labels()
         self.slots = self._build_slots(pointer_tables)
         self._build_words()
@@ -1108,7 +1120,33 @@ class DataPlan(object):
         stride = parse_int(table.get("stride", 4), what + ".stride")
         offsets = [parse_int(o, what + ".pointers")
                    for o in table.get("pointers", [0])]
-        if "count" in table:
+        if table.get("extent") == "next-label":
+            # The C declares an array of pointers but not its length: the
+            # table runs up to the next label (or the segment end), and
+            # every word of that span must be NULL or pointer-valued.
+            if "count" in table or "end" in table:
+                raise ConfigError("%s: \"extent\": \"next-label\" takes no "
+                                  "count or end" % what)
+            if stride != 4 or offsets != [0]:
+                raise ConfigError("%s: a next-label table is a plain array "
+                                  "of pointers" % what)
+            seg = self.segment_of(start)
+            if seg is None:
+                raise ConfigError("%s: 0x%08X is not inside a data segment"
+                                  % (what, start))
+            later = [a for a in self.labels if start < a < seg[2]]
+            end = min(later) if later else seg[2]
+            for addr in range(start, end - 3, 4):
+                v = self.word(addr)
+                if v and not pointer_valued(v):
+                    raise ConfigError(
+                        "%s: word 0x%08X at 0x%08X is not a pointer, so the "
+                        "table is shorter than the span to the next label "
+                        "(0x%08X); give it an explicit end or drop it"
+                        % (what, v, addr, end)
+                    )
+            count = (end - start) // 4
+        elif "count" in table:
             count = parse_int(table["count"], what + ".count")
         elif "end" in table:
             end = parse_int(table["end"], what + ".end")
@@ -1122,6 +1160,8 @@ class DataPlan(object):
         for i in range(count):
             for off in offsets:
                 slots.append((start + i * stride + off, why))
+        if table.get("extent") == "next-label":
+            self.heuristic_slots.update(a for a, _w in slots)
         return slots, table.get("targets")
 
     def _build_slots(self, pointer_tables):
@@ -1217,8 +1257,8 @@ def emit_data_segment(plan, name, start, end, kind, asset):
     )
     words = dict((a, o) for a, o in plan.words.items() if start <= a < end)
     body = []
-    stats = {"labels": 0, "code": 0, "data": 0, "incbins": 0,
-             "incbin_bytes": 0}
+    stats = {"labels": 0, "code": 0, "data": 0, "heuristic": 0,
+             "incbins": 0, "incbin_bytes": 0}
 
     def incbin(a, length):
         body.append('\t.incbin\t"%s", 0x%X, 0x%X'
@@ -1241,6 +1281,8 @@ def emit_data_segment(plan, name, start, end, kind, asset):
         if addr in words:
             body.append("\t.word\t%s" % words[addr])
             stats[plan.kinds[addr]] += 1
+            if addr in plan.heuristic_slots:
+                stats["heuristic"] += 1
             cur = addr + 4
     if cur < end:
         incbin(cur, end - cur)
@@ -1257,6 +1299,9 @@ def emit_data_segment(plan, name, start, end, kind, asset):
         % (stats["labels"], stats["code"], stats["data"], stats["incbins"],
            stats["incbin_bytes"]),
     ]
+    if stats["heuristic"]:
+        h.append("@ %d of the pointers are in next-label tables (docs/data.md"
+                 " 5.1)." % stats["heuristic"])
     if asset:
         h.append("@ Asset segment: its bytes stay extracted from baserom.gba"
                  " forever; only")

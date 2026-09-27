@@ -14,6 +14,12 @@ structure (labels and symbolic pointers) rather than anonymous bytes:
      `.incbin` slices (or emitted as numbers), the latter split again into
      "points at code" (a code or literal-pool segment) and "points at data".
 
+The symbolic words are split by the rule that proved them (docs/data.md
+section 5): the function-entry rule, a consumer-proven pointer table, or a
+"next-label" table whose extent is the span to the next label (the
+coordinator asked for the heuristic to be counted on its own).  The split
+reuses tools/split.py's own DataPlan, so it cannot drift from the emitter.
+
 Pointer-LIKE is not pointer: most of the remaining "points at data" words
 sit in graphics, samples and songs, where a 0x08xxxxxx value is as likely
 to be pixels as an address.  The counts measure the work left, not proven
@@ -38,6 +44,9 @@ import os
 import re
 import struct
 import sys
+
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import split  # noqa: E402  (tools/split.py: the emitter's DataPlan)
 
 ROM_BASE = 0x08000000
 PTR_LO = 0x08000000
@@ -166,6 +175,19 @@ def main():
             if m and m.group(1) in rom_data_names:
                 absolute.add(m.group(1))
 
+    # ---- which proof symbolized a word (tools/split.py's plan) ----------
+    rows_db = split.load_symbol_db("docs/analysis/symbols.csv")
+    seg_cfg = dict((c["name"], c) for c in cfg.get("segments", []))
+    plan = split.DataPlan(
+        rom,
+        [(n, s, e, bool(seg_cfg.get(n, {}).get("asset", False)))
+         for s, e, k, n in segs if k in split.STRUCTURE_KINDS and n in seg_cfg],
+        rows_db, data_symbols,
+        dict((int(a, 16), n) for a, n in cfg.get("extra_labels", {}).items()),
+        cfg.get("pointer_tables", []),
+        dict((int(a, 16), r) for a, r in cfg.get("not_pointers", {}).items()),
+    )
+
     # ---- metric 2: pointer-like words in data segments -------------------
     data_segs = [
         (s, e, k, n) for s, e, k, n in segs
@@ -173,6 +195,7 @@ def main():
     ]
     files = segment_files(set(n for _s, _e, _k, n in data_segs))
     total = {"symbolic": 0, "code": 0, "data": 0}
+    proof = {"rule": 0, "table": 0, "heuristic": 0, "ram": 0}
     rows = []
     labels_total = 0
     incbins_total = 0
@@ -207,6 +230,14 @@ def main():
             if a in symbolic_at:
                 if PTR_LO <= v < PTR_HI:
                     row["symbolic"] += 1
+                    if a in plan.heuristic_slots:
+                        proof["heuristic"] += 1
+                    elif a in plan.slots:
+                        proof["table"] += 1
+                    else:
+                        proof["rule"] += 1
+                else:
+                    proof["ram"] += 1
             elif PTR_LO <= v < PTR_HI:
                 _tn, tk = segment_of(segs, v & ~1)
                 row["code" if tk in CODE_KINDS else "data"] += 1
@@ -225,8 +256,14 @@ def main():
     print("pointer-like words in data segments (4-aligned, 0x%08X-0x%08X):"
           % (PTR_LO, PTR_HI))
     print("    %d symbolic" % total["symbolic"])
+    print("        %d by the function-entry rule" % proof["rule"])
+    print("        %d in consumer-proven pointer tables" % proof["table"])
+    print("        %d in next-label pointer tables (extent heuristic)"
+          % proof["heuristic"])
     print("    %d not symbolic, points at code" % total["code"])
     print("    %d not symbolic, points at data" % total["data"])
+    print("symbolic words pointing at RAM (outside the count above): %d"
+          % proof["ram"])
     if args.verbose:
         print()
         print("%-46s %9s %9s %9s" % ("segment", "symbolic", "code", "data"))
