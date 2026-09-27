@@ -46,7 +46,7 @@
 0x08006AC8 0x08006CD4 c_code early_6ac8 # src/early_6ac8.c (carved by tools/carve.py)
 0x08006CD4 0x08006D18 c_code early_6cd4 # src/early_6cd4.c (carved by tools/carve.py)
 0x08006D18 0x08006D28 c_code early_6d18 # src/early_6d18.c (carved by tools/carve.py)
-0x08006D28 0x08006E8C thumb_code game_code_early_080011ac_08002378_08003110_08003888_08004000_08004fec_08005654_08005acc_08005d9c_08006d18 [split]
+0x08006D28 0x08006E8C c_code early_6d28 # src/early_6d28.c (carved by tools/carve.py)
 0x08006E8C 0x08006E9C c_code early_6e8c # src/early_6e8c.c (carved by tools/carve.py)
 0x08006E9C 0x08007004 c_code early_6e9c # src/early_6e9c.c (carved by tools/carve.py)
 0x08007004 0x08007300 c_code early_7004 # src/early_7004.c (carved by tools/carve.py)
@@ -84,7 +84,7 @@
 0x0801A3E4 0x0801A76C c_code player_1a3e4 # src/player_1a3e4.c (carved by tools/carve.py)
 0x0801A76C 0x0801A8C8 c_code player_1a76c # src/player_1a76c.c (carved by tools/carve.py)
 0x0801A8C8 0x0801B24C c_code hitbox_1a8c8 # src/hitbox_1a8c8.c (carved by tools/carve.py)
-0x0801B24C 0x0801B7DC thumb_code game_code_and_rodata_08018b84_08019eec_0801a3e4_0801a8c8 [split]
+0x0801B24C 0x0801B7DC c_code hitbox_1b24c # src/hitbox_1b24c.c (carved by tools/carve.py)
 0x0801B7DC 0x0801BAA4 c_code hitbox_1b7dc # src/hitbox_1b7dc.c (carved by tools/carve.py)
 0x0801BAA4 0x0801BCAC c_code terrain_1baa4 # src/terrain_1baa4.c (carved by tools/carve.py)
 0x0801BCAC 0x0801C30C c_code terrain_1bcac # src/terrain_1bcac.c (carved by tools/carve.py)
@@ -114,7 +114,7 @@
 0x08026B60 0x080270D0 c_code door_26b60 # src/door_26b60.c (carved by tools/carve.py)
 0x080270D0 0x080273A0 c_code stage_270d0 # src/stage_270d0.c (carved by tools/carve.py)
 0x080273A0 0x08027A6C c_code stage_273a0 # src/stage_273a0.c (carved by tools/carve.py)
-0x08027A6C 0x08027E28 thumb_code game_code_and_rodata_08018b84_08019eec_0801a3e4_0801a8c8_08021b18_08023948_08024e40_080270d0_08027a6c [split]
+0x08027A6C 0x08027E28 c_code level_27a6c # src/level_27a6c.c (carved by tools/carve.py)
 0x08027E28 0x08028320 c_code room_27e28 # src/room_27e28.c (carved by tools/carve.py)
 0x08028320 0x08028B8C c_code room_28320 # src/room_28320.c (carved by tools/carve.py)
 0x08028B8C 0x080296A0 c_code camera_28b8c # src/camera_28b8c.c (carved by tools/carve.py)
@@ -298,8 +298,7 @@
 0x080C3F44 0x080C4630 c_code subgame_c3f44 # src/subgame_c3f44.c (carved by tools/carve.py)
 0x080C4630 0x080C4D08 c_code subgame_c4630 # src/subgame_c4630.c (carved by tools/carve.py)
 0x080C4D08 0x080C5284 c_code subgame_c4d08 # src/subgame_c4d08.c (carved by tools/carve.py)
-0x080C5284 0x080C5B84 c_code subgame_c5284 # src/subgame_c5284.c (carved by tools/carve.py)
-0x080C5B84 0x080C623C thumb_code game_code_and_rodata_080653ec_0806ef5c_080bf994_080c1ffc_080c3648 [split]
+0x080C5284 0x080C623C c_code subgame_c5284 # src/subgame_c5284.c (carved by tools/carve.py)
 0x080C623C 0x080C6258 c_code subgame_c623c # src/subgame_c623c.c (carved by tools/carve.py)
 0x080C6258 0x080C6260 c_code sub_080c6258 # src/sub_080c6258.c (carved by tools/carve.py)
 0x080C6260 0x080C6420 c_code mode_c6260 # src/mode_c6260.c (carved by tools/carve.py)
@@ -308,7 +307,7 @@
 0x080C7E4C 0x080C9004 c_code ending_c7e4c # src/ending_c7e4c.c (carved by tools/carve.py)
 0x080C9004 0x080CAA3C c_code ending_c9004 # src/ending_c9004.c (carved by tools/carve.py)
 0x080CAA3C 0x080CAAB8 c_code boot_caa3c # src/boot_caa3c.c (carved by tools/carve.py)
-0x080CAAB8 0x080CACF0 thumb_code game_code_and_rodata_080653ec_0806ef5c_080bf994_080c1ffc_080c6260_080c7e4c_080caa3c [split]
+0x080CAAB8 0x080CACF0 c_code boot_caab8 # src/boot_caab8.c (carved by tools/carve.py)
 0x080CACF0 0x080CB354 c_code gameover_cacf0 # src/gameover_cacf0.c (carved by tools/carve.py)
 0x080CB354 0x080CB64C c_code gameover_cb354 # src/gameover_cb354.c (carved by tools/carve.py)
 0x080CB64C 0x080CBED4 c_code gameover_cb64c # src/gameover_cb64c.c (carved by tools/carve.py)

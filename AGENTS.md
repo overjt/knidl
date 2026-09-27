@@ -238,7 +238,7 @@ Matching decompilation of Kirby: The Amazing Mirror's predecessor, **Kirby: Nigh
   `src/obj_2eac8.c`, `src/obj_2f62c.c`, `src/obj_30238.c` and
   `src/obj_306b4.c` (**all 151 functions, no asm left in the range**, no
   `asm` statements and no `register` pins).  It is one subsystem with M07
-  (the level / room builder, still asm), which calls it every frame: the
+  (the level / room builder, then still asm), which calls it every frame: the
   camera (mode `gUnk_030055C0`, pixel position `gUnk_03005604`, 16.16
   target `gUnk_03005614`/`gUnk_03005634`, camera and room bounds
   `gUnk_030055F8`/`gUnk_03005628`, per-player cameras for link play, a
@@ -264,9 +264,9 @@ Matching decompilation of Kirby: The Amazing Mirror's predecessor, **Kirby: Nigh
   `src/stage_270d0.c`, `src/stage_273a0.c`, `src/room_27e28.c`,
   `src/room_28320.c` and `src/camera_28b8c.c` (**156 of 157 functions**,
   no `asm` statements and no `register` pins; the one hole is
-  `sub_08027a6c`, 956 bytes, parked at 234 differing bytes with its best
-  source on #93), so `0x08021B18-0x08030803` (M07+M08) is C except that
-  one function.  It is the half of the
+  `sub_08027a6c`, 956 bytes, parked at 234 differing bytes, which the
+  final campaign landed from plain source as `src/level_27a6c.c`), so
+  `0x08021B18-0x08030803` (M07+M08) is all C.  It is the half of the
   level engine that decides which room is on screen and drives M08's camera:
   the room table `gUnk_087E1D58[level][stage][room]` gives the room header
   `gUnk_030055EC` (`struct RoomDef`, 0x58 bytes: BGM, compressed maps,
@@ -316,7 +316,7 @@ Matching decompilation of Kirby: The Amazing Mirror's predecessor, **Kirby: Nigh
   `src/player_39c24.c`, `src/player_3aa64.c` and `src/player_3bde8.c`
   (**all 39 functions, no asm left in the range**, no `asm` statements and
   no `register` pins), so `0x08021B18-0x08040B3F` (M07 through the start of
-  M11) is C except M07's `sub_08027a6c`.  The census name "stage script
+  M11) is C (M07's last function landed in the final campaign).  The census name "stage script
   runner" was wrong: the range is the second half of M09's player action
   machine - "enter" coroutines 10-21 and 23-28 of `gUnk_0873A748[62]` and
   per-frame handlers 9-25 of `gUnk_0873A840[57]` - among them the player's
@@ -454,9 +454,10 @@ Matching decompilation of Kirby: The Amazing Mirror's predecessor, **Kirby: Nigh
   `src/subgame_c4d08.c`, `src/subgame_c5284.c`, `src/subgame_c623c.c` and
   `src/mode_c6260.c` around PR #133's `src/sub_080c6258.c` (**81 of 82
   functions** in C, no `asm` statements and no `register` pins; the one
-  hole is the 1720-byte course renderer `sub_080c5b84`, parked at 22 bytes
-  with its best source on #98), so `0x080B9D0C-0x080C5B83` (M35, M36 and
-  most of M37) is contiguous C.  The census name "FIR-coefficient effect
+  hole was the 1720-byte course renderer `sub_080c5b84`, parked at 22 bytes,
+  which the final campaign landed from natural source at the end of
+  `src/subgame_c5284.c`), so `0x080B9D0C-0x080C641F` (M35, M36 and M37) is
+  contiguous C.  The census name "FIR-coefficient effect
   engine" was wrong: the `0x080CFE2C-0x080D0600` tables it was named after
   are this module's rodata.  The range is game 2 of the sub-game framework
   (`gUnk_02007FCC == 2`), a four-player race along four scrolling lanes:
@@ -468,7 +469,7 @@ Matching decompilation of Kirby: The Amazing Mirror's predecessor, **Kirby: Nigh
   state is the 0x454-byte record `gUnk_02016C40` behind the pointer cell
   `gUnk_02017094` and the course record `gUnk_0201B0E0` behind
   `gUnk_0201716C`, which M35 fills through the course builder
-  `sub_080c59d8` and `sub_080c5b84` (asm) renders column by column;
+  `sub_080c59d8` and `sub_080c5b84` renders column by column;
   the sky is a 160-line HBlank-DMA backdrop gradient.  After the real seam
   at `0x080C6260` comes `AgbMain` state 11 (`src/mode_c6260.c`), two scenes
   directed by M38's task types #100/#101 before state 12.  Four census
@@ -485,9 +486,10 @@ Matching decompilation of Kirby: The Amazing Mirror's predecessor, **Kirby: Nigh
   `src/gameover_cacf0.c`, `src/gameover_cb354.c`, `src/gameover_cb64c.c`,
   `src/gameover_cbed4.c`, `src/gameover_ccd4c.c` and `src/credits_cd330.c`
   (**109 of 110 functions**, no `asm` statements and no `register` pins;
-  the one hole is the boot logo objects' 568-byte interpreter
-  `sub_080caab8`, parked at 33 differing bytes with its best sources on
-  #100), so `0x080C6260-0x080CD89B` is C except that function.  The census
+  the one hole was the boot logo objects' 568-byte interpreter
+  `sub_080caab8`, parked at 33 differing bytes, which the final campaign
+  landed as `src/boot_caab8.c` with two commented zero-byte levers), so
+  `0x080C6260-0x080CD89B` is all C.  The census
   name "intro / cutscene / ending sequences?" was half right: it is the
   ending and the game-over screen.  `AgbMain` state 11 (M37's
   `src/mode_c6260.c`) plays two scenes directed by task types #100 and #101
@@ -524,9 +526,8 @@ Matching decompilation of Kirby: The Amazing Mirror's predecessor, **Kirby: Nigh
   `src/terrain_207a0.c` and `src/terrain_2136c.c` (26) - **54 of 55
   functions**, no `asm` statements and no `register` pins; the one hole is
   `sub_0801b24c` (1424 bytes, the third collider list's hit test), parked
-  at 44 differing bytes with its best sources on #84, so
-  `0x0801A8C8-0x08030803` (M06-M08) is C except it and M07's
-  `sub_08027a6c`.  The census name "terrain / collision query (pure leaf)"
+  at 44 differing bytes, which the final campaign landed as
+  `src/hitbox_1b24c.c`, so `0x0801A8C8-0x08030803` (M06-M08) is all C.  The census name "terrain / collision query (pure leaf)"
   was half right: the range is the collision engine every actor and player
   runs - ten per-frame entry points that load a box, compute its
   room-relative corners and run a probe set picked by the x velocity and
@@ -564,9 +565,9 @@ Matching decompilation of Kirby: The Amazing Mirror's predecessor, **Kirby: Nigh
   `sub_080b5670` a missing third call argument, the compiler's own QImode
   byte copy behind the `[sp, #4]` slot (correcting 3.269) and a VRAM base
   that must be a dropped pointer local (3.258).  `sub_0801b24c` (M06,
-  1424 bytes) stays parked at 44 differing bytes, now from plain source,
+  1424 bytes) stayed parked at 44 differing bytes, now from plain source,
   with its residue traced to 3.464's reaching register and a cse1/cse2
-  path effect (3.478; best source on #84).  No census row changed; 13
+  path effect (3.478); the final campaign landed it (3.492).  No census row changed; 13
   ROM tables named via `split_config.json` `data_symbols`; new lessons
   3.472-3.478 and 4.111.
 - The engine zone's last asm functions (issue #63, the backlog #32 left):
@@ -575,7 +576,8 @@ Matching decompilation of Kirby: The Amazing Mirror's predecessor, **Kirby: Nigh
   `src/early_3888.c`, `src/early_4984.c`, `src/early_5654.c`,
   `src/early_5acc.c`, `src/early_6ac8.c` and `src/early_6e9c.c`, so
   `0x080008E8-0x08007300` is C except `sub_08006d28` (SerialCB, 356 bytes,
-  parked at 15 differing bytes with its best source on #63; rom-map §6.4).
+  parked at 15 differing bytes; the final campaign landed it as
+  `src/early_6d28.c`, rom-map §6.4).
   Twelve are plain source and `sub_08002378` keeps one commented zero-code
   stand-in conjunct.  All fourteen were redrafted from the listings (#32's
   candidates were lost), and every #32 diagnosis turned out to describe
@@ -589,4 +591,29 @@ Matching decompilation of Kirby: The Amazing Mirror's predecessor, **Kirby: Nigh
   the libraries' older revisions.  `include/gba/syscall.h` now declares
   `MultiBoot` as returning int.  No census row changed; done by a
   three-agent fan-out; new lessons 3.479-3.488 and 4.112.
+- The final campaign over the last five game functions (issues #63, #84,
+  #93, #98, #100): `sub_08027a6c` (M07, `src/level_27a6c.c`),
+  `sub_08006d28` (SerialCB, `src/early_6d28.c`), `sub_0801b24c` (M06,
+  `src/hitbox_1b24c.c`), `sub_080c5b84` (M37, appended to
+  `src/subgame_c5284.c`, whose nine landed functions stay byte-identical)
+  and `sub_080caab8` (M38, `src/boot_caab8.c`), 5,024 bytes.  Four are
+  plain source, SerialCB with one commented zero-code stand-in (a dead
+  `i = 4;` before a `break`), and `sub_080caab8` keeps two commented
+  zero-byte `asm` levers at one store, approved by the owner's coordinator
+  (its natural best is on #100).  The two shared "compiler questions" had
+  source answers: SerialCB's doubled live length was jump.c's else-arm swap
+  running before register allocation (lesson 3.491), `sub_0801b24c` had no
+  doubling residue at all (a `p` local and one mask spelling, 3.492), and
+  gcse's PRE slot order is bucket arithmetic over declaration order, insn
+  count and the file's pool-label count (3.493, 3.494); `sub_08027a6c`
+  fell to a `u16` value and a struct copy (3.489).  New lessons 3.489-3.494
+  and 4.113, with correction notes on 3.452, 3.457, 3.464, 3.478, 3.487,
+  4.79 and 4.105.  Three agents, about two hours from the census to the
+  last landing.
+- **The game code is complete**: everything from `AgbInit` (`0x08000310`)
+  to `0x080CD89B`, the start of `m4a_1`, is byte-exact C.  The asm left in the ROM is
+  the sound engine's hand-written core `m4a_1`, crt0 and the ARM task
+  switcher, and the SDK stubs (SWI thunks, SoftReset, lib1funcs and the
+  task trampolines, the interworking veneer).  `make progress`: 846924 of
+  857388 code bytes in `src/` (98.7795%).
 - Next milestones: decompile split/SDK modules to C using the validated per-zone compiler recipe (task system Thumb side, sound driver, then game code); grow `src/` one module at a time with `asmdiff.sh` on the module range.

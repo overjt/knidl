@@ -9,7 +9,7 @@
  * calls once, seeds them from the s16 stream gUnk_08757440 (script id, wait,
  * x, y per object; the draw layer follows y) and clears their saved script
  * cursors gUnk_0201BFD0[].  Their per-frame interpreter sub_080caab8
- * (0x080CAAB8-0x080CACEF, called by M02's task type #0) is still asm. */
+ * (called by M02's task type #0) is src/boot_caab8.c. */
 
 /* One boot-logo sprite object: a command script (sub_080caab8) moving a
    sprite in 24.8 fixed point. */

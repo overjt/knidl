@@ -187,8 +187,8 @@ dispatches, pool density) — a planning aid, not a promise.
 | M03 | `0x0800B920-0x08010357` | 18.6 KiB | 79 | 0 | **** | main menu + its 22 sprite tasks, BG scroll animator, stage sequence state - **landed (#99)** |
 | M04 | `0x08010358-0x08017667` | 28.8 KiB | 65 | 0 | *** | scripted-sequence bank: director + 50 of the 63 scripts |
 | M05 | `0x08017668-0x0801A8C7` | 12.6 KiB | 23 | 0 | *** | player-character animation bank + collision registry - **landed (#81, #125)** |
-| M06 | `0x0801A8C8-0x08021B17` | 28.6 KiB | 55 | 0 | ***** | box-vs-terrain collision engine + actor-vs-collider hit tests - **landed (#84)**, 54/55 |
-| M07 | `0x08021B18-0x0802969F` | 30.9 KiB | 154 | 1 | ****** | level / room builder + tilemap upload |
+| M06 | `0x0801A8C8-0x08021B17` | 28.6 KiB | 55 | 0 | ***** | box-vs-terrain collision engine + actor-vs-collider hit tests - **landed (#84, final campaign)** |
+| M07 | `0x08021B18-0x0802969F` | 30.9 KiB | 154 | 1 | ****** | level / room builder + tilemap upload - **landed (#93, final campaign)** |
 | M08 | `0x080296A0-0x08030803` | 28.3 KiB | 151 | 2 | *** | camera, BG map streaming, map-event tasks + stage objects #221-#236 - **landed (#86)** |
 | M09 | `0x08030804-0x0803627F` | 22.6 KiB | 60 | 0 | ***** | breakable blocks + the player task (#5) and first action bodies - **landed (#92)** |
 | M10 | `0x08036280-0x0803CD5F` | 26.7 KiB | 41 | 0 | **** | stage script runner |
@@ -218,8 +218,8 @@ dispatches, pool density) — a planning aid, not a promise.
 | M34 | `0x080B6154-0x080B9D0B` | 14.9 KiB | 105 | 2 | *** | save file / SRAM records + options - **landed (#94)** |
 | M35 | `0x080B9D0C-0x080BDA2B` | 15.3 KiB | 193 | 4 | *** | sub-game framework + reaction-duel sub-game - **landed (#95)** |
 | M36 | `0x080BDA2C-0x080C1FFB` | 17.5 KiB | 117 | 4 | * | sub-game: four-slot bomb-pass minigame - **landed (#66)** |
-| M37 | `0x080C1FFC-0x080C641F` | 17.0 KiB | 82 | 1 | **** | sub-game 2: the four-player race + `AgbMain` state 11 - **landed (#98)**, 81/82 |
-| M38 | `0x080C6420-0x080CD89B` | 29.1 KiB | 110 | 4 | **** | the ending (two scenes, staff credits, final screen) + the game-over screen - **landed (#100)**, 109/110 |
+| M37 | `0x080C1FFC-0x080C641F` | 17.0 KiB | 82 | 1 | **** | sub-game 2: the four-player race + `AgbMain` state 11 - **landed (#98, final campaign)** |
+| M38 | `0x080C6420-0x080CD89B` | 29.1 KiB | 110 | 4 | **** | the ending (two scenes, staff credits, final screen) + the game-over screen - **landed (#100, final campaign)** |
 | M39 | `0x080CD89C-0x080CE51F` | 3.1 KiB | 40 | 0 | - | **done** - m4a_1 |
 | M40 | `0x080CE520-0x080CEFB3` | 2.6 KiB | 31 | 0 | - | **done** - m4a_c1 |
 | M41 | `0x080CEFB4-0x080CF587` | 1.5 KiB | 4 | 0 | - | **done** - m4a_cgb |
@@ -592,13 +592,13 @@ landed the last three as plain pin-free C (`src/player_18e14.c`,
 * **Called from** M14 x21, M18 x10, M13 x8, M12 x7, M11 x6.
 * **Known RAM cells touched** BLDALPHA hi/lo shadows, BG3HOFS/BG3VOFS shadows (16.16, read as `vs32` and shifted right 16 for the camera), BLDCNT hi/lo shadows.
 
-### M06 `0x0801A8C8-0x08021B17` - the box-vs-terrain collision engine and the actor-vs-collider hit tests - **landed (#84) except one function**
+### M06 `0x0801A8C8-0x08021B17` - the box-vs-terrain collision engine and the actor-vs-collider hit tests - **landed (#84 and the final campaign)**
 
 The range is decompiled and carved out of the split asm, so it now appears in
 `module-map.csv` as `c_code` rows instead of one clusterable module; the census
 below is the pre-decompilation one, kept for the record.
 
-* **Landed as** 21 files, 54 of the 55 functions byte-exact under the
+* **Landed as** 22 files, all 55 functions byte-exact under the
   `--newpb` recipe with no `asm` statements and no `register` pins.  PR
   #131 landed 28 (`src/terrain_1bcac.c`, `terrain_1c30c.c`,
   `terrain_1c444.c`, `terrain_1c51c.c`, `terrain_1c8dc.c`,
@@ -611,16 +611,15 @@ below is the pre-decompilation one, kept for the record.
   `src/terrain_1f540.c` (6), `src/terrain_1ff84.c` (2),
   `src/terrain_207a0.c` (2) and `src/terrain_2136c.c` (1), with 19 new
   `split_config.json` `data_symbols` (the hit-test cells
-  `0x03005294-0x030054F0` and three ROM tables).  **One function is left in
-  asm:** `sub_0801b24c` (`0x0801B24C-0x0801B7DC`, 1424 bytes, the hit test
-  against the third collider list), parked on #84 at 44 differing bytes
-  with the right size: a gcse copy of `&gUnk_030054E4` set in three arms
-  has its live length doubled per set by `update_equiv_regs`, which moves
-  it below the value it must outrank in global allocation (lesson 3.464).
-  The straggler campaign's plain rewrite gives the same 44 bytes, so the
-  residue is not the old candidate's shapes; its second half is a cse1/cse2
-  path effect on the `p` block (lesson 3.478), and the best source is on
-  #84.
+  `0x03005294-0x030054F0` and three ROM tables).  The last function,
+  `sub_0801b24c` (`0x0801B24C-0x0801B7DC`, 1424 bytes, the hit test
+  against the third collider list), parked by #84 at 44 differing bytes,
+  landed in the final campaign as `src/hitbox_1b24c.c` (three more ROM
+  tables named): its player index is read from `gUnk_03005394` at every
+  use instead of through a `p` local, and every table mask goes through
+  one `u32 m` (lesson 3.492).  The triple-doubled reaching register of
+  lesson 3.464 is doubled three times in the matching build too; it was
+  never the residue.
 * **What it turned out to be** not a pure leaf, and two things.  The
   collision engine: ten per-frame entry points (the nine `sub_0801bcac` ...
   `sub_0801c444`, and `sub_0801baa4` for the player, which M09's player
@@ -660,15 +659,16 @@ below is the pre-decompilation one, kept for the record.
 * **Pool references** IWRAM x1303, asset_metadata_index x334, EWRAM x3.
 * **Suggested batches** `0x0801A8C8` (7 fns), `0x0801BCAC` (17 fns), `0x0801DC88` (9 fns), `0x0801FC48` (23 fns).
 
-### M07 `0x08021B18-0x0802969F` - the level / room builder: room loaders, task type #3, doors, map queries and camera start-up - **landed (#93) except one function**
+### M07 `0x08021B18-0x0802969F` - the level / room builder: room loaders, task type #3, doors, map queries and camera start-up - **landed (#93 and the final campaign)**
 
 The range is decompiled and carved out of the split asm, so it now appears in
 `module-map.csv` as `c_code` rows instead of one clusterable module; the census
 below is the pre-decompilation one, kept for the record.
 
-* **Landed as** twelve files, 156 of the 157 functions byte-exact under
-  the `--newpb` recipe with no `asm` statements and no `register` pins,
-  48 new `split_config.json` `data_symbols`:
+* **Landed as** thirteen files, all 157 functions byte-exact under
+  the `--newpb` recipe with no `asm` statements and no `register` pins
+  (#93 landed 156 in twelve files with 48 new `split_config.json`
+  `data_symbols`; the final campaign added `src/level_27a6c.c`):
   `src/terrain_21b18.c` (`0x08021B18-0x0802296C`, 22 fns),
   `src/level_2296c.c` (`0x0802296C-0x08023618`, 8),
   `src/roomtask_23618.c` (`0x08023618-0x08023948`, 10),
@@ -678,6 +678,7 @@ below is the pre-decompilation one, kept for the record.
   `src/door_26b60.c` (`0x08026B60-0x080270D0`, 3),
   `src/stage_270d0.c` (`0x080270D0-0x080273A0`, 10),
   `src/stage_273a0.c` (`0x080273A0-0x08027A6C`, 13),
+  `src/level_27a6c.c` (`0x08027A6C-0x08027E28`, 1),
   `src/room_27e28.c` (`0x08027E28-0x08028320`, 4),
   `src/room_28320.c` (`0x08028320-0x08028B8C`, 5),
   `src/camera_28b8c.c` (`0x08028B8C-0x080296A0`, 20).
@@ -685,13 +686,14 @@ below is the pre-decompilation one, kept for the record.
   `0x08024E40`, `sub_08025024` and `sub_080258e0` only match with the
   loaders in front of them in the same translation unit, and `stage_270d0.c`
   / `stage_273a0.c` are two files for the opposite reason
-  (`docs/lessons-learned.md` 4.79, 4.86).  **One function is left in
-  asm:** `sub_08027a6c` (`0x08027A6C-0x08027E28`, 956 bytes), which builds
-  the second map buffer `gUnk_02006AA0` for `sub_08023948`/`sub_08023ca0`;
-  three agents took it from 675 to 234 differing bytes (948 of 956 bytes,
-  15 structural differences with registers masked, all loop-optimisation and
-  allocation), and the best source is recorded on #93.  Both neighbours,
-  M06 and M08, are C (M06 partly).
+  (`docs/lessons-learned.md` 4.79, 4.86).  The last function,
+  `sub_08027a6c` (`0x08027A6C-0x08027E28`, 956 bytes), which builds the
+  second map buffer `gUnk_02006AA0` for `sub_08023948`/`sub_08023ca0`, was
+  parked by #93 at 234 differing bytes and matched in the final campaign
+  from plain source: a `u16` marker, whose `& 0x100` test is then an
+  HImode constant chain agbcc's second loop pass hoists, and a struct copy
+  for the map store (`docs/lessons-learned.md` 3.489).  Both neighbours,
+  M06 and M08, are C.
 * **What it turned out to be** (`docs/analysis/rom-map.md` §9): the half of
   the level engine that decides WHICH room is on screen, one subsystem with
   M08 (the camera and map streaming), which it drives.
@@ -768,7 +770,7 @@ below is the pre-decompilation one, kept for the record.
   `obj_30238.c`/`obj_306b4.c` are two files because `sub_08030724` only
   matches without the type-#236 bodies in front of it in the same
   translation unit (`docs/lessons-learned.md` 4.79).  Both neighbours, M07
-  and M09, are still asm.
+  and M09, were still asm then; both are C now.
 * **What it turned out to be** (`docs/analysis/rom-map.md` §9): one
   subsystem with M07, which calls it every frame.
   * **The camera** (`camera_*.c`): the per-frame updates of the room modes
@@ -902,8 +904,8 @@ below is the pre-decompilation one, kept for the record.
   `src/player_39c24.c` (`0x08039C24-0x0803AA64`, 2),
   `src/player_3aa64.c` (`0x0803AA64-0x0803BDE8`, 14),
   `src/player_3bde8.c` (`0x0803BDE8-0x0803CD60`, 5).
-  With it `0x08021B18-0x08040B40` (M07 through the start of M11) is C except
-  M07's parked `sub_08027a6c`.
+  With it `0x08021B18-0x08040B40` (M07 through the start of M11) is C
+  (M07's last function landed in the final campaign).
 * **What it turned out to be** (`docs/analysis/rom-map.md` §9): not a "stage
   script runner" but the second half of M09's **player action machine**.
   The player task runs the "enter" coroutine of `PlayerState.unk02` from
@@ -2535,7 +2537,7 @@ below is the pre-decompilation one, kept for the record.
 * **Known RAM cells touched** BG3VOFS shadow (16.16) x16, BG3HOFS shadow (16.16) x13, per-player keys pressed x8, DISPCNT shadow x2, frames left to wait x2, requested/next game state x2.
 * **Suggested batches** `0x080BDA2C` (57 fns), `0x080BF994` (24 fns), `0x080C0DE8` (36 fns).
 
-### M37 `0x080C1FFC-0x080C641F` - sub-game 2: the four-player race + `AgbMain` state 11 - **landed (#98)**
+### M37 `0x080C1FFC-0x080C641F` - sub-game 2: the four-player race + `AgbMain` state 11 - **landed (#98 and the final campaign)**
 
 The range is decompiled and carved out of the split asm, so it now appears in
 `module-map.csv` as `c_code` rows instead of one clusterable module; the census
@@ -2548,16 +2550,21 @@ below is the pre-decompilation one, kept for the record.
   (`0x080C3F44-0x080C4630`, 9), `src/subgame_c4630.c`
   (`0x080C4630-0x080C4D08`, 20), `src/subgame_c4d08.c`
   (`0x080C4D08-0x080C5284`, 7), `src/subgame_c5284.c`
-  (`0x080C5284-0x080C5B84`, 9), `src/subgame_c623c.c`
+  (`0x080C5284-0x080C623C`, 10), `src/subgame_c623c.c`
   (`0x080C623C-0x080C6258`, 1) and `src/mode_c6260.c`
   (`0x080C6260-0x080C6420`, 5), around PR #133's `src/sub_080c6258.c`
-  (`0x080C6258-0x080C6260`, untouched): 80 of the 81 functions to write,
+  (`0x080C6258-0x080C6260`, untouched): all 81 functions to write,
   byte-exact under the `--newpb` recipe with no `asm` statements and no
-  `register` pins, 51 new `split_config.json` `data_symbols`.  One function
-  stays asm: `sub_080c5b84` (`0x080C5B84-0x080C623B`, 1720 bytes, the course
-  renderer), parked on #98 at 22 differing bytes with the right size; a
-  byte-exact version exists but needs 37 empty `asm("")` statements to give
-  gcse's expression hash table the ROM's size (lesson 4.105).
+  `register` pins, 51 new `split_config.json` `data_symbols` in #98 and
+  seven more in the final campaign.  #98 parked the course renderer
+  `sub_080c5b84` (`0x080C5B84-0x080C623B`, 1720 bytes) at 22 differing
+  bytes (byte-exact only with 37 empty `asm("")` statements that gave
+  gcse's expression hash table another size, lesson 4.105); the final
+  campaign matched it from natural source appended to
+  `src/subgame_c5284.c`: its PRE spill slots follow the hash buckets of
+  its locals' pseudo numbers (declaration order) and of the pool label of
+  `&gUnk_0201B0E0`, which is numbered after that file's 40 earlier ones
+  (lesson 3.493).
 * **What it turned out to be** not an effect engine: game 2 of M35's
   sub-game framework (`gUnk_02007FCC == 2`), a four-player race along four
   lanes of a horizontally scrolling course, and - after the real subsystem
@@ -2575,7 +2582,7 @@ below is the pre-decompilation one, kept for the record.
   behind the pointer cell `gUnk_02017094` and the course record
   `gUnk_0201B0E0` behind `gUnk_0201716C`; M35's `sub_080b9f34` builds the
   course with `sub_080c59d8(level, 1)` (lanes of 6000/8500/12000 pixels),
-  and `sub_080c5b84` (still asm) renders it column by column into BG VRAM.
+  and `sub_080c5b84` renders it column by column into BG VRAM.
   The sky is
   a 160-line backdrop gradient built each frame by the per-frame hook
   `sub_080c2d38` and copied by HBlank DMA0, which the VBlank hook
@@ -2606,7 +2613,7 @@ below is the pre-decompilation one, kept for the record.
 * **Known RAM cells touched** per-player keys pressed x9, requested/next game state x4, DISPCNT shadow x2, number of linked players x2, per-player keys held x2, 128 8-byte free-list entries x1.
 * **Suggested batches** `0x080C1FFC` (19 fns), `0x080C3648` (46 fns), `0x080C5284` (17 fns).
 
-### M38 `0x080C6420-0x080CD89B` - the ending (two scenes, staff credits, final screen) + the game-over screen - **landed (#100)**
+### M38 `0x080C6420-0x080CD89B` - the ending (two scenes, staff credits, final screen) + the game-over screen - **landed (#100 and the final campaign)**
 
 The range is decompiled and carved out of the split asm, so it now appears in
 `module-map.csv` as `c_code` rows instead of one clusterable module; the census
@@ -2616,21 +2623,25 @@ below is the pre-decompilation one, kept for the record.
   `src/ending_c6c64.c` (`0x080C6C64-0x080C7E4C`, 8), `src/ending_c7e4c.c`
   (`0x080C7E4C-0x080C9004`, 12), `src/ending_c9004.c`
   (`0x080C9004-0x080CAA3C`, 21), `src/boot_caa3c.c`
-  (`0x080CAA3C-0x080CAAB8`, 1), `src/gameover_cacf0.c`
+  (`0x080CAA3C-0x080CAAB8`, 1), `src/boot_caab8.c`
+  (`0x080CAAB8-0x080CACF0`, 1, final campaign), `src/gameover_cacf0.c`
   (`0x080CACF0-0x080CB354`, 13), `src/gameover_cb354.c`
   (`0x080CB354-0x080CB64C`, 8), `src/gameover_cb64c.c`
   (`0x080CB64C-0x080CBED4`, 6), `src/gameover_cbed4.c`
   (`0x080CBED4-0x080CCD4C`, 18), `src/gameover_ccd4c.c`
   (`0x080CCD4C-0x080CD330`, 10) and `src/credits_cd330.c`
-  (`0x080CD330-0x080CD89C`, 5): 109 of the 110 functions byte-exact
-  under the `--newpb` recipe with no `asm` statements and no `register`
-  pins, and 77 new `split_config.json` `data_symbols`.  One function stays
-  asm: `sub_080caab8` (`0x080CAAB8-0x080CACEF`, 568 bytes, the boot logo
-  objects' command interpreter), parked on #100 at 33 differing bytes with
-  the right size (the ROM's all-ones halfword store keeps an `orrs` that
-  agbcc folds unless the constant comes from outside the block, and two
-  PRE spill slots are swapped, lesson 3.457).  It was the last unstarted
-  bulk module of #35.
+  (`0x080CD330-0x080CD89C`, 5): all 110 functions byte-exact under the
+  `--newpb` recipe, and 77 new `split_config.json` `data_symbols` in #100
+  (one more in the final campaign).  #100 landed 109 with no `asm`
+  statements and no `register` pins; the boot logo objects' command
+  interpreter `sub_080caab8` (`0x080CAAB8-0x080CACEF`, 568 bytes), parked
+  there at 33 differing bytes, landed in the final campaign as
+  `src/boot_caab8.c`: natural dead initializers give gcse the insn count
+  that orders its two PRE spill slots, and the off-screen switch-off keeps
+  two commented zero-byte `asm` levers, because combine folds the ROM's
+  `orrs` of the all-ones store away when it knows the PRE-loaded old
+  halfword fits in 16 bits (lessons 3.457, 3.494; natural best on #100).
+  It was the last unstarted bulk module of #35.
 * **What it turned out to be** not an intro: the game's ending and its
   game-over screen, which `AgbMain` states 11, 12 and 22 run (rom-map §4).
   State 11 (M37's `src/mode_c6260.c`) plays two scenes directed by task

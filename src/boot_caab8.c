@@ -1,0 +1,166 @@
+#include "gba/gba.h"
+#include "global.h"
+#include "task.h"
+
+/* boot_caab8.c (0x080CAAB8-0x080CACEF, issue #100).
+ *
+ * sub_080caab8, the per-frame interpreter of the boot logo's 115 sprite
+ * objects that src/boot_caa3c.c seeds (called by M02's task type #0,
+ * sub_080093fc).  Each active object (unk04 != -1) waits out unk0A frames,
+ * then runs its s16 command stream until it waits or is switched off: a
+ * command is a bit mask and one argument, and bits 0-5 take one more word
+ * each (x/y velocity, x/y acceleration, sprite id, wait; the word is skipped
+ * when the bit is clear); bit 6 starts sound effect `arg` (sub_080031b8),
+ * bit 7 calls script `arg` (the cursor is saved in gUnk_0201BFD0[i]),
+ * bit 8 switches to script `arg`, bits 9/10 set and run a loop of `arg`
+ * passes, bit 11 restarts the script, bit 12 returns to the saved cursor
+ * and bit 13 switches the object off.  The object then moves in 24.8 fixed
+ * point and is drawn (sub_08001a94, sprite gUnk_087554B8[unk06], layer
+ * unk08), or switched off once it leaves the screen.
+ *
+ * Matching notes (#100's final campaign, lesson 3.494): the locals are
+ * initialized at their declarations although each is assigned before it is
+ * read; flow deletes those stores, but they raise the insn count gcse sees,
+ * which is what orders the two PRE spill slots [sp, #12]/[sp, #16] as in the
+ * ROM (lesson 4.105).  The off-screen switch-off keeps TWO zero-byte levers
+ * (see the site): combine folds the plain `obj->unk04 = 0xFFFF;` into a
+ * constant store because it knows the PRE-loaded old halfword fits in 16
+ * bits, where the ROM keeps `ldr r1, =0xFFFF; adds r0, r1, #0; orrs r0, r7`.
+ * No natural spelling that keeps the ROM's OR was found; the natural best
+ * (the plain store, 40 differing bytes) is recorded on #100. */
+
+/* One boot-logo sprite object: a command script (sub_080caab8) moving a
+   sprite in 24.8 fixed point. */
+struct M38LogoObj
+{
+    /*0x00*/ s16 *unk00;    /* script cursor */
+    /*0x04*/ s16 unk04;     /* script id, -1 = off */
+    /*0x06*/ s16 unk06;     /* sprite id (gUnk_087554B8), -1 = none */
+    /*0x08*/ s16 unk08;     /* layer */
+    /*0x0A*/ s16 unk0A;     /* frames to wait */
+    /*0x0C*/ s32 unk0C;     /* x << 8 */
+    /*0x10*/ s32 unk10;     /* y << 8 */
+    /*0x14*/ s16 unk14;     /* x velocity */
+    /*0x16*/ s16 unk16;     /* y velocity */
+    /*0x18*/ s16 unk18;     /* x acceleration */
+    /*0x1A*/ s16 unk1A;     /* y acceleration */
+    /*0x1C*/ s16 unk1C;     /* loop count */
+    /*0x1E*/ u16 unk1E;
+};
+
+extern struct M38LogoObj gUnk_02030000[];
+extern s16 *gUnk_0201BFD0[];
+extern s16 *gUnk_087577D8[];
+extern u32 gUnk_087554B8[];
+s32 sub_08001a94(u32 a, u32 b, u32 c, u32 d, u32 e, s16 f);
+s32 sub_080031b8(s32 id);
+
+/* Run the 115 boot-logo objects one frame: interpret each active object's
+   script until it waits or ends, move it and draw it, switching it off
+   once it leaves the screen. */
+void sub_080caab8(void)
+{
+    struct M38LogoObj *obj = gUnk_02030000;
+    s32 i;
+    s16 *p = 0;
+    s16 mask = 0;
+    s16 arg = 0;
+    s32 j = 0;
+    s32 x = 0, y = 0;
+
+
+    for (i = 0; i < 115; obj++, i++) {
+        if (obj->unk04 == -1)
+            continue;
+        if (obj->unk0A != 0) {
+            obj->unk0A--;
+        } else {
+            while (obj->unk04 != -1 && obj->unk0A == 0) {
+                p = obj->unk00;
+                mask = *p++;
+                arg = *p;
+                for (j = 0; j < 14; j++) {
+                    if ((mask >> j) & 1) {
+                        switch (1 << j) {
+                        case 1:
+                            obj->unk14 = *p++;
+                            break;
+                        case 2:
+                            obj->unk16 = *p++;
+                            break;
+                        case 4:
+                            obj->unk18 = *p++;
+                            break;
+                        case 8:
+                            obj->unk1A = *p++;
+                            break;
+                        case 16:
+                            obj->unk06 = *p++;
+                            break;
+                        case 32:
+                            obj->unk0A = *p++;
+                            break;
+                        case 64:
+                            sub_080031b8(arg);
+                            break;
+                        case 128:
+                            gUnk_0201BFD0[i] = p;
+                            p = gUnk_087577D8[arg];
+                            break;
+                        case 256:
+                            obj->unk04 = arg;
+                            p = gUnk_087577D8[obj->unk04];
+                            break;
+                        case 512:
+                            gUnk_0201BFD0[i] = p;
+                            if (arg != 0)
+                                obj->unk1C = arg;
+                            break;
+                        case 1024:
+                            if (obj->unk1C != 0 && --obj->unk1C == 0)
+                                break;
+                            p = gUnk_0201BFD0[i];
+                            break;
+                        case 4096:
+                            p = gUnk_0201BFD0[i];
+                            break;
+                        case 2048:
+                            p = gUnk_087577D8[obj->unk04];
+                            break;
+                        case 8192:
+                            obj->unk04 = 0xFFFF;
+                            break;
+                        }
+                    } else if (j <= 5) {
+                        p++;
+                    }
+                }
+                obj->unk00 = p;
+            }
+        }
+        obj->unk14 += obj->unk18;
+        obj->unk16 += obj->unk1A;
+        obj->unk0C += obj->unk14;
+        obj->unk10 += obj->unk16;
+        x = obj->unk0C >> 8;
+        y = obj->unk10 >> 8;
+        if (obj->unk06 != -1) {
+            if ((u32)(x + 15) <= 286 && y > -32 && y <= 191)
+                sub_08001a94(obj->unk08, gUnk_087554B8[obj->unk06], 0, 0, x, y);
+            else {
+                s32 m;
+
+                /* LEVER 1 (zero bytes): an opaque 0xFFFF.  Combine would
+                   fold (ior old 0xFFFF) into a bare constant store because
+                   it knows the PRE-loaded old halfword has no bits above
+                   0xFFFF (lessons 3.457, 3.494). */
+                asm("" : "=r"(m) : "0"(0xFFFF));
+                obj->unk04 |= m;
+                /* LEVER 2 (zero bytes): keeps the mask live past the OR, so
+                   the OR's result takes its own register (the ROM's
+                   `adds r0, r1, #0` copy before the `orrs`). */
+                asm("" : : "r"(m));
+            }
+        }
+    }
+}

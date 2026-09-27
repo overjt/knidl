@@ -2945,6 +2945,8 @@ ROM's (`-da` `.greg`, lesson 3.34):
 * `x = x - K + y` is regrouped to `x + (y - K)`: `x -= K; x += y;` (or the
   shared temp above) keeps the ROM's order.
 
+**Note (final campaign, lesson 3.493):** the block scoping of the lane-loop state was one way of reaching the pseudo numbering the slot order needs; the matching source declares the locals at function scope in another order and lands inside `src/subgame_c5284.c`, whose pool labels complete the hash arithmetic.
+
 ### 3.453 A halfword the ROM reads both unsigned and signed is two expressions over one cell
 M38 has three functions where one table or local halfword reaches two uses
 of different signedness, and each needs both reads spelled out.  The spawn
@@ -3066,6 +3068,8 @@ follow gcse's hash-bucket order (4.105; `H = 13772 + regno + const` mod
 127 here), which would need `obj`'s pseudo number above 38 or 4-5 more cse
 insns to flip.  Both are the 4.105 class: the original evidently differs
 in a way later passes erase.
+
+**Note (final campaign, lesson 3.494):** the slot swap was the insn count, settled by natural dead initializers (S = 129); the `orrs` is combine's fold of `(ior old 0xFFFF)`, which knows the PRE-loaded old halfword fits in 16 bits because both of its copies come from valid halfword loads.  The function landed with two commented zero-byte `asm` levers at the switch-off; its natural form is still open.
 
 ### 3.458 cse learns `a == 1` from a branch and then swaps a later AND with `a`: the ROM ANDs the constant
 M06's wall probes test a tile attribute, `a = gUnk_08732EF0[t]; if (a == 1
@@ -3284,6 +3288,8 @@ block's cause in cse1/cse2, lesson 3.478.)
 function with this residue: three user variables ranked by live lengths that
 update_equiv_regs doubled once per constant set, where the ROM behaves as if
 one doubling were missing.
+
+**Note (final campaign, lessons 3.491, 3.492):** in `sub_0801b24c` the triple doubling was not the residue at all (it is doubled three times in the matching build too; the cause was a `p` local and one mask spelling, 3.492); in SerialCB the extra doubling came from WHEN jump.c swapped an else arm (3.491).
 
 ### 3.465 The four-loop family's preheader order is agbcc's SECOND loop pass: write the store the plain way and the cell's address is hoisted last
 The answer to M34's "HImode constant" question, which 3.336, 3.344, 3.347,
@@ -3592,6 +3598,8 @@ arm (44; both 1420).  The next step is an instrumented cse (prints at
 `make_regs_eqv` and at the path boundaries of `cse_end_of_basic_block`);
 the reload trace cannot see either residue.  Best source on #84.
 
+**Note (final campaign, lesson 3.492):** the `p` block's path effect is the `p` local itself: without it (the global read at every use) and with the fourth mask through the shared `m`, the function matches; "one more long-lived value nobody found" was one local fewer.
+
 ### 3.479 `sub_08001cc8`: a goto loop, arithmetic in place, a real 3-D table - not a regmove tie
 The affine sprite emitter (776 bytes, now `src/early_1cc8.c`) was parked by
 issue #32 at 8 bytes with a proof sketch that the ROM's operand tie is
@@ -3790,6 +3798,8 @@ for instance at when cse attaches `REG_EQUAL` to a constant set of a
 multiply-set register - rather than at their sources.  Best source on
 issue #63.
 
+**Note (final campaign, lessons 3.490, 3.491):** matched.  The `u16 *recv` local was wrong (the struct spelling makes the ROM's r4 a compiler pseudo), and the one doubling too many came from jump.c's else-arm swap running in jump1; a dead `i = 4;` before the `break` delays it to jump2.  It was not about when cse attaches REG_EQUAL.
+
 ### 3.488 `sub_08002378`: merge_blocks splices a goto's target back in, and WHEN it does decides cse1's view
 The 0x7700-series link handshake (752 bytes, `src/early_2378.c`) is the twin
 of the landed `sub_08002668`, whose source reaches its negotiation clamp by
@@ -3825,6 +3835,206 @@ loops_enclosed == 1), 61 bytes.  Diagnostic: when the ROM hoists a pair of loads
 your build keeps merged across a branch, look for a cse1 block boundary a
 later pass removed.  **Corrects** 3.55's "the ROM's preheader load must
 come from GCSE's PRE" for this function.
+
+### 3.489 `sub_08027a6c`: a `u16` value makes its constant test a hoistable HImode chain, and a map cell is a struct copy
+M07's room map builder (956 bytes, now `src/level_27a6c.c`) was parked by #93
+at 234 differing bytes (948 of 956) on "loop optimisation and allocation
+choices".  A fresh pass from #93's best found two source facts in about
+fifteen minutes (fin-m07), both read off the `-da` dumps:
+* the per-cell marker is ONE `u16 v` for the whole function.  `v & 0x100`
+  is then an unsigned-short AND, and expand forces the constant into a
+  HImode pseudo plus an SImode subreg copy: a two-insn chain that loop.c
+  scores savings 2, life 2, where the constant of an `s32`/`u32` value is
+  one insn (savings 1, life 1) and never desirable.  Pass 1 rejects the
+  chain (`14 * 2 * 2 = 56 < 77` insns), pass 2 hoists it (`26 * 2 * 2 =
+  104 >= 66`) and appends it after pass 1's giv inits (3.465): the ROM's
+  preheader with `0x100` in r8.  The same change fixed a global-alloc
+  priority swap in the first loop (234 -> 86 bytes, exact size).  #93's
+  note "with a `u16` value the hoist is right but the value spills" was
+  measured with a SECOND `u16` variable next to the `u32` one (cse made a
+  copy pseudo), not with one `u16` variable;
+* the map store is the plain struct copy `gUnk_02006AA0[idx] = *p;` (the
+  4-byte `struct MapCell` is 4-aligned, so the copy is one `ldr`/`str`),
+  not `map = (u32 *)gUnk_02006AA0; map[idx] = *(u32 *)p;`: the ARRAY_REF
+  loads the array base as its own insn (3.392), which pass 1 hoists ahead
+  of the giv init (`ldr =gUnk_02006AA0` before `lsls`), and the pointer
+  local was one more pseudo in global allocation (86 -> 0).
+The loop-1 flag shift keeps a second `& 0xFF7F` (`& 0xFF` is 18 bytes off),
+the y store comes before the x store, and `gUnk_0200AFE0` is `s16 [][2]`
+here (`src/camtask_2d38c.c` reads the same cells as a flat `s16 [4]`).
+The function matches at every pool-label count (4.79's K scan, 0-120).
+
+### 3.490 SerialCB's handshake reads the struct, not a pointer local
+The `u16 *recv` local that #63 put in SerialCB (3.487, "that is what lets the
+ROM index off the same register") was one of the residue's three pseudos:
+pokeruby's plain spelling, `*(struct Pair *)gUnk_03004DA0.recv = ...` and
+`gUnk_03004DA0.recv[i]` in the loop, took the function from 15 to 10 bytes
+(fin-eq).  The ROM's r4 is then a compiler pseudo, the constant load of
+`gUnk_03004DA4` (4 refs, live 34, priority 2352, allocated first), so the
+"recv undoubled" half of 3.487's two options was never needed; what was left
+is playerCount (8 refs, 77 x 4 = 308) against minRecv (8 refs, 85 x 2 = 170),
+and the ROM needs exactly ONE doubling of playerCount.
+
+### 3.491 The "doubled N times" live length is WHEN jump.c swaps an else arm: a dead store before `break` delays it to jump2
+The answer to the question 3.464 and 3.487 left (SerialCB, fin-eq, measured
+with an instrumented agbcc whose `EQV` print shows every update_equiv_regs
+doubling and whose `SWAP` print shows the swap).  jump.c's
+`if (foo) bar; else break;` optimisation (jump.c ~1793: the two ranges are
+exchanged so the else arm is laid out first) runs in any jump pass after the
+first iteration, and its `! first` test has no `reload_completed` guard, so
+it can run in jump2, after register allocation.  update_equiv_regs
+(local-alloc.c) doubles a multi-set pseudo's `REG_LIVE_LENGTH` for every set
+with a constant REG_EQUAL note that comes before its first non-constant set
+IN INSN ORDER, and no_equiv never undoes a doubling.  In SerialCB's loop the
+else arm holds `playerCount = 0` and the then arm `playerCount++`:
+* swapped in jump1 (plain source): the reset precedes the `++` at
+  local-alloc time, playerCount is doubled twice (entry init and reset),
+  and global allocation ranks it below minRecv (r6 instead of r5);
+* swapped only in jump2: allocation sees the then arm first, the `++` kills
+  the equivalence before the reset, playerCount is doubled once
+  (8/156 = 1538 > minRecv 8/172 = 1395), and the final layout is the same
+  else-first code.  A private agbcc that forces the swap after reload
+  (`FE_LATESWAP`) gives the ROM's allocation from the unchanged source.
+The source that delays it is a dead store at the end of the else arm,
+before the `break`: `if (recv[i] != 0xFFFF) playerCount = 0; i = 4;
+break;`.  The store keeps the inner if's skip label from being threaded to
+the break target (`next_active_insn (label)` is not a jump), so the swap's
+`label2 = next_label (label1)` is that skip label rather than the loop's
+continue label and every jump pass before reload declines; flow deletes the
+store (zero bytes), no jump pass runs between flow and reload, and jump2
+threads the label away and swaps.  Without the `break` (`i = 4;` as the
+loop exit) the loop keeps its increment and test (360 bytes).  The landed
+source documents `i = 4;` at the site as a zero-code STAND-IN, like 3.488's
+conjunct: any insn flow deletes at that point works, and what the original
+had there cannot be read from the ROM.  Diagnostic for other "one doubling
+too many" residues: compare the block order of `.greg` with `.jump2`; if an
+arm holding a constant set moved after allocation, an insn flow deletes at
+the end of the arm that must stay last reproduces the late swap.
+**Corrects** 3.487 (the doubling was not "when cse attaches REG_EQUAL to a
+constant set" but when jump.c orders the arms) and answers 3.464's closing
+question for SerialCB; `sub_0801b24c` turned out to have no doubling
+residue at all (3.492).
+
+### 3.492 `sub_0801b24c`: no `p` local, one mask variable - and the triple doubling was never the residue
+M06's third hit test (1424 bytes, now `src/hitbox_1b24c.c`) sat at 44 bytes
+through three agents, the straggler campaign's plain rewrite and 3.464/3.478's
+diagnoses.  A fresh pass matched it in about twenty minutes (fin-m07) with
+two source facts that only work together:
+* there is no `p` local for the player index: `gUnk_03005394` is read at
+  the `!= 4` test, as u's index (`u = &gUnk_03002790[gUnk_03005394]`) and at
+  the two later `== 4`/`!= 4` tests.  cse gives the byte load one compiler
+  pseudo (the ROM's r7) that every test reuses and the index a copy
+  (`adds r1, r7, #0`).  With a `p` local (measured with a cse print at
+  make_regs_eqv, canon_reg and the copy swap), cse1 processes the `p` block
+  inside its longest followed path, where p's last use (the third test) is
+  also seen, so the load temp stays canonical and the third test is
+  rewritten to it; the shorter re-processed paths then make p canonical and
+  swap the load into p, and cse2, seeing the temp live longest, swaps it
+  back (3.478's "path effect");
+* the `gUnk_08732254` mask goes through the shared `u32 m` like the other
+  three table masks (`m = gUnk_08732254[k]; if (!(a->unk14 & m))`): the
+  user variable is a global pseudo that does not tie to the table address
+  in local allocation (the ROM's `ldr r2, [r0]; ands r3, r2`), so
+  `a->unk14` takes r3 and `a` goes to r5.
+Each alone gives 567 or 795 bytes at 1380 (u leaves the stack and two cases
+cross-jump).  In the matching build the reaching register of
+`&gUnk_030054E4` is STILL doubled three times (8 refs, live 192), and gets
+r4 anyway because the `gUnk_03005390` value now takes r7: a private agbcc
+that capped the doublings had reproduced the ROM's join too, which showed a
+sufficient change, not the cause.  Rule: a local whose ROM register behaves
+like a cse temporary (loaded once, reused by the tests, copied for
+arithmetic) is the global read at every use; and before blaming a priority
+formula, check which OTHER pseudos' ranks a candidate fix moves.
+**Corrects** 3.464 (the doubling was not the residue) and 3.478 (the `p`
+block's path effect is the `p` local itself; "the original evidently has one
+more long-lived value" was wrong: it has one fewer local).
+
+### 3.493 `sub_080c5b84`: PRE's slot order is arithmetic - solve the bucket inequalities for declaration order, S and the file's label count together
+The course renderer (1720 bytes, now at the end of `src/subgame_c5284.c`) was
+parked by #98 at 22 bytes, byte-exact only with 37 empty `asm("")` that raised
+gcse's hash-table size S (4.105).  The final campaign first measured the
+premise (fin-gcse, a private gcse print of every expression's unreduced hash
+and of the reaching registers in creation order): with #98's numbering the
+ROM's slot order needs S = 355, and 28 dead initializers of register locals
+(flow deletes them; they add cse-time insns and change nothing else) reach
+only 700 of the 708-711 insns.  Then the other variables of the formula
+closed it with no insn added (fin-m07):
+* the eight spilled PRE copies get stack slots in pseudo order, and gcse
+  creates their reaching registers in hash-bucket order, bucket = H mod S,
+  S = (max_cuid / 2) | 1 (max_cuid: real insns at gcse entry, the `.cse`
+  dump's count); H(reg + c) = 13772 + regno + c, H(r1 - r2) = 14413 + r1 +
+  r2, H(reg << c) = 13784 + regno + c, and a pool load `(mem/u (symbol_ref
+  "*.LCn"))` hashes the label's characters (`h += (h << 7) + c`), so it
+  depends only on n;
+* the ROM's order (unk14, unk1C, unk2C, lo - 120, &gUnk_0201B0E0, lane * 4,
+  lo - hi, unk10) needs `(13792 + regno(p)) mod S` in [0, 3]: with p near 53
+  only S = 355 works, but the natural 673 insns (S = 337) work with p =
+  25..28;
+* locals get pseudos from 22 in declaration order, ADDRESSABLE scalars
+  included (they get one at expand_decl, before `&x` is seen; `zero`, x, y,
+  z, flag, set, clear were 22-28), so `s32 lane; u16 zero; s32 x, y, z;
+  struct M37CoursePlayer *p;` makes lane 22 and p 27 (lo/hi 35/36);
+* the pool-label term then needs &gUnk_0201B0E0 to be `.LC20`-`.LC29` or
+  `.LC40`-`.LC49`: appended to `src/subgame_c5284.c`, which allocates
+  `.LC0`-`.LC39`, it is `.LC41`.  Twelve of twelve model-predicted
+  declaration orders matched there, and the function is 8 bytes off
+  compiled alone (4.79/4.86: the file is part of the source).
+The second residue (0x080C5D86, the sum in a temporary) was the map read
+through the reused pointer, `vp = (u16 *)0x0600E180 + (pos + (x + 80) / 8 *
+32); addr = *vp * 64 + 0x06000000;` (`pos += ...` adds into pos).  Rule for
+every 4.105-class residue: take the unreduced hashes from the `.gcse` dump
+or a print, write the bucket inequalities, and solve for declaration
+positions, S and the label count at once; adding insns is only one of three
+variables.  **Corrects** 4.105's conclusion ("the original evidently has
+~37 more insns at cse time") and 3.452's block-scoping note (the scope was
+one way of getting the numbering; declaration order is another).  Dead
+initializers remain a valid, trace-free way to move S (they closed half of
+caab8's residue, 3.494).
+
+### 3.494 `sub_080caab8`: dead initializers settle the slot swap; the all-ones `orrs` still needs two levers
+The boot logo objects' interpreter (568 bytes, now `src/boot_caab8.c`) had
+two residues (3.457), and the final campaign separated them (fin-gcse, with
+private gcse/combine prints of the expression hashes and of the IOR fold):
+* **the slot swap is the insn count.**  The two PRE copies `obj + 32` and
+  `i + 1` hash to 13772 + regno + 32 and 13772 + regno + 1 (3.493), and the
+  ROM's order needs `bucket(obj + 32) < bucket(i + 1)`.  At the natural 254
+  insns (S = 127) that needs `obj` at pseudo 39 or above, which no
+  declaration order of the function's nine register locals reaches
+  (fin-m07); dead initializers of `p`, `mask`, `arg`, `j`, `x` and `y`
+  (`s16 *p = 0;` ...; each local is assigned before it is read, flow
+  deletes the stores) raise the count to 258 (S = 129) and fix the order
+  with nothing else changed.  The working S values are 115, 117, 119, 129,
+  141, 147 and 157; no pool label is involved, so the file does not matter
+  (the function matches alone and appended to `src/boot_caa3c.c`);
+* **the `orrs` is combine's `(ior A C) -> C` fold** (simplify_logical): the
+  off-screen `obj->unk04 = 0xFFFF` expands to `(ior old 0xFFFF)` with `old`
+  PRE's reaching register for `(mem:HI obj+4)`.  LCM inserts it at the end
+  of the loop-head block and of the while-condition block, cse2 turns both
+  insertions into copies of the compares' own halfword loads, and since no
+  store or call sits between either load and its copy, combine's scan
+  records both values as valid 16-bit loads, so `nonzero_bits (old)` is
+  0xFFFF and the OR folds to a constant store.  Suppressing that one fold in
+  a private compiler (`GHT_NOIOR=<uid>`) gives the ROM's `ldr r1, =0xFFFF;
+  adds r0, r1, #0; orrs r0, r7` from the plain source, and with the dead
+  initializers the whole function.  In the matched `sub_080b75a4` (3.469)
+  the old value's recorded load is invalidated by a later store, so it does
+  not fold.  About forty natural spellings were measured by three agents
+  (loop, label, header, test-order and store spellings, `= -1`, `|= -1`,
+  id locals, u16 fields; `|= 0xFFFF` on the `s16` field avoids the fold but
+  makes PRE reuse the compares' `ldrsh`, 552 bytes) and all fold or change
+  the function; what the ROM needs is a set of that register whose source
+  combine cannot track at its scan, and no source was found that gives one.
+The landed source keeps two commented zero-byte levers at the switch-off,
+approved by the owner's coordinator: `asm("" : "=r"(m) : "0"(0xFFFF));
+obj->unk04 |= m; asm("" : : "r"(m));` (an `s32 m`): the first hides the
+constant from combine, the second keeps `m` live past the OR so the OR's
+result takes its own register (the ROM's `adds r0, r1, #0`; without it
+local allocation ties the result to `m`, 38 bytes).  A `u16 m` loads -1 as
+a HImode constant (4-8 bytes), an `s16 m` sign-extends, a pinned `register
+u16 m asm("r1")` still folds, and making the OLD value opaque restructures
+PRE (556 bytes).  The natural best, the plain store with the dead
+initializers (40 differing bytes, 564 of 568), is on #100: the function is
+"matched with two levers, natural form pending".
 
 ## 4. Splitting ROM ranges into asm (tools/split.py)
 
@@ -8271,6 +8481,8 @@ landing checklist) is not a formality - it is the only check that sees this,
 and a whole file can also match where two smaller ones would not
 (`camtask_2d38c.c`, 10 functions, was verified whole before merging).
 
+**Note (final campaign):** gcse's `hash_expr_1` hashes a `SYMBOL_REF` by the CHARACTERS of its name (`h += (h << 7) + c`; the source comment says it avoids hashing the address), not by the string's address; the conclusion stands, since a `.LCn` label's name carries its TU-wide number n.
+
 ### 4.80 One canonical declaration per shared cell, changed mid-run by evidence
 The M08 harness added a `types.txt` of canonical spellings (every cell used
 by more than one batch, the shared structs, the trampolines), a
@@ -9232,6 +9444,8 @@ the one-function harness (its pool labels are numbered from 1); and read
 the `.gcse` hash table before sweeping declaration orders, which change
 nothing else.
 
+**Note (final campaign, lesson 3.493):** the conclusion was wrong.  The count (S) is one of three variables of the bucket arithmetic; with the locals declared in another order and the function in its landed file (label `.LC41`), the natural 673 insns (S = 337) give the ROM's order.  Solve the inequalities for declaration order, S and label count together before assuming missing insns.
+
 ### 4.106 A pointer run in `asset_metadata_index` can be several dispatch tables back to back
 The module map's anchor-table scan reported `0x08758294` as one table of 23
 entries (24 really: its last word is `sub_080ccd10`) and `0x08758324` as one
@@ -9405,6 +9619,45 @@ installed as a callback by `sub_080cd70c`) and a 4.40 phantom
   not the function; the recurring real causes were constant-versus-symbol
   spellings (3.481, 3.482, 3.486), variable roles (3.480, 3.486) and
   library revisions (3.481, 3.483).
+
+### 4.113 Harness notes from the final campaign (the last five game functions)
+- The census took minutes: the five rows tiled their five holes, every size
+  was a multiple of 4, and a whole-ROM `bl`/pointer scan found only the
+  known callers plus two coincidental Thumb-bit words in graphics data
+  (`0x0825C6xx`).  No census row changed.
+- The #63 harness (`pending/early/`) ported in half an hour with an EMPTY
+  `canon.h`: each `fns/<fn>.c` carries its own structs, which suits holes in
+  five different modules.  `csecount.sh` (real insns in the `.cse` dump,
+  S = (n/2)|1, an asm hash) made the 4.105 arithmetic a one-liner.
+- The instrumented agbcc of 4.77 builds in about a minute with
+  `make -C gcc -j4 normal` in the builder image (rerun with -j1 if a
+  parallel-make race fails).  The shared build added `EQV` (every
+  update_equiv_regs doubling and no_equiv) and `GA` (global allocation's
+  sorted priorities); each agent then patched a PRIVATE copy in its `wip/`
+  (`SWAP`/`FE_LATESWAP` in jump.c, fin-eq; `GHE`/`GRR`/`CIOR`/`GHT_NOIOR` in
+  gcse.c and combine.c, fin-gcse; `CSEP`/`EQVCAP`/`GHASH`, fin-m07), so no
+  agent ever rebuilt a compiler another was using.  A knob that forces a
+  pass decision (a late swap, a capped doubling, a suppressed fold) proves
+  a SUFFICIENT change, not the cause: the capped doubling reproduced
+  `sub_0801b24c`'s join although the doubling was never its residue (3.492).
+- The fan-out was three agents by question (the doubled live length, gcse's
+  hash order, a fresh-eyes pass).  The fresh-eyes agent matched its function
+  in fifteen minutes and then took two more by racing the question agents
+  through `variants.sh` (b24c in twenty-two minutes, c5b84 in eleven),
+  using the question agents' measurements; the question agents answered
+  their questions (3.491, 3.493, 3.494) and closed SerialCB and half of
+  caab8.  Races never collided: the racer wrote only `wip/<agent>/` and the
+  owner kept `fns/`.
+- `sub_080c5b84` landed appended to `src/subgame_c5284.c` by 4.86's
+  procedure (carve the hole under a temporary name, merge the two `c_code`
+  rows in `segments.txt`, drop the second `linker.ld` section; the module
+  map's later row ids shift by one, which nothing references).
+- Result: all five landed between 01:55 and 03:10 UTC, four from plain source
+  (one with a documented zero-code stand-in, SerialCB's dead `i = 4;`) and
+  `sub_080caab8` with two commented zero-byte levers the owner's
+  coordinator approved.  `make modmap` now reports no clusterable asm block
+  in `0x08007300-0x080CFA4C`; the asm left in the ROM is the sound engine
+  core `m4a_1`, crt0 and the ARM task switcher, and the SDK stubs.
 
 ## 5. Workflow that worked
 

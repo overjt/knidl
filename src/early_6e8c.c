@@ -17,11 +17,11 @@
  *   sub_08006d18  serial IRQ: stop the timeout timer, re-arm SIOCNT.
  *   sub_08006d28  VBlank IRQ for the link session: snapshots SIOCNT, then
  *                 either runs the transfer step (state 4) or the connect/ID
- *                 handshake (state 2).            [NOT MATCHING - see report]
+ *                 handshake (state 2).            [src/early_6d28.c]
  *   sub_08006e8c  re-arm the SIOCNT start bit.
  *   sub_08006e9c  per-frame receive step: copies the four SIOMULTI words to
  *                 gUnk_03004D38 and folds them into the per-player buffer.
- *                                                 [NOT MATCHING - see report]
+ *                                                 [src/early_6e9c.c]
  *   sub_08007004  send step: pushes the next ring slot into SIOMLT_SEND.
  *   sub_080070b8  stop the link timeout timer (TM3).
  *   sub_080070e8  end-of-round bookkeeping / re-arm.
