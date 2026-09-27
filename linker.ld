@@ -200,8 +200,9 @@ SECTIONS
         build/src/early_6464.o(.text)
     } > ROM
 
-    .game_code_early_080011ac_08002378_08003110_08003888_08004000_08004fec_08005654_08005acc_08005d9c 0x08006AC8 : {
-        KEEP(*(.game_code_early_080011ac_08002378_08003110_08003888_08004000_08004fec_08005654_08005acc_08005d9c)) KEEP(*(.game_code_early_080011ac_08002378_08003110_08003888_08004000_08004fec_08005654_08005acc_08005d9c.tail))
+    /* early_6ac8 — decompiled to C (src/early_6ac8.c, carved by tools/carve.py) */
+    .early_6ac8 0x08006AC8 : {
+        build/src/early_6ac8.o(.text)
     } > ROM
 
     /* early_6cd4 — decompiled to C (src/early_6cd4.c, carved by tools/carve.py) */
@@ -223,8 +224,9 @@ SECTIONS
         build/src/early_6e8c.o(.text)
     } > ROM
 
-    .game_code_early_080011ac_08002378_08003110_08003888_08004000_08004fec_08005654_08005acc_08005d9c_08006d18_08006e9c 0x08006E9C : {
-        KEEP(*(.game_code_early_080011ac_08002378_08003110_08003888_08004000_08004fec_08005654_08005acc_08005d9c_08006d18_08006e9c)) KEEP(*(.game_code_early_080011ac_08002378_08003110_08003888_08004000_08004fec_08005654_08005acc_08005d9c_08006d18_08006e9c.tail))
+    /* early_6e9c — decompiled to C (src/early_6e9c.c, carved by tools/carve.py) */
+    .early_6e9c 0x08006E9C : {
+        build/src/early_6e9c.o(.text)
     } > ROM
 
     /* early_7004 — decompiled to C (src/early_7004.c, carved by tools/carve.py) */
