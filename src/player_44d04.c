@@ -5,7 +5,7 @@
 /* player_44d04.c (0x08044D04-0x080455C7, issue #87).
  *
  * Player action bodies, part 12: action 35 and per-frame handler 32.
- * sub_08044d04 (action 35, mode 13) is an attack with a ground form
+ * PlayerActionSword (action 35, mode 13) is an attack with a ground form
  * (Task.unk73 = 0) and an air form (1), each in two variants picked by
  * Task.waterFlags bit 0 (Task.unk30).  It installs the player's collider
  * record gPlayerBodyBoxes[] (registered with M05's RegisterCollider) and
@@ -16,7 +16,7 @@
  * gUnk_0873CD44 (air, two passes, counters Task.unk6C/unk6E) with
  * LoadPlayerHitBoxSet, with effects 31 and 28 and sounds 147/148; the air form
  * restores the facing Task.facing it saved in Task.unk34.  Its handler
- * sub_08045398 copies the collider row Task.unk2C of gUnk_0873BF3C
+ * PlayerActionSwordUpdate copies the collider row Task.unk2C of gUnk_0873BF3C
  * (ground) or gUnk_0873BF98/gUnk_0873BFD8 (air) with LoadPlayerBodyBoxRect and
  * registers it every frame, requests action 23 through PlayerHasCrossedWaterSurface and
  * picks the PlayerSetMotionXPreset preset from the held left/right keys. */
@@ -55,7 +55,7 @@ void PlayerSetMotionXPreset(s32 a0, s32 a1);           /* M11, still asm; M11's 
 void PlayerSetMotionYPreset(s32 a0);
 s32 CreatePlayerEffect(s32 a0, s32 a1, s32 a2);
 
-void sub_08044d04(void)
+void PlayerActionSword(void)
 {
     gCurTask->player->prevMode = gCurTask->player->mode;
     gCurTask->player->mode = 13;
@@ -243,7 +243,7 @@ void sub_08044d04(void)
     TaskSleepForever();
 }
 
-void sub_08045398(void)
+void PlayerActionSwordUpdate(void)
 {
     struct Task *t = gCurTask;
 

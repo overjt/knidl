@@ -6,17 +6,17 @@
  *
  * Player action bodies, part 24: actions 30 and 31 and per-frame handler
  * 27 (handler 28, the pair of action 31, is PR #133's src/sub_0804e3a0.c).
- * sub_0804dc08 (action 30, mode 10) is a three-state `switch (Task.unk73)`
+ * PlayerActionBackdrop (action 30, mode 10) is a three-state `switch (Task.unk73)`
  * whose states fall into each other: state 0 winds up (animation 0xE79,
  * camera preset PlayerSetMotionXPreset(11, 5)), state 1 plays sound 200 and effect 6
  * and loops animations 0xE7C/0xE85 four times, and state 2 either swings
  * (animation 0xE7D, M11's PlayerSetMotionYPreset steering, effect 28 when it lands)
  * or, once PlayerState.attachedCount is set, plays sound 177, sets
  * PlayerState.unk42 bit 9 and stops; every pass counts Task.unk28.  Its
- * handler sub_0804df00 re-binds state 2 when PlayerState.attachedCount is set, runs
+ * handler PlayerActionBackdropUpdate re-binds state 2 when PlayerState.attachedCount is set, runs
  * the hit test sub_08030898(gUnk_0873CC64) in state 1 (which spawns
  * sub_08065100's object and marks PlayerState.unk09) and, in state 2,
- * requests action 53, 8 or 1 once the swing is over.  sub_0804e0e0
+ * requests action 53, 8 or 1 once the swing is over.  PlayerActionThrow
  * (action 31, mode 10; the twin of M10's PlayerActionInhale) clears the three
  * records gUnk_02007E90[player][] (and gUnk_02007CF4[player] in link
  * play), plays sound 103 and holds animation 0xF71 with PlayerState.unk40
@@ -25,7 +25,7 @@
 
 /* gTerrainResult: M06's collision result block (src/terrain_1bcac.c spells it
    the same way except unk8, which M09 reads with ldrsh).  A 16-bit test of
-   unk0/unk1 together is `*(u16 *)&gTerrainResult` (M12's sub_08045a50). */
+   unk0/unk1 together is `*(u16 *)&gTerrainResult` (M12's PlayerActionBurningUpdate). */
 struct Unk03005550
 {
     /*0x00*/ u8 unk0;
@@ -86,7 +86,7 @@ void PlayerSetMotionYPreset(s32 a0);
 s32 CreatePlayerEffect(s32 a0, s32 a1, s32 a2);
 s32 sub_08065100(s32 x, s32 y, u32 p2, u8 p3, u8 p4);   /* this caller passes x and y unnarrowed (ldrsh; adds #8) */
 
-void sub_0804dc08(void)
+void PlayerActionBackdrop(void)
 {
     gCurTask->player->prevMode = gCurTask->player->mode;
     gCurTask->player->mode = 10;
@@ -187,7 +187,7 @@ void sub_0804dc08(void)
     TaskSleepForever();
 }
 
-void sub_0804df00(void)
+void PlayerActionBackdropUpdate(void)
 {
     struct Task *t;
     struct Task *u;
@@ -202,7 +202,7 @@ void sub_0804df00(void)
         if ((s8)t->player->attachedCount != 0)
         {
             t->unk73 = 2;
-            TaskSetEntry(sub_0804dc08, gCurTaskIdx);
+            TaskSetEntry(PlayerActionBackdrop, gCurTaskIdx);
         }
         else if (t->player->unk09 == 0)
         {
@@ -268,7 +268,7 @@ void sub_0804df00(void)
     }
 }
 
-void sub_0804e0e0(void)
+void PlayerActionThrow(void)
 {
     struct Task *t;
     struct Task *u;

@@ -8,20 +8,20 @@ extern s16 gViewRect[];
 extern struct Task gTasks[];
 extern u8 gTerrainResult[];
 extern u32 gUnk_08745CEC[];
-extern u32 gUnk_08747BCC[];
+extern u32 gMaceKnightVariants[];
 extern u32 gUnk_08747BD8[];
 extern u32 gUnk_08747BE0[];
 extern u32 gUnk_08747BE8[];
-extern u32 gUnk_08747BF4[];
+extern u32 gTridentKnightVariants[];
 extern u32 gUnk_08747C04[];
 extern u32 gUnk_08747C14[];
 extern u8 gUnk_08747C28[];
 extern u32 gUnk_08747DB4[];
 extern u32 gUnk_08747E0C[];
 extern u32 gUnk_08753354[];
-extern u32 gUnk_08753378[];
+extern u32 gMaceKnightFrames[];
 extern u32 gUnk_08753404[];
-extern u32 gUnk_08753414[];
+extern u32 gTridentKnightFrames[];
 
 /* Externals */
 extern void TaskYieldTrampoline(u32 a);
@@ -247,11 +247,11 @@ void sub_0809dc7c(void)
 
     t = gCurTask;
     t->drawCallback = (u32)ActorDrawWorldInViewOrDestroy;
-    t->frameTable = gUnk_08753378;
+    t->frameTable = gMaceKnightFrames;
     ActorLoadDef((u32)gUnk_08747DB4);
     u = gCurTask;
     u->unk24 = 0;
-    CallTableEntry(u->unk73, 3, gUnk_08747BCC);
+    CallTableEntry(u->unk73, 3, gMaceKnightVariants);
 }
 
 void sub_0809dcbc(void)
@@ -809,11 +809,11 @@ void sub_0809e824(void)
 
     t = gCurTask;
     t->drawCallback = (u32)sub_0809e864;
-    t->frameTable = gUnk_08753414;
+    t->frameTable = gTridentKnightFrames;
     ActorLoadDef((u32)gUnk_08747E0C);
     u = gCurTask;
     u->unk24 = 0;
-    CallTableEntry(u->unk73, 4, gUnk_08747BF4);
+    CallTableEntry(u->unk73, 4, gTridentKnightVariants);
 }
 
 void sub_0809e864(void)

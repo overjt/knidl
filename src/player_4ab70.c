@@ -5,16 +5,16 @@
 /* player_4ab70.c (0x0804AB70-0x0804B5B3, issue #88).
  *
  * Player action bodies, part 19: actions 50-51 and handlers 47-48.
- * sub_0804ab70 (action 50, mode 13) is a rolling move: sound 150, then
+ * PlayerActionTornado (action 50, mode 13) is a rolling move: sound 150, then
  * the velocity presets 63-65 of M11's PlayerSetMotionXPreset over three states
  * that fall into each other (animations 0xDC5/0xDDD/0xDDB-0xDDC by the
- * facing, effects 28 and 45 x3).  Its handler sub_0804ada8 jumps on B
+ * facing, effects 28 and 45 x3).  Its handler PlayerActionTornadoUpdate jumps on B
  * (preset 50) or falls (49) in state 1, turns the player round at a
  * wall (PlayerFaceHeldDirection or the collision block gTerrainResult: Task.velX
  * and unk5C negated, and the facing on a block hit, with an 8-frame
  * lock in Task.unk28), stops a rise on a ceiling hit, registers the
  * collider gUnk_0873C2A0 and requests action 23 through PlayerHasCrossedWaterSurface.
- * sub_0804af54 (action 51, mode 13) is a screen-wide blast with the
+ * PlayerActionCrash (action 51, mode 13) is a screen-wide blast with the
  * stage frozen (gUnk_03001F34 = 1): it switches the DISPCNT shadow
  * gDispCnt to windowed BG1-BG3, remembers the height Task.posY in
  * Task.unk2C, shakes the screen (RequestScreenShake(5), SetRoomUpdateFlags(2)),
@@ -22,13 +22,13 @@
  * gUnk_082030B8 twice (BlendColors, presets 51/52), waits for the
  * blast task through PlayerState.unk16 and TaskSetSkipMask, restores the
  * default script gPlayerDefaultTerrainBox and resets the HUD ability panel
- * (SetPlayerAbility(0, -1, player)).  Its handler sub_0804b474 fades the
+ * (SetPlayerAbility(0, -1, player)).  Its handler PlayerActionCrashUpdate fades the
  * palette in and back out (gUnk_08203098, Task.unk28 in steps of 10 and
  * 16) and keeps the player under the height Task.unk2C. */
 
 /* gTerrainResult: M06's collision result block (src/terrain_1bcac.c spells it
    the same way except unk8, which M09 reads with ldrsh).  A 16-bit test of
-   unk0/unk1 together is `*(u16 *)&gTerrainResult` (M12's sub_08045a50). */
+   unk0/unk1 together is `*(u16 *)&gTerrainResult` (M12's PlayerActionBurningUpdate). */
 struct Unk03005550
 {
     /*0x00*/ u8 unk0;
@@ -80,7 +80,7 @@ void PlayerSetMotionXPreset(s32 a0, s32 a1);           /* M11, still asm; M11's 
 void PlayerSetMotionYPreset(s32 a0);
 s32 CreatePlayerEffect(s32 a0, s32 a1, s32 a2);
 
-void sub_0804ab70(void)
+void PlayerActionTornado(void)
 {
     gCurTask->player->prevMode = gCurTask->player->mode;
     gCurTask->player->mode = 13;
@@ -149,7 +149,7 @@ void sub_0804ab70(void)
     TaskSleepForever();
 }
 
-void sub_0804ada8(void)
+void PlayerActionTornadoUpdate(void)
 {
     switch (gCurTask->unk73) {
     case 1:
@@ -216,7 +216,7 @@ void sub_0804ada8(void)
     }
 }
 
-void sub_0804af54(void)
+void PlayerActionCrash(void)
 {
     gCurTask->player->prevMode = gCurTask->player->mode;
     gCurTask->player->mode = 13;
@@ -368,7 +368,7 @@ void sub_0804af54(void)
     TaskSleepForever();
 }
 
-void sub_0804b474(void)
+void PlayerActionCrashUpdate(void)
 {
     struct Task *t = gCurTask;
 

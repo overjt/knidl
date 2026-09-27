@@ -56,7 +56,7 @@ extern u16 gUnk_087319B0[][2][2];
 extern u32 gUnk_087319C8[][3];
 extern u32 gUnk_08731A28[][3];
 extern u8 gUnk_08731A88[];
-extern u32 gUnk_08731A90[][2];
+extern u32 gAbilityPictures[][2];
 extern u32 gUnk_08731B70[];
 extern u16 gUnk_08731B88[][2];
 extern u32 gUnk_08731BA0[][2];
@@ -190,8 +190,8 @@ void HudClearAbilityPicture(void)
 
 void HudLoadAbilityPicture(s32 a0)
 {
-    RequestCopy(2, gUnk_08731A90[a0][0] + 2, (u32)&gBgPalette[1], 30);
-    RequestCopy(1, gUnk_08731A90[a0][1], 0x06000400, 0x3E0);
+    RequestCopy(2, gAbilityPictures[a0][0] + 2, (u32)&gBgPalette[1], 30);
+    RequestCopy(1, gAbilityPictures[a0][1], 0x06000400, 0x3E0);
 }
 
 /* The 0x02020000 / 0x02020100 buffer addresses must stay integer literals:
@@ -248,8 +248,8 @@ void sub_08008fc4(s32 a0, s32 a1)
         LZ77UnCompVram(gUnk_02028000, (void *)0x06009600);
         HuffUnComp((void *)gUnk_08731BA0[a0][1], gUnk_02030000);
         LZ77UnCompVram(gUnk_02030000, (void *)0x0600B400);
-        RequestCopy(2, gUnk_08731A90[a0][0], (u32)gUnk_030013B0, 32);
-        RequestCopy(1, gUnk_08731A90[a0][1], 0x0600A800, 0x3E0);
+        RequestCopy(2, gAbilityPictures[a0][0], (u32)gUnk_030013B0, 32);
+        RequestCopy(1, gAbilityPictures[a0][1], 0x0600A800, 0x3E0);
         break;
     }
 }

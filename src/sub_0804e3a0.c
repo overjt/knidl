@@ -18,10 +18,10 @@ void PlayerStopAtCeilingAndWall(void);
 s32 PlayerHasCrossedWaterSurface(s32 a0);
 void PlayerSetMotionXPreset(s32 a0, s32 a1);
 void PlayerSetMotionYPreset(s32 a0);
-void sub_0804e0e0(void);
+void PlayerActionThrow(void);
 s32 sub_08065100(s32 x, s32 y, u32 p2, u8 p3, u8 p4);
 
-void sub_0804e3a0(void)
+void PlayerActionThrowUpdate(void)
 {
     struct Task *t;
     struct Task *u;
@@ -71,7 +71,7 @@ void sub_0804e3a0(void)
                     if (!(gLatchedHeldKeys[v->player->playerIndex] & 2))
                     {
                         v->unk73 = 2;
-                        TaskSetEntry(sub_0804e0e0, gCurTaskIdx);
+                        TaskSetEntry(PlayerActionThrow, gCurTaskIdx);
                     }
                 }
                 else

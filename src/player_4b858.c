@@ -5,7 +5,7 @@
 /* player_4b858.c (0x0804B858-0x0804C64B, issue #88).
  *
  * Player action bodies, part 21: action 53 and per-frame handler 50.
- * sub_0804b858 (action 53, mode 13) is `loop: switch (Task.unk73)` over
+ * PlayerActionBackdropHold (action 53, mode 13) is `loop: switch (Task.unk73)` over
  * eight states, a stance with six moves.  A fresh entry starts in
  * state 6 with the 120-frame timer PlayerState.unk14 and Task.unk80 =
  * 22: the stance (animation 0xE84, effect 28 on the ground) picks the
@@ -19,7 +19,7 @@
  * PlayerState.unk42 bit 9, calls SetPlayerInvulnerability(255, 0, player) and ends
  * the action (TaskSleepForever, falling into state 0, lesson 3.403).  The
  * long `bl`s at 0x0804C49E and 0x0804C488 are cross-jumped `goto loop`
- * tails.  Its handler sub_0804c4ac lets PlayerRequestLocomotion end state 7,
+ * tails.  Its handler PlayerActionBackdropHoldUpdate lets PlayerRequestLocomotion end state 7,
  * steers state 4 in the air (TaskSetMotionXFacing and the 8.8 speed Task.speedLimitX
  * for the direction in gUnk_03001F2C), re-binds state 7 from the other
  * moves once PlayerState.unk16 >= 0 and unk08 == 0, and requests action
@@ -50,7 +50,7 @@ void PlayerSetMotionXPreset(s32 a0, s32 a1);           /* M11, still asm; M11's 
 void PlayerSetMotionYPreset(s32 a0);
 s32 CreatePlayerEffect(s32 a0, s32 a1, s32 a2);
 
-void sub_0804b858(void)
+void PlayerActionBackdropHold(void)
 {
     struct Task *h;
     s32 k;
@@ -465,7 +465,7 @@ loop:
     goto loop;
 }
 
-void sub_0804c4ac(void)
+void PlayerActionBackdropHoldUpdate(void)
 {
     switch (gCurTask->unk73) {
     case 7:
@@ -517,7 +517,7 @@ void sub_0804c4ac(void)
                 }
                 PlayerStopAxes(1);
                 gCurTask->unk73 = 7;
-                TaskSetEntry(sub_0804b858, gCurTaskIdx);
+                TaskSetEntry(PlayerActionBackdropHold, gCurTaskIdx);
             }
         }
         break;

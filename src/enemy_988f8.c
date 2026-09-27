@@ -4,11 +4,11 @@
  *   ./tools/fnmatch.sh 0x080988F8 0x08099B20 src/enemy_988f8.c --newpb
  *
  * M27's first mid-boss script, built exactly like M25's bosses (rom-map section 9).
- * sub_08098e64 is the task entry: it installs ActorMove as the draw hook
+ * Task_MrFrosty is the task entry: it installs ActorMove as the draw hook
  * (Task.moveCallback) and sub_08065438 as the per-frame hook (Task.drawCallback), points
- * Task.frameTable at the graphics block gUnk_08753090, counts the enemy into
+ * Task.frameTable at the graphics block gMrFrostyFrames, counts the enemy into
  * gUnk_02007D00[0], loads the animation script gUnk_08745624 and hands
- * Task.unk73 to CallTableEntry with the one-word table gUnk_08745630, whose only
+ * Task.unk73 to CallTableEntry with the one-word table gMrFrostyVariants, whose only
  * entry is sub_08098ed4.
  *
  * sub_08098ed4 installs sub_08098f38 as the per-frame body and dispatches
@@ -45,7 +45,7 @@ extern vu16 gTaskSlotTypes[];
 extern u8 gUnk_08745618[];
 extern u8 gUnk_0874561F[];
 extern struct AnimCmd gUnk_08745624[];
-extern u32 gUnk_08745630[];
+extern u32 gMrFrostyVariants[];
 extern u32 gUnk_08745634[];
 extern u32 gUnk_08745680[];
 extern u32 gUnk_08745868[];
@@ -59,7 +59,7 @@ extern u32 gUnk_08745948[];
 extern u32 gUnk_08745A0C[];
 extern u32 gUnk_08745A14[];
 extern u32 gUnk_08745A80[];
-extern u32 gUnk_08753090[];
+extern u32 gMrFrostyFrames[];
 extern void *gUnk_08274840;
 
 /* Externals */
@@ -376,7 +376,7 @@ void sub_08098de4(void)
     }
 }
 
-void sub_08098e64(void)
+void Task_MrFrosty(void)
 {
     struct Task *t;
     struct Task *u;
@@ -388,14 +388,14 @@ void sub_08098e64(void)
     t->drawCallback = (u32)sub_08065438;
     t->layer = 11;
     zero = 0;
-    gCurTask->frameTable = gUnk_08753090;
+    gCurTask->frameTable = gMrFrostyFrames;
     gUnk_02007D00[0]++;
     sub_080666cc(gUnk_08745624);
     u = gCurTask;
     u->unk18 = 1;
     u->unk46 = zero;
     sub_08066ae0();
-    CallTableEntry(gCurTask->unk73, 1, gUnk_08745630);
+    CallTableEntry(gCurTask->unk73, 1, gMrFrostyVariants);
 }
 
 void sub_08098ed4(void)

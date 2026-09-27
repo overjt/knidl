@@ -48,7 +48,7 @@ extern u32 gUnk_0874CC38[];
 extern u32 gUnk_0874CCA4[];
 extern u32 gUnk_0874CFEC[];
 extern u32 gUnk_08752548[];
-extern u32 gUnk_08752D50[];
+extern u32 gWarpStarFrames[];
 
 /* Externals */
 extern void TaskExitTrampoline(void);
@@ -215,7 +215,7 @@ void sub_0806e424(void)
     else
         t->drawCallback = (u32)TaskDrawScreen;
     u = gCurTask;
-    u->frameTable = gUnk_08752D50;
+    u->frameTable = gWarpStarFrames;
     u->layer = 10;
     gCurTask->updateCallback = (u32)sub_0806e5f0;
     gCurTask->tileWord = 0;

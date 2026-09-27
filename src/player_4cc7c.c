@@ -5,7 +5,7 @@
 /* player_4cc7c.c (0x0804CC7C-0x0804DC07, issue #90).
  *
  * Player action bodies, part 23: action 55 and per-frame handler 52.
- * sub_0804cc7c (action 55, mode 13) is an eleven-state `switch
+ * PlayerActionUFO (action 55, mode 13) is an eleven-state `switch
  * (Task.unk73)` (jump table at 0x0804CCE4) over one stance: states 7-10
  * turn between the stance's four postures, each through a nested `switch
  * (Task.unk24)` on the posture it comes from (animations 0xF88-0xF9E);
@@ -14,7 +14,7 @@
  * 0-5 through CreatePlayerObject; state 1 ends the action.  The states that
  * leave the stance end in a long `bl` to the function's own exit at
  * 0x0804D6C6 (lesson 4.39; the census took it for a function).  Its
- * handler sub_0804d6d0 (jump table at 0x0804D6F0) reads the keys every
+ * handler PlayerActionUFOUpdate (jump table at 0x0804D6F0) reads the keys every
  * frame, re-binds action 55 with the next state (sounds 203-206 and 239,
  * camera preset PlayerSetMotionXPreset(13, 72)), steps the posture timer through
  * gUnk_0873DB34 and hands over to M11's transitions. */
@@ -44,7 +44,7 @@ void PlayerSetMotionXPreset(s32 a0, s32 a1);           /* M11, still asm; M11's 
 s32 CreatePlayerObject(s8 player, u8 variant, s32 arg);
 s32 CreatePlayerEffect(s32 a0, s32 a1, s32 a2);
 
-void sub_0804cc7c(void)
+void PlayerActionUFO(void)
 {
     struct Task *t;
 
@@ -455,7 +455,7 @@ void sub_0804cc7c(void)
     TaskSleepForever();
 }
 
-void sub_0804d6d0(void)
+void PlayerActionUFOUpdate(void)
 {
     s32 old = gCurTask->unk73;
 
@@ -676,5 +676,5 @@ void sub_0804d6d0(void)
     PlayerStopAtCeilingAndWall();
     PlayerCheckLanding();
     if (old != gCurTask->unk73)
-        TaskSetEntry(sub_0804cc7c, gCurTaskIdx);
+        TaskSetEntry(PlayerActionUFO, gCurTaskIdx);
 }

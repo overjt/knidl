@@ -5,7 +5,7 @@
 /* player_46c00.c (0x08046C00-0x080474E7, issue #87).
  *
  * Player action bodies, part 16: action 40 and per-frame handler 37.
- * sub_08046c00 (action 40, mode 13) is sub_08044d04's sibling: the same
+ * PlayerActionHammer (action 40, mode 13) is PlayerActionSword's sibling: the same
  * opening, a ground form (Task.unk73 = 0) and an air form (1) in two
  * variants (Task.unk30 = Task.waterFlags bit 0), the collider record
  * gUnk_0873C060 and the block hit-box sets gUnk_0873CDB4 (ground) /
@@ -13,7 +13,7 @@
  * gUnk_0873CE64 it steps with LoadPlayerHitBoxSet.  On the ground it probes the
  * metatile 20 pixels ahead (sub_0802259c); a solid one (bits 0-1) gives
  * the impact: sound 241, the screen shake RequestScreenShake(2) and effect 35.
- * Its handler sub_08047270 is sub_08045398's twin with the collider rows
+ * Its handler PlayerActionHammerUpdate is PlayerActionSwordUpdate's twin with the collider rows
  * gUnk_0873C074, gUnk_0873C0C0 and gUnk_0873C128, and in the air it
  * records the held left/right direction in Task.unk34. */
 
@@ -52,7 +52,7 @@ void PlayerSetMotionXPreset(s32 a0, s32 a1);           /* M11, still asm; M11's 
 void PlayerSetMotionYPreset(s32 a0);
 s32 CreatePlayerEffect(s32 a0, s32 a1, s32 a2);
 
-void sub_08046c00(void)
+void PlayerActionHammer(void)
 {
     gCurTask->player->prevMode = gCurTask->player->mode;
     gCurTask->player->mode = 13;
@@ -226,7 +226,7 @@ void sub_08046c00(void)
     TaskSleepForever();
 }
 
-void sub_08047270(void)
+void PlayerActionHammerUpdate(void)
 {
     struct Task *t = gCurTask;
 

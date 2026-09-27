@@ -4,10 +4,10 @@
  *   ./tools/fnmatch.sh 0x0809000C 0x0809113C src/enemy_9000c.c --newpb
  *
  * The first of M25's four boss scripts, dispatched through the 23-entry
- * anchor table at 0x08743848.  sub_0809000c is the task entry: it installs
+ * anchor table at 0x08743848.  Task_Bonkers is the task entry: it installs
  * ActorMove as the draw hook (Task.moveCallback) and sub_08065438 as the
  * per-frame hook (Task.drawCallback), points Task.frameTable at the graphics block
- * gUnk_08752ED8, counts the boss into gUnk_02007D00[0], spawns its helper
+ * gBonkersFrames, counts the boss into gUnk_02007D00[0], spawns its helper
  * task with CreateChildTaskHere(177, 1) and hands Task.unk73 to CallTableEntry, which
  * jumps into the table.  sub_080900f4 is the per-frame body: it runs down
  * Task.unk18, asks sub_0806acf8 / ActorCollideTerrain whether the player interrupted,
@@ -29,7 +29,7 @@
  * animation from gUnk_08743744[Task.unk28]), sub_08090e9c (the hover loop),
  * the sub_08090ef0 / sub_08090f14 / sub_08090f4c hit hooks, the companion
  * task sub_08090fc0 / sub_08090fe0 that mirrors the boss's position while
- * gTaskSlotTypes[Task.parent] says the boss is alive - and sub_080910c0, the
+ * gTaskSlotTypes[Task.parent] says the boss is alive - and Task_PoppyBrosSr, the
  * entry of the second boss, whose states live in src/enemy_9113c.c.
  */
 #include "gba/gba.h"
@@ -47,8 +47,8 @@ extern u32 gUnk_087440DC[];
 extern u16 gUnk_087438A4[];
 extern u16 gUnk_087438B2[];
 extern u32 gUnk_087438C0[];
-extern u32 gUnk_08743984[];
-extern u32 gUnk_087530F8[];
+extern u32 gPoppyBrosSrVariants[];
+extern u32 gPoppyBrosSrFrames[];
 extern u32 gUnk_0874373C[];
 extern u8 gUnk_0874374E[];
 extern u32 gUnk_08743750[];
@@ -57,11 +57,11 @@ extern u8 gUnk_087437D0[];
 extern u32 gUnk_087437F4[];
 extern u32 gUnk_08743810[];
 extern u32 gUnk_0874382C[];
-extern u32 gUnk_08743848[];
+extern u32 gBonkersVariants[];
 extern struct AnimCmd gUnk_08743758[];
 extern u32 gUnk_0874384C[];
 extern u32 gUnk_08743878[];
-extern u32 gUnk_08752ED8[];
+extern u32 gBonkersFrames[];
 extern void *gUnk_0826A668;
 
 /* Externals */
@@ -127,7 +127,7 @@ void sub_08090e9c(void);
 void sub_08090fe0(void);
 void sub_08090e54(void);
 
-void sub_0809000c(void)
+void Task_Bonkers(void)
 {
     struct Task *t;
     struct Task *u;
@@ -138,7 +138,7 @@ void sub_0809000c(void)
     t->drawCallback = (u32)sub_08065438;
     t->layer = 11;
     u = gCurTask;
-    u->frameTable = gUnk_08752ED8;
+    u->frameTable = gBonkersFrames;
     gUnk_02007D00[0]++;
     gCurTask->unk46 = CreateChildTaskHere(177, 1);
     if (sub_08067060() == 1)
@@ -146,7 +146,7 @@ void sub_0809000c(void)
     else
         gCurTask->unk18 = 0;
     sub_08066ae0();
-    CallTableEntry(gCurTask->unk73, 1, gUnk_08743848);
+    CallTableEntry(gCurTask->unk73, 1, gBonkersVariants);
 }
 
 void sub_08090090(void)
@@ -835,7 +835,7 @@ void sub_08090fe0(void)
     }
 }
 
-void sub_080910c0(void)
+void Task_PoppyBrosSr(void)
 {
     struct Task *t;
     struct Task *u;
@@ -846,7 +846,7 @@ void sub_080910c0(void)
     t->drawCallback = (u32)sub_08065350;
     t->layer = 11;
     u = gCurTask;
-    u->frameTable = gUnk_087530F8;
+    u->frameTable = gPoppyBrosSrFrames;
     gUnk_02007D00[0]++;
     if (sub_08067060() == 1)
         gCurTask->unk18 = 24;
@@ -854,5 +854,5 @@ void sub_080910c0(void)
         gCurTask->unk18 = 0;
     TaskFaceNearestPlayer();
     sub_08066ae0();
-    CallTableEntry(gCurTask->unk73, 1, gUnk_08743984);
+    CallTableEntry(gCurTask->unk73, 1, gPoppyBrosSrVariants);
 }

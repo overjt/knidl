@@ -27,7 +27,7 @@ extern struct AnimCmd gUnk_087443D0[];
 extern struct AnimCmd gUnk_087443E4[];
 extern struct AnimCmd gUnk_08744408[];
 extern struct AnimCmd gUnk_0874441C[];
-extern u32 gUnk_08744440[];
+extern u32 gGrandWheelieVariants[];
 extern u32 gUnk_08744444[];
 extern u32 gUnk_08744470[];
 extern u16 gUnk_0874449C[];
@@ -72,7 +72,7 @@ extern u32 gUnk_0874533C[];
 extern u32 gUnk_08745344[];
 extern u32 gUnk_0874534C[];
 extern u32 gUnk_0874541C[];
-extern u32 gUnk_08752F74[];
+extern u32 gGrandWheelieFrames[];
 
 /* Externals */
 extern void ActorDrawWorldInViewOrDestroy(void);
@@ -138,7 +138,7 @@ void sub_08094010(void);
 void sub_08094040(void);
 void sub_08094144(void);
 void sub_08094164(void);
-void sub_080941ac(void);
+void Task_GrandWheelie(void);
 void sub_08094220(void);
 void sub_08094290(void);
 void sub_080942b4(void);
@@ -299,7 +299,7 @@ void sub_08094164(void)
     t->velY = gUnk_030023D4;
 }
 
-void sub_080941ac(void)
+void Task_GrandWheelie(void)
 {
     struct Task *t;
 
@@ -307,7 +307,7 @@ void sub_080941ac(void)
     t->moveCallback = (u32)ActorMove;
     t->drawCallback = (u32)sub_08065438;
     t->layer = 11;
-    gCurTask->frameTable = gUnk_08752F74;
+    gCurTask->frameTable = gGrandWheelieFrames;
     sub_08066088(0);
     gUnk_02007D00[8]++;
     gCurTask->unk34 = -1;
@@ -315,7 +315,7 @@ void sub_080941ac(void)
     ActorCollideTerrain();
     sub_080666cc(gUnk_0874433C);
     sub_08066ae0();
-    CallTableEntry(gCurTask->unk73, 1, gUnk_08744440);
+    CallTableEntry(gCurTask->unk73, 1, gGrandWheelieVariants);
 }
 
 void sub_08094220(void)

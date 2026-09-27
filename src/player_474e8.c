@@ -5,21 +5,21 @@
 /* player_474e8.c (0x080474E8-0x08047FE7, issue #87).
  *
  * Player action bodies, part 17: actions 41-43 and per-frame handlers
- * 38-40, the last entries M12 holds.  sub_080474e8 (action 41, mode 13)
+ * 38-40, the last entries M12 holds.  PlayerActionParasol (action 41, mode 13)
  * plays one of two animation scripts (0x8D2... or 0x8DF..., picked by
  * Task.waterFlags bit 0 and remembered in Task.unk2C) with sound 151 and
- * effect 36; its handler sub_080477cc calls PlayerRequestLocomotion once the script
+ * effect 36; its handler PlayerActionParasolUpdate calls PlayerRequestLocomotion once the script
  * has finished (Task.unk28 != 0) and requests action 23 when
- * PlayerHasCrossedWaterSurface(0) fires while Task.velY > 0.  sub_08047844 (action 42)
+ * PlayerHasCrossedWaterSurface(0) fires while Task.velY > 0.  PlayerActionSleep (action 42)
  * is a long scripted sequence (animations 0x8E5-0x8F7, sounds 180 and 274, effect
  * 38 steps 0-3) that holds PlayerState.unk42 bit 1 and releases it with
- * the HUD call SetPlayerAbility(0, -1, player); its handler sub_08047bd8 does
+ * the HUD call SetPlayerAbility(0, -1, player); its handler PlayerActionSleepUpdate does
  * the same release when the ability PlayerState.ability is 11.
- * sub_08047c30 (action 43) is a re-entrant three-state machine: state 0
+ * PlayerActionNeedle (action 43) is a re-entrant three-state machine: state 0
  * installs the hit boxes gUnk_0873C1B0 and gUnk_0873CEEC in the player
  * records gPlayerBodyBoxes[]/gPlayerHitBoxSets[] and steps the frame index
  * Task.unk46, state 1 plays frames 5-10 and waits while B is held,
- * state 2 plays the release.  Its handler sub_08047e74 shows frame
+ * state 2 plays the release.  Its handler PlayerActionNeedleUpdate shows frame
  * gUnk_0873DADE[Task.unk46][Task.unk28] (Task.unk28 = the ground flag
  * Task.onGround of the previous frame), registers the matching boxes and
  * re-binds the coroutine when the ground flag changes. */
@@ -61,7 +61,7 @@ void PlayerSetMotionXPreset(s32 a0, s32 a1);           /* M11, still asm; M11's 
 void PlayerSetMotionYPreset(s32 a0);
 s32 CreatePlayerEffect(s32 a0, s32 a1, s32 a2);
 
-void sub_080474e8(void)
+void PlayerActionParasol(void)
 {
     gCurTask->player->prevMode = gCurTask->player->mode;
     gCurTask->player->mode = 13;
@@ -146,7 +146,7 @@ void sub_080474e8(void)
     TaskSleepForever();
 }
 
-void sub_080477cc(void)
+void PlayerActionParasolUpdate(void)
 {
     struct Task *t = gCurTask;
     struct Task *u;
@@ -169,7 +169,7 @@ void sub_080477cc(void)
     PlayerStopAtCeilingAndWall();
 }
 
-void sub_08047844(void)
+void PlayerActionSleep(void)
 {
     gCurTask->player->prevMode = gCurTask->player->mode;
     gCurTask->player->mode = 13;
@@ -280,7 +280,7 @@ void sub_08047844(void)
     TaskSleepForever();
 }
 
-void sub_08047bd8(void)
+void PlayerActionSleepUpdate(void)
 {
     if (sub_0803e55c() != 0) {
         struct Task *t = gCurTask;
@@ -293,7 +293,7 @@ void sub_08047bd8(void)
     }
 }
 
-void sub_08047c30(void)
+void PlayerActionNeedle(void)
 {
     gCurTask->player->prevMode = gCurTask->player->mode;
     gCurTask->player->mode = 13;
@@ -364,7 +364,7 @@ void sub_08047c30(void)
     TaskSleepForever();
 }
 
-void sub_08047e74(void)
+void PlayerActionNeedleUpdate(void)
 {
     u16 *e = gUnk_0873DADE[gCurTask->unk46];
 
@@ -374,7 +374,7 @@ void sub_08047e74(void)
     switch (gCurTask->unk73) {
     case 1:
         if (gCurTask->unk28 != gCurTask->onGround)
-            TaskSetEntry(sub_08047c30, gCurTaskIdx);
+            TaskSetEntry(PlayerActionNeedle, gCurTaskIdx);
         /* fallthrough */
     case 0:
     case 2:

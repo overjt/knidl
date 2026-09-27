@@ -5,7 +5,7 @@
 /* player_4c64c.c (0x0804C64C-0x0804CC7B, issue #88).
  *
  * Player action bodies, part 22: action 54 and per-frame handler 51.
- * sub_0804c64c (action 54, mode 13) is a charged three-way move, a
+ * PlayerActionThrowHold (action 54, mode 13) is a charged three-way move, a
  * `while (1) switch (Task.unk73)` state machine.  A fresh entry starts
  * in state 3 with the 120-frame timer PlayerState.unk14 and
  * Task.unk80 = 23: state 3 winds up (animation 0xF73, the frame index
@@ -17,7 +17,7 @@
  * (animations 0xF7C/0xF76/0xF84, sound 236, then 0xF80), which end in
  * state 5: clear PlayerState.unk42 bit 9, SetPlayerInvulnerability(255, 0, player)
  * and end the action (TaskSleepForever, which falls into state 0,
- * lesson 3.403).  Its handler sub_0804ca84 re-binds state 5 from states
+ * lesson 3.403).  Its handler PlayerActionThrowHoldUpdate re-binds state 5 from states
  * 0-2 once PlayerState.unk16 >= 0 and unk08 == 0, re-reads the direction
  * every frame in state 4 and cycles the charge animation through
  * Task.unk46 (0xF7A/0xF82/0xF74 and 0xF7B/0xF83/0xF75), and requests
@@ -44,7 +44,7 @@ void PlayerSetMotionXPreset(s32 a0, s32 a1);           /* M11, still asm; M11's 
 void PlayerSetMotionYPreset(s32 a0);
 s32 CreatePlayerEffect(s32 a0, s32 a1, s32 a2);
 
-void sub_0804c64c(void)
+void PlayerActionThrowHold(void)
 {
     gCurTask->player->prevMode = gCurTask->player->mode;
     gCurTask->player->mode = 13;
@@ -189,7 +189,7 @@ void sub_0804c64c(void)
     }
 }
 
-void sub_0804ca84(void)
+void PlayerActionThrowHoldUpdate(void)
 {
     struct Task *t = gCurTask;
 
@@ -255,7 +255,7 @@ void sub_0804ca84(void)
                 t->unk73 = 5;
             } while (0);
         } while (0);
-        TaskSetEntry(sub_0804c64c, gCurTaskIdx);
+        TaskSetEntry(PlayerActionThrowHold, gCurTaskIdx);
         break;
     case 5:
         PlayerRequestLocomotion();

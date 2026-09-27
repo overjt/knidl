@@ -5,16 +5,16 @@
 /* player_4a54c.c (0x0804A54C-0x0804AB6F, issue #88).
  *
  * Player action bodies, part 18: actions 47-48 and handlers 44-45.
- * sub_0804a54c (action 47, mode 13) is a linear yield script (animation
+ * PlayerActionBeam (action 47, mode 13) is a linear yield script (animation
  * 0xBBD, M14's CreatePlayerObject(player, 8, 0..2), three two-step loops over
- * 0xBBF/0xBC1/0xBC3); its handler sub_0804a6a0 lets M11's PlayerRequestLocomotion
- * end it once Task.unk28 is set.  sub_0804a6bc (action 48, mode 13) is
+ * 0xBBF/0xBC1/0xBC3); its handler PlayerActionBeamUpdate lets M11's PlayerRequestLocomotion
+ * end it once Task.unk28 is set.  PlayerActionStone (action 48, mode 13) is
  * a re-entrant four-state move: state 0 winds up (sound 152, velocity
  * preset 39 and animation 0xC53 on the ground, then 0xC40), state 1
  * holds animation 0xC48 until B is newly pressed after Task.unk28
  * frames, state 2 releases it (preset 42, 13 or 2 by ground and
  * variant, animation 0xC4D, effect 43 x4) and state 3 ends it.  Its
- * handler sub_0804a970 registers the collider gUnk_0873C264 in the air
+ * handler PlayerActionStoneUpdate registers the collider gUnk_0873C264 in the air
  * or tests the block set gUnk_0873CF6C on the ground in state 0; in
  * state 1 it plays the landing (effect 27, sound 143, RequestScreenShake(2))
  * and the terrain animation gUnk_0873B654[gTerrainResult.unk4] on the
@@ -23,7 +23,7 @@
 
 /* gTerrainResult: M06's collision result block (src/terrain_1bcac.c spells it
    the same way except unk8, which M09 reads with ldrsh).  A 16-bit test of
-   unk0/unk1 together is `*(u16 *)&gTerrainResult` (M12's sub_08045a50). */
+   unk0/unk1 together is `*(u16 *)&gTerrainResult` (M12's PlayerActionBurningUpdate). */
 struct Unk03005550
 {
     /*0x00*/ u8 unk0;
@@ -71,7 +71,7 @@ void PlayerSetMotionYPreset(s32 a0);
 void CreatePlayerObject(s32 a, s32 b, s32 c);      /* M14, src/plobj_52f6c.c (defined s32 (s8, u8, s32); the result is unused here) */
 s32 CreatePlayerEffect(s32 a0, s32 a1, s32 a2);
 
-void sub_0804a54c(void)
+void PlayerActionBeam(void)
 {
     gCurTask->player->prevMode = gCurTask->player->mode;
     gCurTask->player->mode = 13;
@@ -112,14 +112,14 @@ void sub_0804a54c(void)
     TaskSleepForever();
 }
 
-void sub_0804a6a0(void)
+void PlayerActionBeamUpdate(void)
 {
     if (gCurTask->unk28 != 0)
         PlayerRequestLocomotion();
     sub_0803e55c();
 }
 
-void sub_0804a6bc(void)
+void PlayerActionStone(void)
 {
     gCurTask->player->prevMode = gCurTask->player->mode;
     gCurTask->player->mode = 13;
@@ -210,7 +210,7 @@ void sub_0804a6bc(void)
     TaskSleepForever();
 }
 
-void sub_0804a970(void)
+void PlayerActionStoneUpdate(void)
 {
     struct Task *t = gCurTask;
 

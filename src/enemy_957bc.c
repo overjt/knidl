@@ -46,7 +46,7 @@ extern u32 gUnk_08745200[];
 extern u32 gUnk_08745304[];
 extern u32 gUnk_0874530C[];
 extern u32 gUnk_08745434[];
-extern u32 gUnk_08753718[];
+extern u32 gFireLionFrames[];
 
 /* Externals */
 extern void sub_08065438(void);
@@ -106,7 +106,7 @@ extern s16 sub_0806cc90(u8 flag, u16 vx, s32 c, s32 d);
 extern void TaskYieldTrampoline(u32 frames);
 
 /* Defined below */
-void sub_080957bc(void);
+void Task_FireLion(void);
 void sub_08095834(void);
 void sub_08095940(void);
 void sub_0809595c(void);
@@ -154,7 +154,7 @@ void sub_08096fc0(void);
 void sub_08097024(void);
 void sub_08097088(void);
 
-void sub_080957bc(void)
+void Task_FireLion(void)
 {
     struct Task *t;
 
@@ -162,7 +162,7 @@ void sub_080957bc(void)
     t->moveCallback = (u32)ActorMove;
     t->drawCallback = (u32)sub_08065438;
     t->layer = 11;
-    gCurTask->frameTable = gUnk_08753718;
+    gCurTask->frameTable = gFireLionFrames;
     gUnk_02007D00[8]++;
     sub_08095834();
     ActorCollideTerrain();

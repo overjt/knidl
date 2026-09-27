@@ -43,7 +43,7 @@ extern s32 gUnk_087454FC[];
 extern s32 gUnk_08745504[];
 extern struct AnimCmd gUnk_0874550C[];
 extern u32 gUnk_08753054[];
-extern u32 gUnk_087537FC[];
+extern u32 gPhanPhanFrames[];
 extern u32 gUnk_087538B0[];
 
 /* Externals */
@@ -107,7 +107,7 @@ extern s32 sub_08094d10(void);
 
 /* Defined below */
 void sub_080974c8(void);
-void sub_080974f8(void);
+void Task_PhanPhan(void);
 void sub_08097580(void);
 void sub_080975ac(void);
 void sub_080975c8(void);
@@ -163,7 +163,7 @@ void sub_080974c8(void)
         TaskFree(gCurTaskIdx);
 }
 
-void sub_080974f8(void)
+void Task_PhanPhan(void)
 {
     struct Task *t;
 
@@ -171,7 +171,7 @@ void sub_080974f8(void)
     t->moveCallback = (u32)ActorMove;
     t->drawCallback = (u32)sub_08065438;
     t->layer = 11;
-    gCurTask->frameTable = gUnk_087537FC;
+    gCurTask->frameTable = gPhanPhanFrames;
     gUnk_02007D00[8]++;
     sub_08066088(0);
     sub_08097580();

@@ -37,8 +37,8 @@ extern u16 gUnk_02007D60;
 extern u16 gUnk_02007FF0;
 extern u32 *gUnk_0873F0C4[];
 extern u32 *gUnk_0873F138[];
-extern u32 *gUnk_0873F0E4[];
-extern u32 *gUnk_0873F15C[];
+extern u32 *gMidBossGfx[];
+extern u32 *gBossGfx[];
 extern u32 gUnk_0200AEF4;
 extern u32 gUnk_02004C90;
 extern u32 gUnk_02007D00[];
@@ -982,9 +982,9 @@ u16 sub_08066088(u32 mode)
     p = sub_0806601c();
     t = gCurTask;
     if (t->actorKind == 1)
-        a->gfx.header = (struct GfxHeader *)gUnk_0873F0E4[t->unk76];
+        a->gfx.header = (struct GfxHeader *)gMidBossGfx[t->unk76];
     else
-        a->gfx.header = (struct GfxHeader *)gUnk_0873F15C[t->unk76];
+        a->gfx.header = (struct GfxHeader *)gBossGfx[t->unk76];
     a->gfx.tileBits = gCurTask->tileWord & 0xFFF;
     a->gfx.paletteBank = gCurTask->tileWord >> 12;
     if (p != NULL)

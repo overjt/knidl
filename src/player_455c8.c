@@ -5,7 +5,7 @@
 /* player_455c8.c (0x080455C8-0x08045D33, issue #87).
  *
  * Player action bodies, part 13: actions 36-37 and per-frame handlers
- * 33-34.  sub_080455c8 (action 36, mode 13) is a four-state machine over
+ * 33-34.  PlayerActionBurning (action 36, mode 13) is a four-state machine over
  * Task.unk73: state 0 starts the move (velocity preset 34, effect 32,
  * animation 0x5CB) and installs the attack box gUnk_0873CCA4 in
  * PlayerState.hitBoxSet, state 1 swaps in the scripts gUnk_0873CB2C /
@@ -13,16 +13,16 @@
  * Task.unk2C through 0-2, state 2 restores the default scripts
  * gPlayerDefaultTerrainBox / gPlayerDefaultBodyBox and lands (preset 2), and state 3 is the
  * bounce-off (sound 153, RequestScreenShake(4), preset 23).  Its handler
- * sub_08045a50 drives it from the collision block gTerrainResult -
+ * PlayerActionBurningUpdate drives it from the collision block gTerrainResult -
  * re-binding state 3 on a hit, fading the palette of gUnk_0873B510[]
  * row Task.unk2C and registering the box gUnk_0873BF00.
- * sub_08045c40 (action 37) is a linear script (animations
- * 0x658/0x65A, M14's CreatePlayerObject, sound 172); its handler sub_08045d18
+ * PlayerActionLaser (action 37) is a linear script (animations
+ * 0x658/0x65A, M14's CreatePlayerObject, sound 172); its handler PlayerActionLaserUpdate
  * waits for it to finish. */
 
 /* gTerrainResult: M06's collision result block (src/terrain_1bcac.c spells it
    the same way except unk8, which M09 reads with ldrsh).  A 16-bit test of
-   unk0/unk1 together is `*(u16 *)&gTerrainResult` (good/sub_08045a50.c). */
+   unk0/unk1 together is `*(u16 *)&gTerrainResult` (good/PlayerActionBurningUpdate.c). */
 struct Unk03005550
 {
     /*0x00*/ u8 unk0;
@@ -78,7 +78,7 @@ void PlayerSetMotionYPreset(s32 a0);
 void CreatePlayerObject(s32 a, s32 b, s32 c);      /* M14, src/plobj_52f6c.c (defined s32 (s8, u8, s32); the result is unused here) */
 s32 CreatePlayerEffect(s32 a0, s32 a1, s32 a2);
 
-void sub_080455c8(void)
+void PlayerActionBurning(void)
 {
     gCurTask->player->prevMode = gCurTask->player->mode;
     gCurTask->player->mode = 13;
@@ -223,7 +223,7 @@ void sub_080455c8(void)
     TaskSleepForever();
 }
 
-void sub_08045a50(void)
+void PlayerActionBurningUpdate(void)
 {
     switch (gCurTask->unk73) {
     case 0:
@@ -255,7 +255,7 @@ void sub_08045a50(void)
             } else if (*(u16 *)&gTerrainResult != 0 || t->unk28 != 0
                        || (t->player->boundsClamp & 11) != 0) {
                 gCurTask->unk73 = 3;
-                TaskSetEntry(sub_080455c8, gCurTaskIdx);
+                TaskSetEntry(PlayerActionBurning, gCurTaskIdx);
             }
         }
         {
@@ -289,7 +289,7 @@ void sub_08045a50(void)
     }
 }
 
-void sub_08045c40(void)
+void PlayerActionLaser(void)
 {
     gCurTask->player->prevMode = gCurTask->player->mode;
     gCurTask->player->mode = 13;
@@ -317,7 +317,7 @@ void sub_08045c40(void)
     TaskSleepForever();
 }
 
-void sub_08045d18(void)
+void PlayerActionLaserUpdate(void)
 {
     if (gCurTask->unk28 != 0)
         PlayerRequestLocomotion();

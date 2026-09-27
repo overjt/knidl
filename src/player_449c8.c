@@ -5,15 +5,15 @@
 /* player_449c8.c (0x080449C8-0x08044D03, issue #87).
  *
  * Player action bodies, part 11: per-frame handler 30 and action 34
- * with its handler 31.  sub_080449c8 (handler 30) is the
- * per-frame half of M11's action 33 (sub_08044878): in state 1 it counts
+ * with its handler 31.  PlayerActionSparkUpdate (handler 30) is the
+ * per-frame half of M11's action 33 (PlayerActionSpark): in state 1 it counts
  * Task.unk28 down and re-binds the coroutine to state 2 once B is no
  * longer held, and over the animation frames 0x36B-0x372 it blends the
  * player's palettes gUnk_081BE6BC[player] into the OBJ palette buffer
  * (BlendColors, raising PlayerState.unk42 bit 4 while it does).
- * sub_08044b94 (action 34, mode 13) is a linear yield script (animation
+ * PlayerActionCutter (action 34, mode 13) is a linear yield script (animation
  * 0x3E9, effect 28 on the ground, M14's sub_08053a44, sound 144); its
- * handler sub_08044c7c re-enters it on a newly-pressed B and requests
+ * handler PlayerActionCutterUpdate re-enters it on a newly-pressed B and requests
  * action 2 when left or right is held on the ground. */
 
 extern u16 gLatchedHeldKeys[];             /* held keys, latched per player (M11) */
@@ -30,11 +30,11 @@ s32 PlaySfxIfLocalPlayer(s32 a0, u16 a1);
 s32 sub_0803e55c(void);
 void PlayerTurnToHeldDirection(void);
 s32 PlayerRequestLocomotion(void);
-void sub_08044878(void);
+void PlayerActionSpark(void);
 void sub_08053a44(s32 a0, s32 a1, s32 a2);   /* M14, src/plobj_52f6c.c (defined s32 (s8, u8, s32); the result is unused here) */
 s32 CreatePlayerEffect(s32 a0, s32 a1, s32 a2);
 
-void sub_080449c8(void)
+void PlayerActionSparkUpdate(void)
 {
     struct Task *t = gCurTask;
     u8 *st = &t->unk73;
@@ -46,7 +46,7 @@ void sub_080449c8(void)
         if (t->unk28 == 0) {
             if ((gLatchedHeldKeys[t->player->playerIndex] & 2) == 0) {
                 *st = 2;
-                TaskSetEntry(sub_08044878, gCurTaskIdx);
+                TaskSetEntry(PlayerActionSpark, gCurTaskIdx);
             }
         } else {
             t->unk28--;
@@ -112,7 +112,7 @@ void sub_080449c8(void)
     }
 }
 
-void sub_08044b94(void)
+void PlayerActionCutter(void)
 {
     gCurTask->player->prevMode = gCurTask->player->mode;
     gCurTask->player->mode = 13;
@@ -140,14 +140,14 @@ void sub_08044b94(void)
     TaskSleepForever();
 }
 
-void sub_08044c7c(void)
+void PlayerActionCutterUpdate(void)
 {
     struct Task *t = gCurTask;
 
     if (t->unk28 != 0) {
         if (t->unk28 == 1) {
             if (gLatchedPressedKeys[t->player->playerIndex] & 2) {
-                TaskSetEntry(sub_08044b94, gCurTaskIdx);
+                TaskSetEntry(PlayerActionCutter, gCurTaskIdx);
             } else if (t->onGround & 1) {
                 if (gLatchedHeldKeys[t->player->playerIndex] & 48) {
                     PlayerTurnToHeldDirection();

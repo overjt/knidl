@@ -5,12 +5,12 @@
 /* player_4b5b4.c (0x0804B5B4-0x0804B857, issue #88).
  *
  * Player action bodies, part 20: action 52 and per-frame handler 49.
- * sub_0804b5b4 (action 52, mode 13) is a linear yield script with the
+ * PlayerActionLight (action 52, mode 13) is a linear yield script with the
  * stage frozen (gUnk_03001F34 = 1): M14's CreatePlayerObject(player, 9, 0),
  * the animations 0xDFD-0xE05 in Task.unk6C counter loops and velocity
  * presets 54/55; it then restores the default script gPlayerDefaultTerrainBox in
  * PlayerState.terrainBox, resets the HUD ability panel (SetPlayerAbility(0, -1,
- * player)) and plays 0xE06 on the ground.  Its handler sub_0804b818
+ * player)) and plays 0xE06 on the ground.  Its handler PlayerActionLightUpdate
  * requests action 1 (on the ground) or 7 once Task.unk28 is set; the
  * ROM keeps a dead `ldr [t, #84]` of a test whose two arms were
  * merged. */
@@ -28,7 +28,7 @@ void PlayerStopAtCeilingAndWall(void);
 void PlayerSetMotionYPreset(s32 a0);
 void CreatePlayerObject(s32 a, s32 b, s32 c);      /* M14, src/plobj_52f6c.c (defined s32 (s8, u8, s32); the result is unused here) */
 
-void sub_0804b5b4(void)
+void PlayerActionLight(void)
 {
     gCurTask->player->prevMode = gCurTask->player->mode;
     gCurTask->player->mode = 13;
@@ -114,7 +114,7 @@ void sub_0804b5b4(void)
     TaskSleepForever();
 }
 
-void sub_0804b818(void)
+void PlayerActionLightUpdate(void)
 {
     struct Task *t = gCurTask;
 

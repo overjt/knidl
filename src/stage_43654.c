@@ -734,7 +734,7 @@ void sub_08044470(void)
 }
 
 
-void sub_0804462c(void)
+void PlayerActionFire(void)
 {
     gCurTask->player->prevMode = gCurTask->player->mode;
     gCurTask->player->mode = 13;
@@ -799,7 +799,7 @@ void sub_0804462c(void)
 }
 
 
-void sub_08044800(void)
+void PlayerActionFireUpdate(void)
 {
     struct Task *t = gCurTask;
 
@@ -811,7 +811,7 @@ void sub_08044800(void)
             u16 *p = (u16 *)gLatchedHeldKeys;
             if ((p[t->player->playerIndex] & 2) == 0) {
                 t->unk73 = 2;
-                TaskSetEntry(sub_0804462c, gCurTaskIdx);
+                TaskSetEntry(PlayerActionFire, gCurTaskIdx);
             }
         } else {
             t->unk28--;
@@ -827,7 +827,7 @@ void sub_08044800(void)
 }
 
 
-void sub_08044878(void)
+void PlayerActionSpark(void)
 {
     gCurTask->player->prevMode = gCurTask->player->mode;
     gCurTask->player->mode = 13;

@@ -5,14 +5,14 @@
 /* player_49f98.c (0x08049F98-0x0804A54B, issue #88).
  *
  * Player action bodies, part 17: action 46 and per-frame handler 43.
- * sub_08049f98 (action 46, mode 13) is a five-state move whose states
+ * PlayerActionHiJump (action 46, mode 13) is a five-state move whose states
  * fall into each other; a fresh entry starts in state 0, or in state 4
  * when it comes from mode 5.  State 0 starts it (effect 42, animation
  * 0xB2D), state 1 points PlayerState.hitBoxSet at the block hit-box set
  * gUnk_0873CF5C with effects 42 x4 and sound 174 and runs velocity
  * presets 38, 0 and 1, and states 3-4 hand the player over to mode 5
  * with handler 7 (animation 0xAD2, then the ability's loop from
- * gUnk_0873D3B8[ability][1]).  Its handler sub_0804a258
+ * gUnk_0873D3B8[ability][1]).  Its handler PlayerActionHiJumpUpdate
  * flashes the palette gUnk_081F59F0 (the VRAM transfer queue
  * RequestCopy) in state 1, re-binds state 3 on a newly-pressed B after
  * the PlayerState.unk14 frames, registers the collider gUnk_0873C228,
@@ -22,7 +22,7 @@
 
 /* gTerrainResult: M06's collision result block (src/terrain_1bcac.c spells it
    the same way except unk8, which M09 reads with ldrsh).  A 16-bit test of
-   unk0/unk1 together is `*(u16 *)&gTerrainResult` (M12's sub_08045a50). */
+   unk0/unk1 together is `*(u16 *)&gTerrainResult` (M12's PlayerActionBurningUpdate). */
 struct Unk03005550
 {
     /*0x00*/ u8 unk0;
@@ -71,7 +71,7 @@ void PlayerSetMotionXPreset(s32 a0, s32 a1);           /* M11, still asm; M11's 
 void PlayerSetMotionYPreset(s32 a0);
 s32 CreatePlayerEffect(s32 a0, s32 a1, s32 a2);
 
-void sub_08049f98(void)
+void PlayerActionHiJump(void)
 {
     gCurTask->player->prevMode = gCurTask->player->mode;
     gCurTask->player->mode = 13;
@@ -168,7 +168,7 @@ void sub_08049f98(void)
     }
 }
 
-void sub_0804a258(void)
+void PlayerActionHiJumpUpdate(void)
 {
     struct Task *t = gCurTask;
 
@@ -187,7 +187,7 @@ void sub_0804a258(void)
             if ((s16)p->unk14 == 0) {
                 if (gLatchedPressedKeys[p->playerIndex] & 2) {
                     u->unk73 = 3;
-                    TaskSetEntry(sub_08049f98, gCurTaskIdx);
+                    TaskSetEntry(PlayerActionHiJump, gCurTaskIdx);
                     SetPlayerInvulnerability(255, 0, gCurTask->player->playerIndex);
                     PlayerStopSfx();
                     CreatePlayerEffect(gCurTask->player->playerIndex, 42, 3);
@@ -251,7 +251,7 @@ void sub_0804a258(void)
             if (w->velY < 0 && (gTerrainResult.unk1 != 0 || (w->player->boundsClamp & 4))) {
                 w->velY = 0;
                 w->unk73 = 4;
-                TaskSetEntry(sub_08049f98, gCurTaskIdx);
+                TaskSetEntry(PlayerActionHiJump, gCurTaskIdx);
                 SetPlayerInvulnerability(255, 0, gCurTask->player->playerIndex);
                 PlayerStopSfx();
                 return;

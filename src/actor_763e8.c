@@ -4,7 +4,7 @@
  *   ./tools/fnmatch.sh 0x080763E8 0x08077AE0 src/actor_763e8.c --newpb
  *
  * M19 batch 4: task type #99's cutscene director tail plus type #75
- * (sub_0807705c) and type #76 (sub_0807771c) - the ending-pose and
+ * (Task_Cannon) and type #76 (Task_CannonFuse) - the ending-pose and
  * script-walker families over struct M19Script.
  */
 #include "gba/gba.h"
@@ -45,14 +45,14 @@ extern u16 gUnk_087400A6[];
 extern u16 gUnk_087400E4[];
 extern u16 gUnk_08740124[];
 extern u32 gUnk_0873F5E4[];
-extern u32 gUnk_087400E0[];
-extern u32 gUnk_08740100[];
-extern u32 gUnk_08740110[];
-extern u32 gUnk_08740120[];
+extern u32 gCannonVariants[];
+extern u32 gCannonStates[];
+extern u32 gCannonStateUpdates[];
+extern u32 gCannonFuseVariants[];
 extern u32 gUnk_087402BC[];
 extern u32 gUnk_087402C8[];
-extern u32 gUnk_08752C38[];
-extern u32 gUnk_08752C74[];
+extern u32 gCannonFrames[];
+extern u32 gCannonFuseFrames[];
 extern u8 gUnk_03001F30;
 extern u8 gActivePlayerMask;
 extern u8 gActivePlayerCount;
@@ -107,8 +107,8 @@ extern void sub_080763c4(void);
 /* defined below */
 void sub_08076f50(s32 a);
 void sub_08076f04(s32 a);
-void sub_08077270(void);
-void sub_08077254(void);
+void CannonEnterState(void);
+void CannonUpdate(void);
 void sub_08077898(struct M19Script *p);
 void sub_080779dc(void);
 void sub_08077aa8(void);
@@ -747,7 +747,7 @@ void sub_08076fe4(int a)
     }
 }
 
-void sub_0807705c(void)
+void Task_Cannon(void)
 {
     {
         struct Task *t = gCurTask;
@@ -759,9 +759,9 @@ void sub_0807705c(void)
     {
         struct Task *t = gCurTask;
 
-        t->frameTable = gUnk_08752C38;
+        t->frameTable = gCannonFrames;
         t->unk18 = 0;
-        CallTableEntry(t->unk73, 1, gUnk_087400E0);
+        CallTableEntry(t->unk73, 1, gCannonVariants);
     }
 }
 
@@ -840,24 +840,24 @@ void sub_080771d8(void)
         sub_08076fe4(3);
         ActorSetState(1);
     }
-    TaskSetEntry(sub_08077270, gCurTaskIdx);
+    TaskSetEntry(CannonEnterState, gCurTaskIdx);
 }
 
 void sub_08077224(void)
 {
-    gCurTask->updateCallback = (u32)sub_08077254;
+    gCurTask->updateCallback = (u32)CannonUpdate;
     ActorSetState(0);
-    CallTableEntry(gCurTask->state, 4, gUnk_08740100);
+    CallTableEntry(gCurTask->state, 4, gCannonStates);
 }
 
-void sub_08077254(void)
+void CannonUpdate(void)
 {
-    CallTableEntry(gCurTask->updateState, 4, gUnk_08740110);
+    CallTableEntry(gCurTask->updateState, 4, gCannonStateUpdates);
 }
 
-void sub_08077270(void)
+void CannonEnterState(void)
 {
-    CallTableEntry(gCurTask->state, 4, gUnk_08740100);
+    CallTableEntry(gCurTask->state, 4, gCannonStates);
 }
 
 void sub_0807728c(void)
@@ -932,7 +932,7 @@ void sub_08077308(void)
 void sub_080773a8(void)
 {
     if (gCurTask->state != 1)
-        TaskSetEntry(sub_08077270, gCurTaskIdx);
+        TaskSetEntry(CannonEnterState, gCurTaskIdx);
 }
 
 void sub_080773d0(void)
@@ -1095,7 +1095,7 @@ void sub_08077718(void)
 {
 }
 
-void sub_0807771c(void)
+void Task_CannonFuse(void)
 {
     {
         struct Task *t = gCurTask;
@@ -1107,8 +1107,8 @@ void sub_0807771c(void)
     {
         struct Task *t = gCurTask;
 
-        t->frameTable = gUnk_08752C74;
-        CallTableEntry(t->unk73, 1, gUnk_08740120);
+        t->frameTable = gCannonFuseFrames;
+        CallTableEntry(t->unk73, 1, gCannonFuseVariants);
     }
 }
 

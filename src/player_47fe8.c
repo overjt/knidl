@@ -22,7 +22,7 @@
  * for ability 11, 55 for 24, M11's sub_08040710 otherwise) and, while
  * Task.unk2C is set, drives the pose: ability 2 blends its palettes
  * gUnk_081BE6BC[] over the animation frames 0x36B-0x372 (the twin of
- * M12's sub_080449c8), abilities 4, 12 and 14 register their collider
+ * M12's PlayerActionSparkUpdate), abilities 4, 12 and 14 register their collider
  * and block hit-box rows. */
 
 /* M11's per-player records (src/stage_43654.c spells them the same way) */

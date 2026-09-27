@@ -5,12 +5,12 @@
 
 /* RAM cells / ROM tables */
 extern s16 gViewRect[];
-extern u32 gUnk_08747AA4[];
+extern u32 gAxeKnightVariants[];
 extern u32 gUnk_08747AB4[];
 extern u32 gUnk_08747AC8[];
 extern u32 gUnk_08747D5C[];
 extern u32 gUnk_08747EF4[];
-extern u32 gUnk_08753204[];
+extern u32 gAxeKnightFrames[];
 extern u32 gUnk_08753510[];
 
 /* Externals */
@@ -242,7 +242,7 @@ void sub_0809c0a8(void)
     q->drawCallback = 0;
 }
 
-void sub_0809c404(void)
+void Task_MetaKnightsKnight(void)
 {
     struct Task *t;
     struct Task *u;
@@ -284,11 +284,11 @@ void sub_0809c490(void)
     struct Task *u;
 
     t->drawCallback = (u32)ActorDrawWorldInViewOrDestroy;
-    t->frameTable = gUnk_08753204;
+    t->frameTable = gAxeKnightFrames;
     ActorLoadDef((u32)gUnk_08747D5C);
     u = gCurTask;
     u->unk24 = 0;
-    CallTableEntry(u->unk73, 4, gUnk_08747AA4);
+    CallTableEntry(u->unk73, 4, gAxeKnightVariants);
 }
 
 void sub_0809c4d0(void)

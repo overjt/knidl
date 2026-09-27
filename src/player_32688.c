@@ -167,7 +167,7 @@ void sub_08040808(s32 a0);
 void sub_08040894(s32 a0, u8 a1);
 void LoadAbilityTiles(void);
 void sub_08049a58(void);
-void sub_0804fe68(void);
+void PlayerActionStarRodFlight(void);
 s32 CreatePlayerEffect(s32 a0, s32 a1, s32 a2);
 s32 CreatePlayerEffectHighSlot(s32 a0, s32 a1, s32 a2);
 void sub_0805b278(void);
@@ -279,7 +279,7 @@ void Task_Player(void)
         gCurTask->player->unk37 = 2;
         SetPlayerAbility(25, -1, gCurTask->player->playerIndex);
         gCurTask->player->mouthState = 3;
-        sub_0804fe68();
+        PlayerActionStarRodFlight();
         TaskSleepForever();
     case 3:
         gCurTask->player->unk37 = 3;

@@ -5,16 +5,16 @@
 /* player_4f948.c (0x0804F948-0x0804FFDB, issue #90).
  *
  * Player action bodies, part 26: actions 56-58 and per-frame handlers
- * 53-55.  sub_0804f948 (action 56, mode 13) installs the collider row
+ * 53-55.  PlayerActionStarRod (action 56, mode 13) installs the collider row
  * gUnk_0873C2C8, plays sound 155 and animations 0x1026/0x102A and spawns
- * task type #6's variant 11 through sub_08053a44; its handler sub_0804fab0
+ * task type #6's variant 11 through sub_08053a44; its handler PlayerActionStarRodUpdate
  * re-binds it and requests action 2 once the animation ends.
- * sub_0804fba4 (action 57, mode 13) plays animation 0xFE5 with the collider
- * row gUnk_0873C304; its handler sub_0804fc98 is a `switch (Task.unk73)`
+ * PlayerActionStarRodJump (action 57, mode 13) plays animation 0xFE5 with the collider
+ * row gUnk_0873C304; its handler PlayerActionStarRodJumpUpdate is a `switch (Task.unk73)`
  * with M11's steering and camera presets.  Action 58 is a second move set
- * one level down: sub_0804fe68 (mode 13) dispatches Task.unk73 through its
+ * one level down: PlayerActionStarRodFlight (mode 13) dispatches Task.unk73 through its
  * four sub-actions gUnk_0873B6AC and sub_0804fee8 is the re-entry callback;
- * its handler sub_0804ff1c runs the sub-handler Task.unk73 of
+ * its handler PlayerActionStarRodFlightUpdate runs the sub-handler Task.unk73 of
  * gUnk_0873B6BC, the steering helper sub_080506dc, clamps the player to
  * 16-224 x 18-132 and, once gSpriteCameraY passes 888, subtracts the
  * player's whole health (AddPlayerHealth) and requests action 17. */
@@ -57,7 +57,7 @@ void PlayerSetMotionYPreset(s32 a0);
 void sub_080506dc(void);
 s32 sub_08053a44(s8 player, u8 variant, s32 arg);
 
-void sub_0804f948(void)
+void PlayerActionStarRod(void)
 {
     gCurTask->player->prevMode = gCurTask->player->mode;
     gCurTask->player->mode = 13;
@@ -114,7 +114,7 @@ void sub_0804f948(void)
     TaskSleepForever();
 }
 
-void sub_0804fab0(void)
+void PlayerActionStarRodUpdate(void)
 {
     struct Task *t = gCurTask;
 
@@ -128,7 +128,7 @@ void sub_0804fab0(void)
         {
             if (gLatchedPressedKeys[t->player->playerIndex] & 2)
             {
-                TaskSetEntry(sub_0804f948, gCurTaskIdx);
+                TaskSetEntry(PlayerActionStarRod, gCurTaskIdx);
             }
             else if ((t->onGround & 1) && (gLatchedHeldKeys[t->player->playerIndex] & 0x30))
             {
@@ -149,7 +149,7 @@ void sub_0804fab0(void)
     sub_0803e55c();
 }
 
-void sub_0804fba4(void)
+void PlayerActionStarRodJump(void)
 {
     gCurTask->player->prevMode = gCurTask->player->mode;
     gCurTask->player->mode = 13;
@@ -188,7 +188,7 @@ void sub_0804fba4(void)
     }
 }
 
-void sub_0804fc98(void)
+void PlayerActionStarRodJumpUpdate(void)
 {
     struct Task *t = gCurTask;
 
@@ -263,7 +263,7 @@ void sub_0804fc98(void)
     PlayerStopAtCeilingAndWall();
 }
 
-void sub_0804fe68(void)
+void PlayerActionStarRodFlight(void)
 {
     gCurTask->player->prevMode = gCurTask->player->mode;
     gCurTask->player->mode = 13;
@@ -291,7 +291,7 @@ void sub_0804fee8(void)
     CallTableEntry(gCurTask->unk73, 4, gUnk_0873B6AC);
 }
 
-void sub_0804ff1c(void)
+void PlayerActionStarRodFlightUpdate(void)
 {
     CallTableEntry(gCurTask->unk73, 4, gUnk_0873B6BC);
     sub_080506dc();

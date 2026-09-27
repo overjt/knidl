@@ -3,7 +3,7 @@
  * RECIPE: agbcc -O2 -mthumb-interwork -fprologue-bugfix
  *   ./tools/fnmatch.sh 0x08070EC0 0x08072D8C src/actor_70ec0.c --newpb
  *
- * M19 batch 1: the class-3 entries for task types #74 (sub_08071030) and the
+ * M19 batch 1: the class-3 entries for task types #74 (Task_WarpStar) and the
  * warp-star/intro coroutines they install, plus the shared sprite-frame and
  * palette helpers the rest of the bank calls.
  */
@@ -37,11 +37,11 @@ extern u32 gUnk_0825D2C8[];
 extern u32 gUnk_0873F554[];
 extern u32 gUnk_0873F5CC[];
 extern u32 gUnk_0873FB7C[];
-extern u32 gUnk_0873FBAC[];
-extern u32 gUnk_0873FBB8[];
+extern u32 gWarpStarStates[];
+extern u32 gWarpStarStateUpdates[];
 extern u32 gUnk_0873FBC4[];
 extern u32 gUnk_0873FC2C[];
-extern u32 gUnk_08752D50[];
+extern u32 gWarpStarFrames[];
 extern u32 gUnk_08752D8C[];
 extern u8 gUnk_020061E0;
 extern u8 gUnk_02007CF0;
@@ -98,7 +98,7 @@ extern void sub_08070758(void);
 extern void sub_08074bb0(int a, int b, int c);
 
 /* defined below */
-void sub_08071098(void);
+void WarpStarUpdate(void);
 void sub_080711d0(void);
 u16 sub_08071360(s32 idx);
 void sub_08071778(void);
@@ -170,7 +170,7 @@ void sub_08070ffc(void)
     TaskSetFrame(-1);
 }
 
-void sub_08071030(void)
+void Task_WarpStar(void)
 {
     {
         struct Task *t = gCurTask;
@@ -189,16 +189,16 @@ void sub_08071030(void)
     {
         struct Task *t = gCurTask;
 
-        t->frameTable = gUnk_08752D50;
-        t->updateCallback = (u32)sub_08071098;
+        t->frameTable = gWarpStarFrames;
+        t->updateCallback = (u32)WarpStarUpdate;
     }
     ActorSetState(0);
-    CallTableEntry(gCurTask->state, 3, gUnk_0873FBAC);
+    CallTableEntry(gCurTask->state, 3, gWarpStarStates);
 }
 
-void sub_08071098(void)
+void WarpStarUpdate(void)
 {
-    CallTableEntry(gCurTask->updateState, 3, gUnk_0873FBB8);
+    CallTableEntry(gCurTask->updateState, 3, gWarpStarStateUpdates);
     if (gUnk_02006160 == -1 || gUnk_02006160 == gCurTaskIdx)
     {
         if (ActorCheckHits())
@@ -206,9 +206,9 @@ void sub_08071098(void)
     }
 }
 
-void sub_080710e0(void)
+void WarpStarEnterState(void)
 {
-    CallTableEntry(gCurTask->state, 3, gUnk_0873FBAC);
+    CallTableEntry(gCurTask->state, 3, gWarpStarStates);
 }
 
 void sub_080710fc(void)
@@ -218,7 +218,7 @@ void sub_080710fc(void)
     {
         struct Task *t = gCurTask;
 
-        if (t->frameTable != gUnk_08752D50)
+        if (t->frameTable != gWarpStarFrames)
             return;
         t->unk6E++;
         if (t->unk6E > 5)
@@ -286,7 +286,7 @@ void sub_080711d0(void)
     if (gUnk_030023B8 == 7)
         gUnk_02007D00[9] = 1;
     ActorSetState(1);
-    TaskSetEntry(sub_080710e0, gCurTaskIdx);
+    TaskSetEntry(WarpStarEnterState, gCurTaskIdx);
 }
 
 u16 sub_08071360(s32 idx)
@@ -383,7 +383,7 @@ void sub_0807156c(void)
             gCurTask->unk46 = 0xFFFF;
         }
         ActorSetState(2);
-        TaskSetEntry(sub_080710e0, gCurTaskIdx);
+        TaskSetEntry(WarpStarEnterState, gCurTaskIdx);
     }
     else
     {
@@ -489,7 +489,7 @@ void sub_08071778(void)
         u->layer = 10;
     }
     t = gCurTask;
-    t->frameTable = gUnk_08752D50;
+    t->frameTable = gWarpStarFrames;
     t->updateCallback = (u32)sub_08071830;
     t->unk18 = 0;
     t->unk28 = 0;

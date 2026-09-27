@@ -113,8 +113,8 @@ gUnk_0825CA44:
 	.global	gUnk_0825D2C8
 gUnk_0825D2C8:
 	.incbin	"baserom.gba", 0x25D2C8, 0xD38C
-	.global	gUnk_0826A654
-gUnk_0826A654:
+	.global	gBonkersGfx
+gBonkersGfx:
 	.incbin	"baserom.gba", 0x26A654, 0x14
 	.global	gUnk_0826A668
 gUnk_0826A668:
@@ -122,14 +122,14 @@ gUnk_0826A668:
 	.global	gUnk_0826F170
 gUnk_0826F170:
 	.incbin	"baserom.gba", 0x26F170, 0x4C0
-	.global	gUnk_0826F630
-gUnk_0826F630:
+	.global	gGrandWheelieGfx
+gGrandWheelieGfx:
 	.incbin	"baserom.gba", 0x26F630, 0x5210
 	.global	gUnk_08274840
 gUnk_08274840:
 	.incbin	"baserom.gba", 0x274840, 0xE1C
-	.global	gUnk_0827565C
-gUnk_0827565C:
+	.global	gPoppyBrosSrGfx
+gPoppyBrosSrGfx:
 	.incbin	"baserom.gba", 0x27565C, 0x14
 	.global	gUnk_08275670
 gUnk_08275670:
@@ -137,11 +137,11 @@ gUnk_08275670:
 	.global	gUnk_082797C8
 gUnk_082797C8:
 	.incbin	"baserom.gba", 0x2797C8, 0x678
-	.global	gUnk_08279E40
-gUnk_08279E40:
+	.global	gMrTickTockGfx
+gMrTickTockGfx:
 	.incbin	"baserom.gba", 0x279E40, 0xE24
-	.global	gUnk_0827AC64
-gUnk_0827AC64:
+	.global	gAxeKnightGfx
+gAxeKnightGfx:
 	.incbin	"baserom.gba", 0x27AC64, 0x14
 	.global	gUnk_0827AC78
 gUnk_0827AC78:
@@ -149,8 +149,8 @@ gUnk_0827AC78:
 	.global	gUnk_0827AC7C
 gUnk_0827AC7C:
 	.incbin	"baserom.gba", 0x27AC7C, 0xC7C
-	.global	gUnk_0827B8F8
-gUnk_0827B8F8:
+	.global	gJavelinKnightGfx
+gJavelinKnightGfx:
 	.incbin	"baserom.gba", 0x27B8F8, 0x14
 	.global	gUnk_0827B90C
 gUnk_0827B90C:
@@ -158,8 +158,8 @@ gUnk_0827B90C:
 	.global	gUnk_0827B914
 gUnk_0827B914:
 	.incbin	"baserom.gba", 0x27B914, 0x1134
-	.global	gUnk_0827CA48
-gUnk_0827CA48:
+	.global	gMaceKnightGfx
+gMaceKnightGfx:
 	.incbin	"baserom.gba", 0x27CA48, 0x14
 	.global	gUnk_0827CA5C
 gUnk_0827CA5C:
@@ -167,8 +167,8 @@ gUnk_0827CA5C:
 	.global	gUnk_0827CA60
 gUnk_0827CA60:
 	.incbin	"baserom.gba", 0x27CA60, 0xDA8
-	.global	gUnk_0827D808
-gUnk_0827D808:
+	.global	gTridentKnightGfx
+gTridentKnightGfx:
 	.incbin	"baserom.gba", 0x27D808, 0x14
 	.global	gUnk_0827D81C
 gUnk_0827D81C:
@@ -176,8 +176,8 @@ gUnk_0827D81C:
 	.global	gUnk_0827D820
 gUnk_0827D820:
 	.incbin	"baserom.gba", 0x27D820, 0x18174
-	.global	gUnk_08295994
-gUnk_08295994:
+	.global	gBugzzyGfx
+gBugzzyGfx:
 	.incbin	"baserom.gba", 0x295994, 0x14
 	.global	gUnk_082959A8
 gUnk_082959A8:
@@ -209,41 +209,41 @@ gUnk_082B079C:
 	.global	gUnk_082B07BC
 gUnk_082B07BC:
 	.incbin	"baserom.gba", 0x2B07BC, 0x198
-	.global	gUnk_082B0954
-gUnk_082B0954:
+	.global	gFireLionGfx
+gFireLionGfx:
 	.incbin	"baserom.gba", 0x2B0954, 0xF250
 	.global	gUnk_082BFBA4
 gUnk_082BFBA4:
 	.incbin	"baserom.gba", 0x2BFBA4, 0x2E8
-	.global	gUnk_082BFE8C
-gUnk_082BFE8C:
+	.global	gPhanPhanGfx
+gPhanPhanGfx:
 	.incbin	"baserom.gba", 0x2BFE8C, 0x18798
-	.global	gUnk_082D8624
-gUnk_082D8624:
+	.global	gKingDededeGfx
+gKingDededeGfx:
 	.incbin	"baserom.gba", 0x2D8624, 0x14
 	.global	gUnk_082D8638
 gUnk_082D8638:
 	.incbin	"baserom.gba", 0x2D8638, 0x795C
-	.global	gUnk_082DFF94
-gUnk_082DFF94:
+	.global	gPaintRollerGfx
+gPaintRollerGfx:
 	.incbin	"baserom.gba", 0x2DFF94, 0x14
 	.global	gUnk_082DFFA8
 gUnk_082DFFA8:
 	.incbin	"baserom.gba", 0x2DFFA8, 0x142C0
-	.global	gUnk_082F4268
-gUnk_082F4268:
+	.global	gMetaKnightGfx
+gMetaKnightGfx:
 	.incbin	"baserom.gba", 0x2F4268, 0x14
 	.global	gUnk_082F427C
 gUnk_082F427C:
 	.incbin	"baserom.gba", 0x2F427C, 0x2344
-	.global	gUnk_082F65C0
-gUnk_082F65C0:
+	.global	gHeavyMoleGfx
+gHeavyMoleGfx:
 	.incbin	"baserom.gba", 0x2F65C0, 0x14
 	.global	gUnk_082F65D4
 gUnk_082F65D4:
 	.incbin	"baserom.gba", 0x2F65D4, 0x1C40
-	.global	gUnk_082F8214
-gUnk_082F8214:
+	.global	gMrShineAndMrBrightGfx
+gMrShineAndMrBrightGfx:
 	.incbin	"baserom.gba", 0x2F8214, 0x2F7C
 	.global	gUnk_082FB190
 gUnk_082FB190:
@@ -254,17 +254,17 @@ gUnk_082FB210:
 	.global	gUnk_082FB230
 gUnk_082FB230:
 	.incbin	"baserom.gba", 0x2FB230, 0xBB4
-	.global	gUnk_082FBDE4
-gUnk_082FBDE4:
+	.global	gWhispyWoodsGfx
+gWhispyWoodsGfx:
 	.incbin	"baserom.gba", 0x2FBDE4, 0x1640
-	.global	gUnk_082FD424
-gUnk_082FD424:
+	.global	gKrackoGfx
+gKrackoGfx:
 	.incbin	"baserom.gba", 0x2FD424, 0x14
 	.global	gUnk_082FD438
 gUnk_082FD438:
 	.incbin	"baserom.gba", 0x2FD438, 0xC98
-	.global	gUnk_082FE0D0
-gUnk_082FE0D0:
+	.global	gNightmarePowerOrbGfx
+gNightmarePowerOrbGfx:
 	.incbin	"baserom.gba", 0x2FE0D0, 0x14
 	.global	gUnk_082FE0E4
 gUnk_082FE0E4:
@@ -278,8 +278,8 @@ gUnk_082FEFF4:
 	.global	gUnk_082FFDF0
 gUnk_082FFDF0:
 	.incbin	"baserom.gba", 0x2FFDF0, 0x3467C
-	.global	gUnk_0833446C
-gUnk_0833446C:
+	.global	gNightmareWizardGfx
+gNightmareWizardGfx:
 	.incbin	"baserom.gba", 0x33446C, 0x14
 	.global	gUnk_08334480
 gUnk_08334480:

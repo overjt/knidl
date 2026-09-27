@@ -8,7 +8,7 @@ extern u16 gFrameCount;
 extern struct Task gTasks[];
 extern vu16 gTaskSlotTypes[];
 extern u32 gUnk_08745CEC[];
-extern u32 gUnk_08747ADC[];
+extern u32 gJavelinKnightVariants[];
 extern u32 gUnk_08747AE4[];
 extern u32 gUnk_08747AFC[];
 extern u32 gUnk_08747B10[];
@@ -18,7 +18,7 @@ extern u32 gUnk_08747B58[];
 extern u32 gUnk_08747B68[];
 extern u32 gUnk_08747E64[];
 extern u32 gUnk_08753270[];
-extern u32 gUnk_08753290[];
+extern u32 gJavelinKnightFrames[];
 
 /* Externals */
 extern void TaskYieldTrampoline(u32 a);
@@ -332,11 +332,11 @@ void sub_0809d13c(void)
 
     t = gCurTask;
     t->drawCallback = (u32)sub_0809d17c;
-    t->frameTable = gUnk_08753290;
+    t->frameTable = gJavelinKnightFrames;
     ActorLoadDef((u32)gUnk_08747E64);
     u = gCurTask;
     u->unk24 = 0;
-    CallTableEntry(u->unk73, 2, gUnk_08747ADC);
+    CallTableEntry(u->unk73, 2, gJavelinKnightVariants);
 }
 
 void sub_0809d17c(void)

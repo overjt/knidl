@@ -3,7 +3,7 @@
  * RECIPE: agbcc -O2 -mthumb-interwork -fprologue-bugfix
  *   ./tools/fnmatch.sh 0x08091F9C 0x08093F64 src/enemy_91f9c.c --newpb
  *
- * M25's third and fourth boss scripts.  The third (entry sub_08091f08 in
+ * M25's third and fourth boss scripts.  The third (entry Task_Bugzzy in
  * src/enemy_91f08.c, table 0x08743ADC) starts here with sub_08091f9c, which
  * installs the per-frame body sub_08091ffc and the animation script
  * gUnk_08743AC8.  sub_08091ffc is the busiest body in the module: besides the
@@ -95,8 +95,8 @@ extern u32 gUnk_08743988[];
 extern u32 gUnk_087439A4[];
 extern u32 gUnk_087440F4[];
 extern struct AnimCmd *gUnk_08743A00[];
-extern u32 gUnk_08743ADC[];
-extern u32 gUnk_087535FC[];
+extern u32 gBugzzyVariants[];
+extern u32 gBugzzyFrames[];
 extern u32 gUnk_08753128[];
 extern u32 gUnk_08753148[];
 extern u8 gUnk_087438DC[];
@@ -104,7 +104,7 @@ extern u32 gUnk_087438E4[];
 extern u32 gUnk_087438EC[];
 extern u32 gUnk_0874391C[];
 extern u32 gUnk_0874394C[];
-extern struct GfxHeader gUnk_0827565C;
+extern struct GfxHeader gPoppyBrosSrGfx;
 extern u32 gUnk_08275670;
 
 /* Externals */

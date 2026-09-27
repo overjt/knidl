@@ -4,11 +4,11 @@
  *   ./tools/fnmatch.sh 0x0809113C 0x08091F9C src/enemy_9113c.c --newpb
  *
  * M25's second boss script, dispatched through the 15-entry anchor table at
- * 0x08743984; its entry (sub_080910c0) is the last function of
+ * 0x08743984; its entry (Task_PoppyBrosSr) is the last function of
  * src/enemy_9000c.c.  Same skeleton as the first: sub_0809113c installs the
  * per-frame body sub_080911a8 and the animation script gUnk_0874397C,
  * sub_080911a8 dispatches Task.updateState and reloads the graphics record
- * gUnk_0827565C, and states 0-6 are <body, guard> pairs.  Two states shell out
+ * gPoppyBrosSrGfx, and states 0-6 are <body, guard> pairs.  Two states shell out
  * to sub_08091954, which runs the boss's attack loop: it repeats Task.unk1C
  * times, flips Task.unk20 between the two step helpers sub_08091a30 and
  * sub_08091a98 (they walk Task.frame up and down while yielding Task.unk24
@@ -24,9 +24,9 @@
  * walker that mirrors the leader's animation onto the companion and steps the
  * companion's own AnimCmd script from gUnk_08743A00.
  *
- * sub_08091f08 (the last function here) is the entry of M25's third boss, whose
+ * Task_Bugzzy (the last function here) is the entry of M25's third boss, whose
  * states live in src/enemy_91f9c.c: it installs ActorMove / sub_080653ec as
- * the draw and per-frame hooks, points Task.frameTable at gUnk_087535FC, counts the
+ * the draw and per-frame hooks, points Task.frameTable at gBugzzyFrames, counts the
  * boss into gUnk_02007D00[7], seeds the state block (Task.unk28 = -1,
  * Task.unk34 = 1, Task.unk1C = -1, Task.unk24 = Actor.palette) and dispatches
  * Task.unk73 through the 27-entry anchor table at 0x08743ADC.
@@ -47,8 +47,8 @@ extern u32 gUnk_08743988[];
 extern u32 gUnk_087439A4[];
 extern u32 gUnk_087440F4[];
 extern struct AnimCmd *gUnk_08743A00[];
-extern u32 gUnk_08743ADC[];
-extern u32 gUnk_087535FC[];
+extern u32 gBugzzyVariants[];
+extern u32 gBugzzyFrames[];
 extern u32 gUnk_08753128[];
 extern u32 gUnk_08753148[];
 extern u8 gUnk_087438DC[];
@@ -56,7 +56,7 @@ extern u32 gUnk_087438E4[];
 extern u32 gUnk_087438EC[];
 extern u32 gUnk_0874391C[];
 extern u32 gUnk_0874394C[];
-extern struct GfxHeader gUnk_0827565C;
+extern struct GfxHeader gPoppyBrosSrGfx;
 extern u32 gUnk_08275670;
 
 /* Externals */
@@ -172,11 +172,11 @@ void sub_080911a8(void)
     if (u->unk34 != 0)
     {
         if (u->hitTimer != 1)
-            sub_08066480(&gUnk_0827565C, (u32)&gUnk_08275670, 16);
+            sub_08066480(&gPoppyBrosSrGfx, (u32)&gUnk_08275670, 16);
         else
         {
             u->unk34 = 0;
-            ActorLoadHeaderPalette(&gUnk_0827565C);
+            ActorLoadHeaderPalette(&gPoppyBrosSrGfx);
         }
     }
     ActorSetAttackBox(gUnk_087438EC[gCurTask->frame]);
@@ -470,7 +470,7 @@ void sub_08091824(void)
 
 void sub_0809191c(void)
 {
-    sub_08066480(&gUnk_0827565C, (u32)&gUnk_08275670, 16);
+    sub_08066480(&gPoppyBrosSrGfx, (u32)&gUnk_08275670, 16);
     if (gCurTask->unk2C == 2)
         TaskSetEntry(ActorDie, gCurTaskIdx);
 }
@@ -796,7 +796,7 @@ void sub_08091e18(void)
     }
 }
 
-void sub_08091f08(void)
+void Task_Bugzzy(void)
 {
     struct Task *t;
     struct Task *u;
@@ -807,7 +807,7 @@ void sub_08091f08(void)
     t->drawCallback = (u32)sub_080653ec;
     t->layer = 11;
     u = gCurTask;
-    u->frameTable = gUnk_087535FC;
+    u->frameTable = gBugzzyFrames;
     gUnk_02007D00[7]++;
     u->unk28 = -1;
     u->unk2C = 0;
@@ -820,5 +820,5 @@ void sub_08091f08(void)
     else
         gCurTask->unk20 = 0;
     sub_08066ae0();
-    CallTableEntry(gCurTask->unk73, 1, gUnk_08743ADC);
+    CallTableEntry(gCurTask->unk73, 1, gBugzzyVariants);
 }

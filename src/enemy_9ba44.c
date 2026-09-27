@@ -12,16 +12,16 @@ extern u32 gUnk_030015A0[];
 extern u32 gUnk_030015CE[];
 extern u32 gUnk_030015EC[];
 extern struct Task gTasks[];
-extern u32 gUnk_0827AC64[];
+extern u32 gAxeKnightGfx[];
 extern u32 gUnk_0827AC78[];
 extern u32 gUnk_0827AC7C[];
-extern u32 gUnk_0827B8F8[];
+extern u32 gJavelinKnightGfx[];
 extern u32 gUnk_0827B90C[];
 extern u32 gUnk_0827B914[];
-extern u32 gUnk_0827CA48[];
+extern u32 gMaceKnightGfx[];
 extern u32 gUnk_0827CA5C[];
 extern u32 gUnk_0827CA60[];
-extern u32 gUnk_0827D808[];
+extern u32 gTridentKnightGfx[];
 extern u32 gUnk_0827D81C[];
 extern u32 gUnk_0827D820[];
 extern u32 gUnk_08745B0C[];
@@ -143,7 +143,7 @@ void sub_0809bbd4(void)
 {
 }
 
-void sub_0809bbd8(void)
+void Task_MetaKnights(void)
 {
     struct Task *t;
 
@@ -272,12 +272,12 @@ void sub_0809bfac(void)
     u16 *p;
 
     RequestCopy(4, (u32)gUnk_02020000, 0x06010000, 240 << 6);
-    g = (struct GfxHeader *)gUnk_0827AC64;
+    g = (struct GfxHeader *)gAxeKnightGfx;
     RequestCopy(2, (u32)g->palette, (u32)(p = (u16 *)gUnk_03001570), g->paletteBankCount << 5);
-    g = (struct GfxHeader *)gUnk_0827B8F8;
+    g = (struct GfxHeader *)gJavelinKnightGfx;
     RequestCopy(2, (u32)g->palette, (u32)(p + 16), g->paletteBankCount << 5);
-    g = (struct GfxHeader *)gUnk_0827CA48;
+    g = (struct GfxHeader *)gMaceKnightGfx;
     RequestCopy(2, (u32)g->palette, (u32)(p + 32), g->paletteBankCount << 5);
-    g = (struct GfxHeader *)gUnk_0827D808;
+    g = (struct GfxHeader *)gTridentKnightGfx;
     RequestCopy(2, (u32)g->palette, (u32)(p + 48), g->paletteBankCount << 5);
 }

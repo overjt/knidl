@@ -3,7 +3,7 @@
  * RECIPE: agbcc -O2 -mthumb-interwork -fprologue-bugfix
  *   ./tools/fnmatch.sh 0x08077AE0 0x08078B68 src/actor_77ae0.c --newpb
  *
- * M19 batch 5: task types #77 (sub_08077c64), #78 (sub_08077f0c), #79
+ * M19 batch 5: task types #77 (Task_BigSwitch), #78 (Task_Stake), #79
  * (sub_08078598, the credits particle system over gUnk_03000FE0) and #8
  * (Task_WaddleDee), whose states hand off to module M20.
  */
@@ -46,18 +46,18 @@ extern struct M19Particle gUnk_03000FE0[];
 extern struct PlayerState gPlayerStates[];
 extern struct Task * gCurTask;
 extern u16 gPlayerCount;
-extern u32 gUnk_087402D4[];
-extern u32 gUnk_087402D8[];
-extern u32 gUnk_087402E4[];
-extern u32 gUnk_087402F0[];
+extern u32 gBigSwitchVariants[];
+extern u32 gBigSwitchStates[];
+extern u32 gBigSwitchStateUpdates[];
+extern u32 gStakeVariants[];
 extern u32 gUnk_087402F4[];
 extern u32 gUnk_087402F8[];
 extern u32 gUnk_087402FC[];
 extern u32 gWaddleDeeVariants[];
 extern u32 gUnk_08740BD4[];
 extern u32 gWaddleDeeFrames[];
-extern u32 gUnk_08752D40[];
-extern u32 gUnk_08752D48[];
+extern u32 gBigSwitchFrames[];
+extern u32 gStakeFrames[];
 extern u32 gUnk_08752DB8[];
 extern u32 gUnk_08752E00[];
 extern u8 gUnk_02004B64;
@@ -116,8 +116,8 @@ extern void sub_08079178(void);
 extern void sub_0807938c(void);
 
 /* defined below */
-void sub_08077e30(void);
-void sub_08077e08(void);
+void BigSwitchEnterState(void);
+void BigSwitchUpdate(void);
 void sub_08077f7c(void);
 void sub_080781fc(struct M19Particle *p);
 void sub_080782b4(struct M19Particle *p);
@@ -206,7 +206,7 @@ void sub_08077c2c(void)
         TaskSetEntry(sub_08077ac4, gCurTaskIdx);
 }
 
-void sub_08077c64(void)
+void Task_BigSwitch(void)
 {
     {
         struct Task *t = gCurTask;
@@ -218,8 +218,8 @@ void sub_08077c64(void)
     {
         struct Task *t = gCurTask;
 
-        t->frameTable = gUnk_08752D40;
-        CallTableEntry(t->unk73, 1, gUnk_087402D4);
+        t->frameTable = gBigSwitchFrames;
+        CallTableEntry(t->unk73, 1, gBigSwitchVariants);
     }
 }
 
@@ -248,13 +248,13 @@ void sub_08077cf4(void)
     sub_08077cd4();
     sub_08009e14();
     ActorSetStateSlot(gCurTaskIdx, 1);
-    TaskSetEntry(sub_08077e30, gCurTaskIdx);
+    TaskSetEntry(BigSwitchEnterState, gCurTaskIdx);
 }
 
 void sub_08077d38(s32 id)
 {
     ActorSetStateSlot(id, 2);
-    TaskSetEntry(sub_08077e30, id);
+    TaskSetEntry(BigSwitchEnterState, id);
 }
 
 void sub_08077d54(void)
@@ -289,20 +289,20 @@ void sub_08077d54(void)
 
 void sub_08077dd8(void)
 {
-    gCurTask->updateCallback = (u32)sub_08077e08;
+    gCurTask->updateCallback = (u32)BigSwitchUpdate;
     ActorSetState(0);
-    CallTableEntry(gCurTask->state, 3, gUnk_087402D8);
+    CallTableEntry(gCurTask->state, 3, gBigSwitchStates);
 }
 
-void sub_08077e08(void)
+void BigSwitchUpdate(void)
 {
     if ((u8)ActorCollideTerrain() == 0)
-        CallTableEntry(gCurTask->updateState, 3, gUnk_087402E4);
+        CallTableEntry(gCurTask->updateState, 3, gBigSwitchStateUpdates);
 }
 
-void sub_08077e30(void)
+void BigSwitchEnterState(void)
 {
-    CallTableEntry(gCurTask->state, 3, gUnk_087402D8);
+    CallTableEntry(gCurTask->state, 3, gBigSwitchStates);
 }
 
 void sub_08077e4c(void)
@@ -346,7 +346,7 @@ void sub_08077f08(void)
 {
 }
 
-void sub_08077f0c(void)
+void Task_Stake(void)
 {
     {
         struct Task *t = gCurTask;
@@ -358,8 +358,8 @@ void sub_08077f0c(void)
     {
         struct Task *t = gCurTask;
 
-        t->frameTable = gUnk_08752D48;
-        CallTableEntry(t->unk73, 1, gUnk_087402F0);
+        t->frameTable = gStakeFrames;
+        CallTableEntry(t->unk73, 1, gStakeVariants);
     }
 }
 

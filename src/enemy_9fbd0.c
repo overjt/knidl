@@ -13,9 +13,9 @@ extern u8 gActivePlayerMask;
 extern s32 gUnk_030023B4;
 extern u32 gCurSaveSlot[];
 extern s16 gUnk_0300244C;
-extern u32 gUnk_08748264[];
+extern u32 gKingDededeVariants[];
 extern u32 gUnk_08748974[];
-extern u32 gUnk_087538E0[];
+extern u32 gKingDededeFrames[];
 
 /* Externals */
 extern void CallTableEntry(u32 a, u32 b, u32 *c);
@@ -68,7 +68,7 @@ void sub_0809fc08(void)
     }
 }
 
-void sub_0809fc44(void)
+void Task_KingDedede(void)
 {
     struct Task *t;
     s32 v;
@@ -82,8 +82,8 @@ void sub_0809fc44(void)
     t->moveCallback = (u32)TaskMove;
     t->drawCallback = (u32)sub_08065438;
     t->layer = 11;
-    gCurTask->frameTable = gUnk_087538E0;
-    CallTableEntry(gCurTask->unk73, 1, gUnk_08748264);
+    gCurTask->frameTable = gKingDededeFrames;
+    CallTableEntry(gCurTask->unk73, 1, gKingDededeVariants);
 }
 
 void sub_0809fca4(void)

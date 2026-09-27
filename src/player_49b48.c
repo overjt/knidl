@@ -5,14 +5,14 @@
 /* player_49b48.c (0x08049B48-0x08049F97, issue #88).
  *
  * Player action bodies, part 16: actions 44-45 and handlers 41-42, the
- * twins of M11's actions 32-33.  sub_08049b48 (action 44, mode 13) is
- * M11's sub_0804462c with other constants (Task.unk80 = 13, animations
+ * twins of M11's actions 32-33.  PlayerActionIce (action 44, mode 13) is
+ * M11's PlayerActionFire with other constants (Task.unk80 = 13, animations
  * 0xA0A-0xA0E, sound 140, M14's CreatePlayerObject(player, 7, 0..1), effects
  * 40 x3 and 28): state 0 winds up, state 1 loops the animation until
- * its handler sub_08049d1c (M11's sub_08044800) re-binds state 2 once
+ * its handler PlayerActionIceUpdate (M11's PlayerActionFireUpdate) re-binds state 2 once
  * Task.unk28 has run out and B is released, and state 2 winds down.
- * sub_08049d94 (action 45) is M11's sub_08044878 likewise (animations
- * 0xA86/0xA8E, effect 41 x4, sound 141); its handler sub_08049edc also
+ * PlayerActionFreeze (action 45) is M11's PlayerActionSpark likewise (animations
+ * 0xA86/0xA8E, effect 41 x4, sound 141); its handler PlayerActionFreezeUpdate also
  * registers the collider gUnk_0873C214 and tests the block hit-box set
  * gUnk_0873CF4C every frame in state 1. */
 
@@ -35,7 +35,7 @@ s32 PlayerRequestLocomotion(void);
 void CreatePlayerObject(s32 a, s32 b, s32 c);      /* M14, src/plobj_52f6c.c (defined s32 (s8, u8, s32); the result is unused here) */
 s32 CreatePlayerEffect(s32 a0, s32 a1, s32 a2);
 
-void sub_08049b48(void)
+void PlayerActionIce(void)
 {
     gCurTask->player->prevMode = gCurTask->player->mode;
     gCurTask->player->mode = 13;
@@ -99,7 +99,7 @@ void sub_08049b48(void)
     TaskSleepForever();
 }
 
-void sub_08049d1c(void)
+void PlayerActionIceUpdate(void)
 {
     struct Task *t = gCurTask;
 
@@ -111,7 +111,7 @@ void sub_08049d1c(void)
             u16 *p = (u16 *)gLatchedHeldKeys;
             if ((p[t->player->playerIndex] & 2) == 0) {
                 t->unk73 = 2;
-                TaskSetEntry(sub_08049b48, gCurTaskIdx);
+                TaskSetEntry(PlayerActionIce, gCurTaskIdx);
             }
         } else {
             t->unk28--;
@@ -126,7 +126,7 @@ void sub_08049d1c(void)
     sub_0803e55c();
 }
 
-void sub_08049d94(void)
+void PlayerActionFreeze(void)
 {
     gCurTask->player->prevMode = gCurTask->player->mode;
     gCurTask->player->mode = 13;
@@ -172,7 +172,7 @@ void sub_08049d94(void)
     TaskSleepForever();
 }
 
-void sub_08049edc(void)
+void PlayerActionFreezeUpdate(void)
 {
     struct Task *t = gCurTask;
 
@@ -183,7 +183,7 @@ void sub_08049edc(void)
         if (t->unk28 == 0) {
             if ((gLatchedHeldKeys[t->player->playerIndex] & 2) == 0) {
                 t->unk73 = 2;
-                TaskSetEntry(sub_08049d94, gCurTaskIdx);
+                TaskSetEntry(PlayerActionFreeze, gCurTaskIdx);
             }
         } else {
             t->unk28--;

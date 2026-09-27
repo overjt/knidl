@@ -5,14 +5,14 @@
 /* player_46330.c (0x08046330-0x08046BFF, issue #87).
  *
  * Player action bodies, part 15: action 39 and per-frame handler 36.
- * sub_08046330 (action 39, mode 13) is a re-entrant five-state machine
+ * PlayerActionWheel (action 39, mode 13) is a re-entrant five-state machine
  * over Task.unk73: state 0 winds up (animation 0x701, effect 6, sound
  * 154), state 1 installs the script gUnk_0873CB34 and the block hit-box
  * set gUnk_0873CDAC and spins in an endless yield loop, state 2 turns
  * round (it negates the facing Task.facing) and goes back to state 1,
  * state 3 finishes the move and state 4 bounces off (sound 153, the
  * screen shake RequestScreenShake(4), velocity preset 36).  Its handler
- * sub_0804676c is what leaves the spin: every frame of state 1 it
+ * PlayerActionWheelUpdate is what leaves the spin: every frame of state 1 it
  * re-binds the coroutine to state 3 on a newly-pressed B, to state 2
  * when the held direction opposes the facing, and to state 4 when the
  * collision block gTerrainResult reports a hit; it keeps the player on
@@ -21,7 +21,7 @@
 
 /* gTerrainResult: M06's collision result block (src/terrain_1bcac.c spells it
    the same way except unk8, which M09 reads with ldrsh).  A 16-bit test of
-   unk0/unk1 together is `*(u16 *)&gTerrainResult` (good/sub_08045a50.c). */
+   unk0/unk1 together is `*(u16 *)&gTerrainResult` (good/PlayerActionBurningUpdate.c). */
 struct Unk03005550
 {
     /*0x00*/ u8 unk0;
@@ -66,7 +66,7 @@ void PlayerSetMotionXPreset(s32 a0, s32 a1);           /* M11, still asm; M11's 
 void PlayerSetMotionYPreset(s32 a0);
 s32 CreatePlayerEffect(s32 a0, s32 a1, s32 a2);
 
-void sub_08046330(void)
+void PlayerActionWheel(void)
 {
     gCurTask->player->prevMode = gCurTask->player->mode;
     gCurTask->player->mode = 13;
@@ -209,7 +209,7 @@ again:
     TaskSleepForever();
 }
 
-void sub_0804676c(void)
+void PlayerActionWheelUpdate(void)
 {
     {
         struct Task *t = gCurTask;
@@ -263,7 +263,7 @@ void sub_0804676c(void)
             struct Task *t = gCurTask;
             if (k) {
                 t->unk73 = 3;
-                TaskSetEntry(sub_08046330, gCurTaskIdx);
+                TaskSetEntry(PlayerActionWheel, gCurTaskIdx);
             } else {
                 if (t->onGround & 1) {
                     t->unk28 = 0;
@@ -293,7 +293,7 @@ void sub_0804676c(void)
                 if ((gLatchedHeldKeys[gCurTask->player->playerIndex] & 16 && gCurTask->facing == -1)
                     || (gLatchedHeldKeys[gCurTask->player->playerIndex] & 32 && gCurTask->facing == 1)) {
                     gCurTask->unk73 = 2;
-                    TaskSetEntry(sub_08046330, gCurTaskIdx);
+                    TaskSetEntry(PlayerActionWheel, gCurTaskIdx);
                 } else if (*(u16 *)&gTerrainResult != 0
                            || ((gCurTask->player->boundsClamp & 3)
                                && ((gCurTask->onGround & 1) || gCurTask->unk28 != 0))) {
@@ -302,7 +302,7 @@ void sub_0804676c(void)
                     else
                         PlayerStopAxes(1);
                     gCurTask->unk73 = 4;
-                    TaskSetEntry(sub_08046330, gCurTaskIdx);
+                    TaskSetEntry(PlayerActionWheel, gCurTaskIdx);
                 }
             }
         }
@@ -323,7 +323,7 @@ void sub_0804676c(void)
             u16 k = gLatchedPressedKeys[gCurTask->player->playerIndex] & 2;
             if (k) {
                 gCurTask->unk73 = 3;
-                TaskSetEntry(sub_08046330, gCurTaskIdx);
+                TaskSetEntry(PlayerActionWheel, gCurTaskIdx);
                 break;
             }
             if (*(u16 *)&gTerrainResult != 0 || (gCurTask->player->boundsClamp != 0 && (gCurTask->onGround & 1))) {
@@ -332,7 +332,7 @@ void sub_0804676c(void)
                 else
                     PlayerStopAxes(1);
                 gCurTask->unk73 = 4;
-                TaskSetEntry(sub_08046330, gCurTaskIdx);
+                TaskSetEntry(PlayerActionWheel, gCurTaskIdx);
             }
         }
         if (gCurTask->onGround & 1) {

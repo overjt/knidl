@@ -5,7 +5,7 @@
 /* player_45d34.c (0x08045D34-0x0804632F, issue #87).
  *
  * Player action bodies, part 14: action 38 and per-frame handler 35.
- * sub_08045d34 (action 38, mode 13) spends one charge of the ability
+ * PlayerActionMike (action 38, mode 13) spends one charge of the ability
  * counter PlayerState.abilityUses (the HUD update SetPlayerAbilityNoHud) and plays one
  * of three sequences picked by the charges left (Task.unk73 = unk0E - 1),
  * each with its own song (StopSfx) and sound; meanwhile it freezes
@@ -14,7 +14,7 @@
  * PlayerState.unk42 bits 8-10 and repeats the last loop until the effect
  * counter PlayerState.unk16 runs out.  With the last charge spent it
  * drops the ability (HudShowAbility) unless the ability is 7.  Its handler
- * sub_080462f0 requests action 1 or 7 (on the ground or in the air) once
+ * PlayerActionMikeUpdate requests action 1 or 7 (on the ground or in the air) once
  * it has finished. */
 
 extern vu16 gDispCnt;              /* DISPCNT shadow */
@@ -39,7 +39,7 @@ void PlayerSetMotionXPreset(s32 a0, s32 a1);           /* M11, still asm; M11's 
 void PlayerSetMotionYPreset(s32 a0);
 s32 CreatePlayerEffect(s32 a0, s32 a1, s32 a2);
 
-void sub_08045d34(void)
+void PlayerActionMike(void)
 {
     gCurTask->player->prevMode = gCurTask->player->mode;
     gCurTask->player->mode = 13;
@@ -217,7 +217,7 @@ void sub_08045d34(void)
     TaskSleepForever();
 }
 
-void sub_080462f0(void)
+void PlayerActionMikeUpdate(void)
 {
     struct Task *t = gCurTask;
 

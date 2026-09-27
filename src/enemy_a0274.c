@@ -25,7 +25,7 @@ extern u32 gUnk_08748478[];
 extern u32 gUnk_087484C4[];
 extern u32 gUnk_087484CC[];
 extern u32 gUnk_08748820[];
-extern u32 gUnk_087538E0[];
+extern u32 gKingDededeFrames[];
 
 /* Externals */
 extern void TaskYieldTrampoline(u32 a);
@@ -1165,7 +1165,7 @@ void sub_080a150c(void)
     t = gCurTask;
     t->drawCallback = (u32)sub_08065438;
     t->updateCallback = (u32)sub_080a1550;
-    t->frameTable = gUnk_087538E0;
+    t->frameTable = gKingDededeFrames;
     TaskFaceNearestPlayer();
     ActorSetState(0);
     CallTableEntry(gCurTask->state, 2, gUnk_087484C4);

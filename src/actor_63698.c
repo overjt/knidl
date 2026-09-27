@@ -24,8 +24,8 @@ extern s32 gUnk_030023B4;
 extern s32 gUnk_030023D4;
 
 extern struct ActorDef *gUnk_0873ECEC[];
-extern struct ActorDef *gUnk_0873ED90[];
-extern struct ActorDef *gUnk_0873EDB8[];
+extern struct ActorDef *gMidBossDefs[];
+extern struct ActorDef *gBossDefs[];
 extern struct ActorDef *gUnk_0873EDDC[];
 extern struct ActorDef *gUnk_0873EE70[];
 extern struct ActorDef *gUnk_0873EE88[];
@@ -52,8 +52,8 @@ extern s32 gUnk_0873DF14[];
 extern struct Actor gActors[];
 extern struct PlayerState gPlayerStates[];
 extern u32 gUnk_0873F198[];
-extern u32 gUnk_0873F23C[];
-extern u32 gUnk_0873F264[];
+extern u32 gMidBossTaskTypes[];
+extern u32 gBossTaskTypes[];
 extern u32 gUnk_0873F288[];
 extern u32 gUnk_0873F2A0[];
 extern void AddPlayerScore(s32 a, u32 b);
@@ -149,10 +149,10 @@ void sub_08063704(u32 i)
         break;
     case 1:
     case 3:
-        a->def = gUnk_0873ED90[t->unk76];
+        a->def = gMidBossDefs[t->unk76];
         break;
     case 2:
-        a->def = gUnk_0873EDB8[t->unk76];
+        a->def = gBossDefs[t->unk76];
         gUnk_02007F50 = t->unk76;
         break;
     case 4:
@@ -1617,10 +1617,10 @@ s32 CreateActorByKind(u8 cls, u32 sub, u8 p3, u8 p4, int x, int y, u16 prio)
         break;
     case 1:
     case 3:
-        type = gUnk_0873F23C[sub];
+        type = gMidBossTaskTypes[sub];
         break;
     case 2:
-        type = gUnk_0873F264[sub];
+        type = gBossTaskTypes[sub];
         break;
     case 5:
         type = gUnk_0873F288[sub];

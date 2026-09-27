@@ -15,8 +15,8 @@
  * or (4), then SE 0x1F7).  sub_08099fe0 and sub_08099fe4 are two dead `bx lr`
  * state handlers nothing in the ROM points at.
  *
- * The second script starts at sub_0809a0a8 (graphics gUnk_08753180, animation
- * gUnk_08745744, one-word table gUnk_0874574C): sub_0809a118 installs
+ * The second script starts at Task_MrTickTock (graphics gMrTickTockFrames, animation
+ * gUnk_08745744, one-word table gMrTickTockVariants): sub_0809a118 installs
  * sub_0809a17c and dispatches Task.state through the 24-word guard table
  * gUnk_08745750, sub_0809a17c dispatches Task.updateState through the 24-word body
  * table gUnk_087457B0 that follows it, and sub_0809a1f4 is its re-arm hook.
@@ -53,7 +53,7 @@ extern u32 gUnk_08745980[];
 extern u32 gUnk_087459D4[];
 extern u32 gUnk_087459F0[];
 extern struct AnimCmd gUnk_08745744[];
-extern u32 gUnk_0874574C[];
+extern u32 gMrTickTockVariants[];
 extern u32 gUnk_08745750[];
 extern u32 gUnk_087457B0[];
 extern u32 gUnk_08745A1C[];
@@ -72,7 +72,7 @@ extern u32 gUnk_08745C40[];
 extern u32 gUnk_08745AE8[];
 extern u32 gUnk_08745AF4[];
 extern u32 gUnk_0874CB7C[];
-extern u32 gUnk_08753180[];
+extern u32 gMrTickTockFrames[];
 extern u32 gUnk_087531C4[];
 extern u32 gUnk_087531DC[];
 extern void *gUnk_082797C8;
@@ -466,7 +466,7 @@ void sub_0809a080(u8 a)
     PlaySfx(0x1F7);
 }
 
-void sub_0809a0a8(void)
+void Task_MrTickTock(void)
 {
     struct Task *t;
     struct Task *u;
@@ -480,13 +480,13 @@ void sub_0809a0a8(void)
     t->layer = 11;
     zero = 0;
     u = gCurTask;
-    u->frameTable = gUnk_08753180;
+    u->frameTable = gMrTickTockFrames;
     gUnk_02007D00[0]++;
     u->unk18 = 1;
     u->unk46 = zero;
     sub_080666cc(gUnk_08745744);
     sub_08066ae0();
-    CallTableEntry(gCurTask->unk73, 1, gUnk_0874574C);
+    CallTableEntry(gCurTask->unk73, 1, gMrTickTockVariants);
 }
 
 void sub_0809a118(void)

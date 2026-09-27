@@ -40,7 +40,7 @@ void SetPlayerInvulnerability(s32 a0, s32 a1, s32 a2);
 s32 PlaySfxIfLocalPlayer(s32 a0, u16 a1);
 void sub_0803f6e0(void);
 void PlayerSetMotionXPreset(s32 a0, s32 a1);           /* M11, still asm; M11's own spelling */
-void sub_0804fe68(void);
+void PlayerActionStarRodFlight(void);
 void sub_0804fee8(void);
 s32 sub_08053a44(s8 player, u8 variant, s32 arg);
 void sub_080502f0(void);
@@ -279,7 +279,7 @@ void sub_080504d4(void)
     if ((s16)t->unk70 != 0)
     {
         t->unk73 = 1;
-        TaskSetEntry(sub_0804fe68, gCurTaskIdx);
+        TaskSetEntry(PlayerActionStarRodFlight, gCurTaskIdx);
     }
 }
 
