@@ -450,6 +450,10 @@ def verify_diff(ref):
     if now[:len(before)] != before:
         raise RenameError("%s: rows before %s were edited, not appended" % (renames_rel, ref))
     added = now[len(before):]
+    fields = [r for r in added if r["kind"] == "field"]
+    added = [r for r in added if r["kind"] != "field"]
+    field_pairs = compose_field_renames(fields)
+    field_uses = {}
     # Compose the renames since REF into one forward map (old -> final name),
     # following chains (A -> B, then B -> C), and apply it to REF's text the
     # way the tool does.  Mapping back instead would be lossy wherever a new
@@ -533,14 +537,20 @@ def verify_diff(ref):
             continue
         if path.endswith((".c", ".h", ".s", ".inc")):
             is_asm = path.endswith(".s")
-            if strip_comments(old, is_asm) != strip_comments(new, is_asm):
+            a, b = strip_comments(old, is_asm), strip_comments(new, is_asm)
+            if a != b and not (field_pairs and not is_asm
+                               and fields_only_differ(a, b, field_pairs, field_uses)):
                 problems.append("%s: code differs beyond the renames" % path)
             elif old != new:
                 comment_only.append(path)
             continue
         if old != new:
             problems.append("%s: differs beyond the renames" % path)
-    print("verify-diff %s: %d renames, %d files checked" % (ref, len(added), checked))
+    print("verify-diff %s: %d renames, %d field renames, %d files checked"
+          % (ref, len(added), len(fields), checked))
+    for (tag, o), n in sorted(field_pairs.items()):
+        if not field_uses.get((o, n)):
+            problems.append("field %s.%s -> %s: no use renamed" % (tag, o, n))
     for p in comment_only:
         print("  comment edits (review them): %s" % p)
     for p in outside:
@@ -550,6 +560,84 @@ def verify_diff(ref):
     if problems:
         raise RenameError("the diff since %s is not a pure rename" % ref)
     print("verify-diff: OK - code and generated files differ only by the renames")
+
+
+# ---- field renames (tools/rename_field.py) -------------------------------------
+
+def compose_field_renames(rows):
+    """{(struct tag, original member): final member} from renames.csv rows of
+    kind `field` (`Struct.old` -> `Struct.new`), following chains."""
+    fwd = {}
+    for r in rows:
+        tag, old = r["old"].split(".", 1)
+        tag2, new = r["new"].split(".", 1)
+        if tag != tag2:
+            raise RenameError("field rename %s -> %s changes the struct" % (r["old"], r["new"]))
+        hit = False
+        for k, v in list(fwd.items()):
+            if k[0] == tag and v == old:
+                fwd[k] = new
+                hit = True
+        if not hit:
+            fwd.setdefault((tag, old), new)
+    return fwd
+
+
+FIELD_SPLIT_RE = re.compile(r"([A-Za-z_][A-Za-z0-9_]*)")
+
+
+def fields_only_differ(a, b, pairs, uses):
+    """True if the comment-stripped texts a (the ref, symbols remapped) and b
+    (the tree) differ only by logged field renames: every differing
+    identifier is a (member, new member) pair of `pairs`, and sits after `.`
+    or `->` (an access or a designated initializer) or is a member
+    declarator inside `struct <tag> { ... }` of that pair's struct."""
+    pa, pb = FIELD_SPLIT_RE.split(a), FIELD_SPLIT_RE.split(b)
+    if len(pa) != len(pb):
+        return False
+    by_pair = {}
+    for (tag, o), n in pairs.items():
+        by_pair.setdefault((o, n), set()).add(tag)
+    depth = 0
+    stack = []      # (tag, depth of its body)
+    pending = None  # tag of a `struct TAG` whose `{` may follow
+    found = {}
+    for i, (x, y) in enumerate(zip(pa, pb)):
+        if i % 2 == 0:
+            if x != y:
+                return False
+            for ch in x:
+                if ch == "{":
+                    depth += 1
+                    if pending is not None:
+                        stack.append((pending, depth))
+                        pending = None
+                elif ch == "}":
+                    while stack and stack[-1][1] >= depth:
+                        stack.pop()
+                    depth -= 1
+                elif not ch.isspace():
+                    pending = None
+            continue
+        if pending == "":
+            pending = x          # the tag after `struct` / `union`
+        elif x in ("struct", "union"):
+            pending = ""
+        else:
+            pending = None
+        if x == y:
+            continue
+        tags = by_pair.get((x, y))
+        if not tags:
+            return False
+        prev = pa[i - 1].rstrip()
+        if not (prev.endswith(".") or prev.endswith("->")
+                or (stack and stack[-1][0] in tags)):
+            return False
+        found[(x, y)] = found.get((x, y), 0) + 1
+    for k, v in found.items():
+        uses[k] = uses.get(k, 0) + v
+    return True
 
 
 def regen():
