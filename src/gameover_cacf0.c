@@ -6,7 +6,7 @@
  *
  * AgbMain state 22, the game-over / continue screen.
  *   GameOverMain   the state body: one of three screens - GameOverScreen
- *       outside link play, sub_080caeec in link play, sub_080cb058 after
+ *       when gUnk_03001F30 is 0, sub_080caeec when it is set, sub_080cb058 after
  *       AgbMain state 20 - then, when the choice set game state 5 (continue),
  *       back into the stage (state 6 unless gStageRequest is 1), else the SIO
  *       session is torn down.
@@ -27,7 +27,8 @@ extern vs32 gBg2ScrollY;
 extern vs32 gBg2ScrollX;
 extern vs32 gBg3ScrollY;
 extern vs32 gBg3ScrollX;          /* ... BG3 */
-extern u8 gUnk_03001F30;            /* link-play mode */
+extern u8 gUnk_03001F30;            /* set only by the mode list's fifth row
+                                       (src/menu_0ca10.c); not link play */
 extern u16 gPrevGameState;           /* previous game state */
 extern u16 gGameState;           /* game state (AgbMain dispatch) */
 extern u16 gLocalPlayer;           /* this player's index */
@@ -115,7 +116,7 @@ void GameOverMain(void)
     }
 }
 
-/* The game-over screen outside link play (gUnk_03001F30 == 0): scroll the
+/* The game-over screen when gUnk_03001F30 == 0: scroll the
    banner in, spawn the eight letters (#260) and the #261/#264 objects,
    then wait for the continue choice. */
 void GameOverScreen(void)
@@ -165,7 +166,7 @@ void GameOverScreen(void)
     } while (gGameOverDone == 0);
 }
 
-/* The game-over screen in link play (gUnk_03001F30 != 0): scroll the
+/* The game-over screen when gUnk_03001F30 != 0: scroll the
    banner in, spawn the eight letters (#260) and the cursor (#261), then
    run the continue choice with the clock on screen. */
 void sub_080caeec(void)

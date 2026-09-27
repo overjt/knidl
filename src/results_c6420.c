@@ -6,7 +6,7 @@
  *
  * The screens around the ending and the tile-number helpers.
  *   FinalResultsScreen   AgbMain state 12, after the staff credits: the final screen
- *       (after AgbMain state 20 DrawLargeClockScreen's clock, in link play the clock,
+ *       (after AgbMain state 20 DrawLargeClockScreen's clock, the clock when gUnk_03001F30 is set,
  *       else this player's score), held until START.
  *   DrawLargeClockScreen   the clock drawn with large digit tiles.
  *   ShowMilestonePicture / ShowMilestonePictureForMode   a full-screen picture (screen 57 or 59) held
@@ -23,7 +23,8 @@ extern vs32 gBg2ScrollY;
 extern vs32 gBg2ScrollX;
 extern vs32 gBg3ScrollY;
 extern vs32 gBg3ScrollX;          /* ... BG3 */
-extern u8 gUnk_03001F30;            /* link-play mode */
+extern u8 gUnk_03001F30;            /* set only by the mode list's fifth row
+                                       (src/menu_0ca10.c); not link play */
 extern u16 gPrevGameState;           /* previous game state */
 extern u16 gPlayerCount;           /* number of players */
 extern u8 gExtraMode;
@@ -72,8 +73,8 @@ void DrawClockToBgMap(u16 *time, s32 x, s32 y);
 void CopyToBgMap(u16 *src, s32 x, s32 y, s32 n);
 
 /* AgbMain state 12, after the staff credits: the final screen.  After
-   AgbMain state 20 it shows DrawLargeClockScreen's clock screen, in link play the
-   clock, otherwise this player's score; then it waits for START, fades out
+   AgbMain state 20 it shows DrawLargeClockScreen's clock screen, when gUnk_03001F30 is
+   set the clock, otherwise this player's score; then it waits for START, fades out
    and returns (AgbMain goes back to state 0). */
 void FinalResultsScreen(void)
 {
