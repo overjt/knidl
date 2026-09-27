@@ -87,7 +87,7 @@ extern u16 gPlayerCount;
 extern u8 gActivePlayerCount;
 extern s32 gUnk_03002344;
 extern s16 gRoomEntryX;
-extern s8 gUnk_08733AF0[];
+extern s8 gCollisionTileDoor[];
 extern u32 gUnk_03002160;
 extern u8 gActivePlayerMask;
 extern u8 gUnk_0873264C[][2];
@@ -164,7 +164,7 @@ void UpdateDoors(void)
         y = d->unk4 << 4;
         p->unk1 = 0;
         k = GetCollisionTileAtPixel(x, y);
-        if (gUnk_08733AF0[k] == 0)
+        if (gCollisionTileDoor[k] == 0)
             continue;
         if (gPlayerCount > 1 && gActivePlayerCount > 1)
         {

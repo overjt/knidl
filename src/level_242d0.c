@@ -135,8 +135,8 @@ extern s16 gRoomWidth;
 extern s16 gRoomHeight;
 extern s16 gRoomMetatileCount;
 extern u16 gMetatileTiles[];
-extern s16 *gUnk_0300558C;
-extern s16 gUnk_0873A318[];
+extern s16 *gCurTileDrifts;
+extern s16 gTileDrifts[];
 extern u16 gCameraMode;
 extern u16 gRoomUpdateFlags;
 extern u16 gRoomBorder[2];
@@ -170,9 +170,9 @@ extern s16 gPlayerLives[];
 extern s16 gPlayerHealth[];
 extern s16 gMaxHealth;
 extern u16 gSavedPlayerAbilities[];
-extern u16 gUnk_02007FA8[];
+extern u16 gSavedPlayerAbilityUses[];
 extern u16 gPlayerAbilities[];
-extern u16 gUnk_0200AF18[];
+extern u16 gPlayerAbilityUses[];
 extern u8 gPlayerCameraMode[];
 extern vu16 gPlayerHeldKeys[];
 extern vu16 gPlayerPressedKeys[];
@@ -338,7 +338,7 @@ void sub_08024300(void)
     gHBlankScrollStarted = 0;
     gRoomUpdateFlags = 31;
     gRoomBgLayout = 0;
-    gUnk_0300558C = gUnk_0873A318;
+    gCurTileDrifts = gTileDrifts;
     *gUnk_02005574 = 0;
     ResetBlockAnims();
     StopScreenShake();
@@ -632,15 +632,15 @@ void sub_0802497c(void)
             {
                 gPlayerHealth[i] = gMaxHealth;
                 gSavedPlayerAbilities[i] = 0;
-                gUnk_02007FA8[i] = 0xFFFF;
+                gSavedPlayerAbilityUses[i] = 0xFFFF;
                 AddPlayerLives(-1, i);
             }
             if ((s16)gSavedPlayerAbilities[i] != 0)
             {
                 gPlayerAbilities[i] = gSavedPlayerAbilities[i];
-                gUnk_0200AF18[i] = gUnk_02007FA8[i];
+                gPlayerAbilityUses[i] = gSavedPlayerAbilityUses[i];
                 gSavedPlayerAbilities[i] = 0;
-                gUnk_02007FA8[i] = 0xFFFF;
+                gSavedPlayerAbilityUses[i] = 0xFFFF;
             }
             gActivePlayerMask |= 1 << i;
             gActivePlayerCount++;

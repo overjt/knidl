@@ -82,8 +82,8 @@ extern s8 gUnk_0200B034;
 extern s8 gDoorObjectTasks[][3];
 extern s32 gScrollLockSpeedX;
 extern s32 gScrollLockSpeedY;
-extern s32 gUnk_030055F0;
-extern s32 gUnk_03005618;
+extern s32 gRoomDriftVelX;
+extern s32 gRoomDriftVelY;
 extern s16 gUnk_020055D4;
 extern u8 gUnk_020069F0;
 extern s16 gRoomEntryX;
@@ -147,8 +147,8 @@ void SpawnDoorObjects(void)
     }
     gScrollLockSpeedX = 0;
     gScrollLockSpeedY = 0;
-    gUnk_030055F0 = 0;
-    gUnk_03005618 = 0;
+    gRoomDriftVelX = 0;
+    gRoomDriftVelY = 0;
     gUnk_020055D4 = 0x4000;
     if (gUnk_020069F0 == 1 || gUnk_020069F0 == 4)
     {

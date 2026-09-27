@@ -19,7 +19,7 @@ extern struct M11Buf gUnk_02006A80[];
 extern u8 gUnk_02007CF0;
 extern u16 gUnk_02007F60[];
 extern s16 gRoomEntryY;
-extern u16 gUnk_0200AF18[];
+extern u16 gPlayerAbilityUses[];
 extern u16 gPlayerBubbleTimers[];
 extern vs16 gCurrentBgm;
 extern u16 gPlayerHeldKeys[];
@@ -239,7 +239,7 @@ void InitPlayerState(s32 a0)
     p->unk0A = 0;
     p->pendingAbilityUses = -1;
     p->ability = gPlayerAbilities[a0];
-    p->abilityUses = gUnk_0200AF18[a0];
+    p->abilityUses = gPlayerAbilityUses[a0];
     p->unk10 = 0;
     p->unk0F = 0;
     p->invulnerabilityTimer = 0;
@@ -314,7 +314,7 @@ void sub_0803d1c4(s32 a0)
     p->unk0A = 0;
     p->pendingAbilityUses = -1;
     p->ability = gPlayerAbilities[a0];
-    p->abilityUses = gUnk_0200AF18[a0];
+    p->abilityUses = gPlayerAbilityUses[a0];
     p->unk10 = 0;
     p->unk0F = 0;
     p->invulnerabilityTimer = 0;
@@ -375,7 +375,7 @@ void sub_0803d2d4(s32 a0)
     p->prevMode = 255;
     p->mode = -1;
     p->ability = gPlayerAbilities[a0];
-    p->abilityUses = gUnk_0200AF18[a0];
+    p->abilityUses = gPlayerAbilityUses[a0];
     p->unk10 = 0;
     p->unk0F = 0;
     p->invulnerabilityTimer = 0;

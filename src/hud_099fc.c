@@ -45,7 +45,7 @@ extern s16 gUnk_02007D30;
 extern s16 gPlayerLives[];
 extern s16 gHudHpBarValues[];
 extern s16 gUnk_0200801C;
-extern u16 gUnk_0200AF18[];
+extern u16 gPlayerAbilityUses[];
 extern u8 gHudShowsHpBar;
 extern u32 gUnk_02020000[];
 extern void (*gFrameEndCallback)(void);
@@ -317,7 +317,7 @@ s32 SetPlayerAbilityNoHud(s32 a, s32 b, u32 c)
     if (c < 4) {
         struct PlayerState *p;
         gPlayerAbilities[c] = a;
-        gUnk_0200AF18[c] = b;
+        gPlayerAbilityUses[c] = b;
         p = &gPlayerStates[c];
         p->ability = a;
         p->abilityUses = b;
@@ -330,7 +330,7 @@ s32 SetPlayerAbility(s32 a, s32 b, u32 c)
     if (c < 4) {
         struct PlayerState *p;
         gPlayerAbilities[c] = a;
-        gUnk_0200AF18[c] = b;
+        gPlayerAbilityUses[c] = b;
         p = &gPlayerStates[c];
         p->ability = a;
         p->abilityUses = b;

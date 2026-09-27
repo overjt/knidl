@@ -103,16 +103,16 @@ struct MapTile
 
 extern s32 gScrollLockSpeedX;
 extern s32 gScrollLockSpeedY;
-extern s32 gUnk_030055F0;
-extern s32 gUnk_03005618;
+extern s32 gRoomDriftVelX;
+extern s32 gRoomDriftVelY;
 extern u8 gRoomBgLayout;
-extern s16 *gUnk_0300558C;
-extern s16 gUnk_0873A318[];
-extern s16 gUnk_0873A398[];
+extern s16 *gCurTileDrifts;
+extern s16 gTileDrifts[];
+extern s16 gTileDriftsDoubled[];
 extern u8 gUnk_02005574[];
 extern struct RoomDef *gCurRoomDef;
 extern struct Unk020055D8 gRoomObjectList;
-extern s32 gUnk_087322C0[][2];
+extern s32 gRoomDriftVelocities[][2];
 extern u8 gBg3MapShape;
 extern u8 gUnk_0200B078;
 extern s32 gBg3ParallaxX;
@@ -156,22 +156,22 @@ void InitRoomBgLayout(void)
 
     gScrollLockSpeedX = 0;
     gScrollLockSpeedY = 0;
-    gUnk_030055F0 = 0;
-    gUnk_03005618 = 0;
+    gRoomDriftVelX = 0;
+    gRoomDriftVelY = 0;
     gRoomBgLayout = 0;
-    gUnk_0300558C = gUnk_0873A318;
+    gCurTileDrifts = gTileDrifts;
     gUnk_02005574[0] = 0;
     if ((s16)gCurRoomDef->unk38 != -1)
     {
         e = (s8 *)&gRoomObjectList.entries[(s16)gCurRoomDef->unk38];
         if (e[1] == 7)
         {
-            gUnk_030055F0 = gUnk_087322C0[e[2]][0];
-            gUnk_03005618 = gUnk_087322C0[e[2]][1];
+            gRoomDriftVelX = gRoomDriftVelocities[e[2]][0];
+            gRoomDriftVelY = gRoomDriftVelocities[e[2]][1];
         }
         else if (e[1] == 8)
         {
-            gUnk_0300558C = gUnk_0873A398;
+            gCurTileDrifts = gTileDriftsDoubled;
         }
     }
     if (gCurRoomDef->unk56 != 0)
@@ -252,8 +252,8 @@ void sub_08028130(void)
 
     gScrollLockSpeedX = 0;
     gScrollLockSpeedY = 0;
-    gUnk_030055F0 = 0;
-    gUnk_03005618 = 0;
+    gRoomDriftVelX = 0;
+    gRoomDriftVelY = 0;
     gRoomBgLayout = 0;
     gUnk_02005574[0] = 0;
     if ((s16)gCurRoomDef->unk38 != -1)
@@ -261,8 +261,8 @@ void sub_08028130(void)
         e = (s8 *)&gRoomObjectList.entries[(s16)gCurRoomDef->unk38];
         if (e[1] == 7)
         {
-            gUnk_030055F0 = gUnk_087322C0[e[2]][0];
-            gUnk_03005618 = gUnk_087322C0[e[2]][1];
+            gRoomDriftVelX = gRoomDriftVelocities[e[2]][0];
+            gRoomDriftVelY = gRoomDriftVelocities[e[2]][1];
         }
     }
     if (gCurRoomDef->unk56 != 0)
@@ -287,8 +287,8 @@ void sub_08028280(s32 a)
 {
     gScrollLockSpeedX = 0;
     gScrollLockSpeedY = 0;
-    gUnk_030055F0 = 0;
-    gUnk_03005618 = 0;
+    gRoomDriftVelX = 0;
+    gRoomDriftVelY = 0;
     gRoomBgLayout = 0;
     gUnk_02005574[0] = 0;
     if (a == 0)

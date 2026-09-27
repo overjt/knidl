@@ -107,7 +107,7 @@ extern u32 gRoomIndex[];
 extern u32 gUnk_030027A8[];
 extern vs16 gTaskSlotTypes[];
 extern u8 gTerrainResult[];
-extern u32 gUnk_03005568[];
+extern u32 gTerrainBoundsClamp[];
 extern s16 gRoomBounds[];
 extern u32 gScrollLock[];
 extern u32 gUnk_080A7358[];

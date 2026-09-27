@@ -26,7 +26,7 @@ extern s8 *const gCollisionTileShapes[];
 /* ROM byte tables indexed by tile set. */
 extern u8 gCollisionTileSlope[];
 extern u8 gUnk_087337F0[];
-extern u8 gUnk_087334F0[];
+extern u8 gCollisionTileSlippery[];
 extern s8 gUnk_087336F0[];
 extern s8 gUnk_08732FF0[];
 

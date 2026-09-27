@@ -21,7 +21,7 @@ extern u8 gUnk_020055CC;
 extern u8 gUnk_02006090;
 extern s16 gPlayerLives[];
 extern u8 gUnk_02007FCC;
-extern u16 gUnk_0200AF18[];
+extern u16 gPlayerAbilityUses[];
 extern s16 gInputRecorderMode;
 extern vu16 gFadeBlankAtWhite;
 extern vu16 gFadeSteps;
@@ -129,7 +129,7 @@ void sub_08007624(void)
             if (gPlayerLives[gLocalPlayer] != 0) {
                 gPlayerHealth[gLocalPlayer] = gMaxHealth;
                 gPlayerAbilities[gLocalPlayer] = 0;
-                gUnk_0200AF18[gLocalPlayer] = 0xFFFF;
+                gPlayerAbilityUses[gLocalPlayer] = 0xFFFF;
             } else {
                 gGameState = 1;
             }

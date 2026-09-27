@@ -133,7 +133,7 @@ extern u16 gBlockLayer[];
 extern struct RoomDef *gCurRoomDef;
 extern s8 *const gCollisionTileShapes[];
 extern s8 gUnk_087335F0[];
-extern u8 gUnk_03005568;
+extern u8 gTerrainBoundsClamp;
 extern u16 gUnk_03005544;
 extern struct CamRect gPlayerBounds[4];
 extern u8 gUnk_02005574[];
@@ -499,22 +499,22 @@ s32 IsFullBlockAtPixel(u16 x, u16 y)
 
 void sub_08022650(void)
 {
-    gUnk_03005568 = 0;
+    gTerrainBoundsClamp = 0;
     gUnk_03005544 = 0;
     if (gPlayerBounds[gCurTaskIdx].x0 > gTerrainProbeX + gTerrainBoxLeft)
     {
         gTerrainProbeX = gPlayerBounds[gCurTaskIdx].x0 - gTerrainBoxLeft;
-        gUnk_03005568 = 1;
+        gTerrainBoundsClamp = 1;
     }
     else if (gPlayerBounds[gCurTaskIdx].x1 < gTerrainProbeX + gTerrainBoxRight)
     {
         gTerrainProbeX = gPlayerBounds[gCurTaskIdx].x1 - gTerrainBoxRight;
-        gUnk_03005568 = 2;
+        gTerrainBoundsClamp = 2;
     }
     if (gPlayerBounds[gCurTaskIdx].y0 > gTerrainProbeY + gTerrainBoxTop)
     {
         gTerrainProbeY = gPlayerBounds[gCurTaskIdx].y0 - gTerrainBoxTop;
-        gUnk_03005568 |= 4;
+        gTerrainBoundsClamp |= 4;
         if (gUnk_02005574[0] == 0)
             gUnk_03005544 = gPlayerBounds[gCurTaskIdx].y0;
     }
@@ -567,24 +567,24 @@ s32 sub_08022810(void)
     s32 lo;
     s32 hi;
 
-    gUnk_03005568 = 0;
+    gTerrainBoundsClamp = 0;
     lo = gCameraBounds[0] - 117;
     hi = gCameraBounds[1] + 117;
     if (lo > gTerrainProbeX + gTerrainBoxLeft)
     {
         gTerrainProbeX = lo - gTerrainBoxLeft;
-        gUnk_03005568 = 1;
+        gTerrainBoundsClamp = 1;
     }
     else if (hi < gTerrainProbeX + gTerrainBoxRight)
     {
         gTerrainProbeX = hi - gTerrainBoxRight;
-        gUnk_03005568 = 2;
+        gTerrainBoundsClamp = 2;
     }
     lo = gCameraBounds[2] - 76;
     if (lo > gTerrainProbeY + gTerrainBoxTop)
     {
         gTerrainProbeY = lo - gTerrainBoxTop;
-        gUnk_03005568 |= 4;
+        gTerrainBoundsClamp |= 4;
     }
 }
 

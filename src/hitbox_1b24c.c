@@ -83,7 +83,7 @@ extern u16 gAttackX;           /* actor x */
 extern u16 gAttackHealth;
 extern struct AttackBox *gAttackBox;
 extern u8 gHitKind;            /* hit result */
-extern u8 gUnk_03002390;
+extern u8 gAttackLastHitterSlot;
 extern u16 gHitHealthLeft;
 extern u8 gUnk_03002450;
 extern u8 gUnk_03002460;
@@ -180,7 +180,7 @@ u8 sub_0801b24c(void)
         a = gAttackBox;
         if ((s32)a->unk14 < 0)
         {
-            if (gColliderSlot == (s8)gUnk_03002390 && (s8)gUnk_03002460 == 32)
+            if (gColliderSlot == (s8)gAttackLastHitterSlot && (s8)gUnk_03002460 == 32)
                 continue;
             m = gUnk_08732278[k] | 0x4000;
             if (!(a->unk18 & m) && !(b->unk10 & 8))
@@ -200,7 +200,7 @@ u8 sub_0801b24c(void)
         m = gUnk_08732254[k];
         if (!(a->unk14 & m))
         {
-            if (gColliderSlot == (s8)gUnk_03002390 && (s8)gUnk_03002460 == 32)
+            if (gColliderSlot == (s8)gAttackLastHitterSlot && (s8)gUnk_03002460 == 32)
                 continue;
             if ((a->unk1A & 0x40) && (b->unk10 & 0x4000))
             {
@@ -254,7 +254,7 @@ u8 sub_0801b24c(void)
             u->unk76 &= 0x4000;
             u->unk76 |= b->unk10 & 0x3FFF;
         }
-        if (gColliderSlot != (s8)gUnk_03002390 && (s8)gUnk_03002460 != 32)
+        if (gColliderSlot != (s8)gAttackLastHitterSlot && (s8)gUnk_03002460 != 32)
         {
             m = gUnk_08732278[k] | 0x4000;
             if (!(gAttackBox->unk18 & m) && !(gColliderBodyBox->unk10 & 8))

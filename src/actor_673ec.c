@@ -24,7 +24,7 @@ extern s16 gPlayerHealth[];
 extern u16 gAttackX;
 extern u16 gAttackY;
 extern u16 gAttackHealth;
-extern u8 gUnk_03002390;
+extern u8 gAttackLastHitterSlot;
 extern u8 gAttackLastHitter;
 extern u8 gUnk_030023F0;
 extern s16 gAttackFacing;
@@ -35,8 +35,8 @@ extern u8 gHitKind;
 extern u8 gUnk_03002450;
 extern u16 gHitHealthLeft;
 extern u8 gHitDirection;
-extern u8 gUnk_03002354;
-extern u8 gUnk_030023DC;
+extern u8 gHitTimer;
+extern u8 gHitterSlot;
 extern u8 gUnk_03001F24;
 extern u8 gUnk_030023A4;
 extern u8 gUnk_030023D0;
@@ -1311,7 +1311,7 @@ u32 ActorCheckHitsWithBox(s32 a)
         u = gCurTask;
         gAttackY = u->pixelY;
         gAttackHealth = u->health;
-        gUnk_03002390 = u->hitterSlot;
+        gAttackLastHitterSlot = u->hitterSlot;
         gAttackLastHitter = u->hitterPlayer;
         gUnk_030023F0 = u->hitTimer;
         gAttackFacing = u->facing;
@@ -1352,7 +1352,7 @@ u32 ActorCheckHits(void)
     v = gCurTask;
     gAttackY = v->pixelY;
     gAttackHealth = v->health;
-    gUnk_03002390 = v->hitterSlot;
+    gAttackLastHitterSlot = v->hitterSlot;
     gAttackLastHitter = v->hitterPlayer;
     gUnk_03002460 = a->unk06;
     gUnk_030023F0 = v->hitTimer;
@@ -1406,7 +1406,7 @@ u32 sub_08068f68(void)
         v = gCurTask;
         gAttackY = v->pixelY;
         gAttackHealth = v->health;
-        gUnk_03002390 = v->hitterSlot;
+        gAttackLastHitterSlot = v->hitterSlot;
         gAttackLastHitter = v->hitterPlayer;
         gUnk_03002460 = a->unk06;
         gUnk_030023F0 = v->hitTimer;
@@ -1471,7 +1471,7 @@ u32 sub_0806914c(s32 a)
     u = gCurTask;
     gAttackY = u->pixelY;
     gAttackHealth = u->health;
-    gUnk_03002390 = u->hitterSlot;
+    gAttackLastHitterSlot = u->hitterSlot;
     gAttackLastHitter = u->hitterPlayer;
     gUnk_030023F0 = u->hitTimer;
     gAttackFacing = u->facing;
@@ -1498,8 +1498,8 @@ void ActorStoreHit(u8 a)
     gCurTask->unk82 = gUnk_03002450;
     gCurTask->health = gHitHealthLeft;
     gCurTask->hitDirection = gHitDirection;
-    gCurTask->hitTimer = gUnk_03002354;
-    gCurTask->hitterSlot = gUnk_030023DC;
+    gCurTask->hitTimer = gHitTimer;
+    gCurTask->hitterSlot = gHitterSlot;
     gCurTask->hitterPlayer = gUnk_03001F24;
     if (a != 0)
     {

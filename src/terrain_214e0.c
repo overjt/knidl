@@ -38,7 +38,7 @@ extern s8 *const gCollisionTileShapes[];
 /* ROM byte tables indexed by tile set. */
 extern u8 gCollisionTileSlope[];
 extern u8 gUnk_087337F0[];
-extern u8 gUnk_087334F0[];
+extern u8 gCollisionTileSlippery[];
 extern s8 gUnk_087336F0[];
 extern s8 gUnk_08732FF0[];
 
@@ -276,7 +276,7 @@ void sub_08021a10(u16 a)
 {
     gTerrainProbeResult.slope = gCollisionTileSlope[a];
     gTerrainProbeResult.unk5 = gUnk_087337F0[a];
-    gTerrainProbeResult.unkE = gUnk_087334F0[a];
+    gTerrainProbeResult.unkE = gCollisionTileSlippery[a];
 }
 
 s32 sub_08021a40(u32 x, u32 y)

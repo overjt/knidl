@@ -111,7 +111,7 @@ extern u8 gUnk_020061E0;
 extern u8 gUnk_03001F34;
 extern void (*gPlayerActions[])(void);
 extern void (*gUnk_0873B42C[])(void);
-extern u8 gUnk_03005568;
+extern u8 gTerrainBoundsClamp;
 extern u8 gUnk_02005574[];
 extern struct Unk03005550 gTerrainResult;
 extern u16 gUnk_03005544;
@@ -129,8 +129,8 @@ extern u16 gPlayerHeldKeys[];
 extern u8 gUnk_02007CF0;
 extern u16 gPlayerAbilities[];
 extern u16 gSavedPlayerAbilities[];
-extern u16 gUnk_02007FA8[];
-extern u16 gUnk_0200AF18[];
+extern u16 gSavedPlayerAbilityUses[];
+extern u16 gPlayerAbilityUses[];
 
 void CallTableEntry(u32 idx, u32 count, void (**fns)(void));
 u32 RandomRange(u32 range);
@@ -427,8 +427,8 @@ void PlayerUpdate(void)
     if (gCurTask->player->terrainBox != 0)
     {
         sub_0801baa4(gCurTask->player->terrainBox);
-        gCurTask->player->boundsClamp = gUnk_03005568;
-        if (gUnk_02005574[0] == 0 && (gUnk_03005568 & 4) && gTerrainResult.unk0 != 0)
+        gCurTask->player->boundsClamp = gTerrainBoundsClamp;
+        if (gUnk_02005574[0] == 0 && (gTerrainBoundsClamp & 4) && gTerrainResult.unk0 != 0)
             gCurTask->player->unk4E = gUnk_03005544;
         gCurTask->player->prevTerrainBox = (u32 *)gCurTask->player->terrainBox;
         if (gTerrainResult.unkC != 0 && !(gCurTask->player->unk42 & 0x200)
@@ -610,12 +610,12 @@ void sub_08033414(void)
             if ((s16)gPlayerAbilities[gCurTask->player->playerIndex] != 0)
             {
                 gSavedPlayerAbilities[gCurTask->player->playerIndex] = gPlayerAbilities[gCurTask->player->playerIndex];
-                gUnk_02007FA8[gCurTask->player->playerIndex] = gUnk_0200AF18[gCurTask->player->playerIndex];
+                gSavedPlayerAbilityUses[gCurTask->player->playerIndex] = gPlayerAbilityUses[gCurTask->player->playerIndex];
             }
             else
             {
                 gSavedPlayerAbilities[gCurTask->player->playerIndex] = 4;
-                gUnk_02007FA8[gCurTask->player->playerIndex] = 0xFFFF;
+                gSavedPlayerAbilityUses[gCurTask->player->playerIndex] = 0xFFFF;
             }
             gCurTask->player->pendingAbility = 4;
             gCurTask->player->pendingAbilityUses = 255;

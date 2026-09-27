@@ -51,7 +51,7 @@ extern u8 gUnk_020069F0;
 extern u32 gUnk_02007BF0[8][8];
 extern u16 gPlayerLives[];
 extern u8 gUsedSubGameDoors[];
-extern u16 gUnk_0200AF18[];
+extern u16 gPlayerAbilityUses[];
 extern u8 gUnk_0200B04C;
 extern u8 gInputRecorderRunning;
 extern s16 gInputRecorderMode;
@@ -127,7 +127,7 @@ void InputRecorderStart(void)
             gInputRecordingPtr->unk16[i] = gPlayerLives[i];
             gInputRecordingPtr->unk1E[i] = gPlayerHealth[i];
             gInputRecordingPtr->unk26[i] = gPlayerAbilities[i];
-            gInputRecordingPtr->unk2E[i] = gUnk_0200AF18[i];
+            gInputRecordingPtr->unk2E[i] = gPlayerAbilityUses[i];
         }
         gInputRecordingPtr->unkC0 = gMilestoneFlags;
         gInputRecordingPtr->unkC4[gExtraMode] = gUnk_030023B8;

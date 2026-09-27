@@ -113,7 +113,7 @@ extern s8 gRoomIndex;
 extern u32 gUnk_030027A8[];
 extern vs16 gTaskSlotTypes[];
 extern u8 gTerrainResult[];
-extern u32 gUnk_03005568[];
+extern u32 gTerrainBoundsClamp[];
 extern s16 gRoomBounds[];
 struct Unk03005680
 {

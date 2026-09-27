@@ -41,7 +41,7 @@ extern vu16 gBgPalette[];
 extern s16 gInputRecorderMode;
 extern u32 gUnk_0200EC50;
 extern u16 gSavedPlayerAbilities[];
-extern u16 gUnk_02007FA8[];
+extern u16 gSavedPlayerAbilityUses[];
 extern u16 gUnk_08758334[];
 extern u16 gUnk_08758374[];
 extern vu16 gFadeStep;
@@ -128,7 +128,7 @@ void CreditsMain(void)
         gUnk_0200EC50 = scenes[gUnk_0201C1B0];
         InputRecorderStart();
         gSavedPlayerAbilities[gLocalPlayer] = 0;
-        gUnk_02007FA8[gLocalPlayer] = 0xFFFF;
+        gSavedPlayerAbilityUses[gLocalPlayer] = 0xFFFF;
         CreditsLoadScene();
         gDispCnt &= 0xE0FF;
         gDispCnt |= 0x1D00;

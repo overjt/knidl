@@ -101,8 +101,8 @@ extern u16 gBg3Border[2];
 extern struct MapCell *gRoomMap;
 extern struct MapCell gUnk_02006AA0[];
 extern u8 gRoomBgLayout;
-extern s16 *gUnk_0300558C;
-extern s16 gUnk_0873A318[];
+extern s16 *gCurTileDrifts;
+extern s16 gTileDrifts[];
 extern u8 gUnk_02005574[];
 extern u8 gUnk_02000020;
 extern u8 gUnk_0200B078;
@@ -116,9 +116,9 @@ extern s16 gPlayerLives[];
 extern s16 gPlayerHealth[];
 extern s16 gMaxHealth;
 extern u16 gSavedPlayerAbilities[];
-extern u16 gUnk_02007FA8[];
+extern u16 gSavedPlayerAbilityUses[];
 extern u16 gPlayerAbilities[];
-extern u16 gUnk_0200AF18[];
+extern u16 gPlayerAbilityUses[];
 extern u8 gPlayerCameraMode[];
 extern vu16 gPlayerHeldKeys[];
 extern vu16 gPlayerPressedKeys[];
@@ -219,7 +219,7 @@ void sub_08023948(void)
     gRoomMap = gUnk_02006AA0;
     sub_08027a6c();
     gRoomBgLayout = 0;
-    gUnk_0300558C = gUnk_0873A318;
+    gCurTileDrifts = gTileDrifts;
     *gUnk_02005574 = 0;
     gUnk_02000020 = 0;
     gUnk_0200B078 = 0;
@@ -244,15 +244,15 @@ void sub_08023948(void)
             {
                 gPlayerHealth[i] = gMaxHealth;
                 gSavedPlayerAbilities[i] = 0;
-                gUnk_02007FA8[i] = 0xFFFF;
+                gSavedPlayerAbilityUses[i] = 0xFFFF;
                 AddPlayerLives(-1, i);
             }
             if ((s16)gSavedPlayerAbilities[i] != 0)
             {
                 gPlayerAbilities[i] = gSavedPlayerAbilities[i];
-                gUnk_0200AF18[i] = gUnk_02007FA8[i];
+                gPlayerAbilityUses[i] = gSavedPlayerAbilityUses[i];
                 gSavedPlayerAbilities[i] = 0;
-                gUnk_02007FA8[i] = 0xFFFF;
+                gSavedPlayerAbilityUses[i] = 0xFFFF;
             }
             gActivePlayerMask |= 1 << i;
             gActivePlayerCount++;
@@ -326,7 +326,7 @@ void sub_08023ca0(void)
     w = 0;
     sub_08027a6c();
     gRoomBgLayout = z;
-    gUnk_0300558C = gUnk_0873A318;
+    gCurTileDrifts = gTileDrifts;
     gUnk_02005574[0] = z;
     gUnk_02000020 = z;
     gUnk_0200B078 = z;
@@ -481,7 +481,7 @@ void sub_08023fd4(void)
     gHBlankScrollStarted = 0;
     gRoomUpdateFlags = 31;
     gRoomBgLayout = 0;
-    gUnk_0300558C = gUnk_0873A318;
+    gCurTileDrifts = gTileDrifts;
     *gUnk_02005574 = 0;
     gUnk_02007FB0 = 0;
     ResetBlockAnims();
@@ -506,15 +506,15 @@ void sub_08023fd4(void)
             {
                 gPlayerHealth[i] = gMaxHealth;
                 gSavedPlayerAbilities[i] = 0;
-                gUnk_02007FA8[i] = 0xFFFF;
+                gSavedPlayerAbilityUses[i] = 0xFFFF;
                 AddPlayerLives(-1, i);
             }
             if ((s16)gSavedPlayerAbilities[i] != 0)
             {
                 gPlayerAbilities[i] = gSavedPlayerAbilities[i];
-                gUnk_0200AF18[i] = gUnk_02007FA8[i];
+                gPlayerAbilityUses[i] = gSavedPlayerAbilityUses[i];
                 gSavedPlayerAbilities[i] = 0;
-                gUnk_02007FA8[i] = 0xFFFF;
+                gSavedPlayerAbilityUses[i] = 0xFFFF;
             }
             gActivePlayerMask |= 1 << i;
             gActivePlayerCount++;

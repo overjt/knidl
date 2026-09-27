@@ -51,7 +51,7 @@ extern u32 gUnk_02007BF0[8][8];
 extern s16 gPlayerLives[];
 extern u8 gUsedSubGameDoors[];
 extern u16 gRoomEntryY;
-extern u16 gUnk_0200AF18[];
+extern u16 gPlayerAbilityUses[];
 extern u8 gUnk_0200B04C;
 extern u8 gUnk_0200EC68[];
 extern u16 gUnk_0200EC70[];
@@ -113,7 +113,7 @@ void sub_080b72bc(void)
         gPlayerLives[i] = gInputRecordingPtr->unk16[i];
         gPlayerHealth[i] = gInputRecordingPtr->unk1E[i];
         gPlayerAbilities[i] = gInputRecordingPtr->unk26[i];
-        gUnk_0200AF18[i] = gInputRecordingPtr->unk2E[i];
+        gPlayerAbilityUses[i] = gInputRecordingPtr->unk2E[i];
     }
     j = Div(0x3B6A, gPlayerCount);
     for (i = 0; i < gPlayerCount; i++)

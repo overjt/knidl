@@ -1063,8 +1063,8 @@ gUnk_08732278:
 	.global	gUnk_0873229C
 gUnk_0873229C:
 	.incbin	"baserom.gba", 0x73229C, 0x24
-	.global	gUnk_087322C0
-gUnk_087322C0:
+	.global	gRoomDriftVelocities
+gRoomDriftVelocities:
 	.incbin	"baserom.gba", 0x7322C0, 0x42
 	.global	gUnk_08732302
 gUnk_08732302:
@@ -1702,8 +1702,8 @@ gUnk_087330F0:
 	.word	gUnk_08735118
 	.word	gUnk_08735118
 	.word	gUnk_08735118
-	.global	gUnk_087334F0
-gUnk_087334F0:
+	.global	gCollisionTileSlippery
+gCollisionTileSlippery:
 	.incbin	"baserom.gba", 0x7334F0, 0x100
 	.global	gUnk_087335F0
 gUnk_087335F0:
@@ -1720,8 +1720,8 @@ gUnk_087338F0:
 	.global	gUnk_087339F0
 gUnk_087339F0:
 	.incbin	"baserom.gba", 0x7339F0, 0x100
-	.global	gUnk_08733AF0
-gUnk_08733AF0:
+	.global	gCollisionTileDoor
+gCollisionTileDoor:
 	.incbin	"baserom.gba", 0x733AF0, 0x100
 	.global	gCollisionTilePushDown
 gCollisionTilePushDown:
@@ -2392,11 +2392,11 @@ gUnk_08739718:
 	.global	gUnk_08739818
 gUnk_08739818:
 	.incbin	"baserom.gba", 0x739818, 0xB00
-	.global	gUnk_0873A318
-gUnk_0873A318:
+	.global	gTileDrifts
+gTileDrifts:
 	.incbin	"baserom.gba", 0x73A318, 0x80
-	.global	gUnk_0873A398
-gUnk_0873A398:
+	.global	gTileDriftsDoubled
+gTileDriftsDoubled:
 	.incbin	"baserom.gba", 0x73A398, 0x80
 	.global	gUnk_0873A418
 gUnk_0873A418:

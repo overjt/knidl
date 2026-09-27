@@ -60,7 +60,7 @@ extern s16 gTerrainBoxRight;           /* box right offset */
 extern u16 gUnk_030055AC;           /* cell below: byte 2 */
 extern s16 gTerrainPrevBoxBottom;           /* box bottom (room-relative) */
 extern u8 gUnk_02005574[];
-extern u8 gUnk_03005568;
+extern u8 gTerrainBoundsClamp;
 
 s32 TerrainQueryPixel(u32 x, u32 y);
 s32 TerrainQueryPixelAndBelow(u32 x, u32 y);
@@ -90,7 +90,7 @@ void sub_0801e178(void)
     s32 dir;
     s32 r;
 
-    if (gUnk_02005574[0] == 0 && (gUnk_03005568 & 4)
+    if (gUnk_02005574[0] == 0 && (gTerrainBoundsClamp & 4)
         && TerrainQueryPixel(gTerrainProbeX, gTerrainProbeY + gTerrainBoxBottom) != 0
         && (gUnk_087336F0[gTerrainTile] == 0
             || ((gTerrainProbeResult.unkB & 1)

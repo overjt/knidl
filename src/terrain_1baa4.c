@@ -9,8 +9,8 @@
  * of src/terrain_1bcac.c's entry points, but the room-relative position comes
  * from PlayerState.prevPixelX/unk60 and the box offsets from PlayerState.prevTerrainBox,
  * both wall probes run (in the order the facing gTerrainFacing picks), and
- * the probes' 8.8 push gUnk_030055A8/gUnk_03005580 is written back to
- * PlayerState.driftVelX/unk58 on top of gUnk_030055F0/gUnk_03005618. */
+ * the probes' 8.8 push gTerrainDriftX/gTerrainDriftY is written back to
+ * PlayerState.driftVelX/unk58 on top of gRoomDriftVelX/gRoomDriftVelY. */
 
 /* The probe result block, filled by the terrain probes and mirrored into
    gTerrainResult by TerrainProbeEnd. */
@@ -60,15 +60,15 @@ extern struct Unk03005550 gTerrainResult;
 extern s16 gTerrainProbeX;           /* probe x */
 extern u8 gTerrainFacing;            /* Task.facing */
 extern s16 gTerrainProbeY;           /* probe y */
-extern s32 gUnk_03005580;
+extern s32 gTerrainDriftY;
 extern s16 gTerrainBoxBottom;           /* box bottom offset */
 extern s16 gTerrainPrevBoxRight;           /* box right (room-relative) */
 extern s32 gTerrainVelX;           /* Task.velX */
 extern s16 gTerrainPrevBoxTop;           /* box top (room-relative) */
-extern s32 gUnk_030055A8;
+extern s32 gTerrainDriftX;
 extern s16 gTerrainPrevBoxBottom;           /* box bottom (room-relative) */
-extern s32 gUnk_030055F0;
-extern s32 gUnk_03005618;
+extern s32 gRoomDriftVelX;
+extern s32 gRoomDriftVelY;
 
 void TerrainProbeBegin(const s8 *p);
 void TerrainProbeEnd(const s8 *p);
@@ -105,7 +105,7 @@ void sub_0801baa4(u32 p)
     gTerrainPrevBoxBottom = gTerrainPrevY + box[3];
     gTerrainVelX = gTerrainProbeX - gTerrainPrevX;
     gTerrainVelY = gTerrainProbeY - gTerrainPrevY;
-    gUnk_030055A8 = gUnk_03005580 = zero;
+    gTerrainDriftX = gTerrainDriftY = zero;
     if (gTerrainProbeResult.unkB & 0x80)
     {
         gTerrainProbeResult.unkB = 1;
@@ -145,16 +145,16 @@ void sub_0801baa4(u32 p)
     sub_08021130();
     sub_08021564();
     ps = gCurTask->player;
-    if (gUnk_030055A8 & 0x8000)
-        r = ((gUnk_030055A8 << 8) | 0xFF000000) + gUnk_030055F0;
+    if (gTerrainDriftX & 0x8000)
+        r = ((gTerrainDriftX << 8) | 0xFF000000) + gRoomDriftVelX;
     else
-        r = (gUnk_030055A8 << 8) + gUnk_030055F0;
+        r = (gTerrainDriftX << 8) + gRoomDriftVelX;
     ps->driftVelX = r;
     ps = gCurTask->player;
-    if (gUnk_03005580 & 0x8000)
-        r = ((gUnk_03005580 << 8) | 0xFF000000) + gUnk_03005618;
+    if (gTerrainDriftY & 0x8000)
+        r = ((gTerrainDriftY << 8) | 0xFF000000) + gRoomDriftVelY;
     else
-        r = (gUnk_03005580 << 8) + gUnk_03005618;
+        r = (gTerrainDriftY << 8) + gRoomDriftVelY;
     ps->driftVelY = r;
     gTerrainResult.unkA = gTerrainProbeResult.unkA;
     gTerrainResult.unk6 = gTerrainProbeResult.unkD & 15;

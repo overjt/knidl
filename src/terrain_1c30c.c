@@ -23,10 +23,10 @@ extern s8 *const gCollisionTileShapes[];
 /* ROM byte tables indexed by tile set. */
 extern u8 gCollisionTileSlope[];
 extern u8 gUnk_087337F0[];
-extern u8 gUnk_087334F0[];
+extern u8 gCollisionTileSlippery[];
 extern s8 gUnk_087336F0[];
 extern s8 gUnk_08732FF0[];
-extern s8 gUnk_08733AF0[];
+extern s8 gCollisionTileDoor[];
 extern s8 gCollisionTileShapeClass[];
 extern s8 gUnk_087338F0[];
 extern u8 gUnk_08732DF0[];
@@ -57,9 +57,9 @@ extern s16 gTerrainPrevBoxTop;
 extern u16 gUnk_030055AC;
 extern s16 gTerrainPrevBoxBottom;
 extern s16 gRoomMetatileCount;
-extern s32 gUnk_03005580;
+extern s32 gTerrainDriftY;
 extern s32 gTerrainVelX;
-extern s32 gUnk_030055A8;
+extern s32 gTerrainDriftX;
 extern s16 gRoomHeight;
 extern s16 gRoomWidth;
 
@@ -72,7 +72,7 @@ struct MapCell
 };
 extern struct MapCell *gRoomMap;
 
-extern s16 *gUnk_0300558C;
+extern s16 *gCurTileDrifts;
 
 struct Unk03005530
 {

@@ -7,7 +7,7 @@
  * The floor probe sub_0801bde0 runs for a box standing on the ground
  * (gTerrainProbeResult.unk6 != 0): a wall step in the moving direction first,
  * then the floor under the box (the step and slope attribute tables
- * gUnk_087338F0/gUnk_087337F0/gUnk_087334F0 and gUnk_08735018), the result
+ * gUnk_087338F0/gUnk_087337F0/gCollisionTileSlippery and gUnk_08735018), the result
  * flags gTerrainProbeResult.unkD/unk5/unkE, and the ledge counter
  * gTerrainProbeResult.unk10 when the probe finds no floor. */
 
@@ -35,7 +35,7 @@ struct Unk03005530
 
 extern u8 gCollisionTileSlope[];
 extern s8 gCollisionTileShapeClass[];
-extern u8 gUnk_087334F0[];
+extern u8 gCollisionTileSlippery[];
 extern s8 gUnk_087336F0[];
 extern u8 gUnk_087337F0[];
 extern s8 gUnk_087338F0[];
@@ -56,7 +56,7 @@ extern s32 gTerrainVelX;           /* Task.velX */
 extern s16 gTerrainBoxRight;           /* box right offset */
 extern u16 gUnk_030055AC;           /* cell below: byte 2 */
 extern u8 gUnk_02005574[];
-extern u8 gUnk_03005568;
+extern u8 gTerrainBoundsClamp;
 
 s32 TerrainQueryPixel(u32 x, u32 y);
 s32 TerrainQueryPixelAndBelow(u32 x, u32 y);
@@ -82,7 +82,7 @@ void sub_0801c930(void)
 
     gTerrainProbeResult.unk2++;
     gTerrainProbeResult.unkB = 0;
-    if (gUnk_02005574[0] == 0 && (gUnk_03005568 & 4)
+    if (gUnk_02005574[0] == 0 && (gTerrainBoundsClamp & 4)
         && TerrainQueryPixel(gTerrainProbeX, gTerrainProbeY + gTerrainBoxBottom) != 0)
     {
         if (gTerrainVelX == 0)
@@ -344,7 +344,7 @@ edges:
             gTerrainProbeResult.unk3++;
         }
     }
-    gTerrainProbeResult.unkE = gUnk_087334F0[tile] | gUnk_087334F0[tile2];
+    gTerrainProbeResult.unkE = gCollisionTileSlippery[tile] | gCollisionTileSlippery[tile2];
     gTerrainProbeResult.unkC = (gTerrainProbeY + gTerrainBoxBottom + 1) >> 4;
     return;
 

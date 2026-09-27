@@ -155,9 +155,9 @@ extern s16 gPlayerLives[];
 extern s16 gPlayerHealth[];
 extern s16 gMaxHealth;
 extern u16 gSavedPlayerAbilities[];
-extern u16 gUnk_02007FA8[];
+extern u16 gSavedPlayerAbilityUses[];
 extern u16 gPlayerAbilities[];
-extern u16 gUnk_0200AF18[];
+extern u16 gPlayerAbilityUses[];
 extern u8 gPlayerCameraMode[];
 extern vu16 gPlayerHeldKeys[];
 extern vu16 gPlayerPressedKeys[];
@@ -511,15 +511,15 @@ void sub_08022fa8(void)
             {
                 gPlayerHealth[i] = gMaxHealth;
                 gSavedPlayerAbilities[i] = 0;
-                gUnk_02007FA8[i] = 0xFFFF;
+                gSavedPlayerAbilityUses[i] = 0xFFFF;
                 AddPlayerLives(-1, i);
             }
             if ((s16)gSavedPlayerAbilities[i] != 0)
             {
                 gPlayerAbilities[i] = gSavedPlayerAbilities[i];
-                gUnk_0200AF18[i] = gUnk_02007FA8[i];
+                gPlayerAbilityUses[i] = gSavedPlayerAbilityUses[i];
                 gSavedPlayerAbilities[i] = 0;
-                gUnk_02007FA8[i] = 0xFFFF;
+                gSavedPlayerAbilityUses[i] = 0xFFFF;
             }
             gActivePlayerMask |= 1 << i;
             gActivePlayerCount++;

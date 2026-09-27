@@ -6,7 +6,7 @@
  *
  * The room probe of the non-player entry points (src/terrain_1bcac.c,
  * terrain_1c30c.c): src/terrain_21130.c's sub_08021130 without its tile-set
- * special case in front and its gUnk_08733AF0 copy behind. */
+ * special case in front and its gCollisionTileDoor copy behind. */
 
 /* The probe result block, filled by the terrain probes and mirrored into
    gTerrainResult by TerrainProbeEnd. */
@@ -42,7 +42,7 @@ s32 TerrainQueryPixel(u32 x, u32 y);
 s32 TerrainQueryPixelAndBelow(u32 x, u32 y);
 
 /* Room probe: sub_08021130 without its tile-set special case in front
-   and the gUnk_08733AF0 copy behind.  Classifies the cells at the probe
+   and the gCollisionTileDoor copy behind.  Classifies the cells at the probe
    point (bit 7 of the tile set) into the flags gTerrainProbeResult.unk7 and the
    cell boundary gTerrainProbeResult.unk8 (0xFFFF when there is none).  prev2 is
    u32 here: the u8 copy of sub_08021130 lets the 0x80 mask register win

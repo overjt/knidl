@@ -90,15 +90,15 @@ struct HitEntry
 extern u8 gUnk_03001F24;
 extern s8 gAttackHitDuration;
 extern s16 gViewRect[];         /* camera rectangle: left, right, top, bottom */
-extern u8 gUnk_03002354;
+extern u8 gHitTimer;
 extern u16 gAttackX;           /* actor x */
 extern u16 gAttackHealth;
 extern struct AttackBox *gAttackBox; /* the actor's attack box (s32 in actor_673ec.c) */
 extern u8 gHitKind;            /* hit result */
-extern u8 gUnk_03002390;
+extern u8 gAttackLastHitterSlot;
 extern u16 gHitHealthLeft;
 extern u8 gUnk_030023A4;
-extern u8 gUnk_030023DC;
+extern u8 gHitterSlot;
 extern u8 gAttackLastHitter;
 extern u8 gUnk_03002450;
 extern u8 gUnk_03002460;
@@ -150,7 +150,7 @@ u8 sub_0801a8c8(void)
     {
         gColliderSlot = e->unk00;
         /* gUnk_03002460 is compared signed (lsls/asrs) */
-        if (gColliderSlot == (s8)gUnk_03002390 && *(s8 *)&gUnk_03002460 == 0)
+        if (gColliderSlot == (s8)gAttackLastHitterSlot && *(s8 *)&gUnk_03002460 == 0)
         {
             e++;
             continue;
@@ -332,8 +332,8 @@ u8 sub_0801a8c8(void)
         gHitKind = 7;
         gUnk_030023A4 = 0;
         gHitHealthLeft = gAttackHealth;
-        gUnk_030023DC = gColliderSlot;
-        gUnk_03002354 = gAttackHitDuration;
+        gHitterSlot = gColliderSlot;
+        gHitTimer = gAttackHitDuration;
         if ((gAttackBox->unk06 & 7) == 2)
         {
             gUnk_03001F24 = gColliderPlayer;

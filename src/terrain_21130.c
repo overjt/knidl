@@ -7,8 +7,8 @@
  *
  * The room probe for the player: sub_08021130 is TerrainProbeWater (still in asm)
  * with a tile-set special case in front (tile sets 64..79 and 192..207 pick a
- * pair of signed offsets from the gUnk_0300558C table into gUnk_030055A8 /
- * gUnk_03005580) and the gUnk_08733AF0 attribute copied to unkA behind.
+ * pair of signed offsets from the gCurTileDrifts table into gTerrainDriftX /
+ * gTerrainDriftY) and the gCollisionTileDoor attribute copied to unkA behind.
  */
 
 
@@ -24,10 +24,10 @@ extern s8 *const gCollisionTileShapes[];
 /* ROM byte tables indexed by tile set. */
 extern u8 gCollisionTileSlope[];
 extern u8 gUnk_087337F0[];
-extern u8 gUnk_087334F0[];
+extern u8 gCollisionTileSlippery[];
 extern s8 gUnk_087336F0[];
 extern s8 gUnk_08732FF0[];
-extern s8 gUnk_08733AF0[];
+extern s8 gCollisionTileDoor[];
 extern s8 gCollisionTileShapeClass[];
 extern s8 gUnk_087338F0[];
 extern u8 gUnk_08732DF0[];
@@ -58,9 +58,9 @@ extern s16 gTerrainPrevBoxTop;
 extern u16 gUnk_030055AC;
 extern s16 gTerrainPrevBoxBottom;
 extern s16 gRoomMetatileCount;
-extern s32 gUnk_03005580;
+extern s32 gTerrainDriftY;
 extern s32 gTerrainVelX;
-extern s32 gUnk_030055A8;
+extern s32 gTerrainDriftX;
 extern s16 gRoomHeight;
 extern s16 gRoomWidth;
 
@@ -73,7 +73,7 @@ struct MapCell
 };
 extern struct MapCell *gRoomMap;
 
-extern s16 *gUnk_0300558C;
+extern s16 *gCurTileDrifts;
 
 struct Unk03005530
 {
@@ -143,16 +143,16 @@ void sub_08021130(void)
     t = tile - 64;
     if (t <= 15)
     {
-        gUnk_030055A8 = gUnk_0300558C[(tile - 48) * 2];
-        gUnk_03005580 = gUnk_0300558C[(gTerrainTile - 48) * 2 + 1];
+        gTerrainDriftX = gCurTileDrifts[(tile - 48) * 2];
+        gTerrainDriftY = gCurTileDrifts[(gTerrainTile - 48) * 2 + 1];
     }
     else
     {
         t = tile - 192;
         if (t <= 15)
         {
-            gUnk_030055A8 = gUnk_0300558C[(tile - 192) * 2];
-            gUnk_03005580 = gUnk_0300558C[(gTerrainTile - 192) * 2 + 1];
+            gTerrainDriftX = gCurTileDrifts[(tile - 192) * 2];
+            gTerrainDriftY = gCurTileDrifts[(gTerrainTile - 192) * 2 + 1];
         }
     }
     prev = gTerrainProbeResult.unk7;
@@ -212,6 +212,6 @@ void sub_08021130(void)
         }
     }
     gTerrainProbeResult.unkA = 0;
-    if (gUnk_08733AF0[tile] != 0)
+    if (gCollisionTileDoor[tile] != 0)
         gTerrainProbeResult.unkA = 1;
 }

@@ -92,7 +92,7 @@ extern u32 gRoomIndex[];
 extern u32 gUnk_030027A8[];
 extern vs16 gTaskSlotTypes[];
 extern u8 gTerrainResult[];
-extern u32 gUnk_03005568[];
+extern u32 gTerrainBoundsClamp[];
 extern s16 gRoomBounds[];
 extern u32 gScrollLock[];
 extern u32 gUnk_080A7358[];
@@ -2710,7 +2710,7 @@ void sub_080b460c(void)
     s32 w;
     s32 w2;
 
-    q0 = (u8 *)gUnk_03005568;
+    q0 = (u8 *)gTerrainBoundsClamp;
     w = *q0;
     if (1 & w)
         goto docall;
@@ -2721,7 +2721,7 @@ void sub_080b460c(void)
 docall:
     TaskToggleFacingAndReverseX();
 skip:
-    if (*(u8 *)gUnk_03005568 & 4)
+    if (*(u8 *)gTerrainBoundsClamp & 4)
         gCurTask->velY = 0;
 }
 
