@@ -408,8 +408,9 @@ SECTIONS
         build/src/hitbox_1a8c8.o(.text)
     } > ROM
 
-    .game_code_and_rodata_08018b84_08019eec_0801a3e4_0801a8c8 0x0801B24C : {
-        KEEP(*(.game_code_and_rodata_08018b84_08019eec_0801a3e4_0801a8c8)) KEEP(*(.game_code_and_rodata_08018b84_08019eec_0801a3e4_0801a8c8.tail))
+    /* hitbox_1b24c — decompiled to C (src/hitbox_1b24c.c, carved by tools/carve.py) */
+    .hitbox_1b24c 0x0801B24C : {
+        build/src/hitbox_1b24c.o(.text)
     } > ROM
 
     /* hitbox_1b7dc — decompiled to C (src/hitbox_1b7dc.c, carved by tools/carve.py) */
