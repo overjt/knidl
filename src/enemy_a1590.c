@@ -3959,24 +3959,22 @@ void sub_080a4808(void)
 void sub_080a4814(void)
 {
     struct Task *pt = &gUnk_03002790[gUnk_02007D00[0]];
-    register struct Task *t asm("r4") = gUnk_03002490;
+    struct Task *t = gUnk_03002490;
     struct Actor *myact = t->unk8C;
     struct Actor *pact = gUnk_03002790[gUnk_02007D00[0]].unk8C;
-    u32 *v;
 
     switch (pt->unk3C)
     {
     case 13:
-        v = gUnk_087541E0;
+        t->unk38 = gUnk_087541E0;
         break;
     case 12:
-        v = gUnk_087541B0;
+        t->unk38 = gUnk_087541B0;
         break;
     default:
-        v = gUnk_08754180;
+        t->unk38 = gUnk_08754180;
         break;
     }
-    t->unk38 = v;
     if (pt->unk3C > 15)
         gUnk_03002490->unk3C = 0xFFFF;
     gUnk_03002490->unk43 = pt->unk43;

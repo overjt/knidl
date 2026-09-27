@@ -12,14 +12,10 @@
  * gUnk_03000498[] (frames/seconds/minutes/hours, 59 rollovers, hour cap 998)
  * and finally calls the post-frame hook gUnk_03000014.
  *
- * Matching note: the clock's two `& mask` truncations are ONE HImode value.
- * A plain `u16 mask` local is promoted to SImode and loads as a single
- * `ldr rN,=0xFFFF`; the ROM instead has `ldr r5,=0xFFFF; adds r2,r5,#0` --
- * the agbcc HImode-move-of-a-large-constant shape (scratch register + copy
- * into the destination), which only appears when the variable really lives
- * in HImode.  `register u16 mask asm("r2")` reproduces it exactly (same
- * idiom as FadeOutBody in src/m4a_c1.c) and is also what forces r5 into the
- * prologue push, which in turn moves the case-3 `= 256` constant into r5.
+ * Matching note: the clock counters are pre-incremented in their tests
+ * (`if (++gUnk_03000498[1] > 59)`): the HImode increment's zero-extension
+ * is what gives the ROM's `ldr r5, =0xFFFF; adds r2, r5, #0` mask and the
+ * `ands r0, r2` truncations.
  */
 
 extern vs16 gUnk_03000B0C;
@@ -58,7 +54,6 @@ void sub_08000de4(void)
 {
     s32 i;
     u16 keys;
-    register u16 mask asm("r2");
     sub_08000934();
 
     switch (gUnk_03000B0C)
@@ -157,17 +152,13 @@ void sub_08000de4(void)
 
     if (gUnk_03000498[3] <= 998)
     {
-        gUnk_03000498[0]++;
-        mask = 0xFFFF;
-        if (gUnk_03000498[0] > 59)
+        if (++gUnk_03000498[0] > 59)
         {
             gUnk_03000498[0] = 0;
-            gUnk_03000498[1]++;
-            if ((gUnk_03000498[1] & mask) > 59)
+            if (++gUnk_03000498[1] > 59)
             {
                 gUnk_03000498[1] = 0;
-                gUnk_03000498[2]++;
-                if ((gUnk_03000498[2] & mask) > 59)
+                if (++gUnk_03000498[2] > 59)
                 {
                     gUnk_03000498[2] = 0;
                     gUnk_03000498[3]++;

@@ -83,8 +83,6 @@ void sub_080b72bc(void)
 {
     s32 i;
     s32 j;
-    s32 n;
-    s32 m;
 
     gUnk_03000FB4 = gUnk_0200EC6C->unk00;
     gUnk_03000FAC = gUnk_0200EC6C->unk04;
@@ -117,13 +115,9 @@ void sub_080b72bc(void)
         gUnk_02004B50[i] = gUnk_0200EC6C->unk26[i];
         gUnk_0200AF18[i] = gUnk_0200EC6C->unk2E[i];
     }
-    n = Div(0x3B6A, gUnk_030023AC);
-    asm("" ::: "r0", "r1", "r2");
+    j = Div(0x3B6A, gUnk_030023AC);
     for (i = 0; i < gUnk_030023AC; i++)
-    {
-        asm("" ::: "r1");
-        gUnk_0200EC70[i] = n - 4;
-    }
+        gUnk_0200EC70[i] = j - 4;
     if (gUnk_030023B0 == 0)
     {
         gUnk_03002360 = gUnk_0200EC6C->unk11C;

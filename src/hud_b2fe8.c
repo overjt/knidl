@@ -413,10 +413,10 @@ extern u32 gUnk_0874C24C[];
 extern u32 gUnk_0874C254[];
 extern u32 gUnk_0874C258[];
 extern u32 gUnk_0874C25C[];
-extern u32 gUnk_0874C260[];
-extern u32 gUnk_0874C2A6[];
-extern u32 gUnk_0874C2EC[];
-extern u32 gUnk_0874C332[];
+extern s8 gUnk_0874C260[];
+extern s8 gUnk_0874C2A6[];
+extern s8 gUnk_0874C2EC[];
+extern s8 gUnk_0874C332[];
 extern u32 gUnk_0874C44C[];
 extern u32 gUnk_0874C500[];
 extern u32 gUnk_0874C568[];
@@ -574,7 +574,7 @@ extern void sub_08063d4c(u32 i);
 extern void sub_08063d7c(void);
 extern s32 sub_08063dac(u32 i);
 extern void sub_08063e14(void);
-extern s32 sub_08063eb0(struct Rect *r, u32 i);
+extern s32 sub_08063eb0(struct PointPair *box, s32 i);
 extern void sub_08063f24(s32 i);
 extern void sub_08063fe0(void);
 extern void sub_08063ff4(void);
@@ -2142,73 +2142,30 @@ void sub_080b3a00(void)
 
 void sub_080b3a64(void)
 {
-    struct Task *t;
-    struct Task *t3;
-    register s8 *e asm("r1");
-    s32 w;
-    s32 neg;
-
-    e = (s8 *)gUnk_0874C260;
-    asm("" : "+r"(e));
-    t = gUnk_03002490;
-    w = 65 - *(s16 *)((u8 *)t + 108);
-    e = (s8 *)(w + (u32)e);
-    w = *e;
-    neg = -1;
-    if (w != neg)
-    {
-        asm("" ::: "memory");
-        sub_08001a94(t->unk42,
-                     gUnk_0874CE68[(s8)*(u8 *)e],
-                     t->unk3E, t->unk40,
-                     *(s16 *)((u8 *)t + 72) - gUnk_03002348 + (s8)*(u8 *)((u8 *)t + 117),
-                     (s16)(*(u16 *)((u8 *)t + 74) - (u16)gUnk_030023E4 + (s8)*(u8 *)((u8 *)t + 124)));
-    }
-    e = (s8 *)gUnk_0874C2A6;
-    asm("" : "+r"(e));
-    t = gUnk_03002490;
-    w = 65 - *(s16 *)((u8 *)t + 108);
-    e = (s8 *)(w + (u32)e);
-    w = *e;
-    if (w != neg)
-    {
-        asm("" ::: "memory");
-        sub_08001a94(t->unk42,
-                     gUnk_0874CE68[(s8)*(u8 *)e],
-                     t->unk3E, t->unk40,
-                     *(u16 *)((u8 *)t + 34) - gUnk_03002348 + (s8)*(u8 *)((u8 *)t + 122),
-                     (s16)(t->unk20 - (u16)gUnk_030023E4 + (s8)*(u8 *)((u8 *)t + 125)));
-    }
-    e = (s8 *)gUnk_0874C2EC;
-    asm("" : "+r"(e));
-    t3 = gUnk_03002490;
-    w = 65 - *(s16 *)((u8 *)t3 + 108);
-    e = (s8 *)(w + (u32)e);
-    w = *e;
-    if (w != neg)
-    {
-        asm("" ::: "memory");
-        sub_08001a94(t3->unk42,
-                     gUnk_0874CE68[(s8)*(u8 *)e],
-                     t3->unk3E, t3->unk40,
-                     *(s16 *)((u8 *)t3 + 120) - gUnk_03002348 + (s8)*(u8 *)((u8 *)t3 + 123),
-                     (s16)(*(u16 *)((u8 *)t3 + 132) - (u16)gUnk_030023E4 + (s8)*(u8 *)((u8 *)t3 + 130)));
-    }
-    e = (s8 *)gUnk_0874C332;
-    asm("" : "+r"(e));
-    t = gUnk_03002490;
-    w = 65 - *(s16 *)((u8 *)t + 108);
-    e = (s8 *)(w + (u32)e);
-    w = *e;
-    if (w != neg)
-    {
-        asm("" ::: "memory");
-        sub_08001a94(t->unk42,
-                     gUnk_0874CE68[(s8)*(u8 *)e],
-                     t->unk3E, t->unk40,
-                     t->unk18 - gUnk_03002348,
-                     (s16)(t->unk1C - (u16)gUnk_030023E4));
-    }
+    if (gUnk_0874C260[65 - (s16)gUnk_03002490->unk6C] != -1)
+        sub_08001a94(gUnk_03002490->unk42,
+                     gUnk_0874CE68[gUnk_0874C260[65 - (s16)gUnk_03002490->unk6C]],
+                     gUnk_03002490->unk3E, gUnk_03002490->unk40,
+                     gUnk_03002490->unk48 - gUnk_03002348 + gUnk_03002490->unk75,
+                     gUnk_03002490->unk4A - gUnk_030023E4 + gUnk_03002490->unk7C);
+    if (gUnk_0874C2A6[65 - (s16)gUnk_03002490->unk6C] != -1)
+        sub_08001a94(gUnk_03002490->unk42,
+                     gUnk_0874CE68[gUnk_0874C2A6[65 - (s16)gUnk_03002490->unk6C]],
+                     gUnk_03002490->unk3E, gUnk_03002490->unk40,
+                     ((u32)gUnk_03002490->unk20 >> 16) - gUnk_03002348 + gUnk_03002490->unk7A,
+                     gUnk_03002490->unk20 - gUnk_030023E4 + (s8)gUnk_03002490->unk7D);
+    if (gUnk_0874C2EC[65 - (s16)gUnk_03002490->unk6C] != -1)
+        sub_08001a94(gUnk_03002490->unk42,
+                     gUnk_0874CE68[gUnk_0874C2EC[65 - (s16)gUnk_03002490->unk6C]],
+                     gUnk_03002490->unk3E, gUnk_03002490->unk40,
+                     gUnk_03002490->unk78 - gUnk_03002348 + gUnk_03002490->unk7B,
+                     gUnk_03002490->unk84 - gUnk_030023E4 + (s8)gUnk_03002490->unk82);
+    if (gUnk_0874C332[65 - (s16)gUnk_03002490->unk6C] != -1)
+        sub_08001a94(gUnk_03002490->unk42,
+                     gUnk_0874CE68[gUnk_0874C332[65 - (s16)gUnk_03002490->unk6C]],
+                     gUnk_03002490->unk3E, gUnk_03002490->unk40,
+                     gUnk_03002490->unk18 - gUnk_03002348,
+                     gUnk_03002490->unk1C - gUnk_030023E4);
 }
 
 void sub_080b3c68(void)
@@ -2847,60 +2804,15 @@ void sub_080b44f0(void)
 
 s32 sub_080b4524(void)
 {
-    u32 buf[2];
-    register struct Task *t asm("ip");
-    register u8 *h5 asm("r5");
-    register u8 *h6 asm("r6");
-    register s32 m asm("r3");
-    register u32 kh asm("r4");
-    register u32 k asm("r2");
-    register s32 w asm("r0");
-    register s32 w1 asm("r1");
-    register s32 wv asm("r1");
-    register s32 wv2 asm("r2");
-    register s32 wm asm("r0");
-    s32 w0;
-    register s32 w5 asm("r5");
-    register s32 w6 asm("r6");
+    struct PointPair box;
+    struct Task *t = gUnk_03002490;
     s32 r;
 
-    t = gUnk_03002490;
-    h5 = (u8 *)t + 72;
-    wm = -640;
-    asm("" : "+r"(wm));
-    m = wm;
-    wv = *(u16 *)h5;
-    w = (u16)(m + wv);
-    kh = 0xFFFF0000;
-    w1 = buf[0];
-    w1 &= kh;
-    w1 |= w;
-    buf[0] = w1;
-    h6 = (u8 *)t + 74;
-    wv2 = *(u16 *)h6;
-    m += wv2;
-    m <<= 16;
-    k = 0xFFFF;
-    w0 = k;
-    w0 &= w1;
-    w0 |= m;
-    buf[0] = w0;
-    wm = 160 << 2;
-    asm("" : "+r"(wm));
-    m = wm;
-    w5 = *(u16 *)h5;
-    w = (u16)(m + w5);
-    w1 = buf[1];
-    w1 &= kh;
-    w1 |= w;
-    buf[1] = w1;
-    w6 = *(u16 *)h6;
-    m += w6;
-    m <<= 16;
-    k &= w1;
-    k |= m;
-    buf[1] = k;
-    if (sub_08063eb0((struct Rect *)buf, *(s16 *)((u8 *)t + 68)) != 0)
+    box.x0 = t->unk48 - 640;
+    box.y0 = t->unk4A - 640;
+    box.x1 = t->unk48 + 640;
+    box.y1 = t->unk4A + 640;
+    if (sub_08063eb0(&box, t->unk44) != 0)
         r = 0;
     else
     {
