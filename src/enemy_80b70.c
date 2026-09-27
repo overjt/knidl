@@ -110,8 +110,8 @@ extern void sub_0806a0f0(s32 a);
 extern void sub_08065640(void);
 extern void ActorDrawWorldInViewOrDestroy(void);
 extern void ActorMove(void);
-extern void sub_080804a4(void);
-extern void sub_08080870(void);
+extern void HotHeadWalkEnterState(void);
+extern void HotHeadStandEnterState(void);
 
 /* Defined below */
 void sub_08080d58(void);
@@ -130,13 +130,13 @@ s32 sub_08080b70(void)
     {
     case 0:
         ActorSetState(2);
-        TaskSetEntry(sub_080804a4, gCurTaskIdx);
+        TaskSetEntry(HotHeadWalkEnterState, gCurTaskIdx);
         break;
     case 1:
         break;
     case 2:
         ActorSetState(2);
-        TaskSetEntry(sub_08080870, gCurTaskIdx);
+        TaskSetEntry(HotHeadStandEnterState, gCurTaskIdx);
         break;
     }
     return 1;
@@ -149,13 +149,13 @@ s32 sub_08080bcc(void)
     {
     case 0:
         ActorSetState(0);
-        TaskSetEntry(sub_080804a4, gCurTaskIdx);
+        TaskSetEntry(HotHeadWalkEnterState, gCurTaskIdx);
         break;
     case 1:
         break;
     case 2:
         ActorSetState(0);
-        TaskSetEntry(sub_08080870, gCurTaskIdx);
+        TaskSetEntry(HotHeadStandEnterState, gCurTaskIdx);
         break;
     }
     return 1;

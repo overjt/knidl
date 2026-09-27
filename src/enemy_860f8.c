@@ -37,31 +37,31 @@ extern struct AnimCmd gUnk_08742598[];
 extern struct AnimCmd gUnk_087425A4[];
 extern struct AnimCmd gUnk_08742634[];
 extern u32 gUnk_0873F500[];
-extern u32 gUnk_08742080[];
-extern u32 gUnk_08742084[];
+extern u32 gBrontoBurtWaveStates[];
+extern u32 gBrontoBurtWaveStateUpdates[];
 extern u32 gUnk_087420A0[];
 extern u32 gUnk_087420A4[];
 extern u32 gUnk_087420BC[];
 extern u32 gUnk_087420E8[];
-extern u32 gUnk_087420F0[];
-extern u32 gUnk_08742100[];
-extern u32 gUnk_08742104[];
-extern u32 gUnk_08742108[];
-extern u32 gUnk_0874212C[];
-extern u32 gUnk_08742138[];
+extern u32 gBrontoBurtDiagonalStates[];
+extern u32 gBrontoBurtDiagonalStateUpdates[];
+extern u32 gBrontoBurtChaseStates[];
+extern u32 gBrontoBurtChaseStateUpdates[];
+extern u32 gBrontoBurtTakeOffStates[];
+extern u32 gBrontoBurtTakeOffStateUpdates[];
 extern u32 gTwizzyVariants[];
-extern u32 gUnk_087425B0[];
-extern u32 gUnk_087425B4[];
+extern u32 gTwizzyWaveStates[];
+extern u32 gTwizzyWaveStateUpdates[];
 extern u32 gUnk_087425D0[];
 extern u32 gUnk_087425D4[];
 extern u32 gUnk_087425EC[];
 extern u32 gUnk_087425F0[];
-extern u32 gUnk_087425F8[];
-extern u32 gUnk_087425FC[];
-extern u32 gUnk_0874260C[];
-extern u32 gUnk_08742610[];
-extern u32 gUnk_0874263C[];
-extern u32 gUnk_08742648[];
+extern u32 gTwizzyDiagonalStates[];
+extern u32 gTwizzyDiagonalStateUpdates[];
+extern u32 gTwizzyChaseStates[];
+extern u32 gTwizzyChaseStateUpdates[];
+extern u32 gTwizzyTakeOffStates[];
+extern u32 gTwizzyTakeOffStateUpdates[];
 extern u32 gUnk_08742654[];
 extern u32 gUnk_08742660[];
 extern u32 gUnk_0874266C[];
@@ -99,40 +99,40 @@ extern void sub_080860d8(void);
 void sub_08088024(void);
 
 /* Defined below */
-void sub_0808614c(void);
+void BrontoBurtWaveUpdate(void);
 void sub_08086320(void);
 void sub_0808659c(void);
-void sub_080868dc(void);
-void sub_08086a44(void);
-void sub_08086c14(void);
+void BrontoBurtDiagonalUpdate(void);
+void BrontoBurtChaseUpdate(void);
+void BrontoBurtTakeOffUpdate(void);
 void sub_08086f40(void);
 s32 sub_08086f54(void);
-void sub_08087118(void);
+void TwizzyWaveUpdate(void);
 void sub_080872bc(void);
 void sub_08087508(void);
-void sub_08087848(void);
-void sub_080879b0(void);
-void sub_08087b44(void);
+void TwizzyDiagonalUpdate(void);
+void TwizzyChaseUpdate(void);
+void TwizzyTakeOffUpdate(void);
 void sub_08087e84(void);
 
-void sub_080860f8(void)
+void BrontoBurtWaveInit(void)
 {
-    gCurTask->updateCallback = (u32)sub_0808614c;
+    gCurTask->updateCallback = (u32)BrontoBurtWaveUpdate;
     ActorSetState(0);
-    CallTableEntry(gCurTask->state, 1, gUnk_08742080);
+    CallTableEntry(gCurTask->state, 1, gBrontoBurtWaveStates);
 }
 
 void sub_08086128(void)
 {
     struct Task *t = gCurTask;
 
-    t->updateCallback = (u32)sub_0808614c;
-    CallTableEntry(t->state, 1, gUnk_08742080);
+    t->updateCallback = (u32)BrontoBurtWaveUpdate;
+    CallTableEntry(t->state, 1, gBrontoBurtWaveStates);
 }
 
-void sub_0808614c(void)
+void BrontoBurtWaveUpdate(void)
 {
-    CallTableEntry(gCurTask->updateState, 1, gUnk_08742084);
+    CallTableEntry(gCurTask->updateState, 1, gBrontoBurtWaveStateUpdates);
     ActorCheckHits();
     ActorReactToHit();
 }
@@ -440,11 +440,11 @@ void sub_080867b8(void)
     gCurTask->unk34 = 1;
 }
 
-void sub_08086824(void)
+void BrontoBurtDiagonalInit(void)
 {
     s8 k;
 
-    gCurTask->updateCallback = (u32)sub_080868dc;
+    gCurTask->updateCallback = (u32)BrontoBurtDiagonalUpdate;
     k = TaskGetCompassDirToNearestPlayer();
     if (k > 3)
         k -= 4;
@@ -458,21 +458,21 @@ void sub_08086824(void)
     gCurTask->velY = gUnk_030023D4;
     gCurTask->unk34 = 0;
     ActorSetState(0);
-    CallTableEntry(gCurTask->state, 1, gUnk_087420F0);
+    CallTableEntry(gCurTask->state, 1, gBrontoBurtDiagonalStates);
 }
 
 void sub_080868b8(void)
 {
-    gCurTask->updateCallback = (u32)sub_080868dc;
-    CallTableEntry(gCurTask->state, 1, gUnk_087420F0);
+    gCurTask->updateCallback = (u32)BrontoBurtDiagonalUpdate;
+    CallTableEntry(gCurTask->state, 1, gBrontoBurtDiagonalStates);
 }
 
-void sub_080868dc(void)
+void BrontoBurtDiagonalUpdate(void)
 {
     s32 v;
 
     if ((u8)ActorCollideTerrain() == 0)
-        CallTableEntry(gCurTask->updateState, 1, gUnk_08742100);
+        CallTableEntry(gCurTask->updateState, 1, gBrontoBurtDiagonalStateUpdates);
     if (sub_08086f54() != 0)
     {
         AngleToVector((s16)gCurTask->unk2C,
@@ -514,22 +514,22 @@ void sub_080869b8(void)
     }
 }
 
-void sub_080869f0(void)
+void BrontoBurtChaseInit(void)
 {
-    gCurTask->updateCallback = (u32)sub_08086a44;
+    gCurTask->updateCallback = (u32)BrontoBurtChaseUpdate;
     ActorSetState(0);
-    CallTableEntry(gCurTask->state, 1, gUnk_08742104);
+    CallTableEntry(gCurTask->state, 1, gBrontoBurtChaseStates);
 }
 
 void sub_08086a20(void)
 {
-    gCurTask->updateCallback = (u32)sub_08086a44;
-    CallTableEntry(gCurTask->state, 1, gUnk_08742104);
+    gCurTask->updateCallback = (u32)BrontoBurtChaseUpdate;
+    CallTableEntry(gCurTask->state, 1, gBrontoBurtChaseStates);
 }
 
-void sub_08086a44(void)
+void BrontoBurtChaseUpdate(void)
 {
-    CallTableEntry(gCurTask->updateState, 1, gUnk_08742108);
+    CallTableEntry(gCurTask->updateState, 1, gBrontoBurtChaseStateUpdates);
     ActorCheckHits();
     ActorReactToHit();
 }
@@ -604,29 +604,29 @@ void sub_08086b68(void)
     }
 }
 
-void sub_08086bc0(void)
+void BrontoBurtTakeOffInit(void)
 {
-    gCurTask->updateCallback = (u32)sub_08086c14;
+    gCurTask->updateCallback = (u32)BrontoBurtTakeOffUpdate;
     ActorSetState(0);
-    CallTableEntry(gCurTask->state, 3, gUnk_0874212C);
+    CallTableEntry(gCurTask->state, 3, gBrontoBurtTakeOffStates);
 }
 
-void sub_08086bf0(void)
+void BrontoBurtTakeOffEnterState(void)
 {
-    gCurTask->updateCallback = (u32)sub_08086c14;
-    CallTableEntry(gCurTask->state, 3, gUnk_0874212C);
+    gCurTask->updateCallback = (u32)BrontoBurtTakeOffUpdate;
+    CallTableEntry(gCurTask->state, 3, gBrontoBurtTakeOffStates);
 }
 
-void sub_08086c14(void)
+void BrontoBurtTakeOffUpdate(void)
 {
     if (gCurTask->unk34 != 0)
     {
         if ((u8)ActorCollideTerrain() == 0)
-            CallTableEntry(gCurTask->updateState, 3, gUnk_08742138);
+            CallTableEntry(gCurTask->updateState, 3, gBrontoBurtTakeOffStateUpdates);
     }
     else
     {
-        CallTableEntry(gCurTask->updateState, 3, gUnk_08742138);
+        CallTableEntry(gCurTask->updateState, 3, gBrontoBurtTakeOffStateUpdates);
     }
     ActorCheckHits();
     ActorReactToHit();
@@ -657,7 +657,7 @@ void sub_08086ccc(void)
 {
     if (gCurTask->state != 0)
     {
-        TaskSetEntry(sub_08086bf0, gCurTaskIdx);
+        TaskSetEntry(BrontoBurtTakeOffEnterState, gCurTaskIdx);
         return;
     }
     if (gCurTask->unk8C->animScript != 0)
@@ -692,7 +692,7 @@ void sub_08086da4(void)
 {
     if (gCurTask->state != 1)
     {
-        TaskSetEntry(sub_08086bf0, gCurTaskIdx);
+        TaskSetEntry(BrontoBurtTakeOffEnterState, gCurTaskIdx);
         return;
     }
     if (gCurTask->unk8C->animScript != 0)
@@ -836,22 +836,22 @@ void sub_080870a4(void)
     CallTableEntry(gCurTask->variant, 10, gTwizzyVariants);
 }
 
-void sub_080870c4(void)
+void TwizzyWaveInit(void)
 {
-    gCurTask->updateCallback = (u32)sub_08087118;
+    gCurTask->updateCallback = (u32)TwizzyWaveUpdate;
     ActorSetState(0);
-    CallTableEntry(gCurTask->state, 1, gUnk_087425B0);
+    CallTableEntry(gCurTask->state, 1, gTwizzyWaveStates);
 }
 
 void sub_080870f4(void)
 {
-    gCurTask->updateCallback = (u32)sub_08087118;
-    CallTableEntry(gCurTask->state, 1, gUnk_087425B0);
+    gCurTask->updateCallback = (u32)TwizzyWaveUpdate;
+    CallTableEntry(gCurTask->state, 1, gTwizzyWaveStates);
 }
 
-void sub_08087118(void)
+void TwizzyWaveUpdate(void)
 {
-    CallTableEntry(gCurTask->updateState, 1, gUnk_087425B4);
+    CallTableEntry(gCurTask->updateState, 1, gTwizzyWaveStateUpdates);
     ActorCheckHits();
     ActorReactToHit();
 }
@@ -1134,11 +1134,11 @@ void sub_08087724(void)
     gCurTask->unk34 = 1;
 }
 
-void sub_08087790(void)
+void TwizzyDiagonalInit(void)
 {
     s8 k;
 
-    gCurTask->updateCallback = (u32)sub_08087848;
+    gCurTask->updateCallback = (u32)TwizzyDiagonalUpdate;
     k = TaskGetCompassDirToNearestPlayer() - 1;
     if (k > 3)
         k -= 4;
@@ -1152,23 +1152,23 @@ void sub_08087790(void)
     gCurTask->velY = gUnk_030023D4;
     gCurTask->unk34 = 0;
     ActorSetState(0);
-    CallTableEntry(gCurTask->state, 1, gUnk_087425F8);
+    CallTableEntry(gCurTask->state, 1, gTwizzyDiagonalStates);
 }
 
 void sub_08087824(void)
 {
     struct Task *t = gCurTask;
 
-    t->updateCallback = (u32)sub_08087848;
-    CallTableEntry(t->state, 1, gUnk_087425F8);
+    t->updateCallback = (u32)TwizzyDiagonalUpdate;
+    CallTableEntry(t->state, 1, gTwizzyDiagonalStates);
 }
 
-void sub_08087848(void)
+void TwizzyDiagonalUpdate(void)
 {
     s32 v;
 
     if ((u8)ActorCollideTerrain() == 0)
-        CallTableEntry(gCurTask->updateState, 1, gUnk_087425FC);
+        CallTableEntry(gCurTask->updateState, 1, gTwizzyDiagonalStateUpdates);
     if (sub_08086f54() != 0)
     {
         AngleToVector((s16)gCurTask->unk2C,
@@ -1210,24 +1210,24 @@ void sub_08087924(void)
     }
 }
 
-void sub_0808795c(void)
+void TwizzyChaseInit(void)
 {
-    gCurTask->updateCallback = (u32)sub_080879b0;
+    gCurTask->updateCallback = (u32)TwizzyChaseUpdate;
     ActorSetState(0);
-    CallTableEntry(gCurTask->state, 1, gUnk_0874260C);
+    CallTableEntry(gCurTask->state, 1, gTwizzyChaseStates);
 }
 
 void sub_0808798c(void)
 {
     struct Task *t = gCurTask;
 
-    t->updateCallback = (u32)sub_080879b0;
-    CallTableEntry(t->state, 1, gUnk_0874260C);
+    t->updateCallback = (u32)TwizzyChaseUpdate;
+    CallTableEntry(t->state, 1, gTwizzyChaseStates);
 }
 
-void sub_080879b0(void)
+void TwizzyChaseUpdate(void)
 {
-    CallTableEntry(gCurTask->updateState, 1, gUnk_08742610);
+    CallTableEntry(gCurTask->updateState, 1, gTwizzyChaseStateUpdates);
     ActorCheckHits();
     ActorReactToHit();
 }
@@ -1290,29 +1290,29 @@ void sub_08087a98(void)
     }
 }
 
-void sub_08087af0(void)
+void TwizzyTakeOffInit(void)
 {
-    gCurTask->updateCallback = (u32)sub_08087b44;
+    gCurTask->updateCallback = (u32)TwizzyTakeOffUpdate;
     ActorSetState(0);
-    CallTableEntry(gCurTask->state, 3, gUnk_0874263C);
+    CallTableEntry(gCurTask->state, 3, gTwizzyTakeOffStates);
 }
 
-void sub_08087b20(void)
+void TwizzyTakeOffEnterState(void)
 {
-    gCurTask->updateCallback = (u32)sub_08087b44;
-    CallTableEntry(gCurTask->state, 3, gUnk_0874263C);
+    gCurTask->updateCallback = (u32)TwizzyTakeOffUpdate;
+    CallTableEntry(gCurTask->state, 3, gTwizzyTakeOffStates);
 }
 
-void sub_08087b44(void)
+void TwizzyTakeOffUpdate(void)
 {
     if (gCurTask->unk34 != 0)
     {
         if ((u8)ActorCollideTerrain() == 0)
-            CallTableEntry(gCurTask->updateState, 3, gUnk_08742648);
+            CallTableEntry(gCurTask->updateState, 3, gTwizzyTakeOffStateUpdates);
     }
     else
     {
-        CallTableEntry(gCurTask->updateState, 3, gUnk_08742648);
+        CallTableEntry(gCurTask->updateState, 3, gTwizzyTakeOffStateUpdates);
     }
     ActorCheckHits();
     ActorReactToHit();
@@ -1343,7 +1343,7 @@ void sub_08087bfc(void)
 {
     if (gCurTask->state != 0)
     {
-        TaskSetEntry(sub_08087b20, gCurTaskIdx);
+        TaskSetEntry(TwizzyTakeOffEnterState, gCurTaskIdx);
         return;
     }
     if (gCurTask->unk8C->animScript != 0)
@@ -1378,7 +1378,7 @@ void sub_08087cd4(void)
 {
     if (gCurTask->state != 1)
     {
-        TaskSetEntry(sub_08087b20, gCurTaskIdx);
+        TaskSetEntry(TwizzyTakeOffEnterState, gCurTaskIdx);
         return;
     }
     if (gCurTask->unk8C->animScript != 0)

@@ -109,11 +109,11 @@ extern void sub_08077830(void);
 extern void sub_08077980(void);
 extern void sub_08077a48(void);
 extern void CannonFuseEnterState(void);
-extern void sub_08078c64(void);
-extern void sub_08078d6c(void);
-extern void sub_08078e80(void);
-extern void sub_08079178(void);
-extern void sub_0807938c(void);
+extern void WaddleDeeWalkEnterState(void);
+extern void WaddleDeePaceEnterState(void);
+extern void WaddleDeeJumpEnterState(void);
+extern void ParasolWaddleDeeWalkEnterState(void);
+extern void ParasolWaddleDeeStandEnterState(void);
 
 /* defined below */
 void BigSwitchEnterState(void);
@@ -880,27 +880,27 @@ s32 sub_080789ac(void)
     {
     case 0:
         ActorSetState(1);
-        TaskSetEntry(sub_08078c64, gCurTaskIdx);
+        TaskSetEntry(WaddleDeeWalkEnterState, gCurTaskIdx);
         r = 1;
         break;
     case 1:
         ActorSetState(1);
-        TaskSetEntry(sub_08078d6c, gCurTaskIdx);
+        TaskSetEntry(WaddleDeePaceEnterState, gCurTaskIdx);
         r = 1;
         break;
     case 2:
         ActorSetState(2);
-        TaskSetEntry(sub_08078e80, gCurTaskIdx);
+        TaskSetEntry(WaddleDeeJumpEnterState, gCurTaskIdx);
         r = 1;
         break;
     case 3:
         ActorSetState(1);
-        TaskSetEntry(sub_08079178, gCurTaskIdx);
+        TaskSetEntry(ParasolWaddleDeeWalkEnterState, gCurTaskIdx);
         r = 1;
         break;
     case 5:
         ActorSetState(1);
-        TaskSetEntry(sub_0807938c, gCurTaskIdx);
+        TaskSetEntry(ParasolWaddleDeeStandEnterState, gCurTaskIdx);
         r = 1;
         break;
     }
@@ -915,12 +915,12 @@ s32 sub_08078a48(void)
     {
     case 0:
         ActorSetState(0);
-        TaskSetEntry(sub_08078c64, gCurTaskIdx);
+        TaskSetEntry(WaddleDeeWalkEnterState, gCurTaskIdx);
         r = 1;
         break;
     case 1:
         ActorSetState(0);
-        TaskSetEntry(sub_08078d6c, gCurTaskIdx);
+        TaskSetEntry(WaddleDeePaceEnterState, gCurTaskIdx);
         r = 1;
         break;
     case 2:
@@ -932,18 +932,18 @@ s32 sub_08078a48(void)
         }
         gCurTask->unk34 = ActorStartAnim(gUnk_087406A0);
         ActorSetState(0);
-        TaskSetEntry(sub_08078e80, gCurTaskIdx);
+        TaskSetEntry(WaddleDeeJumpEnterState, gCurTaskIdx);
         r = 1;
         break;
     case 3:
         sub_08066c3c(gUnk_08740BD4);
         ActorSetState(0);
-        TaskSetEntry(sub_08079178, gCurTaskIdx);
+        TaskSetEntry(ParasolWaddleDeeWalkEnterState, gCurTaskIdx);
         r = 1;
         break;
     case 5:
         ActorSetState(0);
-        TaskSetEntry(sub_0807938c, gCurTaskIdx);
+        TaskSetEntry(ParasolWaddleDeeStandEnterState, gCurTaskIdx);
         r = 1;
         break;
     }

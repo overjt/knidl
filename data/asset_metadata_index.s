@@ -4325,32 +4325,32 @@ gUnk_08740620:
 	.incbin	"baserom.gba", 0x740620, 0x10
 	.global	gWaddleDeeVariants
 gWaddleDeeVariants:
-	.word	sub_08078be0+1
-	.word	sub_08078ce8+1
-	.word	sub_08078e3c+1
-	.word	sub_080790ec+1
+	.word	WaddleDeeWalkInit+1
+	.word	WaddleDeePaceInit+1
+	.word	WaddleDeeJumpInit+1
+	.word	ParasolWaddleDeeWalkInit+1
 	.word	sub_08079238+1
-	.word	sub_080792f8+1
+	.word	ParasolWaddleDeeStandInit+1
 	.global	gUnk_08740648
 gUnk_08740648:
 	.incbin	"baserom.gba", 0x740648, 0x10
-	.global	gUnk_08740658
-gUnk_08740658:
+	.global	gWaddleDeeWalkStates
+gWaddleDeeWalkStates:
 	.word	sub_08078c80+1
 	.word	sub_08078cbc+1
-	.global	gUnk_08740660
-gUnk_08740660:
+	.global	gWaddleDeeWalkStateUpdates
+gWaddleDeeWalkStateUpdates:
 	.word	sub_08078cb8+1
 	.word	sub_08078ce4+1
 	.global	gUnk_08740668
 gUnk_08740668:
 	.incbin	"baserom.gba", 0x740668, 0x8
-	.global	gUnk_08740670
-gUnk_08740670:
+	.global	gWaddleDeePaceStates
+gWaddleDeePaceStates:
 	.word	sub_08078d88+1
 	.word	sub_08078e10+1
-	.global	gUnk_08740678
-gUnk_08740678:
+	.global	gWaddleDeePaceStateUpdates
+gWaddleDeePaceStateUpdates:
 	.word	sub_08078dd4+1
 	.word	sub_08078e38+1
 	.global	gUnk_08740680
@@ -4362,22 +4362,22 @@ gUnk_08740690:
 	.global	gUnk_087406A0
 gUnk_087406A0:
 	.incbin	"baserom.gba", 0x7406A0, 0x24
-	.global	gUnk_087406C4
-gUnk_087406C4:
+	.global	gWaddleDeeJumpStates
+gWaddleDeeJumpStates:
 	.word	sub_08078eec+1
 	.word	sub_08078f8c+1
 	.word	sub_080790c0+1
-	.global	gUnk_087406D0
-gUnk_087406D0:
+	.global	gWaddleDeeJumpStateUpdates
+gWaddleDeeJumpStateUpdates:
 	.word	sub_08078f24+1
 	.word	sub_0807906c+1
 	.word	sub_080790e8+1
-	.global	gUnk_087406DC
-gUnk_087406DC:
+	.global	gParasolWaddleDeeWalkStates
+gParasolWaddleDeeWalkStates:
 	.word	sub_08079194+1
 	.word	sub_080791c0+1
-	.global	gUnk_087406E4
-gUnk_087406E4:
+	.global	gParasolWaddleDeeWalkStateUpdates
+gParasolWaddleDeeWalkStateUpdates:
 	.word	sub_080791bc+1
 	.word	sub_0807921c+1
 	.global	gUnk_087406EC
@@ -4389,12 +4389,12 @@ gUnk_08740700:
 	.global	gUnk_08740704
 gUnk_08740704:
 	.word	sub_080792f4+1
-	.global	gUnk_08740708
-gUnk_08740708:
+	.global	gParasolWaddleDeeStandStates
+gParasolWaddleDeeStandStates:
 	.word	sub_080793a8+1
 	.word	sub_080793d0+1
-	.global	gUnk_08740710
-gUnk_08740710:
+	.global	gParasolWaddleDeeStandStateUpdates
+gParasolWaddleDeeStandStateUpdates:
 	.word	sub_080793c4+1
 	.word	sub_08079424+1
 	.global	gPengyVariants
@@ -4989,33 +4989,33 @@ gUnk_087412A8:
 	.incbin	"baserom.gba", 0x7412A8, 0x14
 	.global	gGordoVariants
 gGordoVariants:
-	.word	sub_0807ea30+1
-	.word	sub_0807eaf0+1
-	.word	sub_0807ebe0+1
-	.word	sub_0807eccc+1
-	.global	gUnk_087412CC
-gUnk_087412CC:
+	.word	GordoBobInit+1
+	.word	GordoBounceVerticalInit+1
+	.word	GordoBounceHorizontalInit+1
+	.word	GordoSweepInit+1
+	.global	gGordoBobStates
+gGordoBobStates:
 	.word	sub_0807ea84+1
-	.global	gUnk_087412D0
-gUnk_087412D0:
+	.global	gGordoBobStateUpdates
+gGordoBobStateUpdates:
 	.word	sub_0807ead4+1
-	.global	gUnk_087412D4
-gUnk_087412D4:
+	.global	gGordoBounceVerticalStates
+gGordoBounceVerticalStates:
 	.word	sub_0807eb60+1
-	.global	gUnk_087412D8
-gUnk_087412D8:
+	.global	gGordoBounceVerticalStateUpdates
+gGordoBounceVerticalStateUpdates:
 	.word	sub_0807ebc4+1
-	.global	gUnk_087412DC
-gUnk_087412DC:
+	.global	gGordoBounceHorizontalStates
+gGordoBounceHorizontalStates:
 	.word	sub_0807ec4c+1
-	.global	gUnk_087412E0
-gUnk_087412E0:
+	.global	gGordoBounceHorizontalStateUpdates
+gGordoBounceHorizontalStateUpdates:
 	.word	sub_0807ecb0+1
-	.global	gUnk_087412E4
-gUnk_087412E4:
+	.global	gGordoSweepStates
+gGordoSweepStates:
 	.word	sub_0807ed20+1
-	.global	gUnk_087412E8
-gUnk_087412E8:
+	.global	gGordoSweepStateUpdates
+gGordoSweepStateUpdates:
 	.word	sub_0807ed98+1
 	.global	gUnk_087412EC
 gUnk_087412EC:
@@ -5158,16 +5158,16 @@ gUnk_087414B0:
 	.incbin	"baserom.gba", 0x7414B0, 0x4
 	.global	gHotHeadVariants
 gHotHeadVariants:
-	.word	sub_0808044c+1
+	.word	HotHeadWalkInit+1
 	.word	sub_0808076c+1
-	.word	sub_08080818+1
-	.global	gUnk_087414C0
-gUnk_087414C0:
+	.word	HotHeadStandInit+1
+	.global	gHotHeadWalkStates
+gHotHeadWalkStates:
 	.word	sub_080804f0+1
 	.word	sub_08080570+1
 	.word	sub_08080740+1
-	.global	gUnk_087414CC
-gUnk_087414CC:
+	.global	gHotHeadWalkStateUpdates
+gHotHeadWalkStateUpdates:
 	.word	sub_0808051c+1
 	.word	sub_080806e8+1
 	.word	sub_08080768+1
@@ -5177,13 +5177,13 @@ gUnk_087414D8:
 	.global	gUnk_087414DC
 gUnk_087414DC:
 	.word	sub_08080814+1
-	.global	gUnk_087414E0
-gUnk_087414E0:
+	.global	gHotHeadStandStates
+gHotHeadStandStates:
 	.word	sub_080808bc+1
 	.word	sub_08080930+1
 	.word	sub_08080b00+1
-	.global	gUnk_087414EC
-gUnk_087414EC:
+	.global	gHotHeadStandStateUpdates
+gHotHeadStandStateUpdates:
 	.word	sub_080808dc+1
 	.word	sub_08080aa8+1
 	.word	sub_08080b28+1
@@ -5749,18 +5749,18 @@ gUnk_08742050:
 	.incbin	"baserom.gba", 0x742050, 0x14
 	.global	gBrontoBurtVariants
 gBrontoBurtVariants:
-	.word	sub_080860f8+1
+	.word	BrontoBurtWaveInit+1
 	.word	sub_080862cc+1
 	.word	sub_080864ec+1
-	.word	sub_08086824+1
-	.word	sub_080869f0+1
-	.word	sub_08086bc0+1
+	.word	BrontoBurtDiagonalInit+1
+	.word	BrontoBurtChaseInit+1
+	.word	BrontoBurtTakeOffInit+1
 	.word	sub_08086efc+1
-	.global	gUnk_08742080
-gUnk_08742080:
+	.global	gBrontoBurtWaveStates
+gBrontoBurtWaveStates:
 	.word	sub_08086170+1
-	.global	gUnk_08742084
-gUnk_08742084:
+	.global	gBrontoBurtWaveStateUpdates
+gBrontoBurtWaveStateUpdates:
 	.word	sub_08086274+1
 	.global	gUnk_08742088
 gUnk_08742088:
@@ -5795,31 +5795,31 @@ gUnk_087420D4:
 	.global	gUnk_087420E8
 gUnk_087420E8:
 	.incbin	"baserom.gba", 0x7420E8, 0x8
-	.global	gUnk_087420F0
-gUnk_087420F0:
+	.global	gBrontoBurtDiagonalStates
+gBrontoBurtDiagonalStates:
 	.word	sub_08086984+1
 	.global	gUnk_087420F4
 gUnk_087420F4:
 	.incbin	"baserom.gba", 0x7420F4, 0xC
-	.global	gUnk_08742100
-gUnk_08742100:
+	.global	gBrontoBurtDiagonalStateUpdates
+gBrontoBurtDiagonalStateUpdates:
 	.word	sub_080869b8+1
-	.global	gUnk_08742104
-gUnk_08742104:
+	.global	gBrontoBurtChaseStates
+gBrontoBurtChaseStates:
 	.word	sub_08086a68+1
-	.global	gUnk_08742108
-gUnk_08742108:
+	.global	gBrontoBurtChaseStateUpdates
+gBrontoBurtChaseStateUpdates:
 	.word	sub_08086b68+1
 	.global	gUnk_0874210C
 gUnk_0874210C:
 	.incbin	"baserom.gba", 0x74210C, 0x20
-	.global	gUnk_0874212C
-gUnk_0874212C:
+	.global	gBrontoBurtTakeOffStates
+gBrontoBurtTakeOffStates:
 	.word	sub_08086c5c+1
 	.word	sub_08086d18+1
 	.word	sub_08086df0+1
-	.global	gUnk_08742138
-gUnk_08742138:
+	.global	gBrontoBurtTakeOffStateUpdates
+gBrontoBurtTakeOffStateUpdates:
 	.word	sub_08086ccc+1
 	.word	sub_08086da4+1
 	.word	sub_08086ec8+1
@@ -5831,12 +5831,12 @@ gUnk_08742150:
 	.incbin	"baserom.gba", 0x742150, 0x420
 	.global	gTwizzyVariants
 gTwizzyVariants:
-	.word	sub_080870c4+1
+	.word	TwizzyWaveInit+1
 	.word	sub_08087268+1
 	.word	sub_08087458+1
-	.word	sub_08087790+1
-	.word	sub_0808795c+1
-	.word	sub_08087af0+1
+	.word	TwizzyDiagonalInit+1
+	.word	TwizzyChaseInit+1
+	.word	TwizzyTakeOffInit+1
 	.word	sub_08087e2c+1
 	.word	sub_08087fcc+1
 	.word	sub_08088360+1
@@ -5847,11 +5847,11 @@ gUnk_08742598:
 	.global	gUnk_087425A4
 gUnk_087425A4:
 	.incbin	"baserom.gba", 0x7425A4, 0xC
-	.global	gUnk_087425B0
-gUnk_087425B0:
+	.global	gTwizzyWaveStates
+gTwizzyWaveStates:
 	.word	sub_0808713c+1
-	.global	gUnk_087425B4
-gUnk_087425B4:
+	.global	gTwizzyWaveStateUpdates
+gTwizzyWaveStateUpdates:
 	.word	sub_08087210+1
 	.global	gUnk_087425B8
 gUnk_087425B8:
@@ -5880,20 +5880,20 @@ gUnk_087425EC:
 	.global	gUnk_087425F0
 gUnk_087425F0:
 	.incbin	"baserom.gba", 0x7425F0, 0x8
-	.global	gUnk_087425F8
-gUnk_087425F8:
+	.global	gTwizzyDiagonalStates
+gTwizzyDiagonalStates:
 	.word	sub_080878f0+1
-	.global	gUnk_087425FC
-gUnk_087425FC:
+	.global	gTwizzyDiagonalStateUpdates
+gTwizzyDiagonalStateUpdates:
 	.word	sub_08087924+1
 	.global	gUnk_08742600
 gUnk_08742600:
 	.incbin	"baserom.gba", 0x742600, 0xC
-	.global	gUnk_0874260C
-gUnk_0874260C:
+	.global	gTwizzyChaseStates
+gTwizzyChaseStates:
 	.word	sub_080879d4+1
-	.global	gUnk_08742610
-gUnk_08742610:
+	.global	gTwizzyChaseStateUpdates
+gTwizzyChaseStateUpdates:
 	.word	sub_08087a98+1
 	.global	gUnk_08742614
 gUnk_08742614:
@@ -5901,13 +5901,13 @@ gUnk_08742614:
 	.global	gUnk_08742634
 gUnk_08742634:
 	.incbin	"baserom.gba", 0x742634, 0x8
-	.global	gUnk_0874263C
-gUnk_0874263C:
+	.global	gTwizzyTakeOffStates
+gTwizzyTakeOffStates:
 	.word	sub_08087b8c+1
 	.word	sub_08087c48+1
 	.word	sub_08087d20+1
-	.global	gUnk_08742648
-gUnk_08742648:
+	.global	gTwizzyTakeOffStateUpdates
+gTwizzyTakeOffStateUpdates:
 	.word	sub_08087bfc+1
 	.word	sub_08087cd4+1
 	.word	sub_08087df8+1

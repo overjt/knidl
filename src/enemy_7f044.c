@@ -26,9 +26,9 @@
  *     (`0x087413C0`/`0x087413C8`), `sub_0807fb00`+`sub_0807fb60`
  *     (`0x087413D0`/`0x087413D4`), `TwisterInit`+`TwisterUpdate`
  *     (`0x08741490`/`0x0874149C`), `sub_080802bc`+`sub_0808031c`
- *     (`0x087414A8`), `sub_0808044c`+`sub_080804c0` (`0x087414C0`),
- *     `sub_0808076c`+`sub_080807d8` (`0x087414D8`) and `sub_08080818`+
- *     `sub_0808088c` (`0x087414E0`);
+ *     (`0x087414A8`), `HotHeadWalkInit`+`HotHeadWalkUpdate` (`0x087414C0`),
+ *     `sub_0808076c`+`sub_080807d8` (`0x087414D8`) and `HotHeadStandInit`+
+ *     `HotHeadStandUpdate` (`0x087414E0`);
  *   * the bank's four-corner terrain probe `sub_0807f6a8` (four
  *     sub_08021c14 samples around a box whose six signed offsets come from
  *     Actor.terrainBox) and the jump-table state machine `sub_0807fe18`
@@ -87,12 +87,12 @@ extern u32 gUnk_087414A8[];
 extern u32 gUnk_087414AC[];
 extern u8 gUnk_087414B0[];
 extern u32 gHotHeadVariants[];
-extern u32 gUnk_087414C0[];
-extern u32 gUnk_087414CC[];
+extern u32 gHotHeadWalkStates[];
+extern u32 gHotHeadWalkStateUpdates[];
 extern u32 gUnk_087414D8[];
 extern u32 gUnk_087414DC[];
-extern u32 gUnk_087414E0[];
-extern u32 gUnk_087414EC[];
+extern u32 gHotHeadStandStates[];
+extern u32 gHotHeadStandStateUpdates[];
 extern u32 gUnk_08741ADC[];
 extern u32 gUnk_08741CE0[];
 extern u32 gTwisterFrames[];
@@ -147,10 +147,10 @@ void sub_0807fb60(void);
 void TwisterUpdate(void);
 void sub_08080374(s32 a, s32 b);
 void sub_0808031c(void);
-void sub_080804c0(void);
+void HotHeadWalkUpdate(void);
 void sub_08080b2c(void);
 void sub_080807d8(void);
-void sub_0808088c(void);
+void HotHeadStandUpdate(void);
 
 void sub_0807f044(void)
 {
@@ -1287,11 +1287,11 @@ void Task_HotHead(void)
     CallTableEntry(gCurTask->variant, 3, gHotHeadVariants);
 }
 
-void sub_0808044c(void)
+void HotHeadWalkInit(void)
 {
     struct Task *t = gCurTask;
 
-    t->updateCallback = (u32)sub_080804c0;
+    t->updateCallback = (u32)HotHeadWalkUpdate;
     TaskFaceNearestPlayer();
     t = gCurTask;
     t->unk30 = 6;
@@ -1300,18 +1300,18 @@ void sub_0808044c(void)
         ActorSetState(1);
     else
         ActorSetState(0);
-    CallTableEntry(gCurTask->state, 3, gUnk_087414C0);
+    CallTableEntry(gCurTask->state, 3, gHotHeadWalkStates);
 }
 
-void sub_080804a4(void)
+void HotHeadWalkEnterState(void)
 {
-    CallTableEntry(gCurTask->state, 3, gUnk_087414C0);
+    CallTableEntry(gCurTask->state, 3, gHotHeadWalkStates);
 }
 
-void sub_080804c0(void)
+void HotHeadWalkUpdate(void)
 {
     if ((u8)ActorCollideTerrain() == 0)
-        CallTableEntry(gCurTask->updateState, 3, gUnk_087414CC);
+        CallTableEntry(gCurTask->updateState, 3, gHotHeadWalkStateUpdates);
     ActorCheckHits();
     ActorReactToHit();
 }
@@ -1338,7 +1338,7 @@ void sub_0808051c(void)
         if (RandomRange(gUnk_087414B0[t->unk2C]) != 0)
         {
             ActorSetState(1);
-            TaskSetEntry(sub_080804a4, gCurTaskIdx);
+            TaskSetEntry(HotHeadWalkEnterState, gCurTaskIdx);
         }
         else
         {
@@ -1414,7 +1414,7 @@ void sub_080806e8(void)
         ActorSetState(0);
     }
     if (gCurTask->state != 1)
-        TaskSetEntry(sub_080804a4, gCurTaskIdx);
+        TaskSetEntry(HotHeadWalkEnterState, gCurTaskIdx);
 }
 
 void sub_08080740(void)
@@ -1466,11 +1466,11 @@ void sub_08080814(void)
 {
 }
 
-void sub_08080818(void)
+void HotHeadStandInit(void)
 {
     struct Task *t = gCurTask;
 
-    t->updateCallback = (u32)sub_0808088c;
+    t->updateCallback = (u32)HotHeadStandUpdate;
     TaskFaceNearestPlayer();
     t = gCurTask;
     t->unk30 = 6;
@@ -1479,18 +1479,18 @@ void sub_08080818(void)
         ActorSetState(1);
     else
         ActorSetState(0);
-    CallTableEntry(gCurTask->state, 3, gUnk_087414E0);
+    CallTableEntry(gCurTask->state, 3, gHotHeadStandStates);
 }
 
-void sub_08080870(void)
+void HotHeadStandEnterState(void)
 {
-    CallTableEntry(gCurTask->state, 3, gUnk_087414E0);
+    CallTableEntry(gCurTask->state, 3, gHotHeadStandStates);
 }
 
-void sub_0808088c(void)
+void HotHeadStandUpdate(void)
 {
     if ((u8)ActorCollideTerrain() == 0)
-        CallTableEntry(gCurTask->updateState, 3, gUnk_087414EC);
+        CallTableEntry(gCurTask->updateState, 3, gHotHeadStandStateUpdates);
     ActorCheckHits();
     ActorReactToHit();
 }
@@ -1516,7 +1516,7 @@ void sub_080808dc(void)
         if (RandomRange(gUnk_087414B0[t->unk2C]) != 0)
         {
             ActorSetState(1);
-            TaskSetEntry(sub_08080870, gCurTaskIdx);
+            TaskSetEntry(HotHeadStandEnterState, gCurTaskIdx);
         }
         else
         {
@@ -1593,7 +1593,7 @@ void sub_08080aa8(void)
         ActorSetState(0);
     }
     if (gCurTask->state != 1)
-        TaskSetEntry(sub_08080870, gCurTaskIdx);
+        TaskSetEntry(HotHeadStandEnterState, gCurTaskIdx);
 }
 
 void sub_08080b00(void)

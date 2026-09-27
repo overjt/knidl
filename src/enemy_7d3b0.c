@@ -76,14 +76,14 @@ extern u32 gUnk_08741294[];
 extern u32 gUnk_08741298[];
 extern u32 gUnk_087412A0[];
 extern u32 gGordoVariants[];
-extern u32 gUnk_087412CC[];
-extern u32 gUnk_087412D0[];
-extern u32 gUnk_087412D4[];
-extern u32 gUnk_087412D8[];
-extern u32 gUnk_087412DC[];
-extern u32 gUnk_087412E0[];
-extern u32 gUnk_087412E4[];
-extern u32 gUnk_087412E8[];
+extern u32 gGordoBobStates[];
+extern u32 gGordoBobStateUpdates[];
+extern u32 gGordoBounceVerticalStates[];
+extern u32 gGordoBounceVerticalStateUpdates[];
+extern u32 gGordoBounceHorizontalStates[];
+extern u32 gGordoBounceHorizontalStateUpdates[];
+extern u32 gGordoSweepStates[];
+extern u32 gGordoSweepStateUpdates[];
 extern u32 gCoolSpookVariants[];
 extern u32 gUnk_08741308[];
 extern u32 gUnk_0874130C[];
@@ -161,10 +161,10 @@ void sub_0807e484(void);
 void sub_0807e5bc(void);
 void sub_0807e730(void);
 void sub_0807e920(void);
-void sub_0807ea60(void);
-void sub_0807eb20(void);
-void sub_0807ec10(void);
-void sub_0807ecfc(void);
+void GordoBobUpdate(void);
+void GordoBounceVerticalUpdate(void);
+void GordoBounceHorizontalUpdate(void);
+void GordoSweepUpdate(void);
 void sub_0807ee60(void);
 void sub_0807ef24(void);
 void sub_0807ef7c(void);
@@ -1287,16 +1287,16 @@ void Task_Gordo(void)
     CallTableEntry(gCurTask->variant, 4, gGordoVariants);
 }
 
-void sub_0807ea30(void)
+void GordoBobInit(void)
 {
-    gCurTask->updateCallback = (u32)sub_0807ea60;
+    gCurTask->updateCallback = (u32)GordoBobUpdate;
     ActorSetState(0);
-    CallTableEntry(gCurTask->state, 1, gUnk_087412CC);
+    CallTableEntry(gCurTask->state, 1, gGordoBobStates);
 }
 
-void sub_0807ea60(void)
+void GordoBobUpdate(void)
 {
-    CallTableEntry(gCurTask->updateState, 1, gUnk_087412D0);
+    CallTableEntry(gCurTask->updateState, 1, gGordoBobStateUpdates);
     ActorCheckHits();
     ActorReactToHit();
 }
@@ -1322,14 +1322,14 @@ void sub_0807ead4(void)
     gCurTask->unk28 = ActorTickAnim(gCurTask->unk28);
 }
 
-void sub_0807eaf0(void)
+void GordoBounceVerticalInit(void)
 {
-    gCurTask->updateCallback = (u32)sub_0807eb20;
+    gCurTask->updateCallback = (u32)GordoBounceVerticalUpdate;
     ActorSetState(0);
-    CallTableEntry(gCurTask->state, 1, gUnk_087412D4);
+    CallTableEntry(gCurTask->state, 1, gGordoBounceVerticalStates);
 }
 
-void sub_0807eb20(void)
+void GordoBounceVerticalUpdate(void)
 {
     if ((u8)sub_0806956c() == 1)
     {
@@ -1338,7 +1338,7 @@ void sub_0807eb20(void)
         t->velY = -t->velY;
         t->onGround = 0;
     }
-    CallTableEntry(gCurTask->updateState, 1, gUnk_087412D8);
+    CallTableEntry(gCurTask->updateState, 1, gGordoBounceVerticalStateUpdates);
     ActorCheckHits();
     ActorReactToHit();
 }
@@ -1369,14 +1369,14 @@ void sub_0807ebc4(void)
     gCurTask->unk28 = ActorTickAnim(gCurTask->unk28);
 }
 
-void sub_0807ebe0(void)
+void GordoBounceHorizontalInit(void)
 {
-    gCurTask->updateCallback = (u32)sub_0807ec10;
+    gCurTask->updateCallback = (u32)GordoBounceHorizontalUpdate;
     ActorSetState(0);
-    CallTableEntry(gCurTask->state, 1, gUnk_087412DC);
+    CallTableEntry(gCurTask->state, 1, gGordoBounceHorizontalStates);
 }
 
-void sub_0807ec10(void)
+void GordoBounceHorizontalUpdate(void)
 {
     if ((u8)sub_080695bc() == 1)
     {
@@ -1384,7 +1384,7 @@ void sub_0807ec10(void)
 
         t->velX = -t->velX;
     }
-    CallTableEntry(gCurTask->updateState, 1, gUnk_087412E0);
+    CallTableEntry(gCurTask->updateState, 1, gGordoBounceHorizontalStateUpdates);
     ActorCheckHits();
     ActorReactToHit();
 }
@@ -1415,16 +1415,16 @@ void sub_0807ecb0(void)
     gCurTask->unk28 = ActorTickAnim(gCurTask->unk28);
 }
 
-void sub_0807eccc(void)
+void GordoSweepInit(void)
 {
-    gCurTask->updateCallback = (u32)sub_0807ecfc;
+    gCurTask->updateCallback = (u32)GordoSweepUpdate;
     ActorSetState(0);
-    CallTableEntry(gCurTask->state, 1, gUnk_087412E4);
+    CallTableEntry(gCurTask->state, 1, gGordoSweepStates);
 }
 
-void sub_0807ecfc(void)
+void GordoSweepUpdate(void)
 {
-    CallTableEntry(gCurTask->updateState, 1, gUnk_087412E8);
+    CallTableEntry(gCurTask->updateState, 1, gGordoSweepStateUpdates);
     ActorCheckHits();
     ActorReactToHit();
 }
