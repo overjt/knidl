@@ -845,8 +845,8 @@ gCompletionPercent = 0x0300235C
 gLocalPlayer = 0x03002360
 	.global	gUnk_03002364
 gUnk_03002364 = 0x03002364
-	.global	gAttackPower
-gAttackPower = 0x03002368
+	.global	gAttackHealth
+gAttackHealth = 0x03002368
 	.global	gAttackBox
 gAttackBox = 0x0300236C
 	.global	gUnk_03002378
@@ -861,8 +861,8 @@ gCameraFocusY = 0x03002388
 gLevelIndex = 0x0300238C
 	.global	gUnk_03002390
 gUnk_03002390 = 0x03002390
-	.global	gHitDamage
-gHitDamage = 0x03002394
+	.global	gHitHealthLeft
+gHitHealthLeft = 0x03002394
 	.global	gCameraAnchorX
 gCameraAnchorX = 0x03002398
 	.global	gAttackFacing

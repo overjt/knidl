@@ -32,8 +32,8 @@ extern struct ActorDef *gUnk_0873EE88[];
 
 extern s32 TaskCreateInRange(u32 type, s32 start, s32 end);
 extern void sub_08065ce0(u32 i);
-extern u16 sub_08065f5c(u32 a);
-extern u16 sub_08065f74(u32 i);
+extern u16 ActorComputeHealth(u32 a);
+extern u16 ActorComputeHealthSlot(u32 i);
 extern void sub_08069ac4(u32 i);
 extern void sub_080b54a4(u32 i);
 extern void TaskFree(s32 id);
@@ -68,7 +68,7 @@ void ActorLoadDefSlot(u32 i, struct ActorDef *d);
 void ActorSetAttackBoxSlot(u32 i, u32 v);
 void sub_08063a14(u32 i, u32 v);
 void sub_08063704(u32 i);
-void sub_080637ac(u32 i);
+void ActorResetHealthSlot(u32 i);
 void sub_080637e4(u32 i);
 s32 sub_08063a9c(u32 i);
 s32 TaskFindNearestPlayer(void);
@@ -98,7 +98,7 @@ void TaskAccelerateAxisMinus(s32 step, s32 limit, u8 axis);
 void TaskDecelerateAxis(s32 step, u8 axis);
 void TaskGetScreenPosSlot(u32 i);
 s8 TaskGetParentFacing(void);
-void sub_080636e4(u32 i);
+void ActorInitSlot(u32 i);
 s32 sub_08064a78(struct ActorSpawn *p);
 s32 CreateChildTask(u32 type, int xArg, int yArg, int prioArg);
 s32 CreateChildTaskHere(u32 type, u8 keepPrio);
@@ -126,7 +126,7 @@ s32 sub_08063698(u32 type, s32 start)
     return i;
 }
 
-void sub_080636e4(u32 i)
+void ActorInitSlot(u32 i)
 {
     sub_08063704(i);
     sub_080637e4(i);
@@ -167,17 +167,17 @@ void sub_08063704(u32 i)
     }
 }
 
-void sub_080637ac(u32 i)
+void ActorResetHealthSlot(u32 i)
 {
     struct Task *t;
 
     t = &gTasks[i];
-    t->unk78 = sub_08065f74(i);
+    t->unk78 = ActorComputeHealthSlot(i);
 }
 
 void sub_080637cc(u32 a)
 {
-    gCurTask->unk78 = sub_08065f5c(a);
+    gCurTask->unk78 = ActorComputeHealth(a);
 }
 
 void sub_080637e4(u32 i)
@@ -234,7 +234,7 @@ void sub_080637e4(u32 i)
         a->unk5C = d->unk20;
         a->unk00 = d->unk0C;
         a->unk30 = d->unk08;
-        sub_080637ac(i);
+        ActorResetHealthSlot(i);
         if (a->unk44->unk24 != NULL)
             a->unk44->unk24(i);
         a->unk40 = a->unk44->unk28;
@@ -275,7 +275,7 @@ void ActorLoadDefSlot(u32 i, struct ActorDef *d)
     a->unk00 = d->unk0C;
     a->unk30 = d->unk08;
     a->unk40 = d->unk28;
-    sub_080637ac(i);
+    ActorResetHealthSlot(i);
 }
 
 void ActorSetState(u8 v)
@@ -694,7 +694,7 @@ void TaskTurnAround(void)
     TaskSetFrame(gCurTask->unk3C);
 }
 
-void sub_0806406c(void)
+void TaskToggleFacingAndReverseX(void)
 {
     if (gCurTask->unk43 == 1)
         gCurTask->unk43 = 255;
@@ -1150,7 +1150,7 @@ void TaskAccelerateInDir(s32 step, s32 limit, u16 dir)
 }
 
 /* Nearest active player whose X offset falls inside [lo, hi). */
-s32 sub_08064758(u16 lo, u16 hi)
+s32 TaskFindNearestPlayerInScreenXBand(u16 lo, u16 hi)
 {
     s32 best;
     s32 bestDist;
@@ -1192,7 +1192,7 @@ s32 sub_08064758(u16 lo, u16 hi)
 }
 
 /* Same over the Y offset. */
-s32 sub_080647fc(u16 lo, u16 hi)
+s32 TaskFindNearestPlayerInScreenYBand(u16 lo, u16 hi)
 {
     s32 best;
     s32 bestDist;
@@ -1347,7 +1347,7 @@ s32 sub_08064a78(struct ActorSpawn *p)
         t->unk44 = gCurTaskIdx;
         t->unk40 = p->unk10;
         t->unk8C = &gActors[i];
-        sub_080636e4(i);
+        ActorInitSlot(i);
     }
     return i;
 }
@@ -1535,7 +1535,7 @@ s32 sub_08064d9c(u32 sub, u32 type, int p2Arg, int xArg, int yArg,
         t->unk44 = gCurTaskIdx;
         t->unk40 = prio;
         t->unk8C = &gActors[i];
-        sub_080636e4(i);
+        ActorInitSlot(i);
     }
     return i;
 }
@@ -1599,7 +1599,7 @@ s32 CreateActor(u8 cls, u32 sub, u32 type, u8 p3, u8 p4, int x, int y,
         t->unk50 = y << 16;
         t->unk40 = prio;
         t->unk8C = &gActors[i];
-        sub_080636e4(i);
+        ActorInitSlot(i);
     }
     return i;
 }

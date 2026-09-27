@@ -136,7 +136,7 @@ extern u16 TaskGetAngleTo(s32 a, s32 b);
 extern u32 ActorCheckHits(void);
 extern u32 ActorCollideTerrain(void);
 extern u32 ActorDie(void);
-extern u32 sub_0806bb7c(void);
+extern u32 ActorAttachToHitter(void);
 extern u8 sub_08069604(void);
 extern u8 sub_080699a8(void);
 extern void TaskExitTrampoline(void);
@@ -165,7 +165,7 @@ extern void TaskAccelerateInDir(s32 step, s32 limit, u16 dir);
 extern void TaskFaceLikeParent(void);
 extern void ActorDrawWorldInViewOrDestroy(void);
 extern void ActorMove(void);
-extern void sub_08065760(u32 i, u32 p1, u8 p2);
+extern void SetPaletteAnimSource(u32 i, u32 p1, u8 p2);
 extern void AcquirePaletteAnim(u32 p0, s32 idx);
 extern void sub_0806a0f0(s32 a);
 extern void sub_0806ee2c(void);
@@ -1074,7 +1074,7 @@ void sub_0807bcec(void)
 
 void sub_0807bd14(void)
 {
-    sub_0806bb7c();
+    ActorAttachToHitter();
 }
 
 void sub_0807bd20(void)
@@ -1462,7 +1462,7 @@ void sub_0807c4a0(void)
     v = a->unk28;
     if (v == 0)
         v = gUnk_0825B350[2];
-    sub_08065760(0, v, a->unk0C);
+    SetPaletteAnimSource(0, v, a->unk0C);
 }
 
 void sub_0807c4d4(void)

@@ -109,7 +109,7 @@ extern s32 CreateActorFromDescAtOffsetFacing(struct ActorSpawn *p, u8 keepPrio);
 extern void ActorDrawWorldInViewOrDestroy(void);
 extern void sub_08065640(void);
 extern void ActorMove(void);
-extern void sub_08065760(u32 i, u32 p1, u8 p2);
+extern void SetPaletteAnimSource(u32 i, u32 p1, u8 p2);
 extern void AcquirePaletteAnim(u32 p0, s32 idx);
 extern void ActorCheckHits(void);
 extern u8 ActorCollideTerrain(void);
@@ -1240,7 +1240,7 @@ void sub_0808e3a8(void)
     t->unk42 = 11;
     gCurTask->unk38 = gUnk_08752248;
     AcquirePaletteAnim(3, 1);
-    sub_08065760(1, 0, gCurTask->unk8C->unk0C);
+    SetPaletteAnimSource(1, 0, gCurTask->unk8C->unk0C);
     CallTableEntry(gCurTask->unk73, 2, gUnk_087431E4);
 }
 

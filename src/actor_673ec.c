@@ -23,7 +23,7 @@ extern struct PlayerState gPlayerStates[];
 extern s16 gPlayerHealth[];
 extern u16 gAttackX;
 extern u16 gAttackY;
-extern u16 gAttackPower;
+extern u16 gAttackHealth;
 extern u8 gUnk_03002390;
 extern u8 gAttackLastHitter;
 extern u8 gUnk_030023F0;
@@ -33,7 +33,7 @@ extern u8 gUnk_03002460;
 extern s32 gAttackBox;
 extern u8 gHitKind;
 extern u8 gUnk_03002450;
-extern u16 gHitDamage;
+extern u16 gHitHealthLeft;
 extern u8 gHitDirection;
 extern u8 gUnk_03002354;
 extern u8 gUnk_030023DC;
@@ -58,9 +58,9 @@ extern void sub_0801b7dc(void);
 extern u8 sub_0801b24c(void);
 extern u8 sub_0801af14(void);
 extern u8 sub_0801a8c8(void);
-extern void sub_08069234(u8 a);
-extern u32 sub_08068cb4(u8 a);
-extern void sub_0806dedc(void);
+extern void ActorStoreHit(u8 a);
+extern u32 ActorTestColliders(u8 a);
+extern void ActorUpdateAttachedEffect(void);
 extern void sub_08068a8c(s32 i, u8 flag);
 extern void sub_08068b88(s32 i, u16 b, u8 c, u8 d);
 extern void sub_0806737c(void);
@@ -1263,22 +1263,22 @@ void sub_08068b88(s32 i, u16 b, u8 c, u8 d)
     if (gPlayerHealth[i] != 0)
         sub_08067114();
 }
-u32 sub_08068cb4(u8 a)
+u32 ActorTestColliders(u8 a)
 {
     sub_0801b7dc();
     if (sub_0801b24c() != 0)
     {
-        sub_08069234(a);
+        ActorStoreHit(a);
         return 1;
     }
     if (sub_0801af14() != 0)
     {
-        sub_08069234(a);
+        ActorStoreHit(a);
         return 1;
     }
     if (sub_0801a8c8() != 0)
     {
-        sub_08069234(a);
+        ActorStoreHit(a);
         return 1;
     }
     return 0;
@@ -1310,14 +1310,14 @@ u32 ActorCheckHitsWithBox(s32 a)
         gAttackX = gCurTask->unk48;
         u = gCurTask;
         gAttackY = u->unk4A;
-        gAttackPower = u->unk78;
+        gAttackHealth = u->unk78;
         gUnk_03002390 = u->unk7E;
         gAttackLastHitter = u->unk7F;
         gUnk_030023F0 = u->unk75;
         gAttackFacing = u->unk43;
         gAttackHitDuration = 30;
         gAttackBox = a;
-        r = sub_08068cb4(0);
+        r = ActorTestColliders(0);
     }
     gCurTask->unk78 = saved;
     return r;
@@ -1351,7 +1351,7 @@ u32 ActorCheckHits(void)
     gAttackX = gCurTask->unk48;
     v = gCurTask;
     gAttackY = v->unk4A;
-    gAttackPower = v->unk78;
+    gAttackHealth = v->unk78;
     gUnk_03002390 = v->unk7E;
     gAttackLastHitter = v->unk7F;
     gUnk_03002460 = a->unk06;
@@ -1370,10 +1370,10 @@ u32 ActorCheckHits(void)
         gAttackHitDuration = 30;
         gAttackBox = a->unk48;
     }
-    sub_0806dedc();
+    ActorUpdateAttachedEffect();
     if (gAttackHitDuration - gCurTask->unk75 <= 5)
         return 0;
-    return sub_08068cb4(1);
+    return ActorTestColliders(1);
 }
 u32 sub_08068f68(void)
 {
@@ -1405,7 +1405,7 @@ u32 sub_08068f68(void)
         gAttackX = gCurTask->unk48;
         v = gCurTask;
         gAttackY = v->unk4A;
-        gAttackPower = v->unk78;
+        gAttackHealth = v->unk78;
         gUnk_03002390 = v->unk7E;
         gAttackLastHitter = v->unk7F;
         gUnk_03002460 = a->unk06;
@@ -1426,7 +1426,7 @@ u32 sub_08068f68(void)
         }
         if (gAttackHitDuration - gCurTask->unk75 <= 5)
             return 0;
-        if (sub_08068cb4(1) == 1)
+        if (ActorTestColliders(1) == 1)
             return 1;
     }
     if (a->unk4C == 0)
@@ -1451,7 +1451,7 @@ u32 sub_08068f68(void)
     }
     if (sub_0801a8c8() == 0)
         return 0;
-    sub_08069234(1);
+    ActorStoreHit(1);
     return 1;
 }
 u32 sub_0806914c(s32 a)
@@ -1470,7 +1470,7 @@ u32 sub_0806914c(s32 a)
     gAttackX = gCurTask->unk48;
     u = gCurTask;
     gAttackY = u->unk4A;
-    gAttackPower = u->unk78;
+    gAttackHealth = u->unk78;
     gUnk_03002390 = u->unk7E;
     gAttackLastHitter = u->unk7F;
     gUnk_030023F0 = u->unk75;
@@ -1483,10 +1483,10 @@ u32 sub_0806914c(s32 a)
     sub_0801b7dc();
     if (sub_0801a8c8() == 0)
         return 0;
-    sub_08069234(0);
+    ActorStoreHit(0);
     return 1;
 }
-void sub_08069234(u8 a)
+void ActorStoreHit(u8 a)
 {
     struct Task *t;
     struct Actor *b;
@@ -1496,7 +1496,7 @@ void sub_08069234(u8 a)
     b = t->unk8C;
     t->unk7C = gHitKind;
     gCurTask->unk82 = gUnk_03002450;
-    gCurTask->unk78 = gHitDamage;
+    gCurTask->unk78 = gHitHealthLeft;
     gCurTask->unk7D = gHitDirection;
     gCurTask->unk75 = gUnk_03002354;
     gCurTask->unk7E = gUnk_030023DC;

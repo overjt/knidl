@@ -119,7 +119,7 @@ extern void sub_08066ae0(void);
 extern void sub_08065438(void);
 extern void ActorDrawWorldInViewOrDestroy(void);
 extern u32 ActorCheckHits(void);
-extern void sub_0806df28(s32 a, s32 b);
+extern void ActorAttachEffect(s32 a, s32 b);
 extern void sub_0806d65c(void);
 extern void ActorDestroy(void);
 extern void ActorMove(void);
@@ -1806,7 +1806,7 @@ void sub_0809b608(void)
     v->unk28 = zero;
     v->unk68 = 0x30000;
     PlaySfx(506);
-    sub_0806df28(3, 0);
+    ActorAttachEffect(3, 0);
     gCurTask->unk58 = -262144;
     TaskYieldTrampoline(8);
     gCurTask->unk58 = -131072;

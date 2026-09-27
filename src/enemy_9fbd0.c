@@ -34,7 +34,7 @@ extern void TaskGetScreenPos(void);
 extern s32 CreateActorFromDescAtOffsetFacing(struct ActorSpawn *p, u8 keepPrio);
 extern s32 CreateChildTaskAtOffsetFacing(u32 type, s16 dx, s16 dy, u8 keepPrio);
 extern void sub_08065438(void);
-extern s16 sub_08065f5c(void);
+extern s16 ActorComputeHealth(void);
 extern u16 sub_08066088(u32 mode);
 extern void sub_08066468(void);
 extern void sub_080689c8(s32 i, s32 d);
@@ -75,7 +75,7 @@ void sub_0809fc44(void)
 
     t = gCurTask;
     sub_08066088(0);
-    v = sub_08065f5c();
+    v = ActorComputeHealth();
     v = (v * 85) >> 8;
     t = gCurTask;
     t->unk70 = v;

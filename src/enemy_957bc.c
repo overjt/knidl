@@ -82,7 +82,7 @@ extern s32 ActorStartAnim(struct AnimCmd *p);
 extern s32 ActorTickAnim(s32 n);
 extern s32 CreateChildTaskAtOffsetFacing(u32 type, s16 dx, s16 dy, u8 keepPrio);
 extern s32 CreateChildTaskHere(u32 type, u8 keepPrio);
-extern s16 sub_08065f5c(void);
+extern s16 ActorComputeHealth(void);
 extern u16 sub_08066088(u32 mode);
 extern void sub_08066580(void);
 extern void sub_080666cc(struct AnimCmd *p);
@@ -98,7 +98,7 @@ extern u32 ActorCheckHitsWithBox(void *p);
 extern u32 sub_08068f68(void);
 extern u8 ActorCollideTerrain(void);
 extern u32 ActorReactToHit(void);
-extern void sub_0806a008(void);
+extern void ActorFaceHitter(void);
 extern void ActorDie(void);
 extern u8 sub_0806acf8(void);
 extern void sub_0806ad18(void);
@@ -217,7 +217,7 @@ void sub_08095834(void)
     h->unk6E = 0;
     h->unk70 = 0;
     sub_08066ae0();
-    gUnk_02007D00[9] = sub_08065f5c();
+    gUnk_02007D00[9] = ActorComputeHealth();
 }
 
 void sub_08095940(void)
@@ -1158,7 +1158,7 @@ s32 sub_08096e24(void)
 {
     struct Task *t;
 
-    sub_0806a008();
+    ActorFaceHitter();
     t = gCurTask;
     if (t->unk18 >= 0) {
         sub_080689c8(t->unk18, -t->unk43);

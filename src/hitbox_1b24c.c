@@ -80,11 +80,11 @@ extern u8 gHitDirection;
 extern u16 gAttackY;           /* actor y */
 extern s16 gViewRect[];         /* camera rectangle: left, right, top, bottom */
 extern u16 gAttackX;           /* actor x */
-extern u16 gAttackPower;
+extern u16 gAttackHealth;
 extern struct AttackBox *gAttackBox;
 extern u8 gHitKind;            /* hit result */
 extern u8 gUnk_03002390;
-extern u16 gHitDamage;
+extern u16 gHitHealthLeft;
 extern u8 gUnk_03002450;
 extern u8 gUnk_03002460;
 extern s16 gAttackBoxBottom;           /* attack box bottom */
@@ -214,7 +214,7 @@ u8 sub_0801b24c(void)
                 if (!((gAttackBox->unk1A >> gColliderBodyBox->unk0D) & 1))
                     continue;
                 gHitKind = 7;
-                gHitDamage = gAttackPower;
+                gHitHealthLeft = gAttackHealth;
                 sub_0801b9e4();
                 return 1;
             }
@@ -229,14 +229,14 @@ u8 sub_0801b24c(void)
             case 1:
                 gHitKind = 3;
                 gUnk_03002450 = k;
-                gHitDamage = gAttackPower;
+                gHitHealthLeft = gAttackHealth;
                 gHitDirection = ((((u16)ArcTan2(gAttackX - gColliderX, gAttackY - gColliderY) >> 7) + 32) >> 6) & 7;
                 break;
             case 2:
             case 3:
                 gHitKind = 4;
                 gUnk_03002450 = k;
-                gHitDamage = gAttackPower;
+                gHitHealthLeft = gAttackHealth;
                 gHitDirection = ((((u16)ArcTan2(gAttackX - gColliderX, gAttackY - gColliderY) >> 7) + 32) >> 6) & 7;
                 break;
             default:
@@ -265,7 +265,7 @@ u8 sub_0801b24c(void)
             continue;
         gHitKind = 6;
         gUnk_03002450 = gUnk_08732242[k];
-        gHitDamage = gAttackPower;
+        gHitHealthLeft = gAttackHealth;
         sub_0801b9e4();
         return 1;
     }

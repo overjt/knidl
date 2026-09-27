@@ -165,7 +165,7 @@ extern u16 sub_08066088(u32 mode);
 extern void ActorFlashPalette(void *src, u32 size);
 extern void sub_08066468(void);
 extern void sub_08066480(struct GfxHeader *h, u32 src, u32 size);
-extern void sub_080664cc(struct GfxHeader *h);
+extern void ActorLoadHeaderPalette(struct GfxHeader *h);
 extern void sub_08066580(void);
 extern void sub_080666cc(struct AnimCmd *p);
 extern void sub_080667c0(u8 a, u16 b);

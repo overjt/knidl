@@ -498,7 +498,7 @@ void sub_0806bb34(s32 a)
     t->unk40 = m | 0xF000;
 }
 
-s32 sub_0806bb7c(void)
+s32 ActorAttachToHitter(void)
 {
     sub_0806b9dc();
     sub_0806ba34();

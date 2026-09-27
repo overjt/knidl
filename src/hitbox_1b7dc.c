@@ -8,7 +8,7 @@
  * sub_0801b7dc places the actor's attack box gAttackBox (struct
  * AttackBox) at the actor's position gAttackX/gAttackY, mirrored
  * when the actor faces left, relative to the camera rectangle
- * gViewRect[]; sub_0801b8e4 computes a hit's damage (gAttackPower
+ * gViewRect[]; sub_0801b8e4 computes a hit's damage (gAttackHealth
  * minus the body box's defence) and knock-back direction (one of eight, from
  * ArcTan2 between the collider and the actor); sub_0801b9e4 copies the hit's
  * details out for the actor code. */
@@ -70,10 +70,10 @@ extern u16 gAttackY;           /* actor y */
 extern s16 gViewRect[];         /* camera rectangle: left, right, top, bottom */
 extern u8 gUnk_03002354;
 extern u16 gAttackX;           /* actor x */
-extern u16 gAttackPower;
+extern u16 gAttackHealth;
 extern struct AttackBox *gAttackBox; /* the actor's attack box (s32 in actor_673ec.c) */
 extern u8 gHitKind;            /* hit result */
-extern u16 gHitDamage;
+extern u16 gHitHealthLeft;
 extern s16 gAttackFacing;
 extern u8 gUnk_030023A4;
 extern u8 gUnk_030023D0;
@@ -130,19 +130,19 @@ void sub_0801b7dc(void)
    the angle between the entry and the actor). */
 void sub_0801b8e4(void)
 {
-    gHitDamage = gAttackPower - gColliderBodyBox->unk0C;
-    if ((s16)gHitDamage <= 0)
+    gHitHealthLeft = gAttackHealth - gColliderBodyBox->unk0C;
+    if ((s16)gHitHealthLeft <= 0)
     {
         if (gAttackBox->unk0A & 2)
         {
             gHitKind = 6;
             gUnk_03002450 = 1;
-            gHitDamage = gAttackPower;
+            gHitHealthLeft = gAttackHealth;
             gHitDirection = ((((u16)ArcTan2(gAttackX - gColliderX, gAttackY - gColliderY) >> 7) + 32) >> 6) & 7;
             return;
         }
         gHitKind = 1;
-        gHitDamage = 0;
+        gHitHealthLeft = 0;
     }
     gHitDirection = ((((u16)ArcTan2(gAttackX - gColliderX, gAttackY - gColliderY) >> 7) + 32) >> 6) & 7;
     gUnk_03002450 = gColliderBodyBox->unk0D;

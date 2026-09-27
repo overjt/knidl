@@ -94,9 +94,9 @@ extern u32 sub_08068f68(void);
 extern u32 sub_0806914c(void *p);
 extern u8 ActorCollideTerrain(void);
 extern u32 ActorReactToHit(void);
-extern void sub_0806a008(void);
+extern void ActorFaceHitter(void);
 extern void sub_0806a0f0(s32 a);
-extern u32 sub_0806a25c(void);
+extern u32 ActorReactToDefeat(void);
 extern void ActorDie(void);
 extern u8 sub_0806acf8(void);
 extern void sub_0806ad18(void);
@@ -913,7 +913,7 @@ s32 sub_08098594(void)
 {
     struct Task *t;
 
-    sub_0806a008();
+    ActorFaceHitter();
     t = gCurTask;
     if (t->unk18 >= 0) {
         sub_080689c8(t->unk18, -t->unk43);
@@ -997,7 +997,7 @@ void sub_08098718(void)
 void sub_08098728(void)
 {
     RequestScreenShake(1);
-    sub_0806a25c();
+    ActorReactToDefeat();
 }
 
 void sub_08098738(void)
@@ -1090,7 +1090,7 @@ s32 sub_080988a4(void)
 
 s32 sub_080988b4(void)
 {
-    sub_0806a25c();
+    ActorReactToDefeat();
     return 1;
 }
 

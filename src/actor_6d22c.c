@@ -707,7 +707,7 @@ void sub_0806de60(void)
     TaskExitTrampoline();
 }
 
-void sub_0806dedc(void)
+void ActorUpdateAttachedEffect(void)
 {
     struct Actor *a;
 
@@ -725,7 +725,7 @@ void sub_0806dedc(void)
     a->unk12--;
 }
 
-void sub_0806df28(s32 a, s32 b)
+void ActorAttachEffect(s32 a, s32 b)
 {
     struct Actor *p;
     s32 c;

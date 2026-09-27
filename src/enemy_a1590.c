@@ -578,7 +578,7 @@ extern s32 TaskIsInRectSlot(struct Rect *r, u32 i);
 extern void ActorDestroySlot(s32 i);
 extern void ActorDestroy(void);
 extern void TaskTurnAroundAndReverseX(void);
-extern void sub_0806406c(void);
+extern void TaskToggleFacingAndReverseX(void);
 extern s32 ActorStartAnimNoFlip(struct AnimCmd *p);
 extern void ActorStopAnim(void);
 extern s32 ActorStartAnim(struct AnimCmd *p);
@@ -593,8 +593,8 @@ extern u8 TaskGetXDirBitTo(u32 i);
 extern u8 TaskGetXDirBitToNearestPlayer(void);
 extern void TaskAccelerateTowardNearestPlayer(s32 step, s32 limit);
 extern void TaskAccelerateInDir(s32 step, s32 limit, u16 dir);
-extern s32 sub_08064758(u16 lo, u16 hi);
-extern s32 sub_080647fc(u16 lo, u16 hi);
+extern s32 TaskFindNearestPlayerInScreenXBand(u16 lo, u16 hi);
+extern s32 TaskFindNearestPlayerInScreenYBand(u16 lo, u16 hi);
 extern void TaskGetScreenPosSlot(u32 i);
 extern s32 TaskGetNearestPlayerScreenPos(void);
 extern void TaskGetScreenPos(void);
@@ -617,14 +617,14 @@ extern void sub_08065438(void);
 extern void sub_08065640(void);
 extern void ActorMove(void);
 extern void TaskMoveRelativeToView(void);
-extern void sub_080657a4(void);
-extern void sub_080657cc(u32 v);
-extern void sub_080657f8(u32 a, u32 b);
+extern void ResetBgPaletteBlend(void);
+extern void EndBgPaletteBlend(u32 v);
+extern void StartBgPaletteBlend(u32 a, u32 b);
 extern void sub_08065dbc(u32 slot, u32 sub);
 extern void sub_08065dd0(u32 slot, u32 i);
 extern void sub_08065dfc(u32 slot);
 extern u8 TaskHasSameSerial(u32 i);
-extern s16 sub_08065f5c(void);
+extern s16 ActorComputeHealth(void);
 extern u16 sub_08066088(u32 mode);
 extern void sub_08066144(void);
 extern void sub_0806619c(u32 p0, u32 p1, u32 p2, u16 p3, u8 p4);
@@ -663,7 +663,7 @@ extern u32 sub_08069888(void);
 extern u32 ActorReactToHit(void);
 extern u32 sub_08069b84(void);
 extern u32 sub_08069bbc(void);
-extern u32 sub_0806a25c(void);
+extern u32 ActorReactToDefeat(void);
 extern void ActorDie(void);
 extern void sub_0806b05c(void);
 extern void sub_0806b098(void);
@@ -1686,7 +1686,7 @@ void sub_080a1ad0(void)
     }
     ActorLoadDefSlot(gUnk_02007D00[0], gUnk_087487BC);
     gUnk_02007D00[6] = 1;
-    gUnk_02007D00[8] = sub_08065f5c() >> 1;
+    gUnk_02007D00[8] = ActorComputeHealth() >> 1;
 }
 
 /* sub_080a1b94 (0x080A1B94-0x080A1BD8) */
@@ -2021,7 +2021,7 @@ s32 sub_080a2224(void *a)
 /* sub_080a2274 (0x080A2274-0x080A22B0) */
 void sub_080a2274(void *a)
 {
-    if (sub_080647fc(16, 64) != 0)
+    if (TaskFindNearestPlayerInScreenYBand(16, 64) != 0)
     {
         gCurTask->unk34 = gUnk_030023D4;
         ActorSetState(6);
@@ -2168,7 +2168,7 @@ s32 sub_080a24f8(void)
 
     if (d >= 16 && d <= 63)
     {
-        if ((u8)sub_080a2390() == 0 && sub_080647fc(16, 64) != 0 && sub_08064758(16, 208) != 0)
+        if ((u8)sub_080a2390() == 0 && TaskFindNearestPlayerInScreenYBand(16, 64) != 0 && TaskFindNearestPlayerInScreenXBand(16, 208) != 0)
         {
             gCurTask->unk34 = gUnk_030023D4;
             ret = 1;
@@ -3535,7 +3535,7 @@ void sub_080a3f24(void)
     TaskYieldTrampoline(6);
     sub_080a2ce8();
     sub_080a2d38();
-    sub_080657f8(10, 80);
+    StartBgPaletteBlend(10, 80);
     TaskSleepForever();
 }
 
@@ -3553,14 +3553,14 @@ void sub_080a3f54(void)
         if (gCurTask->unk34 <= 0)
         {
             sub_080a2400(f);
-            sub_080657cc(16);
+            EndBgPaletteBlend(16);
             sub_080a306c();
         }
         gCurTask->unk34--;
     }
     else
     {
-        sub_080657a4();
+        ResetBgPaletteBlend();
         sub_080a306c();
     }
 }

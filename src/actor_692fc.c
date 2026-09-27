@@ -10,8 +10,8 @@
  * sub_080696a0, sub_08069888) then walk the actor's seven-entry handler table
  * at Actor.unk54, calling the first handler that claims the frame.  The tail
  * of the module is the class-1 "carried" task body: state machine entry
- * points (sub_08069ae4/sub_08069bbc), the sub_08069c8c sound dispatcher and
- * the sub_08069dc4/sub_08069e48 push/pop of the actor's transform.
+ * points (ActorReactToHitKind/sub_08069bbc), the ActorPlayHitSfx sound dispatcher and
+ * the ActorStartHitStun/ActorEndHitStun push/pop of the actor's transform.
  */
 #include "gba/gba.h"
 #include "global.h"
@@ -90,29 +90,29 @@ extern void ActorPlaySfx(u32 def, u32 which);
 extern void ActorCheckHits(void);
 extern u32 ActorDie(void);
 extern void sub_0806b26c(void);
-extern u32 sub_0806bb7c(void);
+extern u32 ActorAttachToHitter(void);
 extern void sub_0806d65c(void);
 extern void sub_0806d77c(void);
-extern void sub_0806df28(s32 a, s32 b);
+extern void ActorAttachEffect(s32 a, s32 b);
 extern void sub_0806ee2c(void);
 extern void sub_080b4240(void);
 extern void sub_080b460c(void);
 extern void sub_080b54d0(s32 i);
 
 void ActorGetTerrainBox(struct InputState *out);
-u32 sub_08069ae4(s8 a);
+u32 ActorReactToHitKind(s8 a);
 u32 ActorReactToHit(void);
 s8 sub_08069c48(void);
-void sub_08069c8c(void);
+void ActorPlayHitSfx(void);
 void sub_08069d78(void);
-void sub_08069dc4(void);
-void sub_08069e48(void);
-u32 sub_08069ea0(void);
+void ActorStartHitStun(void);
+void ActorEndHitStun(void);
+u32 ActorReactToDamage(void);
 void sub_08069f0c(void);
 void sub_08069f70(void);
 void sub_08069fb0(void);
 void sub_0806a158(void);
-u32 sub_0806a25c(void);
+u32 ActorReactToDefeat(void);
 
 u32 ActorCollideTerrain(void)
 {
@@ -531,7 +531,7 @@ void sub_08069ac4(s32 i)
     t->unk7A = 1;
 }
 
-u32 sub_08069ae4(s8 a)
+u32 ActorReactToHitKind(s8 a)
 {
     u32 r;
 
@@ -539,17 +539,17 @@ u32 sub_08069ae4(s8 a)
     switch (a)
     {
     case 1:
-        r = sub_0806a25c();
+        r = ActorReactToDefeat();
         break;
     case 3:
-        r = sub_0806bb7c();
+        r = ActorAttachToHitter();
         break;
     case 4:
-        r = sub_0806bb7c();
+        r = ActorAttachToHitter();
         break;
     case 2:
     case 5:
-        r = sub_08069ea0();
+        r = ActorReactToDamage();
         break;
     case 6:
     case 7:
@@ -563,14 +563,14 @@ u32 ActorReactToHit(void)
 {
     if (gTaskSlotTypes[gCurTaskIdx] == -1)
         return 0;
-    return sub_08069ae4(gCurTask->unk7C);
+    return ActorReactToHitKind(gCurTask->unk7C);
 }
 
 u32 sub_08069b84(void)
 {
     if (gTaskSlotTypes[gCurTaskIdx] == -1)
         return 0;
-    return sub_08069ae4(sub_08069c48());
+    return ActorReactToHitKind(sub_08069c48());
 }
 
 u32 sub_08069bbc(void)
@@ -595,7 +595,7 @@ u32 sub_08069bbc(void)
         break;
     case 3:
     case 4:
-        r = sub_0806bb7c();
+        r = ActorAttachToHitter();
         break;
     case 6:
     case 8:
@@ -634,7 +634,7 @@ s8 sub_08069c48(void)
     return v;
 }
 
-void sub_08069c8c(void)
+void ActorPlayHitSfx(void)
 {
     struct Task *t;
     struct Task *u;
@@ -708,7 +708,7 @@ void sub_08069d78(void)
     }
 }
 
-void sub_08069dc4(void)
+void ActorStartHitStun(void)
 {
     struct Task *t;
     struct Task *u;
@@ -729,10 +729,10 @@ void sub_08069dc4(void)
     v->unk8C->unk22 = v->unk40 & 0xF000;
     if (v->unk82 > 3)
         v->unk82 = 0;
-    sub_0806df28(gCurTask->unk82, 1);
+    ActorAttachEffect(gCurTask->unk82, 1);
 }
 
-void sub_08069e48(void)
+void ActorEndHitStun(void)
 {
     struct Task *t;
     struct Task *u;
@@ -749,7 +749,7 @@ void sub_08069e48(void)
     u->unk40 = (u->unk40 & 0xFFF) | u->unk8C->unk22;
 }
 
-u32 sub_08069ea0(void)
+u32 ActorReactToDamage(void)
 {
     struct Actor *a;
     struct ActorVt *p;
@@ -758,14 +758,14 @@ u32 sub_08069ea0(void)
     a = gCurTask->unk8C;
     p = (struct ActorVt *)a->unk5C;
     r = 0;
-    sub_08069c8c();
+    ActorPlayHitSfx();
     if ((gCurTask->unk72 == 1 || gCurTask->unk72 == 2) && a->unk05 != 2)
         sub_0800a42c();
     if (p != NULL)
     {
         if (p->unk00 != -1)
         {
-            sub_08069dc4();
+            ActorStartHitStun();
             r = 0;
         }
         else if (p->unk04 != 0)
@@ -796,7 +796,7 @@ void sub_08069f0c(void)
     t->unk48 += gUnk_0873E58C[j];
     t->unk4A += gUnk_0873E58C[j + 1];
     if ((s8)--a->unk01 < 0)
-        sub_08069e48();
+        ActorEndHitStun();
 }
 
 void sub_08069f70(void)
@@ -829,7 +829,7 @@ void sub_08069fc8(void)
         sub_0806d65c();
 }
 
-void sub_0806a008(void)
+void ActorFaceHitter(void)
 {
     struct Task *t;
 
@@ -946,7 +946,7 @@ void sub_0806a158(void)
     }
 }
 
-u32 sub_0806a25c(void)
+u32 ActorReactToDefeat(void)
 {
     struct Actor *a;
     struct ActorVt *p;
@@ -956,7 +956,7 @@ u32 sub_0806a25c(void)
     a = gCurTask->unk8C;
     p = (struct ActorVt *)a->unk5C;
     r = 0;
-    sub_08069c8c();
+    ActorPlayHitSfx();
     if (gCurTask->unk72 == 1 || gCurTask->unk72 == 2)
         sub_0800a42c();
     t = gCurTask;

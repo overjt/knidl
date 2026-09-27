@@ -48,7 +48,7 @@ extern void ActorDestroy(void);
 extern void ActorMove(void);
 extern void sub_0806d4e4(s32 a, s32 b);
 extern void sub_0806a0cc(void);
-extern void sub_0806df28(s32 a, s32 b);
+extern void ActorAttachEffect(s32 a, s32 b);
 extern void sub_0806a488(void);
 extern void sub_0806a524(void);
 extern void sub_0806a55c(void);
@@ -201,7 +201,7 @@ void sub_0806a530(void)
 
     t = gCurTask;
     t->unk04 = (u32)sub_0806a55c;
-    sub_0806df28(t->unk82, 0);
+    ActorAttachEffect(t->unk82, 0);
     sub_0806a3dc();
     TaskStop();
     sub_0806a0cc();
@@ -218,7 +218,7 @@ void sub_0806a568(void)
 
     t = gCurTask;
     t->unk04 = (u32)sub_0806a594;
-    sub_0806df28(t->unk82, 0);
+    ActorAttachEffect(t->unk82, 0);
     sub_0806a3dc();
     TaskStop();
     sub_0806a0cc();
@@ -296,7 +296,7 @@ void sub_0806a638(void)
     t->unk20 = z;
     t->unk24 = z;
     t->unk28 = a->unk0E;
-    sub_0806df28(3, 0);
+    ActorAttachEffect(3, 0);
     gCurTask->unk80 = zero;
     gCurTask->unk7A = zero;
     ActorSetState(0);

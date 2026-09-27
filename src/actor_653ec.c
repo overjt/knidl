@@ -55,7 +55,7 @@ extern s16 gPlayerHealth[];
 extern u16 gPlayerCount;
 extern u8 gActivePlayerMask;
 extern void sub_08066468(void);
-extern void sub_080664cc(struct GfxHeader *h);
+extern void ActorLoadHeaderPalette(struct GfxHeader *h);
 extern void sub_08068f68(void);
 extern void ActorReactToHit(void);
 extern void sub_08066480(struct GfxHeader *h, u32 b, u32 c);
@@ -88,7 +88,7 @@ extern s32 ActorTickAnim(s32 n);
 extern s32 ActorTickAnimFacingNearestPlayer(s32 n);
 extern s32 sub_08064e90(u32 sub, u32 type, u8 p2, s16 x, s16 y);
 extern void sub_08066a94(u8 a);
-extern void sub_0806a008(void);
+extern void ActorFaceHitter(void);
 extern void TaskSetFrame(s32 a);
 extern void sub_0806ae94(void);
 extern void sub_080262dc(void);
@@ -164,12 +164,12 @@ extern void TaskExitTrampoline(void);
 void sub_08065470(void);
 void sub_0806555c(void);
 void AcquirePaletteAnim(u32 p0, s32 idx);
-s16 sub_08065f74(u32 i);
+s16 ActorComputeHealthSlot(u32 i);
 u32 *sub_0806601c(void);
 void sub_0806627c(void);
 void sub_08066544(void);
 void sub_08066564(void);
-void sub_080665a0(void);
+void ActorShowHpBar(void);
 void ActorLoadPalette(void *src, u32 size, u8 force);
 u8 sub_08066a6c(void);
 u8 sub_08066a80(void);
@@ -373,7 +373,7 @@ void TaskMoveRelativeToView(void)
     t->unk4A = (t->unk50 >> 16) + gViewRect[2];
 }
 
-void sub_08065760(u32 i, u32 p1, u8 p2)
+void SetPaletteAnimSource(u32 i, u32 p1, u8 p2)
 {
     struct Task *t;
     struct Actor *a;
@@ -389,7 +389,7 @@ void sub_08065760(u32 i, u32 p1, u8 p2)
     }
 }
 
-void sub_080657a4(void)
+void ResetBgPaletteBlend(void)
 {
     struct Task *t;
     s32 j;
@@ -402,7 +402,7 @@ void sub_080657a4(void)
     }
 }
 
-void sub_080657cc(u32 v)
+void EndBgPaletteBlend(u32 v)
 {
     struct Task *t;
     s32 j;
@@ -416,7 +416,7 @@ void sub_080657cc(u32 v)
     }
 }
 
-void sub_080657f8(u32 a, u32 b)
+void StartBgPaletteBlend(u32 a, u32 b)
 {
     struct Task *t;
     s32 j;
@@ -873,14 +873,14 @@ u8 TaskHasSameSerial(u32 i)
     return 0;
 }
 
-s16 sub_08065f5c(void)
+s16 ActorComputeHealth(void)
 {
-    return sub_08065f74(gCurTaskIdx);
+    return ActorComputeHealthSlot(gCurTaskIdx);
 }
 
 /* Horizontal draw offset of task `i`'s sprite for the current view mode. */
 /* Horizontal draw offset of task `i`'s sprite for the current view mode. */
-s16 sub_08065f74(u32 i)
+s16 ActorComputeHealthSlot(u32 i)
 {
     struct Task *t;
     struct Actor *a;
@@ -1057,7 +1057,7 @@ void sub_0806621c(void)
         if (gUnk_02006190[5] != 0)
             sub_08066468();
         else
-            sub_080664cc(a->unk64.unk00);
+            ActorLoadHeaderPalette(a->unk64.unk00);
     }
 }
 
@@ -1192,7 +1192,7 @@ void sub_08066480(struct GfxHeader *h, u32 src, u32 size)
         ActorLoadPalette((void *)src, size << 1, 1);
 }
 
-void sub_080664cc(struct GfxHeader *h)
+void ActorLoadHeaderPalette(struct GfxHeader *h)
 {
     ActorLoadPalette(h->unk08, h->unk00 << 5, 0);
 }
@@ -1227,7 +1227,7 @@ void sub_08066544(void)
 
     a = gCurTask->unk8C;
     ActorSetAttackBox(a->unk60->unk04);
-    sub_080665a0();
+    ActorShowHpBar();
 }
 
 void sub_08066564(void)
@@ -1243,11 +1243,11 @@ void sub_08066580(void)
     struct Actor *a;
 
     a = gCurTask->unk8C;
-    sub_080665a0();
+    ActorShowHpBar();
     ActorSetAttackBox(a->unk44->unk14);
 }
 
-void sub_080665a0(void)
+void ActorShowHpBar(void)
 {
     struct Task **g;
     struct Task *t;
@@ -1396,7 +1396,7 @@ void sub_080667c0(u8 a, u16 b)
     p->unk05 = 2;
     p->unk30 = 0;
     sub_08066a94(a);
-    sub_0806a008();
+    ActorFaceHitter();
     TaskSetFrame((s16)b);
     sub_0806ae94();
 }

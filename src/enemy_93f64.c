@@ -123,7 +123,7 @@ extern u32 ActorCheckHits(void);
 extern u32 sub_08068f68(void);
 extern u8 ActorCollideTerrain(void);
 extern u32 ActorReactToHit(void);
-extern void sub_0806a008(void);
+extern void ActorFaceHitter(void);
 extern void ActorDie(void);
 extern u8 sub_0806acf8(void);
 extern void sub_0806ad18(void);
@@ -1229,7 +1229,7 @@ void sub_08095674(void)
 
 void sub_08095694(void)
 {
-    sub_0806a008();
+    ActorFaceHitter();
     StopSfxOnPlayer(gUnk_02007D00[1], 0x209);
     ActorSetState(10);
     TaskSetEntry(sub_08094290, gCurTaskIdx);

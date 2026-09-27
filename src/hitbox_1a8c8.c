@@ -8,7 +8,7 @@
  * calls them after sub_0801b7dc has placed the actor's attack box): each walks
  * one of the collider lists M05's RegisterCollider fills, places the collider's
  * body box the same way, tests the overlap and, on a hit, writes the hit
- * result (gHitKind = hit kind, gUnk_03002450, gHitDamage) through
+ * result (gHitKind = hit kind, gUnk_03002450, gHitHealthLeft) through
  * the shared tails sub_0801b8e4/sub_0801b9e4 and returns 1.
  * sub_0801a8c8 tests the players' list gPlayerColliders (by the attack's class
  * gAttackBox->unk06 & 7: 0 a damaging hit, 1 a hit the body box can
@@ -92,11 +92,11 @@ extern s8 gAttackHitDuration;
 extern s16 gViewRect[];         /* camera rectangle: left, right, top, bottom */
 extern u8 gUnk_03002354;
 extern u16 gAttackX;           /* actor x */
-extern u16 gAttackPower;
+extern u16 gAttackHealth;
 extern struct AttackBox *gAttackBox; /* the actor's attack box (s32 in actor_673ec.c) */
 extern u8 gHitKind;            /* hit result */
 extern u8 gUnk_03002390;
-extern u16 gHitDamage;
+extern u16 gHitHealthLeft;
 extern u8 gUnk_030023A4;
 extern u8 gUnk_030023DC;
 extern u8 gAttackLastHitter;
@@ -213,13 +213,13 @@ u8 sub_0801a8c8(void)
                 {
                     gHitKind = 6;
                     gUnk_03002450 = 12;
-                    gHitDamage = gAttackPower;
+                    gHitHealthLeft = gAttackHealth;
                 }
                 else if (gAttackBox->unk0A & 4)
                 {
                     gHitKind = 6;
                     gUnk_03002450 = 11;
-                    gHitDamage = gAttackPower;
+                    gHitHealthLeft = gAttackHealth;
                 }
                 else
                 {
@@ -257,13 +257,13 @@ u8 sub_0801a8c8(void)
                 {
                     gHitKind = 6;
                     gUnk_03002450 = 11;
-                    gHitDamage = gAttackPower;
+                    gHitHealthLeft = gAttackHealth;
                 }
                 else if (gAttackBox->unk0A & 1)
                 {
                     gHitKind = 6;
                     gUnk_03002450 = 1;
-                    gHitDamage = gAttackPower;
+                    gHitHealthLeft = gAttackHealth;
                 }
                 else
                 {
@@ -279,7 +279,7 @@ u8 sub_0801a8c8(void)
                 {
                     gHitKind = 6;
                     gUnk_03002450 = 11;
-                    gHitDamage = gAttackPower;
+                    gHitHealthLeft = gAttackHealth;
                 }
                 else
                 {
@@ -307,7 +307,7 @@ u8 sub_0801a8c8(void)
             {
                 ps->unk45++;
                 gHitKind = 8;
-                gHitDamage = gAttackPower;
+                gHitHealthLeft = gAttackHealth;
                 sub_0801b9e4();
                 return 1;
             }
@@ -331,7 +331,7 @@ u8 sub_0801a8c8(void)
             continue;
         gHitKind = 7;
         gUnk_030023A4 = 0;
-        gHitDamage = gAttackPower;
+        gHitHealthLeft = gAttackHealth;
         gUnk_030023DC = gColliderSlot;
         gUnk_03002354 = gAttackHitDuration;
         if ((gAttackBox->unk06 & 7) == 2)
@@ -408,7 +408,7 @@ u8 sub_0801af14(void)
             if (!((gAttackBox->unk1A >> gColliderBodyBox->unk0D) & 1))
                 continue;
             gHitKind = 7;
-            gHitDamage = gAttackPower;
+            gHitHealthLeft = gAttackHealth;
             sub_0801b9e4();
             return 1;
         }
@@ -442,7 +442,7 @@ u8 sub_0801af14(void)
             {
                 gHitKind = 6;
                 gUnk_03002450 = gUnk_08732218[k];
-                gHitDamage = gAttackPower;
+                gHitHealthLeft = gAttackHealth;
             }
             sub_0801b9e4();
             return 1;
