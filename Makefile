@@ -107,7 +107,7 @@ ALL_OBJS  := $(ASM_OBJS) $(DATA_OBJS) $(SRC_OBJS)
 
 ELF := $(BUILD_DIR)/$(ROM:.gba=.elf)
 
-.PHONY: all compare check-headers check-data progress datastats report symbols split modmap clean
+.PHONY: all compare check-headers check-data progress datastats shifttest report symbols split modmap clean
 
 all: $(ROM)
 
@@ -179,6 +179,12 @@ progress: $(ELF)
 datastats: baserom.gba tools/datastats.py tools/split_config.json docs/analysis/segments.txt
 	python3 tools/datastats.py --rom baserom.gba
 
+# The shift test (issue #36, docs/data.md section 8): link the same objects
+# again with padding inserted at a few section boundaries and count, per
+# zone, the pointer-like words that did not move with their targets.
+shifttest: $(ELF)
+	python3 tools/shiftcheck.py --elf $(ELF) --by-target --json $(BUILD_DIR)/shifttest.json --objs $(ALL_OBJS)
+
 # Data policy (AGENTS.md, docs/data.md): assets are never committed, and
 # data/ may hold only labels, symbolic .words and .incbin slices of
 # baserom.gba; needs no baserom, so CI runs it on every push.
@@ -221,7 +227,7 @@ else
 
 DOCKER_RUN := docker run --rm -v $(CURDIR):/src -w /src $(IMAGE)
 
-.PHONY: image all compare check-headers check-data progress datastats symbols split modmap clean
+.PHONY: image all compare check-headers check-data progress datastats shifttest symbols split modmap clean
 
 image:
 	docker build -t $(IMAGE) .
@@ -243,6 +249,9 @@ datastats: image
 
 check-data: image
 	$(DOCKER_RUN) make check-data INSIDE_DOCKER=1
+
+shifttest: image
+	$(DOCKER_RUN) make shifttest INSIDE_DOCKER=1
 
 # report.json generation only needs Python + the repo's ground-truth CSVs,
 # so it runs directly on the host (no toolchain image required).
