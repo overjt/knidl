@@ -5,7 +5,7 @@
 /* bgmap_2a9cc.c (0x0802A9CC-0x0802B2EF, issue #86).
  *
  * Tilemap streaming.  A room is gUnk_03005620 x gUnk_0300561C metatiles
- * (gUnk_03005660, 4 bytes each); a metatile is 2x2 tile entries in
+ * (gRoomMap, 4 bytes each); a metatile is 2x2 tile entries in
  * gUnk_0200B080.  sub_0802afc8 writes one tile of the 64x32-tile BG map
  * at 0x06002000, sub_0802af6c one of the 32x32 map at 0x06001800 (from
  * the u16 metatile map gUnk_02004CA0) and sub_0802b030 one of the 64x32
@@ -52,9 +52,9 @@ extern s16 gUnk_03005620;
 extern struct RoomDef *gUnk_030055EC;
 extern u16 gUnk_02004CA0[];
 extern u16 gUnk_0200B080[];
-extern struct MapTile *gUnk_03005660;
+extern struct MapTile *gRoomMap;
 extern u16 gUnk_080D71A0[];
-extern u16 gUnk_02008160[];
+extern u16 gBlockLayer[];
 
 void sub_0802af6c(s32 x, s32 y);
 void sub_0802afc8(s32 x, s32 y);
@@ -360,7 +360,7 @@ void sub_0802afc8(s32 x, s32 y)
 {
     u16 *src;
     s32 i;
-    src = &gUnk_0200B080[((&gUnk_03005660[x >> 1])[(y >> 1) * gUnk_03005620].unk0 << 2)
+    src = &gUnk_0200B080[((&gRoomMap[x >> 1])[(y >> 1) * gUnk_03005620].unk0 << 2)
                          + (x & 1) + ((y & 1) << 1)];
     i = (x & 31) + ((y & 31) << 5) + ((x & 32) << 5);
     ((u16 *)0x06002000)[i] = *src;
@@ -391,7 +391,7 @@ void sub_0802b074(s32 px)
     for (i = 0; i < gUnk_0300561C * 2; i++)
         for (x = x0; x <= x1; x++)
             ((u16 *)0x06002000)[(x & 31) + ((i & 63) << 5)]
-                = *(gUnk_0200B080 + ((&gUnk_03005660[x >> 1])[(i >> 1) * gUnk_03005620].unk0 << 2) + (x & 1) + ((i & 1) << 1));
+                = *(gUnk_0200B080 + ((&gRoomMap[x >> 1])[(i >> 1) * gUnk_03005620].unk0 << 2) + (x & 1) + ((i & 1) << 1));
     for (i = x0; i <= x1; i++)
     {
         sub_0802b168(i, 26);
@@ -411,13 +411,13 @@ void sub_0802b168(s32 x, s32 y)
     q = (x & 1) + ((y & 1) << 1);
     x >>= 1;
     y >>= 1;
-    if ((&gUnk_03005660[x])[y * gUnk_03005620].unk3 == 0)
+    if ((&gRoomMap[x])[y * gUnk_03005620].unk3 == 0)
     {
         xn = (q & 1) ? x + 1 : x - 1;
         yn = (q & 2) ? y + 1 : y - 1;
-        a = (&gUnk_03005660[x])[yn * gUnk_03005620].unk3 != 0;
-        b = (&gUnk_03005660[xn])[y * gUnk_03005620].unk3 != 0;
-        c = (&gUnk_03005660[xn])[yn * gUnk_03005620].unk3 != 0;
+        a = (&gRoomMap[x])[yn * gUnk_03005620].unk3 != 0;
+        b = (&gRoomMap[xn])[y * gUnk_03005620].unk3 != 0;
+        c = (&gRoomMap[xn])[yn * gUnk_03005620].unk3 != 0;
         if (a || b)
             idx = a + (b << 1);
         else
@@ -426,7 +426,7 @@ void sub_0802b168(s32 x, s32 y)
     }
     else
     {
-        *dst = *(gUnk_0200B080 + ((&gUnk_03005660[x])[y * gUnk_03005620].unk0 << 2) + q);
+        *dst = *(gUnk_0200B080 + ((&gRoomMap[x])[y * gUnk_03005620].unk0 << 2) + q);
     }
 }
 
@@ -445,8 +445,8 @@ void sub_0802b29c(s32 x, s32 y)
     s32 i;
 
     i = x + y * gUnk_03005620;
-    gUnk_03005660[i].unk0 = gUnk_03005660[i + 2048].unk0;
-    gUnk_03005660[i].unk2 = gUnk_03005660[i + 2048].unk2;
-    gUnk_03005660[i].unk3 = gUnk_03005660[i + 2048].unk3;
-    gUnk_02008160[i] = gUnk_02008160[i + 2048];
+    gRoomMap[i].unk0 = gRoomMap[i + 2048].unk0;
+    gRoomMap[i].unk2 = gRoomMap[i + 2048].unk2;
+    gRoomMap[i].unk3 = gRoomMap[i + 2048].unk3;
+    gBlockLayer[i] = gBlockLayer[i + 2048];
 }

@@ -39,7 +39,7 @@ void TaskSetSkipMask(u8 val, s32 idx);
 void TaskSleepForever(void);
 void TaskSetFrame(s32 a);
 void sub_08021c74(s8 *box, s32 id);
-void sub_080224b0(void);
+void TaskInitWaterFlags(void);
 void sub_080261d4(u16 a);
 s32 sub_080264b0(void);
 void sub_0802651c(s32 i);
@@ -74,7 +74,7 @@ void sub_08039c24(void)
     gCurTask->unk15 = 19;
     gCurTask->unk43 = 1;
     gCurTask->unk3C = 0xFFFF;
-    sub_080224b0();
+    TaskInitWaterFlags();
     sub_08021c74((s8 *)gPlayerDefaultTerrainBox, gCurTaskIdx);
     if (gUnk_020055C4 == 0)
     {

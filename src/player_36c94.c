@@ -13,12 +13,12 @@
  * gUnk_02007E90[player][] before its animation; its handler sub_08037914
  * runs the block-breaking hit box gUnk_0873CC54 through M09's
  * sub_08030898 (spawning the debris with M17's sub_08065100 at the
- * broken block) and M09's collision registry sub_0801a828.  Actions 14
+ * broken block) and M09's collision registry RegisterCollider.  Actions 14
  * and 15 (sub_08037bd4, sub_08037d64) are short animation scripts, and
  * handlers 14 and 15 pick the next velocity preset from the ground flags
  * Task.unk7A/unk7B. */
 
-/* gUnk_03005550: M06's collision result block (src/terrain_1bcac.c spells it
+/* gTerrainResult: M06's collision result block (src/terrain_1bcac.c spells it
    the same way except unk8, which M09 reads with ldrsh). */
 struct Unk03005550
 {
@@ -62,7 +62,7 @@ extern s16 gUnk_0873D880[];
 extern u16 gUnk_0873D8B4[];
 extern u16 gUnk_0873D908[];
 extern u16 gLatchedPressedKeys[];             /* newly-pressed keys, latched per player */
-extern struct Unk03005550 gUnk_03005550;
+extern struct Unk03005550 gTerrainResult;
 extern s16 gUnk_0300244C;
 extern struct M04Spark gUnk_02007E90[][3];
 extern u8 gUnk_02007CF4[];
@@ -76,7 +76,7 @@ void TaskYieldTrampoline(s32 frames);
 void TaskSleepForever(void);
 void TaskSetEntry(void *a, u32 i);
 void TaskSetFrame(s32 a);
-u32 sub_0801a828(u8 idx, s16 x, s16 y, u8 *p);
+u32 RegisterCollider(u8 idx, s16 x, s16 y, u8 *p);
 u16 sub_08030898(struct HitBoxSet *p, s32 e);
 void PlayerStopAxes(s32 a0);
 s32 PlaySfxIfLocalPlayer(s32 a0, u16 a1);
@@ -345,7 +345,7 @@ void sub_080371f0(void)
     switch (k)
     {
     case 1:
-        if (gUnk_03005550.unk1 != 0 || (t->unk88->unk48 & 4) != 0)
+        if (gTerrainResult.unk1 != 0 || (t->unk88->unk48 & 4) != 0)
             t->unk58 = 0;
         qa = gLatchedHeldKeys;
         ta = gCurTask;
@@ -477,7 +477,7 @@ void sub_080371f0(void)
             PlayerStopAxes(2);
         PlayerRequestLocomotion();
     }
-    else if ((gUnk_03005550.unk6 & 3) == 0)
+    else if ((gTerrainResult.unk6 & 3) == 0)
     {
         te->unk43 = te->unk2C;
         tg = gCurTask;
@@ -681,7 +681,7 @@ void sub_08037914(void)
                 }
                 u = gCurTask;
                 if (u->unk88->unk09 == 0)
-                    sub_0801a828(gCurTaskIdx, u->unk48, u->unk4A, gUnk_0873BEC4);
+                    RegisterCollider(gCurTaskIdx, u->unk48, u->unk4A, gUnk_0873BEC4);
             }
             else if (u->unk88->unk09 == 1)
             {
@@ -696,7 +696,7 @@ void sub_08037914(void)
                 if (u->unk34 != 0)
                 {
                     u->unk34--;
-                    sub_0801a828(gCurTaskIdx, u->unk48, u->unk4A, gUnk_0873BEC4);
+                    RegisterCollider(gCurTaskIdx, u->unk48, u->unk4A, gUnk_0873BEC4);
                 }
             skip:;
             }

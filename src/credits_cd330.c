@@ -79,7 +79,7 @@ void sub_08008c4c(s32 a0);                                   /* load palette set
 void sub_08008c64(u16 a0);                                   /* load screen graphics */
 void sub_0800b4a8(void);
 void sub_0800b514(void);
-void sub_0801a7b4(void);
+void ClearColliderLists(void);
 void sub_0802497c(void);
 void LatchPlayerKeys(void);
 void sub_08066144(void);
@@ -154,7 +154,7 @@ void CreditsMain(void)
         gBrightness = -5;
         n = frames[gUnk_0201C1B0];
         while (--n != 0) {
-            sub_0801a7b4();
+            ClearColliderLists();
             RunLinkFrame();
             sub_080cd75c();
             InputRecorderUpdate();
@@ -205,7 +205,7 @@ void sub_080cd674(void)
     s8 zero;
 
     ResetBgScroll();
-    sub_0801a7b4();
+    ClearColliderLists();
     sub_08008c4c(17);
     sub_0802497c();
     b = gUnk_02007FB8;

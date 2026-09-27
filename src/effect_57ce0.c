@@ -17,7 +17,7 @@
  * walks the tasks 32-62 of kinds 0, 3, 4, 6 and 9 one at a time the same
  * way.  Its callback sub_08058410 kills it once the player leaves mode 13
  * and otherwise, while PlayerState.unk16 is set, registers the collider row
- * gUnk_0873C04C (sub_0801a828).  Variant 38 (sub_08058460) rides on its
+ * gUnk_0873C04C (RegisterCollider).  Variant 38 (sub_08058460) rides on its
  * spawner through four sub-states and draws through M11's sub_0803dfc8;
  * sub_080586fc kills it once the player leaves mode 13. */
 
@@ -53,7 +53,7 @@ void TaskSetMotionXFacing(s32 a, s32 b);
 void TaskSetFrame(s32 a);
 void TaskRestoreSkipMask(u32 idx);
 void TaskSaveSkipMask(u32 idx);
-void sub_0801a828(u8 a, s16 x, s16 y, void *p);   /* M11's caller spelling */
+void RegisterCollider(u8 a, s16 x, s16 y, void *p);   /* M11's caller spelling */
 void sub_0803dfc8(void);
 void LoadBackdropColor(u32 src);
 void sub_08058410(void);
@@ -357,7 +357,7 @@ void sub_08058410(void)
     if (t->unk88->unk04 != 13)
         TaskFree(gCurTaskIdx);
     else if ((s8)t->unk88->unk16 != 0)
-        sub_0801a828((u8)gCurTaskIdx, t->unk28, t->unk2C, gUnk_0873C04C);
+        RegisterCollider((u8)gCurTaskIdx, t->unk28, t->unk2C, gUnk_0873C04C);
 }
 
 void sub_08058460(void)

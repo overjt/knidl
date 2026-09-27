@@ -21,7 +21,7 @@ extern u8 gUnk_03002438;
 extern s8 gUnk_03002444;
 extern u16 gLatchedHeldKeys[];
 extern struct Task *gCurTask;
-extern u8 gUnk_03005550[];
+extern u8 gTerrainResult[];
 extern u32 gPlayerMotionYPresets[];
 extern u32 gUnk_0873BD28[];
 extern u32 gUnk_0873CA68[];
@@ -44,10 +44,10 @@ void TaskSleepForever(void);
 void TaskSetEntry(void *a, u32 i);
 void TaskSetFrameByFacing(s16 a);
 void TaskSetFrame(s32 a);
-void sub_0801a828(u8 a, s16 x, s16 y, void *p);
+void RegisterCollider(u8 a, s16 x, s16 y, void *p);
 void sub_08021c74(s32 a, s32 b);
-void sub_080224b0(void);
-s32 sub_08022624(u16 a, u16 b);
+void TaskInitWaterFlags(void);
+s32 IsFullBlockAtPixel(u16 a, u16 b);
 s32 sub_08022760(struct Task *t);
 void sub_08025024(void);
 void sub_080261d4(u32 a);
@@ -213,7 +213,7 @@ void sub_080415c8(void)
         {
             t->unk88->unk01 = 1;
         }
-        else if (gUnk_03005550[0] != 0)
+        else if (gTerrainResult[0] != 0)
         {
             PlayerCheckBump();
             gCurTask->unk88->unk01 = 1;
@@ -301,7 +301,7 @@ void sub_08041778(void)
     t = gCurTask;
     if (t->unk28 == 0)
     {
-        m2 = gUnk_03005550[13];
+        m2 = gTerrainResult[13];
         if (m2 != 0)
         {
             t->unk88->unk14 = 5;
@@ -317,7 +317,7 @@ void sub_08041778(void)
         p = t->unk88;
         if ((s16)p->unk14 == 0)
         {
-            if (sub_08022624(((u16 *)t)[36],
+            if (IsFullBlockAtPixel(((u16 *)t)[36],
                              (y = ((u16 *)t)[37], m3 = -16, m3 &= y, m3 + 16)) != 0)
                 gCurTask->unk7A = 1;
         }
@@ -360,7 +360,7 @@ void sub_08041778(void)
                 goto end;
             }
         }
-        if (gUnk_03005550[0] == 0)
+        if (gTerrainResult[0] == 0)
             goto end;
         PlayerCheckBump();
         gCurTask->unk88->unk01 = 1;
@@ -456,7 +456,7 @@ void sub_08041a2c(void)
             PlayerRequestLocomotion();
             break;
         }
-        if (gUnk_03005550[1] != 0)
+        if (gTerrainResult[1] != 0)
         {
             PlayerCheckBump();
             PlayerStopAxes(2);
@@ -487,7 +487,7 @@ void sub_08041a2c(void)
                 break;
             }
         }
-        if (gUnk_03005550[0] == 0)
+        if (gTerrainResult[0] == 0)
             break;
         PlayerCheckBump();
         if (((u8 *)gCurTask->unk88)[62] & 7)
@@ -554,7 +554,7 @@ void sub_08041c30(void)
                 break;
             }
         }
-        if (gUnk_03005550[0] == 0)
+        if (gTerrainResult[0] == 0)
             break;
         PlayerCheckBump();
         if (((u8 *)gCurTask->unk88)[62] & 7)
@@ -724,7 +724,7 @@ void sub_08042050(void)
         case 0:
             break;
         case 1:
-            if (gUnk_03005550[0] != 0)
+            if (gTerrainResult[0] != 0)
             {
                 PlayerCheckBump();
                 PlayerStopAxes(1);
@@ -743,7 +743,7 @@ void sub_08042050(void)
             if (x < 0)
                 x = -x;
             if ((u32)x > 0xA000)
-                sub_0801a828((u8)gCurTaskIdx, t2->unk48, t2->unk4A, gUnk_0873CA68);
+                RegisterCollider((u8)gCurTaskIdx, t2->unk48, t2->unk4A, gUnk_0873CA68);
             break;
         case 2:
             if (t->unk28 != 0)
@@ -919,7 +919,7 @@ void sub_08042328(void)
     switch (k)
     {
     case 1:
-        if (gUnk_03005550[1] != 0 || (((u8 *)t->unk88)[72] & 4) != 0)
+        if (gTerrainResult[1] != 0 || (((u8 *)t->unk88)[72] & 4) != 0)
             t->unk58 = 0;
         qa = gLatchedHeldKeys;
         ta = gCurTask;
@@ -1008,7 +1008,7 @@ void sub_08042328(void)
             PlayerStopAxes(2);
         PlayerRequestLocomotion();
     }
-    else if ((gUnk_03005550[6] & 3) == 0)
+    else if ((gTerrainResult[6] & 3) == 0)
     {
         te->unk43 = te->unk2C;
         tg = gCurTask;
@@ -1418,7 +1418,7 @@ void sub_08042e98(void)
     gCurTask->unk88->unk05 = gCurTask->unk88->unk04;
     gCurTask->unk88->unk04 = 19;
     gCurTask->unk15 = 19;
-    sub_080224b0();
+    TaskInitWaterFlags();
     sub_08021c74((s32)gPlayerDefaultTerrainBox, gCurTaskIdx);
     gCurTask->unk28 = 0;
     gCurTask->unk3C = -1;

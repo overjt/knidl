@@ -30,7 +30,7 @@ struct MapTile
     /*0x03*/ u8 unk3;
 };
 
-/* gUnk_020061F0[64] (and gUnk_0200A6F0[64] for the second block layer
+/* gBreakingBlocks[64] (and gUnk_0200A6F0[64] for the second block layer
    gUnk_02004CA0): one 32-byte record per block being broken.  unk0/unk2 =
    metatile x/y, unk4 = its map index, unk6 = the position in the animation
    script (0x7FFF = free slot; bit 15 = already stepped this frame), unk8 =
@@ -60,20 +60,20 @@ struct Unk020061F0
 
 /* M09's view of the room header (M07's struct RoomDef, src/level_*.c): the
    only field read here is unk10, the table of replacement metatiles the low
-   byte of gUnk_02008160[] indexes (M07 types it void *). */
+   byte of gBlockLayer[] indexes (M07 types it void *). */
 struct RoomDef
 {
     /*0x00*/ u8 filler00[0x10];
     /*0x10*/ struct MapTile *unk10;
 };
 
-extern struct Unk020061F0 gUnk_020061F0[];
-extern u16 gUnk_02008160[];             /* per-cell block layer: low byte = replacement index, 0x8000 = being broken */
+extern struct Unk020061F0 gBreakingBlocks[];
+extern u16 gBlockLayer[];             /* per-cell block layer: low byte = replacement index, 0x8000 = being broken */
 extern s16 gUnk_0300561C;               /* map height in metatiles */
 extern s16 gUnk_03005620;               /* map width in metatiles */
 extern struct RoomDef *gUnk_030055EC;   /* the current room header */
 extern struct Unk020061F0 gUnk_02007FD0;
-extern struct MapTile *gUnk_03005660;   /* the room's metatile map */
+extern struct MapTile *gRoomMap;   /* the room's metatile map */
 extern s16 gUnk_020055B8[4];
 extern u16 gUnk_0200B080[];
 extern u16 gUnk_0200B060[];
@@ -81,9 +81,9 @@ extern u16 gUnk_0873A6D4[][3];
 extern u16 gUnk_0873A6EC[][3][3];
 extern s8 gUnk_0873A734[][2];
 extern u16 gUnk_080D71A0[];
-extern u16 gUnk_02007D68;               /* the block sub_0803111c accepted: x */
-extern u16 gUnk_0200AEFC;               /*   y */
-extern u16 gUnk_020060C8;               /*   map index */
+extern u16 gBlockCursorX;               /* the block CanBreakBlock accepted: x */
+extern u16 gBlockCursorY;               /*   y */
+extern u16 gBlockCursorIndex;               /*   map index */
 extern s32 gUnk_03005614;
 extern s32 gUnk_03005634;
 extern u16 gUnk_02004CA0[];
@@ -99,7 +99,7 @@ void sub_08026308(void);
 void sub_0802b2f0(void);
 void sub_0802b368(void);
 void sub_0802b3e4(void);
-s32 sub_0803111c(s32 x, s32 y, s32 id, s32 e);
+s32 CanBreakBlock(s32 x, s32 y, s32 id, s32 e);
 s32 sub_08031374(void);
 void sub_08031994(struct Unk020061F0 *b);
 void sub_080319b0(struct Unk020061F0 *b);
@@ -124,7 +124,7 @@ void sub_080318b4(void)
     sub_0802b2f0();
     for (i = 0; i < 64; i++)
     {
-        b = &gUnk_020061F0[i];
+        b = &gBreakingBlocks[i];
         if (b->unk6 == 0x7FFF || (b->unk6 & 0x8000))
             continue;
     again:
@@ -159,21 +159,21 @@ void sub_080318b4(void)
         }
     }
     for (i = 0; i < 64; i++)
-        gUnk_020061F0[i].unk6 &= 0x7FFF;
+        gBreakingBlocks[i].unk6 &= 0x7FFF;
 }
 
 void sub_08031994(struct Unk020061F0 *b)
 {
     b->unk6 = 0x7FFF;
     b->unk14 = 0;
-    gUnk_02008160[b->unk4] = 0;
+    gBlockLayer[b->unk4] = 0;
 }
 
 void sub_080319b0(struct Unk020061F0 *b)
 {
     b->unk6 = 0x7FFF;
     b->unk14 = 0;
-    gUnk_02008160[b->unk4] &= 0x7FFF;
+    gBlockLayer[b->unk4] &= 0x7FFF;
 }
 
 void sub_080319d0(struct Unk020061F0 *b, s32 n)
@@ -195,15 +195,15 @@ void sub_080319d0(struct Unk020061F0 *b, s32 n)
             if (s->unk2 >= gUnk_0300561C)
                 return;
             s->unk4 = gUnk_03005620 * i + b->unk4;
-            if (gUnk_02008160[s->unk4] != 0)
+            if (gBlockLayer[s->unk4] != 0)
             {
-                s->unk8 = &gUnk_030055EC->unk10[gUnk_02008160[s->unk4] & 0xFF];
+                s->unk8 = &gUnk_030055EC->unk10[gBlockLayer[s->unk4] & 0xFF];
                 s->unkC = (u16 *)0x06002000 + (((s->unk0 * 2) & 31) + ((((s->unk2 * 2) & 31) + (u16)(s->unk0 & 16) * 2) << 5));
                 s->unk16 = s->unk8->unk0;
                 s->unk18 = s->unk8->unk3;
                 sub_08031c38(s);
                 sub_08031c7c(s);
-                gUnk_02008160[s->unk4] = 0;
+                gBlockLayer[s->unk4] = 0;
             }
         }
     }
@@ -226,11 +226,11 @@ void sub_08031ab8(struct Unk020061F0 *b, s32 n)
         if (b->unk2 + i >= gUnk_0300561C)
             return;
         s->unk4 = gUnk_03005620 * i + b->unk4;
-        if (gUnk_02008160[s->unk4] != 0)
+        if (gBlockLayer[s->unk4] != 0)
         {
-            s->unk8 = &gUnk_030055EC->unk10[gUnk_02008160[s->unk4] & 0xFF];
+            s->unk8 = &gUnk_030055EC->unk10[gBlockLayer[s->unk4] & 0xFF];
             sub_08031c38(s);
-            gUnk_02008160[s->unk4] |= 0x8000;
+            gBlockLayer[s->unk4] |= 0x8000;
         }
     }
 }
@@ -254,15 +254,15 @@ void sub_08031b58(struct Unk020061F0 *b, s32 n)
             if (s->unk2 >= gUnk_0300561C)
                 return;
             s->unk4 = gUnk_03005620 * i + b->unk4;
-            if (gUnk_02008160[s->unk4] != 0)
+            if (gBlockLayer[s->unk4] != 0)
             {
-                s->unk8 = &gUnk_030055EC->unk10[gUnk_02008160[s->unk4] & 0xFF] - 1;
+                s->unk8 = &gUnk_030055EC->unk10[gBlockLayer[s->unk4] & 0xFF] - 1;
                 s->unkC = (u16 *)0x06002000 + (((s->unk0 * 2) & 31) + ((((s->unk2 * 2) & 31) + (u16)(s->unk0 & 16) * 2) << 5));
                 s->unk16 = s->unk8->unk0;
                 s->unk18 = s->unk8->unk3;
 
                 sub_08031c7c(s);
-                gUnk_02008160[s->unk4] = 0;
+                gBlockLayer[s->unk4] = 0;
             }
         }
     }
@@ -273,9 +273,9 @@ void sub_08031c38(struct Unk020061F0 *b)
 {
     b->unk16 = b->unk8->unk0;
     b->unk18 = b->unk8->unk3;
-    gUnk_03005660[b->unk4].unk0 = b->unk16;
-    gUnk_03005660[b->unk4].unk3 = b->unk18;
-    gUnk_02008160[b->unk4] = ((u8)gUnk_02008160[b->unk4] + 1) | 0x8000;
+    gRoomMap[b->unk4].unk0 = b->unk16;
+    gRoomMap[b->unk4].unk3 = b->unk18;
+    gBlockLayer[b->unk4] = ((u8)gBlockLayer[b->unk4] + 1) | 0x8000;
 }
 
 void sub_08031c7c(struct Unk020061F0 *b)
@@ -303,29 +303,29 @@ void sub_08031d04(struct Unk020061F0 *b)
 {
     s32 slot;
 
-    if (sub_0803111c(b->unk0, b->unk2 - 1, b->unk1A, b->unk1C) != 0)
+    if (CanBreakBlock(b->unk0, b->unk2 - 1, b->unk1A, b->unk1C) != 0)
     {
         slot = sub_08031374();
         if (slot != -1)
-            gUnk_020061F0[slot].unk6 |= 0x8000;
+            gBreakingBlocks[slot].unk6 |= 0x8000;
     }
-    if (sub_0803111c(b->unk0 - 1, b->unk2, b->unk1A, b->unk1C) != 0)
+    if (CanBreakBlock(b->unk0 - 1, b->unk2, b->unk1A, b->unk1C) != 0)
     {
         slot = sub_08031374();
         if (slot != -1)
-            gUnk_020061F0[slot].unk6 |= 0x8000;
+            gBreakingBlocks[slot].unk6 |= 0x8000;
     }
-    if (sub_0803111c(b->unk0 + 1, b->unk2, b->unk1A, b->unk1C) != 0)
+    if (CanBreakBlock(b->unk0 + 1, b->unk2, b->unk1A, b->unk1C) != 0)
     {
         slot = sub_08031374();
         if (slot != -1)
-            gUnk_020061F0[slot].unk6 |= 0x8000;
+            gBreakingBlocks[slot].unk6 |= 0x8000;
     }
-    if (sub_0803111c(b->unk0, b->unk2 + 1, b->unk1A, b->unk1C) != 0)
+    if (CanBreakBlock(b->unk0, b->unk2 + 1, b->unk1A, b->unk1C) != 0)
     {
         slot = sub_08031374();
         if (slot != -1)
-            gUnk_020061F0[slot].unk6 |= 0x8000;
+            gBreakingBlocks[slot].unk6 |= 0x8000;
     }
 }
 
@@ -338,7 +338,7 @@ void sub_08031de4(void)
     sub_0802b3e4();
     for (i = 0; i < 64; i++)
     {
-        b = &gUnk_020061F0[i];
+        b = &gBreakingBlocks[i];
         if (b->unk6 == 0x7FFF || (b->unk6 & 0x8000))
             continue;
     again:
@@ -370,7 +370,7 @@ void sub_08031de4(void)
         }
     }
     for (i = 0; i < 64; i++)
-        gUnk_020061F0[i].unk6 &= 0x7FFF;
+        gBreakingBlocks[i].unk6 &= 0x7FFF;
     sub_08026308();
 }
 
@@ -381,17 +381,17 @@ void sub_08031ebc(struct Unk020061F0 *b)
 
     b->unk16 = b->unk8->unk0;
     b->unk18 = b->unk8->unk3;
-    gUnk_03005660[b->unk4].unk0 = b->unk16;
-    gUnk_03005660[b->unk4].unk3 = b->unk18;
+    gRoomMap[b->unk4].unk0 = b->unk16;
+    gRoomMap[b->unk4].unk3 = b->unk18;
     x = b->unk0;
     if (x > 39)
     {
         m = 31;
         m &= x;
-        (&gUnk_03005660[m])[b->unk2 * gUnk_03005620].unk0 = b->unk16;
-        (&gUnk_03005660[m])[b->unk2 * gUnk_03005620].unk3 = b->unk18;
+        (&gRoomMap[m])[b->unk2 * gUnk_03005620].unk0 = b->unk16;
+        (&gRoomMap[m])[b->unk2 * gUnk_03005620].unk3 = b->unk18;
     }
-    gUnk_02008160[b->unk4] = ((u8)gUnk_02008160[b->unk4] + 1) | 0x8000;
+    gBlockLayer[b->unk4] = ((u8)gBlockLayer[b->unk4] + 1) | 0x8000;
 }
 
 void sub_08031f3c(struct Unk020061F0 *b)
@@ -437,7 +437,7 @@ void sub_08031f3c(struct Unk020061F0 *b)
                     x += b->unk0;
                     if (x < 0 || gUnk_03005620 <= x)
                         gUnk_0200B060[j + (k + i)] = 0;
-                    else if ((&gUnk_03005660[x])[y * gUnk_03005620].unk3 != 0)
+                    else if ((&gRoomMap[x])[y * gUnk_03005620].unk3 != 0)
                         gUnk_0200B060[j + (k + i)] = 1;
                     else
                         gUnk_0200B060[j + (k + i)] = 0;
@@ -466,7 +466,7 @@ void sub_08031f3c(struct Unk020061F0 *b)
 
                     if (y >= 0 && gUnk_0300561C * 2 > y && x >= gUnk_020055B8[0] && gUnk_020055B8[1] >= x)
                     {
-                        if ((&gUnk_03005660[x >> 1])[(y >> 1) * gUnk_03005620].unk3 == 0)
+                        if ((&gRoomMap[x >> 1])[(y >> 1) * gUnk_03005620].unk3 == 0)
                         {
                             v = gUnk_0200B060[gUnk_0873A6EC[n][l][0]] + gUnk_0200B060[gUnk_0873A6EC[n][l][1]] * 2;
                             if (v == 0)
@@ -487,11 +487,11 @@ s32 sub_08032288(s32 x, s32 y)
 {
     s32 x0, x1, y0, y1;
 
-    gUnk_02007D68 = x;
-    gUnk_0200AEFC = y;
-    if (gUnk_02007D68 >= gUnk_03005620)
+    gBlockCursorX = x;
+    gBlockCursorY = y;
+    if (gBlockCursorX >= gUnk_03005620)
         return 0;
-    if (gUnk_0200AEFC >= gUnk_0300561C)
+    if (gBlockCursorY >= gUnk_0300561C)
         return 0;
     x0 = (gUnk_03005614 >> 20) - 9;
     x1 = (gUnk_03005614 >> 20) + 10;
@@ -505,10 +505,10 @@ s32 sub_08032288(s32 x, s32 y)
         y0 = 0;
     if (y1 > gUnk_0300561C)
         y1 = gUnk_0300561C;
-    if (gUnk_02007D68 < x0 || gUnk_02007D68 > x1 || gUnk_0200AEFC < y0 || gUnk_0200AEFC > y1)
+    if (gBlockCursorX < x0 || gBlockCursorX > x1 || gBlockCursorY < y0 || gBlockCursorY > y1)
         return 0;
-    gUnk_020060C8 = gUnk_0200AEFC * gUnk_03005620 + gUnk_02007D68;
-    if (gUnk_02004CA0[gUnk_020060C8] != 0 && !(gUnk_02004CA0[gUnk_020060C8] & 0x8000))
+    gBlockCursorIndex = gBlockCursorY * gUnk_03005620 + gBlockCursorX;
+    if (gUnk_02004CA0[gBlockCursorIndex] != 0 && !(gUnk_02004CA0[gBlockCursorIndex] & 0x8000))
         return 1;
     return 0;
 }
@@ -526,15 +526,15 @@ s16 sub_08032338(void)
             return -1;
     }
     b = &gUnk_0200A6F0[i];
-    b->unk4 = gUnk_020060C8;
+    b->unk4 = gBlockCursorIndex;
     b->unk8 = gUnk_087E1D58[gUnk_0300238C][gUnk_030023EC][gUnk_03002468 + 1]->unk10 + 1;
-    b->unk0 = gUnk_02007D68;
-    b->unk2 = gUnk_0200AEFC;
-    b->unkC = (u16 *)0x06001800 + (((gUnk_02007D68 * 2) & 31) + (((gUnk_0200AEFC * 2) & 31) << 5));
+    b->unk0 = gBlockCursorX;
+    b->unk2 = gBlockCursorY;
+    b->unkC = (u16 *)0x06001800 + (((gBlockCursorX * 2) & 31) + (((gBlockCursorY * 2) & 31) << 5));
     b->unk6 = 0;
     b->unk14 = 0;
     b->unk10 = gUnk_0873A458;
-    gUnk_02004CA0[gUnk_020060C8] |= 0x8000;
+    gUnk_02004CA0[gBlockCursorIndex] |= 0x8000;
     PlaySfx(224);
     if (b->unk10[0] == 1)
         sub_08032500(b);

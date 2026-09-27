@@ -49,7 +49,7 @@ extern u8 gObjPalette[];              /* OBJ palette buffer (M11 spelling) */
 extern u32 gUnk_0873BF64[];
 extern u32 gUnk_0873C1C4[];
 extern u32 gUnk_0873CEF4[];
-extern u32 gUnk_0873C214[];             /* collider row passed to sub_0801a828 (4th arg) */
+extern u32 gUnk_0873C214[];             /* collider row passed to RegisterCollider (4th arg) */
 extern u32 gUnk_0873CF4C[];             /* hit-box set, passed as (struct HitBoxSet *) */
 
 /* M09's hit-box set (src/block_30804.c); only a pointer is passed here */
@@ -65,8 +65,8 @@ void TaskSetFrameFlip(s32 a);
 s32 sub_08009fcc(s32 a, s32 b, u32 c);
 void sub_0800a0dc(s32 a, s32 b);
 void sub_0800a178(s32 a, s32 id);
-void sub_0801a828(u8 a, s16 x, s16 y, void *p);   /* M11's caller spelling */
-u16 sub_08030848(struct HitBoxSet *p, s32 e);
+void RegisterCollider(u8 a, s16 x, s16 y, void *p);   /* M11's caller spelling */
+u16 TaskBreakBlocks(struct HitBoxSet *p, s32 e);
 void PlayerStopAxes(s32 a0);
 void SetPlayerInvulnerability(s32 a0, s32 a1, s32 a2);
 void PlayerStopSfx(void);
@@ -807,7 +807,7 @@ void sub_08049484(void)
         case 4:
             if (t->unk30 != -1) {
                 LoadPlayerBodyBoxRect(t->unk88->unk00, (u8 *)gUnk_0873BF64 + t->unk30 * 8);
-                sub_0801a828(gCurTaskIdx, gCurTask->unk48, gCurTask->unk4A,
+                RegisterCollider(gCurTaskIdx, gCurTask->unk48, gCurTask->unk4A,
                              (u8 *)gPlayerBodyBoxes + gCurTask->unk88->unk00 * 20);
             }
             break;
@@ -816,15 +816,15 @@ void sub_08049484(void)
                 LoadPlayerBodyBoxRect(t->unk88->unk00, (u8 *)gUnk_0873C1C4 + t->unk30 * 8);
                 LoadPlayerHitBoxSet(gCurTask->unk88->unk00,
                              (s32)((u8 *)gUnk_0873CEF4 + gCurTask->unk30 * 8));
-                sub_0801a828(gCurTaskIdx, gCurTask->unk48, gCurTask->unk4A,
+                RegisterCollider(gCurTaskIdx, gCurTask->unk48, gCurTask->unk4A,
                              (u8 *)gPlayerBodyBoxes + gCurTask->unk88->unk00 * 20);
-                sub_08030848((struct HitBoxSet *)&gPlayerHitBoxSets[gCurTask->unk88->unk00],
+                TaskBreakBlocks((struct HitBoxSet *)&gPlayerHitBoxSets[gCurTask->unk88->unk00],
                              gCurTask->unk88->unk00);
             }
             break;
         case 14:
-            sub_0801a828(gCurTaskIdx, t->unk48, t->unk4A, gUnk_0873C214);
-            sub_08030848((struct HitBoxSet *)gUnk_0873CF4C, gCurTask->unk88->unk00);
+            RegisterCollider(gCurTaskIdx, t->unk48, t->unk4A, gUnk_0873C214);
+            TaskBreakBlocks((struct HitBoxSet *)gUnk_0873CF4C, gCurTask->unk88->unk00);
             break;
         }
     }

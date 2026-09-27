@@ -118,8 +118,8 @@ extern s32 gUnk_030055E8;
 extern struct MapCell gUnk_02000040[];
 extern s16 gUnk_03005620;
 extern s16 gUnk_0300561C;
-extern struct MapCell *gUnk_03005660;
-extern u16 gUnk_02008160[];
+extern struct MapCell *gRoomMap;
+extern u16 gBlockLayer[];
 extern s16 gUnk_030055E4;
 extern s16 gUnk_03005628[4];
 extern u16 gUnk_03005600[2];
@@ -194,14 +194,14 @@ void sub_08027e28(void)
             for (j = 0; j <= 16; j++)
             {
                 idx = gUnk_03005620 * i + j;
-                ((struct MapTile *)gUnk_03005660)[idx].unk0 = 0;
-                ((struct MapTile *)gUnk_03005660)[idx].unk2 = 0;
-                ((struct MapTile *)gUnk_03005660)[idx].unk3 = 0;
-                gUnk_02008160[idx] = 0;
+                ((struct MapTile *)gRoomMap)[idx].unk0 = 0;
+                ((struct MapTile *)gRoomMap)[idx].unk2 = 0;
+                ((struct MapTile *)gRoomMap)[idx].unk3 = 0;
+                gBlockLayer[idx] = 0;
             }
         }
         CpuSet(p, p + 2048, (gUnk_030055E4 * 2) & 0x1FFFFF);
-        CpuSet(gUnk_02008160, gUnk_02008160 + 2048, gUnk_030055E4 & 0x1FFFFF);
+        CpuSet(gBlockLayer, gBlockLayer + 2048, gUnk_030055E4 & 0x1FFFFF);
         gUnk_030055C0 = 5;
         break;
     case 2:

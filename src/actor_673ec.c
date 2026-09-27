@@ -21,20 +21,20 @@ extern vs16 gTaskSlotTypes[];
 extern u32 gUnk_02007D00[];
 extern struct PlayerState gPlayerStates[];
 extern s16 gUnk_02005588[];
-extern u16 gUnk_03002358;
-extern u16 gUnk_0300214C;
-extern u16 gUnk_03002368;
+extern u16 gAttackX;
+extern u16 gAttackY;
+extern u16 gAttackPower;
 extern u8 gUnk_03002390;
 extern u8 gAttackLastHitter;
 extern u8 gUnk_030023F0;
 extern s16 gAttackFacing;
 extern s8 gAttackHitDuration;
 extern u8 gUnk_03002460;
-extern s32 gUnk_0300236C;
-extern u8 gUnk_03002380;
+extern s32 gAttackBox;
+extern u8 gHitKind;
 extern u8 gUnk_03002450;
-extern u16 gUnk_03002394;
-extern u8 gUnk_03002144;
+extern u16 gHitDamage;
+extern u8 gHitDirection;
 extern u8 gUnk_03002354;
 extern u8 gUnk_030023DC;
 extern u8 gUnk_03001F24;
@@ -90,10 +90,10 @@ extern void TaskSetMotionXFacing(s32 a, s32 b);
 extern void TaskSetMotionY(s32 a, s32 b, s32 c);
 extern void TaskSetFrameFlip(s32 a);
 extern u32 gPlayerDefaultTerrainBox[];
-extern u8 gUnk_03005550;
+extern u8 gTerrainResult;
 extern s32 gUnk_0873E348[];
 extern s32 gUnk_0873E388[];
-extern void sub_080227a4(struct Task *t);
+extern void ClampTaskToRoom(struct Task *t);
 extern void sub_0801bcac(u32 *p);
 extern u16 gUnk_0873E3C8[];
 extern void sub_080261d4(u32 a);
@@ -348,9 +348,9 @@ void sub_080676c0(void)
 }
 void sub_08067908(void)
 {
-    sub_080227a4(gCurTask);
+    ClampTaskToRoom(gCurTask);
     sub_0801bcac(gPlayerDefaultTerrainBox);
-    if (gUnk_03005550 != 0)
+    if (gTerrainResult != 0)
         gCurTask->unk54 = 0;
     if (gCurTask->unk34 != 0)
     {
@@ -544,9 +544,9 @@ void sub_08067b24(void)
 
 void sub_08067d30(void)
 {
-    sub_080227a4(gCurTask);
+    ClampTaskToRoom(gCurTask);
     sub_0801bcac(gPlayerDefaultTerrainBox);
-    if (gUnk_03005550 != 0)
+    if (gTerrainResult != 0)
         gCurTask->unk54 = 0;
     if (gCurTask->unk34 != 0)
     {
@@ -668,7 +668,7 @@ void sub_08068028(void)
     struct Task *t;
 
     sub_0801bcac(gPlayerDefaultTerrainBox);
-    if (gUnk_03005550 != 0)
+    if (gTerrainResult != 0)
     {
         CreateChildTaskHere(148, 0);
         PlaySfx(153);
@@ -748,7 +748,7 @@ void sub_08068224(void)
     struct Task *t;
 
     sub_0801bcac(gPlayerDefaultTerrainBox);
-    if (gUnk_03005550 != 0)
+    if (gTerrainResult != 0)
     {
         CreateChildTaskHere(148, 0);
         PlaySfx(153);
@@ -842,9 +842,9 @@ void sub_080682a8(void)
 }
 void sub_08068460(void)
 {
-    sub_080227a4(gCurTask);
+    ClampTaskToRoom(gCurTask);
     sub_0801bcac(gPlayerDefaultTerrainBox);
-    if (gUnk_03005550 != 0)
+    if (gTerrainResult != 0)
         gCurTask->unk54 = 0;
     if (gCurTask->unk34 != 0)
         sub_0806865c(gCurTaskIdx);
@@ -1307,16 +1307,16 @@ u32 ActorCheckHitsWithBox(s32 a)
                 gCurTask->unk7F = -1;
             }
         }
-        gUnk_03002358 = gCurTask->unk48;
+        gAttackX = gCurTask->unk48;
         u = gCurTask;
-        gUnk_0300214C = u->unk4A;
-        gUnk_03002368 = u->unk78;
+        gAttackY = u->unk4A;
+        gAttackPower = u->unk78;
         gUnk_03002390 = u->unk7E;
         gAttackLastHitter = u->unk7F;
         gUnk_030023F0 = u->unk75;
         gAttackFacing = u->unk43;
         gAttackHitDuration = 30;
-        gUnk_0300236C = a;
+        gAttackBox = a;
         r = sub_08068cb4(0);
     }
     gCurTask->unk78 = saved;
@@ -1348,10 +1348,10 @@ u32 ActorCheckHits(void)
                 a->unk05 = 0;
         }
     }
-    gUnk_03002358 = gCurTask->unk48;
+    gAttackX = gCurTask->unk48;
     v = gCurTask;
-    gUnk_0300214C = v->unk4A;
-    gUnk_03002368 = v->unk78;
+    gAttackY = v->unk4A;
+    gAttackPower = v->unk78;
     gUnk_03002390 = v->unk7E;
     gAttackLastHitter = v->unk7F;
     gUnk_03002460 = a->unk06;
@@ -1361,14 +1361,14 @@ u32 ActorCheckHits(void)
     {
         gAttackHitDuration = a->unk60->unk00;
         if (v->unk75 > (a->unk60->unk00 >> 1))
-            gUnk_0300236C = a->unk60->unk04;
+            gAttackBox = a->unk60->unk04;
         else
-            gUnk_0300236C = a->unk48;
+            gAttackBox = a->unk48;
     }
     else
     {
         gAttackHitDuration = 30;
-        gUnk_0300236C = a->unk48;
+        gAttackBox = a->unk48;
     }
     sub_0806dedc();
     if (gAttackHitDuration - gCurTask->unk75 <= 5)
@@ -1402,10 +1402,10 @@ u32 sub_08068f68(void)
                     a->unk05 = 0;
             }
         }
-        gUnk_03002358 = gCurTask->unk48;
+        gAttackX = gCurTask->unk48;
         v = gCurTask;
-        gUnk_0300214C = v->unk4A;
-        gUnk_03002368 = v->unk78;
+        gAttackY = v->unk4A;
+        gAttackPower = v->unk78;
         gUnk_03002390 = v->unk7E;
         gAttackLastHitter = v->unk7F;
         gUnk_03002460 = a->unk06;
@@ -1415,14 +1415,14 @@ u32 sub_08068f68(void)
         {
             gAttackHitDuration = a->unk60->unk00;
             if (v->unk75 > (a->unk60->unk00 >> 1))
-                gUnk_0300236C = a->unk60->unk04;
+                gAttackBox = a->unk60->unk04;
             else
-                gUnk_0300236C = a->unk48;
+                gAttackBox = a->unk48;
         }
         else
         {
             gAttackHitDuration = 30;
-            gUnk_0300236C = a->unk48;
+            gAttackBox = a->unk48;
         }
         if (gAttackHitDuration - gCurTask->unk75 <= 5)
             return 0;
@@ -1431,23 +1431,23 @@ u32 sub_08068f68(void)
     }
     if (a->unk4C == 0)
         return 0;
-    gUnk_0300236C = a->unk4C;
-    gUnk_03002358 = gCurTask->unk48;
+    gAttackBox = a->unk4C;
+    gAttackX = gCurTask->unk48;
     w = gCurTask;
-    gUnk_0300214C = w->unk4A;
+    gAttackY = w->unk4A;
     sub_0801b7dc();
     if (a->unk60 != NULL)
     {
         gAttackHitDuration = a->unk60->unk00;
         if (gCurTask->unk75 > (a->unk60->unk00 >> 1))
-            gUnk_0300236C = a->unk60->unk04;
+            gAttackBox = a->unk60->unk04;
         else
-            gUnk_0300236C = a->unk4C;
+            gAttackBox = a->unk4C;
     }
     else
     {
         gAttackHitDuration = 30;
-        gUnk_0300236C = a->unk4C;
+        gAttackBox = a->unk4C;
     }
     if (sub_0801a8c8() == 0)
         return 0;
@@ -1467,10 +1467,10 @@ u32 sub_0806914c(s32 a)
     t->unk7C = 0;
     if (a == 0)
         return 0;
-    gUnk_03002358 = gCurTask->unk48;
+    gAttackX = gCurTask->unk48;
     u = gCurTask;
-    gUnk_0300214C = u->unk4A;
-    gUnk_03002368 = u->unk78;
+    gAttackY = u->unk4A;
+    gAttackPower = u->unk78;
     gUnk_03002390 = u->unk7E;
     gAttackLastHitter = u->unk7F;
     gUnk_030023F0 = u->unk75;
@@ -1479,7 +1479,7 @@ u32 sub_0806914c(s32 a)
         gAttackHitDuration = b->unk60->unk00;
     else
         gAttackHitDuration = 30;
-    gUnk_0300236C = a;
+    gAttackBox = a;
     sub_0801b7dc();
     if (sub_0801a8c8() == 0)
         return 0;
@@ -1494,16 +1494,16 @@ void sub_08069234(u8 a)
 
     t = gCurTask;
     b = t->unk8C;
-    t->unk7C = gUnk_03002380;
+    t->unk7C = gHitKind;
     gCurTask->unk82 = gUnk_03002450;
-    gCurTask->unk78 = gUnk_03002394;
-    gCurTask->unk7D = gUnk_03002144;
+    gCurTask->unk78 = gHitDamage;
+    gCurTask->unk7D = gHitDirection;
     gCurTask->unk75 = gUnk_03002354;
     gCurTask->unk7E = gUnk_030023DC;
     gCurTask->unk7F = gUnk_03001F24;
     if (a != 0)
     {
-        if ((u8)(gUnk_03002380 - 3) > 1)
+        if ((u8)(gHitKind - 3) > 1)
         {
             if (b->unk05 != 2)
                 b->unk05 = 1;

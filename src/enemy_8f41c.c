@@ -70,7 +70,7 @@ extern void TaskStop(void);
 extern void TaskSetFrame(s32 a);
 extern void TaskSetFrameNoFlip(s32 a);
 extern void TaskSetFrameFlip(s32 a);
-extern void sub_080224b0(void);
+extern void TaskInitWaterFlags(void);
 extern void ActorSetState(u16 v);
 extern void ActorSetAttackBox(void *p);
 extern void TaskFaceNearestPlayer(void);
@@ -469,7 +469,7 @@ void sub_0808f974(void)
 
 s32 sub_0808f978(void)
 {
-    sub_080224b0();
+    TaskInitWaterFlags();
     if (gCurTask->unk7B == 3)
     {
         ActorSetState(2);
@@ -566,7 +566,7 @@ void sub_0808fab4(void)
 
 void sub_0808fb50(void)
 {
-    sub_080224b0();
+    TaskInitWaterFlags();
     gCurTask->unk60 = 128 << 5;
     TaskSetMotionXFacing(128 << 7, 0x5A5A5A5A);
     TaskSetFrame(6);

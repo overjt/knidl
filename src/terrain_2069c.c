@@ -6,7 +6,7 @@
  *
  * Tile-attribute lookups on the current room: the room descriptor cells at
  * 0x030055xx hold the map size (gUnk_03005620 x gUnk_0300561C cells of 16x16
- * pixels), the cell array pointer (gUnk_03005660, 4 bytes per cell, byte 3 is
+ * pixels), the cell array pointer (gRoomMap, 4 bytes per cell, byte 3 is
  * the tile-set index) and the last query results; the 0x100-stride ROM index
  * tables at 0x087328F0.. map a tile-set index to its per-pixel attribute
  * table.  All query functions take pixel coordinates and return the signed
@@ -16,15 +16,15 @@
 
 /* ROM pointer tables: one entry per tile set, each pointing at a byte table. */
 extern u8 *const gUnk_08734BF0[];
-extern u8 *const gUnk_08733BF0[];
-extern u8 *const gUnk_08733FF0[];
-extern u8 *const gUnk_087343F0[];
-extern u8 *const gUnk_087347F0[];
+extern u8 *const gCollisionTilePushDown[];
+extern u8 *const gCollisionTilePushUp[];
+extern u8 *const gCollisionTilePushRight[];
+extern u8 *const gCollisionTilePushLeft[];
 extern s8 *const gUnk_087330F0[];
-extern s8 *const gUnk_087328F0[];
+extern s8 *const gCollisionTileShapes[];
 
 /* ROM byte tables indexed by tile set. */
-extern u8 gUnk_08732CF0[];
+extern u8 gCollisionTileSlope[];
 extern u8 gUnk_087337F0[];
 extern u8 gUnk_087334F0[];
 extern s8 gUnk_087336F0[];
@@ -32,22 +32,22 @@ extern s8 gUnk_08732FF0[];
 
 /* IWRAM room descriptor cells. */
 extern u16 gUnk_03005504;
-extern u16 gUnk_03005508;
-extern u16 gUnk_03005510;
-extern u16 gUnk_03005518;
-extern u16 gUnk_03005520;
-extern s16 gUnk_0300551C;
-extern s16 gUnk_03005560;
+extern u16 gTerrainPixelIndex;
+extern u16 gTerrainTileRight;
+extern u16 gTerrainPrevX;
+extern u16 gTerrainPrevY;
+extern s16 gTerrainBoxLeft;
+extern s16 gTerrainProbeX;
 extern u16 gUnk_0300556C;
-extern s16 gUnk_03005570;
+extern s16 gTerrainProbeY;
 extern u16 gUnk_03005574;
-extern u16 gUnk_03005578;
-extern s16 gUnk_0300557C;
-extern s16 gUnk_03005584;
-extern u16 gUnk_03005588;
-extern u16 gUnk_03005594;
-extern s16 gUnk_0300559C;
-extern s8 *gUnk_030055A0;
+extern u16 gTerrainTile;
+extern s16 gTerrainBoxTop;
+extern s16 gTerrainBoxBottom;
+extern u16 gTerrainTileBelow;
+extern u16 gTerrainTileLeft;
+extern s16 gTerrainBoxRight;
+extern s8 *gTerrainTileShape;
 extern u16 gUnk_030055AC;
 extern s16 gUnk_030055E4;
 extern s16 gUnk_0300561C;
@@ -60,7 +60,7 @@ struct MapCell
     /*0x02*/ u8 unk2;
     /*0x03*/ u8 unk3;
 };
-extern struct MapCell *gUnk_03005660;
+extern struct MapCell *gRoomMap;
 
 struct Unk03005530
 {
@@ -80,43 +80,43 @@ struct Unk03005530
     /*0x0E*/ u8 unkE;
     /*0x0F*/ u8 unkF;
 };
-extern struct Unk03005530 gUnk_03005530;
+extern struct Unk03005530 gTerrainProbeResult;
 
 s32 sub_080218f8(u32 x, u32 y);
 
-s32 sub_080216d8(u32 x, u32 y);
+s32 TerrainQueryPixelAndBelow(u32 x, u32 y);
 
 u32 sub_0802069c(void)
 {
     u32 result = 0;
     s8 v;
 
-    if (sub_080216d8(gUnk_03005560, gUnk_03005570) == 0)
+    if (TerrainQueryPixelAndBelow(gTerrainProbeX, gTerrainProbeY) == 0)
     {
-        if (gUnk_087336F0[gUnk_03005588] != 0)
+        if (gUnk_087336F0[gTerrainTileBelow] != 0)
         {
-            gUnk_03005530.unkB |= 1;
-            if (gUnk_087336F0[gUnk_03005578] != 0 && gUnk_08732CF0[gUnk_03005578] != 0)
-                gUnk_03005530.unkC = (u16)gUnk_03005570 >> 4;
+            gTerrainProbeResult.unkB |= 1;
+            if (gUnk_087336F0[gTerrainTile] != 0 && gCollisionTileSlope[gTerrainTile] != 0)
+                gTerrainProbeResult.unkC = (u16)gTerrainProbeY >> 4;
             else
-                gUnk_03005530.unkC = (gUnk_03005570 + 16) >> 4;
+                gTerrainProbeResult.unkC = (gTerrainProbeY + 16) >> 4;
         }
         else
         {
-            gUnk_03005530.unkB &= 0xFE;
+            gTerrainProbeResult.unkB &= 0xFE;
         }
     }
     else
     {
-        v = gUnk_087336F0[gUnk_03005578];
-        if (v == 0 || ((gUnk_03005530.unkB & 1) && gUnk_03005530.unkC <= gUnk_03005570 >> 4))
+        v = gUnk_087336F0[gTerrainTile];
+        if (v == 0 || ((gTerrainProbeResult.unkB & 1) && gTerrainProbeResult.unkC <= gTerrainProbeY >> 4))
         {
-            gUnk_03005530.unk2 = 1;
-            gUnk_03005530.unk0 = 3;
-            gUnk_03005530.unk1 = 1;
-            gUnk_03005530.unk4 = gUnk_08732CF0[gUnk_03005578];
-            gUnk_03005560 = gUnk_03005518;
-            gUnk_03005570 = gUnk_03005520;
+            gTerrainProbeResult.unk2 = 1;
+            gTerrainProbeResult.unk0 = 3;
+            gTerrainProbeResult.unk1 = 1;
+            gTerrainProbeResult.unk4 = gCollisionTileSlope[gTerrainTile];
+            gTerrainProbeX = gTerrainPrevX;
+            gTerrainProbeY = gTerrainPrevY;
             result = 1;
         }
     }

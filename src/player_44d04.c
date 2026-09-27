@@ -8,8 +8,8 @@
  * sub_08044d04 (action 35, mode 13) is an attack with a ground form
  * (Task.unk73 = 0) and an air form (1), each in two variants picked by
  * Task.unk7B bit 0 (Task.unk30).  It installs the player's collider
- * record gPlayerBodyBoxes[] (registered with M05's sub_0801a828) and
- * block hit-box set gPlayerHitBoxSets[] (tested by M09's sub_08030848) from
+ * record gPlayerBodyBoxes[] (registered with M05's RegisterCollider) and
+ * block hit-box set gPlayerHitBoxSets[] (tested by M09's TaskBreakBlocks) from
  * gUnk_0873BF28/gUnk_0873CCAC or gUnk_0873BF84/gUnk_0873CCFC, points
  * PlayerState.unk6C at the set while the swing is live and steps it
  * through the 8-byte rows of gUnk_0873CCB4 (ground) or gUnk_0873CD04 /
@@ -43,7 +43,7 @@ extern u32 gUnk_0873BFD8[];
 void TaskYieldTrampoline(s32 frames);
 void TaskSleepForever(void);
 void TaskSetFrame(s32 a);
-void sub_0801a828(u8 a, s16 x, s16 y, void *p);   /* M11's caller spelling */
+void RegisterCollider(u8 a, s16 x, s16 y, void *p);   /* M11's caller spelling */
 s32 PlaySfxIfLocalPlayer(s32 a0, u16 a1);
 s32 PlayerLand(s32 a0);
 s32 LoadPlayerBodyBoxRect(s32 playerIdx, u8 *src6);
@@ -258,7 +258,7 @@ void sub_08045398(void)
                 struct Task *u = gCurTask;
                 if (u->unk2C != -1) {
                     LoadPlayerBodyBoxRect(u->unk88->unk00, (u8 *)gUnk_0873BF3C + u->unk2C * 8);
-                    sub_0801a828(gCurTaskIdx, gCurTask->unk48, gCurTask->unk4A,
+                    RegisterCollider(gCurTaskIdx, gCurTask->unk48, gCurTask->unk4A,
                                  (u8 *)gPlayerBodyBoxes + gCurTask->unk88->unk00 * 20);
                 }
             }
@@ -277,7 +277,7 @@ void sub_08045398(void)
                     LoadPlayerBodyBoxRect(u->unk88->unk00, (u8 *)gUnk_0873BF98 + u->unk2C * 8);
                 else
                     LoadPlayerBodyBoxRect(u->unk88->unk00, (u8 *)gUnk_0873BFD8 + u->unk2C * 8);
-                sub_0801a828(gCurTaskIdx, gCurTask->unk48, gCurTask->unk4A,
+                RegisterCollider(gCurTaskIdx, gCurTask->unk48, gCurTask->unk4A,
                              (u8 *)gPlayerBodyBoxes + gCurTask->unk88->unk00 * 20);
             }
         }

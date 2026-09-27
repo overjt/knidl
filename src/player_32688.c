@@ -19,7 +19,7 @@
  * the next action in PlayerState.unk01; sub_08032bd0 is the coroutine
  * that switches to it (unk03 = previous, unk02 = new, unk01 = 0).
  * sub_08032d48 (Task.unk04) runs every frame: the attack hit-boxes
- * (sub_08030848 on PlayerState.unk6C), the collision registry, the
+ * (TaskBreakBlocks on PlayerState.unk6C), the collision registry, the
  * per-frame handler and the damage and star-block reactions;
  * sub_0803332c (Task.unk08) runs the 10-frame timer PlayerState.unk2B;
  * sub_08033414 (called by M11's sub_0803ddc0) turns the frame's hit
@@ -32,7 +32,7 @@ struct M11R8 { u8 unk00; u8 unk01; u8 unk02; u8 unk03; u8 *unk04; };
 struct M11R20 { u32 w[5]; };
 
 /* A hit-box set: unk0 & 0x8000 = mirror with the task's facing, unk0 & 0xFFF
-   = the attack id passed to sub_0803111c; unk2/unk3 = (x, y) offset of the
+   = the attack id passed to CanBreakBlock; unk2/unk3 = (x, y) offset of the
    set; unk4 = the boxes, {y0, y1, x0, x1} each (x mirrored as -x1..-x0),
    terminated by y0 == 127. */
 struct HitBoxSet
@@ -43,7 +43,7 @@ struct HitBoxSet
     /*0x04*/ s8 (*unk4)[4];
 };
 
-/* gUnk_03005550: M06's collision result block (src/terrain_1bcac.c spells it
+/* gTerrainResult: M06's collision result block (src/terrain_1bcac.c spells it
    the same way except unk8, which M09 reads with ldrsh). */
 struct Unk03005550
 {
@@ -113,9 +113,9 @@ extern void (*gPlayerActions[])(void);
 extern void (*gUnk_0873B42C[])(void);
 extern u8 gUnk_03005568;
 extern u8 gUnk_02005574[];
-extern struct Unk03005550 gUnk_03005550;
+extern struct Unk03005550 gTerrainResult;
 extern u16 gUnk_03005544;
-extern struct Unk03005530 gUnk_03005530;
+extern struct Unk03005530 gTerrainProbeResult;
 extern s16 gSpriteCameraX;
 extern s16 gSpriteCameraY;
 extern void (*gPlayerActionHandlers[])(void);
@@ -141,13 +141,13 @@ void TaskSetEntry(void *a, u32 i);
 s32 sub_08009ee8(s32 a, u32 b);
 s32 sub_08009fcc(s32 a, s32 b, u32 c);
 s32 sub_0800a008(s32 a, s32 b, u32 c);
-u32 sub_0801a828(u8 idx, s16 x, s16 y, u8 *p);   /* M09's callers pass ldrsh values unextended (LESSONS 8) */
+u32 RegisterCollider(u8 idx, s16 x, s16 y, u8 *p);   /* M09's callers pass ldrsh values unextended (LESSONS 8) */
 void sub_0801baa4(u32 a);
 void sub_08021c74(s8 *box, s32 id);
-void sub_080224b0(void);
+void TaskInitWaterFlags(void);
 s32 sub_080260b0(void);
 void sub_08026264(s32 x, s32 y);
-u16 sub_08030848(struct HitBoxSet *p, s32 e);
+u16 TaskBreakBlocks(struct HitBoxSet *p, s32 e);
 void sub_0803c9b4(s32 a);                     /* M10: mov r8, r0 on entry, void epilogue */
 void sub_0803cbd8(void);                      /* M10: no argument read, void epilogue */
 void sub_0803ce98(void);
@@ -309,7 +309,7 @@ void Task_Player(void)
         break;
     case 0:
     default:
-        sub_080224b0();
+        TaskInitWaterFlags();
         sub_08021c74((s8 *)gPlayerDefaultTerrainBox, gCurTaskIdx);
         gCurTask->unk88->unk5C = gCurTask->unk7B;
         if (!(gCurTask->unk7B & 1))
@@ -414,7 +414,7 @@ void sub_08032d48(void)
     }
     if (gCurTask->unk88->unk6C != 0)
     {
-        gCurTask->unk88->unk44 = sub_08030848(gCurTask->unk88->unk6C, gCurTask->unk88->unk00);
+        gCurTask->unk88->unk44 = TaskBreakBlocks(gCurTask->unk88->unk6C, gCurTask->unk88->unk00);
         if (gCurTask->unk88->unk44 != 0)
             gCurTask->unk76 |= 1;
     }
@@ -428,16 +428,16 @@ void sub_08032d48(void)
     {
         sub_0801baa4(gCurTask->unk88->unk68);
         gCurTask->unk88->unk48 = gUnk_03005568;
-        if (gUnk_02005574[0] == 0 && (gUnk_03005568 & 4) && gUnk_03005550.unk0 != 0)
+        if (gUnk_02005574[0] == 0 && (gUnk_03005568 & 4) && gTerrainResult.unk0 != 0)
             gCurTask->unk88->unk4E = gUnk_03005544;
         gCurTask->unk88->unk70 = (u32 *)gCurTask->unk88->unk68;
-        if (gUnk_03005550.unkC != 0 && !(gCurTask->unk88->unk42 & 0x200)
+        if (gTerrainResult.unkC != 0 && !(gCurTask->unk88->unk42 & 0x200)
          && gCurTask->unk88->unk3F != 1 && gCurTask->unk88->unk17 == 0)
         {
             r = sub_08009ee8(-8, gCurTask->unk88->unk00);
             if (r != 0)
             {
-                gCurTask->unk82 = gUnk_03005550.unkC | 0x80;
+                gCurTask->unk82 = gTerrainResult.unkC | 0x80;
                 gCurTask->unk7C = 2;
             }
             else
@@ -450,16 +450,16 @@ void sub_08032d48(void)
     }
     else
     {
-        gUnk_03005550.unk0 = gUnk_03005550.unk1 = gUnk_03005550.unk2 = 0;
-        gUnk_03005550.unk3 = gUnk_03005550.unk4 = gUnk_03005550.unk5 = 0;
-        gUnk_03005550.unk8 = gUnk_03005550.unkB = gUnk_03005550.unkC = 0;
-        gUnk_03005550.unkA = 0;
-        gUnk_03005530.unkE = 0;
+        gTerrainResult.unk0 = gTerrainResult.unk1 = gTerrainResult.unk2 = 0;
+        gTerrainResult.unk3 = gTerrainResult.unk4 = gTerrainResult.unk5 = 0;
+        gTerrainResult.unk8 = gTerrainResult.unkB = gTerrainResult.unkC = 0;
+        gTerrainResult.unkA = 0;
+        gTerrainProbeResult.unkE = 0;
     }
-    gCurTask->unk88->unk4A = gUnk_03005550.unk0;
-    gCurTask->unk88->unk4B = gUnk_03005550.unk4;
-    gCurTask->unk88->unk49 = gUnk_03005530.unkE;
-    gCurTask->unk88->unk4C = gUnk_03005550.unkA;
+    gCurTask->unk88->unk4A = gTerrainResult.unk0;
+    gCurTask->unk88->unk4B = gTerrainResult.unk4;
+    gCurTask->unk88->unk49 = gTerrainProbeResult.unkE;
+    gCurTask->unk88->unk4C = gTerrainResult.unkA;
     if (sub_0803fa74() != 0)
         goto tail;
     p = gCurTask->unk88;
@@ -472,7 +472,7 @@ void sub_08032d48(void)
             x += gSpriteCameraX;
             y += gSpriteCameraY;
         }
-        sub_0801a828(gCurTaskIdx, x, y, (u8 *)p->unk64);
+        RegisterCollider(gCurTaskIdx, x, y, (u8 *)p->unk64);
     }
     if (gUnk_03001F30 == 0)
         CallTableEntry(gCurTask->unk15, 57, gPlayerActionHandlers);
@@ -490,16 +490,16 @@ post:
     if (gCurTask->unk58 >= 0)
     {
         if (gCurTask->unk7B & 0x80)
-            CreatePlayerEffect(gCurTask->unk88->unk00, 9, gUnk_03005550.unk8);
+            CreatePlayerEffect(gCurTask->unk88->unk00, 9, gTerrainResult.unk8);
     }
     else if (gCurTask->unk88->unk06 == 2)
     {
         if (gCurTask->unk7B & 0x80)
-            CreatePlayerEffect(gCurTask->unk88->unk00, 10, gUnk_03005550.unk8);
+            CreatePlayerEffect(gCurTask->unk88->unk00, 10, gTerrainResult.unk8);
     }
     else if ((gCurTask->unk88->unk5C & 1) && !(gCurTask->unk7B & 1))
     {
-        CreatePlayerEffect(gCurTask->unk88->unk00, 10, gUnk_03005550.unk8);
+        CreatePlayerEffect(gCurTask->unk88->unk00, 10, gTerrainResult.unk8);
     }
     if ((gCurTask->unk7B & 65) == 1)
     {
@@ -531,12 +531,12 @@ check:
                     struct M11R20 *d = gPlayerBodyBoxes;
                     ((u8 *)&d[gCurTask->unk88->unk00])[12] = 5;
                 }
-                sub_0801a828(gCurTaskIdx, gCurTask->unk48, gCurTask->unk4A,
+                RegisterCollider(gCurTaskIdx, gCurTask->unk48, gCurTask->unk4A,
                              (u8 *)gPlayerBodyBoxes + gCurTask->unk88->unk00 * 20);
             }
             x = gCurTask->unk3C - 0x8D2;
             if (x >= 0 && LoadPlayerHitBoxSet(gCurTask->unk88->unk00, (s32)((u8 *)gUnk_0873CF9C + x * 8)) != 0)
-                sub_08030848((struct HitBoxSet *)&gPlayerHitBoxSets[gCurTask->unk88->unk00], gCurTask->unk88->unk00);
+                TaskBreakBlocks((struct HitBoxSet *)&gPlayerHitBoxSets[gCurTask->unk88->unk00], gCurTask->unk88->unk00);
         }
         if (gUnk_02005E00.unk04[gCurTaskIdx] & 1)
         {

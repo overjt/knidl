@@ -22,8 +22,8 @@ extern s8 gUnk_087337F0[];
 extern s8 gUnk_087339F0[];
 extern struct AnimCmd gUnk_08742894[];
 extern struct AnimCmd gUnk_087428A8[];
-extern u32 gUnk_087343F0[];
-extern u32 gUnk_087347F0[];
+extern u32 gCollisionTilePushRight[];
+extern u32 gCollisionTilePushLeft[];
 extern u32 gUnk_0873F500[];
 extern u32 gUnk_087428C0[];
 extern u32 gUnk_087428D8[];
@@ -42,12 +42,12 @@ extern u32 gUnk_08752858[];
 extern u32 gUnk_087528C8[];
 extern u32 gUnk_08752BD4[];
 extern u8 *gUnk_08742998[];
-extern u8 gUnk_08732CF0[];
+extern u8 gCollisionTileSlope[];
 extern u8 gUnk_08742938[];
 
 /* Externals */
 extern s32 Div(s32 numerator, s32 denominator);
-extern s32 sub_08021b18(u16 x, u16 y);
+extern s32 GetCollisionTileAtPixel(u16 x, u16 y);
 extern s32 TaskFindNearestPlayer(void);
 extern s32 TaskGetNearestPlayerDx(void);
 extern s32 TaskGetNearestPlayerDy(void);
@@ -62,7 +62,7 @@ extern u32 RandomRange(u32 range);
 extern u32 ActorCheckHits(void);
 extern u32 ActorCollideTerrain(void);
 extern u32 ActorReactToHit(void);
-extern u8 sub_08021c4c(s16 x, s16 y);
+extern u8 IsWaterAtPixel(s16 x, s16 y);
 extern u8 TaskGetYDirBitToNearestPlayer(void);
 extern void TaskExitTrampoline(void);
 extern void TaskYieldTrampoline(u32 frames);
@@ -77,7 +77,7 @@ extern void TaskSetMotionY(s32 a, s32 b, s32 c);
 extern void TaskStop(void);
 extern void TaskUpdateFlip(void);
 extern void TaskSetFrame(s32 a);
-extern void sub_080224b0(void);
+extern void TaskInitWaterFlags(void);
 extern void ActorSetState(u8 v);
 extern void ActorSetAttackBox(u32 v);
 extern void TaskFaceNearestPlayer(void);
@@ -124,7 +124,7 @@ void sub_0808aa68(void)
     gCurTask->unk7A = 0;
     if (gCurTask->unk73 == 5)
         sub_0808bb24();
-    sub_080224b0();
+    TaskInitWaterFlags();
     if (gCurTask->unk7B == 3)
         CallTableEntry(gCurTask->unk73, 6, gUnk_087428C0);
     sub_0808b5b4();
@@ -202,7 +202,7 @@ void sub_0808abf4(void)
             gCurTask->unk43 = -1;
         gCurTask->unk28 = gUnk_030023B4 | gUnk_030023D4;
     }
-    if (sub_08021c4c(gCurTask->unk48, (u16)gCurTask->unk4A - 8) != 1)
+    if (IsWaterAtPixel(gCurTask->unk48, (u16)gCurTask->unk4A - 8) != 1)
     {
         if (gCurTask->unk58 < 0)
             gCurTask->unk58 = -gCurTask->unk58;
@@ -247,7 +247,7 @@ void sub_0808ad20(void)
             gCurTask->unk43 = -1;
         gCurTask->unk28 = gUnk_030023B4 | gUnk_030023D4;
     }
-    if (sub_08021c4c(gCurTask->unk48, (u16)gCurTask->unk4A - 8) != 1)
+    if (IsWaterAtPixel(gCurTask->unk48, (u16)gCurTask->unk4A - 8) != 1)
     {
         if (gCurTask->unk58 < 0)
             gCurTask->unk58 = -gCurTask->unk58;
@@ -371,7 +371,7 @@ void sub_0808b094(void)
 {
     if (gCurTask->unk14 == 0)
     {
-        if ((u8)sub_08021c4c(gCurTask->unk48,
+        if ((u8)IsWaterAtPixel(gCurTask->unk48,
                              (u16)gCurTask->unk4A - 8) != 0)
             goto anim;
         gCurTask->unk4A = (gCurTask->unk4A & -16) + 8;
@@ -478,7 +478,7 @@ void sub_0808b28c(void)
 void sub_0808b2fc(void)
 {
     if (gCurTask->unk58 < 0
-        && (u8)sub_08021c4c(gCurTask->unk48,
+        && (u8)IsWaterAtPixel(gCurTask->unk48,
                             (u16)gCurTask->unk4A - 8) == 0)
     {
         gCurTask->unk4A = (gCurTask->unk4A & -16) + 8;
@@ -532,7 +532,7 @@ void sub_0808b368(void)
 void sub_0808b468(void)
 {
     if (gCurTask->unk34 > 0 && gCurTask->unk58 > 0
-        && (u8)sub_08021c4c(gCurTask->unk48,
+        && (u8)IsWaterAtPixel(gCurTask->unk48,
                             (u16)gCurTask->unk4A
                                 + ((s8 *)gCurTask->unk8C->unk50)[2]) != 0)
     {
@@ -549,7 +549,7 @@ void sub_0808b4d0(void)
         gCurTask->unk30 = 192;
         TaskTurnAroundAndReverseX();
     }
-    if ((u8)sub_08021c4c(gCurTask->unk48, gCurTask->unk4A) == 0)
+    if ((u8)IsWaterAtPixel(gCurTask->unk48, gCurTask->unk4A) == 0)
     {
         ActorSetState(1);
         TaskSetEntry(sub_0808b210, gCurTaskIdx);
@@ -715,7 +715,7 @@ void sub_0808b830(void)
 
 void sub_0808b8c4(void)
 {
-    if ((u8)sub_08021c4c(gCurTask->unk48,
+    if ((u8)IsWaterAtPixel(gCurTask->unk48,
                          (u16)gCurTask->unk4A
                              + ((s8 *)gCurTask->unk8C->unk50)[2]) != 0)
     {
@@ -821,7 +821,7 @@ s32 sub_0808bb70(void)
 {
     if (gCurTask->unk73 != 5)
     {
-        if ((u8)sub_08021c4c(gCurTask->unk48, gCurTask->unk4A) == 0)
+        if ((u8)IsWaterAtPixel(gCurTask->unk48, gCurTask->unk4A) == 0)
         {
             TaskSetEntry(sub_0808b5b4, gCurTaskIdx);
             return 1;
@@ -848,7 +848,7 @@ s32 sub_0808bc18(void)
 {
     if (gCurTask->unk73 != 5)
     {
-        if ((u8)sub_08021c4c(gCurTask->unk48, gCurTask->unk4A) == 0)
+        if ((u8)IsWaterAtPixel(gCurTask->unk48, gCurTask->unk4A) == 0)
         {
             TaskSetEntry(sub_0808b5b4, gCurTaskIdx);
             return 1;
@@ -860,7 +860,7 @@ s32 sub_0808bc60(void)
 {
     if (gCurTask->unk73 != 5)
     {
-        if ((u8)sub_08021c4c(gCurTask->unk48, gCurTask->unk4A) == 0)
+        if ((u8)IsWaterAtPixel(gCurTask->unk48, gCurTask->unk4A) == 0)
             goto stop;
         switch (gCurTask->unk73)
         {
@@ -890,7 +890,7 @@ s32 sub_0808bd04(void)
 
     if (gCurTask->unk73 != 5)
     {
-        r = sub_08021c4c(gCurTask->unk48, gCurTask->unk4A);
+        r = IsWaterAtPixel(gCurTask->unk48, gCurTask->unk4A);
         if (r == 0)
         {
             gCurTask->unk58 = r;
@@ -1513,14 +1513,14 @@ s32 sub_0808ca00(s32 a, s32 b)
     x = (s8)a;
     p = (u16)*pa + x;
     q = (u16)t->unk4A + (s8)b;
-    i = sub_08021b18(p, q);
+    i = GetCollisionTileAtPixel(p, q);
     if (gUnk_087339F0[i] == 0 || gUnk_087336F0[i] != 0
-     || gUnk_087337F0[i] != 0 || gUnk_08732CF0[i] != 0
+     || gUnk_087337F0[i] != 0 || gCollisionTileSlope[i] != 0
      || gUnk_08732FF0[i] != 0)
         goto minus1;
     u = ((p << 16) >> 16) & 15;
     w = (u << 4) | u;
-    v = (s8)((u8 *)gUnk_087347F0[i])[w];
+    v = (s8)((u8 *)gCollisionTilePushLeft[i])[w];
     if (v < 0)
         v = -v;
     return x - v;
@@ -1545,14 +1545,14 @@ s32 sub_0808cab8(s32 a, s32 b)
     x = (s8)a;
     p = (u16)*pa - x;
     q = (u16)t->unk4A + (s8)b;
-    i = sub_08021b18(p, q);
+    i = GetCollisionTileAtPixel(p, q);
     if (gUnk_087339F0[i] == 0 || gUnk_087336F0[i] != 0
-     || gUnk_087337F0[i] != 0 || gUnk_08732CF0[i] != 0
+     || gUnk_087337F0[i] != 0 || gCollisionTileSlope[i] != 0
      || gUnk_08732FF0[i] != 0)
         goto minus1;
     u = ((p << 16) >> 16) & 15;
     w = (u << 4) | u;
-    v = (s8)((u8 *)gUnk_087343F0[i])[w];
+    v = (s8)((u8 *)gCollisionTilePushRight[i])[w];
     if (v < 0)
         v = -v;
     return x - v;

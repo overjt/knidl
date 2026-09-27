@@ -29,7 +29,7 @@ extern void TaskExitTrampoline(void);
 extern void TaskSleepForever(void);
 extern void TaskSetEntry(void *fn, s32 i);
 extern void TaskMoveRelativeToParent(void);
-extern void sub_0801a828(u8 a, s16 x, s16 y, void *p);
+extern void RegisterCollider(u8 a, s16 x, s16 y, void *p);
 extern void ActorSetState(u8 v);
 extern void ActorSetTerrainHandlers(u32 v);
 extern void ActorMove(void);
@@ -50,7 +50,7 @@ extern void TaskSetMotionXFacing(s32 a, s32 b);
 extern void ActorSetTerrainBox(u32 v);
 extern s32 CreateChildTaskHere(u32 type, u8 keepPrio);
 
-extern u8 gUnk_03005550[];
+extern u8 gTerrainResult[];
 extern s16 gSpriteCameraX;
 extern s16 gSpriteCameraY;
 extern s32 QueueSprite(u32 a, u32 b, u32 c, u32 d, s32 e, s32 f);
@@ -58,7 +58,7 @@ extern u32 IsWorldPosOnScreen(s16 x, s16 y);
 extern u32 gUnk_0874CC84[];
 extern void PlaySfx(u32 a);
 extern void sub_080261d4(u32 a);
-extern void sub_08030848(void *p, s16 v);
+extern void TaskBreakBlocks(void *p, s16 v);
 extern void ActorCollideTerrain(void);
 extern void TaskSetMotionY(s32 a, s32 b, s32 c);
 extern void ActorDrawWorldInViewOrDestroy(void);
@@ -200,9 +200,9 @@ void sub_0806c418(void)
     sub_0806b410();
     t = gCurTask;
     if (t->unk72 == 1)
-        sub_0801a828((u8)gCurTaskIdx, t->unk48, t->unk4A, gUnk_0873F86C);
+        RegisterCollider((u8)gCurTaskIdx, t->unk48, t->unk4A, gUnk_0873F86C);
     else
-        sub_0801a828((u8)gCurTaskIdx, t->unk48, t->unk4A, gUnk_0873F858);
+        RegisterCollider((u8)gCurTaskIdx, t->unk48, t->unk4A, gUnk_0873F858);
 }
 
 void sub_0806c490(void)
@@ -276,19 +276,19 @@ void sub_0806c5d4(void)
     t = gCurTask;
     t->unk78 = 127;
     if (t->unk72 == 1)
-        sub_08030848(gUnk_0873F8DC, t->unk44);
+        TaskBreakBlocks(gUnk_0873F8DC, t->unk44);
     else
-        sub_08030848(gUnk_0873F8CC, t->unk44);
+        TaskBreakBlocks(gUnk_0873F8CC, t->unk44);
     ActorCollideTerrain();
-    if ((*(u32 *)gUnk_03005550 & 0x00FFFFFF) != 0)
+    if ((*(u32 *)gTerrainResult & 0x00FFFFFF) != 0)
     {
-        if (gUnk_03005550[1] != 0)
+        if (gTerrainResult[1] != 0)
             gCurTask->unk30 = 0;
-        if (gUnk_03005550[2] != 0)
+        if (gTerrainResult[2] != 0)
             gCurTask->unk30 = 1;
-        if (gUnk_03005550[0] != 0)
+        if (gTerrainResult[0] != 0)
             gCurTask->unk30 = 2;
-        if (gUnk_03005550[4] != 0)
+        if (gTerrainResult[4] != 0)
             gCurTask->unk30 = 2;
         PlaySfx(237);
         sub_080261d4(2);
@@ -313,10 +313,10 @@ void sub_0806c5d4(void)
             v->unk24 = (v->unk24 + 1) & 15;
         }
         if (v->unk72 == 1)
-            sub_0801a828((u8)gCurTaskIdx, gCurTask->unk48,
+            RegisterCollider((u8)gCurTaskIdx, gCurTask->unk48,
                          gCurTask->unk4A, gUnk_0873F86C);
         else
-            sub_0801a828((u8)gCurTaskIdx, v->unk48, v->unk4A, gUnk_0873F858);
+            RegisterCollider((u8)gCurTaskIdx, v->unk48, v->unk4A, gUnk_0873F858);
     }
 }
 

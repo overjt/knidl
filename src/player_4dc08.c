@@ -23,9 +23,9 @@
  * bit 2 set until PlayerState.unk07 is non-zero and equal to unk08, then
  * recovers or releases (sound 201, PlayerState.unk42 bit 9). */
 
-/* gUnk_03005550: M06's collision result block (src/terrain_1bcac.c spells it
+/* gTerrainResult: M06's collision result block (src/terrain_1bcac.c spells it
    the same way except unk8, which M09 reads with ldrsh).  A 16-bit test of
-   unk0/unk1 together is `*(u16 *)&gUnk_03005550` (M12's sub_08045a50). */
+   unk0/unk1 together is `*(u16 *)&gTerrainResult` (M12's sub_08045a50). */
 struct Unk03005550
 {
     /*0x00*/ u8 unk0;
@@ -57,8 +57,8 @@ struct M04Spark
 extern u32 gUnk_0873CC64[];             /* hit-box set, passed as (struct HitBoxSet *) */
 extern s16 gUnk_02007FA0[];
 extern s16 gUnk_02004B6C[];
-extern struct Unk03005550 gUnk_03005550;
-extern u32 gUnk_0873BED8[];             /* collider row passed to sub_0801a828 (4th arg) */
+extern struct Unk03005550 gTerrainResult;
+extern u32 gUnk_0873BED8[];             /* collider row passed to RegisterCollider (4th arg) */
 extern s16 gUnk_0300244C;
 extern u8 gUnk_02007CF4[];
 extern s32 gUnk_03001F2C;               /* boot_091ac.c spelling */
@@ -70,7 +70,7 @@ void TaskYieldTrampoline(s32 frames);
 void TaskSleepForever(void);
 void TaskSetEntry(void *a, u32 i);
 void TaskSetFrame(s32 a);
-void sub_0801a828(u8 a, s16 x, s16 y, void *p);   /* M11's caller spelling */
+void RegisterCollider(u8 a, s16 x, s16 y, void *p);   /* M11's caller spelling */
 void sub_080261d4(u16 a);
 u16 sub_08030898(struct HitBoxSet *p, s32 e);
 void PlayerStopAxes(s32 a0);
@@ -214,14 +214,14 @@ void sub_0804df00(void)
             u = gCurTask;
             if (u->unk88->unk09 == 0)
             {
-                if (gUnk_03005550.unk0 != 0)
+                if (gTerrainResult.unk0 != 0)
                 {
                     sub_080261d4(1);
                     gCurTask->unk88->unk01 = 18;
                 }
                 else
                 {
-                    sub_0801a828(gCurTaskIdx, u->unk48, u->unk4A, gUnk_0873BED8);
+                    RegisterCollider(gCurTaskIdx, u->unk48, u->unk4A, gUnk_0873BED8);
                 }
             }
         }
@@ -237,7 +237,7 @@ void sub_0804df00(void)
             else
                 p->unk01 = 1;
         }
-        if (gUnk_03005550.unk0 != 0)
+        if (gTerrainResult.unk0 != 0)
             PlayerStopAxes(1);
         u = gCurTask;
         if (u->unk58 != 0)

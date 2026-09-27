@@ -12,9 +12,9 @@
  * Sub-handler 17 (sub_0804f5bc, a push-less leaf) requests action 7, 20
  * or 23 from the ground flag and the key state. */
 
-/* gUnk_03005550: M06's collision result block (src/terrain_1bcac.c spells it
+/* gTerrainResult: M06's collision result block (src/terrain_1bcac.c spells it
    the same way except unk8, which M09 reads with ldrsh).  A 16-bit test of
-   unk0/unk1 together is `*(u16 *)&gUnk_03005550` (M12's sub_08045a50). */
+   unk0/unk1 together is `*(u16 *)&gTerrainResult` (M12's sub_08045a50). */
 struct Unk03005550
 {
     /*0x00*/ u8 unk0;
@@ -33,7 +33,7 @@ struct Unk03005550
 };
 
 extern u16 gLatchedHeldKeys[];             /* held keys, latched per player (M11) */
-extern struct Unk03005550 gUnk_03005550;
+extern struct Unk03005550 gTerrainResult;
 extern u32 gUnk_0873BD00[];             /* stored to PlayerState.unk64 as (u32)gUnk_0873BD00 */
 extern u32 gPlayerDefaultTerrainBox[];
 
@@ -107,7 +107,7 @@ void sub_0804ef00(void)
     PlayerTurnToHeldDirection();
     while (!sub_0804f7f8(3) && !sub_0804f7f8(2))
     {
-        if (gUnk_03005550.unk1 != 0 || (gCurTask->unk88->unk48 & 4))
+        if (gTerrainResult.unk1 != 0 || (gCurTask->unk88->unk48 & 4))
         {
             struct Task *t;
             PlayerCheckBump();
@@ -126,7 +126,7 @@ void sub_0804ef00(void)
         }
         else
         {
-            if (gUnk_03005550.unk0 != 0)
+            if (gTerrainResult.unk0 != 0)
             {
                 struct Task *t = gCurTask;
                 t->unk54 = -t->unk54;
@@ -195,7 +195,7 @@ void sub_0804f124(void)
     PlayerTurnToHeldDirection();
     while (!sub_0804f7f8(3) && !sub_0804f7f8(2))
     {
-        if (gUnk_03005550.unk1 != 0 || (gCurTask->unk88->unk48 & 4))
+        if (gTerrainResult.unk1 != 0 || (gCurTask->unk88->unk48 & 4))
         {
             struct Task *t;
             PlayerCheckBump();
@@ -216,7 +216,7 @@ void sub_0804f124(void)
         }
         else
         {
-            if (gUnk_03005550.unk0 != 0)
+            if (gTerrainResult.unk0 != 0)
             {
                 struct Task *t;
                 PlayerCheckBump();
@@ -260,7 +260,7 @@ void sub_0804f258(void)
             gCurTask->unk88->unk01 = 23;
         else if (gCurTask->unk7A & 1)
             gCurTask->unk73 = 7;
-        else if (gUnk_03005550.unk0 != 0)
+        else if (gTerrainResult.unk0 != 0)
         {
             struct Task *t;
             PlayerCheckBump();

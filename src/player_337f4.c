@@ -13,7 +13,7 @@
  * come from gUnk_0873D0F8[ability][5] (column picked by M11's
  * sub_0803fd20, row 26 when PlayerState.unk06 == 1) and gUnk_0873D2E8. */
 
-/* gUnk_03005550: M06's collision result block (src/terrain_1bcac.c spells it
+/* gTerrainResult: M06's collision result block (src/terrain_1bcac.c spells it
    the same way except unk8, which M09 reads with ldrsh). */
 struct Unk03005550
 {
@@ -38,13 +38,13 @@ extern u8 gUnk_03001F30;
 extern s16 gUnk_0873D206[];
 extern u16 gUnk_0873D2E8[];
 extern u16 gUnk_0873D350[];
-extern struct Unk03005550 gUnk_03005550;
+extern struct Unk03005550 gTerrainResult;
 
 void TaskYieldTrampoline(s32 frames);
 void TaskSleepForever(void);
 void TaskSetEntry(void *a, u32 i);
 void TaskSetFrame(s32 a);
-s32 sub_08022624(u16 x, u16 y);
+s32 IsFullBlockAtPixel(u16 x, u16 y);
 s32 sub_08022788(s32 y, s32 i);
 void PlayerPlayBump(void);
 void PlayerStopAxes(s32 a0);
@@ -179,12 +179,12 @@ void sub_08033a2c(void)
                 {
                     if (gCurTask->unk43 == 1)
                     {
-                        if (sub_08022624(gCurTask->unk48 + 7, gCurTask->unk4A) == 0)
+                        if (IsFullBlockAtPixel(gCurTask->unk48 + 7, gCurTask->unk4A) == 0)
                             turn = 1;
                     }
                     else
                     {
-                        if (sub_08022624(gCurTask->unk48 - 7, gCurTask->unk4A) == 0)
+                        if (IsFullBlockAtPixel(gCurTask->unk48 - 7, gCurTask->unk4A) == 0)
                             turn = 1;
                     }
                     if (turn == 0)
@@ -418,7 +418,7 @@ void sub_08034278(void)
         {
             t->unk88->unk01 = 1;
         }
-        else if (gUnk_03005550.unk0 != 0)
+        else if (gTerrainResult.unk0 != 0)
         {
             PlayerCheckBump();
             gCurTask->unk88->unk01 = 1;

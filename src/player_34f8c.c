@@ -19,7 +19,7 @@
  * sub-state) and sub_080359f8 mode 14, a six-state loop over Task.unk73
  * whose per-frame handler is M10's sub_08036280. */
 
-/* gUnk_03005550: M06's collision result block (src/terrain_1bcac.c spells it
+/* gTerrainResult: M06's collision result block (src/terrain_1bcac.c spells it
    the same way except unk8, which M09 reads with ldrsh). */
 struct Unk03005550
 {
@@ -41,7 +41,7 @@ struct Unk03005550
 extern s16 gUnk_0873D3B8[][2];
 extern u16 gLatchedHeldKeys[];             /* latched state mask per player (M11) */
 extern u8 gUnk_03001F30;
-extern struct Unk03005550 gUnk_03005550;
+extern struct Unk03005550 gTerrainResult;
 extern s16 gUnk_0873D420[][3];
 extern u32 gUnk_0873CC74[];
 extern u8 gUnk_0873BEB0[];
@@ -56,7 +56,7 @@ void TaskSetEntry(void *a, u32 i);
 void TaskSetFrame(s32 a);
 /* src/player_1a76c.c defines it with u16 x/y; the ROM passes the task's
    s16 position unextended, so this file's callers see s16 parameters */
-u32 sub_0801a828(u8 idx, s16 x, s16 y, u8 *p);
+u32 RegisterCollider(u8 idx, s16 x, s16 y, u8 *p);
 void sub_0803ccd8(s32 a);                     /* M10: lsls r0, #2 on entry, void epilogue */
 void PlayerPlayBump(void);
 void PlayerStopAxes(s32 a0);
@@ -277,7 +277,7 @@ void sub_08035458(void)
             gCurTask->unk88->unk01 = 8;
             break;
         }
-        if (gCurTask->unk88->unk0D != 10 && gUnk_03005550.unk0 != 0)
+        if (gCurTask->unk88->unk0D != 10 && gTerrainResult.unk0 != 0)
         {
             PlayerCheckBump();
             if (gCurTask->unk88->unk3E & 7)
@@ -421,14 +421,14 @@ void sub_08035848(void)
                 }
                 else
                 {
-                    if (gUnk_03005550.unk0 != 0)
+                    if (gTerrainResult.unk0 != 0)
                     {
                         PlayerCheckBump();
                         if (gCurTask->unk88->unk3E & 7)
                             TaskSetEntry(sub_08034f8c, gCurTaskIdx);
                     }
                     if (gCurTask->unk28 != 0)
-                        sub_0801a828(gCurTaskIdx, gCurTask->unk48, gCurTask->unk4A, gUnk_0873BEB0);
+                        RegisterCollider(gCurTaskIdx, gCurTask->unk48, gCurTask->unk4A, gUnk_0873BEB0);
                 }
             }
             break;

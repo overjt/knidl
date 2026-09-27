@@ -9,7 +9,7 @@ extern u8 gUnk_0873BEEC[];
 extern u8 gUnk_0873CC54[];
 
 void TaskSetEntry(void *func, u32 arg);
-void sub_0801a828(u8 a, s16 x, s16 y, void *p);
+void RegisterCollider(u8 a, s16 x, s16 y, void *p);
 u16 sub_08030898(void *table, s32 id);
 void PlayerSetWaterMotionY(void);
 s32 PlayerLand(s32 a0);
@@ -61,7 +61,7 @@ void sub_0804e3a0(void)
                 }
                 u = gCurTask;
                 if (u->unk88->unk09 == 0)
-                    sub_0801a828(gCurTaskIdx, u->unk48, u->unk4A, gUnk_0873BEEC);
+                    RegisterCollider(gCurTaskIdx, u->unk48, u->unk4A, gUnk_0873BEEC);
             }
             v = gCurTask;
             if ((s8)v->unk88->unk07 == 0)

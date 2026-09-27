@@ -80,7 +80,7 @@ void sub_08008c7c(void);
 void sub_08008cb8(void);
 void sub_08009aa0(void);
 void sub_08009ab8(void);
-void sub_0801a7b4(void);
+void ClearColliderLists(void);
 void sub_0802296c(void);
 void sub_08022f98(void);
 void sub_08022f9c(void);
@@ -193,7 +193,7 @@ void sub_0800b648(void)
     gDispCnt |= 0x80;
     ResetFadeAndBlend();
     ResetBgScroll();
-    sub_0801a7b4();
+    ClearColliderLists();
     sub_08008c64(0);
     sub_08008c7c();
     gUnk_02007F50 = -1;

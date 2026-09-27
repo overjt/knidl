@@ -128,7 +128,7 @@ extern u16 gPlayerCount;
 extern struct CamRect gUnk_03005640[4];
 extern s16 gSpriteCameraX;
 extern u16 gUnk_02007FA0;
-extern struct Unk020061F0 gUnk_020061F0[];
+extern struct Unk020061F0 gBreakingBlocks[];
 extern s16 gUnk_03005620;
 extern struct RoomDef *gUnk_030055EC;
 extern s8 gUnk_02006A20[][3];
@@ -277,10 +277,10 @@ void sub_08026308(void)
         gUnk_02007FA0 &= 31;
         for (i = 0; i < 64; i++)
         {
-            if (gUnk_020061F0[i].unk6 != 0xFFFF)
+            if (gBreakingBlocks[i].unk6 != 0xFFFF)
             {
-                gUnk_020061F0[i].unk0 &= 31;
-                gUnk_020061F0[i].unk4 = gUnk_020061F0[i].unk0 + gUnk_020061F0[i].unk2 * gUnk_03005620;
+                gBreakingBlocks[i].unk0 &= 31;
+                gBreakingBlocks[i].unk4 = gBreakingBlocks[i].unk0 + gBreakingBlocks[i].unk2 * gUnk_03005620;
             }
         }
         for (i = 0; i < 64; i++)

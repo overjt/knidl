@@ -55,7 +55,7 @@ struct ActorVt
 };
 
 extern vs16 gTaskSlotTypes[];
-extern u8 gUnk_03005550[];
+extern u8 gTerrainResult[];
 extern u16 gLocalPlayer;
 extern u16 gGameState;
 extern u16 gUnk_0873E58C[];
@@ -138,7 +138,7 @@ u32 ActorCollideTerrain(void)
     sub_0801bcac(&v);
     u = gCurTask;
     if ((u->unk7B & 0x80) != 0)
-        CreateChildTaskAt(140, u->unk48, ((s16 *)gUnk_03005550)[i], 0);
+        CreateChildTaskAt(140, u->unk48, ((s16 *)gTerrainResult)[i], 0);
     if ((f & 1) != 0)
         goto b1;
     if ((f & 0x40) == 0)
@@ -184,7 +184,7 @@ s2:
 s3:
     if (r == 1)
         return 1;
-    if ((gUnk_03005550[0] & 3) != 0)
+    if ((gTerrainResult[0] & 3) != 0)
     {
         fn = ((struct ActorHandlers *)a->unk54)->unk10;
         if (fn != 0)
@@ -192,7 +192,7 @@ s3:
     }
     if (r == 1)
         return 1;
-    if ((gCurTask->unk7A & 1) != 0 && (gUnk_03005550[3] & 1) != 0)
+    if ((gCurTask->unk7A & 1) != 0 && (gTerrainResult[3] & 1) != 0)
     {
         fn = ((struct ActorHandlers *)a->unk54)->unk14;
         if (fn != 0)
@@ -200,7 +200,7 @@ s3:
     }
     if (r == 1)
         return 1;
-    if ((gCurTask->unk7A & 1) == 0 && (gUnk_03005550[1] & 1) != 0)
+    if ((gCurTask->unk7A & 1) == 0 && (gTerrainResult[1] & 1) != 0)
     {
         fn = ((struct ActorHandlers *)a->unk54)->unk18;
         if (fn != 0)
@@ -228,7 +228,7 @@ u32 sub_0806951c(void)
     {
         ActorGetTerrainBox(&v);
         sub_0801c230(&v);
-        if ((*(u32 *)gUnk_03005550 & 0x00FFFFFF) != 0)
+        if ((*(u32 *)gTerrainResult & 0x00FFFFFF) != 0)
             r = 1;
         else
             r = 0;
@@ -246,7 +246,7 @@ u32 sub_0806956c(void)
     {
         ActorGetTerrainBox(&v);
         sub_0801c030(&v);
-        if ((*(u32 *)gUnk_03005550 & 0x00FFFF00) != 0)
+        if ((*(u32 *)gTerrainResult & 0x00FFFF00) != 0)
             r = 1;
         else
             r = 0;
@@ -264,7 +264,7 @@ u32 sub_080695bc(void)
     {
         ActorGetTerrainBox(&v);
         sub_0801bf1c(&v);
-        if (gUnk_03005550[0] != 0)
+        if (gTerrainResult[0] != 0)
             r = 1;
         else
             r = 0;
@@ -283,7 +283,7 @@ u32 sub_08069604(void)
     r = 0;
     ActorGetTerrainBox(&v);
     sub_0801c30c(&v);
-    if (gUnk_03005550[0] != 0 || gUnk_03005550[4] != 0 || gUnk_03005550[1] != 0)
+    if (gTerrainResult[0] != 0 || gTerrainResult[4] != 0 || gTerrainResult[1] != 0)
         r = 1;
     return r;
 }
@@ -330,7 +330,7 @@ u32 sub_080696a0(void)
     sub_080b460c();
     u = gCurTask;
     if ((u->unk7B & 0x80) != 0)
-        CreateChildTaskAt(140, u->unk48, ((s16 *)gUnk_03005550)[i], 0);
+        CreateChildTaskAt(140, u->unk48, ((s16 *)gTerrainResult)[i], 0);
     if ((f & 1) != 0)
         goto b1;
     if ((f & 0x40) == 0)
@@ -376,7 +376,7 @@ s2:
 s3:
     if (r == 1)
         return 1;
-    if ((gUnk_03005550[0] & 3) != 0)
+    if ((gTerrainResult[0] & 3) != 0)
     {
         fn = ((struct ActorHandlers *)a->unk54)->unk10;
         if (fn != 0)
@@ -384,7 +384,7 @@ s3:
     }
     if (r == 1)
         return 1;
-    if ((gCurTask->unk7A & 1) != 0 && (gUnk_03005550[3] & 1) != 0)
+    if ((gCurTask->unk7A & 1) != 0 && (gTerrainResult[3] & 1) != 0)
     {
         fn = ((struct ActorHandlers *)a->unk54)->unk14;
         if (fn != 0)
@@ -392,7 +392,7 @@ s3:
     }
     if (r == 1)
         return 1;
-    if ((gCurTask->unk7A & 1) == 0 && (gUnk_03005550[1] & 1) != 0)
+    if ((gCurTask->unk7A & 1) == 0 && (gTerrainResult[1] & 1) != 0)
     {
         fn = ((struct ActorHandlers *)a->unk54)->unk18;
         if (fn != 0)
@@ -425,7 +425,7 @@ u32 sub_08069888(void)
     sub_0801c12c(&v);
     u = gCurTask;
     if ((u->unk7B & 0x80) != 0)
-        CreateChildTaskAt(140, u->unk48, ((s16 *)gUnk_03005550)[i], 0);
+        CreateChildTaskAt(140, u->unk48, ((s16 *)gTerrainResult)[i], 0);
     if ((f & 1) == 0)
         goto b1;
     if ((f & 0x40) == 0)
@@ -473,8 +473,8 @@ u32 sub_080699a8(void)
         t = gCurTask;
         if ((t->unk24 & 0xFFFF0000) != 0
          && (t->unk7A & 1) != 0
-         && (gUnk_03005550[4] == 1 || gUnk_03005550[4] == 2
-          || gUnk_03005550[4] == 3 || gUnk_03005550[4] == 4))
+         && (gTerrainResult[4] == 1 || gTerrainResult[4] == 2
+          || gTerrainResult[4] == 3 || gTerrainResult[4] == 4))
         {
             if (t->unk54 >= 0)
             {
@@ -618,7 +618,7 @@ s8 sub_08069c48(void)
     }
     else
     {
-        g = gUnk_03005550;
+        g = gTerrainResult;
         if (g[12] != 0)
         {
             v = g[12];

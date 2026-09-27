@@ -17,7 +17,7 @@
  * gUnk_0873CF4C every frame in state 1. */
 
 extern u16 gLatchedHeldKeys[];             /* held keys, latched per player (M11) */
-extern u32 gUnk_0873C214[];             /* collider row passed to sub_0801a828 (4th arg) */
+extern u32 gUnk_0873C214[];             /* collider row passed to RegisterCollider (4th arg) */
 extern u32 gUnk_0873CF4C[];             /* hit-box set, passed as (struct HitBoxSet *) */
 
 /* M09's hit-box set (src/block_30804.c); only a pointer is passed here */
@@ -26,8 +26,8 @@ void TaskYieldTrampoline(s32 frames);
 void TaskSleepForever(void);
 void TaskSetEntry(void *a, u32 i);
 void TaskSetFrame(s32 a);
-void sub_0801a828(u8 a, s16 x, s16 y, void *p);   /* M11's caller spelling */
-u16 sub_08030848(struct HitBoxSet *p, s32 e);
+void RegisterCollider(u8 a, s16 x, s16 y, void *p);   /* M11's caller spelling */
+u16 TaskBreakBlocks(struct HitBoxSet *p, s32 e);
 void PlayerStartSfx(s32 a0, u16 a1);
 void PlayerStopSfx(void);
 s32 sub_0803e55c(void);
@@ -188,9 +188,9 @@ void sub_08049edc(void)
         } else {
             t->unk28--;
         }
-        sub_0801a828((u8)gCurTaskIdx, gCurTask->unk48, gCurTask->unk4A,
+        RegisterCollider((u8)gCurTaskIdx, gCurTask->unk48, gCurTask->unk4A,
                      gUnk_0873C214);
-        sub_08030848((struct HitBoxSet *)gUnk_0873CF4C, gCurTask->unk88->unk00);
+        TaskBreakBlocks((struct HitBoxSet *)gUnk_0873CF4C, gCurTask->unk88->unk00);
         break;
     case 2:
         break;

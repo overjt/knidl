@@ -8,7 +8,7 @@ extern s32 gUnk_030023D4;
 extern vu16 gTaskSlotTypes[];
 extern vu16 gFrameCount;
 extern s32 gUnk_030023B4;
-extern u8 gUnk_03005550[];
+extern u8 gTerrainResult[];
 
 /* ROM tables */
 extern u32 gUnk_087536FC[];
@@ -94,7 +94,7 @@ extern void TaskUpdateFlip(void);
 extern void TaskSetFrame(s32 a);
 extern void TaskSetFrameNoFlip(s32 a);
 extern void TaskSetFrameFlip(s32 a);
-extern s32 sub_08021b18(u16 x, u16 y);
+extern s32 GetCollisionTileAtPixel(u16 x, u16 y);
 extern void sub_080261d4(s32 a);
 extern void ActorSetState(u16 v);
 extern void ActorSetHitReactions(void *p);
@@ -702,7 +702,7 @@ other:
     if (w->unk2C < 0) {
         a = w->unk48;
         p = &w->unk4A;
-        switch (sub_08021b18(a, ((s8 *)w->unk8C->unk50)[3] + *p)) {
+        switch (GetCollisionTileAtPixel(a, ((s8 *)w->unk8C->unk50)[3] + *p)) {
         case 2:
             if (gCurTask->unk43 == -1)
                 return;
@@ -788,8 +788,8 @@ s32 sub_08094d10(void)
 
     t = gCurTask;
     if ((t->unk7A & 1) != 0) {
-        if ((u8)(gUnk_03005550[4] - 1) <= 3) {
-            switch (gUnk_03005550[4]) {
+        if ((u8)(gTerrainResult[4] - 1) <= 3) {
+            switch (gTerrainResult[4]) {
             case 3:
                 if (t->unk43 == 1)
                     return 1;

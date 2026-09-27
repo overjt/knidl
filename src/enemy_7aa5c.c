@@ -10,7 +10,7 @@
  *     velocity ramp;
  *   * task #12's eight-state script (`sub_0807b300`+`sub_0807b32c`) whose hook
  *     packs Task.unk4A into the low half of Task.unk24 and ORs 0x10000 in
- *     when the four-player flag `gUnk_03005550[4]` is out of range;
+ *     when the four-player flag `gTerrainResult[4]` is out of range;
  *   * the eight-state class-8 rider `sub_0807b3f8`..`sub_0807b8ec`, which
  *     probes for a partner with `TaskIsInRectSlot` over a stack `struct PointPair`
  *     and reacts through the shared `sub_0807b294` state entry;
@@ -37,7 +37,7 @@ extern s32 gUnk_030023B4;
 extern s32 gUnk_030023D4;
 extern s8 gUnk_02007FB8[];
 extern struct Task *gCurTask;
-extern u8 gUnk_03005550[];
+extern u8 gTerrainResult[];
 extern vs16 gTaskSlotTypes[];
 
 /* ROM tables */
@@ -641,7 +641,7 @@ void sub_0807b32c(void)
 
     if ((gCurTask->unk7A & 1) != 0)
     {
-        if ((u8)(gUnk_03005550[4] - 1) > 3)
+        if ((u8)(gTerrainResult[4] - 1) > 3)
             gCurTask->unk24 = (u16)gCurTask->unk24 | 0x10000;
     }
     if ((gCurTask->unk7A & 1) == 0)
@@ -905,7 +905,7 @@ void sub_0807b918(void)
 
     if ((gCurTask->unk7A & 1) != 0)
     {
-        if ((u8)(gUnk_03005550[4] - 1) > 3)
+        if ((u8)(gTerrainResult[4] - 1) > 3)
             gCurTask->unk24 = (u16)gCurTask->unk24 | 0x10000;
     }
     if ((gCurTask->unk7A & 1) == 0)
@@ -2116,7 +2116,7 @@ void sub_0807d2b8(void)
 
 void sub_0807d2ec(void)
 {
-    if ((u8)(gUnk_03005550[4] - 1) <= 3)
+    if ((u8)(gTerrainResult[4] - 1) <= 3)
     {
         TaskStop();
         ActorSetState(1);

@@ -6,7 +6,7 @@
 /* RAM cells / ROM tables */
 extern s16 gViewRect[];
 extern struct Task gTasks[];
-extern u8 gUnk_03005550[];
+extern u8 gTerrainResult[];
 extern u32 gUnk_08745CEC[];
 extern u32 gUnk_08747BCC[];
 extern u32 gUnk_08747BD8[];
@@ -206,7 +206,7 @@ u8 sub_0809dbc4(void)
             TaskStopX();
         return 0;
     case 1:
-        if ((t->unk7A & 1) == 0 || (gUnk_03005550[3] & 1) == 0)
+        if ((t->unk7A & 1) == 0 || (gTerrainResult[3] & 1) == 0)
         {
             t->unk54 = -t->unk54;
             if (--t->unk28 > 0)

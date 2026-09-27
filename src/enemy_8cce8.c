@@ -51,7 +51,7 @@ extern s8 gDigits[];
 extern s32 gUnk_030023B4;
 extern s32 gUnk_030023D4;
 extern vu16 gTaskSlotTypes[];
-extern u8 gUnk_03005550[];
+extern u8 gTerrainResult[];
 
 /* ROM tables */
 extern u32 gUnk_0873F500[];
@@ -566,7 +566,7 @@ void sub_0808d58c(void)
     t = gCurTask;
     if ((t->unk7A & 1) != 0)
     {
-        if ((u8)(gUnk_03005550[4] - 1) > 3)
+        if ((u8)(gTerrainResult[4] - 1) > 3)
             t->unk24 = (u16)t->unk24 | 0x10000;
         if ((gCurTask->unk7A & 1) != 0)
             goto skip;
@@ -798,7 +798,7 @@ void sub_0808da34(void)
     t = gCurTask;
     if ((t->unk7A & 1) != 0)
     {
-        if ((u8)(gUnk_03005550[4] - 1) > 3)
+        if ((u8)(gTerrainResult[4] - 1) > 3)
             t->unk24 = (u16)t->unk24 | 0x10000;
         if ((gCurTask->unk7A & 1) != 0)
             goto skip;

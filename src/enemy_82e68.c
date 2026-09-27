@@ -22,8 +22,8 @@
  *   * the walker script `sub_08082e68` (7 states, tables `0x08741778` /
  *     `0x08741794`, per-frame hook `sub_08082eb4`, re-arm `sub_08082e98`);
  *   * its terrain library: `sub_08083a48` / `sub_08083ad4` / `sub_08083bbc` /
- *     `sub_08083cb8` probe the room with sub_08021b18/sub_08021bb4 and turn the
- *     `gUnk_087339F0` / `gUnk_08732CF0` / `gUnk_087416A4` index chain into a
+ *     `sub_08083cb8` probe the room with GetCollisionTileAtPixel/sub_08021bb4 and turn the
+ *     `gUnk_087339F0` / `gCollisionTileSlope` / `gUnk_087416A4` index chain into a
  *     tile class, `sub_08083d28` turns a direction code into an aim angle plus
  *     a 16.16 velocity through AngleToVector, and `sub_08083dfc` is the
  *     five-times-four-frame animation wait;
@@ -52,7 +52,7 @@ extern s32 gUnk_03001F2C;
 
 /* ROM tables */
 extern s8 gUnk_087339F0[];
-extern u8 gUnk_08732CF0[];
+extern u8 gCollisionTileSlope[];
 extern u32 gUnk_0873F500[];
 extern u32 gUnk_0873F720[];
 extern u32 gUnk_0873F758[];
@@ -137,7 +137,7 @@ extern s32 GetDistSq(struct PointPair *p);
 extern s32 TaskIsNearestPlayerInRect(struct PointPair *p);
 extern s32 TaskIsInRect(struct PointPair *r);
 extern void ActorDestroy(void);
-extern s32 sub_08021b18(u16 x, u16 y);
+extern s32 GetCollisionTileAtPixel(u16 x, u16 y);
 extern s32 sub_08021bb4(s16 x, s16 y, s32 c, s32 d);
 extern void ActorCheckHits(void);
 extern u8 ActorCollideTerrain(void);
@@ -699,10 +699,10 @@ u8 sub_08083a48(s32 dir)
     t = gCurTask;
     a = t->unk48 + gUnk_08741684[dir];
     b = t->unk4A + gUnk_08741688[dir];
-    i = sub_08021b18(a, b);
+    i = GetCollisionTileAtPixel(a, b);
     if (gUnk_087339F0[i] != 0)
     {
-        r = gUnk_087416A4[gUnk_08732CF0[i]];
+        r = gUnk_087416A4[gCollisionTileSlope[i]];
         if ((u8)(r - 2) <= 3 && gCurTask->unk7A == 0)
             r = 0;
     }
@@ -767,7 +767,7 @@ u8 sub_08083bbc(s32 dir, s32 k)
         return 0;
     if (gUnk_087339F0[i] != 0)
     {
-        r = gUnk_087416A4[gUnk_08732CF0[i]];
+        r = gUnk_087416A4[gCollisionTileSlope[i]];
         if ((u8)(r - 2) <= 3 && gCurTask->unk7A == 0)
             r = 0;
     }
@@ -780,12 +780,12 @@ u8 sub_08083cb8(s16 x, s16 y)
     u8 r;
 
     r = 0;
-    i = (s16)sub_08021b18(x, y);
+    i = (s16)GetCollisionTileAtPixel(x, y);
     if (i == -1)
         return 0;
     if (gUnk_087339F0[i] != 0)
     {
-        r = gUnk_087416A4[gUnk_08732CF0[i]];
+        r = gUnk_087416A4[gCollisionTileSlope[i]];
         if ((u8)(r - 2) <= 3 && gCurTask->unk7A == 0)
             r = 0;
     }

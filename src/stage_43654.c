@@ -24,7 +24,7 @@ void TaskSetEntry(void *a, u32 i);
 void TaskSetMotionXFacing(s32 a, s32 b);
 void TaskSetMotionY(s32 a, s32 b, s32 c);
 void TaskSetFrame(s32 a);
-void sub_0801a828(u8 a, s16 x, s16 y, void *p);
+void RegisterCollider(u8 a, s16 x, s16 y, void *p);
 void sub_080261d4(u32 a);
 void PlayerStopAxes(s32 a0);
 void PlayerStartSfx(s32 a, u16 b);
@@ -271,7 +271,7 @@ void sub_08043a88(void)
         u = gCurTask;
         if (u->unk2C != -1) {
             LoadPlayerBodyBoxRect(u->unk88->unk00, (u8 *)gUnk_0873CAA4 + u->unk2C * 8);
-            sub_0801a828((u8)gCurTaskIdx, gCurTask->unk48, gCurTask->unk4A,
+            RegisterCollider((u8)gCurTaskIdx, gCurTask->unk48, gCurTask->unk4A,
                          (u8 *)gPlayerBodyBoxes + gCurTask->unk88->unk00 * 20);
         }
     } else {
@@ -439,7 +439,7 @@ void sub_08043e28(void)
         if (gCurTask->unk2C != -1) {
             LoadPlayerBodyBoxRect(gCurTask->unk88->unk00,
                          (u8 *)gUnk_0873CAA4 + gCurTask->unk2C * 8);
-            sub_0801a828((u8)gCurTaskIdx, gCurTask->unk48, gCurTask->unk4A,
+            RegisterCollider((u8)gCurTaskIdx, gCurTask->unk48, gCurTask->unk4A,
                          (u8 *)gPlayerBodyBoxes + gCurTask->unk88->unk00 * 20);
         }
         {
@@ -558,7 +558,7 @@ void sub_080441cc(void)
         PlayerRequestLocomotion();
     } else if (t->unk2C != -1) {
         LoadPlayerBodyBoxRect(t->unk88->unk00, (u8 *)gUnk_0873CAA4 + t->unk2C * 8);
-        sub_0801a828((u8)gCurTaskIdx, gCurTask->unk48, gCurTask->unk4A,
+        RegisterCollider((u8)gCurTaskIdx, gCurTask->unk48, gCurTask->unk4A,
                      (u8 *)gPlayerBodyBoxes + gCurTask->unk88->unk00 * 20);
     }
     u = gCurTask;
@@ -643,7 +643,7 @@ void sub_08044288(void)
             struct Task *t = gCurTask;
             t->unk2C = -1;
             *(u32 *)((u8 *)t->unk88 + 108) = 0;
-            sub_0801a828((u8)gCurTaskIdx, t->unk48, t->unk4A,
+            RegisterCollider((u8)gCurTaskIdx, t->unk48, t->unk4A,
                          (u8 *)gUnk_0873CA7C);
         }
         TaskSetFrame(0x1227);
@@ -712,7 +712,7 @@ void sub_08044470(void)
                 if (w->unk2C != -1) {
                     LoadPlayerBodyBoxRect(w->unk88->unk00,
                                  (u8 *)gUnk_0873CAA4 + w->unk2C * 8);
-                    sub_0801a828((u8)gCurTaskIdx, gCurTask->unk48,
+                    RegisterCollider((u8)gCurTaskIdx, gCurTask->unk48,
                                  gCurTask->unk4A,
                                  (u8 *)gPlayerBodyBoxes
                                      + gCurTask->unk88->unk00 * 20);

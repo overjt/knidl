@@ -115,7 +115,7 @@ extern s16 gUnk_030055F8[4];
 extern struct CamRect gUnk_03005640[4];
 
 void sub_08008c64(u16 a0);
-s32 sub_08021b18(u16 x, u16 y);
+s32 GetCollisionTileAtPixel(u16 x, u16 y);
 void sub_0802a190(void);
 s32 sub_0802eac8(s32 x, s32 y, s32 a);
 s32 sub_0802ec1c(s32 x, s32 y, s32 a);
@@ -152,7 +152,7 @@ void sub_08028320(void)
     gUnk_020055D4 = 0x4000;
     if (gUnk_020069F0 == 1 || gUnk_020069F0 == 4)
     {
-        r = sub_08021b18(gUnk_020055E0, gUnk_0200AEF0);
+        r = GetCollisionTileAtPixel(gUnk_020055E0, gUnk_0200AEF0);
         if (r == 55 || r == 183)
             x = (gUnk_020055E0 >> 4) - 1;
         else

@@ -13,9 +13,9 @@
  * (Task.unk73) and re-bind it through sub_0804e600, most of them through
  * the helper sub_0804f7f8's four key probes. */
 
-/* gUnk_03005550: M06's collision result block (src/terrain_1bcac.c spells it
+/* gTerrainResult: M06's collision result block (src/terrain_1bcac.c spells it
    the same way except unk8, which M09 reads with ldrsh).  A 16-bit test of
-   unk0/unk1 together is `*(u16 *)&gUnk_03005550` (M12's sub_08045a50). */
+   unk0/unk1 together is `*(u16 *)&gTerrainResult` (M12's sub_08045a50). */
 struct Unk03005550
 {
     /*0x00*/ u8 unk0;
@@ -36,7 +36,7 @@ struct Unk03005550
 extern u32 gUnk_0873BD50[];
 extern u32 gUnk_0873CB3C[];
 extern u16 gLatchedHeldKeys[];             /* held keys, latched per player (M11) */
-extern struct Unk03005550 gUnk_03005550;
+extern struct Unk03005550 gTerrainResult;
 
 void TaskYieldTrampoline(s32 frames);
 void TaskSleepForever(void);
@@ -214,7 +214,7 @@ void sub_0804eb60(void)
 {
     while (!sub_0804f7f8(0) && !sub_0804f7f8(1) && !sub_0804f7f8(3) && !sub_0804f7f8(2))
     {
-        if (gUnk_03005550.unk0 != 0)
+        if (gTerrainResult.unk0 != 0)
         {
             struct Task *t;
             PlayerCheckBump();
@@ -273,7 +273,7 @@ void sub_0804ecec(void)
 {
     while (!sub_0804f7f8(0) && !sub_0804f7f8(1) && !sub_0804f7f8(3) && !sub_0804f7f8(2))
     {
-        if (gUnk_03005550.unk0 != 0)
+        if (gTerrainResult.unk0 != 0)
         {
             struct Task *t;
             PlayerCheckBump();

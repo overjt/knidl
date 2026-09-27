@@ -57,7 +57,7 @@ void sub_08008c4c(s32 a0);
 void sub_0800b648(void);
 void sub_0800b788(void);
 void sub_0800b87c(void);
-void sub_0801a7b4(void);
+void ClearColliderLists(void);
 void sub_08027128(void);
 void sub_08027178(void);
 void sub_08027198(void);
@@ -100,7 +100,7 @@ void sub_08007624(void)
     BeginFastFadeInFromWhite();
     RunLinkFramesUntilFadeDone();
     do {
-        sub_0801a7b4();
+        ClearColliderLists();
         RunLinkFrame();
         LatchPlayerKeys();
         sub_080075b8();
@@ -240,7 +240,7 @@ void sub_0800791c(void)
     }
     gUnk_03000048 = 0;
     do {
-        sub_0801a7b4();
+        ClearColliderLists();
         RunLinkFrame();
         InputRecorderUpdate();
         LatchPlayerKeys();

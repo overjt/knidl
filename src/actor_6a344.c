@@ -62,7 +62,7 @@ extern void sub_0806a8d8(void);
 extern u8 TaskGetXDirBitTo(s32 a);
 extern u32 RandomRange(s32 a);
 extern void sub_0806a7f4(void);
-extern void sub_0801a828(u8 a, s16 b, s16 c, void *d);
+extern void RegisterCollider(u8 a, s16 b, s16 c, void *d);
 extern void ActorCheckHits(void);
 extern s32 ActorReactToHit(void);
 extern void TaskSleepForever(void);
@@ -395,7 +395,7 @@ void sub_0806a7f4(void)
         }
         else
         {
-            sub_0801a828((u8)gCurTaskIdx, t->unk48, t->unk4A, gUnk_0873F880);
+            RegisterCollider((u8)gCurTaskIdx, t->unk48, t->unk4A, gUnk_0873F880);
         }
     }
     else if (gTaskSlotTypes[gCurTaskIdx] != -1)
@@ -604,7 +604,7 @@ void sub_0806aba4(void)
     if (gCurTask->unk2C <= 15)
     {
         ActorCheckHits();
-        sub_0801a828((u8)gCurTaskIdx, gCurTask->unk48, gCurTask->unk4A, gUnk_0873F81C);
+        RegisterCollider((u8)gCurTaskIdx, gCurTask->unk48, gCurTask->unk4A, gUnk_0873F81C);
         u = gCurTask;
         u->unk2C = u->unk2C + 1;
     }

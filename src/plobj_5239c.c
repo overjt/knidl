@@ -57,10 +57,10 @@ void TaskSetMotionXFacing(s32 a, s32 b);
 void TaskStop(void);
 u16 RandomSpread(u16 base, u8 scale, u8 amount);
 s16 RandomSpreadFacing(u16 base, u8 scale, u8 amount);
-void sub_0801a828(u8 a, s16 x, s16 y, void *p);   /* M11's caller spelling */
+void RegisterCollider(u8 a, s16 x, s16 y, void *p);   /* M11's caller spelling */
 s32 sub_08027588(void);
 u16 sub_08030804(struct HitBoxSet *p, s32 x, s32 y, s32 e);
-s32 sub_08030848(struct HitBoxSet *p, s32 e);   /* M14's callers test r0 unnarrowed (good/sub_08050c48.c); landed M09/M12/M13 files spell it u16 */
+s32 TaskBreakBlocks(struct HitBoxSet *p, s32 e);   /* M14's callers test r0 unnarrowed (good/sub_08050c48.c); landed M09/M12/M13 files spell it u16 */
 void sub_0803dfc8(void);
 s32 PlaySfxIfLocalPlayer(s32 a0, u16 a1);
 
@@ -200,8 +200,8 @@ void sub_0805268c(void)
         if ((u->unk18 & 15) == 1)
         {
             u->unk78 = 127;
-            sub_0801a828(gCurTaskIdx, u->unk48, u->unk4A, gUnk_0873BE24);
-            sub_08030848((struct HitBoxSet *)gUnk_0873CC1C, gCurTask->unk44);
+            RegisterCollider(gCurTaskIdx, u->unk48, u->unk4A, gUnk_0873BE24);
+            TaskBreakBlocks((struct HitBoxSet *)gUnk_0873CC1C, gCurTask->unk44);
             {
                 struct Task *v = gCurTask;
                 s32 off;
@@ -386,8 +386,8 @@ s32 sub_08052b08(void)
     else if ((t->unk18 & 15) == 0)
     {
         if (t->unk3C != -1)
-            sub_0801a828(gCurTaskIdx, t->unk48, t->unk4A, gUnk_0873BE38);
-        sub_08030848((struct HitBoxSet *)gUnk_0873CC2C, gCurTask->unk44);
+            RegisterCollider(gCurTaskIdx, t->unk48, t->unk4A, gUnk_0873BE38);
+        TaskBreakBlocks((struct HitBoxSet *)gUnk_0873CC2C, gCurTask->unk44);
     }
 }
 

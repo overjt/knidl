@@ -18,7 +18,7 @@
  * on TaskYieldTrampoline; the handlers run M11's transition predicates
  * and write the next request into PlayerState.unk01. */
 
-/* gUnk_03005550: M06's collision result block (src/terrain_1bcac.c spells it
+/* gTerrainResult: M06's collision result block (src/terrain_1bcac.c spells it
    the same way except unk8, which M09 reads with ldrsh). */
 struct Unk03005550
 {
@@ -40,14 +40,14 @@ struct Unk03005550
 extern u16 gLatchedHeldKeys[];             /* latched state mask per player (M11) */
 extern u16 gUnk_0873D31C[];
 extern u16 gUnk_0873D350[];
-extern struct Unk03005550 gUnk_03005550;
+extern struct Unk03005550 gTerrainResult;
 extern u16 gUnk_0873D384[];
 
 void TaskYieldTrampoline(s32 frames);
 void TaskSleepForever(void);
 void TaskSetEntry(void *a, u32 i);
 void TaskSetFrame(s32 a);
-s32 sub_08022624(u16 x, u16 y);
+s32 IsFullBlockAtPixel(u16 x, u16 y);
 void sub_08034f8c(void);
 void PlayerPlayBump(void);
 void PlayerStopAxes(s32 a0);
@@ -193,7 +193,7 @@ void sub_0803469c(void)
     t = gCurTask;
     if (t->unk28 == 0)
     {
-        m2 = gUnk_03005550.unkD;
+        m2 = gTerrainResult.unkD;
         if (m2 != 0)
         {
             t->unk88->unk14 = 5;
@@ -209,7 +209,7 @@ void sub_0803469c(void)
         p = t->unk88;
         if ((s16)p->unk14 == 0)
         {
-            if (sub_08022624(((u16 *)t)[36],
+            if (IsFullBlockAtPixel(((u16 *)t)[36],
                              (y = ((u16 *)t)[37], m3 = -16, m3 &= y, m3 + 16)) != 0)
                 gCurTask->unk7A = 1;
         }
@@ -254,7 +254,7 @@ void sub_0803469c(void)
                 goto end;
             }
         }
-        m5 = gUnk_03005550.unk0;
+        m5 = gTerrainResult.unk0;
         if (m5 != 0)
         {
             PlayerCheckBump();
@@ -345,7 +345,7 @@ void sub_080349b4(void)
             if (gCurTask->unk88->unk01 != 0)
                 break;
         }
-        if (gUnk_03005550.unk0 != 0)
+        if (gTerrainResult.unk0 != 0)
         {
             PlayerCheckBump();
             gCurTask->unk88->unk01 = 1;
@@ -418,7 +418,7 @@ void sub_08034bec(void)
             PlayerRequestLocomotion();
             goto end;
         }
-        if (gUnk_03005550.unk1 != 0)
+        if (gTerrainResult.unk1 != 0)
         {
             PlayerCheckBump();
             PlayerStopAxes(2);
@@ -445,7 +445,7 @@ void sub_08034bec(void)
             }
             break;
         }
-        if (gUnk_03005550.unk0 != 0)
+        if (gTerrainResult.unk0 != 0)
         {
             PlayerCheckBump();
             if (gCurTask->unk88->unk3E & 7)
@@ -510,7 +510,7 @@ void sub_08034e60(void)
             PlayerRequestLocomotion();
             break;
         }
-        if (gUnk_03005550.unk1 != 0)
+        if (gTerrainResult.unk1 != 0)
         {
             PlayerCheckBump();
             PlayerStopAxes(2);
@@ -536,7 +536,7 @@ void sub_08034e60(void)
             }
             break;
         }
-        if (gUnk_03005550.unk0 != 0)
+        if (gTerrainResult.unk0 != 0)
         {
             PlayerCheckBump();
             if (gCurTask->unk88->unk3E & 7)

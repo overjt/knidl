@@ -9,12 +9,12 @@
  * box's top corner through a gUnk_08732DF0 wall class, then the middle and
  * bottom corners), sub_0801c030's ceiling probe sub_0801f800 (sub_0801dee8
  * without the slope tiles) and landing probe sub_0801f9b8 (not while moving
- * up; it tracks passable floor tiles in gUnk_03005530.unkB bits 0-2), and
+ * up; it tracks passable floor tiles in gTerrainProbeResult.unkB bits 0-2), and
  * sub_0801c12c's pair sub_0801fc48 (on the ground: follow the floor or
  * drop off it) / sub_0801fe2c (in the air: land). */
 
 /* The probe result block, filled by the terrain probes and mirrored into
-   gUnk_03005550 by sub_0801c5c8. */
+   gTerrainResult by TerrainProbeEnd. */
 struct Unk03005530
 {
     /*0x00*/ u8 unk0;
@@ -35,33 +35,33 @@ struct Unk03005530
     /*0x10*/ u8 unk10;
 };
 
-extern u8 gUnk_08732CF0[];
+extern u8 gCollisionTileSlope[];
 extern u8 gUnk_08732DF0[];
-extern s8 gUnk_08732EF0[];
+extern s8 gCollisionTileShapeClass[];
 extern s8 gUnk_087336F0[];
 extern s8 gUnk_087339F0[];
-extern u16 gUnk_03005510;
-extern s32 gUnk_03005514;           /* Task.unk58 */
-extern s16 gUnk_0300551C;           /* box left offset */
-extern struct Unk03005530 gUnk_03005530;
-extern s16 gUnk_03005560;           /* probe x */
-extern s16 gUnk_03005570;           /* probe y */
-extern u16 gUnk_03005578;           /* queried cell: tile set */
-extern s16 gUnk_0300557C;           /* box top offset */
-extern s16 gUnk_03005584;           /* box bottom offset */
-extern u16 gUnk_03005588;           /* cell below: tile set */
+extern u16 gTerrainTileRight;
+extern s32 gTerrainVelY;           /* Task.unk58 */
+extern s16 gTerrainBoxLeft;           /* box left offset */
+extern struct Unk03005530 gTerrainProbeResult;
+extern s16 gTerrainProbeX;           /* probe x */
+extern s16 gTerrainProbeY;           /* probe y */
+extern u16 gTerrainTile;           /* queried cell: tile set */
+extern s16 gTerrainBoxTop;           /* box top offset */
+extern s16 gTerrainBoxBottom;           /* box bottom offset */
+extern u16 gTerrainTileBelow;           /* cell below: tile set */
 extern s16 gUnk_03005590;           /* box right (room-relative) */
-extern u16 gUnk_03005594;           /* cell to the left: tile set */
-extern s16 gUnk_0300559C;           /* box right offset */
+extern u16 gTerrainTileLeft;           /* cell to the left: tile set */
+extern s16 gTerrainBoxRight;           /* box right offset */
 
-s32 sub_08021634(u32 x, u32 y);
-s32 sub_080216d8(u32 x, u32 y);
-s32 sub_080217dc(u32 x, u32 y);
+s32 TerrainQueryPixel(u32 x, u32 y);
+s32 TerrainQueryPixelAndBelow(u32 x, u32 y);
+s32 TerrainQueryPixelAndSides(u32 x, u32 y);
 s32 sub_08021970(u16 a);
-s32 sub_08021990(u16 a);
-s32 sub_080219b0(u16 a);
-s32 sub_080219d0(u16 a);
-s32 sub_080219f0(u16 a);
+s32 GetTilePushDown(u16 a);
+s32 GetTilePushUp(u16 a);
+s32 GetTilePushRight(u16 a);
+s32 GetTilePushLeft(u16 a);
 
 /* Right wall probe of the third entry point (sub_0801bf1c). */
 void sub_0801f540(void)
@@ -70,42 +70,42 @@ void sub_0801f540(void)
     s32 x;
     s32 a;
 
-    if (sub_080217dc(gUnk_03005560 + gUnk_0300559C, gUnk_03005570) != 0
-        && (gUnk_087336F0[gUnk_03005578] == 0
-            || (gUnk_08732CF0[gUnk_03005578] != 0 && (gUnk_08732DF0[gUnk_03005578] & 0xF0) == 0xA0)))
+    if (TerrainQueryPixelAndSides(gTerrainProbeX + gTerrainBoxRight, gTerrainProbeY) != 0
+        && (gUnk_087336F0[gTerrainTile] == 0
+            || (gCollisionTileSlope[gTerrainTile] != 0 && (gUnk_08732DF0[gTerrainTile] & 0xF0) == 0xA0)))
     {
-        d = sub_080219f0(gUnk_03005578);
+        d = GetTilePushLeft(gTerrainTile);
         if (d != 0)
         {
-            gUnk_03005560 += d;
-            gUnk_03005530.unk0 = 1;
+            gTerrainProbeX += d;
+            gTerrainProbeResult.unk0 = 1;
             return;
         }
     }
-    x = gUnk_03005560 + gUnk_0300559C;
+    x = gTerrainProbeX + gTerrainBoxRight;
     if ((x & 0xFFF0) == (gUnk_03005590 & 0xFFF0))
         return;
-    if (sub_080217dc(x, gUnk_03005570 + gUnk_0300557C) != 0
-        && (a = gUnk_08732EF0[gUnk_03005578]) == 1
-        && gUnk_087336F0[gUnk_03005578] != 0)
+    if (TerrainQueryPixelAndSides(x, gTerrainProbeY + gTerrainBoxTop) != 0
+        && (a = gCollisionTileShapeClass[gTerrainTile]) == 1
+        && gUnk_087336F0[gTerrainTile] != 0)
     {
-        d = sub_080219f0(gUnk_03005578);
+        d = GetTilePushLeft(gTerrainTile);
         if (d != 0)
         {
-            gUnk_03005560 += d;
-            gUnk_03005530.unk0 = a;
+            gTerrainProbeX += d;
+            gTerrainProbeResult.unk0 = a;
             return;
         }
     }
-    if (sub_080217dc(gUnk_03005560 + gUnk_0300559C, gUnk_03005570 + gUnk_03005584) != 0
-        && (a = gUnk_08732EF0[gUnk_03005578]) == 1
-        && gUnk_087336F0[gUnk_03005578] != 0)
+    if (TerrainQueryPixelAndSides(gTerrainProbeX + gTerrainBoxRight, gTerrainProbeY + gTerrainBoxBottom) != 0
+        && (a = gCollisionTileShapeClass[gTerrainTile]) == 1
+        && gUnk_087336F0[gTerrainTile] != 0)
     {
-        d = sub_080219f0(gUnk_03005578);
+        d = GetTilePushLeft(gTerrainTile);
         if (d != 0)
         {
-            gUnk_03005560 += d;
-            gUnk_03005530.unk0 = a;
+            gTerrainProbeX += d;
+            gTerrainProbeResult.unk0 = a;
         }
     }
 }
@@ -117,42 +117,42 @@ void sub_0801f6b0(void)
     s32 d;
     s32 x;
 
-    if (sub_080217dc(gUnk_03005560 + gUnk_0300551C, gUnk_03005570) != 0
-        && (gUnk_087336F0[gUnk_03005578] == 0
-            || (gUnk_08732CF0[gUnk_03005578] != 0 && (gUnk_08732DF0[gUnk_03005578] & 0xF0) == 0x90)))
+    if (TerrainQueryPixelAndSides(gTerrainProbeX + gTerrainBoxLeft, gTerrainProbeY) != 0
+        && (gUnk_087336F0[gTerrainTile] == 0
+            || (gCollisionTileSlope[gTerrainTile] != 0 && (gUnk_08732DF0[gTerrainTile] & 0xF0) == 0x90)))
     {
-        d = sub_080219d0(gUnk_03005578);
+        d = GetTilePushRight(gTerrainTile);
         if (d != 0)
         {
-            gUnk_03005560 += d;
-            gUnk_03005530.unk0 = 2;
+            gTerrainProbeX += d;
+            gTerrainProbeResult.unk0 = 2;
             return;
         }
     }
-    x = gUnk_03005560 + gUnk_0300551C;
+    x = gTerrainProbeX + gTerrainBoxLeft;
     if ((x & 0xFFF0) == (gUnk_03005590 & 0xFFF0))
         return;
-    if (sub_080217dc(x, gUnk_03005570 + gUnk_0300557C) != 0
-        && gUnk_08732EF0[gUnk_03005578] == 1
-        && gUnk_087336F0[gUnk_03005578] != 0)
+    if (TerrainQueryPixelAndSides(x, gTerrainProbeY + gTerrainBoxTop) != 0
+        && gCollisionTileShapeClass[gTerrainTile] == 1
+        && gUnk_087336F0[gTerrainTile] != 0)
     {
-        d = sub_080219d0(gUnk_03005578);
+        d = GetTilePushRight(gTerrainTile);
         if (d != 0)
         {
-            gUnk_03005560 += d;
-            gUnk_03005530.unk0 = 2;
+            gTerrainProbeX += d;
+            gTerrainProbeResult.unk0 = 2;
             return;
         }
     }
-    if (sub_080217dc(gUnk_03005560 + gUnk_0300551C, gUnk_03005570 + gUnk_03005584) != 0
-        && gUnk_08732EF0[gUnk_03005578] == 1
-        && gUnk_087336F0[gUnk_03005578] != 0)
+    if (TerrainQueryPixelAndSides(gTerrainProbeX + gTerrainBoxLeft, gTerrainProbeY + gTerrainBoxBottom) != 0
+        && gCollisionTileShapeClass[gTerrainTile] == 1
+        && gUnk_087336F0[gTerrainTile] != 0)
     {
-        d = sub_080219d0(gUnk_03005578);
+        d = GetTilePushRight(gTerrainTile);
         if (d != 0)
         {
-            gUnk_03005560 += d;
-            gUnk_03005530.unk0 = 2;
+            gTerrainProbeX += d;
+            gTerrainProbeResult.unk0 = 2;
         }
     }
 }
@@ -161,41 +161,41 @@ void sub_0801f6b0(void)
    without the slope-tile case. */
 void sub_0801f800(void)
 {
-    if (sub_08021634(gUnk_03005560, gUnk_03005570 + gUnk_0300557C) != 0
-        && gUnk_087336F0[gUnk_03005578] == 0)
+    if (TerrainQueryPixel(gTerrainProbeX, gTerrainProbeY + gTerrainBoxTop) != 0
+        && gUnk_087336F0[gTerrainTile] == 0)
     {
-        gUnk_03005530.unk1++;
-        gUnk_03005530.unk4 = gUnk_08732CF0[gUnk_03005578];
-        gUnk_03005570 += sub_08021990(gUnk_03005578);
-        if (sub_08021634(gUnk_03005560, gUnk_03005570 + gUnk_0300557C) != 0)
+        gTerrainProbeResult.unk1++;
+        gTerrainProbeResult.unk4 = gCollisionTileSlope[gTerrainTile];
+        gTerrainProbeY += GetTilePushDown(gTerrainTile);
+        if (TerrainQueryPixel(gTerrainProbeX, gTerrainProbeY + gTerrainBoxTop) != 0)
         {
-            gUnk_03005530.unk4 = gUnk_08732CF0[gUnk_03005578];
-            gUnk_03005570 += sub_08021990(gUnk_03005578);
+            gTerrainProbeResult.unk4 = gCollisionTileSlope[gTerrainTile];
+            gTerrainProbeY += GetTilePushDown(gTerrainTile);
         }
         return;
     }
-    if (sub_080217dc(gUnk_03005560 + gUnk_0300551C, gUnk_03005570 + gUnk_0300557C) != 0
-        && gUnk_08732CF0[gUnk_03005578] == 0
-        && gUnk_087336F0[gUnk_03005578] == 0
-        && (gUnk_087339F0[gUnk_03005510] == 0 || gUnk_087336F0[gUnk_03005510] != 0))
+    if (TerrainQueryPixelAndSides(gTerrainProbeX + gTerrainBoxLeft, gTerrainProbeY + gTerrainBoxTop) != 0
+        && gCollisionTileSlope[gTerrainTile] == 0
+        && gUnk_087336F0[gTerrainTile] == 0
+        && (gUnk_087339F0[gTerrainTileRight] == 0 || gUnk_087336F0[gTerrainTileRight] != 0))
     {
-        gUnk_03005570 += sub_08021990(gUnk_03005578);
-        gUnk_03005530.unk1++;
+        gTerrainProbeY += GetTilePushDown(gTerrainTile);
+        gTerrainProbeResult.unk1++;
         return;
     }
-    if (sub_080217dc(gUnk_03005560 + gUnk_0300559C, gUnk_03005570 + gUnk_0300557C) != 0
-        && gUnk_08732CF0[gUnk_03005578] == 0
-        && gUnk_087336F0[gUnk_03005578] == 0
-        && (gUnk_087339F0[gUnk_03005594] == 0 || gUnk_087336F0[gUnk_03005594] != 0))
+    if (TerrainQueryPixelAndSides(gTerrainProbeX + gTerrainBoxRight, gTerrainProbeY + gTerrainBoxTop) != 0
+        && gCollisionTileSlope[gTerrainTile] == 0
+        && gUnk_087336F0[gTerrainTile] == 0
+        && (gUnk_087339F0[gTerrainTileLeft] == 0 || gUnk_087336F0[gTerrainTileLeft] != 0))
     {
-        gUnk_03005570 += sub_08021990(gUnk_03005578);
-        gUnk_03005530.unk1++;
+        gTerrainProbeY += GetTilePushDown(gTerrainTile);
+        gTerrainProbeResult.unk1++;
     }
 }
 
-/* Floor probe (none while gUnk_03005514, Task.unk58, is negative): land
+/* Floor probe (none while gTerrainVelY, Task.unk58, is negative): land
    the box's bottom on the floor cell under it, else on a slope under one
-   of its bottom corners.  Bits 0-2 of gUnk_03005530.unkB record, for the
+   of its bottom corners.  Bits 0-2 of gTerrainProbeResult.unkB record, for the
    centre and the two corners, whether the cell below is a
    gUnk_087336F0 tile, and let such a cell be landed on next time. */
 void sub_0801f9b8(void)
@@ -203,59 +203,59 @@ void sub_0801f9b8(void)
     s32 a;
     s32 a2;
 
-    if (gUnk_03005514 < 0)
+    if (gTerrainVelY < 0)
     {
-        gUnk_03005530.unkB = 0;
+        gTerrainProbeResult.unkB = 0;
         return;
     }
-    if (sub_080216d8(gUnk_03005560, gUnk_03005584 + gUnk_03005570) != 0
-        && (gUnk_087336F0[gUnk_03005578] == 0 || (gUnk_03005530.unkB & 1)))
+    if (TerrainQueryPixelAndBelow(gTerrainProbeX, gTerrainBoxBottom + gTerrainProbeY) != 0
+        && (gUnk_087336F0[gTerrainTile] == 0 || (gTerrainProbeResult.unkB & 1)))
     {
-        gUnk_03005530.unk6 = 1;
-        gUnk_03005530.unk2 = 1;
-        gUnk_03005530.unk4 = gUnk_08732CF0[gUnk_03005578];
-        gUnk_03005570 += sub_080219b0(gUnk_03005578);
-        if (sub_08021634(gUnk_03005560, gUnk_03005570 + gUnk_03005584) != 0)
+        gTerrainProbeResult.unk6 = 1;
+        gTerrainProbeResult.unk2 = 1;
+        gTerrainProbeResult.unk4 = gCollisionTileSlope[gTerrainTile];
+        gTerrainProbeY += GetTilePushUp(gTerrainTile);
+        if (TerrainQueryPixel(gTerrainProbeX, gTerrainProbeY + gTerrainBoxBottom) != 0)
         {
-            gUnk_03005530.unk4 = gUnk_08732CF0[gUnk_03005578];
-            gUnk_03005570 += sub_080219b0(gUnk_03005578);
+            gTerrainProbeResult.unk4 = gCollisionTileSlope[gTerrainTile];
+            gTerrainProbeY += GetTilePushUp(gTerrainTile);
         }
         return;
     }
-    if (gUnk_087336F0[gUnk_03005588] != 0)
-        gUnk_03005530.unkB |= 1;
+    if (gUnk_087336F0[gTerrainTileBelow] != 0)
+        gTerrainProbeResult.unkB |= 1;
     else
-        gUnk_03005530.unkB &= ~1;
-    if (sub_080216d8(gUnk_03005560 + gUnk_0300551C, gUnk_03005570 + gUnk_03005584) != 0
-        && (a = gUnk_08732EF0[gUnk_03005578]) == 1)
+        gTerrainProbeResult.unkB &= ~1;
+    if (TerrainQueryPixelAndBelow(gTerrainProbeX + gTerrainBoxLeft, gTerrainProbeY + gTerrainBoxBottom) != 0
+        && (a = gCollisionTileShapeClass[gTerrainTile]) == 1)
     {
-        if (gUnk_087336F0[gUnk_03005578] == 0 || (gUnk_03005530.unkB & 2))
+        if (gUnk_087336F0[gTerrainTile] == 0 || (gTerrainProbeResult.unkB & 2))
         {
-            gUnk_03005570 += sub_080219b0(gUnk_03005578);
-            gUnk_03005530.unk6 = 1;
-            gUnk_03005530.unk2 = 1;
+            gTerrainProbeY += GetTilePushUp(gTerrainTile);
+            gTerrainProbeResult.unk6 = 1;
+            gTerrainProbeResult.unk2 = 1;
         }
     }
     else
     {
-        if (gUnk_087336F0[gUnk_03005588] != 0 && gUnk_08732EF0[gUnk_03005588] == 1)
-            gUnk_03005530.unkB |= 2;
+        if (gUnk_087336F0[gTerrainTileBelow] != 0 && gCollisionTileShapeClass[gTerrainTileBelow] == 1)
+            gTerrainProbeResult.unkB |= 2;
         else
-            gUnk_03005530.unkB &= ~2;
+            gTerrainProbeResult.unkB &= ~2;
     }
-    if (sub_080216d8(gUnk_03005560 + gUnk_0300559C, gUnk_03005570 + gUnk_03005584) != 0
-        && (a2 = gUnk_08732EF0[gUnk_03005578]) == 1)
+    if (TerrainQueryPixelAndBelow(gTerrainProbeX + gTerrainBoxRight, gTerrainProbeY + gTerrainBoxBottom) != 0
+        && (a2 = gCollisionTileShapeClass[gTerrainTile]) == 1)
     {
-        if (gUnk_087336F0[gUnk_03005578] != 0 && !(gUnk_03005530.unkB & 4))
+        if (gUnk_087336F0[gTerrainTile] != 0 && !(gTerrainProbeResult.unkB & 4))
             return;
-        gUnk_03005570 += sub_080219b0(gUnk_03005578);
-        gUnk_03005530.unk6 = 1;
-        gUnk_03005530.unk2 = 1;
+        gTerrainProbeY += GetTilePushUp(gTerrainTile);
+        gTerrainProbeResult.unk6 = 1;
+        gTerrainProbeResult.unk2 = 1;
     }
-    if (gUnk_087336F0[gUnk_03005588] != 0 && gUnk_08732EF0[gUnk_03005588] == 1)
-        gUnk_03005530.unkB |= 4;
+    if (gUnk_087336F0[gTerrainTileBelow] != 0 && gCollisionTileShapeClass[gTerrainTileBelow] == 1)
+        gTerrainProbeResult.unkB |= 4;
     else
-        gUnk_03005530.unkB &= ~4;
+        gTerrainProbeResult.unkB &= ~4;
 }
 
 /* Floor probe of the fifth entry point (sub_0801c12c) for a box standing on
@@ -267,55 +267,55 @@ void sub_0801fc48(void)
     s32 n;
     u16 t;
 
-    gUnk_03005530.unk2++;
-    gUnk_03005530.unkB = 0;
-    sub_080216d8(gUnk_03005560, gUnk_03005570 + gUnk_03005584);
-    if (gUnk_08732EF0[gUnk_03005578] == 0)
+    gTerrainProbeResult.unk2++;
+    gTerrainProbeResult.unkB = 0;
+    TerrainQueryPixelAndBelow(gTerrainProbeX, gTerrainProbeY + gTerrainBoxBottom);
+    if (gCollisionTileShapeClass[gTerrainTile] == 0)
     {
-        if (gUnk_08732EF0[gUnk_03005588] == 0)
+        if (gCollisionTileShapeClass[gTerrainTileBelow] == 0)
             goto count;
-        gUnk_03005530.unk4 = gUnk_08732CF0[gUnk_03005588];
-        gUnk_03005570 += sub_08021970(gUnk_03005588) + 16;
+        gTerrainProbeResult.unk4 = gCollisionTileSlope[gTerrainTileBelow];
+        gTerrainProbeY += sub_08021970(gTerrainTileBelow) + 16;
     }
     else
     {
-        gUnk_03005530.unk4 = gUnk_08732CF0[gUnk_03005578];
-        gUnk_03005570 += sub_08021970(gUnk_03005578);
+        gTerrainProbeResult.unk4 = gCollisionTileSlope[gTerrainTile];
+        gTerrainProbeY += sub_08021970(gTerrainTile);
     }
-    if (sub_08021634(gUnk_03005560, gUnk_03005570 + gUnk_03005584) != 0)
+    if (TerrainQueryPixel(gTerrainProbeX, gTerrainProbeY + gTerrainBoxBottom) != 0)
     {
-        gUnk_03005530.unk4 = gUnk_08732CF0[gUnk_03005578];
-        gUnk_03005570 += sub_08021970(gUnk_03005578);
+        gTerrainProbeResult.unk4 = gCollisionTileSlope[gTerrainTile];
+        gTerrainProbeY += sub_08021970(gTerrainTile);
     }
     return;
 count:
     n = 0;
-    if (sub_080216d8(gUnk_03005560 + gUnk_0300551C, gUnk_03005570 + gUnk_03005584) != 0
-        && gUnk_08732CF0[gUnk_03005578] == 0)
+    if (TerrainQueryPixelAndBelow(gTerrainProbeX + gTerrainBoxLeft, gTerrainProbeY + gTerrainBoxBottom) != 0
+        && gCollisionTileSlope[gTerrainTile] == 0)
     {
-        gUnk_03005570 += sub_08021970(gUnk_03005578);
-        t = gUnk_03005578;
+        gTerrainProbeY += sub_08021970(gTerrainTile);
+        t = gTerrainTile;
     }
     else
     {
-        t = gUnk_03005588;
+        t = gTerrainTileBelow;
     }
-    if (gUnk_08732EF0[t] != 0)
+    if (gCollisionTileShapeClass[t] != 0)
         n += 2;
-    if (sub_080216d8(gUnk_03005560 + gUnk_0300559C, gUnk_03005570 + gUnk_03005584) != 0
-        && gUnk_08732CF0[gUnk_03005578] == 0)
+    if (TerrainQueryPixelAndBelow(gTerrainProbeX + gTerrainBoxRight, gTerrainProbeY + gTerrainBoxBottom) != 0
+        && gCollisionTileSlope[gTerrainTile] == 0)
     {
-        gUnk_03005570 += sub_08021970(gUnk_03005578);
-        t = gUnk_03005578;
+        gTerrainProbeY += sub_08021970(gTerrainTile);
+        t = gTerrainTile;
     }
     else
     {
-        t = gUnk_03005588;
+        t = gTerrainTileBelow;
     }
-    if (gUnk_08732EF0[t] != 0)
+    if (gCollisionTileShapeClass[t] != 0)
         n += 1;
     if (n == 0)
-        gUnk_03005530.unk2 = gUnk_03005530.unk3 = gUnk_03005530.unk6 = gUnk_03005530.unk5 = 0;
+        gTerrainProbeResult.unk2 = gTerrainProbeResult.unk3 = gTerrainProbeResult.unk6 = gTerrainProbeResult.unk5 = 0;
 }
 
 /* Landing probe of the fifth entry point (sub_0801c12c) for a box in the
@@ -326,32 +326,32 @@ void sub_0801fe2c(void)
     s32 a;
     s32 a2;
 
-    if (sub_080216d8(gUnk_03005560, gUnk_03005584 + gUnk_03005570) != 0)
+    if (TerrainQueryPixelAndBelow(gTerrainProbeX, gTerrainBoxBottom + gTerrainProbeY) != 0)
     {
-        gUnk_03005530.unk6 = 1;
-        gUnk_03005530.unk2 = 1;
-        gUnk_03005530.unk4 = gUnk_08732CF0[gUnk_03005578];
-        gUnk_03005570 += sub_080219b0(gUnk_03005578);
-        if (sub_08021634(gUnk_03005560, gUnk_03005570 + gUnk_03005584) != 0)
+        gTerrainProbeResult.unk6 = 1;
+        gTerrainProbeResult.unk2 = 1;
+        gTerrainProbeResult.unk4 = gCollisionTileSlope[gTerrainTile];
+        gTerrainProbeY += GetTilePushUp(gTerrainTile);
+        if (TerrainQueryPixel(gTerrainProbeX, gTerrainProbeY + gTerrainBoxBottom) != 0)
         {
-            gUnk_03005530.unk4 = gUnk_08732CF0[gUnk_03005578];
-            gUnk_03005570 += sub_080219b0(gUnk_03005578);
+            gTerrainProbeResult.unk4 = gCollisionTileSlope[gTerrainTile];
+            gTerrainProbeY += GetTilePushUp(gTerrainTile);
         }
         return;
     }
-    if (sub_08021634(gUnk_03005560 + gUnk_0300551C, gUnk_03005570 + gUnk_03005584) != 0
-        && (a = gUnk_08732EF0[gUnk_03005578]) == 1)
+    if (TerrainQueryPixel(gTerrainProbeX + gTerrainBoxLeft, gTerrainProbeY + gTerrainBoxBottom) != 0
+        && (a = gCollisionTileShapeClass[gTerrainTile]) == 1)
     {
-        gUnk_03005570 += sub_080219b0(gUnk_03005578);
-        gUnk_03005530.unk6 = 1;
-        gUnk_03005530.unk2 = 1;
-        gUnk_03005530.unkC = (gUnk_03005570 + gUnk_03005584 + 1) >> 4;
+        gTerrainProbeY += GetTilePushUp(gTerrainTile);
+        gTerrainProbeResult.unk6 = 1;
+        gTerrainProbeResult.unk2 = 1;
+        gTerrainProbeResult.unkC = (gTerrainProbeY + gTerrainBoxBottom + 1) >> 4;
     }
-    if (sub_08021634(gUnk_03005560 + gUnk_0300559C, gUnk_03005570 + gUnk_03005584) != 0
-        && (a2 = gUnk_08732EF0[gUnk_03005578]) == 1)
+    if (TerrainQueryPixel(gTerrainProbeX + gTerrainBoxRight, gTerrainProbeY + gTerrainBoxBottom) != 0
+        && (a2 = gCollisionTileShapeClass[gTerrainTile]) == 1)
     {
-        gUnk_03005570 += sub_080219b0(gUnk_03005578);
-        gUnk_03005530.unk6 = 1;
-        gUnk_03005530.unk2 = 1;
+        gTerrainProbeY += GetTilePushUp(gTerrainTile);
+        gTerrainProbeResult.unk6 = 1;
+        gTerrainProbeResult.unk2 = 1;
     }
 }

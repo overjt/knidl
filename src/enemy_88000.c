@@ -85,7 +85,7 @@ extern u32 ActorCheckHits(void);
 extern u32 ActorCollideTerrain(void);
 extern u32 sub_08069888(void);
 extern u32 ActorReactToHit(void);
-extern u8 sub_08021c4c(s16 x, s16 y);
+extern u8 IsWaterAtPixel(s16 x, s16 y);
 extern void TaskExitTrampoline(void);
 extern void TaskYieldTrampoline(u32 frames);
 extern void CallTableEntry(u32 a, u32 b, u32 *c);
@@ -98,7 +98,7 @@ extern void TaskSetMotionXFacing(s32 a, s32 b);
 extern void TaskSetMotionY(s32 a, s32 b, s32 c);
 extern void TaskStop(void);
 extern void TaskSetFrame(s32 a);
-extern void sub_080224b0(void);
+extern void TaskInitWaterFlags(void);
 extern void ActorSetState(u8 v);
 extern void ActorSetAttackBox(u32 v);
 extern void TaskFaceNearestPlayer(void);
@@ -457,7 +457,7 @@ void sub_08088610(void)
 void sub_08088658(void)
 {
     gCurTask->unk04 = (u32)sub_080886d8;
-    sub_080224b0();
+    TaskInitWaterFlags();
     if (gCurTask->unk7B == 3)
     {
         ActorSetState(3);
@@ -728,7 +728,7 @@ void sub_08088ce4(void)
 void sub_08088ce8(void)
 {
     gCurTask->unk04 = (u32)sub_08088d7c;
-    sub_080224b0();
+    TaskInitWaterFlags();
     if (gCurTask->unk7B == 3)
     {
         gCurTask->unk73 = 0;
@@ -1500,7 +1500,7 @@ void sub_08089c58(void)
 void sub_08089c98(void)
 {
     gCurTask->unk04 = (u32)sub_08089d44;
-    sub_080224b0();
+    TaskInitWaterFlags();
     if (gCurTask->unk7B == 3)
     {
         gCurTask->unk28 = 0;
@@ -1742,7 +1742,7 @@ void sub_0808a1d0(void)
 {
     u8 r;
 
-    r = sub_08021c4c(gCurTask->unk48, gCurTask->unk4A);
+    r = IsWaterAtPixel(gCurTask->unk48, gCurTask->unk4A);
     if (r == 0)
     {
         gCurTask->unk28 = 1;

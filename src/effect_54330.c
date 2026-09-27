@@ -16,15 +16,15 @@
  * short animations from gUnk_0874C520, 9 first calling M11's
  * PlaySfxIfLocalPlayer(134, ...) when the spawner is moving down (Task.unk58 > 0)
  * and 10 placed at the height the spawner passes in the low half of
- * Task.unk18; 11 (PlayerEffectBubble) asks M07's sub_08022624 about its position
+ * Task.unk18; 11 (PlayerEffectBubble) asks M07's IsFullBlockAtPixel about its position
  * and, when that returns 0, rises while swaying left and right, until its
  * companion sub_08054a44 (the collision box gUnk_0873CB74 through
- * sub_0801c3a4) kills it once its Task.unk7B is clear or gUnk_03005550.unk1
+ * sub_0801c3a4) kills it once its Task.unk7B is clear or gTerrainResult.unk1
  * is set. */
 
-/* gUnk_03005550: M06's collision result block (src/terrain_1bcac.c spells it
+/* gTerrainResult: M06's collision result block (src/terrain_1bcac.c spells it
    the same way except unk8, which M09 reads with ldrsh).  A 16-bit test of
-   unk0/unk1 together is `*(u16 *)&gUnk_03005550` (M12's sub_08045a50). */
+   unk0/unk1 together is `*(u16 *)&gTerrainResult` (M12's sub_08045a50). */
 struct Unk03005550
 {
     /*0x00*/ u8 unk0;
@@ -46,7 +46,7 @@ extern u32 gUnk_0874C600[];
 extern u32 gUnk_0874C520[];
 extern u32 gUnk_0874C648[];
 extern s8 gUnk_0873CB74[];              /* collision box passed to sub_0801c3a4 */
-extern struct Unk03005550 gUnk_03005550;
+extern struct Unk03005550 gTerrainResult;
 
 void TaskExitTrampoline(void);
 void TaskYieldTrampoline(s32 frames);
@@ -60,7 +60,7 @@ void TaskStop(void);
 u16 RandomSpread(s32 base, u8 scale, u8 amount);   /* base + ((rand(256) * amount) >> 8) * scale */
 s16 RandomSpreadFacing(s32 base, u8 scale, u8 amount);   /* the same, negated when Task.unk43 != 1 */
 u16 sub_0801c3a4(const s8 *p);
-s32 sub_08022624(u16 x, u16 y);
+s32 IsFullBlockAtPixel(u16 x, u16 y);
 s32 PlaySfxIfLocalPlayer(s32 a0, u16 a1);
 s32 CreatePlayerEffect(s32 a0, s32 a1, s32 a2);          /* M16's effect spawner (spawns task type #7) */
 void sub_08054504(void);
@@ -309,7 +309,7 @@ void PlayerEffectBubble(void)
     t->unk38 = gUnk_0874C648;
     if (t->unk43 == 1)
         t->unk4C = (t->unk48 + 4) << 16;
-    if (sub_08022624(gCurTask->unk4C >> 16, gCurTask->unk50 >> 10) == 0)
+    if (IsFullBlockAtPixel(gCurTask->unk4C >> 16, gCurTask->unk50 >> 10) == 0)
     {
         gCurTask->unk58 = -0x10000;
         for (;;)
@@ -328,6 +328,6 @@ void PlayerEffectBubble(void)
 void sub_08054a44(void)
 {
     sub_0801c3a4(gUnk_0873CB74);
-    if (gCurTask->unk7B == 0 || gUnk_03005550.unk1 != 0)
+    if (gCurTask->unk7B == 0 || gTerrainResult.unk1 != 0)
         TaskFree(gCurTaskIdx);
 }

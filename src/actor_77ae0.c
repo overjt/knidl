@@ -71,7 +71,7 @@ extern s32 QueueSprite(u32 a, u32 b, u32 c, u32 d, u32 e, s16 f);
 extern s32 PlaySfx(u32 a);
 extern s32 sub_08009e14();
 extern s32 sub_08009e20();
-extern s32 sub_08021b18(u16 x, u16 y);
+extern s32 GetCollisionTileAtPixel(u16 x, u16 y);
 extern s32 sub_08025bc8();
 extern s32 ActorStartAnim(struct AnimCmd *p);
 extern s32 sub_080b4204();
@@ -379,7 +379,7 @@ void sub_08077f98(void)
 {
     gCurTask->unk15 = 0;
     gCurTask->unk3C = 0;
-    while (sub_08021b18(gCurTask->unk48, gCurTask->unk4A) == 51)
+    while (GetCollisionTileAtPixel(gCurTask->unk48, gCurTask->unk4A) == 51)
         TaskYieldTrampoline(1);
     TaskYieldTrampoline(5);
     gCurTask->unk3C++;

@@ -119,7 +119,7 @@ extern struct Unk02007D70Cmd **gUnk_087E1F20[];
 extern u16 gUnk_030012B0[];
 extern s16 gUnk_0300561C;
 extern s16 gUnk_03005620;
-extern struct MapTile *gUnk_03005660;
+extern struct MapTile *gRoomMap;
 extern void (*gMapEventVariants[])(void);
 
 void RequestCopy(u32 mode, u32 src, u32 dst, u32 size);
@@ -286,7 +286,7 @@ void sub_0802d294(struct Unk02007D70 *p)
 void sub_0802d2f0(u32 x, u32 y, u32 v)
 {
     if (x < gUnk_03005620 && y < gUnk_0300561C)
-        gUnk_03005660[y * gUnk_03005620 + x].unk3 = v;
+        gRoomMap[y * gUnk_03005620 + x].unk3 = v;
 }
 
 void sub_0802d32c(struct Unk02007D70 *p)

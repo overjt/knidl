@@ -6,12 +6,12 @@
  *
  * The actor-vs-collider hit tests M17/M18's actors run (src/actor_673ec.c
  * calls them after sub_0801b7dc has placed the actor's attack box): each walks
- * one of the collider lists M05's sub_0801a828 fills, places the collider's
+ * one of the collider lists M05's RegisterCollider fills, places the collider's
  * body box the same way, tests the overlap and, on a hit, writes the hit
- * result (gUnk_03002380 = hit kind, gUnk_03002450, gUnk_03002394) through
+ * result (gHitKind = hit kind, gUnk_03002450, gHitDamage) through
  * the shared tails sub_0801b8e4/sub_0801b9e4 and returns 1.
- * sub_0801a8c8 tests the players' list gUnk_030054B0 (by the attack's class
- * gUnk_0300236C->unk06 & 7: 0 a damaging hit, 1 a hit the body box can
+ * sub_0801a8c8 tests the players' list gPlayerColliders (by the attack's class
+ * gAttackBox->unk06 & 7: 0 a damaging hit, 1 a hit the body box can
  * block, 2/3 a touch that marks the player in gUnk_03001F24);
  * sub_0801af14 tests the second list gUnk_030053A0.  The third list's test,
  * sub_0801b24c, is src/hitbox_1b24c.c.
@@ -19,9 +19,9 @@
  * Matching notes: the class 2/3 case is the last case in the source, because
  * merge_blocks moves its head up behind the dispatch; hit paths end at an
  * in-loop `sub_0801b9e4(); return 1;` (loop.c moves lone exit blocks out of
- * the loop); the attack's flags are read from gUnk_0300236C at every test. */
+ * the loop); the attack's flags are read from gAttackBox at every test. */
 
-/* An actor's attack box (ROM), pointed to by gUnk_0300236C during the
+/* An actor's attack box (ROM), pointed to by gAttackBox during the
    actor-vs-player hit tests: signed offsets from the actor's position
    (unk00/unk01) and the box edges relative to that point (left unk02, top
    unk03, right unk04, bottom unk05), then the attack's kind and flags. */
@@ -48,7 +48,7 @@ struct AttackBox
 };
 
 /* A player's body box, pointed to by each entry of the hit list
-   gUnk_030054B0 and cached in gUnk_030054E8: the same six signed offsets,
+   gPlayerColliders and cached in gColliderBodyBox: the same six signed offsets,
    then per-box bytes. */
 struct BodyBox
 {
@@ -71,8 +71,8 @@ struct BodyBox
 };
 
 /* One entry of a collider list (src/player_1a76c.c's struct Collider,
-   filled by M05's sub_0801a828): the owner's task index, its position and
-   its body box.  The three lists are gUnk_030054B0[gUnk_03005290] (up to 4,
+   filled by M05's RegisterCollider): the owner's task index, its position and
+   its body box.  The three lists are gPlayerColliders[gPlayerColliderCount] (up to 4,
    the players), gUnk_030053A0[gUnk_030054A8] and
    gUnk_030052A0[gUnk_030054F4] (up to 20 each), picked by the high nibble
    of the body box's byte 8. */
@@ -91,33 +91,33 @@ extern u8 gUnk_03001F24;
 extern s8 gAttackHitDuration;
 extern s16 gViewRect[];         /* camera rectangle: left, right, top, bottom */
 extern u8 gUnk_03002354;
-extern u16 gUnk_03002358;           /* actor x */
-extern u16 gUnk_03002368;
-extern struct AttackBox *gUnk_0300236C; /* the actor's attack box (s32 in actor_673ec.c) */
-extern u8 gUnk_03002380;            /* hit result */
+extern u16 gAttackX;           /* actor x */
+extern u16 gAttackPower;
+extern struct AttackBox *gAttackBox; /* the actor's attack box (s32 in actor_673ec.c) */
+extern u8 gHitKind;            /* hit result */
 extern u8 gUnk_03002390;
-extern u16 gUnk_03002394;
+extern u16 gHitDamage;
 extern u8 gUnk_030023A4;
 extern u8 gUnk_030023DC;
 extern u8 gAttackLastHitter;
 extern u8 gUnk_03002450;
 extern u8 gUnk_03002460;
-extern s16 gUnk_03005294;           /* attack box bottom */
-extern s16 gUnk_030054E0;           /* attack box top */
-extern s16 gUnk_03005490;           /* attack box right */
-extern s16 gUnk_030054A4;           /* attack box left */
-extern u8 gUnk_03005290;            /* number of hit-list entries */
-extern struct HitEntry gUnk_030054B0[];
-extern struct BodyBox *gUnk_030054E8;   /* the current entry's body box */
-extern struct PlayerState *gUnk_030054F0; /* the current entry's player */
-extern u8 gUnk_03005394;            /* the current entry's player index */
-extern u8 gUnk_03005498;            /* the current entry's task index */
-extern s16 gUnk_0300549C;           /* the current entry's x */
-extern s16 gUnk_030054A0;           /* the current entry's y */
-extern s16 gUnk_030054EC;           /* body box left */
-extern s16 gUnk_030054E4;           /* body box right */
-extern s16 gUnk_03005390;           /* body box top */
-extern s16 gUnk_03005494;           /* body box bottom */
+extern s16 gAttackBoxBottom;           /* attack box bottom */
+extern s16 gAttackBoxTop;           /* attack box top */
+extern s16 gAttackBoxRight;           /* attack box right */
+extern s16 gAttackBoxLeft;           /* attack box left */
+extern u8 gPlayerColliderCount;            /* number of hit-list entries */
+extern struct HitEntry gPlayerColliders[];
+extern struct BodyBox *gColliderBodyBox;   /* the current entry's body box */
+extern struct PlayerState *gColliderPlayerState; /* the current entry's player */
+extern u8 gColliderPlayer;            /* the current entry's player index */
+extern u8 gColliderSlot;            /* the current entry's task index */
+extern s16 gColliderX;           /* the current entry's x */
+extern s16 gColliderY;           /* the current entry's y */
+extern s16 gColliderLeft;           /* body box left */
+extern s16 gColliderRight;           /* body box right */
+extern s16 gColliderTop;           /* body box top */
+extern s16 gColliderBottom;           /* body box bottom */
 extern s16 gUnk_02005588[];
 extern struct HitEntry gUnk_030053A0[];
 extern u8 gUnk_030054A8;
@@ -129,7 +129,7 @@ void sub_0801b8e4(void);
 void sub_0801b9e4(void);
 
 /* Hit test of the actor's attack box against the players' hit list
-   gUnk_030054B0.  By the attack's class (unk06 & 7): 0 = a damaging hit
+   gPlayerColliders.  By the attack's class (unk06 & 7): 0 = a damaging hit
    (hit kind 2/6, health and knock-back through sub_0801b8e4), 1 = hit kind
    8 unless the body box blocks it, 2/3 = a touch (kind 7) that marks the
    player in gUnk_03001F24 (class 2 returns at the first one, class 3 after
@@ -143,205 +143,205 @@ u8 sub_0801a8c8(void)
     s32 i;
     u8 s;
 
-    gUnk_03002380 = 0;
+    gHitKind = 0;
     gUnk_03001F24 = 0;
-    e = gUnk_030054B0;
-    for (i = 0; i < gUnk_03005290; i++)
+    e = gPlayerColliders;
+    for (i = 0; i < gPlayerColliderCount; i++)
     {
-        gUnk_03005498 = e->unk00;
+        gColliderSlot = e->unk00;
         /* gUnk_03002460 is compared signed (lsls/asrs) */
-        if (gUnk_03005498 == (s8)gUnk_03002390 && *(s8 *)&gUnk_03002460 == 0)
+        if (gColliderSlot == (s8)gUnk_03002390 && *(s8 *)&gUnk_03002460 == 0)
         {
             e++;
             continue;
         }
-        t = &gTasks[gUnk_03005498];
-        gUnk_030054F0 = t->unk88;
-        if (gUnk_030054F0->unk45 != 0)
+        t = &gTasks[gColliderSlot];
+        gColliderPlayerState = t->unk88;
+        if (gColliderPlayerState->unk45 != 0)
         {
             e++;
             continue;
         }
-        gUnk_03005394 = gUnk_030054F0->unk00;
-        gUnk_030054E8 = e->unk08;
+        gColliderPlayer = gColliderPlayerState->unk00;
+        gColliderBodyBox = e->unk08;
         /* the list entry's position is unsigned (ldrh) */
-        if (gUnk_030054E8->unk10 & 0x8000)
+        if (gColliderBodyBox->unk10 & 0x8000)
         {
             s32 x;
-            gUnk_0300549C = x = gUnk_030054E8->unk00 + e->unk02;
-            gUnk_030054EC = (x - (u16)gViewRect[0]) + gUnk_030054E8->unk02;
-            gUnk_030054E4 = (x - (u16)gViewRect[0]) + gUnk_030054E8->unk04;
+            gColliderX = x = gColliderBodyBox->unk00 + e->unk02;
+            gColliderLeft = (x - (u16)gViewRect[0]) + gColliderBodyBox->unk02;
+            gColliderRight = (x - (u16)gViewRect[0]) + gColliderBodyBox->unk04;
         }
         else if (t->unk43 == 1)
         {
             s32 x;
-            gUnk_0300549C = x = gUnk_030054E8->unk00 + e->unk02;
-            gUnk_030054EC = (x - (u16)gViewRect[0]) + gUnk_030054E8->unk02;
-            gUnk_030054E4 = (x - (u16)gViewRect[0]) + gUnk_030054E8->unk04;
+            gColliderX = x = gColliderBodyBox->unk00 + e->unk02;
+            gColliderLeft = (x - (u16)gViewRect[0]) + gColliderBodyBox->unk02;
+            gColliderRight = (x - (u16)gViewRect[0]) + gColliderBodyBox->unk04;
         }
         else
         {
             s32 x;
-            gUnk_0300549C = x = -gUnk_030054E8->unk00 + e->unk02;
-            gUnk_030054EC = (x - (u16)gViewRect[0]) - gUnk_030054E8->unk04;
-            gUnk_030054E4 = (x - (u16)gViewRect[0]) - gUnk_030054E8->unk02;
+            gColliderX = x = -gColliderBodyBox->unk00 + e->unk02;
+            gColliderLeft = (x - (u16)gViewRect[0]) - gColliderBodyBox->unk04;
+            gColliderRight = (x - (u16)gViewRect[0]) - gColliderBodyBox->unk02;
         }
-        gUnk_030054A0 = gUnk_030054E8->unk01 + e->unk04;
+        gColliderY = gColliderBodyBox->unk01 + e->unk04;
         e++;
-        gUnk_03005390 = (gUnk_030054A0 - (u16)gViewRect[2]) + gUnk_030054E8->unk03;
-        gUnk_03005494 = (gUnk_030054A0 - (u16)gViewRect[2]) + gUnk_030054E8->unk05;
-        switch (gUnk_0300236C->unk06 & 7)
+        gColliderTop = (gColliderY - (u16)gViewRect[2]) + gColliderBodyBox->unk03;
+        gColliderBottom = (gColliderY - (u16)gViewRect[2]) + gColliderBodyBox->unk05;
+        switch (gAttackBox->unk06 & 7)
         {
         case 0:
-            ps = gUnk_030054F0;
+            ps = gColliderPlayerState;
             s = ps->unk3F;
             if (s == 2)
                 continue;
-            if (gUnk_030054E4 < gUnk_030054A4)
+            if (gColliderRight < gAttackBoxLeft)
                 continue;
-            if (gUnk_03005490 < gUnk_030054EC)
+            if (gAttackBoxRight < gColliderLeft)
                 continue;
-            if (gUnk_03005494 < gUnk_030054E0)
+            if (gColliderBottom < gAttackBoxTop)
                 continue;
-            if (gUnk_03005294 < gUnk_03005390)
+            if (gAttackBoxBottom < gColliderTop)
                 continue;
             if (ps->unk17 == 1)
             {
-                if (gUnk_0300236C->unk0A & 0x8000)
+                if (gAttackBox->unk0A & 0x8000)
                     continue;
-                if (gUnk_0300236C->unk0A & 8)
+                if (gAttackBox->unk0A & 8)
                 {
-                    gUnk_03002380 = 6;
+                    gHitKind = 6;
                     gUnk_03002450 = 12;
-                    gUnk_03002394 = gUnk_03002368;
+                    gHitDamage = gAttackPower;
                 }
-                else if (gUnk_0300236C->unk0A & 4)
+                else if (gAttackBox->unk0A & 4)
                 {
-                    gUnk_03002380 = 6;
+                    gHitKind = 6;
                     gUnk_03002450 = 11;
-                    gUnk_03002394 = gUnk_03002368;
+                    gHitDamage = gAttackPower;
                 }
                 else
                 {
-                    gUnk_03002380 = 2;
+                    gHitKind = 2;
                     sub_0801b8e4();
                     t->unk76 = (t->unk76 & 0x4000) | 1;
                 }
             }
             else if (s == 0)
             {
-                if (!(gUnk_0300236C->unk0C & 0x4005)
-                    && !((gUnk_0300236C->unk1A & 0x40) && (t->unk76 & 0x4000)))
+                if (!(gAttackBox->unk0C & 0x4005)
+                    && !((gAttackBox->unk1A & 0x40) && (t->unk76 & 0x4000)))
                 {
-                    t->unk82 = gUnk_0300236C->unk09;
+                    t->unk82 = gAttackBox->unk09;
                     /* the actor's x is read signed here (ldrsh) */
-                    if ((s16)gUnk_03002358 < gUnk_0300549C)
+                    if ((s16)gAttackX < gColliderX)
                         t->unk7D = 0;
                     else
                         t->unk7D = 4;
-                    gUnk_030054F0->unk45++;
-                    sub_08009ee8(-gUnk_0300236C->unk08, gUnk_03005394);
-                    if (gUnk_02005588[gUnk_03005394] <= 0)
+                    gColliderPlayerState->unk45++;
+                    sub_08009ee8(-gAttackBox->unk08, gColliderPlayer);
+                    if (gUnk_02005588[gColliderPlayer] <= 0)
                     {
                         t->unk7C = 1;
-                        t->unk82 = gUnk_0300236C->unk1A & 0x300;
+                        t->unk82 = gAttackBox->unk1A & 0x300;
                     }
                     else
                     {
                         t->unk7C = 2;
                     }
                 }
-                if (gUnk_0300236C->unk0A & 0x8000)
+                if (gAttackBox->unk0A & 0x8000)
                     continue;
-                if (gUnk_0300236C->unk0A & 4)
+                if (gAttackBox->unk0A & 4)
                 {
-                    gUnk_03002380 = 6;
+                    gHitKind = 6;
                     gUnk_03002450 = 11;
-                    gUnk_03002394 = gUnk_03002368;
+                    gHitDamage = gAttackPower;
                 }
-                else if (gUnk_0300236C->unk0A & 1)
+                else if (gAttackBox->unk0A & 1)
                 {
-                    gUnk_03002380 = 6;
+                    gHitKind = 6;
                     gUnk_03002450 = 1;
-                    gUnk_03002394 = gUnk_03002368;
+                    gHitDamage = gAttackPower;
                 }
                 else
                 {
-                    gUnk_03002380 = 2;
+                    gHitKind = 2;
                     sub_0801b8e4();
                 }
             }
             else if (s == 1 || s == 3)
             {
-                if (gUnk_0300236C->unk0A & 0x8000)
+                if (gAttackBox->unk0A & 0x8000)
                     continue;
-                if (gUnk_0300236C->unk0A & 4)
+                if (gAttackBox->unk0A & 4)
                 {
-                    gUnk_03002380 = 6;
+                    gHitKind = 6;
                     gUnk_03002450 = 11;
-                    gUnk_03002394 = gUnk_03002368;
+                    gHitDamage = gAttackPower;
                 }
                 else
                 {
-                    gUnk_03002380 = 2;
+                    gHitKind = 2;
                     sub_0801b8e4();
                 }
             }
             sub_0801b9e4();
             return 1;
         case 1:
-            ps = gUnk_030054F0;
+            ps = gColliderPlayerState;
             if (ps->unk3F >= 1 && ps->unk3F <= 3)
                 continue;
-            if (gUnk_030054E4 < gUnk_030054A4)
+            if (gColliderRight < gAttackBoxLeft)
                 continue;
-            if (gUnk_03005490 < gUnk_030054EC)
+            if (gAttackBoxRight < gColliderLeft)
                 continue;
-            if (gUnk_03005494 < gUnk_030054E0)
+            if (gColliderBottom < gAttackBoxTop)
                 continue;
-            if (gUnk_03005294 < gUnk_03005390)
+            if (gAttackBoxBottom < gColliderTop)
                 continue;
             gUnk_03002450 = 0;
             /* the body box's halfword at 0x0E (ldrh) */
-            if (!(gUnk_030054E8->unk0E & 6))
+            if (!(gColliderBodyBox->unk0E & 6))
             {
                 ps->unk45++;
-                gUnk_03002380 = 8;
-                gUnk_03002394 = gUnk_03002368;
+                gHitKind = 8;
+                gHitDamage = gAttackPower;
                 sub_0801b9e4();
                 return 1;
             }
-            gUnk_03002380 = 6;
+            gHitKind = 6;
             continue;
         default:
             continue;
         case 2:
         case 3:
-            if (gUnk_030054F0->unk3F == 2)
+            if (gColliderPlayerState->unk3F == 2)
                 continue;
-            if (gUnk_030054E4 < gUnk_030054A4)
+            if (gColliderRight < gAttackBoxLeft)
                 continue;
             break;
         }
-        if (gUnk_03005490 < gUnk_030054EC)
+        if (gAttackBoxRight < gColliderLeft)
             continue;
-        if (gUnk_03005494 < gUnk_030054E0)
+        if (gColliderBottom < gAttackBoxTop)
             continue;
-        if (gUnk_03005294 < gUnk_03005390)
+        if (gAttackBoxBottom < gColliderTop)
             continue;
-        gUnk_03002380 = 7;
+        gHitKind = 7;
         gUnk_030023A4 = 0;
-        gUnk_03002394 = gUnk_03002368;
-        gUnk_030023DC = gUnk_03005498;
+        gHitDamage = gAttackPower;
+        gUnk_030023DC = gColliderSlot;
         gUnk_03002354 = gAttackHitDuration;
-        if ((gUnk_0300236C->unk06 & 7) == 2)
+        if ((gAttackBox->unk06 & 7) == 2)
         {
-            gUnk_03001F24 = gUnk_03005394;
+            gUnk_03001F24 = gColliderPlayer;
             return 1;
         }
-        gUnk_03001F24 |= 1 << gUnk_03005394;
+        gUnk_03001F24 |= 1 << gColliderPlayer;
     }
-    if ((gUnk_0300236C->unk06 & 7) == 3 && gUnk_03002380 == 7)
+    if ((gAttackBox->unk06 & 7) == 3 && gHitKind == 7)
         return 1;
     return 0;
 }
@@ -359,90 +359,90 @@ u8 sub_0801af14(void)
     e = gUnk_030053A0;
     for (i = 0; i < gUnk_030054A8; i++)
     {
-        gUnk_03005498 = e->unk00;
-        t = &gTasks[gUnk_03005498];
-        gUnk_030054F0 = t->unk88;
-        gUnk_03005394 = gUnk_030054F0->unk00;
-        gUnk_030054E8 = e->unk08;
-        if (gUnk_03005394 == (s8)gAttackLastHitter)
+        gColliderSlot = e->unk00;
+        t = &gTasks[gColliderSlot];
+        gColliderPlayerState = t->unk88;
+        gColliderPlayer = gColliderPlayerState->unk00;
+        gColliderBodyBox = e->unk08;
+        if (gColliderPlayer == (s8)gAttackLastHitter)
         {
             e++;
             continue;
         }
         /* the list entry's position is unsigned (ldrh) */
-        if (gUnk_030054E8->unk10 & 0x8000)
+        if (gColliderBodyBox->unk10 & 0x8000)
         {
             s32 x;
-            gUnk_0300549C = x = gUnk_030054E8->unk00 + e->unk02;
-            gUnk_030054EC = (x - (u16)gViewRect[0]) + gUnk_030054E8->unk02;
-            gUnk_030054E4 = (x - (u16)gViewRect[0]) + gUnk_030054E8->unk04;
+            gColliderX = x = gColliderBodyBox->unk00 + e->unk02;
+            gColliderLeft = (x - (u16)gViewRect[0]) + gColliderBodyBox->unk02;
+            gColliderRight = (x - (u16)gViewRect[0]) + gColliderBodyBox->unk04;
         }
         else if (t->unk43 == 1)
         {
             s32 x;
-            gUnk_0300549C = x = gUnk_030054E8->unk00 + e->unk02;
-            gUnk_030054EC = (x - (u16)gViewRect[0]) + gUnk_030054E8->unk02;
-            gUnk_030054E4 = (x - (u16)gViewRect[0]) + gUnk_030054E8->unk04;
+            gColliderX = x = gColliderBodyBox->unk00 + e->unk02;
+            gColliderLeft = (x - (u16)gViewRect[0]) + gColliderBodyBox->unk02;
+            gColliderRight = (x - (u16)gViewRect[0]) + gColliderBodyBox->unk04;
         }
         else
         {
             s32 x;
-            gUnk_0300549C = x = -gUnk_030054E8->unk00 + e->unk02;
-            gUnk_030054EC = (x - (u16)gViewRect[0]) - gUnk_030054E8->unk04;
-            gUnk_030054E4 = (x - (u16)gViewRect[0]) - gUnk_030054E8->unk02;
+            gColliderX = x = -gColliderBodyBox->unk00 + e->unk02;
+            gColliderLeft = (x - (u16)gViewRect[0]) - gColliderBodyBox->unk04;
+            gColliderRight = (x - (u16)gViewRect[0]) - gColliderBodyBox->unk02;
         }
-        gUnk_030054A0 = gUnk_030054E8->unk01 + e->unk04;
+        gColliderY = gColliderBodyBox->unk01 + e->unk04;
         e++;
-        gUnk_03005390 = (gUnk_030054A0 - (u16)gViewRect[2]) + gUnk_030054E8->unk03;
-        gUnk_03005494 = (gUnk_030054A0 - (u16)gViewRect[2]) + gUnk_030054E8->unk05;
-        if (gUnk_030054E4 < gUnk_030054A4)
+        gColliderTop = (gColliderY - (u16)gViewRect[2]) + gColliderBodyBox->unk03;
+        gColliderBottom = (gColliderY - (u16)gViewRect[2]) + gColliderBodyBox->unk05;
+        if (gColliderRight < gAttackBoxLeft)
             continue;
-        if (gUnk_03005490 < gUnk_030054EC)
+        if (gAttackBoxRight < gColliderLeft)
             continue;
-        if (gUnk_03005494 < gUnk_030054E0)
+        if (gColliderBottom < gAttackBoxTop)
             continue;
-        if (gUnk_03005294 < gUnk_03005390)
+        if (gAttackBoxBottom < gColliderTop)
             continue;
-        if (gUnk_0300236C->unk1A & 0x3E)
+        if (gAttackBox->unk1A & 0x3E)
         {
-            if (!((gUnk_0300236C->unk1A >> gUnk_030054E8->unk0D) & 1))
+            if (!((gAttackBox->unk1A >> gColliderBodyBox->unk0D) & 1))
                 continue;
-            gUnk_03002380 = 7;
-            gUnk_03002394 = gUnk_03002368;
+            gHitKind = 7;
+            gHitDamage = gAttackPower;
             sub_0801b9e4();
             return 1;
         }
-        k = (u32)(gUnk_030054E8->unk08 << 28) >> 28;
+        k = (u32)(gColliderBodyBox->unk08 << 28) >> 28;
         mask = gUnk_08732224[k] | 0x4000;
         /* the body box's halfword at 0x0E (ldrh) */
-        if (!(gUnk_030054E8->unk0E & 0x8000) && !(mask & gUnk_0300236C->unk10))
+        if (!(gColliderBodyBox->unk0E & 0x8000) && !(mask & gAttackBox->unk10))
         {
-            t->unk82 = gUnk_0300236C->unk09;
-            t->unk78 -= gUnk_0300236C->unk08;
+            t->unk82 = gAttackBox->unk09;
+            t->unk78 -= gAttackBox->unk08;
             if (t->unk78 <= 0)
                 t->unk7C = 1;
             else
                 t->unk7C = 2;
-            u = &gTasks[gUnk_03005394];
-            if (!(gUnk_0300236C->unk1A & 1))
+            u = &gTasks[gColliderPlayer];
+            if (!(gAttackBox->unk1A & 1))
             {
                 u->unk76 &= 0x4000;
-                u->unk76 |= gUnk_030054E8->unk10 & 0x3FFF;
+                u->unk76 |= gColliderBodyBox->unk10 & 0x3FFF;
             }
         }
-        if (!(gUnk_0300236C->unk0E & 0x8000))
+        if (!(gAttackBox->unk0E & 0x8000))
         {
             mask = gUnk_08732224[k];
-            if (!(mask & gUnk_0300236C->unk0E))
+            if (!(mask & gAttackBox->unk0E))
             {
-                gUnk_03002380 = 2;
+                gHitKind = 2;
                 sub_0801b8e4();
             }
             else
             {
-                gUnk_03002380 = 6;
+                gHitKind = 6;
                 gUnk_03002450 = gUnk_08732218[k];
-                gUnk_03002394 = gUnk_03002368;
+                gHitDamage = gAttackPower;
             }
             sub_0801b9e4();
             return 1;

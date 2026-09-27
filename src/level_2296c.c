@@ -139,9 +139,9 @@ extern s16 gUnk_030055E4;
 extern u16 gUnk_03005600[2];
 extern u16 gUnk_03005608[2];
 extern struct Unk020055D8 gUnk_020055D8;
-extern struct MapCell *gUnk_03005660;
+extern struct MapCell *gRoomMap;
 extern struct MapCell gUnk_02000040[];
-extern u16 gUnk_02008160[];
+extern u16 gBlockLayer[];
 extern u16 gUnk_0200B080[];
 extern u8 gUnk_02000020;
 extern u8 gUnk_0200B078;
@@ -473,16 +473,16 @@ void sub_08022fa8(void)
     gUnk_020055D8.unk0 = gUnk_030055EC->unk3C;
     gUnk_020055D8.unk2 = gUnk_030055EC->unk3E;
     gUnk_020055D8.unk4 = gUnk_030055EC->unk48;
-    gUnk_03005660 = gUnk_02000040;
+    gRoomMap = gUnk_02000040;
     if (gUnk_030055EC->unk05 != 0)
     {
         RequestCopy(8, (u32)gUnk_030055EC->unk08, (u32)gUnk_02000040, 0);
-        RequestCopy(8, (u32)gUnk_030055EC->unk0C, (u32)gUnk_02008160, 0);
+        RequestCopy(8, (u32)gUnk_030055EC->unk0C, (u32)gBlockLayer, 0);
     }
     else
     {
         CpuSet(gUnk_030055EC->unk08, gUnk_02000040, (gUnk_030055E4 * 2) & 0x1FFFFF);
-        CpuSet(gUnk_030055EC->unk0C, gUnk_02008160, gUnk_030055E4 & 0x1FFFFF);
+        CpuSet(gUnk_030055EC->unk0C, gBlockLayer, gUnk_030055E4 & 0x1FFFFF);
     }
     RequestCopy(8, (u32)gUnk_030055EC->unk20, (u32)gUnk_0200B080, 0);
     gUnk_02000020 = 0;
@@ -613,7 +613,7 @@ void sub_080233e0(void)
     gUnk_020055D8.unk0 = gUnk_030055EC->unk3C;
     gUnk_020055D8.unk2 = gUnk_030055EC->unk3E;
     gUnk_020055D8.unk4 = gUnk_030055EC->unk48;
-    gUnk_03005660 = gUnk_02000040;
+    gRoomMap = gUnk_02000040;
     RequestCopy(8, (u32)gUnk_030055EC->unk20, (u32)gUnk_0200B080, 0);
     gUnk_03005624 = 0;
     sub_08030724();

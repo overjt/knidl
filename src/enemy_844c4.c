@@ -9,7 +9,7 @@
  * and the six per-frame guards off `0x08741F90`, and `sub_0808451c` is the
  * per-frame hook - it keeps the low half of Task.unk24 (the 16.16 vertical
  * offset the draw helper reads) while Task.unk7A bit 0 says the object is
- * still attached, and or-s in 0x10000 while `gUnk_03005550[4]` (the room's
+ * still attached, and or-s in 0x10000 while `gTerrainResult[4]` (the room's
  * kind) is outside 1-4.
  *
  * `sub_08084bc0` / `sub_08084c0c` / `sub_08084c5c` / `sub_08084cb8` plus the
@@ -28,7 +28,7 @@
 #include "task.h"
 
 /* RAM cells */
-extern u8 gUnk_03005550[];
+extern u8 gTerrainResult[];
 
 /* ROM tables */
 extern u32 gUnk_0873F500[];
@@ -104,7 +104,7 @@ void sub_0808451c(void)
     t = gCurTask;
     if ((t->unk7A & 1) != 0)
     {
-        if ((u8)(gUnk_03005550[4] - 1) > 3)
+        if ((u8)(gTerrainResult[4] - 1) > 3)
             t->unk24 = (u16)t->unk24 | 0x10000;
         if ((gCurTask->unk7A & 1) != 0)
             goto skip;

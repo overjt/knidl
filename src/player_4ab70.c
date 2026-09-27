@@ -10,7 +10,7 @@
  * that fall into each other (animations 0xDC5/0xDDD/0xDDB-0xDDC by the
  * facing, effects 28 and 45 x3).  Its handler sub_0804ada8 jumps on B
  * (preset 50) or falls (49) in state 1, turns the player round at a
- * wall (PlayerFaceHeldDirection or the collision block gUnk_03005550: Task.unk54
+ * wall (PlayerFaceHeldDirection or the collision block gTerrainResult: Task.unk54
  * and unk5C negated, and the facing on a block hit, with an 8-frame
  * lock in Task.unk28), stops a rise on a ceiling hit, registers the
  * collider gUnk_0873C2A0 and requests action 23 through PlayerHasCrossedWaterSurface.
@@ -26,9 +26,9 @@
  * palette in and back out (gUnk_08203098, Task.unk28 in steps of 10 and
  * 16) and keeps the player under the height Task.unk2C. */
 
-/* gUnk_03005550: M06's collision result block (src/terrain_1bcac.c spells it
+/* gTerrainResult: M06's collision result block (src/terrain_1bcac.c spells it
    the same way except unk8, which M09 reads with ldrsh).  A 16-bit test of
-   unk0/unk1 together is `*(u16 *)&gUnk_03005550` (M12's sub_08045a50). */
+   unk0/unk1 together is `*(u16 *)&gTerrainResult` (M12's sub_08045a50). */
 struct Unk03005550
 {
     /*0x00*/ u8 unk0;
@@ -47,7 +47,7 @@ struct Unk03005550
 };
 
 extern u16 gLatchedHeldKeys[];             /* held keys, latched per player (M11) */
-extern struct Unk03005550 gUnk_03005550;
+extern struct Unk03005550 gTerrainResult;
 extern u32 gUnk_0873C2A0[];
 extern u8 gUnk_03001F34;
 extern vu16 gDispCnt;              /* DISPCNT shadow */
@@ -64,7 +64,7 @@ void TaskSetSkipMask(u8 val, s32 idx);
 void TaskSleepForever(void);
 void TaskSetFrame(s32 a);
 s32 sub_0800a008(s32 a, s32 b, u32 c);       /* landed (hud_099fc.c); M12 calls it as sub_0800a008(0, -1, p->unk00) */
-void sub_0801a828(u8 a, s16 x, s16 y, void *p);   /* M11's caller spelling */
+void RegisterCollider(u8 a, s16 x, s16 y, void *p);   /* M11's caller spelling */
 void sub_080261d4(u16 a);
 void sub_08027204(u32 a);
 void PlayerStopAxes(s32 a0);
@@ -185,7 +185,7 @@ void sub_0804ada8(void)
                 u->unk28--;
             }
         }
-        if (gUnk_03005550.unk0 != 0) {
+        if (gTerrainResult.unk0 != 0) {
             gCurTask->unk28 = 8;
             gCurTask->unk43 = -gCurTask->unk43;
             {
@@ -196,11 +196,11 @@ void sub_0804ada8(void)
         }
         {
             struct Task *w = gCurTask;
-            if (w->unk58 < 0 && gUnk_03005550.unk1 != 0)
+            if (w->unk58 < 0 && gTerrainResult.unk1 != 0)
                 w->unk58 = 0;
         }
         if (gCurTask->unk73 != 2)
-            sub_0801a828(gCurTaskIdx, gCurTask->unk48, gCurTask->unk4A,
+            RegisterCollider(gCurTaskIdx, gCurTask->unk48, gCurTask->unk4A,
                          gUnk_0873C2A0);
         break;
     case 3:

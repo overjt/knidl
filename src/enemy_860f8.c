@@ -12,7 +12,7 @@ extern s32 gUnk_030023B4;
 extern s32 gUnk_030023D4;
 extern struct Task *gCurTask;
 extern struct Task gTasks[];
-extern u8 gUnk_03005550[];
+extern u8 gTerrainResult[];
 
 /* ROM tables */
 extern s16 gUnk_08742150[];
@@ -773,15 +773,15 @@ s32 sub_08086f54(void)
     u8 n = 0;
     s16 v;
 
-    if ((gCurTask->unk7A & 1) == 0 && (gUnk_03005550[1] & 1) == 0
-     && (gUnk_03005550[0] & 3) == 0)
+    if ((gCurTask->unk7A & 1) == 0 && (gTerrainResult[1] & 1) == 0
+     && (gTerrainResult[0] & 3) == 0)
         return 0;
-    switch (gUnk_03005550[4])
+    switch (gTerrainResult[4])
     {
     case 0:
         if (gCurTask->unk7A & 1)
             n = n + 1;
-        if ((gUnk_03005550[1] & 1) == 0)
+        if ((gTerrainResult[1] & 1) == 0)
             break;
         n = n + 2;
         break;
@@ -810,9 +810,9 @@ s32 sub_08086f54(void)
         n = n + 10;
         break;
     }
-    if (gUnk_03005550[0] & 1)
+    if (gTerrainResult[0] & 1)
         n = n + 11;
-    if (gUnk_03005550[0] & 2)
+    if (gTerrainResult[0] & 2)
         n = n + 22;
     v = gUnk_08742150[(n << 4) + (gCurTask->unk2C >> 5)];
     if (v < 0)

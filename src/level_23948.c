@@ -98,7 +98,7 @@ extern s16 gUnk_0300561C;
 extern s16 gUnk_030055E4;
 extern u16 gUnk_03005600[2];
 extern u16 gUnk_03005608[2];
-extern struct MapCell *gUnk_03005660;
+extern struct MapCell *gRoomMap;
 extern struct MapCell gUnk_02006AA0[];
 extern u8 gUnk_0200B050;
 extern s16 *gUnk_0300558C;
@@ -216,7 +216,7 @@ void sub_08023948(void)
     gUnk_03005600[1] = gUnk_030055EC->unk26;
     gUnk_03005608[0] = gUnk_030055EC->unk34;
     gUnk_03005608[1] = gUnk_030055EC->unk36;
-    gUnk_03005660 = gUnk_02006AA0;
+    gRoomMap = gUnk_02006AA0;
     sub_08027a6c();
     gUnk_0200B050 = 0;
     gUnk_0300558C = gUnk_0873A318;
@@ -321,7 +321,7 @@ void sub_08023ca0(void)
     gUnk_03005600[1] = gUnk_030055EC->unk26;
     gUnk_03005608[0] = gUnk_030055EC->unk34;
     gUnk_03005608[1] = gUnk_030055EC->unk36;
-    gUnk_03005660 = gUnk_02006AA0;
+    gRoomMap = gUnk_02006AA0;
     z = 0;
     w = 0;
     sub_08027a6c();
@@ -470,7 +470,7 @@ void sub_08023fd4(void)
     gUnk_03005600[1] = gUnk_030055EC->unk26;
     gUnk_03005608[0] = gUnk_030055EC->unk34;
     gUnk_03005608[1] = gUnk_030055EC->unk36;
-    gUnk_03005660 = gUnk_02000040;
+    gRoomMap = gUnk_02000040;
     if (gUnk_030055EC->unk05 != 0)
         RequestCopy(8, (u32)gUnk_030055EC->unk08, (u32)gUnk_02000040, 0);
     else

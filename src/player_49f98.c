@@ -20,9 +20,9 @@
  * rows 0xB2E-0xB3E by |Task.unk54| and cycles Task.unk46 through them,
  * ends the move on landing and re-binds state 4 on a ceiling hit. */
 
-/* gUnk_03005550: M06's collision result block (src/terrain_1bcac.c spells it
+/* gTerrainResult: M06's collision result block (src/terrain_1bcac.c spells it
    the same way except unk8, which M09 reads with ldrsh).  A 16-bit test of
-   unk0/unk1 together is `*(u16 *)&gUnk_03005550` (M12's sub_08045a50). */
+   unk0/unk1 together is `*(u16 *)&gTerrainResult` (M12's sub_08045a50). */
 struct Unk03005550
 {
     /*0x00*/ u8 unk0;
@@ -48,7 +48,7 @@ extern u32 gUnk_0873C228[];
 extern u8 gObjPalette[];              /* OBJ palette buffer (M11 spelling) */
 extern u16 gLatchedPressedKeys[];             /* newly-pressed keys, latched per player */
 extern u16 gLatchedHeldKeys[];             /* held keys, latched per player (M11) */
-extern struct Unk03005550 gUnk_03005550;
+extern struct Unk03005550 gTerrainResult;
 
 void TaskYieldTrampoline(s32 frames);
 void RequestCopy(u32 mode, void *src, void *dst, u32 size);   /* early_1518; effect_5afac's pointer spelling */
@@ -56,7 +56,7 @@ void TaskSetEntry(void *a, u32 i);
 void TaskSetFrame(s32 a);
 void TaskSetFrameNoFlip(s32 a);
 void TaskSetFrameFlip(s32 a);
-void sub_0801a828(u8 a, s16 x, s16 y, void *p);   /* M11's caller spelling */
+void RegisterCollider(u8 a, s16 x, s16 y, void *p);   /* M11's caller spelling */
 void PlayerStopAxes(s32 a0);
 void SetPlayerInvulnerability(s32 a0, s32 a1, s32 a2);
 void PlayerStartSfx(s32 a0, u16 a1);
@@ -206,14 +206,14 @@ void sub_0804a258(void)
                 u->unk28 = 2;
             }
         }
-        sub_0801a828(gCurTaskIdx, gCurTask->unk48, gCurTask->unk4A, gUnk_0873C228);
+        RegisterCollider(gCurTaskIdx, gCurTask->unk48, gCurTask->unk4A, gUnk_0873C228);
         if (gLatchedHeldKeys[gCurTask->unk88->unk00] & 48) {
             PlayerFaceHeldDirection();
             PlayerSetMotionXPreset(11, 60);
         } else {
             PlayerSetMotionXPreset(11, 61);
         }
-        if (gUnk_03005550.unk0 != 0)
+        if (gTerrainResult.unk0 != 0)
             PlayerStopAxes(1);
         {
             struct Task *u = gCurTask;
@@ -248,7 +248,7 @@ void sub_0804a258(void)
                 PlayerRequestLocomotion();
                 break;
             }
-            if (w->unk58 < 0 && (gUnk_03005550.unk1 != 0 || (w->unk88->unk48 & 4))) {
+            if (w->unk58 < 0 && (gTerrainResult.unk1 != 0 || (w->unk88->unk48 & 4))) {
                 w->unk58 = 0;
                 w->unk73 = 4;
                 TaskSetEntry(sub_08049f98, gCurTaskIdx);

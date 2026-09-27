@@ -9,7 +9,7 @@
  * TaskDrawWorldInViewOrFree, Task.unk42 = 5, an animation table in Task.unk38) and runs
  * `switch (Task.unk18 & 15)` over its sub-states, each a yield script that
  * ends in TaskExitTrampoline; its per-frame callback (Task.unk04) runs
- * the hit test sub_08030848 and the terrain checks and re-binds the body
+ * the hit test TaskBreakBlocks and the terrain checks and re-binds the body
  * in another sub-state, or the shared exit sub_08050814, on contact.
  * Variant 0 (sub_080509ec, callback sub_08050c48) spawns a copy of itself
  * in sub-state 1 while it moves; variants 1 and 2 (sub_08050d00,
@@ -18,9 +18,9 @@
  * sub_080513d4, which draw a six-step trail behind the object
  * (sub_08050f80 is also installed by variants 11 and 12). */
 
-/* gUnk_03005550: M06's collision result block (src/terrain_1bcac.c spells it
+/* gTerrainResult: M06's collision result block (src/terrain_1bcac.c spells it
    the same way except unk8, which M09 reads with ldrsh).  A 16-bit test of
-   unk0/unk1 together is `*(u16 *)&gUnk_03005550` (M12's sub_08045a50). */
+   unk0/unk1 together is `*(u16 *)&gTerrainResult` (M12's sub_08045a50). */
 struct Unk03005550
 {
     /*0x00*/ u8 unk0;
@@ -40,8 +40,8 @@ struct Unk03005550
 
 extern u32 gUnk_0874C568[];
 extern s8 gUnk_0873CB44[];              /* collision box passed to sub_0802205c / sub_0801c230 */
-extern u32 gUnk_0873BD64[];             /* collider row passed to sub_0801a828 (4th arg) */
-extern struct Unk03005550 gUnk_03005550;
+extern u32 gUnk_0873BD64[];             /* collider row passed to RegisterCollider (4th arg) */
+extern struct Unk03005550 gTerrainResult;
 extern u32 gUnk_0873CB84[];
 extern u32 gUnk_0874C44C[];
 extern s8 gUnk_0873CB4C[];
@@ -68,10 +68,10 @@ void TaskSetMotionXFacing(s32 a, s32 b);
 void TaskStopX(void);
 void TaskStop(void);
 u32 IsWorldPosOnScreen(s16 a, s16 b);
-void sub_0801a828(u8 a, s16 x, s16 y, void *p);   /* M11's caller spelling */
+void RegisterCollider(u8 a, s16 x, s16 y, void *p);   /* M11's caller spelling */
 void sub_0801c230(const s8 *p);
 void sub_0802205c(s8 *box);
-s32 sub_08030848(struct HitBoxSet *p, s32 e);   /* M14's callers test r0 unnarrowed (good/sub_08050c48.c); landed M09/M12/M13 files spell it u16 */
+s32 TaskBreakBlocks(struct HitBoxSet *p, s32 e);   /* M14's callers test r0 unnarrowed (good/sub_08050c48.c); landed M09/M12/M13 files spell it u16 */
 s32 PlaySfxIfLocalPlayer(s32 a0, u16 a1);
 void sub_08050814(void);
 
@@ -160,7 +160,7 @@ void sub_080509ec(void)
         {
             struct Task *t = gCurTask;
             t->unk04 = 0;
-            sub_0801a828(gCurTaskIdx, t->unk48, t->unk4A, gUnk_0873BD64);
+            RegisterCollider(gCurTaskIdx, t->unk48, t->unk4A, gUnk_0873BD64);
         }
         gCurTask->unk3C = 26;
         TaskYieldTrampoline(1);
@@ -176,18 +176,18 @@ void sub_080509ec(void)
 
 void sub_08050c48(void)
 {
-    if (sub_08030848((struct HitBoxSet *)gUnk_0873CB84, gCurTask->unk44))
+    if (TaskBreakBlocks((struct HitBoxSet *)gUnk_0873CB84, gCurTask->unk44))
         gCurTask->unk7C = 1;
     else
         sub_0801c230(gUnk_0873CB44);
-    if (gUnk_03005550.unk1 != 0 || (gCurTask->unk7A & 1) || gUnk_03005550.unk0 != 0
+    if (gTerrainResult.unk1 != 0 || (gCurTask->unk7A & 1) || gTerrainResult.unk0 != 0
         || gCurTask->unk7C != 0)
     {
         struct Task *t = gCurTask;
         t->unk18 = (t->unk18 & ~15) | 2;
         TaskSetEntry(sub_080509ec, gCurTaskIdx);
     }
-    sub_0801a828(gCurTaskIdx, gCurTask->unk48, gCurTask->unk4A, gUnk_0873BD64);
+    RegisterCollider(gCurTaskIdx, gCurTask->unk48, gCurTask->unk4A, gUnk_0873BD64);
 }
 
 void sub_08050d00(void)
@@ -256,14 +256,14 @@ void sub_08050e84(void)
 {
     s32 hit;
 
-    if (sub_08030848((struct HitBoxSet *)gUnk_0873CB94, gCurTask->unk44))
+    if (TaskBreakBlocks((struct HitBoxSet *)gUnk_0873CB94, gCurTask->unk44))
         gCurTask->unk7C = 1;
     else
         sub_0801c230(gUnk_0873CB4C);
     hit = 0;
     {
         struct Task *t = gCurTask;
-        if ((t->unk7A & 1) || *(u16 *)&gUnk_03005550 != 0 || t->unk7C != 0)
+        if ((t->unk7A & 1) || *(u16 *)&gTerrainResult != 0 || t->unk7C != 0)
             hit++;
         else if ((t->unk7B & 1) && t->unk28 != 0)
             hit = 1;
@@ -274,10 +274,10 @@ void sub_08050e84(void)
         TaskSetEntry(sub_08050814, gCurTaskIdx);
         t = gCurTask;
         t->unk24 = (s32)gUnk_0873BD78;
-        if (gUnk_03005550.unk1 != 0 || (t->unk7A & 1) || gUnk_03005550.unk0 != 0)
+        if (gTerrainResult.unk1 != 0 || (t->unk7A & 1) || gTerrainResult.unk0 != 0)
             PlaySfxIfLocalPlayer(125, gCurTask->unk44);
     }
-    sub_0801a828(gCurTaskIdx, gCurTask->unk48, gCurTask->unk4A, gUnk_0873BD78);
+    RegisterCollider(gCurTaskIdx, gCurTask->unk48, gCurTask->unk4A, gUnk_0873BD78);
 }
 
 void sub_08050f80(void)
@@ -436,12 +436,12 @@ void sub_080512f8(void)
     {
         struct Task *t = gCurTask;
         t->unk78 = 127;
-        sub_08030848((struct HitBoxSet *)gUnk_0873CBA4, t->unk44);
+        TaskBreakBlocks((struct HitBoxSet *)gUnk_0873CBA4, t->unk44);
     }
     sub_0801c230(gUnk_0873CB4C);
     {
         struct Task *t = gCurTask;
-        if ((t->unk7A & 1) || *(u16 *)&gUnk_03005550 != 0)
+        if ((t->unk7A & 1) || *(u16 *)&gTerrainResult != 0)
         {
             PlaySfxIfLocalPlayer(125, t->unk44);
             TaskSetEntry(sub_08050814, gCurTaskIdx);
@@ -454,7 +454,7 @@ void sub_080512f8(void)
             gCurTask->unk60 = 0x1000;
         }
     }
-    sub_0801a828(gCurTaskIdx, gCurTask->unk48, gCurTask->unk4A, gUnk_0873BD8C);
+    RegisterCollider(gCurTaskIdx, gCurTask->unk48, gCurTask->unk4A, gUnk_0873BD8C);
 }
 
 void sub_080513d4(void)

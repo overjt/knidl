@@ -27,7 +27,7 @@ extern u32 gUnk_0873C28C[];
 void CallTableEntry(u32 idx, u32 count, void (**fns)(void));   /* if (idx < count) fns[idx](); */
 void TaskSetFrameNoFlip(s32 a);
 void TaskSetFrameFlip(s32 a);
-void sub_0801a828(u8 a, s16 x, s16 y, void *p);   /* M11's caller spelling */
+void RegisterCollider(u8 a, s16 x, s16 y, void *p);   /* M11's caller spelling */
 void SetPlayerInvulnerability(s32 a0, s32 a1, s32 a2);
 s32 PlayerHasCrossedWaterSurface(s32 a);
 
@@ -75,7 +75,7 @@ void sub_0804e640(void)
             gCurTask->unk88->unk6C = gUnk_0873CF7C;
         else
             gCurTask->unk88->unk6C = 0;
-        sub_0801a828(gCurTaskIdx, gCurTask->unk48, gCurTask->unk4A, gUnk_0873C28C);
+        RegisterCollider(gCurTaskIdx, gCurTask->unk48, gCurTask->unk4A, gUnk_0873C28C);
     }
     else
     {

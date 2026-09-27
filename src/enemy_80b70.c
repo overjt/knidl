@@ -19,7 +19,7 @@
  *     (`0x087415DC`);
  *   * the shared helpers `sub_08080374` (drain Task.unk18 by N and fire cue
  *     192 when it runs out), `sub_08081814` (the eight-step walk animation)
- *     and `sub_08081e64` (flip Task.unk43 from the gUnk_03005550[4] input,
+ *     and `sub_08081e64` (flip Task.unk43 from the gTerrainResult[4] input,
  *     returning 1 when the input already matches the facing).
  *
  * `sub_0808164c`, `sub_080817b8` and `sub_08081d68` are dead exports of the
@@ -36,7 +36,7 @@ extern s16 gViewRect[];
 extern struct Task *gCurTask;
 extern struct Task gTasks[];
 extern vu16 gTaskSlotTypes[];
-extern u8 gUnk_03005550[];
+extern u8 gTerrainResult[];
 
 /* ROM tables */
 extern u32 gUnk_0873F500[];
@@ -1168,7 +1168,7 @@ s32 sub_08081e64(void)
     s32 n;
 
     t = gCurTask;
-    n = gUnk_03005550[4];
+    n = gTerrainResult[4];
     t->unk1C = n;
     if (t->unk43 == 1)
     {

@@ -9,7 +9,7 @@
  * special case in front and its gUnk_08733AF0 copy behind. */
 
 /* The probe result block, filled by the terrain probes and mirrored into
-   gUnk_03005550 by sub_0801c5c8. */
+   gTerrainResult by TerrainProbeEnd. */
 struct Unk03005530
 {
     /*0x00*/ u8 unk0;
@@ -30,24 +30,24 @@ struct Unk03005530
     /*0x10*/ u8 unk10;
 };
 
-extern struct Unk03005530 gUnk_03005530;
-extern s16 gUnk_03005560;           /* probe x */
-extern s16 gUnk_03005570;           /* probe y */
-extern u16 gUnk_03005578;           /* queried cell: tile set */
-extern s16 gUnk_0300557C;           /* box top offset */
-extern s16 gUnk_03005584;           /* box bottom offset */
+extern struct Unk03005530 gTerrainProbeResult;
+extern s16 gTerrainProbeX;           /* probe x */
+extern s16 gTerrainProbeY;           /* probe y */
+extern u16 gTerrainTile;           /* queried cell: tile set */
+extern s16 gTerrainBoxTop;           /* box top offset */
+extern s16 gTerrainBoxBottom;           /* box bottom offset */
 extern s16 gUnk_0300561C;           /* map height in cells */
 
-s32 sub_08021634(u32 x, u32 y);
-s32 sub_080216d8(u32 x, u32 y);
+s32 TerrainQueryPixel(u32 x, u32 y);
+s32 TerrainQueryPixelAndBelow(u32 x, u32 y);
 
 /* Room probe: sub_08021130 without its tile-set special case in front
    and the gUnk_08733AF0 copy behind.  Classifies the cells at the probe
-   point (bit 7 of the tile set) into the flags gUnk_03005530.unk7 and the
-   cell boundary gUnk_03005530.unk8 (0xFFFF when there is none).  prev2 is
+   point (bit 7 of the tile set) into the flags gTerrainProbeResult.unk7 and the
+   cell boundary gTerrainProbeResult.unk8 (0xFFFF when there is none).  prev2 is
    u32 here: the u8 copy of sub_08021130 lets the 0x80 mask register win
-   r8 over &gUnk_03005570 (global-alloc priority 0.1333 vs 0.1324). */
-void sub_0802136c(void)
+   r8 over &gTerrainProbeY (global-alloc priority 0.1333 vs 0.1324). */
+void TerrainProbeWater(void)
 {
     u8 prev;
     u32 prev2;
@@ -57,60 +57,60 @@ void sub_0802136c(void)
     u16 f;
     u8 v;
 
-    sub_080216d8(gUnk_03005560, gUnk_03005570);
-    prev = gUnk_03005530.unk7;
+    TerrainQueryPixelAndBelow(gTerrainProbeX, gTerrainProbeY);
+    prev = gTerrainProbeResult.unk7;
     prev2 = prev;
-    gUnk_03005530.unk8 = 0xFFFF;
-    gUnk_03005530.unk7 = 0;
+    gTerrainProbeResult.unk8 = 0xFFFF;
+    gTerrainProbeResult.unk7 = 0;
     zero = 0;
-    y = gUnk_03005570;
+    y = gTerrainProbeY;
     h = gUnk_0300561C << 4;
     if (y >= h)
     {
-        sub_08021634(gUnk_03005560, h - 16);
-        if (gUnk_03005578 & 0x80)
-            gUnk_03005530.unk7 = 11;
+        TerrainQueryPixel(gTerrainProbeX, h - 16);
+        if (gTerrainTile & 0x80)
+            gTerrainProbeResult.unk7 = 11;
     }
     else
     {
-        f = gUnk_03005578 & 0x80;
+        f = gTerrainTile & 0x80;
         if (f)
         {
-            gUnk_03005530.unk7 = 1;
-            sub_08021634(gUnk_03005560, gUnk_03005570 + gUnk_0300557C);
-            if (gUnk_03005578 & 0x80)
+            gTerrainProbeResult.unk7 = 1;
+            TerrainQueryPixel(gTerrainProbeX, gTerrainProbeY + gTerrainBoxTop);
+            if (gTerrainTile & 0x80)
             {
-                v = gUnk_03005530.unk7 | 2 | zero;
-                gUnk_03005530.unk7 = v;
+                v = gTerrainProbeResult.unk7 | 2 | zero;
+                gTerrainProbeResult.unk7 = v;
                 if ((prev & 2) == 0)
                 {
-                    gUnk_03005530.unk7 = v | 0x80;
-                    gUnk_03005530.unk8 = (gUnk_03005570 + gUnk_0300557C) & 0xFFF0;
+                    gTerrainProbeResult.unk7 = v | 0x80;
+                    gTerrainProbeResult.unk8 = (gTerrainProbeY + gTerrainBoxTop) & 0xFFF0;
                 }
                 else
                 {
-                    gUnk_03005530.unk7 = v | 8;
+                    gTerrainProbeResult.unk7 = v | 8;
                 }
             }
             else
             {
-                gUnk_03005530.unk7 |= 0x48;
-                gUnk_03005530.unk8 = ((gUnk_03005570 + gUnk_0300557C) & 0xFFF0) + 16;
+                gTerrainProbeResult.unk7 |= 0x48;
+                gTerrainProbeResult.unk8 = ((gTerrainProbeY + gTerrainBoxTop) & 0xFFF0) + 16;
             }
         }
         else
         {
-            gUnk_03005530.unk7 = f;
-            sub_08021634(gUnk_03005560, gUnk_03005570 + gUnk_03005584);
-            if (gUnk_03005578 & 0x80)
+            gTerrainProbeResult.unk7 = f;
+            TerrainQueryPixel(gTerrainProbeX, gTerrainProbeY + gTerrainBoxBottom);
+            if (gTerrainTile & 0x80)
             {
-                gUnk_03005530.unk7 |= 0x48;
-                gUnk_03005530.unk8 = (gUnk_03005570 + gUnk_03005584) & 0xFFF0;
+                gTerrainProbeResult.unk7 |= 0x48;
+                gTerrainProbeResult.unk8 = (gTerrainProbeY + gTerrainBoxBottom) & 0xFFF0;
             }
             else if (prev2 & 8)
             {
-                gUnk_03005530.unk7 |= 0x80;
-                gUnk_03005530.unk8 = ((gUnk_03005570 + gUnk_03005584) & 0xFFF0) + 16;
+                gTerrainProbeResult.unk7 |= 0x80;
+                gTerrainProbeResult.unk8 = ((gTerrainProbeY + gTerrainBoxBottom) & 0xFFF0) + 16;
             }
         }
     }

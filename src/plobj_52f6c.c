@@ -29,9 +29,9 @@
  * return the task index or -1; the landed callers outside M14 declare
  * them `void (s32, s32, s32)`. */
 
-/* gUnk_03005550: M06's collision result block (src/terrain_1bcac.c spells it
+/* gTerrainResult: M06's collision result block (src/terrain_1bcac.c spells it
    the same way except unk8, which M09 reads with ldrsh).  A 16-bit test of
-   unk0/unk1 together is `*(u16 *)&gUnk_03005550` (M12's sub_08045a50). */
+   unk0/unk1 together is `*(u16 *)&gTerrainResult` (M12's sub_08045a50). */
 struct Unk03005550
 {
     /*0x00*/ u8 unk0;
@@ -56,7 +56,7 @@ extern u8 gUnk_0873B88A[][5];
 extern u16 gUnk_0873B8C6[][2][8];
 extern s8 gUnk_0873CB5C[];
 extern s8 gUnk_0873CB6C[];
-extern struct Unk03005550 gUnk_03005550;
+extern struct Unk03005550 gTerrainResult;
 extern u32 gUnk_0873CC3C[];
 extern u32 gUnk_0873CC44[];
 extern u32 gUnk_0873BE4C[];
@@ -87,11 +87,11 @@ void TaskSetMotionXFacing(s32 a, s32 b);
 void TaskStop(void);
 u32 IsWorldPosOnScreen(s16 x, s16 y);
 u32 IsInView(s16 x, s16 y);
-void sub_0801a828(u8 a, s16 x, s16 y, void *p);   /* M11's caller spelling */
+void RegisterCollider(u8 a, s16 x, s16 y, void *p);   /* M11's caller spelling */
 void sub_0801c230(const s8 *p);
 void sub_0802205c(s8 *box);
 void sub_0802233c(s8 *off);
-s32 sub_08030848(struct HitBoxSet *p, s32 e);   /* M14's callers test r0 unnarrowed (good/sub_08050c48.c); landed M09/M12/M13 files spell it u16 */
+s32 TaskBreakBlocks(struct HitBoxSet *p, s32 e);   /* M14's callers test r0 unnarrowed (good/sub_08050c48.c); landed M09/M12/M13 files spell it u16 */
 s32 PlaySfxIfLocalPlayer(s32 a0, u16 a1);
 void sub_08050814(void);
 void sub_08050f80(void);
@@ -308,27 +308,27 @@ void sub_08053380(void)
     {
         s32 hit;
 
-        if (sub_08030848((struct HitBoxSet *)gUnk_0873CC3C, t->unk44))
+        if (TaskBreakBlocks((struct HitBoxSet *)gUnk_0873CC3C, t->unk44))
             gCurTask->unk7C = 1;
         else
             sub_0801c230(gUnk_0873CB6C);
         hit = 0;
-        if ((gCurTask->unk7A & 1) || *(u16 *)&gUnk_03005550 != 0 || gCurTask->unk7C != 0)
+        if ((gCurTask->unk7A & 1) || *(u16 *)&gTerrainResult != 0 || gCurTask->unk7C != 0)
             hit++;
         if (hit)
         {
-            if (gUnk_03005550.unk1 != 0 || (gCurTask->unk7A & 1) || gUnk_03005550.unk0 != 0)
+            if (gTerrainResult.unk1 != 0 || (gCurTask->unk7A & 1) || gTerrainResult.unk0 != 0)
                 PlaySfxIfLocalPlayer(125, gCurTask->unk44);
             TaskSetEntry(sub_08050814, gCurTaskIdx);
             gCurTask->unk24 = (s32)gUnk_0873BE4C;
         }
-        sub_0801a828(gCurTaskIdx, gCurTask->unk48, gCurTask->unk4A, gUnk_0873BE4C);
+        RegisterCollider(gCurTaskIdx, gCurTask->unk48, gCurTask->unk4A, gUnk_0873BE4C);
         break;
     }
     case 5:
         t->unk78 = 127;
-        sub_08030848((struct HitBoxSet *)gUnk_0873CC44, t->unk44);
-        sub_0801a828(gCurTaskIdx, gCurTask->unk48, gCurTask->unk4A, gUnk_0873BE60);
+        TaskBreakBlocks((struct HitBoxSet *)gUnk_0873CC44, t->unk44);
+        RegisterCollider(gCurTaskIdx, gCurTask->unk48, gCurTask->unk4A, gUnk_0873BE60);
         break;
     }
 }
@@ -421,7 +421,7 @@ void sub_080536dc(void)
         TaskSetEntry(sub_08050814, gCurTaskIdx);
         return;
     default:
-        sub_0801a828(gCurTaskIdx, gCurTask->unk48, gCurTask->unk4A, gUnk_0873BE74);
+        RegisterCollider(gCurTaskIdx, gCurTask->unk48, gCurTask->unk4A, gUnk_0873BE74);
         break;
     case 6:
         PlaySfx(0x232);
@@ -446,7 +446,7 @@ void sub_080536dc(void)
     sub_0801c230(gUnk_0873CB4C);
     {
         struct Task *t = gCurTask;
-        if ((t->unk7A & 1) || *(u16 *)&gUnk_03005550 != 0)
+        if ((t->unk7A & 1) || *(u16 *)&gTerrainResult != 0)
         {
             PlaySfxIfLocalPlayer(125, t->unk44);
             TaskSetEntry(sub_08050814, gCurTaskIdx);
@@ -502,7 +502,7 @@ void sub_080538cc(void)
     if (t->unk7C != 0)
         TaskSetEntry(sub_08050814, gCurTaskIdx);
     else
-        sub_0801a828(gCurTaskIdx, t->unk48 + gSpriteCameraX, t->unk4A + gSpriteCameraY, gUnk_0873BE88);
+        RegisterCollider(gCurTaskIdx, t->unk48 + gSpriteCameraX, t->unk4A + gSpriteCameraY, gUnk_0873BE88);
 }
 
 s32 CreatePlayerObject(s8 player, u8 variant, s32 arg)

@@ -29,7 +29,7 @@ void TaskDrawScreen(void);
 void TaskDrawWorldInViewOrFree(void);
 void TaskSetFrameByFacing(s16 a);
 void TaskStop(void);
-void sub_0801a828(u8 a, s16 x, s16 y, void *p);   /* M11's caller spelling */
+void RegisterCollider(u8 a, s16 x, s16 y, void *p);   /* M11's caller spelling */
 
 void Task_PlayerObject(void)
 {
@@ -60,7 +60,7 @@ void sub_08050814(void)
     t->unk3E = 0;
     t->unk40 = 0;
     if (t->unk24 != 0)
-        sub_0801a828(gCurTaskIdx, t->unk48, t->unk4A, (void *)t->unk24);
+        RegisterCollider(gCurTaskIdx, t->unk48, t->unk4A, (void *)t->unk24);
     TaskStop();
     gCurTask->unk3C = 0;
     TaskYieldTrampoline(2);

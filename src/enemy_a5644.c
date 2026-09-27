@@ -91,7 +91,7 @@ extern u32 gExtraMode[];
 extern u32 gUnk_03002468[];
 extern u32 gUnk_030027A8[];
 extern vs16 gTaskSlotTypes[];
-extern u8 gUnk_03005550[];
+extern u8 gTerrainResult[];
 extern u32 gUnk_03005568[];
 extern s16 gUnk_03005628[];
 extern u32 gUnk_03005680[];
@@ -534,8 +534,8 @@ extern void sub_0800a4c0();
 extern void sub_0800a554(void);
 extern void sub_0800a698(void);
 extern s32 sub_08021bb4(s16 x, s16 y, s32 c, s32 d);
-extern void sub_080224b0(void);
-extern u8 sub_080227a4(struct Task *t);
+extern void TaskInitWaterFlags(void);
+extern u8 ClampTaskToRoom(struct Task *t);
 extern u32 sub_0802294c();
 extern void sub_080258e0();
 extern void sub_08025a30();
@@ -1756,7 +1756,7 @@ void sub_080a5dd0(void)
 
 void sub_080a5e30(void)
 {
-    sub_080227a4(gCurTask);
+    ClampTaskToRoom(gCurTask);
     if (gCurTask->unk14 != 2)
         TaskSetEntry(sub_080a5694, gCurTaskIdx);
 }
@@ -1776,7 +1776,7 @@ void sub_080a5e60(void)
 
 void sub_080a5e9c(void)
 {
-    sub_080227a4(gCurTask);
+    ClampTaskToRoom(gCurTask);
     if (gCurTask->unk14 != 3)
         TaskSetEntry(sub_080a5694, gCurTaskIdx);
 }
@@ -1791,7 +1791,7 @@ void sub_080a5ecc(void)
 
 void sub_080a5ef0(void)
 {
-    sub_080227a4(gCurTask);
+    ClampTaskToRoom(gCurTask);
     if (gCurTask->unk14 != 4)
         TaskSetEntry(sub_080a5694, gCurTaskIdx);
 }
@@ -1818,7 +1818,7 @@ void sub_080a5f20(void)
 
 void sub_080a5f7c(void)
 {
-    sub_080227a4(gCurTask);
+    ClampTaskToRoom(gCurTask);
     if (gCurTask->unk14 != 5)
         TaskSetEntry(sub_080a5694, gCurTaskIdx);
 }
@@ -1847,7 +1847,7 @@ void sub_080a6020(void)
     s32 d;
     s32 x;
 
-    sub_080227a4(gCurTask);
+    ClampTaskToRoom(gCurTask);
     x = gCurTask->unk48;
     d = x - gUnk_02007D00[7];
     if (d >= 0 ? d <= 5 : gUnk_02007D00[7] - x <= 5)
@@ -1885,7 +1885,7 @@ void sub_080a60d8(void)
 
 void sub_080a6130(void)
 {
-    sub_080227a4(gCurTask);
+    ClampTaskToRoom(gCurTask);
     if (abs(TaskGetNearestPlayerDx()) <= 43)
     {
         gCurTask->unk34 = 0;
@@ -2160,7 +2160,7 @@ void sub_080a6710(void)
 
 void sub_080a6734(void)
 {
-    sub_080227a4(gCurTask);
+    ClampTaskToRoom(gCurTask);
     if (gCurTask->unk14 != 18)
         sub_080a7168();
 }
@@ -2197,7 +2197,7 @@ void sub_080a680c(void)
 {
     s32 v;
 
-    sub_080227a4(gCurTask);
+    ClampTaskToRoom(gCurTask);
     if (gUnk_02007D00[7] <= 15)
     {
         v = gUnk_02007D00[7] + 1;
@@ -2254,7 +2254,7 @@ void sub_080a6988(void)
 {
     s32 v;
 
-    sub_080227a4(gCurTask);
+    ClampTaskToRoom(gCurTask);
     if (gUnk_02007D00[7] <= 15)
     {
         v = gUnk_02007D00[7] + 1;
@@ -2299,7 +2299,7 @@ void sub_080a69e4(void)
 
 void sub_080a6aac(void)
 {
-    sub_080227a4(gCurTask);
+    ClampTaskToRoom(gCurTask);
     if (gUnk_02007D00[7] <= 25)
     {
         gUnk_02007D00[7]++;
@@ -2356,7 +2356,7 @@ void sub_080a6c3c(void)
     s32 w;
     s32 v;
 
-    sub_080227a4(gCurTask);
+    ClampTaskToRoom(gCurTask);
     pD = gUnk_02007D00;
     v = pD[7];
     if (v == 0)
@@ -2421,7 +2421,7 @@ void sub_080a6d60(void)
 {
     u16 v;
 
-    sub_080227a4(gCurTask);
+    ClampTaskToRoom(gCurTask);
     if (gPlayerStates[gUnk_02007D00[0]].unk40 & 4) {
         if (gCurTask->unk7A != 0) {
             if (gUnk_02007D00[6] == 0) {
@@ -2529,7 +2529,7 @@ s32 sub_080a6f38(s16 x, s16 y)
 
 s32 sub_080a6f74(void)
 {
-    u8 v = sub_080227a4(gCurTask);
+    u8 v = ClampTaskToRoom(gCurTask);
 
     if (((v & 1) && gCurTask->unk54 < 0) || ((v & 2) && gCurTask->unk54 > 0))
         return 1;

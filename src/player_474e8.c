@@ -47,8 +47,8 @@ void TaskSleepForever(void);
 void TaskSetEntry(void *a, u32 i);
 void TaskSetFrame(s32 a);
 s32 sub_0800a008(s32 a, s32 b, u32 c);
-void sub_0801a828(u8 a, s16 x, s16 y, void *p);   /* M11's caller spelling */
-u16 sub_08030848(struct HitBoxSet *p, s32 e);
+void RegisterCollider(u8 a, s16 x, s16 y, void *p);   /* M11's caller spelling */
+u16 TaskBreakBlocks(struct HitBoxSet *p, s32 e);
 s32 PlaySfxIfLocalPlayer(s32 a0, u16 a1);
 s32 PlayerLand(s32 a0);
 s32 sub_0803e55c(void);
@@ -391,9 +391,9 @@ void sub_08047e74(void)
                 LoadPlayerHitBoxSet(gCurTask->unk88->unk00,
                              (s32)((u8 *)gUnk_0873CF1C + gCurTask->unk2C * 8));
             }
-            sub_0801a828(gCurTaskIdx, gCurTask->unk48, gCurTask->unk4A,
+            RegisterCollider(gCurTaskIdx, gCurTask->unk48, gCurTask->unk4A,
                          (u8 *)gPlayerBodyBoxes + gCurTask->unk88->unk00 * 20);
-            sub_08030848((struct HitBoxSet *)&gPlayerHitBoxSets[gCurTask->unk88->unk00],
+            TaskBreakBlocks((struct HitBoxSet *)&gPlayerHitBoxSets[gCurTask->unk88->unk00],
                          gCurTask->unk88->unk00);
         }
         gCurTask->unk28 = gCurTask->unk7A;

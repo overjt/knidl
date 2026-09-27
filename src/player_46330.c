@@ -15,13 +15,13 @@
  * sub_0804676c is what leaves the spin: every frame of state 1 it
  * re-binds the coroutine to state 3 on a newly-pressed B, to state 2
  * when the held direction opposes the facing, and to state 4 when the
- * collision block gUnk_03005550 reports a hit; it keeps the player on
- * slopes and ledges with M06's terrain probes sub_08022624 and
- * sub_08021c4c and registers the collider gUnk_0873BF14. */
+ * collision block gTerrainResult reports a hit; it keeps the player on
+ * slopes and ledges with M06's terrain probes IsFullBlockAtPixel and
+ * IsWaterAtPixel and registers the collider gUnk_0873BF14. */
 
-/* gUnk_03005550: M06's collision result block (src/terrain_1bcac.c spells it
+/* gTerrainResult: M06's collision result block (src/terrain_1bcac.c spells it
    the same way except unk8, which M09 reads with ldrsh).  A 16-bit test of
-   unk0/unk1 together is `*(u16 *)&gUnk_03005550` (good/sub_08045a50.c). */
+   unk0/unk1 together is `*(u16 *)&gTerrainResult` (good/sub_08045a50.c). */
 struct Unk03005550
 {
     /*0x00*/ u8 unk0;
@@ -44,16 +44,16 @@ extern u32 gUnk_0873CB34[];
 extern u32 gUnk_0873CDAC[];
 extern u16 gLatchedHeldKeys[];             /* held keys, latched per player (M11) */
 extern u16 gLatchedPressedKeys[];             /* newly-pressed keys, latched per player */
-extern struct Unk03005550 gUnk_03005550;
+extern struct Unk03005550 gTerrainResult;
 extern u32 gUnk_0873BF14[];
 
 void TaskYieldTrampoline(s32 frames);
 void TaskSleepForever(void);
 void TaskSetEntry(void *a, u32 i);
 void TaskSetFrame(s32 a);
-void sub_0801a828(u8 a, s16 x, s16 y, void *p);   /* M11's caller spelling */
-u8 sub_08021c4c(s16 x, s16 y);
-s32 sub_08022624(u16 x, u16 y);
+void RegisterCollider(u8 a, s16 x, s16 y, void *p);   /* M11's caller spelling */
+u8 IsWaterAtPixel(s16 x, s16 y);
+s32 IsFullBlockAtPixel(u16 x, u16 y);
 void sub_080261d4(u16 a);
 void PlayerStopAxes(s32 a0);
 void SetPlayerInvulnerability(s32 a0, s32 a1, s32 a2);
@@ -214,7 +214,7 @@ void sub_0804676c(void)
     {
         struct Task *t = gCurTask;
         if (t->unk30 == 0) {
-            if (gUnk_03005550.unkD != 0) {
+            if (gTerrainResult.unkD != 0) {
                 t->unk88->unk14 = 5;
                 t->unk30 = 1;
             } else {
@@ -223,7 +223,7 @@ void sub_0804676c(void)
         } else {
             struct PlayerState *p = t->unk88;
             if ((s16)p->unk14 == 0) {
-                if (sub_08022624(t->unk48, (t->unk4A & ~15) + 16) != 0)
+                if (IsFullBlockAtPixel(t->unk48, (t->unk4A & ~15) + 16) != 0)
                     gCurTask->unk7A = 1;
             } else {
                 p->unk14--;
@@ -247,7 +247,7 @@ void sub_0804676c(void)
             PlayerSetMotionYPreset(2);
             PlayerSetMotionXPreset(11, 2);
         }
-        if (gUnk_03005550.unk0 == 0)
+        if (gTerrainResult.unk0 == 0)
             break;
         {
             struct Task *t = gCurTask;
@@ -269,7 +269,7 @@ void sub_0804676c(void)
                     t->unk28 = 0;
                     PlayerSetMotionXPreset(11, 46);
                 } else if (t->unk28 == 0) {
-                    if (sub_08021c4c(t->unk48, t->unk4A + 15) != 0) {
+                    if (IsWaterAtPixel(t->unk48, t->unk4A + 15) != 0) {
                         {
                             struct Task *u = gCurTask;
                             if (u->unk7B & 1)
@@ -294,10 +294,10 @@ void sub_0804676c(void)
                     || (gLatchedHeldKeys[gCurTask->unk88->unk00] & 32 && gCurTask->unk43 == 1)) {
                     gCurTask->unk73 = 2;
                     TaskSetEntry(sub_08046330, gCurTaskIdx);
-                } else if (*(u16 *)&gUnk_03005550 != 0
+                } else if (*(u16 *)&gTerrainResult != 0
                            || ((gCurTask->unk88->unk48 & 3)
                                && ((gCurTask->unk7A & 1) || gCurTask->unk28 != 0))) {
-                    if (gUnk_03005550.unk1 != 0)
+                    if (gTerrainResult.unk1 != 0)
                         gCurTask->unk58 = 0;
                     else
                         PlayerStopAxes(1);
@@ -316,7 +316,7 @@ void sub_0804676c(void)
                 PlayerSetMotionYPreset(2);
             }
         }
-        sub_0801a828(gCurTaskIdx, gCurTask->unk48, gCurTask->unk4A, gUnk_0873BF14);
+        RegisterCollider(gCurTaskIdx, gCurTask->unk48, gCurTask->unk4A, gUnk_0873BF14);
         break;
     case 2:
         {
@@ -326,8 +326,8 @@ void sub_0804676c(void)
                 TaskSetEntry(sub_08046330, gCurTaskIdx);
                 break;
             }
-            if (*(u16 *)&gUnk_03005550 != 0 || (gCurTask->unk88->unk48 != 0 && (gCurTask->unk7A & 1))) {
-                if (gUnk_03005550.unk1 != 0)
+            if (*(u16 *)&gTerrainResult != 0 || (gCurTask->unk88->unk48 != 0 && (gCurTask->unk7A & 1))) {
+                if (gTerrainResult.unk1 != 0)
                     gCurTask->unk58 = 0;
                 else
                     PlayerStopAxes(1);
@@ -348,7 +348,7 @@ void sub_0804676c(void)
         {
             struct Task *t = gCurTask;
             if (t->unk58 < 0) {
-                if (gUnk_03005550.unk1 != 0)
+                if (gTerrainResult.unk1 != 0)
                     t->unk58 = 0;
                 break;
             }

@@ -5,9 +5,9 @@
 /* block_30804.c (0x08030804-0x080318B3, issue #92).
  *
  * Breakable blocks, part 1: the hit-box scans and the block spawner.
- * gUnk_02008160[] is the room's block layer, one u16 per metatile: 0 = no
+ * gBlockLayer[] is the room's block layer, one u16 per metatile: 0 = no
  * block, the low byte = which replacement metatile of RoomDef.unk10[] the
- * cell turns into, bit 15 = being broken.  gUnk_020061F0[64] holds the
+ * cell turns into, bit 15 = being broken.  gBreakingBlocks[64] holds the
  * blocks being broken (struct Unk020061F0).  An attack's hit-box set
  * (struct HitBoxSet) is placed at the task's position and facing by the
  * six wrappers sub_08030804 ... sub_08030db8 and scanned tile by tile:
@@ -16,13 +16,13 @@
  * set's centre (then the rows above and below) and records its pixel
  * position in gUnk_02007FA0/gUnk_02004B6C; sub_08030e00 finds the top of
  * the block column under the box and breaks that row with attack id 6.
- * sub_0803111c(x, y, id, player) decides whether the attack breaks the
+ * CanBreakBlock(x, y, id, player) decides whether the attack breaks the
  * block at a metatile - an 8-way switch on the block kind (id & 0xFF)
  * against the per-collision-byte tables gUnk_0873A494/gUnk_0873A5D4 and
  * the on-screen test sub_08031310 - and latches it into the cursor cells
- * gUnk_02007D68/gUnk_0200AEFC/gUnk_020060C8 (x, y, map index),
- * gUnk_02004B40 (the player), gUnk_02004B48, gUnk_02006174 (the kind) and
- * gUnk_020061D0 (the collision byte); sub_08031374 then takes a free
+ * gBlockCursorX/gBlockCursorY/gBlockCursorIndex (x, y, map index),
+ * gBlockCursorPlayer (the player), gUnk_02004B48, gUnk_02006174 (the kind) and
+ * gBlockCursorTile (the collision byte); sub_08031374 then takes a free
  * record, points it at the BG map entry at 0x06002000, plays the sound
  * (PlaySfx), awards points to the player (sub_0800a04c) and starts
  * the animation script gUnk_0873A47C[kind].  sub_08030f78 (M08's map
@@ -30,7 +30,7 @@
  * sub_08030f1c tests a metatile for an unbroken block. */
 
 /* A hit-box set: unk0 & 0x8000 = mirror with the task's facing, unk0 & 0xFFF
-   = the attack id passed to sub_0803111c; unk2/unk3 = (x, y) offset of the
+   = the attack id passed to CanBreakBlock; unk2/unk3 = (x, y) offset of the
    set; unk4 = the boxes, {y0, y1, x0, x1} each (x mirrored as -x1..-x0),
    terminated by y0 == 127. */
 struct HitBoxSet
@@ -49,7 +49,7 @@ struct MapTile
     /*0x03*/ u8 unk3;
 };
 
-/* gUnk_020061F0[64] (and gUnk_0200A6F0[64] for the second block layer
+/* gBreakingBlocks[64] (and gUnk_0200A6F0[64] for the second block layer
    gUnk_02004CA0): one 32-byte record per block being broken.  unk0/unk2 =
    metatile x/y, unk4 = its map index, unk6 = the position in the animation
    script (0x7FFF = free slot; bit 15 = already stepped this frame), unk8 =
@@ -79,7 +79,7 @@ struct Unk020061F0
 
 /* M09's view of the room header (M07's struct RoomDef, src/level_*.c): the
    only field read here is unk10, the table of replacement metatiles the low
-   byte of gUnk_02008160[] indexes (M07 types it void *). */
+   byte of gBlockLayer[] indexes (M07 types it void *). */
 struct RoomDef
 {
     /*0x00*/ u8 filler00[0x10];
@@ -91,17 +91,17 @@ extern s16 gUnk_0300561C;               /* map height in metatiles */
 extern u16 gUnk_02007FA0;               /* the block sub_08030b14 broke: x (pixels) */
 extern u16 gUnk_02004B6C;               /*   y (pixels) */
 extern u32 gUnk_030004A0;               /* per-frame stage hook (sub_080318b4 / sub_08031de4 / sub_08032428) */
-extern u16 gUnk_02008160[];             /* per-cell block layer: low byte = replacement index, 0x8000 = being broken */
-extern struct MapTile *gUnk_03005660;   /* the room's metatile map */
+extern u16 gBlockLayer[];             /* per-cell block layer: low byte = replacement index, 0x8000 = being broken */
+extern struct MapTile *gRoomMap;   /* the room's metatile map */
 extern struct RoomDef *gUnk_030055EC;   /* the current room header */
-extern struct Unk020061F0 gUnk_020061F0[];
-extern u16 gUnk_02007D68;               /* the block sub_0803111c accepted: x */
-extern u16 gUnk_0200AEFC;               /*   y */
-extern u16 gUnk_020060C8;               /*   map index */
-extern u8 gUnk_02004B40;                /*   the player that hit it */
+extern struct Unk020061F0 gBreakingBlocks[];
+extern u16 gBlockCursorX;               /* the block CanBreakBlock accepted: x */
+extern u16 gBlockCursorY;               /*   y */
+extern u16 gBlockCursorIndex;               /*   map index */
+extern u8 gBlockCursorPlayer;                /*   the player that hit it */
 extern u8 gUnk_02004B48;                /*   hit-box id bit 11 */
 extern u16 gUnk_02006174;               /*   the block kind (hit-box id low byte) */
-extern s16 gUnk_020061D0;               /*   the metatile's collision byte */
+extern s16 gBlockCursorTile;               /*   the metatile's collision byte */
 extern s8 gUnk_0873A494[];
 extern u16 *gUnk_0873A47C[];            /* animation script per block kind */
 extern s8 gUnk_0873A5D4[];
@@ -119,7 +119,7 @@ u16 sub_0803097c(struct HitBoxSet *p, s32 x, s32 y, s32 dir, s32 e);
 u16 sub_08030b14(struct HitBoxSet *p, s32 x, s32 y, s32 dir, s32 e);
 u16 sub_08030e00(struct HitBoxSet *p, s32 x, s32 y, s32 dir);
 s32 sub_08030f1c(u32 x, u32 y);
-s32 sub_0803111c(s32 x, s32 y, s32 id, s32 e);
+s32 CanBreakBlock(s32 x, s32 y, s32 id, s32 e);
 s32 sub_08031310(s32 x, s32 y);
 s32 sub_08031374(void);
 
@@ -134,7 +134,7 @@ u16 sub_08030804(struct HitBoxSet *p, s32 x, s32 y, s32 e)
     return sub_0803097c(p, x, y, dir, e);
 }
 
-u16 sub_08030848(struct HitBoxSet *p, s32 e)
+u16 TaskBreakBlocks(struct HitBoxSet *p, s32 e)
 {
     s32 dir;
 
@@ -224,7 +224,7 @@ u16 sub_0803097c(struct HitBoxSet *p, s32 x, s32 y, s32 dir, s32 e)
         {
             for (tx = x0; tx <= x1; tx++)
             {
-                if (sub_0803111c(tx, ty, p->unk0 & 0xFFF, e) && sub_08031374() != -1)
+                if (CanBreakBlock(tx, ty, p->unk0 & 0xFFF, e) && sub_08031374() != -1)
                     count++;
             }
         }
@@ -277,7 +277,7 @@ u16 sub_08030b14(struct HitBoxSet *p, s32 x, s32 y, s32 dir, s32 e)
     {
         for (tx = x0; tx <= x1; tx++)
         {
-            if (sub_0803111c(tx, y, 1, e) && sub_08031374() != -1)
+            if (CanBreakBlock(tx, y, 1, e) && sub_08031374() != -1)
             {
                 gUnk_02007FA0 = tx * 16;
                 gUnk_02004B6C = y * 16;
@@ -288,7 +288,7 @@ u16 sub_08030b14(struct HitBoxSet *p, s32 x, s32 y, s32 dir, s32 e)
         {
             for (tx = x0; tx <= x1; tx++)
             {
-                if (sub_0803111c(tx, y - 1, 1, e) && sub_08031374() != -1)
+                if (CanBreakBlock(tx, y - 1, 1, e) && sub_08031374() != -1)
                 {
                     gUnk_02007FA0 = tx * 16;
                     gUnk_02004B6C = (y - 1) * 16;
@@ -300,7 +300,7 @@ u16 sub_08030b14(struct HitBoxSet *p, s32 x, s32 y, s32 dir, s32 e)
         {
             for (tx = x0; tx <= x1; tx++)
             {
-                if (sub_0803111c(tx, y + 1, 1, e) && sub_08031374() != -1)
+                if (CanBreakBlock(tx, y + 1, 1, e) && sub_08031374() != -1)
                 {
                     gUnk_02007FA0 = tx * 16;
                     gUnk_02004B6C = (y + 1) * 16;
@@ -313,7 +313,7 @@ u16 sub_08030b14(struct HitBoxSet *p, s32 x, s32 y, s32 dir, s32 e)
     {
         for (tx = x1; tx >= x0; tx--)
         {
-            if (sub_0803111c(tx, y, 1, e) && sub_08031374() != -1)
+            if (CanBreakBlock(tx, y, 1, e) && sub_08031374() != -1)
             {
                 gUnk_02007FA0 = tx * 16;
                 gUnk_02004B6C = y * 16;
@@ -324,7 +324,7 @@ u16 sub_08030b14(struct HitBoxSet *p, s32 x, s32 y, s32 dir, s32 e)
         {
             for (tx = x1; tx >= x0; tx--)
             {
-                if (sub_0803111c(tx, y - 1, 1, e) && sub_08031374() != -1)
+                if (CanBreakBlock(tx, y - 1, 1, e) && sub_08031374() != -1)
                 {
                     gUnk_02007FA0 = tx * 16;
                     gUnk_02004B6C = (y - 1) * 16;
@@ -336,7 +336,7 @@ u16 sub_08030b14(struct HitBoxSet *p, s32 x, s32 y, s32 dir, s32 e)
         {
             for (tx = x1; tx >= x0; tx--)
             {
-                if (sub_0803111c(tx, y + 1, 1, e) && sub_08031374() != -1)
+                if (CanBreakBlock(tx, y + 1, 1, e) && sub_08031374() != -1)
                 {
                     gUnk_02007FA0 = tx * 16;
                     gUnk_02004B6C = (y + 1) * 16;
@@ -410,7 +410,7 @@ u16 sub_08030e00(struct HitBoxSet *p, s32 x, s32 y, s32 dir)
     ty++;
     for (tx = x0; tx <= x1; tx++)
     {
-        if (sub_0803111c(tx, ty, 6, -1) && sub_08031374() != -1)
+        if (CanBreakBlock(tx, ty, 6, -1) && sub_08031374() != -1)
             count++;
     }
     return count;
@@ -422,7 +422,7 @@ s32 sub_08030f1c(u32 x, u32 y)
     if (gUnk_030004A0 != 0 && x < gUnk_03005620 && y < gUnk_0300561C)
     {
         i = y * gUnk_03005620 + x;
-        if (gUnk_02008160[i] != 0 && !(gUnk_02008160[i] & 0x8000))
+        if (gBlockLayer[i] != 0 && !(gBlockLayer[i] & 0x8000))
             return 1;
     }
     return 0;
@@ -435,30 +435,30 @@ s32 sub_08030f78(u32 x, u32 y)
 
     if (gUnk_030004A0 != 0 && x < gUnk_03005620 && y < gUnk_0300561C)
     {
-        gUnk_02004B40 = 0xFF;
-        gUnk_02007D68 = x;
-        gUnk_0200AEFC = y;
-        gUnk_020060C8 = x + gUnk_0200AEFC * gUnk_03005620;
-        if (gUnk_02008160[gUnk_020060C8] != 0 && !(gUnk_02008160[gUnk_020060C8] & 0x8000))
+        gBlockCursorPlayer = 0xFF;
+        gBlockCursorX = x;
+        gBlockCursorY = y;
+        gBlockCursorIndex = x + gBlockCursorY * gUnk_03005620;
+        if (gBlockLayer[gBlockCursorIndex] != 0 && !(gBlockLayer[gBlockCursorIndex] & 0x8000))
         {
-            gUnk_020061D0 = gUnk_03005660[gUnk_020060C8].unk3;
+            gBlockCursorTile = gRoomMap[gBlockCursorIndex].unk3;
             gUnk_02004B48 = 0;
             gUnk_02006174 = 0;
-            if (gUnk_0873A494[gUnk_020061D0] <= 4)
+            if (gUnk_0873A494[gBlockCursorTile] <= 4)
             {
-                while (gUnk_020061F0[i].unk6 != 0x7FFF)
+                while (gBreakingBlocks[i].unk6 != 0x7FFF)
                 {
                     i++;
                     if (i > 63)
                         return -1;
                 }
-                b = &gUnk_020061F0[i];
-                b->unk4 = gUnk_020060C8;
-                b->unk8 = gUnk_030055EC->unk10 + gUnk_02008160[gUnk_020060C8];
-                b->unk0 = gUnk_02007D68;
-                b->unk2 = gUnk_0200AEFC;
-                b->unkC = (u16 *)0x06002000 + ((gUnk_02007D68 * 2 & 31) + ((gUnk_0200AEFC * 2 & 31) + (gUnk_02007D68 & 16) * 2) * 32);
-                gUnk_02008160[gUnk_020060C8] |= 0x8000;
+                b = &gBreakingBlocks[i];
+                b->unk4 = gBlockCursorIndex;
+                b->unk8 = gUnk_030055EC->unk10 + gBlockLayer[gBlockCursorIndex];
+                b->unk0 = gBlockCursorX;
+                b->unk2 = gBlockCursorY;
+                b->unkC = (u16 *)0x06002000 + ((gBlockCursorX * 2 & 31) + ((gBlockCursorY * 2 & 31) + (gBlockCursorX & 16) * 2) * 32);
+                gBlockLayer[gBlockCursorIndex] |= 0x8000;
                 b->unk1A = 0;
                 b->unk10 = gUnk_0873A47C[0];
                 b->unk14 = 0;
@@ -472,17 +472,17 @@ s32 sub_08030f78(u32 x, u32 y)
     return -1;
 }
 
-s32 sub_0803111c(s32 x, s32 y, s32 id, s32 e)
+s32 CanBreakBlock(s32 x, s32 y, s32 id, s32 e)
 {
     if (gUnk_030004A0 != 0 && x < gUnk_03005620 && y < gUnk_0300561C)
     {
-        gUnk_02004B40 = e;
-        gUnk_02007D68 = x;
-        gUnk_0200AEFC = y;
-        gUnk_020060C8 = x + gUnk_0200AEFC * gUnk_03005620;
-        if (gUnk_02008160[gUnk_020060C8] != 0 && !(gUnk_02008160[gUnk_020060C8] & 0x8000))
+        gBlockCursorPlayer = e;
+        gBlockCursorX = x;
+        gBlockCursorY = y;
+        gBlockCursorIndex = x + gBlockCursorY * gUnk_03005620;
+        if (gBlockLayer[gBlockCursorIndex] != 0 && !(gBlockLayer[gBlockCursorIndex] & 0x8000))
         {
-            gUnk_020061D0 = gUnk_03005660[gUnk_020060C8].unk3;
+            gBlockCursorTile = gRoomMap[gBlockCursorIndex].unk3;
             if (id & 0x800)
                 gUnk_02004B48 = 1;
             else
@@ -492,27 +492,27 @@ s32 sub_0803111c(s32 x, s32 y, s32 id, s32 e)
             {
             case 0:
             case 6:
-                if (gUnk_0873A494[gUnk_020061D0] > 4)
+                if (gUnk_0873A494[gBlockCursorTile] > 4)
                     return 0;
                 return 1;
             case 2:
-                if (!sub_08031310(gUnk_02007D68, gUnk_0200AEFC) || gUnk_0873A494[gUnk_020061D0] > 1)
+                if (!sub_08031310(gBlockCursorX, gBlockCursorY) || gUnk_0873A494[gBlockCursorTile] > 1)
                     return 0;
                 return 1;
             case 1:
-                if (!sub_08031310(gUnk_02007D68, gUnk_0200AEFC) || gUnk_0873A494[gUnk_020061D0] != 0)
+                if (!sub_08031310(gBlockCursorX, gBlockCursorY) || gUnk_0873A494[gBlockCursorTile] != 0)
                     return 0;
                 return 1;
             case 3:
-                if (!sub_08031310(gUnk_02007D68, gUnk_0200AEFC) || gUnk_0873A494[gUnk_020061D0] > 2)
+                if (!sub_08031310(gBlockCursorX, gBlockCursorY) || gUnk_0873A494[gBlockCursorTile] > 2)
                     return 0;
                 return 1;
             case 4:
-                if (!sub_08031310(gUnk_02007D68, gUnk_0200AEFC) || gUnk_0873A494[gUnk_020061D0] > 3)
+                if (!sub_08031310(gBlockCursorX, gBlockCursorY) || gUnk_0873A494[gBlockCursorTile] > 3)
                     return 0;
                 return 1;
             case 5:
-                if (gUnk_0873A5D4[gUnk_020061D0] == 0)
+                if (gUnk_0873A5D4[gBlockCursorTile] == 0)
                     return 0;
             case 7:
                 return 1;
@@ -555,29 +555,29 @@ s32 sub_08031374(void)
     struct Unk020061F0 *b;
 
     i = 0;
-    while (gUnk_020061F0[i].unk6 != 0x7FFF)
+    while (gBreakingBlocks[i].unk6 != 0x7FFF)
     {
         i++;
         if (i > 63)
             return -1;
     }
-    b = &gUnk_020061F0[i];
-    b->unk4 = gUnk_020060C8;
-    b->unk8 = gUnk_030055EC->unk10 + gUnk_02008160[gUnk_020060C8];
-    b->unk0 = gUnk_02007D68;
-    b->unk2 = gUnk_0200AEFC;
-    b->unk1C = gUnk_02004B40;
+    b = &gBreakingBlocks[i];
+    b->unk4 = gBlockCursorIndex;
+    b->unk8 = gUnk_030055EC->unk10 + gBlockLayer[gBlockCursorIndex];
+    b->unk0 = gBlockCursorX;
+    b->unk2 = gBlockCursorY;
+    b->unk1C = gBlockCursorPlayer;
     if (gUnk_0200B078 == 1)
-        b->unkC = (u16 *)0x06002000 + ((gUnk_02007D68 * 2 & 31) + ((gUnk_0200AEFC * 2 & 63) << 5));
+        b->unkC = (u16 *)0x06002000 + ((gBlockCursorX * 2 & 31) + ((gBlockCursorY * 2 & 63) << 5));
     else
-        b->unkC = (u16 *)0x06002000 + ((gUnk_02007D68 * 2 & 31) + ((gUnk_0200AEFC * 2 & 31) + (gUnk_02007D68 & 16) * 2) * 32);
-    gUnk_02008160[gUnk_020060C8] |= 0x8000;
+        b->unkC = (u16 *)0x06002000 + ((gBlockCursorX * 2 & 31) + ((gBlockCursorY * 2 & 31) + (gBlockCursorX & 16) * 2) * 32);
+    gBlockLayer[gBlockCursorIndex] |= 0x8000;
     switch (gUnk_02006174)
     {
     case 0:
-        sub_080261c0(gUnk_02007D68 * 16 + 8, gUnk_0200AEFC * 16 + 8);
+        sub_080261c0(gBlockCursorX * 16 + 8, gBlockCursorY * 16 + 8);
         PlaySfx(159);
-        if (gUnk_0873A5D4[gUnk_020061D0] != 0)
+        if (gUnk_0873A5D4[gBlockCursorTile] != 0)
         {
             k = 4;
             b->unk1A = 0x805;
@@ -593,11 +593,11 @@ s32 sub_08031374(void)
         b->unk1A = 1;
         break;
     case 2:
-        sub_080261c0(gUnk_02007D68 * 16 + 8, gUnk_0200AEFC * 16 + 8);
+        sub_080261c0(gBlockCursorX * 16 + 8, gBlockCursorY * 16 + 8);
         PlaySfx(159);
         if (b->unk1C != -1)
             sub_0800a04c(10, b->unk1C);
-        if (gUnk_0873A5D4[gUnk_020061D0] != 0)
+        if (gUnk_0873A5D4[gBlockCursorTile] != 0)
         {
             k = 4;
             b->unk1A = 0x805;
@@ -613,7 +613,7 @@ s32 sub_08031374(void)
     case 4:
         if (b->unk1C != -1)
             sub_0800a04c(10, b->unk1C);
-        if (gUnk_020061D0 == 51)
+        if (gBlockCursorTile == 51)
         {
             PlaySfx(159);
             k = 4;
@@ -623,12 +623,12 @@ s32 sub_08031374(void)
         }
         else
         {
-            sub_080261c0(gUnk_02007D68 * 16 + 8, gUnk_0200AEFC * 16 + 8);
+            sub_080261c0(gBlockCursorX * 16 + 8, gBlockCursorY * 16 + 8);
             if (gUnk_0200B078 == 1)
                 PlaySfx(224);
             else
                 PlaySfx(159);
-            if (gUnk_0873A5D4[gUnk_020061D0] != 0)
+            if (gUnk_0873A5D4[gBlockCursorTile] != 0)
             {
                 k = 4;
                 b->unk1A = 0x805;
@@ -645,9 +645,9 @@ s32 sub_08031374(void)
     case 3:
         if (b->unk1C != -1)
             sub_0800a04c(10, b->unk1C);
-        sub_080261c0(gUnk_02007D68 * 16 + 8, gUnk_0200AEFC * 16 + 8);
+        sub_080261c0(gBlockCursorX * 16 + 8, gBlockCursorY * 16 + 8);
         PlaySfx(159);
-        if (gUnk_0873A5D4[gUnk_020061D0] != 0)
+        if (gUnk_0873A5D4[gBlockCursorTile] != 0)
         {
             k = 4;
             b->unk1A = 0x805;
@@ -661,11 +661,11 @@ s32 sub_08031374(void)
         }
         break;
     case 5:
-        sub_080261c0(gUnk_02007D68 * 16 + 8, gUnk_0200AEFC * 16 + 8);
+        sub_080261c0(gBlockCursorX * 16 + 8, gBlockCursorY * 16 + 8);
         PlaySfx(159);
         if (b->unk1C != -1)
             sub_0800a04c(10, b->unk1C);
-        if (gUnk_0873A5D4[gUnk_020061D0] != 0)
+        if (gUnk_0873A5D4[gBlockCursorTile] != 0)
         {
             k = 4;
             b->unk1A = 0x805;
@@ -677,9 +677,9 @@ s32 sub_08031374(void)
         }
         break;
     case 6:
-        sub_080301e8(3, gUnk_02007D68 * 16 + 8, gUnk_0200AEFC * 16 + 20);
+        sub_080301e8(3, gBlockCursorX * 16 + 8, gBlockCursorY * 16 + 20);
         PlaySfx(159);
-        if (gUnk_0873A5D4[gUnk_020061D0] != 0)
+        if (gUnk_0873A5D4[gBlockCursorTile] != 0)
             k = 3;
         else
             k = 2;
@@ -715,32 +715,32 @@ s32 sub_08031738(u32 x, u32 y, s32 n)
 
     if (x >= gUnk_03005620 || y >= gUnk_0300561C)
         return -1;
-    gUnk_02007D68 = x;
-    gUnk_0200AEFC = y;
-    gUnk_02004B40 = 0xFF;
-    gUnk_020060C8 = x + gUnk_0200AEFC * gUnk_03005620;
-    if (gUnk_02008160[gUnk_020060C8] == 0 || (gUnk_02008160[gUnk_020060C8] & 0x8000))
+    gBlockCursorX = x;
+    gBlockCursorY = y;
+    gBlockCursorPlayer = 0xFF;
+    gBlockCursorIndex = x + gBlockCursorY * gUnk_03005620;
+    if (gBlockLayer[gBlockCursorIndex] == 0 || (gBlockLayer[gBlockCursorIndex] & 0x8000))
         return -1;
     i = 0;
-    while (gUnk_020061F0[i].unk6 != 0x7FFF)
+    while (gBreakingBlocks[i].unk6 != 0x7FFF)
     {
         i++;
         if (i > 63)
             return -1;
     }
-    b = &gUnk_020061F0[i];
-    b->unk4 = gUnk_020060C8;
-    t = gUnk_030055EC->unk10 + gUnk_02008160[gUnk_020060C8] + n;
+    b = &gBreakingBlocks[i];
+    b->unk4 = gBlockCursorIndex;
+    t = gUnk_030055EC->unk10 + gBlockLayer[gBlockCursorIndex] + n;
     b->unk8 = t;
-    b->unk0 = gUnk_02007D68;
-    b->unk2 = gUnk_0200AEFC;
-    b->unk1C = gUnk_02004B40;
-    b->unkC = (u16 *)0x06002000 + ((gUnk_02007D68 * 2 & 31) + ((gUnk_0200AEFC * 2 & 31) + (gUnk_02007D68 & 16) * 2) * 32);
+    b->unk0 = gBlockCursorX;
+    b->unk2 = gBlockCursorY;
+    b->unk1C = gBlockCursorPlayer;
+    b->unkC = (u16 *)0x06002000 + ((gBlockCursorX * 2 & 31) + ((gBlockCursorY * 2 & 31) + (gBlockCursorX & 16) * 2) * 32);
     b->unk16 = t->unk0;
     b->unk18 = t->unk3;
-    gUnk_02008160[gUnk_020060C8] |= 0x8000;
-    gUnk_03005660[gUnk_020060C8].unk0 = b->unk16;
-    gUnk_03005660[gUnk_020060C8].unk3 = b->unk18;
+    gBlockLayer[gBlockCursorIndex] |= 0x8000;
+    gRoomMap[gBlockCursorIndex].unk0 = b->unk16;
+    gRoomMap[gBlockCursorIndex].unk3 = b->unk18;
     b->unk1A = 7;
     b->unk10 = gUnk_0873A47C[5];
     b->unk14 = 0;

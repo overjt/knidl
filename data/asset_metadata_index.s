@@ -1174,8 +1174,8 @@ gUnk_087328D8:
 	.word	sub_08030580+1
 	.word	sub_08030604+1
 	.word	sub_080304ec+1
-	.global	gUnk_087328F0
-gUnk_087328F0:
+	.global	gCollisionTileShapes
+gCollisionTileShapes:
 	.word	gUnk_08735118
 	.word	gUnk_08735218
 	.word	gUnk_08735318
@@ -1432,14 +1432,14 @@ gUnk_087328F0:
 	.word	gUnk_08735118
 	.word	gUnk_08735118
 	.word	gUnk_08735118
-	.global	gUnk_08732CF0
-gUnk_08732CF0:
+	.global	gCollisionTileSlope
+gCollisionTileSlope:
 	.incbin	"baserom.gba", 0x732CF0, 0x100
 	.global	gUnk_08732DF0
 gUnk_08732DF0:
 	.incbin	"baserom.gba", 0x732DF0, 0x100
-	.global	gUnk_08732EF0
-gUnk_08732EF0:
+	.global	gCollisionTileShapeClass
+gCollisionTileShapeClass:
 	.incbin	"baserom.gba", 0x732EF0, 0x100
 	.global	gUnk_08732FF0
 gUnk_08732FF0:
@@ -1723,8 +1723,8 @@ gUnk_087339F0:
 	.global	gUnk_08733AF0
 gUnk_08733AF0:
 	.incbin	"baserom.gba", 0x733AF0, 0x100
-	.global	gUnk_08733BF0
-gUnk_08733BF0:
+	.global	gCollisionTilePushDown
+gCollisionTilePushDown:
 	.word	gUnk_08736318
 	.word	gUnk_08736718
 	.word	gUnk_08736B18
@@ -1981,8 +1981,8 @@ gUnk_08733BF0:
 	.word	gUnk_08736318
 	.word	gUnk_08736318
 	.word	gUnk_08736318
-	.global	gUnk_08733FF0
-gUnk_08733FF0:
+	.global	gCollisionTilePushUp
+gCollisionTilePushUp:
 	.word	gUnk_08736418
 	.word	gUnk_08736818
 	.word	gUnk_08736C18
@@ -2239,11 +2239,11 @@ gUnk_08733FF0:
 	.word	gUnk_08736418
 	.word	gUnk_08736418
 	.word	gUnk_08736418
-	.global	gUnk_087343F0
-gUnk_087343F0:
+	.global	gCollisionTilePushRight
+gCollisionTilePushRight:
 	.incbin	"baserom.gba", 0x7343F0, 0x400
-	.global	gUnk_087347F0
-gUnk_087347F0:
+	.global	gCollisionTilePushLeft
+gCollisionTilePushLeft:
 	.incbin	"baserom.gba", 0x7347F0, 0x400
 	.global	gUnk_08734BF0
 gUnk_08734BF0:

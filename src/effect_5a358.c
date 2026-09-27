@@ -80,7 +80,7 @@ u32 IsWorldPosOnScreen(s16 a, s16 b);   /* the ROM tests r0 unnarrowed (src call
 u32 IsInView(s16 x, s16 y);
 void TaskRestoreSkipMask(u32 idx);
 void TaskSaveSkipMask(u32 idx);
-void sub_0801a828(u8 a, s16 x, s16 y, void *p);   /* M11's caller spelling */
+void RegisterCollider(u8 a, s16 x, s16 y, void *p);   /* M11's caller spelling */
 u16 sub_08030804(struct HitBoxSet *p, s32 x, s32 y, s32 e);
 void sub_0803dfc8(void);
 void FreezeOtherTasks(s32 a0);
@@ -430,7 +430,7 @@ void sub_0805ab04(void)
             if (t->unk2C > 0x100)
                 t->unk2C = 0x100;
         }
-        sub_0801a828((u8)gCurTaskIdx, gUnk_030055D0[gCurTask->unk88->unk00].x,
+        RegisterCollider((u8)gCurTaskIdx, gUnk_030055D0[gCurTask->unk88->unk00].x,
                      gUnk_030055D0[gCurTask->unk88->unk00].y, gUnk_0873C2B4);
         break;
     case 2:

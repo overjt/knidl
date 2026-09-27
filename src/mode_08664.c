@@ -58,7 +58,7 @@ void sub_080075b8(void);
 void sub_08008c4c(s32 a0);
 void sub_08008fc4(s32 a0, s32 a1);
 void sub_0800b648(void);
-void sub_0801a7b4(void);
+void ClearColliderLists(void);
 void sub_08027128(void);
 void sub_080271ec(void);
 void sub_08027210(void);
@@ -217,7 +217,7 @@ void sub_08008a00(void)
     }
     gUnk_03000048 = 0;
     do {
-        sub_0801a7b4();
+        ClearColliderLists();
         RunLinkFrame();
         InputRecorderUpdate();
         LatchPlayerKeys();

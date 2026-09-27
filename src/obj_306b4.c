@@ -7,7 +7,7 @@
  * sub_080306b4 draws one OAM sprite relative to the BG camera
  * (gSpriteCameraX/gSpriteCameraY) when it is on screen, and returns garbage
  * when it is not.  The rest manage the per-frame stage hook gUnk_030004A0:
- * sub_08030724 clears it and the 64 records gUnk_020061F0[] (unk6 =
+ * sub_08030724 clears it and the 64 records gBreakingBlocks[] (unk6 =
  * 0x7FFF), sub_08030758 re-installs it from its id gUnk_02000024,
  * sub_080307a4 clears it and sub_080307b0/cc/e8 install one of three M09
  * routines (ids 1-3).
@@ -26,7 +26,7 @@ struct Unk020061F0
 
 extern s16 gSpriteCameraX;
 extern s16 gSpriteCameraY;
-extern struct Unk020061F0 gUnk_020061F0[];
+extern struct Unk020061F0 gBreakingBlocks[];
 extern u32 gUnk_030004A0;
 extern u8 gUnk_02000024;
 
@@ -51,7 +51,7 @@ void sub_08030724(void)
     s32 i;
 
     for (i = 0; i < 64; i++)
-        gUnk_020061F0[i].unk6 = 0x7FFF;
+        gBreakingBlocks[i].unk6 = 0x7FFF;
     gUnk_030004A0 = 0;
     gUnk_02000024 = 0;
 }

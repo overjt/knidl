@@ -129,7 +129,7 @@ extern s8 gUnk_0300238C;
 extern s8 gUnk_030023EC;
 extern s8 gUnk_030023B8;
 extern u8 gUnk_03001F20;
-extern struct MapCell *gUnk_03005660;
+extern struct MapCell *gRoomMap;
 extern struct MapCell gUnk_02000040[];
 extern s16 gUnk_03005620;
 extern s16 gUnk_0300561C;
@@ -161,7 +161,7 @@ extern s16 gUnk_0200AEF0;
 extern u8 gUnk_02006170;
 extern s8 gUnk_03002444;
 extern struct Unk020055D8 gUnk_020055D8;
-extern u16 gUnk_02008160[];
+extern u16 gBlockLayer[];
 extern u8 gUnk_020069F0;
 extern u8 gUnk_03002350;
 extern u8 gUnk_0300234C;
@@ -230,7 +230,7 @@ void sub_08008c64(u16 a0);
 void sub_08009adc(void);
 s32 sub_08009e60(s32 a, u32 b);
 void sub_0800a778(void);
-s32 sub_08021b18(u16 x, u16 y);
+s32 GetCollisionTileAtPixel(u16 x, u16 y);
 void sub_080235ec(s32 a);
 void sub_080236d4(void);
 void sub_080236e4(void);
@@ -327,7 +327,7 @@ void sub_08024300(void)
     gUnk_03005600[1] = gUnk_030055EC->unk26;
     gUnk_03005608[0] = gUnk_030055EC->unk34;
     gUnk_03005608[1] = gUnk_030055EC->unk36;
-    gUnk_03005660 = gUnk_02000040;
+    gRoomMap = gUnk_02000040;
     if (gUnk_030055EC->unk05 != 0)
         RequestCopy(8, (u32)gUnk_030055EC->unk08, (u32)gUnk_02000040, 0);
     else
@@ -470,16 +470,16 @@ void sub_08024698(s32 a0)
     gUnk_020055D8.unk0 = gUnk_030055EC->unk3C;
     gUnk_020055D8.unk2 = gUnk_030055EC->unk3E;
     gUnk_020055D8.unk4 = gUnk_030055EC->unk48;
-    gUnk_03005660 = gUnk_02000040;
+    gRoomMap = gUnk_02000040;
     if (gUnk_030055EC->unk05 != 0)
     {
         RequestCopy(8, (u32)gUnk_030055EC->unk08, (u32)gUnk_02000040, 0);
-        RequestCopy(8, (u32)gUnk_030055EC->unk0C, (u32)gUnk_02008160, 0);
+        RequestCopy(8, (u32)gUnk_030055EC->unk0C, (u32)gBlockLayer, 0);
     }
     else
     {
         CpuSet(gUnk_030055EC->unk08, gUnk_02000040, (gUnk_030055E4 * 2) & 0x1FFFFF);
-        CpuSet(gUnk_030055EC->unk0C, gUnk_02008160, gUnk_030055E4 & 0x1FFFFF);
+        CpuSet(gUnk_030055EC->unk0C, gBlockLayer, gUnk_030055E4 & 0x1FFFFF);
     }
     RequestCopy(8, (u32)gUnk_030055EC->unk20, (u32)gUnk_0200B080, 0);
     gUnk_02000020 = 0;
@@ -595,16 +595,16 @@ void sub_0802497c(void)
     gUnk_020055D8.unk0 = gUnk_030055EC->unk3C;
     gUnk_020055D8.unk2 = gUnk_030055EC->unk3E;
     gUnk_020055D8.unk4 = gUnk_030055EC->unk48;
-    gUnk_03005660 = gUnk_02000040;
+    gRoomMap = gUnk_02000040;
     if (gUnk_030055EC->unk05 != 0)
     {
         RequestCopy(8, (u32)gUnk_030055EC->unk08, (u32)gUnk_02000040, 0);
-        RequestCopy(8, (u32)gUnk_030055EC->unk0C, (u32)gUnk_02008160, 0);
+        RequestCopy(8, (u32)gUnk_030055EC->unk0C, (u32)gBlockLayer, 0);
     }
     else
     {
         CpuSet(gUnk_030055EC->unk08, gUnk_02000040, (gUnk_030055E4 * 2) & 0x1FFFFF);
-        CpuSet(gUnk_030055EC->unk0C, gUnk_02008160, gUnk_030055E4 & 0x1FFFFF);
+        CpuSet(gUnk_030055EC->unk0C, gBlockLayer, gUnk_030055E4 & 0x1FFFFF);
     }
     RequestCopy(8, (u32)gUnk_030055EC->unk20, (u32)gUnk_0200B080, 0);
     gUnk_02000020 = 0;
@@ -745,7 +745,7 @@ s32 sub_08024e40(s32 x, s32 y)
     gUnk_02000030 = 0xFF;
     if (gUnk_030055EC->unk3A == 0)
         return 0;
-    switch (sub_08021b18(x, y))
+    switch (GetCollisionTileAtPixel(x, y))
     {
     case 55:
     case 183:

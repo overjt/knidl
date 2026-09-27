@@ -12,7 +12,7 @@
  * and Task.unk64/unk68 from signed 8.8 halfwords of gPlayerMotionXPresets[a1] or of
  * the preset row gUnk_0873AF6C[gUnk_03001F30] (22 halfwords), some of them
  * chosen by PlayerState.unk49, the held keys gLatchedHeldKeys[] or the
- * collision block gUnk_03005550; kind 12 picks one of five rows of
+ * collision block gTerrainResult; kind 12 picks one of five rows of
  * gUnk_0873AF58 by the speed.
  *
  * Matching note (issue #85): the key mask is read inline at every test (a
@@ -20,7 +20,7 @@
  * into ip, lessons 4.62/4.63 and 3.476). */
 
 extern u8 gUnk_03001F30;
-extern u8 gUnk_03005550[];
+extern u8 gTerrainResult[];
 extern u16 gLatchedHeldKeys[];   /* held keys, latched per player */
 extern u16 gUnk_0873AF58[][2];
 extern u32 gUnk_0873AF6C[];
@@ -411,8 +411,8 @@ void PlayerSetMotionXPreset(s32 a0, s32 a1)
                     gCurTask->unk5C = 0x4000;
                     gCurTask->unk64 = 0x10000;
                 }
-                if (gUnk_03005550[0] == 2)
-                    gUnk_03005550[0] = 0;
+                if (gTerrainResult[0] == 2)
+                    gTerrainResult[0] = 0;
             }
             else
             {
@@ -426,8 +426,8 @@ void PlayerSetMotionXPreset(s32 a0, s32 a1)
                     gCurTask->unk5C = 0xFFFFC000;
                     gCurTask->unk64 = 0x10000;
                 }
-                if (gUnk_03005550[0] == 1)
-                    gUnk_03005550[0] = 0;
+                if (gTerrainResult[0] == 1)
+                    gTerrainResult[0] = 0;
             }
             if (gLatchedHeldKeys[gCurTask->unk88->unk00] & 192)
             {
@@ -478,13 +478,13 @@ void PlayerSetMotionXPreset(s32 a0, s32 a1)
 
                 if (b != 0)
                 {
-                    if (gUnk_03005550[0] == 2)
-                        gUnk_03005550[0] = 0;
+                    if (gTerrainResult[0] == 2)
+                        gTerrainResult[0] = 0;
                 }
                 else
                 {
-                    if (gUnk_03005550[0] == 1)
-                        gUnk_03005550[0] = 0;
+                    if (gTerrainResult[0] == 1)
+                        gTerrainResult[0] = 0;
                 }
                 if ((gCurTask->unk7B & 1) == 0)
                     gCurTask->unk68 = 0x18000;

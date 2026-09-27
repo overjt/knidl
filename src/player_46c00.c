@@ -38,7 +38,7 @@ extern u32 gUnk_0873C128[];
 void TaskYieldTrampoline(s32 frames);
 void TaskSleepForever(void);
 void TaskSetFrame(s32 a);
-void sub_0801a828(u8 a, s16 x, s16 y, void *p);   /* M11's caller spelling */
+void RegisterCollider(u8 a, s16 x, s16 y, void *p);   /* M11's caller spelling */
 u16 sub_0802259c(u16 x, u16 y);
 void sub_080261d4(u16 a);
 s32 PlaySfxIfLocalPlayer(s32 a0, u16 a1);
@@ -240,7 +240,7 @@ void sub_08047270(void)
             struct Task *u = gCurTask;
             if (u->unk2C != -1) {
                 LoadPlayerBodyBoxRect(u->unk88->unk00, (u8 *)gUnk_0873C074 + u->unk2C * 8);
-                sub_0801a828(gCurTaskIdx, gCurTask->unk48, gCurTask->unk4A,
+                RegisterCollider(gCurTaskIdx, gCurTask->unk48, gCurTask->unk4A,
                              (u8 *)gPlayerBodyBoxes + gCurTask->unk88->unk00 * 20);
             }
         }
@@ -269,7 +269,7 @@ void sub_08047270(void)
                     LoadPlayerBodyBoxRect(u->unk88->unk00, (u8 *)gUnk_0873C0C0 + u->unk2C * 8);
                 else
                     LoadPlayerBodyBoxRect(u->unk88->unk00, (u8 *)gUnk_0873C128 + u->unk2C * 8);
-                sub_0801a828(gCurTaskIdx, gCurTask->unk48, gCurTask->unk4A,
+                RegisterCollider(gCurTaskIdx, gCurTask->unk48, gCurTask->unk4A,
                              (u8 *)gPlayerBodyBoxes + gCurTask->unk88->unk00 * 20);
             }
         }

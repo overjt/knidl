@@ -13,13 +13,13 @@
  * gUnk_0873BD28/gUnk_0873CB24 in PlayerState.unk64/unk68 and plays
  * gUnk_0873D4BC[ability][column]; its handler sub_08036888 requests
  * action 11 on a newly-pressed A or B and 7 on the collision flag
- * gUnk_03005550.unk5.  sub_080369b0 (action 11, mode 7) installs the
+ * gTerrainResult.unk5.  sub_080369b0 (action 11, mode 7) installs the
  * attack hit-box set gUnk_0873CC84 in PlayerState.unk6C; its handler
  * sub_08036b9c registers the box gUnk_0873BE9C with M09's collision
- * registry sub_0801a828 while the player moves faster than 0xE000 and
+ * registry RegisterCollider while the player moves faster than 0xE000 and
  * drops to state 1 below 0x8000. */
 
-/* gUnk_03005550: M06's collision result block (src/terrain_1bcac.c spells it
+/* gTerrainResult: M06's collision result block (src/terrain_1bcac.c spells it
    the same way except unk8, which M09 reads with ldrsh). */
 struct Unk03005550
 {
@@ -40,7 +40,7 @@ struct Unk03005550
 
 extern u16 gLatchedHeldKeys[];             /* held keys, latched per player (M11) */
 extern u16 gLatchedPressedKeys[];             /* newly-pressed keys, latched per player */
-extern struct Unk03005550 gUnk_03005550;
+extern struct Unk03005550 gTerrainResult;
 extern u32 gUnk_0873BD28[];
 extern u32 gUnk_0873CB24[];
 extern u16 gUnk_0873D4BC[][5];
@@ -53,7 +53,7 @@ void TaskYieldTrampoline(s32 frames);
 void TaskSleepForever(void);
 void TaskSetEntry(void *a, u32 i);
 void TaskSetFrame(s32 a);
-u32 sub_0801a828(u8 idx, s16 x, s16 y, u8 *p);
+u32 RegisterCollider(u8 idx, s16 x, s16 y, u8 *p);
 void sub_080359f8(void);
 void PlayerStopAxes(s32 a0);
 void PlayerStartSfx(s32 a0, u16 a1);
@@ -211,7 +211,7 @@ void sub_08036280(void)
         w = gCurTask;
         if (w->unk58 < 0)
         {
-            if (gUnk_03005550.unk1 != 0)
+            if (gTerrainResult.unk1 != 0)
                 w->unk58 = 0;
         }
         else if (w->unk7A & 1)
@@ -334,7 +334,7 @@ void sub_08036888(void)
             PlayerRequestLocomotion();
             break;
         }
-        if (gUnk_03005550.unk5 != 0)
+        if (gTerrainResult.unk5 != 0)
         {
             if (t->unk28 == 0)
             {
@@ -360,7 +360,7 @@ void sub_08036888(void)
         break;
     }
     gCurTask->unk2C = gCurTask->unk88->unk4B;
-    if (gUnk_03005550.unk0 != 0)
+    if (gTerrainResult.unk0 != 0)
         PlayerStopAxes(1);
 }
 
@@ -449,7 +449,7 @@ void sub_08036b9c(void)
         {
             t->unk88->unk01 = 1;
         }
-        else if (gUnk_03005550.unk0 != 0)
+        else if (gTerrainResult.unk0 != 0)
         {
             PlayerCheckBump();
             PlayerStopAxes(1);
@@ -463,7 +463,7 @@ void sub_08036b9c(void)
                 TaskSetEntry(sub_080369b0, gCurTaskIdx);
             }
             if (abs(gCurTask->unk54) > 0xE000)
-                sub_0801a828(gCurTaskIdx, gCurTask->unk48, gCurTask->unk4A, gUnk_0873BE9C);
+                RegisterCollider(gCurTaskIdx, gCurTask->unk48, gCurTask->unk4A, gUnk_0873BE9C);
         }
         break;
     }

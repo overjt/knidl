@@ -13,16 +13,16 @@
  * Task.unk2C through 0-2, state 2 restores the default scripts
  * gPlayerDefaultTerrainBox / gUnk_0873BD00 and lands (preset 2), and state 3 is the
  * bounce-off (sound 153, sub_080261d4(4), preset 23).  Its handler
- * sub_08045a50 drives it from the collision block gUnk_03005550 -
+ * sub_08045a50 drives it from the collision block gTerrainResult -
  * re-binding state 3 on a hit, fading the palette of gUnk_0873B510[]
  * row Task.unk2C and registering the box gUnk_0873BF00.
  * sub_08045c40 (action 37) is a linear script (animations
  * 0x658/0x65A, M14's CreatePlayerObject, sound 172); its handler sub_08045d18
  * waits for it to finish. */
 
-/* gUnk_03005550: M06's collision result block (src/terrain_1bcac.c spells it
+/* gTerrainResult: M06's collision result block (src/terrain_1bcac.c spells it
    the same way except unk8, which M09 reads with ldrsh).  A 16-bit test of
-   unk0/unk1 together is `*(u16 *)&gUnk_03005550` (good/sub_08045a50.c). */
+   unk0/unk1 together is `*(u16 *)&gTerrainResult` (good/sub_08045a50.c). */
 struct Unk03005550
 {
     /*0x00*/ u8 unk0;
@@ -53,7 +53,7 @@ extern u32 gUnk_0873BD00[];             /* stored to PlayerState.unk64 as (u32)g
 extern u32 gUnk_0873CCA4[];
 extern u32 gUnk_0873CB2C[];
 extern u32 gUnk_0873BD3C[];
-extern struct Unk03005550 gUnk_03005550;
+extern struct Unk03005550 gTerrainResult;
 extern struct M12Fade gUnk_0873B510[];
 extern u8 gObjPalette[];              /* OBJ palette buffer (M11 spelling) */
 extern u32 gUnk_0873BF00[];
@@ -63,7 +63,7 @@ void BlendColors(u16 *src, u16 *dst, s32 ratio, s32 count, u16 *out);
 void TaskSleepForever(void);
 void TaskSetEntry(void *a, u32 i);
 void TaskSetFrame(s32 a);
-void sub_0801a828(u8 a, s16 x, s16 y, void *p);   /* M11's caller spelling */
+void RegisterCollider(u8 a, s16 x, s16 y, void *p);   /* M11's caller spelling */
 void sub_080261d4(u16 a);
 void PlayerStopAxes(s32 a0);
 void SetPlayerInvulnerability(s32 a0, s32 a1, s32 a2);
@@ -230,16 +230,16 @@ void sub_08045a50(void)
         gCurTask->unk7A = 0;
         {
             struct Task *t = gCurTask;
-            if (t->unk58 < 0 && gUnk_03005550.unk1 != 0)
+            if (t->unk58 < 0 && gTerrainResult.unk1 != 0)
                 t->unk58 = 0;
         }
-        if (gUnk_03005550.unk0 == 0)
+        if (gTerrainResult.unk0 == 0)
             break;
         PlayerStopAxes(1);
         {
             s8 d = gCurTask->unk43;
-            if ((d == 1 && gUnk_03005550.unk0 == 1)
-                || (d == -1 && gUnk_03005550.unk0 == 2))
+            if ((d == 1 && gTerrainResult.unk0 == 1)
+                || (d == -1 && gTerrainResult.unk0 == 2))
                 gCurTask->unk28 = 1;
         }
         break;
@@ -247,12 +247,12 @@ void sub_08045a50(void)
         {
             struct Task *t = gCurTask;
             if (t->unk7A & 1) {
-                if (gUnk_03005550.unk4 != 0) {
+                if (gTerrainResult.unk4 != 0) {
                     t->unk88->unk01 = 2;
                     PlayerSetMotionXPreset(11, 41);
                     SetPlayerInvulnerability(255, 0, gCurTask->unk88->unk00);
                 }
-            } else if (*(u16 *)&gUnk_03005550 != 0 || t->unk28 != 0
+            } else if (*(u16 *)&gTerrainResult != 0 || t->unk28 != 0
                        || (t->unk88->unk48 & 11) != 0) {
                 gCurTask->unk73 = 3;
                 TaskSetEntry(sub_080455c8, gCurTaskIdx);
@@ -269,7 +269,7 @@ void sub_08045a50(void)
                              (u16 *)(gObjPalette + ((gCurTask->unk40 >> 12) << 5)));
             }
         }
-        sub_0801a828(gCurTaskIdx, gCurTask->unk48, gCurTask->unk4A,
+        RegisterCollider(gCurTaskIdx, gCurTask->unk48, gCurTask->unk4A,
                      gUnk_0873BF00);
         break;
     case 2:

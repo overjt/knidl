@@ -40,7 +40,7 @@ void TaskSleepForever(void);
 void TaskSetEntry(void *a, u32 i);
 void TaskSetFrame(s32 a);
 s32 sub_08009ee8(s32 a, s32 b);
-void sub_0801a828(u8 a, s16 x, s16 y, void *p);   /* M11's caller spelling */
+void RegisterCollider(u8 a, s16 x, s16 y, void *p);   /* M11's caller spelling */
 void PlayerStopAxes(s32 a0);
 s32 PlaySfxIfLocalPlayer(s32 a0, u16 a1);
 s32 PlayerLand(s32 a0);
@@ -141,7 +141,7 @@ void sub_0804fab0(void)
             if (u->unk2C != -1)
             {
                 LoadPlayerBodyBoxRect(u->unk88->unk00, (u8 *)gUnk_0873C2DC + u->unk2C * 8);
-                sub_0801a828(gCurTaskIdx, gCurTask->unk48, gCurTask->unk4A,
+                RegisterCollider(gCurTaskIdx, gCurTask->unk48, gCurTask->unk4A,
                              &gPlayerBodyBoxes[gCurTask->unk88->unk00]);
             }
         }
@@ -241,7 +241,7 @@ void sub_0804fc98(void)
         if (u->unk28 != -1)
         {
             LoadPlayerBodyBoxRect(u->unk88->unk00, (u8 *)gUnk_0873C318 + u->unk28 * 8);
-            sub_0801a828(gCurTaskIdx, gCurTask->unk48, gCurTask->unk4A,
+            RegisterCollider(gCurTaskIdx, gCurTask->unk48, gCurTask->unk4A,
                          &gPlayerBodyBoxes[gCurTask->unk88->unk00]);
         }
     }

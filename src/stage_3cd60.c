@@ -49,7 +49,7 @@ extern u16 gLatchedHeldKeys[];
 extern struct Task *gCurTask;
 extern struct Task gTasks[];
 extern vs16 gTaskSlotTypes[];
-extern u8 gUnk_03005550[];
+extern u8 gTerrainResult[];
 extern u16 gUnk_080DC628[];
 extern u32 gUnk_080DC728[];
 extern u8 gUnk_080DCA28[];
@@ -2392,18 +2392,18 @@ void PlayerCheckBump(void)
             return;
         }
     }
-    else if (gUnk_03005550[1] != 0)
+    else if (gTerrainResult[1] != 0)
     {
         if (gCurTask->unk58 < 0 && gCurTask->unk58 <= 0xFFFF4D00)
             gCurTask->unk88->unk3E = 1;
         return;
     }
-    if (gUnk_03005550[0] != 0)
+    if (gTerrainResult[0] != 0)
     {
         v = (gCurTask->unk54 < 0) ? -gCurTask->unk54 : gCurTask->unk54;
         if (v > 45823)
         {
-            if (gUnk_03005550[0] == 1)
+            if (gTerrainResult[0] == 1)
             {
                 if (gCurTask->unk43 == 1)
                     gCurTask->unk88->unk3E = 3;
@@ -2422,18 +2422,18 @@ void PlayerStopAtCeilingAndWall(void)
 {
     struct Task *t = gCurTask;
 
-    if (t->unk58 < 0 && gUnk_03005550[1] != 0)
+    if (t->unk58 < 0 && gTerrainResult[1] != 0)
         t->unk58 = 0;
     PlayerStopAtWall();
 }
 
 s32 PlayerStopAtWall(void)
 {
-    if (gUnk_03005550[0] == 0)
+    if (gTerrainResult[0] == 0)
         return 0;
     if (((s32 *)gCurTask->unk88)[21] == 0
-     || (gUnk_03005550[0] == 1 && gCurTask->unk43 == 1)
-     || (gUnk_03005550[0] == 2 && gCurTask->unk43 == -1))
+     || (gTerrainResult[0] == 1 && gCurTask->unk43 == 1)
+     || (gTerrainResult[0] == 2 && gCurTask->unk43 == -1))
     {
         PlayerStopAxes(1);
         return 1;
@@ -2460,8 +2460,8 @@ s32 sub_0803fa74(void)
       || (sub_08022760(gCurTask) == 0
        && (gUnk_02005574[0] == 0 || (gCurTask->unk7A & 1) == 0
            || (gCurTask->unk88->unk48 & 4) == 0)
-       && (gUnk_03005550[0] != 1 || (gCurTask->unk88->unk48 & 1) == 0)
-       && (gUnk_03005550[0] != 2 || (gCurTask->unk88->unk48 & 2) == 0))))
+       && (gTerrainResult[0] != 1 || (gCurTask->unk88->unk48 & 1) == 0)
+       && (gTerrainResult[0] != 2 || (gCurTask->unk88->unk48 & 2) == 0))))
         return 0;
     sub_08009ee8(-gUnk_02005588[gCurTask->unk88->unk00], gCurTask->unk88->unk00);
     gCurTask->unk7C = 1;
@@ -2626,9 +2626,9 @@ s32 PlayerCheckDuckOrSwallow(void)
 
 s32 PlayerCheckLadder(void)
 {
-    if (gCurTask->unk88->unk06 == 0 && gUnk_03005550[6] != 0)
+    if (gCurTask->unk88->unk06 == 0 && gTerrainResult[6] != 0)
     {
-        if (gUnk_03005550[6] & 1)
+        if (gTerrainResult[6] & 1)
         {
             if (gLatchedPressedKeys[gCurTask->unk88->unk00] & 64)
                 gCurTask->unk88->unk01 = 12;

@@ -8,12 +8,12 @@
  * (src/player_32688.c) calls it with the player's box record; it is the body
  * of src/terrain_1bcac.c's entry points, but the room-relative position comes
  * from PlayerState.unk5E/unk60 and the box offsets from PlayerState.unk70,
- * both wall probes run (in the order the facing gUnk_03005564 picks), and
+ * both wall probes run (in the order the facing gTerrainFacing picks), and
  * the probes' 8.8 push gUnk_030055A8/gUnk_03005580 is written back to
  * PlayerState.unk54/unk58 on top of gUnk_030055F0/gUnk_03005618. */
 
 /* The probe result block, filled by the terrain probes and mirrored into
-   gUnk_03005550 by sub_0801c5c8. */
+   gTerrainResult by TerrainProbeEnd. */
 struct Unk03005530
 {
     /*0x00*/ u8 unk0;
@@ -52,26 +52,26 @@ struct Unk03005550
 };
 
 extern s16 gUnk_0300550C;           /* box left (room-relative) */
-extern s32 gUnk_03005514;           /* Task.unk58 */
-extern s16 gUnk_03005518;           /* actor x (room-relative) */
-extern s16 gUnk_03005520;           /* actor y (room-relative) */
-extern struct Unk03005530 gUnk_03005530;
-extern struct Unk03005550 gUnk_03005550;
-extern s16 gUnk_03005560;           /* probe x */
-extern u8 gUnk_03005564;            /* Task.unk43 */
-extern s16 gUnk_03005570;           /* probe y */
+extern s32 gTerrainVelY;           /* Task.unk58 */
+extern s16 gTerrainPrevX;           /* actor x (room-relative) */
+extern s16 gTerrainPrevY;           /* actor y (room-relative) */
+extern struct Unk03005530 gTerrainProbeResult;
+extern struct Unk03005550 gTerrainResult;
+extern s16 gTerrainProbeX;           /* probe x */
+extern u8 gTerrainFacing;            /* Task.unk43 */
+extern s16 gTerrainProbeY;           /* probe y */
 extern s32 gUnk_03005580;
-extern s16 gUnk_03005584;           /* box bottom offset */
+extern s16 gTerrainBoxBottom;           /* box bottom offset */
 extern s16 gUnk_03005590;           /* box right (room-relative) */
-extern s32 gUnk_03005598;           /* Task.unk54 */
+extern s32 gTerrainVelX;           /* Task.unk54 */
 extern s16 gUnk_030055A4;           /* box top (room-relative) */
 extern s32 gUnk_030055A8;
 extern s16 gUnk_030055B0;           /* box bottom (room-relative) */
 extern s32 gUnk_030055F0;
 extern s32 gUnk_03005618;
 
-void sub_0801c51c(const s8 *p);
-void sub_0801c5c8(const s8 *p);
+void TerrainProbeBegin(const s8 *p);
+void TerrainProbeEnd(const s8 *p);
 void sub_0801c690(void);
 void sub_0801c7cc(void);
 void sub_0801c8dc(void);
@@ -94,27 +94,27 @@ void sub_0801baa4(u32 p)
     struct PlayerState *ps;
     s32 r;
 
-    sub_0801c51c((const s8 *)p);
-    gUnk_03005530.unkD = gCurTask->unk88->unk50 << 4;
+    TerrainProbeBegin((const s8 *)p);
+    gTerrainProbeResult.unkD = gCurTask->unk88->unk50 << 4;
     zero = 0;
-    gUnk_03005518 = gCurTask->unk88->unk5E + (box = (s8 *)gCurTask->unk88->unk70)[0];
-    gUnk_03005520 = box[1] + gCurTask->unk88->unk60;
-    gUnk_0300550C = gUnk_03005518 + box[4];
-    gUnk_03005590 = gUnk_03005518 + box[5];
-    gUnk_030055A4 = gUnk_03005520 + box[2];
-    gUnk_030055B0 = gUnk_03005520 + box[3];
-    gUnk_03005598 = gUnk_03005560 - gUnk_03005518;
-    gUnk_03005514 = gUnk_03005570 - gUnk_03005520;
+    gTerrainPrevX = gCurTask->unk88->unk5E + (box = (s8 *)gCurTask->unk88->unk70)[0];
+    gTerrainPrevY = box[1] + gCurTask->unk88->unk60;
+    gUnk_0300550C = gTerrainPrevX + box[4];
+    gUnk_03005590 = gTerrainPrevX + box[5];
+    gUnk_030055A4 = gTerrainPrevY + box[2];
+    gUnk_030055B0 = gTerrainPrevY + box[3];
+    gTerrainVelX = gTerrainProbeX - gTerrainPrevX;
+    gTerrainVelY = gTerrainProbeY - gTerrainPrevY;
     gUnk_030055A8 = gUnk_03005580 = zero;
-    if (gUnk_03005530.unkB & 0x80)
+    if (gTerrainProbeResult.unkB & 0x80)
     {
-        gUnk_03005530.unkB = 1;
-        gUnk_03005530.unkC = (gUnk_03005570 + gUnk_03005584 + 16) >> 4;
+        gTerrainProbeResult.unkB = 1;
+        gTerrainProbeResult.unkC = (gTerrainProbeY + gTerrainBoxBottom + 16) >> 4;
     }
     sub_08022650();
-    if (gUnk_03005530.unk6 != 0)
+    if (gTerrainProbeResult.unk6 != 0)
     {
-        if ((s8)gUnk_03005564 == 1)
+        if ((s8)gTerrainFacing == 1)
         {
             sub_0801c7cc();
             sub_0801c690();
@@ -129,7 +129,7 @@ void sub_0801baa4(u32 p)
     }
     else
     {
-        if ((s8)gUnk_03005564 == 1)
+        if ((s8)gTerrainFacing == 1)
         {
             sub_0801dc88();
             sub_0801d9c8();
@@ -156,7 +156,7 @@ void sub_0801baa4(u32 p)
     else
         r = (gUnk_03005580 << 8) + gUnk_03005618;
     ps->unk58 = r;
-    gUnk_03005550.unkA = gUnk_03005530.unkA;
-    gUnk_03005550.unk6 = gUnk_03005530.unkD & 15;
-    sub_0801c5c8((const s8 *)p);
+    gTerrainResult.unkA = gTerrainProbeResult.unkA;
+    gTerrainResult.unk6 = gTerrainProbeResult.unkD & 15;
+    TerrainProbeEnd((const s8 *)p);
 }

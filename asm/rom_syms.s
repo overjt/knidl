@@ -39,8 +39,8 @@ gUnk_02000034 = 0x02000034
 gUnk_02000040 = 0x02000040
 	.global	gUnk_02004000
 gUnk_02004000 = 0x02004000
-	.global	gUnk_02004B40
-gUnk_02004B40 = 0x02004B40
+	.global	gBlockCursorPlayer
+gBlockCursorPlayer = 0x02004B40
 	.global	gUnk_02004B44
 gUnk_02004B44 = 0x02004B44
 	.global	gUnk_02004B48
@@ -153,8 +153,8 @@ gUnk_02006094 = 0x02006094
 gUnk_02006098 = 0x02006098
 	.global	gUnk_020060A0
 gUnk_020060A0 = 0x020060A0
-	.global	gUnk_020060C8
-gUnk_020060C8 = 0x020060C8
+	.global	gBlockCursorIndex
+gBlockCursorIndex = 0x020060C8
 	.global	gUnk_020060CC
 gUnk_020060CC = 0x020060CC
 	.global	gUnk_020060D0
@@ -189,8 +189,8 @@ gUnk_0200618C = 0x0200618C
 gUnk_02006190 = 0x02006190
 	.global	gUnk_020061B0
 gUnk_020061B0 = 0x020061B0
-	.global	gUnk_020061D0
-gUnk_020061D0 = 0x020061D0
+	.global	gBlockCursorTile
+gBlockCursorTile = 0x020061D0
 	.global	gUnk_020061D4
 gUnk_020061D4 = 0x020061D4
 	.global	gPaletteAnimTasks
@@ -199,8 +199,8 @@ gPaletteAnimTasks = 0x020061D8
 gUnk_020061DC = 0x020061DC
 	.global	gUnk_020061E0
 gUnk_020061E0 = 0x020061E0
-	.global	gUnk_020061F0
-gUnk_020061F0 = 0x020061F0
+	.global	gBreakingBlocks
+gBreakingBlocks = 0x020061F0
 	.global	gUnk_020069F0
 gUnk_020069F0 = 0x020069F0
 	.global	gUnk_02006A00
@@ -249,8 +249,8 @@ gUnk_02007D58 = 0x02007D58
 gUnk_02007D60 = 0x02007D60
 	.global	gUnk_02007D64
 gUnk_02007D64 = 0x02007D64
-	.global	gUnk_02007D68
-gUnk_02007D68 = 0x02007D68
+	.global	gBlockCursorX
+gBlockCursorX = 0x02007D68
 	.global	gUnk_02007D70
 gUnk_02007D70 = 0x02007D70
 	.global	gUnk_02007E88
@@ -309,8 +309,8 @@ gUnk_02008050 = 0x02008050
 gUnk_02008054 = 0x02008054
 	.global	gUnk_02008060
 gUnk_02008060 = 0x02008060
-	.global	gUnk_02008160
-gUnk_02008160 = 0x02008160
+	.global	gBlockLayer
+gBlockLayer = 0x02008160
 	.global	gUnk_0200A6E0
 gUnk_0200A6E0 = 0x0200A6E0
 	.global	gUnk_0200A6F0
@@ -319,8 +319,8 @@ gUnk_0200A6F0 = 0x0200A6F0
 gUnk_0200AEF0 = 0x0200AEF0
 	.global	gUnk_0200AEF4
 gUnk_0200AEF4 = 0x0200AEF4
-	.global	gUnk_0200AEFC
-gUnk_0200AEFC = 0x0200AEFC
+	.global	gBlockCursorY
+gBlockCursorY = 0x0200AEFC
 	.global	gUnk_0200AF00
 gUnk_0200AF00 = 0x0200AF00
 	.global	gUnk_0200AF04
@@ -811,12 +811,12 @@ gUnk_03001F34 = 0x03001F34
 gLinkIsMaster = 0x03001F38
 	.global	gAttackHitDuration
 gAttackHitDuration = 0x03002140
-	.global	gUnk_03002144
-gUnk_03002144 = 0x03002144
+	.global	gHitDirection
+gHitDirection = 0x03002144
 	.global	gUnk_03002148
 gUnk_03002148 = 0x03002148
-	.global	gUnk_0300214C
-gUnk_0300214C = 0x0300214C
+	.global	gAttackY
+gAttackY = 0x0300214C
 	.global	gUnk_03002150
 gUnk_03002150 = 0x03002150
 	.global	gViewRect
@@ -837,22 +837,22 @@ gUnk_0300234C = 0x0300234C
 gUnk_03002350 = 0x03002350
 	.global	gUnk_03002354
 gUnk_03002354 = 0x03002354
-	.global	gUnk_03002358
-gUnk_03002358 = 0x03002358
+	.global	gAttackX
+gAttackX = 0x03002358
 	.global	gCompletionPercent
 gCompletionPercent = 0x0300235C
 	.global	gLocalPlayer
 gLocalPlayer = 0x03002360
 	.global	gUnk_03002364
 gUnk_03002364 = 0x03002364
-	.global	gUnk_03002368
-gUnk_03002368 = 0x03002368
-	.global	gUnk_0300236C
-gUnk_0300236C = 0x0300236C
+	.global	gAttackPower
+gAttackPower = 0x03002368
+	.global	gAttackBox
+gAttackBox = 0x0300236C
 	.global	gUnk_03002378
 gUnk_03002378 = 0x03002378
-	.global	gUnk_03002380
-gUnk_03002380 = 0x03002380
+	.global	gHitKind
+gHitKind = 0x03002380
 	.global	gUnk_03002384
 gUnk_03002384 = 0x03002384
 	.global	gUnk_03002388
@@ -861,8 +861,8 @@ gUnk_03002388 = 0x03002388
 gUnk_0300238C = 0x0300238C
 	.global	gUnk_03002390
 gUnk_03002390 = 0x03002390
-	.global	gUnk_03002394
-gUnk_03002394 = 0x03002394
+	.global	gHitDamage
+gHitDamage = 0x03002394
 	.global	gUnk_03002398
 gUnk_03002398 = 0x03002398
 	.global	gAttackFacing
@@ -1021,102 +1021,102 @@ gUnk_03005278 = 0x03005278
 gSendBufferEmpty = 0x0300527C
 	.global	gUnk_03005280
 gUnk_03005280 = 0x03005280
-	.global	gUnk_03005290
-gUnk_03005290 = 0x03005290
-	.global	gUnk_03005294
-gUnk_03005294 = 0x03005294
+	.global	gPlayerColliderCount
+gPlayerColliderCount = 0x03005290
+	.global	gAttackBoxBottom
+gAttackBoxBottom = 0x03005294
 	.global	gUnk_030052A0
 gUnk_030052A0 = 0x030052A0
-	.global	gUnk_03005390
-gUnk_03005390 = 0x03005390
-	.global	gUnk_03005394
-gUnk_03005394 = 0x03005394
+	.global	gColliderTop
+gColliderTop = 0x03005390
+	.global	gColliderPlayer
+gColliderPlayer = 0x03005394
 	.global	gUnk_030053A0
 gUnk_030053A0 = 0x030053A0
-	.global	gUnk_03005490
-gUnk_03005490 = 0x03005490
-	.global	gUnk_03005494
-gUnk_03005494 = 0x03005494
-	.global	gUnk_03005498
-gUnk_03005498 = 0x03005498
-	.global	gUnk_0300549C
-gUnk_0300549C = 0x0300549C
-	.global	gUnk_030054A0
-gUnk_030054A0 = 0x030054A0
-	.global	gUnk_030054A4
-gUnk_030054A4 = 0x030054A4
+	.global	gAttackBoxRight
+gAttackBoxRight = 0x03005490
+	.global	gColliderBottom
+gColliderBottom = 0x03005494
+	.global	gColliderSlot
+gColliderSlot = 0x03005498
+	.global	gColliderX
+gColliderX = 0x0300549C
+	.global	gColliderY
+gColliderY = 0x030054A0
+	.global	gAttackBoxLeft
+gAttackBoxLeft = 0x030054A4
 	.global	gUnk_030054A8
 gUnk_030054A8 = 0x030054A8
-	.global	gUnk_030054B0
-gUnk_030054B0 = 0x030054B0
-	.global	gUnk_030054E0
-gUnk_030054E0 = 0x030054E0
-	.global	gUnk_030054E4
-gUnk_030054E4 = 0x030054E4
-	.global	gUnk_030054E8
-gUnk_030054E8 = 0x030054E8
-	.global	gUnk_030054EC
-gUnk_030054EC = 0x030054EC
-	.global	gUnk_030054F0
-gUnk_030054F0 = 0x030054F0
+	.global	gPlayerColliders
+gPlayerColliders = 0x030054B0
+	.global	gAttackBoxTop
+gAttackBoxTop = 0x030054E0
+	.global	gColliderRight
+gColliderRight = 0x030054E4
+	.global	gColliderBodyBox
+gColliderBodyBox = 0x030054E8
+	.global	gColliderLeft
+gColliderLeft = 0x030054EC
+	.global	gColliderPlayerState
+gColliderPlayerState = 0x030054F0
 	.global	gUnk_030054F4
 gUnk_030054F4 = 0x030054F4
 	.global	gUnk_03005504
 gUnk_03005504 = 0x03005504
-	.global	gUnk_03005508
-gUnk_03005508 = 0x03005508
+	.global	gTerrainPixelIndex
+gTerrainPixelIndex = 0x03005508
 	.global	gUnk_0300550C
 gUnk_0300550C = 0x0300550C
-	.global	gUnk_03005510
-gUnk_03005510 = 0x03005510
-	.global	gUnk_03005514
-gUnk_03005514 = 0x03005514
-	.global	gUnk_03005518
-gUnk_03005518 = 0x03005518
-	.global	gUnk_0300551C
-gUnk_0300551C = 0x0300551C
-	.global	gUnk_03005520
-gUnk_03005520 = 0x03005520
-	.global	gUnk_03005530
-gUnk_03005530 = 0x03005530
+	.global	gTerrainTileRight
+gTerrainTileRight = 0x03005510
+	.global	gTerrainVelY
+gTerrainVelY = 0x03005514
+	.global	gTerrainPrevX
+gTerrainPrevX = 0x03005518
+	.global	gTerrainBoxLeft
+gTerrainBoxLeft = 0x0300551C
+	.global	gTerrainPrevY
+gTerrainPrevY = 0x03005520
+	.global	gTerrainProbeResult
+gTerrainProbeResult = 0x03005530
 	.global	gUnk_03005544
 gUnk_03005544 = 0x03005544
-	.global	gUnk_03005550
-gUnk_03005550 = 0x03005550
-	.global	gUnk_03005560
-gUnk_03005560 = 0x03005560
-	.global	gUnk_03005564
-gUnk_03005564 = 0x03005564
+	.global	gTerrainResult
+gTerrainResult = 0x03005550
+	.global	gTerrainProbeX
+gTerrainProbeX = 0x03005560
+	.global	gTerrainFacing
+gTerrainFacing = 0x03005564
 	.global	gUnk_03005568
 gUnk_03005568 = 0x03005568
 	.global	gUnk_0300556C
 gUnk_0300556C = 0x0300556C
-	.global	gUnk_03005570
-gUnk_03005570 = 0x03005570
+	.global	gTerrainProbeY
+gTerrainProbeY = 0x03005570
 	.global	gUnk_03005574
 gUnk_03005574 = 0x03005574
-	.global	gUnk_03005578
-gUnk_03005578 = 0x03005578
-	.global	gUnk_0300557C
-gUnk_0300557C = 0x0300557C
+	.global	gTerrainTile
+gTerrainTile = 0x03005578
+	.global	gTerrainBoxTop
+gTerrainBoxTop = 0x0300557C
 	.global	gUnk_03005580
 gUnk_03005580 = 0x03005580
-	.global	gUnk_03005584
-gUnk_03005584 = 0x03005584
-	.global	gUnk_03005588
-gUnk_03005588 = 0x03005588
+	.global	gTerrainBoxBottom
+gTerrainBoxBottom = 0x03005584
+	.global	gTerrainTileBelow
+gTerrainTileBelow = 0x03005588
 	.global	gUnk_0300558C
 gUnk_0300558C = 0x0300558C
 	.global	gUnk_03005590
 gUnk_03005590 = 0x03005590
-	.global	gUnk_03005594
-gUnk_03005594 = 0x03005594
-	.global	gUnk_03005598
-gUnk_03005598 = 0x03005598
-	.global	gUnk_0300559C
-gUnk_0300559C = 0x0300559C
-	.global	gUnk_030055A0
-gUnk_030055A0 = 0x030055A0
+	.global	gTerrainTileLeft
+gTerrainTileLeft = 0x03005594
+	.global	gTerrainVelX
+gTerrainVelX = 0x03005598
+	.global	gTerrainBoxRight
+gTerrainBoxRight = 0x0300559C
+	.global	gTerrainTileShape
+gTerrainTileShape = 0x030055A0
 	.global	gUnk_030055A4
 gUnk_030055A4 = 0x030055A4
 	.global	gUnk_030055A8
@@ -1169,8 +1169,8 @@ gUnk_03005630 = 0x03005630
 gUnk_03005634 = 0x03005634
 	.global	gUnk_03005640
 gUnk_03005640 = 0x03005640
-	.global	gUnk_03005660
-gUnk_03005660 = 0x03005660
+	.global	gRoomMap
+gRoomMap = 0x03005660
 	.global	gUnk_03005664
 gUnk_03005664 = 0x03005664
 	.global	gUnk_03005668

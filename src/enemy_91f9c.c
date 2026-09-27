@@ -7,7 +7,7 @@
  * src/enemy_91f08.c, table 0x08743ADC) starts here with sub_08091f9c, which
  * installs the per-frame body sub_08091ffc and the animation script
  * gUnk_08743AC8.  sub_08091ffc is the busiest body in the module: besides the
- * usual Task.unk15 dispatch it calls sub_080227a4 (the camera/room hook) on
+ * usual Task.unk15 dispatch it calls ClampTaskToRoom (the camera/room hook) on
  * entry, and when the row gUnk_08743A58[Task.unk34] is non-null it runs the
  * "hit the wall" transition - sub_0806914c, then Task.unk1C = Task.unk7E,
  * a re-seat of the actor at gUnk_030023B4 - Task.unk43 * 16, and a hand-off to
@@ -76,7 +76,7 @@ extern u32 gUnk_0874419C[];
 extern u32 gUnk_087441B4[];
 extern u8 gUnk_08743B48[];
 extern u32 gUnk_087536FC[];
-extern vu8 gUnk_03005550;
+extern vu8 gTerrainResult;
 extern u32 gUnk_08743A94[];
 extern u32 gUnk_08743A74[];
 extern u8 gUnk_08743A7C[];
@@ -108,7 +108,7 @@ extern struct GfxHeader gUnk_0827565C;
 extern u32 gUnk_08275670;
 
 /* Externals */
-extern void sub_080227a4(struct Task *t);
+extern void ClampTaskToRoom(struct Task *t);
 extern u32 sub_0806914c(s32 a);
 extern void TaskFaceToward(u32 i);
 extern u16 sub_0806660c(u16 a);
@@ -227,7 +227,7 @@ void sub_08091ffc(void)
     struct Task *y;
     s32 m;
 
-    sub_080227a4(gCurTask);
+    ClampTaskToRoom(gCurTask);
     t = gCurTask;
     if (t->unk20 != 0)
     {
@@ -275,7 +275,7 @@ void sub_08091ffc(void)
             x->unk48 = gUnk_030023B4 - x->unk43 * 16;
             m = x->unk48;
             x->unk4C = m << 16;
-            sub_080227a4(x);
+            ClampTaskToRoom(x);
             y = gCurTask;
             y->unk8C->unk28 = y->unk24;
             TaskSetFrame(36);
@@ -1258,8 +1258,8 @@ s32 sub_080937d0(void)
     {
     case 3:
         k = t->unk43;
-        if ((k == 1 && (k & gUnk_03005550) != 0)
-         || (k == -1 && (gUnk_03005550 & 2) != 0))
+        if ((k == 1 && (k & gTerrainResult) != 0)
+         || (k == -1 && (gTerrainResult & 2) != 0))
         {
             u = gCurTask;
             u->unk18 = 0;

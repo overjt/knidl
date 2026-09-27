@@ -9,7 +9,7 @@
  * sub-actions).  Variant 42 (sub_08059570) is a six-way jump table over its
  * sub-state, mixing forms that stay put and forms that move (gUnk_0874C804,
  * gUnk_0874C828, gUnk_08751F0C); its callbacks are sub_08059aac (the
- * collider rows gUnk_0873C23C and gUnk_0873C250 through sub_0801a828 in
+ * collider rows gUnk_0873C23C and gUnk_0873C250 through RegisterCollider in
  * sub-states 3 and 4) and the draw hook sub_08059b18 (QueueSprite when on
  * screen).  Variant 43 (sub_08059c28) has four sub-states with the draw
  * hooks sub_08006040 and M11's sub_0803dfc8.  Variant 44 (sub_08059d7c)
@@ -43,7 +43,7 @@ void TaskSetMotionXFacing(s32 a, s32 b);
 u32 IsWorldPosOnScreen(s16 a, s16 b);   /* the ROM tests r0 unnarrowed (src callers spell u32) */
 u16 RandomSpread(s32 base, u8 scale, u8 amount);   /* base + ((rand(256) * amount) >> 8) * scale */
 s16 RandomSpreadFacing(s32 base, u8 scale, u8 amount);   /* the same, negated when Task.unk43 != 1 */
-void sub_0801a828(u8 a, s16 x, s16 y, void *p);   /* M11's caller spelling */
+void RegisterCollider(u8 a, s16 x, s16 y, void *p);   /* M11's caller spelling */
 void sub_0803dfc8(void);
 void sub_08059aac(void);
 void sub_08059b18(void);
@@ -251,10 +251,10 @@ void sub_08059aac(void)
     switch (t->unk18 & 15)
     {
     case 3:
-        sub_0801a828((u8)gCurTaskIdx, t->unk48, t->unk4A, gUnk_0873C23C);
+        RegisterCollider((u8)gCurTaskIdx, t->unk48, t->unk4A, gUnk_0873C23C);
         break;
     case 4:
-        sub_0801a828((u8)gCurTaskIdx, t->unk48, t->unk4A, gUnk_0873C250);
+        RegisterCollider((u8)gCurTaskIdx, t->unk48, t->unk4A, gUnk_0873C250);
         break;
     }
 }

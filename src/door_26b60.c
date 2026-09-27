@@ -100,7 +100,7 @@ extern u16 gSpriteCameraY;
 
 s32 QueueSprite(u32 a, u32 b, u32 c, u32 d, u32 e, s16 f);
 u32 IsWorldPosOnScreen(s16 x, s16 y);
-s32 sub_08021b18(u16 x, u16 y);
+s32 GetCollisionTileAtPixel(u16 x, u16 y);
 
 void sub_08026b60(void)
 {
@@ -163,7 +163,7 @@ void sub_08026ca4(void)
         x = d->unk2 << 4;
         y = d->unk4 << 4;
         p->unk1 = 0;
-        k = sub_08021b18(x, y);
+        k = GetCollisionTileAtPixel(x, y);
         if (gUnk_08733AF0[k] == 0)
             continue;
         if (gPlayerCount > 1 && gUnk_03002350 > 1)
@@ -238,7 +238,7 @@ void sub_08026eec(void)
         y = d->unk4 << 4;
         if (IsWorldPosOnScreen(x, y) == 0)
             continue;
-        k = sub_08021b18(x, y);
+        k = GetCollisionTileAtPixel(x, y);
         if (k != 16 && k != 144)
             continue;
         gUnk_03001F10 = -1;
