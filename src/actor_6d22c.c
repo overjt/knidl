@@ -6,9 +6,9 @@
  * Class-1 task bodies for a family of scripted set-piece actors: the
  * three-stage entrance at sub_0806d22c (three TaskSetMotionXFacing sweeps with the
  * position recomputed from the parent task each time), the four short
- * animation-table players sub_0806d65c/6e4/730/77c and their dispatch
- * wrappers sub_0806d554/564/574/5a4/5b8/5cc, the CreateChildTaskHere spawner
- * helpers sub_0806d4e4/d928/da3c, the eight-way "carried" body
+ * animation-table players PlayRayBurstAnim/6e4/730/77c and their dispatch
+ * wrappers Task_StarScatter/564/574/5a4/5b8/5cc, the CreateChildTaskHere spawner
+ * helpers CreateBurstEffect/d928/da3c, the eight-way "carried" body
  * sub_0806d7ec, the gTasks[].unk73-keyed body sub_0806daec (with its
  * per-frame mover sub_0806da74), the two-sprite draw callback sub_0806dca0,
  * and the two random-walk bodies sub_0806dd90 and Task_HitFrost.
@@ -74,10 +74,10 @@ extern void TaskSetMotion(s32 a, s32 b, s32 c, s32 d, s32 e, s32 f);
 extern void HitFrostCheckParent(void);
 
 void sub_0806d49c(void);
-void sub_0806d5e0(void);
-void sub_0806d65c(void);
-void sub_0806d6e4(void);
-void sub_0806d77c(void);
+void BurstStickToParentUpdate(void);
+void PlayRayBurstAnim(void);
+void PlayStarScatterAnim(void);
+void PlaySmallBlastAnim(void);
 void sub_0806d9d4(void);
 void sub_0806dca0(void);
 void sub_0806de18(void);
@@ -170,7 +170,7 @@ void sub_0806d49c(void)
         TaskFree(gCurTaskIdx);
 }
 
-void sub_0806d4e4(u32 a, s32 b)
+void CreateBurstEffect(u32 a, s32 b)
 {
     s32 i;
     struct Task *p;
@@ -203,25 +203,25 @@ void sub_0806d4e4(u32 a, s32 b)
     }
 }
 
-void sub_0806d554(void)
+void Task_StarScatter(void)
 {
-    sub_0806d6e4();
+    PlayStarScatterAnim();
     TaskExitTrampoline();
 }
 
-void sub_0806d564(void)
+void Task_RayBurst(void)
 {
-    sub_0806d65c();
+    PlayRayBurstAnim();
     TaskExitTrampoline();
 }
 
-void sub_0806d574(void)
+void Task_SmallBlast(void)
 {
-    sub_0806d77c();
+    PlaySmallBlastAnim();
     TaskExitTrampoline();
 }
 
-void sub_0806d584(void)
+void BurstStickToParent(void)
 {
     struct Task *t;
 
@@ -229,31 +229,31 @@ void sub_0806d584(void)
     t->moveCallback = (u32)TaskMoveRelativeToParent;
     t->posY = 0;
     t->posX = 0;
-    t->updateCallback = (u32)sub_0806d5e0;
+    t->updateCallback = (u32)BurstStickToParentUpdate;
 }
 
-void sub_0806d5a4(void)
+void Task_StarScatterOnParent(void)
 {
-    sub_0806d584();
-    sub_0806d6e4();
+    BurstStickToParent();
+    PlayStarScatterAnim();
     TaskExitTrampoline();
 }
 
-void sub_0806d5b8(void)
+void Task_RayBurstOnParent(void)
 {
-    sub_0806d584();
-    sub_0806d65c();
+    BurstStickToParent();
+    PlayRayBurstAnim();
     TaskExitTrampoline();
 }
 
-void sub_0806d5cc(void)
+void Task_SmallBlastOnParent(void)
 {
-    sub_0806d584();
-    sub_0806d77c();
+    BurstStickToParent();
+    PlaySmallBlastAnim();
     TaskExitTrampoline();
 }
 
-void sub_0806d5e0(void)
+void BurstStickToParentUpdate(void)
 {
     struct Task *t;
 
@@ -272,7 +272,7 @@ void sub_0806d5e0(void)
     }
 }
 
-void sub_0806d65c(void)
+void PlayRayBurstAnim(void)
 {
     struct Task *t;
     struct Task *u;
@@ -300,7 +300,7 @@ void sub_0806d65c(void)
     }
 }
 
-void sub_0806d6e4(void)
+void PlayStarScatterAnim(void)
 {
     struct Task *t;
     s32 i;
@@ -317,7 +317,7 @@ void sub_0806d6e4(void)
     }
 }
 
-void sub_0806d730(void)
+void PlayExplosionAnim(void)
 {
     struct Task *t;
     s32 i;
@@ -334,7 +334,7 @@ void sub_0806d730(void)
     }
 }
 
-void sub_0806d77c(void)
+void PlaySmallBlastAnim(void)
 {
     struct Task *t;
     struct Task *u;

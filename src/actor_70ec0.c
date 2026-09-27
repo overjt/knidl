@@ -90,7 +90,7 @@ extern void ActorDrawWorldInView(void);
 extern void ActorMove(void);
 extern void TaskMoveRelativeToView(void);
 extern void sub_08067108(void);
-extern void sub_0806d4e4(u32 a, s32 b);
+extern void CreateBurstEffect(u32 a, s32 b);
 extern void sub_0806ef38(void);
 extern void sub_08070454(void);
 extern void sub_08070498(u32 a, s32 b);
@@ -280,7 +280,7 @@ void sub_080711d0(void)
     sub_08040934(gCurTask->hitterSlot);
     gCurTask->unk28++;
     sub_08070498(gCurTask->hitterSlot, gCurTaskIdx);
-    sub_0806d4e4(0, 0);
+    CreateBurstEffect(0, 0);
     if (gLocalPlayer == gCurTask->hitterSlot)
         PlaySfx(219);
     if (gUnk_030023B8 == 7)
@@ -793,7 +793,7 @@ void sub_08071ebc(void)
         RequestScreenShake(4);
         StopSfxOnPlayer(gUnk_02004B4C, gUnk_02005584);
         PlaySfx(219);
-        sub_0806d4e4(0, 0);
+        CreateBurstEffect(0, 0);
         PlaySfx(272);
         if (gUnk_03001F30 == 0)
             sub_08071bb0(3);
@@ -1539,7 +1539,7 @@ void sub_08072b00(void)
     RequestScreenShake(4);
     StopSfxOnPlayer(gUnk_02004B4C, gUnk_02005584);
     PlaySfx(219);
-    sub_0806d4e4(0, 0);
+    CreateBurstEffect(0, 0);
     PlaySfx(272);
     if (gUnk_03001F30 == 0)
         sub_08071bb0(4);

@@ -162,7 +162,7 @@ void sub_0805e1bc(void);
 void sub_0805e24c(void);
 void ActorMove(void);
 void sub_08068a8c(u32 a, u8 flag);
-void sub_0806d4e4(s32 a, s32 b);
+void CreateBurstEffect(s32 a, s32 b);
 
 s32 CreatePlayerEffect(s32 a0, s32 a1, s32 a2)
 {
@@ -471,7 +471,7 @@ void sub_0805b688(void)
 void sub_0805b6c0(void)
 {
     gCurTask->updateState = 4;
-    sub_0806d4e4(1, 0);
+    CreateBurstEffect(1, 0);
     gCurTask->unk30 = gUnk_0873DC80[gCurTask->unk34];
     sub_0805b83c();
     sub_0805b8b8();

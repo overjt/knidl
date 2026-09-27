@@ -669,8 +669,8 @@ extern void sub_0806b05c(void);
 extern void sub_0806b098(void);
 extern s16 CreateStarFlash(u8 kind, s32 dx, s32 dy);
 extern s16 CreateDustTrail(u8 flag, u16 vx, s32 c, s32 d);
-extern void sub_0806d4e4(u32 a, s32 b);
-extern void sub_0806d730(void);
+extern void CreateBurstEffect(u32 a, s32 b);
+extern void PlayExplosionAnim(void);
 extern s32 sub_0806e6f8(s16 x, s16 y);
 extern s32 sub_0806e808(s16 x, s16 y);
 extern s32 sub_0806e9b4(u8 a, s16 x, s16 y);
@@ -3045,7 +3045,7 @@ void sub_080b4a8c(void)
     if ((*c)->state == 0 && ActorCheckHits() != 0)
     {
         sub_080b4878();
-        sub_0806d4e4(0, 0);
+        CreateBurstEffect(0, 0);
         if (gLocalPlayer == (s8)*(u8 *)((u8 *)*c + 126))
             PlaySfx(198);
         ActorSetState(1);
@@ -3139,7 +3139,7 @@ void sub_080b4c14(void)
     if ((*c)->state == 1 && ActorCheckHits() != 0)
     {
         sub_080b4878();
-        sub_0806d4e4(0, 0);
+        CreateBurstEffect(0, 0);
         if (gLocalPlayer == (s8)*(u8 *)((u8 *)*c + 126))
             PlaySfx(198);
         ActorSetState(2);

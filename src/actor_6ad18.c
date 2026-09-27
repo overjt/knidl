@@ -39,7 +39,7 @@ extern void TaskSetFrame(u32);
 extern void CreateChildTaskHere(u32, u32);
 extern void ActorPlaySfx(u32, u32);
 extern void ActorDrawWorldInViewOrDestroy(void);
-extern void sub_0806d4e4(u32, u32);
+extern void CreateBurstEffect(u32, u32);
 
 
 extern u32 gUnk_0873E6A0[];
@@ -62,7 +62,7 @@ extern void sub_08066f78(void);
 extern void ActorCheckHits(void);
 extern void ActorReactToHit(void);
 extern void sub_08069fc8(void);
-extern void sub_0806a7a0(void);
+extern void ActorDefeatFrozen(void);
 void sub_0806b2ac(void);
 extern u8 ActorCollideTerrain(void);
 extern void ActorMove(void);
@@ -170,7 +170,7 @@ void sub_0806aec0(void)
     t->tileWord = 0;
     RequestScreenShake(4);
     ActorPlaySfx(0x1F9, 0);
-    sub_0806d4e4(1, 0);
+    CreateBurstEffect(1, 0);
     TaskYieldTrampoline(20);
 }
 
@@ -233,7 +233,7 @@ void sub_0806b098(void)
     ActorPlaySfx(0x1FD, 0);
     RequestScreenShake(4);
     sub_0806d928();
-    sub_0806d4e4(1, 0);
+    CreateBurstEffect(1, 0);
     gCurTask->frame = 0xFFFF;
     sub_0806b070();
     TaskYieldTrampoline(24);
@@ -319,7 +319,7 @@ void sub_0806b1f4(void)
 
 void sub_0806b224(void)
 {
-    sub_0806a7a0();
+    ActorDefeatFrozen();
 }
 
 void sub_0806b230(void)

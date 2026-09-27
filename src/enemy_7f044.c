@@ -134,7 +134,7 @@ extern void TaskFaceNearestPlayer(void);
 extern void ActorDestroy(void);
 extern void sub_0806a0f0(s32 a);
 extern void ActorDie(void);
-extern void sub_0806d4e4(u32 a, s32 b);
+extern void CreateBurstEffect(u32 a, s32 b);
 extern void ActorDrawWorldInViewOrDestroy(void);
 extern void ActorMove(void);
 
@@ -732,7 +732,7 @@ void sub_0807fa98(void)
     TaskStop();
     gCurTask->frame = 12;
     TaskYieldTrampoline(15);
-    sub_0806d4e4(1, 0);
+    CreateBurstEffect(1, 0);
     gCurTask->velY = 0xFFFC0000;
 loop:
 l1:

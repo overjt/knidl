@@ -94,7 +94,7 @@ extern void sub_0803ddc0(void);
 extern void sub_08040808(u32 a);
 extern void sub_08068a8c(u32 a, u8 flag);
 extern void sub_08068b88(s32 i, u16 b, u8 c, u8 d);
-extern void sub_0806d4e4(s32 a, s32 b);
+extern void CreateBurstEffect(s32 a, s32 b);
 extern void sub_0806ee30(void);
 extern void sub_08070ec0(void);
 extern void sub_08070ffc(void);
@@ -365,7 +365,7 @@ void sub_080703a8(void)
                 gCannonFuseState = 0;
             }
             RequestScreenShake(4);
-            sub_0806d4e4(0, 0);
+            CreateBurstEffect(0, 0);
             sub_08070174();
             break;
         case 2:
@@ -592,7 +592,7 @@ void sub_080708ec(void)
         if (u->unk24 == 1)
         {
             RequestScreenShake(4);
-            sub_0806d4e4(0, 0);
+            CreateBurstEffect(0, 0);
         }
     }
 }
@@ -660,7 +660,7 @@ void sub_08070a84(void)
         if (u->unk24 == 1)
         {
             RequestScreenShake(4);
-            sub_0806d4e4(0, 0);
+            CreateBurstEffect(0, 0);
         }
     }
 }
@@ -728,7 +728,7 @@ void sub_08070c0c(void)
         if (u->unk24 == 1)
         {
             RequestScreenShake(4);
-            sub_0806d4e4(0, 0);
+            CreateBurstEffect(0, 0);
         }
     }
     sub_0807042c();
@@ -841,7 +841,7 @@ void sub_08070e7c(void)
         if (u->unk24 == 2)
         {
             RequestScreenShake(4);
-            sub_0806d4e4(0, 0);
+            CreateBurstEffect(0, 0);
         }
     }
 }

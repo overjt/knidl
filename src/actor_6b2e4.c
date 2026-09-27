@@ -27,7 +27,7 @@ extern void TaskSetFrame(s32 a);
 extern void ActorSetState(s32 a);
 extern void ActorDestroy(void);
 extern void sub_0806a0cc(void);
-extern void sub_0806d65c(void);
+extern void PlayRayBurstAnim(void);
 extern void sub_080b54d0(s32 i);
 extern void TaskYieldTrampoline(u32 a);
 extern u32 sub_08021a40(s32 x, s32 y);
@@ -55,7 +55,7 @@ extern s16 gUnk_0873E7A4[];
 extern s16 gUnk_0300244C;
 extern u8 gUnk_02007CF4[];
 extern u8 gUnk_02006178;
-extern u32 gUnk_0873EAA0[];
+extern u32 gActorAttachedStates[];
 extern u32 gUnk_0873F938[];
 extern u32 gUnk_0873F8F4[];
 extern void TaskMoveRelativeToParent(void);
@@ -78,7 +78,7 @@ extern u8 gTerrainResult[];
 void sub_0806bd10(void);
 void sub_0806bf38(void);
 void sub_0806bc54(void);
-void sub_0806befc(void);
+void ActorAttachedEnterState(void);
 
 void sub_0806b2e4(void)
 {
@@ -123,7 +123,7 @@ void sub_0806b390(void)
     t->frameTable = gUnk_0874C9D8;
     t->tileWord = 0;
     sub_0806a0cc();
-    sub_0806d65c();
+    PlayRayBurstAnim();
     ActorDestroy();
 }
 
@@ -145,7 +145,7 @@ void sub_0806b3c4(void)
     u->frameTable = gUnk_0874C9D8;
     u->tileWord = 0;
     PlaySfx(109);
-    sub_0806d65c();
+    PlayRayBurstAnim();
 }
 
 void sub_0806b40c(void)
@@ -519,7 +519,7 @@ s32 ActorAttachToHitter(void)
         ActorSetState(1);
         break;
     }
-    TaskSetEntry(sub_0806befc, gCurTaskIdx);
+    TaskSetEntry(ActorAttachedEnterState, gCurTaskIdx);
     return 1;
 }
 
@@ -749,19 +749,19 @@ u8 sub_0806be84(void)
     return gUnk_02006178;
 }
 
-void sub_0806befc(void)
+void ActorAttachedEnterState(void)
 {
     gCurTask->updateCallback = 0;
     TaskStop();
     gCurTask->onGround = 0;
     sub_0806bb34(gCurTask->state);
-    CallTableEntry(gCurTask->state, 8, gUnk_0873EAA0);
+    CallTableEntry(gCurTask->state, 8, gActorAttachedStates);
     TaskSleepForever();
 }
 
 void sub_0806bf38(void)
 {
-    CallTableEntry(gCurTask->state, 8, gUnk_0873EAA0);
+    CallTableEntry(gCurTask->state, 8, gActorAttachedStates);
 }
 
 void sub_0806bf54(void)

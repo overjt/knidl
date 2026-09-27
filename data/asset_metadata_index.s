@@ -254,17 +254,17 @@ asset_metadata_index:
 	.incbin	"baserom.gba", 0x7303C8, 0x4
 	.word	sub_0806d22c+1
 	.incbin	"baserom.gba", 0x7303D0, 0x4
-	.word	sub_0806d554+1
+	.word	Task_StarScatter+1
 	.incbin	"baserom.gba", 0x7303D8, 0x4
-	.word	sub_0806d564+1
+	.word	Task_RayBurst+1
 	.incbin	"baserom.gba", 0x7303E0, 0x4
-	.word	sub_0806d574+1
+	.word	Task_SmallBlast+1
 	.incbin	"baserom.gba", 0x7303E8, 0x4
-	.word	sub_0806d5a4+1
+	.word	Task_StarScatterOnParent+1
 	.incbin	"baserom.gba", 0x7303F0, 0x4
-	.word	sub_0806d5b8+1
+	.word	Task_RayBurstOnParent+1
 	.incbin	"baserom.gba", 0x7303F8, 0x4
-	.word	sub_0806d5cc+1
+	.word	Task_SmallBlastOnParent+1
 	.incbin	"baserom.gba", 0x730400, 0x4
 	.word	sub_0806d7ec+1
 	.incbin	"baserom.gba", 0x730408, 0x4
@@ -3494,7 +3494,7 @@ gUnk_0873E5A4:
 	.incbin	"baserom.gba", 0x73E5A4, 0x18
 	.global	gUnk_0873E5BC
 gUnk_0873E5BC:
-	.word	sub_0806a3ac+1
+	.word	ActorDefeatByEffect+1
 	.word	sub_0806aa10+1
 	.word	sub_0806ab34+1
 	.word	sub_0806abec+1
@@ -3505,12 +3505,12 @@ gUnk_0873E5BC:
 	.word	sub_0806b178+1
 	.word	sub_0806b230+1
 	.word	sub_0806b3c4+1
-	.global	gUnk_0873E5E8
-gUnk_0873E5E8:
-	.word	sub_0806a500+1
-	.word	sub_0806a530+1
-	.word	sub_0806a568+1
-	.word	sub_0806a7a0+1
+	.global	gActorDefeatsByEffect
+gActorDefeatsByEffect:
+	.word	ActorDefeatPlain+1
+	.word	ActorDefeatBurning+1
+	.word	ActorDefeatShocked+1
+	.word	ActorDefeatFrozen+1
 	.global	gUnk_0873E5F8
 gUnk_0873E5F8:
 	.incbin	"baserom.gba", 0x73E5F8, 0x18
@@ -3613,8 +3613,8 @@ gUnk_0873E7C4:
 	.global	gUnk_0873E864
 gUnk_0873E864:
 	.incbin	"baserom.gba", 0x73E864, 0x23C
-	.global	gUnk_0873EAA0
-gUnk_0873EAA0:
+	.global	gActorAttachedStates
+gActorAttachedStates:
 	.word	sub_0806bf54+1
 	.word	sub_0806c05c+1
 	.word	sub_0806c158+1

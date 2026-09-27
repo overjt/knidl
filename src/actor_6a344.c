@@ -4,12 +4,12 @@
  *   ./tools/fnmatch.sh 0x0806A344 0x0806AD18 src/actor_6a344.c --newpb
  *
  * Class-1 task bodies for the "player is out of the level" states: the
- * warp-star / door exit animation driver (sub_0806a3dc + its per-exit
- * entry points sub_0806a500/530/568), the level-clear dance
- * (sub_0806a7a0/sub_0806a7f4 and the sub_0806a8d8 state dispatcher), the
+ * warp-star / door exit animation driver (ActorDefeatKnockAway + its per-exit
+ * entry points ActorDefeatPlain/530/568), the level-clear dance
+ * (ActorDefeatFrozen/sub_0806a7f4 and the sub_0806a8d8 state dispatcher), the
  * death sequence (sub_0806a980/sub_0806a8f4), and a family of one-shot
- * bodies that re-arm the actor and hand control to sub_0806d65c /
- * sub_0806d730.  Every function here runs as gCurTask (the current
+ * bodies that re-arm the actor and hand control to PlayRayBurstAnim /
+ * PlayExplosionAnim.  Every function here runs as gCurTask (the current
  * task), so almost all of them are a run of `gCurTask->field = K`
  * statements interleaved with TaskYieldTrampoline() waits.
  */
@@ -18,7 +18,7 @@
 #include "task.h"
 
 extern u32 gUnk_0873E5BC[];
-extern u32 gUnk_0873E5E8[];
+extern u32 gActorDefeatsByEffect[];
 extern u16 gUnk_0873E610[];
 extern s16 gUnk_0873E5F8[];
 extern u32 gUnk_0874CB7C[];
@@ -46,10 +46,10 @@ extern void TaskStop(void);
 extern void TaskSetFrame(s32 a);
 extern void ActorDestroy(void);
 extern void ActorMove(void);
-extern void sub_0806d4e4(s32 a, s32 b);
+extern void CreateBurstEffect(s32 a, s32 b);
 extern void sub_0806a0cc(void);
 extern void ActorAttachEffect(s32 a, s32 b);
-extern void sub_0806a488(void);
+extern void ActorDefeatBlinkAndBurst(void);
 extern void sub_0806a524(void);
 extern void sub_0806a55c(void);
 extern void sub_0806a594(void);
@@ -68,8 +68,8 @@ extern s32 ActorReactToHit(void);
 extern void TaskSleepForever(void);
 extern void PlaySfx(s32 a);
 extern void TaskSetMotionXFacing(s32 a, s32 b);
-extern void sub_0806d65c(void);
-extern void sub_0806d730(void);
+extern void PlayRayBurstAnim(void);
+extern void PlayExplosionAnim(void);
 extern void ActorPlaySfx(s32 a, s32 b);
 extern void sub_0806aa40(void);
 extern void LoadBackdropColor(u16 *p);
@@ -78,7 +78,7 @@ extern void sub_0806aba4(void);
 extern void sub_0806ac48(void);
 extern void sub_0806acc4(void);
 extern void TaskYieldTrampoline(u32 a);
-extern s16 sub_0806a03c(void);
+extern s16 TaskGetHitAngle(void);
 extern void AngleToVector(s32 a, s32 b);
 
 void ActorDie(void)
@@ -106,17 +106,17 @@ void ActorDie(void)
     ActorDestroy();
 }
 
-void sub_0806a3ac(void)
+void ActorDefeatByEffect(void)
 {
     struct Task *t;
 
     t = gCurTask;
     if (t->unk82 > 3)
         t->unk82 = 0;
-    CallTableEntry(gCurTask->unk82, 4, gUnk_0873E5E8);
+    CallTableEntry(gCurTask->unk82, 4, gActorDefeatsByEffect);
 }
 
-void sub_0806a3dc(void)
+void ActorDefeatKnockAway(void)
 {
     struct Task *t;
     struct Task *u;
@@ -146,14 +146,14 @@ void sub_0806a3dc(void)
     }
     v = gCurTask;
     v->posY = v->unk2C << 16;
-    AngleToVector(sub_0806a03c(), 512);
+    AngleToVector(TaskGetHitAngle(), 512);
     w = gCurTask;
     w->velX = gUnk_030023B4;
     w->velY = gUnk_030023D4;
     TaskYieldTrampoline(12);
 }
 
-void sub_0806a488(void)
+void ActorDefeatBlinkAndBurst(void)
 {
     struct Task *t;
     struct Task *u;
@@ -172,7 +172,7 @@ void sub_0806a488(void)
     {
         if (u->unk24 == 0)
         {
-            sub_0806d4e4(3, 6);
+            CreateBurstEffect(3, 6);
             gCurTask->unk24 = 1;
         }
     }
@@ -182,51 +182,51 @@ void sub_0806a488(void)
     }
 }
 
-void sub_0806a500(void)
+void ActorDefeatPlain(void)
 {
     gCurTask->updateCallback = (u32)sub_0806a524;
-    sub_0806a3dc();
+    ActorDefeatKnockAway();
     TaskStop();
     sub_0806a0cc();
 }
 
 void sub_0806a524(void)
 {
-    sub_0806a488();
+    ActorDefeatBlinkAndBurst();
 }
 
-void sub_0806a530(void)
+void ActorDefeatBurning(void)
 {
     struct Task *t;
 
     t = gCurTask;
     t->updateCallback = (u32)sub_0806a55c;
     ActorAttachEffect(t->unk82, 0);
-    sub_0806a3dc();
+    ActorDefeatKnockAway();
     TaskStop();
     sub_0806a0cc();
 }
 
 void sub_0806a55c(void)
 {
-    sub_0806a488();
+    ActorDefeatBlinkAndBurst();
 }
 
-void sub_0806a568(void)
+void ActorDefeatShocked(void)
 {
     struct Task *t;
 
     t = gCurTask;
     t->updateCallback = (u32)sub_0806a594;
     ActorAttachEffect(t->unk82, 0);
-    sub_0806a3dc();
+    ActorDefeatKnockAway();
     TaskStop();
     sub_0806a0cc();
 }
 
 void sub_0806a594(void)
 {
-    sub_0806a488();
+    ActorDefeatBlinkAndBurst();
 }
 
 void sub_0806a5a0(void)
@@ -276,7 +276,7 @@ void sub_0806a5a0(void)
     }
 }
 
-void sub_0806a638(void)
+void ActorFreezeIntoIceBlock(void)
 {
     struct Task *t;
     struct Actor *a;
@@ -360,7 +360,7 @@ void sub_0806a6e0(void)
     TaskSetEntry(sub_0806a8d8, gCurTaskIdx);
 }
 
-void sub_0806a7a0(void)
+void ActorDefeatFrozen(void)
 {
     struct Task *t;
 
@@ -372,7 +372,7 @@ void sub_0806a7a0(void)
     gCurTask->updateCallback = (u32)sub_0806a7f4;
     TaskStop();
     gCurTask->layer = 7;
-    sub_0806a638();
+    ActorFreezeIntoIceBlock();
     CallTableEntry(gCurTask->state, 3, gUnk_0873E670);
 }
 
@@ -493,7 +493,7 @@ void sub_0806a9d8(void)
     u = gCurTask;
     u->frameTable = gUnk_0874C9D8;
     u->tileWord = zero;
-    sub_0806d65c();
+    PlayRayBurstAnim();
     ActorDestroy();
 }
 
@@ -525,7 +525,7 @@ void sub_0806aa40(void)
     }
     gCurTask->health = 127;
     ActorPlaySfx(189, 0);
-    sub_0806d730();
+    PlayExplosionAnim();
 }
 
 void sub_0806aa80(void)
@@ -540,7 +540,7 @@ void sub_0806aa8c(void)
 
 void sub_0806aa98(void)
 {
-    sub_0806a7a0();
+    ActorDefeatFrozen();
 }
 
 void sub_0806aaa4(void)
@@ -594,7 +594,7 @@ void sub_0806ab34(void)
     CreateChildTaskHere(163, 1);
     RequestScreenShake(2);
     ActorPlaySfx(189, 0);
-    sub_0806d730();
+    PlayExplosionAnim();
 }
 
 void sub_0806aba4(void)
@@ -631,7 +631,7 @@ void sub_0806abec(void)
     u->unk2C = zero;
     RequestScreenShake(2);
     ActorPlaySfx(189, 0);
-    sub_0806d730();
+    PlayExplosionAnim();
 }
 
 void sub_0806ac48(void)
@@ -668,7 +668,7 @@ void sub_0806ac6c(void)
     v = gCurTask;
     v->frameTable = gUnk_0874C9D8;
     v->tileWord = zero;
-    sub_0806d65c();
+    PlayRayBurstAnim();
 }
 
 void sub_0806acc4(void)
@@ -685,7 +685,7 @@ void sub_0806acc8(void)
     t->frameTable = gUnk_0874C9D8;
     t->tileWord = 0;
     PlaySfx(125);
-    sub_0806d65c();
+    PlayRayBurstAnim();
 }
 
 u32 sub_0806acf8(void)

@@ -57,7 +57,7 @@ extern void RequestScreenShake(u32 a);
 extern void ActorDestroy(void);
 extern void TaskGetScreenPos(void);
 extern void TaskMoveRelativeToView(void);
-extern void sub_0806d4e4(u32 a, s32 b);
+extern void CreateBurstEffect(u32 a, s32 b);
 extern void sub_0807186c(int a, int b, int c, int d);
 extern void sub_08071898(void);
 extern void sub_080718c0(void);
@@ -345,7 +345,7 @@ void sub_080731d0(void)
     RequestScreenShake(4);
     StopSfxOnPlayer(gUnk_02004B4C, gUnk_02005584);
     PlaySfx(219);
-    sub_0806d4e4(0, 0);
+    CreateBurstEffect(0, 0);
     PlaySfx(272);
     if (gUnk_03001F30 == 0)
         sub_08071bb0(5);
@@ -774,7 +774,7 @@ void sub_080739bc(void)
         RequestScreenShake(4);
         StopSfxOnPlayer(gUnk_02004B4C, gUnk_02005584);
         PlaySfx(219);
-        sub_0806d4e4(0, 0);
+        CreateBurstEffect(0, 0);
         PlaySfx(272);
         if (gUnk_03001F30 == 0)
             sub_08071bb0(6);
@@ -1014,7 +1014,7 @@ void sub_08073e80(void)
         RequestScreenShake(4);
         StopSfxOnPlayer(gUnk_02004B4C, gUnk_02005584);
         PlaySfx(219);
-        sub_0806d4e4(0, 0);
+        CreateBurstEffect(0, 0);
         PlaySfx(272);
         if (gUnk_03001F30 == 0)
             sub_08071bb0(3);
@@ -1297,7 +1297,7 @@ void sub_080740bc(void)
     RequestScreenShake(4);
     StopSfxOnPlayer(gUnk_02004B4C, gUnk_02005584);
     PlaySfx(219);
-    sub_0806d4e4(0, 0);
+    CreateBurstEffect(0, 0);
     PlaySfx(272);
     if (gUnk_03001F30 != 0)
         while (1)
@@ -1368,7 +1368,7 @@ void sub_0807447c(void)
         RequestScreenShake(4);
         StopSfxOnPlayer(gUnk_02004B4C, gUnk_02005584);
         PlaySfx(219);
-        sub_0806d4e4(0, 0);
+        CreateBurstEffect(0, 0);
         if (gUnk_03001F30 == 0)
             sub_08071bb0(1);
         else

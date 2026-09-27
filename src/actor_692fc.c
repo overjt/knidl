@@ -91,8 +91,8 @@ extern void ActorCheckHits(void);
 extern u32 ActorDie(void);
 extern void sub_0806b26c(void);
 extern u32 ActorAttachToHitter(void);
-extern void sub_0806d65c(void);
-extern void sub_0806d77c(void);
+extern void PlayRayBurstAnim(void);
+extern void PlaySmallBlastAnim(void);
 extern void ActorAttachEffect(s32 a, s32 b);
 extern void sub_0806ee2c(void);
 extern void PickupHeal(void);
@@ -824,9 +824,9 @@ void sub_08069fc8(void)
 {
     if (gTaskSlotTypes[gCurTaskIdx] == 107 || gTaskSlotTypes[gCurTaskIdx] == 109
      || gTaskSlotTypes[gCurTaskIdx] == 137)
-        sub_0806d77c();
+        PlaySmallBlastAnim();
     else
-        sub_0806d65c();
+        PlayRayBurstAnim();
 }
 
 void ActorFaceHitter(void)
@@ -838,7 +838,7 @@ void ActorFaceHitter(void)
         gCurTask->facing = TaskGetFacingToward(t->hitterPlayer);
 }
 
-s16 sub_0806a03c(void)
+s16 TaskGetHitAngle(void)
 {
     s16 r;
 

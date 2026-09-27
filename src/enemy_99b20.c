@@ -120,7 +120,7 @@ extern void sub_08065438(void);
 extern void ActorDrawWorldInViewOrDestroy(void);
 extern u32 ActorCheckHits(void);
 extern void ActorAttachEffect(s32 a, s32 b);
-extern void sub_0806d65c(void);
+extern void PlayRayBurstAnim(void);
 extern void ActorDestroy(void);
 extern void ActorMove(void);
 extern u8 sub_08067060(void);
@@ -1906,7 +1906,7 @@ void sub_0809b794(void)
     }
     TaskSetFrameNoFlip(4);
     TaskYieldTrampoline(2);
-    sub_0806d65c();
+    PlayRayBurstAnim();
     ActorDestroy();
 }
 

@@ -67,7 +67,7 @@ extern void AngleToVector(s16 t, s16 mag);
 extern void ActorDrawWorldInViewOrDestroy(void);
 extern void sub_080652c8(void);
 extern void LoadBackdropColor(u32 src);
-extern void sub_0806d4e4(u32 a, s32 b);
+extern void CreateBurstEffect(u32 a, s32 b);
 
 /* defined below */
 void sub_08075290(s32 a);
@@ -602,7 +602,7 @@ void sub_080752f4(void)
         }
         TaskYieldTrampoline(5);
         gCurTask->unk2C = -8;
-        sub_0806d4e4(4, 256);
+        CreateBurstEffect(4, 256);
         PlaySfx(189);
         {
             struct Task *t = gCurTask;
@@ -684,7 +684,7 @@ void sub_080752f4(void)
         }
         TaskYieldTrampoline(6);
         gCurTask->unk2C = -8;
-        sub_0806d4e4(4, 256);
+        CreateBurstEffect(4, 256);
         PlaySfx(189);
         {
             struct Task *t = gCurTask;
@@ -872,7 +872,7 @@ void sub_080752f4(void)
         gCurTask->velY = -0x8000;
         TaskYieldTrampoline(4);
         gCurTask->unk2C = -8;
-        sub_0806d4e4(4, 256);
+        CreateBurstEffect(4, 256);
         PlaySfx(189);
         {
             struct Task *t = gCurTask;
@@ -911,7 +911,7 @@ void sub_080752f4(void)
         }
         TaskYieldTrampoline(12);
         gCurTask->unk2C = -8;
-        sub_0806d4e4(4, 256);
+        CreateBurstEffect(4, 256);
         PlaySfx(189);
         {
             struct Task *t = gCurTask;
@@ -1135,7 +1135,7 @@ void sub_080752f4(void)
         }
         TaskYieldTrampoline(12);
         gCurTask->unk2C = 8;
-        sub_0806d4e4(4, 256);
+        CreateBurstEffect(4, 256);
         PlaySfx(189);
         {
             struct Task *t = gCurTask;
@@ -1201,7 +1201,7 @@ void sub_080752f4(void)
             t->unk28 = 0;
             t->unk2C = 8;
         }
-        sub_0806d4e4(4, 256);
+        CreateBurstEffect(4, 256);
         PlaySfx(189);
         {
             struct Task *t = gCurTask;

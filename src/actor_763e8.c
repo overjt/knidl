@@ -92,7 +92,7 @@ extern void ActorMove(void);
 extern void sub_08067108(void);
 extern void sub_08068a8c(s32 i, u8 flag);
 extern void sub_08068b88(s32 i, u16 b, u8 c, u8 d);
-extern void sub_0806d4e4(u32 a, s32 b);
+extern void CreateBurstEffect(u32 a, s32 b);
 extern void sub_0806da3c(u32 a, u32 b);
 extern void sub_0807022c(void);
 extern void sub_08070264(void);
@@ -529,7 +529,7 @@ void sub_08076c00(void)
             case 1:
                 PlaySfx(153);
                 RequestScreenShake(4);
-                sub_0806d4e4(0, 0);
+                CreateBurstEffect(0, 0);
                 {
                     struct Task *v = gCurTask;
 
