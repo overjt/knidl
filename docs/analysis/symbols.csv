@@ -1749,9 +1749,9 @@ vma,size,isa,evidence,name
 0x0806CFFC,0x90,thumb,bl-target,sub_0806cffc
 0x0806D08C,0xBC,thumb,bl-target,sub_0806d08c
 0x0806D148,0xA0,thumb,rom-pointer,sub_0806d148
-0x0806D1E8,0x44,thumb,bl-target,sub_0806d1e8
-0x0806D22C,0x270,thumb,rom-pointer,sub_0806d22c
-0x0806D49C,0x48,thumb,rom-pointer,sub_0806d49c
+0x0806D1E8,0x44,thumb,bl-target,CreateDustBurst
+0x0806D22C,0x270,thumb,rom-pointer,Task_DustBurst
+0x0806D49C,0x48,thumb,rom-pointer,DustBurstCheckParent
 0x0806D4E4,0x70,thumb,bl-target,CreateBurstEffect
 0x0806D554,0x10,thumb,rom-pointer,Task_StarScatter
 0x0806D564,0x10,thumb,rom-pointer,Task_RayBurst
@@ -1766,9 +1766,9 @@ vma,size,isa,evidence,name
 0x0806D730,0x4C,thumb,bl-target,PlayExplosionAnim
 0x0806D77C,0x70,thumb,bl-target,PlaySmallBlastAnim
 0x0806D7EC,0x13C,thumb,rom-pointer,sub_0806d7ec
-0x0806D928,0x34,thumb,bl-target,sub_0806d928
-0x0806D95C,0x78,thumb,rom-pointer,sub_0806d95c
-0x0806D9D4,0x30,thumb,rom-pointer,sub_0806d9d4
+0x0806D928,0x34,thumb,bl-target,CreateStarRing
+0x0806D95C,0x78,thumb,rom-pointer,Task_RingStar
+0x0806D9D4,0x30,thumb,rom-pointer,RingStarUpdate
 0x0806DA04,0x1C,thumb,rom-pointer,sub_0806da04
 0x0806DA20,0x1C,thumb,rom-pointer,sub_0806da20
 0x0806DA3C,0x38,thumb,bl-target,sub_0806da3c
@@ -1777,7 +1777,7 @@ vma,size,isa,evidence,name
 0x0806DCA0,0xF0,thumb,rom-pointer,sub_0806dca0
 0x0806DD90,0x88,thumb,rom-pointer,sub_0806dd90
 0x0806DE18,0x48,thumb,rom-pointer,sub_0806de18
-0x0806DE60,0x7C,thumb,rom-pointer,sub_0806de60
+0x0806DE60,0x7C,thumb,rom-pointer,Task_TrailFlash
 0x0806DEDC,0x4C,thumb,bl-target,ActorUpdateAttachedEffect
 0x0806DF28,0x70,thumb,bl-target,ActorAttachEffect
 0x0806DF98,0x158,thumb,rom-pointer,Task_HitFrost
@@ -1786,8 +1786,8 @@ vma,size,isa,evidence,name
 0x0806E210,0x48,thumb,rom-pointer,HitFlamesCheckParent
 0x0806E258,0x184,thumb,rom-pointer,Task_HitSparks
 0x0806E3DC,0x48,thumb,rom-pointer,HitSparksCheckParent
-0x0806E424,0x1CC,thumb,rom-pointer,sub_0806e424
-0x0806E5F0,0x48,thumb,rom-pointer,sub_0806e5f0
+0x0806E424,0x1CC,thumb,rom-pointer,Task_WarpStarSparkle
+0x0806E5F0,0x48,thumb,rom-pointer,WarpStarSparkleCheckParent
 0x0806E638,0x78,thumb,rom-pointer,Task_AbilityReleaseFlash
 0x0806E6B0,0x48,thumb,rom-pointer,AbilityReleaseFlashCheckParent
 0x0806E6F8,0x44,thumb,bl-target,sub_0806e6f8

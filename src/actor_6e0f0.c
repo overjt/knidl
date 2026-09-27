@@ -78,7 +78,7 @@ extern void sub_08070648(void);
 /* Defined below */
 void HitFlamesCheckParent(void);
 void HitSparksCheckParent(void);
-void sub_0806e5f0(void);
+void WarpStarSparkleCheckParent(void);
 void AbilityReleaseFlashCheckParent(void);
 void sub_0806e7c0(void);
 void sub_0806e96c(void);
@@ -203,7 +203,7 @@ void HitSparksCheckParent(void)
         TaskFree(gCurTaskIdx);
 }
 
-void sub_0806e424(void)
+void Task_WarpStarSparkle(void)
 {
     struct Task *t;
     struct Task *u;
@@ -217,7 +217,7 @@ void sub_0806e424(void)
     u = gCurTask;
     u->frameTable = gWarpStarFrames;
     u->layer = 10;
-    gCurTask->updateCallback = (u32)sub_0806e5f0;
+    gCurTask->updateCallback = (u32)WarpStarSparkleCheckParent;
     gCurTask->tileWord = 0;
 
     while (1)
@@ -271,7 +271,7 @@ void sub_0806e424(void)
     }
 }
 
-void sub_0806e5f0(void)
+void WarpStarSparkleCheckParent(void)
 {
     s32 i;
 

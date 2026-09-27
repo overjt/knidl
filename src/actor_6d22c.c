@@ -4,7 +4,7 @@
  *   ./tools/fnmatch.sh 0x0806D22C 0x0806E0F0 src/actor_6d22c.c --newpb
  *
  * Class-1 task bodies for a family of scripted set-piece actors: the
- * three-stage entrance at sub_0806d22c (three TaskSetMotionXFacing sweeps with the
+ * three-stage entrance at Task_DustBurst (three TaskSetMotionXFacing sweeps with the
  * position recomputed from the parent task each time), the four short
  * animation-table players PlayRayBurstAnim/6e4/730/77c and their dispatch
  * wrappers Task_StarScatter/564/574/5a4/5b8/5cc, the CreateChildTaskHere spawner
@@ -73,16 +73,16 @@ extern void TaskUpdatePixelPos(void);
 extern void TaskSetMotion(s32 a, s32 b, s32 c, s32 d, s32 e, s32 f);
 extern void HitFrostCheckParent(void);
 
-void sub_0806d49c(void);
+void DustBurstCheckParent(void);
 void BurstStickToParentUpdate(void);
 void PlayRayBurstAnim(void);
 void PlayStarScatterAnim(void);
 void PlaySmallBlastAnim(void);
-void sub_0806d9d4(void);
+void RingStarUpdate(void);
 void sub_0806dca0(void);
 void sub_0806de18(void);
 
-void sub_0806d22c(void)
+void Task_DustBurst(void)
 {
     struct Task *t;
     struct Task *u;
@@ -97,7 +97,7 @@ void sub_0806d22c(void)
     t->layer = 10;
     u = gCurTask;
     u->frameTable = gUnk_0874CB90;
-    u->updateCallback = (u32)sub_0806d49c;
+    u->updateCallback = (u32)DustBurstCheckParent;
     TaskFaceLikeParent();
 
     v = gCurTask;
@@ -163,7 +163,7 @@ void sub_0806d22c(void)
     TaskExitTrampoline();
 }
 
-void sub_0806d49c(void)
+void DustBurstCheckParent(void)
 {
     if (gTaskSlotTypes[gCurTask->parent] == -1
      || TaskHasSameSerial(gCurTask->parent) != 1)
@@ -418,7 +418,7 @@ void sub_0806d7ec(void)
     TaskExitTrampoline();
 }
 
-void sub_0806d928(void)
+void CreateStarRing(void)
 {
     s32 i;
     s32 j;
@@ -435,7 +435,7 @@ void sub_0806d928(void)
     }
 }
 
-void sub_0806d95c(void)
+void Task_RingStar(void)
 {
     struct Task *t;
     struct Task *u;
@@ -449,7 +449,7 @@ void sub_0806d95c(void)
     t->layer = 10;
     u = gCurTask;
     u->frameTable = gUnk_0874CC60;
-    u->updateCallback = (u32)sub_0806d9d4;
+    u->updateCallback = (u32)RingStarUpdate;
     u->unk24 = 2;
     u->frame = 0;
     k = u->variant * 4;
@@ -463,7 +463,7 @@ void sub_0806d95c(void)
     TaskSleepForever();
 }
 
-void sub_0806d9d4(void)
+void RingStarUpdate(void)
 {
     struct Task *t;
 
@@ -688,7 +688,7 @@ void sub_0806de18(void)
         TaskFree(gCurTaskIdx);
 }
 
-void sub_0806de60(void)
+void Task_TrailFlash(void)
 {
     struct Task *t;
     struct Task *u;

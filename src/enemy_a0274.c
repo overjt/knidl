@@ -65,7 +65,7 @@ extern void sub_080666f8(struct AnimCmd *p);
 extern s32 sub_08067120(s16 x, s16 y, s16 dir, u8 p8);
 extern u8 ActorCollideTerrain(void);
 extern void sub_0806d08c(s16 a, s16 b, s16 c);
-extern s32 sub_0806d1e8(s16 a, s16 b);
+extern s32 CreateDustBurst(s16 a, s16 b);
 extern void sub_0809fca4(void);
 extern void sub_0809fd20(void);
 extern void sub_080a0028(void);
@@ -732,7 +732,7 @@ void KingDededeJump(void)
         TaskYieldTrampoline(1);
     PlaySfx(0x1F7);
     RequestScreenShake(4);
-    r = sub_0806d1e8(24, 32);
+    r = CreateDustBurst(24, 32);
     u = gCurTask;
     u->unk46 = r;
     sub_080a0274();

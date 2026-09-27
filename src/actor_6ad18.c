@@ -53,7 +53,7 @@ extern u16 gGameState;
 extern void StopBgm(void);
 extern void sub_080668c8(void);
 extern void sub_08067108(void);
-extern void sub_0806d928(void);
+extern void CreateStarRing(void);
 extern void HudRemoveHpBar(void);
 extern void CallTableEntry(u32, u32, void *);
 extern void TaskSetEntry(void (*)(void), u32);
@@ -232,7 +232,7 @@ void sub_0806b098(void)
     SetRoomUpdateFlags(2);
     ActorPlaySfx(0x1FD, 0);
     RequestScreenShake(4);
-    sub_0806d928();
+    CreateStarRing();
     CreateBurstEffect(1, 0);
     gCurTask->frame = 0xFFFF;
     sub_0806b070();

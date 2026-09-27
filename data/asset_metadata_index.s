@@ -252,7 +252,7 @@ asset_metadata_index:
 	.incbin	"baserom.gba", 0x7303C0, 0x4
 	.word	sub_0806d148+1
 	.incbin	"baserom.gba", 0x7303C8, 0x4
-	.word	sub_0806d22c+1
+	.word	Task_DustBurst+1
 	.incbin	"baserom.gba", 0x7303D0, 0x4
 	.word	Task_StarScatter+1
 	.incbin	"baserom.gba", 0x7303D8, 0x4
@@ -268,13 +268,13 @@ asset_metadata_index:
 	.incbin	"baserom.gba", 0x730400, 0x4
 	.word	sub_0806d7ec+1
 	.incbin	"baserom.gba", 0x730408, 0x4
-	.word	sub_0806d95c+1
+	.word	Task_RingStar+1
 	.incbin	"baserom.gba", 0x730410, 0x4
 	.word	sub_0806daec+1
 	.incbin	"baserom.gba", 0x730418, 0x4
 	.word	sub_0806dd90+1
 	.incbin	"baserom.gba", 0x730420, 0x4
-	.word	sub_0806de60+1
+	.word	Task_TrailFlash+1
 	.incbin	"baserom.gba", 0x730428, 0x4
 	.word	Task_HitFrost+1
 	.incbin	"baserom.gba", 0x730430, 0x4
@@ -286,7 +286,7 @@ asset_metadata_index:
 	.incbin	"baserom.gba", 0x730448, 0x4
 	.word	sub_0806da20+1
 	.incbin	"baserom.gba", 0x730450, 0x4
-	.word	sub_0806e424+1
+	.word	Task_WarpStarSparkle+1
 	.incbin	"baserom.gba", 0x730458, 0x4
 	.word	sub_08074c0c+1
 	.incbin	"baserom.gba", 0x730460, 0x4
