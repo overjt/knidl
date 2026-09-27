@@ -13,13 +13,6 @@
  * 0x0801ECBA is reached by a long `bl` from 0x0801E470 as well as by `b.n`s
  * (a far branch inside the function, lesson 4.39). */
 
-s32 TerrainQueryPixel(u32 x, u32 y);
-s32 TerrainQueryPixelAndBelow(u32 x, u32 y);
-s32 GetTilePushUp(u16 a);
-s32 GetTilePushRight(u16 a);
-s32 GetTilePushLeft(u16 a);
-s32 sub_08021ab4(u32 x, u32 y);
-
 /* Landing probe of a box in the air (sub_0801bde0, on-ground flag
    gTerrainProbeResult.unk6 == 0), the twin of sub_0801ecd0: first step the box
    out of a wall it moves into at its bottom corner (the same head as

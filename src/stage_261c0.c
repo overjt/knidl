@@ -5,6 +5,8 @@
 #include "link.h"
 #include "room.h"
 #include "camera.h"
+#include "player.h"
+#include "save.h"
 
 /* stage_261c0.c (0x080261C0-0x08026B5F, issue #93).
  *
@@ -23,24 +25,10 @@
  * room each.  sub_08026994 is an empty dead export. */
 
 void PlaySfx(s32 id);
-s32 TaskCreateFrom(u32 type, s32 idx);
 void TaskSetEntry(void *a, u32 i);
-void CameraWriteScrollParallax(void);
-void StartScrollLock(s32 x0, s32 x1, s32 y0, s32 y1);
-void CameraStartHoldAnchor(void);
-s32 CreateMapEvent(s32 type);
-s32 sub_0802d478(s32 x, s32 y);
-s32 sub_0802ed94(s32 x, s32 y, s32 a);
-s32 sub_0802ef90(s32 x, s32 y, s32 a, s32 b);
-void sub_0802f1dc(void);
-void sub_0802f2fc(void);
-void sub_0802f400(void);
-void sub_0802f6c0(void);
-void sub_0802f6f4(void);
-s32 CreateStageEffect(s32 a, s32 x, s32 y);
-s32 BreakBlockAt(u32 x, u32 y);
+/* Declared here, not through a header: the calls in this file pass other
+   types than the definition takes (lessons 3.428, 3.517). */
 void sub_08031738(u32 x, u32 y);
-void SaveProgress(s32 a);
 
 s32 CreateBlockBreakEffect(s32 x, s32 y)
 {

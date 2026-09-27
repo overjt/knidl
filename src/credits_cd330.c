@@ -3,6 +3,7 @@
 #include "task.h"
 #include "link.h"
 #include "sound.h"
+#include "mode.h"
 #include "hud.h"
 #include "room.h"
 #include "player.h"
@@ -48,25 +49,8 @@ void RequestCopy(u32 mode, u32 src, u32 dst, u32 size);
 void ResetBgScroll(void);
 void ResetTasksAndOam(void);
 void RunLinkFrame(void);                                     /* run one frame */
-void RunFramesNoTasks(s32 count);
-s32 PlayBgm(s32 songId);
-void StopAllSound(void);
-void FadeOutBgm(s32 speed);
-void SetBgmVolume(u16 volume);
 void LoadBgLayout(s32 a0);                                   /* load palette set */
 void LoadGfxSet(u16 a0);                                   /* load screen graphics */
-void ResetScoresAndMaxHealth(void);
-void ResetPlayerRecords(void);
-void ClearColliderLists(void);
-void sub_0802497c(void);
-void LatchPlayerKeys(void);
-void sub_08066144(void);
-void InputRecorderStart(void);
-void InputRecorderUpdate(void);
-void CreditsLoadScene(void);
-void CreditsInitText(void);
-void CreditsStreamText(void);
-void CreditsScrollText(void);
 
 /* AgbMain state 12, part 1: the staff credits.  The credits text scrolls up
    BG0 (CreditsInitText, CreditsStreamText) over a run of recorded demos, one per

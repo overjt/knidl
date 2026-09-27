@@ -3,6 +3,7 @@
 #include "task.h"
 #include "main.h"
 #include "room.h"
+#include "player.h"
 
 /* camtask_2d38c.c (0x0802D38C-0x0802EAC7, issue #86).
  *
@@ -42,26 +43,14 @@ extern u8 gUnk_02007FC4;
 extern struct Unk0200A6F0 gBg1BreakingBlocks[];
 extern s8 gUnk_087324A6[][3];
 
-void TaskExitTrampoline(void);
-void TaskYieldTrampoline(u32 frames);
 void RequestCopy(u32 mode, u32 src, u32 dst, u32 size);
 void BlendColors(u16 *src, u16 *dst, s32 ratio, s32 count, u16 *out);
 void PlaySfx(u32 a);
-void TaskFree(s32 id);
-void TaskSleepForever(void);
-void sub_08025dc4(void);
-s32 CreateBlockBreakEffect(s32 x, s32 y);
-s32 TaskCreateHighSlot(s32 type);
-s32 sub_08026584(void);
-s32 sub_08027750(void);
 void sub_08029b30(void);
 void CameraLeaveScrollLock(void);
 s32 CreateStageEffect(s32 a, s32 x, s32 y);
 void PauseBlockAnims(void);
 void sub_080307e8(void);
-s32 BreakBlockAt(u32 x, u32 y);
-s32 CanBreakBg1Block(s32 x, s32 y);
-s32 BreakBg1BlockAtCursor(void);
 s32 sub_0802d478(s32 x, s32 y);
 s32 sub_0802d5b4(s32 x, s32 y);
 void sub_0802da8c(void);

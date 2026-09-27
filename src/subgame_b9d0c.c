@@ -29,6 +29,7 @@
 #include "gba/gba.h"
 #include "global.h"
 #include "task.h"
+#include "sound.h"
 #include "mode.h"
 #include "room.h"
 #include "subgame.h"
@@ -67,7 +68,6 @@ extern u16 gShouldAdvanceLinkState[];
 extern u16 gSendCmd[4];
 extern u16 gLinkCommand;     /* SIO handshake word; see SubGameSyncLink */
 
-void TaskYieldTrampoline(u32 frames);
 void EndFrame(void);
 void RequestCopy(u32 mode, u32 src, u32 dst, u32 size);
 void ResetFadeAndBlend(void);
@@ -81,33 +81,18 @@ void LinkStopKeyExchange(void);
 void LinkRequestSync(void);
 void LinkSyncRandom(void);
 void RunLinkFrame(void);
+/* Declared here, not through a header: the calls in this file pass other
+   types than the definition takes (lessons 3.428, 3.517). */
 void CallTableEntry(u32 a, u32 b, u32 *c);
 u32 Random(void);
 u32 RandomRange(u32 range);
 s32 PlaySfx(s32 id);
-void StopBgm(void);
-void TaskSetSkipMask(u8 val, s32 idx);
-void TaskSetOthersSkipMask(u16 val, s32 idx);
-void TaskFree(s32 id);
-s32 TaskCreateFrom(u32 type, s32 idx);
 void TaskSleepForever(void);
 void TaskSetEntry(void *fn, u32 i);
 void DisableSerial(void);
 void LinkMain1(void *cmd, void *send, void *recv);
 u32 ConnectLink(void);
 u32 IsLinkError(void);
-void LinkErrorScreen(void);
-void LoadBgLayout(u32 a);
-void LoadGfxSet(u16 a);
-void sub_08008d10(u32 a, u32 b);
-void sub_080c1f88(void);
-void AirGrindBuildCourse(s32 a, s32 b);
-
-void SubGameRunFrame(void);
-void SubGameRunLinkFrame(void);
-void SubGameSyncLink(void);
-void Task_SubGame(void);
-void SubGameStartBody(void);
 
 void SubGameReplay(s32 a0)
 {

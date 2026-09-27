@@ -1,9 +1,11 @@
 #include "gba/gba.h"
 #include "global.h"
 #include "task.h"
+#include "main.h"
 #include "collision.h"
 #include "room.h"
 #include "player.h"
+#include "effect.h"
 
 /* player_36280.c (0x08036280-0x08036C93, issue #91).
  *
@@ -22,31 +24,11 @@
  * registry RegisterCollider while the player moves faster than 0xE000 and
  * drops to state 1 below 0x8000. */
 
-void TaskYieldTrampoline(s32 frames);
-void TaskSleepForever(void);
 void TaskSetEntry(void *a, u32 i);
-void TaskSetFrame(s32 a);
+/* Declared here, not through a header: the calls in this file pass other
+   types than the definition takes (lessons 3.428, 3.517). */
 u32 RegisterCollider(u8 idx, s16 x, s16 y, u8 *p);
-void PlayerActionFloat(void);
-void PlayerStopAxes(s32 a0);
-void PlayerStartSfx(s32 a0, u16 a1);
-s32 PlayerFaceHeldDirection(void);
-s32 PlayerLand(s32 a0);
-void PlayerTurnToHeldDirection(void);
-void PlayerCheckBump(void);
-void PlayerStopAtCeilingAndWall(void);
-s32 PlayerStopAtWall(void);
-s32 PlayerCheckLanding(void);
-s32 PlayerHasCrossedWaterSurface(s32 a);
-s32 sub_0803fd20(s32 a0);
-s32 sub_0803fe68(void);
-s32 PlayerCheckEnterDoor(void);
-s32 PlayerCheckDropAbility(void);
-s32 PlayerRequestLocomotion(void);
 void PlayerSetMotionXPreset(s32 a0, s32 a1);           /* M11, still asm; M11's own spelling */
-void PlayerSetMotionYPreset(s32 a0);
-void sub_08041e8c(void);
-s32 CreatePlayerEffect(s32 a0, s32 a1, s32 a2);
 
 void PlayerActionFloatUpdate(void)
 {

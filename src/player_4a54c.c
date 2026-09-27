@@ -1,9 +1,11 @@
 #include "gba/gba.h"
 #include "global.h"
 #include "task.h"
+#include "main.h"
 #include "collision.h"
 #include "room.h"
 #include "player.h"
+#include "effect.h"
 
 /* player_4a54c.c (0x0804A54C-0x0804AB6F, issue #88).
  *
@@ -26,25 +28,11 @@
 
 /* M09's hit-box set (src/block_30804.c); only a pointer is passed here */
 struct HitBoxSet;
-void TaskYieldTrampoline(s32 frames);
-void TaskSleepForever(void);
-void TaskSetFrame(s32 a);
-void TaskSetFrameNoFlip(s32 a);
 void RegisterCollider(u8 a, s16 x, s16 y, void *p);   /* M11's caller spelling */
 void RequestScreenShake(u16 a);
 u16 TaskBreakBlocks(struct HitBoxSet *p, s32 e);
-void PlayerStopAxes(s32 a0);
-void SetPlayerInvulnerability(s32 a0, s32 a1, s32 a2);
-s32 PlaySfxIfLocalPlayer(s32 a0, u16 a1);
-void PlayerSetWaterMotionY(void);
-s32 PlayerLand(s32 a0);
-s32 sub_0803e55c(void);
-void PlayerTurnToHeldDirection(void);
-s32 PlayerRequestLocomotion(void);
 void PlayerSetMotionXPreset(s32 a0, s32 a1);           /* M11, still asm; M11's own spelling */
-void PlayerSetMotionYPreset(s32 a0);
 void CreatePlayerObject(s32 a, s32 b, s32 c);      /* M14, src/plobj_52f6c.c (defined s32 (s8, u8, s32); the result is unused here) */
-s32 CreatePlayerEffect(s32 a0, s32 a1, s32 a2);
 
 void PlayerActionBeam(void)
 {

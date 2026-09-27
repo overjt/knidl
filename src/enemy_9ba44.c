@@ -2,43 +2,26 @@
 #include "gba/gba.h"
 #include "global.h"
 #include "task.h"
+#include "main.h"
+#include "hud.h"
+#include "room.h"
 #include "player.h"
 #include "effect.h"
 #include "actor.h"
 #include "enemy.h"
 
 /* Externals */
-extern void TaskYieldTrampoline(u32 a);
 extern void RequestCopy(u32 mode, u32 src, u32 dst, u32 size);
+/* Declared here, not through a header: the calls in this file pass other
+   types than the definition takes (lessons 3.428, 3.517). */
 extern void CallTableEntry(u32 a, u32 b, u32 *c);
 extern void BlendColors(void *src, void *dst, s32 ratio, s32 count, void *out);
-extern void TaskSleepForever(void);
 extern void TaskSetEntry(void *fn, s32 i);
-extern void TaskStop(void);
-extern void TaskSetFrameNoFlip(s32 a);
-extern void HudAnimateTaskHpBar(void);
-extern void HudRemoveHpBar(void);
-extern void sub_080262e8(u8 a);
 extern void ActorSetState(u16 v);
-extern void ActorDestroy(void);
 extern s32 CreateActor(u8 cls, u32 sub, u32 type, u8 p3, u8 p4, int x, int y, u32 prio);
-extern void sub_08066544(void);
-extern void sub_08067108(void);
-extern void sub_08067114(void);
 extern u32 ActorCheckHits(void);
 extern u8 sub_0806951c(void);
 extern u32 ActorReactToHit(void);
-extern void sub_0809c028(void);
-extern void sub_0809c0a8(void);
-extern void sub_0809fbd0(void);
-extern void sub_0809fc08(void);
-
-/* Defined below */
-void sub_0809ba94(void);
-void sub_0809baec(void);
-void sub_0809bc1c(void);
-void sub_0809bf2c(void);
-void sub_0809bfac(void);
 
 void sub_0809ba44(void)
 {

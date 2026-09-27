@@ -2,6 +2,7 @@
 #include "global.h"
 #include "task.h"
 #include "main.h"
+#include "hud.h"
 #include "room.h"
 #include "player.h"
 #include "actor.h"
@@ -19,22 +20,9 @@
  * gUnk_0873B724[Task.unk6E], PlayerState.unk10 counting the glide
  * frames). */
 
-void TaskYieldTrampoline(s32 frames);
-void TaskSleepForever(void);
 void TaskSetEntry(void *a, u32 i);
-s32 AddPlayerHealth(s32 a, s32 b);
-void PlayerUpdate(void);
-void sub_0803332c(void);
-void PlayerStopAxes(s32 a0);
-void SetPlayerInvulnerability(s32 a0, s32 a1, s32 a2);
-s32 PlaySfxIfLocalPlayer(s32 a0, u16 a1);
-void sub_0803f6e0(void);
 void PlayerSetMotionXPreset(s32 a0, s32 a1);           /* M11, still asm; M11's own spelling */
-void PlayerActionStarRodFlight(void);
-void sub_0804fee8(void);
 s32 sub_08053a44(s8 player, u8 variant, s32 arg);
-void sub_080502f0(void);
-s32 sub_08050664(void);
 
 void sub_0804ffdc(void)
 {

@@ -1,6 +1,7 @@
 #include "gba/gba.h"
 #include "global.h"
 #include "task.h"
+#include "main.h"
 #include "mode.h"
 #include "menu.h"
 #include "room.h"
@@ -23,23 +24,12 @@
    3.517). */
 extern u8 gMultiBootStruct[];
 
-void TaskExitTrampoline(void);
-void TaskYieldTrampoline(s32 frames);
 void RequestCopy(u32 mode, u32 src, u32 dst, u32 size);
+/* Declared here, not through a header: the calls in this file pass other
+   types than the definition takes (lessons 3.428, 3.517). */
 s32 QueueSprite(u32 a, u32 b, u32 c, u32 d, u32 e, s16 f);
 s32 DrawAffineSprite(s32 a, s16 b, s16 c, s32 d);
 void BlendColors(u16 *src, u16 *dst, s32 ratio, s32 count, u16 *out);
-s32 TaskCreateFrom(u32 type, s32 idx);
-void TaskMove(void);
-void TaskDrawScreen(void);
-void TaskSleepForever(void);
-void LoadGfxSet(u16 a0);
-s32 sub_0800ffd8(void);
-u8 TaskIsOnScreenNoCamera(void);
-void sub_0800f2b4(void);
-void sub_0800f408(void);
-void sub_0800f698(void);
-void sub_0800f840(void);
 
 void Task_LinkPlayPlayerList(void)
 {

@@ -117,4 +117,74 @@ extern u8 gUnk_0876F690[];
 extern u8 gUnk_087954C0[];
 extern u8 gUnk_087C0A4C[];
 
+
+/* Functions (defined in the files named above each group). */
+
+/* src/mode_075b8.c */
+void CheckPauseButton(void);
+void sub_08007624(void);
+void sub_0800783c(void);
+void sub_0800791c(void);
+
+/* src/mode_07b68.c */
+s32 sub_08007b68(u32 *src, u32 *dst, u32 size);
+s32 sub_08007c5c(void);
+void sub_08007d4c(void);
+void sub_08007e04(void);
+void sub_08007f9c(void);
+
+/* src/mode_082d0.c */
+void sub_080082d0(void);
+void sub_08008348(void);
+void sub_08008394(void);
+void sub_080083b0(void);
+void sub_08008460(void);
+void sub_080084dc(void);
+void sub_08008558(void);
+
+/* src/mode_08664.c */
+void PauseScreen(void);
+void sub_080089e0(s32 n);
+void sub_08008a00(void);
+
+/* src/gfx_08b8c.c */
+void LinkErrorScreen(void);
+void LoadBgLayout(s32 a0);
+void LoadGfxSet(u16 a0);
+void sub_08008c7c(void);
+void sub_08008cb8(void);
+void sub_08008d10(s32 a0, s32 a1);
+void sub_08008d98(s32 a0);
+void sub_08008e1c(s32 a0);
+void sub_08008e6c(s32 a0);
+void HudClearAbilityPicture(void);
+void HudLoadAbilityPicture(s32 a0);
+void sub_08008f10(s32 a0);
+void sub_08008fc4(s32 a0, s32 a1);
+
+/* src/boot_091ac.c */
+void BootLogoMain(void);
+s32 PlayBootLogo(void);
+s32 BootLogoWait(s32 n);
+s32 sub_080093cc(void);
+void Task_BootLogo(void);
+void Task_TitlePalette(void);
+void Task_TitleSprites(void);
+void sub_080095e4(void);
+void sub_08009640(void);
+void TitleMain(void);
+s32 TitleScreen(void);
+void IntroStory(void);
+s32 sub_080099c8(s32 n);
+
+/* src/mode_0b44c.c */
+void sub_0800b44c(void);
+void ResetScoresAndMaxHealth(void);
+void ResetPlayerRecords(void);
+void sub_0800b5dc(void);
+void sub_0800b628(void);
+void sub_0800b648(void);
+void sub_0800b788(void);
+void sub_0800b87c(void);
+
 #endif /* GUARD_MODE_H */

@@ -21,17 +21,11 @@
  *   sub_080cc180 ... sub_080cc768 / sub_080ccd10   sub-states 2-5, the cursor's
  *       animations after a choice; handlers 3 and 5 hand over to variant 0. */
 
-void TaskYieldTrampoline(s32 frames);
 void CallTableEntry(u32 idx, u32 count, void (**fns)(void));   /* if (idx < count) fns[idx](); */
 s32 PlaySfx(s32 id);                                    /* play a sound effect */
 s32 TaskCreateFrom(u32 type, s32 idx);                         /* spawn a task */
 void TaskSleepForever(void);                                     /* end the running task */
 void TaskSetEntry(void *a, u32 i);
-void TaskSetMotion(s32 a, s32 b, s32 c, s32 d, s32 e, s32 f);
-void TaskStop(void);
-u8 GameOverIsUpDownPressed(void);
-void GameOverPlayerEnterState(void);
-void GameOverChoiceUpdate(void);
 
 /* Task type #264 variant 1: sub-states gUnk_087582C4[Task.state], per-frame
    handlers gUnk_087582DC[Task.updateState] (GameOverChoiceUpdate). */

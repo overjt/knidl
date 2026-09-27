@@ -3,10 +3,12 @@
 #include "task.h"
 #include "main.h"
 #include "link.h"
+#include "sound.h"
 #include "mode.h"
 #include "hud.h"
 #include "room.h"
 #include "player.h"
+#include "ending.h"
 
 /* results_c6420.c (0x080C6420-0x080C6C63, issue #100).
  *
@@ -23,37 +25,16 @@
  *   CopyToBgMap   copy n map entries to column x, row y of that BG map. */
 
 void RequestCopy(u32 mode, u32 src, u32 dst, u32 size);
-void ResetFadeAndBlend(void);
-void BeginFastFadeInFromWhite(void);
-void BeginFadeOutToWhite(void);
-void BeginFastFadeOutToWhite(void);
 /* Declared without its parameter: early_1fd0.c defines it as
    `u32 ClearWarmBoot(u32 arg)` (it returns arg unchanged, lesson 3.391) and
    this call sets up no argument (lesson 3.428). */
+/* Declared here, not through a header: the calls in this file pass other
+   types than the definition takes (lessons 3.428, 3.517). */
 void ClearWarmBoot(void);
-void ResetTasksAndOam(void);
-void RunFrameNoTasks(void);
-void LinkStartKeyExchange(void);
-void LinkStopKeyExchange(void);
-void LinkRequestSync(void);
-void LinkSyncRandom(void);
 void RunLinkFrame(void);                                     /* run one frame */
-void RunFramesNoTasks(s32 count);
-void RunLinkFrames(s32 count);
-void RunFramesNoTasksUntilFadeDone(void);
-void RunLinkFramesUntilFadeDone(void);
-void IntToDigits(s16 n);
-s32 PlayBgm(s32 songId);
 s32 PlaySfx(s32 id);                                    /* play a sound effect */
-void FadeOutBgm(s32 speed);
-void SetBgmVolume(u16 volume);
 void LoadBgLayout(s32 a0);                                   /* load palette set */
 void LoadGfxSet(u16 a0);                                   /* load screen graphics */
-void DrawLargeClockScreen(void);
-void DrawScoreToBgMap(s32 v, s32 x, s32 y);
-void DrawClockToBgMap(u16 *time, s32 x, s32 y);
-
-void CopyToBgMap(u16 *src, s32 x, s32 y, s32 n);
 
 /* AgbMain state 12, after the staff credits: the final screen.  After
    AgbMain state 20 it shows DrawLargeClockScreen's clock screen, when gUnk_03001F30 is

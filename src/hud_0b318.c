@@ -1,6 +1,7 @@
 #include "gba/gba.h"
 #include "global.h"
 #include "task.h"
+#include "mode.h"
 #include "hud.h"
 #include "room.h"
 
@@ -11,7 +12,6 @@
  * the dirty flag gHudTilemapDirty is set. */
 
 void RequestCopy(u32 mode, u32 src, u32 dst, u32 size);
-void LoadGfxSet(u16 a0);
 
 /* Copy n tiles from src into the HUD tilemap buffer at column x, row y.
  * The walking `pos` (not `pos + i`) is what keeps src incremented in place

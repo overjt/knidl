@@ -6,6 +6,7 @@
 #include "gba/gba.h"
 #include "global.h"
 #include "task.h"
+#include "main.h"
 #include "actor.h"
 #include "enemy.h"
 
@@ -15,52 +16,18 @@
 extern u8 gTerrainResult[];
 
 /* Externals */
-extern s32 TaskFindNearestPlayer(void);
-extern s32 TaskGetNearestPlayerDx(void);
-extern s32 TaskGetNearestPlayerDy(void);
-extern s32 ActorStartAnim(struct AnimCmd *p);
-extern s32 ActorStepAnim(void);
 extern u32 RandomRange(u32 range);
 extern u32 ActorCheckHits(void);
 extern u32 ActorCollideTerrain(void);
 extern u32 ActorReactToHit(void);
-extern u8 TaskGetCompassDirToNearestPlayer(void);
-extern void TaskYieldTrampoline(u32 frames);
+/* Declared here, not through a header: the calls in this file pass other
+   types than the definition takes (lessons 3.428, 3.517). */
 extern void CallTableEntry(u32 a, u32 b, u32 *c);
 extern void PlaySfx(s32 id);
-extern void TaskSleepForever(void);
 extern void TaskSetEntry(void *fn, u32 i);
-extern void TaskSetMotionXFacing(s32 a, s32 b);
-extern void TaskSetMotionY(s32 a, s32 b, s32 c);
-extern void TaskStop(void);
-extern void TaskSetFrame(s32 a);
 extern void ActorSetState(u8 v);
 extern void ActorSetAttackBox(u32 v);
-extern void TaskFaceNearestPlayer(void);
-extern void TaskTurnAroundAndReverseX(void);
 extern void AngleToVector(s16 t, s16 mag);
-extern void TaskAccelerateTowardNearestPlayer(s32 step, s32 limit);
-extern void ActorDrawWorldInViewOrDestroy(void);
-extern void ActorMove(void);
-extern void sub_080860d8(void);
-void sub_08088024(void);
-
-/* Defined below */
-void BrontoBurtWaveUpdate(void);
-void sub_08086320(void);
-void sub_0808659c(void);
-void BrontoBurtDiagonalUpdate(void);
-void BrontoBurtChaseUpdate(void);
-void BrontoBurtTakeOffUpdate(void);
-void sub_08086f40(void);
-s32 sub_08086f54(void);
-void TwizzyWaveUpdate(void);
-void sub_080872bc(void);
-void sub_08087508(void);
-void TwizzyDiagonalUpdate(void);
-void TwizzyChaseUpdate(void);
-void TwizzyTakeOffUpdate(void);
-void sub_08087e84(void);
 
 void BrontoBurtWaveInit(void)
 {

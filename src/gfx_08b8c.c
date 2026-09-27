@@ -2,10 +2,13 @@
 #include "global.h"
 #include "task.h"
 #include "main.h"
+#include "link.h"
+#include "sound.h"
 #include "mode.h"
 #include "room.h"
 #include "player.h"
 #include "actor.h"
+#include "save.h"
 
 /* gfx_08b8c.c (0x08008B8C-0x080091AB, issue #96).
  *
@@ -17,22 +20,8 @@
  * pictures; LinkErrorScreen is the soft-reset prompt. */
 
 void SoftReset(u32 resetFlags);
-void RequestCopyList(struct TransferNode *node);
 void RequestCopy(u32 mode, u32 src, u32 dst, u32 size);
-void ResetFadeAndBlend(void);
-void BeginFastFadeInFromWhite(void);
-void BeginFastFadeOutToWhite(void);
-void ResetTasksAndOam(void);
-void RunFrameNoTasks(void);
-void RunFramesNoTasks(s32 count);
-void RunFramesNoTasksUntilFadeDone(void);
-void ApplyBgLayout(u16 *p);
 void PlaySfx(s32 id);
-void StopAllSound(void);
-void DisableSerial(void);
-void StopHBlankScroll(void);
-void LoadBgLayout(s32 a0);
-void LoadGfxSet(u16 a0);
 
 void LinkErrorScreen(void)
 {

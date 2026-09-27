@@ -1,24 +1,13 @@
 #include "gba/gba.h"
 #include "global.h"
 #include "task.h"
+#include "main.h"
+#include "sound.h"
+#include "cutscene.h"
 #include "player.h"
 #include "actor.h"
 
-void TaskYieldTrampoline(s32 frames);
-void PlayBgm(u32 a);
-void sub_08003184(void);
 s32 PlaySfx(s32 id);
-void StopSfxOnPlayer(s32 player, s32 songId);
-void SetBgmVolume(u16 v);
-void TaskMove(void);
-void TaskSleepForever(void);
-void TaskSetMotion(s32 a, s32 b, s32 c, s32 d, s32 e, s32 f);
-void TaskStop(void);
-void CreateCutsceneActor(s32 a, s32 b);
-void sub_08018464(void);
-void sub_08018b84(void);
-void sub_0801a1ec(void);
-void sub_0801a310(void);
 void RequestScreenShake(s32 a);
 
 void sub_08017668(void)

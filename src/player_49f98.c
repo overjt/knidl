@@ -5,6 +5,7 @@
 #include "collision.h"
 #include "room.h"
 #include "player.h"
+#include "effect.h"
 
 /* player_49f98.c (0x08049F98-0x0804A54B, issue #88).
  *
@@ -24,26 +25,10 @@
  * rows 0xB2E-0xB3E by |Task.velX| and cycles Task.unk46 through them,
  * ends the move on landing and re-binds state 4 on a ceiling hit. */
 
-void TaskYieldTrampoline(s32 frames);
 void RequestCopy(u32 mode, void *src, void *dst, u32 size);   /* early_1518; effect_5afac's pointer spelling */
 void TaskSetEntry(void *a, u32 i);
-void TaskSetFrame(s32 a);
-void TaskSetFrameNoFlip(s32 a);
-void TaskSetFrameFlip(s32 a);
 void RegisterCollider(u8 a, s16 x, s16 y, void *p);   /* M11's caller spelling */
-void PlayerStopAxes(s32 a0);
-void SetPlayerInvulnerability(s32 a0, s32 a1, s32 a2);
-void PlayerStartSfx(s32 a0, u16 a1);
-void PlayerStopSfx(void);
-s32 PlayerFaceHeldDirection(void);
-s32 PlayerLand(s32 a0);
-void PlayerStartOffsetScript(s32 a0);
-void PlayerCheckBump(void);
-s32 PlayerCheckLadder(void);
-s32 PlayerRequestLocomotion(void);
 void PlayerSetMotionXPreset(s32 a0, s32 a1);           /* M11, still asm; M11's own spelling */
-void PlayerSetMotionYPreset(s32 a0);
-s32 CreatePlayerEffect(s32 a0, s32 a1, s32 a2);
 
 void PlayerActionHiJump(void)
 {

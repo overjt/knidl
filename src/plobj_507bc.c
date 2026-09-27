@@ -1,6 +1,7 @@
 #include "gba/gba.h"
 #include "global.h"
 #include "task.h"
+#include "main.h"
 #include "player.h"
 
 /* plobj_507bc.c (0x080507BC-0x080509EB, issue #90).
@@ -17,15 +18,8 @@
  * 0-10 before TaskExitTrampoline.  sub_0805091c is a second, drifting burst
  * (gUnk_0874C7CC). */
 
-void TaskExitTrampoline(void);
-void TaskYieldTrampoline(s32 frames);
 /* task / sprite services (landed prototypes) */
 void CallTableEntry(u32 idx, u32 count, void (**fns)(void));   /* if (idx < count) fns[idx](); */
-void TaskMove(void);
-void TaskDrawScreen(void);
-void TaskDrawWorldInViewOrFree(void);
-void TaskSetFrameByFacing(s16 a);
-void TaskStop(void);
 void RegisterCollider(u8 a, s16 x, s16 y, void *p);   /* M11's caller spelling */
 
 void Task_PlayerObject(void)

@@ -5,15 +5,6 @@
 #include "room.h"
 #include "save.h"
 
-void InputRecorderRecordFrame(void);
-void InputRecorderPlayFrame(void);
-void SelectLatestSaveSlot(void);
-s32 ReadSaveSlot(s32 a, s32 b);
-void WriteNewSaveFile(s32 a);
-void ClearSaveSlot(s32 a);
-u32 CalcSaveSlotChecksum(s32 a);
-void ResetProgress(void);
-
 void InputRecorderUpdate(void)
 {
     switch (gInputRecorderMode)

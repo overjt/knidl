@@ -1,5 +1,7 @@
 #include "gba/gba.h"
 #include "global.h"
+#include "link.h"
+#include "sound.h"
 
 /* VBlank interrupt handler (0x080010CC-0x080011AB, issue #32 batch A1).
  * agbcc -O2 -mthumb-interwork (game-code recipe).
@@ -54,14 +56,8 @@ extern struct MusicPlayerInfo gMPlayInfo_BGM;
 extern struct MusicPlayerInfo gMPlayInfo_SE1;
 extern struct MusicPlayerInfo gMPlayInfo_SE2;
 extern struct MusicPlayerInfo gMPlayInfo_SE3;
-extern void m4aMPlayVolumeControl(struct MusicPlayerInfo *mplayInfo, u16 trackBits, u16 volume);
 extern void m4aSoundVSync(void);
-extern void m4aSoundMain(void);
-extern void SoundDriverVSyncOff(void);
 extern void SoftReset(u32 resetFlags);
-extern void StopAllSound(void);
-extern void LinkBlockMain(void);
-extern void LinkVSync(void);
 extern void ReadKeys(void);
 extern void FlushDisplayRegs(void);
 extern void CopyOamAndPalette(void);

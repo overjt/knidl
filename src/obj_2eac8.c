@@ -1,6 +1,7 @@
 #include "gba/gba.h"
 #include "global.h"
 #include "task.h"
+#include "main.h"
 #include "camera.h"
 
 /* obj_2eac8.c (0x0802EAC8-0x0802F62B, issue #86).
@@ -16,26 +17,8 @@
  * into OBJ VRAM with RequestCopy and resets unk28 to -1.  The last three
  * spawners are the three variants of type #229 (obj_2f62c.c). */
 
-void TaskExitTrampoline(void);
-void TaskYieldTrampoline(u32 frames);
 void RequestCopy(u32 mode, u32 src, u32 dst, u32 size);
 void PlaySfx(u32 a);
-s32 TaskCreateInRange(u32 type, s32 start, s32 end);
-void TaskUpdatePixelPos(void);
-void TaskDrawWorld(void);
-void TaskSleepForever(void);
-void sub_0802f718(void);
-void DoorObjectDraw(void);
-void sub_0802ff70(void);
-void sub_0802eba4(void);
-void sub_0802ed20(void);
-void sub_0802ee88(void);
-void sub_0802f110(void);
-void sub_0802f1dc(void);
-void sub_0802f2b0(void);
-void sub_0802f2fc(void);
-void sub_0802f3d0(void);
-void sub_0802f400(void);
 
 s32 sub_0802eac8(s32 x, s32 y, s32 a)
 {

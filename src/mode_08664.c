@@ -3,8 +3,10 @@
 #include "task.h"
 #include "main.h"
 #include "link.h"
+#include "sound.h"
 #include "mode.h"
 #include "room.h"
+#include "player.h"
 #include "actor.h"
 #include "save.h"
 
@@ -16,39 +18,7 @@
  * the per-frame body of AgbMain state 20, sub_08008a00. */
 
 void RequestCopy(u32 mode, u32 src, u32 dst, u32 size);
-void ResetFadeAndBlend(void);
-void BeginFastFadeInFromWhite(void);
-void BeginFastFadeOutToWhite(void);
-void LinkStartKeyExchange(void);
-void LinkStopKeyExchange(void);
-void LinkRequestSync(void);
-void LinkSyncRandom(void);
-void RunLinkFrame(void);
-void RunLinkFrames(s32 count);
-void RunLinkFramesUntilFadeDone(void);
 void PlaySfx(s32 id);
-void StopSfxOnPlayer(s32 player, s32 songId);
-void StopAllSfx(void);
-void FadeInSfx(u16 speed);
-void FadeOutSfx(s32 speed);
-void TaskSetSkipMask(u8 val, s32 idx);
-void CheckPauseButton(void);
-void LoadBgLayout(s32 a0);
-void sub_08008fc4(s32 a0, s32 a1);
-void sub_0800b648(void);
-void ClearColliderLists(void);
-void sub_08027128(void);
-void PauseRoom(void);
-void ResumeRoom(void);
-void sub_08027228(void);
-void sub_08027240(void);
-void InitPlayerState(s32 a0);
-void LatchPlayerKeys(void);
-void SuspendHBlankScroll(void);
-void RestoreRoomHBlankScroll(void);
-void InputRecorderStart(void);
-void InputRecorderUpdate(void);
-void sub_080089e0(s32 n);
 
 void PauseScreen(void)
 {

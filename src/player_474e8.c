@@ -1,8 +1,11 @@
 #include "gba/gba.h"
 #include "global.h"
 #include "task.h"
+#include "main.h"
+#include "hud.h"
 #include "room.h"
 #include "player.h"
+#include "effect.h"
 
 /* player_474e8.c (0x080474E8-0x08047FE7, issue #87).
  *
@@ -28,24 +31,10 @@
 
 /* M09's hit-box set (src/block_30804.c); only a pointer is passed here */
 struct HitBoxSet;
-void TaskYieldTrampoline(s32 frames);
-void TaskSleepForever(void);
 void TaskSetEntry(void *a, u32 i);
-void TaskSetFrame(s32 a);
-s32 SetPlayerAbility(s32 a, s32 b, u32 c);
 void RegisterCollider(u8 a, s16 x, s16 y, void *p);   /* M11's caller spelling */
 u16 TaskBreakBlocks(struct HitBoxSet *p, s32 e);
-s32 PlaySfxIfLocalPlayer(s32 a0, u16 a1);
-s32 PlayerLand(s32 a0);
-s32 sub_0803e55c(void);
-s32 LoadPlayerBodyBoxRect(s32 playerIdx, u8 *src6);
-s32 LoadPlayerHitBoxSet(s32 a0, s32 a1);
-void PlayerStopAtCeilingAndWall(void);
-s32 PlayerHasCrossedWaterSurface(s32 a);
-s32 PlayerRequestLocomotion(void);
 void PlayerSetMotionXPreset(s32 a0, s32 a1);           /* M11, still asm; M11's own spelling */
-void PlayerSetMotionYPreset(s32 a0);
-s32 CreatePlayerEffect(s32 a0, s32 a1, s32 a2);
 
 void PlayerActionParasol(void)
 {

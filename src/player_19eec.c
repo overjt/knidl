@@ -20,10 +20,7 @@
  * else in src/; the ROM re-reads gBldAlphaEvb right after storing it
  * (lesson 3.472). */
 
-void TaskYieldTrampoline(s32 frames);
 void BlendColors(u16 *src, u16 *dst, s32 ratio, s32 count, u16 *out);
-void TaskMove(void);
-void TaskSleepForever(void);
 
 void sub_08019eec(void)
 {

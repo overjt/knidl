@@ -19,10 +19,6 @@
  * TaskIsOnScreenNoCamera (is the current task on screen), SetBlend (the four
  * blend shadow bytes) and SetWindow (window 0/1 setup). */
 
-void TaskYieldTrampoline(s32 frames);
-void BgScrollStartX(s32 speed, s32 dist, s32 bg);
-void BgScrollStartY(s32 speed, s32 dist, s32 bg);
-
 void BgScrollInit(void)
 {
     s32 i;

@@ -1,8 +1,10 @@
 #include "gba/gba.h"
 #include "global.h"
 #include "task.h"
+#include "main.h"
 #include "room.h"
 #include "player.h"
+#include "effect.h"
 
 /* player_49b48.c (0x08049B48-0x08049F97, issue #88).
  *
@@ -20,18 +22,10 @@
 
 /* M09's hit-box set (src/block_30804.c); only a pointer is passed here */
 struct HitBoxSet;
-void TaskYieldTrampoline(s32 frames);
-void TaskSleepForever(void);
 void TaskSetEntry(void *a, u32 i);
-void TaskSetFrame(s32 a);
 void RegisterCollider(u8 a, s16 x, s16 y, void *p);   /* M11's caller spelling */
 u16 TaskBreakBlocks(struct HitBoxSet *p, s32 e);
-void PlayerStartSfx(s32 a0, u16 a1);
-void PlayerStopSfx(void);
-s32 sub_0803e55c(void);
-s32 PlayerRequestLocomotion(void);
 void CreatePlayerObject(s32 a, s32 b, s32 c);      /* M14, src/plobj_52f6c.c (defined s32 (s8, u8, s32); the result is unused here) */
-s32 CreatePlayerEffect(s32 a0, s32 a1, s32 a2);
 
 void PlayerActionIce(void)
 {

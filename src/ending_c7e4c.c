@@ -1,6 +1,7 @@
 #include "gba/gba.h"
 #include "global.h"
 #include "task.h"
+#include "room.h"
 #include "player.h"
 #include "enemy.h"
 #include "ending.h"
@@ -37,27 +38,17 @@ extern vu8 gBldCntTarget2;
 extern vu8 gBldAlphaEva;
 extern vu8 gBldAlphaEvb;
 
-void TaskExitTrampoline(void);
-void TaskYieldTrampoline(s32 frames);
 void RequestCopy(u32 mode, u32 src, u32 dst, u32 size);
 s32 QueueSprite(u32 a, u32 b, u32 c, u32 d, u32 e, s16 f);  /* sprite draw; callers pass f sign-extended (lsls/asrs #16), the early_1518 definition says u16 (lesson 3.428) */
+/* Declared here, not through a header: the calls in this file pass other
+   types than the definition takes (lessons 3.428, 3.517). */
 s32 DrawAffineSprite(s32 a, s16 b, s16 c, s32 d);
 void BlendColors(u16 *src, u16 *dst, s32 ratio, s32 count, u16 *out);
 s32 PlaySfx(s32 id);                                    /* play a sound effect */
 s32 TaskCreateFrom(u32 type, s32 idx);                         /* spawn a task */
-void TaskMove(void);
-void TaskDrawScreen(void);
-void TaskDrawScreenOrFree(void);
 void TaskSleepForever(void);                                     /* end the running task */
 void TaskSetMotion(s32 a, s32 b, s32 c, s32 d, s32 e, s32 f);
 void TaskStop(void);
-void SetCameraFocusOrAnchor(s32 x, s32 y);
-void sub_080269e8(void);
-void sub_080c8298(void);
-void sub_080c8468(void);
-void sub_080c8778(void);
-void sub_080c8924(void);
-void sub_080c8e88(void);
 
 /* Task type #100 variant 4: the long scripted sprite of the first ending
    scene; its draw callback sub_080c8298 cycles the palette blend.  Near

@@ -7,15 +7,6 @@
 #include "room.h"
 #include "save.h"
 
-extern s32 Div(s32 a, s32 b);
-extern s32 Mod(s32 a, s32 b);
-
-s32 CalcCompletionPercent(s32 a);
-s32 WriteSaveSlot(s32 a);
-u32 UpdateSaveSlotChecksum(s32 a);
-void StoreProgressInSaveSlot(s32 a);
-void MergeProgressIntoSaveSlot(s32 a);
-
 void sub_080b8918(void)
 {
     s32 i;

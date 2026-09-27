@@ -8,6 +8,8 @@
 #include "enemy.h"
 
 /* Externals */
+/* Declared here, not through a header: the calls in this file pass other
+   types than the definition takes (lessons 3.428, 3.517). */
 extern void ActorLoadDef(u32 def);
 
 void sub_0809c028(void)

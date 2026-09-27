@@ -3,6 +3,7 @@
 #include "task.h"
 #include "main.h"
 #include "link.h"
+#include "sound.h"
 #include "mode.h"
 #include "hud.h"
 #include "room.h"
@@ -28,39 +29,11 @@
  *   GameOverResetWait   reset the done flag and the count. */
 
 void RequestCopy(u32 mode, u32 src, u32 dst, u32 size);
-void ResetFadeAndBlend(void);
-void BeginFastFadeInFromWhite(void);
-void BeginFastFadeOutToWhite(void);
-void ResetTasksAndOam(void);
-void LinkStartKeyExchange(void);
-void LinkStopKeyExchange(void);
-void LinkRequestSync(void);
-void LinkSyncRandom(void);
-void LinkSyncClock(void);
-void DisconnectLink(void);
 void RunLinkFrame(void);                                     /* run one frame */
-void RunLinkFrames(s32 count);
-void RunLinkFramesUntilFadeDone(void);
-s32 PlayBgm(s32 songId);
 s32 PlaySfx(s32 id);                                    /* play a sound effect */
 s32 TaskCreateFrom(u32 type, s32 idx);                         /* spawn a task */
 void LoadBgLayout(s32 a0);                                   /* load palette set */
 void LoadGfxSet(u16 a0);                                   /* load screen graphics */
-void ResetPlayerRecords(void);
-void sub_08022c3c(void);
-void DrawScoreToBgMap(s32 v, s32 x, s32 y);
-void DrawClockToBgMap(u16 *time, s32 x, s32 y);
-void GameOverScreen(void);
-void sub_080caeec(void);
-void GameOverShowClock(s32 n);
-void sub_080cb058(void);
-void GameOverMoveCursor(void);
-u8 GameOverIsUpDownPressed(void);
-void GameOverCheckTimeout(void);
-void GameOverCheckChoice(void);
-void GameOverLoadGraphics(void);
-void GameOverResetWait(void);
-void CreateGameOverObjects(void);
 
 /* AgbMain state 22: the game-over / continue screen. */
 void GameOverMain(void)

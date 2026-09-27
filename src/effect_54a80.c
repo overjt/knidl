@@ -3,6 +3,7 @@
 #include "task.h"
 #include "main.h"
 #include "room.h"
+#include "player.h"
 #include "effect.h"
 #include "actor.h"
 
@@ -29,25 +30,13 @@
  * set, adding that offset to its position; sub_080553d4 (Task.lateUpdateCallback) draws
  * it with QueueSprite when on screen. */
 
-void TaskExitTrampoline(void);
-void TaskYieldTrampoline(s32 frames);
 s32 QueueSprite(u32 a, u32 b, u32 c, u32 d, u32 e, s16 f);   /* callers pass f sign-extended (lsls/asrs #16); the early_1518 definition says u16 */
 u32 RandomRange(u32 range);                       /* RNG: 0 .. range-1 */
-void TaskSetSkipMask(u8 val, s32 idx);
 void TaskFree(s32 id);                         /* kill task (M09+ spelling, 49 landed files) */
-void TaskMove(void);
-void TaskMoveRelativeToParent(void);
-void TaskDrawWorld(void);
-void TaskSetFrameByFacing(s16 a);
-void TaskSetMotionXFacing(s32 a, s32 b);
 s32 IsOnScreen(s16 a, s16 b);   /* the ROM tests r0 unnarrowed (src callers spell s32) */
 u32 IsWorldPosOnScreen(s16 a, s16 b);   /* the ROM tests r0 unnarrowed (src callers spell u32) */
 u16 RandomSpread(s32 base, u8 scale, u8 amount);   /* base + ((rand(256) * amount) >> 8) * scale */
 s16 RandomSpreadFacing(s32 base, u8 scale, u8 amount);   /* the same, negated when Task.facing != 1 */
-s32 sub_0803eaf8(s32 a0);
-void sub_08054b98(void);
-void sub_080552fc(void);
-void sub_080553d4(void);
 
 void sub_08054a80(void)
 {

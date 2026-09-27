@@ -3,7 +3,12 @@
 #include "task.h"
 #include "main.h"
 #include "link.h"
+#include "mode.h"
+#include "hud.h"
+#include "cutscene.h"
 #include "room.h"
+#include "camera.h"
+#include "player.h"
 
 /* level_2296c.c (0x0802296C-0x08023617, issue #93).
  *
@@ -26,51 +31,6 @@ struct Unk020055D8Entry
 };
 
 void RequestCopy(u32 mode, u32 src, u32 dst, u32 size);
-void ResetTasksAndOam(void);
-void TaskSetSkipMask(u8 val, s32 idx);
-void TaskSetOthersSkipMask(u16 val, s32 idx);
-s32 TaskCreateFrom(u32 type, s32 idx);
-void LoadGfxSet(u16 a0);
-void HudShowClock(void);
-void HudInit(s32 i);
-s32 AddPlayerLives(s32 a, u32 b);
-void InitRoomBgLayout(void);
-void sub_08028130(void);
-void sub_08028304(void);
-void CalcBg3Parallax(void);
-void CalcRoomBounds(void);
-void CameraResetBoundsToGroup(void);
-void CameraResetBounds(void);
-void SetRoomEntryPoint(void);
-void sub_080290ac(void);
-void CameraInitPos(void);
-void sub_08029110(void);
-void LoadBg2Gfx(void);
-void LoadBg3Gfx(void);
-void ClearBg2Bg3Maps(void);
-void SelectBg3MapShape(void);
-void LoadBg3Map(void);
-void SpawnRoomObjectsInView(void);
-void InitDoors(void);
-void CameraWriteScrollParallax(void);
-void DrawBg2View(s32 px, s32 py);
-void DrawBg3View(s32 px, s32 py);
-void DrawBg23FullRows(s32 py);
-void sub_0802b074(s32 px);
-void CameraFollowFocus(void);
-void CameraFollowScrollLocked(void);
-void CameraHoldAnchor(void);
-void StopScreenShake(void);
-void LoadRoomBgAnims(void);
-void ResetBlockAnims(void);
-void sub_080307b0(void);
-void CreatePlayer(s32 a0);
-void sub_0803d1c4(s32 a0);
-void sub_08077d38(s32 id);
-void sub_080b4e40(void);
-void sub_080b4ea8(void);
-void sub_080b5024(void);
-void CreateRoomTask(s32 a);
 
 void sub_0802296c(void)
 {

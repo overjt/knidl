@@ -23,13 +23,6 @@
  * symbol gUnk_04000120, with which gcse keeps the base in a callee-saved
  * register); lesson 3.481. */
 
-void MultiBootInit(struct MultiBootParam *mp);
-int MultiBootSend(struct MultiBootParam *mp, u16 data);
-void MultiBootStartProbe(struct MultiBootParam *mp);
-int MultiBootCheckComplete(struct MultiBootParam *mp);
-int MultiBootHandShake(struct MultiBootParam *mp);
-void MultiBootWaitSendDone(void);
-
 /* MultiBootMain (AGB SDK): one step of the master's multiboot state machine,
  * run once per frame while a boot image is sent to the clients. */
 u32 MultiBootMain(struct MultiBootParam *mp)

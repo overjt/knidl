@@ -3,6 +3,7 @@
 #include "task.h"
 #include "main.h"
 #include "link.h"
+#include "sound.h"
 #include "mode.h"
 #include "menu.h"
 #include "room.h"
@@ -23,50 +24,9 @@
  * second number. */
 
 void RequestCopy(u32 mode, u32 src, u32 dst, u32 size);
-void ResetFadeAndBlend(void);
-void BeginFastFadeOutToWhite(void);
-void ResetTasksAndOam(void);
-void RunFrame(void);
-void LinkStopKeyExchange(void);
-void RunFrames(s32 count);
-void RunFramesUntilFadeDone(void);
-void RunLinkFramesUntilFadeDone(void);
-void IntToDigits(s16 n);
-s32 PlayBgm(s32 songId);
-void FadeOutBgm(s32 speed);
-void LinkSetupStop(void);
-void LinkSetupMain(u16 a);
-s32 TaskCreateFrom(u32 type, s32 idx);
-void DisableSerial(void);
-void LoadBgLayout(s32 a0);
-void LoadGfxSet(u16 a0);
-void ResetScoresAndMaxHealth(void);
-void sub_0800c09c(void);
-void sub_0800c34c(void);
-void sub_0800c558(void);
-void sub_0800c610(void);
-void sub_0800c8a0(void);
-void MenuEnterModeList(void);
-void sub_0800cd60(void);
-void sub_0800d0f4(void);
-void sub_0800d450(void);
-void sub_0800d85c(void);
-void CreateFileSelectSprites(s32 mode);
-void BgScrollInit(void);
-void BgScrollStartY(s32 speed, s32 dist, s32 bg);
-void SetBlend(s32 a, s32 b, s32 c, s32 d);
-void ResetHBlankScroll(void);
-void SelectLatestSaveSlot(void);
-void LoadSaveSlot(s32 a);
+/* Declared here, not through a header: the calls in this file pass other
+   types than the definition takes (lessons 3.428, 3.517). */
 void sub_080b81a0(s32 a);
-s32 CheckNewMilestones(void);
-void sub_080b8888(void);
-void sub_080b8918(void);
-void MenuDrawSaveSlots(void);
-void sub_0800bda4(s32 slot);
-void sub_0800be8c(s32 slot, u32 pal);
-s32 sub_0800bf10(s32 slot, u32 pal);
-void sub_0800bf6c(s32 slot, s32 value, s32 mode);
 
 void MainMenuMain(void)
 {

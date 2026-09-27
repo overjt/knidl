@@ -2,13 +2,11 @@
 #include "global.h"
 #include "main.h"
 #include "link.h"
+#include "mode.h"
 
-extern void RunFrameNoTasks(void);
+/* Declared here, not through a header: the calls in this file pass other
+   types than the definition takes (lessons 3.428, 3.517). */
 extern void LinkMain1(void *, void *, void *);
-extern int IsLinkError(void);
-extern void LinkErrorScreen(void);
-extern void RunFrames(int);
-extern void DisableSerial(void);
 
 void DisconnectLink(void)
 {

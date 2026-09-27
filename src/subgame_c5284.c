@@ -53,7 +53,6 @@
  * had parked it at 22 bytes (or byte-exact with 37 empty asm statements). */
 
 u32 Random(void);                                      /* LCG step */
-void AirGrindDrawCourse(void);
 
 s32 sub_080c5284(s32 angle)
 {

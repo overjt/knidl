@@ -30,6 +30,7 @@
 #include "gba/gba.h"
 #include "global.h"
 #include "task.h"
+#include "main.h"
 #include "camera.h"
 #include "actor.h"
 #include "enemy.h"
@@ -40,53 +41,20 @@
 extern u8 gTerrainResult[];
 
 /* Externals */
+/* Declared here, not through a header: the calls in this file pass other
+   types than the definition takes (lessons 3.428, 3.517). */
 extern s32 RandomRange(s32 a);
-extern s32 TaskFindNearestPlayer(void);
-extern s32 TaskGetNearestPlayerDx(void);
-extern s32 TaskGetNearestPlayerDy(void);
-extern s32 TaskGetFacingTowardNearestPlayer(void);
-extern s16 CreateDustTrail(u8 flag, u16 vx, s32 c, s32 d);
 extern s32 TaskGetAngleToNearestPlayer(s32 prec);
 extern u32 ActorCheckHits(void);
 extern u32 ActorCollideTerrain(void);
 extern u32 ActorReactToHit(void);
-extern u8 TaskHasSameSerial(u32 i);
-extern void TaskYieldTrampoline(u32 frames);
 extern void CallTableEntry(u32 a, u32 b, u32 *c);
-extern void TaskFree(s32 id);
-extern void TaskSleepForever(void);
 extern void TaskSetEntry(void *fn, u32 i);
-extern void TaskSetMotionXFacing(s32 a, s32 b);
-extern void TaskStopX(void);
-extern void TaskSetMotionY(s32 a, s32 b, s32 c);
-extern void TaskStopY(void);
-extern void TaskStop(void);
-extern void TaskSetFrame(s32 a);
 extern void RequestScreenShake(s32 a);
 extern void ActorLoadDef(u32 *def);
 extern void ActorSetState(u32 v);
 extern void ActorSetAttackBox(u32 *p);
 extern void ActorSetTerrainBox(u32 *p);
-extern void TaskFaceNearestPlayer(void);
-extern void TaskTurnAroundAndReverseX(void);
-extern void TaskFaceLikeParent(void);
-extern void sub_0806a0f0(s32 a);
-extern void sub_08065640(void);
-extern void ActorDrawWorldInViewOrDestroy(void);
-extern void ActorMove(void);
-extern void HotHeadWalkEnterState(void);
-extern void HotHeadStandEnterState(void);
-
-/* Defined below */
-void sub_08080d58(void);
-void sub_08080e5c(void);
-void sub_08081814(void);
-void sub_0808145c(void);
-void StarmanFlyUpdate(void);
-void sub_080817d4(void);
-void sub_08081a74(void);
-s32 sub_08081e64(void);
-void sub_08081d84(void);
 
 s32 sub_08080b70(void)
 {

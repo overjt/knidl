@@ -14,15 +14,6 @@
  * sub_0801c12c's pair sub_0801fc48 (on the ground: follow the floor or
  * drop off it) / sub_0801fe2c (in the air: land). */
 
-s32 TerrainQueryPixel(u32 x, u32 y);
-s32 TerrainQueryPixelAndBelow(u32 x, u32 y);
-s32 TerrainQueryPixelAndSides(u32 x, u32 y);
-s32 GetTileFloorSnap(u16 a);
-s32 GetTilePushDown(u16 a);
-s32 GetTilePushUp(u16 a);
-s32 GetTilePushRight(u16 a);
-s32 GetTilePushLeft(u16 a);
-
 /* Right wall probe of the third entry point (sub_0801bf1c). */
 void sub_0801f540(void)
 {

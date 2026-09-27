@@ -57,14 +57,6 @@
  * int-returning.  Alias it rather than fight the header (see report). */
 extern int MultiBootSvc(struct MultiBootParam *mp) asm("MultiBoot");
 
-int MultiBootSend(struct MultiBootParam *mp, u16 data);
-int MultiBootHandShake(struct MultiBootParam *mp);
-void MultiBootWaitCycles(s32 cycles);
-void MultiBootWaitSendDone(void);
-void MultiBootInit(struct MultiBootParam *mp);
-void MultiBootStartProbe(struct MultiBootParam *mp);
-int MultiBootCheckComplete(struct MultiBootParam *mp);
-
 /*FN LinkBlockMain*/
 void LinkBlockMain(void)
 {

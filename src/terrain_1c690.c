@@ -16,10 +16,6 @@
  * cast (`(s8)a == 1`), and stores the constant `1`/`2` (cse substitutes the
  * attribute register). */
 
-s32 TerrainQueryPixelAndSides(u32 x, u32 y);
-s32 GetTilePushRight(u16 a);
-s32 GetTilePushLeft(u16 a);
-
 /* Right wall probe of a box standing on the ground (gTerrainProbeResult.unk6 !=
    0), the mirror image of sub_0801c7cc: step the probe x out of a wall
    cell at the box's top-right, else its middle-right corner. */

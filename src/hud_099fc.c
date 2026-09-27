@@ -3,6 +3,7 @@
 #include "task.h"
 #include "main.h"
 #include "link.h"
+#include "mode.h"
 #include "hud.h"
 #include "room.h"
 #include "player.h"
@@ -17,34 +18,8 @@
  * AddPlayerScore/AddPlayerScoreNoHud, clamped to 99999999) and the clock mode
  * (HudShowScore/HudShowClock). */
 
-void TaskExitTrampoline(void);
-void TaskYieldTrampoline(s32 frames);
 void RequestCopy(u32 mode, u32 src, u32 dst, u32 size);
 s32 PlaySfx(s32 id);
-void TaskMove(void);
-void TaskDrawScreen(void);
-void HudClearAbilityPicture(void);
-void HudLoadAbilityPicture(s32 a);
-void HudShowAbility(s32 a, s32 id);
-void sub_0800a19c(s32 a);
-void HudShowHpBar(void);
-void HudResetHpBar(s32 idx);
-void sub_0800aad0(void);
-void sub_0800ab3c(void);
-void HudDrawPlayerIcon(s32 a);
-void HudDrawLives(s32 n);
-void HudDrawHealth(s32 n);
-void sub_0800acbc(s32 a, s32 b);
-void HudDrawScore(s32 v);
-void HudDrawClock(u16 *time);
-void HudDrawAbilityPanel(s32 n);
-void HudDrawHpBar(s32 x);
-void sub_0800b230(s32 a, s32 b);
-void HudClearWholeTilemap(void);
-void HudClearTilemap(void);
-void HudFlushTilemap(void);
-void HudLoadGfx(void);
-void HudShowAbilityAnimated(s32 a, s32 b);
 
 void Task_IntroStoryPicture(void)
 {

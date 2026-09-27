@@ -44,62 +44,25 @@
 #include "global.h"
 #include "task.h"
 #include "main.h"
+#include "collision.h"
 #include "actor.h"
 #include "enemy.h"
 
 /* Externals */
 extern s32 RandomRange(s32 a);
-extern u16 sub_08021c14(s16 x, s16 y);
-extern s32 TaskFindNearestPlayer(void);
-extern s32 TaskGetNearestPlayerDistSq(void);
 extern s32 TaskGetDxTo(u32 i);
-extern s32 TaskGetNearestPlayerDx(void);
-extern s32 TaskGetDyTo(u32 i);
-extern s32 ActorStartAnim(struct AnimCmd *p);
-extern s32 ActorStepAnim(void);
-extern s32 ActorTickAnim(s32 n);
-extern s32 CreateActorFromDescHere(struct ActorSpawn *p, u8 keepPrio);
-extern s32 CreateChildTaskHere(u32 type, u8 keepPrio);
 extern u32 ActorCheckHits(void);
 extern u32 ActorCollideTerrain(void);
 extern u32 ActorReactToHit(void);
-extern void TaskYieldTrampoline(u32 frames);
+/* Declared here, not through a header: the calls in this file pass other
+   types than the definition takes (lessons 3.428, 3.517). */
 extern void CallTableEntry(u32 a, u32 b, u32 *c);
 extern void PlaySfx(s32 id);
-extern void TaskSleepForever(void);
 extern void TaskSetEntry(void *fn, u32 i);
-extern void TaskSetMotionXFacing(s32 a, s32 b);
-extern void TaskStopX(void);
-extern void TaskSetMotionY(s32 a, s32 b, s32 c);
-extern void TaskStopY(void);
-extern void TaskStop(void);
-extern void TaskSetFrame(s32 a);
 extern void RequestScreenShake(s32 a);
 extern void ActorSetState(u32 v);
 extern void ActorSetHitReactions(u32 *p);
 extern void ActorSetAttackBox(u32 *p);
-extern void TaskFaceToward(u32 i);
-extern void TaskFaceNearestPlayer(void);
-extern void ActorDestroy(void);
-extern void sub_0806a0f0(s32 a);
-extern void ActorDie(void);
-extern void CreateBurstEffect(u32 a, s32 b);
-extern void ActorDrawWorldInViewOrDestroy(void);
-extern void ActorMove(void);
-
-/* Defined below */
-void sub_0807f094(void);
-void sub_0807f3d4(void);
-s32 sub_0807f6a8(int px, int py, s8 *p);
-void sub_0807f8d8(void);
-void sub_0807fb60(void);
-void TwisterUpdate(void);
-void sub_08080374(s32 a, s32 b);
-void sub_0808031c(void);
-void HotHeadWalkUpdate(void);
-void sub_08080b2c(void);
-void sub_080807d8(void);
-void HotHeadStandUpdate(void);
 
 void sub_0807f044(void)
 {

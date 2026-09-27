@@ -95,4 +95,102 @@ extern u32 gUnk_08755650[];
 extern u32 gUnk_08755688[];
 extern u32 gUnk_087556D4[];
 
+
+/* Functions (defined in the files named above each group). */
+
+/* src/menu_0b920.c */
+void MainMenuMain(void);
+void MenuDrawSaveSlots(void);
+void sub_0800bda4(s32 slot);
+void sub_0800be8c(s32 slot, u32 pal);
+s32 sub_0800bf10(s32 slot, u32 pal);
+void sub_0800bf6c(s32 slot, s32 value, s32 mode);
+
+/* src/menu_0c09c.c */
+void sub_0800c09c(void);
+void MenuSetupFileMenu(void);
+void sub_0800c34c(void);
+void sub_0800c558(void);
+void sub_0800c610(void);
+void sub_0800c8a0(void);
+
+/* src/menu_0ca10.c */
+void MenuEnterModeList(void);
+void MenuDrawModeList(void);
+void sub_0800cd60(void);
+void sub_0800cff4(void);
+void sub_0800d0f4(void);
+void sub_0800d280(void);
+void sub_0800d310(void);
+void sub_0800d35c(s32 a);
+void sub_0800d404(void);
+
+/* src/menu_0d450.c */
+void sub_0800d450(void);
+void sub_0800d85c(void);
+void sub_0800da18(void);
+s32 sub_0800da74(void);
+void CreateFileSelectSprites(s32 mode);
+
+/* src/menutask_0daf8.c */
+void sub_0800daf8(void);
+void sub_0800db64(void);
+void sub_0800dbdc(void);
+void sub_0800dc98(void);
+void Task_FileSelectCursor(void);
+void sub_0800dda0(void);
+void sub_0800de6c(void);
+void sub_0800dfdc(void);
+void Task_FileMenuHighlight(void);
+void sub_0800e148(void);
+void MenuUpdateFileMenuPalette(void);
+s32 MenuLoadPicture(s32 id, s32 part);
+
+/* src/menutask_0e314.c */
+void sub_0800e314(void);
+void sub_0800e390(void);
+void sub_0800e46c(void);
+void sub_0800e518(void);
+void Task_ModeListCursor(void);
+void sub_0800e674(void);
+void sub_0800e7b0(void);
+void sub_0800e81c(void);
+void sub_0800e8c0(void);
+void sub_0800e9a4(void);
+
+/* src/menutask_0ea0c.c */
+void sub_0800ea0c(void);
+void sub_0800eae4(void);
+void sub_0800ec08(void);
+void Task_SoundTestCursors(void);
+void sub_0800ecb8(void);
+void Task_SoundTestPulse(void);
+void sub_0800ef30(void);
+void sub_0800f084(void);
+
+/* src/menutask_0f180.c */
+void Task_LinkPlayPlayerList(void);
+void sub_0800f2b4(void);
+void sub_0800f390(void);
+void sub_0800f408(void);
+void sub_0800f5ec(void);
+void sub_0800f698(void);
+void Task_MenuScreenTitle(void);
+void sub_0800f840(void);
+void sub_0800fa30(void);
+void sub_0800fb94(void);
+
+/* src/bgscroll_0fcbc.c */
+void BgScrollInit(void);
+void BgScrollStart(s32 xspeed, s32 yspeed, s32 xdist, s32 ydist, s32 bg);
+void BgScrollStartX(s32 speed, s32 dist, s32 bg);
+void BgScrollStartY(s32 speed, s32 dist, s32 bg);
+s32 BgScrollStartBg3Slide(s32 speed);
+void BgScrollFinish(void);
+void Task_BgScroll(void);
+s32 sub_0800ffd8(void);
+u8 TaskIsOnScreenNoCamera(void);
+void SetBlend(s32 a, s32 b, s32 c, s32 d);
+void SetWindow(s32 in, s32 out, s32 h, s32 v, s32 win);
+
 #endif /* GUARD_MENU_H */

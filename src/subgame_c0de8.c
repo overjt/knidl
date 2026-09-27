@@ -28,11 +28,12 @@
 #include "task.h"
 #include "main.h"
 #include "link.h"
+#include "sound.h"
 #include "mode.h"
+#include "hud.h"
 #include "room.h"
 
-/* Not from subgame.h: this file's view of gAirGrind differs (lesson 3.517).
-   */
+/* Not from subgame.h: this file's view of gAirGrind differs (lesson 3.517). */
 extern u8 gUnk_020061DC;
 extern s8 gBombRallySeats[];
 extern u8 gBombRallyOutMask;
@@ -115,35 +116,20 @@ extern s8 gUnk_08756748[];
 extern u32 gBombRallyPlayerStates[];
 extern u32 gBombRallyPlayerStateUpdates[];
 
-extern void TaskYieldTrampoline(u32 frames);
-
+/* Declared here, not through a header: the calls in this file pass other
+   types than the definition takes (lessons 3.428, 3.517). */
 extern void CallTableEntry(u32 a, u32 b, u32 *c);
-extern void BeginFastFadeInFromWhite(void);
-extern void BeginFastFadeOutToWhite(void);
-extern s32 TaskCreateFrom(u32 type, s32 idx);
 extern void TaskSetEntry(void *a, u32 i);
-extern void TaskMoveRelativeToBg3(void);
-extern void TaskDrawScreen(void);
-extern void TaskMove(void);
-extern void TaskExitTrampoline(void);
 extern void sub_080bdf9c(u32 a);
 extern void sub_080c0ca4(void);
 extern void sub_080c17ac(void);
 extern void sub_080c1804(void);
 extern void sub_080c1b78(void);
-extern void TaskFree(u32 a);
-extern void TaskSetFrame(s32 a);
 extern void PlaySfx(u32 a);
-extern void sub_080060c0(void);
-extern void AddPlayerLivesNoHud(u32 a, u32 b);
 extern void RequestCopy(u32 mode, u32 src, u32 dst, u32 size);
 extern s32 QueueSprite(u32 a, u32 b, u32 c, u32 d, u32 e, u32 f);
 extern s32 DrawAffineSprite(s32 a, s16 b, s16 c, s32 d);
-extern void TaskStop(void);
 extern u32 RandomRange(u32 range);
-extern void PlayBgm(u32 a);
-extern void StopBgm(void);
-extern void TaskSleepForever(void);
 extern void SubGameReplay(s32 a);
 extern void SubGameQuit(void);
 extern void SubGameCheckEnd(void);
@@ -171,12 +157,9 @@ extern void BombRallyPlayerEnterState(void);
 extern void sub_080bfdb0(void);
 extern void sub_080bfdcc(void);
 extern void sub_080be010(void);
-extern void TaskStopY(void);
-extern s32 Div(s32 numerator, s32 denominator);
 extern void sub_080c05f0(u32 a);
 extern void sub_080c0704(u32 a);
 extern void sub_080c0b18(u32 a);
-extern void TaskSetMotionXFacing(s32 a, s32 b);
 extern s32 sub_080c1ebc(s32 a, s32 b);
 extern void sub_080c061c(s32 a, s32 b, s32 c, s32 d);
 extern void sub_080c072c(s32 a, s32 b, s32 c, s32 d, s32 e, s32 f);

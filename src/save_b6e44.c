@@ -2,11 +2,9 @@
 #include "global.h"
 #include "task.h"
 #include "main.h"
+#include "hud.h"
 #include "room.h"
 #include "save.h"
-
-void UpdateHBlankScroll(void);
-void UpdateRoomHBlankScroll(void);
 
 void ResetHBlankScroll(void)
 {

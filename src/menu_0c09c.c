@@ -2,10 +2,12 @@
 #include "global.h"
 #include "task.h"
 #include "main.h"
+#include "link.h"
 #include "mode.h"
 #include "menu.h"
 #include "room.h"
 #include "save.h"
+#include "ending.h"
 
 /* menu_0c09c.c (0x0800C09C-0x0800CA0F, issue #99).
  *
@@ -18,34 +20,7 @@
  * lead into a game, and sub_0800c8a0 the two-step erase confirmation
  * that clears the slot with EraseSaveSlot. */
 
-void BeginFastFadeInFromWhite(void);
-void BeginFastFadeOutToWhite(void);
-void RunFrame(void);
-void RunFrames(s32 count);
-void RunFramesUntilFadeDone(void);
 s32 PlaySfx(s32 id);
-s32 TaskCreateFrom(u32 type, s32 idx);
-void LoadBgLayout(s32 a0);
-void LoadGfxSet(u16 a0);
-void MenuDrawSaveSlots(void);
-void sub_0800bda4(s32 slot);
-void sub_0800bf6c(s32 slot, s32 value, s32 mode);
-void MenuEnterModeList(void);
-void sub_0800d280(void);
-void CreateFileSelectSprites(s32 mode);
-void MenuUpdateFileMenuPalette(void);
-void BgScrollStartX(s32 speed, s32 dist, s32 bg);
-s32 BgScrollStartBg3Slide(s32 speed);
-void BgScrollFinish(void);
-void SetBlend(s32 a, s32 b, s32 c, s32 d);
-void StopHBlankScroll(void);
-void StartHBlankScroll(s32 a);
-void InitNewSaveFile(s32 a);
-void EraseSaveSlot(s32 a);
-void LoadSaveSlot(s32 a);
-s32 CheckNewMilestones(void);
-void ShowMilestonePictureForMode(s32 a);
-void MenuSetupFileMenu(void);
 
 void sub_0800c09c(void)
 {

@@ -3,8 +3,10 @@
 #include "task.h"
 #include "main.h"
 #include "link.h"
+#include "collision.h"
 #include "room.h"
 #include "player.h"
+#include "effect.h"
 #include "actor.h"
 
 /* player_39c24.c (0x08039C24-0x0803AA63, issue #91).
@@ -21,37 +23,12 @@
  * PlayerActionExitDoorUpdate, per-frame handler 19, only releases the player once
  * Task.unk28 is set. */
 
-void TaskYieldTrampoline(s32 frames);
 void RequestCopy(u32 mode, u32 src, u32 dst, u32 size);
 s32 PlaySfx(s32 id);
-void TaskSetSkipMask(u8 val, s32 idx);
-void TaskSleepForever(void);
-void TaskSetFrame(s32 a);
 void sub_08021c74(s8 *box, s32 id);
-void TaskInitWaterFlags(void);
 void RequestScreenShake(u16 a);
-s32 sub_080264b0(void);
-void sub_0802651c(s32 i);
-s32 sub_0802653c(void);
-s32 sub_08026584(void);
-void sub_08026704(s32 i);
-s32 sub_0802672c(void);
-void sub_08027850(s32 a);
-void sub_08027908(void);
-s32 sub_08027a30(void);
-void sub_08027a60(void);
-void PlayerPlayBump(void);
-void PlayerStopAxes(s32 a0);
-void PlayerStartOffsetScript(s32 a0);
-void sub_0803f6e0(void);
-u16 sub_0803f7e0(u16 a0);
-s32 PlayerRequestLocomotion(void);
-void sub_08040808(s32 a0);
 void PlayerSetMotionXPreset(s32 a0, s32 a1);           /* M11, still asm; M11's own spelling */
-void PlayerSetMotionYPreset(s32 a0);
 void LoadAbilityTiles(void);                     /* M13, src/player_49738.c */
-void sub_08049a58(void);
-s32 CreatePlayerEffect(s32 a0, s32 a1, s32 a2);
 
 void PlayerActionExitDoor(void)
 {

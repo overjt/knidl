@@ -1,7 +1,10 @@
 #include "gba/gba.h"
 #include "global.h"
 #include "task.h"
+#include "main.h"
 #include "room.h"
+#include "player.h"
+#include "effect.h"
 
 /* player_4f614.c (0x0804F614-0x0804F947, issue #90).
  *
@@ -13,15 +16,6 @@
  * four key probes the sub-handlers share (mode 0-3 -> next sub-action 4, 6
  * or 8) and sub_0804f8ec the landing check (M11's PlayerCheckLanding, effect 4
  * on a fast landing). */
-
-void TaskYieldTrampoline(s32 frames);
-void TaskSetFrameNoFlip(s32 a);
-void TaskSetFrameFlip(s32 a);
-void PlayerStopAxes(s32 a0);
-s32 PlaySfxIfLocalPlayer(s32 a0, u16 a1);
-s32 PlayerCheckLanding(void);
-s32 PlayerCheckEnterDoor(void);
-s32 CreatePlayerEffect(s32 a0, s32 a1, s32 a2);
 
 s32 sub_0804f614(void)
 {

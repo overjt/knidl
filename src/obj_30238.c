@@ -1,6 +1,7 @@
 #include "gba/gba.h"
 #include "global.h"
 #include "task.h"
+#include "main.h"
 #include "camera.h"
 #include "effect.h"
 
@@ -13,14 +14,7 @@
  * falls (Task.accelY = -0x400) and sub_080304ec rises (Task.velY =
  * -0x10000). */
 
-void TaskExitTrampoline(void);
-void TaskYieldTrampoline(u32 frames);
 void CallTableEntry(u32 idx, u32 count, void (**fns)(void));
-void TaskMove(void);
-void TaskUpdatePixelPos(void);
-void TaskDrawWorld(void);
-void TaskSleepForever(void);
-void TaskStop(void);
 
 void Task_StageEffect(void)
 {

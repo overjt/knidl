@@ -110,18 +110,7 @@ extern void (*gIntrTable[])(void);
 extern u32 gLinkDriverMode;
 extern u32 gLinkPauseFrames;
 
-void StartTransfer(void);
 u32 RandomRange(u32 range);
-void SerialCB(void);
-void Timer3Intr(void);
-void ResetSendBuffer(void);
-void ResetRecvBuffer(void);
-void EnableSerial(void);
-void DisableSerial(void);
-void CheckMasterOrSlave(void);
-void InitTimer(void);
-void EnqueueSendCmd(u16 *p);
-void DequeueRecvCmds(u16 (*p)[4]);
 
 u32 IsInView(s16 x, s16 y)
 {

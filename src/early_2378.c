@@ -2,6 +2,7 @@
 #include "global.h"
 #include "main.h"
 #include "link.h"
+#include "mode.h"
 
 /* early_2378.c (0x08002378-0x08002667, issue #63).
  *
@@ -24,10 +25,9 @@
  * see the comment at the site and lesson 3.488.  Issue #32 had called the
  * residue a gcse insertion one block late (lesson 3.55). */
 
-void RunFrameNoTasks(void);
+/* Declared here, not through a header: the calls in this file pass other
+   types than the definition takes (lessons 3.428, 3.517). */
 void LinkMain1(void *, void *, void *);
-int IsLinkError(void);
-void LinkErrorScreen(void);
 
 /* The 0x7700-series link handshake, twin of LinkSyncClock (src/early_2668.c)
  * with the payload kept in gRngValue/gFrameCount.  The negotiation

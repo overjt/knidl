@@ -92,21 +92,6 @@ void sub_08026308(void);
 void sub_0802b2f0(void);
 void sub_0802b368(void);
 void sub_0802b3e4(void);
-s32 CanBreakBlock(s32 x, s32 y, s32 id, s32 e);
-s32 BreakBlockAtCursor(void);
-void FreeBlockAnimAndBlock(struct Unk020061F0 *b);
-void FreeBlockAnim(struct Unk020061F0 *b);
-void sub_080319d0(struct Unk020061F0 *b, s32 n);
-void sub_08031b58(struct Unk020061F0 *b, s32 n);
-void BlockAnimWriteMetatile(struct Unk020061F0 *b);
-void sub_08031c7c(struct Unk020061F0 *b);
-void sub_08031d04(struct Unk020061F0 *b);
-void BlockAnimWriteMetatileWrapped(struct Unk020061F0 *b);
-void sub_08031f3c(struct Unk020061F0 *b);
-void sub_080324e4(struct Unk020061F0 *b);
-void Bg1BlockAnimWriteMetatile(struct Unk020061F0 *b);
-void sub_08032520(struct Unk020061F0 *b);
-void sub_080325b8(struct Unk020061F0 *b);
 
 void UpdateBlockAnims(void)
 {

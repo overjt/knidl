@@ -13,16 +13,6 @@
  * flags gTerrainProbeResult.unkD/unk5/unkE, and the ledge counter
  * gTerrainProbeResult.unk10 when the probe finds no floor. */
 
-s32 TerrainQueryPixel(u32 x, u32 y);
-s32 TerrainQueryPixelAndBelow(u32 x, u32 y);
-s32 TerrainQueryPixelAndSides(u32 x, u32 y);
-s32 GetTileFloorSnap(u16 a);
-s32 GetTilePushRight(u16 a);
-s32 GetTilePushLeft(u16 a);
-void sub_08021a10(u16 a);
-s32 sub_08021ab4(u32 x, u32 y);
-s32 GetCollisionTileAtPixel(u16 x, u16 y);
-
 /* Floor probe of a box standing on the ground (gTerrainProbeResult.unk6 != 0),
    sub_0801bde0's counterpart of sub_0801d394: a wall step into the moving
    direction first, the flags gTerrainProbeResult.unkD/unk5/unkE on top, and the

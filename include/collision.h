@@ -214,4 +214,115 @@ extern u8 *const gCollisionTileFloorSnap[];
 extern u16 gUnk_08735018[]; /* indexed by the cell's byte 2 */
 extern u16 gUnk_08735098[];
 
+
+/* Functions (defined in the files named above each group). */
+
+struct Task;
+
+/* src/hitbox_1a8c8.c */
+u8 sub_0801a8c8(void);
+u8 sub_0801af14(void);
+
+/* src/hitbox_1b24c.c */
+u8 sub_0801b24c(void);
+
+/* src/hitbox_1b7dc.c */
+void sub_0801b7dc(void);
+void sub_0801b8e4(void);
+void sub_0801b9e4(void);
+
+/* src/terrain_1baa4.c */
+void sub_0801baa4(u32 p);
+
+/* src/terrain_1c444.c */
+void sub_0801c444(const s8 *p);
+
+/* src/terrain_1c51c.c */
+void TerrainProbeBegin(const s8 *p);
+void TerrainProbeEnd(const s8 *p);
+
+/* src/terrain_1c690.c */
+void sub_0801c690(void);
+void sub_0801c7cc(void);
+
+/* src/terrain_1c8dc.c */
+void sub_0801c8dc(void);
+
+/* src/terrain_1c930.c */
+void sub_0801c930(void);
+
+/* src/terrain_1d394.c */
+void sub_0801d394(void);
+
+/* src/terrain_1d9c8.c */
+void sub_0801d9c8(void);
+void sub_0801dc88(void);
+void sub_0801dee8(void);
+
+/* src/terrain_1e178.c */
+void sub_0801e178(void);
+
+/* src/terrain_1ecd0.c */
+void sub_0801ecd0(void);
+
+/* src/terrain_1f540.c */
+void sub_0801f540(void);
+void sub_0801f6b0(void);
+void sub_0801f800(void);
+void sub_0801f9b8(void);
+void sub_0801fc48(void);
+void sub_0801fe2c(void);
+
+/* src/terrain_1ff84.c */
+void sub_0801ff84(void);
+void sub_08020698(void);
+
+/* src/terrain_2069c.c */
+u32 sub_0802069c(void);
+
+/* src/terrain_207a0.c */
+void sub_080207a0(void);
+void sub_08020b38(void);
+
+/* src/terrain_21130.c */
+void sub_08021130(void);
+
+/* src/terrain_2136c.c */
+void TerrainProbeWater(void);
+
+/* src/terrain_214e0.c */
+void sub_080214e0(void);
+void sub_08021564(void);
+s32 TerrainQueryPixel(u32 x, u32 y);
+s32 TerrainQueryPixelAndBelow(u32 x, u32 y);
+s32 TerrainQueryPixelAndSides(u32 x, u32 y);
+s32 sub_080218f8(u32 x, u32 y);
+s32 GetTileFloorSnap(u16 a);
+s32 GetTilePushDown(u16 a);
+s32 GetTilePushUp(u16 a);
+s32 GetTilePushRight(u16 a);
+s32 GetTilePushLeft(u16 a);
+void sub_08021a10(u16 a);
+s32 sub_08021ab4(u32 x, u32 y);
+
+/* src/terrain_21b18.c */
+s32 GetCollisionTileAtPixel(u16 x, u16 y);
+s32 GetCollisionTile(u32 x, u32 y);
+s32 sub_08021b70(u32 x, u32 y);
+u16 sub_08021c14(s16 x, s16 y);
+u8 IsWaterAtPixel(s16 x, s16 y);
+void sub_080222b0(s32 x, s32 y);
+void sub_0802233c(s8 *off);
+void TaskInitWaterFlags(void);
+void TaskInitWaterFlagsSlot(s32 id);
+s32 sub_08022540(u32 x, u32 y);
+u16 sub_0802259c(u16 x, u16 y);
+s32 IsFullBlockAtPixel(u16 x, u16 y);
+void sub_08022650(void);
+s32 IsTaskBelowPlayerBounds(struct Task *t);
+s32 sub_08022788(s32 y, s32 i);
+s32 ClampTaskToRoom(struct Task *t);
+s32 sub_080228c4(struct Task *t);
+s32 sub_0802294c(struct Task *t);
+
 #endif /* GUARD_COLLISION_H */

@@ -1,8 +1,11 @@
 #include "gba/gba.h"
 #include "global.h"
 #include "task.h"
+#include "main.h"
+#include "collision.h"
 #include "room.h"
 #include "player.h"
+#include "effect.h"
 
 /* player_46c00.c (0x08046C00-0x080474E7, issue #87).
  *
@@ -19,22 +22,9 @@
  * gUnk_0873C074, gUnk_0873C0C0 and gUnk_0873C128, and in the air it
  * records the held left/right direction in Task.unk34. */
 
-void TaskYieldTrampoline(s32 frames);
-void TaskSleepForever(void);
-void TaskSetFrame(s32 a);
 void RegisterCollider(u8 a, s16 x, s16 y, void *p);   /* M11's caller spelling */
-u16 sub_0802259c(u16 x, u16 y);
 void RequestScreenShake(u16 a);
-s32 PlaySfxIfLocalPlayer(s32 a0, u16 a1);
-s32 PlayerLand(s32 a0);
-s32 LoadPlayerBodyBoxRect(s32 playerIdx, u8 *src6);
-s32 LoadPlayerHitBoxSet(s32 a0, s32 a1);
-void PlayerStopAtCeilingAndWall(void);
-s32 PlayerHasCrossedWaterSurface(s32 a);
-s32 PlayerRequestLocomotion(void);
 void PlayerSetMotionXPreset(s32 a0, s32 a1);           /* M11, still asm; M11's own spelling */
-void PlayerSetMotionYPreset(s32 a0);
-s32 CreatePlayerEffect(s32 a0, s32 a1, s32 a2);
 
 void PlayerActionHammer(void)
 {

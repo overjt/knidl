@@ -1,8 +1,10 @@
 #include "gba/gba.h"
 #include "global.h"
 #include "task.h"
+#include "main.h"
 #include "room.h"
 #include "player.h"
+#include "effect.h"
 
 /* player_4cc7c.c (0x0804CC7C-0x0804DC07, issue #90).
  *
@@ -21,26 +23,10 @@
  * camera preset PlayerSetMotionXPreset(13, 72)), steps the posture timer through
  * gUnk_0873DB34 and hands over to M11's transitions. */
 
-void TaskYieldTrampoline(s32 frames);
-void TaskSleepForever(void);
 void TaskSetEntry(void *a, u32 i);
-void TaskSetMotionXFacing(s32 a, s32 b);
-void TaskSetFrame(s32 a);
-void TaskSetFrameNoFlip(s32 a);
-void PlayerStopAxes(s32 a0);
-s32 PlaySfxIfLocalPlayer(s32 a0, u16 a1);
-s32 PlayerFaceHeldDirection(void);
-void PlayerStartOffsetScript(s32 a0);
-s32 PlayerGetHeldDirection(void);
-void PlayerStopAtCeilingAndWall(void);
-s32 PlayerCheckLanding(void);
-s32 PlayerCheckEnterDoor(void);
-s32 PlayerCheckDropAbility(void);
-s32 PlayerRequestLocomotion(void);
 void PlayerSetMotionXPreset(s32 a0, s32 a1);           /* M11, still asm; M11's own spelling */
 
 s32 CreatePlayerObject(s8 player, u8 variant, s32 arg);
-s32 CreatePlayerEffect(s32 a0, s32 a1, s32 a2);
 
 void PlayerActionUFO(void)
 {

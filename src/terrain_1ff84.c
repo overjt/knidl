@@ -16,14 +16,6 @@
  * (gCollisionTileSlope[t] & 1)`) is written as two table reads, not a local: the
  * local's AND is tied in place by regmove, the cse'd read is not. */
 
-s32 TerrainQueryPixel(u32 x, u32 y);
-s32 TerrainQueryPixelAndBelow(u32 x, u32 y);
-s32 TerrainQueryPixelAndSides(u32 x, u32 y);
-s32 GetTilePushDown(u16 a);
-s32 GetTilePushUp(u16 a);
-s32 GetTilePushRight(u16 a);
-s32 GetTilePushLeft(u16 a);
-
 /* The probe set of the sixth entry point (sub_0801c230): a wall probe in
    the moving direction that steps the box onto gUnk_087338F0's step tiles
    and remembers passable wall tiles in gTerrainProbeResult.unkB bits 1 and 2,

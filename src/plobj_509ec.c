@@ -25,31 +25,17 @@
 
 /* M09's hit-box set (src/block_30804.c); only a pointer is passed here */
 struct HitBoxSet;
-void TaskExitTrampoline(void);
-void TaskYieldTrampoline(s32 frames);
+/* Declared here, not through a header: the calls in this file pass other
+   types than the definition takes (lessons 3.428, 3.517). */
 s32 QueueSprite(u32 a, u32 b, u32 c, u32 d, u32 e, s16 f);
-void TaskMove(void);
-void TaskDrawWorldInViewOrFree(void);
-void TaskSleepForever(void);
 void TaskSetEntry(void *a, u32 i);
-void TaskSetFrameByFacing(s16 a);
-void TaskSetMotionXFacing(s32 a, s32 b);
-void TaskStopX(void);
-void TaskStop(void);
 u32 IsWorldPosOnScreen(s16 a, s16 b);
 void RegisterCollider(u8 a, s16 x, s16 y, void *p);   /* M11's caller spelling */
 void sub_0801c230(const s8 *p);
 void sub_0802205c(s8 *box);
 s32 TaskBreakBlocks(struct HitBoxSet *p, s32 e);   /* M14's callers test r0 unnarrowed (good/sub_08050c48.c); landed M09/M12/M13 files spell it u16 */
-s32 PlaySfxIfLocalPlayer(s32 a0, u16 a1);
-void sub_08050814(void);
 
 s32 CreatePlayerObject(s8 player, u8 variant, s32 arg);
-void sub_08050c48(void);
-void sub_08050e84(void);
-void sub_08050f80(void);
-void sub_080512f8(void);
-void sub_080513d4(void);
 
 void sub_080509ec(void)
 {

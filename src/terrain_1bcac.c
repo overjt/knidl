@@ -21,46 +21,10 @@
  * position as the FIRST operand of the narrowed adds (lesson 3.359).
  */
 
-s32 TerrainQueryPixelAndSides(u32 x, u32 y);
-void TerrainProbeBegin(const s8 *p);
-void sub_080207a0(void);
-void sub_0801c690(void);
-void sub_0801c8dc(void);
-void sub_0801d394(void);
-void sub_0801dc88(void);
-void sub_0801e178(void);
-void sub_0801f540(void);
-void sub_0801f800(void);
+/* Declared here, not through a header: the calls in this file pass other
+   types than the definition takes (lessons 3.428, 3.517). */
 void sub_08022810(void);
-void sub_0801fc48(void);
-void sub_0801ff84(void);
-void TerrainProbeWater(void);
-void sub_080222b0(s16 x, s16 y);
-s32 GetTilePushUp(u16 a);
-s32 GetTilePushLeft(u16 a);
 
-void TerrainProbeBegin(const s8 *p);
-void TerrainProbeEnd(const s8 *p);
-void sub_0801c690(void);
-void sub_0801c7cc(void);
-void sub_0801c8dc(void);
-void sub_0801c930(void);
-void sub_0801d394(void);
-void sub_0801d9c8(void);
-void sub_0801dc88(void);
-void sub_0801dee8(void);
-void sub_0801e178(void);
-void sub_0801ecd0(void);
-void sub_0801f540(void);
-void sub_0801f6b0(void);
-void sub_0801f800(void);
-void sub_0801f9b8(void);
-void sub_0801fc48(void);
-void sub_0801fe2c(void);
-void sub_0801ff84(void);
-void sub_080214e0(void);
-void sub_08021564(void);
-void TerrainProbeWater(void);
 void sub_08022810(void);
 
 void sub_0801bcac(const s8 *p)

@@ -1,6 +1,7 @@
 #include "gba/gba.h"
 #include "global.h"
 #include "task.h"
+#include "sound.h"
 #include "room.h"
 #include "player.h"
 #include "effect.h"
@@ -47,34 +48,18 @@ extern vu16 gFadeInterval;
 extern vu16 gFadeBlankAtWhite;
 extern u16 *gFadeKeepMask;
 
-void TaskExitTrampoline(void);
-void TaskYieldTrampoline(s32 frames);
 void RequestCopy(u32 mode, u32 src, u32 dst, u32 size);
 s32 QueueSprite(u32 a, u32 b, u32 c, u32 d, u32 e, s16 f);  /* sprite draw; callers pass f sign-extended (lsls/asrs #16), the early_1518 definition says u16 (lesson 3.428) */
 void CallTableEntry(u32 idx, u32 count, void (**fns)(void));   /* if (idx < count) fns[idx](); */
 u32 RandomRange(u32 range);                                 /* random 0 .. range-1 */
 void BlendColors(u16 *src, u16 *dst, s32 ratio, s32 count, u16 *out);
 s32 PlaySfx(s32 id);                                    /* play a sound effect */
-void SetBgmVolume(u16 volume);
 s32 TaskCreateFrom(u32 type, s32 idx);                         /* spawn a task */
-void TaskMove(void);
 u32 TaskIsOnScreen(void);
 u32 TaskIsInView(void);
-void TaskDrawScreen(void);
 void TaskDrawWorld(void);
 void TaskSleepForever(void);                                     /* end the running task */
 void TaskStop(void);
-void sub_0801a3e4(void);
-void SetCameraFocusOrAnchor(s32 x, s32 y);
-void sub_080c9040(void);
-void sub_080c90c8(void);
-void sub_080c9418(void);
-void sub_080c972c(void);
-void sub_080c97a0(void);
-void sub_080c9974(void);
-void sub_080c9cf0(void);
-void sub_080ca570(void);
-void sub_080ca640(void);
 
 /* Task type #101 (class 3): variant 0 loads the graphics and spawns the
    other variants; variants 1-11 run the anchor table gUnk_087573F4[]. */

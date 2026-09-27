@@ -2,6 +2,7 @@
 #include "global.h"
 #include "task.h"
 #include "main.h"
+#include "menu.h"
 #include "save.h"
 
 /* save_b6474.c (0x080B6474-0x080B6A8F, issue #94).
@@ -23,8 +24,6 @@
  * every use (lesson 3.465); in the pair, one counter n for every flat loop
  * and for the band loop's outer index, and the zero of the calling loop in a
  * variable (3.471). */
-
-void SetWindow(s32 in, s32 out, s32 h, s32 v, s32 win);
 
 s32 sub_080b6474(void)
 {

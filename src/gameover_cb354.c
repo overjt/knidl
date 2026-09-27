@@ -23,15 +23,9 @@
  *       gUnk_087582B8[Task.updateState] (GameOverPlayerUpdate), re-entered through
  *       GameOverPlayerEnterState. */
 
-void TaskExitTrampoline(void);
-void TaskYieldTrampoline(s32 frames);
 void CallTableEntry(u32 idx, u32 count, void (**fns)(void));   /* if (idx < count) fns[idx](); */
 void BlendColors(u16 *src, u16 *dst, s32 ratio, s32 count, u16 *out);
-void TaskMove(void);
-void TaskDrawScreen(void);
 void TaskSleepForever(void);                                     /* end the running task */
-void DrawScoreToBgMap(s32 v, s32 x, s32 y);
-void GameOverPlayerUpdate(void);
 
 /* Task type #260 (class 4): a still sprite, frame and position picked by
    Task.unk18. */

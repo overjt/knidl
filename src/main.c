@@ -2,7 +2,13 @@
 #include "global.h"
 #include "main.h"
 #include "mode.h"
+#include "menu.h"
+#include "cutscene.h"
 #include "room.h"
+#include "effect.h"
+#include "save.h"
+#include "subgame.h"
+#include "ending.h"
 
 /* AgbMain (0x08007300-0x080075B7, issue #33): the game's main loop, entered
  * from crt0 (`Start`) via `bx 0x08007301` after AgbInit (rom-map.md §4).  An
@@ -14,30 +20,6 @@
  * Case bodies appear in source order (this order reproduces the ROM layout);
  * the compiler cross-jumps identical tails (e.g. the "state = 3" stores of
  * cases 1/3 and the "state = 5" tails of cases 10/21). */
-
-void InitSaveSlots(void);
-void sub_0800b44c(void);
-void BootLogoMain(void);
-void TitleMain(void);
-void MainMenuMain(void);
-void ResetScoresAndMaxHealth(void);
-void ResetPlayerRecords(void);
-void CutsceneMain(void);
-void sub_0800b5dc(void);
-void sub_08007624(void);
-void sub_0800b628(void);
-void sub_0800791c(void);
-void sub_0800783c(void);
-void sub_0805b110(void);
-void sub_08007f9c(void);
-void GameOverMain(void);
-void SubGameMain(void);
-void ResetPlayTime(void);
-void sub_08022f50(void);
-void sub_08008a00(void);
-void EndingMain(void);
-void CreditsMain(void);
-void FinalResultsScreen(void);
 
 void AgbMain(void)
 {

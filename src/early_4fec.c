@@ -118,8 +118,7 @@ struct Task {
     /* 0x8C */ u32 w8C;
 };
 
-/* Not from task.h: this file's view of gTaskSlotTypes differs (lesson 3.517).
-   */
+/* Not from task.h: this file's view of gTaskSlotTypes differs (lesson 3.517). */
 extern struct Task gTasks[];
 extern vu16 gTaskSlotTypes[];
 extern vu32 gTaskCount;

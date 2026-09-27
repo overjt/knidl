@@ -5,9 +5,6 @@
 #include "player.h"
 #include "actor.h"
 
-void TaskMove(void);
-void sub_0803ddc0(void);
-
 void sub_0801a76c(s32 i)
 {
     struct Task *t = gCurTask;

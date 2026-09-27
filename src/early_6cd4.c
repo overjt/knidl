@@ -103,18 +103,7 @@ extern u8  gTaskSkipMaskStack[2][64];
 extern u8  gTaskSkipMaskDepth;
 extern struct Task *gCurTask;
 
-void StartTransfer(void);
 u32 RandomRange(u32 range);
-void SerialCB(void);
-void Timer3Intr(void);
-void ResetSendBuffer(void);
-void ResetRecvBuffer(void);
-void EnableSerial(void);
-void DisableSerial(void);
-void CheckMasterOrSlave(void);
-void InitTimer(void);
-void EnqueueSendCmd(u16 *p);
-void DequeueRecvCmds(u16 (*p)[4]);
 
 void LinkVSync(void)
 {

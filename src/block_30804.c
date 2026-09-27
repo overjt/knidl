@@ -2,6 +2,7 @@
 #include "global.h"
 #include "task.h"
 #include "main.h"
+#include "hud.h"
 
 /* block_30804.c (0x08030804-0x080318B3, issue #92).
  *
@@ -111,7 +112,6 @@ extern s16 gViewRect[];
 extern u8 gUnk_0200B078;
 
 s32 PlaySfx(s32 id);
-void AddPlayerScore(s32 a, u32 b);
 s32 CreateBlockBreakEffect(s32 x, s32 y);
 void RequestScreenShake(u16 a);
 s32 CreateStageEffect(s32 a, s32 x, s32 y);

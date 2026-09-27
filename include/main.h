@@ -128,4 +128,89 @@ extern const u8 gUnk_0872EB14[4][4][2]; /* shape/size -> {w,h} half-dims */
 extern const u8 gBootSignature[];
 extern s16 gCosTable[]; /* trig table (mid pointer) */
 
+
+/* Functions (defined in the files named above each group). */
+
+struct TransferNode;
+
+/* src/agb_init.c */
+void AgbInit(void);
+
+/* src/early_08e8.c */
+void UpdateFade(void);
+
+/* src/early_0de4.c */
+void EndFrame(void);
+
+/* src/early_10cc.c */
+void VBlankIntr(void);
+
+/* src/early_11ac.c */
+void CopyOamAndPalette(void);
+void ReadKeys(void);
+void FlushDisplayRegs(void);
+void ProcessCopyQueue(void);
+void SetHBlankIntr(void (*fn)(void));
+void ClearHBlankIntr(void);
+void SetVCountIntr(void (*fn)(void), u8 vcount);
+void ClearVCountIntr(void);
+
+/* src/early_1518.c */
+void IntrDummy(void);
+void sub_0800151c(void);
+void sub_08001560(void);
+void RequestCopyList(struct TransferNode *node);
+void ResetOamShadow(void);
+void ResetSpriteQueue(void);
+void RunBuildOamInIwram(void);
+
+/* src/early_1b08.c */
+void BuildOam(void);
+
+/* src/early_1fd0.c */
+void ResetBgScroll(void);
+void ResetFadeAndBlend(void);
+void BeginFadeInFromWhite(void);
+void BeginFadeInFromBlack(void);
+void BeginFastFadeInFromWhite(void);
+void BeginFadeOutToWhite(void);
+void BeginFastFadeOutToWhite(void);
+void BeginFadeOutToBlack(void);
+u32 CheckWarmBoot(void);
+void ResetTasksAndOam(void);
+void ResetPlayTime(void);
+void RunFrameNoTasks(void);
+void RunFrame(void);
+void LinkStartKeyExchange(void);
+void LinkStopKeyExchange(void);
+void LinkStartRecordExchange(void);
+void LinkRequestSync(void);
+
+/* src/early_5d9c.c */
+void TaskDrawWorld(void);
+void TaskDrawWorldOrFree(void);
+void TaskDrawWorldInView(void);
+void TaskDrawWorldInViewOrFree(void);
+void TaskDrawWorldLoadTiles(void);
+void TaskDrawWorldTilesLoaded(void);
+void sub_080060c0(void);
+void TaskSleepForever(void);
+void TaskSetFrameByFacing(s16 a);
+void TaskSetMotionX(s32 a, s32 b, s32 c);
+void TaskSetMotionXFacing(s32 a, s32 b);
+void TaskStopX(void);
+void TaskSetMotionY(s32 a, s32 b, s32 c);
+void TaskStopY(void);
+void TaskSetMotion(s32 a, s32 b, s32 c, s32 d, s32 e, s32 f);
+void TaskStop(void);
+void TaskStopSlot(u32 i);
+void TaskUpdateFlip(void);
+void TaskSetFrame(s32 a);
+void TaskSetFrameNoFlip(s32 a);
+void TaskSetFrameFlip(s32 a);
+void TaskStepForward(s16 a);
+
+/* src/main.c */
+void AgbMain(void);
+
 #endif /* GUARD_MAIN_H */

@@ -90,4 +90,185 @@ extern u32 gUnk_087559C0[];
 extern u32 gUnk_087559DC[];
 extern struct Unk02007D70Cmd **gRoomBgAnimScripts[];
 
+
+/* Functions (defined in the files named above each group). */
+
+struct Unk0802D25C;
+struct Unk0802D278;
+
+/* src/camera_296a0.c */
+void sub_080296a0(void);
+void StreamBg123Maps(void);
+void StreamBg23Maps(void);
+void StreamBg23Rows(void);
+void CameraWriteScrollParallax(void);
+void CameraWriteScrollHBlank(void);
+void CameraWriteScrollBg23(void);
+void CameraWriteScrollBg123(void);
+void sub_08029b30(void);
+void SpawnRoomObjectsScrolledIn(void);
+
+/* src/camera_29c74.c */
+void UpdatePlayerGroupCenter(void);
+void SetCameraBoundsToGroup(void);
+void sub_08029ef4(void);
+void UpdatePlayerCameras(void);
+void sub_0802a260(void);
+void sub_0802a340(void);
+void SetPlayerBoundsFromCamera(void);
+void sub_0802a484(void);
+void SetViewRectToPlayers(void);
+void sub_0802a568(void);
+void sub_0802a63c(void);
+void SpawnRoomObjectsInRect(s32 x0, s32 x1, s32 y0, s32 y1);
+
+/* src/bgmap_2a9cc.c */
+void DrawBg2View(s32 px, s32 py);
+void DrawBg2Row(s32 x0, s32 x1, s32 y);
+void DrawBg2Column(s32 x, s32 y0, s32 y1);
+void sub_0802aae8(s32 x);
+void DrawBg3View(s32 px, s32 py);
+void DrawBg3Row(s32 x0, s32 x1, s32 y);
+void DrawBg3Column(s32 x, s32 y0, s32 y1);
+void DrawBg123View(s32 px, s32 py);
+void DrawBg123Row(s32 x0, s32 x1, s32 y);
+void DrawBg123Column(s32 x, s32 y0, s32 y1);
+void DrawBg23View(s32 px, s32 py);
+void DrawBg23Row(s32 x0, s32 x1, s32 y);
+void DrawBg23Column(s32 x, s32 y0, s32 y1);
+void DrawBg23FullRows(s32 py);
+void DrawBg23FullRow(s32 y);
+void DrawBg1Tile(s32 x, s32 y);
+void DrawBg2Tile(s32 x, s32 y);
+void DrawBg3Tile(s32 x, s32 y);
+void sub_0802b074(s32 px);
+void sub_0802b168(s32 x, s32 y);
+void sub_0802b25c(s32 x);
+void sub_0802b29c(s32 x, s32 y);
+
+/* src/bgmap_2b2f0.c */
+void sub_0802b2f0(void);
+void sub_0802b368(void);
+void sub_0802b3e4(void);
+void SetBg23ScreenSize(u16 a);
+void SetBg3ScreenSize(u16 a);
+
+/* src/camera_2b4bc.c */
+void CameraFollowFocus(void);
+void CameraSlideToScrollLock(void);
+void CameraFollowScrollLocked(void);
+void CameraSlideFromScrollLock(void);
+
+/* src/camera_2c42c.c */
+void CameraHoldAnchor(void);
+void sub_0802c550(void);
+void sub_0802c680(void);
+void sub_0802c7f4(void);
+void CameraSnapBoundsToAnchor(void);
+void CameraSnapPlayersToAnchor(void);
+void CameraSnapToFocus(void);
+void StopScreenShake(void);
+void UpdateScreenShake(void);
+void StartScrollLock(s32 x0, s32 x1, s32 y0, s32 y1);
+
+/* src/camera_2d01c.c */
+void CameraLeaveScrollLock(void);
+void CameraStartHoldAnchor(void);
+void sub_0802d0c4(void);
+void LoadRoomBgAnims(void);
+void UpdateBgAnims(void);
+void sub_0802d25c(struct Unk0802D25C *a);
+void sub_0802d278(struct Unk02007D70 *p, struct Unk0802D278 *q);
+void sub_0802d294(struct Unk02007D70 *p);
+void sub_0802d2f0(u32 x, u32 y, u32 v);
+void sub_0802d32c(struct Unk02007D70 *p);
+s32 CreateMapEvent(s32 a);
+void Task_MapEvent(void);
+
+/* src/camtask_2d38c.c */
+void sub_0802d38c(void);
+s32 sub_0802d478(s32 x, s32 y);
+void sub_0802d4bc(void);
+s32 sub_0802d5b4(s32 x, s32 y);
+void sub_0802d5f8(void);
+void sub_0802d6cc(void);
+void sub_0802d96c(void);
+void sub_0802da8c(void);
+void sub_0802dcb4(void);
+void sub_0802e3ac(void);
+
+/* src/obj_2eac8.c */
+s32 sub_0802eac8(s32 x, s32 y, s32 a);
+void sub_0802eb28(void);
+void sub_0802eba4(void);
+s32 sub_0802ec1c(s32 x, s32 y, s32 a);
+void sub_0802ec7c(void);
+void sub_0802ed20(void);
+s32 sub_0802ed94(s32 x, s32 y, s32 a);
+void sub_0802ede4(void);
+void sub_0802ee88(void);
+s32 sub_0802ef90(s32 x, s32 y, s32 a, s32 b);
+void sub_0802eff8(void);
+s32 sub_0802f05c(s32 x, s32 y, s32 a, s32 b);
+void sub_0802f0cc(void);
+void sub_0802f110(void);
+void sub_0802f1dc(void);
+s32 sub_0802f1fc(s32 x, s32 y, s32 a, s32 b);
+void sub_0802f26c(void);
+void sub_0802f2b0(void);
+void sub_0802f2fc(void);
+s32 sub_0802f31c(s32 x, s32 y, s32 a, s32 b);
+void sub_0802f38c(void);
+void sub_0802f3d0(void);
+void sub_0802f400(void);
+s32 sub_0802f420(s32 x, s32 y, s32 a);
+void sub_0802f480(void);
+s32 sub_0802f4c8(s32 x, s32 y, s32 a, s32 b);
+s32 sub_0802f53c(s32 x, s32 y, s32 a, s32 b);
+s32 sub_0802f5b4(s32 x, s32 y, s32 a, s32 b);
+
+/* src/obj_2f62c.c */
+void sub_0802f62c(void);
+void sub_0802f684(void);
+void sub_0802f6c0(void);
+void sub_0802f6f4(void);
+void sub_0802f718(void);
+s32 sub_0802f7dc(s32 x, s32 y, s32 a, s32 b);
+void sub_0802f84c(void);
+void sub_0802f8c8(void);
+void sub_0802f93c(void);
+s32 sub_0802fa3c(s32 x, s32 y, s32 a, s32 b);
+void sub_0802faa8(void);
+void sub_0802fd98(void);
+s32 sub_0802fdf4(s32 x, s32 y, s32 a, s32 b);
+void sub_0802fe64(void);
+void DoorObjectDraw(void);
+void sub_0802ff70(void);
+s32 sub_0802ffe8(s32 a, s32 x, s32 y);
+void sub_08030034(void);
+s32 sub_08030074(s32 a);
+void sub_080300c0(void);
+s32 sub_08030100(u8 a);
+s32 sub_08030140(u8 a, s32 b);
+void sub_080301a4(void);
+s32 CreateStageEffect(s32 a, s32 x, s32 y);
+
+/* src/obj_30238.c */
+void Task_StageEffect(void);
+void sub_08030254(void);
+void sub_080302cc(void);
+void sub_08030404(void);
+void sub_080304ec(void);
+void sub_08030580(void);
+void sub_08030604(void);
+
+/* src/obj_306b4.c */
+s32 QueueWorldSprite(u8 a, s32 b, u16 c, u16 d, s16 x, s16 y);
+void ResetBlockAnims(void);
+void ResumeBlockAnims(void);
+void PauseBlockAnims(void);
+void sub_080307b0(void);
+void sub_080307cc(void);
+void sub_080307e8(void);
+
 #endif /* GUARD_CAMERA_H */

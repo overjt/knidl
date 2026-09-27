@@ -3,8 +3,12 @@
 #include "task.h"
 #include "main.h"
 #include "link.h"
+#include "mode.h"
+#include "hud.h"
+#include "collision.h"
 #include "room.h"
 #include "camera.h"
+#include "player.h"
 
 /* level_242d0.c (0x080242D0-0x080261BF, issue #93).
  *
@@ -45,66 +49,6 @@ struct Unk020055D8Entry
 };
 
 void RequestCopy(u32 mode, u32 src, u32 dst, u32 size);
-void ResetTasksAndOam(void);
-void TaskSleepForever(void);
-void LoadGfxSet(u16 a0);
-void HudReset(void);
-s32 AddPlayerLives(s32 a, u32 b);
-void HudUpdateAbilityPanel(void);
-s32 GetCollisionTileAtPixel(u16 x, u16 y);
-void CreateRoomTask(s32 a);
-void RoomTaskDraw(void);
-void RoomTaskUpdateCamera(void);
-void sub_08023748(void);
-void sub_080237a4(void);
-void sub_080237fc(void);
-void sub_0802385c(void);
-void sub_080238a4(void);
-void sub_080238ec(void);
-void sub_0802695c(void);
-void InitRoomBgLayout(void);
-void sub_08028280(s32 a);
-void sub_08028304(void);
-void CalcBg3Parallax(void);
-void CalcRoomBounds(void);
-void CameraResetBoundsToGroup(void);
-void CameraResetBounds(void);
-void sub_08028b8c(void);
-void SetRoomEntryPoint(void);
-void CameraInitPos(void);
-void LoadBg2Gfx(void);
-void LoadBg3Gfx(void);
-void ClearBg2Bg3Maps(void);
-void SelectBg3MapShape(void);
-void LoadBg3Map(void);
-void SpawnRoomObjectsInView(void);
-void InitDoors(void);
-void CameraUpdatePos(void);
-void StreamBg2Map(void);
-void StreamBg3Map(void);
-void CameraWriteScrollParallax(void);
-void SetViewRectToPlayers(void);
-void DrawBg2View(s32 px, s32 py);
-void DrawBg3View(s32 px, s32 py);
-void DrawBg23FullRows(s32 py);
-void sub_0802b074(s32 px);
-void CameraFollowFocus(void);
-void CameraFollowScrollLocked(void);
-void CameraHoldAnchor(void);
-void CameraSnapToFocus(void);
-void StopScreenShake(void);
-void UpdateScreenShake(void);
-void LoadRoomBgAnims(void);
-void UpdateBgAnims(void);
-void ResetBlockAnims(void);
-void CreatePlayer(s32 a0);
-void InitPlayerState(s32 a0);
-void sub_080b4e40(void);
-void sub_080b5024(void);
-void sub_0802457c(void);
-void sub_08024598(void);
-void sub_080245d0(void);
-void sub_08024698(s32 a0);
 
 void sub_080242d0(void)
 {

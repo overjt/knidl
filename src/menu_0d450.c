@@ -7,6 +7,7 @@
 #include "mode.h"
 #include "menu.h"
 #include "room.h"
+#include "save.h"
 
 /* menu_0d450.c (0x0800D450-0x0800DAF7, issue #99).
  *
@@ -18,33 +19,7 @@
  * partners (sub_0800da74) and leaves for game state 5 or 13.
  * CreateFileSelectSprites spawns the file-select sprite tasks #238-#240. */
 
-void RunFrame(void);
-void RunFrames(s32 count);
-s32 PlayBgm(s32 songId);
 s32 PlaySfx(s32 id);
-void StopAllSfx(void);
-void FadeOutBgm(s32 speed);
-void LinkSetupInit(void);
-void LinkSetupStop(void);
-void MultiBootInitWithParams(u8 *start, u8 *end);
-void LinkSetupRequestStart(void);
-void LinkSetupMain(u16 a);
-s32 TaskCreateFrom(u32 type, s32 idx);
-u32 ConnectLink(void);
-void LinkErrorScreen(void);
-void LoadGfxSet(u16 a0);
-void MenuSetupFileMenu(void);
-void MenuEnterModeList(void);
-void sub_0800d310(void);
-void sub_0800d35c(s32 a);
-void sub_0800d404(void);
-void BgScrollStartX(s32 speed, s32 dist, s32 bg);
-void BgScrollFinish(void);
-void StopHBlankScroll(void);
-void StartHBlankScroll(s32 a);
-void CopySaveSlotToLinkSlot(void);
-void sub_0800da18(void);
-s32 sub_0800da74(void);
 
 void sub_0800d450(void)
 {

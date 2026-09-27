@@ -2,6 +2,7 @@
 #include "global.h"
 #include "task.h"
 #include "main.h"
+#include "link.h"
 #include "room.h"
 #include "player.h"
 #include "effect.h"
@@ -36,39 +37,17 @@
 
 /* M09's hit-box set (src/block_30804.c); only a pointer is passed here */
 struct HitBoxSet;
-void TaskExitTrampoline(void);
-void TaskYieldTrampoline(s32 frames);
 u32 BeginFade(u16 steps, s16 delta, u16 *mask);   /* callers pass -4 as movs/negs (src/player_47fe8.c spells it s16 too) */
 void RequestCopy(u32 mode, void *src, void *dst, u32 size);   /* early_1518; effect_5afac's pointer spelling */
 s32 QueueSprite(u32 a, u32 b, u32 c, u32 d, u32 e, s16 f);   /* callers pass f sign-extended (lsls/asrs #16); the early_1518 definition says u16 */
+/* Declared here, not through a header: the calls in this file pass other
+   types than the definition takes (lessons 3.428, 3.517). */
 s32 DrawAffineSprite(s32 a, s16 b, s16 c, s32 d);
 void BlendColors(u16 *src, u16 *dst, s32 ratio, s32 count, u16 *out);
-void TaskSetSkipMask(u8 val, s32 idx);
 void TaskFree(s32 id);                         /* kill task (M09+ spelling, 49 landed files) */
-void TaskMove(void);
-void TaskMoveRelativeToParent(void);
-void TaskDrawWorld(void);
-void TaskDrawWorldInView(void);
-void TaskSetFrameByFacing(s16 a);
-void TaskSetMotionXFacing(s32 a, s32 b);
-void TaskStop(void);
 u32 IsWorldPosOnScreen(s16 a, s16 b);   /* the ROM tests r0 unnarrowed (src callers spell u32) */
-u32 IsInView(s16 x, s16 y);
-void TaskRestoreSkipMask(u32 idx);
-void TaskSaveSkipMask(u32 idx);
 void RegisterCollider(u8 a, s16 x, s16 y, void *p);   /* M11's caller spelling */
 u16 TaskBreakBlocksAt(struct HitBoxSet *p, s32 x, s32 y, s32 e);
-void sub_0803dfc8(void);
-void FreezeOtherTasks(s32 a0);
-void sub_0803f834(u16 a0, void *src);
-void sub_08065e6c(void);
-void sub_08065ed0(void);
-void sub_0805a508(void);
-void sub_0805ab04(void);
-void sub_0805ac50(void);
-void sub_0805ae00(void);
-void sub_0805af44(void);
-void sub_0805af80(void);
 
 void sub_0805a358(void)
 {

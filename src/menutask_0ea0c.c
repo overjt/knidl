@@ -17,16 +17,11 @@
  * palettes of the link-play screen (menu screen 8) through BlendColors
  * blends. */
 
-void TaskExitTrampoline(void);
-void TaskYieldTrampoline(s32 frames);
 void RequestCopy(u32 mode, u32 src, u32 dst, u32 size);
+/* Declared here, not through a header: the calls in this file pass other
+   types than the definition takes (lessons 3.428, 3.517). */
 s32 QueueSprite(u32 a, u32 b, u32 c, u32 d, u32 e, s16 f);
 void BlendColors(u16 *src, u16 *dst, s32 ratio, s32 count, u16 *out);
-void TaskMove(void);
-u8 TaskIsOnScreenNoCamera(void);
-void SetBlend(s32 a, s32 b, s32 c, s32 d);
-void sub_0800ec08(void);
-void sub_0800ecb8(void);
 
 void sub_0800ea0c(void)
 {

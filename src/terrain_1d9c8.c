@@ -17,12 +17,6 @@
  * instead.  The ceiling probe's two side tests each end with their own
  * `gTerrainProbeY += ...; gTerrainProbeResult.unk1++;` (lesson 3.430). */
 
-s32 TerrainQueryPixel(u32 x, u32 y);
-s32 TerrainQueryPixelAndSides(u32 x, u32 y);
-s32 GetTilePushDown(u16 a);
-s32 GetTilePushRight(u16 a);
-s32 GetTilePushLeft(u16 a);
-
 /* Right wall probe of a box in the air (gTerrainProbeResult.unk6 == 0), the
    mirror image of sub_0801dc88: the wall cell's attribute (1) goes to
    gTerrainProbeResult.unk0. */

@@ -36,77 +36,30 @@
  */#include "gba/gba.h"
 #include "global.h"
 #include "task.h"
+#include "main.h"
 #include "actor.h"
 #include "enemy.h"
 
 /* Externals */
-extern void TaskYieldTrampoline(u32 a);
-extern void TaskExitTrampoline(void);
-extern void TaskFaceLikeParent(void);
-extern u16 sub_08066630(u16 a);
-extern void ActorDrawWorldInView(void);
-extern void sub_080653ec(void);
-extern void ActorMove(void);
+/* Declared here, not through a header: the calls in this file pass other
+   types than the definition takes (lessons 3.428, 3.517). */
 extern void CallTableEntry(u32 a, u32 b, u32 *c);
 extern u32 RandomRange(u32 range);
 extern void PlaySfx(s32 id);
-extern void TaskFree(s32 id);
-extern void TaskSleepForever(void);
 extern void TaskSetEntry(void *fn, s32 i);
-extern void TaskSetMotionX(s32 a, s32 b, s32 c);
-extern void TaskSetMotionXFacing(s32 a, s32 b);
-extern void TaskSetMotionY(s32 a, s32 b, s32 c);
-extern void TaskStopX(void);
-extern void TaskStopY(void);
-extern void TaskStop(void);
-extern void TaskUpdateFlip(void);
-extern void TaskSetFrame(s32 a);
 extern void RequestScreenShake(s32 a);
 extern void ActorSetState(u16 v);
 extern void ActorSetHitReactions(u32 *p);
 extern void ActorSetAttackBox(u32 v);
 extern void sub_080639f0(u32 v);
 extern void sub_08063a00(u32 v);
-extern s32 TaskGetNearestPlayerDx(void);
-extern s32 TaskGetNearestPlayerDy(void);
-extern void TaskFaceNearestPlayer(void);
-extern s32 ActorStartAnim(struct AnimCmd *p);
-extern s32 ActorStepAnim(void);
-extern s32 CreateActorFromDescAtOffsetFacing(struct ActorSpawn *p, u8 keepPrio);
-extern s32 CreateChildTask(u32 type, int xArg, int yArg, int prioArg);
-extern s32 CreateChildTaskHere(u32 type, u8 keepPrio);
-extern u16 sub_08066088(u32 mode);
-extern void ActorFlashPalette(void *src, u32 size);
-extern void sub_08066468(void);
-extern void sub_08066480(struct GfxHeader *h, u32 src, u32 size);
-extern void ActorLoadHeaderPalette(struct GfxHeader *h);
-extern void sub_08066580(void);
-extern void sub_080666cc(struct AnimCmd *p);
-extern void sub_080667c0(u8 a, u16 b);
-extern void sub_0806684c(void);
-extern void sub_08066ae0(void);
-extern u8 sub_08067060(void);
 extern s32 sub_08067120(s16 x, s16 y, u16 dir, u8 p8);
 extern void sub_08068f68(void);
 extern u32 ActorCheckHitsWithBox(s32 a);
 extern u8 ActorCollideTerrain(void);
 extern s32 ActorReactToHit(void);
 extern u8 sub_0806acf8(void);
-extern void sub_0806ad18(void);
-extern void ActorDie(void);
-extern s16 CreateStarFlash(u8 kind, s32 dx, s32 dy);
-extern s16 CreateDustTrail(u8 flag, u16 vx, s32 c, s32 d);
-extern void sub_0806cffc(s16 dx, s16 dy);
 extern s32 Div(s32 numerator, s32 denominator);
-
-/* Defined below */
-void PoppyBrosSrEnterState(void);
-void PoppyBrosSrUpdate(void);
-void sub_08091954(void);
-void sub_08091a30(void);
-void sub_08091a98(void);
-void sub_08091d24(void);
-void sub_08091e18(void);
 
 void PoppyBrosSrInit(void)
 {

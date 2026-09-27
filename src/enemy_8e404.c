@@ -35,107 +35,27 @@
 #include "gba/gba.h"
 #include "global.h"
 #include "task.h"
+#include "main.h"
 #include "actor.h"
 #include "enemy.h"
 
 /* Externals */
-extern void TaskYieldTrampoline(u32 a);
+/* Declared here, not through a header: the calls in this file pass other
+   types than the definition takes (lessons 3.428, 3.517). */
 extern void CallTableEntry(u32 a, u32 b, u32 *c);
 extern u32 RandomRange(u32 range);
-extern void TaskMove(void);
-extern void TaskSleepForever(void);
 extern void TaskSetEntry(void *a, u32 i);
-extern void TaskStopY(void);
-extern void TaskStop(void);
-extern void TaskSetFrame(s32 a);
-extern void TaskSetFrameNoFlip(s32 a);
-extern void TaskSetFrameFlip(s32 a);
 extern void ActorSetState(u16 v);
 extern void ActorSetHitReactions(void *p);
 extern void ActorSetAttackBox(void *p);
-extern s32 TaskFindNearestPlayer(void);
-extern s32 TaskGetNearestPlayerDx(void);
-extern void TaskFaceNearestPlayer(void);
-extern void TaskTurnAround(void);
 extern void AngleToVector(s32 a, s32 b);
-extern u8 TaskGetXDirBitToNearestPlayer(void);
-extern s32 CreateActorFromDescAtOffsetFacing(struct ActorSpawn *p, u8 keepPrio);
-extern s32 CreateChildTaskAtOffsetFacing(u32 type, s16 dx, s16 dy, u8 keepPrio);
-extern void ActorDrawWorldInViewOrDestroy(void);
 extern void sub_08066b34(u32 *p);
-extern void sub_08066b70(void);
 extern void sub_08066c08(u32 *p, s32 b);
 extern void sub_08066c3c(u32 *p);
 extern void ActorCheckHits(void);
 extern u8 ActorCollideTerrain(void);
 extern u8 sub_08069888(void);
 extern u32 ActorReactToHit(void);
-extern void sub_0806a0f0(s32 a);
-extern void ActorDie(void);
-extern void sub_0806ee2c(void);
-extern void sub_0808e070(void);
-extern void sub_0808e254(void);
-extern void sub_0808e2b4(void);
-extern void sub_0808e33c(void);
-extern void sub_0808e36c(void);
-
-/* Forward declarations */
-void LaserBallInit(void);
-void LaserBallUpdate(void);
-void LaserBallEnterState(void);
-void sub_0808e480(void);
-void sub_0808e510(void);
-void sub_0808e54c(void);
-void sub_0808e5cc(void);
-void sub_0808e610(void);
-void sub_0808e704(void);
-void sub_0808e730(void);
-void sub_0808e800(void);
-void sub_0808e804(void);
-void sub_0808e848(void);
-void sub_0808e870(void);
-void sub_0808e8a0(void);
-s32 sub_0808e8a4(void);
-s32 sub_0808e8c4(void);
-void sub_0808e8d4(void);
-void sub_0808e914(void);
-void sub_0808e964(void);
-void sub_0808e994(void);
-void sub_0808e9b0(void);
-void sub_0808e9d4(void);
-void sub_0808ea00(void);
-void sub_0808eb10(void);
-void sub_0808eb24(void);
-void sub_0808eb64(void);
-void sub_0808eb94(void);
-void sub_0808ebdc(void);
-s32 sub_0808ebe0(void);
-s32 sub_0808ec34(void);
-s32 sub_0808ec90(void);
-s32 sub_0808ecb4(void);
-s32 sub_0808ece0(void);
-s32 sub_0808ed0c(void);
-void sub_0808ed38(void);
-void sub_0808ee60(void);
-void sub_0808ee9c(void);
-void sub_0808eec4(s32 a);
-void sub_0808ef88(void);
-void sub_0808efdc(void);
-void sub_0808f058(void);
-void sub_0808f0d0(void);
-void sub_0808f1b4(u16 a, void *b);
-void Task_Shotzo(void);
-void sub_0808f26c(void);
-void sub_0808f2a0(void);
-void sub_0808f2c4(void);
-void sub_0808f2fc(void);
-void sub_0808f320(void);
-void sub_0808f35c(void);
-void sub_0808f380(void);
-void sub_0808f39c(void);
-void sub_0808f3b8(void);
-void sub_0808f3d4(void);
-void sub_0808f400(void);
 
 void LaserBallInit(void)
 {

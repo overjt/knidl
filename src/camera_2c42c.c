@@ -22,12 +22,6 @@
  * lock of gScrollLock for a room region, 0xFFFF meaning no limit on
  * that axis (also called from M33, src/hud_b5840.c). */
 
-void UpdatePlayerGroupCenter(void);
-void UpdatePlayerCameras(void);
-void sub_0802a340(void);
-void SetViewRectToPlayers(void);
-void sub_0802a63c(void);
-
 void CameraHoldAnchor(void)
 {
     s32 x, y, i;

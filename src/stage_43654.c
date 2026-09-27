@@ -1,36 +1,18 @@
 #include "gba/gba.h"
 #include "global.h"
 #include "task.h"
+#include "main.h"
 #include "room.h"
 #include "player.h"
+#include "effect.h"
 
-void TaskYieldTrampoline(s32 frames);
 s32 PlaySfx(s32 id);
-void TaskSleepForever(void);
 void TaskSetEntry(void *a, u32 i);
-void TaskSetMotionXFacing(s32 a, s32 b);
-void TaskSetMotionY(s32 a, s32 b, s32 c);
-void TaskSetFrame(s32 a);
+/* Declared here, not through a header: the calls in this file pass other
+   types than the definition takes (lessons 3.428, 3.517). */
 void RegisterCollider(u8 a, s16 x, s16 y, void *p);
 void RequestScreenShake(u32 a);
-void PlayerStopAxes(s32 a0);
-void PlayerStartSfx(s32 a, u16 b);
-void PlayerStopSfx(void);
-void PlayerSetWaterMotionY(void);
-s32 PlayerLand(s32 a0);
-s32 sub_0803e55c(void);
-s32 LoadPlayerBodyBoxRect(s32 playerIdx, u8 *src6);
-s32 LoadPlayerHitBoxSet(s32 a0, s32 a1);
-void PlayerStartOffsetScript(s32 a0);
-void PlayerTurnToHeldDirection(void);
-s32 PlayerStopAtWall(void);
-s32 PlayerCheckLanding(void);
-s32 PlayerHasCrossedWaterSurface(s32 a);
-s32 PlayerRequestLocomotion(void);
-void PlayerSetMotionXPreset(s32 a0, s32 a1);
-void PlayerSetMotionYPreset(s32 a0);
 void CreatePlayerObject(s32 a, s32 b, s32 c);
-s32 CreatePlayerEffect(s32 band, s32 id, s32 payload);
 
 void sub_08043654(void)
 {

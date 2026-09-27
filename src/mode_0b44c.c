@@ -39,16 +39,6 @@ extern s8 gStageRequest;
 extern u16 gLatchedHeldKeys[];
 extern u8 gExtraMode;
 
-void ResetBgScroll(void);
-void ResetFadeAndBlend(void);
-void ResetTasksAndOam(void);
-void ResetPlayTime(void);
-void LoadGfxSet(u16 a0);
-void sub_08008c7c(void);
-void sub_08008cb8(void);
-void HudShowScore(void);
-void HudShowClock(void);
-void ClearColliderLists(void);
 void sub_0802296c(void);
 void sub_08022f98(void);
 void sub_08022f9c(void);
@@ -56,8 +46,6 @@ void sub_08022fa8(void);
 void sub_080233e0(void);
 void sub_08023948(void);
 void sub_08023ca0(void);
-void InitPlayerState(s32 a0);
-void sub_08066144(void);
 
 void sub_0800b44c(void)
 {

@@ -10,9 +10,6 @@
  * terrain_1c30c.c): src/terrain_21130.c's sub_08021130 without its tile-set
  * special case in front and its gCollisionTileDoor copy behind. */
 
-s32 TerrainQueryPixel(u32 x, u32 y);
-s32 TerrainQueryPixelAndBelow(u32 x, u32 y);
-
 /* Room probe: sub_08021130 without its tile-set special case in front
    and the gCollisionTileDoor copy behind.  Classifies the cells at the probe
    point (bit 7 of the tile set) into the flags gTerrainProbeResult.unk7 and the

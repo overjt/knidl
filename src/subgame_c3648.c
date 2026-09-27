@@ -2,6 +2,7 @@
 #include "global.h"
 #include "task.h"
 #include "main.h"
+#include "sound.h"
 #include "subgame.h"
 
 /* subgame_c3648.c (0x080C3648-0x080C3F43, issue #98).
@@ -33,15 +34,8 @@
  *       unk2/unk4 into the course record), and player 0's engine sound
  *       (song 400, pitch from the speed through m4aMPlayPitchControl). */
 
-void m4aMPlayPitchControl(struct MusicPlayerInfo *mplayInfo, u16 trackBits, s16 pitch);
 void BlendColors(u16 *src, u16 *dst, s32 ratio, s32 count, u16 *out);
 s32 PlaySfx(s32 id);
-void StopSfxOnPlayer(s32 player, s32 songId);
-
-void sub_080c2078(s32 a, s32 b, s32 c);
-void sub_080c523c(u16 id);
-void AirGrindDrawCourse(void);
-s32 sub_080c623c(s32 x);
 
 void sub_080c3648(void)
 {

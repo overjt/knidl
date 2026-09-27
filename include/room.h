@@ -689,4 +689,164 @@ extern struct RoomDef *const gUnk_087E2534[];
 extern struct RoomDef *const gUnk_087E2550[];
 extern struct RoomDef *const gUnk_087E2564[];
 
+
+/* Functions (defined in the files named above each group). */
+
+/* src/level_2296c.c */
+void sub_0802296c(void);
+void sub_08022c3c(void);
+void sub_08022f50(void);
+void sub_08022f98(void);
+void sub_08022f9c(void);
+void sub_08022fa8(void);
+void sub_080233e0(void);
+void CreateRoomTask(s32 a);
+
+/* src/roomtask_23618.c */
+void Task_Room(void);
+void sub_08023634(void);
+void RoomTaskDraw(void);
+void RoomTaskUpdateCamera(void);
+void sub_08023748(void);
+void sub_080237a4(void);
+void sub_080237fc(void);
+void sub_0802385c(void);
+void sub_080238a4(void);
+void sub_080238ec(void);
+
+/* src/level_23948.c */
+void sub_08023948(void);
+void sub_08023ca0(void);
+void sub_08023e34(void);
+void sub_08023e78(void);
+void sub_08023ea0(void);
+void sub_08023efc(void);
+void sub_08023f18(void);
+void sub_08023f5c(void);
+void sub_08023fa0(void);
+void sub_08023fd4(void);
+
+/* src/level_242d0.c */
+void sub_080242d0(void);
+void sub_08024300(void);
+void sub_08024540(void);
+void sub_0802457c(void);
+void sub_08024598(void);
+void sub_080245d0(void);
+void sub_08024610(s32 x, s32 y);
+void sub_08024654(s32 x, s32 y);
+void sub_08024698(s32 a0);
+void sub_08024904(void);
+void sub_0802497c(void);
+void sub_08024da4(void);
+s32 FindDoorAt(s32 x, s32 y);
+s32 EnterDoor(void);
+void ExitClearedStage(void);
+void sub_08025a30(void);
+void sub_08025acc(void);
+void sub_08025b0c(void);
+void sub_08025b5c(void);
+void sub_08025bc8(s32 id);
+void sub_08025dc4(void);
+void sub_08025e00(void);
+void sub_08025e0c(void);
+s32 sub_08025e88(s32 i);
+s32 sub_08025f00(void);
+s32 sub_080260b0(void);
+s32 sub_0802610c(void);
+
+/* src/stage_261c0.c */
+s32 CreateBlockBreakEffect(s32 x, s32 y);
+s32 TaskCreateHighSlot(s32 type);
+void SetCameraFocus(s32 x, s32 y);
+void SetCameraFocusOrAnchor(s32 x, s32 y);
+void sub_080262dc(void);
+void sub_080262e8(s32 a);
+void sub_08026308(void);
+s32 sub_080264b0(void);
+void sub_0802651c(s32 i);
+s32 sub_0802653c(void);
+s32 sub_08026584(void);
+void sub_08026704(s32 i);
+s32 sub_0802672c(void);
+s32 sub_08026834(void);
+void sub_08026900(void);
+void sub_0802695c(void);
+void sub_08026994(void);
+void sub_08026998(void);
+void sub_080269e8(void);
+u32 sub_08026a0c(void);
+u32 sub_08026a80(void);
+u32 sub_08026aec(void);
+
+/* src/door_26b60.c */
+void sub_08026b60(void);
+void UpdateDoors(void);
+void DrawDoors(void);
+
+/* src/stage_270d0.c */
+void sub_080270d0(void);
+void sub_08027128(void);
+void sub_08027178(void);
+void sub_08027198(void);
+void PauseRoom(void);
+void SetRoomUpdateFlags(u32 a);
+void ResumeRoom(void);
+void sub_08027228(void);
+void sub_08027240(void);
+void sub_080272dc(void);
+
+/* src/stage_273a0.c */
+void sub_080273a0(void);
+void sub_08027548(void);
+s32 sub_08027588(void);
+s32 sub_080275cc(s32 a);
+s32 sub_080276ac(s32 a);
+s32 sub_080276cc(s32 i);
+s32 sub_08027750(void);
+void sub_08027798(s32 x, s32 y);
+void sub_080277f0(s32 x, s32 y);
+void sub_08027850(s32 a);
+void sub_08027908(void);
+s32 sub_08027a30(void);
+void sub_08027a60(void);
+
+/* src/level_27a6c.c */
+void sub_08027a6c(void);
+
+/* src/room_27e28.c */
+void InitRoomBgLayout(void);
+void sub_08028130(void);
+void sub_08028280(s32 a);
+void sub_08028304(void);
+
+/* src/room_28320.c */
+void SpawnDoorObjects(void);
+void CalcBg3Parallax(void);
+void CalcRoomBounds(void);
+void CameraResetBoundsToGroup(void);
+void CameraResetBounds(void);
+
+/* src/camera_28b8c.c */
+void sub_08028b8c(void);
+void sub_08028e3c(void);
+void SetRoomEntryPoint(void);
+void sub_08029034(void);
+void sub_080290ac(void);
+void CameraInitPos(void);
+void sub_08029110(void);
+void sub_08029194(void);
+void LoadBg2Gfx(void);
+void LoadBg3Gfx(void);
+void ClearBg2Bg3Maps(void);
+void SelectBg3MapShape(void);
+void LoadBg3Map(void);
+void SpawnRoomObjectsInView(void);
+void InitDoors(void);
+void CameraUpdatePos(void);
+void CameraUpdatePosNoParallax(void);
+void CameraUpdatePosBg3AutoScrollX(void);
+void StreamBg2Map(void);
+void StreamBg3Map(void);
+
 #endif /* GUARD_ROOM_H */

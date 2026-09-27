@@ -1,8 +1,10 @@
 #include "gba/gba.h"
 #include "global.h"
 #include "task.h"
+#include "main.h"
 #include "room.h"
 #include "player.h"
+#include "effect.h"
 
 /* player_44d04.c (0x08044D04-0x080455C7, issue #87).
  *
@@ -23,20 +25,8 @@
  * registers it every frame, requests action 23 through PlayerHasCrossedWaterSurface and
  * picks the PlayerSetMotionXPreset preset from the held left/right keys. */
 
-void TaskYieldTrampoline(s32 frames);
-void TaskSleepForever(void);
-void TaskSetFrame(s32 a);
 void RegisterCollider(u8 a, s16 x, s16 y, void *p);   /* M11's caller spelling */
-s32 PlaySfxIfLocalPlayer(s32 a0, u16 a1);
-s32 PlayerLand(s32 a0);
-s32 LoadPlayerBodyBoxRect(s32 playerIdx, u8 *src6);
-s32 LoadPlayerHitBoxSet(s32 a0, s32 a1);
-void PlayerStopAtCeilingAndWall(void);
-s32 PlayerHasCrossedWaterSurface(s32 a);
-s32 PlayerRequestLocomotion(void);
 void PlayerSetMotionXPreset(s32 a0, s32 a1);           /* M11, still asm; M11's own spelling */
-void PlayerSetMotionYPreset(s32 a0);
-s32 CreatePlayerEffect(s32 a0, s32 a1, s32 a2);
 
 void PlayerActionSword(void)
 {

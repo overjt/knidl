@@ -2,42 +2,20 @@
 #include "gba/gba.h"
 #include "global.h"
 #include "task.h"
+#include "main.h"
 #include "camera.h"
 #include "actor.h"
 #include "enemy.h"
 
 /* Externals */
-extern void TaskExitTrampoline(void);
-extern void TaskYieldTrampoline(u32 a);
+/* Declared here, not through a header: the calls in this file pass other
+   types than the definition takes (lessons 3.428, 3.517). */
 extern void CallTableEntry(u32 a, u32 b, u32 *c);
 extern s32 PlaySfx(s32 id);
-extern void TaskMove(void);
-extern void TaskSleepForever(void);
 extern void TaskSetEntry(void *fn, s32 i);
-extern void TaskSetMotionXFacing(s32 a, s32 b);
-extern void TaskStopX(void);
-extern void TaskStopY(void);
-extern void TaskUpdateFlip(void);
-extern void TaskSetFrame(s32 a);
 extern void ActorSetState(u16 v);
-extern void TaskFaceNearestPlayer(void);
-extern void ActorDestroy(void);
-extern void TaskTurnAroundAndReverseX(void);
-extern void TaskGetScreenPos(void);
-extern void TaskFaceLikeParent(void);
-extern void ActorDrawWorldInViewOrDestroy(void);
-extern void ActorMove(void);
 extern u32 ActorCheckHits(void);
 extern u32 ActorReactToHit(void);
-extern void sub_0809e8b0(void);
-extern void sub_0809ec84(void);
-
-/* Defined below */
-void sub_0809f3e0(void);
-void sub_0809f818(s32 v);
-void sub_0809f874(void);
-void sub_0809f90c(void);
-void sub_0809f930(void);
 
 void Task_TridentKnightTrident(void)
 {

@@ -62,6 +62,8 @@ extern u32 gTaskStackPtrs[];
  * screen coordinates handed to QueueSprite. */
 extern vs32 gCurTaskIdx;
 
+/* Declared here, not through a header: the calls in this file pass other
+   types than the definition takes (lessons 3.428, 3.517). */
 extern s32 QueueSprite(u32 a, u32 b, u32 c, u32 d, u32 e, u32 f);
 extern void TaskFree(u32 a);
 extern u8 TaskIsOnScreen(void);

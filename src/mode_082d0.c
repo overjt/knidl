@@ -21,14 +21,13 @@ extern vu16 gBgPalette[];
 extern u16 gObjPalette[];
 extern vu16 gFrameCount;
 
-void TaskYieldTrampoline(u32 frames);
 s32 QueueSprite(u32 a, u32 b, u32 c, u32 d, u32 e, u16 f);
+/* Declared here, not through a header: the calls in this file pass other
+   types than the definition takes (lessons 3.428, 3.517). */
 s32 DrawAffineSprite(s32 a, s16 b, s16 c, s32 d);
 void CallTableEntry(u32 idx, u32 count, void (**fns)(void));
 void BlendColors(u16 *src, u16 *dst, s32 ratio, s32 count, u16 *out);
-s32 TaskCreateFrom(u32 type, s32 idx);
 void TaskSleepForever(void);
-void sub_08008394(void);
 
 void sub_080082d0(void)
 {

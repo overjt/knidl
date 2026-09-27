@@ -5,6 +5,7 @@
 #include "hud.h"
 #include "room.h"
 #include "player.h"
+#include "actor.h"
 #include "enemy.h"
 
 /* hud_b5670.c (0x080B5670-0x080B583F, issue #97).
@@ -38,9 +39,6 @@ struct Unk020055D8Entry
 };
 
 void RequestCopy(u32 mode, u32 src, u32 dst, u32 size);
-void sub_08065dbc(u32 slot, u32 sub, u32 level);
-s32 sub_080b5628(u32 a);
-s32 sub_080b5654(u32 a);
 
 s32 sub_080b5670(struct Unk020055D8Entry *e, s32 idx, s32 n)
 {

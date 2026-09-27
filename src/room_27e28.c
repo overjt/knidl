@@ -1,7 +1,10 @@
 #include "gba/gba.h"
 #include "global.h"
 #include "task.h"
+#include "mode.h"
 #include "room.h"
+#include "camera.h"
+#include "save.h"
 
 /* room_27e28.c (0x08027E28-0x0802831F, issue #93).
  *
@@ -24,15 +27,6 @@ struct Unk020055D8Entry
 };
 
 void RequestCopy(u32 mode, u32 src, u32 dst, u32 size);
-void LoadGfxSet(u16 a0);
-void sub_08025e0c(void);
-void SetBg23ScreenSize(u16 a);
-void SetBg3ScreenSize(u16 a);
-s32 sub_08030074(s32 a);
-s32 sub_08030100(u8 a);
-void sub_080307b0(void);
-void sub_080307cc(void);
-void StartRoomHBlankScroll(s32 a);
 
 void InitRoomBgLayout(void)
 {

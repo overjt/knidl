@@ -14,15 +14,6 @@
  * result block into gTerrainResult.
  */
 
-s32 TerrainQueryPixelAndSides(u32 x, u32 y);
-void TerrainProbeBegin(const s8 *p);
-void sub_080207a0(void);
-void sub_080214e0(void);
-u32 sub_0802069c(void);
-s32 GetTilePushDown(u16 a);
-s32 GetTilePushRight(u16 a);
-s32 TerrainQueryPixel(u32 x, u32 y);
-
 void TerrainProbeBegin(const s8 *p)
 {
     gTerrainProbeX = (gCurTask->posX >> 16) + p[0];

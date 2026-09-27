@@ -3,7 +3,12 @@
 #include "task.h"
 #include "main.h"
 #include "link.h"
+#include "sound.h"
+#include "mode.h"
+#include "hud.h"
 #include "room.h"
+#include "camera.h"
+#include "player.h"
 
 /* level_23948.c (0x08023948-0x080242CF, issue #93).
  *
@@ -20,59 +25,6 @@
  * (CreatePlayer and InitPlayerState/sub_0803d1c4). */
 
 void RequestCopy(u32 mode, u32 src, u32 dst, u32 size);
-void ResetTasksAndOam(void);
-s32 PlayBgm(s32 songId);
-void TaskSleepForever(void);
-void LoadGfxSet(u16 a0);
-void HudInit(s32 i);
-s32 AddPlayerLives(s32 a, u32 b);
-void HudUpdateAbilityPanel(void);
-void CreateRoomTask(s32 a);
-void RoomTaskDraw(void);
-s32 sub_08026834(void);
-void sub_08026b60(void);
-void UpdateDoors(void);
-void sub_08027a6c(void);
-void SpawnDoorObjects(void);
-void CalcBg3Parallax(void);
-void CalcRoomBounds(void);
-void CameraResetBounds(void);
-void SetRoomEntryPoint(void);
-void sub_08029034(void);
-void CameraInitPos(void);
-void sub_08029194(void);
-void LoadBg2Gfx(void);
-void LoadBg3Gfx(void);
-void ClearBg2Bg3Maps(void);
-void SelectBg3MapShape(void);
-void InitDoors(void);
-void CameraUpdatePosNoParallax(void);
-void StreamBg123Maps(void);
-void StreamBg23Maps(void);
-void CameraWriteScrollParallax(void);
-void CameraWriteScrollBg23(void);
-void CameraWriteScrollBg123(void);
-void DrawBg123View(s32 px, s32 py);
-void DrawBg23View(s32 px, s32 py);
-void sub_0802c550(void);
-void sub_0802c680(void);
-void sub_0802c7f4(void);
-void CameraSnapBoundsToAnchor(void);
-void CameraSnapPlayersToAnchor(void);
-void CameraSnapToFocus(void);
-void StopScreenShake(void);
-void UpdateScreenShake(void);
-void LoadRoomBgAnims(void);
-void ResetBlockAnims(void);
-void CreatePlayer(s32 a0);
-void InitPlayerState(s32 a0);
-void sub_0803d1c4(s32 a0);
-void LatchPlayerKeys(void);
-void sub_08023ea0(void);
-void sub_08023efc(void);
-void sub_08023f18(void);
-void sub_08023f5c(void);
-void sub_08023fa0(void);
 
 void sub_08023948(void)
 {

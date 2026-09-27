@@ -3,6 +3,7 @@
 #include "task.h"
 #include "main.h"
 #include "link.h"
+#include "hud.h"
 #include "room.h"
 #include "player.h"
 #include "actor.h"
@@ -24,20 +25,12 @@
  * offsets PlayerState.pixelOffsetX/unk26; sub_0803ccd8 (M09's PlayerActionFall)
  * applies step n of the 8.8 motion table gUnk_0873AEBC. */
 
-void TaskYieldTrampoline(s32 frames);
+/* Declared here, not through a header: the calls in this file pass other
+   types than the definition takes (lessons 3.428, 3.517). */
 s32 QueueSprite(u32 a, u32 b, u32 c, u32 d, u32 e, s16 f);
 u32 RandomRange(u32 range);
 s32 PlaySfx(s32 id);
-void TaskSetSkipMask(u8 val, s32 idx);
-void TaskSleepForever(void);
-void TaskSetMotionY(s32 a, s32 b, s32 c);
-void TaskSetFrame(s32 a);
 u32 IsWorldPosOnScreen(s16 a, s16 b);        /* u8 in early_5d9c.c; u32 as in player_109c8.c (u8 costs 78 bytes) */
-void PlayerStopAxes(s32 a0);
-s32 PlaySfxIfLocalPlayer(s32 a0, u16 a1);
-void FreezeOtherTasks(s32 a0);
-void sub_08040710(void);
-s32 sub_080b4204(u32 a);
 
 /* Action 19 enter (mode 23, per-frame handler 18), aimed at the player
    Task.unk18 names.  With itself as the target it only plays the ability's

@@ -1,6 +1,8 @@
 #include "gba/gba.h"
 #include "global.h"
 #include "task.h"
+#include "main.h"
+#include "sound.h"
 #include "room.h"
 #include "ending.h"
 
@@ -19,16 +21,9 @@
  *       spawns variants 3 and 4); its handler re-enters sub-state 0 with a
  *       120-frame count and spawns variant 2. */
 
-void TaskYieldTrampoline(s32 frames);
 s32 PlaySfx(s32 id);                                    /* play a sound effect */
-void StopSfxOnPlayer(s32 player, s32 songId);
 void TaskSleepForever(void);                                     /* end the running task */
 void TaskSetEntry(void *a, u32 i);
-void TaskSetMotion(s32 a, s32 b, s32 c, s32 d, s32 e, s32 f);
-void TaskStop(void);
-void TaskSetFrame(s32 a);
-void GameOverPlayerEnterState(void);
-void CreateGameOverObject(u8 variant);
 
 /* Task type #264 variant 0, sub-state 0. */
 void sub_080cb64c(void)

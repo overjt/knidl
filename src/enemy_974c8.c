@@ -1,121 +1,31 @@
 #include "gba/gba.h"
 #include "global.h"
 #include "task.h"
+#include "main.h"
 #include "link.h"
 #include "camera.h"
 #include "actor.h"
 #include "enemy.h"
 
 /* Externals */
-extern void ActorDrawWorldInViewOrDestroy(void);
-extern void sub_08065438(void);
-extern void ActorMove(void);
-extern void MrFrostyEnterState(void);
+/* Declared here, not through a header: the calls in this file pass other
+   types than the definition takes (lessons 3.428, 3.517). */
 extern void CallTableEntry(u32 a, u32 b, u32 *c);
 extern u32 RandomRange(u32 range);
 extern s32 PlaySfx(s32 id);
-extern void TaskFree(s32 id);
-extern void TaskSleepForever(void);
 extern void TaskSetEntry(void *fn, s32 i);
-extern void TaskSetMotionXFacing(s32 a, s32 b);
-extern void TaskStopX(void);
-extern void TaskSetMotionY(s32 a, s32 b, s32 c);
-extern void TaskStopY(void);
-extern void TaskStop(void);
-extern void TaskSetFrame(s32 a);
 extern void RequestScreenShake(s32 a);
 extern void ActorSetState(u16 v);
 extern void ActorSetHitReactions(void *p);
 extern void ActorSetAttackBox(void *p);
 extern void sub_08063a00(void *p);
-extern s32 TaskFindNearestPlayer(void);
-extern s32 TaskGetNearestPlayerDx(void);
-extern void TaskFaceToward(u32 i);
-extern void TaskFaceNearestPlayer(void);
-extern void ActorStopAnim(void);
-extern s32 ActorStartAnim(struct AnimCmd *p);
-extern s32 ActorTickAnim(s32 n);
-extern s32 CreateActorFromDescAtOffsetFacing(struct ActorSpawn *p, u8 keepPrio);
-extern s32 CreateChildTaskHere(u32 type, u8 keepPrio);
-extern u16 sub_08066088(u32 mode);
-extern void ActorFlashPalette(void *src, u32 size);
-extern void sub_08066468(void);
-extern void sub_08066580(void);
-extern void sub_080666cc(struct AnimCmd *p);
-extern void sub_080667c0(u8 a, u16 b);
-extern void sub_0806684c(void);
-extern void sub_08066ae0(void);
-extern u8 sub_08067060(void);
-extern void sub_080685ec(s32 i, s32 j, u8 c);
-extern void sub_08068920(s32 i, u8 c);
 extern void sub_080689c8(s32 i, s32 d);
 extern u32 ActorCheckHits(void);
 extern u32 sub_08068f68(void);
 extern u32 sub_0806914c(void *p);
 extern u8 ActorCollideTerrain(void);
 extern u32 ActorReactToHit(void);
-extern void ActorFaceHitter(void);
-extern void sub_0806a0f0(s32 a);
-extern u32 ActorReactToDefeat(void);
-extern void ActorDie(void);
 extern u8 sub_0806acf8(void);
-extern void sub_0806ad18(void);
-extern s16 CreateDustTrail(u8 flag, u16 vx, s32 c, s32 d);
-extern void sub_0806cffc(s16 dx, s16 dy);
-extern void TaskYieldTrampoline(u32 frames);
-extern s32 sub_08094d10(void);
-
-/* Defined below */
-void sub_080974c8(void);
-void Task_PhanPhan(void);
-void sub_08097580(void);
-void sub_080975ac(void);
-void sub_080975c8(void);
-void sub_080975fc(void);
-void sub_08097694(void);
-void sub_08097714(void);
-void sub_0809773c(void);
-void sub_0809780c(void);
-void sub_08097844(void);
-void sub_0809794c(void);
-void sub_08097a54(void);
-void sub_08097a7c(void);
-void sub_08097b4c(void);
-void sub_08097b74(void);
-void sub_08097c44(void);
-void sub_08097c78(void);
-void sub_08097d7c(void);
-void sub_08097da4(void);
-void sub_08097e68(void);
-void sub_08097e90(void);
-void sub_0809809c(void);
-void sub_08098140(void);
-void sub_0809816c(void);
-void sub_08098194(void);
-void sub_08098268(void);
-void sub_0809829c(void);
-void sub_080983a0(void);
-void sub_080983a4(void);
-void sub_08098450(void);
-void sub_080984b4(void);
-s32 sub_08098528(void);
-s32 sub_08098540(void);
-s32 sub_0809857c(void);
-s32 sub_08098594(void);
-void Task_GrandWheelieMiniWheelie(void);
-void sub_0809869c(void);
-void sub_080986ec(void);
-void sub_08098708(void);
-void sub_08098718(void);
-void sub_08098728(void);
-void sub_08098738(void);
-s32 sub_08098748(void);
-void sub_0809876c(void);
-void sub_0809887c(void);
-s32 sub_080988a4(void);
-s32 sub_080988b4(void);
-void sub_080988c0(void);
-s32 sub_080988c4(void);
 
 void sub_080974c8(void)
 {

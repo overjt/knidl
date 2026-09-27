@@ -1,6 +1,8 @@
 #include "gba/gba.h"
 #include "global.h"
 #include "main.h"
+#include "link.h"
+#include "sound.h"
 
 /* Palette fade engine (0x080008E8-0x08000DE3, issue #32 batch A1).
  * agbcc -O2 -mthumb-interwork (game-code recipe).
@@ -17,20 +19,8 @@
  *    exactly as the ROM has it. */
 
 struct MusicPlayerInfo;
-extern void m4aMPlayVolumeControl(struct MusicPlayerInfo *mplayInfo, u16 trackBits, u16 volume);
 extern void m4aSoundVSync(void);
-extern void m4aSoundMain(void);
-extern void SoundDriverVSyncOff(void);
 extern void SoftReset(u32 resetFlags);
-extern void StopAllSound(void);
-extern void LinkBlockMain(void);
-extern void LinkVSync(void);
-extern void ReadKeys(void);
-extern void FlushDisplayRegs(void);
-extern void CopyOamAndPalette(void);
-extern void ProcessCopyQueue(void);
-
-void UpdateFade(void);
 
 u32 BeginFade(u16 steps, u16 delta, u16 *mask)
 {

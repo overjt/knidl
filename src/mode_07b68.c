@@ -3,9 +3,11 @@
 #include "task.h"
 #include "main.h"
 #include "link.h"
+#include "sound.h"
 #include "mode.h"
 #include "player.h"
 #include "save.h"
+#include "ending.h"
 
 /* mode_07b68.c (0x08007B68-0x080082CF, issue #96).
  *
@@ -25,42 +27,8 @@ extern u16 gGameState;
 extern u8 gRoomTable[];
 
 void RequestCopy(u32 mode, u32 src, u32 dst, u32 size);
-void BeginFastFadeInFromWhite(void);
-void BeginFastFadeOutToWhite(void);
-void ResetTasksAndOam(void);
-void RunFrameNoTasks(void);
-void RunFrame(void);
-void LinkStartKeyExchange(void);
-void LinkStopKeyExchange(void);
-void LinkRequestSync(void);
-void LinkSyncRandom(void);
-void RunLinkFrame(void);
-void RunFrames(s32 count);
-void RunFramesNoTasks(s32 count);
-void RunLinkFrames(s32 count);
-void RunFramesUntilFadeDone(void);
-void RunFramesNoTasksUntilFadeDone(void);
-void RunLinkFramesUntilFadeDone(void);
-s32 PlayBgm(s32 songId);
 void PlaySfx(s32 id);
-void EnableSoundDriver(void);
-void MultiBootSetParams(u8 *start, u8 *end);
-void LinkSetupRequestStart(void);
-void LinkSetupMain(u16 a);
-u32 LinkBroadcastWordStep(void);
-void LinkBlockAnnounce(u32 *src, u32 *dst, u32 size);
-u32 LinkBlockHandshakeStep(void);
-void LinkBlockStart(void);
-u32 IsLinkBlockDone(void);
-void DisableSerial(void);
 void LinkMain1(u8 *cmd, u16 *send, u16 *recv);
-u32 ConnectLink(void);
-u32 IsLinkError(void);
-void sub_080082d0(void);
-void LoadBgLayout(s32 a0);
-void LoadGfxSet(u16 a0);
-void sub_08008e1c(s32 a0);
-void DrawClockToBgMap(u16 *a, s32 b, s32 c);
 
 s32 sub_08007b68(u32 *src, u32 *dst, u32 size)
 {

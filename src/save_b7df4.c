@@ -6,11 +6,6 @@
 #include "hud.h"
 #include "save.h"
 
-s32 WriteSaveSlot(s32 a);
-void ClearSaveSlot(s32 a);
-u32 CalcSaveSlotChecksum(s32 a);
-u32 UpdateSaveSlotChecksum(s32 a);
-
 u32 UpdateSaveSlotChecksum(s32 a)
 {
     gSaveSlots[a].checksum = CalcSaveSlotChecksum(a);

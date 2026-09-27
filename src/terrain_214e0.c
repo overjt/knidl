@@ -27,12 +27,6 @@
  *    range check is written positively (the fail path sits before the pool).
  */
 
-s32 sub_080218f8(u32 x, u32 y);
-
-s32 TerrainQueryPixel(u32 x, u32 y);
-s32 TerrainQueryPixelAndBelow(u32 x, u32 y);
-s32 sub_080218f8(u32 x, u32 y);
-
 void sub_080214e0(void)
 {
     s32 y;

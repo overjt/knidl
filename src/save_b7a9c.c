@@ -7,15 +7,6 @@
 #include "room.h"
 #include "save.h"
 
-s32 WriteSaveSlot(s32 a);
-u32 WriteSramSignature(void);
-void ClearSaveSlot(s32 a);
-u32 CalcSaveSlotChecksum(s32 a);
-u32 UpdateSaveSlotChecksum(s32 a);
-void StoreProgressInSaveSlot(s32 a);
-void StoreProgressInBothHalves(s32 a);
-void MergeProgressIntoSaveSlot(s32 a);
-
 s32 WriteSaveSlot(s32 a)
 {
     s32 i;

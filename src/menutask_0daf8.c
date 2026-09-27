@@ -2,6 +2,7 @@
 #include "global.h"
 #include "task.h"
 #include "main.h"
+#include "mode.h"
 #include "menu.h"
 #include "room.h"
 #include "player.h"
@@ -19,23 +20,11 @@
  * marks the selected entry (MenuUpdateFileMenuPalette) and loads its picture
  * (MenuLoadPicture: LZ77 into 0x02020000, one 2 KiB part to 0x06004200). */
 
-void TaskExitTrampoline(void);
-void TaskYieldTrampoline(s32 frames);
 void RequestCopy(u32 mode, u32 src, u32 dst, u32 size);
+/* Declared here, not through a header: the calls in this file pass other
+   types than the definition takes (lessons 3.428, 3.517). */
 s32 QueueSprite(u32 a, u32 b, u32 c, u32 d, u32 e, s16 f);
 void BlendColors(u16 *src, u16 *dst, s32 ratio, s32 count, u16 *out);
-void TaskMove(void);
-void TaskDrawScreen(void);
-void LoadGfxSet(u16 a0);
-s32 sub_0800bf10(s32 slot, u32 pal);
-u8 TaskIsOnScreenNoCamera(void);
-void sub_0800dbdc(void);
-void sub_0800dc98(void);
-void sub_0800dda0(void);
-void sub_0800dfdc(void);
-void sub_0800e148(void);
-void MenuUpdateFileMenuPalette(void);
-s32 MenuLoadPicture(s32 id, s32 part);
 
 void sub_0800daf8(void)
 {

@@ -31,6 +31,8 @@
  * No natural spelling that keeps the ROM's OR was found; the natural best
  * (the plain store, 40 differing bytes) is recorded on #100. */
 
+/* Declared here, not through a header: the calls in this file pass other
+   types than the definition takes (lessons 3.428, 3.517). */
 s32 QueueSprite(u32 a, u32 b, u32 c, u32 d, u32 e, s16 f);
 s32 PlaySfx(s32 id);
 

@@ -15,10 +15,6 @@
  * attribute byte for that pixel, or 0 when the coordinate is outside the map.
  */
 
-s32 sub_080218f8(u32 x, u32 y);
-
-s32 TerrainQueryPixelAndBelow(u32 x, u32 y);
-
 u32 sub_0802069c(void)
 {
     u32 result = 0;

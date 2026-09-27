@@ -2,6 +2,7 @@
 #include "global.h"
 #include "task.h"
 #include "main.h"
+#include "room.h"
 #include "player.h"
 
 /* plobj_5239c.c (0x0805239C-0x08052F6B, issue #90).
@@ -28,30 +29,16 @@
 
 /* M09's hit-box set (src/block_30804.c); only a pointer is passed here */
 struct HitBoxSet;
-void TaskExitTrampoline(void);
-void TaskYieldTrampoline(s32 frames);
 void RequestCopy(u32 mode, void *src, void *dst, u32 size);   /* early_1518; effect_5afac's pointer spelling */
 u32 RandomRange(u32 range);
 s32 PlaySfx(s32 id);
-void TaskFree(s32 id);
-void TaskMove(void);
-void TaskMoveRelativeToParent(void);
-void TaskDrawScreen(void);
-void TaskDrawWorld(void);
-void TaskSetFrameByFacing(s16 a);
-void TaskSetMotionXFacing(s32 a, s32 b);
-void TaskStop(void);
 u16 RandomSpread(u16 base, u8 scale, u8 amount);
 s16 RandomSpreadFacing(u16 base, u8 scale, u8 amount);
 void RegisterCollider(u8 a, s16 x, s16 y, void *p);   /* M11's caller spelling */
-s32 sub_08027588(void);
 u16 TaskBreakBlocksAt(struct HitBoxSet *p, s32 x, s32 y, s32 e);
 s32 TaskBreakBlocks(struct HitBoxSet *p, s32 e);   /* M14's callers test r0 unnarrowed (good/sub_08050c48.c); landed M09/M12/M13 files spell it u16 */
-void sub_0803dfc8(void);
-s32 PlaySfxIfLocalPlayer(s32 a0, u16 a1);
 
 s32 CreatePlayerObject(s8 player, u8 variant, s32 arg);
-void sub_0805268c(void);
 s32 sub_08052b08(void);   /* returns a value: pop {r1} epilogue; plobj_52f6c.c spells it void */
 
 void sub_0805239c(void)

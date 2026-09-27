@@ -2,7 +2,9 @@
 #include "gba/gba.h"
 #include "global.h"
 #include "task.h"
+#include "main.h"
 #include "camera.h"
+#include "actor.h"
 #include "enemy.h"
 
 /* RAM cells / ROM tables */
@@ -11,65 +13,17 @@
 extern u8 gTerrainResult[];
 
 /* Externals */
-extern void TaskYieldTrampoline(u32 a);
+/* Declared here, not through a header: the calls in this file pass other
+   types than the definition takes (lessons 3.428, 3.517). */
 extern void CallTableEntry(u32 a, u32 b, u32 *c);
 extern u32 RandomRange(u32 range);
 extern s32 PlaySfx(s32 id);
-extern void TaskIntegrateMotion(void);
-extern void TaskMove(void);
-extern void TaskSleepForever(void);
 extern void TaskSetEntry(void *fn, s32 i);
-extern void TaskSetMotionXFacing(s32 a, s32 b);
-extern void TaskStopX(void);
-extern void TaskStopY(void);
-extern void TaskStop(void);
-extern void TaskUpdateFlip(void);
-extern void TaskSetFrame(s32 a);
 extern void ActorLoadDef(u32 def);
 extern void ActorSetState(u16 v);
-extern s32 TaskGetNearestPlayerDx(void);
-extern void ActorDestroy(void);
-extern u8 TaskGetYDirBitToNearestPlayer(void);
-extern void TaskFaceLikeParent(void);
-extern s32 CreateActorFromDescAtOffsetFacing(struct ActorSpawn *p, u8 keepPrio);
-extern s32 CreateActorFromDesc(struct ActorSpawn *p, u8 keepPrio);
-extern void ActorDrawWorldInViewOrDestroy(void);
 extern u32 ActorCheckHits(void);
 extern u8 ActorCollideTerrain(void);
 extern u32 ActorReactToHit(void);
-extern void sub_0809d1c0(void);
-extern void sub_0809d71c(void);
-extern void sub_0809f2f4(void);
-extern void TaskFaceScreenCenter(void);
-extern void sub_0809f90c(void);
-extern void sub_0809f930(void);
-extern s32 sub_0809f994(void);
-extern void sub_0809f9dc(void);
-extern void sub_0809fb10(void);
-
-/* Defined below */
-void sub_0809da9c(void);
-void sub_0809dd08(void);
-void sub_0809ddbc(void);
-void sub_0809de54(void);
-void sub_0809dfc8(void);
-void sub_0809e04c(void);
-s32 sub_0809e214(void);
-void sub_0809e2c4(void);
-void sub_0809e630(void);
-void sub_0809e780(void);
-void sub_0809e864(void);
-void sub_0809e8cc(void);
-void sub_0809e914(void);
-void sub_0809ebc0(void);
-void sub_0809ec2c(void);
-void sub_0809ec84(void);
-void sub_0809ed08(void);
-void sub_0809ed74(void);
-void sub_0809ef98(void);
-void sub_0809f0f0(void);
-void sub_0809f26c(void);
-s32 sub_0809f29c(s32 a);
 
 void Task_JavelinKnightJavelin(void)
 {

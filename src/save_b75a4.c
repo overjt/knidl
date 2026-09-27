@@ -25,8 +25,6 @@
  * still holds the element from the `!=` test, lesson 3.469); the count is an
  * s8 local (3.340). */
 
-u32 WriteInputRecordingEntry(u8 *src, s32 i);
-
 void InputRecorderRecordFrame(void)
 {
     s32 i;

@@ -26,6 +26,8 @@
 #include "gba/gba.h"
 #include "global.h"
 #include "task.h"
+#include "main.h"
+#include "actor.h"
 #include "enemy.h"
 
 /* RAM cells */
@@ -34,36 +36,16 @@
 extern u8 gTerrainResult[];
 
 /* Externals */
-extern void TaskYieldTrampoline(u32 frames);
-extern void TaskExitTrampoline(void);
+/* Declared here, not through a header: the calls in this file pass other
+   types than the definition takes (lessons 3.428, 3.517). */
 extern void CallTableEntry(u32 a, u32 b, u32 *c);
-extern void TaskFree(s32 i);
-extern void TaskSleepForever(void);
 extern void TaskSetEntry(void *fn, s32 i);
-extern void TaskSetMotionXFacing(s32 a, s32 b);
-extern void TaskStop(void);
-extern void TaskSetFrame(s32 a);
 extern void ActorSetState(s32 a);
 extern void ActorSetAttackBox(u32 *p);
-extern void TaskFaceNearestPlayer(void);
-extern s32 TaskGetNearestPlayerDistSq(void);
 extern u8 sub_080699a8(void);
-extern void TaskTurnAroundAndReverseX(void);
-extern void sub_0806a0f0(s32 a);
-extern void ActorMove(void);
-extern void TaskMove(void);
-extern void TaskDrawWorld(void);
-extern void ActorDrawWorldInViewOrDestroy(void);
-extern s32 CreateChildTaskAtOffsetFacing(u32 type, s16 dx, s16 dy, u8 keepPrio);
 extern void ActorCheckHits(void);
 extern u8 ActorCollideTerrain(void);
 extern void ActorReactToHit(void);
-
-/* Defined below */
-void NoddyUpdate(void);
-void sub_08084ae8(void);
-void sub_08084b7c(void);
-s32 sub_08084c84(void);
 
 void NoddyInit(void)
 {

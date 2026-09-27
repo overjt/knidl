@@ -16,9 +16,10 @@
  * byte 4, timer in the high one, the star doors from gUnk_0873264C);
  * DrawDoors draws the visible ones with QueueSprite. */
 
+/* Declared here, not through a header: the calls in this file pass other
+   types than the definition takes (lessons 3.428, 3.517). */
 s32 QueueSprite(u32 a, u32 b, u32 c, u32 d, u32 e, s16 f);
 u32 IsWorldPosOnScreen(s16 x, s16 y);
-s32 GetCollisionTileAtPixel(u16 x, u16 y);
 
 void sub_08026b60(void)
 {

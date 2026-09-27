@@ -26,31 +26,19 @@ extern u8 gUnk_03001370[];
 extern u8 gActivePlayerMask;
 
 /* callees */
+/* Declared here, not through a header: the calls in this file pass other
+   types than the definition takes (lessons 3.428, 3.517). */
 extern s32 QueueSprite(u32 a, u32 b, u32 c, u32 d, u32 e, s16 f);
 extern s32 DrawAffineSprite(s32 a, s16 b, s16 c, s32 d);
 extern s32 PlaySfx(u32 a);
-extern s32 TaskCreateFrom(u32 type, s32 idx);
 extern u32 RandomRange(u32 range);
 extern u32 TaskIsOnScreen(void);
-extern void TaskExitTrampoline(void);
-extern void TaskYieldTrampoline(u32 a);
 extern void RequestCopy(u32 mode, u32 src, u32 dst, u32 size);
 extern void CallTableEntry(u32 a, u32 b, u32 *c);
 extern void BlendColors(void *src, void *dst, s32 ratio, s32 count, void *out);
-extern void TaskMove(void);
-extern void TaskSleepForever(void);
-extern void TaskStop(void);
 extern void SetCameraFocus(s32 a, s32 b);
 extern void AngleToVector(s16 t, s16 mag);
-extern void ActorDrawWorldInViewOrDestroy(void);
-extern void sub_080652c8(void);
 extern void LoadBackdropColor(u32 src);
-extern void CreateBurstEffect(u32 a, s32 b);
-
-/* defined below */
-void sub_08075290(s32 a);
-void sub_08076074(void);
-void sub_0807637c(void);
 
 void sub_08074c0c(void)
 {

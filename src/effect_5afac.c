@@ -3,6 +3,9 @@
 #include "task.h"
 #include "main.h"
 #include "link.h"
+#include "sound.h"
+#include "mode.h"
+#include "hud.h"
 #include "player.h"
 #include "actor.h"
 #include "enemy.h"
@@ -52,53 +55,22 @@ extern u32 gUnk_08754850[];
 extern u32 gUnk_0875488C[];
 extern u32 gUnk_087548A0[];
 
-void TaskExitTrampoline(void);
-void TaskYieldTrampoline(s32 frames);
+/* Declared here, not through a header: the calls in this file pass other
+   types than the definition takes (lessons 3.428, 3.517). */
 void RequestCopy(u32 mode, void *src, void *dst, u32 size);
 void QueueSprite(u32 a, s32 b, u32 c, u32 d, u32 e, u32 f);
-void ResetFadeAndBlend(void);
-void BeginFastFadeInFromWhite(void);
-void BeginFastFadeOutToWhite(void);
-void ResetTasksAndOam(void);
-void LinkStartKeyExchange(void);
-void LinkStopKeyExchange(void);
-void LinkRequestSync(void);
-void LinkSyncRandom(void);
-void RunLinkFrame(void);
-void RunLinkFramesUntilFadeDone(void);
 void CallTableEntry(u32 a, u32 b, u32 *c);
 u32 RandomRange(u32 range);
-s32 PlayBgm(s32 songId);
 void PlaySfx(s32 id);
-s32 TaskCreateFrom(u32 type, s32 idx);
-s32 TaskCreateInRange(u32 type, s32 start, s32 end);
-void TaskMove(void);
 u32 TaskIsOnScreen(void);
-void TaskDrawWorld(void);
-void TaskSleepForever(void);
 void TaskSetEntry(void *fn, u32 i);
-void TaskStopX(void);
-void TaskSetMotionY(s32 a, s32 b, s32 c);
-void TaskStopY(void);
-void TaskSetMotion(s32 a, s32 b, s32 c, s32 d, s32 e, s32 f);
-void TaskStop(void);
-void TaskSetFrame(s32 a);
-void TaskSetFrameFlip(s32 a);
 s32 IsOnScreen(s16 a, s16 b);
 u32 IsWorldPosOnScreen(s16 x, s16 y);
-void LoadBgLayout(u32 a);
-void LoadGfxSet(u16 a);
-void HudInit(u16 a);
-void AddPlayerLives(s32 a, s32 b);
-void SetPlayerAbility(u32 a, s32 b, s32 c);
-void AddPlayerScore(s32 a, u32 b);
 void sub_08023fd4(void);
 void ExitClearedStage(void);
 void SetCameraFocus(s32 a, s32 b);
 void sub_08026998(void);
 void sub_08027178(void);
-void PlayerActionWalk(void);
-void LatchPlayerKeys(void);
 void sub_0805b16c(void);
 void sub_0805b370(void);
 s32 sub_0805b4bc(void);
@@ -138,9 +110,6 @@ void sub_0805deac(void);
 void sub_0805e15c(void);
 void sub_0805e1bc(void);
 void sub_0805e24c(void);
-void ActorMove(void);
-void sub_08068a8c(u32 a, u8 flag);
-void CreateBurstEffect(s32 a, s32 b);
 
 s32 CreatePlayerEffect(s32 a0, s32 a1, s32 a2)
 {

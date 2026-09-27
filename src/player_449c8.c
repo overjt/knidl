@@ -4,6 +4,7 @@
 #include "main.h"
 #include "room.h"
 #include "player.h"
+#include "effect.h"
 
 /* player_449c8.c (0x080449C8-0x08044D03, issue #87).
  *
@@ -19,18 +20,9 @@
  * handler PlayerActionCutterUpdate re-enters it on a newly-pressed B and requests
  * action 2 when left or right is held on the ground. */
 
-void TaskYieldTrampoline(s32 frames);
 void BlendColors(u16 *src, u16 *dst, s32 ratio, s32 count, u16 *out);
-void TaskSleepForever(void);
 void TaskSetEntry(void *a, u32 i);
-void TaskSetFrame(s32 a);
-s32 PlaySfxIfLocalPlayer(s32 a0, u16 a1);
-s32 sub_0803e55c(void);
-void PlayerTurnToHeldDirection(void);
-s32 PlayerRequestLocomotion(void);
-void PlayerActionSpark(void);
 void sub_08053a44(s32 a0, s32 a1, s32 a2);   /* M14, src/plobj_52f6c.c (defined s32 (s8, u8, s32); the result is unused here) */
-s32 CreatePlayerEffect(s32 a0, s32 a1, s32 a2);
 
 void PlayerActionSparkUpdate(void)
 {

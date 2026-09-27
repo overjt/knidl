@@ -33,7 +33,9 @@
 #include "global.h"
 #include "task.h"
 #include "link.h"
+#include "cutscene.h"
 #include "room.h"
+#include "player.h"
 #include "actor.h"
 #include "enemy.h"
 
@@ -45,13 +47,13 @@ extern s16 gSpriteCameraX;
 extern s16 gSpriteCameraY;
 
 /* Externals */
-extern void TaskYieldTrampoline(u32 a);
+/* Declared here, not through a header: the calls in this file pass other
+   types than the definition takes (lessons 3.428, 3.517). */
 extern void RequestCopy(u32 mode, void *src, void *dst, u32 size);
 extern void QueueSprite(u32 a, s32 b, u32 c, u32 d, s16 e, s16 f);
 extern s32 DrawAffineSprite(s32 a, s16 b, s16 c, s32 d);
 extern void CallTableEntry(u32 a, u32 b, u32 *c);
 extern void PlaySfx(s32 a);
-extern void TaskMove(void);
 extern void TaskSleepForever(void);
 extern void TaskSetEntry(u32 fn, u32 a);
 extern void TaskSetMotionXFacing(s32 a, s32 b);
@@ -60,30 +62,7 @@ extern void TaskStop(void);
 extern void TaskSetFrame(s32 a);
 extern s32 IsOnScreen(s16 x, s16 y);
 extern void sub_0801bcac(u8 *a);
-extern u32 sub_08025e88(u32 i);
 extern void RequestScreenShake(s32 a);
-extern void SetCameraFocus(s32 x, s32 y);
-extern s32 PlayerLoadFrameTilesAndPalette(s32 a);
-extern void sub_0803d7c4(void);
-extern void sub_0803db74(void);
-extern void sub_0803ddc0(void);
-extern void sub_08040808(u32 a);
-extern void sub_08068a8c(u32 a, u8 flag);
-extern void sub_08068b88(s32 i, u16 b, u8 c, u8 d);
-extern void CreateBurstEffect(s32 a, s32 b);
-extern void sub_0806ee30(void);
-extern void sub_08070ec0(void);
-extern void sub_08070ffc(void);
-
-/* Defined below */
-void sub_080700e8(void);
-void sub_0807029c(void);
-void sub_080702d8(void);
-void sub_0807042c(void);
-void sub_08070454(void);
-void sub_0807073c(void);
-void sub_08070334(void);
-void sub_08070614(u32 a);
 
 void sub_0806ff24(void)
 {

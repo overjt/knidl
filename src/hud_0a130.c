@@ -3,6 +3,7 @@
 #include "task.h"
 #include "main.h"
 #include "link.h"
+#include "mode.h"
 #include "hud.h"
 #include "room.h"
 #include "player.h"
@@ -15,23 +16,6 @@
  * (sub_0800a19c, sub_0800a21c) over gHudAbilityPanelState. */
 
 void PlaySfx(s32 id);
-void HudClearAbilityPicture(void);
-void HudLoadAbilityPicture(s32 a0);
-void HudRedrawClock(void);
-void HudDrawScore(s32 v);
-void HudDrawClock(u16 *time);
-void HudDrawAbilityPanel(s32 n);
-void sub_0800b0fc(void);
-void HudDrawHpBar(s32 x);
-void sub_0800b190(s32 from, s32 to);
-void sub_0800b230(s32 a, s32 b);
-void HudClearTiles(s32 x, s32 y, s32 n);
-void HudFlushTilemap(void);
-void HudAnimateHpBar(s32 from, s32 to, s32 i);
-s32 sub_0800aa18(s32 from, s32 to);
-void HudSetHpBar(s32 x, s32 i);
-void HudResetHpBar(s32 i);
-void sub_0800aaac(s32 i);
 
 void HudShowAbility(s32 a, s32 id)
 {

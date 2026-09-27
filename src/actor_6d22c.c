@@ -21,42 +21,12 @@
 #include "actor.h"
 #include "enemy.h"
 
-extern void TaskYieldTrampoline(u32 a);
-extern void TaskExitTrampoline(void);
-extern void ActorMove(void);
-extern void ActorDrawWorldInViewOrDestroy(void);
-extern void TaskFaceLikeParent(void);
-extern void TaskSetMotionXFacing(s32 a, s32 b);
-extern void TaskSetFrameByFacing(u32 a);
-extern void CreateDustPuff(void);
-extern void TaskStop(void);
-extern u8 TaskHasSameSerial(s32 i);
-extern void TaskFree(s32 i);
-extern s32 CreateChildTaskHere(u32 a, u32 b);
-extern void TaskMoveRelativeToParent(void);
-extern void ActorDrawWorldInView(void);
-extern void TaskMove(void);
 extern s32 RandomRange(s32 a);
-extern void TaskSleepForever(void);
-extern void ActorDestroy(void);
-extern void sub_0806af78(void);
-extern void sub_0806aaa4(void);
-extern u8 ActorIsInView(void);
 extern s32 TaskIsOnScreen(void);
+/* Declared here, not through a header: the calls in this file pass other
+   types than the definition takes (lessons 3.428, 3.517). */
 extern s32 QueueSprite(u32 a, u32 b, u32 c, u32 d, s32 e, s32 f);
 extern s32 RandomSpread(s32 a, s32 b, s32 c);
-extern void TaskUpdatePixelPos(void);
-extern void TaskSetMotion(s32 a, s32 b, s32 c, s32 d, s32 e, s32 f);
-extern void HitFrostCheckParent(void);
-
-void DustBurstCheckParent(void);
-void BurstStickToParentUpdate(void);
-void PlayRayBurstAnim(void);
-void PlayStarScatterAnim(void);
-void PlaySmallBlastAnim(void);
-void RingStarUpdate(void);
-void sub_0806dca0(void);
-void sub_0806de18(void);
 
 void Task_DustBurst(void)
 {

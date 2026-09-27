@@ -3,6 +3,7 @@
 #include "task.h"
 #include "main.h"
 #include "link.h"
+#include "mode.h"
 #include "cutscene.h"
 #include "room.h"
 #include "player.h"
@@ -19,23 +20,6 @@
  * type #91, and pumps frames until the director leaves state 7. */
 
 void RequestCopy(u32 mode, u32 src, u32 dst, u32 size);
-void BeginFastFadeInFromWhite(void);
-void BeginFastFadeOutToWhite(void);
-void ResetTasksAndOam(void);
-void LinkStartKeyExchange(void);
-void LinkStopKeyExchange(void);
-void LinkRequestSync(void);
-void LinkSyncRandom(void);
-void RunLinkFrame(void);
-void RunLinkFramesUntilFadeDone(void);
-s32 TaskCreateFrom(u32 type, s32 idx);
-void LoadBgLayout(s32 a0);
-void LoadGfxSet(u16 a0);
-void sub_08008d98(s32 a0);
-void sub_08024300(void);
-void sub_08027178(void);
-void InitPlayerState(s32 a0);
-void sub_080102c0(void);
 
 void CutsceneMain(void)
 {

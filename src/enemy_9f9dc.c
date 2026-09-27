@@ -3,6 +3,7 @@
 #include "global.h"
 #include "task.h"
 #include "main.h"
+#include "enemy.h"
 
 void sub_0809f9dc(void)
 {

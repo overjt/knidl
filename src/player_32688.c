@@ -3,10 +3,15 @@
 #include "task.h"
 #include "main.h"
 #include "link.h"
+#include "sound.h"
+#include "hud.h"
+#include "cutscene.h"
 #include "collision.h"
 #include "room.h"
 #include "player.h"
+#include "effect.h"
 #include "actor.h"
+#include "save.h"
 
 /* player_32688.c (0x08032688-0x080337F3, issue #92).
  *
@@ -35,51 +40,12 @@
 
 void CallTableEntry(u32 idx, u32 count, void (**fns)(void));
 u32 RandomRange(u32 range);
-s32 PlayBgm(s32 songId);
-void TaskSetSkipMask(u8 val, s32 idx);
-void TaskSleepForever(void);
 void TaskSetEntry(void *a, u32 i);
-s32 AddPlayerHealth(s32 a, u32 b);
-s32 SetPlayerAbilityNoHud(s32 a, s32 b, u32 c);
-s32 SetPlayerAbility(s32 a, s32 b, u32 c);
 u32 RegisterCollider(u8 idx, s16 x, s16 y, u8 *p);   /* M09's callers pass ldrsh values unextended (LESSONS 8) */
-void sub_0801baa4(u32 a);
 void sub_08021c74(s8 *box, s32 id);
-void TaskInitWaterFlags(void);
-s32 sub_080260b0(void);
-void SetCameraFocus(s32 x, s32 y);
 u16 TaskBreakBlocks(struct HitBoxSet *p, s32 e);
 void sub_0803c9b4(s32 a);                     /* M10: mov r8, r0 on entry, void epilogue */
 void sub_0803cbd8(void);                      /* M10: no argument read, void epilogue */
-void sub_0803ce98(void);
-void PlayerMove(void);
-void sub_0803ddc0(void);
-void sub_0803e080(void);
-void SetPlayerInvulnerability(s32 a0, s32 a1, s32 a2);
-void PlayerUpdateInvulnerability(void);
-void PlayerStopSfx(void);
-s32 LoadPlayerBodyBoxRect(s32 playerIdx, u8 *src6);
-s32 LoadPlayerHitBoxSet(s32 a0, s32 a1);
-void PlayerStartOffsetScript(s32 a0);
-s32 sub_0803fa74(void);
-void sub_0803fb54(void);
-s32 sub_08040514(void);
-void sub_08040808(s32 a0);
-void sub_08040894(s32 a0, u8 a1);
-void LoadAbilityTiles(void);
-void sub_08049a58(void);
-void PlayerActionStarRodFlight(void);
-s32 CreatePlayerEffect(s32 a0, s32 a1, s32 a2);
-s32 CreatePlayerEffectHighSlot(s32 a0, s32 a1, s32 a2);
-void sub_0805b278(void);
-void sub_0806ee30(void);
-void sub_08071cc0(int x, int y, int c);
-void sub_08076318(void);
-void sub_080b8ebc(void);
-void sub_080b9118(void);
-void sub_080b9610(void);
-void PlayerUpdate(void);
-void sub_0803332c(void);
 
 void Task_Player(void)
 {

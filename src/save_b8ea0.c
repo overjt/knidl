@@ -3,60 +3,17 @@
 #include "task.h"
 #include "main.h"
 #include "link.h"
+#include "hud.h"
 #include "room.h"
 #include "player.h"
 #include "save.h"
 
+/* Declared here, not through a header: the calls in this file pass other
+   types than the definition takes (lessons 3.428, 3.517). */
 extern void CallTableEntry(u32 a, u32 b, u32 *c);
-extern void TaskExitTrampoline(void);
-extern void HudRedraw(s32 a);
-extern void TaskFree(s32 a);
-extern void AddPlayerLives(s32 a, s32 b);
 extern void HudDrawTiles(u8 *s, s32 a, s32 b, s32 c);
-extern void HudClearTiles(s32 a, s32 b, s32 c);
-extern void TaskYieldTrampoline(u32 frames);
 extern void TaskSetEntry(void *fn, s32 i);
-extern s32 IntToDigits(s16 n);
 extern void RequestCopy(u32 mode, u32 src, u32 dst, u32 size);
-extern void TaskSleepForever(void);
-extern void HudClearTilemap(void);
-
-void sub_080b8ea0(void);
-void sub_080b8ef4(void);
-void sub_080b8f8c(s32 a);
-void sub_080b8ff0(void);
-void sub_080b902c(void);
-void sub_080b9064(void);
-void sub_080b9090(void);
-void sub_080b90c8(void);
-void sub_080b90f8(void);
-void sub_080b9108(void);
-void sub_080b9118(void);
-void sub_080b9140(void);
-void sub_080b9198(void);
-void sub_080b91fc(void);
-void sub_080b927c(void);
-void sub_080b9344(void);
-void sub_080b938c(void);
-void sub_080b93d8(void);
-s32 sub_080b9424(void);
-void sub_080b94b4(s32 a, s32 b);
-void sub_080b9578(void);
-void sub_080b95ac(void);
-void sub_080b95ec(void);
-void sub_080b963c(void);
-void sub_080b9658(void);
-void sub_080b97fc(s32 a);
-void sub_080b9878(void);
-void sub_080b98c0(void);
-void sub_080b9968(s32 a, s32 b);
-void sub_080b99e8(s32 a, s32 b, s32 c);
-void sub_080b9a88(s32 a);
-void sub_080b9b08(s32 a);
-void sub_080b9b98(s32 a);
-void sub_080b9c28(void);
-void sub_080b9c74(void);
-void sub_080b9cc0(void);
 
 void sub_080b8ea0(void)
 {

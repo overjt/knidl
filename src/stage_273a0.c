@@ -2,7 +2,9 @@
 #include "global.h"
 #include "task.h"
 #include "link.h"
+#include "hud.h"
 #include "room.h"
+#include "camera.h"
 
 /* stage_273a0.c (0x080273A0-0x08027A6B, issue #93).
  *
@@ -15,11 +17,9 @@
  * sub_08027850 and sub_08027908 set the camera mode and target
  * (gCameraAnchorX/gCameraAnchorY) for one or all players. */
 
+/* Declared here, not through a header: the calls in this file pass other
+   types than the definition takes (lessons 3.428, 3.517). */
 void sub_08009e2c(s32 a);
-void HudShowAbilityAnimated(s32 a, s32 b);
-void sub_08028b8c(void);
-void sub_08028e3c(void);
-s32 CreateMapEvent(s32 a);
 
 void sub_080273a0(void)
 {

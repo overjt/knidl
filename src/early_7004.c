@@ -70,18 +70,10 @@ extern u16 gLinkCommand;
 extern void (*gIntrTable[])(void);
 extern u32 gLinkDriverMode;
 
-void EnableSerial(void);
-void DisableSerial(void);
+/* Declared here, not through a header: the calls in this file pass other
+   types than the definition takes (lessons 3.428, 3.517). */
 void LinkMain1(u16 *a, u16 *b, u16 *c);
 void RunFrame(void);
-
-void Timer3Intr(void);
-void SerialCB(void);
-void StartTransfer(void);
-void DoRecv(void);
-void DoSend(void);
-void StopTimer(void);
-void SendRecvDone(void);
 
 void DoSend(void)
 {

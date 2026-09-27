@@ -4,6 +4,8 @@
 #include "cutscene.h"
 #include "player.h"
 
+/* Declared here, not through a header: the calls in this file pass other
+   types than the definition takes (lessons 3.428, 3.517). */
 s32 QueueSprite(u32 a, u32 b, u32 c, u32 d, s32 e, s32 f);
 s32 RandomRange(s32 a);
 u32 IsWorldPosOnScreen(s16 x, s16 y);

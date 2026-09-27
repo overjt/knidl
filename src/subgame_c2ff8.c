@@ -26,16 +26,8 @@
  *       and publishes the position and the pressed flag in the course
  *       record gAirGrindCoursePtr->unk018[player]. */
 
-void TaskYieldTrampoline(s32 frames);
 void CallTableEntry(u32 idx, u32 count, void (**fns)(void));   /* if (idx < count) fns[idx](); */
 void TaskSleepForever(void);                                     /* end the running task */
-void sub_080c3efc(void);
-void sub_080c3f20(void);
-u32 AirGrindRandomRange(s32 i, u32 range);
-void sub_080c4d08(void);
-void sub_080c4ea8(void);
-void AirGrindCpuRollTarget(s32 player);
-void AirGrindRacerUpdate(void);
 
 void Task_AirGrindObject(void)
 {

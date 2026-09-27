@@ -2,7 +2,9 @@
 #include "global.h"
 #include "task.h"
 #include "main.h"
+#include "link.h"
 #include "room.h"
+#include "player.h"
 #include "effect.h"
 #include "actor.h"
 
@@ -25,23 +27,9 @@
  * spawner through four sub-states and draws through M11's sub_0803dfc8;
  * sub_080586fc kills it once the player leaves mode 13. */
 
-void TaskExitTrampoline(void);
-void TaskYieldTrampoline(s32 frames);
-void TaskSetSkipMask(u8 val, s32 idx);
 void TaskFree(s32 id);                         /* kill task (M09+ spelling, 49 landed files) */
-void TaskMove(void);
-void TaskMoveRelativeToParent(void);
-void TaskDrawWorld(void);
-void TaskSetFrameByFacing(s16 a);
-void TaskSetMotionXFacing(s32 a, s32 b);
-void TaskSetFrame(s32 a);
-void TaskRestoreSkipMask(u32 idx);
-void TaskSaveSkipMask(u32 idx);
 void RegisterCollider(u8 a, s16 x, s16 y, void *p);   /* M11's caller spelling */
-void sub_0803dfc8(void);
 void LoadBackdropColor(u32 src);
-void sub_08058410(void);
-void sub_080586fc(void);
 
 void sub_08057ce0(void)
 {

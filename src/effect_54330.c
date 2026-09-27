@@ -1,7 +1,9 @@
 #include "gba/gba.h"
 #include "global.h"
 #include "task.h"
+#include "main.h"
 #include "collision.h"
+#include "player.h"
 #include "effect.h"
 #include "actor.h"
 
@@ -25,24 +27,11 @@
  * sub_0801c3a4) kills it once its Task.waterFlags is clear or gTerrainResult.unk1
  * is set. */
 
-void TaskExitTrampoline(void);
-void TaskYieldTrampoline(s32 frames);
 void TaskFree(s32 id);                         /* kill task (M09+ spelling, 49 landed files) */
-void TaskMove(void);
-void TaskDrawWorld(void);
-void TaskDrawWorldInViewOrFree(void);
-void TaskSetFrameByFacing(s16 a);
-void TaskSetMotionXFacing(s32 a, s32 b);
-void TaskStop(void);
 u16 RandomSpread(s32 base, u8 scale, u8 amount);   /* base + ((rand(256) * amount) >> 8) * scale */
 s16 RandomSpreadFacing(s32 base, u8 scale, u8 amount);   /* the same, negated when Task.facing != 1 */
 u16 sub_0801c3a4(const s8 *p);
-s32 IsFullBlockAtPixel(u16 x, u16 y);
-s32 PlaySfxIfLocalPlayer(s32 a0, u16 a1);
 s32 CreatePlayerEffect(s32 a0, s32 a1, s32 a2);          /* M16's effect spawner (spawns task type #7) */
-void sub_08054504(void);
-void sub_08054838(void);
-void sub_08054a44(void);
 
 void sub_08054330(void)
 {

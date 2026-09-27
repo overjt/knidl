@@ -7,8 +7,6 @@
 #include "player.h"
 #include "save.h"
 
-extern s32 Div(s32 a, s32 b);
-
 void sub_080b72bc(void)
 {
     s32 i;

@@ -34,56 +34,21 @@
 #include "task.h"
 #include "main.h"
 #include "link.h"
+#include "sound.h"
 #include "mode.h"
+#include "hud.h"
 #include "room.h"
 #include "subgame.h"
 
-extern void TaskYieldTrampoline(u32 frames);
-
+/* Declared here, not through a header: the calls in this file pass other
+   types than the definition takes (lessons 3.428, 3.517). */
 extern void CallTableEntry(u32 a, u32 b, u32 *c);
-extern void BeginFastFadeInFromWhite(void);
-extern void BeginFastFadeOutToWhite(void);
-extern s32 TaskCreateFrom(u32 type, s32 idx);
 extern void TaskSetEntry(void *a, u32 i);
-extern void TaskMoveRelativeToBg3(void);
-extern void TaskSetFrame(s32 a);
 extern void PlaySfx(u32 a);
-extern void sub_080060c0(void);
-extern void AddPlayerLivesNoHud(u32 a, u32 b);
 extern void RequestCopy(u32 mode, u32 src, u32 dst, u32 size);
 extern s32 QueueSprite(u32 a, u32 b, u32 c, u32 d, u32 e, u32 f);
 extern s32 DrawAffineSprite(s32 a, s16 b, s16 c, s32 d);
-extern void TaskStop(void);
 extern u32 RandomRange(u32 range);
-extern void PlayBgm(u32 a);
-extern void StopBgm(void);
-extern void TaskSleepForever(void);
-extern void SubGameReplay(s32 a);
-extern void SubGameQuit(void);
-extern void SubGameCheckEnd(void);
-
-extern void BombRallyRoundUpdate(void);
-extern void BombRallyEnterState(void);
-extern u32 BombRallyKnockOutTurnPlayer(void);
-extern u32 BombRallyIsMatchOver(void);
-extern void sub_080bddb8(void);
-extern void sub_080bde0c(void);
-extern void sub_080bde78(u32 a);
-extern void BombRallySeatPlayers(void);
-extern void BombRallyResultsUpdate(void);
-extern void BombRallyResultsEnterState(void);
-extern void sub_080be4a4(void);
-extern void sub_080be550(void);
-extern void sub_080be5fc(void);
-extern void CreateBombRallyContinueItems(u32 a);
-extern void CreateBombRallyLevelItems(u32 a);
-extern void BombRallyAwardLives(void);
-extern void BombRallyPlayerUpdate(void);
-extern u32 BombRallyPlayerJudgePress(void);
-extern void BombRallyPlayerUpdatePose(void);
-extern void BombRallyPlayerEnterState(void);
-extern void sub_080bdf3c(s32 a, s32 b, u32 c, u32 d);
-extern void sub_080be7c0(u32 a);
 
 void BombRallyRound(void)
 {

@@ -62,18 +62,7 @@ struct Link {
     /*0x4D0*/ u8 unk4D0, unk4D1;
 };
 
-void EnableSerial(void);
-void DisableSerial(void);
 void LinkMain1(u16 *a, u16 *b, u16 *c);
-void RunFrame(void);
-
-void Timer3Intr(void);
-void SerialCB(void);
-void StartTransfer(void);
-void DoRecv(void);
-void DoSend(void);
-void StopTimer(void);
-void SendRecvDone(void);
 
 void Timer3Intr(void)
 {

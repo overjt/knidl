@@ -2,71 +2,27 @@
 #include "global.h"
 #include "task.h"
 #include "main.h"
+#include "sound.h"
 #include "room.h"
 #include "player.h"
+#include "effect.h"
 #include "actor.h"
 
 /* Not from collision.h: this file's view of gTerrainResult differs (lesson
    3.517). */
 extern u8 gTerrainResult[];
 
-void TaskYieldTrampoline(s32 frames);
 u32 RandomRange(u32 range);
-s32 PlayBgm(s32 songId);
 s32 PlaySfx(s32 id);
-void StopAllSound(void);
-void StopAllSfx(void);
-void TaskSetSkipMask(u8 val, s32 idx);
-void TaskFree(s32 id);
-void TaskSleepForever(void);
 void TaskSetEntry(void *a, u32 i);
-void TaskSetFrameByFacing(s16 a);
-void TaskSetFrame(s32 a);
+/* Declared here, not through a header: the calls in this file pass other
+   types than the definition takes (lessons 3.428, 3.517). */
 void RegisterCollider(u8 a, s16 x, s16 y, void *p);
 void sub_08021c74(s32 a, s32 b);
 void TaskInitWaterFlags(void);
 s32 IsFullBlockAtPixel(u16 a, u16 b);
 s32 IsTaskBelowPlayerBounds(struct Task *t);
-void EnterDoor(void);
 void RequestScreenShake(u32 a);
-s32 sub_080264b0(void);
-void sub_0802651c(s32 a);
-s32 sub_0802653c(void);
-void sub_08026584(void);
-void sub_08026704(s32 a);
-void sub_0802672c(void);
-void SetRoomUpdateFlags(u32 a);
-void sub_08027548(void);
-void sub_080276ac(s32 a);
-void sub_08027a60(void);
-void PlayerPlayBump(void);
-void PlayerStopAxes(s32 a0);
-void sub_0803e080(void);
-void SetPlayerInvulnerability(s32 a0, s32 a1, s32 a2);
-void PlayerStartSfx(s32 a, u16 b);
-void FreezeOtherTasks(s32 a0);
-void PlayerSetWaterMotionY(void);
-s32 PlayerLand(s32 a0);
-void PlayerStartOffsetScript(s32 a0);
-void PlayerTurnToHeldDirection(void);
-void PlayerCheckBump(void);
-void PlayerStopAtCeilingAndWall(void);
-s32 PlayerStopAtWall(void);
-s32 PlayerHasCrossedWaterSurface(s32 a);
-s32 sub_0803fd20(s32 a0);
-s32 PlayerCheckSkid(void);
-s32 PlayerCheckJump(void);
-s32 sub_0803fe68(void);
-s32 PlayerCheckDuckOrSwallow(void);
-s32 PlayerCheckLadder(void);
-s32 PlayerCheckBButton(void);
-s32 PlayerCheckEnterWater(void);
-s32 PlayerCheckEnterDoor(void);
-s32 PlayerRequestLocomotion(void);
-void sub_08040710(void);
-void PlayerSetMotionXPreset(s32 a0, s32 a1);
-void sub_08042c50(void);
-s32 CreatePlayerEffect(s32 band, s32 id, s32 payload);
 
 /* gPlayerMotionYPresets is a table of 8-byte records; the three used halfwords are
    signed 8.8 velocities for Task.velY / unk60 / unk68, and 0x9999 is the

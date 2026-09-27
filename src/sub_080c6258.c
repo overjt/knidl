@@ -1,4 +1,5 @@
 #include "global.h"
+#include "subgame.h"
 
 s32 sub_080c6258(s32 value)
 {

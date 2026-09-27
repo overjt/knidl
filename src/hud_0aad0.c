@@ -2,6 +2,8 @@
 #include "global.h"
 #include "task.h"
 #include "main.h"
+#include "link.h"
+#include "mode.h"
 #include "hud.h"
 #include "room.h"
 
@@ -12,11 +14,7 @@
  * HudDrawScore and the clock renderer HudDrawClock. */
 
 void RequestCopy(u32 mode, u32 src, u32 dst, u32 size);
-void IntToDigits(s16 n);
-void sub_08008e6c(s32 a0);
 void HudDrawTiles(u16 *src, s32 x, s32 y, s32 n);
-void HudClearTiles(s32 x, s32 y, s32 n);
-void HudDrawClock(u16 *time);
 
 void sub_0800aad0(void)
 {

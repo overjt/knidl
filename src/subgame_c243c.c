@@ -2,7 +2,9 @@
 #include "global.h"
 #include "task.h"
 #include "main.h"
+#include "sound.h"
 #include "mode.h"
+#include "hud.h"
 #include "subgame.h"
 
 /* subgame_c243c.c (0x080C243C-0x080C2FF7, issue #98).
@@ -38,22 +40,10 @@
 
 s32 QueueSprite(u32 a, u32 b, u32 c, u32 d, u32 e, s16 f);  /* sprite draw; callers pass f sign-extended (lsls/asrs #16), the early_1518 definition says u16 */
 void BlendColors(u16 *src, u16 *dst, s32 ratio, s32 count, u16 *out);
-s32 PlayBgm(s32 songId);
 s32 PlaySfx(s32 id);
 void TaskSleepForever(void);                                     /* end the running task */
-s32 AddPlayerLivesNoHud(s32 a, u32 b);
-void SubGameReplay(s32 a0);
-void SubGameQuit(void);
-void SubGameCheckEnd(void);
-void sub_080c4a48(s32 pal);
-void sub_080c4a94(s32 idx, s32 x, s32 y);
 void sub_080c4ac4(s32 t, s32 x, s32 y);                   /* draw a frame count as ss:cc */
 void sub_080c4bec(s32 a, s32 b, s32 x, s32 y);            /* draw min(a * 1000 / b, 1000) */
-void sub_080c4c30(s32 idx, s32 pal, s32 scale, s32 x, s32 y, u32 layer);
-void sub_080c25c4(void);
-void sub_080c2b8c(void);
-void sub_080c2ba8(void);
-void sub_080c2ccc(s32 mode);
 
 void AirGrindResults(void)
 {

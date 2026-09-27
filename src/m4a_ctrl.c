@@ -1,5 +1,6 @@
 #include "gba/gba.h"
 #include "gba/m4a_internal.h"
+#include "sound.h"
 
 /* m4a/mp2k sound engine, C driver part 3 (issue #55):
  * 0x080CF588-0x080CFA4B — track controls (m4aMPlay{Volume,Pitch,Panpot}

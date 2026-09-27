@@ -11,6 +11,8 @@ extern u8 gUnk_0873BEEC[];
 extern u8 gUnk_0873CC54[];
 
 void TaskSetEntry(void *func, u32 arg);
+/* Declared here, not through a header: the calls in this file pass other
+   types than the definition takes (lessons 3.428, 3.517). */
 void RegisterCollider(u8 a, s16 x, s16 y, void *p);
 u16 sub_08030898(void *table, s32 id);
 void PlayerSetWaterMotionY(void);

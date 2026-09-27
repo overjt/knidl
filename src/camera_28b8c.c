@@ -3,8 +3,11 @@
 #include "task.h"
 #include "main.h"
 #include "link.h"
+#include "sound.h"
+#include "collision.h"
 #include "room.h"
 #include "camera.h"
+#include "player.h"
 
 /* camera_28b8c.c (0x08028B8C-0x0802969F, issue #93).
  *
@@ -35,25 +38,7 @@ struct Unk020055D8Entry
 };
 
 void RequestCopy(u32 mode, u32 src, u32 dst, u32 size);
-s32 PlayBgm(s32 songId);
-s32 GetCurrentBgm(void);
 void PlaySfx(s32 id);
-void StopBgm(void);
-s32 GetCollisionTile(u32 x, u32 y);
-void CalcRoomBounds(void);
-void CameraResetBounds(void);
-void UpdatePlayerGroupCenter(void);
-void SetCameraBoundsToGroup(void);
-void UpdatePlayerCameras(void);
-void SetPlayerBoundsFromCamera(void);
-void SetViewRectToPlayers(void);
-void SpawnRoomObjectsInRect(s32 x0, s32 x1, s32 y0, s32 y1);
-void DrawBg2Row(s32 x0, s32 x1, s32 y);
-void DrawBg2Column(s32 x, s32 y0, s32 y1);
-void DrawBg3Row(s32 x0, s32 x1, s32 y);
-void DrawBg3Column(s32 x, s32 y0, s32 y1);
-s32 sub_080408e4(void);
-void CameraUpdatePos(void);
 
 void sub_08028b8c(void)
 {

@@ -1,6 +1,7 @@
 #include "gba/gba.h"
 #include "global.h"
 #include "task.h"
+#include "main.h"
 #include "room.h"
 #include "player.h"
 
@@ -24,9 +25,6 @@
 /* Not from collision.h: this file's view of gTerrainResult differs (lesson
    3.517). */
 extern u8 gTerrainResult[];
-
-void TaskSetMotionXFacing(s32 a, s32 b);
-void PlayerStopAxes(s32 a0);
 
 /* Byte-exact.  The key-mask table gLatchedHeldKeys[...] is read inline at every
    test (cse merges the repeats): a halfword read stays an HImode pseudo used

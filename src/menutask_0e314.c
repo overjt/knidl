@@ -1,6 +1,7 @@
 #include "gba/gba.h"
 #include "global.h"
 #include "task.h"
+#include "mode.h"
 #include "menu.h"
 #include "room.h"
 #include "effect.h"
@@ -16,22 +17,11 @@
  * picture of screen 5; and sub_0800e9a4 is the entry of #243, whose
  * body sub_0800ea0c is in menutask_0ea0c.c. */
 
-void TaskExitTrampoline(void);
-void TaskYieldTrampoline(s32 frames);
 void RequestCopy(u32 mode, u32 src, u32 dst, u32 size);
+/* Declared here, not through a header: the calls in this file pass other
+   types than the definition takes (lessons 3.428, 3.517). */
 s32 QueueSprite(u32 a, u32 b, u32 c, u32 d, u32 e, s16 f);
 void BlendColors(u16 *src, u16 *dst, s32 ratio, s32 count, u16 *out);
-void TaskMove(void);
-void TaskDrawScreen(void);
-void LoadGfxSet(u16 a0);
-s32 MenuLoadPicture(s32 id, s32 part);
-void sub_0800ea0c(void);
-u8 TaskIsOnScreenNoCamera(void);
-void sub_0800e390(void);
-void sub_0800e518(void);
-void sub_0800e674(void);
-void sub_0800e7b0(void);
-void sub_0800e8c0(void);
 
 void sub_0800e314(void)
 {

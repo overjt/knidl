@@ -11,10 +11,6 @@
  * under the box's left and right bottom corners, keeping the corner/slope
  * flags in gTerrainProbeResult.unkB. */
 
-s32 TerrainQueryPixel(u32 x, u32 y);
-s32 TerrainQueryPixelAndBelow(u32 x, u32 y);
-s32 GetTilePushUp(u16 a);
-
 /* Landing probe sub_0801bcac runs for a box in the air
    (gTerrainProbeResult.unk6 == 0): snap to the floor under the box's centre;
    failing that, follow the cell's slope link (gUnk_08735018[byte 2]) and

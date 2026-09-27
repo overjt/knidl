@@ -4,6 +4,7 @@
 #include "main.h"
 #include "room.h"
 #include "camera.h"
+#include "player.h"
 
 /* obj_306b4.c (0x080306B4-0x08030803, issue #86).
  *
@@ -20,10 +21,9 @@
  * the addresses of the .LC pool-label strings, which depend on every pool
  * constant compiled earlier in the unit. */
 
+/* Declared here, not through a header: the calls in this file pass other
+   types than the definition takes (lessons 3.428, 3.517). */
 s32 QueueSprite(u32 a, u32 b, u32 c, u32 d, s32 e, s32 f);
-void UpdateBlockAnims(void);
-void UpdateBlockAnimsWithEdges(void);
-void UpdateBg1BlockAnims(void);
 
 s32 QueueWorldSprite(u8 a, s32 b, u16 c, u16 d, s16 x, s16 y)
 {

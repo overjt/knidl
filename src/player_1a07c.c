@@ -5,17 +5,13 @@
 #include "link.h"
 #include "player.h"
 
-void TaskExitTrampoline(void);
-void TaskYieldTrampoline(s32 frames);
 void RequestCopy(u32 mode, u32 src, u32 dst, u32 size);
+/* Declared here, not through a header: the calls in this file pass other
+   types than the definition takes (lessons 3.428, 3.517). */
 s32 QueueSprite(u32 a, u32 b, u32 c, u32 d, s32 e, s16 f);
 void BlendColors(s32 a, s32 b, s32 c, s32 d, void *e);
 s32 PlaySfx(s32 id);
-void TaskMoveRelativeToParent(void);
-void TaskDrawScreen(void);
-void TaskStop(void);
 s32 IsOnScreen(s16 x, s16 y);
-s32 PlayerLoadFrameTilesAndPalette(s32 mode);
 
 void sub_0801a07c(void)
 {

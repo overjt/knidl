@@ -1,6 +1,8 @@
 #include "gba/gba.h"
 #include "global.h"
 #include "task.h"
+#include "main.h"
+#include "mode.h"
 #include "room.h"
 #include "camera.h"
 
@@ -17,25 +19,7 @@
  * sub_08030100 spawns up to two #235 objects from the table
  * gUnk_087328C0. */
 
-void TaskExitTrampoline(void);
-void TaskYieldTrampoline(u32 frames);
 void RequestCopy(u32 mode, u32 src, u32 dst, u32 size);
-s32 TaskCreateInRange(u32 type, s32 start, s32 end);
-void TaskMove(void);
-void TaskUpdatePixelPos(void);
-void TaskDrawWorld(void);
-void TaskSleepForever(void);
-void sub_08008f10(s32 a0);
-s32 QueueWorldSprite(u8 a, s32 b, u16 c, u16 d, s16 x, s16 y);
-void sub_0802f684(void);
-void sub_0802f6c0(void);
-void sub_0802f6f4(void);
-void sub_0802f718(void);
-void sub_0802f8c8(void);
-void sub_0802f93c(void);
-void sub_0802fd98(void);
-void DoorObjectDraw(void);
-s32 sub_08030140(u8 a, s32 b);
 
 void sub_0802f62c(void)
 {

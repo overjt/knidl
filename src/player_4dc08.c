@@ -1,9 +1,11 @@
 #include "gba/gba.h"
 #include "global.h"
 #include "task.h"
+#include "main.h"
 #include "link.h"
 #include "collision.h"
 #include "player.h"
+#include "effect.h"
 #include "actor.h"
 
 /* player_4dc08.c (0x0804DC08-0x0804E39F, issue #90).
@@ -27,31 +29,17 @@
  * bit 2 set until PlayerState.attachedCount is non-zero and equal to unk08, then
  * recovers or releases (sound 201, PlayerState.unk42 bit 9). */
 
-/* Not from room.h: this file's view of gUnk_02007FA0 differs (lesson 3.517).
-   */
+/* Not from room.h: this file's view of gUnk_02007FA0 differs (lesson 3.517). */
 extern s16 gUnk_02007FA0[];
 extern s32 gUnk_03001F2C;               /* boot_091ac.c spelling */
 
 /* M09's hit-box set (src/block_30804.c); only a pointer is passed here */
 struct HitBoxSet;
-void TaskYieldTrampoline(s32 frames);
-void TaskSleepForever(void);
 void TaskSetEntry(void *a, u32 i);
-void TaskSetFrame(s32 a);
 void RegisterCollider(u8 a, s16 x, s16 y, void *p);   /* M11's caller spelling */
 void RequestScreenShake(u16 a);
 u16 sub_08030898(struct HitBoxSet *p, s32 e);
-void PlayerStopAxes(s32 a0);
-void SetPlayerInvulnerability(s32 a0, s32 a1, s32 a2);
-s32 PlaySfxIfLocalPlayer(s32 a0, u16 a1);
-void PlayerStartSfx(s32 a0, u16 a1);
-void PlayerStopSfx(void);
-void PlayerSetWaterMotionY(void);
-s32 PlayerCheckLanding(void);
-s32 PlayerHasCrossedWaterSurface(s32 a);
 void PlayerSetMotionXPreset(s32 a0, s32 a1);           /* M11, still asm; M11's own spelling */
-void PlayerSetMotionYPreset(s32 a0);
-s32 CreatePlayerEffect(s32 a0, s32 a1, s32 a2);
 s32 sub_08065100(s32 x, s32 y, u32 p2, u8 p3, u8 p4);   /* this caller passes x and y unnarrowed (ldrsh; adds #8) */
 
 void PlayerActionBackdrop(void)

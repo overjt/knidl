@@ -2,8 +2,10 @@
 #include "global.h"
 #include "task.h"
 #include "main.h"
+#include "link.h"
 #include "collision.h"
 #include "player.h"
+#include "effect.h"
 
 /* plobj_52f6c.c (0x08052F6C-0x08053AF3, issue #90).
  *
@@ -34,37 +36,16 @@
 
 /* M09's hit-box set (src/block_30804.c); only a pointer is passed here */
 struct HitBoxSet;
-void TaskExitTrampoline(void);
-void TaskYieldTrampoline(s32 frames);
+/* Declared here, not through a header: the calls in this file pass other
+   types than the definition takes (lessons 3.428, 3.517). */
 s32 QueueSprite(u32 a, u32 b, u32 c, u32 d, u32 e, s16 f);
 s32 PlaySfx(s32 id);
-s32 TaskCreateInRange(u32 type, s32 start, s32 end);
-void TaskMove(void);
-void TaskMoveRelativeToParent(void);
-void TaskDrawScreenOrFree(void);
-void TaskDrawWorld(void);
-void TaskDrawWorldInViewOrFree(void);
-void TaskSleepForever(void);
 void TaskSetEntry(void *a, u32 i);
-void TaskSetMotionXFacing(s32 a, s32 b);
-void TaskStop(void);
 u32 IsWorldPosOnScreen(s16 x, s16 y);
-u32 IsInView(s16 x, s16 y);
 void RegisterCollider(u8 a, s16 x, s16 y, void *p);   /* M11's caller spelling */
 void sub_0801c230(const s8 *p);
 void sub_0802205c(s8 *box);
-void sub_0802233c(s8 *off);
 s32 TaskBreakBlocks(struct HitBoxSet *p, s32 e);   /* M14's callers test r0 unnarrowed (good/sub_08050c48.c); landed M09/M12/M13 files spell it u16 */
-s32 PlaySfxIfLocalPlayer(s32 a0, u16 a1);
-void sub_08050814(void);
-void sub_08050f80(void);
-void sub_080520dc(void);
-s32 sub_08052b08(void);
-s32 CreatePlayerEffect(s32 a0, s32 a1, s32 a2);
-void sub_08053380(void);
-void sub_080534d0(void);
-void sub_080536dc(void);
-void sub_080538cc(void);
 
 void sub_08052f6c(void)
 {

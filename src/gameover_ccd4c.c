@@ -1,6 +1,7 @@
 #include "gba/gba.h"
 #include "global.h"
 #include "task.h"
+#include "main.h"
 #include "link.h"
 #include "ending.h"
 
@@ -16,18 +17,10 @@
  *       sub_080cd248, two scripted sprites with empty handlers.
  *   sub_080cd24c / sub_080cd2f8   variants 4 and 5. */
 
-void TaskExitTrampoline(void);
-void TaskYieldTrampoline(s32 frames);
 void CallTableEntry(u32 idx, u32 count, void (**fns)(void));   /* if (idx < count) fns[idx](); */
 s32 PlaySfx(s32 id);                                    /* play a sound effect */
 void TaskFree(s32 id);                                   /* kill task */
 void TaskSleepForever(void);                                     /* end the running task */
-void TaskSetMotionXFacing(s32 a, s32 b);
-void TaskSetMotion(s32 a, s32 b, s32 c, s32 d, s32 e, s32 f);
-void TaskStop(void);
-void TaskSetFrame(s32 a);
-void sub_080cce98(void);
-void sub_080ccf10(void);
 
 /* Task type #264 variant 2. */
 void sub_080ccd4c(void)

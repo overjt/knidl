@@ -1,20 +1,12 @@
 #include "gba/gba.h"
 #include "global.h"
 #include "task.h"
+#include "main.h"
 #include "hud.h"
 #include "enemy.h"
 
 /* Externals */
-extern void TaskMove(void);
-extern void TaskDrawWorld(void);
 extern u32 RandomRange(u32 range);
-extern void TaskSetMotionXFacing(s32 a, s32 b);
-extern void TaskSetFrame(s32 a);
-extern void TaskYieldTrampoline(u32 frames);
-extern void sub_080974c8(void);
-
-/* Defined below */
-void sub_080970c4(void);
 
 void sub_080970c4(void)
 {

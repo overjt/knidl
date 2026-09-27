@@ -2,6 +2,7 @@
 #include "global.h"
 #include "task.h"
 #include "link.h"
+#include "sound.h"
 #include "cutscene.h"
 #include "room.h"
 #include "player.h"
@@ -13,21 +14,14 @@
 extern u8 gObjPalette[];
 extern u16 gPlayerPressedKeys;
 
-void TaskExitTrampoline(void);
-void TaskYieldTrampoline(s32 frames);
 void RequestCopy(u32 mode, u32 src, u32 dst, u32 size);
+/* Declared here, not through a header: the calls in this file pass other
+   types than the definition takes (lessons 3.428, 3.517). */
 void CallTableEntry(u32 a, u32 b, u32 *c);
-void PlayBgm(u32 a);
-void StopSfxOnPlayer(s32 player, s32 songId);
-void TaskFree(s32 id);
-s32 TaskCreateInRange(u32 type, s32 start, s32 end);
-void TaskMove(void);
-void TaskDrawScreen(void);
 void TaskSleepForever(void);
 void TaskSetMotion(s32 a, s32 b, s32 c, s32 d, s32 e, s32 f);
 void TaskStop(void);
 void TaskSetFrame(s32 a);
-void CutsceneCheckSkip(void);
 
 s32 CreateCutsceneActor(s32 a, s32 b)
 {
@@ -227,10 +221,6 @@ void sub_08010528(void)
     gCurTask->frame = 36;
     TaskSleepForever();
 }
-
-/* Not in hdr.c yet: the two task entry points this state installs. */
-void sub_080109c8(void);
-void sub_08010b38(void);
 
 /* OBJ VRAM tile base; not in hdr.c. */
 extern u8 gObjVram[];

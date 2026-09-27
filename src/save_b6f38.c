@@ -43,11 +43,9 @@ struct LinkSave
     /*0x12C*/ u16 unk12C[0x3B6A];
 };
 
-/* Not from save.h: this file's view of gUnk_0200EC50 differs (lesson 3.517).
-   */
+/* Not from save.h: this file's view of gUnk_0200EC50 differs (lesson 3.517). */
 extern struct LinkSave *gUnk_0200EC50;
 extern struct LinkSave *gInputRecordingPtr;
-extern s32 Div(s32 a, s32 b);
 extern u8 gInputRecorderRunning;
 extern s16 gInputRecorderMode;
 extern u16 gUnk_0200EC60[];

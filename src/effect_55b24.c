@@ -20,20 +20,8 @@
  * gFrameCount bit 0 is set and the inherited facing flipped otherwise;
  * variant 23 (sub_08055d74, 904 bytes) is the longest. */
 
-void TaskExitTrampoline(void);
-void TaskYieldTrampoline(s32 frames);
-void TaskMove(void);
-void TaskDrawWorld(void);
-void TaskSetFrameByFacing(s16 a);
-void TaskSetMotionXFacing(s32 a, s32 b);
-void TaskSetMotion(s32 a, s32 b, s32 c, s32 d, s32 e, s32 f);
-void TaskStop(void);
 u16 RandomSpread(s32 base, u8 scale, u8 amount);   /* base + ((rand(256) * amount) >> 8) * scale */
 s16 RandomSpreadFacing(s32 base, u8 scale, u8 amount);   /* the same, negated when Task.facing != 1 */
-void sub_08055d24(void);
-void sub_080560fc(void);
-void sub_08056300(void);
-void sub_08056428(void);
 
 void sub_08055b24(void)
 {

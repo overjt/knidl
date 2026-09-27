@@ -61,7 +61,6 @@ extern u8 gUnk_0200EC4C;
 extern u16 gRecvCmds[];
 extern u16 gSendCmd[4];
 
-extern void IntrDummy(void);
 extern void LinkSetupDetect(void);
 extern void LinkSetupMultiCart(void);
 extern void LinkSetupMultiBoot(void);

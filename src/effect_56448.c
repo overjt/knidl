@@ -1,6 +1,7 @@
 #include "gba/gba.h"
 #include "global.h"
 #include "task.h"
+#include "main.h"
 #include "effect.h"
 
 /* effect_56448.c (0x08056448-0x08056DD3, issue #89).
@@ -15,18 +16,9 @@
  * per-frame callback sub_08056da8 sets Task.unk28 in sub-state 4 once the
  * player leaves mode 13. */
 
-void TaskExitTrampoline(void);
-void TaskYieldTrampoline(s32 frames);
-void TaskMove(void);
-void TaskMoveRelativeToParent(void);
-void TaskDrawWorld(void);
-void TaskSetFrameByFacing(s16 a);
-void TaskSetMotionXFacing(s32 a, s32 b);
-void TaskStop(void);
 u16 RandomSpread(s32 base, u8 scale, u8 amount);   /* base + ((rand(256) * amount) >> 8) * scale */
 s16 RandomSpreadFacing(s32 base, u8 scale, u8 amount);   /* the same, negated when Task.facing != 1 */
 s32 CreatePlayerEffect(s32 a0, s32 a1, s32 a2);          /* M16's effect spawner (spawns task type #7) */
-void sub_08056da8(void);
 
 void sub_08056448(void)
 {

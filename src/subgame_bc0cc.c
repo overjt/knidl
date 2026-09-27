@@ -39,34 +39,18 @@
 #include "main.h"
 #include "link.h"
 #include "mode.h"
+#include "hud.h"
 #include "player.h"
 #include "effect.h"
 #include "subgame.h"
 
-void TaskExitTrampoline(void);
-void TaskYieldTrampoline(u32 frames);
-void LZ77UnCompWram(const void *src, void *dest);
 void RequestCopy(u32 mode, u32 src, u32 dst, u32 size);
+/* Declared here, not through a header: the calls in this file pass other
+   types than the definition takes (lessons 3.428, 3.517). */
 s32 QueueSprite(u32 a, u32 b, u32 c, u32 d, u32 e, s16 f);
 void CallTableEntry(u32 a, u32 b, u32 *c);
 s32 PlaySfx(s32 id);
-void TaskFree(s32 id);
-s32 TaskCreateFrom(u32 type, s32 idx);
-void TaskMove(void);
-void TaskDrawScreen(void);
-void TaskSleepForever(void);
 void TaskSetEntry(void *fn, u32 i);
-void TaskStop(void);
-void AddPlayerLivesNoHud(u32 a, u32 b);
-void AddPlayerScoreNoHud(u32 a, u32 b);
-
-void sub_080bc1c4(void);
-void QuickDrawPlayerEnterState(void);
-void QuickDrawPlayerUpdate(void);
-void sub_080bcf8c(void);
-void QuickDrawOpponentEnterState(void);
-void sub_080bd290(void);
-void QuickDrawOpponentUpdate(void);
 
 void Task_QuickDrawObject(void)
 {

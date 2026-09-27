@@ -14,14 +14,6 @@
  * spelling that gives the ROM's layout (the first jump pass moves the first
  * block of each body reached by an unconditional goto into its place). */
 
-s32 TerrainQueryPixel(u32 x, u32 y);
-s32 TerrainQueryPixelAndBelow(u32 x, u32 y);
-s32 TerrainQueryPixelAndSides(u32 x, u32 y);
-s32 GetTilePushDown(u16 a);
-s32 GetTilePushUp(u16 a);
-s32 GetTilePushRight(u16 a);
-s32 GetTilePushLeft(u16 a);
-
 /* Slope-follow probe of sub_0801c30c (src/terrain_1c30c.c): when the pixel
    under the probe point is solid, step the point along its cell -
    horizontally by the sign of Task.velX (gTerrainVelX), else vertically

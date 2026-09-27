@@ -4,7 +4,9 @@
 #include "main.h"
 #include "link.h"
 #include "sound.h"
+#include "hud.h"
 #include "room.h"
+#include "effect.h"
 #include "actor.h"
 
 struct M11R8 { u8 unk00; u8 unk01; u8 offsetX; u8 offsetY; u8 *boxes; };
@@ -45,28 +47,16 @@ extern u16 gUnk_0873DB44[][2];
 extern u32 gUnk_08751990[];
 extern u32 gUnk_087519CC[];
 
-void TaskYieldTrampoline(s32 frames);
 void RequestCopy(u32 mode, u32 src, u32 dst, u32 size);
+/* Declared here, not through a header: the calls in this file pass other
+   types than the definition takes (lessons 3.428, 3.517). */
 s32 QueueSprite(u32 a, u32 b, u32 c, u32 d, u32 e, s16 f);
 u32 RandomRange(u32 range);
 void BlendColors(u16 *src, u16 *dst, s32 ratio, s32 count, u16 *out);
 s32 PlaySfx(s32 id);
-void StopSfxOnPlayer(s32 player, s32 songId);
-void TaskFree(s32 id);
-s32 TaskCreateFrom(u32 type, s32 idx);
-void TaskSetFrame(s32 a);
 s32 IsOnScreen(s16 x, s16 y);
 u32 IsWorldPosOnScreen(s16 a, s16 b);
-void TaskFreezeOrThawOthers(u16 a, s32 b);
-void TaskRestoreSkipMask(u32 idx);
-s32 AddPlayerHealth(s32 a, s32 b);
-void SetPlayerAbilityNoHud(s32 a, s32 b, s32 c);
-void SetPlayerAbility(u32 a, s32 b, s32 c);
 s32 IsTaskBelowPlayerBounds(struct Task *t);
-s32 FindDoorAt(s32 a0, s32 a1);
-void sub_080270d0(void);
-void PauseRoom(void);
-void ResumeRoom(void);
 void sub_08033414(void);
 s32 sub_0803d010(void);
 void sub_0803d7c4(void);
@@ -84,9 +74,6 @@ void sub_080409b8(s32 a0);
 void sub_08040a44(s16 p0, s16 p1);
 void PlayerSetMotionXPreset(s32 a0, s32 a1);
 void PlayerSetMotionYPreset(s32 a0);
-s32 CreatePlayerEffect(s32 band, s32 id, s32 payload);
-s32 CreatePlayerEffectHighSlot(s32 band, s32 id, s32 payload);
-void CreateAbilityStar(u32 a);
 
 void PlayerPlayBump(void)
 {

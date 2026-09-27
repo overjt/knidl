@@ -2,6 +2,7 @@
 #include "global.h"
 #include "task.h"
 #include "main.h"
+#include "hud.h"
 #include "room.h"
 #include "player.h"
 
@@ -22,28 +23,11 @@
  * 16-224 x 18-132 and, once gSpriteCameraY passes 888, subtracts the
  * player's whole health (AddPlayerHealth) and requests action 17. */
 
-void TaskYieldTrampoline(s32 frames);
 /* task / sprite services (landed prototypes) */
 void CallTableEntry(u32 idx, u32 count, void (**fns)(void));   /* if (idx < count) fns[idx](); */
-void TaskSleepForever(void);
 void TaskSetEntry(void *a, u32 i);
-void TaskSetFrame(s32 a);
-s32 AddPlayerHealth(s32 a, s32 b);
 void RegisterCollider(u8 a, s16 x, s16 y, void *p);   /* M11's caller spelling */
-void PlayerStopAxes(s32 a0);
-s32 PlaySfxIfLocalPlayer(s32 a0, u16 a1);
-s32 PlayerLand(s32 a0);
-s32 sub_0803e55c(void);
-s32 LoadPlayerBodyBoxRect(s32 playerIdx, u8 *src6);
-void PlayerTurnToHeldDirection(void);
-void PlayerCheckBump(void);
-void PlayerStopAtCeilingAndWall(void);
-s32 PlayerCheckFloat(void);
-s32 PlayerCheckBButton(void);
-s32 PlayerRequestLocomotion(void);
 void PlayerSetMotionXPreset(s32 a0, s32 a1);           /* M11, still asm; M11's own spelling */
-void PlayerSetMotionYPreset(s32 a0);
-void sub_080506dc(void);
 s32 sub_08053a44(s8 player, u8 variant, s32 arg);
 
 void PlayerActionStarRod(void)

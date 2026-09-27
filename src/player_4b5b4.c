@@ -1,6 +1,7 @@
 #include "gba/gba.h"
 #include "global.h"
 #include "task.h"
+#include "main.h"
 #include "player.h"
 #include "actor.h"
 
@@ -17,14 +18,7 @@
  * ROM keeps a dead `ldr [t, #84]` of a test whose two arms were
  * merged. */
 
-void TaskYieldTrampoline(s32 frames);
-void TaskSleepForever(void);
-void TaskSetFrame(s32 a);
 s32 SetPlayerAbility(s32 a, s32 b, u32 c);       /* landed (hud_099fc.c); M12 calls it as SetPlayerAbility(0, -1, p->unk00) */
-void PlayerStopAxes(s32 a0);
-void FreezeOtherTasks(s32 a0);
-void PlayerStopAtCeilingAndWall(void);
-void PlayerSetMotionYPreset(s32 a0);
 void CreatePlayerObject(s32 a, s32 b, s32 c);      /* M14, src/plobj_52f6c.c (defined s32 (s8, u8, s32); the result is unused here) */
 
 void PlayerActionLight(void)

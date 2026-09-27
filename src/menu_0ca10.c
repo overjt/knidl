@@ -2,6 +2,7 @@
 #include "global.h"
 #include "task.h"
 #include "main.h"
+#include "link.h"
 #include "sound.h"
 #include "mode.h"
 #include "menu.h"
@@ -23,22 +24,7 @@
  * numbers and play the chosen sound. */
 
 void RequestCopy(u32 mode, u32 src, u32 dst, u32 size);
-void RunFrame(void);
-void RunFrames(s32 count);
-void IntToDigits(s16 n);
 s32 PlaySfx(s32 id);
-void FadeOutBgm(s32 speed);
-s32 TaskCreateFrom(u32 type, s32 idx);
-void LoadGfxSet(u16 a0);
-void MenuSetupFileMenu(void);
-void BgScrollStartX(s32 speed, s32 dist, s32 bg);
-s32 BgScrollStartBg3Slide(s32 speed);
-void BgScrollFinish(void);
-void SetBlend(s32 a, s32 b, s32 c, s32 d);
-void SetWindow(s32 in, s32 out, s32 h, s32 v, s32 win);
-void StopHBlankScroll(void);
-void StartHBlankScroll(s32 a);
-void MenuDrawModeList(void);
 
 void MenuEnterModeList(void)
 {

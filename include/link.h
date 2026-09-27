@@ -91,4 +91,110 @@ extern vu16 gUnk_04000128; /* REG_SIOCNT */
 extern vu16 gUnk_0400012A; /* REG_SIOMLT_SEND */
 extern vu16 gUnk_04000208; /* REG_IME */
 
+
+/* Functions (defined in the files named above each group). */
+
+/* src/early_2378.c */
+void LinkSyncRandom(void);
+
+/* src/early_2668.c */
+void LinkSyncClock(void);
+
+/* src/early_293c.c */
+void DisconnectLink(void);
+
+/* src/early_2b04.c */
+void FillSendCmd(void);
+void UpdatePlayerKeys(void);
+void RunLinkFrame(void);
+void RunFrames(s32 count);
+void RunFramesNoTasks(s32 count);
+void RunLinkFrames(s32 count);
+void RunFramesUntilFadeDone(void);
+void RunFramesNoTasksUntilFadeDone(void);
+void RunLinkFramesUntilFadeDone(void);
+void ApplyBgLayout(u16 *p);
+void SeedRandom(u32 seed);
+u32 Random(void);
+void IntToDigits(s16 n);
+u16 BlendColor(u16 a, u16 b, u16 ratio);
+
+/* src/early_3888.c */
+void LinkSetupInit(void);
+
+/* src/early_3964.c */
+void LinkSetupStop(void);
+void MultiBootSetParams(u8 *start, u8 *end);
+void MultiBootInitWithParams(u8 *start, u8 *end);
+void LinkSetupRequestStart(void);
+void LinkSetupDetect(void);
+void LinkSetupMultiCart(void);
+void LinkSetupMultiBoot(void);
+
+/* src/early_4000.c */
+void LinkSetupMain(u16 a);
+void LinkSetupIntr(void);
+u32 LinkBroadcastWordStep(void);
+void LinkBlockAnnounce(u32 *src, u32 *dst, u32 size);
+u32 LinkBlockHandshakeStep(void);
+void LinkBlockStart(void);
+void LinkBlockParentIntr(void);
+void LinkBlockChildIntr(void);
+u32 IsLinkBlockDone(void);
+
+/* src/early_4734.c */
+void LinkBlockMain(void);
+void MultiBootInit(struct MultiBootParam *mp);
+
+/* src/early_4984.c */
+u32 MultiBootMain(struct MultiBootParam *mp);
+
+/* src/early_4d6c.c */
+int MultiBootSend(struct MultiBootParam *mp, u16 data);
+void MultiBootStartProbe(struct MultiBootParam *mp);
+int MultiBootCheckComplete(struct MultiBootParam *mp);
+int MultiBootHandShake(struct MultiBootParam *mp);
+void MultiBootWaitCycles(s32 cycles);
+void MultiBootWaitSendDone(void);
+
+/* src/early_6464.c */
+u32 IsInView(s16 x, s16 y);
+void TaskFreezeOrThawOthers(u16 val, s32 idx);
+void TaskRestoreSkipMask(u32 idx);
+void TaskSaveSkipMask(u32 idx);
+void InitLinkDriver(void);
+void EnableSerial(void);
+void DisableSerial(void);
+void ResetSerial(void);
+void CheckMasterOrSlave(void);
+void InitTimer(void);
+
+/* src/early_6ac8.c */
+void EnqueueSendCmd(u16 *p);
+void DequeueRecvCmds(u16 (*p)[4]);
+
+/* src/early_6cd4.c */
+void LinkVSync(void);
+
+/* src/early_6d18.c */
+void Timer3Intr(void);
+
+/* src/early_6d28.c */
+void SerialCB(void);
+
+/* src/early_6e8c.c */
+void StartTransfer(void);
+
+/* src/early_6e9c.c */
+void DoRecv(void);
+
+/* src/early_7004.c */
+void DoSend(void);
+void StopTimer(void);
+void SendRecvDone(void);
+void ResetSendBuffer(void);
+void ResetRecvBuffer(void);
+u32 ConnectLink(void);
+u32 IsLinkError(void);
+
 #endif /* GUARD_LINK_H */

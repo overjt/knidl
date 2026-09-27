@@ -27,45 +27,23 @@
 extern u16 gBgPalette;
 extern vu16 gDispCnt;
 
+/* Declared here, not through a header: the calls in this file pass other
+   types than the definition takes (lessons 3.428, 3.517). */
 extern void CallTableEntry(u32 a, u32 b, u32 *c);
-extern void TaskFree(s32 a);
 extern void TaskStop(void);
 extern void TaskSetFrame(s32 a);
-extern void ActorDestroy(void);
-extern void ActorMove(void);
-extern void CreateBurstEffect(s32 a, s32 b);
-extern void sub_0806a0cc(void);
-extern void ActorAttachEffect(s32 a, s32 b);
-extern void ActorDefeatBlinkAndBurst(void);
-extern void sub_0806a524(void);
-extern void sub_0806a55c(void);
-extern void sub_0806a594(void);
-extern s32 CreateChildTaskHere(u32 type, u8 keepPrio);
 extern void ActorSetState(u8 v);
 extern void ActorLoadDef(u32 def);
-extern void ActorDrawWorldInViewOrDestroy(void);
 extern void TaskSetEntry(void *fn, s32 i);
-extern void sub_0806a8d8(void);
-extern u8 TaskGetXDirBitTo(s32 a);
 extern u32 RandomRange(s32 a);
-extern void sub_0806a7f4(void);
 extern void RegisterCollider(u8 a, s16 b, s16 c, void *d);
 extern void ActorCheckHits(void);
 extern s32 ActorReactToHit(void);
 extern void TaskSleepForever(void);
 extern void PlaySfx(s32 a);
 extern void TaskSetMotionXFacing(s32 a, s32 b);
-extern void PlayRayBurstAnim(void);
-extern void PlayExplosionAnim(void);
-extern void ActorPlaySfx(s32 a, s32 b);
-extern void sub_0806aa40(void);
 extern void LoadBackdropColor(u16 *p);
 extern void RequestScreenShake(s32 a);
-extern void sub_0806aba4(void);
-extern void sub_0806ac48(void);
-extern void sub_0806acc4(void);
-extern void TaskYieldTrampoline(u32 a);
-extern s16 TaskGetHitAngle(void);
 extern void AngleToVector(s32 a, s32 b);
 
 void ActorDie(void)

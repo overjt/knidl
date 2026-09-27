@@ -1,6 +1,7 @@
 #include "gba/gba.h"
 #include "global.h"
 #include "main.h"
+#include "sound.h"
 
 /* Link (SIO multi-play + multiboot) driver work area at 0x0200EBC0. */
 struct SioWork
@@ -73,11 +74,11 @@ extern vu16 gMultiBootDataRecv[4];
 extern s8 gUnk_030023A8[];
 extern s16 gUnk_0300244C;
 
-extern void StopAllSound(void);
-extern void DisableSoundDriver(void);
 extern void LinkSetupIntr(void);
 extern void MultiBootInit(struct MultiBootParam *);
 extern u32 MultiBootMain(struct MultiBootParam *);
+/* Declared here, not through a header: the calls in this file pass other
+   types than the definition takes (lessons 3.428, 3.517). */
 extern void MultiBootStartMaster(struct MultiBootParam *, u32, u32, u32, u32);
 extern u32 MultiBootCheckComplete(struct MultiBootParam *);
 

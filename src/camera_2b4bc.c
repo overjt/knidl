@@ -18,17 +18,6 @@
  * arrival.  All of them end by writing the 16.16 target
  * gCameraCenterX/gCameraCenterY and the visible rectangle gViewRect. */
 
-void UpdatePlayerGroupCenter(void);
-void SetCameraBoundsToGroup(void);
-void sub_08029ef4(void);
-void UpdatePlayerCameras(void);
-void sub_0802a260(void);
-void SetPlayerBoundsFromCamera(void);
-void sub_0802a484(void);
-void SetViewRectToPlayers(void);
-void sub_0802a568(void);
-void sub_0802a63c(void);
-
 void CameraFollowFocus(void)
 {
     s32 x, y;

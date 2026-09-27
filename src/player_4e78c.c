@@ -1,9 +1,11 @@
 #include "gba/gba.h"
 #include "global.h"
 #include "task.h"
+#include "main.h"
 #include "collision.h"
 #include "room.h"
 #include "player.h"
+#include "effect.h"
 
 /* player_4e78c.c (0x0804E78C-0x0804EE07, issue #90).
  *
@@ -16,26 +18,8 @@
  * (Task.variant) and re-bind it through sub_0804e600, most of them through
  * the helper sub_0804f7f8's four key probes. */
 
-void TaskYieldTrampoline(s32 frames);
-void TaskSleepForever(void);
 void TaskSetEntry(void *a, u32 i);
-void TaskSetFrame(s32 a);
-void PlayerStopAxes(s32 a0);
-s32 PlaySfxIfLocalPlayer(s32 a0, u16 a1);
-void PlayerUpdateFlip(void);
-s32 PlayerFaceHeldDirection(void);
-void PlayerCheckBump(void);
 void PlayerSetMotionXPreset(s32 a0, s32 a1);           /* M11, still asm; M11's own spelling */
-void PlayerSetMotionYPreset(s32 a0);
-
-void LoadAbilityTiles(void);
-void sub_0804e600(void);
-s32 sub_0804f614(void);
-s32 sub_0804f76c(void);
-void sub_0804f79c(void);
-s32 sub_0804f7f8(s32 a);
-s32 sub_0804f8ec(s32 a0);
-s32 CreatePlayerEffect(s32 a0, s32 a1, s32 a2);
 
 void sub_0804e78c(void)
 {

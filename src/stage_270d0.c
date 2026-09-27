@@ -2,7 +2,11 @@
 #include "global.h"
 #include "task.h"
 #include "main.h"
+#include "sound.h"
+#include "hud.h"
 #include "room.h"
+#include "camera.h"
+#include "save.h"
 
 /* stage_270d0.c (0x080270D0-0x0802739F, issue #93).
  *
@@ -17,22 +21,6 @@
  * front of it in the translation unit (lesson 4.79). */
 
 void RequestCopy(u32 mode, u32 src, u32 dst, u32 size);
-s32 PlayBgm(s32 songId);
-void StopBgm(void);
-void StopAllSfx(void);
-void TaskSetOthersSkipMask(u16 val, s32 idx);
-void TaskFree(s32 id);
-void HudRedrawClock(void);
-void sub_08026998(void);
-void CameraWriteScrollParallax(void);
-void SetBg23ScreenSize(u16 a);
-void SetBg3ScreenSize(u16 a);
-void ResumeBlockAnims(void);
-void PauseBlockAnims(void);
-void StopHBlankScroll(void);
-void HoldHBlankScroll(void);
-void RestoreRoomHBlankScroll(void);
-void ResumeHBlankScroll(void);
 
 void sub_080270d0(void)
 {

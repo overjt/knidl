@@ -1,9 +1,11 @@
 #include "gba/gba.h"
 #include "global.h"
 #include "task.h"
+#include "main.h"
 #include "link.h"
 #include "collision.h"
 #include "room.h"
+#include "effect.h"
 #include "actor.h"
 
 /* player_36c94.c (0x08036C94-0x08037ED7, issue #91).
@@ -52,10 +54,9 @@ extern struct HitBoxSet gUnk_0873CC54;
 extern u16 gUnk_02004B6C;
 extern u8 gUnk_0873BEC4[];
 
-void TaskYieldTrampoline(s32 frames);
-void TaskSleepForever(void);
 void TaskSetEntry(void *a, u32 i);
-void TaskSetFrame(s32 a);
+/* Declared here, not through a header: the calls in this file pass other
+   types than the definition takes (lessons 3.428, 3.517). */
 u32 RegisterCollider(u8 idx, s16 x, s16 y, u8 *p);
 u16 sub_08030898(struct HitBoxSet *p, s32 e);
 void PlayerStopAxes(s32 a0);
@@ -73,7 +74,6 @@ void PlayerSetMotionXPreset(s32 a0, s32 a1);           /* M11, still asm; M11's 
 void PlayerSetMotionYPreset(s32 a0);
 void LoadAbilityTiles(void);                     /* M13, src/player_49738.c */
 void CreatePlayerObject(s32 a, s32 b, s32 c);      /* M14, src/plobj_52f6c.c (defined s32 (s8, u8, s32); the result is unused here) */
-s32 CreatePlayerEffect(s32 a0, s32 a1, s32 a2);
 s32 sub_08065100(s16 x, s16 y, u32 p2, u8 p3, u8 p4);
 
 void PlayerActionLadder(void)

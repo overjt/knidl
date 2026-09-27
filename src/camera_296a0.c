@@ -27,16 +27,6 @@ struct Unk020055D8Entry
     /*0x06*/ u16 y;
 };
 
-void sub_08023f18(void);
-void SpawnRoomObjectsInRect(s32 x0, s32 x1, s32 y0, s32 y1);
-void sub_0802aae8(s32 x);
-void DrawBg123Row(s32 x0, s32 x1, s32 y);
-void DrawBg123Column(s32 x, s32 y0, s32 y1);
-void DrawBg23Row(s32 x0, s32 x1, s32 y);
-void DrawBg23Column(s32 x, s32 y0, s32 y1);
-void DrawBg23FullRow(s32 y);
-void sub_0802b25c(s32 x);
-
 void sub_080296a0(void)
 {
     s32 x, x0, x1, d;

@@ -2,6 +2,7 @@
 #include "global.h"
 #include "task.h"
 #include "link.h"
+#include "hud.h"
 #include "room.h"
 #include "camera.h"
 
@@ -29,8 +30,6 @@ struct Unk020055D8Entry
     /*0x04*/ u16 x;
     /*0x06*/ u16 y;
 };
-
-s32 sub_080b5338(s32 i);
 
 void UpdatePlayerGroupCenter(void)
 {

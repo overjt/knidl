@@ -2,8 +2,10 @@
 #include "global.h"
 #include "task.h"
 #include "main.h"
+#include "hud.h"
 #include "room.h"
 #include "player.h"
+#include "effect.h"
 #include "actor.h"
 
 /* player_47fe8.c (0x08047FE8-0x08049737, issue #88).
@@ -31,32 +33,13 @@
 
 /* M09's hit-box set (src/block_30804.c); only a pointer is passed here */
 struct HitBoxSet;
-void TaskYieldTrampoline(s32 frames);
 u32 BeginFade(u16 steps, s16 delta, u16 *mask);   /* delta is signed: the ROM passes -2 as movs/negs */
 void BlendColors(u16 *src, u16 *dst, s32 ratio, s32 count, u16 *out);
 s32 PlaySfx(s32 id);
-void TaskSleepForever(void);
-void TaskSetFrame(s32 a);
-void TaskSetFrameNoFlip(s32 a);
-void TaskSetFrameFlip(s32 a);
-s32 SetPlayerAbilityNoHud(s32 a, s32 b, u32 c);
-void HudShowAbilityAnimated(s32 a, s32 b);
-void sub_0800a178(s32 a, s32 id);
 void RegisterCollider(u8 a, s16 x, s16 y, void *p);   /* M11's caller spelling */
 u16 TaskBreakBlocks(struct HitBoxSet *p, s32 e);
-void PlayerStopAxes(s32 a0);
-void SetPlayerInvulnerability(s32 a0, s32 a1, s32 a2);
-void PlayerStopSfx(void);
-void FreezeOtherTasks(s32 a0);
-s32 LoadPlayerBodyBoxRect(s32 playerIdx, u8 *src6);
-s32 LoadPlayerHitBoxSet(s32 a0, s32 a1);
-void sub_0803f5fc(s8 a0);
-void sub_08040710(void);
 
-void LoadAbilityTiles(void);
-void sub_08049a58(void);
 void CreatePlayerObject(s32 a, s32 b, s32 c);      /* M14, src/plobj_52f6c.c (defined s32 (s8, u8, s32); the result is unused here) */
-s32 CreatePlayerEffect(s32 a0, s32 a1, s32 a2);
 
 void PlayerActionGetAbility(void)
 {

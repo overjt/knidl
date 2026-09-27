@@ -6,79 +6,24 @@
 #include "gba/gba.h"
 #include "global.h"
 #include "task.h"
+#include "main.h"
 #include "collision.h"
 #include "actor.h"
 #include "enemy.h"
 
 /* Externals */
-extern s32 Div(s32 numerator, s32 denominator);
-extern s32 GetCollisionTileAtPixel(u16 x, u16 y);
-extern s32 TaskFindNearestPlayer(void);
-extern s32 TaskGetNearestPlayerDx(void);
-extern s32 TaskGetNearestPlayerDy(void);
-extern s32 TaskGetFacingTowardNearestPlayer(void);
-extern s32 ActorStartAnim(struct AnimCmd *p);
-extern s32 ActorStepAnim(void);
-extern s32 CreateActorFromDescAtOffsetFacing(struct ActorSpawn *p, u8 keepPrio);
-extern s32 CreateChildTaskHere(u32 type, u8 keepPrio);
-extern s8 TaskGetParentFacing(void);
 extern u16 TaskGetAngleToNearestPlayer(s32 prec);
 extern u32 RandomRange(u32 range);
 extern u32 ActorCheckHits(void);
 extern u32 ActorCollideTerrain(void);
 extern u32 ActorReactToHit(void);
-extern u8 IsWaterAtPixel(s16 x, s16 y);
-extern u8 TaskGetYDirBitToNearestPlayer(void);
-extern void TaskExitTrampoline(void);
-extern void TaskYieldTrampoline(u32 frames);
+/* Declared here, not through a header: the calls in this file pass other
+   types than the definition takes (lessons 3.428, 3.517). */
 extern void CallTableEntry(u32 a, u32 b, u32 *c);
 extern void PlaySfx(s32 id);
-extern void TaskMove(void);
-extern void TaskDrawWorld(void);
-extern void TaskSleepForever(void);
 extern void TaskSetEntry(void *fn, u32 i);
-extern void TaskSetMotionXFacing(s32 a, s32 b);
-extern void TaskSetMotionY(s32 a, s32 b, s32 c);
-extern void TaskStop(void);
-extern void TaskUpdateFlip(void);
-extern void TaskSetFrame(s32 a);
-extern void TaskInitWaterFlags(void);
 extern void ActorSetState(u8 v);
 extern void ActorSetAttackBox(u32 v);
-extern void TaskFaceNearestPlayer(void);
-extern void ActorDestroy(void);
-extern void TaskTurnAroundAndReverseX(void);
-extern void TaskAccelerateInDir(s32 step, s32 limit, u16 dir);
-extern void ActorDrawWorldInViewOrDestroy(void);
-extern void ActorMove(void);
-extern void sub_0806a0f0(s32 a);
-extern void ActorDie(void);
-void sub_0808a84c(u8 *p, s32 b);
-
-/* Defined below */
-void sub_0808ab38(void);
-void sub_0808ae48(void);
-void sub_0808afd0(void);
-void sub_0808b234(void);
-void sub_0808b4d0(void);
-void sub_0808b5b4(void);
-void sub_0808b650(void);
-void sub_0808b704(void);
-void sub_0808b79c(void);
-void sub_0808b830(void);
-void sub_0808b8c4(void);
-void CreateBlipperDroplet(s32 a);
-void sub_0808bb24(void);
-void sub_0808bb5c(void);
-void sub_0808be58(void);
-void sub_0808c708(void);
-s32 sub_0808c82c(void);
-void sub_0808c8bc(void);
-void sub_0808c934(void);
-void sub_0808c980(void);
-s32 sub_0808ca00(s32 a, s32 b);
-s32 sub_0808cab8(s32 a, s32 b);
-void ChillyFreezeUpdate(void);
 
 void Task_Blipper(void)
 {

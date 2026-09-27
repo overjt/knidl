@@ -1,5 +1,6 @@
 #include "gba/gba.h"
 #include "global.h"
+#include "task.h"
 
 /* Early game-code block 0x08001CC8-0x08002377 (issue #32, batch B2).
  *
@@ -70,12 +71,10 @@ extern u16 gLinkCommand;
 extern u16 gLinkIsMaster;
 extern const u8 gBootSignature[];
 
-extern void InitTasks(void);
 extern void ResetOamShadow(void);
 extern void RunBuildOamInIwram(void);
 extern void EndFrame(void);
 extern void ResetSpriteQueue(void);
-extern void RunTasks(void);
 
 void ResetBgScroll(void)
 {

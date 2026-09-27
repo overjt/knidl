@@ -46,6 +46,7 @@
 #include "gba/gba.h"
 #include "global.h"
 #include "task.h"
+#include "main.h"
 #include "cutscene.h"
 #include "camera.h"
 #include "actor.h"
@@ -54,69 +55,17 @@
 /* Externals */
 extern s32 RandomRange(s32 a);
 extern s32 PlaySfx(s32 id);
-extern s32 TaskGetNearestPlayerDistSq(void);
-extern s32 TaskGetNearestPlayerDx(void);
-extern s32 ActorStartAnim(struct AnimCmd *p);
-extern s32 ActorTickAnimFacingNearestPlayer(s32 n);
-extern s32 ActorTickAnim(s32 n);
-extern s32 CreateActorFromDescAtOffsetFacing(struct ActorSpawn *p, u8 keepPrio);
-extern s32 CreateChildTaskAtOffsetFacing(u32 type, s16 dx, s16 dy, u8 keepPrio);
 extern s32 ActorReactToHit(void);
 extern u32 ActorCheckHits(void);
 extern u32 ActorCollideTerrain(void);
-extern u32 ActorDie(void);
-extern void TaskYieldTrampoline(u32 frames);
+/* Declared here, not through a header: the calls in this file pass other
+   types than the definition takes (lessons 3.428, 3.517). */
 extern void CallTableEntry(u32 a, u32 b, u32 *c);
-extern void TaskSleepForever(void);
 extern void TaskSetEntry(void *fn, u32 i);
-extern void TaskSetMotionXFacing(s32 a, s32 b);
-extern void TaskSetMotionY(s32 a, s32 b, s32 c);
-extern void TaskStopY(void);
-extern void TaskStop(void);
-extern void TaskSetFrame(s32 a);
 extern void ActorSetState(u32 v);
 extern void ActorSetHitReactions(u32 *p);
 extern void ActorSetAttackBox(u32 *p);
-extern void TaskGetNearestPlayerPos(void);
-extern void TaskFaceNearestPlayer(void);
-extern void ActorDestroySlot(s32 i);
-extern void TaskTurnAroundAndReverseX(void);
-extern void TaskTurnAround(void);
-extern void ActorStopAnim(void);
-extern void ActorDrawWorldInViewOrDestroy(void);
-extern void ActorMove(void);
-extern void AcquirePaletteAnim(u32 p0, s32 idx);
 extern void sub_08066b34(u32 *p);
-extern void sub_08066ba8(void);
-extern void sub_08066bdc(void);
-extern void sub_080670ac(u32);
-extern void sub_080670d4(void);
-extern void sub_0806a0f0(s32 a);
-extern void sub_0806ee2c(void);
-
-/* Forward declarations */
-void WaddleDeeWalkUpdate(void);
-void WaddleDeePaceUpdate(void);
-void WaddleDeeJumpUpdate(void);
-void ParasolWaddleDeeWalkUpdate(void);
-void sub_08079298(void);
-void ParasolWaddleDeeStandUpdate(void);
-void PengyUpdate(void);
-void PengyEnterState(void);
-void sub_08079578(void);
-void sub_0807964c(void);
-void sub_0807968c(void);
-void sub_080796d8(void);
-void sub_0807995c(void);
-void BomberUpdate(void);
-void BomberEnterState(void);
-void sub_08079d74(void);
-void sub_0807a09c(void);
-void sub_0807a10c(void);
-void sub_0807a4a0(void);
-void sub_0807a5a8(void);
-void sub_0807a618(void);
-extern s32 ScarfyEnterState();
 
 void sub_08078b68(void)
 {

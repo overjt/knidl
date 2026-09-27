@@ -12,62 +12,25 @@
 #include "task.h"
 #include "main.h"
 #include "link.h"
+#include "hud.h"
 #include "cutscene.h"
+#include "collision.h"
 #include "room.h"
 #include "actor.h"
 
 /* callees */
 extern s32 PlaySfx(u32 a);
-extern s32 HudShowAbility();
-extern s32 sub_08022540();
-extern s32 sub_0802610c();
+/* Declared here, not through a header: the calls in this file pass other
+   types than the definition takes (lessons 3.428, 3.517). */
 extern s32 sub_080269d8();
-extern s32 CreateChildTaskHere(u32 type, u8 keepPrio);
 extern u32 ActorCheckHits(void);
 extern u32 ActorCollideTerrain(void);
-extern void TaskYieldTrampoline(u32 a);
 extern void CallTableEntry(u32 a, u32 b, u32 *c);
-extern void TaskFree(s32 id);
-extern void TaskMoveRelativeToParent(void);
-extern void TaskSleepForever(void);
 extern void TaskSetEntry(void *a, u32 i);
-extern void TaskSetMotionXFacing(s32 a, s32 b);
-extern void TaskSetMotionY(s32 a, s32 b, s32 c);
-extern void TaskStopY(void);
-extern void TaskStop(void);
-extern void TaskStopSlot(u32 i);
-extern void TaskSetFrame(s32 a);
 extern void sub_0801bcac(u32 *p);
 extern void RequestScreenShake(u32 a);
-extern void SetCameraFocus(s32 a, s32 b);
 extern void ActorSetState(u8 v);
 extern void AngleToVector(s16 t, s16 mag);
-extern void TaskGetScreenPos(void);
-extern void ActorDrawWorldInView(void);
-extern void ActorMove(void);
-extern void sub_08067108(void);
-extern void sub_08068a8c(s32 i, u8 flag);
-extern void sub_08068b88(s32 i, u16 b, u8 c, u8 d);
-extern void CreateBurstEffect(u32 a, s32 b);
-extern void sub_0806da3c(u32 a, u32 b);
-extern void sub_0807022c(void);
-extern void sub_08070264(void);
-extern void sub_0807029c(void);
-extern void sub_080702d8(void);
-extern void sub_08070334(void);
-extern void sub_080703a8(void);
-extern void sub_08070614(u32 a);
-extern void sub_08076318(void);
-extern void sub_080763c4(void);
-
-/* defined below */
-void sub_08076f50(s32 a);
-void sub_08076f04(s32 a);
-void CannonEnterState(void);
-void CannonUpdate(void);
-void sub_08077898(struct M19Script *p);
-void sub_080779dc(void);
-void CannonFuseUpdate(void);
 
 void sub_080763e8(void)
 {

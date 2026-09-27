@@ -14,20 +14,6 @@
  * the probes' 8.8 push gTerrainDriftX/gTerrainDriftY is written back to
  * PlayerState.driftVelX/unk58 on top of gRoomDriftVelX/gRoomDriftVelY. */
 
-void TerrainProbeBegin(const s8 *p);
-void TerrainProbeEnd(const s8 *p);
-void sub_0801c690(void);
-void sub_0801c7cc(void);
-void sub_0801c8dc(void);
-void sub_0801c930(void);
-void sub_0801d9c8(void);
-void sub_0801dc88(void);
-void sub_0801dee8(void);
-void sub_0801e178(void);
-void sub_08021130(void);
-void sub_08021564(void);
-void sub_08022650(void);
-
 /* The player's per-frame terrain entry point (M09's player task passes the
    player's box record): the position comes from PlayerState.prevPixelX/unk60
    and the box offsets from PlayerState.prevTerrainBox instead of the task. */

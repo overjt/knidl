@@ -2,6 +2,7 @@
 #include "global.h"
 #include "main.h"
 #include "link.h"
+#include "mode.h"
 #include "hud.h"
 
 /* Link-cable session drivers, 0x08002378-0x0800293C (issue #32, batch C1).
@@ -79,10 +80,9 @@
  *   clamp's and the outer 0x7755 case's uses) and none moved it.
  */
 
-extern void RunFrameNoTasks(void);
+/* Declared here, not through a header: the calls in this file pass other
+   types than the definition takes (lessons 3.428, 3.517). */
 extern void LinkMain1(void *, void *, void *);
-extern int IsLinkError(void);
-extern void LinkErrorScreen(void);
 
 void LinkSyncClock(void)
 {

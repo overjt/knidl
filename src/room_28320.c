@@ -2,7 +2,10 @@
 #include "global.h"
 #include "task.h"
 #include "link.h"
+#include "mode.h"
+#include "collision.h"
 #include "room.h"
+#include "camera.h"
 
 /* room_28320.c (0x08028320-0x08028B8B, issue #93).
  *
@@ -13,23 +16,6 @@
  * CalcBg3Parallax computes the BG3 parallax factors, CalcRoomBounds the room
  * bounds, CameraResetBoundsToGroup the multi-player group bounds and CameraResetBounds
  * copies the room bounds into the camera and per-player bounds. */
-
-void LoadGfxSet(u16 a0);
-s32 GetCollisionTileAtPixel(u16 x, u16 y);
-void UpdatePlayerCameras(void);
-s32 sub_0802eac8(s32 x, s32 y, s32 a);
-s32 sub_0802ec1c(s32 x, s32 y, s32 a);
-s32 sub_0802ef90(s32 x, s32 y, s32 a, s32 b);
-s32 sub_0802f05c(s32 x, s32 y, s32 a, s32 b);
-s32 sub_0802f1fc(s32 x, s32 y, s32 a, s32 b);
-s32 sub_0802f31c(s32 x, s32 y, s32 a, s32 b);
-s32 sub_0802f420(s32 x, s32 y, s32 a);
-s32 sub_0802f4c8(s32 x, s32 y, s32 a, s32 b);
-s32 sub_0802f53c(s32 x, s32 y, s32 a, s32 b);
-s32 sub_0802f5b4(s32 x, s32 y, s32 a, s32 b);
-s32 sub_0802f7dc(s32 x, s32 y, s32 a, s32 b);
-s32 sub_0802fa3c(s32 x, s32 y, s32 a, s32 b);
-s32 sub_0802fdf4(s32 x, s32 y, s32 a, s32 b);
 
 void SpawnDoorObjects(void)
 {

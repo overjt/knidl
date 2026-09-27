@@ -35,39 +35,15 @@
 #include "task.h"
 #include "main.h"
 #include "link.h"
+#include "sound.h"
 #include "room.h"
 #include "subgame.h"
 
-void TaskYieldTrampoline(u32 frames);
-void BeginFastFadeInFromWhite(void);
-void BeginFastFadeOutToWhite(void);
+/* Declared here, not through a header: the calls in this file pass other
+   types than the definition takes (lessons 3.428, 3.517). */
 void CallTableEntry(u32 a, u32 b, u32 *c);
-s32 PlayBgm(s32 songId);
 s32 PlaySfx(s32 id);
-void StopBgm(void);
-void TaskSetOthersSkipMask(u16 val, s32 idx);
-void TaskFree(s32 id);
-s32 TaskCreateFrom(u32 type, s32 idx);
-void TaskSleepForever(void);
 void TaskSetEntry(void *fn, u32 i);
-void SubGameCheckEnd(void);
-void QuickDrawFreeze(void);
-void sub_080ba61c(void);
-void QuickDrawStartTimer(void);
-void QuickDrawWaitForSignal(void);
-s32 QuickDrawCountPresses(void);
-void QuickDrawSetPlayerState(s32 a0, u16 a1);
-void sub_080bc79c(u16 a0);
-void QuickDrawLoadOpponentGraphics(s32 a0);
-void QuickDrawSetOpponentState(s32 a0, u16 a1);
-
-void sub_080ba900(void);
-void sub_080baa38(void);
-void sub_080ba94c(void);
-void sub_080ba978(void);
-void sub_080baabc(void);
-void QuickDrawRoundUpdate(void);
-void CreateQuickDrawOpponent(void);
 
 u8 QuickDrawIsTimeUp(void)
 {

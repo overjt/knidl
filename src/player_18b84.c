@@ -1,16 +1,12 @@
 #include "gba/gba.h"
 #include "global.h"
 #include "task.h"
+#include "main.h"
+#include "cutscene.h"
+#include "player.h"
 #include "effect.h"
 
-void TaskExitTrampoline(void);
-void TaskYieldTrampoline(s32 frames);
 s32 PlaySfx(s32 id);
-void TaskMove(void);
-void TaskDrawScreen(void);
-void TaskSetMotion(s32 a, s32 b, s32 c, s32 d, s32 e, s32 f);
-void TaskStop(void);
-void CreateCutsceneActor(s32 a, s32 b);
 
 void sub_08018b84(void)
 {

@@ -26,42 +26,15 @@
 
 /* M09's hit-box set (src/block_30804.c); only a pointer is passed here */
 struct HitBoxSet;
-void TaskExitTrampoline(void);
-void TaskYieldTrampoline(s32 frames);
 u32 RandomRange(u32 range);
-void TaskFree(s32 id);
-void TaskMove(void);
-void TaskMoveRelativeToParent(void);
-void TaskDrawWorld(void);
-void TaskDrawWorldInView(void);
-void TaskDrawWorldInViewOrFree(void);
 void TaskSetEntry(void *a, u32 i);
-void TaskSetFrameByFacing(s16 a);
-void TaskSetMotionXFacing(s32 a, s32 b);
-void TaskStopX(void);
-void TaskStopY(void);
-void TaskStop(void);
 u16 RandomSpread(u16 base, u8 scale, u8 amount);
 s16 RandomSpreadFacing(u16 base, u8 scale, u8 amount);
 void RegisterCollider(u8 a, s16 x, s16 y, void *p);   /* M11's caller spelling */
 void sub_0801c230(const s8 *p);
-void sub_0801c444(const s8 *p);
 void sub_0802205c(s8 *box);
-void sub_0802233c(s8 *off);
-void TaskInitWaterFlags(void);
 u16 TaskBreakBlocksAt(struct HitBoxSet *p, s32 x, s32 y);   /* this file's call passes only x and y: the ROM leaves r3 as it was (the definition in src/block_30804.c takes a fourth, `e`) */
 s32 TaskBreakBlocks(struct HitBoxSet *p, s32 e);   /* M14's callers test r0 unnarrowed (good/sub_08050c48.c); landed M09/M12/M13 files spell it u16 */
-void sub_0803dfc8(void);
-s32 PlaySfxIfLocalPlayer(s32 a0, u16 a1);
-s32 LoadPlayerBodyBoxRect(s32 playerIdx, u8 *src6);
-s32 LoadPlayerHitBoxSet(s32 a0, s32 a1);
-void sub_08050814(void);
-void sub_0805091c(void);
-void sub_08052f6c(void);
-void sub_0805176c(void);
-void sub_08051b0c(void);
-void sub_08051d84(void);
-void sub_080520dc(void);
 
 void sub_080514f8(void)
 {

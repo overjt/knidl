@@ -2,6 +2,7 @@
 #include "global.h"
 #include "task.h"
 #include "link.h"
+#include "sound.h"
 #include "subgame.h"
 
 /* subgame_c1ffc.c (0x080C1FFC-0x080C243B, issue #98).
@@ -27,33 +28,17 @@
  *   AirGrindRaceUpdate   its per-frame callback: the frame counter gAirGrindFrame,
  *       the script cursor, the palette fades and M35's SubGameCheckEnd. */
 
-/* Not from main.h: this file's view of gFrameCallback differs (lesson 3.517).
-   */
+/* Not from main.h: this file's view of gFrameCallback differs (lesson 3.517). */
 extern u16 gLinkPlayerCount;
 extern u32 gFrameCallback;
 extern u32 gVBlankCallback;
 extern u32 gVBlankEndCallback;
 
-void TaskYieldTrampoline(s32 frames);
 void ClearHBlankIntr(void);
-s32 PlayBgm(s32 songId);
-void StopBgm(void);
-void StopAllSfx(void);
 s32 TaskCreateFrom(u32 type, s32 idx);                         /* spawn a task */
-void TaskDrawScreen(void);
 void TaskSleepForever(void);                                     /* end the running task */
-void SubGameCheckEnd(void);
-void AirGrindBuildSky(void);
-void AirGrindSkyVBlankCallback(void);
-void sub_080c4860(s32 y);
 void AirGrindStepPaletteFades(void);                                  /* step the four palette fades gAirGrindPaletteFades[] */
-void sub_080c495c(void);
-s32 AirGrindStartPaletteFade(u16 *src, s32 pal, s32 period, s32 steps, s32 count, s32 repeat);
-void AirGrindStopPaletteFade(s32 i);
-void AirGrindSeedRandom(void);
-void sub_080c51c0(void);
 void sub_080c51d4(void);                                  /* step the gAirGrindScript script */
-void AirGrindRaceUpdate(void);
 
 void CreateAirGrindRacers(void)
 {

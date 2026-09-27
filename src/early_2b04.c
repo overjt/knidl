@@ -1,7 +1,10 @@
 #include "gba/gba.h"
 #include "global.h"
 #include "main.h"
+#include "task.h"
 #include "link.h"
+#include "mode.h"
+#include "save.h"
 
 /* Early subsystem: link-play frame driver, wait helpers, RNG, decimal digit
  * split and 15bpp colour blending (0x08002B04-0x0800310F, issue #32 batch C2).
@@ -40,17 +43,9 @@
  *    BlendColors (lesson 2.13 / zone lesson 14): nothing in ROM calls it.
  */
 
-void FillSendCmdWithSaveSlot(void);
-void ReceiveLinkSaveSlots(void);
+/* Declared here, not through a header: the calls in this file pass other
+   types than the definition takes (lessons 3.428, 3.517). */
 void LinkMain1(u16 *a, u16 *b, u16 *c);
-void LinkErrorScreen(void);
-void RunTasks(void);
-void RunBuildOamInIwram(void);
-void EndFrame(void);
-void ResetSpriteQueue(void);
-u32 IsLinkError(void);
-void RunFrame(void);
-void RunFrameNoTasks(void);
 
 void FillSendCmd(void)
 {

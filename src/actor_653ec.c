@@ -13,122 +13,39 @@
 #include "task.h"
 #include "main.h"
 #include "link.h"
+#include "sound.h"
+#include "hud.h"
+#include "cutscene.h"
 #include "room.h"
 #include "camera.h"
 #include "actor.h"
 #include "enemy.h"
 
 extern void PlaySfx(u32 a);
-extern void TaskSetSkipMask(u32 a, u32 b);
-extern void sub_080662d8(void);
-extern u32 sub_080b5628(u32 a);
-extern u32 sub_080b55d8(u32 a, u32 b);
-extern void sub_08066468(void);
-extern void ActorLoadHeaderPalette(struct GfxHeader *h);
 extern void sub_08068f68(void);
 extern void ActorReactToHit(void);
-extern void sub_08066480(struct GfxHeader *h, u32 b, u32 c);
-extern void HudShowHpBar(void);
+/* Declared here, not through a header: the calls in this file pass other
+   types than the definition takes (lessons 3.428, 3.517). */
 extern void sub_0800a340(s16 a, s16 b);
 extern void HudStartHpBar(s16 a, s16 b);
-extern void sub_08066754(void);
-extern void sub_080666a4(void);
-void sub_08066988(u32 i);
-u8 ActorIsInViewMargin(s16 dx, u16 dy);
 void sub_08066c08(u32 def, u8 b);
-void sub_08066dcc(void);
-void sub_08066f78(void);
-void sub_08066fc0(u8 p3, s16 x, s16 y);
-void sub_08067108(void);
-void sub_08067114(void);
-void sub_08067170(void);
-extern void ActorStopAnim(void);
-extern s32 ActorStartAnim(struct AnimCmd *p);
 extern void ActorSetAttackBox(u32 v);
-extern u32 sub_08026a0c(void);
-extern u32 sub_08026a80(void);
-extern u32 sub_08026aec(void);
-extern s32 ActorTickAnim(s32 n);
-extern s32 ActorTickAnimFacingNearestPlayer(s32 n);
-extern s32 sub_08064e90(u32 sub, u32 type, u8 p2, s16 x, s16 y);
-extern void sub_08066a94(u8 a);
-extern void ActorFaceHitter(void);
-extern void TaskSetFrame(s32 a);
-extern void sub_0806ae94(void);
-extern void sub_080262dc(void);
-extern void sub_08065350(void);
-extern void sub_0806be4c(u32 i);
 extern void TaskSetEntry(void *fn, u32 i);
-extern void ActorDie(void);
-extern void ActorDestroySlot(s32 i);
-extern void sub_08066c74(void);
 extern void ActorLoadDef(u32 def);
-extern void TaskTurnAroundAndReverseX(void);
-extern void TaskFaceNearestPlayer(void);
-extern void TaskUpdateFlip(void);
-extern void ActorDrawWorldInViewOrDestroy(void);
-extern void sub_08066e88(u8 a);
 extern void sub_080637cc(void);
-extern void sub_0806ee2c(void);
-extern s32 CreateActorByKind(u8 cls, u32 sub, u8 p3, u8 p4, int x, int y, u16 prio);
-extern s32 TaskFindNearestPlayer(void);
-extern void sub_080713f8(s32 a, s32 b, u32 c);
-extern void PlayBgm(u32 a);
-extern void TaskFreezeOrThawOthers(u16 a, s32 b);
-extern void PauseRoom(void);
-extern void ResumeRoom(void);
-extern s32 CreateActorFromDesc(struct ActorSpawn *p, u8 keepPrio);
-extern void TaskFaceLikeParent(void);
 extern void ActorSetState(u8 v);
-extern void sub_08067214(void);
-extern void ActorMove(void);
 extern void ActorCheckHits(void);
-extern void TaskSetMotionXFacing(s32 a, s32 b);
-extern void TaskStop(void);
-extern void sub_08067408(void);
-extern void TaskMoveRelativeToParent(void);
 extern s32 sub_08064d9c(u32 sub, u32 type, int p2Arg, int xArg, int yArg,
                         int prioArg, int altArg);
 
 extern u32 TaskIsOnScreen(void);
 extern s32 QueueSprite(u32 a, u32 b, u32 c, u32 d, s32 e, s32 f);
 extern void RequestCopy(u32 mode, u32 src, u32 dst, u32 size);
-extern void HudRemoveHpBar(void);
-extern void ActorDestroy(void);
-extern u8 ActorIsInView(void);
-extern void TaskIntegrateMotion(void);
-extern s32 CreateChildTaskHere(u32 type, u8 keepPrio);
 extern void CallTableEntry(u32 a, u32 b, u32 *c);
 extern void BlendColors(u32 a, u32 b, u32 c, u32 d, u32 e);
-extern void TaskYieldTrampoline(u32 a);
-extern void TaskExitTrampoline(void);
 
-void sub_08065470(void);
-void sub_0806555c(void);
-void AcquirePaletteAnim(u32 p0, s32 idx);
 s16 ActorComputeHealthSlot(u32 i);
-u32 *sub_0806601c(void);
-void sub_0806627c(void);
-void sub_08066544(void);
-void sub_08066564(void);
-void ActorShowHpBar(void);
-void ActorLoadPalette(void *src, u32 size, u8 force);
-u8 sub_08066a6c(void);
-u8 sub_08066a80(void);
-void ActorFlashPalette(void *src, u32 size);
-u16 sub_0806660c(u16 a);
-u32 sub_08066718(void);
-void sub_08066658(struct AnimCmd *p);
-void sub_080666a4(void);
-void sub_08066988(u32 i);
-u8 ActorIsInViewMargin(s16 dx, u16 dy);
 void sub_08066c08(u32 def, u8 b);
-void sub_08066dcc(void);
-void sub_08066f78(void);
-void sub_08066fc0(u8 p3, s16 x, s16 y);
-void sub_08067108(void);
-void sub_08067114(void);
-void sub_08067170(void);
 
 void sub_080653ec(void)
 {

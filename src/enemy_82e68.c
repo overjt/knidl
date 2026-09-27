@@ -43,63 +43,30 @@
 #include "gba/gba.h"
 #include "global.h"
 #include "task.h"
+#include "main.h"
 #include "collision.h"
 #include "room.h"
 #include "actor.h"
 #include "enemy.h"
 
 /* Externals */
-extern void TaskYieldTrampoline(u32 frames);
-extern void TaskExitTrampoline(void);
+/* Declared here, not through a header: the calls in this file pass other
+   types than the definition takes (lessons 3.428, 3.517). */
 extern void CallTableEntry(u32 a, u32 b, u32 *c);
 extern void PlaySfx(s32 a);
-extern void TaskSleepForever(void);
 extern void TaskSetEntry(void *fn, s32 i);
-extern void TaskSetMotionXFacing(s32 a, s32 b);
-extern void TaskStopX(void);
-extern void TaskSetMotionY(s32 a, s32 b, s32 c);
-extern void TaskStop(void);
-extern void TaskSetFrame(s32 a);
 extern void ActorSetState(s32 a);
 extern void ActorSetHitReactions(u32 *p);
 extern void ActorSetAttackBox(u32 *p);
-extern void TaskFaceNearestPlayer(void);
 extern u16 TaskGetAngleToNearestPlayer(s32 a);
-extern s32 ActorTickAnim(s32 n);
 extern void AngleToVector(s32 a, s32 b);
-extern void TaskGetNearestPlayerPos(void);
-extern void TaskFaceLikeParent(void);
-extern void sub_0806a0f0(s32 a);
 extern u8 sub_0806951c(void);
-extern void ActorDie(void);
-extern void ActorMove(void);
-extern void ActorDrawWorldInViewOrDestroy(void);
-extern s32 TaskGetNearestPlayerDx(void);
-extern s32 ActorStartAnim(struct AnimCmd *p);
-extern s32 CreateChildTaskAtOffsetFacing(u32 type, s16 dx, s16 dy, u8 keepPrio);
-extern s32 TaskGetFacingTowardNearestPlayer(void);
-extern s32 GetDistSq(struct PointPair *p);
 extern s32 TaskIsNearestPlayerInRect(struct PointPair *p);
 extern s32 TaskIsInRect(struct PointPair *r);
-extern void ActorDestroy(void);
-extern s32 GetCollisionTileAtPixel(u16 x, u16 y);
 extern s32 GetCollisionTileAtOffset(s16 x, s16 y, s32 c, s32 d);
 extern void ActorCheckHits(void);
 extern u8 ActorCollideTerrain(void);
 extern void ActorReactToHit(void);
-
-/* Defined below */
-void FlamerUpdate(void);
-void sub_080839ec(void);
-u8 sub_08083a48(s32 dir);
-u8 sub_08083ad4(s32 dir);
-u8 sub_08083bbc(s32 dir, s32 k);
-u8 sub_08083cb8(s16 x, s16 y);
-s32 sub_08083d28(u8 a);
-void sub_08083dfc(void);
-void sub_08083f04(void);
-void sub_080840f0(void);
-void sub_080842b8(void);
 
 void FlamerInit(void)
 {

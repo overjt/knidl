@@ -9,11 +9,6 @@
  * (gTerrainProbeResult.unk6 != 0), the simpler sibling of sub_0801c930 in
  * src/terrain_1c930.c. */
 
-s32 TerrainQueryPixel(u32 x, u32 y);
-s32 TerrainQueryPixelAndBelow(u32 x, u32 y);
-s32 GetTileFloorSnap(u16 a);
-s32 sub_08021ab4(u32 x, u32 y);
-
 /* Floor probe of a box standing on the ground (gTerrainProbeResult.unk6 != 0). */
 void sub_0801d394(void)
 {

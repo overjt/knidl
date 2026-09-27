@@ -27,30 +27,14 @@
 #include "link.h"
 #include "actor.h"
 
-extern void TaskYieldTrampoline(u32 a);
-extern void TaskExitTrampoline(void);
-extern void TaskSleepForever(void);
 extern void TaskSetEntry(void *fn, s32 i);
-extern void TaskMoveRelativeToParent(void);
+/* Declared here, not through a header: the calls in this file pass other
+   types than the definition takes (lessons 3.428, 3.517). */
 extern void RegisterCollider(u8 a, s16 x, s16 y, void *p);
 extern void ActorSetState(u8 v);
 extern void ActorSetTerrainHandlers(u32 v);
-extern void ActorMove(void);
-extern void sub_0806b410(void);
-extern void sub_0806b848(void);
-extern void sub_0806b878(void);
-extern void sub_0806b8bc(void);
-extern void sub_0806b938(void);
-extern void sub_0806ba9c(void);
-extern u32 sub_0806baec(u32 a);
-extern void sub_0806bc28(void);
-extern void sub_0806bc9c(void);
-extern void sub_0806be84(void);
-extern void sub_0806bf38(void);
 
-extern void TaskSetMotionXFacing(s32 a, s32 b);
 extern void ActorSetTerrainBox(u32 v);
-extern s32 CreateChildTaskHere(u32 type, u8 keepPrio);
 
 /* Not from collision.h: this file's view of gTerrainResult differs (lesson
    3.517). */
@@ -61,29 +45,8 @@ extern void PlaySfx(u32 a);
 extern void RequestScreenShake(u32 a);
 extern void TaskBreakBlocks(void *p, s16 v);
 extern void ActorCollideTerrain(void);
-extern void TaskSetMotionY(s32 a, s32 b, s32 c);
-extern void ActorDrawWorldInViewOrDestroy(void);
-extern s32 CreateChildTaskAtOffsetFacing(u32 type, s16 dx, s16 dy, u8 keepPrio);
-extern void TaskFaceLikeParent(void);
-extern u8 TaskHasSameSerial(u32 i);
-extern void TaskFree(s32 i);
-extern void TaskSetFrameByFacing(u32 a);
-extern void TaskStop(void);
 extern s16 RandomSpreadFacing(s32 a, u32 b, u32 c);
 extern s32 RandomSpread(s32 a, u32 b, u32 c);
-extern s32 CreateChildTask(u32 type, int xArg, int yArg, int prioArg);
-extern s32 CreateChildTaskAt(u32 type, s16 xArg, s16 yArg, u8 keepPrio);
-extern void TaskSetFrame(s32 a);
-
-void sub_0806c30c(void);
-void sub_0806c384(void);
-void sub_0806c418(void);
-void sub_0806c490(void);
-void sub_0806c5d4(void);
-void sub_0806c770(void);
-void sub_0806c9e8(void);
-void StarFlashFollowParent(void);
-void CreateDustPuff(void);
 
 void sub_0806c2a4(void)
 {

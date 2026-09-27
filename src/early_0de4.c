@@ -1,6 +1,8 @@
 #include "gba/gba.h"
 #include "global.h"
 #include "main.h"
+#include "link.h"
+#include "sound.h"
 
 /* Main per-frame driver / VBlank waiter (0x08000DE4-0x080010CB, issue #32).
  * agbcc -O2 -mthumb-interwork (game-code recipe).
@@ -20,13 +22,8 @@
  */
 
 struct MusicPlayerInfo;
-extern void m4aMPlayVolumeControl(struct MusicPlayerInfo *mplayInfo, u16 trackBits, u16 volume);
 extern void m4aSoundVSync(void);
-extern void SoundDriverVSyncOff(void);
 extern void SoftReset(u32 resetFlags);
-extern void UpdateFade(void);
-extern void StopAllSound(void);
-extern void LinkBlockMain(void);
 
 void EndFrame(void)
 {

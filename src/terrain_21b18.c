@@ -23,12 +23,6 @@
  * gPlayerBounds, the camera bounds gCameraBounds or the room bounds
  * gRoomBounds and return which edges were hit. */
 
-s32 TerrainQueryPixel(u32 x, u32 y);
-s32 TerrainQueryPixelAndBelow(u32 x, u32 y);
-s32 TerrainQueryPixelAndSides(u32 x, u32 y);
-s32 GetTileFloorSnap(u16 a);
-s32 GetCollisionTile(u32 x, u32 y);
-
 s32 GetCollisionTileAtPixel(u16 x, u16 y)
 {
     return GetCollisionTile(x >> 4, y >> 4);

@@ -139,4 +139,153 @@ extern u16 gUnk_08756268[];
 extern u32 gUnk_08756270[];
 extern u32 gUnk_0875628C[];
 
+
+/* Functions (defined in the files named above each group). */
+
+/* src/save_b6154.c */
+s32 sub_080b6154(void);
+
+/* src/save_b6290.c */
+s32 sub_080b6290(void);
+
+/* src/save_b63a4.c */
+s32 sub_080b63a4(void);
+
+/* src/save_b6474.c */
+s32 sub_080b6474(void);
+s32 sub_080b6570(void);
+s32 sub_080b67dc(void);
+
+/* src/save_b6a90.c */
+void UpdateRoomHBlankScroll(void);
+
+/* src/save_b6b08.c */
+s32 sub_080b6b08(void);
+
+/* src/save_b6c40.c */
+s32 sub_080b6c40(void);
+
+/* src/save_b6d04.c */
+s32 sub_080b6d04(void);
+
+/* src/save_b6e44.c */
+void ResetHBlankScroll(void);
+void StopHBlankScroll(void);
+void StartHBlankScroll(s32 a);
+void StartRoomHBlankScroll(s32 a);
+void HoldHBlankScroll(void);
+void SuspendHBlankScroll(void);
+void RestoreRoomHBlankScroll(void);
+void ResumeHBlankScroll(void);
+
+/* src/save_b6f38.c */
+void InputRecorderStart(void);
+
+/* src/save_b72bc.c */
+void sub_080b72bc(void);
+
+/* src/save_b75a4.c */
+void InputRecorderRecordFrame(void);
+void InputRecorderPlayFrame(void);
+
+/* src/save_b77d4.c */
+void InputRecorderUpdate(void);
+void InitSaveSlots(void);
+void SelectLatestSaveSlot(void);
+s32 ReadSaveSlot(s32 a, s32 b);
+void InitNewSaveFile(s32 a);
+
+/* src/save_b79b8.c */
+s32 CalcCompletionPercent(s32 a);
+
+/* src/save_b7a9c.c */
+s32 WriteSaveSlot(s32 a);
+u32 WriteSramSignature(void);
+void WriteNewSaveFile(s32 a);
+void SaveProgress(s32 a);
+void sub_080b7c00(s32 a);
+void sub_080b7cb4(s32 a);
+void EraseSaveSlot(s32 a);
+void ClearSaveSlot(s32 a);
+u32 CalcSaveSlotChecksum(s32 a);
+
+/* src/save_b7df4.c */
+u32 UpdateSaveSlotChecksum(s32 a);
+
+/* src/save_b7e14.c */
+void StoreProgressInSaveSlot(s32 a);
+void StoreProgressInBothHalves(s32 a);
+void LoadSaveSlot(s32 a);
+void ResetProgress(void);
+s32 CheckNewMilestones(void);
+u32 ReadInputRecording(void);
+u32 WriteInputRecording(void);
+u32 WriteInputRecordingEntry(u8 *src, s32 i);
+void CopySaveSlotToLinkSlot(void);
+void FillSendCmdWithSaveSlot(void);
+
+/* src/save_b8694.c */
+void ReceiveLinkSaveSlots(void);
+
+/* src/save_b8888.c */
+void sub_080b8888(void);
+
+/* src/save_b8918.c */
+void sub_080b8918(void);
+void MergeProgressIntoSaveSlot(s32 a);
+
+/* src/save_b8ea0.c */
+void sub_080b8ea0(void);
+void sub_080b8ebc(void);
+void sub_080b8ef4(void);
+void sub_080b8f8c(s32 a);
+void sub_080b8ff0(void);
+void sub_080b902c(void);
+void sub_080b9064(void);
+void sub_080b9090(void);
+void sub_080b90c8(void);
+void sub_080b90f8(void);
+void sub_080b9108(void);
+void sub_080b9118(void);
+void sub_080b9140(void);
+void sub_080b9198(void);
+void sub_080b91fc(void);
+void sub_080b927c(void);
+void sub_080b9344(void);
+void sub_080b938c(void);
+void sub_080b93d8(void);
+s32 sub_080b9424(void);
+void sub_080b94b4(s32 a, s32 b);
+void sub_080b9578(void);
+void sub_080b95ac(void);
+void sub_080b95ec(void);
+void sub_080b9610(void);
+void sub_080b963c(void);
+void sub_080b9658(void);
+void sub_080b9674(void);
+void sub_080b9690(void);
+void sub_080b96a0(void);
+void sub_080b96bc(void);
+void sub_080b9710(void);
+void sub_080b9730(void);
+void sub_080b9740(void);
+void sub_080b9764(void);
+void sub_080b9770(void);
+void sub_080b9798(void);
+void sub_080b97a4(void);
+void sub_080b97d0(void);
+void sub_080b97dc(void);
+void sub_080b97f8(void);
+void sub_080b97fc(s32 a);
+void sub_080b9878(void);
+void sub_080b98c0(void);
+void sub_080b9968(s32 a, s32 b);
+void sub_080b99e8(s32 a, s32 b, s32 c);
+void sub_080b9a88(s32 a);
+void sub_080b9b08(s32 a);
+void sub_080b9b98(s32 a);
+void sub_080b9c28(void);
+void sub_080b9c74(void);
+void sub_080b9cc0(void);
+
 #endif /* GUARD_SAVE_H */

@@ -2,11 +2,11 @@
 #include "global.h"
 #include "task.h"
 #include "main.h"
+#include "hud.h"
 #include "camera.h"
 #include "enemy.h"
 
-/* Not from save.h: this file's view of gHBlankDmaSrc differs (lesson 3.517).
-   */
+/* Not from save.h: this file's view of gHBlankDmaSrc differs (lesson 3.517). */
 extern u16 *gHBlankDmaSrc;
 extern u8 gHBlankScrollState;
 extern s32 gHBlankScrollTimer;
@@ -16,8 +16,6 @@ extern u16 gHBlankScrollDmaTable[];
 extern u32 gHBlankDmaDest;
 extern u32 gHBlankDmaCnt;
 extern s8 gUnk_087561CC[];
-
-void HBlankScrollVBlankCallback(void);
 
 void UpdateRoomHBlankScroll(void)
 {

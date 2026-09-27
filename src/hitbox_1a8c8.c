@@ -1,6 +1,7 @@
 #include "gba/gba.h"
 #include "global.h"
 #include "task.h"
+#include "hud.h"
 #include "room.h"
 #include "camera.h"
 
@@ -126,7 +127,6 @@ extern u8 gUnk_030054A8;
 extern u16 gUnk_08732218[];
 extern u16 gUnk_08732224[];
 
-s32 AddPlayerHealth(s32 a, u32 b);
 void sub_0801b8e4(void);
 void sub_0801b9e4(void);
 

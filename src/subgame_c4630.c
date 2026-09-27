@@ -34,13 +34,8 @@ extern u16 gObjPalette[];
 s32 QueueSprite(u32 a, u32 b, u32 c, u32 d, u32 e, s16 f);  /* sprite draw; callers pass f sign-extended (lsls/asrs #16), the early_1518 definition says u16 */
 u32 Random(void);                                      /* LCG step */
 void BlendColors(u16 *src, u16 *dst, s32 ratio, s32 count, u16 *out);
-void TaskSetSkipMask(u8 val, s32 idx);
-void TaskDrawScreen(void);
 void TaskSleepForever(void);                                     /* end the running task */
 u32 sub_080c4f60(u16 *src, s16 scale);                    /* callers pass scale sign-extended (ldrsh / lsls-asrs); the callee narrows it with lsls/lsrs */
-void sub_080c4790(void);
-void AirGrindStopPaletteFade(s32 i);
-u32 AirGrindRandomRange(s32 i, u32 range);
 
 void sub_080c4630(s32 idx, s32 x, s32 y, u16 attr)
 {

@@ -3,6 +3,7 @@
 #include "task.h"
 #include "main.h"
 #include "room.h"
+#include "camera.h"
 
 /* bgmap_2b2f0.c (0x0802B2F0-0x0802B4BB, issue #86).
  *

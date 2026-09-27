@@ -16,8 +16,11 @@
 #include "gba/gba.h"
 #include "global.h"
 #include "task.h"
+#include "main.h"
 #include "link.h"
+#include "hud.h"
 #include "room.h"
+#include "player.h"
 #include "actor.h"
 
 /* The 6-byte directional record ActorGetTerrainBox fills on the stack: three raw
@@ -63,11 +66,9 @@ extern u8 gTerrainResult[];
 
 extern u32 RandomRange(u32 range);
 extern void PlaySfx(s32 id);
-extern void TaskSetSkipMask(s32 a, s32 b);
 extern void TaskSetEntry(void *fn, s32 i);
-extern void TaskSetFrame(s32 a);
-extern void AddPlayerLives(s32 a, s32 b);
-extern void HudAnimateTaskHpBar(void);
+/* Declared here, not through a header: the calls in this file pass other
+   types than the definition takes (lessons 3.428, 3.517). */
 extern void sub_0801bcac(struct InputState *p);
 extern void sub_0801bde0(struct InputState *p);
 extern void sub_0801bf1c(struct InputState *p);
@@ -78,40 +79,11 @@ extern void sub_0801c30c(struct InputState *p);
 extern u32 sub_0801c3a4(struct InputState *p);
 extern u32 sub_0802205c(struct InputState *p);
 extern void TaskInitWaterFlagsSlot(s32 i);
-extern void sub_0804087c(s32 a);
 extern void ActorSetState(u8 v);
 extern void ActorSetTerrainHandlers(u32 v);
-extern s32 TaskGetFacingToward(u32 i);
-extern void ActorDestroy(void);
-extern s32 CreateChildTaskAt(u32 type, s16 xArg, s16 yArg, u8 keepPrio);
-extern void ActorAwardScore(s32 a, s32 b);
-extern void ActorPlaySfx(u32 def, u32 which);
 extern void ActorCheckHits(void);
-extern u32 ActorDie(void);
-extern void sub_0806b26c(void);
-extern u32 ActorAttachToHitter(void);
-extern void PlayRayBurstAnim(void);
-extern void PlaySmallBlastAnim(void);
-extern void ActorAttachEffect(s32 a, s32 b);
-extern void sub_0806ee2c(void);
-extern void PickupHeal(void);
-extern void sub_080b460c(void);
-extern void sub_080b54d0(s32 i);
 
-void ActorGetTerrainBox(struct InputState *out);
-u32 ActorReactToHitKind(s8 a);
 u32 ActorReactToHit(void);
-s8 sub_08069c48(void);
-void ActorPlayHitSfx(void);
-void sub_08069d78(void);
-void ActorStartHitStun(void);
-void ActorEndHitStun(void);
-u32 ActorReactToDamage(void);
-void sub_08069f0c(void);
-void sub_08069f70(void);
-void sub_08069fb0(void);
-void PickupCollect(void);
-u32 ActorReactToDefeat(void);
 
 u32 ActorCollideTerrain(void)
 {

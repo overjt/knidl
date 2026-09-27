@@ -121,7 +121,6 @@ extern struct Unk_030023A8 gUnk_030023A8;
 extern s16 gUnk_0300244C;
 extern vu32 gWarmBoot;
 
-extern void m4aSoundInit(void);
 extern void ResetOamShadow(void);
 extern void BuildOam(void);
 extern void ResetFadeAndBlend(void);

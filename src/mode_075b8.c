@@ -3,10 +3,13 @@
 #include "task.h"
 #include "main.h"
 #include "link.h"
+#include "sound.h"
 #include "mode.h"
 #include "room.h"
+#include "player.h"
 #include "actor.h"
 #include "save.h"
+#include "ending.h"
 
 /* mode_075b8.c (0x080075B8-0x08007B67, issue #96).
  *
@@ -18,35 +21,6 @@
  * has lives left), 7/8/12 go to states 11/10/17 and 9-14 enter the six
  * extra modes.  CheckPauseButton raises request 5 when a present, living
  * player presses START and records that player in gPausingPlayer. */
-
-void BeginFastFadeInFromWhite(void);
-void BeginFastFadeOutToWhite(void);
-void ResetTasksAndOam(void);
-void LinkStartKeyExchange(void);
-void LinkStopKeyExchange(void);
-void LinkRequestSync(void);
-void LinkSyncRandom(void);
-void RunLinkFrame(void);
-void RunLinkFramesUntilFadeDone(void);
-void StopSfxOnPlayer(s32 player, s32 songId);
-void StopAllSfx(void);
-void PauseScreen(void);
-void LoadBgLayout(s32 a0);
-void sub_0800b648(void);
-void sub_0800b788(void);
-void sub_0800b87c(void);
-void ClearColliderLists(void);
-void sub_08027128(void);
-void sub_08027178(void);
-void sub_08027198(void);
-void sub_080272dc(void);
-void sub_080273a0(void);
-void LatchPlayerKeys(void);
-void InputRecorderStart(void);
-void InputRecorderUpdate(void);
-void SaveProgress(s32 a);
-s32 CheckNewMilestones(void);
-void ShowMilestonePicture(void);
 
 void CheckPauseButton(void)
 {

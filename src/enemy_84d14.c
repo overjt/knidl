@@ -29,54 +29,26 @@
 #include "gba/gba.h"
 #include "global.h"
 #include "task.h"
+#include "main.h"
+#include "actor.h"
 #include "enemy.h"
 
 /* Externals */
-extern void TaskYieldTrampoline(u32 frames);
+/* Declared here, not through a header: the calls in this file pass other
+   types than the definition takes (lessons 3.428, 3.517). */
 extern void CallTableEntry(u32 a, u32 b, u32 *c);
 extern u32 RandomRange(u32 range);
 extern void PlaySfx(s32 a);
-extern void TaskSleepForever(void);
 extern void TaskSetEntry(void *fn, s32 i);
-extern void TaskSetMotionXFacing(s32 a, s32 b);
-extern void TaskStopX(void);
-extern void TaskSetMotionY(s32 a, s32 b, s32 c);
-extern void TaskStopY(void);
-extern void TaskStop(void);
-extern void TaskSetFrame(s32 a);
 extern void ActorSetState(s32 a);
 extern void ActorSetAttackBox(u32 *p);
-extern void TaskFaceNearestPlayer(void);
-extern s32 ActorTickAnim(s32 n);
-extern void TaskTurnAroundAndReverseX(void);
 extern void sub_08066b34(u32 *p);
-extern void sub_08066ba8(void);
-extern void sub_08066bdc(void);
-extern void ActorStopAnim(void);
 extern void sub_08066c3c(u32 *p);
 extern void sub_08066c08(u32 *p, s32 b);
-extern void sub_08066b70(void);
-extern void sub_0806a0f0(s32 a);
-extern void ActorDie(void);
-extern void ActorMove(void);
-extern void ActorDrawWorldInViewOrDestroy(void);
-extern s32 TaskGetNearestPlayerDy(void);
-extern s32 ActorStartAnim(struct AnimCmd *p);
-extern s32 CreateActorFromDescHere(struct ActorSpawn *p, u8 keepPrio);
-extern s32 CreateActorFromDescAtOffsetFacing(struct ActorSpawn *p, u8 keepPrio);
 extern s32 sub_08021a40(s32 x, s32 y);
-extern s32 TaskGetFacingTowardNearestPlayer(void);
 extern void ActorCheckHits(void);
 extern u8 ActorCollideTerrain(void);
 extern void ActorReactToHit(void);
-
-/* Defined below */
-void ChillyUpdate(void);
-void sub_0808537c(void);
-void sub_08085500(void);
-void sub_080858cc(void);
-void sub_08085cc4(void);
-void sub_08085e60(void);
 
 void ChillyInit(void)
 {

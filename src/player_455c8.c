@@ -4,6 +4,7 @@
 #include "main.h"
 #include "collision.h"
 #include "player.h"
+#include "effect.h"
 
 /* player_455c8.c (0x080455C8-0x08045D33, issue #87).
  *
@@ -23,25 +24,12 @@
  * 0x658/0x65A, M14's CreatePlayerObject, sound 172); its handler PlayerActionLaserUpdate
  * waits for it to finish. */
 
-void TaskYieldTrampoline(s32 frames);
 void BlendColors(u16 *src, u16 *dst, s32 ratio, s32 count, u16 *out);
-void TaskSleepForever(void);
 void TaskSetEntry(void *a, u32 i);
-void TaskSetFrame(s32 a);
 void RegisterCollider(u8 a, s16 x, s16 y, void *p);   /* M11's caller spelling */
 void RequestScreenShake(u16 a);
-void PlayerStopAxes(s32 a0);
-void SetPlayerInvulnerability(s32 a0, s32 a1, s32 a2);
-s32 PlaySfxIfLocalPlayer(s32 a0, u16 a1);
-void PlayerStartSfx(s32 a0, u16 a1);
-void PlayerStopSfx(void);
-s32 sub_0803e55c(void);
-s32 PlayerHasCrossedWaterSurface(s32 a);
-s32 PlayerRequestLocomotion(void);
 void PlayerSetMotionXPreset(s32 a0, s32 a1);           /* M11, still asm; M11's own spelling */
-void PlayerSetMotionYPreset(s32 a0);
 void CreatePlayerObject(s32 a, s32 b, s32 c);      /* M14, src/plobj_52f6c.c (defined s32 (s8, u8, s32); the result is unused here) */
-s32 CreatePlayerEffect(s32 a0, s32 a1, s32 a2);
 
 void PlayerActionBurning(void)
 {

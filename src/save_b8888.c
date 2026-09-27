@@ -2,25 +2,16 @@
 #include "gba/agb_sram.h"
 #include "global.h"
 #include "task.h"
+#include "main.h"
 #include "hud.h"
 #include "room.h"
 #include "save.h"
 
-extern s32 Div(s32 a, s32 b);
-extern s32 Mod(s32 a, s32 b);
 /* Not from link.h: this file's view of gRecvCmds differs (lesson 3.517). */
 extern u16 gPlayerCount;
 extern u16 gRecvCmds[];
 extern u16 gSendCmd[4];
-extern void LinkStopKeyExchange(void);
-extern void LinkStartRecordExchange(void);
 extern void RunLinkFrame(void);
-
-s32 CalcCompletionPercent(s32 a);
-s32 WriteSaveSlot(s32 a);
-u32 UpdateSaveSlotChecksum(s32 a);
-void StoreProgressInSaveSlot(s32 a);
-void MergeProgressIntoSaveSlot(s32 a);
 
 void sub_080b8888(void)
 {

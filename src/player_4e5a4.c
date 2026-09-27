@@ -1,6 +1,7 @@
 #include "gba/gba.h"
 #include "global.h"
 #include "task.h"
+#include "main.h"
 #include "player.h"
 
 /* player_4e5a4.c (0x0804E5A4-0x0804E78B, issue #90).
@@ -20,11 +21,7 @@
 
 /* task / sprite services (landed prototypes) */
 void CallTableEntry(u32 idx, u32 count, void (**fns)(void));   /* if (idx < count) fns[idx](); */
-void TaskSetFrameNoFlip(s32 a);
-void TaskSetFrameFlip(s32 a);
 void RegisterCollider(u8 a, s16 x, s16 y, void *p);   /* M11's caller spelling */
-void SetPlayerInvulnerability(s32 a0, s32 a1, s32 a2);
-s32 PlayerHasCrossedWaterSurface(s32 a);
 
 void PlayerActionBall(void)
 {

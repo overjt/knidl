@@ -23,6 +23,8 @@
  * to four instructions (lesson 3.475). */
 
 void RequestCopy(u32 mode, u32 src, u32 dst, u32 size);
+/* Declared here, not through a header: the calls in this file pass other
+   types than the definition takes (lessons 3.428, 3.517). */
 s32 QueueSprite(u32 a, u32 b, u32 c, u32 d, s32 e, s16 f);
 s32 IsOnScreen(s16 x, s16 y);
 

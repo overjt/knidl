@@ -5,6 +5,7 @@
 #include "collision.h"
 #include "room.h"
 #include "player.h"
+#include "effect.h"
 #include "actor.h"
 
 /* player_4ab70.c (0x0804AB70-0x0804B5B3, issue #88).
@@ -31,28 +32,12 @@
  * palette in and back out (gUnk_08203098, Task.unk28 in steps of 10 and
  * 16) and keeps the player under the height Task.unk2C. */
 
-void TaskYieldTrampoline(s32 frames);
 void BlendColors(u16 *src, u16 *dst, s32 ratio, s32 count, u16 *out);
 s32 PlaySfx(s32 id);
-void TaskSetSkipMask(u8 val, s32 idx);
-void TaskSleepForever(void);
-void TaskSetFrame(s32 a);
 s32 SetPlayerAbility(s32 a, s32 b, u32 c);       /* landed (hud_099fc.c); M12 calls it as SetPlayerAbility(0, -1, p->unk00) */
 void RegisterCollider(u8 a, s16 x, s16 y, void *p);   /* M11's caller spelling */
 void RequestScreenShake(u16 a);
-void SetRoomUpdateFlags(u32 a);
-void PlayerStopAxes(s32 a0);
-void SetPlayerInvulnerability(s32 a0, s32 a1, s32 a2);
-s32 PlaySfxIfLocalPlayer(s32 a0, u16 a1);
-void FreezeOtherTasks(s32 a0);
-s32 PlayerFaceHeldDirection(void);
-void PlayerSetWaterMotionY(void);
-s32 PlayerCheckLanding(void);
-s32 PlayerHasCrossedWaterSurface(s32 a);
-s32 PlayerRequestLocomotion(void);
 void PlayerSetMotionXPreset(s32 a0, s32 a1);           /* M11, still asm; M11's own spelling */
-void PlayerSetMotionYPreset(s32 a0);
-s32 CreatePlayerEffect(s32 a0, s32 a1, s32 a2);
 
 void PlayerActionTornado(void)
 {
