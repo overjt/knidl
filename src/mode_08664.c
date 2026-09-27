@@ -4,13 +4,13 @@
 
 /* mode_08664.c (0x08008664-0x08008B8B, issue #96).
  *
- * The pause screen sub_08008664: it fades out, loads the level's pause
+ * The pause screen PauseScreen: it fades out, loads the level's pause
  * picture (sub_08008fc4), waits for A/START or B and, when the stage
  * allows it, toggles a Continue/Exit choice drawn by sub_080089e0.  Also
  * the per-frame body of AgbMain state 20, sub_08008a00. */
 
-extern u16 gUnk_02004B60;
-extern s16 gUnk_02005588[];
+extern u16 gPausingPlayer;
+extern s16 gPlayerHealth[];
 extern s16 gPlayerLives[];
 extern s8 gUnk_02007D64;
 extern s16 gInputRecorderMode;
@@ -54,8 +54,8 @@ void StopAllSfx(void);
 void FadeInSfx(u16 speed);
 void FadeOutSfx(s32 speed);
 void TaskSetSkipMask(u8 val, s32 idx);
-void sub_080075b8(void);
-void sub_08008c4c(s32 a0);
+void CheckPauseButton(void);
+void LoadBgLayout(s32 a0);
 void sub_08008fc4(s32 a0, s32 a1);
 void sub_0800b648(void);
 void ClearColliderLists(void);
@@ -72,7 +72,7 @@ void InputRecorderStart(void);
 void InputRecorderUpdate(void);
 void sub_080089e0(s32 n);
 
-void sub_08008664(void)
+void PauseScreen(void)
 {
     s32 i;
     s32 id;
@@ -98,12 +98,12 @@ void sub_08008664(void)
     flag = 0;
     if (mode == 8 && gUnk_03002400[gUnk_030023B8][gUnk_03001F20] != 0)
         flag = gUnk_02007D64 != 5;
-    sub_08008c4c(5);
+    LoadBgLayout(5);
     if (gUnk_03001F30 == 1) {
         gDispCnt &= 0xE0FF;
         gDispCnt |= 0xC00;
         id = 28;
-    } else if (gPlayerLives[gLocalPlayer] == 0 && gUnk_02005588[gLocalPlayer] == 0) {
+    } else if (gPlayerLives[gLocalPlayer] == 0 && gPlayerHealth[gLocalPlayer] == 0) {
         gDispCnt &= 0xE0FF;
         gDispCnt |= 0x800;
         id = 27;
@@ -129,7 +129,7 @@ void sub_08008664(void)
         pressed = 0;
         if (gUnk_0300244C == 0) {
             for (i = 0; i < gPlayerCount; i++) {
-                if (gPlayerLives[i] != 0 || gUnk_02005588[i] != 0) {
+                if (gPlayerLives[i] != 0 || gPlayerHealth[i] != 0) {
                     if (gPlayerPressedKeys[i] & 9) {
                         if (sel != 0) {
                             gGameState = 5;
@@ -149,19 +149,19 @@ void sub_08008664(void)
                 }
             }
         } else {
-            if (flag != 0 && (gPlayerPressedKeys[gUnk_02004B60] & 0xC0)) {
+            if (flag != 0 && (gPlayerPressedKeys[gPausingPlayer] & 0xC0)) {
                 PlaySfx(286);
                 sel ^= 1;
                 sub_080089e0(sel);
             }
-            if (gPlayerPressedKeys[gUnk_02004B60] & 9) {
+            if (gPlayerPressedKeys[gPausingPlayer] & 9) {
                 if (sel != 0) {
                     gGameState = 5;
                     StopAllSfx();
                 }
                 PlaySfx(0x11F);
                 pressed++;
-            } else if (gPlayerPressedKeys[gUnk_02004B60] & 2) {
+            } else if (gPlayerPressedKeys[gPausingPlayer] & 2) {
                 PlaySfx(215);
                 pressed++;
             }
@@ -171,7 +171,7 @@ void sub_08008664(void)
         sub_08002338();
         BeginFastFadeOutToWhite();
         RunLinkFramesUntilFadeDone();
-        sub_08008c4c(3);
+        LoadBgLayout(3);
         sub_08027240();
         for (i = 0; i < 64; i++)
             TaskSetSkipMask(15, i);
@@ -198,8 +198,8 @@ void sub_08008a00(void)
     s32 done = 0;
     s32 i;
 
-    gUnk_02004B60 = 0;
-    sub_08008c4c(3);
+    gPausingPlayer = 0;
+    LoadBgLayout(3);
     gInputRecorderMode = 0;
     InputRecorderStart();
     sub_0800b648();
@@ -221,7 +221,7 @@ void sub_08008a00(void)
         RunLinkFrame();
         InputRecorderUpdate();
         LatchPlayerKeys();
-        sub_080075b8();
+        CheckPauseButton();
         switch (gStageRequest) {
         case 0:
             break;
@@ -236,7 +236,7 @@ void sub_08008a00(void)
         case 4:
             break;
         case 5:
-            sub_08008664();
+            PauseScreen();
             gStageRequest = 0;
             break;
         case 6:

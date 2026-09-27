@@ -91,7 +91,7 @@ struct Unk02005E00
 
 extern struct PlayerState gPlayerStates[];
 extern s16 gPlayerLives[];
-extern s16 gUnk_02005588[];
+extern s16 gPlayerHealth[];
 extern u8 gUnk_030023B0;
 extern u16 gGameState;
 extern u32 gUnk_0874CFEC[];
@@ -127,7 +127,7 @@ extern u32 gUnk_0873CF9C[];
 extern struct Unk02005E00 gUnk_02005E00;
 extern u16 gPlayerHeldKeys[];
 extern u8 gUnk_02007CF0;
-extern u16 gUnk_02004B50[];
+extern u16 gPlayerAbilities[];
 extern u16 gUnk_02008008[];
 extern u16 gUnk_02007FA8[];
 extern u16 gUnk_0200AF18[];
@@ -138,9 +138,9 @@ s32 PlayBgm(s32 songId);
 void TaskSetSkipMask(u8 val, s32 idx);
 void TaskSleepForever(void);
 void TaskSetEntry(void *a, u32 i);
-s32 sub_08009ee8(s32 a, u32 b);
-s32 sub_08009fcc(s32 a, s32 b, u32 c);
-s32 sub_0800a008(s32 a, s32 b, u32 c);
+s32 AddPlayerHealth(s32 a, u32 b);
+s32 SetPlayerAbilityNoHud(s32 a, s32 b, u32 c);
+s32 SetPlayerAbility(s32 a, s32 b, u32 c);
 u32 RegisterCollider(u8 idx, s16 x, s16 y, u8 *p);   /* M09's callers pass ldrsh values unextended (LESSONS 8) */
 void sub_0801baa4(u32 a);
 void sub_08021c74(s8 *box, s32 id);
@@ -186,7 +186,7 @@ void Task_Player(void)
 
     gCurTask->unk44 = gCurTaskIdx;
     gCurTask->unk88 = &gPlayerStates[gCurTaskIdx];
-    if (gPlayerLives[gCurTask->unk88->unk00] == 0 && gUnk_02005588[gCurTask->unk88->unk00] == 0)
+    if (gPlayerLives[gCurTask->unk88->unk00] == 0 && gPlayerHealth[gCurTask->unk88->unk00] == 0)
     {
         gCurTask->unk04 = 0;
         gCurTask->unk12 = 4;
@@ -226,7 +226,7 @@ void Task_Player(void)
     gCurTask->unk88->unk6C = 0;
     gCurTask->unk88->unk5E = gCurTask->unk4C >> 16;
     gCurTask->unk88->unk60 = gCurTask->unk50 >> 16;
-    gCurTask->unk78 = gUnk_02005588[gCurTask->unk88->unk00];
+    gCurTask->unk78 = gPlayerHealth[gCurTask->unk88->unk00];
     if (gCurTask->unk88->unk0D != 0)
     {
         LoadAbilityTiles();
@@ -254,11 +254,11 @@ void Task_Player(void)
             if (gGameState != 5)
                 break;
         case 11:
-            sub_0800a008(0, -1, gCurTask->unk88->unk00);
+            SetPlayerAbility(0, -1, gCurTask->unk88->unk00);
             break;
         case 25:
             if (gUnk_02000020 != 2 && gUnk_02000020 != 3)
-                sub_08009fcc(0, -1, gCurTask->unk88->unk00);
+                SetPlayerAbilityNoHud(0, -1, gCurTask->unk88->unk00);
             break;
         }
     }
@@ -277,13 +277,13 @@ void Task_Player(void)
         TaskSleepForever();
     case 2:
         gCurTask->unk88->unk37 = 2;
-        sub_0800a008(25, -1, gCurTask->unk88->unk00);
+        SetPlayerAbility(25, -1, gCurTask->unk88->unk00);
         gCurTask->unk88->unk06 = 3;
         sub_0804fe68();
         TaskSleepForever();
     case 3:
         gCurTask->unk88->unk37 = 3;
-        sub_08009fcc(25, -1, gCurTask->unk88->unk00);
+        SetPlayerAbilityNoHud(25, -1, gCurTask->unk88->unk00);
     }
     switch (gUnk_020069F0)
     {
@@ -434,7 +434,7 @@ void sub_08032d48(void)
         if (gTerrainResult.unkC != 0 && !(gCurTask->unk88->unk42 & 0x200)
          && gCurTask->unk88->unk3F != 1 && gCurTask->unk88->unk17 == 0)
         {
-            r = sub_08009ee8(-8, gCurTask->unk88->unk00);
+            r = AddPlayerHealth(-8, gCurTask->unk88->unk00);
             if (r != 0)
             {
                 gCurTask->unk82 = gTerrainResult.unkC | 0x80;
@@ -607,9 +607,9 @@ void sub_08033414(void)
     default:
         if (gUnk_03001F30 == 0 && (gCurTask->unk88->unk40 & 32))
         {
-            if ((s16)gUnk_02004B50[gCurTask->unk88->unk00] != 0)
+            if ((s16)gPlayerAbilities[gCurTask->unk88->unk00] != 0)
             {
-                gUnk_02008008[gCurTask->unk88->unk00] = gUnk_02004B50[gCurTask->unk88->unk00];
+                gUnk_02008008[gCurTask->unk88->unk00] = gPlayerAbilities[gCurTask->unk88->unk00];
                 gUnk_02007FA8[gCurTask->unk88->unk00] = gUnk_0200AF18[gCurTask->unk88->unk00];
             }
             else

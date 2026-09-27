@@ -157,7 +157,7 @@ s32 PlayBgm(s32 songId);
 s32 GetCurrentBgm(void);
 void PlaySfx(s32 id);
 void StopBgm(void);
-s32 sub_08021b2c(u32 x, u32 y);
+s32 GetCollisionTile(u32 x, u32 y);
 void CalcRoomBounds(void);
 void CameraResetBounds(void);
 void UpdatePlayerGroupCenter(void);
@@ -496,8 +496,8 @@ void InitDoors(void)
            zero in the loop and change what loop.c hoists (0x22B8 then goes
            to sl). */
         gDoorStates[i].filler02[2] = 0;
-        a = sub_08021b2c(d->unk2, d->unk4);
-        b = sub_08021b2c(d->unk2 + 1, d->unk4);
+        a = GetCollisionTile(d->unk2, d->unk4);
+        b = GetCollisionTile(d->unk2 + 1, d->unk4);
         if ((a == 16 && b == 55) || (a == 144 && b == 183))
         {
             gDoorStates[i].unk0 = 1;

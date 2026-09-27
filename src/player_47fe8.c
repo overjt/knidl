@@ -12,7 +12,7 @@
  * (PlayerState.unk0A > 1), spins the HUD roulette: PlayerState.unk0B
  * steps through abilities 1-24 with the delays gUnk_0873B634[] until A
  * or B is pressed.  It then shows the new ability on the HUD
- * (sub_08009fcc, sub_0800a0dc), loads its sprite tiles (M13's
+ * (SetPlayerAbilityNoHud, sub_0800a0dc), loads its sprite tiles (M13's
  * LoadAbilityTiles) and plays the ability's own pose - a 25-way switch on
  * PlayerState.unk0D - 1 whose arms install hit boxes, spawn effects
  * and load extra tiles (sub_08049a58) - before it restores the palette
@@ -62,7 +62,7 @@ void TaskSleepForever(void);
 void TaskSetFrame(s32 a);
 void TaskSetFrameNoFlip(s32 a);
 void TaskSetFrameFlip(s32 a);
-s32 sub_08009fcc(s32 a, s32 b, u32 c);
+s32 SetPlayerAbilityNoHud(s32 a, s32 b, u32 c);
 void sub_0800a0dc(s32 a, s32 b);
 void sub_0800a178(s32 a, s32 id);
 void RegisterCollider(u8 a, s16 x, s16 y, void *p);   /* M11's caller spelling */
@@ -113,7 +113,7 @@ void sub_08047fe8(void)
             gCurTask->unk88->unk06 = 0;
             {
                 struct PlayerState *q = gCurTask->unk88;
-                sub_08009fcc((s8)q->unk0B, (s8)q->unk0C, q->unk00);
+                SetPlayerAbilityNoHud((s8)q->unk0B, (s8)q->unk0C, q->unk00);
             }
             gCurTask->unk88->unk0B = 0;
             gCurTask->unk88->unk0C |= 0xFF;
@@ -198,7 +198,7 @@ void sub_08047fe8(void)
             TaskYieldTrampoline(2);
             {
                 struct PlayerState *q = gCurTask->unk88;
-                sub_08009fcc((s8)q->unk0B, (s8)q->unk0C, q->unk00);
+                SetPlayerAbilityNoHud((s8)q->unk0B, (s8)q->unk0C, q->unk00);
             }
             {
                 struct PlayerState *q = gCurTask->unk88;

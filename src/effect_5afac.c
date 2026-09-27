@@ -108,12 +108,12 @@ void TaskSetFrame(s32 a);
 void TaskSetFrameFlip(s32 a);
 s32 IsOnScreen(s16 a, s16 b);
 u32 IsWorldPosOnScreen(s16 x, s16 y);
-void sub_08008c4c(u32 a);
-void sub_08008c64(u16 a);
+void LoadBgLayout(u32 a);
+void LoadGfxSet(u16 a);
 void sub_08009b2c(u16 a);
-void sub_08009e60(s32 a, s32 b);
-void sub_0800a008(u32 a, s32 b, s32 c);
-void sub_0800a04c(s32 a, u32 b);
+void AddPlayerLives(s32 a, s32 b);
+void SetPlayerAbility(u32 a, s32 b, s32 c);
+void AddPlayerScore(s32 a, u32 b);
 void sub_08023fd4(void);
 void sub_080258e0(void);
 void SetCameraFocus(s32 a, s32 b);
@@ -235,7 +235,7 @@ s32 CreatePlayerEffectHighSlot(s32 a0, s32 a1, s32 a2)
 
 void sub_0805b110(void)
 {
-    sub_08008c4c(3);
+    LoadBgLayout(3);
     sub_0805b16c();
     sub_08009b2c(gLocalPlayer);
     sub_08002358();
@@ -269,12 +269,12 @@ void sub_0805b16c(void)
     gDispCnt |= 128;
     gBg0ScrollX = gBg1ScrollX = gBg2ScrollX = gBg3ScrollX = 0;
     gBg0ScrollY = gBg1ScrollY = gBg2ScrollY = gBg3ScrollY = 0;
-    sub_08008c64(0);
+    LoadGfxSet(0);
     sub_08023fd4();
     for (i = 0; i < gPlayerCount; i++)
     {
         if (gPlayerStates[i].unk0D == 24)
-            sub_0800a008(0, -1, i);
+            SetPlayerAbility(0, -1, i);
         else
             gPlayerStates[i].unk0D = 0;
     }
@@ -734,7 +734,7 @@ void sub_0805bd34(void)
     if (gCurTask->unk30 == 0)
         TaskYieldTrampoline(30);
     else if (gCurTask->unk30 != 6)
-        sub_0800a04c(gUnk_0873DC9A[gCurTask->unk30],
+        AddPlayerScore(gUnk_0873DC9A[gCurTask->unk30],
                      gCurTask->unk88->unk00);
     if (gUnk_02006A14[gCurTask->unk88->unk00] == 0)
     {
@@ -1613,7 +1613,7 @@ void sub_0805d668(void)
     }
     if (gCurTask->unk2C == gLocalPlayer)
         PlaySfx(220);
-    sub_08009e60(1, gCurTask->unk2C);
+    AddPlayerLives(1, gCurTask->unk2C);
     TaskExitTrampoline();
 }
 

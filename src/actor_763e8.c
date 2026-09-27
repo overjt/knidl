@@ -26,7 +26,7 @@ struct M19Script
 
 
 /* RAM cells and ROM tables */
-extern s16 gUnk_02005588[];
+extern s16 gPlayerHealth[];
 extern s16 gUnk_0300244C;
 extern s16 gUnk_0873D384[];
 extern s32 gUnk_030023B4;
@@ -62,7 +62,7 @@ extern vu16 gPlayerPressedKeys[4];
 
 /* callees */
 extern s32 PlaySfx(u32 a);
-extern s32 sub_0800a130();
+extern s32 HudShowAbility();
 extern s32 sub_08022540();
 extern s32 sub_0802610c();
 extern s32 sub_080269d8();
@@ -697,7 +697,7 @@ void sub_08076f04(s32 id)
     t->unk7A = 0;
     TaskStopY();
     sub_08068b88(id, 0, 1, 0);
-    sub_0800a130(p->unk0D, id);
+    HudShowAbility(p->unk0D, id);
 }
 
 void sub_08076f50(s32 id)
@@ -718,7 +718,7 @@ void sub_08076f50(s32 id)
     TaskStopSlot(id);
     sub_08068b88(id, 6, 1, 0);
     p->unk14 = 8;
-    sub_0800a130(p->unk0D, id);
+    HudShowAbility(p->unk0D, id);
     if (u->unk1C > 0)
         sub_08067108();
 }
@@ -787,7 +787,7 @@ u16 sub_080770a0(void)
 
 void sub_080770f0(s32 id)
 {
-    if (gUnk_0300244C == 0 || gUnk_02005588[id] > 0)
+    if (gUnk_0300244C == 0 || gPlayerHealth[id] > 0)
     {
         struct Task *t = &gTasks[id];
         struct PlayerState *p = &gPlayerStates[id];

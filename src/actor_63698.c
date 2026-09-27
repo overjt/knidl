@@ -56,13 +56,13 @@ extern u32 gUnk_0873F23C[];
 extern u32 gUnk_0873F264[];
 extern u32 gUnk_0873F288[];
 extern u32 gUnk_0873F2A0[];
-extern void sub_0800a04c(s32 a, u32 b);
+extern void AddPlayerScore(s32 a, u32 b);
 extern s32 sub_08021a40(s16 x, s16 y);
 extern u32 TaskIsOnScreen(void);
 extern s32 QueueSprite(u32 a, u32 b, u32 c, u32 d, s32 e, s32 f);
 extern u8 sub_08066a6c(void);
 extern u8 sub_08066a80(void);
-extern void sub_0800a554(void);
+extern void HudRemoveHpBar(void);
 
 void ActorLoadDefSlot(u32 i, struct ActorDef *d);
 void ActorSetAttackBoxSlot(u32 i, u32 v);
@@ -1303,7 +1303,7 @@ void ActorAwardScore(u32 arg, s32 mul)
     if (gCurTask->unk72 == 0 && gCurTask->unk76 == 40
         && (u8)(a->unk04 - 2) <= 1)
         v = 200;
-    sub_0800a04c(v, arg);
+    AddPlayerScore(v, arg);
 }
 
 s8 TaskGetParentFacing(void)
@@ -1779,7 +1779,7 @@ void sub_08065350(void)
     }
     else if (sub_08066a80() != 0)
     {
-        sub_0800a554();
+        HudRemoveHpBar();
         ActorDestroy();
     }
 }

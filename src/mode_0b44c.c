@@ -5,8 +5,8 @@
 /* mode_0b44c.c (0x0800B44C-0x0800B91F, issue #96).
  *
  * The game-state setup helpers AgbMain and the state bodies call:
- * sub_0800b44c (reset the game-state cells), sub_0800b4a8 (scores, the
- * maximum health 24 or 48, the HUD mode), sub_0800b514 (three lives and
+ * sub_0800b44c (reset the game-state cells), ResetScoresAndMaxHealth (scores, the
+ * maximum health 24 or 48, the HUD mode), ResetPlayerRecords (three lives and
  * cleared records per player), sub_0800b5dc/sub_0800b628, and the three
  * screen setups sub_0800b648/sub_0800b788/sub_0800b87c. */
 
@@ -19,14 +19,14 @@ struct Unk02005E00
 
 extern u16 gNextActorSerial;
 extern u8 gUnk_02000020;
-extern u16 gUnk_02004B50[];
+extern u16 gPlayerAbilities[];
 extern u8 gUnk_02004B64;
-extern s16 gUnk_02005580;
-extern s16 gUnk_02005588[];
+extern s16 gMaxHealth;
+extern s16 gPlayerHealth[];
 extern u8 gUnk_020055C4;
 extern u8 gUnk_020055CC;
 extern struct Unk02005E00 gUnk_02005E00;
-extern s32 gUnk_02006020[];
+extern s32 gPlayerScores[];
 extern s8 gUnk_02006094;
 extern u8 gUnk_020060CC;
 extern s8 gUnk_02006160;
@@ -75,11 +75,11 @@ void ResetBgScroll(void);
 void ResetFadeAndBlend(void);
 void ResetTasksAndOam(void);
 void ResetPlayTime(void);
-void sub_08008c64(u16 a0);
+void LoadGfxSet(u16 a0);
 void sub_08008c7c(void);
 void sub_08008cb8(void);
-void sub_08009aa0(void);
-void sub_08009ab8(void);
+void HudShowScore(void);
+void HudShowClock(void);
 void ClearColliderLists(void);
 void sub_0802296c(void);
 void sub_08022f98(void);
@@ -105,38 +105,38 @@ void sub_0800b44c(void)
     gUnk_0200EC50 = 0;
 }
 
-void sub_0800b4a8(void)
+void ResetScoresAndMaxHealth(void)
 {
     s32 i;
 
     ResetTasksAndOam();
     for (i = 0; i <= 3; i++) {
-        gUnk_02006020[i] = 0;
+        gPlayerScores[i] = 0;
         InitPlayerState(i);
     }
     ResetPlayTime();
     if (gUnk_03001F30 == 0) {
         if (gExtraMode == 1)
-            gUnk_02005580 = 24;
+            gMaxHealth = 24;
         else
-            gUnk_02005580 = 48;
-        sub_08009aa0();
+            gMaxHealth = 48;
+        HudShowScore();
     } else {
-        gUnk_02005580 = 24;
-        sub_08009ab8();
+        gMaxHealth = 24;
+        HudShowClock();
     }
     sub_0802296c();
 }
 
-void sub_0800b514(void)
+void ResetPlayerRecords(void)
 {
     s32 i;
 
     ResetTasksAndOam();
     for (i = 0; i <= 3; i++) {
         gPlayerLives[i] = 3;
-        gUnk_02005588[i] = 0;
-        gUnk_02008008[i] = gUnk_02004B50[i] = 0;
+        gPlayerHealth[i] = 0;
+        gUnk_02008008[i] = gPlayerAbilities[i] = 0;
         /* Volatile all-ones stores reuse their dead pre-read (lesson 3.68);
          * the two cells differ in signedness, so the chain stores the
          * constant twice instead of re-reading the inner cell (3.361). */
@@ -194,7 +194,7 @@ void sub_0800b648(void)
     ResetFadeAndBlend();
     ResetBgScroll();
     ClearColliderLists();
-    sub_08008c64(0);
+    LoadGfxSet(0);
     sub_08008c7c();
     gUnk_02007F50 = -1;
     if (gUnk_02004B64 == 0)
@@ -255,7 +255,7 @@ void sub_0800b788(void)
     ResetTasksAndOam();
     gBg0ScrollX = gBg1ScrollX = gBg2ScrollX = gBg3ScrollX = 0;
     gBg0ScrollY = gBg1ScrollY = gBg2ScrollY = gBg3ScrollY = 0;
-    sub_08008c64(0);
+    LoadGfxSet(0);
     sub_08008c7c();
     sub_08023948();
     b = gUnk_02007FB8;
@@ -284,7 +284,7 @@ void sub_0800b87c(void)
     gDispCnt |= 0x80;
     ResetFadeAndBlend();
     ResetBgScroll();
-    sub_08008c64(0);
+    LoadGfxSet(0);
     sub_08008c7c();
     sub_08023ca0();
     /* A reversed clear loop only strength-reduces as a do/while over a

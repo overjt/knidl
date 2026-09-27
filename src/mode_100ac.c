@@ -4,7 +4,7 @@
 
 /* mode_100ac.c (0x080100AC-0x08010357, issue #99).
  *
- * AgbMain state 7 (sub_080100ac), entered instead of states 5/6 while
+ * AgbMain state 7 (CutsceneMain), entered instead of states 5/6 while
  * gUnk_02007FC0 is set: the scripted sequence of stage gUnk_030023B8.
  * It clears the blend and window shadows, loads the sequence's palette
  * set and pictures (sub_08008d98, and sub_080102c0: the sprite sheet
@@ -54,28 +54,28 @@ void sub_08002378(void);
 void RunLinkFrame(void);
 void RunLinkFramesUntilFadeDone(void);
 s32 TaskCreateFrom(u32 type, s32 idx);
-void sub_08008c4c(s32 a0);
-void sub_08008c64(u16 a0);
+void LoadBgLayout(s32 a0);
+void LoadGfxSet(u16 a0);
 void sub_08008d98(s32 a0);
 void sub_08024300(void);
 void sub_08027178(void);
 void InitPlayerState(s32 a0);
 void sub_080102c0(void);
 
-void sub_080100ac(void)
+void CutsceneMain(void)
 {
     s32 i;
 
     ResetTasksAndOam();
     if (gUnk_03001F30 != 1) {
         gBldCntTarget1 = gBldCntTarget2 = gBldAlphaEva = gBldAlphaEvb = gBldY = 0;
-        sub_08008c64(0);
+        LoadGfxSet(0);
         gUnk_0200AF04 = 1;
         sub_08024300();
         if (gUnk_030023B8 != 7)
-            sub_08008c4c(8);
+            LoadBgLayout(8);
         else
-            sub_08008c4c(9);
+            LoadBgLayout(9);
         sub_08008d98(gUnk_030023B8);
         gBg2ScrollX = gBg3ScrollX = 0;
         gBg2ScrollY = gBg3ScrollY = 0;

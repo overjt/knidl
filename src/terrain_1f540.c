@@ -57,7 +57,7 @@ extern s16 gTerrainBoxRight;           /* box right offset */
 s32 TerrainQueryPixel(u32 x, u32 y);
 s32 TerrainQueryPixelAndBelow(u32 x, u32 y);
 s32 TerrainQueryPixelAndSides(u32 x, u32 y);
-s32 sub_08021970(u16 a);
+s32 GetTileFloorSnap(u16 a);
 s32 GetTilePushDown(u16 a);
 s32 GetTilePushUp(u16 a);
 s32 GetTilePushRight(u16 a);
@@ -275,17 +275,17 @@ void sub_0801fc48(void)
         if (gCollisionTileShapeClass[gTerrainTileBelow] == 0)
             goto count;
         gTerrainProbeResult.unk4 = gCollisionTileSlope[gTerrainTileBelow];
-        gTerrainProbeY += sub_08021970(gTerrainTileBelow) + 16;
+        gTerrainProbeY += GetTileFloorSnap(gTerrainTileBelow) + 16;
     }
     else
     {
         gTerrainProbeResult.unk4 = gCollisionTileSlope[gTerrainTile];
-        gTerrainProbeY += sub_08021970(gTerrainTile);
+        gTerrainProbeY += GetTileFloorSnap(gTerrainTile);
     }
     if (TerrainQueryPixel(gTerrainProbeX, gTerrainProbeY + gTerrainBoxBottom) != 0)
     {
         gTerrainProbeResult.unk4 = gCollisionTileSlope[gTerrainTile];
-        gTerrainProbeY += sub_08021970(gTerrainTile);
+        gTerrainProbeY += GetTileFloorSnap(gTerrainTile);
     }
     return;
 count:
@@ -293,7 +293,7 @@ count:
     if (TerrainQueryPixelAndBelow(gTerrainProbeX + gTerrainBoxLeft, gTerrainProbeY + gTerrainBoxBottom) != 0
         && gCollisionTileSlope[gTerrainTile] == 0)
     {
-        gTerrainProbeY += sub_08021970(gTerrainTile);
+        gTerrainProbeY += GetTileFloorSnap(gTerrainTile);
         t = gTerrainTile;
     }
     else
@@ -305,7 +305,7 @@ count:
     if (TerrainQueryPixelAndBelow(gTerrainProbeX + gTerrainBoxRight, gTerrainProbeY + gTerrainBoxBottom) != 0
         && gCollisionTileSlope[gTerrainTile] == 0)
     {
-        gTerrainProbeY += sub_08021970(gTerrainTile);
+        gTerrainProbeY += GetTileFloorSnap(gTerrainTile);
         t = gTerrainTile;
     }
     else

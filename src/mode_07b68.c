@@ -12,7 +12,7 @@
  * 0x5503 SIO handshake (sub_08007b68/sub_08007c5c); sub_08007d4c is the
  * failure prompt that returns to state 4. */
 
-extern s8 gUnk_02000004;
+extern s8 gLinkSessionMode;
 extern u32 gUnk_02004000[];
 extern u8 gUnk_02006090;
 extern s8 gUnk_02006168;
@@ -93,8 +93,8 @@ void LinkMain1(u8 *cmd, u16 *send, u16 *recv);
 u32 ConnectLink(void);
 u32 IsLinkError(void);
 void sub_080082d0(void);
-void sub_08008c4c(s32 a0);
-void sub_08008c64(u16 a0);
+void LoadBgLayout(s32 a0);
+void LoadGfxSet(u16 a0);
 void sub_08008e1c(s32 a0);
 void DrawClockToBgMap(u16 *a, s32 b, s32 c);
 
@@ -193,8 +193,8 @@ void sub_08007d4c(void)
     BeginFastFadeOutToWhite();
     RunFramesNoTasksUntilFadeDone();
     DisableSerial();
-    sub_08008c4c(3);
-    sub_08008c64(64);
+    LoadBgLayout(3);
+    LoadGfxSet(64);
     gBg3ScrollX = gBg3ScrollY = 0;
     gDispCnt &= 0xE0FF;
     gDispCnt |= 0x800;
@@ -277,15 +277,15 @@ void sub_08007f9c(void)
     u8 k;
 
     ResetTasksAndOam();
-    sub_08008c4c(4);
+    LoadBgLayout(4);
     sub_08008e1c(gUnk_02006090);
-    sub_08008c64(63);
+    LoadGfxSet(63);
     gBg0ScrollX = gBg0ScrollY = 0;
     gBg3ScrollX = gBg3ScrollY = 0;
     gDispCnt &= 0xE0FF;
     gDispCnt |= 0x1800;
     if (gUnk_02006090 == 6 || gUnk_02006090 == 7) {
-        sub_08008c64(4);
+        LoadGfxSet(4);
         RequestCopy(6, 0, 0x06001000, 0x800);
         /* Two complete copies: jump2 cross-jumps the identical tails, which
            is what leaves the ROM's `ldr r0, =F18; b join` arm.  A pointer
@@ -317,13 +317,13 @@ void sub_08007f9c(void)
         BeginFastFadeInFromWhite();
         while (gFadeSteps != 0) {
             RunFrame();
-            sub_08004000(gUnk_02000004);
+            sub_08004000(gLinkSessionMode);
         }
         gUnk_03000048 = 0;
         sub_08003a98();
         do {
             RunFrame();
-            sub_08004000(gUnk_02000004);
+            sub_08004000(gLinkSessionMode);
         } while (gUnk_0200EBC0[2] != 3 && gUnk_0200EBC0[44] == 0);
         if (gUnk_0200EBC0[3] != 0) {
             sub_08007d4c();

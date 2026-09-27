@@ -9,7 +9,7 @@
  * sub_0803c990) hands something over to the partner player in
  * Task.unk18: the two face each other, play the rows of gUnk_0873DA62 by
  * ability, and PlayerState.unk3A says what passes - 1 refills the
- * partner's health gUnk_02005588[] up to gUnk_02005580 step by step
+ * partner's health gPlayerHealth[] up to gMaxHealth step by step
  * through sub_080b4204 (src/hud_b2fe8.c), 2 gives one or two steps, 3
  * copies PlayerState.unk17/unk18.  sub_0803c9b4 (from M09's
  * sub_08033414, the twin of M04's sub_080109c8) steps and draws the
@@ -44,8 +44,8 @@ struct Unk0873A994
 extern u16 gUnk_0873DA62[][2];
 extern s16 gUnk_0873DACA[][2];
 extern struct PlayerState gPlayerStates[];
-extern s16 gUnk_02005588[];             /* health per player (M02's HUD) */
-extern s16 gUnk_02005580;
+extern s16 gPlayerHealth[];             /* health per player (M02's HUD) */
+extern s16 gMaxHealth;
 extern u16 gLocalPlayer;
 extern u8 gExtraMode;
 extern struct M04Spark gUnk_02007E90[][3];
@@ -77,8 +77,8 @@ s32 sub_080b4204(u32 a);
    Task.unk7B bit 0 is set) and ends; otherwise it turns to face the target
    task gTasks[unk18], plays gUnk_0873DA62[ability][0] (or
    gUnk_0873DACA[k][0]) and, by PlayerState.unk3A, raises the target's
-   health gUnk_02005588[] through sub_080b4204 while it is below the maximum
-   gUnk_02005580 (1: until full, 2: at most 1 or 2 steps by gExtraMode)
+   health gPlayerHealth[] through sub_080b4204 while it is below the maximum
+   gMaxHealth (1: until full, 2: at most 1 or 2 steps by gExtraMode)
    or copies its own unk17/unk18 to the target (3); then it restores both
    tasks' Task.unk42/unk43 (saved on the stack), clears PlayerState.unk42
    bit 8 on both players and sets the target's bit in PlayerState.unk3B. */
@@ -211,7 +211,7 @@ void sub_0803bde8(void)
             switch (gCurTask->unk88->unk3A)
             {
             case 1:
-                if (gUnk_02005588[gCurTask->unk18] < gUnk_02005580)
+                if (gPlayerHealth[gCurTask->unk18] < gMaxHealth)
                 {
                     do
                     {
@@ -224,7 +224,7 @@ void sub_0803bde8(void)
                 TaskYieldTrampoline(16);
                 break;
             case 2:
-                if (gUnk_02005588[gCurTask->unk18] < gUnk_02005580)
+                if (gPlayerHealth[gCurTask->unk18] < gMaxHealth)
                 {
                     if (gExtraMode == 0)
                         n = 2;
@@ -280,7 +280,7 @@ void sub_0803bde8(void)
             switch (gCurTask->unk88->unk3A)
             {
             case 1:
-                if (gUnk_02005588[gCurTask->unk18] < gUnk_02005580)
+                if (gPlayerHealth[gCurTask->unk18] < gMaxHealth)
                 {
                     do
                     {
@@ -305,7 +305,7 @@ void sub_0803bde8(void)
                 }
                 break;
             case 2:
-                if (gUnk_02005588[gCurTask->unk18] < gUnk_02005580)
+                if (gPlayerHealth[gCurTask->unk18] < gMaxHealth)
                 {
                     if (gExtraMode == 0)
                         n = 2;
@@ -390,7 +390,7 @@ void sub_0803bde8(void)
         switch (gCurTask->unk88->unk3A)
         {
         case 1:
-            if (gUnk_02005588[gCurTask->unk18] < gUnk_02005580)
+            if (gPlayerHealth[gCurTask->unk18] < gMaxHealth)
             {
                 do
                 {
@@ -403,7 +403,7 @@ void sub_0803bde8(void)
             TaskYieldTrampoline(16);
             break;
         case 2:
-            if (gUnk_02005588[gCurTask->unk18] < gUnk_02005580)
+            if (gPlayerHealth[gCurTask->unk18] < gMaxHealth)
             {
                 if (gExtraMode == 0)
                     n = 2;

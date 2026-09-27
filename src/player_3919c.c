@@ -8,7 +8,7 @@
  * 17) is the player's death: it installs sub_080396a4 as the task's
  * per-frame callback Task.unk04 (state 1 falls until the player is below
  * the screen, state 2 waits PlayerState.unk14 frames, state 4 leaves for
- * the results screen), counts the players whose health gUnk_02005588[] is
+ * the results screen), counts the players whose health gPlayerHealth[] is
  * not 0, plays the lost-life or game-over music, loops the fall animation
  * until the callback reaches state 3, and when gUnk_0300234C drops to 0
  * raises M02's stage request gStageRequest = 6; Task.unk73 = 4 or 5 then
@@ -24,7 +24,7 @@ extern u8 gActivePlayerCount;
 extern u8 gActivePlayerMask;
 extern u16 gUnk_0873D9FA[][2];
 extern u16 gPlayerCount;               /* number of players */
-extern s16 gUnk_02005588[];             /* health per player (M02's HUD) */
+extern s16 gPlayerHealth[];             /* health per player (M02's HUD) */
 extern u16 gLocalPlayer;
 extern vu16 gDispCnt;              /* DISPCNT shadow */
 extern vs16 gTaskSlotTypes[];
@@ -51,7 +51,7 @@ void TaskSetSkipMask(u8 val, s32 idx);
 void TaskSleepForever(void);
 void TaskSetEntry(void *a, u32 i);
 void TaskSetFrame(s32 a);
-s32 sub_0800a008(s32 a, s32 b, u32 c);
+s32 SetPlayerAbility(s32 a, s32 b, u32 c);
 s32 sub_08025024(void);
 void RequestScreenShake(u16 a);
 s32 sub_080264b0(void);
@@ -105,14 +105,14 @@ void sub_0803919c(void)
     SetPlayerInvulnerability(255, 0, gCurTask->unk88->unk00);
     PlayerStopAxes(3);
     gCurTask->unk88->unk06 = 0;
-    sub_0800a008(0, -1, gCurTask->unk88->unk00);
+    SetPlayerAbility(0, -1, gCurTask->unk88->unk00);
     sub_080276ac(gCurTask->unk88->unk00);
     gCurTask->unk88->unk16 = 255;
     anim = gUnk_0873D9FA[gCurTask->unk88->unk0D];
     n = 0;
     for (i = 0; i < gPlayerCount; i++)
     {
-        if (gUnk_02005588[i] != 0)
+        if (gPlayerHealth[i] != 0)
             n++;
     }
     if (n == 0)
@@ -342,7 +342,7 @@ void sub_080397f8(void)
         {
             for (i = 0; i < gPlayerCount; i++)
             {
-                if (gUnk_02005588[i] == 0)
+                if (gPlayerHealth[i] == 0)
                 {
                     n++;
                     TaskSetSkipMask(0, i);

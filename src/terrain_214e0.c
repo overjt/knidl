@@ -27,7 +27,7 @@
 
 
 /* ROM pointer tables: one entry per tile set, each pointing at a byte table. */
-extern s8 *const gUnk_08734BF0[];
+extern s8 *const gCollisionTileFloorSnap[];
 extern s8 *const gCollisionTilePushDown[];
 extern s8 *const gCollisionTilePushUp[];
 extern s8 *const gCollisionTilePushRight[];
@@ -242,9 +242,9 @@ s32 sub_080218f8(u32 x, u32 y)
     return gUnk_087330F0[tile][off];
 }
 
-s32 sub_08021970(u16 a)
+s32 GetTileFloorSnap(u16 a)
 {
-    s8 *p = gUnk_08734BF0[a];
+    s8 *p = gCollisionTileFloorSnap[a];
     return p[gTerrainPixelIndex];
 }
 

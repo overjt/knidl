@@ -15,7 +15,7 @@
 
 
 /* ROM pointer tables: one entry per tile set, each pointing at a byte table. */
-extern u8 *const gUnk_08734BF0[];
+extern u8 *const gCollisionTileFloorSnap[];
 extern u8 *const gCollisionTilePushDown[];
 extern u8 *const gCollisionTilePushUp[];
 extern u8 *const gCollisionTilePushRight[];

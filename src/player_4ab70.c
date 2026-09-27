@@ -22,7 +22,7 @@
  * gUnk_082030B8 twice (BlendColors, presets 51/52), waits for the
  * blast task through PlayerState.unk16 and TaskSetSkipMask, restores the
  * default script gPlayerDefaultTerrainBox and resets the HUD ability panel
- * (sub_0800a008(0, -1, player)).  Its handler sub_0804b474 fades the
+ * (SetPlayerAbility(0, -1, player)).  Its handler sub_0804b474 fades the
  * palette in and back out (gUnk_08203098, Task.unk28 in steps of 10 and
  * 16) and keeps the player under the height Task.unk2C. */
 
@@ -63,7 +63,7 @@ s32 PlaySfx(s32 id);
 void TaskSetSkipMask(u8 val, s32 idx);
 void TaskSleepForever(void);
 void TaskSetFrame(s32 a);
-s32 sub_0800a008(s32 a, s32 b, u32 c);       /* landed (hud_099fc.c); M12 calls it as sub_0800a008(0, -1, p->unk00) */
+s32 SetPlayerAbility(s32 a, s32 b, u32 c);       /* landed (hud_099fc.c); M12 calls it as SetPlayerAbility(0, -1, p->unk00) */
 void RegisterCollider(u8 a, s16 x, s16 y, void *p);   /* M11's caller spelling */
 void RequestScreenShake(u16 a);
 void SetRoomUpdateFlags(u32 a);
@@ -354,7 +354,7 @@ void sub_0804af54(void)
     TaskYieldTrampoline(2);
     PlayerStopAxes(2);
     gCurTask->unk88->unk68 = (u32)gPlayerDefaultTerrainBox;
-    sub_0800a008(0, -1, gCurTask->unk88->unk00);
+    SetPlayerAbility(0, -1, gCurTask->unk88->unk00);
     gCurTask->unk73 = 2;
     gCurTask->unk3C++;
     for (gCurTask->unk6C = 0; (s16)gCurTask->unk6C <= 31; gCurTask->unk6C++) {

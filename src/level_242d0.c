@@ -5,7 +5,7 @@
 /* level_242d0.c (0x080242D0-0x080261BF, issue #93).
  *
  * Room loaders, part 3: sub_08024300 (M02's stage sequence state,
- * sub_080100ac), sub_08024698 (entered through sub_08024610 and
+ * CutsceneMain), sub_08024698 (entered through sub_08024610 and
  * sub_08024654, which preset the level/stage/room and the player
  * position) and sub_0802497c, plus the room-task variants 3-6 of task type
  * #3 (sub_080242d0, sub_08024540, sub_08024904, sub_08024da4) and their
@@ -151,7 +151,7 @@ extern u8 gUnk_02000020;
 extern u8 gUnk_02005574[];
 extern u8 gBg3MapShape;
 extern s8 gUnk_02007D64;
-extern u8 gUnk_0200B040;
+extern u8 gHBlankScrollStarted;
 extern u8 gRoomBgLayout;
 extern u8 gUnk_0200B078;
 extern u8 gUnk_08732630[];
@@ -167,11 +167,11 @@ extern u8 gActivePlayerCount;
 extern u8 gUnk_0300234C;
 extern u16 gPlayerCount;
 extern s16 gPlayerLives[];
-extern s16 gUnk_02005588[];
-extern s16 gUnk_02005580;
+extern s16 gPlayerHealth[];
+extern s16 gMaxHealth;
 extern u16 gUnk_02008008[];
 extern u16 gUnk_02007FA8[];
-extern u16 gUnk_02004B50[];
+extern u16 gPlayerAbilities[];
 extern u16 gUnk_0200AF18[];
 extern u8 gPlayerCameraMode[];
 extern vu16 gPlayerHeldKeys[];
@@ -226,10 +226,10 @@ extern s8 gUnk_0200B02C;
 void RequestCopy(u32 mode, u32 src, u32 dst, u32 size);
 void ResetTasksAndOam(void);
 void TaskSleepForever(void);
-void sub_08008c64(u16 a0);
+void LoadGfxSet(u16 a0);
 void sub_08009adc(void);
-s32 sub_08009e60(s32 a, u32 b);
-void sub_0800a778(void);
+s32 AddPlayerLives(s32 a, u32 b);
+void HudUpdateAbilityPanel(void);
 s32 GetCollisionTileAtPixel(u16 x, u16 y);
 void CreateRoomTask(s32 a);
 void RoomTaskDraw(void);
@@ -301,7 +301,7 @@ void sub_08024300(void)
     u32 a;
 
     gCameraMode = 0;
-    sub_08008c64(1);
+    LoadGfxSet(1);
     CreateRoomTask(3);
     if (gLevelIndex == 8)
     {
@@ -335,7 +335,7 @@ void sub_08024300(void)
     RequestCopy(8, (u32)gCurRoomDef->unk20, (u32)gMetatileTiles, 0);
     gUnk_02000020 = 0;
     gUnk_0200B078 = 0;
-    gUnk_0200B040 = 0;
+    gHBlankScrollStarted = 0;
     gRoomUpdateFlags = 31;
     gRoomBgLayout = 0;
     gUnk_0300558C = gUnk_0873A318;
@@ -417,7 +417,7 @@ void sub_080245d0(void)
         StreamBg3Map();
     }
     CameraWriteScrollParallax();
-    sub_0800a778();
+    HudUpdateAbilityPanel();
 }
 
 void sub_08024610(s32 x, s32 y)
@@ -451,7 +451,7 @@ void sub_08024698(s32 a0)
     gUnk_030023B8 = gLevelIndex;
     gUnk_03001F20 = gStageIndex;
     gCameraMode = 0;
-    sub_08008c64(1);
+    LoadGfxSet(1);
     CreateRoomTask(0);
     gCurRoomDef = gRoomTable[gLevelIndex][gStageIndex][gRoomIndex];
     gUnk_02007D64 = gCurRoomDef->unk57;
@@ -484,7 +484,7 @@ void sub_08024698(s32 a0)
     RequestCopy(8, (u32)gCurRoomDef->unk20, (u32)gMetatileTiles, 0);
     gUnk_02000020 = 0;
     gUnk_0200B078 = 0;
-    gUnk_0200B040 = 0;
+    gHBlankScrollStarted = 0;
     gRoomUpdateFlags = 31;
     ResetBlockAnims();
     StopScreenShake();
@@ -609,7 +609,7 @@ void sub_0802497c(void)
     RequestCopy(8, (u32)gCurRoomDef->unk20, (u32)gMetatileTiles, 0);
     gUnk_02000020 = 0;
     gUnk_0200B078 = 0;
-    gUnk_0200B040 = 0;
+    gHBlankScrollStarted = 0;
     gRoomUpdateFlags = 31;
     ResetBlockAnims();
     StopScreenShake();
@@ -626,18 +626,18 @@ void sub_0802497c(void)
     gUnk_0300234C = 0;
     for (i = 0; i < gPlayerCount; i++)
     {
-        if (gPlayerLives[i] != 0 || gUnk_02005588[i] != 0)
+        if (gPlayerLives[i] != 0 || gPlayerHealth[i] != 0)
         {
-            if (gUnk_02005588[i] == 0)
+            if (gPlayerHealth[i] == 0)
             {
-                gUnk_02005588[i] = gUnk_02005580;
+                gPlayerHealth[i] = gMaxHealth;
                 gUnk_02008008[i] = 0;
                 gUnk_02007FA8[i] = 0xFFFF;
-                sub_08009e60(-1, i);
+                AddPlayerLives(-1, i);
             }
             if ((s16)gUnk_02008008[i] != 0)
             {
-                gUnk_02004B50[i] = gUnk_02008008[i];
+                gPlayerAbilities[i] = gUnk_02008008[i];
                 gUnk_0200AF18[i] = gUnk_02007FA8[i];
                 gUnk_02008008[i] = 0;
                 gUnk_02007FA8[i] = 0xFFFF;

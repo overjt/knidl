@@ -12,7 +12,7 @@
  * sub_080b6570 and sub_080b67dc are a 24-frame pair on a two-halfword-per-
  * line table (BG1HOFS, BG1VOFS) with the blend fading: the bands (when
  * gHBlankScrollEffect is 4, resp. 6; otherwise the table is cleared), whose loop
- * over lines 136-151 also sets window 1 through sub_08010048 (its bottom edge
+ * over lines 136-151 also sets window 1 through SetWindow (its bottom edge
  * moves with the frame), and a split that opens lines 112-159 by the ramp
  * gUnk_087561C4.  sub_080b6570 plays the bands first and the split last,
  * sub_080b67dc the other way round.
@@ -37,7 +37,7 @@ extern vu8 gBldCntTarget1;
 extern vu8 gBldAlphaEvb;
 extern u8 gUnk_087561C4[];
 
-void sub_08010048(s32 in, s32 out, s32 h, s32 v, s32 win);
+void SetWindow(s32 in, s32 out, s32 h, s32 v, s32 win);
 
 s32 sub_080b6474(void)
 {
@@ -146,13 +146,13 @@ s32 sub_080b6570(void)
                 {
                     gHBlankScrollTable[(136 + n) * 2 + 1] = 256 - gHBlankScrollTimer;
                     gHBlankScrollTable[(144 + n) * 2 + 1] = gHBlankScrollTimer;
-                    sub_08010048(60, 63, 255, gHBlankScrollTimer + 0x8788, 0x4000);
+                    SetWindow(60, 63, 255, gHBlankScrollTimer + 0x8788, 0x4000);
                 }
                 else
                 {
                     gHBlankScrollTable[(136 + n) * 2 + 1] = 248;
                     gHBlankScrollTable[(144 + n) * 2 + 1] = 8;
-                    sub_08010048(60, 63, 255, 0x878F, 0x4000);
+                    SetWindow(60, 63, 255, 0x878F, 0x4000);
                 }
             }
         }
@@ -255,13 +255,13 @@ s32 sub_080b67dc(void)
                 {
                     gHBlankScrollTable[(136 + n) * 2 + 1] = gHBlankScrollTimer + 232;
                     gHBlankScrollTable[(144 + n) * 2 + 1] = 24 - gHBlankScrollTimer;
-                    sub_08010048(60, 63, 255, 0x87A0 - gHBlankScrollTimer, 0x4000);
+                    SetWindow(60, 63, 255, 0x87A0 - gHBlankScrollTimer, 0x4000);
                 }
                 else
                 {
                     gHBlankScrollTable[(136 + n) * 2 + 1] = 248;
                     gHBlankScrollTable[(144 + n) * 2 + 1] = 8;
-                    sub_08010048(60, 63, 255, 0x878F, 0x4000);
+                    SetWindow(60, 63, 255, 0x878F, 0x4000);
                 }
             }
         }

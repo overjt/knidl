@@ -6,14 +6,14 @@
  *
  * Player action bodies, part 14: action 38 and per-frame handler 35.
  * sub_08045d34 (action 38, mode 13) spends one charge of the ability
- * counter PlayerState.unk0E (the HUD update sub_08009fcc) and plays one
+ * counter PlayerState.unk0E (the HUD update SetPlayerAbilityNoHud) and plays one
  * of three sequences picked by the charges left (Task.unk73 = unk0E - 1),
  * each with its own song (StopSfx) and sound; meanwhile it freezes
  * the stage (gUnk_03001F34 = 1), switches the DISPCNT shadow
  * gDispCnt to BG0, BG2, BG3 and OBJ unless BG2 is already on, raises
  * PlayerState.unk42 bits 8-10 and repeats the last loop until the effect
  * counter PlayerState.unk16 runs out.  With the last charge spent it
- * drops the ability (sub_0800a130) unless the ability is 7.  Its handler
+ * drops the ability (HudShowAbility) unless the ability is 7.  Its handler
  * sub_080462f0 requests action 1 or 7 (on the ground or in the air) once
  * it has finished. */
 
@@ -26,8 +26,8 @@ s32 PlaySfx(s32 id);
 s32 StopSfx(s32 songId);
 void TaskSleepForever(void);
 void TaskSetFrame(s32 a);
-s32 sub_08009fcc(s32 a, s32 b, u32 c);
-void sub_0800a130(s32 a, s32 id);
+s32 SetPlayerAbilityNoHud(s32 a, s32 b, u32 c);
+void HudShowAbility(s32 a, s32 id);
 void RequestScreenShake(u16 a);
 void SetRoomUpdateFlags(u32 a);
 void PlayerStopAxes(s32 a0);
@@ -47,10 +47,10 @@ void sub_08045d34(void)
     gCurTask->unk73 = gCurTask->unk88->unk0E - 1;
     gCurTask->unk88->unk42 &= 0xFFEF;
     if (--gCurTask->unk88->unk0E == 0) {
-        sub_08009fcc(0, -1, gCurTask->unk88->unk00);
+        SetPlayerAbilityNoHud(0, -1, gCurTask->unk88->unk00);
     } else {
         struct PlayerState *p = gCurTask->unk88;
-        sub_08009fcc(p->unk0D, p->unk0E, p->unk00);
+        SetPlayerAbilityNoHud(p->unk0D, p->unk0E, p->unk00);
     }
     gUnk_03001F34 = 1;
     PlayerStopAxes(3);
@@ -207,7 +207,7 @@ void sub_08045d34(void)
     {
         struct PlayerState *p = gCurTask->unk88;
         if (p->unk0D != 7)
-            sub_0800a130(p->unk0D, p->unk00);
+            HudShowAbility(p->unk0D, p->unk00);
         else
             p->unk22 = 2;
     }

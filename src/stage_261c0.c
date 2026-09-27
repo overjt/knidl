@@ -159,7 +159,7 @@ void TaskSetEntry(void *a, u32 i);
 void CameraWriteScrollParallax(void);
 void StartScrollLock(s32 x0, s32 x1, s32 y0, s32 y1);
 void sub_0802d074(void);
-s32 sub_0802d344(s32 type);
+s32 CreateMapEvent(s32 type);
 s32 sub_0802d478(s32 x, s32 y);
 s32 sub_0802ed94(s32 x, s32 y, s32 a);
 s32 sub_0802ef90(s32 x, s32 y, s32 a, s32 b);
@@ -395,7 +395,7 @@ void sub_08026704(s32 i)
 
 s32 sub_0802672c(void)
 {
-    s32 id = sub_0802d344(5);
+    s32 id = CreateMapEvent(5);
     struct Task *t;
     u8 f;
 
@@ -433,7 +433,7 @@ s32 sub_0802672c(void)
 
 s32 sub_08026834(void)
 {
-    s32 id = sub_0802d344(6);
+    s32 id = CreateMapEvent(6);
     struct Task *t;
     u8 f;
 

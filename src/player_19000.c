@@ -25,7 +25,7 @@ void TaskDrawScreen(void);
 void TaskSleepForever(void);
 void TaskSetMotion(s32 a, s32 b, s32 c, s32 d, s32 e, s32 f);
 void TaskStop(void);
-void sub_08010358(s32 a, s32 b);
+void CreateCutsceneActor(s32 a, s32 b);
 void sub_08019590(void);
 void sub_08019ecc(void);
 void sub_0801a310(void);
@@ -56,7 +56,7 @@ void sub_08019000(void)
     TaskYieldTrampoline(200);
     TaskYieldTrampoline(200);
     TaskYieldTrampoline(88);
-    sub_08010358(56, 32);
+    CreateCutsceneActor(56, 32);
     TaskYieldTrampoline(66);
     gCurTask->unk6C = 0;
     do

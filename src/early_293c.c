@@ -4,7 +4,7 @@
 extern void RunFrameNoTasks(void);
 extern void LinkMain1(void *, void *, void *);
 extern int IsLinkError(void);
-extern void sub_08008b8c(void);
+extern void LinkErrorScreen(void);
 extern void RunFrames(int);
 extern void DisableSerial(void);
 
@@ -60,10 +60,10 @@ void sub_0800293c(void)
         RunFrameNoTasks();
         LinkMain1(&gShouldAdvanceLinkState, gSendCmd, gRecvCmds);
         if (IsLinkError() != 0)
-            sub_08008b8c();
+            LinkErrorScreen();
         if (old == gSerialIntrCount) {
             if (++b > 30)
-                sub_08008b8c();
+                LinkErrorScreen();
         }
         for (i = 0; i < 4; i++) {
             switch (gRecvCmds[0][i]) {

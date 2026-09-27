@@ -7,7 +7,7 @@
  * Map and collision queries, the continuation of M06's terrain probes
  * (src/terrain_*.c).  gRoomMap is the room's metatile map,
  * gRoomWidth x gRoomHeight cells of 16x16 pixels.  GetCollisionTileAtPixel,
- * sub_08021b2c, sub_08021b70 and sub_08021bb4 read a cell's tile-set byte
+ * GetCollisionTile, sub_08021b70 and sub_08021bb4 read a cell's tile-set byte
  * (or unk2) at pixel or metatile coordinates; sub_08021c14, IsWaterAtPixel
  * and IsFullBlockAtPixel test a pixel for a wall through M06's TerrainQueryPixel and
  * the per-tile-set tables; sub_08022540 and sub_0802259c read the second
@@ -16,7 +16,7 @@
  * gTerrainProbeX/gTerrainProbeY, box offsets gTerrainBoxTop/84/1C/9C, results
  * in gTerrainProbeResult) and writes the corrected position back;
  * sub_0802205c and sub_0802233c do the same for walls, sub_080222b0 probes
- * the ground and TaskInitWaterFlags/sub_080224f8 set a task's in-wall state
+ * the ground and TaskInitWaterFlags/TaskInitWaterFlagsSlot set a task's in-wall state
  * (Task.unk7B).  The rest clamp a body or a task to the per-player bounds
  * gPlayerBounds, the camera bounds gCameraBounds or the room bounds
  * gRoomBounds and return which edges were hit. */
@@ -143,15 +143,15 @@ extern s16 gCameraBounds[4];
 s32 TerrainQueryPixel(u32 x, u32 y);
 s32 TerrainQueryPixelAndBelow(u32 x, u32 y);
 s32 TerrainQueryPixelAndSides(u32 x, u32 y);
-s32 sub_08021970(u16 a);
-s32 sub_08021b2c(u32 x, u32 y);
+s32 GetTileFloorSnap(u16 a);
+s32 GetCollisionTile(u32 x, u32 y);
 
 s32 GetCollisionTileAtPixel(u16 x, u16 y)
 {
-    return sub_08021b2c(x >> 4, y >> 4);
+    return GetCollisionTile(x >> 4, y >> 4);
 }
 
-s32 sub_08021b2c(u32 x, u32 y)
+s32 GetCollisionTile(u32 x, u32 y)
 {
     s16 w = gRoomWidth;
     u32 idx;
@@ -259,14 +259,14 @@ void sub_08021c74(s8 *box, s32 id)
                 goto edges;
             goto slope;
         }
-        gTerrainProbeY += sub_08021970(gTerrainTileBelow) + 16;
+        gTerrainProbeY += GetTileFloorSnap(gTerrainTileBelow) + 16;
     }
     else
     {
-        gTerrainProbeY += sub_08021970(gTerrainTile);
+        gTerrainProbeY += GetTileFloorSnap(gTerrainTile);
     }
     if (TerrainQueryPixel(gTerrainProbeX, gTerrainProbeY + gTerrainBoxBottom) != 0)
-        gTerrainProbeY += sub_08021970(gTerrainTile);
+        gTerrainProbeY += GetTileFloorSnap(gTerrainTile);
     gTerrainProbeResult.unkC = (gTerrainProbeY + gTerrainBoxBottom + 1) >> 4;
     goto done;
 
@@ -275,9 +275,9 @@ slope:
        `cmp #1; beq; cmp #2; bne` (one `flags == 1 || flags == 2` test
        folds to a `subs; cmp #1; bhi` range check). */
     if (flags == 1)
-        gTerrainProbeY += sub_08021970(tile);
+        gTerrainProbeY += GetTileFloorSnap(tile);
     else if (flags == 2)
-        gTerrainProbeY += sub_08021970(tile);
+        gTerrainProbeY += GetTileFloorSnap(tile);
     if (TerrainQueryPixel(gTerrainProbeX + gTerrainBoxLeft, gTerrainProbeY + gTerrainBoxBottom) == 0)
         flags &= ~1;
     if (TerrainQueryPixel(gTerrainProbeX + gTerrainBoxRight, gTerrainProbeY + gTerrainBoxBottom) == 0)
@@ -291,12 +291,12 @@ edges:
     n = 0;
     if (TerrainQueryPixelAndBelow(gTerrainProbeX + gTerrainBoxLeft, gTerrainProbeY + gTerrainBoxBottom) != 0)
     {
-        gTerrainProbeY += sub_08021970(gTerrainTile);
+        gTerrainProbeY += GetTileFloorSnap(gTerrainTile);
         n = 2;
     }
     if (TerrainQueryPixelAndBelow(gTerrainProbeX + gTerrainBoxRight, gTerrainProbeY + gTerrainBoxBottom) != 0)
     {
-        gTerrainProbeY += sub_08021970(gTerrainTile);
+        gTerrainProbeY += GetTileFloorSnap(gTerrainTile);
         n++;
     }
     if (n == 0)
@@ -433,7 +433,7 @@ void TaskInitWaterFlags(void)
     gCurTask->unk84 = 128;
 }
 
-void sub_080224f8(s32 id)
+void TaskInitWaterFlagsSlot(s32 id)
 {
     struct Task *t = &gTasks[id];
 

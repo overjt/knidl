@@ -25,7 +25,7 @@
  *   7  sub_080bd7f0  a sprite drawn by TaskDrawScreen (0x08755B90)
  *   8  sub_080bd8ac  the same graphics as a per-player award: in
  *                    gUnk_03002150 == 5, sub_080bd828 passes 1000 / 3000 /
- *                    5000 or 10 to sub_0800a0ac, or 1 to sub_08009eb8
+ *                    5000 or 10 to AddPlayerScoreNoHud, or 1 to sub_08009eb8
  *   9  sub_080bd9b0  a sprite drawn by sub_080bd938 (0x08755A68)
  *
  * sub_080bc1c4 places a player by the number of linked players and the
@@ -111,7 +111,7 @@ void TaskSleepForever(void);
 void TaskSetEntry(void *fn, u32 i);
 void TaskStop(void);
 void sub_08009eb8(u32 a, u32 b);
-void sub_0800a0ac(u32 a, u32 b);
+void AddPlayerScoreNoHud(u32 a, u32 b);
 
 void sub_080bc1c4(void);
 void sub_080bc8c4(void);
@@ -1301,16 +1301,16 @@ void sub_080bd828(void)
         switch (gCurTask->unk3C)
         {
         case 5:
-            sub_0800a0ac(10, gCurTask->unk1C);
+            AddPlayerScoreNoHud(10, gCurTask->unk1C);
             break;
         case 2:
-            sub_0800a0ac(1000, gCurTask->unk1C);
+            AddPlayerScoreNoHud(1000, gCurTask->unk1C);
             break;
         case 3:
-            sub_0800a0ac(3000, gCurTask->unk1C);
+            AddPlayerScoreNoHud(3000, gCurTask->unk1C);
             break;
         case 4:
-            sub_0800a0ac(5000, gCurTask->unk1C);
+            AddPlayerScoreNoHud(5000, gCurTask->unk1C);
             break;
         case 6:
             sub_08009eb8(1, gCurTask->unk1C);

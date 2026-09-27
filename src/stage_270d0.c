@@ -80,7 +80,7 @@ extern u16 gUnk_02008060[];
 extern vu16 gDispCnt;
 extern u8 gBg3MapShape;
 extern u8 gUnk_0200B078;
-extern u8 gUnk_0200B040;
+extern u8 gHBlankScrollStarted;
 extern struct RoomDef **gRoomTable[][8];
 extern s8 gLevelIndex;
 extern s8 gStageIndex;
@@ -203,7 +203,7 @@ void sub_08027240(void)
     else if (gUnk_0200B078 == 1)
         SetBg23ScreenSize(0x8000);
     CameraWriteScrollParallax();
-    if (gUnk_0200B040 != 0)
+    if (gHBlankScrollStarted != 0)
         sub_080b6f04();
     sub_0800ab08();
 }

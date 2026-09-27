@@ -39,7 +39,7 @@ void TaskStop(void);
 u32 IsWorldPosOnScreen(s16 x, s16 y);
 s32 RandomSpread(s32 a, s32 b, s32 c);
 s16 RandomSpreadFacing(s32 a, u32 b, u32 c);
-s32 sub_08010358(s32 a, s32 b);
+s32 CreateCutsceneActor(s32 a, s32 b);
 void RequestScreenShake(s32 a);
 s32 PlayerLoadFrameTilesAndPalette(s32 mode);
 void LoadBackdropColor(u16 *p);
@@ -56,8 +56,8 @@ void sub_08010b38(void)
     }
 }
 
-/* NOTE: hdr.c declares sub_08010358 as void, but the ROM stores its r0 into
-   Task.unk46 here.  Real prototype: s16 sub_08010358(s32 a, s32 b).
+/* NOTE: hdr.c declares CreateCutsceneActor as void, but the ROM stores its r0 into
+   Task.unk46 here.  Real prototype: s16 CreateCutsceneActor(s32 a, s32 b).
    Aliased locally so this file can compile against the shared header. */
 
 void sub_08010bac(void)
@@ -67,13 +67,13 @@ void sub_08010bac(void)
     gCurTask->unk42 = 5;
     gCurTask->unk38 = gUnk_08751CEC;
     gCurTask->unk40 = 0;
-    gCurTask->unk46 = sub_08010358(3, 32);
+    gCurTask->unk46 = CreateCutsceneActor(3, 32);
     gTasks[gCurTask->unk46].unk1C = 0;
-    gCurTask->unk46 = sub_08010358(3, 32);
+    gCurTask->unk46 = CreateCutsceneActor(3, 32);
     gTasks[gCurTask->unk46].unk1C = 1;
-    gCurTask->unk46 = sub_08010358(3, 32);
+    gCurTask->unk46 = CreateCutsceneActor(3, 32);
     gTasks[gCurTask->unk46].unk1C = 2;
-    gCurTask->unk46 = sub_08010358(3, 32);
+    gCurTask->unk46 = CreateCutsceneActor(3, 32);
     gTasks[gCurTask->unk46].unk1C = 3;
     TaskYieldTrampoline(30);
     gCurTask->unk4C = (gCurTask->unk48 + RandomSpreadFacing(-16, 1, 16)) << 16;
@@ -293,15 +293,15 @@ void sub_08010eb8(void)
 void sub_08011154(void)
 {
     PlayBgm(21);
-    sub_08010358(5, 0);
-    sub_08010358(6, 32);
-    sub_08010358(7, 32);
-    sub_08010358(8, 32);
-    sub_08010358(9, 32);
-    sub_08010358(10, 32);
-    sub_08010358(11, 32);
-    sub_08010358(12, 32);
-    sub_08010358(13, 32);
+    CreateCutsceneActor(5, 0);
+    CreateCutsceneActor(6, 32);
+    CreateCutsceneActor(7, 32);
+    CreateCutsceneActor(8, 32);
+    CreateCutsceneActor(9, 32);
+    CreateCutsceneActor(10, 32);
+    CreateCutsceneActor(11, 32);
+    CreateCutsceneActor(12, 32);
+    CreateCutsceneActor(13, 32);
 }
 
 void sub_080111a8(void)
@@ -938,9 +938,9 @@ void sub_08011bfc(void)
 void sub_08011ff8(void)
 {
     PlayBgm(11);
-    sub_08010358(14, 0);
-    sub_08010358(15, 32);
-    sub_08010358(17, 32);
+    CreateCutsceneActor(14, 0);
+    CreateCutsceneActor(15, 32);
+    CreateCutsceneActor(17, 32);
 }
 
 void sub_0801201c(void)
@@ -970,7 +970,7 @@ void sub_0801201c(void)
     gCurTask->unk3C = 13;
     TaskYieldTrampoline(2);
     RequestScreenShake(1);
-    sub_08010358(21, 32);
+    CreateCutsceneActor(21, 32);
     TaskSetMotion(128 << 9, 0, 0x5A5A5A5A, 192 << 10, 0xFFFF0000, 0x5A5A5A5A);
     gCurTask->unk3C = 16;
     TaskYieldTrampoline(3);
@@ -1186,7 +1186,7 @@ void sub_08012628(void)
     gCurTask->unk38 = gUnk_08754B80;
     gCurTask->unk4C = 204 << 14;
     gCurTask->unk50 = 192 << 14;
-    sub_08010358(16, 32);
+    CreateCutsceneActor(16, 32);
     TaskStop();
     gCurTask->unk3C = 0xFFFF;
     TaskYieldTrampoline(10);
@@ -1332,7 +1332,7 @@ void sub_080129f8(void)
     gCurTask->unk0C = (u32)TaskDrawScreen;
     gCurTask->unk42 = 13;
     gCurTask->unk38 = gUnk_08754B80;
-    sub_08010358(19, 32);
+    CreateCutsceneActor(19, 32);
     gCurTask->unk4C = 200 << 13;
     gCurTask->unk50 = 0xFFED0000;
     TaskStop();
@@ -1399,7 +1399,7 @@ void sub_08012b94(void)
     gCurTask->unk0C = (u32)TaskDrawScreen;
     gCurTask->unk42 = 13;
     gCurTask->unk38 = gUnk_08754B80;
-    sub_08010358(20, 32);
+    CreateCutsceneActor(20, 32);
     gCurTask->unk4C = 254 << 15;
     gCurTask->unk50 = 0;
     TaskStop();
@@ -1498,7 +1498,7 @@ void sub_08012b94(void)
     TaskYieldTrampoline(1);
     TaskStop();
     gCurTask->unk3C = -1;
-    sub_08010358(18, 32);
+    CreateCutsceneActor(18, 32);
     TaskSleepForever();
 }
 
@@ -1815,14 +1815,14 @@ void sub_08013348(void)
 void sub_08013430(void)
 {
     PlayBgm(17);
-    sub_08010358(22, 0);
-    sub_08010358(23, 32);
-    sub_08010358(24, 32);
-    sub_08010358(25, 32);
-    sub_08010358(26, 32);
-    sub_08010358(27, 32);
-    sub_08010358(28, 32);
-    sub_08010358(29, 32);
+    CreateCutsceneActor(22, 0);
+    CreateCutsceneActor(23, 32);
+    CreateCutsceneActor(24, 32);
+    CreateCutsceneActor(25, 32);
+    CreateCutsceneActor(26, 32);
+    CreateCutsceneActor(27, 32);
+    CreateCutsceneActor(28, 32);
+    CreateCutsceneActor(29, 32);
 }
 
 void sub_0801347c(void)
@@ -2437,9 +2437,9 @@ void sub_080143b4(void)
 void sub_0801448c(void)
 {
     PlayBgm(22);
-    sub_08010358(30, 0);
-    sub_08010358(31, 32);
-    sub_08010358(33, 32);
+    CreateCutsceneActor(30, 0);
+    CreateCutsceneActor(31, 32);
+    CreateCutsceneActor(33, 32);
 }
 
 void sub_080144b0(void)
@@ -2450,7 +2450,7 @@ void sub_080144b0(void)
     gCurTask->unk38 = gUnk_08754D60;
     gCurTask->unk4C = 188 << 14;
     gCurTask->unk50 = 242 << 15;
-    sub_08010358(32, 32);
+    CreateCutsceneActor(32, 32);
     gCurTask->unk6C = 0;
     do
     {
@@ -2839,11 +2839,11 @@ void sub_08014d08(void)
 void sub_08014e6c(void)
 {
     PlayBgm(12);
-    sub_08010358(34, 0);
-    sub_08010358(35, 32);
-    sub_08010358(36, 32);
-    sub_08010358(37, 32);
-    sub_08010358(38, 32);
+    CreateCutsceneActor(34, 0);
+    CreateCutsceneActor(35, 32);
+    CreateCutsceneActor(36, 32);
+    CreateCutsceneActor(37, 32);
+    CreateCutsceneActor(38, 32);
 }
 
 void sub_08014ea0(void)
@@ -3172,15 +3172,15 @@ void sub_08015680(void)
 void sub_08015704(void)
 {
     PlayBgm(18);
-    sub_08010358(39, 0);
-    sub_08010358(41, 32);
-    sub_08010358(43, 32);
-    sub_08010358(44, 32);
-    sub_08010358(45, 32);
-    sub_08010358(46, 32);
-    sub_08010358(47, 32);
-    sub_08010358(48, 32);
-    sub_08010358(49, 32);
+    CreateCutsceneActor(39, 0);
+    CreateCutsceneActor(41, 32);
+    CreateCutsceneActor(43, 32);
+    CreateCutsceneActor(44, 32);
+    CreateCutsceneActor(45, 32);
+    CreateCutsceneActor(46, 32);
+    CreateCutsceneActor(47, 32);
+    CreateCutsceneActor(48, 32);
+    CreateCutsceneActor(49, 32);
 }
 
 void sub_08015758(void)
@@ -3448,7 +3448,7 @@ void sub_08015758(void)
     TaskYieldTrampoline(5);
     TaskStop();
     RequestScreenShake(6);
-    sub_08010358(40, 32);
+    CreateCutsceneActor(40, 32);
     gCurTask->unk6C = 0;
     do
     {
@@ -3647,7 +3647,7 @@ void sub_0801607c(void)
     gCurTask->unk58 = 128 << 9;
     gCurTask->unk3C = 12;
     TaskYieldTrampoline(1);
-    sub_08010358(42, 32);
+    CreateCutsceneActor(42, 32);
     gCurTask->unk54 = 128 << 12;
     gCurTask->unk58 = 0xFFFC0000;
     gCurTask->unk3C = 12;
@@ -4472,12 +4472,12 @@ void sub_0801757c(void)
 void sub_0801761c(void)
 {
     PlayBgm(31);
-    sub_08010358(50, 0);
-    sub_08010358(51, 32);
-    sub_08010358(55, 32);
-    sub_08010358(58, 32);
-    sub_08010358(59, 32);
-    sub_08010358(60, 32);
-    sub_08010358(61, 32);
-    sub_08010358(62, 32);
+    CreateCutsceneActor(50, 0);
+    CreateCutsceneActor(51, 32);
+    CreateCutsceneActor(55, 32);
+    CreateCutsceneActor(58, 32);
+    CreateCutsceneActor(59, 32);
+    CreateCutsceneActor(60, 32);
+    CreateCutsceneActor(61, 32);
+    CreateCutsceneActor(62, 32);
 }

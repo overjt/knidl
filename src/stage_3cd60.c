@@ -8,10 +8,10 @@ struct M11R20 { u32 w[5]; };
 
 extern u8 gUnk_02000020;
 extern u16 gUnk_02000028;
-extern u16 gUnk_02004B50[];
+extern u16 gPlayerAbilities[];
 extern struct M11R8 gPlayerHitBoxSets[];
 extern u8 gUnk_02005574[];
-extern s16 gUnk_02005588[];
+extern s16 gPlayerHealth[];
 extern u8 gUnk_020055C4[];
 extern s16 gRoomEntryX;
 extern struct M11R20 gPlayerBodyBoxes[];
@@ -86,9 +86,9 @@ s32 IsOnScreen(s16 x, s16 y);
 u32 IsWorldPosOnScreen(s16 a, s16 b);
 void sub_0800652c(u16 a, s32 b);
 void TaskRestoreSkipMask(u32 idx);
-s32 sub_08009ee8(s32 a, s32 b);
-void sub_08009fcc(s32 a, s32 b, s32 c);
-void sub_0800a008(u32 a, s32 b, s32 c);
+s32 AddPlayerHealth(s32 a, s32 b);
+void SetPlayerAbilityNoHud(s32 a, s32 b, s32 c);
+void SetPlayerAbility(u32 a, s32 b, s32 c);
 s32 sub_08022760(struct Task *t);
 s32 sub_08024e40(s32 a0, s32 a1);
 void sub_080270d0(void);
@@ -216,7 +216,7 @@ void CreatePlayer(s32 a0)
     t->unk48 = t->unk4C >> 16;
     t->unk4A = t->unk50 >> 16;
     if ((u8)(gUnk_02000020 - 2) <= 1)
-        sub_08009fcc(25, -1, a0);
+        SetPlayerAbilityNoHud(25, -1, a0);
 }
 
 /* Reset player record a0 to its start-of-stage state. */
@@ -238,7 +238,7 @@ void InitPlayerState(s32 a0)
     p->unk0B = 0;
     p->unk0A = 0;
     p->unk0C = -1;
-    p->unk0D = gUnk_02004B50[a0];
+    p->unk0D = gPlayerAbilities[a0];
     p->unk0E = gUnk_0200AF18[a0];
     p->unk10 = 0;
     p->unk0F = 0;
@@ -313,7 +313,7 @@ void sub_0803d1c4(s32 a0)
     p->unk0B = 0;
     p->unk0A = 0;
     p->unk0C = -1;
-    p->unk0D = gUnk_02004B50[a0];
+    p->unk0D = gPlayerAbilities[a0];
     p->unk0E = gUnk_0200AF18[a0];
     p->unk10 = 0;
     p->unk0F = 0;
@@ -374,7 +374,7 @@ void sub_0803d2d4(s32 a0)
     p->unk01 = 0;
     p->unk05 = 255;
     p->unk04 = -1;
-    p->unk0D = gUnk_02004B50[a0];
+    p->unk0D = gPlayerAbilities[a0];
     p->unk0E = gUnk_0200AF18[a0];
     p->unk10 = 0;
     p->unk0F = 0;
@@ -2463,7 +2463,7 @@ s32 sub_0803fa74(void)
        && (gTerrainResult[0] != 1 || (gCurTask->unk88->unk48 & 1) == 0)
        && (gTerrainResult[0] != 2 || (gCurTask->unk88->unk48 & 2) == 0))))
         return 0;
-    sub_08009ee8(-gUnk_02005588[gCurTask->unk88->unk00], gCurTask->unk88->unk00);
+    AddPlayerHealth(-gPlayerHealth[gCurTask->unk88->unk00], gCurTask->unk88->unk00);
     gCurTask->unk7C = 1;
     gCurTask->unk88->unk01 = 17;
     return gCurTask->unk88->unk01;
@@ -2771,7 +2771,7 @@ s32 PlayerCheckDropAbility(void)
     {
         sub_08064eb8(gCurTask->unk88->unk30);
         PlaySfxIfLocalPlayer(182, (u16)gCurTask->unk88->unk00);
-        sub_0800a008(0, -1, gCurTask->unk88->unk00);
+        SetPlayerAbility(0, -1, gCurTask->unk88->unk00);
         gCurTask->unk88->unk01 = gCurTask->unk88->unk02;
     }
     return gCurTask->unk88->unk01;
@@ -2859,7 +2859,7 @@ s32 sub_08040514(void)
             continue;
         if ((gCurTask->unk88->unk3B >> i) & 1)
             continue;
-        if (gUnk_02005588[i] == 0)
+        if (gPlayerHealth[i] == 0)
             continue;
         u = &gTasks[i];
         if (u->unk13 != 0)

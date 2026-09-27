@@ -6,8 +6,8 @@
 extern u32 gUnk_0200000C[];
 extern u32 gUnk_02000034[];
 extern u32 gUnk_02004C90;
-extern u32 gUnk_02005580[];
-extern s16 gUnk_02005588[];
+extern u32 gMaxHealth[];
+extern s16 gPlayerHealth[];
 extern u32 gUnk_02005590[];
 extern u32 gUnk_020055D0[];
 extern u32 gRoomObjectList[];
@@ -526,12 +526,12 @@ extern void TaskUpdateFlip(void);
 extern void TaskSetFrame(s32 a);
 extern void TaskSetFrameNoFlip(s32 a);
 extern void TaskSetFrameFlip(s32 a);
-extern s32 sub_08009ee8(s32 a, s32 b);
-extern void sub_08009fcc();
+extern s32 AddPlayerHealth(s32 a, s32 b);
+extern void SetPlayerAbilityNoHud();
 extern void sub_0800a280(void);
 extern void sub_0800a294();
 extern void sub_0800a4c0();
-extern void sub_0800a554(void);
+extern void HudRemoveHpBar(void);
 extern void sub_0800a698(void);
 extern s32 sub_08021bb4(s16 x, s16 y, s32 c, s32 d);
 extern void TaskInitWaterFlags(void);
@@ -544,7 +544,7 @@ extern void sub_08025b5c();
 extern void RequestScreenShake(u32 a);
 extern void sub_080275cc();
 extern void StartScrollLock();
-extern s32 sub_0802d344();
+extern s32 CreateMapEvent();
 extern void sub_0802ffe8();
 extern void sub_080308e8();
 extern void sub_08030db8();
@@ -1430,7 +1430,7 @@ void sub_080a860c(void)
             n = 0;
             for (gCurTask->unk6C = 0; (s16)gCurTask->unk6C < gPlayerCount; gCurTask->unk6C++)
             {
-                if ((gPlayerLives[(s16)gCurTask->unk6C] != 0 || gUnk_02005588[(s16)gCurTask->unk6C] != 0) && ((gActivePlayerMask >> (s16)gCurTask->unk6C) & 1))
+                if ((gPlayerLives[(s16)gCurTask->unk6C] != 0 || gPlayerHealth[(s16)gCurTask->unk6C] != 0) && ((gActivePlayerMask >> (s16)gCurTask->unk6C) & 1))
                 {
                     TaskGetPosSlot((s16)gCurTask->unk6C);
                     if (gUnk_030023D4 > 151)

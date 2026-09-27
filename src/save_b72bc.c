@@ -41,9 +41,9 @@ struct LinkSave
 extern struct LinkSave *gInputRecordingPtr;
 extern s32 Div(s32 a, s32 b);
 extern u8 gUnk_02000020;
-extern u16 gUnk_02004B50[];
-extern u16 gUnk_02005580;
-extern s16 gUnk_02005588[];
+extern u16 gPlayerAbilities[];
+extern u16 gMaxHealth;
+extern s16 gPlayerHealth[];
 extern u16 gRoomEntryX;
 extern u8 gRoomEntrySet;
 extern u8 gUnk_020069F0;
@@ -95,7 +95,7 @@ void sub_080b72bc(void)
     gRoomEntryX = gInputRecordingPtr->unk0E;
     gRoomEntryY = gInputRecordingPtr->unk10;
     gUnk_02000020 = gInputRecordingPtr->unk13;
-    gUnk_02005580 = gInputRecordingPtr->unk14;
+    gMaxHealth = gInputRecordingPtr->unk14;
     gUnk_0200B04C = gInputRecordingPtr->unk36;
     gUnk_03001F30 = gInputRecordingPtr->unk11E;
     for (i = 0; i <= 7; i++)
@@ -111,8 +111,8 @@ void sub_080b72bc(void)
         gUnk_0200EC78[i] = i;
         gUnk_0200EC68[i] = 0;
         gPlayerLives[i] = gInputRecordingPtr->unk16[i];
-        gUnk_02005588[i] = gInputRecordingPtr->unk1E[i];
-        gUnk_02004B50[i] = gInputRecordingPtr->unk26[i];
+        gPlayerHealth[i] = gInputRecordingPtr->unk1E[i];
+        gPlayerAbilities[i] = gInputRecordingPtr->unk26[i];
         gUnk_0200AF18[i] = gInputRecordingPtr->unk2E[i];
     }
     j = Div(0x3B6A, gPlayerCount);

@@ -4,11 +4,11 @@
 
 /* menu_0b920.c (0x0800B920-0x0800C09B, issue #99).
  *
- * AgbMain state 4 (sub_0800b920), the main menu: it resets the menu cells,
+ * AgbMain state 4 (MainMenuMain), the main menu: it resets the menu cells,
  * spawns the background tasks #256-#259, picks the first screen from the
  * return state gUnk_03002150 (3 = file select, 14-16/20/21 = back from an
  * extra mode, straight to the mode list) and dispatches on the menu
- * screen gUnk_020060D0 until it reaches 9 (start a game: state 5 or 13)
+ * screen gMenuScreen until it reaches 9 (start a game: state 5 or 13)
  * or 10 (back to the title).  The rest draws the file-select screen's
  * three save slots: sub_0800bcf0 all three, sub_0800bda4 a slot's label
  * (empty, finished, or its number through the digit buffer gDigits),
@@ -36,14 +36,14 @@ struct SaveSlot
     /*0x74*/ u8 filler74[0x8C];
 };
 
-extern s8 gUnk_02000004;
-extern u32 gUnk_02004B70;
+extern s8 gLinkSessionMode;
+extern u32 gMenuBufferedKeys;
 extern u8 gUnk_02006090;
-extern s8 gUnk_020060D0;
-extern s8 gUnk_02006180;
+extern s8 gMenuScreen;
+extern s8 gMenuTransitionTimer;
 extern u8 gUnk_02007FC0;
-extern s16 gUnk_0200A6E0[];
-extern s8 gUnk_0200B074;
+extern s16 gSoundTestSelection[];
+extern s8 gMenuCursor;
 extern struct SaveSlot gSaveSlots[];
 extern u32 gUnk_0200EC48;
 extern vu16 gUnk_03000048;
@@ -92,9 +92,9 @@ void sub_08003964(void);
 void sub_08004000(u16 a);
 s32 TaskCreateFrom(u32 type, s32 idx);
 void DisableSerial(void);
-void sub_08008c4c(s32 a0);
-void sub_08008c64(u16 a0);
-void sub_0800b4a8(void);
+void LoadBgLayout(s32 a0);
+void LoadGfxSet(u16 a0);
+void ResetScoresAndMaxHealth(void);
 void sub_0800c09c(void);
 void sub_0800c34c(void);
 void sub_0800c558(void);
@@ -106,9 +106,9 @@ void sub_0800d0f4(void);
 void sub_0800d450(void);
 void sub_0800d85c(void);
 void sub_0800da9c(s32 mode);
-void sub_0800fcbc(void);
-void sub_0800fdb8(s32 speed, s32 dist, s32 bg);
-void sub_08010020(s32 a, s32 b, s32 c, s32 d);
+void BgScrollInit(void);
+void BgScrollStartY(s32 speed, s32 dist, s32 bg);
+void SetBlend(s32 a, s32 b, s32 c, s32 d);
 void ResetHBlankScroll(void);
 void SelectLatestSaveSlot(void);
 void sub_080b8070(s32 a);
@@ -122,7 +122,7 @@ void sub_0800be8c(s32 slot, u32 pal);
 s32 sub_0800bf10(s32 slot, u32 pal);
 void sub_0800bf6c(s32 slot, s32 value, s32 mode);
 
-void sub_0800b920(void)
+void MainMenuMain(void)
 {
     sub_08003964();
     DisableSerial();
@@ -132,14 +132,14 @@ void sub_0800b920(void)
     ResetHBlankScroll();
     if (gCurSaveSlot == -1 || gCurSaveSlot == 3)
         SelectLatestSaveSlot();
-    gUnk_0200A6E0[0] = 0;
-    gUnk_0200A6E0[1] = 0;
+    gSoundTestSelection[0] = 0;
+    gSoundTestSelection[1] = 0;
     gKeyRepeatDelay = 10;
     gKeyRepeatInterval = 6;
-    gUnk_02006180 = 0;
-    sub_08008c4c(2);
-    sub_08008c64(22);
-    sub_0800fcbc();
+    gMenuTransitionTimer = 0;
+    LoadBgLayout(2);
+    LoadGfxSet(22);
+    BgScrollInit();
     TaskCreateFrom(0x101, 32);
     TaskCreateFrom(0x102, 32);
     TaskCreateFrom(0x103, 32);
@@ -148,10 +148,10 @@ void sub_0800b920(void)
     {
     case 3:
         gBg3ScrollY = 64;
-        sub_0800fdb8(0x80000, 80, 3);
+        BgScrollStartY(0x80000, 80, 3);
         gDispCnt &= 0xE0FF;
         gDispCnt |= 0x1C00;
-        gUnk_020060D0 = 0;
+        gMenuScreen = 0;
         sub_0800bcf0();
         sub_0800da9c(0);
         break;
@@ -161,16 +161,16 @@ void sub_0800b920(void)
     case 20:
     case 21:
         gBg3ScrollY = 64;
-        sub_0800fdb8(0x80000, 80, 3);
+        BgScrollStartY(0x80000, 80, 3);
         if (gUnk_03002150 <= 16)
-            gUnk_0200B074 = gUnk_03002150 - 14;
+            gMenuCursor = gUnk_03002150 - 14;
         else if (gUnk_03002150 == 20)
-            gUnk_0200B074 = 3;
+            gMenuCursor = 3;
         else
-            gUnk_0200B074 = 4;
-        gUnk_020060D0 = 11;
+            gMenuCursor = 4;
+        gMenuScreen = 11;
         sub_0800ca10();
-        gUnk_02004B70 = 0;
+        gMenuBufferedKeys = 0;
         break;
     }
     PlayBgm(40);
@@ -185,7 +185,7 @@ void sub_0800b920(void)
     RunFrames(6);
     do
     {
-        switch (gUnk_020060D0)
+        switch (gMenuScreen)
         {
         case 0:
             sub_0800c09c();
@@ -215,7 +215,7 @@ void sub_0800b920(void)
             sub_0800d85c();
             break;
         }
-    } while (gUnk_020060D0 != 9 && gUnk_020060D0 != 10);
+    } while (gMenuScreen != 9 && gMenuScreen != 10);
     BeginFastFadeOutToWhite();
     if (gUnk_0200EC48 == 2)
     {
@@ -223,7 +223,7 @@ void sub_0800b920(void)
         while (gFadeSteps != 0)
         {
             RunFrame();
-            sub_08004000(gUnk_02000004);
+            sub_08004000(gLinkSessionMode);
         }
         gUnk_03000048 = 0;
         gUnk_03001F30 = 0;
@@ -249,7 +249,7 @@ void sub_0800b920(void)
             RunFramesUntilFadeDone();
         }
     }
-    sub_08010020(0, 0, 0, 0);
+    SetBlend(0, 0, 0, 0);
     gDispCnt &= 0xDFFF;
     switch (gGameState)
     {
@@ -258,7 +258,7 @@ void sub_0800b920(void)
     case 5:
         sub_080b8070(gCurSaveSlot);
         sub_080b8290();
-        sub_0800b4a8();
+        ResetScoresAndMaxHealth();
         gUnk_02007FC0 = 1;
         break;
     case 13:
@@ -278,8 +278,8 @@ void sub_0800bcf0(void)
 {
     s32 i;
 
-    gUnk_0200B074 = gCurSaveSlot;
-    sub_08008c64(18);
+    gMenuCursor = gCurSaveSlot;
+    LoadGfxSet(18);
     for (i = 0; i < 3; i++)
     {
         sub_0800bda4(i);
@@ -329,7 +329,7 @@ s32 sub_0800bf10(s32 slot, u32 pal)
 {
     if (pal > 6)
         pal = 7;
-    if (slot == gUnk_0200B074)
+    if (slot == gMenuCursor)
         RequestCopy(2, (u32)&gUnk_08554B78[pal * 16], (u32)&gUnk_03001490[slot * 16], 32);
     else
         RequestCopy(2, (u32)&gUnk_08554B78[(pal + 8) * 16], (u32)&gUnk_03001490[slot * 16], 32);

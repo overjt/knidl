@@ -7,7 +7,7 @@
  * machine in gLinkCommand while pumping the link layer once per frame:
  * RunFrameNoTasks (frame wait), LinkMain1(&gShouldAdvanceLinkState, gSendCmd,
  * gRecvCmds) (SIO transfer step), IsLinkError (abort poll) and
- * sub_08008b8c (error/reset path, taken after 31 frames without the counter
+ * LinkErrorScreen (error/reset path, taken after 31 frames without the counter
  * at gSerialIntrCount moving).
  *
  *  - sub_08002378 / sub_08002668 run the 0x7700-series handshake.  They are
@@ -79,7 +79,7 @@
 extern void RunFrameNoTasks(void);
 extern void LinkMain1(void *, void *, void *);
 extern int IsLinkError(void);
-extern void sub_08008b8c(void);
+extern void LinkErrorScreen(void);
 
 extern u16 gUnk_02006068[4];
 extern vu32 gRngValue;
@@ -164,10 +164,10 @@ void sub_08002668(void)
         RunFrameNoTasks();
         LinkMain1(&gShouldAdvanceLinkState, gSendCmd, gRecvCmds);
         if (IsLinkError() != 0)
-            sub_08008b8c();
+            LinkErrorScreen();
         if (old == gSerialIntrCount) {
             if (++b > 30)
-                sub_08008b8c();
+                LinkErrorScreen();
         }
         for (i = 0; i < 4; i++) {
             switch (gRecvCmds[0][i]) {

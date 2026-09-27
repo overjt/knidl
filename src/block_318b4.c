@@ -5,7 +5,7 @@
 /* block_318b4.c (0x080318B4-0x08032687, issue #92).
  *
  * Breakable blocks, part 2: the three per-frame stage hooks M08's
- * src/obj_306b4.c stores into gUnk_030004A0, and their record helpers.
+ * src/obj_306b4.c stores into gBlockAnimHook, and their record helpers.
  * Each hook steps the animation script of every live record once a frame
  * (struct Unk020061F0: {op, arg} pairs - draw a frame, break the four
  * neighbours, wait, free) and then clears the "stepped" bit 15 of unk6.

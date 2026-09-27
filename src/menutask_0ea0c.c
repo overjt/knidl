@@ -15,11 +15,11 @@
  * palettes of the link-play screen (menu screen 8) through BlendColors
  * blends. */
 
-extern s8 gUnk_020060D0;
-extern s8 gUnk_02007D34;
-extern s8 gUnk_02007E88;
-extern s16 gUnk_0200A6E0[];
-extern s8 gUnk_0200B074;
+extern s8 gMenuScreen;
+extern s8 gMenuChoiceCursor;
+extern s8 gPrevMenuScreen;
+extern s16 gSoundTestSelection[];
+extern s8 gMenuCursor;
 extern vu16 gPressedKeys;
 extern vu8 gBldAlphaEva;
 extern u16 gUnk_030012F0[][16];
@@ -44,8 +44,8 @@ void RequestCopy(u32 mode, u32 src, u32 dst, u32 size);
 s32 QueueSprite(u32 a, u32 b, u32 c, u32 d, u32 e, s16 f);
 void BlendColors(u16 *src, u16 *dst, s32 ratio, s32 count, u16 *out);
 void TaskMove(void);
-u8 sub_0800ffe8(void);
-void sub_08010020(s32 a, s32 b, s32 c, s32 d);
+u8 TaskIsOnScreenNoCamera(void);
+void SetBlend(s32 a, s32 b, s32 c, s32 d);
 void sub_0800ec08(void);
 void sub_0800ecb8(void);
 
@@ -58,7 +58,7 @@ void sub_0800ea0c(void)
     s32 n;
     s32 k;
 
-    if (sub_0800ffe8()) {
+    if (TaskIsOnScreenNoCamera()) {
         struct Task *s = gCurTask;
         u32 *tbl = s->unk38;
 
@@ -79,7 +79,7 @@ void sub_0800ea0c(void)
     v->unk34 = n;
     if (n > 256)
         v->unk34 = 256;
-    k = gUnk_02007D34 * 2;
+    k = gMenuChoiceCursor * 2;
     x = gCurTask;
     BlendColors(gUnk_08559BA4[k + x->unk2C], gUnk_08559BA4[k + x->unk30], (u16)x->unk34, 16, gUnk_030015D0);
 }
@@ -122,7 +122,7 @@ void sub_0800eae4(void)
 
 void sub_0800ec08(void)
 {
-    if (sub_0800ffe8()) {
+    if (TaskIsOnScreenNoCamera()) {
         struct Task *t = gCurTask;
         u32 *tbl = t->unk38;
 
@@ -141,7 +141,7 @@ void sub_0800ec70(void)
     t->unk2C = 0;
     t->unk30 = 1;
     t->unk34 = 0;
-    while (gUnk_020060D0 == 7)
+    while (gMenuScreen == 7)
         TaskYieldTrampoline(1);
     TaskExitTrampoline();
 }
@@ -153,10 +153,10 @@ void sub_0800ecb8(void)
     struct Task *w;
     s32 v;
 
-    if (sub_0800ffe8()) {
+    if (TaskIsOnScreenNoCamera()) {
         u32 *tbl = gUnk_087556D4;
 
-        QueueSprite(9, tbl[0], 0, 0, gUnk_0200B074 * 52 + 94, 136);
+        QueueSprite(9, tbl[0], 0, 0, gMenuCursor * 52 + 94, 136);
         QueueSprite(8, tbl[1], 0, 0, 94, 136);
         QueueSprite(8, tbl[2], 0, 0, 146, 136);
     }
@@ -184,7 +184,7 @@ void sub_0800ed78(void)
     t->unk30 = 1;
     t->unk34 = 0;
     t->unk18 = 0;
-    while (gUnk_020060D0 == 7) {
+    while (gMenuScreen == 7) {
         struct Task *u;
         struct Task *v;
         struct Task *w;
@@ -211,12 +211,12 @@ void sub_0800ed78(void)
             if (n > 256)
                 v->unk34 = 256;
         }
-        if (gUnk_0200B074 == 0) {
-            if ((s32)gMPlayTable[gSongTable[gUnk_0200A6E0[gUnk_0200B074]].ms].info->status >= 0) {
+        if (gMenuCursor == 0) {
+            if ((s32)gMPlayTable[gSongTable[gSoundTestSelection[gMenuCursor]].ms].info->status >= 0) {
                 w = gCurTask;
-                BlendColors(gUnk_085634D8[w->unk2C], gUnk_085634D8[w->unk30], (u16)w->unk34, 16, gUnk_03001310[gUnk_0200B074]);
+                BlendColors(gUnk_085634D8[w->unk2C], gUnk_085634D8[w->unk30], (u16)w->unk34, 16, gUnk_03001310[gMenuCursor]);
             } else {
-                BlendColors(gUnk_085634D8[5], gUnk_085634D8[5], (u16)gCurTask->unk34, 16, gUnk_03001310[gUnk_0200B074]);
+                BlendColors(gUnk_085634D8[5], gUnk_085634D8[5], (u16)gCurTask->unk34, 16, gUnk_03001310[gMenuCursor]);
             }
         } else {
             if (gPressedKeys & 1) {
@@ -230,11 +230,11 @@ void sub_0800ed78(void)
             }
             w = gCurTask;
             if (w->unk18 != 0)
-                BlendColors(gUnk_085634D8[w->unk2C], gUnk_085634D8[w->unk30], (u16)w->unk34, 16, gUnk_03001310[gUnk_0200B074]);
+                BlendColors(gUnk_085634D8[w->unk2C], gUnk_085634D8[w->unk30], (u16)w->unk34, 16, gUnk_03001310[gMenuCursor]);
             else
-                BlendColors(gUnk_085634D8[5], gUnk_085634D8[5], (u16)w->unk34, 16, gUnk_03001310[gUnk_0200B074]);
+                BlendColors(gUnk_085634D8[5], gUnk_085634D8[5], (u16)w->unk34, 16, gUnk_03001310[gMenuCursor]);
         }
-        RequestCopy(2, (u32)&gUnk_085634D8[0][(gUnk_0200B074 + 6) * 16], (u32)gUnk_03001310[(s8)(gUnk_0200B074 ^ 1)], 32);
+        RequestCopy(2, (u32)&gUnk_085634D8[0][(gMenuCursor + 6) * 16], (u32)gUnk_03001310[(s8)(gMenuCursor ^ 1)], 32);
         TaskYieldTrampoline(1);
     }
     TaskExitTrampoline();
@@ -249,8 +249,8 @@ void sub_0800ef30(void)
     t->unk30 = 1;
     t->unk34 = 0;
     t->unk18 = 0;
-    sub_08010020(68, 8, 0, 16);
-    while (gUnk_020060D0 == 8 || gUnk_020060D0 == 9) {
+    SetBlend(68, 8, 0, 16);
+    while (gMenuScreen == 8 || gMenuScreen == 9) {
         struct Task *u;
         struct Task *v;
         s32 n;
@@ -299,11 +299,11 @@ void sub_0800f084(void)
 {
     struct Task *t = gCurTask;
 
-    t->unk28 = gUnk_02007E88;
+    t->unk28 = gPrevMenuScreen;
     t->unk2C = 0;
     t->unk30 = 1;
     t->unk34 = 0;
-    while (gUnk_020060D0 == 8 || gUnk_020060D0 == 9) {
+    while (gMenuScreen == 8 || gMenuScreen == 9) {
         struct Task *u;
         struct Task *v;
         struct Task *w;

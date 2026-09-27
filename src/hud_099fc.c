@@ -6,10 +6,10 @@
  *
  * Task type #237 (Task_IntroStoryPicture, one intro-story picture) and the
  * HUD/score interface other modules call: HUD init/redraw
- * (sub_08009b2c/sub_08009cb0), lives (sub_08009e60), health
- * (sub_08009ee8, returns the new value), score (sub_08009fcc/sub_0800a008/
- * sub_0800a04c/sub_0800a0ac, clamped to 99999999) and the clock mode
- * (sub_08009aa0/sub_08009ab8). */
+ * (sub_08009b2c/HudRedraw), lives (AddPlayerLives), health
+ * (AddPlayerHealth, returns the new value), score (SetPlayerAbilityNoHud/SetPlayerAbility/
+ * AddPlayerScore/AddPlayerScoreNoHud, clamped to 99999999) and the clock mode
+ * (HudShowScore/HudShowClock). */
 
 struct HudBar
 {
@@ -27,26 +27,26 @@ struct Unk02005E00
     /*0x08*/ u8 unk08[4];
 };
 
-extern u16 gUnk_02004B50[];
-extern s8 gUnk_02004B58;
-extern s16 gUnk_02004B68;
-extern s16 gUnk_02005580;
-extern s16 gUnk_02005588[];
+extern u16 gPlayerAbilities[];
+extern s8 gHudHpBarIndex;
+extern s16 gHudHpBarMaxHp;
+extern s16 gMaxHealth;
+extern s16 gPlayerHealth[];
 extern s8 gUnk_020055F0[];
 extern struct Unk02005E00 gUnk_02005E00;
-extern u8 gUnk_02006014;
-extern s32 gUnk_02006020[];
-extern u8 gUnk_02006030;
+extern u8 gHudMode;
+extern s32 gPlayerScores[];
+extern u8 gHudShowsClock;
 extern u16 gUnk_02006068[];
 extern s8 gUnk_0200617C;
-extern s8 gUnk_020061D4;
-extern struct HudBar gUnk_02006A00[];
+extern s8 gHudAbilityPanelState;
+extern struct HudBar gHudHpBars[];
 extern s16 gUnk_02007D30;
 extern s16 gPlayerLives[];
-extern s16 gUnk_02007FBC[];
+extern s16 gHudHpBarValues[];
 extern s16 gUnk_0200801C;
 extern u16 gUnk_0200AF18[];
-extern u8 gUnk_0200B028;
+extern u8 gHudShowsHpBar;
 extern u32 gUnk_02020000[];
 extern void (*gFrameEndCallback)(void);
 extern u16 gObjPalette[];
@@ -69,24 +69,24 @@ void TaskMove(void);
 void TaskDrawScreen(void);
 void sub_08008ebc(void);
 void sub_08008ed4(s32 a);
-void sub_0800a130(s32 a, s32 id);
+void HudShowAbility(s32 a, s32 id);
 void sub_0800a19c(s32 a);
 void sub_0800a280(void);
 void sub_0800aa94(s32 idx);
 void sub_0800aad0(void);
 void sub_0800ab3c(void);
 void sub_0800ab64(s32 a);
-void sub_0800abc0(s32 n);
-void sub_0800ac38(s32 n);
+void HudDrawLives(s32 n);
+void HudDrawHealth(s32 n);
 void sub_0800acbc(s32 a, s32 b);
-void sub_0800ad68(s32 v);
-void sub_0800af40(u16 *time);
-void sub_0800b0a4(s32 n);
-void sub_0800b130(s32 x);
+void HudDrawScore(s32 v);
+void HudDrawClock(u16 *time);
+void HudDrawAbilityPanel(s32 n);
+void HudDrawHpBar(s32 x);
 void sub_0800b230(s32 a, s32 b);
-void sub_0800b37c(void);
-void sub_0800b3a8(void);
-void sub_0800b3f8(void);
+void HudClearWholeTilemap(void);
+void HudClearTilemap(void);
+void HudFlushTilemap(void);
 void sub_0800b428(void);
 void sub_0800a0dc(s32 a, s32 b);
 
@@ -110,15 +110,15 @@ void Task_IntroStoryPicture(void)
     TaskExitTrampoline();
 }
 
-void sub_08009aa0(void)
+void HudShowScore(void)
 {
-    gUnk_02006030 = 0;
+    gHudShowsClock = 0;
     gFrameEndCallback = 0;
 }
 
-void sub_08009ab8(void)
+void HudShowClock(void)
 {
-    gUnk_02006030 = 1;
+    gHudShowsClock = 1;
     gFrameEndCallback = sub_0800aad0;
     gFrameEndCallback();
 }
@@ -127,13 +127,13 @@ void sub_08009adc(void)
 {
     s32 i;
 
-    gUnk_02006014 = 0;
+    gHudMode = 0;
     gUnk_0200617C = 0;
     for (i = 0; i < 2; i++) {
-        gUnk_02007FBC[i] = 0;
+        gHudHpBarValues[i] = 0;
         sub_0800aa94(i);
     }
-    gUnk_02004B68 = gUnk_02007D30 = 0;
+    gHudHpBarMaxHp = gUnk_02007D30 = 0;
     gUnk_020055F0[0] = 0;
     gUnk_020055F0[1] = 0;
 }
@@ -142,89 +142,89 @@ void sub_08009b2c(s32 i)
 {
     s32 j;
 
-    sub_0800b37c();
+    HudClearWholeTilemap();
     if (gUnk_03002444 != 0)
         sub_0800ab3c();
-    if (gPlayerLives[i] != 0 || gUnk_02005588[i] != 0) {
-        gUnk_02006014 = 1;
+    if (gPlayerLives[i] != 0 || gPlayerHealth[i] != 0) {
+        gHudMode = 1;
         gUnk_0200617C = 1;
         sub_0800b428();
         sub_0800ab64(i);
-        sub_0800abc0(gPlayerLives[i]);
-        sub_0800ac38(gUnk_02005588[i] >> 3);
+        HudDrawLives(gPlayerLives[i]);
+        HudDrawHealth(gPlayerHealth[i] >> 3);
         if ((gActivePlayerMask >> i) & 1) {
-            sub_0800a130((s16)gUnk_02004B50[i], i);
-            if ((s16)gUnk_02004B50[i] != 0) {
-                gUnk_020061D4 = 1;
+            HudShowAbility((s16)gPlayerAbilities[i], i);
+            if ((s16)gPlayerAbilities[i] != 0) {
+                gHudAbilityPanelState = 1;
                 gUnk_0200801C = 16;
-                sub_0800b0a4(2);
+                HudDrawAbilityPanel(2);
             } else {
-                gUnk_020061D4 = 0;
+                gHudAbilityPanelState = 0;
                 gUnk_0200801C = 0;
-                sub_0800b0a4(0);
+                HudDrawAbilityPanel(0);
             }
         } else if (gPlayerCameraMode[i] != 1) {
-            sub_0800a130(26, i);
-            gUnk_020061D4 = 1;
+            HudShowAbility(26, i);
+            gHudAbilityPanelState = 1;
             gUnk_0200801C = 16;
-            sub_0800b0a4(2);
+            HudDrawAbilityPanel(2);
         } else {
-            gUnk_020061D4 = 0;
+            gHudAbilityPanelState = 0;
             gUnk_0200801C = 0;
-            sub_0800b0a4(0);
+            HudDrawAbilityPanel(0);
         }
-        if (gUnk_02006030 == 0)
-            sub_0800ad68(gUnk_02006020[i]);
+        if (gHudShowsClock == 0)
+            HudDrawScore(gPlayerScores[i]);
         else
-            sub_0800af40(gUnk_02006068);
-        gUnk_0200B028 = 0;
+            HudDrawClock(gUnk_02006068);
+        gHudShowsHpBar = 0;
         for (j = 0; j < 2; j++) {
-            gUnk_02007FBC[j] = 0;
+            gHudHpBarValues[j] = 0;
             sub_0800aa94(j);
         }
-        gUnk_02004B68 = gUnk_02007D30 = 0;
+        gHudHpBarMaxHp = gUnk_02007D30 = 0;
         gUnk_020055F0[0] = 0;
         gUnk_020055F0[1] = 0;
     } else {
-        gUnk_02006014 = 2;
+        gHudMode = 2;
         gUnk_0200617C = 0;
     }
-    sub_0800b3f8();
+    HudFlushTilemap();
 }
 
-void sub_08009cb0(s32 i)
+void HudRedraw(s32 i)
 {
-    gUnk_02006014 = 1;
+    gHudMode = 1;
     gUnk_0200617C = 1;
-    sub_0800b3a8();
+    HudClearTilemap();
     sub_0800b428();
     if (gUnk_03002444 != 0)
         sub_0800ab3c();
     sub_0800ab64(i);
-    sub_0800abc0(gPlayerLives[i]);
-    sub_0800ac38(gUnk_02005588[i] >> 3);
+    HudDrawLives(gPlayerLives[i]);
+    HudDrawHealth(gPlayerHealth[i] >> 3);
     if ((gActivePlayerMask >> i) & 1) {
-        sub_0800a130((s16)gUnk_02004B50[i], i);
-        if ((s16)gUnk_02004B50[i] != 0) {
-            gUnk_020061D4 = 1;
+        HudShowAbility((s16)gPlayerAbilities[i], i);
+        if ((s16)gPlayerAbilities[i] != 0) {
+            gHudAbilityPanelState = 1;
             gUnk_0200801C = 16;
-            sub_0800b0a4(2);
+            HudDrawAbilityPanel(2);
         } else {
-            gUnk_020061D4 = 0;
+            gHudAbilityPanelState = 0;
             gUnk_0200801C = 0;
-            sub_0800b0a4(0);
+            HudDrawAbilityPanel(0);
         }
     } else {
         sub_0800a0dc(26, i);
     }
-    if (gUnk_0200B028 == 0) {
-        if (gUnk_02006030 == 0)
-            sub_0800ad68(gUnk_02006020[i]);
+    if (gHudShowsHpBar == 0) {
+        if (gHudShowsClock == 0)
+            HudDrawScore(gPlayerScores[i]);
         else
-            sub_0800af40(gUnk_02006068);
+            HudDrawClock(gUnk_02006068);
     } else {
         sub_0800a280();
-        sub_0800b130(gUnk_02006A00[gUnk_02004B58].unk4);
+        HudDrawHpBar(gHudHpBars[gHudHpBarIndex].unk4);
     }
     if (gUnk_020055F0[0] != 0) {
         if (gUnk_020055F0[0] == 2)
@@ -232,7 +232,7 @@ void sub_08009cb0(s32 i)
         else
             sub_0800b230(i, gUnk_020055F0[0]);
     }
-    sub_0800b3f8();
+    HudFlushTilemap();
 }
 
 void sub_08009e14(void)
@@ -247,14 +247,14 @@ void sub_08009e20(void)
 
 void sub_08009e2c(void)
 {
-    gUnk_02006014 = 2;
+    gHudMode = 2;
     gUnk_0200617C = 0;
-    sub_0800b3a8();
+    HudClearTilemap();
     if (gUnk_03002444 != 0)
         sub_0800ab3c();
 }
 
-s32 sub_08009e60(s32 a, u32 b)
+s32 AddPlayerLives(s32 a, u32 b)
 {
     if (b < 4) {
         gPlayerLives[b] = gPlayerLives[b] + a;
@@ -262,8 +262,8 @@ s32 sub_08009e60(s32 a, u32 b)
             gPlayerLives[b] = 99;
         else if (gPlayerLives[b] < 0)
             gPlayerLives[b] = 0;
-        if (b == gLocalPlayer && gUnk_02006014 == 1)
-            sub_0800abc0(gPlayerLives[b]);
+        if (b == gLocalPlayer && gHudMode == 1)
+            HudDrawLives(gPlayerLives[b]);
     }
 }
 
@@ -278,45 +278,45 @@ s32 sub_08009eb8(s32 a, u32 b)
     }
 }
 
-s32 sub_08009ee8(s32 a, u32 b)
+s32 AddPlayerHealth(s32 a, u32 b)
 {
     s32 old, delta;
 
     if (b < 4) {
-        old = gUnk_02005588[b];
+        old = gPlayerHealth[b];
         if (a > 0) {
-            if (old + a > gUnk_02005580) {
-                delta = gUnk_02005580 - old;
-                gUnk_02005588[b] = gUnk_02005580;
+            if (old + a > gMaxHealth) {
+                delta = gMaxHealth - old;
+                gPlayerHealth[b] = gMaxHealth;
             } else {
                 delta = a;
-                gUnk_02005588[b] += delta;
+                gPlayerHealth[b] += delta;
             }
         } else {
             if (old + a < 0) {
                 delta = -old;
-                gUnk_02005588[b] = 0;
+                gPlayerHealth[b] = 0;
             } else {
                 delta = a;
-                gUnk_02005588[b] += delta;
+                gPlayerHealth[b] += delta;
             }
-            if (gUnk_02005588[b] == 0)
+            if (gPlayerHealth[b] == 0)
                 gUnk_03001F34 = 1;
-            else if (gUnk_02005588[b] == 8 && gLocalPlayer == b)
+            else if (gPlayerHealth[b] == 8 && gLocalPlayer == b)
                 PlaySfx(262);
         }
-        gTasks[b].unk78 = gUnk_02005588[b];
-        if (b == gLocalPlayer && gUnk_02006014 == 1)
+        gTasks[b].unk78 = gPlayerHealth[b];
+        if (b == gLocalPlayer && gHudMode == 1)
             sub_0800acbc(old >> 3, delta >> 3);
         return gTasks[b].unk78;
     }
 }
 
-s32 sub_08009fcc(s32 a, s32 b, u32 c)
+s32 SetPlayerAbilityNoHud(s32 a, s32 b, u32 c)
 {
     if (c < 4) {
         struct PlayerState *p;
-        gUnk_02004B50[c] = a;
+        gPlayerAbilities[c] = a;
         gUnk_0200AF18[c] = b;
         p = &gPlayerStates[c];
         p->unk0D = a;
@@ -325,52 +325,52 @@ s32 sub_08009fcc(s32 a, s32 b, u32 c)
     }
 }
 
-s32 sub_0800a008(s32 a, s32 b, u32 c)
+s32 SetPlayerAbility(s32 a, s32 b, u32 c)
 {
     if (c < 4) {
         struct PlayerState *p;
-        gUnk_02004B50[c] = a;
+        gPlayerAbilities[c] = a;
         gUnk_0200AF18[c] = b;
         p = &gPlayerStates[c];
         p->unk0D = a;
         p->unk0E = b;
-        sub_0800a130(a, c);
+        HudShowAbility(a, c);
         return p->unk0D;
     }
 }
 
-void sub_0800a04c(s32 a, u32 b)
+void AddPlayerScore(s32 a, u32 b)
 {
     if (b < 4) {
-        if (gUnk_02006020[b] < 99999999) {
-            gUnk_02006020[b] = gUnk_02006020[b] + a;
-            if (gUnk_02006020[b] > 99999999)
-                gUnk_02006020[b] = 99999999;
+        if (gPlayerScores[b] < 99999999) {
+            gPlayerScores[b] = gPlayerScores[b] + a;
+            if (gPlayerScores[b] > 99999999)
+                gPlayerScores[b] = 99999999;
         }
-        if (gLocalPlayer == b && gUnk_0200B028 == 0 && gUnk_02006030 == 0)
-            sub_0800ad68(gUnk_02006020[b]);
+        if (gLocalPlayer == b && gHudShowsHpBar == 0 && gHudShowsClock == 0)
+            HudDrawScore(gPlayerScores[b]);
     }
 }
 
-void sub_0800a0ac(s32 a, u32 b)
+void AddPlayerScoreNoHud(s32 a, u32 b)
 {
     if (b < 4) {
-        if (gUnk_02006020[b] < 99999999) {
-            gUnk_02006020[b] = gUnk_02006020[b] + a;
-            if (gUnk_02006020[b] > 99999999)
-                gUnk_02006020[b] = 99999999;
+        if (gPlayerScores[b] < 99999999) {
+            gPlayerScores[b] = gPlayerScores[b] + a;
+            if (gPlayerScores[b] > 99999999)
+                gPlayerScores[b] = 99999999;
         }
     }
 }
 
 void sub_0800a0dc(s32 a, s32 b)
 {
-    if (b == gLocalPlayer && gUnk_02006014 == 1) {
+    if (b == gLocalPlayer && gHudMode == 1) {
         if (a == 0) {
             sub_08008ebc();
-            gUnk_020061D4 = a;
+            gHudAbilityPanelState = a;
             gUnk_0200801C = a;
-            sub_0800b0a4(0);
+            HudDrawAbilityPanel(0);
         } else {
             sub_08008ed4(a);
             sub_0800a19c(b);

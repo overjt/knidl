@@ -15,7 +15,7 @@
  *       gUnk_03001F30 is 1, and ends with sub_080b8070(gCurSaveSlot).
  *   sub_080c62f0 / sub_080c6388   one scene each: preset and load a room
  *       (sub_08024610(0, 0) / sub_08024654(632, 248)), palette set 15 / 16
- *       (sub_08008c4c), DISPCNT BG bits 0x1D00 / 0x1C00, spawn the scene's
+ *       (LoadBgLayout), DISPCNT BG bits 0x1D00 / 0x1C00, spawn the scene's
  *       task and run frames (RunLinkFrame) until it clears gEndingSceneActive,
  *       then tear the level down (sub_08027178).
  *   sub_080c6354 / sub_080c63ec   spawn M38's task type #100 / #101,
@@ -44,7 +44,7 @@ void RunLinkFrame(void);
 void RunLinkFramesUntilFadeDone(void);
 void StopAllSound(void);
 s32 TaskCreateFrom(u32 type, s32 idx);                         /* spawn a task */
-void sub_08008c4c(s32 a0);
+void LoadBgLayout(s32 a0);
 void sub_08024610(s32 x, s32 y);
 void sub_08024654(s32 x, s32 y);
 void sub_08027178(void);
@@ -78,7 +78,7 @@ void sub_080c62f0(void)
 {
     gEndingSceneActive = 1;
     sub_08024610(0, 0);
-    sub_08008c4c(15);
+    LoadBgLayout(15);
     gDispCnt &= 0xE0FF;
     gDispCnt |= 0x1D00;
     sub_080c6354();
@@ -106,7 +106,7 @@ void sub_080c6388(void)
 {
     gEndingSceneActive = 1;
     sub_08024654(632, 248);
-    sub_08008c4c(16);
+    LoadBgLayout(16);
     gDispCnt &= 0xE0FF;
     gDispCnt |= 0x1C00;
     sub_080c63ec();

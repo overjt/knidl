@@ -6,9 +6,9 @@
  *
  * Screen/asset loaders: LZ77/Huffman decompression of palettes, tiles and
  * maps into VRAM from the ROM tables at 0x08731980-0x08731BA8.
- * sub_08008c4c(i) loads a palette set and sub_08008c64(i) queues a VRAM
+ * LoadBgLayout(i) loads a palette set and LoadGfxSet(i) queues a VRAM
  * transfer node (both called ROM-wide); sub_08008fc4 loads the pause
- * pictures; sub_08008b8c is the soft-reset prompt. */
+ * pictures; LinkErrorScreen is the soft-reset prompt. */
 
 extern u32 gUnk_02020000[];
 extern u32 gUnk_02028000[];
@@ -75,10 +75,10 @@ void PlaySfx(s32 id);
 void StopAllSound(void);
 void DisableSerial(void);
 void StopHBlankScroll(void);
-void sub_08008c4c(s32 a0);
-void sub_08008c64(u16 a0);
+void LoadBgLayout(s32 a0);
+void LoadGfxSet(u16 a0);
 
-void sub_08008b8c(void)
+void LinkErrorScreen(void)
 {
     ResetFadeAndBlend();
     ResetTasksAndOam();
@@ -88,8 +88,8 @@ void sub_08008b8c(void)
     gFrameEndCallback = 0;
     gBrightness = 31;
     RunFrameNoTasks();
-    sub_08008c4c(3);
-    sub_08008c64(65);
+    LoadBgLayout(3);
+    LoadGfxSet(65);
     gBg3ScrollX = gBg3ScrollY = 0;
     gDispCnt &= 0xE0FF;
     gDispCnt |= 0x800;
@@ -112,12 +112,12 @@ void sub_08008b8c(void)
     SoftReset(0x1C);
 }
 
-void sub_08008c4c(s32 a0)
+void LoadBgLayout(s32 a0)
 {
     sub_08002e38(gUnk_08730884[a0]);
 }
 
-void sub_08008c64(u16 a0)
+void LoadGfxSet(u16 a0)
 {
     RequestCopyList(gUnk_0873185C[a0]);
 }

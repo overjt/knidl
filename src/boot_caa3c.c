@@ -5,7 +5,7 @@
 /* boot_caa3c.c (0x080CAA3C-0x080CAAB7, issue #100).
  *
  * The boot logo's 115 script-driven sprite objects (gUnk_02030000[],
- * struct M38LogoObj): BootLogoInitObjects, which M02's logo sequence sub_08009200
+ * struct M38LogoObj): BootLogoInitObjects, which M02's logo sequence PlayBootLogo
  * calls once, seeds them from the s16 stream gUnk_08757440 (script id, wait,
  * x, y per object; the draw layer follows y) and clears their saved script
  * cursors gUnk_0201BFD0[].  Their per-frame interpreter BootLogoUpdateObjects

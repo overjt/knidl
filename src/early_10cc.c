@@ -44,7 +44,7 @@ extern void (*gUnk_03000FA4)(void);
 extern vu16 gVBlankCount;
 extern vu16 gUnk_03001008;
 extern void (*gUnk_03000F90)(void);
-extern void (*gUnk_030004A0)(void);
+extern void (*gBlockAnimHook)(void);
 extern void (*gUnk_03000AF4)(void);
 
 struct MusicPlayerInfo;
@@ -103,8 +103,8 @@ void VBlankIntr(void)
         FlushDisplayRegs();
         CopyOamAndPalette();
         ProcessCopyQueue();
-        if (gUnk_030004A0 != 0)
-            gUnk_030004A0();
+        if (gBlockAnimHook != 0)
+            gBlockAnimHook();
     }
 
     if (gSoundDriverOn != 0)

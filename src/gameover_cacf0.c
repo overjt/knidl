@@ -32,7 +32,7 @@ extern u16 gUnk_03002150;           /* previous game state */
 extern u16 gGameState;           /* game state (AgbMain dispatch) */
 extern u16 gLocalPlayer;           /* this player's index */
 extern u16 gPlayerCount;           /* number of players */
-extern s32 gUnk_02006020[];         /* score per player */
+extern s32 gPlayerScores[];         /* score per player */
 extern u16 gUnk_02006068[];         /* clock (four fields) */
 extern vu16 gPlayerPressedKeys[];        /* keys pressed per player */
 extern u32 gUnk_02020000[];         /* decompression buffer */
@@ -68,9 +68,9 @@ void RunLinkFramesUntilFadeDone(void);
 s32 PlayBgm(s32 songId);
 s32 PlaySfx(s32 id);                                    /* play a sound effect */
 s32 TaskCreateFrom(u32 type, s32 idx);                         /* spawn a task */
-void sub_08008c4c(s32 a0);                                   /* load palette set */
-void sub_08008c64(u16 a0);                                   /* load screen graphics */
-void sub_0800b514(void);
+void LoadBgLayout(s32 a0);                                   /* load palette set */
+void LoadGfxSet(u16 a0);                                   /* load screen graphics */
+void ResetPlayerRecords(void);
 void sub_08022c3c(void);
 void DrawScoreToBgMap(s32 v, s32 x, s32 y);
 void DrawClockToBgMap(u16 *time, s32 x, s32 y);
@@ -106,7 +106,7 @@ void GameOverMain(void)
     RunLinkFramesUntilFadeDone();
     if (gGameState == 5) {
         gUnk_02007FC0 = 1;
-        sub_0800b514();
+        ResetPlayerRecords();
         sub_08022c3c();
         if (gStageRequest != 1)
             gGameState = 6;
@@ -125,10 +125,10 @@ void sub_080cad8c(void)
     gBg1ScrollX = gBg1ScrollY = 0;
     gBg2ScrollX = gBg3ScrollX = 240 << 16;
     gBg2ScrollY = gBg3ScrollY = 0;
-    sub_08008c4c(6);
-    sub_08008c64(4);
-    sub_08008c64(51);
-    DrawScoreToBgMap(gUnk_02006020[gLocalPlayer], 22, 18);
+    LoadBgLayout(6);
+    LoadGfxSet(4);
+    LoadGfxSet(51);
+    DrawScoreToBgMap(gPlayerScores[gLocalPlayer], 22, 18);
     gDispCnt &= 0xE0FF;
     gDispCnt |= 0x1D00;
     sub_080cb21c();
@@ -175,9 +175,9 @@ void sub_080caeec(void)
     gBg1ScrollX = gBg1ScrollY = 0;
     gBg2ScrollX = gBg3ScrollX = 240 << 16;
     gBg2ScrollY = gBg3ScrollY = 0;
-    sub_08008c4c(6);
-    sub_08008c64(4);
-    sub_08008c64(51);
+    LoadBgLayout(6);
+    LoadGfxSet(4);
+    LoadGfxSet(51);
     sub_08002358();
     sub_08002378();
     sub_080022fc();
@@ -228,9 +228,9 @@ void sub_080cb030(s32 n)
 void sub_080cb058(void)
 {
     gBg3ScrollX = gBg3ScrollY = 0;
-    sub_08008c4c(6);
-    sub_08008c64(4);
-    sub_08008c64(52);
+    LoadBgLayout(6);
+    LoadGfxSet(4);
+    LoadGfxSet(52);
     sub_08002358();
     sub_08002668();
     sub_080022fc();

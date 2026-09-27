@@ -1058,8 +1058,8 @@ gUnk_085A5654:
 	.global	gUnk_085A6714
 gUnk_085A6714:
 	.incbin	"baserom.gba", 0x5A6714, 0x820
-	.global	gUnk_085A6F34
-gUnk_085A6F34:
+	.global	gHudDigitTiles
+gHudDigitTiles:
 	.incbin	"baserom.gba", 0x5A6F34, 0x28
 	.global	gUnk_085A6F5C
 gUnk_085A6F5C:
@@ -1073,8 +1073,8 @@ gUnk_085A6F64:
 	.global	gUnk_085A6F68
 gUnk_085A6F68:
 	.incbin	"baserom.gba", 0x5A6F68, 0x3C
-	.global	gUnk_085A6FA4
-gUnk_085A6FA4:
+	.global	gHudPlayerIconTiles
+gHudPlayerIconTiles:
 	.incbin	"baserom.gba", 0x5A6FA4, 0x20
 	.global	gUnk_085A6FC4
 gUnk_085A6FC4:

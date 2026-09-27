@@ -17,7 +17,7 @@ void TaskMove(void);
 void TaskSleepForever(void);
 void TaskSetMotion(s32 a, s32 b, s32 c, s32 d, s32 e, s32 f);
 void TaskStop(void);
-void sub_08010358(s32 a, s32 b);
+void CreateCutsceneActor(s32 a, s32 b);
 void sub_08018464(void);
 void sub_08018b84(void);
 void sub_0801a1ec(void);
@@ -424,7 +424,7 @@ void sub_08017668(void)
         TaskYieldTrampoline(2);
         gCurTask->unk6C++;
     } while ((s16)gCurTask->unk6C <= 4);
-    sub_08010358(57, 32);
+    CreateCutsceneActor(57, 32);
     TaskSetMotion(0xFFFEB000, 0, 0x5A5A5A5A, 0xFFFCB000, 222 << 7, 0x5A5A5A5A);
     gCurTask->unk3C = 10;
     TaskYieldTrampoline(10);
@@ -642,7 +642,7 @@ void sub_08018498(void)
     gCurTask->unk4C = 184 << 14;
     gCurTask->unk50 = 0xFFDA0000;
     gCurTask->unk28 = 0;
-    sub_08010358(53, 32);
+    CreateCutsceneActor(53, 32);
     gCurTask->unk3E &= 0x7FFF;
     TaskStop();
     gCurTask->unk3C = 0xFFFF;
@@ -856,7 +856,7 @@ void sub_08018498(void)
     TaskYieldTrampoline(4);
     gCurTask->unk3C = 20;
     TaskYieldTrampoline(16);
-    sub_08010358(52, 32);
+    CreateCutsceneActor(52, 32);
     gUnk_02007D00[0] = PlaySfx(0x21B);
     gCurTask->unk6C = 0;
     do

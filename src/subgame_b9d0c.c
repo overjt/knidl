@@ -114,9 +114,9 @@ void DisableSerial(void);
 void LinkMain1(void *cmd, void *send, void *recv);
 u32 ConnectLink(void);
 u32 IsLinkError(void);
-void sub_08008b8c(void);
-void sub_08008c4c(u32 a);
-void sub_08008c64(u16 a);
+void LinkErrorScreen(void);
+void LoadBgLayout(u32 a);
+void LoadGfxSet(u16 a);
 void sub_08008d10(u32 a, u32 b);
 void sub_080c1f88(void);
 void sub_080c59d8(s32 a, s32 b);
@@ -207,10 +207,10 @@ void sub_080b9e50(s32 a0)
 {
     s32 m = gUnk_02007FCC;
 
-    sub_08008c4c(gUnk_087562A8[m][a0]);
+    LoadBgLayout(gUnk_087562A8[m][a0]);
     m = m * 2 + a0;
     if (gUnk_087562C0[m] != 0)
-        sub_08008c64(gUnk_087562C0[m]);
+        LoadGfxSet(gUnk_087562C0[m]);
     sub_08008d10(gUnk_02007FCC, a0);
     gSubGamePhase = a0;
 }
@@ -389,9 +389,9 @@ void sub_080ba150(void)
         RunFrame();
         LinkMain1(gShouldAdvanceLinkState, gSendCmd, gRecvCmds);
         if (IsLinkError() != 0)
-            sub_08008b8c();
+            LinkErrorScreen();
         if (old == gSerialIntrCount && ++stall > 30)
-            sub_08008b8c();
+            LinkErrorScreen();
         for (i = 0; i <= 3; i++)
         {
             switch (gRecvCmds[i])

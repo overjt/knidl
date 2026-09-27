@@ -13,7 +13,7 @@
 
 
 /* RAM cells and ROM tables */
-extern s16 gUnk_02005588[];
+extern s16 gPlayerHealth[];
 extern s16 gViewRect[];
 extern s16 gSpriteCameraX;
 extern s16 gSpriteCameraY;
@@ -241,7 +241,7 @@ void sub_080710fc(void)
 
 void sub_080711d0(void)
 {
-    if (gUnk_0300244C != 0 && gUnk_02005588[gCurTask->unk7E] <= 0)
+    if (gUnk_0300244C != 0 && gPlayerHealth[gCurTask->unk7E] <= 0)
         return;
     if (gUnk_020061E0 == 0)
     {

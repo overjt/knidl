@@ -8,7 +8,7 @@
  * loop (screen 0: three save slots, A/START loads or creates the slot,
  * B returns to the title screen); sub_0800c20c opens the file menu
  * (screen 1) and sub_0800c34c is its input loop over four entries
- * (gUnk_020055E4: start, the mode list, the sound test, erase);
+ * (gFileMenuCursor: start, the mode list, the sound test, erase);
  * sub_0800c558 and sub_0800c610 run the two-choice screens 2/3 that
  * lead into a game, and sub_0800c8a0 the two-step erase confirmation
  * that clears the slot with EraseSaveSlot. */
@@ -35,14 +35,14 @@ struct SaveSlot
 };
 
 extern s8 gUnk_02004B44;
-extern u32 gUnk_02004B70;
-extern s8 gUnk_020055E4;
-extern s8 gUnk_020060D0;
-extern s8 gUnk_02006180;
-extern u8 gUnk_0200618C;
-extern s8 gUnk_02007D34;
-extern s8 gUnk_02007E88;
-extern s8 gUnk_0200B074;
+extern u32 gMenuBufferedKeys;
+extern s8 gFileMenuCursor;
+extern s8 gMenuScreen;
+extern s8 gMenuTransitionTimer;
+extern u8 gEraseConfirmCount;
+extern s8 gMenuChoiceCursor;
+extern s8 gPrevMenuScreen;
+extern s8 gMenuCursor;
 extern struct SaveSlot gSaveSlots[];
 extern vu16 gPressedKeys;
 extern vu16 gRepeatedKeys;
@@ -63,8 +63,8 @@ void RunFrames(s32 count);
 void RunFramesUntilFadeDone(void);
 s32 PlaySfx(s32 id);
 s32 TaskCreateFrom(u32 type, s32 idx);
-void sub_08008c4c(s32 a0);
-void sub_08008c64(u16 a0);
+void LoadBgLayout(s32 a0);
+void LoadGfxSet(u16 a0);
 void sub_0800bcf0(void);
 void sub_0800bda4(s32 slot);
 void sub_0800bf6c(s32 slot, s32 value, s32 mode);
@@ -72,10 +72,10 @@ void sub_0800ca10(void);
 void sub_0800d280(void);
 void sub_0800da9c(s32 mode);
 void sub_0800e28c(void);
-void sub_0800fd24(s32 speed, s32 dist, s32 bg);
-s32 sub_0800fe54(s32 speed);
-void sub_0800fe94(void);
-void sub_08010020(s32 a, s32 b, s32 c, s32 d);
+void BgScrollStartX(s32 speed, s32 dist, s32 bg);
+s32 BgScrollStartBg3Slide(s32 speed);
+void BgScrollFinish(void);
+void SetBlend(s32 a, s32 b, s32 c, s32 d);
 void StopHBlankScroll(void);
 void StartHBlankScroll(s32 a);
 void sub_080b798c(s32 a);
@@ -88,7 +88,7 @@ void sub_0800c20c(void);
 void sub_0800c09c(void)
 {
     vu16 *keys = &gPressedKeys;
-    s8 *state = &gUnk_020060D0;
+    s8 *state = &gMenuScreen;
     s32 i;
     s32 done;
 
@@ -97,7 +97,7 @@ void sub_0800c09c(void)
         if (*keys & 9)
         {
             PlaySfx(102);
-            gCurSaveSlot = gUnk_0200B074;
+            gCurSaveSlot = gMenuCursor;
             if (gSaveSlots[gCurSaveSlot].unk04 == 0x99999999)
                 sub_080b798c(gCurSaveSlot);
             done = 0;
@@ -118,16 +118,16 @@ void sub_0800c09c(void)
             }
             if (done)
             {
-                sub_08008c4c(2);
+                LoadBgLayout(2);
                 sub_0800bcf0();
-                sub_08008c64(19);
+                LoadGfxSet(19);
                 gDispCnt &= 0xE0FF;
                 gDispCnt |= 0x1C00;
                 BeginFastFadeInFromWhite();
                 RunFramesUntilFadeDone();
             }
-            sub_0800fe54(0x80000);
-            gUnk_02007E88 = *state;
+            BgScrollStartBg3Slide(0x80000);
+            gPrevMenuScreen = *state;
             *state = 1;
             sub_0800c20c();
             return;
@@ -143,14 +143,14 @@ void sub_0800c09c(void)
         if (gRepeatedKeys & 0x40)
         {
             PlaySfx(101);
-            if (--gUnk_0200B074 < 0)
-                gUnk_0200B074 = 2;
+            if (--gMenuCursor < 0)
+                gMenuCursor = 2;
         }
         else if (gRepeatedKeys & 0x80)
         {
             PlaySfx(101);
-            if (++gUnk_0200B074 > 2)
-                gUnk_0200B074 = 0;
+            if (++gMenuCursor > 2)
+                gMenuCursor = 0;
         }
         RunFrame();
     }
@@ -158,96 +158,96 @@ void sub_0800c09c(void)
 
 void sub_0800c20c(void)
 {
-    gUnk_0200618C = 0;
+    gEraseConfirmCount = 0;
     TaskCreateFrom(241, 32);
     sub_0800e28c();
-    sub_08008c64(21);
+    LoadGfxSet(21);
     sub_0800bda4(gCurSaveSlot);
     sub_0800bf6c(gCurSaveSlot, gSaveSlots[gCurSaveSlot].unk12[0], 1);
-    sub_08010020(66, 12, 13, 3);
-    switch (gUnk_02007E88)
+    SetBlend(66, 12, 13, 3);
+    switch (gPrevMenuScreen)
     {
     case 0:
-        gUnk_020055E4 = 0;
-        sub_08008c64(25);
+        gFileMenuCursor = 0;
+        LoadGfxSet(25);
         gDispCnt &= 0xE0FF;
         gDispCnt |= 0x1E00;
         StartHBlankScroll(0);
         RunFrames(8);
-        gUnk_02006180 = 9;
+        gMenuTransitionTimer = 9;
         break;
     case 4:
-        gUnk_020055E4 = 1;
-        sub_08008c64(25);
+        gFileMenuCursor = 1;
+        LoadGfxSet(25);
         gDispCnt &= 0xE0FF;
         gDispCnt |= 0x1F00;
         TaskCreateFrom(242, 32);
         StartHBlankScroll(3);
-        gUnk_02006180 = 17;
+        gMenuTransitionTimer = 17;
         break;
     case 8:
-        gUnk_020055E4 = 0;
-        sub_08008c64(26);
-        gUnk_02006180 = 17;
+        gFileMenuCursor = 0;
+        LoadGfxSet(26);
+        gMenuTransitionTimer = 17;
         break;
     case 7:
-        gUnk_020055E4 = 2;
-        sub_08008c64(25);
+        gFileMenuCursor = 2;
+        LoadGfxSet(25);
         gDispCnt &= 0xE0FF;
         gDispCnt |= 0x1A00;
         StartHBlankScroll(0);
-        gUnk_02006180 = 17;
+        gMenuTransitionTimer = 17;
         break;
     }
 }
 
 void sub_0800c34c(void)
 {
-    gUnk_02004B70 = 0;
+    gMenuBufferedKeys = 0;
     while (1)
     {
-        if (gUnk_02006180 != 0)
+        if (gMenuTransitionTimer != 0)
         {
-            if (--gUnk_02006180 != 0 && (gPressedKeys & 11))
+            if (--gMenuTransitionTimer != 0 && (gPressedKeys & 11))
             {
-                gUnk_02006180 = 0;
+                gMenuTransitionTimer = 0;
                 StopHBlankScroll();
-                sub_0800fe94();
-                gUnk_02004B70 = gPressedKeys;
+                BgScrollFinish();
+                gMenuBufferedKeys = gPressedKeys;
             }
-            if (gUnk_02006180 == 0)
+            if (gMenuTransitionTimer == 0)
             {
-                if (gUnk_02007E88 != 4)
+                if (gPrevMenuScreen != 4)
                     TaskCreateFrom(242, 32);
-                if (gUnk_02004B70 != 0)
+                if (gMenuBufferedKeys != 0)
                     RunFrames(4);
             }
         }
-        if ((gPressedKeys & 9) || (gUnk_02004B70 & 9))
+        if ((gPressedKeys & 9) || (gMenuBufferedKeys & 9))
         {
             PlaySfx(102);
-            switch (gUnk_020055E4)
+            switch (gFileMenuCursor)
             {
             case 0:
                 gUnk_03001F30 = 0;
                 gExtraMode = 0;
                 if (gSaveSlots[gCurSaveSlot].unk10 & 4)
                 {
-                    gUnk_020060D0 = 2;
-                    gUnk_02007D34 = 0;
+                    gMenuScreen = 2;
+                    gMenuChoiceCursor = 0;
                     TaskCreateFrom(245, 32);
                     RunFrames(10);
                 }
                 else
                 {
-                    gUnk_020060D0 = 3;
+                    gMenuScreen = 3;
                     gUnk_02004B44 = 0;
                     TaskCreateFrom(246, 32);
                     RunFrames(10);
                 }
                 break;
             case 3:
-                gUnk_020060D0 = 6;
+                gMenuScreen = 6;
                 break;
             case 1:
                 sub_0800ca10();
@@ -258,33 +258,33 @@ void sub_0800c34c(void)
             }
             return;
         }
-        if ((gPressedKeys & 2) || (gUnk_02004B70 & 2))
+        if ((gPressedKeys & 2) || (gMenuBufferedKeys & 2))
         {
             PlaySfx(215);
-            gUnk_020060D0 = 0;
+            gMenuScreen = 0;
             sub_0800bcf0();
             sub_0800da9c(1);
             gDispCnt &= 0xE0FF;
             gDispCnt |= 0x1E00;
             StartHBlankScroll(1);
-            sub_08008c64(25);
-            sub_0800fe54(0xFFF80000);
+            LoadGfxSet(25);
+            BgScrollStartBg3Slide(0xFFF80000);
             RunFrames(18);
             return;
         }
-        if (gUnk_02006180 == 0)
+        if (gMenuTransitionTimer == 0)
         {
             if (gRepeatedKeys & 0x40)
             {
                 PlaySfx(101);
-                if (--gUnk_020055E4 < 0)
-                    gUnk_020055E4 = 3;
+                if (--gFileMenuCursor < 0)
+                    gFileMenuCursor = 3;
             }
             else if (gRepeatedKeys & 0x80)
             {
                 PlaySfx(101);
-                if (++gUnk_020055E4 > 3)
-                    gUnk_020055E4 = 0;
+                if (++gFileMenuCursor > 3)
+                    gFileMenuCursor = 0;
             }
         }
         RunFrame();
@@ -294,7 +294,7 @@ void sub_0800c34c(void)
 void sub_0800c558(void)
 {
     vu16 *keys = &gPressedKeys;
-    s8 *state = &gUnk_020060D0;
+    s8 *state = &gMenuScreen;
 
     while (!(*keys & 9))
     {
@@ -305,20 +305,20 @@ void sub_0800c558(void)
             RunFrames(10);
             return;
         }
-        if ((gHeldKeys & 0x80) && gUnk_02007D34 == 0)
+        if ((gHeldKeys & 0x80) && gMenuChoiceCursor == 0)
         {
             PlaySfx(101);
-            gUnk_02007D34 = 1;
+            gMenuChoiceCursor = 1;
         }
-        else if ((gHeldKeys & 0x40) && gUnk_02007D34 == 1)
+        else if ((gHeldKeys & 0x40) && gMenuChoiceCursor == 1)
         {
             PlaySfx(101);
-            gUnk_02007D34 = 0;
+            gMenuChoiceCursor = 0;
         }
         RunFrame();
     }
     PlaySfx(102);
-    gExtraMode = gUnk_02007D34;
+    gExtraMode = gMenuChoiceCursor;
     *state = 3;
     gUnk_02004B44 = 0;
     TaskCreateFrom(246, 32);
@@ -327,79 +327,79 @@ void sub_0800c558(void)
 
 void sub_0800c610(void)
 {
-    gUnk_02004B70 = 0;
+    gMenuBufferedKeys = 0;
     while (1)
     {
-        if (gUnk_02006180 != 0)
+        if (gMenuTransitionTimer != 0)
         {
-            if (--gUnk_02006180 != 0 && (gPressedKeys & 11))
+            if (--gMenuTransitionTimer != 0 && (gPressedKeys & 11))
             {
-                gUnk_02006180 = 0;
+                gMenuTransitionTimer = 0;
                 StopHBlankScroll();
-                sub_0800fe94();
-                gUnk_02004B70 = gPressedKeys;
+                BgScrollFinish();
+                gMenuBufferedKeys = gPressedKeys;
             }
-            if (gUnk_02006180 == 0)
+            if (gMenuTransitionTimer == 0)
             {
                 gDispCnt &= 0xE0FF;
                 gDispCnt |= 0x1F00;
                 TaskCreateFrom(242, 32);
                 if (gSaveSlots[gCurSaveSlot].unk10 & 4)
                 {
-                    gUnk_02007D34 = gExtraMode;
+                    gMenuChoiceCursor = gExtraMode;
                     TaskCreateFrom(245, 32);
                 }
                 gUnk_02004B44 = 1;
                 TaskCreateFrom(246, 32);
-                if (gUnk_02004B70 != 0)
+                if (gMenuBufferedKeys != 0)
                     RunFrames(1);
             }
         }
-        if ((gPressedKeys & 9) || (gUnk_02004B70 & 9))
+        if ((gPressedKeys & 9) || (gMenuBufferedKeys & 9))
         {
             PlaySfx(102);
             if (gUnk_02004B44 == 0)
             {
-                gUnk_020060D0 = 9;
+                gMenuScreen = 9;
                 gUnk_03001F30 = 0;
                 gGameState = 5;
             }
             else
             {
-                gUnk_02007E88 = gUnk_020060D0;
-                gUnk_020060D0 = 8;
-                sub_08008c64(36);
+                gPrevMenuScreen = gMenuScreen;
+                gMenuScreen = 8;
+                LoadGfxSet(36);
                 gDispCnt &= 0xE0FF;
                 gDispCnt |= 0x1A00;
                 gBg2ScrollY = gBg3ScrollY = 0;
-                sub_0800fd24(0xFFF00000, 256, 2);
-                sub_0800fd24(0xFFF00000, 256, 3);
+                BgScrollStartX(0xFFF00000, 256, 2);
+                BgScrollStartX(0xFFF00000, 256, 3);
                 TaskCreateFrom(250, 32);
-                sub_08008c64(26);
+                LoadGfxSet(26);
                 StartHBlankScroll(4);
                 RunFrames(16);
-                sub_08008c64(39);
-                sub_08008c64(37);
+                LoadGfxSet(39);
+                LoadGfxSet(37);
                 gDispCnt &= 0xE0FF;
                 gDispCnt |= 0x1E00;
                 TaskCreateFrom(249, 32);
                 RunFrames(8);
-                sub_08008c64(40);
+                LoadGfxSet(40);
                 TaskCreateFrom(251, 32);
             }
             return;
         }
-        if ((gPressedKeys & 2) || (gUnk_02004B70 & 2))
+        if ((gPressedKeys & 2) || (gMenuBufferedKeys & 2))
         {
             PlaySfx(215);
             if (gSaveSlots[gCurSaveSlot].unk10 & 4)
-                gUnk_020060D0 = 2;
+                gMenuScreen = 2;
             else
-                gUnk_020060D0 = 1;
+                gMenuScreen = 1;
             RunFrames(10);
             return;
         }
-        if (gUnk_02006180 == 0)
+        if (gMenuTransitionTimer == 0)
         {
             if ((gHeldKeys & 0x80) && gUnk_02004B44 == 0)
             {
@@ -420,21 +420,21 @@ void sub_0800c8a0(void)
 {
     vu16 *keys;
 
-    gUnk_0200618C = 0;
-    gUnk_02007D34 = 1;
-    sub_08008c64(29);
+    gEraseConfirmCount = 0;
+    gMenuChoiceCursor = 1;
+    LoadGfxSet(29);
     TaskCreateFrom(243, 32);
     RunFrames(10);
     keys = &gPressedKeys;
     while (1)
     {
-        if ((gPressedKeys & 9) && gUnk_02007D34 == 0)
+        if ((gPressedKeys & 9) && gMenuChoiceCursor == 0)
         {
             PlaySfx(102);
-            if (++gUnk_0200618C == 1)
+            if (++gEraseConfirmCount == 1)
             {
-                sub_08008c64(30);
-                gUnk_02007D34 = 1;
+                LoadGfxSet(30);
+                gMenuChoiceCursor = 1;
                 RunFrames(10);
             }
             else
@@ -443,13 +443,13 @@ void sub_0800c8a0(void)
                 RunFrames(10);
                 PlaySfx(268);
                 EraseSaveSlot(gCurSaveSlot);
-                gUnk_020060D0 = 0;
+                gMenuScreen = 0;
                 sub_0800bcf0();
                 gDispCnt &= 0xE0FF;
                 gDispCnt |= 0x1E00;
                 StartHBlankScroll(1);
-                sub_08008c64(25);
-                sub_0800fe54(0xFFF80000);
+                LoadGfxSet(25);
+                BgScrollStartBg3Slide(0xFFF80000);
                 RunFrames(28);
                 sub_0800da9c(1);
                 RunFrames(16);
@@ -462,19 +462,19 @@ void sub_0800c8a0(void)
                 PlaySfx(102);
             else
                 PlaySfx(215);
-            gUnk_020060D0 = 1;
+            gMenuScreen = 1;
             RunFrames(10);
             return;
         }
-        if ((gHeldKeys & 0x20) && gUnk_02007D34 == 1)
+        if ((gHeldKeys & 0x20) && gMenuChoiceCursor == 1)
         {
             PlaySfx(101);
-            gUnk_02007D34 = 0;
+            gMenuChoiceCursor = 0;
         }
-        else if ((gHeldKeys & 0x10) && gUnk_02007D34 == 0)
+        else if ((gHeldKeys & 0x10) && gMenuChoiceCursor == 0)
         {
             PlaySfx(101);
-            gUnk_02007D34 = 1;
+            gMenuChoiceCursor = 1;
         }
         RunFrame();
     }

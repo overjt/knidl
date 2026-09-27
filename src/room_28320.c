@@ -114,7 +114,7 @@ extern u16 gPlayerGroupCenter[2];
 extern s16 gCameraBounds[4];
 extern struct CamRect gPlayerBounds[4];
 
-void sub_08008c64(u16 a0);
+void LoadGfxSet(u16 a0);
 s32 GetCollisionTileAtPixel(u16 x, u16 y);
 void UpdatePlayerCameras(void);
 s32 sub_0802eac8(s32 x, s32 y, s32 a);
@@ -137,7 +137,7 @@ void sub_08028320(void)
     u32 v;
     struct Door *d;
 
-    sub_08008c64(2);
+    LoadGfxSet(2);
     gUnk_0200B034 = -1;
     for (i = 0; i < 32; i++)
     {

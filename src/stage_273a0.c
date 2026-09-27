@@ -112,7 +112,7 @@ void sub_08009e2c(s32 a);
 void sub_0800a0dc(s32 a, s32 b);
 void sub_08028b8c(void);
 void sub_08028e3c(void);
-s32 sub_0802d344(s32 a);
+s32 CreateMapEvent(s32 a);
 
 void sub_080273a0(void)
 {
@@ -183,7 +183,7 @@ void sub_08027548(void)
 
 s32 sub_08027588(void)
 {
-    if (gUnk_0200B078 != 4 || gUnk_02006098[0] != 0 || sub_0802d344(1) == -1)
+    if (gUnk_0200B078 != 4 || gUnk_02006098[0] != 0 || CreateMapEvent(1) == -1)
         return 0;
     gUnk_02006098[0] |= 0x80;
     return 1;
@@ -244,7 +244,7 @@ s32 sub_080275cc(s32 a)
     }
     if (p[0] == a)
         return 0;
-    if (sub_0802d344(4) != -1)
+    if (CreateMapEvent(4) != -1)
     {
         if (gUnk_02006098[0] != 1 && a != 1)
         {

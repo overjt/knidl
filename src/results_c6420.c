@@ -29,11 +29,11 @@ extern u16 gPlayerCount;           /* number of players */
 extern u8 gExtraMode;
 extern u16 gUnk_03002364;
 extern u16 gUnk_02000028;
-extern s32 gUnk_02006020[];         /* score per player */
+extern s32 gPlayerScores[];         /* score per player */
 extern u16 gUnk_02006068[];         /* clock (four fields) */
 extern vu16 gPlayerPressedKeys[];        /* keys pressed per player */
 extern u32 gUnk_02020000[];         /* decompression buffer */
-extern u16 gUnk_085A6F34[2][10];    /* digit tiles, top and bottom rows */
+extern u16 gHudDigitTiles[2][10];    /* digit tiles, top and bottom rows */
 extern u16 gUnk_085A6F5C[];         /* the clock's colon tiles */
 extern s8 gDigits[];
 extern vu16 gPressedKeys;
@@ -63,8 +63,8 @@ s32 PlayBgm(s32 songId);
 s32 PlaySfx(s32 id);                                    /* play a sound effect */
 void FadeOutBgm(s32 speed);
 void SetBgmVolume(u16 volume);
-void sub_08008c4c(s32 a0);                                   /* load palette set */
-void sub_08008c64(u16 a0);                                   /* load screen graphics */
+void LoadBgLayout(s32 a0);                                   /* load palette set */
+void LoadGfxSet(u16 a0);                                   /* load screen graphics */
 void sub_080c6600(void);
 void DrawScoreToBgMap(s32 v, s32 x, s32 y);
 void DrawClockToBgMap(u16 *time, s32 x, s32 y);
@@ -78,24 +78,24 @@ void sub_080c6c3c(u16 *src, s32 x, s32 y, s32 n);
 void sub_080c6420(void)
 {
     if (gUnk_03002150 != 20) {
-        sub_08008c64(4);
+        LoadGfxSet(4);
         if (gUnk_03001F30 == 0) {
             if (gExtraMode == 0)
-                sub_08008c64(56);
+                LoadGfxSet(56);
             else
-                sub_08008c64(58);
-            DrawScoreToBgMap(gUnk_02006020[gUnk_02000028], 22, 0);
+                LoadGfxSet(58);
+            DrawScoreToBgMap(gPlayerScores[gUnk_02000028], 22, 0);
         } else {
-            sub_08008c64(55);
+            LoadGfxSet(55);
             DrawClockToBgMap(gUnk_02006068, 22, 18);
         }
     } else {
-        sub_08008c64(54);
+        LoadGfxSet(54);
         sub_080c6600();
     }
     ResetFadeAndBlend();
     ResetTasksAndOam();
-    sub_08008c4c(7);
+    LoadBgLayout(7);
     gBg0ScrollX = gBg0ScrollY = 0;
     gBg2ScrollX = gBg2ScrollY = 0;
     gBg3ScrollX = gBg3ScrollY = 0;
@@ -139,7 +139,7 @@ void sub_080c6420(void)
    seconds in a second tile set). */
 void sub_080c6600(void)
 {
-    sub_08008c64(53);
+    LoadGfxSet(53);
     IntToDigits(gUnk_02006068[3]);
     RequestCopy(1, (u32)gUnk_02020000 + (gDigits[1] << 5), 0x0600AEA0, 32);
     RequestCopy(1, (u32)gUnk_02020000 + ((gDigits[1] + 16) << 5), 0x0600B0A0, 32);
@@ -165,11 +165,11 @@ void sub_080c6750(void)
     s32 i;
 
     ResetFadeAndBlend();
-    sub_08008c4c(7);
+    LoadBgLayout(7);
     if (gExtraMode == 0)
-        sub_08008c64(57);
+        LoadGfxSet(57);
     else
-        sub_08008c64(59);
+        LoadGfxSet(59);
     gBg3ScrollX = gBg3ScrollY = 0;
     sub_08002358();
     sub_08002378();
@@ -202,11 +202,11 @@ void sub_080c680c(s32 slot)
     ResetFadeAndBlend();
     x = gBg3ScrollX;
     y = gBg3ScrollY;
-    sub_08008c4c(7);
+    LoadBgLayout(7);
     if (slot == 0)
-        sub_08008c64(57);
+        LoadGfxSet(57);
     else
-        sub_08008c64(59);
+        LoadGfxSet(59);
     gBg3ScrollX = gBg3ScrollY = 0;
     gDispCnt &= 0xE0FF;
     gDispCnt |= 0x800;
@@ -235,8 +235,8 @@ void DrawScoreToBgMap(s32 v, s32 x, s32 y)
             d++;
         }
         v += 10000000;
-        sub_080c6c3c(&gUnk_085A6F34[0][d], x, y, 1);
-        sub_080c6c3c(&gUnk_085A6F34[1][d], x, y + 1, 1);
+        sub_080c6c3c(&gHudDigitTiles[0][d], x, y, 1);
+        sub_080c6c3c(&gHudDigitTiles[1][d], x, y + 1, 1);
 
         d = -1;
         while (v >= 0) {
@@ -244,8 +244,8 @@ void DrawScoreToBgMap(s32 v, s32 x, s32 y)
             d++;
         }
         v += 1000000;
-        sub_080c6c3c(&gUnk_085A6F34[0][d], x + 1, y, 1);
-        sub_080c6c3c(&gUnk_085A6F34[1][d], x + 1, y + 1, 1);
+        sub_080c6c3c(&gHudDigitTiles[0][d], x + 1, y, 1);
+        sub_080c6c3c(&gHudDigitTiles[1][d], x + 1, y + 1, 1);
 
         d = -1;
         while (v >= 0) {
@@ -253,8 +253,8 @@ void DrawScoreToBgMap(s32 v, s32 x, s32 y)
             d++;
         }
         v += 100000;
-        sub_080c6c3c(&gUnk_085A6F34[0][d], x + 2, y, 1);
-        sub_080c6c3c(&gUnk_085A6F34[1][d], x + 2, y + 1, 1);
+        sub_080c6c3c(&gHudDigitTiles[0][d], x + 2, y, 1);
+        sub_080c6c3c(&gHudDigitTiles[1][d], x + 2, y + 1, 1);
 
         d = -1;
         while (v >= 0) {
@@ -262,8 +262,8 @@ void DrawScoreToBgMap(s32 v, s32 x, s32 y)
             d++;
         }
         v += 10000;
-        sub_080c6c3c(&gUnk_085A6F34[0][d], x + 3, y, 1);
-        sub_080c6c3c(&gUnk_085A6F34[1][d], x + 3, y + 1, 1);
+        sub_080c6c3c(&gHudDigitTiles[0][d], x + 3, y, 1);
+        sub_080c6c3c(&gHudDigitTiles[1][d], x + 3, y + 1, 1);
 
         d = -1;
         while (v >= 0) {
@@ -271,8 +271,8 @@ void DrawScoreToBgMap(s32 v, s32 x, s32 y)
             d++;
         }
         v += 1000;
-        sub_080c6c3c(&gUnk_085A6F34[0][d], x + 4, y, 1);
-        sub_080c6c3c(&gUnk_085A6F34[1][d], x + 4, y + 1, 1);
+        sub_080c6c3c(&gHudDigitTiles[0][d], x + 4, y, 1);
+        sub_080c6c3c(&gHudDigitTiles[1][d], x + 4, y + 1, 1);
 
         d = -1;
         while (v >= 0) {
@@ -280,8 +280,8 @@ void DrawScoreToBgMap(s32 v, s32 x, s32 y)
             d++;
         }
         v += 100;
-        sub_080c6c3c(&gUnk_085A6F34[0][d], x + 5, y, 1);
-        sub_080c6c3c(&gUnk_085A6F34[1][d], x + 5, y + 1, 1);
+        sub_080c6c3c(&gHudDigitTiles[0][d], x + 5, y, 1);
+        sub_080c6c3c(&gHudDigitTiles[1][d], x + 5, y + 1, 1);
 
         d = -1;
         while (v >= 0) {
@@ -289,11 +289,11 @@ void DrawScoreToBgMap(s32 v, s32 x, s32 y)
             d++;
         }
         v += 10;
-        sub_080c6c3c(&gUnk_085A6F34[0][d], x + 6, y, 1);
-        sub_080c6c3c(&gUnk_085A6F34[1][d], x + 6, y + 1, 1);
+        sub_080c6c3c(&gHudDigitTiles[0][d], x + 6, y, 1);
+        sub_080c6c3c(&gHudDigitTiles[1][d], x + 6, y + 1, 1);
 
-        sub_080c6c3c(&gUnk_085A6F34[0][v], x + 7, y, 1);
-        sub_080c6c3c(&gUnk_085A6F34[1][v], x + 7, y + 1, 1);
+        sub_080c6c3c(&gHudDigitTiles[0][v], x + 7, y, 1);
+        sub_080c6c3c(&gHudDigitTiles[1][v], x + 7, y + 1, 1);
     }
 }
 
@@ -311,10 +311,10 @@ void DrawClockToBgMap(u16 *time, s32 x, s32 y)
         d++;
     }
     v += 10;
-    sub_080c6c3c(&gUnk_085A6F34[0][d], x, y, 1);
-    sub_080c6c3c(&gUnk_085A6F34[1][d], x, y + 1, 1);
-    sub_080c6c3c(&gUnk_085A6F34[0][v], x + 1, y, 1);
-    sub_080c6c3c(&gUnk_085A6F34[1][v], x + 1, y + 1, 1);
+    sub_080c6c3c(&gHudDigitTiles[0][d], x, y, 1);
+    sub_080c6c3c(&gHudDigitTiles[1][d], x, y + 1, 1);
+    sub_080c6c3c(&gHudDigitTiles[0][v], x + 1, y, 1);
+    sub_080c6c3c(&gHudDigitTiles[1][v], x + 1, y + 1, 1);
     sub_080c6c3c(gUnk_085A6F5C, x + 2, y, 1);
     sub_080c6c3c(gUnk_085A6F5C + 1, x + 2, y + 1, 1);
 
@@ -325,10 +325,10 @@ void DrawClockToBgMap(u16 *time, s32 x, s32 y)
         d++;
     }
     v += 10;
-    sub_080c6c3c(&gUnk_085A6F34[0][d], x + 3, y, 1);
-    sub_080c6c3c(&gUnk_085A6F34[1][d], x + 3, y + 1, 1);
-    sub_080c6c3c(&gUnk_085A6F34[0][v], x + 4, y, 1);
-    sub_080c6c3c(&gUnk_085A6F34[1][v], x + 4, y + 1, 1);
+    sub_080c6c3c(&gHudDigitTiles[0][d], x + 3, y, 1);
+    sub_080c6c3c(&gHudDigitTiles[1][d], x + 3, y + 1, 1);
+    sub_080c6c3c(&gHudDigitTiles[0][v], x + 4, y, 1);
+    sub_080c6c3c(&gHudDigitTiles[1][v], x + 4, y + 1, 1);
     sub_080c6c3c(gUnk_085A6F5C, x + 5, y, 1);
     sub_080c6c3c(gUnk_085A6F5C + 1, x + 5, y + 1, 1);
 
@@ -339,10 +339,10 @@ void DrawClockToBgMap(u16 *time, s32 x, s32 y)
         d++;
     }
     v += 10;
-    sub_080c6c3c(&gUnk_085A6F34[0][d], x + 6, y, 1);
-    sub_080c6c3c(&gUnk_085A6F34[1][d], x + 6, y + 1, 1);
-    sub_080c6c3c(&gUnk_085A6F34[0][v], x + 7, y, 1);
-    sub_080c6c3c(&gUnk_085A6F34[1][v], x + 7, y + 1, 1);
+    sub_080c6c3c(&gHudDigitTiles[0][d], x + 6, y, 1);
+    sub_080c6c3c(&gHudDigitTiles[1][d], x + 6, y + 1, 1);
+    sub_080c6c3c(&gHudDigitTiles[0][v], x + 7, y, 1);
+    sub_080c6c3c(&gHudDigitTiles[1][v], x + 7, y + 1, 1);
 }
 
 /* Copy n tiles from src to the BG map at 0x06001000, row y, column x. */

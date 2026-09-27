@@ -20,7 +20,7 @@ extern u32 gPlayerDefaultTerrainBox[];
 extern u8 gUnk_020055C4;
 extern u16 gPlayerCount;               /* number of players */
 extern u8 gUnk_0200AF00;
-extern s16 gUnk_02005588[];             /* health per player (M02's HUD) */
+extern s16 gPlayerHealth[];             /* health per player (M02's HUD) */
 extern vu16 gFadeSteps;
 extern u16 gUnk_0873D632[][7];
 extern struct PlayerState gPlayerStates[];
@@ -83,7 +83,7 @@ void sub_08039c24(void)
         {
             for (i = 0; i < gPlayerCount; i++)
             {
-                if (gUnk_02005588[i] == 0)
+                if (gPlayerHealth[i] == 0)
                     TaskSetSkipMask(4, i);
             }
         }
@@ -552,7 +552,7 @@ void sub_08039c24(void)
         for (i = 0; i < gPlayerCount; i++)
         {
             gPlayerStates[i].unk42 &= 0xFFBF;
-            if (gUnk_02005588[i] != 0)
+            if (gPlayerHealth[i] != 0)
                 sub_08040808(i);
             if (i != gCurTaskIdx)
                 TaskSetSkipMask(0, i);

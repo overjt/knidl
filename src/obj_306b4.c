@@ -6,7 +6,7 @@
  *
  * QueueWorldSprite draws one OAM sprite relative to the BG camera
  * (gSpriteCameraX/gSpriteCameraY) when it is on screen, and returns garbage
- * when it is not.  The rest manage the per-frame stage hook gUnk_030004A0:
+ * when it is not.  The rest manage the per-frame stage hook gBlockAnimHook:
  * ResetBlockAnims clears it and the 64 records gBreakingBlocks[] (unk6 =
  * 0x7FFF), ResumeBlockAnims re-installs it from its id gBlockAnimHookId,
  * PauseBlockAnims clears it and sub_080307b0/cc/e8 install one of three M09
@@ -27,7 +27,7 @@ struct Unk020061F0
 extern s16 gSpriteCameraX;
 extern s16 gSpriteCameraY;
 extern struct Unk020061F0 gBreakingBlocks[];
-extern u32 gUnk_030004A0;
+extern u32 gBlockAnimHook;
 extern u8 gBlockAnimHookId;
 
 s32 QueueSprite(u32 a, u32 b, u32 c, u32 d, s32 e, s32 f);
@@ -52,7 +52,7 @@ void ResetBlockAnims(void)
 
     for (i = 0; i < 64; i++)
         gBreakingBlocks[i].unk6 = 0x7FFF;
-    gUnk_030004A0 = 0;
+    gBlockAnimHook = 0;
     gBlockAnimHookId = 0;
 }
 
@@ -63,36 +63,36 @@ void ResumeBlockAnims(void)
     case 0:
         break;
     case 1:
-        gUnk_030004A0 = (u32)sub_080318b4;
+        gBlockAnimHook = (u32)sub_080318b4;
         break;
     case 2:
-        gUnk_030004A0 = (u32)sub_08031de4;
+        gBlockAnimHook = (u32)sub_08031de4;
         break;
     case 3:
-        gUnk_030004A0 = (u32)sub_08032428;
+        gBlockAnimHook = (u32)sub_08032428;
         break;
     }
 }
 
 void PauseBlockAnims(void)
 {
-    gUnk_030004A0 = 0;
+    gBlockAnimHook = 0;
 }
 
 void sub_080307b0(void)
 {
-    gUnk_030004A0 = (u32)sub_080318b4;
+    gBlockAnimHook = (u32)sub_080318b4;
     gBlockAnimHookId = 1;
 }
 
 void sub_080307cc(void)
 {
-    gUnk_030004A0 = (u32)sub_08031de4;
+    gBlockAnimHook = (u32)sub_08031de4;
     gBlockAnimHookId = 2;
 }
 
 void sub_080307e8(void)
 {
-    gUnk_030004A0 = (u32)sub_08032428;
+    gBlockAnimHook = (u32)sub_08032428;
     gBlockAnimHookId = 3;
 }

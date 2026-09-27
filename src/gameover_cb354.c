@@ -19,7 +19,7 @@
 
 extern u8 gUnk_03001F30;            /* link-play mode */
 extern u16 gLocalPlayer;           /* this player's index */
-extern s32 gUnk_02006020[];         /* score per player */
+extern s32 gPlayerScores[];         /* score per player */
 extern s8 gGameOverCursor;            /* game-over screen: cursor (continue = 0?) */
 extern u32 gUnk_087556E0[];
 extern u16 gUnk_08758274[];
@@ -121,11 +121,11 @@ void Task_HalveScore(void)
 {
     gCurTask->unk00 = 0;
     gCurTask->unk0C = 0;
-    gCurTask->unk28 = gUnk_02006020[gLocalPlayer];
-    gUnk_02006020[gLocalPlayer] >>= 1;
-    gCurTask->unk2C = Mod(gUnk_02006020[gLocalPlayer], 10);
-    gUnk_02006020[gLocalPlayer] -= gCurTask->unk2C;
-    while (gCurTask->unk28 != gUnk_02006020[gLocalPlayer]) {
+    gCurTask->unk28 = gPlayerScores[gLocalPlayer];
+    gPlayerScores[gLocalPlayer] >>= 1;
+    gCurTask->unk2C = Mod(gPlayerScores[gLocalPlayer], 10);
+    gPlayerScores[gLocalPlayer] -= gCurTask->unk2C;
+    while (gCurTask->unk28 != gPlayerScores[gLocalPlayer]) {
         gCurTask->unk28 -= 10;
         DrawScoreToBgMap(gCurTask->unk28, 22, 18);
         TaskYieldTrampoline(1);

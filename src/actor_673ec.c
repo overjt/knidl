@@ -20,7 +20,7 @@ extern u32 gUnk_0873E31C[];
 extern vs16 gTaskSlotTypes[];
 extern u32 gUnk_02007D00[];
 extern struct PlayerState gPlayerStates[];
-extern s16 gUnk_02005588[];
+extern s16 gPlayerHealth[];
 extern u16 gAttackX;
 extern u16 gAttackY;
 extern u16 gAttackPower;
@@ -43,9 +43,9 @@ extern u8 gUnk_030023D0;
 
 extern void CallTableEntry(u32 a, u32 b, u32 *c);
 extern void TaskStopSlot(s32 i);
-extern s32 sub_08009ee8(s32 a, s32 b);
+extern s32 AddPlayerHealth(s32 a, s32 b);
 extern void sub_08064eb8(u32 a);
-extern void sub_0800a008(u32 a, s32 b, s32 c);
+extern void SetPlayerAbility(u32 a, s32 b, s32 c);
 extern void StopSfxOnPlayer(s32 a, s32 b);
 extern void sub_0803d1c4(s32 i);
 extern void sub_0803d2d4(s32 i);
@@ -1148,11 +1148,11 @@ s32 sub_08068a2c(s32 a, s32 b)
     struct Task *t;
     s32 r;
 
-    r = sub_08009ee8(a, gCurTaskIdx);
+    r = AddPlayerHealth(a, gCurTaskIdx);
     if (gCurTask->unk88->unk0D != 0)
     {
         sub_08064eb8(0);
-        sub_0800a008(0, -1, gCurTask->unk88->unk00);
+        SetPlayerAbility(0, -1, gCurTask->unk88->unk00);
     }
     t = gCurTask;
     if (t->unk78 == 0)
@@ -1260,7 +1260,7 @@ void sub_08068b88(s32 i, u16 b, u8 c, u8 d)
         SetPlayerInvulnerability(1, 96, i);
     p->unk5E = t->unk48;
     p->unk60 = t->unk4A;
-    if (gUnk_02005588[i] != 0)
+    if (gPlayerHealth[i] != 0)
         sub_08067114();
 }
 u32 sub_08068cb4(u8 a)

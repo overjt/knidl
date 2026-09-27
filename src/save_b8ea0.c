@@ -13,11 +13,11 @@ extern vu16 gPlayerPressedKeys[];    /* per-player keys pressed */
 extern void CallTableEntry(u32 a, u32 b, u32 *c);
 extern struct Task *gCurTask;
 extern void TaskExitTrampoline(void);
-extern void sub_08009cb0(s32 a);
+extern void HudRedraw(s32 a);
 extern void TaskFree(s32 a);
-extern void sub_08009e60(s32 a, s32 b);
-extern void sub_0800b318(u8 *s, s32 a, s32 b, s32 c);
-extern void sub_0800b34c(s32 a, s32 b, s32 c);
+extern void AddPlayerLives(s32 a, s32 b);
+extern void HudDrawTiles(u8 *s, s32 a, s32 b, s32 c);
+extern void HudClearTiles(s32 a, s32 b, s32 c);
 extern void TaskYieldTrampoline(u32 frames);
 extern s32 gCurTaskIdx;
 extern u16 gUnk_02000010[];
@@ -54,7 +54,7 @@ extern void TaskSetEntry(void *fn, s32 i);
 extern s32 IntToDigits(s16 n);
 extern void RequestCopy(u32 mode, u32 src, u32 dst, u32 size);
 extern void TaskSleepForever(void);
-extern void sub_0800b3a8(void);
+extern void HudClearTilemap(void);
 
 void sub_080b8ea0(void);
 void sub_080b8ef4(void);
@@ -188,7 +188,7 @@ void sub_080b8ff0(void)
     if (gLocalPlayer == t->unk88->unk00)
     {
         sub_080b8f8c(0);
-        sub_0800b3a8();
+        HudClearTilemap();
         sub_080b97fc(gCurTask->unk18);
     }
 }
@@ -214,15 +214,15 @@ void sub_080b9064(void)
 }
 void sub_080b9090(void)
 {
-    sub_08009e60(-1, gCurTask->unk1C);
-    sub_08009e60(1, gCurTask->unk88->unk00);
+    AddPlayerLives(-1, gCurTask->unk1C);
+    AddPlayerLives(1, gCurTask->unk88->unk00);
     sub_080b8ea0();
     sub_080b9b98(gCurTask->unk1C);
 }
 void sub_080b90c8(void)
 {
     if (gLocalPlayer == gCurTask->unk88->unk00)
-        sub_08009cb0(gLocalPlayer);
+        HudRedraw(gLocalPlayer);
     TaskExitTrampoline();
 }
 void sub_080b90f8(void)
@@ -378,7 +378,7 @@ void sub_080b9344(void)
     if ((k[p] & 1) != 0)
     {
         if (gLocalPlayer == p)
-            sub_08009cb0(p);
+            HudRedraw(p);
         TaskFree(gCurTaskIdx);
     }
 }
@@ -626,10 +626,10 @@ void sub_080b97fc(s32 a)
             p = gUnk_085B0A10;
             q = gUnk_085B0A30;
         }
-        sub_0800b318(p, 1, 2, 8);
-        sub_0800b318(p + 16, 1, 3, 8);
-        sub_0800b318(q, 1, 4, 13);
-        sub_0800b318(q + 26, 1, 5, 13);
+        HudDrawTiles(p, 1, 2, 8);
+        HudDrawTiles(p + 16, 1, 3, 8);
+        HudDrawTiles(q, 1, 4, 13);
+        HudDrawTiles(q + 26, 1, 5, 13);
     }
 }
 void sub_080b9878(void)
@@ -639,9 +639,9 @@ void sub_080b9878(void)
     if (gLocalPlayer == gCurTask->unk88->unk00)
     {
         p = gUnk_085B0A64;
-        sub_0800b318(p, 1, 2, 19);
+        HudDrawTiles(p, 1, 2, 19);
         p += 38;
-        sub_0800b318(p, 1, 3, 19);
+        HudDrawTiles(p, 1, 3, 19);
     }
 }
 void sub_080b98c0(void)
@@ -655,7 +655,7 @@ void sub_080b98c0(void)
 
     if (gLocalPlayer == gCurTask->unk88->unk00)
     {
-        sub_0800b3a8();
+        HudClearTilemap();
         for (i = 0, j = 0; i < gPlayerCount; i++)
         {
             f = gUnk_02005E00.unk04;
@@ -688,13 +688,13 @@ void sub_080b9968(s32 a, s32 b)
     {
         off = a * 4;
         p = gUnk_085B0AB0;
-        sub_0800b318(p + off, 3, b * 2 + 4, 2);
+        HudDrawTiles(p + off, 3, b * 2 + 4, 2);
         p += 16;
-        sub_0800b318(p + off, 3, b * 2 + 5, 2);
+        HudDrawTiles(p + off, 3, b * 2 + 5, 2);
         q = gUnk_085B0AD0;
-        sub_0800b318(q, 5, b * 2 + 4, 1);
+        HudDrawTiles(q, 5, b * 2 + 4, 1);
         q += 2;
-        sub_0800b318(q, 5, b * 2 + 5, 1);
+        HudDrawTiles(q, 5, b * 2 + 5, 1);
     }
 }
 void sub_080b99e8(s32 a, s32 b, s32 c)
@@ -702,10 +702,10 @@ void sub_080b99e8(s32 a, s32 b, s32 c)
     if (gLocalPlayer == gCurTask->unk88->unk00)
     {
         IntToDigits(c);
-        sub_0800b318(&gUnk_085B0AD4[gDigits[1] * 2], 6, b * 2 + 4, 1);
-        sub_0800b318(&gUnk_085B0AD4[20 + gDigits[1] * 2], 6, b * 2 + 5, 1);
-        sub_0800b318(&gUnk_085B0AD4[gDigits[0] * 2], 7, b * 2 + 4, 1);
-        sub_0800b318(&gUnk_085B0AD4[20 + gDigits[0] * 2], 7, b * 2 + 5, 1);
+        HudDrawTiles(&gUnk_085B0AD4[gDigits[1] * 2], 6, b * 2 + 4, 1);
+        HudDrawTiles(&gUnk_085B0AD4[20 + gDigits[1] * 2], 6, b * 2 + 5, 1);
+        HudDrawTiles(&gUnk_085B0AD4[gDigits[0] * 2], 7, b * 2 + 4, 1);
+        HudDrawTiles(&gUnk_085B0AD4[20 + gDigits[0] * 2], 7, b * 2 + 5, 1);
     }
 }
 void sub_080b9a88(s32 a)
@@ -717,13 +717,13 @@ void sub_080b9a88(s32 a)
     {
         for (i = 0; i < gPlayerCount; i++)
         {
-            sub_0800b34c(2, i * 2 + 4, 1);
-            sub_0800b34c(2, i * 2 + 5, 1);
+            HudClearTiles(2, i * 2 + 4, 1);
+            HudClearTiles(2, i * 2 + 5, 1);
         }
         p = gUnk_085B0AFC;
-        sub_0800b318(p, 2, a * 2 + 4, 1);
+        HudDrawTiles(p, 2, a * 2 + 4, 1);
         p += 2;
-        sub_0800b318(p, 2, a * 2 + 5, 1);
+        HudDrawTiles(p, 2, a * 2 + 5, 1);
     }
 }
 void sub_080b9b08(s32 a)
@@ -734,20 +734,20 @@ void sub_080b9b08(s32 a)
 
     if (gLocalPlayer == gCurTask->unk88->unk00)
     {
-        sub_0800b3a8();
+        HudClearTilemap();
         p = gUnk_085B0B00;
-        sub_0800b318(p, 13, 6, 2);
+        HudDrawTiles(p, 13, 6, 2);
         p += 4;
-        sub_0800b318(p, 13, 7, 2);
+        HudDrawTiles(p, 13, 7, 2);
         a *= 4;
         q = gUnk_085B0BB4;
-        sub_0800b318(q + a, 16, 8, 2);
+        HudDrawTiles(q + a, 16, 8, 2);
         q += 16;
-        sub_0800b318(q + a, 16, 9, 2);
+        HudDrawTiles(q + a, 16, 9, 2);
         r = gUnk_085B0B10;
-        sub_0800b318(r, 10, 8, 6);
+        HudDrawTiles(r, 10, 8, 6);
         r += 12;
-        sub_0800b318(r, 10, 9, 6);
+        HudDrawTiles(r, 10, 9, 6);
     }
 }
 void sub_080b9b98(s32 a)
@@ -758,20 +758,20 @@ void sub_080b9b98(s32 a)
 
     if (gLocalPlayer == gCurTask->unk88->unk00)
     {
-        sub_0800b3a8();
+        HudClearTilemap();
         p = gUnk_085B0B08;
-        sub_0800b318(p, 13, 6, 2);
+        HudDrawTiles(p, 13, 6, 2);
         p += 4;
-        sub_0800b318(p, 13, 7, 2);
+        HudDrawTiles(p, 13, 7, 2);
         a *= 4;
         q = gUnk_085B0BB4;
-        sub_0800b318(q + a, 19, 8, 2);
+        HudDrawTiles(q + a, 19, 8, 2);
         q += 16;
-        sub_0800b318(q + a, 19, 9, 2);
+        HudDrawTiles(q + a, 19, 9, 2);
         r = gUnk_085B0B28;
-        sub_0800b318(r, 6, 8, 13);
+        HudDrawTiles(r, 6, 8, 13);
         r += 26;
-        sub_0800b318(r, 6, 9, 13);
+        HudDrawTiles(r, 6, 9, 13);
     }
 }
 void sub_080b9c28(void)
@@ -780,11 +780,11 @@ void sub_080b9c28(void)
 
     if (gLocalPlayer == gCurTask->unk88->unk00)
     {
-        sub_0800b3a8();
+        HudClearTilemap();
         p = gUnk_085B0B5C;
-        sub_0800b318(p, 4, 8, 22);
+        HudDrawTiles(p, 4, 8, 22);
         p += 44;
-        sub_0800b318(p, 4, 9, 22);
+        HudDrawTiles(p, 4, 9, 22);
     }
 }
 void sub_080b9c74(void)
@@ -793,11 +793,11 @@ void sub_080b9c74(void)
 
     if (gLocalPlayer == gCurTask->unk88->unk00)
     {
-        sub_0800b3a8();
+        HudClearTilemap();
         p = gUnk_085B0BD4;
-        sub_0800b318(p, 4, 8, 22);
+        HudDrawTiles(p, 4, 8, 22);
         p += 44;
-        sub_0800b318(p, 4, 9, 22);
+        HudDrawTiles(p, 4, 9, 22);
     }
 }
 void sub_080b9cc0(void)
@@ -806,10 +806,10 @@ void sub_080b9cc0(void)
 
     if (gLocalPlayer == gCurTask->unk88->unk00)
     {
-        sub_0800b3a8();
+        HudClearTilemap();
         p = gUnk_085B0C2C;
-        sub_0800b318(p, 8, 8, 14);
+        HudDrawTiles(p, 8, 8, 14);
         p += 28;
-        sub_0800b318(p, 8, 9, 14);
+        HudDrawTiles(p, 8, 9, 14);
     }
 }

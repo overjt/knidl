@@ -54,7 +54,7 @@ extern void StopBgm(void);
 extern void sub_080668c8(void);
 extern void sub_08067108(void);
 extern void sub_0806d928(void);
-extern void sub_0800a554(void);
+extern void HudRemoveHpBar(void);
 extern void CallTableEntry(u32, u32, void *);
 extern void TaskSetEntry(void (*)(void), u32);
 extern void ActorSetState(u32);
@@ -264,7 +264,7 @@ s32 sub_0806b0f0(void)
 void sub_0806b12c(void)
 {
     gUnk_02007D00[9] = gCurTask->unk40;
-    sub_0800a554();
+    HudRemoveHpBar();
     sub_0806b0f0();
     sub_0806b05c();
     sub_0806b098();

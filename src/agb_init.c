@@ -44,7 +44,7 @@ extern vu16 gPlayerHeldKeys[4];
 extern vu32 gRngValue;
 extern vu32 gUnk_03000AF4;
 extern vu32 gUnk_03000F90;
-extern vu32 gUnk_030004A0;
+extern vu32 gBlockAnimHook;
 extern vu32 gFrameEndCallback;
 extern vu16 gDispCnt;
 extern vu16 gDispStat;
@@ -191,7 +191,7 @@ void AgbInit(void)
     gRngValue = zeroB = 0;
     gUnk_03000AF4 = zeroB;
     gUnk_03000F90 = zeroB;
-    gUnk_030004A0 = zeroB;
+    gBlockAnimHook = zeroB;
     gFrameEndCallback = zeroB;
 
     gUnk_03001004 = REG_WAITCNT & 0x8000;

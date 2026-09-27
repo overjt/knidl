@@ -11,16 +11,16 @@
 @ address here is a table still waiting for its label, docs/data.md):
 	.global	gUnk_02000000
 gUnk_02000000 = 0x02000000
-	.global	gUnk_02000004
-gUnk_02000004 = 0x02000004
+	.global	gLinkSessionMode
+gLinkSessionMode = 0x02000004
 	.global	gNextActorSerial
 gNextActorSerial = 0x02000008
 	.global	gUnk_0200000C
 gUnk_0200000C = 0x0200000C
 	.global	gUnk_02000010
 gUnk_02000010 = 0x02000010
-	.global	gUnk_02000018
-gUnk_02000018 = 0x02000018
+	.global	gModeListExtraRows
+gModeListExtraRows = 0x02000018
 	.global	gUnk_0200001C
 gUnk_0200001C = 0x0200001C
 	.global	gUnk_02000020
@@ -29,8 +29,8 @@ gUnk_02000020 = 0x02000020
 gBlockAnimHookId = 0x02000024
 	.global	gUnk_02000028
 gUnk_02000028 = 0x02000028
-	.global	gUnk_0200002C
-gUnk_0200002C = 0x0200002C
+	.global	gHudTilemapDirty
+gHudTilemapDirty = 0x0200002C
 	.global	gUnk_02000030
 gUnk_02000030 = 0x02000030
 	.global	gUnk_02000034
@@ -47,24 +47,24 @@ gUnk_02004B44 = 0x02004B44
 gUnk_02004B48 = 0x02004B48
 	.global	gUnk_02004B4C
 gUnk_02004B4C = 0x02004B4C
-	.global	gUnk_02004B50
-gUnk_02004B50 = 0x02004B50
-	.global	gUnk_02004B58
-gUnk_02004B58 = 0x02004B58
+	.global	gPlayerAbilities
+gPlayerAbilities = 0x02004B50
+	.global	gHudHpBarIndex
+gHudHpBarIndex = 0x02004B58
 	.global	gUnk_02004B5C
 gUnk_02004B5C = 0x02004B5C
-	.global	gUnk_02004B60
-gUnk_02004B60 = 0x02004B60
+	.global	gPausingPlayer
+gPausingPlayer = 0x02004B60
 	.global	gUnk_02004B64
 gUnk_02004B64 = 0x02004B64
-	.global	gUnk_02004B68
-gUnk_02004B68 = 0x02004B68
+	.global	gHudHpBarMaxHp
+gHudHpBarMaxHp = 0x02004B68
 	.global	gUnk_02004B6C
 gUnk_02004B6C = 0x02004B6C
-	.global	gUnk_02004B70
-gUnk_02004B70 = 0x02004B70
-	.global	gUnk_02004B74
-gUnk_02004B74 = 0x02004B74
+	.global	gMenuBufferedKeys
+gMenuBufferedKeys = 0x02004B70
+	.global	gBgScrollActive
+gBgScrollActive = 0x02004B74
 	.global	gObjectSpawnViewRect
 gObjectSpawnViewRect = 0x02004B78
 	.global	gUnk_02004B80
@@ -87,12 +87,12 @@ gUnk_02005574 = 0x02005574
 gUnk_02005578 = 0x02005578
 	.global	gUnk_0200557C
 gUnk_0200557C = 0x0200557C
-	.global	gUnk_02005580
-gUnk_02005580 = 0x02005580
+	.global	gMaxHealth
+gMaxHealth = 0x02005580
 	.global	gUnk_02005584
 gUnk_02005584 = 0x02005584
-	.global	gUnk_02005588
-gUnk_02005588 = 0x02005588
+	.global	gPlayerHealth
+gPlayerHealth = 0x02005588
 	.global	gUnk_02005590
 gUnk_02005590 = 0x02005590
 	.global	gBg3MapShape
@@ -115,36 +115,36 @@ gUnk_020055D4 = 0x020055D4
 gRoomObjectList = 0x020055D8
 	.global	gRoomEntryX
 gRoomEntryX = 0x020055E0
-	.global	gUnk_020055E4
-gUnk_020055E4 = 0x020055E4
+	.global	gFileMenuCursor
+gFileMenuCursor = 0x020055E4
 	.global	gUnk_020055E8
 gUnk_020055E8 = 0x020055E8
 	.global	gUnk_020055EC
 gUnk_020055EC = 0x020055EC
 	.global	gUnk_020055F0
 gUnk_020055F0 = 0x020055F0
-	.global	gUnk_02005600
-gUnk_02005600 = 0x02005600
+	.global	gHudTilemap
+gHudTilemap = 0x02005600
 	.global	gUnk_02005E00
 gUnk_02005E00 = 0x02005E00
 	.global	gUnk_02005E10
 gUnk_02005E10 = 0x02005E10
 	.global	gUnk_02005F10
 gUnk_02005F10 = 0x02005F10
-	.global	gUnk_02006010
-gUnk_02006010 = 0x02006010
-	.global	gUnk_02006014
-gUnk_02006014 = 0x02006014
-	.global	gUnk_02006020
-gUnk_02006020 = 0x02006020
-	.global	gUnk_02006030
-gUnk_02006030 = 0x02006030
+	.global	gSoundTestRepeatCount
+gSoundTestRepeatCount = 0x02006010
+	.global	gHudMode
+gHudMode = 0x02006014
+	.global	gPlayerScores
+gPlayerScores = 0x02006020
+	.global	gHudShowsClock
+gHudShowsClock = 0x02006030
 	.global	gUnk_02006040
 gUnk_02006040 = 0x02006040
 	.global	gUnk_02006068
 gUnk_02006068 = 0x02006068
-	.global	gUnk_02006070
-gUnk_02006070 = 0x02006070
+	.global	gBgScrollSpeeds
+gBgScrollSpeeds = 0x02006070
 	.global	gUnk_02006090
 gUnk_02006090 = 0x02006090
 	.global	gUnk_02006094
@@ -157,8 +157,8 @@ gUnk_020060A0 = 0x020060A0
 gBlockCursorIndex = 0x020060C8
 	.global	gUnk_020060CC
 gUnk_020060CC = 0x020060CC
-	.global	gUnk_020060D0
-gUnk_020060D0 = 0x020060D0
+	.global	gMenuScreen
+gMenuScreen = 0x020060D0
 	.global	gPlayerBodyBoxes
 gPlayerBodyBoxes = 0x020060E0
 	.global	gUnk_02006130
@@ -179,20 +179,20 @@ gUnk_02006174 = 0x02006174
 gUnk_02006178 = 0x02006178
 	.global	gUnk_0200617C
 gUnk_0200617C = 0x0200617C
-	.global	gUnk_02006180
-gUnk_02006180 = 0x02006180
+	.global	gMenuTransitionTimer
+gMenuTransitionTimer = 0x02006180
 	.global	gUnk_02006184
 gUnk_02006184 = 0x02006184
-	.global	gUnk_0200618C
-gUnk_0200618C = 0x0200618C
+	.global	gEraseConfirmCount
+gEraseConfirmCount = 0x0200618C
 	.global	gUnk_02006190
 gUnk_02006190 = 0x02006190
-	.global	gUnk_020061B0
-gUnk_020061B0 = 0x020061B0
+	.global	gBgScrollTargets
+gBgScrollTargets = 0x020061B0
 	.global	gBlockCursorTile
 gBlockCursorTile = 0x020061D0
-	.global	gUnk_020061D4
-gUnk_020061D4 = 0x020061D4
+	.global	gHudAbilityPanelState
+gHudAbilityPanelState = 0x020061D4
 	.global	gPaletteAnimTasks
 gPaletteAnimTasks = 0x020061D8
 	.global	gUnk_020061DC
@@ -203,8 +203,8 @@ gUnk_020061E0 = 0x020061E0
 gBreakingBlocks = 0x020061F0
 	.global	gUnk_020069F0
 gUnk_020069F0 = 0x020069F0
-	.global	gUnk_02006A00
-gUnk_02006A00 = 0x02006A00
+	.global	gHudHpBars
+gHudHpBars = 0x02006A00
 	.global	gUnk_02006A10
 gUnk_02006A10 = 0x02006A10
 	.global	gUnk_02006A14
@@ -231,8 +231,8 @@ gUnk_02007D28 = 0x02007D28
 gSubGamePhase = 0x02007D2C
 	.global	gUnk_02007D30
 gUnk_02007D30 = 0x02007D30
-	.global	gUnk_02007D34
-gUnk_02007D34 = 0x02007D34
+	.global	gMenuChoiceCursor
+gMenuChoiceCursor = 0x02007D34
 	.global	gUnk_02007D38
 gUnk_02007D38 = 0x02007D38
 	.global	gUnk_02007D3C
@@ -253,8 +253,8 @@ gUnk_02007D64 = 0x02007D64
 gBlockCursorX = 0x02007D68
 	.global	gBgAnims
 gBgAnims = 0x02007D70
-	.global	gUnk_02007E88
-gUnk_02007E88 = 0x02007E88
+	.global	gPrevMenuScreen
+gPrevMenuScreen = 0x02007E88
 	.global	gUnk_02007E8C
 gUnk_02007E8C = 0x02007E8C
 	.global	gUnk_02007E90
@@ -273,8 +273,8 @@ gUnk_02007FB0 = 0x02007FB0
 gUnk_02007FB4 = 0x02007FB4
 	.global	gUnk_02007FB8
 gUnk_02007FB8 = 0x02007FB8
-	.global	gUnk_02007FBC
-gUnk_02007FBC = 0x02007FBC
+	.global	gHudHpBarValues
+gHudHpBarValues = 0x02007FBC
 	.global	gUnk_02007FC0
 gUnk_02007FC0 = 0x02007FC0
 	.global	gUnk_02007FC4
@@ -311,8 +311,8 @@ gUnk_02008054 = 0x02008054
 gUnk_02008060 = 0x02008060
 	.global	gBlockLayer
 gBlockLayer = 0x02008160
-	.global	gUnk_0200A6E0
-gUnk_0200A6E0 = 0x0200A6E0
+	.global	gSoundTestSelection
+gSoundTestSelection = 0x0200A6E0
 	.global	gUnk_0200A6F0
 gUnk_0200A6F0 = 0x0200A6F0
 	.global	gRoomEntryY
@@ -347,8 +347,8 @@ gUnk_0200AFF4 = 0x0200AFF4
 gUnk_0200AFF8 = 0x0200AFF8
 	.global	gUnk_0200B000
 gUnk_0200B000 = 0x0200B000
-	.global	gUnk_0200B028
-gUnk_0200B028 = 0x0200B028
+	.global	gHudShowsHpBar
+gHudShowsHpBar = 0x0200B028
 	.global	gUnk_0200B02C
 gUnk_0200B02C = 0x0200B02C
 	.global	gUnk_0200B030
@@ -359,8 +359,8 @@ gUnk_0200B034 = 0x0200B034
 gUnk_0200B038 = 0x0200B038
 	.global	gUnk_0200B03C
 gUnk_0200B03C = 0x0200B03C
-	.global	gUnk_0200B040
-gUnk_0200B040 = 0x0200B040
+	.global	gHBlankScrollStarted
+gHBlankScrollStarted = 0x0200B040
 	.global	gUnk_0200B044
 gUnk_0200B044 = 0x0200B044
 	.global	gUnk_0200B048
@@ -371,8 +371,8 @@ gUnk_0200B04C = 0x0200B04C
 gRoomBgLayout = 0x0200B050
 	.global	gUnk_0200B060
 gUnk_0200B060 = 0x0200B060
-	.global	gUnk_0200B074
-gUnk_0200B074 = 0x0200B074
+	.global	gMenuCursor
+gMenuCursor = 0x0200B074
 	.global	gUnk_0200B078
 gUnk_0200B078 = 0x0200B078
 	.global	gUnk_0200B07C
@@ -549,8 +549,8 @@ gOamBuffer = 0x03000050
 gCurrentBgm = 0x03000490
 	.global	gPlayTime
 gPlayTime = 0x03000498
-	.global	gUnk_030004A0
-gUnk_030004A0 = 0x030004A0
+	.global	gBlockAnimHook
+gBlockAnimHook = 0x030004A0
 	.global	gFadeStep
 gFadeStep = 0x030004A4
 	.global	gIntrTable

@@ -24,7 +24,7 @@ extern vs32 gBg0ScrollX;
 extern u16 gLocalPlayer;           /* this player's index */
 extern u8 gExtraMode;
 extern u16 gUnk_02000028;
-extern s32 gUnk_02006020[];         /* score per player */
+extern s32 gPlayerScores[];         /* score per player */
 extern vu16 gPlayerPressedKeys[];        /* keys pressed per player */
 extern vu8 gBldCntTarget1;
 extern vu8 gBldCntTarget2;
@@ -63,7 +63,7 @@ extern u8 gUnk_0201C1A8;
 extern u8 gUnk_0201C19C;
 extern s32 gUnk_0201C1B4;           /* credits: scroll since the last page copy, 1/16 pixel */
 extern u32 *gUnk_087583B4[];        /* credits: the 14 compressed text pages */
-extern u16 gUnk_02005600[];
+extern u16 gHudTilemap[];
 
 u32 BeginFade(u16 steps, s16 delta, u16 *mask);   /* delta passed as movs/negs (-2); early_08e8.c defines it u16, src/effect_5a358.c and src/player_47fe8.c spell it s16 too (lesson 3.428) */
 void RequestCopy(u32 mode, u32 src, u32 dst, u32 size);
@@ -75,10 +75,10 @@ s32 PlayBgm(s32 songId);
 void StopAllSound(void);
 void FadeOutBgm(s32 speed);
 void SetBgmVolume(u16 volume);
-void sub_08008c4c(s32 a0);                                   /* load palette set */
-void sub_08008c64(u16 a0);                                   /* load screen graphics */
-void sub_0800b4a8(void);
-void sub_0800b514(void);
+void LoadBgLayout(s32 a0);                                   /* load palette set */
+void LoadGfxSet(u16 a0);                                   /* load screen graphics */
+void ResetScoresAndMaxHealth(void);
+void ResetPlayerRecords(void);
 void ClearColliderLists(void);
 void sub_0802497c(void);
 void LatchPlayerKeys(void);
@@ -105,9 +105,9 @@ void CreditsMain(void)
     gDispCnt |= 0x80;
     gBldCntTarget1 = gBldCntTarget2 = gBldAlphaEva = gBldAlphaEvb = gBldY = 0;
     ResetTasksAndOam();
-    sub_08008c4c(17);
+    LoadBgLayout(17);
     gSfxDisabled = 1;
-    gUnk_0201C1A4 = gUnk_02006020[gUnk_02000028];
+    gUnk_0201C1A4 = gPlayerScores[gUnk_02000028];
     gLocalPlayer = 0;
     if (gExtraMode == 1)
         gUnk_030023B0 = 2;
@@ -117,9 +117,9 @@ void CreditsMain(void)
     scenes = gUnk_087583CC[gUnk_030023B0];
     frames = gUnk_0875841E[gUnk_030023B0];
     sub_080cd70c();
-    sub_0800b4a8();
-    sub_0800b514();
-    sub_08008c64(0);
+    ResetScoresAndMaxHealth();
+    ResetPlayerRecords();
+    LoadGfxSet(0);
     gBgPalette[0] = 0;
     gInputRecorderMode = 3;
     gDispCnt &= ~0x80;
@@ -192,7 +192,7 @@ void CreditsMain(void)
     ResetTasksAndOam();
     RunFramesNoTasks(2);
     SetBgmVolume(255);
-    gUnk_02006020[gUnk_02000028] = gUnk_0201C1A4;
+    gPlayerScores[gUnk_02000028] = gUnk_0201C1A4;
 }
 
 /* Load the staff credits' next demo scene: the room, palette set 17, and
@@ -206,7 +206,7 @@ void sub_080cd674(void)
 
     ResetBgScroll();
     ClearColliderLists();
-    sub_08008c4c(17);
+    LoadBgLayout(17);
     sub_0802497c();
     b = gUnk_02007FB8;
     zero = 0;
@@ -229,7 +229,7 @@ void sub_080cd674(void)
    scroll and the page counters and install the scroll callback. */
 void sub_080cd70c(void)
 {
-    sub_08008c64(72);
+    LoadGfxSet(72);
     gUnk_0201C1A0 = 0x400000;
     gUnk_0201C1AC = 0x40000;
     gUnk_03000AF4 = (u32)sub_080cd828;
@@ -239,7 +239,7 @@ void sub_080cd70c(void)
 }
 
 /* Stream the staff credits' text into BG0: stage the next page (a blank one
-   after the 14 pages) in gUnk_02005600, and each time another 256 pixels
+   after the 14 pages) in gHudTilemap, and each time another 256 pixels
    have scrolled by copy it into one of the two BG0 map halves (0x06001000
    for odd pages, 0x06001800 for even ones). */
 void sub_080cd75c(void)
@@ -248,19 +248,19 @@ void sub_080cd75c(void)
 
     if (gUnk_0201C19C == 0) {
         if (gUnk_0201C1A8 < 14) {
-            LZ77UnCompWram(gUnk_087583B4[gUnk_0201C1A8], gUnk_02005600);
+            LZ77UnCompWram(gUnk_087583B4[gUnk_0201C1A8], gHudTilemap);
         } else {
             zero = 0;
-            CpuSet(&zero, gUnk_02005600, 0x01000400);
+            CpuSet(&zero, gHudTilemap, 0x01000400);
         }
         gUnk_0201C19C = 1;
         gUnk_0201C1A8++;
     }
     if ((gUnk_0201C1B4 & 0x1000) && gUnk_0201C19C != 0) {
         if (gUnk_0201C1A8 & 1)
-            RequestCopy(1, (u32)gUnk_02005600, 0x06001000, 0x800);
+            RequestCopy(1, (u32)gHudTilemap, 0x06001000, 0x800);
         else
-            RequestCopy(1, (u32)gUnk_02005600, 0x06001800, 0x800);
+            RequestCopy(1, (u32)gHudTilemap, 0x06001800, 0x800);
         gUnk_0201C19C = 0;
         gUnk_0201C1B4 = 0;
     }

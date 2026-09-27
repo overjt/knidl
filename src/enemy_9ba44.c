@@ -39,7 +39,7 @@ extern void TaskSetEntry(void *fn, s32 i);
 extern void TaskStop(void);
 extern void TaskSetFrameNoFlip(s32 a);
 extern void sub_0800a42c(void);
-extern void sub_0800a554(void);
+extern void HudRemoveHpBar(void);
 extern void sub_080262e8(u8 a);
 extern void ActorSetState(u16 v);
 extern void ActorDestroy(void);
@@ -246,7 +246,7 @@ void sub_0809bc1c(void)
         && gUnk_02007D00[3] < 0)
     {
         sub_080262e8(gCurTask->unk73);
-        sub_0800a554();
+        HudRemoveHpBar();
         ActorDestroy();
     }
 }

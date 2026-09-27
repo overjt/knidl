@@ -54,7 +54,7 @@ void TaskDrawScreen(void);
 void TaskSleepForever(void);                                     /* end the running task */
 void TaskSetMotion(s32 a, s32 b, s32 c, s32 d, s32 e, s32 f);
 void TaskStop(void);
-void sub_08008c64(u16 a0);                                   /* load screen graphics */
+void LoadGfxSet(u16 a0);                                   /* load screen graphics */
 void sub_080c6ca0(void);
 void sub_080c6d38(void);
 void sub_080c769c(void);
@@ -81,7 +81,7 @@ void sub_080c6ca0(void)
 {
     struct GfxHeader *h = &gUnk_085995AC;
 
-    sub_08008c64(0);
+    LoadGfxSet(0);
     LZ77UnCompWram(h->unk0C, gUnk_02020000);
     RequestCopy(4, (u32)gUnk_02020000, (u32)gObjVram, h->unk02 << 5);
     RequestCopy(2, (u32)h->unk08, (u32)gUnk_03001570, h->unk00 << 5);
@@ -90,7 +90,7 @@ void sub_080c6ca0(void)
     h = &gUnk_0859990C;
     LZ77UnCompWram(h->unk0C, gUnk_02020000);
     RequestCopy(3, (u32)gUnk_02020000, (u32)gObjVram, h->unk02 << 5);
-    sub_08008c64(71);
+    LoadGfxSet(71);
 }
 
 /* Spawn one task type #100 per variant listed in gUnk_0875735C[] (1, 6, 7,

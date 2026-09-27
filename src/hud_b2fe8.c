@@ -6,8 +6,8 @@
 extern u32 gUnk_0200000C[];
 extern u32 gUnk_02000034[];
 extern u32 gUnk_02004C90;
-extern u32 gUnk_02005580[];
-extern s16 gUnk_02005588[];
+extern u32 gMaxHealth[];
+extern s16 gPlayerHealth[];
 extern u32 gUnk_02005590[];
 extern u32 gUnk_020055D0[];
 extern u32 gRoomObjectList[];
@@ -526,12 +526,12 @@ extern void TaskUpdateFlip(void);
 extern void TaskSetFrame(s32 a);
 extern void TaskSetFrameNoFlip(s32 a);
 extern void TaskSetFrameFlip(s32 a);
-extern s32 sub_08009ee8(s32 a, s32 b);
-extern void sub_08009fcc();
+extern s32 AddPlayerHealth(s32 a, s32 b);
+extern void SetPlayerAbilityNoHud();
 extern void sub_0800a280(void);
 extern void sub_0800a294();
 extern void sub_0800a4c0();
-extern void sub_0800a554(void);
+extern void HudRemoveHpBar(void);
 extern void sub_0800a698(void);
 extern s32 sub_08021bb4(s16 x, s16 y, s32 c, s32 d);
 extern void TaskInitWaterFlags(void);
@@ -544,7 +544,7 @@ extern void sub_08025b5c();
 extern void RequestScreenShake(u32 a);
 extern void sub_080275cc();
 extern void StartScrollLock();
-extern s32 sub_0802d344();
+extern s32 CreateMapEvent();
 extern void sub_0802ffe8();
 extern void sub_080308e8();
 extern void sub_08030db8();
@@ -2443,8 +2443,8 @@ s32 sub_080b4204(u32 a)
 
     if ((gActivePlayerMask >> a) & 1)
     {
-        r = sub_08009ee8(8, a);
-        if (r <= *(s16 *)gUnk_02005580 - 1)
+        r = AddPlayerHealth(8, a);
+        if (r <= *(s16 *)gMaxHealth - 1)
             return 0;
     }
     return 1;
@@ -2466,7 +2466,7 @@ void sub_080b4240(void)
     w = (s8)*(u8 *)((u8 *)t + 126);
     h = (s16 *)((u8 *)t + 68);
     *h = w;
-    e = (u8 *)gUnk_02005588;
+    e = (u8 *)gPlayerHealth;
     if (*(s16 *)((*h << 1) + (u32)e) != 0)
     {
         sub_080670ac(15);
@@ -2899,7 +2899,7 @@ void sub_080b4878(void)
                 sub_0803e68c(i);
                 w = (s8)*(u8 *)(b5 + 116 * i + 13);
                 if (w == 24 || w == 11)
-                    sub_08009fcc(0, -1, i);
+                    SetPlayerAbilityNoHud(0, -1, i);
             }
             i++;
         } while (i < gPlayerCount);

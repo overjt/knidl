@@ -34,9 +34,9 @@ void TaskSleepForever(void);
 void TaskSetMotion(s32 a, s32 b, s32 c, s32 d, s32 e, s32 f);
 void TaskStop(void);
 void TaskSetFrame(s32 a);
-void sub_08010480(void);
+void CutsceneCheckSkip(void);
 
-s32 sub_08010358(s32 a, s32 b)
+s32 CreateCutsceneActor(s32 a, s32 b)
 {
     s32 i;
     struct Task *t;
@@ -60,7 +60,7 @@ s32 sub_08010358(s32 a, s32 b)
     return i;
 }
 
-void sub_08010480(void);   /* hdr.c lacks this in-module prototype */
+void CutsceneCheckSkip(void);   /* hdr.c lacks this in-module prototype */
 
 void Task_CutsceneDirector(void)
 {
@@ -70,7 +70,7 @@ void Task_CutsceneDirector(void)
     gCurTask->unk28 = 0;
     CallTableEntry(*(s8 *)&gUnk_030023B8, 9, gUnk_08731FA8);
     TaskYieldTrampoline(60);
-    gCurTask->unk04 = (u32)sub_08010480;
+    gCurTask->unk04 = (u32)CutsceneCheckSkip;
     gCurTask->unk6C = 0;
     p = (u16 *)gCutsceneDurations;
     if ((s16)gCurTask->unk6C < p[*(s8 *)&gUnk_030023B8] - 60)
@@ -86,7 +86,7 @@ void Task_CutsceneDirector(void)
     TaskSleepForever();
 }
 
-void sub_08010480(void)
+void CutsceneCheckSkip(void)
 {
     s32 i;
 
@@ -115,8 +115,8 @@ void Task_CutsceneActor(void)
 void sub_0801050c(void)
 {
     PlayBgm(0);
-    sub_08010358(0, 0);
-    sub_08010358(4, 32);
+    CreateCutsceneActor(0, 0);
+    CreateCutsceneActor(4, 32);
 }
 
 void sub_08010528(void)
@@ -180,7 +180,7 @@ void sub_08010528(void)
     TaskStop();
     gCurTask->unk3C = 18;
     TaskYieldTrampoline(2);
-    sub_08010358(1, 32);
+    CreateCutsceneActor(1, 32);
     gCurTask->unk6C = 0;
     do
     {
@@ -207,7 +207,7 @@ void sub_08010528(void)
     gCurTask->unk54 = 0xFFFF0000;
     gCurTask->unk3C = 27;
     TaskYieldTrampoline(2);
-    sub_08010358(2, 32);
+    CreateCutsceneActor(2, 32);
     TaskStop();
     gCurTask->unk3C = 28;
     TaskYieldTrampoline(2);

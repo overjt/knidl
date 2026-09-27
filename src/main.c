@@ -17,17 +17,17 @@ extern u16 gUnk_03002150; /* requested/next game state */
 extern u8 gUnk_02007FC0;
 extern vu32 gUnk_03000B00;
 extern u8 gUnk_03001F30;
-extern u16 gUnk_02005588[4];
+extern u16 gPlayerHealth[4];
 extern u16 gPlayerLives[4];
 
 void InitSaveSlots(void);
 void sub_0800b44c(void);
-void sub_080091ac(void);
-void sub_080096e0(void);
-void sub_0800b920(void);
-void sub_0800b4a8(void);
-void sub_0800b514(void);
-void sub_080100ac(void);
+void BootLogoMain(void);
+void TitleMain(void);
+void MainMenuMain(void);
+void ResetScoresAndMaxHealth(void);
+void ResetPlayerRecords(void);
+void CutsceneMain(void);
 void sub_0800b5dc(void);
 void sub_08007624(void);
 void sub_0800b628(void);
@@ -58,22 +58,22 @@ void AgbMain(void)
             break;
         case 1:
             if (gUnk_03000B00 == 0)
-                sub_080091ac();
+                BootLogoMain();
             gGameState = 3;
             break;
         case 3:
-            sub_080096e0();
+            TitleMain();
             gGameState = 4;
             gUnk_03002150 = 3;
             break;
         case 4:
-            sub_0800b920();
-            sub_0800b4a8();
-            sub_0800b514();
+            MainMenuMain();
+            ResetScoresAndMaxHealth();
+            ResetPlayerRecords();
             break;
         case 7:
             if (gUnk_02007FC0 != 0)
-                sub_080100ac();
+                CutsceneMain();
             gUnk_02007FC0 = 0;
             gGameState = gUnk_03002150;
             break;
@@ -140,7 +140,7 @@ void AgbMain(void)
         case 20:
             for (i = 0; i < 4; i++) {
                 gPlayerLives[i] = 1;
-                gUnk_02005588[i] = 0;
+                gPlayerHealth[i] = 0;
             }
             ResetPlayTime();
             sub_08022f50();
@@ -149,7 +149,7 @@ void AgbMain(void)
             gUnk_03002150 = 20;
             break;
         case 21:
-            sub_0800b4a8();
+            ResetScoresAndMaxHealth();
             gUnk_02007FC0 = 1;
             gGameState = 5;
             break;

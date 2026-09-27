@@ -106,18 +106,18 @@ extern s16 gUnk_0873A318[];
 extern u8 gUnk_02005574[];
 extern u8 gUnk_02000020;
 extern u8 gUnk_0200B078;
-extern u8 gUnk_0200B040;
+extern u8 gHBlankScrollStarted;
 extern u16 gRoomUpdateFlags;
 extern u8 gActivePlayerMask;
 extern u8 gActivePlayerCount;
 extern u8 gUnk_0300234C;
 extern u16 gPlayerCount;
 extern s16 gPlayerLives[];
-extern s16 gUnk_02005588[];
-extern s16 gUnk_02005580;
+extern s16 gPlayerHealth[];
+extern s16 gMaxHealth;
 extern u16 gUnk_02008008[];
 extern u16 gUnk_02007FA8[];
-extern u16 gUnk_02004B50[];
+extern u16 gPlayerAbilities[];
 extern u16 gUnk_0200AF18[];
 extern u8 gPlayerCameraMode[];
 extern vu16 gPlayerHeldKeys[];
@@ -136,10 +136,10 @@ void RequestCopy(u32 mode, u32 src, u32 dst, u32 size);
 void ResetTasksAndOam(void);
 s32 PlayBgm(s32 songId);
 void TaskSleepForever(void);
-void sub_08008c64(u16 a0);
+void LoadGfxSet(u16 a0);
 void sub_08009b2c(s32 i);
-s32 sub_08009e60(s32 a, u32 b);
-void sub_0800a778(void);
+s32 AddPlayerLives(s32 a, u32 b);
+void HudUpdateAbilityPanel(void);
 void CreateRoomTask(s32 a);
 void RoomTaskDraw(void);
 s32 sub_08026834(void);
@@ -200,7 +200,7 @@ void sub_08023948(void)
         gCameraMode = 4;
     else
         gCameraMode = 0;
-    sub_08008c64(1);
+    LoadGfxSet(1);
     CreateRoomTask(1);
     gCurRoomDef = gRoomTable[gLevelIndex][gStageIndex][gRoomIndex];
     gUnk_02007D64 = gCurRoomDef->unk57;
@@ -223,7 +223,7 @@ void sub_08023948(void)
     *gUnk_02005574 = 0;
     gUnk_02000020 = 0;
     gUnk_0200B078 = 0;
-    gUnk_0200B040 = 0;
+    gHBlankScrollStarted = 0;
     gRoomUpdateFlags = 31;
     ResetBlockAnims();
     StopScreenShake();
@@ -238,18 +238,18 @@ void sub_08023948(void)
     gUnk_0300234C = 0;
     for (i = 0; i < gPlayerCount; i++)
     {
-        if (gPlayerLives[i] != 0 || gUnk_02005588[i] != 0)
+        if (gPlayerLives[i] != 0 || gPlayerHealth[i] != 0)
         {
-            if (gUnk_02005588[i] == 0)
+            if (gPlayerHealth[i] == 0)
             {
-                gUnk_02005588[i] = gUnk_02005580;
+                gPlayerHealth[i] = gMaxHealth;
                 gUnk_02008008[i] = 0;
                 gUnk_02007FA8[i] = 0xFFFF;
-                sub_08009e60(-1, i);
+                AddPlayerLives(-1, i);
             }
             if ((s16)gUnk_02008008[i] != 0)
             {
-                gUnk_02004B50[i] = gUnk_02008008[i];
+                gPlayerAbilities[i] = gUnk_02008008[i];
                 gUnk_0200AF18[i] = gUnk_02007FA8[i];
                 gUnk_02008008[i] = 0;
                 gUnk_02007FA8[i] = 0xFFFF;
@@ -305,7 +305,7 @@ void sub_08023ca0(void)
     gUnk_030023B8 = gStageIndex;
     gUnk_03001F20 = 16;
     gCameraMode = 2;
-    sub_08008c64(1);
+    LoadGfxSet(1);
     CreateRoomTask(2);
     gCurRoomDef = gRoomTable[gLevelIndex][gStageIndex][gRoomIndex];
     gUnk_02007D64 = gCurRoomDef->unk57;
@@ -330,7 +330,7 @@ void sub_08023ca0(void)
     gUnk_02005574[0] = z;
     gUnk_02000020 = z;
     gUnk_0200B078 = z;
-    gUnk_0200B040 = z;
+    gHBlankScrollStarted = z;
     gRoomUpdateFlags = 3;
     ResetBlockAnims();
     StopScreenShake();
@@ -417,7 +417,7 @@ void sub_08023f18(void)
     CameraWriteScrollBg23();
     if (gRoomUpdateFlags & 16)
         UpdateDoors();
-    sub_0800a778();
+    HudUpdateAbilityPanel();
 }
 
 void sub_08023f5c(void)
@@ -432,7 +432,7 @@ void sub_08023f5c(void)
     CameraWriteScrollBg123();
     if (gRoomUpdateFlags & 16)
         UpdateDoors();
-    sub_0800a778();
+    HudUpdateAbilityPanel();
 }
 
 void sub_08023fa0(void)
@@ -453,7 +453,7 @@ void sub_08023fd4(void)
     u32 a;
 
     gCameraMode = 0;
-    sub_08008c64(1);
+    LoadGfxSet(1);
     CreateRoomTask(4);
     gCurRoomDef = gRoomTable[8][7][0];
     gUnk_02007D64 = gCurRoomDef->unk57;
@@ -478,7 +478,7 @@ void sub_08023fd4(void)
     RequestCopy(8, (u32)gCurRoomDef->unk20, (u32)gMetatileTiles, 0);
     gUnk_02000020 = 0;
     gUnk_0200B078 = 0;
-    gUnk_0200B040 = 0;
+    gHBlankScrollStarted = 0;
     gRoomUpdateFlags = 31;
     gRoomBgLayout = 0;
     gUnk_0300558C = gUnk_0873A318;
@@ -500,18 +500,18 @@ void sub_08023fd4(void)
     gUnk_0300234C = 0;
     for (i = 0; i < gPlayerCount; i++)
     {
-        if (gPlayerLives[i] != 0 || gUnk_02005588[i] != 0)
+        if (gPlayerLives[i] != 0 || gPlayerHealth[i] != 0)
         {
-            if (gUnk_02005588[i] == 0)
+            if (gPlayerHealth[i] == 0)
             {
-                gUnk_02005588[i] = gUnk_02005580;
+                gPlayerHealth[i] = gMaxHealth;
                 gUnk_02008008[i] = 0;
                 gUnk_02007FA8[i] = 0xFFFF;
-                sub_08009e60(-1, i);
+                AddPlayerLives(-1, i);
             }
             if ((s16)gUnk_02008008[i] != 0)
             {
-                gUnk_02004B50[i] = gUnk_02008008[i];
+                gPlayerAbilities[i] = gUnk_02008008[i];
                 gUnk_0200AF18[i] = gUnk_02007FA8[i];
                 gUnk_02008008[i] = 0;
                 gUnk_02007FA8[i] = 0xFFFF;

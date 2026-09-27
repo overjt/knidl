@@ -69,7 +69,7 @@ extern u8 gDigits[6];     /* decimal digit buffer, [5] = sign/flag */
 void sub_080b84f0(void);
 void sub_080b8694(void);
 void LinkMain1(u16 *a, u16 *b, u16 *c);
-void sub_08008b8c(void);
+void LinkErrorScreen(void);
 void RunTasks(void);
 void RunBuildOamInIwram(void);
 void EndFrame(void);
@@ -142,7 +142,7 @@ void UpdatePlayerKeys(void)
                 if (old == gSerialIntrCount) {
                     tries++;
                     if (tries > 29)
-                        sub_08008b8c();
+                        LinkErrorScreen();
                 }
                 FillSendCmd();
                 LinkMain1(gShouldAdvanceLinkState, gSendCmd, gRecvCmds[0]);
@@ -179,7 +179,7 @@ void RunLinkFrame(void)
     ResetSpriteQueue();
     UpdatePlayerKeys();
     if (IsLinkError() != 0)
-        sub_08008b8c();
+        LinkErrorScreen();
 }
 
 void RunFrames(s32 count)

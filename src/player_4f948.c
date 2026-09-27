@@ -17,7 +17,7 @@
  * its handler sub_0804ff1c runs the sub-handler Task.unk73 of
  * gUnk_0873B6BC, the steering helper sub_080506dc, clamps the player to
  * 16-224 x 18-132 and, once gSpriteCameraY passes 888, subtracts the
- * player's whole health (sub_08009ee8) and requests action 17. */
+ * player's whole health (AddPlayerHealth) and requests action 17. */
 
 struct M11R20 { u32 w[5]; };
 
@@ -31,7 +31,7 @@ extern u32 gUnk_0873C318[];
 extern void (*gUnk_0873B6AC[])(void);   /* enter 58's sub-actions [4] */
 extern void (*gUnk_0873B6BC[])(void);   /* handler 55's per-frame sub-handlers [4] */
 extern s16 gSpriteCameraY;               /* scalar, read with ldrsh (32 landed files) */
-extern s16 gUnk_02005588[];             /* per-player health (M02's HUD) */
+extern s16 gPlayerHealth[];             /* per-player health (M02's HUD) */
 
 void TaskYieldTrampoline(s32 frames);
 /* task / sprite services (landed prototypes) */
@@ -39,7 +39,7 @@ void CallTableEntry(u32 idx, u32 count, void (**fns)(void));   /* if (idx < coun
 void TaskSleepForever(void);
 void TaskSetEntry(void *a, u32 i);
 void TaskSetFrame(s32 a);
-s32 sub_08009ee8(s32 a, s32 b);
+s32 AddPlayerHealth(s32 a, s32 b);
 void RegisterCollider(u8 a, s16 x, s16 y, void *p);   /* M11's caller spelling */
 void PlayerStopAxes(s32 a0);
 s32 PlaySfxIfLocalPlayer(s32 a0, u16 a1);
@@ -324,7 +324,7 @@ void sub_0804ff1c(void)
     if (gSpriteCameraY > 888)
     {
         gCurTask->unk7C = 1;
-        sub_08009ee8(-gUnk_02005588[gCurTask->unk88->unk00], gCurTask->unk88->unk00);
+        AddPlayerHealth(-gPlayerHealth[gCurTask->unk88->unk00], gCurTask->unk88->unk00);
         gCurTask->unk88->unk01 = 17;
     }
 }

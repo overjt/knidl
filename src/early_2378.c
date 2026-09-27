@@ -7,7 +7,7 @@
  * (src/early_2668.c, which keeps the payload in the record gUnk_02006068;
  * this one keeps it in gRngValue and gFrameCount).  It blocks, pumping
  * the link layer once per frame (RunFrameNoTasks, LinkMain1, the abort poll
- * IsLinkError and the reset path sub_08008b8c after 31 frames without the
+ * IsLinkError and the reset path LinkErrorScreen after 31 frames without the
  * frame counter gSerialIntrCount moving), and drives the state word
  * gLinkCommand through the 0xBB00 exchange of the per-player bytes
  * gUnk_030023A8 and the 0x7700-0x7706 payload exchange, reading the other
@@ -39,7 +39,7 @@ extern u16 gLinkCommand;
 void RunFrameNoTasks(void);
 void LinkMain1(void *, void *, void *);
 int IsLinkError(void);
-void sub_08008b8c(void);
+void LinkErrorScreen(void);
 
 /* The 0x7700-series link handshake, twin of sub_08002668 (src/early_2668.c)
  * with the payload kept in gRngValue/gFrameCount.  The negotiation
@@ -113,10 +113,10 @@ void sub_08002378(void)
         RunFrameNoTasks();
         LinkMain1(&gShouldAdvanceLinkState, gSendCmd, gRecvCmds);
         if (IsLinkError() != 0)
-            sub_08008b8c();
+            LinkErrorScreen();
         if (old == gSerialIntrCount) {
             if (++b > 30)
-                sub_08008b8c();
+                LinkErrorScreen();
         }
         for (i = 0; i < 4; i++) {
             switch (gRecvCmds[0][i]) {

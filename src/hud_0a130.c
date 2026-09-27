@@ -5,8 +5,8 @@
 /* hud_0a130.c (0x0800A130-0x0800AACF, issue #96).
  *
  * HUD/score state updates: the life/health/score/timer changes, the
- * per-player bar records gUnk_02006A00[] and the two 5-way state switches
- * (sub_0800a19c, sub_0800a21c) over gUnk_020061D4. */
+ * per-player bar records gHudHpBars[] and the two 5-way state switches
+ * (sub_0800a19c, sub_0800a21c) over gHudAbilityPanelState. */
 
 struct HudBar
 {
@@ -25,25 +25,25 @@ struct Unk02005E00
 };
 
 extern u8 gUnk_02000034;
-extern s8 gUnk_02004B58;
-extern s16 gUnk_02004B68;
+extern s8 gHudHpBarIndex;
+extern s16 gHudHpBarMaxHp;
 extern s8 gUnk_02005590[];
 extern s8 gUnk_020055D0;
 extern s8 gUnk_020055F0[];
 extern struct Unk02005E00 gUnk_02005E00;
-extern u8 gUnk_02006014;
-extern s32 gUnk_02006020[];
-extern u8 gUnk_02006030;
+extern u8 gHudMode;
+extern s32 gPlayerScores[];
+extern u8 gHudShowsClock;
 extern u16 gUnk_02006068[];
 extern s8 gUnk_0200617C;
-extern s8 gUnk_020061D4;
-extern struct HudBar gUnk_02006A00[];
+extern s8 gHudAbilityPanelState;
+extern struct HudBar gHudHpBars[];
 extern s16 gUnk_02007D30;
-extern s16 gUnk_02007FBC[];
+extern s16 gHudHpBarValues[];
 extern s16 gUnk_02008014[];
 extern s16 gUnk_0200801C;
 extern u8 gUnk_0200AFF8;
-extern u8 gUnk_0200B028;
+extern u8 gHudShowsHpBar;
 extern void (*gFrameEndCallback)(void);
 extern u16 gLocalPlayer;
 extern u8 gUnk_030023B0;
@@ -54,29 +54,29 @@ void PlaySfx(s32 id);
 void sub_08008ebc(void);
 void sub_08008ed4(s32 a0);
 void sub_0800ab08(void);
-void sub_0800ad68(s32 v);
-void sub_0800af40(u16 *time);
-void sub_0800b0a4(s32 n);
+void HudDrawScore(s32 v);
+void HudDrawClock(u16 *time);
+void HudDrawAbilityPanel(s32 n);
 void sub_0800b0fc(void);
-void sub_0800b130(s32 x);
+void HudDrawHpBar(s32 x);
 void sub_0800b190(s32 from, s32 to);
 void sub_0800b230(s32 a, s32 b);
-void sub_0800b34c(s32 x, s32 y, s32 n);
-void sub_0800b3f8(void);
+void HudClearTiles(s32 x, s32 y, s32 n);
+void HudFlushTilemap(void);
 void sub_0800a9a0(s32 from, s32 to, s32 i);
 s32 sub_0800aa18(s32 from, s32 to);
 void sub_0800aa74(s32 x, s32 i);
 void sub_0800aa94(s32 i);
 void sub_0800aaac(s32 i);
 
-void sub_0800a130(s32 a, s32 id)
+void HudShowAbility(s32 a, s32 id)
 {
-    if (id == gLocalPlayer && gUnk_02006014 == 1) {
+    if (id == gLocalPlayer && gHudMode == 1) {
         if (a == 0) {
             sub_08008ebc();
-            gUnk_020061D4 = 0;
+            gHudAbilityPanelState = 0;
             gUnk_0200801C = 0;
-            sub_0800b0a4(0);
+            HudDrawAbilityPanel(0);
         } else {
             sub_08008ed4(a);
         }
@@ -85,20 +85,20 @@ void sub_0800a130(s32 a, s32 id)
 
 void sub_0800a178(s32 a, s32 id)
 {
-    if (id == gLocalPlayer && gUnk_02006014 == 1)
+    if (id == gLocalPlayer && gHudMode == 1)
         gUnk_0200801C = a;
 }
 
 void sub_0800a19c(s32 id)
 {
-    if (id == gLocalPlayer && gUnk_02006014 == 1) {
-        switch (gUnk_020061D4) {
+    if (id == gLocalPlayer && gHudMode == 1) {
+        switch (gHudAbilityPanelState) {
         case 0:
-            gUnk_020061D4 = 2;
+            gHudAbilityPanelState = 2;
             gUnk_0200801C = 0;
             break;
         case 1:
-            gUnk_020061D4 = 2;
+            gHudAbilityPanelState = 2;
             gUnk_0200801C = 16;
             break;
         case 2:
@@ -107,7 +107,7 @@ void sub_0800a19c(s32 id)
             gUnk_0200801C = 180;
             break;
         case 4:
-            gUnk_020061D4 = 2;
+            gHudAbilityPanelState = 2;
             break;
         }
     }
@@ -115,16 +115,16 @@ void sub_0800a19c(s32 id)
 
 void sub_0800a21c(s32 id)
 {
-    if (id == gLocalPlayer && gUnk_02006014 == 1) {
-        switch (gUnk_020061D4) {
+    if (id == gLocalPlayer && gHudMode == 1) {
+        switch (gHudAbilityPanelState) {
         case 0:
         case 1:
             break;
         case 2:
-            gUnk_020061D4 = 4;
+            gHudAbilityPanelState = 4;
             break;
         case 3:
-            gUnk_020061D4 = 4;
+            gHudAbilityPanelState = 4;
             gUnk_0200801C = 48;
             break;
         case 4:
@@ -135,32 +135,32 @@ void sub_0800a21c(s32 id)
 
 void sub_0800a280(void)
 {
-    gUnk_0200B028 = 1;
+    gHudShowsHpBar = 1;
     sub_0800b0fc();
 }
 
 void sub_0800a294(s32 max, s32 cur)
 {
     if (gUnk_030023B0 != 0) {
-        gUnk_02004B68 = max;
+        gHudHpBarMaxHp = max;
         gUnk_02007D30 = 32;
-        gUnk_02007FBC[0] = 32;
+        gHudHpBarValues[0] = 32;
         gUnk_0200AFF8 = 1;
-        sub_0800b130(32);
-        gUnk_02004B58 = 0;
-        gUnk_02006A00[0].unk0 = 0;
-        gUnk_02006A00[0].unk4 = gUnk_02007FBC[0];
-        gUnk_02006A00[0].unk2 = gUnk_02007FBC[0];
-        gUnk_02006A00[0].unk6 = 0;
+        HudDrawHpBar(32);
+        gHudHpBarIndex = 0;
+        gHudHpBars[0].unk0 = 0;
+        gHudHpBars[0].unk4 = gHudHpBarValues[0];
+        gHudHpBars[0].unk2 = gHudHpBarValues[0];
+        gHudHpBars[0].unk6 = 0;
     } else {
-        gUnk_02004B68 = max;
+        gHudHpBarMaxHp = max;
         gUnk_02007D30 = 32;
-        gUnk_02007FBC[0] = Div(cur << 5, gUnk_02004B68);
-        if (gUnk_02007FBC[0] > gUnk_02007D30)
-            gUnk_02007FBC[0] = gUnk_02007D30;
+        gHudHpBarValues[0] = Div(cur << 5, gHudHpBarMaxHp);
+        if (gHudHpBarValues[0] > gUnk_02007D30)
+            gHudHpBarValues[0] = gUnk_02007D30;
         sub_0800aa94(0);
-        sub_0800b130(0);
-        sub_0800aa18(0, gUnk_02007FBC[0]);
+        HudDrawHpBar(0);
+        sub_0800aa18(0, gHudHpBarValues[0]);
     }
 }
 
@@ -174,28 +174,28 @@ void sub_0800a340(s32 max, s32 cur)
     else
         idx = gUnk_02005590[gCurTaskIdx - 32];
     if (gUnk_030023B0 != 0) {
-        if (gUnk_02004B68 == 0) {
-            gUnk_02004B68 = max;
+        if (gHudHpBarMaxHp == 0) {
+            gHudHpBarMaxHp = max;
             gUnk_02007D30 = 32;
         }
-        gUnk_02007FBC[idx] = gUnk_02007D30;
+        gHudHpBarValues[idx] = gUnk_02007D30;
         gUnk_0200AFF8 = 1;
-        sub_0800b130(32);
-        gUnk_02004B58 = idx;
-        p = &gUnk_02006A00[idx];
+        HudDrawHpBar(32);
+        gHudHpBarIndex = idx;
+        p = &gHudHpBars[idx];
         p->unk0 = 0;
-        p->unk4 = gUnk_02007FBC[idx];
-        p->unk2 = gUnk_02007FBC[idx];
+        p->unk4 = gHudHpBarValues[idx];
+        p->unk2 = gHudHpBarValues[idx];
         p->unk6 = 0;
     } else {
-        if (gUnk_02004B68 == 0) {
-            gUnk_02004B68 = max;
+        if (gHudHpBarMaxHp == 0) {
+            gHudHpBarMaxHp = max;
             gUnk_02007D30 = 32;
         }
-        gUnk_02007FBC[idx] = Div(cur << 5, gUnk_02004B68);
+        gHudHpBarValues[idx] = Div(cur << 5, gHudHpBarMaxHp);
         sub_0800aa94(idx);
-        sub_0800b130(0);
-        sub_0800a9a0(0, gUnk_02007FBC[idx], idx);
+        HudDrawHpBar(0);
+        sub_0800a9a0(0, gHudHpBarValues[idx], idx);
     }
 }
 
@@ -204,16 +204,16 @@ void sub_0800a42c(void)
     s32 idx;
     s32 v;
 
-    if (gUnk_02004B68 != 0) {
+    if (gHudHpBarMaxHp != 0) {
         if (gUnk_020055D0 == 1)
             idx = 0;
         else
             idx = gUnk_02005590[gCurTaskIdx - 32];
         if (gUnk_02008014[idx] != -1 && gCurTask->unk78 > 0) {
-            v = Div(gCurTask->unk78 << 5, gUnk_02004B68);
-            if (v != gUnk_02007FBC[idx])
-                sub_0800a9a0(gUnk_02007FBC[idx], v, idx);
-            gUnk_02007FBC[idx] = v;
+            v = Div(gCurTask->unk78 << 5, gHudHpBarMaxHp);
+            if (v != gHudHpBarValues[idx])
+                sub_0800a9a0(gHudHpBarValues[idx], v, idx);
+            gHudHpBarValues[idx] = v;
         }
     }
 }
@@ -223,23 +223,23 @@ void sub_0800a4c0(void)
     s32 idx;
     s32 v;
 
-    if (gUnk_02004B68 != 0) {
+    if (gHudHpBarMaxHp != 0) {
         if (gUnk_020055D0 == 1)
             idx = 0;
         else
             idx = gUnk_02005590[gCurTaskIdx - 32];
         if (gUnk_02008014[idx] != -1) {
             if (gCurTask->unk78 > 0)
-                v = Div(gCurTask->unk78 << 5, gUnk_02004B68);
+                v = Div(gCurTask->unk78 << 5, gHudHpBarMaxHp);
             else
                 v = 0;
-            gUnk_02007FBC[idx] = v;
+            gHudHpBarValues[idx] = v;
             sub_0800aa74(v, idx);
         }
     }
 }
 
-void sub_0800a554(void)
+void HudRemoveHpBar(void)
 {
     s32 idx;
     s32 i;
@@ -251,25 +251,25 @@ void sub_0800a554(void)
     if (gUnk_02008014[idx] != -1) {
         gUnk_02008014[idx] = -1;
         if (--gUnk_02000034 != 0) {
-            if (gUnk_02004B58 == idx) {
+            if (gHudHpBarIndex == idx) {
                 for (i = 0; i < 2; i++) {
                     if (i != idx && gUnk_02005590[gUnk_02008014[i] - 32] != -1)
                         break;
                 }
-                if (gUnk_02006014 == 1)
-                    sub_0800aa74(gUnk_02007FBC[i], idx);
+                if (gHudMode == 1)
+                    sub_0800aa74(gHudHpBarValues[i], idx);
             }
         } else {
-            if (gUnk_02006014 == 1) {
-                sub_0800b34c(20, 18, 2);
-                sub_0800b34c(20, 19, 2);
-                if (gUnk_02006030 == 0)
-                    sub_0800ad68(gUnk_02006020[gLocalPlayer]);
+            if (gHudMode == 1) {
+                HudClearTiles(20, 18, 2);
+                HudClearTiles(20, 19, 2);
+                if (gHudShowsClock == 0)
+                    HudDrawScore(gPlayerScores[gLocalPlayer]);
                 else
-                    sub_0800af40(gUnk_02006068);
+                    HudDrawClock(gUnk_02006068);
             }
-            gUnk_0200B028 = 0;
-            gUnk_02004B68 = gUnk_02007D30 = 0;
+            gHudShowsHpBar = 0;
+            gHudHpBarMaxHp = gUnk_02007D30 = 0;
         }
     }
 }
@@ -281,7 +281,7 @@ void sub_0800a698(void)
 
 void sub_0800a6a4(void)
 {
-    u8 mode = gUnk_02006014;
+    u8 mode = gHudMode;
     s32 row;
 
     if (mode != 0) {
@@ -297,8 +297,8 @@ void sub_0800a6a4(void)
             if (gUnk_02005E00.unk04[gLocalPlayer] == 0) {
                 gUnk_020055F0[0] = 0;
                 row = gUnk_03002444 ? 2 : 0;
-                sub_0800b34c(12, row, 16);
-                sub_0800b34c(12, row + 1, 16);
+                HudClearTiles(12, row, 16);
+                HudClearTiles(12, row + 1, 16);
             } else {
                 if (gUnk_020055F0[1] == 0) {
                     if (gUnk_020055F0[0] == 2) {
@@ -315,14 +315,14 @@ void sub_0800a6a4(void)
         }
     done:
         sub_0800ab08();
-        sub_0800b3f8();
+        HudFlushTilemap();
     }
 }
 
-void sub_0800a778(void)
+void HudUpdateAbilityPanel(void)
 {
-    if (gUnk_02006014 != 0 && gUnk_0200617C != 0) {
-        switch (gUnk_020061D4) {
+    if (gHudMode != 0 && gUnk_0200617C != 0) {
+        switch (gHudAbilityPanelState) {
         case 0:
         case 1:
             break;
@@ -331,10 +331,10 @@ void sub_0800a778(void)
             gUnk_03002448 = gUnk_0200801C;
             if (gUnk_03002448 > 47) {
                 gUnk_03002448 = 48;
-                gUnk_020061D4 = 3;
+                gHudAbilityPanelState = 3;
                 gUnk_0200801C = 180;
             }
-            sub_0800b0a4(gUnk_03002448 >> 3);
+            HudDrawAbilityPanel(gUnk_03002448 >> 3);
             break;
         case 3:
             if (--gUnk_0200801C <= 0)
@@ -345,24 +345,24 @@ void sub_0800a778(void)
             gUnk_03002448 = gUnk_0200801C;
             if (gUnk_03002448 <= 16) {
                 gUnk_03002448 = 16;
-                gUnk_020061D4 = 1;
+                gHudAbilityPanelState = 1;
                 gUnk_0200801C = 0;
             }
-            sub_0800b0a4(gUnk_03002448 >> 3);
+            HudDrawAbilityPanel(gUnk_03002448 >> 3);
             break;
         }
     }
 }
 
-void sub_0800a854(void)
+void HudUpdateHpBars(void)
 {
     s32 i;
     struct HudBar *p;
     s32 v;
 
-    if (gUnk_02006014 != 0 && gUnk_0200B028 == 1) {
+    if (gHudMode != 0 && gHudShowsHpBar == 1) {
         for (i = 0; i < 2; i++) {
-            p = &gUnk_02006A00[i];
+            p = &gHudHpBars[i];
             switch (p->unk0) {
             case 0:
                 break;
@@ -373,7 +373,7 @@ void sub_0800a854(void)
                 v = p->unk4 + 1;
                 if (v > p->unk2)
                     v = p->unk2;
-                if (gUnk_02004B58 == i)
+                if (gHudHpBarIndex == i)
                     sub_0800b190(p->unk4, v);
                 p->unk4 = v;
                 if (p->unk4 == p->unk2) {
@@ -390,7 +390,7 @@ void sub_0800a854(void)
                 v = p->unk4 + 1;
                 if (v > p->unk2)
                     v = p->unk2;
-                if (gUnk_02004B58 == i)
+                if (gHudHpBarIndex == i)
                     sub_0800b190(p->unk4, v);
                 p->unk4 = v;
                 if (p->unk4 == p->unk2)
@@ -404,7 +404,7 @@ void sub_0800a854(void)
                 v = p->unk4 - 1;
                 if (v < p->unk2)
                     v = p->unk2;
-                if (gUnk_02004B58 == i)
+                if (gHudHpBarIndex == i)
                     sub_0800b190(p->unk4, v);
                 p->unk4 = v;
                 if (p->unk4 == p->unk2)
@@ -422,10 +422,10 @@ void sub_0800a9a0(s32 from, s32 to, s32 i)
     struct HudBar *p;
     s32 d;
 
-    if (gUnk_02006014 != 0 && gUnk_0200B028 == 1) {
-        p = &gUnk_02006A00[i];
+    if (gHudMode != 0 && gHudShowsHpBar == 1) {
+        p = &gHudHpBars[i];
         if (p->unk0 != 1) {
-            sub_0800b130(p->unk4);
+            HudDrawHpBar(p->unk4);
             if (p->unk0 != 0) {
                 d = to - p->unk4;
                 p->unk2 = to;
@@ -445,7 +445,7 @@ void sub_0800a9a0(s32 from, s32 to, s32 i)
                         p->unk0 = 3;
                 }
             }
-            gUnk_02004B58 = i;
+            gHudHpBarIndex = i;
         }
     }
 }
@@ -454,14 +454,14 @@ s32 sub_0800aa18(s32 from, s32 to)
 {
     s32 i;
 
-    if (gUnk_02006014 != 0 && gUnk_0200B028 == 1 && to > from) {
+    if (gHudMode != 0 && gHudShowsHpBar == 1 && to > from) {
         for (i = 0; i < 2; i++) {
-            gUnk_02006A00[i].unk4 = from;
-            gUnk_02006A00[i].unk2 = to;
-            gUnk_02006A00[i].unk6 = 4;
-            gUnk_02006A00[i].unk0 = 1;
+            gHudHpBars[i].unk4 = from;
+            gHudHpBars[i].unk2 = to;
+            gHudHpBars[i].unk6 = 4;
+            gHudHpBars[i].unk0 = 1;
         }
-        gUnk_02004B58 = 0;
+        gHudHpBarIndex = 0;
         gUnk_0200AFF8 = 0;
     }
 }
@@ -469,13 +469,13 @@ s32 sub_0800aa18(s32 from, s32 to)
 void sub_0800aa74(s32 x, s32 i)
 {
     sub_0800aaac(i);
-    sub_0800b130(x);
-    gUnk_02004B58 = i;
+    HudDrawHpBar(x);
+    gHudHpBarIndex = i;
 }
 
 void sub_0800aa94(s32 i)
 {
-    struct HudBar *p = &gUnk_02006A00[i];
+    struct HudBar *p = &gHudHpBars[i];
 
     p->unk0 = 0;
     p->unk4 = 0;
@@ -485,10 +485,10 @@ void sub_0800aa94(s32 i)
 
 void sub_0800aaac(s32 i)
 {
-    struct HudBar *p = &gUnk_02006A00[i];
+    struct HudBar *p = &gHudHpBars[i];
 
     p->unk0 = 0;
-    p->unk4 = gUnk_02007FBC[i];
-    p->unk2 = gUnk_02007FBC[i];
+    p->unk4 = gHudHpBarValues[i];
+    p->unk2 = gHudHpBarValues[i];
     p->unk6 = 0;
 }

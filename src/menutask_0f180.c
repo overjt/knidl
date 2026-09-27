@@ -13,8 +13,8 @@
  * (sub_0800fa30) and #258 (sub_0800fb94) cycle and cross-fade the
  * background palettes when the menu screen changes. */
 
-extern s8 gUnk_020060D0;
-extern s8 gUnk_02007E88;
+extern s8 gMenuScreen;
+extern s8 gPrevMenuScreen;
 extern s8 gUnk_02007FC8;
 /* Plain u8 here (vu8 elsewhere): a volatile byte load expands to a load plus
    two shifts, which lengthens this address's live range in sub_0800f408 enough
@@ -52,9 +52,9 @@ s32 TaskCreateFrom(u32 type, s32 idx);
 void TaskMove(void);
 void TaskDrawScreen(void);
 void TaskSleepForever(void);
-void sub_08008c64(u16 a0);
+void LoadGfxSet(u16 a0);
 s32 sub_0800ffd8(void);
-u8 sub_0800ffe8(void);
+u8 TaskIsOnScreenNoCamera(void);
 void sub_0800f2b4(void);
 void sub_0800f408(void);
 void sub_0800f698(void);
@@ -95,7 +95,7 @@ void sub_0800f180(void)
     s->unk18 = 0;
     s->unk1C = 0;
     s->unk20 = 0;
-    while (gUnk_020060D0 == 8 || gUnk_020060D0 == 9) {
+    while (gMenuScreen == 8 || gMenuScreen == 9) {
         s32 n = sub_0800ffd8();
         struct Task *v;
 
@@ -165,7 +165,7 @@ void sub_0800f390(void)
     gCurTask->unk4C = 0x780000;
     gCurTask->unk50 = 0x480000;
     gCurTask->unk2C = 0;
-    while (gUnk_020060D0 == 8 || gUnk_020060D0 == 9)
+    while (gMenuScreen == 8 || gMenuScreen == 9)
         TaskYieldTrampoline(1);
     TaskExitTrampoline();
 }
@@ -202,7 +202,7 @@ void sub_0800f408(void)
     if (gUnk_02007FC8 == 0) {
         v = gCurTask;
         v->unk3C = gUnk_08731EA8[p->unk1C];
-        if (sub_0800ffe8()) {
+        if (TaskIsOnScreenNoCamera()) {
             w = gCurTask;
             tbl = w->unk38;
             QueueSprite(w->unk42 - 1, tbl[gUnk_08731EB0[p->unk1C]], 0, 0, w->unk48, w->unk4A);
@@ -243,7 +243,7 @@ void sub_0800f5ec(void)
     t->unk50 = gUnk_08731EC0[t->unk18] << 16;
     t->unk28 = 1;
     t->unk2C = 1;
-    while (gUnk_020060D0 == 8 || gUnk_020060D0 == 9) {
+    while (gMenuScreen == 8 || gMenuScreen == 9) {
         struct Task *u = gCurTask;
 
         if (u->unk18 == 0 && --u->unk28 == 0) {
@@ -303,9 +303,9 @@ void Task_MenuScreenTitle(void)
     gCurTask->unk38 = gUnk_08755620;
     gCurTask->unk42 = 7;
     t = gCurTask;
-    t->unk28 = gUnk_020060D0;
-    sub_08008c64(gUnk_08731D70[t->unk28]);
-    if (gUnk_020060D0 == 7) {
+    t->unk28 = gMenuScreen;
+    LoadGfxSet(gUnk_08731D70[t->unk28]);
+    if (gMenuScreen == 7) {
         t = gCurTask;
         t->unk4C = 0x600000;
         t->unk50 = 0x200000;
@@ -328,8 +328,8 @@ void sub_0800f840(void)
     struct Task *v;
     s32 old = t->unk28;
 
-    if (tbl[old] != tbl[gUnk_020060D0]) {
-        if (gUnk_020060D0 == 7 || old == 7) {
+    if (tbl[old] != tbl[gMenuScreen]) {
+        if (gMenuScreen == 7 || old == 7) {
             t->unk2C = 0;
             t->unk30 = 8;
             if (old == 7) {
@@ -349,19 +349,19 @@ void sub_0800f840(void)
             u->unk4C = 0x640000;
             u->unk50 = 0xE0000;
             u->unk54 = 0;
-            if (gUnk_08731D70[gUnk_020060D0])
+            if (gUnk_08731D70[gMenuScreen])
                 u->unk2C = 2;
             else
                 u->unk2C = 3;
         }
-        gCurTask->unk28 = gUnk_020060D0;
+        gCurTask->unk28 = gMenuScreen;
     }
     v = gCurTask;
     switch (v->unk2C) {
     case 0:
         if (--v->unk30 == 0) {
-            sub_08008c64(gUnk_08731D70[v->unk28]);
-            if (gUnk_020060D0 == 7) {
+            LoadGfxSet(gUnk_08731D70[v->unk28]);
+            if (gMenuScreen == 7) {
                 u = gCurTask;
                 u->unk4C = 0xFFE00000;
                 u->unk50 = 0x200000;
@@ -381,11 +381,11 @@ void sub_0800f840(void)
         break;
     case 2:
         if (--v->unk30 == 0) {
-            if (gUnk_020060D0 == 8 && gUnk_02007E88 == 5)
-                sub_08008c64(44);
+            if (gMenuScreen == 8 && gPrevMenuScreen == 5)
+                LoadGfxSet(44);
             else
-                sub_08008c64(gUnk_08731D70[gCurTask->unk28]);
-            if (gUnk_020060D0 == 7)
+                LoadGfxSet(gUnk_08731D70[gCurTask->unk28]);
+            if (gMenuScreen == 7)
                 gCurTask->unk3C = 11;
             else
                 gCurTask->unk3C = 10;
@@ -394,7 +394,7 @@ void sub_0800f840(void)
         break;
     case 1:
         if (--v->unk30 == 0) {
-            if (gUnk_020060D0 == 7) {
+            if (gMenuScreen == 7) {
                 v->unk4C = 0x600000;
                 v->unk50 = 0x200000;
             } else {
@@ -418,16 +418,16 @@ void sub_0800fa30(void)
     t->unk2C = 0;
     t->unk30 = 1;
     t->unk34 = 0;
-    s = gUnk_020060D0;
+    s = gMenuScreen;
     t->unk18 = s;
     t->unk1C = s;
     t->unk20 = 0;
     t->unk24 = 0;
     for (;;) {
-        p = gUnk_08731D28[gUnk_020060D0];
+        p = gUnk_08731D28[gMenuScreen];
         if (p != NULL && gUnk_08731D28[gCurTask->unk18] != p) {
             gCurTask->unk1C = gCurTask->unk18;
-            gCurTask->unk18 = gUnk_020060D0;
+            gCurTask->unk18 = gMenuScreen;
             gCurTask->unk24 = 0;
             gCurTask->unk20 = 1;
         }
@@ -473,18 +473,18 @@ void sub_0800fb94(void)
     u16 *p;
     s32 s;
 
-    s = gUnk_020060D0;
+    s = gMenuScreen;
     t->unk18 = s;
     t->unk1C = s;
     t->unk20 = 0;
     t->unk24 = 0;
-    sub_08008c64(gUnk_08731D58[s]);
+    LoadGfxSet(gUnk_08731D58[s]);
     RequestCopy(2, (u32)gUnk_08731CF8[gCurTask->unk18], (u32)gUnk_030012B0, 32);
     for (;;) {
-        p = gUnk_08731CF8[gUnk_020060D0];
+        p = gUnk_08731CF8[gMenuScreen];
         if (p != NULL && gUnk_08731CF8[gCurTask->unk18] != p) {
             gCurTask->unk1C = gCurTask->unk18;
-            gCurTask->unk18 = gUnk_020060D0;
+            gCurTask->unk18 = gMenuScreen;
             gCurTask->unk24 = 0;
             gCurTask->unk20 = 1;
         }
@@ -498,7 +498,7 @@ void sub_0800fb94(void)
                 if (w->unk24 == 256) {
                     w->unk24 = 0;
                     w->unk20 = 2;
-                    sub_08008c64(gUnk_08731D58[w->unk18]);
+                    LoadGfxSet(gUnk_08731D58[w->unk18]);
                 }
                 break;
             case 2:

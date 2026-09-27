@@ -13,7 +13,7 @@
  * PlayerHasCrossedWaterSurface(0) fires while Task.unk58 > 0.  sub_08047844 (action 42)
  * is a long scripted sequence (animations 0x8E5-0x8F7, sounds 180 and 274, effect
  * 38 steps 0-3) that holds PlayerState.unk42 bit 1 and releases it with
- * the HUD call sub_0800a008(0, -1, player); its handler sub_08047bd8 does
+ * the HUD call SetPlayerAbility(0, -1, player); its handler sub_08047bd8 does
  * the same release when the ability PlayerState.unk0D is 11.
  * sub_08047c30 (action 43) is a re-entrant three-state machine: state 0
  * installs the hit boxes gUnk_0873C1B0 and gUnk_0873CEEC in the player
@@ -46,7 +46,7 @@ void TaskYieldTrampoline(s32 frames);
 void TaskSleepForever(void);
 void TaskSetEntry(void *a, u32 i);
 void TaskSetFrame(s32 a);
-s32 sub_0800a008(s32 a, s32 b, u32 c);
+s32 SetPlayerAbility(s32 a, s32 b, u32 c);
 void RegisterCollider(u8 a, s16 x, s16 y, void *p);   /* M11's caller spelling */
 u16 TaskBreakBlocks(struct HitBoxSet *p, s32 e);
 s32 PlaySfxIfLocalPlayer(s32 a0, u16 a1);
@@ -252,7 +252,7 @@ void sub_08047844(void)
     gCurTask->unk3C++;
     TaskYieldTrampoline(4);
     gCurTask->unk88->unk42 &= 0xFFFD;
-    sub_0800a008(0, -1, gCurTask->unk88->unk00);
+    SetPlayerAbility(0, -1, gCurTask->unk88->unk00);
     gCurTask->unk3C--;
     TaskYieldTrampoline(32);
     TaskSetFrame(0x8F6);
@@ -286,7 +286,7 @@ void sub_08047bd8(void)
         struct Task *t = gCurTask;
         if (t->unk88->unk0D == 11) {
             t->unk88->unk42 &= 0xFFFD;
-            sub_0800a008(0, -1, t->unk88->unk00);
+            SetPlayerAbility(0, -1, t->unk88->unk00);
         }
     } else if (gCurTask->unk28 != 0) {
         PlayerRequestLocomotion();

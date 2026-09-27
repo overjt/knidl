@@ -12,7 +12,7 @@
  * body sub_0800dfdc) a sprite group that slides with the screen; #242
  * (Task_FileMenuHighlight, body sub_0800e148) the file-menu highlight, which
  * marks the selected entry (sub_0800e28c) and loads its picture
- * (sub_0800e2dc: LZ77 into 0x02020000, one 2 KiB part to 0x06004200). */
+ * (MenuLoadPicture: LZ77 into 0x02020000, one 2 KiB part to 0x06004200). */
 
 struct SaveSlot
 {
@@ -35,9 +35,9 @@ struct SaveSlot
     /*0x74*/ u8 filler74[0x8C];
 };
 
-extern s8 gUnk_020055E4;
-extern s8 gUnk_020060D0;
-extern s8 gUnk_0200B074;
+extern s8 gFileMenuCursor;
+extern s8 gMenuScreen;
+extern s8 gMenuCursor;
 extern struct SaveSlot gSaveSlots[];
 extern u32 gUnk_02020000[];
 extern u16 gBgPalette[];
@@ -61,16 +61,16 @@ s32 QueueSprite(u32 a, u32 b, u32 c, u32 d, u32 e, s16 f);
 void BlendColors(u16 *src, u16 *dst, s32 ratio, s32 count, u16 *out);
 void TaskMove(void);
 void TaskDrawScreen(void);
-void sub_08008c64(u16 a0);
+void LoadGfxSet(u16 a0);
 s32 sub_0800bf10(s32 slot, u32 pal);
-u8 sub_0800ffe8(void);
+u8 TaskIsOnScreenNoCamera(void);
 void sub_0800dbdc(void);
 void sub_0800dc98(void);
 void sub_0800dda0(void);
 void sub_0800dfdc(void);
 void sub_0800e148(void);
 void sub_0800e28c(void);
-s32 sub_0800e2dc(s32 id, s32 part);
+s32 MenuLoadPicture(s32 id, s32 part);
 
 void sub_0800daf8(void)
 {
@@ -80,7 +80,7 @@ void sub_0800daf8(void)
     gCurTask->unk38 = gUnk_08755620;
     gCurTask->unk3C = gCurTask->unk1C + 3;
     sub_0800dc98();
-    while (gUnk_020060D0 != 1)
+    while (gMenuScreen != 1)
         TaskYieldTrampoline(1);
     gCurTask->unk54 = 0x1AE000;
     TaskYieldTrampoline(10);
@@ -97,7 +97,7 @@ void sub_0800db64(void)
     gCurTask->unk3C = gCurTask->unk1C;
     gCurTask->unk28 = -1;
     sub_0800dc98();
-    while (gUnk_020060D0 != 1)
+    while (gMenuScreen != 1)
         TaskYieldTrampoline(1);
     gCurTask->unk54 = 0x1AE000;
     TaskYieldTrampoline(10);
@@ -111,14 +111,14 @@ void sub_0800dbdc(void)
     s32 slot;
     s32 i;
 
-    if (gUnk_0200B074 != gCurTask->unk28) {
+    if (gMenuCursor != gCurTask->unk28) {
         slot = gCurTask->unk1C;
         s = gSaveSlots;
         i = slot * 256;
         if (gSaveSlots[slot].unk12[1] != 0 && gSaveSlots[slot].unk04 != 0x99999999)
             i++;
         sub_0800bf10(slot, (s8)s->unk16[i]);
-        gCurTask->unk28 = gUnk_0200B074;
+        gCurTask->unk28 = gMenuCursor;
     }
 
     if (gSaveSlots[gCurTask->unk1C].unk12[1] != 0 && gSaveSlots[gCurTask->unk1C].unk04 != 0x99999999) {
@@ -154,12 +154,12 @@ void Task_FileSelectCursor(void)
     gCurTask->unk30 = 1;
     gCurTask->unk34 = 0;
     gCurTask->unk4C = 0x160000;
-    gCurTask->unk50 = ((gUnk_0200B074 * 5) << 19) + 0x240000;
+    gCurTask->unk50 = ((gMenuCursor * 5) << 19) + 0x240000;
     gCurTask->unk54 = 0x30000;
     TaskYieldTrampoline(8);
     gCurTask->unk54 = 0;
-    while (gUnk_020060D0 != 1) {
-        gCurTask->unk50 = ((gUnk_0200B074 * 5) << 19) + 0x240000;
+    while (gMenuScreen != 1) {
+        gCurTask->unk50 = ((gMenuCursor * 5) << 19) + 0x240000;
         TaskYieldTrampoline(1);
     }
     gCurTask->unk54 = 0xFFFA0000;
@@ -186,13 +186,13 @@ void sub_0800dda0(void)
         v->unk34 = 256;
     w = gCurTask;
     BlendColors(gUnk_08554B60[w->unk2C], gUnk_08554B60[w->unk30], (u16)w->unk34, 4, gUnk_03001668);
-    cur = gUnk_0200B074;
+    cur = gMenuCursor;
     if (cur != gCurTask->unk28) {
         u8 *p;
         RequestCopy(3, (u32)&gUnk_08550B9C[cur * 192], 0x06013580, 96);
         p = gUnk_08550B9C;
-        RequestCopy(3, (u32)&p[gUnk_0200B074 * 192 + 96], 0x06013980, 96);
-        gCurTask->unk28 = gUnk_0200B074;
+        RequestCopy(3, (u32)&p[gMenuCursor * 192 + 96], 0x06013980, 96);
+        gCurTask->unk28 = gMenuCursor;
     }
 }
 
@@ -216,7 +216,7 @@ void sub_0800de6c(void)
         u->unk18 += 0xFFF90000;
         u->unk20 += 0xFFFA0000;
         TaskYieldTrampoline(1);
-        s = gUnk_020060D0;
+        s = gMenuScreen;
         if (s == 0 || s == 4 || s == 7 || s == 8) {
             gCurTask->unk28 = 1;
             break;
@@ -224,7 +224,7 @@ void sub_0800de6c(void)
     }
     for (;;) {
         TaskYieldTrampoline(1);
-        s = gUnk_020060D0;
+        s = gMenuScreen;
         if (s == 1) {
             v = gCurTask;
             if (v->unk18 < (s32)0xFFC80000) {
@@ -269,7 +269,7 @@ void sub_0800dfdc(void)
     struct Task *t;
     u32 *tbl;
 
-    if (sub_0800ffe8()) {
+    if (TaskIsOnScreenNoCamera()) {
         tbl = gUnk_08755650;
         QueueSprite(12, tbl[3], gCurTask->unk3E, 0, (gCurTask->unk18 >> 16) + 304, (gCurTask->unk1C >> 16) + 40);
         QueueSprite(12, tbl[2], gCurTask->unk3E, 0, (gCurTask->unk18 >> 16) + 304, (gCurTask->unk1C >> 16) + 40);
@@ -297,10 +297,10 @@ void Task_FileMenuHighlight(void)
     gCurTask->unk34 = 0;
     gCurTask->unk4C = 0x640000;
     for (;;) {
-        s = gUnk_020060D0;
+        s = gMenuScreen;
         if (s == 0 || s == 4 || s == 7 || s == 8)
             break;
-        gCurTask->unk50 = ((gUnk_020055E4 * 3) << 19) + 0x300000;
+        gCurTask->unk50 = ((gFileMenuCursor * 3) << 19) + 0x300000;
         TaskYieldTrampoline(1);
     }
     TaskExitTrampoline();
@@ -323,21 +323,21 @@ void sub_0800e148(void)
     v = gCurTask;
     if ((v->unk34 += 32) > 256)
         v->unk34 = 256;
-    if (gUnk_020060D0 == 1) {
+    if (gMenuScreen == 1) {
         w = gCurTask;
         BlendColors(gUnk_08559B68[w->unk2C], gUnk_08559B68[w->unk30], (u16)w->unk34, 10, gUnk_0300153C);
-        sub_08008c64(23);
-        if (gUnk_020055E4 != gCurTask->unk28) {
+        LoadGfxSet(23);
+        if (gFileMenuCursor != gCurTask->unk28) {
             sub_0800e28c();
-            sub_0800e2dc(0, gUnk_020055E4);
-            gCurTask->unk28 = gUnk_020055E4;
+            MenuLoadPicture(0, gFileMenuCursor);
+            gCurTask->unk28 = gFileMenuCursor;
         }
     } else {
         BlendColors(gUnk_08559B90, gUnk_08559B90, (u16)gCurTask->unk34, 10, gUnk_0300153C);
-        sub_08008c64(24);
+        LoadGfxSet(24);
         gCurTask->unk28 = -1;
     }
-    if (sub_0800ffe8()) {
+    if (TaskIsOnScreenNoCamera()) {
         tbl = gUnk_08755650;
         QueueSprite(6, tbl[1], 0, 0, gCurTask->unk48, gCurTask->unk4A);
         QueueSprite(10, tbl[0], 0, 0, gCurTask->unk48, gCurTask->unk4A);
@@ -351,14 +351,14 @@ void sub_0800e28c(void)
 
     for (i = 0; i <= 3; i++) {
         p = gBgPalette;
-        if (i == gUnk_020055E4)
+        if (i == gFileMenuCursor)
             RequestCopy(2, (u32)gUnk_08554D7A, (u32)&p[i * 3 + 1], 6);
         else
             RequestCopy(2, (u32)gUnk_08554D80, (u32)&p[i * 3 + 1], 6);
     }
 }
 
-s32 sub_0800e2dc(s32 id, s32 part)
+s32 MenuLoadPicture(s32 id, s32 part)
 {
     LZ77UnCompWram(gUnk_08731E34[id], gUnk_02020000);
     RequestCopy(1, (u32)gUnk_02020000 + (part << 11), 0x06004200, 0x800);

@@ -118,13 +118,13 @@ extern s16 gColliderLeft;           /* body box left */
 extern s16 gColliderRight;           /* body box right */
 extern s16 gColliderTop;           /* body box top */
 extern s16 gColliderBottom;           /* body box bottom */
-extern s16 gUnk_02005588[];
+extern s16 gPlayerHealth[];
 extern struct HitEntry gUnk_030053A0[];
 extern u8 gUnk_030054A8;
 extern u16 gUnk_08732218[];
 extern u16 gUnk_08732224[];
 
-s32 sub_08009ee8(s32 a, u32 b);
+s32 AddPlayerHealth(s32 a, u32 b);
 void sub_0801b8e4(void);
 void sub_0801b9e4(void);
 
@@ -240,8 +240,8 @@ u8 sub_0801a8c8(void)
                     else
                         t->unk7D = 4;
                     gColliderPlayerState->unk45++;
-                    sub_08009ee8(-gAttackBox->unk08, gColliderPlayer);
-                    if (gUnk_02005588[gColliderPlayer] <= 0)
+                    AddPlayerHealth(-gAttackBox->unk08, gColliderPlayer);
+                    if (gPlayerHealth[gColliderPlayer] <= 0)
                     {
                         t->unk7C = 1;
                         t->unk82 = gAttackBox->unk1A & 0x300;

@@ -25,8 +25,8 @@ extern u16 gCameraMode;
 void CallTableEntry(u32 idx, u32 count, void (**fns)(void));
 void TaskSleepForever(void);
 void sub_0800a6a4(void);
-void sub_0800a778(void);
-void sub_0800a854(void);
+void HudUpdateAbilityPanel(void);
+void HudUpdateHpBars(void);
 void UpdateDoors(void);
 void DrawDoors(void);
 void CameraUpdatePos(void);
@@ -141,8 +141,8 @@ void sub_08023748(void)
     if (gRoomUpdateFlags & 16)
         UpdateDoors();
     if (gRoomUpdateFlags & 8)
-        sub_0800a854();
-    sub_0800a778();
+        HudUpdateHpBars();
+    HudUpdateAbilityPanel();
 }
 
 void sub_080237a4(void)
@@ -159,8 +159,8 @@ void sub_080237a4(void)
     if (gRoomUpdateFlags & 16)
         UpdateDoors();
     if (gRoomUpdateFlags & 8)
-        sub_0800a854();
-    sub_0800a778();
+        HudUpdateHpBars();
+    HudUpdateAbilityPanel();
 }
 
 void sub_080237fc(void)
@@ -179,8 +179,8 @@ void sub_080237fc(void)
     if (gRoomUpdateFlags & 16)
         UpdateDoors();
     if (gRoomUpdateFlags & 8)
-        sub_0800a854();
-    sub_0800a778();
+        HudUpdateHpBars();
+    HudUpdateAbilityPanel();
 }
 
 void sub_0802385c(void)
@@ -195,8 +195,8 @@ void sub_0802385c(void)
     }
     CameraWriteScrollHBlank();
     if (gRoomUpdateFlags & 8)
-        sub_0800a854();
-    sub_0800a778();
+        HudUpdateHpBars();
+    HudUpdateAbilityPanel();
 }
 
 void sub_080238a4(void)
@@ -211,8 +211,8 @@ void sub_080238a4(void)
     }
     CameraWriteScrollHBlank();
     if (gRoomUpdateFlags & 8)
-        sub_0800a854();
-    sub_0800a778();
+        HudUpdateHpBars();
+    HudUpdateAbilityPanel();
 }
 
 void sub_080238ec(void)
@@ -230,6 +230,6 @@ void sub_080238ec(void)
     if (gRoomUpdateFlags & 16)
         UpdateDoors();
     if (gRoomUpdateFlags & 8)
-        sub_0800a854();
-    sub_0800a778();
+        HudUpdateHpBars();
+    HudUpdateAbilityPanel();
 }

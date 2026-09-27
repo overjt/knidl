@@ -865,14 +865,14 @@ gUnk_08731D58:
 	.global	gUnk_08731D70
 gUnk_08731D70:
 	.incbin	"baserom.gba", 0x731D70, 0x30
-	.global	gUnk_08731DA0
-gUnk_08731DA0:
+	.global	gBgScrollYPtrs
+gBgScrollYPtrs:
 	.word	gBg0ScrollY
 	.word	gBg1ScrollY
 	.word	gBg2ScrollY
 	.word	gBg3ScrollY
-	.global	gUnk_08731DB0
-gUnk_08731DB0:
+	.global	gBgScrollXPtrs
+gBgScrollXPtrs:
 	.word	gBg0ScrollX
 	.word	gBg1ScrollX
 	.word	gBg2ScrollX
@@ -2245,8 +2245,8 @@ gCollisionTilePushRight:
 	.global	gCollisionTilePushLeft
 gCollisionTilePushLeft:
 	.incbin	"baserom.gba", 0x7347F0, 0x400
-	.global	gUnk_08734BF0
-gUnk_08734BF0:
+	.global	gCollisionTileFloorSnap
+gCollisionTileFloorSnap:
 	.incbin	"baserom.gba", 0x734BF0, 0x428
 	.global	gUnk_08735018
 gUnk_08735018:

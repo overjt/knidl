@@ -67,7 +67,7 @@ extern void PlaySfx(s32 id);
 extern void TaskSetSkipMask(s32 a, s32 b);
 extern void TaskSetEntry(void *fn, s32 i);
 extern void TaskSetFrame(s32 a);
-extern void sub_08009e60(s32 a, s32 b);
+extern void AddPlayerLives(s32 a, s32 b);
 extern void sub_0800a42c(void);
 extern void sub_0801bcac(struct InputState *p);
 extern void sub_0801bde0(struct InputState *p);
@@ -78,7 +78,7 @@ extern void sub_0801c230(struct InputState *p);
 extern void sub_0801c30c(struct InputState *p);
 extern u32 sub_0801c3a4(struct InputState *p);
 extern u32 sub_0802205c(struct InputState *p);
-extern void sub_080224f8(s32 i);
+extern void TaskInitWaterFlagsSlot(s32 i);
 extern void sub_0804087c(s32 a);
 extern void ActorSetState(u8 v);
 extern void ActorSetTerrainHandlers(u32 v);
@@ -527,7 +527,7 @@ void sub_08069ac4(s32 i)
     struct Task *t;
 
     t = &gTasks[i];
-    sub_080224f8(i);
+    TaskInitWaterFlagsSlot(i);
     t->unk7A = 1;
 }
 
@@ -919,7 +919,7 @@ void sub_0806a158(void)
     case 1:
         if (gLocalPlayer == t->unk7E)
             PlaySfx(220);
-        sub_08009e60(1, gCurTask->unk7E);
+        AddPlayerLives(1, gCurTask->unk7E);
         ActorDestroy();
         break;
     case 3:

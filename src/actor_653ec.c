@@ -51,7 +51,7 @@ extern u32 sub_080b5628(u32 a);
 extern u32 sub_080b55d8(u32 a, u32 b);
 extern s16 gUnk_0873E184[];
 extern u16 gUnk_0873E16C[];
-extern s16 gUnk_02005588[];
+extern s16 gPlayerHealth[];
 extern u16 gPlayerCount;
 extern u8 gActivePlayerMask;
 extern void sub_08066468(void);
@@ -151,7 +151,7 @@ extern s16 gSpriteCameraY;
 extern u32 TaskIsOnScreen(void);
 extern s32 QueueSprite(u32 a, u32 b, u32 c, u32 d, s32 e, s32 f);
 extern void RequestCopy(u32 mode, u32 src, u32 dst, u32 size);
-extern void sub_0800a554(void);
+extern void HudRemoveHpBar(void);
 extern void ActorDestroy(void);
 extern u8 ActorIsInView(void);
 extern void TaskIntegrateMotion(void);
@@ -205,7 +205,7 @@ void sub_080653ec(void)
     }
     else if (sub_08066a80() != 0)
     {
-        sub_0800a554();
+        HudRemoveHpBar();
         ActorDestroy();
     }
 }
@@ -1140,7 +1140,7 @@ s32 sub_08066394(void)
     {
         if ((gActivePlayerMask >> i) & 1)
         {
-            v = gUnk_02005588[i];
+            v = gPlayerHealth[i];
             if (v != 0)
                 break;
         }
@@ -1386,7 +1386,7 @@ void sub_080667c0(u8 a, u16 b)
     struct Actor *p;
 
     p = gCurTask->unk8C;
-    sub_0800a554();
+    HudRemoveHpBar();
     t = gCurTask;
     if (t->unk0C == (u32)sub_08065438 || t->unk0C == (u32)sub_080653ec)
         t->unk0C = (u32)sub_080653ec;

@@ -11,7 +11,7 @@
  * nibble, or 4 when bit 7 is set) and, for a player holding an ability
  * (PlayerState.unk0D) with bit 1 of PlayerState.unk42 clear, releases it
  * through M17's sub_08064eb8(PlayerState.unk30) and M02's HUD
- * (sub_0800a008); states 0-4 play the ability's animations and state 6
+ * (SetPlayerAbility); states 0-4 play the ability's animations and state 6
  * leaves.  sub_08038fe8, handler 16, steers every state into state 6 and
  * re-binds the coroutine. */
 
@@ -24,8 +24,8 @@ void TaskSetEntry(void *a, u32 i);
 void TaskSetFrame(s32 a);
 void TaskSetFrameNoFlip(s32 a);
 void TaskSetFrameFlip(s32 a);
-s32 sub_0800a008(s32 a, s32 b, u32 c);
-void sub_0800a130(s32 a, s32 id);
+s32 SetPlayerAbility(s32 a, s32 b, u32 c);
+void HudShowAbility(s32 a, s32 id);
 void RequestScreenShake(u16 a);
 void PlayerStopAxes(s32 a0);
 void SetPlayerInvulnerability(s32 a0, s32 a1, s32 a2);
@@ -74,7 +74,7 @@ loop:
             if (gCurTask->unk88->unk0D == 11)
             {
                 gCurTask->unk88->unk42 &= 0xFFFD;
-                sub_0800a008(0, -1, gCurTask->unk88->unk00);
+                SetPlayerAbility(0, -1, gCurTask->unk88->unk00);
             }
             u = gCurTask;
             if (u->unk82 & 128)
@@ -87,12 +87,12 @@ loop:
                 {
                     gCurTask->unk88->unk42 &= 0xFFFB;
                     sub_08064eb8(gCurTask->unk88->unk30);
-                    sub_0800a008(0, -1, gCurTask->unk88->unk00);
+                    SetPlayerAbility(0, -1, gCurTask->unk88->unk00);
                 }
             }
             else
             {
-                sub_0800a130(gCurTask->unk88->unk0D, gCurTask->unk88->unk00);
+                HudShowAbility(gCurTask->unk88->unk0D, gCurTask->unk88->unk00);
             }
             if (gLocalPlayer == gCurTask->unk88->unk00)
                 RequestScreenShake(2);

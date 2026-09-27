@@ -136,7 +136,7 @@ extern s8 gRoomIndex;
 extern u16 gUnk_030012B0[];
 
 void RequestCopy(u32 mode, u32 src, u32 dst, u32 size);
-void sub_08008c64(u16 a0);
+void LoadGfxSet(u16 a0);
 void sub_08025e0c(void);
 void SetBg23ScreenSize(u16 a);
 void SetBg3ScreenSize(u16 a);
@@ -210,7 +210,7 @@ void sub_08027e28(void)
     case 3:
         gUnk_0200B078 = 3;
         gRoomBounds[2] = gRoomHeight * 16 - gRoomBorder[1] - 80;
-        sub_08008c64(3);
+        LoadGfxSet(3);
         sub_08030074(gUnk_030023B8);
         break;
     case 4:

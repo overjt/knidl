@@ -16,7 +16,7 @@
  * starts a palette fade (sub_0802d278, stepped by sub_0802d294 into the
  * palette buffer gUnk_030012B0), 2 waits, 3 loops, 5 sets a metatile's
  * solid flag (sub_0802d2f0), 6 plays a sound effect, anything else stops
- * the slot (sub_0802d32c).  sub_0802d344 spawns task type #4 through M07's
+ * the slot (sub_0802d32c).  CreateMapEvent spawns task type #4 through M07's
  * sub_0802621c; Task_MapEvent, the type's body, dispatches on Task.unk14
  * into the seven camera tasks of the anchor table gMapEventVariants. */
 
@@ -297,7 +297,7 @@ void sub_0802d32c(struct Unk02007D70 *p)
     p->unk8 = -1;
 }
 
-s32 sub_0802d344(s32 a)
+s32 CreateMapEvent(s32 a)
 {
     s32 id;
     struct Task *t;

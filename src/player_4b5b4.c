@@ -9,7 +9,7 @@
  * stage frozen (gUnk_03001F34 = 1): M14's CreatePlayerObject(player, 9, 0),
  * the animations 0xDFD-0xE05 in Task.unk6C counter loops and velocity
  * presets 54/55; it then restores the default script gPlayerDefaultTerrainBox in
- * PlayerState.unk68, resets the HUD ability panel (sub_0800a008(0, -1,
+ * PlayerState.unk68, resets the HUD ability panel (SetPlayerAbility(0, -1,
  * player)) and plays 0xE06 on the ground.  Its handler sub_0804b818
  * requests action 1 (on the ground) or 7 once Task.unk28 is set; the
  * ROM keeps a dead `ldr [t, #84]` of a test whose two arms were
@@ -21,7 +21,7 @@ extern u32 gPlayerDefaultTerrainBox[];
 void TaskYieldTrampoline(s32 frames);
 void TaskSleepForever(void);
 void TaskSetFrame(s32 a);
-s32 sub_0800a008(s32 a, s32 b, u32 c);       /* landed (hud_099fc.c); M12 calls it as sub_0800a008(0, -1, p->unk00) */
+s32 SetPlayerAbility(s32 a, s32 b, u32 c);       /* landed (hud_099fc.c); M12 calls it as SetPlayerAbility(0, -1, p->unk00) */
 void PlayerStopAxes(s32 a0);
 void FreezeOtherTasks(s32 a0);
 void PlayerStopAtCeilingAndWall(void);
@@ -94,7 +94,7 @@ void sub_0804b5b4(void)
     {
         struct Task *t = gCurTask;
         t->unk88->unk68 = (u32)gPlayerDefaultTerrainBox;
-        sub_0800a008(0, -1, t->unk88->unk00);
+        SetPlayerAbility(0, -1, t->unk88->unk00);
     }
     FreezeOtherTasks(0);
     if (gCurTask->unk7A & 1) {

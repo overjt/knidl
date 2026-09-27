@@ -4,13 +4,13 @@
 
 /* boot_091ac.c (0x080091AC-0x080099FB, issue #96).
  *
- * The boot and title sequence.  AgbMain state 1 (sub_080091ac) runs the
- * skippable logo sequence sub_08009200, whose frame waits sub_08009398(n)
+ * The boot and title sequence.  AgbMain state 1 (BootLogoMain) runs the
+ * skippable logo sequence PlayBootLogo, whose frame waits BootLogoWait(n)
  * return 1 on A/B/START (sub_080093cc is a dead twin) and whose task type
- * #0 (Task_BootLogo) runs every frame.  State 3 (sub_080096e0) alternates
- * the title screen sub_0800973c - task type #1 (Task_TitlePalette) animates the
+ * #0 (Task_BootLogo) runs every frame.  State 3 (TitleMain) alternates
+ * the title screen TitleScreen - task type #1 (Task_TitlePalette) animates the
  * title palette, task type #2 (Task_TitleSprites) spawns ten sprite children
- * (sub_08009640) - with the nine-scene intro story sub_080098a8. */
+ * (sub_08009640) - with the nine-scene intro story IntroStory. */
 
 extern vs32 gBg0ScrollY;
 extern vu16 gPressedKeys;
@@ -70,23 +70,23 @@ s32 TaskCreateFrom(u32 type, s32 idx);
 void TaskMove(void);
 void TaskDrawScreen(void);
 void TaskSleepForever(void);
-void sub_08008c4c(s32 a0);
-void sub_08008c64(u16 a0);
+void LoadBgLayout(s32 a0);
+void LoadGfxSet(u16 a0);
 void BootLogoInitObjects(void);
 void BootLogoUpdateObjects(void);
-s32 sub_08009200(void);
-s32 sub_08009398(s32 n);
+s32 PlayBootLogo(void);
+s32 BootLogoWait(s32 n);
 void sub_080095e4(void);
 void sub_08009640(void);
-s32 sub_0800973c(void);
-void sub_080098a8(void);
+s32 TitleScreen(void);
+void IntroStory(void);
 s32 sub_080099c8(s32 n);
 
-void sub_080091ac(void)
+void BootLogoMain(void)
 {
     s32 i, vol;
 
-    if (sub_08009200() == 1) {
+    if (PlayBootLogo() == 1) {
         BeginFade(16, 2, gUnk_08731C88);
         vol = 256;
         for (i = 0; i < 16; i++) {
@@ -102,16 +102,16 @@ void sub_080091ac(void)
     }
 }
 
-s32 sub_08009200(void)
+s32 PlayBootLogo(void)
 {
     s32 i;
 
     ResetTasksAndOam();
     BootLogoInitObjects();
     gLinkPlayerCount = 0x9999;
-    sub_08008c4c(0);
-    sub_08008c64(6);
-    sub_08008c64(7);
+    LoadBgLayout(0);
+    LoadGfxSet(6);
+    LoadGfxSet(7);
     gBg0ScrollY = gBg0ScrollX = gBg1ScrollY = gBg1ScrollX = gBg2ScrollY = gBg2ScrollX = gBg3ScrollY = gBg3ScrollX = 0;
     gDispCnt &= 0xE0FF;
     gDispCnt |= 0x1100;
@@ -121,14 +121,14 @@ s32 sub_08009200(void)
     TaskCreateFrom(0, 0);
     RunFrames(60);
     gLinkPlayerCount = 1;
-    if (sub_08009398(70) != 0)
+    if (BootLogoWait(70) != 0)
         return 1;
     PlaySfx(0x10D);
-    if (sub_08009398(35) != 0)
+    if (BootLogoWait(35) != 0)
         return 1;
     gDispCnt &= 0xE0FF;
     gDispCnt |= 0x1F00;
-    if (sub_08009398(21) != 0)
+    if (BootLogoWait(21) != 0)
         return 1;
     gWinIn0 = 49;
     gUnk_03000F7C = 62;
@@ -145,7 +145,7 @@ s32 sub_08009200(void)
     return 0;
 }
 
-s32 sub_08009398(s32 n)
+s32 BootLogoWait(s32 n)
 {
     s32 i;
 
@@ -276,10 +276,10 @@ void sub_08009640(void)
     TaskSleepForever();
 }
 
-void sub_080096e0(void)
+void TitleMain(void)
 {
-    while (sub_0800973c() == 0)
-        sub_080098a8();
+    while (TitleScreen() == 0)
+        IntroStory();
     gFadeSteps = 10;
     gBrightness = 2;
     gFadeStep = 3;
@@ -294,14 +294,14 @@ void sub_080096e0(void)
    make expand_end_loop rotate it), and the result goes through one `ret`
    local: with a plain `return 0` the done block ends in a jump and jump.c's
    "if (foo) bar; else break;" swap moves it in front of the loop body. */
-s32 sub_0800973c(void)
+s32 TitleScreen(void)
 {
     s32 idx, i, ret;
 
     if (gUnk_03002150 != 1) {
         ResetTasksAndOam();
-        sub_08008c4c(0);
-        sub_08008c64(7);
+        LoadBgLayout(0);
+        LoadGfxSet(7);
         gBg0ScrollY = gBg0ScrollX = gBg1ScrollY = gBg1ScrollX = gBg2ScrollY = gBg2ScrollX = gBg3ScrollY = gBg3ScrollX = 0;
         gDispCnt &= 0xE0FF;
         gDispCnt |= 0x1E00;
@@ -343,15 +343,15 @@ out:
     return ret;
 }
 
-void sub_080098a8(void)
+void IntroStory(void)
 {
     s32 i;
     s32 j;
     s32 t;
 
     ResetTasksAndOam();
-    sub_08008c4c(1);
-    sub_08008c64(8);
+    LoadBgLayout(1);
+    LoadGfxSet(8);
     gDispCnt &= 0xE0FF;
     gDispCnt |= 0x1C00;
     gBldCntTarget1 = 84;
@@ -361,7 +361,7 @@ void sub_080098a8(void)
     BeginFadeInFromWhite();
     RunFramesUntilFadeDone();
     for (i = 0; i < 9; i++) {
-        sub_08008c64(gUnk_08731CDC[i]);
+        LoadGfxSet(gUnk_08731CDC[i]);
         t = TaskCreateFrom(237, 0);
         gTasks[t].unk18 = i;
         for (j = 0; j <= 16; j++) {
