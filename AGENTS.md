@@ -238,7 +238,7 @@ Matching decompilation of Kirby: The Amazing Mirror's predecessor, **Kirby: Nigh
   `src/obj_2eac8.c`, `src/obj_2f62c.c`, `src/obj_30238.c` and
   `src/obj_306b4.c` (**all 151 functions, no asm left in the range**, no
   `asm` statements and no `register` pins).  It is one subsystem with M07
-  (the level / room builder, still asm), which calls it every frame: the
+  (the level / room builder, then still asm), which calls it every frame: the
   camera (mode `gUnk_030055C0`, pixel position `gUnk_03005604`, 16.16
   target `gUnk_03005614`/`gUnk_03005634`, camera and room bounds
   `gUnk_030055F8`/`gUnk_03005628`, per-player cameras for link play, a
@@ -486,9 +486,10 @@ Matching decompilation of Kirby: The Amazing Mirror's predecessor, **Kirby: Nigh
   `src/gameover_cacf0.c`, `src/gameover_cb354.c`, `src/gameover_cb64c.c`,
   `src/gameover_cbed4.c`, `src/gameover_ccd4c.c` and `src/credits_cd330.c`
   (**109 of 110 functions**, no `asm` statements and no `register` pins;
-  the one hole is the boot logo objects' 568-byte interpreter
-  `sub_080caab8`, parked at 33 differing bytes with its best sources on
-  #100), so `0x080C6260-0x080CD89B` is C except that function.  The census
+  the one hole was the boot logo objects' 568-byte interpreter
+  `sub_080caab8`, parked at 33 differing bytes, which the final campaign
+  landed as `src/boot_caab8.c` with two commented zero-byte levers), so
+  `0x080C6260-0x080CD89B` is all C.  The census
   name "intro / cutscene / ending sequences?" was half right: it is the
   ending and the game-over screen.  `AgbMain` state 11 (M37's
   `src/mode_c6260.c`) plays two scenes directed by task types #100 and #101

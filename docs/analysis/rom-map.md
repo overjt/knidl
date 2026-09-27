@@ -1420,8 +1420,10 @@ child issues of #35 are created from it. Findings that belong in this document:
 
 - **M38 (`0x080C6420-0x080CD89B`) is the game's ending and its game-over
   screen, not an intro.**  Decompiled in #100, in eleven files
-  (`docs/analysis/module-map.md` §6); 109 of the 110 functions are C, and
-  the boot logo objects' interpreter `sub_080caab8` stays asm.  `AgbMain`
+  (`docs/analysis/module-map.md` §6) and the final campaign's
+  `src/boot_caab8.c`: all 110 functions are C (`sub_080caab8`, the boot
+  logo objects' interpreter, with two commented zero-byte levers, lesson
+  3.494).  `AgbMain`
   states 11, 12 and 22 (§4) run it.
   * **Task type #100** (class 3, body `sub_080c6c64`), the first ending
     scene: variant 0 (`Task.unk73 == 0`) loads two sprite sheets
@@ -1482,8 +1484,8 @@ child issues of #35 are created from it. Findings that belong in this document:
   * **The boot logo's objects**: `sub_080caa3c` (called once by M02's
     `sub_08009200`) seeds 115 32-byte records at `gUnk_02030000` from the
     s16 stream `gUnk_08757440` (script id, wait, x, y; the draw layer
-    follows y), and `sub_080caab8` (still asm, `0x080CAAB8-0x080CACEF`,
-    parked on #100; called every frame by task type #0) runs each record's
+    follows y), and `sub_080caab8` (`src/boot_caab8.c`, called every
+    frame by task type #0) runs each record's
     command script (`gUnk_087577D8[id]`: a bit mask per step - velocity,
     acceleration, sprite, wait, sound, call/return, goto, loop, end, with
     `gUnk_0201BFD0[i]` as the return/loop cursor), moves it in 24.8 and

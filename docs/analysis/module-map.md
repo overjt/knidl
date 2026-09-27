@@ -219,7 +219,7 @@ dispatches, pool density) — a planning aid, not a promise.
 | M35 | `0x080B9D0C-0x080BDA2B` | 15.3 KiB | 193 | 4 | *** | sub-game framework + reaction-duel sub-game - **landed (#95)** |
 | M36 | `0x080BDA2C-0x080C1FFB` | 17.5 KiB | 117 | 4 | * | sub-game: four-slot bomb-pass minigame - **landed (#66)** |
 | M37 | `0x080C1FFC-0x080C641F` | 17.0 KiB | 82 | 1 | **** | sub-game 2: the four-player race + `AgbMain` state 11 - **landed (#98, final campaign)** |
-| M38 | `0x080C6420-0x080CD89B` | 29.1 KiB | 110 | 4 | **** | the ending (two scenes, staff credits, final screen) + the game-over screen - **landed (#100)**, 109/110 |
+| M38 | `0x080C6420-0x080CD89B` | 29.1 KiB | 110 | 4 | **** | the ending (two scenes, staff credits, final screen) + the game-over screen - **landed (#100, final campaign)** |
 | M39 | `0x080CD89C-0x080CE51F` | 3.1 KiB | 40 | 0 | - | **done** - m4a_1 |
 | M40 | `0x080CE520-0x080CEFB3` | 2.6 KiB | 31 | 0 | - | **done** - m4a_c1 |
 | M41 | `0x080CEFB4-0x080CF587` | 1.5 KiB | 4 | 0 | - | **done** - m4a_cgb |
@@ -770,7 +770,7 @@ below is the pre-decompilation one, kept for the record.
   `obj_30238.c`/`obj_306b4.c` are two files because `sub_08030724` only
   matches without the type-#236 bodies in front of it in the same
   translation unit (`docs/lessons-learned.md` 4.79).  Both neighbours, M07
-  and M09, are still asm.
+  and M09, were still asm then; both are C now.
 * **What it turned out to be** (`docs/analysis/rom-map.md` §9): one
   subsystem with M07, which calls it every frame.
   * **The camera** (`camera_*.c`): the per-frame updates of the room modes
@@ -2613,7 +2613,7 @@ below is the pre-decompilation one, kept for the record.
 * **Known RAM cells touched** per-player keys pressed x9, requested/next game state x4, DISPCNT shadow x2, number of linked players x2, per-player keys held x2, 128 8-byte free-list entries x1.
 * **Suggested batches** `0x080C1FFC` (19 fns), `0x080C3648` (46 fns), `0x080C5284` (17 fns).
 
-### M38 `0x080C6420-0x080CD89B` - the ending (two scenes, staff credits, final screen) + the game-over screen - **landed (#100)**
+### M38 `0x080C6420-0x080CD89B` - the ending (two scenes, staff credits, final screen) + the game-over screen - **landed (#100 and the final campaign)**
 
 The range is decompiled and carved out of the split asm, so it now appears in
 `module-map.csv` as `c_code` rows instead of one clusterable module; the census
@@ -2623,21 +2623,25 @@ below is the pre-decompilation one, kept for the record.
   `src/ending_c6c64.c` (`0x080C6C64-0x080C7E4C`, 8), `src/ending_c7e4c.c`
   (`0x080C7E4C-0x080C9004`, 12), `src/ending_c9004.c`
   (`0x080C9004-0x080CAA3C`, 21), `src/boot_caa3c.c`
-  (`0x080CAA3C-0x080CAAB8`, 1), `src/gameover_cacf0.c`
+  (`0x080CAA3C-0x080CAAB8`, 1), `src/boot_caab8.c`
+  (`0x080CAAB8-0x080CACF0`, 1, final campaign), `src/gameover_cacf0.c`
   (`0x080CACF0-0x080CB354`, 13), `src/gameover_cb354.c`
   (`0x080CB354-0x080CB64C`, 8), `src/gameover_cb64c.c`
   (`0x080CB64C-0x080CBED4`, 6), `src/gameover_cbed4.c`
   (`0x080CBED4-0x080CCD4C`, 18), `src/gameover_ccd4c.c`
   (`0x080CCD4C-0x080CD330`, 10) and `src/credits_cd330.c`
-  (`0x080CD330-0x080CD89C`, 5): 109 of the 110 functions byte-exact
-  under the `--newpb` recipe with no `asm` statements and no `register`
-  pins, and 77 new `split_config.json` `data_symbols`.  One function stays
-  asm: `sub_080caab8` (`0x080CAAB8-0x080CACEF`, 568 bytes, the boot logo
-  objects' command interpreter), parked on #100 at 33 differing bytes with
-  the right size (the ROM's all-ones halfword store keeps an `orrs` that
-  agbcc folds unless the constant comes from outside the block, and two
-  PRE spill slots are swapped, lesson 3.457).  It was the last unstarted
-  bulk module of #35.
+  (`0x080CD330-0x080CD89C`, 5): all 110 functions byte-exact under the
+  `--newpb` recipe, and 77 new `split_config.json` `data_symbols` in #100
+  (one more in the final campaign).  #100 landed 109 with no `asm`
+  statements and no `register` pins; the boot logo objects' command
+  interpreter `sub_080caab8` (`0x080CAAB8-0x080CACEF`, 568 bytes), parked
+  there at 33 differing bytes, landed in the final campaign as
+  `src/boot_caab8.c`: natural dead initializers give gcse the insn count
+  that orders its two PRE spill slots, and the off-screen switch-off keeps
+  two commented zero-byte `asm` levers, because combine folds the ROM's
+  `orrs` of the all-ones store away when it knows the PRE-loaded old
+  halfword fits in 16 bits (lessons 3.457, 3.494; natural best on #100).
+  It was the last unstarted bulk module of #35.
 * **What it turned out to be** not an intro: the game's ending and its
   game-over screen, which `AgbMain` states 11, 12 and 22 run (rom-map §4).
   State 11 (M37's `src/mode_c6260.c`) plays two scenes directed by task
