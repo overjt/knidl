@@ -494,7 +494,15 @@ def verify_diff(ref):
             old = remap(old)
         with open(os.path.join(ROOT, path), encoding="utf-8") as f:
             new = f.read()
-        if path in (rel(SYMDB), rel(CONFIG)):
+        if path == rel(CONFIG):
+            # Compare the config structurally: the tool re-sorts
+            # external_defined, which moves JSON's comma-less last line.
+            want = json.loads(old)
+            want["external_defined"] = sorted(want.get("external_defined", []))
+            if want != json.loads(new):
+                problems.append("%s: differs beyond the renames" % path)
+            continue
+        if path == rel(SYMDB):
             a = sorted(old.split("\n"))
             b = sorted(new.split("\n"))
             extra = []
