@@ -1967,48 +1967,33 @@ void sub_080a2164(void)
 /* sub_080a21a0 (0x080A21A0-0x080A2224) */
 void sub_080a21a0(void *a)
 {
-    struct Task *t;
-    s16 *p;
-    s32 d;
-    u16 y;
-    u16 m3;
-    u16 z;
-    u16 x2;
-    s16 *q2;
+    struct Task *t = gUnk_03002490;
+    u16 d = t->unk4A - gUnk_03002158[2];
 
-    t = gUnk_03002490;
-    p = &t->unk4A;
-    q2 = gUnk_03002158;
-    x2 = *p;
-    d = (u16)(x2 - (y = q2[2]));
     if (t->unk58 < 0)
     {
         if ((s16)d > 16)
             return;
+        t->unk4A = gUnk_03002158[2] + 17;
+        t->unk50 = t->unk4A << 16;
+        t->unk58 = 0;
+    }
+    else if ((s16)d <= (s32)gUnk_02006040[4])
+    {
+        if ((s16)d > 16)
+            return;
+        t->unk4A = gUnk_03002158[2] + 17;
+        t->unk50 = t->unk4A << 16;
+        t->unk58 = 0;
     }
     else
     {
-        d = (s16)d;
-        if (d > (s32)gUnk_02006040[4])
-            goto snap;
-        if (d > 16)
-            return;
+        t->unk4A = gUnk_03002158[2] + gUnk_02006040[4];
+        t->unk50 = t->unk4A << 16;
+        sub_080062c4();
+        sub_0806395c(3);
+        sub_08006148(a, gCurTaskIdx);
     }
-    m3 = y + 17;
-    z = 0;
-    *p = m3;
-    t->unk50 = *p << 16;
-    t->unk58 = z;
-    return;
-snap:
-    *p = y + gUnk_02006040[4];
-    do
-    {
-        t->unk50 = *p << 16;
-    } while (0);
-    sub_080062c4();
-    sub_0806395c(3);
-    sub_08006148(a, gCurTaskIdx);
 }
 
 /* sub_080a2224 (0x080A2224-0x080A2274) */
