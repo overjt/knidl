@@ -22,7 +22,7 @@
  *   * the walker script `sub_08082e68` (7 states, tables `0x08741778` /
  *     `0x08741794`, per-frame hook `sub_08082eb4`, re-arm `sub_08082e98`);
  *   * its terrain library: `sub_08083a48` / `sub_08083ad4` / `sub_08083bbc` /
- *     `sub_08083cb8` probe the room with GetCollisionTileAtPixel/sub_08021bb4 and turn the
+ *     `sub_08083cb8` probe the room with GetCollisionTileAtPixel/GetCollisionTileAtOffset and turn the
  *     `gUnk_087339F0` / `gCollisionTileSlope` / `gUnk_087416A4` index chain into a
  *     tile class, `sub_08083d28` turns a direction code into an aim angle plus
  *     a 16.16 velocity through AngleToVector, and `sub_08083dfc` is the
@@ -138,7 +138,7 @@ extern s32 TaskIsNearestPlayerInRect(struct PointPair *p);
 extern s32 TaskIsInRect(struct PointPair *r);
 extern void ActorDestroy(void);
 extern s32 GetCollisionTileAtPixel(u16 x, u16 y);
-extern s32 sub_08021bb4(s16 x, s16 y, s32 c, s32 d);
+extern s32 GetCollisionTileAtOffset(s16 x, s16 y, s32 c, s32 d);
 extern void ActorCheckHits(void);
 extern u8 ActorCollideTerrain(void);
 extern void ActorReactToHit(void);
@@ -762,7 +762,7 @@ u8 sub_08083bbc(s32 dir, s32 k)
     }
     p = &gUnk_0874169C[k];
     q = &gUnk_087416A0[k];
-    i = sub_08021bb4(a, b, *p, *q);
+    i = GetCollisionTileAtOffset(a, b, *p, *q);
     if (i == -1)
         return 0;
     if (gUnk_087339F0[i] != 0)

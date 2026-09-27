@@ -12,7 +12,7 @@
  * callback sub_0803dfc8 and the collision callback sub_0805176c (sound
  * 133).  Variant 4 (sub_0805181c, gUnk_08751A28/gUnk_08751CA4) installs
  * sub_08051b0c, which registers the collider row gUnk_0873BDD4 and calls
- * the hit test sub_08030804 at the spawner's position with only three
+ * the hit test TaskBreakBlocksAt at the spawner's position with only three
  * arguments.  Variant 5 (sub_08051c1c, gUnk_08751A98) and its callback
  * sub_08051d84 re-bind the body or the shared exit sub_08050814.  Variant
  * 6 (sub_08051f4c, gUnk_08751AF8, the animation/velocity pairs
@@ -97,7 +97,7 @@ void sub_0801c444(const s8 *p);
 void sub_0802205c(s8 *box);
 void sub_0802233c(s8 *off);
 void TaskInitWaterFlags(void);
-u16 sub_08030804(struct HitBoxSet *p, s32 x, s32 y);   /* this file's call passes only x and y: the ROM leaves r3 as it was (the definition in src/block_30804.c takes a fourth, `e`) */
+u16 TaskBreakBlocksAt(struct HitBoxSet *p, s32 x, s32 y);   /* this file's call passes only x and y: the ROM leaves r3 as it was (the definition in src/block_30804.c takes a fourth, `e`) */
 s32 TaskBreakBlocks(struct HitBoxSet *p, s32 e);   /* M14's callers test r0 unnarrowed (good/sub_08050c48.c); landed M09/M12/M13 files spell it u16 */
 void sub_0803dfc8(void);
 s32 PlaySfxIfLocalPlayer(s32 a0, u16 a1);
@@ -380,7 +380,7 @@ void sub_08051b0c(void)
             t = gCurTask;
             dx = (t->unk43 == 1) ? 12 : -12;
             /* the ROM passes no 4th argument: r3 is whatever the last ldrsh left (0) */
-            sub_08030804((struct HitBoxSet *)gUnk_0873CBDC, ((struct Task *)t->unk8C)->unk48 + dx,
+            TaskBreakBlocksAt((struct HitBoxSet *)gUnk_0873CBDC, ((struct Task *)t->unk8C)->unk48 + dx,
                          ((struct Task *)t->unk8C)->unk4A + 2);
         }
     }

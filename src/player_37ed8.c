@@ -5,14 +5,14 @@
 /* player_37ed8.c (0x08037ED8-0x0803919B, issue #91).
  *
  * Player action body, part 6: action 16 and per-frame handler 16.
- * sub_08037ed8 (action 16, mode 17, 4368 bytes) is the twin of M11's
+ * PlayerActionHurt (action 16, mode 17, 4368 bytes) is the twin of M11's
  * sub_08042580: a goto loop around a seven-state switch over Task.unk73.
  * State 5, the entry, picks the next state from Task.unk82 (its low
  * nibble, or 4 when bit 7 is set) and, for a player holding an ability
  * (PlayerState.unk0D) with bit 1 of PlayerState.unk42 clear, releases it
  * through M17's sub_08064eb8(PlayerState.unk30) and M02's HUD
  * (SetPlayerAbility); states 0-4 play the ability's animations and state 6
- * leaves.  sub_08038fe8, handler 16, steers every state into state 6 and
+ * leaves.  PlayerActionHurtUpdate, handler 16, steers every state into state 6 and
  * re-binds the coroutine. */
 
 extern u16 gLocalPlayer;
@@ -40,7 +40,7 @@ void PlayerSetMotionYPreset(s32 a0);
 s32 CreatePlayerEffect(s32 a0, s32 a1, s32 a2);
 s32 sub_08064eb8(u8 p2);
 
-void sub_08037ed8(void)
+void PlayerActionHurt(void)
 {
     struct Task *t;
     struct PlayerState *p;
@@ -665,7 +665,7 @@ loop:
     TaskSleepForever();
 }
 
-void sub_08038fe8(void)
+void PlayerActionHurtUpdate(void)
 {
     struct Task *t;
 
@@ -675,7 +675,7 @@ void sub_08038fe8(void)
         if (PlayerHasCrossedWaterSurface(0) != 0)
         {
             gCurTask->unk73 = 6;
-            TaskSetEntry(sub_08037ed8, gCurTaskIdx);
+            TaskSetEntry(PlayerActionHurt, gCurTaskIdx);
         }
         break;
     case 1:
@@ -690,11 +690,11 @@ void sub_08038fe8(void)
             if (--t->unk88->unk14 != 0)
                 break;
             t->unk73 = 6;
-            TaskSetEntry(sub_08037ed8, gCurTaskIdx);
+            TaskSetEntry(PlayerActionHurt, gCurTaskIdx);
             break;
         }
         gCurTask->unk73 = 6;
-        TaskSetEntry(sub_08037ed8, gCurTaskIdx);
+        TaskSetEntry(PlayerActionHurt, gCurTaskIdx);
         break;
     case 3:
         if (gCurTask->unk58 > 0)
@@ -709,7 +709,7 @@ void sub_08038fe8(void)
                     if (t->unk28 <= 2)
                     {
                         PlayerStopAxes(3);
-                        TaskSetEntry(sub_08037ed8, gCurTaskIdx);
+                        TaskSetEntry(PlayerActionHurt, gCurTaskIdx);
                         break;
                     }
                 }
@@ -724,13 +724,13 @@ void sub_08038fe8(void)
                 if (t->unk28 <= 2)
                     goto s2;
                 t->unk73 = 6;
-                TaskSetEntry(sub_08037ed8, gCurTaskIdx);
+                TaskSetEntry(PlayerActionHurt, gCurTaskIdx);
                 break;
             }
             if (t->unk28 <= 3)
                 goto s3;
             t->unk73 = 6;
-            TaskSetEntry(sub_08037ed8, gCurTaskIdx);
+            TaskSetEntry(PlayerActionHurt, gCurTaskIdx);
             break;
         }
         /* An empty loop (a compiled-out macro?): its NOTE_INSN_LOOP_END
@@ -742,31 +742,31 @@ void sub_08038fe8(void)
         {
         } while (0);
         gCurTask->unk73 = 6;
-        TaskSetEntry(sub_08037ed8, gCurTaskIdx);
+        TaskSetEntry(PlayerActionHurt, gCurTaskIdx);
         break;
     case 4:
         if (PlayerHasCrossedWaterSurface(0) != 0)
         {
             gCurTask->unk73 = 6;
-            TaskSetEntry(sub_08037ed8, gCurTaskIdx);
+            TaskSetEntry(PlayerActionHurt, gCurTaskIdx);
         }
         PlayerSetMotionXPreset(7, 72);
         break;
     e1:
         PlayerStopAxes(1);
-        TaskSetEntry(sub_08037ed8, gCurTaskIdx);
+        TaskSetEntry(PlayerActionHurt, gCurTaskIdx);
         break;
     e3:
         PlayerStopAxes(3);
-        TaskSetEntry(sub_08037ed8, gCurTaskIdx);
+        TaskSetEntry(PlayerActionHurt, gCurTaskIdx);
         break;
     s2:
         t->unk28 = 2;
-        TaskSetEntry(sub_08037ed8, gCurTaskIdx);
+        TaskSetEntry(PlayerActionHurt, gCurTaskIdx);
         break;
     s3:
         t->unk28 = 3;
-        TaskSetEntry(sub_08037ed8, gCurTaskIdx);
+        TaskSetEntry(PlayerActionHurt, gCurTaskIdx);
         break;
     case 6:
         sub_08040710();

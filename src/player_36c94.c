@@ -5,16 +5,16 @@
 /* player_36c94.c (0x08036C94-0x08037ED7, issue #91).
  *
  * Player action bodies, part 5: actions 12-15 and per-frame handlers
- * 12-15.  sub_08036c94 (action 12, mode 9) is a four-state machine over
+ * 12-15.  PlayerActionLadder (action 12, mode 9) is a four-state machine over
  * Task.unk73 that plays the ability's rows of gUnk_0873D880,
- * gUnk_0873D8B4 and gUnk_0873D908; its handler sub_080371f0 re-binds it
- * when the keys change.  sub_080375e0 (action 13, mode 10) clears the
+ * gUnk_0873D8B4 and gUnk_0873D908; its handler PlayerActionLadderUpdate re-binds it
+ * when the keys change.  PlayerActionInhale (action 13, mode 10) clears the
  * ability (PlayerState.unk0D = 0) and the player's three spark records
- * gUnk_02007E90[player][] before its animation; its handler sub_08037914
+ * gUnk_02007E90[player][] before its animation; its handler PlayerActionInhaleUpdate
  * runs the block-breaking hit box gUnk_0873CC54 through M09's
  * sub_08030898 (spawning the debris with M17's sub_08065100 at the
  * broken block) and M09's collision registry RegisterCollider.  Actions 14
- * and 15 (sub_08037bd4, sub_08037d64) are short animation scripts, and
+ * and 15 (PlayerActionSpit, PlayerActionSwallow) are short animation scripts, and
  * handlers 14 and 15 pick the next velocity preset from the ground flags
  * Task.unk7A/unk7B. */
 
@@ -96,7 +96,7 @@ void CreatePlayerObject(s32 a, s32 b, s32 c);      /* M14, src/plobj_52f6c.c (de
 s32 CreatePlayerEffect(s32 a0, s32 a1, s32 a2);
 s32 sub_08065100(s16 x, s16 y, u32 p2, u8 p3, u8 p4);
 
-void sub_08036c94(void)
+void PlayerActionLadder(void)
 {
     struct Task *h1;
     struct Task *h3;
@@ -310,7 +310,7 @@ void sub_08036c94(void)
     }
 }
 
-void sub_080371f0(void)
+void PlayerActionLadderUpdate(void)
 {
     struct Task *t;
     struct Task *ta;
@@ -335,7 +335,7 @@ void sub_080371f0(void)
     {
         t = gCurTask;
         t->unk3C = gUnk_0873D880[t->unk88->unk0D];
-        TaskSetEntry(sub_08036c94, gCurTaskIdx);
+        TaskSetEntry(PlayerActionLadder, gCurTaskIdx);
         if (gUnk_0300244C != 0)
             gCurTask->unk88->unk01 = 0;
         return;
@@ -355,7 +355,7 @@ void sub_080371f0(void)
             ta->unk73 = 2;
         if (gCurTask->unk73 == 1)
             break;
-        TaskSetEntry(sub_08036c94, gCurTaskIdx);
+        TaskSetEntry(PlayerActionLadder, gCurTaskIdx);
         break;
     case 2:
         p = t->unk88;
@@ -377,7 +377,7 @@ void sub_080371f0(void)
             tb->unk73 = 1;
         if (gCurTask->unk73 == 2)
             break;
-        TaskSetEntry(sub_08036c94, gCurTaskIdx);
+        TaskSetEntry(PlayerActionLadder, gCurTaskIdx);
         break;
     case 0:
         if ((gLatchedPressedKeys[t->unk88->unk00] & 192) == 0)
@@ -461,7 +461,7 @@ void sub_080371f0(void)
             if (td->unk28 > 20)
                 td->unk28 = 16;
         callit:
-            TaskSetEntry(sub_08036c94, gCurTaskIdx);
+            TaskSetEntry(PlayerActionLadder, gCurTaskIdx);
             break;
         }
         break;
@@ -489,7 +489,7 @@ void sub_080371f0(void)
     }
 }
 
-void sub_080375e0(void)
+void PlayerActionInhale(void)
 {
     struct Task *t;
     struct Task *u;
@@ -615,7 +615,7 @@ void sub_080375e0(void)
     TaskSleepForever();
 }
 
-void sub_08037914(void)
+void PlayerActionInhaleUpdate(void)
 {
     struct Task *t;
 
@@ -655,7 +655,7 @@ void sub_08037914(void)
                     if (!(gLatchedHeldKeys[p->unk00] & 2))
                     {
                         t->unk73 = 2;
-                        TaskSetEntry(sub_080375e0, gCurTaskIdx);
+                        TaskSetEntry(PlayerActionInhale, gCurTaskIdx);
                         break;
                     }
                 }
@@ -746,7 +746,7 @@ void sub_08037914(void)
     PlayerStopAtCeilingAndWall();
 }
 
-void sub_08037bd4(void)
+void PlayerActionSpit(void)
 {
     gCurTask->unk88->unk05 = gCurTask->unk88->unk04;
     gCurTask->unk88->unk04 = 11;
@@ -777,7 +777,7 @@ void sub_08037bd4(void)
     TaskSleepForever();
 }
 
-void sub_08037cc8(void)
+void PlayerActionSpitUpdate(void)
 {
     struct Task *t;
 
@@ -810,7 +810,7 @@ void sub_08037cc8(void)
     PlayerStopAtCeilingAndWall();
 }
 
-void sub_08037d64(void)
+void PlayerActionSwallow(void)
 {
     gCurTask->unk88->unk05 = gCurTask->unk88->unk04;
     gCurTask->unk88->unk04 = 12;
@@ -838,7 +838,7 @@ void sub_08037d64(void)
     TaskSleepForever();
 }
 
-void sub_08037e28(void)
+void PlayerActionSwallowUpdate(void)
 {
     struct Task *t = gCurTask;
     struct Task *u;

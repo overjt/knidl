@@ -36,7 +36,7 @@ extern s32 sub_08025b0c();
 extern s32 sub_08025e00();
 extern s32 sub_08025e0c();
 extern s32 sub_08025f00();
-extern s32 sub_08026278();
+extern s32 SetCameraFocusOrAnchor();
 extern s32 sub_08027798();
 extern s32 sub_080277f0();
 extern s32 CreateChildTaskAt(u32 type, s16 xArg, s16 yArg, u8 keepPrio);
@@ -1393,7 +1393,7 @@ void sub_08074568(void)
 {
     struct Task *t = gCurTask;
 
-    sub_08026278(t->unk48, t->unk4A);
+    SetCameraFocusOrAnchor(t->unk48, t->unk4A);
 }
 
 void sub_08074588(void)
@@ -1544,7 +1544,7 @@ void sub_080747ec(void)
 void sub_08074880(void)
 {
     TaskStop();
-    sub_08026278(gCurTask->unk48, 0x10D);
+    SetCameraFocusOrAnchor(gCurTask->unk48, 0x10D);
     TaskExitTrampoline();
 }
 

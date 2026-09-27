@@ -8,7 +8,7 @@
  * (gUnk_0873B688), each sub-action followed by its sub-handler: more
  * attacks of the same move set (sounds 168-170, 183, 184, 202 and 246,
  * M11's PlayerSetMotionYPreset steering, effect 44), the last one (sub_0804f450)
- * installing the hit boxes gUnk_0873BD00/gPlayerDefaultTerrainBox in PlayerState.
+ * installing the hit boxes gPlayerDefaultBodyBox/gPlayerDefaultTerrainBox in PlayerState.
  * Sub-handler 17 (sub_0804f5bc, a push-less leaf) requests action 7, 20
  * or 23 from the ground flag and the key state. */
 
@@ -34,7 +34,7 @@ struct Unk03005550
 
 extern u16 gLatchedHeldKeys[];             /* held keys, latched per player (M11) */
 extern struct Unk03005550 gTerrainResult;
-extern u32 gUnk_0873BD00[];             /* stored to PlayerState.unk64 as (u32)gUnk_0873BD00 */
+extern u32 gPlayerDefaultBodyBox[];             /* stored to PlayerState.unk64 as (u32)gPlayerDefaultBodyBox */
 extern u32 gPlayerDefaultTerrainBox[];
 
 void TaskYieldTrampoline(s32 frames);
@@ -394,7 +394,7 @@ void sub_0804f450(void)
     }
     {
         struct Task *t = gCurTask;
-        t->unk88->unk64 = (u32)gUnk_0873BD00;
+        t->unk88->unk64 = (u32)gPlayerDefaultBodyBox;
         t->unk88->unk68 = (u32)gPlayerDefaultTerrainBox;
         t->unk70++;
     }

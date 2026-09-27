@@ -9,16 +9,16 @@
  * Each hook steps the animation script of every live record once a frame
  * (struct Unk020061F0: {op, arg} pairs - draw a frame, break the four
  * neighbours, wait, free) and then clears the "stepped" bit 15 of unk6.
- * sub_080318b4 draws the replacement metatiles into the BG map
+ * UpdateBlockAnims draws the replacement metatiles into the BG map
  * (sub_08031b58/sub_080319d0 for a whole column of n blocks, through the
  * scratch record gUnk_02007FD0) and chains to the neighbours
- * (sub_08031d04); sub_08031de4 also rebuilds the 3x3 edge tiles around
+ * (sub_08031d04); UpdateBlockAnimsWithEdges also rebuilds the 3x3 edge tiles around
  * the block (sub_08031f3c) for rooms whose BG map has edge tiles; and
- * sub_08032428 animates the blocks of the second layer gBg1MetatileMap in
- * the BG map at 0x06001800, with its own records gUnk_0200A6F0[] and
- * the probe/spawner pair sub_08032288/sub_08032338 that M08's map
- * events call.  sub_08031994/sub_080319b0/sub_080324e4 free a record,
- * sub_08031c38/sub_08031ebc write its metatile back into the map, and
+ * UpdateBg1BlockAnims animates the blocks of the second layer gBg1MetatileMap in
+ * the BG map at 0x06001800, with its own records gBg1BreakingBlocks[] and
+ * the probe/spawner pair CanBreakBg1Block/BreakBg1BlockAtCursor that M08's map
+ * events call.  FreeBlockAnimAndBlock/FreeBlockAnim/sub_080324e4 free a record,
+ * BlockAnimWriteMetatile/BlockAnimWriteMetatileWrapped write its metatile back into the map, and
  * sub_08031c7c/sub_08032520 draw its 2x2 tiles inside the visible
  * window gUnk_020055B8. */
 
@@ -30,7 +30,7 @@ struct MapTile
     /*0x03*/ u8 unk3;
 };
 
-/* gBreakingBlocks[64] (and gUnk_0200A6F0[64] for the second block layer
+/* gBreakingBlocks[64] (and gBg1BreakingBlocks[64] for the second block layer
    gBg1MetatileMap): one 32-byte record per block being broken.  unk0/unk2 =
    metatile x/y, unk4 = its map index, unk6 = the position in the animation
    script (0x7FFF = free slot; bit 15 = already stepped this frame), unk8 =
@@ -87,7 +87,7 @@ extern u16 gBlockCursorIndex;               /*   map index */
 extern s32 gCameraCenterX;
 extern s32 gCameraCenterY;
 extern u16 gBg1MetatileMap[];
-extern struct Unk020061F0 gUnk_0200A6F0[];
+extern struct Unk020061F0 gBg1BreakingBlocks[];
 extern struct RoomDef **gRoomTable[][8];
 extern s8 gStageIndex;
 extern s8 gLevelIndex;
@@ -100,22 +100,22 @@ void sub_0802b2f0(void);
 void sub_0802b368(void);
 void sub_0802b3e4(void);
 s32 CanBreakBlock(s32 x, s32 y, s32 id, s32 e);
-s32 sub_08031374(void);
-void sub_08031994(struct Unk020061F0 *b);
-void sub_080319b0(struct Unk020061F0 *b);
+s32 BreakBlockAtCursor(void);
+void FreeBlockAnimAndBlock(struct Unk020061F0 *b);
+void FreeBlockAnim(struct Unk020061F0 *b);
 void sub_080319d0(struct Unk020061F0 *b, s32 n);
 void sub_08031b58(struct Unk020061F0 *b, s32 n);
-void sub_08031c38(struct Unk020061F0 *b);
+void BlockAnimWriteMetatile(struct Unk020061F0 *b);
 void sub_08031c7c(struct Unk020061F0 *b);
 void sub_08031d04(struct Unk020061F0 *b);
-void sub_08031ebc(struct Unk020061F0 *b);
+void BlockAnimWriteMetatileWrapped(struct Unk020061F0 *b);
 void sub_08031f3c(struct Unk020061F0 *b);
 void sub_080324e4(struct Unk020061F0 *b);
-void sub_08032500(struct Unk020061F0 *b);
+void Bg1BlockAnimWriteMetatile(struct Unk020061F0 *b);
 void sub_08032520(struct Unk020061F0 *b);
 void sub_080325b8(struct Unk020061F0 *b);
 
-void sub_080318b4(void)
+void UpdateBlockAnims(void)
 {
     s32 i;
     struct Unk020061F0 *b;
@@ -151,10 +151,10 @@ void sub_080318b4(void)
             continue;
         case 0x8000:
         default:
-            sub_08031994(b);
+            FreeBlockAnimAndBlock(b);
             continue;
         case 0x8001:
-            sub_080319b0(b);
+            FreeBlockAnim(b);
             continue;
         }
     }
@@ -162,14 +162,14 @@ void sub_080318b4(void)
         gBreakingBlocks[i].unk6 &= 0x7FFF;
 }
 
-void sub_08031994(struct Unk020061F0 *b)
+void FreeBlockAnimAndBlock(struct Unk020061F0 *b)
 {
     b->unk6 = 0x7FFF;
     b->unk14 = 0;
     gBlockLayer[b->unk4] = 0;
 }
 
-void sub_080319b0(struct Unk020061F0 *b)
+void FreeBlockAnim(struct Unk020061F0 *b)
 {
     b->unk6 = 0x7FFF;
     b->unk14 = 0;
@@ -183,7 +183,7 @@ void sub_080319d0(struct Unk020061F0 *b, s32 n)
 
     if (n <= 0)
         return;
-    sub_08031c38(b);
+    BlockAnimWriteMetatile(b);
     sub_08031c7c(b);
     if (n != 1)
     {
@@ -201,7 +201,7 @@ void sub_080319d0(struct Unk020061F0 *b, s32 n)
                 s->unkC = (u16 *)0x06002000 + (((s->unk0 * 2) & 31) + ((((s->unk2 * 2) & 31) + (u16)(s->unk0 & 16) * 2) << 5));
                 s->unk16 = s->unk8->unk0;
                 s->unk18 = s->unk8->unk3;
-                sub_08031c38(s);
+                BlockAnimWriteMetatile(s);
                 sub_08031c7c(s);
                 gBlockLayer[s->unk4] = 0;
             }
@@ -217,7 +217,7 @@ void sub_08031ab8(struct Unk020061F0 *b, s32 n)
 
     if (n <= 0)
         return;
-    sub_08031c38(b);
+    BlockAnimWriteMetatile(b);
     if (n == 1)
         return;
     s = &gUnk_02007FD0;
@@ -229,7 +229,7 @@ void sub_08031ab8(struct Unk020061F0 *b, s32 n)
         if (gBlockLayer[s->unk4] != 0)
         {
             s->unk8 = &gCurRoomDef->unk10[gBlockLayer[s->unk4] & 0xFF];
-            sub_08031c38(s);
+            BlockAnimWriteMetatile(s);
             gBlockLayer[s->unk4] |= 0x8000;
         }
     }
@@ -269,7 +269,7 @@ void sub_08031b58(struct Unk020061F0 *b, s32 n)
     b->unk8++;
 }
 
-void sub_08031c38(struct Unk020061F0 *b)
+void BlockAnimWriteMetatile(struct Unk020061F0 *b)
 {
     b->unk16 = b->unk8->unk0;
     b->unk18 = b->unk8->unk3;
@@ -305,31 +305,31 @@ void sub_08031d04(struct Unk020061F0 *b)
 
     if (CanBreakBlock(b->unk0, b->unk2 - 1, b->unk1A, b->unk1C) != 0)
     {
-        slot = sub_08031374();
+        slot = BreakBlockAtCursor();
         if (slot != -1)
             gBreakingBlocks[slot].unk6 |= 0x8000;
     }
     if (CanBreakBlock(b->unk0 - 1, b->unk2, b->unk1A, b->unk1C) != 0)
     {
-        slot = sub_08031374();
+        slot = BreakBlockAtCursor();
         if (slot != -1)
             gBreakingBlocks[slot].unk6 |= 0x8000;
     }
     if (CanBreakBlock(b->unk0 + 1, b->unk2, b->unk1A, b->unk1C) != 0)
     {
-        slot = sub_08031374();
+        slot = BreakBlockAtCursor();
         if (slot != -1)
             gBreakingBlocks[slot].unk6 |= 0x8000;
     }
     if (CanBreakBlock(b->unk0, b->unk2 + 1, b->unk1A, b->unk1C) != 0)
     {
-        slot = sub_08031374();
+        slot = BreakBlockAtCursor();
         if (slot != -1)
             gBreakingBlocks[slot].unk6 |= 0x8000;
     }
 }
 
-void sub_08031de4(void)
+void UpdateBlockAnimsWithEdges(void)
 {
     s32 i;
     struct Unk020061F0 *b;
@@ -348,7 +348,7 @@ void sub_08031de4(void)
         switch (p[0])
         {
         case 2:
-            sub_08031ebc(b);
+            BlockAnimWriteMetatileWrapped(b);
         case 1:
             sub_08031f3c(b);
             b->unk6++;
@@ -362,10 +362,10 @@ void sub_08031de4(void)
             continue;
         case 0x8000:
         default:
-            sub_08031994(b);
+            FreeBlockAnimAndBlock(b);
             continue;
         case 0x8001:
-            sub_080319b0(b);
+            FreeBlockAnim(b);
             continue;
         }
     }
@@ -374,7 +374,7 @@ void sub_08031de4(void)
     sub_08026308();
 }
 
-void sub_08031ebc(struct Unk020061F0 *b)
+void BlockAnimWriteMetatileWrapped(struct Unk020061F0 *b)
 {
     u32 x;
     u32 m;
@@ -483,7 +483,7 @@ void sub_08031f3c(struct Unk020061F0 *b)
     b->unk8++;
 }
 
-s32 sub_08032288(s32 x, s32 y)
+s32 CanBreakBg1Block(s32 x, s32 y)
 {
     s32 x0, x1, y0, y1;
 
@@ -513,19 +513,19 @@ s32 sub_08032288(s32 x, s32 y)
     return 0;
 }
 
-s16 sub_08032338(void)
+s16 BreakBg1BlockAtCursor(void)
 {
     s32 i;
     struct Unk020061F0 *b;
 
     i = 0;
-    while (gUnk_0200A6F0[i].unk6 != 0x7FFF)
+    while (gBg1BreakingBlocks[i].unk6 != 0x7FFF)
     {
         i++;
         if (i > 63)
             return -1;
     }
-    b = &gUnk_0200A6F0[i];
+    b = &gBg1BreakingBlocks[i];
     b->unk4 = gBlockCursorIndex;
     b->unk8 = gRoomTable[gLevelIndex][gStageIndex][gRoomIndex + 1]->unk10 + 1;
     b->unk0 = gBlockCursorX;
@@ -537,11 +537,11 @@ s16 sub_08032338(void)
     gBg1MetatileMap[gBlockCursorIndex] |= 0x8000;
     PlaySfx(224);
     if (b->unk10[0] == 1)
-        sub_08032500(b);
+        Bg1BlockAnimWriteMetatile(b);
     return i;
 }
 
-void sub_08032428(void)
+void UpdateBg1BlockAnims(void)
 {
     s32 i;
     struct Unk020061F0 *b;
@@ -550,7 +550,7 @@ void sub_08032428(void)
     sub_0802b368();
     for (i = 0; i < 64; i++)
     {
-        b = &gUnk_0200A6F0[i];
+        b = &gBg1BreakingBlocks[i];
         if (b->unk6 == 0x7FFF || (b->unk6 & 0x8000))
             continue;
     again:
@@ -564,7 +564,7 @@ void sub_08032428(void)
             b->unk6++;
             goto again;
         case 2:
-            sub_08032500(b);
+            Bg1BlockAnimWriteMetatile(b);
             sub_08032520(b);
             b->unk6++;
             goto again;
@@ -583,7 +583,7 @@ void sub_08032428(void)
         }
     }
     for (i = 0; i < 64; i++)
-        gUnk_0200A6F0[i].unk6 &= 0x7FFF;
+        gBg1BreakingBlocks[i].unk6 &= 0x7FFF;
 }
 
 void sub_080324e4(struct Unk020061F0 *b)
@@ -593,7 +593,7 @@ void sub_080324e4(struct Unk020061F0 *b)
     gBg1MetatileMap[b->unk4] = 0;
 }
 
-void sub_08032500(struct Unk020061F0 *b)
+void Bg1BlockAnimWriteMetatile(struct Unk020061F0 *b)
 {
     b->unk16 = b->unk8->unk0;
     gBg1MetatileMap[b->unk4] = b->unk16 | 0x8000;
@@ -625,28 +625,28 @@ void sub_080325b8(struct Unk020061F0 *b)
 {
     s16 slot;
 
-    if (sub_08032288(b->unk0, b->unk2 - 1) != 0)
+    if (CanBreakBg1Block(b->unk0, b->unk2 - 1) != 0)
     {
-        slot = sub_08032338();
+        slot = BreakBg1BlockAtCursor();
         if (slot != -1)
-            gUnk_0200A6F0[slot].unk6 |= 0x8000;
+            gBg1BreakingBlocks[slot].unk6 |= 0x8000;
     }
-    if (sub_08032288(b->unk0 - 1, b->unk2) != 0)
+    if (CanBreakBg1Block(b->unk0 - 1, b->unk2) != 0)
     {
-        slot = sub_08032338();
+        slot = BreakBg1BlockAtCursor();
         if (slot != -1)
-            gUnk_0200A6F0[slot].unk6 |= 0x8000;
+            gBg1BreakingBlocks[slot].unk6 |= 0x8000;
     }
-    if (sub_08032288(b->unk0 + 1, b->unk2) != 0)
+    if (CanBreakBg1Block(b->unk0 + 1, b->unk2) != 0)
     {
-        slot = sub_08032338();
+        slot = BreakBg1BlockAtCursor();
         if (slot != -1)
-            gUnk_0200A6F0[slot].unk6 |= 0x8000;
+            gBg1BreakingBlocks[slot].unk6 |= 0x8000;
     }
-    if (sub_08032288(b->unk0, b->unk2 + 1) != 0)
+    if (CanBreakBg1Block(b->unk0, b->unk2 + 1) != 0)
     {
-        slot = sub_08032338();
+        slot = BreakBg1BlockAtCursor();
         if (slot != -1)
-            gUnk_0200A6F0[slot].unk6 |= 0x8000;
+            gBg1BreakingBlocks[slot].unk6 |= 0x8000;
     }
 }

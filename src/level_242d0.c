@@ -17,15 +17,15 @@
  * players, streams the whole view and spawns task type #3.  sub_0802497c is
  * the same shape as sub_08022fa8.
  * 
- * The doors, from sub_08024e40 on (one translation unit with the loaders:
- * split at 0x08024E40, sub_08025024 and sub_080258e0 swap hoisted address
- * registers, lesson 4.79).  sub_08024e40(x, y) finds an enterable door at a
+ * The doors, from FindDoorAt on (one translation unit with the loaders:
+ * split at 0x08024E40, EnterDoor and ExitClearedStage swap hoisted address
+ * registers, lesson 4.79).  FindDoorAt(x, y) finds an enterable door at a
  * pixel - the door metatiles 16/144, 54/182 and 55/183, the door records
- * RoomDef.unk44 and their locks gUnk_02007D58[]/gUnk_0200B04C - and records
- * it in gUnk_02000030 (type << 8 | index); sub_08025024 enters it, a 9-way
+ * RoomDef.unk44 and their locks gUsedSubGameDoors[]/gUnk_0200B04C - and records
+ * it in gUnk_02000030 (type << 8 | index); EnterDoor enters it, a 9-way
  * switch on the door kind (RoomDef door byte +6) that sets the next
  * level/stage/room, the arrival position gRoomEntryX/gRoomEntryY and
- * the stage request gStageRequest for M02's state bodies.  sub_080258e0
+ * the stage request gStageRequest for M02's state bodies.  ExitClearedStage
  * (a stage cleared: the hub's next stage door, or on to the next level),
  * sub_08025a30, sub_08025acc, sub_08025b0c, sub_08025b5c, sub_08025bc8 and
  * sub_08025dc4 are the other exits, each setting the level/stage/room and a
@@ -169,7 +169,7 @@ extern u16 gPlayerCount;
 extern s16 gPlayerLives[];
 extern s16 gPlayerHealth[];
 extern s16 gMaxHealth;
-extern u16 gUnk_02008008[];
+extern u16 gSavedPlayerAbilities[];
 extern u16 gUnk_02007FA8[];
 extern u16 gPlayerAbilities[];
 extern u16 gUnk_0200AF18[];
@@ -179,7 +179,7 @@ extern vu16 gPlayerPressedKeys[];
 extern u16 gLatchedHeldKeys[];
 extern u16 gLatchedPressedKeys[];
 extern struct Unk02004B90 gDoorStates[];
-extern u8 gUnk_02007D58[];
+extern u8 gUsedSubGameDoors[];
 extern s8 gUnk_0200B038;
 extern u8 gUnk_0200B04C;
 extern u16 gUnk_02000030;
@@ -227,7 +227,7 @@ void RequestCopy(u32 mode, u32 src, u32 dst, u32 size);
 void ResetTasksAndOam(void);
 void TaskSleepForever(void);
 void LoadGfxSet(u16 a0);
-void sub_08009adc(void);
+void HudReset(void);
 s32 AddPlayerLives(s32 a, u32 b);
 void HudUpdateAbilityPanel(void);
 s32 GetCollisionTileAtPixel(u16 x, u16 y);
@@ -241,15 +241,15 @@ void sub_0802385c(void);
 void sub_080238a4(void);
 void sub_080238ec(void);
 void sub_0802695c(void);
-void sub_08027e28(void);
+void InitRoomBgLayout(void);
 void sub_08028280(s32 a);
 void sub_08028304(void);
 void CalcBg3Parallax(void);
 void CalcRoomBounds(void);
-void sub_08028990(void);
+void CameraResetBoundsToGroup(void);
 void CameraResetBounds(void);
 void sub_08028b8c(void);
-void sub_08028e4c(void);
+void SetRoomEntryPoint(void);
 void CameraInitPos(void);
 void LoadBg2Gfx(void);
 void LoadBg3Gfx(void);
@@ -270,7 +270,7 @@ void sub_0802b074(s32 px);
 void CameraFollowFocus(void);
 void CameraFollowScrollLocked(void);
 void CameraHoldAnchor(void);
-void sub_0802cc90(void);
+void CameraSnapToFocus(void);
 void StopScreenShake(void);
 void UpdateScreenShake(void);
 void LoadRoomBgAnims(void);
@@ -343,7 +343,7 @@ void sub_08024300(void)
     ResetBlockAnims();
     StopScreenShake();
     CalcBg3Parallax();
-    sub_08027e28();
+    InitRoomBgLayout();
     CalcRoomBounds();
     LoadRoomBgAnims();
     gCameraFocusX = gBg3Border[0] + 120;
@@ -353,13 +353,13 @@ void sub_08024300(void)
     gUnk_0200B078 = 0;
     gUnk_02000020 = 0;
     CameraResetBounds();
-    sub_0802cc90();
+    CameraSnapToFocus();
     CameraInitPos();
     CameraWriteScrollParallax();
     SetViewRectToPlayers();
     a = 0;
     CpuFastSet(&a, (u32 *)0x06002000, 0x01000400);
-    sub_08009adc();
+    HudReset();
     if (gBg3MapShape != 0)
     {
         DrawBg2View(gCameraPos[0], gCameraPos[1]);
@@ -389,7 +389,7 @@ void sub_08024540(void)
 void sub_0802457c(void)
 {
     if (gRoomUpdateFlags & 1)
-        sub_0802cc90();
+        CameraSnapToFocus();
 }
 
 void sub_08024598(void)
@@ -491,11 +491,11 @@ void sub_08024698(s32 a0)
     CalcBg3Parallax();
     CalcRoomBounds();
     sub_08028280(a0);
-    sub_08028e4c();
+    SetRoomEntryPoint();
     LoadRoomBgAnims();
     sub_08028304();
     CameraResetBounds();
-    sub_08009adc();
+    HudReset();
     switch (gCameraMode)
     {
     default:
@@ -615,9 +615,9 @@ void sub_0802497c(void)
     StopScreenShake();
     CalcBg3Parallax();
     CalcRoomBounds();
-    sub_08027e28();
+    InitRoomBgLayout();
     sub_080b4e40();
-    sub_08028e4c();
+    SetRoomEntryPoint();
     LoadRoomBgAnims();
     InitDoors();
     sub_08028304();
@@ -631,15 +631,15 @@ void sub_0802497c(void)
             if (gPlayerHealth[i] == 0)
             {
                 gPlayerHealth[i] = gMaxHealth;
-                gUnk_02008008[i] = 0;
+                gSavedPlayerAbilities[i] = 0;
                 gUnk_02007FA8[i] = 0xFFFF;
                 AddPlayerLives(-1, i);
             }
-            if ((s16)gUnk_02008008[i] != 0)
+            if ((s16)gSavedPlayerAbilities[i] != 0)
             {
-                gPlayerAbilities[i] = gUnk_02008008[i];
+                gPlayerAbilities[i] = gSavedPlayerAbilities[i];
                 gUnk_0200AF18[i] = gUnk_02007FA8[i];
-                gUnk_02008008[i] = 0;
+                gSavedPlayerAbilities[i] = 0;
                 gUnk_02007FA8[i] = 0xFFFF;
             }
             gActivePlayerMask |= 1 << i;
@@ -660,8 +660,8 @@ void sub_0802497c(void)
     if (gPlayerCount == 1)
         CameraResetBounds();
     else
-        sub_08028990();
-    sub_08009adc();
+        CameraResetBoundsToGroup();
+    HudReset();
     switch (gCameraMode)
     {
     default:
@@ -736,7 +736,7 @@ void sub_08024da4(void)
     TaskSleepForever();
 }
 
-s32 sub_08024e40(s32 x, s32 y)
+s32 FindDoorAt(s32 x, s32 y)
 {
     s32 type;
     s32 i;
@@ -798,15 +798,15 @@ s32 sub_08024e40(s32 x, s32 y)
         switch ((u8)d->unk6)
         {
         case 3:
-            if (gUnk_02007D58[gUnk_030023B8] & 1)
+            if (gUsedSubGameDoors[gUnk_030023B8] & 1)
                 return 0;
             break;
         case 4:
-            if (gUnk_02007D58[gUnk_030023B8] & 2)
+            if (gUsedSubGameDoors[gUnk_030023B8] & 2)
                 return 0;
             break;
         case 5:
-            if (gUnk_02007D58[gUnk_030023B8] & 4)
+            if (gUsedSubGameDoors[gUnk_030023B8] & 4)
                 return 0;
             break;
         case 6:
@@ -819,7 +819,7 @@ s32 sub_08024e40(s32 x, s32 y)
     return 1;
 }
 
-s32 sub_08025024(void)
+s32 EnterDoor(void)
 {
     struct RoomDef *room;
     struct Door *d;
@@ -902,7 +902,7 @@ s32 sub_08025024(void)
                 break;
             case 3:
                 gSubGameLevel = gUnk_087323E2[gUnk_030023B8][0][gExtraMode];
-                gUnk_02007D58[gStageIndex] |= 1;
+                gUsedSubGameDoors[gStageIndex] |= 1;
                 gRoomEntryX = d->unk2 * 16 + 22;
                 gRoomEntryY = d->unk4 * 16 + 5;
                 gRoomEntrySet = 1;
@@ -912,7 +912,7 @@ s32 sub_08025024(void)
                 break;
             case 4:
                 gSubGameLevel = gUnk_087323E2[gUnk_030023B8][1][gExtraMode];
-                gUnk_02007D58[gStageIndex] |= 2;
+                gUsedSubGameDoors[gStageIndex] |= 2;
                 gRoomEntryX = d->unk2 * 16 + 22;
                 gRoomEntryY = d->unk4 * 16 + 5;
                 gRoomEntrySet = 1;
@@ -922,7 +922,7 @@ s32 sub_08025024(void)
                 break;
             case 5:
                 gSubGameLevel = gUnk_087323E2[gUnk_030023B8][2][gExtraMode];
-                gUnk_02007D58[gStageIndex] |= 4;
+                gUsedSubGameDoors[gStageIndex] |= 4;
                 gRoomEntryX = d->unk2 * 16 + 22;
                 gRoomEntryY = d->unk4 * 16 + 5;
                 gRoomEntrySet = 1;
@@ -1046,7 +1046,7 @@ s32 sub_08025024(void)
     return gUnk_02000030 >> 8;
 }
 
-void sub_080258e0(void)
+void ExitClearedStage(void)
 {
     if (gGameState == 8)
     {

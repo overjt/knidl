@@ -14,10 +14,10 @@
  * gUnk_0873D420, gUnk_0873D7E4) with TaskSetFrame and TaskYieldTrampoline;
  * the per-frame handler runs M11's transition predicates in order and
  * writes the next mode request into PlayerState.unk01, or re-binds the
- * task to another coroutine with TaskSetEntry.  sub_08034f8c/sub_08035458
+ * task to another coroutine with TaskSetEntry.  PlayerActionFall/PlayerActionFallUpdate
  * are mode 5, sub_080355d8/sub_08035848 mode 8 (Task.unk73 is its
- * sub-state) and sub_080359f8 mode 14, a six-state loop over Task.unk73
- * whose per-frame handler is M10's sub_08036280. */
+ * sub-state) and PlayerActionFloat mode 14, a six-state loop over Task.unk73
+ * whose per-frame handler is M10's PlayerActionFloatUpdate. */
 
 /* gTerrainResult: M06's collision result block (src/terrain_1bcac.c spells it
    the same way except unk8, which M09 reads with ldrsh). */
@@ -45,7 +45,7 @@ extern struct Unk03005550 gTerrainResult;
 extern s16 gUnk_0873D420[][3];
 extern u32 gUnk_0873CC74[];
 extern u8 gUnk_0873BEB0[];
-extern u32 gUnk_0873BD00[];               /* stored to PlayerState.unk64 as (u32)gUnk_0873BD00 */
+extern u32 gPlayerDefaultBodyBox[];               /* stored to PlayerState.unk64 as (u32)gPlayerDefaultBodyBox */
 extern u32 gPlayerDefaultTerrainBox[];
 extern u32 gUnk_0873BD14[];
 extern s16 gUnk_0873D7E4[][3];
@@ -68,9 +68,9 @@ void PlayerStopAtCeilingAndWall(void);
 s32 PlayerCheckLanding(void);
 s32 PlayerCheckLadder(void);
 s32 PlayerCheckFloat(void);
-s32 sub_08040084(void);
-s32 sub_080400c0(void);
-s32 sub_08040264(void);
+s32 PlayerCheckAirFloat(void);
+s32 PlayerCheckBButton(void);
+s32 PlayerCheckEnterWater(void);
 s32 PlayerCheckEnterDoor(void);
 s32 PlayerCheckDropAbility(void);
 s32 PlayerRequestLocomotion(void);
@@ -79,7 +79,7 @@ void PlayerSetMotionYPreset(s32 a0);
 void CreatePlayerObject(s32 a, s32 b, s32 c);
 s32 CreatePlayerEffect(s32 a0, s32 a1, s32 a2);
 
-void sub_08034f8c(void)
+void PlayerActionFall(void)
 {
     gCurTask->unk88->unk05 = gCurTask->unk88->unk04;
     gCurTask->unk88->unk04 = 5;
@@ -256,11 +256,11 @@ void sub_08034f8c(void)
     }
 }
 
-void sub_08035458(void)
+void PlayerActionFallUpdate(void)
 {
     PlayerTurnToHeldDirection();
-    while (sub_08040264() == 0 && PlayerCheckLadder() == 0 && PlayerCheckEnterDoor() == 0
-           && PlayerCheckFloat() == 0 && sub_08040084() == 0 && sub_080400c0() == 0
+    while (PlayerCheckEnterWater() == 0 && PlayerCheckLadder() == 0 && PlayerCheckEnterDoor() == 0
+           && PlayerCheckFloat() == 0 && PlayerCheckAirFloat() == 0 && PlayerCheckBButton() == 0
            && PlayerCheckDropAbility() == 0)
     {
         if (gCurTask->unk7A & 1)
@@ -281,7 +281,7 @@ void sub_08035458(void)
         {
             PlayerCheckBump();
             if (gCurTask->unk88->unk3E & 7)
-                TaskSetEntry(sub_08034f8c, gCurTaskIdx);
+                TaskSetEntry(PlayerActionFall, gCurTaskIdx);
         }
         if (gCurTask->unk88->unk0D == 10)
         {
@@ -389,8 +389,8 @@ void sub_080355d8(void)
 
 void sub_08035848(void)
 {
-    if (PlayerCheckLadder() == 0 && PlayerCheckEnterDoor() == 0 && sub_08040264() == 0
-        && PlayerCheckFloat() == 0 && sub_08040084() == 0 && sub_080400c0() == 0)
+    if (PlayerCheckLadder() == 0 && PlayerCheckEnterDoor() == 0 && PlayerCheckEnterWater() == 0
+        && PlayerCheckFloat() == 0 && PlayerCheckAirFloat() == 0 && PlayerCheckBButton() == 0)
         PlayerCheckDropAbility();
     if (gCurTask->unk88->unk01 != 0)
     {
@@ -425,7 +425,7 @@ void sub_08035848(void)
                     {
                         PlayerCheckBump();
                         if (gCurTask->unk88->unk3E & 7)
-                            TaskSetEntry(sub_08034f8c, gCurTaskIdx);
+                            TaskSetEntry(PlayerActionFall, gCurTaskIdx);
                     }
                     if (gCurTask->unk28 != 0)
                         RegisterCollider(gCurTaskIdx, gCurTask->unk48, gCurTask->unk4A, gUnk_0873BEB0);
@@ -453,7 +453,7 @@ void sub_08035848(void)
     PlayerStopAtCeilingAndWall();
 }
 
-void sub_080359f8(void)
+void PlayerActionFloat(void)
 {
     gCurTask->unk88->unk05 = gCurTask->unk88->unk04;
     gCurTask->unk88->unk04 = 14;
@@ -620,7 +620,7 @@ void sub_080359f8(void)
             if (gCurTask->unk88->unk06 == 2)
             {
                 gCurTask->unk88->unk06 = 0;
-                gCurTask->unk88->unk64 = (u32)gUnk_0873BD00;
+                gCurTask->unk88->unk64 = (u32)gPlayerDefaultBodyBox;
                 gCurTask->unk88->unk68 = (u32)gPlayerDefaultTerrainBox;
                 CreatePlayerObject(gCurTask->unk88->unk00, 0, 0);
                 gCurTask->unk28++;

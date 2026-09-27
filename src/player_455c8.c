@@ -11,7 +11,7 @@
  * PlayerState.unk6C, state 1 swaps in the scripts gUnk_0873CB2C /
  * gUnk_0873BD3C (PlayerState.unk68/unk64) and cycles the hit-box row
  * Task.unk2C through 0-2, state 2 restores the default scripts
- * gPlayerDefaultTerrainBox / gUnk_0873BD00 and lands (preset 2), and state 3 is the
+ * gPlayerDefaultTerrainBox / gPlayerDefaultBodyBox and lands (preset 2), and state 3 is the
  * bounce-off (sound 153, RequestScreenShake(4), preset 23).  Its handler
  * sub_08045a50 drives it from the collision block gTerrainResult -
  * re-binding state 3 on a hit, fading the palette of gUnk_0873B510[]
@@ -49,7 +49,7 @@ struct M12Fade
 };
 
 extern u32 gPlayerDefaultTerrainBox[];
-extern u32 gUnk_0873BD00[];             /* stored to PlayerState.unk64 as (u32)gUnk_0873BD00 */
+extern u32 gPlayerDefaultBodyBox[];             /* stored to PlayerState.unk64 as (u32)gPlayerDefaultBodyBox */
 extern u32 gUnk_0873CCA4[];
 extern u32 gUnk_0873CB2C[];
 extern u32 gUnk_0873BD3C[];
@@ -185,7 +185,7 @@ void sub_080455c8(void)
         gCurTask->unk88->unk6C = 0;
         SetPlayerInvulnerability(255, 0, gCurTask->unk88->unk00);
         gCurTask->unk88->unk68 = (u32)gPlayerDefaultTerrainBox;
-        gCurTask->unk88->unk64 = (u32)gUnk_0873BD00;
+        gCurTask->unk88->unk64 = (u32)gPlayerDefaultBodyBox;
         PlayerSetMotionXPreset(11, 41);
         PlayerSetMotionYPreset(2);
         CreatePlayerEffect(gCurTask->unk88->unk00, 32, 5);

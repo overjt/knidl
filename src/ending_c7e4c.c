@@ -17,7 +17,7 @@
  *   sub_080c8958   variant 8, nine sprites: the centre one flickers, the
  *       other eight fly outwards along gUnk_08757374[]..gUnk_087573D4[].
  *   sub_080c8cd4 / sub_080c8e88   variant 9, an invisible task the camera
- *       follows (M07's sub_08026278) that shakes vertically.
+ *       follows (M07's SetCameraFocusOrAnchor) that shakes vertically.
  *   sub_080c8ea8   variant 10: after 900 frames, eleven times, copy the next
  *       4 KiB of BG tiles from the decompression buffer, blend them in, hold
  *       and blend them out; then turn BG0 off. */
@@ -61,7 +61,7 @@ void TaskDrawScreenOrFree(void);
 void TaskSleepForever(void);                                     /* end the running task */
 void TaskSetMotion(s32 a, s32 b, s32 c, s32 d, s32 e, s32 f);
 void TaskStop(void);
-void sub_08026278(s32 x, s32 y);
+void SetCameraFocusOrAnchor(s32 x, s32 y);
 void sub_080269e8(void);
 void sub_080c8298(void);
 void sub_080c8468(void);
@@ -699,12 +699,12 @@ void sub_080c8cd4(void)
 }
 
 /* Task type #100 variant 9's per-frame hook: move the camera target to
-   the task's position (M07's sub_08026278). */
+   the task's position (M07's SetCameraFocusOrAnchor). */
 void sub_080c8e88(void)
 {
     struct Task *t = gCurTask;
 
-    sub_08026278(t->unk48, t->unk4A);
+    SetCameraFocusOrAnchor(t->unk48, t->unk4A);
 }
 
 /* Task type #100 variant 10: after 900 frames, eleven times: copy the next

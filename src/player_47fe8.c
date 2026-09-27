@@ -5,19 +5,19 @@
 /* player_47fe8.c (0x08047FE8-0x08049737, issue #88).
  *
  * Player action bodies, part 15: action 29 and per-frame handler 26.
- * sub_08047fe8 (action 29, mode 19) is the ability get: it freezes the
+ * PlayerActionGetAbility (action 29, mode 19) is the ability get: it freezes the
  * stage (gUnk_03001F34 = 1), starts the palette fade BeginFade over
  * the rows gUnk_0873B534[player] selects (unless gUnk_030023B0 is set)
  * and, when the swallowed object gives a random ability
  * (PlayerState.unk0A > 1), spins the HUD roulette: PlayerState.unk0B
  * steps through abilities 1-24 with the delays gUnk_0873B634[] until A
  * or B is pressed.  It then shows the new ability on the HUD
- * (SetPlayerAbilityNoHud, sub_0800a0dc), loads its sprite tiles (M13's
+ * (SetPlayerAbilityNoHud, HudShowAbilityAnimated), loads its sprite tiles (M13's
  * LoadAbilityTiles) and plays the ability's own pose - a 25-way switch on
  * PlayerState.unk0D - 1 whose arms install hit boxes, spawn effects
  * and load extra tiles (sub_08049a58) - before it restores the palette
  * and the mode (the fade back, BeginFade(4, 2, ...)) and unfreezes
- * the stage.  Its handler sub_08049484 hands
+ * the stage.  Its handler PlayerActionGetAbilityUpdate hands
  * over to the ability's own follow-up once Task.unk28 is set (action 42
  * for ability 11, 55 for 24, M11's sub_08040710 otherwise) and, while
  * Task.unk2C is set, drives the pose: ability 2 blends its palettes
@@ -63,7 +63,7 @@ void TaskSetFrame(s32 a);
 void TaskSetFrameNoFlip(s32 a);
 void TaskSetFrameFlip(s32 a);
 s32 SetPlayerAbilityNoHud(s32 a, s32 b, u32 c);
-void sub_0800a0dc(s32 a, s32 b);
+void HudShowAbilityAnimated(s32 a, s32 b);
 void sub_0800a178(s32 a, s32 id);
 void RegisterCollider(u8 a, s16 x, s16 y, void *p);   /* M11's caller spelling */
 u16 TaskBreakBlocks(struct HitBoxSet *p, s32 e);
@@ -81,7 +81,7 @@ void sub_08049a58(void);
 void CreatePlayerObject(s32 a, s32 b, s32 c);      /* M14, src/plobj_52f6c.c (defined s32 (s8, u8, s32); the result is unused here) */
 s32 CreatePlayerEffect(s32 a0, s32 a1, s32 a2);
 
-void sub_08047fe8(void)
+void PlayerActionGetAbility(void)
 {
     gCurTask->unk88->unk05 = gCurTask->unk88->unk04;
     gCurTask->unk88->unk04 = 19;
@@ -119,7 +119,7 @@ void sub_08047fe8(void)
             gCurTask->unk88->unk0C |= 0xFF;
             {
                 struct PlayerState *q = gCurTask->unk88;
-                sub_0800a0dc(q->unk0D, q->unk00);
+                HudShowAbilityAnimated(q->unk0D, q->unk00);
             }
             CreatePlayerEffect(gCurTask->unk88->unk00, 14, 0);
             CreatePlayerEffect(gCurTask->unk88->unk00, 14, 1);
@@ -133,7 +133,7 @@ void sub_08047fe8(void)
                 struct PlayerState *q = gCurTask->unk88;
                 if (q->unk0A > 1) {
                     q->unk0A = 0;
-                    sub_0800a0dc(27, gCurTask->unk88->unk00);
+                    HudShowAbilityAnimated(27, gCurTask->unk88->unk00);
                     TaskYieldTrampoline(6);
                     gCurTask->unk6C = 0;
                     {
@@ -147,7 +147,7 @@ void sub_08047fe8(void)
                             PlaySfx(101);
                             {
                                 struct PlayerState *r = gCurTask->unk88;
-                                sub_0800a0dc((s8)r->unk0B, r->unk00);
+                                HudShowAbilityAnimated((s8)r->unk0B, r->unk00);
                             }
                             {
                                 struct Task *t = gCurTask;
@@ -202,7 +202,7 @@ void sub_08047fe8(void)
             }
             {
                 struct PlayerState *q = gCurTask->unk88;
-                sub_0800a0dc(q->unk0D, q->unk00);
+                HudShowAbilityAnimated(q->unk0D, q->unk00);
             }
         }
     }
@@ -736,7 +736,7 @@ void sub_08047fe8(void)
     TaskSleepForever();
 }
 
-void sub_08049484(void)
+void PlayerActionGetAbilityUpdate(void)
 {
     struct Task *t = gCurTask;
 

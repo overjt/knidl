@@ -44,7 +44,7 @@ void TaskSetEntry(void *a, u32 i);
 void TaskSetFrame(s32 a);
 void PlayerStopAxes(s32 a0);
 s32 PlaySfxIfLocalPlayer(s32 a0, u16 a1);
-void sub_0803e414(void);
+void PlayerUpdateFlip(void);
 s32 PlayerFaceHeldDirection(void);
 void PlayerCheckBump(void);
 void PlayerSetMotionXPreset(s32 a0, s32 a1);           /* M11, still asm; M11's own spelling */
@@ -295,7 +295,7 @@ void sub_0804ecec(void)
                 }
                 else if (gLatchedHeldKeys[gCurTask->unk88->unk00] & 16)
                     gCurTask->unk43 = 1;
-                sub_0803e414();
+                PlayerUpdateFlip();
                 gCurTask->unk5C = 0;
                 gCurTask->unk73 = 2;
             }

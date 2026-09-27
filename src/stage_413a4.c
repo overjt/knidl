@@ -48,8 +48,8 @@ void RegisterCollider(u8 a, s16 x, s16 y, void *p);
 void sub_08021c74(s32 a, s32 b);
 void TaskInitWaterFlags(void);
 s32 IsFullBlockAtPixel(u16 a, u16 b);
-s32 sub_08022760(struct Task *t);
-void sub_08025024(void);
+s32 IsTaskBelowPlayerBounds(struct Task *t);
+void EnterDoor(void);
 void RequestScreenShake(u32 a);
 s32 sub_080264b0(void);
 void sub_0802651c(s32 a);
@@ -76,13 +76,13 @@ void PlayerStopAtCeilingAndWall(void);
 s32 PlayerStopAtWall(void);
 s32 PlayerHasCrossedWaterSurface(s32 a);
 s32 sub_0803fd20(s32 a0);
-s32 sub_0803fd90(void);
+s32 PlayerCheckSkid(void);
 s32 PlayerCheckJump(void);
 s32 sub_0803fe68(void);
 s32 PlayerCheckDuckOrSwallow(void);
 s32 PlayerCheckLadder(void);
-s32 sub_080400c0(void);
-s32 sub_08040264(void);
+s32 PlayerCheckBButton(void);
+s32 PlayerCheckEnterWater(void);
 s32 PlayerCheckEnterDoor(void);
 s32 PlayerRequestLocomotion(void);
 void sub_08040710(void);
@@ -203,9 +203,9 @@ void sub_080414e8(void)
 
 void sub_080415c8(void)
 {
-    while (sub_0803fd90() == 0 && PlayerCheckJump() == 0 && sub_0803fe68() == 0
+    while (PlayerCheckSkid() == 0 && PlayerCheckJump() == 0 && sub_0803fe68() == 0
            && PlayerCheckEnterDoor() == 0 && PlayerCheckLadder() == 0 && PlayerCheckDuckOrSwallow() == 0
-           && sub_080400c0() == 0)
+           && PlayerCheckBButton() == 0)
     {
         struct Task *t = gCurTask;
 
@@ -332,7 +332,7 @@ void sub_08041778(void)
         t->unk28 = 0;
         t->unk88->unk14 = 0;
     }
-    while (sub_0803fd90() == 0 && PlayerCheckJump() == 0)
+    while (PlayerCheckSkid() == 0 && PlayerCheckJump() == 0)
     {
         if (gCurTask->unk28 == 0 && sub_0803fe68() != 0)
             break;
@@ -342,7 +342,7 @@ void sub_08041778(void)
             break;
         if (PlayerCheckDuckOrSwallow() != 0)
             goto end;
-        if (sub_080400c0() != 0)
+        if (PlayerCheckBButton() != 0)
             goto end;
         q = gLatchedHeldKeys;
         t3 = gCurTask;
@@ -439,9 +439,9 @@ void sub_08041a2c(void)
     s32 k;
 
     PlayerTurnToHeldDirection();
-    while (sub_08040264() == 0 && PlayerCheckLadder() == 0)
+    while (PlayerCheckEnterWater() == 0 && PlayerCheckLadder() == 0)
     {
-        if (sub_080400c0() != 0)
+        if (PlayerCheckBButton() != 0)
             break;
         if (PlayerCheckEnterDoor() != 0)
             break;
@@ -531,11 +531,11 @@ void sub_08041c30(void)
     struct PlayerState *p;
 
     PlayerTurnToHeldDirection();
-    while (sub_08040264() == 0 && PlayerCheckLadder() == 0)
+    while (PlayerCheckEnterWater() == 0 && PlayerCheckLadder() == 0)
     {
         if (PlayerCheckEnterDoor() != 0)
             break;
-        if (sub_080400c0() != 0)
+        if (PlayerCheckBButton() != 0)
             break;
         t = gCurTask;
         if (t->unk7A & 1)
@@ -599,7 +599,7 @@ void sub_08041dc8(void)
     s32 v;
 
     PlayerTurnToHeldDirection();
-    while (PlayerCheckLadder() == 0 && sub_080400c0() == 0)
+    while (PlayerCheckLadder() == 0 && PlayerCheckBButton() == 0)
     {
         if ((v = PlayerCheckEnterDoor()) != 0)
             break;
@@ -1281,7 +1281,7 @@ void sub_080429fc(void)
     gCurTask->unk88->unk22 = k = 1;
     gCurTask->unk88->unk12 = 0x8000;
     PlayBgm(3);
-    if (sub_08022760(gCurTask))
+    if (IsTaskBelowPlayerBounds(gCurTask))
     {
         PlayerSetMotionYPreset(32);
     }
@@ -1384,7 +1384,7 @@ void sub_08042d54(void)
         }
         TaskYieldTrampoline(1);
     }
-    sub_08025024();
+    EnterDoor();
     if (gUnk_03002444 != 0)
         ((void (*)(void))sub_080264b0)();
     if (gUnk_03002444 == 0)

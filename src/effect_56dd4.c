@@ -17,7 +17,7 @@
  * leaves mode 13 or the spawner's Task.unk73 is not 1, and otherwise, while
  * Task.unk28 is clear, registers the collider row gUnk_0873C038 (M05's
  * RegisterCollider) and tests the block hit-box set gUnk_0873CC94 (M09's
- * sub_08030804) at the spawner's position.  Variant 31 (sub_08057430, M12)
+ * TaskBreakBlocksAt) at the spawner's position.  Variant 31 (sub_08057430, M12)
  * is a single animation on its spawner (gUnk_08751CEC). */
 
 extern u32 gUnk_08751CA4[];
@@ -43,7 +43,7 @@ void TaskSetFrame(s32 a);
 u16 RandomSpread(s32 base, u8 scale, u8 amount);   /* base + ((rand(256) * amount) >> 8) * scale */
 s16 RandomSpreadFacing(s32 base, u8 scale, u8 amount);   /* the same, negated when Task.unk43 != 1 */
 void RegisterCollider(u8 a, s16 x, s16 y, void *p);   /* M11's caller spelling */
-u16 sub_08030804(struct HitBoxSet *p, s32 x, s32 y, s32 e);
+u16 TaskBreakBlocksAt(struct HitBoxSet *p, s32 x, s32 y, s32 e);
 void sub_0805707c(void);
 void sub_080573a4(void);
 
@@ -226,7 +226,7 @@ void sub_080573a4(void)
     else if (t->unk28 == 0)
     {
         RegisterCollider(gCurTaskIdx, p->unk48, p->unk4A, gUnk_0873C038);
-        sub_08030804((struct HitBoxSet *)gUnk_0873CC94, ((struct Task *)gCurTask->unk8C)->unk48,
+        TaskBreakBlocksAt((struct HitBoxSet *)gUnk_0873CC94, ((struct Task *)gCurTask->unk8C)->unk48,
                      ((struct Task *)gCurTask->unk8C)->unk4A, gCurTask->unk44);
     }
 }

@@ -6,7 +6,7 @@
  *
  * Level resets and room loaders, part 1.  sub_0802296c (M02's
  * ResetScoresAndMaxHealth) and its twin sub_08022c3c clear the level state, rebuild
- * the per-stage door masks gUnk_02007D58[] and the cleared-stage mask
+ * the per-stage door masks gUsedSubGameDoors[] and the cleared-stage mask
  * gUnk_0200B04C from the save flags (gUnk_08732348[level][6] names each
  * stage's flag) and place the player at the matching door of the hub
  * room gRoomTable[8][stage][0]; sub_08022f50 (AgbMain) resets level,
@@ -107,7 +107,7 @@ extern u8 gUnk_02005578;
 extern s16 gRoomEntryX;
 extern u8 gRoomEntrySet;
 extern u8 gUnk_020069F0;
-extern u8 gUnk_02007D58[];
+extern u8 gUsedSubGameDoors[];
 extern u16 gUnk_02007D60;
 extern u8 gCutscenePending;
 extern u16 gUnk_02007FF0;
@@ -154,7 +154,7 @@ extern u16 gPlayerCount;
 extern s16 gPlayerLives[];
 extern s16 gPlayerHealth[];
 extern s16 gMaxHealth;
-extern u16 gUnk_02008008[];
+extern u16 gSavedPlayerAbilities[];
 extern u16 gUnk_02007FA8[];
 extern u16 gPlayerAbilities[];
 extern u16 gUnk_0200AF18[];
@@ -177,16 +177,16 @@ void TaskSetOthersSkipMask(u16 val, s32 idx);
 s32 TaskCreateFrom(u32 type, s32 idx);
 void LoadGfxSet(u16 a0);
 void HudShowClock(void);
-void sub_08009b2c(s32 i);
+void HudInit(s32 i);
 s32 AddPlayerLives(s32 a, u32 b);
-void sub_08027e28(void);
+void InitRoomBgLayout(void);
 void sub_08028130(void);
 void sub_08028304(void);
 void CalcBg3Parallax(void);
 void CalcRoomBounds(void);
-void sub_08028990(void);
+void CameraResetBoundsToGroup(void);
 void CameraResetBounds(void);
-void sub_08028e4c(void);
+void SetRoomEntryPoint(void);
 void sub_080290ac(void);
 void CameraInitPos(void);
 void sub_08029110(void);
@@ -239,9 +239,9 @@ void sub_0802296c(void)
     for (i = 0; i <= 6; i++)
     {
         if (gUnk_03001F30)
-            gUnk_02007D58[i] = 15;
+            gUsedSubGameDoors[i] = 15;
         else
-            gUnk_02007D58[i] = 0;
+            gUsedSubGameDoors[i] = 0;
         if (gUnk_08732348[i][6] & 0x100)
         {
             if (gUnk_030023C8[0] & (1 << (gUnk_08732348[i][6] & 0xFF)))
@@ -329,9 +329,9 @@ void sub_08022c3c(void)
     for (i = 0; i <= 6; i++)
     {
         if (gUnk_03001F30)
-            gUnk_02007D58[i] = 15;
+            gUsedSubGameDoors[i] = 15;
         else
-            gUnk_02007D58[i] = 0;
+            gUsedSubGameDoors[i] = 0;
         if (gUnk_08732348[i][6] & 0x100)
         {
             if (gUnk_030023C8[0] & (1 << (gUnk_08732348[i][6] & 0xFF)))
@@ -493,9 +493,9 @@ void sub_08022fa8(void)
     StopScreenShake();
     CalcBg3Parallax();
     CalcRoomBounds();
-    sub_08027e28();
+    InitRoomBgLayout();
     sub_080b4e40();
-    sub_08028e4c();
+    SetRoomEntryPoint();
     sub_08029110();
     LoadRoomBgAnims();
     InitDoors();
@@ -510,15 +510,15 @@ void sub_08022fa8(void)
             if (gPlayerHealth[i] == 0)
             {
                 gPlayerHealth[i] = gMaxHealth;
-                gUnk_02008008[i] = 0;
+                gSavedPlayerAbilities[i] = 0;
                 gUnk_02007FA8[i] = 0xFFFF;
                 AddPlayerLives(-1, i);
             }
-            if ((s16)gUnk_02008008[i] != 0)
+            if ((s16)gSavedPlayerAbilities[i] != 0)
             {
-                gPlayerAbilities[i] = gUnk_02008008[i];
+                gPlayerAbilities[i] = gSavedPlayerAbilities[i];
                 gUnk_0200AF18[i] = gUnk_02007FA8[i];
-                gUnk_02008008[i] = 0;
+                gSavedPlayerAbilities[i] = 0;
                 gUnk_02007FA8[i] = 0xFFFF;
             }
             gActivePlayerMask |= 1 << i;
@@ -539,8 +539,8 @@ void sub_08022fa8(void)
     if (gPlayerCount == 1)
         CameraResetBounds();
     else
-        sub_08028990();
-    sub_08009b2c(gLocalPlayer);
+        CameraResetBoundsToGroup();
+    HudInit(gLocalPlayer);
     switch (gCameraMode)
     {
     default:
@@ -628,7 +628,7 @@ void sub_080233e0(void)
     if (gPlayerCount == 1)
         CameraResetBounds();
     else
-        sub_08028990();
+        CameraResetBoundsToGroup();
     switch (gCameraMode)
     {
     default:

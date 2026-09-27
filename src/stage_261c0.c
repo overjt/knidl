@@ -5,8 +5,8 @@
 /* stage_261c0.c (0x080261C0-0x08026B5F, issue #93).
  *
  * Stage helpers the rest of the game calls.  RequestScreenShake starts a screen
- * shake (gScreenShake, levels 1-4 only upgrade), sub_0802621c spawns a task
- * in one of the free high slots 32-62, SetCameraFocus/sub_08026278 place the
+ * shake (gScreenShake, levels 1-4 only upgrade), TaskCreateHighSlot spawns a task
+ * in one of the free high slots 32-62, SetCameraFocus/SetCameraFocusOrAnchor place the
  * player or the camera target, sub_080262e8 spawns a map event at a
  * tabled position, sub_08026308 wraps every camera, object and task
  * coordinate back by 0x200 pixels in a looping room, sub_08026900 clamps
@@ -158,7 +158,7 @@ s32 TaskCreateFrom(u32 type, s32 idx);
 void TaskSetEntry(void *a, u32 i);
 void CameraWriteScrollParallax(void);
 void StartScrollLock(s32 x0, s32 x1, s32 y0, s32 y1);
-void sub_0802d074(void);
+void CameraStartHoldAnchor(void);
 s32 CreateMapEvent(s32 type);
 s32 sub_0802d478(s32 x, s32 y);
 s32 sub_0802ed94(s32 x, s32 y, s32 a);
@@ -168,14 +168,14 @@ void sub_0802f2fc(void);
 void sub_0802f400(void);
 void sub_0802f6c0(void);
 void sub_0802f6f4(void);
-s32 sub_080301e8(s32 a, s32 x, s32 y);
-s32 sub_08030f78(u32 x, u32 y);
+s32 CreateStageEffect(s32 a, s32 x, s32 y);
+s32 BreakBlockAt(u32 x, u32 y);
 void sub_08031738(u32 x, u32 y);
 void SaveProgress(s32 a);
 
-s32 sub_080261c0(s32 x, s32 y)
+s32 CreateBlockBreakEffect(s32 x, s32 y)
 {
-    return sub_080301e8(0, x, y);
+    return CreateStageEffect(0, x, y);
 }
 
 void RequestScreenShake(u16 a)
@@ -198,7 +198,7 @@ void RequestScreenShake(u16 a)
     }
 }
 
-s32 sub_0802621c(s32 type)
+s32 TaskCreateHighSlot(s32 type)
 {
     s32 i = 62;
 
@@ -217,7 +217,7 @@ void SetCameraFocus(s32 x, s32 y)
     gCameraFocusY = y;
 }
 
-void sub_08026278(s32 x, s32 y)
+void SetCameraFocusOrAnchor(s32 x, s32 y)
 {
     if (gUnk_03002444 != 0)
     {
@@ -350,7 +350,7 @@ s32 sub_08026584(void)
             TaskSetEntry(sub_0802f6c0, gDoorObjectTasks[gUnk_0200B034][0]);
             break;
         case 2:
-            sub_080301e8(4, (d->unk2 << 4) + 16, (d->unk4 << 4) + 8);
+            CreateStageEffect(4, (d->unk2 << 4) + 16, (d->unk4 << 4) + 8);
             n = 1;
             TaskSetEntry(sub_0802f6f4, gDoorObjectTasks[gUnk_0200B034][0]);
             break;
@@ -373,7 +373,7 @@ s32 sub_08026584(void)
         default:
             return;
         }
-        sub_080301e8(4, (gCurRoomDef->unk44[gUnk_0200B034].unk2 << 4) + 16, (gCurRoomDef->unk44[gUnk_0200B034].unk4 << 4) + 8);
+        CreateStageEffect(4, (gCurRoomDef->unk44[gUnk_0200B034].unk2 << 4) + 16, (gCurRoomDef->unk44[gUnk_0200B034].unk4 << 4) + 8);
         n++;
         PlaySfx(0x11B);
         break;
@@ -425,7 +425,7 @@ s32 sub_0802672c(void)
             gCameraAnchorY = gRoomBounds[2];
         if (gCameraAnchorY > gRoomBounds[3])
             gCameraAnchorY = gRoomBounds[3];
-        sub_0802d074();
+        CameraStartHoldAnchor();
         gUnk_020055E8 = 0;
     }
     return id;
@@ -455,7 +455,7 @@ s32 sub_08026834(void)
             gCameraAnchorY = gRoomBounds[2];
         if (gCameraAnchorY > gRoomBounds[3])
             gCameraAnchorY = gRoomBounds[3];
-        sub_0802d074();
+        CameraStartHoldAnchor();
         gUnk_020055E8 = 0;
     }
     return id;
@@ -506,7 +506,7 @@ void sub_080269e8(void)
 
     for (j = 2; j <= 4; j++)
         for (i = 5; i <= 8; i++)
-            sub_08030f78(i, j);
+            BreakBlockAt(i, j);
 }
 
 u32 sub_08026a0c(void)

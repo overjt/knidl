@@ -109,7 +109,7 @@ extern s16 gCameraBounds[4];
 extern struct CamPos gPlayerCameraPos[4];
 
 void sub_08009e2c(s32 a);
-void sub_0800a0dc(s32 a, s32 b);
+void HudShowAbilityAnimated(s32 a, s32 b);
 void sub_08028b8c(void);
 void sub_08028e3c(void);
 s32 CreateMapEvent(s32 a);
@@ -295,7 +295,7 @@ s32 sub_080276cc(s32 i)
         if (i == gLocalPlayer)
         {
             if (gPlayerLives[i] != 0)
-                sub_0800a0dc(26, gCurTask->unk88->unk00);
+                HudShowAbilityAnimated(26, gCurTask->unk88->unk00);
             else
                 sub_08009e2c(i);
         }

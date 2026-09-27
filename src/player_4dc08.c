@@ -17,7 +17,7 @@
  * the hit test sub_08030898(gUnk_0873CC64) in state 1 (which spawns
  * sub_08065100's object and marks PlayerState.unk09) and, in state 2,
  * requests action 53, 8 or 1 once the swing is over.  sub_0804e0e0
- * (action 31, mode 10; the twin of M10's sub_080375e0) clears the three
+ * (action 31, mode 10; the twin of M10's PlayerActionInhale) clears the three
  * records gUnk_02007E90[player][] (and gUnk_02007CF4[player] in link
  * play), plays sound 103 and holds animation 0xF71 with PlayerState.unk40
  * bit 2 set until PlayerState.unk07 is non-zero and equal to unk08, then

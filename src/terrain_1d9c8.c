@@ -45,7 +45,7 @@ extern s8 gCollisionTileShapeClass[];
 extern s8 gUnk_087336F0[];
 extern s8 gUnk_087339F0[];
 extern u16 gTerrainPixelIndex;           /* pixel offset inside the queried cell */
-extern s16 gUnk_0300550C;           /* box left (room-relative) */
+extern s16 gTerrainPrevBoxLeft;           /* box left (room-relative) */
 extern u16 gTerrainTileRight;
 extern s32 gTerrainVelY;           /* Task.unk58 */
 extern s16 gTerrainBoxLeft;           /* box left offset */
@@ -57,12 +57,12 @@ extern u16 gUnk_03005574;           /* queried cell: byte 2 */
 extern u16 gTerrainTile;           /* queried cell: tile set */
 extern s16 gTerrainBoxTop;           /* box top offset */
 extern s16 gTerrainBoxBottom;           /* box bottom offset */
-extern s16 gUnk_03005590;           /* box right (room-relative) */
+extern s16 gTerrainPrevBoxRight;           /* box right (room-relative) */
 extern u16 gTerrainTileLeft;           /* cell to the left: tile set */
 extern s32 gTerrainVelX;           /* Task.unk54 */
 extern s16 gTerrainBoxRight;           /* box right offset */
-extern s16 gUnk_030055A4;           /* box top (room-relative) */
-extern s16 gUnk_030055B0;           /* box bottom (room-relative) */
+extern s16 gTerrainPrevBoxTop;           /* box top (room-relative) */
+extern s16 gTerrainPrevBoxBottom;           /* box bottom (room-relative) */
 extern u16 gUnk_08735098[];
 
 s32 TerrainQueryPixel(u32 x, u32 y);
@@ -101,8 +101,8 @@ void sub_0801d9c8(void)
     {
         d = GetTilePushLeft(gTerrainTile);
         if (d != 0
-            && (gUnk_030055A4 & 0xFFF0) <= ((gTerrainProbeY + gTerrainBoxTop) & 0xFFF0)
-            && ((gTerrainProbeX + gTerrainBoxRight) & 0xFFF0) > (gUnk_03005590 & 0xFFF0))
+            && (gTerrainPrevBoxTop & 0xFFF0) <= ((gTerrainProbeY + gTerrainBoxTop) & 0xFFF0)
+            && ((gTerrainProbeX + gTerrainBoxRight) & 0xFFF0) > (gTerrainPrevBoxRight & 0xFFF0))
         {
             gTerrainProbeX += d;
             gTerrainProbeResult.unk0 = 1;
@@ -118,8 +118,8 @@ void sub_0801d9c8(void)
     {
         d = GetTilePushLeft(gTerrainTile);
         if (d != 0
-            && ((gTerrainProbeX + gTerrainBoxRight) & 0xFFF0) > (gUnk_03005590 & 0xFFF0)
-            && (gUnk_030055B0 & 0xFFF0) >= ((gTerrainProbeY + gTerrainBoxBottom) & 0xFFF0))
+            && ((gTerrainProbeX + gTerrainBoxRight) & 0xFFF0) > (gTerrainPrevBoxRight & 0xFFF0)
+            && (gTerrainPrevBoxBottom & 0xFFF0) >= ((gTerrainProbeY + gTerrainBoxBottom) & 0xFFF0))
         {
             gTerrainProbeX += d;
             gTerrainProbeResult.unk0 = 1;
@@ -155,8 +155,8 @@ void sub_0801dc88(void)
     {
         d = GetTilePushRight(gTerrainTile);
         if (d != 0
-            && (gUnk_030055A4 & 0xFFF0) <= ((gTerrainProbeY + gTerrainBoxTop) & 0xFFF0)
-            && ((gTerrainProbeX + gTerrainBoxLeft) & 0xFFF0) < (gUnk_0300550C & 0xFFF0))
+            && (gTerrainPrevBoxTop & 0xFFF0) <= ((gTerrainProbeY + gTerrainBoxTop) & 0xFFF0)
+            && ((gTerrainProbeX + gTerrainBoxLeft) & 0xFFF0) < (gTerrainPrevBoxLeft & 0xFFF0))
         {
             gTerrainProbeX += d;
             gTerrainProbeResult.unk0 = 2;
@@ -172,8 +172,8 @@ void sub_0801dc88(void)
     {
         d = GetTilePushRight(gTerrainTile);
         if (d != 0
-            && ((gTerrainProbeX + gTerrainBoxLeft) & 0xFFF0) < (gUnk_0300550C & 0xFFF0)
-            && (gUnk_030055B0 & 0xFFF0) >= ((gTerrainProbeY + gTerrainBoxBottom) & 0xFFF0))
+            && ((gTerrainProbeX + gTerrainBoxLeft) & 0xFFF0) < (gTerrainPrevBoxLeft & 0xFFF0)
+            && (gTerrainPrevBoxBottom & 0xFFF0) >= ((gTerrainProbeY + gTerrainBoxBottom) & 0xFFF0))
         {
             gTerrainProbeX += d;
             gTerrainProbeResult.unk0 = 2;

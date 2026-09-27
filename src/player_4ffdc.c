@@ -21,7 +21,7 @@ extern s16 gPlayerHealth[];             /* per-player health (M02's HUD) */
 extern s16 gMaxHealth;
 extern u8 gUnk_020055C4;
 extern u16 gUnk_0873B6CC[][2];
-extern u32 gUnk_0873BD00[];             /* stored to PlayerState.unk64 as (u32)gUnk_0873BD00 */
+extern u32 gPlayerDefaultBodyBox[];             /* stored to PlayerState.unk64 as (u32)gPlayerDefaultBodyBox */
 extern u16 gLatchedHeldKeys[];             /* held keys, latched per player (M11) */
 extern u8 gUnk_0873B6DC[];
 extern u16 gUnk_0873B6E8[][6];
@@ -33,7 +33,7 @@ void TaskYieldTrampoline(s32 frames);
 void TaskSleepForever(void);
 void TaskSetEntry(void *a, u32 i);
 s32 AddPlayerHealth(s32 a, s32 b);
-void sub_08032d48(void);
+void PlayerUpdate(void);
 void sub_0803332c(void);
 void PlayerStopAxes(s32 a0);
 void SetPlayerInvulnerability(s32 a0, s32 a1, s32 a2);
@@ -187,7 +187,7 @@ void sub_0804ffdc(void)
     {
         struct Task *t = gCurTask;
         t->unk70++;
-        t->unk88->unk64 = (u32)gUnk_0873BD00;
+        t->unk88->unk64 = (u32)gPlayerDefaultBodyBox;
     }
     TaskSleepForever();
 }
@@ -199,7 +199,7 @@ void sub_080502f0(void)
     if ((s16)t->unk70 != 0)
     {
         t->unk73 = 1;
-        gCurTask->unk04 = (u32)sub_08032d48;
+        gCurTask->unk04 = (u32)PlayerUpdate;
         gCurTask->unk08 = (u32)sub_0803332c;
         TaskSetEntry(sub_0804fee8, gCurTaskIdx);
         gUnk_03001F34 = 0;

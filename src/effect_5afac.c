@@ -110,16 +110,16 @@ s32 IsOnScreen(s16 a, s16 b);
 u32 IsWorldPosOnScreen(s16 x, s16 y);
 void LoadBgLayout(u32 a);
 void LoadGfxSet(u16 a);
-void sub_08009b2c(u16 a);
+void HudInit(u16 a);
 void AddPlayerLives(s32 a, s32 b);
 void SetPlayerAbility(u32 a, s32 b, s32 c);
 void AddPlayerScore(s32 a, u32 b);
 void sub_08023fd4(void);
-void sub_080258e0(void);
+void ExitClearedStage(void);
 void SetCameraFocus(s32 a, s32 b);
 void sub_08026998(void);
 void sub_08027178(void);
-void sub_08033d0c(void);
+void PlayerActionWalk(void);
 void LatchPlayerKeys(void);
 void sub_0805b16c(void);
 void sub_0805b370(void);
@@ -237,7 +237,7 @@ void sub_0805b110(void)
 {
     LoadBgLayout(3);
     sub_0805b16c();
-    sub_08009b2c(gLocalPlayer);
+    HudInit(gLocalPlayer);
     LinkRequestSync();
     LinkSyncRandom();
     LinkStartKeyExchange();
@@ -627,7 +627,7 @@ void sub_0805ba08(void)
         else
             gCurTask->unk43 = -1;
         gCurTask->unk04 = (u32)sub_0805bb90;
-        sub_08033d0c();
+        PlayerActionWalk();
     }
     TaskStop();
     TaskStartFrameScriptId(6);
@@ -1994,7 +1994,7 @@ void sub_0805e110(s32 a0)
     t = &gTasks[a0];
     sub_08068a8c(a0, 1);
     sub_0805e038(a0);
-    TaskSetEntry(sub_08033d0c, a0);
+    TaskSetEntry(PlayerActionWalk, a0);
     ps->unk16 = 1;
     t->unk04 = (u32)sub_0805dfe8;
 }
@@ -2069,7 +2069,7 @@ void sub_0805e24c(void)
     CallTableEntry(*(s8 *)gUnk_02008010, 14, gUnk_0873DEDC);
     TaskYieldTrampoline(60);
     if (gCurTask->unk34 != 0)
-        sub_080258e0();
+        ExitClearedStage();
 }
 
 void sub_0805e2d4(void)

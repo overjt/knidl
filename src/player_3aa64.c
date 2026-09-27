@@ -7,13 +7,13 @@
  * Player action bodies, part 9: actions 18 and 23-28, per-frame handlers
  * 17 and 20-25.  gLatchedHeldKeys[player] is the held-keys mask the bodies
  * test (0x30 left/right, 0x41 A or up, 0x80 down; gLatchedPressedKeys[] is the
- * newly-pressed one).  sub_0803aa64 (action 23) is the twin of M11's
+ * newly-pressed one).  PlayerActionSwim (action 23) is the twin of M11's
  * sub_08043014: a four-state machine over Task.unk73 picked from the keys
  * (left/right = 3, A/up = 1, down = 2, else 0) that plays a row of
  * gUnk_0873D9DA[4][4] chosen by the ability; its per-frame handler 20,
- * sub_0803afcc, re-picks the state and re-binds the coroutine when the
- * keys change.  Actions 24-28 (sub_0803b3c4, sub_0803b4f8, sub_0803b768,
- * sub_0803b87c, sub_0803b9a0) are short animation scripts, the last a
+ * PlayerActionSwimUpdate, re-picks the state and re-binds the coroutine when the
+ * keys change.  Actions 24-28 (PlayerActionStandInWater, PlayerActionWalkInWater, PlayerActionSwallowInWater,
+ * PlayerActionSpitInWater, sub_0803b9a0) are short animation scripts, the last a
  * four-way directional pick; handlers 21-25 run M11's predicates and
  * request the next action through PlayerState.unk01.  sub_0803bd90
  * (action 18) installs handler 17, the leaf sub_0803bdd4. */
@@ -35,15 +35,15 @@ s32 PlayerLand(s32 a0);
 void PlayerTurnToHeldDirection(void);
 void PlayerStopAtCeilingAndWall(void);
 s32 PlayerCheckDuckOrSwallow(void);
-s32 sub_080400c0(void);
+s32 PlayerCheckBButton(void);
 s32 PlayerCheckEnterDoor(void);
 s32 PlayerCheckDropAbility(void);
-s32 sub_080403e4(void);
+s32 PlayerCheckStartSwim(void);
 void PlayerSetMotionXPreset(s32 a0, s32 a1);           /* M11, still asm; M11's own spelling */
 void PlayerSetMotionYPreset(s32 a0);
 void CreatePlayerObject(s32 a, s32 b, s32 c);      /* M14, src/plobj_52f6c.c (defined s32 (s8, u8, s32); the result is unused here) */
 
-void sub_0803aa64(void)
+void PlayerActionSwim(void)
 {
     struct Task *t;
     struct Task *u;
@@ -253,7 +253,7 @@ void sub_0803aa64(void)
     TaskSleepForever();
 }
 
-void sub_0803afcc(void)
+void PlayerActionSwimUpdate(void)
 {
     struct Task *t;
     struct Task *v;
@@ -304,7 +304,7 @@ void sub_0803afcc(void)
             if (!(gLatchedHeldKeys[t->unk88->unk00] & 128))
                 break;
             *st = 2;
-            TaskSetEntry(sub_0803aa64, gCurTaskIdx);
+            TaskSetEntry(PlayerActionSwim, gCurTaskIdx);
             break;
         case 1:
             /* The do { } while (0) changes no code: it counts case 1's
@@ -336,11 +336,11 @@ void sub_0803afcc(void)
             break;
         set1d:
             *st = 1;
-            TaskSetEntry(sub_0803aa64, gCurTaskIdx);
+            TaskSetEntry(PlayerActionSwim, gCurTaskIdx);
             goto keys;
         set2d:
             *st = 2;
-            TaskSetEntry(sub_0803aa64, gCurTaskIdx);
+            TaskSetEntry(PlayerActionSwim, gCurTaskIdx);
             goto keys;
         dec2:
             t->unk88->unk14--;
@@ -359,7 +359,7 @@ void sub_0803afcc(void)
             if (t->unk58 < 0)
                 goto keys;
             *st = 0;
-            TaskSetEntry(sub_0803aa64, gCurTaskIdx);
+            TaskSetEntry(PlayerActionSwim, gCurTaskIdx);
         keys:
             if (gLatchedHeldKeys[gCurTask->unk88->unk00] & 48)
             {
@@ -378,36 +378,36 @@ void sub_0803afcc(void)
             break;
         set3a:
             *st = 3;
-            TaskSetEntry(sub_0803aa64, gCurTaskIdx);
+            TaskSetEntry(PlayerActionSwim, gCurTaskIdx);
             break;
         set1a:
             *st = 1;
-            TaskSetEntry(sub_0803aa64, gCurTaskIdx);
+            TaskSetEntry(PlayerActionSwim, gCurTaskIdx);
             break;
         set2b:
             *st = 2;
-            TaskSetEntry(sub_0803aa64, gCurTaskIdx);
+            TaskSetEntry(PlayerActionSwim, gCurTaskIdx);
             break;
         set3b:
             *st = 3;
-            TaskSetEntry(sub_0803aa64, gCurTaskIdx);
+            TaskSetEntry(PlayerActionSwim, gCurTaskIdx);
             break;
         set0b:
             *st = 0;
-            TaskSetEntry(sub_0803aa64, gCurTaskIdx);
+            TaskSetEntry(PlayerActionSwim, gCurTaskIdx);
             break;
         set1c:
             *st = 1;
-            TaskSetEntry(sub_0803aa64, gCurTaskIdx);
+            TaskSetEntry(PlayerActionSwim, gCurTaskIdx);
             break;
         set3c:
             *st = 3;
-            TaskSetEntry(sub_0803aa64, gCurTaskIdx);
+            TaskSetEntry(PlayerActionSwim, gCurTaskIdx);
             break;
         set0c:
             *st = 0;
             gCurTask->unk2C = 1;
-            TaskSetEntry(sub_0803aa64, gCurTaskIdx);
+            TaskSetEntry(PlayerActionSwim, gCurTaskIdx);
             break;
         set25:
             w->unk88->unk01 = 25;
@@ -417,7 +417,7 @@ void sub_0803afcc(void)
             PlayerSetMotionYPreset(13);
         }
     }
-    if (sub_080400c0() == 0 && PlayerCheckEnterDoor() == 0)
+    if (PlayerCheckBButton() == 0 && PlayerCheckEnterDoor() == 0)
     {
         x = gCurTask;
         if (!(x->unk7B & 1))
@@ -450,7 +450,7 @@ out:
         PlayerLand(0);
 }
 
-void sub_0803b3c4(void)
+void PlayerActionStandInWater(void)
 {
     gCurTask->unk88->unk05 = gCurTask->unk88->unk04;
     gCurTask->unk88->unk04 = 0;
@@ -486,11 +486,11 @@ void sub_0803b3c4(void)
     TaskSleepForever();
 }
 
-void sub_0803b47c(void)
+void PlayerActionStandInWaterUpdate(void)
 {
     PlayerTurnToHeldDirection();
-    while (PlayerCheckEnterDoor() == 0 && sub_080403e4() == 0 && PlayerCheckDuckOrSwallow() == 0
-           && sub_080400c0() == 0 && PlayerCheckDropAbility() == 0)
+    while (PlayerCheckEnterDoor() == 0 && PlayerCheckStartSwim() == 0 && PlayerCheckDuckOrSwallow() == 0
+           && PlayerCheckBButton() == 0 && PlayerCheckDropAbility() == 0)
     {
         if (gLatchedHeldKeys[gCurTask->unk88->unk00] & 48)
         {
@@ -504,7 +504,7 @@ void sub_0803b47c(void)
     }
 }
 
-void sub_0803b4f8(void)
+void PlayerActionWalkInWater(void)
 {
     struct Task *t;
 
@@ -584,11 +584,11 @@ void sub_0803b4f8(void)
     }
 }
 
-void sub_0803b6ec(void)
+void PlayerActionWalkInWaterUpdate(void)
 {
     PlayerTurnToHeldDirection();
-    while (PlayerCheckEnterDoor() == 0 && sub_080403e4() == 0 && PlayerCheckDuckOrSwallow() == 0
-           && sub_080400c0() == 0 && PlayerCheckDropAbility() == 0)
+    while (PlayerCheckEnterDoor() == 0 && PlayerCheckStartSwim() == 0 && PlayerCheckDuckOrSwallow() == 0
+           && PlayerCheckBButton() == 0 && PlayerCheckDropAbility() == 0)
     {
         if (gCurTask->unk54 == 0 && gCurTask->unk64 == 0)
         {
@@ -602,7 +602,7 @@ void sub_0803b6ec(void)
     PlayerSetMotionXPreset(9, 72);
 }
 
-void sub_0803b768(void)
+void PlayerActionSwallowInWater(void)
 {
     gCurTask->unk88->unk05 = gCurTask->unk88->unk04;
     gCurTask->unk88->unk04 = 12;
@@ -630,7 +630,7 @@ void sub_0803b768(void)
     TaskSleepForever();
 }
 
-void sub_0803b828(void)
+void PlayerActionSwallowInWaterUpdate(void)
 {
     struct Task *t = gCurTask;
 
@@ -644,7 +644,7 @@ void sub_0803b828(void)
     }
 }
 
-void sub_0803b87c(void)
+void PlayerActionSpitInWater(void)
 {
     gCurTask->unk88->unk05 = gCurTask->unk88->unk04;
     gCurTask->unk88->unk04 = 11;
@@ -665,7 +665,7 @@ void sub_0803b87c(void)
     TaskSleepForever();
 }
 
-void sub_0803b914(void)
+void PlayerActionSpitInWaterUpdate(void)
 {
     struct Task *t = gCurTask;
 
@@ -859,7 +859,7 @@ void sub_0803bbf0(void)
         if ((s16)gCurTask->unk88->unk14 != 0)
             gCurTask->unk88->unk14--;
     }
-    else if (t->unk2C != 0 && sub_080403e4() == 0)
+    else if (t->unk2C != 0 && PlayerCheckStartSwim() == 0)
     {
         if (!(gCurTask->unk7A & 1) || (gLatchedHeldKeys[gCurTask->unk88->unk00] & 65))
             gCurTask->unk88->unk01 = 23;

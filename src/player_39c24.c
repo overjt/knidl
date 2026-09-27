@@ -4,16 +4,16 @@
 
 /* player_39c24.c (0x08039C24-0x0803AA63, issue #91).
  *
- * Player action body, part 8: action 21 (sub_08039c24, 3612 bytes), the
+ * Player action body, part 8: action 21 (PlayerActionExitDoor, 3612 bytes), the
  * walk through a door the player entered with action 20.  It plays the
- * ability's door animations (gUnk_0873D632[ability][1..6], or
+ * ability's door animations (gPlayerDoorAnims[ability][1..6], or
  * sub_0803f7e0 for the form with Task.unk7B bit 0 set), moves the player
  * by the door side kept in Task.unk2C, drives the door's M08 stage
  * objects through M07's helpers (sub_080264b0 ... sub_08026704) and the
  * cameras through sub_08027850/sub_08027908/sub_08027a30/sub_08027a60;
  * the second mode of gUnk_0200AF00 also uploads an OBJ graphic
  * (LZ77UnCompWram of gUnk_080D07C8 into gUnk_02020000, then 0x06014000).
- * sub_0803aa40, per-frame handler 19, only releases the player once
+ * PlayerActionExitDoorUpdate, per-frame handler 19, only releases the player once
  * Task.unk28 is set. */
 
 extern u32 gPlayerDefaultTerrainBox[];
@@ -22,7 +22,7 @@ extern u16 gPlayerCount;               /* number of players */
 extern u8 gUnk_0200AF00;
 extern s16 gPlayerHealth[];             /* health per player (M02's HUD) */
 extern vu16 gFadeSteps;
-extern u16 gUnk_0873D632[][7];
+extern u16 gPlayerDoorAnims[][7];
 extern struct PlayerState gPlayerStates[];
 extern u16 gUnk_0873D0F8[][5];
 extern u8 gUnk_080D07C8[];
@@ -64,7 +64,7 @@ void LoadAbilityTiles(void);                     /* M13, src/player_49738.c */
 void sub_08049a58(void);
 s32 CreatePlayerEffect(s32 a0, s32 a1, s32 a2);
 
-void sub_08039c24(void)
+void PlayerActionExitDoor(void)
 {
     s32 i;
     s32 r;
@@ -108,7 +108,7 @@ void sub_08039c24(void)
 
         if (!(t->unk7B & 1))
         {
-            t->unk46 = gUnk_0873D632[t->unk88->unk0D][1];
+            t->unk46 = gPlayerDoorAnims[t->unk88->unk0D][1];
             switch (t->unk88->unk0D)
             {
             case 0:
@@ -189,7 +189,7 @@ void sub_08039c24(void)
             struct Task *t = gCurTask;
 
             if (!(t->unk7B & 1))
-                t->unk46 = gUnk_0873D632[t->unk88->unk0D][2];
+                t->unk46 = gPlayerDoorAnims[t->unk88->unk0D][2];
             else
                 gCurTask->unk46 = sub_0803f7e0(2);
         }
@@ -245,7 +245,7 @@ void sub_08039c24(void)
                 struct Task *t = gCurTask;
 
                 if (!(t->unk7B & 1))
-                    t->unk46 = gUnk_0873D632[t->unk88->unk0D][2];
+                    t->unk46 = gPlayerDoorAnims[t->unk88->unk0D][2];
                 else
                     gCurTask->unk46 = sub_0803f7e0(2);
             }
@@ -292,7 +292,7 @@ void sub_08039c24(void)
             t->unk3E = 0x2000;
             if (!(t->unk7B & 1))
             {
-                t->unk46 = gUnk_0873D632[t->unk88->unk0D][3];
+                t->unk46 = gPlayerDoorAnims[t->unk88->unk0D][3];
                 switch (t->unk88->unk0D)
                 {
                 case 0:
@@ -337,7 +337,7 @@ void sub_08039c24(void)
 
             PlayerSetMotionYPreset(20);
             t = gCurTask;
-            t->unk46 = gUnk_0873D632[t->unk88->unk0D][4];
+            t->unk46 = gPlayerDoorAnims[t->unk88->unk0D][4];
         }
         else
         {
@@ -379,7 +379,7 @@ void sub_08039c24(void)
 
             if (!(t->unk7B & 1))
             {
-                t->unk46 = gUnk_0873D632[t->unk88->unk0D][5];
+                t->unk46 = gPlayerDoorAnims[t->unk88->unk0D][5];
                 switch (t->unk88->unk0D)
                 {
                 case 0:
@@ -481,7 +481,7 @@ void sub_08039c24(void)
                 gCurTask->unk3C = gCurTask->unk46;
                 TaskYieldTrampoline(2);
                 u = gCurTask;
-                u->unk3C = gUnk_0873D632[u->unk88->unk0D][6];
+                u->unk3C = gPlayerDoorAnims[u->unk88->unk0D][6];
                 TaskYieldTrampoline(2);
                 for (gCurTask->unk6C = 0; (s16)gCurTask->unk6C <= 4; gCurTask->unk6C++)
                 {
@@ -564,7 +564,7 @@ void sub_08039c24(void)
     TaskSleepForever();
 }
 
-void sub_0803aa40(void)
+void PlayerActionExitDoorUpdate(void)
 {
     if (gCurTask->unk28 != 0)
     {

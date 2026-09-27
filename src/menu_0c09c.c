@@ -6,7 +6,7 @@
  *
  * Main-menu screens, first part.  sub_0800c09c is the file-select input
  * loop (screen 0: three save slots, A/START loads or creates the slot,
- * B returns to the title screen); sub_0800c20c opens the file menu
+ * B returns to the title screen); MenuSetupFileMenu opens the file menu
  * (screen 1) and sub_0800c34c is its input loop over four entries
  * (gFileMenuCursor: start, the mode list, the sound test, erase);
  * sub_0800c558 and sub_0800c610 run the two-choice screens 2/3 that
@@ -65,13 +65,13 @@ s32 PlaySfx(s32 id);
 s32 TaskCreateFrom(u32 type, s32 idx);
 void LoadBgLayout(s32 a0);
 void LoadGfxSet(u16 a0);
-void sub_0800bcf0(void);
+void MenuDrawSaveSlots(void);
 void sub_0800bda4(s32 slot);
 void sub_0800bf6c(s32 slot, s32 value, s32 mode);
-void sub_0800ca10(void);
+void MenuEnterModeList(void);
 void sub_0800d280(void);
-void sub_0800da9c(s32 mode);
-void sub_0800e28c(void);
+void CreateFileSelectSprites(s32 mode);
+void MenuUpdateFileMenuPalette(void);
 void BgScrollStartX(s32 speed, s32 dist, s32 bg);
 s32 BgScrollStartBg3Slide(s32 speed);
 void BgScrollFinish(void);
@@ -83,7 +83,7 @@ void EraseSaveSlot(s32 a);
 void LoadSaveSlot(s32 a);
 s32 CheckNewMilestones(void);
 void ShowMilestonePictureForMode(s32 a);
-void sub_0800c20c(void);
+void MenuSetupFileMenu(void);
 
 void sub_0800c09c(void)
 {
@@ -119,7 +119,7 @@ void sub_0800c09c(void)
             if (done)
             {
                 LoadBgLayout(2);
-                sub_0800bcf0();
+                MenuDrawSaveSlots();
                 LoadGfxSet(19);
                 gDispCnt &= 0xE0FF;
                 gDispCnt |= 0x1C00;
@@ -129,7 +129,7 @@ void sub_0800c09c(void)
             BgScrollStartBg3Slide(0x80000);
             gPrevMenuScreen = *state;
             *state = 1;
-            sub_0800c20c();
+            MenuSetupFileMenu();
             return;
         }
         if (*keys & 2)
@@ -156,11 +156,11 @@ void sub_0800c09c(void)
     }
 }
 
-void sub_0800c20c(void)
+void MenuSetupFileMenu(void)
 {
     gEraseConfirmCount = 0;
     TaskCreateFrom(241, 32);
-    sub_0800e28c();
+    MenuUpdateFileMenuPalette();
     LoadGfxSet(21);
     sub_0800bda4(gCurSaveSlot);
     sub_0800bf6c(gCurSaveSlot, gSaveSlots[gCurSaveSlot].unk12[0], 1);
@@ -250,7 +250,7 @@ void sub_0800c34c(void)
                 gMenuScreen = 6;
                 break;
             case 1:
-                sub_0800ca10();
+                MenuEnterModeList();
                 break;
             case 2:
                 sub_0800d280();
@@ -262,8 +262,8 @@ void sub_0800c34c(void)
         {
             PlaySfx(215);
             gMenuScreen = 0;
-            sub_0800bcf0();
-            sub_0800da9c(1);
+            MenuDrawSaveSlots();
+            CreateFileSelectSprites(1);
             gDispCnt &= 0xE0FF;
             gDispCnt |= 0x1E00;
             StartHBlankScroll(1);
@@ -444,14 +444,14 @@ void sub_0800c8a0(void)
                 PlaySfx(268);
                 EraseSaveSlot(gCurSaveSlot);
                 gMenuScreen = 0;
-                sub_0800bcf0();
+                MenuDrawSaveSlots();
                 gDispCnt &= 0xE0FF;
                 gDispCnt |= 0x1E00;
                 StartHBlankScroll(1);
                 LoadGfxSet(25);
                 BgScrollStartBg3Slide(0xFFF80000);
                 RunFrames(28);
-                sub_0800da9c(1);
+                CreateFileSelectSprites(1);
                 RunFrames(16);
                 return;
             }

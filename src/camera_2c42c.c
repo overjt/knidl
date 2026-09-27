@@ -9,7 +9,7 @@
  * per-player cameras and bounds, to the spawn point
  * gCameraAnchorX/gCameraAnchorY clamped to the room bounds gRoomBounds
  * (when gActivePlayerCount is set).  sub_0802c550, sub_0802c680, sub_0802c7f4
- * and sub_0802cc90 follow the player (gCameraFocusX/gCameraFocusY, the
+ * and CameraSnapToFocus follow the player (gCameraFocusX/gCameraFocusY, the
  * task gUnk_02007D38 or the multiplayer group of camera_29c74.c) inside
  * the bounds gCameraBounds and write the 16.16 target
  * gCameraCenterX/gCameraCenterY and the visible rectangle gViewRect.
@@ -455,7 +455,7 @@ void CameraSnapPlayersToAnchor(void)
     }
 }
 
-void sub_0802cc90(void)
+void CameraSnapToFocus(void)
 {
     s32 x = gCameraFocusX;
     s32 y = gCameraFocusY;

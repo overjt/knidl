@@ -8,8 +8,8 @@
  * sub_08033808 are entries 59-61 of the action table gPlayerActions and
  * entry 56 of the per-frame table gPlayerActionHandlers (two of them, sub_080337f8
  * and sub_08033800, are dead exports nothing points at).  Then actions 1
- * and 2: sub_0803380c enters mode 0 (per-frame handler 1, sub_08033a2c)
- * and sub_08033d0c mode 1 (handler 2, sub_08034278).  Their animations
+ * and 2: PlayerActionStand enters mode 0 (per-frame handler 1, PlayerActionStandUpdate)
+ * and PlayerActionWalk mode 1 (handler 2, PlayerActionWalkUpdate).  Their animations
  * come from gUnk_0873D0F8[ability][5] (column picked by M11's
  * sub_0803fd20, row 26 when PlayerState.unk06 == 1) and gUnk_0873D2E8. */
 
@@ -48,17 +48,17 @@ s32 IsFullBlockAtPixel(u16 x, u16 y);
 s32 sub_08022788(s32 y, s32 i);
 void PlayerPlayBump(void);
 void PlayerStopAxes(s32 a0);
-void sub_0803e414(void);
+void PlayerUpdateFlip(void);
 s32 PlayerFaceHeldDirection(void);
 void PlayerCheckBump(void);
 s32 sub_0803fd20(s32 a0);
-s32 sub_0803fd90(void);
+s32 PlayerCheckSkid(void);
 s32 PlayerCheckJump(void);
 s32 sub_0803fe68(void);
 s32 PlayerCheckDuckOrSwallow(void);
 s32 PlayerCheckLadder(void);
 s32 PlayerCheckFloat(void);
-s32 sub_080400c0(void);
+s32 PlayerCheckBButton(void);
 s32 PlayerCheckEnterDoor(void);
 s32 PlayerCheckDropAbility(void);
 void PlayerSetMotionXPreset(s32 a0, s32 a1);           /* M11, still asm; M11's own spelling */
@@ -89,7 +89,7 @@ void sub_08033808(void)
 {
 }
 
-void sub_0803380c(void)
+void PlayerActionStand(void)
 {
     struct PlayerState *p;
 
@@ -158,16 +158,16 @@ void sub_0803380c(void)
     }
 }
 
-void sub_08033a2c(void)
+void PlayerActionStandUpdate(void)
 {
     s32 dir = gCurTask->unk43;
     s32 turn = 0;
 
     if (PlayerFaceHeldDirection() != 0)
-        sub_0803e414();
+        PlayerUpdateFlip();
     while (PlayerCheckJump() == 0 && sub_0803fe68() == 0 && PlayerCheckEnterDoor() == 0
            && PlayerCheckLadder() == 0 && PlayerCheckDuckOrSwallow() == 0 && PlayerCheckFloat() == 0
-           && sub_080400c0() == 0)
+           && PlayerCheckBButton() == 0)
     {
         if (PlayerCheckDropAbility() != 0)
             goto end;
@@ -244,7 +244,7 @@ void sub_08033a2c(void)
             if (w->unk88->unk4B != w->unk2C || dir != w->unk43)
             {
                 if (gUnk_03001F30 == 0)
-                    TaskSetEntry(sub_0803380c, gCurTaskIdx);
+                    TaskSetEntry(PlayerActionStand, gCurTaskIdx);
                 else
                     TaskSetEntry(sub_08041438, gCurTaskIdx);
             }
@@ -255,7 +255,7 @@ end:
     gCurTask->unk2C = gCurTask->unk88->unk4B;
 }
 
-void sub_08033d0c(void)
+void PlayerActionWalk(void)
 {
     struct PlayerState *p;
     struct Task *t;
@@ -401,15 +401,15 @@ void sub_08033d0c(void)
     }
 }
 
-void sub_08034278(void)
+void PlayerActionWalkUpdate(void)
 {
-    while (sub_0803fd90() == 0 && PlayerCheckJump() == 0 && sub_0803fe68() == 0
+    while (PlayerCheckSkid() == 0 && PlayerCheckJump() == 0 && sub_0803fe68() == 0
            && PlayerCheckEnterDoor() == 0 && PlayerCheckLadder() == 0 && PlayerCheckDuckOrSwallow() == 0
            && PlayerCheckFloat() == 0)
     {
         struct Task *t;
 
-        if (sub_080400c0() != 0)
+        if (PlayerCheckBButton() != 0)
             goto end;
         if (PlayerCheckDropAbility() != 0)
             goto end;
@@ -451,13 +451,13 @@ void sub_08034278(void)
                     if (sub_0803fd20(gCurTask->unk88->unk00) == 4)
                     {
                         gCurTask->unk73 = 1;
-                        TaskSetEntry(sub_08033d0c, gCurTaskIdx);
+                        TaskSetEntry(PlayerActionWalk, gCurTaskIdx);
                     }
                 }
                 else if (sub_0803fd20(gCurTask->unk88->unk00) != 4)
                 {
                     gCurTask->unk73 = 0;
-                    TaskSetEntry(sub_08033d0c, gCurTaskIdx);
+                    TaskSetEntry(PlayerActionWalk, gCurTaskIdx);
                 }
             }
         }

@@ -50,7 +50,7 @@ void PlayerTurnToHeldDirection(void);
 void PlayerCheckBump(void);
 void PlayerStopAtCeilingAndWall(void);
 s32 PlayerCheckFloat(void);
-s32 sub_080400c0(void);
+s32 PlayerCheckBButton(void);
 s32 PlayerRequestLocomotion(void);
 void PlayerSetMotionXPreset(s32 a0, s32 a1);           /* M11, still asm; M11's own spelling */
 void PlayerSetMotionYPreset(s32 a0);
@@ -222,7 +222,7 @@ void sub_0804fc98(void)
     }
     if (PlayerCheckFloat() == 0)
     {
-        if (sub_080400c0() == 0)
+        if (PlayerCheckBButton() == 0)
         {
             if (gCurTask->unk7A & 1)
             {

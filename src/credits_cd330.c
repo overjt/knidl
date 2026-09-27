@@ -40,7 +40,7 @@ extern u16 gUnk_0875841E[][7];      /* credits: per variant, the scenes' lengths
 extern vu16 gBgPalette[];
 extern s16 gInputRecorderMode;
 extern u32 gUnk_0200EC50;
-extern u16 gUnk_02008008[];
+extern u16 gSavedPlayerAbilities[];
 extern u16 gUnk_02007FA8[];
 extern u16 gUnk_08758334[];
 extern u16 gUnk_08758374[];
@@ -127,7 +127,7 @@ void CreditsMain(void)
     for (;;) {
         gUnk_0200EC50 = scenes[gUnk_0201C1B0];
         InputRecorderStart();
-        gUnk_02008008[gLocalPlayer] = 0;
+        gSavedPlayerAbilities[gLocalPlayer] = 0;
         gUnk_02007FA8[gLocalPlayer] = 0xFFFF;
         CreditsLoadScene();
         gDispCnt &= 0xE0FF;

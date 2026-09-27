@@ -53,7 +53,7 @@ void sub_0800aad0(void)
     }
 }
 
-void sub_0800ab08(void)
+void HudRedrawClock(void)
 {
     if (gHudMode == 1 && gHudShowsHpBar != 1 && gHudShowsClock == 1)
         HudDrawClock(gHudClock);
@@ -65,7 +65,7 @@ void sub_0800ab3c(void)
     HudDrawTiles(gUnk_085A5654, 0, 0, 64);
 }
 
-void sub_0800ab64(s32 a)
+void HudDrawPlayerIcon(s32 a)
 {
     if (gHudMode == 1) {
         HudDrawTiles(gHudPlayerIconTiles[0][a], 7, 18, 2);

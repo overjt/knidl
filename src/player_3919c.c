@@ -4,7 +4,7 @@
 
 /* player_3919c.c (0x0803919C-0x08039C23, issue #91).
  *
- * Player action bodies, part 7: actions 17 and 20.  sub_0803919c (action
+ * Player action bodies, part 7: actions 17 and 20.  PlayerActionDie (action
  * 17) is the player's death: it installs sub_080396a4 as the task's
  * per-frame callback Task.unk04 (state 1 falls until the player is below
  * the screen, state 2 waits PlayerState.unk14 frames, state 4 leaves for
@@ -13,10 +13,10 @@
  * until the callback reaches state 3, and when gUnk_0300234C drops to 0
  * raises M02's stage request gStageRequest = 6; Task.unk73 = 4 or 5 then
  * says whether the player has lives left (gPlayerLives[]).
- * sub_080397f8 (action 20) enters a door: it stops the player, plays the
+ * PlayerActionEnterDoor (action 20) enters a door: it stops the player, plays the
  * landing or crouch animation picked by M11's sub_080404e4, calls M07's
- * door code sub_08025024 and plays the ability's door animation
- * (gUnk_0873D632[ability][0]). */
+ * door code EnterDoor and plays the ability's door animation
+ * (gPlayerDoorAnims[ability][0]). */
 
 struct CamPos { u16 x, y; };
 
@@ -38,7 +38,7 @@ extern struct CamPos gPlayerCameraPos[4];
 extern s16 gSpriteCameraY;
 extern s8 gUnk_03002444;
 extern s16 gUnk_0873D7E4[][3];
-extern u16 gUnk_0873D632[][7];
+extern u16 gPlayerDoorAnims[][7];
 
 void TaskExitTrampoline(void);
 void TaskYieldTrampoline(s32 frames);
@@ -52,7 +52,7 @@ void TaskSleepForever(void);
 void TaskSetEntry(void *a, u32 i);
 void TaskSetFrame(s32 a);
 s32 SetPlayerAbility(s32 a, s32 b, u32 c);
-s32 sub_08025024(void);
+s32 EnterDoor(void);
 void RequestScreenShake(u16 a);
 s32 sub_080264b0(void);
 void PauseRoom(void);
@@ -77,7 +77,7 @@ void sub_080b9118(void);
 void sub_080b9610(void);
 void sub_080396a4(void);
 
-void sub_0803919c(void)
+void PlayerActionDie(void)
 {
     struct Task *t;
     struct Task *u;
@@ -315,7 +315,7 @@ void sub_080396a4(void)
     }
 }
 
-void sub_080397f8(void)
+void PlayerActionEnterDoor(void)
 {
     struct Task *t;
     s32 n;
@@ -402,7 +402,7 @@ void sub_080397f8(void)
         TaskYieldTrampoline(2);
         break;
     }
-    sub_08025024();
+    EnterDoor();
     if (gUnk_03002444 != 0)
         sub_080264b0();
     if (gUnk_03002444 == 0)
@@ -410,7 +410,7 @@ void sub_080397f8(void)
     t = gCurTask;
     if (!(t->unk7B & 1))
     {
-        t->unk46 = gUnk_0873D632[t->unk88->unk0D][0];
+        t->unk46 = gPlayerDoorAnims[t->unk88->unk0D][0];
         switch (t->unk88->unk0D)
         {
         case 0:

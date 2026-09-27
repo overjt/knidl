@@ -593,7 +593,7 @@ void sub_080301a4(void)
     TaskSleepForever();
 }
 
-s32 sub_080301e8(s32 a, s32 x, s32 y)
+s32 CreateStageEffect(s32 a, s32 x, s32 y)
 {
     s32 id;
     struct Task *t;

@@ -78,7 +78,7 @@ void HudFlushTilemap(void)
     }
 }
 
-void sub_0800b428(void)
+void HudLoadGfx(void)
 {
     if (gUnk_03001F30 == 0)
         LoadGfxSet(4);

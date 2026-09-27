@@ -90,8 +90,8 @@ gUnk_080DBF28:
 	.global	gUnk_080DBF30
 gUnk_080DBF30:
 	.incbin	"baserom.gba", 0xDBF30, 0x6F8
-	.global	gUnk_080DC628
-gUnk_080DC628:
+	.global	gPlayerPalettes
+gPlayerPalettes:
 	.incbin	"baserom.gba", 0xDC628, 0x100
 	.global	gUnk_080DC728
 gUnk_080DC728:

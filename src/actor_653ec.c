@@ -61,9 +61,9 @@ extern void ActorReactToHit(void);
 extern void sub_08066480(struct GfxHeader *h, u32 b, u32 c);
 extern u16 gFrameCount;
 extern u8 gUnk_0200AFF8;
-extern void sub_0800a280(void);
+extern void HudShowHpBar(void);
 extern void sub_0800a340(s16 a, s16 b);
-extern void sub_0800a294(s16 a, s16 b);
+extern void HudStartHpBar(s16 a, s16 b);
 extern void sub_08066754(void);
 extern void sub_080666a4(void);
 void sub_08066988(u32 i);
@@ -1255,7 +1255,7 @@ void ActorShowHpBar(void)
 
     g = &gCurTask;
     gUnk_0200AFF8 = 0;
-    sub_0800a280();
+    HudShowHpBar();
     t = *g;
     if (t->unk72 == 1 || (t->unk72 == 2 && t->unk76 == 7))
     {
@@ -1265,7 +1265,7 @@ void ActorShowHpBar(void)
     else
     {
         v = gCurTask->unk78;
-        sub_0800a294(v, v);
+        HudStartHpBar(v, v);
     }
 }
 

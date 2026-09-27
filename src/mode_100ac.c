@@ -40,7 +40,7 @@ extern s8 gUnk_030023B8;
 extern u16 gGameState;
 extern vu16 gLinkCommand;
 extern u32 gObjVram[];
-extern u16 gUnk_080DC628[][16];
+extern u16 gPlayerPalettes[][16];
 extern struct GfxHeader *const gUnk_08731F78[];
 
 void RequestCopy(u32 mode, u32 src, u32 dst, u32 size);
@@ -133,7 +133,7 @@ void sub_080102c0(void)
         RequestCopy(4, (u32)gUnk_02020000, (u32)gObjVram, h->unk02 << 5);
         RequestCopy(2, (u32)h->unk08, (u32)gUnk_03001570, h->unk00 << 5);
         if (gPlayerCount > 1)
-            RequestCopy(2, (u32)gUnk_080DC628[gLocalPlayer], (u32)gUnk_03001570, 22);
+            RequestCopy(2, (u32)gPlayerPalettes[gLocalPlayer], (u32)gUnk_03001570, 22);
     }
     if (gUnk_030023B8 == 7)
         LZ77UnCompWram((void *)0x085E0090, gUnk_02020000);

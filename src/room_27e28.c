@@ -4,7 +4,7 @@
 
 /* room_27e28.c (0x08027E28-0x0802831F, issue #93).
  *
- * Room start-up, part 1.  sub_08027e28 (the loaders' second step) sets up
+ * Room start-up, part 1.  InitRoomBgLayout (the loaders' second step) sets up
  * the scroll speeds, the BG layout gRoomBgLayout/gUnk_0200B078 for the
  * room (a 7-way switch on RoomDef.unk54, table 0x08027F28), the
  * metatile-map edits of the special rooms and the bottom bound
@@ -146,7 +146,7 @@ void sub_080307b0(void);
 void sub_080307cc(void);
 void StartRoomHBlankScroll(s32 a);
 
-void sub_08027e28(void)
+void InitRoomBgLayout(void)
 {
     s8 *e;
     struct MapCell *p;

@@ -51,11 +51,11 @@ extern u16 gCameraMode;
 extern s16 gRoomBounds[4];
 
 void UpdatePlayerGroupCenter(void);
-void sub_08029e24(void);
+void SetCameraBoundsToGroup(void);
 void sub_08029ef4(void);
 void UpdatePlayerCameras(void);
 void sub_0802a260(void);
-void sub_0802a42c(void);
+void SetPlayerBoundsFromCamera(void);
 void sub_0802a484(void);
 void SetViewRectToPlayers(void);
 void sub_0802a568(void);
@@ -101,9 +101,9 @@ void CameraFollowFocus(void)
         else
         {
             UpdatePlayerGroupCenter();
-            sub_08029e24();
+            SetCameraBoundsToGroup();
             UpdatePlayerCameras();
-            sub_0802a42c();
+            SetPlayerBoundsFromCamera();
             if ((gActivePlayerMask >> gLocalPlayer) & 1)
             {
                 x = gCameraFocusX;
@@ -479,7 +479,7 @@ void CameraFollowScrollLocked(void)
         else
         {
             UpdatePlayerGroupCenter();
-            sub_08029e24();
+            SetCameraBoundsToGroup();
             if (gScrollLock.unk1 & 1)
             {
                 gCameraBounds[0] = gScrollLock.unk2;
@@ -491,7 +491,7 @@ void CameraFollowScrollLocked(void)
                 gCameraBounds[3] = gScrollLock.unk8;
             }
             UpdatePlayerCameras();
-            sub_0802a42c();
+            SetPlayerBoundsFromCamera();
             if ((gActivePlayerMask >> gLocalPlayer) & 1)
             {
                 x = gCameraFocusX;
@@ -621,7 +621,7 @@ void CameraSlideFromScrollLock(void)
         else
         {
             UpdatePlayerGroupCenter();
-            sub_08029e24();
+            SetCameraBoundsToGroup();
             if (gScrollLock.unk1 & 1)
             {
                 gScrollLock.unk2 -= gScrollLockSpeedX;
@@ -667,7 +667,7 @@ void CameraSlideFromScrollLock(void)
             if (gScrollLock.unk1 == 0)
                 gCameraMode = 0;
             UpdatePlayerCameras();
-            sub_0802a42c();
+            SetPlayerBoundsFromCamera();
             if ((gActivePlayerMask >> gLocalPlayer) & 1)
             {
                 x = gCameraFocusX;

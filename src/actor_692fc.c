@@ -68,7 +68,7 @@ extern void TaskSetSkipMask(s32 a, s32 b);
 extern void TaskSetEntry(void *fn, s32 i);
 extern void TaskSetFrame(s32 a);
 extern void AddPlayerLives(s32 a, s32 b);
-extern void sub_0800a42c(void);
+extern void HudAnimateTaskHpBar(void);
 extern void sub_0801bcac(struct InputState *p);
 extern void sub_0801bde0(struct InputState *p);
 extern void sub_0801bf1c(struct InputState *p);
@@ -760,7 +760,7 @@ u32 ActorReactToDamage(void)
     r = 0;
     ActorPlayHitSfx();
     if ((gCurTask->unk72 == 1 || gCurTask->unk72 == 2) && a->unk05 != 2)
-        sub_0800a42c();
+        HudAnimateTaskHpBar();
     if (p != NULL)
     {
         if (p->unk00 != -1)
@@ -958,7 +958,7 @@ u32 ActorReactToDefeat(void)
     r = 0;
     ActorPlayHitSfx();
     if (gCurTask->unk72 == 1 || gCurTask->unk72 == 2)
-        sub_0800a42c();
+        HudAnimateTaskHpBar();
     t = gCurTask;
     if (t->unk72 == 1)
         ActorAwardScore(t->unk7F, 1);

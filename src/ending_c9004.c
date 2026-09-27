@@ -35,7 +35,7 @@ extern s16 gSpriteCameraY;
 extern u32 gUnk_02020000[];         /* decompression buffer */
 extern u16 gUnk_03001570[];         /* palette buffer */
 extern u32 gObjVram[];         /* OBJ VRAM */
-extern u16 gUnk_080DC628[][16];     /* per-player palettes */
+extern u16 gPlayerPalettes[][16];     /* per-player palettes */
 extern void (*gUnk_087573F4[])(void);
 extern struct GfxHeader gUnk_0859A09C;
 extern u16 gUnk_085E0070[];
@@ -86,7 +86,7 @@ void TaskDrawWorld(void);
 void TaskSleepForever(void);                                     /* end the running task */
 void TaskStop(void);
 void sub_0801a3e4(void);
-void sub_08026278(s32 x, s32 y);
+void SetCameraFocusOrAnchor(s32 x, s32 y);
 void sub_080c9040(void);
 void sub_080c90c8(void);
 void sub_080c9418(void);
@@ -121,7 +121,7 @@ void sub_080c9040(void)
     RequestCopy(4, (u32)gUnk_02020000, (u32)gObjVram, h->unk02 << 5);
     RequestCopy(2, (u32)h->unk08, (u32)gUnk_03001570, h->unk00 << 5);
     if (gUnk_02004C94 > 1)
-        RequestCopy(2, (u32)gUnk_080DC628[gUnk_02000028], (u32)gUnk_03001570, 22);
+        RequestCopy(2, (u32)gPlayerPalettes[gUnk_02000028], (u32)gUnk_03001570, 22);
     RequestCopy(2, (u32)gUnk_085E0070, (u32)&gUnk_03001570[80], 32);
     LZ77UnCompWram(gUnk_085E0090, gUnk_02020000);
 }
@@ -521,12 +521,12 @@ void sub_080c9a28(void)
 }
 
 /* Task type #101 variant 11's per-frame hook: move the camera target to
-   the task's position (M07's sub_08026278). */
+   the task's position (M07's SetCameraFocusOrAnchor). */
 void sub_080c9cf0(void)
 {
     struct Task *t = gCurTask;
 
-    sub_08026278(t->unk48, t->unk4A);
+    SetCameraFocusOrAnchor(t->unk48, t->unk4A);
 }
 
 /* Task type #101 variant 2: a sprite at the camera's (120, 40) that plays

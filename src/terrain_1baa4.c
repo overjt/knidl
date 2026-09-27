@@ -51,7 +51,7 @@ struct Unk03005550
     /*0x0D*/ u8 unkD;
 };
 
-extern s16 gUnk_0300550C;           /* box left (room-relative) */
+extern s16 gTerrainPrevBoxLeft;           /* box left (room-relative) */
 extern s32 gTerrainVelY;           /* Task.unk58 */
 extern s16 gTerrainPrevX;           /* actor x (room-relative) */
 extern s16 gTerrainPrevY;           /* actor y (room-relative) */
@@ -62,11 +62,11 @@ extern u8 gTerrainFacing;            /* Task.unk43 */
 extern s16 gTerrainProbeY;           /* probe y */
 extern s32 gUnk_03005580;
 extern s16 gTerrainBoxBottom;           /* box bottom offset */
-extern s16 gUnk_03005590;           /* box right (room-relative) */
+extern s16 gTerrainPrevBoxRight;           /* box right (room-relative) */
 extern s32 gTerrainVelX;           /* Task.unk54 */
-extern s16 gUnk_030055A4;           /* box top (room-relative) */
+extern s16 gTerrainPrevBoxTop;           /* box top (room-relative) */
 extern s32 gUnk_030055A8;
-extern s16 gUnk_030055B0;           /* box bottom (room-relative) */
+extern s16 gTerrainPrevBoxBottom;           /* box bottom (room-relative) */
 extern s32 gUnk_030055F0;
 extern s32 gUnk_03005618;
 
@@ -99,10 +99,10 @@ void sub_0801baa4(u32 p)
     zero = 0;
     gTerrainPrevX = gCurTask->unk88->unk5E + (box = (s8 *)gCurTask->unk88->unk70)[0];
     gTerrainPrevY = box[1] + gCurTask->unk88->unk60;
-    gUnk_0300550C = gTerrainPrevX + box[4];
-    gUnk_03005590 = gTerrainPrevX + box[5];
-    gUnk_030055A4 = gTerrainPrevY + box[2];
-    gUnk_030055B0 = gTerrainPrevY + box[3];
+    gTerrainPrevBoxLeft = gTerrainPrevX + box[4];
+    gTerrainPrevBoxRight = gTerrainPrevX + box[5];
+    gTerrainPrevBoxTop = gTerrainPrevY + box[2];
+    gTerrainPrevBoxBottom = gTerrainPrevY + box[3];
     gTerrainVelX = gTerrainProbeX - gTerrainPrevX;
     gTerrainVelY = gTerrainProbeY - gTerrainPrevY;
     gUnk_030055A8 = gUnk_03005580 = zero;

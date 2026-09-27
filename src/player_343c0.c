@@ -9,10 +9,10 @@
  * gPlayerActions[62] and every frame the "per-frame" handler Task.unk15
  * from gPlayerActionHandlers[57] (CallTableEntry(index, count, table); entry 0 of
  * both tables is NULL).  Here: actions 3-6 and 22.
- * sub_080343c0 enters mode 2 (handler 3, sub_0803469c), sub_08034874
- * mode 3 (handler 4, sub_080349b4), sub_08034a88 and sub_08034d34 mode 4
- * (handlers 5 and 6, sub_08034bec and sub_08034e60); sub_08034f70
- * (action 22) clears PlayerState.unk68 and runs sub_08034f8c, the
+ * PlayerActionRun enters mode 2 (handler 3, PlayerActionRunUpdate), PlayerActionSkid
+ * mode 3 (handler 4, PlayerActionSkidUpdate), PlayerActionJump and sub_08034d34 mode 4
+ * (handlers 5 and 6, PlayerActionJumpUpdate and sub_08034e60); sub_08034f70
+ * (action 22) clears PlayerState.unk68 and runs PlayerActionFall, the
  * mode-5 coroutine of the next file.  The enter coroutines switch on the
  * ability PlayerState.unk0D for the animation (TaskSetFrame) and loop
  * on TaskYieldTrampoline; the handlers run M11's transition predicates
@@ -48,7 +48,7 @@ void TaskSleepForever(void);
 void TaskSetEntry(void *a, u32 i);
 void TaskSetFrame(s32 a);
 s32 IsFullBlockAtPixel(u16 x, u16 y);
-void sub_08034f8c(void);
+void PlayerActionFall(void);
 void PlayerPlayBump(void);
 void PlayerStopAxes(s32 a0);
 s32 PlaySfxIfLocalPlayer(s32 a0, u16 a1);
@@ -58,14 +58,14 @@ void PlayerTurnToHeldDirection(void);
 void PlayerCheckBump(void);
 s32 PlayerStopAtWall(void);
 s32 sub_0803fd20(s32 a0);
-s32 sub_0803fd90(void);
+s32 PlayerCheckSkid(void);
 s32 PlayerCheckJump(void);
 s32 sub_0803fe68(void);
 s32 PlayerCheckDuckOrSwallow(void);
 s32 PlayerCheckLadder(void);
 s32 PlayerCheckFloat(void);
-s32 sub_08040084(void);
-s32 sub_080400c0(void);
+s32 PlayerCheckAirFloat(void);
+s32 PlayerCheckBButton(void);
 s32 PlayerCheckEnterDoor(void);
 s32 PlayerCheckDropAbility(void);
 s32 PlayerRequestLocomotion(void);
@@ -73,7 +73,7 @@ void PlayerSetMotionXPreset(s32 a0, s32 a1);           /* M11, still asm; M11's 
 void PlayerSetMotionYPreset(s32 a0);
 s32 CreatePlayerEffect(s32 band, s32 id, s32 payload);
 
-void sub_080343c0(void)
+void PlayerActionRun(void)
 {
     struct Task *t;
     struct PlayerState *p;
@@ -176,7 +176,7 @@ void sub_080343c0(void)
     }
 }
 
-void sub_0803469c(void)
+void PlayerActionRunUpdate(void)
 {
     struct Task *t;
     struct Task *t3;
@@ -224,7 +224,7 @@ void sub_0803469c(void)
         t->unk28 = 0;
         t->unk88->unk14 = 0;
     }
-    while (sub_0803fd90() == 0 && PlayerCheckJump() == 0)
+    while (PlayerCheckSkid() == 0 && PlayerCheckJump() == 0)
     {
         if (gCurTask->unk28 == 0 && sub_0803fe68() != 0)
             break;
@@ -236,7 +236,7 @@ void sub_0803469c(void)
             goto end;
         if (PlayerCheckFloat() != 0)
             goto end;
-        if (sub_080400c0() != 0)
+        if (PlayerCheckBButton() != 0)
             goto end;
         if (PlayerCheckDropAbility() != 0)
             goto end;
@@ -266,13 +266,13 @@ void sub_0803469c(void)
             if (sub_0803fd20(gCurTask->unk88->unk00) == 4)
             {
                 gCurTask->unk73 = 1;
-                TaskSetEntry(sub_080343c0, gCurTaskIdx);
+                TaskSetEntry(PlayerActionRun, gCurTaskIdx);
             }
         }
         else if (sub_0803fd20(gCurTask->unk88->unk00) != 4)
         {
             gCurTask->unk73 = m5;
-            TaskSetEntry(sub_080343c0, gCurTaskIdx);
+            TaskSetEntry(PlayerActionRun, gCurTaskIdx);
         }
         goto end;
     }
@@ -280,7 +280,7 @@ end:
     PlayerSetMotionXPreset(3, 72);
 }
 
-void sub_08034874(void)
+void PlayerActionSkid(void)
 {
     gCurTask->unk88->unk05 = gCurTask->unk88->unk04;
     gCurTask->unk88->unk04 = 3;
@@ -315,9 +315,9 @@ void sub_08034874(void)
     }
 }
 
-void sub_080349b4(void)
+void PlayerActionSkidUpdate(void)
 {
-    while (PlayerCheckJump() == 0 && sub_0803fe68() == 0 && sub_080400c0() == 0 && PlayerCheckDropAbility() == 0)
+    while (PlayerCheckJump() == 0 && sub_0803fe68() == 0 && PlayerCheckBButton() == 0 && PlayerCheckDropAbility() == 0)
     {
         if (gCurTask->unk54 == 0)
         {
@@ -354,7 +354,7 @@ void sub_080349b4(void)
     }
 }
 
-void sub_08034a88(void)
+void PlayerActionJump(void)
 {
     gCurTask->unk88->unk05 = gCurTask->unk88->unk04;
     gCurTask->unk88->unk04 = 4;
@@ -406,10 +406,10 @@ void sub_08034a88(void)
     }
 }
 
-void sub_08034bec(void)
+void PlayerActionJumpUpdate(void)
 {
     PlayerTurnToHeldDirection();
-    while (PlayerCheckLadder() == 0 && sub_080400c0() == 0 && PlayerCheckDropAbility() == 0 && PlayerCheckEnterDoor() == 0)
+    while (PlayerCheckLadder() == 0 && PlayerCheckBButton() == 0 && PlayerCheckDropAbility() == 0 && PlayerCheckEnterDoor() == 0)
     {
         if (gCurTask->unk7A & 1)
         {
@@ -437,7 +437,7 @@ void sub_08034bec(void)
             }
             break;
         case 1:
-            if (sub_08040084() == 0 && --gCurTask->unk88->unk14 == 0)
+            if (PlayerCheckAirFloat() == 0 && --gCurTask->unk88->unk14 == 0)
             {
                 PlayerStopAxes(2);
                 PlayerSetMotionYPreset(2);
@@ -449,7 +449,7 @@ void sub_08034bec(void)
         {
             PlayerCheckBump();
             if (gCurTask->unk88->unk3E & 7)
-                TaskSetEntry(sub_08034a88, gCurTaskIdx);
+                TaskSetEntry(PlayerActionJump, gCurTaskIdx);
         }
         break;
     }
@@ -501,7 +501,7 @@ void sub_08034d34(void)
 void sub_08034e60(void)
 {
     PlayerTurnToHeldDirection();
-    while (sub_080400c0() == 0 && PlayerCheckDropAbility() == 0)
+    while (PlayerCheckBButton() == 0 && PlayerCheckDropAbility() == 0)
     {
         if (gCurTask->unk7A & 1)
         {
@@ -540,7 +540,7 @@ void sub_08034e60(void)
         {
             PlayerCheckBump();
             if (gCurTask->unk88->unk3E & 7)
-                TaskSetEntry(sub_08034a88, gCurTaskIdx);
+                TaskSetEntry(PlayerActionJump, gCurTaskIdx);
         }
         break;
     }
@@ -551,5 +551,5 @@ void sub_08034e60(void)
 void sub_08034f70(void)
 {
     gCurTask->unk88->unk68 = 0;
-    sub_08034f8c();
+    PlayerActionFall();
 }

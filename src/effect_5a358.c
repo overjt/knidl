@@ -22,7 +22,7 @@
  * M13) is an animation in world space; its callback sub_0805ae00 clears
  * Task.unk28 in sub-state 0 when the player leaves mode 13 or the spawner's
  * Task.unk73 is not 4 (and copies the spawner's facing), and in the other
- * sub-states tests the block hit-box set gUnk_0873CF8C (sub_08030804) at the
+ * sub-states tests the block hit-box set gUnk_0873CF8C (TaskBreakBlocksAt) at the
  * spawner's position offset by PlayerState.unk24/unk26 (8.8).  Variant 48
  * (sub_0805ae94, M14's action 55) rides on its spawner with the draw hook
  * sub_0805af80 (shared with variant 34: M11's sub_0803dfc8 in player mode
@@ -81,7 +81,7 @@ u32 IsInView(s16 x, s16 y);
 void TaskRestoreSkipMask(u32 idx);
 void TaskSaveSkipMask(u32 idx);
 void RegisterCollider(u8 a, s16 x, s16 y, void *p);   /* M11's caller spelling */
-u16 sub_08030804(struct HitBoxSet *p, s32 x, s32 y, s32 e);
+u16 TaskBreakBlocksAt(struct HitBoxSet *p, s32 x, s32 y, s32 e);
 void sub_0803dfc8(void);
 void FreezeOtherTasks(s32 a0);
 void sub_0803f834(u16 a0, void *src);
@@ -537,7 +537,7 @@ void sub_0805ae00(void)
     }
     else
     {
-        sub_08030804((struct HitBoxSet *)gUnk_0873CF8C,
+        TaskBreakBlocksAt((struct HitBoxSet *)gUnk_0873CF8C,
                      ((struct Task *)t->unk8C)->unk48 + ((s16)t->unk88->unk24 >> 8),
                      ((struct Task *)t->unk8C)->unk4A + ((s16)t->unk88->unk26 >> 8), t->unk44);
     }

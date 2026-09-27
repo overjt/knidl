@@ -9,7 +9,7 @@
  * gUnk_08751B40/gUnk_08751E5C) switches on the sub-state Task.unk18 & 15
  * and installs M11's sub_0803dfc8 and its own collision callback
  * sub_0805268c, which registers the collider row gUnk_0873BE24 and runs the
- * hit test sub_08030804(gUnk_0873CC1C) at the spawner's position (Task.unk8C).
+ * hit test TaskBreakBlocksAt(gUnk_0873CC1C) at the spawner's position (Task.unk8C).
  * Variant 8 (sub_080527a4, gUnk_08751BB0) traces six-step paths from the
  * 8.8 velocity rows gUnk_0873B7C0[k] and the animation rows
  * gUnk_0873B808[k] (sound 129) with the callback sub_08052b08 (collider row
@@ -59,7 +59,7 @@ u16 RandomSpread(u16 base, u8 scale, u8 amount);
 s16 RandomSpreadFacing(u16 base, u8 scale, u8 amount);
 void RegisterCollider(u8 a, s16 x, s16 y, void *p);   /* M11's caller spelling */
 s32 sub_08027588(void);
-u16 sub_08030804(struct HitBoxSet *p, s32 x, s32 y, s32 e);
+u16 TaskBreakBlocksAt(struct HitBoxSet *p, s32 x, s32 y, s32 e);
 s32 TaskBreakBlocks(struct HitBoxSet *p, s32 e);   /* M14's callers test r0 unnarrowed (good/sub_08050c48.c); landed M09/M12/M13 files spell it u16 */
 void sub_0803dfc8(void);
 s32 PlaySfxIfLocalPlayer(s32 a0, u16 a1);
@@ -209,7 +209,7 @@ void sub_0805268c(void)
                     off = 12;
                 else
                     off = -12;
-                sub_08030804((struct HitBoxSet *)gUnk_0873CC1C, ((struct Task *)v->unk8C)->unk48 + off,
+                TaskBreakBlocksAt((struct HitBoxSet *)gUnk_0873CC1C, ((struct Task *)v->unk8C)->unk48 + off,
                              ((struct Task *)v->unk8C)->unk4A + 2, v->unk44);
             }
         }

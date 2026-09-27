@@ -6,7 +6,7 @@
  *
  * Camera mode switches, the room's BG animation scripts and the camera
  * task spawners.  gCameraMode is the camera mode: CameraLeaveScrollLock leaves
- * mode 3 for 4 or 0 from the flags in gScrollLock.unk1, sub_0802d074
+ * mode 3 for 4 or 0 from the flags in gScrollLock.unk1, CameraStartHoldAnchor
  * snaps the 16.16 camera target gCameraCenterX/gCameraCenterY to the player
  * and picks mode 4 or 5, and sub_0802d0c4 is a dead export (both arms of
  * its test store 0).  LoadRoomBgAnims resets the ten BG animation slots
@@ -17,7 +17,7 @@
  * palette buffer gUnk_030012B0), 2 waits, 3 loops, 5 sets a metatile's
  * solid flag (sub_0802d2f0), 6 plays a sound effect, anything else stops
  * the slot (sub_0802d32c).  CreateMapEvent spawns task type #4 through M07's
- * sub_0802621c; Task_MapEvent, the type's body, dispatches on Task.unk14
+ * TaskCreateHighSlot; Task_MapEvent, the type's body, dispatches on Task.unk14
  * into the seven camera tasks of the anchor table gMapEventVariants. */
 
 struct Unk03005680
@@ -126,7 +126,7 @@ void RequestCopy(u32 mode, u32 src, u32 dst, u32 size);
 void CallTableEntry(u32 idx, u32 count, void (**fns)(void));
 void BlendColors(u16 *src, u16 *dst, s32 ratio, s32 count, u16 *out);
 void PlaySfx(u32 a);
-s32 sub_0802621c(s32 type);
+s32 TaskCreateHighSlot(s32 type);
 void CalcRoomBounds(void);
 void CameraResetBounds(void);
 void sub_0802d25c(struct Unk0802D25C *a);
@@ -151,7 +151,7 @@ void CameraLeaveScrollLock(void)
     }
 }
 
-void sub_0802d074(void)
+void CameraStartHoldAnchor(void)
 {
     gCameraCenterX = gCameraAnchorX << 16;
     gCameraCenterY = gCameraAnchorY << 16;
@@ -165,7 +165,7 @@ void sub_0802d0c4(void)
 {
     CalcRoomBounds();
     CameraResetBounds();
-    /* both arms store 0 in the ROM too (sub_0802d074 stores 4 / 5) */
+    /* both arms store 0 in the ROM too (CameraStartHoldAnchor stores 4 / 5) */
     if (gUnk_03002444 != 0)
         gCameraMode = 0;
     else
@@ -302,7 +302,7 @@ s32 CreateMapEvent(s32 a)
     s32 id;
     struct Task *t;
 
-    id = sub_0802621c(4);
+    id = TaskCreateHighSlot(4);
     if (id != -1)
     {
         t = &gTasks[id];

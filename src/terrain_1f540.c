@@ -50,7 +50,7 @@ extern u16 gTerrainTile;           /* queried cell: tile set */
 extern s16 gTerrainBoxTop;           /* box top offset */
 extern s16 gTerrainBoxBottom;           /* box bottom offset */
 extern u16 gTerrainTileBelow;           /* cell below: tile set */
-extern s16 gUnk_03005590;           /* box right (room-relative) */
+extern s16 gTerrainPrevBoxRight;           /* box right (room-relative) */
 extern u16 gTerrainTileLeft;           /* cell to the left: tile set */
 extern s16 gTerrainBoxRight;           /* box right offset */
 
@@ -83,7 +83,7 @@ void sub_0801f540(void)
         }
     }
     x = gTerrainProbeX + gTerrainBoxRight;
-    if ((x & 0xFFF0) == (gUnk_03005590 & 0xFFF0))
+    if ((x & 0xFFF0) == (gTerrainPrevBoxRight & 0xFFF0))
         return;
     if (TerrainQueryPixelAndSides(x, gTerrainProbeY + gTerrainBoxTop) != 0
         && (a = gCollisionTileShapeClass[gTerrainTile]) == 1
@@ -130,7 +130,7 @@ void sub_0801f6b0(void)
         }
     }
     x = gTerrainProbeX + gTerrainBoxLeft;
-    if ((x & 0xFFF0) == (gUnk_03005590 & 0xFFF0))
+    if ((x & 0xFFF0) == (gTerrainPrevBoxRight & 0xFFF0))
         return;
     if (TerrainQueryPixelAndSides(x, gTerrainProbeY + gTerrainBoxTop) != 0
         && gCollisionTileShapeClass[gTerrainTile] == 1

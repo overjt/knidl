@@ -7,7 +7,7 @@
  * Map and collision queries, the continuation of M06's terrain probes
  * (src/terrain_*.c).  gRoomMap is the room's metatile map,
  * gRoomWidth x gRoomHeight cells of 16x16 pixels.  GetCollisionTileAtPixel,
- * GetCollisionTile, sub_08021b70 and sub_08021bb4 read a cell's tile-set byte
+ * GetCollisionTile, sub_08021b70 and GetCollisionTileAtOffset read a cell's tile-set byte
  * (or unk2) at pixel or metatile coordinates; sub_08021c14, IsWaterAtPixel
  * and IsFullBlockAtPixel test a pixel for a wall through M06's TerrainQueryPixel and
  * the per-tile-set tables; sub_08022540 and sub_0802259c read the second
@@ -176,7 +176,7 @@ s32 sub_08021b70(u32 x, u32 y)
     return (&gRoomMap[idx])[x].unk2;
 }
 
-s32 sub_08021bb4(s16 x, s16 y, s16 dx, s16 dy)
+s32 GetCollisionTileAtOffset(s16 x, s16 y, s16 dx, s16 dy)
 {
     s32 cx = (x >> 4) + dx;
     s32 cy = (y >> 4) + dy;
@@ -520,7 +520,7 @@ void sub_08022650(void)
     }
 }
 
-s32 sub_08022760(struct Task *t)
+s32 IsTaskBelowPlayerBounds(struct Task *t)
 {
     if (gPlayerBounds[gCurTaskIdx].y1 < t->unk4A)
         return 1;

@@ -51,9 +51,9 @@ extern void sub_0803d1c4(s32 i);
 extern void sub_0803d2d4(s32 i);
 extern void sub_08067108(void);
 extern void sub_08067114(void);
-extern void sub_08032d48(void);
+extern void PlayerUpdate(void);
 extern void sub_0803332c(void);
-extern void sub_08032bd0(void);
+extern void PlayerStartRequestedAction(void);
 extern void sub_0801b7dc(void);
 extern u8 sub_0801b24c(void);
 extern u8 sub_0801af14(void);
@@ -64,7 +64,7 @@ extern void ActorUpdateAttachedEffect(void);
 extern void sub_08068a8c(s32 i, u8 flag);
 extern void sub_08068b88(s32 i, u16 b, u8 c, u8 d);
 extern void sub_0806737c(void);
-extern void sub_0803e2d4(void);
+extern void PlayerUpdateInvulnerability(void);
 extern void sub_0803e080(void);
 extern void SetCameraFocus(s16 x, s16 y);
 extern void sub_08068690(void);
@@ -111,7 +111,7 @@ void sub_080673ec(void)
 void sub_08067408(void)
 {
     CallTableEntry(gCurTask->unk15, 11, gUnk_0873E31C);
-    sub_0803e2d4();
+    PlayerUpdateInvulnerability();
     if ((gCurTask->unk88->unk42 & 32) == 0)
         sub_0803e080();
     if (gLocalPlayer == gCurTask->unk88->unk00)
@@ -1221,7 +1221,7 @@ void sub_08068b88(s32 i, u16 b, u8 c, u8 d)
     t->unk42 = 7;
     t->unk44 = i;
     t->unk00 = (u32)PlayerMove;
-    t->unk04 = (u32)sub_08032d48;
+    t->unk04 = (u32)PlayerUpdate;
     t->unk08 = (u32)sub_0803332c;
     if (b == 0)
     {
@@ -1255,7 +1255,7 @@ void sub_08068b88(s32 i, u16 b, u8 c, u8 d)
         p->unk01 = 55;
         break;
     }
-    TaskSetEntry(sub_08032bd0, i);
+    TaskSetEntry(PlayerStartRequestedAction, i);
     if (d != 0)
         SetPlayerInvulnerability(1, 96, i);
     p->unk5E = t->unk48;

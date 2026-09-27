@@ -10,7 +10,7 @@
  * extra mode, straight to the mode list) and dispatches on the menu
  * screen gMenuScreen until it reaches 9 (start a game: state 5 or 13)
  * or 10 (back to the title).  The rest draws the file-select screen's
- * three save slots: sub_0800bcf0 all three, sub_0800bda4 a slot's label
+ * three save slots: MenuDrawSaveSlots all three, sub_0800bda4 a slot's label
  * (empty, finished, or its number through the digit buffer gDigits),
  * sub_0800be8c/sub_0800bf10 its picture and palette, sub_0800bf6c its
  * second number. */
@@ -100,12 +100,12 @@ void sub_0800c34c(void);
 void sub_0800c558(void);
 void sub_0800c610(void);
 void sub_0800c8a0(void);
-void sub_0800ca10(void);
+void MenuEnterModeList(void);
 void sub_0800cd60(void);
 void sub_0800d0f4(void);
 void sub_0800d450(void);
 void sub_0800d85c(void);
-void sub_0800da9c(s32 mode);
+void CreateFileSelectSprites(s32 mode);
 void BgScrollInit(void);
 void BgScrollStartY(s32 speed, s32 dist, s32 bg);
 void SetBlend(s32 a, s32 b, s32 c, s32 d);
@@ -116,7 +116,7 @@ void sub_080b81a0(s32 a);
 s32 CheckNewMilestones(void);
 void sub_080b8888(void);
 void sub_080b8918(void);
-void sub_0800bcf0(void);
+void MenuDrawSaveSlots(void);
 void sub_0800bda4(s32 slot);
 void sub_0800be8c(s32 slot, u32 pal);
 s32 sub_0800bf10(s32 slot, u32 pal);
@@ -152,8 +152,8 @@ void MainMenuMain(void)
         gDispCnt &= 0xE0FF;
         gDispCnt |= 0x1C00;
         gMenuScreen = 0;
-        sub_0800bcf0();
-        sub_0800da9c(0);
+        MenuDrawSaveSlots();
+        CreateFileSelectSprites(0);
         break;
     case 14:
     case 15:
@@ -169,7 +169,7 @@ void MainMenuMain(void)
         else
             gMenuCursor = 4;
         gMenuScreen = 11;
-        sub_0800ca10();
+        MenuEnterModeList();
         gMenuBufferedKeys = 0;
         break;
     }
@@ -274,7 +274,7 @@ void MainMenuMain(void)
     }
 }
 
-void sub_0800bcf0(void)
+void MenuDrawSaveSlots(void)
 {
     s32 i;
 

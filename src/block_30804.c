@@ -10,7 +10,7 @@
  * cell turns into, bit 15 = being broken.  gBreakingBlocks[64] holds the
  * blocks being broken (struct Unk020061F0).  An attack's hit-box set
  * (struct HitBoxSet) is placed at the task's position and facing by the
- * six wrappers sub_08030804 ... sub_08030db8 and scanned tile by tile:
+ * six wrappers TaskBreakBlocksAt ... sub_08030db8 and scanned tile by tile:
  * BreakBlocksInHitBoxes tries every metatile its boxes cover and returns how many
  * blocks broke; sub_08030b14 breaks the first block of the row at the
  * set's centre (then the rows above and below) and records its pixel
@@ -22,10 +22,10 @@
  * the on-screen test sub_08031310 - and latches it into the cursor cells
  * gBlockCursorX/gBlockCursorY/gBlockCursorIndex (x, y, map index),
  * gBlockCursorPlayer (the player), gUnk_02004B48, gUnk_02006174 (the kind) and
- * gBlockCursorTile (the collision byte); sub_08031374 then takes a free
+ * gBlockCursorTile (the collision byte); BreakBlockAtCursor then takes a free
  * record, points it at the BG map entry at 0x06002000, plays the sound
  * (PlaySfx), awards points to the player (AddPlayerScore) and starts
- * the animation script gUnk_0873A47C[kind].  sub_08030f78 (M08's map
+ * the animation script gUnk_0873A47C[kind].  BreakBlockAt (M08's map
  * events) and sub_08031738 (M07) break a block at a metatile directly;
  * sub_08030f1c tests a metatile for an unbroken block. */
 
@@ -49,7 +49,7 @@ struct MapTile
     /*0x03*/ u8 unk3;
 };
 
-/* gBreakingBlocks[64] (and gUnk_0200A6F0[64] for the second block layer
+/* gBreakingBlocks[64] (and gBg1BreakingBlocks[64] for the second block layer
    gBg1MetatileMap): one 32-byte record per block being broken.  unk0/unk2 =
    metatile x/y, unk4 = its map index, unk6 = the position in the animation
    script (0x7FFF = free slot; bit 15 = already stepped this frame), unk8 =
@@ -90,7 +90,7 @@ extern s16 gRoomWidth;               /* map width in metatiles */
 extern s16 gRoomHeight;               /* map height in metatiles */
 extern u16 gUnk_02007FA0;               /* the block sub_08030b14 broke: x (pixels) */
 extern u16 gUnk_02004B6C;               /*   y (pixels) */
-extern u32 gBlockAnimHook;               /* per-frame stage hook (sub_080318b4 / sub_08031de4 / sub_08032428) */
+extern u32 gBlockAnimHook;               /* per-frame stage hook (UpdateBlockAnims / UpdateBlockAnimsWithEdges / UpdateBg1BlockAnims) */
 extern u16 gBlockLayer[];             /* per-cell block layer: low byte = replacement index, 0x8000 = being broken */
 extern struct MapTile *gRoomMap;   /* the room's metatile map */
 extern struct RoomDef *gCurRoomDef;   /* the current room header */
@@ -110,20 +110,20 @@ extern u8 gUnk_0200B078;
 
 s32 PlaySfx(s32 id);
 void AddPlayerScore(s32 a, u32 b);
-s32 sub_080261c0(s32 x, s32 y);
+s32 CreateBlockBreakEffect(s32 x, s32 y);
 void RequestScreenShake(u16 a);
-s32 sub_080301e8(s32 a, s32 x, s32 y);
+s32 CreateStageEffect(s32 a, s32 x, s32 y);
 void sub_08031ab8(struct Unk020061F0 *b, s32 n);
-void sub_08031ebc(struct Unk020061F0 *b);
+void BlockAnimWriteMetatileWrapped(struct Unk020061F0 *b);
 u16 BreakBlocksInHitBoxes(struct HitBoxSet *p, s32 x, s32 y, s32 dir, s32 e);
 u16 sub_08030b14(struct HitBoxSet *p, s32 x, s32 y, s32 dir, s32 e);
 u16 sub_08030e00(struct HitBoxSet *p, s32 x, s32 y, s32 dir);
 s32 sub_08030f1c(u32 x, u32 y);
 s32 CanBreakBlock(s32 x, s32 y, s32 id, s32 e);
 s32 sub_08031310(s32 x, s32 y);
-s32 sub_08031374(void);
+s32 BreakBlockAtCursor(void);
 
-u16 sub_08030804(struct HitBoxSet *p, s32 x, s32 y, s32 e)
+u16 TaskBreakBlocksAt(struct HitBoxSet *p, s32 x, s32 y, s32 e)
 {
     s32 dir;
 
@@ -156,7 +156,7 @@ u16 sub_08030898(struct HitBoxSet *p, s32 e)
     return sub_08030b14(p, gCurTask->unk48, gCurTask->unk4A, dir, e);
 }
 
-u16 sub_080308e8(struct HitBoxSet *p)
+u16 TaskBreakBlocksNoPlayer(struct HitBoxSet *p)
 {
     s32 dir;
 
@@ -224,7 +224,7 @@ u16 BreakBlocksInHitBoxes(struct HitBoxSet *p, s32 x, s32 y, s32 dir, s32 e)
         {
             for (tx = x0; tx <= x1; tx++)
             {
-                if (CanBreakBlock(tx, ty, p->unk0 & 0xFFF, e) && sub_08031374() != -1)
+                if (CanBreakBlock(tx, ty, p->unk0 & 0xFFF, e) && BreakBlockAtCursor() != -1)
                     count++;
             }
         }
@@ -277,7 +277,7 @@ u16 sub_08030b14(struct HitBoxSet *p, s32 x, s32 y, s32 dir, s32 e)
     {
         for (tx = x0; tx <= x1; tx++)
         {
-            if (CanBreakBlock(tx, y, 1, e) && sub_08031374() != -1)
+            if (CanBreakBlock(tx, y, 1, e) && BreakBlockAtCursor() != -1)
             {
                 gUnk_02007FA0 = tx * 16;
                 gUnk_02004B6C = y * 16;
@@ -288,7 +288,7 @@ u16 sub_08030b14(struct HitBoxSet *p, s32 x, s32 y, s32 dir, s32 e)
         {
             for (tx = x0; tx <= x1; tx++)
             {
-                if (CanBreakBlock(tx, y - 1, 1, e) && sub_08031374() != -1)
+                if (CanBreakBlock(tx, y - 1, 1, e) && BreakBlockAtCursor() != -1)
                 {
                     gUnk_02007FA0 = tx * 16;
                     gUnk_02004B6C = (y - 1) * 16;
@@ -300,7 +300,7 @@ u16 sub_08030b14(struct HitBoxSet *p, s32 x, s32 y, s32 dir, s32 e)
         {
             for (tx = x0; tx <= x1; tx++)
             {
-                if (CanBreakBlock(tx, y + 1, 1, e) && sub_08031374() != -1)
+                if (CanBreakBlock(tx, y + 1, 1, e) && BreakBlockAtCursor() != -1)
                 {
                     gUnk_02007FA0 = tx * 16;
                     gUnk_02004B6C = (y + 1) * 16;
@@ -313,7 +313,7 @@ u16 sub_08030b14(struct HitBoxSet *p, s32 x, s32 y, s32 dir, s32 e)
     {
         for (tx = x1; tx >= x0; tx--)
         {
-            if (CanBreakBlock(tx, y, 1, e) && sub_08031374() != -1)
+            if (CanBreakBlock(tx, y, 1, e) && BreakBlockAtCursor() != -1)
             {
                 gUnk_02007FA0 = tx * 16;
                 gUnk_02004B6C = y * 16;
@@ -324,7 +324,7 @@ u16 sub_08030b14(struct HitBoxSet *p, s32 x, s32 y, s32 dir, s32 e)
         {
             for (tx = x1; tx >= x0; tx--)
             {
-                if (CanBreakBlock(tx, y - 1, 1, e) && sub_08031374() != -1)
+                if (CanBreakBlock(tx, y - 1, 1, e) && BreakBlockAtCursor() != -1)
                 {
                     gUnk_02007FA0 = tx * 16;
                     gUnk_02004B6C = (y - 1) * 16;
@@ -336,7 +336,7 @@ u16 sub_08030b14(struct HitBoxSet *p, s32 x, s32 y, s32 dir, s32 e)
         {
             for (tx = x1; tx >= x0; tx--)
             {
-                if (CanBreakBlock(tx, y + 1, 1, e) && sub_08031374() != -1)
+                if (CanBreakBlock(tx, y + 1, 1, e) && BreakBlockAtCursor() != -1)
                 {
                     gUnk_02007FA0 = tx * 16;
                     gUnk_02004B6C = (y + 1) * 16;
@@ -410,7 +410,7 @@ u16 sub_08030e00(struct HitBoxSet *p, s32 x, s32 y, s32 dir)
     ty++;
     for (tx = x0; tx <= x1; tx++)
     {
-        if (CanBreakBlock(tx, ty, 6, -1) && sub_08031374() != -1)
+        if (CanBreakBlock(tx, ty, 6, -1) && BreakBlockAtCursor() != -1)
             count++;
     }
     return count;
@@ -428,7 +428,7 @@ s32 sub_08030f1c(u32 x, u32 y)
     return 0;
 }
 
-s32 sub_08030f78(u32 x, u32 y)
+s32 BreakBlockAt(u32 x, u32 y)
 {
     s32 i = 0;
     struct Unk020061F0 *b;
@@ -548,7 +548,7 @@ s32 sub_08031310(s32 x, s32 y)
     return 0;
 }
 
-s32 sub_08031374(void)
+s32 BreakBlockAtCursor(void)
 {
     s32 i;
     s32 k;
@@ -575,7 +575,7 @@ s32 sub_08031374(void)
     switch (gUnk_02006174)
     {
     case 0:
-        sub_080261c0(gBlockCursorX * 16 + 8, gBlockCursorY * 16 + 8);
+        CreateBlockBreakEffect(gBlockCursorX * 16 + 8, gBlockCursorY * 16 + 8);
         PlaySfx(159);
         if (gUnk_0873A5D4[gBlockCursorTile] != 0)
         {
@@ -593,7 +593,7 @@ s32 sub_08031374(void)
         b->unk1A = 1;
         break;
     case 2:
-        sub_080261c0(gBlockCursorX * 16 + 8, gBlockCursorY * 16 + 8);
+        CreateBlockBreakEffect(gBlockCursorX * 16 + 8, gBlockCursorY * 16 + 8);
         PlaySfx(159);
         if (b->unk1C != -1)
             AddPlayerScore(10, b->unk1C);
@@ -623,7 +623,7 @@ s32 sub_08031374(void)
         }
         else
         {
-            sub_080261c0(gBlockCursorX * 16 + 8, gBlockCursorY * 16 + 8);
+            CreateBlockBreakEffect(gBlockCursorX * 16 + 8, gBlockCursorY * 16 + 8);
             if (gUnk_0200B078 == 1)
                 PlaySfx(224);
             else
@@ -645,7 +645,7 @@ s32 sub_08031374(void)
     case 3:
         if (b->unk1C != -1)
             AddPlayerScore(10, b->unk1C);
-        sub_080261c0(gBlockCursorX * 16 + 8, gBlockCursorY * 16 + 8);
+        CreateBlockBreakEffect(gBlockCursorX * 16 + 8, gBlockCursorY * 16 + 8);
         PlaySfx(159);
         if (gUnk_0873A5D4[gBlockCursorTile] != 0)
         {
@@ -661,7 +661,7 @@ s32 sub_08031374(void)
         }
         break;
     case 5:
-        sub_080261c0(gBlockCursorX * 16 + 8, gBlockCursorY * 16 + 8);
+        CreateBlockBreakEffect(gBlockCursorX * 16 + 8, gBlockCursorY * 16 + 8);
         PlaySfx(159);
         if (b->unk1C != -1)
             AddPlayerScore(10, b->unk1C);
@@ -677,7 +677,7 @@ s32 sub_08031374(void)
         }
         break;
     case 6:
-        sub_080301e8(3, gBlockCursorX * 16 + 8, gBlockCursorY * 16 + 20);
+        CreateStageEffect(3, gBlockCursorX * 16 + 8, gBlockCursorY * 16 + 20);
         PlaySfx(159);
         if (gUnk_0873A5D4[gBlockCursorTile] != 0)
             k = 3;
@@ -700,7 +700,7 @@ s32 sub_08031374(void)
     if (b->unk10[0] == 1)
     {
         if (gUnk_0200B078 == 1)
-            sub_08031ebc(b);
+            BlockAnimWriteMetatileWrapped(b);
         else
             sub_08031ab8(b, ((s16 *)b->unk10)[1]);
     }

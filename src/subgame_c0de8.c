@@ -140,7 +140,7 @@ extern void TaskFree(u32 a);
 extern void TaskSetFrame(s32 a);
 extern void PlaySfx(u32 a);
 extern void sub_080060c0(void);
-extern void sub_08009eb8(u32 a, u32 b);
+extern void AddPlayerLivesNoHud(u32 a, u32 b);
 extern void RequestCopy(u32 mode, u32 src, u32 dst, u32 size);
 extern s32 QueueSprite(u32 a, u32 b, u32 c, u32 d, u32 e, u32 f);
 extern s32 DrawAffineSprite(s32 a, s16 b, s16 c, s32 d);

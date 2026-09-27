@@ -6,13 +6,13 @@
  *
  * Per-frame player handler 20 of gUnk_0873B4A4[27], the handler table M09's
  * player task uses instead of gPlayerActionHandlers while gUnk_03001F30 is non-zero,
- * and the copy of M10's handler 20 sub_0803afcc (src/player_3aa64.c): it
+ * and the copy of M10's handler 20 PlayerActionSwimUpdate (src/player_3aa64.c): it
  * re-picks the four-way state Task.unk73 from the latched held keys
  * gLatchedHeldKeys[] (left or right = 3, A or up = 1, down = 2, else 0; state 1
  * also looks at the newly pressed keys gLatchedPressedKeys[] and the counter
  * Task.unk28), applies the motion presets of PlayerSetMotionXPreset and PlayerSetMotionYPreset
  * in state 3, re-binds the coroutine sub_08043014 when the state changed
- * and then, unless M11's predicates sub_080400c0/PlayerCheckEnterDoor take over,
+ * and then, unless M11's predicates PlayerCheckBButton/PlayerCheckEnterDoor take over,
  * requests the next action through PlayerState.unk01 (9 or 5 on the ground,
  * 24 or 25 in the air).
  *
@@ -28,13 +28,13 @@ void TaskSetEntry(void *a, u32 i);
 s32 PlayerLand(s32 a0);
 void PlayerTurnToHeldDirection(void);
 void PlayerStopAtCeilingAndWall(void);
-s32 sub_080400c0(void);
+s32 PlayerCheckBButton(void);
 s32 PlayerCheckEnterDoor(void);
 void PlayerSetMotionXPreset(s32 a0, s32 a1);
 void PlayerSetMotionYPreset(s32 a0);
 void sub_08043014(void);
 
-/* Same shape as M10's twin sub_0803afcc (src/player_3aa64.c):
+/* Same shape as M10's twin PlayerActionSwimUpdate (src/player_3aa64.c):
    `st = &t->unk73` for the five unk73
    stores in multi-predecessor blocks, the stores as labels at the end of the
    switch (set2/Lstore, set0, set1, set3) so the ROM's layout and
@@ -165,7 +165,7 @@ void sub_0804335c(void)
     }
     if (gCurTask->unk2C != gCurTask->unk73)
         TaskSetEntry(sub_08043014, gCurTaskIdx);
-    if (!sub_080400c0() && !PlayerCheckEnterDoor())
+    if (!PlayerCheckBButton() && !PlayerCheckEnterDoor())
     {
         m = gCurTask->unk7B & 1;
         tp = &gCurTask;

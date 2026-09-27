@@ -38,7 +38,7 @@ extern s16 gPlayerLives[];
 extern u32 gUnk_02007F50;
 extern vs16 gUnk_02007FA8[];
 extern s8 gUnk_02007FB8[];
-extern u16 gUnk_02008008[];
+extern u16 gSavedPlayerAbilities[];
 extern s8 gUnk_02008010;
 extern vu16 gUnk_0200AF18[];
 extern u32 gUnk_0200EC50;
@@ -136,7 +136,7 @@ void ResetPlayerRecords(void)
     for (i = 0; i <= 3; i++) {
         gPlayerLives[i] = 3;
         gPlayerHealth[i] = 0;
-        gUnk_02008008[i] = gPlayerAbilities[i] = 0;
+        gSavedPlayerAbilities[i] = gPlayerAbilities[i] = 0;
         /* Volatile all-ones stores reuse their dead pre-read (lesson 3.68);
          * the two cells differ in signedness, so the chain stores the
          * constant twice instead of re-reading the inner cell (3.361). */

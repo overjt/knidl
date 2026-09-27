@@ -10,10 +10,10 @@
  * gPlayerCount is the player count and gActivePlayerMask the mask of the
  * players present.  UpdatePlayerGroupCenter, sub_08029ef4 and sub_0802a340 compute
  * the group centre gPlayerGroupCenter (the midpoint of the players' extremes,
- * clamped to the camera bounds gCameraBounds), sub_08029e24 re-centres
+ * clamped to the camera bounds gCameraBounds), SetCameraBoundsToGroup re-centres
  * those bounds on it inside the room bounds gRoomBounds,
  * UpdatePlayerCameras/sub_0802a260 update the per-player positions,
- * sub_0802a42c/sub_0802a484 their bounds and SetViewRectToPlayers/sub_0802a568
+ * SetPlayerBoundsFromCamera/sub_0802a484 their bounds and SetViewRectToPlayers/sub_0802a568
  * the visible rectangle gViewRect around them.  sub_0802a63c moves
  * the bounds once every player has crossed the scroll line held in the
  * camera control block gScrollLock.  SpawnRoomObjectsInRect spawns the entries
@@ -165,7 +165,7 @@ void UpdatePlayerGroupCenter(void)
     gPlayerGroupCenter[1] = (y0 + y1) >> 1;
 }
 
-void sub_08029e24(void)
+void SetCameraBoundsToGroup(void)
 {
     s32 y, i;
 
@@ -409,7 +409,7 @@ void sub_0802a340(void)
     gPlayerGroupCenter[1] = (y0 + y1) >> 1;
 }
 
-void sub_0802a42c(void)
+void SetPlayerBoundsFromCamera(void)
 {
     s32 i;
 

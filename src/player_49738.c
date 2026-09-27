@@ -5,7 +5,7 @@
 /* player_49738.c (0x08049738-0x08049B47, issue #88).
  *
  * The player's ability sprite-tile loaders, called by M09's player task
- * (Task_Player, sub_08032bd0), M10's actions 13 and 21, M13's action
+ * (Task_Player, PlayerStartRequestedAction), M10's actions 13 and 21, M13's action
  * 29, M14 and M18's ability objects (src/actor_6ef5c.c).  LoadAbilityTiles
  * uploads the tiles of the ability PlayerState.unk0D (a 25-way switch:
  * abilities 0, 1, 3, 5, 6, 8-11, 13, 14, 16, 19, 20 and 24 have tiles)

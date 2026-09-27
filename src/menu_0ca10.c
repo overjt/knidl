@@ -6,8 +6,8 @@
  *
  * Main-menu screens, second part (gMenuScreen is the menu screen,
  * gMenuCursor the cursor, gPressedKeys/gRepeatedKeys the newly pressed
- * and auto-repeat keys).  sub_0800ca10 opens the mode list (screen 4)
- * and draws its 3-5 rows with sub_0800cc30 according to the save slot
+ * and auto-repeat keys).  MenuEnterModeList opens the mode list (screen 4)
+ * and draws its 3-5 rows with MenuDrawModeList according to the save slot
  * unlock bits; sub_0800cd60 is its input loop (A/START picks a mode and
  * sets gUnk_02007FCC, row 4 leaves for game state 13, B goes back to the
  * file menu).  sub_0800d0f4 runs screen 5 (one player, or link play
@@ -85,7 +85,7 @@ s32 PlaySfx(s32 id);
 void FadeOutBgm(s32 speed);
 s32 TaskCreateFrom(u32 type, s32 idx);
 void LoadGfxSet(u16 a0);
-void sub_0800c20c(void);
+void MenuSetupFileMenu(void);
 void BgScrollStartX(s32 speed, s32 dist, s32 bg);
 s32 BgScrollStartBg3Slide(s32 speed);
 void BgScrollFinish(void);
@@ -93,9 +93,9 @@ void SetBlend(s32 a, s32 b, s32 c, s32 d);
 void SetWindow(s32 in, s32 out, s32 h, s32 v, s32 win);
 void StopHBlankScroll(void);
 void StartHBlankScroll(s32 a);
-void sub_0800cc30(void);
+void MenuDrawModeList(void);
 
-void sub_0800ca10(void)
+void MenuEnterModeList(void)
 {
     s32 i;
 
@@ -154,12 +154,12 @@ void sub_0800ca10(void)
         gModeListExtraRows = 1;
     else
         gModeListExtraRows = 0;
-    sub_0800cc30();
+    MenuDrawModeList();
     if (gMenuScreen != 5)
         TaskCreateFrom(247, 32);
 }
 
-void sub_0800cc30(void)
+void MenuDrawModeList(void)
 {
     RequestCopy(6, 0, 0x06003800, 0x800);
     switch (gModeListExtraRows) {
@@ -244,7 +244,7 @@ void sub_0800cd60(void)
                 }
             }
             gDispCnt &= 0xDFFF;
-            sub_0800c20c();
+            MenuSetupFileMenu();
             return;
         }
         if (gRepeatedKeys & 64) {

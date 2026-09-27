@@ -8,7 +8,7 @@
  * Task_Player is the body: it binds the task to its player record
  * (Task.unk88 = &gPlayerStates[gCurTaskIdx]), kills it when the player
  * has no lives and no health left, installs the callbacks (Task.unk00 =
- * M11's PlayerMove, unk04 = sub_08032d48, unk08 = sub_0803332c, unk0C =
+ * M11's PlayerMove, unk04 = PlayerUpdate, unk08 = sub_0803332c, unk0C =
  * M11's sub_0803ddc0), sets up the ability (PlayerState.unk0D) and the
  * stage entry mode (gUnk_02000020, gUnk_020069F0), and starts the first
  * action.  The actions are two tables of void (*)(void) dispatched
@@ -16,15 +16,15 @@
  * coroutine of action PlayerState.unk02 from gPlayerActions[62] (M11's
  * gUnk_0873B42C[30] when gUnk_03001F30 != 0) and the "per-frame" handler
  * Task.unk15 from gPlayerActionHandlers[57] (M11's gUnk_0873B4A4[27]).  A handler requests
- * the next action in PlayerState.unk01; sub_08032bd0 is the coroutine
+ * the next action in PlayerState.unk01; PlayerStartRequestedAction is the coroutine
  * that switches to it (unk03 = previous, unk02 = new, unk01 = 0).
- * sub_08032d48 (Task.unk04) runs every frame: the attack hit-boxes
+ * PlayerUpdate (Task.unk04) runs every frame: the attack hit-boxes
  * (TaskBreakBlocks on PlayerState.unk6C), the collision registry, the
  * per-frame handler and the damage and star-block reactions;
  * sub_0803332c (Task.unk08) runs the 10-frame timer PlayerState.unk2B;
  * sub_08033414 (called by M11's sub_0803ddc0) turns the frame's hit
  * event Task.unk7C and the status bits PlayerState.unk40 into an action
- * request, re-binds the task to sub_08032bd0 when one is pending and
+ * request, re-binds the task to PlayerStartRequestedAction when one is pending and
  * adds the 8.8 offsets PlayerState.unk24/unk26 to the 16.16 position. */
 
 struct M11R8 { u8 unk00; u8 unk01; u8 unk02; u8 unk03; u8 *unk04; };
@@ -98,7 +98,7 @@ extern u32 gUnk_0874CFEC[];
 extern u16 gPlayerCount;
 extern u16 gLocalPlayer;
 extern u8 gUnk_03001F30;
-extern u32 gUnk_0873BD00[];               /* stored to PlayerState.unk64 as (u32)gUnk_0873BD00 */
+extern u32 gPlayerDefaultBodyBox[];               /* stored to PlayerState.unk64 as (u32)gPlayerDefaultBodyBox */
 extern u32 gUnk_0873CA54[];
 extern u32 gPlayerDefaultTerrainBox[];
 extern struct M11R20 gPlayerBodyBoxes[];
@@ -128,7 +128,7 @@ extern struct Unk02005E00 gUnk_02005E00;
 extern u16 gPlayerHeldKeys[];
 extern u8 gUnk_02007CF0;
 extern u16 gPlayerAbilities[];
-extern u16 gUnk_02008008[];
+extern u16 gSavedPlayerAbilities[];
 extern u16 gUnk_02007FA8[];
 extern u16 gUnk_0200AF18[];
 
@@ -155,7 +155,7 @@ void PlayerMove(void);
 void sub_0803ddc0(void);
 void sub_0803e080(void);
 void SetPlayerInvulnerability(s32 a0, s32 a1, s32 a2);
-void sub_0803e2d4(void);
+void PlayerUpdateInvulnerability(void);
 void PlayerStopSfx(void);
 s32 LoadPlayerBodyBoxRect(s32 playerIdx, u8 *src6);
 s32 LoadPlayerHitBoxSet(s32 a0, s32 a1);
@@ -177,7 +177,7 @@ void sub_08076318(void);
 void sub_080b8ebc(void);
 void sub_080b9118(void);
 void sub_080b9610(void);
-void sub_08032d48(void);
+void PlayerUpdate(void);
 void sub_0803332c(void);
 
 void Task_Player(void)
@@ -208,7 +208,7 @@ void Task_Player(void)
     t = gCurTask;
     t->unk00 = (u32)PlayerMove;
     t->unk0C = (u32)sub_0803ddc0;
-    t->unk04 = (u32)sub_08032d48;
+    t->unk04 = (u32)PlayerUpdate;
     t->unk08 = (u32)sub_0803332c;
     t->unk38 = gUnk_0874CFEC;
     if (gPlayerCount > 1 && gLocalPlayer == t->unk88->unk00)
@@ -219,7 +219,7 @@ void Task_Player(void)
     gCurTask->unk76 = 0;
     gCurTask->unk88->unk01 = 0;
     if (gUnk_03001F30 == 0)
-        gCurTask->unk88->unk64 = (u32)gUnk_0873BD00;
+        gCurTask->unk88->unk64 = (u32)gPlayerDefaultBodyBox;
     else
         gCurTask->unk88->unk64 = (u32)gUnk_0873CA54;
     gCurTask->unk88->unk68 = (u32)gPlayerDefaultTerrainBox;
@@ -346,7 +346,7 @@ void Task_Player(void)
     }
 }
 
-void sub_08032bd0(void)
+void PlayerStartRequestedAction(void)
 {
     if (gPlayerCount > 1)
     {
@@ -360,14 +360,14 @@ void sub_08032bd0(void)
     gCurTask->unk88->unk01 = 0;
     if (gCurTask->unk88->unk06 == 1)
     {
-        gCurTask->unk88->unk64 = (u32)gUnk_0873BD00;
+        gCurTask->unk88->unk64 = (u32)gPlayerDefaultBodyBox;
         gCurTask->unk88->unk68 = (u32)gPlayerDefaultTerrainBox;
         gCurTask->unk88->unk6C = 0;
     }
     else if (gCurTask->unk88->unk37 != 2)
     {
         if (gUnk_03001F30 == 0)
-            gCurTask->unk88->unk64 = (u32)gUnk_0873BD00;
+            gCurTask->unk88->unk64 = (u32)gPlayerDefaultBodyBox;
         else
             gCurTask->unk88->unk64 = (u32)gUnk_0873CA54;
         gCurTask->unk88->unk68 = (u32)gPlayerDefaultTerrainBox;
@@ -397,7 +397,7 @@ void sub_08032bd0(void)
     }
 }
 
-void sub_08032d48(void)
+void PlayerUpdate(void)
 {
     s32 x;
     s32 y;
@@ -478,7 +478,7 @@ void sub_08032d48(void)
         CallTableEntry(gCurTask->unk15, 57, gPlayerActionHandlers);
     else
         CallTableEntry(gCurTask->unk15, 27, gUnk_0873B4A4);
-    sub_0803e2d4();
+    PlayerUpdateInvulnerability();
 post:
     gCurTask->unk88->unk45 = 0;
     sub_0803fb54();
@@ -582,7 +582,7 @@ void sub_0803332c(void)
             p = gCurTask->unk88;
             if (!(p->unk40 & 1) && gUnk_03001F30 == 0 && p->unk04 == 7 && p->unk44 == 0)
             {
-                TaskSetEntry(sub_08032bd0, gCurTaskIdx);
+                TaskSetEntry(PlayerStartRequestedAction, gCurTaskIdx);
                 gCurTask->unk88->unk01 = 18;
             }
         }
@@ -609,12 +609,12 @@ void sub_08033414(void)
         {
             if ((s16)gPlayerAbilities[gCurTask->unk88->unk00] != 0)
             {
-                gUnk_02008008[gCurTask->unk88->unk00] = gPlayerAbilities[gCurTask->unk88->unk00];
+                gSavedPlayerAbilities[gCurTask->unk88->unk00] = gPlayerAbilities[gCurTask->unk88->unk00];
                 gUnk_02007FA8[gCurTask->unk88->unk00] = gUnk_0200AF18[gCurTask->unk88->unk00];
             }
             else
             {
-                gUnk_02008008[gCurTask->unk88->unk00] = 4;
+                gSavedPlayerAbilities[gCurTask->unk88->unk00] = 4;
                 gUnk_02007FA8[gCurTask->unk88->unk00] = 0xFFFF;
             }
             gCurTask->unk88->unk0B = 4;
@@ -681,7 +681,7 @@ void sub_08033414(void)
             sub_0803ce98();
     }
     if (gCurTask->unk88->unk01 != 0)
-        TaskSetEntry(sub_08032bd0, gCurTaskIdx);
+        TaskSetEntry(PlayerStartRequestedAction, gCurTaskIdx);
     if (gUnk_03001F30 == 0)
     {
         if (gCurTask->unk88->unk40 & 4)

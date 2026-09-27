@@ -99,7 +99,7 @@ void StopBgm(void);
 void StopAllSfx(void);
 void TaskSetOthersSkipMask(u16 val, s32 idx);
 void TaskFree(s32 id);
-void sub_0800ab08(void);
+void HudRedrawClock(void);
 void sub_08026998(void);
 void CameraWriteScrollParallax(void);
 void SetBg23ScreenSize(u16 a);
@@ -205,7 +205,7 @@ void sub_08027240(void)
     CameraWriteScrollParallax();
     if (gHBlankScrollStarted != 0)
         RestoreRoomHBlankScroll();
-    sub_0800ab08();
+    HudRedrawClock();
 }
 
 void sub_080272dc(void)

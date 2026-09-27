@@ -22,7 +22,7 @@ extern u16 gUnk_02004C94;
 extern u32 gUnk_02020000[];         /* decompression buffer */
 extern u16 gUnk_03001570[];         /* palette buffer */
 extern u32 gObjVram[];         /* OBJ VRAM */
-extern u16 gUnk_080DC628[][16];     /* per-player palettes */
+extern u16 gPlayerPalettes[][16];     /* per-player palettes */
 extern void (*gUnk_08757330[])(void);
 extern struct GfxHeader gUnk_085995AC;
 extern struct GfxHeader gUnk_0859990C;
@@ -86,7 +86,7 @@ void sub_080c6ca0(void)
     RequestCopy(4, (u32)gUnk_02020000, (u32)gObjVram, h->unk02 << 5);
     RequestCopy(2, (u32)h->unk08, (u32)gUnk_03001570, h->unk00 << 5);
     if (gUnk_02004C94 > 1)
-        RequestCopy(2, (u32)gUnk_080DC628[gUnk_02000028], (u32)&gUnk_03001570[16], 22);
+        RequestCopy(2, (u32)gPlayerPalettes[gUnk_02000028], (u32)&gUnk_03001570[16], 22);
     h = &gUnk_0859990C;
     LZ77UnCompWram(h->unk0C, gUnk_02020000);
     RequestCopy(3, (u32)gUnk_02020000, (u32)gObjVram, h->unk02 << 5);

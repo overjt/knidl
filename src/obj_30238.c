@@ -4,8 +4,8 @@
 
 /* obj_30238.c (0x08030238-0x080306B3, issue #86).
  *
- * Task type #236 (class 4): sub_08030238 dispatches on Task.unk14 into the
- * six bodies of the anchor table gUnk_087328D8 (sub_080301e8 spawns it).
+ * Task type #236 (class 4): Task_StageEffect dispatches on Task.unk14 into the
+ * six bodies of the anchor table gUnk_087328D8 (CreateStageEffect spawns it).
  * They are short sprite animations that step Task.unk3C, the frame of the
  * Task.unk38 graphics table, every one to four frames; sub_08030404 also
  * falls (Task.unk60 = -0x400) and sub_080304ec rises (Task.unk58 =
@@ -27,7 +27,7 @@ void TaskDrawWorld(void);
 void TaskSleepForever(void);
 void TaskStop(void);
 
-void sub_08030238(void)
+void Task_StageEffect(void)
 {
     CallTableEntry(gCurTask->unk14, 6, gUnk_087328D8);
 }

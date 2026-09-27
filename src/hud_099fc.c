@@ -6,7 +6,7 @@
  *
  * Task type #237 (Task_IntroStoryPicture, one intro-story picture) and the
  * HUD/score interface other modules call: HUD init/redraw
- * (sub_08009b2c/HudRedraw), lives (AddPlayerLives), health
+ * (HudInit/HudRedraw), lives (AddPlayerLives), health
  * (AddPlayerHealth, returns the new value), score (SetPlayerAbilityNoHud/SetPlayerAbility/
  * AddPlayerScore/AddPlayerScoreNoHud, clamped to 99999999) and the clock mode
  * (HudShowScore/HudShowClock). */
@@ -67,15 +67,15 @@ void RequestCopy(u32 mode, u32 src, u32 dst, u32 size);
 s32 PlaySfx(s32 id);
 void TaskMove(void);
 void TaskDrawScreen(void);
-void sub_08008ebc(void);
-void sub_08008ed4(s32 a);
+void HudClearAbilityPicture(void);
+void HudLoadAbilityPicture(s32 a);
 void HudShowAbility(s32 a, s32 id);
 void sub_0800a19c(s32 a);
-void sub_0800a280(void);
-void sub_0800aa94(s32 idx);
+void HudShowHpBar(void);
+void HudResetHpBar(s32 idx);
 void sub_0800aad0(void);
 void sub_0800ab3c(void);
-void sub_0800ab64(s32 a);
+void HudDrawPlayerIcon(s32 a);
 void HudDrawLives(s32 n);
 void HudDrawHealth(s32 n);
 void sub_0800acbc(s32 a, s32 b);
@@ -87,8 +87,8 @@ void sub_0800b230(s32 a, s32 b);
 void HudClearWholeTilemap(void);
 void HudClearTilemap(void);
 void HudFlushTilemap(void);
-void sub_0800b428(void);
-void sub_0800a0dc(s32 a, s32 b);
+void HudLoadGfx(void);
+void HudShowAbilityAnimated(s32 a, s32 b);
 
 void Task_IntroStoryPicture(void)
 {
@@ -123,7 +123,7 @@ void HudShowClock(void)
     gFrameEndCallback();
 }
 
-void sub_08009adc(void)
+void HudReset(void)
 {
     s32 i;
 
@@ -131,14 +131,14 @@ void sub_08009adc(void)
     gUnk_0200617C = 0;
     for (i = 0; i < 2; i++) {
         gHudHpBarValues[i] = 0;
-        sub_0800aa94(i);
+        HudResetHpBar(i);
     }
     gHudHpBarMaxHp = gUnk_02007D30 = 0;
     gUnk_020055F0[0] = 0;
     gUnk_020055F0[1] = 0;
 }
 
-void sub_08009b2c(s32 i)
+void HudInit(s32 i)
 {
     s32 j;
 
@@ -148,8 +148,8 @@ void sub_08009b2c(s32 i)
     if (gPlayerLives[i] != 0 || gPlayerHealth[i] != 0) {
         gHudMode = 1;
         gUnk_0200617C = 1;
-        sub_0800b428();
-        sub_0800ab64(i);
+        HudLoadGfx();
+        HudDrawPlayerIcon(i);
         HudDrawLives(gPlayerLives[i]);
         HudDrawHealth(gPlayerHealth[i] >> 3);
         if ((gActivePlayerMask >> i) & 1) {
@@ -180,7 +180,7 @@ void sub_08009b2c(s32 i)
         gHudShowsHpBar = 0;
         for (j = 0; j < 2; j++) {
             gHudHpBarValues[j] = 0;
-            sub_0800aa94(j);
+            HudResetHpBar(j);
         }
         gHudHpBarMaxHp = gUnk_02007D30 = 0;
         gUnk_020055F0[0] = 0;
@@ -197,10 +197,10 @@ void HudRedraw(s32 i)
     gHudMode = 1;
     gUnk_0200617C = 1;
     HudClearTilemap();
-    sub_0800b428();
+    HudLoadGfx();
     if (gUnk_03002444 != 0)
         sub_0800ab3c();
-    sub_0800ab64(i);
+    HudDrawPlayerIcon(i);
     HudDrawLives(gPlayerLives[i]);
     HudDrawHealth(gPlayerHealth[i] >> 3);
     if ((gActivePlayerMask >> i) & 1) {
@@ -215,7 +215,7 @@ void HudRedraw(s32 i)
             HudDrawAbilityPanel(0);
         }
     } else {
-        sub_0800a0dc(26, i);
+        HudShowAbilityAnimated(26, i);
     }
     if (gHudShowsHpBar == 0) {
         if (gHudShowsClock == 0)
@@ -223,7 +223,7 @@ void HudRedraw(s32 i)
         else
             HudDrawClock(gHudClock);
     } else {
-        sub_0800a280();
+        HudShowHpBar();
         HudDrawHpBar(gHudHpBars[gHudHpBarIndex].unk4);
     }
     if (gUnk_020055F0[0] != 0) {
@@ -267,7 +267,7 @@ s32 AddPlayerLives(s32 a, u32 b)
     }
 }
 
-s32 sub_08009eb8(s32 a, u32 b)
+s32 AddPlayerLivesNoHud(s32 a, u32 b)
 {
     if (b < 4) {
         gPlayerLives[b] = gPlayerLives[b] + a;
@@ -363,16 +363,16 @@ void AddPlayerScoreNoHud(s32 a, u32 b)
     }
 }
 
-void sub_0800a0dc(s32 a, s32 b)
+void HudShowAbilityAnimated(s32 a, s32 b)
 {
     if (b == gLocalPlayer && gHudMode == 1) {
         if (a == 0) {
-            sub_08008ebc();
+            HudClearAbilityPicture();
             gHudAbilityPanelState = a;
             gUnk_0200801C = a;
             HudDrawAbilityPanel(0);
         } else {
-            sub_08008ed4(a);
+            HudLoadAbilityPicture(a);
             sub_0800a19c(b);
         }
     }

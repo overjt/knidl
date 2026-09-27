@@ -9,7 +9,7 @@
  * sub_0802d38c waits for camera mode 3 and M07's sub_08027750, raises
  * gUnk_0200D080 until it drops, then by Task.unk18 spawns a type-#4
  * child (sub_0802d478/sub_0802d5b4) or updates two metatiles through
- * sub_080261c0 and M09's sub_08030f78; sub_0802d4bc and sub_0802d5f8
+ * CreateBlockBreakEffect and M09's BreakBlockAt; sub_0802d4bc and sub_0802d5f8
  * update one or three metatiles behind type-#236 effects;
  * sub_0802d6cc and sub_0802d96c/sub_0802da8c fade the room palettes
  * towards another room's (the table gRoomTable, BlendColors into the
@@ -78,7 +78,7 @@ extern u8 gUnk_02007FC4;
 extern s8 gUnk_030023B8;
 extern s16 gRoomWidth;
 extern u16 gBg1MetatileMap[];
-extern struct Unk0200A6F0 gUnk_0200A6F0[];
+extern struct Unk0200A6F0 gBg1BreakingBlocks[];
 extern u8 gUnk_0200AF08;
 extern s16 gUnk_020055D4;
 extern u8 gUnk_020055E8;
@@ -93,18 +93,18 @@ void PlaySfx(u32 a);
 void TaskFree(s32 id);
 void TaskSleepForever(void);
 void sub_08025dc4(void);
-s32 sub_080261c0(s32 x, s32 y);
-s32 sub_0802621c(s32 type);
+s32 CreateBlockBreakEffect(s32 x, s32 y);
+s32 TaskCreateHighSlot(s32 type);
 s32 sub_08026584(void);
 s32 sub_08027750(void);
 void sub_08029b30(void);
 void CameraLeaveScrollLock(void);
-s32 sub_080301e8(s32 a, s32 x, s32 y);
+s32 CreateStageEffect(s32 a, s32 x, s32 y);
 void PauseBlockAnims(void);
 void sub_080307e8(void);
-s32 sub_08030f78(u32 x, u32 y);
-s32 sub_08032288(s32 x, s32 y);
-s32 sub_08032338(void);
+s32 BreakBlockAt(u32 x, u32 y);
+s32 CanBreakBg1Block(s32 x, s32 y);
+s32 BreakBg1BlockAtCursor(void);
 s32 sub_0802d478(s32 x, s32 y);
 s32 sub_0802d5b4(s32 x, s32 y);
 void sub_0802da8c(void);
@@ -139,9 +139,9 @@ void sub_0802d38c(void)
     else if (gCurTask->unk18 == 2)
     {
         PlaySfx(159);
-        sub_080261c0((gCurTask->unk1C & 0xFFF0) + 8, (gCurTask->unk20 & 0xFFF0) + 8);
-        sub_08030f78(gCurTask->unk1C >> 4, gCurTask->unk20 >> 4);
-        sub_08030f78(gCurTask->unk1C >> 4, (gCurTask->unk20 >> 4) - 1);
+        CreateBlockBreakEffect((gCurTask->unk1C & 0xFFF0) + 8, (gCurTask->unk20 & 0xFFF0) + 8);
+        BreakBlockAt(gCurTask->unk1C >> 4, gCurTask->unk20 >> 4);
+        BreakBlockAt(gCurTask->unk1C >> 4, (gCurTask->unk20 >> 4) - 1);
     }
     TaskExitTrampoline();
 }
@@ -151,7 +151,7 @@ s32 sub_0802d478(s32 x, s32 y)
     s32 id;
     struct Task *t;
 
-    id = sub_0802621c(4);
+    id = TaskCreateHighSlot(4);
     if (id != -1)
     {
         t = &gTasks[id];
@@ -169,14 +169,14 @@ void sub_0802d4bc(void)
     gCurTask->unk00 = 0;
     gCurTask->unk0C = 0;
     PlaySfx(159);
-    sub_080301e8(2, gCurTask->unk48, gCurTask->unk4A - 8);
-    if ((gCurTask->unk46 = sub_080301e8(1, gCurTask->unk48, gCurTask->unk4A - 8)) == -1)
+    CreateStageEffect(2, gCurTask->unk48, gCurTask->unk4A - 8);
+    if ((gCurTask->unk46 = CreateStageEffect(1, gCurTask->unk48, gCurTask->unk4A - 8)) == -1)
         TaskExitTrampoline();
     gTasks[gCurTask->unk46].unk18 = 0;
     while (gTasks[gCurTask->unk46].unk18 == 0)
         TaskYieldTrampoline(1);
-    sub_08030f78(gCurTask->unk48 >> 4, gCurTask->unk4A >> 4);
-    sub_08030f78(gCurTask->unk48 >> 4, (gCurTask->unk4A - 16) >> 4);
+    BreakBlockAt(gCurTask->unk48 >> 4, gCurTask->unk4A >> 4);
+    BreakBlockAt(gCurTask->unk48 >> 4, (gCurTask->unk4A - 16) >> 4);
     TaskYieldTrampoline(1);
     TaskFree(gCurTask->unk46);
     TaskExitTrampoline();
@@ -187,7 +187,7 @@ s32 sub_0802d5b4(s32 x, s32 y)
     s32 id;
     struct Task *t;
 
-    id = sub_0802621c(4);
+    id = TaskCreateHighSlot(4);
     if (id != -1)
     {
         t = &gTasks[id];
@@ -204,17 +204,17 @@ void sub_0802d5f8(void)
 {
     gCurTask->unk00 = 0;
     gCurTask->unk0C = 0;
-    sub_080301e8(5, gCurTask->unk48 + 2, gCurTask->unk4A);
+    CreateStageEffect(5, gCurTask->unk48 + 2, gCurTask->unk4A);
     TaskYieldTrampoline(2);
-    sub_08030f78(gCurTask->unk48 >> 4, gCurTask->unk4A >> 4);
+    BreakBlockAt(gCurTask->unk48 >> 4, gCurTask->unk4A >> 4);
     TaskYieldTrampoline(4);
-    sub_080301e8(5, gCurTask->unk48 + 2, gCurTask->unk4A - 12);
+    CreateStageEffect(5, gCurTask->unk48 + 2, gCurTask->unk4A - 12);
     TaskYieldTrampoline(2);
-    sub_08030f78(gCurTask->unk48 >> 4, (gCurTask->unk4A - 16) >> 4);
+    BreakBlockAt(gCurTask->unk48 >> 4, (gCurTask->unk4A - 16) >> 4);
     TaskYieldTrampoline(4);
-    sub_080301e8(5, gCurTask->unk48 + 2, gCurTask->unk4A - 24);
+    CreateStageEffect(5, gCurTask->unk48 + 2, gCurTask->unk4A - 24);
     TaskYieldTrampoline(2);
-    sub_08030f78(gCurTask->unk48 >> 4, (gCurTask->unk4A - 32) >> 4);
+    BreakBlockAt(gCurTask->unk48 >> 4, (gCurTask->unk4A - 32) >> 4);
     TaskYieldTrampoline(4);
     TaskExitTrampoline();
 }
@@ -458,10 +458,10 @@ void sub_0802dcb4(void)
     sub_080307e8();
     TaskYieldTrampoline(1);
     gCurTask->unk20 = gCurTask->unk1C * 2;
-    if (sub_08032288(gUnk_0200AFE0[0], gUnk_0200AFE0[1]))
-        sub_08032338();
-    if (gUnk_0200AFE0[2] != -1 && sub_08032288(gUnk_0200AFE0[2], gUnk_0200AFE0[3]))
-        sub_08032338();
+    if (CanBreakBg1Block(gUnk_0200AFE0[0], gUnk_0200AFE0[1]))
+        BreakBg1BlockAtCursor();
+    if (gUnk_0200AFE0[2] != -1 && CanBreakBg1Block(gUnk_0200AFE0[2], gUnk_0200AFE0[3]))
+        BreakBg1BlockAtCursor();
     while (1)
     {
         t8 = gCurTask;
@@ -487,7 +487,7 @@ void sub_0802dcb4(void)
         t10->unk20 = 0;
         for (t10->unk6C = 0; (s16)gCurTask->unk6C <= 63; gCurTask->unk6C++)
         {
-            if (gUnk_0200A6F0[(s16)gCurTask->unk6C].unk6 != 0x7FFF)
+            if (gBg1BreakingBlocks[(s16)gCurTask->unk6C].unk6 != 0x7FFF)
             {
                 gCurTask->unk20++;
                 break;
@@ -643,10 +643,10 @@ void sub_0802e3ac(void)
     sub_080307e8();
     TaskYieldTrampoline(1);
     gCurTask->unk20 = gCurTask->unk1C * 2;
-    if (sub_08032288(gUnk_0200AFE0[0], gUnk_0200AFE0[1]))
-        sub_08032338();
-    if (gUnk_0200AFE0[2] != -1 && sub_08032288(gUnk_0200AFE0[2], gUnk_0200AFE0[3]))
-        sub_08032338();
+    if (CanBreakBg1Block(gUnk_0200AFE0[0], gUnk_0200AFE0[1]))
+        BreakBg1BlockAtCursor();
+    if (gUnk_0200AFE0[2] != -1 && CanBreakBg1Block(gUnk_0200AFE0[2], gUnk_0200AFE0[3]))
+        BreakBg1BlockAtCursor();
     while (1)
     {
         t8 = gCurTask;
@@ -672,7 +672,7 @@ void sub_0802e3ac(void)
         t10->unk20 = 0;
         for (t10->unk6C = 0; (s16)gCurTask->unk6C <= 63; gCurTask->unk6C++)
         {
-            if (gUnk_0200A6F0[(s16)gCurTask->unk6C].unk6 != 0x7FFF)
+            if (gBg1BreakingBlocks[(s16)gCurTask->unk6C].unk6 != 0x7FFF)
             {
                 gCurTask->unk20++;
                 break;

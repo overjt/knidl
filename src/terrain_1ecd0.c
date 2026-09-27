@@ -41,7 +41,7 @@ extern s8 gUnk_087336F0[];
 extern s8 gUnk_087339F0[];
 extern u16 gUnk_08735018[];         /* indexed by the cell's byte 2 */
 extern u16 gTerrainPixelIndex;           /* pixel offset inside the queried cell */
-extern s16 gUnk_0300550C;           /* box left (room-relative) */
+extern s16 gTerrainPrevBoxLeft;           /* box left (room-relative) */
 extern s32 gTerrainVelY;           /* Task.unk58 */
 extern s16 gTerrainBoxLeft;           /* box left offset */
 extern struct Unk03005530 gTerrainProbeResult;
@@ -51,10 +51,10 @@ extern u16 gUnk_03005574;           /* queried cell: byte 2 */
 extern u16 gTerrainTile;           /* queried cell: tile set */
 extern s16 gTerrainBoxBottom;           /* box bottom offset */
 extern u16 gTerrainTileBelow;           /* cell below: tile set */
-extern s16 gUnk_03005590;           /* box right (room-relative) */
+extern s16 gTerrainPrevBoxRight;           /* box right (room-relative) */
 extern s16 gTerrainBoxRight;           /* box right offset */
 extern u16 gUnk_030055AC;           /* cell below: byte 2 */
-extern s16 gUnk_030055B0;           /* box bottom (room-relative) */
+extern s16 gTerrainPrevBoxBottom;           /* box bottom (room-relative) */
 
 s32 TerrainQueryPixel(u32 x, u32 y);
 s32 TerrainQueryPixelAndBelow(u32 x, u32 y);
@@ -184,9 +184,9 @@ walls:
         {
             if (!(gTerrainProbeResult.unkB & 2))
                 goto flatL;
-            if (((gTerrainProbeX + gTerrainBoxLeft) & 0xFFF0) != (gUnk_0300550C & 0xFFF0))
+            if (((gTerrainProbeX + gTerrainBoxLeft) & 0xFFF0) != (gTerrainPrevBoxLeft & 0xFFF0))
                 goto flatL;
-            if (((gTerrainProbeY + gTerrainBoxBottom) & 0xFFF0) <= (gUnk_030055B0 & 0xFFF0))
+            if (((gTerrainProbeY + gTerrainBoxBottom) & 0xFFF0) <= (gTerrainPrevBoxBottom & 0xFFF0))
                 goto flatL;
         }
         gTerrainProbeResult.unkB |= 1;
@@ -256,9 +256,9 @@ right:
         {
             if (!(gTerrainProbeResult.unkB & 4))
                 goto flatR;
-            if (((gTerrainProbeX + gTerrainBoxRight) & 0xFFF0) != (gUnk_03005590 & 0xFFF0))
+            if (((gTerrainProbeX + gTerrainBoxRight) & 0xFFF0) != (gTerrainPrevBoxRight & 0xFFF0))
                 return;
-            if (((gTerrainProbeY + gTerrainBoxBottom) & 0xFFF0) <= (gUnk_030055B0 & 0xFFF0))
+            if (((gTerrainProbeY + gTerrainBoxBottom) & 0xFFF0) <= (gTerrainPrevBoxBottom & 0xFFF0))
                 goto flatR;
         }
         gTerrainProbeResult.unkB |= 1;

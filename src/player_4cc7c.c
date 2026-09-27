@@ -33,7 +33,7 @@ void PlayerStopAxes(s32 a0);
 s32 PlaySfxIfLocalPlayer(s32 a0, u16 a1);
 s32 PlayerFaceHeldDirection(void);
 void PlayerStartOffsetScript(s32 a0);
-s32 sub_0803f884(void);
+s32 PlayerGetHeldDirection(void);
 void PlayerStopAtCeilingAndWall(void);
 s32 PlayerCheckLanding(void);
 s32 PlayerCheckEnterDoor(void);
@@ -189,7 +189,7 @@ void sub_0804cc7c(void)
         switch (gCurTask->unk24)
         {
         case 8:
-            if (sub_0803f884() == 2)
+            if (PlayerGetHeldDirection() == 2)
                 PlayerFaceHeldDirection();
             TaskSetFrame(0xF96);
             TaskYieldTrampoline(2);
@@ -199,7 +199,7 @@ void sub_0804cc7c(void)
             TaskYieldTrampoline(2);
             break;
         case 9:
-            if (sub_0803f884() == 2)
+            if (PlayerGetHeldDirection() == 2)
                 PlayerFaceHeldDirection();
             TaskSetFrame(0xF95);
             TaskYieldTrampoline(2);
@@ -497,7 +497,7 @@ void sub_0804d6d0(void)
                         u->unk24 = 7;
                 }
             }
-            else if (sub_0803f884() == 2)
+            else if (PlayerGetHeldDirection() == 2)
             {
                 gCurTask->unk24 = 12;
                 gCurTask->unk88->unk14 = 3;
@@ -576,7 +576,7 @@ void sub_0804d6d0(void)
                 break;
             }
         }
-        if (sub_0803f884() == 2)
+        if (PlayerGetHeldDirection() == 2)
         {
             old = -1;
             gCurTask->unk24 = 11;

@@ -8,7 +8,7 @@
  * 5) copies the room bounds into the camera bounds and puts the camera,
  * its 16.16 target and the visible rectangle on the player (one player)
  * or runs M08's multi-player updates; sub_08028e3c only sets the bounds.
- * sub_08028e4c places the player at the room's start position
+ * SetRoomEntryPoint places the player at the room's start position
  * (RoomDef.unk50/unk52) unless a door already did, clamps it and records
  * the arrival for the next level change (gUnk_02008054, gUnk_0200AFF4,
  * gUnk_02008050).  sub_08029034 clamps the arrival position into the room
@@ -161,9 +161,9 @@ s32 GetCollisionTile(u32 x, u32 y);
 void CalcRoomBounds(void);
 void CameraResetBounds(void);
 void UpdatePlayerGroupCenter(void);
-void sub_08029e24(void);
+void SetCameraBoundsToGroup(void);
 void UpdatePlayerCameras(void);
-void sub_0802a42c(void);
+void SetPlayerBoundsFromCamera(void);
 void SetViewRectToPlayers(void);
 void SpawnRoomObjectsInRect(s32 x0, s32 x1, s32 y0, s32 y1);
 void DrawBg2Row(s32 x0, s32 x1, s32 y);
@@ -211,9 +211,9 @@ void sub_08028b8c(void)
         else
         {
             UpdatePlayerGroupCenter();
-            sub_08029e24();
+            SetCameraBoundsToGroup();
             UpdatePlayerCameras();
-            sub_0802a42c();
+            SetPlayerBoundsFromCamera();
             if ((gActivePlayerMask >> gLocalPlayer) & 1)
             {
                 x = gCameraFocusX;
@@ -275,7 +275,7 @@ void sub_08028e3c(void)
     CameraResetBounds();
 }
 
-void sub_08028e4c(void)
+void SetRoomEntryPoint(void)
 {
     s32 v;
 

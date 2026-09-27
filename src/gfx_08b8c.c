@@ -183,12 +183,12 @@ void sub_08008e6c(s32 a0)
     RequestCopy(1, (u32)gUnk_02020000 + (a0 << 11), 0x06007800, 0x800);
 }
 
-void sub_08008ebc(void)
+void HudClearAbilityPicture(void)
 {
     RequestCopy(6, 0, 0x06000400, 0x3E0);
 }
 
-void sub_08008ed4(s32 a0)
+void HudLoadAbilityPicture(s32 a0)
 {
     RequestCopy(2, gUnk_08731A90[a0][0] + 2, (u32)&gBgPalette[1], 30);
     RequestCopy(1, gUnk_08731A90[a0][1], 0x06000400, 0x3E0);

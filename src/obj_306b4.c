@@ -31,9 +31,9 @@ extern u32 gBlockAnimHook;
 extern u8 gBlockAnimHookId;
 
 s32 QueueSprite(u32 a, u32 b, u32 c, u32 d, s32 e, s32 f);
-void sub_080318b4(void);
-void sub_08031de4(void);
-void sub_08032428(void);
+void UpdateBlockAnims(void);
+void UpdateBlockAnimsWithEdges(void);
+void UpdateBg1BlockAnims(void);
 
 s32 QueueWorldSprite(u8 a, s32 b, u16 c, u16 d, s16 x, s16 y)
 {
@@ -63,13 +63,13 @@ void ResumeBlockAnims(void)
     case 0:
         break;
     case 1:
-        gBlockAnimHook = (u32)sub_080318b4;
+        gBlockAnimHook = (u32)UpdateBlockAnims;
         break;
     case 2:
-        gBlockAnimHook = (u32)sub_08031de4;
+        gBlockAnimHook = (u32)UpdateBlockAnimsWithEdges;
         break;
     case 3:
-        gBlockAnimHook = (u32)sub_08032428;
+        gBlockAnimHook = (u32)UpdateBg1BlockAnims;
         break;
     }
 }
@@ -81,18 +81,18 @@ void PauseBlockAnims(void)
 
 void sub_080307b0(void)
 {
-    gBlockAnimHook = (u32)sub_080318b4;
+    gBlockAnimHook = (u32)UpdateBlockAnims;
     gBlockAnimHookId = 1;
 }
 
 void sub_080307cc(void)
 {
-    gBlockAnimHook = (u32)sub_08031de4;
+    gBlockAnimHook = (u32)UpdateBlockAnimsWithEdges;
     gBlockAnimHookId = 2;
 }
 
 void sub_080307e8(void)
 {
-    gBlockAnimHook = (u32)sub_08032428;
+    gBlockAnimHook = (u32)UpdateBg1BlockAnims;
     gBlockAnimHookId = 3;
 }

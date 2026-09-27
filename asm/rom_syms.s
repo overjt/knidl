@@ -243,8 +243,8 @@ gUnk_02007D40 = 0x02007D40
 gPlayerLives = 0x02007D48
 	.global	gUnk_02007D50
 gUnk_02007D50 = 0x02007D50
-	.global	gUnk_02007D58
-gUnk_02007D58 = 0x02007D58
+	.global	gUsedSubGameDoors
+gUsedSubGameDoors = 0x02007D58
 	.global	gUnk_02007D60
 gUnk_02007D60 = 0x02007D60
 	.global	gUnk_02007D64
@@ -291,8 +291,8 @@ gUnk_02007FF0 = 0x02007FF0
 gUnk_02007FF8 = 0x02007FF8
 	.global	gUnk_02008000
 gUnk_02008000 = 0x02008000
-	.global	gUnk_02008008
-gUnk_02008008 = 0x02008008
+	.global	gSavedPlayerAbilities
+gSavedPlayerAbilities = 0x02008008
 	.global	gUnk_02008010
 gUnk_02008010 = 0x02008010
 	.global	gUnk_02008014
@@ -313,8 +313,8 @@ gUnk_02008060 = 0x02008060
 gBlockLayer = 0x02008160
 	.global	gSoundTestSelection
 gSoundTestSelection = 0x0200A6E0
-	.global	gUnk_0200A6F0
-gUnk_0200A6F0 = 0x0200A6F0
+	.global	gBg1BreakingBlocks
+gBg1BreakingBlocks = 0x0200A6F0
 	.global	gRoomEntryY
 gRoomEntryY = 0x0200AEF0
 	.global	gUnk_0200AEF4
@@ -1065,8 +1065,8 @@ gUnk_030054F4 = 0x030054F4
 gUnk_03005504 = 0x03005504
 	.global	gTerrainPixelIndex
 gTerrainPixelIndex = 0x03005508
-	.global	gUnk_0300550C
-gUnk_0300550C = 0x0300550C
+	.global	gTerrainPrevBoxLeft
+gTerrainPrevBoxLeft = 0x0300550C
 	.global	gTerrainTileRight
 gTerrainTileRight = 0x03005510
 	.global	gTerrainVelY
@@ -1107,8 +1107,8 @@ gTerrainBoxBottom = 0x03005584
 gTerrainTileBelow = 0x03005588
 	.global	gUnk_0300558C
 gUnk_0300558C = 0x0300558C
-	.global	gUnk_03005590
-gUnk_03005590 = 0x03005590
+	.global	gTerrainPrevBoxRight
+gTerrainPrevBoxRight = 0x03005590
 	.global	gTerrainTileLeft
 gTerrainTileLeft = 0x03005594
 	.global	gTerrainVelX
@@ -1117,14 +1117,14 @@ gTerrainVelX = 0x03005598
 gTerrainBoxRight = 0x0300559C
 	.global	gTerrainTileShape
 gTerrainTileShape = 0x030055A0
-	.global	gUnk_030055A4
-gUnk_030055A4 = 0x030055A4
+	.global	gTerrainPrevBoxTop
+gTerrainPrevBoxTop = 0x030055A4
 	.global	gUnk_030055A8
 gUnk_030055A8 = 0x030055A8
 	.global	gUnk_030055AC
 gUnk_030055AC = 0x030055AC
-	.global	gUnk_030055B0
-gUnk_030055B0 = 0x030055B0
+	.global	gTerrainPrevBoxBottom
+gTerrainPrevBoxBottom = 0x030055B0
 	.global	gCameraMode
 gCameraMode = 0x030055C0
 	.global	gPlayerCameraPos

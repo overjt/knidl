@@ -50,7 +50,7 @@ extern u16 gPlayerHealth[];
 extern u8 gUnk_020069F0;
 extern u32 gUnk_02007BF0[8][8];
 extern u16 gPlayerLives[];
-extern u8 gUnk_02007D58[];
+extern u8 gUsedSubGameDoors[];
 extern u16 gUnk_0200AF18[];
 extern u8 gUnk_0200B04C;
 extern u8 gInputRecorderRunning;
@@ -112,7 +112,7 @@ void InputRecorderStart(void)
         gInputRecordingPtr->unk11E = gUnk_03001F30;
         for (i = 0; i <= 7; i++)
         {
-            gInputRecordingPtr->unk38[i] = gUnk_02007D58[i];
+            gInputRecordingPtr->unk38[i] = gUsedSubGameDoors[i];
         }
         for (i = 0; i <= 7; i++)
         {

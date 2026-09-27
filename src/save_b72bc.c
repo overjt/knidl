@@ -49,7 +49,7 @@ extern u8 gRoomEntrySet;
 extern u8 gUnk_020069F0;
 extern u32 gUnk_02007BF0[8][8];
 extern s16 gPlayerLives[];
-extern u8 gUnk_02007D58[];
+extern u8 gUsedSubGameDoors[];
 extern u16 gRoomEntryY;
 extern u16 gUnk_0200AF18[];
 extern u8 gUnk_0200B04C;
@@ -99,7 +99,7 @@ void sub_080b72bc(void)
     gUnk_0200B04C = gInputRecordingPtr->unk36;
     gUnk_03001F30 = gInputRecordingPtr->unk11E;
     for (i = 0; i <= 7; i++)
-        gUnk_02007D58[i] = gInputRecordingPtr->unk38[i];
+        gUsedSubGameDoors[i] = gInputRecordingPtr->unk38[i];
     for (i = 0; i <= 7; i++)
     {
         for (j = 0; j <= 7; j++)

@@ -430,7 +430,7 @@ asset_metadata_index:
 	.incbin	"baserom.gba", 0x730688, 0x4
 	.word	sub_080301a4+1
 	.incbin	"baserom.gba", 0x730690, 0x4
-	.word	sub_08030238+1
+	.word	Task_StageEffect+1
 	.incbin	"baserom.gba", 0x730698, 0x4
 	.word	Task_IntroStoryPicture+1
 	.incbin	"baserom.gba", 0x7306A0, 0x4
@@ -2445,35 +2445,35 @@ gUnk_0873A734:
 	.global	gPlayerActions
 gPlayerActions:
 	.incbin	"baserom.gba", 0x73A748, 0x4
-	.word	sub_0803380c+1
-	.word	sub_08033d0c+1
-	.word	sub_080343c0+1
-	.word	sub_08034874+1
-	.word	sub_08034a88+1
+	.word	PlayerActionStand+1
+	.word	PlayerActionWalk+1
+	.word	PlayerActionRun+1
+	.word	PlayerActionSkid+1
+	.word	PlayerActionJump+1
 	.word	sub_08034d34+1
-	.word	sub_08034f8c+1
+	.word	PlayerActionFall+1
 	.word	sub_080355d8+1
-	.word	sub_080359f8+1
-	.word	sub_080366c4+1
-	.word	sub_080369b0+1
-	.word	sub_08036c94+1
-	.word	sub_080375e0+1
-	.word	sub_08037bd4+1
-	.word	sub_08037d64+1
-	.word	sub_08037ed8+1
-	.word	sub_0803919c+1
+	.word	PlayerActionFloat+1
+	.word	PlayerActionDuck+1
+	.word	PlayerActionSlide+1
+	.word	PlayerActionLadder+1
+	.word	PlayerActionInhale+1
+	.word	PlayerActionSpit+1
+	.word	PlayerActionSwallow+1
+	.word	PlayerActionHurt+1
+	.word	PlayerActionDie+1
 	.word	sub_0803bd90+1
 	.word	sub_0803bde8+1
-	.word	sub_080397f8+1
-	.word	sub_08039c24+1
+	.word	PlayerActionEnterDoor+1
+	.word	PlayerActionExitDoor+1
 	.word	sub_08034f70+1
-	.word	sub_0803aa64+1
-	.word	sub_0803b3c4+1
-	.word	sub_0803b4f8+1
-	.word	sub_0803b768+1
-	.word	sub_0803b87c+1
+	.word	PlayerActionSwim+1
+	.word	PlayerActionStandInWater+1
+	.word	PlayerActionWalkInWater+1
+	.word	PlayerActionSwallowInWater+1
+	.word	PlayerActionSpitInWater+1
 	.word	sub_0803b9a0+1
-	.word	sub_08047fe8+1
+	.word	PlayerActionGetAbility+1
 	.word	sub_0804dc08+1
 	.word	sub_0804e0e0+1
 	.word	sub_0804462c+1
@@ -2509,32 +2509,32 @@ gPlayerActions:
 	.global	gPlayerActionHandlers
 gPlayerActionHandlers:
 	.incbin	"baserom.gba", 0x73A840, 0x4
-	.word	sub_08033a2c+1
-	.word	sub_08034278+1
-	.word	sub_0803469c+1
-	.word	sub_080349b4+1
-	.word	sub_08034bec+1
+	.word	PlayerActionStandUpdate+1
+	.word	PlayerActionWalkUpdate+1
+	.word	PlayerActionRunUpdate+1
+	.word	PlayerActionSkidUpdate+1
+	.word	PlayerActionJumpUpdate+1
 	.word	sub_08034e60+1
-	.word	sub_08035458+1
+	.word	PlayerActionFallUpdate+1
 	.word	sub_08035848+1
-	.word	sub_08036280+1
-	.word	sub_08036888+1
-	.word	sub_08036b9c+1
-	.word	sub_080371f0+1
-	.word	sub_08037914+1
-	.word	sub_08037cc8+1
-	.word	sub_08037e28+1
-	.word	sub_08038fe8+1
+	.word	PlayerActionFloatUpdate+1
+	.word	PlayerActionDuckUpdate+1
+	.word	PlayerActionSlideUpdate+1
+	.word	PlayerActionLadderUpdate+1
+	.word	PlayerActionInhaleUpdate+1
+	.word	PlayerActionSpitUpdate+1
+	.word	PlayerActionSwallowUpdate+1
+	.word	PlayerActionHurtUpdate+1
 	.word	sub_0803bdd4+1
 	.word	sub_0803c990+1
-	.word	sub_0803aa40+1
-	.word	sub_0803afcc+1
-	.word	sub_0803b47c+1
-	.word	sub_0803b6ec+1
+	.word	PlayerActionExitDoorUpdate+1
+	.word	PlayerActionSwimUpdate+1
+	.word	PlayerActionStandInWaterUpdate+1
+	.word	PlayerActionWalkInWaterUpdate+1
 	.word	sub_0803bbf0+1
-	.word	sub_0803b914+1
-	.word	sub_0803b828+1
-	.word	sub_08049484+1
+	.word	PlayerActionSpitInWaterUpdate+1
+	.word	PlayerActionSwallowInWaterUpdate+1
+	.word	PlayerActionGetAbilityUpdate+1
 	.word	sub_0804df00+1
 	.word	sub_0804e3a0+1
 	.word	sub_08044800+1
@@ -2637,26 +2637,26 @@ gUnk_0873B42C:
 	.global	gUnk_0873B4A4
 gUnk_0873B4A4:
 	.incbin	"baserom.gba", 0x73B4A4, 0x4
-	.word	sub_08033a2c+1
+	.word	PlayerActionStandUpdate+1
 	.word	sub_080415c8+1
 	.word	sub_08041778+1
-	.word	sub_080349b4+1
+	.word	PlayerActionSkidUpdate+1
 	.word	sub_08041a2c+1
 	.word	sub_08041a2c+1
 	.word	sub_08041c30+1
 	.incbin	"baserom.gba", 0x73B4C4, 0x4
 	.word	sub_08041dc8+1
-	.word	sub_08036888+1
+	.word	PlayerActionDuckUpdate+1
 	.word	sub_08042050+1
 	.word	sub_08042328+1
 	.incbin	"baserom.gba", 0x73B4D8, 0xC
 	.word	sub_08042980+1
 	.word	sub_08042d40+1
 	.incbin	"baserom.gba", 0x73B4EC, 0x4
-	.word	sub_0803aa40+1
+	.word	PlayerActionExitDoorUpdate+1
 	.word	sub_0804335c+1
-	.word	sub_0803b47c+1
-	.word	sub_0803b6ec+1
+	.word	PlayerActionStandInWaterUpdate+1
+	.word	PlayerActionWalkInWaterUpdate+1
 	.word	sub_08043a88+1
 	.word	sub_08043e28+1
 	.word	sub_080441cc+1
@@ -2848,8 +2848,8 @@ gUnk_0873BB7E:
 	.global	gUnk_0873BC3E
 gUnk_0873BC3E:
 	.incbin	"baserom.gba", 0x73BC3E, 0xC2
-	.global	gUnk_0873BD00
-gUnk_0873BD00:
+	.global	gPlayerDefaultBodyBox
+gPlayerDefaultBodyBox:
 	.incbin	"baserom.gba", 0x73BD00, 0x14
 	.global	gUnk_0873BD14
 gUnk_0873BD14:
@@ -3199,8 +3199,8 @@ gUnk_0873D044:
 	.global	gUnk_0873D04C
 gUnk_0873D04C:
 	.incbin	"baserom.gba", 0x73D04C, 0x78
-	.global	gUnk_0873D0C4
-gUnk_0873D0C4:
+	.global	gAbilityBButtonActions
+gAbilityBButtonActions:
 	.incbin	"baserom.gba", 0x73D0C4, 0x34
 	.global	gUnk_0873D0F8
 gUnk_0873D0F8:
@@ -3241,8 +3241,8 @@ gUnk_0873D5C0:
 	.global	gUnk_0873D5CA
 gUnk_0873D5CA:
 	.incbin	"baserom.gba", 0x73D5CA, 0x68
-	.global	gUnk_0873D632
-gUnk_0873D632:
+	.global	gPlayerDoorAnims
+gPlayerDoorAnims:
 	.incbin	"baserom.gba", 0x73D632, 0x16C
 	.global	gUnk_0873D79E
 gUnk_0873D79E:

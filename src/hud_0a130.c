@@ -51,9 +51,9 @@ extern s8 gUnk_03002444;
 extern s32 gUnk_03002448;
 
 void PlaySfx(s32 id);
-void sub_08008ebc(void);
-void sub_08008ed4(s32 a0);
-void sub_0800ab08(void);
+void HudClearAbilityPicture(void);
+void HudLoadAbilityPicture(s32 a0);
+void HudRedrawClock(void);
 void HudDrawScore(s32 v);
 void HudDrawClock(u16 *time);
 void HudDrawAbilityPanel(s32 n);
@@ -63,22 +63,22 @@ void sub_0800b190(s32 from, s32 to);
 void sub_0800b230(s32 a, s32 b);
 void HudClearTiles(s32 x, s32 y, s32 n);
 void HudFlushTilemap(void);
-void sub_0800a9a0(s32 from, s32 to, s32 i);
+void HudAnimateHpBar(s32 from, s32 to, s32 i);
 s32 sub_0800aa18(s32 from, s32 to);
-void sub_0800aa74(s32 x, s32 i);
-void sub_0800aa94(s32 i);
+void HudSetHpBar(s32 x, s32 i);
+void HudResetHpBar(s32 i);
 void sub_0800aaac(s32 i);
 
 void HudShowAbility(s32 a, s32 id)
 {
     if (id == gLocalPlayer && gHudMode == 1) {
         if (a == 0) {
-            sub_08008ebc();
+            HudClearAbilityPicture();
             gHudAbilityPanelState = 0;
             gUnk_0200801C = 0;
             HudDrawAbilityPanel(0);
         } else {
-            sub_08008ed4(a);
+            HudLoadAbilityPicture(a);
         }
     }
 }
@@ -133,13 +133,13 @@ void sub_0800a21c(s32 id)
     }
 }
 
-void sub_0800a280(void)
+void HudShowHpBar(void)
 {
     gHudShowsHpBar = 1;
     sub_0800b0fc();
 }
 
-void sub_0800a294(s32 max, s32 cur)
+void HudStartHpBar(s32 max, s32 cur)
 {
     if (gUnk_030023B0 != 0) {
         gHudHpBarMaxHp = max;
@@ -158,7 +158,7 @@ void sub_0800a294(s32 max, s32 cur)
         gHudHpBarValues[0] = Div(cur << 5, gHudHpBarMaxHp);
         if (gHudHpBarValues[0] > gUnk_02007D30)
             gHudHpBarValues[0] = gUnk_02007D30;
-        sub_0800aa94(0);
+        HudResetHpBar(0);
         HudDrawHpBar(0);
         sub_0800aa18(0, gHudHpBarValues[0]);
     }
@@ -193,13 +193,13 @@ void sub_0800a340(s32 max, s32 cur)
             gUnk_02007D30 = 32;
         }
         gHudHpBarValues[idx] = Div(cur << 5, gHudHpBarMaxHp);
-        sub_0800aa94(idx);
+        HudResetHpBar(idx);
         HudDrawHpBar(0);
-        sub_0800a9a0(0, gHudHpBarValues[idx], idx);
+        HudAnimateHpBar(0, gHudHpBarValues[idx], idx);
     }
 }
 
-void sub_0800a42c(void)
+void HudAnimateTaskHpBar(void)
 {
     s32 idx;
     s32 v;
@@ -212,13 +212,13 @@ void sub_0800a42c(void)
         if (gUnk_02008014[idx] != -1 && gCurTask->unk78 > 0) {
             v = Div(gCurTask->unk78 << 5, gHudHpBarMaxHp);
             if (v != gHudHpBarValues[idx])
-                sub_0800a9a0(gHudHpBarValues[idx], v, idx);
+                HudAnimateHpBar(gHudHpBarValues[idx], v, idx);
             gHudHpBarValues[idx] = v;
         }
     }
 }
 
-void sub_0800a4c0(void)
+void HudSetTaskHpBar(void)
 {
     s32 idx;
     s32 v;
@@ -234,7 +234,7 @@ void sub_0800a4c0(void)
             else
                 v = 0;
             gHudHpBarValues[idx] = v;
-            sub_0800aa74(v, idx);
+            HudSetHpBar(v, idx);
         }
     }
 }
@@ -257,7 +257,7 @@ void HudRemoveHpBar(void)
                         break;
                 }
                 if (gHudMode == 1)
-                    sub_0800aa74(gHudHpBarValues[i], idx);
+                    HudSetHpBar(gHudHpBarValues[i], idx);
             }
         } else {
             if (gHudMode == 1) {
@@ -314,7 +314,7 @@ void sub_0800a6a4(void)
             }
         }
     done:
-        sub_0800ab08();
+        HudRedrawClock();
         HudFlushTilemap();
     }
 }
@@ -417,7 +417,7 @@ void HudUpdateHpBars(void)
     }
 }
 
-void sub_0800a9a0(s32 from, s32 to, s32 i)
+void HudAnimateHpBar(s32 from, s32 to, s32 i)
 {
     struct HudBar *p;
     s32 d;
@@ -466,14 +466,14 @@ s32 sub_0800aa18(s32 from, s32 to)
     }
 }
 
-void sub_0800aa74(s32 x, s32 i)
+void HudSetHpBar(s32 x, s32 i)
 {
     sub_0800aaac(i);
     HudDrawHpBar(x);
     gHudHpBarIndex = i;
 }
 
-void sub_0800aa94(s32 i)
+void HudResetHpBar(s32 i)
 {
     struct HudBar *p = &gHudHpBars[i];
 

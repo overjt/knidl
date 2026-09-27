@@ -18,7 +18,7 @@
  * stage frozen (gUnk_03001F34 = 1): it switches the DISPCNT shadow
  * gDispCnt to windowed BG1-BG3, remembers the height Task.unk50 in
  * Task.unk2C, shakes the screen (RequestScreenShake(5), SetRoomUpdateFlags(2)),
- * flashes the player's palette gUnk_080DC628[player] towards
+ * flashes the player's palette gPlayerPalettes[player] towards
  * gUnk_082030B8 twice (BlendColors, presets 51/52), waits for the
  * blast task through PlayerState.unk16 and TaskSetSkipMask, restores the
  * default script gPlayerDefaultTerrainBox and resets the HUD ability panel
@@ -51,7 +51,7 @@ extern struct Unk03005550 gTerrainResult;
 extern u32 gUnk_0873C2A0[];
 extern u8 gUnk_03001F34;
 extern vu16 gDispCnt;              /* DISPCNT shadow */
-extern u16 gUnk_080DC628[][16];         /* per-player palettes (M03 spelling) */
+extern u16 gPlayerPalettes[][16];         /* per-player palettes (M03 spelling) */
 extern u8 gObjPalette[];              /* OBJ palette buffer (M11 spelling) */
 extern u16 gUnk_082030B8[];
 extern u32 gPlayerDefaultTerrainBox[];
@@ -263,7 +263,7 @@ void sub_0804af54(void)
     gCurTask->unk88->unk42 |= 16;
     gCurTask->unk6C = 0;
     do {
-        BlendColors(gUnk_080DC628[gCurTask->unk88->unk00], gUnk_082030B8,
+        BlendColors(gPlayerPalettes[gCurTask->unk88->unk00], gUnk_082030B8,
                      (u16)gCurTask->unk28, 16,
                      (u16 *)(gObjPalette + ((gCurTask->unk40 >> 12) << 5)));
         gCurTask->unk28 += 85;
@@ -282,7 +282,7 @@ void sub_0804af54(void)
     gCurTask->unk88->unk42 |= 16;
     gCurTask->unk6C = 0;
     do {
-        BlendColors(gUnk_080DC628[gCurTask->unk88->unk00], gUnk_082030B8,
+        BlendColors(gPlayerPalettes[gCurTask->unk88->unk00], gUnk_082030B8,
                      (u16)gCurTask->unk28, 16,
                      (u16 *)(gObjPalette + ((gCurTask->unk40 >> 12) << 5)));
         gCurTask->unk28 += 85;
@@ -374,7 +374,7 @@ void sub_0804b474(void)
 
     switch (t->unk73) {
     case 1:
-        BlendColors(gUnk_080DC628[t->unk88->unk00], gUnk_08203098, (u16)t->unk28, 16,
+        BlendColors(gPlayerPalettes[t->unk88->unk00], gUnk_08203098, (u16)t->unk28, 16,
                      (u16 *)(gObjPalette + ((t->unk40 >> 12) << 5)));
         {
             struct Task *u = gCurTask;
@@ -388,7 +388,7 @@ void sub_0804b474(void)
         }
         break;
     case 2:
-        BlendColors(gUnk_080DC628[t->unk88->unk00], gUnk_08203098, (u16)t->unk28, 16,
+        BlendColors(gPlayerPalettes[t->unk88->unk00], gUnk_08203098, (u16)t->unk28, 16,
                      (u16 *)(gObjPalette + ((t->unk40 >> 12) << 5)));
         {
             struct Task *u = gCurTask;

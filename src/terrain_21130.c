@@ -34,7 +34,7 @@ extern u8 gUnk_08732DF0[];
 
 /* IWRAM room descriptor cells. */
 extern u16 gUnk_03005504;
-extern s16 gUnk_0300550C;
+extern s16 gTerrainPrevBoxLeft;
 extern u16 gTerrainPixelIndex;
 extern u16 gTerrainTileRight;
 extern s32 gTerrainVelY;
@@ -50,13 +50,13 @@ extern u16 gTerrainTile;
 extern s16 gTerrainBoxTop;
 extern s16 gTerrainBoxBottom;
 extern u16 gTerrainTileBelow;
-extern s16 gUnk_03005590;
+extern s16 gTerrainPrevBoxRight;
 extern u16 gTerrainTileLeft;
 extern s16 gTerrainBoxRight;
 extern s8 *gTerrainTileShape;
-extern s16 gUnk_030055A4;
+extern s16 gTerrainPrevBoxTop;
 extern u16 gUnk_030055AC;
-extern s16 gUnk_030055B0;
+extern s16 gTerrainPrevBoxBottom;
 extern s16 gRoomMetatileCount;
 extern s32 gUnk_03005580;
 extern s32 gTerrainVelX;

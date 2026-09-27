@@ -38,7 +38,7 @@ extern void TaskSleepForever(void);
 extern void TaskSetEntry(void *fn, s32 i);
 extern void TaskStop(void);
 extern void TaskSetFrameNoFlip(s32 a);
-extern void sub_0800a42c(void);
+extern void HudAnimateTaskHpBar(void);
 extern void HudRemoveHpBar(void);
 extern void sub_080262e8(u8 a);
 extern void ActorSetState(u16 v);
@@ -262,7 +262,7 @@ void sub_0809bf2c(void)
     if (gUnk_02007D00[5] & 8)
         gCurTask->unk78 -= gUnk_02007D00[4];
     if (gUnk_02007D00[5] != 0)
-        sub_0800a42c();
+        HudAnimateTaskHpBar();
     gUnk_02007D00[5] = 0;
 }
 

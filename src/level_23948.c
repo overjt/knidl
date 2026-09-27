@@ -115,7 +115,7 @@ extern u16 gPlayerCount;
 extern s16 gPlayerLives[];
 extern s16 gPlayerHealth[];
 extern s16 gMaxHealth;
-extern u16 gUnk_02008008[];
+extern u16 gSavedPlayerAbilities[];
 extern u16 gUnk_02007FA8[];
 extern u16 gPlayerAbilities[];
 extern u16 gUnk_0200AF18[];
@@ -137,7 +137,7 @@ void ResetTasksAndOam(void);
 s32 PlayBgm(s32 songId);
 void TaskSleepForever(void);
 void LoadGfxSet(u16 a0);
-void sub_08009b2c(s32 i);
+void HudInit(s32 i);
 s32 AddPlayerLives(s32 a, u32 b);
 void HudUpdateAbilityPanel(void);
 void CreateRoomTask(s32 a);
@@ -146,11 +146,11 @@ s32 sub_08026834(void);
 void sub_08026b60(void);
 void UpdateDoors(void);
 void sub_08027a6c(void);
-void sub_08028320(void);
+void SpawnDoorObjects(void);
 void CalcBg3Parallax(void);
 void CalcRoomBounds(void);
 void CameraResetBounds(void);
-void sub_08028e4c(void);
+void SetRoomEntryPoint(void);
 void sub_08029034(void);
 void CameraInitPos(void);
 void sub_08029194(void);
@@ -172,7 +172,7 @@ void sub_0802c680(void);
 void sub_0802c7f4(void);
 void CameraSnapBoundsToAnchor(void);
 void CameraSnapPlayersToAnchor(void);
-void sub_0802cc90(void);
+void CameraSnapToFocus(void);
 void StopScreenShake(void);
 void UpdateScreenShake(void);
 void LoadRoomBgAnims(void);
@@ -230,8 +230,8 @@ void sub_08023948(void)
     CalcBg3Parallax();
     CalcRoomBounds();
     InitDoors();
-    sub_08028e4c();
-    sub_08028320();
+    SetRoomEntryPoint();
+    SpawnDoorObjects();
     sub_08029194();
     gActivePlayerMask = 0;
     gActivePlayerCount = 0;
@@ -243,15 +243,15 @@ void sub_08023948(void)
             if (gPlayerHealth[i] == 0)
             {
                 gPlayerHealth[i] = gMaxHealth;
-                gUnk_02008008[i] = 0;
+                gSavedPlayerAbilities[i] = 0;
                 gUnk_02007FA8[i] = 0xFFFF;
                 AddPlayerLives(-1, i);
             }
-            if ((s16)gUnk_02008008[i] != 0)
+            if ((s16)gSavedPlayerAbilities[i] != 0)
             {
-                gPlayerAbilities[i] = gUnk_02008008[i];
+                gPlayerAbilities[i] = gSavedPlayerAbilities[i];
                 gUnk_0200AF18[i] = gUnk_02007FA8[i];
-                gUnk_02008008[i] = 0;
+                gSavedPlayerAbilities[i] = 0;
                 gUnk_02007FA8[i] = 0xFFFF;
             }
             gActivePlayerMask |= 1 << i;
@@ -269,7 +269,7 @@ void sub_08023948(void)
         gLatchedHeldKeys[i] = gLatchedPressedKeys[i] = 0;
     }
     CameraResetBounds();
-    sub_08009b2c(gLocalPlayer);
+    HudInit(gLocalPlayer);
     switch (gCameraMode)
     {
     default:
@@ -337,7 +337,7 @@ void sub_08023ca0(void)
     CalcBg3Parallax();
     CalcRoomBounds();
     InitDoors();
-    sub_08028320();
+    SpawnDoorObjects();
     sub_08029034();
     sub_08026b60();
     sub_08026834();
@@ -505,15 +505,15 @@ void sub_08023fd4(void)
             if (gPlayerHealth[i] == 0)
             {
                 gPlayerHealth[i] = gMaxHealth;
-                gUnk_02008008[i] = 0;
+                gSavedPlayerAbilities[i] = 0;
                 gUnk_02007FA8[i] = 0xFFFF;
                 AddPlayerLives(-1, i);
             }
-            if ((s16)gUnk_02008008[i] != 0)
+            if ((s16)gSavedPlayerAbilities[i] != 0)
             {
-                gPlayerAbilities[i] = gUnk_02008008[i];
+                gPlayerAbilities[i] = gSavedPlayerAbilities[i];
                 gUnk_0200AF18[i] = gUnk_02007FA8[i];
-                gUnk_02008008[i] = 0;
+                gSavedPlayerAbilities[i] = 0;
                 gUnk_02007FA8[i] = 0xFFFF;
             }
             gActivePlayerMask |= 1 << i;
@@ -531,8 +531,8 @@ void sub_08023fd4(void)
     }
     LatchPlayerKeys();
     CameraResetBounds();
-    sub_08009b2c(gLocalPlayer);
-    sub_0802cc90();
+    HudInit(gLocalPlayer);
+    CameraSnapToFocus();
     CameraInitPos();
     CameraWriteScrollParallax();
     a = 0;

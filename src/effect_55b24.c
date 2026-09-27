@@ -5,7 +5,7 @@
 /* effect_55b24.c (0x08055B24-0x08056447, issue #89).
  *
  * Task type #7 (the player's effect objects, see src/effect_53af4.c):
- * variants 22-25, spawned by M10's action 16 (sub_08037ed8) and by M11.
+ * variants 22-25, spawned by M10's action 16 (PlayerActionHurt) and by M11.
  * Each is a loop of short animations around its spawner (22-24 at random
  * offsets from RandomSpread/RandomSpreadFacing; tables gUnk_0874C718,
  * gUnk_0874C7A4, gUnk_0874C7B4, gUnk_0874C7CC) that ends once its companion

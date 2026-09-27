@@ -50,7 +50,7 @@ extern struct Task *gCurTask;
 extern struct Task gTasks[];
 extern vs16 gTaskSlotTypes[];
 extern u8 gTerrainResult[];
-extern u16 gUnk_080DC628[];
+extern u16 gPlayerPalettes[];
 extern u32 gUnk_080DC728[];
 extern u8 gUnk_080DCA28[];
 extern u32 gUnk_080DCC28[];
@@ -64,7 +64,7 @@ extern u8 gUnk_0873AF30[][2];
 extern u8 gUnk_0873AF3A[][2];
 extern u8 gUnk_0873AF42[];
 extern u32 gPlayerDefaultTerrainBox[];
-extern u8 gUnk_0873D0C4[];
+extern u8 gAbilityBButtonActions[];
 extern s16 gUnk_0873D210[];
 extern s16 gUnk_0873D2E0[];
 extern u16 gUnk_0873D79E[];
@@ -89,8 +89,8 @@ void TaskRestoreSkipMask(u32 idx);
 s32 AddPlayerHealth(s32 a, s32 b);
 void SetPlayerAbilityNoHud(s32 a, s32 b, s32 c);
 void SetPlayerAbility(u32 a, s32 b, s32 c);
-s32 sub_08022760(struct Task *t);
-s32 sub_08024e40(s32 a0, s32 a1);
+s32 IsTaskBelowPlayerBounds(struct Task *t);
+s32 FindDoorAt(s32 a0, s32 a1);
 void sub_080270d0(void);
 void PauseRoom(void);
 void ResumeRoom(void);
@@ -623,7 +623,7 @@ void sub_0803d7c4(void)
     idx = sub_0803d870();
     if (idx == -1)
         return;
-    RequestCopy(2, (idx << 1) + (u32)gUnk_080DC628
+    RequestCopy(2, (idx << 1) + (u32)gPlayerPalettes
                     + (gCurTask->unk88->unk00 << 5),
                  (u32)gObjPalette + ((gCurTask->unk40 >> 12) << 5), 32);
 }
@@ -635,7 +635,7 @@ void sub_0803d824(void)
     idx = sub_0803d870();
     if (idx == -1)
         return;
-    RequestCopy(2, (idx << 1) + (u32)gUnk_080DC628 + (gUnk_02000028 << 5),
+    RequestCopy(2, (idx << 1) + (u32)gPlayerPalettes + (gUnk_02000028 << 5),
                  (u32)gObjPalette + ((gCurTask->unk40 >> 12) << 5), 32);
 }
 
@@ -1069,7 +1069,7 @@ void sub_0803e28c(s32 a0)
     }
 }
 
-void sub_0803e2d4(void)
+void PlayerUpdateInvulnerability(void)
 {
     struct PlayerState *p = gCurTask->unk88;
 
@@ -1132,7 +1132,7 @@ void FreezeOtherTasks(s32 a0)
     }
 }
 
-void sub_0803e414(void)
+void PlayerUpdateFlip(void)
 {
     if (gCurTask->unk43 == 1)
         gCurTask->unk3E &= 0x7FFF;
@@ -2365,10 +2365,10 @@ void sub_0803f834(u16 a0, void *src)
 void PlayerTurnToHeldDirection(void)
 {
     if (PlayerFaceHeldDirection() != 0)
-        sub_0803e414();
+        PlayerUpdateFlip();
 }
 
-s32 sub_0803f884(void)
+s32 PlayerGetHeldDirection(void)
 {
     if (gLatchedHeldKeys[gCurTask->unk88->unk00] & 48)
     {
@@ -2457,7 +2457,7 @@ s32 sub_0803fa74(void)
 {
     if (gCurTask->unk78 != 0
      && ((gCurTask->unk88->unk42 & 1024)
-      || (sub_08022760(gCurTask) == 0
+      || (IsTaskBelowPlayerBounds(gCurTask) == 0
        && (gUnk_02005574[0] == 0 || (gCurTask->unk7A & 1) == 0
            || (gCurTask->unk88->unk48 & 4) == 0)
        && (gTerrainResult[0] != 1 || (gCurTask->unk88->unk48 & 1) == 0)
@@ -2554,7 +2554,7 @@ s32 sub_0803fd20(s32 a0)
     return gUnk_0873AF30[gPlayerStates[a0].unk4B][1];
 }
 
-s32 sub_0803fd90(void)
+s32 PlayerCheckSkid(void)
 {
     if (gLatchedHeldKeys[gCurTask->unk88->unk00] & 16)
     {
@@ -2670,7 +2670,7 @@ s32 PlayerCheckFloat(void)
     return gCurTask->unk88->unk01;
 }
 
-s32 sub_08040084(void)
+s32 PlayerCheckAirFloat(void)
 {
     if (gCurTask->unk88->unk06 == 0
      && (gLatchedPressedKeys[gCurTask->unk88->unk00] & 1))
@@ -2678,7 +2678,7 @@ s32 sub_08040084(void)
     return gCurTask->unk88->unk01;
 }
 
-s32 sub_080400c0(void)
+s32 PlayerCheckBButton(void)
 {
     u8 v;
 
@@ -2713,7 +2713,7 @@ s32 sub_080400c0(void)
     if ((gLatchedPressedKeys[gCurTask->unk88->unk00] & 2) == 0)
         goto out;
     gCurTask->unk88->unk3D = 0;
-    v = gUnk_0873D0C4[(gCurTask->unk7B & 1) + gCurTask->unk88->unk0D * 2];
+    v = gAbilityBButtonActions[(gCurTask->unk7B & 1) + gCurTask->unk88->unk0D * 2];
     if (gCurTask->unk88->unk06 == 1)
     {
         if ((gCurTask->unk7B & 1) == 0)
@@ -2737,7 +2737,7 @@ out:
     return gCurTask->unk88->unk01;
 }
 
-s32 sub_08040264(void)
+s32 PlayerCheckEnterWater(void)
 {
     if (gCurTask->unk58 > 0 && PlayerHasCrossedWaterSurface(0) != 0)
         gCurTask->unk88->unk01 = 23;
@@ -2749,7 +2749,7 @@ s32 PlayerCheckEnterDoor(void)
     if ((gLatchedHeldKeys[gCurTask->unk88->unk00] & 64) && gUnk_02007CF0 == 0
      && gCurTask->unk88->unk4C != 0
      && (gCurTask->unk88->unk42 & 1) == 0
-     && sub_08024e40(gCurTask->unk48, gCurTask->unk4A) != 0)
+     && FindDoorAt(gCurTask->unk48, gCurTask->unk4A) != 0)
     {
         gUnk_02007CF0 = 1;
         gUnk_03001F34 = 1;
@@ -2777,7 +2777,7 @@ s32 PlayerCheckDropAbility(void)
     return gCurTask->unk88->unk01;
 }
 
-s32 sub_080403e4(void)
+s32 PlayerCheckStartSwim(void)
 {
     if ((gLatchedPressedKeys[gCurTask->unk88->unk00] & 65) || (gCurTask->unk7A & 1) == 0)
         gCurTask->unk88->unk01 = 23;

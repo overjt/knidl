@@ -5,17 +5,17 @@
 /* player_36280.c (0x08036280-0x08036C93, issue #91).
  *
  * Player action bodies, part 4: per-frame handler 9 and actions 10 and
- * 11.  sub_08036280 (handler 9) is the other half of M09's mode-14
- * coroutine sub_080359f8: a seven-state switch over Task.unk73 that
+ * 11.  PlayerActionFloatUpdate (handler 9) is the other half of M09's mode-14
+ * coroutine PlayerActionFloat: a seven-state switch over Task.unk73 that
  * re-binds the coroutine with the next state (1 on a held A or up, 4 on
  * a newly-pressed B, 2/3/5 from the ground flags Task.unk7A/unk7B).
- * sub_080366c4 (action 10, mode 6) installs the scripts
+ * PlayerActionDuck (action 10, mode 6) installs the scripts
  * gUnk_0873BD28/gUnk_0873CB24 in PlayerState.unk64/unk68 and plays
- * gUnk_0873D4BC[ability][column]; its handler sub_08036888 requests
+ * gUnk_0873D4BC[ability][column]; its handler PlayerActionDuckUpdate requests
  * action 11 on a newly-pressed A or B and 7 on the collision flag
- * gTerrainResult.unk5.  sub_080369b0 (action 11, mode 7) installs the
+ * gTerrainResult.unk5.  PlayerActionSlide (action 11, mode 7) installs the
  * attack hit-box set gUnk_0873CC84 in PlayerState.unk6C; its handler
- * sub_08036b9c registers the box gUnk_0873BE9C with M09's collision
+ * PlayerActionSlideUpdate registers the box gUnk_0873BE9C with M09's collision
  * registry RegisterCollider while the player moves faster than 0xE000 and
  * drops to state 1 below 0x8000. */
 
@@ -54,7 +54,7 @@ void TaskSleepForever(void);
 void TaskSetEntry(void *a, u32 i);
 void TaskSetFrame(s32 a);
 u32 RegisterCollider(u8 idx, s16 x, s16 y, u8 *p);
-void sub_080359f8(void);
+void PlayerActionFloat(void);
 void PlayerStopAxes(s32 a0);
 void PlayerStartSfx(s32 a0, u16 a1);
 s32 PlayerFaceHeldDirection(void);
@@ -75,7 +75,7 @@ void PlayerSetMotionYPreset(s32 a0);
 void sub_08041e8c(void);
 s32 CreatePlayerEffect(s32 a0, s32 a1, s32 a2);
 
-void sub_08036280(void)
+void PlayerActionFloatUpdate(void)
 {
     struct Task *t;
     struct Task *u;
@@ -106,7 +106,7 @@ void sub_08036280(void)
         else if (gCurTask->unk7B & 1)
         {
             gCurTask->unk73 = 4;
-            TaskSetEntry(sub_080359f8, gCurTaskIdx);
+            TaskSetEntry(PlayerActionFloat, gCurTaskIdx);
             break;
         }
         else
@@ -129,7 +129,7 @@ void sub_08036280(void)
         if (gLatchedPressedKeys[gCurTask->unk88->unk00] & 2)
         {
             gCurTask->unk73 = 4;
-            TaskSetEntry(sub_080359f8, gCurTaskIdx);
+            TaskSetEntry(PlayerActionFloat, gCurTaskIdx);
             break;
         }
         break;
@@ -146,20 +146,20 @@ void sub_08036280(void)
         if (t->unk7A & 1)
         {
             t->unk73 = 3;
-            TaskSetEntry(sub_080359f8, gCurTaskIdx);
+            TaskSetEntry(PlayerActionFloat, gCurTaskIdx);
             PlayerStopAxes(2);
             break;
         }
         if (gLatchedHeldKeys[t->unk88->unk00] & 65)
         {
             t->unk73 = 1;
-            TaskSetEntry(sub_080359f8, gCurTaskIdx);
+            TaskSetEntry(PlayerActionFloat, gCurTaskIdx);
             break;
         }
         if (gLatchedPressedKeys[t->unk88->unk00] & 2)
         {
             t->unk73 = 4;
-            TaskSetEntry(sub_080359f8, gCurTaskIdx);
+            TaskSetEntry(PlayerActionFloat, gCurTaskIdx);
             break;
         }
         if (!(t->unk7B & 1))
@@ -167,7 +167,7 @@ void sub_08036280(void)
         PlayerStopAxes(2);
         gCurTask->unk28 = -1;
         gCurTask->unk73 = 5;
-        TaskSetEntry(sub_080359f8, gCurTaskIdx);
+        TaskSetEntry(PlayerActionFloat, gCurTaskIdx);
         break;
     case 3:
         if (PlayerCheckEnterDoor() != 0)
@@ -182,19 +182,19 @@ void sub_08036280(void)
         if (!(u->unk7A & 1))
         {
             u->unk73 = 2;
-            TaskSetEntry(sub_080359f8, gCurTaskIdx);
+            TaskSetEntry(PlayerActionFloat, gCurTaskIdx);
             break;
         }
         if (gLatchedHeldKeys[u->unk88->unk00] & 65)
         {
             u->unk73 = 1;
-            TaskSetEntry(sub_080359f8, gCurTaskIdx);
+            TaskSetEntry(PlayerActionFloat, gCurTaskIdx);
             break;
         }
         if (gLatchedPressedKeys[u->unk88->unk00] & 2)
         {
             u->unk73 = 4;
-            TaskSetEntry(sub_080359f8, gCurTaskIdx);
+            TaskSetEntry(PlayerActionFloat, gCurTaskIdx);
             break;
         }
         break;
@@ -230,13 +230,13 @@ void sub_08036280(void)
         {
             PlayerStopAxes(2);
             gCurTask->unk73 = 1;
-            TaskSetEntry(sub_080359f8, gCurTaskIdx);
+            TaskSetEntry(PlayerActionFloat, gCurTaskIdx);
         }
         else if (gLatchedPressedKeys[gCurTask->unk88->unk00] & 2)
         {
             PlayerStopAxes(2);
             gCurTask->unk73 = 4;
-            TaskSetEntry(sub_080359f8, gCurTaskIdx);
+            TaskSetEntry(PlayerActionFloat, gCurTaskIdx);
         }
         break;
     case 6:
@@ -258,7 +258,7 @@ void sub_08036280(void)
     }
 }
 
-void sub_080366c4(void)
+void PlayerActionDuck(void)
 {
     struct Task *t;
     struct PlayerState *p;
@@ -314,7 +314,7 @@ void sub_080366c4(void)
     }
 }
 
-void sub_08036888(void)
+void PlayerActionDuckUpdate(void)
 {
     s32 dir = gCurTask->unk43;
 
@@ -352,7 +352,7 @@ void sub_08036888(void)
             if (w->unk88->unk4B != w->unk2C || dir != w->unk43)
             {
                 if (gUnk_03001F30 == 0)
-                    TaskSetEntry(sub_080366c4, gCurTaskIdx);
+                    TaskSetEntry(PlayerActionDuck, gCurTaskIdx);
                 else
                     TaskSetEntry(sub_08041e8c, gCurTaskIdx);
             }
@@ -364,7 +364,7 @@ void sub_08036888(void)
         PlayerStopAxes(1);
 }
 
-void sub_080369b0(void)
+void PlayerActionSlide(void)
 {
     struct Task *t;
 
@@ -429,7 +429,7 @@ void sub_080369b0(void)
     TaskSleepForever();
 }
 
-void sub_08036b9c(void)
+void PlayerActionSlideUpdate(void)
 {
     struct Task *t;
     struct PlayerState *p;
@@ -460,7 +460,7 @@ void sub_08036b9c(void)
             if (abs(t->unk54) <= 0x7FFF)
             {
                 t->unk73 = 1;
-                TaskSetEntry(sub_080369b0, gCurTaskIdx);
+                TaskSetEntry(PlayerActionSlide, gCurTaskIdx);
             }
             if (abs(gCurTask->unk54) > 0xE000)
                 RegisterCollider(gCurTaskIdx, gCurTask->unk48, gCurTask->unk4A, gUnk_0873BE9C);

@@ -528,16 +528,16 @@ extern void TaskSetFrameNoFlip(s32 a);
 extern void TaskSetFrameFlip(s32 a);
 extern s32 AddPlayerHealth(s32 a, s32 b);
 extern void SetPlayerAbilityNoHud();
-extern void sub_0800a280(void);
-extern void sub_0800a294();
-extern void sub_0800a4c0();
+extern void HudShowHpBar(void);
+extern void HudStartHpBar();
+extern void HudSetTaskHpBar();
 extern void HudRemoveHpBar(void);
 extern void sub_0800a698(void);
-extern s32 sub_08021bb4(s16 x, s16 y, s32 c, s32 d);
+extern s32 GetCollisionTileAtOffset(s16 x, s16 y, s32 c, s32 d);
 extern void TaskInitWaterFlags(void);
 extern u8 ClampTaskToRoom(struct Task *t);
 extern u32 sub_0802294c();
-extern void sub_080258e0();
+extern void ExitClearedStage();
 extern void sub_08025a30();
 extern void sub_08025acc();
 extern void sub_08025b5c();
@@ -546,7 +546,7 @@ extern void sub_080275cc();
 extern void StartScrollLock();
 extern s32 CreateMapEvent();
 extern void sub_0802ffe8();
-extern void sub_080308e8();
+extern void TaskBreakBlocksNoPlayer();
 extern void sub_08030db8();
 extern void sub_0803e68c();
 extern void sub_08040858();
@@ -1646,13 +1646,13 @@ void sub_080a19ec(void)
     ActorSetAttackBoxSlot(gUnk_02007D00[1], ab->unk60->unk04);
     ActorSetAttackBoxSlot(gUnk_02007D00[0], aa->unk60->unk04);
     gUnk_0200AFF8 = 0;
-    sub_0800a280();
-    sub_0800a294(tb->unk78 * 2, tb->unk78);
+    HudShowHpBar();
+    HudStartHpBar(tb->unk78 * 2, tb->unk78);
     while (gUnk_0200AFF8 == 0)
         TaskYieldTrampoline(1);
     gUnk_0200AFF8 = 0;
-    sub_0800a280();
-    sub_0800a294(ta->unk78 * 2, ta->unk78);
+    HudShowHpBar();
+    HudStartHpBar(ta->unk78 * 2, ta->unk78);
     while (gUnk_0200AFF8 == 0)
         TaskYieldTrampoline(1);
     if (gUnk_030023B0 != 0)
@@ -1853,7 +1853,7 @@ s32 sub_080a1ec4(void)
 {
     RequestScreenShake(4);
     sub_0806d4e4(1, 0);
-    sub_0800a4c0();
+    HudSetTaskHpBar();
     PlaySfx(510);
     CreateChildTaskHere(162, 1);
     if (gCurTask->unk46 != -1)
@@ -1907,7 +1907,7 @@ void sub_080a2020(void)
 /* sub_080a2030 (0x080A2030-0x080A2090) */
 void sub_080a2030(void)
 {
-    sub_0800a4c0();
+    HudSetTaskHpBar();
     if (gCurTask->unk4A - gViewRect[2] <= 31)
         TaskSetMotionY(128 << 9, 168 << 5, 192 << 11);
     else

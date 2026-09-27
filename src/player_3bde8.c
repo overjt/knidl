@@ -16,7 +16,7 @@
  * three spark records gUnk_02007E90[player][]; sub_0803cbd8 (M09's
  * sub_0803332c) steps the knock-back script
  * gUnk_0873A994[PlayerState.filler2A][PlayerState.unk28] into the 8.8
- * offsets PlayerState.unk24/unk26; sub_0803ccd8 (M09's sub_08034f8c)
+ * offsets PlayerState.unk24/unk26; sub_0803ccd8 (M09's PlayerActionFall)
  * applies step n of the 8.8 motion table gUnk_0873AEBC. */
 
 /* gUnk_02007E90[4][3]: M04's per-player spark records (src/player_10358.c) */

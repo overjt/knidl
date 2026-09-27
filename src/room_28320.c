@@ -4,12 +4,12 @@
 
 /* room_28320.c (0x08028320-0x08028B8B, issue #93).
  *
- * Room start-up services.  sub_08028320 clears the door-object slots
+ * Room start-up services.  SpawnDoorObjects clears the door-object slots
  * gDoorObjectTasks[32][3], finds the door the player entered by and spawns
  * an M08 stage object for every locked or special door (a 9-way switch on
  * the door kind, gated by the save flags gUnk_08732348/gUnk_03002400);
  * CalcBg3Parallax computes the BG3 parallax factors, CalcRoomBounds the room
- * bounds, sub_08028990 the multi-player group bounds and CameraResetBounds
+ * bounds, CameraResetBoundsToGroup the multi-player group bounds and CameraResetBounds
  * copies the room bounds into the camera and per-player bounds. */
 
 struct MapCell
@@ -97,7 +97,7 @@ extern s8 gUnk_030023E0;
 extern s8 gUnk_03002384;
 extern s8 gStageIndex;
 extern u8 gUnk_0200AF00;
-extern u8 gUnk_02007D58[];
+extern u8 gUsedSubGameDoors[];
 extern u8 gUnk_0200AF08;
 extern u8 gUnk_0200B04C;
 extern s8 gUnk_03002444;
@@ -131,7 +131,7 @@ s32 sub_0802f7dc(s32 x, s32 y, s32 a, s32 b);
 s32 sub_0802fa3c(s32 x, s32 y, s32 a, s32 b);
 s32 sub_0802fdf4(s32 x, s32 y, s32 a, s32 b);
 
-void sub_08028320(void)
+void SpawnDoorObjects(void)
 {
     s32 i, x, y, k, m, r;
     u32 v;
@@ -243,7 +243,7 @@ void sub_08028320(void)
                 gDoorObjectTasks[i][0] = sub_0802fdf4(x, y, 1, i);
             break;
         case 3:
-            if (!(gUnk_02007D58[gStageIndex] & 1))
+            if (!(gUsedSubGameDoors[gStageIndex] & 1))
                 gDoorObjectTasks[i][0] = sub_0802f1fc(x, y, 1, i);
             else if (i == gUnk_0200B034 && gUnk_0200AF00 == 2)
                 gDoorObjectTasks[i][0] = sub_0802f1fc(x, y, 1, i);
@@ -251,7 +251,7 @@ void sub_08028320(void)
                 gDoorObjectTasks[i][0] = sub_0802f1fc(x, y, 0, i);
             break;
         case 4:
-            if (!(gUnk_02007D58[gStageIndex] & 2))
+            if (!(gUsedSubGameDoors[gStageIndex] & 2))
                 gDoorObjectTasks[i][0] = sub_0802f31c(x, y, 1, i);
             else if (i == gUnk_0200B034 && gUnk_0200AF00 == 2)
                 gDoorObjectTasks[i][0] = sub_0802f31c(x, y, 1, i);
@@ -259,7 +259,7 @@ void sub_08028320(void)
                 gDoorObjectTasks[i][0] = sub_0802f31c(x, y, 0, i);
             break;
         case 5:
-            if (!(gUnk_02007D58[gStageIndex] & 4))
+            if (!(gUsedSubGameDoors[gStageIndex] & 4))
                 gDoorObjectTasks[i][0] = sub_0802f05c(x, y, 1, i);
             else if (i == gUnk_0200B034 && gUnk_0200AF00 == 2)
                 gDoorObjectTasks[i][0] = sub_0802f05c(x, y, 1, i);
@@ -352,7 +352,7 @@ void CalcRoomBounds(void)
     gRoomBounds[3] = gRoomHeight * 16 - gRoomBorder[1] - 80;
 }
 
-void sub_08028990(void)
+void CameraResetBoundsToGroup(void)
 {
     s32 x0, x1, y0, y1, v, cx, cy, i;
     s16 t;

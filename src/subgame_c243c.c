@@ -18,7 +18,7 @@
  *   sub_080c2740   the results state machine (gAirGrindResults.unk00): a place
  *       jingle (songs 0x81D/0x81C/0x817), in the extra mode (gPrevGameState ==
  *       5) the stars counted up and handed to the linked players
- *       (sub_08009eb8) before M35's SubGameQuit ends the screen, otherwise a
+ *       (AddPlayerLivesNoHud) before M35's SubGameQuit ends the screen, otherwise a
  *       retry/quit choice and a three-way level choice passed to M35's
  *       SubGameReplay.
  *   sub_080c2b8c / sub_080c2ba8 / sub_080c2ccc   the per-frame callback, the
@@ -181,7 +181,7 @@ void BlendColors(u16 *src, u16 *dst, s32 ratio, s32 count, u16 *out);
 s32 PlayBgm(s32 songId);
 s32 PlaySfx(s32 id);
 void TaskSleepForever(void);                                     /* end the running task */
-s32 sub_08009eb8(s32 a, u32 b);
+s32 AddPlayerLivesNoHud(s32 a, u32 b);
 void SubGameReplay(s32 a0);
 void SubGameQuit(void);
 void SubGameCheckEnd(void);
@@ -384,13 +384,13 @@ void sub_080c2740(void)
                     if (pal < gAirGrindPtr->unk448) {
                         switch (gAirGrindResults.unk0C[gAirGrindResults.unk08[i]]) {
                         case 0:
-                            sub_08009eb8(3, pal);
+                            AddPlayerLivesNoHud(3, pal);
                             break;
                         case 1:
-                            sub_08009eb8(2, pal);
+                            AddPlayerLivesNoHud(2, pal);
                             break;
                         case 2:
-                            sub_08009eb8(1, pal);
+                            AddPlayerLivesNoHud(1, pal);
                             break;
                         }
                     }

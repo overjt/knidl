@@ -10,7 +10,7 @@
  * and the link-play connection screen sub_0800d85c, which starts the SIO
  * multi-play session for the mode sub_0800da18 picks, waits for the
  * partners (sub_0800da74) and leaves for game state 5 or 13.
- * sub_0800da9c spawns the file-select sprite tasks #238-#240. */
+ * CreateFileSelectSprites spawns the file-select sprite tasks #238-#240. */
 
 extern s8 gLinkSessionMode;
 extern s8 gSoundTestRepeatCount;
@@ -56,8 +56,8 @@ s32 TaskCreateFrom(u32 type, s32 idx);
 u32 ConnectLink(void);
 void LinkErrorScreen(void);
 void LoadGfxSet(u16 a0);
-void sub_0800c20c(void);
-void sub_0800ca10(void);
+void MenuSetupFileMenu(void);
+void MenuEnterModeList(void);
 void sub_0800d310(void);
 void sub_0800d35c(s32 a);
 void sub_0800d404(void);
@@ -126,7 +126,7 @@ void sub_0800d450(void)
                 FadeOutBgm(32);
             RunFrames(8);
             PlayBgm(40);
-            sub_0800c20c();
+            MenuSetupFileMenu();
             return;
         }
         if (gMenuTransitionTimer == 0) {
@@ -202,11 +202,11 @@ void sub_0800d85c(void)
                 BgScrollStartX(0x100000, 256, 3);
                 StartHBlankScroll(6);
                 RunFrames(8);
-                sub_0800c20c();
+                MenuSetupFileMenu();
                 return;
             }
             LoadGfxSet(41);
-            sub_0800ca10();
+            MenuEnterModeList();
             return;
         }
         if (gUnk_02007FC8 == 0) {
@@ -270,7 +270,7 @@ s32 sub_0800da74(void)
     return r;
 }
 
-void sub_0800da9c(s32 mode)
+void CreateFileSelectSprites(s32 mode)
 {
     s32 i;
     struct Task *t;

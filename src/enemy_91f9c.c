@@ -21,7 +21,7 @@
  * multi-hit dive, sub_080930ac the four-way finisher whose case 3 spawns the
  * actor 154 at gUnk_030023B4/gUnk_030023D4, and sub_08093380 the defeat
  * sequence.  sub_080934b8 is the shake helper the first states yield to and
- * sub_080934f8 is the collision probe: ten sub_08021bb4 samples along
+ * sub_080934f8 is the collision probe: ten GetCollisionTileAtOffset samples along
  * gUnk_08743AB8, mapped through the terrain-class table gUnk_087339F0 into a
  * two-bit result that picks the next Task.unk28 direction from gUnk_08743AC2.
  * sub_0809364c / sub_080936a0 / sub_08093780 are the shared step sequences,
@@ -117,7 +117,7 @@ extern u8 TaskGetYDirBitToNearestPlayer(void);
 extern s32 CreateChildTaskAt(u32 type, s16 xArg, s16 yArg, u8 keepPrio);
 extern s32 CreateChildTaskAtOffsetFacing(u32 type, s16 dx, s16 dy, u8 keepPrio);
 extern void sub_08068920(s32 i, u8 c);
-extern s32 sub_08021bb4(s16 x, s16 y, s32 c, s32 d);
+extern s32 GetCollisionTileAtOffset(s16 x, s16 y, s32 c, s32 d);
 extern void TaskGetPosSlot(u32 i);
 extern void sub_080685ec(s32 i, s32 j, u8 c);
 extern s32 TaskFindNearestPlayer(void);
@@ -1118,7 +1118,7 @@ void sub_080934f8(void)
     for (i = 9; i >= 0; i--)
     {
         t = gCurTask;
-        m = sub_08021bb4(t->unk48, t->unk4A, gUnk_08743AB8[i] * t->unk43, 0);
+        m = GetCollisionTileAtOffset(t->unk48, t->unk4A, gUnk_08743AB8[i] * t->unk43, 0);
         if (m == -1)
             m = 1;
         if (gUnk_087339F0[m] != 0)

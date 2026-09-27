@@ -6,12 +6,12 @@
  *
  * Menu sprite tasks, first part: the file-select screen.  Task types #238
  * and #239 (sub_0800daf8, sub_0800db64 with body sub_0800dbdc; three of
- * each, spawned by sub_0800da9c) slide the three save-slot sprites in with
+ * each, spawned by CreateFileSelectSprites) slide the three save-slot sprites in with
  * sub_0800dc98 and recolour a slot when the cursor moves; #240
  * (Task_FileSelectCursor, body sub_0800dda0) is the cursor; #241 (sub_0800de6c,
  * body sub_0800dfdc) a sprite group that slides with the screen; #242
  * (Task_FileMenuHighlight, body sub_0800e148) the file-menu highlight, which
- * marks the selected entry (sub_0800e28c) and loads its picture
+ * marks the selected entry (MenuUpdateFileMenuPalette) and loads its picture
  * (MenuLoadPicture: LZ77 into 0x02020000, one 2 KiB part to 0x06004200). */
 
 struct SaveSlot
@@ -69,7 +69,7 @@ void sub_0800dc98(void);
 void sub_0800dda0(void);
 void sub_0800dfdc(void);
 void sub_0800e148(void);
-void sub_0800e28c(void);
+void MenuUpdateFileMenuPalette(void);
 s32 MenuLoadPicture(s32 id, s32 part);
 
 void sub_0800daf8(void)
@@ -328,7 +328,7 @@ void sub_0800e148(void)
         BlendColors(gUnk_08559B68[w->unk2C], gUnk_08559B68[w->unk30], (u16)w->unk34, 10, gUnk_0300153C);
         LoadGfxSet(23);
         if (gFileMenuCursor != gCurTask->unk28) {
-            sub_0800e28c();
+            MenuUpdateFileMenuPalette();
             MenuLoadPicture(0, gFileMenuCursor);
             gCurTask->unk28 = gFileMenuCursor;
         }
@@ -344,7 +344,7 @@ void sub_0800e148(void)
     }
 }
 
-void sub_0800e28c(void)
+void MenuUpdateFileMenuPalette(void)
 {
     s32 i;
     u16 *p;

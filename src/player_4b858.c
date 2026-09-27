@@ -9,7 +9,7 @@
  * eight states, a stance with six moves.  A fresh entry starts in
  * state 6 with the 120-frame timer PlayerState.unk14 and Task.unk80 =
  * 22: the stance (animation 0xE84, effect 28 on the ground) picks the
- * next move from the input - up 0, back 1 or forward 2 (sub_0803f884,
+ * next move from the input - up 0, back 1 or forward 2 (PlayerGetHeldDirection,
  * kept in gUnk_03001F2C), down 3, A 4, leaving the ground 5 - or a
  * random one (gUnk_0873B65E[RandomRange(4)]) when the timer runs out,
  * and goes to state 7 once PlayerState.unk08 is 0.  States 0-5 are the
@@ -42,7 +42,7 @@ s32 PlaySfxIfLocalPlayer(s32 a0, u16 a1);
 s32 PlayerLand(s32 a0);
 void PlayerStartOffsetScript(s32 a0);
 void PlayerTurnToHeldDirection(void);
-s32 sub_0803f884(void);
+s32 PlayerGetHeldDirection(void);
 void PlayerStopAtCeilingAndWall(void);
 s32 PlayerHasCrossedWaterSurface(s32 a);
 s32 PlayerRequestLocomotion(void);
@@ -114,7 +114,7 @@ loop:
                 b->unk73 = 4;
                 goto loop;
             }
-            k = sub_0803f884();
+            k = PlayerGetHeldDirection();
             gUnk_03001F2C = k;
             if (k != 0)
             {
@@ -478,7 +478,7 @@ void sub_0804c4ac(void)
             struct Task *t = gCurTask;
             if (t->unk28 == 0 && !(t->unk7A & 1) && (s8)t->unk88->unk16 != -1) {
                 s32 k, x, v;
-                k = sub_0803f884();
+                k = PlayerGetHeldDirection();
                 gUnk_03001F2C = k;
                 if (k != 0) {
                     if (k == 1)
