@@ -14,8 +14,9 @@
  * SendRecvDone inside the declared 0x4A of StopTimer -- see the report;
  * symbols.csv's sub_08007102/0x22 entry is a mis-split of SendRecvDone.
  *
- *   Timer3Intr  serial IRQ: stop the timeout timer, re-arm SIOCNT.
- *   SerialCB  VBlank IRQ for the link session: snapshots SIOCNT, then
+ *   Timer3Intr  timer-3 IRQ (gIntrTable[1]): stop the timeout timer, re-arm
+ *               SIOCNT (pokeruby's Timer3Intr).
+ *   SerialCB  serial IRQ (gIntrTable[0]) for the link session: snapshots SIOCNT, then
  *                 either runs the transfer step (state 4) or the connect/ID
  *                 handshake (state 2).            [src/early_6d28.c]
  *   StartTransfer  re-arm the SIOCNT start bit.

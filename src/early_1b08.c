@@ -10,7 +10,7 @@
  *                  bits11-10 = OBJ mode bits OR'd into attr0
  *      +2  flags   bits15-11 = palette bank / blend control,
  *                  bits10-0  = base tile number added to attr2
- *      +4  y bias, +6 x bias, +8 pointer to the OAM template stream
+ *      +4  x bias, +6 y bias, +8 pointer to the OAM template stream
  * The template stream is copied into the OAM shadow at gOamBuffer with the
  * biases added (attr0 y in bits 7-0, attr1 x in bits 8-0, both wrapping in
  * their own field width) until a template entry has bit12 set ("last") or the

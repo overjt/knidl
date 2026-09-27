@@ -44,7 +44,7 @@
  *   DequeueRecvCmds  dequeue one 4x4 receive frame out of the receive ring
  *                 (gLink+0x110, u16[4][4][30]); when nothing is
  *                 pending the caller's matrix is zeroed and [12] is set.
- *   LinkVSync  timeout tick (called from the timer-3 IRQ path).
+ *   LinkVSync  per-VBlank link tick, called from VBlankIntr (pokeruby's LinkVSync).
  *
  * symbols.csv hides FOUR unreferenced/extra functions in this range
  * (lesson 2.13 / zone lesson 14): TaskSaveSkipMask and sub_0800668c inside the

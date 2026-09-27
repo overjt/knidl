@@ -13,12 +13,14 @@
  *   gTasks  struct Task[64] (0x90 bytes each) task control blocks
  *   gCurTask  struct Task *  currently running task
  *   gTaskCount  s32   live task count
- *   gTaskResumeAddrs (0x030025F0) u32[64] per-slot flag word from the ROM table
- *   gTaskStackPtrs  u32[64] per-slot 256-byte scratch pointer into 0x0203BFE0
+ *   gTaskResumeAddrs (0x030025F0) u32[64] per-slot coroutine resume address
+ *                (the type's entry from the ROM table at first)
+ *   gTaskStackPtrs  u32[64] per-slot saved coroutine stack pointer (256-byte
+ *                stacks below 0x0203BFE0)
  *   gUnk_03002700  u8[]  per-class round-robin write index
  *   gTaskClassLists  u8[]  per-class slot list (class*64 + n)
  *   gTaskListRefs  u16[64] packed (class << 8) | n back-reference
- *   gTaskTypes  ROM table, 8 bytes per task type: u8 class, u32 flags
+ *   gTaskTypes  ROM table, 8 bytes per task type: u8 class, u32 entry
  */
 
 struct Task
