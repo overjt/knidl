@@ -255,7 +255,8 @@ def main():
             seg[3] if seg else "?")
         if key not in rows:
             rows[key] = {"total": 0, "pointer": 0, "coincidence": 0,
-                         "unknown": 0, "start": seg[0] if seg else 0}
+                         "unknown": 0, "heuristic": 0,
+                         "start": seg[0] if seg else 0}
             order.append(key)
         row = rows[key]
         row["total"] += 1
@@ -263,11 +264,16 @@ def main():
             cls = "pointer"
         else:
             c = coin.covering(a, a + 4)
-            if c:
+            if c and not c[0].endswith("-nextlabel"):
                 cls = "coincidence"
                 kinds_total[c[0]] = kinds_total.get(c[0], 0) + 1
             else:
+                # a value table whose element type is proven but whose
+                # extent is only the span to the next label (docs/data.md
+                # 5.1) is counted apart and not treated as proven
                 cls = "unknown"
+                if c:
+                    row["heuristic"] += 1
                 unknown.append(("0x%08X" % a, "0x%08X" % v))
         row[cls] += 1
         if cls != "coincidence":
@@ -280,18 +286,23 @@ def main():
     print("pointer census of the %d unrelocated words (insertion at %s):"
           % (len(words), shift.get("lowest", "?")))
     print()
-    print("%-46s %8s %8s %11s %8s"
-          % ("holding segment", "words", "pointer", "coincidence", "unknown"))
-    tot = {"total": 0, "pointer": 0, "coincidence": 0, "unknown": 0}
+    print("%-46s %8s %8s %11s %8s %9s"
+          % ("holding segment", "words", "pointer", "coincidence", "unknown",
+             "(heur.)"))
+    tot = {"total": 0, "pointer": 0, "coincidence": 0, "unknown": 0,
+           "heuristic": 0}
     for key in sorted(order, key=lambda k: rows[k]["start"]):
         r = rows[key]
         for k in tot:
             tot[k] += r[k]
-        print("%-46s %8d %8d %11d %8d"
-              % (key, r["total"], r["pointer"], r["coincidence"], r["unknown"]))
-    print("%-46s %8d %8d %11d %8d"
+        print("%-46s %8d %8d %11d %8d %9s"
+              % (key, r["total"], r["pointer"], r["coincidence"], r["unknown"],
+                 r["heuristic"] or ""))
+    print("%-46s %8d %8d %11d %8d %9d"
           % ("total", tot["total"], tot["pointer"], tot["coincidence"],
-             tot["unknown"]))
+             tot["unknown"], tot["heuristic"]))
+    print("(heur.): unknown words inside a value table whose extent is only "
+          "the span to the next label")
     print()
     print("coincidences by evidence: " + ", ".join(
         "%s %d" % (k, n) for k, n in sorted(kinds_total.items(),

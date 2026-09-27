@@ -3,7 +3,7 @@
 @ Segment lib_rodata_fir_tables: 0x080CFF00-0x080D0000 (data, 0x100 bytes)
 @ Structure only (docs/data.md): labels, symbolic pointer words and
 @ .incbin slices of the user's baserom.gba; no ROM bytes are committed.
-@ 8 label(s), 0 code pointer(s), 0 data pointer(s), 9 .incbin slice(s) (0x100 bytes).
+@ 11 label(s), 0 code pointer(s), 0 data pointer(s), 12 .incbin slice(s) (0x100 bytes).
 
 	.section .lib_rodata_fir_tables, "a"
 	.global	lib_rodata_fir_tables
@@ -14,7 +14,16 @@ gUnk_080CFF01:
 	.incbin	"baserom.gba", 0xCFF01, 0x1B
 	.global	gUnk_080CFF1C
 gUnk_080CFF1C:
-	.incbin	"baserom.gba", 0xCFF1C, 0x36
+	.incbin	"baserom.gba", 0xCFF1C, 0x1E
+	.global	gUnk_080CFF3A
+gUnk_080CFF3A:
+	.incbin	"baserom.gba", 0xCFF3A, 0x8
+	.global	gUnk_080CFF42
+gUnk_080CFF42:
+	.incbin	"baserom.gba", 0xCFF42, 0x8
+	.global	gUnk_080CFF4A
+gUnk_080CFF4A:
+	.incbin	"baserom.gba", 0xCFF4A, 0x8
 	.global	gUnk_080CFF52
 gUnk_080CFF52:
 	.incbin	"baserom.gba", 0xCFF52, 0xE
