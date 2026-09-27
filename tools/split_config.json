@@ -11398,19 +11398,19 @@
       "asset": true
     },
     {
-      "name": "sound_samples_1",
+      "name": "room_bg_anims",
       "asset": true
     },
     {
-      "name": "level_graphics_palettes_2",
+      "name": "room_data",
       "asset": true
     },
     {
-      "name": "sound_samples_2",
+      "name": "room_metatiles",
       "asset": true
     },
     {
-      "name": "level_graphics_palettes_3",
+      "name": "room_bg3_maps",
       "asset": true
     },
     {
@@ -11455,7 +11455,10 @@
       "asset": true
     },
     {
-      "name": "sample_set_index"
+      "name": "room_bg_anim_lists"
+    },
+    {
+      "name": "sprite_frame_lists"
     },
     {
       "name": "zero_padding"

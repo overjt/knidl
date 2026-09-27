@@ -214,6 +214,13 @@ def main():
         repls[-1] = section_block(post_name, post[0]) if post else ''
         for i in range(1, len(covered) - 1):
             repls[i] = ''
+    # the comment line above the first block describes that segment: with
+    # no pre part it now belongs above the post part
+    cm = re.search(r'([ \t]*/\*[^\n]*\*/[ \t]*\n)$', old_ld[:spans[0][0]])
+    if cm and not pre and post and len(covered) == 1:
+        spans[0] = (cm.start(1), spans[0][1])
+        repls[0] = repls[0].replace(section_block(post_name, post[0]),
+                                    cm.group(1).rstrip('\n') + '\n' + section_block(post_name, post[0]))
     new_ld = old_ld
     for (a, b), r in sorted(zip(spans, repls), reverse=True):
         new_ld = new_ld[:a] + r + new_ld[b:]

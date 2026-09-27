@@ -1633,33 +1633,33 @@ SECTIONS
         KEEP(*(.level_object_tables)) KEEP(*(.level_object_tables.tail))
     } > ROM
 
-    /* Level data / uncompressed graphics / palettes */
+    /* Level graphics and palettes (asset); its last 12 bytes are the stage-count table gUnk_08334EB4 */
     .level_graphics_palettes 0x08120000 : {
         KEEP(*(.level_graphics_palettes)) KEEP(*(.level_graphics_palettes.tail))
     } > ROM
 
-    /* Sound sample data (PCM), block 1 */
-    .sound_samples_1 0x083356E0 : {
-        KEEP(*(.sound_samples_1)) KEEP(*(.sound_samples_1.tail))
+    /* Room BG animations (#36 phase 2): 30 scripts, 181 tile frames, 14 palette fades, 28 palettes (LoadRoomBgAnims, src/camera_2d01c.c) */
+    .room_bg_anims 0x08334EC0 : {
+        KEEP(*(.room_bg_anims)) KEEP(*(.room_bg_anims.tail))
     } > ROM
 
-    /* Interleaved level graphics/palettes, block 2 */
-    .level_graphics_palettes_2 0x0834EEE8 : {
-        KEEP(*(.level_graphics_palettes_2)) KEEP(*(.level_graphics_palettes_2.tail))
+    /* Room records (#36 phase 2): 333 RoomDefs, each after its metatile map, block layer, block table, doors and object list */
+    .room_data 0x0835CFD4 : {
+        KEEP(*(.room_data)) KEEP(*(.room_data.tail))
     } > ROM
 
-    /* Sound sample data (PCM), block 2 */
-    .sound_samples_2 0x08350AF8 : {
-        KEEP(*(.sound_samples_2)) KEEP(*(.sound_samples_2.tail))
+    /* Room metatile tables (#36 phase 2): 23 LZ77 RoomDef.metatileTiles streams */
+    .room_metatiles 0x083A862C : {
+        KEEP(*(.room_metatiles)) KEEP(*(.room_metatiles.tail))
     } > ROM
 
-    /* Interleaved level graphics/palettes, block 3 */
-    .level_graphics_palettes_3 0x083A85D4 : {
-        KEEP(*(.level_graphics_palettes_3)) KEEP(*(.level_graphics_palettes_3.tail))
+    /* Room BG3 maps (#36 phase 2): 32 struct BgMap, 25 LZ77 and 7 raw */
+    .room_bg3_maps 0x083B5538 : {
+        KEEP(*(.room_bg3_maps)) KEEP(*(.room_bg3_maps.tail))
     } > ROM
 
     /* Compressed graphics (LZ77/RLE-class) */
-    .compressed_graphics 0x083D0000 : {
+    .compressed_graphics 0x083D0148 : {
         KEEP(*(.compressed_graphics)) KEEP(*(.compressed_graphics.tail))
     } > ROM
 
@@ -1723,9 +1723,24 @@ SECTIONS
         KEEP(*(.song_tail_misc_audio)) KEEP(*(.song_tail_misc_audio.tail))
     } > ROM
 
-    /* End-of-ROM index (sample sets) */
-    .sample_set_index 0x087E1D58 : {
-        KEEP(*(.sample_set_index)) KEEP(*(.sample_set_index.tail))
+    /* room_table - functional table in C (src/data/room_table.c, carved by tools/carve_data.py) */
+    .room_table 0x087E1D58 : {
+        build/src/data/room_table.o(.rodata)
+    } > ROM
+
+    /* Room BG-animation script lists (#36 phase 2): 12 NULL-ended lists of the 30 scripts and their index gRoomBgAnimScripts */
+    .room_bg_anim_lists 0x087E1E78 : {
+        KEEP(*(.room_bg_anim_lists)) KEEP(*(.room_bg_anim_lists.tail))
+    } > ROM
+
+    /* room_lists - functional table in C (src/data/room_lists.c, carved by tools/carve_data.py) */
+    .room_lists 0x087E1F58 : {
+        build/src/data/room_lists.o(.rodata)
+    } > ROM
+
+    /* Sprite frame lists (#36 phase 2): 23 per-sheet lists of frame pointers, one per extended GfxHeader trailer; no code reference found */
+    .sprite_frame_lists 0x087E2570 : {
+        KEEP(*(.sprite_frame_lists)) KEEP(*(.sprite_frame_lists.tail))
     } > ROM
 
     /* Zero padding to ROM end */
