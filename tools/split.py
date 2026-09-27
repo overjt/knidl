@@ -1081,6 +1081,10 @@ class DataPlan(object):
         # Pointer slots whose bit 0 is a flag, not part of the address
         # (a "targets" "tagged" field): emitted as `label+1` when set.
         self.tagged_slots = set()
+        # Slots of tables marked "proof": "format": pointers proven by a
+        # format parse that no code reads (docs/data.md 5.3), counted apart
+        # from the consumer-proven ones.
+        self.format_slots = set()
         # The m4a song structure (config "m4a", tools/m4a_struct.py,
         # docs/data.md 3.4): a label at every song header, track position,
         # voicegroup and wave, and a pointer slot at every pointer field,
@@ -1229,8 +1233,15 @@ class DataPlan(object):
                 raise ConfigError("pointer slot 0x%08X (%s) is not inside a "
                                   "data segment" % (addr, why))
             slots.setdefault(addr, why)
+            if fmt:
+                self.format_slots.add(addr)
 
         for index, table in enumerate(pointer_tables):
+            proof = table.get("proof", "consumer")
+            if proof not in ("consumer", "format"):
+                raise ConfigError("pointer_tables[%d].proof must be "
+                                  "\"consumer\" or \"format\"" % index)
+            fmt = proof == "format"
             base, layout = self._table_slots(table, index)
             in_c = [r for r in self.c_ranges
                     if r[0] <= base[0][0] < r[1]] if base else []

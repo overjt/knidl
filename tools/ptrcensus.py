@@ -313,6 +313,11 @@ def main():
         "%s %d" % (k, n) for k, n in sorted(kinds_total.items(),
                                             key=lambda kv: -kv[1])))
     print("providers: " + ", ".join(n for n, _r in results))
+    fmt = [t for t in cfg.get("pointer_tables", []) if t.get("proof") == "format"]
+    if fmt:
+        print("(%d pointer table(s) are symbolized on format-only evidence, "
+              "no consumer: docs/data.md 5.3; make datastats counts their "
+              "words)" % len(fmt))
     if args.by_target:
         print()
         print("proven-pointer and unknown words by the segment they point "

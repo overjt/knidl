@@ -211,7 +211,8 @@ def main():
     ]
     files = segment_files(set(n for _s, _e, _k, n in data_segs))
     total = {"symbolic": 0, "code": 0, "data": 0}
-    proof = {"rule": 0, "table": 0, "heuristic": 0, "ram": 0, "m4a": 0}
+    proof = {"rule": 0, "table": 0, "heuristic": 0, "ram": 0, "m4a": 0,
+             "format": 0}
     rows = []
     labels_total = 0
     incbins_total = 0
@@ -246,7 +247,9 @@ def main():
             if a in symbolic_at:
                 if PTR_LO <= v < PTR_HI:
                     row["symbolic"] += 1
-                    if a in plan.heuristic_slots:
+                    if a in plan.format_slots:
+                        proof["format"] += 1
+                    elif a in plan.heuristic_slots:
                         proof["heuristic"] += 1
                     elif a in plan.m4a_slots:
                         proof["m4a"] += 1
@@ -280,6 +283,8 @@ def main():
           % proof["heuristic"])
     print("        %d in the m4a song structure (tools/m4a_struct.py)"
           % proof["m4a"])
+    print("        %d format-only (no consumer; tables with \"proof\": "
+          "\"format\")" % proof["format"])
     print("    %d not symbolic, points at code" % total["code"])
     print("    %d not symbolic, points at data" % total["data"])
     print("symbolic words pointing at RAM (outside the count above): %d"
