@@ -8,14 +8,14 @@
  * 17 and 20-25.  gLatchedHeldKeys[player] is the held-keys mask the bodies
  * test (0x30 left/right, 0x41 A or up, 0x80 down; gLatchedPressedKeys[] is the
  * newly-pressed one).  PlayerActionSwim (action 23) is the twin of M11's
- * sub_08043014: a four-state machine over Task.unk73 picked from the keys
+ * sub_08043014: a four-state machine over Task.variant picked from the keys
  * (left/right = 3, A/up = 1, down = 2, else 0) that plays a row of
  * gUnk_0873D9DA[4][4] chosen by the ability; its per-frame handler 20,
  * PlayerActionSwimUpdate, re-picks the state and re-binds the coroutine when the
  * keys change.  Actions 24-28 (PlayerActionStandInWater, PlayerActionWalkInWater, PlayerActionSwallowInWater,
  * PlayerActionSpitInWater, sub_0803b9a0) are short animation scripts, the last a
  * four-way directional pick; handlers 21-25 run M11's predicates and
- * request the next action through PlayerState.unk01.  sub_0803bd90
+ * request the next action through PlayerState.requestedAction.  sub_0803bd90
  * (action 18) installs handler 17, the leaf sub_0803bdd4. */
 
 extern u16 gLatchedHeldKeys[];             /* held keys, latched per player (M11) */
@@ -50,18 +50,18 @@ void PlayerActionSwim(void)
     struct Task *v;
     s16 *anim;
 
-    gCurTask->unk88->unk05 = gCurTask->unk88->unk04;
-    gCurTask->unk88->unk04 = 15;
-    gCurTask->unk15 = 20;
+    gCurTask->player->prevMode = gCurTask->player->mode;
+    gCurTask->player->mode = 15;
+    gCurTask->updateState = 20;
     t = gCurTask;
-    if (t->unk88->unk06 != 0)
+    if (t->player->mouthState != 0)
     {
-        if (t->unk88->unk05 != 15)
+        if (t->player->prevMode != 15)
         {
-            t->unk73 = 0;
+            t->variant = 0;
             u = gCurTask;
-            u->unk88->unk14 = 1;
-            if (gLatchedHeldKeys[u->unk88->unk00] & 65)
+            u->player->unk14 = 1;
+            if (gLatchedHeldKeys[u->player->playerIndex] & 65)
                 u->unk28 = 2;
             else
                 u->unk28 = 5;
@@ -73,37 +73,37 @@ void PlayerActionSwim(void)
             TaskYieldTrampoline(gCurTask->unk28);
             for (gCurTask->unk6C = 0; (s16)gCurTask->unk6C <= 3; gCurTask->unk6C++)
             {
-                gCurTask->unk3C++;
+                gCurTask->frame++;
                 TaskYieldTrampoline(gCurTask->unk28);
             }
             TaskSetFrame(0x161);
             TaskYieldTrampoline(gCurTask->unk28);
             for (gCurTask->unk6C = 0; (s16)gCurTask->unk6C <= 9; gCurTask->unk6C++)
             {
-                gCurTask->unk3C++;
+                gCurTask->frame++;
                 TaskYieldTrampoline(gCurTask->unk28);
-                if (gCurTask->unk3C == 356)
-                    PlaySfxIfLocalPlayer(135, gCurTask->unk88->unk00);
+                if (gCurTask->frame == 356)
+                    PlaySfxIfLocalPlayer(135, gCurTask->player->playerIndex);
             }
-            PlaySfxIfLocalPlayer(135, gCurTask->unk88->unk00);
+            PlaySfxIfLocalPlayer(135, gCurTask->player->playerIndex);
         }
     }
     v = gCurTask;
-    if (v->unk88->unk05 != 15)
+    if (v->player->prevMode != 15)
     {
-        if (gLatchedHeldKeys[v->unk88->unk00] & 48)
-            v->unk73 = 3;
-        else if (gLatchedHeldKeys[v->unk88->unk00] & 65)
-            v->unk73 = 1;
-        else if (gLatchedHeldKeys[v->unk88->unk00] & 128)
-            v->unk73 = 2;
+        if (gLatchedHeldKeys[v->player->playerIndex] & 48)
+            v->variant = 3;
+        else if (gLatchedHeldKeys[v->player->playerIndex] & 65)
+            v->variant = 1;
+        else if (gLatchedHeldKeys[v->player->playerIndex] & 128)
+            v->variant = 2;
         else
-            v->unk73 = 0;
+            v->variant = 0;
         PlayerSetWaterMotionY();
         gCurTask->unk2C = 0;
     }
-    gCurTask->unk88->unk3D = 0;
-    switch (gCurTask->unk88->unk0D)
+    gCurTask->player->running = 0;
+    switch (gCurTask->player->ability)
     {
     default:
         anim = gUnk_0873D9DA[0];
@@ -118,7 +118,7 @@ void PlayerActionSwim(void)
         anim = gUnk_0873D9DA[3];
         break;
     }
-    switch (gCurTask->unk73)
+    switch (gCurTask->variant)
     {
     case 0:
         PlayerSetMotionYPreset(13);
@@ -127,9 +127,9 @@ void PlayerActionSwim(void)
         {
             gCurTask->unk2C = 0;
             TaskSetFrame(anim[3]);
-            gCurTask->unk3C++;
+            gCurTask->frame++;
             TaskYieldTrampoline(3);
-            gCurTask->unk3C--;
+            gCurTask->frame--;
             TaskYieldTrampoline(3);
         }
         TaskSetFrame(anim[0]);
@@ -141,22 +141,22 @@ void PlayerActionSwim(void)
         while (1)
         {
         lab1:
-            PlaySfxIfLocalPlayer(120, gCurTask->unk88->unk00);
+            PlaySfxIfLocalPlayer(120, gCurTask->player->playerIndex);
             gCurTask->unk28 = 0;
-            if (gCurTask->unk88->unk5C & 1)
+            if (gCurTask->player->prevWaterFlags & 1)
             {
                 PlayerSetMotionYPreset(15);
                 TaskSetFrame((s16)(gCurTask->unk46 + 1));
                 TaskYieldTrampoline(2);
                 for (gCurTask->unk6C = 0; (s16)gCurTask->unk6C <= 4; gCurTask->unk6C++)
                 {
-                    gCurTask->unk3C++;
+                    gCurTask->frame++;
                     TaskYieldTrampoline(2);
                 }
                 gCurTask->unk6C = 0;
                 do
                 {
-                    gCurTask->unk3C++;
+                    gCurTask->frame++;
                     if (gCurTask->unk28 != 0)
                         goto lab1;
                     TaskYieldTrampoline(1);
@@ -164,7 +164,7 @@ void PlayerActionSwim(void)
                         goto lab1;
                     TaskYieldTrampoline(1);
                 } while ((s16)++gCurTask->unk6C <= 4);
-                gCurTask->unk68 = 0x10000;
+                gCurTask->speedLimitY = 0x10000;
             }
             TaskSetFrame(gCurTask->unk46);
             gCurTask->unk6C = 0;
@@ -174,7 +174,7 @@ void PlayerActionSwim(void)
                     goto lab1;
                 TaskYieldTrampoline(1);
             } while ((s16)++gCurTask->unk6C <= 14);
-            if (gLatchedHeldKeys[gCurTask->unk88->unk00] & 65)
+            if (gLatchedHeldKeys[gCurTask->player->playerIndex] & 65)
                 goto lab1;
             gCurTask->unk6C = 0;
             do
@@ -189,19 +189,19 @@ void PlayerActionSwim(void)
     case 2:
         PlayerSetMotionYPreset(14);
         PlayerSetMotionXPreset(11, 4);
-        gCurTask->unk88->unk14 = 15;
+        gCurTask->player->unk14 = 15;
         TaskSetFrame(anim[3]);
         TaskYieldTrampoline(3);
-        gCurTask->unk3C++;
+        gCurTask->frame++;
         TaskYieldTrampoline(3);
-        gCurTask->unk3C++;
+        gCurTask->frame++;
         break;
     case 3:
         PlayerSetMotionXPreset(11, 3);
         gCurTask->unk28 = 0;
-        if (gCurTask->unk88->unk5C & 1)
+        if (gCurTask->player->prevWaterFlags & 1)
         {
-            if (gLatchedHeldKeys[gCurTask->unk88->unk00] & 65)
+            if (gLatchedHeldKeys[gCurTask->player->playerIndex] & 65)
                 PlayerSetMotionYPreset(12);
             else
                 PlayerSetMotionYPreset(13);
@@ -211,42 +211,42 @@ void PlayerActionSwim(void)
             PlayerSetMotionYPreset(13);
             gCurTask->unk28 = 10;
         }
-        gCurTask->unk88->unk14 = 15;
+        gCurTask->player->unk14 = 15;
         gCurTask->unk46 = anim[2];
         while (1)
         {
-            PlaySfxIfLocalPlayer(120, gCurTask->unk88->unk00);
+            PlaySfxIfLocalPlayer(120, gCurTask->player->playerIndex);
             TaskSetFrame(gCurTask->unk46);
             TaskYieldTrampoline(3);
-            gCurTask->unk3C++;
+            gCurTask->frame++;
             TaskYieldTrampoline(3);
-            gCurTask->unk3C++;
+            gCurTask->frame++;
             TaskYieldTrampoline(2);
-            gCurTask->unk3C++;
+            gCurTask->frame++;
             TaskYieldTrampoline(2);
-            gCurTask->unk3C++;
+            gCurTask->frame++;
             TaskYieldTrampoline(3);
-            gCurTask->unk3C++;
+            gCurTask->frame++;
             TaskYieldTrampoline(3);
-            gCurTask->unk3C++;
+            gCurTask->frame++;
             TaskYieldTrampoline(4);
-            gCurTask->unk3C++;
+            gCurTask->frame++;
             TaskYieldTrampoline(4);
-            gCurTask->unk3C++;
+            gCurTask->frame++;
             TaskYieldTrampoline(3);
-            gCurTask->unk3C++;
+            gCurTask->frame++;
             TaskYieldTrampoline(3);
-            gCurTask->unk3C++;
+            gCurTask->frame++;
             TaskYieldTrampoline(2);
-            gCurTask->unk3C++;
+            gCurTask->frame++;
             TaskYieldTrampoline(2);
-            gCurTask->unk3C++;
+            gCurTask->frame++;
             TaskYieldTrampoline(3);
-            gCurTask->unk3C++;
+            gCurTask->frame++;
             TaskYieldTrampoline(3);
-            gCurTask->unk3C++;
+            gCurTask->frame++;
             TaskYieldTrampoline(4);
-            gCurTask->unk3C++;
+            gCurTask->frame++;
             TaskYieldTrampoline(4);
         }
     }
@@ -266,42 +266,42 @@ void PlayerActionSwimUpdate(void)
         return;
     PlayerTurnToHeldDirection();
     t = gCurTask;
-    if (t->unk88->unk06 != 0)
+    if (t->player->mouthState != 0)
     {
-        if (t->unk58 < 0)
+        if (t->velY < 0)
         {
             t->unk28 = 2;
         }
         else
         {
             t->unk28 = 5;
-            t->unk88->unk14 = 1;
+            t->player->unk14 = 1;
         }
-        if ((gLatchedHeldKeys[gCurTask->unk88->unk00] & 65) && --gCurTask->unk88->unk14 == 0)
+        if ((gLatchedHeldKeys[gCurTask->player->playerIndex] & 65) && --gCurTask->player->unk14 == 0)
         {
-            gCurTask->unk88->unk14 = 15;
+            gCurTask->player->unk14 = 15;
             PlayerSetMotionYPreset(18);
         }
-        if (gLatchedHeldKeys[gCurTask->unk88->unk00] & 128)
+        if (gLatchedHeldKeys[gCurTask->player->playerIndex] & 128)
             PlayerSetMotionYPreset(17);
         else
             PlayerSetMotionYPreset(16);
-        if (gLatchedHeldKeys[gCurTask->unk88->unk00] & 48)
+        if (gLatchedHeldKeys[gCurTask->player->playerIndex] & 48)
             PlayerSetMotionXPreset(11, 3);
         else
             PlayerSetMotionXPreset(11, 4);
     }
     else
     {
-        st = &t->unk73;
+        st = &t->variant;
         switch (*st)
         {
         case 0:
-            if (gLatchedHeldKeys[t->unk88->unk00] & 48)
+            if (gLatchedHeldKeys[t->player->playerIndex] & 48)
                 goto set3a;
-            if (gLatchedHeldKeys[t->unk88->unk00] & 65)
+            if (gLatchedHeldKeys[t->player->playerIndex] & 65)
                 goto set1a;
-            if (!(gLatchedHeldKeys[t->unk88->unk00] & 128))
+            if (!(gLatchedHeldKeys[t->player->playerIndex] & 128))
                 break;
             *st = 2;
             TaskSetEntry(PlayerActionSwim, gCurTaskIdx);
@@ -313,26 +313,26 @@ void PlayerActionSwimUpdate(void)
                the switch value, as in the ROM. */
             do
             {
-                if ((gLatchedHeldKeys[t->unk88->unk00] & 193) == 128)
+                if ((gLatchedHeldKeys[t->player->playerIndex] & 193) == 128)
                     goto set2b;
-                if (gLatchedPressedKeys[t->unk88->unk00] & 48)
+                if (gLatchedPressedKeys[t->player->playerIndex] & 48)
                     goto set3b;
                 if (t->unk28 == -1)
                     goto set0b;
-                if (gLatchedPressedKeys[t->unk88->unk00] & 65)
+                if (gLatchedPressedKeys[t->player->playerIndex] & 65)
                     t->unk28 = 1;
             } while (0);
             break;
         case 2:
             t->unk2C = 0;
-            if (gLatchedHeldKeys[t->unk88->unk00] & 65)
+            if (gLatchedHeldKeys[t->player->playerIndex] & 65)
                 goto set1c;
-            if (gLatchedHeldKeys[t->unk88->unk00] & 48)
+            if (gLatchedHeldKeys[t->player->playerIndex] & 48)
                 goto set3c;
-            if (!(gLatchedHeldKeys[t->unk88->unk00] & 240))
+            if (!(gLatchedHeldKeys[t->player->playerIndex] & 240))
                 goto set0c;
-            if ((s16)t->unk88->unk14 != 0)
-                t->unk88->unk14--;
+            if ((s16)t->player->unk14 != 0)
+                t->player->unk14--;
             break;
         set1d:
             *st = 1;
@@ -343,25 +343,25 @@ void PlayerActionSwimUpdate(void)
             TaskSetEntry(PlayerActionSwim, gCurTaskIdx);
             goto keys;
         dec2:
-            t->unk88->unk14--;
+            t->player->unk14--;
             goto keys;
         case 3:
-            if (gLatchedHeldKeys[t->unk88->unk00] & 48)
+            if (gLatchedHeldKeys[t->player->playerIndex] & 48)
                 goto keys3;
-            if (gLatchedHeldKeys[t->unk88->unk00] & 65)
+            if (gLatchedHeldKeys[t->player->playerIndex] & 65)
                 goto set1d;
-            if (gLatchedHeldKeys[t->unk88->unk00] & 128)
+            if (gLatchedHeldKeys[t->player->playerIndex] & 128)
                 goto set2d;
-            if ((s16)t->unk88->unk14 != 0)
+            if ((s16)t->player->unk14 != 0)
                 goto dec2;
-            if (gLatchedHeldKeys[t->unk88->unk00] & 241)
+            if (gLatchedHeldKeys[t->player->playerIndex] & 241)
                 goto keys;
-            if (t->unk58 < 0)
+            if (t->velY < 0)
                 goto keys;
             *st = 0;
             TaskSetEntry(PlayerActionSwim, gCurTaskIdx);
         keys:
-            if (gLatchedHeldKeys[gCurTask->unk88->unk00] & 48)
+            if (gLatchedHeldKeys[gCurTask->player->playerIndex] & 48)
             {
             keys3:
                 PlayerSetMotionXPreset(11, 3);
@@ -371,7 +371,7 @@ void PlayerActionSwimUpdate(void)
             v = gCurTask;
             if (v->unk28 != 0)
                 goto dec;
-            if (gLatchedHeldKeys[v->unk88->unk00] & 65)
+            if (gLatchedHeldKeys[v->player->playerIndex] & 65)
                 PlayerSetMotionYPreset(12);
             else
                 PlayerSetMotionYPreset(13);
@@ -410,7 +410,7 @@ void PlayerActionSwimUpdate(void)
             TaskSetEntry(PlayerActionSwim, gCurTaskIdx);
             break;
         set25:
-            w->unk88->unk01 = 25;
+            w->player->requestedAction = 25;
             goto out;
         dec:
             v->unk28--;
@@ -420,53 +420,53 @@ void PlayerActionSwimUpdate(void)
     if (PlayerCheckBButton() == 0 && PlayerCheckEnterDoor() == 0)
     {
         x = gCurTask;
-        if (!(x->unk7B & 1))
+        if (!(x->waterFlags & 1))
         {
-            if ((gLatchedHeldKeys[(q = x->unk88)->unk00] & 64) && q->unk06 != 1)
-                q->unk01 = 9;
+            if ((gLatchedHeldKeys[(q = x->player)->playerIndex] & 64) && q->mouthState != 1)
+                q->requestedAction = 9;
             else
-                q->unk01 = 5;
-            gCurTask->unk88->unk3D = 0;
-            gCurTask->unk88->unk0F = 0;
+                q->requestedAction = 5;
+            gCurTask->player->running = 0;
+            gCurTask->player->unk0F = 0;
         }
         else
         {
-            q = x->unk88;
-            if (q->unk06 != 0 || x->unk73 != 1 || !(gLatchedHeldKeys[q->unk00] & 65))
+            q = x->player;
+            if (q->mouthState != 0 || x->variant != 1 || !(gLatchedHeldKeys[q->playerIndex] & 65))
             {
                 w = gCurTask;
-                if (w->unk58 != 0 && (w->unk7A & 1))
+                if (w->velY != 0 && (w->onGround & 1))
                 {
-                    if (w->unk54 != 0)
+                    if (w->velX != 0)
                         goto set25;
-                    w->unk88->unk01 = 24;
+                    w->player->requestedAction = 24;
                 }
             }
         }
     }
 out:
     PlayerStopAtCeilingAndWall();
-    if (gCurTask->unk7A & 1)
+    if (gCurTask->onGround & 1)
         PlayerLand(0);
 }
 
 void PlayerActionStandInWater(void)
 {
-    gCurTask->unk88->unk05 = gCurTask->unk88->unk04;
-    gCurTask->unk88->unk04 = 0;
-    gCurTask->unk15 = 21;
-    if (gCurTask->unk88->unk05 != 0)
+    gCurTask->player->prevMode = gCurTask->player->mode;
+    gCurTask->player->mode = 0;
+    gCurTask->updateState = 21;
+    if (gCurTask->player->prevMode != 0)
     {
         PlayerStopAxes(3);
-        gCurTask->unk28 = gCurTask->unk88->unk4A;
+        gCurTask->unk28 = gCurTask->player->wallSide;
     }
-    if (gCurTask->unk88->unk06 == 1)
+    if (gCurTask->player->mouthState == 1)
     {
         gCurTask->unk46 = 352;
     }
     else
     {
-        switch (gCurTask->unk88->unk0D)
+        switch (gCurTask->player->ability)
         {
         default:
             gCurTask->unk46 = 221;
@@ -492,13 +492,13 @@ void PlayerActionStandInWaterUpdate(void)
     while (PlayerCheckEnterDoor() == 0 && PlayerCheckStartSwim() == 0 && PlayerCheckDuckOrSwallow() == 0
            && PlayerCheckBButton() == 0 && PlayerCheckDropAbility() == 0)
     {
-        if (gLatchedHeldKeys[gCurTask->unk88->unk00] & 48)
+        if (gLatchedHeldKeys[gCurTask->player->playerIndex] & 48)
         {
-            if ((gLatchedHeldKeys[gCurTask->unk88->unk00] & 16) && gCurTask->unk28 == 1)
+            if ((gLatchedHeldKeys[gCurTask->player->playerIndex] & 16) && gCurTask->unk28 == 1)
                 break;
-            if ((gLatchedHeldKeys[gCurTask->unk88->unk00] & 32) && gCurTask->unk28 == 2)
+            if ((gLatchedHeldKeys[gCurTask->player->playerIndex] & 32) && gCurTask->unk28 == 2)
                 break;
-            gCurTask->unk88->unk01 = 25;
+            gCurTask->player->requestedAction = 25;
         }
         break;
     }
@@ -508,19 +508,19 @@ void PlayerActionWalkInWater(void)
 {
     struct Task *t;
 
-    gCurTask->unk88->unk05 = gCurTask->unk88->unk04;
-    gCurTask->unk88->unk04 = 1;
-    gCurTask->unk15 = 22;
+    gCurTask->player->prevMode = gCurTask->player->mode;
+    gCurTask->player->mode = 1;
+    gCurTask->updateState = 22;
     t = gCurTask;
-    if ((u32)abs(t->unk54) > 0x9900)
+    if ((u32)abs(t->velX) > 0x9900)
     {
-        if (t->unk54 < 0)
-            t->unk54 = -0x9900;
+        if (t->velX < 0)
+            t->velX = -0x9900;
         else
-            t->unk54 = 0x9900;
+            t->velX = 0x9900;
     }
     PlayerSetMotionXPreset(9, 72);
-    if (gCurTask->unk88->unk06 == 1)
+    if (gCurTask->player->mouthState == 1)
     {
         while (1)
         {
@@ -528,19 +528,19 @@ void PlayerActionWalkInWater(void)
             TaskYieldTrampoline(5);
             for (gCurTask->unk6C = 0; (s16)gCurTask->unk6C <= 3; gCurTask->unk6C++)
             {
-                gCurTask->unk3C++;
+                gCurTask->frame++;
                 TaskYieldTrampoline(5);
             }
             TaskSetFrame(0x161);
             TaskYieldTrampoline(5);
             for (gCurTask->unk6C = 0; (s16)gCurTask->unk6C <= 9; gCurTask->unk6C++)
             {
-                gCurTask->unk3C++;
+                gCurTask->frame++;
                 TaskYieldTrampoline(5);
             }
         }
     }
-    switch (gCurTask->unk88->unk0D)
+    switch (gCurTask->player->ability)
     {
     default:
         gCurTask->unk46 = 207;
@@ -559,26 +559,26 @@ void PlayerActionWalkInWater(void)
     {
         TaskSetFrame(gCurTask->unk46);
         TaskYieldTrampoline(3);
-        gCurTask->unk3C++;
+        gCurTask->frame++;
         TaskYieldTrampoline(4);
-        gCurTask->unk3C++;
+        gCurTask->frame++;
         TaskYieldTrampoline(10);
-        gCurTask->unk3C++;
+        gCurTask->frame++;
         TaskYieldTrampoline(4);
         for (gCurTask->unk6C = 0; (s16)gCurTask->unk6C <= 4; gCurTask->unk6C++)
         {
-            gCurTask->unk3C++;
+            gCurTask->frame++;
             TaskYieldTrampoline(3);
         }
-        gCurTask->unk3C++;
+        gCurTask->frame++;
         TaskYieldTrampoline(4);
         TaskSetFrame((s16)(gCurTask->unk46 - 6));
         TaskYieldTrampoline(10);
-        gCurTask->unk3C++;
+        gCurTask->frame++;
         TaskYieldTrampoline(4);
         for (gCurTask->unk6C = 0; (s16)gCurTask->unk6C <= 3; gCurTask->unk6C++)
         {
-            gCurTask->unk3C++;
+            gCurTask->frame++;
             TaskYieldTrampoline(3);
         }
     }
@@ -590,13 +590,13 @@ void PlayerActionWalkInWaterUpdate(void)
     while (PlayerCheckEnterDoor() == 0 && PlayerCheckStartSwim() == 0 && PlayerCheckDuckOrSwallow() == 0
            && PlayerCheckBButton() == 0 && PlayerCheckDropAbility() == 0)
     {
-        if (gCurTask->unk54 == 0 && gCurTask->unk64 == 0)
+        if (gCurTask->velX == 0 && gCurTask->speedLimitX == 0)
         {
-            gCurTask->unk88->unk01 = 24;
+            gCurTask->player->requestedAction = 24;
             break;
         }
-        if (!(gCurTask->unk7A & 1))
-            gCurTask->unk88->unk01 = 23;
+        if (!(gCurTask->onGround & 1))
+            gCurTask->player->requestedAction = 23;
         break;
     }
     PlayerSetMotionXPreset(9, 72);
@@ -604,27 +604,27 @@ void PlayerActionWalkInWaterUpdate(void)
 
 void PlayerActionSwallowInWater(void)
 {
-    gCurTask->unk88->unk05 = gCurTask->unk88->unk04;
-    gCurTask->unk88->unk04 = 12;
-    gCurTask->unk15 = 25;
+    gCurTask->player->prevMode = gCurTask->player->mode;
+    gCurTask->player->mode = 12;
+    gCurTask->updateState = 25;
     gCurTask->unk28 = 0;
-    gCurTask->unk88->unk06 = 0;
+    gCurTask->player->mouthState = 0;
     TaskSetFrame(225);
     TaskYieldTrampoline(2);
-    PlaySfxIfLocalPlayer(113, gCurTask->unk88->unk00);
-    gCurTask->unk3C++;
+    PlaySfxIfLocalPlayer(113, gCurTask->player->playerIndex);
+    gCurTask->frame++;
     TaskYieldTrampoline(2);
-    gCurTask->unk3C++;
+    gCurTask->frame++;
     TaskYieldTrampoline(4);
-    gCurTask->unk3C++;
+    gCurTask->frame++;
     TaskYieldTrampoline(2);
-    gCurTask->unk3C++;
+    gCurTask->frame++;
     TaskYieldTrampoline(2);
     TaskSetFrame(227);
     TaskYieldTrampoline(2);
     TaskSetFrame(229);
     TaskYieldTrampoline(8);
-    gCurTask->unk3C++;
+    gCurTask->frame++;
     TaskYieldTrampoline(2);
     gCurTask->unk28++;
     TaskSleepForever();
@@ -636,30 +636,30 @@ void PlayerActionSwallowInWaterUpdate(void)
 
     if (t->unk28 != 0)
     {
-        gLatchedHeldKeys[t->unk88->unk00] = gLatchedPressedKeys[t->unk88->unk00] = 0;
-        if (t->unk7A & 1)
-            t->unk88->unk01 = 24;
+        gLatchedHeldKeys[t->player->playerIndex] = gLatchedPressedKeys[t->player->playerIndex] = 0;
+        if (t->onGround & 1)
+            t->player->requestedAction = 24;
         else
-            t->unk88->unk01 = 23;
+            t->player->requestedAction = 23;
     }
 }
 
 void PlayerActionSpitInWater(void)
 {
-    gCurTask->unk88->unk05 = gCurTask->unk88->unk04;
-    gCurTask->unk88->unk04 = 11;
-    gCurTask->unk15 = 24;
+    gCurTask->player->prevMode = gCurTask->player->mode;
+    gCurTask->player->mode = 11;
+    gCurTask->updateState = 24;
     gCurTask->unk28 = 0;
-    gCurTask->unk88->unk06 = 0;
+    gCurTask->player->mouthState = 0;
     TaskSetFrame(224);
     TaskYieldTrampoline(2);
-    gCurTask->unk3C--;
+    gCurTask->frame--;
     TaskYieldTrampoline(2);
-    if ((s8)gCurTask->unk88->unk07 > 1)
-        CreatePlayerObject(gCurTask->unk88->unk00, 2, 0);
+    if ((s8)gCurTask->player->attachedCount > 1)
+        CreatePlayerObject(gCurTask->player->playerIndex, 2, 0);
     else
-        CreatePlayerObject(gCurTask->unk88->unk00, 1, 0);
-    gCurTask->unk3C--;
+        CreatePlayerObject(gCurTask->player->playerIndex, 1, 0);
+    gCurTask->frame--;
     TaskYieldTrampoline(2);
     gCurTask->unk28++;
     TaskSleepForever();
@@ -671,14 +671,14 @@ void PlayerActionSpitInWaterUpdate(void)
 
     if (t->unk28 != 0)
     {
-        if (!(t->unk7A & 1) || (gLatchedHeldKeys[t->unk88->unk00] & 65))
-            t->unk88->unk01 = 23;
+        if (!(t->onGround & 1) || (gLatchedHeldKeys[t->player->playerIndex] & 65))
+            t->player->requestedAction = 23;
         else
-            t->unk88->unk01 = 24;
+            t->player->requestedAction = 24;
     }
-    if (gCurTask->unk7A & 1)
+    if (gCurTask->onGround & 1)
     {
-        if (gCurTask->unk54 != 0)
+        if (gCurTask->velX != 0)
             PlayerSetMotionXPreset(8, 72);
         PlayerLand(1);
     }
@@ -694,24 +694,24 @@ void sub_0803b9a0(void)
 {
     struct Task *t;
 
-    gCurTask->unk88->unk05 = gCurTask->unk88->unk04;
-    gCurTask->unk88->unk04 = 11;
-    gCurTask->unk15 = 23;
+    gCurTask->player->prevMode = gCurTask->player->mode;
+    gCurTask->player->mode = 11;
+    gCurTask->updateState = 23;
     t = gCurTask;
-    if (t->unk88->unk05 != 11)
+    if (t->player->prevMode != 11)
     {
-        if (gLatchedHeldKeys[t->unk88->unk00] & 240)
+        if (gLatchedHeldKeys[t->player->playerIndex] & 240)
         {
-            if (gLatchedHeldKeys[t->unk88->unk00] & 64)
+            if (gLatchedHeldKeys[t->player->playerIndex] & 64)
                 t->unk28 = 3;
-            else if (gLatchedHeldKeys[t->unk88->unk00] & 128)
+            else if (gLatchedHeldKeys[t->player->playerIndex] & 128)
                 t->unk28 = 1;
-            else if (gLatchedHeldKeys[t->unk88->unk00] & 16)
+            else if (gLatchedHeldKeys[t->player->playerIndex] & 16)
                 t->unk28 = 0;
-            else if (gLatchedHeldKeys[t->unk88->unk00] & 32)
+            else if (gLatchedHeldKeys[t->player->playerIndex] & 32)
                 t->unk28 = 2;
         }
-        else if (t->unk43 == 1)
+        else if (t->facing == 1)
         {
             t->unk28 = 0;
         }
@@ -719,22 +719,22 @@ void sub_0803b9a0(void)
         {
             t->unk28 = 2;
         }
-        gCurTask->unk73 = 0;
+        gCurTask->variant = 0;
         {
             struct Task *u = gCurTask;
 
             u->unk2C = 0;
-            u->unk88->unk14 = 15;
-            if ((u32)abs(u->unk54) > 0x10C00)
+            u->player->unk14 = 15;
+            if ((u32)abs(u->velX) > 0x10C00)
                 TaskSetMotionXFacing(0x10C00, 0x5A5A5A5A);
         }
         if (gUnk_0300244C != 0)
         {
             struct Task *v = gCurTask;
 
-            if ((u32)abs(v->unk58) > 0xE000)
+            if ((u32)abs(v->velY) > 0xE000)
             {
-                v->unk58 = 0xE000;
+                v->velY = 0xE000;
                 PlayerSetMotionYPreset(13);
             }
         }
@@ -742,80 +742,80 @@ void sub_0803b9a0(void)
     switch (gCurTask->unk28)
     {
     case 3:
-        if (gCurTask->unk73 == 0)
+        if (gCurTask->variant == 0)
         {
-            CreatePlayerObject(gCurTask->unk88->unk00, 3, 0);
+            CreatePlayerObject(gCurTask->player->playerIndex, 3, 0);
             while (1)
             {
                 TaskSetFrame(239);
                 TaskYieldTrampoline(3);
-                gCurTask->unk3C++;
+                gCurTask->frame++;
                 TaskYieldTrampoline(3);
             }
         }
         gCurTask->unk28 = -1;
         TaskSetFrame(241);
         TaskYieldTrampoline(3);
-        gCurTask->unk3C++;
+        gCurTask->frame++;
         TaskYieldTrampoline(3);
         gCurTask->unk2C++;
         break;
     case 1:
-        if (gCurTask->unk73 == 0)
+        if (gCurTask->variant == 0)
         {
-            CreatePlayerObject(gCurTask->unk88->unk00, 3, 0);
+            CreatePlayerObject(gCurTask->player->playerIndex, 3, 0);
             while (1)
             {
                 TaskSetFrame(235);
                 TaskYieldTrampoline(3);
-                gCurTask->unk3C++;
+                gCurTask->frame++;
                 TaskYieldTrampoline(3);
             }
         }
         gCurTask->unk28 = -1;
         TaskSetFrame(237);
         TaskYieldTrampoline(3);
-        gCurTask->unk3C++;
+        gCurTask->frame++;
         TaskYieldTrampoline(3);
         gCurTask->unk2C++;
         break;
     case 0:
-        if (gCurTask->unk73 == 0)
+        if (gCurTask->variant == 0)
         {
-            gCurTask->unk43 = 1;
-            CreatePlayerObject(gCurTask->unk88->unk00, 3, 0);
+            gCurTask->facing = 1;
+            CreatePlayerObject(gCurTask->player->playerIndex, 3, 0);
             while (1)
             {
                 TaskSetFrame(231);
                 TaskYieldTrampoline(3);
-                gCurTask->unk3C++;
+                gCurTask->frame++;
                 TaskYieldTrampoline(3);
             }
         }
         gCurTask->unk28 = -1;
         TaskSetFrame(233);
         TaskYieldTrampoline(3);
-        gCurTask->unk3C++;
+        gCurTask->frame++;
         TaskYieldTrampoline(3);
         gCurTask->unk2C++;
         break;
     case 2:
-        if (gCurTask->unk73 == 0)
+        if (gCurTask->variant == 0)
         {
-            gCurTask->unk43 = -1;
-            CreatePlayerObject(gCurTask->unk88->unk00, 3, 0);
+            gCurTask->facing = -1;
+            CreatePlayerObject(gCurTask->player->playerIndex, 3, 0);
             while (1)
             {
                 TaskSetFrame(231);
                 TaskYieldTrampoline(3);
-                gCurTask->unk3C++;
+                gCurTask->frame++;
                 TaskYieldTrampoline(3);
             }
         }
         gCurTask->unk28 = -1;
         TaskSetFrame(233);
         TaskYieldTrampoline(3);
-        gCurTask->unk3C++;
+        gCurTask->frame++;
         TaskYieldTrampoline(3);
         gCurTask->unk2C++;
         break;
@@ -826,11 +826,11 @@ void sub_0803b9a0(void)
 void sub_0803bbf0(void)
 {
     struct Task *t = gCurTask;
-    u8 *st = &t->unk73;
+    u8 *st = &t->variant;
 
     if (*st == 0)
     {
-        if (!(gLatchedHeldKeys[t->unk88->unk00] & 2) && (s16)t->unk88->unk14 == 0)
+        if (!(gLatchedHeldKeys[t->player->playerIndex] & 2) && (s16)t->player->unk14 == 0)
         {
             *st = 1;
             TaskSetEntry(sub_0803b9a0, gCurTaskIdx);
@@ -839,15 +839,15 @@ void sub_0803bbf0(void)
         {
             s32 d = gCurTask->unk28;
 
-            if (gLatchedHeldKeys[gCurTask->unk88->unk00] & 240)
+            if (gLatchedHeldKeys[gCurTask->player->playerIndex] & 240)
             {
-                if (gLatchedHeldKeys[gCurTask->unk88->unk00] & 64)
+                if (gLatchedHeldKeys[gCurTask->player->playerIndex] & 64)
                     d = 3;
-                else if (gLatchedHeldKeys[gCurTask->unk88->unk00] & 128)
+                else if (gLatchedHeldKeys[gCurTask->player->playerIndex] & 128)
                     d = 1;
-                else if (gLatchedHeldKeys[gCurTask->unk88->unk00] & 16)
+                else if (gLatchedHeldKeys[gCurTask->player->playerIndex] & 16)
                     d = 0;
-                else if (gLatchedHeldKeys[gCurTask->unk88->unk00] & 32)
+                else if (gLatchedHeldKeys[gCurTask->player->playerIndex] & 32)
                     d = 2;
             }
             if (d != gCurTask->unk28)
@@ -856,24 +856,24 @@ void sub_0803bbf0(void)
                 TaskSetEntry(sub_0803b9a0, gCurTaskIdx);
             }
         }
-        if ((s16)gCurTask->unk88->unk14 != 0)
-            gCurTask->unk88->unk14--;
+        if ((s16)gCurTask->player->unk14 != 0)
+            gCurTask->player->unk14--;
     }
     else if (t->unk2C != 0 && PlayerCheckStartSwim() == 0)
     {
-        if (!(gCurTask->unk7A & 1) || (gLatchedHeldKeys[gCurTask->unk88->unk00] & 65))
-            gCurTask->unk88->unk01 = 23;
+        if (!(gCurTask->onGround & 1) || (gLatchedHeldKeys[gCurTask->player->playerIndex] & 65))
+            gCurTask->player->requestedAction = 23;
         else
-            gCurTask->unk88->unk01 = 24;
+            gCurTask->player->requestedAction = 24;
     }
-    if (!(gCurTask->unk7B & 1))
+    if (!(gCurTask->waterFlags & 1))
     {
-        if (gLatchedHeldKeys[gCurTask->unk88->unk00] & 64)
-            gCurTask->unk88->unk01 = 9;
+        if (gLatchedHeldKeys[gCurTask->player->playerIndex] & 64)
+            gCurTask->player->requestedAction = 9;
         else
-            gCurTask->unk88->unk01 = 5;
+            gCurTask->player->requestedAction = 5;
     }
-    if (gCurTask->unk7A & 1)
+    if (gCurTask->onGround & 1)
     {
         PlayerLand(1);
         PlayerSetMotionXPreset(8, 72);
@@ -888,16 +888,16 @@ void sub_0803bbf0(void)
 
 void sub_0803bd90(void)
 {
-    gCurTask->unk88->unk05 = gCurTask->unk88->unk04;
-    gCurTask->unk88->unk04 = 5;
-    gCurTask->unk15 = 17;
+    gCurTask->player->prevMode = gCurTask->player->mode;
+    gCurTask->player->mode = 5;
+    gCurTask->updateState = 17;
     PlayerSetMotionXPreset(11, 16);
     PlayerSetMotionYPreset(22);
-    gCurTask->unk7A = 0;
+    gCurTask->onGround = 0;
     TaskSleepForever();
 }
 
 void sub_0803bdd4(void)
 {
-    gCurTask->unk88->unk01 = 7;
+    gCurTask->player->requestedAction = 7;
 }

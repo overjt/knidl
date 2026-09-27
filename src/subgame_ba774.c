@@ -5,18 +5,18 @@
  *   ./tools/fnmatch.sh 0x080BA774 0x080BB528 src/subgame_ba774.c --newpb
  *
  * The reaction duel's round controller (sub-game 0 of src/subgame_b9d0c.c).
- * Task.unk14 is the requested state and Task.unk15 the running one; each of
+ * Task.state is the requested state and Task.updateState the running one; each of
  * the seven states is an <entry, per-frame check> pair dispatched through
  * CallTableEntry: 0x087562FC / 0x08756318 in link play (QuickDrawEnterState /
  * QuickDrawRoundUpdate) and 0x08756334 / 0x08756350 against the computer
- * (QuickDrawEnterStateVsCpu).  A check re-dispatches as soon as Task.unk14 changes.
+ * (QuickDrawEnterStateVsCpu).  A check re-dispatches as soon as Task.state changes.
  *
  *   state 0  wait for the players, then QuickDrawWaitForSignal waits a random delay
  *            (range from 0x087562F6 / 0x087562F0, row gSubGameLevel)
  *            before the signal; the check sends anyone pressing too early
- *            to sub_080babb0, which moves to state 3 once all have
+ *            to QuickDrawFalseStart, which moves to state 3 once all have
  *   state 1  the signal is up: QuickDrawCountPresses collects the players that
- *            pressed into the mask Task.unk2C; sub_080bacbc sends a single
+ *            pressed into the mask Task.unk2C; QuickDrawDecideRound sends a single
  *            presser to state 4 and several to state 5, and QuickDrawIsTimeUp
  *            ends the wait (state 2) once the frame counter Task.unk20
  *            passes 98
@@ -47,8 +47,8 @@ extern u16 gPlayerCount;
 extern struct Task *gCurTask;
 extern struct Task gTasks[];
 extern vs16 gTaskSlotTypes[];
-extern u32 gUnk_087562FC[];
-extern u32 gUnk_08756318[];
+extern u32 gQuickDrawStates[];
+extern u32 gQuickDrawStateUpdates[];
 extern u32 gUnk_08756334[];
 extern u32 gUnk_08756350[];
 
@@ -101,7 +101,7 @@ void sub_080ba78c(void)
 
 void sub_080ba7b0(void)
 {
-    while (gCurTask->unk75 == 0)
+    while (gCurTask->hitTimer == 0)
         TaskYieldTrampoline(1);
     StopBgm();
     sub_080ba900();
@@ -152,7 +152,7 @@ void sub_080ba8cc(void)
     o = &gTasks[t->unk28];
     o->unk1C = 0;
     o->unk18 = 0;
-    o->unk3C = 0;
+    o->frame = 0;
     o->unk24 = 0;
     t->unk20 = 0;
 }
@@ -164,13 +164,13 @@ void sub_080ba900(void)
     if (i != -1)
     {
         struct Task *t = &gTasks[i];
-        t->unk73 = 1;
+        t->variant = 1;
         t->unk18 = 0;
         t->unk1C = 1;
         t->unk20 = 120;
         t->unk24 = -1;
-        t->unk48 = 88;
-        t->unk4A = 24;
+        t->pixelX = 88;
+        t->pixelY = 24;
         t->unk34 = 0;
     }
 }
@@ -183,7 +183,7 @@ void sub_080ba94c(void)
     if (i != -1)
     {
         t = &gTasks[i];
-        t->unk73 = 3;
+        t->variant = 3;
     }
 }
 
@@ -195,7 +195,7 @@ void sub_080ba978(void)
     if (i != -1)
     {
         t = &gTasks[i];
-        t->unk73 = 4;
+        t->variant = 4;
     }
 }
 
@@ -270,18 +270,18 @@ void sub_080baabc(void)
 
 void QuickDrawRound(void)
 {
-    gCurTask->unk04 = (u32)QuickDrawRoundUpdate;
+    gCurTask->updateCallback = (u32)QuickDrawRoundUpdate;
     sub_080ba61c();
     if (gPlayerCount != 1)
     {
-        gCurTask->unk14 = 0;
-        CallTableEntry(gCurTask->unk14, 7, gUnk_087562FC);
+        gCurTask->state = 0;
+        CallTableEntry(gCurTask->state, 7, gQuickDrawStates);
     }
     else
     {
         CreateQuickDrawOpponent();
-        gCurTask->unk14 = 0;
-        CallTableEntry(gCurTask->unk14, 7, gUnk_08756334);
+        gCurTask->state = 0;
+        CallTableEntry(gCurTask->state, 7, gUnk_08756334);
     }
     TaskSleepForever();
 }
@@ -289,13 +289,13 @@ void QuickDrawRound(void)
 void QuickDrawRoundUpdate(void)
 {
     if (gPlayerCount != 1)
-        CallTableEntry(gCurTask->unk15, 7, gUnk_08756318);
+        CallTableEntry(gCurTask->updateState, 7, gQuickDrawStateUpdates);
     else
-        CallTableEntry(gCurTask->unk15, 7, gUnk_08756350);
+        CallTableEntry(gCurTask->updateState, 7, gUnk_08756350);
     SubGameCheckEnd();
 }
 
-void sub_080babb0(s32 a0)
+void QuickDrawFalseStart(s32 a0)
 {
     s32 i;
     struct Task *t;
@@ -317,7 +317,7 @@ void sub_080babb0(s32 a0)
     t->unk6E |= t->unk2C;
     if (gPlayerCount != 1 && (s16)t->unk70 == gPlayerCount)
     {
-        t->unk14 = 3;
+        t->state = 3;
         if (gTaskSlotTypes[62] != -1)
             TaskFree(62);
     }
@@ -340,106 +340,106 @@ u8 QuickDrawFindMatchWinner(void)
     return found;
 }
 
-void sub_080bacbc(s32 a0)
+void QuickDrawDecideRound(s32 a0)
 {
     if (a0 == 1)
-        gCurTask->unk14 = 4;
+        gCurTask->state = 4;
     else
-        gCurTask->unk14 = 5;
+        gCurTask->state = 5;
     QuickDrawFreeze();
 }
 
 void QuickDrawEnterState(void)
 {
-    CallTableEntry(gCurTask->unk14, 7, gUnk_087562FC);
+    CallTableEntry(gCurTask->state, 7, gQuickDrawStates);
 }
 
-void sub_080bad00(void)
+void QuickDrawRoundWait(void)
 {
-    gCurTask->unk15 = 0;
+    gCurTask->updateState = 0;
     PlayBgm(0x823);
     while (gCurTask->unk24 == 0)
         TaskYieldTrampoline(1);
     QuickDrawWaitForSignal();
-    gCurTask->unk14 = 1;
+    gCurTask->state = 1;
     TaskSleepForever();
 }
 
-void sub_080bad44(void)
+void QuickDrawRoundWaitUpdate(void)
 {
     if (gCurTask->unk24 != 0)
     {
         s32 r = QuickDrawCountPresses();
         if (r != 0)
-            sub_080babb0(r);
-        if (gCurTask->unk14 != 0)
+            QuickDrawFalseStart(r);
+        if (gCurTask->state != 0)
             TaskSetEntry(QuickDrawEnterState, gCurTaskIdx);
     }
 }
 
-void sub_080bad80(void)
+void QuickDrawRoundSignal(void)
 {
-    gCurTask->unk15 = 1;
+    gCurTask->updateState = 1;
     QuickDrawStartTimer();
     TaskSleepForever();
 }
 
-void sub_080bad9c(void)
+void QuickDrawRoundSignalUpdate(void)
 {
     s32 r = QuickDrawCountPresses();
 
     if (r != 0)
-        sub_080bacbc(r);
+        QuickDrawDecideRound(r);
     else if (QuickDrawIsTimeUp())
-        gCurTask->unk14 = 2;
-    if (gCurTask->unk14 != 1)
+        gCurTask->state = 2;
+    if (gCurTask->state != 1)
         TaskSetEntry(QuickDrawEnterState, gCurTaskIdx);
 }
 
-void sub_080bade4(void)
+void QuickDrawRoundTimeUp(void)
 {
-    gCurTask->unk15 = 2;
+    gCurTask->updateState = 2;
     sub_080ba78c();
     TaskYieldTrampoline(8);
-    gCurTask->unk14 = 6;
+    gCurTask->state = 6;
     TaskSleepForever();
 }
 
-void sub_080bae0c(void)
+void QuickDrawRoundTimeUpUpdate(void)
 {
-    if (gCurTask->unk14 != 2)
+    if (gCurTask->state != 2)
         TaskSetEntry(QuickDrawEnterState, gCurTaskIdx);
 }
 
-void sub_080bae34(void)
+void QuickDrawRoundAllFalseStart(void)
 {
-    gCurTask->unk15 = 3;
+    gCurTask->updateState = 3;
     sub_080ba7b0();
     TaskYieldTrampoline(8);
-    gCurTask->unk14 = 6;
+    gCurTask->state = 6;
     TaskSleepForever();
 }
 
-void sub_080bae5c(void)
+void QuickDrawRoundAllFalseStartUpdate(void)
 {
-    if (gCurTask->unk14 != 3)
+    if (gCurTask->state != 3)
         TaskSetEntry(QuickDrawEnterState, gCurTaskIdx);
 }
 
-void sub_080bae84(void)
+void QuickDrawRoundWin(void)
 {
-    gCurTask->unk15 = 4;
+    gCurTask->updateState = 4;
     sub_080ba7fc(1);
     TaskYieldTrampoline(80);
-    gCurTask->unk14 = 6;
+    gCurTask->state = 6;
     TaskSleepForever();
 }
 
-void sub_080baeb0(void)
+void QuickDrawRoundWinUpdate(void)
 {
     struct Task *t = gCurTask;
 
-    if (t->unk14 != 4 && t->unk18 != 2)
+    if (t->state != 4 && t->unk18 != 2)
     {
         if (QuickDrawFindMatchWinner())
             gCurTask->unk18 = 2;
@@ -448,24 +448,24 @@ void sub_080baeb0(void)
     }
 }
 
-void sub_080baef0(void)
+void QuickDrawRoundTie(void)
 {
-    gCurTask->unk15 = 5;
+    gCurTask->updateState = 5;
     sub_080ba860();
     TaskYieldTrampoline(8);
-    gCurTask->unk14 = 6;
+    gCurTask->state = 6;
     TaskSleepForever();
 }
 
-void sub_080baf18(void)
+void QuickDrawRoundTieUpdate(void)
 {
-    if (gCurTask->unk14 != 5)
+    if (gCurTask->state != 5)
         TaskSetEntry(QuickDrawEnterState, gCurTaskIdx);
 }
 
-void sub_080baf40(void)
+void QuickDrawRoundNext(void)
 {
-    gCurTask->unk15 = 6;
+    gCurTask->updateState = 6;
     BeginFastFadeOutToWhite();
     while (gFadeSteps != 0)
         TaskYieldTrampoline(1);
@@ -473,15 +473,15 @@ void sub_080baf40(void)
     BeginFastFadeInFromWhite();
     while (gFadeSteps != 0)
         TaskYieldTrampoline(1);
-    gCurTask->unk14 = 0;
+    gCurTask->state = 0;
     TaskSleepForever();
 }
 
-void sub_080baf9c(void)
+void QuickDrawRoundNextUpdate(void)
 {
     struct Task *t = gCurTask;
 
-    if (t->unk14 != 6 && t->unk18 != 2)
+    if (t->state != 6 && t->unk18 != 2)
         TaskSetEntry(QuickDrawEnterState, gCurTaskIdx);
 }
 
@@ -507,7 +507,7 @@ void sub_080bafc8(s32 a0)
     t->unk6E |= t->unk2C;
     if (gPlayerCount != 1 && (s16)t->unk70 == gPlayerCount)
     {
-        t->unk14 = 2;
+        t->state = 2;
         if (gTaskSlotTypes[62] != -1)
             TaskFree(62);
     }
@@ -523,8 +523,8 @@ void CreateQuickDrawOpponent(void)
     if (i != -1)
     {
         t = &gTasks[i];
-        t->unk44 = gCurTaskIdx;
-        t->unk73 = 5;
+        t->parent = gCurTaskIdx;
+        t->variant = 5;
         t->unk74 = gSubGameLevel;
         t->unk76 = 0;
         gCurTask->unk46 = i;
@@ -539,13 +539,13 @@ void sub_080bb0d8(s32 a0)
     if (t->unk20 == o->unk1C)
     {
         if (a0 == 0)
-            t->unk14 = 4;
+            t->state = 4;
         else
-            t->unk14 = 5;
+            t->state = 5;
     }
     else if (a0 == 1)
     {
-        t->unk14 = 3;
+        t->state = 3;
     }
 }
 
@@ -601,17 +601,17 @@ u8 QuickDrawFindMatchWinnerVsCpu(void)
 
 void QuickDrawEnterStateVsCpu(void)
 {
-    CallTableEntry(gCurTask->unk14, 7, gUnk_08756334);
+    CallTableEntry(gCurTask->state, 7, gUnk_08756334);
 }
 
 void sub_080bb258(void)
 {
-    gCurTask->unk15 = 0;
+    gCurTask->updateState = 0;
     PlayBgm(0x823);
     while (gCurTask->unk24 == 0)
         TaskYieldTrampoline(1);
     QuickDrawWaitForSignal();
-    gCurTask->unk14 = 1;
+    gCurTask->state = 1;
     TaskSleepForever();
 }
 
@@ -622,14 +622,14 @@ void sub_080bb29c(void)
         s32 r = QuickDrawCountPresses();
         if (r != 0)
             sub_080bafc8(r);
-        if (gCurTask->unk14 != 0)
+        if (gCurTask->state != 0)
             TaskSetEntry(QuickDrawEnterStateVsCpu, gCurTaskIdx);
     }
 }
 
 void sub_080bb2d8(void)
 {
-    gCurTask->unk15 = 1;
+    gCurTask->updateState = 1;
     QuickDrawStartTimer();
     TaskSleepForever();
 }
@@ -637,7 +637,7 @@ void sub_080bb2d8(void)
 void sub_080bb2f4(void)
 {
     sub_080bb0d8(QuickDrawCountPresses());
-    if (gCurTask->unk14 != 1)
+    if (gCurTask->state != 1)
     {
         QuickDrawFreeze();
         TaskSetEntry(QuickDrawEnterStateVsCpu, gCurTaskIdx);
@@ -646,26 +646,26 @@ void sub_080bb2f4(void)
 
 void sub_080bb328(void)
 {
-    gCurTask->unk15 = 2;
+    gCurTask->updateState = 2;
     sub_080ba7b0();
     gCurTask->unk1C = 0;
     TaskYieldTrampoline(8);
-    gCurTask->unk14 = 6;
+    gCurTask->state = 6;
     TaskSleepForever();
 }
 
 void sub_080bb358(void)
 {
-    if (gCurTask->unk14 != 2)
+    if (gCurTask->state != 2)
         TaskSetEntry(QuickDrawEnterStateVsCpu, gCurTaskIdx);
 }
 
 void sub_080bb380(void)
 {
-    gCurTask->unk15 = 3;
+    gCurTask->updateState = 3;
     sub_080bb174();
     TaskYieldTrampoline(80);
-    gCurTask->unk14 = 6;
+    gCurTask->state = 6;
     TaskSleepForever();
 }
 
@@ -673,7 +673,7 @@ void sub_080bb3a8(void)
 {
     struct Task *t = gCurTask;
 
-    if (t->unk14 != 3 && t->unk18 != 2)
+    if (t->state != 3 && t->unk18 != 2)
     {
         if (QuickDrawFindMatchWinnerVsCpu())
             gCurTask->unk18 = 2;
@@ -684,10 +684,10 @@ void sub_080bb3a8(void)
 
 void sub_080bb3e8(void)
 {
-    gCurTask->unk15 = 4;
+    gCurTask->updateState = 4;
     sub_080bb19c();
     TaskYieldTrampoline(80);
-    gCurTask->unk14 = 6;
+    gCurTask->state = 6;
     TaskSleepForever();
 }
 
@@ -695,28 +695,28 @@ void sub_080bb410(void)
 {
     struct Task *t = gCurTask;
 
-    if (t->unk14 != 4 && t->unk18 != 2)
+    if (t->state != 4 && t->unk18 != 2)
         t->unk18 = 2;
 }
 
 void sub_080bb42c(void)
 {
-    gCurTask->unk15 = 5;
+    gCurTask->updateState = 5;
     sub_080bb1c4();
     TaskYieldTrampoline(8);
-    gCurTask->unk14 = 6;
+    gCurTask->state = 6;
     TaskSleepForever();
 }
 
 void sub_080bb454(void)
 {
-    if (gCurTask->unk14 != 5)
+    if (gCurTask->state != 5)
         TaskSetEntry(QuickDrawEnterStateVsCpu, gCurTaskIdx);
 }
 
 void sub_080bb47c(void)
 {
-    gCurTask->unk15 = 6;
+    gCurTask->updateState = 6;
     BeginFastFadeOutToWhite();
     while (gFadeSteps != 0)
         TaskYieldTrampoline(1);
@@ -727,7 +727,7 @@ void sub_080bb47c(void)
     BeginFastFadeInFromWhite();
     while (gFadeSteps != 0)
         TaskYieldTrampoline(1);
-    gCurTask->unk14 = 0;
+    gCurTask->state = 0;
     TaskSleepForever();
 }
 
@@ -735,6 +735,6 @@ void sub_080bb4fc(void)
 {
     struct Task *t = gCurTask;
 
-    if (t->unk14 != 6 && t->unk18 != 2)
+    if (t->state != 6 && t->unk18 != 2)
         TaskSetEntry(QuickDrawEnterStateVsCpu, gCurTaskIdx);
 }

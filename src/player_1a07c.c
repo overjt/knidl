@@ -26,61 +26,61 @@ void sub_0801a07c(void)
 {
     struct Task *t = gCurTask;
 
-    t->unk00 = (u32)TaskMoveRelativeToParent;
-    t->unk0C = (u32)TaskDrawScreen;
-    t->unk42 = 12;
-    gCurTask->unk38 = gUnk_0874CE90;
-    gCurTask->unk40 = 0;
-    gCurTask->unk4C = 0;
-    gCurTask->unk50 = 0;
+    t->moveCallback = (u32)TaskMoveRelativeToParent;
+    t->drawCallback = (u32)TaskDrawScreen;
+    t->layer = 12;
+    gCurTask->frameTable = gUnk_0874CE90;
+    gCurTask->tileWord = 0;
+    gCurTask->posX = 0;
+    gCurTask->posY = 0;
     TaskStop();
     PlaySfx(0x242);
     gCurTask->unk6C = 0;
     do
     {
-        gCurTask->unk3C = 0;
+        gCurTask->frame = 0;
         TaskYieldTrampoline(1);
-        gCurTask->unk3C = 16;
+        gCurTask->frame = 16;
         TaskYieldTrampoline(1);
-        gCurTask->unk3C = 1;
+        gCurTask->frame = 1;
         TaskYieldTrampoline(1);
-        gCurTask->unk3C = 17;
+        gCurTask->frame = 17;
         TaskYieldTrampoline(1);
-        gCurTask->unk3C = 2;
+        gCurTask->frame = 2;
         TaskYieldTrampoline(1);
-        gCurTask->unk3C = 18;
+        gCurTask->frame = 18;
         TaskYieldTrampoline(1);
-        gCurTask->unk3C = 3;
+        gCurTask->frame = 3;
         TaskYieldTrampoline(1);
-        gCurTask->unk3C = 19;
+        gCurTask->frame = 19;
         TaskYieldTrampoline(1);
-        gCurTask->unk3C = 4;
+        gCurTask->frame = 4;
         TaskYieldTrampoline(1);
-        gCurTask->unk3C = 20;
+        gCurTask->frame = 20;
         TaskYieldTrampoline(1);
-        gCurTask->unk3C = 5;
+        gCurTask->frame = 5;
         TaskYieldTrampoline(1);
-        gCurTask->unk3C = 21;
+        gCurTask->frame = 21;
         TaskYieldTrampoline(1);
-        gCurTask->unk3C = 6;
+        gCurTask->frame = 6;
         TaskYieldTrampoline(1);
-        gCurTask->unk3C = 11;
+        gCurTask->frame = 11;
         TaskYieldTrampoline(1);
-        gCurTask->unk3C = 7;
+        gCurTask->frame = 7;
         TaskYieldTrampoline(1);
-        gCurTask->unk3C = 12;
+        gCurTask->frame = 12;
         TaskYieldTrampoline(1);
-        gCurTask->unk3C = 8;
+        gCurTask->frame = 8;
         TaskYieldTrampoline(1);
-        gCurTask->unk3C = 13;
+        gCurTask->frame = 13;
         TaskYieldTrampoline(1);
-        gCurTask->unk3C = 9;
+        gCurTask->frame = 9;
         TaskYieldTrampoline(1);
-        gCurTask->unk3C = 14;
+        gCurTask->frame = 14;
         TaskYieldTrampoline(1);
-        gCurTask->unk3C = 10;
+        gCurTask->frame = 10;
         TaskYieldTrampoline(1);
-        gCurTask->unk3C = 15;
+        gCurTask->frame = 15;
         TaskYieldTrampoline(1);
         gCurTask->unk6C++;
     } while ((s16)gCurTask->unk6C <= 5);
@@ -104,19 +104,19 @@ void sub_0801a1ec(void)
     s16 y;
 
     t = gCurTask;
-    if (t->unk38 == NULL)
+    if (t->frameTable == NULL)
         return;
-    if (t->unk3C == -1)
+    if (t->frame == -1)
         return;
     mode = 0;
-    if (t->unk3C > 49 && (gFrameCount & 3) == 0)
+    if (t->frame > 49 && (gFrameCount & 3) == 0)
         mode = 73;
     u = gCurTask;
-    dx = u->unk48;
-    dy = u->unk4A;
+    dx = u->pixelX;
+    dy = u->pixelY;
     anim = PlayerLoadFrameTilesAndPalette(mode);
     v = gCurTask;
-    if (v->unk3C > 49)
+    if (v->frame > 49)
     {
         n = v->unk34 + 1;
         v->unk34 = n;
@@ -127,17 +127,17 @@ void sub_0801a1ec(void)
             w->unk34 = 0;
         BlendColors(0x0859A0B0, 0x0859A0D0, gUnk_08757368[gCurTask->unk34], 16,
                      (void *)((u32)gObjPalette
-                              + (((gCurTask->unk40 >> 12) + 1) << 5)));
+                              + (((gCurTask->tileWord >> 12) + 1) << 5)));
     }
     if (gPlayerCount > 1)
         RequestCopy(2, (gLocalPlayer << 5) + 0x080DC628,
-                     (u32)gObjPalette + ((gCurTask->unk40 >> 12) << 5), 22);
+                     (u32)gObjPalette + ((gCurTask->tileWord >> 12) << 5), 22);
     x = dx;
     y = dy;
     if (IsOnScreen(x, y) == 0)
         return;
     q = gCurTask;
-    QueueSprite(q->unk42, anim, q->unk3E, 0x800 | q->unk40, x, y);
+    QueueSprite(q->layer, anim, q->spriteFlags, 0x800 | q->tileWord, x, y);
 }
 
 void sub_0801a310(void)
@@ -151,14 +151,14 @@ void sub_0801a310(void)
     u32 prio;
 
     t = gCurTask;
-    if (t->unk38 == NULL)
+    if (t->frameTable == NULL)
         return;
-    if (t->unk3C == -1)
+    if (t->frame == -1)
         return;
-    prio = t->unk40;
+    prio = t->tileWord;
     dst = ((prio & 0x7FF) << 5) + 0x0600FE00;
-    g = (struct TaskGfx *)t->unk38[t->unk3C];
-    p = g->unk08;
+    g = (struct TaskGfx *)t->frameTable[t->frame];
+    p = g->tiles;
     if (*p != 0xFFFF)
     {
         do
@@ -169,8 +169,8 @@ void sub_0801a310(void)
             dst += 0x400;
         } while (*p != 0xFFFF);
     }
-    RequestCopy(2, (u32)(g->unk04 + 1), (u32)gObjPalette + ((prio >> 12) << 5),
-                 *g->unk04);
+    RequestCopy(2, (u32)(g->palette + 1), (u32)gObjPalette + ((prio >> 12) << 5),
+                 *g->palette);
     u = gCurTask;
-    QueueSprite(u->unk42, g->unk00, u->unk3E, 0x800 | u->unk40, u->unk48, u->unk4A);
+    QueueSprite(u->layer, g->oamTemplate, u->spriteFlags, 0x800 | u->tileWord, u->pixelX, u->pixelY);
 }

@@ -5,8 +5,8 @@
 /* player_4cc7c.c (0x0804CC7C-0x0804DC07, issue #90).
  *
  * Player action bodies, part 23: action 55 and per-frame handler 52.
- * sub_0804cc7c (action 55, mode 13) is an eleven-state `switch
- * (Task.unk73)` (jump table at 0x0804CCE4) over one stance: states 7-10
+ * PlayerActionUFO (action 55, mode 13) is an eleven-state `switch
+ * (Task.variant)` (jump table at 0x0804CCE4) over one stance: states 7-10
  * turn between the stance's four postures, each through a nested `switch
  * (Task.unk24)` on the posture it comes from (animations 0xF88-0xF9E);
  * states 2-6 are its attacks (animations 0xFA0-0xFD3, sounds 208-210 and
@@ -14,7 +14,7 @@
  * 0-5 through CreatePlayerObject; state 1 ends the action.  The states that
  * leave the stance end in a long `bl` to the function's own exit at
  * 0x0804D6C6 (lesson 4.39; the census took it for a function).  Its
- * handler sub_0804d6d0 (jump table at 0x0804D6F0) reads the keys every
+ * handler PlayerActionUFOUpdate (jump table at 0x0804D6F0) reads the keys every
  * frame, re-binds action 55 with the next state (sounds 203-206 and 239,
  * camera preset PlayerSetMotionXPreset(13, 72)), steps the posture timer through
  * gUnk_0873DB34 and hands over to M11's transitions. */
@@ -44,30 +44,30 @@ void PlayerSetMotionXPreset(s32 a0, s32 a1);           /* M11, still asm; M11's 
 s32 CreatePlayerObject(s8 player, u8 variant, s32 arg);
 s32 CreatePlayerEffect(s32 a0, s32 a1, s32 a2);
 
-void sub_0804cc7c(void)
+void PlayerActionUFO(void)
 {
     struct Task *t;
 
-    gCurTask->unk88->unk05 = gCurTask->unk88->unk04;
-    gCurTask->unk88->unk04 = 13;
-    gCurTask->unk15 = 52;
+    gCurTask->player->prevMode = gCurTask->player->mode;
+    gCurTask->player->mode = 13;
+    gCurTask->updateState = 52;
     t = gCurTask;
-    if (t->unk88->unk05 != 13)
+    if (t->player->prevMode != 13)
     {
         t->unk70 = 0;
         t->unk34 = 0;
         t->unk74 = 0;
-        gCurTask->unk73 = 0;
+        gCurTask->variant = 0;
         gCurTask->unk80 = 24;
     }
-    switch (gCurTask->unk73)
+    switch (gCurTask->variant)
     {
     case 0:
         {
             struct Task *u = gCurTask;
 
             u->unk46 = 0;
-            u->unk73 = 7;
+            u->variant = 7;
         }
         gCurTask->unk24 = -1;
     case 7:
@@ -79,13 +79,13 @@ void sub_0804cc7c(void)
             switch (u->unk24)
             {
             case 8:
-                u->unk3C = 0xF90;
+                u->frame = 0xF90;
                 TaskYieldTrampoline(1);
-                gCurTask->unk3C = 0xF8C;
+                gCurTask->frame = 0xF8C;
                 TaskYieldTrampoline(1);
                 break;
             case 9:
-                u->unk3C = 0xF95;
+                u->frame = 0xF95;
                 TaskYieldTrampoline(2);
                 break;
             }
@@ -107,27 +107,27 @@ void sub_0804cc7c(void)
         case 7:
             TaskSetFrame(0xF8C);
             TaskYieldTrampoline(2);
-            gCurTask->unk3C = 0xF90;
+            gCurTask->frame = 0xF90;
             TaskYieldTrampoline(2);
             break;
         case 9:
             TaskSetFrame(0xF95);
             TaskYieldTrampoline(1);
-            gCurTask->unk3C = 0xF88;
+            gCurTask->frame = 0xF88;
             TaskYieldTrampoline(2);
-            gCurTask->unk3C = 0xF9E;
+            gCurTask->frame = 0xF9E;
             TaskYieldTrampoline(2);
-            gCurTask->unk3C = 0xF8C;
+            gCurTask->frame = 0xF8C;
             TaskYieldTrampoline(2);
-            gCurTask->unk3C = 0xF90;
+            gCurTask->frame = 0xF90;
             TaskYieldTrampoline(1);
             break;
         case 10:
             TaskSetFrame(0xF9E);
             TaskYieldTrampoline(2);
-            gCurTask->unk3C = 0xF8C;
+            gCurTask->frame = 0xF8C;
             TaskYieldTrampoline(2);
-            gCurTask->unk3C = 0xF90;
+            gCurTask->frame = 0xF90;
             TaskYieldTrampoline(2);
             break;
         }
@@ -136,11 +136,11 @@ void sub_0804cc7c(void)
         {
             TaskSetFrame(0xF91);
             TaskYieldTrampoline(2);
-            gCurTask->unk3C++;
+            gCurTask->frame++;
             TaskYieldTrampoline(2);
-            gCurTask->unk3C++;
+            gCurTask->frame++;
             TaskYieldTrampoline(2);
-            gCurTask->unk3C++;
+            gCurTask->frame++;
             TaskYieldTrampoline(2);
         }
     case 9:
@@ -149,27 +149,27 @@ void sub_0804cc7c(void)
         case 7:
             TaskSetFrame(0xF88);
             TaskYieldTrampoline(2);
-            gCurTask->unk3C = 0xF95;
+            gCurTask->frame = 0xF95;
             TaskYieldTrampoline(2);
             break;
         case 8:
             TaskSetFrame(0xF90);
             TaskYieldTrampoline(1);
-            gCurTask->unk3C = 0xF8C;
+            gCurTask->frame = 0xF8C;
             TaskYieldTrampoline(2);
-            gCurTask->unk3C = 0xF9E;
+            gCurTask->frame = 0xF9E;
             TaskYieldTrampoline(2);
-            gCurTask->unk3C = 0xF88;
+            gCurTask->frame = 0xF88;
             TaskYieldTrampoline(2);
-            gCurTask->unk3C = 0xF95;
+            gCurTask->frame = 0xF95;
             TaskYieldTrampoline(1);
             break;
         case 10:
             TaskSetFrame(0xF9E);
             TaskYieldTrampoline(2);
-            gCurTask->unk3C = 0xF88;
+            gCurTask->frame = 0xF88;
             TaskYieldTrampoline(2);
-            gCurTask->unk3C = 0xF95;
+            gCurTask->frame = 0xF95;
             TaskYieldTrampoline(2);
             break;
         }
@@ -178,11 +178,11 @@ void sub_0804cc7c(void)
         {
             TaskSetFrame(0xF96);
             TaskYieldTrampoline(2);
-            gCurTask->unk3C++;
+            gCurTask->frame++;
             TaskYieldTrampoline(2);
-            gCurTask->unk3C++;
+            gCurTask->frame++;
             TaskYieldTrampoline(2);
-            gCurTask->unk3C++;
+            gCurTask->frame++;
             TaskYieldTrampoline(2);
         }
     case 10:
@@ -193,9 +193,9 @@ void sub_0804cc7c(void)
                 PlayerFaceHeldDirection();
             TaskSetFrame(0xF96);
             TaskYieldTrampoline(2);
-            gCurTask->unk3C = 0xF88;
+            gCurTask->frame = 0xF88;
             TaskYieldTrampoline(2);
-            gCurTask->unk3C = 0xF9E;
+            gCurTask->frame = 0xF9E;
             TaskYieldTrampoline(2);
             break;
         case 9:
@@ -203,9 +203,9 @@ void sub_0804cc7c(void)
                 PlayerFaceHeldDirection();
             TaskSetFrame(0xF95);
             TaskYieldTrampoline(2);
-            gCurTask->unk3C = 0xF88;
+            gCurTask->frame = 0xF88;
             TaskYieldTrampoline(2);
-            gCurTask->unk3C = 0xF9E;
+            gCurTask->frame = 0xF9E;
             TaskYieldTrampoline(2);
             break;
         case 11:
@@ -214,18 +214,18 @@ void sub_0804cc7c(void)
             TaskYieldTrampoline(2);
             TaskSetFrame(0xFA0);
             TaskYieldTrampoline(1);
-            gCurTask->unk43 = -gCurTask->unk43;
-            if (gLatchedHeldKeys[gCurTask->unk88->unk00] & 48)
+            gCurTask->facing = -gCurTask->facing;
+            if (gLatchedHeldKeys[gCurTask->player->playerIndex] & 48)
             {
-                if (!(gCurTask->unk7B & 1))
+                if (!(gCurTask->waterFlags & 1))
                 {
                     TaskSetMotionXFacing(0x20000, 0x8000);
-                    gCurTask->unk64 = 0x20000;
+                    gCurTask->speedLimitX = 0x20000;
                 }
                 else
                 {
                     TaskSetMotionXFacing(0x10000, 0x4000);
-                    gCurTask->unk64 = 0x10000;
+                    gCurTask->speedLimitX = 0x10000;
                 }
             }
             TaskSetFrame(0xFA0);
@@ -239,11 +239,11 @@ void sub_0804cc7c(void)
         {
             TaskSetFrame(0xF9A);
             TaskYieldTrampoline(5);
-            gCurTask->unk3C++;
+            gCurTask->frame++;
             TaskYieldTrampoline(5);
-            gCurTask->unk3C++;
+            gCurTask->frame++;
             TaskYieldTrampoline(5);
-            gCurTask->unk3C++;
+            gCurTask->frame++;
             TaskYieldTrampoline(5);
         }
     case 2:
@@ -252,122 +252,122 @@ void sub_0804cc7c(void)
         gCurTask->unk70 = 0;
         TaskSetFrame(0xFD1);
         TaskYieldTrampoline(2);
-        gCurTask->unk3C++;
+        gCurTask->frame++;
         TaskYieldTrampoline(2);
         TaskSetFrame(0xFB4);
         TaskYieldTrampoline(2);
-        gCurTask->unk3C++;
+        gCurTask->frame++;
         TaskYieldTrampoline(2);
-        gCurTask->unk3C++;
+        gCurTask->frame++;
         TaskYieldTrampoline(2);
-        gCurTask->unk3C++;
+        gCurTask->frame++;
         TaskYieldTrampoline(2);
         {
             struct Task *u = gCurTask;
 
             u->unk2C++;
-            u->unk88->unk14 = 0;
-            if (!(gLatchedHeldKeys[u->unk88->unk00] & 3))
+            u->player->unk14 = 0;
+            if (!(gLatchedHeldKeys[u->player->playerIndex] & 3))
                 break;
             u->unk6C = 0;
         }
         do
         {
-            gCurTask->unk88->unk14++;
+            gCurTask->player->unk14++;
             TaskSetFrame(0xFB8);
             TaskYieldTrampoline(3);
-            gCurTask->unk3C++;
+            gCurTask->frame++;
             TaskYieldTrampoline(3);
-            gCurTask->unk3C++;
+            gCurTask->frame++;
             TaskYieldTrampoline(3);
-            gCurTask->unk3C++;
+            gCurTask->frame++;
             TaskYieldTrampoline(3);
         } while ((s16)++gCurTask->unk6C <= 2);
-        CreatePlayerEffect(gCurTask->unk88->unk00, 48, 0);
+        CreatePlayerEffect(gCurTask->player->playerIndex, 48, 0);
         for (gCurTask->unk6C = 0; (s16)gCurTask->unk6C <= 4; gCurTask->unk6C++)
         {
-            gCurTask->unk88->unk14++;
+            gCurTask->player->unk14++;
             TaskSetFrame(0xFBC);
             TaskYieldTrampoline(3);
-            gCurTask->unk3C++;
+            gCurTask->frame++;
             TaskYieldTrampoline(3);
-            gCurTask->unk3C++;
+            gCurTask->frame++;
             TaskYieldTrampoline(3);
-            gCurTask->unk3C++;
+            gCurTask->frame++;
             TaskYieldTrampoline(3);
         }
-        PlaySfxIfLocalPlayer(240, gCurTask->unk88->unk00);
-        CreatePlayerEffect(gCurTask->unk88->unk00, 48, 0);
-        gCurTask->unk88->unk14++;
+        PlaySfxIfLocalPlayer(240, gCurTask->player->playerIndex);
+        CreatePlayerEffect(gCurTask->player->playerIndex, 48, 0);
+        gCurTask->player->unk14++;
         while (1)
         {
             TaskSetFrame(0xFC0);
             TaskYieldTrampoline(3);
-            gCurTask->unk3C++;
+            gCurTask->frame++;
             TaskYieldTrampoline(3);
-            gCurTask->unk3C++;
+            gCurTask->frame++;
             TaskYieldTrampoline(3);
-            gCurTask->unk3C++;
+            gCurTask->frame++;
             TaskYieldTrampoline(3);
         }
     case 3:
         gCurTask->unk70 = 0;
         TaskSetFrame(0xFD3);
         TaskYieldTrampoline(4);
-        gCurTask->unk3C++;
+        gCurTask->frame++;
         TaskYieldTrampoline(2);
-        gCurTask->unk3C++;
+        gCurTask->frame++;
         TaskYieldTrampoline(2);
-        CreatePlayerObject(gCurTask->unk88->unk00, 10, 0);
-        CreatePlayerObject(gCurTask->unk88->unk00, 10, 1);
-        CreatePlayerObject(gCurTask->unk88->unk00, 10, 2);
+        CreatePlayerObject(gCurTask->player->playerIndex, 10, 0);
+        CreatePlayerObject(gCurTask->player->playerIndex, 10, 1);
+        CreatePlayerObject(gCurTask->player->playerIndex, 10, 2);
         for (gCurTask->unk6C = 0; (s16)gCurTask->unk6C <= 1; gCurTask->unk6C++)
         {
-            gCurTask->unk3C = 0xFD5;
+            gCurTask->frame = 0xFD5;
             TaskYieldTrampoline(2);
-            gCurTask->unk3C++;
+            gCurTask->frame++;
             TaskYieldTrampoline(3);
         }
         for (gCurTask->unk6C = 0; (s16)gCurTask->unk6C <= 1; gCurTask->unk6C++)
         {
-            gCurTask->unk3C = 0xFD7;
+            gCurTask->frame = 0xFD7;
             TaskYieldTrampoline(2);
-            gCurTask->unk3C++;
+            gCurTask->frame++;
             TaskYieldTrampoline(3);
         }
         for (gCurTask->unk6C = 0; (s16)gCurTask->unk6C <= 1; gCurTask->unk6C++)
         {
-            gCurTask->unk3C = 0xFD9;
+            gCurTask->frame = 0xFD9;
             TaskYieldTrampoline(2);
-            gCurTask->unk3C++;
+            gCurTask->frame++;
             TaskYieldTrampoline(3);
         }
-        gCurTask->unk3C = 0xFD9;
+        gCurTask->frame = 0xFD9;
         TaskYieldTrampoline(2);
-        gCurTask->unk3C = 0xFDB;
+        gCurTask->frame = 0xFDB;
         TaskYieldTrampoline(2);
-        gCurTask->unk3C++;
+        gCurTask->frame++;
         TaskYieldTrampoline(1);
         {
             struct Task *u = gCurTask;
 
             u->unk70++;
-            u->unk3C++;
+            u->frame++;
         }
         TaskYieldTrampoline(4);
-        gCurTask->unk3C++;
+        gCurTask->frame++;
         TaskYieldTrampoline(2);
-        gCurTask->unk3C++;
+        gCurTask->frame++;
         TaskYieldTrampoline(4);
-        gCurTask->unk3C++;
+        gCurTask->frame++;
         TaskYieldTrampoline(1);
-        gCurTask->unk3C++;
+        gCurTask->frame++;
         TaskYieldTrampoline(1);
-        gCurTask->unk3C++;
+        gCurTask->frame++;
         TaskYieldTrampoline(1);
-        gCurTask->unk3C++;
+        gCurTask->frame++;
         TaskYieldTrampoline(1);
-        gCurTask->unk3C++;
+        gCurTask->frame++;
         TaskYieldTrampoline(1);
         gCurTask->unk70++;
         break;
@@ -376,13 +376,13 @@ void sub_0804cc7c(void)
         PlayerStartOffsetScript(6);
         TaskSetFrame(0xFC4);
         TaskYieldTrampoline(2);
-        CreatePlayerObject(gCurTask->unk88->unk00, 10, 3);
-        PlaySfxIfLocalPlayer(208, gCurTask->unk88->unk00);
+        CreatePlayerObject(gCurTask->player->playerIndex, 10, 3);
+        PlaySfxIfLocalPlayer(208, gCurTask->player->playerIndex);
         {
             struct Task *u = gCurTask;
 
             u->unk70++;
-            u->unk3C++;
+            u->frame++;
         }
         TaskYieldTrampoline(2);
         gCurTask->unk70++;
@@ -391,20 +391,20 @@ void sub_0804cc7c(void)
         gCurTask->unk70 = 0;
         TaskSetFrame(0xFC6);
         TaskYieldTrampoline(1);
-        gCurTask->unk3C++;
+        gCurTask->frame++;
         TaskYieldTrampoline(1);
-        gCurTask->unk3C++;
+        gCurTask->frame++;
         TaskYieldTrampoline(1);
         PlayerStartOffsetScript(7);
-        gCurTask->unk3C = 0xFC4;
+        gCurTask->frame = 0xFC4;
         TaskYieldTrampoline(2);
-        CreatePlayerObject(gCurTask->unk88->unk00, 10, 4);
-        PlaySfxIfLocalPlayer(209, gCurTask->unk88->unk00);
+        CreatePlayerObject(gCurTask->player->playerIndex, 10, 4);
+        PlaySfxIfLocalPlayer(209, gCurTask->player->playerIndex);
         {
             struct Task *u = gCurTask;
 
             u->unk70++;
-            u->unk3C++;
+            u->frame++;
         }
         TaskYieldTrampoline(2);
         gCurTask->unk70++;
@@ -413,35 +413,35 @@ void sub_0804cc7c(void)
         gCurTask->unk70 = 0;
         TaskSetFrame(0xFC6);
         TaskYieldTrampoline(1);
-        gCurTask->unk3C++;
+        gCurTask->frame++;
         TaskYieldTrampoline(1);
-        gCurTask->unk3C++;
+        gCurTask->frame++;
         TaskYieldTrampoline(1);
         PlayerStartOffsetScript(8);
-        gCurTask->unk3C++;
+        gCurTask->frame++;
         TaskYieldTrampoline(2);
-        gCurTask->unk3C++;
+        gCurTask->frame++;
         TaskYieldTrampoline(2);
-        CreatePlayerObject(gCurTask->unk88->unk00, 10, 5);
-        PlaySfxIfLocalPlayer(210, gCurTask->unk88->unk00);
-        gCurTask->unk3C++;
+        CreatePlayerObject(gCurTask->player->playerIndex, 10, 5);
+        PlaySfxIfLocalPlayer(210, gCurTask->player->playerIndex);
+        gCurTask->frame++;
         TaskYieldTrampoline(1);
-        gCurTask->unk3C++;
+        gCurTask->frame++;
         TaskYieldTrampoline(1);
         {
             struct Task *u = gCurTask;
 
             u->unk70++;
-            u->unk3C++;
+            u->frame++;
         }
         TaskYieldTrampoline(1);
-        gCurTask->unk3C++;
+        gCurTask->frame++;
         TaskYieldTrampoline(1);
-        gCurTask->unk3C++;
+        gCurTask->frame++;
         TaskYieldTrampoline(1);
-        gCurTask->unk3C++;
+        gCurTask->frame++;
         TaskYieldTrampoline(1);
-        gCurTask->unk3C = 0xFB4;
+        gCurTask->frame = 0xFB4;
         TaskYieldTrampoline(1);
         gCurTask->unk70++;
         break;
@@ -455,9 +455,9 @@ void sub_0804cc7c(void)
     TaskSleepForever();
 }
 
-void sub_0804d6d0(void)
+void PlayerActionUFOUpdate(void)
 {
-    s32 old = gCurTask->unk73;
+    s32 old = gCurTask->variant;
 
     switch (old)
     {
@@ -476,7 +476,7 @@ void sub_0804d6d0(void)
 
             if (t->unk46 != -1)
             {
-                if (t->unk43 == 1)
+                if (t->facing == 1)
                     TaskSetFrame((s16)(t->unk46 + 0xF88));
                 else
                     TaskSetFrame((s16)(t->unk46 + 0xFA8));
@@ -487,66 +487,66 @@ void sub_0804d6d0(void)
 
             if (t->unk24 == 12)
             {
-                if ((s16)t->unk88->unk14 == 3)
-                    t->unk43 = -t->unk43;
+                if ((s16)t->player->unk14 == 3)
+                    t->facing = -t->facing;
                 TaskSetFrameNoFlip(gUnk_0873DB34[gCurTask->unk46]);
                 {
                     struct Task *u = gCurTask;
 
-                    if (--u->unk88->unk14 == 0)
+                    if (--u->player->unk14 == 0)
                         u->unk24 = 7;
                 }
             }
             else if (PlayerGetHeldDirection() == 2)
             {
                 gCurTask->unk24 = 12;
-                gCurTask->unk88->unk14 = 3;
+                gCurTask->player->unk14 = 3;
                 break;
             }
-            else if (gLatchedHeldKeys[gCurTask->unk88->unk00] & 48)
+            else if (gLatchedHeldKeys[gCurTask->player->playerIndex] & 48)
             {
-                gCurTask->unk73 = 10;
+                gCurTask->variant = 10;
                 gCurTask->unk24 = 7;
                 break;
             }
         }
-        if (gLatchedHeldKeys[gCurTask->unk88->unk00] & 64)
+        if (gLatchedHeldKeys[gCurTask->player->playerIndex] & 64)
         {
-            gCurTask->unk73 = 8;
+            gCurTask->variant = 8;
             gCurTask->unk24 = 7;
         }
-        else if (gLatchedHeldKeys[gCurTask->unk88->unk00] & 128)
+        else if (gLatchedHeldKeys[gCurTask->player->playerIndex] & 128)
         {
-            gCurTask->unk73 = 9;
+            gCurTask->variant = 9;
             gCurTask->unk24 = 7;
         }
         break;
     case 8:
         PlayerSetMotionXPreset(13, 72);
-        if (gLatchedHeldKeys[gCurTask->unk88->unk00] & 128)
+        if (gLatchedHeldKeys[gCurTask->player->playerIndex] & 128)
         {
-            gCurTask->unk73 = 9;
+            gCurTask->variant = 9;
             break;
         }
         goto moving;
     case 9:
         PlayerSetMotionXPreset(13, 72);
-        if (gLatchedHeldKeys[gCurTask->unk88->unk00] & 64)
+        if (gLatchedHeldKeys[gCurTask->player->playerIndex] & 64)
         {
-            gCurTask->unk73 = 8;
+            gCurTask->variant = 8;
             break;
         }
     moving:
         {
             struct Task *t = gCurTask;
 
-            if ((t->unk54 | t->unk5C | t->unk58 | t->unk60) == 0)
+            if ((t->velX | t->accelX | t->velY | t->accelY) == 0)
             {
-                t->unk73 = 7;
+                t->variant = 7;
                 break;
             }
-            if (gLatchedHeldKeys[t->unk88->unk00] & 48)
-                t->unk73 = 10;
+            if (gLatchedHeldKeys[t->player->playerIndex] & 48)
+                t->variant = 10;
         }
         break;
     case 10:
@@ -556,23 +556,23 @@ void sub_0804d6d0(void)
         {
             struct Task *t = gCurTask;
 
-            if ((t->unk54 | t->unk5C) == 0)
+            if ((t->velX | t->accelX) == 0)
             {
-                if (gLatchedHeldKeys[t->unk88->unk00] & 128)
+                if (gLatchedHeldKeys[t->player->playerIndex] & 128)
                 {
-                    t->unk73 = 9;
+                    t->variant = 9;
                     break;
                 }
-                if (gLatchedHeldKeys[t->unk88->unk00] & 64)
-                    t->unk73 = 8;
+                if (gLatchedHeldKeys[t->player->playerIndex] & 64)
+                    t->variant = 8;
             }
         }
         {
             struct Task *t = gCurTask;
 
-            if ((t->unk54 | t->unk5C | t->unk58 | t->unk60) == 0)
+            if ((t->velX | t->accelX | t->velY | t->accelY) == 0)
             {
-                t->unk73 = 7;
+                t->variant = 7;
                 break;
             }
         }
@@ -588,18 +588,18 @@ void sub_0804d6d0(void)
 
             if (t->unk2C != 0)
             {
-                if (!(gLatchedHeldKeys[t->unk88->unk00] & 3))
+                if (!(gLatchedHeldKeys[t->player->playerIndex] & 3))
                 {
-                    s16 n = t->unk88->unk14;
+                    s16 n = t->player->unk14;
 
                     if (n == 0)
-                        t->unk73 = 3;
+                        t->variant = 3;
                     else if (n <= 3)
-                        t->unk73 = 4;
+                        t->variant = 4;
                     else if (n <= 8)
-                        t->unk73 = 5;
+                        t->variant = 5;
                     else
-                        t->unk73 = 6;
+                        t->variant = 6;
                 }
                 else if ((--t->unk30 & 0xFFFF) == 0 && (u32)(t->unk30 & 0xFFFF0000) <= 0xCFFFF)
                 {
@@ -607,19 +607,19 @@ void sub_0804d6d0(void)
                     {
                     case 0:
                         t->unk30 += 0x10008;
-                        PlaySfxIfLocalPlayer(203, t->unk88->unk00);
+                        PlaySfxIfLocalPlayer(203, t->player->playerIndex);
                         break;
                     case 1:
                         t->unk30 += 0x10008;
-                        PlaySfxIfLocalPlayer(204, t->unk88->unk00);
+                        PlaySfxIfLocalPlayer(204, t->player->playerIndex);
                         break;
                     case 2:
                         t->unk30 += 0x10008;
-                        PlaySfxIfLocalPlayer(205, t->unk88->unk00);
+                        PlaySfxIfLocalPlayer(205, t->player->playerIndex);
                         break;
                     default:
                         gCurTask->unk30 |= 5;
-                        PlaySfxIfLocalPlayer(206, gCurTask->unk88->unk00);
+                        PlaySfxIfLocalPlayer(206, gCurTask->player->playerIndex);
                         break;
                     }
                 }
@@ -638,43 +638,43 @@ void sub_0804d6d0(void)
 
             if (m != 0)
             {
-                if (gLatchedPressedKeys[t->unk88->unk00] & 3)
-                    t->unk73 = 2;
-                else if ((gLatchedHeldKeys[t->unk88->unk00] & 240) || m == 2)
+                if (gLatchedPressedKeys[t->player->playerIndex] & 3)
+                    t->variant = 2;
+                else if ((gLatchedHeldKeys[t->player->playerIndex] & 240) || m == 2)
                 {
                     t->unk24 = -1;
-                    t->unk73 = 7;
+                    t->variant = 7;
                 }
             }
         }
         break;
     }
     if (gCurTask->unk34 == 0)
-        PlaySfxIfLocalPlayer(239, gCurTask->unk88->unk00);
+        PlaySfxIfLocalPlayer(239, gCurTask->player->playerIndex);
     {
         struct Task *t = gCurTask;
 
         t->unk34 = (t->unk34 + 1) & 7;
-        switch (t->unk73)
+        switch (t->variant)
         {
         case 7:
         case 8:
         case 9:
         case 10:
-            if (gLatchedPressedKeys[t->unk88->unk00] & 3)
-                t->unk73 = 2;
+            if (gLatchedPressedKeys[t->player->playerIndex] & 3)
+                t->variant = 2;
             else if (PlayerCheckDropAbility() != 0)
-                gCurTask->unk73 = 1;
+                gCurTask->variant = 1;
             break;
         }
     }
     if (gCurTask->unk74 == 0 && PlayerCheckEnterDoor() != 0)
     {
         gCurTask->unk74++;
-        gCurTask->unk73 = 1;
+        gCurTask->variant = 1;
     }
     PlayerStopAtCeilingAndWall();
     PlayerCheckLanding();
-    if (old != gCurTask->unk73)
-        TaskSetEntry(sub_0804cc7c, gCurTaskIdx);
+    if (old != gCurTask->variant)
+        TaskSetEntry(PlayerActionUFO, gCurTaskIdx);
 }

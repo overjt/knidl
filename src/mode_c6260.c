@@ -19,7 +19,7 @@
  *       task and run frames (RunLinkFrame) until it clears gEndingSceneActive,
  *       then tear the level down (sub_08027178).
  *   sub_080c6354 / sub_080c63ec   spawn M38's task type #100 / #101,
- *       retrying every frame until a slot is free, with Task.unk73 = 0. */
+ *       retrying every frame until a slot is free, with Task.variant = 0. */
 
 extern u16 gUnk_02000028;
 extern u16 gLocalPlayer;
@@ -99,7 +99,7 @@ void sub_080c6354(void)
     while ((id = TaskCreateFrom(100, 32)) == -1)
         RunLinkFrame();
     t = &gTasks[id];
-    t->unk73 = 0;
+    t->variant = 0;
 }
 
 void sub_080c6388(void)
@@ -127,5 +127,5 @@ void sub_080c63ec(void)
     while ((id = TaskCreateFrom(101, 32)) == -1)
         RunLinkFrame();
     t = &gTasks[id];
-    t->unk73 = 0;
+    t->variant = 0;
 }

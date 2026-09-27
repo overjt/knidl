@@ -21,14 +21,14 @@ struct MapCell
     /*0x00*/ u8 unk0;
     /*0x01*/ u8 unk1;
     /*0x02*/ u8 unk2;
-    /*0x03*/ u8 unk3;
+    /*0x03*/ u8 collisionTile;
 };
 
 struct BgMap
 {
     /*0x00*/ u16 unk0;
-    /*0x02*/ u16 unk2;
-    /*0x04*/ u16 unk4;
+    /*0x02*/ u16 width;
+    /*0x04*/ u16 height;
     /*0x06*/ u16 unk6[0];
 };
 
@@ -45,35 +45,35 @@ struct Door
 struct RoomDef
 {
     /*0x00*/ u8 filler00[4];
-    /*0x04*/ s8 unk04;
-    /*0x05*/ u8 unk05;
+    /*0x04*/ s8 bgm;
+    /*0x05*/ u8 mapsCompressed;
     /*0x06*/ u8 filler06[2];
-    /*0x08*/ void *unk08;
-    /*0x0C*/ void *unk0C;
+    /*0x08*/ void *metatileMap;
+    /*0x0C*/ void *blockLayer;
     /*0x10*/ void *unk10;
-    /*0x14*/ u16 unk14;
-    /*0x16*/ u16 unk16;
-    /*0x18*/ u16 *unk18;
-    /*0x1C*/ void *unk1C;
-    /*0x20*/ void *unk20;
-    /*0x24*/ u16 unk24;
-    /*0x26*/ u16 unk26;
-    /*0x28*/ u16 *unk28;
-    /*0x2C*/ void *unk2C;
-    /*0x30*/ struct BgMap *unk30;
-    /*0x34*/ u16 unk34;
-    /*0x36*/ u16 unk36;
+    /*0x14*/ u16 width;
+    /*0x16*/ u16 height;
+    /*0x18*/ u16 *bg2Palette;
+    /*0x1C*/ void *bg2Tiles;
+    /*0x20*/ void *metatileTiles;
+    /*0x24*/ u16 borderX;
+    /*0x26*/ u16 borderY;
+    /*0x28*/ u16 *bg3Palette;
+    /*0x2C*/ void *bg3Tiles;
+    /*0x30*/ struct BgMap *bg3Map;
+    /*0x34*/ u16 bg3BorderX;
+    /*0x36*/ u16 bg3BorderY;
     /*0x38*/ u16 unk38;
-    /*0x3A*/ u16 unk3A;
-    /*0x3C*/ u16 unk3C;
-    /*0x3E*/ u16 unk3E;
-    /*0x40*/ u16 unk40;
+    /*0x3A*/ u16 doorCount;
+    /*0x3C*/ u16 objectCount;
+    /*0x3E*/ u16 objectsSortedByY;
+    /*0x40*/ u16 bgAnimSet;
     /*0x42*/ u16 unk42;
-    /*0x44*/ struct Door *unk44;
-    /*0x48*/ void *unk48;
+    /*0x44*/ struct Door *doors;
+    /*0x48*/ void *objects;
     /*0x4C*/ u8 filler4C[4];
-    /*0x50*/ u16 unk50;
-    /*0x52*/ u16 unk52;
+    /*0x50*/ u16 entryX;
+    /*0x52*/ u16 entryY;
     /*0x54*/ u8 unk54;
     /*0x55*/ u8 unk55;
     /*0x56*/ u8 unk56;
@@ -101,8 +101,8 @@ extern u16 gBg3Border[2];
 extern struct MapCell *gRoomMap;
 extern struct MapCell gUnk_02006AA0[];
 extern u8 gRoomBgLayout;
-extern s16 *gUnk_0300558C;
-extern s16 gUnk_0873A318[];
+extern s16 *gCurTileDrifts;
+extern s16 gTileDrifts[];
 extern u8 gUnk_02005574[];
 extern u8 gUnk_02000020;
 extern u8 gUnk_0200B078;
@@ -116,9 +116,9 @@ extern s16 gPlayerLives[];
 extern s16 gPlayerHealth[];
 extern s16 gMaxHealth;
 extern u16 gSavedPlayerAbilities[];
-extern u16 gUnk_02007FA8[];
+extern u16 gSavedPlayerAbilityUses[];
 extern u16 gPlayerAbilities[];
-extern u16 gUnk_0200AF18[];
+extern u16 gPlayerAbilityUses[];
 extern u8 gPlayerCameraMode[];
 extern vu16 gPlayerHeldKeys[];
 extern vu16 gPlayerPressedKeys[];
@@ -209,17 +209,17 @@ void sub_08023948(void)
     LoadBg2Gfx();
     LoadBg3Gfx();
     SelectBg3MapShape();
-    gRoomWidth = gCurRoomDef->unk14;
-    gRoomHeight = gCurRoomDef->unk16;
+    gRoomWidth = gCurRoomDef->width;
+    gRoomHeight = gCurRoomDef->height;
     gRoomMetatileCount = gRoomWidth * gRoomHeight;
-    gRoomBorder[0] = gCurRoomDef->unk24;
-    gRoomBorder[1] = gCurRoomDef->unk26;
-    gBg3Border[0] = gCurRoomDef->unk34;
-    gBg3Border[1] = gCurRoomDef->unk36;
+    gRoomBorder[0] = gCurRoomDef->borderX;
+    gRoomBorder[1] = gCurRoomDef->borderY;
+    gBg3Border[0] = gCurRoomDef->bg3BorderX;
+    gBg3Border[1] = gCurRoomDef->bg3BorderY;
     gRoomMap = gUnk_02006AA0;
     sub_08027a6c();
     gRoomBgLayout = 0;
-    gUnk_0300558C = gUnk_0873A318;
+    gCurTileDrifts = gTileDrifts;
     *gUnk_02005574 = 0;
     gUnk_02000020 = 0;
     gUnk_0200B078 = 0;
@@ -244,15 +244,15 @@ void sub_08023948(void)
             {
                 gPlayerHealth[i] = gMaxHealth;
                 gSavedPlayerAbilities[i] = 0;
-                gUnk_02007FA8[i] = 0xFFFF;
+                gSavedPlayerAbilityUses[i] = 0xFFFF;
                 AddPlayerLives(-1, i);
             }
             if ((s16)gSavedPlayerAbilities[i] != 0)
             {
                 gPlayerAbilities[i] = gSavedPlayerAbilities[i];
-                gUnk_0200AF18[i] = gUnk_02007FA8[i];
+                gPlayerAbilityUses[i] = gSavedPlayerAbilityUses[i];
                 gSavedPlayerAbilities[i] = 0;
-                gUnk_02007FA8[i] = 0xFFFF;
+                gSavedPlayerAbilityUses[i] = 0xFFFF;
             }
             gActivePlayerMask |= 1 << i;
             gActivePlayerCount++;
@@ -314,19 +314,19 @@ void sub_08023ca0(void)
     LoadBg2Gfx();
     LoadBg3Gfx();
     SelectBg3MapShape();
-    gRoomWidth = gCurRoomDef->unk14;
-    gRoomHeight = gCurRoomDef->unk16;
+    gRoomWidth = gCurRoomDef->width;
+    gRoomHeight = gCurRoomDef->height;
     gRoomMetatileCount = gRoomWidth * gRoomHeight;
-    gRoomBorder[0] = gCurRoomDef->unk24;
-    gRoomBorder[1] = gCurRoomDef->unk26;
-    gBg3Border[0] = gCurRoomDef->unk34;
-    gBg3Border[1] = gCurRoomDef->unk36;
+    gRoomBorder[0] = gCurRoomDef->borderX;
+    gRoomBorder[1] = gCurRoomDef->borderY;
+    gBg3Border[0] = gCurRoomDef->bg3BorderX;
+    gBg3Border[1] = gCurRoomDef->bg3BorderY;
     gRoomMap = gUnk_02006AA0;
     z = 0;
     w = 0;
     sub_08027a6c();
     gRoomBgLayout = z;
-    gUnk_0300558C = gUnk_0873A318;
+    gCurTileDrifts = gTileDrifts;
     gUnk_02005574[0] = z;
     gUnk_02000020 = z;
     gUnk_0200B078 = z;
@@ -354,13 +354,13 @@ void sub_08023e34(void)
 {
     struct Task *t = gCurTask;
 
-    t->unk00 = 0;
-    t->unk0C = (u32)RoomTaskDraw;
-    t->unk04 = (u32)sub_08023ea0;
+    t->moveCallback = 0;
+    t->drawCallback = (u32)RoomTaskDraw;
+    t->updateCallback = (u32)sub_08023ea0;
     if (gUnk_0200AF08 != 0)
-        t->unk08 = (u32)sub_08023f5c;
+        t->lateUpdateCallback = (u32)sub_08023f5c;
     else
-        t->unk08 = (u32)sub_08023f18;
+        t->lateUpdateCallback = (u32)sub_08023f18;
     TaskSleepForever();
 }
 
@@ -368,10 +368,10 @@ void sub_08023e78(void)
 {
     struct Task *t = gCurTask;
 
-    t->unk00 = 0;
-    t->unk0C = 0;
-    t->unk04 = (u32)sub_08023efc;
-    t->unk08 = (u32)sub_08023fa0;
+    t->moveCallback = 0;
+    t->drawCallback = 0;
+    t->updateCallback = (u32)sub_08023efc;
+    t->lateUpdateCallback = (u32)sub_08023fa0;
     TaskSleepForever();
 }
 
@@ -463,25 +463,25 @@ void sub_08023fd4(void)
     LoadBg3Gfx();
     SelectBg3MapShape();
     gUnk_03002444 = 0;
-    gRoomWidth = gCurRoomDef->unk14;
-    gRoomHeight = gCurRoomDef->unk16;
+    gRoomWidth = gCurRoomDef->width;
+    gRoomHeight = gCurRoomDef->height;
     gRoomMetatileCount = gRoomWidth * gRoomHeight;
-    gRoomBorder[0] = gCurRoomDef->unk24;
-    gRoomBorder[1] = gCurRoomDef->unk26;
-    gBg3Border[0] = gCurRoomDef->unk34;
-    gBg3Border[1] = gCurRoomDef->unk36;
+    gRoomBorder[0] = gCurRoomDef->borderX;
+    gRoomBorder[1] = gCurRoomDef->borderY;
+    gBg3Border[0] = gCurRoomDef->bg3BorderX;
+    gBg3Border[1] = gCurRoomDef->bg3BorderY;
     gRoomMap = gRoomMapBuffer;
-    if (gCurRoomDef->unk05 != 0)
-        RequestCopy(8, (u32)gCurRoomDef->unk08, (u32)gRoomMapBuffer, 0);
+    if (gCurRoomDef->mapsCompressed != 0)
+        RequestCopy(8, (u32)gCurRoomDef->metatileMap, (u32)gRoomMapBuffer, 0);
     else
-        CpuSet(gCurRoomDef->unk08, gRoomMapBuffer, (gRoomMetatileCount * 2) & 0x1FFFFF);
-    RequestCopy(8, (u32)gCurRoomDef->unk20, (u32)gMetatileTiles, 0);
+        CpuSet(gCurRoomDef->metatileMap, gRoomMapBuffer, (gRoomMetatileCount * 2) & 0x1FFFFF);
+    RequestCopy(8, (u32)gCurRoomDef->metatileTiles, (u32)gMetatileTiles, 0);
     gUnk_02000020 = 0;
     gUnk_0200B078 = 0;
     gHBlankScrollStarted = 0;
     gRoomUpdateFlags = 31;
     gRoomBgLayout = 0;
-    gUnk_0300558C = gUnk_0873A318;
+    gCurTileDrifts = gTileDrifts;
     *gUnk_02005574 = 0;
     gUnk_02007FB0 = 0;
     ResetBlockAnims();
@@ -506,15 +506,15 @@ void sub_08023fd4(void)
             {
                 gPlayerHealth[i] = gMaxHealth;
                 gSavedPlayerAbilities[i] = 0;
-                gUnk_02007FA8[i] = 0xFFFF;
+                gSavedPlayerAbilityUses[i] = 0xFFFF;
                 AddPlayerLives(-1, i);
             }
             if ((s16)gSavedPlayerAbilities[i] != 0)
             {
                 gPlayerAbilities[i] = gSavedPlayerAbilities[i];
-                gUnk_0200AF18[i] = gUnk_02007FA8[i];
+                gPlayerAbilityUses[i] = gSavedPlayerAbilityUses[i];
                 gSavedPlayerAbilities[i] = 0;
-                gUnk_02007FA8[i] = 0xFFFF;
+                gSavedPlayerAbilityUses[i] = 0xFFFF;
             }
             gActivePlayerMask |= 1 << i;
             gActivePlayerCount++;

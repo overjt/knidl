@@ -209,8 +209,8 @@ void HudAnimateTaskHpBar(void)
             idx = 0;
         else
             idx = gUnk_02005590[gCurTaskIdx - 32];
-        if (gUnk_02008014[idx] != -1 && gCurTask->unk78 > 0) {
-            v = Div(gCurTask->unk78 << 5, gHudHpBarMaxHp);
+        if (gUnk_02008014[idx] != -1 && gCurTask->health > 0) {
+            v = Div(gCurTask->health << 5, gHudHpBarMaxHp);
             if (v != gHudHpBarValues[idx])
                 HudAnimateHpBar(gHudHpBarValues[idx], v, idx);
             gHudHpBarValues[idx] = v;
@@ -229,8 +229,8 @@ void HudSetTaskHpBar(void)
         else
             idx = gUnk_02005590[gCurTaskIdx - 32];
         if (gUnk_02008014[idx] != -1) {
-            if (gCurTask->unk78 > 0)
-                v = Div(gCurTask->unk78 << 5, gHudHpBarMaxHp);
+            if (gCurTask->health > 0)
+                v = Div(gCurTask->health << 5, gHudHpBarMaxHp);
             else
                 v = 0;
             gHudHpBarValues[idx] = v;

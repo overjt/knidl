@@ -81,7 +81,7 @@ void PauseScreen(void)
     s32 pressed;
     u16 mode;
 
-    id = gPlayerStates[gLocalPlayer].unk0D;
+    id = gPlayerStates[gLocalPlayer].ability;
     PlaySfx(232);
     for (i = 0; i < 64; i++)
         TaskSetSkipMask(15, i);
@@ -257,9 +257,9 @@ void sub_08008a00(void)
     }
     gFadeBlankAtWhite = 0;
     for (i = 0; i < gPlayerCount; i++) {
-        if (gPlayerStates[i].unk2C != -1) {
-            StopSfxOnPlayer(gPlayerStates[i].unk2C, gPlayerStates[i].unk2E);
-            gPlayerStates[i].unk2C = -1;
+        if (gPlayerStates[i].sfxPlayer != -1) {
+            StopSfxOnPlayer(gPlayerStates[i].sfxPlayer, gPlayerStates[i].sfxId);
+            gPlayerStates[i].sfxPlayer = -1;
         }
     }
     sub_08027128();

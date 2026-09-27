@@ -32,15 +32,15 @@ void sub_0809cb90(void)
     }
     ActorCheckHits();
     ActorReactToHit();
-    if ((u16)(gCurTask->unk3C - 22) <= 1)
+    if ((u16)(gCurTask->frame - 22) <= 1)
         ActorCheckHitsWithBox((s32)gUnk_08747EF4);
     if (sub_0809f994() != 0)
     {
-        if (gCurTask->unk48 < ((s8 *)gCurTask->unk8C->unk50)[4] + 24)
-            gCurTask->unk48 = ((s8 *)gCurTask->unk8C->unk50)[4] + 24;
+        if (gCurTask->pixelX < ((s8 *)gCurTask->unk8C->terrainBox)[4] + 24)
+            gCurTask->pixelX = ((s8 *)gCurTask->unk8C->terrainBox)[4] + 24;
         else
-            gCurTask->unk48 = 288 - ((s8 *)gCurTask->unk8C->unk50)[5];
-        gCurTask->unk4C = gCurTask->unk48 << 16;
+            gCurTask->pixelX = 288 - ((s8 *)gCurTask->unk8C->terrainBox)[5];
+        gCurTask->posX = gCurTask->pixelX << 16;
         sub_0809f970();
     }
 }

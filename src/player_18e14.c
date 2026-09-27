@@ -6,11 +6,11 @@
  *
  * Animation script 52 of the sequence bank (entry 60 of gUnk_08731FA8, run by
  * task type #92, src/player_10358.c): three sparkles that close in on the
- * anchor task gTasks[Task.unk44].  The particle array gUnk_02006040
+ * anchor task gTasks[Task.parent].  The particle array gUnk_02006040
  * holds per sparkle i an x offset [i], a y offset [i + 3] and an x
  * acceleration [i + 6], all 16.16.  For the first 50 frames a free slot is
  * refilled from the 16-entry start tables gUnk_08732150[0] (x, mirrored by the
- * facing Task.unk43) and gUnk_08732150[1] (y); every frame the x offset closes
+ * facing Task.facing) and gUnk_08732150[1] (y); every frame the x offset closes
  * in (the slot is freed within 10 pixels of the anchor), the y offset shrinks
  * in proportion to it, and each live sparkle is drawn around the anchor, its
  * position left in gUnk_03001F2C/gUnk_03002448.  The script ends after 61
@@ -50,7 +50,7 @@ void sub_08018e14(void)
             {
                 gUnk_02006040[i + 6] = 0;
                 r = RandomRange(16);
-                if ((s8)gCurTask->unk43 == 1)
+                if ((s8)gCurTask->facing == 1)
                     gUnk_02006040[i] = gUnk_08732150[0][r] << 16;
                 else
                     gUnk_02006040[i] = -(gUnk_08732150[0][r] << 16);
@@ -74,9 +74,9 @@ void sub_08018e14(void)
             gUnk_02006040[i + 3] += v;
             if (gUnk_02006040[i] != 0)
             {
-                gUnk_03001F2C = gTasks[gCurTask->unk44].unk48 + (gUnk_02006040[i] >> 16) - 8;
-                gUnk_03002448 = gTasks[gCurTask->unk44].unk4A + (gUnk_02006040[i + 3] >> 16) + 16;
-                QueueSprite(gCurTask->unk42, (u32)gUnk_080D2148, 0, 0, gUnk_03001F2C, gUnk_03002448);
+                gUnk_03001F2C = gTasks[gCurTask->parent].pixelX + (gUnk_02006040[i] >> 16) - 8;
+                gUnk_03002448 = gTasks[gCurTask->parent].pixelY + (gUnk_02006040[i + 3] >> 16) + 16;
+                QueueSprite(gCurTask->layer, (u32)gUnk_080D2148, 0, 0, gUnk_03001F2C, gUnk_03002448);
             }
         }
         gCurTask->unk6C++;

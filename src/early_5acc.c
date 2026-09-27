@@ -5,14 +5,14 @@
 /* early_5acc.c (0x08005ACC-0x08005C4B, issue #63).
  *
  * Three task helpers of the task system (src/early_58e4.c):
- *   TaskIsOnScreen  is the running task's position (Task.unk48/unk4A) on screen,
+ *   TaskIsOnScreen  is the running task's position (Task.pixelX/unk4A) on screen,
  *                 relative to the camera gSpriteCameraX/gSpriteCameraY, with a
  *                 63-pixel margin on every side?
  *   TaskLoadFrameTilesAndPalette  upload the running task's tile stream (its graphics
- *                 descriptor Task.unk38[Task.unk3C], struct TaskGfx) to OBJ VRAM
- *                 at tile Task.unk40 & 0x7FF (or to the 0x0600FE00 bank when
+ *                 descriptor Task.frameTable[Task.frame], struct TaskGfx) to OBJ VRAM
+ *                 at tile Task.tileWord & 0x7FF (or to the 0x0600FE00 bank when
  *                 `alt` is set), then its palette to palette-buffer bank
- *                 Task.unk40 >> 12; returns the descriptor's first word.  A dead
+ *                 Task.tileWord >> 12; returns the descriptor's first word.  A dead
  *                 export: nothing calls it.
  *   TaskLoadFrameTiles  the same without the palette (called by src/early_5d9c.c).
  * The tile stream is a list of (size, data) chunks ended by 0xFFFF, one
@@ -38,8 +38,8 @@ u32 TaskIsOnScreen(void)
     s16 y;
     u16 t;
 
-    x = gCurTask->unk48 - gSpriteCameraX;
-    y = gCurTask->unk4A - gSpriteCameraY;
+    x = gCurTask->pixelX - gSpriteCameraX;
+    y = gCurTask->pixelY - gSpriteCameraY;
     t = x + 63;
     if (t > 366)
         return 0;
@@ -62,14 +62,14 @@ u32 TaskLoadFrameTilesAndPalette(u32 alt)
     u16 *q;
     u16 *pal;
 
-    attr = gCurTask->unk40;
+    attr = gCurTask->tileWord;
     if (alt == 0)
         dst = (attr & 0x7FF) * 32 + (u32)gObjVram;
     else
         dst = (attr & 0x7FF) * 32 + 0x0600FE00;
-    tbl = gCurTask->unk38;
-    g = (struct TaskGfx *)tbl[gCurTask->unk3C];
-    p = g->unk08;
+    tbl = gCurTask->frameTable;
+    g = (struct TaskGfx *)tbl[gCurTask->frame];
+    p = g->tiles;
     while (*p != 0xFFFF)
     {
         q = p + 1;
@@ -77,9 +77,9 @@ u32 TaskLoadFrameTilesAndPalette(u32 alt)
         p = (u16 *)((u8 *)q + *p);
         dst += 0x400;
     }
-    pal = g->unk04;
+    pal = g->palette;
     RequestCopy(2, (u32)(pal + 1), (attr >> 12) * 32 + (u32)gObjPalette, *pal);
-    return g->unk00;
+    return g->oamTemplate;
 }
 
 /* Upload the running task's tile stream. */
@@ -92,14 +92,14 @@ u32 TaskLoadFrameTiles(u32 alt)
     u16 *p;
     u16 *q;
 
-    attr = gCurTask->unk40;
+    attr = gCurTask->tileWord;
     if (alt == 0)
         dst = (attr & 0x7FF) * 32 + (u32)gObjVram;
     else
         dst = (attr & 0x7FF) * 32 + 0x0600FE00;
-    tbl = gCurTask->unk38;
-    g = (struct TaskGfx *)tbl[gCurTask->unk3C];
-    p = g->unk08;
+    tbl = gCurTask->frameTable;
+    g = (struct TaskGfx *)tbl[gCurTask->frame];
+    p = g->tiles;
     while (*p != 0xFFFF)
     {
         q = p + 1;
@@ -107,5 +107,5 @@ u32 TaskLoadFrameTiles(u32 alt)
         p = (u16 *)((u8 *)q + *p);
         dst += 0x400;
     }
-    return g->unk00;
+    return g->oamTemplate;
 }

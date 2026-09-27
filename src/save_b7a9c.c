@@ -7,10 +7,10 @@ struct SaveSlot
 {
     /*0x00*/ u32 unk00;
     /*0x04*/ s32 unk04;
-    /*0x08*/ u32 unk08;
-    /*0x0C*/ s32 unk0C;
-    /*0x10*/ u16 unk10;
-    /*0x12*/ u16 unk12[2];
+    /*0x08*/ u32 generation;
+    /*0x0C*/ s32 saveCount;
+    /*0x10*/ u16 milestoneFlags;
+    /*0x12*/ u16 completionPercent[2];
     /*0x16*/ u8 unk16[2];
     /*0x18*/ u8 unk18[2];
     /*0x1A*/ u8 unk1A[2];
@@ -20,7 +20,7 @@ struct SaveSlot
     /*0x28*/ u8 unk28[8][7];
     /*0x60*/ u16 unk60[4];
     /*0x68*/ u16 unk68[4];
-    /*0x70*/ u32 unk70;
+    /*0x70*/ u32 checksum;
     /*0x74*/ u8 filler74[0x8C];
 };
 
@@ -70,11 +70,11 @@ void WriteNewSaveFile(s32 a)
     best = 0;
     for (i = 0; i <= 2; i++)
     {
-        if (gSaveSlots[i].unk08 > best)
-            best = gSaveSlots[i].unk08;
+        if (gSaveSlots[i].generation > best)
+            best = gSaveSlots[i].generation;
     }
-    gSaveSlots[a].unk08 = best + 1;
-    gSaveSlots[a].unk0C++;
+    gSaveSlots[a].generation = best + 1;
+    gSaveSlots[a].saveCount++;
     UpdateSaveSlotChecksum(a);
     WriteSaveSlot(a);
     WriteSramSignature();
@@ -93,11 +93,11 @@ void SaveProgress(s32 a)
     best = 0;
     for (i = 0; i <= 2; i++)
     {
-        if (gSaveSlots[i].unk08 > best)
-            best = gSaveSlots[i].unk08;
+        if (gSaveSlots[i].generation > best)
+            best = gSaveSlots[i].generation;
     }
-    gSaveSlots[a].unk08 = best + 1;
-    gSaveSlots[a].unk0C++;
+    gSaveSlots[a].generation = best + 1;
+    gSaveSlots[a].saveCount++;
     UpdateSaveSlotChecksum(a);
     WriteSaveSlot(a);
 }
@@ -127,11 +127,11 @@ void sub_080b7c00(s32 a)
     best = 0;
     for (i = 0; i < 3; i++)
     {
-        if (gSaveSlots[i].unk08 > best)
-            best = gSaveSlots[i].unk08;
+        if (gSaveSlots[i].generation > best)
+            best = gSaveSlots[i].generation;
     }
-    gSaveSlots[a].unk08 = best + 1;
-    gSaveSlots[a].unk0C++;
+    gSaveSlots[a].generation = best + 1;
+    gSaveSlots[a].saveCount++;
     UpdateSaveSlotChecksum(a);
     WriteSaveSlot(a);
 }
@@ -163,11 +163,11 @@ void sub_080b7cb4(s32 a)
     best = 0;
     for (i = 0; i < 3; i++)
     {
-        if (gSaveSlots[i].unk08 > best)
-            best = gSaveSlots[i].unk08;
+        if (gSaveSlots[i].generation > best)
+            best = gSaveSlots[i].generation;
     }
-    gSaveSlots[a].unk08 = best + 1;
-    gSaveSlots[a].unk0C++;
+    gSaveSlots[a].generation = best + 1;
+    gSaveSlots[a].saveCount++;
     UpdateSaveSlotChecksum(a);
     WriteSaveSlot(a);
 }
@@ -183,10 +183,10 @@ void ClearSaveSlot(s32 a)
     u32 *end;
 
     p = (u32 *)&gSaveSlots[a];
-    end = (u32 *)&gSaveSlots[a].unk70;
+    end = (u32 *)&gSaveSlots[a].checksum;
     while (p != end)
         *p++ = 0x99999999;
-    gSaveSlots[a].unk08 = 0;
+    gSaveSlots[a].generation = 0;
     UpdateSaveSlotChecksum(a);
 }
 u32 CalcSaveSlotChecksum(s32 a)
@@ -196,7 +196,7 @@ u32 CalcSaveSlotChecksum(s32 a)
     u32 sum;
 
     p = (u32 *)&gSaveSlots[a];
-    end = (u32 *)&gSaveSlots[a].unk70;
+    end = (u32 *)&gSaveSlots[a].checksum;
     sum = 0x97538642;
     while (p != end)
         sum += *p++;

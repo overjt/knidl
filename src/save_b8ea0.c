@@ -140,11 +140,11 @@ void sub_080b8ef4(void)
     s32 i;
     s32 n;
     t = gCurTask;
-    t->unk00 = 0;
-    t->unk0C = 0;
+    t->moveCallback = 0;
+    t->drawCallback = 0;
     if (gUnk_02005E00.unk08[gCurTaskIdx] != 0)
     {
-        t->unk14 = 6;
+        t->state = 6;
     }
     else
     {
@@ -160,19 +160,19 @@ void sub_080b8ef4(void)
         {
             sub_080b8f8c(1);
             if (gPlayerLives[gCurTask->unk1C] > 0)
-                gCurTask->unk14 = 2;
+                gCurTask->state = 2;
             else
-                gCurTask->unk14 = 4;
+                gCurTask->state = 4;
         }
         else
         {
-            gCurTask->unk14 = n;
+            gCurTask->state = n;
         }
     }
 }
 void sub_080b8f8c(s32 a)
 {
-    if (gLocalPlayer == gCurTask->unk88->unk00)
+    if (gLocalPlayer == gCurTask->player->playerIndex)
     {
         RequestCopy(2, (u32)gUnk_085ADD1C, (u32)gBgPalette, 64);
         if (a <= 2)
@@ -185,7 +185,7 @@ void sub_080b8ff0(void)
 
     t = gCurTask;
     t->unk18 = 0;
-    if (gLocalPlayer == t->unk88->unk00)
+    if (gLocalPlayer == t->player->playerIndex)
     {
         sub_080b8f8c(0);
         HudClearTilemap();
@@ -215,13 +215,13 @@ void sub_080b9064(void)
 void sub_080b9090(void)
 {
     AddPlayerLives(-1, gCurTask->unk1C);
-    AddPlayerLives(1, gCurTask->unk88->unk00);
+    AddPlayerLives(1, gCurTask->player->playerIndex);
     sub_080b8ea0();
     sub_080b9b98(gCurTask->unk1C);
 }
 void sub_080b90c8(void)
 {
-    if (gLocalPlayer == gCurTask->unk88->unk00)
+    if (gLocalPlayer == gCurTask->player->playerIndex)
         HudRedraw(gLocalPlayer);
     TaskExitTrampoline();
 }
@@ -256,7 +256,7 @@ void sub_080b9140(void)
 
     k = gPlayerPressedKeys;
     t = gCurTask;
-    e = &k[t->unk88->unk00];
+    e = &k[t->player->playerIndex];
     if ((*e & 0xC0) != 0)
     {
         if ((*e & 0x40) != 0)
@@ -281,18 +281,18 @@ void sub_080b9198(void)
 
     k = gPlayerPressedKeys;
     t = gCurTask;
-    if ((k[t->unk88->unk00] & 1) != 0)
+    if ((k[t->player->playerIndex] & 1) != 0)
     {
         if (t->unk18 == 0)
         {
             if (sub_080b9424() != 0)
-                gCurTask->unk14 = 1;
+                gCurTask->state = 1;
             else
-                gCurTask->unk14 = 5;
+                gCurTask->state = 5;
         }
         else
         {
-            t->unk14 = 6;
+            t->state = 6;
         }
         TaskSetEntry(sub_080b9658, gCurTaskIdx);
     }
@@ -313,7 +313,7 @@ void sub_080b91fc(void)
     }
     k = gPlayerPressedKeys;
     t = gCurTask;
-    e = &k[t->unk88->unk00];
+    e = &k[t->player->playerIndex];
     if ((*e & 0xC0) != 0)
     {
         if ((*e & 0x40) != 0)
@@ -341,7 +341,7 @@ void sub_080b927c(void)
 
     k = gPlayerPressedKeys;
     t = gCurTask;
-    e = &k[t->unk88->unk00];
+    e = &k[t->player->playerIndex];
     if ((*e & 11) != 0)
     {
         if ((*e & 1) != 0)
@@ -360,11 +360,11 @@ void sub_080b927c(void)
                 j++;
             }
             gUnk_02005E00.unk04[gCurTask->unk1C] = (gCurTaskIdx << 4) | 1;
-            gCurTask->unk14 = 2;
+            gCurTask->state = 2;
         }
         else
         {
-            t->unk14 = 0;
+            t->state = 0;
         }
     }
 }
@@ -374,7 +374,7 @@ void sub_080b9344(void)
     s32 p;
 
     k = gPlayerPressedKeys;
-    p = gCurTask->unk88->unk00;
+    p = gCurTask->player->playerIndex;
     if ((k[p] & 1) != 0)
     {
         if (gLocalPlayer == p)
@@ -389,9 +389,9 @@ void sub_080b938c(void)
 
     k = gPlayerPressedKeys;
     t = gCurTask;
-    if ((k[t->unk88->unk00] & 1) != 0)
-        t->unk14 = 0;
-    if (gCurTask->unk14 != 4)
+    if ((k[t->player->playerIndex] & 1) != 0)
+        t->state = 0;
+    if (gCurTask->state != 4)
         TaskSetEntry(sub_080b9658, gCurTaskIdx);
 }
 void sub_080b93d8(void)
@@ -401,9 +401,9 @@ void sub_080b93d8(void)
 
     k = gPlayerPressedKeys;
     t = gCurTask;
-    if ((k[t->unk88->unk00] & 1) != 0)
-        t->unk14 = 0;
-    if (gCurTask->unk14 != 5)
+    if ((k[t->player->playerIndex] & 1) != 0)
+        t->state = 0;
+    if (gCurTask->state != 5)
         TaskSetEntry(sub_080b9658, gCurTaskIdx);
 }
 s32 sub_080b9424(void)
@@ -477,15 +477,15 @@ void sub_080b9578(void)
     if ((v & 2) != 0)
     {
         if ((v >> 4) == gCurTaskIdx)
-            t->unk14 = 3;
+            t->state = 3;
     }
 }
 void sub_080b95ac(void)
 {
     if (gUnk_02005E00.unk00 <= 0)
-        gCurTask->unk14 = 4;
+        gCurTask->state = 4;
     gUnk_02005E00.unk00--;
-    if (gCurTask->unk14 != 2)
+    if (gCurTask->state != 2)
         TaskSetEntry(sub_080b9658, gCurTaskIdx);
 }
 void sub_080b95ec(void)
@@ -496,25 +496,25 @@ void sub_080b95ec(void)
     p = gPlayerLives;
     t = gCurTask;
     if (p[t->unk1C] <= 0)
-        t->unk14 = 4;
+        t->state = 4;
 }
 void sub_080b9610(void)
 {
-    gCurTask->unk04 = (u32)sub_080b963c;
+    gCurTask->updateCallback = (u32)sub_080b963c;
     sub_080b8ef4();
-    CallTableEntry(gCurTask->unk14, 7, gUnk_08756270);
+    CallTableEntry(gCurTask->state, 7, gUnk_08756270);
 }
 void sub_080b963c(void)
 {
-    CallTableEntry(gCurTask->unk15, 7, gUnk_0875628C);
+    CallTableEntry(gCurTask->updateState, 7, gUnk_0875628C);
 }
 void sub_080b9658(void)
 {
-    CallTableEntry(gCurTask->unk14, 7, gUnk_08756270);
+    CallTableEntry(gCurTask->state, 7, gUnk_08756270);
 }
 void sub_080b9674(void)
 {
-    gCurTask->unk15 = 0;
+    gCurTask->updateState = 0;
     sub_080b8ff0();
     TaskSleepForever();
 }
@@ -525,7 +525,7 @@ void sub_080b9690(void)
 }
 void sub_080b96a0(void)
 {
-    gCurTask->unk15 = 1;
+    gCurTask->updateState = 1;
     sub_080b902c();
     TaskSleepForever();
 }
@@ -544,14 +544,14 @@ void sub_080b96bc(void)
     }
     else
     {
-        gCurTask->unk14 = 5;
+        gCurTask->state = 5;
     }
-    if (gCurTask->unk14 != 1)
+    if (gCurTask->state != 1)
         TaskSetEntry(sub_080b9658, gCurTaskIdx);
 }
 void sub_080b9710(void)
 {
-    gCurTask->unk15 = 2;
+    gCurTask->updateState = 2;
     sub_080b9064();
     while (1)
     {
@@ -566,7 +566,7 @@ void sub_080b9730(void)
 }
 void sub_080b9740(void)
 {
-    gCurTask->unk15 = 3;
+    gCurTask->updateState = 3;
     sub_080b9090();
     TaskYieldTrampoline(180);
     sub_080b90c8();
@@ -578,10 +578,10 @@ void sub_080b9764(void)
 }
 void sub_080b9770(void)
 {
-    gCurTask->unk15 = 4;
+    gCurTask->updateState = 4;
     sub_080b90f8();
     TaskYieldTrampoline(180);
-    gCurTask->unk14 = 0;
+    gCurTask->state = 0;
     TaskSleepForever();
 }
 void sub_080b9798(void)
@@ -590,10 +590,10 @@ void sub_080b9798(void)
 }
 void sub_080b97a4(void)
 {
-    gCurTask->unk15 = 5;
+    gCurTask->updateState = 5;
     sub_080b9108();
     TaskYieldTrampoline(300);
-    gCurTask->unk14 = 0;
+    gCurTask->state = 0;
     TaskSleepForever();
 }
 void sub_080b97d0(void)
@@ -602,7 +602,7 @@ void sub_080b97d0(void)
 }
 void sub_080b97dc(void)
 {
-    gCurTask->unk15 = 6;
+    gCurTask->updateState = 6;
     sub_080b9118();
     TaskSleepForever();
 }
@@ -614,7 +614,7 @@ void sub_080b97fc(s32 a)
     u8 *p;
     u8 *q;
 
-    if (gLocalPlayer == gCurTask->unk88->unk00)
+    if (gLocalPlayer == gCurTask->player->playerIndex)
     {
         if (a == 0)
         {
@@ -636,7 +636,7 @@ void sub_080b9878(void)
 {
     u8 *p;
 
-    if (gLocalPlayer == gCurTask->unk88->unk00)
+    if (gLocalPlayer == gCurTask->player->playerIndex)
     {
         p = gUnk_085B0A64;
         HudDrawTiles(p, 1, 2, 19);
@@ -653,7 +653,7 @@ void sub_080b98c0(void)
     u8 *f;
     u16 v;
 
-    if (gLocalPlayer == gCurTask->unk88->unk00)
+    if (gLocalPlayer == gCurTask->player->playerIndex)
     {
         HudClearTilemap();
         for (i = 0, j = 0; i < gPlayerCount; i++)
@@ -684,7 +684,7 @@ void sub_080b9968(s32 a, s32 b)
 
     s32 off;
 
-    if (gLocalPlayer == gCurTask->unk88->unk00)
+    if (gLocalPlayer == gCurTask->player->playerIndex)
     {
         off = a * 4;
         p = gUnk_085B0AB0;
@@ -699,7 +699,7 @@ void sub_080b9968(s32 a, s32 b)
 }
 void sub_080b99e8(s32 a, s32 b, s32 c)
 {
-    if (gLocalPlayer == gCurTask->unk88->unk00)
+    if (gLocalPlayer == gCurTask->player->playerIndex)
     {
         IntToDigits(c);
         HudDrawTiles(&gUnk_085B0AD4[gDigits[1] * 2], 6, b * 2 + 4, 1);
@@ -713,7 +713,7 @@ void sub_080b9a88(s32 a)
     s32 i;
     u8 *p;
 
-    if (gLocalPlayer == gCurTask->unk88->unk00)
+    if (gLocalPlayer == gCurTask->player->playerIndex)
     {
         for (i = 0; i < gPlayerCount; i++)
         {
@@ -732,7 +732,7 @@ void sub_080b9b08(s32 a)
     u8 *q;
     u8 *r;
 
-    if (gLocalPlayer == gCurTask->unk88->unk00)
+    if (gLocalPlayer == gCurTask->player->playerIndex)
     {
         HudClearTilemap();
         p = gUnk_085B0B00;
@@ -756,7 +756,7 @@ void sub_080b9b98(s32 a)
     u8 *q;
     u8 *r;
 
-    if (gLocalPlayer == gCurTask->unk88->unk00)
+    if (gLocalPlayer == gCurTask->player->playerIndex)
     {
         HudClearTilemap();
         p = gUnk_085B0B08;
@@ -778,7 +778,7 @@ void sub_080b9c28(void)
 {
     u8 *p;
 
-    if (gLocalPlayer == gCurTask->unk88->unk00)
+    if (gLocalPlayer == gCurTask->player->playerIndex)
     {
         HudClearTilemap();
         p = gUnk_085B0B5C;
@@ -791,7 +791,7 @@ void sub_080b9c74(void)
 {
     u8 *p;
 
-    if (gLocalPlayer == gCurTask->unk88->unk00)
+    if (gLocalPlayer == gCurTask->player->playerIndex)
     {
         HudClearTilemap();
         p = gUnk_085B0BD4;
@@ -804,7 +804,7 @@ void sub_080b9cc0(void)
 {
     u8 *p;
 
-    if (gLocalPlayer == gCurTask->unk88->unk00)
+    if (gLocalPlayer == gCurTask->player->playerIndex)
     {
         HudClearTilemap();
         p = gUnk_085B0C2C;

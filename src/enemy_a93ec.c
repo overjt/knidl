@@ -36,11 +36,11 @@ extern u8 gUnk_0200D080;
 struct Unk0200D120
 {
     /*0x00*/ u8 filler00[0x05];
-    /*0x05*/ u8 unk05;
+    /*0x05*/ u8 hitState;
     /*0x06*/ u8 filler06[0x1A];
-    /*0x20*/ u16 unk20;
+    /*0x20*/ u16 savedTileWord;
     /*0x22*/ u8 filler22[0x26];
-    /*0x48*/ s8 *unk48;
+    /*0x48*/ s8 *attackBox;
     /*0x4C*/ u8 filler4C[0x24];
 };
 extern struct Unk0200D120 gUnk_0200D120[];
@@ -79,7 +79,7 @@ extern s16 gCameraAnchorX;
 extern u16 gPlayerCount;
 extern u8 gUnk_030023B0;
 extern s32 gUnk_030023B4;
-extern u32 gUnk_030023C8[];
+extern u32 gBigSwitchFlags[];
 extern s32 gUnk_030023D4;
 extern u16 gGameState;
 extern s16 gSpriteCameraY;
@@ -92,7 +92,7 @@ extern u32 gRoomIndex[];
 extern u32 gUnk_030027A8[];
 extern vs16 gTaskSlotTypes[];
 extern u8 gTerrainResult[];
-extern u32 gUnk_03005568[];
+extern u32 gTerrainBoundsClamp[];
 extern s16 gRoomBounds[];
 extern u32 gScrollLock[];
 extern u32 gUnk_080A7358[];
@@ -123,13 +123,13 @@ extern u32 gUnk_087324DA[];
 extern u32 gPlayerDefaultTerrainBox[];
 extern u32 gUnk_0873EEA0[];
 extern u32 gUnk_0873EF48[];
-extern u32 *gUnk_0873F0E4[];
-extern u32 gUnk_0873F104[];
-extern u32 *gUnk_0873F15C[];
+extern u32 *gMidBossGfx[];
+extern u32 gMetaKnightsGfx[];
+extern u32 *gBossGfx[];
 extern u32 gUnk_0873F180[];
 extern s16 gUnk_0873FF98[];
 extern struct AnimCmd gUnk_087484A4[];
-extern u32 gUnk_087484D4[];
+extern u32 gMrShineAndMrBrightVariants[];
 extern u16 gUnk_087484E4[];
 extern s32 gUnk_087484EC[];
 extern u32 gUnk_0874850C[];
@@ -149,12 +149,12 @@ extern struct AnimCmd gUnk_087485EC[];
 extern struct AnimCmd gUnk_087485FC[];
 extern s32 gUnk_08748604[];
 extern s32 gUnk_08748614[];
-extern u32 gUnk_08748624[];
-extern u32 gUnk_08748634[];
-extern u32 gUnk_08748644[];
-extern u32 gUnk_0874868C[];
-extern u32 gUnk_087486D4[];
-extern u32 gUnk_0874871C[];
+extern u32 gMrShineAndMrBrightStates[];
+extern u32 gMrShineAndMrBrightStateUpdates[];
+extern u32 gMrShineStates[];
+extern u32 gMrShineStateUpdates[];
+extern u32 gMrBrightStates[];
+extern u32 gMrBrightStateUpdates[];
 extern struct ActorDef gUnk_087487BC[];
 extern u32 gUnk_0874883C[];
 extern u32 gUnk_08748858[];
@@ -217,9 +217,9 @@ extern u16 gUnk_08748E88[];
 extern u16 gUnk_08748E98[];
 extern u16 gUnk_08748EA8[];
 extern u8 gUnk_08748EAC[];
-extern u32 gUnk_08748EB8[];
-extern u32 gUnk_08748EBC[];
-extern u32 gUnk_08748F1C[];
+extern u32 gMetaKnightVariants[];
+extern u32 gMetaKnightStates[];
+extern u32 gMetaKnightStateUpdates[];
 extern u32 gUnk_08748F7C[];
 extern u32 gUnk_08748F84[];
 extern u32 gUnk_08748F8C[];
@@ -235,7 +235,7 @@ extern u8 gUnk_087490DC[];
 extern u8 gUnk_087490E4[];
 extern s32 gUnk_087490E8[];
 extern s32 gUnk_08749100[];
-extern u32 gUnk_08749150[];
+extern u32 gKrackoVariants[];
 extern u32 gUnk_08749158[];
 extern u32 gUnk_08749160[];
 extern u32 gUnk_08749168[];
@@ -269,9 +269,9 @@ extern u32 gUnk_08749358[];
 extern u32 gUnk_0874936C[];
 extern s8 gUnk_08749380[];
 extern s8 gUnk_087493A4[];
-extern u32 gUnk_087493F4[];
-extern u32 gUnk_087493F8[];
-extern u32 gUnk_08749428[];
+extern u32 gNightmareWizardVariants[];
+extern u32 gNightmareWizardStates[];
+extern u32 gNightmareWizardStateUpdates[];
 extern u32 gUnk_08749458[];
 extern u32 gUnk_08749490[];
 extern s8 gUnk_087494C8[];
@@ -398,9 +398,9 @@ extern u32 gUnk_0874BB98[];
 extern u32 gUnk_0874BFD4[];
 extern u32 gUnk_0874C108[];
 extern u32 gUnk_0874C110[];
-extern u32 gUnk_0874C12C[];
-extern u32 gUnk_0874C130[];
-extern u32 gUnk_0874C140[];
+extern u32 gWhispyWoodsVariants[];
+extern u32 gWhispyWoodsStates[];
+extern u32 gWhispyWoodsStateUpdates[];
 extern u32 gUnk_0874C150[];
 extern u32 gUnk_0874C154[];
 extern u32 gUnk_0874C210[];
@@ -420,14 +420,14 @@ extern u32 gUnk_0874C332[];
 extern u32 gUnk_0874C44C[];
 extern u32 gUnk_0874C500[];
 extern u32 gUnk_0874C568[];
-extern u32 gUnk_0874CAEC[];
-extern u32 gUnk_0874CCF4[];
-extern u32 gUnk_0874CD0C[];
-extern u32 gUnk_0874CD24[];
-extern u32 gUnk_0874CD3C[];
+extern u32 gAbilityStarFrames[];
+extern u32 gOneUpFrames[];
+extern u32 gMaximTomatoFrames[];
+extern u32 gInvincibleCandyFrames[];
+extern u32 gEnergyDrinkFrames[];
 extern u32 gUnk_0874CE68[];
 extern u32 gUnk_08753990[];
-extern u32 gUnk_08753994[];
+extern u32 gPaintRollerFrames[];
 extern u32 gUnk_08753A8C[];
 extern u32 gUnk_08753AAC[];
 extern u32 gUnk_08753AC8[];
@@ -438,44 +438,44 @@ extern u32 gUnk_08753B48[];
 extern u32 gUnk_08753B68[];
 extern u32 gUnk_08753B88[];
 extern u32 gUnk_08753BA4[];
-extern u32 gUnk_08753BB4[];
+extern u32 gMetaKnightFrames[];
 extern u32 gUnk_08753DA0[];
-extern u32 gUnk_08753E3C[];
+extern u32 gHeavyMoleFrames[];
 extern u32 gUnk_08753E8C[];
 extern u32 gUnk_087540AC[];
 extern u32 gUnk_087540EC[];
-extern u32 gUnk_0875412C[];
+extern u32 gMrBrightFrames[];
 extern u32 gUnk_08754180[];
 extern u32 gUnk_087541B0[];
 extern u32 gUnk_087541E0[];
-extern u32 gUnk_08754210[];
+extern u32 gMrShineFrames[];
 extern u32 gUnk_08754260[];
 extern u32 gUnk_08754280[];
 extern u32 gUnk_08754290[];
 extern u32 gUnk_087542A8[];
-extern u32 gUnk_087542C0[];
-extern u32 gUnk_08754308[];
+extern u32 gWhispyWoodsFrames[];
+extern u32 gWhispyWoodsAppleFrames[];
 extern u32 gUnk_08754358[];
 extern u32 gUnk_087543A0[];
-extern u32 gUnk_087543E8[];
+extern u32 gKrackoFrames[];
 extern u32 gUnk_08754418[];
 extern u32 gUnk_08754448[];
 extern u32 gUnk_0875447C[];
-extern u32 gUnk_087544B4[];
+extern u32 gNightmarePowerOrbFrames[];
 extern u32 gUnk_08754504[];
 extern u32 gUnk_08754560[];
 extern u32 gUnk_08754568[];
-extern u32 gUnk_0875456C[];
+extern u32 gNightmareWizardFrames[];
 extern u32 gUnk_087546D0[];
 extern u32 gUnk_087546F8[];
 extern u32 gUnk_08754708[];
 extern u32 gUnk_08754718[];
 extern u32 gUnk_08754738[];
 extern u32 gUnk_08754780[];
-extern u32 gUnk_0875607C[];
+extern u32 gPickupVariants[];
 extern u32 gUnk_08756084[];
-extern u32 gUnk_087560A0[];
-extern u32 gUnk_087560AC[];
+extern u32 gPickupStates[];
+extern u32 gPickupStateUpdates[];
 extern u32 gUnk_087560B8[];
 extern u32 gUnk_087560C0[];
 extern u32 gUnk_087560D0[];
@@ -667,10 +667,10 @@ extern u32 ActorReactToDefeat(void);
 extern void ActorDie(void);
 extern void sub_0806b05c(void);
 extern void sub_0806b098(void);
-extern s16 sub_0806caa0(u8 kind, s32 dx, s32 dy);
-extern s16 sub_0806cc90(u8 flag, u16 vx, s32 c, s32 d);
-extern void sub_0806d4e4(u32 a, s32 b);
-extern void sub_0806d730(void);
+extern s16 CreateStarFlash(u8 kind, s32 dx, s32 dy);
+extern s16 CreateDustTrail(u8 flag, u16 vx, s32 c, s32 d);
+extern void CreateBurstEffect(u32 a, s32 b);
+extern void PlayExplosionAnim(void);
 extern s32 sub_0806e6f8(s16 x, s16 y);
 extern s32 sub_0806e808(s16 x, s16 y);
 extern s32 sub_0806e9b4(u8 a, s16 x, s16 y);
@@ -690,9 +690,9 @@ void sub_080a180c();
 void sub_080a1864();
 void sub_080a18d4();
 void sub_080a1980();
-void sub_080a19cc();
+void Task_MrShineAndMrBright();
 void sub_080a19ec();
-void sub_080a1ad0();
+void CreateMrShineAndMrBright();
 void sub_080a1b94();
 void sub_080a1bd8(u16 a, u16 b);
 void sub_080a1c1c();
@@ -754,9 +754,9 @@ void sub_080a3000();
 void sub_080a301c();
 void sub_080a306c();
 void sub_080a30d0();
-void sub_080a3114();
-void sub_080a314c();
-void sub_080a3168();
+void MrShineAndMrBrightInit();
+void MrShineAndMrBrightUpdate();
+void MrShineAndMrBrightEnterState();
 void sub_080a3184();
 void sub_080a31a4();
 void sub_080a31d0();
@@ -766,10 +766,10 @@ void sub_080a3238();
 void sub_080a3250();
 void sub_080a3268();
 void sub_080a3280();
-void sub_080a3298();
-void sub_080a32c4();
-void sub_080a332c();
-void sub_080a3348();
+void MrShineInit();
+void MrShineUpdate();
+void MrShineEnterState();
+void MrShineFall();
 void sub_080a33a4();
 void sub_080a33dc();
 void sub_080a3424();
@@ -805,10 +805,10 @@ void sub_080a3b7c();
 void sub_080a3ba0();
 void sub_080a3bc0();
 void sub_080a3c08();
-void sub_080a3c28();
-void sub_080a3c54();
-void sub_080a3cbc();
-void sub_080a3cd8();
+void MrBrightInit();
+void MrBrightUpdate();
+void MrBrightEnterState();
+void MrBrightFall();
 void sub_080a3d3c();
 void sub_080a3d84();
 void sub_080a3dd0();
@@ -850,7 +850,7 @@ void sub_080a472c();
 void sub_080a4808();
 void sub_080a4814();
 void sub_080a488c();
-void sub_080a498c();
+void Task_KingDededeStar();
 void sub_080a49cc();
 void sub_080a4a1c();
 void sub_080a4a60();
@@ -903,10 +903,10 @@ void sub_080a54e4();
 void sub_080a5524();
 void sub_080a556c();
 void sub_080a55ac();
-void sub_080a55ec();
-void sub_080a5644();
-void sub_080a5694();
-void sub_080a56b0();
+void Task_MetaKnight();
+void MetaKnightInit();
+void MetaKnightEnterState();
+void MetaKnightUpdate();
 void sub_080a57d4();
 void sub_080a5a78();
 void sub_080a5aa0();
@@ -921,7 +921,7 @@ void sub_080a5f20();
 void sub_080a5f7c();
 void sub_080a5fac();
 void sub_080a6020();
-void sub_080a60d8();
+void MetaKnightRun();
 void sub_080a6130();
 void sub_080a61b4();
 void sub_080a6264();
@@ -983,7 +983,7 @@ void sub_080a7ae4();
 void sub_080a7b88();
 void sub_080a7c9c();
 s32 sub_080a7d20();
-void sub_080a7d2c();
+void Task_Kracko();
 void sub_080a7d98();
 void sub_080a7df4();
 void sub_080a7e10();
@@ -1034,10 +1034,10 @@ void sub_080a9ed8();
 void sub_080a9ef4();
 void sub_080aa16c();
 void sub_080aa188();
-void sub_080aa288();
-void sub_080aa338();
-void sub_080aa38c();
-void sub_080aa3a8();
+void Task_NightmareWizard();
+void NightmareWizardInit();
+void NightmareWizardEnterState();
+void NightmareWizardUpdate();
 void sub_080aa47c();
 void sub_080aa52c();
 void sub_080aa560();
@@ -1111,7 +1111,7 @@ void sub_080acc9c();
 void sub_080accf0();
 void sub_080acd38();
 void sub_080ace60();
-void sub_080acea8();
+void Task_PaintRoller();
 void sub_080acf3c();
 void sub_080acf48();
 void sub_080acf68();
@@ -1129,7 +1129,7 @@ void sub_080ad3a0();
 void sub_080ad3e8();
 void sub_080ad458();
 void sub_080ad47c();
-void sub_080ad4b8();
+void Task_HeavyMole();
 void sub_080ad630();
 void sub_080ad650();
 void sub_080ad710();
@@ -1158,7 +1158,7 @@ void sub_080ae198();
 void sub_080ae1f0();
 void sub_080ae37c();
 s32 sub_080ae380(s32 i);
-void sub_080ae3bc();
+void Task_NightmarePowerOrb();
 void sub_080ae470();
 void sub_080ae4c4();
 void sub_080ae548();
@@ -1212,7 +1212,7 @@ void sub_080b0338();
 void sub_080b0570();
 void sub_080b05e8();
 void sub_080b07d8();
-void sub_080b0840();
+void Task_NightmarePowerOrbIntroScroll();
 void sub_080b08a0();
 void sub_080b08e4();
 void sub_080b09ac();
@@ -1273,10 +1273,10 @@ void sub_080b27b0();
 s32 sub_080b2804();
 void sub_080b2884();
 void sub_080b2890();
-void sub_080b2a00();
-void sub_080b2a74();
-void sub_080b2aa4();
-void sub_080b2ac8();
+void Task_WhispyWoods();
+void WhispyWoodsInit();
+void WhispyWoodsUpdate();
+void WhispyWoodsEnterState();
 void sub_080b2ae4();
 void sub_080b2b28();
 void sub_080b2b40();
@@ -1295,7 +1295,7 @@ void sub_080b2f78();
 void sub_080b2fb0();
 void sub_080b2fe8();
 void sub_080b3010(u8 a);
-void sub_080b3050();
+void Task_WhispyWoodsApple();
 void sub_080b3090();
 void sub_080b30c8();
 void sub_080b3110();
@@ -1307,7 +1307,7 @@ void sub_080b3214();
 void sub_080b3258();
 void sub_080b328c();
 void sub_080b32d0();
-void sub_080b3318();
+void Task_WhispyWoodsAirPuff();
 void sub_080b3368();
 void sub_080b3398();
 void sub_080b33bc();
@@ -1319,19 +1319,19 @@ void sub_080b3a00();
 void sub_080b3a64();
 void sub_080b3c68();
 void sub_080b3e30();
-void sub_080b3e54();
-void sub_080b3e94();
-void sub_080b3ed4();
-void sub_080b3f14();
+void Task_OneUp();
+void Task_MaximTomato();
+void Task_InvincibleCandy();
+void Task_EnergyDrink();
 void sub_080b3f54();
 void sub_080b3fcc();
 void sub_080b3ffc();
 s32 sub_080b404c();
 s32 sub_080b406c();
 s32 sub_080b408c();
-void sub_080b40a4();
-void sub_080b4100();
-void sub_080b4158();
+void PickupInit();
+void PickupUpdate();
+void PickupEnterState();
 void sub_080b4174();
 void sub_080b4190();
 void sub_080b4194();
@@ -1339,9 +1339,9 @@ void sub_080b41c8();
 void sub_080b41cc();
 void sub_080b4200();
 s32 sub_080b4204();
-void sub_080b4240();
-void sub_080b429c();
-void sub_080b42f8();
+void PickupHeal();
+void MaximTomatoHeal();
+void EnergyDrinkHeal();
 s32 sub_080b4390();
 s32 sub_080b43d4();
 s32 sub_080b43f4();
@@ -1352,7 +1352,7 @@ s32 sub_080b4524();
 s32 sub_080b45c0();
 void sub_080b460c();
 void sub_080b4648();
-void sub_080b469c();
+void Task_AbilityStar();
 void sub_080b4714();
 void sub_080b4754();
 void sub_080b4770();
@@ -1424,10 +1424,10 @@ void sub_080a9434(struct Task *pt)
     t->unk2C = 0;
     t->unk30 = 32;
     gUnk_02007D00[0] = 131;
-    t->unk18 = pt->unk48;
-    t->unk20 = pt->unk4A;
+    t->unk18 = pt->pixelX;
+    t->unk20 = pt->pixelY;
     gUnk_02007D00[4] = ((u16)TaskGetAngleTo(gUnk_02007D00[5], 3) + 256) & 496;
-    if (pt->unk7A != 0)
+    if (pt->onGround != 0)
     {
         gUnk_02007D00[3] = 1;
         gCurTask->unk20 |= 15;
@@ -1468,8 +1468,8 @@ void sub_080a94d4(void)
         gCurTask->unk20 = gUnk_03002448;
     }
     AngleToVector((s16)gUnk_02007D00[4], 320);
-    gCurTask->unk54 = gUnk_030023B4;
-    gCurTask->unk58 = gUnk_030023D4;
+    gCurTask->velX = gUnk_030023B4;
+    gCurTask->velY = gUnk_030023D4;
 }
 
 s32 sub_080a95dc(void)
@@ -1565,7 +1565,7 @@ void sub_080a9738(void)
     s32 v;
 
     v = ((u16)TaskGetAngleToNearestPlayer(3) + 32) & 0x1FF;
-    gCurTask->unk3C = (v >> 6) + 4;
+    gCurTask->frame = (v >> 6) + 4;
 }
 
 s32 sub_080a9760(void)
@@ -1579,7 +1579,7 @@ s32 sub_080a9760(void)
 void sub_080a9794(void)
 {
     if (gFrameCount & 1)
-        gCurTask->unk3C = (gCurTask->unk3C + 1) & 7;
+        gCurTask->frame = (gCurTask->frame + 1) & 7;
     if (gUnk_02006190[3] == 0) {
         sub_0806621c();
         gUnk_02007D00[0] = gUnk_02007D00[1];
@@ -1600,7 +1600,7 @@ s32 sub_080a97d8(void)
 void sub_080a9814(void)
 {
     gCurTask->unk34 = 2;
-    sub_08066fc0(0, gCurTask->unk48, gCurTask->unk4A);
+    sub_08066fc0(0, gCurTask->pixelX, gCurTask->pixelY);
 }
 
 void sub_080a983c(void)
@@ -1608,16 +1608,16 @@ void sub_080a983c(void)
     s32 w;
     s32 n;
 
-    gCurTask->unk00 = 0;
-    gCurTask->unk0C = (u32)ActorDrawWorldInView;
-    gCurTask->unk42 = 12;
-    gCurTask->unk38 = gUnk_08754418;
-    gCurTask->unk04 = (u32)sub_080a9910;
+    gCurTask->moveCallback = 0;
+    gCurTask->drawCallback = (u32)ActorDrawWorldInView;
+    gCurTask->layer = 12;
+    gCurTask->frameTable = gUnk_08754418;
+    gCurTask->updateCallback = (u32)sub_080a9910;
     TaskFaceNearestPlayer();
     gCurTask->unk28 = gUnk_02007D00[0] & 15;
     gCurTask->unk2C = 0;
     gCurTask->unk30 = gUnk_087491A8[gCurTask->unk28];
-    gCurTask->unk3C = gUnk_087491A0[0];
+    gCurTask->frame = gUnk_087491A0[0];
     while (gUnk_02007D00[0] != 4) {
         if (gCurTask->unk28 != (gUnk_02007D00[0] & 15)) {
             gCurTask->unk28 = gUnk_02007D00[0] & 15;
@@ -1630,12 +1630,12 @@ void sub_080a983c(void)
             gCurTask->unk2C = n;
             if (n > 3)
                 gCurTask->unk2C = w;
-            gCurTask->unk3C = gUnk_087491A0[gCurTask->unk2C];
+            gCurTask->frame = gUnk_087491A0[gCurTask->unk2C];
             gCurTask->unk30 = gUnk_087491A8[gCurTask->unk28];
         }
         TaskYieldTrampoline(1);
     }
-    gCurTask->unk3C = 0xFFFF;
+    gCurTask->frame = 0xFFFF;
     TaskSleepForever();
 }
 
@@ -1647,12 +1647,12 @@ void sub_080a9910(void)
 
     arr = gTaskSlotTypes;
     t = gCurTask;
-    i = t->unk44;
+    i = t->parent;
     if ((s16)arr[i] != -1) {
         struct Task *o = &gTasks[i];
 
-        t->unk48 = o->unk48;
-        t->unk4A = o->unk4A;
+        t->pixelX = o->pixelX;
+        t->pixelY = o->pixelY;
     }
     if (gUnk_02007D00[0] & 128) {
         TaskFaceNearestPlayer();
@@ -1671,63 +1671,63 @@ void sub_080a99a0(void)
     s32 w;
     s32 n;
 
-    gCurTask->unk00 = 0;
-    gCurTask->unk0C = (u32)ActorDrawWorldInView;
-    gCurTask->unk42 = 12;
-    gCurTask->unk38 = gUnk_08754418;
-    gCurTask->unk04 = (u32)sub_080a9ba0;
-    gCurTask->unk43 = 1;
-    gCurTask->unk3C = 10;
+    gCurTask->moveCallback = 0;
+    gCurTask->drawCallback = (u32)ActorDrawWorldInView;
+    gCurTask->layer = 12;
+    gCurTask->frameTable = gUnk_08754418;
+    gCurTask->updateCallback = (u32)sub_080a9ba0;
+    gCurTask->facing = 1;
+    gCurTask->frame = 10;
     TaskYieldTrampoline(6);
-    gCurTask->unk3C++;
+    gCurTask->frame++;
     TaskYieldTrampoline(6);
-    gCurTask->unk3C = 8;
+    gCurTask->frame = 8;
     TaskYieldTrampoline(6);
-    gCurTask->unk3C++;
+    gCurTask->frame++;
     TaskYieldTrampoline(6);
-    gCurTask->unk3C++;
+    gCurTask->frame++;
     TaskYieldTrampoline(6);
-    gCurTask->unk3C++;
+    gCurTask->frame++;
     TaskYieldTrampoline(6);
     gCurTask->unk6C = 0;
     do {
-        gCurTask->unk3C = 8;
+        gCurTask->frame = 8;
         TaskYieldTrampoline(2);
-        gCurTask->unk3C++;
+        gCurTask->frame++;
         TaskYieldTrampoline(2);
-        gCurTask->unk3C++;
+        gCurTask->frame++;
         TaskYieldTrampoline(2);
-        gCurTask->unk3C++;
+        gCurTask->frame++;
         TaskYieldTrampoline(2);
         gCurTask->unk6C++;
     } while ((s16)gCurTask->unk6C <= 2);
     gCurTask->unk6C = 0;
     do {
-        gCurTask->unk3C = 8;
+        gCurTask->frame = 8;
         TaskYieldTrampoline(1);
-        gCurTask->unk3C++;
+        gCurTask->frame++;
         TaskYieldTrampoline(1);
-        gCurTask->unk3C++;
+        gCurTask->frame++;
         TaskYieldTrampoline(1);
-        gCurTask->unk3C++;
+        gCurTask->frame++;
         TaskYieldTrampoline(1);
         gCurTask->unk6C++;
     } while ((s16)gCurTask->unk6C <= 3);
     gCurTask->unk6C = 0;
     do {
-        gCurTask->unk3C = 0;
+        gCurTask->frame = 0;
         TaskYieldTrampoline(2);
-        gCurTask->unk3C++;
+        gCurTask->frame++;
         TaskYieldTrampoline(1);
-        gCurTask->unk3C++;
+        gCurTask->frame++;
         TaskYieldTrampoline(1);
-        gCurTask->unk3C--;
+        gCurTask->frame--;
         TaskYieldTrampoline(1);
         gCurTask->unk6C++;
     } while ((s16)gCurTask->unk6C <= 6);
     gCurTask->unk28 = (d = gUnk_02007D00[0]);
     gCurTask->unk2C = 0;
-    gCurTask->unk3C = gUnk_087491BC[0];
+    gCurTask->frame = gUnk_087491BC[0];
     p = gUnk_087491D4[d];
     gCurTask->unk30 = p[0];
     for (;;) {
@@ -1744,7 +1744,7 @@ void sub_080a99a0(void)
             gCurTask->unk2C = n;
             if (n > 3)
                 gCurTask->unk2C = w;
-            gCurTask->unk3C = gUnk_087491BC[gCurTask->unk2C];
+            gCurTask->frame = gUnk_087491BC[gCurTask->unk2C];
             gCurTask->unk30 = p[gCurTask->unk2C];
         }
         TaskYieldTrampoline(1);
@@ -1759,13 +1759,13 @@ void sub_080a9ba0(void)
 
     arr = gTaskSlotTypes;
     t = gCurTask;
-    i = t->unk44;
+    i = t->parent;
     if ((s16)arr[i] != -1) {
         struct Task *o = &gTasks[i];
 
         if (o->unk76 == 6 && o->unk34 != 2) {
-            t->unk48 = o->unk48;
-            t->unk4A = o->unk4A;
+            t->pixelX = o->pixelX;
+            t->pixelY = o->pixelY;
         } else {
             TaskFree(gCurTaskIdx);
         }
@@ -1777,34 +1777,34 @@ void sub_080a9ba0(void)
 void sub_080a9c28(void)
 {
 
-    gCurTask->unk00 = (u32)ActorMove;
-    gCurTask->unk0C = (u32)ActorDrawWorldInView;
-    gCurTask->unk42 = 12;
-    gCurTask->unk38 = gUnk_08754448;
-    gCurTask->unk04 = (u32)sub_080a9e14;
-    gCurTask->unk43 = 1;
-    gCurTask->unk3C = RandomRange(12);
-    gCurTask->unk48 += RandomRange(16) + (u16)(0xFFF8 + gUnk_087491E4[gCurTask->unk3C]);
-    gCurTask->unk4C = gCurTask->unk48 << 16;
-    gCurTask->unk46 = CreateChildTaskAtOffsetFacing(198, gUnk_087491FC[gCurTask->unk3C], 16, 1);
-    gTasks[gCurTask->unk46].unk44 = gCurTask->unk44;
+    gCurTask->moveCallback = (u32)ActorMove;
+    gCurTask->drawCallback = (u32)ActorDrawWorldInView;
+    gCurTask->layer = 12;
+    gCurTask->frameTable = gUnk_08754448;
+    gCurTask->updateCallback = (u32)sub_080a9e14;
+    gCurTask->facing = 1;
+    gCurTask->frame = RandomRange(12);
+    gCurTask->pixelX += RandomRange(16) + (u16)(0xFFF8 + gUnk_087491E4[gCurTask->frame]);
+    gCurTask->posX = gCurTask->pixelX << 16;
+    gCurTask->unk46 = CreateChildTaskAtOffsetFacing(198, gUnk_087491FC[gCurTask->frame], 16, 1);
+    gTasks[gCurTask->unk46].parent = gCurTask->parent;
     TaskYieldTrampoline(2);
     TaskExitTrampoline();
 }
 
 void sub_080a9cf0(void)
 {
-    gCurTask->unk00 = (u32)ActorMove;
-    gCurTask->unk0C = (u32)ActorDrawWorldInView;
-    gCurTask->unk42 = 12;
-    gCurTask->unk38 = gUnk_08754448;
-    gCurTask->unk04 = (u32)sub_080a9e14;
-    gCurTask->unk43 = 1;
-    gCurTask->unk3C = RandomRange(12);
-    gCurTask->unk48 += gUnk_087491E4[gCurTask->unk3C];
-    gCurTask->unk4C = gCurTask->unk48 << 16;
-    gCurTask->unk46 = CreateChildTaskAtOffsetFacing(199, gUnk_087491FC[gCurTask->unk3C], 12, 1);
-    gTasks[gCurTask->unk46].unk44 = gCurTask->unk44;
+    gCurTask->moveCallback = (u32)ActorMove;
+    gCurTask->drawCallback = (u32)ActorDrawWorldInView;
+    gCurTask->layer = 12;
+    gCurTask->frameTable = gUnk_08754448;
+    gCurTask->updateCallback = (u32)sub_080a9e14;
+    gCurTask->facing = 1;
+    gCurTask->frame = RandomRange(12);
+    gCurTask->pixelX += gUnk_087491E4[gCurTask->frame];
+    gCurTask->posX = gCurTask->pixelX << 16;
+    gCurTask->unk46 = CreateChildTaskAtOffsetFacing(199, gUnk_087491FC[gCurTask->frame], 12, 1);
+    gTasks[gCurTask->unk46].parent = gCurTask->parent;
     TaskYieldTrampoline(2);
     TaskExitTrampoline();
 }
@@ -1813,15 +1813,15 @@ void sub_080a9da4(void)
 {
     s32 r;
 
-    gCurTask->unk00 = (u32)ActorMove;
-    gCurTask->unk0C = (u32)ActorDrawWorldInView;
-    gCurTask->unk42 = 10;
-    gCurTask->unk38 = gUnk_08754448;
-    gCurTask->unk04 = (u32)sub_080a9e14;
-    gCurTask->unk43 = 1;
+    gCurTask->moveCallback = (u32)ActorMove;
+    gCurTask->drawCallback = (u32)ActorDrawWorldInView;
+    gCurTask->layer = 10;
+    gCurTask->frameTable = gUnk_08754448;
+    gCurTask->updateCallback = (u32)sub_080a9e14;
+    gCurTask->facing = 1;
     r = RandomRange(3);
-    gCurTask->unk4C = (gCurTask->unk48 + gUnk_08749214[r]) << 16;
-    gCurTask->unk3C = 12;
+    gCurTask->posX = (gCurTask->pixelX + gUnk_08749214[r]) << 16;
+    gCurTask->frame = 12;
     TaskYieldTrampoline(2);
     TaskExitTrampoline();
 }
@@ -1832,7 +1832,7 @@ void sub_080a9e14(void)
     s16 i;
 
     arr = gTaskSlotTypes;
-    i = gCurTask->unk44;
+    i = gCurTask->parent;
     if ((s16)arr[i] != -1) {
         struct Task *o = &gTasks[i];
 
@@ -1881,16 +1881,16 @@ void sub_080a9ef4(void)
     s32 pal;
 
     t = gCurTask;
-    gt = t->unk38;
+    gt = t->frameTable;
     if (gt == 0)
         return;
-    if (t->unk3C == -1)
+    if (t->frame == -1)
         return;
-    x = t->unk40;
+    x = t->tileWord;
     pal = x >> 12;
     dst = ((x & 0x7FF) << 5) + 0x0600FE00;
-    g = (struct TaskGfx *)gt[t->unk3C];
-    src = g->unk08;
+    g = (struct TaskGfx *)gt[t->frame];
+    src = g->tiles;
     while (src[0] != 0xFFFF) {
         nx = src + 1;
         RequestCopy(4, (u32)nx, dst, src[0]);
@@ -1901,26 +1901,26 @@ void sub_080a9ef4(void)
     if (gUnk_03001F2C > 31)
         gUnk_03001F2C = 64 - gUnk_03001F2C;
     gUnk_03001F2C <<= 3;
-    switch (g->unk04[0]) {
+    switch (g->palette[0]) {
     case 32:
         BlendColors(gUnk_08334480, gUnk_08334480 + 16, (u16)gUnk_03001F2C, 16, (u16 *)((pal << 5) + (u32)gObjPalette));
         break;
     case 96:
         BlendColors(gUnk_08334480, gUnk_08334480 + 16, (u16)gUnk_03001F2C, 16, (u16 *)(((pal + 2) << 5) + (u32)gObjPalette));
         RequestCopy(2, (((gFrameCount >> 1) & 1) << 5) + (u32)gUnk_083344C0, ((pal + 1) << 5) + (u32)gObjPalette, 32);
-        RequestCopy(2, (u32)g->unk04 + 2, (pal << 5) + (u32)gObjPalette, 32);
+        RequestCopy(2, (u32)g->palette + 2, (pal << 5) + (u32)gObjPalette, 32);
         break;
     }
-    QueueSprite(gCurTask->unk42, g->unk00, gCurTask->unk3E,
-                 (128 << 4) | gCurTask->unk40,
-                 gCurTask->unk48 - gViewRect[0],
-                 (s16)(gCurTask->unk4A - gViewRect[2]));
-    gUnk_03001F2C = (s8)gUnk_087493A4[gCurTask->unk3C];
+    QueueSprite(gCurTask->layer, g->oamTemplate, gCurTask->spriteFlags,
+                 (128 << 4) | gCurTask->tileWord,
+                 gCurTask->pixelX - gViewRect[0],
+                 (s16)(gCurTask->pixelY - gViewRect[2]));
+    gUnk_03001F2C = (s8)gUnk_087493A4[gCurTask->frame];
     if (gUnk_03001F2C == -1)
         return;
     dst = 0x06014800;
     g = (struct TaskGfx *)gUnk_087546D0[gUnk_03001F2C];
-    src = g->unk08;
+    src = g->tiles;
     while (src[0] != 0xFFFF) {
         nx = src + 1;
         RequestCopy(4, (u32)nx, dst, src[0]);
@@ -1928,18 +1928,18 @@ void sub_080a9ef4(void)
         dst += 128 << 3;
     }
     pal = 12;
-    switch (g->unk04[0]) {
+    switch (g->palette[0]) {
     case 64:
         pal = 11;
         RequestCopy(2, (((gFrameCount >> 1) & 1) << 5) + (u32)gUnk_083344C0, ((pal + 1) << 5) + (u32)gObjPalette, 32);
     case 32:
-        RequestCopy(2, (u32)g->unk04 + 2, (pal << 5) + (u32)gObjPalette, 32);
+        RequestCopy(2, (u32)g->palette + 2, (pal << 5) + (u32)gObjPalette, 32);
         break;
     }
-    QueueSprite(gCurTask->unk42 - 1, g->unk00, gCurTask->unk3E,
+    QueueSprite(gCurTask->layer - 1, g->oamTemplate, gCurTask->spriteFlags,
                  (pal << 12) | 0xA50,
-                 gCurTask->unk48 - gViewRect[0],
-                 (s16)(gCurTask->unk4A - gViewRect[2]));
+                 gCurTask->pixelX - gViewRect[0],
+                 (s16)(gCurTask->pixelY - gViewRect[2]));
 }
 
 void sub_080aa16c(void)
@@ -1959,15 +1959,15 @@ void sub_080aa188(void)
     u32 x;
 
     t = gCurTask;
-    gt = t->unk38;
+    gt = t->frameTable;
     if (gt == 0)
         return;
-    if (t->unk3C == -1)
+    if (t->frame == -1)
         return;
-    x = t->unk40;
+    x = t->tileWord;
     dst = ((0x7FF & x) << 5) + 0x0600FE00;
-    g = (struct TaskGfx *)gt[t->unk3C];
-    src = g->unk08;
+    g = (struct TaskGfx *)gt[t->frame];
+    src = g->tiles;
     while (src[0] != 0xFFFF) {
         nx = src + 1;
         RequestCopy(4, (u32)nx, dst, src[0]);
@@ -1975,35 +1975,35 @@ void sub_080aa188(void)
         dst += 128 << 3;
     }
     RequestCopy(2, (((gFrameCount >> 1) & 1) << 5) + (u32)gUnk_083344C0, ((x >> 12) << 5) + (u32)gObjPalette, 32);
-    QueueSprite(gCurTask->unk42, g->unk00, gCurTask->unk3E,
-                 (128 << 4) | gCurTask->unk40,
-                 gCurTask->unk48 - gViewRect[0],
-                 (s16)(gCurTask->unk4A - gViewRect[2]));
+    QueueSprite(gCurTask->layer, g->oamTemplate, gCurTask->spriteFlags,
+                 (128 << 4) | gCurTask->tileWord,
+                 gCurTask->pixelX - gViewRect[0],
+                 (s16)(gCurTask->pixelY - gViewRect[2]));
 }
 
-void sub_080aa288(void)
+void Task_NightmareWizard(void)
 {
     struct Task *o;
 
     PlayBgm(34);
     o = &gTasks[TaskFindNearestPlayer()];
     if (gUnk_020069F0 == 2) {
-        if (o->unk7A == 0) {
+        if (o->onGround == 0) {
             do
                 TaskYieldTrampoline(1);
-            while (o->unk7A == 0);
+            while (o->onGround == 0);
         }
     }
     sub_08066088(0);
     sub_08066144();
-    gCurTask->unk00 = (u32)ActorMove;
-    gCurTask->unk0C = (u32)sub_080a9ed8;
-    gCurTask->unk42 = 11;
-    gCurTask->unk38 = gUnk_0875456C;
-    gCurTask->unk8C->unk38 = 0x23E;
+    gCurTask->moveCallback = (u32)ActorMove;
+    gCurTask->drawCallback = (u32)sub_080a9ed8;
+    gCurTask->layer = 11;
+    gCurTask->frameTable = gNightmareWizardFrames;
+    gCurTask->unk8C->sfxOverride = 0x23E;
     gUnk_02007D00[2] = 0;
     gUnk_02007D00[3] = 1;
     gUnk_02007D00[4] = 0;
     CreateChildTaskHere(208, 0);
-    CallTableEntry(gCurTask->unk73, 1, gUnk_087493F4);
+    CallTableEntry(gCurTask->variant, 1, gNightmareWizardVariants);
 }

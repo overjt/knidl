@@ -67,7 +67,7 @@ extern u32 gUnk_0873DEA0[];
 extern u16 gUnk_0873DEA8[];
 extern u32 gUnk_0873DEDC[];
 extern u32 gUnk_0874C890[];
-extern u32 gUnk_0874CCF4[];
+extern u32 gOneUpFrames[];
 extern u32 gUnk_0874CDF8[];
 extern u32 gUnk_0874CFEC[];
 extern u32 gUnk_08754850[];
@@ -162,7 +162,7 @@ void sub_0805e1bc(void);
 void sub_0805e24c(void);
 void ActorMove(void);
 void sub_08068a8c(u32 a, u8 flag);
-void sub_0806d4e4(s32 a, s32 b);
+void CreateBurstEffect(s32 a, s32 b);
 
 s32 CreatePlayerEffect(s32 a0, s32 a1, s32 a2)
 {
@@ -201,12 +201,12 @@ s32 CreatePlayerEffect(s32 a0, s32 a1, s32 a2)
     {
         t = &gTasks[idx];
         t->unk18 = (param << 24) | (a2 & 0x00FFFFFF);
-        t->unk4C = gCurTask->unk4C;
-        t->unk48 = gCurTask->unk48;
-        t->unk50 = gCurTask->unk50;
-        t->unk4A = gCurTask->unk4A;
-        t->unk43 = gCurTask->unk43;
-        t->unk88 = gCurTask->unk88;
+        t->posX = gCurTask->posX;
+        t->pixelX = gCurTask->pixelX;
+        t->posY = gCurTask->posY;
+        t->pixelY = gCurTask->pixelY;
+        t->facing = gCurTask->facing;
+        t->player = gCurTask->player;
     }
     return idx;
 }
@@ -222,13 +222,13 @@ s32 CreatePlayerEffectHighSlot(s32 a0, s32 a1, s32 a2)
     {
         t = &gTasks[idx];
         t->unk18 = (param << 24) | (a2 & 0x00FFFFFF);
-        t->unk4C = gCurTask->unk4C;
-        t->unk48 = gCurTask->unk48;
-        t->unk50 = gCurTask->unk50;
-        t->unk4A = gCurTask->unk4A;
-        t->unk43 = gCurTask->unk43;
-        t->unk88 = gCurTask->unk88;
-        t->unk72 = 10;
+        t->posX = gCurTask->posX;
+        t->pixelX = gCurTask->pixelX;
+        t->posY = gCurTask->posY;
+        t->pixelY = gCurTask->pixelY;
+        t->facing = gCurTask->facing;
+        t->player = gCurTask->player;
+        t->actorKind = 10;
     }
     return idx;
 }
@@ -273,10 +273,10 @@ void sub_0805b16c(void)
     sub_08023fd4();
     for (i = 0; i < gPlayerCount; i++)
     {
-        if (gPlayerStates[i].unk0D == 24)
+        if (gPlayerStates[i].ability == 24)
             SetPlayerAbility(0, -1, i);
         else
-            gPlayerStates[i].unk0D = 0;
+            gPlayerStates[i].ability = 0;
     }
     gUnk_03001F34 = 1;
     gUnk_02007CF0 = 0;
@@ -298,23 +298,23 @@ void sub_0805b278(void)
     gCurTask->unk6C = 0;
     while ((s16)gCurTask->unk6C < gPlayerCount)
     {
-        if ((s16)gCurTask->unk6C == gCurTask->unk88->unk00)
+        if ((s16)gCurTask->unk6C == gCurTask->player->playerIndex)
             gCurTask->unk2C = gUnk_030023D4;
         if (((gActivePlayerMask >> (s16)gCurTask->unk6C) & 1) != 0)
             gUnk_030023D4++;
         gCurTask->unk6C++;
     }
-    gCurTask->unk43 = 1;
-    gCurTask->unk04 = (u32)sub_0805b4bc;
-    gUnk_02007D00[8] |= 1 << gCurTask->unk88->unk00;
+    gCurTask->facing = 1;
+    gCurTask->updateCallback = (u32)sub_0805b4bc;
+    gUnk_02007D00[8] |= 1 << gCurTask->player->playerIndex;
     sub_0805b370();
-    gCurTask->unk14 = 0;
-    CallTableEntry(gCurTask->unk14, 11, gUnk_0873DBE4);
+    gCurTask->state = 0;
+    CallTableEntry(gCurTask->state, 11, gUnk_0873DBE4);
 }
 
 void sub_0805b354(void)
 {
-    CallTableEntry(gCurTask->unk14, 11, gUnk_0873DBE4);
+    CallTableEntry(gCurTask->state, 11, gUnk_0873DBE4);
 }
 
 void sub_0805b370(void)
@@ -333,35 +333,35 @@ void sub_0805b370(void)
         do
         {
             gUnk_02007D00[(s16)gCurTask->unk6C] = TaskCreateFrom(85, 32);
-            (gTasks + gUnk_02007D00[(s16)gCurTask->unk6C])->unk73 = gCurTask->unk6C;
+            (gTasks + gUnk_02007D00[(s16)gCurTask->unk6C])->variant = gCurTask->unk6C;
             gCurTask->unk6C++;
         } while ((s16)gCurTask->unk6C <= 6);
         TaskCreateFrom(90, 32);
     }
-    gCurTask->unk4C = gUnk_0873DBAC[gActivePlayerCount * 4 + gCurTask->unk2C] << 16;
-    gCurTask->unk50 = 232 << 18;
+    gCurTask->posX = gUnk_0873DBAC[gActivePlayerCount * 4 + gCurTask->unk2C] << 16;
+    gCurTask->posY = 232 << 18;
     TaskCreateFrom(88, 32);
     gCurTask->unk28 = TaskCreateFrom(84, 32);
-    (gTasks + gCurTask->unk28)->unk73 = gCurTask->unk88->unk00;
+    (gTasks + gCurTask->unk28)->variant = gCurTask->player->playerIndex;
     if (gActivePlayerCount > 1)
     {
         gCurTask->unk46 = TaskCreateFrom(87, 32);
-        (gTasks + gCurTask->unk46)->unk73 = gCurTask->unk88->unk00;
+        (gTasks + gCurTask->unk46)->variant = gCurTask->player->playerIndex;
     }
 }
 
 s32 sub_0805b4bc(void)
 {
-    CallTableEntry(gCurTask->unk15, 11, gUnk_0873DC10);
+    CallTableEntry(gCurTask->updateState, 11, gUnk_0873DC10);
 }
 
 void sub_0805b4d8(void)
 {
-    gCurTask->unk15 = 0;
+    gCurTask->updateState = 0;
     TaskStartFrameScriptId(0);
-    gCurTask->unk60 = 128 << 7;
+    gCurTask->accelY = 128 << 7;
     TaskYieldTrampoline(27);
-    gCurTask->unk14 = 1;
+    gCurTask->state = 1;
     sub_0805b514();
 }
 
@@ -372,7 +372,7 @@ void sub_0805b508(void)
 
 void sub_0805b514(void)
 {
-    gCurTask->unk15 = 1;
+    gCurTask->updateState = 1;
     TaskStop();
     TaskStartFrameScriptId(1);
     TaskSleepForever();
@@ -388,18 +388,18 @@ void sub_0805b534(void)
         gCurTask->unk30++;
         if (gCurTask->unk30 > 35)
         {
-            gCurTask->unk14 = 4;
+            gCurTask->state = 4;
             TaskSetEntry(sub_0805b354, gCurTaskIdx);
         }
     }
     else if (gUnk_030023D4 != 0)
     {
-        gCurTask->unk14 = 2;
+        gCurTask->state = 2;
         TaskSetEntry(sub_0805b354, gCurTaskIdx);
     }
     else
     {
-        gCurTask->unk14 = 3;
+        gCurTask->state = 3;
         TaskSetEntry(sub_0805b354, gCurTaskIdx);
     }
 }
@@ -409,7 +409,7 @@ s32 sub_0805b5b0(void)
     u16 *p = (u16 *)gLatchedPressedKeys;
     s32 n;
 
-    if ((p[gCurTask->unk88->unk00] & 3) != 0)
+    if ((p[gCurTask->player->playerIndex] & 3) != 0)
     {
         sub_0805b61c();
         n = gCurTask->unk30;
@@ -439,7 +439,7 @@ void sub_0805b61c(void)
 
 void sub_0805b644(void)
 {
-    gCurTask->unk15 = 2;
+    gCurTask->updateState = 2;
     TaskYieldTrampoline(4);
     sub_0805b670();
 }
@@ -452,7 +452,7 @@ void sub_0805b660(void)
 
 void sub_0805b670(void)
 {
-    gCurTask->unk15 = 3;
+    gCurTask->updateState = 3;
     TaskSleepForever();
 }
 
@@ -463,40 +463,40 @@ void sub_0805b688(void)
     gCurTask->unk30++;
     if (gCurTask->unk30 > 35)
     {
-        gCurTask->unk14 = 4;
+        gCurTask->state = 4;
         TaskSetEntry(sub_0805b354, gCurTaskIdx);
     }
 }
 
 void sub_0805b6c0(void)
 {
-    gCurTask->unk15 = 4;
-    sub_0806d4e4(1, 0);
+    gCurTask->updateState = 4;
+    CreateBurstEffect(1, 0);
     gCurTask->unk30 = gUnk_0873DC80[gCurTask->unk34];
     sub_0805b83c();
     sub_0805b8b8();
     TaskStartFrameScriptId(3);
     TaskCreateFrom(81, 32);
     gCurTask->unk24 = 0;
-    if (gCurTask->unk88->unk00 == gLocalPlayer)
+    if (gCurTask->player->playerIndex == gLocalPlayer)
     {
         if (gCurTask->unk30 <= 1)
             PlaySfx(244);
         else
             PlaySfx(227);
     }
-    gCurTask->unk58 = 0xFFF80000;
+    gCurTask->velY = 0xFFF80000;
     TaskYieldTrampoline(gUnk_0873DC4C[gCurTask->unk34]);
-    gCurTask->unk60 = 128 << 7;
+    gCurTask->accelY = 128 << 7;
     TaskYieldTrampoline(32);
     if (gUnk_0873DC66[gCurTask->unk34] != 0)
     {
-        gCurTask->unk14 = 5;
+        gCurTask->state = 5;
         sub_0805b8f8();
     }
     else
     {
-        gCurTask->unk14 = 6;
+        gCurTask->state = 6;
         sub_0805b9a4();
     }
 }
@@ -506,10 +506,10 @@ void sub_0805b788(void)
     gCurTask->unk70++;
     TaskUpdateFrameScript();
     gCurTask->unk24++;
-    if (IsWorldPosOnScreen(gCurTask->unk48, gCurTask->unk4A) != 0)
+    if (IsWorldPosOnScreen(gCurTask->pixelX, gCurTask->pixelY) != 0)
         QueueSprite(14, gUnk_0873DC3C[gCurTask->unk24 & 3], 0, 0,
-                     gCurTask->unk48 - gSpriteCameraX,
-                     (s16)(gCurTask->unk4A - gSpriteCameraY + 16));
+                     gCurTask->pixelX - gSpriteCameraX,
+                     (s16)(gCurTask->pixelY - gSpriteCameraY + 16));
     if ((gCurTask->unk24 & 7) == 0)
         TaskCreateFrom(83, 32);
     if (gCurTask->unk24 > 31)
@@ -521,14 +521,14 @@ void sub_0805b788(void)
 
 void sub_0805b83c(void)
 {
-    gUnk_02006A14[gCurTask->unk88->unk00]--;
-    if (gUnk_02006A14[gCurTask->unk88->unk00] != gCurTask->unk30)
+    gUnk_02006A14[gCurTask->player->playerIndex]--;
+    if (gUnk_02006A14[gCurTask->player->playerIndex] != gCurTask->unk30)
     {
-        gUnk_02006A14[gCurTask->unk88->unk00] = 7;
+        gUnk_02006A14[gCurTask->player->playerIndex] = 7;
         if (gCurTask->unk30 == 6)
-            gUnk_02006A14[gCurTask->unk88->unk00]--;
+            gUnk_02006A14[gCurTask->player->playerIndex]--;
     }
-    if (gUnk_02006A14[gCurTask->unk88->unk00] == 0)
+    if (gUnk_02006A14[gCurTask->player->playerIndex] == 0)
         gUnk_02007D00[9] = 1;
 }
 
@@ -538,28 +538,28 @@ void sub_0805b8b8(void)
 
     t = &gTasks[gUnk_02007D00[gCurTask->unk30]];
     t->unk28 = 0;
-    t->unk2C |= 1 << gCurTask->unk88->unk00;
+    t->unk2C |= 1 << gCurTask->player->playerIndex;
 }
 
 void sub_0805b8f8(void)
 {
-    gCurTask->unk15 = 5;
+    gCurTask->updateState = 5;
     TaskStop();
     TaskStartFrameScriptId(4);
-    gCurTask->unk4A -= 4;
-    gCurTask->unk50 = gCurTask->unk4A << 16;
+    gCurTask->pixelY -= 4;
+    gCurTask->posY = gCurTask->pixelY << 16;
     TaskYieldTrampoline(60);
-    gCurTask->unk4A -= 4;
-    gCurTask->unk50 = gCurTask->unk4A << 16;
+    gCurTask->pixelY -= 4;
+    gCurTask->posY = gCurTask->pixelY << 16;
     TaskYieldTrampoline(4);
-    gCurTask->unk4A -= 4;
-    gCurTask->unk50 = gCurTask->unk4A << 16;
+    gCurTask->pixelY -= 4;
+    gCurTask->posY = gCurTask->pixelY << 16;
     TaskYieldTrampoline(8);
-    gCurTask->unk4A -= 4;
-    gCurTask->unk50 = gCurTask->unk4A << 16;
+    gCurTask->pixelY -= 4;
+    gCurTask->posY = gCurTask->pixelY << 16;
     TaskYieldTrampoline(12);
-    gCurTask->unk58 = -163840;
-    gCurTask->unk60 = 128 << 8;
+    gCurTask->velY = -163840;
+    gCurTask->accelY = 128 << 8;
     TaskYieldTrampoline(9);
     sub_0805ba08();
 }
@@ -571,7 +571,7 @@ void sub_0805b998(void)
 
 void sub_0805b9a4(void)
 {
-    gCurTask->unk15 = 6;
+    gCurTask->updateState = 6;
     TaskStartFrameScriptId(0);
     TaskSleepForever();
 }
@@ -582,20 +582,20 @@ void sub_0805b9c0(void)
     s16 *tbl;
 
     TaskUpdateFrameScript();
-    v = gCurTask->unk4A;
+    v = gCurTask->pixelY;
     tbl = (s16 *)gUnk_0873DBD4;
     if (v > tbl[gCurTask->unk30] - 2)
     {
-        gCurTask->unk14 = 7;
+        gCurTask->state = 7;
         TaskSetEntry(sub_0805b354, gCurTaskIdx);
     }
 }
 
 void sub_0805ba08(void)
 {
-    gCurTask->unk15 = 7;
+    gCurTask->updateState = 7;
     TaskStop();
-    gCurTask->unk50 = (gUnk_0873DBD4[gCurTask->unk30] - 2) << 16;
+    gCurTask->posY = (gUnk_0873DBD4[gCurTask->unk30] - 2) << 16;
     TaskStartFrameScriptId(5);
     TaskYieldTrampoline(2);
     TaskStartFrameScriptId(6);
@@ -617,22 +617,22 @@ void sub_0805ba08(void)
             gCurTask->unk6C++;
         }
         gCurTask->unk24 = ((s16 *)gUnk_0873DBAC)[gUnk_030023D4 * 4 + gUnk_030023B4];
-        if (gCurTask->unk24 == gCurTask->unk48)
+        if (gCurTask->unk24 == gCurTask->pixelX)
         {
-            gCurTask->unk14 = 8;
+            gCurTask->state = 8;
             sub_0805bc1c();
         }
-        if (gCurTask->unk48 < gCurTask->unk24 + gSpriteCameraX)
-            gCurTask->unk43 = 1;
+        if (gCurTask->pixelX < gCurTask->unk24 + gSpriteCameraX)
+            gCurTask->facing = 1;
         else
-            gCurTask->unk43 = -1;
-        gCurTask->unk04 = (u32)sub_0805bb90;
+            gCurTask->facing = -1;
+        gCurTask->updateCallback = (u32)sub_0805bb90;
         PlayerActionWalk();
     }
     TaskStop();
     TaskStartFrameScriptId(6);
     sub_0805bca4();
-    gCurTask->unk14 = 9;
+    gCurTask->state = 9;
     sub_0805bce0();
 }
 
@@ -643,25 +643,25 @@ void sub_0805bb84(void)
 
 void sub_0805bb90(void)
 {
-    if (gCurTask->unk43 == 1)
+    if (gCurTask->facing == 1)
     {
-        if (gCurTask->unk48 >= gCurTask->unk24)
+        if (gCurTask->pixelX >= gCurTask->unk24)
         {
-            gCurTask->unk48 = gCurTask->unk24;
-            gCurTask->unk4C = gCurTask->unk48 << 16;
-            gCurTask->unk04 = (u32)sub_0805b4bc;
-            gCurTask->unk14 = 8;
+            gCurTask->pixelX = gCurTask->unk24;
+            gCurTask->posX = gCurTask->pixelX << 16;
+            gCurTask->updateCallback = (u32)sub_0805b4bc;
+            gCurTask->state = 8;
             TaskSetEntry(sub_0805b354, gCurTaskIdx);
         }
     }
     else
     {
-        if (gCurTask->unk48 <= gCurTask->unk24)
+        if (gCurTask->pixelX <= gCurTask->unk24)
         {
-            gCurTask->unk48 = gCurTask->unk24;
-            gCurTask->unk4C = gCurTask->unk48 << 16;
-            gCurTask->unk04 = (u32)sub_0805b4bc;
-            gCurTask->unk14 = 8;
+            gCurTask->pixelX = gCurTask->unk24;
+            gCurTask->posX = gCurTask->pixelX << 16;
+            gCurTask->updateCallback = (u32)sub_0805b4bc;
+            gCurTask->state = 8;
             TaskSetEntry(sub_0805b354, gCurTaskIdx);
         }
     }
@@ -669,9 +669,9 @@ void sub_0805bb90(void)
 
 void sub_0805bc1c(void)
 {
-    gCurTask->unk15 = 8;
-    gCurTask->unk08 = (u32)sub_0805bc5c;
-    gCurTask->unk43 = 1;
+    gCurTask->updateState = 8;
+    gCurTask->lateUpdateCallback = (u32)sub_0805bc5c;
+    gCurTask->facing = 1;
     TaskStop();
     TaskStartFrameScriptId(6);
     sub_0805bca4();
@@ -690,7 +690,7 @@ void sub_0805bc5c(void)
     t = &gTasks[gUnk_02007D00[gCurTask->unk30]];
     if (t->unk2C == 0)
     {
-        gCurTask->unk14 = 9;
+        gCurTask->state = 9;
         TaskSetEntry(sub_0805b354, gCurTaskIdx);
     }
 }
@@ -700,20 +700,20 @@ void sub_0805bca4(void)
     struct Task *t;
 
     t = &gTasks[gUnk_02007D00[gCurTask->unk30]];
-    t->unk2C &= ~(1 << gCurTask->unk88->unk00);
+    t->unk2C &= ~(1 << gCurTask->player->playerIndex);
 }
 
 void sub_0805bce0(void)
 {
-    gCurTask->unk15 = 9;
-    gCurTask->unk08 = 0;
+    gCurTask->updateState = 9;
+    gCurTask->lateUpdateCallback = 0;
     if (gCurTask->unk30 == 0)
         TaskYieldTrampoline(50);
     else
         TaskYieldTrampoline(30);
     TaskStartFrameScriptId(0);
     sub_0805e15c();
-    gCurTask->unk14 = 10;
+    gCurTask->state = 10;
     sub_0805bd34();
 }
 
@@ -724,19 +724,19 @@ void sub_0805bd28(void)
 
 void sub_0805bd34(void)
 {
-    gCurTask->unk04 = (u32)sub_0805b4bc;
-    gCurTask->unk15 = 10;
-    if ((gCurTask->unk3E & (128 << 8)) != 0)
-        gCurTask->unk43 = -1;
+    gCurTask->updateCallback = (u32)sub_0805b4bc;
+    gCurTask->updateState = 10;
+    if ((gCurTask->spriteFlags & (128 << 8)) != 0)
+        gCurTask->facing = -1;
     else
-        gCurTask->unk43 = 1;
+        gCurTask->facing = 1;
     TaskStartFrameScriptId(7);
     if (gCurTask->unk30 == 0)
         TaskYieldTrampoline(30);
     else if (gCurTask->unk30 != 6)
         AddPlayerScore(gUnk_0873DC9A[gCurTask->unk30],
-                     gCurTask->unk88->unk00);
-    if (gUnk_02006A14[gCurTask->unk88->unk00] == 0)
+                     gCurTask->player->playerIndex);
+    if (gUnk_02006A14[gCurTask->player->playerIndex] == 0)
     {
         TaskYieldTrampoline(60);
         TaskYieldTrampoline(60);
@@ -747,7 +747,7 @@ void sub_0805bd34(void)
         TaskYieldTrampoline(60);
         TaskYieldTrampoline(30);
     }
-    gUnk_02007D00[8] &= ~(1 << gCurTask->unk88->unk00);
+    gUnk_02007D00[8] &= ~(1 << gCurTask->player->playerIndex);
     while (gUnk_02007D00[8] != 0)
         TaskYieldTrampoline(1);
     TaskYieldTrampoline(10);
@@ -763,88 +763,88 @@ void sub_0805be3c(void)
 void sub_0805be48(void)
 {
     if (((gActivePlayerMask >> gLocalPlayer) & 1) != 0
-     && gLocalPlayer == gCurTask->unk88->unk00
+     && gLocalPlayer == gCurTask->player->playerIndex
      && (gFrameCount & 4) != 0)
         QueueSprite(8, 0x085B9B2C, 0, 0x00009010, 120, 70);
 }
 
 void sub_0805beb0(void)
 {
-    gCurTask->unk00 = (u32)TaskMove;
-    gCurTask->unk0C = (u32)sub_0805c150;
-    gCurTask->unk04 = (u32)sub_0805c114;
-    gCurTask->unk42 = 12;
-    gCurTask->unk38 = gUnk_0874C890;
-    gCurTask->unk40 = 0;
+    gCurTask->moveCallback = (u32)TaskMove;
+    gCurTask->drawCallback = (u32)sub_0805c150;
+    gCurTask->updateCallback = (u32)sub_0805c114;
+    gCurTask->layer = 12;
+    gCurTask->frameTable = gUnk_0874C890;
+    gCurTask->tileWord = 0;
     TaskStop();
-    gCurTask->unk48 = gTasks[gCurTask->unk44].unk48;
-    gCurTask->unk4A = gTasks[gCurTask->unk44].unk4A + 32;
-    gCurTask->unk4C = gCurTask->unk48 << 16;
-    gCurTask->unk50 = gCurTask->unk4A << 16;
-    gCurTask->unk3C = 0;
+    gCurTask->pixelX = gTasks[gCurTask->parent].pixelX;
+    gCurTask->pixelY = gTasks[gCurTask->parent].pixelY + 32;
+    gCurTask->posX = gCurTask->pixelX << 16;
+    gCurTask->posY = gCurTask->pixelY << 16;
+    gCurTask->frame = 0;
     TaskYieldTrampoline(1);
-    gCurTask->unk3C = 1;
+    gCurTask->frame = 1;
     TaskYieldTrampoline(1);
-    gCurTask->unk3C = 2;
+    gCurTask->frame = 2;
     TaskYieldTrampoline(1);
-    gCurTask->unk3C = 3;
+    gCurTask->frame = 3;
     TaskYieldTrampoline(1);
-    gCurTask->unk3C = 0;
+    gCurTask->frame = 0;
     TaskYieldTrampoline(1);
-    gCurTask->unk3C = 1;
+    gCurTask->frame = 1;
     TaskYieldTrampoline(1);
     while (1)
     {
-        gCurTask->unk48 = gTasks[gCurTask->unk44].unk48;
-        gCurTask->unk4A = gTasks[gCurTask->unk44].unk4A + 32;
-        gCurTask->unk4C = gCurTask->unk48 << 16;
-        gCurTask->unk50 = gCurTask->unk4A << 16;
-        gCurTask->unk3C = 6;
+        gCurTask->pixelX = gTasks[gCurTask->parent].pixelX;
+        gCurTask->pixelY = gTasks[gCurTask->parent].pixelY + 32;
+        gCurTask->posX = gCurTask->pixelX << 16;
+        gCurTask->posY = gCurTask->pixelY << 16;
+        gCurTask->frame = 6;
         TaskYieldTrampoline(1);
-        gCurTask->unk3C = 7;
+        gCurTask->frame = 7;
         TaskYieldTrampoline(1);
-        gCurTask->unk3C = 4;
+        gCurTask->frame = 4;
         TaskYieldTrampoline(1);
-        gCurTask->unk3C = 5;
+        gCurTask->frame = 5;
         TaskYieldTrampoline(1);
-        gCurTask->unk3C = 6;
+        gCurTask->frame = 6;
         TaskYieldTrampoline(1);
-        gCurTask->unk3C = 7;
+        gCurTask->frame = 7;
         TaskYieldTrampoline(1);
-        gCurTask->unk48 = gTasks[gCurTask->unk44].unk48;
-        gCurTask->unk4A = gTasks[gCurTask->unk44].unk4A + 32;
-        gCurTask->unk4C = gCurTask->unk48 << 16;
-        gCurTask->unk50 = gCurTask->unk4A << 16;
-        gCurTask->unk3C = 8;
+        gCurTask->pixelX = gTasks[gCurTask->parent].pixelX;
+        gCurTask->pixelY = gTasks[gCurTask->parent].pixelY + 32;
+        gCurTask->posX = gCurTask->pixelX << 16;
+        gCurTask->posY = gCurTask->pixelY << 16;
+        gCurTask->frame = 8;
         TaskYieldTrampoline(1);
-        gCurTask->unk3C = 9;
+        gCurTask->frame = 9;
         TaskYieldTrampoline(1);
-        gCurTask->unk3C = 10;
+        gCurTask->frame = 10;
         TaskYieldTrampoline(1);
-        gCurTask->unk3C = 11;
+        gCurTask->frame = 11;
         TaskYieldTrampoline(1);
-        gCurTask->unk3C = 8;
+        gCurTask->frame = 8;
         TaskYieldTrampoline(1);
-        gCurTask->unk3C = 9;
+        gCurTask->frame = 9;
         TaskYieldTrampoline(1);
     }
 }
 
 void sub_0805c0a8(void)
 {
-    gCurTask->unk04 = 0;
-    gCurTask->unk60 = 128 << 7;
-    gCurTask->unk68 = 192 << 10;
+    gCurTask->updateCallback = 0;
+    gCurTask->accelY = 128 << 7;
+    gCurTask->speedLimitY = 192 << 10;
     gCurTask->unk6C = 0;
     do
     {
-        gCurTask->unk3C = 10;
+        gCurTask->frame = 10;
         TaskYieldTrampoline(1);
-        gCurTask->unk3C = 11;
+        gCurTask->frame = 11;
         TaskYieldTrampoline(1);
-        gCurTask->unk3C = 8;
+        gCurTask->frame = 8;
         TaskYieldTrampoline(1);
-        gCurTask->unk3C = 9;
+        gCurTask->frame = 9;
         TaskYieldTrampoline(1);
         gCurTask->unk6C++;
     } while ((s16)gCurTask->unk6C <= 9);
@@ -853,7 +853,7 @@ void sub_0805c0a8(void)
 
 void sub_0805c114(void)
 {
-    if (gTasks[gCurTask->unk44].unk60 != 0)
+    if (gTasks[gCurTask->parent].accelY != 0)
         TaskSetEntry(sub_0805c0a8, gCurTaskIdx);
 }
 
@@ -863,84 +863,84 @@ void sub_0805c150(void)
     {
         s16 *tbl = (s16 *)gUnk_0873DCA8;
 
-        if (tbl[gCurTask->unk3C] != -1
-            && IsOnScreen(gCurTask->unk48 - gSpriteCameraX,
-                            gCurTask->unk4A - gSpriteCameraY + 48))
+        if (tbl[gCurTask->frame] != -1
+            && IsOnScreen(gCurTask->pixelX - gSpriteCameraX,
+                            gCurTask->pixelY - gSpriteCameraY + 48))
         {
             struct Task *q = gCurTask;
-            u32 *g = q->unk38;
+            u32 *g = q->frameTable;
 
-            QueueSprite(q->unk42, g[tbl[q->unk3C]], q->unk3E, q->unk40,
-                         q->unk48 - gSpriteCameraX,
-                         (s16)(q->unk4A - gSpriteCameraY + 48));
+            QueueSprite(q->layer, g[tbl[q->frame]], q->spriteFlags, q->tileWord,
+                         q->pixelX - gSpriteCameraX,
+                         (s16)(q->pixelY - gSpriteCameraY + 48));
         }
     }
 }
 
 void sub_0805c204(void)
 {
-    gCurTask->unk00 = (u32)ActorMove;
-    gCurTask->unk0C = (u32)TaskDrawWorld;
-    gCurTask->unk42 = 11;
-    gCurTask->unk38 = gUnk_0874C890;
-    gCurTask->unk40 = 0;
-    gCurTask->unk48 = gTasks[gCurTask->unk44].unk48
+    gCurTask->moveCallback = (u32)ActorMove;
+    gCurTask->drawCallback = (u32)TaskDrawWorld;
+    gCurTask->layer = 11;
+    gCurTask->frameTable = gUnk_0874C890;
+    gCurTask->tileWord = 0;
+    gCurTask->pixelX = gTasks[gCurTask->parent].pixelX
                          + ((s8 *)gUnk_0873DCC0)[RandomRange(8)];
-    gCurTask->unk4A = gTasks[gCurTask->unk44].unk4A
+    gCurTask->pixelY = gTasks[gCurTask->parent].pixelY
                          + ((s8 *)gUnk_0873DCC8)[RandomRange(4)];
-    gCurTask->unk4C = gCurTask->unk48 << 16;
-    gCurTask->unk50 = gCurTask->unk4A << 16;
-    TaskSetMotionY(gTasks[gCurTask->unk44].unk58 + (128 << 9),
+    gCurTask->posX = gCurTask->pixelX << 16;
+    gCurTask->posY = gCurTask->pixelY << 16;
+    TaskSetMotionY(gTasks[gCurTask->parent].velY + (128 << 9),
                  128 << 7, 192 << 10);
     gCurTask->unk6C = 0;
     do
     {
-        gCurTask->unk3C = 13;
+        gCurTask->frame = 13;
         TaskYieldTrampoline(1);
-        gCurTask->unk3C = 14;
+        gCurTask->frame = 14;
         TaskYieldTrampoline(1);
-        gCurTask->unk3C = 15;
+        gCurTask->frame = 15;
         TaskYieldTrampoline(1);
-        gCurTask->unk3C = 14;
-        TaskYieldTrampoline(1);
-        gCurTask->unk6C++;
-    } while ((s16)gCurTask->unk6C <= 1);
-    gCurTask->unk6C = 0;
-    do
-    {
-        gCurTask->unk3C = 16;
-        TaskYieldTrampoline(1);
-        gCurTask->unk3C = 17;
-        TaskYieldTrampoline(1);
-        gCurTask->unk3C = 18;
-        TaskYieldTrampoline(1);
-        gCurTask->unk3C = 19;
+        gCurTask->frame = 14;
         TaskYieldTrampoline(1);
         gCurTask->unk6C++;
     } while ((s16)gCurTask->unk6C <= 1);
     gCurTask->unk6C = 0;
     do
     {
-        gCurTask->unk3C = 20;
+        gCurTask->frame = 16;
         TaskYieldTrampoline(1);
-        gCurTask->unk3C = 21;
+        gCurTask->frame = 17;
         TaskYieldTrampoline(1);
-        gCurTask->unk3C = 22;
+        gCurTask->frame = 18;
         TaskYieldTrampoline(1);
-        gCurTask->unk3C = 23;
+        gCurTask->frame = 19;
         TaskYieldTrampoline(1);
         gCurTask->unk6C++;
     } while ((s16)gCurTask->unk6C <= 1);
     gCurTask->unk6C = 0;
     do
     {
-        gCurTask->unk3C = 24;
+        gCurTask->frame = 20;
         TaskYieldTrampoline(1);
-        gCurTask->unk3C = 25;
+        gCurTask->frame = 21;
         TaskYieldTrampoline(1);
-        gCurTask->unk3C = 26;
+        gCurTask->frame = 22;
         TaskYieldTrampoline(1);
-        gCurTask->unk3C = 27;
+        gCurTask->frame = 23;
+        TaskYieldTrampoline(1);
+        gCurTask->unk6C++;
+    } while ((s16)gCurTask->unk6C <= 1);
+    gCurTask->unk6C = 0;
+    do
+    {
+        gCurTask->frame = 24;
+        TaskYieldTrampoline(1);
+        gCurTask->frame = 25;
+        TaskYieldTrampoline(1);
+        gCurTask->frame = 26;
+        TaskYieldTrampoline(1);
+        gCurTask->frame = 27;
         TaskYieldTrampoline(1);
         gCurTask->unk6C++;
     } while ((s16)gCurTask->unk6C <= 1);
@@ -949,42 +949,42 @@ void sub_0805c204(void)
 
 void sub_0805c410(void)
 {
-    gCurTask->unk00 = (u32)ActorMove;
-    gCurTask->unk0C = (u32)TaskDrawWorld;
-    gCurTask->unk42 = 13;
-    gCurTask->unk38 = gUnk_0874C890;
-    gCurTask->unk40 = 0;
-    gCurTask->unk48 = gTasks[gCurTask->unk44].unk48
+    gCurTask->moveCallback = (u32)ActorMove;
+    gCurTask->drawCallback = (u32)TaskDrawWorld;
+    gCurTask->layer = 13;
+    gCurTask->frameTable = gUnk_0874C890;
+    gCurTask->tileWord = 0;
+    gCurTask->pixelX = gTasks[gCurTask->parent].pixelX
                          + ((s8 *)gUnk_0873DCC0)[RandomRange(8)];
-    gCurTask->unk4A = gTasks[gCurTask->unk44].unk4A
+    gCurTask->pixelY = gTasks[gCurTask->parent].pixelY
                          + ((s8 *)gUnk_0873DCC8)[RandomRange(4)];
-    gCurTask->unk4C = gCurTask->unk48 << 16;
-    gCurTask->unk50 = gCurTask->unk4A << 16;
-    TaskSetMotionY(gTasks[gCurTask->unk44].unk58 + (128 << 8),
+    gCurTask->posX = gCurTask->pixelX << 16;
+    gCurTask->posY = gCurTask->pixelY << 16;
+    TaskSetMotionY(gTasks[gCurTask->parent].velY + (128 << 8),
                  128 << 7, 192 << 10);
     gCurTask->unk6C = 0;
     do
     {
-        gCurTask->unk3C = 20;
+        gCurTask->frame = 20;
         TaskYieldTrampoline(1);
-        gCurTask->unk3C = 21;
+        gCurTask->frame = 21;
         TaskYieldTrampoline(1);
-        gCurTask->unk3C = 22;
+        gCurTask->frame = 22;
         TaskYieldTrampoline(1);
-        gCurTask->unk3C = 23;
+        gCurTask->frame = 23;
         TaskYieldTrampoline(1);
         gCurTask->unk6C++;
     } while ((s16)gCurTask->unk6C <= 1);
     gCurTask->unk6C = 0;
     do
     {
-        gCurTask->unk3C = 24;
+        gCurTask->frame = 24;
         TaskYieldTrampoline(1);
-        gCurTask->unk3C = 25;
+        gCurTask->frame = 25;
         TaskYieldTrampoline(1);
-        gCurTask->unk3C = 26;
+        gCurTask->frame = 26;
         TaskYieldTrampoline(1);
-        gCurTask->unk3C = 27;
+        gCurTask->frame = 27;
         TaskYieldTrampoline(1);
         gCurTask->unk6C++;
     } while ((s16)gCurTask->unk6C <= 1);
@@ -996,45 +996,45 @@ void sub_0805c584(void)
     struct Task *t = gCurTask;
     s16 *tbl = (s16 *)gUnk_0873DCCC;
 
-    t->unk4A = 1024 + tbl[t->unk30];
-    t->unk50 = t->unk4A << 16;
-    (gTasks + t->unk28)->unk50 = (tbl[t->unk30] + 1048) << 16;
+    t->pixelY = 1024 + tbl[t->unk30];
+    t->posY = t->pixelY << 16;
+    (gTasks + t->unk28)->posY = (tbl[t->unk30] + 1048) << 16;
     if (t->unk30 == 24)
     {
-        (gTasks + t->unk28)->unk3C = 2;
-        (gTasks + t->unk28)->unk10 = 2;
+        (gTasks + t->unk28)->frame = 2;
+        (gTasks + t->unk28)->sleepFrames = 2;
     }
 }
 
 void sub_0805c5fc(void)
 {
-    gCurTask->unk00 = (u32)TaskMove;
-    gCurTask->unk04 = (u32)sub_0805c990;
+    gCurTask->moveCallback = (u32)TaskMove;
+    gCurTask->updateCallback = (u32)sub_0805c990;
     if ((gActivePlayerMask >> gLocalPlayer) & 1)
     {
         TaskStop();
         gCurTask->unk28 = -1;
         gCurTask->unk2C = 0;
-        gCurTask->unk48 = 144;
-        gCurTask->unk4A = gTasks[gLocalPlayer].unk4A;
-        gCurTask->unk4C = gCurTask->unk48 << 16;
-        gCurTask->unk50 = gCurTask->unk4A << 16;
-        while (gTasks[gLocalPlayer].unk14 <= 3)
+        gCurTask->pixelX = 144;
+        gCurTask->pixelY = gTasks[gLocalPlayer].pixelY;
+        gCurTask->posX = gCurTask->pixelX << 16;
+        gCurTask->posY = gCurTask->pixelY << 16;
+        while (gTasks[gLocalPlayer].state <= 3)
         {
-            gCurTask->unk4A = gTasks[gLocalPlayer].unk4A;
-            gCurTask->unk50 = gCurTask->unk4A << 16;
+            gCurTask->pixelY = gTasks[gLocalPlayer].pixelY;
+            gCurTask->posY = gCurTask->pixelY << 16;
             TaskYieldTrampoline(1);
         }
-        gCurTask->unk4A = gTasks[gLocalPlayer].unk4A;
-        gCurTask->unk50 = gCurTask->unk4A << 16;
+        gCurTask->pixelY = gTasks[gLocalPlayer].pixelY;
+        gCurTask->posY = gCurTask->pixelY << 16;
         TaskYieldTrampoline(1);
-        gCurTask->unk58 = 0xFFF78000;
+        gCurTask->velY = 0xFFF78000;
         {
             u8 *t1 = (u8 *)gUnk_0873DD16;
 
             TaskYieldTrampoline(t1[gTasks[gLocalPlayer].unk34]);
         }
-        gCurTask->unk60 = 136 << 7;
+        gCurTask->accelY = 136 << 7;
         TaskYieldTrampoline(32);
         TaskStop();
         {
@@ -1042,8 +1042,8 @@ void sub_0805c5fc(void)
 
             TaskYieldTrampoline(t2[gTasks[gLocalPlayer].unk34]);
         }
-        gCurTask->unk60 = 128 << 7;
-        while (gCurTask->unk4A
+        gCurTask->accelY = 128 << 7;
+        while (gCurTask->pixelY
                < gUnk_0873DBD4[gTasks[gLocalPlayer].unk30] - 2)
             TaskYieldTrampoline(1);
         TaskStop();
@@ -1067,27 +1067,27 @@ void sub_0805c5fc(void)
 void sub_0805c814(void)
 {
     TaskStop();
-    gCurTask->unk48 = 144;
-    gCurTask->unk4A = gTasks[gCurTask->unk28].unk4A;
-    gCurTask->unk4C = gCurTask->unk48 << 16;
-    gCurTask->unk50 = gCurTask->unk4A << 16;
-    while (gTasks[gCurTask->unk28].unk14 <= 3)
+    gCurTask->pixelX = 144;
+    gCurTask->pixelY = gTasks[gCurTask->unk28].pixelY;
+    gCurTask->posX = gCurTask->pixelX << 16;
+    gCurTask->posY = gCurTask->pixelY << 16;
+    while (gTasks[gCurTask->unk28].state <= 3)
     {
-        gCurTask->unk4A = gTasks[gCurTask->unk28].unk4A;
-        gCurTask->unk50 = gCurTask->unk4A << 16;
+        gCurTask->pixelY = gTasks[gCurTask->unk28].pixelY;
+        gCurTask->posY = gCurTask->pixelY << 16;
         TaskYieldTrampoline(1);
     }
-    gCurTask->unk4A = gTasks[gCurTask->unk28].unk4A;
-    gCurTask->unk50 = gCurTask->unk4A << 16;
+    gCurTask->pixelY = gTasks[gCurTask->unk28].pixelY;
+    gCurTask->posY = gCurTask->pixelY << 16;
     TaskYieldTrampoline(1);
-    gCurTask->unk58 = 0xFFF78000;
+    gCurTask->velY = 0xFFF78000;
     {
         u8 *t1 = (u8 *)gUnk_0873DD16;
 
         TaskYieldTrampoline(t1[gTasks[gCurTask->unk28].unk34]
                             - (s16)gTasks[gCurTask->unk28].unk70 + 1);
     }
-    gCurTask->unk60 = 136 << 7;
+    gCurTask->accelY = 136 << 7;
     TaskYieldTrampoline(32);
     TaskStop();
     {
@@ -1095,8 +1095,8 @@ void sub_0805c814(void)
 
         TaskYieldTrampoline(t2[gTasks[gCurTask->unk28].unk34]);
     }
-    gCurTask->unk60 = 128 << 7;
-    while (gCurTask->unk4A
+    gCurTask->accelY = 128 << 7;
+    while (gCurTask->pixelY
            < gUnk_0873DBD4[gTasks[gCurTask->unk28].unk30] - 2)
         TaskYieldTrampoline(1);
     TaskStop();
@@ -1108,8 +1108,8 @@ void sub_0805c990(void)
     u16 x;
     u16 y;
 
-    x = gCurTask->unk48;
-    y = gCurTask->unk4A + gCurTask->unk2C;
+    x = gCurTask->pixelX;
+    y = gCurTask->pixelY + gCurTask->unk2C;
     if ((s16)y > 0x41C)
         y = 0x41C;
     SetCameraFocus((s16)x, (s16)y);
@@ -1140,8 +1140,8 @@ void sub_0805c990(void)
                 {
                     gCurTask->unk2C = 0;
                     gCurTask->unk28 = gUnk_030023D4;
-                    gCurTask->unk4A = gTasks[gUnk_030023D4].unk4A;
-                    gCurTask->unk50 = gCurTask->unk4A << 16;
+                    gCurTask->pixelY = gTasks[gUnk_030023D4].pixelY;
+                    gCurTask->posY = gCurTask->pixelY << 16;
                     TaskSetEntry(sub_0805c814, gCurTaskIdx);
                 }
             }
@@ -1153,11 +1153,11 @@ void sub_0805c990(void)
                     && gTasks[gCurTask->unk28].unk34
                            < gTasks[gUnk_030023D4].unk34)
                 {
-                    gCurTask->unk2C = gCurTask->unk4A + gCurTask->unk2C
-                                         - gTasks[gUnk_030023D4].unk4A;
+                    gCurTask->unk2C = gCurTask->pixelY + gCurTask->unk2C
+                                         - gTasks[gUnk_030023D4].pixelY;
                     gCurTask->unk28 = gUnk_030023D4;
-                    gCurTask->unk4A = gTasks[gUnk_030023D4].unk4A;
-                    gCurTask->unk50 = gCurTask->unk4A << 16;
+                    gCurTask->pixelY = gTasks[gUnk_030023D4].pixelY;
+                    gCurTask->posY = gCurTask->pixelY << 16;
                     TaskSetEntry(sub_0805c814, gCurTaskIdx);
                 }
             }
@@ -1167,45 +1167,45 @@ void sub_0805c990(void)
 
 void sub_0805cb30(void)
 {
-    gCurTask->unk00 = (u32)TaskMove;
-    gCurTask->unk0C = (u32)TaskDrawWorld;
-    gCurTask->unk42 = 8;
+    gCurTask->moveCallback = (u32)TaskMove;
+    gCurTask->drawCallback = (u32)TaskDrawWorld;
+    gCurTask->layer = 8;
     if (gActivePlayerCount == 1)
-        gCurTask->unk38 = gUnk_08754850;
+        gCurTask->frameTable = gUnk_08754850;
     else
-        gCurTask->unk38 = (u32 *)gUnk_0873DD4C[gCurTask->unk73];
-    gCurTask->unk40 = 0x00009010;
+        gCurTask->frameTable = (u32 *)gUnk_0873DD4C[gCurTask->variant];
+    gCurTask->tileWord = 0x00009010;
     {
         s16 *tbl = (s16 *)gUnk_0873DBAC;
 
-        gCurTask->unk4C = tbl[(gActivePlayerCount << 2)
-            + gTasks[gCurTask->unk44].unk2C] << 16;
+        gCurTask->posX = tbl[(gActivePlayerCount << 2)
+            + gTasks[gCurTask->parent].unk2C] << 16;
     }
-    gCurTask->unk50 = 131 << 19;
+    gCurTask->posY = 131 << 19;
     while (1)
     {
-        gCurTask->unk3C = 0;
+        gCurTask->frame = 0;
         TaskYieldTrampoline(4);
-        gCurTask->unk3C = 1;
+        gCurTask->frame = 1;
         TaskYieldTrampoline(4);
     }
 }
 
 void sub_0805cbec(void)
 {
-    gCurTask->unk0C = (u32)TaskDrawWorld;
-    gCurTask->unk42 = 11;
-    gCurTask->unk38 = gUnk_0875488C;
-    gCurTask->unk04 = (u32)sub_0805cc54;
-    gCurTask->unk40 = 0x0000A010;
-    if (gLocalPlayer == gCurTask->unk73)
+    gCurTask->drawCallback = (u32)TaskDrawWorld;
+    gCurTask->layer = 11;
+    gCurTask->frameTable = gUnk_0875488C;
+    gCurTask->updateCallback = (u32)sub_0805cc54;
+    gCurTask->tileWord = 0x0000A010;
+    if (gLocalPlayer == gCurTask->variant)
     {
-        gCurTask->unk3C = 4;
+        gCurTask->frame = 4;
     }
     else
     {
         u16 *tbl = (u16 *)gUnk_0873DD5C;
-        gCurTask->unk3C = tbl[gCurTask->unk73];
+        gCurTask->frame = tbl[gCurTask->variant];
     }
     TaskYieldTrampoline(27);
     TaskExitTrampoline();
@@ -1213,38 +1213,38 @@ void sub_0805cbec(void)
 
 s32 sub_0805cc54(void)
 {
-    gCurTask->unk48 = (gTasks + gCurTask->unk44)->unk48;
-    gCurTask->unk4A = (gTasks + gCurTask->unk44)->unk4A - 24;
+    gCurTask->pixelX = (gTasks + gCurTask->parent)->pixelX;
+    gCurTask->pixelY = (gTasks + gCurTask->parent)->pixelY - 24;
 }
 
 void sub_0805cca0(void)
 {
-    gCurTask->unk00 = (u32)TaskMove;
-    gCurTask->unk0C = (u32)TaskDrawWorld;
-    gCurTask->unk42 = 9;
-    gCurTask->unk38 = (u32 *)gUnk_0873DD64[gCurTask->unk73];
-    gCurTask->unk4C = 200 << 16;
+    gCurTask->moveCallback = (u32)TaskMove;
+    gCurTask->drawCallback = (u32)TaskDrawWorld;
+    gCurTask->layer = 9;
+    gCurTask->frameTable = (u32 *)gUnk_0873DD64[gCurTask->variant];
+    gCurTask->posX = 200 << 16;
     {
         s16 *t = (s16 *)gUnk_0873DBD4;
 
-        gCurTask->unk50 = (t[gCurTask->unk73] - 8) << 16;
+        gCurTask->posY = (t[gCurTask->variant] - 8) << 16;
     }
-    gCurTask->unk40 = 0x00008010;
+    gCurTask->tileWord = 0x00008010;
     gCurTask->unk28 = 1;
     gCurTask->unk2C = 0;
-    gCurTask->unk3C = 0;
+    gCurTask->frame = 0;
     do
     {
         TaskYieldTrampoline(1);
     } while (gCurTask->unk28 != 0 || gCurTask->unk2C != 0);
     gCurTask->unk46 = TaskCreateFrom(86, 32);
-    (gTasks + gCurTask->unk46)->unk74 = gCurTask->unk73;
+    (gTasks + gCurTask->unk46)->unk74 = gCurTask->variant;
     (gTasks + gCurTask->unk46)->unk28 = gUnk_02007D00[7];
     gUnk_02007D00[7]++;
-    if (gCurTask->unk73 == 0)
+    if (gCurTask->variant == 0)
     {
         TaskYieldTrampoline(24);
-        gCurTask->unk04 = (u32)sub_0805ceec;
+        gCurTask->updateCallback = (u32)sub_0805ceec;
         gCurTask->unk28 = 1;
         do
         {
@@ -1253,29 +1253,29 @@ void sub_0805cca0(void)
         gCurTask->unk6C = 0;
         do
         {
-            gCurTask->unk3C = 1;
+            gCurTask->frame = 1;
             TaskYieldTrampoline(1);
-            gCurTask->unk3C = 2;
+            gCurTask->frame = 2;
             TaskYieldTrampoline(1);
-            gCurTask->unk3C = 3;
+            gCurTask->frame = 3;
             TaskYieldTrampoline(2);
-            gCurTask->unk3C = 4;
+            gCurTask->frame = 4;
             TaskYieldTrampoline(24);
-            gCurTask->unk3C = 3;
+            gCurTask->frame = 3;
             TaskYieldTrampoline(2);
-            gCurTask->unk3C = 2;
+            gCurTask->frame = 2;
             TaskYieldTrampoline(1);
-            gCurTask->unk3C = 1;
+            gCurTask->frame = 1;
             TaskYieldTrampoline(1);
             gCurTask->unk6C++;
         } while ((s16)gCurTask->unk6C <= 2);
-        gCurTask->unk3C = 1;
+        gCurTask->frame = 1;
         TaskYieldTrampoline(3);
-        gCurTask->unk3C = 2;
+        gCurTask->frame = 2;
         TaskYieldTrampoline(3);
-        gCurTask->unk3C = 3;
+        gCurTask->frame = 3;
         TaskYieldTrampoline(3);
-        gCurTask->unk3C = 4;
+        gCurTask->frame = 4;
         TaskSleepForever();
     }
     else
@@ -1285,115 +1285,115 @@ void sub_0805cca0(void)
         {
             TaskYieldTrampoline(1);
         } while (gCurTask->unk28 != 0);
-        gCurTask->unk58 = 0xFFF8CD00;
+        gCurTask->velY = 0xFFF8CD00;
         TaskYieldTrampoline(3);
-        gCurTask->unk58 = 0xFFFB3300;
+        gCurTask->velY = 0xFFFB3300;
         TaskYieldTrampoline(3);
-        gCurTask->unk58 = 0xFFFD9A00;
+        gCurTask->velY = 0xFFFD9A00;
         TaskYieldTrampoline(3);
-        gCurTask->unk58 = 0x00026600;
+        gCurTask->velY = 0x00026600;
         TaskYieldTrampoline(3);
-        gCurTask->unk58 = 0x0004CD00;
+        gCurTask->velY = 0x0004CD00;
         TaskYieldTrampoline(5);
         TaskStop();
         TaskYieldTrampoline(27);
-        gCurTask->unk3C = 1;
+        gCurTask->frame = 1;
         TaskYieldTrampoline(5);
-        gCurTask->unk3C = 2;
+        gCurTask->frame = 2;
         TaskYieldTrampoline(5);
-        gCurTask->unk3C = 3;
+        gCurTask->frame = 3;
         TaskYieldTrampoline(5);
-        gCurTask->unk3C = 4;
+        gCurTask->frame = 4;
     }
     TaskSleepForever();
 }
 
 void sub_0805ceec(void)
 {
-    gCurTask->unk48 = (gTasks + gCurTask->unk46)->unk48 - 4;
-    gCurTask->unk4A = (gTasks + gCurTask->unk46)->unk4A - 16;
+    gCurTask->pixelX = (gTasks + gCurTask->unk46)->pixelX - 4;
+    gCurTask->pixelY = (gTasks + gCurTask->unk46)->pixelY - 16;
 }
 
 void sub_0805cf3c(void)
 {
-    gCurTask->unk04 = (u32)sub_0805d420;
-    gCurTask->unk4C = 248 << 16;
-    gCurTask->unk43 = 255;
+    gCurTask->updateCallback = (u32)sub_0805d420;
+    gCurTask->posX = 248 << 16;
+    gCurTask->facing = 255;
     gCurTask->unk2C = 0;
     gCurTask->unk30 = 0;
     gCurTask->unk24 = 0;
     if (gCurTask->unk74 == 0)
-        gCurTask->unk73 = 1;
+        gCurTask->variant = 1;
     else
-        gCurTask->unk73 = 0;
-    sub_0805d994(gCurTask->unk28, gCurTask->unk73);
-    gCurTask->unk42 = 8;
-    switch (gCurTask->unk73)
+        gCurTask->variant = 0;
+    sub_0805d994(gCurTask->unk28, gCurTask->variant);
+    gCurTask->layer = 8;
+    switch (gCurTask->variant)
     {
     case 1:
         if (((gActivePlayerMask >> gLocalPlayer) & 1)
             && (gTasks + gLocalPlayer)->unk30 != 0)
-            gCurTask->unk0C = 0;
-        gCurTask->unk4C = 244 << 16;
-        gCurTask->unk50 = 196 << 16;
+            gCurTask->drawCallback = 0;
+        gCurTask->posX = 244 << 16;
+        gCurTask->posY = 196 << 16;
         TaskStartFrameScript((s32)gUnk_0873DDB4);
-        gCurTask->unk54 = 0xFFFB3300;
-        gCurTask->unk58 = 0xFFFC6600;
+        gCurTask->velX = 0xFFFB3300;
+        gCurTask->velY = 0xFFFC6600;
         TaskYieldTrampoline(5);
-        gCurTask->unk54 = 0xFFFD9A00;
+        gCurTask->velX = 0xFFFD9A00;
         TaskYieldTrampoline(5);
-        gCurTask->unk54 = 0xFFFECD00;
+        gCurTask->velX = 0xFFFECD00;
         TaskYieldTrampoline(5);
-        gCurTask->unk54 = 0xFFFF6600;
+        gCurTask->velX = 0xFFFF6600;
         TaskYieldTrampoline(5);
-        gCurTask->unk54 = 0x00009A00;
+        gCurTask->velX = 0x00009A00;
         TaskYieldTrampoline(5);
-        gCurTask->unk54 = 0x00013300;
+        gCurTask->velX = 0x00013300;
         TaskYieldTrampoline(5);
-        gCurTask->unk54 = 0x00026600;
+        gCurTask->velX = 0x00026600;
         TaskYieldTrampoline(5);
-        gCurTask->unk54 = 0x0004CD00;
+        gCurTask->velX = 0x0004CD00;
         TaskYieldTrampoline(5);
-        gCurTask->unk58 = 0;
+        gCurTask->velY = 0;
         TaskYieldTrampoline(5);
         TaskStop();
         TaskYieldTrampoline(53);
         TaskStartFrameScript((s32)gUnk_0873DDA2);
-        gCurTask->unk54 = 0xFFFD6000;
+        gCurTask->velX = 0xFFFD6000;
         TaskYieldTrampoline(60);
         TaskStartFrameScript((s32)gUnk_0873DD80);
         TaskStop();
-        (gTasks + gCurTask->unk44)->unk28 = 0;
+        (gTasks + gCurTask->parent)->unk28 = 0;
         gCurTask->unk6C = 0;
         do
         {
-            gCurTask->unk58 = 0xFFFECD00;
+            gCurTask->velY = 0xFFFECD00;
             TaskYieldTrampoline(3);
-            gCurTask->unk58 = 0xFFFF6600;
+            gCurTask->velY = 0xFFFF6600;
             TaskYieldTrampoline(3);
-            gCurTask->unk58 = 0x00009A00;
+            gCurTask->velY = 0x00009A00;
             TaskYieldTrampoline(3);
-            gCurTask->unk58 = 0x00013300;
+            gCurTask->velY = 0x00013300;
             TaskYieldTrampoline(3);
             gCurTask->unk6C++;
         } while ((s16)gCurTask->unk6C <= 7);
-        gCurTask->unk58 = 0;
+        gCurTask->velY = 0;
         TaskStartFrameScript((s32)gUnk_0873DDA2);
-        gCurTask->unk54 = 0x00009A00;
+        gCurTask->velX = 0x00009A00;
         TaskYieldTrampoline(5);
-        gCurTask->unk54 = 0x00013300;
+        gCurTask->velX = 0x00013300;
         TaskYieldTrampoline(5);
-        gCurTask->unk54 = 0x00026600;
+        gCurTask->velX = 0x00026600;
         TaskYieldTrampoline(5);
-        gCurTask->unk54 = 0x0004CD00;
+        gCurTask->velX = 0x0004CD00;
         TaskYieldTrampoline(10);
-        gCurTask->unk54 = 0x0004CD00;
+        gCurTask->velX = 0x0004CD00;
         TaskYieldTrampoline(5);
-        gCurTask->unk54 = 0x00026600;
+        gCurTask->velX = 0x00026600;
         TaskYieldTrampoline(5);
-        gCurTask->unk54 = 0x00013300;
+        gCurTask->velX = 0x00013300;
         TaskYieldTrampoline(5);
-        gCurTask->unk54 = 0x00009A00;
+        gCurTask->velX = 0x00009A00;
         TaskYieldTrampoline(5);
         for (gCurTask->unk6C = 0;
              (s16)gCurTask->unk6C < gPlayerCount;
@@ -1407,25 +1407,25 @@ void sub_0805cf3c(void)
             }
         }
         gCurTask->unk34 = gCurTask->unk30 - 1;
-        gCurTask->unk54 = 0xFFFF6600;
+        gCurTask->velX = 0xFFFF6600;
         TaskYieldTrampoline(5);
-        gCurTask->unk54 = 0xFFFECD00;
+        gCurTask->velX = 0xFFFECD00;
         TaskYieldTrampoline(5);
-        gCurTask->unk54 = 0xFFFD9A00;
+        gCurTask->velX = 0xFFFD9A00;
         TaskYieldTrampoline(5);
-        gCurTask->unk54 = 0xFFFB3300;
+        gCurTask->velX = 0xFFFB3300;
         TaskYieldTrampoline(60);
         TaskStop();
         if (gUnk_02007D00[9] != 0)
         {
-            gCurTask->unk43 = 1;
-            gCurTask->unk54 = 192 << 10;
+            gCurTask->facing = 1;
+            gCurTask->velX = 192 << 10;
             TaskYieldTrampoline(36);
-            gCurTask->unk54 = 128 << 10;
+            gCurTask->velX = 128 << 10;
             TaskYieldTrampoline(8);
-            gCurTask->unk54 = 128 << 9;
+            gCurTask->velX = 128 << 9;
             TaskYieldTrampoline(8);
-            gCurTask->unk54 = 128 << 8;
+            gCurTask->velX = 128 << 8;
             TaskYieldTrampoline(8);
             TaskStop();
             gCurTask->unk6C = 0;
@@ -1441,7 +1441,7 @@ void sub_0805cf3c(void)
                         gCurTask->unk46 = TaskCreateFrom(89, 32);
                         (gTasks + gCurTask->unk46)->unk2C
                             = gCurTask->unk6E;
-                        (gTasks + gCurTask->unk46)->unk73 = 1;
+                        (gTasks + gCurTask->unk46)->variant = 1;
                     }
                 }
                 TaskYieldTrampoline(11);
@@ -1451,18 +1451,18 @@ void sub_0805cf3c(void)
         TaskSleepForever();
         break;
     case 0:
-        gCurTask->unk4C = 240 << 16;
+        gCurTask->posX = 240 << 16;
         {
             s16 *t = (s16 *)gUnk_0873DBD4;
 
-            gCurTask->unk50 = (t[gCurTask->unk74] - 2) << 16;
+            gCurTask->posY = (t[gCurTask->unk74] - 2) << 16;
         }
         TaskStartFrameScript((s32)gUnk_0873DDBE);
-        gCurTask->unk54 = 0xFFFE0000;
+        gCurTask->velX = 0xFFFE0000;
         TaskYieldTrampoline(23);
         TaskStop();
         TaskStartFrameScript(0);
-        gCurTask->unk43 = 1;
+        gCurTask->facing = 1;
         gCurTask->unk6C = 0;
         do
         {
@@ -1474,7 +1474,7 @@ void sub_0805cf3c(void)
         } while ((s16)gCurTask->unk6C <= 3);
         TaskSetFrame(167);
         TaskYieldTrampoline(4);
-        (gTasks + gCurTask->unk44)->unk28 = 0;
+        (gTasks + gCurTask->parent)->unk28 = 0;
         TaskSetFrame(165);
         TaskYieldTrampoline(2);
         TaskSetFrame(168);
@@ -1500,7 +1500,7 @@ void sub_0805d420(void)
     {
         if (((gActivePlayerMask >> (s16)gCurTask->unk6C) & 1)
             && ((gCurTask->unk2C >> (s16)gCurTask->unk6C) & 1)
-            && gCurTask->unk48 < gUnk_0873DBAC[(gCurTask->unk30 << 2) + gCurTask->unk34] - 6)
+            && gCurTask->pixelX < gUnk_0873DBAC[(gCurTask->unk30 << 2) + gCurTask->unk34] - 6)
         {
             if (gUnk_02006A14[(s16)gCurTask->unk6C] != 0)
             {
@@ -1508,7 +1508,7 @@ void sub_0805d420(void)
                 (gTasks + gCurTask->unk46)->unk2C = (s16)gCurTask->unk6C;
                 (gTasks + gCurTask->unk46)->unk30 = gCurTask->unk30;
                 (gTasks + gCurTask->unk46)->unk34 = gCurTask->unk34;
-                (gTasks + gCurTask->unk46)->unk73 = 0;
+                (gTasks + gCurTask->unk46)->variant = 0;
             }
             gCurTask->unk2C &= ~(1 << (s16)gCurTask->unk6C);
             gCurTask->unk34--;
@@ -1519,14 +1519,14 @@ void sub_0805d420(void)
 
 void sub_0805d564(void)
 {
-    gCurTask->unk00 = (u32)TaskMove;
-    gCurTask->unk0C = (u32)sub_0805d5fc;
-    gCurTask->unk42 = 15;
-    gCurTask->unk38 = gUnk_087548A0;
-    gCurTask->unk40 = 0x0000B010;
-    gCurTask->unk4C = (gTasks + gCurTask->unk44)->unk48 << 16;
-    gCurTask->unk50 = (gTasks + gCurTask->unk44)->unk4A << 16;
-    gCurTask->unk3C = 0;
+    gCurTask->moveCallback = (u32)TaskMove;
+    gCurTask->drawCallback = (u32)sub_0805d5fc;
+    gCurTask->layer = 15;
+    gCurTask->frameTable = gUnk_087548A0;
+    gCurTask->tileWord = 0x0000B010;
+    gCurTask->posX = (gTasks + gCurTask->parent)->pixelX << 16;
+    gCurTask->posY = (gTasks + gCurTask->parent)->pixelY << 16;
+    gCurTask->frame = 0;
     while (1)
     {
         gCurTask->unk6C = 0;
@@ -1547,65 +1547,65 @@ void sub_0805d5fc(void)
         struct Task *t = gCurTask;
 
         QueueSprite(14, tbl[(s16)t->unk6C], 0, 0,
-                     t->unk48 - gSpriteCameraX,
-                     (s16)(t->unk4A - gSpriteCameraY));
+                     t->pixelX - gSpriteCameraX,
+                     (s16)(t->pixelY - gSpriteCameraY));
     }
 }
 
 void sub_0805d668(void)
 {
-    gCurTask->unk00 = (u32)TaskMove;
-    gCurTask->unk0C = (u32)TaskDrawWorld;
-    gCurTask->unk42 = 10;
-    gCurTask->unk38 = gUnk_0874CCF4;
-    gCurTask->unk40 = 240 << 8;
-    gCurTask->unk3C = 4;
-    switch (gCurTask->unk73)
+    gCurTask->moveCallback = (u32)TaskMove;
+    gCurTask->drawCallback = (u32)TaskDrawWorld;
+    gCurTask->layer = 10;
+    gCurTask->frameTable = gOneUpFrames;
+    gCurTask->tileWord = 240 << 8;
+    gCurTask->frame = 4;
+    switch (gCurTask->variant)
     {
     case 0:
-        gCurTask->unk4C = (gUnk_0873DBAC[(gCurTask->unk30 << 2)
+        gCurTask->posX = (gUnk_0873DBAC[(gCurTask->unk30 << 2)
             + gCurTask->unk34] - 6) << 16;
-        gCurTask->unk50 = (gTasks + gCurTask->unk44)->unk4A << 16;
-        gCurTask->unk24 = 44 - gTasks[gCurTask->unk44].unk24;
+        gCurTask->posY = (gTasks + gCurTask->parent)->pixelY << 16;
+        gCurTask->unk24 = 44 - gTasks[gCurTask->parent].unk24;
         if (gCurTask->unk24 & 1)
             TaskYieldTrampoline(1);
-        gCurTask->unk58 = 0xFFFE0000;
+        gCurTask->velY = 0xFFFE0000;
         TaskYieldTrampoline(gCurTask->unk24 >> 1);
-        gCurTask->unk54 = 128 << 8;
-        gCurTask->unk58 = 0xFFFE0000;
+        gCurTask->velX = 128 << 8;
+        gCurTask->velY = 0xFFFE0000;
         TaskYieldTrampoline(4);
-        gCurTask->unk58 = 0xFFFF0000;
+        gCurTask->velY = 0xFFFF0000;
         TaskYieldTrampoline(4);
-        gCurTask->unk58 = 0xFFFF8000;
+        gCurTask->velY = 0xFFFF8000;
         TaskYieldTrampoline(4);
         TaskStop();
         TaskYieldTrampoline(5);
-        gCurTask->unk58 = 128 << 9;
+        gCurTask->velY = 128 << 9;
         TaskYieldTrampoline(8);
-        gCurTask->unk58 = 128 << 10;
+        gCurTask->velY = 128 << 10;
         TaskYieldTrampoline(gCurTask->unk24 >> 1);
         TaskYieldTrampoline(22);
         break;
     case 1:
-        gCurTask->unk4C = gTasks[gCurTask->unk44].unk48 << 16;
-        gCurTask->unk50 = gTasks[gCurTask->unk44].unk4A << 16;
-        gCurTask->unk54 = (gTasks[gCurTask->unk2C].unk48
-            - gTasks[gCurTask->unk44].unk48) << 11;
-        gCurTask->unk58 = 0xFFFC0000;
+        gCurTask->posX = gTasks[gCurTask->parent].pixelX << 16;
+        gCurTask->posY = gTasks[gCurTask->parent].pixelY << 16;
+        gCurTask->velX = (gTasks[gCurTask->unk2C].pixelX
+            - gTasks[gCurTask->parent].pixelX) << 11;
+        gCurTask->velY = 0xFFFC0000;
         TaskYieldTrampoline(4);
-        gCurTask->unk58 = 0xFFFE0000;
+        gCurTask->velY = 0xFFFE0000;
         TaskYieldTrampoline(4);
-        gCurTask->unk58 = 0xFFFF0000;
+        gCurTask->velY = 0xFFFF0000;
         TaskYieldTrampoline(4);
-        gCurTask->unk58 = 0xFFFF8000;
+        gCurTask->velY = 0xFFFF8000;
         TaskYieldTrampoline(4);
-        gCurTask->unk58 = 128 << 8;
+        gCurTask->velY = 128 << 8;
         TaskYieldTrampoline(4);
-        gCurTask->unk58 = 128 << 9;
+        gCurTask->velY = 128 << 9;
         TaskYieldTrampoline(4);
-        gCurTask->unk58 = 128 << 10;
+        gCurTask->velY = 128 << 10;
         TaskYieldTrampoline(4);
-        gCurTask->unk58 = 128 << 11;
+        gCurTask->velY = 128 << 11;
         TaskYieldTrampoline(4);
         TaskStopX();
         TaskYieldTrampoline(8);
@@ -1700,21 +1700,21 @@ void sub_0805d994(s32 a0, s32 a1)
     if (a1 == 0)
     {
         if (a0 <= 1)
-            gCurTask->unk40 = ((a0 << 3) + 768) | -16368;
+            gCurTask->tileWord = ((a0 << 3) + 768) | -16368;
         else
-            gCurTask->unk40 = ((a0 << 3) + 896) | -16368;
+            gCurTask->tileWord = ((a0 << 3) + 896) | -16368;
     }
     else
     {
         if (a0 <= 1)
-            gCurTask->unk40 = ((a0 << 3) + 768) | -12272;
+            gCurTask->tileWord = ((a0 << 3) + 768) | -12272;
         else
-            gCurTask->unk40 = ((a0 << 3) + 896) | -12272;
+            gCurTask->tileWord = ((a0 << 3) + 896) | -12272;
     }
-    gCurTask->unk00 = (u32)TaskMove;
-    gCurTask->unk0C = (u32)sub_0805da2c;
-    gCurTask->unk42 = 7;
-    gCurTask->unk38 = gUnk_0874CFEC;
+    gCurTask->moveCallback = (u32)TaskMove;
+    gCurTask->drawCallback = (u32)sub_0805da2c;
+    gCurTask->layer = 7;
+    gCurTask->frameTable = gUnk_0874CFEC;
 }
 
 void sub_0805da2c(void)
@@ -1730,21 +1730,21 @@ void sub_0805da2c(void)
     u16 **pal;
 
     t = gCurTask;
-    if (t->unk38 == NULL)
+    if (t->frameTable == NULL)
         return;
-    if (t->unk3C == -1)
+    if (t->frame == -1)
         return;
     if (TaskIsOnScreen() == 0)
         return;
     s = gCurTask;
-    a = s->unk40;
-    tbl = s->unk38;
-    g = (struct TaskGfx *)tbl[s->unk3C];
-    if ((g->unk00 & 1) != 0)
+    a = s->tileWord;
+    tbl = s->frameTable;
+    g = (struct TaskGfx *)tbl[s->frame];
+    if ((g->oamTemplate & 1) != 0)
     {
-        pal = &g->unk04;
-        if (g->unk04 != NULL)
-            RequestCopy(2, g->unk04 + 1, gObjPalette + ((a >> 12) << 5), *g->unk04);
+        pal = &g->palette;
+        if (g->palette != NULL)
+            RequestCopy(2, g->palette + 1, gObjPalette + ((a >> 12) << 5), *g->palette);
         p = pal[1];
         dst = (u8 *)(((a & 0x7FF) << 5) + 0x0600FE00);
         while (*p != 0xFFFF)
@@ -1757,9 +1757,9 @@ void sub_0805da2c(void)
     }
     else
     {
-        if (*g->unk04 != 0)
-            RequestCopy(2, g->unk04 + 1, gObjPalette + ((a >> 12) << 5), *g->unk04);
-        p = g->unk08;
+        if (*g->palette != 0)
+            RequestCopy(2, g->palette + 1, gObjPalette + ((a >> 12) << 5), *g->palette);
+        p = g->tiles;
         dst = (u8 *)(((a & 0x7FF) << 5) + 0x0600FE00);
         while (*p != 0xFFFF)
         {
@@ -1770,8 +1770,8 @@ void sub_0805da2c(void)
         }
     }
     u = gCurTask;
-    QueueSprite(u->unk42, g->unk00 & ~1, u->unk3E, 0x800 | u->unk40,
-                 u->unk48 - gSpriteCameraX, (s16)(u->unk4A - gSpriteCameraY));
+    QueueSprite(u->layer, g->oamTemplate & ~1, u->spriteFlags, 0x800 | u->tileWord,
+                 u->pixelX - gSpriteCameraX, (s16)(u->pixelY - gSpriteCameraY));
 }
 
 void sub_0805dba0(void)
@@ -1780,20 +1780,20 @@ void sub_0805dba0(void)
     struct Task *u;
 
     t = gCurTask;
-    t->unk04 = 0;
-    t->unk08 = 0;
-    t->unk00 = (u32)TaskMove;
-    t->unk38 = gUnk_0874CFEC;
+    t->updateCallback = 0;
+    t->lateUpdateCallback = 0;
+    t->moveCallback = (u32)TaskMove;
+    t->frameTable = gUnk_0874CFEC;
     TaskStop();
     u = gCurTask;
-    u->unk3E &= 0x7FFF;
-    u->unk88->unk42 &= 0xFFEF;
-    CallTableEntry(u->unk14, 2, gUnk_0873DEA0);
+    u->spriteFlags &= 0x7FFF;
+    u->player->unk42 &= 0xFFEF;
+    CallTableEntry(u->state, 2, gUnk_0873DEA0);
 }
 
 void sub_0805dbfc(void)
 {
-    CallTableEntry(gCurTask->unk14, 2, gUnk_0873DEA0);
+    CallTableEntry(gCurTask->state, 2, gUnk_0873DEA0);
 }
 
 /* NOTE: needs hdr.c corrected to "extern u16 gUnk_0873DEA8[];" (stride 2, ldrh, symbol-first) */
@@ -1806,11 +1806,11 @@ void sub_0805dc18(void)
     struct Task *x;
 
     t = gCurTask;
-    t->unk04 = (u32)sub_0805dd4c;
-    t->unk43 = 1;
+    t->updateCallback = (u32)sub_0805dd4c;
+    t->facing = 1;
     u = gCurTask;
-    u->unk3E &= 0x7FFF;
-    switch ((s8)u->unk88->unk0D)
+    u->spriteFlags &= 0x7FFF;
+    switch ((s8)u->player->ability)
     {
     case 0:
     case 7:
@@ -1818,7 +1818,7 @@ void sub_0805dc18(void)
     case 21:
     case 24:
         v = gCurTask;
-        v->unk3E |= 128 << 8;
+        v->spriteFlags |= 128 << 8;
         break;
     case 1:
     case 2:
@@ -1827,18 +1827,18 @@ void sub_0805dc18(void)
         while (1)
         {
             w = gCurTask;
-            w->unk3C = gUnk_0873DEA8[(s8)w->unk88->unk0D];
+            w->frame = gUnk_0873DEA8[(s8)w->player->ability];
             TaskYieldTrampoline(2);
-            gCurTask->unk3C++;
+            gCurTask->frame++;
             TaskYieldTrampoline(2);
-            gCurTask->unk3C++;
+            gCurTask->frame++;
             TaskYieldTrampoline(2);
-            gCurTask->unk3C++;
+            gCurTask->frame++;
             TaskYieldTrampoline(2);
         }
     }
     x = gCurTask;
-    x->unk3C = gUnk_0873DEA8[(s8)x->unk88->unk0D];
+    x->frame = gUnk_0873DEA8[(s8)x->player->ability];
     TaskSleepForever();
 }
 
@@ -1853,8 +1853,8 @@ void sub_0805dd4c(void)
 
 void sub_0805dd88(void)
 {
-    gCurTask->unk04 = (u32)sub_0805dd4c;
-    gCurTask->unk43 = 1;
+    gCurTask->updateCallback = (u32)sub_0805dd4c;
+    gCurTask->facing = 1;
     TaskSetFrameFlip(146);
     TaskSleepForever();
 }
@@ -1865,9 +1865,9 @@ void sub_0805ddb0(s32 a0)
 
     t = &gTasks[a0];
     t->unk46 = CreatePlayerEffectHighSlot((s8)a0, 19, 0);
-    gTasks[t->unk46].unk44 = a0;
-    gTasks[t->unk46].unk88 = t->unk88;
-    switch ((s8)gPlayerStates[a0].unk0D)
+    gTasks[t->unk46].parent = a0;
+    gTasks[t->unk46].player = t->player;
+    switch ((s8)gPlayerStates[a0].ability)
     {
     case 0:
     case 7:
@@ -1876,11 +1876,11 @@ void sub_0805ddb0(s32 a0)
     case 21:
         break;
     default:
-        gTasks[CreatePlayerEffect((s8)a0, 17, 0)].unk44 = a0;
+        gTasks[CreatePlayerEffect((s8)a0, 17, 0)].parent = a0;
         break;
     }
-    gPlayerStates[a0].unk0D = 0;
-    gPlayerStates[a0].unk04 = 22;
+    gPlayerStates[a0].ability = 0;
+    gPlayerStates[a0].mode = 22;
 }
 
 void sub_0805deac(void)
@@ -1893,7 +1893,7 @@ void sub_0805deac(void)
         {
             if (gPlayerCount != 1)
             {
-                switch ((s8)gPlayerStates[i].unk0D)
+                switch ((s8)gPlayerStates[i].ability)
                 {
                 case 0:
                 case 7:
@@ -1902,11 +1902,11 @@ void sub_0805deac(void)
                 case 21:
                     break;
                 default:
-                    gTasks[CreatePlayerEffect((s8)i, 17, 0)].unk44 = i;
+                    gTasks[CreatePlayerEffect((s8)i, 17, 0)].parent = i;
                     break;
                 }
-                gPlayerStates[i].unk0D = 0;
-                gPlayerStates[i].unk04 = 22;
+                gPlayerStates[i].ability = 0;
+                gPlayerStates[i].mode = 22;
             }
             TaskSetEntry(sub_0805e15c, i);
         }
@@ -1916,11 +1916,11 @@ void sub_0805deac(void)
 void sub_0805df9c(void)
 {
     if (gPlayerCount != 1)
-        gCurTask->unk14 = 0;
+        gCurTask->state = 0;
     else
-        gCurTask->unk14 = gPlayerCount;
+        gCurTask->state = gPlayerCount;
     TaskSetEntry(sub_0805dba0, gCurTaskIdx);
-    gCurTask->unk88->unk16 = 2;
+    gCurTask->player->unk16 = 2;
     TaskStop();
 }
 
@@ -1930,8 +1930,8 @@ void sub_0805dfe8(void)
     u16 d;
 
     t = gCurTask;
-    d = t->unk48 - gSpriteCameraX;
-    if (t->unk43 == 1)
+    d = t->pixelX - gSpriteCameraX;
+    if (t->facing == 1)
     {
         if ((s16)d >= t->unk18)
             sub_0805df9c();
@@ -1955,33 +1955,33 @@ void sub_0805e038(s32 a0)
     switch (gPlayerCount)
     {
     case 1:
-        v = (ps->unk00 + 1) * 104 + 24;
+        v = (ps->playerIndex + 1) * 104 + 24;
         break;
     case 2:
-        v = (ps->unk00 + 1) * 69 + 24;
+        v = (ps->playerIndex + 1) * 69 + 24;
         break;
     case 3:
-        v = (ps->unk00 + 1) * 52 + 24;
+        v = (ps->playerIndex + 1) * 52 + 24;
         break;
     case 4:
-        v = (ps->unk00 + 1) * 41 + 24;
+        v = (ps->playerIndex + 1) * 41 + 24;
         break;
     }
     w = (s16)v;
     t->unk18 = w;
     if (gUnk_0300244C == 0)
     {
-        if (t->unk48 - w <= 0)
-            t->unk43 = 1;
+        if (t->pixelX - w <= 0)
+            t->facing = 1;
         else
-            t->unk43 = 255;
+            t->facing = 255;
     }
     else
     {
-        if (t->unk48 - gSpriteCameraX - w <= 0)
-            t->unk43 = 1;
+        if (t->pixelX - gSpriteCameraX - w <= 0)
+            t->facing = 1;
         else
-            t->unk43 = 255;
+            t->facing = 255;
     }
 }
 
@@ -1996,7 +1996,7 @@ void sub_0805e110(s32 a0)
     sub_0805e038(a0);
     TaskSetEntry(PlayerActionWalk, a0);
     ps->unk16 = 1;
-    t->unk04 = (u32)sub_0805dfe8;
+    t->updateCallback = (u32)sub_0805dfe8;
 }
 
 void sub_0805e15c(void)
@@ -2004,18 +2004,18 @@ void sub_0805e15c(void)
     struct PlayerState *ps;
     struct Task *t;
 
-    ps = gCurTask->unk88;
-    ps->unk05 = ps->unk04;
-    gCurTask->unk88->unk04 = 22;
+    ps = gCurTask->player;
+    ps->prevMode = ps->mode;
+    gCurTask->player->mode = 22;
     t = gCurTask;
-    t->unk04 = 0;
-    t->unk08 = 0;
-    t->unk88->unk64 = 0;
-    t->unk88->unk68 = 0;
-    t->unk88->unk6C = 0;
-    t->unk64 = 128 << 24;
-    t->unk2C = t->unk50;
-    t->unk28 = t->unk4C;
+    t->updateCallback = 0;
+    t->lateUpdateCallback = 0;
+    t->player->bodyBox = 0;
+    t->player->terrainBox = 0;
+    t->player->hitBoxSet = 0;
+    t->speedLimitX = 128 << 24;
+    t->unk2C = t->posY;
+    t->unk28 = t->posX;
     if (((u8 *)gUnk_02000020)[0] == 1)
     {
         sub_0805e1bc();
@@ -2036,13 +2036,13 @@ void sub_0805e1bc(void)
     t = gCurTask;
     if (t->unk30 != 0)
     {
-        if (gLocalPlayer == t->unk88->unk00)
+        if (gLocalPlayer == t->player->playerIndex)
             PlayBgm(14);
         CallTableEntry(*(s8 *)gUnk_02008010, 14, gUnk_0873DEDC);
     }
     else
     {
-        if (gLocalPlayer == t->unk88->unk00)
+        if (gLocalPlayer == t->player->playerIndex)
             PlayBgm(13);
         CallTableEntry(*(s8 *)gUnk_02008010 + 7, 14, gUnk_0873DEDC);
     }
@@ -2075,1426 +2075,1426 @@ void sub_0805e24c(void)
 void sub_0805e2d4(void)
 {
     TaskSetMotion(128 << 9, 0, 0x5A5A5A5A, 144 << 10, 0, 0x5A5A5A5A);
-    gCurTask->unk3E &= 0x7FFF;
-    gCurTask->unk3C = 147 << 1;
+    gCurTask->spriteFlags &= 0x7FFF;
+    gCurTask->frame = 147 << 1;
     TaskYieldTrampoline(1);
-    gCurTask->unk58 = 0xFFFD8000;
-    gCurTask->unk60 = 128 << 7;
+    gCurTask->velY = 0xFFFD8000;
+    gCurTask->accelY = 128 << 7;
     TaskYieldTrampoline(2);
-    gCurTask->unk3C = 0x00000135;
+    gCurTask->frame = 0x00000135;
     TaskYieldTrampoline(2);
-    gCurTask->unk3C--;
+    gCurTask->frame--;
     TaskYieldTrampoline(2);
-    gCurTask->unk3C--;
+    gCurTask->frame--;
     TaskYieldTrampoline(2);
-    gCurTask->unk3C--;
+    gCurTask->frame--;
     TaskYieldTrampoline(1);
-    gCurTask->unk3C--;
+    gCurTask->frame--;
     TaskYieldTrampoline(1);
-    gCurTask->unk3C--;
+    gCurTask->frame--;
     TaskYieldTrampoline(2);
-    gCurTask->unk3C--;
+    gCurTask->frame--;
     TaskYieldTrampoline(4);
-    gCurTask->unk3C--;
+    gCurTask->frame--;
     TaskYieldTrampoline(4);
     TaskSetMotion(0xFFFF0000, 0, 0x5A5A5A5A, 0xFFFD4000, 128 << 7, 0x5A5A5A5A);
-    gCurTask->unk3C--;
+    gCurTask->frame--;
     TaskYieldTrampoline(2);
-    gCurTask->unk3C++;
+    gCurTask->frame++;
     TaskYieldTrampoline(2);
-    gCurTask->unk3C++;
+    gCurTask->frame++;
     TaskYieldTrampoline(3);
-    gCurTask->unk3C++;
+    gCurTask->frame++;
     TaskYieldTrampoline(3);
-    gCurTask->unk3C++;
+    gCurTask->frame++;
     TaskYieldTrampoline(3);
-    gCurTask->unk3C++;
+    gCurTask->frame++;
     TaskYieldTrampoline(4);
-    gCurTask->unk3C++;
+    gCurTask->frame++;
     TaskYieldTrampoline(4);
     TaskSetMotion(0xFFFF8000, 0, 0x5A5A5A5A, 0xFFFB0000, 0, 0x5A5A5A5A);
-    gCurTask->unk3C = 5;
+    gCurTask->frame = 5;
     TaskYieldTrampoline(1);
-    gCurTask->unk58 = 0xFFFC1000;
-    gCurTask->unk60 = 192 << 6;
+    gCurTask->velY = 0xFFFC1000;
+    gCurTask->accelY = 192 << 6;
     TaskYieldTrampoline(1);
-    gCurTask->unk3C = 0x28;
+    gCurTask->frame = 0x28;
     TaskYieldTrampoline(2);
-    gCurTask->unk3C++;
+    gCurTask->frame++;
     TaskYieldTrampoline(2);
-    gCurTask->unk3C--;
+    gCurTask->frame--;
     TaskYieldTrampoline(1);
-    gCurTask->unk3C = 0x25;
+    gCurTask->frame = 0x25;
     TaskYieldTrampoline(3);
-    gCurTask->unk3C--;
+    gCurTask->frame--;
     TaskYieldTrampoline(3);
-    gCurTask->unk3C = 0x2F;
+    gCurTask->frame = 0x2F;
     TaskYieldTrampoline(2);
-    gCurTask->unk3C--;
+    gCurTask->frame--;
     TaskYieldTrampoline(1);
-    gCurTask->unk3C = 0x2C;
+    gCurTask->frame = 0x2C;
     TaskYieldTrampoline(1);
-    gCurTask->unk3C = 0x27;
+    gCurTask->frame = 0x27;
     TaskYieldTrampoline(1);
-    gCurTask->unk3C = 0x21;
+    gCurTask->frame = 0x21;
     TaskYieldTrampoline(1);
-    gCurTask->unk3C--;
+    gCurTask->frame--;
     TaskYieldTrampoline(1);
-    gCurTask->unk3C = 0x29;
+    gCurTask->frame = 0x29;
     TaskYieldTrampoline(1);
-    gCurTask->unk3C = 0x25;
+    gCurTask->frame = 0x25;
     TaskYieldTrampoline(3);
-    gCurTask->unk3C--;
+    gCurTask->frame--;
     TaskYieldTrampoline(1);
-    gCurTask->unk3C = 0x2F;
+    gCurTask->frame = 0x2F;
     TaskYieldTrampoline(1);
-    gCurTask->unk3C--;
+    gCurTask->frame--;
     TaskYieldTrampoline(1);
-    gCurTask->unk3C = 0x2C;
+    gCurTask->frame = 0x2C;
     TaskYieldTrampoline(1);
-    gCurTask->unk3C = 0x27;
+    gCurTask->frame = 0x27;
     TaskYieldTrampoline(1);
-    gCurTask->unk3C = 0x21;
+    gCurTask->frame = 0x21;
     TaskYieldTrampoline(1);
-    gCurTask->unk3C--;
+    gCurTask->frame--;
     TaskYieldTrampoline(1);
-    gCurTask->unk3C = 0x29;
+    gCurTask->frame = 0x29;
     TaskYieldTrampoline(1);
     TaskYieldTrampoline(2);
-    gCurTask->unk3C--;
+    gCurTask->frame--;
     TaskYieldTrampoline(2);
-    gCurTask->unk3C++;
+    gCurTask->frame++;
     TaskYieldTrampoline(2);
-    gCurTask->unk3C--;
+    gCurTask->frame--;
     TaskYieldTrampoline(2);
-    gCurTask->unk3C++;
+    gCurTask->frame++;
     TaskYieldTrampoline(2);
     TaskSetMotion(0xFFFF8000, 0, 0x5A5A5A5A, 0, 0, 0x5A5A5A5A);
-    gCurTask->unk3C = 5;
+    gCurTask->frame = 5;
     TaskYieldTrampoline(2);
     TaskSetMotion(128 << 9, 0, 0x5A5A5A5A, 0xFFFD8000, 128 << 7, 0x5A5A5A5A);
-    gCurTask->unk3C = 0x28;
+    gCurTask->frame = 0x28;
     TaskYieldTrampoline(2);
-    gCurTask->unk3C++;
+    gCurTask->frame++;
     TaskYieldTrampoline(2);
-    gCurTask->unk3C--;
+    gCurTask->frame--;
     TaskYieldTrampoline(2);
-    gCurTask->unk3C++;
+    gCurTask->frame++;
     TaskYieldTrampoline(2);
-    gCurTask->unk3C--;
+    gCurTask->frame--;
     TaskYieldTrampoline(2);
-    gCurTask->unk3C++;
+    gCurTask->frame++;
     TaskYieldTrampoline(2);
-    gCurTask->unk3C--;
+    gCurTask->frame--;
     TaskYieldTrampoline(2);
-    gCurTask->unk3C++;
+    gCurTask->frame++;
     TaskYieldTrampoline(2);
-    gCurTask->unk3C--;
+    gCurTask->frame--;
     TaskYieldTrampoline(2);
-    gCurTask->unk3C++;
+    gCurTask->frame++;
     TaskYieldTrampoline(1);
     TaskSetMotion(128 << 8, 0, 0x5A5A5A5A, 0, 0, 0x5A5A5A5A);
-    gCurTask->unk3C = 5;
+    gCurTask->frame = 5;
     TaskYieldTrampoline(2);
-    gCurTask->unk54 = 0xFFFF8800;
-    gCurTask->unk5C = 192 << 5;
-    gCurTask->unk3C = 0x66;
+    gCurTask->velX = 0xFFFF8800;
+    gCurTask->accelX = 192 << 5;
+    gCurTask->frame = 0x66;
     TaskYieldTrampoline(4);
-    gCurTask->unk3C++;
+    gCurTask->frame++;
     TaskYieldTrampoline(3);
-    gCurTask->unk3C++;
+    gCurTask->frame++;
     TaskYieldTrampoline(2);
     TaskStop();
-    gCurTask->unk3C++;
+    gCurTask->frame++;
     TaskYieldTrampoline(1);
-    gCurTask->unk54 = 240 << 7;
-    gCurTask->unk5C = 0xFFFFE800;
+    gCurTask->velX = 240 << 7;
+    gCurTask->accelX = 0xFFFFE800;
     TaskYieldTrampoline(1);
-    gCurTask->unk3C++;
+    gCurTask->frame++;
     TaskYieldTrampoline(2);
-    gCurTask->unk3C++;
+    gCurTask->frame++;
     TaskYieldTrampoline(2);
-    gCurTask->unk3C++;
+    gCurTask->frame++;
     TaskYieldTrampoline(2);
-    gCurTask->unk3C++;
+    gCurTask->frame++;
     TaskYieldTrampoline(2);
     TaskSetMotion(128 << 7, 0, 0x5A5A5A5A, 242 << 7, 0xFFFFF500, 0x5A5A5A5A);
-    gCurTask->unk3C = 0x7B;
+    gCurTask->frame = 0x7B;
     TaskYieldTrampoline(4);
-    gCurTask->unk54 = 0;
+    gCurTask->velX = 0;
     TaskYieldTrampoline(15);
-    gCurTask->unk3C = 5;
+    gCurTask->frame = 5;
     TaskYieldTrampoline(2);
     TaskStop();
-    gCurTask->unk3E &= 0x7FFF;
-    CreatePlayerEffect(gCurTask->unk88->unk00, 16, 0);
-    gCurTask->unk3C = 0x92;
+    gCurTask->spriteFlags &= 0x7FFF;
+    CreatePlayerEffect(gCurTask->player->playerIndex, 16, 0);
+    gCurTask->frame = 0x92;
     TaskYieldTrampoline(0x15);
 }
 
 void sub_0805e7b4(void)
 {
-    gCurTask->unk58 = 144 << 10;
-    gCurTask->unk60 = 0xFFFF8000;
-    gCurTask->unk3E |= 128 << 8;
-    gCurTask->unk3C = 0;
+    gCurTask->velY = 144 << 10;
+    gCurTask->accelY = 0xFFFF8000;
+    gCurTask->spriteFlags |= 128 << 8;
+    gCurTask->frame = 0;
     TaskYieldTrampoline(4);
-    gCurTask->unk3C = 9;
+    gCurTask->frame = 9;
     TaskYieldTrampoline(4);
     TaskSetMotion(152 << 8, 0, 0x5A5A5A5A, 0xFFFBE000, 128 << 7, 0x5A5A5A5A);
-    gCurTask->unk3C = 4;
+    gCurTask->frame = 4;
     TaskYieldTrampoline(2);
-    gCurTask->unk3C = 40;
+    gCurTask->frame = 40;
     TaskYieldTrampoline(10);
-    gCurTask->unk58 = 0xFFF8E000;
-    gCurTask->unk3C = 5;
+    gCurTask->velY = 0xFFF8E000;
+    gCurTask->frame = 5;
     TaskYieldTrampoline(1);
-    gCurTask->unk58 = 0xFFFF2000;
+    gCurTask->velY = 0xFFFF2000;
     TaskYieldTrampoline(3);
-    gCurTask->unk58 = 188 << 11;
-    gCurTask->unk3E &= 0x7FFF;
+    gCurTask->velY = 188 << 11;
+    gCurTask->spriteFlags &= 0x7FFF;
     TaskYieldTrampoline(1);
-    gCurTask->unk58 = 128 << 6;
+    gCurTask->velY = 128 << 6;
     TaskYieldTrampoline(3);
-    gCurTask->unk3C = 40;
+    gCurTask->frame = 40;
     TaskYieldTrampoline(12);
     TaskSetMotion(128 << 8, 0, 0x5A5A5A5A, 0, 0, 0x5A5A5A5A);
-    gCurTask->unk3C = 5;
+    gCurTask->frame = 5;
     TaskYieldTrampoline(4);
     TaskYieldTrampoline(2);
-    gCurTask->unk3E |= 128 << 8;
+    gCurTask->spriteFlags |= 128 << 8;
     TaskYieldTrampoline(2);
-    gCurTask->unk54 = 0xFFFC8000;
-    gCurTask->unk3C = 97;
+    gCurTask->velX = 0xFFFC8000;
+    gCurTask->frame = 97;
     TaskYieldTrampoline(8);
-    gCurTask->unk5C = 160 << 8;
+    gCurTask->accelX = 160 << 8;
     TaskYieldTrampoline(4);
-    gCurTask->unk54 = 0xFFFF8000;
-    gCurTask->unk5C = 0;
-    gCurTask->unk3C++;
+    gCurTask->velX = 0xFFFF8000;
+    gCurTask->accelX = 0;
+    gCurTask->frame++;
     TaskYieldTrampoline(2);
-    gCurTask->unk54 = 0;
-    gCurTask->unk3C = 40;
+    gCurTask->velX = 0;
+    gCurTask->frame = 40;
     TaskYieldTrampoline(2);
-    gCurTask->unk3E &= 0x7FFF;
+    gCurTask->spriteFlags &= 0x7FFF;
     TaskYieldTrampoline(1);
-    gCurTask->unk3C = 5;
+    gCurTask->frame = 5;
     TaskYieldTrampoline(2);
-    gCurTask->unk54 = 128 << 10;
-    gCurTask->unk3C = 97;
+    gCurTask->velX = 128 << 10;
+    gCurTask->frame = 97;
     TaskYieldTrampoline(8);
-    gCurTask->unk5C = 0xFFFF6000;
+    gCurTask->accelX = 0xFFFF6000;
     TaskYieldTrampoline(4);
-    gCurTask->unk54 = 0xFFFF8000;
-    gCurTask->unk5C = 0;
-    gCurTask->unk3C++;
+    gCurTask->velX = 0xFFFF8000;
+    gCurTask->accelX = 0;
+    gCurTask->frame++;
     TaskYieldTrampoline(2);
     TaskSetMotion(0, 0, 0x5A5A5A5A, 0xFFFE0000, 128 << 9, 0x5A5A5A5A);
-    gCurTask->unk3C = 40;
+    gCurTask->frame = 40;
     TaskYieldTrampoline(3);
     TaskStop();
     TaskYieldTrampoline(2);
-    gCurTask->unk54 = 192 << 8;
-    gCurTask->unk5C = 0xFFFFD000;
-    gCurTask->unk3C = 102;
+    gCurTask->velX = 192 << 8;
+    gCurTask->accelX = 0xFFFFD000;
+    gCurTask->frame = 102;
     TaskYieldTrampoline(3);
-    gCurTask->unk3C++;
+    gCurTask->frame++;
     TaskYieldTrampoline(3);
-    gCurTask->unk3C++;
+    gCurTask->frame++;
     TaskYieldTrampoline(3);
-    gCurTask->unk3C++;
+    gCurTask->frame++;
     TaskYieldTrampoline(3);
-    gCurTask->unk54 = 0xFFFE8000;
-    gCurTask->unk5C = 192 << 5;
-    gCurTask->unk3C++;
+    gCurTask->velX = 0xFFFE8000;
+    gCurTask->accelX = 192 << 5;
+    gCurTask->frame++;
     TaskYieldTrampoline(3);
-    gCurTask->unk3C++;
+    gCurTask->frame++;
     TaskYieldTrampoline(3);
-    gCurTask->unk3C++;
+    gCurTask->frame++;
     TaskYieldTrampoline(3);
-    gCurTask->unk3C++;
+    gCurTask->frame++;
     TaskYieldTrampoline(2);
-    gCurTask->unk3C++;
+    gCurTask->frame++;
     TaskYieldTrampoline(2);
-    gCurTask->unk3E |= 128 << 8;
-    gCurTask->unk3C = 17;
+    gCurTask->spriteFlags |= 128 << 8;
+    gCurTask->frame = 17;
     TaskYieldTrampoline(2);
-    gCurTask->unk3E &= 0x7FFF;
-    gCurTask->unk3C = 111;
+    gCurTask->spriteFlags &= 0x7FFF;
+    gCurTask->frame = 111;
     TaskYieldTrampoline(1);
     TaskStop();
-    gCurTask->unk3C = 5;
+    gCurTask->frame = 5;
     TaskYieldTrampoline(2);
     TaskSetMotion(128 << 8, 0, 0x5A5A5A5A, 0xFFFEA000, 128 << 7, 0x5A5A5A5A);
-    gCurTask->unk3C = 40;
+    gCurTask->frame = 40;
     TaskYieldTrampoline(10);
     TaskSetMotion(128 << 8, 0, 0x5A5A5A5A, 0, 0, 0x5A5A5A5A);
-    gCurTask->unk3C = 5;
+    gCurTask->frame = 5;
     TaskYieldTrampoline(2);
     TaskStop();
     TaskYieldTrampoline(2);
     TaskSetMotion(128 << 8, 0, 0x5A5A5A5A, 0xFFFE6000, 128 << 7, 0x5A5A5A5A);
-    gCurTask->unk3C = 40;
+    gCurTask->frame = 40;
     TaskYieldTrampoline(12);
     TaskSetMotion(128 << 7, 0, 0x5A5A5A5A, 0, 0, 0x5A5A5A5A);
-    gCurTask->unk3C = 5;
+    gCurTask->frame = 5;
     TaskYieldTrampoline(7);
     TaskStop();
-    gCurTask->unk3E |= 128 << 8;
-    CreatePlayerEffect(gCurTask->unk88->unk00, 16, 0);
-    gCurTask->unk3C = 146;
+    gCurTask->spriteFlags |= 128 << 8;
+    CreatePlayerEffect(gCurTask->player->playerIndex, 16, 0);
+    gCurTask->frame = 146;
     TaskYieldTrampoline(21);
 }
 
 void sub_0805eb2c(s32 a0, s32 a1, s32 a2)
 {
     TaskSetMotion(0xFFFFC000, 0, 0x5A5A5A5A, 0xFFFD4000, 128 << 8, 0x5A5A5A5A);
-    gCurTask->unk3C = 0x133;
+    gCurTask->frame = 0x133;
     TaskYieldTrampoline(10);
     TaskSetMotion(0, 0, 0x5A5A5A5A, 144 << 9, 0xFFFFC000, 0x5A5A5A5A);
-    gCurTask->unk3C = 123;
+    gCurTask->frame = 123;
     TaskYieldTrampoline(8);
     TaskSetMotion(0xFFFF8000, 0, 0x5A5A5A5A, 0, 0, 0x5A5A5A5A);
-    gCurTask->unk3C = 5;
+    gCurTask->frame = 5;
     TaskYieldTrampoline(3);
     TaskSetMotion(0xFFFFC000, 0, 0x5A5A5A5A, 0xFFFD4000, 128 << 8, 0x5A5A5A5A);
-    gCurTask->unk3C = 0x133;
+    gCurTask->frame = 0x133;
     TaskYieldTrampoline(10);
-    gCurTask->unk3E |= 128 << 8;
+    gCurTask->spriteFlags |= 128 << 8;
     TaskSetMotion(0, 0, 0x5A5A5A5A, 144 << 9, 0xFFFFC000, 0x5A5A5A5A);
-    gCurTask->unk3C = 123;
+    gCurTask->frame = 123;
     TaskYieldTrampoline(8);
     TaskSetMotion(0xFFFF8000, 0, 0x5A5A5A5A, 0, 0, 0x5A5A5A5A);
-    gCurTask->unk3C = 5;
+    gCurTask->frame = 5;
     TaskYieldTrampoline(3);
-    gCurTask->unk3E &= 0x7FFF;
-    gCurTask->unk54 = 0xFFF80000;
-    gCurTask->unk5C = 128 << 9;
-    gCurTask->unk3C = 100;
+    gCurTask->spriteFlags &= 0x7FFF;
+    gCurTask->velX = 0xFFF80000;
+    gCurTask->accelX = 128 << 9;
+    gCurTask->frame = 100;
     TaskYieldTrampoline(1);
-    gCurTask->unk54 = 0;
+    gCurTask->velX = 0;
     TaskYieldTrampoline(2);
     TaskSetMotion(192 << 12, 0xFFFFD000, 0x5A5A5A5A, 0, 0, 0x5A5A5A5A);
-    gCurTask->unk3C = 30;
+    gCurTask->frame = 30;
     TaskYieldTrampoline(1);
-    gCurTask->unk54 = 180 << 10;
+    gCurTask->velX = 180 << 10;
     TaskYieldTrampoline(15);
-    gCurTask->unk54 = 128 << 7;
-    gCurTask->unk3C = 5;
+    gCurTask->velX = 128 << 7;
+    gCurTask->frame = 5;
     TaskYieldTrampoline(2);
     TaskSetMotion(0xFFFF0000, 0, 0x5A5A5A5A, 0xFFFD8000, 128 << 7, 0x5A5A5A5A);
-    gCurTask->unk3E |= 128 << 8;
-    gCurTask->unk3C = 40;
+    gCurTask->spriteFlags |= 128 << 8;
+    gCurTask->frame = 40;
     TaskYieldTrampoline(2);
-    gCurTask->unk3C = 32;
+    gCurTask->frame = 32;
     TaskYieldTrampoline(3);
-    gCurTask->unk3C++;
+    gCurTask->frame++;
     TaskYieldTrampoline(3);
-    gCurTask->unk3C++;
+    gCurTask->frame++;
     TaskYieldTrampoline(3);
-    gCurTask->unk3C++;
+    gCurTask->frame++;
     TaskYieldTrampoline(3);
-    gCurTask->unk3C++;
+    gCurTask->frame++;
     TaskYieldTrampoline(3);
-    gCurTask->unk3C++;
+    gCurTask->frame++;
     TaskYieldTrampoline(2);
     TaskSetMotion(0xFFFF8000, 0, 0x5A5A5A5A, 0, 0, 0x5A5A5A5A);
-    gCurTask->unk3C = 5;
+    gCurTask->frame = 5;
     TaskYieldTrampoline(2);
     TaskStop();
     TaskYieldTrampoline(2);
     TaskSetMotion(0xFFFF8000, 0, 0x5A5A5A5A, 0xFFFE0000, 128 << 7, 0x5A5A5A5A);
-    gCurTask->unk3C = 40;
+    gCurTask->frame = 40;
     TaskYieldTrampoline(15);
     TaskSetMotion(0xFFFFC000, 0, 0x5A5A5A5A, 0, 0, 0x5A5A5A5A);
-    gCurTask->unk3C = 5;
+    gCurTask->frame = 5;
     TaskYieldTrampoline(4);
     TaskYieldTrampoline(2);
     TaskSetMotion(0xFFFF8000, 0, 0x5A5A5A5A, 0xFFFE0000, 128 << 7, 0x5A5A5A5A);
-    gCurTask->unk3C = 40;
+    gCurTask->frame = 40;
     TaskYieldTrampoline(15);
     TaskSetMotion(0xFFFFC000, 0, 0x5A5A5A5A, 0, 0, 0x5A5A5A5A);
-    gCurTask->unk3C = 5;
+    gCurTask->frame = 5;
     TaskYieldTrampoline(4);
     TaskSetMotion(240 << 8, 0, 0x5A5A5A5A, 0xFFFD8000, 128 << 7, 0x5A5A5A5A);
-    gCurTask->unk3C = 40;
+    gCurTask->frame = 40;
     TaskYieldTrampoline(2);
-    gCurTask->unk3C = 32;
+    gCurTask->frame = 32;
     TaskYieldTrampoline(3);
-    gCurTask->unk3C++;
+    gCurTask->frame++;
     TaskYieldTrampoline(3);
-    gCurTask->unk3C++;
+    gCurTask->frame++;
     TaskYieldTrampoline(3);
-    gCurTask->unk3C++;
+    gCurTask->frame++;
     TaskYieldTrampoline(3);
-    gCurTask->unk3C++;
+    gCurTask->frame++;
     TaskYieldTrampoline(3);
-    gCurTask->unk3C++;
+    gCurTask->frame++;
     TaskYieldTrampoline(2);
     TaskSetMotion(0xFFFFC000, 0, 0x5A5A5A5A, 0, 0, 0x5A5A5A5A);
-    gCurTask->unk3C = 5;
+    gCurTask->frame = 5;
     TaskYieldTrampoline(2);
     TaskStop();
-    gCurTask->unk3E |= 128 << 8;
-    CreatePlayerEffect(gCurTask->unk88->unk00, 16, 0);
-    gCurTask->unk3C = 146;
+    gCurTask->spriteFlags |= 128 << 8;
+    CreatePlayerEffect(gCurTask->player->playerIndex, 16, 0);
+    gCurTask->frame = 146;
     TaskYieldTrampoline(21);
 }
 
 void sub_0805ee90(void)
 {
-    gCurTask->unk58 = 144 << 9;
-    gCurTask->unk60 = 0xFFFFC000;
-    gCurTask->unk3C = 150;
+    gCurTask->velY = 144 << 9;
+    gCurTask->accelY = 0xFFFFC000;
+    gCurTask->frame = 150;
     TaskYieldTrampoline(4);
-    gCurTask->unk58 = 0xFFFC8000;
-    gCurTask->unk60 = 128 << 7;
-    gCurTask->unk3C = 0x133;
+    gCurTask->velY = 0xFFFC8000;
+    gCurTask->accelY = 128 << 7;
+    gCurTask->frame = 0x133;
     TaskYieldTrampoline(2);
-    gCurTask->unk3C = 151;
+    gCurTask->frame = 151;
     TaskYieldTrampoline(12);
-    gCurTask->unk3C = 0x133;
+    gCurTask->frame = 0x133;
     TaskYieldTrampoline(3);
-    gCurTask->unk58 = 144 << 9;
-    gCurTask->unk60 = 0xFFFFC000;
-    gCurTask->unk3C = 150;
+    gCurTask->velY = 144 << 9;
+    gCurTask->accelY = 0xFFFFC000;
+    gCurTask->frame = 150;
     TaskYieldTrampoline(4);
-    gCurTask->unk58 = 0xFFFC8000;
-    gCurTask->unk60 = 128 << 7;
-    gCurTask->unk3C = 0x133;
+    gCurTask->velY = 0xFFFC8000;
+    gCurTask->accelY = 128 << 7;
+    gCurTask->frame = 0x133;
     TaskYieldTrampoline(2);
-    gCurTask->unk3C = 151;
+    gCurTask->frame = 151;
     TaskYieldTrampoline(12);
-    gCurTask->unk60 = 192 << 6;
-    gCurTask->unk3C = 0x133;
+    gCurTask->accelY = 192 << 6;
+    gCurTask->frame = 0x133;
     TaskYieldTrampoline(3);
-    gCurTask->unk58 = 208 << 8;
-    gCurTask->unk60 = 128 << 6;
+    gCurTask->velY = 208 << 8;
+    gCurTask->accelY = 128 << 6;
     TaskYieldTrampoline(3);
-    gCurTask->unk3C--;
+    gCurTask->frame--;
     TaskYieldTrampoline(3);
-    gCurTask->unk3C--;
+    gCurTask->frame--;
     TaskYieldTrampoline(3);
-    gCurTask->unk3C--;
+    gCurTask->frame--;
     TaskYieldTrampoline(2);
-    gCurTask->unk3C--;
+    gCurTask->frame--;
     TaskYieldTrampoline(2);
-    gCurTask->unk3C--;
+    gCurTask->frame--;
     TaskYieldTrampoline(2);
-    gCurTask->unk3C--;
+    gCurTask->frame--;
     TaskYieldTrampoline(1);
-    gCurTask->unk3C--;
+    gCurTask->frame--;
     TaskYieldTrampoline(1);
-    gCurTask->unk3C--;
+    gCurTask->frame--;
     TaskYieldTrampoline(2);
-    gCurTask->unk58 = 192 << 11;
-    gCurTask->unk60 = 0;
-    gCurTask->unk3C = 310;
+    gCurTask->velY = 192 << 11;
+    gCurTask->accelY = 0;
+    gCurTask->frame = 310;
     TaskYieldTrampoline(1);
-    gCurTask->unk58 = 0;
+    gCurTask->velY = 0;
     TaskYieldTrampoline(1);
-    gCurTask->unk58 = 0xFFFB2000;
-    gCurTask->unk60 = 0xFFFFC000;
-    gCurTask->unk3C = 0x133 - 8;
+    gCurTask->velY = 0xFFFB2000;
+    gCurTask->accelY = 0xFFFFC000;
+    gCurTask->frame = 0x133 - 8;
     TaskYieldTrampoline(1);
-    gCurTask->unk58 = 224 << 8;
+    gCurTask->velY = 224 << 8;
     TaskYieldTrampoline(3);
-    gCurTask->unk58 = 0xFFFDA000;
-    gCurTask->unk60 = 128 << 7;
-    gCurTask->unk3C = 151 + 161;
+    gCurTask->velY = 0xFFFDA000;
+    gCurTask->accelY = 128 << 7;
+    gCurTask->frame = 151 + 161;
     TaskYieldTrampoline(14);
-    gCurTask->unk3C = 0x133 - 8;
+    gCurTask->frame = 0x133 - 8;
     TaskYieldTrampoline(3);
-    gCurTask->unk58 = 192 << 11;
-    gCurTask->unk60 = 0;
-    gCurTask->unk3C = 310;
+    gCurTask->velY = 192 << 11;
+    gCurTask->accelY = 0;
+    gCurTask->frame = 310;
     TaskYieldTrampoline(1);
-    gCurTask->unk58 = 0;
+    gCurTask->velY = 0;
     TaskYieldTrampoline(1);
-    gCurTask->unk58 = 0xFFFB2000;
-    gCurTask->unk60 = 0xFFFF8000;
-    gCurTask->unk3C = 0x133 - 8;
+    gCurTask->velY = 0xFFFB2000;
+    gCurTask->accelY = 0xFFFF8000;
+    gCurTask->frame = 0x133 - 8;
     TaskYieldTrampoline(1);
-    gCurTask->unk58 = 224 << 8;
+    gCurTask->velY = 224 << 8;
     TaskYieldTrampoline(3);
-    gCurTask->unk58 = 0xFFFBC000;
-    gCurTask->unk60 = 128 << 7;
-    gCurTask->unk3C = 151 + 161;
+    gCurTask->velY = 0xFFFBC000;
+    gCurTask->accelY = 128 << 7;
+    gCurTask->frame = 151 + 161;
     TaskYieldTrampoline(14);
-    gCurTask->unk3E |= 128 << 8;
-    gCurTask->unk3C = 0x139;
+    gCurTask->spriteFlags |= 128 << 8;
+    gCurTask->frame = 0x139;
     TaskYieldTrampoline(3);
-    gCurTask->unk3C++;
+    gCurTask->frame++;
     TaskYieldTrampoline(2);
-    gCurTask->unk3C++;
+    gCurTask->frame++;
     TaskYieldTrampoline(2);
-    gCurTask->unk3C++;
+    gCurTask->frame++;
     TaskYieldTrampoline(2);
-    gCurTask->unk3C++;
+    gCurTask->frame++;
     TaskYieldTrampoline(8);
-    gCurTask->unk3C = 106;
+    gCurTask->frame = 106;
     TaskYieldTrampoline(2);
-    gCurTask->unk58 = 128 << 10;
-    gCurTask->unk60 = 0xFFFF0000;
+    gCurTask->velY = 128 << 10;
+    gCurTask->accelY = 0xFFFF0000;
     TaskYieldTrampoline(3);
     TaskStopY();
     TaskYieldTrampoline(2);
-    gCurTask->unk54 = 0xFFFEA000;
-    gCurTask->unk5C = 128 << 6;
+    gCurTask->velX = 0xFFFEA000;
+    gCurTask->accelX = 128 << 6;
     TaskYieldTrampoline(4);
-    gCurTask->unk3E &= 0x7FFF;
+    gCurTask->spriteFlags &= 0x7FFF;
     TaskYieldTrampoline(5);
-    gCurTask->unk3C++;
+    gCurTask->frame++;
     TaskYieldTrampoline(4);
-    gCurTask->unk3C++;
+    gCurTask->frame++;
     TaskYieldTrampoline(3);
-    gCurTask->unk3C++;
+    gCurTask->frame++;
     TaskYieldTrampoline(2);
-    gCurTask->unk3C++;
+    gCurTask->frame++;
     TaskYieldTrampoline(1);
-    gCurTask->unk3C = 17;
+    gCurTask->frame = 17;
     TaskYieldTrampoline(1);
-    gCurTask->unk3C = 111;
+    gCurTask->frame = 111;
     TaskYieldTrampoline(1);
     TaskStop();
-    gCurTask->unk3E |= 128 << 8;
-    CreatePlayerEffect(gCurTask->unk88->unk00, 16, 0);
-    gCurTask->unk3C = 146;
+    gCurTask->spriteFlags |= 128 << 8;
+    CreatePlayerEffect(gCurTask->player->playerIndex, 16, 0);
+    gCurTask->frame = 146;
     TaskYieldTrampoline(21);
 }
 
 void sub_0805f1bc(void)
 {
-    gCurTask->unk54 = 128 << 9;
-    gCurTask->unk3E |= 128 << 8;
-    gCurTask->unk3C = 20;
+    gCurTask->velX = 128 << 9;
+    gCurTask->spriteFlags |= 128 << 8;
+    gCurTask->frame = 20;
     TaskYieldTrampoline(3);
-    gCurTask->unk3C--;
+    gCurTask->frame--;
     TaskYieldTrampoline(2);
-    gCurTask->unk54 = 128 << 8;
-    gCurTask->unk3C--;
+    gCurTask->velX = 128 << 8;
+    gCurTask->frame--;
     TaskYieldTrampoline(3);
-    gCurTask->unk54 = 128 << 7;
-    gCurTask->unk3C--;
+    gCurTask->velX = 128 << 7;
+    gCurTask->frame--;
     TaskYieldTrampoline(10);
-    gCurTask->unk3C--;
+    gCurTask->frame--;
     TaskYieldTrampoline(3);
-    gCurTask->unk54 = 128 << 9;
-    gCurTask->unk3C--;
+    gCurTask->velX = 128 << 9;
+    gCurTask->frame--;
     TaskYieldTrampoline(3);
-    gCurTask->unk3C--;
+    gCurTask->frame--;
     TaskYieldTrampoline(2);
-    gCurTask->unk54 = 128 << 7;
-    gCurTask->unk3C--;
+    gCurTask->velX = 128 << 7;
+    gCurTask->frame--;
     TaskYieldTrampoline(3);
-    gCurTask->unk3C--;
+    gCurTask->frame--;
     TaskYieldTrampoline(10);
-    gCurTask->unk54 = 176 << 8;
-    gCurTask->unk5C = 0xFFFFF000;
-    gCurTask->unk3C = 102;
+    gCurTask->velX = 176 << 8;
+    gCurTask->accelX = 0xFFFFF000;
+    gCurTask->frame = 102;
     TaskYieldTrampoline(3);
-    gCurTask->unk3C++;
+    gCurTask->frame++;
     TaskYieldTrampoline(3);
-    gCurTask->unk3C++;
+    gCurTask->frame++;
     TaskYieldTrampoline(3);
-    gCurTask->unk3C++;
+    gCurTask->frame++;
     TaskYieldTrampoline(3);
-    gCurTask->unk3C++;
+    gCurTask->frame++;
     TaskYieldTrampoline(3);
-    gCurTask->unk3C++;
+    gCurTask->frame++;
     TaskYieldTrampoline(3);
-    gCurTask->unk3C++;
+    gCurTask->frame++;
     TaskYieldTrampoline(2);
-    gCurTask->unk3C++;
+    gCurTask->frame++;
     TaskYieldTrampoline(2);
-    gCurTask->unk3C++;
+    gCurTask->frame++;
     TaskYieldTrampoline(2);
-    gCurTask->unk3E &= 0x7FFF;
-    gCurTask->unk3C = 17;
+    gCurTask->spriteFlags &= 0x7FFF;
+    gCurTask->frame = 17;
     TaskYieldTrampoline(2);
-    gCurTask->unk3E |= 128 << 8;
-    gCurTask->unk3C = 111;
+    gCurTask->spriteFlags |= 128 << 8;
+    gCurTask->frame = 111;
     TaskYieldTrampoline(2);
-    gCurTask->unk3E &= 0x7FFF;
-    gCurTask->unk3C = 110;
+    gCurTask->spriteFlags &= 0x7FFF;
+    gCurTask->frame = 110;
     TaskYieldTrampoline(2);
-    gCurTask->unk54 = 128 << 9;
-    gCurTask->unk3E |= 128 << 8;
-    gCurTask->unk3C = 102;
+    gCurTask->velX = 128 << 9;
+    gCurTask->spriteFlags |= 128 << 8;
+    gCurTask->frame = 102;
     TaskYieldTrampoline(2);
-    gCurTask->unk3C++;
+    gCurTask->frame++;
     TaskYieldTrampoline(2);
-    gCurTask->unk3C++;
+    gCurTask->frame++;
     TaskYieldTrampoline(2);
-    gCurTask->unk3C++;
+    gCurTask->frame++;
     TaskYieldTrampoline(2);
-    gCurTask->unk3C++;
+    gCurTask->frame++;
     TaskYieldTrampoline(1);
-    gCurTask->unk3C++;
+    gCurTask->frame++;
     TaskYieldTrampoline(1);
-    gCurTask->unk3C++;
+    gCurTask->frame++;
     TaskYieldTrampoline(1);
-    gCurTask->unk3C++;
+    gCurTask->frame++;
     TaskYieldTrampoline(1);
-    gCurTask->unk3C++;
+    gCurTask->frame++;
     TaskYieldTrampoline(1);
-    gCurTask->unk3E &= 0x7FFF;
-    gCurTask->unk3C = 17;
+    gCurTask->spriteFlags &= 0x7FFF;
+    gCurTask->frame = 17;
     TaskYieldTrampoline(1);
-    gCurTask->unk3E |= 128 << 8;
-    gCurTask->unk3C = 111;
+    gCurTask->spriteFlags |= 128 << 8;
+    gCurTask->frame = 111;
     TaskYieldTrampoline(1);
-    gCurTask->unk54 = 0xFFF38000;
-    gCurTask->unk5C = 0xFFFE8000;
-    gCurTask->unk3E |= 128 << 8;
-    gCurTask->unk3C = 0x10F7;
+    gCurTask->velX = 0xFFF38000;
+    gCurTask->accelX = 0xFFFE8000;
+    gCurTask->spriteFlags |= 128 << 8;
+    gCurTask->frame = 0x10F7;
     TaskYieldTrampoline(1);
-    gCurTask->unk54 = 160 << 10;
+    gCurTask->velX = 160 << 10;
     TaskYieldTrampoline(1);
-    gCurTask->unk54 = 140 << 13;
-    gCurTask->unk3C = 104;
+    gCurTask->velX = 140 << 13;
+    gCurTask->frame = 104;
     TaskYieldTrampoline(1);
-    gCurTask->unk54 = 0;
+    gCurTask->velX = 0;
     TaskYieldTrampoline(1);
-    gCurTask->unk3C = 107;
+    gCurTask->frame = 107;
     TaskYieldTrampoline(2);
-    gCurTask->unk54 = 200 << 12;
-    gCurTask->unk5C = 128 << 8;
-    gCurTask->unk3E &= 0x7FFF;
-    gCurTask->unk3C = 0x10F7;
+    gCurTask->velX = 200 << 12;
+    gCurTask->accelX = 128 << 8;
+    gCurTask->spriteFlags &= 0x7FFF;
+    gCurTask->frame = 0x10F7;
     TaskYieldTrampoline(1);
-    gCurTask->unk54 = 0xFFFD8000;
+    gCurTask->velX = 0xFFFD8000;
     TaskYieldTrampoline(1);
-    gCurTask->unk54 = 0xFFEE8000;
-    gCurTask->unk58 = 128 << 10;
-    gCurTask->unk3C = 37;
+    gCurTask->velX = 0xFFEE8000;
+    gCurTask->velY = 128 << 10;
+    gCurTask->frame = 37;
     TaskYieldTrampoline(1);
-    gCurTask->unk54 = 0;
-    gCurTask->unk58 = 0;
+    gCurTask->velX = 0;
+    gCurTask->velY = 0;
     TaskYieldTrampoline(1);
-    gCurTask->unk3E |= 128 << 8;
+    gCurTask->spriteFlags |= 128 << 8;
     TaskYieldTrampoline(2);
     TaskSetMotion(0xFFF38000, 0xFFFE8000, 0x5A5A5A5A, 0xFFFE0000, 0, 0x5A5A5A5A);
-    gCurTask->unk3E |= 128 << 8;
-    gCurTask->unk3C = 0x10F7;
+    gCurTask->spriteFlags |= 128 << 8;
+    gCurTask->frame = 0x10F7;
     TaskYieldTrampoline(1);
-    gCurTask->unk54 = 160 << 10;
-    gCurTask->unk58 = 0;
+    gCurTask->velX = 160 << 10;
+    gCurTask->velY = 0;
     TaskYieldTrampoline(1);
-    gCurTask->unk54 = 140 << 13;
-    gCurTask->unk3C = 104;
+    gCurTask->velX = 140 << 13;
+    gCurTask->frame = 104;
     TaskYieldTrampoline(1);
-    gCurTask->unk54 = 0;
+    gCurTask->velX = 0;
     TaskYieldTrampoline(1);
-    gCurTask->unk3C = 107;
+    gCurTask->frame = 107;
     TaskYieldTrampoline(2);
-    gCurTask->unk54 = 200 << 12;
-    gCurTask->unk5C = 128 << 8;
-    gCurTask->unk3E &= 0x7FFF;
-    gCurTask->unk3C = 0x10F7;
+    gCurTask->velX = 200 << 12;
+    gCurTask->accelX = 128 << 8;
+    gCurTask->spriteFlags &= 0x7FFF;
+    gCurTask->frame = 0x10F7;
     TaskYieldTrampoline(1);
-    gCurTask->unk54 = 0xFFFD8000;
+    gCurTask->velX = 0xFFFD8000;
     TaskYieldTrampoline(1);
-    gCurTask->unk54 = 0xFFEE8000;
-    gCurTask->unk58 = 128 << 10;
-    gCurTask->unk3C = 37;
+    gCurTask->velX = 0xFFEE8000;
+    gCurTask->velY = 128 << 10;
+    gCurTask->frame = 37;
     TaskYieldTrampoline(1);
-    gCurTask->unk54 = 0;
-    gCurTask->unk58 = 0;
+    gCurTask->velX = 0;
+    gCurTask->velY = 0;
     TaskYieldTrampoline(1);
-    gCurTask->unk3E |= 128 << 8;
+    gCurTask->spriteFlags |= 128 << 8;
     TaskYieldTrampoline(2);
     TaskSetMotion(0xFFF38000, 0xFFFE8000, 0x5A5A5A5A, 0xFFFE0000, 0, 0x5A5A5A5A);
-    gCurTask->unk3E |= 128 << 8;
-    gCurTask->unk3C = 0x10F7;
+    gCurTask->spriteFlags |= 128 << 8;
+    gCurTask->frame = 0x10F7;
     TaskYieldTrampoline(1);
-    gCurTask->unk54 = 0xFFFD8000;
-    gCurTask->unk58 = 0;
+    gCurTask->velX = 0xFFFD8000;
+    gCurTask->velY = 0;
     TaskYieldTrampoline(1);
-    gCurTask->unk54 = 140 << 13;
-    gCurTask->unk3C = 104;
+    gCurTask->velX = 140 << 13;
+    gCurTask->frame = 104;
     TaskYieldTrampoline(1);
-    gCurTask->unk54 = 0;
+    gCurTask->velX = 0;
     TaskYieldTrampoline(1);
-    gCurTask->unk3C = 37;
+    gCurTask->frame = 37;
     TaskYieldTrampoline(2);
-    gCurTask->unk54 = 200 << 12;
-    gCurTask->unk5C = 128 << 8;
-    gCurTask->unk3E &= 0x7FFF;
-    gCurTask->unk3C = 0x10F7;
+    gCurTask->velX = 200 << 12;
+    gCurTask->accelX = 128 << 8;
+    gCurTask->spriteFlags &= 0x7FFF;
+    gCurTask->frame = 0x10F7;
     TaskYieldTrampoline(1);
-    gCurTask->unk54 = 0xFFFD8000;
+    gCurTask->velX = 0xFFFD8000;
     TaskYieldTrampoline(1);
-    gCurTask->unk54 = 0xFFEE8000;
-    gCurTask->unk58 = 128 << 10;
-    gCurTask->unk3C = 37;
+    gCurTask->velX = 0xFFEE8000;
+    gCurTask->velY = 128 << 10;
+    gCurTask->frame = 37;
     TaskYieldTrampoline(1);
-    gCurTask->unk54 = 0;
-    gCurTask->unk58 = 0;
+    gCurTask->velX = 0;
+    gCurTask->velY = 0;
     TaskYieldTrampoline(1);
-    gCurTask->unk3E |= 128 << 8;
-    gCurTask->unk3C = 37;
+    gCurTask->spriteFlags |= 128 << 8;
+    gCurTask->frame = 37;
     TaskYieldTrampoline(2);
     TaskSetMotion(128 << 8, 0, 0x5A5A5A5A, 0xFFFC6000, 128 << 7, 0x5A5A5A5A);
-    gCurTask->unk3C = 31;
+    gCurTask->frame = 31;
     TaskYieldTrampoline(1);
-    gCurTask->unk58 = 0xFFFD9000;
+    gCurTask->velY = 0xFFFD9000;
     TaskYieldTrampoline(3);
-    gCurTask->unk3C++;
+    gCurTask->frame++;
     TaskYieldTrampoline(2);
-    gCurTask->unk3C++;
+    gCurTask->frame++;
     TaskYieldTrampoline(2);
-    gCurTask->unk3C++;
+    gCurTask->frame++;
     TaskYieldTrampoline(2);
-    gCurTask->unk3C++;
+    gCurTask->frame++;
     TaskYieldTrampoline(2);
-    gCurTask->unk3C++;
+    gCurTask->frame++;
     TaskYieldTrampoline(2);
-    gCurTask->unk3C++;
+    gCurTask->frame++;
     TaskYieldTrampoline(2);
-    gCurTask->unk3C++;
+    gCurTask->frame++;
     TaskYieldTrampoline(2);
-    gCurTask->unk3C++;
+    gCurTask->frame++;
     TaskYieldTrampoline(2);
     TaskSetMotion(0, 0, 0x5A5A5A5A, 128 << 9, 0xFFFFC000, 0x5A5A5A5A);
-    gCurTask->unk3C = 5;
+    gCurTask->frame = 5;
     TaskYieldTrampoline(7);
     TaskStop();
-    gCurTask->unk3E |= 128 << 8;
-    CreatePlayerEffect(gCurTask->unk88->unk00, 16, 0);
-    gCurTask->unk3C = 146;
+    gCurTask->spriteFlags |= 128 << 8;
+    CreatePlayerEffect(gCurTask->player->playerIndex, 16, 0);
+    gCurTask->frame = 146;
     TaskYieldTrampoline(21);
 }
 
 void sub_0805f778(void)
 {
-    gCurTask->unk54 = 0xFFFD8000;
-    gCurTask->unk5C = 128 << 7;
-    gCurTask->unk3C = 20;
+    gCurTask->velX = 0xFFFD8000;
+    gCurTask->accelX = 128 << 7;
+    gCurTask->frame = 20;
     TaskYieldTrampoline(5);
-    gCurTask->unk54 = 0xFFFF0000;
-    gCurTask->unk5C = 128 << 5;
-    gCurTask->unk3C--;
+    gCurTask->velX = 0xFFFF0000;
+    gCurTask->accelX = 128 << 5;
+    gCurTask->frame--;
     TaskYieldTrampoline(1);
-    gCurTask->unk3C--;
+    gCurTask->frame--;
     TaskYieldTrampoline(3);
-    gCurTask->unk3C--;
+    gCurTask->frame--;
     TaskYieldTrampoline(10);
-    gCurTask->unk54 = 0xFFFF8000;
-    gCurTask->unk5C = 0;
-    gCurTask->unk3C--;
+    gCurTask->velX = 0xFFFF8000;
+    gCurTask->accelX = 0;
+    gCurTask->frame--;
     TaskYieldTrampoline(2);
-    gCurTask->unk54 = 160 << 10;
-    gCurTask->unk5C = 0xFFFFC000;
-    gCurTask->unk3C = 18;
+    gCurTask->velX = 160 << 10;
+    gCurTask->accelX = 0xFFFFC000;
+    gCurTask->frame = 18;
     TaskYieldTrampoline(5);
-    gCurTask->unk54 = 128 << 9;
-    gCurTask->unk5C = 0;
-    gCurTask->unk3C++;
+    gCurTask->velX = 128 << 9;
+    gCurTask->accelX = 0;
+    gCurTask->frame++;
     TaskYieldTrampoline(1);
-    gCurTask->unk3C++;
+    gCurTask->frame++;
     TaskYieldTrampoline(3);
-    gCurTask->unk54 = 128 << 8;
-    gCurTask->unk5C = 0;
-    gCurTask->unk3C = 12;
+    gCurTask->velX = 128 << 8;
+    gCurTask->accelX = 0;
+    gCurTask->frame = 12;
     TaskYieldTrampoline(10);
-    gCurTask->unk3C = 5;
+    gCurTask->frame = 5;
     TaskYieldTrampoline(2);
     TaskSetMotion(128 << 8, 0, 0x5A5A5A5A, 0xFFFD8000, 128 << 7, 0x5A5A5A5A);
-    gCurTask->unk3C = 40;
+    gCurTask->frame = 40;
     TaskYieldTrampoline(2);
-    gCurTask->unk3C++;
+    gCurTask->frame++;
     TaskYieldTrampoline(2);
-    gCurTask->unk3C--;
+    gCurTask->frame--;
     TaskYieldTrampoline(2);
-    gCurTask->unk3C++;
+    gCurTask->frame++;
     TaskYieldTrampoline(2);
-    gCurTask->unk3C--;
+    gCurTask->frame--;
     TaskYieldTrampoline(2);
-    gCurTask->unk3C++;
+    gCurTask->frame++;
     TaskYieldTrampoline(2);
-    gCurTask->unk3C--;
+    gCurTask->frame--;
     TaskYieldTrampoline(2);
-    gCurTask->unk3C++;
+    gCurTask->frame++;
     TaskYieldTrampoline(2);
-    gCurTask->unk3C--;
+    gCurTask->frame--;
     TaskYieldTrampoline(2);
-    gCurTask->unk3C++;
+    gCurTask->frame++;
     TaskYieldTrampoline(1);
     TaskSetMotion(128 << 8, 0, 0x5A5A5A5A, 0, 0, 0x5A5A5A5A);
-    gCurTask->unk3C = 5;
+    gCurTask->frame = 5;
     TaskYieldTrampoline(2);
     TaskSetMotion(0xFFFFE000, 0, 0x5A5A5A5A, 0xFFFD8000, 128 << 7, 0x5A5A5A5A);
-    gCurTask->unk3E |= 128 << 8;
-    gCurTask->unk3C = 40;
+    gCurTask->spriteFlags |= 128 << 8;
+    gCurTask->frame = 40;
     TaskYieldTrampoline(2);
-    gCurTask->unk3C++;
+    gCurTask->frame++;
     TaskYieldTrampoline(2);
-    gCurTask->unk3C--;
+    gCurTask->frame--;
     TaskYieldTrampoline(2);
-    gCurTask->unk3C++;
+    gCurTask->frame++;
     TaskYieldTrampoline(2);
-    gCurTask->unk3C--;
+    gCurTask->frame--;
     TaskYieldTrampoline(2);
-    gCurTask->unk3C++;
+    gCurTask->frame++;
     TaskYieldTrampoline(2);
-    gCurTask->unk3C--;
+    gCurTask->frame--;
     TaskYieldTrampoline(2);
-    gCurTask->unk3C++;
+    gCurTask->frame++;
     TaskYieldTrampoline(2);
-    gCurTask->unk3C--;
+    gCurTask->frame--;
     TaskYieldTrampoline(2);
-    gCurTask->unk3C++;
+    gCurTask->frame++;
     TaskYieldTrampoline(1);
     TaskSetMotion(0xFFFF8000, 0, 0x5A5A5A5A, 0, 0, 0x5A5A5A5A);
-    gCurTask->unk3C = 5;
+    gCurTask->frame = 5;
     TaskYieldTrampoline(2);
     TaskSetMotion(0xFFFFC000, 0, 0x5A5A5A5A, 0xFFFAA000, 128 << 7, 0x5A5A5A5A);
-    gCurTask->unk3C = 40;
+    gCurTask->frame = 40;
     TaskYieldTrampoline(2);
-    gCurTask->unk3C++;
+    gCurTask->frame++;
     TaskYieldTrampoline(2);
-    gCurTask->unk3C--;
+    gCurTask->frame--;
     TaskYieldTrampoline(2);
-    gCurTask->unk3C++;
+    gCurTask->frame++;
     TaskYieldTrampoline(2);
-    gCurTask->unk3C--;
+    gCurTask->frame--;
     TaskYieldTrampoline(2);
-    gCurTask->unk3C++;
+    gCurTask->frame++;
     TaskYieldTrampoline(2);
-    gCurTask->unk3C = 37;
+    gCurTask->frame = 37;
     TaskYieldTrampoline(3);
-    gCurTask->unk3C--;
+    gCurTask->frame--;
     TaskYieldTrampoline(3);
-    gCurTask->unk3C--;
+    gCurTask->frame--;
     TaskYieldTrampoline(3);
-    gCurTask->unk3C--;
+    gCurTask->frame--;
     TaskYieldTrampoline(3);
-    gCurTask->unk3C--;
+    gCurTask->frame--;
     TaskYieldTrampoline(3);
-    gCurTask->unk3C--;
+    gCurTask->frame--;
     TaskYieldTrampoline(3);
-    gCurTask->unk3C = 40;
+    gCurTask->frame = 40;
     TaskYieldTrampoline(2);
-    gCurTask->unk3C++;
+    gCurTask->frame++;
     TaskYieldTrampoline(2);
-    gCurTask->unk3C--;
+    gCurTask->frame--;
     TaskYieldTrampoline(2);
-    gCurTask->unk3C++;
+    gCurTask->frame++;
     TaskYieldTrampoline(2);
-    gCurTask->unk3C--;
+    gCurTask->frame--;
     TaskYieldTrampoline(2);
-    gCurTask->unk3C++;
+    gCurTask->frame++;
     TaskYieldTrampoline(2);
     TaskSetMotion(128 << 7, 0, 0x5A5A5A5A, 0, 0, 0x5A5A5A5A);
-    gCurTask->unk3C = 5;
+    gCurTask->frame = 5;
     TaskYieldTrampoline(6);
     TaskSetMotion(0, 0, 0x5A5A5A5A, 224 << 8, 0xFFFFE000, 0x5A5A5A5A);
-    gCurTask->unk3C = 123;
+    gCurTask->frame = 123;
     TaskYieldTrampoline(13);
-    gCurTask->unk3E |= 128 << 8;
+    gCurTask->spriteFlags |= 128 << 8;
     TaskStopY();
-    gCurTask->unk3C = 5;
+    gCurTask->frame = 5;
     TaskYieldTrampoline(2);
     TaskStop();
-    gCurTask->unk3E |= 128 << 8;
-    CreatePlayerEffect(gCurTask->unk88->unk00, 16, 0);
-    gCurTask->unk3C = 146;
+    gCurTask->spriteFlags |= 128 << 8;
+    CreatePlayerEffect(gCurTask->player->playerIndex, 16, 0);
+    gCurTask->frame = 146;
     TaskYieldTrampoline(21);
 }
 
 void sub_0805fb88(void)
 {
     TaskSetMotion(204 << 9, 0xFFFFE800, 0x5A5A5A5A, 0xFFFE7800, 224 << 6, 0x5A5A5A5A);
-    gCurTask->unk3E &= 0x7FFF;
-    gCurTask->unk3C = 13;
+    gCurTask->spriteFlags &= 0x7FFF;
+    gCurTask->frame = 13;
     TaskYieldTrampoline(4);
-    gCurTask->unk3C++;
+    gCurTask->frame++;
     TaskYieldTrampoline(3);
-    gCurTask->unk3C++;
+    gCurTask->frame++;
     TaskYieldTrampoline(3);
-    gCurTask->unk54 = 192 << 6;
-    gCurTask->unk5C = 0;
-    gCurTask->unk3C++;
+    gCurTask->velX = 192 << 6;
+    gCurTask->accelX = 0;
+    gCurTask->frame++;
     TaskYieldTrampoline(3);
-    gCurTask->unk58 = 0;
-    gCurTask->unk60 = 0;
-    gCurTask->unk3C++;
+    gCurTask->velY = 0;
+    gCurTask->accelY = 0;
+    gCurTask->frame++;
     TaskYieldTrampoline(8);
     TaskSetMotion(204 << 9, 0xFFFFE800, 0x5A5A5A5A, 0xFFFE7800, 224 << 6, 0x5A5A5A5A);
-    gCurTask->unk3C++;
+    gCurTask->frame++;
     TaskYieldTrampoline(4);
-    gCurTask->unk3C++;
+    gCurTask->frame++;
     TaskYieldTrampoline(3);
-    gCurTask->unk3C++;
+    gCurTask->frame++;
     TaskYieldTrampoline(3);
-    gCurTask->unk54 = 192 << 6;
-    gCurTask->unk5C = 0;
-    gCurTask->unk3C++;
+    gCurTask->velX = 192 << 6;
+    gCurTask->accelX = 0;
+    gCurTask->frame++;
     TaskYieldTrampoline(3);
-    gCurTask->unk58 = 0;
-    gCurTask->unk60 = 0;
-    gCurTask->unk3C = 12;
+    gCurTask->velY = 0;
+    gCurTask->accelY = 0;
+    gCurTask->frame = 12;
     TaskYieldTrampoline(8);
-    gCurTask->unk54 = 168 << 9;
-    gCurTask->unk5C = 0xFFFFE800;
-    gCurTask->unk3C = 102;
+    gCurTask->velX = 168 << 9;
+    gCurTask->accelX = 0xFFFFE800;
+    gCurTask->frame = 102;
     TaskYieldTrampoline(2);
-    gCurTask->unk3C++;
+    gCurTask->frame++;
     TaskYieldTrampoline(2);
-    gCurTask->unk3C++;
+    gCurTask->frame++;
     TaskYieldTrampoline(3);
-    gCurTask->unk3C++;
+    gCurTask->frame++;
     TaskYieldTrampoline(1);
-    gCurTask->unk3C++;
+    gCurTask->frame++;
     TaskYieldTrampoline(1);
-    gCurTask->unk3C++;
+    gCurTask->frame++;
     TaskYieldTrampoline(1);
-    gCurTask->unk3C++;
+    gCurTask->frame++;
     TaskYieldTrampoline(1);
-    gCurTask->unk3C++;
+    gCurTask->frame++;
     TaskYieldTrampoline(1);
-    gCurTask->unk54 = 192 << 6;
-    gCurTask->unk5C = 0;
+    gCurTask->velX = 192 << 6;
+    gCurTask->accelX = 0;
     TaskYieldTrampoline(2);
     TaskSetMotion(192 << 6, 0, 0x5A5A5A5A, 0xFFFD6000, 192 << 7, 0x5A5A5A5A);
     TaskSetFrameFlip(17);
     TaskYieldTrampoline(1);
-    gCurTask->unk3E &= 0x7FFF;
-    gCurTask->unk3C = 111;
+    gCurTask->spriteFlags &= 0x7FFF;
+    gCurTask->frame = 111;
     TaskYieldTrampoline(1);
-    gCurTask->unk3C = 102;
+    gCurTask->frame = 102;
     TaskYieldTrampoline(1);
-    gCurTask->unk3C++;
+    gCurTask->frame++;
     TaskYieldTrampoline(1);
-    gCurTask->unk3C++;
+    gCurTask->frame++;
     TaskYieldTrampoline(1);
-    gCurTask->unk3C++;
+    gCurTask->frame++;
     TaskYieldTrampoline(1);
-    gCurTask->unk3C++;
+    gCurTask->frame++;
     TaskYieldTrampoline(1);
-    gCurTask->unk3C++;
+    gCurTask->frame++;
     TaskYieldTrampoline(2);
-    gCurTask->unk3C++;
+    gCurTask->frame++;
     TaskYieldTrampoline(2);
-    gCurTask->unk3C++;
+    gCurTask->frame++;
     TaskYieldTrampoline(2);
     TaskSetMotion(192 << 6, 0, 0x5A5A5A5A, 0, 0, 0x5A5A5A5A);
-    gCurTask->unk3E |= 128 << 8;
-    gCurTask->unk3C = 5;
+    gCurTask->spriteFlags |= 128 << 8;
+    gCurTask->frame = 5;
     TaskYieldTrampoline(2);
-    gCurTask->unk3C = 40;
+    gCurTask->frame = 40;
     TaskYieldTrampoline(11);
-    gCurTask->unk3C = 5;
+    gCurTask->frame = 5;
     TaskYieldTrampoline(2);
     TaskSetMotion(0xFFFF2800, 0, 0x5A5A5A5A, 0xFFFB8000, 192 << 6, 0x5A5A5A5A);
-    gCurTask->unk3C = 31;
+    gCurTask->frame = 31;
     TaskYieldTrampoline(14);
-    gCurTask->unk3C++;
+    gCurTask->frame++;
     TaskYieldTrampoline(3);
-    gCurTask->unk3C++;
+    gCurTask->frame++;
     TaskYieldTrampoline(2);
-    gCurTask->unk54 = 0xFFFFA000;
-    gCurTask->unk5C = 0xFFFFF400;
-    gCurTask->unk3C++;
+    gCurTask->velX = 0xFFFFA000;
+    gCurTask->accelX = 0xFFFFF400;
+    gCurTask->frame++;
     TaskYieldTrampoline(2);
-    gCurTask->unk3C++;
+    gCurTask->frame++;
     TaskYieldTrampoline(1);
-    gCurTask->unk3C++;
+    gCurTask->frame++;
     TaskYieldTrampoline(1);
-    gCurTask->unk3C++;
+    gCurTask->frame++;
     TaskYieldTrampoline(1);
-    gCurTask->unk54 = 0xFFFF2800;
-    gCurTask->unk3C = 40;
+    gCurTask->velX = 0xFFFF2800;
+    gCurTask->frame = 40;
     TaskYieldTrampoline(3);
-    gCurTask->unk54 = 0xFFFFA000;
-    gCurTask->unk3C = 32;
+    gCurTask->velX = 0xFFFFA000;
+    gCurTask->frame = 32;
     TaskYieldTrampoline(2);
-    gCurTask->unk3C++;
+    gCurTask->frame++;
     TaskYieldTrampoline(1);
-    gCurTask->unk3C++;
+    gCurTask->frame++;
     TaskYieldTrampoline(1);
-    gCurTask->unk3C++;
+    gCurTask->frame++;
     TaskYieldTrampoline(1);
-    gCurTask->unk3C++;
+    gCurTask->frame++;
     TaskYieldTrampoline(1);
-    gCurTask->unk3C++;
+    gCurTask->frame++;
     TaskYieldTrampoline(2);
-    gCurTask->unk54 = 0xFFFF7000;
-    gCurTask->unk3C = 40;
+    gCurTask->velX = 0xFFFF7000;
+    gCurTask->frame = 40;
     TaskYieldTrampoline(7);
     TaskYieldTrampoline(5);
     TaskSetMotion(0xFFFFD000, 0, 0x5A5A5A5A, 224 << 7, 0xFFFFF000, 0x5A5A5A5A);
-    gCurTask->unk3C = 5;
+    gCurTask->frame = 5;
     TaskYieldTrampoline(2);
-    gCurTask->unk54 = 0xFFFF4000;
-    gCurTask->unk5C = 192 << 5;
-    gCurTask->unk3C = 123;
+    gCurTask->velX = 0xFFFF4000;
+    gCurTask->accelX = 192 << 5;
+    gCurTask->frame = 123;
     TaskYieldTrampoline(6);
-    gCurTask->unk54 = 0;
-    gCurTask->unk5C = 0;
+    gCurTask->velX = 0;
+    gCurTask->accelX = 0;
     TaskYieldTrampoline(5);
     TaskStop();
-    gCurTask->unk3C = 5;
+    gCurTask->frame = 5;
     TaskYieldTrampoline(3);
-    gCurTask->unk3E |= 128 << 8;
-    gCurTask->unk3C = 146;
+    gCurTask->spriteFlags |= 128 << 8;
+    gCurTask->frame = 146;
     TaskYieldTrampoline(19);
-    gCurTask->unk3C = 0;
+    gCurTask->frame = 0;
     TaskYieldTrampoline(2);
     TaskStop();
-    gCurTask->unk3E |= 128 << 8;
-    gCurTask->unk3C = 0;
+    gCurTask->spriteFlags |= 128 << 8;
+    gCurTask->frame = 0;
     TaskYieldTrampoline(2);
-    gCurTask->unk54 = 0xFFFE2000;
-    gCurTask->unk5C = 240 << 4;
-    gCurTask->unk3C = 97;
+    gCurTask->velX = 0xFFFE2000;
+    gCurTask->accelX = 240 << 4;
+    gCurTask->frame = 97;
     TaskYieldTrampoline(19);
-    gCurTask->unk54 = 0;
-    gCurTask->unk5C = 0;
-    gCurTask->unk3C = 5;
+    gCurTask->velX = 0;
+    gCurTask->accelX = 0;
+    gCurTask->frame = 5;
     TaskYieldTrampoline(2);
-    gCurTask->unk54 = 0xFFFE8000;
-    gCurTask->unk5C = 144 << 4;
-    gCurTask->unk3C = 97;
+    gCurTask->velX = 0xFFFE8000;
+    gCurTask->accelX = 144 << 4;
+    gCurTask->frame = 97;
     TaskYieldTrampoline(11);
-    gCurTask->unk54 = 0xFFFFA000;
-    gCurTask->unk3C = 123;
+    gCurTask->velX = 0xFFFFA000;
+    gCurTask->frame = 123;
     TaskYieldTrampoline(8);
-    gCurTask->unk54 = 0xFFFE8600;
-    gCurTask->unk5C = 216 << 6;
-    gCurTask->unk3C = 0;
+    gCurTask->velX = 0xFFFE8600;
+    gCurTask->accelX = 216 << 6;
+    gCurTask->frame = 0;
     TaskYieldTrampoline(2);
-    gCurTask->unk58 = 160 << 11;
-    gCurTask->unk3E &= 0x7FFF;
-    gCurTask->unk3C = 154 << 1;
+    gCurTask->velY = 160 << 11;
+    gCurTask->spriteFlags &= 0x7FFF;
+    gCurTask->frame = 154 << 1;
     TaskYieldTrampoline(1);
-    gCurTask->unk58 = 0;
+    gCurTask->velY = 0;
     TaskYieldTrampoline(2);
-    gCurTask->unk3C = 309;
+    gCurTask->frame = 309;
     TaskYieldTrampoline(4);
     TaskSetMotion(0, 0, 0x5A5A5A5A, 0xFFFDC000, 192 << 7, 0x5A5A5A5A);
-    gCurTask->unk3C = 147 << 1;
+    gCurTask->frame = 147 << 1;
     TaskYieldTrampoline(1);
-    gCurTask->unk3C = 309;
+    gCurTask->frame = 309;
     TaskYieldTrampoline(1);
-    gCurTask->unk3C--;
+    gCurTask->frame--;
     TaskYieldTrampoline(1);
-    gCurTask->unk3C--;
+    gCurTask->frame--;
     TaskYieldTrampoline(1);
-    gCurTask->unk3C--;
+    gCurTask->frame--;
     TaskYieldTrampoline(1);
-    gCurTask->unk3C--;
+    gCurTask->frame--;
     TaskYieldTrampoline(1);
-    gCurTask->unk3C--;
+    gCurTask->frame--;
     TaskYieldTrampoline(1);
-    gCurTask->unk3C--;
+    gCurTask->frame--;
     TaskYieldTrampoline(1);
-    gCurTask->unk3C--;
+    gCurTask->frame--;
     TaskYieldTrampoline(1);
-    gCurTask->unk3C--;
+    gCurTask->frame--;
     TaskYieldTrampoline(1);
-    gCurTask->unk3C--;
+    gCurTask->frame--;
     TaskYieldTrampoline(1);
-    gCurTask->unk58 = 0;
-    gCurTask->unk60 = 0;
-    gCurTask->unk3C--;
+    gCurTask->velY = 0;
+    gCurTask->accelY = 0;
+    gCurTask->frame--;
     TaskYieldTrampoline(1);
-    gCurTask->unk54 = 144 << 9;
-    gCurTask->unk5C = 192 << 4;
-    gCurTask->unk3C = 149 << 1;
+    gCurTask->velX = 144 << 9;
+    gCurTask->accelX = 192 << 4;
+    gCurTask->frame = 149 << 1;
     TaskYieldTrampoline(2);
-    gCurTask->unk3C--;
+    gCurTask->frame--;
     TaskYieldTrampoline(2);
-    gCurTask->unk3C--;
+    gCurTask->frame--;
     TaskYieldTrampoline(2);
-    gCurTask->unk3C--;
+    gCurTask->frame--;
     TaskYieldTrampoline(2);
-    gCurTask->unk3C--;
+    gCurTask->frame--;
     TaskYieldTrampoline(2);
-    gCurTask->unk3C = 309;
+    gCurTask->frame = 309;
     TaskYieldTrampoline(2);
-    gCurTask->unk54 = 216 << 8;
-    gCurTask->unk3C--;
+    gCurTask->velX = 216 << 8;
+    gCurTask->frame--;
     TaskYieldTrampoline(3);
-    gCurTask->unk54 = 144 << 8;
-    gCurTask->unk3C--;
+    gCurTask->velX = 144 << 8;
+    gCurTask->frame--;
     TaskYieldTrampoline(4);
     TaskSetMotion(144 << 7, 0, 0x5A5A5A5A, 0xFFFB0000, 0, 0x5A5A5A5A);
-    gCurTask->unk3C = 5;
+    gCurTask->frame = 5;
     TaskYieldTrampoline(1);
-    gCurTask->unk58 = 0;
+    gCurTask->velY = 0;
     TaskYieldTrampoline(1);
-    gCurTask->unk54 = 144 << 7;
-    gCurTask->unk3C = 102;
+    gCurTask->velX = 144 << 7;
+    gCurTask->frame = 102;
     TaskYieldTrampoline(7);
-    gCurTask->unk58 = 0;
-    gCurTask->unk60 = 0;
-    gCurTask->unk3C++;
+    gCurTask->velY = 0;
+    gCurTask->accelY = 0;
+    gCurTask->frame++;
     TaskYieldTrampoline(5);
-    gCurTask->unk3C++;
+    gCurTask->frame++;
     TaskYieldTrampoline(5);
-    gCurTask->unk5C = 192 << 3;
-    gCurTask->unk3C++;
+    gCurTask->accelX = 192 << 3;
+    gCurTask->frame++;
     TaskYieldTrampoline(4);
-    gCurTask->unk3C++;
+    gCurTask->frame++;
     TaskYieldTrampoline(4);
-    gCurTask->unk3C++;
+    gCurTask->frame++;
     TaskYieldTrampoline(4);
-    gCurTask->unk3C++;
+    gCurTask->frame++;
     TaskYieldTrampoline(3);
-    gCurTask->unk3C++;
+    gCurTask->frame++;
     TaskYieldTrampoline(3);
-    gCurTask->unk3E |= 128 << 8;
-    gCurTask->unk3C = 16;
+    gCurTask->spriteFlags |= 128 << 8;
+    gCurTask->frame = 16;
     TaskYieldTrampoline(3);
-    gCurTask->unk3C++;
+    gCurTask->frame++;
     TaskYieldTrampoline(2);
-    gCurTask->unk3E &= 0x7FFF;
-    gCurTask->unk3C = 111;
+    gCurTask->spriteFlags &= 0x7FFF;
+    gCurTask->frame = 111;
     TaskYieldTrampoline(2);
     TaskSetMotion(144 << 8, 0xFFFFEE00, 0x5A5A5A5A, 242 << 7, 0xFFFFF500, 0x5A5A5A5A);
-    gCurTask->unk3E |= 128 << 8;
-    gCurTask->unk3C = 123;
+    gCurTask->spriteFlags |= 128 << 8;
+    gCurTask->frame = 123;
     TaskYieldTrampoline(8);
-    gCurTask->unk54 = 0;
-    gCurTask->unk5C = 0;
+    gCurTask->velX = 0;
+    gCurTask->accelX = 0;
     TaskYieldTrampoline(11);
-    gCurTask->unk3E &= 0x7FFF;
-    gCurTask->unk3C = 5;
+    gCurTask->spriteFlags &= 0x7FFF;
+    gCurTask->frame = 5;
     TaskYieldTrampoline(2);
     TaskStop();
-    gCurTask->unk3E |= 128 << 8;
-    CreatePlayerEffect(gCurTask->unk88->unk00, 16, 0);
-    gCurTask->unk3C = 146;
+    gCurTask->spriteFlags |= 128 << 8;
+    CreatePlayerEffect(gCurTask->player->playerIndex, 16, 0);
+    gCurTask->frame = 146;
     TaskYieldTrampoline(21);
 }
 
 void sub_08060308(void)
 {
     TaskSetMotion(0xFFFF8C00, 0, 0x5A5A5A5A, 0, 0, 0x5A5A5A5A);
-    gCurTask->unk3E |= 128 << 8;
-    gCurTask->unk3C = 15;
+    gCurTask->spriteFlags |= 128 << 8;
+    gCurTask->frame = 15;
     TaskYieldTrampoline(2);
-    gCurTask->unk58 = 0xFFFF4000;
-    gCurTask->unk60 = 128 << 6;
-    gCurTask->unk3C++;
+    gCurTask->velY = 0xFFFF4000;
+    gCurTask->accelY = 128 << 6;
+    gCurTask->frame++;
     TaskYieldTrampoline(1);
-    gCurTask->unk3C++;
+    gCurTask->frame++;
     TaskYieldTrampoline(7);
-    gCurTask->unk54 = 0xFFFE8000;
-    gCurTask->unk3C++;
+    gCurTask->velX = 0xFFFE8000;
+    gCurTask->frame++;
     TaskYieldTrampoline(2);
-    gCurTask->unk3C++;
+    gCurTask->frame++;
     TaskYieldTrampoline(1);
     TaskSetMotion(0xFFFF8000, 0, 0x5A5A5A5A, 0, 0, 0x5A5A5A5A);
-    gCurTask->unk3C = 5;
+    gCurTask->frame = 5;
     TaskYieldTrampoline(7);
-    gCurTask->unk3C = 19;
+    gCurTask->frame = 19;
     TaskYieldTrampoline(1);
     TaskSetMotion(0xFFFF8C00, 0, 0x5A5A5A5A, 0, 0, 0x5A5A5A5A);
-    gCurTask->unk3E |= 128 << 8;
-    gCurTask->unk3C = 20;
+    gCurTask->spriteFlags |= 128 << 8;
+    gCurTask->frame = 20;
     TaskYieldTrampoline(2);
-    gCurTask->unk58 = 0xFFFF4000;
-    gCurTask->unk60 = 128 << 6;
-    gCurTask->unk3C++;
+    gCurTask->velY = 0xFFFF4000;
+    gCurTask->accelY = 128 << 6;
+    gCurTask->frame++;
     TaskYieldTrampoline(1);
-    gCurTask->unk3C = 12;
+    gCurTask->frame = 12;
     TaskYieldTrampoline(7);
-    gCurTask->unk54 = 0xFFFE8000;
-    gCurTask->unk3C++;
+    gCurTask->velX = 0xFFFE8000;
+    gCurTask->frame++;
     TaskYieldTrampoline(2);
-    gCurTask->unk3C++;
+    gCurTask->frame++;
     TaskYieldTrampoline(1);
     TaskSetMotion(0xFFFF8000, 0, 0x5A5A5A5A, 0, 0, 0x5A5A5A5A);
-    gCurTask->unk3C = 5;
+    gCurTask->frame = 5;
     TaskYieldTrampoline(7);
-    gCurTask->unk3C = 14;
+    gCurTask->frame = 14;
     TaskYieldTrampoline(1);
     TaskStop();
-    gCurTask->unk3C = 111;
+    gCurTask->frame = 111;
     TaskYieldTrampoline(3);
-    gCurTask->unk3E &= 0x7FFF;
-    gCurTask->unk3C = 111;
+    gCurTask->spriteFlags &= 0x7FFF;
+    gCurTask->frame = 111;
     TaskYieldTrampoline(3);
-    gCurTask->unk54 = 128 << 8;
-    gCurTask->unk3C = 102;
+    gCurTask->velX = 128 << 8;
+    gCurTask->frame = 102;
     TaskYieldTrampoline(3);
-    gCurTask->unk3C++;
+    gCurTask->frame++;
     TaskYieldTrampoline(3);
-    gCurTask->unk3C++;
+    gCurTask->frame++;
     TaskYieldTrampoline(3);
-    gCurTask->unk3C++;
+    gCurTask->frame++;
     TaskYieldTrampoline(3);
-    gCurTask->unk3C++;
+    gCurTask->frame++;
     TaskYieldTrampoline(3);
-    gCurTask->unk3C = 108;
+    gCurTask->frame = 108;
     TaskYieldTrampoline(3);
-    gCurTask->unk54 = 128 << 9;
-    gCurTask->unk3C++;
+    gCurTask->velX = 128 << 9;
+    gCurTask->frame++;
     TaskYieldTrampoline(3);
-    gCurTask->unk54 = 192 << 9;
-    gCurTask->unk3E |= 128 << 8;
-    gCurTask->unk3C = 111;
+    gCurTask->velX = 192 << 9;
+    gCurTask->spriteFlags |= 128 << 8;
+    gCurTask->frame = 111;
     TaskYieldTrampoline(3);
-    gCurTask->unk3E &= 0x7FFF;
-    gCurTask->unk3C = 111;
+    gCurTask->spriteFlags &= 0x7FFF;
+    gCurTask->frame = 111;
     TaskYieldTrampoline(3);
-    gCurTask->unk54 = 128 << 8;
-    gCurTask->unk3C = 148;
+    gCurTask->velX = 128 << 8;
+    gCurTask->frame = 148;
     TaskYieldTrampoline(3);
-    gCurTask->unk3C++;
+    gCurTask->frame++;
     TaskYieldTrampoline(3);
-    gCurTask->unk3C++;
+    gCurTask->frame++;
     TaskYieldTrampoline(3);
     TaskSetMotion(0, 0, 0x5A5A5A5A, 0xFFFCA000, 128 << 6, 0x5A5A5A5A);
-    gCurTask->unk3C++;
+    gCurTask->frame++;
     TaskYieldTrampoline(2);
-    gCurTask->unk3C = 172;
+    gCurTask->frame = 172;
     TaskYieldTrampoline(2);
-    gCurTask->unk3C = 151;
+    gCurTask->frame = 151;
     TaskYieldTrampoline(2);
-    gCurTask->unk3C = 172;
+    gCurTask->frame = 172;
     TaskYieldTrampoline(2);
-    gCurTask->unk3C = 151;
+    gCurTask->frame = 151;
     TaskYieldTrampoline(2);
-    gCurTask->unk3C = 172;
+    gCurTask->frame = 172;
     TaskYieldTrampoline(2);
-    gCurTask->unk3C = 151;
+    gCurTask->frame = 151;
     TaskYieldTrampoline(5);
-    gCurTask->unk3C = 0x00000133;
+    gCurTask->frame = 0x00000133;
     TaskYieldTrampoline(4);
-    gCurTask->unk3C++;
+    gCurTask->frame++;
     TaskYieldTrampoline(4);
-    gCurTask->unk3C++;
+    gCurTask->frame++;
     TaskYieldTrampoline(4);
-    gCurTask->unk3C = 147 << 1;
+    gCurTask->frame = 147 << 1;
     TaskYieldTrampoline(3);
-    gCurTask->unk3C++;
+    gCurTask->frame++;
     TaskYieldTrampoline(3);
-    gCurTask->unk3C++;
+    gCurTask->frame++;
     TaskYieldTrampoline(3);
-    gCurTask->unk3C++;
+    gCurTask->frame++;
     TaskYieldTrampoline(2);
-    gCurTask->unk3C++;
+    gCurTask->frame++;
     TaskYieldTrampoline(2);
-    gCurTask->unk3C++;
+    gCurTask->frame++;
     TaskYieldTrampoline(11);
-    gCurTask->unk58 = 160 << 12;
-    gCurTask->unk60 = 0xFFFF0000;
-    gCurTask->unk3C = 155 << 1;
+    gCurTask->velY = 160 << 12;
+    gCurTask->accelY = 0xFFFF0000;
+    gCurTask->frame = 155 << 1;
     TaskYieldTrampoline(1);
-    gCurTask->unk58 = 192 << 10;
+    gCurTask->velY = 192 << 10;
     TaskYieldTrampoline(6);
-    gCurTask->unk58 = 0xFFFE0000;
-    gCurTask->unk60 = 0;
-    gCurTask->unk3C = 0x0000012B;
+    gCurTask->velY = 0xFFFE0000;
+    gCurTask->accelY = 0;
+    gCurTask->frame = 0x0000012B;
     TaskYieldTrampoline(1);
-    gCurTask->unk58 = 0;
+    gCurTask->velY = 0;
     TaskYieldTrampoline(2);
-    gCurTask->unk58 = 0xFFFD0000;
-    gCurTask->unk3C = 156 << 1;
+    gCurTask->velY = 0xFFFD0000;
+    gCurTask->frame = 156 << 1;
     TaskYieldTrampoline(1);
     TaskStop();
     TaskYieldTrampoline(18);
-    gCurTask->unk3C = 0x0000012B;
+    gCurTask->frame = 0x0000012B;
     TaskYieldTrampoline(2);
-    gCurTask->unk58 = 160 << 11;
-    gCurTask->unk3C = 0x00000137;
+    gCurTask->velY = 160 << 11;
+    gCurTask->frame = 0x00000137;
     TaskYieldTrampoline(1);
     TaskStop();
     TaskYieldTrampoline(1);
     TaskSetMotion(192 << 8, 0, 0x5A5A5A5A, 0xFFF7C000, 128 << 7, 0x5A5A5A5A);
-    gCurTask->unk3C = 149 << 1;
+    gCurTask->frame = 149 << 1;
     TaskYieldTrampoline(1);
-    gCurTask->unk58 = 0xFFFE0000;
+    gCurTask->velY = 0xFFFE0000;
     TaskYieldTrampoline(1);
-    gCurTask->unk3C--;
+    gCurTask->frame--;
     TaskYieldTrampoline(2);
-    gCurTask->unk3C--;
+    gCurTask->frame--;
     TaskYieldTrampoline(2);
-    gCurTask->unk3C--;
+    gCurTask->frame--;
     TaskYieldTrampoline(2);
-    gCurTask->unk3C--;
+    gCurTask->frame--;
     TaskYieldTrampoline(2);
-    gCurTask->unk3C = 0x00000135;
+    gCurTask->frame = 0x00000135;
     TaskYieldTrampoline(2);
-    gCurTask->unk3C--;
+    gCurTask->frame--;
     TaskYieldTrampoline(2);
-    gCurTask->unk3C--;
+    gCurTask->frame--;
     TaskYieldTrampoline(3);
-    gCurTask->unk3E |= 128 << 8;
+    gCurTask->spriteFlags |= 128 << 8;
     TaskSetMotion(128 << 8, 0, 0x5A5A5A5A, 0, 0, 0x5A5A5A5A);
-    gCurTask->unk3C = 5;
+    gCurTask->frame = 5;
     TaskYieldTrampoline(2);
     TaskSetMotion(212 << 8, 0, 0x5A5A5A5A, 0xFFFD8000, 128 << 7, 0x5A5A5A5A);
-    gCurTask->unk3C = 40;
+    gCurTask->frame = 40;
     TaskYieldTrampoline(2);
-    gCurTask->unk3C++;
+    gCurTask->frame++;
     TaskYieldTrampoline(2);
-    gCurTask->unk3C--;
+    gCurTask->frame--;
     TaskYieldTrampoline(2);
-    gCurTask->unk3C++;
+    gCurTask->frame++;
     TaskYieldTrampoline(2);
-    gCurTask->unk3C--;
+    gCurTask->frame--;
     TaskYieldTrampoline(2);
-    gCurTask->unk3C++;
+    gCurTask->frame++;
     TaskYieldTrampoline(2);
-    gCurTask->unk3C--;
+    gCurTask->frame--;
     TaskYieldTrampoline(2);
-    gCurTask->unk3C++;
+    gCurTask->frame++;
     TaskYieldTrampoline(2);
-    gCurTask->unk3C--;
+    gCurTask->frame--;
     TaskYieldTrampoline(2);
-    gCurTask->unk3C++;
+    gCurTask->frame++;
     TaskYieldTrampoline(1);
     TaskSetMotion(128 << 8, 0, 0x5A5A5A5A, 0, 0, 0x5A5A5A5A);
-    gCurTask->unk3C = 5;
+    gCurTask->frame = 5;
     TaskYieldTrampoline(2);
     TaskSetMotion(0xFFFF4000, 0, 0x5A5A5A5A, 0xFFFD5000, 128 << 6, 0x5A5A5A5A);
-    gCurTask->unk3C = 31;
+    gCurTask->frame = 31;
     TaskYieldTrampoline(21);
-    gCurTask->unk3C = 111;
+    gCurTask->frame = 111;
     TaskYieldTrampoline(3);
-    gCurTask->unk3E &= 0x7FFF;
-    gCurTask->unk3C = 111;
+    gCurTask->spriteFlags &= 0x7FFF;
+    gCurTask->frame = 111;
     TaskYieldTrampoline(3);
-    gCurTask->unk3C = 41;
+    gCurTask->frame = 41;
     TaskYieldTrampoline(2);
-    gCurTask->unk3C = 40;
+    gCurTask->frame = 40;
     TaskYieldTrampoline(1);
-    gCurTask->unk54 = 0xFFFF8000;
-    gCurTask->unk3C = 102;
+    gCurTask->velX = 0xFFFF8000;
+    gCurTask->frame = 102;
     TaskYieldTrampoline(1);
-    gCurTask->unk3C++;
+    gCurTask->frame++;
     TaskYieldTrampoline(1);
-    gCurTask->unk3C++;
+    gCurTask->frame++;
     TaskYieldTrampoline(1);
-    gCurTask->unk54 = 0xFFFE8000;
-    gCurTask->unk3C++;
+    gCurTask->velX = 0xFFFE8000;
+    gCurTask->frame++;
     TaskYieldTrampoline(1);
-    gCurTask->unk3C++;
+    gCurTask->frame++;
     TaskYieldTrampoline(1);
-    gCurTask->unk3C++;
+    gCurTask->frame++;
     TaskYieldTrampoline(1);
-    gCurTask->unk54 = 0xFFFF8000;
-    gCurTask->unk3C++;
+    gCurTask->velX = 0xFFFF8000;
+    gCurTask->frame++;
     TaskYieldTrampoline(1);
-    gCurTask->unk3C++;
+    gCurTask->frame++;
     TaskYieldTrampoline(1);
-    gCurTask->unk3E |= 128 << 8;
-    gCurTask->unk3C = 111;
+    gCurTask->spriteFlags |= 128 << 8;
+    gCurTask->frame = 111;
     TaskYieldTrampoline(2);
-    gCurTask->unk3E &= 0x7FFF;
-    gCurTask->unk54 = 128 << 8;
-    gCurTask->unk3C = 111;
+    gCurTask->spriteFlags &= 0x7FFF;
+    gCurTask->velX = 128 << 8;
+    gCurTask->frame = 111;
     TaskYieldTrampoline(2);
     TaskSetMotion(128 << 8, 0, 0x5A5A5A5A, 0, 0, 0x5A5A5A5A);
-    gCurTask->unk3C = 5;
+    gCurTask->frame = 5;
     TaskYieldTrampoline(2);
-    gCurTask->unk54 = 128 << 8;
-    gCurTask->unk3C = 111;
+    gCurTask->velX = 128 << 8;
+    gCurTask->frame = 111;
     TaskYieldTrampoline(3);
-    gCurTask->unk3E |= 128 << 8;
-    gCurTask->unk54 = 0xFFFF8000;
-    gCurTask->unk3C = 111;
+    gCurTask->spriteFlags |= 128 << 8;
+    gCurTask->velX = 0xFFFF8000;
+    gCurTask->frame = 111;
     TaskYieldTrampoline(3);
-    gCurTask->unk3E &= 0x7FFF;
-    gCurTask->unk54 = 0xFFFF0000;
-    gCurTask->unk3C = 109;
+    gCurTask->spriteFlags &= 0x7FFF;
+    gCurTask->velX = 0xFFFF0000;
+    gCurTask->frame = 109;
     TaskYieldTrampoline(1);
-    gCurTask->unk54 = 0xFFFF8000;
-    gCurTask->unk3C--;
+    gCurTask->velX = 0xFFFF8000;
+    gCurTask->frame--;
     TaskYieldTrampoline(1);
-    gCurTask->unk3C--;
+    gCurTask->frame--;
     TaskYieldTrampoline(1);
-    gCurTask->unk3C--;
+    gCurTask->frame--;
     TaskYieldTrampoline(1);
-    gCurTask->unk54 = 128 << 8;
-    gCurTask->unk3C--;
+    gCurTask->velX = 128 << 8;
+    gCurTask->frame--;
     TaskYieldTrampoline(1);
-    gCurTask->unk3C--;
+    gCurTask->frame--;
     TaskYieldTrampoline(1);
-    gCurTask->unk3C--;
+    gCurTask->frame--;
     TaskYieldTrampoline(1);
-    gCurTask->unk54 = 128 << 9;
-    gCurTask->unk3C--;
+    gCurTask->velX = 128 << 9;
+    gCurTask->frame--;
     TaskYieldTrampoline(1);
-    gCurTask->unk54 = 128 << 8;
-    gCurTask->unk3C = 111;
+    gCurTask->velX = 128 << 8;
+    gCurTask->frame = 111;
     TaskYieldTrampoline(1);
-    gCurTask->unk3E |= 128 << 8;
-    gCurTask->unk54 = 0xFFFF8000;
-    gCurTask->unk3C = 111;
+    gCurTask->spriteFlags |= 128 << 8;
+    gCurTask->velX = 0xFFFF8000;
+    gCurTask->frame = 111;
     TaskYieldTrampoline(2);
-    gCurTask->unk3E &= 0x7FFF;
-    gCurTask->unk54 = 0xFFFF0000;
-    gCurTask->unk3C = 109;
+    gCurTask->spriteFlags &= 0x7FFF;
+    gCurTask->velX = 0xFFFF0000;
+    gCurTask->frame = 109;
     TaskYieldTrampoline(2);
-    gCurTask->unk3C--;
+    gCurTask->frame--;
     TaskYieldTrampoline(2);
-    gCurTask->unk3C--;
+    gCurTask->frame--;
     TaskYieldTrampoline(2);
-    gCurTask->unk3C--;
+    gCurTask->frame--;
     TaskYieldTrampoline(2);
-    gCurTask->unk54 = 128 << 8;
-    gCurTask->unk3C--;
+    gCurTask->velX = 128 << 8;
+    gCurTask->frame--;
     TaskYieldTrampoline(2);
-    gCurTask->unk3C--;
+    gCurTask->frame--;
     TaskYieldTrampoline(2);
-    gCurTask->unk3C--;
+    gCurTask->frame--;
     TaskYieldTrampoline(2);
-    gCurTask->unk54 = 128 << 9;
-    gCurTask->unk3C--;
+    gCurTask->velX = 128 << 9;
+    gCurTask->frame--;
     TaskYieldTrampoline(2);
-    gCurTask->unk54 = 128 << 7;
-    gCurTask->unk3C = 14;
+    gCurTask->velX = 128 << 7;
+    gCurTask->frame = 14;
     TaskYieldTrampoline(2);
-    gCurTask->unk58 = 128 << 9;
-    gCurTask->unk3C = 150;
+    gCurTask->velY = 128 << 9;
+    gCurTask->frame = 150;
     TaskYieldTrampoline(1);
-    gCurTask->unk58 = 128 << 8;
-    gCurTask->unk3C--;
+    gCurTask->velY = 128 << 8;
+    gCurTask->frame--;
     TaskYieldTrampoline(2);
-    gCurTask->unk58 = 0;
-    gCurTask->unk3C--;
+    gCurTask->velY = 0;
+    gCurTask->frame--;
     TaskYieldTrampoline(2);
-    gCurTask->unk54 = 0;
-    gCurTask->unk58 = 0xFFFE1600;
-    gCurTask->unk3C = 151;
+    gCurTask->velX = 0;
+    gCurTask->velY = 0xFFFE1600;
+    gCurTask->frame = 151;
     TaskYieldTrampoline(1);
-    gCurTask->unk58 = 176 << 5;
+    gCurTask->velY = 176 << 5;
     TaskYieldTrampoline(1);
-    gCurTask->unk3C = 172;
+    gCurTask->frame = 172;
     TaskYieldTrampoline(2);
-    gCurTask->unk3C = 151;
+    gCurTask->frame = 151;
     TaskYieldTrampoline(2);
-    gCurTask->unk3C = 172;
+    gCurTask->frame = 172;
     TaskYieldTrampoline(2);
-    gCurTask->unk3C = 151;
+    gCurTask->frame = 151;
     TaskYieldTrampoline(2);
-    gCurTask->unk3C = 172;
+    gCurTask->frame = 172;
     TaskYieldTrampoline(2);
-    gCurTask->unk58 = 248 << 6;
-    gCurTask->unk3C = 151;
+    gCurTask->velY = 248 << 6;
+    gCurTask->frame = 151;
     TaskYieldTrampoline(2);
-    gCurTask->unk3C = 172;
+    gCurTask->frame = 172;
     TaskYieldTrampoline(2);
-    gCurTask->unk58 = 128 << 8;
-    gCurTask->unk3C = 148;
+    gCurTask->velY = 128 << 8;
+    gCurTask->frame = 148;
     TaskYieldTrampoline(1);
-    gCurTask->unk3C++;
+    gCurTask->frame++;
     TaskYieldTrampoline(1);
-    gCurTask->unk58 = 0;
-    gCurTask->unk3C++;
+    gCurTask->velY = 0;
+    gCurTask->frame++;
     TaskYieldTrampoline(1);
-    gCurTask->unk3C = 5;
+    gCurTask->frame = 5;
     TaskYieldTrampoline(2);
-    gCurTask->unk58 = 0xFFFD0000;
-    gCurTask->unk3E |= 128 << 8;
-    CreatePlayerEffect(gCurTask->unk88->unk00, 16, 0);
-    gCurTask->unk3C = 146;
+    gCurTask->velY = 0xFFFD0000;
+    gCurTask->spriteFlags |= 128 << 8;
+    CreatePlayerEffect(gCurTask->player->playerIndex, 16, 0);
+    gCurTask->frame = 146;
     TaskYieldTrampoline(1);
     TaskStop();
     TaskYieldTrampoline(20);
@@ -3502,925 +3502,925 @@ void sub_08060308(void)
 
 void sub_08060c2c(void)
 {
-    gCurTask->unk3E |= 128 << 8;
-    gCurTask->unk54 = 0xFFFFC000;
-    gCurTask->unk3C = 5;
+    gCurTask->spriteFlags |= 128 << 8;
+    gCurTask->velX = 0xFFFFC000;
+    gCurTask->frame = 5;
     TaskYieldTrampoline(2);
     TaskSetMotion(0xFFFF8000, 128 << 3, 0x5A5A5A5A, 0xFFFE0800, 224 << 6, 0x5A5A5A5A);
-    gCurTask->unk3C = 40;
+    gCurTask->frame = 40;
     TaskYieldTrampoline(3);
-    gCurTask->unk3C++;
+    gCurTask->frame++;
     TaskYieldTrampoline(4);
-    gCurTask->unk3C--;
+    gCurTask->frame--;
     TaskYieldTrampoline(3);
-    gCurTask->unk3C++;
+    gCurTask->frame++;
     TaskYieldTrampoline(4);
-    gCurTask->unk3C--;
+    gCurTask->frame--;
     TaskYieldTrampoline(3);
     TaskSetMotion(0xFFFF8000, 0, 0x5A5A5A5A, 0, 0, 0x5A5A5A5A);
-    gCurTask->unk3C = 5;
+    gCurTask->frame = 5;
     TaskYieldTrampoline(2);
-    gCurTask->unk54 = 0xFFFFC000;
-    gCurTask->unk3C = 5;
+    gCurTask->velX = 0xFFFFC000;
+    gCurTask->frame = 5;
     TaskYieldTrampoline(2);
     TaskSetMotion(0xFFFF4000, 192 << 3, 0x5A5A5A5A, 0xFFFE0800, 224 << 6, 0x5A5A5A5A);
-    gCurTask->unk3C = 40;
+    gCurTask->frame = 40;
     TaskYieldTrampoline(3);
-    gCurTask->unk3E &= 0x7FFF;
-    gCurTask->unk3C = 109;
+    gCurTask->spriteFlags &= 0x7FFF;
+    gCurTask->frame = 109;
     TaskYieldTrampoline(2);
-    gCurTask->unk3C = 107;
+    gCurTask->frame = 107;
     TaskYieldTrampoline(2);
-    gCurTask->unk3C--;
+    gCurTask->frame--;
     TaskYieldTrampoline(2);
-    gCurTask->unk3C--;
+    gCurTask->frame--;
     TaskYieldTrampoline(2);
-    gCurTask->unk3C--;
+    gCurTask->frame--;
     TaskYieldTrampoline(2);
-    gCurTask->unk3C--;
+    gCurTask->frame--;
     TaskYieldTrampoline(2);
-    gCurTask->unk3C--;
+    gCurTask->frame--;
     TaskYieldTrampoline(2);
     TaskSetMotion(0xFFFF8000, 0, 0x5A5A5A5A, 0, 0, 0x5A5A5A5A);
-    gCurTask->unk3C = 5;
+    gCurTask->frame = 5;
     TaskYieldTrampoline(2);
-    gCurTask->unk3E &= 0x7FFF;
-    gCurTask->unk3C = 16;
+    gCurTask->spriteFlags &= 0x7FFF;
+    gCurTask->frame = 16;
     TaskYieldTrampoline(2);
-    gCurTask->unk54 = 0;
-    gCurTask->unk3C = 15;
+    gCurTask->velX = 0;
+    gCurTask->frame = 15;
     TaskYieldTrampoline(2);
-    gCurTask->unk54 = 128 << 7;
-    gCurTask->unk5C = 160 << 3;
-    gCurTask->unk3C = 10;
+    gCurTask->velX = 128 << 7;
+    gCurTask->accelX = 160 << 3;
+    gCurTask->frame = 10;
     TaskYieldTrampoline(14);
-    gCurTask->unk58 = 0xFFFE0000;
-    gCurTask->unk60 = 128 << 9;
-    gCurTask->unk3C = 10;
+    gCurTask->velY = 0xFFFE0000;
+    gCurTask->accelY = 128 << 9;
+    gCurTask->frame = 10;
     TaskYieldTrampoline(3);
     TaskSetMotion(128 << 9, 0, 0x5A5A5A5A, 128 << 10, 0, 0x5A5A5A5A);
-    gCurTask->unk3C = 38;
+    gCurTask->frame = 38;
     TaskYieldTrampoline(2);
-    gCurTask->unk58 = 0;
-    gCurTask->unk60 = 0;
-    gCurTask->unk3C = 33;
+    gCurTask->velY = 0;
+    gCurTask->accelY = 0;
+    gCurTask->frame = 33;
     TaskYieldTrampoline(2);
-    gCurTask->unk58 = 0xFFFC0000;
-    gCurTask->unk3C = 43;
+    gCurTask->velY = 0xFFFC0000;
+    gCurTask->frame = 43;
     TaskYieldTrampoline(1);
     TaskSetMotion(0, 0, 0x5A5A5A5A, 0, 0, 0x5A5A5A5A);
-    gCurTask->unk3C = 43;
+    gCurTask->frame = 43;
     TaskYieldTrampoline(1);
-    gCurTask->unk54 = 128 << 7;
-    gCurTask->unk58 = 128 << 11;
-    gCurTask->unk3C = 42;
+    gCurTask->velX = 128 << 7;
+    gCurTask->velY = 128 << 11;
+    gCurTask->frame = 42;
     TaskYieldTrampoline(1);
-    gCurTask->unk58 = 0xFFFE0000;
-    gCurTask->unk60 = 128 << 9;
-    gCurTask->unk3C = 42;
+    gCurTask->velY = 0xFFFE0000;
+    gCurTask->accelY = 128 << 9;
+    gCurTask->frame = 42;
     TaskYieldTrampoline(3);
-    gCurTask->unk58 = 0xFFFE0000;
-    gCurTask->unk60 = 128 << 9;
-    gCurTask->unk3C = 42;
+    gCurTask->velY = 0xFFFE0000;
+    gCurTask->accelY = 128 << 9;
+    gCurTask->frame = 42;
     TaskYieldTrampoline(3);
-    gCurTask->unk58 = 0xFFFE0000;
-    gCurTask->unk60 = 128 << 9;
-    gCurTask->unk3C = 42;
+    gCurTask->velY = 0xFFFE0000;
+    gCurTask->accelY = 128 << 9;
+    gCurTask->frame = 42;
     TaskYieldTrampoline(3);
-    gCurTask->unk54 = 128 << 7;
-    gCurTask->unk58 = 0;
-    gCurTask->unk60 = 0;
-    gCurTask->unk3C = 42;
+    gCurTask->velX = 128 << 7;
+    gCurTask->velY = 0;
+    gCurTask->accelY = 0;
+    gCurTask->frame = 42;
     TaskYieldTrampoline(3);
-    gCurTask->unk58 = 0xFFFC0000;
-    gCurTask->unk3C = 43;
+    gCurTask->velY = 0xFFFC0000;
+    gCurTask->frame = 43;
     TaskYieldTrampoline(1);
-    gCurTask->unk58 = 0;
-    gCurTask->unk3C = 43;
+    gCurTask->velY = 0;
+    gCurTask->frame = 43;
     TaskYieldTrampoline(1);
-    gCurTask->unk54 = 128 << 9;
-    gCurTask->unk58 = 0xFFFD8000;
-    gCurTask->unk60 = 128 << 7;
-    gCurTask->unk3C = 44;
+    gCurTask->velX = 128 << 9;
+    gCurTask->velY = 0xFFFD8000;
+    gCurTask->accelY = 128 << 7;
+    gCurTask->frame = 44;
     TaskYieldTrampoline(2);
-    gCurTask->unk3C = 46;
+    gCurTask->frame = 46;
     TaskYieldTrampoline(4);
-    gCurTask->unk3C = 47;
+    gCurTask->frame = 47;
     TaskYieldTrampoline(2);
-    gCurTask->unk3C = 36;
+    gCurTask->frame = 36;
     TaskYieldTrampoline(2);
-    gCurTask->unk3C = 49;
+    gCurTask->frame = 49;
     TaskYieldTrampoline(2);
-    gCurTask->unk3C = 37;
+    gCurTask->frame = 37;
     TaskYieldTrampoline(2);
-    gCurTask->unk3C = 40;
+    gCurTask->frame = 40;
     TaskYieldTrampoline(2);
-    gCurTask->unk3C = 32;
+    gCurTask->frame = 32;
     TaskYieldTrampoline(3);
     TaskSetMotion(128 << 7, 0, 0x5A5A5A5A, 0, 0, 0x5A5A5A5A);
-    gCurTask->unk3C = 43;
+    gCurTask->frame = 43;
     TaskYieldTrampoline(2);
-    gCurTask->unk54 = 0xFFFF6000;
-    gCurTask->unk58 = 0xFFFD4000;
-    gCurTask->unk60 = 128 << 7;
-    gCurTask->unk3C = 42;
+    gCurTask->velX = 0xFFFF6000;
+    gCurTask->velY = 0xFFFD4000;
+    gCurTask->accelY = 128 << 7;
+    gCurTask->frame = 42;
     TaskYieldTrampoline(6);
-    gCurTask->unk3C = 33;
+    gCurTask->frame = 33;
     TaskYieldTrampoline(2);
-    gCurTask->unk3C = 32;
+    gCurTask->frame = 32;
     TaskYieldTrampoline(2);
-    gCurTask->unk3C = 40;
+    gCurTask->frame = 40;
     TaskYieldTrampoline(2);
-    gCurTask->unk3C = 41;
+    gCurTask->frame = 41;
     TaskYieldTrampoline(2);
-    gCurTask->unk3C = 40;
+    gCurTask->frame = 40;
     TaskYieldTrampoline(2);
-    gCurTask->unk3C = 41;
+    gCurTask->frame = 41;
     TaskYieldTrampoline(2);
-    gCurTask->unk3C = 40;
+    gCurTask->frame = 40;
     TaskYieldTrampoline(2);
-    gCurTask->unk3C = 40;
+    gCurTask->frame = 40;
     TaskYieldTrampoline(1);
     TaskSetMotion(0xFFFFC000, 0, 0x5A5A5A5A, 0, 0, 0x5A5A5A5A);
-    gCurTask->unk3C = 5;
+    gCurTask->frame = 5;
     TaskYieldTrampoline(14);
-    gCurTask->unk54 = 0;
-    gCurTask->unk3C = 5;
+    gCurTask->velX = 0;
+    gCurTask->frame = 5;
     TaskYieldTrampoline(5);
-    gCurTask->unk54 = 0xFFFA0000;
-    gCurTask->unk3C = 100;
+    gCurTask->velX = 0xFFFA0000;
+    gCurTask->frame = 100;
     TaskYieldTrampoline(1);
-    gCurTask->unk54 = 0;
-    gCurTask->unk3C = 100;
+    gCurTask->velX = 0;
+    gCurTask->frame = 100;
     TaskYieldTrampoline(1);
-    gCurTask->unk3E |= 128 << 8;
-    gCurTask->unk54 = 192 << 11;
-    gCurTask->unk3C = 146;
+    gCurTask->spriteFlags |= 128 << 8;
+    gCurTask->velX = 192 << 11;
+    gCurTask->frame = 146;
     TaskYieldTrampoline(1);
-    gCurTask->unk54 = 0;
-    gCurTask->unk3C = 146;
+    gCurTask->velX = 0;
+    gCurTask->frame = 146;
     TaskYieldTrampoline(20);
-    gCurTask->unk3E &= 0x7FFF;
-    gCurTask->unk58 = 160 << 9;
-    gCurTask->unk60 = 0xFFFFC000;
-    gCurTask->unk3C = 123;
+    gCurTask->spriteFlags &= 0x7FFF;
+    gCurTask->velY = 160 << 9;
+    gCurTask->accelY = 0xFFFFC000;
+    gCurTask->frame = 123;
     TaskYieldTrampoline(9);
     TaskSetMotion(0, 0, 0x5A5A5A5A, 0, 0, 0x5A5A5A5A);
-    gCurTask->unk3C = 5;
+    gCurTask->frame = 5;
     TaskYieldTrampoline(2);
-    gCurTask->unk58 = 0xFFFE0000;
-    gCurTask->unk60 = 128 << 8;
-    gCurTask->unk3C = 146;
+    gCurTask->velY = 0xFFFE0000;
+    gCurTask->accelY = 128 << 8;
+    gCurTask->frame = 146;
     TaskYieldTrampoline(7);
-    gCurTask->unk58 = 0;
-    gCurTask->unk60 = 0;
-    gCurTask->unk3C = 146;
+    gCurTask->velY = 0;
+    gCurTask->accelY = 0;
+    gCurTask->frame = 146;
     TaskYieldTrampoline(3);
-    gCurTask->unk3E |= 128 << 8;
+    gCurTask->spriteFlags |= 128 << 8;
     TaskSetMotion(0xFFFFE000, 0, 0x5A5A5A5A, 160 << 9, 0xFFFFC000, 0x5A5A5A5A);
-    gCurTask->unk3C = 123;
+    gCurTask->frame = 123;
     TaskYieldTrampoline(9);
     TaskSetMotion(0, 0, 0x5A5A5A5A, 0, 0, 0x5A5A5A5A);
-    gCurTask->unk3C = 5;
+    gCurTask->frame = 5;
     TaskYieldTrampoline(2);
-    gCurTask->unk58 = 0xFFFE0000;
-    gCurTask->unk60 = 128 << 8;
-    gCurTask->unk3C = 146;
+    gCurTask->velY = 0xFFFE0000;
+    gCurTask->accelY = 128 << 8;
+    gCurTask->frame = 146;
     TaskYieldTrampoline(7);
-    gCurTask->unk58 = 0;
-    gCurTask->unk60 = 0;
-    gCurTask->unk3C = 146;
+    gCurTask->velY = 0;
+    gCurTask->accelY = 0;
+    gCurTask->frame = 146;
     TaskYieldTrampoline(3);
-    gCurTask->unk3E &= 0x7FFF;
+    gCurTask->spriteFlags &= 0x7FFF;
     TaskSetMotion(128 << 6, 0, 0x5A5A5A5A, 160 << 9, 0xFFFFC000, 0x5A5A5A5A);
-    gCurTask->unk3C = 123;
+    gCurTask->frame = 123;
     TaskYieldTrampoline(9);
     TaskSetMotion(0, 0, 0x5A5A5A5A, 0, 0, 0x5A5A5A5A);
-    gCurTask->unk3C = 5;
+    gCurTask->frame = 5;
     TaskYieldTrampoline(2);
-    gCurTask->unk5C = 192 << 4;
-    gCurTask->unk58 = 0xFFFDF800;
-    gCurTask->unk60 = 160 << 6;
-    gCurTask->unk3C = 146;
+    gCurTask->accelX = 192 << 4;
+    gCurTask->velY = 0xFFFDF800;
+    gCurTask->accelY = 160 << 6;
+    gCurTask->frame = 146;
     TaskYieldTrampoline(4);
-    gCurTask->unk3C = 31;
+    gCurTask->frame = 31;
     TaskYieldTrampoline(4);
-    gCurTask->unk3C = 32;
+    gCurTask->frame = 32;
     TaskYieldTrampoline(2);
-    gCurTask->unk3C = 33;
+    gCurTask->frame = 33;
     TaskYieldTrampoline(2);
-    gCurTask->unk3C = 34;
+    gCurTask->frame = 34;
     TaskYieldTrampoline(2);
-    gCurTask->unk3C = 35;
+    gCurTask->frame = 35;
     TaskYieldTrampoline(2);
-    gCurTask->unk3C = 36;
+    gCurTask->frame = 36;
     TaskYieldTrampoline(2);
-    gCurTask->unk3C = 37;
+    gCurTask->frame = 37;
     TaskYieldTrampoline(2);
-    gCurTask->unk3C = 40;
+    gCurTask->frame = 40;
     TaskYieldTrampoline(2);
-    gCurTask->unk3C = 41;
+    gCurTask->frame = 41;
     TaskYieldTrampoline(3);
     TaskSetMotion(0, 0, 0x5A5A5A5A, 0xFFFF2000, 128 << 7, 0x5A5A5A5A);
-    gCurTask->unk3C = 5;
+    gCurTask->frame = 5;
     TaskYieldTrampoline(6);
-    gCurTask->unk3E |= 128 << 8;
-    gCurTask->unk58 = 0;
-    gCurTask->unk60 = 0;
-    gCurTask->unk3C = 15;
+    gCurTask->spriteFlags |= 128 << 8;
+    gCurTask->velY = 0;
+    gCurTask->accelY = 0;
+    gCurTask->frame = 15;
     TaskYieldTrampoline(2);
-    gCurTask->unk3C = 14;
+    gCurTask->frame = 14;
     TaskYieldTrampoline(2);
-    gCurTask->unk54 = 0xFFFFC000;
-    gCurTask->unk5C = 0xFFFFFB00;
-    gCurTask->unk3C = 10;
+    gCurTask->velX = 0xFFFFC000;
+    gCurTask->accelX = 0xFFFFFB00;
+    gCurTask->frame = 10;
     TaskYieldTrampoline(14);
-    gCurTask->unk5C = 0;
-    gCurTask->unk58 = 0xFFFE0000;
-    gCurTask->unk60 = 128 << 9;
-    gCurTask->unk3C = 10;
+    gCurTask->accelX = 0;
+    gCurTask->velY = 0xFFFE0000;
+    gCurTask->accelY = 128 << 9;
+    gCurTask->frame = 10;
     TaskYieldTrampoline(3);
     TaskSetMotion(0xFFFF4000, 0, 0x5A5A5A5A, 128 << 10, 0, 0x5A5A5A5A);
-    gCurTask->unk3C = 38;
+    gCurTask->frame = 38;
     TaskYieldTrampoline(2);
-    gCurTask->unk58 = 0;
-    gCurTask->unk60 = 0;
-    gCurTask->unk3C = 33;
+    gCurTask->velY = 0;
+    gCurTask->accelY = 0;
+    gCurTask->frame = 33;
     TaskYieldTrampoline(1);
-    gCurTask->unk3C = 43;
+    gCurTask->frame = 43;
     TaskYieldTrampoline(1);
-    gCurTask->unk54 = 0xFFFFB800;
-    gCurTask->unk3C = 42;
+    gCurTask->velX = 0xFFFFB800;
+    gCurTask->frame = 42;
     TaskYieldTrampoline(1);
-    gCurTask->unk58 = 0xFFFE0000;
-    gCurTask->unk60 = 128 << 9;
-    gCurTask->unk3C = 42;
+    gCurTask->velY = 0xFFFE0000;
+    gCurTask->accelY = 128 << 9;
+    gCurTask->frame = 42;
     TaskYieldTrampoline(2);
-    gCurTask->unk58 = 0xFFFE0000;
-    gCurTask->unk60 = 136 << 7;
-    gCurTask->unk3C = 46;
+    gCurTask->velY = 0xFFFE0000;
+    gCurTask->accelY = 136 << 7;
+    gCurTask->frame = 46;
     TaskYieldTrampoline(2);
-    gCurTask->unk3C = 36;
+    gCurTask->frame = 36;
     TaskYieldTrampoline(2);
-    gCurTask->unk3C = 37;
+    gCurTask->frame = 37;
     TaskYieldTrampoline(2);
-    gCurTask->unk3C = 40;
+    gCurTask->frame = 40;
     TaskYieldTrampoline(2);
-    gCurTask->unk3C = 41;
+    gCurTask->frame = 41;
     TaskYieldTrampoline(2);
-    gCurTask->unk3C = 40;
+    gCurTask->frame = 40;
     TaskYieldTrampoline(2);
     TaskSetMotion(0, 0, 0x5A5A5A5A, 0, 0, 0x5A5A5A5A);
-    gCurTask->unk3C = 5;
+    gCurTask->frame = 5;
     TaskYieldTrampoline(2);
-    gCurTask->unk58 = 132 << 8;
-    gCurTask->unk60 = 0xFFFFF400;
-    gCurTask->unk3C = 5;
+    gCurTask->velY = 132 << 8;
+    gCurTask->accelY = 0xFFFFF400;
+    gCurTask->frame = 5;
     TaskYieldTrampoline(19);
-    gCurTask->unk3C = 5;
+    gCurTask->frame = 5;
     TaskYieldTrampoline(2);
     TaskStop();
-    CreatePlayerEffect(gCurTask->unk88->unk00, 16, 0);
-    gCurTask->unk3C = 146;
+    CreatePlayerEffect(gCurTask->player->playerIndex, 16, 0);
+    gCurTask->frame = 146;
     TaskYieldTrampoline(21);
 }
 
 void sub_080613e4(void)
 {
-    gCurTask->unk3E |= 0x8000;
+    gCurTask->spriteFlags |= 0x8000;
     TaskSetMotion(0, 0, 0x5A5A5A5A, 0, 0, 0x5A5A5A5A);
-    gCurTask->unk3C = 5;
+    gCurTask->frame = 5;
     TaskYieldTrampoline(2);
-    gCurTask->unk3E &= 0x7FFF;
+    gCurTask->spriteFlags &= 0x7FFF;
     TaskSetMotion(0xFFFF0000, 0, 0x5A5A5A5A, 0xFFFDC000, 0x4000, 0x5A5A5A5A);
-    gCurTask->unk3C = 0x134;
+    gCurTask->frame = 0x134;
     TaskYieldTrampoline(2);
-    gCurTask->unk3C = 0x00000135;
+    gCurTask->frame = 0x00000135;
     TaskYieldTrampoline(2);
-    gCurTask->unk3C = 0x126;
+    gCurTask->frame = 0x126;
     TaskYieldTrampoline(2);
-    gCurTask->unk3C = 0x00000127;
+    gCurTask->frame = 0x00000127;
     TaskYieldTrampoline(2);
-    gCurTask->unk3C = 0x128;
+    gCurTask->frame = 0x128;
     TaskYieldTrampoline(2);
-    gCurTask->unk3C = 0x00000129;
+    gCurTask->frame = 0x00000129;
     TaskYieldTrampoline(2);
-    gCurTask->unk3C = 0x12A;
+    gCurTask->frame = 0x12A;
     TaskYieldTrampoline(2);
-    gCurTask->unk3C = 0x0000012B;
+    gCurTask->frame = 0x0000012B;
     TaskYieldTrampoline(3);
     TaskSetMotion(0xFFFFC000, 0, 0x5A5A5A5A, 0x60000, 0, 0x5A5A5A5A);
-    gCurTask->unk3C = 0x00000137;
+    gCurTask->frame = 0x00000137;
     TaskYieldTrampoline(1);
-    gCurTask->unk58 = 0x20000;
-    gCurTask->unk60 = 0xFFFF0000;
-    gCurTask->unk3C = 0x00000137;
+    gCurTask->velY = 0x20000;
+    gCurTask->accelY = 0xFFFF0000;
+    gCurTask->frame = 0x00000137;
     TaskYieldTrampoline(1);
-    gCurTask->unk54 = 0;
-    gCurTask->unk3C = 0x00000137;
+    gCurTask->velX = 0;
+    gCurTask->frame = 0x00000137;
     TaskYieldTrampoline(2);
     TaskSetMotion(0x10000, 0, 0x5A5A5A5A, 0xFFF7C000, 0x4000, 0x5A5A5A5A);
-    gCurTask->unk3C = 0x0000012B;
+    gCurTask->frame = 0x0000012B;
     TaskYieldTrampoline(1);
-    gCurTask->unk58 = 0xFFFE0000;
-    gCurTask->unk3C = 0x0000012B;
+    gCurTask->velY = 0xFFFE0000;
+    gCurTask->frame = 0x0000012B;
     TaskYieldTrampoline(1);
-    gCurTask->unk3C = 0x12A;
+    gCurTask->frame = 0x12A;
     TaskYieldTrampoline(2);
-    gCurTask->unk3C = 0x00000129;
+    gCurTask->frame = 0x00000129;
     TaskYieldTrampoline(2);
-    gCurTask->unk3C = 0x128;
+    gCurTask->frame = 0x128;
     TaskYieldTrampoline(2);
-    gCurTask->unk3C = 0x00000127;
+    gCurTask->frame = 0x00000127;
     TaskYieldTrampoline(2);
-    gCurTask->unk3C = 0x126;
+    gCurTask->frame = 0x126;
     TaskYieldTrampoline(2);
-    gCurTask->unk3C = 0x00000135;
+    gCurTask->frame = 0x00000135;
     TaskYieldTrampoline(2);
-    gCurTask->unk3C = 0x134;
+    gCurTask->frame = 0x134;
     TaskYieldTrampoline(3);
     TaskSetMotion(0x4000, 0, 0x5A5A5A5A, 0, 0, 0x5A5A5A5A);
-    gCurTask->unk3C = 5;
+    gCurTask->frame = 5;
     TaskYieldTrampoline(2);
-    gCurTask->unk54 = 0x5800;
-    gCurTask->unk5C = 0xFFFFF800;
-    gCurTask->unk3C = 5;
+    gCurTask->velX = 0x5800;
+    gCurTask->accelX = 0xFFFFF800;
+    gCurTask->frame = 5;
     TaskYieldTrampoline(5);
-    gCurTask->unk3C = 0x10;
+    gCurTask->frame = 0x10;
     TaskYieldTrampoline(3);
-    gCurTask->unk3C = 0x66;
+    gCurTask->frame = 0x66;
     TaskYieldTrampoline(3);
-    gCurTask->unk3C = 0x67;
+    gCurTask->frame = 0x67;
     TaskYieldTrampoline(3);
-    gCurTask->unk58 = 0x6000;
-    gCurTask->unk60 = 0xFFFFE000;
-    gCurTask->unk3C = 0x68;
+    gCurTask->velY = 0x6000;
+    gCurTask->accelY = 0xFFFFE000;
+    gCurTask->frame = 0x68;
     TaskYieldTrampoline(3);
-    gCurTask->unk3C = 0x69;
+    gCurTask->frame = 0x69;
     TaskYieldTrampoline(2);
     TaskSetMotion(0, 0, 0x5A5A5A5A, 0xFFFE5000, 0x3000, 0x5A5A5A5A);
-    gCurTask->unk3C = 0x5A;
+    gCurTask->frame = 0x5A;
     TaskYieldTrampoline(2);
-    gCurTask->unk3C = 0x58;
+    gCurTask->frame = 0x58;
     TaskYieldTrampoline(15);
     TaskSetMotion(0, 0, 0x5A5A5A5A, 0, 0, 0x5A5A5A5A);
-    gCurTask->unk3C = 5;
+    gCurTask->frame = 5;
     TaskYieldTrampoline(6);
-    gCurTask->unk3C = 0;
+    gCurTask->frame = 0;
     TaskYieldTrampoline(2);
     TaskSetMotion(0x10000, 0, 0x5A5A5A5A, 0xFFFDC000, 0x4000, 0x5A5A5A5A);
-    gCurTask->unk3C = 0x132;
+    gCurTask->frame = 0x132;
     TaskYieldTrampoline(2);
-    gCurTask->unk3C = 0x00000131;
+    gCurTask->frame = 0x00000131;
     TaskYieldTrampoline(2);
-    gCurTask->unk3C = 0x130;
+    gCurTask->frame = 0x130;
     TaskYieldTrampoline(2);
-    gCurTask->unk54 = 0x12000;
-    gCurTask->unk3C = 0x0000012F;
+    gCurTask->velX = 0x12000;
+    gCurTask->frame = 0x0000012F;
     TaskYieldTrampoline(2);
-    gCurTask->unk3C = 0x12E;
+    gCurTask->frame = 0x12E;
     TaskYieldTrampoline(2);
-    gCurTask->unk3C = 0x0000012D;
+    gCurTask->frame = 0x0000012D;
     TaskYieldTrampoline(2);
-    gCurTask->unk3C = 0x12C;
+    gCurTask->frame = 0x12C;
     TaskYieldTrampoline(2);
-    gCurTask->unk3C = 0x0000012B;
+    gCurTask->frame = 0x0000012B;
     TaskYieldTrampoline(3);
     TaskSetMotion(0x4000, 0, 0x5A5A5A5A, 0x60000, 0, 0x5A5A5A5A);
-    gCurTask->unk3C = 0x136;
+    gCurTask->frame = 0x136;
     TaskYieldTrampoline(1);
-    gCurTask->unk58 = 0x20000;
-    gCurTask->unk60 = 0xFFFF0000;
-    gCurTask->unk3C = 0x136;
+    gCurTask->velY = 0x20000;
+    gCurTask->accelY = 0xFFFF0000;
+    gCurTask->frame = 0x136;
     TaskYieldTrampoline(1);
-    gCurTask->unk54 = 0;
-    gCurTask->unk3C = 0x136;
+    gCurTask->velX = 0;
+    gCurTask->frame = 0x136;
     TaskYieldTrampoline(2);
     TaskSetMotion(0xFFFF0000, 0, 0x5A5A5A5A, 0xFFF7C000, 0x4000, 0x5A5A5A5A);
-    gCurTask->unk3C = 0x0000012B;
+    gCurTask->frame = 0x0000012B;
     TaskYieldTrampoline(1);
-    gCurTask->unk58 = 0xFFFE0000;
-    gCurTask->unk3C = 0x0000012B;
+    gCurTask->velY = 0xFFFE0000;
+    gCurTask->frame = 0x0000012B;
     TaskYieldTrampoline(1);
-    gCurTask->unk3C = 0x12C;
+    gCurTask->frame = 0x12C;
     TaskYieldTrampoline(2);
-    gCurTask->unk3C = 0x0000012D;
+    gCurTask->frame = 0x0000012D;
     TaskYieldTrampoline(2);
-    gCurTask->unk3C = 0x12E;
+    gCurTask->frame = 0x12E;
     TaskYieldTrampoline(2);
-    gCurTask->unk3C = 0x0000012F;
+    gCurTask->frame = 0x0000012F;
     TaskYieldTrampoline(2);
-    gCurTask->unk3C = 0x130;
+    gCurTask->frame = 0x130;
     TaskYieldTrampoline(2);
-    gCurTask->unk3C = 0x00000131;
+    gCurTask->frame = 0x00000131;
     TaskYieldTrampoline(2);
-    gCurTask->unk3C = 0x132;
+    gCurTask->frame = 0x132;
     TaskYieldTrampoline(3);
-    gCurTask->unk3E |= 0x8000;
+    gCurTask->spriteFlags |= 0x8000;
     TaskSetMotion(0xFFFFC000, 0, 0x5A5A5A5A, 0, 0, 0x5A5A5A5A);
-    gCurTask->unk3C = 5;
+    gCurTask->frame = 5;
     TaskYieldTrampoline(2);
-    gCurTask->unk54 = 0xFFFFA800;
-    gCurTask->unk5C = 0x800;
-    gCurTask->unk3C = 5;
+    gCurTask->velX = 0xFFFFA800;
+    gCurTask->accelX = 0x800;
+    gCurTask->frame = 5;
     TaskYieldTrampoline(5);
-    gCurTask->unk3E &= 0x7FFF;
-    gCurTask->unk3C = 0x6C;
+    gCurTask->spriteFlags &= 0x7FFF;
+    gCurTask->frame = 0x6C;
     TaskYieldTrampoline(3);
-    gCurTask->unk3C = 0x6D;
+    gCurTask->frame = 0x6D;
     TaskYieldTrampoline(3);
-    gCurTask->unk3C = 0x6E;
+    gCurTask->frame = 0x6E;
     TaskYieldTrampoline(3);
-    gCurTask->unk3E |= 0x8000;
-    gCurTask->unk58 = 0x6000;
-    gCurTask->unk60 = 0xFFFFE800;
-    gCurTask->unk3C = 0x6F;
+    gCurTask->spriteFlags |= 0x8000;
+    gCurTask->velY = 0x6000;
+    gCurTask->accelY = 0xFFFFE800;
+    gCurTask->frame = 0x6F;
     TaskYieldTrampoline(5);
     TaskSetMotion(0, 0, 0x5A5A5A5A, 0xFFFE4800, 0x2800, 0x5A5A5A5A);
-    gCurTask->unk3C = 0x92;
+    gCurTask->frame = 0x92;
     TaskYieldTrampoline(2);
-    gCurTask->unk3C = 0x92;
+    gCurTask->frame = 0x92;
     TaskYieldTrampoline(0x13);
     TaskSetMotion(0, 0, 0x5A5A5A5A, 0, 0, 0x5A5A5A5A);
-    gCurTask->unk3C = 5;
+    gCurTask->frame = 5;
     TaskYieldTrampoline(2);
-    gCurTask->unk58 = 0xFFFDC000;
-    gCurTask->unk60 = 0x4000;
-    gCurTask->unk3C = 0x28;
+    gCurTask->velY = 0xFFFDC000;
+    gCurTask->accelY = 0x4000;
+    gCurTask->frame = 0x28;
     TaskYieldTrampoline(2);
-    gCurTask->unk3C = 0x29;
+    gCurTask->frame = 0x29;
     TaskYieldTrampoline(2);
-    gCurTask->unk3C = 0x28;
+    gCurTask->frame = 0x28;
     TaskYieldTrampoline(2);
-    gCurTask->unk3C = 0x29;
+    gCurTask->frame = 0x29;
     TaskYieldTrampoline(2);
-    gCurTask->unk3C = 0x28;
+    gCurTask->frame = 0x28;
     TaskYieldTrampoline(2);
-    gCurTask->unk3C = 0x29;
+    gCurTask->frame = 0x29;
     TaskYieldTrampoline(2);
-    gCurTask->unk3C = 0x28;
+    gCurTask->frame = 0x28;
     TaskYieldTrampoline(2);
-    gCurTask->unk3C = 0x29;
+    gCurTask->frame = 0x29;
     TaskYieldTrampoline(2);
-    gCurTask->unk3C = 0x28;
+    gCurTask->frame = 0x28;
     TaskYieldTrampoline(1);
     TaskSetMotion(0, 0, 0x5A5A5A5A, 0, 0, 0x5A5A5A5A);
-    gCurTask->unk3C = 5;
+    gCurTask->frame = 5;
     TaskYieldTrampoline(2);
-    gCurTask->unk3E &= 0x7FFF;
-    gCurTask->unk3C = 5;
+    gCurTask->spriteFlags &= 0x7FFF;
+    gCurTask->frame = 5;
     TaskYieldTrampoline(2);
-    gCurTask->unk58 = 0xFFFDC000;
-    gCurTask->unk60 = 0x4000;
-    gCurTask->unk3C = 0x28;
+    gCurTask->velY = 0xFFFDC000;
+    gCurTask->accelY = 0x4000;
+    gCurTask->frame = 0x28;
     TaskYieldTrampoline(2);
-    gCurTask->unk3C = 0x29;
+    gCurTask->frame = 0x29;
     TaskYieldTrampoline(2);
-    gCurTask->unk3C = 0x28;
+    gCurTask->frame = 0x28;
     TaskYieldTrampoline(2);
-    gCurTask->unk3C = 0x29;
+    gCurTask->frame = 0x29;
     TaskYieldTrampoline(2);
-    gCurTask->unk3C = 0x28;
+    gCurTask->frame = 0x28;
     TaskYieldTrampoline(2);
-    gCurTask->unk3C = 0x29;
+    gCurTask->frame = 0x29;
     TaskYieldTrampoline(2);
-    gCurTask->unk3C = 0x28;
+    gCurTask->frame = 0x28;
     TaskYieldTrampoline(2);
-    gCurTask->unk3C = 0x29;
+    gCurTask->frame = 0x29;
     TaskYieldTrampoline(2);
-    gCurTask->unk3C = 0x28;
+    gCurTask->frame = 0x28;
     TaskYieldTrampoline(1);
     TaskSetMotion(0, 0, 0x5A5A5A5A, 0, 0, 0x5A5A5A5A);
-    gCurTask->unk3C = 5;
+    gCurTask->frame = 5;
     TaskYieldTrampoline(2);
-    gCurTask->unk3E |= 0x8000;
-    gCurTask->unk3C = 5;
+    gCurTask->spriteFlags |= 0x8000;
+    gCurTask->frame = 5;
     TaskYieldTrampoline(2);
-    gCurTask->unk58 = 0xFFFB8000;
-    gCurTask->unk60 = 0x4000;
-    gCurTask->unk3C = 0x28;
+    gCurTask->velY = 0xFFFB8000;
+    gCurTask->accelY = 0x4000;
+    gCurTask->frame = 0x28;
     TaskYieldTrampoline(10);
-    gCurTask->unk3E &= 0x7FFF;
-    gCurTask->unk58 = 0xFFFF7000;
-    gCurTask->unk60 = 0x1800;
-    gCurTask->unk3C = 0x00000133;
+    gCurTask->spriteFlags &= 0x7FFF;
+    gCurTask->velY = 0xFFFF7000;
+    gCurTask->accelY = 0x1800;
+    gCurTask->frame = 0x00000133;
     TaskYieldTrampoline(1);
-    gCurTask->unk3C = 0x00000135;
+    gCurTask->frame = 0x00000135;
     TaskYieldTrampoline(2);
-    gCurTask->unk3C = 0x00000127;
+    gCurTask->frame = 0x00000127;
     TaskYieldTrampoline(2);
-    gCurTask->unk3C = 0x00000129;
+    gCurTask->frame = 0x00000129;
     TaskYieldTrampoline(2);
-    gCurTask->unk3C = 0x0000012B;
+    gCurTask->frame = 0x0000012B;
     TaskYieldTrampoline(2);
-    gCurTask->unk3C = 0x0000012D;
+    gCurTask->frame = 0x0000012D;
     TaskYieldTrampoline(2);
-    gCurTask->unk58 = 0;
-    gCurTask->unk60 = 0x3000;
-    gCurTask->unk3C = 0x0000012F;
+    gCurTask->velY = 0;
+    gCurTask->accelY = 0x3000;
+    gCurTask->frame = 0x0000012F;
     TaskYieldTrampoline(2);
-    gCurTask->unk3C = 0x00000131;
+    gCurTask->frame = 0x00000131;
     TaskYieldTrampoline(2);
-    gCurTask->unk3C = 0x00000133;
+    gCurTask->frame = 0x00000133;
     TaskYieldTrampoline(2);
-    gCurTask->unk3C = 0x134;
+    gCurTask->frame = 0x134;
     TaskYieldTrampoline(2);
-    gCurTask->unk3C = 0x00000135;
+    gCurTask->frame = 0x00000135;
     TaskYieldTrampoline(2);
-    gCurTask->unk3C = 0x126;
+    gCurTask->frame = 0x126;
     TaskYieldTrampoline(2);
-    gCurTask->unk3C = 0x00000127;
+    gCurTask->frame = 0x00000127;
     TaskYieldTrampoline(2);
-    gCurTask->unk3C = 0x128;
+    gCurTask->frame = 0x128;
     TaskYieldTrampoline(2);
-    gCurTask->unk3C = 0x00000129;
+    gCurTask->frame = 0x00000129;
     TaskYieldTrampoline(2);
-    gCurTask->unk58 = 0x60000;
-    gCurTask->unk60 = 0;
-    gCurTask->unk3C = 0x136;
+    gCurTask->velY = 0x60000;
+    gCurTask->accelY = 0;
+    gCurTask->frame = 0x136;
     TaskYieldTrampoline(1);
     TaskSetMotion(0, 0, 0x5A5A5A5A, 0, 0, 0x5A5A5A5A);
-    gCurTask->unk3C = 0x136;
+    gCurTask->frame = 0x136;
     TaskYieldTrampoline(2);
-    gCurTask->unk58 = 0xFFFD3000;
-    gCurTask->unk60 = 0x3000;
-    gCurTask->unk3C = 0x0000012B;
+    gCurTask->velY = 0xFFFD3000;
+    gCurTask->accelY = 0x3000;
+    gCurTask->frame = 0x0000012B;
     TaskYieldTrampoline(9);
-    gCurTask->unk3C = 0x00000139;
+    gCurTask->frame = 0x00000139;
     TaskYieldTrampoline(3);
-    gCurTask->unk3C = 0x13A;
+    gCurTask->frame = 0x13A;
     TaskYieldTrampoline(3);
-    gCurTask->unk3C = 0x0000013B;
+    gCurTask->frame = 0x0000013B;
     TaskYieldTrampoline(3);
-    gCurTask->unk3C = 0x13C;
+    gCurTask->frame = 0x13C;
     TaskYieldTrampoline(3);
-    gCurTask->unk3C = 0x0000013D;
+    gCurTask->frame = 0x0000013D;
     TaskYieldTrampoline(8);
-    gCurTask->unk58 = 0xFFFC0000;
-    gCurTask->unk60 = 0xFFFE8000;
-    gCurTask->unk3C = 0x6A;
+    gCurTask->velY = 0xFFFC0000;
+    gCurTask->accelY = 0xFFFE8000;
+    gCurTask->frame = 0x6A;
     TaskYieldTrampoline(1);
-    gCurTask->unk58 = 0x18000;
-    gCurTask->unk3C = 0x6A;
+    gCurTask->velY = 0x18000;
+    gCurTask->frame = 0x6A;
     TaskYieldTrampoline(2);
-    gCurTask->unk58 = 0;
-    gCurTask->unk60 = 0;
-    gCurTask->unk3C = 0x69;
+    gCurTask->velY = 0;
+    gCurTask->accelY = 0;
+    gCurTask->frame = 0x69;
     TaskYieldTrampoline(2);
-    gCurTask->unk3C = 0x68;
+    gCurTask->frame = 0x68;
     TaskYieldTrampoline(2);
-    gCurTask->unk3C = 0x67;
+    gCurTask->frame = 0x67;
     TaskYieldTrampoline(2);
-    gCurTask->unk3C = 0x66;
+    gCurTask->frame = 0x66;
     TaskYieldTrampoline(2);
-    gCurTask->unk3E |= 0x8000;
-    gCurTask->unk3C = 0x6E;
+    gCurTask->spriteFlags |= 0x8000;
+    gCurTask->frame = 0x6E;
     TaskYieldTrampoline(2);
-    gCurTask->unk3E &= 0x7FFF;
-    gCurTask->unk3C = 0x6F;
+    gCurTask->spriteFlags &= 0x7FFF;
+    gCurTask->frame = 0x6F;
     TaskYieldTrampoline(2);
-    gCurTask->unk3E |= 0x8000;
-    gCurTask->unk3C = 0x11;
+    gCurTask->spriteFlags |= 0x8000;
+    gCurTask->frame = 0x11;
     TaskYieldTrampoline(2);
-    gCurTask->unk3C = 5;
+    gCurTask->frame = 5;
     TaskYieldTrampoline(15);
-    gCurTask->unk3E &= 0x7FFF;
-    gCurTask->unk3C = 5;
+    gCurTask->spriteFlags &= 0x7FFF;
+    gCurTask->frame = 5;
     TaskYieldTrampoline(2);
     TaskStop();
-    gCurTask->unk3E |= 0x8000;
-    CreatePlayerEffect(gCurTask->unk88->unk00, 16, 0);
-    gCurTask->unk3C = 0x92;
+    gCurTask->spriteFlags |= 0x8000;
+    CreatePlayerEffect(gCurTask->player->playerIndex, 16, 0);
+    gCurTask->frame = 0x92;
     TaskYieldTrampoline(0x15);
 }
 
 void sub_08061cac(void)
 {
-    gCurTask->unk3E &= 0x7FFF;
+    gCurTask->spriteFlags &= 0x7FFF;
     TaskSetMotion(0, 0, 0x5A5A5A5A, 0, 0, 0x5A5A5A5A);
-    gCurTask->unk3C = 0;
+    gCurTask->frame = 0;
     TaskYieldTrampoline(2);
     TaskSetMotion(0xFFFB0000, 0, 0x5A5A5A5A, 0xFFFD0000, 0x10000, 0x5A5A5A5A);
-    gCurTask->unk3C = 0x64;
+    gCurTask->frame = 0x64;
     TaskYieldTrampoline(1);
-    gCurTask->unk54 = 0;
-    gCurTask->unk3C = 0x64;
+    gCurTask->velX = 0;
+    gCurTask->frame = 0x64;
     TaskYieldTrampoline(4);
     TaskSetMotion(0x80000, 0, 0x5A5A5A5A, 0, 0, 0x5A5A5A5A);
-    gCurTask->unk3C = 5;
+    gCurTask->frame = 5;
     TaskYieldTrampoline(1);
-    gCurTask->unk54 = 0x20000;
-    gCurTask->unk5C = 0xFFFFC000;
-    gCurTask->unk3C = 5;
+    gCurTask->velX = 0x20000;
+    gCurTask->accelX = 0xFFFFC000;
+    gCurTask->frame = 5;
     TaskYieldTrampoline(7);
     TaskSetMotion(0x4000, 0, 0x5A5A5A5A, 0, 0, 0x5A5A5A5A);
-    gCurTask->unk3C = 5;
+    gCurTask->frame = 5;
     TaskYieldTrampoline(4);
-    gCurTask->unk3C = 0x13;
+    gCurTask->frame = 0x13;
     TaskYieldTrampoline(2);
-    gCurTask->unk54 = 0;
-    gCurTask->unk3C = 0;
+    gCurTask->velX = 0;
+    gCurTask->frame = 0;
     TaskYieldTrampoline(2);
     TaskSetMotion(0xFFFB0000, 0, 0x5A5A5A5A, 0xFFFD0000, 0x10000, 0x5A5A5A5A);
-    gCurTask->unk3C = 0x64;
+    gCurTask->frame = 0x64;
     TaskYieldTrampoline(1);
-    gCurTask->unk54 = 0;
-    gCurTask->unk3C = 0x64;
+    gCurTask->velX = 0;
+    gCurTask->frame = 0x64;
     TaskYieldTrampoline(4);
     TaskSetMotion(0x80000, 0, 0x5A5A5A5A, 0, 0, 0x5A5A5A5A);
-    gCurTask->unk3C = 5;
+    gCurTask->frame = 5;
     TaskYieldTrampoline(1);
-    gCurTask->unk54 = 0x20000;
-    gCurTask->unk5C = 0xFFFFC000;
-    gCurTask->unk3C = 5;
+    gCurTask->velX = 0x20000;
+    gCurTask->accelX = 0xFFFFC000;
+    gCurTask->frame = 5;
     TaskYieldTrampoline(7);
     TaskSetMotion(0x4000, 0, 0x5A5A5A5A, 0, 0, 0x5A5A5A5A);
-    gCurTask->unk3C = 5;
+    gCurTask->frame = 5;
     TaskYieldTrampoline(4);
-    gCurTask->unk3C = 0x13;
+    gCurTask->frame = 0x13;
     TaskYieldTrampoline(2);
-    gCurTask->unk54 = 0xFFFF0000;
-    gCurTask->unk3C = 0;
+    gCurTask->velX = 0xFFFF0000;
+    gCurTask->frame = 0;
     TaskYieldTrampoline(2);
     TaskSetMotion(0xFFFA0000, 0, 0x5A5A5A5A, 0xFFFB8000, 0x8000, 0x5A5A5A5A);
-    gCurTask->unk3C = 0x64;
+    gCurTask->frame = 0x64;
     TaskYieldTrampoline(1);
-    gCurTask->unk54 = 0xFFFF0000;
-    gCurTask->unk3C = 0x64;
+    gCurTask->velX = 0xFFFF0000;
+    gCurTask->frame = 0x64;
     TaskYieldTrampoline(4);
-    gCurTask->unk54 = 0x40000;
-    gCurTask->unk3C = 0x28;
+    gCurTask->velX = 0x40000;
+    gCurTask->frame = 0x28;
     TaskYieldTrampoline(1);
-    gCurTask->unk54 = 0xFFFF0000;
-    gCurTask->unk3C = 0x28;
+    gCurTask->velX = 0xFFFF0000;
+    gCurTask->frame = 0x28;
     TaskYieldTrampoline(1);
-    gCurTask->unk3C = 0x29;
+    gCurTask->frame = 0x29;
     TaskYieldTrampoline(2);
-    gCurTask->unk3C = 0x28;
+    gCurTask->frame = 0x28;
     TaskYieldTrampoline(2);
-    gCurTask->unk3C = 0x29;
+    gCurTask->frame = 0x29;
     TaskYieldTrampoline(2);
-    gCurTask->unk3C = 0x28;
+    gCurTask->frame = 0x28;
     TaskYieldTrampoline(2);
-    gCurTask->unk3C = 0x29;
+    gCurTask->frame = 0x29;
     TaskYieldTrampoline(2);
     TaskSetMotion(0x8000, 0, 0x5A5A5A5A, 0, 0, 0x5A5A5A5A);
-    gCurTask->unk3C = 5;
+    gCurTask->frame = 5;
     TaskYieldTrampoline(2);
     TaskSetMotion(0xFFFF0000, 0x1000, 0x5A5A5A5A, 0xFFFE8000, 0x4000, 0x5A5A5A5A);
-    gCurTask->unk3C = 0x1E;
+    gCurTask->frame = 0x1E;
     TaskYieldTrampoline(11);
     TaskSetMotion(0xFFFFC000, 0, 0x5A5A5A5A, 0, 0, 0x5A5A5A5A);
-    gCurTask->unk3C = 0x1E;
+    gCurTask->frame = 0x1E;
     TaskYieldTrampoline(8);
-    gCurTask->unk54 = 0x4000;
-    gCurTask->unk3C = 5;
+    gCurTask->velX = 0x4000;
+    gCurTask->frame = 5;
     TaskYieldTrampoline(2);
     TaskSetMotion(0xFFFF0000, 0, 0x5A5A5A5A, 0xFFFDC000, 0x4000, 0x5A5A5A5A);
-    gCurTask->unk3C = 0x28;
+    gCurTask->frame = 0x28;
     TaskYieldTrampoline(2);
-    gCurTask->unk3C = 0x29;
+    gCurTask->frame = 0x29;
     TaskYieldTrampoline(2);
-    gCurTask->unk3C = 0x28;
+    gCurTask->frame = 0x28;
     TaskYieldTrampoline(2);
-    gCurTask->unk58 = 0x14000;
-    gCurTask->unk3C = 0x00000133;
+    gCurTask->velY = 0x14000;
+    gCurTask->frame = 0x00000133;
     TaskYieldTrampoline(1);
-    gCurTask->unk58 = 0xFFFF8000;
-    gCurTask->unk3C = 0x00000133;
+    gCurTask->velY = 0xFFFF8000;
+    gCurTask->frame = 0x00000133;
     TaskYieldTrampoline(5);
-    gCurTask->unk3E |= 0x8000;
-    gCurTask->unk58 = 0xFFFEC000;
-    gCurTask->unk3C = 0x28;
+    gCurTask->spriteFlags |= 0x8000;
+    gCurTask->velY = 0xFFFEC000;
+    gCurTask->frame = 0x28;
     TaskYieldTrampoline(1);
-    gCurTask->unk58 = 0x8000;
-    gCurTask->unk3C = 0x28;
+    gCurTask->velY = 0x8000;
+    gCurTask->frame = 0x28;
     TaskYieldTrampoline(1);
-    gCurTask->unk3C = 0x29;
+    gCurTask->frame = 0x29;
     TaskYieldTrampoline(2);
-    gCurTask->unk3C = 0x28;
+    gCurTask->frame = 0x28;
     TaskYieldTrampoline(1);
-    gCurTask->unk54 = 0xFFFFC000;
-    gCurTask->unk3C = 5;
+    gCurTask->velX = 0xFFFFC000;
+    gCurTask->frame = 5;
     TaskYieldTrampoline(1);
     TaskSetMotion(0xFFFFC000, 0, 0x5A5A5A5A, 0, 0, 0x5A5A5A5A);
-    gCurTask->unk3C = 5;
+    gCurTask->frame = 5;
     TaskYieldTrampoline(1);
-    gCurTask->unk3C = 0x7B;
+    gCurTask->frame = 0x7B;
     TaskYieldTrampoline(2);
     TaskSetMotion(0x10000, 0, 0x5A5A5A5A, 0xFFFDC000, 0x4000, 0x5A5A5A5A);
-    gCurTask->unk3C = 0x28;
+    gCurTask->frame = 0x28;
     TaskYieldTrampoline(2);
-    gCurTask->unk3C = 0x29;
+    gCurTask->frame = 0x29;
     TaskYieldTrampoline(2);
-    gCurTask->unk3C = 0x28;
+    gCurTask->frame = 0x28;
     TaskYieldTrampoline(2);
-    gCurTask->unk3E &= 0x7FFF;
-    gCurTask->unk58 = 0x14000;
-    gCurTask->unk3C = 0x00000133;
+    gCurTask->spriteFlags &= 0x7FFF;
+    gCurTask->velY = 0x14000;
+    gCurTask->frame = 0x00000133;
     TaskYieldTrampoline(1);
-    gCurTask->unk58 = 0xFFFF8000;
-    gCurTask->unk3C = 0x00000133;
+    gCurTask->velY = 0xFFFF8000;
+    gCurTask->frame = 0x00000133;
     TaskYieldTrampoline(5);
-    gCurTask->unk58 = 0xFFFEC000;
-    gCurTask->unk3C = 0x28;
+    gCurTask->velY = 0xFFFEC000;
+    gCurTask->frame = 0x28;
     TaskYieldTrampoline(1);
-    gCurTask->unk58 = 0x8000;
-    gCurTask->unk3C = 0x28;
+    gCurTask->velY = 0x8000;
+    gCurTask->frame = 0x28;
     TaskYieldTrampoline(1);
-    gCurTask->unk3C = 0x29;
+    gCurTask->frame = 0x29;
     TaskYieldTrampoline(2);
-    gCurTask->unk3C = 0x28;
+    gCurTask->frame = 0x28;
     TaskYieldTrampoline(1);
-    gCurTask->unk54 = 0x4000;
-    gCurTask->unk3C = 5;
+    gCurTask->velX = 0x4000;
+    gCurTask->frame = 5;
     TaskYieldTrampoline(1);
     TaskSetMotion(0x4000, 0, 0x5A5A5A5A, 0, 0, 0x5A5A5A5A);
-    gCurTask->unk3C = 5;
+    gCurTask->frame = 5;
     TaskYieldTrampoline(1);
-    gCurTask->unk3C = 0x7B;
+    gCurTask->frame = 0x7B;
     TaskYieldTrampoline(2);
     TaskSetMotion(0, 0, 0x5A5A5A5A, 0xFFFA8000, 0x8000, 0x5A5A5A5A);
-    gCurTask->unk3C = 0x28;
+    gCurTask->frame = 0x28;
     TaskYieldTrampoline(2);
-    gCurTask->unk3C = 0x29;
+    gCurTask->frame = 0x29;
     TaskYieldTrampoline(2);
-    gCurTask->unk3C = 0x66;
+    gCurTask->frame = 0x66;
     TaskYieldTrampoline(2);
-    gCurTask->unk3C = 0x68;
+    gCurTask->frame = 0x68;
     TaskYieldTrampoline(2);
-    gCurTask->unk3C = 0x6B;
+    gCurTask->frame = 0x6B;
     TaskYieldTrampoline(2);
-    gCurTask->unk3C = 0x6D;
+    gCurTask->frame = 0x6D;
     TaskYieldTrampoline(2);
-    gCurTask->unk3E |= 0x8000;
-    gCurTask->unk3C = 0x28;
+    gCurTask->spriteFlags |= 0x8000;
+    gCurTask->frame = 0x28;
     TaskYieldTrampoline(2);
-    gCurTask->unk3E &= 0x7FFF;
-    gCurTask->unk58 = 0x38000;
-    gCurTask->unk3C = 0x00000133;
+    gCurTask->spriteFlags &= 0x7FFF;
+    gCurTask->velY = 0x38000;
+    gCurTask->frame = 0x00000133;
     TaskYieldTrampoline(1);
-    gCurTask->unk58 = 0x20000;
-    gCurTask->unk3C = 0x00000133;
+    gCurTask->velY = 0x20000;
+    gCurTask->frame = 0x00000133;
     TaskYieldTrampoline(2);
-    gCurTask->unk58 = 0x10000;
-    gCurTask->unk3C = 0x28;
+    gCurTask->velY = 0x10000;
+    gCurTask->frame = 0x28;
     TaskYieldTrampoline(1);
-    gCurTask->unk58 = 0x38000;
-    gCurTask->unk3C = 0x28;
+    gCurTask->velY = 0x38000;
+    gCurTask->frame = 0x28;
     TaskYieldTrampoline(1);
-    gCurTask->unk3C = 0x29;
+    gCurTask->frame = 0x29;
     TaskYieldTrampoline(2);
-    gCurTask->unk58 = 0x20000;
-    gCurTask->unk60 = 0xFFFF0000;
-    gCurTask->unk3C = 5;
+    gCurTask->velY = 0x20000;
+    gCurTask->accelY = 0xFFFF0000;
+    gCurTask->frame = 5;
     TaskYieldTrampoline(3);
-    gCurTask->unk58 = 0x20000;
-    gCurTask->unk60 = 0;
-    gCurTask->unk3C = 0x7B;
+    gCurTask->velY = 0x20000;
+    gCurTask->accelY = 0;
+    gCurTask->frame = 0x7B;
     TaskYieldTrampoline(1);
-    gCurTask->unk58 = 0xFFFE0000;
-    gCurTask->unk3C = 0x7B;
+    gCurTask->velY = 0xFFFE0000;
+    gCurTask->frame = 0x7B;
     TaskYieldTrampoline(1);
-    gCurTask->unk58 = 0x20000;
-    gCurTask->unk3C = 0x7B;
+    gCurTask->velY = 0x20000;
+    gCurTask->frame = 0x7B;
     TaskYieldTrampoline(1);
-    gCurTask->unk58 = 0xFFFE0000;
-    gCurTask->unk3C = 0x7B;
+    gCurTask->velY = 0xFFFE0000;
+    gCurTask->frame = 0x7B;
     TaskYieldTrampoline(1);
-    gCurTask->unk58 = 0x10000;
-    gCurTask->unk3C = 0x7B;
+    gCurTask->velY = 0x10000;
+    gCurTask->frame = 0x7B;
     TaskYieldTrampoline(1);
-    gCurTask->unk58 = 0xFFFF0000;
-    gCurTask->unk3C = 0x7B;
+    gCurTask->velY = 0xFFFF0000;
+    gCurTask->frame = 0x7B;
     TaskYieldTrampoline(1);
-    gCurTask->unk58 = 0x10000;
-    gCurTask->unk3C = 0x7B;
+    gCurTask->velY = 0x10000;
+    gCurTask->frame = 0x7B;
     TaskYieldTrampoline(1);
-    gCurTask->unk58 = 0xFFFF0000;
-    gCurTask->unk3C = 0x7B;
+    gCurTask->velY = 0xFFFF0000;
+    gCurTask->frame = 0x7B;
     TaskYieldTrampoline(1);
-    gCurTask->unk58 = 0;
-    gCurTask->unk3C = 0x7B;
+    gCurTask->velY = 0;
+    gCurTask->frame = 0x7B;
     TaskYieldTrampoline(10);
-    gCurTask->unk3E |= 0x8000;
-    gCurTask->unk54 = 0x20000;
-    gCurTask->unk5C = 0xFFFFF000;
-    gCurTask->unk3C = 0x12;
+    gCurTask->spriteFlags |= 0x8000;
+    gCurTask->velX = 0x20000;
+    gCurTask->accelX = 0xFFFFF000;
+    gCurTask->frame = 0x12;
     TaskYieldTrampoline(6);
-    gCurTask->unk54 = 0x10000;
-    gCurTask->unk3C = 0x11;
+    gCurTask->velX = 0x10000;
+    gCurTask->frame = 0x11;
     TaskYieldTrampoline(6);
-    gCurTask->unk54 = 0x10000;
-    gCurTask->unk3C = 0x10;
+    gCurTask->velX = 0x10000;
+    gCurTask->frame = 0x10;
     TaskYieldTrampoline(4);
-    gCurTask->unk54 = 0x8000;
-    gCurTask->unk3C = 15;
+    gCurTask->velX = 0x8000;
+    gCurTask->frame = 15;
     TaskYieldTrampoline(3);
-    gCurTask->unk54 = 0;
-    gCurTask->unk3C = 14;
+    gCurTask->velX = 0;
+    gCurTask->frame = 14;
     TaskYieldTrampoline(2);
-    gCurTask->unk54 = 0x20000;
-    gCurTask->unk5C = 0xFFFFF000;
-    gCurTask->unk3C = 13;
+    gCurTask->velX = 0x20000;
+    gCurTask->accelX = 0xFFFFF000;
+    gCurTask->frame = 13;
     TaskYieldTrampoline(6);
-    gCurTask->unk54 = 0x10000;
-    gCurTask->unk3C = 12;
+    gCurTask->velX = 0x10000;
+    gCurTask->frame = 12;
     TaskYieldTrampoline(6);
-    gCurTask->unk54 = 0x10000;
-    gCurTask->unk3C = 0x15;
+    gCurTask->velX = 0x10000;
+    gCurTask->frame = 0x15;
     TaskYieldTrampoline(4);
-    gCurTask->unk54 = 0x8000;
-    gCurTask->unk3C = 0x14;
+    gCurTask->velX = 0x8000;
+    gCurTask->frame = 0x14;
     TaskYieldTrampoline(3);
-    gCurTask->unk54 = 0;
-    gCurTask->unk3C = 0x13;
+    gCurTask->velX = 0;
+    gCurTask->frame = 0x13;
     TaskYieldTrampoline(2);
-    gCurTask->unk3E &= 0x7FFF;
-    gCurTask->unk54 = 0x10000;
-    gCurTask->unk3C = 0x6D;
+    gCurTask->spriteFlags &= 0x7FFF;
+    gCurTask->velX = 0x10000;
+    gCurTask->frame = 0x6D;
     TaskYieldTrampoline(2);
-    gCurTask->unk3C = 0x6C;
+    gCurTask->frame = 0x6C;
     TaskYieldTrampoline(2);
-    gCurTask->unk54 = 0xC000;
-    gCurTask->unk3C = 0x6B;
+    gCurTask->velX = 0xC000;
+    gCurTask->frame = 0x6B;
     TaskYieldTrampoline(2);
-    gCurTask->unk3C = 0x6A;
+    gCurTask->frame = 0x6A;
     TaskYieldTrampoline(2);
-    gCurTask->unk3C = 0x69;
+    gCurTask->frame = 0x69;
     TaskYieldTrampoline(2);
-    gCurTask->unk54 = 0x8000;
-    gCurTask->unk3C = 0x68;
+    gCurTask->velX = 0x8000;
+    gCurTask->frame = 0x68;
     TaskYieldTrampoline(2);
-    gCurTask->unk3C = 0x67;
+    gCurTask->frame = 0x67;
     TaskYieldTrampoline(2);
-    gCurTask->unk3C = 0x66;
+    gCurTask->frame = 0x66;
     TaskYieldTrampoline(2);
-    gCurTask->unk54 = 0x4000;
-    gCurTask->unk3C = 0x6F;
+    gCurTask->velX = 0x4000;
+    gCurTask->frame = 0x6F;
     TaskYieldTrampoline(2);
-    gCurTask->unk3E |= 0x8000;
-    gCurTask->unk54 = 0;
-    gCurTask->unk3C = 0x11;
+    gCurTask->spriteFlags |= 0x8000;
+    gCurTask->velX = 0;
+    gCurTask->frame = 0x11;
     TaskYieldTrampoline(3);
-    gCurTask->unk54 = 0;
-    gCurTask->unk3C = 0x10;
+    gCurTask->velX = 0;
+    gCurTask->frame = 0x10;
     TaskYieldTrampoline(3);
-    gCurTask->unk54 = 0xFFFFC000;
-    gCurTask->unk5C = 0;
-    gCurTask->unk3C = 15;
+    gCurTask->velX = 0xFFFFC000;
+    gCurTask->accelX = 0;
+    gCurTask->frame = 15;
     TaskYieldTrampoline(2);
-    gCurTask->unk54 = 0xFFFF8000;
-    gCurTask->unk3C = 14;
+    gCurTask->velX = 0xFFFF8000;
+    gCurTask->frame = 14;
     TaskYieldTrampoline(1);
-    gCurTask->unk3C = 13;
+    gCurTask->frame = 13;
     TaskYieldTrampoline(3);
-    gCurTask->unk54 = 0xFFFF0000;
-    gCurTask->unk3C = 0x1B;
+    gCurTask->velX = 0xFFFF0000;
+    gCurTask->frame = 0x1B;
     TaskYieldTrampoline(2);
-    gCurTask->unk3C = 0x1C;
+    gCurTask->frame = 0x1C;
     TaskYieldTrampoline(2);
-    gCurTask->unk3C = 0x1D;
+    gCurTask->frame = 0x1D;
     TaskYieldTrampoline(2);
-    gCurTask->unk3C = 0x1C;
+    gCurTask->frame = 0x1C;
     TaskYieldTrampoline(2);
-    gCurTask->unk3C = 0x1B;
+    gCurTask->frame = 0x1B;
     TaskYieldTrampoline(2);
-    gCurTask->unk54 = 0xFFFF8000;
-    gCurTask->unk3C = 5;
+    gCurTask->velX = 0xFFFF8000;
+    gCurTask->frame = 5;
     TaskYieldTrampoline(2);
     TaskSetMotion(0xFFFEC000, 0, 0x5A5A5A5A, 0xFFFD4000, 0x4000, 0x5A5A5A5A);
-    gCurTask->unk3C = 0x16;
+    gCurTask->frame = 0x16;
     TaskYieldTrampoline(14);
-    gCurTask->unk3C = 0x28;
+    gCurTask->frame = 0x28;
     TaskYieldTrampoline(2);
-    gCurTask->unk3C = 0x29;
+    gCurTask->frame = 0x29;
     TaskYieldTrampoline(2);
-    gCurTask->unk3C = 0x28;
+    gCurTask->frame = 0x28;
     TaskYieldTrampoline(2);
-    gCurTask->unk3C = 0x29;
+    gCurTask->frame = 0x29;
     TaskYieldTrampoline(1);
     TaskSetMotion(0xFFFF8000, 0, 0x5A5A5A5A, 0, 0, 0x5A5A5A5A);
-    gCurTask->unk3C = 5;
+    gCurTask->frame = 5;
     TaskYieldTrampoline(2);
-    gCurTask->unk54 = 0xFFFFC000;
-    gCurTask->unk3C = 0x1E;
+    gCurTask->velX = 0xFFFFC000;
+    gCurTask->frame = 0x1E;
     TaskYieldTrampoline(0xF);
-    gCurTask->unk54 = 0;
-    gCurTask->unk3C = 0x28;
+    gCurTask->velX = 0;
+    gCurTask->frame = 0x28;
     TaskYieldTrampoline(2);
-    gCurTask->unk3C = 0;
+    gCurTask->frame = 0;
     TaskYieldTrampoline(2);
-    gCurTask->unk54 = 0x4000;
-    gCurTask->unk3C = 5;
+    gCurTask->velX = 0x4000;
+    gCurTask->frame = 5;
     TaskYieldTrampoline(5);
-    gCurTask->unk54 = 0;
-    gCurTask->unk3C = 5;
+    gCurTask->velX = 0;
+    gCurTask->frame = 5;
     TaskYieldTrampoline(14);
-    gCurTask->unk3C = 5;
+    gCurTask->frame = 5;
     TaskYieldTrampoline(2);
     TaskStop();
-    CreatePlayerEffect(gCurTask->unk88->unk00, 16, 0);
-    gCurTask->unk3C = 0x92;
+    CreatePlayerEffect(gCurTask->player->playerIndex, 16, 0);
+    gCurTask->frame = 0x92;
     TaskYieldTrampoline(0x15);
 }

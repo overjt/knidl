@@ -18,8 +18,8 @@
 struct BgMap
 {
     /*0x00*/ u16 unk0;
-    /*0x02*/ u16 unk2;
-    /*0x04*/ u16 unk4;
+    /*0x02*/ u16 width;
+    /*0x04*/ u16 height;
     /*0x06*/ u16 unk6[0];
 };
 
@@ -36,35 +36,35 @@ struct Door
 struct RoomDef
 {
     /*0x00*/ u8 filler00[4];
-    /*0x04*/ s8 unk04;
-    /*0x05*/ u8 unk05;
+    /*0x04*/ s8 bgm;
+    /*0x05*/ u8 mapsCompressed;
     /*0x06*/ u8 filler06[2];
-    /*0x08*/ void *unk08;
-    /*0x0C*/ void *unk0C;
+    /*0x08*/ void *metatileMap;
+    /*0x0C*/ void *blockLayer;
     /*0x10*/ void *unk10;
-    /*0x14*/ u16 unk14;
-    /*0x16*/ u16 unk16;
-    /*0x18*/ u16 *unk18;
-    /*0x1C*/ void *unk1C;
-    /*0x20*/ void *unk20;
-    /*0x24*/ u16 unk24;
-    /*0x26*/ u16 unk26;
-    /*0x28*/ u16 *unk28;
-    /*0x2C*/ void *unk2C;
-    /*0x30*/ struct BgMap *unk30;
-    /*0x34*/ u16 unk34;
-    /*0x36*/ u16 unk36;
+    /*0x14*/ u16 width;
+    /*0x16*/ u16 height;
+    /*0x18*/ u16 *bg2Palette;
+    /*0x1C*/ void *bg2Tiles;
+    /*0x20*/ void *metatileTiles;
+    /*0x24*/ u16 borderX;
+    /*0x26*/ u16 borderY;
+    /*0x28*/ u16 *bg3Palette;
+    /*0x2C*/ void *bg3Tiles;
+    /*0x30*/ struct BgMap *bg3Map;
+    /*0x34*/ u16 bg3BorderX;
+    /*0x36*/ u16 bg3BorderY;
     /*0x38*/ u16 unk38;
-    /*0x3A*/ u16 unk3A;
-    /*0x3C*/ u16 unk3C;
-    /*0x3E*/ u16 unk3E;
-    /*0x40*/ u16 unk40;
+    /*0x3A*/ u16 doorCount;
+    /*0x3C*/ u16 objectCount;
+    /*0x3E*/ u16 objectsSortedByY;
+    /*0x40*/ u16 bgAnimSet;
     /*0x42*/ u16 unk42;
-    /*0x44*/ struct Door *unk44;
-    /*0x48*/ void *unk48;
+    /*0x44*/ struct Door *doors;
+    /*0x48*/ void *objects;
     /*0x4C*/ u8 filler4C[4];
-    /*0x50*/ u16 unk50;
-    /*0x52*/ u16 unk52;
+    /*0x50*/ u16 entryX;
+    /*0x52*/ u16 entryY;
     /*0x54*/ u8 unk54;
     /*0x55*/ u8 unk55;
     /*0x56*/ u8 unk56;
@@ -76,21 +76,21 @@ struct MapCell
     /*0x00*/ u8 unk0;
     /*0x01*/ u8 unk1;
     /*0x02*/ u8 unk2;
-    /*0x03*/ u8 unk3;
+    /*0x03*/ u8 collisionTile;
 };
 
 struct Unk020055D8Entry
 {
     /*0x00*/ u8 filler0[4];
-    /*0x04*/ u16 unk4;
-    /*0x06*/ u16 unk6;
+    /*0x04*/ u16 x;
+    /*0x06*/ u16 y;
 };
 
 struct Unk020055D8
 {
-    /*0x00*/ s16 unk0;
-    /*0x02*/ s16 unk2;
-    /*0x04*/ struct Unk020055D8Entry *unk4;
+    /*0x00*/ s16 count;
+    /*0x02*/ s16 sortedByY;
+    /*0x04*/ struct Unk020055D8Entry *entries;
 };
 
 extern struct RoomDef **gRoomTable[][8];
@@ -119,7 +119,7 @@ extern u8 gUnk_0200AF08;
 extern s8 gUnk_0200B038;
 extern u8 gUnk_0200B04C;
 extern u8 gUnk_03001F30;
-extern u32 gUnk_030023C8[];
+extern u32 gBigSwitchFlags[];
 extern u8 gUnk_03002400[8][7];
 extern u16 gUnk_08732348[][9];
 extern u8 gUnk_02004B64;
@@ -155,9 +155,9 @@ extern s16 gPlayerLives[];
 extern s16 gPlayerHealth[];
 extern s16 gMaxHealth;
 extern u16 gSavedPlayerAbilities[];
-extern u16 gUnk_02007FA8[];
+extern u16 gSavedPlayerAbilityUses[];
 extern u16 gPlayerAbilities[];
-extern u16 gUnk_0200AF18[];
+extern u16 gPlayerAbilityUses[];
 extern u8 gPlayerCameraMode[];
 extern vu16 gPlayerHeldKeys[];
 extern vu16 gPlayerPressedKeys[];
@@ -244,7 +244,7 @@ void sub_0802296c(void)
             gUsedSubGameDoors[i] = 0;
         if (gUnk_08732348[i][6] & 0x100)
         {
-            if (gUnk_030023C8[0] & (1 << (gUnk_08732348[i][6] & 0xFF)))
+            if (gBigSwitchFlags[0] & (1 << (gUnk_08732348[i][6] & 0xFF)))
                 gUnk_0200B04C |= 1 << i;
         }
         else if (gUnk_03002400[i][gUnk_08732348[i][6]] != 0)
@@ -259,7 +259,7 @@ void sub_0802296c(void)
     gUnk_02005578 = gStageIndex;
     gUnk_02007FF8 = gUnk_03001F20;
     room = gRoomTable[gLevelIndex][gStageIndex][gRoomIndex];
-    d = room->unk44;
+    d = room->doors;
     if (gUnk_030023E0 == 0 && gUnk_03002384 == 0)
     {
         gRoomEntrySet = 0;
@@ -269,7 +269,7 @@ void sub_0802296c(void)
     {
         if ((s8)gUnk_03001F20 == 16)
         {
-            for (i = 0; i < room->unk3A; d++, i++)
+            for (i = 0; i < room->doorCount; d++, i++)
             {
                 if (d->unk0 == 0x270F && *(u8 *)&d->unk6 == 1)
                     break;
@@ -281,7 +281,7 @@ void sub_0802296c(void)
         }
         else if ((s8)gUnk_03001F20 == 32)
         {
-            for (i = 0; i < room->unk3A; d++, i++)
+            for (i = 0; i < room->doorCount; d++, i++)
             {
                 if (d->unk0 == 0x270F && *(u8 *)&d->unk6 == 2)
                     break;
@@ -292,7 +292,7 @@ void sub_0802296c(void)
         }
         else
         {
-            for (i = 0; i < room->unk3A; d++, i++)
+            for (i = 0; i < room->doorCount; d++, i++)
             {
                 if (d->unk0 == 0x270F && *(u8 *)&d->unk6 == 0 && d->unk8 == (s8)gUnk_03001F20)
                     break;
@@ -334,7 +334,7 @@ void sub_08022c3c(void)
             gUsedSubGameDoors[i] = 0;
         if (gUnk_08732348[i][6] & 0x100)
         {
-            if (gUnk_030023C8[0] & (1 << (gUnk_08732348[i][6] & 0xFF)))
+            if (gBigSwitchFlags[0] & (1 << (gUnk_08732348[i][6] & 0xFF)))
                 gUnk_0200B04C |= 1 << i;
         }
         else if (gUnk_03002400[i][gUnk_08732348[i][6]] != 0)
@@ -368,10 +368,10 @@ void sub_08022c3c(void)
         else
         {
             room = gRoomTable[gLevelIndex][gStageIndex][gRoomIndex];
-            d = room->unk44;
+            d = room->doors;
             if (gUnk_02007FF8 == 16)
             {
-                for (i = 0; i < room->unk3A; d++, i++)
+                for (i = 0; i < room->doorCount; d++, i++)
                 {
                     if (d->unk0 == 0x270F && *(u8 *)&d->unk6 == 1)
                         break;
@@ -383,7 +383,7 @@ void sub_08022c3c(void)
             }
             else if (gUnk_02007FF8 == 32)
             {
-                for (i = 0; i < room->unk3A; d++, i++)
+                for (i = 0; i < room->doorCount; d++, i++)
                 {
                     if (d->unk0 == 0x270F && *(u8 *)&d->unk6 == 2)
                         break;
@@ -395,7 +395,7 @@ void sub_08022c3c(void)
             }
             else
             {
-                for (i = 0; i < room->unk3A; d++, i++)
+                for (i = 0; i < room->doorCount; d++, i++)
                 {
                     if (d->unk0 == 0x270F && *(u8 *)&d->unk6 == 0 && d->unk8 == gUnk_02007FF8)
                         break;
@@ -463,28 +463,28 @@ void sub_08022fa8(void)
     LoadBg2Gfx();
     LoadBg3Gfx();
     SelectBg3MapShape();
-    gRoomWidth = gCurRoomDef->unk14;
-    gRoomHeight = gCurRoomDef->unk16;
+    gRoomWidth = gCurRoomDef->width;
+    gRoomHeight = gCurRoomDef->height;
     gRoomMetatileCount = gRoomWidth * gRoomHeight;
-    gRoomBorder[0] = gCurRoomDef->unk24;
-    gRoomBorder[1] = gCurRoomDef->unk26;
-    gBg3Border[0] = gCurRoomDef->unk34;
-    gBg3Border[1] = gCurRoomDef->unk36;
-    gRoomObjectList.unk0 = gCurRoomDef->unk3C;
-    gRoomObjectList.unk2 = gCurRoomDef->unk3E;
-    gRoomObjectList.unk4 = gCurRoomDef->unk48;
+    gRoomBorder[0] = gCurRoomDef->borderX;
+    gRoomBorder[1] = gCurRoomDef->borderY;
+    gBg3Border[0] = gCurRoomDef->bg3BorderX;
+    gBg3Border[1] = gCurRoomDef->bg3BorderY;
+    gRoomObjectList.count = gCurRoomDef->objectCount;
+    gRoomObjectList.sortedByY = gCurRoomDef->objectsSortedByY;
+    gRoomObjectList.entries = gCurRoomDef->objects;
     gRoomMap = gRoomMapBuffer;
-    if (gCurRoomDef->unk05 != 0)
+    if (gCurRoomDef->mapsCompressed != 0)
     {
-        RequestCopy(8, (u32)gCurRoomDef->unk08, (u32)gRoomMapBuffer, 0);
-        RequestCopy(8, (u32)gCurRoomDef->unk0C, (u32)gBlockLayer, 0);
+        RequestCopy(8, (u32)gCurRoomDef->metatileMap, (u32)gRoomMapBuffer, 0);
+        RequestCopy(8, (u32)gCurRoomDef->blockLayer, (u32)gBlockLayer, 0);
     }
     else
     {
-        CpuSet(gCurRoomDef->unk08, gRoomMapBuffer, (gRoomMetatileCount * 2) & 0x1FFFFF);
-        CpuSet(gCurRoomDef->unk0C, gBlockLayer, gRoomMetatileCount & 0x1FFFFF);
+        CpuSet(gCurRoomDef->metatileMap, gRoomMapBuffer, (gRoomMetatileCount * 2) & 0x1FFFFF);
+        CpuSet(gCurRoomDef->blockLayer, gBlockLayer, gRoomMetatileCount & 0x1FFFFF);
     }
-    RequestCopy(8, (u32)gCurRoomDef->unk20, (u32)gMetatileTiles, 0);
+    RequestCopy(8, (u32)gCurRoomDef->metatileTiles, (u32)gMetatileTiles, 0);
     gUnk_02000020 = 0;
     gUnk_0200B078 = 0;
     gHBlankScrollStarted = 0;
@@ -511,15 +511,15 @@ void sub_08022fa8(void)
             {
                 gPlayerHealth[i] = gMaxHealth;
                 gSavedPlayerAbilities[i] = 0;
-                gUnk_02007FA8[i] = 0xFFFF;
+                gSavedPlayerAbilityUses[i] = 0xFFFF;
                 AddPlayerLives(-1, i);
             }
             if ((s16)gSavedPlayerAbilities[i] != 0)
             {
                 gPlayerAbilities[i] = gSavedPlayerAbilities[i];
-                gUnk_0200AF18[i] = gUnk_02007FA8[i];
+                gPlayerAbilityUses[i] = gSavedPlayerAbilityUses[i];
                 gSavedPlayerAbilities[i] = 0;
-                gUnk_02007FA8[i] = 0xFFFF;
+                gSavedPlayerAbilityUses[i] = 0xFFFF;
             }
             gActivePlayerMask |= 1 << i;
             gActivePlayerCount++;
@@ -603,18 +603,18 @@ void sub_080233e0(void)
     LoadBg2Gfx();
     LoadBg3Gfx();
     SelectBg3MapShape();
-    gRoomWidth = gCurRoomDef->unk14;
-    gRoomHeight = gCurRoomDef->unk16;
+    gRoomWidth = gCurRoomDef->width;
+    gRoomHeight = gCurRoomDef->height;
     gRoomMetatileCount = gRoomWidth * gRoomHeight;
-    gRoomBorder[0] = gCurRoomDef->unk24;
-    gRoomBorder[1] = gCurRoomDef->unk26;
-    gBg3Border[0] = gCurRoomDef->unk34;
-    gBg3Border[1] = gCurRoomDef->unk36;
-    gRoomObjectList.unk0 = gCurRoomDef->unk3C;
-    gRoomObjectList.unk2 = gCurRoomDef->unk3E;
-    gRoomObjectList.unk4 = gCurRoomDef->unk48;
+    gRoomBorder[0] = gCurRoomDef->borderX;
+    gRoomBorder[1] = gCurRoomDef->borderY;
+    gBg3Border[0] = gCurRoomDef->bg3BorderX;
+    gBg3Border[1] = gCurRoomDef->bg3BorderY;
+    gRoomObjectList.count = gCurRoomDef->objectCount;
+    gRoomObjectList.sortedByY = gCurRoomDef->objectsSortedByY;
+    gRoomObjectList.entries = gCurRoomDef->objects;
     gRoomMap = gRoomMapBuffer;
-    RequestCopy(8, (u32)gCurRoomDef->unk20, (u32)gMetatileTiles, 0);
+    RequestCopy(8, (u32)gCurRoomDef->metatileTiles, (u32)gMetatileTiles, 0);
     gRoomUpdateFlags = 0;
     ResetBlockAnims();
     StopScreenShake();
@@ -669,6 +669,6 @@ void CreateRoomTask(s32 a)
     if (id != -1)
     {
         t = &gTasks[id];
-        t->unk14 = a;
+        t->state = a;
     }
 }

@@ -5,7 +5,7 @@
 extern u16 gCompletionPercent;
 extern u16 gMilestoneFlags;
 extern s8 gUnk_03002384;
-extern u32 gUnk_030023C8[];
+extern u32 gBigSwitchFlags[];
 extern s8 gUnk_030023E0;
 
 s32 CalcCompletionPercent(s32 a)
@@ -29,7 +29,7 @@ s32 CalcCompletionPercent(s32 a)
         gCompletionPercent = gUnk_03002384;
     for (i = 0; i <= 16; i++)
     {
-        if (gUnk_030023C8[0] & (1 << i))
+        if (gBigSwitchFlags[0] & (1 << i))
             gCompletionPercent++;
     }
     if (gCompletionPercent == 100)

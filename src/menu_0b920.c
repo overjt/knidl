@@ -19,10 +19,10 @@ struct SaveSlot
 {
     /*0x00*/ u32 unk00;
     /*0x04*/ s32 unk04;
-    /*0x08*/ u32 unk08;
-    /*0x0C*/ s32 unk0C;
-    /*0x10*/ u16 unk10;
-    /*0x12*/ u16 unk12[2];
+    /*0x08*/ u32 generation;
+    /*0x0C*/ s32 saveCount;
+    /*0x10*/ u16 milestoneFlags;
+    /*0x12*/ u16 completionPercent[2];
     /*0x16*/ u8 unk16[2];
     /*0x18*/ u8 unk18[2];
     /*0x1A*/ u8 unk1A[2];
@@ -32,7 +32,7 @@ struct SaveSlot
     /*0x28*/ u8 unk28[8][7];
     /*0x60*/ u16 unk60[4];
     /*0x68*/ u16 unk68[4];
-    /*0x70*/ u32 unk70;
+    /*0x70*/ u32 checksum;
     /*0x74*/ u8 filler74[0x8C];
 };
 
@@ -283,8 +283,8 @@ void MenuDrawSaveSlots(void)
     for (i = 0; i < 3; i++)
     {
         sub_0800bda4(i);
-        sub_0800be8c(i, (s8)gSaveSlots[i].unk16[gSaveSlots[i].unk12[1] ? (gSaveSlots[i].unk04 != 0x99999999) : 0]);
-        sub_0800bf6c(i, gSaveSlots[i].unk12[gSaveSlots[i].unk12[1] ? (gSaveSlots[i].unk04 != 0x99999999) : 0], 0);
+        sub_0800be8c(i, (s8)gSaveSlots[i].unk16[gSaveSlots[i].completionPercent[1] ? (gSaveSlots[i].unk04 != 0x99999999) : 0]);
+        sub_0800bf6c(i, gSaveSlots[i].completionPercent[gSaveSlots[i].completionPercent[1] ? (gSaveSlots[i].unk04 != 0x99999999) : 0], 0);
     }
 }
 
@@ -297,14 +297,14 @@ void sub_0800bda4(s32 slot)
         RequestCopy(3, (u32)gUnk_08553510, (u32)gObjVram + ((slot * 64 + 576) << 5), 0x180);
         RequestCopy(3, (u32)&gUnk_08553510[0x180], (u32)gObjVram + ((slot * 64 + 608) << 5), 0x180);
     }
-    else if (gSaveSlots[slot].unk10 & 2)
+    else if (gSaveSlots[slot].milestoneFlags & 2)
     {
         RequestCopy(3, (u32)gUnk_08553210, (u32)gObjVram + ((slot * 64 + 576) << 5), 0x180);
         RequestCopy(3, (u32)&gUnk_08553210[0x180], (u32)gObjVram + ((slot * 64 + 608) << 5), 0x180);
     }
     else
     {
-        IntToDigits(gSaveSlots[slot].unk12[0]);
+        IntToDigits(gSaveSlots[slot].completionPercent[0]);
         n = (gDigits[1] + gDigits[2] * 10) * 2;
         RequestCopy(3, (u32)&gUnk_08551110[n * 0x180], (u32)gObjVram + ((slot * 64 + 576) << 5), 0x180);
         n++;

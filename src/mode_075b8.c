@@ -21,7 +21,7 @@ extern u8 gUnk_020055CC;
 extern u8 gUnk_02006090;
 extern s16 gPlayerLives[];
 extern u8 gUnk_02007FCC;
-extern u16 gUnk_0200AF18[];
+extern u16 gPlayerAbilityUses[];
 extern s16 gInputRecorderMode;
 extern vu16 gFadeBlankAtWhite;
 extern vu16 gFadeSteps;
@@ -129,7 +129,7 @@ void sub_08007624(void)
             if (gPlayerLives[gLocalPlayer] != 0) {
                 gPlayerHealth[gLocalPlayer] = gMaxHealth;
                 gPlayerAbilities[gLocalPlayer] = 0;
-                gUnk_0200AF18[gLocalPlayer] = 0xFFFF;
+                gPlayerAbilityUses[gLocalPlayer] = 0xFFFF;
             } else {
                 gGameState = 1;
             }
@@ -163,9 +163,9 @@ void sub_08007624(void)
     BeginFastFadeOutToWhite();
     RunLinkFramesUntilFadeDone();
     for (i = 0; i < gPlayerCount; i++) {
-        if (gPlayerStates[i].unk2C != -1) {
-            StopSfxOnPlayer(gPlayerStates[i].unk2C, gPlayerStates[i].unk2E);
-            gPlayerStates[i].unk2C = -1;
+        if (gPlayerStates[i].sfxPlayer != -1) {
+            StopSfxOnPlayer(gPlayerStates[i].sfxPlayer, gPlayerStates[i].sfxId);
+            gPlayerStates[i].sfxPlayer = -1;
         }
     }
     sub_08027178();

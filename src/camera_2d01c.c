@@ -17,17 +17,17 @@
  * palette buffer gUnk_030012B0), 2 waits, 3 loops, 5 sets a metatile's
  * solid flag (sub_0802d2f0), 6 plays a sound effect, anything else stops
  * the slot (sub_0802d32c).  CreateMapEvent spawns task type #4 through M07's
- * TaskCreateHighSlot; Task_MapEvent, the type's body, dispatches on Task.unk14
+ * TaskCreateHighSlot; Task_MapEvent, the type's body, dispatches on Task.state
  * into the seven camera tasks of the anchor table gMapEventVariants. */
 
 struct Unk03005680
 {
     /*0x00*/ u8 unk0;
-    /*0x01*/ u8 unk1;
-    /*0x02*/ u16 unk2;
-    /*0x04*/ u16 unk4;
-    /*0x06*/ u16 unk6;
-    /*0x08*/ u16 unk8;
+    /*0x01*/ u8 lockedAxes;
+    /*0x02*/ u16 x0;
+    /*0x04*/ u16 x1;
+    /*0x06*/ u16 y0;
+    /*0x08*/ u16 y1;
     /*0x0A*/ u16 unkA;
     /*0x0C*/ u16 unkC;
 };
@@ -60,8 +60,8 @@ struct Unk02007D70
 struct BgMap
 {
     /*0x00*/ u16 unk0;
-    /*0x02*/ u16 unk2;
-    /*0x04*/ u16 unk4;
+    /*0x02*/ u16 width;
+    /*0x04*/ u16 height;
     /*0x06*/ u16 unk6[0];
 };
 
@@ -71,13 +71,13 @@ struct BgMap
 struct RoomDef
 {
     /*0x00*/ u8 filler00[0x18];
-    /*0x18*/ u16 *unk18;
+    /*0x18*/ u16 *bg2Palette;
     /*0x1C*/ u8 filler1C[0xC];
-    /*0x28*/ u16 *unk28;
+    /*0x28*/ u16 *bg3Palette;
     /*0x2C*/ u8 filler2C[4];
-    /*0x30*/ struct BgMap *unk30;
+    /*0x30*/ struct BgMap *bg3Map;
     /*0x34*/ u8 filler34[0xC];
-    /*0x40*/ u16 unk40;
+    /*0x40*/ u16 bgAnimSet;
 };
 
 struct Unk0802D25C
@@ -98,9 +98,9 @@ struct Unk0802D278
 
 struct MapTile
 {
-    /*0x00*/ u16 unk0;
+    /*0x00*/ u16 metatile;
     /*0x02*/ u8 unk2;
-    /*0x03*/ u8 unk3;
+    /*0x03*/ u8 collisionTile;
 };
 
 extern u16 gCameraMode;
@@ -139,11 +139,11 @@ void CameraLeaveScrollLock(void)
 {
     if (gCameraMode == 3)
     {
-        if (gScrollLock.unk1 & 1)
+        if (gScrollLock.lockedAxes & 1)
             gScrollLockSpeedX = 6;
-        if (gScrollLock.unk1 & 2)
+        if (gScrollLock.lockedAxes & 2)
             gScrollLockSpeedY = 3;
-        if (gScrollLock.unk1 != 0)
+        if (gScrollLock.lockedAxes != 0)
             gCameraMode = 4;
         else
             gCameraMode = 0;
@@ -183,12 +183,12 @@ void LoadRoomBgAnims(void)
         gBgAnims[k].unk0 = 0x7FFF;
         gBgAnims[k].unk8 |= 0xFFFF;
     }
-    if (gCurRoomDef->unk40 != 0)
+    if (gCurRoomDef->bgAnimSet != 0)
     {
-        while (gRoomBgAnimScripts[gCurRoomDef->unk40][i] != 0)
+        while (gRoomBgAnimScripts[gCurRoomDef->bgAnimSet][i] != 0)
         {
             struct Unk02007D70 *p = &gBgAnims[i];
-            p->unk4 = gRoomBgAnimScripts[gCurRoomDef->unk40][i];
+            p->unk4 = gRoomBgAnimScripts[gCurRoomDef->bgAnimSet][i];
             p->unk0 = 0;
             p->unk2 = 0;
             i++;
@@ -286,7 +286,7 @@ void sub_0802d294(struct Unk02007D70 *p)
 void sub_0802d2f0(u32 x, u32 y, u32 v)
 {
     if (x < gRoomWidth && y < gRoomHeight)
-        gRoomMap[y * gRoomWidth + x].unk3 = v;
+        gRoomMap[y * gRoomWidth + x].collisionTile = v;
 }
 
 void sub_0802d32c(struct Unk02007D70 *p)
@@ -306,12 +306,12 @@ s32 CreateMapEvent(s32 a)
     if (id != -1)
     {
         t = &gTasks[id];
-        t->unk14 = a;
+        t->state = a;
     }
     return id;
 }
 
 void Task_MapEvent(void)
 {
-    CallTableEntry(gCurTask->unk14, 7, gMapEventVariants);
+    CallTableEntry(gCurTask->state, 7, gMapEventVariants);
 }

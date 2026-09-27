@@ -340,7 +340,7 @@ void CreateGameOverObjects(void)
             id = TaskCreateFrom(264, 32);
             if (id != -1) {
                 t = &gTasks[id];
-                t->unk73 = i;
+                t->variant = i;
                 if (i == 0)
                     gGameOverPlayerTask = id;
             }
@@ -349,7 +349,7 @@ void CreateGameOverObjects(void)
         id = TaskCreateFrom(264, 32);
         if (id != -1) {
             struct Task *t2 = &gTasks[id];
-            t2->unk73 = 5;
+            t2->variant = 5;
         }
     }
 }

@@ -36,11 +36,11 @@ extern u8 gUnk_0200D080;
 struct Unk0200D120
 {
     /*0x00*/ u8 filler00[0x05];
-    /*0x05*/ u8 unk05;
+    /*0x05*/ u8 hitState;
     /*0x06*/ u8 filler06[0x1A];
-    /*0x20*/ u16 unk20;
+    /*0x20*/ u16 savedTileWord;
     /*0x22*/ u8 filler22[0x26];
-    /*0x48*/ s8 *unk48;
+    /*0x48*/ s8 *attackBox;
     /*0x4C*/ u8 filler4C[0x24];
 };
 extern struct Unk0200D120 gUnk_0200D120[];
@@ -79,7 +79,7 @@ extern s16 gCameraAnchorX;
 extern u16 gPlayerCount;
 extern u8 gUnk_030023B0;
 extern s32 gUnk_030023B4;
-extern u32 gUnk_030023C8[];
+extern u32 gBigSwitchFlags[];
 extern s32 gUnk_030023D4;
 extern u16 gGameState;
 extern s16 gSpriteCameraY;
@@ -92,7 +92,7 @@ extern u32 gRoomIndex[];
 extern u32 gUnk_030027A8[];
 extern vs16 gTaskSlotTypes[];
 extern u8 gTerrainResult[];
-extern u32 gUnk_03005568[];
+extern u32 gTerrainBoundsClamp[];
 extern s16 gRoomBounds[];
 extern u32 gScrollLock[];
 extern u32 gUnk_080A7358[];
@@ -123,13 +123,13 @@ extern u32 gUnk_087324DA[];
 extern u32 gPlayerDefaultTerrainBox[];
 extern u32 gUnk_0873EEA0[];
 extern u32 gUnk_0873EF48[];
-extern u32 *gUnk_0873F0E4[];
-extern u32 gUnk_0873F104[];
-extern u32 *gUnk_0873F15C[];
+extern u32 *gMidBossGfx[];
+extern u32 gMetaKnightsGfx[];
+extern u32 *gBossGfx[];
 extern u32 gUnk_0873F180[];
 extern s16 gUnk_0873FF98[];
 extern struct AnimCmd gUnk_087484A4[];
-extern u32 gUnk_087484D4[];
+extern u32 gMrShineAndMrBrightVariants[];
 extern u16 gUnk_087484E4[];
 extern s32 gUnk_087484EC[];
 extern u32 gUnk_0874850C[];
@@ -149,12 +149,12 @@ extern struct AnimCmd gUnk_087485EC[];
 extern struct AnimCmd gUnk_087485FC[];
 extern s32 gUnk_08748604[];
 extern s32 gUnk_08748614[];
-extern u32 gUnk_08748624[];
-extern u32 gUnk_08748634[];
-extern u32 gUnk_08748644[];
-extern u32 gUnk_0874868C[];
-extern u32 gUnk_087486D4[];
-extern u32 gUnk_0874871C[];
+extern u32 gMrShineAndMrBrightStates[];
+extern u32 gMrShineAndMrBrightStateUpdates[];
+extern u32 gMrShineStates[];
+extern u32 gMrShineStateUpdates[];
+extern u32 gMrBrightStates[];
+extern u32 gMrBrightStateUpdates[];
 extern struct ActorDef gUnk_087487BC[];
 extern u32 gUnk_0874883C[];
 extern u32 gUnk_08748858[];
@@ -217,9 +217,9 @@ extern u16 gUnk_08748E88[];
 extern u16 gUnk_08748E98[];
 extern u16 gUnk_08748EA8[];
 extern u8 gUnk_08748EAC[];
-extern u32 gUnk_08748EB8[];
-extern u32 gUnk_08748EBC[];
-extern u32 gUnk_08748F1C[];
+extern u32 gMetaKnightVariants[];
+extern u32 gMetaKnightStates[];
+extern u32 gMetaKnightStateUpdates[];
 extern u32 gUnk_08748F7C[];
 extern u32 gUnk_08748F84[];
 extern u32 gUnk_08748F8C[];
@@ -235,7 +235,7 @@ extern u8 gUnk_087490DC[];
 extern u8 gUnk_087490E4[];
 extern s32 gUnk_087490E8[];
 extern s32 gUnk_08749100[];
-extern u32 gUnk_08749150[];
+extern u32 gKrackoVariants[];
 extern u32 gUnk_08749158[];
 extern u32 gUnk_08749160[];
 extern u32 gUnk_08749168[];
@@ -269,9 +269,9 @@ extern u32 gUnk_08749358[];
 extern u32 gUnk_0874936C[];
 extern s8 gUnk_08749380[];
 extern s8 gUnk_087493A4[];
-extern u32 gUnk_087493F4[];
-extern u32 gUnk_087493F8[];
-extern u32 gUnk_08749428[];
+extern u32 gNightmareWizardVariants[];
+extern u32 gNightmareWizardStates[];
+extern u32 gNightmareWizardStateUpdates[];
 extern u32 gUnk_08749458[];
 extern u32 gUnk_08749490[];
 extern s8 gUnk_087494C8[];
@@ -398,9 +398,9 @@ extern u32 gUnk_0874BB98[];
 extern u32 gUnk_0874BFD4[];
 extern u32 gUnk_0874C108[];
 extern u32 gUnk_0874C110[];
-extern u32 gUnk_0874C12C[];
-extern u32 gUnk_0874C130[];
-extern u32 gUnk_0874C140[];
+extern u32 gWhispyWoodsVariants[];
+extern u32 gWhispyWoodsStates[];
+extern u32 gWhispyWoodsStateUpdates[];
 extern u32 gUnk_0874C150[];
 extern u32 gUnk_0874C154[];
 extern u32 gUnk_0874C210[];
@@ -420,14 +420,14 @@ extern s8 gUnk_0874C332[];
 extern u32 gUnk_0874C44C[];
 extern u32 gUnk_0874C500[];
 extern u32 gUnk_0874C568[];
-extern u32 gUnk_0874CAEC[];
-extern u32 gUnk_0874CCF4[];
-extern u32 gUnk_0874CD0C[];
-extern u32 gUnk_0874CD24[];
-extern u32 gUnk_0874CD3C[];
+extern u32 gAbilityStarFrames[];
+extern u32 gOneUpFrames[];
+extern u32 gMaximTomatoFrames[];
+extern u32 gInvincibleCandyFrames[];
+extern u32 gEnergyDrinkFrames[];
 extern u32 gUnk_0874CE68[];
 extern u32 gUnk_08753990[];
-extern u32 gUnk_08753994[];
+extern u32 gPaintRollerFrames[];
 extern u32 gUnk_08753A8C[];
 extern u32 gUnk_08753AAC[];
 extern u32 gUnk_08753AC8[];
@@ -438,44 +438,44 @@ extern u32 gUnk_08753B48[];
 extern u32 gUnk_08753B68[];
 extern u32 gUnk_08753B88[];
 extern u32 gUnk_08753BA4[];
-extern u32 gUnk_08753BB4[];
+extern u32 gMetaKnightFrames[];
 extern u32 gUnk_08753DA0[];
-extern u32 gUnk_08753E3C[];
+extern u32 gHeavyMoleFrames[];
 extern u32 gUnk_08753E8C[];
 extern u32 gUnk_087540AC[];
 extern u32 gUnk_087540EC[];
-extern u32 gUnk_0875412C[];
+extern u32 gMrBrightFrames[];
 extern u32 gUnk_08754180[];
 extern u32 gUnk_087541B0[];
 extern u32 gUnk_087541E0[];
-extern u32 gUnk_08754210[];
+extern u32 gMrShineFrames[];
 extern u32 gUnk_08754260[];
 extern u32 gUnk_08754280[];
 extern u32 gUnk_08754290[];
 extern u32 gUnk_087542A8[];
-extern u32 gUnk_087542C0[];
-extern u32 gUnk_08754308[];
+extern u32 gWhispyWoodsFrames[];
+extern u32 gWhispyWoodsAppleFrames[];
 extern u32 gUnk_08754358[];
 extern u32 gUnk_087543A0[];
-extern u32 gUnk_087543E8[];
+extern u32 gKrackoFrames[];
 extern u32 gUnk_08754418[];
 extern u32 gUnk_08754448[];
 extern u32 gUnk_0875447C[];
-extern u32 gUnk_087544B4[];
+extern u32 gNightmarePowerOrbFrames[];
 extern u32 gUnk_08754504[];
 extern u32 gUnk_08754560[];
 extern u32 gUnk_08754568[];
-extern u32 gUnk_0875456C[];
+extern u32 gNightmareWizardFrames[];
 extern u32 gUnk_087546D0[];
 extern u32 gUnk_087546F8[];
 extern u32 gUnk_08754708[];
 extern u32 gUnk_08754718[];
 extern u32 gUnk_08754738[];
 extern u32 gUnk_08754780[];
-extern u32 gUnk_0875607C[];
+extern u32 gPickupVariants[];
 extern u32 gUnk_08756084[];
-extern u32 gUnk_087560A0[];
-extern u32 gUnk_087560AC[];
+extern u32 gPickupStates[];
+extern u32 gPickupStateUpdates[];
 extern u32 gUnk_087560B8[];
 extern u32 gUnk_087560C0[];
 extern u32 gUnk_087560D0[];
@@ -667,10 +667,10 @@ extern u32 ActorReactToDefeat(void);
 extern void ActorDie(void);
 extern void sub_0806b05c(void);
 extern void sub_0806b098(void);
-extern s16 sub_0806caa0(u8 kind, s32 dx, s32 dy);
-extern s16 sub_0806cc90(u8 flag, u16 vx, s32 c, s32 d);
-extern void sub_0806d4e4(u32 a, s32 b);
-extern void sub_0806d730(void);
+extern s16 CreateStarFlash(u8 kind, s32 dx, s32 dy);
+extern s16 CreateDustTrail(u8 flag, u16 vx, s32 c, s32 d);
+extern void CreateBurstEffect(u32 a, s32 b);
+extern void PlayExplosionAnim(void);
 extern s32 sub_0806e6f8(s16 x, s16 y);
 extern s32 sub_0806e808(s16 x, s16 y);
 extern s32 sub_0806e9b4(u8 a, s16 x, s16 y);
@@ -690,9 +690,9 @@ void sub_080a180c();
 void sub_080a1864();
 void sub_080a18d4();
 void sub_080a1980();
-void sub_080a19cc();
+void Task_MrShineAndMrBright();
 void sub_080a19ec();
-void sub_080a1ad0();
+void CreateMrShineAndMrBright();
 void sub_080a1b94();
 void sub_080a1bd8(u16 a, u16 b);
 void sub_080a1c1c();
@@ -754,9 +754,9 @@ void sub_080a3000();
 void sub_080a301c();
 void sub_080a306c();
 void sub_080a30d0();
-void sub_080a3114();
-void sub_080a314c();
-void sub_080a3168();
+void MrShineAndMrBrightInit();
+void MrShineAndMrBrightUpdate();
+void MrShineAndMrBrightEnterState();
 void sub_080a3184();
 void sub_080a31a4();
 void sub_080a31d0();
@@ -766,10 +766,10 @@ void sub_080a3238();
 void sub_080a3250();
 void sub_080a3268();
 void sub_080a3280();
-void sub_080a3298();
-void sub_080a32c4();
-void sub_080a332c();
-void sub_080a3348();
+void MrShineInit();
+void MrShineUpdate();
+void MrShineEnterState();
+void MrShineFall();
 void sub_080a33a4();
 void sub_080a33dc();
 void sub_080a3424();
@@ -805,10 +805,10 @@ void sub_080a3b7c();
 void sub_080a3ba0();
 void sub_080a3bc0();
 void sub_080a3c08();
-void sub_080a3c28();
-void sub_080a3c54();
-void sub_080a3cbc();
-void sub_080a3cd8();
+void MrBrightInit();
+void MrBrightUpdate();
+void MrBrightEnterState();
+void MrBrightFall();
 void sub_080a3d3c();
 void sub_080a3d84();
 void sub_080a3dd0();
@@ -850,7 +850,7 @@ void sub_080a472c();
 void sub_080a4808();
 void sub_080a4814();
 void sub_080a488c();
-void sub_080a498c();
+void Task_KingDededeStar();
 void sub_080a49cc();
 void sub_080a4a1c();
 void sub_080a4a60();
@@ -903,10 +903,10 @@ void sub_080a54e4();
 void sub_080a5524();
 void sub_080a556c();
 void sub_080a55ac();
-void sub_080a55ec();
-void sub_080a5644();
-void sub_080a5694();
-void sub_080a56b0();
+void Task_MetaKnight();
+void MetaKnightInit();
+void MetaKnightEnterState();
+void MetaKnightUpdate();
 void sub_080a57d4();
 void sub_080a5a78();
 void sub_080a5aa0();
@@ -921,7 +921,7 @@ void sub_080a5f20();
 void sub_080a5f7c();
 void sub_080a5fac();
 void sub_080a6020();
-void sub_080a60d8();
+void MetaKnightRun();
 void sub_080a6130();
 void sub_080a61b4();
 void sub_080a6264();
@@ -983,7 +983,7 @@ void sub_080a7ae4();
 void sub_080a7b88();
 void sub_080a7c9c();
 s32 sub_080a7d20();
-void sub_080a7d2c();
+void Task_Kracko();
 void sub_080a7d98();
 void sub_080a7df4();
 void sub_080a7e10();
@@ -1034,10 +1034,10 @@ void sub_080a9ed8();
 void sub_080a9ef4();
 void sub_080aa16c();
 void sub_080aa188();
-void sub_080aa288();
-void sub_080aa338();
-void sub_080aa38c();
-void sub_080aa3a8();
+void Task_NightmareWizard();
+void NightmareWizardInit();
+void NightmareWizardEnterState();
+void NightmareWizardUpdate();
 void sub_080aa47c();
 void sub_080aa52c();
 void sub_080aa560();
@@ -1111,7 +1111,7 @@ void sub_080acc9c();
 void sub_080accf0();
 void sub_080acd38();
 void sub_080ace60();
-void sub_080acea8();
+void Task_PaintRoller();
 void sub_080acf3c();
 void sub_080acf48();
 void sub_080acf68();
@@ -1129,7 +1129,7 @@ void sub_080ad3a0();
 void sub_080ad3e8();
 void sub_080ad458();
 void sub_080ad47c();
-void sub_080ad4b8();
+void Task_HeavyMole();
 void sub_080ad630();
 void sub_080ad650();
 void sub_080ad710();
@@ -1158,7 +1158,7 @@ void sub_080ae198();
 void sub_080ae1f0();
 void sub_080ae37c();
 s32 sub_080ae380(s32 i);
-void sub_080ae3bc();
+void Task_NightmarePowerOrb();
 void sub_080ae470();
 void sub_080ae4c4();
 void sub_080ae548();
@@ -1212,7 +1212,7 @@ void sub_080b0338();
 void sub_080b0570();
 void sub_080b05e8();
 void sub_080b07d8();
-void sub_080b0840();
+void Task_NightmarePowerOrbIntroScroll();
 void sub_080b08a0();
 void sub_080b08e4();
 void sub_080b09ac();
@@ -1273,10 +1273,10 @@ void sub_080b27b0();
 s32 sub_080b2804();
 void sub_080b2884();
 void sub_080b2890();
-void sub_080b2a00();
-void sub_080b2a74();
-void sub_080b2aa4();
-void sub_080b2ac8();
+void Task_WhispyWoods();
+void WhispyWoodsInit();
+void WhispyWoodsUpdate();
+void WhispyWoodsEnterState();
 void sub_080b2ae4();
 void sub_080b2b28();
 void sub_080b2b40();
@@ -1295,7 +1295,7 @@ void sub_080b2f78();
 void sub_080b2fb0();
 void sub_080b2fe8();
 void sub_080b3010(u8 a);
-void sub_080b3050();
+void Task_WhispyWoodsApple();
 void sub_080b3090();
 void sub_080b30c8();
 void sub_080b3110();
@@ -1307,7 +1307,7 @@ void sub_080b3214();
 void sub_080b3258();
 void sub_080b328c();
 void sub_080b32d0();
-void sub_080b3318();
+void Task_WhispyWoodsAirPuff();
 void sub_080b3368();
 void sub_080b3398();
 void sub_080b33bc();
@@ -1319,19 +1319,19 @@ void sub_080b3a00();
 void sub_080b3a64();
 void sub_080b3c68();
 void sub_080b3e30();
-void sub_080b3e54();
-void sub_080b3e94();
-void sub_080b3ed4();
-void sub_080b3f14();
+void Task_OneUp();
+void Task_MaximTomato();
+void Task_InvincibleCandy();
+void Task_EnergyDrink();
 void sub_080b3f54();
 void sub_080b3fcc();
 void sub_080b3ffc();
 s32 sub_080b404c();
 s32 sub_080b406c();
 s32 sub_080b408c();
-void sub_080b40a4();
-void sub_080b4100();
-void sub_080b4158();
+void PickupInit();
+void PickupUpdate();
+void PickupEnterState();
 void sub_080b4174();
 void sub_080b4190();
 void sub_080b4194();
@@ -1339,9 +1339,9 @@ void sub_080b41c8();
 void sub_080b41cc();
 void sub_080b4200();
 s32 sub_080b4204();
-void sub_080b4240();
-void sub_080b429c();
-void sub_080b42f8();
+void PickupHeal();
+void MaximTomatoHeal();
+void EnergyDrinkHeal();
 s32 sub_080b4390();
 s32 sub_080b43d4();
 s32 sub_080b43f4();
@@ -1352,7 +1352,7 @@ s32 sub_080b4524();
 s32 sub_080b45c0();
 void sub_080b460c();
 void sub_080b4648();
-void sub_080b469c();
+void Task_AbilityStar();
 void sub_080b4714();
 void sub_080b4754();
 void sub_080b4770();
@@ -1411,8 +1411,8 @@ void sub_080b2fe8(void)
 
     t = gCurTask;
     t->unk6C = 6;
-    t->unk30 = t->unk48;
-    t->unk34 = t->unk4A;
+    t->unk30 = t->pixelX;
+    t->unk34 = t->pixelY;
 }
 
 void sub_080b3010(u8 a)
@@ -1433,7 +1433,7 @@ void sub_080b3010(u8 a)
     TaskYieldTrampoline(a);
 }
 
-void sub_080b3050(void)
+void Task_WhispyWoodsApple(void)
 {
     struct Task **c;
     struct Task *t;
@@ -1441,13 +1441,13 @@ void sub_080b3050(void)
 
     c = &gCurTask;
     t = *c;
-    t->unk00 = (u32)ActorMove;
-    t->unk0C = (u32)ActorDrawWorldInViewOrDestroy;
-    t->unk42 = 9;
+    t->moveCallback = (u32)ActorMove;
+    t->drawCallback = (u32)ActorDrawWorldInViewOrDestroy;
+    t->layer = 9;
     u = *c;
-    u->unk38 = gUnk_08754308;
+    u->frameTable = gWhispyWoodsAppleFrames;
     u->unk28 = 1;
-    CallTableEntry(u->unk73, 1, gUnk_0874C21C);
+    CallTableEntry(u->variant, 1, gUnk_0874C21C);
 }
 
 void sub_080b3090(void)
@@ -1458,11 +1458,11 @@ void sub_080b3090(void)
 
     c = &gCurTask;
     t = *c;
-    t->unk04 = (u32)sub_080b30c8;
-    t->unk43 = t->unk74;
+    t->updateCallback = (u32)sub_080b30c8;
+    t->facing = t->unk74;
     ActorSetState(0);
     u = *c;
-    CallTableEntry(u->unk14, 4, gUnk_0874C220);
+    CallTableEntry(u->state, 4, gUnk_0874C220);
 }
 
 void sub_080b30c8(void)
@@ -1478,18 +1478,18 @@ void sub_080b30c8(void)
         if ((u8)ActorCollideTerrain() == 0)
         {
             u = *c;
-            CallTableEntry(u->unk15, 4, gUnk_0874C230);
+            CallTableEntry(u->updateState, 4, gUnk_0874C230);
         }
     }
     else
-        CallTableEntry(t->unk15, 4, gUnk_0874C230);
+        CallTableEntry(t->updateState, 4, gUnk_0874C230);
     ActorCheckHits();
     ActorReactToHit();
 }
 
 void sub_080b3110(void)
 {
-    CallTableEntry(gCurTask->unk14, 4, gUnk_0874C220);
+    CallTableEntry(gCurTask->state, 4, gUnk_0874C220);
 }
 
 void sub_080b312c(void)
@@ -1507,26 +1507,26 @@ void sub_080b312c(void)
     c = &gCurTask;
     t = *c;
     z = 0;
-    t->unk15 = z;
+    t->updateState = z;
     TaskFaceNearestPlayer();
     u = *c;
-    u->unk7A = z;
+    u->onGround = z;
     u2 = *c;
     u2->unk6C = z;
     do
     {
         q1 = *c;
-        q1->unk3C = 4;
+        q1->frame = 4;
         TaskYieldTrampoline(4);
         q2 = *c;
-        q2->unk3C = 0xFFFF;
+        q2->frame = 0xFFFF;
         TaskYieldTrampoline(4);
         q3 = *c;
         q3->unk6C++;
     } while ((s16)q3->unk6C <= 5);
     u3 = gCurTask;
-    u3->unk60 = 148 << 6;
-    u3->unk68 = 128 << 11;
+    u3->accelY = 148 << 6;
+    u3->speedLimitY = 128 << 11;
     for (;;)
     {
         sub_080b3010(15);
@@ -1550,14 +1550,14 @@ void sub_080b31a0(void)
     c = &gCurTask;
     t = *c;
     z = 0;
-    t->unk15 = 1;
+    t->updateState = 1;
     TaskFaceNearestPlayer();
     u = *c;
-    u->unk7A = z;
+    u->onGround = z;
     TaskSetMotionXFacing(128 << 9, 0x5A5A5A5A);
     u2 = *c;
-    u2->unk58 = 0xFFFE0000;
-    u2->unk60 = 168 << 5;
+    u2->velY = 0xFFFE0000;
+    u2->accelY = 168 << 5;
     for (;;)
         sub_080b3010(4);
 }
@@ -1567,7 +1567,7 @@ void sub_080b31e0(void)
     struct Task *t;
 
     t = gCurTask;
-    if (t->unk4A > t->unk2C)
+    if (t->pixelY > t->unk2C)
     {
         ActorSetState(2);
         TaskSetEntry(sub_080b3110, gCurTaskIdx);
@@ -1585,14 +1585,14 @@ void sub_080b3214(void)
     c = &gCurTask;
     t = *c;
     z = 0;
-    t->unk15 = 2;
+    t->updateState = 2;
     TaskSetFrameNoFlip(4);
     u = *c;
-    u->unk7A = z;
+    u->onGround = z;
     TaskSetMotionXFacing(160 << 9, 0x5A5A5A5A);
     u2 = *c;
-    u2->unk58 = 0xFFFF0000;
-    u2->unk60 = 192 << 4;
+    u2->velY = 0xFFFF0000;
+    u2->accelY = 192 << 4;
     for (;;)
         sub_080b3010(8);
 }
@@ -1602,7 +1602,7 @@ void sub_080b3258(void)
     struct Task *t;
 
     t = gCurTask;
-    if (t->unk4A > t->unk2C)
+    if (t->pixelY > t->unk2C)
     {
         ActorSetState(3);
         TaskSetEntry(sub_080b3110, gCurTaskIdx);
@@ -1620,14 +1620,14 @@ void sub_080b328c(void)
     c = &gCurTask;
     t = *c;
     z = 0;
-    t->unk15 = 3;
+    t->updateState = 3;
     TaskSetFrameNoFlip(4);
     u = *c;
-    u->unk7A = z;
+    u->onGround = z;
     TaskSetMotionXFacing(0x1CD00, 0x5A5A5A5A);
     u2 = *c;
-    u2->unk58 = 0xFFFFC000;
-    u2->unk60 = 224 << 3;
+    u2->velY = 0xFFFFC000;
+    u2->accelY = 224 << 3;
     for (;;)
         sub_080b3010(8);
 }
@@ -1640,17 +1640,17 @@ void sub_080b32d0(void)
 
     c = &gCurTask;
     t = *c;
-    if (t->unk4A > t->unk2C)
+    if (t->pixelY > t->unk2C)
     {
-        t->unk7A = 0;
+        t->onGround = 0;
         TaskSetMotionXFacing(0x1CD00, 0x5A5A5A5A);
         u = *c;
-        u->unk58 = 0xFFFFC000;
-        u->unk60 = 224 << 3;
+        u->velY = 0xFFFFC000;
+        u->accelY = 224 << 3;
     }
 }
 
-void sub_080b3318(void)
+void Task_WhispyWoodsAirPuff(void)
 {
     struct Task **c;
     s32 z;
@@ -1661,17 +1661,17 @@ void sub_080b3318(void)
 
     c = &gCurTask;
     t = *c;
-    t->unk00 = (u32)ActorMove;
-    t->unk0C = (u32)ActorDrawWorldInViewOrDestroy;
-    b42 = &t->unk42;
+    t->moveCallback = (u32)ActorMove;
+    t->drawCallback = (u32)ActorDrawWorldInViewOrDestroy;
+    b42 = &t->layer;
     z = 0;
     *b42 = 9;
     u = *c;
-    u->unk38 = gUnk_0874C568;
-    u->unk40 = z;
-    u->unk43 = 255;
+    u->frameTable = gUnk_0874C568;
+    u->tileWord = z;
+    u->facing = 255;
     u2 = *c;
-    CallTableEntry(u2->unk73, 1, gUnk_0874C254);
+    CallTableEntry(u2->variant, 1, gUnk_0874C254);
 }
 
 void sub_080b3368(void)
@@ -1680,22 +1680,22 @@ void sub_080b3368(void)
     struct Task *u;
 
     c = &gCurTask;
-    (*c)->unk04 = (u32)sub_080b3398;
+    (*c)->updateCallback = (u32)sub_080b3398;
     ActorSetState(0);
     u = *c;
-    CallTableEntry(u->unk14, 1, gUnk_0874C258);
+    CallTableEntry(u->state, 1, gUnk_0874C258);
 }
 
 void sub_080b3398(void)
 {
-    CallTableEntry(gCurTask->unk15, 1, gUnk_0874C25C);
+    CallTableEntry(gCurTask->updateState, 1, gUnk_0874C25C);
     ActorCheckHits();
     ActorReactToHit();
 }
 
 void sub_080b33bc(void)
 {
-    CallTableEntry(gCurTask->unk14, 1, gUnk_0874C258);
+    CallTableEntry(gCurTask->state, 1, gUnk_0874C258);
 }
 
 void sub_080b33d8(void)
@@ -1719,15 +1719,15 @@ void sub_080b33d8(void)
 
     t = gCurTask;
     z = 0;
-    t->unk15 = z;
+    t->updateState = z;
     u = gCurTask;
-    u->unk7A = z;
+    u->onGround = z;
     c = &gCurTask;
     v5 = 128 << 9;
     v6 = 0xFFFD0000;
 top:
     u0 = *c;
-    u0->unk54 = 0xFFFC0000;
+    u0->velX = 0xFFFC0000;
     TaskSetFrameFlip(0);
     TaskYieldTrampoline(2);
     TaskSetFrameFlip(2);
@@ -1745,7 +1745,7 @@ top:
     TaskSetFrameFlip(0);
     TaskYieldTrampoline(1);
     u1 = *c;
-    u1->unk58 = v5;
+    u1->velY = v5;
     TaskSetFrameFlip(0);
     TaskYieldTrampoline(1);
     TaskSetFrameFlip(4);
@@ -1762,7 +1762,7 @@ top:
     TaskSetFrameFlip(0);
     TaskYieldTrampoline(2);
     u2 = *c;
-    u2->unk54 = v6;
+    u2->velX = v6;
     sub_080b2fe8();
     TaskSetFrameFlip(2);
     TaskYieldTrampoline(1);
@@ -1778,7 +1778,7 @@ top:
     TaskSetFrameFlip(0);
     TaskYieldTrampoline(1);
     u3 = *c;
-    u3->unk58 = 128 << 8;
+    u3->velY = 128 << 8;
     TaskSetFrameFlip(0);
     TaskYieldTrampoline(1);
     TaskSetFrameFlip(4);
@@ -1793,7 +1793,7 @@ top:
     TaskSetFrameFlip(4);
     TaskYieldTrampoline(1);
     u4 = *c;
-    u4->unk54 = v6;
+    u4->velX = v6;
     TaskSetFrameFlip(0);
     TaskYieldTrampoline(2);
     sub_080b2fe8();
@@ -1808,7 +1808,7 @@ top:
     TaskSetFrameFlip(0);
     TaskYieldTrampoline(2);
     u5 = *c;
-    u5->unk58 = v5;
+    u5->velY = v5;
     sub_080b2fe8();
     TaskSetFrameFlip(2);
     TaskYieldTrampoline(1);
@@ -1824,7 +1824,7 @@ top:
     TaskSetFrameFlip(0);
     TaskYieldTrampoline(1);
     u6 = *c;
-    u6->unk54 = 0xFFFE0000;
+    u6->velX = 0xFFFE0000;
     TaskSetFrameFlip(0);
     TaskYieldTrampoline(1);
     TaskSetFrameFlip(4);
@@ -1839,7 +1839,7 @@ top:
     TaskSetFrameFlip(4);
     TaskYieldTrampoline(1);
     u7 = *c;
-    u7->unk58 = 0;
+    u7->velY = 0;
     TaskSetFrameFlip(0);
     TaskYieldTrampoline(2);
     sub_080b2fe8();
@@ -1854,7 +1854,7 @@ top:
     TaskSetFrameFlip(0);
     TaskYieldTrampoline(2);
     u8 = *c;
-    u8->unk54 = 0xFFFF0000;
+    u8->velX = 0xFFFF0000;
     sub_080b2fe8();
     TaskSetFrameFlip(2);
     TaskYieldTrampoline(1);
@@ -1870,7 +1870,7 @@ top:
     TaskSetFrameFlip(0);
     TaskYieldTrampoline(1);
     u9 = *c;
-    u9->unk58 = v5;
+    u9->velY = v5;
     TaskSetFrameFlip(0);
     TaskYieldTrampoline(1);
     TaskSetFrameFlip(4);
@@ -1913,10 +1913,10 @@ void sub_080b3758(void)
         t6 = t;
         w = t6->unk30 - d;
         t6->unk30 = w;
-        a0v = t->unk42 + 1;
+        a0v = t->layer + 1;
         t68 = (u32 *)gUnk_0874C568;
         t40 = (u8 *)gUnk_0874C240;
-        QueueSprite(a0v, t68[t40[*a]], t->unk3E, t->unk40,
+        QueueSprite(a0v, t68[t40[*a]], t->spriteFlags, t->tileWord,
                      w - gSpriteCameraX,
                      (s16)(t->unk34 - (u16)gSpriteCameraY));
     }
@@ -1924,7 +1924,7 @@ void sub_080b3758(void)
 
 void sub_080b37ec(void)
 {
-    gCurTask->unk78 = gCurTask->unk80;
+    gCurTask->health = gCurTask->unk80;
     gCurTask->unk80 = gCurTask->unk46;
     gCurTask->unk46 = gCurTask->unk70;
     gCurTask->unk70 = (u32)gCurTask->unk24 >> 16;
@@ -1935,17 +1935,17 @@ void sub_080b37ec(void)
     /* the redundant mask is what loads 0xFFFF0000 here for the ANDs below
        (combine drops the AND before the shift, the constant stays) */
     gCurTask->unk2C = (gCurTask->unk2C & 0xFFFF) + (((u32)(gCurTask->unk28 & 0xFFFF0000) >> 16) << 16);
-    gCurTask->unk28 = (gCurTask->unk28 & 0xFFFF) + (gCurTask->unk48 << 16);
-    gCurTask->unk84 = gCurTask->unk7F;
-    gCurTask->unk7F = gCurTask->unk44;
-    gCurTask->unk44 = gCurTask->unk43;
-    gCurTask->unk43 = gCurTask->unk24;
+    gCurTask->unk28 = (gCurTask->unk28 & 0xFFFF) + (gCurTask->pixelX << 16);
+    gCurTask->unk84 = gCurTask->hitterPlayer;
+    gCurTask->hitterPlayer = gCurTask->parent;
+    gCurTask->parent = gCurTask->facing;
+    gCurTask->facing = gCurTask->unk24;
     gCurTask->unk24 = (gCurTask->unk24 & 0xFFFF0000) + (gCurTask->unk20 & 0xFFFF);
     gCurTask->unk20 = (gCurTask->unk20 & 0xFFFF0000) + (gCurTask->unk34 & 0xFFFF);
     gCurTask->unk34 = (gCurTask->unk34 & 0xFFFF0000) + (gCurTask->unk30 & 0xFFFF);
     gCurTask->unk30 = (gCurTask->unk30 & 0xFFFF0000) + (gCurTask->unk2C & 0xFFFF);
     gCurTask->unk2C = (gCurTask->unk2C & 0xFFFF0000) + (gCurTask->unk28 & 0xFFFF);
-    gCurTask->unk28 = (gCurTask->unk28 & 0xFFFF0000) + gCurTask->unk4A;
+    gCurTask->unk28 = (gCurTask->unk28 & 0xFFFF0000) + gCurTask->pixelY;
 }
 
 void sub_080b38f0(void)
@@ -2051,10 +2051,10 @@ void sub_080b3a00(void)
     r = RandomRange(30);
     c = &gCurTask;
     u1 = *c;
-    u1->unk75 = r - 10;
+    u1->hitTimer = r - 10;
     r2 = RandomRange(30);
     u2 = *c;
-    u2->unk7A = r2 - 10;
+    u2->onGround = r2 - 10;
     r3 = RandomRange(30);
     u3 = *c;
     w3 = r3 - 10;
@@ -2076,27 +2076,27 @@ void sub_080b3a00(void)
 void sub_080b3a64(void)
 {
     if (gUnk_0874C260[65 - (s16)gCurTask->unk6C] != -1)
-        QueueSprite(gCurTask->unk42,
+        QueueSprite(gCurTask->layer,
                      gUnk_0874CE68[gUnk_0874C260[65 - (s16)gCurTask->unk6C]],
-                     gCurTask->unk3E, gCurTask->unk40,
-                     gCurTask->unk48 - gSpriteCameraX + gCurTask->unk75,
-                     gCurTask->unk4A - gSpriteCameraY + gCurTask->unk7C);
+                     gCurTask->spriteFlags, gCurTask->tileWord,
+                     gCurTask->pixelX - gSpriteCameraX + gCurTask->hitTimer,
+                     gCurTask->pixelY - gSpriteCameraY + gCurTask->hitKind);
     if (gUnk_0874C2A6[65 - (s16)gCurTask->unk6C] != -1)
-        QueueSprite(gCurTask->unk42,
+        QueueSprite(gCurTask->layer,
                      gUnk_0874CE68[gUnk_0874C2A6[65 - (s16)gCurTask->unk6C]],
-                     gCurTask->unk3E, gCurTask->unk40,
-                     ((u32)gCurTask->unk20 >> 16) - gSpriteCameraX + gCurTask->unk7A,
-                     gCurTask->unk20 - gSpriteCameraY + (s8)gCurTask->unk7D);
+                     gCurTask->spriteFlags, gCurTask->tileWord,
+                     ((u32)gCurTask->unk20 >> 16) - gSpriteCameraX + gCurTask->onGround,
+                     gCurTask->unk20 - gSpriteCameraY + (s8)gCurTask->hitDirection);
     if (gUnk_0874C2EC[65 - (s16)gCurTask->unk6C] != -1)
-        QueueSprite(gCurTask->unk42,
+        QueueSprite(gCurTask->layer,
                      gUnk_0874CE68[gUnk_0874C2EC[65 - (s16)gCurTask->unk6C]],
-                     gCurTask->unk3E, gCurTask->unk40,
-                     gCurTask->unk78 - gSpriteCameraX + gCurTask->unk7B,
+                     gCurTask->spriteFlags, gCurTask->tileWord,
+                     gCurTask->health - gSpriteCameraX + gCurTask->waterFlags,
                      gCurTask->unk84 - gSpriteCameraY + (s8)gCurTask->unk82);
     if (gUnk_0874C332[65 - (s16)gCurTask->unk6C] != -1)
-        QueueSprite(gCurTask->unk42,
+        QueueSprite(gCurTask->layer,
                      gUnk_0874CE68[gUnk_0874C332[65 - (s16)gCurTask->unk6C]],
-                     gCurTask->unk3E, gCurTask->unk40,
+                     gCurTask->spriteFlags, gCurTask->tileWord,
                      gCurTask->unk18 - gSpriteCameraX,
                      gCurTask->unk1C - gSpriteCameraY);
 }
@@ -2106,12 +2106,12 @@ void sub_080b3c68(void)
     s32 m;
     s32 z;
 
-    gCurTask->unk00 = (u32)ActorMove;
-    gCurTask->unk40 = 0;
-    gCurTask->unk0C = (u32)sub_080b3a64;
-    gCurTask->unk42 = 8;
-    gCurTask->unk38 = (u32 *)gUnk_0874CE68;
-    gCurTask->unk04 = (u32)sub_080b3e30;
+    gCurTask->moveCallback = (u32)ActorMove;
+    gCurTask->tileWord = 0;
+    gCurTask->drawCallback = (u32)sub_080b3a64;
+    gCurTask->layer = 8;
+    gCurTask->frameTable = (u32 *)gUnk_0874CE68;
+    gCurTask->updateCallback = (u32)sub_080b3e30;
     sub_080b38f0();
     sub_080b3a00();
     gCurTask->unk6C = 66;
@@ -2121,65 +2121,65 @@ void sub_080b3c68(void)
     z = 0;
     do
     {
-        gCurTask->unk58 = z;
+        gCurTask->velY = z;
         TaskYieldTrampoline(2);
-        gCurTask->unk54 = 0x18000;
-        gCurTask->unk58 = m;
+        gCurTask->velX = 0x18000;
+        gCurTask->velY = m;
         TaskYieldTrampoline(2);
-        gCurTask->unk54 = 0x10000;
-        gCurTask->unk58 = m;
+        gCurTask->velX = 0x10000;
+        gCurTask->velY = m;
         TaskYieldTrampoline(2);
-        gCurTask->unk54 = m;
-        gCurTask->unk58 = 0x4000;
+        gCurTask->velX = m;
+        gCurTask->velY = 0x4000;
         TaskYieldTrampoline(2);
-        gCurTask->unk54 = 0x4000;
-        gCurTask->unk58 = 0x2000;
+        gCurTask->velX = 0x4000;
+        gCurTask->velY = 0x2000;
         TaskYieldTrampoline(2);
-        gCurTask->unk54 = z;
-        gCurTask->unk58 = m;
+        gCurTask->velX = z;
+        gCurTask->velY = m;
         TaskYieldTrampoline(2);
-        gCurTask->unk54 = -0x18000;
-        gCurTask->unk58 = m;
+        gCurTask->velX = -0x18000;
+        gCurTask->velY = m;
         TaskYieldTrampoline(2);
-        gCurTask->unk54 = -0x10000;
-        gCurTask->unk58 = m;
+        gCurTask->velX = -0x10000;
+        gCurTask->velY = m;
         TaskYieldTrampoline(2);
-        gCurTask->unk54 = -0x8000;
-        gCurTask->unk58 = 0x4000;
+        gCurTask->velX = -0x8000;
+        gCurTask->velY = 0x4000;
         TaskYieldTrampoline(2);
-        gCurTask->unk54 = -0x4000;
-        gCurTask->unk58 = 0x2000;
+        gCurTask->velX = -0x4000;
+        gCurTask->velY = 0x2000;
         TaskYieldTrampoline(2);
     } while (++gCurTask->unk6E <= 2);
-    gCurTask->unk54 = 0;
-    gCurTask->unk58 = 0x8000;
+    gCurTask->velX = 0;
+    gCurTask->velY = 0x8000;
     TaskYieldTrampoline(1);
-    gCurTask->unk54 = 0x18000;
-    gCurTask->unk58 = 0x8000;
+    gCurTask->velX = 0x18000;
+    gCurTask->velY = 0x8000;
     TaskYieldTrampoline(1);
-    gCurTask->unk54 = 0x10000;
-    gCurTask->unk58 = 0x8000;
+    gCurTask->velX = 0x10000;
+    gCurTask->velY = 0x8000;
     TaskYieldTrampoline(1);
-    gCurTask->unk54 = 0x8000;
-    gCurTask->unk58 = 0x4000;
+    gCurTask->velX = 0x8000;
+    gCurTask->velY = 0x4000;
     TaskYieldTrampoline(1);
-    gCurTask->unk54 = 0x4000;
-    gCurTask->unk58 = 0x2000;
+    gCurTask->velX = 0x4000;
+    gCurTask->velY = 0x2000;
     TaskYieldTrampoline(1);
-    gCurTask->unk54 = 0;
-    gCurTask->unk58 = 0x8000;
+    gCurTask->velX = 0;
+    gCurTask->velY = 0x8000;
     TaskYieldTrampoline(1);
-    gCurTask->unk54 = -0x18000;
-    gCurTask->unk58 = 0x8000;
+    gCurTask->velX = -0x18000;
+    gCurTask->velY = 0x8000;
     TaskYieldTrampoline(1);
-    gCurTask->unk54 = -0x10000;
-    gCurTask->unk58 = 0x8000;
+    gCurTask->velX = -0x10000;
+    gCurTask->velY = 0x8000;
     TaskYieldTrampoline(1);
-    gCurTask->unk54 = -0x8000;
-    gCurTask->unk58 = 0x4000;
+    gCurTask->velX = -0x8000;
+    gCurTask->velY = 0x4000;
     TaskYieldTrampoline(1);
-    gCurTask->unk54 = -0x4000;
-    gCurTask->unk58 = 0x2000;
+    gCurTask->velX = -0x4000;
+    gCurTask->velY = 0x2000;
     TaskYieldTrampoline(1);
     TaskSleepForever();
 }
@@ -2199,7 +2199,7 @@ void sub_080b3e30(void)
         ActorDestroy();
 }
 
-void sub_080b3e54(void)
+void Task_OneUp(void)
 {
     struct Task **c;
     struct Task *ta;
@@ -2207,15 +2207,15 @@ void sub_080b3e54(void)
 
     c = &gCurTask;
     ta = *c;
-    ta->unk00 = (u32)TaskMove;
-    ta->unk0C = (u32)sub_08065640;
+    ta->moveCallback = (u32)TaskMove;
+    ta->drawCallback = (u32)sub_08065640;
     *(u8 *)((u8 *)ta + 66) = 11;
     tb = *c;
-    tb->unk38 = (u32 *)gUnk_0874CCF4;
-    CallTableEntry(*(u8 *)((u8 *)tb + 115), 2, gUnk_0875607C);
+    tb->frameTable = (u32 *)gOneUpFrames;
+    CallTableEntry(*(u8 *)((u8 *)tb + 115), 2, gPickupVariants);
 }
 
-void sub_080b3e94(void)
+void Task_MaximTomato(void)
 {
     struct Task **c;
     struct Task *ta;
@@ -2223,15 +2223,15 @@ void sub_080b3e94(void)
 
     c = &gCurTask;
     ta = *c;
-    ta->unk00 = (u32)TaskMove;
-    ta->unk0C = (u32)sub_08065640;
+    ta->moveCallback = (u32)TaskMove;
+    ta->drawCallback = (u32)sub_08065640;
     *(u8 *)((u8 *)ta + 66) = 11;
     tb = *c;
-    tb->unk38 = (u32 *)gUnk_0874CD0C;
-    CallTableEntry(*(u8 *)((u8 *)tb + 115), 2, gUnk_0875607C);
+    tb->frameTable = (u32 *)gMaximTomatoFrames;
+    CallTableEntry(*(u8 *)((u8 *)tb + 115), 2, gPickupVariants);
 }
 
-void sub_080b3ed4(void)
+void Task_InvincibleCandy(void)
 {
     struct Task **c;
     struct Task *ta;
@@ -2239,15 +2239,15 @@ void sub_080b3ed4(void)
 
     c = &gCurTask;
     ta = *c;
-    ta->unk00 = (u32)TaskMove;
-    ta->unk0C = (u32)sub_08065640;
+    ta->moveCallback = (u32)TaskMove;
+    ta->drawCallback = (u32)sub_08065640;
     *(u8 *)((u8 *)ta + 66) = 11;
     tb = *c;
-    tb->unk38 = (u32 *)gUnk_0874CD24;
-    CallTableEntry(*(u8 *)((u8 *)tb + 115), 2, gUnk_0875607C);
+    tb->frameTable = (u32 *)gInvincibleCandyFrames;
+    CallTableEntry(*(u8 *)((u8 *)tb + 115), 2, gPickupVariants);
 }
 
-void sub_080b3f14(void)
+void Task_EnergyDrink(void)
 {
     struct Task **c;
     struct Task *ta;
@@ -2255,12 +2255,12 @@ void sub_080b3f14(void)
 
     c = &gCurTask;
     ta = *c;
-    ta->unk00 = (u32)TaskMove;
-    ta->unk0C = (u32)sub_08065640;
+    ta->moveCallback = (u32)TaskMove;
+    ta->drawCallback = (u32)sub_08065640;
     *(u8 *)((u8 *)ta + 66) = 11;
     tb = *c;
-    tb->unk38 = (u32 *)gUnk_0874CD3C;
-    CallTableEntry(*(u8 *)((u8 *)tb + 115), 2, gUnk_0875607C);
+    tb->frameTable = (u32 *)gEnergyDrinkFrames;
+    CallTableEntry(*(u8 *)((u8 *)tb + 115), 2, gPickupVariants);
 }
 
 void sub_080b3f54(void)
@@ -2268,14 +2268,14 @@ void sub_080b3f54(void)
     struct Actor *a;
 
     a = gCurTask->unk8C;
-    if (a->unk2C == NULL)
+    if (a->animScript == NULL)
         gCurTask->unk34 = ActorStartAnim((struct AnimCmd *)gUnk_08756084);
-    gCurTask->unk40 = (gCurTask->unk40 & 0xFFF) | 0xF000;
+    gCurTask->tileWord = (gCurTask->tileWord & 0xFFF) | 0xF000;
     if (gUnk_03001F30 == 1 && gCurTask->unk76 == 1)
-        gCurTask->unk40 = (gCurTask->unk40 & 0xFFF) | 0xE000;
-    a->unk03 = 1;
-    a->unk1E = 0xF000;
-    a->unk18 = 0;
+        gCurTask->tileWord = (gCurTask->tileWord & 0xFFF) | 0xE000;
+    a->extraLayerOffset = 1;
+    a->extraTileWord = 0xF000;
+    a->extraOffsetY = 0;
     a->unk16 = 0;
 }
 
@@ -2289,10 +2289,10 @@ void sub_080b3fcc(void)
     c = &gCurTask;
     t = *c;
     a = *(struct Actor **)((u8 *)t + 140);
-    if (t->unk3C == -1)
+    if (t->frame == -1)
     {
         *(u16 *)((u8 *)a + 26) = 5;
-        t->unk3C = 4;
+        t->frame = 4;
     }
     else
     {
@@ -2303,26 +2303,26 @@ void sub_080b3fcc(void)
 
 void sub_080b3ffc(void)
 {
-    if (gCurTask->unk3C != 5)
+    if (gCurTask->frame != 5)
     {
         if (gUnk_03001F30 == 1 && gCurTask->unk76 == 1)
-            gCurTask->unk40 = (gCurTask->unk40 & 0xFFF) | 0xE000;
+            gCurTask->tileWord = (gCurTask->tileWord & 0xFFF) | 0xE000;
     }
     else
-        gCurTask->unk40 = (gCurTask->unk40 & 0xFFF) | 0xF000;
+        gCurTask->tileWord = (gCurTask->tileWord & 0xFFF) | 0xF000;
 }
 
 s32 sub_080b404c(void)
 {
     ActorSetState(1);
-    TaskSetEntry(sub_080b4158, gCurTaskIdx);
+    TaskSetEntry(PickupEnterState, gCurTaskIdx);
     return 1;
 }
 
 s32 sub_080b406c(void)
 {
     ActorSetState(0);
-    TaskSetEntry(sub_080b4158, gCurTaskIdx);
+    TaskSetEntry(PickupEnterState, gCurTaskIdx);
     return 1;
 }
 
@@ -2331,12 +2331,12 @@ s32 sub_080b408c(void)
     struct Task *t;
 
     t = gCurTask;
-    t->unk60 = 128 << 5;
-    t->unk68 = 160 << 9;
+    t->accelY = 128 << 5;
+    t->speedLimitY = 160 << 9;
     return 0;
 }
 
-void sub_080b40a4(void)
+void PickupInit(void)
 {
     struct Task **c;
     struct Task *ta;
@@ -2344,7 +2344,7 @@ void sub_080b40a4(void)
 
     c = &gCurTask;
     ta = *c;
-    ta->unk04 = (u32)sub_080b4100;
+    ta->updateCallback = (u32)PickupUpdate;
     *(u8 *)((u8 *)ta + 122) = 0;
     TaskInitWaterFlags();
     tb = *c;
@@ -2353,15 +2353,15 @@ void sub_080b40a4(void)
     else
         ActorSetState(1);
     sub_080b3f54();
-    CallTableEntry(gCurTask->unk14, 3, gUnk_087560A0);
+    CallTableEntry(gCurTask->state, 3, gPickupStates);
 }
 
-void sub_080b4100(void)
+void PickupUpdate(void)
 {
     s32 v;
 
-    if (gCurTask->unk73 == 0 && (u8)sub_08069888() == 0)
-        CallTableEntry(gCurTask->unk15, 3, gUnk_087560AC);
+    if (gCurTask->variant == 0 && (u8)sub_08069888() == 0)
+        CallTableEntry(gCurTask->updateState, 3, gPickupStateUpdates);
     v = gCurTask->unk34;
     gCurTask->unk34 = ActorTickAnim(v);
     if (v <= 0)
@@ -2373,14 +2373,14 @@ void sub_080b4100(void)
     sub_08069bbc();
 }
 
-void sub_080b4158(void)
+void PickupEnterState(void)
 {
-    CallTableEntry(gCurTask->unk14, 3, gUnk_087560A0);
+    CallTableEntry(gCurTask->state, 3, gPickupStates);
 }
 
 void sub_080b4174(void)
 {
-    gCurTask->unk15 = 0;
+    gCurTask->updateState = 0;
     TaskStopY();
     TaskSleepForever();
 }
@@ -2395,12 +2395,12 @@ void sub_080b4194(void)
     struct Task *t;
 
     c = &gCurTask;
-    (*c)->unk15 = 1;
+    (*c)->updateState = 1;
     t = *c;
     if (*(u8 *)((u8 *)t + 115) == 0)
     {
-        t->unk60 = 128 << 6;
-        t->unk68 = 160 << 10;
+        t->accelY = 128 << 6;
+        t->speedLimitY = 160 << 10;
     }
     else
     {
@@ -2419,12 +2419,12 @@ void sub_080b41cc(void)
     struct Task *t;
 
     c = &gCurTask;
-    (*c)->unk15 = 2;
+    (*c)->updateState = 2;
     t = *c;
     if (*(u8 *)((u8 *)t + 115) == 0)
     {
-        t->unk60 = 128 << 5;
-        t->unk68 = 160 << 9;
+        t->accelY = 128 << 5;
+        t->speedLimitY = 160 << 9;
     }
     else
     {
@@ -2450,7 +2450,7 @@ s32 sub_080b4204(u32 a)
     return 1;
 }
 
-void sub_080b4240(void)
+void PickupHeal(void)
 {
     struct Task **c;
     struct Task *t;
@@ -2460,9 +2460,9 @@ void sub_080b4240(void)
 
     c = &gCurTask;
     t = *c;
-    t->unk00 = 0;
-    t->unk04 = 0;
-    t->unk08 = 0;
+    t->moveCallback = 0;
+    t->updateCallback = 0;
+    t->lateUpdateCallback = 0;
     w = (s8)*(u8 *)((u8 *)t + 126);
     h = (s16 *)((u8 *)t + 68);
     *h = w;
@@ -2470,13 +2470,13 @@ void sub_080b4240(void)
     if (*(s16 *)((*h << 1) + (u32)e) != 0)
     {
         sub_080670ac(15);
-        CallTableEntry((*c)->unk14, 2, gUnk_087560B8);
+        CallTableEntry((*c)->state, 2, gUnk_087560B8);
         sub_080670d4();
     }
     ActorDestroy();
 }
 
-void sub_080b429c(void)
+void MaximTomatoHeal(void)
 {
     struct Task **c;
     u8 k4;
@@ -2494,7 +2494,7 @@ void sub_080b429c(void)
     sub_08067114();
 }
 
-void sub_080b42f8(void)
+void EnergyDrinkHeal(void)
 {
     struct Task **c;
     struct Task **c2;
@@ -2547,7 +2547,7 @@ s32 sub_080b4390(void)
 
     c = &gCurTask;
     t = *c;
-    if (t->unk14 == 1)
+    if (t->state == 1)
     {
         TaskSetEntry(ActorDie, gCurTaskIdx);
         r = 1;
@@ -2555,7 +2555,7 @@ s32 sub_080b4390(void)
     else
     {
         *(u8 *)((u8 *)t + 122) = 0;
-        (*c)->unk58 = 0xFFFD0000;
+        (*c)->velY = 0xFFFD0000;
         PlaySfx(157);
         r = 0;
     }
@@ -2573,7 +2573,7 @@ s32 sub_080b43f4(void)
 {
     s32 r;
 
-    if (gCurTask->unk14 == 1)
+    if (gCurTask->state == 1)
     {
         TaskSetEntry(ActorDie, gCurTaskIdx);
         r = 1;
@@ -2593,14 +2593,14 @@ s32 sub_080b442c(void)
     s32 r;
 
     t = gCurTask;
-    if (t->unk14 == 1)
+    if (t->state == 1)
     {
         TaskSetEntry(ActorDie, gCurTaskIdx);
         r = 1;
     }
     else
     {
-        t->unk58 = 0;
+        t->velY = 0;
         if ((u8)(gTerrainResult[4] - 5) <= 3)
             TaskToggleFacingAndReverseX();
         PlaySfx(157);
@@ -2637,7 +2637,7 @@ void sub_080b447c(void)
     t2->unk2C = 2;
     t2->unk30 = 48;
     z = 0;
-    t2->unk3C = 4;
+    t2->frame = 4;
     *(u8 *)((u8 *)t2 + 122) = z;
 }
 
@@ -2659,7 +2659,7 @@ void sub_080b44f0(void)
         w = *(u16 *)((u8 *)t + 60) + 1;
         *(u16 *)((u8 *)t + 60) = w;
         if ((s16)w > 19)
-            t->unk3C = 4;
+            t->frame = 4;
         (*c2)->unk2C = 2;
     }
     t3 = *c2;
@@ -2672,11 +2672,11 @@ s32 sub_080b4524(void)
     struct Task *t = gCurTask;
     s32 r;
 
-    box.x0 = t->unk48 - 640;
-    box.y0 = t->unk4A - 640;
-    box.x1 = t->unk48 + 640;
-    box.y1 = t->unk4A + 640;
-    if (TaskIsInRectSlot(&box, t->unk44) != 0)
+    box.x0 = t->pixelX - 640;
+    box.y0 = t->pixelY - 640;
+    box.x1 = t->pixelX + 640;
+    box.y1 = t->pixelY + 640;
+    if (TaskIsInRectSlot(&box, t->parent) != 0)
         r = 0;
     else
     {
@@ -2710,7 +2710,7 @@ void sub_080b460c(void)
     s32 w;
     s32 w2;
 
-    q0 = (u8 *)gUnk_03005568;
+    q0 = (u8 *)gTerrainBoundsClamp;
     w = *q0;
     if (1 & w)
         goto docall;
@@ -2721,8 +2721,8 @@ void sub_080b460c(void)
 docall:
     TaskToggleFacingAndReverseX();
 skip:
-    if (*(u8 *)gUnk_03005568 & 4)
-        gCurTask->unk58 = 0;
+    if (*(u8 *)gTerrainBoundsClamp & 4)
+        gCurTask->velY = 0;
 }
 
 void sub_080b4648(void)
@@ -2753,7 +2753,7 @@ void sub_080b4648(void)
     sub_080b44f0();
 }
 
-void sub_080b469c(void)
+void Task_AbilityStar(void)
 {
     struct Task **c;
     struct Task *ta;
@@ -2763,12 +2763,12 @@ void sub_080b469c(void)
 
     c = &gCurTask;
     ta = *c;
-    ta->unk00 = (u32)TaskMove;
-    ta->unk0C = (u32)ActorDrawWorldInView;
+    ta->moveCallback = (u32)TaskMove;
+    ta->drawCallback = (u32)ActorDrawWorldInView;
     *(u8 *)((u8 *)ta + 66) = 5;
     tb = *c;
-    tb->unk38 = (u32 *)gUnk_0874CAEC;
-    tb->unk04 = (u32)sub_080b4714;
+    tb->frameTable = (u32 *)gAbilityStarFrames;
+    tb->updateCallback = (u32)sub_080b4714;
     sub_080b447c();
     w = *(u8 *)((u8 *)*c + 123);
     w2 = 1;
@@ -2784,7 +2784,7 @@ void sub_080b469c(void)
 elsecall:
     ActorSetState(0);
 after:
-    CallTableEntry(gCurTask->unk14, 2, gUnk_087560D0);
+    CallTableEntry(gCurTask->state, 2, gUnk_087560D0);
 }
 
 void sub_080b4714(void)
@@ -2793,7 +2793,7 @@ void sub_080b4714(void)
     s32 w;
 
     if ((u8)sub_080696a0() == 0)
-        CallTableEntry(gCurTask->unk15, 2, gUnk_087560D8);
+        CallTableEntry(gCurTask->updateState, 2, gUnk_087560D8);
     t = gCurTask;
     w = t->unk30;
     if (w <= 0)
@@ -2805,12 +2805,12 @@ void sub_080b4714(void)
 
 void sub_080b4754(void)
 {
-    CallTableEntry(gCurTask->unk14, 2, gUnk_087560D0);
+    CallTableEntry(gCurTask->state, 2, gUnk_087560D0);
 }
 
 void sub_080b4770(void)
 {
-    gCurTask->unk15 = 0;
+    gCurTask->updateState = 0;
     TaskSleepForever();
 }
 
@@ -2824,9 +2824,9 @@ void sub_080b4794(void)
     struct Task **c;
 
     c = &gCurTask;
-    (*c)->unk15 = 1;
+    (*c)->updateState = 1;
     TaskStop();
-    (*c)->unk60 = 128 << 3;
+    (*c)->accelY = 128 << 3;
     TaskYieldTrampoline(60);
     ActorDie();
 }
@@ -2844,11 +2844,11 @@ void sub_080b47cc(void)
 
     c = &gCurTask;
     ta = *c;
-    ta->unk00 = (u32)ActorMove;
-    ta->unk0C = (u32)ActorDrawWorldInView;
+    ta->moveCallback = (u32)ActorMove;
+    ta->drawCallback = (u32)ActorDrawWorldInView;
     *(u8 *)((u8 *)ta + 66) = 11;
     tb = *c;
-    tb->unk38 = (u32 *)gUnk_08754780;
+    tb->frameTable = (u32 *)gUnk_08754780;
     CallTableEntry(*(u8 *)((u8 *)tb + 115), 3, gUnk_087560E0);
 }
 
@@ -2872,8 +2872,8 @@ void sub_080b480c(void)
             t = (struct Task *)((u8 *)gTasks + o);
             if (*(u8 *)(*(u8 **)((u8 *)t + 140) + 4) != 0)
             {
-                t->unk4C = *(s16 *)((u8 *)t + 72) << 16;
-                t->unk50 = *(s16 *)((u8 *)t + 74) << 16;
+                t->posX = *(s16 *)((u8 *)t + 72) << 16;
+                t->posY = *(s16 *)((u8 *)t + 74) << 16;
             }
             TaskSetEntry(ActorDie, i);
         }
@@ -3031,9 +3031,9 @@ void sub_080b4a5c(void)
     struct Task **c;
 
     c = &gCurTask;
-    (*c)->unk04 = (u32)sub_080b4a8c;
+    (*c)->updateCallback = (u32)sub_080b4a8c;
     ActorSetState(0);
-    CallTableEntry((*c)->unk14, 2, gUnk_08756150);
+    CallTableEntry((*c)->state, 2, gUnk_08756150);
 }
 
 void sub_080b4a8c(void)
@@ -3041,11 +3041,11 @@ void sub_080b4a8c(void)
     struct Task **c;
 
     c = &gCurTask;
-    CallTableEntry((*c)->unk15, 2, gUnk_08756158);
-    if ((*c)->unk14 == 0 && ActorCheckHits() != 0)
+    CallTableEntry((*c)->updateState, 2, gUnk_08756158);
+    if ((*c)->state == 0 && ActorCheckHits() != 0)
     {
         sub_080b4878();
-        sub_0806d4e4(0, 0);
+        CreateBurstEffect(0, 0);
         if (gLocalPlayer == (s8)*(u8 *)((u8 *)*c + 126))
             PlaySfx(198);
         ActorSetState(1);
@@ -3055,7 +3055,7 @@ void sub_080b4a8c(void)
 
 void sub_080b4afc(void)
 {
-    CallTableEntry(gCurTask->unk14, 2, gUnk_08756150);
+    CallTableEntry(gCurTask->state, 2, gUnk_08756150);
 }
 
 void sub_080b4b18(void)
@@ -3067,7 +3067,7 @@ void sub_080b4b18(void)
     s32 r;
 
     c = &gCurTask;
-    (*c)->unk15 = 0;
+    (*c)->updateState = 0;
     *(u8 *)((u8 *)*c + 67) = 1;
     TaskStop();
     r = ActorStartAnimNoFlip((struct AnimCmd *)gUnk_087560EC);
@@ -3077,17 +3077,17 @@ void sub_080b4b18(void)
     v5 = 128 << 7;
     for (;;)
     {
-        (*c)->unk58 = v6;
+        (*c)->velY = v6;
         TaskYieldTrampoline(16);
-        (*c)->unk58 = 0xFFFFA000;
+        (*c)->velY = 0xFFFFA000;
         TaskYieldTrampoline(16);
-        (*c)->unk58 = v6;
+        (*c)->velY = v6;
         TaskYieldTrampoline(16);
-        (*c)->unk58 = v5;
+        (*c)->velY = v5;
         TaskYieldTrampoline(16);
-        (*c)->unk58 = 192 << 7;
+        (*c)->velY = 192 << 7;
         TaskYieldTrampoline(16);
-        (*c)->unk58 = v5;
+        (*c)->velY = v5;
         TaskYieldTrampoline(16);
     }
 }
@@ -3109,9 +3109,9 @@ void sub_080b4bb0(void)
     struct Task **c;
 
     c = &gCurTask;
-    (*c)->unk15 = 1;
+    (*c)->updateState = 1;
     sub_080b48e0();
-    (*c)->unk3C = 0xFFFF;
+    (*c)->frame = 0xFFFF;
     TaskSleepForever();
 }
 
@@ -3125,9 +3125,9 @@ void sub_080b4be4(void)
     struct Task **c;
 
     c = &gCurTask;
-    (*c)->unk04 = (u32)sub_080b4c14;
+    (*c)->updateCallback = (u32)sub_080b4c14;
     ActorSetState(0);
-    CallTableEntry((*c)->unk14, 3, gUnk_08756160);
+    CallTableEntry((*c)->state, 3, gUnk_08756160);
 }
 
 void sub_080b4c14(void)
@@ -3135,11 +3135,11 @@ void sub_080b4c14(void)
     struct Task **c;
 
     c = &gCurTask;
-    CallTableEntry((*c)->unk15, 3, gUnk_0875616C);
-    if ((*c)->unk14 == 1 && ActorCheckHits() != 0)
+    CallTableEntry((*c)->updateState, 3, gUnk_0875616C);
+    if ((*c)->state == 1 && ActorCheckHits() != 0)
     {
         sub_080b4878();
-        sub_0806d4e4(0, 0);
+        CreateBurstEffect(0, 0);
         if (gLocalPlayer == (s8)*(u8 *)((u8 *)*c + 126))
             PlaySfx(198);
         ActorSetState(2);
@@ -3149,7 +3149,7 @@ void sub_080b4c14(void)
 
 void sub_080b4c84(void)
 {
-    CallTableEntry(gCurTask->unk14, 3, gUnk_08756160);
+    CallTableEntry(gCurTask->state, 3, gUnk_08756160);
 }
 
 void sub_080b4ca0(void)
@@ -3159,19 +3159,19 @@ void sub_080b4ca0(void)
     s32 r;
 
     c = &gCurTask;
-    (*c)->unk15 = 0;
+    (*c)->updateState = 0;
     *(u8 *)((u8 *)*c + 67) = 255;
     TaskStop();
     r = ActorStartAnimNoFlip((struct AnimCmd *)gUnk_087560EC);
     t = *c;
     t->unk34 = r;
-    t->unk54 = 0xFFFC0000;
+    t->velX = 0xFFFC0000;
     TaskYieldTrampoline(8);
-    (*c)->unk54 = 0xFFFE0000;
+    (*c)->velX = 0xFFFE0000;
     TaskYieldTrampoline(8);
-    (*c)->unk54 = 0xFFFF0000;
+    (*c)->velX = 0xFFFF0000;
     TaskYieldTrampoline(8);
-    (*c)->unk54 = 0xFFFF8000;
+    (*c)->velX = 0xFFFF8000;
     TaskYieldTrampoline(8);
     TaskStop();
     ActorSetState(1);
@@ -3188,7 +3188,7 @@ void sub_080b4d1c(void)
     r = ActorTickAnim((*c)->unk34);
     t = *c;
     t->unk34 = r;
-    if (t->unk14 != 0)
+    if (t->state != 0)
         TaskSetEntry(sub_080b4c84, gCurTaskIdx);
 }
 
@@ -3201,23 +3201,23 @@ void sub_080b4d50(void)
     s32 r;
 
     c = &gCurTask;
-    (*c)->unk15 = 1;
+    (*c)->updateState = 1;
     TaskStop();
     v6 = 0xFFFFC000;
     v5 = 128 << 7;
     for (;;)
     {
-        (*c)->unk58 = v6;
+        (*c)->velY = v6;
         TaskYieldTrampoline(16);
-        (*c)->unk58 = 0xFFFFA000;
+        (*c)->velY = 0xFFFFA000;
         TaskYieldTrampoline(16);
-        (*c)->unk58 = v6;
+        (*c)->velY = v6;
         TaskYieldTrampoline(16);
-        (*c)->unk58 = v5;
+        (*c)->velY = v5;
         TaskYieldTrampoline(16);
-        (*c)->unk58 = 192 << 7;
+        (*c)->velY = 192 << 7;
         TaskYieldTrampoline(16);
-        (*c)->unk58 = v5;
+        (*c)->velY = v5;
         TaskYieldTrampoline(16);
     }
 }
@@ -3239,9 +3239,9 @@ void sub_080b4dd0(void)
     struct Task **c;
 
     c = &gCurTask;
-    (*c)->unk15 = 2;
+    (*c)->updateState = 2;
     sub_080b48e0();
-    (*c)->unk3C = 0xFFFF;
+    (*c)->frame = 0xFFFF;
     TaskSleepForever();
 }
 
@@ -3255,9 +3255,9 @@ void sub_080b4e04(void)
     struct Task *t;
 
     t = gCurTask;
-    t->unk00 = 0;
-    t->unk0C = 0;
-    t->unk04 = 0;
+    t->moveCallback = 0;
+    t->drawCallback = 0;
+    t->updateCallback = 0;
     if (*(u8 *)((u8 *)t + 116) != 2)
         TaskYieldTrampoline(60);
     if (sub_08066394() != 0)

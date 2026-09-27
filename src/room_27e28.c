@@ -12,21 +12,22 @@
  * sub_08028280 its layout-only form for sub_08024698, and
  * sub_08028304 picks the tile-upload routine for the layout.
  * sub_08027a6c, the first function of the range (the second map buffer
- * gUnk_02006AA0 for sub_08023948/sub_08023ca0), is still asm. */
+ * gUnk_02006AA0 for sub_08023948/sub_08023ca0), landed separately as
+ * src/level_27a6c.c. */
 
 struct MapCell
 {
     /*0x00*/ u8 unk0;
     /*0x01*/ u8 unk1;
     /*0x02*/ u8 unk2;
-    /*0x03*/ u8 unk3;
+    /*0x03*/ u8 collisionTile;
 };
 
 struct BgMap
 {
     /*0x00*/ u16 unk0;
-    /*0x02*/ u16 unk2;
-    /*0x04*/ u16 unk4;
+    /*0x02*/ u16 width;
+    /*0x04*/ u16 height;
     /*0x06*/ u16 unk6[0];
 };
 
@@ -43,35 +44,35 @@ struct Door
 struct RoomDef
 {
     /*0x00*/ u8 filler00[4];
-    /*0x04*/ s8 unk04;
-    /*0x05*/ u8 unk05;
+    /*0x04*/ s8 bgm;
+    /*0x05*/ u8 mapsCompressed;
     /*0x06*/ u8 filler06[2];
-    /*0x08*/ void *unk08;
-    /*0x0C*/ void *unk0C;
+    /*0x08*/ void *metatileMap;
+    /*0x0C*/ void *blockLayer;
     /*0x10*/ void *unk10;
-    /*0x14*/ u16 unk14;
-    /*0x16*/ u16 unk16;
-    /*0x18*/ u16 *unk18;
-    /*0x1C*/ void *unk1C;
-    /*0x20*/ void *unk20;
-    /*0x24*/ u16 unk24;
-    /*0x26*/ u16 unk26;
-    /*0x28*/ u16 *unk28;
-    /*0x2C*/ void *unk2C;
-    /*0x30*/ struct BgMap *unk30;
-    /*0x34*/ u16 unk34;
-    /*0x36*/ u16 unk36;
+    /*0x14*/ u16 width;
+    /*0x16*/ u16 height;
+    /*0x18*/ u16 *bg2Palette;
+    /*0x1C*/ void *bg2Tiles;
+    /*0x20*/ void *metatileTiles;
+    /*0x24*/ u16 borderX;
+    /*0x26*/ u16 borderY;
+    /*0x28*/ u16 *bg3Palette;
+    /*0x2C*/ void *bg3Tiles;
+    /*0x30*/ struct BgMap *bg3Map;
+    /*0x34*/ u16 bg3BorderX;
+    /*0x36*/ u16 bg3BorderY;
     /*0x38*/ u16 unk38;
-    /*0x3A*/ u16 unk3A;
-    /*0x3C*/ u16 unk3C;
-    /*0x3E*/ u16 unk3E;
-    /*0x40*/ u16 unk40;
+    /*0x3A*/ u16 doorCount;
+    /*0x3C*/ u16 objectCount;
+    /*0x3E*/ u16 objectsSortedByY;
+    /*0x40*/ u16 bgAnimSet;
     /*0x42*/ u16 unk42;
-    /*0x44*/ struct Door *unk44;
-    /*0x48*/ void *unk48;
+    /*0x44*/ struct Door *doors;
+    /*0x48*/ void *objects;
     /*0x4C*/ u8 filler4C[4];
-    /*0x50*/ u16 unk50;
-    /*0x52*/ u16 unk52;
+    /*0x50*/ u16 entryX;
+    /*0x52*/ u16 entryY;
     /*0x54*/ u8 unk54;
     /*0x55*/ u8 unk55;
     /*0x56*/ u8 unk56;
@@ -81,37 +82,37 @@ struct RoomDef
 struct Unk020055D8Entry
 {
     /*0x00*/ u8 filler0[4];
-    /*0x04*/ u16 unk4;
-    /*0x06*/ u16 unk6;
+    /*0x04*/ u16 x;
+    /*0x06*/ u16 y;
 };
 
 struct Unk020055D8
 {
-    /*0x00*/ s16 unk0;
-    /*0x02*/ s16 unk2;
-    /*0x04*/ struct Unk020055D8Entry *unk4;
+    /*0x00*/ s16 count;
+    /*0x02*/ s16 sortedByY;
+    /*0x04*/ struct Unk020055D8Entry *entries;
 };
 
 /* M08's view of a map cell (src/bgmap_2a9cc.c): the metatile index is a u16 */
 struct MapTile
 {
-    /*0x00*/ u16 unk0;
+    /*0x00*/ u16 metatile;
     /*0x02*/ u8 unk2;
-    /*0x03*/ u8 unk3;
+    /*0x03*/ u8 collisionTile;
 };
 
 extern s32 gScrollLockSpeedX;
 extern s32 gScrollLockSpeedY;
-extern s32 gUnk_030055F0;
-extern s32 gUnk_03005618;
+extern s32 gRoomDriftVelX;
+extern s32 gRoomDriftVelY;
 extern u8 gRoomBgLayout;
-extern s16 *gUnk_0300558C;
-extern s16 gUnk_0873A318[];
-extern s16 gUnk_0873A398[];
+extern s16 *gCurTileDrifts;
+extern s16 gTileDrifts[];
+extern s16 gTileDriftsDoubled[];
 extern u8 gUnk_02005574[];
 extern struct RoomDef *gCurRoomDef;
 extern struct Unk020055D8 gRoomObjectList;
-extern s32 gUnk_087322C0[][2];
+extern s32 gRoomDriftVelocities[][2];
 extern u8 gBg3MapShape;
 extern u8 gUnk_0200B078;
 extern s32 gBg3ParallaxX;
@@ -155,22 +156,22 @@ void InitRoomBgLayout(void)
 
     gScrollLockSpeedX = 0;
     gScrollLockSpeedY = 0;
-    gUnk_030055F0 = 0;
-    gUnk_03005618 = 0;
+    gRoomDriftVelX = 0;
+    gRoomDriftVelY = 0;
     gRoomBgLayout = 0;
-    gUnk_0300558C = gUnk_0873A318;
+    gCurTileDrifts = gTileDrifts;
     gUnk_02005574[0] = 0;
     if ((s16)gCurRoomDef->unk38 != -1)
     {
-        e = (s8 *)&gRoomObjectList.unk4[(s16)gCurRoomDef->unk38];
+        e = (s8 *)&gRoomObjectList.entries[(s16)gCurRoomDef->unk38];
         if (e[1] == 7)
         {
-            gUnk_030055F0 = gUnk_087322C0[e[2]][0];
-            gUnk_03005618 = gUnk_087322C0[e[2]][1];
+            gRoomDriftVelX = gRoomDriftVelocities[e[2]][0];
+            gRoomDriftVelY = gRoomDriftVelocities[e[2]][1];
         }
         else if (e[1] == 8)
         {
-            gUnk_0300558C = gUnk_0873A398;
+            gCurTileDrifts = gTileDriftsDoubled;
         }
     }
     if (gCurRoomDef->unk56 != 0)
@@ -194,9 +195,9 @@ void InitRoomBgLayout(void)
             for (j = 0; j <= 16; j++)
             {
                 idx = gRoomWidth * i + j;
-                ((struct MapTile *)gRoomMap)[idx].unk0 = 0;
+                ((struct MapTile *)gRoomMap)[idx].metatile = 0;
                 ((struct MapTile *)gRoomMap)[idx].unk2 = 0;
-                ((struct MapTile *)gRoomMap)[idx].unk3 = 0;
+                ((struct MapTile *)gRoomMap)[idx].collisionTile = 0;
                 gBlockLayer[idx] = 0;
             }
         }
@@ -251,17 +252,17 @@ void sub_08028130(void)
 
     gScrollLockSpeedX = 0;
     gScrollLockSpeedY = 0;
-    gUnk_030055F0 = 0;
-    gUnk_03005618 = 0;
+    gRoomDriftVelX = 0;
+    gRoomDriftVelY = 0;
     gRoomBgLayout = 0;
     gUnk_02005574[0] = 0;
     if ((s16)gCurRoomDef->unk38 != -1)
     {
-        e = (s8 *)&gRoomObjectList.unk4[(s16)gCurRoomDef->unk38];
+        e = (s8 *)&gRoomObjectList.entries[(s16)gCurRoomDef->unk38];
         if (e[1] == 7)
         {
-            gUnk_030055F0 = gUnk_087322C0[e[2]][0];
-            gUnk_03005618 = gUnk_087322C0[e[2]][1];
+            gRoomDriftVelX = gRoomDriftVelocities[e[2]][0];
+            gRoomDriftVelY = gRoomDriftVelocities[e[2]][1];
         }
     }
     if (gCurRoomDef->unk56 != 0)
@@ -276,8 +277,8 @@ void sub_08028130(void)
         if (gUnk_02006098[0] == 1)
         {
             next = gRoomTable[gLevelIndex][gStageIndex][gRoomIndex + 1];
-            RequestCopy(2, (u32)(next->unk18 + 1), (u32)gUnk_030012B0, *gCurRoomDef->unk18);
-            RequestCopy(2, (u32)(next->unk28 + 1), (u32)gUnk_030012B0 + 0x1C0 - *gCurRoomDef->unk28, *gCurRoomDef->unk28);
+            RequestCopy(2, (u32)(next->bg2Palette + 1), (u32)gUnk_030012B0, *gCurRoomDef->bg2Palette);
+            RequestCopy(2, (u32)(next->bg3Palette + 1), (u32)gUnk_030012B0 + 0x1C0 - *gCurRoomDef->bg3Palette, *gCurRoomDef->bg3Palette);
         }
     }
 }
@@ -286,8 +287,8 @@ void sub_08028280(s32 a)
 {
     gScrollLockSpeedX = 0;
     gScrollLockSpeedY = 0;
-    gUnk_030055F0 = 0;
-    gUnk_03005618 = 0;
+    gRoomDriftVelX = 0;
+    gRoomDriftVelY = 0;
     gRoomBgLayout = 0;
     gUnk_02005574[0] = 0;
     if (a == 0)

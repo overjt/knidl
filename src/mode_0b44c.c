@@ -27,7 +27,7 @@ extern u8 gUnk_020055C4;
 extern u8 gUnk_020055CC;
 extern struct Unk02005E00 gUnk_02005E00;
 extern s32 gPlayerScores[];
-extern s8 gUnk_02006094;
+extern s8 gCannonFuseState;
 extern u8 gUnk_020060CC;
 extern s8 gUnk_02006160;
 extern u8 gUnk_02006178;
@@ -36,11 +36,11 @@ extern u8 gUnk_02007CF0;
 extern u8 gUnk_02007CF4[];
 extern s16 gPlayerLives[];
 extern u32 gUnk_02007F50;
-extern vs16 gUnk_02007FA8[];
+extern vs16 gSavedPlayerAbilityUses[];
 extern s8 gUnk_02007FB8[];
 extern u16 gSavedPlayerAbilities[];
 extern s8 gUnk_02008010;
-extern vu16 gUnk_0200AF18[];
+extern vu16 gPlayerAbilityUses[];
 extern u32 gUnk_0200EC50;
 extern s16 gInputRecorderMode;
 extern vs32 gBg0ScrollY;
@@ -140,7 +140,7 @@ void ResetPlayerRecords(void)
         /* Volatile all-ones stores reuse their dead pre-read (lesson 3.68);
          * the two cells differ in signedness, so the chain stores the
          * constant twice instead of re-reading the inner cell (3.361). */
-        gUnk_02007FA8[i] = gUnk_0200AF18[i] = 0xFFFF;
+        gSavedPlayerAbilityUses[i] = gPlayerAbilityUses[i] = 0xFFFF;
         InitPlayerState(i);
         gUnk_02005E00.unk04[i] = 0;
         gUnk_02005E00.unk08[i] = 0;
@@ -207,7 +207,7 @@ void sub_0800b648(void)
      * pointer locals assigned here reproduce that order. */
     q1 = &gUnk_020061E0;
     q2 = &gUnk_02006160;
-    q3 = &gUnk_02006094;
+    q3 = &gCannonFuseState;
     q4 = &gUnk_020060CC;
     b = gUnk_02007FB8;
     zero = 0;

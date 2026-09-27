@@ -147,8 +147,8 @@ gHudClock = 0x02006068
 gBgScrollSpeeds = 0x02006070
 	.global	gUnk_02006090
 gUnk_02006090 = 0x02006090
-	.global	gUnk_02006094
-gUnk_02006094 = 0x02006094
+	.global	gCannonFuseState
+gCannonFuseState = 0x02006094
 	.global	gUnk_02006098
 gUnk_02006098 = 0x02006098
 	.global	gUnk_020060A0
@@ -205,8 +205,8 @@ gBreakingBlocks = 0x020061F0
 gUnk_020069F0 = 0x020069F0
 	.global	gHudHpBars
 gHudHpBars = 0x02006A00
-	.global	gUnk_02006A10
-gUnk_02006A10 = 0x02006A10
+	.global	gBombRallySeats
+gBombRallySeats = 0x02006A10
 	.global	gUnk_02006A14
 gUnk_02006A14 = 0x02006A14
 	.global	gDoorObjectTasks
@@ -265,8 +265,8 @@ gUnk_02007F50 = 0x02007F50
 gUnk_02007F60 = 0x02007F60
 	.global	gUnk_02007FA0
 gUnk_02007FA0 = 0x02007FA0
-	.global	gUnk_02007FA8
-gUnk_02007FA8 = 0x02007FA8
+	.global	gSavedPlayerAbilityUses
+gSavedPlayerAbilityUses = 0x02007FA8
 	.global	gUnk_02007FB0
 gUnk_02007FB0 = 0x02007FB0
 	.global	gUnk_02007FB4
@@ -329,18 +329,18 @@ gUnk_0200AF04 = 0x0200AF04
 gUnk_0200AF08 = 0x0200AF08
 	.global	gUnk_0200AF0C
 gUnk_0200AF0C = 0x0200AF0C
-	.global	gUnk_0200AF10
-gUnk_0200AF10 = 0x0200AF10
-	.global	gUnk_0200AF18
-gUnk_0200AF18 = 0x0200AF18
+	.global	gBombRallyOutMask
+gBombRallyOutMask = 0x0200AF10
+	.global	gPlayerAbilityUses
+gPlayerAbilityUses = 0x0200AF18
 	.global	gUnk_0200AF20
 gUnk_0200AF20 = 0x0200AF20
 	.global	gUnk_0200AFE0
 gUnk_0200AFE0 = 0x0200AFE0
 	.global	gPlayerBubbleTimers
 gPlayerBubbleTimers = 0x0200AFE8
-	.global	gUnk_0200AFF0
-gUnk_0200AFF0 = 0x0200AFF0
+	.global	gBombRallyOutCount
+gBombRallyOutCount = 0x0200AFF0
 	.global	gUnk_0200AFF4
 gUnk_0200AFF4 = 0x0200AFF4
 	.global	gUnk_0200AFF8
@@ -361,8 +361,8 @@ gUnk_0200B038 = 0x0200B038
 gQuickDrawWins = 0x0200B03C
 	.global	gHBlankScrollStarted
 gHBlankScrollStarted = 0x0200B040
-	.global	gUnk_0200B044
-gUnk_0200B044 = 0x0200B044
+	.global	gBombRallyFinishOrder
+gBombRallyFinishOrder = 0x0200B044
 	.global	gUnk_0200B048
 gUnk_0200B048 = 0x0200B048
 	.global	gUnk_0200B04C
@@ -835,8 +835,8 @@ gSpriteCameraX = 0x03002348
 gUnk_0300234C = 0x0300234C
 	.global	gActivePlayerCount
 gActivePlayerCount = 0x03002350
-	.global	gUnk_03002354
-gUnk_03002354 = 0x03002354
+	.global	gHitTimer
+gHitTimer = 0x03002354
 	.global	gAttackX
 gAttackX = 0x03002358
 	.global	gCompletionPercent
@@ -859,8 +859,8 @@ gUnk_03002384 = 0x03002384
 gCameraFocusY = 0x03002388
 	.global	gLevelIndex
 gLevelIndex = 0x0300238C
-	.global	gUnk_03002390
-gUnk_03002390 = 0x03002390
+	.global	gAttackLastHitterSlot
+gAttackLastHitterSlot = 0x03002390
 	.global	gHitHealthLeft
 gHitHealthLeft = 0x03002394
 	.global	gCameraAnchorX
@@ -881,8 +881,8 @@ gUnk_030023B4 = 0x030023B4
 gUnk_030023B8 = 0x030023B8
 	.global	gLatchedPressedKeys
 gLatchedPressedKeys = 0x030023C0
-	.global	gUnk_030023C8
-gUnk_030023C8 = 0x030023C8
+	.global	gBigSwitchFlags
+gBigSwitchFlags = 0x030023C8
 	.global	gCameraFocusX
 gCameraFocusX = 0x030023CC
 	.global	gUnk_030023D0
@@ -891,8 +891,8 @@ gUnk_030023D0 = 0x030023D0
 gUnk_030023D4 = 0x030023D4
 	.global	gGameState
 gGameState = 0x030023D8
-	.global	gUnk_030023DC
-gUnk_030023DC = 0x030023DC
+	.global	gHitterSlot
+gHitterSlot = 0x030023DC
 	.global	gUnk_030023E0
 gUnk_030023E0 = 0x030023E0
 	.global	gSpriteCameraY
@@ -1087,8 +1087,8 @@ gTerrainResult = 0x03005550
 gTerrainProbeX = 0x03005560
 	.global	gTerrainFacing
 gTerrainFacing = 0x03005564
-	.global	gUnk_03005568
-gUnk_03005568 = 0x03005568
+	.global	gTerrainBoundsClamp
+gTerrainBoundsClamp = 0x03005568
 	.global	gUnk_0300556C
 gUnk_0300556C = 0x0300556C
 	.global	gTerrainProbeY
@@ -1099,14 +1099,14 @@ gUnk_03005574 = 0x03005574
 gTerrainTile = 0x03005578
 	.global	gTerrainBoxTop
 gTerrainBoxTop = 0x0300557C
-	.global	gUnk_03005580
-gUnk_03005580 = 0x03005580
+	.global	gTerrainDriftY
+gTerrainDriftY = 0x03005580
 	.global	gTerrainBoxBottom
 gTerrainBoxBottom = 0x03005584
 	.global	gTerrainTileBelow
 gTerrainTileBelow = 0x03005588
-	.global	gUnk_0300558C
-gUnk_0300558C = 0x0300558C
+	.global	gCurTileDrifts
+gCurTileDrifts = 0x0300558C
 	.global	gTerrainPrevBoxRight
 gTerrainPrevBoxRight = 0x03005590
 	.global	gTerrainTileLeft
@@ -1119,8 +1119,8 @@ gTerrainBoxRight = 0x0300559C
 gTerrainTileShape = 0x030055A0
 	.global	gTerrainPrevBoxTop
 gTerrainPrevBoxTop = 0x030055A4
-	.global	gUnk_030055A8
-gUnk_030055A8 = 0x030055A8
+	.global	gTerrainDriftX
+gTerrainDriftX = 0x030055A8
 	.global	gUnk_030055AC
 gUnk_030055AC = 0x030055AC
 	.global	gTerrainPrevBoxBottom
@@ -1135,8 +1135,8 @@ gRoomMetatileCount = 0x030055E4
 gBg3ParallaxX = 0x030055E8
 	.global	gCurRoomDef
 gCurRoomDef = 0x030055EC
-	.global	gUnk_030055F0
-gUnk_030055F0 = 0x030055F0
+	.global	gRoomDriftVelX
+gRoomDriftVelX = 0x030055F0
 	.global	gPlayerGroupCenter
 gPlayerGroupCenter = 0x030055F4
 	.global	gCameraBounds
@@ -1153,8 +1153,8 @@ gPlayerCameraMode = 0x0300560C
 gScrollLockSpeedX = 0x03005610
 	.global	gCameraCenterX
 gCameraCenterX = 0x03005614
-	.global	gUnk_03005618
-gUnk_03005618 = 0x03005618
+	.global	gRoomDriftVelY
+gRoomDriftVelY = 0x03005618
 	.global	gRoomHeight
 gRoomHeight = 0x0300561C
 	.global	gRoomWidth

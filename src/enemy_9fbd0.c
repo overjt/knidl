@@ -13,9 +13,9 @@ extern u8 gActivePlayerMask;
 extern s32 gUnk_030023B4;
 extern u32 gCurSaveSlot[];
 extern s16 gUnk_0300244C;
-extern u32 gUnk_08748264[];
+extern u32 gKingDededeVariants[];
 extern u32 gUnk_08748974[];
-extern u32 gUnk_087538E0[];
+extern u32 gKingDededeFrames[];
 
 /* Externals */
 extern void CallTableEntry(u32 a, u32 b, u32 *c);
@@ -41,9 +41,9 @@ extern void sub_080689c8(s32 i, s32 d);
 extern void sub_08068f68(void);
 extern u32 ActorReactToHit(void);
 extern void ActorDie(void);
-extern s16 sub_0806caa0(u8 kind, s32 dx, s32 dy);
+extern s16 CreateStarFlash(u8 kind, s32 dx, s32 dy);
 extern void sub_080a0a84(void);
-extern void sub_080a0b10(void);
+extern void KingDededeEnterState(void);
 extern void sub_080b7c00(u32 a);
 
 void sub_0809fbd0(void)
@@ -68,7 +68,7 @@ void sub_0809fc08(void)
     }
 }
 
-void sub_0809fc44(void)
+void Task_KingDedede(void)
 {
     struct Task *t;
     s32 v;
@@ -79,11 +79,11 @@ void sub_0809fc44(void)
     v = (v * 85) >> 8;
     t = gCurTask;
     t->unk70 = v;
-    t->unk00 = (u32)TaskMove;
-    t->unk0C = (u32)sub_08065438;
-    t->unk42 = 11;
-    gCurTask->unk38 = gUnk_087538E0;
-    CallTableEntry(gCurTask->unk73, 1, gUnk_08748264);
+    t->moveCallback = (u32)TaskMove;
+    t->drawCallback = (u32)sub_08065438;
+    t->layer = 11;
+    gCurTask->frameTable = gKingDededeFrames;
+    CallTableEntry(gCurTask->variant, 1, gKingDededeVariants);
 }
 
 void sub_0809fca4(void)
@@ -100,17 +100,17 @@ void sub_0809fcb4(void)
     RequestScreenShake(4);
     TaskSetSkipMask(7, gCurTaskIdx);
     t = gCurTask;
-    t->unk08 = (u32)sub_080a0a84;
-    gUnk_02006190[0] = t->unk48;
-    gUnk_02006190[1] = t->unk4A;
-    gUnk_02006190[2] = t->unk3C;
+    t->lateUpdateCallback = (u32)sub_080a0a84;
+    gUnk_02006190[0] = t->pixelX;
+    gUnk_02006190[1] = t->pixelY;
+    gUnk_02006190[2] = t->frame;
     one = 1;
     gUnk_02006190[7] = one;
     TaskSetFrame(8);
     gUnk_02006190[3] = one;
     gUnk_02006190[4] = -2;
     gUnk_02006190[5] = 0;
-    sub_0806caa0(1, 0, 0);
+    CreateStarFlash(1, 0, 0);
 }
 
 void sub_0809fd20(void)
@@ -121,10 +121,10 @@ void sub_0809fd20(void)
     TaskSetSkipMask(0, gCurTaskIdx);
     t = gCurTask;
     z = 0;
-    t->unk08 = z;
-    t->unk48 = gUnk_02006190[0];
-    t->unk4A = gUnk_02006190[1];
-    t->unk3C = gUnk_02006190[2];
+    t->lateUpdateCallback = z;
+    t->pixelX = gUnk_02006190[0];
+    t->pixelY = gUnk_02006190[1];
+    t->frame = gUnk_02006190[2];
     gUnk_02006190[7] = z;
     sub_08066468();
 }
@@ -145,7 +145,7 @@ u8 sub_0809fd64(void)
     }
     if (gUnk_02007D00[8] != -1 && gUnk_02007D00[1] != -1)
     {
-        sub_080689c8(gUnk_02007D00[8], -gCurTask->unk43);
+        sub_080689c8(gUnk_02007D00[8], -gCurTask->facing);
         gUnk_02007D00[8] = -1;
     }
     if (gUnk_02007D00[9] != -1)
@@ -176,13 +176,13 @@ u8 sub_0809fe10(void)
 
     t = gCurTask;
     a = t->unk8C;
-    s0 = t->unk14;
+    s0 = t->state;
     sub_0809fcb4();
-    switch (gCurTask->unk14)
+    switch (gCurTask->state)
     {
     case 3:
         u = gCurTask;
-        if ((u->unk7A & 1) == 0)
+        if ((u->onGround & 1) == 0)
         {
             gUnk_02006190[2] = 43;
             ActorSetState(10);
@@ -197,7 +197,7 @@ u8 sub_0809fe10(void)
         goto install;
     case 4:
         v = gCurTask;
-        if ((v->unk7A & 1) == 0)
+        if ((v->onGround & 1) == 0)
         {
             if (gUnk_0300244C != 0)
                 gUnk_02006190[2] = 43;
@@ -236,32 +236,32 @@ u8 sub_0809fe10(void)
         x->unk2C = 1;
         gUnk_02006190[2] = 4;
         ActorSetState(1);
-        a->unk1C = gCurTask->unk1C;
+        a->prevState = gCurTask->unk1C;
     install:
-        TaskSetEntry(sub_080a0b10, gCurTaskIdx);
+        TaskSetEntry(KingDededeEnterState, gCurTaskIdx);
         break;
     case 8:
     case 9:
         TaskSetSkipMask(0, gCurTaskIdx);
         y = gCurTask;
-        y->unk08 = 0;
-        y->unk3C = gUnk_02006190[2];
+        y->lateUpdateCallback = 0;
+        y->frame = gUnk_02006190[2];
         gUnk_02006190[5] = 14;
         break;
     case 0:
-        gCurTask->unk14 = 1;
+        gCurTask->state = 1;
     case 1:
         z = gCurTask;
         z->unk2C = 1;
         gUnk_02006190[2] = 4;
         ActorSetState(1);
-        TaskSetEntry(sub_080a0b10, gCurTaskIdx);
+        TaskSetEntry(KingDededeEnterState, gCurTaskIdx);
         break;
     case 5:
     case 6:
         break;
     }
-    if (s0 == gCurTask->unk14)
+    if (s0 == gCurTask->state)
         return 0;
     return 1;
 }
@@ -271,8 +271,8 @@ void sub_0809ffec(void)
     struct Task *t;
 
     t = gCurTask;
-    if (t->unk7C == 6 && t->unk82 == 4)
-        gPlayerStates[t->unk7E].unk01 = 18;
+    if (t->hitKind == 6 && t->unk82 == 4)
+        gPlayerStates[t->hitterSlot].requestedAction = 18;
 }
 
 void sub_080a0028(void)
@@ -281,18 +281,18 @@ void sub_080a0028(void)
 
     TaskGetScreenPos();
     if (gUnk_030023B4 <= 127)
-        gCurTask->unk43 = 1;
+        gCurTask->facing = 1;
     else
-        gCurTask->unk43 = -1;
+        gCurTask->facing = -1;
     TaskSetFrame(29);
-    sp.unk00 = 10;
-    sp.unk04 = 112;
-    sp.unk08 = 0;
-    sp.unk09 = 0;
-    sp.unk10 = 0;
-    sp.unk0C = 32;
-    sp.unk0E = 16;
-    sp.unk0A = 0;
+    sp.subtype = 10;
+    sp.taskType = 112;
+    sp.variant = 0;
+    sp.spawnArg = 0;
+    sp.tileWord = 0;
+    sp.x = 32;
+    sp.y = 16;
+    sp.checkTerrain = 0;
     CreateActorFromDescAtOffsetFacing(&sp, 1);
     PlaySfx(0x21D);
 }

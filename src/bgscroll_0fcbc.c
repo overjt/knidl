@@ -171,8 +171,8 @@ s32 sub_0800ffd8(void)
 u8 TaskIsOnScreenNoCamera(void)
 {
     struct Task *t = gCurTask;
-    s16 x = t->unk48;
-    s16 y = t->unk4A;
+    s16 x = t->pixelX;
+    s16 y = t->pixelY;
 
     if ((u16)(x + 63) > 366)
         return 0;

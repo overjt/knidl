@@ -1553,7 +1553,12 @@ functions; the reachability sweep of #77 corrected that to 414, see below).
   `bx lr` stub plus the hidden entry's 0x14 bytes (lesson 4.34).
 * **What it turned out to be** twenty-one ROM task types built to the same
   three-table pattern as M21/M22/M24/M25/M26, but - unlike every other bank -
-  almost all of them are **moving scenery** rather than enemies: the bodies
+  almost all of them are **moving scenery** rather than enemies (*correction,
+  #155 run 2: they are enemies - Waddle Dee's rows, Rocky, Pengy, Sir Kibble,
+  Cappy, Gordo, Cool Spook, Kabu, Bomber, Sparky, Scarfy, the sword knights,
+  Togezo, UFO and the parasol, identified from local sprite renders and
+  their ActorDef.ability; the table title above comes from
+  `tools/modmap.py` and keeps the old reading until a non-rename PR*): the bodies
   drive the 16.16 velocity pair `Task.unk54`/`Task.unk58` and the gravity cell
   `Task.unk60` from ROM constants and then wait on the collision flag
   `Task.unk7A`, instead of aiming at a player.

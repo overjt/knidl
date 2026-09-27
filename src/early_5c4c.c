@@ -23,16 +23,16 @@
 
 struct Task
 {
-    /*0x00*/ u32 unk00;
-    /*0x04*/ u32 unk04;
-    /*0x08*/ u32 unk08;
-    /*0x0C*/ u32 unk0C;
-    /*0x10*/ u16 unk10;
-    /*0x12*/ s8 unk12;
-    /*0x13*/ u8 unk13;
-    /*0x14*/ u8 unk14;
-    /*0x15*/ u8 unk15;
-    /*0x16*/ u16 unk16;
+    /*0x00*/ u32 moveCallback;
+    /*0x04*/ u32 updateCallback;
+    /*0x08*/ u32 lateUpdateCallback;
+    /*0x0C*/ u32 drawCallback;
+    /*0x10*/ u16 sleepFrames;
+    /*0x12*/ s8 taskClass;
+    /*0x13*/ u8 skipMask;
+    /*0x14*/ u8 state;
+    /*0x15*/ u8 updateState;
+    /*0x16*/ u16 serial;
     /*0x18*/ u32 unk18;
     /*0x1C*/ u32 unk1C;
     /*0x20*/ u32 unk20;
@@ -41,62 +41,62 @@ struct Task
     /*0x2C*/ u32 unk2C;
     /*0x30*/ u32 unk30;
     /*0x34*/ u32 unk34;
-    /*0x38*/ u32 *unk38;
-    /*0x3C*/ s16 unk3C;
-    /*0x3E*/ u16 unk3E;
-    /*0x40*/ u16 unk40;
-    /*0x42*/ u8 unk42;
-    /*0x43*/ u8 unk43;
-    /*0x44*/ s16 unk44;
+    /*0x38*/ u32 *frameTable;
+    /*0x3C*/ s16 frame;
+    /*0x3E*/ u16 spriteFlags;
+    /*0x40*/ u16 tileWord;
+    /*0x42*/ u8 layer;
+    /*0x43*/ u8 facing;
+    /*0x44*/ s16 parent;
     /*0x46*/ s16 unk46;
-    /*0x48*/ s16 unk48;
-    /*0x4A*/ s16 unk4A;
-    /*0x4C*/ s32 unk4C;
-    /*0x50*/ s32 unk50;
-    /*0x54*/ s32 unk54;
-    /*0x58*/ s32 unk58;
-    /*0x5C*/ s32 unk5C;
-    /*0x60*/ s32 unk60;
-    /*0x64*/ s32 unk64;
-    /*0x68*/ s32 unk68;
+    /*0x48*/ s16 pixelX;
+    /*0x4A*/ s16 pixelY;
+    /*0x4C*/ s32 posX;
+    /*0x50*/ s32 posY;
+    /*0x54*/ s32 velX;
+    /*0x58*/ s32 velY;
+    /*0x5C*/ s32 accelX;
+    /*0x60*/ s32 accelY;
+    /*0x64*/ s32 speedLimitX;
+    /*0x68*/ s32 speedLimitY;
     /*0x6C*/ u16 unk6C;
     /*0x6E*/ u16 unk6E;
     /*0x70*/ u16 unk70;
-    /*0x72*/ u8 unk72;
-    /*0x73*/ u8 unk73;
+    /*0x72*/ u8 actorKind;
+    /*0x73*/ u8 variant;
     /*0x74*/ u8 unk74;
-    /*0x75*/ u8 unk75;
+    /*0x75*/ u8 hitTimer;
     /*0x76*/ u16 unk76;
-    /*0x78*/ u16 unk78;
-    /*0x7A*/ u8 unk7A;
-    /*0x7B*/ u8 unk7B;
-    /*0x7C*/ u8 unk7C;
-    /*0x7D*/ u8 unk7D;
-    /*0x7E*/ s8 unk7E;
-    /*0x7F*/ s8 unk7F;
+    /*0x78*/ u16 health;
+    /*0x7A*/ u8 onGround;
+    /*0x7B*/ u8 waterFlags;
+    /*0x7C*/ u8 hitKind;
+    /*0x7D*/ u8 hitDirection;
+    /*0x7E*/ s8 hitterSlot;
+    /*0x7F*/ s8 hitterPlayer;
     /*0x80*/ s8 unk80;
     /*0x81*/ u8 unk81;
     /*0x82*/ u16 unk82;
     /*0x84*/ u16 unk84;
     /*0x86*/ u16 unk86;
-    /*0x88*/ u32 unk88;
+    /*0x88*/ u32 player;
     /*0x8C*/ u32 unk8C;
 };
 
 /* 8 bytes per task type in ROM at 0x0872FF30. */
 struct TaskType
 {
-    /*0x00*/ u8 unk00;
+    /*0x00*/ u8 taskClass;
     /*0x01*/ u8 pad01[3];
-    /*0x04*/ u32 unk04;
+    /*0x04*/ u32 entry;
 };
 
-/* Per-task graphics descriptor reached through Task.unk38[Task.unk3C]. */
+/* Per-task graphics descriptor reached through Task.frameTable[Task.frame]. */
 struct TaskGfx
 {
-    /*0x00*/ u32 unk00;
-    /*0x04*/ u16 *unk04;
-    /*0x08*/ u16 *unk08;
+    /*0x00*/ u32 oamTemplate;
+    /*0x04*/ u16 *palette;
+    /*0x08*/ u16 *tiles;
 };
 
 extern struct Task *gCurTask;
@@ -146,7 +146,7 @@ void TaskClampVelocity(void);
 /* Task body: integrate, then publish the 16.16 position as screen coords. */
 
 /* Task body: integrate if moving, then publish position relative to the
- * parent task's position (Task.unk44 indexes the task array). */
+ * parent task's position (Task.parent indexes the task array). */
 
 /* Hidden (unreferenced) export inside TaskMoveRelativeToParent's symbols.csv size. */
 
@@ -163,13 +163,13 @@ void TaskClampVelocity(void);
 /* Is the running task inside the rectangle at gViewRect (+/- 64)? */
 u32 TaskIsInView(void)
 {
-    if (gViewRect[0] - 64 >= gCurTask->unk48)
+    if (gViewRect[0] - 64 >= gCurTask->pixelX)
         return 0;
-    if (gCurTask->unk48 >= gViewRect[1] + 64)
+    if (gCurTask->pixelX >= gViewRect[1] + 64)
         return 0;
-    if (gViewRect[2] - 64 >= gCurTask->unk4A)
+    if (gViewRect[2] - 64 >= gCurTask->pixelY)
         return 0;
-    if (gCurTask->unk4A >= gViewRect[3] + 64)
+    if (gCurTask->pixelY >= gViewRect[3] + 64)
         return 0;
     return 1;
 }
@@ -181,18 +181,18 @@ void TaskDrawScreen(void)
     s16 y;
 
     t = gCurTask;
-    if (t->unk38 == 0)
+    if (t->frameTable == 0)
         return;
-    if (t->unk3C == -1)
+    if (t->frame == -1)
         return;
-    if ((u16)(t->unk48 + 63) > 366)
+    if ((u16)(t->pixelX + 63) > 366)
         return;
-    y = t->unk4A;
+    y = t->pixelY;
     if (y <= -64)
         return;
     if (y > 223)
         return;
-    QueueSprite(t->unk42, t->unk38[t->unk3C], t->unk3E, t->unk40, t->unk48, t->unk4A);
+    QueueSprite(t->layer, t->frameTable[t->frame], t->spriteFlags, t->tileWord, t->pixelX, t->pixelY);
 }
 
 /* Same, but free the task when it leaves the screen. */
@@ -202,18 +202,18 @@ void TaskDrawScreenOrFree(void)
     s16 y;
 
     t = gCurTask;
-    if (t->unk38 == 0)
+    if (t->frameTable == 0)
         return;
-    if (t->unk3C == -1)
+    if (t->frame == -1)
         return;
-    if ((u16)(t->unk48 + 63) > 366)
+    if ((u16)(t->pixelX + 63) > 366)
         goto kill;
-    y = t->unk4A;
+    y = t->pixelY;
     if (y <= -64)
         goto kill;
     if (y > 223)
         goto kill;
-    QueueSprite(t->unk42, t->unk38[t->unk3C], t->unk3E, t->unk40, t->unk48, t->unk4A);
+    QueueSprite(t->layer, t->frameTable[t->frame], t->spriteFlags, t->tileWord, t->pixelX, t->pixelY);
     return;
 kill:
     TaskFree(gCurTaskIdx);

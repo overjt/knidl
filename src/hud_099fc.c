@@ -45,7 +45,7 @@ extern s16 gUnk_02007D30;
 extern s16 gPlayerLives[];
 extern s16 gHudHpBarValues[];
 extern s16 gUnk_0200801C;
-extern u16 gUnk_0200AF18[];
+extern u16 gPlayerAbilityUses[];
 extern u8 gHudShowsHpBar;
 extern u32 gUnk_02020000[];
 extern void (*gFrameEndCallback)(void);
@@ -94,18 +94,18 @@ void Task_IntroStoryPicture(void)
 {
     struct GfxHeader *h;
 
-    gCurTask->unk00 = (u32)TaskMove;
-    gCurTask->unk0C = (u32)TaskDrawScreen;
-    gCurTask->unk42 = 8;
-    gCurTask->unk38 = gUnk_087555D8;
-    gCurTask->unk40 = 0x800;
-    gCurTask->unk4C = 0x300000;
-    gCurTask->unk50 = 0x780000;
+    gCurTask->moveCallback = (u32)TaskMove;
+    gCurTask->drawCallback = (u32)TaskDrawScreen;
+    gCurTask->layer = 8;
+    gCurTask->frameTable = gUnk_087555D8;
+    gCurTask->tileWord = 0x800;
+    gCurTask->posX = 0x300000;
+    gCurTask->posY = 0x780000;
     h = gUnk_087555FC[gCurTask->unk18];
-    RequestCopy(2, (u32)h->unk08, (u32)gObjPalette, h->unk00 << 5);
-    LZ77UnCompVram(h->unk0C, gUnk_02020000);
-    RequestCopy(3, (u32)gUnk_02020000, (u32)gObjVram, h->unk02 << 5);
-    gCurTask->unk3C = gCurTask->unk18;
+    RequestCopy(2, (u32)h->palette, (u32)gObjPalette, h->paletteBankCount << 5);
+    LZ77UnCompVram(h->tiles, gUnk_02020000);
+    RequestCopy(3, (u32)gUnk_02020000, (u32)gObjVram, h->tileCount << 5);
+    gCurTask->frame = gCurTask->unk18;
     TaskYieldTrampoline(gUnk_08731CE6[gCurTask->unk18] + 67);
     TaskExitTrampoline();
 }
@@ -305,10 +305,10 @@ s32 AddPlayerHealth(s32 a, u32 b)
             else if (gPlayerHealth[b] == 8 && gLocalPlayer == b)
                 PlaySfx(262);
         }
-        gTasks[b].unk78 = gPlayerHealth[b];
+        gTasks[b].health = gPlayerHealth[b];
         if (b == gLocalPlayer && gHudMode == 1)
             sub_0800acbc(old >> 3, delta >> 3);
-        return gTasks[b].unk78;
+        return gTasks[b].health;
     }
 }
 
@@ -317,11 +317,11 @@ s32 SetPlayerAbilityNoHud(s32 a, s32 b, u32 c)
     if (c < 4) {
         struct PlayerState *p;
         gPlayerAbilities[c] = a;
-        gUnk_0200AF18[c] = b;
+        gPlayerAbilityUses[c] = b;
         p = &gPlayerStates[c];
-        p->unk0D = a;
-        p->unk0E = b;
-        return p->unk0D;
+        p->ability = a;
+        p->abilityUses = b;
+        return p->ability;
     }
 }
 
@@ -330,12 +330,12 @@ s32 SetPlayerAbility(s32 a, s32 b, u32 c)
     if (c < 4) {
         struct PlayerState *p;
         gPlayerAbilities[c] = a;
-        gUnk_0200AF18[c] = b;
+        gPlayerAbilityUses[c] = b;
         p = &gPlayerStates[c];
-        p->unk0D = a;
-        p->unk0E = b;
+        p->ability = a;
+        p->abilityUses = b;
         HudShowAbility(a, c);
-        return p->unk0D;
+        return p->ability;
     }
 }
 

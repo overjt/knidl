@@ -6,34 +6,34 @@
  *
  * Task type #6, variants 0-2, each variant body followed by the callbacks
  * only it installs.  A variant body installs the sprite (TaskMove /
- * TaskDrawWorldInViewOrFree, Task.unk42 = 5, an animation table in Task.unk38) and runs
+ * TaskDrawWorldInViewOrFree, Task.layer = 5, an animation table in Task.frameTable) and runs
  * `switch (Task.unk18 & 15)` over its sub-states, each a yield script that
- * ends in TaskExitTrampoline; its per-frame callback (Task.unk04) runs
+ * ends in TaskExitTrampoline; its per-frame callback (Task.updateCallback) runs
  * the hit test TaskBreakBlocks and the terrain checks and re-binds the body
  * in another sub-state, or the shared exit sub_08050814, on contact.
  * Variant 0 (sub_080509ec, callback sub_08050c48) spawns a copy of itself
  * in sub-state 1 while it moves; variants 1 and 2 (sub_08050d00,
  * sub_08051124) have the collision callbacks sub_08050e84/sub_080512f8
- * (sound 125 on contact) and the Task.unk08 callbacks sub_08050f80/
+ * (sound 125 on contact) and the Task.lateUpdateCallback callbacks sub_08050f80/
  * sub_080513d4, which draw a six-step trail behind the object
  * (sub_08050f80 is also installed by variants 11 and 12). */
 
 /* gTerrainResult: M06's collision result block (src/terrain_1bcac.c spells it
    the same way except unk8, which M09 reads with ldrsh).  A 16-bit test of
-   unk0/unk1 together is `*(u16 *)&gTerrainResult` (M12's sub_08045a50). */
+   unk0/unk1 together is `*(u16 *)&gTerrainResult` (M12's PlayerActionBurningUpdate). */
 struct Unk03005550
 {
     /*0x00*/ u8 unk0;
-    /*0x01*/ u8 unk1;
+    /*0x01*/ u8 ceilingHits;
     /*0x02*/ u8 unk2;
     /*0x03*/ u8 unk3;
-    /*0x04*/ u8 unk4;
+    /*0x04*/ u8 slope;
     /*0x05*/ u8 unk5;
     /*0x06*/ u8 unk6;
     /*0x07*/ u8 unk7;
     /*0x08*/ s16 unk8;
-    /*0x0A*/ u8 unkA;
-    /*0x0B*/ u8 unkB;
+    /*0x0A*/ u8 atDoor;
+    /*0x0B*/ u8 onSlipperyFloor;
     /*0x0C*/ u8 unkC;
     /*0x0D*/ u8 unkD;
 };
@@ -86,87 +86,87 @@ void sub_080509ec(void)
 {
     {
         struct Task *t = gCurTask;
-        t->unk00 = (u32)TaskMove;
-        t->unk0C = (u32)TaskDrawWorldInViewOrFree;
-        t->unk42 = 5;
+        t->moveCallback = (u32)TaskMove;
+        t->drawCallback = (u32)TaskDrawWorldInViewOrFree;
+        t->layer = 5;
     }
-    gCurTask->unk38 = gUnk_0874C568;
+    gCurTask->frameTable = gUnk_0874C568;
     sub_0802205c(gUnk_0873CB44);
     switch (gCurTask->unk18 & 15)
     {
     case 0:
     {
         struct Task *t = gCurTask;
-        t->unk04 = (u32)sub_08050c48;
-        if (t->unk43 == 1)
-            t->unk4C = (t->unk48 + 8) << 16;
+        t->updateCallback = (u32)sub_08050c48;
+        if (t->facing == 1)
+            t->posX = (t->pixelX + 8) << 16;
         else
-            t->unk4C = (t->unk48 - 8) << 16;
+            t->posX = (t->pixelX - 8) << 16;
     }
     {
         struct Task *t = gCurTask;
-        t->unk50 = (t->unk4A + 2) << 16;
-        PlaySfxIfLocalPlayer(114, t->unk44);
+        t->posY = (t->pixelY + 2) << 16;
+        PlaySfxIfLocalPlayer(114, t->parent);
     }
         TaskSetMotionXFacing(0x3C000, -0x2000);
         for (gCurTask->unk6C = 0; (s16)gCurTask->unk6C <= 1; gCurTask->unk6C++)
         {
             TaskSetFrameByFacing(0);
             TaskYieldTrampoline(2);
-            gCurTask->unk3C += 2;
+            gCurTask->frame += 2;
             TaskYieldTrampoline(1);
-            CreatePlayerObject(gCurTask->unk88->unk00, 0, 1);
-            gCurTask->unk3C -= 2;
+            CreatePlayerObject(gCurTask->player->playerIndex, 0, 1);
+            gCurTask->frame -= 2;
             TaskYieldTrampoline(2);
             TaskSetFrameByFacing(4);
             TaskYieldTrampoline(2);
         }
         TaskStopX();
-        gCurTask->unk04 = 0;
+        gCurTask->updateCallback = 0;
         TaskSetFrameByFacing(0);
         TaskYieldTrampoline(2);
-        gCurTask->unk3C += 2;
+        gCurTask->frame += 2;
         TaskYieldTrampoline(1);
-        gCurTask->unk3C -= 2;
+        gCurTask->frame -= 2;
         TaskYieldTrampoline(2);
         TaskSetFrameByFacing(4);
         TaskYieldTrampoline(1);
         TaskSetFrameByFacing(10);
         TaskYieldTrampoline(1);
-        gCurTask->unk3C += 2;
+        gCurTask->frame += 2;
         TaskYieldTrampoline(1);
-        gCurTask->unk3C += 2;
+        gCurTask->frame += 2;
         TaskYieldTrampoline(1);
-        gCurTask->unk3C += 2;
+        gCurTask->frame += 2;
         TaskYieldTrampoline(1);
-        gCurTask->unk3C += 2;
+        gCurTask->frame += 2;
         TaskYieldTrampoline(1);
-        gCurTask->unk3C += 2;
+        gCurTask->frame += 2;
         TaskYieldTrampoline(1);
-        gCurTask->unk3C += 2;
+        gCurTask->frame += 2;
         TaskYieldTrampoline(1);
-        gCurTask->unk3C += 2;
+        gCurTask->frame += 2;
         TaskYieldTrampoline(1);
         break;
     case 1:
         TaskSetMotionXFacing(-0x10000, 0x5A5A5A5A);
         TaskSetFrameByFacing(6);
         TaskYieldTrampoline(4);
-        gCurTask->unk3C += 2;
+        gCurTask->frame += 2;
         TaskYieldTrampoline(2);
         break;
     case 2:
         TaskStop();
         {
             struct Task *t = gCurTask;
-            t->unk04 = 0;
-            RegisterCollider(gCurTaskIdx, t->unk48, t->unk4A, gUnk_0873BD64);
+            t->updateCallback = 0;
+            RegisterCollider(gCurTaskIdx, t->pixelX, t->pixelY, gUnk_0873BD64);
         }
-        gCurTask->unk3C = 26;
+        gCurTask->frame = 26;
         TaskYieldTrampoline(1);
         for (gCurTask->unk6C = 0; (s16)gCurTask->unk6C <= 10; gCurTask->unk6C++)
         {
-            gCurTask->unk3C++;
+            gCurTask->frame++;
             TaskYieldTrampoline(1);
         }
         break;
@@ -176,46 +176,46 @@ void sub_080509ec(void)
 
 void sub_08050c48(void)
 {
-    if (TaskBreakBlocks((struct HitBoxSet *)gUnk_0873CB84, gCurTask->unk44))
-        gCurTask->unk7C = 1;
+    if (TaskBreakBlocks((struct HitBoxSet *)gUnk_0873CB84, gCurTask->parent))
+        gCurTask->hitKind = 1;
     else
         sub_0801c230(gUnk_0873CB44);
-    if (gTerrainResult.unk1 != 0 || (gCurTask->unk7A & 1) || gTerrainResult.unk0 != 0
-        || gCurTask->unk7C != 0)
+    if (gTerrainResult.ceilingHits != 0 || (gCurTask->onGround & 1) || gTerrainResult.unk0 != 0
+        || gCurTask->hitKind != 0)
     {
         struct Task *t = gCurTask;
         t->unk18 = (t->unk18 & ~15) | 2;
         TaskSetEntry(sub_080509ec, gCurTaskIdx);
     }
-    RegisterCollider(gCurTaskIdx, gCurTask->unk48, gCurTask->unk4A, gUnk_0873BD64);
+    RegisterCollider(gCurTaskIdx, gCurTask->pixelX, gCurTask->pixelY, gUnk_0873BD64);
 }
 
 void sub_08050d00(void)
 {
     {
         struct Task *t = gCurTask;
-        t->unk00 = (u32)TaskMove;
-        t->unk0C = (u32)TaskDrawWorldInViewOrFree;
-        t->unk04 = (u32)sub_08050e84;
-        t->unk42 = 5;
+        t->moveCallback = (u32)TaskMove;
+        t->drawCallback = (u32)TaskDrawWorldInViewOrFree;
+        t->updateCallback = (u32)sub_08050e84;
+        t->layer = 5;
     }
-    gCurTask->unk38 = gUnk_0874C44C;
+    gCurTask->frameTable = gUnk_0874C44C;
     sub_0802205c(gUnk_0873CB4C);
     {
         struct Task *t = gCurTask;
-        t->unk50 = (t->unk4A + 4) << 16;
-        if (t->unk43 == 1)
-            t->unk4C = (t->unk48 + 8) << 16;
+        t->posY = (t->pixelY + 4) << 16;
+        if (t->facing == 1)
+            t->posX = (t->pixelX + 8) << 16;
         else
-            t->unk4C = (t->unk48 - 8) << 16;
+            t->posX = (t->pixelX - 8) << 16;
     }
-    PlaySfxIfLocalPlayer(105, gCurTask->unk44);
+    PlaySfxIfLocalPlayer(105, gCurTask->parent);
     {
         struct Task *t = gCurTask;
-        if (!(t->unk7B & 1))
+        if (!(t->waterFlags & 1))
         {
             t->unk28 = 0;
-            if (t->unk43 == 1)
+            if (t->facing == 1)
                 t->unk2C = -0x40000;
             else
                 t->unk2C = 0x40000;
@@ -223,29 +223,29 @@ void sub_08050d00(void)
             TaskSetMotionXFacing(0x40000, 0x5A5A5A5A);
             while (1)
             {
-                gCurTask->unk3C = 4;
+                gCurTask->frame = 4;
                 TaskYieldTrampoline(3);
-                gCurTask->unk08 = (u32)sub_08050f80;
-                gCurTask->unk3C++;
+                gCurTask->lateUpdateCallback = (u32)sub_08050f80;
+                gCurTask->frame++;
                 TaskYieldTrampoline(3);
-                gCurTask->unk3C++;
+                gCurTask->frame++;
                 TaskYieldTrampoline(3);
-                gCurTask->unk3C++;
+                gCurTask->frame++;
                 TaskYieldTrampoline(3);
             }
         }
     }
     gCurTask->unk28 = 0;
-    gCurTask->unk60 = 0x400;
+    gCurTask->accelY = 0x400;
     for (gCurTask->unk6C = 0; (s16)gCurTask->unk6C <= 4; gCurTask->unk6C++)
     {
-        gCurTask->unk3C = 4;
+        gCurTask->frame = 4;
         TaskYieldTrampoline(3);
-        gCurTask->unk3C++;
+        gCurTask->frame++;
         TaskYieldTrampoline(3);
-        gCurTask->unk3C++;
+        gCurTask->frame++;
         TaskYieldTrampoline(3);
-        gCurTask->unk3C++;
+        gCurTask->frame++;
         TaskYieldTrampoline(3);
     }
     gCurTask->unk28++;
@@ -256,16 +256,16 @@ void sub_08050e84(void)
 {
     s32 hit;
 
-    if (TaskBreakBlocks((struct HitBoxSet *)gUnk_0873CB94, gCurTask->unk44))
-        gCurTask->unk7C = 1;
+    if (TaskBreakBlocks((struct HitBoxSet *)gUnk_0873CB94, gCurTask->parent))
+        gCurTask->hitKind = 1;
     else
         sub_0801c230(gUnk_0873CB4C);
     hit = 0;
     {
         struct Task *t = gCurTask;
-        if ((t->unk7A & 1) || *(u16 *)&gTerrainResult != 0 || t->unk7C != 0)
+        if ((t->onGround & 1) || *(u16 *)&gTerrainResult != 0 || t->hitKind != 0)
             hit++;
-        else if ((t->unk7B & 1) && t->unk28 != 0)
+        else if ((t->waterFlags & 1) && t->unk28 != 0)
             hit = 1;
     }
     if (hit)
@@ -274,10 +274,10 @@ void sub_08050e84(void)
         TaskSetEntry(sub_08050814, gCurTaskIdx);
         t = gCurTask;
         t->unk24 = (s32)gUnk_0873BD78;
-        if (gTerrainResult.unk1 != 0 || (t->unk7A & 1) || gTerrainResult.unk0 != 0)
-            PlaySfxIfLocalPlayer(125, gCurTask->unk44);
+        if (gTerrainResult.ceilingHits != 0 || (t->onGround & 1) || gTerrainResult.unk0 != 0)
+            PlaySfxIfLocalPlayer(125, gCurTask->parent);
     }
-    RegisterCollider(gCurTaskIdx, gCurTask->unk48, gCurTask->unk4A, gUnk_0873BD78);
+    RegisterCollider(gCurTaskIdx, gCurTask->pixelX, gCurTask->pixelY, gUnk_0873BD78);
 }
 
 void sub_08050f80(void)
@@ -287,7 +287,7 @@ void sub_08050f80(void)
     struct Task *t;
 
     t = gCurTask;
-    if (t->unk43 == 1)
+    if (t->facing == 1)
         dx = -8;
     else
         dx = 8;
@@ -319,7 +319,7 @@ void sub_08050f80(void)
     if (t->unk28++ > 5)
     {
         t->unk28 = 0;
-        if (t->unk43 == 1)
+        if (t->facing == 1)
             t->unk2C = -0x40000;
         else
             t->unk2C = 0x40000;
@@ -327,17 +327,17 @@ void sub_08050f80(void)
     }
     else
     {
-        if (t->unk43 == 1)
+        if (t->facing == 1)
             t->unk30 += -0x10000;
         else
             t->unk30 += 0x10000;
         gCurTask->unk2C += gCurTask->unk30;
     }
     t = gCurTask;
-    if (t->unk88->unk37 != 2)
+    if (t->player->unk37 != 2)
     {
-        x = t->unk48 + dx + ((s16 *)&t->unk2C)[1];
-        y = t->unk4A;
+        x = t->pixelX + dx + ((s16 *)&t->unk2C)[1];
+        y = t->pixelY;
         if (!IsWorldPosOnScreen(x, y))
             return;
         x -= gSpriteCameraX;
@@ -345,88 +345,88 @@ void sub_08050f80(void)
     }
     else
     {
-        x = t->unk48 + dx + ((s16 *)&t->unk2C)[1];
-        y = t->unk4A;
+        x = t->pixelX + dx + ((s16 *)&t->unk2C)[1];
+        y = t->pixelY;
     }
     {
-        u32 *tbl = gCurTask->unk38;
-        QueueSprite(gCurTask->unk42, tbl[gCurTask->unk34], 0, 0, x, y);
+        u32 *tbl = gCurTask->frameTable;
+        QueueSprite(gCurTask->layer, tbl[gCurTask->unk34], 0, 0, x, y);
     }
 }
 
 void sub_08051124(void)
 {
-    gCurTask->unk00 = (u32)TaskMove;
-    gCurTask->unk0C = (u32)TaskDrawWorldInViewOrFree;
-    gCurTask->unk04 = (u32)sub_080512f8;
-    gCurTask->unk08 = (u32)sub_080513d4;
-    gCurTask->unk42 = 5;
-    gCurTask->unk38 = gUnk_0874C478;
+    gCurTask->moveCallback = (u32)TaskMove;
+    gCurTask->drawCallback = (u32)TaskDrawWorldInViewOrFree;
+    gCurTask->updateCallback = (u32)sub_080512f8;
+    gCurTask->lateUpdateCallback = (u32)sub_080513d4;
+    gCurTask->layer = 5;
+    gCurTask->frameTable = gUnk_0874C478;
     sub_0802205c(gUnk_0873CB4C);
     {
         struct Task *t = gCurTask;
-        if (t->unk43 == 1)
-            t->unk4C = (t->unk48 + 8) << 16;
+        if (t->facing == 1)
+            t->posX = (t->pixelX + 8) << 16;
         else
-            t->unk4C = (t->unk48 - 8) << 16;
+            t->posX = (t->pixelX - 8) << 16;
     }
     {
         struct Task *t = gCurTask;
-        t->unk50 = (t->unk4A + 4) << 16;
+        t->posY = (t->pixelY + 4) << 16;
         t->unk28 = 6;
         t->unk34 = 0;
-        PlaySfxIfLocalPlayer(106, t->unk44);
+        PlaySfxIfLocalPlayer(106, t->parent);
     }
     TaskSetMotionXFacing(0x40000, 0x5A5A5A5A);
     while (1)
     {
-        gCurTask->unk3C = 0;
+        gCurTask->frame = 0;
         TaskYieldTrampoline(1);
-        gCurTask->unk3C = 16;
+        gCurTask->frame = 16;
         TaskYieldTrampoline(1);
-        gCurTask->unk3C = 1;
+        gCurTask->frame = 1;
         TaskYieldTrampoline(2);
-        gCurTask->unk3C++;
+        gCurTask->frame++;
         TaskYieldTrampoline(1);
-        gCurTask->unk3C = 17;
+        gCurTask->frame = 17;
         TaskYieldTrampoline(1);
-        gCurTask->unk3C = 3;
+        gCurTask->frame = 3;
         TaskYieldTrampoline(2);
-        gCurTask->unk3C++;
+        gCurTask->frame++;
         TaskYieldTrampoline(1);
-        gCurTask->unk3C = 18;
+        gCurTask->frame = 18;
         TaskYieldTrampoline(1);
-        gCurTask->unk3C = 5;
+        gCurTask->frame = 5;
         TaskYieldTrampoline(2);
-        gCurTask->unk3C++;
+        gCurTask->frame++;
         TaskYieldTrampoline(1);
-        gCurTask->unk3C = 19;
+        gCurTask->frame = 19;
         TaskYieldTrampoline(1);
-        gCurTask->unk3C = 7;
+        gCurTask->frame = 7;
         TaskYieldTrampoline(2);
-        gCurTask->unk3C++;
+        gCurTask->frame++;
         TaskYieldTrampoline(1);
-        gCurTask->unk3C = 20;
+        gCurTask->frame = 20;
         TaskYieldTrampoline(1);
-        gCurTask->unk3C = 9;
+        gCurTask->frame = 9;
         TaskYieldTrampoline(2);
-        gCurTask->unk3C++;
+        gCurTask->frame++;
         TaskYieldTrampoline(1);
-        gCurTask->unk3C = 21;
+        gCurTask->frame = 21;
         TaskYieldTrampoline(1);
-        gCurTask->unk3C = 11;
+        gCurTask->frame = 11;
         TaskYieldTrampoline(2);
-        gCurTask->unk3C++;
+        gCurTask->frame++;
         TaskYieldTrampoline(1);
-        gCurTask->unk3C = 22;
+        gCurTask->frame = 22;
         TaskYieldTrampoline(1);
-        gCurTask->unk3C = 13;
+        gCurTask->frame = 13;
         TaskYieldTrampoline(2);
-        gCurTask->unk3C++;
+        gCurTask->frame++;
         TaskYieldTrampoline(1);
-        gCurTask->unk3C = 23;
+        gCurTask->frame = 23;
         TaskYieldTrampoline(1);
-        gCurTask->unk3C = 15;
+        gCurTask->frame = 15;
         TaskYieldTrampoline(2);
     }
 }
@@ -435,26 +435,26 @@ void sub_080512f8(void)
 {
     {
         struct Task *t = gCurTask;
-        t->unk78 = 127;
-        TaskBreakBlocks((struct HitBoxSet *)gUnk_0873CBA4, t->unk44);
+        t->health = 127;
+        TaskBreakBlocks((struct HitBoxSet *)gUnk_0873CBA4, t->parent);
     }
     sub_0801c230(gUnk_0873CB4C);
     {
         struct Task *t = gCurTask;
-        if ((t->unk7A & 1) || *(u16 *)&gTerrainResult != 0)
+        if ((t->onGround & 1) || *(u16 *)&gTerrainResult != 0)
         {
-            PlaySfxIfLocalPlayer(125, t->unk44);
+            PlaySfxIfLocalPlayer(125, t->parent);
             TaskSetEntry(sub_08050814, gCurTaskIdx);
             gCurTask->unk24 = (s32)gUnk_0873BD8C;
         }
-        else if (t->unk7B & 1)
+        else if (t->waterFlags & 1)
         {
-            if (t->unk54 & 0xFFFF0000)
+            if (t->velX & 0xFFFF0000)
                 TaskSetMotionXFacing(0x5A5A5A5A, -0x1800);
-            gCurTask->unk60 = 0x1000;
+            gCurTask->accelY = 0x1000;
         }
     }
-    RegisterCollider(gCurTaskIdx, gCurTask->unk48, gCurTask->unk4A, gUnk_0873BD8C);
+    RegisterCollider(gCurTaskIdx, gCurTask->pixelX, gCurTask->pixelY, gUnk_0873BD8C);
 }
 
 void sub_080513d4(void)
@@ -466,10 +466,10 @@ void sub_080513d4(void)
     case 0:
         {
             struct Task *u = gCurTask;
-            if (u->unk43 == 1)
-                u->unk30 = u->unk48 - 8;
+            if (u->facing == 1)
+                u->unk30 = u->pixelX - 8;
             else
-                u->unk30 = u->unk48 + 8;
+                u->unk30 = u->pixelX + 8;
         }
     case 1:
         gCurTask->unk2C = 24;
@@ -495,16 +495,16 @@ void sub_080513d4(void)
     t->unk28 = (t->unk28 + 1) & 7;
     if (t->unk2C != -1)
     {
-        if (t->unk43 == 1)
+        if (t->facing == 1)
             t->unk34--;
         else
             t->unk34++;
-        if (IsWorldPosOnScreen(gCurTask->unk30 + gCurTask->unk34, gCurTask->unk4A))
+        if (IsWorldPosOnScreen(gCurTask->unk30 + gCurTask->unk34, gCurTask->pixelY))
         {
-            u32 *tbl = gCurTask->unk38;
-            QueueSprite(gCurTask->unk42, tbl[gCurTask->unk2C], 0, 0,
+            u32 *tbl = gCurTask->frameTable;
+            QueueSprite(gCurTask->layer, tbl[gCurTask->unk2C], 0, 0,
                          gCurTask->unk30 + gCurTask->unk34 - gSpriteCameraX,
-                         gCurTask->unk4A - gSpriteCameraY);
+                         gCurTask->pixelY - gSpriteCameraY);
         }
     }
 }

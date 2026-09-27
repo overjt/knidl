@@ -15,18 +15,18 @@
    sprite in 24.8 fixed point. */
 struct M38LogoObj
 {
-    /*0x00*/ s16 *unk00;    /* script cursor */
-    /*0x04*/ s16 unk04;     /* script id, -1 = off */
-    /*0x06*/ s16 unk06;     /* sprite id (gUnk_087554B8), -1 = none */
-    /*0x08*/ s16 unk08;     /* layer */
-    /*0x0A*/ s16 unk0A;     /* frames to wait */
-    /*0x0C*/ s32 unk0C;     /* x << 8 */
-    /*0x10*/ s32 unk10;     /* y << 8 */
-    /*0x14*/ s16 unk14;     /* x velocity */
-    /*0x16*/ s16 unk16;     /* y velocity */
-    /*0x18*/ s16 unk18;     /* x acceleration */
-    /*0x1A*/ s16 unk1A;     /* y acceleration */
-    /*0x1C*/ s16 unk1C;     /* loop count */
+    /*0x00*/ s16 *scriptPos;    /* script cursor */
+    /*0x04*/ s16 scriptId;     /* script id, -1 = off */
+    /*0x06*/ s16 spriteId;     /* sprite id (gUnk_087554B8), -1 = none */
+    /*0x08*/ s16 layer;     /* layer */
+    /*0x0A*/ s16 sleepFrames;     /* frames to wait */
+    /*0x0C*/ s32 posX;     /* x << 8 */
+    /*0x10*/ s32 posY;     /* y << 8 */
+    /*0x14*/ s16 velX;     /* x velocity */
+    /*0x16*/ s16 velY;     /* y velocity */
+    /*0x18*/ s16 accelX;     /* x acceleration */
+    /*0x1A*/ s16 accelY;     /* y acceleration */
+    /*0x1C*/ s16 loopCount;     /* loop count */
     /*0x1E*/ u16 unk1E;
 };
 
@@ -44,18 +44,18 @@ void BootLogoInitObjects(void)
     s32 i;
 
     for (i = 0; i < 115; i++) {
-        obj->unk04 = *s;
-        obj->unk00 = gUnk_087577D8[*s++];
-        obj->unk06 = 0xFFFF;
-        obj->unk0A = *s++;
-        obj->unk0C = *s++ << 8;
-        obj->unk10 = *s << 8;
-        obj->unk14 = 0;
-        obj->unk16 = 0;
-        obj->unk18 = 0;
-        obj->unk1A = 0;
-        obj->unk08 = 15 - ((*s++ - 1) >> 4);
-        obj->unk1C = 0;
+        obj->scriptId = *s;
+        obj->scriptPos = gUnk_087577D8[*s++];
+        obj->spriteId = 0xFFFF;
+        obj->sleepFrames = *s++;
+        obj->posX = *s++ << 8;
+        obj->posY = *s << 8;
+        obj->velX = 0;
+        obj->velY = 0;
+        obj->accelX = 0;
+        obj->accelY = 0;
+        obj->layer = 15 - ((*s++ - 1) >> 4);
+        obj->loopCount = 0;
         obj++;
         gUnk_0201BFD0[i] = 0;
     }

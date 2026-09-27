@@ -65,56 +65,56 @@
  */
 
 struct Task {
-    /* 0x00 */ void (*f00)(void);
-    /* 0x04 */ void (*f04)(void);
-    /* 0x08 */ void (*f08)(void);
-    /* 0x0C */ void (*f0C)(void);
-    /* 0x10 */ s16 h10;
-    /* 0x12 */ u8  b12;
-    /* 0x13 */ u8  b13;
-    /* 0x14 */ u8  b14;
-    /* 0x15 */ u8  b15;
-    /* 0x16 */ u16 h16;
+    /* 0x00 */ void (*moveCallback)(void);
+    /* 0x04 */ void (*updateCallback)(void);
+    /* 0x08 */ void (*lateUpdateCallback)(void);
+    /* 0x0C */ void (*drawCallback)(void);
+    /* 0x10 */ s16 sleepFrames;
+    /* 0x12 */ u8  taskClass;
+    /* 0x13 */ u8  skipMask;
+    /* 0x14 */ u8  state;
+    /* 0x15 */ u8  updateState;
+    /* 0x16 */ u16 serial;
     /* 0x18 */ u32 w18[8];
-    /* 0x38 */ u32 w38;
-    /* 0x3C */ u16 h3C;
-    /* 0x3E */ u16 h3E;
-    /* 0x40 */ u16 h40;
-    /* 0x42 */ u8  b42;
-    /* 0x43 */ u8  b43;
-    /* 0x44 */ u16 h44;
+    /* 0x38 */ u32 frameTable;
+    /* 0x3C */ u16 frame;
+    /* 0x3E */ u16 spriteFlags;
+    /* 0x40 */ u16 tileWord;
+    /* 0x42 */ u8  layer;
+    /* 0x43 */ u8  facing;
+    /* 0x44 */ u16 parent;
     /* 0x46 */ u16 h46;
-    /* 0x48 */ u16 h48;
-    /* 0x4A */ u16 h4A;
-    /* 0x4C */ u32 w4C;
-    /* 0x50 */ u32 w50;
-    /* 0x54 */ u32 w54;
-    /* 0x58 */ u32 w58;
-    /* 0x5C */ u32 w5C;
-    /* 0x60 */ u32 w60;
-    /* 0x64 */ u32 w64;
-    /* 0x68 */ u32 w68;
+    /* 0x48 */ u16 pixelX;
+    /* 0x4A */ u16 pixelY;
+    /* 0x4C */ u32 posX;
+    /* 0x50 */ u32 posY;
+    /* 0x54 */ u32 velX;
+    /* 0x58 */ u32 velY;
+    /* 0x5C */ u32 accelX;
+    /* 0x60 */ u32 accelY;
+    /* 0x64 */ u32 speedLimitX;
+    /* 0x68 */ u32 speedLimitY;
     /* 0x6C */ u16 h6C;
     /* 0x6E */ u16 h6E;
     /* 0x70 */ u16 h70;
-    /* 0x72 */ u8  b72;
-    /* 0x73 */ u8  b73;
+    /* 0x72 */ u8  actorKind;
+    /* 0x73 */ u8  variant;
     /* 0x74 */ u8  b74;
-    /* 0x75 */ u8  b75;
+    /* 0x75 */ u8  hitTimer;
     /* 0x76 */ u16 h76;
-    /* 0x78 */ u16 h78;
-    /* 0x7A */ u8  b7A;
-    /* 0x7B */ u8  b7B;
-    /* 0x7C */ u8  b7C;
-    /* 0x7D */ u8  b7D;
-    /* 0x7E */ u8  b7E;
-    /* 0x7F */ u8  b7F;
+    /* 0x78 */ u16 health;
+    /* 0x7A */ u8  onGround;
+    /* 0x7B */ u8  waterFlags;
+    /* 0x7C */ u8  hitKind;
+    /* 0x7D */ u8  hitDirection;
+    /* 0x7E */ u8  hitterSlot;
+    /* 0x7F */ u8  hitterPlayer;
     /* 0x80 */ u8  b80;
     /* 0x81 */ u8  b81;
     /* 0x82 */ u16 h82;
     /* 0x84 */ u16 h84;
     /* 0x86 */ u16 h86;
-    /* 0x88 */ u32 w88;
+    /* 0x88 */ u32 player;
     /* 0x8C */ u32 w8C;
 };
 
@@ -148,7 +148,7 @@ void TaskSwitchTrampoline(s32 id, u32 fn, u32 stack);
 
 void TaskSetSkipMask(u8 val, s32 idx)
 {
-    gTasks[idx].b13 = val;
+    gTasks[idx].skipMask = val;
 }
 
 void TaskSetOthersSkipMask(u16 val, s32 idx)
@@ -156,12 +156,12 @@ void TaskSetOthersSkipMask(u16 val, s32 idx)
     u8 save;
     u16 i;
 
-    save = gTasks[idx].b13;
+    save = gTasks[idx].skipMask;
     for (i = 0; i < 64; i++) {
         if ((s16)gTaskSlotTypes[i] >= 0)
-            gTasks[i].b13 = val;
+            gTasks[i].skipMask = val;
     }
-    gTasks[idx].b13 = save;
+    gTasks[idx].skipMask = save;
 }
 
 void TaskSetAllSkipMask(u16 val)
@@ -170,6 +170,6 @@ void TaskSetAllSkipMask(u16 val)
 
     for (i = 0; i < 64; i++) {
         if ((s16)gTaskSlotTypes[i] >= 0)
-            gTasks[i].b13 = val;
+            gTasks[i].skipMask = val;
     }
 }

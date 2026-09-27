@@ -129,9 +129,9 @@ void sub_080102c0(void)
     struct GfxHeader *h = gUnk_08731F78[gUnk_030023B8];
 
     if (h != NULL) {
-        LZ77UnCompWram(h->unk0C, gUnk_02020000);
-        RequestCopy(4, (u32)gUnk_02020000, (u32)gObjVram, h->unk02 << 5);
-        RequestCopy(2, (u32)h->unk08, (u32)gUnk_03001570, h->unk00 << 5);
+        LZ77UnCompWram(h->tiles, gUnk_02020000);
+        RequestCopy(4, (u32)gUnk_02020000, (u32)gObjVram, h->tileCount << 5);
+        RequestCopy(2, (u32)h->palette, (u32)gUnk_03001570, h->paletteBankCount << 5);
         if (gPlayerCount > 1)
             RequestCopy(2, (u32)gPlayerPalettes[gLocalPlayer], (u32)gUnk_03001570, 22);
     }

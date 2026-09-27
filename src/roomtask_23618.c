@@ -5,7 +5,7 @@
 /* roomtask_23618.c (0x08023618-0x08023947, issue #93).
  *
  * Task type #3 (class 4), the room's per-frame driver.  Task_Room, the
- * type's body, dispatches Task.unk14 through the anchor table
+ * type's body, dispatches Task.state through the anchor table
  * gRoomTaskVariants: sub_08023634 (index 0), sub_08023e34 (1), sub_08023e78
  * (2), sub_08024540 (3), sub_080242d0 (4), sub_08024904 (5) and
  * sub_08024da4 (6); every room loader spawns the task with its own index
@@ -58,36 +58,36 @@ void sub_080238ec(void);
 
 void Task_Room(void)
 {
-    CallTableEntry(gCurTask->unk14, 7, gRoomTaskVariants);
+    CallTableEntry(gCurTask->state, 7, gRoomTaskVariants);
 }
 
 void sub_08023634(void)
 {
     struct Task *t = gCurTask;
 
-    t->unk00 = 0;
-    t->unk0C = (u32)RoomTaskDraw;
-    t->unk04 = (u32)RoomTaskUpdateCamera;
+    t->moveCallback = 0;
+    t->drawCallback = (u32)RoomTaskDraw;
+    t->updateCallback = (u32)RoomTaskUpdateCamera;
     switch (gRoomBgLayout)
     {
     default:
     case 0:
-        gCurTask->unk08 = (u32)sub_08023748;
+        gCurTask->lateUpdateCallback = (u32)sub_08023748;
         break;
     case 1:
-        gCurTask->unk08 = (u32)sub_080237fc;
+        gCurTask->lateUpdateCallback = (u32)sub_080237fc;
         break;
     case 2:
-        gCurTask->unk08 = (u32)sub_080238ec;
+        gCurTask->lateUpdateCallback = (u32)sub_080238ec;
         break;
     case 3:
-        gCurTask->unk08 = (u32)sub_080237a4;
+        gCurTask->lateUpdateCallback = (u32)sub_080237a4;
         break;
     case 4:
-        gCurTask->unk08 = (u32)sub_0802385c;
+        gCurTask->lateUpdateCallback = (u32)sub_0802385c;
         break;
     case 5:
-        gCurTask->unk08 = (u32)sub_080238a4;
+        gCurTask->lateUpdateCallback = (u32)sub_080238a4;
         break;
     }
     TaskSleepForever();

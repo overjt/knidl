@@ -17,7 +17,7 @@
  * in gTerrainProbeResult) and writes the corrected position back;
  * sub_0802205c and sub_0802233c do the same for walls, sub_080222b0 probes
  * the ground and TaskInitWaterFlags/TaskInitWaterFlagsSlot set a task's in-wall state
- * (Task.unk7B).  The rest clamp a body or a task to the per-player bounds
+ * (Task.waterFlags).  The rest clamp a body or a task to the per-player bounds
  * gPlayerBounds, the camera bounds gCameraBounds or the room bounds
  * gRoomBounds and return which edges were hit. */
 
@@ -26,33 +26,33 @@ struct MapCell
     /*0x00*/ u8 unk0;
     /*0x01*/ u8 unk1;
     /*0x02*/ u8 unk2;
-    /*0x03*/ u8 unk3;
+    /*0x03*/ u8 collisionTile;
 };
 
 struct Unk03005530
 {
     /*0x00*/ u8 unk0;
-    /*0x01*/ u8 unk1;
+    /*0x01*/ u8 ceilingHits;
     /*0x02*/ u8 unk2;
     /*0x03*/ u8 unk3;
-    /*0x04*/ u8 unk4;
+    /*0x04*/ u8 slope;
     /*0x05*/ u8 unk5;
-    /*0x06*/ u8 unk6;
-    /*0x07*/ u8 unk7;
+    /*0x06*/ u8 onGround;
+    /*0x07*/ u8 waterFlags;
     /*0x08*/ u16 unk8;
-    /*0x0A*/ u8 unkA;
+    /*0x0A*/ u8 atDoor;
     /*0x0B*/ u8 unkB;
     /*0x0C*/ u8 unkC;
     /*0x0D*/ u8 unkD;
-    /*0x0E*/ u8 unkE;
+    /*0x0E*/ u8 onSlipperyFloor;
     /*0x0F*/ u8 unkF;
 };
 
 struct BgMap
 {
     /*0x00*/ u16 unk0;
-    /*0x02*/ u16 unk2;
-    /*0x04*/ u16 unk4;
+    /*0x02*/ u16 width;
+    /*0x04*/ u16 height;
     /*0x06*/ u16 unk6[0];
 };
 
@@ -69,35 +69,35 @@ struct Door
 struct RoomDef
 {
     /*0x00*/ u8 filler00[4];
-    /*0x04*/ s8 unk04;
-    /*0x05*/ u8 unk05;
+    /*0x04*/ s8 bgm;
+    /*0x05*/ u8 mapsCompressed;
     /*0x06*/ u8 filler06[2];
-    /*0x08*/ void *unk08;
-    /*0x0C*/ void *unk0C;
+    /*0x08*/ void *metatileMap;
+    /*0x0C*/ void *blockLayer;
     /*0x10*/ void *unk10;
-    /*0x14*/ u16 unk14;
-    /*0x16*/ u16 unk16;
-    /*0x18*/ u16 *unk18;
-    /*0x1C*/ void *unk1C;
-    /*0x20*/ void *unk20;
-    /*0x24*/ u16 unk24;
-    /*0x26*/ u16 unk26;
-    /*0x28*/ u16 *unk28;
-    /*0x2C*/ void *unk2C;
-    /*0x30*/ struct BgMap *unk30;
-    /*0x34*/ u16 unk34;
-    /*0x36*/ u16 unk36;
+    /*0x14*/ u16 width;
+    /*0x16*/ u16 height;
+    /*0x18*/ u16 *bg2Palette;
+    /*0x1C*/ void *bg2Tiles;
+    /*0x20*/ void *metatileTiles;
+    /*0x24*/ u16 borderX;
+    /*0x26*/ u16 borderY;
+    /*0x28*/ u16 *bg3Palette;
+    /*0x2C*/ void *bg3Tiles;
+    /*0x30*/ struct BgMap *bg3Map;
+    /*0x34*/ u16 bg3BorderX;
+    /*0x36*/ u16 bg3BorderY;
     /*0x38*/ u16 unk38;
-    /*0x3A*/ u16 unk3A;
-    /*0x3C*/ u16 unk3C;
-    /*0x3E*/ u16 unk3E;
-    /*0x40*/ u16 unk40;
+    /*0x3A*/ u16 doorCount;
+    /*0x3C*/ u16 objectCount;
+    /*0x3E*/ u16 objectsSortedByY;
+    /*0x40*/ u16 bgAnimSet;
     /*0x42*/ u16 unk42;
-    /*0x44*/ struct Door *unk44;
-    /*0x48*/ void *unk48;
+    /*0x44*/ struct Door *doors;
+    /*0x48*/ void *objects;
     /*0x4C*/ u8 filler4C[4];
-    /*0x50*/ u16 unk50;
-    /*0x52*/ u16 unk52;
+    /*0x50*/ u16 entryX;
+    /*0x52*/ u16 entryY;
     /*0x54*/ u8 unk54;
     /*0x55*/ u8 unk55;
     /*0x56*/ u8 unk56;
@@ -133,7 +133,7 @@ extern u16 gBlockLayer[];
 extern struct RoomDef *gCurRoomDef;
 extern s8 *const gCollisionTileShapes[];
 extern s8 gUnk_087335F0[];
-extern u8 gUnk_03005568;
+extern u8 gTerrainBoundsClamp;
 extern u16 gUnk_03005544;
 extern struct CamRect gPlayerBounds[4];
 extern u8 gUnk_02005574[];
@@ -159,7 +159,7 @@ s32 GetCollisionTile(u32 x, u32 y)
     if (x >= w || y >= gRoomHeight)
         return 0;
     idx = y * w;
-    return (&gRoomMap[idx])[x].unk3;
+    return (&gRoomMap[idx])[x].collisionTile;
 }
 
 s32 sub_08021b70(u32 x, u32 y)
@@ -186,7 +186,7 @@ s32 GetCollisionTileAtOffset(s16 x, s16 y, s16 dx, s16 dy)
     if (cx <= 0 || cx >= (w = gRoomWidth) - 1 || cy <= 0 || cy >= gRoomHeight - 1)
         return -1;
     idx = cy * w;
-    return (&gRoomMap[idx])[cx].unk3;
+    return (&gRoomMap[idx])[cx].collisionTile;
 }
 
 u16 sub_08021c14(s16 x, s16 y)
@@ -212,14 +212,14 @@ void sub_08021c74(s8 *box, s32 id)
     s32 flags;
     s32 n;
 
-    gTerrainProbeX = (t->unk4C >> 16) + box[0];
-    gTerrainProbeY = (t->unk50 >> 16) + box[1];
+    gTerrainProbeX = (t->posX >> 16) + box[0];
+    gTerrainProbeY = (t->posY >> 16) + box[1];
     gTerrainBoxTop = box[2];
     gTerrainBoxBottom = box[3];
     gTerrainBoxLeft = box[4];
     gTerrainBoxRight = box[5];
     gTerrainProbeResult.unk2++;
-    gTerrainProbeResult.unk6 = 1;
+    gTerrainProbeResult.onGround = 1;
     TerrainQueryPixelAndBelow(gTerrainProbeX, gTerrainProbeY + gTerrainBoxBottom);
     if (gCollisionTileShapeClass[gTerrainTile] == 0)
     {
@@ -305,37 +305,37 @@ edges:
     goto done;
 
 clear:
-    gTerrainProbeResult.unk6 = 0;
+    gTerrainProbeResult.onGround = 0;
     gTerrainProbeResult.unk2 = 0;
     gTerrainProbeResult.unkB = 0;
 
 done:
-    t->unk7A = gTerrainProbeResult.unk6;
+    t->onGround = gTerrainProbeResult.onGround;
     t->unk84 = (gTerrainProbeResult.unkC << 8) | gTerrainProbeResult.unkB;
     n = gTerrainProbeX - box[0];
-    if ((t->unk4C >> 16) != n)
+    if ((t->posX >> 16) != n)
     {
-        t->unk4C = (n << 16) + 0x8000;
-        t->unk48 = n;
+        t->posX = (n << 16) + 0x8000;
+        t->pixelX = n;
     }
     n = gTerrainProbeY - box[1];
-    if ((t->unk50 >> 16) != n)
+    if ((t->posY >> 16) != n)
     {
-        t->unk50 = (n << 16) + 0x8000;
-        t->unk4A = n;
+        t->posY = (n << 16) + 0x8000;
+        t->pixelY = n;
     }
 }
 
 void sub_0802205c(s8 *box)
 {
-    gTerrainProbeX = (gCurTask->unk4C >> 16) + box[0];
-    gTerrainProbeY = (gCurTask->unk50 >> 16) + box[1];
+    gTerrainProbeX = (gCurTask->posX >> 16) + box[0];
+    gTerrainProbeY = (gCurTask->posY >> 16) + box[1];
     gTerrainBoxTop = box[2];
     gTerrainBoxBottom = box[3];
     gTerrainBoxLeft = box[4];
     gTerrainBoxRight = box[5];
     gTerrainProbeResult.unkB = 0;
-    if (gCurTask->unk43 != -1)
+    if (gCurTask->facing != -1)
     {
         if (TerrainQueryPixelAndSides(gTerrainProbeX + gTerrainBoxRight, gTerrainProbeY) == 0)
         {
@@ -396,12 +396,12 @@ void sub_080222b0(s32 x, s32 y)
 
 void sub_0802233c(s8 *off)
 {
-    gTerrainProbeX = (gCurTask->unk4C >> 16) + off[0];
-    gTerrainProbeY = (gCurTask->unk50 >> 16) + off[1];
+    gTerrainProbeX = (gCurTask->posX >> 16) + off[0];
+    gTerrainProbeY = (gCurTask->posY >> 16) + off[1];
     gTerrainProbeResult.unkB = 0;
     if (TerrainQueryPixelAndSides(gTerrainProbeX, gTerrainProbeY) == 0)
     {
-        if (gCurTask->unk43 != -1)
+        if (gCurTask->facing != -1)
         {
             if ((gUnk_087336F0[gTerrainTile] != 0 && gCollisionTileSlope[gTerrainTile] != 0
                  && (gCollisionTileSlope[gTerrainTile] & 1))
@@ -425,11 +425,11 @@ void sub_0802233c(s8 *off)
 
 void TaskInitWaterFlags(void)
 {
-    TerrainQueryPixel(gCurTask->unk4C >> 16, gCurTask->unk50 >> 16);
+    TerrainQueryPixel(gCurTask->posX >> 16, gCurTask->posY >> 16);
     if (gTerrainTile > 127)
-        gCurTask->unk7B = 3;
+        gCurTask->waterFlags = 3;
     else
-        gCurTask->unk7B = 0;
+        gCurTask->waterFlags = 0;
     gCurTask->unk84 = 128;
 }
 
@@ -437,11 +437,11 @@ void TaskInitWaterFlagsSlot(s32 id)
 {
     struct Task *t = &gTasks[id];
 
-    TerrainQueryPixel(t->unk4C >> 16, t->unk50 >> 16);
+    TerrainQueryPixel(t->posX >> 16, t->posY >> 16);
     if (gTerrainTile > 127)
-        t->unk7B = 3;
+        t->waterFlags = 3;
     else
-        t->unk7B = 0;
+        t->waterFlags = 0;
     t->unk84 = 128;
 }
 
@@ -481,7 +481,7 @@ u16 sub_0802259c(u16 x, u16 y)
     if (x >= w || y >= gRoomHeight)
         return 0;
     idx = y * w;
-    tile = (&gRoomMap[idx])[x].unk3;
+    tile = (&gRoomMap[idx])[x].collisionTile;
     r = 0;
     if (tile > 127)
         r = 256;
@@ -499,22 +499,22 @@ s32 IsFullBlockAtPixel(u16 x, u16 y)
 
 void sub_08022650(void)
 {
-    gUnk_03005568 = 0;
+    gTerrainBoundsClamp = 0;
     gUnk_03005544 = 0;
     if (gPlayerBounds[gCurTaskIdx].x0 > gTerrainProbeX + gTerrainBoxLeft)
     {
         gTerrainProbeX = gPlayerBounds[gCurTaskIdx].x0 - gTerrainBoxLeft;
-        gUnk_03005568 = 1;
+        gTerrainBoundsClamp = 1;
     }
     else if (gPlayerBounds[gCurTaskIdx].x1 < gTerrainProbeX + gTerrainBoxRight)
     {
         gTerrainProbeX = gPlayerBounds[gCurTaskIdx].x1 - gTerrainBoxRight;
-        gUnk_03005568 = 2;
+        gTerrainBoundsClamp = 2;
     }
     if (gPlayerBounds[gCurTaskIdx].y0 > gTerrainProbeY + gTerrainBoxTop)
     {
         gTerrainProbeY = gPlayerBounds[gCurTaskIdx].y0 - gTerrainBoxTop;
-        gUnk_03005568 |= 4;
+        gTerrainBoundsClamp |= 4;
         if (gUnk_02005574[0] == 0)
             gUnk_03005544 = gPlayerBounds[gCurTaskIdx].y0;
     }
@@ -522,7 +522,7 @@ void sub_08022650(void)
 
 s32 IsTaskBelowPlayerBounds(struct Task *t)
 {
-    if (gPlayerBounds[gCurTaskIdx].y1 < t->unk4A)
+    if (gPlayerBounds[gCurTaskIdx].y1 < t->pixelY)
         return 1;
     return 0;
 }
@@ -540,23 +540,23 @@ s32 ClampTaskToRoom(struct Task *t)
     s32 lo = gRoomBounds[0] - 111;
     s32 hi = gRoomBounds[1] + 111;
 
-    if (lo > t->unk48)
+    if (lo > t->pixelX)
     {
-        t->unk4C = lo << 16;
-        t->unk48 = lo;
+        t->posX = lo << 16;
+        t->pixelX = lo;
         r = 1;
     }
-    else if (hi < t->unk48)
+    else if (hi < t->pixelX)
     {
-        t->unk4C = hi << 16;
-        t->unk48 = hi;
+        t->posX = hi << 16;
+        t->pixelX = hi;
         r = 2;
     }
     lo = gRoomBounds[2] - 72;
-    if (lo > t->unk4A)
+    if (lo > t->pixelY)
     {
-        t->unk50 = lo << 16;
-        t->unk4A = lo;
+        t->posY = lo << 16;
+        t->pixelY = lo;
         r |= 4;
     }
     return r;
@@ -567,24 +567,24 @@ s32 sub_08022810(void)
     s32 lo;
     s32 hi;
 
-    gUnk_03005568 = 0;
+    gTerrainBoundsClamp = 0;
     lo = gCameraBounds[0] - 117;
     hi = gCameraBounds[1] + 117;
     if (lo > gTerrainProbeX + gTerrainBoxLeft)
     {
         gTerrainProbeX = lo - gTerrainBoxLeft;
-        gUnk_03005568 = 1;
+        gTerrainBoundsClamp = 1;
     }
     else if (hi < gTerrainProbeX + gTerrainBoxRight)
     {
         gTerrainProbeX = hi - gTerrainBoxRight;
-        gUnk_03005568 = 2;
+        gTerrainBoundsClamp = 2;
     }
     lo = gCameraBounds[2] - 76;
     if (lo > gTerrainProbeY + gTerrainBoxTop)
     {
         gTerrainProbeY = lo - gTerrainBoxTop;
-        gUnk_03005568 |= 4;
+        gTerrainBoundsClamp |= 4;
     }
 }
 
@@ -594,31 +594,31 @@ s32 sub_080228c4(struct Task *t)
     s32 lo = gCameraBounds[0] - 111;
     s32 hi = gCameraBounds[1] + 111;
 
-    if (t->unk48 < lo)
+    if (t->pixelX < lo)
     {
-        if (lo - t->unk48 <= 11)
+        if (lo - t->pixelX <= 11)
         {
-            t->unk4C = lo << 16;
-            t->unk48 = lo;
+            t->posX = lo << 16;
+            t->pixelX = lo;
             r = 1;
         }
     }
-    else if (hi < t->unk48)
+    else if (hi < t->pixelX)
     {
-        if (t->unk48 - lo > 12)
+        if (t->pixelX - lo > 12)
         {
-            t->unk4C = hi << 16;
-            t->unk48 = hi;
+            t->posX = hi << 16;
+            t->pixelX = hi;
             r = 2;
         }
     }
     lo = gCameraBounds[2] - 72;
-    if (lo > t->unk4A)
+    if (lo > t->pixelY)
     {
-        if (lo - t->unk48 <= 11)
+        if (lo - t->pixelX <= 11)
         {
-            t->unk50 = lo << 16;
-            t->unk4A = lo;
+            t->posY = lo << 16;
+            t->pixelY = lo;
             r |= 4;
         }
     }
@@ -627,7 +627,7 @@ s32 sub_080228c4(struct Task *t)
 
 s32 sub_0802294c(struct Task *t)
 {
-    if (gRoomBounds[3] + 104 < t->unk4A)
+    if (gRoomBounds[3] + 104 < t->pixelY)
         return 1;
     return 0;
 }

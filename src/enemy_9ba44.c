@@ -12,16 +12,16 @@ extern u32 gUnk_030015A0[];
 extern u32 gUnk_030015CE[];
 extern u32 gUnk_030015EC[];
 extern struct Task gTasks[];
-extern u32 gUnk_0827AC64[];
+extern u32 gAxeKnightGfx[];
 extern u32 gUnk_0827AC78[];
 extern u32 gUnk_0827AC7C[];
-extern u32 gUnk_0827B8F8[];
+extern u32 gJavelinKnightGfx[];
 extern u32 gUnk_0827B90C[];
 extern u32 gUnk_0827B914[];
-extern u32 gUnk_0827CA48[];
+extern u32 gMaceKnightGfx[];
 extern u32 gUnk_0827CA5C[];
 extern u32 gUnk_0827CA60[];
-extern u32 gUnk_0827D808[];
+extern u32 gTridentKnightGfx[];
 extern u32 gUnk_0827D81C[];
 extern u32 gUnk_0827D820[];
 extern u32 gUnk_08745B0C[];
@@ -66,45 +66,45 @@ void sub_0809ba44(void)
 {
     struct Task *t = gCurTask;
 
-    t->unk04 = (u32)sub_0809ba94;
-    t->unk2C = -gTasks[t->unk44].unk43;
+    t->updateCallback = (u32)sub_0809ba94;
+    t->unk2C = -gTasks[t->parent].facing;
     ActorSetState(0);
-    CallTableEntry(gCurTask->unk14, 2, gUnk_08745B20);
+    CallTableEntry(gCurTask->state, 2, gUnk_08745B20);
 }
 
 void sub_0809ba94(void)
 {
     if (sub_0806951c() == 0)
     {
-        CallTableEntry(gCurTask->unk15, 2, gUnk_08745B28);
+        CallTableEntry(gCurTask->updateState, 2, gUnk_08745B28);
     }
     else
     {
         ActorSetState(1);
         TaskSetEntry(sub_0809baec, gCurTaskIdx);
     }
-    if (gCurTask->unk14 != 1)
+    if (gCurTask->state != 1)
         ActorCheckHits();
     ActorReactToHit();
 }
 
 void sub_0809baec(void)
 {
-    CallTableEntry(gCurTask->unk14, 2, gUnk_08745B20);
+    CallTableEntry(gCurTask->state, 2, gUnk_08745B20);
 }
 
 void sub_0809bb08(void)
 {
     struct Task *t;
 
-    gCurTask->unk15 = 0;
-    gCurTask->unk7A = 0;
+    gCurTask->updateState = 0;
+    gCurTask->onGround = 0;
     t = gCurTask;
     t->unk28 = 0;
-    t->unk54 = gUnk_08745B0C[t->unk74] * t->unk2C;
-    t->unk58 = 0xFFFD0000;
-    t->unk60 = 0xC0 << 6;
-    t->unk68 = 0xC0 << 10;
+    t->velX = gUnk_08745B0C[t->unk74] * t->unk2C;
+    t->velY = 0xFFFD0000;
+    t->accelY = 0xC0 << 6;
+    t->speedLimitY = 0xC0 << 10;
     TaskSetFrameNoFlip(4);
     TaskYieldTrampoline(6);
     TaskSetFrameNoFlip(5);
@@ -119,21 +119,21 @@ void sub_0809bb6c(void)
 {
     struct Task *t;
 
-    gCurTask->unk15 = 1;
-    gCurTask->unk7A = 0;
+    gCurTask->updateState = 1;
+    gCurTask->onGround = 0;
     gCurTask->unk28 = 0;
     TaskStop();
     t = gCurTask;
-    t->unk58 = 0xFFFD0000;
-    t->unk60 = 0xC0 << 6;
-    t->unk68 = 0xC0 << 10;
-    t->unk3C = 6;
+    t->velY = 0xFFFD0000;
+    t->accelY = 0xC0 << 6;
+    t->speedLimitY = 0xC0 << 10;
+    t->frame = 6;
     TaskYieldTrampoline(2);
     t = gCurTask;
-    t->unk3C += 2;
+    t->frame += 2;
     TaskYieldTrampoline(2);
     t = gCurTask;
-    t->unk3C += 1;
+    t->frame += 1;
     TaskYieldTrampoline(2);
     ActorDestroy();
     TaskSleepForever();
@@ -143,7 +143,7 @@ void sub_0809bbd4(void)
 {
 }
 
-void sub_0809bbd8(void)
+void Task_MetaKnights(void)
 {
     struct Task *t;
 
@@ -156,8 +156,8 @@ void sub_0809bbd8(void)
     sub_0809bfac();
     sub_08067114();
     t = gCurTask;
-    t->unk04 = (u32)sub_0809bc1c;
-    t->unk08 = (u32)sub_0809bf2c;
+    t->updateCallback = (u32)sub_0809bc1c;
+    t->lateUpdateCallback = (u32)sub_0809bf2c;
     TaskSleepForever();
 }
 
@@ -245,7 +245,7 @@ void sub_0809bc1c(void)
     if (gUnk_02007D00[0] < 0 && gUnk_02007D00[1] < 0 && gUnk_02007D00[2] < 0
         && gUnk_02007D00[3] < 0)
     {
-        sub_080262e8(gCurTask->unk73);
+        sub_080262e8(gCurTask->variant);
         HudRemoveHpBar();
         ActorDestroy();
     }
@@ -254,13 +254,13 @@ void sub_0809bc1c(void)
 void sub_0809bf2c(void)
 {
     if (gUnk_02007D00[5] & 1)
-        gCurTask->unk78 -= gUnk_02007D00[4];
+        gCurTask->health -= gUnk_02007D00[4];
     if (gUnk_02007D00[5] & 2)
-        gCurTask->unk78 -= gUnk_02007D00[4];
+        gCurTask->health -= gUnk_02007D00[4];
     if (gUnk_02007D00[5] & 4)
-        gCurTask->unk78 -= gUnk_02007D00[4];
+        gCurTask->health -= gUnk_02007D00[4];
     if (gUnk_02007D00[5] & 8)
-        gCurTask->unk78 -= gUnk_02007D00[4];
+        gCurTask->health -= gUnk_02007D00[4];
     if (gUnk_02007D00[5] != 0)
         HudAnimateTaskHpBar();
     gUnk_02007D00[5] = 0;
@@ -272,12 +272,12 @@ void sub_0809bfac(void)
     u16 *p;
 
     RequestCopy(4, (u32)gUnk_02020000, 0x06010000, 240 << 6);
-    g = (struct GfxHeader *)gUnk_0827AC64;
-    RequestCopy(2, (u32)g->unk08, (u32)(p = (u16 *)gUnk_03001570), g->unk00 << 5);
-    g = (struct GfxHeader *)gUnk_0827B8F8;
-    RequestCopy(2, (u32)g->unk08, (u32)(p + 16), g->unk00 << 5);
-    g = (struct GfxHeader *)gUnk_0827CA48;
-    RequestCopy(2, (u32)g->unk08, (u32)(p + 32), g->unk00 << 5);
-    g = (struct GfxHeader *)gUnk_0827D808;
-    RequestCopy(2, (u32)g->unk08, (u32)(p + 48), g->unk00 << 5);
+    g = (struct GfxHeader *)gAxeKnightGfx;
+    RequestCopy(2, (u32)g->palette, (u32)(p = (u16 *)gUnk_03001570), g->paletteBankCount << 5);
+    g = (struct GfxHeader *)gJavelinKnightGfx;
+    RequestCopy(2, (u32)g->palette, (u32)(p + 16), g->paletteBankCount << 5);
+    g = (struct GfxHeader *)gMaceKnightGfx;
+    RequestCopy(2, (u32)g->palette, (u32)(p + 32), g->paletteBankCount << 5);
+    g = (struct GfxHeader *)gTridentKnightGfx;
+    RequestCopy(2, (u32)g->palette, (u32)(p + 48), g->paletteBankCount << 5);
 }

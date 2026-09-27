@@ -24,8 +24,8 @@ extern s32 gUnk_030023B4;
 extern s32 gUnk_030023D4;
 
 extern struct ActorDef *gUnk_0873ECEC[];
-extern struct ActorDef *gUnk_0873ED90[];
-extern struct ActorDef *gUnk_0873EDB8[];
+extern struct ActorDef *gMidBossDefs[];
+extern struct ActorDef *gBossDefs[];
 extern struct ActorDef *gUnk_0873EDDC[];
 extern struct ActorDef *gUnk_0873EE70[];
 extern struct ActorDef *gUnk_0873EE88[];
@@ -52,8 +52,8 @@ extern s32 gUnk_0873DF14[];
 extern struct Actor gActors[];
 extern struct PlayerState gPlayerStates[];
 extern u32 gUnk_0873F198[];
-extern u32 gUnk_0873F23C[];
-extern u32 gUnk_0873F264[];
+extern u32 gMidBossTaskTypes[];
+extern u32 gBossTaskTypes[];
 extern u32 gUnk_0873F288[];
 extern u32 gUnk_0873F2A0[];
 extern void AddPlayerScore(s32 a, u32 b);
@@ -122,7 +122,7 @@ s32 sub_08063698(u32 type, s32 start)
     if (gUnk_02006178 != 1)
         return i;
     gTaskSkipMaskStack[0][i] = gTaskSkipMaskStack[1][i] = 0;
-    t->unk13 = 15;
+    t->skipMask = 15;
     return i;
 }
 
@@ -141,28 +141,28 @@ void sub_08063704(u32 i)
 
     t = &gTasks[i];
     a = t->unk8C;
-    a->unk44 = NULL;
-    switch (t->unk72)
+    a->def = NULL;
+    switch (t->actorKind)
     {
     case 0:
-        a->unk44 = gUnk_0873ECEC[t->unk76];
+        a->def = gUnk_0873ECEC[t->unk76];
         break;
     case 1:
     case 3:
-        a->unk44 = gUnk_0873ED90[t->unk76];
+        a->def = gMidBossDefs[t->unk76];
         break;
     case 2:
-        a->unk44 = gUnk_0873EDB8[t->unk76];
+        a->def = gBossDefs[t->unk76];
         gUnk_02007F50 = t->unk76;
         break;
     case 4:
-        a->unk44 = gUnk_0873EDDC[t->unk76];
+        a->def = gUnk_0873EDDC[t->unk76];
         break;
     case 5:
-        a->unk44 = gUnk_0873EE70[t->unk76];
+        a->def = gUnk_0873EE70[t->unk76];
         break;
     default:
-        a->unk44 = gUnk_0873EE88[t->unk76];
+        a->def = gUnk_0873EE88[t->unk76];
         break;
     }
 }
@@ -172,12 +172,12 @@ void ActorResetHealthSlot(u32 i)
     struct Task *t;
 
     t = &gTasks[i];
-    t->unk78 = ActorComputeHealthSlot(i);
+    t->health = ActorComputeHealthSlot(i);
 }
 
 void sub_080637cc(u32 a)
 {
-    gCurTask->unk78 = ActorComputeHealth(a);
+    gCurTask->health = ActorComputeHealth(a);
 }
 
 void sub_080637e4(u32 i)
@@ -188,71 +188,71 @@ void sub_080637e4(u32 i)
 
     t = &gTasks[i];
     a = t->unk8C;
-    a->unk1C = 0xFFFF;
+    a->prevState = 0xFFFF;
     a->unk04 = 0;
-    a->unk05 = 0;
+    a->hitState = 0;
     a->unk06 = 0;
     a->unk07 = 0;
-    a->unk2C = 0;
-    a->unk01 = 0;
-    a->unk08 = 0;
-    a->unk09 = 0;
-    a->unk0A = 0;
-    a->unk0B = 0;
+    a->animScript = 0;
+    a->hitStunTimer = 0;
+    a->animNoFlip = 0;
+    a->animScriptPos = 0;
+    a->paletteOverridden = 0;
+    a->paletteLocked = 0;
     a->unk0E = -1;
-    a->unk10 = -1;
-    a->unk12 = 0xFFFE;
-    a->unk22 = t->unk40 & 0xF000;
-    a->unk24 = 16;
-    a->unk28 = 0;
-    a->unk0C = t->unk73 >> 4;
-    t->unk73 = t->unk73 & 15;
-    if (a->unk0C != 0)
+    a->attachedTask = -1;
+    a->attachedTaskLifetime = 0xFFFE;
+    a->savedPaletteBits = t->tileWord & 0xF000;
+    a->paletteColorCount = 16;
+    a->palette = 0;
+    a->paletteVariant = t->variant >> 4;
+    t->variant = t->variant & 15;
+    if (a->paletteVariant != 0)
         sub_08065ce0(i);
-    t->unk16 = gNextActorSerial;
+    t->serial = gNextActorSerial;
     if (gNextActorSerial > 0xFFFE)
         gNextActorSerial = 0;
     else
         gNextActorSerial = gNextActorSerial + 1;
     a->unk3C = 0;
     a->unk34 = -1;
-    a->unk38 = -1;
+    a->sfxOverride = -1;
     a->unk0D = 0;
-    a->unk18 = 0;
+    a->extraOffsetY = 0;
     a->unk16 = 0;
-    a->unk03 = 0;
-    a->unk1E = 0;
-    a->unk1A = 0xFFFF;
-    a->unk02 = 0;
-    d = a->unk44;
+    a->extraLayerOffset = 0;
+    a->extraTileWord = 0;
+    a->extraFrame = 0xFFFF;
+    a->healthBonus = 0;
+    d = a->def;
     if (d != NULL)
     {
-        a->unk48 = d->unk14;
+        a->attackBox = d->attackBox;
         a->unk4C = 0;
-        a->unk50 = d->unk18;
-        a->unk58 = a->unk54 = d->unk1C;
-        a->unk5C = d->unk20;
-        a->unk00 = d->unk0C;
-        a->unk30 = d->unk08;
+        a->terrainBox = d->terrainBox;
+        a->prevTerrainHandlers = a->terrainHandlers = d->terrainHandlers;
+        a->hitReactions = d->hitReactions;
+        a->ability = d->ability;
+        a->score = d->score;
         ActorResetHealthSlot(i);
-        if (a->unk44->unk24 != NULL)
-            a->unk44->unk24(i);
-        a->unk40 = a->unk44->unk28;
-        a->unk60 = a->unk44->unk10;
+        if (a->def->unk24 != NULL)
+            a->def->unk24(i);
+        a->teardown = a->def->teardown;
+        a->unk60 = a->def->unk10;
     }
     else
     {
-        a->unk48 = 0;
+        a->attackBox = 0;
         a->unk4C = 0;
-        a->unk50 = 0;
-        a->unk54 = 0;
-        a->unk58 = 0;
-        a->unk5C = 0;
-        a->unk00 = 0;
-        a->unk30 = 0;
-        t->unk78 = 0;
+        a->terrainBox = 0;
+        a->terrainHandlers = 0;
+        a->prevTerrainHandlers = 0;
+        a->hitReactions = 0;
+        a->ability = 0;
+        a->score = 0;
+        t->health = 0;
         a->unk60 = 0;
-        a->unk40 = 0;
+        a->teardown = 0;
     }
 }
 
@@ -266,15 +266,15 @@ void ActorLoadDefSlot(u32 i, struct ActorDef *d)
     struct Actor *a;
 
     a = (&gTasks[i])->unk8C;
-    a->unk44 = d;
-    a->unk48 = d->unk14;
-    a->unk50 = d->unk18;
-    a->unk58 = a->unk54;
-    a->unk54 = d->unk1C;
-    a->unk5C = d->unk20;
-    a->unk00 = d->unk0C;
-    a->unk30 = d->unk08;
-    a->unk40 = d->unk28;
+    a->def = d;
+    a->attackBox = d->attackBox;
+    a->terrainBox = d->terrainBox;
+    a->prevTerrainHandlers = a->terrainHandlers;
+    a->terrainHandlers = d->terrainHandlers;
+    a->hitReactions = d->hitReactions;
+    a->ability = d->ability;
+    a->score = d->score;
+    a->teardown = d->teardown;
     ActorResetHealthSlot(i);
 }
 
@@ -283,8 +283,8 @@ void ActorSetState(u8 v)
     struct Task *t;
 
     t = gCurTask;
-    t->unk8C->unk1C = t->unk14;
-    t->unk14 = v;
+    t->unk8C->prevState = t->state;
+    t->state = v;
 }
 
 void ActorSetStateSlot(u32 i, u8 v)
@@ -292,8 +292,8 @@ void ActorSetStateSlot(u32 i, u8 v)
     struct Task *t;
 
     t = &gTasks[i];
-    t->unk8C->unk1C = t->unk14;
-    t->unk14 = v;
+    t->unk8C->prevState = t->state;
+    t->state = v;
 }
 
 void ActorSetTerrainHandlers(u32 v)
@@ -301,13 +301,13 @@ void ActorSetTerrainHandlers(u32 v)
     struct Actor *a;
 
     a = gCurTask->unk8C;
-    a->unk58 = a->unk54;
-    a->unk54 = v;
+    a->prevTerrainHandlers = a->terrainHandlers;
+    a->terrainHandlers = v;
 }
 
 void ActorSetHitReactions(u32 v)
 {
-    gCurTask->unk8C->unk5C = v;
+    gCurTask->unk8C->hitReactions = v;
 }
 
 void ActorSetAttackBox(u32 v)
@@ -320,12 +320,12 @@ void ActorSetAttackBoxSlot(u32 i, u32 v)
     struct Task *t;
 
     t = &gTasks[i];
-    t->unk8C->unk48 = v;
+    t->unk8C->attackBox = v;
 }
 
 void ActorSetTerrainBox(u32 v)
 {
-    gCurTask->unk8C->unk50 = v;
+    gCurTask->unk8C->terrainBox = v;
 }
 
 void sub_080639f0(struct ActorAux *v)
@@ -363,9 +363,9 @@ s32 sub_08063a2c(void)
         if (gTaskSlotTypes[i] != -1)
         {
             o = &gTasks[i];
-            d = gCurTask->unk48 - o->unk48;
+            d = gCurTask->pixelX - o->pixelX;
             if (d < 0)
-                d = o->unk48 - gCurTask->unk48;
+                d = o->pixelX - gCurTask->pixelX;
             if (best == -1 || bestDist > d)
             {
                 bestDist = d;
@@ -395,9 +395,9 @@ s32 sub_08063a9c(u32 i)
         if ((gActivePlayerMask >> j) & 1)
         {
             o = &gTasks[j];
-            d = t->unk48 - o->unk48;
+            d = t->pixelX - o->pixelX;
             if (d < 0)
-                d = o->unk48 - t->unk48;
+                d = o->pixelX - t->pixelX;
             if (best == -1 || bestDist > d)
             {
                 bestDist = d;
@@ -407,7 +407,7 @@ s32 sub_08063a9c(u32 i)
         }
     }
     t->unk80 = best;
-    t->unk88 = bestPtr;
+    t->player = bestPtr;
     return best;
 }
 
@@ -427,9 +427,9 @@ s32 TaskFindNearestPlayer(void)
         if ((gActivePlayerMask >> j) & 1)
         {
             o = &gTasks[j];
-            d = gCurTask->unk48 - o->unk48;
+            d = gCurTask->pixelX - o->pixelX;
             if (d < 0)
-                d = o->unk48 - gCurTask->unk48;
+                d = o->pixelX - gCurTask->pixelX;
             if (best == -1 || bestDist > d)
             {
                 bestDist = d;
@@ -439,7 +439,7 @@ s32 TaskFindNearestPlayer(void)
         }
     }
     gCurTask->unk80 = best;
-    gCurTask->unk88 = bestPtr;
+    gCurTask->player = bestPtr;
     return best;
 }
 
@@ -461,10 +461,10 @@ s32 GetTaskDistSq(u32 i, u32 j)
 
     a = &gTasks[i];
     b = &gTasks[j];
-    p.x1 = a->unk48;
-    p.y1 = a->unk4A;
-    p.x0 = b->unk48;
-    p.y0 = b->unk4A;
+    p.x1 = a->pixelX;
+    p.y1 = a->pixelY;
+    p.x0 = b->pixelX;
+    p.y0 = b->pixelY;
     return GetDistSq(&p);
 }
 
@@ -490,7 +490,7 @@ s32 GetTaskDx(u32 i, u32 j)
 
     a = &gTasks[i];
     b = &gTasks[j];
-    return a->unk48 - b->unk48;
+    return a->pixelX - b->pixelX;
 }
 
 s32 TaskGetDxTo(u32 i)
@@ -515,7 +515,7 @@ s32 GetTaskDy(u32 i, u32 j)
 
     a = &gTasks[i];
     b = &gTasks[j];
-    return a->unk4A - b->unk4A;
+    return a->pixelY - b->pixelY;
 }
 
 s32 TaskGetDyTo(u32 i)
@@ -538,8 +538,8 @@ void TaskGetPosSlot(u32 i)
     struct Task *t;
 
     t = &gTasks[i];
-    gUnk_030023B4 = t->unk48;
-    gUnk_030023D4 = t->unk4A;
+    gUnk_030023B4 = t->pixelX;
+    gUnk_030023D4 = t->pixelY;
 }
 
 void TaskGetNearestPlayerPos(void)
@@ -564,7 +564,7 @@ s32 TaskGetFacingToward(u32 i)
     s32 v;
 
     t = &gTasks[i];
-    d = t->unk48 - gCurTask->unk48;
+    d = t->pixelX - gCurTask->pixelX;
     v = 1;
     if (d < 0)
         v = -1;
@@ -573,7 +573,7 @@ s32 TaskGetFacingToward(u32 i)
 
 void TaskFaceToward(u32 i)
 {
-    gCurTask->unk43 = TaskGetFacingToward(i);
+    gCurTask->facing = TaskGetFacingToward(i);
 }
 
 s32 TaskGetFacingTowardNearestPlayer(void)
@@ -588,7 +588,7 @@ s32 TaskGetFacingTowardNearestPlayer(void)
 
 void TaskFaceNearestPlayer(void)
 {
-    gCurTask->unk43 = TaskGetFacingTowardNearestPlayer();
+    gCurTask->facing = TaskGetFacingTowardNearestPlayer();
 }
 
 u8 TaskIsInRect(struct Rect *r)
@@ -596,8 +596,8 @@ u8 TaskIsInRect(struct Rect *r)
     struct Task *t;
 
     t = gCurTask;
-    if (t->unk48 > r->left && t->unk48 < r->right
-        && t->unk4A > r->top && t->unk4A < r->bottom)
+    if (t->pixelX > r->left && t->pixelX < r->right
+        && t->pixelY > r->top && t->pixelY < r->bottom)
         return 1;
     return 0;
 }
@@ -615,8 +615,8 @@ s32 TaskIsInRectSlot(struct Rect *r, u32 i)
     struct Task *t;
 
     t = &gTasks[i];
-    if (t->unk48 > r->left && t->unk48 < r->right
-        && t->unk4A > r->top && t->unk4A < r->bottom)
+    if (t->pixelX > r->left && t->pixelX < r->right
+        && t->pixelY > r->top && t->pixelY < r->bottom)
         return 1;
     return 0;
 }
@@ -642,16 +642,16 @@ void ActorDestroySlot(s32 i)
         return;
     t = &gTasks[i];
     a = t->unk8C;
-    if (a != NULL && (u8)(t->unk72 - 7) > 3)
+    if (a != NULL && (u8)(t->actorKind - 7) > 3)
     {
-        if (a->unk40 != NULL)
-            a->unk40();
-        if (a->unk10 != -1)
+        if (a->teardown != NULL)
+            a->teardown();
+        if (a->attachedTask != -1)
         {
-            TaskFree(a->unk10);
-            a->unk10 = 0xFFFF;
+            TaskFree(a->attachedTask);
+            a->attachedTask = 0xFFFF;
         }
-        switch (t->unk72)
+        switch (t->actorKind)
         {
         case 0:
             sub_080b54a4(i);
@@ -676,32 +676,32 @@ void ActorDestroy(void)
 
 void TaskTurnAroundAndReverseX(void)
 {
-    if (gCurTask->unk43 == 1)
-        gCurTask->unk43 = 255;
+    if (gCurTask->facing == 1)
+        gCurTask->facing = 255;
     else
-        gCurTask->unk43 = 1;
-    TaskSetFrame(gCurTask->unk3C);
-    TaskSetMotionX(-gCurTask->unk54, -gCurTask->unk5C,
-                 gCurTask->unk64);
+        gCurTask->facing = 1;
+    TaskSetFrame(gCurTask->frame);
+    TaskSetMotionX(-gCurTask->velX, -gCurTask->accelX,
+                 gCurTask->speedLimitX);
 }
 
 void TaskTurnAround(void)
 {
-    if (gCurTask->unk43 == 1)
-        gCurTask->unk43 = 255;
+    if (gCurTask->facing == 1)
+        gCurTask->facing = 255;
     else
-        gCurTask->unk43 = 1;
-    TaskSetFrame(gCurTask->unk3C);
+        gCurTask->facing = 1;
+    TaskSetFrame(gCurTask->frame);
 }
 
 void TaskToggleFacingAndReverseX(void)
 {
-    if (gCurTask->unk43 == 1)
-        gCurTask->unk43 = 255;
+    if (gCurTask->facing == 1)
+        gCurTask->facing = 255;
     else
-        gCurTask->unk43 = 1;
-    TaskSetMotionX(-gCurTask->unk54, -gCurTask->unk5C,
-                 gCurTask->unk64);
+        gCurTask->facing = 1;
+    TaskSetMotionX(-gCurTask->velX, -gCurTask->accelX,
+                 gCurTask->speedLimitX);
 }
 
 s32 ActorStartAnimNoFlip(struct AnimCmd *p)
@@ -709,15 +709,15 @@ s32 ActorStartAnimNoFlip(struct AnimCmd *p)
     struct Actor *a;
 
     a = gCurTask->unk8C;
-    a->unk2C = p;
-    a->unk09 = 0;
-    a->unk08 = 1;
+    a->animScript = p;
+    a->animScriptPos = 0;
+    a->animNoFlip = 1;
     return ActorStepAnim();
 }
 
 void ActorStopAnim(void)
 {
-    gCurTask->unk8C->unk2C = NULL;
+    gCurTask->unk8C->animScript = NULL;
 }
 
 s32 ActorStartAnim(struct AnimCmd *p)
@@ -725,9 +725,9 @@ s32 ActorStartAnim(struct AnimCmd *p)
     struct Actor *a;
 
     a = gCurTask->unk8C;
-    a->unk2C = p;
-    a->unk09 = 0;
-    a->unk08 = 0;
+    a->animScript = p;
+    a->animScriptPos = 0;
+    a->animNoFlip = 0;
     return ActorStepAnim();
 }
 
@@ -742,33 +742,33 @@ s32 ActorStepAnim(void)
     s32 cmd;
 
     a = gCurTask->unk8C;
-    p = a->unk2C;
-    p += a->unk09;
-    cmd = p->unk00;
+    p = a->animScript;
+    p += a->animScriptPos;
+    cmd = p->frame;
     if (cmd == -3)
     {
-        a->unk09 = 0;
-        p = a->unk2C;
+        a->animScriptPos = 0;
+        p = a->animScript;
     }
     else if (cmd == -2)
     {
         delay = cmd;
-        a->unk2C = NULL;
-        a->unk09++;
+        a->animScript = NULL;
+        a->animScriptPos++;
         return delay;
     }
-    if (a->unk08 != 0)
-        gCurTask->unk3C = p->unk00;
+    if (a->animNoFlip != 0)
+        gCurTask->frame = p->frame;
     else
-        TaskSetFrame(p->unk00);
-    delay = p->unk02;
-    a->unk09++;
+        TaskSetFrame(p->frame);
+    delay = p->delay;
+    a->animScriptPos++;
     return delay;
 }
 
 s32 ActorTickAnimFacingNearestPlayer(s32 n)
 {
-    if (gCurTask->unk8C->unk2C != NULL)
+    if (gCurTask->unk8C->animScript != NULL)
     {
         if (n <= 0)
         {
@@ -782,7 +782,7 @@ s32 ActorTickAnimFacingNearestPlayer(s32 n)
 
 s32 ActorTickAnim(s32 n)
 {
-    if (gCurTask->unk8C->unk2C != NULL)
+    if (gCurTask->unk8C->animScript != NULL)
     {
         if (n <= 0)
             n = ActorStepAnim();
@@ -836,7 +836,7 @@ u16 GetTaskAngle(u32 i, u32 j, s32 prec)
 
     a = &gTasks[i];
     b = &gTasks[j];
-    return GetPointAngle(b->unk48, b->unk4A, a->unk48, a->unk4A, prec);
+    return GetPointAngle(b->pixelX, b->pixelY, a->pixelX, a->pixelY, prec);
 }
 
 u16 TaskGetAngleTo(u32 i, s32 prec)
@@ -957,32 +957,32 @@ void TaskAccelerateAxisPlus(s32 step, s32 limit, u8 axis)
     if (axis == 0)
     {
         t = gCurTask;
-        if (t->unk54 < 0)
+        if (t->velX < 0)
         {
-            t->unk54 += step;
+            t->velX += step;
             gUnk_030023B4 = 1;
         }
-        else if (t->unk54 < limit)
+        else if (t->velX < limit)
         {
-            t->unk54 += step;
+            t->velX += step;
             gUnk_030023B4 = 1;
         }
         else
         {
-            t->unk54 = limit;
+            t->velX = limit;
         }
     }
     else
     {
         t = gCurTask;
-        if (t->unk58 < 0 || t->unk58 < limit)
+        if (t->velY < 0 || t->velY < limit)
         {
-            t->unk58 += step;
+            t->velY += step;
             gUnk_030023D4 = 1;
         }
         else
         {
-            t->unk58 = limit;
+            t->velY = limit;
         }
     }
 }
@@ -997,33 +997,33 @@ void TaskAccelerateAxisMinus(s32 step, s32 limit, u8 axis)
     if (axis == 0)
     {
         t = gCurTask;
-        if (t->unk54 > 0)
+        if (t->velX > 0)
         {
-            t->unk54 -= step;
+            t->velX -= step;
             gUnk_030023B4 = -1;
         }
-        else if (abs(t->unk54) < limit)
+        else if (abs(t->velX) < limit)
         {
-            t->unk54 -= step;
+            t->velX -= step;
             gUnk_030023B4 = -1;
         }
         else
         {
-            t->unk54 = -limit;
+            t->velX = -limit;
         }
     }
     else
     {
         t = gCurTask;
-        v = t->unk58;
+        v = t->velY;
         if (v > 0 || abs(v) < limit)
         {
-            t->unk58 = v - step;
+            t->velY = v - step;
             gUnk_030023D4 = -1;
         }
         else
         {
-            t->unk58 = -limit;
+            t->velY = -limit;
         }
     }
 }
@@ -1036,32 +1036,32 @@ void TaskDecelerateAxis(s32 step, u8 axis)
     if (axis == 0)
     {
         t = gCurTask;
-        if (t->unk54 == 0)
+        if (t->velX == 0)
             return;
-        if (t->unk54 < 0)
+        if (t->velX < 0)
         {
-            t->unk54 += step;
+            t->velX += step;
             gUnk_030023B4 = 1;
         }
         else
         {
-            t->unk54 -= step;
+            t->velX -= step;
             gUnk_030023B4 = -1;
         }
     }
     else
     {
         t = gCurTask;
-        if (t->unk58 == 0)
+        if (t->velY == 0)
             return;
-        if (t->unk58 < 0)
+        if (t->velY < 0)
         {
-            t->unk58 += step;
+            t->velY += step;
             gUnk_030023D4 = 1;
         }
         else
         {
-            t->unk58 -= step;
+            t->velY -= step;
             gUnk_030023D4 = -1;
         }
     }
@@ -1241,13 +1241,13 @@ void TaskGetScreenPosSlot(u32 i)
     t = &gTasks[i];
     if (gPlayerCount == 1 || gActivePlayerCount == 1)
     {
-        gUnk_030023B4 = t->unk48 - gSpriteCameraX;
-        gUnk_030023D4 = t->unk4A - gSpriteCameraY;
+        gUnk_030023B4 = t->pixelX - gSpriteCameraX;
+        gUnk_030023D4 = t->pixelY - gSpriteCameraY;
     }
     else
     {
-        gUnk_030023B4 = t->unk48 - gViewRect[0];
-        gUnk_030023D4 = t->unk4A - gViewRect[2];
+        gUnk_030023B4 = t->pixelX - gViewRect[0];
+        gUnk_030023D4 = t->pixelY - gViewRect[2];
     }
 }
 
@@ -1293,14 +1293,14 @@ void ActorAwardScore(u32 arg, s32 mul)
     a = t->unk8C;
     if (gGameState == 18)
         return;
-    v = a->unk30;
-    if (t->unk72 == 0 && t->unk76 == 37)
+    v = a->score;
+    if (t->actorKind == 0 && t->unk76 == 37)
     {
         k = gFrameCount & 3;
         v = gUnk_0873DF14[k];
     }
     v *= mul;
-    if (gCurTask->unk72 == 0 && gCurTask->unk76 == 40
+    if (gCurTask->actorKind == 0 && gCurTask->unk76 == 40
         && (u8)(a->unk04 - 2) <= 1)
         v = 200;
     AddPlayerScore(v, arg);
@@ -1311,14 +1311,14 @@ s8 TaskGetParentFacing(void)
     struct Task *t;
     s32 i;
 
-    i = gCurTask->unk44;
+    i = gCurTask->parent;
     t = &gTasks[i];
-    return t->unk43;
+    return t->facing;
 }
 
 void TaskFaceLikeParent(void)
 {
-    gCurTask->unk43 = TaskGetParentFacing();
+    gCurTask->facing = TaskGetParentFacing();
 }
 
 /* Spawn a class-4 task from a descriptor; returns its slot or -1. */
@@ -1327,25 +1327,25 @@ s32 sub_08064a78(struct ActorSpawn *p)
     struct Task *t;
     s32 i;
 
-    if (p->unk0A == 1)
+    if (p->checkTerrain == 1)
     {
-        if (sub_08021a40(p->unk0C, p->unk0E) != 0)
+        if (sub_08021a40(p->x, p->y) != 0)
             return -1;
     }
-    i = sub_08063698(p->unk04, 32);
+    i = sub_08063698(p->taskType, 32);
     if (i != -1)
     {
         t = &gTasks[i];
-        t->unk72 = 4;
-        t->unk76 = p->unk00;
-        t->unk73 = p->unk08;
-        t->unk74 = p->unk09;
-        t->unk48 = p->unk0C;
-        t->unk4A = p->unk0E;
-        t->unk4C = p->unk0C << 16;
-        t->unk50 = p->unk0E << 16;
-        t->unk44 = gCurTaskIdx;
-        t->unk40 = p->unk10;
+        t->actorKind = 4;
+        t->unk76 = p->subtype;
+        t->variant = p->variant;
+        t->unk74 = p->spawnArg;
+        t->pixelX = p->x;
+        t->pixelY = p->y;
+        t->posX = p->x << 16;
+        t->posY = p->y << 16;
+        t->parent = gCurTaskIdx;
+        t->tileWord = p->tileWord;
         t->unk8C = &gActors[i];
         ActorInitSlot(i);
     }
@@ -1357,10 +1357,10 @@ s32 CreateActorFromDescHere(struct ActorSpawn *p, u8 keepPrio)
     struct Task *t;
 
     t = gCurTask;
-    p->unk0C = t->unk48;
-    p->unk0E = t->unk4A;
+    p->x = t->pixelX;
+    p->y = t->pixelY;
     if (keepPrio == 0)
-        p->unk10 = t->unk40;
+        p->tileWord = t->tileWord;
     return sub_08064a78(p);
 }
 
@@ -1369,17 +1369,17 @@ s32 CreateActorFromDescAtOffsetFacing(struct ActorSpawn *p, u8 keepPrio)
     struct Task *t;
 
     t = gCurTask;
-    p->unk0C = t->unk48 + p->unk0C * t->unk43;
-    p->unk0E += t->unk4A;
+    p->x = t->pixelX + p->x * t->facing;
+    p->y += t->pixelY;
     if (keepPrio == 0)
-        p->unk10 = t->unk40;
+        p->tileWord = t->tileWord;
     return sub_08064a78(p);
 }
 
 s32 CreateActorFromDesc(struct ActorSpawn *p, u8 keepPrio)
 {
     if (keepPrio == 0)
-        p->unk10 = gCurTask->unk40;
+        p->tileWord = gCurTask->tileWord;
     return sub_08064a78(p);
 }
 
@@ -1392,17 +1392,17 @@ void sub_08064bcc(void)
     t = gCurTask;
     if (t->unk24 <= 0)
     {
-        if (t->unk43 == 1)
+        if (t->facing == 1)
         {
-            t->unk3C++;
-            if (t->unk3C > 7)
-                t->unk3C = 4;
+            t->frame++;
+            if (t->frame > 7)
+                t->frame = 4;
         }
         else
         {
-            t->unk3C--;
-            if (t->unk3C <= 3)
-                t->unk3C = 7;
+            t->frame--;
+            if (t->frame <= 3)
+                t->frame = 7;
         }
         gCurTask->unk24 = 2;
     }
@@ -1431,28 +1431,28 @@ s32 CreateChildTask(u32 type, int xArg, int yArg, int prioArg)
     if (i != -1)
     {
         t = &gTasks[i];
-        switch (gCurTask->unk72)
+        switch (gCurTask->actorKind)
         {
         case 2:
         case 7:
-            t->unk72 = 7;
+            t->actorKind = 7;
             break;
         case 1:
         case 8:
-            t->unk72 = 8;
+            t->actorKind = 8;
             break;
         default:
-            t->unk72 = 9;
+            t->actorKind = 9;
             break;
         }
-        t->unk48 = x;
-        t->unk4A = y;
-        t->unk4C = x << 16;
-        t->unk50 = y << 16;
-        t->unk44 = gCurTaskIdx;
-        t->unk40 = prio;
-        t->unk78 = 2;
-        gTasks[i].unk16 = gTasks[gCurTaskIdx].unk16;
+        t->pixelX = x;
+        t->pixelY = y;
+        t->posX = x << 16;
+        t->posY = y << 16;
+        t->parent = gCurTaskIdx;
+        t->tileWord = prio;
+        t->health = 2;
+        gTasks[i].serial = gTasks[gCurTaskIdx].serial;
     }
     return i;
 }
@@ -1465,10 +1465,10 @@ s32 CreateChildTaskAtOffsetFacing(u32 type, s16 dx, s16 dy, u8 keepPrio)
     u16 prio;
 
     t = gCurTask;
-    x = (s16)(t->unk48 + t->unk43 * dx);
-    y = (s16)(dy + t->unk4A);
+    x = (s16)(t->pixelX + t->facing * dx);
+    y = (s16)(dy + t->pixelY);
     if (keepPrio != 0)
-        prio = t->unk40;
+        prio = t->tileWord;
     else
         prio = 0;
     return CreateChildTask(type, x, y, prio);
@@ -1482,10 +1482,10 @@ s32 CreateChildTaskHere(u32 type, u8 keepPrio)
     u16 prio;
 
     t = gCurTask;
-    x = t->unk48;
-    y = t->unk4A;
+    x = t->pixelX;
+    y = t->pixelY;
     if (keepPrio != 0)
-        prio = t->unk40;
+        prio = t->tileWord;
     else
         prio = 0;
     return CreateChildTask(type, x, y, prio);
@@ -1498,7 +1498,7 @@ s32 CreateChildTaskAt(u32 type, s16 xArg, s16 yArg, u8 keepPrio)
     u16 prio;
 
     if (keepPrio != 0)
-        prio = gCurTask->unk40;
+        prio = gCurTask->tileWord;
     else
         prio = 0;
     return CreateChildTask(type, x, y, prio);
@@ -1522,18 +1522,18 @@ s32 sub_08064d9c(u32 sub, u32 type, int p2Arg, int xArg, int yArg,
     {
         t = &gTasks[i];
         if (alt != 0)
-            t->unk72 = 6;
+            t->actorKind = 6;
         else
-            t->unk72 = 5;
+            t->actorKind = 5;
         t->unk76 = sub;
-        t->unk73 = 0;
+        t->variant = 0;
         t->unk74 = p2;
-        t->unk48 = x;
-        t->unk4A = y;
-        t->unk4C = x << 16;
-        t->unk50 = y << 16;
-        t->unk44 = gCurTaskIdx;
-        t->unk40 = prio;
+        t->pixelX = x;
+        t->pixelY = y;
+        t->posX = x << 16;
+        t->posY = y << 16;
+        t->parent = gCurTaskIdx;
+        t->tileWord = prio;
         t->unk8C = &gActors[i];
         ActorInitSlot(i);
     }
@@ -1545,7 +1545,7 @@ s32 sub_08064e5c(u32 sub, u32 type, u8 p2)
     struct Task *t;
 
     t = gCurTask;
-    return sub_08064d9c(sub, type, p2, t->unk48, t->unk4A, 0, 1);
+    return sub_08064d9c(sub, type, p2, t->pixelX, t->pixelY, 0, 1);
 }
 
 s32 sub_08064e90(u32 sub, u32 type, u8 p2, s16 xArg, s16 yArg)
@@ -1556,7 +1556,7 @@ s32 sub_08064e90(u32 sub, u32 type, u8 p2, s16 xArg, s16 yArg)
     return sub_08064d9c(sub, type, p2, x, y, 0, 1);
 }
 
-s32 sub_08064eb8(u8 p2)
+s32 CreateAbilityStar(u8 p2)
 {
     struct Task *t;
     struct Actor *a;
@@ -1567,12 +1567,12 @@ s32 sub_08064eb8(u8 p2)
     if (i != -1)
     {
         t = &gTasks[i];
-        t->unk88 = p = &gPlayerStates[gCurTaskIdx];
+        t->player = p = &gPlayerStates[gCurTaskIdx];
         a = t->unk8C;
-        t->unk18 = p->unk0D;
-        t->unk1C = p->unk0E;
+        t->unk18 = p->ability;
+        t->unk1C = p->abilityUses;
         t->unk20 = gCurTaskIdx;
-        a->unk00 = p->unk0D;
+        a->ability = p->ability;
     }
     CreateChildTaskHere(166, 0);
     return i;
@@ -1589,15 +1589,15 @@ s32 CreateActor(u8 cls, u32 sub, u32 type, u8 p3, u8 p4, int x, int y,
     if (i != -1)
     {
         t = &gTasks[i];
-        t->unk72 = cls;
+        t->actorKind = cls;
         t->unk76 = sub;
-        t->unk73 = p3;
+        t->variant = p3;
         t->unk74 = p4;
-        t->unk48 = x;
-        t->unk4A = y;
-        t->unk4C = x << 16;
-        t->unk50 = y << 16;
-        t->unk40 = prio;
+        t->pixelX = x;
+        t->pixelY = y;
+        t->posX = x << 16;
+        t->posY = y << 16;
+        t->tileWord = prio;
         t->unk8C = &gActors[i];
         ActorInitSlot(i);
     }
@@ -1617,10 +1617,10 @@ s32 CreateActorByKind(u8 cls, u32 sub, u8 p3, u8 p4, int x, int y, u16 prio)
         break;
     case 1:
     case 3:
-        type = gUnk_0873F23C[sub];
+        type = gMidBossTaskTypes[sub];
         break;
     case 2:
-        type = gUnk_0873F264[sub];
+        type = gBossTaskTypes[sub];
         break;
     case 5:
         type = gUnk_0873F288[sub];
@@ -1646,14 +1646,14 @@ s32 sub_0806505c(u8 p3, u8 p4, u32 x, u32 y, u16 prio)
 
     t = gCurTask;
     a = t->unk8C;
-    i = CreateActor(t->unk72, t->unk76, gTaskSlotTypes[gCurTaskIdx], p3, p4,
+    i = CreateActor(t->actorKind, t->unk76, gTaskSlotTypes[gCurTaskIdx], p3, p4,
                      x, y, prio);
     if (i != -1)
     {
         u = &gTasks[i];
         b = u->unk8C;
-        u->unk44 = gCurTaskIdx;
-        b->unk64 = a->unk64;
+        u->parent = gCurTaskIdx;
+        b->gfx = a->gfx;
     }
     return i;
 }
@@ -1667,9 +1667,9 @@ s32 sub_08065100(s16 x, s16 y, u32 p2, u8 p3, u8 p4)
     if (i != -1)
     {
         t = &gTasks[i];
-        t->unk7C = p3;
+        t->hitKind = p3;
         t->unk82 = p4;
-        t->unk7E = p2;
+        t->hitterSlot = p2;
     }
     return i;
 }
@@ -1677,10 +1677,10 @@ s32 sub_08065100(s16 x, s16 y, u32 p2, u8 p3, u8 p4)
 /* Is the running task inside the 64px-padded camera window? */
 u8 ActorIsInView(void)
 {
-    if (gViewRect[0] - 64 < gCurTask->unk48
-        && gCurTask->unk48 < gViewRect[1] + 64
-        && gViewRect[2] - 64 < gCurTask->unk4A
-        && gCurTask->unk4A < gViewRect[3] + 64)
+    if (gViewRect[0] - 64 < gCurTask->pixelX
+        && gCurTask->pixelX < gViewRect[1] + 64
+        && gViewRect[2] - 64 < gCurTask->pixelY
+        && gCurTask->pixelY < gViewRect[3] + 64)
         return 1;
     return 0;
 }
@@ -1692,19 +1692,19 @@ void ActorDrawWorldInView(void)
     u32 *tbl;
 
     p = gCurTask;
-    if (p->unk38 == NULL)
+    if (p->frameTable == NULL)
         return;
-    if (p->unk3C == -1)
+    if (p->frame == -1)
         return;
     if (ActorIsInView() == 0)
         return;
     if (TaskIsOnScreen() == 0)
         return;
     t = gCurTask;
-    tbl = t->unk38;
-    QueueSprite(t->unk42, tbl[t->unk3C], t->unk3E, t->unk40,
-                 t->unk48 - gSpriteCameraX,
-                 (s16)(t->unk4A - gSpriteCameraY));
+    tbl = t->frameTable;
+    QueueSprite(t->layer, tbl[t->frame], t->spriteFlags, t->tileWord,
+                 t->pixelX - gSpriteCameraX,
+                 (s16)(t->pixelY - gSpriteCameraY));
 }
 
 void ActorDrawWorldInViewOrDestroy(void)
@@ -1714,19 +1714,19 @@ void ActorDrawWorldInViewOrDestroy(void)
     u32 *tbl;
 
     p = gCurTask;
-    if (p->unk38 == NULL)
+    if (p->frameTable == NULL)
         return;
-    if (p->unk3C == -1)
+    if (p->frame == -1)
         return;
     if (ActorIsInView() != 0)
     {
         if (TaskIsOnScreen() == 0)
             return;
         t = gCurTask;
-        tbl = t->unk38;
-        QueueSprite(t->unk42, tbl[t->unk3C], t->unk3E, t->unk40,
-                     t->unk48 - gSpriteCameraX,
-                     (s16)(t->unk4A - gSpriteCameraY));
+        tbl = t->frameTable;
+        QueueSprite(t->layer, tbl[t->frame], t->spriteFlags, t->tileWord,
+                     t->pixelX - gSpriteCameraX,
+                     (s16)(t->pixelY - gSpriteCameraY));
     }
     else
     {
@@ -1741,19 +1741,19 @@ void sub_080652c8(void)
     u32 *tbl;
 
     p = gCurTask;
-    if (p->unk38 == NULL)
+    if (p->frameTable == NULL)
         return;
-    if (p->unk3C == -1)
+    if (p->frame == -1)
         return;
     if (sub_08066a6c() == 0)
         return;
     if (TaskIsOnScreen() == 0)
         return;
     t = gCurTask;
-    tbl = t->unk38;
-    QueueSprite(t->unk42, tbl[t->unk3C], t->unk3E, t->unk40,
-                 t->unk48 - gSpriteCameraX,
-                 (s16)(t->unk4A - gSpriteCameraY));
+    tbl = t->frameTable;
+    QueueSprite(t->layer, tbl[t->frame], t->spriteFlags, t->tileWord,
+                 t->pixelX - gSpriteCameraX,
+                 (s16)(t->pixelY - gSpriteCameraY));
 }
 
 void sub_08065350(void)
@@ -1763,19 +1763,19 @@ void sub_08065350(void)
     u32 *tbl;
 
     p = gCurTask;
-    if (p->unk38 == NULL)
+    if (p->frameTable == NULL)
         return;
-    if (p->unk3C == -1)
+    if (p->frame == -1)
         return;
     if (sub_08066a6c() != 0)
     {
         if (TaskIsOnScreen() == 0)
             return;
         t = gCurTask;
-        tbl = t->unk38;
-        QueueSprite(t->unk42, tbl[t->unk3C], t->unk3E, t->unk40,
-                     t->unk48 - gSpriteCameraX,
-                     (s16)(t->unk4A - gSpriteCameraY));
+        tbl = t->frameTable;
+        QueueSprite(t->layer, tbl[t->frame], t->spriteFlags, t->tileWord,
+                     t->pixelX - gSpriteCameraX,
+                     (s16)(t->pixelY - gSpriteCameraY));
     }
     else if (sub_08066a80() != 0)
     {

@@ -19,9 +19,9 @@ void sub_0809c028(void)
     u32 *p;
 
     if (gUnk_0300244C != 0)
-        p = gUnk_08745D4C[gCurTask->unk73 * 4 + gActivePlayerCount - 1];
+        p = gUnk_08745D4C[gCurTask->variant * 4 + gActivePlayerCount - 1];
     else
-        p = gUnk_08745CFC[gCurTask->unk73 * 4 + gActivePlayerCount - 1];
+        p = gUnk_08745CFC[gCurTask->variant * 4 + gActivePlayerCount - 1];
     ActorLoadDef(p[0]);
     gUnk_02007D00[4] = p[1];
     t = gCurTask;

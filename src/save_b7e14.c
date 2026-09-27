@@ -7,10 +7,10 @@ struct SaveSlot
 {
     /*0x00*/ u32 unk00;
     /*0x04*/ s32 unk04;
-    /*0x08*/ u32 unk08;
-    /*0x0C*/ s32 unk0C;
-    /*0x10*/ u16 unk10;
-    /*0x12*/ u16 unk12[2];
+    /*0x08*/ u32 generation;
+    /*0x0C*/ s32 saveCount;
+    /*0x10*/ u16 milestoneFlags;
+    /*0x12*/ u16 completionPercent[2];
     /*0x16*/ u8 unk16[2];
     /*0x18*/ u8 unk18[2];
     /*0x1A*/ u8 unk1A[2];
@@ -20,7 +20,7 @@ struct SaveSlot
     /*0x28*/ u8 unk28[8][7];
     /*0x60*/ u16 unk60[4];
     /*0x68*/ u16 unk68[4];
-    /*0x70*/ u32 unk70;
+    /*0x70*/ u32 checksum;
     /*0x74*/ u8 filler74[0x8C];
 };
 
@@ -39,7 +39,7 @@ extern u16 gUnk_03002378[];
 extern s8 gUnk_03002384;
 extern u16 gPlayerCount;
 extern u8 gUnk_030023B8;
-extern s32 gUnk_030023C8[];
+extern s32 gBigSwitchFlags[];
 extern s8 gUnk_030023E0;
 extern s32 gCurSaveSlot;
 extern u8 gUnk_03002400[8][7];
@@ -61,7 +61,7 @@ void StoreProgressInSaveSlot(s32 a)
     gSaveSlots[a].unk18[gExtraMode] = gUnk_03001F20;
     gSaveSlots[a].unk1A[gExtraMode] = gUnk_030023E0;
     gSaveSlots[a].unk1C[gExtraMode] = gUnk_03002384;
-    gSaveSlots[a].unk20[gExtraMode] = gUnk_030023C8[0];
+    gSaveSlots[a].unk20[gExtraMode] = gBigSwitchFlags[0];
     for (i = 0; i <= 7; i++)
     {
         for (j = 0; j <= 6; j++)
@@ -76,8 +76,8 @@ void StoreProgressInSaveSlot(s32 a)
         gSaveSlots[a].unk68[i] = gUnk_03002378[i];
     }
     CalcCompletionPercent(gExtraMode);
-    gSaveSlots[a].unk12[gExtraMode] = gCompletionPercent;
-    gSaveSlots[a].unk10 = gMilestoneFlags;
+    gSaveSlots[a].completionPercent[gExtraMode] = gCompletionPercent;
+    gSaveSlots[a].milestoneFlags = gMilestoneFlags;
 }
 void StoreProgressInBothHalves(s32 a)
 {
@@ -90,11 +90,11 @@ void StoreProgressInBothHalves(s32 a)
         gSaveSlots[a].unk18[i] = gUnk_03001F20;
         gSaveSlots[a].unk1A[i] = gUnk_030023E0;
         gSaveSlots[a].unk1C[i] = gUnk_03002384;
-        gSaveSlots[a].unk20[i] = gUnk_030023C8[0];
+        gSaveSlots[a].unk20[i] = gBigSwitchFlags[0];
         CalcCompletionPercent(i);
-        gSaveSlots[a].unk12[i] = gCompletionPercent;
+        gSaveSlots[a].completionPercent[i] = gCompletionPercent;
     }
-    gSaveSlots[a].unk10 = gMilestoneFlags;
+    gSaveSlots[a].milestoneFlags = gMilestoneFlags;
     for (i = 0; i <= 7; i++)
     {
         for (j = 0; j <= 6; j++)
@@ -115,12 +115,12 @@ void LoadSaveSlot(s32 a)
         return;
     if (gPlayerCount != 1)
         a = 3;
-    gMilestoneFlags = gSaveSlots[a].unk10;
+    gMilestoneFlags = gSaveSlots[a].milestoneFlags;
     gUnk_030023B8 = gSaveSlots[a].unk16[gExtraMode];
     gUnk_03001F20 = gSaveSlots[a].unk18[gExtraMode];
     gUnk_030023E0 = gSaveSlots[a].unk1A[gExtraMode];
     gUnk_03002384 = gSaveSlots[a].unk1C[gExtraMode];
-    gUnk_030023C8[0] = gSaveSlots[a].unk20[gExtraMode];
+    gBigSwitchFlags[0] = gSaveSlots[a].unk20[gExtraMode];
     for (i = 0; i <= 7; i++)
     {
         for (j = 0; j <= 6; j++)
@@ -142,7 +142,7 @@ void sub_080b81a0(void)
     gUnk_03001F20 = 0;
     gUnk_030023E0 = 0;
     gUnk_03002384 = 0;
-    gUnk_030023C8[0] = 0;
+    gBigSwitchFlags[0] = 0;
     for (i = 0; i <= 7; i++)
     {
         for (j = 0; j <= 6; j++)
@@ -163,7 +163,7 @@ void ResetProgress(void)
     gUnk_03001F20 = 0;
     gUnk_030023E0 = 0;
     gUnk_03002384 = 0;
-    gUnk_030023C8[0] = 0;
+    gBigSwitchFlags[0] = 0;
     gCompletionPercent = 0;
     for (i = 0; i <= 7; i++)
     {
@@ -209,7 +209,7 @@ s32 CheckNewMilestones(void)
         StoreProgressInSaveSlot(gCurSaveSlot);
     else
         MergeProgressIntoSaveSlot(gCurSaveSlot);
-    gSaveSlots[gCurSaveSlot].unk0C++;
+    gSaveSlots[gCurSaveSlot].saveCount++;
     UpdateSaveSlotChecksum(gCurSaveSlot);
     WriteSaveSlot(gCurSaveSlot);
     return r;
@@ -242,8 +242,8 @@ void CopySaveSlotToLinkSlot(void)
     gSaveSlots[3].unk1A[gExtraMode] = gSaveSlots[gCurSaveSlot].unk1A[gExtraMode];
     gSaveSlots[3].unk1C[gExtraMode] = gSaveSlots[gCurSaveSlot].unk1C[gExtraMode];
     gSaveSlots[3].unk20[gExtraMode] = gSaveSlots[gCurSaveSlot].unk20[gExtraMode];
-    gSaveSlots[3].unk12[gExtraMode] = gSaveSlots[gCurSaveSlot].unk12[gExtraMode];
-    gSaveSlots[3].unk10 = gSaveSlots[gCurSaveSlot].unk10;
+    gSaveSlots[3].completionPercent[gExtraMode] = gSaveSlots[gCurSaveSlot].completionPercent[gExtraMode];
+    gSaveSlots[3].milestoneFlags = gSaveSlots[gCurSaveSlot].milestoneFlags;
     for (i = 0; i <= 7; i++)
     {
         for (j = 0; j <= 6; j++)
@@ -270,12 +270,12 @@ void FillSendCmdWithSaveSlot(void)
                          | (s8)gSaveSlots[gCurSaveSlot].unk18[gExtraMode];
         gSendCmd[2] = ((s8)gSaveSlots[gCurSaveSlot].unk1A[gExtraMode] << 8)
                          | (s8)gSaveSlots[gCurSaveSlot].unk1C[gExtraMode];
-        gSendCmd[3] = gSaveSlots[gCurSaveSlot].unk12[gExtraMode];
+        gSendCmd[3] = gSaveSlots[gCurSaveSlot].completionPercent[gExtraMode];
         break;
     case 2:
         gSendCmd[1] = gSaveSlots[gCurSaveSlot].unk20[gExtraMode] >> 16;
         gSendCmd[2] = gSaveSlots[gCurSaveSlot].unk20[gExtraMode];
-        gSendCmd[3] = gSaveSlots[gCurSaveSlot].unk10;
+        gSendCmd[3] = gSaveSlots[gCurSaveSlot].milestoneFlags;
         break;
     default:
         q = Div(gLinkSaveSlotPart - 3, 3);

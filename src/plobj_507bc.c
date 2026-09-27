@@ -7,7 +7,7 @@
  * Task type #6 (the objects the player's actions spawn through
  * CreatePlayerObject/sub_08053a44): the body and two shared callbacks.  The body
  * Task_PlayerObject links the task to its spawner (Task.unk8C =
- * &gTasks[Task.unk44], the first time only) and dispatches the
+ * &gTasks[Task.parent], the first time only) and dispatches the
  * variant, the top byte of Task.unk18, through the 13 variant bodies
  * gPlayerObjectVariants.  sub_08050814 is the common exit most variants re-bind on
  * contact: it installs the sprite (TaskDrawScreen for PlayerState.unk37 == 2,
@@ -36,8 +36,8 @@ void Task_PlayerObject(void)
     if (gCurTask->unk8C == NULL)
     {
         gCurTask->unk80 = 0;
-        gCurTask->unk8C = (struct Actor *)&gTasks[gCurTask->unk44];
-        gCurTask->unk78 = 1;
+        gCurTask->unk8C = (struct Actor *)&gTasks[gCurTask->parent];
+        gCurTask->health = 1;
         gCurTask->unk24 = 0;
     }
     CallTableEntry(((u8 *)gCurTask)[27], 13, gPlayerObjectVariants);
@@ -47,42 +47,42 @@ void sub_08050814(void)
 {
     struct Task *t = gCurTask;
 
-    t->unk00 = 0;
-    if (t->unk88->unk37 != 2)
-        t->unk0C = (u32)TaskDrawWorldInViewOrFree;
+    t->moveCallback = 0;
+    if (t->player->unk37 != 2)
+        t->drawCallback = (u32)TaskDrawWorldInViewOrFree;
     else
-        t->unk0C = (u32)TaskDrawScreen;
-    gCurTask->unk04 = 0;
-    gCurTask->unk08 = 0;
-    gCurTask->unk42 = 5;
+        t->drawCallback = (u32)TaskDrawScreen;
+    gCurTask->updateCallback = 0;
+    gCurTask->lateUpdateCallback = 0;
+    gCurTask->layer = 5;
     t = gCurTask;
-    t->unk38 = gUnk_0874C650;
-    t->unk3E = 0;
-    t->unk40 = 0;
+    t->frameTable = gUnk_0874C650;
+    t->spriteFlags = 0;
+    t->tileWord = 0;
     if (t->unk24 != 0)
-        RegisterCollider(gCurTaskIdx, t->unk48, t->unk4A, (void *)t->unk24);
+        RegisterCollider(gCurTaskIdx, t->pixelX, t->pixelY, (void *)t->unk24);
     TaskStop();
-    gCurTask->unk3C = 0;
+    gCurTask->frame = 0;
     TaskYieldTrampoline(2);
-    gCurTask->unk3C++;
+    gCurTask->frame++;
     TaskYieldTrampoline(1);
-    gCurTask->unk3C = 6;
+    gCurTask->frame = 6;
     TaskYieldTrampoline(1);
-    gCurTask->unk3C = 2;
+    gCurTask->frame = 2;
     TaskYieldTrampoline(1);
-    gCurTask->unk3C = 7;
+    gCurTask->frame = 7;
     TaskYieldTrampoline(1);
-    gCurTask->unk3C = 3;
+    gCurTask->frame = 3;
     TaskYieldTrampoline(1);
-    gCurTask->unk3C = 8;
+    gCurTask->frame = 8;
     TaskYieldTrampoline(1);
-    gCurTask->unk3C = 4;
+    gCurTask->frame = 4;
     TaskYieldTrampoline(1);
-    gCurTask->unk3C = 9;
+    gCurTask->frame = 9;
     TaskYieldTrampoline(1);
-    gCurTask->unk3C = 5;
+    gCurTask->frame = 5;
     TaskYieldTrampoline(1);
-    gCurTask->unk3C = 10;
+    gCurTask->frame = 10;
     TaskYieldTrampoline(1);
     TaskExitTrampoline();
 }
@@ -91,36 +91,36 @@ void sub_0805091c(void)
 {
     struct Task *t;
 
-    gCurTask->unk00 = (u32)TaskMove;
-    gCurTask->unk0C = (u32)TaskDrawWorldInViewOrFree;
-    gCurTask->unk04 = 0;
-    gCurTask->unk08 = 0;
-    gCurTask->unk42 = 5;
+    gCurTask->moveCallback = (u32)TaskMove;
+    gCurTask->drawCallback = (u32)TaskDrawWorldInViewOrFree;
+    gCurTask->updateCallback = 0;
+    gCurTask->lateUpdateCallback = 0;
+    gCurTask->layer = 5;
     t = gCurTask;
-    t->unk38 = gUnk_0874C7CC;
-    t->unk3E = 0;
-    t->unk40 = 0;
+    t->frameTable = gUnk_0874C7CC;
+    t->spriteFlags = 0;
+    t->tileWord = 0;
     t->unk28 = 0;
-    if (t->unk58 < 0)
+    if (t->velY < 0)
         t->unk28 = 1;
     TaskStop();
     if (gCurTask->unk28 == 1)
-        gCurTask->unk58 = 0x8000;
+        gCurTask->velY = 0x8000;
     else
-        gCurTask->unk58 = -0x8000;
+        gCurTask->velY = -0x8000;
     TaskSetFrameByFacing(0);
     TaskYieldTrampoline(3);
-    gCurTask->unk3C += 2;
+    gCurTask->frame += 2;
     TaskYieldTrampoline(3);
-    gCurTask->unk3C += 2;
+    gCurTask->frame += 2;
     TaskYieldTrampoline(3);
-    gCurTask->unk3C += 2;
+    gCurTask->frame += 2;
     TaskYieldTrampoline(1);
-    gCurTask->unk3C += 2;
+    gCurTask->frame += 2;
     TaskYieldTrampoline(1);
-    gCurTask->unk3C += 2;
+    gCurTask->frame += 2;
     TaskYieldTrampoline(2);
-    gCurTask->unk3C += 2;
+    gCurTask->frame += 2;
     TaskYieldTrampoline(1);
     TaskExitTrampoline();
 }

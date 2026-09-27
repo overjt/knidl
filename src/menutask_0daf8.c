@@ -18,10 +18,10 @@ struct SaveSlot
 {
     /*0x00*/ u32 unk00;
     /*0x04*/ s32 unk04;
-    /*0x08*/ u32 unk08;
-    /*0x0C*/ s32 unk0C;
-    /*0x10*/ u16 unk10;
-    /*0x12*/ u16 unk12[2];
+    /*0x08*/ u32 generation;
+    /*0x0C*/ s32 saveCount;
+    /*0x10*/ u16 milestoneFlags;
+    /*0x12*/ u16 completionPercent[2];
     /*0x16*/ u8 unk16[2];
     /*0x18*/ u8 unk18[2];
     /*0x1A*/ u8 unk1A[2];
@@ -31,7 +31,7 @@ struct SaveSlot
     /*0x28*/ u8 unk28[8][7];
     /*0x60*/ u16 unk60[4];
     /*0x68*/ u16 unk68[4];
-    /*0x70*/ u32 unk70;
+    /*0x70*/ u32 checksum;
     /*0x74*/ u8 filler74[0x8C];
 };
 
@@ -74,32 +74,32 @@ s32 MenuLoadPicture(s32 id, s32 part);
 
 void sub_0800daf8(void)
 {
-    gCurTask->unk00 = (u32)TaskMove;
-    gCurTask->unk0C = (u32)TaskDrawScreen;
-    gCurTask->unk42 = 8;
-    gCurTask->unk38 = gUnk_08755620;
-    gCurTask->unk3C = gCurTask->unk1C + 3;
+    gCurTask->moveCallback = (u32)TaskMove;
+    gCurTask->drawCallback = (u32)TaskDrawScreen;
+    gCurTask->layer = 8;
+    gCurTask->frameTable = gUnk_08755620;
+    gCurTask->frame = gCurTask->unk1C + 3;
     sub_0800dc98();
     while (gMenuScreen != 1)
         TaskYieldTrampoline(1);
-    gCurTask->unk54 = 0x1AE000;
+    gCurTask->velX = 0x1AE000;
     TaskYieldTrampoline(10);
     TaskExitTrampoline();
 }
 
 void sub_0800db64(void)
 {
-    gCurTask->unk00 = (u32)TaskMove;
-    gCurTask->unk0C = (u32)TaskDrawScreen;
-    gCurTask->unk04 = (u32)sub_0800dbdc;
-    gCurTask->unk42 = 9;
-    gCurTask->unk38 = gUnk_08755620;
-    gCurTask->unk3C = gCurTask->unk1C;
+    gCurTask->moveCallback = (u32)TaskMove;
+    gCurTask->drawCallback = (u32)TaskDrawScreen;
+    gCurTask->updateCallback = (u32)sub_0800dbdc;
+    gCurTask->layer = 9;
+    gCurTask->frameTable = gUnk_08755620;
+    gCurTask->frame = gCurTask->unk1C;
     gCurTask->unk28 = -1;
     sub_0800dc98();
     while (gMenuScreen != 1)
         TaskYieldTrampoline(1);
-    gCurTask->unk54 = 0x1AE000;
+    gCurTask->velX = 0x1AE000;
     TaskYieldTrampoline(10);
     TaskExitTrampoline();
 }
@@ -115,15 +115,15 @@ void sub_0800dbdc(void)
         slot = gCurTask->unk1C;
         s = gSaveSlots;
         i = slot * 256;
-        if (gSaveSlots[slot].unk12[1] != 0 && gSaveSlots[slot].unk04 != 0x99999999)
+        if (gSaveSlots[slot].completionPercent[1] != 0 && gSaveSlots[slot].unk04 != 0x99999999)
             i++;
         sub_0800bf10(slot, (s8)s->unk16[i]);
         gCurTask->unk28 = gMenuCursor;
     }
 
-    if (gSaveSlots[gCurTask->unk1C].unk12[1] != 0 && gSaveSlots[gCurTask->unk1C].unk04 != 0x99999999) {
+    if (gSaveSlots[gCurTask->unk1C].completionPercent[1] != 0 && gSaveSlots[gCurTask->unk1C].unk04 != 0x99999999) {
         t = gCurTask;
-        QueueSprite(t->unk42 - 1, gUnk_08755620[t->unk1C + 6], t->unk3E, t->unk40, t->unk48, t->unk4A);
+        QueueSprite(t->layer - 1, gUnk_08755620[t->unk1C + 6], t->spriteFlags, t->tileWord, t->pixelX, t->pixelY);
     }
 }
 
@@ -132,37 +132,37 @@ void sub_0800dc98(void)
     struct Task *t = gCurTask;
     s32 n;
 
-    t->unk4C = 0x1500000;
+    t->posX = 0x1500000;
     n = t->unk1C;
-    t->unk50 = ((n + 1) * 5) << 19;
+    t->posY = ((n + 1) * 5) << 19;
     TaskYieldTrampoline(n * 5);
-    gCurTask->unk54 = 0xFFE52000;
+    gCurTask->velX = 0xFFE52000;
     TaskYieldTrampoline(8);
-    gCurTask->unk54 = 0;
+    gCurTask->velX = 0;
 }
 
 void Task_FileSelectCursor(void)
 {
-    gCurTask->unk00 = (u32)TaskMove;
-    gCurTask->unk0C = (u32)TaskDrawScreen;
-    gCurTask->unk04 = (u32)sub_0800dda0;
-    gCurTask->unk42 = 6;
-    gCurTask->unk38 = gUnk_08755620;
-    gCurTask->unk3C = 9;
+    gCurTask->moveCallback = (u32)TaskMove;
+    gCurTask->drawCallback = (u32)TaskDrawScreen;
+    gCurTask->updateCallback = (u32)sub_0800dda0;
+    gCurTask->layer = 6;
+    gCurTask->frameTable = gUnk_08755620;
+    gCurTask->frame = 9;
     gCurTask->unk28 = -1;
     gCurTask->unk2C = 0;
     gCurTask->unk30 = 1;
     gCurTask->unk34 = 0;
-    gCurTask->unk4C = 0x160000;
-    gCurTask->unk50 = ((gMenuCursor * 5) << 19) + 0x240000;
-    gCurTask->unk54 = 0x30000;
+    gCurTask->posX = 0x160000;
+    gCurTask->posY = ((gMenuCursor * 5) << 19) + 0x240000;
+    gCurTask->velX = 0x30000;
     TaskYieldTrampoline(8);
-    gCurTask->unk54 = 0;
+    gCurTask->velX = 0;
     while (gMenuScreen != 1) {
-        gCurTask->unk50 = ((gMenuCursor * 5) << 19) + 0x240000;
+        gCurTask->posY = ((gMenuCursor * 5) << 19) + 0x240000;
         TaskYieldTrampoline(1);
     }
-    gCurTask->unk54 = 0xFFFA0000;
+    gCurTask->velX = 0xFFFA0000;
     TaskYieldTrampoline(8);
     TaskExitTrampoline();
 }
@@ -202,10 +202,10 @@ void sub_0800de6c(void)
     struct Task *u, *v, *w;
     s8 s;
 
-    t->unk00 = 0;
-    t->unk0C = 0;
-    t->unk04 = (u32)sub_0800dfdc;
-    t->unk3E = 0x2000;
+    t->moveCallback = 0;
+    t->drawCallback = 0;
+    t->updateCallback = (u32)sub_0800dfdc;
+    t->spriteFlags = 0x2000;
     t->unk28 = 0;
     t->unk18 = 0;
     t->unk1C = 0;
@@ -228,7 +228,7 @@ void sub_0800de6c(void)
         if (s == 1) {
             v = gCurTask;
             if (v->unk18 < (s32)0xFFC80000) {
-                v->unk3E = 0;
+                v->spriteFlags = 0;
                 v->unk18 += 0x33000;
                 v->unk1C += 0xFFFD2000;
                 if (v->unk18 > (s32)0xFFC80000) {
@@ -236,11 +236,11 @@ void sub_0800de6c(void)
                     v->unk1C = 0;
                 }
             } else {
-                v->unk3E = 0x2000;
+                v->spriteFlags = 0x2000;
             }
         } else if (s == 6) {
             v = gCurTask;
-            v->unk3E = 0;
+            v->spriteFlags = 0;
             if (v->unk18 > (s32)0xFFA80000) {
                 v->unk18 += 0xFFFCD000;
                 v->unk1C += 0x2E000;
@@ -271,14 +271,14 @@ void sub_0800dfdc(void)
 
     if (TaskIsOnScreenNoCamera()) {
         tbl = gUnk_08755650;
-        QueueSprite(12, tbl[3], gCurTask->unk3E, 0, (gCurTask->unk18 >> 16) + 304, (gCurTask->unk1C >> 16) + 40);
-        QueueSprite(12, tbl[2], gCurTask->unk3E, 0, (gCurTask->unk18 >> 16) + 304, (gCurTask->unk1C >> 16) + 40);
-        QueueSprite(11, tbl[5], gCurTask->unk3E, 0, (gCurTask->unk18 >> 16) + 304, (gCurTask->unk1C >> 16) + 40);
-        QueueSprite(13, tbl[4], gCurTask->unk3E, 0, (gCurTask->unk20 >> 16) + 296, 40);
+        QueueSprite(12, tbl[3], gCurTask->spriteFlags, 0, (gCurTask->unk18 >> 16) + 304, (gCurTask->unk1C >> 16) + 40);
+        QueueSprite(12, tbl[2], gCurTask->spriteFlags, 0, (gCurTask->unk18 >> 16) + 304, (gCurTask->unk1C >> 16) + 40);
+        QueueSprite(11, tbl[5], gCurTask->spriteFlags, 0, (gCurTask->unk18 >> 16) + 304, (gCurTask->unk1C >> 16) + 40);
+        QueueSprite(13, tbl[4], gCurTask->spriteFlags, 0, (gCurTask->unk20 >> 16) + 296, 40);
         t = gCurTask;
         if (t->unk28 == 0) {
             tbl = gUnk_08755620;
-            QueueSprite(11, tbl[gCurSaveSlot + 3], t->unk3E, 0, (t->unk18 >> 16) + 234, (t->unk1C >> 16) + 13);
+            QueueSprite(11, tbl[gCurSaveSlot + 3], t->spriteFlags, 0, (t->unk18 >> 16) + 234, (t->unk1C >> 16) + 13);
         }
     }
 }
@@ -287,20 +287,20 @@ void Task_FileMenuHighlight(void)
 {
     s8 s;
 
-    gCurTask->unk00 = (u32)TaskMove;
-    gCurTask->unk0C = 0;
-    gCurTask->unk04 = (u32)sub_0800e148;
-    gCurTask->unk38 = gUnk_08755650;
+    gCurTask->moveCallback = (u32)TaskMove;
+    gCurTask->drawCallback = 0;
+    gCurTask->updateCallback = (u32)sub_0800e148;
+    gCurTask->frameTable = gUnk_08755650;
     gCurTask->unk28 = -1;
     gCurTask->unk2C = 0;
     gCurTask->unk30 = 1;
     gCurTask->unk34 = 0;
-    gCurTask->unk4C = 0x640000;
+    gCurTask->posX = 0x640000;
     for (;;) {
         s = gMenuScreen;
         if (s == 0 || s == 4 || s == 7 || s == 8)
             break;
-        gCurTask->unk50 = ((gFileMenuCursor * 3) << 19) + 0x300000;
+        gCurTask->posY = ((gFileMenuCursor * 3) << 19) + 0x300000;
         TaskYieldTrampoline(1);
     }
     TaskExitTrampoline();
@@ -339,8 +339,8 @@ void sub_0800e148(void)
     }
     if (TaskIsOnScreenNoCamera()) {
         tbl = gUnk_08755650;
-        QueueSprite(6, tbl[1], 0, 0, gCurTask->unk48, gCurTask->unk4A);
-        QueueSprite(10, tbl[0], 0, 0, gCurTask->unk48, gCurTask->unk4A);
+        QueueSprite(6, tbl[1], 0, 0, gCurTask->pixelX, gCurTask->pixelY);
+        QueueSprite(10, tbl[0], 0, 0, gCurTask->pixelX, gCurTask->pixelY);
     }
 }
 

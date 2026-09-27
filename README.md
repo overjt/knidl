@@ -69,8 +69,8 @@ make progress
         4176 bytes excluded from decompilation tracking
 
 11065 total symbols
-    1326 symbols documented (11.9837%)
-    9739 symbols undocumented (88.0163%)
+    2132 symbols documented (19.2680%)
+    8933 symbols undocumented (80.7320%)
 
 7537436 total bytes of data
     16 bytes of data in src (0.0002%)
@@ -91,9 +91,13 @@ What is left:
   `tools/rename.py`, each with its evidence in `docs/analysis/renames.csv`
   (convention: `docs/naming.md`).  Run 1 named 1,141 symbols, among them
   178 of the engine zone's 182 functions and most of the widely called
-  helpers.  The rest still have address-based names (`sub_08XXXXXX`,
-  `gUnk_XXXXXXXX`), shown as "symbols undocumented" above, and struct
-  fields are still `unkXX`.
+  helpers.  Run 2 named 242 struct fields (`tools/rename_field.py`; 153 of
+  the 222 fields in `include/task.h`), identified the enemies, mid-bosses,
+  bosses and the 25 copy abilities from local sprite renders, and named
+  their families (806 more symbols).  The rest still have address-based
+  names (`sub_08XXXXXX`, `gUnk_XXXXXXXX`), shown as "symbols undocumented"
+  above, and the fields whose role changes with the task family stay
+  `unkXX`.
 
 ## CI
 

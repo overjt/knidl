@@ -5,14 +5,14 @@
 /* player_49b48.c (0x08049B48-0x08049F97, issue #88).
  *
  * Player action bodies, part 16: actions 44-45 and handlers 41-42, the
- * twins of M11's actions 32-33.  sub_08049b48 (action 44, mode 13) is
- * M11's sub_0804462c with other constants (Task.unk80 = 13, animations
+ * twins of M11's actions 32-33.  PlayerActionIce (action 44, mode 13) is
+ * M11's PlayerActionFire with other constants (Task.unk80 = 13, animations
  * 0xA0A-0xA0E, sound 140, M14's CreatePlayerObject(player, 7, 0..1), effects
  * 40 x3 and 28): state 0 winds up, state 1 loops the animation until
- * its handler sub_08049d1c (M11's sub_08044800) re-binds state 2 once
+ * its handler PlayerActionIceUpdate (M11's PlayerActionFireUpdate) re-binds state 2 once
  * Task.unk28 has run out and B is released, and state 2 winds down.
- * sub_08049d94 (action 45) is M11's sub_08044878 likewise (animations
- * 0xA86/0xA8E, effect 41 x4, sound 141); its handler sub_08049edc also
+ * PlayerActionFreeze (action 45) is M11's PlayerActionSpark likewise (animations
+ * 0xA86/0xA8E, effect 41 x4, sound 141); its handler PlayerActionFreezeUpdate also
  * registers the collider gUnk_0873C214 and tests the block hit-box set
  * gUnk_0873CF4C every frame in state 1. */
 
@@ -35,55 +35,55 @@ s32 PlayerRequestLocomotion(void);
 void CreatePlayerObject(s32 a, s32 b, s32 c);      /* M14, src/plobj_52f6c.c (defined s32 (s8, u8, s32); the result is unused here) */
 s32 CreatePlayerEffect(s32 a0, s32 a1, s32 a2);
 
-void sub_08049b48(void)
+void PlayerActionIce(void)
 {
-    gCurTask->unk88->unk05 = gCurTask->unk88->unk04;
-    gCurTask->unk88->unk04 = 13;
-    gCurTask->unk15 = 41;
+    gCurTask->player->prevMode = gCurTask->player->mode;
+    gCurTask->player->mode = 13;
+    gCurTask->updateState = 41;
     {
         struct Task *t = gCurTask;
-        if (t->unk88->unk05 != 13) {
+        if (t->player->prevMode != 13) {
             struct Task *u;
-            t->unk73 = 0;
+            t->variant = 0;
             u = gCurTask;
             u->unk28 = 15;
             u->unk80 = 13;
         }
     }
-    switch (gCurTask->unk73) {
+    switch (gCurTask->variant) {
     case 0:
         TaskSetFrame(0xA0A);
         TaskYieldTrampoline(2);
-        gCurTask->unk3C++;
+        gCurTask->frame++;
         TaskYieldTrampoline(2);
-        gCurTask->unk3C++;
+        gCurTask->frame++;
         TaskYieldTrampoline(6);
-        gCurTask->unk3C--;
+        gCurTask->frame--;
         TaskYieldTrampoline(2);
         TaskSetFrame(0xA0D);
         TaskYieldTrampoline(1);
-        gCurTask->unk3C++;
+        gCurTask->frame++;
         TaskYieldTrampoline(1);
-        gCurTask->unk73 = 1;
+        gCurTask->variant = 1;
         /* fallthrough */
     case 1:
         {
-            struct PlayerState *p = gCurTask->unk88;
+            struct PlayerState *p = gCurTask->player;
             if ((p->unk42 & 128) == 0)
-                PlayerStartSfx(140, p->unk00);
+                PlayerStartSfx(140, p->playerIndex);
         }
-        CreatePlayerObject(gCurTask->unk88->unk00, 7, 0);
-        CreatePlayerObject(gCurTask->unk88->unk00, 7, 1);
-        CreatePlayerEffect(gCurTask->unk88->unk00, 40, 0);
-        CreatePlayerEffect(gCurTask->unk88->unk00, 40, 1);
-        CreatePlayerEffect(gCurTask->unk88->unk00, 40, 2);
-        CreatePlayerEffect(gCurTask->unk88->unk00, 28, 4);
+        CreatePlayerObject(gCurTask->player->playerIndex, 7, 0);
+        CreatePlayerObject(gCurTask->player->playerIndex, 7, 1);
+        CreatePlayerEffect(gCurTask->player->playerIndex, 40, 0);
+        CreatePlayerEffect(gCurTask->player->playerIndex, 40, 1);
+        CreatePlayerEffect(gCurTask->player->playerIndex, 40, 2);
+        CreatePlayerEffect(gCurTask->player->playerIndex, 28, 4);
         while (1) {
             TaskSetFrame(0x9FA);
             TaskYieldTrampoline(2);
             gCurTask->unk6C = 0;
             do {
-                gCurTask->unk3C++;
+                gCurTask->frame++;
                 TaskYieldTrampoline(2);
             } while ((s16)++gCurTask->unk6C <= 14);
         }
@@ -91,27 +91,27 @@ void sub_08049b48(void)
         TaskSetFrame(0xA0E);
         TaskYieldTrampoline(3);
         PlayerStopSfx();
-        gCurTask->unk3C++;
+        gCurTask->frame++;
         TaskYieldTrampoline(3);
-        gCurTask->unk73 = 3;
+        gCurTask->variant = 3;
         break;
     }
     TaskSleepForever();
 }
 
-void sub_08049d1c(void)
+void PlayerActionIceUpdate(void)
 {
     struct Task *t = gCurTask;
 
-    switch (t->unk73) {
+    switch (t->variant) {
     case 0:
         break;
     case 1:
         if (t->unk28 == 0) {
             u16 *p = (u16 *)gLatchedHeldKeys;
-            if ((p[t->unk88->unk00] & 2) == 0) {
-                t->unk73 = 2;
-                TaskSetEntry(sub_08049b48, gCurTaskIdx);
+            if ((p[t->player->playerIndex] & 2) == 0) {
+                t->variant = 2;
+                TaskSetEntry(PlayerActionIce, gCurTaskIdx);
             }
         } else {
             t->unk28--;
@@ -126,39 +126,39 @@ void sub_08049d1c(void)
     sub_0803e55c();
 }
 
-void sub_08049d94(void)
+void PlayerActionFreeze(void)
 {
-    gCurTask->unk88->unk05 = gCurTask->unk88->unk04;
-    gCurTask->unk88->unk04 = 13;
-    gCurTask->unk15 = 42;
+    gCurTask->player->prevMode = gCurTask->player->mode;
+    gCurTask->player->mode = 13;
+    gCurTask->updateState = 42;
     {
         struct Task *t = gCurTask;
-        if (t->unk88->unk05 != 13) {
+        if (t->player->prevMode != 13) {
             struct Task *u;
-            t->unk73 = 0;
+            t->variant = 0;
             u = gCurTask;
             u->unk28 = 15;
             u->unk80 = 14;
         }
     }
-    switch (gCurTask->unk73) {
+    switch (gCurTask->variant) {
     case 0:
         TaskSetFrame(0xA8E);
         TaskYieldTrampoline(2);
-        gCurTask->unk73 = 1;
+        gCurTask->variant = 1;
         /* fallthrough */
     case 1:
-        CreatePlayerEffect(gCurTask->unk88->unk00, 41, 0);
-        CreatePlayerEffect(gCurTask->unk88->unk00, 41, 1);
-        CreatePlayerEffect(gCurTask->unk88->unk00, 41, 2);
-        CreatePlayerEffect(gCurTask->unk88->unk00, 41, 3);
-        PlayerStartSfx(141, gCurTask->unk88->unk00);
+        CreatePlayerEffect(gCurTask->player->playerIndex, 41, 0);
+        CreatePlayerEffect(gCurTask->player->playerIndex, 41, 1);
+        CreatePlayerEffect(gCurTask->player->playerIndex, 41, 2);
+        CreatePlayerEffect(gCurTask->player->playerIndex, 41, 3);
+        PlayerStartSfx(141, gCurTask->player->playerIndex);
         while (1) {
             TaskSetFrame(0xA86);
             TaskYieldTrampoline(1);
             gCurTask->unk6C = 0;
             do {
-                gCurTask->unk3C++;
+                gCurTask->frame++;
                 TaskYieldTrampoline(1);
             } while ((s16)++gCurTask->unk6C <= 6);
         }
@@ -166,31 +166,31 @@ void sub_08049d94(void)
         PlayerStopSfx();
         TaskSetFrame(0xA8E);
         TaskYieldTrampoline(1);
-        gCurTask->unk73 = 3;
+        gCurTask->variant = 3;
         break;
     }
     TaskSleepForever();
 }
 
-void sub_08049edc(void)
+void PlayerActionFreezeUpdate(void)
 {
     struct Task *t = gCurTask;
 
-    switch (t->unk73) {
+    switch (t->variant) {
     case 0:
         break;
     case 1:
         if (t->unk28 == 0) {
-            if ((gLatchedHeldKeys[t->unk88->unk00] & 2) == 0) {
-                t->unk73 = 2;
-                TaskSetEntry(sub_08049d94, gCurTaskIdx);
+            if ((gLatchedHeldKeys[t->player->playerIndex] & 2) == 0) {
+                t->variant = 2;
+                TaskSetEntry(PlayerActionFreeze, gCurTaskIdx);
             }
         } else {
             t->unk28--;
         }
-        RegisterCollider((u8)gCurTaskIdx, gCurTask->unk48, gCurTask->unk4A,
+        RegisterCollider((u8)gCurTaskIdx, gCurTask->pixelX, gCurTask->pixelY,
                      gUnk_0873C214);
-        TaskBreakBlocks((struct HitBoxSet *)gUnk_0873CF4C, gCurTask->unk88->unk00);
+        TaskBreakBlocks((struct HitBoxSet *)gUnk_0873CF4C, gCurTask->player->playerIndex);
         break;
     case 2:
         break;

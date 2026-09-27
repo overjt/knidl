@@ -9,7 +9,7 @@
  * its 16.16 target and the visible rectangle on the player (one player)
  * or runs M08's multi-player updates; sub_08028e3c only sets the bounds.
  * SetRoomEntryPoint places the player at the room's start position
- * (RoomDef.unk50/unk52) unless a door already did, clamps it and records
+ * (RoomDef.entryX/unk52) unless a door already did, clamps it and records
  * the arrival for the next level change (gUnk_02008054, gUnk_0200AFF4,
  * gUnk_02008050).  sub_08029034 clamps the arrival position into the room
  * and makes it the camera target, sub_080290ac copies the current
@@ -30,8 +30,8 @@ struct CamRect { s16 x0, x1, y0, y1; };
 struct BgMap
 {
     /*0x00*/ u16 unk0;
-    /*0x02*/ u16 unk2;
-    /*0x04*/ u16 unk4;
+    /*0x02*/ u16 width;
+    /*0x04*/ u16 height;
     /*0x06*/ u16 unk6[0];
 };
 
@@ -48,35 +48,35 @@ struct Door
 struct RoomDef
 {
     /*0x00*/ u8 filler00[4];
-    /*0x04*/ s8 unk04;
-    /*0x05*/ u8 unk05;
+    /*0x04*/ s8 bgm;
+    /*0x05*/ u8 mapsCompressed;
     /*0x06*/ u8 filler06[2];
-    /*0x08*/ void *unk08;
-    /*0x0C*/ void *unk0C;
+    /*0x08*/ void *metatileMap;
+    /*0x0C*/ void *blockLayer;
     /*0x10*/ void *unk10;
-    /*0x14*/ u16 unk14;
-    /*0x16*/ u16 unk16;
-    /*0x18*/ u16 *unk18;
-    /*0x1C*/ void *unk1C;
-    /*0x20*/ void *unk20;
-    /*0x24*/ u16 unk24;
-    /*0x26*/ u16 unk26;
-    /*0x28*/ u16 *unk28;
-    /*0x2C*/ void *unk2C;
-    /*0x30*/ struct BgMap *unk30;
-    /*0x34*/ u16 unk34;
-    /*0x36*/ u16 unk36;
+    /*0x14*/ u16 width;
+    /*0x16*/ u16 height;
+    /*0x18*/ u16 *bg2Palette;
+    /*0x1C*/ void *bg2Tiles;
+    /*0x20*/ void *metatileTiles;
+    /*0x24*/ u16 borderX;
+    /*0x26*/ u16 borderY;
+    /*0x28*/ u16 *bg3Palette;
+    /*0x2C*/ void *bg3Tiles;
+    /*0x30*/ struct BgMap *bg3Map;
+    /*0x34*/ u16 bg3BorderX;
+    /*0x36*/ u16 bg3BorderY;
     /*0x38*/ u16 unk38;
-    /*0x3A*/ u16 unk3A;
-    /*0x3C*/ u16 unk3C;
-    /*0x3E*/ u16 unk3E;
-    /*0x40*/ u16 unk40;
+    /*0x3A*/ u16 doorCount;
+    /*0x3C*/ u16 objectCount;
+    /*0x3E*/ u16 objectsSortedByY;
+    /*0x40*/ u16 bgAnimSet;
     /*0x42*/ u16 unk42;
-    /*0x44*/ struct Door *unk44;
-    /*0x48*/ void *unk48;
+    /*0x44*/ struct Door *doors;
+    /*0x48*/ void *objects;
     /*0x4C*/ u8 filler4C[4];
-    /*0x50*/ u16 unk50;
-    /*0x52*/ u16 unk52;
+    /*0x50*/ u16 entryX;
+    /*0x52*/ u16 entryY;
     /*0x54*/ u8 unk54;
     /*0x55*/ u8 unk55;
     /*0x56*/ u8 unk56;
@@ -96,15 +96,15 @@ struct Unk02004B90
 struct Unk020055D8Entry
 {
     /*0x00*/ u8 filler0[4];
-    /*0x04*/ u16 unk4;
-    /*0x06*/ u16 unk6;
+    /*0x04*/ u16 x;
+    /*0x06*/ u16 y;
 };
 
 struct Unk020055D8
 {
-    /*0x00*/ s16 unk0;
-    /*0x02*/ s16 unk2;
-    /*0x04*/ struct Unk020055D8Entry *unk4;
+    /*0x00*/ s16 count;
+    /*0x02*/ s16 sortedByY;
+    /*0x04*/ struct Unk020055D8Entry *entries;
 };
 
 extern u16 gCameraMode;
@@ -281,8 +281,8 @@ void SetRoomEntryPoint(void)
 
     if (gRoomEntrySet == 0)
     {
-        gRoomEntryX = gCurRoomDef->unk50;
-        gRoomEntryY = gCurRoomDef->unk52 + 0xFFFD;
+        gRoomEntryX = gCurRoomDef->entryX;
+        gRoomEntryY = gCurRoomDef->entryY + 0xFFFD;
         gRoomEntrySet = 0;
     }
     v = gRoomBounds[0] - 117;
@@ -302,8 +302,8 @@ void SetRoomEntryPoint(void)
         gUnk_02008054 = gRoomIndex;
         if (gUnk_020069F0 == 2)
         {
-            gUnk_0200AFF4 = gCurRoomDef->unk50;
-            gUnk_02008050 = gCurRoomDef->unk52;
+            gUnk_0200AFF4 = gCurRoomDef->entryX;
+            gUnk_02008050 = gCurRoomDef->entryY;
         }
         else
         {
@@ -387,7 +387,7 @@ void sub_08029110(void)
 
     if (sub_080408e4() == 0)
     {
-        bgm = gCurRoomDef->unk04;
+        bgm = gCurRoomDef->bgm;
         if (bgm == -1)
         {
             StopBgm();
@@ -417,10 +417,10 @@ void sub_08029194(void)
 {
     if (gUnk_0200AF04 == 0)
     {
-        if (gCurRoomDef->unk04 == -1)
+        if (gCurRoomDef->bgm == -1)
             StopBgm();
         else
-            PlayBgm(gCurRoomDef->unk04);
+            PlayBgm(gCurRoomDef->bgm);
     }
     else
     {
@@ -430,14 +430,14 @@ void sub_08029194(void)
 
 void LoadBg2Gfx(void)
 {
-    RequestCopy(8, (u32)gCurRoomDef->unk1C, 0x06004000, 0);
-    RequestCopy(2, (u32)(gCurRoomDef->unk18 + 1), (u32)gUnk_030012B0, gCurRoomDef->unk18[0]);
+    RequestCopy(8, (u32)gCurRoomDef->bg2Tiles, 0x06004000, 0);
+    RequestCopy(2, (u32)(gCurRoomDef->bg2Palette + 1), (u32)gUnk_030012B0, gCurRoomDef->bg2Palette[0]);
 }
 
 void LoadBg3Gfx(void)
 {
-    RequestCopy(8, (u32)gCurRoomDef->unk2C, 0x06008000, 0);
-    RequestCopy(2, (u32)(gCurRoomDef->unk28 + 1), (u32)(gObjPalette - gCurRoomDef->unk28[0]), gCurRoomDef->unk28[0]);
+    RequestCopy(8, (u32)gCurRoomDef->bg3Tiles, 0x06008000, 0);
+    RequestCopy(2, (u32)(gCurRoomDef->bg3Palette + 1), (u32)(gObjPalette - gCurRoomDef->bg3Palette[0]), gCurRoomDef->bg3Palette[0]);
 }
 
 void ClearBg2Bg3Maps(void)
@@ -456,8 +456,8 @@ void SelectBg3MapShape(void)
     s32 w;
     s32 h;
 
-    w = gCurRoomDef->unk30->unk2;
-    h = gCurRoomDef->unk30->unk4;
+    w = gCurRoomDef->bg3Map->width;
+    h = gCurRoomDef->bg3Map->height;
     if (w <= 64 && h <= 32)
         gBg3MapShape = 0;
     else if (w <= 32 && h <= 64)
@@ -468,12 +468,12 @@ void SelectBg3MapShape(void)
 
 void LoadBg3Map(void)
 {
-    RequestCopy(8, (u32)gCurRoomDef->unk30 + 8, 0x06003000, 0);
+    RequestCopy(8, (u32)gCurRoomDef->bg3Map + 8, 0x06003000, 0);
 }
 
 void SpawnRoomObjectsInView(void)
 {
-    if (gRoomObjectList.unk0 != 0)
+    if (gRoomObjectList.count != 0)
     {
         SpawnRoomObjectsInRect(gViewRect[0] - 36, gViewRect[1] + 36, gViewRect[2] - 40, gViewRect[3] + 40);
         *(long long *)gObjectSpawnViewRect = *(long long *)gViewRect;
@@ -487,8 +487,8 @@ void InitDoors(void)
     s32 a;
     s32 b;
 
-    d = gCurRoomDef->unk44;
-    for (i = 0; i < gCurRoomDef->unk3A; i++)
+    d = gCurRoomDef->doors;
+    for (i = 0; i < gCurRoomDef->doorCount; i++)
     {
         gDoorStates[i].unk1 = 1;
         /* The whole byte at +4 (unk4_0/unk4_4) cleared with one strb

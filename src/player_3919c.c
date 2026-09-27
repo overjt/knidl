@@ -6,12 +6,12 @@
  *
  * Player action bodies, part 7: actions 17 and 20.  PlayerActionDie (action
  * 17) is the player's death: it installs sub_080396a4 as the task's
- * per-frame callback Task.unk04 (state 1 falls until the player is below
+ * per-frame callback Task.updateCallback (state 1 falls until the player is below
  * the screen, state 2 waits PlayerState.unk14 frames, state 4 leaves for
  * the results screen), counts the players whose health gPlayerHealth[] is
  * not 0, plays the lost-life or game-over music, loops the fall animation
  * until the callback reaches state 3, and when gUnk_0300234C drops to 0
- * raises M02's stage request gStageRequest = 6; Task.unk73 = 4 or 5 then
+ * raises M02's stage request gStageRequest = 6; Task.variant = 4 or 5 then
  * says whether the player has lives left (gPlayerLives[]).
  * PlayerActionEnterDoor (action 20) enters a door: it stops the player, plays the
  * landing or crouch animation picked by M11's sub_080404e4, calls M07's
@@ -86,29 +86,29 @@ void PlayerActionDie(void)
     u16 n;
     u16 i;
 
-    gCurTask->unk88->unk05 = gCurTask->unk88->unk04;
-    gCurTask->unk88->unk04 = 18;
-    gCurTask->unk04 = (u32)sub_080396a4;
-    gCurTask->unk08 = 0;
-    gCurTask->unk43 = 1;
+    gCurTask->player->prevMode = gCurTask->player->mode;
+    gCurTask->player->mode = 18;
+    gCurTask->updateCallback = (u32)sub_080396a4;
+    gCurTask->lateUpdateCallback = 0;
+    gCurTask->facing = 1;
     t = gCurTask;
-    t->unk3E &= 0x7FFF;
+    t->spriteFlags &= 0x7FFF;
     gActivePlayerCount--;
-    gActivePlayerMask &= ~(1 << t->unk88->unk00);
+    gActivePlayerMask &= ~(1 << t->player->playerIndex);
     if (t->unk82 == 0x200)
         sub_08027548();
     u = gCurTask;
-    u->unk88->unk40 |= 8;
-    u->unk88->unk42 |= 0x100;
-    u->unk73 = 0;
-    gCurTask->unk88->unk42 &= 0xFFEF;
-    SetPlayerInvulnerability(255, 0, gCurTask->unk88->unk00);
+    u->player->unk40 |= 8;
+    u->player->unk42 |= 0x100;
+    u->variant = 0;
+    gCurTask->player->unk42 &= 0xFFEF;
+    SetPlayerInvulnerability(255, 0, gCurTask->player->playerIndex);
     PlayerStopAxes(3);
-    gCurTask->unk88->unk06 = 0;
-    SetPlayerAbility(0, -1, gCurTask->unk88->unk00);
-    sub_080276ac(gCurTask->unk88->unk00);
-    gCurTask->unk88->unk16 = 255;
-    anim = gUnk_0873D9FA[gCurTask->unk88->unk0D];
+    gCurTask->player->mouthState = 0;
+    SetPlayerAbility(0, -1, gCurTask->player->playerIndex);
+    sub_080276ac(gCurTask->player->playerIndex);
+    gCurTask->player->unk16 = 255;
+    anim = gUnk_0873D9FA[gCurTask->player->ability];
     n = 0;
     for (i = 0; i < gPlayerCount; i++)
     {
@@ -119,18 +119,18 @@ void PlayerActionDie(void)
     {
         StopAllSound();
         StopAllSfx();
-        gCurTask->unk42 = 4;
-        gCurTask->unk88->unk17 = n;
-        gCurTask->unk88->unk18 = n;
-        gCurTask->unk88->unk1A = gCurTask->unk88->unk1C = n;
+        gCurTask->layer = 4;
+        gCurTask->player->unk17 = n;
+        gCurTask->player->unk18 = n;
+        gCurTask->player->unk1A = gCurTask->player->unk1C = n;
     }
     else
     {
         sub_0803e868();
     }
-    if (gLocalPlayer == gCurTask->unk88->unk00)
+    if (gLocalPlayer == gCurTask->player->playerIndex)
     {
-        gCurTask->unk3C = anim[0];
+        gCurTask->frame = anim[0];
         if (gPlayerCount == 1)
         {
             StopAllSfx();
@@ -161,14 +161,14 @@ void PlayerActionDie(void)
         }
         else
         {
-            sub_08040934(gCurTask->unk88->unk00);
+            sub_08040934(gCurTask->player->playerIndex);
         }
-        if (gCurTask->unk88->unk37 != 2 || gActivePlayerMask == 0)
+        if (gCurTask->player->unk37 != 2 || gActivePlayerMask == 0)
             RequestScreenShake(4);
     }
     else
     {
-        gCurTask->unk3C = anim[0];
+        gCurTask->frame = anim[0];
         if (gActivePlayerMask == 0)
         {
             for (i = 4; i <= 63; i++)
@@ -188,20 +188,20 @@ void PlayerActionDie(void)
         }
         else
         {
-            sub_08040934(gCurTask->unk88->unk00);
+            sub_08040934(gCurTask->player->playerIndex);
         }
     }
     TaskYieldTrampoline(1);
     if (gActivePlayerMask == 0)
         PlaySfx(158);
     else
-        PlaySfxIfLocalPlayer(158, gCurTask->unk88->unk00);
+        PlaySfxIfLocalPlayer(158, gCurTask->player->playerIndex);
     TaskYieldTrampoline(59);
-    gCurTask->unk73 = 1;
-    gCurTask->unk88->unk22 = 1;
-    gCurTask->unk88->unk12 = 0x8000;
+    gCurTask->variant = 1;
+    gCurTask->player->unk22 = 1;
+    gCurTask->player->invulnerabilityTimer = 0x8000;
     for (i = 0; i <= 3; i++)
-        CreatePlayerEffect(gCurTask->unk88->unk00, 12, i);
+        CreatePlayerEffect(gCurTask->player->playerIndex, 12, i);
     if (n == 0)
         PlayBgm(3);
     else if (gUnk_02007CF0 != 1)
@@ -213,53 +213,53 @@ void PlayerActionDie(void)
         struct Task *w = gCurTask;
         struct Task *x;
 
-        if (w->unk0C != 0)
-            CreatePlayerEffectHighSlot(w->unk88->unk00, 5, 0);
-        gCurTask->unk3C = gCurTask->unk46;
+        if (w->drawCallback != 0)
+            CreatePlayerEffectHighSlot(w->player->playerIndex, 5, 0);
+        gCurTask->frame = gCurTask->unk46;
         TaskYieldTrampoline(1);
         for (gCurTask->unk6C = 0; (s16)gCurTask->unk6C <= 6; gCurTask->unk6C++)
         {
-            gCurTask->unk3C--;
+            gCurTask->frame--;
             TaskYieldTrampoline(1);
         }
         x = gCurTask;
-        if (x->unk0C != 0)
-            CreatePlayerEffectHighSlot(x->unk88->unk00, 5, 0);
+        if (x->drawCallback != 0)
+            CreatePlayerEffectHighSlot(x->player->playerIndex, 5, 0);
         for (gCurTask->unk6C = 0; (s16)gCurTask->unk6C <= 7; gCurTask->unk6C++)
         {
-            gCurTask->unk3C--;
+            gCurTask->frame--;
             TaskYieldTrampoline(1);
         }
-    } while (gCurTask->unk73 != 3);
+    } while (gCurTask->variant != 3);
     gUnk_0300234C--;
     t2 = gCurTask;
-    t2->unk00 = 0;
-    t2->unk0C = 0;
-    t2->unk08 = 0;
+    t2->moveCallback = 0;
+    t2->drawCallback = 0;
+    t2->lateUpdateCallback = 0;
     if (gUnk_0300234C == 0)
     {
         gStageRequest = 6;
         TaskExitTrampoline();
     }
-    sub_080276cc(gCurTask->unk88->unk00);
-    if (gPlayerLives[gCurTask->unk88->unk00] == 0)
-        gCurTask->unk73 = 4;
+    sub_080276cc(gCurTask->player->playerIndex);
+    if (gPlayerLives[gCurTask->player->playerIndex] == 0)
+        gCurTask->variant = 4;
     else
-        gCurTask->unk73 = 5;
+        gCurTask->variant = 5;
     gUnk_03001F34 = 0;
     TaskSleepForever();
 }
 
 void sub_080396a4(void)
 {
-    switch (gCurTask->unk73)
+    switch (gCurTask->variant)
     {
     case 4:
     {
         struct Task *t = gCurTask;
 
-        t->unk04 = 0;
-        t->unk12 = 4;
+        t->updateCallback = 0;
+        t->taskClass = 4;
         if (gGameState != 20)
             TaskSetEntry(sub_080b9610, gCurTaskIdx);
         else
@@ -270,33 +270,33 @@ void sub_080396a4(void)
     {
         struct Task *t = gCurTask;
 
-        if (t->unk58 > 0)
+        if (t->velY > 0)
         {
             struct PlayerState *p;
             u16 y;
 
-            t->unk68 = 0x40000;
-            p = t->unk88;
+            t->speedLimitY = 0x40000;
+            p = t->player;
             if (p->unk37 != 2)
-                y = t->unk4A - (u16)(gPlayerCameraPos[p->unk00].y - 80);
+                y = t->pixelY - (u16)(gPlayerCameraPos[p->playerIndex].y - 80);
             else
-                y = t->unk4A;
+                y = t->pixelY;
             if ((s16)y > 184)
             {
                 struct Task *u;
                 struct PlayerState *q;
 
-                gCurTask->unk88->unk14 = 90;
-                gCurTask->unk73 = 2;
+                gCurTask->player->unk14 = 90;
+                gCurTask->variant = 2;
                 PlayerStopAxes(2);
                 u = gCurTask;
-                q = u->unk88;
-                if (q->unk37 != 2 && u->unk4A - gSpriteCameraY <= 183)
-                    CreatePlayerEffect(q->unk00, 18, 0);
-                gCurTask->unk0C = 0;
+                q = u->player;
+                if (q->unk37 != 2 && u->pixelY - gSpriteCameraY <= 183)
+                    CreatePlayerEffect(q->playerIndex, 18, 0);
+                gCurTask->drawCallback = 0;
             }
         }
-        if (!(gCurTask->unk88->unk42 & 32))
+        if (!(gCurTask->player->unk42 & 32))
             sub_0803e080();
         break;
     }
@@ -304,8 +304,8 @@ void sub_080396a4(void)
     {
         struct Task *t = gCurTask;
 
-        if (--t->unk88->unk14 == 0)
-            t->unk73 = 3;
+        if (--t->player->unk14 == 0)
+            t->variant = 3;
         break;
     }
     case 0:
@@ -321,13 +321,13 @@ void PlayerActionEnterDoor(void)
     s32 n;
     s32 i;
 
-    gCurTask->unk88->unk05 = gCurTask->unk88->unk04;
-    gCurTask->unk88->unk04 = 19;
-    gCurTask->unk04 = 0;
-    gCurTask->unk08 = 0;
-    gCurTask->unk88->unk3D = 0;
+    gCurTask->player->prevMode = gCurTask->player->mode;
+    gCurTask->player->mode = 19;
+    gCurTask->updateCallback = 0;
+    gCurTask->lateUpdateCallback = 0;
+    gCurTask->player->running = 0;
     PlayerStopAxes(3);
-    gCurTask->unk88->unk42 |= 0x100;
+    gCurTask->player->unk42 |= 0x100;
     RequestScreenShake(0);
     if (gUnk_03002444 == 0)
     {
@@ -357,48 +357,48 @@ void PlayerActionEnterDoor(void)
     switch (sub_080404e4())
     {
     case 1:
-        gCurTask->unk88->unk06 = 0;
-        CreatePlayerObject(gCurTask->unk88->unk00, 0, 0);
-        TaskSetFrame(gUnk_0873D7E4[gCurTask->unk88->unk0D][2]);
+        gCurTask->player->mouthState = 0;
+        CreatePlayerObject(gCurTask->player->playerIndex, 0, 0);
+        TaskSetFrame(gUnk_0873D7E4[gCurTask->player->ability][2]);
         TaskYieldTrampoline(6);
-        gCurTask->unk3C--;
+        gCurTask->frame--;
         TaskYieldTrampoline(2);
         break;
     case 2:
-        gCurTask->unk88->unk06 = 0;
-        if (!(gCurTask->unk7B & 1))
+        gCurTask->player->mouthState = 0;
+        if (!(gCurTask->waterFlags & 1))
         {
             TaskSetFrame(79);
             TaskYieldTrampoline(1);
-            gCurTask->unk3C++;
+            gCurTask->frame++;
             TaskYieldTrampoline(1);
-            if ((s8)gCurTask->unk88->unk07 > 1)
-                CreatePlayerObject(gCurTask->unk88->unk00, 2, 0);
+            if ((s8)gCurTask->player->attachedCount > 1)
+                CreatePlayerObject(gCurTask->player->playerIndex, 2, 0);
             else
-                CreatePlayerObject(gCurTask->unk88->unk00, 1, 0);
-            if (gCurTask->unk7A & 1)
+                CreatePlayerObject(gCurTask->player->playerIndex, 1, 0);
+            if (gCurTask->onGround & 1)
             {
-                CreatePlayerEffect(gCurTask->unk88->unk00, 2, 0);
-                CreatePlayerEffect(gCurTask->unk88->unk00, 2, 1);
+                CreatePlayerEffect(gCurTask->player->playerIndex, 2, 0);
+                CreatePlayerEffect(gCurTask->player->playerIndex, 2, 1);
             }
-            gCurTask->unk3C++;
+            gCurTask->frame++;
             TaskYieldTrampoline(4);
-            gCurTask->unk3C++;
+            gCurTask->frame++;
             TaskYieldTrampoline(1);
-            gCurTask->unk3C++;
+            gCurTask->frame++;
     default:
             TaskYieldTrampoline(1);
             break;
         }
         TaskSetFrame(224);
         TaskYieldTrampoline(2);
-        gCurTask->unk3C--;
+        gCurTask->frame--;
         TaskYieldTrampoline(2);
-        if ((s8)gCurTask->unk88->unk07 > 1)
-            CreatePlayerObject(gCurTask->unk88->unk00, 2, 0);
+        if ((s8)gCurTask->player->attachedCount > 1)
+            CreatePlayerObject(gCurTask->player->playerIndex, 2, 0);
         else
-            CreatePlayerObject(gCurTask->unk88->unk00, 1, 0);
-        gCurTask->unk3C--;
+            CreatePlayerObject(gCurTask->player->playerIndex, 1, 0);
+        gCurTask->frame--;
         TaskYieldTrampoline(2);
         break;
     }
@@ -408,20 +408,20 @@ void PlayerActionEnterDoor(void)
     if (gUnk_03002444 == 0)
         PlaySfx(181);
     t = gCurTask;
-    if (!(t->unk7B & 1))
+    if (!(t->waterFlags & 1))
     {
-        t->unk46 = gPlayerDoorAnims[t->unk88->unk0D][0];
-        switch (t->unk88->unk0D)
+        t->unk46 = gPlayerDoorAnims[t->player->ability][0];
+        switch (t->player->ability)
         {
         case 0:
         default:
             TaskSetFrame(gCurTask->unk46);
             TaskYieldTrampoline(2);
-            gCurTask->unk3C++;
+            gCurTask->frame++;
             TaskYieldTrampoline(2);
-            gCurTask->unk3C++;
+            gCurTask->frame++;
             TaskYieldTrampoline(2);
-            gCurTask->unk3C++;
+            gCurTask->frame++;
             break;
         case 1:
         case 2:
@@ -431,9 +431,9 @@ void PlayerActionEnterDoor(void)
         case 23:
             TaskSetFrame(gCurTask->unk46);
             TaskYieldTrampoline(2);
-            gCurTask->unk3C++;
+            gCurTask->frame++;
             TaskYieldTrampoline(2);
-            gCurTask->unk3C++;
+            gCurTask->frame++;
             TaskYieldTrampoline(2);
             while (1)
             {
@@ -449,11 +449,11 @@ void PlayerActionEnterDoor(void)
         gCurTask->unk46 = sub_0803f7e0(0);
         TaskSetFrame(gCurTask->unk46);
         TaskYieldTrampoline(3);
-        gCurTask->unk3C++;
+        gCurTask->frame++;
         TaskYieldTrampoline(3);
-        gCurTask->unk3C++;
+        gCurTask->frame++;
         TaskYieldTrampoline(3);
-        gCurTask->unk3C++;
+        gCurTask->frame++;
     }
     TaskSleepForever();
 }

@@ -15,40 +15,40 @@
 #include "gba/gba.h"
 #include "global.h"
 
-/* Sprite / draw-request record.  gCurTask points at the entry that is
- * currently being filled in; gTasks[] is the array those entries live
- * in (stride 0x90, indexed by the same slot number used by TaskSetEntry).
+/* The draw code's view of struct Task (include/task.h): gCurTask is the
+ * running task and gTasks[] the 64 control blocks (stride 0x90, indexed
+ * by the same slot number used by TaskSetEntry).
  *
  * Evidence for the field types is in the ROM itself:
- *   unk38  ldr  [p,#0x38] + ldr [base + idx*4]   -> array of pointers
- *   unk3C  ldrsh, compared against -1            -> signed slot index
- *   unk43  ldrb + lsls #24 + asrs #24            -> s8 (see the recipe note)
- *   unk48  ldrsh / ldrh                          -> s16 world X
- *   unk4A  ldrsh / ldrh                          -> s16 world Y
- *   unk54/58/5C/60/64/68 are s32 pairs that are cleared to 0 / 0x80000000.
+ *   frameTable  ldr  [p,#0x38] + ldr [base + idx*4] -> array of pointers
+ *   frame       ldrsh, compared against -1          -> signed frame index
+ *   facing      ldrb + lsls #24 + asrs #24          -> s8 (see the recipe note)
+ *   pixelX      ldrsh / ldrh                        -> s16 world X
+ *   pixelY      ldrsh / ldrh                        -> s16 world Y
+ *   velX/Y, accelX/Y, speedLimitX/Y are s32 pairs cleared to 0 / 0x80000000.
  */
 struct Sprite
 {
     /*0x00*/ u8 filler00[0x10];
-    /*0x10*/ u16 unk10;
+    /*0x10*/ u16 sleepFrames;
     /*0x12*/ u8 filler12[0x38 - 0x12];
-    /*0x38*/ void **unk38;
-    /*0x3C*/ s16 unk3C;
-    /*0x3E*/ u16 unk3E;
-    /*0x40*/ u16 unk40;
-    /*0x42*/ u8 unk42;
-    /*0x43*/ s8 unk43;
+    /*0x38*/ void **frameTable;
+    /*0x3C*/ s16 frame;
+    /*0x3E*/ u16 spriteFlags;
+    /*0x40*/ u16 tileWord;
+    /*0x42*/ u8 layer;
+    /*0x43*/ s8 facing;
     /*0x44*/ u8 filler44[4];
-    /*0x48*/ s16 unk48;
-    /*0x4A*/ s16 unk4A;
-    /*0x4C*/ s32 unk4C;
+    /*0x48*/ s16 pixelX;
+    /*0x4A*/ s16 pixelY;
+    /*0x4C*/ s32 posX;
     /*0x50*/ u8 filler50[4];
-    /*0x54*/ s32 unk54;
-    /*0x58*/ s32 unk58;
-    /*0x5C*/ s32 unk5C;
-    /*0x60*/ s32 unk60;
-    /*0x64*/ s32 unk64;
-    /*0x68*/ s32 unk68;
+    /*0x54*/ s32 velX;
+    /*0x58*/ s32 velY;
+    /*0x5C*/ s32 accelX;
+    /*0x60*/ s32 accelY;
+    /*0x64*/ s32 speedLimitX;
+    /*0x68*/ s32 speedLimitY;
     /*0x6C*/ u8 filler6C[0x90 - 0x6C];
 };
 
@@ -76,13 +76,13 @@ void TaskDrawWorld(void)
     void **tbl;
 
     p = gCurTask;
-    if (p->unk38 == NULL) return;
-    if (p->unk3C == -1) return;
+    if (p->frameTable == NULL) return;
+    if (p->frame == -1) return;
     if (TaskIsOnScreen() == 0) return;
     q = gCurTask;
-    tbl = q->unk38;
-    QueueSprite(q->unk42, (u32)tbl[q->unk3C], q->unk3E, q->unk40,
-                 q->unk48 - gSpriteCameraX, (s16)(q->unk4A - gSpriteCameraY));
+    tbl = q->frameTable;
+    QueueSprite(q->layer, (u32)tbl[q->frame], q->spriteFlags, q->tileWord,
+                 q->pixelX - gSpriteCameraX, (s16)(q->pixelY - gSpriteCameraY));
 }
 
 void TaskDrawWorldOrFree(void)
@@ -92,14 +92,14 @@ void TaskDrawWorldOrFree(void)
     void **tbl;
 
     p = gCurTask;
-    if (p->unk38 == NULL) return;
-    if (p->unk3C == -1) return;
+    if (p->frameTable == NULL) return;
+    if (p->frame == -1) return;
     if (TaskIsOnScreen() != 0) {
         q = gCurTask;
-        tbl = q->unk38;
-        QueueSprite(q->unk42, (u32)tbl[q->unk3C], q->unk3E, q->unk40,
-                     q->unk48 - gSpriteCameraX,
-                     (s16)(q->unk4A - gSpriteCameraY));
+        tbl = q->frameTable;
+        QueueSprite(q->layer, (u32)tbl[q->frame], q->spriteFlags, q->tileWord,
+                     q->pixelX - gSpriteCameraX,
+                     (s16)(q->pixelY - gSpriteCameraY));
     } else {
         TaskFree(gCurTaskIdx);
     }
@@ -112,15 +112,15 @@ void TaskDrawWorldInView(void)
     void **tbl;
 
     p = gCurTask;
-    if (p->unk38 == NULL) return;
-    if (p->unk3C == -1) return;
+    if (p->frameTable == NULL) return;
+    if (p->frame == -1) return;
     if (TaskIsInView() == 0) return;
     if (TaskIsOnScreen() == 0) return;
     q = gCurTask;
-    tbl = q->unk38;
-    QueueSprite(q->unk42, (u32)tbl[q->unk3C], q->unk3E, q->unk40,
-                 q->unk48 - gSpriteCameraX,
-                 (s16)(q->unk4A - gSpriteCameraY));
+    tbl = q->frameTable;
+    QueueSprite(q->layer, (u32)tbl[q->frame], q->spriteFlags, q->tileWord,
+                 q->pixelX - gSpriteCameraX,
+                 (s16)(q->pixelY - gSpriteCameraY));
 }
 
 void TaskDrawWorldInViewOrFree(void)
@@ -130,15 +130,15 @@ void TaskDrawWorldInViewOrFree(void)
     void **tbl;
 
     p = gCurTask;
-    if (p->unk38 == NULL) return;
-    if (p->unk3C == -1) return;
+    if (p->frameTable == NULL) return;
+    if (p->frame == -1) return;
     if (TaskIsInView() != 0) {
         if (TaskIsOnScreen() == 0) return;
         q = gCurTask;
-        tbl = q->unk38;
-        QueueSprite(q->unk42, (u32)tbl[q->unk3C], q->unk3E, q->unk40,
-                     q->unk48 - gSpriteCameraX,
-                     (s16)(q->unk4A - gSpriteCameraY));
+        tbl = q->frameTable;
+        QueueSprite(q->layer, (u32)tbl[q->frame], q->spriteFlags, q->tileWord,
+                     q->pixelX - gSpriteCameraX,
+                     (s16)(q->pixelY - gSpriteCameraY));
     } else {
         TaskFree(gCurTaskIdx);
     }
@@ -151,14 +151,14 @@ void TaskDrawWorldLoadTiles(void)
     u32 v;
 
     p = gCurTask;
-    if (p->unk38 == NULL) return;
-    if (p->unk3C == -1) return;
+    if (p->frameTable == NULL) return;
+    if (p->frame == -1) return;
     if (TaskIsOnScreen() == 0) return;
     v = TaskLoadFrameTiles(0);
     q = gCurTask;
-    QueueSprite(q->unk42, v, q->unk3E, q->unk40,
-                 q->unk48 - gSpriteCameraX,
-                 (s16)(q->unk4A - gSpriteCameraY));
+    QueueSprite(q->layer, v, q->spriteFlags, q->tileWord,
+                 q->pixelX - gSpriteCameraX,
+                 (s16)(q->pixelY - gSpriteCameraY));
 }
 
 void TaskDrawWorldTilesLoaded(void)
@@ -169,15 +169,15 @@ void TaskDrawWorldTilesLoaded(void)
     u32 *r;
 
     p = gCurTask;
-    if (p->unk38 == NULL) return;
-    if (p->unk3C == -1) return;
+    if (p->frameTable == NULL) return;
+    if (p->frame == -1) return;
     if (TaskIsOnScreen() == 0) return;
     q = gCurTask;
-    tbl = q->unk38;
-    r = tbl[q->unk3C];
-    QueueSprite(q->unk42, *r, q->unk3E, q->unk40,
-                 q->unk48 - gSpriteCameraX,
-                 (s16)(q->unk4A - gSpriteCameraY));
+    tbl = q->frameTable;
+    r = tbl[q->frame];
+    QueueSprite(q->layer, *r, q->spriteFlags, q->tileWord,
+                 q->pixelX - gSpriteCameraX,
+                 (s16)(q->pixelY - gSpriteCameraY));
 }
 
 void sub_080060c0(void)
@@ -187,15 +187,15 @@ void sub_080060c0(void)
     u16 t;
 
     p = gCurTask;
-    if (p->unk38 == NULL) return;
-    if (p->unk3C == -1) return;
-    t = p->unk48 + 31;
+    if (p->frameTable == NULL) return;
+    if (p->frame == -1) return;
+    t = p->pixelX + 31;
     if (t > 302) return;
-    if (p->unk4A <= -32) return;
-    if (p->unk4A > 191) return;
-    tbl = p->unk38;
-    QueueSprite(p->unk42, (u32)tbl[p->unk3C], p->unk3E, p->unk40,
-                 p->unk48, p->unk4A);
+    if (p->pixelY <= -32) return;
+    if (p->pixelY > 191) return;
+    tbl = p->frameTable;
+    QueueSprite(p->layer, (u32)tbl[p->frame], p->spriteFlags, p->tileWord,
+                 p->pixelX, p->pixelY);
 }
 
 void TaskSleepForever(void)
@@ -206,7 +206,7 @@ void TaskSleepForever(void)
 
 void TaskSetEntry(void *a, u32 i)
 {
-    gTasks[i].unk10 = 0;
+    gTasks[i].sleepFrames = 0;
     gTaskResumeAddrs[i] = a;
     gTaskStackPtrs[i] = 0x0203BFE0 + (i << 8);
 }
@@ -216,10 +216,10 @@ void TaskSetFrameByFacing(s16 a)
     struct Sprite *p;
 
     p = gCurTask;
-    if (p->unk43 == 1)
-        p->unk3C = a;
+    if (p->facing == 1)
+        p->frame = a;
     else
-        p->unk3C = a | 1;
+        p->frame = a | 1;
 }
 
 void TaskSetMotionX(s32 a, s32 b, s32 c)
@@ -227,9 +227,9 @@ void TaskSetMotionX(s32 a, s32 b, s32 c)
     struct Sprite *p;
 
     p = gCurTask;
-    p->unk54 = a;
-    p->unk5C = b;
-    p->unk64 = abs(c);
+    p->velX = a;
+    p->accelX = b;
+    p->speedLimitX = abs(c);
 }
 
 void TaskSetMotionXFacing(s32 a, s32 b)
@@ -237,12 +237,12 @@ void TaskSetMotionXFacing(s32 a, s32 b)
     struct Sprite *p;
 
     p = gCurTask;
-    if (p->unk43 == 1) {
-        if (a != 0x5A5A5A5A) p->unk54 = a;
-        if (b != 0x5A5A5A5A) gCurTask->unk5C = b;
+    if (p->facing == 1) {
+        if (a != 0x5A5A5A5A) p->velX = a;
+        if (b != 0x5A5A5A5A) gCurTask->accelX = b;
     } else {
-        if (a != 0x5A5A5A5A) p->unk54 = -a;
-        if (b != 0x5A5A5A5A) gCurTask->unk5C = -b;
+        if (a != 0x5A5A5A5A) p->velX = -a;
+        if (b != 0x5A5A5A5A) gCurTask->accelX = -b;
     }
 }
 
@@ -251,9 +251,9 @@ void TaskStopX(void)
     struct Sprite *p;
 
     p = gCurTask;
-    p->unk5C = 0;
-    p->unk54 = 0;
-    p->unk64 = 0x80000000;
+    p->accelX = 0;
+    p->velX = 0;
+    p->speedLimitX = 0x80000000;
 }
 
 void TaskSetMotionY(s32 a, s32 b, s32 c)
@@ -261,9 +261,9 @@ void TaskSetMotionY(s32 a, s32 b, s32 c)
     struct Sprite *p;
 
     p = gCurTask;
-    p->unk58 = a;
-    p->unk60 = b;
-    p->unk68 = abs(c);
+    p->velY = a;
+    p->accelY = b;
+    p->speedLimitY = abs(c);
 }
 
 void TaskStopY(void)
@@ -271,19 +271,19 @@ void TaskStopY(void)
     struct Sprite *p;
 
     p = gCurTask;
-    p->unk60 = 0;
-    p->unk58 = 0;
-    p->unk68 = 0x80000000;
+    p->accelY = 0;
+    p->velY = 0;
+    p->speedLimitY = 0x80000000;
 }
 
 void TaskSetMotion(s32 a, s32 b, s32 c, s32 d, s32 e, s32 f)
 {
-    if (a != 0x5A5A5A5A) gCurTask->unk54 = a;
-    if (b != 0x5A5A5A5A) gCurTask->unk5C = b;
-    if (c != 0x5A5A5A5A) gCurTask->unk64 = abs(c);
-    if (d != 0x5A5A5A5A) gCurTask->unk58 = d;
-    if (e != 0x5A5A5A5A) gCurTask->unk60 = e;
-    if (f != 0x5A5A5A5A) gCurTask->unk68 = abs(f);
+    if (a != 0x5A5A5A5A) gCurTask->velX = a;
+    if (b != 0x5A5A5A5A) gCurTask->accelX = b;
+    if (c != 0x5A5A5A5A) gCurTask->speedLimitX = abs(c);
+    if (d != 0x5A5A5A5A) gCurTask->velY = d;
+    if (e != 0x5A5A5A5A) gCurTask->accelY = e;
+    if (f != 0x5A5A5A5A) gCurTask->speedLimitY = abs(f);
 }
 
 void TaskStop(void)
@@ -291,12 +291,12 @@ void TaskStop(void)
     struct Sprite *p;
 
     p = gCurTask;
-    p->unk60 = 0;
-    p->unk58 = 0;
-    p->unk5C = 0;
-    p->unk54 = 0;
-    p->unk68 = 0x80000000;
-    p->unk64 = 0x80000000;
+    p->accelY = 0;
+    p->velY = 0;
+    p->accelX = 0;
+    p->velX = 0;
+    p->speedLimitY = 0x80000000;
+    p->speedLimitX = 0x80000000;
 }
 
 void TaskStopSlot(u32 i)
@@ -304,12 +304,12 @@ void TaskStopSlot(u32 i)
     struct Sprite *p;
 
     p = &gTasks[i];
-    p->unk60 = 0;
-    p->unk58 = 0;
-    p->unk5C = 0;
-    p->unk54 = 0;
-    p->unk68 = 0x80000000;
-    p->unk64 = 0x80000000;
+    p->accelY = 0;
+    p->velY = 0;
+    p->accelX = 0;
+    p->velX = 0;
+    p->speedLimitY = 0x80000000;
+    p->speedLimitX = 0x80000000;
 }
 
 void TaskUpdateFlip(void)
@@ -317,15 +317,15 @@ void TaskUpdateFlip(void)
     struct Sprite *p;
 
     p = gCurTask;
-    if (p->unk43 == 1)
-        p->unk3E &= 0x7FFF;
+    if (p->facing == 1)
+        p->spriteFlags &= 0x7FFF;
     else
-        p->unk3E |= 0x8000;
+        p->spriteFlags |= 0x8000;
 }
 
 void TaskSetFrame(s32 a)
 {
-    gCurTask->unk3C = a;
+    gCurTask->frame = a;
     TaskUpdateFlip();
 }
 
@@ -334,8 +334,8 @@ void TaskSetFrameNoFlip(s32 a)
     struct Sprite *p;
 
     p = gCurTask;
-    p->unk3E &= 0x7FFF;
-    p->unk3C = a;
+    p->spriteFlags &= 0x7FFF;
+    p->frame = a;
 }
 
 void TaskSetFrameFlip(s32 a)
@@ -343,8 +343,8 @@ void TaskSetFrameFlip(s32 a)
     struct Sprite *p;
 
     p = gCurTask;
-    p->unk3E |= 0x8000;
-    p->unk3C = a;
+    p->spriteFlags |= 0x8000;
+    p->frame = a;
 }
 
 void TaskSetPosXFacing(u16 a)
@@ -352,10 +352,10 @@ void TaskSetPosXFacing(u16 a)
     struct Sprite *p;
 
     p = gCurTask;
-    if (p->unk43 == 1)
-        p->unk4C = a << 16;
+    if (p->facing == 1)
+        p->posX = a << 16;
     else
-        p->unk4C = -(a << 16);
+        p->posX = -(a << 16);
 }
 
 void TaskStepForward(s16 a)
@@ -363,10 +363,10 @@ void TaskStepForward(s16 a)
     struct Sprite *p;
 
     p = gCurTask;
-    if (p->unk43 == 1)
-        p->unk4C = (p->unk48 + a) << 16;
+    if (p->facing == 1)
+        p->posX = (p->pixelX + a) << 16;
     else
-        p->unk4C = (p->unk48 - a) << 16;
+        p->posX = (p->pixelX - a) << 16;
 }
 
 u8 IsOnScreen(s16 a, s16 b)

@@ -25,11 +25,11 @@ struct CamPos { u16 x, y; };
 struct Unk03005680
 {
     /*0x00*/ u8 unk0;
-    /*0x01*/ u8 unk1;
-    /*0x02*/ u16 unk2;
-    /*0x04*/ u16 unk4;
-    /*0x06*/ u16 unk6;
-    /*0x08*/ u16 unk8;
+    /*0x01*/ u8 lockedAxes;
+    /*0x02*/ u16 x0;
+    /*0x04*/ u16 x1;
+    /*0x06*/ u16 y0;
+    /*0x08*/ u16 y1;
     /*0x0A*/ u16 unkA;
     /*0x0C*/ u16 unkC;
 };
@@ -39,15 +39,15 @@ struct CamRect { s16 x0, x1, y0, y1; };
 struct Unk020055D8Entry
 {
     /*0x00*/ u8 filler0[4];
-    /*0x04*/ u16 unk4;
-    /*0x06*/ u16 unk6;
+    /*0x04*/ u16 x;
+    /*0x06*/ u16 y;
 };
 
 struct Unk020055D8
 {
-    /*0x00*/ s16 unk0;
-    /*0x02*/ s16 unk2;
-    /*0x04*/ struct Unk020055D8Entry *unk4;
+    /*0x00*/ s16 count;
+    /*0x02*/ s16 sortedByY;
+    /*0x04*/ struct Unk020055D8Entry *entries;
 };
 
 extern s16 gRoomWidth;
@@ -82,7 +82,7 @@ void UpdatePlayerGroupCenter(void)
         switch (gPlayerCameraMode[i])
         {
         case 0:
-            y = gTasks[i].unk48;
+            y = gTasks[i].pixelX;
             if (y < gCameraBounds[0])
                 y = gCameraBounds[0];
             if (gCameraBounds[1] < y)
@@ -91,7 +91,7 @@ void UpdatePlayerGroupCenter(void)
                 x0 = y;
             if (x1 < y)
                 x1 = y;
-            y = gTasks[i].unk4A;
+            y = gTasks[i].pixelY;
             if (y < gCameraBounds[2])
                 y = gCameraBounds[2];
             if (gCameraBounds[3] < y)
@@ -213,7 +213,7 @@ void sub_08029ef4(void)
         case 0:
             if ((gScrollLock.unk0 >> i) & 1)
                 break;
-            x = gTasks[i].unk48;
+            x = gTasks[i].pixelX;
             if (x < gCameraBounds[0])
                 x = gCameraBounds[0];
             if (gCameraBounds[1] < x)
@@ -222,7 +222,7 @@ void sub_08029ef4(void)
                 x0 = x;
             if (x1 < x)
                 x1 = x;
-            y = gTasks[i].unk4A;
+            y = gTasks[i].pixelY;
             if (y < gCameraBounds[2])
                 y = gCameraBounds[2];
             if (gCameraBounds[3] < y)
@@ -258,14 +258,14 @@ void sub_08029ef4(void)
             break;
         }
     }
-    if (gScrollLock.unk1 & 1)
+    if (gScrollLock.lockedAxes & 1)
     {
         if (gScrollLockSpeedX > 0)
             x1 = gScrollLock.unkA;
         else
             x0 = gScrollLock.unkA;
     }
-    if (gScrollLock.unk1 & 2)
+    if (gScrollLock.lockedAxes & 2)
     {
         if (gScrollLockSpeedY > 0)
             y1 = gScrollLock.unkC;
@@ -274,7 +274,7 @@ void sub_08029ef4(void)
     }
     cx = (x0 + x1) >> 1;
     cy = (y0 + y1) >> 1;
-    if (!((gScrollLock.unk0 >> gPlayerCount) & 1) || !(gScrollLock.unk1 & 1))
+    if (!((gScrollLock.unk0 >> gPlayerCount) & 1) || !(gScrollLock.lockedAxes & 1))
     {
         gCameraBounds[0] = t = cx - 80;
         gCameraBounds[1] = cx + 80;
@@ -283,7 +283,7 @@ void sub_08029ef4(void)
         if (gRoomBounds[1] < gCameraBounds[1])
             gCameraBounds[1] = gRoomBounds[1];
     }
-    if (!((gScrollLock.unk0 >> gPlayerCount) & 1) || !(gScrollLock.unk1 & 2))
+    if (!((gScrollLock.unk0 >> gPlayerCount) & 1) || !(gScrollLock.lockedAxes & 2))
     {
         gCameraBounds[2] = cy - 120;
         if (gUnk_0200B078 == 2)
@@ -318,12 +318,12 @@ void UpdatePlayerCameras(void)
         switch (gPlayerCameraMode[i])
         {
         case 0:
-            gPlayerCameraPos[i].x = gTasks[i].unk48;
+            gPlayerCameraPos[i].x = gTasks[i].pixelX;
             if (gPlayerCameraPos[i].x < gCameraBounds[0])
                 gPlayerCameraPos[i].x = gCameraBounds[0];
             if (gCameraBounds[1] < gPlayerCameraPos[i].x)
                 gPlayerCameraPos[i].x = gCameraBounds[1];
-            gPlayerCameraPos[i].y = gTasks[i].unk4A;
+            gPlayerCameraPos[i].y = gTasks[i].pixelY;
             if (gPlayerCameraPos[i].y < gCameraBounds[2])
                 gPlayerCameraPos[i].y = gCameraBounds[2];
             if (gCameraBounds[3] < gPlayerCameraPos[i].y)
@@ -351,12 +351,12 @@ void sub_0802a260(void)
         case 0:
             if ((gScrollLock.unk0 >> i) & 1)
                 break;
-            gPlayerCameraPos[i].x = gTasks[i].unk48;
+            gPlayerCameraPos[i].x = gTasks[i].pixelX;
             if (gPlayerCameraPos[i].x < gCameraBounds[0])
                 gPlayerCameraPos[i].x = gCameraBounds[0];
             if (gCameraBounds[1] < gPlayerCameraPos[i].x)
                 gPlayerCameraPos[i].x = gCameraBounds[1];
-            gPlayerCameraPos[i].y = gTasks[i].unk4A;
+            gPlayerCameraPos[i].y = gTasks[i].pixelY;
             if (gPlayerCameraPos[i].y < gCameraBounds[2])
                 gPlayerCameraPos[i].y = gCameraBounds[2];
             if (gCameraBounds[3] < gPlayerCameraPos[i].y)
@@ -385,7 +385,7 @@ void sub_0802a340(void)
     {
         if ((gActivePlayerMask >> i) & 1)
         {
-            v = gTasks[i].unk48;
+            v = gTasks[i].pixelX;
             if (v < gCameraBounds[0])
                 v = gCameraBounds[0];
             if (gCameraBounds[1] < v)
@@ -394,7 +394,7 @@ void sub_0802a340(void)
                 x0 = v;
             if (x1 < v)
                 x1 = v;
-            v = gTasks[i].unk4A;
+            v = gTasks[i].pixelY;
             if (v < gCameraBounds[2])
                 v = gCameraBounds[2];
             if (gCameraBounds[3] < v)
@@ -489,7 +489,7 @@ void sub_0802a568(void)
         if (y1 < v)
             y1 = v;
     }
-    if (gScrollLock.unk1 & 1)
+    if (gScrollLock.lockedAxes & 1)
     {
         v = gPlayerCameraPos[gPlayerCount].x;
         if (v < x0)
@@ -497,7 +497,7 @@ void sub_0802a568(void)
         if (x1 < v)
             x1 = v;
     }
-    if (gScrollLock.unk1 & 2)
+    if (gScrollLock.lockedAxes & 2)
     {
         v = gPlayerCameraPos[gPlayerCount].y;
         if (v < y0)
@@ -517,7 +517,7 @@ void sub_0802a63c(void)
 
     if ((gScrollLock.unk0 >> gPlayerCount) & 1)
         return;
-    if (gScrollLock.unk1 & 1)
+    if (gScrollLock.lockedAxes & 1)
     {
         for (i = 0; i < gPlayerCount; i++)
         {
@@ -527,18 +527,18 @@ void sub_0802a63c(void)
                 {
                     gScrollLock.unk0 |= 1 << i;
                     gPlayerBounds[i].x0 = gPlayerCameraPos[i].x + 0xFF8B;
-                    gPlayerBounds[i].x1 = gScrollLock.unk4 + 117;
+                    gPlayerBounds[i].x1 = gScrollLock.x1 + 117;
                 }
                 else if (gScrollLockSpeedX < 0 && gPlayerCameraPos[i].x <= gScrollLock.unkA)
                 {
                     gScrollLock.unk0 |= 1 << i;
-                    gPlayerBounds[i].x0 = gScrollLock.unk2 + 0xFF8B;
+                    gPlayerBounds[i].x0 = gScrollLock.x0 + 0xFF8B;
                     gPlayerBounds[i].x1 = gPlayerCameraPos[i].x + 117;
                 }
             }
         }
     }
-    if (gScrollLock.unk1 & 2)
+    if (gScrollLock.lockedAxes & 2)
     {
         for (i = 0; i < gPlayerCount; i++)
         {
@@ -548,12 +548,12 @@ void sub_0802a63c(void)
                 {
                     gScrollLock.unk0 |= 1 << i;
                     gPlayerBounds[i].y0 = gPlayerCameraPos[i].y + 0xFFB4;
-                    gPlayerBounds[i].y1 = gScrollLock.unk8 + 104;
+                    gPlayerBounds[i].y1 = gScrollLock.y1 + 104;
                 }
                 else if (gScrollLockSpeedY < 0 && gPlayerCameraPos[i].y <= gScrollLock.unkC)
                 {
                     gScrollLock.unk0 |= 1 << i;
-                    gPlayerBounds[i].y0 = gScrollLock.unk6 + 0xFFB4;
+                    gPlayerBounds[i].y0 = gScrollLock.y0 + 0xFFB4;
                     gPlayerBounds[i].y1 = gPlayerCameraPos[i].y + 104;
                 }
             }
@@ -562,14 +562,14 @@ void sub_0802a63c(void)
     if ((gScrollLock.unk0 & gActivePlayerMask) == gActivePlayerMask)
     {
         gScrollLock.unk0 |= 1 << gPlayerCount;
-        if (gScrollLock.unk1 & 1)
+        if (gScrollLock.lockedAxes & 1)
         {
             if (gScrollLockSpeedX > 0)
                 gCameraBounds[0] = gScrollLock.unkA;
             else
                 gCameraBounds[1] = gScrollLock.unkA;
         }
-        if (gScrollLock.unk1 & 2)
+        if (gScrollLock.lockedAxes & 2)
         {
             if (gScrollLockSpeedY > 0)
                 gCameraBounds[2] = gScrollLock.unkC;
@@ -600,31 +600,31 @@ void SpawnRoomObjectsInRect(s32 x0, s32 x1, s32 y0, s32 y1)
         y0 = gRoomHeight << 4;
     if (y1 > gRoomHeight << 4)
         y1 = gRoomHeight << 4;
-    if (gRoomObjectList.unk2 != 0)
+    if (gRoomObjectList.sortedByY != 0)
     {
         if ((y1 + y0) >> 1 >= gRoomHeight << 3)
         {
-            for (i = gRoomObjectList.unk0 - 1; i >= 0; i--)
+            for (i = gRoomObjectList.count - 1; i >= 0; i--)
             {
-                e = &gRoomObjectList.unk4[i];
-                if (e->unk6 >= y1)
+                e = &gRoomObjectList.entries[i];
+                if (e->y >= y1)
                     continue;
-                if (e->unk6 < y0)
+                if (e->y < y0)
                     break;
-                if (e->unk4 >= x0 && e->unk4 < x1)
+                if (e->x >= x0 && e->x < x1)
                     sub_080b5338(i);
             }
         }
         else
         {
-            for (i = 0; i < gRoomObjectList.unk0; i++)
+            for (i = 0; i < gRoomObjectList.count; i++)
             {
-                e = &gRoomObjectList.unk4[i];
-                if (e->unk6 < y0)
+                e = &gRoomObjectList.entries[i];
+                if (e->y < y0)
                     continue;
-                if (e->unk6 >= y1)
+                if (e->y >= y1)
                     break;
-                if (e->unk4 >= x0 && e->unk4 < x1)
+                if (e->x >= x0 && e->x < x1)
                     sub_080b5338(i);
             }
         }
@@ -633,27 +633,27 @@ void SpawnRoomObjectsInRect(s32 x0, s32 x1, s32 y0, s32 y1)
     {
         if ((x1 + x0) >> 1 >= gRoomWidth << 3)
         {
-            for (i = gRoomObjectList.unk0 - 1; i >= 0; i--)
+            for (i = gRoomObjectList.count - 1; i >= 0; i--)
             {
-                e = &gRoomObjectList.unk4[i];
-                if (e->unk4 >= x1)
+                e = &gRoomObjectList.entries[i];
+                if (e->x >= x1)
                     continue;
-                if (e->unk4 < x0)
+                if (e->x < x0)
                     break;
-                if (e->unk6 >= y0 && e->unk6 < y1)
+                if (e->y >= y0 && e->y < y1)
                     sub_080b5338(i);
             }
         }
         else
         {
-            for (i = 0; i < gRoomObjectList.unk0; i++)
+            for (i = 0; i < gRoomObjectList.count; i++)
             {
-                e = &gRoomObjectList.unk4[i];
-                if (e->unk4 < x0)
+                e = &gRoomObjectList.entries[i];
+                if (e->x < x0)
                     continue;
-                if (e->unk4 >= x1)
+                if (e->x >= x1)
                     break;
-                if (e->unk6 >= y0 && e->unk6 < y1)
+                if (e->y >= y0 && e->y < y1)
                     sub_080b5338(i);
             }
         }

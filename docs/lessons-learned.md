@@ -4483,6 +4483,21 @@ constants before a function (4.86), so adding or removing a *reference*
 still matters; and this holds for identifiers, not for string literals,
 whose bytes are data.
 
+### 3.516 A struct field rename never reaches codegen
+A member name is resolved to a byte offset by the C front end
+(`build_component_ref` turns `p->unk3C` into a `COMPONENT_REF` whose
+`FIELD_DECL` carries the offset and the type), and RTL expansion emits a
+`MEM` at that offset: no pass after the parser sees the identifier.  So a
+field rename is codegen-neutral by construction, not only by measurement
+(lesson 3.515 needed the gcse hashing argument for symbols; fields never
+get that far).  Measured anyway: #155 run 2 renamed 242 fields of 30 structs (296
+`renames.csv` rows with the local copies), 34,096 identifier uses in 247
+files, in eight batches, and `make clean && make compare` passed after
+every batch.  The one thing that can change codegen
+is the type, and a rename never touches it; the tool compares the whole
+error set of the renamed tree with the original's, so no access moved to
+another struct.
+
 ## 4. Splitting ROM ranges into asm (tools/split.py)
 
 ### 4.1 objdump text only round-trips under `.syntax unified`
@@ -10396,6 +10411,114 @@ split && make modmap` may rewrite.  Findings from writing and running it:
   file headers and in D's evidence was wrong, and the game-over screen it
   gates stayed unnamed.  Grep every writer of a cell before trusting a
   header comment's role for it.
+
+### 4.125 `tools/rename_field.py`: a compiler-guided field rename
+A word replace cannot rename a field: `Task.unk3C` has 7,461 accesses, and
+27 more `.unk3C`/`->unk3C` in the tree belong to `Actor`, `RoomDef` and
+`PlayerState`.  The tool lets a compiler tell them apart:
+* The knidl-builder image has Debian's gcc 12 next to agbcc (it builds
+  agbcc).  `gcc -fsyntax-only -std=gnu89 -w -fdiagnostics-column-unit=byte
+  -I include` parses the whole tree in about 3 s, and its "'struct Task' has
+  no member named 'unk3C'" error carries the struct's tag, the file, the
+  line and the column, so two structs' `unk14` on one line are told apart.
+  agbcc's own error has no column and no tag, and `make` pipes `cpp -P`, so
+  its line numbers are the preprocessed file's.
+* The column points at the `.`/`->` of an access and at the name of a
+  designated initializer; an access inside a macro body is reported at the
+  macro's own line (plus an "in expansion of macro" note), which is where
+  the rename belongs.  The message may carry qualifiers (`'volatile struct
+  Task'`), a typedef (`'U'`, or `'Foo' {aka 'struct Bar'}`) and gcc 12's
+  `; did you mean 'unk0C'?` suffix; the first version missed the last two
+  and reported hundreds of "new" errors.
+* gcc 12 rejects a few things agbcc accepts (five files declare
+  `extern s32 gCurTaskIdx` against the header's `vs32`); the tool records
+  the unmodified tree's error set and requires the renamed tree's to be
+  identical, which also proves no access was renamed into a struct that
+  lacks the new name.  agbcc and `make compare` stay the ground truth.
+* Local copies: the task engine's files (`src/early_4fec.c`, `early_5228.c`,
+  `early_55b0.c`, `early_58e4.c`, `early_5c4c.c`, `early_6464.c`,
+  `early_6cd4.c`) declare their own `struct Task`, with `h10`/`b12`/`w4C`
+  names, `s16` where the header has `u16`, and `u32 w18[8]` or
+  `u8 pad14[0x7C]` spans; `early_5d9c.c` calls the same block `struct
+  Sprite`.  None is layout-identical to `include/task.h`, so none could be
+  replaced by the header.  With `copies` the tool renames the member at the
+  same offset (from the `/*0x14*/` comment) in every definition of the tag
+  and in the listed aliases, skips arrays and padding that span the field,
+  and logs each copy as its own `renames.csv` row.
+* `renames.csv` rows of kind `field` are written `Struct.old` ->
+  `Struct.new`.  `tools/rename.py --verify-diff` compares the tree with the
+  ref token by token: a differing identifier must be a logged field pair and
+  sit after `.`/`->` or at a declarator inside `struct <tag> { ... }` of that
+  pair's struct; comments are compared after the tool's own rule (a
+  qualified `Task.unk3C` becomes `Task.frame`), so only hand edits are
+  listed for review.  Which struct an access belongs to is the compiler's
+  proof, not verify-diff's.
+* The first `--verify-diff` compared the comment-stripped C exactly.  A
+  comment-only commit that ADDED a comment above a field (a strip leaves a
+  space where the comment was, next to the new line break) then failed the
+  proof for every later batch.  C is free-form, so the check now collapses
+  whitespace in C before comparing; the token and punctuation sequence is
+  still exact, and `make compare` stays the byte-level proof.  Run
+  `--verify-diff` after comment-only commits as well.
+
+### 4.126 Local sprite renders as naming evidence (enemies, abilities)
+No string in the code says which enemy a script is, but the graphics do.
+The pipeline, from the loaders' C (all under `pending/`, never committed):
+* Room objects are created by `CreateActorByKind(kind, subtype, ...)`; the
+  task type comes from a per-kind table indexed by the subtype (kind 0:
+  `gUnk_0873F198`, subtypes 0-40 -> types 8-48), and the room object loader
+  (`src/hud_b5670.c`) copies the subtype's graphics descriptor
+  `gUnk_0873EEA0[subtype]` = `{u16 palette banks, u16 tile count, u16 ?, u16
+  compressed, u32 palette, u32 tiles}` into OBJ VRAM and the OBJ palette.
+* OBJ VRAM is in 2D mapping: `RequestCopy` modes 3/4 copy 0x200-byte rows to
+  a 0x400 stride (mode 4 into the right half), so a descriptor's tiles drawn
+  16 tiles wide ARE the sprite sheet, and a frame's OAM tile offsets index
+  it as row `t / 32`, column `t % 32`.
+* A frame table (`Task.unk38`) holds one OAM template per frame: a stream of
+  4 halfwords per object (attr0 with the y offset in its low byte and bit 12
+  = last, attr1, the h-flipped attr1, attr2 with the tile offset from the
+  task's tile word), exactly what `BuildOam` (`src/early_1b08.c`) reads.
+  Assembling frames from it gives recognisable sprites.
+* A render is written with `zlib` + `struct` (no PIL on the host) and read
+  back with the Read tool.  `visual:` evidence says what the local render
+  shows and is corroborated by the code or katam; the PNGs never leave
+  `pending/` (data policy, AGENTS.md).
+
+### 4.127 Harness notes from #155 run 2 (fields, enemies, abilities)
+- Four proposal agents by subject (Task/PlayerState fields, the actor
+  records, kind-0 enemies, bosses and abilities) instead of by address:
+  fields and identities cut across modules.  Each ran several short
+  rounds resumed with `SendMessage`; a round of about an hour with a
+  clear list beat one long brief, and the second round again corrected
+  the first (A's grab counters against D's reading, B's `BgMap.unk6`
+  second reader, C's own withdrawn `Task_InhalableStar`).
+- A session limit killed all four agents at once mid-round; resuming each
+  with `SendMessage` after the reset lost nothing but the unwritten
+  round, so ask agents to write their CSV incrementally.
+- The render pipeline was worth building before the fan-out: once the
+  coordinator had proved it on Waddle Dee, the two enemy agents
+  identified 31 kind-0 subtypes, the mid-bosses, the bosses and all 25
+  abilities in about 30 minutes each.  The ability pictures carry their
+  names as text, the strongest `visual:` evidence the ROM offers.
+- The second source that settled most enemies was data, not code: each
+  subtype's `ActorDef.ability` (Rocky -> STONE, Noddy -> SLEEP) and the
+  bosses' scores in world order.  Two species with one script (Sword and
+  Blade Knight) stayed unnamed because nothing but memory tells them
+  apart.
+- Agents found wrong module readings while naming (M20 is enemies, not
+  moving scenery; RoomDef's "OBJ" graphics are BG3's).  Fix the prose as
+  comment/docs-only commits, but leave generated titles (`tools/modmap.py`
+  feeds `module-map.csv`) for a non-rename PR, or the pure-rename proof
+  breaks.
+- Never run two batch scripts at once: two `apply.sh` calls issued in
+  parallel both ran `rename.py --write` before either reached its verify
+  step, so one failed check left two uncommitted batches in the tree.  They
+  were rebuilt, re-verified and committed together; one batch at a time
+  keeps each commit a single proven step.
+- One agent parsed the tree with the host's preinstalled clang to map
+  every access to its struct.  It built nothing, but AGENTS.md keeps
+  compilers in Docker, so the coordinator stopped it; `rename_field.py`'s
+  gcc-in-Docker pass is the sanctioned way to get the same map.
 
 ## 5. Workflow that worked
 

@@ -6,15 +6,15 @@
  *
  * Player action bodies, part 4: per-frame handler 9 and actions 10 and
  * 11.  PlayerActionFloatUpdate (handler 9) is the other half of M09's mode-14
- * coroutine PlayerActionFloat: a seven-state switch over Task.unk73 that
+ * coroutine PlayerActionFloat: a seven-state switch over Task.variant that
  * re-binds the coroutine with the next state (1 on a held A or up, 4 on
- * a newly-pressed B, 2/3/5 from the ground flags Task.unk7A/unk7B).
+ * a newly-pressed B, 2/3/5 from the ground flags Task.onGround/unk7B).
  * PlayerActionDuck (action 10, mode 6) installs the scripts
- * gUnk_0873BD28/gUnk_0873CB24 in PlayerState.unk64/unk68 and plays
+ * gUnk_0873BD28/gUnk_0873CB24 in PlayerState.bodyBox/unk68 and plays
  * gUnk_0873D4BC[ability][column]; its handler PlayerActionDuckUpdate requests
  * action 11 on a newly-pressed A or B and 7 on the collision flag
  * gTerrainResult.unk5.  PlayerActionSlide (action 11, mode 7) installs the
- * attack hit-box set gUnk_0873CC84 in PlayerState.unk6C; its handler
+ * attack hit-box set gUnk_0873CC84 in PlayerState.hitBoxSet; its handler
  * PlayerActionSlideUpdate registers the box gUnk_0873BE9C with M09's collision
  * registry RegisterCollider while the player moves faster than 0xE000 and
  * drops to state 1 below 0x8000. */
@@ -24,16 +24,16 @@
 struct Unk03005550
 {
     /*0x00*/ u8 unk0;
-    /*0x01*/ u8 unk1;
+    /*0x01*/ u8 ceilingHits;
     /*0x02*/ u8 unk2;
     /*0x03*/ u8 unk3;
-    /*0x04*/ u8 unk4;
+    /*0x04*/ u8 slope;
     /*0x05*/ u8 unk5;
     /*0x06*/ u8 unk6;
     /*0x07*/ u8 unk7;
     /*0x08*/ s16 unk8;
-    /*0x0A*/ u8 unkA;
-    /*0x0B*/ u8 unkB;
+    /*0x0A*/ u8 atDoor;
+    /*0x0B*/ u8 onSlipperyFloor;
     /*0x0C*/ u8 unkC;
     /*0x0D*/ u8 unkD;
 };
@@ -83,29 +83,29 @@ void PlayerActionFloatUpdate(void)
     struct Task *w;
     struct Task *x;
 
-    if (gCurTask->unk73 != 6 && PlayerCheckDropAbility() != 0)
+    if (gCurTask->variant != 6 && PlayerCheckDropAbility() != 0)
     {
-        if (gCurTask->unk73 == 5)
-            gCurTask->unk73 = 2;
+        if (gCurTask->variant == 5)
+            gCurTask->variant = 2;
         return;
     }
     PlayerTurnToHeldDirection();
-    switch (gCurTask->unk73)
+    switch (gCurTask->variant)
     {
     case 0:
         if (PlayerCheckEnterDoor() != 0)
             break;
-        if (gLatchedHeldKeys[gCurTask->unk88->unk00] & 65)
+        if (gLatchedHeldKeys[gCurTask->player->playerIndex] & 65)
         {
             PlayerSetMotionYPreset(8);
         }
-        else if (gCurTask->unk7A & 1)
+        else if (gCurTask->onGround & 1)
         {
             PlayerStopAxes(2);
         }
-        else if (gCurTask->unk7B & 1)
+        else if (gCurTask->waterFlags & 1)
         {
-            gCurTask->unk73 = 4;
+            gCurTask->variant = 4;
             TaskSetEntry(PlayerActionFloat, gCurTaskIdx);
             break;
         }
@@ -113,22 +113,22 @@ void PlayerActionFloatUpdate(void)
         {
             PlayerSetMotionYPreset(7);
         }
-        gCurTask->unk7A = 0;
+        gCurTask->onGround = 0;
         PlayerSetMotionXPreset(6, 72);
         PlayerStopAtCeilingAndWall();
         break;
     case 1:
         if (PlayerCheckEnterDoor() != 0)
             break;
-        gCurTask->unk7A = 0;
+        gCurTask->onGround = 0;
         PlayerSetMotionYPreset(8);
         PlayerSetMotionXPreset(6, 72);
         PlayerStopAtCeilingAndWall();
-        if (gCurTask->unk7A & 1)
+        if (gCurTask->onGround & 1)
             PlayerStopAxes(2);
-        if (gLatchedPressedKeys[gCurTask->unk88->unk00] & 2)
+        if (gLatchedPressedKeys[gCurTask->player->playerIndex] & 2)
         {
-            gCurTask->unk73 = 4;
+            gCurTask->variant = 4;
             TaskSetEntry(PlayerActionFloat, gCurTaskIdx);
             break;
         }
@@ -136,87 +136,87 @@ void PlayerActionFloatUpdate(void)
     case 2:
         if (PlayerCheckEnterDoor() != 0)
             break;
-        if (!(gCurTask->unk7A & 1))
+        if (!(gCurTask->onGround & 1))
             PlayerSetMotionYPreset(7);
         else
             PlayerStopAxes(2);
         PlayerSetMotionXPreset(6, 72);
         PlayerStopAtCeilingAndWall();
         t = gCurTask;
-        if (t->unk7A & 1)
+        if (t->onGround & 1)
         {
-            t->unk73 = 3;
+            t->variant = 3;
             TaskSetEntry(PlayerActionFloat, gCurTaskIdx);
             PlayerStopAxes(2);
             break;
         }
-        if (gLatchedHeldKeys[t->unk88->unk00] & 65)
+        if (gLatchedHeldKeys[t->player->playerIndex] & 65)
         {
-            t->unk73 = 1;
+            t->variant = 1;
             TaskSetEntry(PlayerActionFloat, gCurTaskIdx);
             break;
         }
-        if (gLatchedPressedKeys[t->unk88->unk00] & 2)
+        if (gLatchedPressedKeys[t->player->playerIndex] & 2)
         {
-            t->unk73 = 4;
+            t->variant = 4;
             TaskSetEntry(PlayerActionFloat, gCurTaskIdx);
             break;
         }
-        if (!(t->unk7B & 1))
+        if (!(t->waterFlags & 1))
             break;
         PlayerStopAxes(2);
         gCurTask->unk28 = -1;
-        gCurTask->unk73 = 5;
+        gCurTask->variant = 5;
         TaskSetEntry(PlayerActionFloat, gCurTaskIdx);
         break;
     case 3:
         if (PlayerCheckEnterDoor() != 0)
             break;
-        if (!(gCurTask->unk7A & 1))
+        if (!(gCurTask->onGround & 1))
             PlayerSetMotionYPreset(7);
         else
             PlayerStopAxes(2);
         PlayerSetMotionXPreset(6, 72);
         PlayerStopAtCeilingAndWall();
         u = gCurTask;
-        if (!(u->unk7A & 1))
+        if (!(u->onGround & 1))
         {
-            u->unk73 = 2;
+            u->variant = 2;
             TaskSetEntry(PlayerActionFloat, gCurTaskIdx);
             break;
         }
-        if (gLatchedHeldKeys[u->unk88->unk00] & 65)
+        if (gLatchedHeldKeys[u->player->playerIndex] & 65)
         {
-            u->unk73 = 1;
+            u->variant = 1;
             TaskSetEntry(PlayerActionFloat, gCurTaskIdx);
             break;
         }
-        if (gLatchedPressedKeys[u->unk88->unk00] & 2)
+        if (gLatchedPressedKeys[u->player->playerIndex] & 2)
         {
-            u->unk73 = 4;
+            u->variant = 4;
             TaskSetEntry(PlayerActionFloat, gCurTaskIdx);
             break;
         }
         break;
     case 4:
         v = gCurTask;
-        if (!(v->unk7A & 1))
+        if (!(v->onGround & 1))
         {
-            if (!(v->unk7B & 1))
+            if (!(v->waterFlags & 1))
                 PlayerSetMotionYPreset(2);
             else
                 PlayerSetMotionYPreset(13);
         }
         PlayerSetMotionXPreset(7, 72);
         w = gCurTask;
-        if (w->unk58 < 0)
+        if (w->velY < 0)
         {
-            if (gTerrainResult.unk1 != 0)
-                w->unk58 = 0;
+            if (gTerrainResult.ceilingHits != 0)
+                w->velY = 0;
         }
-        else if (w->unk7A & 1)
+        else if (w->onGround & 1)
         {
-            if ((u32)w->unk58 > 0xC000)
+            if ((u32)w->velY > 0xC000)
                 PlayerLand(1);
             else
                 PlayerCheckLanding();
@@ -226,25 +226,25 @@ void PlayerActionFloatUpdate(void)
     case 5:
         PlayerSetMotionXPreset(6, 72);
         PlayerStopAtWall();
-        if (gLatchedHeldKeys[gCurTask->unk88->unk00] & 65)
+        if (gLatchedHeldKeys[gCurTask->player->playerIndex] & 65)
         {
             PlayerStopAxes(2);
-            gCurTask->unk73 = 1;
+            gCurTask->variant = 1;
             TaskSetEntry(PlayerActionFloat, gCurTaskIdx);
         }
-        else if (gLatchedPressedKeys[gCurTask->unk88->unk00] & 2)
+        else if (gLatchedPressedKeys[gCurTask->player->playerIndex] & 2)
         {
             PlayerStopAxes(2);
-            gCurTask->unk73 = 4;
+            gCurTask->variant = 4;
             TaskSetEntry(PlayerActionFloat, gCurTaskIdx);
         }
         break;
     case 6:
         PlayerRequestLocomotion();
         x = gCurTask;
-        if (x->unk7A & 1)
+        if (x->onGround & 1)
         {
-            if ((u32)x->unk58 > 0xC000)
+            if ((u32)x->velY > 0xC000)
                 PlayerLand(1);
             else
                 PlayerCheckLanding();
@@ -253,8 +253,8 @@ void PlayerActionFloatUpdate(void)
     }
     if (PlayerHasCrossedWaterSurface(0) != 0)
     {
-        gCurTask->unk88->unk06 = 0;
-        gCurTask->unk88->unk01 = 23;
+        gCurTask->player->mouthState = 0;
+        gCurTask->player->requestedAction = 23;
     }
 }
 
@@ -263,24 +263,24 @@ void PlayerActionDuck(void)
     struct Task *t;
     struct PlayerState *p;
 
-    gCurTask->unk88->unk05 = gCurTask->unk88->unk04;
-    gCurTask->unk88->unk04 = 6;
-    gCurTask->unk15 = 10;
+    gCurTask->player->prevMode = gCurTask->player->mode;
+    gCurTask->player->mode = 6;
+    gCurTask->updateState = 10;
     t = gCurTask;
-    if (t->unk88->unk05 != 6)
+    if (t->player->prevMode != 6)
     {
-        t->unk88->unk64 = (u32)gUnk_0873BD28;
-        t->unk88->unk68 = (u32)gUnk_0873CB24;
-        t->unk2C = t->unk88->unk4B;
+        t->player->bodyBox = (u32)gUnk_0873BD28;
+        t->player->terrainBox = (u32)gUnk_0873CB24;
+        t->unk2C = t->player->slope;
         PlayerSetMotionXPreset(0, 72);
     }
     gCurTask->unk28 = 8;
-    gCurTask->unk88->unk33 = sub_0803fd20(gCurTask->unk88->unk00);
-    p = gCurTask->unk88;
+    gCurTask->player->unk33 = sub_0803fd20(gCurTask->player->playerIndex);
+    p = gCurTask->player;
     p->unk35 = 0;
     p->unk34 = 0;
-    gCurTask->unk46 = gUnk_0873D4BC[gCurTask->unk88->unk0D][sub_0803fd20(gCurTask->unk88->unk00)];
-    switch (gCurTask->unk88->unk0D)
+    gCurTask->unk46 = gUnk_0873D4BC[gCurTask->player->ability][sub_0803fd20(gCurTask->player->playerIndex)];
+    switch (gCurTask->player->ability)
     {
     case 1:
     case 2:
@@ -292,7 +292,7 @@ void PlayerActionDuck(void)
             TaskYieldTrampoline(2);
             for (gCurTask->unk6C = 0; (s16)gCurTask->unk6C <= 2; gCurTask->unk6C++)
             {
-                gCurTask->unk3C++;
+                gCurTask->frame++;
                 TaskYieldTrampoline(2);
             }
         }
@@ -303,7 +303,7 @@ void PlayerActionDuck(void)
             TaskYieldTrampoline(6);
             for (gCurTask->unk6C = 0; (s16)gCurTask->unk6C <= 2; gCurTask->unk6C++)
             {
-                gCurTask->unk3C++;
+                gCurTask->frame++;
                 TaskYieldTrampoline(6);
             }
         }
@@ -316,7 +316,7 @@ void PlayerActionDuck(void)
 
 void PlayerActionDuckUpdate(void)
 {
-    s32 dir = gCurTask->unk43;
+    s32 dir = gCurTask->facing;
 
     PlayerFaceHeldDirection();
     while (sub_0803fe68() == 0 && PlayerCheckDropAbility() == 0)
@@ -324,12 +324,12 @@ void PlayerActionDuckUpdate(void)
         u16 *q = gLatchedPressedKeys;
         struct Task *t = gCurTask;
 
-        if (q[t->unk88->unk00] & 3)
+        if (q[t->player->playerIndex] & 3)
         {
-            t->unk88->unk01 = 11;
+            t->player->requestedAction = 11;
             break;
         }
-        if (!(gLatchedHeldKeys[t->unk88->unk00] & 128))
+        if (!(gLatchedHeldKeys[t->player->playerIndex] & 128))
         {
             PlayerRequestLocomotion();
             break;
@@ -338,10 +338,10 @@ void PlayerActionDuckUpdate(void)
         {
             if (t->unk28 == 0)
             {
-                t->unk7A = 0;
-                gCurTask->unk88->unk01 = 7;
+                t->onGround = 0;
+                gCurTask->player->requestedAction = 7;
                 gCurTask->unk84 = 0;
-                gCurTask->unk50 += 0x10000;
+                gCurTask->posY += 0x10000;
                 break;
             }
             t->unk28--;
@@ -349,7 +349,7 @@ void PlayerActionDuckUpdate(void)
         {
             struct Task *w = gCurTask;
 
-            if (w->unk88->unk4B != w->unk2C || dir != w->unk43)
+            if (w->player->slope != w->unk2C || dir != w->facing)
             {
                 if (gUnk_03001F30 == 0)
                     TaskSetEntry(PlayerActionDuck, gCurTaskIdx);
@@ -359,7 +359,7 @@ void PlayerActionDuckUpdate(void)
         }
         break;
     }
-    gCurTask->unk2C = gCurTask->unk88->unk4B;
+    gCurTask->unk2C = gCurTask->player->slope;
     if (gTerrainResult.unk0 != 0)
         PlayerStopAxes(1);
 }
@@ -368,25 +368,25 @@ void PlayerActionSlide(void)
 {
     struct Task *t;
 
-    gCurTask->unk88->unk05 = gCurTask->unk88->unk04;
-    gCurTask->unk88->unk04 = 7;
-    gCurTask->unk15 = 11;
+    gCurTask->player->prevMode = gCurTask->player->mode;
+    gCurTask->player->mode = 7;
+    gCurTask->updateState = 11;
     t = gCurTask;
-    if (t->unk88->unk05 != 7)
+    if (t->player->prevMode != 7)
     {
         t->unk28 = 0;
-        t->unk73 = 0;
-        gCurTask->unk88->unk14 = 10;
-        PlayerStartSfx(118, gCurTask->unk88->unk00);
-        gCurTask->unk88->unk6C = gUnk_0873CC84;
+        t->variant = 0;
+        gCurTask->player->unk14 = 10;
+        PlayerStartSfx(118, gCurTask->player->playerIndex);
+        gCurTask->player->hitBoxSet = gUnk_0873CC84;
         PlayerSetMotionXPreset(11, 0);
-        CreatePlayerEffect(gCurTask->unk88->unk00, 8, 0);
+        CreatePlayerEffect(gCurTask->player->playerIndex, 8, 0);
     }
-    switch (gCurTask->unk73)
+    switch (gCurTask->variant)
     {
     case 0:
-        gCurTask->unk46 = gUnk_0873D5CA[gCurTask->unk88->unk0D][0];
-        switch (gCurTask->unk88->unk0D)
+        gCurTask->unk46 = gUnk_0873D5CA[gCurTask->player->ability][0];
+        switch (gCurTask->player->ability)
         {
         case 0:
         default:
@@ -401,7 +401,7 @@ void PlayerActionSlide(void)
                 TaskYieldTrampoline(2);
                 for (gCurTask->unk6C = 0; (s16)gCurTask->unk6C <= 2; gCurTask->unk6C++)
                 {
-                    gCurTask->unk3C++;
+                    gCurTask->frame++;
                     TaskYieldTrampoline(2);
                 }
             }
@@ -416,15 +416,15 @@ void PlayerActionSlide(void)
             {
                 TaskSetFrame(gCurTask->unk46);
                 TaskYieldTrampoline(2);
-                gCurTask->unk3C++;
+                gCurTask->frame++;
                 TaskYieldTrampoline(2);
             }
         }
     case 1:
-        TaskSetFrame(gUnk_0873D5CA[gCurTask->unk88->unk0D][1]);
+        TaskSetFrame(gUnk_0873D5CA[gCurTask->player->ability][1]);
         break;
     }
-    gCurTask->unk88->unk6C = 0;
+    gCurTask->player->hitBoxSet = 0;
     gCurTask->unk28++;
     TaskSleepForever();
 }
@@ -438,7 +438,7 @@ void PlayerActionSlideUpdate(void)
     {
         if (sub_0803fe68() != 0)
         {
-            if (gCurTask->unk5C == 0)
+            if (gCurTask->accelX == 0)
                 PlayerSetMotionXPreset(5, 72);
             break;
         }
@@ -447,31 +447,31 @@ void PlayerActionSlideUpdate(void)
         t = gCurTask;
         if (t->unk28 != 0)
         {
-            t->unk88->unk01 = 1;
+            t->player->requestedAction = 1;
         }
         else if (gTerrainResult.unk0 != 0)
         {
             PlayerCheckBump();
             PlayerStopAxes(1);
-            gCurTask->unk88->unk01 = 1;
+            gCurTask->player->requestedAction = 1;
         }
         else
         {
-            if (abs(t->unk54) <= 0x7FFF)
+            if (abs(t->velX) <= 0x7FFF)
             {
-                t->unk73 = 1;
+                t->variant = 1;
                 TaskSetEntry(PlayerActionSlide, gCurTaskIdx);
             }
-            if (abs(gCurTask->unk54) > 0xE000)
-                RegisterCollider(gCurTaskIdx, gCurTask->unk48, gCurTask->unk4A, gUnk_0873BE9C);
+            if (abs(gCurTask->velX) > 0xE000)
+                RegisterCollider(gCurTaskIdx, gCurTask->pixelX, gCurTask->pixelY, gUnk_0873BE9C);
         }
         break;
     }
-    p = gCurTask->unk88;
+    p = gCurTask->player;
     if ((s16)p->unk14 == 0)
     {
         PlayerSetMotionXPreset(5, 72);
-        gCurTask->unk88->unk14--;
+        gCurTask->player->unk14--;
     }
     else if ((s16)p->unk14 > 0)
     {

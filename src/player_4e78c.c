@@ -9,26 +9,26 @@
  * sub-actions are yield scripts (sub_0804e78c: sound 171, animations
  * 0xCCA-0xCDA and effect 44 four times; sub_0804eca4: sound 119,
  * effect 6 and camera preset PlayerSetMotionXPreset(11, 62)); the sub-handlers read
- * the keys and the ground flag Task.unk7A, pick the next sub-action
- * (Task.unk73) and re-bind it through sub_0804e600, most of them through
+ * the keys and the ground flag Task.onGround, pick the next sub-action
+ * (Task.variant) and re-bind it through sub_0804e600, most of them through
  * the helper sub_0804f7f8's four key probes. */
 
 /* gTerrainResult: M06's collision result block (src/terrain_1bcac.c spells it
    the same way except unk8, which M09 reads with ldrsh).  A 16-bit test of
-   unk0/unk1 together is `*(u16 *)&gTerrainResult` (M12's sub_08045a50). */
+   unk0/unk1 together is `*(u16 *)&gTerrainResult` (M12's PlayerActionBurningUpdate). */
 struct Unk03005550
 {
     /*0x00*/ u8 unk0;
-    /*0x01*/ u8 unk1;
+    /*0x01*/ u8 ceilingHits;
     /*0x02*/ u8 unk2;
     /*0x03*/ u8 unk3;
-    /*0x04*/ u8 unk4;
+    /*0x04*/ u8 slope;
     /*0x05*/ u8 unk5;
     /*0x06*/ u8 unk6;
     /*0x07*/ u8 unk7;
     /*0x08*/ s16 unk8;
-    /*0x0A*/ u8 unkA;
-    /*0x0B*/ u8 unkB;
+    /*0x0A*/ u8 atDoor;
+    /*0x0B*/ u8 onSlipperyFloor;
     /*0x0C*/ u8 unkC;
     /*0x0D*/ u8 unkD;
 };
@@ -65,41 +65,41 @@ void sub_0804e78c(void)
         struct Task *t = gCurTask;
         t->unk70 = 0;
         t->unk46 = 0xFFFF;
-        t->unk88->unk64 = (u32)gUnk_0873BD50;
-        t->unk88->unk68 = (u32)gUnk_0873CB3C;
-        PlaySfxIfLocalPlayer(171, (u16)t->unk88->unk00);
+        t->player->bodyBox = (u32)gUnk_0873BD50;
+        t->player->terrainBox = (u32)gUnk_0873CB3C;
+        PlaySfxIfLocalPlayer(171, (u16)t->player->playerIndex);
     }
-    if (gCurTask->unk7A & 1)
+    if (gCurTask->onGround & 1)
     {
         PlayerSetMotionYPreset(47);
         TaskSetFrame(0xCCA);
         TaskYieldTrampoline(6);
-        gCurTask->unk3C++;
+        gCurTask->frame++;
         TaskYieldTrampoline(2);
     }
     TaskSetFrame(0xCCC);
     TaskYieldTrampoline(2);
     for (gCurTask->unk6C = 0; (s16)gCurTask->unk6C <= 4; gCurTask->unk6C++)
     {
-        gCurTask->unk3C++;
+        gCurTask->frame++;
         TaskYieldTrampoline(2);
     }
-    gCurTask->unk3C = 0xCDA;
+    gCurTask->frame = 0xCDA;
     TaskYieldTrampoline(2);
     for (gCurTask->unk6C = 0; (s16)gCurTask->unk6C <= 5; gCurTask->unk6C++)
     {
-        gCurTask->unk3C++;
+        gCurTask->frame++;
         TaskYieldTrampoline(2);
     }
     {
         struct Task *t = gCurTask;
-        t->unk6E = t->unk43;
+        t->unk6E = t->facing;
         t->unk70++;
-        CreatePlayerEffect(t->unk88->unk00, 44, 0x100);
+        CreatePlayerEffect(t->player->playerIndex, 44, 0x100);
     }
-    CreatePlayerEffect(gCurTask->unk88->unk00, 44, 0x200);
-    CreatePlayerEffect(gCurTask->unk88->unk00, 44, 0x300);
-    CreatePlayerEffect(gCurTask->unk88->unk00, 44, 0x400);
+    CreatePlayerEffect(gCurTask->player->playerIndex, 44, 0x200);
+    CreatePlayerEffect(gCurTask->player->playerIndex, 44, 0x300);
+    CreatePlayerEffect(gCurTask->player->playerIndex, 44, 0x400);
     LoadAbilityTiles();
     TaskSleepForever();
 }
@@ -110,15 +110,15 @@ void sub_0804e8f4(void)
 
     if ((s16)t->unk70 != 0)
     {
-        if (t->unk7A & 1)
+        if (t->onGround & 1)
         {
-            if (gLatchedHeldKeys[t->unk88->unk00] & 1)
-                t->unk73 = 4;
+            if (gLatchedHeldKeys[t->player->playerIndex] & 1)
+                t->variant = 4;
             else
-                t->unk73 = 1;
+                t->variant = 1;
         }
         else
-            t->unk73 = 6;
+            t->variant = 6;
         gCurTask->unk46 = 0;
         TaskSetEntry(sub_0804e600, gCurTaskIdx);
     }
@@ -130,7 +130,7 @@ void sub_0804e97c(void)
     PlayerStopAxes(3);
     {
         struct Task *t = gCurTask;
-        t->unk28 = t->unk88->unk4A;
+        t->unk28 = t->player->wallSide;
     }
     sub_0804f614();
     {
@@ -179,17 +179,17 @@ void sub_0804ea7c(void)
     PlayerFaceHeldDirection();
     while (!sub_0804f7f8(0) && !sub_0804f7f8(1) && !sub_0804f7f8(3) && !sub_0804f7f8(2))
     {
-        if (gLatchedHeldKeys[gCurTask->unk88->unk00] & 48)
+        if (gLatchedHeldKeys[gCurTask->player->playerIndex] & 48)
         {
-            if ((gLatchedHeldKeys[gCurTask->unk88->unk00] & 16) && gCurTask->unk28 == 1)
+            if ((gLatchedHeldKeys[gCurTask->player->playerIndex] & 16) && gCurTask->unk28 == 1)
                 break;
-            if ((gLatchedHeldKeys[gCurTask->unk88->unk00] & 32) && gCurTask->unk28 == 2)
+            if ((gLatchedHeldKeys[gCurTask->player->playerIndex] & 32) && gCurTask->unk28 == 2)
                 break;
-            gCurTask->unk73 = 2;
+            gCurTask->variant = 2;
         }
         break;
     }
-    if (gCurTask->unk73 != 1)
+    if (gCurTask->variant != 1)
     {
         struct Task *t = gCurTask;
         t->unk24 = 0;
@@ -202,7 +202,7 @@ void sub_0804eb28(void)
     sub_0804f614();
     PlayerSetMotionXPreset(12, 1);
     gCurTask->unk28 = sub_0804f76c();
-    gCurTask->unk2C = gCurTask->unk88->unk4B;
+    gCurTask->unk2C = gCurTask->player->slope;
     while (1)
     {
         sub_0804f79c();
@@ -219,39 +219,39 @@ void sub_0804eb60(void)
             struct Task *t;
             PlayerCheckBump();
             t = gCurTask;
-            t->unk54 = -t->unk54;
-            t->unk5C = -t->unk5C;
-            t->unk43 = -t->unk43;
+            t->velX = -t->velX;
+            t->accelX = -t->accelX;
+            t->facing = -t->facing;
             gCurTask->unk24 = 0;
             TaskSetEntry(sub_0804e600, gCurTaskIdx);
             break;
         }
-        if (gLatchedHeldKeys[gCurTask->unk88->unk00] & 16)
+        if (gLatchedHeldKeys[gCurTask->player->playerIndex] & 16)
         {
-            if (gCurTask->unk43 == -1)
+            if (gCurTask->facing == -1)
             {
-                gCurTask->unk73 = 3;
+                gCurTask->variant = 3;
                 break;
             }
         }
-        else if ((gLatchedHeldKeys[gCurTask->unk88->unk00] & 32) && gCurTask->unk43 == 1)
+        else if ((gLatchedHeldKeys[gCurTask->player->playerIndex] & 32) && gCurTask->facing == 1)
         {
-            gCurTask->unk73 = 3;
+            gCurTask->variant = 3;
             break;
         }
-        if (gCurTask->unk54 == 0 && gCurTask->unk64 == 0)
+        if (gCurTask->velX == 0 && gCurTask->speedLimitX == 0)
         {
-            gCurTask->unk73 = 1;
+            gCurTask->variant = 1;
             break;
         }
-        if (gCurTask->unk2C != gCurTask->unk88->unk4B)
+        if (gCurTask->unk2C != gCurTask->player->slope)
         {
             gCurTask->unk24 = 0;
             TaskSetEntry(sub_0804e600, gCurTaskIdx);
         }
         break;
     }
-    if (gCurTask->unk73 != 2)
+    if (gCurTask->variant != 2)
     {
         struct Task *t = gCurTask;
         t->unk24 = 0;
@@ -264,8 +264,8 @@ void sub_0804eb60(void)
 void sub_0804eca4(void)
 {
     PlayerSetMotionXPreset(11, 62);
-    PlaySfxIfLocalPlayer(119, (u16)gCurTask->unk88->unk00);
-    gCurTask->unk34 = CreatePlayerEffect(gCurTask->unk88->unk00, 6, 60);
+    PlaySfxIfLocalPlayer(119, (u16)gCurTask->player->playerIndex);
+    gCurTask->unk34 = CreatePlayerEffect(gCurTask->player->playerIndex, 6, 60);
     TaskSleepForever();
 }
 
@@ -278,33 +278,33 @@ void sub_0804ecec(void)
             struct Task *t;
             PlayerCheckBump();
             t = gCurTask;
-            t->unk54 = -t->unk54;
-            t->unk5C = -t->unk5C;
-            t->unk43 = -t->unk43;
-            gCurTask->unk73 = 2;
+            t->velX = -t->velX;
+            t->accelX = -t->accelX;
+            t->facing = -t->facing;
+            gCurTask->variant = 2;
             break;
         }
-        if (gCurTask->unk54 == 0)
+        if (gCurTask->velX == 0)
         {
-            if (gLatchedHeldKeys[gCurTask->unk88->unk00] & 48)
+            if (gLatchedHeldKeys[gCurTask->player->playerIndex] & 48)
             {
-                if (gCurTask->unk43 == 1)
+                if (gCurTask->facing == 1)
                 {
-                    if (gLatchedHeldKeys[gCurTask->unk88->unk00] & 32)
-                        gCurTask->unk43 = -1;
+                    if (gLatchedHeldKeys[gCurTask->player->playerIndex] & 32)
+                        gCurTask->facing = -1;
                 }
-                else if (gLatchedHeldKeys[gCurTask->unk88->unk00] & 16)
-                    gCurTask->unk43 = 1;
+                else if (gLatchedHeldKeys[gCurTask->player->playerIndex] & 16)
+                    gCurTask->facing = 1;
                 PlayerUpdateFlip();
-                gCurTask->unk5C = 0;
-                gCurTask->unk73 = 2;
+                gCurTask->accelX = 0;
+                gCurTask->variant = 2;
             }
             else
-                gCurTask->unk73 = 1;
+                gCurTask->variant = 1;
         }
         break;
     }
-    if (gCurTask->unk73 != 3)
+    if (gCurTask->variant != 3)
     {
         TaskSetEntry(sub_0804e600, gCurTaskIdx);
         gTasks[gCurTask->unk34].unk28 = -1;
