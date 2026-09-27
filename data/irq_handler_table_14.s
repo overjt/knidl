@@ -8,17 +8,17 @@
 	.section .irq_handler_table_14, "a"
 	.global	irq_handler_table_14
 irq_handler_table_14:
-	.word	sub_08001518+1
-	.word	sub_08001518+1
-	.word	sub_080010cc+1
-	.word	sub_08001518+1
-	.word	sub_08001518+1
-	.word	sub_08001518+1
-	.word	sub_08001518+1
-	.word	sub_08001518+1
-	.word	sub_08001518+1
-	.word	sub_08001518+1
-	.word	sub_08001518+1
-	.word	sub_08001518+1
-	.word	sub_08001518+1
-	.word	sub_08001518+1
+	.word	IntrDummy+1
+	.word	IntrDummy+1
+	.word	VBlankIntr+1
+	.word	IntrDummy+1
+	.word	IntrDummy+1
+	.word	IntrDummy+1
+	.word	IntrDummy+1
+	.word	IntrDummy+1
+	.word	IntrDummy+1
+	.word	IntrDummy+1
+	.word	IntrDummy+1
+	.word	IntrDummy+1
+	.word	IntrDummy+1
+	.word	IntrDummy+1

@@ -7,31 +7,31 @@
  * 64 task slots of 0x90 bytes live at 0x03002790.  Each slot carries four
  * callbacks (+0x00/+0x04/+0x08/+0x0C), a countdown (+0x10), a priority-group
  * id (+0x12, negative = free) and a per-phase skip mask (+0x13).  Slots are
- * bucketed into five priority groups: gUnk_030024A0[group][slot] holds the
- * task ids, gUnk_03002480[group] the live count, gUnk_03002700/gUnk_03002708
+ * bucketed into five priority groups: gTaskClassLists[group][slot] holds the
+ * task ids, gTaskClassPassEnd[group] the live count, gTaskClassListLen/gTaskClassPassStart
  * the pending/processed counts used to detect list growth during a pass.
- * gTaskFlagsTable[id]/gUnk_03004B90[id] are the coroutine resume PC/SP consumed
+ * gTaskResumeAddrs[id]/gTaskStackPtrs[id] are the coroutine resume PC/SP consumed
  * by the ARM task switcher at 0x08000234 (reached through its thumb veneer
  * TaskSwitchTrampoline); gTaskSavedR0 is that switcher's "sleep" result.
  *
- *   sub_08004fec  cold init: clears the bucket tables, the id map and every
+ *   InitTasks  cold init: clears the bucket tables, the id map and every
  *                 task slot (two CpuSet fills plus a per-slot field reset).
- *   sub_08005228  the per-frame driver (called from sub_08002d18): rebuilds
+ *   RunTasks  the per-frame driver (called from RunLinkFrame): rebuilds
  *                 the buckets from the slot table, then runs phases 1..5 --
  *                 resume/countdown + callback[0]/[1], then callback[2] and
  *                 callback[3] -- restarting whenever a callback added tasks.
- *   sub_080055b0  set one task's +0x13 skip mask.
- *   sub_080055c4  set +0x13 on every allocated task, preserving one slot's.
- *   sub_08005618  set +0x13 on every allocated task (dead export).
+ *   TaskSetSkipMask  set one task's +0x13 skip mask.
+ *   TaskSetOthersSkipMask  set +0x13 on every allocated task, preserving one slot's.
+ *   TaskSetAllSkipMask  set +0x13 on every allocated task (dead export).
  *
  * Recipe: old_agbcc -O2 -mthumb-interwork (fnmatch --old2).  Evidence: the
- * leaf sub_080055b0 ends in a bare `bx lr`; agbcc always emits
+ * leaf TaskSetSkipMask ends in a bare `bx lr`; agbcc always emits
  * `push {lr}` / `pop {r0}; bx r0` even for leaves.
  *
  * Matching notes (docs/lessons-learned.md §3):
- *  - sub_08005618 is a dead export hidden inside symbols.csv's 0x90 size for
- *    sub_080055c4 (lesson 2.13 / zone lesson 14): nothing in ROM calls it.
- *  - `gUnk_03002710[i] = 0xFFFF; gUnk_03004CA0[i] = gUnk_03002710[i];` is the
+ *  - TaskSetAllSkipMask is a dead export hidden inside symbols.csv's 0x90 size for
+ *    TaskSetOthersSkipMask (lesson 2.13 / zone lesson 14): nothing in ROM calls it.
+ *  - `gTaskListRefs[i] = 0xFFFF; gTaskSlotTypes[i] = gTaskListRefs[i];` is the
  *    shape behind the ROM's `ldrh/orrs/strh` triplet: agbcc emits the
  *    volatile indexed store's dead pre-read (3.7) and then REUSES that
  *    register by OR-ing the all-ones constant into it instead of
@@ -45,20 +45,20 @@
  *  - `fill` must be `vu16`: a plain `u16` stack temp makes agbcc load 0xFFFF
  *    straight into the destination, while the ROM shows the movhi scratch
  *    pair `ldr rS,=0xFFFF; adds rD,rS,#0` (3.24).
- *  - the restart of sub_08005228's phase-1..3 pass is a `goto`, not a
+ *  - the restart of RunTasks's phase-1..3 pass is a `goto`, not a
  *    do/while: a loop note re-weights every reference inside it by one more
  *    loop level and moves three long-lived address pseudos onto different
  *    hard registers (3.21 applied to allocation rather than to hoisting).
- *  - sub_08005228 folds the restart counter into `j`; that is what raises
+ *  - RunTasks folds the restart counter into `j`; that is what raises
  *    j's global-alloc priority past &gTaskSavedR0's and puts j on r5.
  *
- * STATUS: sub_08004fec, sub_080055b0, sub_080055c4 and sub_08005618 are
- * byte-exact.  sub_08005228 reproduces the ROM's instruction sequence
+ * STATUS: InitTasks, TaskSetSkipMask, TaskSetOthersSkipMask and TaskSetAllSkipMask are
+ * byte-exact.  RunTasks reproduces the ROM's instruction sequence
  * one-for-one but diverges on register NAMES only (908 vs 904 bytes).  Root
  * cause: agbcc's local allocator gives the current-task pointer r1 (reusing
- * the dying `ldr r1,=gUnk_03002790`) where the ROM uses a fresh r2; that
+ * the dying `ldr r1,=gTasks`) where the ROM uses a fresh r2; that
  * pushes the `task->b13` temp from r1 to r6, denies r6 to the phase-4/5
- * &gUnk_03002490 pseudo, evicts &gUnk_03002488 from r8 into the
+ * &gCurTask pseudo, evicts &gCurTaskListPos from r8 into the
  * caller-clobbered r3 and so costs one extra `mov` plus a second caller-save
  * slot (`sub sp,#8`).  No source spelling tried moves that one local-alloc
  * decision - see the batch report for the list.
@@ -119,61 +119,61 @@ struct Task {
 };
 
 
-extern struct Task gUnk_03002790[];
-extern vu16 gUnk_03004CA0[];
-extern vu32 gUnk_030026F0;
-extern vs32 gUnk_030026F4;
+extern struct Task gTasks[];
+extern vu16 gTaskSlotTypes[];
+extern vu32 gTaskCount;
+extern vs32 gTaskRunPhase;
 extern vu32 gTaskSavedLr;
 extern vu32 gTaskSavedSp;
-extern vu8  gUnk_03002478[];
-extern vu8  gUnk_03002480[];
-extern vu32 gUnk_03002488;
+extern vu8  gTaskClassListPos[];
+extern vu8  gTaskClassPassEnd[];
+extern vu32 gCurTaskListPos;
 extern vs32 gCurTaskIdx;
-extern struct Task *gUnk_03002490;
-extern vu32 gUnk_03002494;
-extern vu8  gUnk_030024A0[5][64];
+extern struct Task *gCurTask;
+extern vu32 gTaskCursor;
+extern vu8  gTaskClassLists[5][64];
 extern s32  gTaskSavedR0;
-extern u32  gTaskFlagsTable[];
-extern vu8  gUnk_03002700[];
-extern vu8  gUnk_03002708[];
-extern vu16 gUnk_03002710[];
-extern u32  gUnk_03004B90[];
-extern vs32 gUnk_03004C90;
+extern u32  gTaskResumeAddrs[];
+extern vu8  gTaskClassListLen[];
+extern vu8  gTaskClassPassStart[];
+extern vu16 gTaskListRefs[];
+extern u32  gTaskStackPtrs[];
+extern vs32 gCurTaskClass;
 extern vu32 gTaskBaseSp;
-extern vu8  gUnk_0200D110;
+extern vu8  gTaskSkipMaskDepth;
 
 void TaskSwitchTrampoline(s32 id, u32 fn, u32 stack);
 
-void sub_08004fec(void)
+void InitTasks(void)
 {
     u32 i;
     u32 j;
     vu16 fill;
     u16 fill2;
 
-    gCurTaskIdx = gUnk_030026F4 = gUnk_03004C90 = -1;
-    gUnk_030026F0 = gUnk_03002494 = 0;
+    gCurTaskIdx = gTaskRunPhase = gCurTaskClass = -1;
+    gTaskCount = gTaskCursor = 0;
 
     for (i = 0; i < 5; i++) {
         for (j = 0; j < 64; j++)
-            gUnk_030024A0[i][j] = 0;
-        gUnk_03002708[i] = gUnk_03002478[i] = gUnk_03002700[i] = gUnk_03002480[i] = 0;
+            gTaskClassLists[i][j] = 0;
+        gTaskClassPassStart[i] = gTaskClassListPos[i] = gTaskClassListLen[i] = gTaskClassPassEnd[i] = 0;
     }
 
     gTaskBaseSp = gTaskSavedSp = gTaskSavedLr = gTaskSavedR0 = 0;
 
     for (i = 0; i < 64; i++) {
-        gUnk_03004CA0[i] = gUnk_03002710[i] = 0xFFFF;
-        gTaskFlagsTable[i] = 0;
+        gTaskSlotTypes[i] = gTaskListRefs[i] = 0xFFFF;
+        gTaskResumeAddrs[i] = 0;
     }
 
     fill = 0xFFFF;
     CpuSet((const void *)&fill, (void *)0x0203BF00, 0x01002000);
     fill2 = 0;
-    CpuSet(&fill2, gUnk_03002790, 0x01001200);
+    CpuSet(&fill2, gTasks, 0x01001200);
 
     for (i = 0; i < 64; i++) {
-        struct Task *p = &gUnk_03002790[i];
+        struct Task *p = &gTasks[i];
 
         p->b12 |= 0xFF;
         p->h10 = 0;
@@ -232,7 +232,7 @@ void sub_08004fec(void)
         p->b80 |= 0xFF;
     }
 
-    gUnk_0200D110 = 0xFF;
+    gTaskSkipMaskDepth = 0xFF;
 }
 
 

@@ -6,13 +6,13 @@
  *
  * Sub-game 2: the course builder and the course renderer.
  * 
- *   sub_080c59d8   called by M35's sub_080b9f34 as sub_080c59d8(level, 1)
+ *   AirGrindBuildCourse   called by M35's SubGameRunScreen as AirGrindBuildCourse(level, 1)
  *       before the race screen loads: the BG control and scroll shadows, the
- *       course record gUnk_0201B0E0 (scroll 240, start line 1000, finish line
+ *       course record gAirGrindCourse (scroll 240, start line 1000, finish line
  *       6000/8500/12000 for levels 0-2, the four racers at 0), cleared VRAM,
- *       the BG palette from gUnk_080D0198, then sub_080c5678 and a first
- *       render by sub_080c5b84.
- *   sub_080c5678   lays the course out: per lane the distance table
+ *       the BG palette from gUnk_080D0198, then AirGrindLayOutCourse and a first
+ *       render by AirGrindDrawCourse.
+ *   AirGrindLayOutCourse   lays the course out: per lane the distance table
  *       gUnk_02017980[lane][500] (the running sum of 0x4000 / (depth + 512),
  *       scaled to 16000) and its inverse gUnk_02019140, then 2n + 1
  *       alternating segment lengths gUnk_0201B690[] from the LCG (n from the
@@ -28,11 +28,11 @@
  *       gUnk_02018920 over a span (the racers' scores).
  *   sub_080c55d8 / sub_080c5628   linear interpolation in gUnk_02017980 /
  *       gUnk_02019140 at 32-pixel steps.
- *   sub_080c5b84   the course renderer (called every frame by player 0's
+ *   AirGrindDrawCourse   the course renderer (called every frame by player 0's
  *       racer step sub_080c383c, src/subgame_c3648.c, and once by
- *       sub_080c59d8): per lane, every course
+ *       AirGrindBuildCourse): per lane, every course
  *       column that scrolled into view since the last frame
- *       (gUnk_0201B0E0.unk108 -> unk000) gets its BG map column at 0x0600E000
+ *       (gAirGrindCourse.unk108 -> unk000) gets its BG map column at 0x0600E000
  *       and a vertical strip in its tiles, sized by the depth (gUnk_080D059A)
  *       and shaded by the segment it lies on; the strip's tile address,
  *       height and segment flag go to gUnk_0201A0E0/gUnk_0201B7C0/
@@ -43,14 +43,14 @@
  *       (sub_080c5580), and finally the four lanes are ranked by depth into
  *       the racers' unk18 and the priority bits of *gUnk_08757320[lane].
  *
- * Matching note (issue #98's final campaign, lesson 3.493): sub_080c5b84
+ * Matching note (issue #98's final campaign, lesson 3.493): AirGrindDrawCourse
  * only matches in this translation unit.  Its PRE spill slots follow
  * gcse's hash buckets, which depend on its locals' pseudo numbers (the
  * declaration order: lane first, p right after x, y, z) and on the pool
- * label of &gUnk_0201B0E0, numbered after this file's 40 earlier ones; #98
+ * label of &gAirGrindCourse, numbered after this file's 40 earlier ones; #98
  * had parked it at 22 bytes (or byte-exact with 37 empty asm statements). */
 
-/* per-player records of gUnk_0201B0E0, M37Course.unk018[4] (0x3C bytes) */
+/* per-player records of gAirGrindCourse, M37Course.unk018[4] (0x3C bytes) */
 struct M37CoursePlayer
 {
     /*0x00*/ s32 unk00;
@@ -70,7 +70,7 @@ struct M37CoursePlayer
     /*0x38*/ s32 unk38;
 };
 
-/* gUnk_0201B0E0, reached through gUnk_0201716C (and directly by the
+/* gAirGrindCourse, reached through gAirGrindCoursePtr (and directly by the
    0x080C5284-0x080C623C builder) */
 struct M37Course
 {
@@ -86,7 +86,7 @@ struct M37Course
     /*0x110*/ s32 unk110;
 };
 
-extern struct M37Course gUnk_0201B0E0;
+extern struct M37Course gAirGrindCourse;
 extern s16 gUnk_080D0398[];
 extern s32 gUnk_0201BFC0;
 extern s32 gUnk_0201B200[4][73];
@@ -97,19 +97,19 @@ extern s16 gUnk_02019140[4][500];
 extern s16 gUnk_0201B1F4;
 extern s16 gUnk_080D075A[];
 extern s16 gUnk_080D0760[];
-extern vu16 gUnk_03001188;
-extern vu16 gUnk_03000B14;
-extern vu16 gUnk_03000B10;
-extern vu16 gUnk_03001EB4;
-extern u32 gUnk_0300117C;
-extern vs32 gUnk_03001EE0;
-extern vs32 gUnk_03000F8C;
-extern vs32 gUnk_03000B78;
-extern u32 gUnk_03000010;
-extern vs32 gUnk_03000FC0;
-extern vs32 gUnk_03001E94;
-extern vs32 gUnk_03000FA8;
-extern u16 gUnk_03001270[];
+extern vu16 gBg0Cnt;
+extern vu16 gBg1Cnt;
+extern vu16 gBg2Cnt;
+extern vu16 gBg3Cnt;
+extern u32 gBg0ScrollX;
+extern vs32 gBg1ScrollX;
+extern vs32 gBg2ScrollX;
+extern vs32 gBg3ScrollX;
+extern u32 gBg0ScrollY;
+extern vs32 gBg1ScrollY;
+extern vs32 gBg2ScrollY;
+extern vs32 gBg3ScrollY;
+extern u16 gBgPalette[];
 extern u16 gUnk_080D0198[];
 extern u32 gUnk_0201A0E0[4][256];
 extern s16 gUnk_0201B7C0[4][256];
@@ -120,8 +120,8 @@ extern s32 *gUnk_08757300[];
 extern s32 *gUnk_08757310[];
 extern u16 *gUnk_08757320[];
 
-u32 sub_08002ec0(void);                                      /* LCG step */
-void sub_080c5b84(void);
+u32 Random(void);                                      /* LCG step */
+void AirGrindDrawCourse(void);
 
 s32 sub_080c5284(s32 angle)
 {
@@ -141,7 +141,7 @@ void sub_080c52c4(s32 lane, s32 x, s32 *px, s32 *py, s32 *pz)
     s32 v;
     s32 off;
 
-    if (x < gUnk_0201B0E0.unk00C)
+    if (x < gAirGrindCourse.unk00C)
     {
         amp = 0;
         switch (lane)
@@ -173,12 +173,12 @@ void sub_080c52c4(s32 lane, s32 x, s32 *px, s32 *py, s32 *pz)
         if (d > 100)
             d = 100;
     }
-    else if (x < gUnk_0201B0E0.unk00C + 1000)
+    else if (x < gAirGrindCourse.unk00C + 1000)
         amp = Div((x - 1000) << 8, 1000);
-    else if (x < gUnk_0201B0E0.unk010 - 1000)
+    else if (x < gAirGrindCourse.unk010 - 1000)
         amp = 256;
-    else if (x < gUnk_0201B0E0.unk010)
-        amp = Div((gUnk_0201B0E0.unk010 - x) << 8, 1000);
+    else if (x < gAirGrindCourse.unk010)
+        amp = Div((gAirGrindCourse.unk010 - x) << 8, 1000);
     else
         amp = 0;
 
@@ -273,7 +273,7 @@ s32 sub_080c5628(s32 lane, s32 x)
     return (hi - lo) * x + lo * 32;
 }
 
-void sub_080c5678(s32 a)
+void AirGrindLayOutCourse(s32 a)
 {
     s32 x, y, z;
     s32 sums[2];
@@ -283,7 +283,7 @@ void sub_080c5678(s32 a)
     s32 m;
     s32 v;
 
-    gUnk_0201BFC0 = sub_08002ec0();
+    gUnk_0201BFC0 = Random();
     for (i = 0; i < 4; i++)
     {
         for (j = 0; j < 500; j++)
@@ -312,23 +312,23 @@ void sub_080c5678(s32 a)
     n = gUnk_080D075A[a];
     m = gUnk_080D0760[a];
     sums[0] = sums[1] = 0;
-    gUnk_0201B0E0.unk014 = n;
+    gAirGrindCourse.unk014 = n;
     for (i = 0; i < n * 2 + 1; i++)
     {
         if (!(i & 1))
         {
-            gUnk_0201B690[i] = (sub_08002ec0() & 63) + 224;
+            gUnk_0201B690[i] = (Random() & 63) + 224;
             gUnk_0201B690[i] -= 200 * i / (n * 2);
         }
         else
-            gUnk_0201B690[i] = sub_08002ec0() % 320 + 96;
+            gUnk_0201B690[i] = Random() % 320 + 96;
         sums[i % 2] += gUnk_0201B690[i];
     }
     for (i = 0; i < n * 2 + 1; i++)
     {
         v = gUnk_0201B690[i];
         if (!(i & 1))
-            gUnk_0201B690[i] = (gUnk_0201B0E0.unk010 - gUnk_0201B0E0.unk00C - m) * v;
+            gUnk_0201B690[i] = (gAirGrindCourse.unk010 - gAirGrindCourse.unk00C - m) * v;
         else
             gUnk_0201B690[i] = m * v;
         gUnk_0201B690[i] /= sums[i % 2];
@@ -364,27 +364,27 @@ void sub_080c5678(s32 a)
     }
 }
 
-void sub_080c59d8(s32 a, s32 b)
+void AirGrindBuildCourse(s32 a, s32 b)
 {
     s32 i;
     struct M37CoursePlayer *p;
 
-    gUnk_03001188 = 0x1C80;
-    gUnk_03000B14 = 0x1D81;
-    gUnk_03000B10 = 0x1E82;
-    gUnk_03001EB4 = 0x1F83;
-    gUnk_0300117C = gUnk_03001EE0 = gUnk_03000F8C = gUnk_03000B78 = 0;
-    gUnk_03000010 = gUnk_03000FC0 = gUnk_03001E94 = gUnk_03000FA8 = 0x300000;
-    gUnk_0201B0E0.unk110 = a;
-    gUnk_0201B0E0.unk10C = b;
-    gUnk_0201B0E0.unk108 = 0;
-    gUnk_0201B0E0.unk000 = 240;
-    gUnk_0201B0E0.unk004 = 0;
-    gUnk_0201B0E0.unk008 = 0;
+    gBg0Cnt = 0x1C80;
+    gBg1Cnt = 0x1D81;
+    gBg2Cnt = 0x1E82;
+    gBg3Cnt = 0x1F83;
+    gBg0ScrollX = gBg1ScrollX = gBg2ScrollX = gBg3ScrollX = 0;
+    gBg0ScrollY = gBg1ScrollY = gBg2ScrollY = gBg3ScrollY = 0x300000;
+    gAirGrindCourse.unk110 = a;
+    gAirGrindCourse.unk10C = b;
+    gAirGrindCourse.unk108 = 0;
+    gAirGrindCourse.unk000 = 240;
+    gAirGrindCourse.unk004 = 0;
+    gAirGrindCourse.unk008 = 0;
     for (i = 0; i < 4; i++)
     {
-        p = &gUnk_0201B0E0.unk018[i];
-        p->unk34 = p->unk00 = gUnk_0201B0E0.unk108;
+        p = &gAirGrindCourse.unk018[i];
+        p->unk34 = p->unk00 = gAirGrindCourse.unk108;
         p->unk30 = 0;
         p->unk04 = 0;
         p->unk38 = 1;
@@ -392,17 +392,17 @@ void sub_080c59d8(s32 a, s32 b)
         p->unk20 = 0;
         p->unk2C = 0;
     }
-    gUnk_0201B0E0.unk00C = 1000;
+    gAirGrindCourse.unk00C = 1000;
     switch (a)
     {
     case 0:
-        gUnk_0201B0E0.unk010 = 6000;
+        gAirGrindCourse.unk010 = 6000;
         break;
     case 1:
-        gUnk_0201B0E0.unk010 = 8500;
+        gAirGrindCourse.unk010 = 8500;
         break;
     case 2:
-        gUnk_0201B0E0.unk010 = 12000;
+        gAirGrindCourse.unk010 = 12000;
         break;
     }
     for (i = 0; i < 0x1000; i++)
@@ -410,18 +410,18 @@ void sub_080c59d8(s32 a, s32 b)
     for (i = 0; i < 64; i++)
         ((vu8 *)0x06000000)[i] = 0;
     for (i = 0; i < 256; i++)
-        gUnk_03001270[i] = gUnk_080D0198[i];
-    sub_080c5678(a);
+        gBgPalette[i] = gUnk_080D0198[i];
+    AirGrindLayOutCourse(a);
     for (i = 0; i < 64; i++)
         ((vu8 *)0x0600C000)[i] = 8;
     for (i = 0; i < 0x400; i++)
         ((u16 *)0x0600F800)[i] = 0;
     *(u16 *)0x0600FC20 = 0x300;
-    gUnk_0201B0E0.unk000 = 360;
-    sub_080c5b84();
+    gAirGrindCourse.unk000 = 360;
+    AirGrindDrawCourse();
 }
 
-void sub_080c5b84(void)
+void AirGrindDrawCourse(void)
 {
     s32 depth[4];
     s32 lane;
@@ -455,9 +455,9 @@ void sub_080c5b84(void)
 
     for (lane = 0; lane < 4; lane++)
     {
-        p = &gUnk_0201B0E0.unk018[lane];
-        lo = sub_080c55d8(lane, gUnk_0201B0E0.unk000) / 32;
-        hi = sub_080c55d8(lane, gUnk_0201B0E0.unk108) / 32;
+        p = &gAirGrindCourse.unk018[lane];
+        lo = sub_080c55d8(lane, gAirGrindCourse.unk000) / 32;
+        hi = sub_080c55d8(lane, gAirGrindCourse.unk108) / 32;
         for (k = 0; k < lo - hi; k++)
         {
             j = k + 120;
@@ -560,13 +560,13 @@ void sub_080c5b84(void)
         v /= 32;
         p->unk08 = depth[lane] + 512;
         sn = gUnk_080D059A[p->unk08 / 4 - 32];
-        *gUnk_08757310[lane] = (gUnk_0201B0E0.unk004 * sn << 8) + 0x300000;
+        *gUnk_08757310[lane] = (gAirGrindCourse.unk004 * sn << 8) + 0x300000;
         sn = gUnk_080D059A[p->unk08 / 4 - 32];
-        *gUnk_08757300[lane] += sn * gUnk_0201B0E0.unk008 << 8;
+        *gUnk_08757300[lane] += sn * gAirGrindCourse.unk008 << 8;
         old = p->unk0C;
         p->unk0C = v - lo + 120;
         p->unk10 += 128 - *gUnk_08757310[lane] / 65536;
-        if (gUnk_0201B0E0.unk10C != 0)
+        if (gAirGrindCourse.unk10C != 0)
         {
             if (p->unk04 != 0 || p->unk30 != 0 || p->unk0C > 240)
             {
@@ -622,14 +622,14 @@ void sub_080c5b84(void)
                 }
             }
         }
-        if (gUnk_0201B0E0.unk00C <= p->unk00 && p->unk34 <= gUnk_0201B0E0.unk010)
+        if (gAirGrindCourse.unk00C <= p->unk00 && p->unk34 <= gAirGrindCourse.unk010)
         {
             k = p->unk34;
             m = p->unk00;
-            if (k < gUnk_0201B0E0.unk00C)
-                k = gUnk_0201B0E0.unk00C;
-            if (m > gUnk_0201B0E0.unk010)
-                m = gUnk_0201B0E0.unk010;
+            if (k < gAirGrindCourse.unk00C)
+                k = gAirGrindCourse.unk00C;
+            if (m > gAirGrindCourse.unk010)
+                m = gAirGrindCourse.unk010;
             sub_080c5580(k, m, &set, &clear);
             if (p->unk04 != 0)
                 p->unk24 += set;
@@ -647,10 +647,10 @@ void sub_080c5b84(void)
         for (k = 0; k < 4; k++)
             if (depth[lane] > depth[k])
                 m++;
-        gUnk_0201B0E0.unk018[lane].unk18 = m;
+        gAirGrindCourse.unk018[lane].unk18 = m;
         if (m == 3)
             m = 2;
         *gUnk_08757320[lane] = (*gUnk_08757320[lane] & 0xFFFC) | m;
     }
-    gUnk_0201B0E0.unk108 = gUnk_0201B0E0.unk000;
+    gAirGrindCourse.unk108 = gAirGrindCourse.unk000;
 }

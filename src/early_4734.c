@@ -1,30 +1,33 @@
 #include "gba/gba.h"
 #include "global.h"
 
-/* Link boot sequencer + the AGB SDK MultiBoot client library
+/* The link block-transfer step + the AGB SDK MultiBoot client library
  * (0x08004734-0x08004FEB, issue #32 batch E2).
  *
  * Recipe: old_agbcc -O2 -mthumb-interwork (fnmatch --old2).  Evidence: the
- * leaves sub_08004968 / sub_08004e9c / sub_08004f98 end in a bare `bx lr`;
+ * leaves MultiBootInit / MultiBootCheckComplete / MultiBootWaitCycles end in a
+ * bare `bx lr`;
  * agbcc unconditionally emits `push {lr}` / `pop {r0}; bx r0` even for leaves
  * (docs/lessons-learned.md 3.18).
  *
  * 0x08004968-0x08004FEB is the AGB SDK multiboot library (the same code
  * pokeemerald ships as src/multiboot.c).  Semantic names, in ROM order:
- *   sub_08004968  MultiBootInit
- *   sub_08004984  MultiBootMain
- *   sub_08004d6c  MultiBootSend           (static)
- *   sub_08004db4  MultiBootStartProbe
- *   sub_08004dd8  MultiBootStartMaster
- *   sub_08004e9c  MultiBootCheckComplete
- *   sub_08004eac  MultiBootHandShake      (static)
- *   sub_08004f98  MultiBootWaitCycles     (static)
- *   sub_08004fb0  MultiBootWaitSendDone   (static)
- * sub_08004734 is game code: the 5-step link/multiboot session sequencer
- * driven by the counter at 0x0200EBA8.
+ *   0x08004968  MultiBootInit
+ *   0x08004984  MultiBootMain
+ *   0x08004D6C  MultiBootSend           (static)
+ *   0x08004DB4  MultiBootStartProbe
+ *   0x08004DD8  MultiBootStartMaster
+ *   0x08004E9C  MultiBootCheckComplete
+ *   0x08004EAC  MultiBootHandShake      (static)
+ *   0x08004F98  MultiBootWaitCycles     (static)
+ *   0x08004FB0  MultiBootWaitSendDone   (static)
+ * LinkBlockMain is game code: the 5-step block-transfer state machine
+ * (32-bit normal-mode SIO after the 0x5500/0x5501 handshake, run from
+ * EndFrame while gLinkDriverMode is 2), not multiboot, driven by the
+ * state gLinkBlockState (0x0200EBA8).
  *
- * STATUS: 9 of the 10 functions are byte-exact.  sub_08004984
- * (MultiBootMain) is NOT matched: same size (1000 bytes) and the same
+ * STATUS: 9 of the 10 functions are byte-exact.
+ * MultiBootMain is NOT matched: same size (1000 bytes) and the same
  * instruction sequence, but 534 bytes differ on register naming.  The whole
  * function's allocation is shifted by exactly one hard register (ROM has
  * t=r5 / mp=r7 / &check_wait=sl, this candidate has t=r4 / mp=r6 /
@@ -33,7 +36,7 @@
  * every mention.  See the batch report for the full analysis.
  */
 
-/* AGB SDK MultiBootParam (0x4C bytes); the live instance is gUnk_0200EBF0. */
+/* AGB SDK MultiBootParam (0x4C bytes); the live instance is gMultiBootParam. */
 struct MultiBootParam
 {
     /*0x00*/ u32 system_work[5];
@@ -57,27 +60,27 @@ struct MultiBootParam
     /*0x4B*/ u8 server_type;
 };
 
-/* REG_SIOMULTI0..3 as an array.  UNRESOLVED (see the report): sub_08004eac
+/* REG_SIOMULTI0..3 as an array.  UNRESOLVED (see the report): MultiBootHandShake
  * only reproduces the ROM through the cast literal (gcc rematerialises the
- * pool word at every mention), while sub_08004984 only reproduces the ROM's
+ * pool word at every mention), while MultiBootMain only reproduces the ROM's
  * instruction *count* through a symbol reference.  Both spell 0x04000120. */
 #define SIOMULTI  ((vu16 *)REG_ADDR_SIOMULTI0)
 extern vu16 gUnk_04000120[];
 #define SIOMULTI2 gUnk_04000120
 
 /* Per-client probe response cache (3 halfwords). */
-extern u16 gUnk_03006920[];
+extern u16 gMultiBootClientData[];
 
 /* Link session sequencer state / frame counters (EWRAM). */
-extern s32 gUnk_0200EBA0;
-extern s32 gUnk_0200EBA4;
-extern vs32 gUnk_0200EBA8;
-extern s32 gUnk_0200EBAC;
-extern s32 gUnk_0200EBBC;
-extern s32 gUnk_0200EC40;
-extern vu16 gUnk_03000018;      /* REG_IE shadow */
-extern vu16 gUnk_03001EF8;      /* REG_IME shadow */
-extern vu16 gUnk_03001F38;      /* link-mode flag */
+extern s32 gLinkDriverMode;
+extern s32 gLinkBlockTimeout;
+extern vs32 gLinkBlockState;
+extern s32 gLinkBlockWords;
+extern s32 gLinkBlockIndex;
+extern s32 gLinkBlockFrames;
+extern vu16 gIntrEnable;      /* REG_IE shadow */
+extern vu16 gIntrMasterEnable;      /* REG_IME shadow */
+extern vu16 gLinkIsMaster;      /* link-mode flag */
 
 /* REG_IME must be reached through a SYMBOL here, not the io_reg.h cast
  * literal: with the literal, cse.c derives 0x04000208 from the still-live
@@ -92,28 +95,28 @@ extern vu16 gUnk_04000208;
  * int-returning.  Alias it rather than fight the header (see report). */
 extern int MultiBootSvc(struct MultiBootParam *mp) asm("MultiBoot");
 
-int sub_08004d6c(struct MultiBootParam *mp, u16 data);
-int sub_08004eac(struct MultiBootParam *mp);
-void sub_08004f98(s32 cycles);
-void sub_08004fb0(void);
-void sub_08004968(struct MultiBootParam *mp);
-void sub_08004db4(struct MultiBootParam *mp);
-int sub_08004e9c(struct MultiBootParam *mp);
+int MultiBootSend(struct MultiBootParam *mp, u16 data);
+int MultiBootHandShake(struct MultiBootParam *mp);
+void MultiBootWaitCycles(s32 cycles);
+void MultiBootWaitSendDone(void);
+void MultiBootInit(struct MultiBootParam *mp);
+void MultiBootStartProbe(struct MultiBootParam *mp);
+int MultiBootCheckComplete(struct MultiBootParam *mp);
 
 
-/*FN sub_08004734*/
-void sub_08004734(void)
+/*FN LinkBlockMain*/
+void LinkBlockMain(void)
 {
-    switch (gUnk_0200EBA8)
+    switch (gLinkBlockState)
     {
     case 0:
-        gUnk_0200EBA4 = ((((gUnk_0200EBAC << 2) >> 2) * 0x10B3) >> 18) + 9;
-        gUnk_0200EBA8++;
+        gLinkBlockTimeout = ((((gLinkBlockWords << 2) >> 2) * 0x10B3) >> 18) + 9;
+        gLinkBlockState++;
         break;
     case 1:
-        if (gUnk_03001F38 != 0)
+        if (gLinkIsMaster != 0)
         {
-            if (gUnk_0200EC40 <= 5)
+            if (gLinkBlockFrames <= 5)
                 break;
         }
         else
@@ -122,51 +125,51 @@ void sub_08004734(void)
         }
         REG_SIODATA32 = 0;
         REG_IF |= 0xC0;
-        if (gUnk_03001F38 != 0)
+        if (gLinkIsMaster != 0)
         {
             REG_SIOCNT |= 0x80;
             REG_TM3CNT_L = 0xF318;
             REG_TM3CNT_H = 0xC0;
-            gUnk_03001EF8 = GIME = GIME & 0xFFFE;
-            REG_IE = gUnk_03000018 = gUnk_03000018 | 0x40;
+            gIntrMasterEnable = GIME = GIME & 0xFFFE;
+            REG_IE = gIntrEnable = gIntrEnable | 0x40;
         }
         else
         {
             REG_SIOCNT |= 0x4080;
-            gUnk_03001EF8 = GIME = GIME & 0xFFFE;
-            REG_IE = gUnk_03000018 = gUnk_03000018 | 0x80;
+            gIntrMasterEnable = GIME = GIME & 0xFFFE;
+            REG_IE = gIntrEnable = gIntrEnable | 0x80;
         }
-        gUnk_03001EF8 = GIME = GIME | 1;
-        gUnk_0200EC40 = 0;
-        gUnk_0200EBA8++;
+        gIntrMasterEnable = GIME = GIME | 1;
+        gLinkBlockFrames = 0;
+        gLinkBlockState++;
         break;
     case 2:
-        if (gUnk_0200EBBC < gUnk_0200EBAC && gUnk_0200EC40 < gUnk_0200EBA4)
+        if (gLinkBlockIndex < gLinkBlockWords && gLinkBlockFrames < gLinkBlockTimeout)
             break;
-        gUnk_0200EBA8++;
+        gLinkBlockState++;
         break;
     case 3:
-        gUnk_0200EBA8++;
+        gLinkBlockState++;
         break;
     case 4:
-        gUnk_03001EF8 = GIME = GIME & 0xFFFE;
-        REG_IE = gUnk_03000018 = gUnk_03000018 & 0xFF3F;
+        gIntrMasterEnable = GIME = GIME & 0xFFFE;
+        REG_IE = gIntrEnable = gIntrEnable & 0xFF3F;
         REG_SIOCNT = 0x1000;
         REG_SIOCNT = 0x2000;
         REG_SIOCNT |= 0x4003;
         REG_TM3CNT_H = 0;
         REG_IF |= 0xC0;
-        gUnk_03001EF8 = GIME = GIME | 1;
-        gUnk_0200EBA8 = 0x9999;
-        gUnk_0200EBA0 = 0;
+        gIntrMasterEnable = GIME = GIME | 1;
+        gLinkBlockState = 0x9999;
+        gLinkDriverMode = 0;
         break;
     }
-    gUnk_0200EC40++;
+    gLinkBlockFrames++;
 }
 
 
-/*FN sub_08004968*/
-void sub_08004968(struct MultiBootParam *mp)
+/*FN MultiBootInit*/
+void MultiBootInit(struct MultiBootParam *mp)
 {
     mp->client_bit = 0;
     mp->probe_count = 0;

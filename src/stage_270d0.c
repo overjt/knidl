@@ -6,11 +6,11 @@
  *
  * Stage helpers, part 2.  sub_080270d0 restarts the room's BGM (with
  * the 0x800 flag), sub_08027128/sub_08027178/sub_08027198 tear the level
- * down before a state change (flags in gUnk_02007FB0), sub_080271ec/
- * sub_08027204/sub_08027210 set the per-frame flags gUnk_03005624, and
+ * down before a state change (flags in gUnk_02007FB0), PauseRoom/
+ * SetRoomUpdateFlags/ResumeRoom set the per-frame flags gRoomUpdateFlags, and
  * sub_08027228/sub_08027240 save and restore the OBJ palette and tiles
  * around M02's pause screen.  sub_080272dc picks the hub door the player
- * returns to (gUnk_020055E0/gUnk_0200AEF0).  The file stops before
+ * returns to (gRoomEntryX/gRoomEntryY).  The file stops before
  * sub_080273a0 because that function only matches without these nine in
  * front of it in the translation unit (lesson 4.79). */
 
@@ -70,86 +70,86 @@ struct Door
     /*0x0A*/ u16 unkA;
 };
 
-extern struct RoomDef *gUnk_030055EC;
+extern struct RoomDef *gCurRoomDef;
 extern s16 gUnk_087325A2[];
 extern u16 gUnk_02007FB0;
-extern s8 gUnk_02006A20[][3];
-extern u16 gUnk_03005624;
+extern s8 gDoorObjectTasks[][3];
+extern u16 gRoomUpdateFlags;
 extern u8 gUnk_03001370[];
 extern u16 gUnk_02008060[];
-extern vu16 gUnk_03001ED8;
-extern u8 gUnk_020055B0;
+extern vu16 gDispCnt;
+extern u8 gBg3MapShape;
 extern u8 gUnk_0200B078;
-extern u8 gUnk_0200B040;
-extern struct RoomDef **gUnk_087E1D58[][8];
-extern s8 gUnk_0300238C;
-extern s8 gUnk_030023EC;
+extern u8 gHBlankScrollStarted;
+extern struct RoomDef **gRoomTable[][8];
+extern s8 gLevelIndex;
+extern s8 gStageIndex;
 extern s8 gUnk_030023B8;
-extern s8 gUnk_03002468;
-extern s16 gUnk_020055E0;
-extern s16 gUnk_0200AEF0;
-extern u8 gUnk_02006170;
+extern s8 gRoomIndex;
+extern s16 gRoomEntryX;
+extern s16 gRoomEntryY;
+extern u8 gRoomEntrySet;
 extern u8 gUnk_0200AF00;
 extern u8 gUnk_020069F0;
 extern u8 gUnk_03001F20;
 
-void sub_080017e4(u32 mode, u32 src, u32 dst, u32 size);
-s32 sub_08003110(s32 songId);
-void sub_080034d0(void);
-void sub_08003688(void);
-void sub_080055c4(u16 val, s32 idx);
-void sub_08005654(s32 id);
-void sub_0800ab08(void);
+void RequestCopy(u32 mode, u32 src, u32 dst, u32 size);
+s32 PlayBgm(s32 songId);
+void StopBgm(void);
+void StopAllSfx(void);
+void TaskSetOthersSkipMask(u16 val, s32 idx);
+void TaskFree(s32 id);
+void HudRedrawClock(void);
 void sub_08026998(void);
-void sub_08029930(void);
-void sub_0802b460(u16 a);
-void sub_0802b49c(u16 a);
-void sub_08030758(void);
-void sub_080307a4(void);
-void sub_080b6e60(void);
-void sub_080b6ed4(void);
-void sub_080b6f04(void);
-void sub_080b6f20(void);
+void CameraWriteScrollParallax(void);
+void SetBg23ScreenSize(u16 a);
+void SetBg3ScreenSize(u16 a);
+void ResumeBlockAnims(void);
+void PauseBlockAnims(void);
+void StopHBlankScroll(void);
+void HoldHBlankScroll(void);
+void RestoreRoomHBlankScroll(void);
+void ResumeHBlankScroll(void);
 
 void sub_080270d0(void)
 {
-    s32 bgm = gUnk_030055EC->unk04;
+    s32 bgm = gCurRoomDef->unk04;
     s16 v;
 
     if (bgm == -1)
     {
-        sub_080034d0();
+        StopBgm();
     }
     else if (gUnk_087325A2[bgm] != -1)
     {
         v = gUnk_087325A2[bgm] | 0x800;
-        sub_08003110(v);
+        PlayBgm(v);
     }
     else
     {
-        sub_08003110(bgm | 0x800);
+        PlayBgm(bgm | 0x800);
     }
 }
 
 void sub_08027128(void)
 {
-    sub_080307a4();
-    sub_080b6e60();
-    sub_08005654(63);
+    PauseBlockAnims();
+    StopHBlankScroll();
+    TaskFree(63);
     if (gUnk_02007FB0 & 1)
         sub_08026998();
     if (gUnk_02007FB0 & 2)
-        sub_08003688();
+        StopAllSfx();
     if (gUnk_02007FB0 & 4)
-        sub_080055c4(31, 63);
+        TaskSetOthersSkipMask(31, 63);
     gUnk_02007FB0 = 0;
 }
 
 void sub_08027178(void)
 {
-    sub_080307a4();
-    sub_080b6e60();
-    sub_08005654(63);
+    PauseBlockAnims();
+    StopHBlankScroll();
+    TaskFree(63);
     gUnk_02007FB0 = 0;
 }
 
@@ -158,31 +158,31 @@ void sub_08027198(void)
     s32 i;
     s32 j;
 
-    sub_08005654(63);
+    TaskFree(63);
     for (j = 0; j <= 31; j++)
         for (i = 0; i <= 2; i++)
-            if (gUnk_02006A20[j][i] != -1)
-                sub_08005654(gUnk_02006A20[j][i]);
-    sub_080307a4();
+            if (gDoorObjectTasks[j][i] != -1)
+                TaskFree(gDoorObjectTasks[j][i]);
+    PauseBlockAnims();
 }
 
-void sub_080271ec(void)
+void PauseRoom(void)
 {
-    gUnk_03005624 = 0;
-    sub_080307a4();
-    sub_080b6ed4();
+    gRoomUpdateFlags = 0;
+    PauseBlockAnims();
+    HoldHBlankScroll();
 }
 
-void sub_08027204(u32 a)
+void SetRoomUpdateFlags(u32 a)
 {
-    gUnk_03005624 = a;
+    gRoomUpdateFlags = a;
 }
 
-void sub_08027210(void)
+void ResumeRoom(void)
 {
-    gUnk_03005624 = 31;
-    sub_08030758();
-    sub_080b6f20();
+    gRoomUpdateFlags = 31;
+    ResumeBlockAnims();
+    ResumeHBlankScroll();
 }
 
 void sub_08027228(void)
@@ -192,20 +192,20 @@ void sub_08027228(void)
 
 void sub_08027240(void)
 {
-    gUnk_03001ED8 &= 0xE0FF;
-    gUnk_03001ED8 |= 0x1F00;
-    sub_080017e4(8, (u32)gUnk_030055EC->unk2C, 0x06008000, 0);
+    gDispCnt &= 0xE0FF;
+    gDispCnt |= 0x1F00;
+    RequestCopy(8, (u32)gCurRoomDef->unk2C, 0x06008000, 0);
     CpuSet(gUnk_02008060, gUnk_03001370, 128);
-    if (gUnk_020055B0 == 1)
-        sub_0802b49c(0x8000);
+    if (gBg3MapShape == 1)
+        SetBg3ScreenSize(0x8000);
     if (gUnk_0200B078 == 6)
-        sub_0802b460(0);
+        SetBg23ScreenSize(0);
     else if (gUnk_0200B078 == 1)
-        sub_0802b460(0x8000);
-    sub_08029930();
-    if (gUnk_0200B040 != 0)
-        sub_080b6f04();
-    sub_0800ab08();
+        SetBg23ScreenSize(0x8000);
+    CameraWriteScrollParallax();
+    if (gHBlankScrollStarted != 0)
+        RestoreRoomHBlankScroll();
+    HudRedrawClock();
 }
 
 void sub_080272dc(void)
@@ -214,19 +214,19 @@ void sub_080272dc(void)
     struct Door *d;
     s32 i;
 
-    gUnk_0300238C = 8;
-    gUnk_030023EC = gUnk_030023B8;
-    gUnk_03002468 = 0;
-    r = gUnk_087E1D58[gUnk_0300238C][gUnk_030023EC][0];
+    gLevelIndex = 8;
+    gStageIndex = gUnk_030023B8;
+    gRoomIndex = 0;
+    r = gRoomTable[gLevelIndex][gStageIndex][0];
     d = r->unk44;
     for (i = 0; i < r->unk3A; d++, i++)
     {
         if (d->unk0 == 0x270F && *(u8 *)&d->unk6 == 0 && d->unk8 == (s8)gUnk_03001F20)
             break;
     }
-    gUnk_020055E0 = (d->unk2 << 4) + 22;
-    gUnk_0200AEF0 = (d->unk4 << 4) + 5;
-    gUnk_02006170 = 1;
+    gRoomEntryX = (d->unk2 << 4) + 22;
+    gRoomEntryY = (d->unk4 << 4) + 5;
+    gRoomEntrySet = 1;
     gUnk_0200AF00 = 0;
     gUnk_020069F0 = 1;
 }

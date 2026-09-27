@@ -5,18 +5,18 @@
 /* camera_2c42c.c (0x0802C42C-0x0802D01B, issue #86).
  *
  * Camera modes, the screen shake and the scroll-lock setup.
- * sub_0802c42c, sub_0802cab0 and sub_0802cbb8 snap the camera, and the
+ * CameraHoldAnchor, CameraSnapBoundsToAnchor and CameraSnapPlayersToAnchor snap the camera, and the
  * per-player cameras and bounds, to the spawn point
- * gUnk_03002398/gUnk_03001F00 clamped to the room bounds gUnk_03005628
- * (when gUnk_03002350 is set).  sub_0802c550, sub_0802c680, sub_0802c7f4
- * and sub_0802cc90 follow the player (gUnk_030023CC/gUnk_03002388, the
+ * gCameraAnchorX/gCameraAnchorY clamped to the room bounds gRoomBounds
+ * (when gActivePlayerCount is set).  sub_0802c550, sub_0802c680, sub_0802c7f4
+ * and CameraSnapToFocus follow the player (gCameraFocusX/gCameraFocusY, the
  * task gUnk_02007D38 or the multiplayer group of camera_29c74.c) inside
- * the bounds gUnk_030055F8 and write the 16.16 target
- * gUnk_03005614/gUnk_03005634 and the visible rectangle gUnk_03002158.
- * sub_0802cd24 clears and sub_0802cd38 steps the screen shake
- * gUnk_03005670 through the offset lists of gUnk_08732880 (0x8000 ends a
- * list, 0x9999 restarts it).  sub_0802cda0(x0, x1, y0, y1) arms the scroll
- * lock of gUnk_03005680 for a room region, 0xFFFF meaning no limit on
+ * the bounds gCameraBounds and write the 16.16 target
+ * gCameraCenterX/gCameraCenterY and the visible rectangle gViewRect.
+ * StopScreenShake clears and UpdateScreenShake steps the screen shake
+ * gScreenShake through the offset lists of gScreenShakePatterns (0x8000 ends a
+ * list, 0x9999 restarts it).  StartScrollLock(x0, x1, y0, y1) arms the scroll
+ * lock of gScrollLock for a room region, 0xFFFF meaning no limit on
  * that axis (also called from M33, src/hud_b5840.c). */
 
 struct CamPos { u16 x, y; };
@@ -44,70 +44,70 @@ struct Unk03005680
     /*0x0C*/ u16 unkC;
 };
 
-extern u8 gUnk_03002350;
-extern s16 gUnk_03002398;
-extern s16 gUnk_03001F00;
-extern s16 gUnk_03005628[4];
-extern s16 gUnk_030055F8[4];
-extern u16 gUnk_030023AC;
-extern s16 gUnk_03002158[4];
-extern struct CamRect gUnk_03005640[4];
-extern struct CamPos gUnk_030055D0[4];
-extern s32 gUnk_03005614;
-extern s32 gUnk_03005634;
-extern s16 gUnk_030023CC;
-extern s16 gUnk_03002388;
-extern u16 gUnk_03002360;
-extern u8 gUnk_03002340;
+extern u8 gActivePlayerCount;
+extern s16 gCameraAnchorX;
+extern s16 gCameraAnchorY;
+extern s16 gRoomBounds[4];
+extern s16 gCameraBounds[4];
+extern u16 gPlayerCount;
+extern s16 gViewRect[4];
+extern struct CamRect gPlayerBounds[4];
+extern struct CamPos gPlayerCameraPos[4];
+extern s32 gCameraCenterX;
+extern s32 gCameraCenterY;
+extern s16 gCameraFocusX;
+extern s16 gCameraFocusY;
+extern u16 gLocalPlayer;
+extern u8 gActivePlayerMask;
 extern u8 gUnk_02007D38;
-extern u8 gUnk_0300560C[];
-extern u16 gUnk_030055F4[2];
-extern struct Unk03005670 gUnk_03005670;
-extern u16 *gUnk_08732880[];
-extern struct Unk03005680 gUnk_03005680;
-extern s32 gUnk_03005610;
-extern s32 gUnk_03005664;
-extern u16 gUnk_030055C0;
+extern u8 gPlayerCameraMode[];
+extern u16 gPlayerGroupCenter[2];
+extern struct Unk03005670 gScreenShake;
+extern u16 *gScreenShakePatterns[];
+extern struct Unk03005680 gScrollLock;
+extern s32 gScrollLockSpeedX;
+extern s32 gScrollLockSpeedY;
+extern u16 gCameraMode;
 
-void sub_08029c74(void);
-void sub_0802a190(void);
+void UpdatePlayerGroupCenter(void);
+void UpdatePlayerCameras(void);
 void sub_0802a340(void);
-void sub_0802a4ec(void);
+void SetViewRectToPlayers(void);
 void sub_0802a63c(void);
 
-void sub_0802c42c(void)
+void CameraHoldAnchor(void)
 {
     s32 x, y, i;
 
-    if (gUnk_03002350)
+    if (gActivePlayerCount)
     {
-        x = gUnk_03002398;
-        y = gUnk_03001F00;
-        if (x < gUnk_03005628[0])
-            x = gUnk_03005628[0];
-        if (x > gUnk_03005628[1])
-            x = gUnk_03005628[1];
-        if (y < gUnk_03005628[2])
-            y = gUnk_03005628[2];
-        if (y > gUnk_03005628[3])
-            y = gUnk_03005628[3];
-        gUnk_030055F8[0] = gUnk_030055F8[1] = x;
-        gUnk_030055F8[2] = gUnk_030055F8[3] = y;
-        for (i = 0; i < gUnk_030023AC; i++)
+        x = gCameraAnchorX;
+        y = gCameraAnchorY;
+        if (x < gRoomBounds[0])
+            x = gRoomBounds[0];
+        if (x > gRoomBounds[1])
+            x = gRoomBounds[1];
+        if (y < gRoomBounds[2])
+            y = gRoomBounds[2];
+        if (y > gRoomBounds[3])
+            y = gRoomBounds[3];
+        gCameraBounds[0] = gCameraBounds[1] = x;
+        gCameraBounds[2] = gCameraBounds[3] = y;
+        for (i = 0; i < gPlayerCount; i++)
         {
-            gUnk_03005640[i].x0 = x - 117;
-            gUnk_03005640[i].x1 = x + 117;
-            gUnk_03005640[i].y0 = y - 76;
-            gUnk_03005640[i].y1 = y + 104;
-            gUnk_030055D0[i].x = x;
-            gUnk_030055D0[i].y = y;
+            gPlayerBounds[i].x0 = x - 117;
+            gPlayerBounds[i].x1 = x + 117;
+            gPlayerBounds[i].y0 = y - 76;
+            gPlayerBounds[i].y1 = y + 104;
+            gPlayerCameraPos[i].x = x;
+            gPlayerCameraPos[i].y = y;
         }
-        gUnk_03005614 = x << 16;
-        gUnk_03005634 = y << 16;
-        gUnk_03002158[0] = x - 120;
-        gUnk_03002158[1] = x + 120;
-        gUnk_03002158[2] = y - 80;
-        gUnk_03002158[3] = y + 80;
+        gCameraCenterX = x << 16;
+        gCameraCenterY = y << 16;
+        gViewRect[0] = x - 120;
+        gViewRect[1] = x + 120;
+        gViewRect[2] = y - 80;
+        gViewRect[3] = y + 80;
     }
 }
 
@@ -115,57 +115,57 @@ void sub_0802c550(void)
 {
     s32 x, y;
 
-    if (gUnk_030023AC == 1)
+    if (gPlayerCount == 1)
     {
         struct CamPos *c;
 
-        x = gUnk_030023CC;
-        y = gUnk_03002388;
-        if (x < gUnk_030055F8[0])
-            x = gUnk_030055F8[0];
-        if (x > gUnk_030055F8[1])
-            x = gUnk_030055F8[1];
-        if (y < gUnk_030055F8[2])
-            y = gUnk_030055F8[2];
-        if (y > gUnk_030055F8[3])
-            y = gUnk_030055F8[3];
-        c = gUnk_030055D0;
-        c[gUnk_03002360].x = x;
-        c[gUnk_03002360].y = y;
-        gUnk_03005614 = x << 16;
-        gUnk_03005634 = y << 16;
-        gUnk_03002158[0] = x - 120;
-        gUnk_03002158[1] = x - 120 + 240;
-        gUnk_03002158[2] = y - 80;
-        gUnk_03002158[3] = y - 80 + 160;
+        x = gCameraFocusX;
+        y = gCameraFocusY;
+        if (x < gCameraBounds[0])
+            x = gCameraBounds[0];
+        if (x > gCameraBounds[1])
+            x = gCameraBounds[1];
+        if (y < gCameraBounds[2])
+            y = gCameraBounds[2];
+        if (y > gCameraBounds[3])
+            y = gCameraBounds[3];
+        c = gPlayerCameraPos;
+        c[gLocalPlayer].x = x;
+        c[gLocalPlayer].y = y;
+        gCameraCenterX = x << 16;
+        gCameraCenterY = y << 16;
+        gViewRect[0] = x - 120;
+        gViewRect[1] = x - 120 + 240;
+        gViewRect[2] = y - 80;
+        gViewRect[3] = y - 80 + 160;
     }
     else
     {
-        sub_08029c74();
-        sub_0802a190();
-        if ((gUnk_03002340 >> gUnk_03002360) & 1)
+        UpdatePlayerGroupCenter();
+        UpdatePlayerCameras();
+        if ((gActivePlayerMask >> gLocalPlayer) & 1)
         {
-            x = gUnk_030023CC;
-            y = gUnk_03002388;
-            if (x < gUnk_030055F8[0])
-                x = gUnk_030055F8[0];
-            if (x > gUnk_030055F8[1])
-                x = gUnk_030055F8[1];
-            if (y < gUnk_030055F8[2])
-                y = gUnk_030055F8[2];
-            if (y > gUnk_030055F8[3])
-                y = gUnk_030055F8[3];
+            x = gCameraFocusX;
+            y = gCameraFocusY;
+            if (x < gCameraBounds[0])
+                x = gCameraBounds[0];
+            if (x > gCameraBounds[1])
+                x = gCameraBounds[1];
+            if (y < gCameraBounds[2])
+                y = gCameraBounds[2];
+            if (y > gCameraBounds[3])
+                y = gCameraBounds[3];
         }
         else
         {
-            struct CamPos *c = gUnk_030055D0;
+            struct CamPos *c = gPlayerCameraPos;
 
-            x = c[gUnk_03002360].x;
-            y = c[gUnk_03002360].y;
+            x = c[gLocalPlayer].x;
+            y = c[gLocalPlayer].y;
         }
-        gUnk_03005614 = x << 16;
-        gUnk_03005634 = y << 16;
-        sub_0802a4ec();
+        gCameraCenterX = x << 16;
+        gCameraCenterY = y << 16;
+        SetViewRectToPlayers();
     }
 }
 
@@ -173,57 +173,57 @@ void sub_0802c680(void)
 {
     s32 x, y;
 
-    if (gUnk_030023AC == 1)
+    if (gPlayerCount == 1)
     {
         struct CamPos *c;
 
-        x = gUnk_030023CC;
-        y = gUnk_03002388;
-        if (x < gUnk_030055F8[0])
-            x = gUnk_030055F8[0];
-        if (x > gUnk_030055F8[1])
-            x = gUnk_030055F8[1];
-        if (y < gUnk_030055F8[2])
-            y = gUnk_030055F8[2];
-        if (y > gUnk_030055F8[3])
-            y = gUnk_030055F8[3];
-        c = gUnk_030055D0;
-        c[gUnk_03002360].x = x;
-        c[gUnk_03002360].y = y;
-        gUnk_03005614 = x << 16;
-        gUnk_03005634 = y << 16;
-        gUnk_03002158[0] = x - 120;
-        gUnk_03002158[1] = x - 120 + 240;
-        gUnk_03002158[2] = y - 80;
-        gUnk_03002158[3] = y - 80 + 160;
+        x = gCameraFocusX;
+        y = gCameraFocusY;
+        if (x < gCameraBounds[0])
+            x = gCameraBounds[0];
+        if (x > gCameraBounds[1])
+            x = gCameraBounds[1];
+        if (y < gCameraBounds[2])
+            y = gCameraBounds[2];
+        if (y > gCameraBounds[3])
+            y = gCameraBounds[3];
+        c = gPlayerCameraPos;
+        c[gLocalPlayer].x = x;
+        c[gLocalPlayer].y = y;
+        gCameraCenterX = x << 16;
+        gCameraCenterY = y << 16;
+        gViewRect[0] = x - 120;
+        gViewRect[1] = x - 120 + 240;
+        gViewRect[2] = y - 80;
+        gViewRect[3] = y - 80 + 160;
     }
     else
     {
         s32 i;
 
-        x = gUnk_03002790[gUnk_02007D38].unk48;
-        y = gUnk_03002790[gUnk_02007D38].unk4A;
-        if (x < gUnk_030055F8[0])
-            x = gUnk_030055F8[0];
-        if (x > gUnk_030055F8[1])
-            x = gUnk_030055F8[1];
-        if (y < gUnk_030055F8[2])
-            y = gUnk_030055F8[2];
-        if (y > gUnk_030055F8[3])
-            y = gUnk_030055F8[3];
+        x = gTasks[gUnk_02007D38].unk48;
+        y = gTasks[gUnk_02007D38].unk4A;
+        if (x < gCameraBounds[0])
+            x = gCameraBounds[0];
+        if (x > gCameraBounds[1])
+            x = gCameraBounds[1];
+        if (y < gCameraBounds[2])
+            y = gCameraBounds[2];
+        if (y > gCameraBounds[3])
+            y = gCameraBounds[3];
         /* indexed as a u16[][2] here: the struct spelling (.x/.y) gives the
            loop one address giv and reorders the hoisted rectangle sums */
-        for (i = 0; i < gUnk_030023AC; i++)
+        for (i = 0; i < gPlayerCount; i++)
         {
-            ((u16 (*)[2])gUnk_030055D0)[i][0] = x;
-            ((u16 (*)[2])gUnk_030055D0)[i][1] = y;
+            ((u16 (*)[2])gPlayerCameraPos)[i][0] = x;
+            ((u16 (*)[2])gPlayerCameraPos)[i][1] = y;
         }
-        gUnk_03005614 = x << 16;
-        gUnk_03005634 = y << 16;
-        gUnk_03002158[0] = x - 120;
-        gUnk_03002158[1] = x + 120;
-        gUnk_03002158[2] = y - 80;
-        gUnk_03002158[3] = y + 80;
+        gCameraCenterX = x << 16;
+        gCameraCenterY = y << 16;
+        gViewRect[0] = x - 120;
+        gViewRect[1] = x + 120;
+        gViewRect[2] = y - 80;
+        gViewRect[3] = y + 80;
     }
 }
 
@@ -231,407 +231,407 @@ void sub_0802c7f4(void)
 {
     s32 x, y;
 
-    if (gUnk_030023AC == 1)
+    if (gPlayerCount == 1)
     {
-        x = gUnk_030023CC;
-        y = gUnk_03002388;
-        if (x < gUnk_030055F8[0])
-            x = gUnk_030055F8[0];
-        if (x > gUnk_030055F8[1])
-            x = gUnk_030055F8[1];
-        if (y < gUnk_030055F8[2])
-            y = gUnk_030055F8[2];
-        if (y > gUnk_030055F8[3])
-            y = gUnk_030055F8[3];
-        if (gUnk_0300560C[gUnk_03002360] == 2)
+        x = gCameraFocusX;
+        y = gCameraFocusY;
+        if (x < gCameraBounds[0])
+            x = gCameraBounds[0];
+        if (x > gCameraBounds[1])
+            x = gCameraBounds[1];
+        if (y < gCameraBounds[2])
+            y = gCameraBounds[2];
+        if (y > gCameraBounds[3])
+            y = gCameraBounds[3];
+        if (gPlayerCameraMode[gLocalPlayer] == 2)
         {
-            if (x == gUnk_030055D0[gUnk_03002360].x && y == gUnk_030055D0[gUnk_03002360].y)
+            if (x == gPlayerCameraPos[gLocalPlayer].x && y == gPlayerCameraPos[gLocalPlayer].y)
             {
-                gUnk_0300560C[gUnk_03002360] = 0;
+                gPlayerCameraMode[gLocalPlayer] = 0;
             }
             else
             {
-                if (x < gUnk_030055D0[gUnk_03002360].x)
+                if (x < gPlayerCameraPos[gLocalPlayer].x)
                 {
-                    gUnk_030055D0[gUnk_03002360].x -= 3;
-                    if (gUnk_030055D0[gUnk_03002360].x < x)
-                        gUnk_030055D0[gUnk_03002360].x = x;
+                    gPlayerCameraPos[gLocalPlayer].x -= 3;
+                    if (gPlayerCameraPos[gLocalPlayer].x < x)
+                        gPlayerCameraPos[gLocalPlayer].x = x;
                 }
                 else
                 {
-                    gUnk_030055D0[gUnk_03002360].x += 3;
-                    if (x < gUnk_030055D0[gUnk_03002360].x)
-                        gUnk_030055D0[gUnk_03002360].x = x;
+                    gPlayerCameraPos[gLocalPlayer].x += 3;
+                    if (x < gPlayerCameraPos[gLocalPlayer].x)
+                        gPlayerCameraPos[gLocalPlayer].x = x;
                 }
-                if (y < gUnk_030055D0[gUnk_03002360].y)
+                if (y < gPlayerCameraPos[gLocalPlayer].y)
                 {
-                    gUnk_030055D0[gUnk_03002360].y -= 3;
-                    if (gUnk_030055D0[gUnk_03002360].y < y)
-                        gUnk_030055D0[gUnk_03002360].y = y;
+                    gPlayerCameraPos[gLocalPlayer].y -= 3;
+                    if (gPlayerCameraPos[gLocalPlayer].y < y)
+                        gPlayerCameraPos[gLocalPlayer].y = y;
                 }
                 else
                 {
-                    gUnk_030055D0[gUnk_03002360].y += 3;
-                    if (y < gUnk_030055D0[gUnk_03002360].y)
-                        gUnk_030055D0[gUnk_03002360].y = y;
+                    gPlayerCameraPos[gLocalPlayer].y += 3;
+                    if (y < gPlayerCameraPos[gLocalPlayer].y)
+                        gPlayerCameraPos[gLocalPlayer].y = y;
                 }
             }
-            x = gUnk_030055D0[gUnk_03002360].x;
-            y = gUnk_030055D0[gUnk_03002360].y;
+            x = gPlayerCameraPos[gLocalPlayer].x;
+            y = gPlayerCameraPos[gLocalPlayer].y;
         }
         else
         {
-            gUnk_030055D0[gUnk_03002360].x = x;
-            gUnk_030055D0[gUnk_03002360].y = y;
+            gPlayerCameraPos[gLocalPlayer].x = x;
+            gPlayerCameraPos[gLocalPlayer].y = y;
         }
-        gUnk_03005614 = x << 16;
-        gUnk_03005634 = y << 16;
-        gUnk_03002158[0] = x - 120;
-        gUnk_03002158[1] = x - 120 + 240;
-        gUnk_03002158[2] = y - 80;
-        gUnk_03002158[3] = y - 80 + 160;
+        gCameraCenterX = x << 16;
+        gCameraCenterY = y << 16;
+        gViewRect[0] = x - 120;
+        gViewRect[1] = x - 120 + 240;
+        gViewRect[2] = y - 80;
+        gViewRect[3] = y - 80 + 160;
     }
     else
     {
         s32 i;
 
         sub_0802a340();
-        for (i = 0; i < gUnk_030023AC; i++)
+        for (i = 0; i < gPlayerCount; i++)
         {
-            if ((gUnk_03002340 >> i) & 1)
+            if ((gActivePlayerMask >> i) & 1)
             {
-                x = gUnk_03002790[i].unk48;
-                y = gUnk_03002790[i].unk4A;
-                if (x < gUnk_030055F8[0])
-                    x = gUnk_030055F8[0];
-                if (gUnk_030055F8[1] < x)
-                    x = gUnk_030055F8[1];
-                if (y < gUnk_030055F8[2])
-                    y = gUnk_030055F8[2];
-                if (gUnk_030055F8[3] < y)
-                    y = gUnk_030055F8[3];
-                if (gUnk_0300560C[i] == 2)
+                x = gTasks[i].unk48;
+                y = gTasks[i].unk4A;
+                if (x < gCameraBounds[0])
+                    x = gCameraBounds[0];
+                if (gCameraBounds[1] < x)
+                    x = gCameraBounds[1];
+                if (y < gCameraBounds[2])
+                    y = gCameraBounds[2];
+                if (gCameraBounds[3] < y)
+                    y = gCameraBounds[3];
+                if (gPlayerCameraMode[i] == 2)
                 {
-                    if (x == gUnk_030055D0[i].x && y == gUnk_030055D0[i].y)
+                    if (x == gPlayerCameraPos[i].x && y == gPlayerCameraPos[i].y)
                     {
-                        gUnk_0300560C[i] = 0;
+                        gPlayerCameraMode[i] = 0;
                     }
                     else
                     {
-                        if (x < gUnk_030055D0[i].x)
+                        if (x < gPlayerCameraPos[i].x)
                         {
-                            gUnk_030055D0[i].x -= 3;
-                            if (gUnk_030055D0[i].x < x)
-                                gUnk_030055D0[i].x = x;
+                            gPlayerCameraPos[i].x -= 3;
+                            if (gPlayerCameraPos[i].x < x)
+                                gPlayerCameraPos[i].x = x;
                         }
                         else
                         {
-                            gUnk_030055D0[i].x += 3;
-                            if (x < gUnk_030055D0[i].x)
-                                gUnk_030055D0[i].x = x;
+                            gPlayerCameraPos[i].x += 3;
+                            if (x < gPlayerCameraPos[i].x)
+                                gPlayerCameraPos[i].x = x;
                         }
-                        if (y < gUnk_030055D0[i].y)
+                        if (y < gPlayerCameraPos[i].y)
                         {
-                            gUnk_030055D0[i].y -= 3;
-                            if (gUnk_030055D0[i].y < y)
-                                gUnk_030055D0[i].y = y;
+                            gPlayerCameraPos[i].y -= 3;
+                            if (gPlayerCameraPos[i].y < y)
+                                gPlayerCameraPos[i].y = y;
                         }
                         else
                         {
-                            gUnk_030055D0[i].y += 3;
-                            if (y < gUnk_030055D0[i].y)
-                                gUnk_030055D0[i].y = y;
+                            gPlayerCameraPos[i].y += 3;
+                            if (y < gPlayerCameraPos[i].y)
+                                gPlayerCameraPos[i].y = y;
                         }
                     }
                 }
                 else
                 {
-                    gUnk_030055D0[i].x = x;
-                    gUnk_030055D0[i].y = y;
+                    gPlayerCameraPos[i].x = x;
+                    gPlayerCameraPos[i].y = y;
                 }
             }
             else
             {
-                x = gUnk_030055F4[0];
-                if (x < gUnk_030055F8[0])
-                    x = gUnk_030055F8[0];
-                if (gUnk_030055F8[1] < x)
-                    x = gUnk_030055F8[1];
-                if (gUnk_0300560C[i] == 2)
+                x = gPlayerGroupCenter[0];
+                if (x < gCameraBounds[0])
+                    x = gCameraBounds[0];
+                if (gCameraBounds[1] < x)
+                    x = gCameraBounds[1];
+                if (gPlayerCameraMode[i] == 2)
                 {
-                    if (x == gUnk_030055D0[i].x)
+                    if (x == gPlayerCameraPos[i].x)
                     {
-                        gUnk_0300560C[i] = 3;
+                        gPlayerCameraMode[i] = 3;
                     }
-                    else if (x < gUnk_030055D0[i].x)
+                    else if (x < gPlayerCameraPos[i].x)
                     {
-                        gUnk_030055D0[i].x -= 3;
-                        if (gUnk_030055D0[i].x < x)
-                            gUnk_030055D0[i].x = x;
+                        gPlayerCameraPos[i].x -= 3;
+                        if (gPlayerCameraPos[i].x < x)
+                            gPlayerCameraPos[i].x = x;
                     }
                     else
                     {
-                        gUnk_030055D0[i].x += 3;
-                        if (x < gUnk_030055D0[i].x)
-                            gUnk_030055D0[i].x = x;
+                        gPlayerCameraPos[i].x += 3;
+                        if (x < gPlayerCameraPos[i].x)
+                            gPlayerCameraPos[i].x = x;
                     }
                 }
                 else
                 {
-                    gUnk_030055D0[i].x = x;
+                    gPlayerCameraPos[i].x = x;
                 }
             }
         }
-        x = gUnk_030055D0[gUnk_03002360].x;
-        y = gUnk_030055D0[gUnk_03002360].y;
-        gUnk_03005614 = x << 16;
-        gUnk_03005634 = y << 16;
-        sub_0802a4ec();
+        x = gPlayerCameraPos[gLocalPlayer].x;
+        y = gPlayerCameraPos[gLocalPlayer].y;
+        gCameraCenterX = x << 16;
+        gCameraCenterY = y << 16;
+        SetViewRectToPlayers();
     }
 }
 
-void sub_0802cab0(void)
+void CameraSnapBoundsToAnchor(void)
 {
     s32 x, y, i;
 
-    if (gUnk_03002350)
+    if (gActivePlayerCount)
     {
-        x = gUnk_03002398;
-        y = gUnk_03001F00;
-        if (x < gUnk_03005628[0])
-            x = gUnk_03005628[0];
-        if (x > gUnk_03005628[1])
-            x = gUnk_03005628[1];
-        if (y < gUnk_03005628[2])
-            y = gUnk_03005628[2];
-        if (y > gUnk_03005628[3])
-            y = gUnk_03005628[3];
-        gUnk_030055F8[0] = gUnk_030055F8[1] = x;
-        gUnk_030055F8[2] = gUnk_030055F8[3] = y;
-        for (i = 0; i < gUnk_030023AC; i++)
+        x = gCameraAnchorX;
+        y = gCameraAnchorY;
+        if (x < gRoomBounds[0])
+            x = gRoomBounds[0];
+        if (x > gRoomBounds[1])
+            x = gRoomBounds[1];
+        if (y < gRoomBounds[2])
+            y = gRoomBounds[2];
+        if (y > gRoomBounds[3])
+            y = gRoomBounds[3];
+        gCameraBounds[0] = gCameraBounds[1] = x;
+        gCameraBounds[2] = gCameraBounds[3] = y;
+        for (i = 0; i < gPlayerCount; i++)
         {
-            struct CamRect *p = &gUnk_03005640[i];
+            struct CamRect *p = &gPlayerBounds[i];
             p->x0 = x - 117;
             p->x1 = x + 117;
             p->y0 = y - 76;
             p->y1 = y + 104;
         }
-        gUnk_03005614 = x << 16;
-        gUnk_03005634 = y << 16;
-        gUnk_03002158[0] = x - 120;
-        gUnk_03002158[1] = x + 120;
-        gUnk_03002158[2] = y - 80;
-        gUnk_03002158[3] = y + 80;
+        gCameraCenterX = x << 16;
+        gCameraCenterY = y << 16;
+        gViewRect[0] = x - 120;
+        gViewRect[1] = x + 120;
+        gViewRect[2] = y - 80;
+        gViewRect[3] = y + 80;
     }
 }
 
-void sub_0802cbb8(void)
+void CameraSnapPlayersToAnchor(void)
 {
     s32 x, y, i;
 
-    if (gUnk_03002350)
+    if (gActivePlayerCount)
     {
-        x = gUnk_03002398;
-        y = gUnk_03001F00;
-        if (x < gUnk_03005628[0])
-            x = gUnk_03005628[0];
-        if (x > gUnk_03005628[1])
-            x = gUnk_03005628[1];
-        if (y < gUnk_03005628[2])
-            y = gUnk_03005628[2];
-        if (y > gUnk_03005628[3])
-            y = gUnk_03005628[3];
-        for (i = 0; i < gUnk_030023AC; i++)
+        x = gCameraAnchorX;
+        y = gCameraAnchorY;
+        if (x < gRoomBounds[0])
+            x = gRoomBounds[0];
+        if (x > gRoomBounds[1])
+            x = gRoomBounds[1];
+        if (y < gRoomBounds[2])
+            y = gRoomBounds[2];
+        if (y > gRoomBounds[3])
+            y = gRoomBounds[3];
+        for (i = 0; i < gPlayerCount; i++)
         {
-            gUnk_030055D0[i].x = x;
-            gUnk_030055D0[i].y = y;
+            gPlayerCameraPos[i].x = x;
+            gPlayerCameraPos[i].y = y;
         }
-        gUnk_03005614 = x << 16;
-        gUnk_03005634 = y << 16;
-        gUnk_03002158[0] = x - 120;
-        gUnk_03002158[1] = x + 120;
-        gUnk_03002158[2] = y - 80;
-        gUnk_03002158[3] = y + 80;
+        gCameraCenterX = x << 16;
+        gCameraCenterY = y << 16;
+        gViewRect[0] = x - 120;
+        gViewRect[1] = x + 120;
+        gViewRect[2] = y - 80;
+        gViewRect[3] = y + 80;
     }
 }
 
-void sub_0802cc90(void)
+void CameraSnapToFocus(void)
 {
-    s32 x = gUnk_030023CC;
-    s32 y = gUnk_03002388;
+    s32 x = gCameraFocusX;
+    s32 y = gCameraFocusY;
     s32 t;
     struct CamPos *c;
 
-    if (x < gUnk_030055F8[0])
-        x = gUnk_030055F8[0];
-    if (x > gUnk_030055F8[1])
-        x = gUnk_030055F8[1];
-    if (y < gUnk_030055F8[2])
-        y = gUnk_030055F8[2];
-    if (y > gUnk_030055F8[3])
-        y = gUnk_030055F8[3];
-    c = gUnk_030055D0;
-    c[gUnk_03002360].x = x;
-    c[gUnk_03002360].y = y;
-    gUnk_03005614 = x << 16;
-    gUnk_03005634 = y << 16;
-    gUnk_03002158[0] = x - 120;
-    gUnk_03002158[1] = x - 120 + 240;
-    gUnk_03002158[2] = y - 80;
-    gUnk_03002158[3] = y - 80 + 160;
+    if (x < gCameraBounds[0])
+        x = gCameraBounds[0];
+    if (x > gCameraBounds[1])
+        x = gCameraBounds[1];
+    if (y < gCameraBounds[2])
+        y = gCameraBounds[2];
+    if (y > gCameraBounds[3])
+        y = gCameraBounds[3];
+    c = gPlayerCameraPos;
+    c[gLocalPlayer].x = x;
+    c[gLocalPlayer].y = y;
+    gCameraCenterX = x << 16;
+    gCameraCenterY = y << 16;
+    gViewRect[0] = x - 120;
+    gViewRect[1] = x - 120 + 240;
+    gViewRect[2] = y - 80;
+    gViewRect[3] = y - 80 + 160;
 }
 
-void sub_0802cd24(void)
+void StopScreenShake(void)
 {
-    gUnk_03005670.unk0 = 0;
-    gUnk_03005670.unk2 = 0;
-    gUnk_03005670.unk4 = 0;
-    gUnk_03005670.unk6 = 0;
+    gScreenShake.unk0 = 0;
+    gScreenShake.unk2 = 0;
+    gScreenShake.unk4 = 0;
+    gScreenShake.unk6 = 0;
 }
 
-void sub_0802cd38(void)
+void UpdateScreenShake(void)
 {
     u16 *p;
 
-    if (gUnk_03005670.unk0 != 0)
+    if (gScreenShake.unk0 != 0)
     {
-        p = gUnk_08732880[gUnk_03005670.unk0];
-        switch (p[gUnk_03005670.unk6 * 2])
+        p = gScreenShakePatterns[gScreenShake.unk0];
+        switch (p[gScreenShake.unk6 * 2])
         {
         case 0x8000:
-            gUnk_03005670.unk0 = 0;
-            gUnk_03005670.unk2 = 0;
-            gUnk_03005670.unk4 = 0;
-            gUnk_03005670.unk6 = 0;
+            gScreenShake.unk0 = 0;
+            gScreenShake.unk2 = 0;
+            gScreenShake.unk4 = 0;
+            gScreenShake.unk6 = 0;
             return;
         case 0x9999:
-            gUnk_03005670.unk6 = 0;
+            gScreenShake.unk6 = 0;
         }
-        gUnk_03005670.unk2 = p[gUnk_03005670.unk6 * 2];
-        gUnk_03005670.unk4 = p[gUnk_03005670.unk6 * 2 + 1];
-        gUnk_03005670.unk6++;
+        gScreenShake.unk2 = p[gScreenShake.unk6 * 2];
+        gScreenShake.unk4 = p[gScreenShake.unk6 * 2 + 1];
+        gScreenShake.unk6++;
     }
 }
 
-void sub_0802cda0(s32 x0, s32 x1, s32 y0, s32 y1)
+void StartScrollLock(s32 x0, s32 x1, s32 y0, s32 y1)
 {
     u8 flags = 0;
     s32 mid;
 
     if (x0 != 0xFFFF && x1 != 0xFFFF)
     {
-        gUnk_03005680.unk2 = x0 + 120;
-        gUnk_03005680.unk4 = x1 - 120;
-        if (gUnk_03005680.unk2 < gUnk_03005628[0])
-            gUnk_03005680.unk2 = gUnk_03005628[0];
-        if (gUnk_03005628[1] < gUnk_03005680.unk4)
-            gUnk_03005680.unk4 = gUnk_03005628[1];
+        gScrollLock.unk2 = x0 + 120;
+        gScrollLock.unk4 = x1 - 120;
+        if (gScrollLock.unk2 < gRoomBounds[0])
+            gScrollLock.unk2 = gRoomBounds[0];
+        if (gRoomBounds[1] < gScrollLock.unk4)
+            gScrollLock.unk4 = gRoomBounds[1];
         flags = 1;
-        mid = (gUnk_03005680.unk2 + gUnk_03005680.unk4) >> 1;
-        if (gUnk_03005680.unkA <= mid)
+        mid = (gScrollLock.unk2 + gScrollLock.unk4) >> 1;
+        if (gScrollLock.unkA <= mid)
         {
-            gUnk_03005610 = 2;
-            gUnk_030055F8[1] = gUnk_03005680.unk4;
+            gScrollLockSpeedX = 2;
+            gCameraBounds[1] = gScrollLock.unk4;
         }
         else
         {
-            gUnk_03005610 = -2;
-            gUnk_030055F8[0] = gUnk_03005680.unk2;
+            gScrollLockSpeedX = -2;
+            gCameraBounds[0] = gScrollLock.unk2;
         }
     }
     else
     {
-        gUnk_03005680.unk2 = 0xFFFF;
-        gUnk_03005680.unk4 = -1;
-        gUnk_03005610 = 0;
+        gScrollLock.unk2 = 0xFFFF;
+        gScrollLock.unk4 = -1;
+        gScrollLockSpeedX = 0;
     }
     if (y0 != 0xFFFF && y1 != 0xFFFF)
     {
-        gUnk_03005680.unk6 = y0 + 80;
-        gUnk_03005680.unk8 = y1 - 80;
-        if (gUnk_03005680.unk6 < gUnk_03005628[2])
-            gUnk_03005680.unk6 = gUnk_03005628[2];
-        if (gUnk_03005680.unk8 > gUnk_03005628[3])
-            gUnk_03005680.unk8 = gUnk_03005628[3];
+        gScrollLock.unk6 = y0 + 80;
+        gScrollLock.unk8 = y1 - 80;
+        if (gScrollLock.unk6 < gRoomBounds[2])
+            gScrollLock.unk6 = gRoomBounds[2];
+        if (gScrollLock.unk8 > gRoomBounds[3])
+            gScrollLock.unk8 = gRoomBounds[3];
         flags |= 2;
-        mid = (gUnk_03005680.unk6 + gUnk_03005680.unk8) >> 1;
-        if (gUnk_03005680.unkC <= mid)
+        mid = (gScrollLock.unk6 + gScrollLock.unk8) >> 1;
+        if (gScrollLock.unkC <= mid)
         {
-            gUnk_03005664 = 1;
-            gUnk_030055F8[3] = gUnk_03005680.unk8;
+            gScrollLockSpeedY = 1;
+            gCameraBounds[3] = gScrollLock.unk8;
         }
         else
         {
-            gUnk_03005664 = -1;
-            gUnk_030055F8[2] = gUnk_03005680.unk6;
+            gScrollLockSpeedY = -1;
+            gCameraBounds[2] = gScrollLock.unk6;
         }
     }
     else
     {
-        gUnk_03005680.unk6 = 0xFFFF;
-        gUnk_03005680.unk8 = -1;
-        gUnk_03005664 = 0;
+        gScrollLock.unk6 = 0xFFFF;
+        gScrollLock.unk8 = -1;
+        gScrollLockSpeedY = 0;
     }
     if (flags != 0)
     {
-        gUnk_030055C0 = 2;
-        gUnk_03005680.unk1 = flags;
-        gUnk_03005680.unk0 = 0;
-        if (gUnk_030023AC == 1)
+        gCameraMode = 2;
+        gScrollLock.unk1 = flags;
+        gScrollLock.unk0 = 0;
+        if (gPlayerCount == 1)
         {
             if (flags & 1)
             {
                 struct CamRect *b;
 
-                if (gUnk_03005610 > 0)
+                if (gScrollLockSpeedX > 0)
                 {
-                    gUnk_030055F8[0] = gUnk_030055D0[gUnk_03002360].x;
-                    gUnk_030055F8[1] = gUnk_03005680.unk4;
+                    gCameraBounds[0] = gPlayerCameraPos[gLocalPlayer].x;
+                    gCameraBounds[1] = gScrollLock.unk4;
                 }
                 else
                 {
-                    gUnk_030055F8[0] = gUnk_03005680.unk2;
-                    gUnk_030055F8[1] = gUnk_030055D0[gUnk_03002360].x;
+                    gCameraBounds[0] = gScrollLock.unk2;
+                    gCameraBounds[1] = gPlayerCameraPos[gLocalPlayer].x;
                 }
-                b = gUnk_03005640;
-                b[gUnk_03002360].x0 = gUnk_030055F8[0] - 117;
-                b[gUnk_03002360].x1 = gUnk_030055F8[1] + 117;
+                b = gPlayerBounds;
+                b[gLocalPlayer].x0 = gCameraBounds[0] - 117;
+                b[gLocalPlayer].x1 = gCameraBounds[1] + 117;
             }
-            if (gUnk_03005680.unk1 & 2)
+            if (gScrollLock.unk1 & 2)
             {
                 struct CamRect *b;
 
-                if (gUnk_03005664 > 0)
+                if (gScrollLockSpeedY > 0)
                 {
-                    s16 *d = gUnk_030055F8;
-                    struct CamPos *c = gUnk_030055D0;
+                    s16 *d = gCameraBounds;
+                    struct CamPos *c = gPlayerCameraPos;
 
-                    d[2] = c[gUnk_03002360].y;
-                    gUnk_030055F8[3] = gUnk_03005680.unk8;
+                    d[2] = c[gLocalPlayer].y;
+                    gCameraBounds[3] = gScrollLock.unk8;
                 }
                 else
                 {
                     struct CamPos *c;
 
-                    gUnk_030055F8[2] = gUnk_03005680.unk6;
-                    c = gUnk_030055D0;
-                    gUnk_030055F8[3] = c[gUnk_03002360].y;
+                    gCameraBounds[2] = gScrollLock.unk6;
+                    c = gPlayerCameraPos;
+                    gCameraBounds[3] = c[gLocalPlayer].y;
                 }
-                b = gUnk_03005640;
-                b[gUnk_03002360].y0 = gUnk_030055F8[2] - 76;
-                b[gUnk_03002360].y1 = gUnk_030055F8[3] + 104;
+                b = gPlayerBounds;
+                b[gLocalPlayer].y0 = gCameraBounds[2] - 76;
+                b[gLocalPlayer].y1 = gCameraBounds[3] + 104;
             }
         }
         else
         {
             sub_0802a63c();
-            if (gUnk_03005680.unk1 & 1)
-                gUnk_030055D0[gUnk_030023AC].x = gUnk_03005680.unkA;
-            if (gUnk_03005680.unk1 & 2)
+            if (gScrollLock.unk1 & 1)
+                gPlayerCameraPos[gPlayerCount].x = gScrollLock.unkA;
+            if (gScrollLock.unk1 & 2)
             {
-                struct CamPos *c = gUnk_030055D0;
+                struct CamPos *c = gPlayerCameraPos;
 
-                c[gUnk_030023AC].y = gUnk_03005680.unkC;
+                c[gPlayerCount].y = gScrollLock.unkC;
             }
         }
     }

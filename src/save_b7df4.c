@@ -24,17 +24,17 @@ struct SaveSlot
     /*0x74*/ u8 filler74[0x8C];
 };
 
-extern u16 gUnk_02006068[];
-extern struct SaveSlot gUnk_0200E600[];
-extern s32 gUnk_03001EA8;
-extern u16 gUnk_030023AC;
+extern u16 gHudClock[];
+extern struct SaveSlot gSaveSlots[];
+extern s32 gSramAvailable;
+extern u16 gPlayerCount;
 
-s32 sub_080b7a9c(s32 a);
-void sub_080b7d94(s32 a);
-u32 sub_080b7dd0(s32 a);
-u32 sub_080b7df4(s32 a);
+s32 WriteSaveSlot(s32 a);
+void ClearSaveSlot(s32 a);
+u32 CalcSaveSlotChecksum(s32 a);
+u32 UpdateSaveSlotChecksum(s32 a);
 
-u32 sub_080b7df4(s32 a)
+u32 UpdateSaveSlotChecksum(s32 a)
 {
-    gUnk_0200E600[a].unk70 = sub_080b7dd0(a);
+    gSaveSlots[a].unk70 = CalcSaveSlotChecksum(a);
 }

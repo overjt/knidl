@@ -2,58 +2,58 @@
 #include "global.h"
 #include "task.h"
 
-extern void (*gUnk_0300003C)(void);
-extern u8 gUnk_0200B040;
-extern u8 gUnk_02016490;
-extern s32 gUnk_02016494;
-extern u16 gUnk_02016860;
+extern void (*gFrameCallback)(void);
+extern u8 gHBlankScrollStarted;
+extern u8 gHBlankScrollState;
+extern s32 gHBlankScrollTimer;
+extern u16 gHBlankScrollEffect;
 
-void sub_080b60e8(void);
-void sub_080b6a90(void);
+void UpdateHBlankScroll(void);
+void UpdateRoomHBlankScroll(void);
 
-void sub_080b6e44(void)
+void ResetHBlankScroll(void)
 {
-    gUnk_0300003C = NULL;
-    gUnk_02016494 = 0;
+    gFrameCallback = NULL;
+    gHBlankScrollTimer = 0;
     REG_DMA0CNT_H = 0;
 }
-void sub_080b6e60(void)
+void StopHBlankScroll(void)
 {
-    gUnk_02016490 = 2;
+    gHBlankScrollState = 2;
 }
-void sub_080b6e6c(s32 a)
+void StartHBlankScroll(s32 a)
 {
-    gUnk_02016494 = 0;
-    gUnk_02016490 = 1;
-    gUnk_02016860 = a;
-    gUnk_0300003C = sub_080b60e8;
-    gUnk_0200B040 = 1;
+    gHBlankScrollTimer = 0;
+    gHBlankScrollState = 1;
+    gHBlankScrollEffect = a;
+    gFrameCallback = UpdateHBlankScroll;
+    gHBlankScrollStarted = 1;
 }
-void sub_080b6ea0(s32 a)
+void StartRoomHBlankScroll(s32 a)
 {
-    gUnk_02016494 = 0;
-    gUnk_02016490 = 1;
-    gUnk_02016860 = a;
-    gUnk_0300003C = sub_080b6a90;
-    gUnk_0200B040 = 1;
+    gHBlankScrollTimer = 0;
+    gHBlankScrollState = 1;
+    gHBlankScrollEffect = a;
+    gFrameCallback = UpdateRoomHBlankScroll;
+    gHBlankScrollStarted = 1;
 }
-void sub_080b6ed4(void)
+void HoldHBlankScroll(void)
 {
-    if (gUnk_0200B040 != 0)
-        gUnk_02016490 = 3;
+    if (gHBlankScrollStarted != 0)
+        gHBlankScrollState = 3;
 }
-void sub_080b6eec(void)
+void SuspendHBlankScroll(void)
 {
-    if (gUnk_0200B040 != 0)
-        gUnk_0300003C = NULL;
+    if (gHBlankScrollStarted != 0)
+        gFrameCallback = NULL;
 }
-void sub_080b6f04(void)
+void RestoreRoomHBlankScroll(void)
 {
-    if (gUnk_0200B040 != 0)
-        gUnk_0300003C = sub_080b6a90;
+    if (gHBlankScrollStarted != 0)
+        gFrameCallback = UpdateRoomHBlankScroll;
 }
-void sub_080b6f20(void)
+void ResumeHBlankScroll(void)
 {
-    if (gUnk_0200B040 != 0)
-        gUnk_02016490 = 1;
+    if (gHBlankScrollStarted != 0)
+        gHBlankScrollState = 1;
 }

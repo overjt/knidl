@@ -8,7 +8,7 @@
  *
  * `struct Task` is the 0x90-byte task control block first mapped in issue #32
  * (`src/early_58e4.c`, `src/early_5d9c.c`); the 64-entry table lives at
- * gUnk_03002790 and gUnk_03002490 points at the task that is currently
+ * gTasks and gCurTask points at the task that is currently
  * running.  `struct Actor` is the larger per-task actor record hanging off
  * Task.unk8C that module M17 (issue #65) is the field API for, and
  * `struct ActorDef` is the ROM descriptor an actor is bound to
@@ -212,7 +212,7 @@ struct AnimCmd
     /*0x02*/ s16 unk02;
 };
 
-/* 116-byte per-player record at gUnk_03002170 (0x08064EB8); Task.unk88 points
+/* 116-byte per-player record at gPlayerStates (0x08064EB8); Task.unk88 points
    at the record of the player the task belongs to (0x08064EB8). */
 struct PlayerState
 {
@@ -296,7 +296,7 @@ struct PlayerState
        starts (issue #83); they were inside filler62 before M11 named them. */
     /*0x64*/ u32 unk64;
     /*0x68*/ u32 unk68;
-    /* M11 keeps &gUnk_02005550[unk00] here and clears it to 0 (issue #85). */
+    /* M11 keeps &gPlayerHitBoxSets[unk00] here and clears it to 0 (issue #85). */
     /*0x6C*/ void *unk6C;
     /*0x70*/ u32 *unk70;
 };
@@ -317,8 +317,8 @@ struct ActorSpawn
 
 /* Axis-aligned box the actor overlap helpers take (0x08063E2C).
  *
- * INCOMPLETE MODEL - read this before declaring a caller of sub_08063E2C or
- * sub_08063F00.  Four separate `s16` fields are what the CALLEE reads (that is
+ * INCOMPLETE MODEL - read this before declaring a caller of TaskIsInRect or
+ * TaskIsNearestPlayerInRect.  Four separate `s16` fields are what the CALLEE reads (that is
  * how src/actor_63698.c matches), but a caller that fills the box in the
  * caller's own stack frame does NOT necessarily see this type: M22 (issue #69)
  * has three of them (sub_08083020, sub_08083488, sub_08083fbc) where the ROM
@@ -342,7 +342,7 @@ struct Rect
 };
 
 /* Two 16.16-packed points, laid out as four 16-bit fields (0x08063BD4).
- * Also the shape every M22 caller of the sub_08063E2C / sub_08063F00 overlap
+ * Also the shape every M22 caller of the TaskIsInRect / TaskIsNearestPlayerInRect overlap
  * helpers passes them - see the note on struct Rect above. */
 struct PointPair
 {
@@ -352,8 +352,8 @@ struct PointPair
     u32 y1:16;
 };
 
-extern struct Task *gUnk_03002490;
-extern struct Task gUnk_03002790[];
+extern struct Task *gCurTask;
+extern struct Task gTasks[];
 extern vs32 gCurTaskIdx;
 
 #endif // GUARD_TASK_H

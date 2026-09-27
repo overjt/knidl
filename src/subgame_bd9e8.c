@@ -16,16 +16,16 @@
 #include "global.h"
 #include "task.h"
 
-extern u8 gUnk_02007D2C;
+extern u8 gSubGamePhase;
 extern u8 gUnk_0200AF10;
 extern u8 gUnk_0200AFF0;
 extern u8 gUnk_0200B044[];
 extern u32 gUnk_08756568[];
 
-void sub_08002e98(u32 a, u32 b, u32 *c);
-void sub_08006138(void);
+void CallTableEntry(u32 a, u32 b, u32 *c);
+void TaskSleepForever(void);
 
-void sub_080bd9e8(void)
+void BombRallyInit(void)
 {
     gUnk_0200AFF0 = 0;
     gUnk_0200AF10 = 0;
@@ -35,8 +35,8 @@ void sub_080bd9e8(void)
     gUnk_0200B044[0] = 3;
 }
 
-void sub_080bda0c(void)
+void BombRallyMain(void)
 {
-    sub_08002e98(gUnk_02007D2C, 2, gUnk_08756568);
-    sub_08006138();
+    CallTableEntry(gSubGamePhase, 2, gUnk_08756568);
+    TaskSleepForever();
 }

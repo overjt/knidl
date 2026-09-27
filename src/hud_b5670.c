@@ -4,7 +4,7 @@
 
 /* hud_b5670.c (0x080B5670-0x080B583F, issue #97).
  *
- * Graphics loader for one object of the room's object list gUnk_020055D8
+ * Graphics loader for one object of the room's object list gRoomObjectList
  * (called by src/hud_b4ea8.c's sub_080b4ea8 for every kind-1 entry, which
  * counts the return values): e is the entry, idx its index in the list and n
  * the next free graphics slot of gUnk_020060A0.  If an earlier kind-1 entry
@@ -14,7 +14,7 @@
  * copies the descriptor's tiles (through gUnk_02020000 when compressed), then
  * shares the palette of an earlier slot in the same palette group
  * gUnk_0873EF48[kind] or allocates one (sub_080b5654) and copies it into the
- * palette buffer gUnk_03001470; a non-zero high nibble of e->unk2 is passed
+ * palette buffer gObjPalette; a non-zero high nibble of e->unk2 is passed
  * to sub_08065dbc with the slot's palette.  It returns 1.
  *
  * Matching notes (issue #97): sub_08065dbc takes three arguments; the VRAM
@@ -56,16 +56,16 @@ struct Unk020060A0
     /*0x02*/ s16 unk2;
 };
 
-extern struct Unk020055D8 gUnk_020055D8;
+extern struct Unk020055D8 gRoomObjectList;
 extern struct Unk020060A0 gUnk_020060A0[];
 extern s8 gUnk_02006130[];
 extern u8 gUnk_02020000[];
-extern u8 gUnk_03001470[];
-extern u8 gUnk_06010000[];
+extern u8 gObjPalette[];
+extern u8 gObjVram[];
 extern struct Unk0873EEA0 *gUnk_0873EEA0[];
 extern s8 gUnk_0873EF48[];
 
-void sub_080017e4(u32 mode, u32 src, u32 dst, u32 size);
+void RequestCopy(u32 mode, u32 src, u32 dst, u32 size);
 void sub_08065dbc(u32 slot, u32 sub, u32 level);
 s32 sub_080b5628(u32 a);
 s32 sub_080b5654(u32 a);
@@ -78,15 +78,15 @@ s32 sub_080b5670(struct Unk020055D8Entry *e, s32 idx, s32 n)
     u32 vram;
 
     /* a plain pointer local that global alloc drops: reload rematerialises
-       `ldr r0, =gUnk_06010000` at both uses, which the ROM's reload order
+       `ldr r0, =gObjVram` at both uses, which the ROM's reload order
        needs (lesson 3.258) */
-    vram = (u32)gUnk_06010000;
+    vram = (u32)gObjVram;
     d = gUnk_0873EEA0[e->unk1];
     if (d == NULL)
         return 0;
     for (i = 0; i < idx; i++)
     {
-        if (gUnk_020055D8.unk4[i].unk0 == 1)
+        if (gRoomObjectList.unk4[i].unk0 == 1)
         {
             if (gUnk_02006130[i] != -1
              && gUnk_0873EEA0[gUnk_020060A0[gUnk_02006130[i]].unk0] == d)
@@ -106,11 +106,11 @@ s32 sub_080b5670(struct Unk020055D8Entry *e, s32 idx, s32 n)
         if (d->unk6 != 0)
         {
             LZ77UnCompVram((void *)d->unkC, gUnk_02020000);
-            sub_080017e4(4, (u32)gUnk_02020000, (gUnk_020060A0[n].unk2 << 6) + vram, d->unk2 << 5);
+            RequestCopy(4, (u32)gUnk_02020000, (gUnk_020060A0[n].unk2 << 6) + vram, d->unk2 << 5);
         }
         else
         {
-            sub_080017e4(4, d->unkC, (gUnk_020060A0[n].unk2 << 6) + vram, d->unk2 << 5);
+            RequestCopy(4, d->unkC, (gUnk_020060A0[n].unk2 << 6) + vram, d->unk2 << 5);
         }
     }
     if (d->unk0 != 0)
@@ -120,7 +120,7 @@ s32 sub_080b5670(struct Unk020055D8Entry *e, s32 idx, s32 n)
         {
             for (i = 0; i < n; i++)
             {
-                if (gUnk_020055D8.unk4[i].unk0 == 1
+                if (gRoomObjectList.unk4[i].unk0 == 1
                  && gUnk_0873EF48[gUnk_020060A0[i].unk0] == gUnk_0873EF48[e->unk1])
                 {
                     gUnk_020060A0[n].unk1 = gUnk_020060A0[i].unk1;
@@ -132,7 +132,7 @@ s32 sub_080b5670(struct Unk020055D8Entry *e, s32 idx, s32 n)
         if (cnt == 0)
         {
             gUnk_020060A0[n].unk1 = sub_080b5654(d->unk0);
-            sub_080017e4(2, d->unk8, (u32)gUnk_03001470 + (gUnk_020060A0[n].unk1 << 5), d->unk0 << 5);
+            RequestCopy(2, d->unk8, (u32)gObjPalette + (gUnk_020060A0[n].unk1 << 5), d->unk0 << 5);
         }
         if (e->unk2 >> 4)
             sub_08065dbc(gUnk_020060A0[n].unk1, e->unk1, e->unk2 >> 4);

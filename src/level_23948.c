@@ -9,12 +9,12 @@
  * room-task variants 1 and 2 of task type #3 (sub_08023e34, sub_08023e78)
  * and their per-frame bodies (sub_08023ea0 ... sub_08023fa0).
  * sub_08023948 and sub_08023ca0 build their map in the second buffer
- * gUnk_02006AA0 through sub_08027a6c instead of gUnk_02000040, spawn the
+ * gUnk_02006AA0 through sub_08027a6c instead of gRoomMapBuffer, spawn the
  * door objects and set up the multi-player cameras; sub_08023fd4 loads
- * the fixed room gUnk_087E1D58[8][7][0] with the player at (136, 928) and
+ * the fixed room gRoomTable[8][7][0] with the player at (136, 928) and
  * BGM 1.  Every loader ends with the per-player loop that refills health,
- * rebuilds the player mask gUnk_03002340 and restarts the player tasks
- * (sub_0803d034 and sub_0803d0a0/sub_0803d1c4). */
+ * rebuilds the player mask gActivePlayerMask and restarts the player tasks
+ * (CreatePlayer and InitPlayerState/sub_0803d1c4). */
 
 struct MapCell
 {
@@ -82,105 +82,105 @@ struct RoomDef
 
 extern s8 gUnk_03002444;
 extern s8 gUnk_030023B8;
-extern s8 gUnk_030023EC;
+extern s8 gStageIndex;
 extern u8 gUnk_03001F20;
 extern u8 gUnk_0200AF08;
 extern u8 gUnk_020069F0;
-extern u16 gUnk_030055C0;
-extern struct RoomDef *gUnk_030055EC;
-extern struct RoomDef **gUnk_087E1D58[][8];
-extern s8 gUnk_0300238C;
-extern s8 gUnk_03002468;
+extern u16 gCameraMode;
+extern struct RoomDef *gCurRoomDef;
+extern struct RoomDef **gRoomTable[][8];
+extern s8 gLevelIndex;
+extern s8 gRoomIndex;
 extern s8 gUnk_02007D64;
 extern s8 gUnk_02000000;
-extern s16 gUnk_03005620;
-extern s16 gUnk_0300561C;
-extern s16 gUnk_030055E4;
-extern u16 gUnk_03005600[2];
-extern u16 gUnk_03005608[2];
-extern struct MapCell *gUnk_03005660;
+extern s16 gRoomWidth;
+extern s16 gRoomHeight;
+extern s16 gRoomMetatileCount;
+extern u16 gRoomBorder[2];
+extern u16 gBg3Border[2];
+extern struct MapCell *gRoomMap;
 extern struct MapCell gUnk_02006AA0[];
-extern u8 gUnk_0200B050;
+extern u8 gRoomBgLayout;
 extern s16 *gUnk_0300558C;
 extern s16 gUnk_0873A318[];
 extern u8 gUnk_02005574[];
 extern u8 gUnk_02000020;
 extern u8 gUnk_0200B078;
-extern u8 gUnk_0200B040;
-extern u16 gUnk_03005624;
-extern u8 gUnk_03002340;
-extern u8 gUnk_03002350;
+extern u8 gHBlankScrollStarted;
+extern u16 gRoomUpdateFlags;
+extern u8 gActivePlayerMask;
+extern u8 gActivePlayerCount;
 extern u8 gUnk_0300234C;
-extern u16 gUnk_030023AC;
-extern s16 gUnk_02007D48[];
-extern s16 gUnk_02005588[];
-extern s16 gUnk_02005580;
-extern u16 gUnk_02008008[];
+extern u16 gPlayerCount;
+extern s16 gPlayerLives[];
+extern s16 gPlayerHealth[];
+extern s16 gMaxHealth;
+extern u16 gSavedPlayerAbilities[];
 extern u16 gUnk_02007FA8[];
-extern u16 gUnk_02004B50[];
+extern u16 gPlayerAbilities[];
 extern u16 gUnk_0200AF18[];
-extern u8 gUnk_0300560C[];
-extern vu16 gUnk_03000F98[];
-extern vu16 gUnk_03001EB8[];
-extern u16 gUnk_03002458[];
-extern u16 gUnk_030023C0[];
-extern u16 gUnk_03002360;
-extern u16 gUnk_03005604[2];
-extern struct MapCell gUnk_02000040[];
-extern u16 gUnk_0200B080[];
+extern u8 gPlayerCameraMode[];
+extern vu16 gPlayerHeldKeys[];
+extern vu16 gPlayerPressedKeys[];
+extern u16 gLatchedHeldKeys[];
+extern u16 gLatchedPressedKeys[];
+extern u16 gLocalPlayer;
+extern u16 gCameraPos[2];
+extern struct MapCell gRoomMapBuffer[];
+extern u16 gMetatileTiles[];
 extern u16 gUnk_02007FB0;
-extern s16 gUnk_030023CC;
-extern s16 gUnk_03002388;
+extern s16 gCameraFocusX;
+extern s16 gCameraFocusY;
 
-void sub_080017e4(u32 mode, u32 src, u32 dst, u32 size);
-void sub_080022ac(void);
-s32 sub_08003110(s32 songId);
-void sub_08006138(void);
-void sub_08008c64(u16 a0);
-void sub_08009b2c(s32 i);
-s32 sub_08009e60(s32 a, u32 b);
-void sub_0800a778(void);
-void sub_080235ec(s32 a);
-void sub_080236d4(void);
+void RequestCopy(u32 mode, u32 src, u32 dst, u32 size);
+void ResetTasksAndOam(void);
+s32 PlayBgm(s32 songId);
+void TaskSleepForever(void);
+void LoadGfxSet(u16 a0);
+void HudInit(s32 i);
+s32 AddPlayerLives(s32 a, u32 b);
+void HudUpdateAbilityPanel(void);
+void CreateRoomTask(s32 a);
+void RoomTaskDraw(void);
 s32 sub_08026834(void);
 void sub_08026b60(void);
-void sub_08026ca4(void);
+void UpdateDoors(void);
 void sub_08027a6c(void);
-void sub_08028320(void);
-void sub_0802885c(void);
-void sub_08028948(void);
-void sub_08028b1c(void);
-void sub_08028e4c(void);
+void SpawnDoorObjects(void);
+void CalcBg3Parallax(void);
+void CalcRoomBounds(void);
+void CameraResetBounds(void);
+void SetRoomEntryPoint(void);
 void sub_08029034(void);
-void sub_080290dc(void);
+void CameraInitPos(void);
 void sub_08029194(void);
-void sub_080291d0(void);
-void sub_08029204(void);
-void sub_0802923c(void);
-void sub_08029270(void);
-void sub_08029318(void);
-void sub_08029444(void);
-void sub_08029708(void);
-void sub_080297dc(void);
-void sub_08029930(void);
-void sub_08029a4c(void);
-void sub_08029ab4(void);
-void sub_0802ac30(s32 px, s32 py);
-void sub_0802ad78(s32 px, s32 py);
+void LoadBg2Gfx(void);
+void LoadBg3Gfx(void);
+void ClearBg2Bg3Maps(void);
+void SelectBg3MapShape(void);
+void InitDoors(void);
+void CameraUpdatePosNoParallax(void);
+void StreamBg123Maps(void);
+void StreamBg23Maps(void);
+void CameraWriteScrollParallax(void);
+void CameraWriteScrollBg23(void);
+void CameraWriteScrollBg123(void);
+void DrawBg123View(s32 px, s32 py);
+void DrawBg23View(s32 px, s32 py);
 void sub_0802c550(void);
 void sub_0802c680(void);
 void sub_0802c7f4(void);
-void sub_0802cab0(void);
-void sub_0802cbb8(void);
-void sub_0802cc90(void);
-void sub_0802cd24(void);
-void sub_0802cd38(void);
-void sub_0802d0f4(void);
-void sub_08030724(void);
-void sub_0803d034(s32 a0);
-void sub_0803d0a0(s32 a0);
+void CameraSnapBoundsToAnchor(void);
+void CameraSnapPlayersToAnchor(void);
+void CameraSnapToFocus(void);
+void StopScreenShake(void);
+void UpdateScreenShake(void);
+void LoadRoomBgAnims(void);
+void ResetBlockAnims(void);
+void CreatePlayer(s32 a0);
+void InitPlayerState(s32 a0);
 void sub_0803d1c4(s32 a0);
-void sub_08040788(void);
+void LatchPlayerKeys(void);
 void sub_08023ea0(void);
 void sub_08023efc(void);
 void sub_08023f18(void);
@@ -192,85 +192,85 @@ void sub_08023948(void)
     s32 i;
     u32 a;
 
-    sub_080022ac();
+    ResetTasksAndOam();
     gUnk_03002444 = 1;
-    gUnk_030023B8 = gUnk_030023EC;
+    gUnk_030023B8 = gStageIndex;
     gUnk_03001F20 = 16;
     if (gUnk_0200AF08 != 0 || gUnk_020069F0 == 2)
-        gUnk_030055C0 = 4;
+        gCameraMode = 4;
     else
-        gUnk_030055C0 = 0;
-    sub_08008c64(1);
-    sub_080235ec(1);
-    gUnk_030055EC = gUnk_087E1D58[gUnk_0300238C][gUnk_030023EC][gUnk_03002468];
-    gUnk_02007D64 = gUnk_030055EC->unk57;
-    gUnk_02000000 = gUnk_030055EC->unk55;
-    sub_0802923c();
-    sub_080291d0();
-    sub_08029204();
-    sub_08029270();
-    gUnk_03005620 = gUnk_030055EC->unk14;
-    gUnk_0300561C = gUnk_030055EC->unk16;
-    gUnk_030055E4 = gUnk_03005620 * gUnk_0300561C;
-    gUnk_03005600[0] = gUnk_030055EC->unk24;
-    gUnk_03005600[1] = gUnk_030055EC->unk26;
-    gUnk_03005608[0] = gUnk_030055EC->unk34;
-    gUnk_03005608[1] = gUnk_030055EC->unk36;
-    gUnk_03005660 = gUnk_02006AA0;
+        gCameraMode = 0;
+    LoadGfxSet(1);
+    CreateRoomTask(1);
+    gCurRoomDef = gRoomTable[gLevelIndex][gStageIndex][gRoomIndex];
+    gUnk_02007D64 = gCurRoomDef->unk57;
+    gUnk_02000000 = gCurRoomDef->unk55;
+    ClearBg2Bg3Maps();
+    LoadBg2Gfx();
+    LoadBg3Gfx();
+    SelectBg3MapShape();
+    gRoomWidth = gCurRoomDef->unk14;
+    gRoomHeight = gCurRoomDef->unk16;
+    gRoomMetatileCount = gRoomWidth * gRoomHeight;
+    gRoomBorder[0] = gCurRoomDef->unk24;
+    gRoomBorder[1] = gCurRoomDef->unk26;
+    gBg3Border[0] = gCurRoomDef->unk34;
+    gBg3Border[1] = gCurRoomDef->unk36;
+    gRoomMap = gUnk_02006AA0;
     sub_08027a6c();
-    gUnk_0200B050 = 0;
+    gRoomBgLayout = 0;
     gUnk_0300558C = gUnk_0873A318;
     *gUnk_02005574 = 0;
     gUnk_02000020 = 0;
     gUnk_0200B078 = 0;
-    gUnk_0200B040 = 0;
-    gUnk_03005624 = 31;
-    sub_08030724();
-    sub_0802cd24();
-    sub_0802885c();
-    sub_08028948();
-    sub_08029318();
-    sub_08028e4c();
-    sub_08028320();
+    gHBlankScrollStarted = 0;
+    gRoomUpdateFlags = 31;
+    ResetBlockAnims();
+    StopScreenShake();
+    CalcBg3Parallax();
+    CalcRoomBounds();
+    InitDoors();
+    SetRoomEntryPoint();
+    SpawnDoorObjects();
     sub_08029194();
-    gUnk_03002340 = 0;
-    gUnk_03002350 = 0;
+    gActivePlayerMask = 0;
+    gActivePlayerCount = 0;
     gUnk_0300234C = 0;
-    for (i = 0; i < gUnk_030023AC; i++)
+    for (i = 0; i < gPlayerCount; i++)
     {
-        if (gUnk_02007D48[i] != 0 || gUnk_02005588[i] != 0)
+        if (gPlayerLives[i] != 0 || gPlayerHealth[i] != 0)
         {
-            if (gUnk_02005588[i] == 0)
+            if (gPlayerHealth[i] == 0)
             {
-                gUnk_02005588[i] = gUnk_02005580;
-                gUnk_02008008[i] = 0;
+                gPlayerHealth[i] = gMaxHealth;
+                gSavedPlayerAbilities[i] = 0;
                 gUnk_02007FA8[i] = 0xFFFF;
-                sub_08009e60(-1, i);
+                AddPlayerLives(-1, i);
             }
-            if ((s16)gUnk_02008008[i] != 0)
+            if ((s16)gSavedPlayerAbilities[i] != 0)
             {
-                gUnk_02004B50[i] = gUnk_02008008[i];
+                gPlayerAbilities[i] = gSavedPlayerAbilities[i];
                 gUnk_0200AF18[i] = gUnk_02007FA8[i];
-                gUnk_02008008[i] = 0;
+                gSavedPlayerAbilities[i] = 0;
                 gUnk_02007FA8[i] = 0xFFFF;
             }
-            gUnk_03002340 |= 1 << i;
-            gUnk_03002350++;
+            gActivePlayerMask |= 1 << i;
+            gActivePlayerCount++;
             gUnk_0300234C++;
-            gUnk_0300560C[i] = 0;
+            gPlayerCameraMode[i] = 0;
         }
         else
         {
-            gUnk_0300560C[i] = 3;
+            gPlayerCameraMode[i] = 3;
         }
-        sub_0803d034(i);
+        CreatePlayer(i);
         sub_0803d1c4(i);
-        gUnk_03000F98[i] = gUnk_03001EB8[i] = 0;
-        gUnk_03002458[i] = gUnk_030023C0[i] = 0;
+        gPlayerHeldKeys[i] = gPlayerPressedKeys[i] = 0;
+        gLatchedHeldKeys[i] = gLatchedPressedKeys[i] = 0;
     }
-    sub_08028b1c();
-    sub_08009b2c(gUnk_03002360);
-    switch (gUnk_030055C0)
+    CameraResetBounds();
+    HudInit(gLocalPlayer);
+    switch (gCameraMode)
     {
     default:
     case 0:
@@ -279,20 +279,20 @@ void sub_08023948(void)
         break;
     case 2:
     case 4:
-        sub_0802cbb8();
+        CameraSnapPlayersToAnchor();
         break;
     case 1:
         sub_0802c680();
         break;
     }
-    sub_080290dc();
-    sub_08029930();
+    CameraInitPos();
+    CameraWriteScrollParallax();
     a = 0;
     CpuFastSet(&a, (u32 *)0x06002000, 0x01000400);
     if (gUnk_0200AF08 != 0)
-        sub_0802ac30(gUnk_03005604[0], gUnk_03005604[1]);
+        DrawBg123View(gCameraPos[0], gCameraPos[1]);
     else
-        sub_0802ad78(gUnk_03005604[0], gUnk_03005604[1]);
+        DrawBg23View(gCameraPos[0], gCameraPos[1]);
 }
 
 void sub_08023ca0(void)
@@ -302,84 +302,84 @@ void sub_08023ca0(void)
     u32 zero;
 
     gUnk_03002444 = 1;
-    gUnk_030023B8 = gUnk_030023EC;
+    gUnk_030023B8 = gStageIndex;
     gUnk_03001F20 = 16;
-    gUnk_030055C0 = 2;
-    sub_08008c64(1);
-    sub_080235ec(2);
-    gUnk_030055EC = gUnk_087E1D58[gUnk_0300238C][gUnk_030023EC][gUnk_03002468];
-    gUnk_02007D64 = gUnk_030055EC->unk57;
-    gUnk_02000000 = gUnk_030055EC->unk55;
-    sub_0802923c();
-    sub_080291d0();
-    sub_08029204();
-    sub_08029270();
-    gUnk_03005620 = gUnk_030055EC->unk14;
-    gUnk_0300561C = gUnk_030055EC->unk16;
-    gUnk_030055E4 = gUnk_03005620 * gUnk_0300561C;
-    gUnk_03005600[0] = gUnk_030055EC->unk24;
-    gUnk_03005600[1] = gUnk_030055EC->unk26;
-    gUnk_03005608[0] = gUnk_030055EC->unk34;
-    gUnk_03005608[1] = gUnk_030055EC->unk36;
-    gUnk_03005660 = gUnk_02006AA0;
+    gCameraMode = 2;
+    LoadGfxSet(1);
+    CreateRoomTask(2);
+    gCurRoomDef = gRoomTable[gLevelIndex][gStageIndex][gRoomIndex];
+    gUnk_02007D64 = gCurRoomDef->unk57;
+    gUnk_02000000 = gCurRoomDef->unk55;
+    ClearBg2Bg3Maps();
+    LoadBg2Gfx();
+    LoadBg3Gfx();
+    SelectBg3MapShape();
+    gRoomWidth = gCurRoomDef->unk14;
+    gRoomHeight = gCurRoomDef->unk16;
+    gRoomMetatileCount = gRoomWidth * gRoomHeight;
+    gRoomBorder[0] = gCurRoomDef->unk24;
+    gRoomBorder[1] = gCurRoomDef->unk26;
+    gBg3Border[0] = gCurRoomDef->unk34;
+    gBg3Border[1] = gCurRoomDef->unk36;
+    gRoomMap = gUnk_02006AA0;
     z = 0;
     w = 0;
     sub_08027a6c();
-    gUnk_0200B050 = z;
+    gRoomBgLayout = z;
     gUnk_0300558C = gUnk_0873A318;
     gUnk_02005574[0] = z;
     gUnk_02000020 = z;
     gUnk_0200B078 = z;
-    gUnk_0200B040 = z;
-    gUnk_03005624 = 3;
-    sub_08030724();
-    sub_0802cd24();
-    sub_0802885c();
-    sub_08028948();
-    sub_08029318();
-    sub_08028320();
+    gHBlankScrollStarted = z;
+    gRoomUpdateFlags = 3;
+    ResetBlockAnims();
+    StopScreenShake();
+    CalcBg3Parallax();
+    CalcRoomBounds();
+    InitDoors();
+    SpawnDoorObjects();
     sub_08029034();
     sub_08026b60();
     sub_08026834();
-    sub_08028b1c();
-    sub_0802cab0();
-    sub_080290dc();
-    sub_08029930();
+    CameraResetBounds();
+    CameraSnapBoundsToAnchor();
+    CameraInitPos();
+    CameraWriteScrollParallax();
     zero = w;
     CpuFastSet(&zero, (void *)0x06002000, 0x01000400);
-    sub_0802ac30(gUnk_03005604[0], gUnk_03005604[1]);
+    DrawBg123View(gCameraPos[0], gCameraPos[1]);
 }
 
 void sub_08023e34(void)
 {
-    struct Task *t = gUnk_03002490;
+    struct Task *t = gCurTask;
 
     t->unk00 = 0;
-    t->unk0C = (u32)sub_080236d4;
+    t->unk0C = (u32)RoomTaskDraw;
     t->unk04 = (u32)sub_08023ea0;
     if (gUnk_0200AF08 != 0)
         t->unk08 = (u32)sub_08023f5c;
     else
         t->unk08 = (u32)sub_08023f18;
-    sub_08006138();
+    TaskSleepForever();
 }
 
 void sub_08023e78(void)
 {
-    struct Task *t = gUnk_03002490;
+    struct Task *t = gCurTask;
 
     t->unk00 = 0;
     t->unk0C = 0;
     t->unk04 = (u32)sub_08023efc;
     t->unk08 = (u32)sub_08023fa0;
-    sub_08006138();
+    TaskSleepForever();
 }
 
 void sub_08023ea0(void)
 {
-    if (gUnk_03005624 & 1)
+    if (gRoomUpdateFlags & 1)
     {
-        switch (gUnk_030055C0)
+        switch (gCameraMode)
         {
         default:
         case 0:
@@ -387,7 +387,7 @@ void sub_08023ea0(void)
             break;
         case 2:
         case 4:
-            sub_0802cbb8();
+            CameraSnapPlayersToAnchor();
             break;
         case 3:
             sub_0802c7f4();
@@ -401,50 +401,50 @@ void sub_08023ea0(void)
 
 void sub_08023efc(void)
 {
-    if (gUnk_03005624 & 1)
-        sub_0802cab0();
+    if (gRoomUpdateFlags & 1)
+        CameraSnapBoundsToAnchor();
 }
 
 void sub_08023f18(void)
 {
-    if (gUnk_03005624 & 2)
-        sub_0802cd38();
-    if (gUnk_03005624 & 1)
+    if (gRoomUpdateFlags & 2)
+        UpdateScreenShake();
+    if (gRoomUpdateFlags & 1)
     {
-        sub_08029444();
-        sub_080297dc();
+        CameraUpdatePosNoParallax();
+        StreamBg23Maps();
     }
-    sub_08029a4c();
-    if (gUnk_03005624 & 16)
-        sub_08026ca4();
-    sub_0800a778();
+    CameraWriteScrollBg23();
+    if (gRoomUpdateFlags & 16)
+        UpdateDoors();
+    HudUpdateAbilityPanel();
 }
 
 void sub_08023f5c(void)
 {
-    if (gUnk_03005624 & 2)
-        sub_0802cd38();
-    if (gUnk_03005624 & 1)
+    if (gRoomUpdateFlags & 2)
+        UpdateScreenShake();
+    if (gRoomUpdateFlags & 1)
     {
-        sub_08029444();
-        sub_08029708();
+        CameraUpdatePosNoParallax();
+        StreamBg123Maps();
     }
-    sub_08029ab4();
-    if (gUnk_03005624 & 16)
-        sub_08026ca4();
-    sub_0800a778();
+    CameraWriteScrollBg123();
+    if (gRoomUpdateFlags & 16)
+        UpdateDoors();
+    HudUpdateAbilityPanel();
 }
 
 void sub_08023fa0(void)
 {
-    if (gUnk_03005624 & 2)
-        sub_0802cd38();
-    if (gUnk_03005624 & 1)
+    if (gRoomUpdateFlags & 2)
+        UpdateScreenShake();
+    if (gRoomUpdateFlags & 1)
     {
-        sub_08029444();
-        sub_08029708();
+        CameraUpdatePosNoParallax();
+        StreamBg123Maps();
     }
-    sub_08029ab4();
+    CameraWriteScrollBg123();
 }
 
 void sub_08023fd4(void)
@@ -452,90 +452,90 @@ void sub_08023fd4(void)
     s32 i;
     u32 a;
 
-    gUnk_030055C0 = 0;
-    sub_08008c64(1);
-    sub_080235ec(4);
-    gUnk_030055EC = gUnk_087E1D58[8][7][0];
-    gUnk_02007D64 = gUnk_030055EC->unk57;
-    gUnk_02000000 = gUnk_030055EC->unk55;
-    sub_0802923c();
-    sub_080291d0();
-    sub_08029204();
-    sub_08029270();
+    gCameraMode = 0;
+    LoadGfxSet(1);
+    CreateRoomTask(4);
+    gCurRoomDef = gRoomTable[8][7][0];
+    gUnk_02007D64 = gCurRoomDef->unk57;
+    gUnk_02000000 = gCurRoomDef->unk55;
+    ClearBg2Bg3Maps();
+    LoadBg2Gfx();
+    LoadBg3Gfx();
+    SelectBg3MapShape();
     gUnk_03002444 = 0;
-    gUnk_03005620 = gUnk_030055EC->unk14;
-    gUnk_0300561C = gUnk_030055EC->unk16;
-    gUnk_030055E4 = gUnk_03005620 * gUnk_0300561C;
-    gUnk_03005600[0] = gUnk_030055EC->unk24;
-    gUnk_03005600[1] = gUnk_030055EC->unk26;
-    gUnk_03005608[0] = gUnk_030055EC->unk34;
-    gUnk_03005608[1] = gUnk_030055EC->unk36;
-    gUnk_03005660 = gUnk_02000040;
-    if (gUnk_030055EC->unk05 != 0)
-        sub_080017e4(8, (u32)gUnk_030055EC->unk08, (u32)gUnk_02000040, 0);
+    gRoomWidth = gCurRoomDef->unk14;
+    gRoomHeight = gCurRoomDef->unk16;
+    gRoomMetatileCount = gRoomWidth * gRoomHeight;
+    gRoomBorder[0] = gCurRoomDef->unk24;
+    gRoomBorder[1] = gCurRoomDef->unk26;
+    gBg3Border[0] = gCurRoomDef->unk34;
+    gBg3Border[1] = gCurRoomDef->unk36;
+    gRoomMap = gRoomMapBuffer;
+    if (gCurRoomDef->unk05 != 0)
+        RequestCopy(8, (u32)gCurRoomDef->unk08, (u32)gRoomMapBuffer, 0);
     else
-        CpuSet(gUnk_030055EC->unk08, gUnk_02000040, (gUnk_030055E4 * 2) & 0x1FFFFF);
-    sub_080017e4(8, (u32)gUnk_030055EC->unk20, (u32)gUnk_0200B080, 0);
+        CpuSet(gCurRoomDef->unk08, gRoomMapBuffer, (gRoomMetatileCount * 2) & 0x1FFFFF);
+    RequestCopy(8, (u32)gCurRoomDef->unk20, (u32)gMetatileTiles, 0);
     gUnk_02000020 = 0;
     gUnk_0200B078 = 0;
-    gUnk_0200B040 = 0;
-    gUnk_03005624 = 31;
-    gUnk_0200B050 = 0;
+    gHBlankScrollStarted = 0;
+    gRoomUpdateFlags = 31;
+    gRoomBgLayout = 0;
     gUnk_0300558C = gUnk_0873A318;
     *gUnk_02005574 = 0;
     gUnk_02007FB0 = 0;
-    sub_08030724();
-    sub_0802cd24();
-    sub_0802885c();
-    sub_08028948();
-    sub_0802d0f4();
-    gUnk_030023CC = 136;
-    gUnk_03002388 = 928;
-    sub_08003110(1);
-    gUnk_0200B050 = 0;
+    ResetBlockAnims();
+    StopScreenShake();
+    CalcBg3Parallax();
+    CalcRoomBounds();
+    LoadRoomBgAnims();
+    gCameraFocusX = 136;
+    gCameraFocusY = 928;
+    PlayBgm(1);
+    gRoomBgLayout = 0;
     gUnk_0200B078 = 0;
     gUnk_02000020 = 1;
-    gUnk_03002340 = 0;
-    gUnk_03002350 = 0;
+    gActivePlayerMask = 0;
+    gActivePlayerCount = 0;
     gUnk_0300234C = 0;
-    for (i = 0; i < gUnk_030023AC; i++)
+    for (i = 0; i < gPlayerCount; i++)
     {
-        if (gUnk_02007D48[i] != 0 || gUnk_02005588[i] != 0)
+        if (gPlayerLives[i] != 0 || gPlayerHealth[i] != 0)
         {
-            if (gUnk_02005588[i] == 0)
+            if (gPlayerHealth[i] == 0)
             {
-                gUnk_02005588[i] = gUnk_02005580;
-                gUnk_02008008[i] = 0;
+                gPlayerHealth[i] = gMaxHealth;
+                gSavedPlayerAbilities[i] = 0;
                 gUnk_02007FA8[i] = 0xFFFF;
-                sub_08009e60(-1, i);
+                AddPlayerLives(-1, i);
             }
-            if ((s16)gUnk_02008008[i] != 0)
+            if ((s16)gSavedPlayerAbilities[i] != 0)
             {
-                gUnk_02004B50[i] = gUnk_02008008[i];
+                gPlayerAbilities[i] = gSavedPlayerAbilities[i];
                 gUnk_0200AF18[i] = gUnk_02007FA8[i];
-                gUnk_02008008[i] = 0;
+                gSavedPlayerAbilities[i] = 0;
                 gUnk_02007FA8[i] = 0xFFFF;
             }
-            gUnk_03002340 |= 1 << i;
-            gUnk_03002350++;
+            gActivePlayerMask |= 1 << i;
+            gActivePlayerCount++;
             gUnk_0300234C++;
         }
         else
         {
-            gUnk_0300560C[i] = 0;
+            gPlayerCameraMode[i] = 0;
         }
-        sub_0803d034(i);
-        sub_0803d0a0(i);
-        gUnk_03000F98[i] = gUnk_03001EB8[i] = 0;
-        gUnk_03002458[i] = gUnk_030023C0[i] = 0;
+        CreatePlayer(i);
+        InitPlayerState(i);
+        gPlayerHeldKeys[i] = gPlayerPressedKeys[i] = 0;
+        gLatchedHeldKeys[i] = gLatchedPressedKeys[i] = 0;
     }
-    sub_08040788();
-    sub_08028b1c();
-    sub_08009b2c(gUnk_03002360);
-    sub_0802cc90();
-    sub_080290dc();
-    sub_08029930();
+    LatchPlayerKeys();
+    CameraResetBounds();
+    HudInit(gLocalPlayer);
+    CameraSnapToFocus();
+    CameraInitPos();
+    CameraWriteScrollParallax();
     a = 0;
     CpuFastSet(&a, (u32 *)0x06002000, 0x01000400);
-    sub_0802ad78(gUnk_03005604[0], gUnk_03005604[1]);
+    DrawBg23View(gCameraPos[0], gCameraPos[1]);
 }

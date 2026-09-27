@@ -8,4 +8,4 @@
 	.section .gap_interworking_veneer_irq_handler_table_14, "a"
 	.global	gap_interworking_veneer_irq_handler_table_14
 gap_interworking_veneer_irq_handler_table_14:
-	.word	sub_08005654+1
+	.word	TaskFree+1

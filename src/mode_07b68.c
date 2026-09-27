@@ -12,38 +12,38 @@
  * 0x5503 SIO handshake (sub_08007b68/sub_08007c5c); sub_08007d4c is the
  * failure prompt that returns to state 4. */
 
-extern s8 gUnk_02000004;
+extern s8 gLinkSessionMode;
 extern u32 gUnk_02004000[];
 extern u8 gUnk_02006090;
-extern s8 gUnk_02006168;
+extern s8 gSubGameLevel;
 extern s32 gUnk_02007D00;
 extern u8 gUnk_02007FCC;
-extern u32 gUnk_0200EBA0;
-extern u8 gUnk_0200EBB0;
-extern vu8 gUnk_0200EBC0[];
-extern vu32 gUnk_0200EC3C;
-extern u32 gUnk_0200EC44;
-extern u32 gUnk_0200EC48;
+extern u32 gLinkDriverMode;
+extern u8 gLinkBroadcastAcks;
+extern vu8 gMultiBootStruct[];
+extern vu32 gLinkBlockParentChecksum;
+extern u32 gLinkBlockChecksum;
+extern u32 gLinkSetupMode;
 extern u32 gUnk_02020000[];
-extern vs32 gUnk_03000010;
-extern vu16 gUnk_03000038;
-extern vu16 gUnk_03000048;
-extern vs32 gUnk_03000B78;
-extern vs32 gUnk_03000FA8;
-extern vs32 gUnk_0300117C;
-extern vu16 gUnk_03001E90;
-extern vu16 gUnk_03001EB8[];
-extern vu16 gUnk_03001ED8;
+extern vs32 gBg0ScrollY;
+extern vu16 gPressedKeys;
+extern vu16 gFadeBlankAtWhite;
+extern vs32 gBg3ScrollX;
+extern vs32 gBg3ScrollY;
+extern vs32 gBg0ScrollX;
+extern vu16 gFadeSteps;
+extern vu16 gPlayerPressedKeys[];
+extern vu16 gDispCnt;
 extern u16 gUnk_03001F18[];
-extern u16 gUnk_03001F38;
-extern u16 gUnk_03002150;
+extern u16 gLinkIsMaster;
+extern u16 gPrevGameState;
 extern u16 gUnk_03002378[];
-extern u16 gUnk_030023AC;
-extern u16 gUnk_030023D8;
-extern u16 gUnk_0300243C;
-extern u16 gUnk_03004D50[4][4];
-extern u16 gUnk_03004D88[];
-extern u16 gUnk_03004D90[4];
+extern u16 gPlayerCount;
+extern u16 gGameState;
+extern u16 gLinkPlayerCount;
+extern u16 gRecvCmds[4][4];
+extern u16 gShouldAdvanceLinkState[];
+extern u16 gSendCmd[4];
 extern s32 gUnk_03005280;
 extern u16 gUnk_085B113C[];
 extern u16 gUnk_085B119C[];
@@ -58,45 +58,45 @@ extern u8 gUnk_0876B1FC[];
 extern u8 gUnk_0876F690[];
 extern u8 gUnk_087954C0[];
 extern u8 gUnk_087C0A4C[];
-extern u8 gUnk_087E1D58[];
+extern u8 gRoomTable[];
 
-void sub_080017e4(u32 mode, u32 src, u32 dst, u32 size);
-void sub_0800214c(void);
-void sub_080021dc(void);
-void sub_080022ac(void);
-void sub_080022d0(void);
-void sub_080022e4(void);
-void sub_080022fc(void);
-void sub_08002338(void);
-void sub_08002358(void);
-void sub_08002378(void);
-void sub_08002d18(void);
-void sub_08002d54(s32 count);
-void sub_08002d74(s32 count);
-void sub_08002d94(s32 count);
-void sub_08002db4(void);
-void sub_08002de0(void);
-void sub_08002e0c(void);
-s32 sub_08003110(s32 songId);
-void sub_080031b8(s32 id);
-void sub_08003864(void);
-void sub_08003a00(u8 *start, u8 *end);
-void sub_08003a98(void);
-void sub_08004000(u16 a);
-u32 sub_08004308(void);
-void sub_08004390(u32 *src, u32 *dst, u32 size);
-u32 sub_08004400(void);
-void sub_080044b8(void);
-u32 sub_08004714(void);
-void sub_08006868(void);
-void sub_08006914(u8 *cmd, u16 *send, u16 *recv);
-u32 sub_080071dc(void);
-u32 sub_080072e0(void);
+void RequestCopy(u32 mode, u32 src, u32 dst, u32 size);
+void BeginFastFadeInFromWhite(void);
+void BeginFastFadeOutToWhite(void);
+void ResetTasksAndOam(void);
+void RunFrameNoTasks(void);
+void RunFrame(void);
+void LinkStartKeyExchange(void);
+void LinkStopKeyExchange(void);
+void LinkRequestSync(void);
+void LinkSyncRandom(void);
+void RunLinkFrame(void);
+void RunFrames(s32 count);
+void RunFramesNoTasks(s32 count);
+void RunLinkFrames(s32 count);
+void RunFramesUntilFadeDone(void);
+void RunFramesNoTasksUntilFadeDone(void);
+void RunLinkFramesUntilFadeDone(void);
+s32 PlayBgm(s32 songId);
+void PlaySfx(s32 id);
+void EnableSoundDriver(void);
+void MultiBootSetParams(u8 *start, u8 *end);
+void LinkSetupRequestStart(void);
+void LinkSetupMain(u16 a);
+u32 LinkBroadcastWordStep(void);
+void LinkBlockAnnounce(u32 *src, u32 *dst, u32 size);
+u32 LinkBlockHandshakeStep(void);
+void LinkBlockStart(void);
+u32 IsLinkBlockDone(void);
+void DisableSerial(void);
+void LinkMain1(u8 *cmd, u16 *send, u16 *recv);
+u32 ConnectLink(void);
+u32 IsLinkError(void);
 void sub_080082d0(void);
-void sub_08008c4c(s32 a0);
-void sub_08008c64(u16 a0);
+void LoadBgLayout(s32 a0);
+void LoadGfxSet(u16 a0);
 void sub_08008e1c(s32 a0);
-void sub_080c6ab4(u16 *a, s32 b, s32 c);
+void DrawClockToBgMap(u16 *a, s32 b, s32 c);
 
 s32 sub_08007b68(u32 *src, u32 *dst, u32 size)
 {
@@ -104,38 +104,38 @@ s32 sub_08007b68(u32 *src, u32 *dst, u32 size)
     s32 n;
     s32 m;
 
-    sub_08004390(src, dst, size);
+    LinkBlockAnnounce(src, dst, size);
     do {
-        sub_080022e4();
-        sub_08006914((u8 *)gUnk_03004D88, gUnk_03004D90, gUnk_03004D50[0]);
-        if (sub_080072e0() != 0)
+        RunFrame();
+        LinkMain1((u8 *)gShouldAdvanceLinkState, gSendCmd, gRecvCmds[0]);
+        if (IsLinkError() != 0)
             goto fail;
-    } while (sub_08004400() == 0);
-    sub_08002d54(2);
-    sub_080044b8();
-    while (sub_08004714() == 0)
-        sub_080022e4();
-    if (sub_080071dc() != 0)
+    } while (LinkBlockHandshakeStep() == 0);
+    RunFrames(2);
+    LinkBlockStart();
+    while (IsLinkBlockDone() == 0)
+        RunFrame();
+    if (ConnectLink() != 0)
         goto fail;
-    gUnk_03004D90[0] = 0x5503;
-    gUnk_03004D90[1] = 0;
-    if (gUnk_0200EC44 == gUnk_0200EC3C)
-        gUnk_03004D90[1] = 1;
+    gSendCmd[0] = 0x5503;
+    gSendCmd[1] = 0;
+    if (gLinkBlockChecksum == gLinkBlockParentChecksum)
+        gSendCmd[1] = 1;
     m = 0;
     n = 0;
     do {
         for (i = 0; i < 4; i++) {
-            if (gUnk_03004D50[0][i] == 0x5503) {
+            if (gRecvCmds[0][i] == 0x5503) {
                 n++;
-                if (gUnk_03004D50[1][i] != 0)
+                if (gRecvCmds[1][i] != 0)
                     m++;
             }
         }
-        if (n == gUnk_0300243C)
+        if (n == gLinkPlayerCount)
             goto done;
-        sub_080022e4();
-        sub_08006914((u8 *)gUnk_03004D88, gUnk_03004D90, gUnk_03004D50[0]);
-    } while (sub_080072e0() == 0);
+        RunFrame();
+        LinkMain1((u8 *)gShouldAdvanceLinkState, gSendCmd, gRecvCmds[0]);
+    } while (IsLinkError() == 0);
 fail:
     return 1;
 done:
@@ -150,19 +150,19 @@ s32 sub_08007c5c(void)
     u32 size;
     s32 ret;
 
-    if (sub_080071dc() != 0)
+    if (ConnectLink() != 0)
         return 1;
-    if (gUnk_03001F38 != 0) {
-        gUnk_0200EBB0 = 0;
-        gUnk_03004D90[0] = 0xAA00;
-        gUnk_03004D90[1] = gUnk_02006090;
+    if (gLinkIsMaster != 0) {
+        gLinkBroadcastAcks = 0;
+        gSendCmd[0] = 0xAA00;
+        gSendCmd[1] = gUnk_02006090;
     }
     do {
-        sub_080022e4();
-        sub_08006914((u8 *)gUnk_03004D88, gUnk_03004D90, gUnk_03004D50[0]);
-        if (sub_080072e0() != 0)
+        RunFrame();
+        LinkMain1((u8 *)gShouldAdvanceLinkState, gSendCmd, gRecvCmds[0]);
+        if (IsLinkError() != 0)
             return 1;
-    } while (sub_08004308() == 0);
+    } while (LinkBroadcastWordStep() == 0);
     switch (gUnk_02006090) {
     case 0:
         src = gUnk_0876F690;
@@ -174,48 +174,48 @@ s32 sub_08007c5c(void)
         break;
     case 2:
         src = gUnk_087C0A4C;
-        size = gUnk_087E1D58 - gUnk_087C0A4C;
+        size = gRoomTable - gUnk_087C0A4C;
         break;
     }
     ret = sub_08007b68((u32 *)src, gUnk_02004000, size);
     if (ret != 0)
         return 1;
     gUnk_03005280 = 2;
-    gUnk_03001ED8 &= 0xFEFF;
-    gUnk_0300117C = ret;
-    sub_080022fc();
-    sub_08002d94(64);
+    gDispCnt &= 0xFEFF;
+    gBg0ScrollX = ret;
+    LinkStartKeyExchange();
+    RunLinkFrames(64);
     return 0;
 }
 
 void sub_08007d4c(void)
 {
-    sub_080021dc();
-    sub_08002de0();
-    sub_08006868();
-    sub_08008c4c(3);
-    sub_08008c64(64);
-    gUnk_03000B78 = gUnk_03000FA8 = 0;
-    gUnk_03001ED8 &= 0xE0FF;
-    gUnk_03001ED8 |= 0x800;
-    sub_0800214c();
-    sub_08002d74(32);
-    gUnk_03000048 = 0;
+    BeginFastFadeOutToWhite();
+    RunFramesNoTasksUntilFadeDone();
+    DisableSerial();
+    LoadBgLayout(3);
+    LoadGfxSet(64);
+    gBg3ScrollX = gBg3ScrollY = 0;
+    gDispCnt &= 0xE0FF;
+    gDispCnt |= 0x800;
+    BeginFastFadeInFromWhite();
+    RunFramesNoTasks(32);
+    gFadeBlankAtWhite = 0;
     while (1) {
-        if (gUnk_03000038 & 9) {
-            sub_080031b8(102);
+        if (gPressedKeys & 9) {
+            PlaySfx(102);
             break;
         }
-        if (gUnk_03000038 & 2) {
-            sub_080031b8(215);
+        if (gPressedKeys & 2) {
+            PlaySfx(215);
             break;
         }
-        sub_080022d0();
+        RunFrameNoTasks();
     }
-    sub_080021dc();
-    sub_08002de0();
-    gUnk_03002150 = gUnk_02007FCC + 14;
-    gUnk_030023D8 = 4;
+    BeginFastFadeOutToWhite();
+    RunFramesNoTasksUntilFadeDone();
+    gPrevGameState = gUnk_02007FCC + 14;
+    gGameState = 4;
 }
 
 /* Stage the link-play payload at 0x02020000: the common blob
@@ -267,7 +267,7 @@ void sub_08007e04(void)
         dst = (u8 *)(size + 0x02021DD0);
         break;
     }
-    sub_08003a00((u8 *)gUnk_02020000, dst);
+    MultiBootSetParams((u8 *)gUnk_02020000, dst);
 }
 
 void sub_08007f9c(void)
@@ -276,122 +276,122 @@ void sub_08007f9c(void)
     s32 n;
     u8 k;
 
-    sub_080022ac();
-    sub_08008c4c(4);
+    ResetTasksAndOam();
+    LoadBgLayout(4);
     sub_08008e1c(gUnk_02006090);
-    sub_08008c64(63);
-    gUnk_0300117C = gUnk_03000010 = 0;
-    gUnk_03000B78 = gUnk_03000FA8 = 0;
-    gUnk_03001ED8 &= 0xE0FF;
-    gUnk_03001ED8 |= 0x1800;
+    LoadGfxSet(63);
+    gBg0ScrollX = gBg0ScrollY = 0;
+    gBg3ScrollX = gBg3ScrollY = 0;
+    gDispCnt &= 0xE0FF;
+    gDispCnt |= 0x1800;
     if (gUnk_02006090 == 6 || gUnk_02006090 == 7) {
-        sub_08008c64(4);
-        sub_080017e4(6, 0, 0x06001000, 0x800);
+        LoadGfxSet(4);
+        RequestCopy(6, 0, 0x06001000, 0x800);
         /* Two complete copies: jump2 cross-jumps the identical tails, which
            is what leaves the ROM's `ldr r0, =F18; b join` arm.  A pointer
            local (if/else or ?:) is folded into "p = b; if (c) p = a". */
         if (gUnk_02006090 == 6) {
             if (gUnk_03001F18[0] != 0 || gUnk_03001F18[1] != 0
                 || gUnk_03001F18[2] != 0 || gUnk_03001F18[3] != 0) {
-                sub_080c6ab4(gUnk_03001F18, 22, 18);
-                gUnk_03001ED8 &= 0xE0FF;
-                gUnk_03001ED8 |= 0x1900;
+                DrawClockToBgMap(gUnk_03001F18, 22, 18);
+                gDispCnt &= 0xE0FF;
+                gDispCnt |= 0x1900;
             }
         } else {
             if (gUnk_03002378[0] != 0 || gUnk_03002378[1] != 0
                 || gUnk_03002378[2] != 0 || gUnk_03002378[3] != 0) {
-                sub_080c6ab4(gUnk_03002378, 22, 18);
-                gUnk_03001ED8 &= 0xE0FF;
-                gUnk_03001ED8 |= 0x1900;
+                DrawClockToBgMap(gUnk_03002378, 22, 18);
+                gDispCnt &= 0xE0FF;
+                gDispCnt |= 0x1900;
             }
         }
     }
     sub_080082d0();
     gUnk_02007D00 = 0;
-    if (gUnk_0200EC48 == 2) {
-        gUnk_0300243C = 999;
+    if (gLinkSetupMode == 2) {
+        gLinkPlayerCount = 999;
         sub_08007e04();
-        gUnk_03001ED8 &= 0xE0FF;
-        gUnk_03001ED8 |= 0x1900;
+        gDispCnt &= 0xE0FF;
+        gDispCnt |= 0x1900;
         gUnk_03005280 = 0;
-        sub_0800214c();
-        while (gUnk_03001E90 != 0) {
-            sub_080022e4();
-            sub_08004000(gUnk_02000004);
+        BeginFastFadeInFromWhite();
+        while (gFadeSteps != 0) {
+            RunFrame();
+            LinkSetupMain(gLinkSessionMode);
         }
-        gUnk_03000048 = 0;
-        sub_08003a98();
+        gFadeBlankAtWhite = 0;
+        LinkSetupRequestStart();
         do {
-            sub_080022e4();
-            sub_08004000(gUnk_02000004);
-        } while (gUnk_0200EBC0[2] != 3 && gUnk_0200EBC0[44] == 0);
-        if (gUnk_0200EBC0[3] != 0) {
+            RunFrame();
+            LinkSetupMain(gLinkSessionMode);
+        } while (gMultiBootStruct[2] != 3 && gMultiBootStruct[44] == 0);
+        if (gMultiBootStruct[3] != 0) {
             sub_08007d4c();
-            sub_08003864();
+            EnableSoundDriver();
             return;
         }
-        sub_08003864();
+        EnableSoundDriver();
         gUnk_03005280 = 1;
-        sub_08003110(40);
+        PlayBgm(40);
         /* `cancel` sits here in the ROM, between this arm and the else arm */
         if (sub_08007c5c() == 0)
             goto select;
         sub_08007d4c();
         return;
     cancel:
-        sub_080031b8(215);
-        sub_080021dc();
-        sub_08002db4();
-        gUnk_030023D8 = 4;
-        gUnk_03002150 = gUnk_02007FCC + 14;
+        PlaySfx(215);
+        BeginFastFadeOutToWhite();
+        RunFramesUntilFadeDone();
+        gGameState = 4;
+        gPrevGameState = gUnk_02007FCC + 14;
         return;
     } else {
-        sub_08002358();
-        sub_08002378();
-        sub_080022fc();
+        LinkRequestSync();
+        LinkSyncRandom();
+        LinkStartKeyExchange();
         gUnk_03005280 = 3;
-        sub_0800214c();
-        sub_08002e0c();
-        sub_08002d94(16);
+        BeginFastFadeInFromWhite();
+        RunLinkFramesUntilFadeDone();
+        RunLinkFrames(16);
     }
 select:
     gUnk_03005280 = 3;
     while (1) {
-        sub_08002d18();
-        if (gUnk_03002150 == 4) {
+        RunLinkFrame();
+        if (gPrevGameState == 4) {
             if (gUnk_02006090 <= 2) {
-                if ((gUnk_03001EB8[0] & 0x20) && gUnk_02006168 != 0) {
-                    sub_080031b8(101);
-                    gUnk_02006168--;
-                } else if ((gUnk_03001EB8[0] & 0x10) && gUnk_02006168 != 2) {
-                    sub_080031b8(101);
-                    gUnk_02006168++;
+                if ((gPlayerPressedKeys[0] & 0x20) && gSubGameLevel != 0) {
+                    PlaySfx(101);
+                    gSubGameLevel--;
+                } else if ((gPlayerPressedKeys[0] & 0x10) && gSubGameLevel != 2) {
+                    PlaySfx(101);
+                    gSubGameLevel++;
                 }
             }
-            if (gUnk_030023AC == 1 && (gUnk_03001EB8[0] & 2))
+            if (gPlayerCount == 1 && (gPlayerPressedKeys[0] & 2))
                 goto cancel;
-            if (gUnk_03001EB8[0] & 9) {
-                sub_080031b8(102);
+            if (gPlayerPressedKeys[0] & 9) {
+                PlaySfx(102);
                 break;
             }
         } else {
             n = 0;
-            for (i = 0; i < gUnk_030023AC; i++) {
-                if (gUnk_03001EB8[i] & 9)
+            for (i = 0; i < gPlayerCount; i++) {
+                if (gPlayerPressedKeys[i] & 9)
                     n++;
             }
             if (n != 0)
                 break;
         }
     }
-    if (gUnk_0200EC48 == 2)
-        gUnk_0200EBA0 = 0;
+    if (gLinkSetupMode == 2)
+        gLinkDriverMode = 0;
     gUnk_03005280 = 4;
-    sub_08002338();
+    LinkStopKeyExchange();
     /* store address first, then the one read of gUnk_02007FCC, kept in k */
-    gUnk_030023D8 = (k = gUnk_02007FCC) + 14;
-    if (gUnk_03002150 == 4 && k <= 2)
-        sub_08002d94(32);
-    sub_080021dc();
-    sub_08002e0c();
+    gGameState = (k = gUnk_02007FCC) + 14;
+    if (gPrevGameState == 4 && k <= 2)
+        RunLinkFrames(32);
+    BeginFastFadeOutToWhite();
+    RunLinkFramesUntilFadeDone();
 }

@@ -6,19 +6,19 @@
  *
  * Player mode bodies, part 2.  The player task starts the "enter"
  * coroutine of the requested action PlayerState.unk02 from
- * gUnk_0873A748[62] and every frame the "per-frame" handler Task.unk15
- * from gUnk_0873A840[57] (sub_08002e98(index, count, table); entry 0 of
+ * gPlayerActions[62] and every frame the "per-frame" handler Task.unk15
+ * from gPlayerActionHandlers[57] (CallTableEntry(index, count, table); entry 0 of
  * both tables is NULL).  Here: actions 3-6 and 22.
- * sub_080343c0 enters mode 2 (handler 3, sub_0803469c), sub_08034874
- * mode 3 (handler 4, sub_080349b4), sub_08034a88 and sub_08034d34 mode 4
- * (handlers 5 and 6, sub_08034bec and sub_08034e60); sub_08034f70
- * (action 22) clears PlayerState.unk68 and runs sub_08034f8c, the
+ * PlayerActionRun enters mode 2 (handler 3, PlayerActionRunUpdate), PlayerActionSkid
+ * mode 3 (handler 4, PlayerActionSkidUpdate), PlayerActionJump and sub_08034d34 mode 4
+ * (handlers 5 and 6, PlayerActionJumpUpdate and sub_08034e60); sub_08034f70
+ * (action 22) clears PlayerState.unk68 and runs PlayerActionFall, the
  * mode-5 coroutine of the next file.  The enter coroutines switch on the
- * ability PlayerState.unk0D for the animation (sub_08006338) and loop
+ * ability PlayerState.unk0D for the animation (TaskSetFrame) and loop
  * on TaskYieldTrampoline; the handlers run M11's transition predicates
  * and write the next request into PlayerState.unk01. */
 
-/* gUnk_03005550: M06's collision result block (src/terrain_1bcac.c spells it
+/* gTerrainResult: M06's collision result block (src/terrain_1bcac.c spells it
    the same way except unk8, which M09 reads with ldrsh). */
 struct Unk03005550
 {
@@ -37,126 +37,126 @@ struct Unk03005550
     /*0x0D*/ u8 unkD;
 };
 
-extern u16 gUnk_03002458[];             /* latched state mask per player (M11) */
+extern u16 gLatchedHeldKeys[];             /* latched state mask per player (M11) */
 extern u16 gUnk_0873D31C[];
 extern u16 gUnk_0873D350[];
-extern struct Unk03005550 gUnk_03005550;
+extern struct Unk03005550 gTerrainResult;
 extern u16 gUnk_0873D384[];
 
 void TaskYieldTrampoline(s32 frames);
-void sub_08006138(void);
-void sub_08006148(void *a, u32 i);
-void sub_08006338(s32 a);
-s32 sub_08022624(u16 x, u16 y);
-void sub_08034f8c(void);
-void sub_0803cd60(void);
-void sub_0803e050(s32 a0);
-s32 sub_0803e34c(s32 a0, u16 a1);
-void sub_0803e374(s32 a0, u16 a1);
-s32 sub_0803e4ec(s32 a0);
-void sub_0803f870(void);
-void sub_0803f8e8(void);
-s32 sub_0803f9e8(void);
+void TaskSleepForever(void);
+void TaskSetEntry(void *a, u32 i);
+void TaskSetFrame(s32 a);
+s32 IsFullBlockAtPixel(u16 x, u16 y);
+void PlayerActionFall(void);
+void PlayerPlayBump(void);
+void PlayerStopAxes(s32 a0);
+s32 PlaySfxIfLocalPlayer(s32 a0, u16 a1);
+void PlayerStartSfx(s32 a0, u16 a1);
+s32 PlayerLand(s32 a0);
+void PlayerTurnToHeldDirection(void);
+void PlayerCheckBump(void);
+s32 PlayerStopAtWall(void);
 s32 sub_0803fd20(s32 a0);
-s32 sub_0803fd90(void);
-s32 sub_0803fdf4(void);
+s32 PlayerCheckSkid(void);
+s32 PlayerCheckJump(void);
 s32 sub_0803fe68(void);
-s32 sub_0803fec4(void);
-s32 sub_0803ff7c(void);
-s32 sub_0803ffe0(void);
-s32 sub_08040084(void);
-s32 sub_080400c0(void);
-s32 sub_08040298(void);
-s32 sub_08040340(void);
-s32 sub_0804042c(void);
-void sub_08040b40(s32 a0, s32 a1);           /* M11, still asm; M11's own spelling */
-void sub_080413a4(s32 a0);
-s32 sub_0805afac(s32 band, s32 id, s32 payload);
+s32 PlayerCheckDuckOrSwallow(void);
+s32 PlayerCheckLadder(void);
+s32 PlayerCheckFloat(void);
+s32 PlayerCheckAirFloat(void);
+s32 PlayerCheckBButton(void);
+s32 PlayerCheckEnterDoor(void);
+s32 PlayerCheckDropAbility(void);
+s32 PlayerRequestLocomotion(void);
+void PlayerSetMotionXPreset(s32 a0, s32 a1);           /* M11, still asm; M11's own spelling */
+void PlayerSetMotionYPreset(s32 a0);
+s32 CreatePlayerEffect(s32 band, s32 id, s32 payload);
 
-void sub_080343c0(void)
+void PlayerActionRun(void)
 {
     struct Task *t;
     struct PlayerState *p;
     u16 *q;
 
-    gUnk_03002490->unk88->unk05 = gUnk_03002490->unk88->unk04;
-    gUnk_03002490->unk88->unk04 = 2;
-    gUnk_03002490->unk15 = 3;
-    t = gUnk_03002490;
+    gCurTask->unk88->unk05 = gCurTask->unk88->unk04;
+    gCurTask->unk88->unk04 = 2;
+    gCurTask->unk15 = 3;
+    t = gCurTask;
     t->unk28 = 0;
     t->unk2C = -1;
-    sub_08040b40(3, 72);
-    if (gUnk_03002490->unk88->unk05 != 2)
+    PlayerSetMotionXPreset(3, 72);
+    if (gCurTask->unk88->unk05 != 2)
     {
-        gUnk_03002490->unk88->unk46 = 0;
-        q = gUnk_03002458;
-        p = gUnk_03002490->unk88;
+        gCurTask->unk88->unk46 = 0;
+        q = gLatchedHeldKeys;
+        p = gCurTask->unk88;
         if (q[p->unk00] & 48)
         {
             if (p->unk3E == 2)
                 p->unk3E = 0;
         }
-        sub_0803cd60();
-        sub_0803e374(117, gUnk_03002490->unk88->unk00);
-        sub_0805afac(gUnk_03002490->unk88->unk00, 7, 0);
-        if (sub_0803fd20(gUnk_03002490->unk88->unk00) == 4)
-            gUnk_03002490->unk73 = 1;
+        PlayerPlayBump();
+        PlayerStartSfx(117, gCurTask->unk88->unk00);
+        CreatePlayerEffect(gCurTask->unk88->unk00, 7, 0);
+        if (sub_0803fd20(gCurTask->unk88->unk00) == 4)
+            gCurTask->unk73 = 1;
         else
-            gUnk_03002490->unk73 = 0;
+            gCurTask->unk73 = 0;
     }
-    if (gUnk_03002490->unk73 == 0)
+    if (gCurTask->unk73 == 0)
     {
-        if (gUnk_03002490->unk88->unk06 == 1)
+        if (gCurTask->unk88->unk06 == 1)
         {
             while (1)
             {
-                sub_08006338(0x153);
+                TaskSetFrame(0x153);
                 TaskYieldTrampoline(2);
-                gUnk_03002490->unk6C = 0;
+                gCurTask->unk6C = 0;
                 do
                 {
-                    gUnk_03002490->unk3C++;
+                    gCurTask->unk3C++;
                     TaskYieldTrampoline(2);
-                    gUnk_03002490->unk6C++;
-                } while ((s16)gUnk_03002490->unk6C <= 3);
-                sub_08006338(0x148);
+                    gCurTask->unk6C++;
+                } while ((s16)gCurTask->unk6C <= 3);
+                TaskSetFrame(0x148);
                 TaskYieldTrampoline(2);
-                gUnk_03002490->unk6C = 0;
+                gCurTask->unk6C = 0;
                 do
                 {
-                    gUnk_03002490->unk3C++;
+                    gCurTask->unk3C++;
                     TaskYieldTrampoline(2);
-                    gUnk_03002490->unk6C++;
-                } while ((s16)gUnk_03002490->unk6C <= 9);
+                    gCurTask->unk6C++;
+                } while ((s16)gCurTask->unk6C <= 9);
             }
         }
         else
         {
-            gUnk_03002490->unk46 = gUnk_0873D31C[gUnk_03002490->unk88->unk0D];
+            gCurTask->unk46 = gUnk_0873D31C[gCurTask->unk88->unk0D];
             while (1)
             {
-                sub_08006338(gUnk_03002490->unk46);
+                TaskSetFrame(gCurTask->unk46);
                 TaskYieldTrampoline(2);
-                gUnk_03002490->unk6C = 0;
+                gCurTask->unk6C = 0;
                 do
                 {
-                    gUnk_03002490->unk3C++;
+                    gCurTask->unk3C++;
                     TaskYieldTrampoline(3);
-                    gUnk_03002490->unk3C++;
+                    gCurTask->unk3C++;
                     TaskYieldTrampoline(2);
-                    gUnk_03002490->unk6C++;
-                } while ((s16)gUnk_03002490->unk6C <= 2);
-                gUnk_03002490->unk3C++;
+                    gCurTask->unk6C++;
+                } while ((s16)gCurTask->unk6C <= 2);
+                gCurTask->unk3C++;
                 TaskYieldTrampoline(3);
             }
         }
     }
-    sub_0805afac(gUnk_03002490->unk88->unk00, 6, 0x200);
-    if (gUnk_03002490->unk88->unk06 == 1)
-        gUnk_03002490->unk46 = 0x15D;
+    CreatePlayerEffect(gCurTask->unk88->unk00, 6, 0x200);
+    if (gCurTask->unk88->unk06 == 1)
+        gCurTask->unk46 = 0x15D;
     else
-        gUnk_03002490->unk46 = gUnk_0873D350[gUnk_03002490->unk88->unk0D];
-    switch (gUnk_03002490->unk88->unk0D)
+        gCurTask->unk46 = gUnk_0873D350[gCurTask->unk88->unk0D];
+    switch (gCurTask->unk88->unk0D)
     {
     case 1:
     case 2:
@@ -164,19 +164,19 @@ void sub_080343c0(void)
     case 19:
         while (1)
         {
-            sub_08006338(gUnk_03002490->unk46);
+            TaskSetFrame(gCurTask->unk46);
             TaskYieldTrampoline(2);
-            gUnk_03002490->unk3C++;
+            gCurTask->unk3C++;
             TaskYieldTrampoline(2);
         }
     case 0:
     default:
-        sub_08006338(gUnk_03002490->unk46);
-        sub_08006138();
+        TaskSetFrame(gCurTask->unk46);
+        TaskSleepForever();
     }
 }
 
-void sub_0803469c(void)
+void PlayerActionRunUpdate(void)
 {
     struct Task *t;
     struct Task *t3;
@@ -190,10 +190,10 @@ void sub_0803469c(void)
     s32 y;
     s32 m3;
 
-    t = gUnk_03002490;
+    t = gCurTask;
     if (t->unk28 == 0)
     {
-        m2 = gUnk_03005550.unkD;
+        m2 = gTerrainResult.unkD;
         if (m2 != 0)
         {
             t->unk88->unk14 = 5;
@@ -209,39 +209,39 @@ void sub_0803469c(void)
         p = t->unk88;
         if ((s16)p->unk14 == 0)
         {
-            if (sub_08022624(((u16 *)t)[36],
+            if (IsFullBlockAtPixel(((u16 *)t)[36],
                              (y = ((u16 *)t)[37], m3 = -16, m3 &= y, m3 + 16)) != 0)
-                gUnk_03002490->unk7A = 1;
+                gCurTask->unk7A = 1;
         }
         else
         {
             p->unk14--;
         }
     }
-    t = gUnk_03002490;
+    t = gCurTask;
     if ((t->unk7A & 1) != 0 || (t->unk88->unk48 & 3) != 0)
     {
         t->unk28 = 0;
         t->unk88->unk14 = 0;
     }
-    while (sub_0803fd90() == 0 && sub_0803fdf4() == 0)
+    while (PlayerCheckSkid() == 0 && PlayerCheckJump() == 0)
     {
-        if (gUnk_03002490->unk28 == 0 && sub_0803fe68() != 0)
+        if (gCurTask->unk28 == 0 && sub_0803fe68() != 0)
             break;
-        if (sub_08040298() != 0)
+        if (PlayerCheckEnterDoor() != 0)
             break;
-        if (sub_0803ff7c() != 0)
+        if (PlayerCheckLadder() != 0)
             break;
-        if (sub_0803fec4() != 0)
+        if (PlayerCheckDuckOrSwallow() != 0)
             goto end;
-        if (sub_0803ffe0() != 0)
+        if (PlayerCheckFloat() != 0)
             goto end;
-        if (sub_080400c0() != 0)
+        if (PlayerCheckBButton() != 0)
             goto end;
-        if (sub_08040340() != 0)
+        if (PlayerCheckDropAbility() != 0)
             goto end;
-        q = gUnk_03002458;
-        t3 = gUnk_03002490;
+        q = gLatchedHeldKeys;
+        t3 = gCurTask;
         p4 = t3->unk88;
         m = q[p4->unk00] & 48;
         if (m == 0)
@@ -250,52 +250,52 @@ void sub_0803469c(void)
             if ((u32)x <= 0x14BFF)
             {
                 p4->unk3D = m;
-                gUnk_03002490->unk88->unk01 = 2;
+                gCurTask->unk88->unk01 = 2;
                 goto end;
             }
         }
-        m5 = gUnk_03005550.unk0;
+        m5 = gTerrainResult.unk0;
         if (m5 != 0)
         {
-            sub_0803f8e8();
-            gUnk_03002490->unk88->unk01 = 1;
+            PlayerCheckBump();
+            gCurTask->unk88->unk01 = 1;
             goto end;
         }
-        if (gUnk_03002490->unk73 == 0)
+        if (gCurTask->unk73 == 0)
         {
-            if (sub_0803fd20(gUnk_03002490->unk88->unk00) == 4)
+            if (sub_0803fd20(gCurTask->unk88->unk00) == 4)
             {
-                gUnk_03002490->unk73 = 1;
-                sub_08006148(sub_080343c0, gCurTaskIdx);
+                gCurTask->unk73 = 1;
+                TaskSetEntry(PlayerActionRun, gCurTaskIdx);
             }
         }
-        else if (sub_0803fd20(gUnk_03002490->unk88->unk00) != 4)
+        else if (sub_0803fd20(gCurTask->unk88->unk00) != 4)
         {
-            gUnk_03002490->unk73 = m5;
-            sub_08006148(sub_080343c0, gCurTaskIdx);
+            gCurTask->unk73 = m5;
+            TaskSetEntry(PlayerActionRun, gCurTaskIdx);
         }
         goto end;
     }
 end:
-    sub_08040b40(3, 72);
+    PlayerSetMotionXPreset(3, 72);
 }
 
-void sub_08034874(void)
+void PlayerActionSkid(void)
 {
-    gUnk_03002490->unk88->unk05 = gUnk_03002490->unk88->unk04;
-    gUnk_03002490->unk88->unk04 = 3;
-    gUnk_03002490->unk15 = 4;
-    sub_08040b40(4, 72);
-    if (gUnk_03002490->unk88->unk05 != 3)
+    gCurTask->unk88->unk05 = gCurTask->unk88->unk04;
+    gCurTask->unk88->unk04 = 3;
+    gCurTask->unk15 = 4;
+    PlayerSetMotionXPreset(4, 72);
+    if (gCurTask->unk88->unk05 != 3)
     {
-        sub_0803e34c(119, gUnk_03002490->unk88->unk00);
-        sub_0805afac(gUnk_03002490->unk88->unk00, 6, 0);
+        PlaySfxIfLocalPlayer(119, gCurTask->unk88->unk00);
+        CreatePlayerEffect(gCurTask->unk88->unk00, 6, 0);
     }
-    if (gUnk_03002490->unk88->unk06 == 1)
-        gUnk_03002490->unk46 = 0x15D;
+    if (gCurTask->unk88->unk06 == 1)
+        gCurTask->unk46 = 0x15D;
     else
-        gUnk_03002490->unk46 = gUnk_0873D350[gUnk_03002490->unk88->unk0D];
-    switch (gUnk_03002490->unk88->unk0D)
+        gCurTask->unk46 = gUnk_0873D350[gCurTask->unk88->unk0D];
+    switch (gCurTask->unk88->unk0D)
     {
     case 1:
     case 2:
@@ -303,87 +303,87 @@ void sub_08034874(void)
     case 19:
         while (1)
         {
-            sub_08006338(gUnk_03002490->unk46);
+            TaskSetFrame(gCurTask->unk46);
             TaskYieldTrampoline(2);
-            gUnk_03002490->unk3C++;
+            gCurTask->unk3C++;
             TaskYieldTrampoline(2);
         }
     case 0:
     default:
-        sub_08006338(gUnk_03002490->unk46);
-        sub_08006138();
+        TaskSetFrame(gCurTask->unk46);
+        TaskSleepForever();
     }
 }
 
-void sub_080349b4(void)
+void PlayerActionSkidUpdate(void)
 {
-    while (sub_0803fdf4() == 0 && sub_0803fe68() == 0 && sub_080400c0() == 0 && sub_08040340() == 0)
+    while (PlayerCheckJump() == 0 && sub_0803fe68() == 0 && PlayerCheckBButton() == 0 && PlayerCheckDropAbility() == 0)
     {
-        if (gUnk_03002490->unk54 == 0)
+        if (gCurTask->unk54 == 0)
         {
-            if (gUnk_03002458[gUnk_03002490->unk88->unk00] & 48)
+            if (gLatchedHeldKeys[gCurTask->unk88->unk00] & 48)
             {
-                if (gUnk_03002490->unk43 == 1)
+                if (gCurTask->unk43 == 1)
                 {
-                    if (gUnk_03002458[gUnk_03002490->unk88->unk00] & 32)
-                        gUnk_03002490->unk43 = -1;
+                    if (gLatchedHeldKeys[gCurTask->unk88->unk00] & 32)
+                        gCurTask->unk43 = -1;
                 }
-                else if (gUnk_03002458[gUnk_03002490->unk88->unk00] & 16)
+                else if (gLatchedHeldKeys[gCurTask->unk88->unk00] & 16)
                 {
-                    gUnk_03002490->unk43 = 1;
+                    gCurTask->unk43 = 1;
                 }
-                gUnk_03002490->unk5C = 0;
-                if (gUnk_03002490->unk88->unk3D == 0)
-                    gUnk_03002490->unk88->unk01 = 2;
+                gCurTask->unk5C = 0;
+                if (gCurTask->unk88->unk3D == 0)
+                    gCurTask->unk88->unk01 = 2;
                 else
-                    gUnk_03002490->unk88->unk01 = 3;
+                    gCurTask->unk88->unk01 = 3;
             }
             else
             {
-                gUnk_03002490->unk88->unk01 = 1;
+                gCurTask->unk88->unk01 = 1;
             }
-            if (gUnk_03002490->unk88->unk01 != 0)
+            if (gCurTask->unk88->unk01 != 0)
                 break;
         }
-        if (gUnk_03005550.unk0 != 0)
+        if (gTerrainResult.unk0 != 0)
         {
-            sub_0803f8e8();
-            gUnk_03002490->unk88->unk01 = 1;
+            PlayerCheckBump();
+            gCurTask->unk88->unk01 = 1;
         }
         break;
     }
 }
 
-void sub_08034a88(void)
+void PlayerActionJump(void)
 {
-    gUnk_03002490->unk88->unk05 = gUnk_03002490->unk88->unk04;
-    gUnk_03002490->unk88->unk04 = 4;
-    gUnk_03002490->unk15 = 5;
-    if (gUnk_03002490->unk88->unk05 != 4)
+    gCurTask->unk88->unk05 = gCurTask->unk88->unk04;
+    gCurTask->unk88->unk04 = 4;
+    gCurTask->unk15 = 5;
+    if (gCurTask->unk88->unk05 != 4)
     {
-        if (gUnk_03002490->unk88->unk05 == 9)
-            gUnk_03002490->unk88->unk14 = 4;
+        if (gCurTask->unk88->unk05 == 9)
+            gCurTask->unk88->unk14 = 4;
         else
-            gUnk_03002490->unk88->unk14 = 23;
-        sub_080413a4(0);
-        sub_0803e34c(100, gUnk_03002490->unk88->unk00);
-        gUnk_03002490->unk73 = 0;
+            gCurTask->unk88->unk14 = 23;
+        PlayerSetMotionYPreset(0);
+        PlaySfxIfLocalPlayer(100, gCurTask->unk88->unk00);
+        gCurTask->unk73 = 0;
     }
-    sub_0803cd60();
-    if (gUnk_03002490->unk88->unk06 == 1)
+    PlayerPlayBump();
+    if (gCurTask->unk88->unk06 == 1)
     {
-        sub_08006338(0x158);
+        TaskSetFrame(0x158);
         TaskYieldTrampoline(2);
-        gUnk_03002490->unk3C++;
-        sub_08006138();
+        gCurTask->unk3C++;
+        TaskSleepForever();
     }
-    gUnk_03002490->unk46 = gUnk_0873D384[gUnk_03002490->unk88->unk0D];
-    switch (gUnk_03002490->unk88->unk0D)
+    gCurTask->unk46 = gUnk_0873D384[gCurTask->unk88->unk0D];
+    switch (gCurTask->unk88->unk0D)
     {
     case 0:
     default:
-        sub_08006338(gUnk_03002490->unk46);
-        sub_08006138();
+        TaskSetFrame(gCurTask->unk46);
+        TaskSleepForever();
     case 1:
     case 2:
     case 4:
@@ -398,79 +398,79 @@ void sub_08034a88(void)
     case 23:
         while (1)
         {
-            sub_08006338(gUnk_03002490->unk46);
+            TaskSetFrame(gCurTask->unk46);
             TaskYieldTrampoline(2);
-            gUnk_03002490->unk3C++;
+            gCurTask->unk3C++;
             TaskYieldTrampoline(2);
         }
     }
 }
 
-void sub_08034bec(void)
+void PlayerActionJumpUpdate(void)
 {
-    sub_0803f870();
-    while (sub_0803ff7c() == 0 && sub_080400c0() == 0 && sub_08040340() == 0 && sub_08040298() == 0)
+    PlayerTurnToHeldDirection();
+    while (PlayerCheckLadder() == 0 && PlayerCheckBButton() == 0 && PlayerCheckDropAbility() == 0 && PlayerCheckEnterDoor() == 0)
     {
-        if (gUnk_03002490->unk7A & 1)
+        if (gCurTask->unk7A & 1)
         {
-            sub_0803f8e8();
-            sub_0803e4ec(0);
-            sub_0804042c();
+            PlayerCheckBump();
+            PlayerLand(0);
+            PlayerRequestLocomotion();
             goto end;
         }
-        if (gUnk_03005550.unk1 != 0)
+        if (gTerrainResult.unk1 != 0)
         {
-            sub_0803f8e8();
-            sub_0803e050(2);
-            gUnk_03002490->unk88->unk01 = 7;
+            PlayerCheckBump();
+            PlayerStopAxes(2);
+            gCurTask->unk88->unk01 = 7;
             break;
         }
-        switch (gUnk_03002490->unk73)
+        switch (gCurTask->unk73)
         {
         case 0:
-            if (--gUnk_03002490->unk88->unk14 == 0
-                || (gUnk_03002458[gUnk_03002490->unk88->unk00] & 1) == 0)
+            if (--gCurTask->unk88->unk14 == 0
+                || (gLatchedHeldKeys[gCurTask->unk88->unk00] & 1) == 0)
             {
-                gUnk_03002490->unk73 = 1;
-                sub_080413a4(1);
-                gUnk_03002490->unk88->unk14 = 6;
+                gCurTask->unk73 = 1;
+                PlayerSetMotionYPreset(1);
+                gCurTask->unk88->unk14 = 6;
             }
             break;
         case 1:
-            if (sub_08040084() == 0 && --gUnk_03002490->unk88->unk14 == 0)
+            if (PlayerCheckAirFloat() == 0 && --gCurTask->unk88->unk14 == 0)
             {
-                sub_0803e050(2);
-                sub_080413a4(2);
-                gUnk_03002490->unk88->unk01 = 7;
+                PlayerStopAxes(2);
+                PlayerSetMotionYPreset(2);
+                gCurTask->unk88->unk01 = 7;
             }
             break;
         }
-        if (gUnk_03005550.unk0 != 0)
+        if (gTerrainResult.unk0 != 0)
         {
-            sub_0803f8e8();
-            if (gUnk_03002490->unk88->unk3E & 7)
-                sub_08006148(sub_08034a88, gCurTaskIdx);
+            PlayerCheckBump();
+            if (gCurTask->unk88->unk3E & 7)
+                TaskSetEntry(PlayerActionJump, gCurTaskIdx);
         }
         break;
     }
 end:
-    sub_08040b40(7, 72);
-    sub_0803f9e8();
+    PlayerSetMotionXPreset(7, 72);
+    PlayerStopAtWall();
 }
 
 void sub_08034d34(void)
 {
-    gUnk_03002490->unk88->unk05 = gUnk_03002490->unk88->unk04;
-    gUnk_03002490->unk88->unk04 = 4;
-    gUnk_03002490->unk15 = 6;
-    if (gUnk_03002490->unk88->unk05 != 4)
+    gCurTask->unk88->unk05 = gCurTask->unk88->unk04;
+    gCurTask->unk88->unk04 = 4;
+    gCurTask->unk15 = 6;
+    if (gCurTask->unk88->unk05 != 4)
     {
-        gUnk_03002490->unk73 = 0;
-        sub_080413a4(0);
-        sub_0803e34c(100, gUnk_03002490->unk88->unk00);
+        gCurTask->unk73 = 0;
+        PlayerSetMotionYPreset(0);
+        PlaySfxIfLocalPlayer(100, gCurTask->unk88->unk00);
     }
-    gUnk_03002490->unk46 = gUnk_0873D384[gUnk_03002490->unk88->unk0D];
-    switch (gUnk_03002490->unk88->unk0D)
+    gCurTask->unk46 = gUnk_0873D384[gCurTask->unk88->unk0D];
+    switch (gCurTask->unk88->unk0D)
     {
     case 1:
     case 2:
@@ -486,70 +486,70 @@ void sub_08034d34(void)
     case 23:
         while (1)
         {
-            sub_08006338(gUnk_03002490->unk46);
+            TaskSetFrame(gCurTask->unk46);
             TaskYieldTrampoline(2);
-            gUnk_03002490->unk3C++;
+            gCurTask->unk3C++;
             TaskYieldTrampoline(2);
         }
     case 0:
     default:
-        sub_08006338(gUnk_03002490->unk46);
-        sub_08006138();
+        TaskSetFrame(gCurTask->unk46);
+        TaskSleepForever();
     }
 }
 
 void sub_08034e60(void)
 {
-    sub_0803f870();
-    while (sub_080400c0() == 0 && sub_08040340() == 0)
+    PlayerTurnToHeldDirection();
+    while (PlayerCheckBButton() == 0 && PlayerCheckDropAbility() == 0)
     {
-        if (gUnk_03002490->unk7A & 1)
+        if (gCurTask->unk7A & 1)
         {
-            sub_0803f8e8();
-            sub_0803e4ec(0);
-            sub_0804042c();
+            PlayerCheckBump();
+            PlayerLand(0);
+            PlayerRequestLocomotion();
             break;
         }
-        if (gUnk_03005550.unk1 != 0)
+        if (gTerrainResult.unk1 != 0)
         {
-            sub_0803f8e8();
-            sub_0803e050(2);
-            gUnk_03002490->unk88->unk01 = 7;
+            PlayerCheckBump();
+            PlayerStopAxes(2);
+            gCurTask->unk88->unk01 = 7;
             break;
         }
-        switch (gUnk_03002490->unk73)
+        switch (gCurTask->unk73)
         {
         case 0:
-            if (--gUnk_03002490->unk88->unk14 == 0)
+            if (--gCurTask->unk88->unk14 == 0)
             {
-                gUnk_03002490->unk73 = 1;
-                sub_080413a4(1);
-                gUnk_03002490->unk88->unk14 = 5;
+                gCurTask->unk73 = 1;
+                PlayerSetMotionYPreset(1);
+                gCurTask->unk88->unk14 = 5;
             }
             break;
         case 1:
-            if (--gUnk_03002490->unk88->unk14 == 0)
+            if (--gCurTask->unk88->unk14 == 0)
             {
-                sub_0803e050(2);
-                sub_080413a4(2);
-                gUnk_03002490->unk88->unk01 = 7;
+                PlayerStopAxes(2);
+                PlayerSetMotionYPreset(2);
+                gCurTask->unk88->unk01 = 7;
             }
             break;
         }
-        if (gUnk_03005550.unk0 != 0)
+        if (gTerrainResult.unk0 != 0)
         {
-            sub_0803f8e8();
-            if (gUnk_03002490->unk88->unk3E & 7)
-                sub_08006148(sub_08034a88, gCurTaskIdx);
+            PlayerCheckBump();
+            if (gCurTask->unk88->unk3E & 7)
+                TaskSetEntry(PlayerActionJump, gCurTaskIdx);
         }
         break;
     }
-    sub_08040b40(7, 72);
-    sub_0803f9e8();
+    PlayerSetMotionXPreset(7, 72);
+    PlayerStopAtWall();
 }
 
 void sub_08034f70(void)
 {
-    gUnk_03002490->unk88->unk68 = 0;
-    sub_08034f8c();
+    gCurTask->unk88->unk68 = 0;
+    PlayerActionFall();
 }

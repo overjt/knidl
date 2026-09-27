@@ -41,126 +41,126 @@ struct LinkSave
 };
 
 extern struct LinkSave *gUnk_0200EC50;
-extern struct LinkSave *gUnk_0200EC6C;
+extern struct LinkSave *gInputRecordingPtr;
 extern s32 Div(s32 a, s32 b);
 extern u8 gUnk_02000020;
-extern u16 gUnk_02004B50[];
-extern u16 gUnk_02005580;
-extern u16 gUnk_02005588[];
+extern u16 gPlayerAbilities[];
+extern u16 gMaxHealth;
+extern u16 gPlayerHealth[];
 extern u8 gUnk_020069F0;
 extern u32 gUnk_02007BF0[8][8];
-extern u16 gUnk_02007D48[];
-extern u8 gUnk_02007D58[];
+extern u16 gPlayerLives[];
+extern u8 gUsedSubGameDoors[];
 extern u16 gUnk_0200AF18[];
 extern u8 gUnk_0200B04C;
-extern u8 gUnk_0200EC54;
-extern s16 gUnk_0200EC58;
+extern u8 gInputRecorderRunning;
+extern s16 gInputRecorderMode;
 extern u16 gUnk_0200EC60[];
 extern u8 gUnk_0200EC68[];
 extern u16 gUnk_0200EC70[];
 extern u16 gUnk_0200EC78[];
-extern struct LinkSave gUnk_0200EC80;
-extern u16 gUnk_03000FAC;
-extern u32 gUnk_03000FB4;
-extern u16 gUnk_03001EA4;
+extern struct LinkSave gInputRecording;
+extern u16 gVBlankCount;
+extern u32 gRngValue;
+extern u16 gFrameCount;
 extern u16 gUnk_03001F18[];
 extern u8 gUnk_03001F20;
 extern u8 gUnk_03001F30;
-extern u16 gUnk_0300235C;
-extern u16 gUnk_03002360;
-extern u16 gUnk_03002364;
+extern u16 gCompletionPercent;
+extern u16 gLocalPlayer;
+extern u16 gMilestoneFlags;
 extern u16 gUnk_03002378[];
 extern u8 gUnk_03002384;
-extern u8 gUnk_0300238C;
-extern u16 gUnk_030023AC;
+extern u8 gLevelIndex;
+extern u16 gPlayerCount;
 extern u8 gUnk_030023B8;
 extern u32 gUnk_030023C8[];
 extern u8 gUnk_030023E0;
-extern u8 gUnk_030023EC;
+extern u8 gStageIndex;
 extern u8 gUnk_03002400[8][7];
-extern u8 gUnk_03002464;
-extern u8 gUnk_03002468;
+extern u8 gExtraMode;
+extern u8 gRoomIndex;
 extern void sub_080b72bc(void);
-extern void sub_080b8348(void);
-extern void sub_080b8374(void);
+extern void ReadInputRecording(void);
+extern void WriteInputRecording(void);
 
-void sub_080b6f38(void)
+void InputRecorderStart(void)
 {
     s32 i;
     s32 j;
 
-    gUnk_0200EC54 = 1;
-    switch (gUnk_0200EC58)
+    gInputRecorderRunning = 1;
+    switch (gInputRecorderMode)
     {
     case 1:
-        gUnk_0200EC6C = &gUnk_0200EC80;
+        gInputRecordingPtr = &gInputRecording;
         for (i = 0; i <= 0x3B69; i++)
-            gUnk_0200EC6C->unk12C[i] = 0;
-        gUnk_0200EC6C->unk00 = gUnk_03000FB4;
-        gUnk_0200EC6C->unk04 = gUnk_03000FAC;
-        gUnk_0200EC6C->unk06 = gUnk_03001EA4;
-        gUnk_0200EC6C->unk08 = gUnk_0300238C;
-        gUnk_0200EC6C->unk09 = gUnk_030023EC;
-        gUnk_0200EC6C->unk0A = gUnk_03002468;
-        gUnk_0200EC6C->unk0B = gUnk_03002464;
-        gUnk_0200EC6C->unk0C = gUnk_030023AC;
-        gUnk_0200EC6C->unk12 = gUnk_020069F0;
-        gUnk_0200EC6C->unk13 = gUnk_02000020;
-        gUnk_0200EC6C->unk14 = gUnk_02005580;
-        gUnk_0200EC6C->unk36 = gUnk_0200B04C;
-        gUnk_0200EC6C->unk11C = gUnk_03002360;
-        gUnk_0200EC6C->unk11E = gUnk_03001F30;
+            gInputRecordingPtr->unk12C[i] = 0;
+        gInputRecordingPtr->unk00 = gRngValue;
+        gInputRecordingPtr->unk04 = gVBlankCount;
+        gInputRecordingPtr->unk06 = gFrameCount;
+        gInputRecordingPtr->unk08 = gLevelIndex;
+        gInputRecordingPtr->unk09 = gStageIndex;
+        gInputRecordingPtr->unk0A = gRoomIndex;
+        gInputRecordingPtr->unk0B = gExtraMode;
+        gInputRecordingPtr->unk0C = gPlayerCount;
+        gInputRecordingPtr->unk12 = gUnk_020069F0;
+        gInputRecordingPtr->unk13 = gUnk_02000020;
+        gInputRecordingPtr->unk14 = gMaxHealth;
+        gInputRecordingPtr->unk36 = gUnk_0200B04C;
+        gInputRecordingPtr->unk11C = gLocalPlayer;
+        gInputRecordingPtr->unk11E = gUnk_03001F30;
         for (i = 0; i <= 7; i++)
         {
-            gUnk_0200EC6C->unk38[i] = gUnk_02007D58[i];
+            gInputRecordingPtr->unk38[i] = gUsedSubGameDoors[i];
         }
         for (i = 0; i <= 7; i++)
         {
             for (j = 0; j <= 7; j++)
-                gUnk_0200EC6C->unk40[i][j] = gUnk_02007BF0[i][j];
+                gInputRecordingPtr->unk40[i][j] = gUnk_02007BF0[i][j];
         }
-        for (i = 0; i < gUnk_030023AC; i++)
+        for (i = 0; i < gPlayerCount; i++)
         {
             gUnk_0200EC78[i] = i;
             gUnk_0200EC60[i] = 0xFFFF;
             gUnk_0200EC68[i] = 0;
-            gUnk_0200EC6C->unk16[i] = gUnk_02007D48[i];
-            gUnk_0200EC6C->unk1E[i] = gUnk_02005588[i];
-            gUnk_0200EC6C->unk26[i] = gUnk_02004B50[i];
-            gUnk_0200EC6C->unk2E[i] = gUnk_0200AF18[i];
+            gInputRecordingPtr->unk16[i] = gPlayerLives[i];
+            gInputRecordingPtr->unk1E[i] = gPlayerHealth[i];
+            gInputRecordingPtr->unk26[i] = gPlayerAbilities[i];
+            gInputRecordingPtr->unk2E[i] = gUnk_0200AF18[i];
         }
-        gUnk_0200EC6C->unkC0 = gUnk_03002364;
-        gUnk_0200EC6C->unkC4[gUnk_03002464] = gUnk_030023B8;
-        gUnk_0200EC6C->unkC6[gUnk_03002464] = gUnk_03001F20;
-        gUnk_0200EC6C->unkC8[gUnk_03002464] = gUnk_030023E0;
-        gUnk_0200EC6C->unkCA[gUnk_03002464] = gUnk_03002384;
-        gUnk_0200EC6C->unkCC[gUnk_03002464] = gUnk_030023C8[0];
+        gInputRecordingPtr->unkC0 = gMilestoneFlags;
+        gInputRecordingPtr->unkC4[gExtraMode] = gUnk_030023B8;
+        gInputRecordingPtr->unkC6[gExtraMode] = gUnk_03001F20;
+        gInputRecordingPtr->unkC8[gExtraMode] = gUnk_030023E0;
+        gInputRecordingPtr->unkCA[gExtraMode] = gUnk_03002384;
+        gInputRecordingPtr->unkCC[gExtraMode] = gUnk_030023C8[0];
         for (i = 0; i <= 7; i++)
         {
             for (j = 0; j <= 6; j++)
             {
-                gUnk_0200EC6C->unkD4[i][j] &= 15 << ((1 ^ gUnk_03002464) * 4);
-                gUnk_0200EC6C->unkD4[i][j] |= gUnk_03002400[i][j] << (gUnk_03002464 * 4);
+                gInputRecordingPtr->unkD4[i][j] &= 15 << ((1 ^ gExtraMode) * 4);
+                gInputRecordingPtr->unkD4[i][j] |= gUnk_03002400[i][j] << (gExtraMode * 4);
             }
         }
         for (i = 0; i <= 3; i++)
         {
-            gUnk_0200EC6C->unk10C[i] = gUnk_03001F18[i];
-            gUnk_0200EC6C->unk114[i] = gUnk_03002378[i];
+            gInputRecordingPtr->unk10C[i] = gUnk_03001F18[i];
+            gInputRecordingPtr->unk114[i] = gUnk_03002378[i];
         }
-        gUnk_0200EC6C->unkC2 = gUnk_0300235C;
-        sub_080b8374();
-        j = Div(0x3B6A, gUnk_030023AC);
-        for (i = 0; i < gUnk_030023AC; i++)
+        gInputRecordingPtr->unkC2 = gCompletionPercent;
+        WriteInputRecording();
+        j = Div(0x3B6A, gPlayerCount);
+        for (i = 0; i < gPlayerCount; i++)
             gUnk_0200EC70[i] = j - 4;
         break;
     case 2:
-        sub_080b8348();
-        gUnk_0200EC6C = &gUnk_0200EC80;
+        ReadInputRecording();
+        gInputRecordingPtr = &gInputRecording;
         sub_080b72bc();
         break;
     case 3:
-        gUnk_0200EC6C = gUnk_0200EC50;
+        gInputRecordingPtr = gUnk_0200EC50;
         sub_080b72bc();
         break;
     }

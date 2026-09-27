@@ -4,6 +4,8 @@ Layout analysis of `baserom.gba` (8 MiB, SHA-1 `37a476567d133c146fee6b5e2eb0b07a
 All addresses are GBA cart VMAs (`file offset = VMA - 0x08000000`); every claim below is
 verifiable against `baserom.gba` at the cited address. Produced for issue #2.
 
+Names: this map keeps the `sub_`/`gUnk_` names of its time; `docs/analysis/renames.csv` maps each one to its real name (issue #155, `docs/naming.md`).
+
 ## 1. Method
 
 All disassembly ran inside the Docker toolchain image (per `AGENTS.md`):

@@ -5,13 +5,13 @@
 /* boot_caa3c.c (0x080CAA3C-0x080CAAB7, issue #100).
  *
  * The boot logo's 115 script-driven sprite objects (gUnk_02030000[],
- * struct M38LogoObj): sub_080caa3c, which M02's logo sequence sub_08009200
+ * struct M38LogoObj): BootLogoInitObjects, which M02's logo sequence PlayBootLogo
  * calls once, seeds them from the s16 stream gUnk_08757440 (script id, wait,
  * x, y per object; the draw layer follows y) and clears their saved script
- * cursors gUnk_0201BFD0[].  Their per-frame interpreter sub_080caab8
+ * cursors gUnk_0201BFD0[].  Their per-frame interpreter BootLogoUpdateObjects
  * (called by M02's task type #0) is src/boot_caab8.c. */
 
-/* One boot-logo sprite object: a command script (sub_080caab8) moving a
+/* One boot-logo sprite object: a command script (BootLogoUpdateObjects) moving a
    sprite in 24.8 fixed point. */
 struct M38LogoObj
 {
@@ -37,7 +37,7 @@ extern s16 *gUnk_087577D8[];
 
 /* Seed the 115 boot-logo objects from gUnk_08757440[] (script id, wait,
    x, y per object; the layer follows y). */
-void sub_080caa3c(void)
+void BootLogoInitObjects(void)
 {
     s16 *s = gUnk_08757440;
     struct M38LogoObj *obj = gUnk_02030000;

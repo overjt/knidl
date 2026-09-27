@@ -8,8 +8,8 @@
 	.section .sample_set_index, "a"
 	.global	sample_set_index
 sample_set_index:
-	.global	gUnk_087E1D58
-gUnk_087E1D58:
+	.global	gRoomTable
+gRoomTable:
 	.word	gUnk_087E1F68
 	.word	gUnk_087E1F7C
 	.word	gUnk_087E1F98
@@ -141,8 +141,8 @@ gUnk_087E1F0C:
 gUnk_087E1F18:
 	.word	gUnk_08350AF8
 	.incbin	"baserom.gba", 0x7E1F1C, 0x4
-	.global	gUnk_087E1F20
-gUnk_087E1F20:
+	.global	gRoomBgAnimScripts
+gRoomBgAnimScripts:
 	.incbin	"baserom.gba", 0x7E1F20, 0x4
 	.word	gUnk_087E1E78
 	.word	gUnk_087E1EA4

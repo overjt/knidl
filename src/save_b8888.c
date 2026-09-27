@@ -40,60 +40,60 @@ struct LinkRec
 
 extern s32 Div(s32 a, s32 b);
 extern s32 Mod(s32 a, s32 b);
-extern u16 gUnk_02006068[];
-extern struct SaveSlot gUnk_0200E600[];
-extern struct LinkRec gUnk_0200EA00[];
-extern u8 gUnk_0200EB80;
-extern u8 gUnk_0200EC80[];
-extern s32 gUnk_03001EA8;
+extern u16 gHudClock[];
+extern struct SaveSlot gSaveSlots[];
+extern struct LinkRec gLinkSaveSlots[];
+extern u8 gLinkSaveSlotPart;
+extern u8 gInputRecording[];
+extern s32 gSramAvailable;
 extern u16 gUnk_03001F18[];
 extern u8 gUnk_03001F20;
-extern u16 gUnk_0300235C;
-extern u16 gUnk_03002364;
+extern u16 gCompletionPercent;
+extern u16 gMilestoneFlags;
 extern u16 gUnk_03002378[];
 extern s8 gUnk_03002384;
-extern u16 gUnk_030023AC;
+extern u16 gPlayerCount;
 extern u8 gUnk_030023B8;
 extern s32 gUnk_030023C8[];
 extern s8 gUnk_030023E0;
-extern s32 gUnk_030023E8;
+extern s32 gCurSaveSlot;
 extern u8 gUnk_03002400[8][7];
-extern u8 gUnk_03002464;
-extern u16 gUnk_03004D50[];
-extern u16 gUnk_03004D90[];
-extern void sub_08002338(void);
-extern void sub_08002348(void);
-extern void sub_08002d18(void);
+extern u8 gExtraMode;
+extern u16 gRecvCmds[];
+extern u16 gSendCmd[];
+extern void LinkStopKeyExchange(void);
+extern void LinkStartRecordExchange(void);
+extern void RunLinkFrame(void);
 
-s32 sub_080b79b8(s32 a);
-s32 sub_080b7a9c(s32 a);
-u32 sub_080b7df4(s32 a);
-void sub_080b7e14(s32 a);
-void sub_080b8b2c(s32 a);
+s32 CalcCompletionPercent(s32 a);
+s32 WriteSaveSlot(s32 a);
+u32 UpdateSaveSlotChecksum(s32 a);
+void StoreProgressInSaveSlot(s32 a);
+void MergeProgressIntoSaveSlot(s32 a);
 
 void sub_080b8888(void)
 {
     s32 n;
     s32 i;
 
-    sub_08002348();
-    gUnk_0200EB80 = 0;
+    LinkStartRecordExchange();
+    gLinkSaveSlotPart = 0;
     do
     {
-        sub_08002d18();
+        RunLinkFrame();
         n = 0;
-        if (gUnk_0200EB80 <= 26)
+        if (gLinkSaveSlotPart <= 26)
         {
-            gUnk_0200EB80++;
+            gLinkSaveSlotPart++;
         }
         else
         {
-            for (i = 0; i < gUnk_030023AC; i++)
+            for (i = 0; i < gPlayerCount; i++)
             {
-                if ((gUnk_03004D50[i] & 0xFF00) == (204 << 7) && (gUnk_03004D50[i] & 255) == 27)
+                if ((gRecvCmds[i] & 0xFF00) == (204 << 7) && (gRecvCmds[i] & 255) == 27)
                     n++;
             }
         }
-    } while (n != gUnk_030023AC);
-    sub_08002338();
+    } while (n != gPlayerCount);
+    LinkStopKeyExchange();
 }

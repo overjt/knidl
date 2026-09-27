@@ -523,7 +523,7 @@ SoundMainRAM:
 	strb	r7, [r6, #1]
 	b.n	.L_080cdf3e	@ 0x080CDF3E
 	strb	r0, [r6, #24]
-	b.n	sub_080cd70c	@ 0x080CD70C
+	b.n	CreditsInitText	@ 0x080CD70C
 	str	r4, [r0, #0]
 	.short	0xE485
 	movs	r6, r4

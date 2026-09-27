@@ -2,16 +2,16 @@
 #include "global.h"
 #include "task.h"
 
-extern u8 gUnk_02016490;
-extern s32 gUnk_02016494;
-extern u16 gUnk_020164A0[];
+extern u8 gHBlankScrollState;
+extern s32 gHBlankScrollTimer;
+extern u16 gHBlankScrollTable[];
 extern s32 gUnk_02016C30;
-extern void (*gUnk_0300003C)(void);
-extern u32 gUnk_0300101C;
-extern vs32 gUnk_03000B78;
-extern vs32 gUnk_03000F8C;
-extern vu32 gUnk_03001E94;
-extern u16 gUnk_030023E4;
+extern void (*gFrameCallback)(void);
+extern u32 gHBlankDmaDest;
+extern vs32 gBg3ScrollX;
+extern vs32 gBg2ScrollX;
+extern vu32 gBg2ScrollY;
+extern u16 gSpriteCameraY;
 extern s8 gUnk_087561CC[];
 
 /* The fixed BG2VOFS value `w` is a plain u32 local that global allocation
@@ -39,31 +39,31 @@ s32 sub_080b6d04(void)
     s32 d;
     u32 *pc;
 
-    if (gUnk_02016490 == 3)
+    if (gHBlankScrollState == 3)
     {
-        gUnk_03000F8C = gUnk_020164A0[0] << 16;
-        gUnk_03000B78 = gUnk_020164A0[2] << 16;
-        gUnk_0300101C = 0x04000018;
+        gBg2ScrollX = gHBlankScrollTable[0] << 16;
+        gBg3ScrollX = gHBlankScrollTable[2] << 16;
+        gHBlankDmaDest = 0x04000018;
         return 3;
     }
-    if (gUnk_02016490 == 2)
+    if (gHBlankScrollState == 2)
     {
-        gUnk_0300003C = NULL;
-        gUnk_02016494 = 0;
+        gFrameCallback = NULL;
+        gHBlankScrollTimer = 0;
     }
     else
     {
-        if (gUnk_02016494 > 0x1FF)
-            gUnk_02016494 = 0;
-        d = 512 - gUnk_02016494;
-        i = gUnk_030023E4;
-        w = gUnk_03001E94 >> 16;
+        if (gHBlankScrollTimer > 0x1FF)
+            gHBlankScrollTimer = 0;
+        d = 512 - gHBlankScrollTimer;
+        i = gSpriteCameraY;
+        w = gBg2ScrollY >> 16;
         pt = gUnk_087561CC;
         v = ((d * pt[i >> 3]) >> 1) + *(pc2 = &gUnk_02016C30);
-        pf = &gUnk_03000F8C;
-        base = gUnk_020164A0;
-        pb = &gUnk_03000B78;
-        pc = &gUnk_0300101C;
+        pf = &gBg2ScrollX;
+        base = gHBlankScrollTable;
+        pb = &gBg3ScrollX;
+        pc = &gHBlankDmaDest;
         pc3 = pc2;
         pt2 = pt;
         p = base;

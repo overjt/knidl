@@ -5,47 +5,47 @@
  * agbcc -O2 -mthumb-interwork (game-code recipe).
  *
  * Pointer-called entry: runs the sound driver's vsync/main, flushes the OAM
- * and palette shadows via sub_080011ac, pumps the copy queue, and clears the
- * frame flag gUnk_03001EC4 that sub_08000de4 spins on. */
+ * and palette shadows via CopyOamAndPalette, pumps the copy queue, and clears the
+ * frame flag gWaitingForVBlank that EndFrame spins on. */
 
-extern vu16 gUnk_03001174;
-extern vu16 gUnk_03001E98;
-extern vu16 gUnk_03001E90;
-extern vs16 gUnk_03000FB8;
-extern vu16 gUnk_030004A4;
-extern u16 *gUnk_03001ED4;
-extern vu32 gUnk_03000FB0;
-extern vu16 gUnk_03000048;
-extern vu16 gUnk_03001ED8;
-extern u16 gUnk_03001270[];
-extern u16 gUnk_03001A90[];
+extern vu16 gFadeTimer;
+extern vu16 gFadeInterval;
+extern vu16 gFadeSteps;
+extern vs16 gBrightness;
+extern vu16 gFadeStep;
+extern u16 *gFadeKeepMask;
+extern vu32 gPaletteSource;
+extern vu16 gFadeBlankAtWhite;
+extern vu16 gDispCnt;
+extern u16 gBgPalette[];
+extern u16 gFadedPalette[];
 
-extern vs16 gUnk_03000B0C;
-extern vs16 gUnk_03000FBC;
-extern vu16 gUnk_03000FCC;
-extern vu16 gUnk_03000AF8;
-extern void (*gUnk_0300003C)(void);
+extern vs16 gVolumeRampMode;
+extern vs16 gVolumeRampLevel;
+extern vu16 gVolumeRampSpeed;
+extern vu16 gSoundDisabled;
+extern void (*gFrameCallback)(void);
 extern vu16 gUnk_03001014;
 extern u32 gUnk_03000B74;
-extern vu16 gUnk_03001EC4;
-extern vu16 gUnk_03000FD0;
-extern vu16 gUnk_03001EF4;
-extern vu16 gUnk_03000038;
-extern vu16 gUnk_0300243C;
-extern vu16 gUnk_03001EF8;
-extern vu32 gUnk_0200EBA0;
-extern vu16 gUnk_03001EA4;
-extern u16 gUnk_03000498[4];
-extern void (*gUnk_03000014)(void);
+extern vu16 gWaitingForVBlank;
+extern vu16 gFrameInProgress;
+extern vu16 gHeldKeys;
+extern vu16 gPressedKeys;
+extern vu16 gLinkPlayerCount;
+extern vu16 gIntrMasterEnable;
+extern vu32 gLinkDriverMode;
+extern vu16 gFrameCount;
+extern u16 gPlayTime[4];
+extern void (*gFrameEndCallback)(void);
 
-extern vu16 gUnk_03001EE4;
-extern u32 gUnk_03004D30;
-extern void (*gUnk_03000FA4)(void);
-extern vu16 gUnk_03000FAC;
+extern vu16 gSoundDriverOn;
+extern u32 gLinkPauseFrames;
+extern void (*gVBlankCallback)(void);
+extern vu16 gVBlankCount;
 extern vu16 gUnk_03001008;
 extern void (*gUnk_03000F90)(void);
-extern void (*gUnk_030004A0)(void);
-extern void (*gUnk_03000AF4)(void);
+extern void (*gBlockAnimHook)(void);
+extern void (*gVBlankEndCallback)(void);
 
 struct MusicPlayerInfo;
 extern struct MusicPlayerInfo gMPlayInfo_BGM;
@@ -57,61 +57,61 @@ extern void m4aSoundVSync(void);
 extern void m4aSoundMain(void);
 extern void SoundDriverVSyncOff(void);
 extern void SoftReset(u32 resetFlags);
-extern void sub_08003484(void);
-extern void sub_08004734(void);
-extern void sub_08006cd4(void);
-extern void sub_080011dc(void);
-extern void sub_08001280(void);
-extern void sub_080011ac(void);
-extern void sub_080013f8(void);
+extern void StopAllSound(void);
+extern void LinkBlockMain(void);
+extern void LinkVSync(void);
+extern void ReadKeys(void);
+extern void FlushDisplayRegs(void);
+extern void CopyOamAndPalette(void);
+extern void ProcessCopyQueue(void);
 
-void sub_08000934(void);
+void UpdateFade(void);
 
-void sub_080010cc(void)
+void VBlankIntr(void)
 {
-    if (gUnk_03001EE4 != 0)
+    if (gSoundDriverOn != 0)
         m4aSoundVSync();
 
-    if (gUnk_0300243C != 1)
+    if (gLinkPlayerCount != 1)
     {
-        if (gUnk_03004D30 != 0)
+        if (gLinkPauseFrames != 0)
         {
-            gUnk_03004D30--;
-            if (gUnk_03004D30 == 0)
-                gUnk_0200EBA0 = 1;
+            gLinkPauseFrames--;
+            if (gLinkPauseFrames == 0)
+                gLinkDriverMode = 1;
         }
     }
 
-    if (gUnk_0200EBA0 == 1)
-        sub_08006cd4();
+    if (gLinkDriverMode == 1)
+        LinkVSync();
 
-    if (gUnk_03000FA4 != 0)
-        gUnk_03000FA4();
+    if (gVBlankCallback != 0)
+        gVBlankCallback();
 
-    gUnk_03000FAC++;
+    gVBlankCount++;
 
-    if (gUnk_03000FD0 != 0)
+    if (gFrameInProgress != 0)
     {
         if (gUnk_03001008 != 0)
-            sub_080011dc();
+            ReadKeys();
     }
     else
     {
-        sub_080011dc();
+        ReadKeys();
         if (gUnk_03000F90 != 0)
             gUnk_03000F90();
-        sub_08001280();
-        sub_080011ac();
-        sub_080013f8();
-        if (gUnk_030004A0 != 0)
-            gUnk_030004A0();
+        FlushDisplayRegs();
+        CopyOamAndPalette();
+        ProcessCopyQueue();
+        if (gBlockAnimHook != 0)
+            gBlockAnimHook();
     }
 
-    if (gUnk_03001EE4 != 0)
+    if (gSoundDriverOn != 0)
         m4aSoundMain();
 
-    if (gUnk_03000AF4 != 0)
-        gUnk_03000AF4();
+    if (gVBlankEndCallback != 0)
+        gVBlankEndCallback();
 
-    gUnk_03001EC4 = 0;
+    gWaitingForVBlank = 0;
 }

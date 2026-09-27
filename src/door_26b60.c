@@ -4,13 +4,13 @@
 
 /* door_26b60.c (0x08026B60-0x080270CF, issue #93).
  *
- * The door objects: one gUnk_02004B90 record per RoomDef door that is not
+ * The door objects: one gDoorStates record per RoomDef door that is not
  * one of the special ids 0x1A0A, 0x1E61 or 0x15B3.  sub_08026b60 and
- * sub_08026ca4 (the per-frame body, flag 16 of gUnk_03005624) decide
+ * UpdateDoors (the per-frame body, flag 16 of gRoomUpdateFlags) decide
  * whether a door is usable - in multi-player every present player must be
  * within 128 pixels - and step its animation (frame in the low nibble of
  * byte 4, timer in the high one, the star doors from gUnk_0873264C);
- * sub_08026eec draws the visible ones with sub_08001a94. */
+ * DrawDoors draws the visible ones with QueueSprite. */
 
 struct BgMap
 {
@@ -78,36 +78,36 @@ struct Unk02004B90
     /*0x05*/ u8 filler05[3];
 };
 
-extern struct RoomDef *gUnk_030055EC;
-extern struct Unk02004B90 gUnk_02004B90[];
-extern s16 gUnk_0200AEF0;
+extern struct RoomDef *gCurRoomDef;
+extern struct Unk02004B90 gDoorStates[];
+extern s16 gRoomEntryY;
 extern s32 gUnk_03001F2C;
 extern s32 gUnk_03002448;
-extern u16 gUnk_030023AC;
-extern u8 gUnk_03002350;
+extern u16 gPlayerCount;
+extern u8 gActivePlayerCount;
 extern s32 gUnk_03002344;
-extern s16 gUnk_020055E0;
+extern s16 gRoomEntryX;
 extern s8 gUnk_08733AF0[];
 extern u32 gUnk_03002160;
-extern u8 gUnk_03002340;
+extern u8 gActivePlayerMask;
 extern u8 gUnk_0873264C[][2];
 extern s8 gUnk_03002444;
 extern u32 gUnk_03001F10;
 extern u8 gUnk_02007CF0;
 extern u32 gUnk_0874CDF8[];
-extern s16 gUnk_03002348;
-extern u16 gUnk_030023E4;
+extern s16 gSpriteCameraX;
+extern u16 gSpriteCameraY;
 
-s32 sub_08001a94(u32 a, u32 b, u32 c, u32 d, u32 e, s16 f);
-u32 sub_0800641c(s16 x, s16 y);
-s32 sub_08021b18(u16 x, u16 y);
+s32 QueueSprite(u32 a, u32 b, u32 c, u32 d, u32 e, s16 f);
+u32 IsWorldPosOnScreen(s16 x, s16 y);
+s32 GetCollisionTileAtPixel(u16 x, u16 y);
 
 void sub_08026b60(void)
 {
-    struct Door *d = gUnk_030055EC->unk44;
+    struct Door *d = gCurRoomDef->unk44;
     s16 i;
 
-    for (i = 0; i < gUnk_030055EC->unk3A; d++, i++)
+    for (i = 0; i < gCurRoomDef->unk3A; d++, i++)
     {
         struct Unk02004B90 *p;
         s16 x;
@@ -116,15 +116,15 @@ void sub_08026b60(void)
 
         if (d->unk0 == 0x1A0A || d->unk0 == 0x1E61 || d->unk0 == 0x15B3)
             continue;
-        p = &gUnk_02004B90[i];
+        p = &gDoorStates[i];
         x = d->unk2 << 4;
         y = d->unk4 << 4;
         p->unk1 = 0;
-        if (gUnk_030023AC > 1 && gUnk_03002350 > 1)
+        if (gPlayerCount > 1 && gActivePlayerCount > 1)
         {
             gUnk_03002344 = 128;
-            gUnk_03001F2C = x - gUnk_020055E0;
-            gUnk_03002448 = y - gUnk_0200AEF0;
+            gUnk_03001F2C = x - gRoomEntryX;
+            gUnk_03002448 = y - gRoomEntryY;
             lim = 0x4000;
             if (lim < gUnk_03001F2C * gUnk_03001F2C + gUnk_03002448 * gUnk_03002448)
                 p->unk1 = 0;
@@ -144,12 +144,12 @@ void sub_08026b60(void)
     }
 }
 
-void sub_08026ca4(void)
+void UpdateDoors(void)
 {
-    struct Door *d = gUnk_030055EC->unk44;
+    struct Door *d = gCurRoomDef->unk44;
     s16 i;
 
-    for (i = 0; i < gUnk_030055EC->unk3A; d++, i++)
+    for (i = 0; i < gCurRoomDef->unk3A; d++, i++)
     {
         struct Unk02004B90 *p;
         s16 x;
@@ -159,22 +159,22 @@ void sub_08026ca4(void)
 
         if (d->unk0 == 0x1A0A || d->unk0 == 0x1E61 || d->unk0 == 0x15B3)
             continue;
-        p = &gUnk_02004B90[i];
+        p = &gDoorStates[i];
         x = d->unk2 << 4;
         y = d->unk4 << 4;
         p->unk1 = 0;
-        k = sub_08021b18(x, y);
+        k = GetCollisionTileAtPixel(x, y);
         if (gUnk_08733AF0[k] == 0)
             continue;
-        if (gUnk_030023AC > 1 && gUnk_03002350 > 1)
+        if (gPlayerCount > 1 && gActivePlayerCount > 1)
         {
             gUnk_03002160 = 0;
             gUnk_03002344 = 128;
-            for (j = 0; j < gUnk_030023AC; j++)
+            for (j = 0; j < gPlayerCount; j++)
             {
-                if ((gUnk_03002340 >> j) & 1)
+                if ((gActivePlayerMask >> j) & 1)
                 {
-                    struct Task *t = &gUnk_03002790[j];
+                    struct Task *t = &gTasks[j];
 
                     gUnk_03001F2C = x - t->unk48;
                     gUnk_03002448 = y - t->unk4A;
@@ -186,7 +186,7 @@ void sub_08026ca4(void)
                     gUnk_03002160++;
                 }
             }
-            if (gUnk_03002160 == gUnk_030023AC)
+            if (gUnk_03002160 == gPlayerCount)
                 p->unk1 = 1;
             else
                 p->unk1 = 0;
@@ -216,15 +216,15 @@ void sub_08026ca4(void)
     }
 }
 
-void sub_08026eec(void)
+void DrawDoors(void)
 {
     struct Door *d;
     s16 i;
 
     if (gUnk_03002444 != 0)
         return;
-    d = gUnk_030055EC->unk44;
-    for (i = 0; i < gUnk_030055EC->unk3A; d++, i++)
+    d = gCurRoomDef->unk44;
+    for (i = 0; i < gCurRoomDef->unk3A; d++, i++)
     {
         struct Unk02004B90 *p;
         s16 x;
@@ -233,12 +233,12 @@ void sub_08026eec(void)
 
         if (d->unk0 == 0x1A0A || d->unk0 == 0x1E61 || d->unk0 == 0x15B3)
             continue;
-        p = &gUnk_02004B90[i];
+        p = &gDoorStates[i];
         x = d->unk2 << 4;
         y = d->unk4 << 4;
-        if (sub_0800641c(x, y) == 0)
+        if (IsWorldPosOnScreen(x, y) == 0)
             continue;
-        k = sub_08021b18(x, y);
+        k = GetCollisionTileAtPixel(x, y);
         if (k != 16 && k != 144)
             continue;
         gUnk_03001F10 = -1;
@@ -246,7 +246,7 @@ void sub_08026eec(void)
         {
         case 1:
             gUnk_03001F2C = 16;
-            if ((gUnk_02007CF0 != 2 || gUnk_03002350 <= 1) && p->unk1 != 0)
+            if ((gUnk_02007CF0 != 2 || gActivePlayerCount <= 1) && p->unk1 != 0)
                 gUnk_03001F10 = 8;
             else
                 gUnk_03001F10 = 12;
@@ -255,7 +255,7 @@ void sub_08026eec(void)
         default:
         case 0:
             gUnk_03001F2C = 8;
-            if ((gUnk_02007CF0 != 2 || gUnk_03002350 <= 1) && p->unk1 != 0)
+            if ((gUnk_02007CF0 != 2 || gActivePlayerCount <= 1) && p->unk1 != 0)
                 gUnk_03001F10 = 0;
             else
                 gUnk_03001F10 = 4;
@@ -270,7 +270,7 @@ void sub_08026eec(void)
             gUnk_03001F10 += gUnk_0873264C[p->unk4_0][0];
             break;
         }
-        sub_08001a94(15, gUnk_0874CDF8[gUnk_03001F10], 0, 0, x + gUnk_03001F2C - gUnk_03002348,
-                     -gUnk_030023E4 + y);
+        QueueSprite(15, gUnk_0874CDF8[gUnk_03001F10], 0, 0, x + gUnk_03001F2C - gSpriteCameraX,
+                     -gSpriteCameraY + y);
     }
 }

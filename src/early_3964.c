@@ -62,82 +62,82 @@ struct Unk030023A8
     /*0x03*/ u8 unk03;
 };
 
-extern struct SioWork gUnk_0200EBC0;
-extern struct MultiBootParam gUnk_0200EBF0;
-extern u32 gUnk_0200EBA8;
-extern u32 gUnk_0200EC48;
-extern vu16 gUnk_0200EB98[];
+extern struct SioWork gMultiBootStruct;
+extern struct MultiBootParam gMultiBootParam;
+extern u32 gLinkBlockState;
+extern u32 gLinkSetupMode;
+extern vu16 gMultiBootDataRecv[];
 extern struct Unk030023A8 gUnk_030023A8;
 extern vu16 gUnk_0300244C;
-extern u32 gUnk_030004B0[];
-extern vu16 gUnk_03000018;
-extern vu16 gUnk_03001EF8;
+extern u32 gIntrTable[];
+extern vu16 gIntrEnable;
+extern vu16 gIntrMasterEnable;
 
-extern void sub_08003484(void);
-extern void sub_08003840(void);
-extern void sub_08004068(void);
-extern void sub_08004968(struct MultiBootParam *);
-extern u32 sub_08004984(struct MultiBootParam *);
-extern void sub_08004dd8(struct MultiBootParam *, u32, u32, u32, u32);
-extern u32 sub_08004e9c(struct MultiBootParam *);
+extern void StopAllSound(void);
+extern void DisableSoundDriver(void);
+extern void LinkSetupIntr(void);
+extern void MultiBootInit(struct MultiBootParam *);
+extern u32 MultiBootMain(struct MultiBootParam *);
+extern void MultiBootStartMaster(struct MultiBootParam *, u32, u32, u32, u32);
+extern u32 MultiBootCheckComplete(struct MultiBootParam *);
 
-/*FN sub_08003888*/
+/*FN LinkSetupInit*/
 
-/*FN sub_08003964*/
-void sub_08003964(void)
+/*FN LinkSetupStop*/
+void LinkSetupStop(void)
 {
-    gUnk_03001EF8 = REG_IME = REG_IME & 0xFFFE;
-    gUnk_0200EC48 = -1;
+    gIntrMasterEnable = REG_IME = REG_IME & 0xFFFE;
+    gLinkSetupMode = -1;
     REG_SIOCNT = REG_SIOCNT & 0xBFFF;
     REG_SIOMLT_SEND = 0xD952;
-    gUnk_030004B0[1] = gUnk_030004B0[0] = (u32)sub_08004068;
-    gUnk_0200EBC0.unk01 = gUnk_0200EBC0.unk02 = 0;
-    REG_IE = gUnk_03000018 = gUnk_03000018 & 0xFF3F;
-    gUnk_03001EF8 = REG_IME = REG_IME | 1;
+    gIntrTable[1] = gIntrTable[0] = (u32)LinkSetupIntr;
+    gMultiBootStruct.unk01 = gMultiBootStruct.unk02 = 0;
+    REG_IE = gIntrEnable = gIntrEnable & 0xFF3F;
+    gIntrMasterEnable = REG_IME = REG_IME | 1;
 }
 
-/*FN sub_08003a00*/
-void sub_08003a00(u8 *start, u8 *end)
+/*FN MultiBootSetParams*/
+void MultiBootSetParams(u8 *start, u8 *end)
 {
     u32 len;
 
     len = ((u32)end - (u32)start + 16) & ~15;
-    gUnk_0200EBC0.unk10 = (u32)start + 0xC0;
-    gUnk_0200EBC0.unk14 = (u32)end;
-    gUnk_0200EBC0.unk18 = len - 0xC0;
-    gUnk_0200EBF0.masterp = start;
-    gUnk_0200EBF0.server_type = 0;
+    gMultiBootStruct.unk10 = (u32)start + 0xC0;
+    gMultiBootStruct.unk14 = (u32)end;
+    gMultiBootStruct.unk18 = len - 0xC0;
+    gMultiBootParam.masterp = start;
+    gMultiBootParam.server_type = 0;
 }
 
-/*FN sub_08003a34*/
-void sub_08003a34(u8 *start, u8 *end)
+/*FN MultiBootInitWithParams*/
+void MultiBootInitWithParams(u8 *start, u8 *end)
 {
     vu16 zero;
     u32 len;
 
     len = ((u32)end - (u32)start + 16) & ~15;
     zero = 0;
-    CpuSet((void *)&zero, &gUnk_0200EBF0, 0x01000026);
-    gUnk_0200EBC0.unk10 = (u32)start + 0xC0;
-    gUnk_0200EBC0.unk14 = (u32)end;
-    gUnk_0200EBC0.unk18 = len - 0xC0;
-    gUnk_0200EBF0.masterp = start;
-    gUnk_0200EBF0.server_type = 0;
-    sub_08004968(&gUnk_0200EBF0);
+    CpuSet((void *)&zero, &gMultiBootParam, 0x01000026);
+    gMultiBootStruct.unk10 = (u32)start + 0xC0;
+    gMultiBootStruct.unk14 = (u32)end;
+    gMultiBootStruct.unk18 = len - 0xC0;
+    gMultiBootParam.masterp = start;
+    gMultiBootParam.server_type = 0;
+    MultiBootInit(&gMultiBootParam);
 }
 
-/*FN sub_08003a98*/
-void sub_08003a98(void)
+/*FN LinkSetupRequestStart*/
+void LinkSetupRequestStart(void)
 {
-    if (gUnk_0200EBC0.unk2B != 0)
+    if (gMultiBootStruct.unk2B != 0)
         return;
-    if (gUnk_0200EBC0.unk02 != 2)
+    if (gMultiBootStruct.unk02 != 2)
         return;
-    gUnk_0200EBC0.unk2B = 1;
+    gMultiBootStruct.unk2B = 1;
 }
 
-/*FN sub_08003ab8*/
-void sub_08003ab8(void)
+/*FN LinkSetupDetect*/
+void LinkSetupDetect(void)
 {
     vu16 cnt;
     u16 t;
@@ -146,129 +146,129 @@ void sub_08003ab8(void)
 
     cnt = REG_SIOCNT;
     if ((REG_SIOCNT & 4) == 0)
-        sub_08004984(&gUnk_0200EBF0);
-    gUnk_0200EBC0.unk25 = 0;
+        MultiBootMain(&gMultiBootParam);
+    gMultiBootStruct.unk25 = 0;
     if ((cnt & 8) == 0)
     {
         t = cnt & 0x80;
         if (t != 0)
             return;
-        gUnk_0200EBC0.unk24 = gUnk_0200EBC0.unk25 = gUnk_0200EBC0.unk03 = t;
+        gMultiBootStruct.unk24 = gMultiBootStruct.unk25 = gMultiBootStruct.unk03 = t;
         return;
     }
-    if (gUnk_0200EBC0.unk24 <= 29)
+    if (gMultiBootStruct.unk24 <= 29)
         return;
     mask = 0;
     for (i = 0; i <= 2; i++)
     {
         u16 v;
 
-        v = gUnk_0200EBC0.unk1E[i] & 0xFFF0;
+        v = gMultiBootStruct.unk1E[i] & 0xFFF0;
         if (v == 0x7200)
             mask |= 1;
         if (v == 0xD950)
             mask |= 2;
     }
-    gUnk_0200EBC0.unk25 = mask;
+    gMultiBootStruct.unk25 = mask;
     mask &= 3;
     if (mask == 3)
     {
-        gUnk_0200EBC0.unk03 |= 2;
+        gMultiBootStruct.unk03 |= 2;
         return;
     }
-    gUnk_0200EBC0.unk2A = 0;
-    gUnk_0200EBC0.unk02 = 0;
-    gUnk_0200EBC0.unk0A = 0;
-    if (gUnk_0200EBC0.unk25 == 1)
+    gMultiBootStruct.unk2A = 0;
+    gMultiBootStruct.unk02 = 0;
+    gMultiBootStruct.unk0A = 0;
+    if (gMultiBootStruct.unk25 == 1)
     {
-        gUnk_0200EC48 = 2;
+        gLinkSetupMode = 2;
         return;
     }
-    if (gUnk_0200EBC0.unk25 == 2)
-        gUnk_0200EC48 = 1;
+    if (gMultiBootStruct.unk25 == 2)
+        gLinkSetupMode = 1;
 }
 
-/*FN sub_08003bd8*/
-void sub_08003bd8(void)
+/*FN LinkSetupMultiCart*/
+void LinkSetupMultiCart(void)
 {
     vu16 cnt;
     u16 t;
     u16 t2;
 
     cnt = REG_SIOCNT;
-    if ((gUnk_0200EBC0.unk28 & 0x40) != 0 || (gUnk_0200EBC0.unk28 & 8) == 0)
+    if ((gMultiBootStruct.unk28 & 0x40) != 0 || (gMultiBootStruct.unk28 & 8) == 0)
     {
-        gUnk_0200EBC0.unk01 = 0;
-        gUnk_0200EBC0.unk2A = gUnk_0200EBC0.unk02 = gUnk_0200EBC0.unk24 = gUnk_0200EBC0.unk25 = 0;
-        gUnk_0200EC48 = 0;
+        gMultiBootStruct.unk01 = 0;
+        gMultiBootStruct.unk2A = gMultiBootStruct.unk02 = gMultiBootStruct.unk24 = gMultiBootStruct.unk25 = 0;
+        gLinkSetupMode = 0;
     }
     else
     {
-        t = gUnk_0200EBC0.unk28 & 4;
+        t = gMultiBootStruct.unk28 & 4;
         if (t == 0 && (cnt & 0xFC) != 8)
         {
-            gUnk_0200EBC0.unk01 = t;
-            gUnk_0200EBC0.unk2A = gUnk_0200EBC0.unk02 = gUnk_0200EBC0.unk24 = gUnk_0200EBC0.unk25 = t;
-            gUnk_0200EC48 = t;
+            gMultiBootStruct.unk01 = t;
+            gMultiBootStruct.unk2A = gMultiBootStruct.unk02 = gMultiBootStruct.unk24 = gMultiBootStruct.unk25 = t;
+            gLinkSetupMode = t;
         }
         else
         {
-            if (gUnk_0200EB98[0] == 0xE4E4 && (gUnk_0200EBC0.unk28 & 4) != 0)
+            if (gMultiBootDataRecv[0] == 0xE4E4 && (gMultiBootStruct.unk28 & 4) != 0)
                 return;
-            t = gUnk_0200EBC0.unk2B;
+            t = gMultiBootStruct.unk2B;
             if (t != 0)
             {
                 REG_SIOMLT_SEND = 0xE4E4;
                 REG_SIOCNT |= 0x80;
                 return;
             }
-            if (gUnk_0200EBC0.unk2A != 0)
+            if (gMultiBootStruct.unk2A != 0)
             {
-                if (gUnk_0200EBC0.unk02 != 2 || gUnk_0200EBC0.unk01 == 1)
+                if (gMultiBootStruct.unk02 != 2 || gMultiBootStruct.unk01 == 1)
                 {
-                    gUnk_0200EBC0.unk01 = t;
-                    gUnk_0200EBC0.unk2A = gUnk_0200EBC0.unk02 = gUnk_0200EBC0.unk24 = gUnk_0200EBC0.unk25 = t;
-                    gUnk_0200EC48 = t;
+                    gMultiBootStruct.unk01 = t;
+                    gMultiBootStruct.unk2A = gMultiBootStruct.unk02 = gMultiBootStruct.unk24 = gMultiBootStruct.unk25 = t;
+                    gLinkSetupMode = t;
                     return;
                 }
             }
-            else if (gUnk_0200EBC0.unk02 == 2)
+            else if (gMultiBootStruct.unk02 == 2)
             {
-                gUnk_0200EBC0.unk2A = 1;
+                gMultiBootStruct.unk2A = 1;
             }
-            if (gUnk_0200EB98[0] == 0xE4E4)
+            if (gMultiBootDataRecv[0] == 0xE4E4)
                 return;
-            t2 = gUnk_0200EBC0.unk28 & 4;
+            t2 = gMultiBootStruct.unk28 & 4;
             if (t2 == 0)
             {
                 if ((cnt & 0xFC) != 8)
-                    gUnk_0200EBC0.unk02 = 0;
-                gUnk_0200EBC0.unk06 = gUnk_0200EBC0.unk06 + 1;
-                gUnk_0200EBC0.unk06 = gUnk_0200EBC0.unk06 & 0x1FFF;
-                if (gUnk_0200EBC0.unk06 <= 255)
-                    gUnk_0200EBC0.unk06 = 0x100;
-                REG_SIOMLT_SEND = gUnk_0200EBC0.unk06 | gUnk_0200EBC0.unk0C;
-                if ((gUnk_0200EBC0.unk28 & 0x4000) == 0)
+                    gMultiBootStruct.unk02 = 0;
+                gMultiBootStruct.unk06 = gMultiBootStruct.unk06 + 1;
+                gMultiBootStruct.unk06 = gMultiBootStruct.unk06 & 0x1FFF;
+                if (gMultiBootStruct.unk06 <= 255)
+                    gMultiBootStruct.unk06 = 0x100;
+                REG_SIOMLT_SEND = gMultiBootStruct.unk06 | gMultiBootStruct.unk0C;
+                if ((gMultiBootStruct.unk28 & 0x4000) == 0)
                 {
-                    gUnk_0200EBC0.unk02 = 0;
+                    gMultiBootStruct.unk02 = 0;
                     return;
                 }
-                gUnk_0200EBC0.unk0A = gUnk_0200EBC0.unk0A + 1;
+                gMultiBootStruct.unk0A = gMultiBootStruct.unk0A + 1;
                 REG_SIOCNT |= 0x80;
                 return;
             }
-            if (gUnk_0200EBC0.unk06 == gUnk_0200EBC0.unk08)
+            if (gMultiBootStruct.unk06 == gMultiBootStruct.unk08)
             {
-                gUnk_0200EBC0.unk02 = 0;
-                gUnk_0200EBC0.unk03 &= 0xFE;
+                gMultiBootStruct.unk02 = 0;
+                gMultiBootStruct.unk03 &= 0xFE;
             }
-            gUnk_0200EBC0.unk06 = gUnk_0200EBC0.unk08;
+            gMultiBootStruct.unk06 = gMultiBootStruct.unk08;
         }
     }
 }
 
-/*FN sub_08003dc4*/
-void sub_08003dc4(void)
+/*FN LinkSetupMultiBoot*/
+void LinkSetupMultiBoot(void)
 {
     vu16 cnt;
     u16 t;
@@ -276,87 +276,87 @@ void sub_08003dc4(void)
     u8 cb;
 
     cnt = REG_SIOCNT;
-    t = gUnk_0200EBC0.unk28 & 4;
+    t = gMultiBootStruct.unk28 & 4;
     if (t != 0)
     {
-        gUnk_0200EC48 = 0;
+        gLinkSetupMode = 0;
         return;
     }
-    if (gUnk_0200EBC0.unk2A == 1)
+    if (gMultiBootStruct.unk2A == 1)
     {
-        if (gUnk_0200EBC0.unk01 == 1 || (gUnk_0200EBF0.client_bit & 14) == 0)
+        if (gMultiBootStruct.unk01 == 1 || (gMultiBootParam.client_bit & 14) == 0)
         {
-            gUnk_0200EBC0.unk01 = t;
-            gUnk_0200EBC0.unk2A = gUnk_0200EBC0.unk02 = gUnk_0200EBC0.unk24 = gUnk_0200EBC0.unk25 = t;
-            gUnk_0200EC48 = t;
+            gMultiBootStruct.unk01 = t;
+            gMultiBootStruct.unk2A = gMultiBootStruct.unk02 = gMultiBootStruct.unk24 = gMultiBootStruct.unk25 = t;
+            gLinkSetupMode = t;
             return;
         }
     }
     else
     {
-        t = gUnk_0200EBF0.client_bit & 14;
+        t = gMultiBootParam.client_bit & 14;
         if (t == 0)
             goto noconn;
     }
-    if (gUnk_0200EBC0.unk2A == 0)
-        gUnk_0200EBC0.unk2A = 1;
-    gUnk_0200EBC0.unk02 = 1;
-    gUnk_0200EBC0.unk01 = 1;
-    cb = gUnk_0200EBF0.client_bit;
-    gUnk_0200EBC0.unk01 = gUnk_0200EBC0.unk01 + ((cb >> 1) & 1);
-    gUnk_0200EBC0.unk01 = gUnk_0200EBC0.unk01 + ((cb >> 2) & 1);
-    gUnk_0200EBC0.unk01 = gUnk_0200EBC0.unk01 + ((cb >> 3) & 1);
-    switch (gUnk_0200EBF0.probe_count)
+    if (gMultiBootStruct.unk2A == 0)
+        gMultiBootStruct.unk2A = 1;
+    gMultiBootStruct.unk02 = 1;
+    gMultiBootStruct.unk01 = 1;
+    cb = gMultiBootParam.client_bit;
+    gMultiBootStruct.unk01 = gMultiBootStruct.unk01 + ((cb >> 1) & 1);
+    gMultiBootStruct.unk01 = gMultiBootStruct.unk01 + ((cb >> 2) & 1);
+    gMultiBootStruct.unk01 = gMultiBootStruct.unk01 + ((cb >> 3) & 1);
+    switch (gMultiBootParam.probe_count)
     {
     case 0:
-        if (gUnk_0200EBC0.unk0A <= 15)
-            gUnk_0200EBC0.unk0A = gUnk_0200EBC0.unk0A + 1;
-        if (gUnk_0200EBC0.unk0A == 16)
-            gUnk_0200EBC0.unk02 = 2;
-        gUnk_0200EBC0.unk04 = 2;
+        if (gMultiBootStruct.unk0A <= 15)
+            gMultiBootStruct.unk0A = gMultiBootStruct.unk0A + 1;
+        if (gMultiBootStruct.unk0A == 16)
+            gMultiBootStruct.unk02 = 2;
+        gMultiBootStruct.unk04 = 2;
         break;
     case 0xD1:
-        gUnk_0200EBC0.unk2B = 2;
-        gUnk_0200EBC0.unk04 = 3;
-        gUnk_0200EBF0.server_type = 1;
+        gMultiBootStruct.unk2B = 2;
+        gMultiBootStruct.unk04 = 3;
+        gMultiBootParam.server_type = 1;
         break;
     }
-    if (gUnk_0200EBF0.probe_count > 0xDF)
-        gUnk_0200EBC0.unk04 = 4;
+    if (gMultiBootParam.probe_count > 0xDF)
+        gMultiBootStruct.unk04 = 4;
     goto next;
 noconn:
-    gUnk_0200EBC0.unk02 = t;
-    gUnk_0200EBC0.unk0A = t;
+    gMultiBootStruct.unk02 = t;
+    gMultiBootStruct.unk0A = t;
 next:
-    if (gUnk_0200EBC0.unk0A == 17)
+    if (gMultiBootStruct.unk0A == 17)
     {
-        sub_08004dd8(&gUnk_0200EBF0, gUnk_0200EBC0.unk10, gUnk_0200EBC0.unk18, 4, 1);
-        gUnk_0200EBC0.unk0A = 18;
+        MultiBootStartMaster(&gMultiBootParam, gMultiBootStruct.unk10, gMultiBootStruct.unk18, 4, 1);
+        gMultiBootStruct.unk0A = 18;
     }
-    if (gUnk_0200EBC0.unk2B == 1 && gUnk_0200EBC0.unk0A == 16 && gUnk_0200EBF0.probe_count == 0
-     && (gUnk_0200EBF0.client_bit & 14) != 0)
+    if (gMultiBootStruct.unk2B == 1 && gMultiBootStruct.unk0A == 16 && gMultiBootParam.probe_count == 0
+     && (gMultiBootParam.client_bit & 14) != 0)
     {
-        sub_08003484();
-        sub_08003840();
-        gUnk_0200EBC0.unk0A = 17;
-        gUnk_0200EBC0.unk2A = 2;
+        StopAllSound();
+        DisableSoundDriver();
+        gMultiBootStruct.unk0A = 17;
+        gMultiBootStruct.unk2A = 2;
     }
-    r = sub_08004984(&gUnk_0200EBF0);
-    if (gUnk_0200EBC0.unk2B == 2)
+    r = MultiBootMain(&gMultiBootParam);
+    if (gMultiBootStruct.unk2B == 2)
     {
-        gUnk_0200EBF0.server_type = 0;
-        gUnk_0200EBC0.unk2B = 0;
+        gMultiBootParam.server_type = 0;
+        gMultiBootStruct.unk2B = 0;
         if (r != 0)
         {
             REG_SIOCNT |= 0x4000;
-            gUnk_0200EBC0.unk2C = 4;
-            gUnk_0200EBC0.unk03 |= 4;
-            gUnk_0200EBC0.unk01 = 0;
-            gUnk_0200EBC0.unk2A = gUnk_0200EBC0.unk02 = gUnk_0200EBC0.unk24 = gUnk_0200EBC0.unk25 = 0;
-            gUnk_0200EC48 = 0;
+            gMultiBootStruct.unk2C = 4;
+            gMultiBootStruct.unk03 |= 4;
+            gMultiBootStruct.unk01 = 0;
+            gMultiBootStruct.unk2A = gMultiBootStruct.unk02 = gMultiBootStruct.unk24 = gMultiBootStruct.unk25 = 0;
+            gLinkSetupMode = 0;
             return;
         }
     }
-    if (sub_08004e9c(&gUnk_0200EBF0) != 0)
-        gUnk_0200EBC0.unk02 = 3;
+    if (MultiBootCheckComplete(&gMultiBootParam) != 0)
+        gMultiBootStruct.unk02 = 3;
 }

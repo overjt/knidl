@@ -5,15 +5,15 @@
 /* hitbox_1b7dc.c (0x0801B7DC-0x0801BAA3, issue #84).
  *
  * The pieces the actor-vs-collider hit tests of src/hitbox_1a8c8.c share:
- * sub_0801b7dc places the actor's attack box gUnk_0300236C (struct
- * AttackBox) at the actor's position gUnk_03002358/gUnk_0300214C, mirrored
+ * sub_0801b7dc places the actor's attack box gAttackBox (struct
+ * AttackBox) at the actor's position gAttackX/gAttackY, mirrored
  * when the actor faces left, relative to the camera rectangle
- * gUnk_03002158[]; sub_0801b8e4 computes a hit's damage (gUnk_03002368
+ * gViewRect[]; sub_0801b8e4 computes a hit's damage (gAttackHealth
  * minus the body box's defence) and knock-back direction (one of eight, from
  * ArcTan2 between the collider and the actor); sub_0801b9e4 copies the hit's
  * details out for the actor code. */
 
-/* An actor's attack box (ROM), pointed to by gUnk_0300236C during the
+/* An actor's attack box (ROM), pointed to by gAttackBox during the
    actor-vs-player hit tests: signed offsets from the actor's position
    (unk00/unk01) and the box edges relative to that point (left unk02, top
    unk03, right unk04, bottom unk05), then the attack's kind and flags. */
@@ -40,7 +40,7 @@ struct AttackBox
 };
 
 /* A player's body box, pointed to by each entry of the hit list
-   gUnk_030054B0 and cached in gUnk_030054E8: the same six signed offsets,
+   gPlayerColliders and cached in gColliderBodyBox: the same six signed offsets,
    then per-box bytes. */
 struct BodyBox
 {
@@ -64,30 +64,30 @@ struct BodyBox
 
 /* Actor-vs-player hit test cells (M17's src/actor_673ec.c widths). */
 extern u8 gUnk_03001F24;
-extern s8 gUnk_03002140;
-extern u8 gUnk_03002144;
-extern u16 gUnk_0300214C;           /* actor y */
-extern s16 gUnk_03002158[];         /* camera rectangle: left, right, top, bottom */
+extern s8 gAttackHitDuration;
+extern u8 gHitDirection;
+extern u16 gAttackY;           /* actor y */
+extern s16 gViewRect[];         /* camera rectangle: left, right, top, bottom */
 extern u8 gUnk_03002354;
-extern u16 gUnk_03002358;           /* actor x */
-extern u16 gUnk_03002368;
-extern struct AttackBox *gUnk_0300236C; /* the actor's attack box (s32 in actor_673ec.c) */
-extern u8 gUnk_03002380;            /* hit result */
-extern u16 gUnk_03002394;
-extern s16 gUnk_0300239C;
+extern u16 gAttackX;           /* actor x */
+extern u16 gAttackHealth;
+extern struct AttackBox *gAttackBox; /* the actor's attack box (s32 in actor_673ec.c) */
+extern u8 gHitKind;            /* hit result */
+extern u16 gHitHealthLeft;
+extern s16 gAttackFacing;
 extern u8 gUnk_030023A4;
 extern u8 gUnk_030023D0;
 extern u8 gUnk_030023DC;
 extern u8 gUnk_03002450;
-extern s16 gUnk_03005294;           /* attack box bottom */
-extern s16 gUnk_030054E0;           /* attack box top */
-extern s16 gUnk_03005490;           /* attack box right */
-extern s16 gUnk_030054A4;           /* attack box left */
-extern struct BodyBox *gUnk_030054E8;   /* the current entry's body box */
-extern u8 gUnk_03005394;            /* the current entry's player index */
-extern u8 gUnk_03005498;            /* the current entry's task index */
-extern s16 gUnk_0300549C;           /* the current entry's x */
-extern s16 gUnk_030054A0;           /* the current entry's y */
+extern s16 gAttackBoxBottom;           /* attack box bottom */
+extern s16 gAttackBoxTop;           /* attack box top */
+extern s16 gAttackBoxRight;           /* attack box right */
+extern s16 gAttackBoxLeft;           /* attack box left */
+extern struct BodyBox *gColliderBodyBox;   /* the current entry's body box */
+extern u8 gColliderPlayer;            /* the current entry's player index */
+extern u8 gColliderSlot;            /* the current entry's task index */
+extern s16 gColliderX;           /* the current entry's x */
+extern s16 gColliderY;           /* the current entry's y */
 extern s16 gUnk_03001F04;
 extern s16 gUnk_03002148;
 
@@ -98,31 +98,31 @@ void sub_0801b7dc(void)
 {
     s32 y;
 
-    if (gUnk_0300236C->unk1A & 0x8000)
+    if (gAttackBox->unk1A & 0x8000)
     {
         s32 x;
-        gUnk_03002358 = x = gUnk_0300236C->unk00 + gUnk_03002358;
-        gUnk_030054A4 = (x - (u16)gUnk_03002158[0]) + gUnk_0300236C->unk02;
-        gUnk_03005490 = (x - (u16)gUnk_03002158[0]) + gUnk_0300236C->unk04;
+        gAttackX = x = gAttackBox->unk00 + gAttackX;
+        gAttackBoxLeft = (x - (u16)gViewRect[0]) + gAttackBox->unk02;
+        gAttackBoxRight = (x - (u16)gViewRect[0]) + gAttackBox->unk04;
     }
-    else if (gUnk_0300239C == 1)
+    else if (gAttackFacing == 1)
     {
         s32 x;
-        gUnk_03002358 = x = gUnk_0300236C->unk00 + gUnk_03002358;
-        gUnk_030054A4 = (x - (u16)gUnk_03002158[0]) + gUnk_0300236C->unk02;
-        gUnk_03005490 = (x - (u16)gUnk_03002158[0]) + gUnk_0300236C->unk04;
+        gAttackX = x = gAttackBox->unk00 + gAttackX;
+        gAttackBoxLeft = (x - (u16)gViewRect[0]) + gAttackBox->unk02;
+        gAttackBoxRight = (x - (u16)gViewRect[0]) + gAttackBox->unk04;
     }
     else
     {
         s32 x;
-        gUnk_03002358 = x = -gUnk_0300236C->unk00 + gUnk_03002358;
-        gUnk_030054A4 = (x - (u16)gUnk_03002158[0]) - gUnk_0300236C->unk04;
-        gUnk_03005490 = (x - (u16)gUnk_03002158[0]) - gUnk_0300236C->unk02;
+        gAttackX = x = -gAttackBox->unk00 + gAttackX;
+        gAttackBoxLeft = (x - (u16)gViewRect[0]) - gAttackBox->unk04;
+        gAttackBoxRight = (x - (u16)gViewRect[0]) - gAttackBox->unk02;
     }
-    y = gUnk_0300214C + gUnk_0300236C->unk01;
-    gUnk_0300214C = y;
-    gUnk_030054E0 = (y - (u16)gUnk_03002158[2]) + gUnk_0300236C->unk03;
-    gUnk_03005294 = (y - (u16)gUnk_03002158[2]) + gUnk_0300236C->unk05;
+    y = gAttackY + gAttackBox->unk01;
+    gAttackY = y;
+    gAttackBoxTop = (y - (u16)gViewRect[2]) + gAttackBox->unk03;
+    gAttackBoxBottom = (y - (u16)gViewRect[2]) + gAttackBox->unk05;
 }
 
 /* Shared tail of the hit tests: the damage left after the body box's
@@ -130,22 +130,22 @@ void sub_0801b7dc(void)
    the angle between the entry and the actor). */
 void sub_0801b8e4(void)
 {
-    gUnk_03002394 = gUnk_03002368 - gUnk_030054E8->unk0C;
-    if ((s16)gUnk_03002394 <= 0)
+    gHitHealthLeft = gAttackHealth - gColliderBodyBox->unk0C;
+    if ((s16)gHitHealthLeft <= 0)
     {
-        if (gUnk_0300236C->unk0A & 2)
+        if (gAttackBox->unk0A & 2)
         {
-            gUnk_03002380 = 6;
+            gHitKind = 6;
             gUnk_03002450 = 1;
-            gUnk_03002394 = gUnk_03002368;
-            gUnk_03002144 = ((((u16)ArcTan2(gUnk_03002358 - gUnk_0300549C, gUnk_0300214C - gUnk_030054A0) >> 7) + 32) >> 6) & 7;
+            gHitHealthLeft = gAttackHealth;
+            gHitDirection = ((((u16)ArcTan2(gAttackX - gColliderX, gAttackY - gColliderY) >> 7) + 32) >> 6) & 7;
             return;
         }
-        gUnk_03002380 = 1;
-        gUnk_03002394 = 0;
+        gHitKind = 1;
+        gHitHealthLeft = 0;
     }
-    gUnk_03002144 = ((((u16)ArcTan2(gUnk_03002358 - gUnk_0300549C, gUnk_0300214C - gUnk_030054A0) >> 7) + 32) >> 6) & 7;
-    gUnk_03002450 = gUnk_030054E8->unk0D;
+    gHitDirection = ((((u16)ArcTan2(gAttackX - gColliderX, gAttackY - gColliderY) >> 7) + 32) >> 6) & 7;
+    gUnk_03002450 = gColliderBodyBox->unk0D;
 }
 
 /* Shared tail of the hit tests: copy the hit's details out - the body
@@ -153,15 +153,15 @@ void sub_0801b8e4(void)
    the midpoint between the entry and the actor. */
 void sub_0801b9e4(void)
 {
-    gUnk_030023A4 = gUnk_030054E8->unk08 & 0xF0;
-    gUnk_030023D0 = (u32)(gUnk_030054E8->unk08 << 28) >> 28;
-    gUnk_030023DC = gUnk_03005498;
-    gUnk_03001F24 = gUnk_03005394;
-    if (gUnk_03002380 == 6 || gUnk_03002380 == 8)
-        gUnk_03002354 = gUnk_03002490->unk75;
+    gUnk_030023A4 = gColliderBodyBox->unk08 & 0xF0;
+    gUnk_030023D0 = (u32)(gColliderBodyBox->unk08 << 28) >> 28;
+    gUnk_030023DC = gColliderSlot;
+    gUnk_03001F24 = gColliderPlayer;
+    if (gHitKind == 6 || gHitKind == 8)
+        gUnk_03002354 = gCurTask->unk75;
     else
-        gUnk_03002354 = gUnk_03002140;
-    /* gUnk_03002358/gUnk_0300214C are read signed here (ldrsh) */
-    gUnk_03001F04 = (gUnk_0300549C + (s16)gUnk_03002358) >> 1;
-    gUnk_03002148 = (gUnk_030054A0 + (s16)gUnk_0300214C) >> 1;
+        gUnk_03002354 = gAttackHitDuration;
+    /* gAttackX/gAttackY are read signed here (ldrsh) */
+    gUnk_03001F04 = (gColliderX + (s16)gAttackX) >> 1;
+    gUnk_03002148 = (gColliderY + (s16)gAttackY) >> 1;
 }

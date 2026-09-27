@@ -699,11 +699,37 @@ Matching decompilation of Kirby: The Amazing Mirror's predecessor, **Kirby: Nigh
   `0x087E2570`; the names stay until phase 2.  The SRAM table's pointers to
   the two `static` cores of `src/agb_sram.c` stay extracted
   (`not_pointers`).  New lessons 4.116-4.122.
+- Names, run 1 (issue #155): `tools/rename.py` renames a function or
+  cell everywhere its name lives (`tools/symdb.py` `KNOWN_SYMBOLS` /
+  `ARM_ENTRIES`, `tools/split_config.json`, `src/`, `include/`, the
+  hand-written asm) and appends its evidence to
+  `docs/analysis/renames.csv`, the alias table from the old names the
+  lessons, rom-map and module-map keep; `--verify-diff master` proves a
+  branch is a pure rename.  The convention (pret/katam style, `Task_<Thing>`
+  task bodies, evidence tags, what stays unnamed) is `docs/naming.md`.
+  1,145 renames in 14 batches (765 functions, 342 RAM cells, 38 ROM
+  tables; four of them corrected earlier names, among them
+  `TaskDispatchTrampoline` -> `TaskExitTrampoline` and `gTaskFlagsTable`
+  -> `gTaskResumeAddrs`): 178 of the engine zone's 182 functions (the task
+  engine, motion, sprites, fades, sound front end, the SDK MultiBoot
+  library, pokeruby's link driver, katam's link-setup code), 286 of the
+  424 functions with 5+ callers, the actor API, the player's shared checks
+  and 23 player actions, the collision engine, camera, room and BG
+  streaming, the HUD and menu, the save file, the sub-games and the
+  game-over screen, 29 of the 266 task bodies.  No rename changed a byte:
+  agbcc's Thumb backend forces every symbol address into the constant pool
+  at expand time, so gcse only hashes `.LCn` names (lesson 3.515).
+  `make progress`: 185 -> 1,326 of 11,065 symbols documented (1.7% ->
+  12.0%).  Done by four proposal agents by address zone plus the
+  coordinator, who alone applied names; new lessons 3.515, 4.123-4.124.
 - Next milestones: (1) #36 phase 2, typed C declarations in shared
   headers (with #155's renames), and functional tables as C where their
   consumers prove the layout (the data policy above), which will prove most of seg 18's
   data-to-data tables, the seg 13 re-survey and the linker.ld pins that
-  still keep the ROM from shifting (docs/data.md §7); (2) names for
-  functions, globals and struct fields (#155), then #37's final audit.
+  still keep the ROM from shifting (docs/data.md §7); (2) #155 run 2:
+  struct fields (`Task`, `PlayerState`, `Actor`, `RoomDef`), the enemy
+  banks once their enemies are identified, the ability moves once the
+  abilities have names, and the remaining `gUnk_` cells; then #37's final
+  audit.
   The three functions #154 left pinned or levered are listed in its
   bullet above.

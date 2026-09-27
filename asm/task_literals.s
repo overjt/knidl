@@ -20,4 +20,4 @@ gUnk_080002e5:
 	.word	gTaskBaseSp
 	.word	gTaskSavedR0
 	.word	gCurTaskIdx
-	.word	gTaskFlagsTable
+	.word	gTaskResumeAddrs

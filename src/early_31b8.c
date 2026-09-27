@@ -4,11 +4,11 @@
 /* early_31b8.c (0x080031B8-0x08003483, issue #63).
  *
  * The sound-effect front end of src/early_3110.c: start sound effect `id`
- * (100-578, song gUnk_0872EB38[id - 100]) on one of the three SE players,
- * called from almost every module.  gUnk_03000F80[slot] is the song id of SE
- * slot 1-3, gUnk_03001180[slot] its music player (gMPlayTable) and
- * gUnk_0300001C the inverse map, gUnk_03001674[slot] the slot's age (1 =
- * newest, 0 = unused); gUnk_03001EDC mutes sound effects.  A slot is taken
+ * (100-578, song gSfxTable[id - 100]) on one of the three SE players,
+ * called from almost every module.  gSfxSlotSongs[slot] is the song id of SE
+ * slot 1-3, gSfxSlotPlayers[slot] its music player (gMPlayTable) and
+ * gSfxPlayerSlots the inverse map, gSfxSlotAges[slot] the slot's age (1 =
+ * newest, 0 = unused); gSfxDisabled mutes sound effects.  A slot is taken
  * in this order: a stopped player the song's channel mask allows; a stopped
  * player one of the allowed slots' songs may move to (the two slots swap);
  * the allowed slot playing the lowest priority; on a priority tie the oldest.
@@ -29,19 +29,19 @@ struct SongEntry
     u8 pad[2];
 };
 
-extern const struct SongEntry gUnk_0872EB38[];
-extern vu16 gUnk_03001EDC;
-extern vu16 gUnk_03000F80[];
-extern vu8 gUnk_0300001C[];
-extern vu8 gUnk_03001180[];
-extern vu8 gUnk_03001674[];
+extern const struct SongEntry gSfxTable[];
+extern vu16 gSfxDisabled;
+extern vu16 gSfxSlotSongs[];
+extern vu8 gSfxPlayerSlots[];
+extern vu8 gSfxSlotPlayers[];
+extern vu8 gSfxSlotAges[];
 
 /* Start sound effect `id` (100-578) on one of the three SE players: a free
  * player the song allows, else a player freed by moving its song to a
  * free one, else the allowed player with the lowest priority (the oldest
  * one on a tie).  Returns the player index, 0 when muted or out of range,
  * -1 when no player can take it. */
-s32 sub_080031b8(s32 id)
+s32 PlaySfx(s32 id)
 {
     const struct SongEntry *song;
     s32 slot;
@@ -55,20 +55,20 @@ s32 sub_080031b8(s32 id)
 
     /* Three separate guards: an `||` chain lets reload inherit the first
      * `ldr [sp]` of id, the ROM re-loads it for the second compare. */
-    if (gUnk_03001EDC != 0)
+    if (gSfxDisabled != 0)
         return 0;
     if (id > 578)
         return 0;
     if (id < 100)
         return 0;
     id -= 100;
-    song = &gUnk_0872EB38[id];
+    song = &gSfxTable[id];
     if (song->header == NULL)
         return -1;
     slot = -1;
     free = 0;
     for (i = 1; i <= 3; i++)
-        if (gMPlayTable[(s8)gUnk_03001180[i]].info->status & 0x80000000)
+        if (gMPlayTable[(s8)gSfxSlotPlayers[i]].info->status & 0x80000000)
             free |= 1 << i;
     /* No mask local: loop.c hoists `song->chans & free` and cse2 turns it
      * into the ROM's register copy. */
@@ -84,7 +84,7 @@ s32 sub_080031b8(s32 id)
         {
             if ((song->chans >> i) & 1)
             {
-                t = gUnk_0872EB38[(s16)gUnk_03000F80[i]].chans & free;
+                t = gSfxTable[(s16)gSfxSlotSongs[i]].chans & free;
                 if (t != 0)
                 {
                     j = 0;
@@ -97,15 +97,15 @@ s32 sub_080031b8(s32 id)
                                 break;
                         } while (!((t >> j) & 1));
                     }
-                    gUnk_03000F80[j] = gUnk_03000F80[i];
-                    t = (s8)gUnk_03001674[j];
-                    gUnk_03001674[j] = gUnk_03001674[i];
-                    gUnk_03001674[i] = t;
-                    t = (s8)gUnk_03001180[j];
-                    gUnk_03001180[j] = gUnk_03001180[i];
-                    gUnk_03001180[i] = t;
-                    gUnk_0300001C[(s8)gUnk_03001180[i]] = i;
-                    gUnk_0300001C[(s8)gUnk_03001180[j]] = j;
+                    gSfxSlotSongs[j] = gSfxSlotSongs[i];
+                    t = (s8)gSfxSlotAges[j];
+                    gSfxSlotAges[j] = gSfxSlotAges[i];
+                    gSfxSlotAges[i] = t;
+                    t = (s8)gSfxSlotPlayers[j];
+                    gSfxSlotPlayers[j] = gSfxSlotPlayers[i];
+                    gSfxSlotPlayers[i] = t;
+                    gSfxPlayerSlots[(s8)gSfxSlotPlayers[i]] = i;
+                    gSfxPlayerSlots[(s8)gSfxSlotPlayers[j]] = j;
                     goto found;
                 }
             }
@@ -117,12 +117,12 @@ s32 sub_080031b8(s32 id)
     {
         if ((song->chans >> i) & 1)
         {
-            if (t > gUnk_0872EB38[(s16)gUnk_03000F80[i]].prio)
+            if (t > gSfxTable[(s16)gSfxSlotSongs[i]].prio)
             {
-                t = gUnk_0872EB38[(s16)gUnk_03000F80[i]].prio;
+                t = gSfxTable[(s16)gSfxSlotSongs[i]].prio;
                 slot = i;
             }
-            else if (song->prio == gUnk_0872EB38[(s16)gUnk_03000F80[i]].prio)
+            else if (song->prio == gSfxTable[(s16)gSfxSlotSongs[i]].prio)
             {
                 tie |= 1 << i;
             }
@@ -133,9 +133,9 @@ s32 sub_080031b8(s32 id)
         t = 0;
         for (i = 1; i <= 3; i++)
         {
-            if (((tie >> i) & 1) && (s8)gUnk_03001674[i] > t)
+            if (((tie >> i) & 1) && (s8)gSfxSlotAges[i] > t)
             {
-                t = (s8)gUnk_03001674[i];
+                t = (s8)gSfxSlotAges[i];
                 slot = i;
             }
         }
@@ -146,21 +146,21 @@ s32 sub_080031b8(s32 id)
 found:
     slot = i;
 play:
-    t = (s8)gUnk_03001674[slot];
+    t = (s8)gSfxSlotAges[slot];
     if (t == 0)
     {
         for (i = 1; i <= 3; i++)
-            if (gUnk_03001674[i] != 0)
-                gUnk_03001674[i]++;
+            if (gSfxSlotAges[i] != 0)
+                gSfxSlotAges[i]++;
     }
     else
     {
         for (i = 1; i <= 3; i++)
-            if (gUnk_03001674[i] != 0 && (s8)gUnk_03001674[i] < t)
-                gUnk_03001674[i]++;
+            if (gSfxSlotAges[i] != 0 && (s8)gSfxSlotAges[i] < t)
+                gSfxSlotAges[i]++;
     }
-    gUnk_03001674[slot] = 1;
-    MPlayStart(gMPlayTable[(s8)gUnk_03001180[slot]].info, song->header);
-    gUnk_03000F80[slot] = id;
-    return (s8)gUnk_03001180[slot];
+    gSfxSlotAges[slot] = 1;
+    MPlayStart(gMPlayTable[(s8)gSfxSlotPlayers[slot]].info, song->header);
+    gSfxSlotSongs[slot] = id;
+    return (s8)gSfxSlotPlayers[slot];
 }

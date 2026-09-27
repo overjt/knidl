@@ -4,8 +4,8 @@
 
 /* mode_100ac.c (0x080100AC-0x08010357, issue #99).
  *
- * AgbMain state 7 (sub_080100ac), entered instead of states 5/6 while
- * gUnk_02007FC0 is set: the scripted sequence of stage gUnk_030023B8.
+ * AgbMain state 7 (CutsceneMain), entered instead of states 5/6 while
+ * gCutscenePending is set: the scripted sequence of stage gUnk_030023B8.
  * It clears the blend and window shadows, loads the sequence's palette
  * set and pictures (sub_08008d98, and sub_080102c0: the sprite sheet
  * gUnk_08731F78[stage] plus, in link play, the player palette), opens
@@ -14,112 +14,112 @@
 
 extern u8 gUnk_0200AF04;
 extern u32 gUnk_02020000[];
-extern vs32 gUnk_03000010;
-extern vu8 gUnk_03000040;
-extern vu16 gUnk_03000044;
-extern vu8 gUnk_03000B08;
-extern vu8 gUnk_03000B18;
-extern vs32 gUnk_03000B78;
-extern vu8 gUnk_03000F7C;
-extern vs32 gUnk_03000F8C;
-extern vs32 gUnk_03000FA8;
-extern vs32 gUnk_03000FC0;
-extern vu16 gUnk_03000FD4;
-extern vs32 gUnk_0300117C;
-extern vu8 gUnk_0300118C;
+extern vs32 gBg0ScrollY;
+extern vu8 gBldCntTarget2;
+extern vu16 gWin0V;
+extern vu8 gBldAlphaEva;
+extern vu8 gWinIn0;
+extern vs32 gBg3ScrollX;
+extern vu8 gWinOut;
+extern vs32 gBg2ScrollX;
+extern vs32 gBg3ScrollY;
+extern vs32 gBg1ScrollY;
+extern vu16 gWin0H;
+extern vs32 gBg0ScrollX;
+extern vu8 gBldCntTarget1;
 extern u16 gUnk_03001570[];
-extern vs32 gUnk_03001E94;
-extern vu8 gUnk_03001EAC;
-extern vu16 gUnk_03001ED8;
-extern vs32 gUnk_03001EE0;
-extern vu16 gUnk_03001EEC;
+extern vs32 gBg2ScrollY;
+extern vu8 gBldAlphaEvb;
+extern vu16 gDispCnt;
+extern vs32 gBg1ScrollX;
+extern vu16 gBldY;
 extern u8 gUnk_03001F30;
-extern u16 gUnk_03002360;
-extern u16 gUnk_030023AC;
+extern u16 gLocalPlayer;
+extern u16 gPlayerCount;
 extern s8 gUnk_030023B8;
-extern u16 gUnk_030023D8;
-extern vu16 gUnk_03005274;
-extern u32 gUnk_06010000[];
-extern u16 gUnk_080DC628[][16];
+extern u16 gGameState;
+extern vu16 gLinkCommand;
+extern u32 gObjVram[];
+extern u16 gPlayerPalettes[][16];
 extern struct GfxHeader *const gUnk_08731F78[];
 
-void sub_080017e4(u32 mode, u32 src, u32 dst, u32 size);
-void sub_0800214c(void);
-void sub_080021dc(void);
-void sub_080022ac(void);
-void sub_080022fc(void);
-void sub_08002338(void);
-void sub_08002358(void);
-void sub_08002378(void);
-void sub_08002d18(void);
-void sub_08002e0c(void);
-s32 sub_080058e4(u32 type, s32 idx);
-void sub_08008c4c(s32 a0);
-void sub_08008c64(u16 a0);
+void RequestCopy(u32 mode, u32 src, u32 dst, u32 size);
+void BeginFastFadeInFromWhite(void);
+void BeginFastFadeOutToWhite(void);
+void ResetTasksAndOam(void);
+void LinkStartKeyExchange(void);
+void LinkStopKeyExchange(void);
+void LinkRequestSync(void);
+void LinkSyncRandom(void);
+void RunLinkFrame(void);
+void RunLinkFramesUntilFadeDone(void);
+s32 TaskCreateFrom(u32 type, s32 idx);
+void LoadBgLayout(s32 a0);
+void LoadGfxSet(u16 a0);
 void sub_08008d98(s32 a0);
 void sub_08024300(void);
 void sub_08027178(void);
-void sub_0803d0a0(s32 a0);
+void InitPlayerState(s32 a0);
 void sub_080102c0(void);
 
-void sub_080100ac(void)
+void CutsceneMain(void)
 {
     s32 i;
 
-    sub_080022ac();
+    ResetTasksAndOam();
     if (gUnk_03001F30 != 1) {
-        gUnk_0300118C = gUnk_03000040 = gUnk_03000B08 = gUnk_03001EAC = gUnk_03001EEC = 0;
-        sub_08008c64(0);
+        gBldCntTarget1 = gBldCntTarget2 = gBldAlphaEva = gBldAlphaEvb = gBldY = 0;
+        LoadGfxSet(0);
         gUnk_0200AF04 = 1;
         sub_08024300();
         if (gUnk_030023B8 != 7)
-            sub_08008c4c(8);
+            LoadBgLayout(8);
         else
-            sub_08008c4c(9);
+            LoadBgLayout(9);
         sub_08008d98(gUnk_030023B8);
-        gUnk_03000F8C = gUnk_03000B78 = 0;
-        gUnk_03001E94 = gUnk_03000FA8 = 0;
-        gUnk_03000010 = 0x280000;
-        gUnk_0300117C = 0x100000;
-        gUnk_03000FC0 = 0x280000;
-        gUnk_03001EE0 = 0x100000;
+        gBg2ScrollX = gBg3ScrollX = 0;
+        gBg2ScrollY = gBg3ScrollY = 0;
+        gBg0ScrollY = 0x280000;
+        gBg0ScrollX = 0x100000;
+        gBg1ScrollY = 0x280000;
+        gBg1ScrollX = 0x100000;
         if (gUnk_030023B8 == 7) {
-            gUnk_03001ED8 &= 0xE0FF;
-            gUnk_03001ED8 |= 0x3F00;
+            gDispCnt &= 0xE0FF;
+            gDispCnt |= 0x3F00;
         } else {
-            gUnk_03001ED8 &= 0xE0FF;
-            gUnk_03001ED8 |= 0x3D00;
+            gDispCnt &= 0xE0FF;
+            gDispCnt |= 0x3D00;
         }
         if (gUnk_030023B8 == 7) {
-            gUnk_03000FD4 = 240;
-            gUnk_03000044 = 0x1090;
-            gUnk_03000B18 = 63;
-            gUnk_03000F7C = 47;
+            gWin0H = 240;
+            gWin0V = 0x1090;
+            gWinIn0 = 63;
+            gWinOut = 47;
         } else {
-            gUnk_03000FD4 = 0x28D0;
-            gUnk_03000044 = 0x1090;
-            gUnk_03000B18 = 63;
-            gUnk_03000F7C = 47;
+            gWin0H = 0x28D0;
+            gWin0V = 0x1090;
+            gWinIn0 = 63;
+            gWinOut = 47;
         }
         for (i = 0; i <= 3; i++)
-            sub_0803d0a0(i);
+            InitPlayerState(i);
         sub_080102c0();
-        sub_080058e4(91, 32);
-        sub_08002358();
-        sub_08002378();
-        sub_080022fc();
-        sub_0800214c();
-        sub_08002e0c();
-        gUnk_03005274 = 0x8800;
+        TaskCreateFrom(91, 32);
+        LinkRequestSync();
+        LinkSyncRandom();
+        LinkStartKeyExchange();
+        BeginFastFadeInFromWhite();
+        RunLinkFramesUntilFadeDone();
+        gLinkCommand = 0x8800;
         do
-            sub_08002d18();
-        while (gUnk_030023D8 == 7);
-        sub_08002338();
-        sub_080021dc();
-        sub_08002e0c();
-        gUnk_03001ED8 &= 0xDFFF;
-        gUnk_03000FD4 = gUnk_03000044 = gUnk_03000B18 = gUnk_03000F7C = 0;
-        gUnk_0300118C = gUnk_03000040 = gUnk_03000B08 = gUnk_03001EAC = 0;
+            RunLinkFrame();
+        while (gGameState == 7);
+        LinkStopKeyExchange();
+        BeginFastFadeOutToWhite();
+        RunLinkFramesUntilFadeDone();
+        gDispCnt &= 0xDFFF;
+        gWin0H = gWin0V = gWinIn0 = gWinOut = 0;
+        gBldCntTarget1 = gBldCntTarget2 = gBldAlphaEva = gBldAlphaEvb = 0;
         sub_08027178();
     }
 }
@@ -130,10 +130,10 @@ void sub_080102c0(void)
 
     if (h != NULL) {
         LZ77UnCompWram(h->unk0C, gUnk_02020000);
-        sub_080017e4(4, (u32)gUnk_02020000, (u32)gUnk_06010000, h->unk02 << 5);
-        sub_080017e4(2, (u32)h->unk08, (u32)gUnk_03001570, h->unk00 << 5);
-        if (gUnk_030023AC > 1)
-            sub_080017e4(2, (u32)gUnk_080DC628[gUnk_03002360], (u32)gUnk_03001570, 22);
+        RequestCopy(4, (u32)gUnk_02020000, (u32)gObjVram, h->unk02 << 5);
+        RequestCopy(2, (u32)h->unk08, (u32)gUnk_03001570, h->unk00 << 5);
+        if (gPlayerCount > 1)
+            RequestCopy(2, (u32)gPlayerPalettes[gLocalPlayer], (u32)gUnk_03001570, 22);
     }
     if (gUnk_030023B8 == 7)
         LZ77UnCompWram((void *)0x085E0090, gUnk_02020000);

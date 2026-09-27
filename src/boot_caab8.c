@@ -4,18 +4,18 @@
 
 /* boot_caab8.c (0x080CAAB8-0x080CACEF, issue #100).
  *
- * sub_080caab8, the per-frame interpreter of the boot logo's 115 sprite
+ * BootLogoUpdateObjects, the per-frame interpreter of the boot logo's 115 sprite
  * objects that src/boot_caa3c.c seeds (called by M02's task type #0,
- * sub_080093fc).  Each active object (unk04 != -1) waits out unk0A frames,
+ * Task_BootLogo).  Each active object (unk04 != -1) waits out unk0A frames,
  * then runs its s16 command stream until it waits or is switched off: a
  * command is a bit mask and one argument, and bits 0-5 take one more word
  * each (x/y velocity, x/y acceleration, sprite id, wait; the word is skipped
- * when the bit is clear); bit 6 starts sound effect `arg` (sub_080031b8),
+ * when the bit is clear); bit 6 starts sound effect `arg` (PlaySfx),
  * bit 7 calls script `arg` (the cursor is saved in gUnk_0201BFD0[i]),
  * bit 8 switches to script `arg`, bits 9/10 set and run a loop of `arg`
  * passes, bit 11 restarts the script, bit 12 returns to the saved cursor
  * and bit 13 switches the object off.  The object then moves in 24.8 fixed
- * point and is drawn (sub_08001a94, sprite gUnk_087554B8[unk06], layer
+ * point and is drawn (QueueSprite, sprite gUnk_087554B8[unk06], layer
  * unk08), or switched off once it leaves the screen.
  *
  * Matching notes (#100's final campaign, lesson 3.494): the locals are
@@ -29,7 +29,7 @@
  * No natural spelling that keeps the ROM's OR was found; the natural best
  * (the plain store, 40 differing bytes) is recorded on #100. */
 
-/* One boot-logo sprite object: a command script (sub_080caab8) moving a
+/* One boot-logo sprite object: a command script (BootLogoUpdateObjects) moving a
    sprite in 24.8 fixed point. */
 struct M38LogoObj
 {
@@ -52,13 +52,13 @@ extern struct M38LogoObj gUnk_02030000[];
 extern s16 *gUnk_0201BFD0[];
 extern s16 *gUnk_087577D8[];
 extern u32 gUnk_087554B8[];
-s32 sub_08001a94(u32 a, u32 b, u32 c, u32 d, u32 e, s16 f);
-s32 sub_080031b8(s32 id);
+s32 QueueSprite(u32 a, u32 b, u32 c, u32 d, u32 e, s16 f);
+s32 PlaySfx(s32 id);
 
 /* Run the 115 boot-logo objects one frame: interpret each active object's
    script until it waits or ends, move it and draw it, switching it off
    once it leaves the screen. */
-void sub_080caab8(void)
+void BootLogoUpdateObjects(void)
 {
     struct M38LogoObj *obj = gUnk_02030000;
     s32 i;
@@ -101,7 +101,7 @@ void sub_080caab8(void)
                             obj->unk0A = *p++;
                             break;
                         case 64:
-                            sub_080031b8(arg);
+                            PlaySfx(arg);
                             break;
                         case 128:
                             gUnk_0201BFD0[i] = p;
@@ -146,7 +146,7 @@ void sub_080caab8(void)
         y = obj->unk10 >> 8;
         if (obj->unk06 != -1) {
             if ((u32)(x + 15) <= 286 && y > -32 && y <= 191)
-                sub_08001a94(obj->unk08, gUnk_087554B8[obj->unk06], 0, 0, x, y);
+                QueueSprite(obj->unk08, gUnk_087554B8[obj->unk06], 0, 0, x, y);
             else {
                 s32 m;
 

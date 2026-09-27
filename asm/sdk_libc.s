@@ -11,7 +11,7 @@
 @   0x080CFD04 __umodsi3
 @   0x080CFDC4 TaskSwitchTrampoline
 @   0x080CFDCC TaskYieldTrampoline
-@   0x080CFDD4 TaskDispatchTrampoline
+@   0x080CFDD4 TaskExitTrampoline
 
 	.section .sdk_libc, "ax"
 	.global	sdk_libc
@@ -313,8 +313,8 @@ TaskYieldTrampoline:
 	stmia	r1!, {r5}
 	.short	0xEAFC
 	.thumb_func
-	.global	TaskDispatchTrampoline
-TaskDispatchTrampoline:
+	.global	TaskExitTrampoline
+TaskExitTrampoline:
 	.thumb
 	.short	0x4778
 	nop

@@ -2,12 +2,12 @@
 #include "global.h"
 #include "task.h"
 
-extern struct Task *gUnk_03002490;
+extern struct Task *gCurTask;
 extern u32 gUnk_08732104[];
 
-s32 sub_08001a94(u32 a, u32 b, u32 c, u32 d, s32 e, s32 f);
-s32 sub_08002ee8(s32 a);
-u32 sub_0800641c(s16 x, s16 y);
+s32 QueueSprite(u32 a, u32 b, u32 c, u32 d, s32 e, s32 f);
+s32 RandomRange(s32 a);
+u32 IsWorldPosOnScreen(s16 x, s16 y);
 
 /* 16-byte per-slot record, 3 slots per player, at gUnk_02007E90.
    unk00/unk04 are 16.16 (x,y) offsets whose high halves are read directly,
@@ -41,11 +41,11 @@ void sub_080109c8(void)
     i = 0;
     do
     {
-        p = &gUnk_02007E90[gUnk_03002490->unk88->unk00][i];
+        p = &gUnk_02007E90[gCurTask->unk88->unk00][i];
         if (p->unk00 == 0)
         {
             p->unk08 = 0;
-            n = sub_08002ee8(16);
+            n = RandomRange(16);
             p->unk00 = -(gUnk_087320C4[0][n] << 16);
             p->unk04 = gUnk_087320C4[1][n] << 16;
         }
@@ -82,10 +82,10 @@ void sub_080109c8(void)
                 p->unk0C = 1;
             }
             d = p->unk0D;
-            x = gUnk_03002490->unk48 + ((s16 *)&p->unk00)[1];
-            y = gUnk_03002490->unk4A + ((s16 *)&p->unk04)[1] + 4;
-            if (sub_0800641c(x, y))
-                sub_08001a94(gUnk_03002490->unk42 - 1, gUnk_08732104[d], 0, 12, x, (s16)y);
+            x = gCurTask->unk48 + ((s16 *)&p->unk00)[1];
+            y = gCurTask->unk4A + ((s16 *)&p->unk04)[1] + 4;
+            if (IsWorldPosOnScreen(x, y))
+                QueueSprite(gCurTask->unk42 - 1, gUnk_08732104[d], 0, 12, x, (s16)y);
         }
         i++;
     } while (i <= 2);

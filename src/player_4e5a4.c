@@ -14,7 +14,7 @@
  * mirrored by Task.unk6E, registers the body collider (gUnk_0873C28C, and
  * the block hit-box set gUnk_0873CF7C while moving) when the vertical
  * speed exceeds 2 pixels a frame, requests action 23 through M11's
- * sub_0803fce4 and otherwise runs the sub-handler Task.unk73 of
+ * PlayerHasCrossedWaterSurface and otherwise runs the sub-handler Task.unk73 of
  * gUnk_0873B688. */
 
 extern void (*gUnk_0873B664[])(void);   /* enter 49's sub-actions [9], indexed by Task.unk73 */
@@ -24,66 +24,66 @@ extern u32 gUnk_0873CF7C[];
 extern u32 gUnk_0873C28C[];
 
 /* task / sprite services (landed prototypes) */
-void sub_08002e98(u32 idx, u32 count, void (**fns)(void));   /* if (idx < count) fns[idx](); */
-void sub_0800634c(s32 a);
-void sub_08006364(s32 a);
-void sub_0801a828(u8 a, s16 x, s16 y, void *p);   /* M11's caller spelling */
-void sub_0803e1b8(s32 a0, s32 a1, s32 a2);
-s32 sub_0803fce4(s32 a);
+void CallTableEntry(u32 idx, u32 count, void (**fns)(void));   /* if (idx < count) fns[idx](); */
+void TaskSetFrameNoFlip(s32 a);
+void TaskSetFrameFlip(s32 a);
+void RegisterCollider(u8 a, s16 x, s16 y, void *p);   /* M11's caller spelling */
+void SetPlayerInvulnerability(s32 a0, s32 a1, s32 a2);
+s32 PlayerHasCrossedWaterSurface(s32 a);
 
 void sub_0804e5a4(void)
 {
-    gUnk_03002490->unk88->unk05 = gUnk_03002490->unk88->unk04;
-    gUnk_03002490->unk88->unk04 = 13;
-    gUnk_03002490->unk15 = 46;
-    gUnk_03002490->unk74 = 0;
-    gUnk_03002490->unk88->unk3E = 0;
-    gUnk_03002490->unk24 = 0;
-    gUnk_03002490->unk73 = 0;
-    gUnk_03002490->unk80 = 18;
-    sub_08002e98(gUnk_03002490->unk73, 9, gUnk_0873B664);
+    gCurTask->unk88->unk05 = gCurTask->unk88->unk04;
+    gCurTask->unk88->unk04 = 13;
+    gCurTask->unk15 = 46;
+    gCurTask->unk74 = 0;
+    gCurTask->unk88->unk3E = 0;
+    gCurTask->unk24 = 0;
+    gCurTask->unk73 = 0;
+    gCurTask->unk80 = 18;
+    CallTableEntry(gCurTask->unk73, 9, gUnk_0873B664);
 }
 
 void sub_0804e600(void)
 {
-    gUnk_03002490->unk88->unk3D = 0;
-    gUnk_03002490->unk88->unk05 = gUnk_03002490->unk88->unk04;
-    gUnk_03002490->unk88->unk04 = 13;
-    sub_08002e98(gUnk_03002490->unk73, 9, gUnk_0873B664);
+    gCurTask->unk88->unk3D = 0;
+    gCurTask->unk88->unk05 = gCurTask->unk88->unk04;
+    gCurTask->unk88->unk04 = 13;
+    CallTableEntry(gCurTask->unk73, 9, gUnk_0873B664);
 }
 
 void sub_0804e640(void)
 {
-    struct Task *t = gUnk_03002490;
+    struct Task *t = gCurTask;
 
     if (t->unk46 != -1)
     {
         if (t->unk24 == 0)
         {
             if (t->unk6E == 1)
-                sub_0800634c((s16)gUnk_0873DB0A[t->unk46]);
+                TaskSetFrameNoFlip((s16)gUnk_0873DB0A[t->unk46]);
             else
-                sub_08006364(gUnk_0873DB0A[t->unk46]);
+                TaskSetFrameFlip(gUnk_0873DB0A[t->unk46]);
         }
-        if (gUnk_03002490->unk46 == 9)
-            gUnk_03002490->unk6E = gUnk_03002490->unk43;
+        if (gCurTask->unk46 == 9)
+            gCurTask->unk6E = gCurTask->unk43;
     }
-    if (abs(gUnk_03002490->unk58) > 0x20000)
+    if (abs(gCurTask->unk58) > 0x20000)
     {
-        sub_0803e1b8(3, 0, gUnk_03002490->unk88->unk00);
-        if ((u32)abs(gUnk_03002490->unk54) > 0x8000)
-            gUnk_03002490->unk88->unk6C = gUnk_0873CF7C;
+        SetPlayerInvulnerability(3, 0, gCurTask->unk88->unk00);
+        if ((u32)abs(gCurTask->unk54) > 0x8000)
+            gCurTask->unk88->unk6C = gUnk_0873CF7C;
         else
-            gUnk_03002490->unk88->unk6C = 0;
-        sub_0801a828(gCurTaskIdx, gUnk_03002490->unk48, gUnk_03002490->unk4A, gUnk_0873C28C);
+            gCurTask->unk88->unk6C = 0;
+        RegisterCollider(gCurTaskIdx, gCurTask->unk48, gCurTask->unk4A, gUnk_0873C28C);
     }
     else
     {
-        gUnk_03002490->unk88->unk6C = 0;
-        sub_0803e1b8(0xFF, 0, gUnk_03002490->unk88->unk00);
+        gCurTask->unk88->unk6C = 0;
+        SetPlayerInvulnerability(0xFF, 0, gCurTask->unk88->unk00);
     }
-    if (sub_0803fce4(0) != 0)
-        gUnk_03002490->unk88->unk01 = 23;
+    if (PlayerHasCrossedWaterSurface(0) != 0)
+        gCurTask->unk88->unk01 = 23;
     else
-        sub_08002e98(gUnk_03002490->unk73, 9, gUnk_0873B688);
+        CallTableEntry(gCurTask->unk73, 9, gUnk_0873B688);
 }

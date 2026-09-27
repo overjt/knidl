@@ -12,37 +12,37 @@ struct Collider
     /*0x08*/ u8 *unk08;
 };
 
-extern struct PlayerState gUnk_03002170[];
-extern struct Task *gUnk_03002490;
-extern u8 gUnk_03005290;
+extern struct PlayerState gPlayerStates[];
+extern struct Task *gCurTask;
+extern u8 gPlayerColliderCount;
 extern struct Collider gUnk_030052A0[];
 extern struct Collider gUnk_030053A0[];
 extern u8 gUnk_030054A8;
-extern struct Collider gUnk_030054B0[];
+extern struct Collider gPlayerColliders[];
 extern u8 gUnk_030054F4;
 extern u32 gUnk_0874CFEC[];
 
-void sub_080059d8(void);
+void TaskMove(void);
 void sub_0803ddc0(void);
 
 void sub_0801a76c(s32 i)
 {
-    struct Task *t = gUnk_03002490;
+    struct Task *t = gCurTask;
 
-    t->unk00 = (u32)sub_080059d8;
+    t->unk00 = (u32)TaskMove;
     t->unk0C = (u32)sub_0803ddc0;
     t->unk42 = 7;
-    gUnk_03002490->unk38 = gUnk_0874CFEC;
-    gUnk_03002490->unk40 = (i << 13) | (i << 7);
-    gUnk_03002490->unk88 = &gUnk_03002170[i];
+    gCurTask->unk38 = gUnk_0874CFEC;
+    gCurTask->unk40 = (i << 13) | (i << 7);
+    gCurTask->unk88 = &gPlayerStates[i];
 }
 
-void sub_0801a7b4(void)
+void ClearColliderLists(void)
 {
-    struct Collider *p = gUnk_030054B0;
+    struct Collider *p = gPlayerColliders;
     struct Collider *q = gUnk_030053A0;
     struct Collider *r = gUnk_030052A0;
-    u8 *ca = &gUnk_03005290;
+    u8 *ca = &gPlayerColliderCount;
     u8 *cb = &gUnk_030054A8;
     u8 *cc = &gUnk_030054F4;
     s32 i;
@@ -78,16 +78,16 @@ void sub_0801a7b4(void)
     *ca = 0;
 }
 
-u32 sub_0801a828(u8 idx, u16 x, u16 y, u8 *p)
+u32 RegisterCollider(u8 idx, u16 x, u16 y, u8 *p)
 {
     struct Collider *r;
 
     switch (p[8] & 0xF0)
     {
     case 0x00:
-        if (gUnk_03005290 == 4)
+        if (gPlayerColliderCount == 4)
             return 1;
-        r = &gUnk_030054B0[gUnk_03005290++];
+        r = &gPlayerColliders[gPlayerColliderCount++];
         break;
     case 0x10:
         if (gUnk_030054A8 == 20)

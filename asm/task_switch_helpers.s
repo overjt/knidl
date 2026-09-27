@@ -2,9 +2,9 @@
 @ Regenerate with: make split
 @ Segment task_switch_helpers: 0x08000234-0x080002E5 (arm_code, 0xB1 bytes)
 @ Functions (docs/analysis/symbols.csv):
-@   0x08000234 sub_08000234
-@   0x08000258 sub_08000258
-@   0x08000288 sub_08000288
+@   0x08000234 TaskSwitch
+@   0x08000258 TaskYield
+@   0x08000288 TaskExit
 @   0x080002A8 sub_080002a8
 @ Trailing 1 byte(s) at 0x080002E4 live in .task_switch_helpers.tail: gas would otherwise pad
 @ the main section to its instruction alignment and shift every later segment.
@@ -15,8 +15,8 @@
 	.syntax	unified
 	.cpu	arm7tdmi
 task_switch_helpers:
-	.global	sub_08000234
-sub_08000234:
+	.global	TaskSwitch
+TaskSwitch:
 	.arm
 	stmfd	sp!, {lr}
 	push	{r4, r5, r6, r7, r8, r9, sl, fp}
@@ -27,8 +27,8 @@ sub_08000234:
 	mov	r2, #1
 	orr	r1, r1, r2
 	bx	r1
-	.global	sub_08000258
-sub_08000258:
+	.global	TaskYield
+TaskYield:
 	.arm
 	push	{r4, r5, r6, r7, r8, r9, sl, fp}
 	ldr	r3, [pc, #136]	@ 0x080002EC
@@ -42,8 +42,8 @@ sub_08000258:
 	pop	{r4, r5, r6, r7, r8, r9, sl, fp}
 	ldmfd	sp!, {r1}
 	bx	r1
-	.global	sub_08000288
-sub_08000288:
+	.global	TaskExit
+TaskExit:
 	.arm
 	ldr	r0, [pc, #108]	@ 0x080002FC
 	ldr	r0, [r0]

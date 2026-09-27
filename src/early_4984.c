@@ -7,7 +7,7 @@
  * src/early_4d6c.c hold the rest of it: MultiBootInit, MultiBootSend,
  * MultiBootStartProbe, MultiBootStartMaster, MultiBootCheckComplete, the
  * handshake and the wait helpers).  The link-play code in src/early_3964.c
- * calls it with the MultiBootParam gUnk_0200EBF0 while a boot image goes to
+ * calls it with the MultiBootParam gMultiBootParam while a boot image goes to
  * the clients; each call is one step: it probes the clients through the
  * SIOMULTI registers, exchanges the header and palette bytes, starts the BIOS
  * MultiBoot transfer and runs the final handshake; it returns 0 or one of the
@@ -22,7 +22,7 @@
  * symbol gUnk_04000120, with which gcse keeps the base in a callee-saved
  * register); lesson 3.481. */
 
-/* AGB SDK MultiBootParam (0x4C bytes); the live instance is gUnk_0200EBF0. */
+/* AGB SDK MultiBootParam (0x4C bytes); the live instance is gMultiBootParam. */
 struct MultiBootParam
 {
     /*0x00*/ u32 system_work[5];
@@ -46,24 +46,24 @@ struct MultiBootParam
     /*0x4B*/ u8 server_type;
 };
 
-extern u16 gUnk_03006920[];
+extern u16 gMultiBootClientData[];
 
-void sub_08004968(struct MultiBootParam *mp);
-int sub_08004d6c(struct MultiBootParam *mp, u16 data);
-void sub_08004db4(struct MultiBootParam *mp);
-int sub_08004e9c(struct MultiBootParam *mp);
-int sub_08004eac(struct MultiBootParam *mp);
-void sub_08004fb0(void);
+void MultiBootInit(struct MultiBootParam *mp);
+int MultiBootSend(struct MultiBootParam *mp, u16 data);
+void MultiBootStartProbe(struct MultiBootParam *mp);
+int MultiBootCheckComplete(struct MultiBootParam *mp);
+int MultiBootHandShake(struct MultiBootParam *mp);
+void MultiBootWaitSendDone(void);
 
 /* MultiBootMain (AGB SDK): one step of the master's multiboot state machine,
  * run once per frame while a boot image is sent to the clients. */
-u32 sub_08004984(struct MultiBootParam *mp)
+u32 MultiBootMain(struct MultiBootParam *mp)
 {
     int i;
     int j;
     int k;
 
-    if (sub_08004e9c(mp))
+    if (MultiBootCheckComplete(mp))
         return 0;
 
     if (mp->check_wait > 15)
@@ -80,29 +80,29 @@ output_burst:
         i = REG_SIOCNT & 0xFC;
         if (i != 8)
         {
-            sub_08004968(mp);
+            MultiBootInit(mp);
             return i ^ 8;
         }
     }
 
     if (mp->probe_count >= 0xE0)
     {
-        i = sub_08004eac(mp);
+        i = MultiBootHandShake(mp);
         if (i)
             return i;
 
         if (mp->probe_count > 0xE1
-         && sub_08004e9c(mp) == 0)
+         && MultiBootCheckComplete(mp) == 0)
         {
-            sub_08004fb0();
+            MultiBootWaitSendDone();
             goto output_burst;
         }
 
-        if (sub_08004e9c(mp) == 0)
+        if (MultiBootCheckComplete(mp) == 0)
         {
             if (mp->handshake_timeout == 0)
             {
-                sub_08004968(mp);
+                MultiBootInit(mp);
                 return 0x71;
             }
             mp->handshake_timeout--;
@@ -160,13 +160,13 @@ output_burst:
         {
             if (mp->response_bit != mp->client_bit)
             {
-                sub_08004db4(mp);
+                MultiBootStartProbe(mp);
                 goto case_1;
             }
         }
 
     output_master_info:
-        return sub_08004d6c(mp, (0x62 << 8) | mp->client_bit);
+        return MultiBootSend(mp, (0x62 << 8) | mp->client_bit);
 
     case_1:
     case 1:
@@ -176,7 +176,7 @@ output_burst:
             j = REG_SIOMULTI(i);
             if ((j >> 8) == 0x72)
             {
-                gUnk_03006920[i - 1] = j;
+                gMultiBootClientData[i - 1] = j;
                 j &= 0xFF;
                 if (j == (1 << i))
                     mp->probe_target_bit |= j;
@@ -187,7 +187,7 @@ output_burst:
             goto output_master_info;
 
         mp->probe_count = 2;
-        return sub_08004d6c(mp, (0x61 << 8) | mp->probe_target_bit);
+        return MultiBootSend(mp, (0x61 << 8) | mp->probe_target_bit);
 
     case 2:
         for (i = 3; i != 0; i--)
@@ -195,7 +195,7 @@ output_burst:
             if (mp->probe_target_bit & (1 << i))
             {
                 j = REG_SIOMULTI(i);
-                if (j != gUnk_03006920[i - 1])
+                if (j != gMultiBootClientData[i - 1])
                     mp->probe_target_bit ^= 1 << i;
             }
         }
@@ -212,16 +212,16 @@ output_burst:
                 if ((j >> 8) != 0x72
                  && (j >> 8) != 0x73)
                 {
-                    sub_08004968(mp);
+                    MultiBootInit(mp);
                     return 0x60;
                 }
-                if (j == gUnk_03006920[i - 1])
+                if (j == gMultiBootClientData[i - 1])
                     k = 0;
             }
         }
 
         if (k == 0)
-            return sub_08004d6c(mp, (0x63 << 8) | mp->palette_data);
+            return MultiBootSend(mp, (0x63 << 8) | mp->palette_data);
 
         mp->probe_count = 0xD1;
 
@@ -229,7 +229,7 @@ output_burst:
         for (i = 3; i != 0; i--)
             k += mp->client_data[i - 1];
         mp->handshake_data = k;
-        return sub_08004d6c(mp, (0x64 << 8) | (k & 0xFF));
+        return MultiBootSend(mp, (0x64 << 8) | (k & 0xFF));
 
     case 0xD1:
         for (i = 3; i != 0; i--)
@@ -239,7 +239,7 @@ output_burst:
             {
                 if ((j >> 8) != 0x73)
                 {
-                    sub_08004968(mp);
+                    MultiBootInit(mp);
                     return 0x60;
                 }
             }
@@ -253,7 +253,7 @@ output_burst:
             mp->handshake_timeout = 400;
             return 0;
         }
-        sub_08004968(mp);
+        MultiBootInit(mp);
         mp->check_wait = 30;
         return 0x70;
 
@@ -279,14 +279,14 @@ output_burst:
     output_header:
         if (mp->probe_target_bit == 0)
         {
-            sub_08004968(mp);
+            MultiBootInit(mp);
             return 0x50;
         }
 
         mp->probe_count += 2;
         if (mp->probe_count == 0xC4)
             goto output_master_info;
-        i = sub_08004d6c(mp,
+        i = MultiBootSend(mp,
             (mp->masterp[mp->probe_count - 4 + 1] << 8)
             | mp->masterp[mp->probe_count - 4]);
 
@@ -294,7 +294,7 @@ output_burst:
             return i;
         if (mp->server_type == 1)
         {
-            sub_08004fb0();
+            MultiBootWaitSendDone();
             goto output_burst;
         }
         return 0;

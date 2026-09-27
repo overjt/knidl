@@ -8,39 +8,39 @@ extern u32 gUnk_02006040[];
 extern s32 gUnk_02006190[];
 extern s32 gUnk_02007D00[];
 extern u8 gUnk_03001F30;
-extern struct PlayerState gUnk_03002170[];
-extern u8 gUnk_03002340;
+extern struct PlayerState gPlayerStates[];
+extern u8 gActivePlayerMask;
 extern s32 gUnk_030023B4;
-extern u32 gUnk_030023E8[];
+extern u32 gCurSaveSlot[];
 extern s16 gUnk_0300244C;
 extern u32 gUnk_08748264[];
 extern u32 gUnk_08748974[];
 extern u32 gUnk_087538E0[];
 
 /* Externals */
-extern void sub_08002e98(u32 a, u32 b, u32 *c);
-extern s32 sub_080031b8(s32 id);
-extern void sub_080034f0(s32 player, s32 songId);
-extern void sub_080055b0(u32 a, u32 b);
-extern void sub_08005654(s32 id);
-extern void sub_080059d8(void);
-extern void sub_08006148(void *fn, s32 i);
-extern void sub_08006338(s32 a);
+extern void CallTableEntry(u32 a, u32 b, u32 *c);
+extern s32 PlaySfx(s32 id);
+extern void StopSfxOnPlayer(s32 player, s32 songId);
+extern void TaskSetSkipMask(u32 a, u32 b);
+extern void TaskFree(s32 id);
+extern void TaskMove(void);
+extern void TaskSetEntry(void *fn, s32 i);
+extern void TaskSetFrame(s32 a);
 extern void sub_0800a698(void);
-extern void sub_080261d4(s32 a);
-extern void sub_0806395c(u16 v);
-extern void sub_080639a4(u32 *p);
-extern void sub_08064970(void);
-extern s32 sub_08064b5c(struct ActorSpawn *p, u8 keepPrio);
-extern s32 sub_08064cdc(u32 type, s16 dx, s16 dy, u8 keepPrio);
+extern void RequestScreenShake(s32 a);
+extern void ActorSetState(u16 v);
+extern void ActorSetHitReactions(u32 *p);
+extern void TaskGetScreenPos(void);
+extern s32 CreateActorFromDescAtOffsetFacing(struct ActorSpawn *p, u8 keepPrio);
+extern s32 CreateChildTaskAtOffsetFacing(u32 type, s16 dx, s16 dy, u8 keepPrio);
 extern void sub_08065438(void);
-extern s16 sub_08065f5c(void);
+extern s16 ActorComputeHealth(void);
 extern u16 sub_08066088(u32 mode);
 extern void sub_08066468(void);
 extern void sub_080689c8(s32 i, s32 d);
 extern void sub_08068f68(void);
-extern u32 sub_08069b44(void);
-extern void sub_0806a344(void);
+extern u32 ActorReactToHit(void);
+extern void ActorDie(void);
 extern s16 sub_0806caa0(u8 kind, s32 dx, s32 dy);
 extern void sub_080a0a84(void);
 extern void sub_080a0b10(void);
@@ -52,8 +52,8 @@ void sub_0809fbd0(void)
 
     for (i = 0; i <= 3; i++)
     {
-        if (((gUnk_03002340 >> i) & 1) != 0)
-            gUnk_03002170[i].unk42 |= 64;
+        if (((gActivePlayerMask >> i) & 1) != 0)
+            gPlayerStates[i].unk42 |= 64;
     }
 }
 
@@ -63,8 +63,8 @@ void sub_0809fc08(void)
 
     for (i = 0; i <= 3; i++)
     {
-        if (((gUnk_03002340 >> i) & 1) != 0)
-            gUnk_03002170[i].unk42 &= 0xFFBF;
+        if (((gActivePlayerMask >> i) & 1) != 0)
+            gPlayerStates[i].unk42 &= 0xFFBF;
     }
 }
 
@@ -73,23 +73,23 @@ void sub_0809fc44(void)
     struct Task *t;
     s32 v;
 
-    t = gUnk_03002490;
+    t = gCurTask;
     sub_08066088(0);
-    v = sub_08065f5c();
+    v = ActorComputeHealth();
     v = (v * 85) >> 8;
-    t = gUnk_03002490;
+    t = gCurTask;
     t->unk70 = v;
-    t->unk00 = (u32)sub_080059d8;
+    t->unk00 = (u32)TaskMove;
     t->unk0C = (u32)sub_08065438;
     t->unk42 = 11;
-    gUnk_03002490->unk38 = gUnk_087538E0;
-    sub_08002e98(gUnk_03002490->unk73, 1, gUnk_08748264);
+    gCurTask->unk38 = gUnk_087538E0;
+    CallTableEntry(gCurTask->unk73, 1, gUnk_08748264);
 }
 
 void sub_0809fca4(void)
 {
     sub_08068f68();
-    sub_08069b44();
+    ActorReactToHit();
 }
 
 void sub_0809fcb4(void)
@@ -97,16 +97,16 @@ void sub_0809fcb4(void)
     struct Task *t;
     s32 one;
 
-    sub_080261d4(4);
-    sub_080055b0(7, gCurTaskIdx);
-    t = gUnk_03002490;
+    RequestScreenShake(4);
+    TaskSetSkipMask(7, gCurTaskIdx);
+    t = gCurTask;
     t->unk08 = (u32)sub_080a0a84;
     gUnk_02006190[0] = t->unk48;
     gUnk_02006190[1] = t->unk4A;
     gUnk_02006190[2] = t->unk3C;
     one = 1;
     gUnk_02006190[7] = one;
-    sub_08006338(8);
+    TaskSetFrame(8);
     gUnk_02006190[3] = one;
     gUnk_02006190[4] = -2;
     gUnk_02006190[5] = 0;
@@ -118,8 +118,8 @@ void sub_0809fd20(void)
     struct Task *t;
     s32 z;
 
-    sub_080055b0(0, gCurTaskIdx);
-    t = gUnk_03002490;
+    TaskSetSkipMask(0, gCurTaskIdx);
+    t = gCurTask;
     z = 0;
     t->unk08 = z;
     t->unk48 = gUnk_02006190[0];
@@ -134,31 +134,31 @@ u8 sub_0809fd64(void)
     struct Task *t;
     s16 *p;
 
-    sub_080639a4(gUnk_08748974);
-    sub_08006338(9);
-    t = gUnk_03002490;
+    ActorSetHitReactions(gUnk_08748974);
+    TaskSetFrame(9);
+    t = gCurTask;
     p = &t->unk46;
     if (*p != -1)
     {
-        sub_08005654(*p);
-        gUnk_03002490->unk46 = 0xFFFF;
+        TaskFree(*p);
+        gCurTask->unk46 = 0xFFFF;
     }
     if (gUnk_02007D00[8] != -1 && gUnk_02007D00[1] != -1)
     {
-        sub_080689c8(gUnk_02007D00[8], -gUnk_03002490->unk43);
+        sub_080689c8(gUnk_02007D00[8], -gCurTask->unk43);
         gUnk_02007D00[8] = -1;
     }
     if (gUnk_02007D00[9] != -1)
     {
-        sub_080034f0(gUnk_02007D00[9], 0x21B);
+        StopSfxOnPlayer(gUnk_02007D00[9], 0x21B);
         gUnk_02007D00[9] = -1;
     }
     if (gUnk_03001F30 == 1)
     {
         sub_0800a698();
-        sub_080b7c00(gUnk_030023E8[0]);
+        sub_080b7c00(gCurSaveSlot[0]);
     }
-    sub_08006148(sub_0806a344, gCurTaskIdx);
+    TaskSetEntry(ActorDie, gCurTaskIdx);
     return 1;
 }
 
@@ -174,34 +174,34 @@ u8 sub_0809fe10(void)
     struct Actor *a;
     u8 s0;
 
-    t = gUnk_03002490;
+    t = gCurTask;
     a = t->unk8C;
     s0 = t->unk14;
     sub_0809fcb4();
-    switch (gUnk_03002490->unk14)
+    switch (gCurTask->unk14)
     {
     case 3:
-        u = gUnk_03002490;
+        u = gCurTask;
         if ((u->unk7A & 1) == 0)
         {
             gUnk_02006190[2] = 43;
-            sub_0806395c(10);
+            ActorSetState(10);
             goto install;
         }
         else
         {
             u->unk2C = 1;
             gUnk_02006190[2] = 4;
-            sub_0806395c(1);
+            ActorSetState(1);
         }
         goto install;
     case 4:
-        v = gUnk_03002490;
+        v = gCurTask;
         if ((v->unk7A & 1) == 0)
         {
             if (gUnk_0300244C != 0)
                 gUnk_02006190[2] = 43;
-            sub_0806395c(10);
+            ActorSetState(10);
             BLOCK_CROSS_JUMP
             goto install;
         }
@@ -209,17 +209,17 @@ u8 sub_0809fe10(void)
         {
             v->unk2C = 1;
             gUnk_02006190[2] = 4;
-            sub_0806395c(1);
+            ActorSetState(1);
         }
         BLOCK_CROSS_JUMP
         goto install;
     case 7:
-        w = gUnk_03002490;
+        w = gCurTask;
         if (w->unk24 == 2)
         {
             if (gUnk_0300244C != 0)
                 gUnk_02006190[2] = 43;
-            sub_0806395c(10);
+            ActorSetState(10);
             BLOCK_CROSS_JUMP
             goto install;
         }
@@ -227,41 +227,41 @@ u8 sub_0809fe10(void)
         {
             w->unk2C = 1;
             gUnk_02006190[2] = 4;
-            sub_0806395c(1);
+            ActorSetState(1);
         }
         BLOCK_CROSS_JUMP
         goto install;
     case 2:
-        x = gUnk_03002490;
+        x = gCurTask;
         x->unk2C = 1;
         gUnk_02006190[2] = 4;
-        sub_0806395c(1);
-        a->unk1C = gUnk_03002490->unk1C;
+        ActorSetState(1);
+        a->unk1C = gCurTask->unk1C;
     install:
-        sub_08006148(sub_080a0b10, gCurTaskIdx);
+        TaskSetEntry(sub_080a0b10, gCurTaskIdx);
         break;
     case 8:
     case 9:
-        sub_080055b0(0, gCurTaskIdx);
-        y = gUnk_03002490;
+        TaskSetSkipMask(0, gCurTaskIdx);
+        y = gCurTask;
         y->unk08 = 0;
         y->unk3C = gUnk_02006190[2];
         gUnk_02006190[5] = 14;
         break;
     case 0:
-        gUnk_03002490->unk14 = 1;
+        gCurTask->unk14 = 1;
     case 1:
-        z = gUnk_03002490;
+        z = gCurTask;
         z->unk2C = 1;
         gUnk_02006190[2] = 4;
-        sub_0806395c(1);
-        sub_08006148(sub_080a0b10, gCurTaskIdx);
+        ActorSetState(1);
+        TaskSetEntry(sub_080a0b10, gCurTaskIdx);
         break;
     case 5:
     case 6:
         break;
     }
-    if (s0 == gUnk_03002490->unk14)
+    if (s0 == gCurTask->unk14)
         return 0;
     return 1;
 }
@@ -270,21 +270,21 @@ void sub_0809ffec(void)
 {
     struct Task *t;
 
-    t = gUnk_03002490;
+    t = gCurTask;
     if (t->unk7C == 6 && t->unk82 == 4)
-        gUnk_03002170[t->unk7E].unk01 = 18;
+        gPlayerStates[t->unk7E].unk01 = 18;
 }
 
 void sub_080a0028(void)
 {
     struct ActorSpawn sp;
 
-    sub_08064970();
+    TaskGetScreenPos();
     if (gUnk_030023B4 <= 127)
-        gUnk_03002490->unk43 = 1;
+        gCurTask->unk43 = 1;
     else
-        gUnk_03002490->unk43 = -1;
-    sub_08006338(29);
+        gCurTask->unk43 = -1;
+    TaskSetFrame(29);
     sp.unk00 = 10;
     sp.unk04 = 112;
     sp.unk08 = 0;
@@ -293,8 +293,8 @@ void sub_080a0028(void)
     sp.unk0C = 32;
     sp.unk0E = 16;
     sp.unk0A = 0;
-    sub_08064b5c(&sp, 1);
-    sub_080031b8(0x21D);
+    CreateActorFromDescAtOffsetFacing(&sp, 1);
+    PlaySfx(0x21D);
 }
 
 void sub_080a0098(void)
@@ -305,7 +305,7 @@ void sub_080a0098(void)
     s32 *r;
     s32 z;
 
-    tp = &gUnk_03002490;
+    tp = &gCurTask;
     r = gUnk_02007D00;
     q = gUnk_02006040;
     z = 0;
@@ -318,6 +318,6 @@ void sub_080a0098(void)
     (*tp)->unk20 = 1;
     (*tp)->unk34 = 90;
     r[0] = -1;
-    (*tp)->unk46 = sub_08064cdc(183, 38, 10, 0);
-    r[9] = sub_080031b8(0x21B);
+    (*tp)->unk46 = CreateChildTaskAtOffsetFacing(183, 38, 10, 0);
+    r[9] = PlaySfx(0x21B);
 }

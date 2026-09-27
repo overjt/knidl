@@ -12,36 +12,36 @@ gap_sram_driver_fn_table_asset_metadata_index:
 	.global	gUnk_0872EB14
 gUnk_0872EB14:
 	.incbin	"baserom.gba", 0x72EB14, 0x18
-	.global	gUnk_0872EB2C
-gUnk_0872EB2C:
+	.global	gBootSignature
+gBootSignature:
 	.incbin	"baserom.gba", 0x72EB2C, 0xC
-	.global	gUnk_0872EB38
-gUnk_0872EB38:
+	.global	gSfxTable
+gSfxTable:
 	.incbin	"baserom.gba", 0x72EB38, 0xEF8
 	.global	gUnk_0872FA30
 gUnk_0872FA30:
 	.incbin	"baserom.gba", 0x72FA30, 0x100
-	.global	gUnk_0872FB30
-gUnk_0872FB30:
+	.global	gCosTable
+gCosTable:
 	.incbin	"baserom.gba", 0x72FB30, 0x400
-	.global	gUnk_0872FF30
-gUnk_0872FF30:
+	.global	gTaskTypes
+gTaskTypes:
 	.incbin	"baserom.gba", 0x72FF30, 0x4
-	.word	sub_080093fc+1
+	.word	Task_BootLogo+1
 	.incbin	"baserom.gba", 0x72FF38, 0x4
-	.word	sub_08009418+1
+	.word	Task_TitlePalette+1
 	.incbin	"baserom.gba", 0x72FF40, 0x4
-	.word	sub_080095c0+1
+	.word	Task_TitleSprites+1
 	.incbin	"baserom.gba", 0x72FF48, 0x4
-	.word	sub_08023618+1
+	.word	Task_Room+1
 	.incbin	"baserom.gba", 0x72FF50, 0x4
-	.word	sub_0802d370+1
+	.word	Task_MapEvent+1
 	.incbin	"baserom.gba", 0x72FF58, 0x4
-	.word	sub_08032688+1
+	.word	Task_Player+1
 	.incbin	"baserom.gba", 0x72FF60, 0x4
-	.word	sub_080507bc+1
+	.word	Task_PlayerObject+1
 	.incbin	"baserom.gba", 0x72FF68, 0x4
-	.word	sub_08053af4+1
+	.word	Task_PlayerEffect+1
 	.incbin	"baserom.gba", 0x72FF70, 0x4
 	.word	sub_0807893c+1
 	.incbin	"baserom.gba", 0x72FF78, 0x4
