@@ -131,10 +131,6 @@ s32 sub_0800579c(u32 type);
 void sub_080059a0(void);
 void sub_08005954(void);
 
-/* Free the task in slot `id`. */
-
-/* Allocate a task of the given type; returns its slot index or -1. */
-
 /* Allocate, optionally forcing the cursor to `idx` first. */
 s32 sub_080058e4(u32 type, s32 idx)
 {
@@ -264,14 +260,6 @@ void sub_08005a90(void)
     t->unk48 = (t->unk4C >> 16) - (gUnk_03000B78 >> 16);
     t->unk4A = (t->unk50 >> 16) - (gUnk_03000FA8 >> 16);
 }
-
-/* Is the running task on screen (with a 63/64-pixel margin) relative to
- * gUnk_03002348/gUnk_030023E4? */
-
-/* Hidden (unreferenced) export inside sub_08005acc's symbols.csv size:
- * upload the running task's tile stream plus its palette. */
-
-/* Upload the running task's tile stream. */
 
 /* Is the running task inside the rectangle at gUnk_03002158 (+/- 64)? */
 
