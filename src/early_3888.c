@@ -1,6 +1,5 @@
 #include "gba/gba.h"
 #include "global.h"
-#include "task.h"
 
 /* early_3888.c (0x08003888-0x08003963, issue #63).
  *

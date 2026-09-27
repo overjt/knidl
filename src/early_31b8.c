@@ -1,6 +1,5 @@
 #include "gba/gba.h"
 #include "global.h"
-#include "task.h"
 
 /* early_31b8.c (0x080031B8-0x08003483, issue #63).
  *

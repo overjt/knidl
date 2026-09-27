@@ -1,6 +1,5 @@
 #include "gba/gba.h"
 #include "global.h"
-#include "task.h"
 
 /* early_4984.c (0x08004984-0x08004D6B, issue #63).
  *
