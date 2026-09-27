@@ -4,9 +4,10 @@
 /* The room table gRoomTable[level][stage] (0x087E1D58-0x087E1E77, issue #36
  * phase 2): levels 0-8 (8 = the hub), eight stages each, every entry a
  * stage's room list (src/data/room_lists.c) or NULL.  The room loaders
- * read gRoomTable[level][stage][room] into gCurRoomDef (LoadRoom and its
- * siblings in src/level_23948.c, src/level_242d0.c) and the camera tasks
- * read the next room's palettes through it (src/camtask_2d38c.c).
+ * read gRoomTable[level][stage][room] into gCurRoomDef (sub_08023948,
+ * sub_08023ca0 and sub_08023fd4 in src/level_23948.c, and src/level_242d0.c)
+ * and the camera tasks read the next room's palettes through it
+ * (src/camtask_2d38c.c).
  * Carved by tools/carve_data.py. */
 
 struct RoomDef *const *const gRoomTable[9][8] = {
