@@ -14,8 +14,14 @@ extern u32 gUnk_020055D8[];
 extern u8 gUnk_02005E10[];
 extern u32 gUnk_02005F10[];
 extern u32 gUnk_02006040[];
-extern u32 gUnk_020060A0[];
-extern u32 gUnk_02006130[];
+struct Unk020060A0
+{
+    /*0x00*/ s8 unk0;
+    /*0x01*/ s8 unk1;
+    /*0x02*/ s16 unk2;
+};
+extern struct Unk020060A0 gUnk_020060A0[];
+extern s8 gUnk_02006130[];
 extern s32 gUnk_02006190[];
 extern u8 gUnk_020069F0;
 extern u32 gUnk_02007BF0[];
@@ -124,7 +130,16 @@ extern u32 gUnk_0873CB1C[];
 extern u32 gUnk_0873EEA0[];
 extern u32 gUnk_0873EF48[];
 extern u32 *gUnk_0873F0E4[];
-extern u32 gUnk_0873F104[];
+struct Unk0873EEA0
+{
+    /*0x00*/ u16 unk0;
+    /*0x02*/ u16 unk2;
+    /*0x04*/ u16 unk4;
+    /*0x06*/ u16 unk6;
+    /*0x08*/ u32 unk8;
+    /*0x0C*/ u32 unkC;
+};
+extern struct Unk0873EEA0 *gUnk_0873F104[];
 extern u32 *gUnk_0873F15C[];
 extern u32 gUnk_0873F180[];
 extern s16 gUnk_0873FF98[];
@@ -1497,57 +1512,36 @@ s32 sub_080b590c(u8 *e, s32 i, s32 k)
     return 1;
 }
 
-void sub_080b59d8(u8 *e, s32 i, s32 k)
+void sub_080b59d8(u8 *e, s32 idx, s32 n)
 {
-    u8 *d5;
-    u8 *p2;
-    register u8 *p6 asm("r6");
-    register u8 *pb asm("r0");
-    u8 *pz;
-    u8 *pb2;
-    register s32 z3 asm("r3");
-    register s32 w asm("r0");
-    register s32 i4 asm("r4");
-    s32 o2;
+    struct Unk0873EEA0 *d;
+    s32 i;
 
-    pz = (u8 *)gUnk_02006130 + i;
-    z3 = 0;
-    *pz = k;
-    pb2 = (u8 *)gUnk_020060A0;
-    asm("" : "+r"(pb2));
-    p2 = (u8 *)((k << 2) + (u32)pb2);
-    p2[0] = e[1];
-    *(u16 *)(p2 + 2) = z3;
-    p2[1] = 8;
-    d5 = (u8 *)gUnk_0873F104[0];
-    if (*(u16 *)(d5 + 2) != 0)
+    gUnk_02006130[idx] = n;
+    gUnk_020060A0[n].unk0 = e[1];
+    gUnk_020060A0[n].unk2 = 0;
+    gUnk_020060A0[n].unk1 = 8;
+    d = gUnk_0873F104[0];
+    if (d->unk2 != 0)
     {
-        if (*(u16 *)(d5 + 6) != 0)
+        if (d->unk6 != 0)
         {
-            LZ77UnCompVram((void *)*(u32 *)(d5 + 12), (void *)gUnk_02020000);
-            sub_080017e4(4, (u32)gUnk_02020000, 0x06010000, *(u16 *)(d5 + 2) << 5);
+            LZ77UnCompVram((void *)d->unkC, gUnk_02020000);
+            sub_080017e4(4, (u32)gUnk_02020000, 0x06010000, d->unk2 << 5);
         }
         else
         {
-            sub_080017e4(4, *(u32 *)(d5 + 12), 0x06010000, *(u16 *)(d5 + 2) << 5);
+            sub_080017e4(4, d->unkC, 0x06010000, d->unk2 << 5);
         }
     }
-    w = *(u16 *)d5;
-    if (w != 0)
-        sub_080017e4(2, *(u32 *)(d5 + 8), (u32)gUnk_03001570, ({ s32 t = w; asm("" : "+r"(t)); t << 5; }));
-    i4 = 1;
-    pb = (u8 *)gUnk_0873F104;
-    asm("" : "+r"(pb));
-    p6 = pb + 4;
-    do
+    if (d->unk0 != 0)
+        sub_080017e4(2, d->unk8, (u32)gUnk_03001570, d->unk0 << 5);
+    for (i = 1; i <= 4; i++)
     {
-        o2 = i4 << 2;
-        d5 = (u8 *)*(u32 *)p6;
-        if (*(u16 *)(d5 + 6) != 0)
-            LZ77UnCompVram((void *)*(u32 *)(d5 + 12), (void *)(*(u32 *)(o2 + (u32)gUnk_08756184) + (u32)gUnk_02020000));
-        p6 += 4;
-        i4++;
-    } while (i4 <= 4);
+        d = gUnk_0873F104[i];
+        if (d->unk6 != 0)
+            LZ77UnCompVram((void *)d->unkC, (void *)(gUnk_08756184[i] + (u32)gUnk_02020000));
+    }
 }
 
 s32 sub_080b5a94(u8 *e, s32 n, s32 k)
@@ -2031,44 +2025,25 @@ aftery:;
 
 void sub_080b603c(void)
 {
-    s32 w3;
-    vu32 *p4;
-    register vu32 *q asm("r1");
-    vu32 *pA;
-    vu32 *pB;
-    vu32 *pC;
-
-    *(vu16 *)0x040000BA = 0;
-    w3 = gUnk_0300003C;
-    if (w3 == 0)
+    REG_DMA0CNT_H = 0;
+    if (gUnk_0300003C == 0)
     {
-        *(vu32 *)&gUnk_03000FA4 = w3;
-        pC = (vu32 *)gUnk_0300101C;
-        pB = (vu32 *)gUnk_03001EF0;
-        pA = (vu32 *)gUnk_03001184;
-        *pA = w3;
-        *pB = *pA;
-        *pC = *pB;
-        *(vu32 *)&gUnk_03000B74 = w3;
+        gUnk_03000FA4 = 0;
+        *(vu32 *)gUnk_0300101C = *(vu32 *)gUnk_03001EF0 = *(vu32 *)gUnk_03001184 = 0;
+        gUnk_03000B74 = 0;
     }
     else
     {
-        p4 = (vu32 *)&gUnk_03000B74;
-        if (*p4 & 1)
+        if (gUnk_03000B74 & 1)
         {
             CpuSet(gUnk_020164A0, gUnk_02016870, 0x040000F0);
-            *p4 = 2;
+            gUnk_03000B74 = 2;
         }
-        if (*p4 & 2)
+        if (gUnk_03000B74 & 2)
         {
-            q = (vu32 *)0x040000B0;
-            *q = *(vu32 *)gUnk_03001EF0;
-            asm("" : "+r"(q));
-            q += 1;
-            *q = *(vu32 *)gUnk_0300101C;
-            asm("" : "+r"(q));
-            q += 1;
-            *q = *(vu32 *)gUnk_03001184;
+            REG_DMA0SAD = gUnk_03001EF0[0];
+            REG_DMA0DAD = gUnk_0300101C[0];
+            REG_DMA0CNT = gUnk_03001184[0];
         }
     }
 }

@@ -1127,17 +1127,18 @@ s32 sub_0807777c(struct M19Script *p)
 {
     struct Task *t = gUnk_03002490;
     u8 *q;
-    register s32 i asm("r1");
-    register u16 v asm("r0");
+    s32 i;
+    u16 v;
 
     if (t->unk24 == 1)
     {
         if (t->unk18 != 0)
         {
-            i = t->unk1C * 2;
+            i = t->unk1C;
+            i *= 2;
             q = (u8 *)p + 18;
             q += i;
-            v = *(u16 *)q;
+            v = *(vu16 *)q;
             return (s16)v;
         }
     }
@@ -1145,17 +1146,19 @@ s32 sub_0807777c(struct M19Script *p)
     {
         if (t->unk18 == 0)
         {
-            i = t->unk1C * 2;
+            i = t->unk1C;
+            i *= 2;
             q = (u8 *)p + 18;
             q += i;
-            v = *(u16 *)q;
+            v = *(vu16 *)q;
             return (s16)v;
         }
     }
-    i = t->unk1C * 2;
+    i = t->unk1C;
+    i *= 2;
     q = (u8 *)p + 6;
     q += i;
-    v = *(u16 *)q;
+    v = *(vu16 *)q;
     return (s16)v;
 }
 
