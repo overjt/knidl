@@ -1233,9 +1233,10 @@ class DataPlan(object):
                 raise ConfigError("pointer slot 0x%08X (%s) is not inside a "
                                   "data segment" % (addr, why))
             slots.setdefault(addr, why)
-            if fmt:
-                self.format_slots.add(addr)
+            (self.format_slots if fmt else proven).add(addr)
 
+        fmt = False
+        proven = set()  # slots some consumer-proven table claims
         for index, table in enumerate(pointer_tables):
             proof = table.get("proof", "consumer")
             if proof not in ("consumer", "format"):
@@ -1287,9 +1288,12 @@ class DataPlan(object):
                     if self.word(target + toff) & 1:
                         for off in extra:
                             add(target + off, lwhy)
+        fmt = False  # the m4a slots are a verified format parse (3.4)
         for addr, (_target, why) in sorted(self.m4a_slots.items()):
             if addr % 4 == 0:
                 add(addr, why)
+        # format-only means no consumer-proven table reaches the slot too
+        self.format_slots -= proven
         return slots
 
     def _build_words(self):

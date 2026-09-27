@@ -172,7 +172,7 @@ def provide(rom, cfg, segs):
         raise ValueError("frame-table labels missing from the config")
     pointer = {}
     rec_why = {}
-    oam_direct = {}   # stream start -> table start
+    oam_direct = {}   # stream start -> table start (consumer-proven frames)
     oam_rec = set()   # .oamTemplate streams of records
     tiles = set()
     pals = set()
@@ -247,9 +247,121 @@ def provide(rom, cfg, segs):
             coincidence.append((o, e, "oam", "BuildOam template stream (src/early_1b08.c), %s"
                                 % ("the .oamTemplate of a TaskGfx record" if o in oam_rec
                                    else "frame table 0x%08X, chained" % oam_direct[o])))
+    fmt_ptr, fmt_coin = _frame_lists(rom, cfg, segs, labels, pointer, oam_rec,
+                                     oam_direct, rec_why)
+    for a, why in fmt_ptr.items():
+        pointer.setdefault(a, why)
+    for s, e, k, why in fmt_coin:
+        if clean(s, e):
+            coincidence.append((s, e, k, why))
     return {
         "coincidence": coincidence,
         "pointer": sorted(pointer.items()),
     }
+
+
+# ---- round 2: the per-sheet frame lists (format only, no code reads them) --
+#
+# sprite_frame_lists (0x087E2570, docs/data.md 4) and its twin at the head of
+# seg 19, from the end of the player's tagged record block (the last record
+# 0x0876923C, 20 bytes) to the next label gUnk_0876B1FC.  Each list is named
+# by exactly one trailer word: +0x10 of a GfxHeader-shaped sheet header
+# {u16 banks, u16 tileCount, u16 frameCount, u16 flag, palette, tiles} whose
+# frameCount is the list length (OAM sheets), or the word after a u32 count
+# that follows the sheet's struct TaskGfx records (record sheets).  An entry
+# is a pointer when its target is a consumer-proven frame (above) or, if it
+# has no label, when it is a frame of the sheet's block: the block chains
+# byte for byte from the list's first consumer-proven frame to the header
+# (OAM) or the count word (records).  Other entries (two point at the header
+# itself) stay unknown.
+LIST_TWIN_LO = 0x08769250
+LIST_TWIN_HI = 0x0876B1FC  # gUnk_0876B1FC, the next table (labelled since phase 1)
+# frames that code names directly (no frame table): gUnk_0824A9CC is the
+# QueueSprite/DrawAffineSprite template of src/actor_70ec0.c:70/78
+CODE_FRAMES = (0x0824A9CC,)
+
+
+def _frame_lists(rom, cfg, segs, labels, pointer, oam_rec, oam_direct, rec_why):
+    zones = [(s, e) for s, e, _k, n in segs if n == "sprite_frame_lists"]
+    zones.append((LIST_TWIN_LO, LIST_TWIN_HI))
+    data_segs = [(s, e) for s, e, k, _n in segs if k == "data"]
+    holders = {}
+    for s, e in data_segs:
+        for w in range((s + 3) & ~3, e - 3, 4):
+            v = _u32(rom, w)
+            if any(a <= v < b for a, b in zones):
+                holders.setdefault(v, []).append(w)
+    proven_oam = set(oam_direct) | set(oam_rec) | set(CODE_FRAMES)
+    proven_rec = set(rec_why)
+    ptrs = {}
+    coin = []
+    starts = sorted(holders)
+    for i, s in enumerate(starts):
+        if len(holders[s]) != 1:
+            raise ValueError("frame list 0x%08X has %d trailers" % (s, len(holders[s])))
+        h = holders[s][0]
+        zone = [z for z in zones if z[0] <= s < z[1]][0]
+        nxt = [x for x in starts[i + 1:] if zone[0] <= x < zone[1]]
+        e = nxt[0] if nxt else zone[1]
+        vals = [_u32(rom, x) for x in range(s, e, 4)]
+        n = len(vals)
+        oam_sheet = _in_rom(rom, _u32(rom, h - 4)) and _u16(rom, h - 0x10) <= 16
+        if oam_sheet:
+            end_blk = h - 0x10
+            if _u16(rom, end_blk + 4) != n:
+                raise ValueError("0x%08X: frame count != list length" % h)
+        else:
+            end_blk = h - 4
+            if _u32(rom, end_blk) != n:
+                raise ValueError("0x%08X: record count != list length" % h)
+        if not all(b > a for a, b in zip(vals, vals[1:])):
+            raise ValueError("frame list 0x%08X is not increasing" % s)
+        proven = proven_oam if oam_sheet else proven_rec
+        prov = [v for v in vals if v in proven]
+        block = {}
+        if prov:
+            p = min(prov)
+            while p < end_blk:
+                ln = oam_len(rom, p) if oam_sheet else None
+                if not oam_sheet:
+                    f = taskgfx(rom, p, False)
+                    ln = 4 * len(f) if f else None
+                if not ln:
+                    break
+                block[p] = ln
+                p += ln
+            if p != end_blk:
+                block = {}
+        tag = ("format only: frame list 0x%08X (%d entries, trailer 0x%08X: count "
+               "== length, increasing, %d of %d consumer-proven)"
+               % (s, n, h, len(prov), n))
+        kept = 0
+        for i2, v in enumerate(vals):
+            # a frame of the block that had no label before round 2 is
+            # format-proven; a labelled non-frame (the header) is not in it
+            if v in proven or v in block:
+                ptrs[s + 4 * i2] = tag
+                kept += 1
+                if not oam_sheet and v not in proven:
+                    for j, (slot, sv) in enumerate(taskgfx(rom, v, False)):
+                        if sv:
+                            ptrs[slot] = tag + ", struct TaskGfx field +0x%X" % (4 * j)
+        if kept:
+            ptrs[h] = ("format only: trailer word of the sheet ending 0x%08X, "
+                       "the start of frame list 0x%08X (%d entries = its count)"
+                       % (end_blk, s, n))
+        for p, ln in block.items():
+            if oam_sheet:
+                coin.append((p, p + ln, "oam", tag + ": the sheet's chained OAM block"))
+            else:
+                f = [sv for _s, sv in taskgfx(rom, p, False)]
+                o = f[0] & ~1
+                coin.append((o, o + oam_len(rom, o), "oam", tag + ": record .oamTemplate"))
+                if f[1]:
+                    coin.append((f[1], f[1] + palette_len(rom, f[1]), "palette",
+                                 tag + ": record .palette"))
+                coin.append((f[2], f[2] + tiles_len(rom, f[2]), "tiles",
+                             tag + ": record .tiles"))
+    return ptrs, coin
 
 

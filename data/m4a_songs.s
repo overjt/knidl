@@ -3,7 +3,7 @@
 @ Segment m4a_songs: 0x085C0000-0x0860A140 (data, 0x4A140 bytes)
 @ Structure only (docs/data.md): labels, symbolic pointer words and
 @ .incbin slices of the user's baserom.gba; no ROM bytes are committed.
-@ 1155 label(s), 0 code pointer(s), 331 data pointer(s), 1058 .incbin slice(s) (0x49C14 bytes).
+@ 1157 label(s), 0 code pointer(s), 348 data pointer(s), 1058 .incbin slice(s) (0x49BD0 bytes).
 @ Asset segment: its bytes stay extracted from baserom.gba forever; only
 @ labels and consumer-proven pointer tables are structure.
 
@@ -220,7 +220,7 @@ gUnk_085C1974:
 	.incbin	"baserom.gba", 0x5C1974, 0x8
 	.word	gUnk_085BF424
 	.word	gUnk_085BF484
-	.incbin	"baserom.gba", 0x5C1984, 0x4
+	.word	gUnk_087E29A0
 	.global	gUnk_085C1988
 gUnk_085C1988:
 	.incbin	"baserom.gba", 0x5C1988, 0x40
@@ -397,7 +397,7 @@ gUnk_085C4218:
 	.incbin	"baserom.gba", 0x5C4218, 0x8
 	.word	gUnk_085C220C
 	.word	gUnk_085C224C
-	.incbin	"baserom.gba", 0x5C4228, 0x4
+	.word	gUnk_087E2AB0
 	.global	gUnk_085C422C
 gUnk_085C422C:
 	.incbin	"baserom.gba", 0x5C422C, 0x40
@@ -631,7 +631,7 @@ gUnk_085C6B98:
 	.incbin	"baserom.gba", 0x5C6B98, 0x8
 	.word	gUnk_085C4AA8
 	.word	gUnk_085C4AE8
-	.incbin	"baserom.gba", 0x5C6BA8, 0x4
+	.word	gUnk_087E2B80
 	.global	gUnk_085C6BAC
 gUnk_085C6BAC:
 	.incbin	"baserom.gba", 0x5C6BAC, 0x40
@@ -829,7 +829,7 @@ gUnk_085C9250:
 	.incbin	"baserom.gba", 0x5C9250, 0x8
 	.word	gUnk_085C7450
 	.word	gUnk_085C74F0
-	.incbin	"baserom.gba", 0x5C9260, 0x4
+	.word	gUnk_087E2C9C
 	.global	gUnk_085C9264
 gUnk_085C9264:
 	.incbin	"baserom.gba", 0x5C9264, 0x40
@@ -1042,7 +1042,7 @@ gUnk_085CC328:
 	.incbin	"baserom.gba", 0x5CC328, 0x8
 	.word	gUnk_085C9B20
 	.word	gUnk_085C9BA0
-	.incbin	"baserom.gba", 0x5CC338, 0x4
+	.word	gUnk_087E2D88
 	.global	gUnk_085CC33C
 gUnk_085CC33C:
 	.incbin	"baserom.gba", 0x5CC33C, 0x40
@@ -1764,7 +1764,8 @@ gUnk_085D51F0:
 	.word	gUnk_085D4ECE
 	.word	gUnk_085CCCCE
 	.word	gUnk_085D4198
-	.incbin	"baserom.gba", 0x5D51FC, 0x8
+	.incbin	"baserom.gba", 0x5D51FC, 0x4
+	.word	gUnk_087E2E88
 	.global	gUnk_085D5204
 gUnk_085D5204:
 	.incbin	"baserom.gba", 0x5D5204, 0x22
@@ -1900,7 +1901,8 @@ gUnk_085D9C94:
 	.word	gUnk_085D9BDE
 	.word	gUnk_085D5204
 	.word	gUnk_085D92B4
-	.incbin	"baserom.gba", 0x5D9CA0, 0x8
+	.incbin	"baserom.gba", 0x5D9CA0, 0x4
+	.word	gUnk_087E2F8C
 	.global	gUnk_085D9CA8
 gUnk_085D9CA8:
 	.incbin	"baserom.gba", 0x5D9CA8, 0x22
@@ -2047,7 +2049,8 @@ gUnk_085DFA7C:
 	.word	gUnk_085DF9C4
 	.word	gUnk_085D9CA8
 	.word	gUnk_085DF182
-	.incbin	"baserom.gba", 0x5DFA88, 0x8
+	.incbin	"baserom.gba", 0x5DFA88, 0x4
+	.word	gUnk_087E2FBC
 	.global	gUnk_085DFA90
 gUnk_085DFA90:
 	.incbin	"baserom.gba", 0x5DFA90, 0x22
@@ -2116,7 +2119,10 @@ gUnk_085DFF60:
 	.incbin	"baserom.gba", 0x5DFF60, 0x10
 	.global	gUnk_085DFF70
 gUnk_085DFF70:
-	.incbin	"baserom.gba", 0x5DFF70, 0x20
+	.incbin	"baserom.gba", 0x5DFF70, 0x10
+	.global	gUnk_085DFF80
+gUnk_085DFF80:
+	.incbin	"baserom.gba", 0x5DFF80, 0x10
 	.global	gUnk_085DFF90
 gUnk_085DFF90:
 	.word	gUnk_085DFE70
@@ -2202,7 +2208,13 @@ gUnk_085E0050:
 	.word	gUnk_085DFF70
 	.word	gUnk_085DFA90
 	.word	gUnk_085DFAB2
-	.incbin	"baserom.gba", 0x5E005C, 0x14
+	.global	gUnk_085E005C
+gUnk_085E005C:
+	.word	gUnk_085DFF80
+	.word	gUnk_085DFA90
+	.word	gUnk_085DFAB2
+	.incbin	"baserom.gba", 0x5E0068, 0x4
+	.word	gUnk_087E2FF0
 	.global	gUnk_085E0070
 gUnk_085E0070:
 	.incbin	"baserom.gba", 0x5E0070, 0x20
@@ -2607,7 +2619,9 @@ gUnk_085EEE08:
 	.incbin	"baserom.gba", 0x5EEE08, 0x18
 	.global	gUnk_085EEE20
 gUnk_085EEE20:
-	.incbin	"baserom.gba", 0x5EEE20, 0x9A4
+	.incbin	"baserom.gba", 0x5EEE20, 0x10
+	.word	gUnk_087E3038
+	.incbin	"baserom.gba", 0x5EEE34, 0x990
 	.global	gUnk_085EF7C4
 gUnk_085EF7C4:
 	.incbin	"baserom.gba", 0x5EF7C4, 0x28
@@ -2622,7 +2636,9 @@ gUnk_085EF85C:
 	.incbin	"baserom.gba", 0x5EF85C, 0x18
 	.global	gUnk_085EF874
 gUnk_085EF874:
-	.incbin	"baserom.gba", 0x5EF874, 0xEB8
+	.incbin	"baserom.gba", 0x5EF874, 0x10
+	.word	gUnk_087E3048
+	.incbin	"baserom.gba", 0x5EF888, 0xEA4
 	.global	gUnk_085F072C
 gUnk_085F072C:
 	.incbin	"baserom.gba", 0x5F072C, 0x30
@@ -2637,7 +2653,9 @@ gUnk_085F07DC:
 	.incbin	"baserom.gba", 0x5F07DC, 0x20
 	.global	gUnk_085F07FC
 gUnk_085F07FC:
-	.incbin	"baserom.gba", 0x5F07FC, 0xC64
+	.incbin	"baserom.gba", 0x5F07FC, 0x10
+	.word	gUnk_087E3058
+	.incbin	"baserom.gba", 0x5F0810, 0xC50
 	.global	gUnk_085F1460
 gUnk_085F1460:
 	.incbin	"baserom.gba", 0x5F1460, 0x28
@@ -2652,7 +2670,9 @@ gUnk_085F1500:
 	.incbin	"baserom.gba", 0x5F1500, 0x20
 	.global	gUnk_085F1520
 gUnk_085F1520:
-	.incbin	"baserom.gba", 0x5F1520, 0x14D8
+	.incbin	"baserom.gba", 0x5F1520, 0x10
+	.word	gUnk_087E3068
+	.incbin	"baserom.gba", 0x5F1534, 0x14C4
 	.global	gUnk_085F29F8
 gUnk_085F29F8:
 	.incbin	"baserom.gba", 0x5F29F8, 0x40
@@ -2667,7 +2687,8 @@ gUnk_085F2AF8:
 	.incbin	"baserom.gba", 0x5F2AF8, 0x20
 	.global	gUnk_085F2B18
 gUnk_085F2B18:
-	.incbin	"baserom.gba", 0x5F2B18, 0x14
+	.incbin	"baserom.gba", 0x5F2B18, 0x10
+	.word	gUnk_087E3078
 	.global	gUnk_085F2B2C
 gUnk_085F2B2C:
 	.incbin	"baserom.gba", 0x5F2B2C, 0x10
