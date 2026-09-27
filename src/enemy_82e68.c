@@ -19,7 +19,7 @@
  * `count` argument is what separates them (`0x08741778` + 7*4 = `0x08741794`).
  *
  * This batch holds:
- *   * the walker script `FlamerInit` (7 states, tables `0x08741778` /
+ *   * Task_Flamer's rows 0/1 `FlamerInit` (7 states, tables `0x08741778` /
  *     `0x08741794`, per-frame hook `FlamerUpdate`, re-arm `FlamerEnterState`);
  *   * its terrain library: `sub_08083a48` / `sub_08083ad4` / `sub_08083bbc` /
  *     `sub_08083cb8` probe the room with GetCollisionTileAtPixel/GetCollisionTileAtOffset and turn the

@@ -1978,7 +1978,13 @@ child issues of #35 are created from it. Findings that belong in this document:
   the palette ramps `0x0873FD98`/`0x0873FE98`, and the EWRAM cells
   `0x02004B64`, `0x02006160`, `0x02007CF0` and `0x0200AF20`.
 - **M20 (`0x08078B68-0x0807F043`) is the three-table shape applied to MOVING
-  SCENERY, not enemies.** Decompiled in #77 into `src/enemy_78b68.c`,
+  SCENERY, not enemies.** *Correction (#155 run 2): it is enemies.  Local
+  renders of the kind-0 graphics descriptors plus each subtype's
+  `ActorDef.ability` show Waddle Dee's rows, Rocky, Pengy, Sir Kibble,
+  Cappy, Gordo, Cool Spook, Kabu, Bomber, Sparky, Scarfy, the two sword
+  knights, Togezo, UFO and the parasol (`Task_<Enemy>` in
+  `docs/analysis/renames.csv`); the velocity-and-onGround waits below are
+  how these enemies walk, hop and float.*  Decompiled in #77 into `src/enemy_78b68.c`,
   `src/enemy_7aa5c.c` and `src/enemy_7d3b0.c`. Twenty-one ROM task types live
   here — eighteen class-3 (#9, #12, #15, #16, #18, #19, #21, #22, #26, #29,
   #36, #37, #44, #45, #46, #48, #216, #217), the class-2 pair #102/#134 and

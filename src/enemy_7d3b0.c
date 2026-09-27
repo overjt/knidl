@@ -4,23 +4,28 @@
  *   ./tools/fnmatch.sh 0x0807D3B0 0x0807F044 src/enemy_7d3b0.c --newpb
  *
  * The last third of enemy/object behaviour bank 1 (see src/enemy_78b68.c for
- * the bank's three-table script pattern).  Mostly "moving scenery": scripts
- * that drive Task.velX/unk58 (the 16.16 x/y velocity pair) and Task.accelY
- * from ROM tables, then wait on the collision flag Task.onGround:
- *   * the two class-8 platform intros `sub_0807d490` and `sub_0807d510`
- *     (the latter a seventeen-step cue script over `0x087410C0`);
- *   * task #216's rider `sub_0807d6c4`+`sub_0807d718`, whose per-frame
+ * the bank's three-table script pattern).  Enemies (Task_Rocky,
+ * Task_SirKibble, Task_Cappy, Task_Gordo, Task_CoolSpook and the head of
+ * Task_Kabu) and their helper tasks (#155 run 2; an older reading called them
+ * moving scenery): scripts that drive Task.velX/velY and Task.accelY from ROM
+ * tables and wait on Task.onGround:
+ *   * task types #216 and #217 (`sub_0807d490`, `sub_0807d510`, the latter a
+ *     seventeen-step cue script over `0x087410C0`), the effect tasks Pengy's
+ *     breath state PengyShoot spawns with CreateChildTaskAtOffsetFacing;
+ *   * Task_Rocky's (#9) row 0 `sub_0807d6c4`+`sub_0807d718`, whose per-frame
  *     handlers `sub_0807d82c` / `sub_0807d918` re-centre on the nearest
  *     player when `|TaskGetNearestPlayerDx()| <= 49` and `|TaskGetDyTo()| <= 15`;
  *   * the class-3 three-way branch pair `sub_0807dd70` / `sub_0807dddc`
  *     (`switch (Task.variant)` with an empty `case 1`);
- *   * the `0x08741220` function-pointer table the three `sub_0807e244` /
- *     `sub_0807e3b0` hooks dispatch through;
- *   * the two 0x120/0xA8-byte cutscene coroutines `sub_0807e290` and
- *     `sub_0807e768`, which spawn a companion with `CreateActorFromDescAtOffsetFacing` and then
+ *   * Task_SirKibble's `0x08741220` function-pointer table the three
+ *     `sub_0807e244` / `sub_0807e3b0` hooks dispatch through;
+ *   * Sir Kibble's jump-and-throw state `sub_0807e290` (rows 0/1, state 2)
+ *     and the capless Cappy's hop `sub_0807e768` (row 1, state 0), which
+ *     spawn a companion with `CreateActorFromDescAtOffsetFacing` and then
  *     bounce between velocity presets until Task.onGround fires;
- *   * the swing/orbit loops `sub_0807ea84`, `sub_0807eb60`, `sub_0807ec4c`,
- *     `sub_0807ed20` and `sub_0807ef7c`, each an infinite eight-step ramp.
+ *   * Gordo's four movement states (`sub_0807ea84`, `sub_0807eb60`,
+ *     `sub_0807ec4c`, `sub_0807ed20`) and Cool Spook's float `sub_0807ef7c`,
+ *     each an infinite eight-step velocity ramp.
  *
  * `sub_0807daf0`, `sub_0807e428`, `sub_0807e5a0`, `sub_0807e904`,
  * `sub_0807ee44` and `sub_0807ef08` are dead exports: each is a copy of its

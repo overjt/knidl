@@ -3,7 +3,8 @@
  * RECIPE: agbcc -O2 -mthumb-interwork -fprologue-bugfix
  *   ./tools/fnmatch.sh 0x08078B68 0x0807AA5C src/enemy_78b68.c --newpb
  *
- * M20 is enemy/object behaviour bank 1: twenty-one ROM task types whose
+ * M20 is enemy behaviour bank 1 (#155 run 2 identified its enemies from local
+ * sprite renders and their ActorDef.ability): twenty-one ROM task types whose
  * bodies use the same three-table pattern as M21/M22/M24/M25/M26
  * (rom-map section 9):
  *
@@ -18,22 +19,24 @@
  * This batch holds the bank's first twelve scripts, among them:
  *   * the shared eight-frame "bob" coroutine `sub_08078b68`, which nine of
  *     the bank's idle bodies tail-call;
- *   * the `0x08740648` / `0x08740668` cue+delay pair the door/lift scripts
- *     index by Task.unk74 (`sub_08078c80`, `sub_08078d88`);
- *   * task #9's four-state script `PengyInit`+`PengyUpdate` with its
- *     `0x08740758` class-4 dispatch and the `sub_080795d8` state machine
- *     (a screen-shake amplitude test plus a 120-frame timer);
- *   * `PengyShoot`, which spawns three class-4 actors from a stack
- *     `struct ActorSpawn` and clears Task.unk74 on the companion it gets
- *     back from CreateChildTaskAtOffsetFacing;
+ *   * the `0x08740648` / `0x08740668` cue+delay pair Task_WaddleDee's walk
+ *     states (rows 0/1: `sub_08078c80`, `sub_08078d88`) index by Task.unk74;
+ *   * Task_Pengy's (#12) four-state row `PengyInit`+`PengyUpdate` with its
+ *     state table gPengyStates (`0x08740758`) and the `sub_080795d8` check
+ *     (the nearest player within 64 px horizontally, plus a cooldown timer);
+ *   * `PengyShoot`, Pengy's breath state, which spawns actor type 102 ten
+ *     times (cycling Task.unk74 0-2) from a stack `struct ActorSpawn` and
+ *     clears Task.unk74 on the companion it gets back from
+ *     CreateChildTaskAtOffsetFacing;
  *   * the `sub_08079eec` / `sub_08079f18` / `sub_08079f54` sound-cue chain
  *     (all `u16`-parameterised) that every later script funnels its
  *     "player hit me" reaction through;
- *   * the two 0x1C0-byte cutscene coroutines `sub_0807a1c0` and
- *     `sub_0807a634` (identical: a seventeen-step frame script followed by an
+ *   * the two 0x1C0-byte Task_Sparky states `sub_0807a1c0` (row 0) and
+ *     `sub_0807a634` (row 2) (identical: a seventeen-step frame script followed by an
  *     eight-iteration palette flip between `0x08740DE4` and `0x0873F774`);
- *   * `sub_0807a8fc`, the bank's only `mov pc` jump table (five states over
- *     Task.variant), and `sub_0807a968`, which clamps a spawn point from
+ *   * Task_Scarfy's `sub_0807a8fc`, the bank's only `mov pc` jump table (five
+ *     cases over Task.variant), and `sub_0807a968`, which places Scarfy at an
+ *     offset from the nearest player, clamping the point from
  *     `0x08740824` into the camera box `gViewRect[0..3]`.
  *
  * `sub_0807927c`, `sub_080794d0`, `sub_080799a0`, `sub_08079db8` and

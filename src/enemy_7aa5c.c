@@ -5,22 +5,25 @@
  *
  * The middle third of enemy/object behaviour bank 1 (see src/enemy_78b68.c for
  * the bank's three-table script pattern).  Twelve more scripts, among them:
- *   * the class-6 "swinging platform" pair `ScarfyInit`+`ScarfyUpdate` with
- *     its five-state `sub_0807a8fc` dispatch and `sub_0807aa5c`'s two-table
- *     velocity ramp;
- *   * task #12's eight-state script (`sub_0807b300`+`sub_0807b32c`) whose hook
+ *   * Task_Scarfy's row `ScarfyInit`+`ScarfyUpdate` with its five-case
+ *     `sub_0807a8fc` setup and `sub_0807aa5c`'s two-table float wave (an
+ *     older reading called it a swinging platform);
+ *   * row 0 of the two sword knights' shared table `gUnk_08740990` (task
+ *     types #36/#37: `sub_0807b300`+`sub_0807b32c`), whose hook
  *     packs Task.pixelY into the low half of Task.unk24 and ORs 0x10000 in
  *     when the four-player flag `gTerrainResult[4]` is out of range;
- *   * the eight-state class-8 rider `sub_0807b3f8`..`sub_0807b8ec`, which
- *     probes for a partner with `TaskIsInRectSlot` over a stack `struct PointPair`
+ *   * the sword knights' remaining states and rows `sub_0807b3f8`..
+ *     `sub_0807b8ec`, which probe for a partner with `TaskIsInRectSlot` over a
+ *     stack `struct PointPair`
  *     and reacts through the shared `sub_0807b294` state entry;
- *   * the class-4 "conveyor" script `UFOInit`+`UFOUpdate` with the
+ *   * Task_UFO's row 0 `UFOInit`+`UFOUpdate` with the
  *     `sub_0807c5ac` box test (`struct Rect` + GetDistSq) and the
  *     `sub_0807c530` aim helper that clamps into `0x08740B3C`/`0x08740B60`;
- *   * `sub_0807c828`, which walks a sixteen-entry cue ring through
+ *   * UFO's state check `sub_0807c828` (gUFOStateUpdates[1]), which walks a
+ *     sixteen-entry cue ring through
  *     `sub_0807c508` (`15 & (rand + Task.unk24)`);
- *   * the class-1 lift `sub_0807cc68`+`sub_0807cc9c` and the `sub_0807cbf4`
- *     spin-up (a 512-step angle from `TaskGetAngleTo`).
+ *   * Task_Parasol's row 0 `sub_0807cc68`+`sub_0807cc9c` and its aim
+ *     `sub_0807cbf4` (a 512-step angle from `TaskGetAngleTo`).
  *
  * `sub_0807b888`, `sub_0807bd60`, `sub_0807c3d8`, `sub_0807cadc`,
  * `sub_0807ccec`, `sub_0807cdec`, `sub_0807cf64` and `sub_0807d0d8` are dead
