@@ -35,7 +35,7 @@ everywhere it lives and logs it in `docs/analysis/renames.csv`.
 | Globals (RAM cells, ROM tables) | `g` + `PascalCase` | `gMultiBootParam`, `gTaskTypes` |
 | File-local statics | `s` + `PascalCase` | `sLinkTimer` |
 | Struct and union tags, typedefs | `PascalCase` | `struct Task`, `struct RoomDef` |
-| Struct fields | `camelCase` | `unk10` until named (run 2 of #155) |
+| Struct fields | `camelCase` | `posX`, `sleepFrames`, `frameTable` (section 2.2) |
 | Macros, enum constants | `UPPER_CASE` | `REG_IME`, `TASK_CLASS_ACTOR` |
 | Unknown fields / regions | `unk<off>` / `filler<off>` | `unk3C`, `filler6C` |
 | Unknown parameters and locals | positional / register | `arg0`, `r4`, `sp00` |
@@ -84,19 +84,91 @@ These words were fixed by run 1 and the families built on them; keep them.
   (`TaskFree(gCurTaskIdx)`).  A task is **freed** (`TaskFree`, `...OrFree`);
   an actor is **destroyed** (`ActorDestroy`, `...OrDestroy`) because that
   also runs its teardown and frees its attached task.
-- **Facing** in a name means the sign follows `Task.unk43` (1 = right).
+- **Facing** in a name means the sign follows `Task.facing` (1 = right).
 - **World** / **Screen** coordinates: world pixels minus the sprite camera
   (`gSpriteCameraX/Y`) are screen pixels.  **InView** tests the view rect
   `gViewRect` widened by 64 px; **OnScreen** tests the screen widened by
   about 64 px.
-- Motion: **position** (16.16, `Task.unk4C/50`), **pixel position**
-  (`unk48/4A`), **velocity**, **acceleration**, **speed limit**.
-  `Task.unk78` is **health** (actors and players).
+- Motion: **position** (16.16, `Task.posX/posY`), **pixel position**
+  (`pixelX/pixelY`), **velocity** (`velX/velY`), **acceleration**
+  (`accelX/accelY`), **speed limit** (`speedLimitX/speedLimitY`).
+  `Task.health` is **health** (actors and players).
 - The player's action machine: `PlayerAction<Name>` is the enter coroutine
   in `gPlayerActions`, `PlayerAction<Name>Update` the per-frame handler it
   installs, `PlayerCheck<Name>` the check that requests it.
 - Do not reuse a public name with a different shape: pokeruby's
   `BuildSendCmd` takes a command and ours does not, hence `FillSendCmd`.
+
+### 2.2 Struct fields (run 2 of #155)
+
+Fields follow the symbols' evidence rules, one struct at a time, with
+`tools/rename_field.py` (section 6).  A field keeps `unk<off>` while its
+role is not proven on every path; the offset comments (`/*0x14*/`) stay.
+
+- **camelCase, the words of 2.1.**  Axis pairs end in `X`/`Y` (`posX`,
+  `pixelY`, `velX`); a saved copy is `saved<Field>` (`Actor.savedFrame`),
+  last frame's value `prev<Field>` (`PlayerState.prevPixelX`,
+  `Actor.prevState`); a count is `<thing>Count` (`RoomDef.doorCount`); a
+  flag that is only tested reads as a predicate (`onGround`, `running`,
+  `mapsCompressed`); a callback slot is `<role>Callback`.
+- **The same word for the same thing** across structs: `ActorDef.score` is
+  copied into `Actor.score`, `ActorDef.ability` into `Actor.ability`,
+  `GfxHeader`, `TaskGfx` and the room objects' graphics descriptor all say
+  `palette` / `tiles` / `tileCount` / `paletteBankCount`.
+- **Per-type scratch stays unnamed.**  `Task.unk18`-`unk34`,
+  `unk6C`-`unk70`, `unk46`, `unk73`/`unk74`/`unk76` and `unk82`/`unk84`
+  mean different things in different task families (a variant, a timer, a
+  child slot); they get a name only where every writer and reader agrees.
+  A field that one or two families reuse for their own values may still
+  be named after the engine's use (`Task.facing`, `Task.hitTimer`); say so
+  in the evidence.
+- **Local copies.**  A file that declares its own copy of a shared struct
+  (the task engine's `struct Task` with `h10`/`b12`/`w4C` names,
+  `src/early_5d9c.c`'s `struct Sprite`, the 17 `struct RoomDef` copies)
+  gets the same name at the same offset; a copy whose member spans more
+  than the field (an array, padding) keeps its span.
+- **What the named `struct Task` looks like** (`include/task.h`): four
+  callbacks `moveCallback`, `updateCallback` (the state's per-frame
+  update), `lateUpdateCallback` (RunTasks phase 4, after every task has
+  moved) and `drawCallback`; the coroutine's `sleepFrames`, `taskClass`,
+  `skipMask`; the state machine `state` (`CallTableEntry(Task.state, n,
+  states)`) and `updateState` (the update callback's handler index);
+  `serial`, `parent`; the sprite `frameTable`, `frame`, `spriteFlags`,
+  `tileWord`, `layer`, `facing`; the motion fields of 2.1; the actor and
+  hit engine's `actorKind`, `hitTimer`, `health`, `onGround`,
+  `waterFlags`, `hitKind`, `hitDirection`, `hitterSlot`, `hitterPlayer`;
+  and `player`, the task's `struct PlayerState`.
+
+### 2.3 Enemies and the abilities (run 2 of #155)
+
+No string says which enemy a script is; the local sprite renders do
+(section 4, `visual:`; lesson 4.126), corroborated by the enemy's
+`ActorDef.ability` (the ability Kirby gets from it), its behaviour or
+katam.  Names use the enemy's English name as the game's manual spells
+it, in PascalCase (`WaddleDee`, `BrontoBurt`, `PoppyBrosJr`, `UFO`).
+
+| Symbol | Name | Example |
+|---|---|---|
+| the task-type body a room object of that subtype runs | `Task_<Enemy>` | `Task_WaddleDee` |
+| its frame table (`Task.frameTable`) | `g<Enemy>Frames` | `gRockyFrames` |
+| its variant table (`CallTableEntry(Task.unk73, n, ...)`) | `g<Enemy>Variants` | `gSparkyVariants` |
+| a state machine's entry / per-frame guard | `<Enemy>EnterState` / `<Enemy>Update` | `ScarfyEnterState` |
+| its state tables (`Task.state` / `Task.updateState`) | `g<Enemy>States` / `g<Enemy>StateUpdates` | `gScarfyStates` |
+| a state body with a verb the code shows | `<Enemy><Verb>` | `ScarfyChase` |
+| its graphics descriptor, where it has a label | `g<Enemy>Gfx` | `gUFOGfx` |
+
+An enemy that two species could be (Sword Knight and Blade Knight share
+one script) stays unnamed until a second source tells them apart.
+
+The ability ids (`PlayerState.ability`, `ActorDef.ability`) are fixed by
+the HUD ability pictures `gAbilityPictures[id]`, whose banners carry the
+name: 0 NORMAL, 1 FIRE, 2 SPARK, 3 CUTTER, 4 SWORD, 5 BURNING, 6 LASER,
+7 MIKE, 8 WHEEL, 9 HAMMER, 10 PARASOL, 11 SLEEP, 12 NEEDLE, 13 ICE,
+14 FREEZE, 15 HI-JUMP, 16 BEAM, 17 STONE, 18 BALL, 19 TORNADO, 20 CRASH,
+21 LIGHT, 22 BACKDROP, 23 THROW, 24 U.F.O., 25 STAR ROD, 26 WAIT.  The
+ability moves are `PlayerAction<Ability>` / `PlayerAction<Ability>Update`
+(`PlayerActionFire`, `PlayerActionHiJumpUpdate`, `PlayerActionStarRod`).
+An enum for the ids would be a code change and waits for #36 phase 2.
 
 ## 3. Words with a fixed meaning
 
@@ -128,6 +200,12 @@ check.  Start it with one of these tags:
   with what, what it writes, which table dispatches it.  Cite a file, a table
   or a rom-map section: `role: installed in gUnk_030004B0[0], the serial
   slot of the master ISR's handler table (src/early_6464.c)`.
+- `visual:` what a LOCAL render of the graphics the code loads shows
+  (`visual: a red rock-dome creature with a headband (local render, not
+  committed)`).  Renders live only in the gitignored `pending/` and are
+  never committed, uploaded or attached anywhere (data policy, AGENTS.md;
+  lesson 4.126).  A render is never enough alone: combine it with `code:`
+  (the ability byte, the behaviour) or `katam:`.
 - `code:` what the body itself does, read from the C: the cells it reads
   and writes, the loop it runs, what it returns (for example, code: the
   body is `while (1) TaskYieldTrampoline(0x7FFF)`).  Enough on its own only
@@ -155,9 +233,9 @@ Keep the placeholder when:
 
 Unnamed by design, for #37's audit:
 
-- **struct fields** (`Task.unkXX`, `PlayerState.unkXX`, `RoomDef.unkXX`):
-  they touch `include/task.h` and hundreds of sites and come in run 2 of
-  #155, one struct at a time, with the same evidence rules;
+- **struct fields whose role changes with the task family** (section 2.2)
+  and the fields run 2 of #155 could not prove; the list of what is left is
+  in #155;
 - **assets** (graphics, palettes, tilemaps, samples, songs, level maps):
   their labels in `data/*.s` keep address names until a consumer's role
   gives them one (`docs/data.md`), and the data policy (AGENTS.md) still
@@ -198,7 +276,9 @@ appends to `docs/analysis/renames.csv`.  It never edits generated files:
 
 `--verify-diff REF` maps every name `renames.csv` gained since the git ref
 back to its old name and compares the tree with the ref: the C and asm must
-be identical outside comments (comment edits are listed for review), and
+be identical outside comments (comment edits are listed for review), a
+field rename is accepted only after `.`/`->` or at a member declarator of
+its struct, and
 the generated files, the config and `tools/symdb.py` identical except for
 the new `KNOWN_SYMBOLS` entries.  It is the proof that a rename branch
 changed nothing but names.
@@ -206,6 +286,30 @@ changed nothing but names.
 `docs/analysis/renames.csv` is the alias table.  The lessons, the rom-map
 and the module-map keep the names of their time; a reader maps an old name
 through it.
+
+### 6.1 Fields: `tools/rename_field.py`
+
+```sh
+tools/rename_field.py Task unk43 facing --copies \
+    --evidence "code: ..."                   # dry run (compiles in Docker)
+tools/rename_field.py --csv fields.csv       # struct,old,new,evidence[,offset,copies]
+tools/rename_field.py --csv fields.csv --write
+make clean && make compare
+tools/rename.py --verify-diff master         # covers field renames too
+```
+
+A word replace cannot rename a field (dozens of structs have an `unk14`),
+so the tool renames the member in every definition of the struct, lets
+gcc 12's `-fsyntax-only` (in the knidl-builder image) report each access
+that now fails with its file, line, column and struct, renames exactly
+those, and repeats until the tree compiles as before; the renamed tree's
+error set must equal the original's (lesson 4.125).  `copies` renames the
+member at the same offset in the local copies of the struct (section 2.2).
+A qualified mention `Struct.old` in a comment of `src/` or `include/`
+follows; prose such as `task->unk14` does not.  Each field rename is a
+`renames.csv` row of kind `field`, written `Struct.old` -> `Struct.new`, one
+per local copy with its own old name.  Field names never reach code
+generation (lesson 3.516), and agbcc's `make compare` is still the proof.
 
 Apply names in batches of about 50-100 and run `make clean && make compare`
 after every batch.  gcc 2.95 hashes some RTL by symbol name (lessons 4.79,
