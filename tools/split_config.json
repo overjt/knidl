@@ -1,11 +1,14 @@
 {
   "comment": [
-    "Segments to extract from baserom.gba into labeled asm (tools/split.py).",
+    "Segments to extract from baserom.gba (tools/split.py).",
     "Names/kinds/boundaries come from docs/analysis/segments.txt; function",
-    "labels come from docs/analysis/symbols.csv. For every segment listed",
-    "here, make split writes asm/<name>.s (verified byte-identical against",
-    "the ROM) and removes the data/<name>.s incbin slice; linker.ld already",
-    "pins each section by name, so no linker script change is needed.",
+    "labels come from docs/analysis/symbols.csv. For every code segment",
+    "listed here, make split writes asm/<name>.s (verified byte-identical",
+    "against the ROM) and removes the data/<name>.s incbin slice; every data",
+    "segment becomes a structure-only data/<name>.s (issue #36,",
+    "docs/data.md): labels, symbolic pointer words and .incbin slices of",
+    "baserom.gba, never ROM values. linker.ld already pins each section by",
+    "name, so no linker script change is needed.",
     "",
     "external_defined lists symbols that already exist as real labels in the",
     "link (asm/crt0.s, src/agb_sram.c) and therefore must NOT be redefined",
@@ -49,7 +52,17 @@
     "driver reads its music-player count and max-lines limit as symbol",
     "ADDRESSES: (u16)gNumMusicPlayers == 4 players (pool word 0x00000004",
     "at 0x080CE5C8), (u32)gMaxLines == 0 (pool word at 0x080CE928), the",
-    "same SDK idiom katam's m4a.h documents (issue #53)."
+    "same SDK idiom katam's m4a.h documents (issue #53).",
+    "",
+    "Data segments (issue #36, docs/data.md): every ROM address in",
+    "data_symbols and every extra_labels address inside a data segment is a",
+    "real label there. \"asset\": true on a segment turns off the blanket",
+    "code-pointer rule (graphics, samples, songs). pointer_tables lists the",
+    "tables whose words are pointers, each with the consumer that proves it",
+    "(\"why\"): start plus end or count, stride and pointer offsets, optional",
+    "\"targets\" (the layout of the records it points at) or \"extent\":",
+    "\"next-label\" for a declared pointer array of unknown length. not_pointers",
+    "keeps a word inside its .incbin, with the reason."
   ],
   "abs_symbols": {
     "gNumMusicPlayers": "0x00000004",

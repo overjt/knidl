@@ -83,10 +83,12 @@ bytes: `data/<name>.s` holds only labels, symbolic `.word`s and
     there is as likely pixels as a pointer) or the word is listed in
     `"not_pointers"`;
   * `.word <label>` for every word of a `"pointer_tables"` entry, the
-    tables whose layout a decompiled consumer proves: each non-NULL word
-    must resolve to a function, a ROM data label or a named RAM cell, and
-    an unresolved one stops the run (`--missing-labels` writes the
-    data_symbols entries it would need);
+    tables whose layout a decompiled consumer proves (or, with
+    `"extent": "next-label"`, whose element type the consumer declares
+    and whose span up to the next label is all NULL or pointer values):
+    each non-NULL word must resolve to a function, a ROM data label or a
+    named RAM cell, and an unresolved one stops the run
+    (`--missing-labels` writes the data_symbols entries it would need);
   * `.incbin` for every other run of bytes, whatever its length.
 
 Run inside the knidl-builder image via `make split`, or directly:

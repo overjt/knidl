@@ -10197,6 +10197,101 @@ to be listed as excluded, or "remaining to be decompiled" never reaches 0.
   second.  A measured residue says what the candidate does, not what the
   original was.
 
+### 4.116 The group verification's stand-ins resolve names the real link cannot
+`split.py` verifies every candidate in one link against zero-size stand-ins
+for each `external_defined` name (4.18).  `ReadSram_Core` and
+`VerifySram_Core` are listed there because C defines them, but
+`src/agb_sram.c` makes them `static` (as the SDK source does).  So the
+first structure-only emission of `sram_driver_fn_table` (#36) put
+`.word ReadSram_Core+1` in `data/`, passed `make split`'s verification, and
+then failed the real link with `undefined reference to 'ReadSram_Core'`.
+Only `make clean && make compare` sees it.  A data pointer cannot name a
+`static` C function until the C gives it external linkage (a `src/`
+change for the owner to decide), so the two words are `not_pointers` with
+the reason.  After any data change, run the clean build, not just `make
+split`.
+
+### 4.117 An even word equal to a Thumb entry has no `.word` spelling
+For a C-defined Thumb function the symbol is a Thumb `STT_FUNC`, and
+`R_ARM_ABS32` computes `(S + A) | T`: `.word fn` assembles to `fn | 1` and
+`.word fn+1` to `fn + 1` (not `fn + 2`).  The `+1` form is therefore right
+for every odd pointer, whether `fn` is a C label or an absolute in
+`asm/rom_syms.s` (which carries `T = 0`, so the old IRQ table matched
+either way), and an even value equal to a Thumb entry (a `mov pc`
+jump-table target, 4.38) cannot be written against the function at all.
+The data emitter symbolizes a Thumb entry only from an odd value and an
+ARM entry only from an even one.
+
+### 4.118 Graphics, samples and songs hold "function pointers" by chance
+25 four-aligned words of the asset segments equal a symbols.csv entry (with
+the Thumb bit for a Thumb one): `0x080C9005` twice in the level palettes,
+`Start` (`0x080000C0`, ARM) in the compressed graphics, three copies of
+`0x08000701` (AgbInit's pool-skip branch, rom-map §2 seg 5) inside seg 13,
+eleven in the songs.  In seg 18 the same rule is sound: its 2,700 hits sit
+in pointer runs, and the 17 with no other function pointer within 32 bytes
+are record fields (four copies of `sub_0809f808` 0x58 bytes apart, five of
+the `sub_080af178`/`sub_080af1b8` pair 0x40 apart) whose targets are
+decompiled functions with no census evidence but that very `rom-pointer`
+word.  So the blanket rule is per segment: `"asset": true` turns it off for
+graphics, samples and songs, where only labels and consumer-proven tables
+apply.
+
+### 4.119 A consumer's struct is the pointer proof; a value scan is not
+Across the 333 RoomDef headers the room lists reach, the eleven pointer
+fields of M07's `struct RoomDef` are exactly the words that hold ROM
+addresses (NULL allowed in the door and object-list fields), while the four
+`u8` fields at `+0x54` produce six "pointers" into crt0 because their bytes
+happen to spell `0x08000xxx`.  A pointer table's `targets` layout comes
+from the C struct, never from "every word of the record that looks like an
+address".  The same test settled the task-type table: `src/early_5c4c.c`'s
+comment still calls the second word "u32 flags", but TaskCreate copies it
+into the slot's resume address, which the ARM switcher enters with `bx`,
+and all 266 values are Thumb entries.
+
+### 4.120 Labels make the `.incbin` count go up, not down
+The #36 plan expected the last line of `make progress` ("N bytes of data in
+M baserom incbins") to fall as tables got labels.  Under the structure-only
+emitter every label and every symbolic word cuts a slice, so M rose from 19
+to 6,295 while the bytes fell by four per symbolic word.  The data run's
+progress metrics are `make datastats`' two numbers (absolute ROM data
+symbols; pointer-like words not yet symbolic), which is also why
+`calcrom.pl` needed no change.
+
+### 4.121 A zone's census name is a guess: follow the consumers' pointers
+Seg 13 was named "sound samples" by entropy, and its first byte
+(`0x083356E0`) is the first BG animation script of `gUnk_087E1F20[]`; 332
+of the 333 RoomDef headers and their maps, block tables, doors and object
+lists sit in its second half.  Seg 20 ("sample_set_index") is the room
+table, and from `0x087E2570` a different 710-word pointer table into
+`0x0854xxxx-0x085Fxxxx` whose records point back at it (23 references);
+`m4a_songs` holds 45 labels of game data from `0x085CCB58` on.  The names
+stay until phase 2 (renaming a segment touches linker.ld, segments.txt and
+every tool), but a data change must read a zone through its consumers'
+pointers, not through its name.
+
+### 4.122 Harness notes from #36 phase 1
+- One owner, no fan-out: the work was tooling.  Analysis scripts lived in
+  `pending/data/` (`survey.py` for per-segment symbol and pointer counts,
+  `rooms.py` for the RoomDef census, `ptrdecl2.py` for the C-declared
+  pointer arrays and their spans).
+- `tools/split.py --missing-labels FILE` lists every pointer-table target
+  that has no label as `data_symbols` entries: the pilot's 2,326 labels and
+  the 48 arrays' 462 each came from one run, reviewed by segment and merged.
+  A next-label span is recomputed from the labels on every run, so a target
+  that lands inside a span shrinks it; here it converged after one pass.
+- `tools/datastats.py` imports `split.py`'s `DataPlan` to say which proof
+  symbolized a word, so the metric cannot drift from the emitter.
+- gas resolves `.incbin "baserom.gba"` against the process's working
+  directory first and `-I` second; `split.py` writes candidates to a
+  tmpdir but runs from the repository root, and adds `-I` for the ROM's
+  directory.
+- CI's regeneration check is `git diff --exit-code -- asm data`, which does
+  not see untracked files: a newly generated `data/*.s` that is not
+  committed passes it.  Stage with `git add -A asm data` and read `git
+  status` before committing a split change.
+- The whole emit-and-verify of 7.5 MB of data takes about 7 s in the
+  container; `make clean && make compare` about 10 s.
+
 ## 5. Workflow that worked
 
 The canonical per-function loop (pick → m2c first pass → asmdiff iterate →
