@@ -569,4 +569,24 @@ Matching decompilation of Kirby: The Amazing Mirror's predecessor, **Kirby: Nigh
   path effect (3.478; best source on #84).  No census row changed; 13
   ROM tables named via `split_config.json` `data_symbols`; new lessons
   3.472-3.478 and 4.111.
+- The engine zone's last asm functions (issue #63, the backlog #32 left):
+  13 of the 14 functions of `game_code_early` that #32 parked landed as C
+  in `src/early_1cc8.c`, `src/early_2378.c`, `src/early_31b8.c`,
+  `src/early_3888.c`, `src/early_4984.c`, `src/early_5654.c`,
+  `src/early_5acc.c`, `src/early_6ac8.c` and `src/early_6e9c.c`, so
+  `0x080008E8-0x08007300` is C except `sub_08006d28` (SerialCB, 356 bytes,
+  parked at 15 differing bytes with its best source on #63; rom-map §6.4).
+  Twelve are plain source and `sub_08002378` keeps one commented zero-code
+  stand-in conjunct.  All fourteen were redrafted from the listings (#32's
+  candidates were lost), and every #32 diagnosis turned out to describe
+  the old candidate: two "Group B" proofs (3.35, 3.73) now carry correction
+  notes.  Several are library code with public references - MultiBootMain
+  is an older revision of the SDK source pokeemerald ships, the link driver
+  an older revision of pokeruby's `src/link.c` (EnqueueSendCmd,
+  DequeueRecvCmds, SerialCB, DoRecv) - and the recurring causes were
+  constant-versus-symbol spellings of I/O and EWRAM addresses (gcse PREs
+  symbol loads, never CONST_INTs), one variable serving several roles, and
+  the libraries' older revisions.  `include/gba/syscall.h` now declares
+  `MultiBoot` as returning int.  No census row changed; done by a
+  three-agent fan-out; new lessons 3.479-3.488 and 4.112.
 - Next milestones: decompile split/SDK modules to C using the validated per-zone compiler recipe (task system Thumb side, sound driver, then game code); grow `src/` one module at a time with `asmdiff.sh` on the module range.
