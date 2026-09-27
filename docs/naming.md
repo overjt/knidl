@@ -99,9 +99,12 @@ check.  Start it with one of these tags:
   similar role is not evidence.
 - `role:` the caller or cell pattern that fixes the role: who calls it and
   with what, what it writes, which table dispatches it.  Cite a file, a table
-  or a rom-map section: `role: TaskCreate's (src/early_5654.c) only
-  allocator; every spawner calls it with a task-type id and 64-slot table
-  gUnk_03002790`.
+  or a rom-map section: `role: installed in gUnk_030004B0[0], the serial
+  slot of the master ISR's handler table (src/early_6464.c)`.
+- `code:` what the body itself does, read from the C: the cells it reads
+  and writes, the loop it runs, what it returns (for example, code: the
+  body is `while (1) TaskYieldTrampoline(0x7FFF)`).  Enough on its own only
+  for a small function whose whole contract is visible.
 - `hw:` a hardware register the code drives: `hw: writes REG_SIOCNT
   0x4003 (multi-play, 115200 bps, IRQ) and REG_RCNT 0`.
 - `string:` a string or ID the code reads or compares (`"AGB  KIRBY"`).
