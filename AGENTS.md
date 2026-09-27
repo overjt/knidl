@@ -50,6 +50,8 @@ Matching decompilation of Kirby: The Amazing Mirror's predecessor, **Kirby: Nigh
   - `make compare` — build and verify SHA-1 against `knidl.sha1` (USA `A7KE`, SHA-1 `37a476567d133c146fee6b5e2eb0b07a215da6b0`).
   - `make progress` — parse `build/knidl.map` with `tools/calcrom.pl` into code/data byte counts and percentages.
   - `make datastats` — data-structure metrics (`tools/datastats.py`): ROM data symbols still defined by absolute address, and pointer-like data words not yet symbolic (docs/data.md §6).
+  - `make shifttest` — the shift test and pointer census (`tools/shiftcheck.py`, `tools/ptrcensus.py`, docs/data.md §8): relinks with padding at a few section boundaries and sorts every pointer-like word that did not move into proven pointer / proven coincidence / unknown; run after a build, CI runs it after `make compare`.
+  - `make MATCHING=0` — link without `linker.ld`'s per-section address assertions (a modified ROM); the default `MATCHING=1` keeps every section at its original address.
   - `make check-data` — the no-ROM-bytes check (`tools/check_data_policy.py`): `data/*.s` may hold only labels, symbolic `.word`s and `.incbin` slices of `baserom.gba`; needs no baserom.
   - `make check-headers` — compile-only smoke test of `include/gba/*.h` (`tools/header_smoke.c`) with agbcc + old_agbcc, and of all the game headers `include/*.h` in one translation unit (`tools/header_smoke_game.c`); never linked into the ROM.
   - `make clean` — remove `build/` and `knidl.gba`.
@@ -799,12 +801,45 @@ Matching decompilation of Kirby: The Amazing Mirror's predecessor, **Kirby: Nigh
   new names are `docs/data.md` §4.1.  Every file was verified by its
   agbcc assembly (all 306 identical to master, lesson 4.128) and the ROM
   by `make compare`.  New lessons 3.517-3.519 and 4.128-4.131.
-- Next milestones: (1) #36 phase 2, run 2: more functional tables as C
-  (the RoomDef and ActorDef records, the BG animation lists and script
-  records), the six mixed tables of docs/data.md §5.1 as next-label
-  tables now that the headers give each one type, and a per-target census
-  of the pointers still missing before the `linker.ld` pins can go
-  (docs/data.md §7); (2) #155 run 3: the enemies' remaining rows and
+- Data structure, phase 2, run 2 (issue #36): **the ROM's sections
+  follow each other, and shifting is measured**.  `linker.ld` pins only
+  the cartridge header; every other block is placed by ld after the
+  previous one and followed by `ASSERT(!MATCHING || ADDR(.x) == <addr>)`,
+  with `--defsym MATCHING=1` from the Makefile unless `MATCHING=0` is
+  given (`tools/ldblocks.py` writes the blocks for carve.py,
+  carve_data.py and resegment.py); order and sizes alone reproduce the
+  ROM.  `tools/shiftcheck.py` (`make shifttest`, also in CI) relinks
+  with 0x1000 bytes inserted at seven section boundaries and counts the
+  pointer-like words that did not move; `tools/ptrcensus.py` sorts them
+  into proven pointers, proven coincidences and unknowns, from providers
+  `tools/census_*.py`.  After crt0 (the whole ROM): **56,092 unrelocated
+  words -> 16,997, of which 16,568 are proven coincidences, 429 unknown
+  and 0 proven pointers**; relocated 16,866 -> 55,961 plus 1,343
+  unaligned m4a track operands (docs/data.md §8, per zone and per
+  insertion point).  What changed: the code's last 14 raw ROM pointers
+  (crt0's AgbInit/AgbMain words, 10 C pool constants, the SRAM table's two
+  cores, now non-static; each file's agbcc assembly identical but for the
+  pool word, lesson 3.520); SoundMainRAM's ARM mixer kept raw
+  (`raw_ranges`: a false Thumb branch to another object, 4.134); the m4a
+  song structure as a verified parse (`tools/m4a_struct.py`, config
+  `"m4a"`: 330 headers, 701 tracks, 129 WaveData, 3,894 pointer words,
+  1,343 unaligned); the BG animation scripts, ActorDef/ActorAux/GfxHeader
+  records, seg 18's behaviour tables (the six mixed and seven short-span
+  tables of §5.1), the sprite frame network (329 frame tables, 5,087
+  TaskGfx records, the 20-byte tagged player records that fill seg 19's
+  head, split.py's `targets.tagged`) and, format-only because no code
+  reads them, the frame lists, GfxHeader trailers and sheet headers
+  (`"proof": "format"`, 3,014 words, docs/data.md §5.3).  `make datastats`: symbolic
+  pointer-like words 8,385 -> 47,465 (763 of them in C; +1,343
+  unaligned), not symbolic 56,278 -> 17,198; 25,859 ROM data labels.  Seg 19 holds no
+  songs (the player frame records, the frame lists and four separately
+  linked GBA programs); new lessons 3.520 and 4.132-4.139.  Done by four
+  proposal agents in scratch copies of the tree, in three rounds, plus the
+  coordinator, who alone applied config, linker and tool changes.
+- Next milestones: (1) #36: the 429 unknown words of the census
+  (docs/data.md §8.3: sprite sheets no consumer reaches, unbounded value
+  tables, unreferenced records), then the records as C and content-true
+  names for seg 19 and `m4a_songs`; (2) #155 run 3: the enemies' remaining rows and
   state verbs, the unidentified subtypes (15, 22, 26, 28/29, 31-33, 39,
   40), the boss children and the per-family `Task` fields (the headers
   now hold one declaration to rename), and the remaining `gUnk_` cells;
