@@ -1718,6 +1718,15 @@ SECTIONS
         KEEP(*(.asset_metadata_index)) KEEP(*(.asset_metadata_index.tail))
     } > ROM
 
+    /* actor_defs - functional table in C (src/data/actor_defs.c, carved by tools/carve_data.py) */
+    .actor_defs 0x0873ECEC : {
+        build/src/data/actor_defs.o(.rodata)
+    } > ROM
+
+    .asset_metadata_index_0873eea0 0x0873EEA0 : {
+        KEEP(*(.asset_metadata_index_0873eea0)) KEEP(*(.asset_metadata_index_0873eea0.tail))
+    } > ROM
+
     /* Song tail / misc audio data */
     .song_tail_misc_audio 0x08760000 : {
         KEEP(*(.song_tail_misc_audio)) KEEP(*(.song_tail_misc_audio.tail))

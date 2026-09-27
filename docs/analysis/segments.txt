@@ -344,7 +344,9 @@
 0x0872EA04 0x0872EA14 data sram_driver_fn_table
 0x0872EA14 0x0872FF30 data gap_sram_driver_fn_table_asset_metadata_index
 0x0872FF30 0x08730780 c_data task_types # src/data/task_types.c (carved by tools/carve_data.py)
-0x08730780 0x08760000 data asset_metadata_index
+0x08730780 0x0873ECEC data asset_metadata_index
+0x0873ECEC 0x0873EEA0 c_data actor_defs # src/data/actor_defs.c (carved by tools/carve_data.py)
+0x0873EEA0 0x08760000 data asset_metadata_index_0873eea0
 0x08760000 0x087E1D58 data song_tail_misc_audio
 0x087E1D58 0x087E1E78 c_data room_table # src/data/room_table.c (carved by tools/carve_data.py)
 0x087E1E78 0x087E1F58 data room_bg_anim_lists # Room BG-animation script lists (#36 phase 2): 12 NULL-ended lists of the 30 scripts and their index gRoomBgAnimScripts

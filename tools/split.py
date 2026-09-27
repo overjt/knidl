@@ -1138,11 +1138,18 @@ class DataPlan(object):
                 raise ConfigError("%s: a next-label table is a plain array "
                                   "of pointers" % what)
             seg = self.segment_of(start)
-            if seg is None:
+            c_seg = [r for r in self.c_ranges if r[0] <= start < r[1]]
+            if seg is not None:
+                later = [a for a in self.labels if start < a < seg[2]]
+                end = min(later) if later else seg[2]
+            elif c_seg:
+                # a table carved into C: its neighbours are C objects, named
+                # by data_symbols (they are no asm labels any more)
+                later = [a for a in self.data_symbols if start < a < c_seg[0][1]]
+                end = min(later) if later else c_seg[0][1]
+            else:
                 raise ConfigError("%s: 0x%08X is not inside a data segment"
                                   % (what, start))
-            later = [a for a in self.labels if start < a < seg[2]]
-            end = min(later) if later else seg[2]
             for addr in range(start, end - 3, 4):
                 v = self.word(addr)
                 if v and not pointer_valued(v):
