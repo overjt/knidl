@@ -1523,8 +1523,9 @@ SECTIONS
         build/src/boot_caa3c.o(.text)
     } > ROM
 
-    .game_code_and_rodata_080653ec_0806ef5c_080bf994_080c1ffc_080c6260_080c7e4c_080caa3c 0x080CAAB8 : {
-        KEEP(*(.game_code_and_rodata_080653ec_0806ef5c_080bf994_080c1ffc_080c6260_080c7e4c_080caa3c)) KEEP(*(.game_code_and_rodata_080653ec_0806ef5c_080bf994_080c1ffc_080c6260_080c7e4c_080caa3c.tail))
+    /* boot_caab8 — decompiled to C (src/boot_caab8.c, carved by tools/carve.py) */
+    .boot_caab8 0x080CAAB8 : {
+        build/src/boot_caab8.o(.text)
     } > ROM
 
     /* gameover_cacf0 — decompiled to C (src/gameover_cacf0.c, carved by tools/carve.py) */

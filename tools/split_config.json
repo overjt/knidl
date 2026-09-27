@@ -5273,6 +5273,7 @@
     "sub_080ca830",
     "sub_080ca8f0",
     "sub_080caa3c",
+    "sub_080caab8",
     "sub_080cacf0",
     "sub_080cad8c",
     "sub_080caeec",
@@ -8022,6 +8023,7 @@
     "0x0875546C": "gUnk_0875546C",
     "0x08755484": "gUnk_08755484",
     "0x0875549C": "gUnk_0875549C",
+    "0x087554B8": "gUnk_087554B8",
     "0x087555B4": "gUnk_087555B4",
     "0x087555D8": "gUnk_087555D8",
     "0x087555FC": "gUnk_087555FC",
@@ -8251,10 +8253,6 @@
     "0x087E1F20": "gUnk_087E1F20"
   },
   "segments": [
-    {
-      "name": "game_code_and_rodata_080653ec_0806ef5c_080bf994_080c1ffc_080c6260_080c7e4c_080caa3c",
-      "chunk_bytes": 65536
-    },
     {
       "name": "m4a_1"
     },
