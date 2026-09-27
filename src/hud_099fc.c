@@ -320,7 +320,7 @@ s32 SetPlayerAbilityNoHud(s32 a, s32 b, u32 c)
         gUnk_0200AF18[c] = b;
         p = &gPlayerStates[c];
         p->ability = a;
-        p->unk0E = b;
+        p->abilityUses = b;
         return p->ability;
     }
 }
@@ -333,7 +333,7 @@ s32 SetPlayerAbility(s32 a, s32 b, u32 c)
         gUnk_0200AF18[c] = b;
         p = &gPlayerStates[c];
         p->ability = a;
-        p->unk0E = b;
+        p->abilityUses = b;
         HudShowAbility(a, c);
         return p->ability;
     }

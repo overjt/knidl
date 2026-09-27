@@ -1570,7 +1570,7 @@ s32 sub_08064eb8(u8 p2)
         t->player = p = &gPlayerStates[gCurTaskIdx];
         a = t->unk8C;
         t->unk18 = p->ability;
-        t->unk1C = p->unk0E;
+        t->unk1C = p->abilityUses;
         t->unk20 = gCurTaskIdx;
         a->ability = p->ability;
     }

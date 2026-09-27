@@ -107,7 +107,7 @@ void sub_0804ef00(void)
     PlayerTurnToHeldDirection();
     while (!sub_0804f7f8(3) && !sub_0804f7f8(2))
     {
-        if (gTerrainResult.unk1 != 0 || (gCurTask->player->unk48 & 4))
+        if (gTerrainResult.unk1 != 0 || (gCurTask->player->boundsClamp & 4))
         {
             struct Task *t;
             PlayerCheckBump();
@@ -195,7 +195,7 @@ void sub_0804f124(void)
     PlayerTurnToHeldDirection();
     while (!sub_0804f7f8(3) && !sub_0804f7f8(2))
     {
-        if (gTerrainResult.unk1 != 0 || (gCurTask->player->unk48 & 4))
+        if (gTerrainResult.unk1 != 0 || (gCurTask->player->boundsClamp & 4))
         {
             struct Task *t;
             PlayerCheckBump();

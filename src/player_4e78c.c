@@ -130,7 +130,7 @@ void sub_0804e97c(void)
     PlayerStopAxes(3);
     {
         struct Task *t = gCurTask;
-        t->unk28 = t->player->unk4A;
+        t->unk28 = t->player->wallSide;
     }
     sub_0804f614();
     {
@@ -202,7 +202,7 @@ void sub_0804eb28(void)
     sub_0804f614();
     PlayerSetMotionXPreset(12, 1);
     gCurTask->unk28 = sub_0804f76c();
-    gCurTask->unk2C = gCurTask->player->unk4B;
+    gCurTask->unk2C = gCurTask->player->slope;
     while (1)
     {
         sub_0804f79c();
@@ -244,7 +244,7 @@ void sub_0804eb60(void)
             gCurTask->unk73 = 1;
             break;
         }
-        if (gCurTask->unk2C != gCurTask->player->unk4B)
+        if (gCurTask->unk2C != gCurTask->player->slope)
         {
             gCurTask->unk24 = 0;
             TaskSetEntry(sub_0804e600, gCurTaskIdx);

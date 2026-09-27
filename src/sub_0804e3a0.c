@@ -35,7 +35,7 @@ void sub_0804e3a0(void)
         if (PlayerHasCrossedWaterSurface(0) != 0)
         {
             PlayerSetWaterMotionY();
-            if ((s8)gCurTask->player->unk07 != 0)
+            if ((s8)gCurTask->player->attachedCount != 0)
                 gCurTask->player->unk16 = 0xFF;
             gCurTask->player->requestedAction = 23;
             break;
@@ -64,7 +64,7 @@ void sub_0804e3a0(void)
                     RegisterCollider(gCurTaskIdx, u->pixelX, u->pixelY, gUnk_0873BEEC);
             }
             v = gCurTask;
-            if ((s8)v->player->unk07 == 0)
+            if ((s8)v->player->attachedCount == 0)
             {
                 if (v->unk2C == 0)
                 {
@@ -90,7 +90,7 @@ void sub_0804e3a0(void)
             break;
         case 3:
             r = t->player;
-            if ((s8)r->unk07 != 0)
+            if ((s8)r->attachedCount != 0)
                 r->requestedAction = 54;
             else if (t->onGround & 1)
                 r->requestedAction = 1;

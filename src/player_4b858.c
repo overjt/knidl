@@ -12,7 +12,7 @@
  * next move from the input - up 0, back 1 or forward 2 (PlayerGetHeldDirection,
  * kept in gUnk_03001F2C), down 3, A 4, leaving the ground 5 - or a
  * random one (gUnk_0873B65E[RandomRange(4)]) when the timer runs out,
- * and goes to state 7 once PlayerState.unk08 is 0.  States 0-5 are the
+ * and goes to state 7 once PlayerState.heldCount is 0.  States 0-5 are the
  * moves (animations 0xE97-0xEE4 with the frame index PlayerState.unk16,
  * velocity presets 2 and 56-68, sounds 178/179, a landing with effect
  * 27 and RequestScreenShake(2)), each back to state 7, which clears
@@ -138,7 +138,7 @@ loop:
                 c->unk73 = 3;
                 goto loop;
             }
-            if ((s8)p->unk08 == 0)
+            if ((s8)p->heldCount == 0)
                 c->unk73 = 7;
             TaskYieldTrampoline(1);
         }
@@ -510,7 +510,7 @@ void sub_0804c4ac(void)
         {
             struct Task *u = gCurTask;
             struct PlayerState *p = u->player;
-            if ((s8)p->unk16 >= 0 && (s8)p->unk08 == 0) {
+            if ((s8)p->unk16 >= 0 && (s8)p->heldCount == 0) {
                 if (!(u->onGround & 1)) {
                     PlayerStopAxes(2);
                     PlayerSetMotionYPreset(2);

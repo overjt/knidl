@@ -10,7 +10,7 @@
  * from PlayerState.prevPixelX/unk60 and the box offsets from PlayerState.prevTerrainBox,
  * both wall probes run (in the order the facing gTerrainFacing picks), and
  * the probes' 8.8 push gUnk_030055A8/gUnk_03005580 is written back to
- * PlayerState.unk54/unk58 on top of gUnk_030055F0/gUnk_03005618. */
+ * PlayerState.driftVelX/unk58 on top of gUnk_030055F0/gUnk_03005618. */
 
 /* The probe result block, filled by the terrain probes and mirrored into
    gTerrainResult by TerrainProbeEnd. */
@@ -149,13 +149,13 @@ void sub_0801baa4(u32 p)
         r = ((gUnk_030055A8 << 8) | 0xFF000000) + gUnk_030055F0;
     else
         r = (gUnk_030055A8 << 8) + gUnk_030055F0;
-    ps->unk54 = r;
+    ps->driftVelX = r;
     ps = gCurTask->player;
     if (gUnk_03005580 & 0x8000)
         r = ((gUnk_03005580 << 8) | 0xFF000000) + gUnk_03005618;
     else
         r = (gUnk_03005580 << 8) + gUnk_03005618;
-    ps->unk58 = r;
+    ps->driftVelY = r;
     gTerrainResult.unkA = gTerrainProbeResult.unkA;
     gTerrainResult.unk6 = gTerrainProbeResult.unkD & 15;
     TerrainProbeEnd((const s8 *)p);

@@ -458,7 +458,7 @@ void PlayerActionStandInWater(void)
     if (gCurTask->player->prevMode != 0)
     {
         PlayerStopAxes(3);
-        gCurTask->unk28 = gCurTask->player->unk4A;
+        gCurTask->unk28 = gCurTask->player->wallSide;
     }
     if (gCurTask->player->mouthState == 1)
     {
@@ -655,7 +655,7 @@ void PlayerActionSpitInWater(void)
     TaskYieldTrampoline(2);
     gCurTask->frame--;
     TaskYieldTrampoline(2);
-    if ((s8)gCurTask->player->unk07 > 1)
+    if ((s8)gCurTask->player->attachedCount > 1)
         CreatePlayerObject(gCurTask->player->playerIndex, 2, 0);
     else
         CreatePlayerObject(gCurTask->player->playerIndex, 1, 0);

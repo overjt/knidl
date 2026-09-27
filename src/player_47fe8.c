@@ -113,10 +113,10 @@ void PlayerActionGetAbility(void)
             gCurTask->player->mouthState = 0;
             {
                 struct PlayerState *q = gCurTask->player;
-                SetPlayerAbilityNoHud((s8)q->pendingAbility, (s8)q->unk0C, q->playerIndex);
+                SetPlayerAbilityNoHud((s8)q->pendingAbility, (s8)q->pendingAbilityUses, q->playerIndex);
             }
             gCurTask->player->pendingAbility = 0;
-            gCurTask->player->unk0C |= 0xFF;
+            gCurTask->player->pendingAbilityUses |= 0xFF;
             {
                 struct PlayerState *q = gCurTask->player;
                 HudShowAbilityAnimated(q->ability, q->playerIndex);
@@ -162,15 +162,15 @@ void PlayerActionGetAbility(void)
                     sub_0800a178(0x7FFF, gCurTask->player->playerIndex);
                     switch ((s8)gCurTask->player->pendingAbility) {
                     default:
-                        gCurTask->player->unk0C = 0xFF;
+                        gCurTask->player->pendingAbilityUses = 0xFF;
                         break;
                     case 7:
-                        gCurTask->player->unk0C = 3;
+                        gCurTask->player->pendingAbilityUses = 3;
                         break;
                     case 11:
                     case 20:
                     case 21:
-                        gCurTask->player->unk0C = 1;
+                        gCurTask->player->pendingAbilityUses = 1;
                         break;
                     }
                 }
@@ -198,7 +198,7 @@ void PlayerActionGetAbility(void)
             TaskYieldTrampoline(2);
             {
                 struct PlayerState *q = gCurTask->player;
-                SetPlayerAbilityNoHud((s8)q->pendingAbility, (s8)q->unk0C, q->playerIndex);
+                SetPlayerAbilityNoHud((s8)q->pendingAbility, (s8)q->pendingAbilityUses, q->playerIndex);
             }
             {
                 struct PlayerState *q = gCurTask->player;

@@ -427,7 +427,7 @@ void PlayerUpdate(void)
     if (gCurTask->player->terrainBox != 0)
     {
         sub_0801baa4(gCurTask->player->terrainBox);
-        gCurTask->player->unk48 = gUnk_03005568;
+        gCurTask->player->boundsClamp = gUnk_03005568;
         if (gUnk_02005574[0] == 0 && (gUnk_03005568 & 4) && gTerrainResult.unk0 != 0)
             gCurTask->player->unk4E = gUnk_03005544;
         gCurTask->player->prevTerrainBox = (u32 *)gCurTask->player->terrainBox;
@@ -456,10 +456,10 @@ void PlayerUpdate(void)
         gTerrainResult.unkA = 0;
         gTerrainProbeResult.unkE = 0;
     }
-    gCurTask->player->unk4A = gTerrainResult.unk0;
-    gCurTask->player->unk4B = gTerrainResult.slope;
-    gCurTask->player->unk49 = gTerrainProbeResult.unkE;
-    gCurTask->player->unk4C = gTerrainResult.unkA;
+    gCurTask->player->wallSide = gTerrainResult.unk0;
+    gCurTask->player->slope = gTerrainResult.slope;
+    gCurTask->player->onSlipperyFloor = gTerrainProbeResult.unkE;
+    gCurTask->player->atDoor = gTerrainResult.unkA;
     if (sub_0803fa74() != 0)
         goto tail;
     p = gCurTask->player;
@@ -480,7 +480,7 @@ void PlayerUpdate(void)
         CallTableEntry(gCurTask->updateState, 27, gUnk_0873B4A4);
     PlayerUpdateInvulnerability();
 post:
-    gCurTask->player->unk45 = 0;
+    gCurTask->player->hitsThisFrame = 0;
     sub_0803fb54();
     if (!(gCurTask->player->unk42 & 32))
         sub_0803e080();
@@ -618,7 +618,7 @@ void sub_08033414(void)
                 gUnk_02007FA8[gCurTask->player->playerIndex] = 0xFFFF;
             }
             gCurTask->player->pendingAbility = 4;
-            gCurTask->player->unk0C = 255;
+            gCurTask->player->pendingAbilityUses = 255;
             gCurTask->player->unk37 = 1;
             gCurTask->player->requestedAction = 29;
         }

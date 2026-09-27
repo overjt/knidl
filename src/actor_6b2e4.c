@@ -383,8 +383,8 @@ void sub_0806b938(void)
     if (p->mode == 10)
         return;
     z = 0;
-    p->unk08 = z;
-    p->unk07 = z;
+    p->heldCount = z;
+    p->attachedCount = z;
     sub_0806b8bc();
 }
 
@@ -428,7 +428,7 @@ void sub_0806b9dc(void)
     t = gCurTask;
     t->parent = t->hitterSlot;
     t->player = p = &gPlayerStates[t->parent];
-    p->unk07++;
+    p->attachedCount++;
     u = gCurTask;
     s = &gTasks[u->parent];
     u->unk28 = s->facing;
@@ -553,7 +553,7 @@ void sub_0806bc28(void)
 
     t = gCurTask;
     p = t->player;
-    if (*(s8 *)&p->unk08 != 0)
+    if (*(s8 *)&p->heldCount != 0)
     {
         t->unk18 = 1;
         TaskStop();
@@ -592,7 +592,7 @@ void sub_0806bc9c(void)
     t = gCurTask;
     p = t->player;
     ActorAwardScore(t->parent, 1);
-    if (*(s8 *)&p->unk08 != 0)
+    if (*(s8 *)&p->heldCount != 0)
     {
         gCurTask->unk18 = 1;
         TaskStop();
@@ -600,8 +600,8 @@ void sub_0806bc9c(void)
     else
     {
         one = 1;
-        p->unk08 = one;
-        p->unk07 = one;
+        p->heldCount = one;
+        p->attachedCount = one;
         TaskStop();
     }
 }
@@ -633,21 +633,21 @@ void sub_0806bd10(void)
     p = t->player;
     if ((s8)a->def->unk0D == 1)
     {
-        if (*(s8 *)&p->unk07 == 1 && t->actorKind == 6 && t->unk76 != 0)
+        if (*(s8 *)&p->attachedCount == 1 && t->actorKind == 6 && t->unk76 != 0)
         {
             p->unk09 = 3;
-            gCurTask->unk30 = *(s8 *)&p->unk08;
-            p->unk08++;
+            gCurTask->unk30 = *(s8 *)&p->heldCount;
+            p->heldCount++;
         }
-        else if ((s8)p->unk07 > 0)
+        else if ((s8)p->attachedCount > 0)
         {
-            p->unk07--;
+            p->attachedCount--;
         }
     }
     else
     {
-        t->unk30 = *(s8 *)&p->unk08;
-        p->unk08++;
+        t->unk30 = *(s8 *)&p->heldCount;
+        p->heldCount++;
         p->mouthState = 1;
     }
     p->unk31 = 0;
@@ -661,7 +661,7 @@ void sub_0806bd10(void)
         {
             p->pendingAbility = u->unk18;
             v = gCurTask;
-            p->unk0C = v->unk1C;
+            p->pendingAbilityUses = v->unk1C;
             w = gCurTask;
             if (w->unk20 == w->parent)
                 p->unk31 = 1;
@@ -691,7 +691,7 @@ void sub_0806bd10(void)
         q = 255;
         break;
     }
-    p->unk0C = q;
+    p->pendingAbilityUses = q;
 }
 
 void sub_0806be4c(u32 i)
@@ -705,24 +705,24 @@ void sub_0806be4c(u32 i)
     p = s->player;
     if (a->unk04 == 1)
     {
-        if (*(s8 *)&p->unk08 != 0)
+        if (*(s8 *)&p->heldCount != 0)
         {
-            p->unk07 = p->unk08;
+            p->attachedCount = p->heldCount;
         }
         else
         {
             p->unk0A = 0;
             p->unk09 = 0;
-            p->unk08 = 0;
-            p->unk07 = 0;
+            p->heldCount = 0;
+            p->attachedCount = 0;
         }
     }
     else
     {
         p->unk0A = 0;
         p->unk09 = 0;
-        p->unk08 = 0;
-        p->unk07 = 0;
+        p->heldCount = 0;
+        p->attachedCount = 0;
     }
 }
 

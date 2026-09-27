@@ -248,7 +248,7 @@ void sub_0804a258(void)
                 PlayerRequestLocomotion();
                 break;
             }
-            if (w->velY < 0 && (gTerrainResult.unk1 != 0 || (w->player->unk48 & 4))) {
+            if (w->velY < 0 && (gTerrainResult.unk1 != 0 || (w->player->boundsClamp & 4))) {
                 w->velY = 0;
                 w->unk73 = 4;
                 TaskSetEntry(sub_08049f98, gCurTaskIdx);

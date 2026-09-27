@@ -219,7 +219,7 @@ void PlayerActionRunUpdate(void)
         }
     }
     t = gCurTask;
-    if ((t->onGround & 1) != 0 || (t->player->unk48 & 3) != 0)
+    if ((t->onGround & 1) != 0 || (t->player->boundsClamp & 3) != 0)
     {
         t->unk28 = 0;
         t->player->unk14 = 0;

@@ -6,7 +6,7 @@
  *
  * Player action bodies, part 14: action 38 and per-frame handler 35.
  * sub_08045d34 (action 38, mode 13) spends one charge of the ability
- * counter PlayerState.unk0E (the HUD update SetPlayerAbilityNoHud) and plays one
+ * counter PlayerState.abilityUses (the HUD update SetPlayerAbilityNoHud) and plays one
  * of three sequences picked by the charges left (Task.unk73 = unk0E - 1),
  * each with its own song (StopSfx) and sound; meanwhile it freezes
  * the stage (gUnk_03001F34 = 1), switches the DISPCNT shadow
@@ -44,13 +44,13 @@ void sub_08045d34(void)
     gCurTask->player->prevMode = gCurTask->player->mode;
     gCurTask->player->mode = 13;
     gCurTask->updateState = 35;
-    gCurTask->unk73 = gCurTask->player->unk0E - 1;
+    gCurTask->unk73 = gCurTask->player->abilityUses - 1;
     gCurTask->player->unk42 &= 0xFFEF;
-    if (--gCurTask->player->unk0E == 0) {
+    if (--gCurTask->player->abilityUses == 0) {
         SetPlayerAbilityNoHud(0, -1, gCurTask->player->playerIndex);
     } else {
         struct PlayerState *p = gCurTask->player;
-        SetPlayerAbilityNoHud(p->ability, p->unk0E, p->playerIndex);
+        SetPlayerAbilityNoHud(p->ability, p->abilityUses, p->playerIndex);
     }
     gUnk_03001F34 = 1;
     PlayerStopAxes(3);

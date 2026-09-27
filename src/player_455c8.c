@@ -253,7 +253,7 @@ void sub_08045a50(void)
                     SetPlayerInvulnerability(255, 0, gCurTask->player->playerIndex);
                 }
             } else if (*(u16 *)&gTerrainResult != 0 || t->unk28 != 0
-                       || (t->player->unk48 & 11) != 0) {
+                       || (t->player->boundsClamp & 11) != 0) {
                 gCurTask->unk73 = 3;
                 TaskSetEntry(sub_080455c8, gCurTaskIdx);
             }

@@ -271,7 +271,7 @@ void PlayerActionDuck(void)
     {
         t->player->bodyBox = (u32)gUnk_0873BD28;
         t->player->terrainBox = (u32)gUnk_0873CB24;
-        t->unk2C = t->player->unk4B;
+        t->unk2C = t->player->slope;
         PlayerSetMotionXPreset(0, 72);
     }
     gCurTask->unk28 = 8;
@@ -349,7 +349,7 @@ void PlayerActionDuckUpdate(void)
         {
             struct Task *w = gCurTask;
 
-            if (w->player->unk4B != w->unk2C || dir != w->facing)
+            if (w->player->slope != w->unk2C || dir != w->facing)
             {
                 if (gUnk_03001F30 == 0)
                     TaskSetEntry(PlayerActionDuck, gCurTaskIdx);
@@ -359,7 +359,7 @@ void PlayerActionDuckUpdate(void)
         }
         break;
     }
-    gCurTask->unk2C = gCurTask->player->unk4B;
+    gCurTask->unk2C = gCurTask->player->slope;
     if (gTerrainResult.unk0 != 0)
         PlayerStopAxes(1);
 }

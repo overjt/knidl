@@ -232,14 +232,14 @@ void InitPlayerState(s32 a0)
     p->prevMode = 255;
     p->mode = -1;
     p->mouthState = 0;
-    p->unk08 = 0;
-    p->unk07 = 0;
+    p->heldCount = 0;
+    p->attachedCount = 0;
     p->unk09 = 0;
     p->pendingAbility = 0;
     p->unk0A = 0;
-    p->unk0C = -1;
+    p->pendingAbilityUses = -1;
     p->ability = gPlayerAbilities[a0];
-    p->unk0E = gUnk_0200AF18[a0];
+    p->abilityUses = gUnk_0200AF18[a0];
     p->unk10 = 0;
     p->unk0F = 0;
     p->invulnerabilityTimer = 0;
@@ -266,25 +266,25 @@ void InitPlayerState(s32 a0)
     p->unk3B = 0;
     p->unk3A = 0;
     p->unk3C = 0;
-    p->unk48 = 0;
+    p->boundsClamp = 0;
     p->running = 0;
     p->bumpKind = 0;
     p->invulnerability = 0;
     p->unk40 = 0;
     p->unk42 = 0;
     p->blocksBroken = 0;
-    p->unk45 = 0;
+    p->hitsThisFrame = 0;
     p->unk50 = 0;
     p->unk46 = 0;
     p->unk47 = 1;
     p->unk50 = 0;
-    p->unk4C = 0;
-    p->unk4A = 0;
-    p->unk4B = 0;
-    p->unk49 = 0;
+    p->atDoor = 0;
+    p->wallSide = 0;
+    p->slope = 0;
+    p->onSlipperyFloor = 0;
     p->unk4E = -1;
-    p->unk58 = 0;
-    p->unk54 = 0;
+    p->driftVelY = 0;
+    p->driftVelX = 0;
     p->prevPixelY = 0;
     p->prevPixelX = 0;
     p->bodyBox = 0;
@@ -307,14 +307,14 @@ void sub_0803d1c4(s32 a0)
     p->prevMode = 255;
     p->mode = -1;
     p->mouthState = 0;
-    p->unk08 = 0;
-    p->unk07 = 0;
+    p->heldCount = 0;
+    p->attachedCount = 0;
     p->unk09 = 0;
     p->pendingAbility = 0;
     p->unk0A = 0;
-    p->unk0C = -1;
+    p->pendingAbilityUses = -1;
     p->ability = gPlayerAbilities[a0];
-    p->unk0E = gUnk_0200AF18[a0];
+    p->abilityUses = gUnk_0200AF18[a0];
     p->unk10 = 0;
     p->unk0F = 0;
     p->invulnerabilityTimer = 0;
@@ -336,25 +336,25 @@ void sub_0803d1c4(s32 a0)
     p->unk3B = 0;
     p->unk3A = 0;
     p->unk3C = 0;
-    p->unk48 = 0;
+    p->boundsClamp = 0;
     p->running = 0;
     p->bumpKind = 0;
     p->invulnerability = 0;
     p->unk40 = 0;
     p->unk42 = 0;
     p->blocksBroken = 0;
-    p->unk45 = 0;
+    p->hitsThisFrame = 0;
     p->unk50 = 0;
     p->unk46 = 0;
     p->unk47 = 1;
     p->unk50 = 0;
-    p->unk4C = 0;
-    p->unk4A = 0;
-    p->unk4B = 0;
-    p->unk49 = 0;
+    p->atDoor = 0;
+    p->wallSide = 0;
+    p->slope = 0;
+    p->onSlipperyFloor = 0;
     p->unk4E = -1;
-    p->unk58 = 0;
-    p->unk54 = 0;
+    p->driftVelY = 0;
+    p->driftVelX = 0;
     p->bodyBox = 0;
     p->terrainBox = 0;
     p->hitBoxSet = 0;
@@ -375,7 +375,7 @@ void sub_0803d2d4(s32 a0)
     p->prevMode = 255;
     p->mode = -1;
     p->ability = gPlayerAbilities[a0];
-    p->unk0E = gUnk_0200AF18[a0];
+    p->abilityUses = gUnk_0200AF18[a0];
     p->unk10 = 0;
     p->unk0F = 0;
     p->invulnerabilityTimer = 0;
@@ -398,25 +398,25 @@ void sub_0803d2d4(s32 a0)
     p->unk38 = 0;
     p->unk3B = 0;
     p->unk3A = 0;
-    p->unk48 = 0;
+    p->boundsClamp = 0;
     p->running = 0;
     p->bumpKind = 0;
     p->invulnerability = 0;
     p->unk40 = 0;
     p->unk42 = 0;
     p->blocksBroken = 0;
-    p->unk45 = 0;
+    p->hitsThisFrame = 0;
     p->unk50 = 0;
     p->unk46 = 0;
     p->unk47 = 1;
     p->unk50 = 0;
-    p->unk4C = 0;
-    p->unk4A = 0;
-    p->unk4B = 0;
-    p->unk49 = 0;
+    p->atDoor = 0;
+    p->wallSide = 0;
+    p->slope = 0;
+    p->onSlipperyFloor = 0;
     p->unk4E = -1;
-    p->unk58 = 0;
-    p->unk54 = 0;
+    p->driftVelY = 0;
+    p->driftVelX = 0;
     p->bodyBox = 0;
     p->terrainBox = 0;
     p->hitBoxSet = 0;
@@ -500,10 +500,10 @@ void PlayerMove(void)
     t->speedLimitY = gUnk_03002344;
     t->velY += gUnk_03002448;
     if ((t->player->unk42 & 0x100) == 0) {
-        t->posX += t->player->unk54;
+        t->posX += t->player->driftVelX;
         if ((t->onGround & 1) == 0) {
-            t->posY += t->player->unk58;
-            if (t->player->unk58 < 0)
+            t->posY += t->player->driftVelY;
+            if (t->player->driftVelY < 0)
                 t->onGround = 0;
         }
     }
@@ -1324,15 +1324,15 @@ void sub_0803e68c(s32 a0)
     }
     else if (p->mode == 10)
     {
-        if ((s8)p->unk07 != 0 && (s8)p->unk07 == (s8)p->unk08)
+        if ((s8)p->attachedCount != 0 && (s8)p->attachedCount == (s8)p->heldCount)
         {
-            p->unk08 = p->unk07;
+            p->heldCount = p->attachedCount;
             v = 14;
         }
         else
         {
-            p->unk08 = 0;
-            p->unk07 = 0;
+            p->heldCount = 0;
+            p->attachedCount = 0;
             v = t->onGround != 0 ? 1 : 7;
         }
     }
@@ -2459,9 +2459,9 @@ s32 sub_0803fa74(void)
      && ((gCurTask->player->unk42 & 1024)
       || (IsTaskBelowPlayerBounds(gCurTask) == 0
        && (gUnk_02005574[0] == 0 || (gCurTask->onGround & 1) == 0
-           || (gCurTask->player->unk48 & 4) == 0)
-       && (gTerrainResult[0] != 1 || (gCurTask->player->unk48 & 1) == 0)
-       && (gTerrainResult[0] != 2 || (gCurTask->player->unk48 & 2) == 0))))
+           || (gCurTask->player->boundsClamp & 4) == 0)
+       && (gTerrainResult[0] != 1 || (gCurTask->player->boundsClamp & 1) == 0)
+       && (gTerrainResult[0] != 2 || (gCurTask->player->boundsClamp & 2) == 0))))
         return 0;
     AddPlayerHealth(-gPlayerHealth[gCurTask->player->playerIndex], gCurTask->player->playerIndex);
     gCurTask->hitKind = 1;
@@ -2550,8 +2550,8 @@ s32 sub_0803fd20(s32 a0)
     if (gTasks[a0].onGround == 0)
         return 0;
     if (gTasks[a0].facing == 1)
-        return gUnk_0873AF30[gPlayerStates[a0].unk4B][0];
-    return gUnk_0873AF30[gPlayerStates[a0].unk4B][1];
+        return gUnk_0873AF30[gPlayerStates[a0].slope][0];
+    return gUnk_0873AF30[gPlayerStates[a0].slope][1];
 }
 
 s32 PlayerCheckSkid(void)
@@ -2747,7 +2747,7 @@ s32 PlayerCheckEnterWater(void)
 s32 PlayerCheckEnterDoor(void)
 {
     if ((gLatchedHeldKeys[gCurTask->player->playerIndex] & 64) && gUnk_02007CF0 == 0
-     && gCurTask->player->unk4C != 0
+     && gCurTask->player->atDoor != 0
      && (gCurTask->player->unk42 & 1) == 0
      && FindDoorAt(gCurTask->pixelX, gCurTask->pixelY) != 0)
     {

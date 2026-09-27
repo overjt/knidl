@@ -105,9 +105,9 @@ void PlayerActionStand(void)
         PlayerStopAxes(3);
         t = gCurTask;
         t->unk28 = (u16)t->player->unk4E;
-        t->unk2C = t->player->unk4B;
-        if (t->player->unk4A != 0)
-            t->player->unk46 = t->player->unk4A;
+        t->unk2C = t->player->slope;
+        if (t->player->wallSide != 0)
+            t->player->unk46 = t->player->wallSide;
         gCurTask->player->running = 0;
         t2 = gCurTask;
         t2->player->unk40 &= 0xFFEF;
@@ -241,7 +241,7 @@ void PlayerActionStandUpdate(void)
         {
             struct Task *w = gCurTask;
 
-            if (w->player->unk4B != w->unk2C || dir != w->facing)
+            if (w->player->slope != w->unk2C || dir != w->facing)
             {
                 if (gUnk_03001F30 == 0)
                     TaskSetEntry(PlayerActionStand, gCurTaskIdx);
@@ -252,7 +252,7 @@ void PlayerActionStandUpdate(void)
         break;
     }
 end:
-    gCurTask->unk2C = gCurTask->player->unk4B;
+    gCurTask->unk2C = gCurTask->player->slope;
 }
 
 void PlayerActionWalk(void)

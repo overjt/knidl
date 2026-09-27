@@ -12,7 +12,7 @@
  * PlayerState.unk16 stepping 0-1-2-1-2, effect 28 on the ground) and
  * picks the direction Task.unk28 from the held keys (up 0, down 2,
  * otherwise 1); state 4 (effect 47) holds until the timer runs out or
- * B is pressed, switching to state 5 once PlayerState.unk08 is 0, and
+ * B is pressed, switching to state 5 once PlayerState.heldCount is 0, and
  * then jumps to state unk28.  States 0-2 are the three releases
  * (animations 0xF7C/0xF76/0xF84, sound 236, then 0xF80), which end in
  * state 5: clear PlayerState.unk42 bit 9, SetPlayerInvulnerability(255, 0, player)
@@ -100,7 +100,7 @@ void sub_0804c64c(void)
             for (;;) {
                 {
                     struct Task *t = gCurTask;
-                    if ((s8)t->player->unk08 == 0)
+                    if ((s8)t->player->heldCount == 0)
                         t->unk73 = 5;
                 }
                 if ((u16)--gCurTask->player->unk14 == 0)
@@ -245,7 +245,7 @@ void sub_0804ca84(void)
     case 2:
         {
             struct PlayerState *p = t->player;
-            if ((s8)p->unk16 >= 0 && (s8)p->unk08 == 0)
+            if ((s8)p->unk16 >= 0 && (s8)p->heldCount == 0)
                 goto rebind;
         }
         break;

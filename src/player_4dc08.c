@@ -11,16 +11,16 @@
  * camera preset PlayerSetMotionXPreset(11, 5)), state 1 plays sound 200 and effect 6
  * and loops animations 0xE7C/0xE85 four times, and state 2 either swings
  * (animation 0xE7D, M11's PlayerSetMotionYPreset steering, effect 28 when it lands)
- * or, once PlayerState.unk07 is set, plays sound 177, sets
+ * or, once PlayerState.attachedCount is set, plays sound 177, sets
  * PlayerState.unk42 bit 9 and stops; every pass counts Task.unk28.  Its
- * handler sub_0804df00 re-binds state 2 when PlayerState.unk07 is set, runs
+ * handler sub_0804df00 re-binds state 2 when PlayerState.attachedCount is set, runs
  * the hit test sub_08030898(gUnk_0873CC64) in state 1 (which spawns
  * sub_08065100's object and marks PlayerState.unk09) and, in state 2,
  * requests action 53, 8 or 1 once the swing is over.  sub_0804e0e0
  * (action 31, mode 10; the twin of M10's PlayerActionInhale) clears the three
  * records gUnk_02007E90[player][] (and gUnk_02007CF4[player] in link
  * play), plays sound 103 and holds animation 0xF71 with PlayerState.unk40
- * bit 2 set until PlayerState.unk07 is non-zero and equal to unk08, then
+ * bit 2 set until PlayerState.attachedCount is non-zero and equal to unk08, then
  * recovers or releases (sound 201, PlayerState.unk42 bit 9). */
 
 /* gTerrainResult: M06's collision result block (src/terrain_1bcac.c spells it
@@ -100,8 +100,8 @@ void sub_0804dc08(void)
             struct PlayerState *p = gCurTask->player;
 
             p->unk09 = 0;
-            p->unk08 = 0;
-            p->unk07 = 0;
+            p->heldCount = 0;
+            p->attachedCount = 0;
         }
     }
     switch (gCurTask->unk73)
@@ -129,7 +129,7 @@ void sub_0804dc08(void)
         }
         gCurTask->unk73 = 2;
     case 2:
-        if ((s8)gCurTask->player->unk07 == 0)
+        if ((s8)gCurTask->player->attachedCount == 0)
         {
             if (gCurTask->onGround & 1)
                 CreatePlayerEffect(gCurTask->player->playerIndex, 4, 0);
@@ -199,7 +199,7 @@ void sub_0804df00(void)
     case 0:
         break;
     case 1:
-        if ((s8)t->player->unk07 != 0)
+        if ((s8)t->player->attachedCount != 0)
         {
             t->unk73 = 2;
             TaskSetEntry(sub_0804dc08, gCurTaskIdx);
@@ -230,7 +230,7 @@ void sub_0804df00(void)
         if (t->unk28 != 0)
         {
             p = t->player;
-            if ((s8)p->unk08 != 0)
+            if ((s8)p->heldCount != 0)
                 p->requestedAction = 53;
             else if (!(t->onGround & 1))
                 p->requestedAction = 8;
@@ -245,7 +245,7 @@ void sub_0804df00(void)
             if (PlayerHasCrossedWaterSurface(0) != 0)
             {
                 PlayerSetWaterMotionY();
-                if ((s8)gCurTask->player->unk07 == 0)
+                if ((s8)gCurTask->player->attachedCount == 0)
                     gCurTask->player->requestedAction = 23;
             }
             else if (PlayerCheckLanding() != 0)
@@ -293,8 +293,8 @@ void sub_0804e0e0(void)
             struct PlayerState *p = gCurTask->player;
 
             p->unk09 = 0;
-            p->unk08 = 0;
-            p->unk07 = 0;
+            p->heldCount = 0;
+            p->attachedCount = 0;
         }
         if (gUnk_0300244C != 0)
             gUnk_02007CF4[gCurTask->player->playerIndex] = 0;
@@ -324,14 +324,14 @@ void sub_0804e0e0(void)
             TaskSetFrame(0xF71);
             for (gCurTask->unk6C = 0; (s16)gCurTask->unk6C <= 2; gCurTask->unk6C++)
             {
-                if ((s8)gCurTask->player->unk07 != 0 && (s8)gCurTask->player->unk07 == (s8)gCurTask->player->unk08)
+                if ((s8)gCurTask->player->attachedCount != 0 && (s8)gCurTask->player->attachedCount == (s8)gCurTask->player->heldCount)
                     goto hit;
                 TaskYieldTrampoline(1);
             }
             gCurTask->frame++;
             for (gCurTask->unk6C = 0; (s16)gCurTask->unk6C <= 2; gCurTask->unk6C++)
             {
-                if ((s8)gCurTask->player->unk07 != 0 && (s8)gCurTask->player->unk07 == (s8)gCurTask->player->unk08)
+                if ((s8)gCurTask->player->attachedCount != 0 && (s8)gCurTask->player->attachedCount == (s8)gCurTask->player->heldCount)
                     goto hit;
                 TaskYieldTrampoline(1);
             }
@@ -341,7 +341,7 @@ void sub_0804e0e0(void)
     case 2:
         gCurTask->player->unk40 &= 0xFFFB;
         PlayerStopSfx();
-        if ((s8)gCurTask->player->unk08 == 0)
+        if ((s8)gCurTask->player->heldCount == 0)
         {
             TaskSetFrame(0xF6E);
             TaskYieldTrampoline(2);

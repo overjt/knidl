@@ -11,7 +11,7 @@
  * them by the facing and leaves a component alone when passed 0x5A5A5A5A)
  * and Task.speedLimitX/unk68 from signed 8.8 halfwords of gPlayerMotionXPresets[a1] or of
  * the preset row gUnk_0873AF6C[gUnk_03001F30] (22 halfwords), some of them
- * chosen by PlayerState.unk49, the held keys gLatchedHeldKeys[] or the
+ * chosen by PlayerState.onSlipperyFloor, the held keys gLatchedHeldKeys[] or the
  * collision block gTerrainResult; kind 12 picks one of five rows of
  * gUnk_0873AF58 by the speed.
  *
@@ -52,7 +52,7 @@ void PlayerSetMotionXPreset(s32 a0, s32 a1)
     switch (a0)
     {
     case 0:
-        if (gCurTask->player->unk49 == 0)
+        if (gCurTask->player->onSlipperyFloor == 0)
         {
             s32 v = q[2] << 8;
             if (q[2] & 0x8000)
@@ -69,7 +69,7 @@ void PlayerSetMotionXPreset(s32 a0, s32 a1)
         gCurTask->speedLimitX = 0;
         break;
     case 1:
-        if (gCurTask->player->unk49 == 0)
+        if (gCurTask->player->onSlipperyFloor == 0)
         {
             s32 v = q[1] << 8;
             if (q[1] & 0x8000)
@@ -95,7 +95,7 @@ void PlayerSetMotionXPreset(s32 a0, s32 a1)
     case 2:
         if ((gLatchedHeldKeys[gCurTask->player->playerIndex] & 48) != 0)
         {
-            if (gCurTask->player->unk49 == 0)
+            if (gCurTask->player->onSlipperyFloor == 0)
             {
                 s32 v = q[1] << 8;
                 if (q[1] & 0x8000)
@@ -126,7 +126,7 @@ void PlayerSetMotionXPreset(s32 a0, s32 a1)
     case 3:
         if ((gLatchedHeldKeys[gCurTask->player->playerIndex] & 48) != 0)
         {
-            if (gCurTask->player->unk49 == 0)
+            if (gCurTask->player->onSlipperyFloor == 0)
             {
                 s32 v = q[6] << 8;
                 if (q[6] & 0x8000)
@@ -155,7 +155,7 @@ void PlayerSetMotionXPreset(s32 a0, s32 a1)
         }
         break;
     case 4:
-        if (gCurTask->player->unk49 == 0)
+        if (gCurTask->player->onSlipperyFloor == 0)
         {
             s32 v = q[10] << 8;
             if (q[10] & 0x8000)
@@ -172,7 +172,7 @@ void PlayerSetMotionXPreset(s32 a0, s32 a1)
         gCurTask->speedLimitX = 0;
         break;
     case 5:
-        if (gCurTask->player->unk49 == 0)
+        if (gCurTask->player->onSlipperyFloor == 0)
             TaskSetMotionXFacing(0x20000, 0x1000);
         else
             TaskSetMotionXFacing(0x20000, 0x800);
@@ -332,7 +332,7 @@ void PlayerSetMotionXPreset(s32 a0, s32 a1)
             {
                 if (gLatchedHeldKeys[gCurTask->player->playerIndex] & 48)
                 {
-                    switch (gCurTask->player->unk4B)
+                    switch (gCurTask->player->slope)
                     {
                     case 0:
                     default:

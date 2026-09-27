@@ -151,9 +151,9 @@ void sub_08041438(void)
         PlayerStopAxes(3);
         t = gCurTask;
         t->unk28 = (u16)t->player->unk4E;
-        t->unk2C = t->player->unk4B;
-        if (t->player->unk4A != 0)
-            t->player->unk46 = t->player->unk4A;
+        t->unk2C = t->player->slope;
+        if (t->player->wallSide != 0)
+            t->player->unk46 = t->player->wallSide;
         gCurTask->player->running = 0;
         t2 = gCurTask;
         t2->player->unk40 &= 0xFFEF;

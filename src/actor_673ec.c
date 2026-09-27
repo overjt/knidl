@@ -1195,14 +1195,14 @@ void sub_08068a8c(s32 i, u8 flag)
     t->speedLimitY = 0x80000000;
     t->speedLimitX = 0x80000000;
     a = p->mode;
-    b = p->unk45;
+    b = p->hitsThisFrame;
     if (flag != 0)
         sub_0803d1c4(i);
     else
         sub_0803d2d4(i);
     p->prevMode = a;
     p->mode = 16;
-    gPlayerStates[i].unk45 = b;
+    gPlayerStates[i].hitsThisFrame = b;
     p->unk16 = 255;
     sub_08067108();
 }

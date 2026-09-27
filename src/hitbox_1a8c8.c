@@ -157,7 +157,7 @@ u8 sub_0801a8c8(void)
         }
         t = &gTasks[gColliderSlot];
         gColliderPlayerState = t->player;
-        if (gColliderPlayerState->unk45 != 0)
+        if (gColliderPlayerState->hitsThisFrame != 0)
         {
             e++;
             continue;
@@ -239,7 +239,7 @@ u8 sub_0801a8c8(void)
                         t->hitDirection = 0;
                     else
                         t->hitDirection = 4;
-                    gColliderPlayerState->unk45++;
+                    gColliderPlayerState->hitsThisFrame++;
                     AddPlayerHealth(-gAttackBox->unk08, gColliderPlayer);
                     if (gPlayerHealth[gColliderPlayer] <= 0)
                     {
@@ -305,7 +305,7 @@ u8 sub_0801a8c8(void)
             /* the body box's halfword at 0x0E (ldrh) */
             if (!(gColliderBodyBox->unk0E & 6))
             {
-                ps->unk45++;
+                ps->hitsThisFrame++;
                 gHitKind = 8;
                 gHitHealthLeft = gAttackHealth;
                 sub_0801b9e4();

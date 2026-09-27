@@ -372,7 +372,7 @@ void PlayerActionEnterDoor(void)
             TaskYieldTrampoline(1);
             gCurTask->frame++;
             TaskYieldTrampoline(1);
-            if ((s8)gCurTask->player->unk07 > 1)
+            if ((s8)gCurTask->player->attachedCount > 1)
                 CreatePlayerObject(gCurTask->player->playerIndex, 2, 0);
             else
                 CreatePlayerObject(gCurTask->player->playerIndex, 1, 0);
@@ -394,7 +394,7 @@ void PlayerActionEnterDoor(void)
         TaskYieldTrampoline(2);
         gCurTask->frame--;
         TaskYieldTrampoline(2);
-        if ((s8)gCurTask->player->unk07 > 1)
+        if ((s8)gCurTask->player->attachedCount > 1)
             CreatePlayerObject(gCurTask->player->playerIndex, 2, 0);
         else
             CreatePlayerObject(gCurTask->player->playerIndex, 1, 0);

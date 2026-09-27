@@ -283,7 +283,7 @@ void sub_0804676c(void)
                             u->unk28 = 1;
                         }
                     } else {
-                        if (gCurTask->player->unk48 & 3)
+                        if (gCurTask->player->boundsClamp & 3)
                             PlayerStopAxes(1);
                         PlayerSetMotionXPreset(11, 50);
                     }
@@ -295,7 +295,7 @@ void sub_0804676c(void)
                     gCurTask->unk73 = 2;
                     TaskSetEntry(sub_08046330, gCurTaskIdx);
                 } else if (*(u16 *)&gTerrainResult != 0
-                           || ((gCurTask->player->unk48 & 3)
+                           || ((gCurTask->player->boundsClamp & 3)
                                && ((gCurTask->onGround & 1) || gCurTask->unk28 != 0))) {
                     if (gTerrainResult.unk1 != 0)
                         gCurTask->velY = 0;
@@ -326,7 +326,7 @@ void sub_0804676c(void)
                 TaskSetEntry(sub_08046330, gCurTaskIdx);
                 break;
             }
-            if (*(u16 *)&gTerrainResult != 0 || (gCurTask->player->unk48 != 0 && (gCurTask->onGround & 1))) {
+            if (*(u16 *)&gTerrainResult != 0 || (gCurTask->player->boundsClamp != 0 && (gCurTask->onGround & 1))) {
                 if (gTerrainResult.unk1 != 0)
                     gCurTask->velY = 0;
                 else

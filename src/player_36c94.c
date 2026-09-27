@@ -345,7 +345,7 @@ void PlayerActionLadderUpdate(void)
     switch (k)
     {
     case 1:
-        if (gTerrainResult.unk1 != 0 || (t->player->unk48 & 4) != 0)
+        if (gTerrainResult.unk1 != 0 || (t->player->boundsClamp & 4) != 0)
             t->velY = 0;
         qa = gLatchedHeldKeys;
         ta = gCurTask;
@@ -515,8 +515,8 @@ void PlayerActionInhale(void)
 
             p->unk0A = 0;
             p->unk09 = 0;
-            p->unk08 = 0;
-            p->unk07 = 0;
+            p->heldCount = 0;
+            p->attachedCount = 0;
         }
         {
             struct PlayerState *p = gCurTask->player;
@@ -527,8 +527,8 @@ void PlayerActionInhale(void)
         {
             struct PlayerState *p = gCurTask->player;
 
-            p->unk0E = 255;
-            p->unk0C = -1;
+            p->abilityUses = 255;
+            p->pendingAbilityUses = -1;
         }
         if (gUnk_0300244C != 0)
             gUnk_02007CF4[gCurTask->player->playerIndex] = 0;
@@ -560,14 +560,14 @@ void PlayerActionInhale(void)
             TaskSetFrame(60);
             for (gCurTask->unk6C = 0; (s16)gCurTask->unk6C <= 2; gCurTask->unk6C++)
             {
-                if ((s8)gCurTask->player->unk07 != 0 && (s8)gCurTask->player->unk07 == (s8)gCurTask->player->unk08)
+                if ((s8)gCurTask->player->attachedCount != 0 && (s8)gCurTask->player->attachedCount == (s8)gCurTask->player->heldCount)
                     goto hit;
                 TaskYieldTrampoline(1);
             }
             gCurTask->frame++;
             for (gCurTask->unk6C = 0; (s16)gCurTask->unk6C <= 2; gCurTask->unk6C++)
             {
-                if ((s8)gCurTask->player->unk07 != 0 && (s8)gCurTask->player->unk07 == (s8)gCurTask->player->unk08)
+                if ((s8)gCurTask->player->attachedCount != 0 && (s8)gCurTask->player->attachedCount == (s8)gCurTask->player->heldCount)
                     goto hit;
                 TaskYieldTrampoline(1);
             }
@@ -580,7 +580,7 @@ void PlayerActionInhale(void)
         {
             struct PlayerState *q = gCurTask->player;
 
-            if ((s8)q->unk07 == 0 || q->unk09 == 3)
+            if ((s8)q->attachedCount == 0 || q->unk09 == 3)
             {
                 TaskSetFrame(57);
                 TaskYieldTrampoline(2);
@@ -606,7 +606,7 @@ void PlayerActionInhale(void)
                     TaskYieldTrampoline(2);
                 }
                 r = gCurTask->player;
-                if ((s8)r->unk08 == 0)
+                if ((s8)r->heldCount == 0)
                     r->mouthState = 0;
             }
         }
@@ -624,7 +624,7 @@ void PlayerActionInhaleUpdate(void)
         if (PlayerHasCrossedWaterSurface(0) != 0)
         {
             PlayerSetWaterMotionY();
-            if ((s8)gCurTask->player->unk07 == 0)
+            if ((s8)gCurTask->player->attachedCount == 0)
             {
                 gCurTask->player->requestedAction = 23;
                 break;
@@ -633,7 +633,7 @@ void PlayerActionInhaleUpdate(void)
         else
         {
             t = gCurTask;
-            if ((t->waterFlags & 1) && (s8)t->player->unk07 == 0)
+            if ((t->waterFlags & 1) && (s8)t->player->attachedCount == 0)
             {
                 PlayerSetWaterMotionY();
                 gCurTask->player->requestedAction = 23;
@@ -648,7 +648,7 @@ void PlayerActionInhaleUpdate(void)
             struct Task *u;
             struct PlayerState *p = t->player;
 
-            if ((s8)p->unk07 == 0)
+            if ((s8)p->attachedCount == 0)
             {
                 if (t->unk2C == 0)
                 {
@@ -700,7 +700,7 @@ void PlayerActionInhaleUpdate(void)
                 }
             skip:;
             }
-            if ((s8)gCurTask->player->unk07 != 0 && gCurTask->unk30 == 0)
+            if ((s8)gCurTask->player->attachedCount != 0 && gCurTask->unk30 == 0)
             {
                 PlayerStartOffsetScript(1);
                 gCurTask->unk30++;
@@ -759,7 +759,7 @@ void PlayerActionSpit(void)
     gCurTask->frame++;
     TaskYieldTrampoline(1);
     gCurTask->player->pendingAbility = 0;
-    if ((s8)gCurTask->player->unk07 > 1)
+    if ((s8)gCurTask->player->attachedCount > 1)
         CreatePlayerObject(gCurTask->player->playerIndex, 2, 0);
     else
         CreatePlayerObject(gCurTask->player->playerIndex, 1, 0);
