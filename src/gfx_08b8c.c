@@ -6,8 +6,9 @@
  *
  * Screen/asset loaders: LZ77/Huffman decompression of palettes, tiles and
  * maps into VRAM from the ROM tables at 0x08731980-0x08731BA8.
- * LoadBgLayout(i) loads a palette set and LoadGfxSet(i) queues a VRAM
- * transfer node (both called ROM-wide); sub_08008fc4 loads the pause
+ * LoadBgLayout(i) sets the DISPCNT mode bits and the BGnCNT shadows from
+ * preset i and LoadGfxSet(i) queues a VRAM transfer list (both called
+ * ROM-wide); sub_08008fc4 loads the pause
  * pictures; LinkErrorScreen is the soft-reset prompt. */
 
 extern u32 gUnk_02020000[];
