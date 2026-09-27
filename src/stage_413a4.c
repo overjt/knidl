@@ -2,7 +2,7 @@
 #include "global.h"
 #include "task.h"
 
-struct M11R8 { u8 unk00; u8 unk01; u8 unk02; u8 unk03; u8 *unk04; };
+struct M11R8 { u8 unk00; u8 unk01; u8 offsetX; u8 offsetY; u8 *boxes; };
 struct M11Buf { u8 unk00[4]; u8 unk04[4]; };
 struct M11R20 { u32 w[5]; };
 

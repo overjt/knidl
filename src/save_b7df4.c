@@ -20,7 +20,7 @@ struct SaveSlot
     /*0x28*/ u8 unk28[8][7];
     /*0x60*/ u16 unk60[4];
     /*0x68*/ u16 unk68[4];
-    /*0x70*/ u32 unk70;
+    /*0x70*/ u32 checksum;
     /*0x74*/ u8 filler74[0x8C];
 };
 
@@ -36,5 +36,5 @@ u32 UpdateSaveSlotChecksum(s32 a);
 
 u32 UpdateSaveSlotChecksum(s32 a)
 {
-    gSaveSlots[a].unk70 = CalcSaveSlotChecksum(a);
+    gSaveSlots[a].checksum = CalcSaveSlotChecksum(a);
 }

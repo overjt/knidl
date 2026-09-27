@@ -27,7 +27,7 @@
  * request, re-binds the task to PlayerStartRequestedAction when one is pending and
  * adds the 8.8 offsets PlayerState.pixelOffsetX/unk26 to the 16.16 position. */
 
-struct M11R8 { u8 unk00; u8 unk01; u8 unk02; u8 unk03; u8 *unk04; };
+struct M11R8 { u8 unk00; u8 unk01; u8 offsetX; u8 offsetY; u8 *boxes; };
 
 struct M11R20 { u32 w[5]; };
 
@@ -51,7 +51,7 @@ struct Unk03005550
     /*0x01*/ u8 unk1;
     /*0x02*/ u8 unk2;
     /*0x03*/ u8 unk3;
-    /*0x04*/ u8 unk4;
+    /*0x04*/ u8 slope;
     /*0x05*/ u8 unk5;
     /*0x06*/ u8 unk6;
     /*0x07*/ u8 unk7;
@@ -68,7 +68,7 @@ struct Unk03005530
     /*0x01*/ u8 unk1;
     /*0x02*/ u8 unk2;
     /*0x03*/ u8 unk3;
-    /*0x04*/ u8 unk4;
+    /*0x04*/ u8 slope;
     /*0x05*/ u8 unk5;
     /*0x06*/ u8 onGround;
     /*0x07*/ u8 unk7;
@@ -451,13 +451,13 @@ void PlayerUpdate(void)
     else
     {
         gTerrainResult.unk0 = gTerrainResult.unk1 = gTerrainResult.unk2 = 0;
-        gTerrainResult.unk3 = gTerrainResult.unk4 = gTerrainResult.unk5 = 0;
+        gTerrainResult.unk3 = gTerrainResult.slope = gTerrainResult.unk5 = 0;
         gTerrainResult.unk8 = gTerrainResult.unkB = gTerrainResult.unkC = 0;
         gTerrainResult.unkA = 0;
         gTerrainProbeResult.unkE = 0;
     }
     gCurTask->player->unk4A = gTerrainResult.unk0;
-    gCurTask->player->unk4B = gTerrainResult.unk4;
+    gCurTask->player->unk4B = gTerrainResult.slope;
     gCurTask->player->unk49 = gTerrainProbeResult.unkE;
     gCurTask->player->unk4C = gTerrainResult.unkA;
     if (sub_0803fa74() != 0)

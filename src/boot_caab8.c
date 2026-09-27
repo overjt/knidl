@@ -33,18 +33,18 @@
    sprite in 24.8 fixed point. */
 struct M38LogoObj
 {
-    /*0x00*/ s16 *unk00;    /* script cursor */
-    /*0x04*/ s16 unk04;     /* script id, -1 = off */
-    /*0x06*/ s16 unk06;     /* sprite id (gUnk_087554B8), -1 = none */
-    /*0x08*/ s16 unk08;     /* layer */
-    /*0x0A*/ s16 unk0A;     /* frames to wait */
-    /*0x0C*/ s32 unk0C;     /* x << 8 */
-    /*0x10*/ s32 unk10;     /* y << 8 */
-    /*0x14*/ s16 unk14;     /* x velocity */
-    /*0x16*/ s16 unk16;     /* y velocity */
-    /*0x18*/ s16 unk18;     /* x acceleration */
-    /*0x1A*/ s16 unk1A;     /* y acceleration */
-    /*0x1C*/ s16 unk1C;     /* loop count */
+    /*0x00*/ s16 *scriptPos;    /* script cursor */
+    /*0x04*/ s16 scriptId;     /* script id, -1 = off */
+    /*0x06*/ s16 spriteId;     /* sprite id (gUnk_087554B8), -1 = none */
+    /*0x08*/ s16 layer;     /* layer */
+    /*0x0A*/ s16 sleepFrames;     /* frames to wait */
+    /*0x0C*/ s32 posX;     /* x << 8 */
+    /*0x10*/ s32 posY;     /* y << 8 */
+    /*0x14*/ s16 velX;     /* x velocity */
+    /*0x16*/ s16 velY;     /* y velocity */
+    /*0x18*/ s16 accelX;     /* x acceleration */
+    /*0x1A*/ s16 accelY;     /* y acceleration */
+    /*0x1C*/ s16 loopCount;     /* loop count */
     /*0x1E*/ u16 unk1E;
 };
 
@@ -70,35 +70,35 @@ void BootLogoUpdateObjects(void)
 
 
     for (i = 0; i < 115; obj++, i++) {
-        if (obj->unk04 == -1)
+        if (obj->scriptId == -1)
             continue;
-        if (obj->unk0A != 0) {
-            obj->unk0A--;
+        if (obj->sleepFrames != 0) {
+            obj->sleepFrames--;
         } else {
-            while (obj->unk04 != -1 && obj->unk0A == 0) {
-                p = obj->unk00;
+            while (obj->scriptId != -1 && obj->sleepFrames == 0) {
+                p = obj->scriptPos;
                 mask = *p++;
                 arg = *p;
                 for (j = 0; j < 14; j++) {
                     if ((mask >> j) & 1) {
                         switch (1 << j) {
                         case 1:
-                            obj->unk14 = *p++;
+                            obj->velX = *p++;
                             break;
                         case 2:
-                            obj->unk16 = *p++;
+                            obj->velY = *p++;
                             break;
                         case 4:
-                            obj->unk18 = *p++;
+                            obj->accelX = *p++;
                             break;
                         case 8:
-                            obj->unk1A = *p++;
+                            obj->accelY = *p++;
                             break;
                         case 16:
-                            obj->unk06 = *p++;
+                            obj->spriteId = *p++;
                             break;
                         case 32:
-                            obj->unk0A = *p++;
+                            obj->sleepFrames = *p++;
                             break;
                         case 64:
                             PlaySfx(arg);
@@ -108,16 +108,16 @@ void BootLogoUpdateObjects(void)
                             p = gUnk_087577D8[arg];
                             break;
                         case 256:
-                            obj->unk04 = arg;
-                            p = gUnk_087577D8[obj->unk04];
+                            obj->scriptId = arg;
+                            p = gUnk_087577D8[obj->scriptId];
                             break;
                         case 512:
                             gUnk_0201BFD0[i] = p;
                             if (arg != 0)
-                                obj->unk1C = arg;
+                                obj->loopCount = arg;
                             break;
                         case 1024:
-                            if (obj->unk1C != 0 && --obj->unk1C == 0)
+                            if (obj->loopCount != 0 && --obj->loopCount == 0)
                                 break;
                             p = gUnk_0201BFD0[i];
                             break;
@@ -125,28 +125,28 @@ void BootLogoUpdateObjects(void)
                             p = gUnk_0201BFD0[i];
                             break;
                         case 2048:
-                            p = gUnk_087577D8[obj->unk04];
+                            p = gUnk_087577D8[obj->scriptId];
                             break;
                         case 8192:
-                            obj->unk04 = 0xFFFF;
+                            obj->scriptId = 0xFFFF;
                             break;
                         }
                     } else if (j <= 5) {
                         p++;
                     }
                 }
-                obj->unk00 = p;
+                obj->scriptPos = p;
             }
         }
-        obj->unk14 += obj->unk18;
-        obj->unk16 += obj->unk1A;
-        obj->unk0C += obj->unk14;
-        obj->unk10 += obj->unk16;
-        x = obj->unk0C >> 8;
-        y = obj->unk10 >> 8;
-        if (obj->unk06 != -1) {
+        obj->velX += obj->accelX;
+        obj->velY += obj->accelY;
+        obj->posX += obj->velX;
+        obj->posY += obj->velY;
+        x = obj->posX >> 8;
+        y = obj->posY >> 8;
+        if (obj->spriteId != -1) {
             if ((u32)(x + 15) <= 286 && y > -32 && y <= 191)
-                QueueSprite(obj->unk08, gUnk_087554B8[obj->unk06], 0, 0, x, y);
+                QueueSprite(obj->layer, gUnk_087554B8[obj->spriteId], 0, 0, x, y);
             else {
                 s32 m;
 
@@ -155,7 +155,7 @@ void BootLogoUpdateObjects(void)
                    it knows the PRE-loaded old halfword has no bits above
                    0xFFFF (lessons 3.457, 3.494). */
                 asm("" : "=r"(m) : "0"(0xFFFF));
-                obj->unk04 |= m;
+                obj->scriptId |= m;
                 /* LEVER 2 (zero bytes): keeps the mask live past the OR, so
                    the OR's result takes its own register (the ROM's
                    `adds r0, r1, #0` copy before the `orrs`). */

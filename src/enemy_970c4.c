@@ -5,9 +5,9 @@
 struct Unk0200D120
 {
     /*0x00*/ u8 filler00[0x20];
-    /*0x20*/ u16 unk20;
+    /*0x20*/ u16 savedTileWord;
     /*0x22*/ u8 filler22[0x26];
-    /*0x48*/ s8 *unk48;
+    /*0x48*/ s8 *attackBox;
     /*0x4C*/ u8 filler4C[0x24];
 };
 
@@ -81,7 +81,7 @@ void sub_080970c4(void)
     t->layer = 10;
     u = gCurTask;
     u->frameTable = gUnk_087537E8;
-    u->tileWord = gUnk_0200D120[u->parent - 32].unk20;
+    u->tileWord = gUnk_0200D120[u->parent - 32].savedTileWord;
     if (RandomRange(2) != 0)
         gCurTask->facing = 1;
     else
@@ -99,7 +99,7 @@ void sub_080970c4(void)
             q0 = &gTasks[i0];
             a0 = &q0->pixelX;
             k0 = q0->facing;
-            p0 = gUnk_0200D120[i0 - 32].unk48;
+            p0 = gUnk_0200D120[i0 - 32].attackBox;
             x = k0 * (p0[2] + p0[0]) + *a0;
             y = (p0[3] + q0->pixelY) + p0[1];
             break;
@@ -108,13 +108,13 @@ void sub_080970c4(void)
             q1 = &gTasks[i1];
             a1 = &q1->pixelX;
             k1 = q1->facing;
-            p1 = gUnk_0200D120[i1 - 32].unk48;
+            p1 = gUnk_0200D120[i1 - 32].attackBox;
             x = k1 * (p1[2] + p1[0]) + *a1;
             y = (q1->pixelY + p1[5]) - (abs(p1[5] - p1[3]) >> 1) + p1[1];
             break;
         case 2:
             i2 = w->parent;
-            p2 = gUnk_0200D120[i2 - 32].unk48;
+            p2 = gUnk_0200D120[i2 - 32].attackBox;
             c4_2 = p2[4];
             c0_2 = p2[0];
             k2 = gTasks[i2].facing;
@@ -124,12 +124,12 @@ void sub_080970c4(void)
             j2 = gCurTask->parent;
             r = &gTasks[j2];
             b2 = &r->pixelY;
-            p2b = gUnk_0200D120[j2 - 32].unk48;
+            p2b = gUnk_0200D120[j2 - 32].attackBox;
             y = (p2b[3] + *b2) + p2b[1];
             break;
         case 3:
             i3 = w->parent;
-            p3 = gUnk_0200D120[i3 - 32].unk48;
+            p3 = gUnk_0200D120[i3 - 32].attackBox;
             c4_3 = p3[4];
             c0_3 = p3[0];
             k3 = gTasks[i3].facing;
@@ -138,16 +138,16 @@ void sub_080970c4(void)
             x = u48_3 + (c4_3 - (abs(c4_3 - c2_3) >> 1) + c0_3) * k3;
             j3 = gCurTask->parent;
             h3 = gTasks[j3].pixelY;
-            p3b = gUnk_0200D120[j3 - 32].unk48;
+            p3b = gUnk_0200D120[j3 - 32].attackBox;
             y = (h3 + p3b[5]) - (abs(p3b[5] - p3b[3]) >> 1) + p3b[1];
             break;
         }
         ia = gCurTask->parent;
-        pa = gUnk_0200D120[ia - 32].unk48;
+        pa = gUnk_0200D120[ia - 32].attackBox;
         n = RandomRange(abs(pa[4] - pa[2]) >> 1);
         ib = gCurTask->parent;
         x = x + n * gTasks[ib].facing;
-        pb = gUnk_0200D120[ib - 32].unk48;
+        pb = gUnk_0200D120[ib - 32].attackBox;
         y = y + RandomRange(abs(pb[5] - pb[3]) >> 1);
         z = gCurTask;
         z->posX = x << 16;

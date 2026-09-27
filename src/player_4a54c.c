@@ -30,7 +30,7 @@ struct Unk03005550
     /*0x01*/ u8 unk1;
     /*0x02*/ u8 unk2;
     /*0x03*/ u8 unk3;
-    /*0x04*/ u8 unk4;
+    /*0x04*/ u8 slope;
     /*0x05*/ u8 unk5;
     /*0x06*/ u8 unk6;
     /*0x07*/ u8 unk7;
@@ -234,10 +234,10 @@ void sub_0804a970(void)
                 RequestScreenShake(2);
                 PlayerStopAxes(2);
             }
-            if (gTerrainResult.unk4 == 0)
+            if (gTerrainResult.slope == 0)
                 TaskSetFrame(0xC48);
             else
-                TaskSetFrameNoFlip(gUnk_0873B654[gTerrainResult.unk4]);
+                TaskSetFrameNoFlip(gUnk_0873B654[gTerrainResult.slope]);
             {
                 struct PlayerState *p = gCurTask->player;
                 if (p->invulnerability != 2)

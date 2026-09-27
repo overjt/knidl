@@ -24,7 +24,7 @@ struct Unk03005530
     /*0x01*/ u8 unk1;
     /*0x02*/ u8 unk2;
     /*0x03*/ u8 unk3;
-    /*0x04*/ u8 unk4;
+    /*0x04*/ u8 slope;
     /*0x05*/ u8 unk5;
     /*0x06*/ u8 onGround;
     /*0x07*/ u8 unk7;
@@ -219,18 +219,18 @@ void sub_0801dee8(void)
                 return;
         }
         gTerrainProbeResult.unk1++;
-        gTerrainProbeResult.unk4 = gCollisionTileSlope[t];
+        gTerrainProbeResult.slope = gCollisionTileSlope[t];
         gTerrainProbeY += GetTilePushDown(t);
         return;
     }
     if (gUnk_087336F0[gTerrainTile] == 0)
     {
         gTerrainProbeResult.unk1++;
-        gTerrainProbeResult.unk4 = gCollisionTileSlope[gTerrainTile];
+        gTerrainProbeResult.slope = gCollisionTileSlope[gTerrainTile];
         gTerrainProbeY += GetTilePushDown(gTerrainTile);
         if (TerrainQueryPixel(gTerrainProbeX, gTerrainProbeY + gTerrainBoxTop) != 0)
         {
-            gTerrainProbeResult.unk4 = gCollisionTileSlope[gTerrainTile];
+            gTerrainProbeResult.slope = gCollisionTileSlope[gTerrainTile];
             gTerrainProbeY += GetTilePushDown(gTerrainTile);
         }
         return;

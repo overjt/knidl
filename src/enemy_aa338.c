@@ -36,11 +36,11 @@ extern u8 gUnk_0200D080;
 struct Unk0200D120
 {
     /*0x00*/ u8 filler00[0x05];
-    /*0x05*/ u8 unk05;
+    /*0x05*/ u8 hitState;
     /*0x06*/ u8 filler06[0x1A];
-    /*0x20*/ u16 unk20;
+    /*0x20*/ u16 savedTileWord;
     /*0x22*/ u8 filler22[0x26];
-    /*0x48*/ s8 *unk48;
+    /*0x48*/ s8 *attackBox;
     /*0x4C*/ u8 filler4C[0x24];
 };
 extern struct Unk0200D120 gUnk_0200D120[];
@@ -3972,7 +3972,7 @@ void sub_080add48(void)
     w2 = tt2->pixelY << 16;
     t->posY = w2;
     t->pixelY = w2 >> 16;
-    if (gUnk_0200D120[*a - 32].unk05 == 2)
+    if (gUnk_0200D120[*a - 32].hitState == 2)
         TaskSetEntry(sub_080ade98, gCurTaskIdx);
     else if (gUnk_02006190[3] != 0)
         TaskSetSkipMask(1, gCurTaskIdx);
@@ -4092,7 +4092,7 @@ void sub_080adf50(void)
     w2 = tt2->pixelY << 16;
     t->posY = w2;
     t->pixelY = w2 >> 16;
-    if (gUnk_0200D120[*a - 32].unk05 == 2)
+    if (gUnk_0200D120[*a - 32].hitState == 2)
         TaskSetEntry(sub_080adfd4, gCurTaskIdx);
 }
 
@@ -4194,7 +4194,7 @@ void sub_080ae0b4(void)
     w2 = tt2->pixelY << 16;
     t->posY = w2;
     t->pixelY = w2 >> 16;
-    if (gUnk_0200D120[*a - 32].unk05 == 2)
+    if (gUnk_0200D120[*a - 32].hitState == 2)
     {
         k1 = 13;
         t->frame = k1;

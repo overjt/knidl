@@ -50,10 +50,10 @@
  * label of &gAirGrindCourse, numbered after this file's 40 earlier ones; #98
  * had parked it at 22 bytes (or byte-exact with 37 empty asm statements). */
 
-/* per-player records of gAirGrindCourse, M37Course.unk018[4] (0x3C bytes) */
+/* per-player records of gAirGrindCourse, M37Course.players[4] (0x3C bytes) */
 struct M37CoursePlayer
 {
-    /*0x00*/ s32 unk00;
+    /*0x00*/ s32 coursePos;
     /*0x04*/ s32 unk04;
     /*0x08*/ s32 unk08;
     /*0x0C*/ s32 unk0C;
@@ -66,7 +66,7 @@ struct M37CoursePlayer
     /*0x28*/ s32 unk28;
     /*0x2C*/ s32 unk2C;
     /*0x30*/ s32 unk30;
-    /*0x34*/ s32 unk34;
+    /*0x34*/ s32 prevCoursePos;
     /*0x38*/ s32 unk38;
 };
 
@@ -74,13 +74,13 @@ struct M37CoursePlayer
    0x080C5284-0x080C623C builder) */
 struct M37Course
 {
-    /*0x000*/ s32 unk000;
+    /*0x000*/ s32 scrollPos;
     /*0x004*/ s32 unk004;
     /*0x008*/ s32 unk008;
     /*0x00C*/ s32 unk00C;
-    /*0x010*/ s32 unk010;
+    /*0x010*/ s32 finishLine;
     /*0x014*/ s32 unk014;
-    /*0x018*/ struct M37CoursePlayer unk018[4];
+    /*0x018*/ struct M37CoursePlayer players[4];
     /*0x108*/ s32 unk108;
     /*0x10C*/ s32 unk10C;
     /*0x110*/ s32 unk110;
@@ -175,10 +175,10 @@ void sub_080c52c4(s32 lane, s32 x, s32 *px, s32 *py, s32 *pz)
     }
     else if (x < gAirGrindCourse.unk00C + 1000)
         amp = Div((x - 1000) << 8, 1000);
-    else if (x < gAirGrindCourse.unk010 - 1000)
+    else if (x < gAirGrindCourse.finishLine - 1000)
         amp = 256;
-    else if (x < gAirGrindCourse.unk010)
-        amp = Div((gAirGrindCourse.unk010 - x) << 8, 1000);
+    else if (x < gAirGrindCourse.finishLine)
+        amp = Div((gAirGrindCourse.finishLine - x) << 8, 1000);
     else
         amp = 0;
 
@@ -328,7 +328,7 @@ void AirGrindLayOutCourse(s32 a)
     {
         v = gUnk_0201B690[i];
         if (!(i & 1))
-            gUnk_0201B690[i] = (gAirGrindCourse.unk010 - gAirGrindCourse.unk00C - m) * v;
+            gUnk_0201B690[i] = (gAirGrindCourse.finishLine - gAirGrindCourse.unk00C - m) * v;
         else
             gUnk_0201B690[i] = m * v;
         gUnk_0201B690[i] /= sums[i % 2];
@@ -378,13 +378,13 @@ void AirGrindBuildCourse(s32 a, s32 b)
     gAirGrindCourse.unk110 = a;
     gAirGrindCourse.unk10C = b;
     gAirGrindCourse.unk108 = 0;
-    gAirGrindCourse.unk000 = 240;
+    gAirGrindCourse.scrollPos = 240;
     gAirGrindCourse.unk004 = 0;
     gAirGrindCourse.unk008 = 0;
     for (i = 0; i < 4; i++)
     {
-        p = &gAirGrindCourse.unk018[i];
-        p->unk34 = p->unk00 = gAirGrindCourse.unk108;
+        p = &gAirGrindCourse.players[i];
+        p->prevCoursePos = p->coursePos = gAirGrindCourse.unk108;
         p->unk30 = 0;
         p->unk04 = 0;
         p->unk38 = 1;
@@ -396,13 +396,13 @@ void AirGrindBuildCourse(s32 a, s32 b)
     switch (a)
     {
     case 0:
-        gAirGrindCourse.unk010 = 6000;
+        gAirGrindCourse.finishLine = 6000;
         break;
     case 1:
-        gAirGrindCourse.unk010 = 8500;
+        gAirGrindCourse.finishLine = 8500;
         break;
     case 2:
-        gAirGrindCourse.unk010 = 12000;
+        gAirGrindCourse.finishLine = 12000;
         break;
     }
     for (i = 0; i < 0x1000; i++)
@@ -417,7 +417,7 @@ void AirGrindBuildCourse(s32 a, s32 b)
     for (i = 0; i < 0x400; i++)
         ((u16 *)0x0600F800)[i] = 0;
     *(u16 *)0x0600FC20 = 0x300;
-    gAirGrindCourse.unk000 = 360;
+    gAirGrindCourse.scrollPos = 360;
     AirGrindDrawCourse();
 }
 
@@ -455,8 +455,8 @@ void AirGrindDrawCourse(void)
 
     for (lane = 0; lane < 4; lane++)
     {
-        p = &gAirGrindCourse.unk018[lane];
-        lo = sub_080c55d8(lane, gAirGrindCourse.unk000) / 32;
+        p = &gAirGrindCourse.players[lane];
+        lo = sub_080c55d8(lane, gAirGrindCourse.scrollPos) / 32;
         hi = sub_080c55d8(lane, gAirGrindCourse.unk108) / 32;
         for (k = 0; k < lo - hi; k++)
         {
@@ -552,11 +552,11 @@ void AirGrindDrawCourse(void)
             }
         }
         *gUnk_08757300[lane] = (lo - 120) << 16;
-        v = sub_080c55d8(lane, p->unk00);
+        v = sub_080c55d8(lane, p->coursePos);
         sub_080c52c4(lane, v / 32, &p->unk10, &depth[lane], &p->unk1C);
         p->unk38 = p->unk14;
         sub_080c54a4(lane, &p->unk2C, v, &p->unk14);
-        p->unk28 = sub_080c553c(p->unk2C, p->unk00);
+        p->unk28 = sub_080c553c(p->unk2C, p->coursePos);
         v /= 32;
         p->unk08 = depth[lane] + 512;
         sn = gUnk_080D059A[p->unk08 / 4 - 32];
@@ -622,21 +622,21 @@ void AirGrindDrawCourse(void)
                 }
             }
         }
-        if (gAirGrindCourse.unk00C <= p->unk00 && p->unk34 <= gAirGrindCourse.unk010)
+        if (gAirGrindCourse.unk00C <= p->coursePos && p->prevCoursePos <= gAirGrindCourse.finishLine)
         {
-            k = p->unk34;
-            m = p->unk00;
+            k = p->prevCoursePos;
+            m = p->coursePos;
             if (k < gAirGrindCourse.unk00C)
                 k = gAirGrindCourse.unk00C;
-            if (m > gAirGrindCourse.unk010)
-                m = gAirGrindCourse.unk010;
+            if (m > gAirGrindCourse.finishLine)
+                m = gAirGrindCourse.finishLine;
             sub_080c5580(k, m, &set, &clear);
             if (p->unk04 != 0)
                 p->unk24 += set;
             p->unk20 += set;
         }
         p->unk30 = p->unk04;
-        p->unk34 = p->unk00;
+        p->prevCoursePos = p->coursePos;
     }
     depth[1] += 256;
     depth[2] += 304;
@@ -647,10 +647,10 @@ void AirGrindDrawCourse(void)
         for (k = 0; k < 4; k++)
             if (depth[lane] > depth[k])
                 m++;
-        gAirGrindCourse.unk018[lane].unk18 = m;
+        gAirGrindCourse.players[lane].unk18 = m;
         if (m == 3)
             m = 2;
         *gUnk_08757320[lane] = (*gUnk_08757320[lane] & 0xFFFC) | m;
     }
-    gAirGrindCourse.unk108 = gAirGrindCourse.unk000;
+    gAirGrindCourse.unk108 = gAirGrindCourse.scrollPos;
 }

@@ -22,7 +22,7 @@
  * contact. */
 
 /* M11's per-player records (src/stage_43654.c spells them the same way) */
-struct M11R8 { u8 unk00; u8 unk01; u8 unk02; u8 unk03; u8 *unk04; };
+struct M11R8 { u8 unk00; u8 unk01; u8 offsetX; u8 offsetY; u8 *boxes; };
 
 struct M11R20 { u32 w[5]; };
 
@@ -35,7 +35,7 @@ struct Unk03005550
     /*0x01*/ u8 unk1;
     /*0x02*/ u8 unk2;
     /*0x03*/ u8 unk3;
-    /*0x04*/ u8 unk4;
+    /*0x04*/ u8 slope;
     /*0x05*/ u8 unk5;
     /*0x06*/ u8 unk6;
     /*0x07*/ u8 unk7;
@@ -660,7 +660,7 @@ void sub_080520dc(void)
             sub_0801c444(gUnk_0873CB64);
         break;
     }
-    if (gTerrainResult.unk4 != 0)
+    if (gTerrainResult.slope != 0)
     {
         struct Task *t = gCurTask;
         if (t->unk2C-- == 0)
@@ -709,7 +709,7 @@ void sub_080520dc(void)
         TaskSetEntry(sub_0805091c, gCurTaskIdx);
         return;
     }
-    switch (gTerrainResult.unk4)
+    switch (gTerrainResult.slope)
     {
     case 0:
         switch (gCurTask->unk28)

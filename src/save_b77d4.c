@@ -20,7 +20,7 @@ struct SaveSlot
     /*0x28*/ u8 unk28[8][7];
     /*0x60*/ u16 unk60[4];
     /*0x68*/ u16 unk68[4];
-    /*0x70*/ u32 unk70;
+    /*0x70*/ u32 checksum;
     /*0x74*/ u8 filler74[0x8C];
 };
 
@@ -131,7 +131,7 @@ s32 ReadSaveSlot(s32 a, s32 b)
         for (i = 0; i <= 1; i++)
         {
             ReadSram((u8 *)((((b * 2) + i) << 8) + 0x0E000200), (u8 *)&gSaveSlots[a], 256);
-            if (CalcSaveSlotChecksum(a) == gSaveSlots[a].unk70)
+            if (CalcSaveSlotChecksum(a) == gSaveSlots[a].checksum)
                 break;
         }
         if (i == 2)

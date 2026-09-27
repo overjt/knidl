@@ -21,7 +21,7 @@ struct Unk03005530
     /*0x01*/ u8 unk1;
     /*0x02*/ u8 unk2;
     /*0x03*/ u8 unk3;
-    /*0x04*/ u8 unk4;
+    /*0x04*/ u8 slope;
     /*0x05*/ u8 unk5;
     /*0x06*/ u8 onGround;
     /*0x07*/ u8 unk7;
@@ -98,7 +98,7 @@ right:
         t = gTerrainTile;
     }
     gTerrainProbeResult.unk0 = 1;
-    gTerrainProbeResult.unk4 = gCollisionTileSlope[t];
+    gTerrainProbeResult.slope = gCollisionTileSlope[t];
     gTerrainProbeX += GetTilePushLeft(t);
     if (gCollisionTileSlope[gTerrainTile] != 0 && (gCollisionTileSlope[gTerrainTile] & 1))
         return;
@@ -114,7 +114,7 @@ right:
     {
         t = gTerrainTile;
     }
-    gTerrainProbeResult.unk4 = gCollisionTileSlope[t];
+    gTerrainProbeResult.slope = gCollisionTileSlope[t];
     gTerrainProbeX += GetTilePushLeft(t);
     return;
 left:
@@ -129,7 +129,7 @@ left:
         t = gTerrainTile;
     }
     gTerrainProbeResult.unk0 = 2;
-    gTerrainProbeResult.unk4 = gCollisionTileSlope[t];
+    gTerrainProbeResult.slope = gCollisionTileSlope[t];
     gTerrainProbeX += GetTilePushRight(t);
     if (gCollisionTileSlope[gTerrainTile] != 0 && !(gCollisionTileSlope[gTerrainTile] & 1))
         return;
@@ -145,7 +145,7 @@ left:
     {
         t = gTerrainTile;
     }
-    gTerrainProbeResult.unk4 = gCollisionTileSlope[t];
+    gTerrainProbeResult.slope = gCollisionTileSlope[t];
     gTerrainProbeX += GetTilePushRight(t);
     return;
 up:
@@ -154,13 +154,13 @@ up:
     if (gUnk_087336F0[gTerrainTile] != 0)
         return;
     gTerrainProbeResult.unk1 = 1;
-    gTerrainProbeResult.unk4 = gCollisionTileSlope[gTerrainTile];
+    gTerrainProbeResult.slope = gCollisionTileSlope[gTerrainTile];
     gTerrainProbeY += GetTilePushDown(gTerrainTile);
     if (!(gUnk_08732DF0[gTerrainTile] & 0x40)
         && TerrainQueryPixel(gTerrainProbeX, gTerrainProbeY) != 0)
     {
         gTerrainProbeY += GetTilePushDown(gTerrainTile);
-        gTerrainProbeResult.unk4 = gCollisionTileSlope[gTerrainTile];
+        gTerrainProbeResult.slope = gCollisionTileSlope[gTerrainTile];
     }
     return;
 down:
@@ -169,12 +169,12 @@ down:
         gTerrainProbeResult.unk2 = 1;
         gTerrainProbeResult.onGround = 1;
         gTerrainProbeY += GetTilePushUp(gTerrainTile);
-        gTerrainProbeResult.unk4 = gCollisionTileSlope[gTerrainTile];
+        gTerrainProbeResult.slope = gCollisionTileSlope[gTerrainTile];
         if (!(gUnk_08732DF0[gTerrainTile] & 0x80)
             && TerrainQueryPixel(gTerrainProbeX, gTerrainProbeY) != 0
             && (gUnk_087336F0[gTerrainTile] == 0 || (gTerrainProbeResult.unkB & 1)))
         {
-            gTerrainProbeResult.unk4 = gCollisionTileSlope[gTerrainTile];
+            gTerrainProbeResult.slope = gCollisionTileSlope[gTerrainTile];
             gTerrainProbeY += GetTilePushUp(gTerrainTile);
         }
     }
@@ -233,7 +233,7 @@ right:
         u = gTerrainTile;
     }
     gTerrainProbeResult.unk0 = 1;
-    gTerrainProbeResult.unk4 = gCollisionTileSlope[u];
+    gTerrainProbeResult.slope = gCollisionTileSlope[u];
     gTerrainProbeX += GetTilePushLeft(u);
     if ((gCollisionTileSlope[gTerrainTile] == 0 || (gCollisionTileSlope[gTerrainTile] & 1) == 0)
         && TerrainQueryPixel(gTerrainProbeX, gTerrainProbeY) != 0)
@@ -248,11 +248,11 @@ right:
         {
             u = gTerrainTile;
         }
-        gTerrainProbeResult.unk4 = gCollisionTileSlope[u];
+        gTerrainProbeResult.slope = gCollisionTileSlope[u];
         gTerrainProbeX += GetTilePushLeft(u);
     }
     gTerrainProbeResult.unkB = 0;
-    if (gTerrainProbeResult.unk4 != 0)
+    if (gTerrainProbeResult.slope != 0)
         gTerrainProbeX++;
     return;
 left:
@@ -287,7 +287,7 @@ left:
         u = gTerrainTile;
     }
     gTerrainProbeResult.unk0 = 2;
-    gTerrainProbeResult.unk4 = gCollisionTileSlope[u];
+    gTerrainProbeResult.slope = gCollisionTileSlope[u];
     gTerrainProbeX += GetTilePushRight(u);
     if ((gCollisionTileSlope[gTerrainTile] == 0 || (gCollisionTileSlope[gTerrainTile] & 1) != 0)
         && TerrainQueryPixel(gTerrainProbeX, gTerrainProbeY) != 0)
@@ -302,11 +302,11 @@ left:
         {
             u = gTerrainTile;
         }
-        gTerrainProbeResult.unk4 = gCollisionTileSlope[u];
+        gTerrainProbeResult.slope = gCollisionTileSlope[u];
         gTerrainProbeX += GetTilePushRight(u);
     }
     gTerrainProbeResult.unkB = 0;
-    if (gTerrainProbeResult.unk4 != 0)
+    if (gTerrainProbeResult.slope != 0)
         gTerrainProbeX--;
     return;
 up:
@@ -320,11 +320,11 @@ up:
         && TerrainQueryPixel(gTerrainProbeX, gTerrainProbeY) != 0)
         gTerrainProbeY += GetTilePushDown(gTerrainTile);
     gTerrainProbeResult.unkB = 0;
-    gTerrainProbeResult.unk4 = gCollisionTileSlope[gTerrainTile];
-    if (gTerrainProbeResult.unk4 == 0)
+    gTerrainProbeResult.slope = gCollisionTileSlope[gTerrainTile];
+    if (gTerrainProbeResult.slope == 0)
         return;
     gTerrainProbeY--;
-    if ((gTerrainProbeResult.unk4 & 1) != 0)
+    if ((gTerrainProbeResult.slope & 1) != 0)
     {
         if (gUnk_087336F0[gTerrainTileLeft] == 0)
             return;
@@ -356,11 +356,11 @@ down:
         && TerrainQueryPixel(gTerrainProbeX, gTerrainProbeY) != 0)
         gTerrainProbeY += GetTilePushUp(gTerrainTile);
     gTerrainProbeResult.unkB = 0;
-    gTerrainProbeResult.unk4 = gCollisionTileSlope[gTerrainTile];
-    if (gTerrainProbeResult.unk4 == 0)
+    gTerrainProbeResult.slope = gCollisionTileSlope[gTerrainTile];
+    if (gTerrainProbeResult.slope == 0)
         return;
     gTerrainProbeY++;
-    if ((gTerrainProbeResult.unk4 & 1) != 0)
+    if ((gTerrainProbeResult.slope & 1) != 0)
     {
         if (gUnk_087336F0[gTerrainTileLeft] == 0)
             return;

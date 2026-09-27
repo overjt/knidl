@@ -36,7 +36,7 @@ struct M37Obj
    type #96 variant 1's seven scrolling objects.  sub_080c4664 addresses an
    object as &set->unk04[i] off the set's own base (`lsls #4; adds #4`), so
    the records are a sub-struct, not flat fields; the two 16-colour rows
-   AirGrindSetupRace fills end it exactly at M37Game.unk1A4. */
+   AirGrindSetupRace fills end it exactly at M37Game.randomStates. */
 struct M37ObjSet
 {
     /*0x00*/ s32 unk00;         /* the scroll position last frame */
@@ -46,7 +46,7 @@ struct M37ObjSet
     /*0x96*/ u16 unk96[16];     /* M37Game + 0x182 */
 };
 
-/* per-player records, M37Game.unk01C[4] (0x34 bytes) */
+/* per-player records, M37Game.players[4] (0x34 bytes) */
 struct M37Player
 {
     /*0x00*/ u8 unk00;
@@ -74,22 +74,22 @@ struct M37Player
 /* gAirGrind, the game's state; always used through gAirGrindPtr */
 struct M37Game
 {
-    /*0x000*/ s32 unk000;       /* the level (M36's AirGrindInit copies gSubGameLevel) */
-    /*0x004*/ s32 unk004[4];
+    /*0x000*/ s32 level;       /* the level (M36's AirGrindInit copies gSubGameLevel) */
+    /*0x004*/ s32 raceTimes[4];
     /*0x014*/ s32 unk014;
     /*0x018*/ s32 unk018;
-    /*0x01C*/ struct M37Player unk01C[4];
+    /*0x01C*/ struct M37Player players[4];
     /*0x0EC*/ struct M37ObjSet unk0EC;
-    /*0x1A4*/ s32 unk1A4[5];    /* five LCG streams (AirGrindRandom, AirGrindRandomRange) */
+    /*0x1A4*/ s32 randomStates[5];    /* five LCG streams (AirGrindRandom, AirGrindRandomRange) */
     /*0x1B8*/ s32 unk1B8;
-    /*0x1BC*/ u16 unk1BC[160]; /* per-scanline colour, HBlank DMA source */
-    /*0x2FC*/ u16 unk2FC;
+    /*0x1BC*/ u16 skyLineColors[160]; /* per-scanline colour, HBlank DMA source */
+    /*0x2FC*/ u16 backdropColor;
     /*0x2FE*/ u8 pad2FE[2];
-    /*0x300*/ u32 unk300;       /* frame counter */
+    /*0x300*/ u32 frameCount;       /* frame counter */
     /*0x304*/ s16 unk304;       /* sub_080c4f60's OAM list: entry count */
     /*0x306*/ s16 unk306[160];  /* ... and entries */
-    /*0x446*/ u16 unk446;       /* gLocalPlayer */
-    /*0x448*/ u16 unk448;       /* gLinkPlayerCount */
+    /*0x446*/ u16 localPlayer;       /* gLocalPlayer */
+    /*0x448*/ u16 playerCount;       /* gLinkPlayerCount */
     /*0x44A*/ u8 pad44A[2];
     /*0x44C*/ s32 unk44C;       /* a task index into gTasks */
     /*0x450*/ u8 unk450;
@@ -97,10 +97,10 @@ struct M37Game
     /*0x452*/ u8 pad452[2];
 };
 
-/* per-player records of gAirGrindCourse, M37Course.unk018[4] (0x3C bytes) */
+/* per-player records of gAirGrindCourse, M37Course.players[4] (0x3C bytes) */
 struct M37CoursePlayer
 {
-    /*0x00*/ s32 unk00;
+    /*0x00*/ s32 coursePos;
     /*0x04*/ s32 unk04;
     /*0x08*/ s32 unk08;
     /*0x0C*/ s32 unk0C;
@@ -113,7 +113,7 @@ struct M37CoursePlayer
     /*0x28*/ s32 unk28;
     /*0x2C*/ s32 unk2C;
     /*0x30*/ s32 unk30;
-    /*0x34*/ s32 unk34;
+    /*0x34*/ s32 prevCoursePos;
     /*0x38*/ s32 unk38;
 };
 
@@ -121,13 +121,13 @@ struct M37CoursePlayer
    0x080C5284-0x080C623C builder) */
 struct M37Course
 {
-    /*0x000*/ s32 unk000;
+    /*0x000*/ s32 scrollPos;
     /*0x004*/ s32 unk004;
     /*0x008*/ s32 unk008;
     /*0x00C*/ s32 unk00C;
-    /*0x010*/ s32 unk010;
+    /*0x010*/ s32 finishLine;
     /*0x014*/ s32 unk014;
-    /*0x018*/ struct M37CoursePlayer unk018[4];
+    /*0x018*/ struct M37CoursePlayer players[4];
     /*0x108*/ s32 unk108;
     /*0x10C*/ s32 unk10C;
     /*0x110*/ s32 unk110;
@@ -196,7 +196,7 @@ void sub_080c3f44(void)
         gAirGrindPtr->unk451 = 1;
         break;
     case 0:
-        scale = sub_080c623c(gAirGrindCoursePtr->unk018[gCurTask->unk18].unk08);
+        scale = sub_080c623c(gAirGrindCoursePtr->players[gCurTask->unk18].unk08);
         gCurTask->drawCallback = (u32)sub_080c4e10;
         gCurTask->layer = u->layer;
         gCurTask->spriteFlags = u->spriteFlags & 0x6000;
@@ -215,7 +215,7 @@ void sub_080c3f44(void)
         break;
     case 3:
     case 4:
-        scale = sub_080c623c(gAirGrindCoursePtr->unk018[gCurTask->unk18].unk08);
+        scale = sub_080c623c(gAirGrindCoursePtr->players[gCurTask->unk18].unk08);
         gCurTask->drawCallback = (u32)sub_080c4e10;
         gCurTask->moveCallback = (u32)TaskMove;
         gCurTask->layer = u->layer;
@@ -278,8 +278,8 @@ void sub_080c42dc(s32 layer)
         gCurTask->pixelX = u->pixelX;
         gCurTask->pixelY = u->pixelY;
     } else {
-        gCurTask->pixelX = gAirGrindCoursePtr->unk018[gCurTask->unk18].unk0C;
-        gCurTask->pixelY = gAirGrindCoursePtr->unk018[gCurTask->unk18].unk10;
+        gCurTask->pixelX = gAirGrindCoursePtr->players[gCurTask->unk18].unk0C;
+        gCurTask->pixelY = gAirGrindCoursePtr->players[gCurTask->unk18].unk10;
     }
 }
 

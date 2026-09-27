@@ -16,7 +16,7 @@ struct Unk03005530
     /*0x01*/ u8 unk1;
     /*0x02*/ u8 unk2;
     /*0x03*/ u8 unk3;
-    /*0x04*/ u8 unk4;
+    /*0x04*/ u8 slope;
     /*0x05*/ u8 unk5;
     /*0x06*/ u8 onGround;
     /*0x07*/ u8 unk7;
@@ -117,19 +117,19 @@ void sub_0801d394(void)
             goto edges;
         goto slope_below;
     }
-    gTerrainProbeResult.unk4 = gCollisionTileSlope[gTerrainTileBelow];
+    gTerrainProbeResult.slope = gCollisionTileSlope[gTerrainTileBelow];
     gTerrainProbeY += GetTileFloorSnap(gTerrainTileBelow) + 16;
     goto check;
 
 floor:
-    gTerrainProbeResult.unk4 = gCollisionTileSlope[gTerrainTile];
+    gTerrainProbeResult.slope = gCollisionTileSlope[gTerrainTile];
     gTerrainProbeY += GetTileFloorSnap(gTerrainTile);
 check:
     if (TerrainQueryPixel(gTerrainProbeX, gTerrainProbeY + gTerrainBoxBottom) != 0
         && (gUnk_087336F0[gTerrainTile] == 0 || gCollisionTileSlope[gTerrainTile] != 0
             || gTerrainProbeResult.unkC <= (gTerrainProbeY + gTerrainBoxBottom) >> 4))
     {
-        gTerrainProbeResult.unk4 = gCollisionTileSlope[gTerrainTile];
+        gTerrainProbeResult.slope = gCollisionTileSlope[gTerrainTile];
         gTerrainProbeY += GetTileFloorSnap(gTerrainTile);
     }
     gTerrainProbeResult.unkC = (gTerrainProbeY + gTerrainBoxBottom + 1) >> 4;
@@ -141,7 +141,7 @@ slope:
     {
         if (hit != 0)
         {
-            gTerrainProbeResult.unk4 = gCollisionTileSlope[tile];
+            gTerrainProbeResult.slope = gCollisionTileSlope[tile];
             gTerrainProbeY += GetTileFloorSnap(tile);
         }
         if (gTerrainVelX > 0)
@@ -151,7 +151,7 @@ slope:
     {
         if (hit != 0)
         {
-            gTerrainProbeResult.unk4 = gCollisionTileSlope[tile];
+            gTerrainProbeResult.slope = gCollisionTileSlope[tile];
             gTerrainProbeY += GetTileFloorSnap(tile);
         }
         if (gTerrainVelX < 0)
@@ -163,14 +163,14 @@ slope_below:
     tile = gUnk_08735018[gUnk_030055AC];
     if (dir == 1)
     {
-        gTerrainProbeResult.unk4 = gCollisionTileSlope[tile];
+        gTerrainProbeResult.slope = gCollisionTileSlope[tile];
         gTerrainProbeY += GetTileFloorSnap(tile) + 16;
         if (gTerrainVelX > 0)
             gTerrainProbeResult.unk3 = dir;
     }
     else if (dir == 2)
     {
-        gTerrainProbeResult.unk4 = gCollisionTileSlope[tile];
+        gTerrainProbeResult.slope = gCollisionTileSlope[tile];
         gTerrainProbeY += GetTileFloorSnap(tile) + 16;
         if (gTerrainVelX < 0)
             gTerrainProbeResult.unk3 = 1;

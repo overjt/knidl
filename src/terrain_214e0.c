@@ -80,7 +80,7 @@ struct Unk03005530
     /*0x01*/ u8 unk1;
     /*0x02*/ u8 unk2;
     /*0x03*/ u8 unk3;
-    /*0x04*/ u8 unk4;
+    /*0x04*/ u8 slope;
     /*0x05*/ u8 unk5;
     /*0x06*/ u8 onGround;
     /*0x07*/ u8 unk7;
@@ -274,7 +274,7 @@ s32 GetTilePushLeft(u16 a)
 
 void sub_08021a10(u16 a)
 {
-    gTerrainProbeResult.unk4 = gCollisionTileSlope[a];
+    gTerrainProbeResult.slope = gCollisionTileSlope[a];
     gTerrainProbeResult.unk5 = gUnk_087337F0[a];
     gTerrainProbeResult.unkE = gUnk_087334F0[a];
 }

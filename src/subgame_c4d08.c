@@ -42,7 +42,7 @@ struct M37Obj
    type #96 variant 1's seven scrolling objects.  sub_080c4664 addresses an
    object as &set->unk04[i] off the set's own base (`lsls #4; adds #4`), so
    the records are a sub-struct, not flat fields; the two 16-colour rows
-   AirGrindSetupRace fills end it exactly at M37Game.unk1A4. */
+   AirGrindSetupRace fills end it exactly at M37Game.randomStates. */
 struct M37ObjSet
 {
     /*0x00*/ s32 unk00;         /* the scroll position last frame */
@@ -52,7 +52,7 @@ struct M37ObjSet
     /*0x96*/ u16 unk96[16];     /* M37Game + 0x182 */
 };
 
-/* per-player records, M37Game.unk01C[4] (0x34 bytes) */
+/* per-player records, M37Game.players[4] (0x34 bytes) */
 struct M37Player
 {
     /*0x00*/ u8 unk00;
@@ -80,22 +80,22 @@ struct M37Player
 /* gAirGrind, the game's state; always used through gAirGrindPtr */
 struct M37Game
 {
-    /*0x000*/ s32 unk000;       /* the level (M36's AirGrindInit copies gSubGameLevel) */
-    /*0x004*/ s32 unk004[4];
+    /*0x000*/ s32 level;       /* the level (M36's AirGrindInit copies gSubGameLevel) */
+    /*0x004*/ s32 raceTimes[4];
     /*0x014*/ s32 unk014;
     /*0x018*/ s32 unk018;
-    /*0x01C*/ struct M37Player unk01C[4];
+    /*0x01C*/ struct M37Player players[4];
     /*0x0EC*/ struct M37ObjSet unk0EC;
-    /*0x1A4*/ s32 unk1A4[5];    /* five LCG streams (AirGrindRandom, AirGrindRandomRange) */
+    /*0x1A4*/ s32 randomStates[5];    /* five LCG streams (AirGrindRandom, AirGrindRandomRange) */
     /*0x1B8*/ s32 unk1B8;
-    /*0x1BC*/ u16 unk1BC[160]; /* per-scanline colour, HBlank DMA source */
-    /*0x2FC*/ u16 unk2FC;
+    /*0x1BC*/ u16 skyLineColors[160]; /* per-scanline colour, HBlank DMA source */
+    /*0x2FC*/ u16 backdropColor;
     /*0x2FE*/ u8 pad2FE[2];
-    /*0x300*/ u32 unk300;       /* frame counter */
+    /*0x300*/ u32 frameCount;       /* frame counter */
     /*0x304*/ s16 unk304;       /* sub_080c4f60's OAM list: entry count */
     /*0x306*/ s16 unk306[160];  /* ... and entries */
-    /*0x446*/ u16 unk446;       /* gLocalPlayer */
-    /*0x448*/ u16 unk448;       /* gLinkPlayerCount */
+    /*0x446*/ u16 localPlayer;       /* gLocalPlayer */
+    /*0x448*/ u16 playerCount;       /* gLinkPlayerCount */
     /*0x44A*/ u8 pad44A[2];
     /*0x44C*/ s32 unk44C;       /* a task index into gTasks */
     /*0x450*/ u8 unk450;
@@ -108,8 +108,8 @@ struct M37Game
    loop) */
 struct M37Script
 {
-    /*0x00*/ u8 unk0;           /* script id, 0 = none */
-    /*0x01*/ u8 unk1;           /* step */
+    /*0x00*/ u8 scriptId;           /* script id, 0 = none */
+    /*0x01*/ u8 step;           /* step */
     /*0x02*/ s16 unk2;
     /*0x04*/ s16 unk4;
 };
@@ -179,12 +179,12 @@ void sub_080c4e10(void)
 void sub_080c4ea8(void)
 {
     struct M37Game *g = gAirGrindPtr;
-    u16 n = g->unk448;
+    u16 n = g->playerCount;
     struct Task *t;
     s32 v;
     s32 d;
 
-    if (n <= 1 || gUnk_080CFE2C[g->unk446][gCurTask->unk1C] >= n) {
+    if (n <= 1 || gUnk_080CFE2C[g->localPlayer][gCurTask->unk1C] >= n) {
         gCurTask->velX += gCurTask->accelX;
     } else {
         t = gCurTask;
@@ -199,8 +199,8 @@ void sub_080c4ea8(void)
         }
     }
     if (gCurTask->velX > 0) {
-        if (gCurTask->velX > gUnk_080CFE3C[gAirGrindPtr->unk000][0])
-            gCurTask->velX = gUnk_080CFE3C[gAirGrindPtr->unk000][0];
+        if (gCurTask->velX > gUnk_080CFE3C[gAirGrindPtr->level][0])
+            gCurTask->velX = gUnk_080CFE3C[gAirGrindPtr->level][0];
     } else if (gCurTask->velX < 0) {
         gCurTask->velX = 0;
     }
@@ -277,31 +277,31 @@ loop:
 
 void sub_080c51c0(void)
 {
-    gAirGrindScript.unk0 = 0;
+    gAirGrindScript.scriptId = 0;
     gAirGrindScript.unk2 = 0;
     gAirGrindScript.unk4 = 0;
-    gAirGrindScript.unk1 = 0;
+    gAirGrindScript.step = 0;
 }
 
 void sub_080c51d4(void)
 {
     u16 *p;
 
-    if (gAirGrindScript.unk0 != 0) {
-        p = gUnk_087572EC[gAirGrindScript.unk0];
-        switch (p[gAirGrindScript.unk1 * 2]) {
+    if (gAirGrindScript.scriptId != 0) {
+        p = gUnk_087572EC[gAirGrindScript.scriptId];
+        switch (p[gAirGrindScript.step * 2]) {
         case 0x8000:
-            gAirGrindScript.unk0 = 0;
+            gAirGrindScript.scriptId = 0;
             gAirGrindScript.unk2 = 0;
             gAirGrindScript.unk4 = 0;
-            gAirGrindScript.unk1 = 0;
+            gAirGrindScript.step = 0;
             break;
         case 0x9999:
-            gAirGrindScript.unk1 = 0;
+            gAirGrindScript.step = 0;
         default:
-            gAirGrindScript.unk2 = p[gAirGrindScript.unk1 * 2];
-            gAirGrindScript.unk4 = p[gAirGrindScript.unk1 * 2 + 1];
-            gAirGrindScript.unk1++;
+            gAirGrindScript.unk2 = p[gAirGrindScript.step * 2];
+            gAirGrindScript.unk4 = p[gAirGrindScript.step * 2 + 1];
+            gAirGrindScript.step++;
             break;
         }
     }
@@ -311,15 +311,15 @@ void sub_080c523c(u16 id)
 {
     if (id <= 4) {
         if (id == 0) {
-            gAirGrindScript.unk0 = id;
+            gAirGrindScript.scriptId = id;
             gAirGrindScript.unk2 = id;
             gAirGrindScript.unk4 = id;
-            gAirGrindScript.unk1 = 0;
-        } else if ((u8)(gAirGrindScript.unk0 - 1) > 3 || gAirGrindScript.unk0 <= id) {
-            gAirGrindScript.unk0 = id;
+            gAirGrindScript.step = 0;
+        } else if ((u8)(gAirGrindScript.scriptId - 1) > 3 || gAirGrindScript.scriptId <= id) {
+            gAirGrindScript.scriptId = id;
             gAirGrindScript.unk2 = 0;
             gAirGrindScript.unk4 = 0;
-            gAirGrindScript.unk1 = 0;
+            gAirGrindScript.step = 0;
         }
     }
 }

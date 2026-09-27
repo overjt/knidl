@@ -20,7 +20,7 @@ struct SaveSlot
     /*0x28*/ u8 unk28[8][7];
     /*0x60*/ u16 unk60[4];
     /*0x68*/ u16 unk68[4];
-    /*0x70*/ u32 unk70;
+    /*0x70*/ u32 checksum;
     /*0x74*/ u8 filler74[0x8C];
 };
 
@@ -183,7 +183,7 @@ void ClearSaveSlot(s32 a)
     u32 *end;
 
     p = (u32 *)&gSaveSlots[a];
-    end = (u32 *)&gSaveSlots[a].unk70;
+    end = (u32 *)&gSaveSlots[a].checksum;
     while (p != end)
         *p++ = 0x99999999;
     gSaveSlots[a].generation = 0;
@@ -196,7 +196,7 @@ u32 CalcSaveSlotChecksum(s32 a)
     u32 sum;
 
     p = (u32 *)&gSaveSlots[a];
-    end = (u32 *)&gSaveSlots[a].unk70;
+    end = (u32 *)&gSaveSlots[a].checksum;
     sum = 0x97538642;
     while (p != end)
         sum += *p++;

@@ -29,7 +29,7 @@ struct Unk03005550
     /*0x01*/ u8 unk1;
     /*0x02*/ u8 unk2;
     /*0x03*/ u8 unk3;
-    /*0x04*/ u8 unk4;
+    /*0x04*/ u8 slope;
     /*0x05*/ u8 unk5;
     /*0x06*/ u8 unk6;
     /*0x07*/ u8 unk7;
@@ -247,7 +247,7 @@ void sub_08045a50(void)
         {
             struct Task *t = gCurTask;
             if (t->onGround & 1) {
-                if (gTerrainResult.unk4 != 0) {
+                if (gTerrainResult.slope != 0) {
                     t->player->requestedAction = 2;
                     PlayerSetMotionXPreset(11, 41);
                     SetPlayerInvulnerability(255, 0, gCurTask->player->playerIndex);

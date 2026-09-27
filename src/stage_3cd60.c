@@ -2,7 +2,7 @@
 #include "global.h"
 #include "task.h"
 
-struct M11R8 { u8 unk00; u8 unk01; u8 unk02; u8 unk03; u8 *unk04; };
+struct M11R8 { u8 unk00; u8 unk01; u8 offsetX; u8 offsetY; u8 *boxes; };
 struct M11Buf { u8 unk00[4]; u8 unk04[4]; };
 struct M11R20 { u32 w[5]; };
 
@@ -1259,9 +1259,9 @@ s32 LoadPlayerHitBoxSet(s32 a0, s32 a1)
 
     if (src[0] == 128)
         return 0;
-    gPlayerHitBoxSets[a0].unk02 = src[0];
-    gPlayerHitBoxSets[a0].unk03 = src[1];
-    gPlayerHitBoxSets[a0].unk04 = gUnk_02006A80[a0].unk00;
+    gPlayerHitBoxSets[a0].offsetX = src[0];
+    gPlayerHitBoxSets[a0].offsetY = src[1];
+    gPlayerHitBoxSets[a0].boxes = gUnk_02006A80[a0].unk00;
     gUnk_02006A80[a0].unk00[0] = src[2];
     gUnk_02006A80[a0].unk00[1] = src[3];
     gUnk_02006A80[a0].unk00[2] = src[4];
