@@ -69,25 +69,25 @@ struct Task {
     /* 0x04 */ void (*f04)(void);
     /* 0x08 */ void (*f08)(void);
     /* 0x0C */ void (*f0C)(void);
-    /* 0x10 */ s16 h10;
-    /* 0x12 */ u8  b12;
-    /* 0x13 */ u8  b13;
+    /* 0x10 */ s16 sleepFrames;
+    /* 0x12 */ u8  taskClass;
+    /* 0x13 */ u8  skipMask;
     /* 0x14 */ u8  b14;
     /* 0x15 */ u8  b15;
     /* 0x16 */ u16 h16;
     /* 0x18 */ u32 w18[8];
     /* 0x38 */ u32 w38;
-    /* 0x3C */ u16 h3C;
+    /* 0x3C */ u16 frame;
     /* 0x3E */ u16 h3E;
     /* 0x40 */ u16 h40;
-    /* 0x42 */ u8  b42;
-    /* 0x43 */ u8  b43;
+    /* 0x42 */ u8  layer;
+    /* 0x43 */ u8  facing;
     /* 0x44 */ u16 h44;
     /* 0x46 */ u16 h46;
     /* 0x48 */ u16 h48;
     /* 0x4A */ u16 h4A;
-    /* 0x4C */ u32 w4C;
-    /* 0x50 */ u32 w50;
+    /* 0x4C */ u32 posX;
+    /* 0x50 */ u32 posY;
     /* 0x54 */ u32 w54;
     /* 0x58 */ u32 w58;
     /* 0x5C */ u32 w5C;
@@ -148,7 +148,7 @@ void TaskSwitchTrampoline(s32 id, u32 fn, u32 stack);
 
 void TaskSetSkipMask(u8 val, s32 idx)
 {
-    gTasks[idx].b13 = val;
+    gTasks[idx].skipMask = val;
 }
 
 void TaskSetOthersSkipMask(u16 val, s32 idx)
@@ -156,12 +156,12 @@ void TaskSetOthersSkipMask(u16 val, s32 idx)
     u8 save;
     u16 i;
 
-    save = gTasks[idx].b13;
+    save = gTasks[idx].skipMask;
     for (i = 0; i < 64; i++) {
         if ((s16)gTaskSlotTypes[i] >= 0)
-            gTasks[i].b13 = val;
+            gTasks[i].skipMask = val;
     }
-    gTasks[idx].b13 = save;
+    gTasks[idx].skipMask = save;
 }
 
 void TaskSetAllSkipMask(u16 val)
@@ -170,6 +170,6 @@ void TaskSetAllSkipMask(u16 val)
 
     for (i = 0; i < 64; i++) {
         if ((s16)gTaskSlotTypes[i] >= 0)
-            gTasks[i].b13 = val;
+            gTasks[i].skipMask = val;
     }
 }

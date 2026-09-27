@@ -37,7 +37,7 @@ s32 sub_0804f614(void)
         switch (k)
         {
         case 1:
-            gCurTask->unk3C = 0xCEB;
+            gCurTask->frame = 0xCEB;
             TaskYieldTrampoline(2);
             {
                 struct Task *t = gCurTask;
@@ -58,7 +58,7 @@ s32 sub_0804f614(void)
             }
             else
             {
-                gCurTask->unk3C = 0xCEA;
+                gCurTask->frame = 0xCEA;
                 TaskYieldTrampoline(2);
             }
             break;
@@ -73,7 +73,7 @@ s32 sub_0804f614(void)
             }
             else
             {
-                gCurTask->unk3C = 0xCEA;
+                gCurTask->frame = 0xCEA;
                 TaskYieldTrampoline(2);
             }
             break;

@@ -32,7 +32,7 @@ void sub_080a00ec(void)
         {
             gUnk_02006040[i + 6] = 0;
             r = RandomRange(16);
-            if (gCurTask->unk43 == 1)
+            if (gCurTask->facing == 1)
                 gUnk_02006040[i] = (gUnk_08748268[0][r] + 20) << 16;
             else
                 gUnk_02006040[i] = -((gUnk_08748268[0][r] + 20) << 16);
@@ -60,6 +60,6 @@ void sub_080a00ec(void)
         sh = gUnk_02006040[i + 3] >> 16;
         sh += 16;
         *pb = uy + sh - gViewRect[2];
-        QueueSprite(t->unk42, (u32)gUnk_080D2148, 0, 0, gUnk_03001F2C, (s16)*pb);
+        QueueSprite(t->layer, (u32)gUnk_080D2148, 0, 0, gUnk_03001F2C, (s16)*pb);
     }
 }

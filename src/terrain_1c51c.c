@@ -8,7 +8,7 @@
  * TerrainProbeBegin copies the actor's six signed box offsets and the task fields
  * into the room-descriptor cells and clears the probe result block at
  * gTerrainProbeResult; TerrainProbeEnd writes the probe results back into the task
- * (re-seating Task.unk4C/unk50 when the probe moved the actor) and mirrors the
+ * (re-seating Task.posX/unk50 when the probe moved the actor) and mirrors the
  * result block into gTerrainResult.
  */
 
@@ -126,13 +126,13 @@ s32 TerrainQueryPixel(u32 x, u32 y);
 
 void TerrainProbeBegin(const s8 *p)
 {
-    gTerrainProbeX = (gCurTask->unk4C >> 16) + p[0];
-    gTerrainProbeY = (gCurTask->unk50 >> 16) + p[1];
+    gTerrainProbeX = (gCurTask->posX >> 16) + p[0];
+    gTerrainProbeY = (gCurTask->posY >> 16) + p[1];
     gTerrainBoxTop = p[2];
     gTerrainBoxBottom = p[3];
     gTerrainBoxLeft = p[4];
     gTerrainBoxRight = p[5];
-    gTerrainFacing = gCurTask->unk43;
+    gTerrainFacing = gCurTask->facing;
     gTerrainProbeResult.unk0 = gTerrainProbeResult.unk1 = gTerrainProbeResult.unk2 = gTerrainProbeResult.unk3 = gTerrainProbeResult.unk4 = gTerrainProbeResult.unk5 = gTerrainProbeResult.unkE = gTerrainProbeResult.unkF = gTerrainProbeResult.unk10 = 0;
     gTerrainProbeResult.unk6 = gCurTask->unk7A;
     gTerrainProbeResult.unk7 = gCurTask->unk7B;
@@ -144,14 +144,14 @@ void TerrainProbeEnd(const s8 *p)
 {
     gCurTask->unk7A = gTerrainProbeResult.unk6;
     gCurTask->unk7B = gTerrainProbeResult.unk7;
-    if (gCurTask->unk4C >> 16 != gTerrainProbeX - p[0])
+    if (gCurTask->posX >> 16 != gTerrainProbeX - p[0])
     {
-        gCurTask->unk4C = ((gTerrainProbeX - p[0]) << 16) + 0x8000;
+        gCurTask->posX = ((gTerrainProbeX - p[0]) << 16) + 0x8000;
         gCurTask->unk48 = gTerrainProbeX - p[0];
     }
-    if (gCurTask->unk50 >> 16 != gTerrainProbeY - p[1])
+    if (gCurTask->posY >> 16 != gTerrainProbeY - p[1])
     {
-        gCurTask->unk50 = ((gTerrainProbeY - p[1]) << 16) + 0x8000;
+        gCurTask->posY = ((gTerrainProbeY - p[1]) << 16) + 0x8000;
         gCurTask->unk4A = gTerrainProbeY - p[1];
     }
     gTerrainResult.unk0 = gTerrainProbeResult.unk0;

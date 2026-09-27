@@ -30,18 +30,18 @@
 struct Sprite
 {
     /*0x00*/ u8 filler00[0x10];
-    /*0x10*/ u16 unk10;
+    /*0x10*/ u16 sleepFrames;
     /*0x12*/ u8 filler12[0x38 - 0x12];
     /*0x38*/ void **unk38;
-    /*0x3C*/ s16 unk3C;
+    /*0x3C*/ s16 frame;
     /*0x3E*/ u16 unk3E;
     /*0x40*/ u16 unk40;
-    /*0x42*/ u8 unk42;
-    /*0x43*/ s8 unk43;
+    /*0x42*/ u8 layer;
+    /*0x43*/ s8 facing;
     /*0x44*/ u8 filler44[4];
     /*0x48*/ s16 unk48;
     /*0x4A*/ s16 unk4A;
-    /*0x4C*/ s32 unk4C;
+    /*0x4C*/ s32 posX;
     /*0x50*/ u8 filler50[4];
     /*0x54*/ s32 unk54;
     /*0x58*/ s32 unk58;
@@ -77,11 +77,11 @@ void TaskDrawWorld(void)
 
     p = gCurTask;
     if (p->unk38 == NULL) return;
-    if (p->unk3C == -1) return;
+    if (p->frame == -1) return;
     if (TaskIsOnScreen() == 0) return;
     q = gCurTask;
     tbl = q->unk38;
-    QueueSprite(q->unk42, (u32)tbl[q->unk3C], q->unk3E, q->unk40,
+    QueueSprite(q->layer, (u32)tbl[q->frame], q->unk3E, q->unk40,
                  q->unk48 - gSpriteCameraX, (s16)(q->unk4A - gSpriteCameraY));
 }
 
@@ -93,11 +93,11 @@ void TaskDrawWorldOrFree(void)
 
     p = gCurTask;
     if (p->unk38 == NULL) return;
-    if (p->unk3C == -1) return;
+    if (p->frame == -1) return;
     if (TaskIsOnScreen() != 0) {
         q = gCurTask;
         tbl = q->unk38;
-        QueueSprite(q->unk42, (u32)tbl[q->unk3C], q->unk3E, q->unk40,
+        QueueSprite(q->layer, (u32)tbl[q->frame], q->unk3E, q->unk40,
                      q->unk48 - gSpriteCameraX,
                      (s16)(q->unk4A - gSpriteCameraY));
     } else {
@@ -113,12 +113,12 @@ void TaskDrawWorldInView(void)
 
     p = gCurTask;
     if (p->unk38 == NULL) return;
-    if (p->unk3C == -1) return;
+    if (p->frame == -1) return;
     if (TaskIsInView() == 0) return;
     if (TaskIsOnScreen() == 0) return;
     q = gCurTask;
     tbl = q->unk38;
-    QueueSprite(q->unk42, (u32)tbl[q->unk3C], q->unk3E, q->unk40,
+    QueueSprite(q->layer, (u32)tbl[q->frame], q->unk3E, q->unk40,
                  q->unk48 - gSpriteCameraX,
                  (s16)(q->unk4A - gSpriteCameraY));
 }
@@ -131,12 +131,12 @@ void TaskDrawWorldInViewOrFree(void)
 
     p = gCurTask;
     if (p->unk38 == NULL) return;
-    if (p->unk3C == -1) return;
+    if (p->frame == -1) return;
     if (TaskIsInView() != 0) {
         if (TaskIsOnScreen() == 0) return;
         q = gCurTask;
         tbl = q->unk38;
-        QueueSprite(q->unk42, (u32)tbl[q->unk3C], q->unk3E, q->unk40,
+        QueueSprite(q->layer, (u32)tbl[q->frame], q->unk3E, q->unk40,
                      q->unk48 - gSpriteCameraX,
                      (s16)(q->unk4A - gSpriteCameraY));
     } else {
@@ -152,11 +152,11 @@ void TaskDrawWorldLoadTiles(void)
 
     p = gCurTask;
     if (p->unk38 == NULL) return;
-    if (p->unk3C == -1) return;
+    if (p->frame == -1) return;
     if (TaskIsOnScreen() == 0) return;
     v = TaskLoadFrameTiles(0);
     q = gCurTask;
-    QueueSprite(q->unk42, v, q->unk3E, q->unk40,
+    QueueSprite(q->layer, v, q->unk3E, q->unk40,
                  q->unk48 - gSpriteCameraX,
                  (s16)(q->unk4A - gSpriteCameraY));
 }
@@ -170,12 +170,12 @@ void TaskDrawWorldTilesLoaded(void)
 
     p = gCurTask;
     if (p->unk38 == NULL) return;
-    if (p->unk3C == -1) return;
+    if (p->frame == -1) return;
     if (TaskIsOnScreen() == 0) return;
     q = gCurTask;
     tbl = q->unk38;
-    r = tbl[q->unk3C];
-    QueueSprite(q->unk42, *r, q->unk3E, q->unk40,
+    r = tbl[q->frame];
+    QueueSprite(q->layer, *r, q->unk3E, q->unk40,
                  q->unk48 - gSpriteCameraX,
                  (s16)(q->unk4A - gSpriteCameraY));
 }
@@ -188,13 +188,13 @@ void sub_080060c0(void)
 
     p = gCurTask;
     if (p->unk38 == NULL) return;
-    if (p->unk3C == -1) return;
+    if (p->frame == -1) return;
     t = p->unk48 + 31;
     if (t > 302) return;
     if (p->unk4A <= -32) return;
     if (p->unk4A > 191) return;
     tbl = p->unk38;
-    QueueSprite(p->unk42, (u32)tbl[p->unk3C], p->unk3E, p->unk40,
+    QueueSprite(p->layer, (u32)tbl[p->frame], p->unk3E, p->unk40,
                  p->unk48, p->unk4A);
 }
 
@@ -206,7 +206,7 @@ void TaskSleepForever(void)
 
 void TaskSetEntry(void *a, u32 i)
 {
-    gTasks[i].unk10 = 0;
+    gTasks[i].sleepFrames = 0;
     gTaskResumeAddrs[i] = a;
     gTaskStackPtrs[i] = 0x0203BFE0 + (i << 8);
 }
@@ -216,10 +216,10 @@ void TaskSetFrameByFacing(s16 a)
     struct Sprite *p;
 
     p = gCurTask;
-    if (p->unk43 == 1)
-        p->unk3C = a;
+    if (p->facing == 1)
+        p->frame = a;
     else
-        p->unk3C = a | 1;
+        p->frame = a | 1;
 }
 
 void TaskSetMotionX(s32 a, s32 b, s32 c)
@@ -237,7 +237,7 @@ void TaskSetMotionXFacing(s32 a, s32 b)
     struct Sprite *p;
 
     p = gCurTask;
-    if (p->unk43 == 1) {
+    if (p->facing == 1) {
         if (a != 0x5A5A5A5A) p->unk54 = a;
         if (b != 0x5A5A5A5A) gCurTask->unk5C = b;
     } else {
@@ -317,7 +317,7 @@ void TaskUpdateFlip(void)
     struct Sprite *p;
 
     p = gCurTask;
-    if (p->unk43 == 1)
+    if (p->facing == 1)
         p->unk3E &= 0x7FFF;
     else
         p->unk3E |= 0x8000;
@@ -325,7 +325,7 @@ void TaskUpdateFlip(void)
 
 void TaskSetFrame(s32 a)
 {
-    gCurTask->unk3C = a;
+    gCurTask->frame = a;
     TaskUpdateFlip();
 }
 
@@ -335,7 +335,7 @@ void TaskSetFrameNoFlip(s32 a)
 
     p = gCurTask;
     p->unk3E &= 0x7FFF;
-    p->unk3C = a;
+    p->frame = a;
 }
 
 void TaskSetFrameFlip(s32 a)
@@ -344,7 +344,7 @@ void TaskSetFrameFlip(s32 a)
 
     p = gCurTask;
     p->unk3E |= 0x8000;
-    p->unk3C = a;
+    p->frame = a;
 }
 
 void TaskSetPosXFacing(u16 a)
@@ -352,10 +352,10 @@ void TaskSetPosXFacing(u16 a)
     struct Sprite *p;
 
     p = gCurTask;
-    if (p->unk43 == 1)
-        p->unk4C = a << 16;
+    if (p->facing == 1)
+        p->posX = a << 16;
     else
-        p->unk4C = -(a << 16);
+        p->posX = -(a << 16);
 }
 
 void TaskStepForward(s16 a)
@@ -363,10 +363,10 @@ void TaskStepForward(s16 a)
     struct Sprite *p;
 
     p = gCurTask;
-    if (p->unk43 == 1)
-        p->unk4C = (p->unk48 + a) << 16;
+    if (p->facing == 1)
+        p->posX = (p->unk48 + a) << 16;
     else
-        p->unk4C = (p->unk48 - a) << 16;
+        p->posX = (p->unk48 - a) << 16;
 }
 
 u8 IsOnScreen(s16 a, s16 b)

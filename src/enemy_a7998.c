@@ -1412,46 +1412,46 @@ void sub_080a7998(void)
     t = gCurTask;
     t->unk00 = (u32)TaskMove;
     t->unk0C = (u32)ActorDrawWorldInView;
-    t->unk42 = 12;
+    t->layer = 12;
     gCurTask->unk38 = gUnk_08753DA0;
-    gCurTask->unk43 = 1;
+    gCurTask->facing = 1;
     TaskSetMotion(128 << 8, 0, 0x5A5A5A5A, -0xC000, 128 << 5, 0x5A5A5A5A);
     TaskSetFrame(0);
     TaskYieldTrampoline(3);
     gCurTask->unk6E = 0;
     do
     {
-        gCurTask->unk3C++;
+        gCurTask->frame++;
         TaskYieldTrampoline(3);
         gCurTask->unk6E++;
     } while ((s16)gCurTask->unk6E <= 2);
     TaskSetFrame(0);
     TaskYieldTrampoline(2);
-    gCurTask->unk3C = 0xFFFF;
+    gCurTask->frame = 0xFFFF;
     TaskYieldTrampoline(1);
     TaskSetFrame(1);
     TaskYieldTrampoline(2);
-    gCurTask->unk3C = -1;
+    gCurTask->frame = -1;
     TaskYieldTrampoline(1);
     TaskSetFrame(2);
     TaskYieldTrampoline(1);
-    gCurTask->unk3C = -1;
+    gCurTask->frame = -1;
     TaskYieldTrampoline(1);
     TaskSetFrame(2);
     TaskYieldTrampoline(1);
-    gCurTask->unk3C = -1;
+    gCurTask->frame = -1;
     TaskYieldTrampoline(1);
     TaskSetFrame(3);
     TaskYieldTrampoline(1);
-    gCurTask->unk3C = -1;
+    gCurTask->frame = -1;
     TaskYieldTrampoline(1);
     TaskSetFrame(0);
     TaskYieldTrampoline(1);
-    gCurTask->unk3C = -1;
+    gCurTask->frame = -1;
     TaskYieldTrampoline(2);
     TaskSetFrame(1);
     TaskYieldTrampoline(1);
-    gCurTask->unk3C = -1;
+    gCurTask->frame = -1;
     TaskYieldTrampoline(2);
     TaskExitTrampoline();
 }
@@ -1463,7 +1463,7 @@ void sub_080a7ae4(void)
 
     gCurTask->unk00 = (u32)TaskMove;
     gCurTask->unk0C = (u32)ActorDrawWorldInView;
-    gCurTask->unk42 = 3;
+    gCurTask->layer = 3;
     gCurTask->unk38 = gUnk_08753DA0;
     TaskFaceLikeParent();
     gCurTask->unk58 = -0x10000;
@@ -1478,7 +1478,7 @@ void sub_080a7ae4(void)
         gTasks[v].unk18 = (s16)gCurTask->unk6C;
         gCurTask->unk6C++;
     } while ((s16)gCurTask->unk6C <= 1);
-    gCurTask->unk3C = 0xFFFF;
+    gCurTask->frame = 0xFFFF;
     TaskSleepForever();
 }
 
@@ -1486,7 +1486,7 @@ void sub_080a7b88(void)
 {
     gCurTask->unk00 = (u32)TaskMove;
     gCurTask->unk0C = (u32)ActorDrawWorldInView;
-    gCurTask->unk42 = 3;
+    gCurTask->layer = 3;
     gCurTask->unk38 = gUnk_08753DA0;
     TaskFaceLikeParent();
     if (gCurTask->unk18 == 0)
@@ -1499,11 +1499,11 @@ void sub_080a7b88(void)
         {
             TaskSetFrame(31);
             TaskYieldTrampoline(2);
-            gCurTask->unk3C++;
+            gCurTask->frame++;
             TaskYieldTrampoline(2);
-            gCurTask->unk3C++;
+            gCurTask->frame++;
             TaskYieldTrampoline(2);
-            gCurTask->unk3C++;
+            gCurTask->frame++;
             TaskYieldTrampoline(2);
             gCurTask->unk6C++;
         } while ((s16)gCurTask->unk6C <= 4);
@@ -1518,11 +1518,11 @@ void sub_080a7b88(void)
         {
             TaskSetFrame(27);
             TaskYieldTrampoline(2);
-            gCurTask->unk3C++;
+            gCurTask->frame++;
             TaskYieldTrampoline(2);
-            gCurTask->unk3C++;
+            gCurTask->frame++;
             TaskYieldTrampoline(2);
-            gCurTask->unk3C++;
+            gCurTask->frame++;
             TaskYieldTrampoline(2);
             gCurTask->unk6C++;
         } while ((s16)gCurTask->unk6C <= 4);
@@ -1534,19 +1534,19 @@ void sub_080a7c9c(void)
 {
     gCurTask->unk00 = (u32)TaskMove;
     gCurTask->unk0C = (u32)ActorDrawWorldInView;
-    gCurTask->unk42 = 3;
+    gCurTask->layer = 3;
     gCurTask->unk38 = gUnk_08753DA0;
     TaskSetFrame(13);
     TaskYieldTrampoline(1);
-    gCurTask->unk3C++;
+    gCurTask->frame++;
     TaskYieldTrampoline(1);
-    gCurTask->unk3C++;
+    gCurTask->frame++;
     TaskYieldTrampoline(1);
     TaskSetFrame(36);
     TaskYieldTrampoline(1);
-    gCurTask->unk3C++;
+    gCurTask->frame++;
     TaskYieldTrampoline(1);
-    gCurTask->unk3C++;
+    gCurTask->frame++;
     TaskYieldTrampoline(1);
     TaskExitTrampoline();
 }
@@ -1564,7 +1564,7 @@ void sub_080a7d2c(void)
     sub_08066144();
     gCurTask->unk00 = (u32)ActorMove;
     gCurTask->unk0C = (u32)ActorDrawWorldInView;
-    gCurTask->unk42 = 10;
+    gCurTask->layer = 10;
     t = gCurTask;
     t->unk38 = gUnk_087543E8;
     t->unk8C->unk3C = (u32)sub_080a9e88;

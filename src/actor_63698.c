@@ -122,7 +122,7 @@ s32 sub_08063698(u32 type, s32 start)
     if (gUnk_02006178 != 1)
         return i;
     gTaskSkipMaskStack[0][i] = gTaskSkipMaskStack[1][i] = 0;
-    t->unk13 = 15;
+    t->skipMask = 15;
     return i;
 }
 
@@ -573,7 +573,7 @@ s32 TaskGetFacingToward(u32 i)
 
 void TaskFaceToward(u32 i)
 {
-    gCurTask->unk43 = TaskGetFacingToward(i);
+    gCurTask->facing = TaskGetFacingToward(i);
 }
 
 s32 TaskGetFacingTowardNearestPlayer(void)
@@ -588,7 +588,7 @@ s32 TaskGetFacingTowardNearestPlayer(void)
 
 void TaskFaceNearestPlayer(void)
 {
-    gCurTask->unk43 = TaskGetFacingTowardNearestPlayer();
+    gCurTask->facing = TaskGetFacingTowardNearestPlayer();
 }
 
 u8 TaskIsInRect(struct Rect *r)
@@ -676,30 +676,30 @@ void ActorDestroy(void)
 
 void TaskTurnAroundAndReverseX(void)
 {
-    if (gCurTask->unk43 == 1)
-        gCurTask->unk43 = 255;
+    if (gCurTask->facing == 1)
+        gCurTask->facing = 255;
     else
-        gCurTask->unk43 = 1;
-    TaskSetFrame(gCurTask->unk3C);
+        gCurTask->facing = 1;
+    TaskSetFrame(gCurTask->frame);
     TaskSetMotionX(-gCurTask->unk54, -gCurTask->unk5C,
                  gCurTask->unk64);
 }
 
 void TaskTurnAround(void)
 {
-    if (gCurTask->unk43 == 1)
-        gCurTask->unk43 = 255;
+    if (gCurTask->facing == 1)
+        gCurTask->facing = 255;
     else
-        gCurTask->unk43 = 1;
-    TaskSetFrame(gCurTask->unk3C);
+        gCurTask->facing = 1;
+    TaskSetFrame(gCurTask->frame);
 }
 
 void TaskToggleFacingAndReverseX(void)
 {
-    if (gCurTask->unk43 == 1)
-        gCurTask->unk43 = 255;
+    if (gCurTask->facing == 1)
+        gCurTask->facing = 255;
     else
-        gCurTask->unk43 = 1;
+        gCurTask->facing = 1;
     TaskSetMotionX(-gCurTask->unk54, -gCurTask->unk5C,
                  gCurTask->unk64);
 }
@@ -758,7 +758,7 @@ s32 ActorStepAnim(void)
         return delay;
     }
     if (a->unk08 != 0)
-        gCurTask->unk3C = p->unk00;
+        gCurTask->frame = p->unk00;
     else
         TaskSetFrame(p->unk00);
     delay = p->unk02;
@@ -1313,12 +1313,12 @@ s8 TaskGetParentFacing(void)
 
     i = gCurTask->unk44;
     t = &gTasks[i];
-    return t->unk43;
+    return t->facing;
 }
 
 void TaskFaceLikeParent(void)
 {
-    gCurTask->unk43 = TaskGetParentFacing();
+    gCurTask->facing = TaskGetParentFacing();
 }
 
 /* Spawn a class-4 task from a descriptor; returns its slot or -1. */
@@ -1342,8 +1342,8 @@ s32 sub_08064a78(struct ActorSpawn *p)
         t->unk74 = p->unk09;
         t->unk48 = p->unk0C;
         t->unk4A = p->unk0E;
-        t->unk4C = p->unk0C << 16;
-        t->unk50 = p->unk0E << 16;
+        t->posX = p->unk0C << 16;
+        t->posY = p->unk0E << 16;
         t->unk44 = gCurTaskIdx;
         t->unk40 = p->unk10;
         t->unk8C = &gActors[i];
@@ -1369,7 +1369,7 @@ s32 CreateActorFromDescAtOffsetFacing(struct ActorSpawn *p, u8 keepPrio)
     struct Task *t;
 
     t = gCurTask;
-    p->unk0C = t->unk48 + p->unk0C * t->unk43;
+    p->unk0C = t->unk48 + p->unk0C * t->facing;
     p->unk0E += t->unk4A;
     if (keepPrio == 0)
         p->unk10 = t->unk40;
@@ -1392,17 +1392,17 @@ void sub_08064bcc(void)
     t = gCurTask;
     if (t->unk24 <= 0)
     {
-        if (t->unk43 == 1)
+        if (t->facing == 1)
         {
-            t->unk3C++;
-            if (t->unk3C > 7)
-                t->unk3C = 4;
+            t->frame++;
+            if (t->frame > 7)
+                t->frame = 4;
         }
         else
         {
-            t->unk3C--;
-            if (t->unk3C <= 3)
-                t->unk3C = 7;
+            t->frame--;
+            if (t->frame <= 3)
+                t->frame = 7;
         }
         gCurTask->unk24 = 2;
     }
@@ -1447,8 +1447,8 @@ s32 CreateChildTask(u32 type, int xArg, int yArg, int prioArg)
         }
         t->unk48 = x;
         t->unk4A = y;
-        t->unk4C = x << 16;
-        t->unk50 = y << 16;
+        t->posX = x << 16;
+        t->posY = y << 16;
         t->unk44 = gCurTaskIdx;
         t->unk40 = prio;
         t->unk78 = 2;
@@ -1465,7 +1465,7 @@ s32 CreateChildTaskAtOffsetFacing(u32 type, s16 dx, s16 dy, u8 keepPrio)
     u16 prio;
 
     t = gCurTask;
-    x = (s16)(t->unk48 + t->unk43 * dx);
+    x = (s16)(t->unk48 + t->facing * dx);
     y = (s16)(dy + t->unk4A);
     if (keepPrio != 0)
         prio = t->unk40;
@@ -1530,8 +1530,8 @@ s32 sub_08064d9c(u32 sub, u32 type, int p2Arg, int xArg, int yArg,
         t->unk74 = p2;
         t->unk48 = x;
         t->unk4A = y;
-        t->unk4C = x << 16;
-        t->unk50 = y << 16;
+        t->posX = x << 16;
+        t->posY = y << 16;
         t->unk44 = gCurTaskIdx;
         t->unk40 = prio;
         t->unk8C = &gActors[i];
@@ -1595,8 +1595,8 @@ s32 CreateActor(u8 cls, u32 sub, u32 type, u8 p3, u8 p4, int x, int y,
         t->unk74 = p4;
         t->unk48 = x;
         t->unk4A = y;
-        t->unk4C = x << 16;
-        t->unk50 = y << 16;
+        t->posX = x << 16;
+        t->posY = y << 16;
         t->unk40 = prio;
         t->unk8C = &gActors[i];
         ActorInitSlot(i);
@@ -1694,7 +1694,7 @@ void ActorDrawWorldInView(void)
     p = gCurTask;
     if (p->unk38 == NULL)
         return;
-    if (p->unk3C == -1)
+    if (p->frame == -1)
         return;
     if (ActorIsInView() == 0)
         return;
@@ -1702,7 +1702,7 @@ void ActorDrawWorldInView(void)
         return;
     t = gCurTask;
     tbl = t->unk38;
-    QueueSprite(t->unk42, tbl[t->unk3C], t->unk3E, t->unk40,
+    QueueSprite(t->layer, tbl[t->frame], t->unk3E, t->unk40,
                  t->unk48 - gSpriteCameraX,
                  (s16)(t->unk4A - gSpriteCameraY));
 }
@@ -1716,7 +1716,7 @@ void ActorDrawWorldInViewOrDestroy(void)
     p = gCurTask;
     if (p->unk38 == NULL)
         return;
-    if (p->unk3C == -1)
+    if (p->frame == -1)
         return;
     if (ActorIsInView() != 0)
     {
@@ -1724,7 +1724,7 @@ void ActorDrawWorldInViewOrDestroy(void)
             return;
         t = gCurTask;
         tbl = t->unk38;
-        QueueSprite(t->unk42, tbl[t->unk3C], t->unk3E, t->unk40,
+        QueueSprite(t->layer, tbl[t->frame], t->unk3E, t->unk40,
                      t->unk48 - gSpriteCameraX,
                      (s16)(t->unk4A - gSpriteCameraY));
     }
@@ -1743,7 +1743,7 @@ void sub_080652c8(void)
     p = gCurTask;
     if (p->unk38 == NULL)
         return;
-    if (p->unk3C == -1)
+    if (p->frame == -1)
         return;
     if (sub_08066a6c() == 0)
         return;
@@ -1751,7 +1751,7 @@ void sub_080652c8(void)
         return;
     t = gCurTask;
     tbl = t->unk38;
-    QueueSprite(t->unk42, tbl[t->unk3C], t->unk3E, t->unk40,
+    QueueSprite(t->layer, tbl[t->frame], t->unk3E, t->unk40,
                  t->unk48 - gSpriteCameraX,
                  (s16)(t->unk4A - gSpriteCameraY));
 }
@@ -1765,7 +1765,7 @@ void sub_08065350(void)
     p = gCurTask;
     if (p->unk38 == NULL)
         return;
-    if (p->unk3C == -1)
+    if (p->frame == -1)
         return;
     if (sub_08066a6c() != 0)
     {
@@ -1773,7 +1773,7 @@ void sub_08065350(void)
             return;
         t = gCurTask;
         tbl = t->unk38;
-        QueueSprite(t->unk42, tbl[t->unk3C], t->unk3E, t->unk40,
+        QueueSprite(t->layer, tbl[t->frame], t->unk3E, t->unk40,
                      t->unk48 - gSpriteCameraX,
                      (s16)(t->unk4A - gSpriteCameraY));
     }

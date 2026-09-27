@@ -141,11 +141,11 @@ void sub_0806a3dc(void)
     {
         u = gCurTask;
         u->unk4A = u->unk2C + p[i];
-        u->unk50 = u->unk4A << 16;
+        u->posY = u->unk4A << 16;
         TaskYieldTrampoline(1);
     }
     v = gCurTask;
-    v->unk50 = v->unk2C << 16;
+    v->posY = v->unk2C << 16;
     AngleToVector(sub_0806a03c(), 512);
     w = gCurTask;
     w->unk54 = gUnk_030023B4;
@@ -248,9 +248,9 @@ void sub_0806a5a0(void)
         {
             t->unk24 = t->unk24 + 1;
             if (t->unk1C != 0)
-                t->unk3C = 0;
+                t->frame = 0;
             else
-                t->unk3C = 0xFFFF;
+                t->frame = 0xFFFF;
             u = gCurTask;
             tbl = gUnk_0873E5F8;
             n = u->unk1C;
@@ -271,8 +271,8 @@ void sub_0806a5a0(void)
         if (gUnk_0300244C != 0)
             t->unk8C->unk22 = 0;
         w = gCurTask;
-        if (w->unk3C == -1)
-            w->unk3C = 4;
+        if (w->frame == -1)
+            w->frame = 4;
     }
 }
 
@@ -347,10 +347,10 @@ void sub_0806a6e0(void)
         if (RandomRange(2) != 0)
             goto set_one;
     case 4:
-        (*g)->unk43 = -1;
+        (*g)->facing = -1;
         break;
     set_one:
-        (*g)->unk43 = one;
+        (*g)->facing = one;
         break;
     }
     u = gCurTask;
@@ -371,7 +371,7 @@ void sub_0806a7a0(void)
     TaskYieldTrampoline(6);
     gCurTask->unk04 = (u32)sub_0806a7f4;
     TaskStop();
-    gCurTask->unk42 = 7;
+    gCurTask->layer = 7;
     sub_0806a638();
     CallTableEntry(gCurTask->unk14, 3, gUnk_0873E670);
 }
@@ -463,7 +463,7 @@ void sub_0806a980(void)
     a = t->unk8C;
     one = 1;
     t->unk15 = one;
-    gCurTask->unk12 = one;
+    gCurTask->taskClass = one;
     if (a->unk10 != -1)
     {
         TaskFree(a->unk10);
@@ -582,7 +582,7 @@ void sub_0806ab34(void)
     t->unk88 = (struct PlayerState *)zero;
     TaskSetFrame(0);
     TaskYieldTrampoline(1);
-    gCurTask->unk12 = 1;
+    gCurTask->taskClass = 1;
     u = gCurTask;
     zb = 0;
     u->unk78 = 127;
@@ -623,7 +623,7 @@ void sub_0806abec(void)
     t->unk04 = zero;
     TaskSetFrame(0);
     TaskYieldTrampoline(1);
-    gCurTask->unk12 = 1;
+    gCurTask->taskClass = 1;
     u = gCurTask;
     u->unk78 = 127;
     u->unk04 = (u32)sub_0806ac48;

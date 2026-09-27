@@ -336,17 +336,17 @@ void sub_080864ec(void)
     {
         u = &gTasks[TaskFindNearestPlayer()];
         gCurTask->unk48 = (u16)u->unk48;
-        gCurTask->unk4C = u->unk4C;
+        gCurTask->posX = u->posX;
     }
     else
     {
         r = RandomRange(4);
         gCurTask->unk48 =
             gUnk_087420AC[r] + (u16)gTasks[TaskFindNearestPlayer()].unk48;
-        gCurTask->unk4C = (s16)gCurTask->unk48 << 16;
+        gCurTask->posX = (s16)gCurTask->unk48 << 16;
     }
     gCurTask->unk4A = 0;
-    gCurTask->unk50 = 0;
+    gCurTask->posY = 0;
     gCurTask->unk34 = 0;
     TaskFaceNearestPlayer();
     ActorSetState(0);
@@ -480,9 +480,9 @@ void sub_080868dc(void)
         v = gCurTask->unk54 = gUnk_030023B4;
         gCurTask->unk58 = gUnk_030023D4;
         if (v > 0)
-            gCurTask->unk43 = 1;
+            gCurTask->facing = 1;
         else if (v < 0)
-            gCurTask->unk43 = -1;
+            gCurTask->facing = -1;
         gCurTask->unk34 = 20;
         gCurTask->unk28 = ActorStartAnim(gUnk_087420C0);
     }
@@ -825,7 +825,7 @@ void sub_0808705c(void)
 {
     gCurTask->unk00 = (u32)ActorMove;
     gCurTask->unk0C = (u32)ActorDrawWorldInViewOrDestroy;
-    gCurTask->unk42 = 11;
+    gCurTask->layer = 11;
     gCurTask->unk38 = gUnk_08752560;
     TaskFaceNearestPlayer();
     CallTableEntry(gCurTask->unk73, 10, gUnk_08742570);
@@ -1030,17 +1030,17 @@ void sub_08087458(void)
     {
         u = &gTasks[TaskFindNearestPlayer()];
         gCurTask->unk48 = (u16)u->unk48;
-        gCurTask->unk4C = u->unk4C;
+        gCurTask->posX = u->posX;
     }
     else
     {
         r = RandomRange(4);
         gCurTask->unk48 =
             gUnk_087425DC[r] + (u16)gTasks[TaskFindNearestPlayer()].unk48;
-        gCurTask->unk4C = (s16)gCurTask->unk48 << 16;
+        gCurTask->posX = (s16)gCurTask->unk48 << 16;
     }
     gCurTask->unk4A = 0;
-    gCurTask->unk50 = 0;
+    gCurTask->posY = 0;
     gCurTask->unk34 = 0;
     TaskFaceNearestPlayer();
     ActorSetState(0);
@@ -1176,9 +1176,9 @@ void sub_08087848(void)
         v = gCurTask->unk54 = gUnk_030023B4;
         gCurTask->unk58 = gUnk_030023D4;
         if (v > 0)
-            gCurTask->unk43 = 1;
+            gCurTask->facing = 1;
         else if (v < 0)
-            gCurTask->unk43 = -1;
+            gCurTask->facing = -1;
         gCurTask->unk34 = 20;
         gCurTask->unk28 = ActorStartAnim(gUnk_08742598);
     }
@@ -1484,7 +1484,7 @@ void sub_08087f18(void)
     {
         TaskSetFrame(4);
         TaskYieldTrampoline(4);
-        gCurTask->unk3C++;
+        gCurTask->frame++;
         TaskYieldTrampoline(4);
     } while ((s16)++gCurTask->unk6C <= 3);
     TaskSetFrame(4);
@@ -1504,7 +1504,7 @@ void sub_08087f8c(void)
     {
         TaskSetFrame(4);
         TaskYieldTrampoline(4);
-        gCurTask->unk3C++;
+        gCurTask->frame++;
         TaskYieldTrampoline(4);
     }
 }

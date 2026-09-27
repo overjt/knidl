@@ -444,7 +444,7 @@ void sub_0808f8e8(void)
     ActorSetAttackBox(gUnk_0873F500);
     gCurTask->unk78 = 2;
     ActorSetState(0);
-    gCurTask->unk43 = 255;
+    gCurTask->facing = 255;
     CallTableEntry(gCurTask->unk14, 1, gUnk_087432E4);
 }
 
@@ -518,7 +518,7 @@ void sub_0808fa10(void)
     t = gCurTask;
     t->unk00 = (u32)TaskMove;
     t->unk0C = (u32)ActorDrawWorldInViewOrDestroy;
-    t->unk42 = 11;
+    t->layer = 11;
     u = gCurTask;
     u->unk38 = gUnk_08752A70;
     CallTableEntry(u->unk73, 2, gUnk_087432F4);
@@ -622,7 +622,7 @@ void sub_0808fc40(void)
     t = gCurTask;
     t->unk00 = (u32)TaskMove;
     t->unk0C = (u32)ActorDrawWorldInViewOrDestroy;
-    t->unk42 = 11;
+    t->layer = 11;
     gCurTask->unk38 = gUnk_0875227C;
     TaskFaceLikeParent();
     gCurTask->unk7A = 0;
@@ -662,7 +662,7 @@ void sub_0808fd38(void)
 {
     gCurTask->unk15 = 1;
     gCurTask->unk7A = 0;
-    gCurTask->unk3C = 0;
+    gCurTask->frame = 0;
     TaskSleepForever();
 }
 
@@ -679,9 +679,9 @@ void sub_0808fd60(void)
     gCurTask->unk04 = 0;
     TaskStop();
     t = gCurTask;
-    t->unk48 += t->unk43 * 16;
-    t->unk4C = t->unk48 << 16;
-    t->unk3C = 1;
+    t->unk48 += t->facing * 16;
+    t->posX = t->unk48 << 16;
+    t->frame = 1;
     TaskYieldTrampoline(2);
     ActorDestroy();
     TaskSleepForever();
@@ -699,7 +699,7 @@ void sub_0808fdb8(void)
     t = gCurTask;
     t->unk00 = (u32)TaskMove;
     t->unk0C = (u32)ActorDrawWorldInViewOrDestroy;
-    t->unk42 = 11;
+    t->layer = 11;
     u = gCurTask;
     u->unk38 = gUnk_08752520;
     CallTableEntry(u->unk73, 4, gUnk_0874362C);
@@ -764,15 +764,15 @@ void sub_0808fe88(void)
     {
         TaskSetFrame(4);
         TaskYieldTrampoline(1);
-        gCurTask->unk3C++;
+        gCurTask->frame++;
         TaskYieldTrampoline(1);
-        gCurTask->unk3C++;
+        gCurTask->frame++;
         TaskYieldTrampoline(1);
-        gCurTask->unk3C++;
+        gCurTask->frame++;
         TaskYieldTrampoline(1);
-        gCurTask->unk3C++;
+        gCurTask->frame++;
         TaskYieldTrampoline(1);
-        gCurTask->unk3C++;
+        gCurTask->frame++;
         TaskYieldTrampoline(1);
     }
 }

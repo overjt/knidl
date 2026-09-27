@@ -10,7 +10,7 @@
  *   sub_080c4ea8   a racer's Task.unk00 callback: Task.unk54 (speed) +=
  *       Task.unk5C (acceleration), with a catch-up bonus for the computer
  *       racers behind the leader (M37Game.unk1B8), capped by the level's
- *       gUnk_080CFE3C[level][0]; then Task.unk4C += speed.
+ *       gUnk_080CFE3C[level][0]; then Task.posX += speed.
  *   sub_080c4d08 / sub_080c4e10   the Task.unk0C draw callbacks of the
  *       racers (with a blinking extra sprite for three poses) and of the
  *       effect sprites (which end themselves off screen), both drawn scaled
@@ -137,12 +137,12 @@ void sub_080c4d08(void)
     u32 *p;
     s32 n;
 
-    if (tbl != NULL && t->unk3C != -1 && (u16)(t->unk48 + 63) <= 366
+    if (tbl != NULL && t->frame != -1 && (u16)(t->unk48 + 63) <= 366
         && t->unk4A > -64 && t->unk4A < 224) {
         p = tbl;
         if (gAirGrindFrame & 2) {
             n = 0;
-            switch (t->unk3C) {
+            switch (t->frame) {
             case 0:
                 n = 17;
                 break;
@@ -154,10 +154,10 @@ void sub_080c4d08(void)
                 break;
             }
             if (n != 0)
-                QueueSprite(gCurTask->unk42, sub_080c4f60((u16 *)p[n], gCurTask->unk28),
+                QueueSprite(gCurTask->layer, sub_080c4f60((u16 *)p[n], gCurTask->unk28),
                              gCurTask->unk3E, gCurTask->unk40, gCurTask->unk48, gCurTask->unk4A);
         }
-        QueueSprite(gCurTask->unk42, sub_080c4f60((u16 *)p[gCurTask->unk3C], gCurTask->unk28),
+        QueueSprite(gCurTask->layer, sub_080c4f60((u16 *)p[gCurTask->frame], gCurTask->unk28),
                      gCurTask->unk3E, gCurTask->unk40, gCurTask->unk48, gCurTask->unk4A);
     }
 }
@@ -167,9 +167,9 @@ void sub_080c4e10(void)
     struct Task *t = gCurTask;
     u32 *tbl = t->unk38;
 
-    if (tbl != NULL && t->unk3C != -1) {
+    if (tbl != NULL && t->frame != -1) {
         if ((u16)(t->unk48 + 63) <= 366 && t->unk4A > -64 && t->unk4A < 224)
-            QueueSprite(gCurTask->unk42, sub_080c4f60((u16 *)tbl[t->unk3C], t->unk28),
+            QueueSprite(gCurTask->layer, sub_080c4f60((u16 *)tbl[t->frame], t->unk28),
                          gCurTask->unk3E, gCurTask->unk40, gCurTask->unk48, gCurTask->unk4A);
         else
             TaskFree(gCurTaskIdx);
@@ -190,7 +190,7 @@ void sub_080c4ea8(void)
         t = gCurTask;
         v = t->unk5C;
         if (v > 0) {
-            d = g->unk1B8 - (t->unk4C >> 16);
+            d = g->unk1B8 - (t->posX >> 16);
             if (d > 256)
                 d = 256;
             t->unk54 += v + ((v * d) >> 8);
@@ -204,7 +204,7 @@ void sub_080c4ea8(void)
     } else if (gCurTask->unk54 < 0) {
         gCurTask->unk54 = 0;
     }
-    gCurTask->unk4C += gCurTask->unk54;
+    gCurTask->posX += gCurTask->unk54;
 }
 
 u32 sub_080c4f60(u16 *src, s16 scale)

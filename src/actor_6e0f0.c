@@ -7,10 +7,10 @@
  * the same three-function group:
  *
  *   <spawn/body>   installs Task.unk00/unk0C (the per-frame update + draw
- *                  hooks), the sprite table in Task.unk38, Task.unk42 (draw
+ *                  hooks), the sprite table in Task.unk38, Task.layer (draw
  *                  priority) and Task.unk04 (the "still alive?" callback),
  *                  then runs an animation script of
- *                  `Task.unk3C = frame; TaskYieldTrampoline(delay);`.
+ *                  `Task.frame = frame; TaskYieldTrampoline(delay);`.
  *   <alive check>  the 0x48-byte helper repeated eight times in this range:
  *                  `if (gTaskSlotTypes[t->unk44] == -1 || TaskHasSameSerial(...) != 1)
  *                       TaskFree(gCurTaskIdx);`  - i.e. kill this task when
@@ -104,29 +104,29 @@ void sub_0806e138(void)
     t->unk00 = (u32)TaskMoveRelativeToParent;
     t->unk0C = (u32)ActorDrawWorldInView;
     t->unk38 = gUnk_0874CBD0;
-    t->unk42 = 10;
+    t->layer = 10;
     gCurTask->unk04 = (u32)sub_0806e210;
     gCurTask->unk40 = 0;
     while (1)
     {
-        gCurTask->unk4C = RandomSpreadFacing(-12, 1, 24) << 16;
-        gCurTask->unk50 = RandomSpread(-12, 1, 24) << 16;
+        gCurTask->posX = RandomSpreadFacing(-12, 1, 24) << 16;
+        gCurTask->posY = RandomSpread(-12, 1, 24) << 16;
         gCurTask->unk58 = 0xFFFF8000;
         TaskSetFrame(18);
         TaskYieldTrampoline(2);
-        gCurTask->unk3C += 2;
+        gCurTask->frame += 2;
         TaskYieldTrampoline(2);
         TaskSetFrame(14);
         TaskYieldTrampoline(2);
         gCurTask->unk58 = 0xFFFF0000;
-        gCurTask->unk3C += 2;
+        gCurTask->frame += 2;
         TaskYieldTrampoline(6);
-        gCurTask->unk3C += 2;
+        gCurTask->frame += 2;
         TaskYieldTrampoline(6);
         gCurTask->unk58 = 0xFFFE0000;
         TaskSetFrame(24);
         TaskYieldTrampoline(2);
-        gCurTask->unk3C = 0xFFFF;
+        gCurTask->frame = 0xFFFF;
         TaskYieldTrampoline(4);
     }
 }
@@ -147,15 +147,15 @@ void sub_0806e258(void)
     t->unk00 = (u32)TaskMoveRelativeToParent;
     t->unk0C = (u32)ActorDrawWorldInView;
     t->unk38 = gUnk_0874CC38;
-    t->unk42 = 10;
+    t->layer = 10;
     gCurTask->unk04 = (u32)sub_0806e3dc;
     gCurTask->unk40 = 0;
     while (1)
     {
-        gCurTask->unk4C = RandomSpreadFacing(-12, 1, 24) << 16;
-        gCurTask->unk50 = RandomSpread(-12, 1, 24) << 16;
+        gCurTask->posX = RandomSpreadFacing(-12, 1, 24) << 16;
+        gCurTask->posY = RandomSpread(-12, 1, 24) << 16;
         gCurTask->unk54 = 0x10000;
-        gCurTask->unk3C = 0;
+        gCurTask->frame = 0;
         TaskYieldTrampoline(1);
         gCurTask->unk54 = 0xFFFF0000;
         gCurTask->unk58 = 0xFFFF0000;
@@ -164,12 +164,12 @@ void sub_0806e258(void)
         gCurTask->unk58 = 0x10000;
         TaskYieldTrampoline(1);
         TaskStop();
-        gCurTask->unk3C = 0xFFFF;
+        gCurTask->frame = 0xFFFF;
         TaskYieldTrampoline(10);
-        gCurTask->unk4C = RandomSpreadFacing(-12, 1, 24) << 16;
-        gCurTask->unk50 = RandomSpread(-12, 1, 24) << 16;
+        gCurTask->posX = RandomSpreadFacing(-12, 1, 24) << 16;
+        gCurTask->posY = RandomSpread(-12, 1, 24) << 16;
         gCurTask->unk54 = 0x10000;
-        gCurTask->unk3C = 2;
+        gCurTask->frame = 2;
         TaskYieldTrampoline(1);
         gCurTask->unk54 = 0xFFFF0000;
         gCurTask->unk58 = 0xFFFF0000;
@@ -178,19 +178,19 @@ void sub_0806e258(void)
         gCurTask->unk58 = 0x10000;
         TaskYieldTrampoline(1);
         TaskStop();
-        gCurTask->unk3C = 0xFFFF;
+        gCurTask->frame = 0xFFFF;
         TaskYieldTrampoline(28);
-        gCurTask->unk4C = RandomSpreadFacing(-12, 1, 24) << 16;
-        gCurTask->unk50 = RandomSpread(-12, 1, 24) << 16;
-        gCurTask->unk3C = 0;
+        gCurTask->posX = RandomSpreadFacing(-12, 1, 24) << 16;
+        gCurTask->posY = RandomSpread(-12, 1, 24) << 16;
+        gCurTask->frame = 0;
         TaskYieldTrampoline(1);
-        gCurTask->unk3C = 0xFFFF;
+        gCurTask->frame = 0xFFFF;
         TaskYieldTrampoline(4);
-        gCurTask->unk4C = RandomSpreadFacing(-12, 1, 24) << 16;
-        gCurTask->unk50 = RandomSpread(-12, 1, 24) << 16;
-        gCurTask->unk3C = 3;
+        gCurTask->posX = RandomSpreadFacing(-12, 1, 24) << 16;
+        gCurTask->posY = RandomSpread(-12, 1, 24) << 16;
+        gCurTask->frame = 3;
         TaskYieldTrampoline(1);
-        gCurTask->unk3C = 0xFFFF;
+        gCurTask->frame = 0xFFFF;
         TaskYieldTrampoline(2);
     }
 }
@@ -216,57 +216,57 @@ void sub_0806e424(void)
         t->unk0C = (u32)TaskDrawScreen;
     u = gCurTask;
     u->unk38 = gUnk_08752D50;
-    u->unk42 = 10;
+    u->layer = 10;
     gCurTask->unk04 = (u32)sub_0806e5f0;
     gCurTask->unk40 = 0;
 
     while (1)
     {
-        gCurTask->unk4C = RandomSpread(-16, 1, 32) << 16;
-        gCurTask->unk50 = RandomSpread(-16, 1, 32) << 16;
-        gCurTask->unk3C = 5;
+        gCurTask->posX = RandomSpread(-16, 1, 32) << 16;
+        gCurTask->posY = RandomSpread(-16, 1, 32) << 16;
+        gCurTask->frame = 5;
         TaskYieldTrampoline(1);
-        gCurTask->unk3C += 1;
+        gCurTask->frame += 1;
         TaskYieldTrampoline(1);
-        gCurTask->unk3C += 1;
+        gCurTask->frame += 1;
         TaskYieldTrampoline(2);
-        gCurTask->unk3C += 1;
+        gCurTask->frame += 1;
         TaskYieldTrampoline(2);
-        gCurTask->unk3C = 6;
+        gCurTask->frame = 6;
         TaskYieldTrampoline(1);
-        gCurTask->unk3C -= 1;
+        gCurTask->frame -= 1;
         TaskYieldTrampoline(1);
-        gCurTask->unk3C = 0xFFFF;
+        gCurTask->frame = 0xFFFF;
         TaskYieldTrampoline(30);
-        gCurTask->unk4C = RandomSpread(-16, 1, 32) << 16;
-        gCurTask->unk50 = RandomSpread(-16, 1, 32) << 16;
-        gCurTask->unk3C = 5;
+        gCurTask->posX = RandomSpread(-16, 1, 32) << 16;
+        gCurTask->posY = RandomSpread(-16, 1, 32) << 16;
+        gCurTask->frame = 5;
         TaskYieldTrampoline(1);
-        gCurTask->unk3C += 1;
+        gCurTask->frame += 1;
         TaskYieldTrampoline(1);
-        gCurTask->unk3C += 1;
+        gCurTask->frame += 1;
         TaskYieldTrampoline(2);
-        gCurTask->unk3C += 1;
+        gCurTask->frame += 1;
         TaskYieldTrampoline(2);
-        gCurTask->unk3C = 6;
+        gCurTask->frame = 6;
         TaskYieldTrampoline(1);
-        gCurTask->unk3C -= 1;
+        gCurTask->frame -= 1;
         TaskYieldTrampoline(1);
-        gCurTask->unk3C = 0xFFFF;
+        gCurTask->frame = 0xFFFF;
         TaskYieldTrampoline(4);
-        gCurTask->unk4C = RandomSpread(-16, 1, 32) << 16;
-        gCurTask->unk50 = RandomSpread(-16, 1, 32) << 16;
-        gCurTask->unk3C = 5;
+        gCurTask->posX = RandomSpread(-16, 1, 32) << 16;
+        gCurTask->posY = RandomSpread(-16, 1, 32) << 16;
+        gCurTask->frame = 5;
         TaskYieldTrampoline(1);
-        gCurTask->unk3C += 1;
+        gCurTask->frame += 1;
         TaskYieldTrampoline(1);
-        gCurTask->unk3C += 1;
+        gCurTask->frame += 1;
         TaskYieldTrampoline(2);
-        gCurTask->unk3C += 1;
+        gCurTask->frame += 1;
         TaskYieldTrampoline(2);
-        gCurTask->unk3C = 6;
+        gCurTask->frame = 6;
         TaskYieldTrampoline(1);
-        gCurTask->unk3C -= 1;
+        gCurTask->frame -= 1;
         TaskYieldTrampoline(1);
     }
 }
@@ -288,18 +288,18 @@ void sub_0806e638(void)
     t->unk00 = (u32)TaskMoveRelativeToParent;
     t->unk0C = (u32)ActorDrawWorldInView;
     t->unk38 = gUnk_0874CB3C;
-    t->unk42 = 4;
+    t->layer = 4;
     u = gCurTask;
     u->unk04 = (u32)sub_0806e6b0;
     u->unk40 = 0;
-    u->unk4C = 0;
-    u->unk50 = 0;
-    u->unk3C = 0;
+    u->posX = 0;
+    u->posY = 0;
+    u->frame = 0;
     TaskYieldTrampoline(1);
     gCurTask->unk6C = 0;
     do
     {
-        gCurTask->unk3C += 1;
+        gCurTask->frame += 1;
         TaskYieldTrampoline(1);
     } while ((s16)(++gCurTask->unk6C) <= 6);
     TaskExitTrampoline();
@@ -336,7 +336,7 @@ void sub_0806e73c(void)
     t = gCurTask;
     t->unk00 = (u32)TaskMoveRelativeToParent;
     t->unk0C = (u32)ActorDrawWorldInView;
-    t->unk42 = 10;
+    t->layer = 10;
     u = gCurTask;
     u->unk38 = gUnk_0874CCA4;
     u->unk04 = (u32)sub_0806e7c0;
@@ -345,7 +345,7 @@ void sub_0806e73c(void)
     while (1)
     {
         TaskSetPosXFacing(gCurTask->unk24);
-        gCurTask->unk50 = gCurTask->unk20 << 16;
+        gCurTask->posY = gCurTask->unk20 << 16;
         TaskSetMotionXFacing(0xFFFD0000, 0x5A5A5A5A);
         TaskSetFrame(0);
         TaskYieldTrampoline(2);
@@ -387,39 +387,39 @@ void sub_0806e84c(void)
     t = gCurTask;
     t->unk00 = (u32)TaskMoveRelativeToParent;
     t->unk0C = (u32)ActorDrawWorldInView;
-    t->unk42 = 10;
+    t->layer = 10;
     u = gCurTask;
     u->unk38 = gUnk_0874C718;
     u->unk04 = (u32)sub_0806e96c;
     u->unk40 = 0;
     TaskFaceLikeParent();
-    gCurTask->unk43 = -gCurTask->unk43;
+    gCurTask->facing = -gCurTask->facing;
     while (1)
     {
-        gCurTask->unk4C = (RandomSpreadFacing(-8, 1, 16)
-            + gCurTask->unk24 * gCurTask->unk43) << 16;
-        gCurTask->unk50 = (RandomSpread(-8, 1, 16)
+        gCurTask->posX = (RandomSpreadFacing(-8, 1, 16)
+            + gCurTask->unk24 * gCurTask->facing) << 16;
+        gCurTask->posY = (RandomSpread(-8, 1, 16)
             + gCurTask->unk20) << 16;
         TaskSetMotionXFacing(0x30000, 0x5A5A5A5A);
         TaskSetFrame(0);
         TaskYieldTrampoline(2);
-        gCurTask->unk3C += 2;
+        gCurTask->frame += 2;
         TaskYieldTrampoline(2);
-        gCurTask->unk3C += 2;
+        gCurTask->frame += 2;
         TaskYieldTrampoline(1);
-        gCurTask->unk3C += 2;
+        gCurTask->frame += 2;
         TaskYieldTrampoline(1);
-        gCurTask->unk3C += 2;
+        gCurTask->frame += 2;
         TaskYieldTrampoline(1);
-        gCurTask->unk3C += 2;
+        gCurTask->frame += 2;
         TaskYieldTrampoline(1);
-        gCurTask->unk3C += 2;
+        gCurTask->frame += 2;
         TaskYieldTrampoline(1);
-        gCurTask->unk3C += 2;
+        gCurTask->frame += 2;
         TaskYieldTrampoline(2);
-        gCurTask->unk3C += 2;
+        gCurTask->frame += 2;
         TaskYieldTrampoline(2);
-        gCurTask->unk3C += 2;
+        gCurTask->frame += 2;
         TaskYieldTrampoline(1);
     }
 }
@@ -456,36 +456,36 @@ void sub_0806e9fc(void)
     t = gCurTask;
     t->unk00 = (u32)TaskMove;
     t->unk0C = (u32)ActorDrawWorldInView;
-    t->unk42 = 10;
+    t->layer = 10;
     u = gCurTask;
     u->unk38 = gUnk_0874C828;
     u->unk48 += u->unk24;
     u->unk4A += u->unk20;
-    u->unk4C = u->unk48 << 16;
-    u->unk50 = u->unk4A << 16;
+    u->posX = u->unk48 << 16;
+    u->posY = u->unk4A << 16;
     CallTableEntry(u->unk73, 3, gUnk_0873ECE0);
     TaskSleepForever();
 }
 
 void sub_0806ea70(void)
 {
-    gCurTask->unk3C = 16;
+    gCurTask->frame = 16;
     TaskYieldTrampoline(1);
     sub_0806e9b4(1, 0, 0);
     sub_0806e9b4(2, 0, 0);
-    gCurTask->unk3C += 1;
+    gCurTask->frame += 1;
     TaskYieldTrampoline(2);
-    gCurTask->unk3C += 1;
+    gCurTask->frame += 1;
     TaskYieldTrampoline(2);
-    gCurTask->unk3C += 1;
+    gCurTask->frame += 1;
     TaskYieldTrampoline(2);
-    gCurTask->unk3C += 1;
+    gCurTask->frame += 1;
     TaskYieldTrampoline(2);
-    gCurTask->unk3C += 1;
+    gCurTask->frame += 1;
     TaskYieldTrampoline(2);
-    gCurTask->unk3C += 1;
+    gCurTask->frame += 1;
     TaskYieldTrampoline(2);
-    gCurTask->unk3C += 1;
+    gCurTask->frame += 1;
     TaskYieldTrampoline(2);
     TaskExitTrampoline();
 }
@@ -496,26 +496,26 @@ void sub_0806eb04(void)
     struct Task *u;
 
     t = gCurTask;
-    t->unk3C = 0;
+    t->frame = 0;
     t->unk54 = 0xFFFA0000;
     TaskYieldTrampoline(1);
-    gCurTask->unk3C += 2;
+    gCurTask->frame += 2;
     TaskYieldTrampoline(1);
-    gCurTask->unk3C += 2;
+    gCurTask->frame += 2;
     TaskYieldTrampoline(1);
     u = gCurTask;
     u->unk54 = 0xFFFE0000;
     u->unk5C = 0x1000;
     TaskYieldTrampoline(2);
-    gCurTask->unk3C += 2;
+    gCurTask->frame += 2;
     TaskYieldTrampoline(2);
-    gCurTask->unk3C += 2;
+    gCurTask->frame += 2;
     TaskYieldTrampoline(2);
-    gCurTask->unk3C += 2;
+    gCurTask->frame += 2;
     TaskYieldTrampoline(2);
-    gCurTask->unk3C += 2;
+    gCurTask->frame += 2;
     TaskYieldTrampoline(1);
-    gCurTask->unk3C += 2;
+    gCurTask->frame += 2;
     TaskYieldTrampoline(1);
     TaskExitTrampoline();
 }
@@ -526,26 +526,26 @@ void sub_0806eba4(void)
     struct Task *u;
 
     t = gCurTask;
-    t->unk3C = 1;
+    t->frame = 1;
     t->unk54 = 0x60000;
     TaskYieldTrampoline(1);
-    gCurTask->unk3C += 2;
+    gCurTask->frame += 2;
     TaskYieldTrampoline(1);
-    gCurTask->unk3C += 2;
+    gCurTask->frame += 2;
     TaskYieldTrampoline(1);
     u = gCurTask;
     u->unk54 = 0x20000;
     u->unk5C = 0xFFFFF000;
     TaskYieldTrampoline(2);
-    gCurTask->unk3C += 2;
+    gCurTask->frame += 2;
     TaskYieldTrampoline(2);
-    gCurTask->unk3C += 2;
+    gCurTask->frame += 2;
     TaskYieldTrampoline(2);
-    gCurTask->unk3C += 2;
+    gCurTask->frame += 2;
     TaskYieldTrampoline(2);
-    gCurTask->unk3C += 2;
+    gCurTask->frame += 2;
     TaskYieldTrampoline(1);
-    gCurTask->unk3C += 2;
+    gCurTask->frame += 2;
     TaskYieldTrampoline(1);
     TaskExitTrampoline();
 }
@@ -558,13 +558,13 @@ void sub_0806ec40(void)
     t = gCurTask;
     t->unk00 = (u32)TaskMoveRelativeToParent;
     t->unk0C = (u32)ActorDrawWorldInViewOrDestroy;
-    t->unk42 = 7;
+    t->layer = 7;
     u = gCurTask;
     u->unk38 = gUnk_0874CB7C;
     u->unk04 = (u32)sub_0806ec88;
     u->unk40 = 0;
-    u->unk4C = 0;
-    u->unk50 = 0;
+    u->posX = 0;
+    u->posY = 0;
     TaskSleepForever();
 }
 
@@ -609,9 +609,9 @@ void sub_0806ed28(void)
         {
             t->unk70 = v + 1;
             if (t->unk1C != 0)
-                t->unk3C = 0xFFFF;
+                t->frame = 0xFFFF;
             else
-                t->unk3C = 4;
+                t->frame = 4;
             u = gCurTask;
             u->unk20 = gUnk_0873E5F8[i][u->unk1C];
             u->unk1C ^= 1;
@@ -632,19 +632,19 @@ void sub_0806ed9c(void)
     t = gCurTask;
     t->unk0C = (u32)ActorDrawWorldInView;
     t->unk38 = gUnk_08752548;
-    t->unk42 = 10;
+    t->layer = 10;
     gCurTask->unk40 = 0;
     TaskSetFrame(0);
     TaskYieldTrampoline(1);
-    gCurTask->unk3C += 1;
+    gCurTask->frame += 1;
     TaskYieldTrampoline(1);
-    gCurTask->unk3C += 1;
+    gCurTask->frame += 1;
     TaskYieldTrampoline(1);
-    gCurTask->unk3C += 1;
+    gCurTask->frame += 1;
     TaskYieldTrampoline(1);
-    gCurTask->unk3C += 1;
+    gCurTask->frame += 1;
     TaskYieldTrampoline(1);
-    gCurTask->unk3C += 1;
+    gCurTask->frame += 1;
     TaskYieldTrampoline(1);
 }
 
@@ -676,7 +676,7 @@ void sub_0806ee30(void)
     t->unk0C = (u32)sub_0806ff7c;
     t->unk04 = (u32)sub_0806ef1c;
     t->unk08 = 0;
-    t->unk12 = 4;
+    t->taskClass = 4;
     gCurTask->unk38 = gUnk_0874CFEC;
     TaskStop();
     u = gCurTask;
@@ -684,9 +684,9 @@ void sub_0806ee30(void)
     u->unk88->unk42 &= 0xFFEF;
     u->unk44 = gUnk_020055C0;
     if (gTasks[u->unk44].unk74 == 0)
-        gCurTask->unk43 = gUnk_0873FAE8[sub_08025e88(u->unk44)];
+        gCurTask->facing = gUnk_0873FAE8[sub_08025e88(u->unk44)];
     else
-        u->unk43 = gUnk_0873FAE8[gTasks[u->unk44].unk74];
+        u->facing = gUnk_0873FAE8[gTasks[u->unk44].unk74];
     v = gCurTask;
     v->unk14 = 2;
     CallTableEntry(gCurTask->unk14, 8, gUnk_0873FB04);

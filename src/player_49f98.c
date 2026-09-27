@@ -136,7 +136,7 @@ void sub_08049f98(void)
         TaskYieldTrampoline(2);
         gCurTask->unk6C = 0;
         do {
-            gCurTask->unk3C++;
+            gCurTask->frame++;
             TaskYieldTrampoline(2);
         } while ((s16)++gCurTask->unk6C <= 4);
         /* fallthrough */
@@ -162,7 +162,7 @@ void sub_08049f98(void)
         while (1) {
             TaskSetFrame(gCurTask->unk46);
             TaskYieldTrampoline(2);
-            gCurTask->unk3C++;
+            gCurTask->frame++;
             TaskYieldTrampoline(2);
         }
     }

@@ -191,13 +191,13 @@ void sub_080414e8(void)
     {
         TaskSetFrame(0x11D5);
         TaskYieldTrampoline(gCurTask->unk28 + 2);
-        t = gCurTask; t->unk3C++; TaskYieldTrampoline(t->unk28 + 10);
-        t = gCurTask; t->unk3C++; TaskYieldTrampoline(t->unk28 + 5);
-        t = gCurTask; t->unk3C++; TaskYieldTrampoline(t->unk28 + 5);
-        t = gCurTask; t->unk3C++; TaskYieldTrampoline(t->unk28 + 2);
-        t = gCurTask; t->unk3C++; TaskYieldTrampoline(t->unk28 + 10);
-        t = gCurTask; t->unk3C++; TaskYieldTrampoline(t->unk28 + 5);
-        t = gCurTask; t->unk3C++; TaskYieldTrampoline(t->unk28 + 5);
+        t = gCurTask; t->frame++; TaskYieldTrampoline(t->unk28 + 10);
+        t = gCurTask; t->frame++; TaskYieldTrampoline(t->unk28 + 5);
+        t = gCurTask; t->frame++; TaskYieldTrampoline(t->unk28 + 5);
+        t = gCurTask; t->frame++; TaskYieldTrampoline(t->unk28 + 2);
+        t = gCurTask; t->frame++; TaskYieldTrampoline(t->unk28 + 10);
+        t = gCurTask; t->frame++; TaskYieldTrampoline(t->unk28 + 5);
+        t = gCurTask; t->frame++; TaskYieldTrampoline(t->unk28 + 5);
     }
 }
 
@@ -278,7 +278,7 @@ void sub_080416a0(void)
         gCurTask->unk6C = 0;
         do
         {
-            gCurTask->unk3C++;
+            gCurTask->frame++;
             TaskYieldTrampoline(2);
             gCurTask->unk6C++;
         } while ((s16)gCurTask->unk6C <= 4);
@@ -423,7 +423,7 @@ void sub_08041940(void)
     gCurTask->unk6C = 0;
     do
     {
-        gCurTask->unk3C++;
+        gCurTask->frame++;
         TaskYieldTrampoline(3);
         gCurTask->unk6C++;
     } while ((s16)gCurTask->unk6C <= 5);
@@ -578,15 +578,15 @@ void sub_08041d14(void)
     PlaySfx(0x109);
     TaskSetFrame(0x11EE);
     TaskYieldTrampoline(2);
-    gCurTask->unk3C++;
+    gCurTask->frame++;
     TaskYieldTrampoline(2);
-    gCurTask->unk3C++;
+    gCurTask->frame++;
     TaskYieldTrampoline(2);
-    gCurTask->unk3C++;
+    gCurTask->frame++;
     TaskYieldTrampoline(1);
-    gCurTask->unk3C++;
+    gCurTask->frame++;
     TaskYieldTrampoline(1);
-    gCurTask->unk3C++;
+    gCurTask->frame++;
     TaskYieldTrampoline(2);
     TaskSetFrame(0x11E4);
     TaskSleepForever();
@@ -678,7 +678,7 @@ void sub_08041f10(void)
         TaskSetFrame(0x1201);
         TaskYieldTrampoline(1);
         PlayerStopAxes(1);
-        gCurTask->unk3C++;
+        gCurTask->frame++;
         TaskYieldTrampoline(2);
         gCurTask->unk73 = 1;
         /* fallthrough */
@@ -691,7 +691,7 @@ void sub_08041f10(void)
         CreatePlayerEffect(gCurTask->unk88->unk00, 8, 0);
         TaskSetFrame(0x1203);
         TaskYieldTrampoline(2);
-        gCurTask->unk3C++;
+        gCurTask->frame++;
         while ((u32)abs(gCurTask->unk54) > 0x7FFF)
             TaskYieldTrampoline(1);
         gCurTask->unk73 = 2;
@@ -801,7 +801,7 @@ void sub_08042128(void)
     if (gCurTask->unk88->unk05 != 9)
     {
         PlayerStopAxes(3);
-        gCurTask->unk43 = 1;
+        gCurTask->facing = 1;
         h1 = gCurTask;
         h1->unk3E &= 0x7FFF;
         h1->unk88->unk3D = 0;
@@ -819,8 +819,8 @@ void sub_08042128(void)
             gCurTask->unk28 = 10;
         }
         h3 = gCurTask;
-        h3->unk2C = h3->unk43;
-        h3->unk4C = ((h3->unk48 & 0xFFF0) | 8) << 16;
+        h3->unk2C = h3->facing;
+        h3->posX = ((h3->unk48 & 0xFFF0) | 8) << 16;
     }
     d = gCurTask;
     d->unk46 = 0x11F4;
@@ -845,7 +845,7 @@ void sub_08042128(void)
             if (x & 0x8000)
                 v |= 0xFF000000;
             a1->unk68 = v;
-            a1->unk3C = r[0] + ((u16 *)a1)[35];
+            a1->frame = r[0] + ((u16 *)a1)[35];
             TaskYieldTrampoline(r[1]);
             b1 = gCurTask;
             b1->unk28++;
@@ -871,7 +871,7 @@ void sub_08042128(void)
             if (x & 0x8000)
                 v |= 0xFF000000;
             a2->unk68 = v;
-            a2->unk3C = r[0] + ((u16 *)a2)[35];
+            a2->frame = r[0] + ((u16 *)a2)[35];
             TaskYieldTrampoline(r[1]);
             b2 = gCurTask;
             b2->unk28++;
@@ -1001,7 +1001,7 @@ void sub_08042328(void)
     te = gCurTask;
     if ((qd[te->unk88->unk00] & 48) != 0)
     {
-        te->unk43 = te->unk2C;
+        te->facing = te->unk2C;
         tf = gCurTask;
         tf->unk3E &= 0x7FFF;
         if (tf->unk58 != 0)
@@ -1010,7 +1010,7 @@ void sub_08042328(void)
     }
     else if ((gTerrainResult[6] & 3) == 0)
     {
-        te->unk43 = te->unk2C;
+        te->facing = te->unk2C;
         tg = gCurTask;
         if (tg->unk73 == 1)
             goto set5;
@@ -1078,11 +1078,11 @@ void sub_08042580(void)
             {
                 TaskSetFrame(0x1244);
                 TaskYieldTrampoline(2);
-                gCurTask->unk3C++;
+                gCurTask->frame++;
                 TaskYieldTrampoline(2);
-                gCurTask->unk3C++;
+                gCurTask->frame++;
                 TaskYieldTrampoline(2);
-                gCurTask->unk3C++;
+                gCurTask->frame++;
                 TaskYieldTrampoline(2);
                 gCurTask->unk6C++;
             } while ((s16)gCurTask->unk6C <= 3);
@@ -1127,7 +1127,7 @@ void sub_08042580(void)
             gCurTask->unk6C = 0;
             do
             {
-                gCurTask->unk3C++;
+                gCurTask->frame++;
                 TaskYieldTrampoline(2);
                 gCurTask->unk6C++;
             } while ((s16)gCurTask->unk6C <= 5);
@@ -1145,7 +1145,7 @@ void sub_08042580(void)
         gCurTask->unk6C = 0;
         do
         {
-            gCurTask->unk3C++;
+            gCurTask->frame++;
             TaskYieldTrampoline(2);
             gCurTask->unk6C++;
         } while ((s16)gCurTask->unk6C <= 4);
@@ -1162,7 +1162,7 @@ void sub_08042580(void)
         }
         else
         {
-            tt->unk3C++;
+            tt->frame++;
             TaskYieldTrampoline(3);
         }
         PlayerStopAxes(3);
@@ -1257,7 +1257,7 @@ void sub_080429fc(void)
     q[14] = 0;
     q[13] = 0;
     PlayerStopAxes(3);
-    gCurTask->unk42 = 4;
+    gCurTask->layer = 4;
     sub_080276ac(gCurTask->unk88->unk00);
     StopAllSfx();
     StopAllSound();
@@ -1393,21 +1393,21 @@ void sub_08042d54(void)
     {
         TaskSetFrame(0x1208);
         TaskYieldTrampoline(2);
-        gCurTask->unk3C++;
+        gCurTask->frame++;
         TaskYieldTrampoline(2);
-        gCurTask->unk3C++;
+        gCurTask->frame++;
         TaskYieldTrampoline(2);
     }
     else
     {
         TaskSetFrame(0x1208);
         TaskYieldTrampoline(3);
-        gCurTask->unk3C++;
+        gCurTask->frame++;
         TaskYieldTrampoline(3);
-        gCurTask->unk3C++;
+        gCurTask->frame++;
         TaskYieldTrampoline(3);
     }
-    gCurTask->unk3C++;
+    gCurTask->frame++;
     TaskSleepForever();
 }
 
@@ -1421,7 +1421,7 @@ void sub_08042e98(void)
     TaskInitWaterFlags();
     sub_08021c74((s32)gPlayerDefaultTerrainBox, gCurTaskIdx);
     gCurTask->unk28 = 0;
-    gCurTask->unk3C = -1;
+    gCurTask->frame = -1;
     if (gUnk_0200AF00 == 1)
     {
         ((void (*)(void))sub_08027a60)();
@@ -1432,18 +1432,18 @@ void sub_08042e98(void)
     while (gFadeSteps != 0)
         TaskYieldTrampoline(1);
     a = ((s32 (*)(void))sub_080264b0)();
-    gCurTask->unk3C = -1;
+    gCurTask->frame = -1;
     TaskYieldTrampoline(4);
     gCurTask->unk3E = 0x2000;
     PlayerSetMotionXPreset(10, 9);
-    gCurTask->unk3C = 0x120B;
+    gCurTask->frame = 0x120B;
     TaskYieldTrampoline(3);
-    gCurTask->unk3C--;
+    gCurTask->frame--;
     TaskYieldTrampoline(3);
     sub_0802651c(a);
-    gCurTask->unk3C--;
+    gCurTask->frame--;
     TaskYieldTrampoline(4);
-    gCurTask->unk3C--;
+    gCurTask->frame--;
     TaskYieldTrampoline(4);
     PlayerStopAxes(1);
     TaskSetFrameByFacing(0x1208);
@@ -1511,17 +1511,17 @@ void sub_08043014(void)
                 PlayerSetMotionYPreset(15);
                 TaskSetFrame(0x1234);
                 TaskYieldTrampoline(4);
-                gCurTask->unk3C++;
+                gCurTask->frame++;
                 TaskYieldTrampoline(4);
-                gCurTask->unk3C++;
+                gCurTask->frame++;
                 TaskYieldTrampoline(4);
-                gCurTask->unk3C++;
+                gCurTask->frame++;
                 TaskYieldTrampoline(4);
                 TaskSetFrame(0x1230);
                 TaskYieldTrampoline(4);
-                gCurTask->unk3C++;
+                gCurTask->frame++;
                 TaskYieldTrampoline(4);
-                gCurTask->unk3C++;
+                gCurTask->frame++;
                 gCurTask->unk6C = 0;
                 do
                 {
@@ -1562,7 +1562,7 @@ void sub_08043014(void)
         gCurTask->unk88->unk14 = 15;
         TaskSetFrame(0x1239);
         TaskYieldTrampoline(3);
-        gCurTask->unk3C++;
+        gCurTask->frame++;
         break;
     case 3:
         PlayerSetMotionXPreset(11, 3);
@@ -1588,7 +1588,7 @@ void sub_08043014(void)
             gCurTask->unk6C = 0;
             do
             {
-                gCurTask->unk3C++;
+                gCurTask->frame++;
                 TaskYieldTrampoline(5);
             } while ((s16)++gCurTask->unk6C <= 6);
         }

@@ -81,7 +81,7 @@ void sub_0809fc44(void)
     t->unk70 = v;
     t->unk00 = (u32)TaskMove;
     t->unk0C = (u32)sub_08065438;
-    t->unk42 = 11;
+    t->layer = 11;
     gCurTask->unk38 = gUnk_087538E0;
     CallTableEntry(gCurTask->unk73, 1, gUnk_08748264);
 }
@@ -103,7 +103,7 @@ void sub_0809fcb4(void)
     t->unk08 = (u32)sub_080a0a84;
     gUnk_02006190[0] = t->unk48;
     gUnk_02006190[1] = t->unk4A;
-    gUnk_02006190[2] = t->unk3C;
+    gUnk_02006190[2] = t->frame;
     one = 1;
     gUnk_02006190[7] = one;
     TaskSetFrame(8);
@@ -124,7 +124,7 @@ void sub_0809fd20(void)
     t->unk08 = z;
     t->unk48 = gUnk_02006190[0];
     t->unk4A = gUnk_02006190[1];
-    t->unk3C = gUnk_02006190[2];
+    t->frame = gUnk_02006190[2];
     gUnk_02006190[7] = z;
     sub_08066468();
 }
@@ -145,7 +145,7 @@ u8 sub_0809fd64(void)
     }
     if (gUnk_02007D00[8] != -1 && gUnk_02007D00[1] != -1)
     {
-        sub_080689c8(gUnk_02007D00[8], -gCurTask->unk43);
+        sub_080689c8(gUnk_02007D00[8], -gCurTask->facing);
         gUnk_02007D00[8] = -1;
     }
     if (gUnk_02007D00[9] != -1)
@@ -245,7 +245,7 @@ u8 sub_0809fe10(void)
         TaskSetSkipMask(0, gCurTaskIdx);
         y = gCurTask;
         y->unk08 = 0;
-        y->unk3C = gUnk_02006190[2];
+        y->frame = gUnk_02006190[2];
         gUnk_02006190[5] = 14;
         break;
     case 0:
@@ -281,9 +281,9 @@ void sub_080a0028(void)
 
     TaskGetScreenPos();
     if (gUnk_030023B4 <= 127)
-        gCurTask->unk43 = 1;
+        gCurTask->facing = 1;
     else
-        gCurTask->unk43 = -1;
+        gCurTask->facing = -1;
     TaskSetFrame(29);
     sp.unk00 = 10;
     sp.unk04 = 112;

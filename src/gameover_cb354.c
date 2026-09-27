@@ -51,11 +51,11 @@ void Task_GameOverSprite(void)
 {
     gCurTask->unk00 = (u32)TaskMove;
     gCurTask->unk0C = (u32)TaskDrawScreen;
-    gCurTask->unk42 = 9;
+    gCurTask->layer = 9;
     gCurTask->unk38 = gUnk_087556E0;
-    gCurTask->unk3C = gCurTask->unk18;
-    gCurTask->unk4C = gUnk_08758274[gCurTask->unk18] << 16;
-    gCurTask->unk50 = gUnk_08758284[gCurTask->unk18] << 16;
+    gCurTask->frame = gCurTask->unk18;
+    gCurTask->posX = gUnk_08758274[gCurTask->unk18] << 16;
+    gCurTask->posY = gUnk_08758284[gCurTask->unk18] << 16;
     TaskSleepForever();
 }
 
@@ -64,17 +64,17 @@ void Task_GameOverCursor(void)
 {
     gCurTask->unk00 = (u32)TaskMove;
     gCurTask->unk0C = (u32)TaskDrawScreen;
-    gCurTask->unk42 = 8;
+    gCurTask->layer = 8;
     gCurTask->unk38 = gUnk_087556E0;
     if (gUnk_03001F30 == 0) {
-        gCurTask->unk4C = 184 << 16;
-        gCurTask->unk50 = 94 << 16;
+        gCurTask->posX = 184 << 16;
+        gCurTask->posY = 94 << 16;
     } else {
-        gCurTask->unk4C = 184 << 16;
-        gCurTask->unk50 = 96 << 16;
+        gCurTask->posX = 184 << 16;
+        gCurTask->posY = 96 << 16;
     }
     for (;;) {
-        gCurTask->unk3C = gGameOverCursor + 8;
+        gCurTask->frame = gGameOverCursor + 8;
         TaskYieldTrampoline(1);
     }
 }
@@ -148,11 +148,11 @@ void Task_GameOverObject(void)
 void GameOverPlayer(void)
 {
     gCurTask->unk04 = (u32)GameOverPlayerUpdate;
-    gCurTask->unk42 = 8;
+    gCurTask->layer = 8;
     gCurTask->unk38 = gUnk_08754914;
     gCurTask->unk24 = 0;
     gCurTask->unk18 = 0;
-    gCurTask->unk43 = 1;
+    gCurTask->facing = 1;
     gCurTask->unk14 = 0;
     CallTableEntry(gCurTask->unk14, 3, gUnk_087582AC);
     TaskSleepForever();

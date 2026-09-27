@@ -12,7 +12,7 @@
  *       position list with TaskYieldTrampoline.
  *   sub_080c17b0 / sub_080c183c    the two dispatch bodies (switch on
  *       Task.unk1C / Task.unk20).
- *   sub_080c18c8 / sub_080c1950    slot placement: Task.unk4C/unk50 from
+ *   sub_080c18c8 / sub_080c1950    slot placement: Task.posX/unk50 from
  *       gUnk_08757250/gUnk_08757260, and the per-slot horizontal offset
  *       switch over gUnk_0200B044[Task.unk20].
  *   sub_080c1b30 / sub_080c1b78    the results task.
@@ -208,7 +208,7 @@ void sub_080c0de8(void)
     TaskYieldTrampoline(3);
     gCurTask->unk6C = 0;
     do {
-        gCurTask->unk3C++;
+        gCurTask->frame++;
         TaskYieldTrampoline(2);
         gCurTask->unk6C++;
     } while ((s16)gCurTask->unk6C <= 6);
@@ -217,7 +217,7 @@ void sub_080c0de8(void)
     TaskYieldTrampoline(2);
     gCurTask->unk6C = 0;
     do {
-        gCurTask->unk3C++;
+        gCurTask->frame++;
         TaskYieldTrampoline(2);
         gCurTask->unk6C++;
     } while ((s16)gCurTask->unk6C <= 2);
@@ -236,7 +236,7 @@ void sub_080c0e88(void)
     TaskYieldTrampoline(2);
     gCurTask->unk6C = 0;
     do {
-        gCurTask->unk3C++;
+        gCurTask->frame++;
         TaskYieldTrampoline(2);
         gCurTask->unk6C++;
     } while ((s16)gCurTask->unk6C <= 2);
@@ -244,14 +244,14 @@ void sub_080c0e88(void)
     TaskYieldTrampoline(2);
     gCurTask->unk6C = 0;
     do {
-        gCurTask->unk3C++;
+        gCurTask->frame++;
         TaskYieldTrampoline(2);
         gCurTask->unk6C++;
     } while ((s16)gCurTask->unk6C <= 1);
     TaskStop();
     gCurTask->unk6C = 0;
     do {
-        gCurTask->unk3C++;
+        gCurTask->frame++;
         TaskYieldTrampoline(2);
         gCurTask->unk6C++;
     } while ((s16)gCurTask->unk6C <= 2);
@@ -270,7 +270,7 @@ void sub_080c0f54(void)
     TaskYieldTrampoline(2);
     gCurTask->unk6C = 0;
     do {
-        gCurTask->unk3C++;
+        gCurTask->frame++;
         TaskYieldTrampoline(2);
         gCurTask->unk6C++;
     } while ((s16)gCurTask->unk6C <= 5);
@@ -279,7 +279,7 @@ void sub_080c0f54(void)
     TaskYieldTrampoline(2);
     TaskSetFrame(4);
     TaskYieldTrampoline(2);
-    gCurTask->unk3C++;
+    gCurTask->frame++;
     TaskYieldTrampoline(2);
     TaskExitTrampoline();
 }
@@ -296,14 +296,14 @@ void sub_080c0fe4(void)
     TaskYieldTrampoline(2);
     gCurTask->unk6C = 0;
     do {
-        gCurTask->unk3C++;
+        gCurTask->frame++;
         TaskYieldTrampoline(2);
         gCurTask->unk6C++;
     } while ((s16)gCurTask->unk6C <= 6);
     TaskStop();
     TaskSetFrame(4);
     TaskYieldTrampoline(2);
-    gCurTask->unk3C++;
+    gCurTask->frame++;
     TaskYieldTrampoline(2);
     TaskExitTrampoline();
 }
@@ -320,18 +320,18 @@ void sub_080c1068(void)
     TaskYieldTrampoline(3);
     gCurTask->unk6C = 0;
     do {
-        gCurTask->unk3C++;
+        gCurTask->frame++;
         TaskYieldTrampoline(2);
         gCurTask->unk6C++;
     } while ((s16)gCurTask->unk6C <= 3);
     TaskSetFrame(1);
     TaskYieldTrampoline(2);
-    gCurTask->unk3C++;
+    gCurTask->frame++;
     TaskYieldTrampoline(2);
     TaskStop();
     gCurTask->unk6C = 0;
     do {
-        gCurTask->unk3C++;
+        gCurTask->frame++;
         TaskYieldTrampoline(2);
         gCurTask->unk6C++;
     } while ((s16)gCurTask->unk6C <= 2);
@@ -350,20 +350,20 @@ void sub_080c1114(void)
     TaskYieldTrampoline(2);
     gCurTask->unk6C = 0;
     do {
-        gCurTask->unk3C++;
+        gCurTask->frame++;
         TaskYieldTrampoline(2);
         gCurTask->unk6C++;
     } while ((s16)gCurTask->unk6C <= 2);
     TaskSetFrame(0);
     TaskYieldTrampoline(2);
-    gCurTask->unk3C++;
+    gCurTask->frame++;
     TaskYieldTrampoline(2);
     TaskStop();
     TaskSetFrame(6);
     TaskYieldTrampoline(2);
     gCurTask->unk6C = 0;
     do {
-        gCurTask->unk3C++;
+        gCurTask->frame++;
         TaskYieldTrampoline(2);
         gCurTask->unk6C++;
     } while ((s16)gCurTask->unk6C <= 2);
@@ -382,14 +382,14 @@ void sub_080c11cc(void)
     TaskYieldTrampoline(2);
     gCurTask->unk6C = 0;
     do {
-        gCurTask->unk3C++;
+        gCurTask->frame++;
         TaskYieldTrampoline(2);
         gCurTask->unk6C++;
     } while ((s16)gCurTask->unk6C <= 4);
     TaskStop();
     gCurTask->unk6C = 0;
     do {
-        gCurTask->unk3C++;
+        gCurTask->frame++;
         TaskYieldTrampoline(2);
         gCurTask->unk6C++;
     } while ((s16)gCurTask->unk6C <= 1);
@@ -408,7 +408,7 @@ void sub_080c1260(void)
     TaskYieldTrampoline(2);
     gCurTask->unk6C = 0;
     do {
-        gCurTask->unk3C++;
+        gCurTask->frame++;
         TaskYieldTrampoline(2);
         gCurTask->unk6C++;
     } while ((s16)gCurTask->unk6C <= 2);
@@ -417,7 +417,7 @@ void sub_080c1260(void)
     TaskStop();
     gCurTask->unk6C = 0;
     do {
-        gCurTask->unk3C++;
+        gCurTask->frame++;
         TaskYieldTrampoline(2);
         gCurTask->unk6C++;
     } while ((s16)gCurTask->unk6C <= 1);
@@ -436,14 +436,14 @@ void sub_080c1300(void)
     TaskYieldTrampoline(3);
     gCurTask->unk6C = 0;
     do {
-        gCurTask->unk3C++;
+        gCurTask->frame++;
         TaskYieldTrampoline(2);
         gCurTask->unk6C++;
     } while ((s16)gCurTask->unk6C <= 2);
     TaskStop();
     TaskSetFrame(0);
     TaskYieldTrampoline(2);
-    gCurTask->unk3C++;
+    gCurTask->frame++;
     TaskYieldTrampoline(2);
     TaskSetFrame(6);
     TaskYieldTrampoline(2);
@@ -462,14 +462,14 @@ void sub_080c1390(void)
     TaskYieldTrampoline(3);
     gCurTask->unk6C = 0;
     do {
-        gCurTask->unk3C++;
+        gCurTask->frame++;
         TaskYieldTrampoline(2);
         gCurTask->unk6C++;
     } while ((s16)gCurTask->unk6C <= 3);
     TaskStop();
     gCurTask->unk6C = 0;
     do {
-        gCurTask->unk3C++;
+        gCurTask->frame++;
         TaskYieldTrampoline(2);
         gCurTask->unk6C++;
     } while ((s16)gCurTask->unk6C <= 1);
@@ -488,14 +488,14 @@ void sub_080c1424(void)
     TaskYieldTrampoline(2);
     gCurTask->unk6C = 0;
     do {
-        gCurTask->unk3C++;
+        gCurTask->frame++;
         TaskYieldTrampoline(2);
         gCurTask->unk6C++;
     } while ((s16)gCurTask->unk6C <= 3);
     TaskStop();
     gCurTask->unk6C = 0;
     do {
-        gCurTask->unk3C++;
+        gCurTask->frame++;
         TaskYieldTrampoline(2);
         gCurTask->unk6C++;
     } while ((s16)gCurTask->unk6C <= 2);
@@ -514,7 +514,7 @@ void sub_080c14b8(void)
     TaskYieldTrampoline(2);
     gCurTask->unk6C = 0;
     do {
-        gCurTask->unk3C++;
+        gCurTask->frame++;
         TaskYieldTrampoline(2);
         gCurTask->unk6C++;
     } while ((s16)gCurTask->unk6C <= 2);
@@ -523,7 +523,7 @@ void sub_080c14b8(void)
     TaskYieldTrampoline(2);
     gCurTask->unk6C = 0;
     do {
-        gCurTask->unk3C++;
+        gCurTask->frame++;
         TaskYieldTrampoline(2);
         gCurTask->unk6C++;
     } while ((s16)gCurTask->unk6C <= 2);
@@ -540,20 +540,20 @@ void sub_080c1558(void)
     t->unk60 = 0xFFFFFB00;
     TaskSetFrame(4);
     TaskYieldTrampoline(2);
-    gCurTask->unk3C++;
+    gCurTask->frame++;
     TaskYieldTrampoline(2);
     TaskSetFrame(8);
     TaskYieldTrampoline(2);
     gCurTask->unk6C = 0;
     do {
-        gCurTask->unk3C++;
+        gCurTask->frame++;
         TaskYieldTrampoline(2);
         gCurTask->unk6C++;
     } while ((s16)gCurTask->unk6C <= 1);
     TaskStop();
     gCurTask->unk6C = 0;
     do {
-        gCurTask->unk3C++;
+        gCurTask->frame++;
         TaskYieldTrampoline(2);
         gCurTask->unk6C++;
     } while ((s16)gCurTask->unk6C <= 2);
@@ -570,16 +570,16 @@ void sub_080c1608(void)
     t->unk60 = 0xA0 << 3;
     TaskSetFrame(4);
     TaskYieldTrampoline(2);
-    gCurTask->unk3C++;
+    gCurTask->frame++;
     TaskYieldTrampoline(2);
     TaskSetFrame(10);
     TaskYieldTrampoline(2);
-    gCurTask->unk3C++;
+    gCurTask->frame++;
     TaskYieldTrampoline(2);
     TaskStop();
     TaskSetFrame(4);
     TaskYieldTrampoline(2);
-    gCurTask->unk3C++;
+    gCurTask->frame++;
     TaskYieldTrampoline(2);
     TaskExitTrampoline();
 }
@@ -596,20 +596,20 @@ void sub_080c168c(void)
     TaskYieldTrampoline(2);
     gCurTask->unk6C = 0;
     do {
-        gCurTask->unk3C++;
+        gCurTask->frame++;
         TaskYieldTrampoline(2);
         gCurTask->unk6C++;
     } while ((s16)gCurTask->unk6C <= 2);
     TaskStop();
     gCurTask->unk6C = 0;
     do {
-        gCurTask->unk3C++;
+        gCurTask->frame++;
         TaskYieldTrampoline(2);
         gCurTask->unk6C++;
     } while ((s16)gCurTask->unk6C <= 1);
     TaskSetFrame(4);
     TaskYieldTrampoline(12);
-    gCurTask->unk3C++;
+    gCurTask->frame++;
     TaskYieldTrampoline(2);
     TaskExitTrampoline();
 }
@@ -623,16 +623,16 @@ void sub_080c173c(void)
     t->unk00 = (u32)TaskMove;
     t->unk0C = (u32)TaskDrawScreen;
     t->unk04 = (u32)sub_080c17ac;
-    t->unk42 = 6;
+    t->layer = 6;
     u = gCurTask;
     u->unk38 = gUnk_08755EFC;
-    u->unk4C = 0xF0 << 15;
-    u->unk50 = 0xE0 << 15;
-    u->unk3C = 0;
+    u->posX = 0xF0 << 15;
+    u->posY = 0xE0 << 15;
+    u->frame = 0;
     TaskYieldTrampoline(46);
-    gCurTask->unk3C = 0xFFFF;
+    gCurTask->frame = 0xFFFF;
     TaskYieldTrampoline(16);
-    gCurTask->unk3C = 1;
+    gCurTask->frame = 1;
     TaskYieldTrampoline(30);
     TaskExitTrampoline();
 }
@@ -682,19 +682,19 @@ void sub_080c183c(void)
 
     t = gCurTask;
     t->unk15 = 0;
-    gCurTask->unk42 = 9;
+    gCurTask->layer = 9;
     u = gCurTask;
     u->unk38 = gUnk_08755F1C;
     u->unk40 = (u->unk18 << 12) | (0x80 << 4);
     if (gPlayerCount == 1) {
-        u->unk4C = 0xF0 << 15;
-        u->unk50 = 0xC0 << 15;
+        u->posX = 0xF0 << 15;
+        u->posY = 0xC0 << 15;
     } else {
-        u->unk4C = gUnk_08757250[u->unk18] << 16;
-        u->unk50 = gUnk_08757260[u->unk18] << 16;
+        u->posX = gUnk_08757250[u->unk18] << 16;
+        u->posY = gUnk_08757260[u->unk18] << 16;
     }
     v = gCurTask;
-    v->unk3C = gUnk_0200B044[v->unk20];
+    v->frame = gUnk_0200B044[v->unk20];
     TaskSleepForever();
 }
 
@@ -714,11 +714,11 @@ void sub_080c18c8(void)
     u = gCurTask;
     u->unk28 = 0;
     if (gPlayerCount == 1) {
-        u->unk4C = 0xF0 << 15;
-        u->unk50 = 0xC0 << 15;
+        u->posX = 0xF0 << 15;
+        u->posY = 0xC0 << 15;
     } else {
-        u->unk4C = gUnk_08757250[u->unk18] << 16;
-        u->unk50 = gUnk_08757260[u->unk18] << 16;
+        u->posX = gUnk_08757250[u->unk18] << 16;
+        u->posY = gUnk_08757260[u->unk18] << 16;
     }
     n = gUnk_0200B044[gCurTask->unk20];
     switch (n) {
@@ -797,18 +797,18 @@ void sub_080c1ab8(void)
 
     t = gCurTask;
     t->unk15 = 1;
-    gCurTask->unk42 = 7;
+    gCurTask->layer = 7;
     u = gCurTask;
     u->unk38 = gUnk_08755EFC;
     if (gPlayerCount == 1) {
-        u->unk4C = 0xF0 << 15;
-        u->unk50 = 0x90 << 15;
+        u->posX = 0xF0 << 15;
+        u->posY = 0x90 << 15;
     } else {
-        u->unk4C = gUnk_08757250[u->unk18] << 16;
-        u->unk50 = (gUnk_08757260[u->unk18] - 24) << 16;
+        u->posX = gUnk_08757250[u->unk18] << 16;
+        u->posY = (gUnk_08757260[u->unk18] - 24) << 16;
     }
     v = gCurTask;
-    v->unk3C = gUnk_0200B044[v->unk20] + 2;
+    v->frame = gUnk_0200B044[v->unk20] + 2;
     TaskSleepForever();
 }
 
@@ -846,16 +846,16 @@ void sub_080c1b94(void)
     gCurTask->unk15 = 0;
     t = gCurTask;
     t->unk38 = gUnk_08755F2C;
-    t->unk3C = t->unk18;
+    t->frame = t->unk18;
     t->unk28 = 0;
     if (t->unk18 == t->unk1C) {
-        t->unk4C = 0xDC << 15;
-        t->unk50 = 0xFE << 15;
-        t->unk42 = 3;
+        t->posX = 0xDC << 15;
+        t->posY = 0xFE << 15;
+        t->layer = 3;
     } else {
-        t->unk4C = 0x82 << 16;
-        t->unk50 = 0x89 << 16;
-        t->unk42 = 4;
+        t->posX = 0x82 << 16;
+        t->posY = 0x89 << 16;
+        t->layer = 4;
     }
     TaskSleepForever();
 }
@@ -878,33 +878,33 @@ void sub_080c1be8(void)
     v = gCurTask;
     if (u->unk2C != v->unk18) {
         if ((s16)v->unk4A <= 136) {
-            v->unk50 += 0x80 << 9;
-            v->unk4A = v->unk50 >> 16;
-            v->unk4C += 0x80 << 10;
-            v->unk48 = v->unk4C >> 16;
+            v->posY += 0x80 << 9;
+            v->unk4A = v->posY >> 16;
+            v->posX += 0x80 << 10;
+            v->unk48 = v->posX >> 16;
             if (u->unk30 == 0)
-                v->unk42 = 4;
+                v->layer = 4;
             else
-                v->unk42 = 3;
+                v->layer = 3;
         } else {
-            v->unk42 = 4;
+            v->layer = 4;
         }
         w = gCurTask;
-        w->unk3C = w->unk18 << 1;
+        w->frame = w->unk18 << 1;
     } else {
         if ((s16)v->unk4A > 127) {
-            v->unk50 += 0xFFFF0000;
-            v->unk4A = v->unk50 >> 16;
-            v->unk4C += 0xFFFE0000;
-            v->unk48 = v->unk4C >> 16;
-            v->unk3C = v->unk18 << 1;
+            v->posY += 0xFFFF0000;
+            v->unk4A = v->posY >> 16;
+            v->posX += 0xFFFE0000;
+            v->unk48 = v->posX >> 16;
+            v->frame = v->unk18 << 1;
             if (u->unk30 == 0)
-                v->unk42 = 3;
+                v->layer = 3;
             else
-                v->unk42 = 4;
+                v->layer = 4;
         } else {
-            v->unk3C = (v->unk18 << 1) + ((v->unk28 >> 1) & 1);
-            v->unk42 = 3;
+            v->frame = (v->unk18 << 1) + ((v->unk28 >> 1) & 1);
+            v->layer = 3;
         }
     }
     if (u->unk28 != 0)
@@ -929,11 +929,11 @@ void sub_080c1cec(void)
     do {
         v = gCurTask;
         if (v->unk18 == v->unk1C) {
-            v->unk42 = (u8)v->unk6C + 3;
+            v->layer = (u8)v->unk6C + 3;
             w = gCurTask;
-            w->unk3C = w->unk18 << 1;
-            w->unk4C = (((s16)w->unk6C * 5) << 18) + (0xC8 << 15);
-            w->unk50 = (((s16)w->unk6C * 5) << 17) + (0xF4 << 15);
+            w->frame = w->unk18 << 1;
+            w->posX = (((s16)w->unk6C * 5) << 18) + (0xC8 << 15);
+            w->posY = (((s16)w->unk6C * 5) << 17) + (0xF4 << 15);
         }
         x = gCurTask;
         x->unk1C++;
@@ -981,25 +981,25 @@ void sub_080c1d84(void)
     } while ((s16)y->unk6C <= 2);
     z = gCurTask;
     if ((s16)z->unk4A > z->unk2C) {
-        z->unk50 += 0xFFFE0000;
-        z->unk4A = z->unk50 >> 16;
-        z->unk4C += 0xFFFC0000;
-        z->unk48 = z->unk4C >> 16;
-        z->unk3C = z->unk18 << 1;
+        z->posY += 0xFFFE0000;
+        z->unk4A = z->posY >> 16;
+        z->posX += 0xFFFC0000;
+        z->unk48 = z->posX >> 16;
+        z->frame = z->unk18 << 1;
         if (u->unk30 == 0)
-            z->unk42 = z->unk30;
+            z->layer = z->unk30;
     } else if ((s16)z->unk4A < z->unk2C) {
-        z->unk50 += 0x80 << 10;
-        z->unk4A = z->unk50 >> 16;
-        z->unk4C += 0x80 << 11;
-        z->unk48 = z->unk4C >> 16;
-        z->unk3C = z->unk18 << 1;
+        z->posY += 0x80 << 10;
+        z->unk4A = z->posY >> 16;
+        z->posX += 0x80 << 11;
+        z->unk48 = z->posX >> 16;
+        z->frame = z->unk18 << 1;
         if (u->unk30 == 0)
-            z->unk42 = z->unk30;
+            z->layer = z->unk30;
     } else {
         if (z->unk18 == u->unk2C)
-            z->unk3C = (z->unk18 << 1) + ((z->unk34 >> 1) & 1);
-        gCurTask->unk42 = gCurTask->unk30;
+            z->frame = (z->unk18 << 1) + ((z->unk34 >> 1) & 1);
+        gCurTask->layer = gCurTask->unk30;
     }
     if (u->unk28 != 1)
         TaskFree(gCurTaskIdx);

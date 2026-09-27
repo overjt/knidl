@@ -90,10 +90,10 @@ void sub_080bb554(void)
     struct Task *t;
 
     gCurTask->unk38 = gUnk_08755BAC;
-    gCurTask->unk42 = 4;
+    gCurTask->layer = 4;
     t = gCurTask;
     t->unk40 |= 0x800;
-    t->unk3C = 0;
+    t->frame = 0;
     t->unk48 = 120;
     t->unk4A = 152;
     t->unk1C = 0;
@@ -127,7 +127,7 @@ void sub_080bb5b8(void)
             if (t->unk1C != 0)
             {
                 t->unk1C = 0;
-                t->unk3C = 0;
+                t->frame = 0;
                 sub_080bb59c(101);
             }
         }
@@ -137,7 +137,7 @@ void sub_080bb5b8(void)
             if (t->unk1C == 0)
             {
                 t->unk1C = 1;
-                t->unk3C = 1;
+                t->frame = 1;
                 sub_080bb59c(101);
             }
         }
@@ -154,7 +154,7 @@ void sub_080bb63c(void)
     v = gSubGameLevel;
     t->unk1C = v;
     t->unk24 = 10;
-    t->unk3C = v + 2;
+    t->frame = v + 2;
 }
 
 void sub_080bb66c(void)
@@ -193,7 +193,7 @@ void sub_080bb66c(void)
                 sub_080bb59c(101);
             }
         }
-        gCurTask->unk3C = gCurTask->unk1C + 2;
+        gCurTask->frame = gCurTask->unk1C + 2;
     }
 }
 
@@ -206,7 +206,7 @@ void sub_080bb718(u16 a0, u16 a1, u16 a2)
         struct Task *t = &gTasks[i];
 
         t->unk73 = 7;
-        t->unk3C = a0;
+        t->frame = a0;
         t->unk48 = a1;
         t->unk4A = a2;
     }
@@ -258,7 +258,7 @@ void sub_080bb820(u8 a0, s16 a1, s16 a2, s8 a3)
         t->unk73 = 9;
         t->unk18 = a0;
         t->unk1C = a3;
-        t->unk3C = a0;
+        t->frame = a0;
     }
 }
 

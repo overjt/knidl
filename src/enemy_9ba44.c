@@ -67,7 +67,7 @@ void sub_0809ba44(void)
     struct Task *t = gCurTask;
 
     t->unk04 = (u32)sub_0809ba94;
-    t->unk2C = -gTasks[t->unk44].unk43;
+    t->unk2C = -gTasks[t->unk44].facing;
     ActorSetState(0);
     CallTableEntry(gCurTask->unk14, 2, gUnk_08745B20);
 }
@@ -127,13 +127,13 @@ void sub_0809bb6c(void)
     t->unk58 = 0xFFFD0000;
     t->unk60 = 0xC0 << 6;
     t->unk68 = 0xC0 << 10;
-    t->unk3C = 6;
+    t->frame = 6;
     TaskYieldTrampoline(2);
     t = gCurTask;
-    t->unk3C += 2;
+    t->frame += 2;
     TaskYieldTrampoline(2);
     t = gCurTask;
-    t->unk3C += 1;
+    t->frame += 1;
     TaskYieldTrampoline(2);
     ActorDestroy();
     TaskSleepForever();

@@ -256,23 +256,23 @@ void sub_08009640(void)
     t->unk00 = (u32)TaskMove;
     t->unk0C = (u32)TaskDrawScreen;
     t->unk38 = gUnk_087555B4;
-    t->unk42 = 8;
+    t->layer = 8;
     u = gCurTask;
     if (u->unk18 <= 4) {
-        u->unk4C = u->unk18 * 0x140000 + 0x180000;
-        u->unk50 = 0x800000;
+        u->posX = u->unk18 * 0x140000 + 0x180000;
+        u->posY = 0x800000;
     } else {
-        u->unk4C = (u->unk18 - 5) * 0x140000 + 0x880000;
-        u->unk50 = 0x800000;
+        u->posX = (u->unk18 - 5) * 0x140000 + 0x880000;
+        u->posY = 0x800000;
     }
-    gCurTask->unk3C = 8;
+    gCurTask->frame = 8;
     TaskYieldTrampoline(1);
-    gCurTask->unk3C--;
+    gCurTask->frame--;
     TaskYieldTrampoline(1);
-    gCurTask->unk3C--;
+    gCurTask->frame--;
     TaskYieldTrampoline(1);
     v = gCurTask;
-    v->unk3C = gUnk_08731CC8[v->unk18];
+    v->frame = gUnk_08731CC8[v->unk18];
     TaskSleepForever();
 }
 

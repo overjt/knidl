@@ -42,7 +42,7 @@ void TaskDrawWorldTilesLoaded(void);
 void TaskSetMotionXFacing(s32 a, s32 b);
 u32 IsWorldPosOnScreen(s16 a, s16 b);   /* the ROM tests r0 unnarrowed (src callers spell u32) */
 u16 RandomSpread(s32 base, u8 scale, u8 amount);   /* base + ((rand(256) * amount) >> 8) * scale */
-s16 RandomSpreadFacing(s32 base, u8 scale, u8 amount);   /* the same, negated when Task.unk43 != 1 */
+s16 RandomSpreadFacing(s32 base, u8 scale, u8 amount);   /* the same, negated when Task.facing != 1 */
 void RegisterCollider(u8 a, s16 x, s16 y, void *p);   /* M11's caller spelling */
 void sub_0803dfc8(void);
 void sub_08059aac(void);
@@ -62,7 +62,7 @@ void sub_08059570(void)
     switch (gCurTask->unk18 & 15)
     {
     case 0:
-        gCurTask->unk42 = 8;
+        gCurTask->layer = 8;
         while (1)
         {
             u = gCurTask;
@@ -70,26 +70,26 @@ void sub_08059570(void)
             u->unk64 = 0x40000;
             u->unk58 = 0x20000;
             u->unk68 = 0x20000;
-            u->unk4C = ((struct Task *)u->unk8C)->unk48 << 16;
-            u->unk50 = (((struct Task *)u->unk8C)->unk4A + 16) << 16;
-            u->unk3C = 16;
+            u->posX = ((struct Task *)u->unk8C)->unk48 << 16;
+            u->posY = (((struct Task *)u->unk8C)->unk4A + 16) << 16;
+            u->frame = 16;
             TaskYieldTrampoline(1);
-            gCurTask->unk3C++;
+            gCurTask->frame++;
             TaskYieldTrampoline(1);
-            gCurTask->unk3C++;
+            gCurTask->frame++;
             TaskYieldTrampoline(1);
-            gCurTask->unk3C++;
+            gCurTask->frame++;
             TaskYieldTrampoline(1);
-            gCurTask->unk3C++;
+            gCurTask->frame++;
             TaskYieldTrampoline(1);
-            gCurTask->unk3C++;
+            gCurTask->frame++;
             TaskYieldTrampoline(1);
             if (gCurTask->unk88->unk3F != 3 || gCurTask->unk88->unk04 != 13)
                 break;
         }
         break;
     case 1:
-        gCurTask->unk42 = 5;
+        gCurTask->layer = 5;
         while (1)
         {
             v = gCurTask;
@@ -97,26 +97,26 @@ void sub_08059570(void)
             v->unk64 = 0x40000;
             v->unk58 = 0x20000;
             v->unk68 = 0x20000;
-            gCurTask->unk4C = (RandomSpread(-8, 1, 16) + ((struct Task *)gCurTask->unk8C)->unk48) << 16;
-            gCurTask->unk50 = (RandomSpread(-8, 1, 16) + ((struct Task *)gCurTask->unk8C)->unk4A + 16) << 16;
-            gCurTask->unk3C = 26;
+            gCurTask->posX = (RandomSpread(-8, 1, 16) + ((struct Task *)gCurTask->unk8C)->unk48) << 16;
+            gCurTask->posY = (RandomSpread(-8, 1, 16) + ((struct Task *)gCurTask->unk8C)->unk4A + 16) << 16;
+            gCurTask->frame = 26;
             TaskYieldTrampoline(1);
-            gCurTask->unk3C++;
+            gCurTask->frame++;
             TaskYieldTrampoline(2);
-            gCurTask->unk3C++;
+            gCurTask->frame++;
             TaskYieldTrampoline(2);
-            gCurTask->unk3C++;
+            gCurTask->frame++;
             TaskYieldTrampoline(2);
-            gCurTask->unk3C--;
+            gCurTask->frame--;
             TaskYieldTrampoline(2);
-            gCurTask->unk3C--;
+            gCurTask->frame--;
             TaskYieldTrampoline(2);
             if (gCurTask->unk88->unk3F != 3 || gCurTask->unk88->unk04 != 13)
                 break;
         }
         break;
     case 2:
-        gCurTask->unk42 = 5;
+        gCurTask->layer = 5;
         while (1)
         {
             w = gCurTask;
@@ -124,23 +124,23 @@ void sub_08059570(void)
             w->unk64 = 0x40000;
             w->unk58 = 0x20000;
             w->unk68 = 0x20000;
-            gCurTask->unk4C = (RandomSpread(-8, 1, 16) + ((struct Task *)gCurTask->unk8C)->unk48) << 16;
-            gCurTask->unk50 = (RandomSpread(-8, 1, 16) + ((struct Task *)gCurTask->unk8C)->unk4A + 16) << 16;
-            gCurTask->unk3C = 22;
+            gCurTask->posX = (RandomSpread(-8, 1, 16) + ((struct Task *)gCurTask->unk8C)->unk48) << 16;
+            gCurTask->posY = (RandomSpread(-8, 1, 16) + ((struct Task *)gCurTask->unk8C)->unk4A + 16) << 16;
+            gCurTask->frame = 22;
             TaskYieldTrampoline(1);
-            gCurTask->unk3C++;
+            gCurTask->frame++;
             TaskYieldTrampoline(2);
-            gCurTask->unk3C++;
+            gCurTask->frame++;
             TaskYieldTrampoline(2);
-            gCurTask->unk3C++;
+            gCurTask->frame++;
             TaskYieldTrampoline(2);
-            gCurTask->unk3C++;
+            gCurTask->frame++;
             TaskYieldTrampoline(2);
-            gCurTask->unk3C++;
+            gCurTask->frame++;
             TaskYieldTrampoline(2);
-            gCurTask->unk3C++;
+            gCurTask->frame++;
             TaskYieldTrampoline(2);
-            gCurTask->unk3C++;
+            gCurTask->frame++;
             TaskYieldTrampoline(1);
             if (gCurTask->unk88->unk3F != 3 || gCurTask->unk88->unk04 != 13)
                 break;
@@ -149,93 +149,93 @@ void sub_08059570(void)
     case 3:
         gCurTask->unk00 = (u32)TaskUpdatePixelPos;
         gCurTask->unk04 = (u32)sub_08059aac;
-        gCurTask->unk42 = 8;
+        gCurTask->layer = 8;
         gCurTask->unk38 = gUnk_0874C804;
-        gCurTask->unk3C = 0;
+        gCurTask->frame = 0;
         TaskYieldTrampoline(1);
-        gCurTask->unk3C++;
+        gCurTask->frame++;
         TaskYieldTrampoline(1);
-        gCurTask->unk3C++;
+        gCurTask->frame++;
         TaskYieldTrampoline(1);
         gCurTask->unk04 = 0;
-        gCurTask->unk3C++;
+        gCurTask->frame++;
         TaskYieldTrampoline(1);
-        gCurTask->unk3C++;
+        gCurTask->frame++;
         TaskYieldTrampoline(1);
-        gCurTask->unk3C++;
+        gCurTask->frame++;
         TaskYieldTrampoline(1);
-        gCurTask->unk3C++;
+        gCurTask->frame++;
         TaskYieldTrampoline(2);
-        gCurTask->unk3C++;
+        gCurTask->frame++;
         TaskYieldTrampoline(2);
-        gCurTask->unk3C++;
+        gCurTask->frame++;
         TaskYieldTrampoline(1);
         TaskExitTrampoline();
     case 4:
         gCurTask->unk00 = (u32)TaskUpdatePixelPos;
         gCurTask->unk0C = (u32)TaskDrawWorld;
         gCurTask->unk04 = (u32)sub_08059aac;
-        gCurTask->unk42 = 5;
+        gCurTask->layer = 5;
         t = gCurTask;
         t->unk38 = gUnk_0874C828;
-        t->unk50 = (t->unk4A + 1) << 16;
-        t->unk3C = 0xFFFF;
+        t->posY = (t->unk4A + 1) << 16;
+        t->frame = 0xFFFF;
         TaskYieldTrampoline(4);
         gCurTask->unk04 = 0;
-        gCurTask->unk3C = 16;
+        gCurTask->frame = 16;
         TaskYieldTrampoline(1);
-        gCurTask->unk3C = 24;
+        gCurTask->frame = 24;
         TaskYieldTrampoline(1);
-        gCurTask->unk3C = 17;
+        gCurTask->frame = 17;
         TaskYieldTrampoline(1);
-        gCurTask->unk3C++;
+        gCurTask->frame++;
         TaskYieldTrampoline(1);
-        gCurTask->unk3C++;
+        gCurTask->frame++;
         TaskYieldTrampoline(1);
-        gCurTask->unk3C++;
+        gCurTask->frame++;
         TaskYieldTrampoline(1);
-        gCurTask->unk3C++;
+        gCurTask->frame++;
         TaskYieldTrampoline(1);
-        gCurTask->unk3C++;
+        gCurTask->frame++;
         TaskYieldTrampoline(1);
-        gCurTask->unk3C++;
+        gCurTask->frame++;
         TaskYieldTrampoline(1);
         TaskExitTrampoline();
     case 5:
         gCurTask->unk00 = (u32)TaskMove;
         gCurTask->unk0C = (u32)sub_08059b18;
-        gCurTask->unk42 = 5;
+        gCurTask->layer = 5;
         t = gCurTask;
         t->unk28 = t->unk48;
         t->unk2C = t->unk4A;
-        t->unk4C = 0;
-        t->unk50 = 0x30000;
+        t->posX = 0;
+        t->posY = 0x30000;
         t->unk54 = -0x40000;
-        t->unk3C = 0;
+        t->frame = 0;
         TaskYieldTrampoline(2);
-        gCurTask->unk3C += 2;
+        gCurTask->frame += 2;
         TaskYieldTrampoline(2);
         gCurTask->unk54 = -0x10000;
         gCurTask->unk5C = 0x800;
-        gCurTask->unk3C += 2;
+        gCurTask->frame += 2;
         TaskYieldTrampoline(5);
-        gCurTask->unk3C -= 2;
+        gCurTask->frame -= 2;
         TaskYieldTrampoline(3);
         gCurTask->unk6C = 0;
         do
         {
-            gCurTask->unk3C = 0xFFFF;
+            gCurTask->frame = 0xFFFF;
             TaskYieldTrampoline(1);
-            gCurTask->unk3C = 2;
+            gCurTask->frame = 2;
             TaskYieldTrampoline(1);
             gCurTask->unk6C++;
         } while ((s16)gCurTask->unk6C <= 1);
         gCurTask->unk6C = 0;
         do
         {
-            gCurTask->unk3C = 0xFFFF;
+            gCurTask->frame = 0xFFFF;
             TaskYieldTrampoline(1);
-            gCurTask->unk3C = 0;
+            gCurTask->frame = 0;
             TaskYieldTrampoline(1);
             gCurTask->unk6C++;
         } while ((s16)gCurTask->unk6C <= 1);
@@ -264,12 +264,12 @@ void sub_08059b18(void)
     struct Task *t = gCurTask;
     struct Task *u;
 
-    if (t->unk3C != -1)
+    if (t->frame != -1)
     {
         if (IsWorldPosOnScreen((s16)(t->unk28 + t->unk48), (s16)(t->unk2C + t->unk4A)) != 0)
         {
             u = gCurTask;
-            QueueSprite(u->unk42, gUnk_0874C828[u->unk3C], 0, 0,
+            QueueSprite(u->layer, gUnk_0874C828[u->frame], 0, 0,
                          u->unk28 + u->unk48 - gSpriteCameraX,
                          (s16)(u->unk2C + u->unk4A - gSpriteCameraY));
         }
@@ -277,7 +277,7 @@ void sub_08059b18(void)
         if (IsWorldPosOnScreen((s16)(t->unk28 - t->unk48), (s16)(t->unk2C + t->unk4A)) != 0)
         {
             u = gCurTask;
-            QueueSprite(u->unk42, gUnk_0874C828[(s16)(u->unk3C | 1)], 0, 0,
+            QueueSprite(u->layer, gUnk_0874C828[(s16)(u->frame | 1)], 0, 0,
                          u->unk28 - u->unk48 - gSpriteCameraX,
                          (s16)(u->unk2C + u->unk4A - gSpriteCameraY));
         }
@@ -290,13 +290,13 @@ void sub_08059c28(void)
     struct Task *u;
 
     gCurTask->unk00 = (u32)TaskMove;
-    gCurTask->unk42 = 5;
+    gCurTask->layer = 5;
     t = gCurTask;
     t->unk38 = gUnk_08751ECC;
     t->unk40 = (((struct Task *)t->unk8C)->unk40 + 0x800) | 12;
     t->unk3E = 0;
-    gCurTask->unk4C = (RandomSpreadFacing(-4, 1, 8) + ((struct Task *)gCurTask->unk8C)->unk48) << 16;
-    gCurTask->unk50 = (RandomSpread(-4, 1, 8) + ((struct Task *)gCurTask->unk8C)->unk4A) << 16;
+    gCurTask->posX = (RandomSpreadFacing(-4, 1, 8) + ((struct Task *)gCurTask->unk8C)->unk48) << 16;
+    gCurTask->posY = (RandomSpread(-4, 1, 8) + ((struct Task *)gCurTask->unk8C)->unk4A) << 16;
     u = gCurTask;
     switch (u->unk18 & 15)
     {
@@ -304,35 +304,35 @@ void sub_08059c28(void)
         u->unk0C = (u32)sub_0803dfc8;
         u->unk54 = -0x18000;
         u->unk58 = -0x18000;
-        u->unk3C = 0;
+        u->frame = 0;
         break;
     case 1:
         u->unk0C = (u32)TaskDrawWorldTilesLoaded;
         u->unk54 = 0x18000;
         u->unk58 = -0x18000;
-        u->unk3C = 4;
+        u->frame = 4;
         break;
     case 2:
         u->unk0C = (u32)TaskDrawWorldTilesLoaded;
         u->unk54 = -0x18000;
         u->unk58 = 0x18000;
-        u->unk3C = 8;
+        u->frame = 8;
         break;
     case 3:
         u->unk0C = (u32)TaskDrawWorldTilesLoaded;
         u->unk54 = 0x18000;
         u->unk58 = 0x18000;
-        u->unk3C = 11;
+        u->frame = 11;
         break;
     }
     TaskYieldTrampoline(2);
-    gCurTask->unk3C++;
+    gCurTask->frame++;
     TaskYieldTrampoline(4);
     gCurTask->unk54 = 0;
     gCurTask->unk58 = 0;
-    gCurTask->unk3C++;
+    gCurTask->frame++;
     TaskYieldTrampoline(2);
-    gCurTask->unk3C++;
+    gCurTask->frame++;
     TaskYieldTrampoline(1);
     TaskExitTrampoline();
 }
@@ -347,27 +347,27 @@ void sub_08059d7c(void)
         t->unk00 = (u32)TaskMoveRelativeToParent;
         t->unk0C = (u32)sub_0803dfc8;
         t->unk04 = (u32)sub_0805a320;
-        t->unk42 = 5;
+        t->layer = 5;
         {
             struct Task *u = gCurTask;
 
             u->unk38 = gUnk_08751F84;
             u->unk40 = (((struct Task *)u->unk8C)->unk40 + 0x1800) | 12;
-            u->unk4C = 0;
-            u->unk50 = 0;
+            u->posX = 0;
+            u->posY = 0;
         }
         for (;;)
         {
             while (gCurTask->unk88->unk3F == 3)
             {
-                gCurTask->unk3C = 0;
+                gCurTask->frame = 0;
                 TaskYieldTrampoline(1);
-                gCurTask->unk3C++;
+                gCurTask->frame++;
                 TaskYieldTrampoline(1);
-                gCurTask->unk3C = 0xFFFF;
+                gCurTask->frame = 0xFFFF;
                 TaskYieldTrampoline(4);
             }
-            gCurTask->unk3C = 0xFFFF;
+            gCurTask->frame = 0xFFFF;
             while (gCurTask->unk88->unk3F != 3)
                 TaskYieldTrampoline(1);
         }
@@ -375,28 +375,28 @@ void sub_08059d7c(void)
         gCurTask->unk00 = (u32)TaskUpdatePixelPos;
         gCurTask->unk0C = (u32)TaskDrawWorld;
         gCurTask->unk04 = (u32)sub_0805a320;
-        gCurTask->unk42 = 8;
+        gCurTask->layer = 8;
         gCurTask->unk38 = gUnk_08751F0C;
         for (;;)
         {
             while (abs(((struct Task *)gCurTask->unk8C)->unk58) > 0x2FFFF)
             {
-                gCurTask->unk4C = (RandomSpread(-8, 1, 16) + ((struct Task *)gCurTask->unk8C)->unk48) << 16;
-                gCurTask->unk50 = (RandomSpread(-8, 1, 16) + ((struct Task *)gCurTask->unk8C)->unk4A) << 16;
-                gCurTask->unk3C = 26;
+                gCurTask->posX = (RandomSpread(-8, 1, 16) + ((struct Task *)gCurTask->unk8C)->unk48) << 16;
+                gCurTask->posY = (RandomSpread(-8, 1, 16) + ((struct Task *)gCurTask->unk8C)->unk4A) << 16;
+                gCurTask->frame = 26;
                 TaskYieldTrampoline(1);
-                gCurTask->unk3C++;
+                gCurTask->frame++;
                 TaskYieldTrampoline(2);
-                gCurTask->unk3C++;
+                gCurTask->frame++;
                 TaskYieldTrampoline(2);
-                gCurTask->unk3C++;
+                gCurTask->frame++;
                 TaskYieldTrampoline(2);
-                gCurTask->unk3C--;
+                gCurTask->frame--;
                 TaskYieldTrampoline(2);
-                gCurTask->unk3C--;
+                gCurTask->frame--;
                 TaskYieldTrampoline(2);
             }
-            gCurTask->unk3C = 0xFFFF;
+            gCurTask->frame = 0xFFFF;
             while (abs(((struct Task *)gCurTask->unk8C)->unk58) <= 0x2FFFF)
                 TaskYieldTrampoline(1);
         }
@@ -404,32 +404,32 @@ void sub_08059d7c(void)
         gCurTask->unk00 = (u32)TaskUpdatePixelPos;
         gCurTask->unk0C = (u32)TaskDrawWorld;
         gCurTask->unk04 = (u32)sub_0805a320;
-        gCurTask->unk42 = 5;
+        gCurTask->layer = 5;
         gCurTask->unk38 = gUnk_08751F0C;
         for (;;)
         {
             while (abs(((struct Task *)gCurTask->unk8C)->unk58) > 0x2FFFF)
             {
-                gCurTask->unk4C = (RandomSpread(-8, 1, 16) + ((struct Task *)gCurTask->unk8C)->unk48) << 16;
-                gCurTask->unk50 = (RandomSpread(-8, 1, 16) + ((struct Task *)gCurTask->unk8C)->unk4A) << 16;
-                gCurTask->unk3C = 22;
+                gCurTask->posX = (RandomSpread(-8, 1, 16) + ((struct Task *)gCurTask->unk8C)->unk48) << 16;
+                gCurTask->posY = (RandomSpread(-8, 1, 16) + ((struct Task *)gCurTask->unk8C)->unk4A) << 16;
+                gCurTask->frame = 22;
                 TaskYieldTrampoline(1);
-                gCurTask->unk3C++;
+                gCurTask->frame++;
                 TaskYieldTrampoline(2);
-                gCurTask->unk3C++;
+                gCurTask->frame++;
                 TaskYieldTrampoline(2);
-                gCurTask->unk3C++;
+                gCurTask->frame++;
                 TaskYieldTrampoline(2);
-                gCurTask->unk3C++;
+                gCurTask->frame++;
                 TaskYieldTrampoline(2);
-                gCurTask->unk3C++;
+                gCurTask->frame++;
                 TaskYieldTrampoline(2);
-                gCurTask->unk3C++;
+                gCurTask->frame++;
                 TaskYieldTrampoline(2);
-                gCurTask->unk3C++;
+                gCurTask->frame++;
                 TaskYieldTrampoline(1);
             }
-            gCurTask->unk3C = 0xFFFF;
+            gCurTask->frame = 0xFFFF;
             while (abs(((struct Task *)gCurTask->unk8C)->unk58) <= 0x2FFFF)
                 TaskYieldTrampoline(1);
         }
@@ -437,35 +437,35 @@ void sub_08059d7c(void)
         gCurTask->unk00 = (u32)TaskUpdatePixelPos;
         gCurTask->unk0C = (u32)TaskDrawWorld;
         gCurTask->unk04 = (u32)sub_0805a320;
-        gCurTask->unk42 = 8;
+        gCurTask->layer = 8;
         gCurTask->unk38 = gUnk_08751F0C;
         for (;;)
         {
             while (abs(((struct Task *)gCurTask->unk8C)->unk58) > 0x37FFF)
             {
-                gCurTask->unk4C = ((struct Task *)gCurTask->unk8C)->unk48 << 16;
-                gCurTask->unk50 = ((struct Task *)gCurTask->unk8C)->unk4A << 16;
-                gCurTask->unk3C = 16;
+                gCurTask->posX = ((struct Task *)gCurTask->unk8C)->unk48 << 16;
+                gCurTask->posY = ((struct Task *)gCurTask->unk8C)->unk4A << 16;
+                gCurTask->frame = 16;
                 TaskYieldTrampoline(2);
-                gCurTask->unk3C++;
+                gCurTask->frame++;
                 TaskYieldTrampoline(2);
-                gCurTask->unk3C++;
+                gCurTask->frame++;
                 TaskYieldTrampoline(2);
-                gCurTask->unk3C++;
+                gCurTask->frame++;
                 TaskYieldTrampoline(2);
-                gCurTask->unk3C++;
+                gCurTask->frame++;
                 TaskYieldTrampoline(2);
-                gCurTask->unk3C++;
+                gCurTask->frame++;
                 TaskYieldTrampoline(2);
             }
-            gCurTask->unk3C = 0xFFFF;
+            gCurTask->frame = 0xFFFF;
             while (abs(((struct Task *)gCurTask->unk8C)->unk58) <= 0x37FFF)
                 TaskYieldTrampoline(1);
         }
     case 0x500:
         gCurTask->unk00 = (u32)TaskMove;
         gCurTask->unk0C = (u32)TaskDrawWorld;
-        gCurTask->unk42 = 5;
+        gCurTask->layer = 5;
         {
             struct Task *u = gCurTask;
             u32 off;
@@ -480,8 +480,8 @@ void sub_08059d7c(void)
             RequestCopy(1, src + 256, (void *)(off + 0x06010900), 128);
             RequestCopy(1, src + 384, (void *)(off + 0x06010D00), 128);
         }
-        gCurTask->unk4C = (gCurTask->unk48 + RandomSpreadFacing(0, 1, 8)) << 16;
-        gCurTask->unk50 = (gCurTask->unk4A + RandomSpread(0, 1, 8)) << 16;
+        gCurTask->posX = (gCurTask->unk48 + RandomSpreadFacing(0, 1, 8)) << 16;
+        gCurTask->posY = (gCurTask->unk4A + RandomSpread(0, 1, 8)) << 16;
         {
             u16 *row = gUnk_0873BB0E[gCurTask->unk18 & 15];
 
@@ -501,17 +501,17 @@ void sub_08059d7c(void)
                 if (a & 0x8000)
                     b |= 0xFF000000;
                 w->unk58 = b;
-                w->unk3C = row[2];
+                w->frame = row[2];
             }
         }
         TaskYieldTrampoline(2);
-        gCurTask->unk3C++;
+        gCurTask->frame++;
         TaskYieldTrampoline(4);
         gCurTask->unk54 = 0;
         gCurTask->unk58 = 0;
-        gCurTask->unk3C++;
+        gCurTask->frame++;
         TaskYieldTrampoline(2);
-        gCurTask->unk3C++;
+        gCurTask->frame++;
         TaskYieldTrampoline(1);
         TaskExitTrampoline();
         break;

@@ -6,7 +6,7 @@
  * M06 terrain / collision query (issue #84), range 0x0801C30C-0x0801C444.
  *
  * Two per-frame entry points that load the actor's terrain box (TerrainProbeBegin),
- * derive the actor's position relative to the room from Task.unk4C/unk50 and
+ * derive the actor's position relative to the room from Task.posX/unk50 and
  * Task.unk54/unk58, run the probes and write the results back (TerrainProbeEnd).
  */
 
@@ -136,8 +136,8 @@ void sub_0801c30c(const s8 *p)
     TerrainProbeBegin(p);
     gTerrainVelX = gCurTask->unk54;
     gTerrainVelY = gCurTask->unk58;
-    gTerrainPrevX = ((gTerrainProbeX << 16) + (gCurTask->unk4C & 0xFFFF) - gTerrainVelX) >> 16;
-    gTerrainPrevY = ((gTerrainProbeY << 16) + (gCurTask->unk50 & 0xFFFF) - gTerrainVelY) >> 16;
+    gTerrainPrevX = ((gTerrainProbeX << 16) + (gCurTask->posX & 0xFFFF) - gTerrainVelX) >> 16;
+    gTerrainPrevY = ((gTerrainProbeY << 16) + (gCurTask->posY & 0xFFFF) - gTerrainVelY) >> 16;
     if (gTerrainProbeResult.unkB & 0x80)
         sub_080222b0(gTerrainPrevX, gTerrainPrevY);
     sub_080207a0();
@@ -152,8 +152,8 @@ u16 sub_0801c3a4(const s8 *p)
     TerrainProbeBegin(p);
     gTerrainVelX = gCurTask->unk54;
     gTerrainVelY = gCurTask->unk58;
-    gTerrainPrevX = ((gTerrainProbeX << 16) + (gCurTask->unk4C & 0xFFFF) - gTerrainVelX) >> 16;
-    gTerrainPrevY = ((gTerrainProbeY << 16) + (gCurTask->unk50 & 0xFFFF) - gTerrainVelY) >> 16;
+    gTerrainPrevX = ((gTerrainProbeX << 16) + (gCurTask->posX & 0xFFFF) - gTerrainVelX) >> 16;
+    gTerrainPrevY = ((gTerrainProbeY << 16) + (gCurTask->posY & 0xFFFF) - gTerrainVelY) >> 16;
     if (gTerrainProbeResult.unkB & 0x80)
         sub_080222b0(gTerrainPrevX, gTerrainPrevY);
     r = sub_0802069c();

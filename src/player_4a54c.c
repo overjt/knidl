@@ -80,7 +80,7 @@ void sub_0804a54c(void)
     gCurTask->unk80 = 0;
     TaskSetFrame(0xBBD);
     TaskYieldTrampoline(6);
-    gCurTask->unk3C++;
+    gCurTask->frame++;
     TaskYieldTrampoline(2);
     CreatePlayerObject(gCurTask->unk88->unk00, 8, 0);
     CreatePlayerObject(gCurTask->unk88->unk00, 8, 1);
@@ -89,21 +89,21 @@ void sub_0804a54c(void)
     do {
         TaskSetFrame(0xBBF);
         TaskYieldTrampoline(2);
-        gCurTask->unk3C++;
+        gCurTask->frame++;
         TaskYieldTrampoline(3);
     } while ((s16)++gCurTask->unk6C <= 1);
     gCurTask->unk6C = 0;
     do {
         TaskSetFrame(0xBC1);
         TaskYieldTrampoline(2);
-        gCurTask->unk3C++;
+        gCurTask->frame++;
         TaskYieldTrampoline(3);
     } while ((s16)++gCurTask->unk6C <= 1);
     gCurTask->unk6C = 0;
     do {
         TaskSetFrame(0xBC3);
         TaskYieldTrampoline(2);
-        gCurTask->unk3C++;
+        gCurTask->frame++;
         TaskYieldTrampoline(3);
     } while ((s16)++gCurTask->unk6C <= 1);
     TaskSetFrame(0xBBF);
@@ -150,16 +150,16 @@ void sub_0804a6bc(void)
         TaskYieldTrampoline(1);
         gCurTask->unk6C = 0;
         do {
-            gCurTask->unk3C++;
+            gCurTask->frame++;
             TaskYieldTrampoline(2);
         } while ((s16)++gCurTask->unk6C <= 3);
-        gCurTask->unk3C++;
+        gCurTask->frame++;
         TaskYieldTrampoline(1);
-        gCurTask->unk3C++;
+        gCurTask->frame++;
         TaskYieldTrampoline(1);
-        gCurTask->unk3C++;
+        gCurTask->frame++;
         TaskYieldTrampoline(2);
-        gCurTask->unk42 = 13;
+        gCurTask->layer = 13;
         gCurTask->unk73 = 1;
         /* fallthrough */
     case 1:
@@ -177,7 +177,7 @@ void sub_0804a6bc(void)
         gCurTask->unk73 = 2;
         /* fallthrough */
     case 2:
-        gCurTask->unk42 = 7;
+        gCurTask->layer = 7;
         {
             struct Task *t = gCurTask;
             if (t->unk7A & 1) {
@@ -195,14 +195,14 @@ void sub_0804a6bc(void)
         CreatePlayerEffect(gCurTask->unk88->unk00, 43, 1);
         CreatePlayerEffect(gCurTask->unk88->unk00, 43, 2);
         CreatePlayerEffect(gCurTask->unk88->unk00, 43, 3);
-        gCurTask->unk3C++;
+        gCurTask->frame++;
         TaskYieldTrampoline(3);
         gCurTask->unk6C = 0;
         do {
-            gCurTask->unk3C++;
+            gCurTask->frame++;
             TaskYieldTrampoline(2);
         } while ((s16)++gCurTask->unk6C <= 3);
-        gCurTask->unk3C++;
+        gCurTask->frame++;
         TaskYieldTrampoline(1);
         gCurTask->unk73 = 3;
         SetPlayerInvulnerability(255, 0, gCurTask->unk88->unk00);

@@ -9,7 +9,7 @@
  *                 relative to the camera gSpriteCameraX/gSpriteCameraY, with a
  *                 63-pixel margin on every side?
  *   TaskLoadFrameTilesAndPalette  upload the running task's tile stream (its graphics
- *                 descriptor Task.unk38[Task.unk3C], struct TaskGfx) to OBJ VRAM
+ *                 descriptor Task.unk38[Task.frame], struct TaskGfx) to OBJ VRAM
  *                 at tile Task.unk40 & 0x7FF (or to the 0x0600FE00 bank when
  *                 `alt` is set), then its palette to palette-buffer bank
  *                 Task.unk40 >> 12; returns the descriptor's first word.  A dead
@@ -68,7 +68,7 @@ u32 TaskLoadFrameTilesAndPalette(u32 alt)
     else
         dst = (attr & 0x7FF) * 32 + 0x0600FE00;
     tbl = gCurTask->unk38;
-    g = (struct TaskGfx *)tbl[gCurTask->unk3C];
+    g = (struct TaskGfx *)tbl[gCurTask->frame];
     p = g->unk08;
     while (*p != 0xFFFF)
     {
@@ -98,7 +98,7 @@ u32 TaskLoadFrameTiles(u32 alt)
     else
         dst = (attr & 0x7FF) * 32 + 0x0600FE00;
     tbl = gCurTask->unk38;
-    g = (struct TaskGfx *)tbl[gCurTask->unk3C];
+    g = (struct TaskGfx *)tbl[gCurTask->frame];
     p = g->unk08;
     while (*p != 0xFFFF)
     {

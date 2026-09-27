@@ -115,7 +115,7 @@ void PlayerActionRun(void)
                 gCurTask->unk6C = 0;
                 do
                 {
-                    gCurTask->unk3C++;
+                    gCurTask->frame++;
                     TaskYieldTrampoline(2);
                     gCurTask->unk6C++;
                 } while ((s16)gCurTask->unk6C <= 3);
@@ -124,7 +124,7 @@ void PlayerActionRun(void)
                 gCurTask->unk6C = 0;
                 do
                 {
-                    gCurTask->unk3C++;
+                    gCurTask->frame++;
                     TaskYieldTrampoline(2);
                     gCurTask->unk6C++;
                 } while ((s16)gCurTask->unk6C <= 9);
@@ -140,13 +140,13 @@ void PlayerActionRun(void)
                 gCurTask->unk6C = 0;
                 do
                 {
-                    gCurTask->unk3C++;
+                    gCurTask->frame++;
                     TaskYieldTrampoline(3);
-                    gCurTask->unk3C++;
+                    gCurTask->frame++;
                     TaskYieldTrampoline(2);
                     gCurTask->unk6C++;
                 } while ((s16)gCurTask->unk6C <= 2);
-                gCurTask->unk3C++;
+                gCurTask->frame++;
                 TaskYieldTrampoline(3);
             }
         }
@@ -166,7 +166,7 @@ void PlayerActionRun(void)
         {
             TaskSetFrame(gCurTask->unk46);
             TaskYieldTrampoline(2);
-            gCurTask->unk3C++;
+            gCurTask->frame++;
             TaskYieldTrampoline(2);
         }
     case 0:
@@ -305,7 +305,7 @@ void PlayerActionSkid(void)
         {
             TaskSetFrame(gCurTask->unk46);
             TaskYieldTrampoline(2);
-            gCurTask->unk3C++;
+            gCurTask->frame++;
             TaskYieldTrampoline(2);
         }
     case 0:
@@ -323,14 +323,14 @@ void PlayerActionSkidUpdate(void)
         {
             if (gLatchedHeldKeys[gCurTask->unk88->unk00] & 48)
             {
-                if (gCurTask->unk43 == 1)
+                if (gCurTask->facing == 1)
                 {
                     if (gLatchedHeldKeys[gCurTask->unk88->unk00] & 32)
-                        gCurTask->unk43 = -1;
+                        gCurTask->facing = -1;
                 }
                 else if (gLatchedHeldKeys[gCurTask->unk88->unk00] & 16)
                 {
-                    gCurTask->unk43 = 1;
+                    gCurTask->facing = 1;
                 }
                 gCurTask->unk5C = 0;
                 if (gCurTask->unk88->unk3D == 0)
@@ -374,7 +374,7 @@ void PlayerActionJump(void)
     {
         TaskSetFrame(0x158);
         TaskYieldTrampoline(2);
-        gCurTask->unk3C++;
+        gCurTask->frame++;
         TaskSleepForever();
     }
     gCurTask->unk46 = gUnk_0873D384[gCurTask->unk88->unk0D];
@@ -400,7 +400,7 @@ void PlayerActionJump(void)
         {
             TaskSetFrame(gCurTask->unk46);
             TaskYieldTrampoline(2);
-            gCurTask->unk3C++;
+            gCurTask->frame++;
             TaskYieldTrampoline(2);
         }
     }
@@ -488,7 +488,7 @@ void sub_08034d34(void)
         {
             TaskSetFrame(gCurTask->unk46);
             TaskYieldTrampoline(2);
-            gCurTask->unk3C++;
+            gCurTask->frame++;
             TaskYieldTrampoline(2);
         }
     case 0:

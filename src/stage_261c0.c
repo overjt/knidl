@@ -287,7 +287,7 @@ void sub_08026308(void)
         {
             if (gTaskSlotTypes[i] != -1)
             {
-                gTasks[i].unk4C &= 0x1FFFFFF;
+                gTasks[i].posX &= 0x1FFFFFF;
                 gTasks[i].unk48 &= 0x1FF;
             }
         }
@@ -388,7 +388,7 @@ void sub_08026704(s32 i)
     if (i != -1)
     {
         t = &gTasks[i];
-        t->unk42 = 15;
+        t->layer = 15;
         t->unk3E = 0x4000;
     }
 }

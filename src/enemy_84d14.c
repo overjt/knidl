@@ -159,27 +159,27 @@ void sub_08084dc0(void)
         TaskSetFrame(4);
         TaskYieldTrampoline(1);
         u1 = gCurTask;
-        u1->unk3C++;
+        u1->frame++;
         TaskYieldTrampoline(2);
         u2 = gCurTask;
-        u2->unk3C++;
+        u2->frame++;
         TaskYieldTrampoline(2);
         u3 = gCurTask;
-        u3->unk3C++;
+        u3->frame++;
         TaskYieldTrampoline(8);
         u4 = gCurTask;
-        u4->unk3C--;
+        u4->frame--;
         TaskYieldTrampoline(2);
         u5 = gCurTask;
-        u5->unk3C--;
+        u5->frame--;
         TaskYieldTrampoline(2);
         u6 = gCurTask;
-        u6->unk3C--;
+        u6->frame--;
         TaskYieldTrampoline(1);
-        gCurTask->unk43 = -gCurTask->unk43;
+        gCurTask->facing = -gCurTask->facing;
         gCurTask->unk6C++;
     } while ((s16)gCurTask->unk6C <= 3);
-    gCurTask->unk43 = -gCurTask->unk43;
+    gCurTask->facing = -gCurTask->facing;
     ActorSetState(1);
     TaskSleepForever();
 }
@@ -203,33 +203,33 @@ void sub_08084e9c(void)
     gCurTask->unk15 = 1;
     while (1)
     {
-        a = gCurTask->unk43;
+        a = gCurTask->facing;
         if (a == TaskGetFacingTowardNearestPlayer()
             && abs(TaskGetNearestPlayerDy()) <= 32)
         {
             ActorSetState(2);
             TaskSleepForever();
         }
-        gCurTask->unk43 = -gCurTask->unk43;
+        gCurTask->facing = -gCurTask->facing;
         TaskSetFrame(4);
         TaskYieldTrampoline(1);
         u1 = gCurTask;
-        u1->unk3C++;
+        u1->frame++;
         TaskYieldTrampoline(2);
         u2 = gCurTask;
-        u2->unk3C++;
+        u2->frame++;
         TaskYieldTrampoline(2);
         u3 = gCurTask;
-        u3->unk3C++;
+        u3->frame++;
         TaskYieldTrampoline(8);
         u4 = gCurTask;
-        u4->unk3C--;
+        u4->frame--;
         TaskYieldTrampoline(2);
         u5 = gCurTask;
-        u5->unk3C--;
+        u5->frame--;
         TaskYieldTrampoline(2);
         u6 = gCurTask;
-        u6->unk3C--;
+        u6->frame--;
         TaskYieldTrampoline(1);
     }
 }
@@ -492,7 +492,7 @@ void sub_08085450(void)
     t = gCurTask;
     t->unk00 = (u32)ActorMove;
     t->unk0C = (u32)ActorDrawWorldInViewOrDestroy;
-    t->unk42 = 11;
+    t->layer = 11;
     u = gCurTask;
     u->unk38 = gUnk_087523A0;
     u->unk8C->unk1A = 4;
@@ -547,25 +547,25 @@ void sub_08085530(void)
         TaskSetFrame(4);
         TaskYieldTrampoline(gUnk_08742020[gCurTask->unk74]);
         u1 = gCurTask;
-        u1->unk3C++;
+        u1->frame++;
         TaskYieldTrampoline(gUnk_08742024[u1->unk74]);
         u2 = gCurTask;
-        u2->unk3C++;
+        u2->frame++;
         TaskYieldTrampoline(gUnk_08742024[u2->unk74]);
         u3 = gCurTask;
-        u3->unk3C++;
+        u3->frame++;
         TaskYieldTrampoline(gUnk_08742024[u3->unk74]);
         u4 = gCurTask;
-        u4->unk3C++;
+        u4->frame++;
         TaskYieldTrampoline(gUnk_08742020[u4->unk74]);
         u5 = gCurTask;
-        u5->unk3C--;
+        u5->frame--;
         TaskYieldTrampoline(gUnk_08742024[u5->unk74]);
         u6 = gCurTask;
-        u6->unk3C--;
+        u6->frame--;
         TaskYieldTrampoline(gUnk_08742024[u6->unk74]);
         u7 = gCurTask;
-        u7->unk3C--;
+        u7->frame--;
         TaskYieldTrampoline(gUnk_08742024[u7->unk74]);
     }
 }
@@ -610,16 +610,16 @@ void sub_08085660(void)
     TaskSetFrame(7);
     TaskYieldTrampoline(2);
     t = gCurTask;
-    t->unk3C--;
+    t->frame--;
     TaskYieldTrampoline(2);
     t = gCurTask;
-    t->unk3C--;
+    t->frame--;
     TaskYieldTrampoline(2);
     t = gCurTask;
-    t->unk3C++;
+    t->frame++;
     TaskYieldTrampoline(2);
     t = gCurTask;
-    t->unk3C++;
+    t->frame++;
     TaskYieldTrampoline(2);
     TaskSetFrame(8);
     TaskSleepForever();
@@ -670,12 +670,12 @@ void sub_080856e0(void)
         sp.unk0C = 8;
         sp.unk0E = 3;
         sp.unk0A = 1;
-        if (sub_08021a40(w->unk48 + (w->unk43 << 3), w->unk4A + 3) == 0)
+        if (sub_08021a40(w->unk48 + (w->facing << 3), w->unk4A + 3) == 0)
             gCurTask->unk46 = CreateActorFromDescAtOffsetFacing(&sp, 0);
         TaskYieldTrampoline(2);
         x = gCurTask;
         x->unk34++;
-        if ((s16)x->unk3C == 12)
+        if ((s16)x->frame == 12)
             TaskSetFrame(13);
         else
             TaskSetFrame(12);
@@ -742,25 +742,25 @@ void sub_080858fc(void)
         TaskSetFrame(4);
         TaskYieldTrampoline(gUnk_08742020[1]);
         u1 = gCurTask;
-        u1->unk3C++;
+        u1->frame++;
         TaskYieldTrampoline(gUnk_08742024[1]);
         u2 = gCurTask;
-        u2->unk3C++;
+        u2->frame++;
         TaskYieldTrampoline(gUnk_08742024[1]);
         u3 = gCurTask;
-        u3->unk3C++;
+        u3->frame++;
         TaskYieldTrampoline(gUnk_08742024[1]);
         u4 = gCurTask;
-        u4->unk3C++;
+        u4->frame++;
         TaskYieldTrampoline(gUnk_08742020[1]);
         u5 = gCurTask;
-        u5->unk3C--;
+        u5->frame--;
         TaskYieldTrampoline(gUnk_08742024[1]);
         u6 = gCurTask;
-        u6->unk3C--;
+        u6->frame--;
         TaskYieldTrampoline(gUnk_08742024[1]);
         u7 = gCurTask;
-        u7->unk3C--;
+        u7->frame--;
         TaskYieldTrampoline(gUnk_08742024[1]);
     }
 }
@@ -805,16 +805,16 @@ void sub_08085a04(void)
     TaskSetFrame(7);
     TaskYieldTrampoline(2);
     t = gCurTask;
-    t->unk3C--;
+    t->frame--;
     TaskYieldTrampoline(2);
     t = gCurTask;
-    t->unk3C--;
+    t->frame--;
     TaskYieldTrampoline(2);
     t = gCurTask;
-    t->unk3C++;
+    t->frame++;
     TaskYieldTrampoline(2);
     t = gCurTask;
-    t->unk3C++;
+    t->frame++;
     TaskYieldTrampoline(2);
     TaskSetFrame(8);
     TaskSleepForever();
@@ -865,12 +865,12 @@ void sub_08085a84(void)
         sp.unk0E = 3;
         sp.unk0A = 1;
         w = gCurTask;
-        if (sub_08021a40(w->unk48 + (w->unk43 << 3), w->unk4A + 3) == 0)
+        if (sub_08021a40(w->unk48 + (w->facing << 3), w->unk4A + 3) == 0)
             gCurTask->unk46 = CreateActorFromDescAtOffsetFacing(&sp, 0);
         TaskYieldTrampoline(2);
         x = gCurTask;
         x->unk34++;
-        if ((s16)x->unk3C == 12)
+        if ((s16)x->frame == 12)
             TaskSetFrame(13);
         else
             TaskSetFrame(12);
@@ -925,25 +925,25 @@ void sub_08085c2c(void)
         TaskSetFrame(4);
         TaskYieldTrampoline(10);
         u1 = gCurTask;
-        u1->unk3C++;
+        u1->frame++;
         TaskYieldTrampoline(7);
         u2 = gCurTask;
-        u2->unk3C++;
+        u2->frame++;
         TaskYieldTrampoline(7);
         u3 = gCurTask;
-        u3->unk3C++;
+        u3->frame++;
         TaskYieldTrampoline(7);
         u4 = gCurTask;
-        u4->unk3C++;
+        u4->frame++;
         TaskYieldTrampoline(10);
         u5 = gCurTask;
-        u5->unk3C--;
+        u5->frame--;
         TaskYieldTrampoline(7);
         u6 = gCurTask;
-        u6->unk3C--;
+        u6->frame--;
         TaskYieldTrampoline(7);
         u7 = gCurTask;
-        u7->unk3C--;
+        u7->frame--;
         TaskYieldTrampoline(7);
     }
 }
@@ -979,25 +979,25 @@ void sub_08085cd8(void)
             TaskSetFrame(4);
             TaskYieldTrampoline(10);
             u1 = gCurTask;
-            u1->unk3C++;
+            u1->frame++;
             TaskYieldTrampoline(7);
             u2 = gCurTask;
-            u2->unk3C++;
+            u2->frame++;
             TaskYieldTrampoline(7);
             u3 = gCurTask;
-            u3->unk3C++;
+            u3->frame++;
             TaskYieldTrampoline(7);
             u4 = gCurTask;
-            u4->unk3C++;
+            u4->frame++;
             TaskYieldTrampoline(10);
             u5 = gCurTask;
-            u5->unk3C--;
+            u5->frame--;
             TaskYieldTrampoline(7);
             u6 = gCurTask;
-            u6->unk3C--;
+            u6->frame--;
             TaskYieldTrampoline(7);
             u7 = gCurTask;
-            u7->unk3C--;
+            u7->frame--;
             TaskYieldTrampoline(7);
             gCurTask->unk6C++;
         } while ((s16)gCurTask->unk6C <= 2);
@@ -1026,12 +1026,12 @@ void sub_08085cd8(void)
             sp.unk0E = 3;
             sp.unk0A = 1;
             w = gCurTask;
-            if (sub_08021a40(w->unk48 + (w->unk43 << 3), w->unk4A + 3) == 0)
+            if (sub_08021a40(w->unk48 + (w->facing << 3), w->unk4A + 3) == 0)
                 gCurTask->unk46 = CreateActorFromDescAtOffsetFacing(&sp, 0);
             TaskYieldTrampoline(2);
             x = gCurTask;
             x->unk34++;
-            if ((s16)x->unk3C == 12)
+            if ((s16)x->frame == 12)
                 TaskSetFrame(13);
             else
                 TaskSetFrame(12);
@@ -1180,7 +1180,7 @@ void sub_08086090(void)
     t = gCurTask;
     t->unk00 = (u32)ActorMove;
     t->unk0C = (u32)ActorDrawWorldInViewOrDestroy;
-    t->unk42 = 11;
+    t->layer = 11;
     gCurTask->unk38 = gUnk_0875240C;
     TaskFaceNearestPlayer();
     CallTableEntry(gCurTask->unk73, 7, gUnk_08742064);

@@ -73,16 +73,16 @@ void PlayerActionSwim(void)
             TaskYieldTrampoline(gCurTask->unk28);
             for (gCurTask->unk6C = 0; (s16)gCurTask->unk6C <= 3; gCurTask->unk6C++)
             {
-                gCurTask->unk3C++;
+                gCurTask->frame++;
                 TaskYieldTrampoline(gCurTask->unk28);
             }
             TaskSetFrame(0x161);
             TaskYieldTrampoline(gCurTask->unk28);
             for (gCurTask->unk6C = 0; (s16)gCurTask->unk6C <= 9; gCurTask->unk6C++)
             {
-                gCurTask->unk3C++;
+                gCurTask->frame++;
                 TaskYieldTrampoline(gCurTask->unk28);
-                if (gCurTask->unk3C == 356)
+                if (gCurTask->frame == 356)
                     PlaySfxIfLocalPlayer(135, gCurTask->unk88->unk00);
             }
             PlaySfxIfLocalPlayer(135, gCurTask->unk88->unk00);
@@ -127,9 +127,9 @@ void PlayerActionSwim(void)
         {
             gCurTask->unk2C = 0;
             TaskSetFrame(anim[3]);
-            gCurTask->unk3C++;
+            gCurTask->frame++;
             TaskYieldTrampoline(3);
-            gCurTask->unk3C--;
+            gCurTask->frame--;
             TaskYieldTrampoline(3);
         }
         TaskSetFrame(anim[0]);
@@ -150,13 +150,13 @@ void PlayerActionSwim(void)
                 TaskYieldTrampoline(2);
                 for (gCurTask->unk6C = 0; (s16)gCurTask->unk6C <= 4; gCurTask->unk6C++)
                 {
-                    gCurTask->unk3C++;
+                    gCurTask->frame++;
                     TaskYieldTrampoline(2);
                 }
                 gCurTask->unk6C = 0;
                 do
                 {
-                    gCurTask->unk3C++;
+                    gCurTask->frame++;
                     if (gCurTask->unk28 != 0)
                         goto lab1;
                     TaskYieldTrampoline(1);
@@ -192,9 +192,9 @@ void PlayerActionSwim(void)
         gCurTask->unk88->unk14 = 15;
         TaskSetFrame(anim[3]);
         TaskYieldTrampoline(3);
-        gCurTask->unk3C++;
+        gCurTask->frame++;
         TaskYieldTrampoline(3);
-        gCurTask->unk3C++;
+        gCurTask->frame++;
         break;
     case 3:
         PlayerSetMotionXPreset(11, 3);
@@ -218,35 +218,35 @@ void PlayerActionSwim(void)
             PlaySfxIfLocalPlayer(120, gCurTask->unk88->unk00);
             TaskSetFrame(gCurTask->unk46);
             TaskYieldTrampoline(3);
-            gCurTask->unk3C++;
+            gCurTask->frame++;
             TaskYieldTrampoline(3);
-            gCurTask->unk3C++;
+            gCurTask->frame++;
             TaskYieldTrampoline(2);
-            gCurTask->unk3C++;
+            gCurTask->frame++;
             TaskYieldTrampoline(2);
-            gCurTask->unk3C++;
+            gCurTask->frame++;
             TaskYieldTrampoline(3);
-            gCurTask->unk3C++;
+            gCurTask->frame++;
             TaskYieldTrampoline(3);
-            gCurTask->unk3C++;
+            gCurTask->frame++;
             TaskYieldTrampoline(4);
-            gCurTask->unk3C++;
+            gCurTask->frame++;
             TaskYieldTrampoline(4);
-            gCurTask->unk3C++;
+            gCurTask->frame++;
             TaskYieldTrampoline(3);
-            gCurTask->unk3C++;
+            gCurTask->frame++;
             TaskYieldTrampoline(3);
-            gCurTask->unk3C++;
+            gCurTask->frame++;
             TaskYieldTrampoline(2);
-            gCurTask->unk3C++;
+            gCurTask->frame++;
             TaskYieldTrampoline(2);
-            gCurTask->unk3C++;
+            gCurTask->frame++;
             TaskYieldTrampoline(3);
-            gCurTask->unk3C++;
+            gCurTask->frame++;
             TaskYieldTrampoline(3);
-            gCurTask->unk3C++;
+            gCurTask->frame++;
             TaskYieldTrampoline(4);
-            gCurTask->unk3C++;
+            gCurTask->frame++;
             TaskYieldTrampoline(4);
         }
     }
@@ -528,14 +528,14 @@ void PlayerActionWalkInWater(void)
             TaskYieldTrampoline(5);
             for (gCurTask->unk6C = 0; (s16)gCurTask->unk6C <= 3; gCurTask->unk6C++)
             {
-                gCurTask->unk3C++;
+                gCurTask->frame++;
                 TaskYieldTrampoline(5);
             }
             TaskSetFrame(0x161);
             TaskYieldTrampoline(5);
             for (gCurTask->unk6C = 0; (s16)gCurTask->unk6C <= 9; gCurTask->unk6C++)
             {
-                gCurTask->unk3C++;
+                gCurTask->frame++;
                 TaskYieldTrampoline(5);
             }
         }
@@ -559,26 +559,26 @@ void PlayerActionWalkInWater(void)
     {
         TaskSetFrame(gCurTask->unk46);
         TaskYieldTrampoline(3);
-        gCurTask->unk3C++;
+        gCurTask->frame++;
         TaskYieldTrampoline(4);
-        gCurTask->unk3C++;
+        gCurTask->frame++;
         TaskYieldTrampoline(10);
-        gCurTask->unk3C++;
+        gCurTask->frame++;
         TaskYieldTrampoline(4);
         for (gCurTask->unk6C = 0; (s16)gCurTask->unk6C <= 4; gCurTask->unk6C++)
         {
-            gCurTask->unk3C++;
+            gCurTask->frame++;
             TaskYieldTrampoline(3);
         }
-        gCurTask->unk3C++;
+        gCurTask->frame++;
         TaskYieldTrampoline(4);
         TaskSetFrame((s16)(gCurTask->unk46 - 6));
         TaskYieldTrampoline(10);
-        gCurTask->unk3C++;
+        gCurTask->frame++;
         TaskYieldTrampoline(4);
         for (gCurTask->unk6C = 0; (s16)gCurTask->unk6C <= 3; gCurTask->unk6C++)
         {
-            gCurTask->unk3C++;
+            gCurTask->frame++;
             TaskYieldTrampoline(3);
         }
     }
@@ -612,19 +612,19 @@ void PlayerActionSwallowInWater(void)
     TaskSetFrame(225);
     TaskYieldTrampoline(2);
     PlaySfxIfLocalPlayer(113, gCurTask->unk88->unk00);
-    gCurTask->unk3C++;
+    gCurTask->frame++;
     TaskYieldTrampoline(2);
-    gCurTask->unk3C++;
+    gCurTask->frame++;
     TaskYieldTrampoline(4);
-    gCurTask->unk3C++;
+    gCurTask->frame++;
     TaskYieldTrampoline(2);
-    gCurTask->unk3C++;
+    gCurTask->frame++;
     TaskYieldTrampoline(2);
     TaskSetFrame(227);
     TaskYieldTrampoline(2);
     TaskSetFrame(229);
     TaskYieldTrampoline(8);
-    gCurTask->unk3C++;
+    gCurTask->frame++;
     TaskYieldTrampoline(2);
     gCurTask->unk28++;
     TaskSleepForever();
@@ -653,13 +653,13 @@ void PlayerActionSpitInWater(void)
     gCurTask->unk88->unk06 = 0;
     TaskSetFrame(224);
     TaskYieldTrampoline(2);
-    gCurTask->unk3C--;
+    gCurTask->frame--;
     TaskYieldTrampoline(2);
     if ((s8)gCurTask->unk88->unk07 > 1)
         CreatePlayerObject(gCurTask->unk88->unk00, 2, 0);
     else
         CreatePlayerObject(gCurTask->unk88->unk00, 1, 0);
-    gCurTask->unk3C--;
+    gCurTask->frame--;
     TaskYieldTrampoline(2);
     gCurTask->unk28++;
     TaskSleepForever();
@@ -711,7 +711,7 @@ void sub_0803b9a0(void)
             else if (gLatchedHeldKeys[t->unk88->unk00] & 32)
                 t->unk28 = 2;
         }
-        else if (t->unk43 == 1)
+        else if (t->facing == 1)
         {
             t->unk28 = 0;
         }
@@ -749,14 +749,14 @@ void sub_0803b9a0(void)
             {
                 TaskSetFrame(239);
                 TaskYieldTrampoline(3);
-                gCurTask->unk3C++;
+                gCurTask->frame++;
                 TaskYieldTrampoline(3);
             }
         }
         gCurTask->unk28 = -1;
         TaskSetFrame(241);
         TaskYieldTrampoline(3);
-        gCurTask->unk3C++;
+        gCurTask->frame++;
         TaskYieldTrampoline(3);
         gCurTask->unk2C++;
         break;
@@ -768,54 +768,54 @@ void sub_0803b9a0(void)
             {
                 TaskSetFrame(235);
                 TaskYieldTrampoline(3);
-                gCurTask->unk3C++;
+                gCurTask->frame++;
                 TaskYieldTrampoline(3);
             }
         }
         gCurTask->unk28 = -1;
         TaskSetFrame(237);
         TaskYieldTrampoline(3);
-        gCurTask->unk3C++;
+        gCurTask->frame++;
         TaskYieldTrampoline(3);
         gCurTask->unk2C++;
         break;
     case 0:
         if (gCurTask->unk73 == 0)
         {
-            gCurTask->unk43 = 1;
+            gCurTask->facing = 1;
             CreatePlayerObject(gCurTask->unk88->unk00, 3, 0);
             while (1)
             {
                 TaskSetFrame(231);
                 TaskYieldTrampoline(3);
-                gCurTask->unk3C++;
+                gCurTask->frame++;
                 TaskYieldTrampoline(3);
             }
         }
         gCurTask->unk28 = -1;
         TaskSetFrame(233);
         TaskYieldTrampoline(3);
-        gCurTask->unk3C++;
+        gCurTask->frame++;
         TaskYieldTrampoline(3);
         gCurTask->unk2C++;
         break;
     case 2:
         if (gCurTask->unk73 == 0)
         {
-            gCurTask->unk43 = -1;
+            gCurTask->facing = -1;
             CreatePlayerObject(gCurTask->unk88->unk00, 3, 0);
             while (1)
             {
                 TaskSetFrame(231);
                 TaskYieldTrampoline(3);
-                gCurTask->unk3C++;
+                gCurTask->frame++;
                 TaskYieldTrampoline(3);
             }
         }
         gCurTask->unk28 = -1;
         TaskSetFrame(233);
         TaskYieldTrampoline(3);
-        gCurTask->unk3C++;
+        gCurTask->frame++;
         TaskYieldTrampoline(3);
         gCurTask->unk2C++;
         break;

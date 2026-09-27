@@ -53,7 +53,7 @@ void sub_0804ffdc(void)
         struct Task *t = gCurTask;
         t->unk04 = (u32)sub_080502f0;
         t->unk70 = 0;
-        t->unk3C = 0xFFFF;
+        t->frame = 0xFFFF;
         if (gGameState != 20)
         {
             gPlayerHealth[t->unk88->unk00] = 0;
@@ -62,13 +62,13 @@ void sub_0804ffdc(void)
     }
     {
         struct Task *t = gCurTask;
-        t->unk4C = 0x80000;
-        t->unk50 = 0xB00000;
+        t->posX = 0x80000;
+        t->posY = 0xB00000;
     }
     TaskYieldTrampoline(65);
     {
         struct Task *t = gCurTask;
-        t->unk3C = 0x1056;
+        t->frame = 0x1056;
         t->unk64 = 0x80000000;
         t->unk68 = 0x80000000;
         t->unk54 = 0x10000;
@@ -80,21 +80,21 @@ void sub_0804ffdc(void)
     {
         struct Task *t = gCurTask;
         t->unk58 = 0xFFFF8000;
-        t->unk3C--;
+        t->frame--;
     }
     TaskYieldTrampoline(8);
-    gCurTask->unk3C--;
+    gCurTask->frame--;
     TaskYieldTrampoline(12);
     {
         struct Task *t = gCurTask;
         t->unk54 = 0x8000;
         t->unk58 = 0x8000;
-        t->unk3C = 0x1051;
+        t->frame = 0x1051;
     }
     TaskYieldTrampoline(4);
-    gCurTask->unk3C++;
+    gCurTask->frame++;
     TaskYieldTrampoline(4);
-    gCurTask->unk3C++;
+    gCurTask->frame++;
     TaskYieldTrampoline(2);
     gCurTask->unk58 = 0x10000;
     TaskYieldTrampoline(10);
@@ -102,26 +102,26 @@ void sub_0804ffdc(void)
     TaskYieldTrampoline(10);
     gCurTask->unk54 = 0xFFFFE000;
     TaskYieldTrampoline(6);
-    gCurTask->unk3C = 0x1040;
+    gCurTask->frame = 0x1040;
     TaskYieldTrampoline(1);
-    gCurTask->unk3C = 0x1042;
+    gCurTask->frame = 0x1042;
     TaskYieldTrampoline(1);
-    gCurTask->unk3C = 0x1045;
+    gCurTask->frame = 0x1045;
     TaskYieldTrampoline(1);
-    gCurTask->unk3C = 0x1048;
+    gCurTask->frame = 0x1048;
     TaskYieldTrampoline(1);
     {
         struct Task *t = gCurTask;
         t->unk54 = 0;
         t->unk58 = 0;
-        t->unk3C = 0x104B;
+        t->frame = 0x104B;
     }
     TaskYieldTrampoline(1);
-    gCurTask->unk3C = 0x104E;
+    gCurTask->frame = 0x104E;
     TaskYieldTrampoline(1);
     {
         struct Task *t = gCurTask;
-        t->unk3C = 0x105D;
+        t->frame = 0x105D;
         t->unk54 = 0xFFFF0000;
     }
     TaskYieldTrampoline(16);
@@ -147,17 +147,17 @@ void sub_0804ffdc(void)
         t->unk58 = v;
     }
     TaskYieldTrampoline(16);
-    gCurTask->unk3C = 0x105E;
+    gCurTask->frame = 0x105E;
     TaskYieldTrampoline(2);
-    gCurTask->unk3C++;
+    gCurTask->frame++;
     TaskYieldTrampoline(2);
-    gCurTask->unk3C = 0x1041;
+    gCurTask->frame = 0x1041;
     TaskYieldTrampoline(1);
-    gCurTask->unk3C = 0x1044;
+    gCurTask->frame = 0x1044;
     TaskYieldTrampoline(1);
-    gCurTask->unk3C = 0x1045;
+    gCurTask->frame = 0x1045;
     TaskYieldTrampoline(1);
-    gCurTask->unk3C = 0x1048;
+    gCurTask->frame = 0x1048;
     TaskYieldTrampoline(1);
     {
         struct Task *t = gCurTask;
@@ -165,18 +165,18 @@ void sub_0804ffdc(void)
         t->unk58 = 0x8000;
     }
     TaskYieldTrampoline(2);
-    gCurTask->unk3C = 0x1049;
+    gCurTask->frame = 0x1049;
     TaskYieldTrampoline(1);
-    gCurTask->unk3C = 0x104C;
+    gCurTask->frame = 0x104C;
     TaskYieldTrampoline(1);
-    gCurTask->unk3C = 0x104D;
+    gCurTask->frame = 0x104D;
     TaskYieldTrampoline(1);
-    gCurTask->unk3C = 0x104F;
+    gCurTask->frame = 0x104F;
     TaskYieldTrampoline(1);
     {
         struct Task *t = gCurTask;
         t->unk54 = 0;
-        t->unk3C = 0x103F;
+        t->frame = 0x103F;
         t->unk58 = 0x2000;
     }
     TaskYieldTrampoline(6);
@@ -242,7 +242,7 @@ void sub_0805035c(void)
             else
                 t->unk28 = k;
         }
-        gCurTask->unk3C = row[gCurTask->unk46];
+        gCurTask->frame = row[gCurTask->unk46];
     }
 }
 
@@ -253,19 +253,19 @@ void sub_08050418(void)
         t->unk70 = 0;
         PlaySfxIfLocalPlayer(155, (u16)t->unk88->unk00);
     }
-    gCurTask->unk3C = 0x1040;
+    gCurTask->frame = 0x1040;
     TaskYieldTrampoline(4);
-    gCurTask->unk3C = 0x1041;
+    gCurTask->frame = 0x1041;
     TaskYieldTrampoline(1);
     for (gCurTask->unk6C = 0; (s16)gCurTask->unk6C <= 4; gCurTask->unk6C++)
     {
-        gCurTask->unk3C++;
+        gCurTask->frame++;
         TaskYieldTrampoline(1);
     }
     sub_08053a44(gCurTask->unk88->unk00, 12, 0);
     for (gCurTask->unk6C = 0; (s16)gCurTask->unk6C <= 9; gCurTask->unk6C++)
     {
-        gCurTask->unk3C++;
+        gCurTask->frame++;
         TaskYieldTrampoline(1);
     }
     gCurTask->unk70++;
@@ -305,16 +305,16 @@ void sub_08050508(void)
         PlayerSetMotionXPreset(10, 24);
     else
         PlayerSetMotionXPreset(10, 26);
-    gCurTask->unk3C = 0x105D;
+    gCurTask->frame = 0x105D;
     TaskYieldTrampoline(4);
     if ((s8)gCurTask->unk7D == 0)
         PlayerSetMotionXPreset(10, 25);
     else
         PlayerSetMotionXPreset(10, 27);
     TaskYieldTrampoline(2);
-    gCurTask->unk3C++;
+    gCurTask->frame++;
     TaskYieldTrampoline(2);
-    gCurTask->unk3C++;
+    gCurTask->frame++;
     TaskYieldTrampoline(2);
     PlayerStopAxes(1);
     SetPlayerInvulnerability(1, 96, gCurTask->unk88->unk00);

@@ -28,59 +28,59 @@ void sub_0801a07c(void)
 
     t->unk00 = (u32)TaskMoveRelativeToParent;
     t->unk0C = (u32)TaskDrawScreen;
-    t->unk42 = 12;
+    t->layer = 12;
     gCurTask->unk38 = gUnk_0874CE90;
     gCurTask->unk40 = 0;
-    gCurTask->unk4C = 0;
-    gCurTask->unk50 = 0;
+    gCurTask->posX = 0;
+    gCurTask->posY = 0;
     TaskStop();
     PlaySfx(0x242);
     gCurTask->unk6C = 0;
     do
     {
-        gCurTask->unk3C = 0;
+        gCurTask->frame = 0;
         TaskYieldTrampoline(1);
-        gCurTask->unk3C = 16;
+        gCurTask->frame = 16;
         TaskYieldTrampoline(1);
-        gCurTask->unk3C = 1;
+        gCurTask->frame = 1;
         TaskYieldTrampoline(1);
-        gCurTask->unk3C = 17;
+        gCurTask->frame = 17;
         TaskYieldTrampoline(1);
-        gCurTask->unk3C = 2;
+        gCurTask->frame = 2;
         TaskYieldTrampoline(1);
-        gCurTask->unk3C = 18;
+        gCurTask->frame = 18;
         TaskYieldTrampoline(1);
-        gCurTask->unk3C = 3;
+        gCurTask->frame = 3;
         TaskYieldTrampoline(1);
-        gCurTask->unk3C = 19;
+        gCurTask->frame = 19;
         TaskYieldTrampoline(1);
-        gCurTask->unk3C = 4;
+        gCurTask->frame = 4;
         TaskYieldTrampoline(1);
-        gCurTask->unk3C = 20;
+        gCurTask->frame = 20;
         TaskYieldTrampoline(1);
-        gCurTask->unk3C = 5;
+        gCurTask->frame = 5;
         TaskYieldTrampoline(1);
-        gCurTask->unk3C = 21;
+        gCurTask->frame = 21;
         TaskYieldTrampoline(1);
-        gCurTask->unk3C = 6;
+        gCurTask->frame = 6;
         TaskYieldTrampoline(1);
-        gCurTask->unk3C = 11;
+        gCurTask->frame = 11;
         TaskYieldTrampoline(1);
-        gCurTask->unk3C = 7;
+        gCurTask->frame = 7;
         TaskYieldTrampoline(1);
-        gCurTask->unk3C = 12;
+        gCurTask->frame = 12;
         TaskYieldTrampoline(1);
-        gCurTask->unk3C = 8;
+        gCurTask->frame = 8;
         TaskYieldTrampoline(1);
-        gCurTask->unk3C = 13;
+        gCurTask->frame = 13;
         TaskYieldTrampoline(1);
-        gCurTask->unk3C = 9;
+        gCurTask->frame = 9;
         TaskYieldTrampoline(1);
-        gCurTask->unk3C = 14;
+        gCurTask->frame = 14;
         TaskYieldTrampoline(1);
-        gCurTask->unk3C = 10;
+        gCurTask->frame = 10;
         TaskYieldTrampoline(1);
-        gCurTask->unk3C = 15;
+        gCurTask->frame = 15;
         TaskYieldTrampoline(1);
         gCurTask->unk6C++;
     } while ((s16)gCurTask->unk6C <= 5);
@@ -106,17 +106,17 @@ void sub_0801a1ec(void)
     t = gCurTask;
     if (t->unk38 == NULL)
         return;
-    if (t->unk3C == -1)
+    if (t->frame == -1)
         return;
     mode = 0;
-    if (t->unk3C > 49 && (gFrameCount & 3) == 0)
+    if (t->frame > 49 && (gFrameCount & 3) == 0)
         mode = 73;
     u = gCurTask;
     dx = u->unk48;
     dy = u->unk4A;
     anim = PlayerLoadFrameTilesAndPalette(mode);
     v = gCurTask;
-    if (v->unk3C > 49)
+    if (v->frame > 49)
     {
         n = v->unk34 + 1;
         v->unk34 = n;
@@ -137,7 +137,7 @@ void sub_0801a1ec(void)
     if (IsOnScreen(x, y) == 0)
         return;
     q = gCurTask;
-    QueueSprite(q->unk42, anim, q->unk3E, 0x800 | q->unk40, x, y);
+    QueueSprite(q->layer, anim, q->unk3E, 0x800 | q->unk40, x, y);
 }
 
 void sub_0801a310(void)
@@ -153,11 +153,11 @@ void sub_0801a310(void)
     t = gCurTask;
     if (t->unk38 == NULL)
         return;
-    if (t->unk3C == -1)
+    if (t->frame == -1)
         return;
     prio = t->unk40;
     dst = ((prio & 0x7FF) << 5) + 0x0600FE00;
-    g = (struct TaskGfx *)t->unk38[t->unk3C];
+    g = (struct TaskGfx *)t->unk38[t->frame];
     p = g->unk08;
     if (*p != 0xFFFF)
     {
@@ -172,5 +172,5 @@ void sub_0801a310(void)
     RequestCopy(2, (u32)(g->unk04 + 1), (u32)gObjPalette + ((prio >> 12) << 5),
                  *g->unk04);
     u = gCurTask;
-    QueueSprite(u->unk42, g->unk00, u->unk3E, 0x800 | u->unk40, u->unk48, u->unk4A);
+    QueueSprite(u->layer, g->unk00, u->unk3E, 0x800 | u->unk40, u->unk48, u->unk4A);
 }

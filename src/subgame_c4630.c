@@ -219,11 +219,11 @@ void sub_080c46ec(void)
 
     gCurTask->unk0C = (u32)TaskDrawScreen;
     gCurTask->unk3E &= 0x7FFF;
-    gCurTask->unk42 = 3;
+    gCurTask->layer = 3;
     gCurTask->unk3E = 0;
     gCurTask->unk4A = 40;
     gCurTask->unk38 = gUnk_08755FBC;
-    gCurTask->unk3C = 0xFFFF;
+    gCurTask->frame = 0xFFFF;
     g->unk0EC.unk74 = 0;
     for (i = 0, p = &g->unk0EC.unk04[0].unk8, x = 0; i <= 6; i++) {
         sub_080c4664(i);
@@ -266,10 +266,10 @@ void sub_080c4818(void)
 {
     struct Task *t = gCurTask;
 
-    t->unk48 = (t->unk4C >> 16) - gAirGrindCoursePtr->unk000 + 120;
-    t->unk3C = gAirGrindFrame & 1;
+    t->unk48 = (t->posX >> 16) - gAirGrindCoursePtr->unk000 + 120;
+    t->frame = gAirGrindFrame & 1;
     if (t->unk48 < -120) {
-        t->unk3C = 0xFFFF;
+        t->frame = 0xFFFF;
         t->unk08 = 0;
     }
 }
@@ -278,7 +278,7 @@ void sub_080c4860(s32 y)
 {
     struct Task *t = &gTasks[gAirGrindPtr->unk44C];
 
-    t->unk4C = y << 16;
+    t->posX = y << 16;
     t->unk08 = (u32)sub_080c4818;
 }
 

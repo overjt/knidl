@@ -82,22 +82,22 @@ void sub_0806ad18(void)
 
     t = gCurTask;
     t->unk8C->unk1A = 0;
-    t->unk50 = (t->unk4A + 1) << 16;
+    t->posY = (t->unk4A + 1) << 16;
     TaskYieldTrampoline(2);
     gCurTask->unk6C = 0;
     do
     {
         t = gCurTask;
-        t->unk50 = (t->unk4A - 2) << 16;
+        t->posY = (t->unk4A - 2) << 16;
         TaskYieldTrampoline(2);
         t = gCurTask;
-        t->unk50 = (t->unk4A + 2) << 16;
+        t->posY = (t->unk4A + 2) << 16;
         TaskYieldTrampoline(2);
         t = gCurTask;
         t->unk6C++;
     } while ((s16)t->unk6C <= 11);
     t = gCurTask;
-    t->unk50 = (t->unk4A - 1) << 16;
+    t->posY = (t->unk4A - 1) << 16;
     TaskYieldTrampoline(2);
     gCurTask->unk8C->unk1A = 0xFFFF;
 }
@@ -234,7 +234,7 @@ void sub_0806b098(void)
     RequestScreenShake(4);
     sub_0806d928();
     sub_0806d4e4(1, 0);
-    gCurTask->unk3C = 0xFFFF;
+    gCurTask->frame = 0xFFFF;
     sub_0806b070();
     TaskYieldTrampoline(24);
     sub_080670d4();

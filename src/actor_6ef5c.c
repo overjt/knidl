@@ -80,11 +80,11 @@ void sub_0806ef5c(void)
         }
         while (1)
         {
-            gCurTask->unk3C = gCurTask->unk28;
+            gCurTask->frame = gCurTask->unk28;
             TaskYieldTrampoline(d);
             for (i = 0; i < n; i++)
             {
-                gCurTask->unk3C++;
+                gCurTask->frame++;
                 TaskYieldTrampoline(d);
             }
         }
@@ -108,7 +108,7 @@ void sub_0806efec(void)
         p->unk37 = 3;
     LoadAbilityTiles();
     gCurTask->unk0C = (u32)sub_0803ddc0;
-    gCurTask->unk42 = 7;
+    gCurTask->layer = 7;
     gCurTask->unk3E &= 0x7FFF;
     sub_0807029c();
     switch (gCurTask->unk88->unk00)
@@ -189,7 +189,7 @@ void sub_0806f1e0(void)
         p->unk37 = 3;
     LoadAbilityTiles();
     gCurTask->unk0C = (u32)sub_0803ddc0;
-    gCurTask->unk42 = 7;
+    gCurTask->layer = 7;
     gCurTask->unk3E &= 0x7FFF;
     sub_0807029c();
     switch (gCurTask->unk88->unk00)
@@ -270,8 +270,8 @@ void sub_0806f3d8(void)
         p->unk37 = 3;
     LoadAbilityTiles();
     gCurTask->unk0C = (u32)sub_0803ddc0;
-    gCurTask->unk42 = 7;
-    gCurTask->unk43 = -1;
+    gCurTask->layer = 7;
+    gCurTask->facing = -1;
     gCurTask->unk3E &= 0x7FFF;
     sub_0807029c();
     switch (gCurTask->unk88->unk00)
@@ -348,7 +348,7 @@ void sub_0806f5c4(void)
         u->unk24++;
         if (u->unk24 == 2)
         {
-            u->unk43 = 1;
+            u->facing = 1;
             sub_08070264();
         }
     }
@@ -368,8 +368,8 @@ void sub_0806f638(void)
         p->unk37 = 3;
     LoadAbilityTiles();
     gCurTask->unk0C = (u32)sub_0803ddc0;
-    gCurTask->unk42 = 7;
-    gCurTask->unk43 = 1;
+    gCurTask->layer = 7;
+    gCurTask->facing = 1;
     switch (gCurTask->unk88->unk00)
     {
     case 0:
@@ -392,40 +392,40 @@ void sub_0806f638(void)
         TaskSetFrame(gUnk_0873D3B8[k][1]);
     gCurTask->unk58 = 0xFFFD0000;
     TaskYieldTrampoline(2);
-    gCurTask->unk3C++;
+    gCurTask->frame++;
     TaskYieldTrampoline(2);
-    gCurTask->unk3C--;
+    gCurTask->frame--;
     TaskYieldTrampoline(2);
-    gCurTask->unk3C++;
+    gCurTask->frame++;
     TaskYieldTrampoline(2);
-    gCurTask->unk3C--;
+    gCurTask->frame--;
     gCurTask->unk58 = 0xFFFE0000;
     TaskYieldTrampoline(2);
-    gCurTask->unk3C++;
+    gCurTask->frame++;
     TaskYieldTrampoline(2);
-    gCurTask->unk3C--;
+    gCurTask->frame--;
     TaskYieldTrampoline(2);
-    gCurTask->unk3C++;
+    gCurTask->frame++;
     TaskYieldTrampoline(2);
-    gCurTask->unk3C--;
+    gCurTask->frame--;
     gCurTask->unk58 = 0xFFFF0000;
     TaskYieldTrampoline(2);
-    gCurTask->unk3C++;
+    gCurTask->frame++;
     TaskYieldTrampoline(2);
-    gCurTask->unk3C--;
+    gCurTask->frame--;
     TaskYieldTrampoline(2);
-    gCurTask->unk3C++;
+    gCurTask->frame++;
     TaskYieldTrampoline(2);
-    gCurTask->unk3C--;
+    gCurTask->frame--;
     gCurTask->unk58 = 0xFFFF8000;
     TaskYieldTrampoline(2);
-    gCurTask->unk3C++;
+    gCurTask->frame++;
     TaskYieldTrampoline(2);
-    gCurTask->unk3C--;
+    gCurTask->frame--;
     TaskYieldTrampoline(2);
-    gCurTask->unk3C++;
+    gCurTask->frame++;
     TaskYieldTrampoline(2);
-    gCurTask->unk3C--;
+    gCurTask->frame--;
     switch (gCurTask->unk88->unk0D)
     {
     case 4:
@@ -433,32 +433,32 @@ void sub_0806f638(void)
         TaskSetFrame(gUnk_0873D3B8[gCurTask->unk88->unk0D][1]);
         gCurTask->unk58 = 0x8000;
         TaskYieldTrampoline(2);
-        gCurTask->unk3C++;
+        gCurTask->frame++;
         TaskYieldTrampoline(2);
-        gCurTask->unk3C--;
+        gCurTask->frame--;
         TaskYieldTrampoline(2);
-        gCurTask->unk3C++;
+        gCurTask->frame++;
         TaskYieldTrampoline(2);
         gCurTask->unk58 = 0x10000;
-        gCurTask->unk3C--;
+        gCurTask->frame--;
         TaskYieldTrampoline(2);
-        gCurTask->unk3C++;
+        gCurTask->frame++;
         TaskYieldTrampoline(2);
         break;
     case 10:
         TaskSetFrame(0x841);
         gCurTask->unk58 = 0x8000;
         TaskYieldTrampoline(2);
-        gCurTask->unk3C++;
+        gCurTask->frame++;
         TaskYieldTrampoline(2);
-        gCurTask->unk3C--;
+        gCurTask->frame--;
         TaskYieldTrampoline(2);
-        gCurTask->unk3C++;
+        gCurTask->frame++;
         TaskYieldTrampoline(2);
         gCurTask->unk58 = 0x10000;
-        gCurTask->unk3C--;
+        gCurTask->frame--;
         TaskYieldTrampoline(2);
-        gCurTask->unk3C++;
+        gCurTask->frame++;
         TaskYieldTrampoline(2);
         break;
     default:
@@ -484,27 +484,27 @@ void sub_0806f638(void)
     else
         TaskSetFrame(gUnk_0873D3B8[k][1]);
     TaskYieldTrampoline(2);
-    gCurTask->unk3C++;
+    gCurTask->frame++;
     TaskYieldTrampoline(2);
-    gCurTask->unk3C--;
+    gCurTask->frame--;
     gCurTask->unk58 = 0x20000;
     TaskYieldTrampoline(2);
-    gCurTask->unk3C++;
+    gCurTask->frame++;
     TaskYieldTrampoline(2);
-    gCurTask->unk3C--;
+    gCurTask->frame--;
     TaskYieldTrampoline(2);
-    gCurTask->unk3C++;
+    gCurTask->frame++;
     TaskYieldTrampoline(2);
-    gCurTask->unk3C--;
+    gCurTask->frame--;
     gCurTask->unk58 = 0x30000;
     TaskYieldTrampoline(2);
-    gCurTask->unk3C++;
+    gCurTask->frame++;
     TaskYieldTrampoline(2);
-    gCurTask->unk3C--;
+    gCurTask->frame--;
     TaskYieldTrampoline(2);
-    gCurTask->unk3C++;
+    gCurTask->frame++;
     TaskYieldTrampoline(2);
-    gCurTask->unk3C--;
+    gCurTask->frame--;
     gCurTask->unk58 = 0x40000;
     while (gCurTask->unk24 != 2)
         TaskYieldTrampoline(1);
@@ -540,7 +540,7 @@ void sub_0806fb0c(void)
         p->unk37 = 3;
     LoadAbilityTiles();
     gCurTask->unk0C = (u32)sub_0803ddc0;
-    gCurTask->unk42 = 7;
+    gCurTask->layer = 7;
     gCurTask->unk3E &= 0x7FFF;
     sub_0807029c();
     switch (gCurTask->unk88->unk00)
@@ -622,7 +622,7 @@ void sub_0806fd04(void)
         p->unk37 = 3;
     LoadAbilityTiles();
     gCurTask->unk0C = (u32)sub_0803ddc0;
-    gCurTask->unk42 = 7;
+    gCurTask->layer = 7;
     gCurTask->unk3E &= 0x7FFF;
     gCurTask->unk24 = 1;
     gCurTask->unk34 = 0;

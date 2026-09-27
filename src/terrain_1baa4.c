@@ -58,7 +58,7 @@ extern s16 gTerrainPrevY;           /* actor y (room-relative) */
 extern struct Unk03005530 gTerrainProbeResult;
 extern struct Unk03005550 gTerrainResult;
 extern s16 gTerrainProbeX;           /* probe x */
-extern u8 gTerrainFacing;            /* Task.unk43 */
+extern u8 gTerrainFacing;            /* Task.facing */
 extern s16 gTerrainProbeY;           /* probe y */
 extern s32 gUnk_03005580;
 extern s16 gTerrainBoxBottom;           /* box bottom offset */

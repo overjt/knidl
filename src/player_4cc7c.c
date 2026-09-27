@@ -79,13 +79,13 @@ void sub_0804cc7c(void)
             switch (u->unk24)
             {
             case 8:
-                u->unk3C = 0xF90;
+                u->frame = 0xF90;
                 TaskYieldTrampoline(1);
-                gCurTask->unk3C = 0xF8C;
+                gCurTask->frame = 0xF8C;
                 TaskYieldTrampoline(1);
                 break;
             case 9:
-                u->unk3C = 0xF95;
+                u->frame = 0xF95;
                 TaskYieldTrampoline(2);
                 break;
             }
@@ -107,27 +107,27 @@ void sub_0804cc7c(void)
         case 7:
             TaskSetFrame(0xF8C);
             TaskYieldTrampoline(2);
-            gCurTask->unk3C = 0xF90;
+            gCurTask->frame = 0xF90;
             TaskYieldTrampoline(2);
             break;
         case 9:
             TaskSetFrame(0xF95);
             TaskYieldTrampoline(1);
-            gCurTask->unk3C = 0xF88;
+            gCurTask->frame = 0xF88;
             TaskYieldTrampoline(2);
-            gCurTask->unk3C = 0xF9E;
+            gCurTask->frame = 0xF9E;
             TaskYieldTrampoline(2);
-            gCurTask->unk3C = 0xF8C;
+            gCurTask->frame = 0xF8C;
             TaskYieldTrampoline(2);
-            gCurTask->unk3C = 0xF90;
+            gCurTask->frame = 0xF90;
             TaskYieldTrampoline(1);
             break;
         case 10:
             TaskSetFrame(0xF9E);
             TaskYieldTrampoline(2);
-            gCurTask->unk3C = 0xF8C;
+            gCurTask->frame = 0xF8C;
             TaskYieldTrampoline(2);
-            gCurTask->unk3C = 0xF90;
+            gCurTask->frame = 0xF90;
             TaskYieldTrampoline(2);
             break;
         }
@@ -136,11 +136,11 @@ void sub_0804cc7c(void)
         {
             TaskSetFrame(0xF91);
             TaskYieldTrampoline(2);
-            gCurTask->unk3C++;
+            gCurTask->frame++;
             TaskYieldTrampoline(2);
-            gCurTask->unk3C++;
+            gCurTask->frame++;
             TaskYieldTrampoline(2);
-            gCurTask->unk3C++;
+            gCurTask->frame++;
             TaskYieldTrampoline(2);
         }
     case 9:
@@ -149,27 +149,27 @@ void sub_0804cc7c(void)
         case 7:
             TaskSetFrame(0xF88);
             TaskYieldTrampoline(2);
-            gCurTask->unk3C = 0xF95;
+            gCurTask->frame = 0xF95;
             TaskYieldTrampoline(2);
             break;
         case 8:
             TaskSetFrame(0xF90);
             TaskYieldTrampoline(1);
-            gCurTask->unk3C = 0xF8C;
+            gCurTask->frame = 0xF8C;
             TaskYieldTrampoline(2);
-            gCurTask->unk3C = 0xF9E;
+            gCurTask->frame = 0xF9E;
             TaskYieldTrampoline(2);
-            gCurTask->unk3C = 0xF88;
+            gCurTask->frame = 0xF88;
             TaskYieldTrampoline(2);
-            gCurTask->unk3C = 0xF95;
+            gCurTask->frame = 0xF95;
             TaskYieldTrampoline(1);
             break;
         case 10:
             TaskSetFrame(0xF9E);
             TaskYieldTrampoline(2);
-            gCurTask->unk3C = 0xF88;
+            gCurTask->frame = 0xF88;
             TaskYieldTrampoline(2);
-            gCurTask->unk3C = 0xF95;
+            gCurTask->frame = 0xF95;
             TaskYieldTrampoline(2);
             break;
         }
@@ -178,11 +178,11 @@ void sub_0804cc7c(void)
         {
             TaskSetFrame(0xF96);
             TaskYieldTrampoline(2);
-            gCurTask->unk3C++;
+            gCurTask->frame++;
             TaskYieldTrampoline(2);
-            gCurTask->unk3C++;
+            gCurTask->frame++;
             TaskYieldTrampoline(2);
-            gCurTask->unk3C++;
+            gCurTask->frame++;
             TaskYieldTrampoline(2);
         }
     case 10:
@@ -193,9 +193,9 @@ void sub_0804cc7c(void)
                 PlayerFaceHeldDirection();
             TaskSetFrame(0xF96);
             TaskYieldTrampoline(2);
-            gCurTask->unk3C = 0xF88;
+            gCurTask->frame = 0xF88;
             TaskYieldTrampoline(2);
-            gCurTask->unk3C = 0xF9E;
+            gCurTask->frame = 0xF9E;
             TaskYieldTrampoline(2);
             break;
         case 9:
@@ -203,9 +203,9 @@ void sub_0804cc7c(void)
                 PlayerFaceHeldDirection();
             TaskSetFrame(0xF95);
             TaskYieldTrampoline(2);
-            gCurTask->unk3C = 0xF88;
+            gCurTask->frame = 0xF88;
             TaskYieldTrampoline(2);
-            gCurTask->unk3C = 0xF9E;
+            gCurTask->frame = 0xF9E;
             TaskYieldTrampoline(2);
             break;
         case 11:
@@ -214,7 +214,7 @@ void sub_0804cc7c(void)
             TaskYieldTrampoline(2);
             TaskSetFrame(0xFA0);
             TaskYieldTrampoline(1);
-            gCurTask->unk43 = -gCurTask->unk43;
+            gCurTask->facing = -gCurTask->facing;
             if (gLatchedHeldKeys[gCurTask->unk88->unk00] & 48)
             {
                 if (!(gCurTask->unk7B & 1))
@@ -239,11 +239,11 @@ void sub_0804cc7c(void)
         {
             TaskSetFrame(0xF9A);
             TaskYieldTrampoline(5);
-            gCurTask->unk3C++;
+            gCurTask->frame++;
             TaskYieldTrampoline(5);
-            gCurTask->unk3C++;
+            gCurTask->frame++;
             TaskYieldTrampoline(5);
-            gCurTask->unk3C++;
+            gCurTask->frame++;
             TaskYieldTrampoline(5);
         }
     case 2:
@@ -252,15 +252,15 @@ void sub_0804cc7c(void)
         gCurTask->unk70 = 0;
         TaskSetFrame(0xFD1);
         TaskYieldTrampoline(2);
-        gCurTask->unk3C++;
+        gCurTask->frame++;
         TaskYieldTrampoline(2);
         TaskSetFrame(0xFB4);
         TaskYieldTrampoline(2);
-        gCurTask->unk3C++;
+        gCurTask->frame++;
         TaskYieldTrampoline(2);
-        gCurTask->unk3C++;
+        gCurTask->frame++;
         TaskYieldTrampoline(2);
-        gCurTask->unk3C++;
+        gCurTask->frame++;
         TaskYieldTrampoline(2);
         {
             struct Task *u = gCurTask;
@@ -276,11 +276,11 @@ void sub_0804cc7c(void)
             gCurTask->unk88->unk14++;
             TaskSetFrame(0xFB8);
             TaskYieldTrampoline(3);
-            gCurTask->unk3C++;
+            gCurTask->frame++;
             TaskYieldTrampoline(3);
-            gCurTask->unk3C++;
+            gCurTask->frame++;
             TaskYieldTrampoline(3);
-            gCurTask->unk3C++;
+            gCurTask->frame++;
             TaskYieldTrampoline(3);
         } while ((s16)++gCurTask->unk6C <= 2);
         CreatePlayerEffect(gCurTask->unk88->unk00, 48, 0);
@@ -289,11 +289,11 @@ void sub_0804cc7c(void)
             gCurTask->unk88->unk14++;
             TaskSetFrame(0xFBC);
             TaskYieldTrampoline(3);
-            gCurTask->unk3C++;
+            gCurTask->frame++;
             TaskYieldTrampoline(3);
-            gCurTask->unk3C++;
+            gCurTask->frame++;
             TaskYieldTrampoline(3);
-            gCurTask->unk3C++;
+            gCurTask->frame++;
             TaskYieldTrampoline(3);
         }
         PlaySfxIfLocalPlayer(240, gCurTask->unk88->unk00);
@@ -303,71 +303,71 @@ void sub_0804cc7c(void)
         {
             TaskSetFrame(0xFC0);
             TaskYieldTrampoline(3);
-            gCurTask->unk3C++;
+            gCurTask->frame++;
             TaskYieldTrampoline(3);
-            gCurTask->unk3C++;
+            gCurTask->frame++;
             TaskYieldTrampoline(3);
-            gCurTask->unk3C++;
+            gCurTask->frame++;
             TaskYieldTrampoline(3);
         }
     case 3:
         gCurTask->unk70 = 0;
         TaskSetFrame(0xFD3);
         TaskYieldTrampoline(4);
-        gCurTask->unk3C++;
+        gCurTask->frame++;
         TaskYieldTrampoline(2);
-        gCurTask->unk3C++;
+        gCurTask->frame++;
         TaskYieldTrampoline(2);
         CreatePlayerObject(gCurTask->unk88->unk00, 10, 0);
         CreatePlayerObject(gCurTask->unk88->unk00, 10, 1);
         CreatePlayerObject(gCurTask->unk88->unk00, 10, 2);
         for (gCurTask->unk6C = 0; (s16)gCurTask->unk6C <= 1; gCurTask->unk6C++)
         {
-            gCurTask->unk3C = 0xFD5;
+            gCurTask->frame = 0xFD5;
             TaskYieldTrampoline(2);
-            gCurTask->unk3C++;
+            gCurTask->frame++;
             TaskYieldTrampoline(3);
         }
         for (gCurTask->unk6C = 0; (s16)gCurTask->unk6C <= 1; gCurTask->unk6C++)
         {
-            gCurTask->unk3C = 0xFD7;
+            gCurTask->frame = 0xFD7;
             TaskYieldTrampoline(2);
-            gCurTask->unk3C++;
+            gCurTask->frame++;
             TaskYieldTrampoline(3);
         }
         for (gCurTask->unk6C = 0; (s16)gCurTask->unk6C <= 1; gCurTask->unk6C++)
         {
-            gCurTask->unk3C = 0xFD9;
+            gCurTask->frame = 0xFD9;
             TaskYieldTrampoline(2);
-            gCurTask->unk3C++;
+            gCurTask->frame++;
             TaskYieldTrampoline(3);
         }
-        gCurTask->unk3C = 0xFD9;
+        gCurTask->frame = 0xFD9;
         TaskYieldTrampoline(2);
-        gCurTask->unk3C = 0xFDB;
+        gCurTask->frame = 0xFDB;
         TaskYieldTrampoline(2);
-        gCurTask->unk3C++;
+        gCurTask->frame++;
         TaskYieldTrampoline(1);
         {
             struct Task *u = gCurTask;
 
             u->unk70++;
-            u->unk3C++;
+            u->frame++;
         }
         TaskYieldTrampoline(4);
-        gCurTask->unk3C++;
+        gCurTask->frame++;
         TaskYieldTrampoline(2);
-        gCurTask->unk3C++;
+        gCurTask->frame++;
         TaskYieldTrampoline(4);
-        gCurTask->unk3C++;
+        gCurTask->frame++;
         TaskYieldTrampoline(1);
-        gCurTask->unk3C++;
+        gCurTask->frame++;
         TaskYieldTrampoline(1);
-        gCurTask->unk3C++;
+        gCurTask->frame++;
         TaskYieldTrampoline(1);
-        gCurTask->unk3C++;
+        gCurTask->frame++;
         TaskYieldTrampoline(1);
-        gCurTask->unk3C++;
+        gCurTask->frame++;
         TaskYieldTrampoline(1);
         gCurTask->unk70++;
         break;
@@ -382,7 +382,7 @@ void sub_0804cc7c(void)
             struct Task *u = gCurTask;
 
             u->unk70++;
-            u->unk3C++;
+            u->frame++;
         }
         TaskYieldTrampoline(2);
         gCurTask->unk70++;
@@ -391,12 +391,12 @@ void sub_0804cc7c(void)
         gCurTask->unk70 = 0;
         TaskSetFrame(0xFC6);
         TaskYieldTrampoline(1);
-        gCurTask->unk3C++;
+        gCurTask->frame++;
         TaskYieldTrampoline(1);
-        gCurTask->unk3C++;
+        gCurTask->frame++;
         TaskYieldTrampoline(1);
         PlayerStartOffsetScript(7);
-        gCurTask->unk3C = 0xFC4;
+        gCurTask->frame = 0xFC4;
         TaskYieldTrampoline(2);
         CreatePlayerObject(gCurTask->unk88->unk00, 10, 4);
         PlaySfxIfLocalPlayer(209, gCurTask->unk88->unk00);
@@ -404,7 +404,7 @@ void sub_0804cc7c(void)
             struct Task *u = gCurTask;
 
             u->unk70++;
-            u->unk3C++;
+            u->frame++;
         }
         TaskYieldTrampoline(2);
         gCurTask->unk70++;
@@ -413,35 +413,35 @@ void sub_0804cc7c(void)
         gCurTask->unk70 = 0;
         TaskSetFrame(0xFC6);
         TaskYieldTrampoline(1);
-        gCurTask->unk3C++;
+        gCurTask->frame++;
         TaskYieldTrampoline(1);
-        gCurTask->unk3C++;
+        gCurTask->frame++;
         TaskYieldTrampoline(1);
         PlayerStartOffsetScript(8);
-        gCurTask->unk3C++;
+        gCurTask->frame++;
         TaskYieldTrampoline(2);
-        gCurTask->unk3C++;
+        gCurTask->frame++;
         TaskYieldTrampoline(2);
         CreatePlayerObject(gCurTask->unk88->unk00, 10, 5);
         PlaySfxIfLocalPlayer(210, gCurTask->unk88->unk00);
-        gCurTask->unk3C++;
+        gCurTask->frame++;
         TaskYieldTrampoline(1);
-        gCurTask->unk3C++;
+        gCurTask->frame++;
         TaskYieldTrampoline(1);
         {
             struct Task *u = gCurTask;
 
             u->unk70++;
-            u->unk3C++;
+            u->frame++;
         }
         TaskYieldTrampoline(1);
-        gCurTask->unk3C++;
+        gCurTask->frame++;
         TaskYieldTrampoline(1);
-        gCurTask->unk3C++;
+        gCurTask->frame++;
         TaskYieldTrampoline(1);
-        gCurTask->unk3C++;
+        gCurTask->frame++;
         TaskYieldTrampoline(1);
-        gCurTask->unk3C = 0xFB4;
+        gCurTask->frame = 0xFB4;
         TaskYieldTrampoline(1);
         gCurTask->unk70++;
         break;
@@ -476,7 +476,7 @@ void sub_0804d6d0(void)
 
             if (t->unk46 != -1)
             {
-                if (t->unk43 == 1)
+                if (t->facing == 1)
                     TaskSetFrame((s16)(t->unk46 + 0xF88));
                 else
                     TaskSetFrame((s16)(t->unk46 + 0xFA8));
@@ -488,7 +488,7 @@ void sub_0804d6d0(void)
             if (t->unk24 == 12)
             {
                 if ((s16)t->unk88->unk14 == 3)
-                    t->unk43 = -t->unk43;
+                    t->facing = -t->facing;
                 TaskSetFrameNoFlip(gUnk_0873DB34[gCurTask->unk46]);
                 {
                     struct Task *u = gCurTask;

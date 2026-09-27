@@ -11,7 +11,7 @@
  *       sub_080c383c, then sub_080c38c8 or sub_080c3d58, then sub_080c3e18.
  *   sub_080c383c   player 0 drives the camera (sub_080c3670) and rebuilds the
  *       course view (AirGrindDrawCourse) and keeps the leader's position in
- *       M37Game.unk1B8; every racer sets Task.unk42/unk3E from the course
+ *       M37Game.unk1B8; every racer sets Task.layer/unk3E from the course
  *       record's unk18 and Task.unk28 from its unk08.
  *   sub_080c38c8   the racing step: holding A (M37Player.unk02 & 1) on the
  *       course (record unk14 != 0) accelerates Task.unk54 by the level's
@@ -19,7 +19,7 @@
  *       (sub_080c3698, capped by gUnk_080CFE3C[level][0]), and holding A
  *       while the record's unk14 is 0 starts a 24-frame penalty
  *       (M37Player.unk08); the tilt and animation frame
- *       Task.unk3C come from the tables gUnk_080CFEE4/gUnk_080CFEE9/
+ *       Task.frame come from the tables gUnk_080CFEE4/gUnk_080CFEE9/
  *       gUnk_080CFF01, and player 0's effects are variant 2 tasks
  *       (sub_080c2078).
  *   sub_080c3d58   the idle step used before the start and after the finish.
@@ -250,7 +250,7 @@ void sub_080c383c(s32 player)
     u16 rank;
 
     if (player == 0) {
-        sub_080c3670((gCurTask->unk4C >> 16) + 48);
+        sub_080c3670((gCurTask->posX >> 16) + 48);
         AirGrindDrawCourse();
         max = 0;
         for (i = 0; i < 4; i++) {
@@ -260,7 +260,7 @@ void sub_080c383c(s32 player)
         gAirGrindPtr->unk1B8 = max;
     }
     rank = (u16)gAirGrindCoursePtr->unk018[player].unk18;
-    gCurTask->unk42 = rank + 4;
+    gCurTask->layer = rank + 4;
     if (rank > 2)
         rank = 2;
     gCurTask->unk3E = (rank << 13) & 0x6000;
@@ -353,14 +353,14 @@ void sub_080c38c8(s32 player)
         gAirGrindPtr->unk01C[player].unk1C = gAirGrindCoursePtr->unk018[player].unk28;
     gAirGrindPtr->unk01C[player].unk10 = gAirGrindPtr->unk01C[player].unk1C - gAirGrindCoursePtr->unk018[player].unk00;
     if (gAirGrindPtr->unk01C[player].unk08 == 0) {
-        if (gCurTask->unk3C > 8)
+        if (gCurTask->frame > 8)
             gAirGrindPtr->unk01C[player].unk06 = 0;
         if (gAirGrindCoursePtr->unk018[player].unk1C > 16)
-            gCurTask->unk3C = 0;
+            gCurTask->frame = 0;
         else if (gAirGrindCoursePtr->unk018[player].unk1C < -16)
-            gCurTask->unk3C = 6;
+            gCurTask->frame = 6;
         else
-            gCurTask->unk3C = 3;
+            gCurTask->frame = 3;
         if (gAirGrindPtr->unk01C[player].unk02 & 1) {
             if (gAirGrindPtr->unk01C[player].unk06 > 0)
                 gAirGrindPtr->unk01C[player].unk06--;
@@ -368,16 +368,16 @@ void sub_080c38c8(s32 player)
             if (gAirGrindPtr->unk01C[player].unk06 <= 3)
                 gAirGrindPtr->unk01C[player].unk06++;
         }
-        gCurTask->unk3C += gUnk_080CFEE4[gAirGrindPtr->unk01C[player].unk06];
+        gCurTask->frame += gUnk_080CFEE4[gAirGrindPtr->unk01C[player].unk06];
     } else {
-        if (gCurTask->unk3C <= 8)
+        if (gCurTask->frame <= 8)
             gAirGrindPtr->unk01C[player].unk06 = 0;
         if (player == 0 && gAirGrindPtr->unk01C[0].unk06 == 0)
             PlaySfx(401);
-        gCurTask->unk3C = 9;
+        gCurTask->frame = 9;
         if (++gAirGrindPtr->unk01C[player].unk06 > 23)
             gAirGrindPtr->unk01C[player].unk06 = 0;
-        gCurTask->unk3C += gUnk_080CFEE9[gAirGrindPtr->unk01C[player].unk06];
+        gCurTask->frame += gUnk_080CFEE9[gAirGrindPtr->unk01C[player].unk06];
         gAirGrindPtr->unk01C[player].unk14 = gUnk_080CFF01[gAirGrindPtr->unk01C[player].unk06] << 16;
     }
 }
@@ -390,17 +390,17 @@ void sub_080c3d58(s32 player)
         if (gAirGrindPtr->unk01C[player].unk14 < 0)
             gAirGrindPtr->unk01C[player].unk14 = 0;
     }
-    if (gCurTask->unk3C > 8)
+    if (gCurTask->frame > 8)
         gAirGrindPtr->unk01C[player].unk06 = 0;
     if (gAirGrindCoursePtr->unk018[player].unk1C > 16)
-        gCurTask->unk3C = 0;
+        gCurTask->frame = 0;
     else if (gAirGrindCoursePtr->unk018[player].unk1C < -16)
-        gCurTask->unk3C = 6;
+        gCurTask->frame = 6;
     else
-        gCurTask->unk3C = 3;
+        gCurTask->frame = 3;
     if (gCurTask->unk14 == 0)
         gAirGrindPtr->unk01C[player].unk06 = 3;
-    gCurTask->unk3C += gUnk_080CFEE4[gAirGrindPtr->unk01C[player].unk06];
+    gCurTask->frame += gUnk_080CFEE4[gAirGrindPtr->unk01C[player].unk06];
 }
 
 void sub_080c3e18(s32 player)

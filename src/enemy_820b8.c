@@ -217,10 +217,10 @@ void sub_08082338(void)
     gCurTask->unk15 = 0;
     TaskFaceNearestPlayer();
     t = gCurTask;
-    if (t->unk43 == 1)
-        t->unk43 = -1;
+    if (t->facing == 1)
+        t->facing = -1;
     else
-        t->unk43 = 1;
+        t->facing = 1;
     n = TaskGetAngleToNearestPlayer(3);
     u = gCurTask;
     u->unk18 = ((u16)n + 256) & 511;
@@ -266,8 +266,8 @@ void sub_08082458(void)
         if ((++t->unk1C & 3) == 0)
         {
             t->unk1C = 0;
-            if (++t->unk3C > 11)
-                t->unk3C = 4;
+            if (++t->frame > 11)
+                t->frame = 4;
         }
     }
 }
@@ -367,8 +367,8 @@ void sub_080825ec(void)
     if (--t->unk20 == 0)
     {
         t->unk20 = gUnk_087415F0[t->unk74];
-        if (++t->unk3C > 16)
-            t->unk3C = 9;
+        if (++t->frame > 16)
+            t->frame = 9;
     }
     u = gCurTask;
     if (u->unk18 != -1)
@@ -420,7 +420,7 @@ void sub_080826d8(void)
 
     t->unk00 = (u32)ActorMove;
     t->unk0C = (u32)ActorDrawWorldInViewOrDestroy;
-    t->unk42 = 11;
+    t->layer = 11;
     gCurTask->unk38 = gUnk_08752A8C;
     CallTableEntry(gCurTask->unk73, 3, gUnk_08741640);
 }
@@ -458,9 +458,9 @@ void sub_0808279c(void)
     {
         TaskSetFrame(4);
         TaskYieldTrampoline(3);
-        gCurTask->unk3C++;
+        gCurTask->frame++;
         TaskYieldTrampoline(2);
-        gCurTask->unk3C++;
+        gCurTask->frame++;
         TaskYieldTrampoline(3);
     } while (++*(s16 *)&gCurTask->unk6C <= 3);
     ActorSetState(1);
@@ -502,11 +502,11 @@ void sub_080828a8(void)
         sub_0806cc90(1, 1, -4, 6);
         TaskSetFrame(8);
         TaskYieldTrampoline(2);
-        gCurTask->unk3C++;
+        gCurTask->frame++;
         TaskYieldTrampoline(2);
-        gCurTask->unk3C--;
+        gCurTask->frame--;
         TaskYieldTrampoline(2);
-        gCurTask->unk3C++;
+        gCurTask->frame++;
         TaskYieldTrampoline(2);
     }
 }
@@ -548,10 +548,10 @@ void sub_08082980(void)
     gCurTask->unk15 = 3;
     TaskStopX();
     t = gCurTask;
-    if (t->unk43 == 1)
-        t->unk43 = -1;
+    if (t->facing == 1)
+        t->facing = -1;
     else
-        t->unk43 = 1;
+        t->facing = 1;
     n = RandomRange(3);
     u = gCurTask;
     u->unk30 = gUnk_08741638[n];
@@ -605,13 +605,13 @@ void sub_08082a08(void)
     TaskStop();
     TaskSetFrame(8);
     TaskYieldTrampoline(2);
-    gCurTask->unk3C++;
+    gCurTask->frame++;
     TaskYieldTrampoline(2);
     v = gCurTask;
-    if (v->unk43 == 1)
-        v->unk43 = -1;
+    if (v->facing == 1)
+        v->facing = -1;
     else
-        v->unk43 = 1;
+        v->facing = 1;
     ActorSetState(1);
     TaskSleepForever();
 }
@@ -639,14 +639,14 @@ void sub_08082b48(void)
     {
         if (--t->unk30 == 0)
         {
-            t->unk4C = t->unk34;
-            t->unk50 = t->unk24;
+            t->posX = t->unk34;
+            t->posY = t->unk24;
         }
     }
     if (gCurTask->unk7A != 0)
     {
         TaskStopY();
-        if (TaskGetFacingTowardNearestPlayer() != gCurTask->unk43)
+        if (TaskGetFacingTowardNearestPlayer() != gCurTask->facing)
             ActorSetState(2);
         else
             ActorSetState(1);
@@ -700,7 +700,7 @@ void sub_08082c5c(void)
     t->unk28 = 30;
     if (RandomRange(2) == 0)
         return;
-    if (TaskGetFacingTowardNearestPlayer() == gCurTask->unk43)
+    if (TaskGetFacingTowardNearestPlayer() == gCurTask->facing)
         return;
     if (abs(TaskGetNearestPlayerDy()) <= 31)
         ActorSetState(2);
@@ -759,8 +759,8 @@ s32 sub_08082d4c(void)
         TaskTurnAroundAndReverseX();
         t = gCurTask;
         t->unk30 = 2;
-        t->unk34 = t->unk4C;
-        t->unk24 = t->unk50;
+        t->unk34 = t->posX;
+        t->unk24 = t->posY;
         break;
     case 2:
         TaskStopX();
@@ -796,7 +796,7 @@ void sub_08082de4(void)
     t = gCurTask;
     t->unk00 = (u32)ActorMove;
     t->unk0C = (u32)ActorDrawWorldInViewOrDestroy;
-    t->unk42 = 11;
+    t->layer = 11;
     u = gCurTask;
     u->unk38 = gUnk_08752AB4;
     switch (u->unk73)

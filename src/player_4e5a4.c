@@ -66,7 +66,7 @@ void sub_0804e640(void)
                 TaskSetFrameFlip(gUnk_0873DB0A[t->unk46]);
         }
         if (gCurTask->unk46 == 9)
-            gCurTask->unk6E = gCurTask->unk43;
+            gCurTask->unk6E = gCurTask->facing;
     }
     if (abs(gCurTask->unk58) > 0x20000)
     {

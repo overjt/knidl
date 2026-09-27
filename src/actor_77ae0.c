@@ -132,15 +132,15 @@ void sub_080788e0(void);
 void sub_08077ae0(void)
 {
     gCurTask->unk15 = 0;
-    gCurTask->unk43 = 1;
+    gCurTask->facing = 1;
     TaskStop();
     gUnk_02006094 = -1;
     {
         struct Task *t = gCurTask;
 
-        t->unk4C = t->unk30 << 16;
-        t->unk50 = t->unk2C << 16;
-        t->unk3C = 42;
+        t->posX = t->unk30 << 16;
+        t->posY = t->unk2C << 16;
+        t->frame = 42;
     }
     TaskSleepForever();
 }
@@ -193,7 +193,7 @@ void sub_08077bf0(void)
         struct Task *t = gCurTask;
 
         t->unk4A += 16;
-        t->unk50 = t->unk4A << 16;
+        t->posY = t->unk4A << 16;
     }
     TaskSleepForever();
 }
@@ -213,7 +213,7 @@ void sub_08077c64(void)
 
         t->unk00 = (u32)ActorMove;
         t->unk0C = (u32)ActorDrawWorldInView;
-        t->unk42 = 11;
+        t->layer = 11;
     }
     {
         struct Task *t = gCurTask;
@@ -234,7 +234,7 @@ s32 sub_08077ca4(void)
 
 void sub_08077cd4(void)
 {
-    gCurTask->unk3C = 1;
+    gCurTask->frame = 1;
     sub_080670ac(15);
     SetRoomUpdateFlags(2);
 }
@@ -308,9 +308,9 @@ void sub_08077e30(void)
 void sub_08077e4c(void)
 {
     gCurTask->unk15 = 0;
-    gCurTask->unk43 = 1;
+    gCurTask->facing = 1;
     TaskStop();
-    gCurTask->unk3C = 0;
+    gCurTask->frame = 0;
     TaskSleepForever();
 }
 
@@ -353,7 +353,7 @@ void sub_08077f0c(void)
 
         t->unk00 = (u32)ActorMove;
         t->unk0C = (u32)ActorDrawWorldInView;
-        t->unk42 = 11;
+        t->layer = 11;
     }
     {
         struct Task *t = gCurTask;
@@ -378,13 +378,13 @@ void sub_08077f7c(void)
 void sub_08077f98(void)
 {
     gCurTask->unk15 = 0;
-    gCurTask->unk3C = 0;
+    gCurTask->frame = 0;
     while (GetCollisionTileAtPixel(gCurTask->unk48, gCurTask->unk4A) == 51)
         TaskYieldTrampoline(1);
     TaskYieldTrampoline(5);
-    gCurTask->unk3C++;
+    gCurTask->frame++;
     TaskYieldTrampoline(2);
-    gCurTask->unk3C = 0xFFFF;
+    gCurTask->frame = 0xFFFF;
     ActorDestroy();
 }
 
@@ -498,7 +498,7 @@ void sub_080781fc(struct M19Particle *p)
 {
     struct Task *t = gCurTask;
 
-    QueueSprite(t->unk42,
+    QueueSprite(t->layer,
                  gUnk_08752DB8[gUnk_08740320[p->unk00][p->unk01].unk00],
                  t->unk3E, t->unk40, p->unk02, p->unk03);
 }
@@ -507,7 +507,7 @@ void sub_08078258(struct M19Particle *p)
 {
     struct Task *t = gCurTask;
 
-    QueueSprite(t->unk42,
+    QueueSprite(t->layer,
                  gUnk_08752E00[gUnk_087404A0[p->unk00][p->unk01].unk00],
                  t->unk3E, t->unk40, p->unk02, p->unk03);
 }
@@ -516,7 +516,7 @@ void sub_080782b4(struct M19Particle *p)
 {
     struct Task *t = gCurTask;
 
-    QueueSprite(t->unk42,
+    QueueSprite(t->layer,
                  gUnk_08752E00[gUnk_087404A0[p->unk00][p->unk01].unk00],
                  t->unk3E, t->unk40, p->unk02 - gSpriteCameraX, p->unk03);
 }
@@ -531,7 +531,7 @@ void sub_0807831c(struct M19Particle *p)
         {
             struct Task *t = gCurTask;
 
-            QueueSprite(t->unk42,
+            QueueSprite(t->layer,
                          gUnk_08752E00[gUnk_087404A0[p->unk00][p->unk01].unk00],
                          t->unk3E, t->unk40,
                          p->unk02 - gSpriteCameraX + t->unk2C * 192,
@@ -698,7 +698,7 @@ void sub_08078598(void)
         sub_0806ee2c();
         break;
     }
-    gCurTask->unk42 = 4;
+    gCurTask->layer = 4;
     {
         struct Task *t = gCurTask;
 
@@ -854,7 +854,7 @@ void sub_0807893c(void)
 
         t->unk00 = (u32)ActorMove;
         t->unk0C = (u32)ActorDrawWorldInViewOrDestroy;
-        t->unk42 = 11;
+        t->layer = 11;
     }
     {
         struct Task *t = gCurTask;

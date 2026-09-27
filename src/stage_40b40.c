@@ -339,16 +339,16 @@ void PlayerSetMotionXPreset(s32 a0, s32 a1)
                         n = 0;
                         break;
                     case 1:
-                        n = (gCurTask->unk43 == 1) ? 1 : 2;
+                        n = (gCurTask->facing == 1) ? 1 : 2;
                         break;
                     case 2:
-                        n = (gCurTask->unk43 == 1) ? 2 : 1;
+                        n = (gCurTask->facing == 1) ? 2 : 1;
                         break;
                     case 3:
-                        n = (gCurTask->unk43 == 1) ? 3 : 4;
+                        n = (gCurTask->facing == 1) ? 3 : 4;
                         break;
                     case 4:
-                        n = (gCurTask->unk43 == 1) ? 4 : 3;
+                        n = (gCurTask->facing == 1) ? 4 : 3;
                         break;
                     }
                     {

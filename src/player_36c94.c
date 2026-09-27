@@ -129,14 +129,14 @@ void PlayerActionLadder(void)
     if (gCurTask->unk88->unk05 != 9)
     {
         PlayerStopAxes(3);
-        gCurTask->unk43 = 1;
+        gCurTask->facing = 1;
         h1 = gCurTask;
         h1->unk3E &= 0x7FFF;
         h1->unk88->unk3D = 0;
         gCurTask->unk88->unk50 = 1;
         h3 = gCurTask;
-        h3->unk2C = h3->unk43;
-        h3->unk4C = ((h3->unk48 & 0xFFF0) | 8) << 16;
+        h3->unk2C = h3->facing;
+        h3->posX = ((h3->unk48 & 0xFFF0) | 8) << 16;
         q = gLatchedHeldKeys;
         if (q[h3->unk88->unk00] & 64)
             h3->unk73 = 1;
@@ -193,7 +193,7 @@ void PlayerActionLadder(void)
                 if (x & 0x8000)
                     v |= 0xFF000000;
                 a1->unk68 = v;
-                a1->unk3C = r[0] + a1->unk46;
+                a1->frame = r[0] + a1->unk46;
                 TaskYieldTrampoline(r[1]);
                 b1 = gCurTask;
                 b1->unk28++;
@@ -220,7 +220,7 @@ void PlayerActionLadder(void)
                 if (x & 0x8000)
                     v |= 0xFF000000;
                 a3->unk68 = v;
-                a3->unk3C = r[0] + a3->unk46;
+                a3->frame = r[0] + a3->unk46;
                 TaskYieldTrampoline(r[1]);
                 b3 = gCurTask;
                 b3->unk28++;
@@ -251,7 +251,7 @@ void PlayerActionLadder(void)
                 if (x & 0x8000)
                     v |= 0xFF000000;
                 a2->unk68 = v;
-                a2->unk3C = r[0] + a2->unk46;
+                a2->frame = r[0] + a2->unk46;
                 TaskYieldTrampoline(r[1]);
                 b2 = gCurTask;
                 b2->unk28++;
@@ -277,7 +277,7 @@ void PlayerActionLadder(void)
                 if (x & 0x8000)
                     w |= 0xFF000000;
                 a4->unk68 = w;
-                a4->unk3C = r[0] + a4->unk46;
+                a4->frame = r[0] + a4->unk46;
                 TaskYieldTrampoline((&gUnk_0873D908[1])[i * 3]);
                 b4 = gCurTask;
                 b4->unk28++;
@@ -303,7 +303,7 @@ void PlayerActionLadder(void)
                 gCurTask->unk34 += 13;
                 if (gCurTask->unk34 > 51)
                     gCurTask->unk34 -= 52;
-                gCurTask->unk3C = gCurTask->unk34 + gCurTask->unk46;
+                gCurTask->frame = gCurTask->unk34 + gCurTask->unk46;
                 TaskYieldTrampoline(2);
             }
         }
@@ -334,7 +334,7 @@ void PlayerActionLadderUpdate(void)
     if (PlayerCheckDropAbility() != 0)
     {
         t = gCurTask;
-        t->unk3C = gUnk_0873D880[t->unk88->unk0D];
+        t->frame = gUnk_0873D880[t->unk88->unk0D];
         TaskSetEntry(PlayerActionLadder, gCurTaskIdx);
         if (gUnk_0300244C != 0)
             gCurTask->unk88->unk01 = 0;
@@ -470,7 +470,7 @@ void PlayerActionLadderUpdate(void)
     te = gCurTask;
     if ((qd[te->unk88->unk00] & 48) != 0)
     {
-        te->unk43 = te->unk2C;
+        te->facing = te->unk2C;
         tf = gCurTask;
         tf->unk3E &= 0x7FFF;
         if (tf->unk58 != 0)
@@ -479,7 +479,7 @@ void PlayerActionLadderUpdate(void)
     }
     else if ((gTerrainResult.unk6 & 3) == 0)
     {
-        te->unk43 = te->unk2C;
+        te->facing = te->unk2C;
         tg = gCurTask;
         if (tg->unk73 == 1)
             goto set5;
@@ -546,12 +546,12 @@ void PlayerActionInhale(void)
         gCurTask->unk73 = 1;
         TaskSetFrame(57);
         TaskYieldTrampoline(4);
-        gCurTask->unk3C++;
+        gCurTask->frame++;
         TaskYieldTrampoline(2);
         PlayerStartSfx(103, gCurTask->unk88->unk00);
         CreatePlayerEffect(gCurTask->unk88->unk00, 0, 0);
         gCurTask->unk88->unk40 |= 4;
-        gCurTask->unk3C++;
+        gCurTask->frame++;
         TaskYieldTrampoline(2);
         gCurTask->unk73 = 1;
     case 1:
@@ -564,7 +564,7 @@ void PlayerActionInhale(void)
                     goto hit;
                 TaskYieldTrampoline(1);
             }
-            gCurTask->unk3C++;
+            gCurTask->frame++;
             for (gCurTask->unk6C = 0; (s16)gCurTask->unk6C <= 2; gCurTask->unk6C++)
             {
                 if ((s8)gCurTask->unk88->unk07 != 0 && (s8)gCurTask->unk88->unk07 == (s8)gCurTask->unk88->unk08)
@@ -602,7 +602,7 @@ void PlayerActionInhale(void)
                 PlayerStartOffsetScript(2);
                 for (gCurTask->unk6C = 0; (s16)gCurTask->unk6C <= 4; gCurTask->unk6C++)
                 {
-                    gCurTask->unk3C++;
+                    gCurTask->frame++;
                     TaskYieldTrampoline(2);
                 }
                 r = gCurTask->unk88;
@@ -756,7 +756,7 @@ void PlayerActionSpit(void)
     PlayerStartOffsetScript(3);
     TaskSetFrame(79);
     TaskYieldTrampoline(1);
-    gCurTask->unk3C++;
+    gCurTask->frame++;
     TaskYieldTrampoline(1);
     gCurTask->unk88->unk0B = 0;
     if ((s8)gCurTask->unk88->unk07 > 1)
@@ -768,11 +768,11 @@ void PlayerActionSpit(void)
         CreatePlayerEffect(gCurTask->unk88->unk00, 2, 0);
         CreatePlayerEffect(gCurTask->unk88->unk00, 2, 1);
     }
-    gCurTask->unk3C++;
+    gCurTask->frame++;
     TaskYieldTrampoline(11);
-    gCurTask->unk3C++;
+    gCurTask->frame++;
     TaskYieldTrampoline(1);
-    gCurTask->unk3C++;
+    gCurTask->frame++;
     gCurTask->unk28++;
     TaskSleepForever();
 }
@@ -820,19 +820,19 @@ void PlayerActionSwallow(void)
     TaskSetFrame(68);
     TaskYieldTrampoline(2);
     PlaySfxIfLocalPlayer(113, gCurTask->unk88->unk00);
-    gCurTask->unk3C++;
+    gCurTask->frame++;
     TaskYieldTrampoline(2);
-    gCurTask->unk3C++;
+    gCurTask->frame++;
     TaskYieldTrampoline(4);
-    gCurTask->unk3C++;
+    gCurTask->frame++;
     TaskYieldTrampoline(2);
-    gCurTask->unk3C++;
+    gCurTask->frame++;
     TaskYieldTrampoline(2);
-    gCurTask->unk3C--;
+    gCurTask->frame--;
     TaskYieldTrampoline(2);
-    gCurTask->unk3C++;
+    gCurTask->frame++;
     TaskYieldTrampoline(8);
-    gCurTask->unk3C++;
+    gCurTask->frame++;
     TaskYieldTrampoline(2);
     gCurTask->unk28++;
     TaskSleepForever();

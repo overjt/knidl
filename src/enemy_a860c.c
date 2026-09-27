@@ -1420,7 +1420,7 @@ void sub_080a860c(void)
         sub_08066718();
         break;
     case 1:
-        gCurTask->unk50 = (gViewRect[2] - 62) << 16;
+        gCurTask->posY = (gViewRect[2] - 62) << 16;
         if (sub_08066718() == 1)
             gCurTask->unk28++;
         break;
@@ -1442,15 +1442,15 @@ void sub_080a860c(void)
             {
                 TaskGetNearestPlayerScreenPos();
                 if (gUnk_030023B4 == 128)
-                    gCurTask->unk4C = (gUnk_087490E4[RandomRange(2)] + gViewRect[0]) << 16;
+                    gCurTask->posX = (gUnk_087490E4[RandomRange(2)] + gViewRect[0]) << 16;
                 if (gUnk_030023B4 <= 127)
-                    gCurTask->unk4C = (gViewRect[0] + 168) << 16;
+                    gCurTask->posX = (gViewRect[0] + 168) << 16;
                 else
-                    gCurTask->unk4C = (gViewRect[0] + 72) << 16;
+                    gCurTask->posX = (gViewRect[0] + 72) << 16;
                 gCurTask->unk28++;
             }
         }
-        gCurTask->unk50 = (gViewRect[2] - 62) << 16;
+        gCurTask->posY = (gViewRect[2] - 62) << 16;
         break;
     case 3:
         TaskSetEntry(sub_080a87c8, gCurTaskIdx);

@@ -130,6 +130,10 @@ C_COMMENT_RE = re.compile(r"/\*.*?\*/|//[^\n]*", re.S)
 ASM_COMMENT_RE = re.compile(r"/\*.*?\*/|@[^\n]*", re.S)
 
 
+def comments_of(text, is_asm):
+    return (ASM_COMMENT_RE if is_asm else C_COMMENT_RE).findall(text)
+
+
 def strip_comments(text, is_asm):
     return (ASM_COMMENT_RE if is_asm else C_COMMENT_RE).sub(" ", text)
 
@@ -541,7 +545,8 @@ def verify_diff(ref):
             if a != b and not (field_pairs and not is_asm
                                and fields_only_differ(a, b, field_pairs, field_uses)):
                 problems.append("%s: code differs beyond the renames" % path)
-            elif old != new:
+            elif ([qualify_fields(c, field_pairs) for c in comments_of(old, is_asm)]
+                  != comments_of(new, is_asm)):
                 comment_only.append(path)
             continue
         if old != new:
@@ -581,6 +586,14 @@ def compose_field_renames(rows):
         if not hit:
             fwd.setdefault((tag, old), new)
     return fwd
+
+
+def qualify_fields(comment, pairs):
+    """rename_field.py's comment rule: `Struct.old` -> `Struct.new`."""
+    for (tag, o), n in pairs.items():
+        comment = re.sub(r"(?<![A-Za-z0-9_])%s\.%s(?![A-Za-z0-9_])" % (
+            re.escape(tag), re.escape(o)), tag + "." + n, comment)
+    return comment
 
 
 FIELD_SPLIT_RE = re.compile(r"([A-Za-z_][A-Za-z0-9_]*)")

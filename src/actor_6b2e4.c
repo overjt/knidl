@@ -174,10 +174,10 @@ void sub_0806b410(void)
     t = gCurTask;
     s = &gTasks[t->unk44];
     p = t->unk88;
-    if (t->unk28 != s->unk43)
-        t->unk43 = -t->unk43;
+    if (t->unk28 != s->facing)
+        t->facing = -t->facing;
     u = gCurTask;
-    u->unk28 = s->unk43;
+    u->unk28 = s->facing;
     if (*(s8 *)&p->unk16 == -1)
     {
         u->unk48 = u->unk20;
@@ -187,7 +187,7 @@ void sub_0806b410(void)
     }
     if ((u8)(p->unk16 + 5) <= 2)
     {
-        u->unk43 = s->unk43;
+        u->facing = s->facing;
         v = gCurTask;
         v->unk70 = -*(s8 *)&p->unk16;
         v->unk48 = v->unk20;
@@ -197,19 +197,19 @@ void sub_0806b410(void)
         {
             ActorSetTerrainBox(gUnk_0873F8BC);
             w = gCurTask;
-            w->unk48 += gUnk_0873EAD8[k][2] * w->unk43;
+            w->unk48 += gUnk_0873EAD8[k][2] * w->facing;
             w->unk4A += gUnk_0873EAD8[k][3];
         }
         else
         {
             ActorSetTerrainBox(gUnk_0873F8B4);
             w = gCurTask;
-            w->unk48 += gUnk_0873EAD8[k][0] * w->unk43;
+            w->unk48 += gUnk_0873EAD8[k][0] * w->facing;
             w->unk4A += gUnk_0873EAD8[k][1];
         }
         x = gCurTask;
-        x->unk4C = x->unk48 << 16;
-        x->unk50 = x->unk4A << 16;
+        x->posX = x->unk48 << 16;
+        x->posY = x->unk4A << 16;
         if (sub_08021a40(x->unk48, x->unk4A) != 0)
         {
             y = gCurTask;
@@ -224,7 +224,7 @@ void sub_0806b410(void)
         return;
     }
     n = *(s8 *)&p->unk16 * 5;
-    g = (gUnk_0873E7C4[n] + u->unk34) * s->unk43;
+    g = (gUnk_0873E7C4[n] + u->unk34) * s->facing;
     if (e == 1)
         h = gUnk_0873E7C4[n + 1] - u->unk30;
     else
@@ -237,7 +237,7 @@ void sub_0806b410(void)
     z->unk20 = z->unk48;
     z->unk1C = z->unk4A;
     TaskSetFrame((s16)(e + 2));
-    gCurTask->unk42 = b;
+    gCurTask->layer = b;
 }
 
 void sub_0806b670(void)
@@ -270,8 +270,8 @@ void sub_0806b670(void)
     {
         t->unk48 = t->unk20;
         t->unk4A = t->unk1C;
-        t->unk4C = t->unk48 << 16;
-        t->unk50 = t->unk4A << 16;
+        t->posX = t->unk48 << 16;
+        t->posY = t->unk4A << 16;
         if (sub_08021a40(t->unk48, t->unk4A) != 0)
         {
             u = gCurTask;
@@ -281,19 +281,19 @@ void sub_0806b670(void)
                 return;
             }
             v = gCurTask;
-            v->unk43 = s->unk43;
+            v->facing = s->facing;
         }
         else
         {
             w = gCurTask;
-            w->unk43 = s->unk43;
+            w->facing = s->facing;
         }
         ActorSetState(2);
         TaskSetEntry(sub_0806bf38, gCurTaskIdx);
         return;
     }
     n = *(s8 *)&p->unk16 * 5;
-    g = (gUnk_0873E864[n] + t->unk34) * s->unk43;
+    g = (gUnk_0873E864[n] + t->unk34) * s->facing;
     if (e == 1)
         h = gUnk_0873E864[n + 1] - t->unk30;
     else
@@ -306,11 +306,11 @@ void sub_0806b670(void)
     z->unk20 = z->unk48;
     z->unk1C = z->unk4A;
     TaskSetFrame((s16)(e + 2));
-    gCurTask->unk42 = b;
+    gCurTask->layer = b;
     if (gUnk_0873E864[n + 3] == 1)
     {
         x = gCurTask;
-        if (x->unk43 == 1)
+        if (x->facing == 1)
             x->unk3E |= 0x8000;
         else
             x->unk3E &= 0x7FFF;
@@ -369,8 +369,8 @@ void sub_0806b8bc(void)
     u = gCurTask;
     u->unk00 = (u32)TaskMove;
     u->unk82 = 0;
-    u->unk4C = u->unk48 << 16;
-    u->unk50 = u->unk4A << 16;
+    u->posX = u->unk48 << 16;
+    u->posY = u->unk4A << 16;
     TaskSetEntry(ActorDie, gCurTaskIdx);
 }
 
@@ -431,7 +431,7 @@ void sub_0806b9dc(void)
     p->unk07++;
     u = gCurTask;
     s = &gTasks[u->unk44];
-    u->unk28 = s->unk43;
+    u->unk28 = s->facing;
 }
 
 void sub_0806ba34(void)
@@ -464,8 +464,8 @@ void sub_0806ba9c(void)
 
     t = gCurTask;
     s = &gTasks[t->unk44];
-    t->unk4C = (t->unk48 - s->unk48) << 16;
-    t->unk50 = (t->unk4A - s->unk4A) << 16;
+    t->posX = (t->unk48 - s->unk48) << 16;
+    t->posY = (t->unk4A - s->unk4A) << 16;
 }
 
 s32 sub_0806baec(s32 a)
@@ -531,16 +531,16 @@ void sub_0806bbe8(void)
     s32 w;
 
     t = gCurTask;
-    if (t->unk4C <= 0)
+    if (t->posX <= 0)
         t->unk5C = 10752;
     else
         t->unk5C = -10752;
     u = gCurTask;
-    v = u->unk50;
+    v = u->posY;
     if (v < 0)
         v = -v;
     v >>= 3;
-    if (u->unk50 <= 0)
+    if (u->posY <= 0)
         u->unk58 = v;
     else
         u->unk58 = -v;
@@ -740,8 +740,8 @@ u8 sub_0806be84(void)
         m = 0xFFF;
         m &= w;
         t->unk40 = m | t->unk8C->unk22;
-        t->unk4C = t->unk48 << 16;
-        t->unk50 = t->unk4A << 16;
+        t->posX = t->unk48 << 16;
+        t->posY = t->unk4A << 16;
         if (t->unk72 != 1 && t->unk72 != 6)
             ActorSetHitReactions(gUnk_0873F938);
         sub_0806b8bc();
@@ -778,7 +778,7 @@ void sub_0806bf54(void)
     u->unk46 = 0;
     u->unk70 = 0;
     u->unk30 = 0;
-    u->unk42 = 6;
+    u->layer = 6;
     while (sub_0806baec(16) == 0)
     {
         sub_0806bcdc();
@@ -834,13 +834,13 @@ void sub_0806c05c(void)
     t->unk00 = (u32)TaskMoveRelativeToParent;
     t->unk04 = (u32)sub_0806c0c0;
     t->unk08 = (u32)sub_0806c148;
-    t->unk50 = 0;
-    t->unk4C = 0;
+    t->posY = 0;
+    t->posX = 0;
     t->unk7C = 0;
     u = gCurTask;
     u->unk20 = u->unk48;
     u->unk1C = u->unk4A;
-    u->unk12 = 1;
+    u->taskClass = 1;
     ActorSetTerrainHandlers(gUnk_0873F8F4);
     gCurTask->unk18 = 0;
     sub_0806bc9c();

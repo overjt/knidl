@@ -59,7 +59,7 @@ void sub_0801a3e4(void)
     tbl = t->unk38;
     if (tbl == NULL)
         return;
-    if (t->unk3C == -1)
+    if (t->frame == -1)
         return;
     base = ((t->unk40 - 16) & 0xFFF) << 5;
     dst = 0x06010000 + base;
@@ -67,10 +67,10 @@ void sub_0801a3e4(void)
     dy = t->unk4A - (gBg3ScrollY >> 16);
     if (tbl == gUnk_08755440)
     {
-        RequestCopy(4, (u32)gUnk_02020000 + (gUnk_08732190[t->unk3C] << 5), dst,
+        RequestCopy(4, (u32)gUnk_02020000 + (gUnk_08732190[t->frame] << 5), dst,
                      128 << 2);
         RequestCopy(4, (u32)gUnk_02020000
-                        + ((gUnk_08732190[gCurTask->unk3C] + 16) << 5),
+                        + ((gUnk_08732190[gCurTask->frame] + 16) << 5),
                      0x06010400 + base, 224 << 1);
         xb = dx;
         x = xb - 64;
@@ -78,40 +78,40 @@ void sub_0801a3e4(void)
         if (IsOnScreen(x, yb) != 0)
         {
             u = gCurTask;
-            QueueSprite(u->unk42, gUnk_087321C0[u->unk3C], u->unk3E,
+            QueueSprite(u->layer, gUnk_087321C0[u->frame], u->unk3E,
                          0x800 | u->unk40, x, yb);
         }
         x2 = xb + 64;
         if (IsOnScreen(x2, yb) != 0)
         {
             u = gCurTask;
-            QueueSprite(u->unk42, gUnk_087321C0[u->unk3C], u->unk3E,
+            QueueSprite(u->layer, gUnk_087321C0[u->frame], u->unk3E,
                          0x800 | u->unk40, x2, yb);
         }
         x3 = xb - 96;
         if (IsOnScreen(x3, yb - 7) != 0)
         {
             u = gCurTask;
-            QueueSprite(u->unk42, gUnk_087321EC[u->unk3C], u->unk3E,
+            QueueSprite(u->layer, gUnk_087321EC[u->frame], u->unk3E,
                          0x800 | u->unk40, x3, yb - 7);
         }
         x4 = xb + 96;
         if (IsOnScreen(x4, yb - 7) != 0)
         {
             u = gCurTask;
-            QueueSprite(u->unk42, gUnk_087321EC[u->unk3C], u->unk3E,
+            QueueSprite(u->layer, gUnk_087321EC[u->frame], u->unk3E,
                          0x800 | u->unk40, x4, yb - 7);
         }
     }
     else if (tbl == gUnk_0875546C)
     {
-        RequestCopy(4, (u32)gUnk_02020000 + ((gUnk_087321A6[t->unk3C] + 14) << 5),
+        RequestCopy(4, (u32)gUnk_02020000 + ((gUnk_087321A6[t->frame] + 14) << 5),
                      0x060105C0 + base, 64);
         RequestCopy(4, (u32)gUnk_02020000
-                        + ((gUnk_087321A6[gCurTask->unk3C] + 16) << 5),
+                        + ((gUnk_087321A6[gCurTask->frame] + 16) << 5),
                      0x06010800 + base, 128 << 2);
         RequestCopy(4, (u32)gUnk_02020000
-                        + ((gUnk_087321A6[gCurTask->unk3C] + 32) << 5),
+                        + ((gUnk_087321A6[gCurTask->frame] + 32) << 5),
                      0x06010C00 + base, 64);
         xb = dx;
         yb = dy;
@@ -123,26 +123,26 @@ void sub_0801a3e4(void)
         if (IsOnScreen(xb, yb) != 0)
         {
             u = gCurTask;
-            QueueSprite(u->unk42, (u32)gUnk_085E24D8, u->unk3E,
+            QueueSprite(u->layer, (u32)gUnk_085E24D8, u->unk3E,
                          c | u->unk40, xb, yb);
         }
     }
     else if (tbl == gUnk_08755484)
     {
-        RequestCopy(4, (u32)gUnk_02020000 + ((gUnk_087321B2[t->unk3C] + 2) << 5),
+        RequestCopy(4, (u32)gUnk_02020000 + ((gUnk_087321B2[t->frame] + 2) << 5),
                      0x06010C40 + base, 224 << 1);
         RequestCopy(4, (u32)gUnk_02020000
-                        + ((gUnk_087321B2[gCurTask->unk3C] + 16) << 5),
+                        + ((gUnk_087321B2[gCurTask->frame] + 16) << 5),
                      0x06011000 + base, 128 << 2);
         RequestCopy(4, (u32)gUnk_02020000
-                        + ((gUnk_087321B2[gCurTask->unk3C] + 32) << 5),
+                        + ((gUnk_087321B2[gCurTask->frame] + 32) << 5),
                      0x06011400 + base, 128 << 2);
         xb = dx;
         yb = dy;
         if (IsOnScreen(xb, yb) != 0)
         {
             u = gCurTask;
-            QueueSprite(u->unk42, (u32)gUnk_085E26E8, u->unk3E,
+            QueueSprite(u->layer, (u32)gUnk_085E26E8, u->unk3E,
                          0x800 | u->unk40, xb, yb);
         }
     }

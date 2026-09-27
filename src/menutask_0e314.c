@@ -77,14 +77,14 @@ void sub_0800e314(void)
     gCurTask->unk00 = (u32)TaskMove;
     gCurTask->unk0C = (u32)TaskDrawScreen;
     gCurTask->unk04 = (u32)sub_0800e390;
-    gCurTask->unk42 = 6;
+    gCurTask->layer = 6;
     gCurTask->unk38 = gUnk_08755650;
-    gCurTask->unk3C = 7;
+    gCurTask->frame = 7;
     gCurTask->unk2C = 0;
     gCurTask->unk30 = 1;
     gCurTask->unk34 = 0;
-    gCurTask->unk4C = 0xA00000;
-    gCurTask->unk50 = 0x300000;
+    gCurTask->posX = 0xA00000;
+    gCurTask->posY = 0x300000;
     while (gMenuScreen == 2 || gMenuScreen == 3)
         TaskYieldTrampoline(1);
     TaskExitTrampoline();
@@ -122,18 +122,18 @@ void sub_0800e46c(void)
     gCurTask->unk00 = (u32)TaskMove;
     gCurTask->unk0C = (u32)TaskDrawScreen;
     gCurTask->unk04 = (u32)sub_0800e518;
-    gCurTask->unk42 = 5;
+    gCurTask->layer = 5;
     gCurTask->unk38 = gUnk_08755650;
-    gCurTask->unk3C = 6;
+    gCurTask->frame = 6;
     gCurTask->unk2C = 0;
     gCurTask->unk30 = 1;
     gCurTask->unk34 = 0;
     if (gSaveSlots[gCurSaveSlot].unk10 & 4) {
-        gCurTask->unk4C = 0xB00000;
-        gCurTask->unk50 = (gMenuChoiceCursor << 20) + 0x280000;
+        gCurTask->posX = 0xB00000;
+        gCurTask->posY = (gMenuChoiceCursor << 20) + 0x280000;
     } else {
-        gCurTask->unk4C = 0xA80000;
-        gCurTask->unk50 = 0x300000;
+        gCurTask->posX = 0xA80000;
+        gCurTask->posY = 0x300000;
     }
     while (gMenuScreen == 3)
         TaskYieldTrampoline(1);
@@ -177,9 +177,9 @@ void Task_ModeListCursor(void)
     gCurTask->unk2C = 0;
     gCurTask->unk30 = 1;
     gCurTask->unk34 = 0;
-    gCurTask->unk4C = 0x680000;
+    gCurTask->posX = 0x680000;
     while (1) {
-        gCurTask->unk50 = (gUnk_08731E4C[gModeListExtraRows] + gUnk_08731E52[gModeListExtraRows] * gMenuCursor) << 16;
+        gCurTask->posY = (gUnk_08731E4C[gModeListExtraRows] + gUnk_08731E52[gModeListExtraRows] * gMenuCursor) << 16;
         if (gMenuScreen == 1 || gMenuScreen == 8)
             break;
         TaskYieldTrampoline(1);
@@ -243,14 +243,14 @@ void sub_0800e81c(void)
     gCurTask->unk00 = (u32)TaskMove;
     gCurTask->unk0C = (u32)TaskDrawScreen;
     gCurTask->unk04 = (u32)sub_0800e8c0;
-    gCurTask->unk42 = 5;
+    gCurTask->layer = 5;
     gCurTask->unk38 = gUnk_08755650;
-    gCurTask->unk3C = 6;
+    gCurTask->frame = 6;
     gCurTask->unk2C = 0;
     gCurTask->unk30 = 1;
     gCurTask->unk34 = 0;
-    gCurTask->unk4C = 0xA80000;
-    gCurTask->unk50 = (gUnk_08731E4C[gModeListExtraRows] + gUnk_08731E52[gModeListExtraRows] * gMenuCursor) << 16;
+    gCurTask->posX = 0xA80000;
+    gCurTask->posY = (gUnk_08731E4C[gModeListExtraRows] + gUnk_08731E52[gModeListExtraRows] * gMenuCursor) << 16;
     while (gMenuScreen == 5)
         TaskYieldTrampoline(1);
     TaskExitTrampoline();
@@ -292,8 +292,8 @@ void sub_0800e9a4(void)
     gCurTask->unk2C = 0;
     gCurTask->unk30 = 1;
     gCurTask->unk34 = 0;
-    gCurTask->unk4C = 0x800000;
-    gCurTask->unk50 = 0x680000;
+    gCurTask->posX = 0x800000;
+    gCurTask->posY = 0x680000;
     while (gMenuScreen == 6 && gEraseConfirmCount != 2)
         TaskYieldTrampoline(1);
     TaskExitTrampoline();

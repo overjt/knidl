@@ -252,7 +252,7 @@ void AirGrindRace(void)
     AirGrindSetupRace();
     gCurTask->unk0C = (u32)TaskDrawScreen;
     gCurTask->unk38 = gUnk_08755FEC;
-    gCurTask->unk3C = 0xFFFF;
+    gCurTask->frame = 0xFFFF;
     PlayBgm(0x82B);
     CreateAirGrindRacers();
     sub_080c2038(0);
@@ -268,12 +268,12 @@ void AirGrindRace(void)
     gCurTask->unk48 = 144;
     gCurTask->unk4A = 80;
     gCurTask->unk34 = AirGrindStartPaletteFade(gUnk_0860A042, 241, 10, 8, 15, 0);
-    gCurTask->unk3C = 0;
+    gCurTask->frame = 0;
     PlayBgm(0x82A);
     while (gAirGrindCoursePtr->unk000 < gAirGrindCoursePtr->unk00C + 240)
         TaskYieldTrampoline(1);
     gCurTask->unk08 = 0;
-    gCurTask->unk3C = 0xFFFF;
+    gCurTask->frame = 0xFFFF;
     AirGrindStopPaletteFade(gCurTask->unk34);
     if (gFrameCallback != 0 && gAirGrind.unk000 != 2) {
         while (gAirGrindPtr->unk300 <= 0x4AF)
@@ -293,7 +293,7 @@ void AirGrindRace(void)
     gCurTask->unk48 = 112;
     gCurTask->unk4A = 80;
     gCurTask->unk34 = AirGrindStartPaletteFade(gUnk_0860A042, 241, 10, 8, 15, 0);
-    gCurTask->unk3C = 1;
+    gCurTask->frame = 1;
     PlayBgm(0x82C);
     while (1) {
         n = 0;

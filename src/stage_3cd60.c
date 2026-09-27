@@ -191,7 +191,7 @@ void sub_0803ce98(void)
     }
     if (sub_0803d010() != 0)
         return;
-    QueueSprite(gCurTask->unk42, gUnk_08751990[v],
+    QueueSprite(gCurTask->layer, gUnk_08751990[v],
                  (u16)(gCurTask->unk3E & 0x8000),
                  gCurTask->unk40 & 0xF000,
                  gCurTask->unk48 - gSpriteCameraX,
@@ -201,7 +201,7 @@ void sub_0803ce98(void)
 /* True while the running task's unk3C (state id) is one of 1511..1515. */
 s32 sub_0803d010(void)
 {
-    if ((u16)(gCurTask->unk3C - 1511) <= 4)
+    if ((u16)(gCurTask->frame - 1511) <= 4)
         return 1;
     return 0;
 }
@@ -211,10 +211,10 @@ void CreatePlayer(s32 a0)
     struct Task *t;
 
     t = &gTasks[TaskCreateFrom(5, 0)];
-    t->unk4C = gRoomEntryX << 16;
-    t->unk50 = gRoomEntryY << 16;
-    t->unk48 = t->unk4C >> 16;
-    t->unk4A = t->unk50 >> 16;
+    t->posX = gRoomEntryX << 16;
+    t->posY = gRoomEntryY << 16;
+    t->unk48 = t->posX >> 16;
+    t->unk4A = t->posY >> 16;
     if ((u8)(gUnk_02000020 - 2) <= 1)
         SetPlayerAbilityNoHud(25, -1, a0);
 }
@@ -500,18 +500,18 @@ void PlayerMove(void)
     t->unk68 = gUnk_03002344;
     t->unk58 += gUnk_03002448;
     if ((t->unk88->unk42 & 0x100) == 0) {
-        t->unk4C += t->unk88->unk54;
+        t->posX += t->unk88->unk54;
         if ((t->unk7A & 1) == 0) {
-            t->unk50 += t->unk88->unk58;
+            t->posY += t->unk88->unk58;
             if (t->unk88->unk58 < 0)
                 t->unk7A = 0;
         }
     }
     u = gCurTask;
-    u->unk4C += u->unk54;
-    u->unk50 += u->unk58;
-    u->unk48 = u->unk4C >> 16;
-    u->unk4A = u->unk50 >> 16;
+    u->posX += u->unk54;
+    u->posY += u->unk58;
+    u->unk48 = u->posX >> 16;
+    u->unk4A = u->posY >> 16;
 }
 
 /* Upload the frame's graphics for gfx script entry unk3C+a0 and return its
@@ -530,7 +530,7 @@ s32 PlayerLoadFrameTilesAndPalette(s32 a0)
     t = gCurTask;
     prio = t->unk40;
     tbl = t->unk38;
-    g = (struct TaskGfx *)tbl[t->unk3C + a0];
+    g = (struct TaskGfx *)tbl[t->frame + a0];
     if ((g->unk00 & 1) != 0) {
         p = &g->unk04;
         if ((t->unk88->unk42 & 16) == 0 && g->unk04 != NULL)
@@ -592,7 +592,7 @@ void sub_0803d710(void)
 
     t = gCurTask;
     tbl = t->unk38;
-    p = (u16 **)tbl[t->unk3C];
+    p = (u16 **)tbl[t->frame];
     g = (struct TaskGfx *)p;
     p++;
     w = g->unk04;
@@ -653,7 +653,7 @@ s32 sub_0803d870(void)
     u16 w;
 
     t = gCurTask;
-    v = t->unk3C;
+    v = t->frame;
     if ((v >= 273 && v <= 284) || (v >= 389 && v <= 403))
         return 192;
     if (v >= 252 && v <= 272)
@@ -697,7 +697,7 @@ s32 sub_0803d870(void)
                 return -1;
             if (ps->unk06 == 2)
                 return -1;
-            w = u->unk3C;
+            w = u->frame;
             if (w >= 173 && w <= 242)
                 return 0;
             if (w >= 285 && w <= 293)
@@ -711,19 +711,19 @@ s32 sub_0803d870(void)
         switch (gCurTask->unk88->unk0D) {
         case 5:
             x = gCurTask;
-            w = x->unk3C;
+            w = x->frame;
             if (w >= 1487 && w <= 1504)
                 return -1;
             break;
         case 19:
             x = gCurTask;
-            w = x->unk3C;
+            w = x->frame;
             if (w >= 3549 && w <= 3556)
                 return -1;
             break;
         case 8:
             x = gCurTask;
-            w = x->unk3C;
+            w = x->frame;
             if (w >= 1794 && w <= 1810)
                 return 256;
             break;
@@ -733,7 +733,7 @@ s32 sub_0803d870(void)
             return 704;
         case 17:
             x = gCurTask;
-            w = x->unk3C;
+            w = x->frame;
             if (w >= 3144 && w <= 3148)
                 return 384;
             return -1;
@@ -741,7 +741,7 @@ s32 sub_0803d870(void)
             y = gCurTask;
             if ((y->unk88->unk42 & 16) != 0)
                 return -1;
-            w = y->unk3C;
+            w = y->frame;
             if (w >= 3976 && w <= 4068)
                 return 576;
             break;
@@ -800,19 +800,19 @@ void sub_0803db74(void)
         }
         return;
     }
-    if ((u16)(t->unk3C - 655) <= 218 || (u16)(t->unk3C - 4369) <= 23) {
+    if ((u16)(t->frame - 655) <= 218 || (u16)(t->frame - 4369) <= 23) {
         if ((ps->unk42 & 16) == 0)
             RequestCopy(2, (u32)gUnk_081BC050,
                          (u32)gObjPalette + (((t->unk40 >> 12) + 1) << 5), 32);
         return;
     }
-    if ((u16)(t->unk3C - 874) <= 8) {
+    if ((u16)(t->frame - 874) <= 8) {
         if ((ps->unk42 & 16) == 0)
             RequestCopy(2, (u32)&gUnk_081BE6BC[ps->unk00 * 128],
                          (u32)gObjPalette + ((t->unk40 >> 12) << 5), 32);
     }
     u = gCurTask;
-    if ((u16)(u->unk3C - 3821) <= 128 || (u16)(u->unk3C - 4525) <= 5) {
+    if ((u16)(u->frame - 3821) <= 128 || (u16)(u->frame - 4525) <= 5) {
         ps2 = u->unk88;
         if ((ps2->unk42 & 16) == 0) {
             if (gUnk_030023B0 == 0)
@@ -844,7 +844,7 @@ void sub_0803ddc0(void)
     u16 y;
     s32 pal;
 
-    if (gCurTask->unk08 != 0 && (gCurTask->unk13 & 8) == 0)
+    if (gCurTask->unk08 != 0 && (gCurTask->skipMask & 8) == 0)
         sub_08033414();
     if ((gLocalPlayer != gCurTask->unk88->unk00
          || gUnk_03002444 != 0)
@@ -853,19 +853,19 @@ void sub_0803ddc0(void)
     {
         if (gCurTask->unk38 == 0)
             return;
-        if (gCurTask->unk3C == -1)
+        if (gCurTask->frame == -1)
             return;
         sub_0803d710();
         return;
     }
     if (gCurTask->unk38 == 0)
         return;
-    if (gCurTask->unk3C == -1)
+    if (gCurTask->frame == -1)
         return;
     speed = 0;
     if ((gCurTask->unk88->unk37 == 2
       || gCurTask->unk88->unk37 == 3)
-     && gCurTask->unk3C > 0xFEC && (gFrameCount & 3) == 0)
+     && gCurTask->frame > 0xFEC && (gFrameCount & 3) == 0)
         speed = 131;
     if (gCurTask->unk88->unk37 == 2)
     {
@@ -894,13 +894,13 @@ void sub_0803ddc0(void)
     if (IsOnScreen((s16)x, (s16)y) == 0)
         return;
     sub_08040a44((s16)x, (s16)y);
-    QueueSprite(gCurTask->unk42, pal, gCurTask->unk3E,
+    QueueSprite(gCurTask->layer, pal, gCurTask->unk3E,
                  2048 | gCurTask->unk40, (s16)x, (s16)y);
     if ((gCurTask->unk88->unk40 & 128) == 0)
         return;
-    QueueSprite(gCurTask->unk42, pal, gCurTask->unk3E,
+    QueueSprite(gCurTask->layer, pal, gCurTask->unk3E,
                  2048 | gCurTask->unk40, (s16)x - 48, (s16)y);
-    QueueSprite(gCurTask->unk42, pal, gCurTask->unk3E,
+    QueueSprite(gCurTask->layer, pal, gCurTask->unk3E,
                  2048 | gCurTask->unk40, (s16)x + 48, (s16)y);
 }
 
@@ -908,11 +908,11 @@ void sub_0803dfc8(void)
 {
     if (gCurTask->unk38 == 0)
         return;
-    if (gCurTask->unk3C == -1)
+    if (gCurTask->frame == -1)
         return;
     if (IsWorldPosOnScreen(gCurTask->unk48, gCurTask->unk4A) == 0)
         return;
-    QueueSprite(gCurTask->unk42, PlayerLoadFrameTilesAndPalette(0), gCurTask->unk3E,
+    QueueSprite(gCurTask->layer, PlayerLoadFrameTilesAndPalette(0), gCurTask->unk3E,
                  gCurTask->unk40,
                  gCurTask->unk48 - gSpriteCameraX,
                  gCurTask->unk4A - gSpriteCameraY);
@@ -1134,7 +1134,7 @@ void FreezeOtherTasks(s32 a0)
 
 void PlayerUpdateFlip(void)
 {
-    if (gCurTask->unk43 == 1)
+    if (gCurTask->facing == 1)
         gCurTask->unk3E &= 0x7FFF;
     else
         gCurTask->unk3E |= 0x8000;
@@ -1149,17 +1149,17 @@ s32 PlayerFaceHeldDirection(void)
     {
         if (tbl[i] & 16)
         {
-            if (gCurTask->unk43 == -1)
+            if (gCurTask->facing == -1)
             {
-                gCurTask->unk43 = 1;
+                gCurTask->facing = 1;
                 return 1;
             }
         }
         else
         {
-            if (gCurTask->unk43 == 1)
+            if (gCurTask->facing == 1)
             {
-                gCurTask->unk43 = -1;
+                gCurTask->facing = -1;
                 return 1;
             }
         }
@@ -1287,13 +1287,13 @@ void sub_0803e68c(s32 a0)
     s32 v;
 
     if (gLocalPlayer == p->unk00)
-        t->unk42 = 6;
+        t->layer = 6;
     else
-        t->unk42 = 7;
+        t->layer = 7;
     if (t->unk7A != 0)
     {
         t->unk64 = 0;
-        if (t->unk43 == 1)
+        if (t->facing == 1)
             t->unk5C = 3584;
         else
             t->unk5C = -3584;
@@ -1304,7 +1304,7 @@ void sub_0803e68c(s32 a0)
     else
     {
         t->unk64 = 0;
-        if (t->unk43 == 1)
+        if (t->facing == 1)
             t->unk5C = 2048;
         else
             t->unk5C = -2048;
@@ -1529,7 +1529,7 @@ void sub_0803e8ec(void)
 /* CENSUS: one function, 0x0803EAF8-0x0803F5FC (2820 bytes).  Returns the
    packed pair (hi << 16) | lo; `pop {r1}` at 0x0803F5E8 is lesson 3.94's
    not-void marker.  The body is three near-identical if/else-if chains over
-   Task.unk3C (one per PlayerState.unk0D value 1/2/5) whose arms are all
+   Task.frame (one per PlayerState.unk0D value 1/2/5) whose arms are all
    cross-jumped into one shared set of tails at 0x0803F16C-0x0803F5C2. */
 s32 sub_0803eaf8(s32 a0)
 {
@@ -1543,12 +1543,12 @@ s32 sub_0803eaf8(s32 a0)
     {
     case 1:
         t = &gTasks[a0];
-        if ((u16)t->unk3C >= 434 && (u16)t->unk3C <= 453)
+        if ((u16)t->frame >= 434 && (u16)t->frame <= 453)
         {
             hi = 0;
             lo = 6;
         }
-        else if ((u16)t->unk3C >= 486 && (u16)t->unk3C <= 487)
+        else if ((u16)t->frame >= 486 && (u16)t->frame <= 487)
         {
             if ((t->unk3E & 0x8000) == 0)
                 hi = -12;
@@ -1556,9 +1556,9 @@ s32 sub_0803eaf8(s32 a0)
                 hi = 12;
             lo = 4;
         }
-        else if ((u16)t->unk3C >= 488 && (u16)t->unk3C <= 509)
+        else if ((u16)t->frame >= 488 && (u16)t->frame <= 509)
         {
-            switch (t->unk3C)
+            switch (t->frame)
             {
             case 490:
             case 496:
@@ -1594,9 +1594,9 @@ s32 sub_0803eaf8(s32 a0)
                 break;
             }
         }
-        else if ((u16)t->unk3C >= 510 && (u16)t->unk3C <= 525)
+        else if ((u16)t->frame >= 510 && (u16)t->frame <= 525)
         {
-            switch (t->unk3C)
+            switch (t->frame)
             {
             default:
                 hi = 0;
@@ -1608,9 +1608,9 @@ s32 sub_0803eaf8(s32 a0)
                 break;
             }
         }
-        else if ((u16)t->unk3C >= 526 && (u16)t->unk3C <= 577)
+        else if ((u16)t->frame >= 526 && (u16)t->frame <= 577)
         {
-            switch (t->unk3C)
+            switch (t->frame)
             {
             case 536:
             case 537:
@@ -1633,9 +1633,9 @@ s32 sub_0803eaf8(s32 a0)
                 break;
             }
         }
-        else if ((u16)t->unk3C >= 578 && (u16)t->unk3C <= 582)
+        else if ((u16)t->frame >= 578 && (u16)t->frame <= 582)
         {
-            if ((u16)t->unk3C == 582)
+            if ((u16)t->frame == 582)
                 lo = 4;
             else
                 lo = 8;
@@ -1644,9 +1644,9 @@ s32 sub_0803eaf8(s32 a0)
             else
                 hi = 8;
         }
-        else if ((u16)t->unk3C >= 583 && (u16)t->unk3C <= 585)
+        else if ((u16)t->frame >= 583 && (u16)t->frame <= 585)
         {
-            switch (t->unk3C)
+            switch (t->frame)
             {
             default:
                 hi = 0;
@@ -1667,9 +1667,9 @@ s32 sub_0803eaf8(s32 a0)
                 break;
             }
         }
-        else if ((u16)t->unk3C >= 617 && (u16)t->unk3C <= 632)
+        else if ((u16)t->frame >= 617 && (u16)t->frame <= 632)
         {
-            switch (t->unk3C)
+            switch (t->frame)
             {
             case 617:
                 hi = -16;
@@ -1734,35 +1734,35 @@ s32 sub_0803eaf8(s32 a0)
                 break;
             }
         }
-        else if ((u16)t->unk3C >= 4345 && (u16)t->unk3C <= 4368)
+        else if ((u16)t->frame >= 4345 && (u16)t->frame <= 4368)
         {
-            if ((u16)t->unk3C >= 4345 && (u16)t->unk3C <= 4348)
+            if ((u16)t->frame >= 4345 && (u16)t->frame <= 4348)
             {
                 hi = -8;
                 lo = -12;
                 if (gUnk_0300244C != 0 && (t->unk3E & 0x8000))
                     hi = 8;
             }
-            else if ((u16)t->unk3C >= 4349 && (u16)t->unk3C <= 4352)
+            else if ((u16)t->frame >= 4349 && (u16)t->frame <= 4352)
             {
                 hi = 8;
                 lo = -12;
                 if (gUnk_0300244C != 0 && (t->unk3E & 0x8000))
                     hi = -8;
             }
-            else if ((u16)t->unk3C >= 4353 && (u16)t->unk3C <= 4356)
+            else if ((u16)t->frame >= 4353 && (u16)t->frame <= 4356)
             {
                 hi = 0;
                 lo = 8;
             }
-            else if ((u16)t->unk3C >= 4357 && (u16)t->unk3C <= 4360)
+            else if ((u16)t->frame >= 4357 && (u16)t->frame <= 4360)
             {
                 hi = 12;
                 lo = -12;
                 if (gUnk_0300244C != 0 && (t->unk3E & 0x8000))
                     hi = lo;
             }
-            else if ((u16)t->unk3C >= 4361 && (u16)t->unk3C <= 4364)
+            else if ((u16)t->frame >= 4361 && (u16)t->frame <= 4364)
             {
                 hi = -16;
                 lo = 0;
@@ -1780,12 +1780,12 @@ s32 sub_0803eaf8(s32 a0)
         break;
     case 2:
         t = &gTasks[a0];
-        if ((u16)t->unk3C >= 675 && (u16)t->unk3C <= 694)
+        if ((u16)t->frame >= 675 && (u16)t->frame <= 694)
         {
             hi = 0;
             lo = 6;
         }
-        else if ((u16)t->unk3C >= 727 && (u16)t->unk3C <= 728)
+        else if ((u16)t->frame >= 727 && (u16)t->frame <= 728)
         {
             if ((t->unk3E & 0x8000) == 0)
                 hi = -12;
@@ -1793,9 +1793,9 @@ s32 sub_0803eaf8(s32 a0)
                 hi = 12;
             lo = 4;
         }
-        else if ((u16)t->unk3C >= 729 && (u16)t->unk3C <= 750)
+        else if ((u16)t->frame >= 729 && (u16)t->frame <= 750)
         {
-            switch (t->unk3C)
+            switch (t->frame)
             {
             case 731:
             case 737:
@@ -1831,14 +1831,14 @@ s32 sub_0803eaf8(s32 a0)
                 break;
             }
         }
-        else if ((u16)t->unk3C >= 751 && (u16)t->unk3C <= 766)
+        else if ((u16)t->frame >= 751 && (u16)t->frame <= 766)
         {
             hi = 0;
             lo = -4;
         }
-        else if ((u16)t->unk3C >= 767 && (u16)t->unk3C <= 818)
+        else if ((u16)t->frame >= 767 && (u16)t->frame <= 818)
         {
-            switch (t->unk3C)
+            switch (t->frame)
             {
             case 777:
             case 778:
@@ -1861,9 +1861,9 @@ s32 sub_0803eaf8(s32 a0)
                 break;
             }
         }
-        else if ((u16)t->unk3C >= 819 && (u16)t->unk3C <= 823)
+        else if ((u16)t->frame >= 819 && (u16)t->frame <= 823)
         {
-            if ((u16)t->unk3C == 823)
+            if ((u16)t->frame == 823)
                 lo = 4;
             else
                 lo = 8;
@@ -1872,9 +1872,9 @@ s32 sub_0803eaf8(s32 a0)
             else
                 hi = 8;
         }
-        else if ((u16)t->unk3C >= 824 && (u16)t->unk3C <= 826)
+        else if ((u16)t->frame >= 824 && (u16)t->frame <= 826)
         {
-            switch (t->unk3C)
+            switch (t->frame)
             {
             default:
                 hi = 0;
@@ -1895,9 +1895,9 @@ s32 sub_0803eaf8(s32 a0)
                 break;
             }
         }
-        else if ((u16)t->unk3C >= 858 && (u16)t->unk3C <= 873)
+        else if ((u16)t->frame >= 858 && (u16)t->frame <= 873)
         {
-            switch (t->unk3C)
+            switch (t->frame)
             {
             case 858:
                 hi = -16;
@@ -1962,35 +1962,35 @@ s32 sub_0803eaf8(s32 a0)
                 break;
             }
         }
-        else if ((u16)t->unk3C >= 4369 && (u16)t->unk3C <= 4392)
+        else if ((u16)t->frame >= 4369 && (u16)t->frame <= 4392)
         {
-            if ((u16)t->unk3C >= 4369 && (u16)t->unk3C <= 4372)
+            if ((u16)t->frame >= 4369 && (u16)t->frame <= 4372)
             {
                 hi = -8;
                 lo = -12;
                 if (gUnk_0300244C != 0 && (t->unk3E & 0x8000))
                     hi = 8;
             }
-            else if ((u16)t->unk3C >= 4373 && (u16)t->unk3C <= 4376)
+            else if ((u16)t->frame >= 4373 && (u16)t->frame <= 4376)
             {
                 hi = 8;
                 lo = -12;
                 if (gUnk_0300244C != 0 && (t->unk3E & 0x8000))
                     hi = -8;
             }
-            else if ((u16)t->unk3C >= 4377 && (u16)t->unk3C <= 4380)
+            else if ((u16)t->frame >= 4377 && (u16)t->frame <= 4380)
             {
                 hi = 0;
                 lo = 8;
             }
-            else if ((u16)t->unk3C >= 4381 && (u16)t->unk3C <= 4384)
+            else if ((u16)t->frame >= 4381 && (u16)t->frame <= 4384)
             {
                 hi = 12;
                 lo = -12;
                 if (gUnk_0300244C != 0 && (t->unk3E & 0x8000))
                     hi = lo;
             }
-            else if ((u16)t->unk3C >= 4385 && (u16)t->unk3C <= 4388)
+            else if ((u16)t->frame >= 4385 && (u16)t->frame <= 4388)
             {
                 hi = -16;
                 lo = 0;
@@ -2005,7 +2005,7 @@ s32 sub_0803eaf8(s32 a0)
                     hi = -16;
             }
         }
-        else if ((u16)t->unk3C >= 843 && (u16)t->unk3C <= 853)
+        else if ((u16)t->frame >= 843 && (u16)t->frame <= 853)
         {
             gCurTask->unk40 = (gCurTask->unk40 & ~15) | 12;
         }
@@ -2016,12 +2016,12 @@ s32 sub_0803eaf8(s32 a0)
         break;
     case 5:
         t = &gTasks[a0];
-        if ((u16)t->unk3C >= 1284 && (u16)t->unk3C <= 1303)
+        if ((u16)t->frame >= 1284 && (u16)t->frame <= 1303)
         {
             hi = 0;
             lo = 6;
         }
-        else if ((u16)t->unk3C >= 1336 && (u16)t->unk3C <= 1337)
+        else if ((u16)t->frame >= 1336 && (u16)t->frame <= 1337)
         {
             if ((t->unk3E & 0x8000) == 0)
                 hi = -12;
@@ -2029,9 +2029,9 @@ s32 sub_0803eaf8(s32 a0)
                 hi = 12;
             lo = 4;
         }
-        else if ((u16)t->unk3C >= 1338 && (u16)t->unk3C <= 1359)
+        else if ((u16)t->frame >= 1338 && (u16)t->frame <= 1359)
         {
-            switch (t->unk3C)
+            switch (t->frame)
             {
             case 1340:
             case 1346:
@@ -2067,14 +2067,14 @@ s32 sub_0803eaf8(s32 a0)
                 break;
             }
         }
-        else if ((u16)t->unk3C >= 1360 && (u16)t->unk3C <= 1375)
+        else if ((u16)t->frame >= 1360 && (u16)t->frame <= 1375)
         {
             hi = 0;
             lo = -4;
         }
-        else if ((u16)t->unk3C >= 1376 && (u16)t->unk3C <= 1427)
+        else if ((u16)t->frame >= 1376 && (u16)t->frame <= 1427)
         {
-            switch (t->unk3C)
+            switch (t->frame)
             {
             case 1386:
             case 1387:
@@ -2097,9 +2097,9 @@ s32 sub_0803eaf8(s32 a0)
                 break;
             }
         }
-        else if ((u16)t->unk3C >= 1428 && (u16)t->unk3C <= 1432)
+        else if ((u16)t->frame >= 1428 && (u16)t->frame <= 1432)
         {
-            if ((u16)t->unk3C == 1432)
+            if ((u16)t->frame == 1432)
                 lo = 4;
             else
                 lo = 8;
@@ -2108,9 +2108,9 @@ s32 sub_0803eaf8(s32 a0)
             else
                 hi = 8;
         }
-        else if ((u16)t->unk3C >= 1433 && (u16)t->unk3C <= 1435)
+        else if ((u16)t->frame >= 1433 && (u16)t->frame <= 1435)
         {
-            switch (t->unk3C)
+            switch (t->frame)
             {
             default:
                 hi = 0;
@@ -2131,9 +2131,9 @@ s32 sub_0803eaf8(s32 a0)
                 break;
             }
         }
-        else if ((u16)t->unk3C >= 1467 && (u16)t->unk3C <= 1482)
+        else if ((u16)t->frame >= 1467 && (u16)t->frame <= 1482)
         {
-            switch (t->unk3C)
+            switch (t->frame)
             {
             case 1467:
                 hi = -16;
@@ -2198,35 +2198,35 @@ s32 sub_0803eaf8(s32 a0)
                 break;
             }
         }
-        else if ((u16)t->unk3C >= 4405 && (u16)t->unk3C <= 4428)
+        else if ((u16)t->frame >= 4405 && (u16)t->frame <= 4428)
         {
-            if ((u16)t->unk3C >= 4405 && (u16)t->unk3C <= 4408)
+            if ((u16)t->frame >= 4405 && (u16)t->frame <= 4408)
             {
                 hi = -8;
                 lo = -12;
                 if (gUnk_0300244C != 0 && (t->unk3E & 0x8000))
                     hi = 8;
             }
-            else if ((u16)t->unk3C >= 4409 && (u16)t->unk3C <= 4412)
+            else if ((u16)t->frame >= 4409 && (u16)t->frame <= 4412)
             {
                 hi = 8;
                 lo = -12;
                 if (gUnk_0300244C != 0 && (t->unk3E & 0x8000))
                     hi = -8;
             }
-            else if ((u16)t->unk3C >= 4413 && (u16)t->unk3C <= 4416)
+            else if ((u16)t->frame >= 4413 && (u16)t->frame <= 4416)
             {
                 hi = 0;
                 lo = 8;
             }
-            else if ((u16)t->unk3C >= 4417 && (u16)t->unk3C <= 4420)
+            else if ((u16)t->frame >= 4417 && (u16)t->frame <= 4420)
             {
                 hi = 12;
                 lo = -12;
                 if (gUnk_0300244C != 0 && (t->unk3E & 0x8000))
                     hi = lo;
             }
-            else if ((u16)t->unk3C >= 4421 && (u16)t->unk3C <= 4424)
+            else if ((u16)t->frame >= 4421 && (u16)t->frame <= 4424)
             {
                 hi = -16;
                 lo = 0;
@@ -2243,7 +2243,7 @@ s32 sub_0803eaf8(s32 a0)
         }
         break;
     }
-    if (t->unk3C == -1 || ((u16)t->unk3C >= 4551 && (u16)t->unk3C <= 4554))
+    if (t->frame == -1 || ((u16)t->frame >= 4551 && (u16)t->frame <= 4554))
     {
         lo = 0x5A5A;
         hi = lo;
@@ -2372,8 +2372,8 @@ s32 PlayerGetHeldDirection(void)
 {
     if (gLatchedHeldKeys[gCurTask->unk88->unk00] & 48)
     {
-        if (((gLatchedHeldKeys[gCurTask->unk88->unk00] & 16) && gCurTask->unk43 == 1)
-         || ((gLatchedHeldKeys[gCurTask->unk88->unk00] & 32) && gCurTask->unk43 == -1))
+        if (((gLatchedHeldKeys[gCurTask->unk88->unk00] & 16) && gCurTask->facing == 1)
+         || ((gLatchedHeldKeys[gCurTask->unk88->unk00] & 32) && gCurTask->facing == -1))
             return 1;
         return 2;
     }
@@ -2405,12 +2405,12 @@ void PlayerCheckBump(void)
         {
             if (gTerrainResult[0] == 1)
             {
-                if (gCurTask->unk43 == 1)
+                if (gCurTask->facing == 1)
                     gCurTask->unk88->unk3E = 3;
                 else
                     gCurTask->unk88->unk3E = 4;
             }
-            else if (gCurTask->unk43 == -1)
+            else if (gCurTask->facing == -1)
                 gCurTask->unk88->unk3E = 5;
             else
                 gCurTask->unk88->unk3E = 6;
@@ -2432,8 +2432,8 @@ s32 PlayerStopAtWall(void)
     if (gTerrainResult[0] == 0)
         return 0;
     if (((s32 *)gCurTask->unk88)[21] == 0
-     || (gTerrainResult[0] == 1 && gCurTask->unk43 == 1)
-     || (gTerrainResult[0] == 2 && gCurTask->unk43 == -1))
+     || (gTerrainResult[0] == 1 && gCurTask->facing == 1)
+     || (gTerrainResult[0] == 2 && gCurTask->facing == -1))
     {
         PlayerStopAxes(1);
         return 1;
@@ -2503,9 +2503,9 @@ void sub_0803fb54(void)
               && (s8)gCurTask->unk88->unk0F <= 16)
         {
             if (((gLatchedHeldKeys[gCurTask->unk88->unk00] & 16)
-                 && gCurTask->unk43 == 1)
+                 && gCurTask->facing == 1)
              || ((gLatchedHeldKeys[gCurTask->unk88->unk00] & 32)
-                 && gCurTask->unk43 == -1))
+                 && gCurTask->facing == -1))
             {
                 gCurTask->unk88->unk3D = 1;
                 gCurTask->unk88->unk40 |= 16;
@@ -2549,7 +2549,7 @@ s32 sub_0803fd20(s32 a0)
 {
     if (gTasks[a0].unk7A == 0)
         return 0;
-    if (gTasks[a0].unk43 == 1)
+    if (gTasks[a0].facing == 1)
         return gUnk_0873AF30[gPlayerStates[a0].unk4B][0];
     return gUnk_0873AF30[gPlayerStates[a0].unk4B][1];
 }
@@ -2558,10 +2558,10 @@ s32 PlayerCheckSkid(void)
 {
     if (gLatchedHeldKeys[gCurTask->unk88->unk00] & 16)
     {
-        if (gCurTask->unk43 == -1)
+        if (gCurTask->facing == -1)
             gCurTask->unk88->unk01 = 4;
     }
-    else if ((gLatchedHeldKeys[gCurTask->unk88->unk00] & 32) && gCurTask->unk43 == 1)
+    else if ((gLatchedHeldKeys[gCurTask->unk88->unk00] & 32) && gCurTask->facing == 1)
         gCurTask->unk88->unk01 = 4;
     return gCurTask->unk88->unk01;
 }
@@ -2862,7 +2862,7 @@ s32 sub_08040514(void)
         if (gPlayerHealth[i] == 0)
             continue;
         u = &gTasks[i];
-        if (u->unk13 != 0)
+        if (u->skipMask != 0)
             continue;
         if (u->unk48 - gCurTask->unk48 >= 0)
         {
@@ -2893,7 +2893,7 @@ s32 sub_08040514(void)
         gCurTask->unk88->unk01 = 19;
         q->unk01 = 19;
         gCurTask->unk18 = u->unk18 = i;
-        u->unk12++;
+        u->taskClass++;
         u->unk1C = gCurTaskIdx;
         break;
     }
@@ -3036,11 +3036,11 @@ void sub_080409b8(s32 a0)
             struct Task *s = &gTasks[a0];
             struct Task *d = &gTasks[n];
 
-            d->unk4C = s->unk4C;
+            d->posX = s->posX;
             d->unk48 = s->unk48;
-            d->unk50 = s->unk50;
+            d->posY = s->posY;
             d->unk4A = s->unk4A;
-            d->unk43 = s->unk43;
+            d->facing = s->facing;
             d->unk88 = s->unk88;
             d->unk44 = a0;
         }
@@ -3059,7 +3059,7 @@ void sub_08040a44(s16 p0, s16 p1)
     if ((t->unk7B & 1) == 0)
     {
         idx = gUnk_0873DB44[t->unk88->unk0D][1];
-        v = t->unk3C - gUnk_0873DB44[t->unk88->unk0D][0];
+        v = t->frame - gUnk_0873DB44[t->unk88->unk0D][0];
     }
     else
     {
@@ -3067,16 +3067,16 @@ void sub_08040a44(s16 p0, s16 p1)
         switch (t->unk88->unk0D)
         {
         default:
-            v = gCurTask->unk3C - 138;
+            v = gCurTask->frame - 138;
             break;
         case 4:
-            v = t->unk3C - 1122;
+            v = t->frame - 1122;
             break;
         case 9:
-            v = t->unk3C - 1923;
+            v = t->frame - 1923;
             break;
         case 10:
-            v = t->unk3C - 2180;
+            v = t->frame - 2180;
             break;
         }
     }

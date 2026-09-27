@@ -212,8 +212,8 @@ void sub_08021c74(s8 *box, s32 id)
     s32 flags;
     s32 n;
 
-    gTerrainProbeX = (t->unk4C >> 16) + box[0];
-    gTerrainProbeY = (t->unk50 >> 16) + box[1];
+    gTerrainProbeX = (t->posX >> 16) + box[0];
+    gTerrainProbeY = (t->posY >> 16) + box[1];
     gTerrainBoxTop = box[2];
     gTerrainBoxBottom = box[3];
     gTerrainBoxLeft = box[4];
@@ -313,29 +313,29 @@ done:
     t->unk7A = gTerrainProbeResult.unk6;
     t->unk84 = (gTerrainProbeResult.unkC << 8) | gTerrainProbeResult.unkB;
     n = gTerrainProbeX - box[0];
-    if ((t->unk4C >> 16) != n)
+    if ((t->posX >> 16) != n)
     {
-        t->unk4C = (n << 16) + 0x8000;
+        t->posX = (n << 16) + 0x8000;
         t->unk48 = n;
     }
     n = gTerrainProbeY - box[1];
-    if ((t->unk50 >> 16) != n)
+    if ((t->posY >> 16) != n)
     {
-        t->unk50 = (n << 16) + 0x8000;
+        t->posY = (n << 16) + 0x8000;
         t->unk4A = n;
     }
 }
 
 void sub_0802205c(s8 *box)
 {
-    gTerrainProbeX = (gCurTask->unk4C >> 16) + box[0];
-    gTerrainProbeY = (gCurTask->unk50 >> 16) + box[1];
+    gTerrainProbeX = (gCurTask->posX >> 16) + box[0];
+    gTerrainProbeY = (gCurTask->posY >> 16) + box[1];
     gTerrainBoxTop = box[2];
     gTerrainBoxBottom = box[3];
     gTerrainBoxLeft = box[4];
     gTerrainBoxRight = box[5];
     gTerrainProbeResult.unkB = 0;
-    if (gCurTask->unk43 != -1)
+    if (gCurTask->facing != -1)
     {
         if (TerrainQueryPixelAndSides(gTerrainProbeX + gTerrainBoxRight, gTerrainProbeY) == 0)
         {
@@ -396,12 +396,12 @@ void sub_080222b0(s32 x, s32 y)
 
 void sub_0802233c(s8 *off)
 {
-    gTerrainProbeX = (gCurTask->unk4C >> 16) + off[0];
-    gTerrainProbeY = (gCurTask->unk50 >> 16) + off[1];
+    gTerrainProbeX = (gCurTask->posX >> 16) + off[0];
+    gTerrainProbeY = (gCurTask->posY >> 16) + off[1];
     gTerrainProbeResult.unkB = 0;
     if (TerrainQueryPixelAndSides(gTerrainProbeX, gTerrainProbeY) == 0)
     {
-        if (gCurTask->unk43 != -1)
+        if (gCurTask->facing != -1)
         {
             if ((gUnk_087336F0[gTerrainTile] != 0 && gCollisionTileSlope[gTerrainTile] != 0
                  && (gCollisionTileSlope[gTerrainTile] & 1))
@@ -425,7 +425,7 @@ void sub_0802233c(s8 *off)
 
 void TaskInitWaterFlags(void)
 {
-    TerrainQueryPixel(gCurTask->unk4C >> 16, gCurTask->unk50 >> 16);
+    TerrainQueryPixel(gCurTask->posX >> 16, gCurTask->posY >> 16);
     if (gTerrainTile > 127)
         gCurTask->unk7B = 3;
     else
@@ -437,7 +437,7 @@ void TaskInitWaterFlagsSlot(s32 id)
 {
     struct Task *t = &gTasks[id];
 
-    TerrainQueryPixel(t->unk4C >> 16, t->unk50 >> 16);
+    TerrainQueryPixel(t->posX >> 16, t->posY >> 16);
     if (gTerrainTile > 127)
         t->unk7B = 3;
     else
@@ -542,20 +542,20 @@ s32 ClampTaskToRoom(struct Task *t)
 
     if (lo > t->unk48)
     {
-        t->unk4C = lo << 16;
+        t->posX = lo << 16;
         t->unk48 = lo;
         r = 1;
     }
     else if (hi < t->unk48)
     {
-        t->unk4C = hi << 16;
+        t->posX = hi << 16;
         t->unk48 = hi;
         r = 2;
     }
     lo = gRoomBounds[2] - 72;
     if (lo > t->unk4A)
     {
-        t->unk50 = lo << 16;
+        t->posY = lo << 16;
         t->unk4A = lo;
         r |= 4;
     }
@@ -598,7 +598,7 @@ s32 sub_080228c4(struct Task *t)
     {
         if (lo - t->unk48 <= 11)
         {
-            t->unk4C = lo << 16;
+            t->posX = lo << 16;
             t->unk48 = lo;
             r = 1;
         }
@@ -607,7 +607,7 @@ s32 sub_080228c4(struct Task *t)
     {
         if (t->unk48 - lo > 12)
         {
-            t->unk4C = hi << 16;
+            t->posX = hi << 16;
             t->unk48 = hi;
             r = 2;
         }
@@ -617,7 +617,7 @@ s32 sub_080228c4(struct Task *t)
     {
         if (lo - t->unk48 <= 11)
         {
-            t->unk50 = lo << 16;
+            t->posY = lo << 16;
             t->unk4A = lo;
             r |= 4;
         }

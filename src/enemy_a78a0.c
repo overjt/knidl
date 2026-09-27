@@ -1415,14 +1415,14 @@ void sub_080a78a0(void)
         o = &gTasks[t->unk44];
         if (o->unk76 == 2 && o->unk78 > 0)
         {
-            if ((u16)(o->unk3C - 88) <= 33)
+            if ((u16)(o->frame - 88) <= 33)
             {
-                t->unk28 = (s16)o->unk3C - 88;
+                t->unk28 = (s16)o->frame - 88;
                 if (gUnk_08748F8C[t->unk28] != 0)
                 {
-                    t->unk48 = o->unk48 + gUnk_08749014[t->unk28] * o->unk43;
+                    t->unk48 = o->unk48 + gUnk_08749014[t->unk28] * o->facing;
                     t->unk4A = o->unk4A + gUnk_08749058[t->unk28];
-                    t->unk43 = o->unk43;
+                    t->facing = o->facing;
                     ActorCheckHitsWithBox(gUnk_08748F8C[gCurTask->unk28]);
                 }
             }

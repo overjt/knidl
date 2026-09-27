@@ -80,7 +80,7 @@ s32 sub_080b4204(u32 a);
    health gPlayerHealth[] through sub_080b4204 while it is below the maximum
    gMaxHealth (1: until full, 2: at most 1 or 2 steps by gExtraMode)
    or copies its own unk17/unk18 to the target (3); then it restores both
-   tasks' Task.unk42/unk43 (saved on the stack), clears PlayerState.unk42
+   tasks' Task.layer/unk43 (saved on the stack), clears PlayerState.unk42
    bit 8 on both players and sets the target's bit in PlayerState.unk3B. */
 void sub_0803bde8(void)
 {
@@ -101,7 +101,7 @@ void sub_0803bde8(void)
     PlaySfxIfLocalPlayer(292, gCurTask->unk88->unk00);
     if (gCurTask->unk18 == gCurTask->unk88->unk00)
     {
-        gCurTask->unk42 = 5;
+        gCurTask->layer = 5;
         TaskSetSkipMask(14, gCurTaskIdx);
         t = gCurTask;
         t->unk88->unk42 |= 0x100;
@@ -127,11 +127,11 @@ void sub_0803bde8(void)
                 {
                     TaskSetFrame(gCurTask->unk46);
                     TaskYieldTrampoline(2);
-                    gCurTask->unk3C++;
+                    gCurTask->frame++;
                     TaskYieldTrampoline(2);
-                    gCurTask->unk3C++;
+                    gCurTask->frame++;
                     TaskYieldTrampoline(2);
-                    gCurTask->unk3C++;
+                    gCurTask->frame++;
                     TaskYieldTrampoline(2);
                 }
             }
@@ -166,22 +166,22 @@ void sub_0803bde8(void)
     FreezeOtherTasks(15);
     TaskSetSkipMask(12, gCurTaskIdx);
     TaskSetSkipMask(0, gCurTask->unk18);
-    a43 = gCurTask->unk43;
-    a42 = gCurTask->unk42;
+    a43 = gCurTask->facing;
+    a42 = gCurTask->layer;
     PlayerStopAxes(3);
     t = gCurTask;
     t->unk88->unk42 |= 0x100;
     t->unk88->unk42 &= 0xFFEF;
     if (u->unk48 - t->unk48 > 0)
-        t->unk43 = 1;
+        t->facing = 1;
     else
-        t->unk43 = -1;
-    gCurTask->unk42 = 4;
-    b43 = u->unk43;
-    b42 = u->unk42;
+        t->facing = -1;
+    gCurTask->layer = 4;
+    b43 = u->facing;
+    b42 = u->layer;
     u->unk54 = u->unk5C = u->unk64 = 0;
     u->unk58 = u->unk60 = u->unk68 = 0;
-    if ((u->unk43 = -gCurTask->unk43) == 1)
+    if ((u->facing = -gCurTask->facing) == 1)
         u->unk3E &= 0x7FFF;
     else
         u->unk3E |= 0x8000;
@@ -202,11 +202,11 @@ void sub_0803bde8(void)
             {
                 TaskSetFrame(gCurTask->unk46);
                 TaskYieldTrampoline(2);
-                gCurTask->unk3C++;
+                gCurTask->frame++;
                 TaskYieldTrampoline(2);
-                gCurTask->unk3C++;
+                gCurTask->frame++;
                 TaskYieldTrampoline(2);
-                gCurTask->unk3C++;
+                gCurTask->frame++;
             }
             switch (gCurTask->unk88->unk3A)
             {
@@ -257,11 +257,11 @@ void sub_0803bde8(void)
             }
             else
             {
-                gCurTask->unk3C--;
+                gCurTask->frame--;
                 TaskYieldTrampoline(2);
-                gCurTask->unk3C--;
+                gCurTask->frame--;
                 TaskYieldTrampoline(2);
-                gCurTask->unk3C--;
+                gCurTask->frame--;
                 TaskYieldTrampoline(2);
             }
             break;
@@ -273,9 +273,9 @@ void sub_0803bde8(void)
         case 23:
             TaskSetFrame(gCurTask->unk46);
             TaskYieldTrampoline(2);
-            gCurTask->unk3C++;
+            gCurTask->frame++;
             TaskYieldTrampoline(2);
-            gCurTask->unk3C++;
+            gCurTask->frame++;
             TaskYieldTrampoline(2);
             switch (gCurTask->unk88->unk3A)
             {
@@ -351,11 +351,11 @@ void sub_0803bde8(void)
             }
             TaskSetFrame((s16)(gCurTask->unk46 + 3));
             TaskYieldTrampoline(2);
-            gCurTask->unk3C--;
+            gCurTask->frame--;
             TaskYieldTrampoline(2);
-            gCurTask->unk3C--;
+            gCurTask->frame--;
             TaskYieldTrampoline(2);
-            gCurTask->unk3C--;
+            gCurTask->frame--;
             TaskYieldTrampoline(2);
             break;
         }
@@ -382,11 +382,11 @@ void sub_0803bde8(void)
         }
         TaskSetFrame(gCurTask->unk46);
         TaskYieldTrampoline(2);
-        gCurTask->unk3C++;
+        gCurTask->frame++;
         TaskYieldTrampoline(2);
-        gCurTask->unk3C++;
+        gCurTask->frame++;
         TaskYieldTrampoline(2);
-        gCurTask->unk3C++;
+        gCurTask->frame++;
         switch (gCurTask->unk88->unk3A)
         {
         case 1:
@@ -429,20 +429,20 @@ void sub_0803bde8(void)
             TaskYieldTrampoline(32);
             break;
         }
-        gCurTask->unk3C--;
+        gCurTask->frame--;
         TaskYieldTrampoline(2);
-        gCurTask->unk3C--;
+        gCurTask->frame--;
         TaskYieldTrampoline(2);
-        gCurTask->unk3C--;
+        gCurTask->frame--;
         TaskYieldTrampoline(2);
     }
-    gCurTask->unk43 = a43;
-    gCurTask->unk42 = a42;
+    gCurTask->facing = a43;
+    gCurTask->layer = a42;
     gCurTask->unk88->unk42 &= 0xFEFF;
-    u->unk43 = b43;
-    u->unk42 = b42;
+    u->facing = b43;
+    u->layer = b42;
     gPlayerStates[gCurTask->unk18].unk42 &= 0xFEFF;
-    u->unk12--;
+    u->taskClass--;
     FreezeOtherTasks(0);
     TaskSetSkipMask(0, gCurTaskIdx);
     gCurTask->unk88->unk3B |= 1 << gCurTask->unk18;
@@ -461,7 +461,7 @@ void sub_0803c990(void)
 
 /* M09's sub_08033414: step and draw the player's three sparks (twin of M04's
    sub_080109c8, src/player_109c8.c).  a != 0 freezes the frame counter and
-   draws frame `a` with no palette offset; Task.unk13 & 1 skips the motion. */
+   draws frame `a` with no palette offset; Task.skipMask & 1 skips the motion. */
 void sub_0803c9b4(s32 a)
 {
     struct M04Spark *p;
@@ -477,14 +477,14 @@ void sub_0803c9b4(s32 a)
     for (i = 0; i <= 2; i++)
     {
         p = &gUnk_02007E90[gCurTask->unk88->unk00][i];
-        if (gCurTask->unk13 & 1)
+        if (gCurTask->skipMask & 1)
         {
             k = 0;
             if (a == 0)
                 k = gCurTask->unk40 + 0x180C;
             d = p->unk0D;
             if (a == 0 && d == 0)
-                d = (gCurTask->unk43 == 1) ? 2 : 3;
+                d = (gCurTask->facing == 1) ? 2 : 3;
         }
         else
         {
@@ -492,7 +492,7 @@ void sub_0803c9b4(s32 a)
             {
                 p->unk08 = 0;
                 n = RandomRange(16);
-                if (gCurTask->unk43 == 1)
+                if (gCurTask->facing == 1)
                     p->unk00 = gUnk_0873A924[0][n] << 16;
                 else
                     p->unk00 = -(gUnk_0873A924[0][n] << 16);
@@ -528,7 +528,7 @@ void sub_0803c9b4(s32 a)
                 {
                     if (p->unk0D == 0)
                     {
-                        if (gCurTask->unk43 == 1)
+                        if (gCurTask->facing == 1)
                             p->unk0D = 2;
                         else
                             p->unk0D = 3;
@@ -547,7 +547,7 @@ void sub_0803c9b4(s32 a)
         {
             x -= gSpriteCameraX;
             y -= gSpriteCameraY;
-            QueueSprite(gCurTask->unk42, gUnk_0873A964[d], 0, k, x, y);
+            QueueSprite(gCurTask->layer, gUnk_0873A964[d], 0, k, x, y);
         }
     }
 }
@@ -568,7 +568,7 @@ void sub_0803cbd8(void)
             TaskSetSkipMask(3, gCurTaskIdx);
         if (e->unk4 & 64)
         {
-            if (gCurTask->unk43 == 1)
+            if (gCurTask->facing == 1)
                 gCurTask->unk88->unk24 = e->unk0;
             else
                 gCurTask->unk88->unk24 = -e->unk0;
@@ -603,7 +603,7 @@ void sub_0803ccd8(s32 a)
         y |= 0xFF000000;
     TaskSetMotionY(x, 0, y);
     t = gCurTask;
-    if (t->unk43 == 1)
+    if (t->facing == 1)
     {
         s32 v = e[0] << 8;
         if (e[0] & 0x8000)

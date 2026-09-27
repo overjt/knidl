@@ -119,21 +119,21 @@ loop:
                 PlayerSetMotionXPreset(10, 25);
             else
                 PlayerSetMotionXPreset(10, 27);
-            gCurTask->unk3C++;
+            gCurTask->frame++;
             TaskYieldTrampoline(4);
-            gCurTask->unk3C--;
+            gCurTask->frame--;
             TaskYieldTrampoline(2);
-            gCurTask->unk3C--;
+            gCurTask->frame--;
             TaskYieldTrampoline(4);
-            gCurTask->unk3C++;
+            gCurTask->frame++;
             TaskYieldTrampoline(2);
-            gCurTask->unk3C++;
+            gCurTask->frame++;
             TaskYieldTrampoline(4);
-            gCurTask->unk3C--;
+            gCurTask->frame--;
             TaskYieldTrampoline(3);
-            gCurTask->unk3C--;
+            gCurTask->frame--;
             TaskYieldTrampoline(5);
-            gCurTask->unk3C++;
+            gCurTask->frame++;
             TaskYieldTrampoline(3);
         }
         else
@@ -158,8 +158,8 @@ loop:
                 anim = 0x1036;
                 break;
             }
-            if (((s8)gCurTask->unk7D == 0 && gCurTask->unk43 == -1)
-                || ((s8)gCurTask->unk7D == 4 && gCurTask->unk43 == 1))
+            if (((s8)gCurTask->unk7D == 0 && gCurTask->facing == -1)
+                || ((s8)gCurTask->unk7D == 4 && gCurTask->facing == 1))
             {
                 if ((s8)gCurTask->unk7D == 0)
                     PlayerSetMotionXPreset(10, 18);
@@ -171,11 +171,11 @@ loop:
                     PlayerSetMotionXPreset(10, 19);
                 else
                     PlayerSetMotionXPreset(10, 22);
-                gCurTask->unk3C++;
+                gCurTask->frame++;
                 TaskYieldTrampoline(2);
-                gCurTask->unk3C++;
+                gCurTask->frame++;
                 TaskYieldTrampoline(2);
-                gCurTask->unk3C++;
+                gCurTask->frame++;
                 TaskYieldTrampoline(2);
                 if ((s8)gCurTask->unk7D == 0)
                     PlayerSetMotionXPreset(10, 20);
@@ -183,7 +183,7 @@ loop:
                     PlayerSetMotionXPreset(10, 23);
                 for (gCurTask->unk6C = 0; (s16)gCurTask->unk6C <= 4; gCurTask->unk6C++)
                 {
-                    gCurTask->unk3C++;
+                    gCurTask->frame++;
                     TaskYieldTrampoline(3);
                 }
             }
@@ -193,7 +193,7 @@ loop:
                     PlayerSetMotionXPreset(10, 18);
                 else
                     PlayerSetMotionXPreset(10, 21);
-                if (gCurTask->unk43 == 1)
+                if (gCurTask->facing == 1)
                 {
                     TaskSetFrameFlip(anim);
                     TaskYieldTrampoline(3);
@@ -209,9 +209,9 @@ loop:
                     PlayerSetMotionXPreset(10, 22);
                 TaskSetFrame(anim + 8);
                 TaskYieldTrampoline(2);
-                gCurTask->unk3C--;
+                gCurTask->frame--;
                 TaskYieldTrampoline(2);
-                gCurTask->unk3C--;
+                gCurTask->frame--;
                 TaskYieldTrampoline(2);
                 if ((s8)gCurTask->unk7D == 0)
                     PlayerSetMotionXPreset(10, 20);
@@ -219,7 +219,7 @@ loop:
                     PlayerSetMotionXPreset(10, 23);
                 for (gCurTask->unk6C = 0; (s16)gCurTask->unk6C <= 4; gCurTask->unk6C++)
                 {
-                    gCurTask->unk3C--;
+                    gCurTask->frame--;
                     TaskYieldTrampoline(2);
                 }
             }
@@ -271,7 +271,7 @@ loop:
                         TaskYieldTrampoline(2);
                         for (gCurTask->unk6C = 0; (s16)gCurTask->unk6C <= 6; gCurTask->unk6C++)
                         {
-                            gCurTask->unk3C++;
+                            gCurTask->frame++;
                             TaskYieldTrampoline(2);
                         }
                     }
@@ -281,11 +281,11 @@ loop:
                 {
                     TaskSetFrame(260);
                     TaskYieldTrampoline(4);
-                    gCurTask->unk3C++;
+                    gCurTask->frame++;
                     TaskYieldTrampoline(2);
-                    gCurTask->unk3C++;
+                    gCurTask->frame++;
                     TaskYieldTrampoline(4);
-                    gCurTask->unk3C++;
+                    gCurTask->frame++;
                     TaskYieldTrampoline(2);
                 }
             case 1:
@@ -308,7 +308,7 @@ loop:
                     TaskYieldTrampoline(3);
                     for (gCurTask->unk6C = 0; (s16)gCurTask->unk6C <= 6; gCurTask->unk6C++)
                     {
-                        gCurTask->unk3C++;
+                        gCurTask->frame++;
                         TaskYieldTrampoline(3);
                     }
                 }
@@ -319,7 +319,7 @@ loop:
                 PlayerSetMotionYPreset(26);
                 for (gCurTask->unk6C = 0; (s16)gCurTask->unk6C <= 6; gCurTask->unk6C++)
                 {
-                    gCurTask->unk3C++;
+                    gCurTask->frame++;
                     TaskYieldTrampoline(2);
                 }
                 gCurTask->unk88->unk14 = 1;
@@ -344,7 +344,7 @@ loop:
                         TaskYieldTrampoline(2);
                         for (gCurTask->unk6C = 0; (s16)gCurTask->unk6C <= 6; gCurTask->unk6C++)
                         {
-                            gCurTask->unk3C++;
+                            gCurTask->frame++;
                             TaskYieldTrampoline(2);
                         }
                     }
@@ -354,11 +354,11 @@ loop:
                 {
                     TaskSetFrame(380);
                     TaskYieldTrampoline(2);
-                    gCurTask->unk3C++;
+                    gCurTask->frame++;
                     TaskYieldTrampoline(2);
-                    gCurTask->unk3C++;
+                    gCurTask->frame++;
                     TaskYieldTrampoline(2);
-                    gCurTask->unk3C++;
+                    gCurTask->frame++;
                     TaskYieldTrampoline(2);
                 }
             case 1:
@@ -379,7 +379,7 @@ loop:
                 {
                     TaskSetFrame(0x181);
                     TaskYieldTrampoline(4);
-                    gCurTask->unk3C--;
+                    gCurTask->frame--;
                     TaskYieldTrampoline(2);
                     TaskSetFrame(386);
                     TaskYieldTrampoline(4);
@@ -390,7 +390,7 @@ loop:
                 gCurTask->unk28++;
                 TaskSetFrame(0x183);
                 TaskYieldTrampoline(2);
-                gCurTask->unk3C++;
+                gCurTask->frame++;
                 TaskYieldTrampoline(1);
                 PlayerSetMotionYPreset(26);
                 while (1)
@@ -399,22 +399,22 @@ loop:
                     TaskYieldTrampoline(2);
                     TaskSetFrame(0x181);
                     TaskYieldTrampoline(4);
-                    gCurTask->unk3C--;
+                    gCurTask->frame--;
                     TaskYieldTrampoline(2);
                     TaskSetFrame(386);
                     TaskYieldTrampoline(4);
                     TaskSetFrame(384);
                     TaskYieldTrampoline(2);
-                    gCurTask->unk3C++;
+                    gCurTask->frame++;
                     TaskYieldTrampoline(1);
                 }
             case 3:
                 gCurTask->unk28++;
                 TaskSetFrame(0x183);
                 TaskYieldTrampoline(2);
-                gCurTask->unk3C++;
+                gCurTask->frame++;
                 TaskYieldTrampoline(1);
-                gCurTask->unk3C--;
+                gCurTask->frame--;
                 TaskYieldTrampoline(2);
                 TaskSetFrame(384);
                 TaskYieldTrampoline(2);
@@ -451,34 +451,34 @@ loop:
                 TaskYieldTrampoline(4);
                 for (gCurTask->unk6C = 0; (s16)gCurTask->unk6C <= 4; gCurTask->unk6C++)
                 {
-                    gCurTask->unk3C++;
+                    gCurTask->frame++;
                     TaskYieldTrampoline(4);
                 }
-                gCurTask->unk3C++;
+                gCurTask->frame++;
                 CreatePlayerEffect(gCurTask->unk88->unk00, 24, 0);
                 break;
             case 1:
                 gCurTask->unk28 = 2;
                 TaskSetFrame(280);
                 TaskYieldTrampoline(4);
-                gCurTask->unk3C++;
+                gCurTask->frame++;
                 TaskYieldTrampoline(4);
-                gCurTask->unk3C++;
+                gCurTask->frame++;
                 TaskYieldTrampoline(2);
-                gCurTask->unk3C++;
+                gCurTask->frame++;
                 TaskYieldTrampoline(4);
-                gCurTask->unk3C++;
+                gCurTask->frame++;
                 TaskYieldTrampoline(4);
                 TaskSetFrame(0x117);
                 TaskYieldTrampoline(48);
                 CreatePlayerEffect(gCurTask->unk88->unk00, 26, 0);
-                gCurTask->unk3C--;
+                gCurTask->frame--;
                 TaskYieldTrampoline(2);
-                gCurTask->unk3C--;
+                gCurTask->frame--;
                 TaskYieldTrampoline(2);
-                gCurTask->unk3C--;
+                gCurTask->frame--;
                 TaskYieldTrampoline(2);
-                gCurTask->unk3C--;
+                gCurTask->frame--;
                 TaskYieldTrampoline(2);
                 PlayerSetMotionYPreset(26);
                 gCurTask->unk88->unk14 = 120;
@@ -486,16 +486,16 @@ loop:
                 gCurTask->unk28++;
                 TaskSetFrame(250);
                 TaskYieldTrampoline(2);
-                gCurTask->unk3C++;
+                gCurTask->frame++;
                 TaskYieldTrampoline(2);
                 TaskSetFrame(244);
                 TaskYieldTrampoline(3);
                 for (gCurTask->unk6C = 0; (s16)gCurTask->unk6C <= 4; gCurTask->unk6C++)
                 {
-                    gCurTask->unk3C++;
+                    gCurTask->frame++;
                     TaskYieldTrampoline(2);
                 }
-                gCurTask->unk3C++;
+                gCurTask->frame++;
                 TaskYieldTrampoline(4);
                 gCurTask->unk88->unk14 = 1;
                 break;
@@ -514,10 +514,10 @@ loop:
                 TaskYieldTrampoline(4);
                 for (gCurTask->unk6C = 0; (s16)gCurTask->unk6C <= 4; gCurTask->unk6C++)
                 {
-                    gCurTask->unk3C++;
+                    gCurTask->frame++;
                     TaskYieldTrampoline(4);
                 }
-                gCurTask->unk3C++;
+                gCurTask->frame++;
                 break;
             case 1:
                 gCurTask->unk28++;
@@ -529,15 +529,15 @@ loop:
                 TaskYieldTrampoline(2);
                 TaskSetFrame(0x18B);
                 TaskYieldTrampoline(16);
-                gCurTask->unk3C++;
+                gCurTask->frame++;
                 TaskYieldTrampoline(4);
-                gCurTask->unk3C++;
+                gCurTask->frame++;
                 TaskYieldTrampoline(4);
-                gCurTask->unk3C++;
+                gCurTask->frame++;
                 TaskYieldTrampoline(2);
-                gCurTask->unk3C++;
+                gCurTask->frame++;
                 TaskYieldTrampoline(4);
-                gCurTask->unk3C++;
+                gCurTask->frame++;
                 TaskYieldTrampoline(4);
                 TaskSetFrame(0x18B);
                 TaskYieldTrampoline(20);
@@ -564,27 +564,27 @@ loop:
                 CreatePlayerEffect(gCurTask->unk88->unk00, 26, 0);
                 TaskSetFrame(0x193);
                 TaskYieldTrampoline(2);
-                gCurTask->unk3C++;
+                gCurTask->frame++;
                 TaskYieldTrampoline(2);
-                gCurTask->unk3C++;
+                gCurTask->frame++;
                 TaskYieldTrampoline(2);
-                gCurTask->unk3C++;
+                gCurTask->frame++;
                 TaskYieldTrampoline(2);
-                gCurTask->unk3C++;
+                gCurTask->frame++;
                 TaskYieldTrampoline(2);
-                gCurTask->unk3C++;
+                gCurTask->frame++;
                 TaskYieldTrampoline(2);
-                gCurTask->unk3C++;
+                gCurTask->frame++;
                 TaskYieldTrampoline(4);
-                gCurTask->unk3C--;
+                gCurTask->frame--;
                 TaskYieldTrampoline(2);
-                gCurTask->unk3C--;
+                gCurTask->frame--;
                 TaskYieldTrampoline(4);
-                gCurTask->unk3C++;
+                gCurTask->frame++;
                 TaskYieldTrampoline(2);
-                gCurTask->unk3C++;
+                gCurTask->frame++;
                 TaskYieldTrampoline(4);
-                gCurTask->unk3C--;
+                gCurTask->frame--;
                 TaskYieldTrampoline(2);
                 if (gCurTask->unk7A & 1)
                 {
@@ -629,7 +629,7 @@ loop:
             }
             for (gCurTask->unk6C = 0; (s16)gCurTask->unk6C <= 6; gCurTask->unk6C++)
             {
-                gCurTask->unk3C++;
+                gCurTask->frame++;
                 TaskYieldTrampoline(2);
             }
         }
@@ -646,11 +646,11 @@ loop:
                 TaskSetFrame(412);
                 TaskYieldTrampoline(2);
             }
-            gCurTask->unk3C++;
+            gCurTask->frame++;
             TaskYieldTrampoline(4);
-            gCurTask->unk3C--;
+            gCurTask->frame--;
             TaskYieldTrampoline(2);
-            gCurTask->unk3C--;
+            gCurTask->frame--;
             TaskYieldTrampoline(4);
         }
         gCurTask->unk73 = 6;

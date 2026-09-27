@@ -152,7 +152,7 @@ void sub_080ba8cc(void)
     o = &gTasks[t->unk28];
     o->unk1C = 0;
     o->unk18 = 0;
-    o->unk3C = 0;
+    o->frame = 0;
     o->unk24 = 0;
     t->unk20 = 0;
 }

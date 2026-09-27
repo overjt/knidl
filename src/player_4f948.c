@@ -76,9 +76,9 @@ void sub_0804f948(void)
     }
     TaskSetFrame(0x1026);
     TaskYieldTrampoline(1);
-    gCurTask->unk3C++;
+    gCurTask->frame++;
     TaskYieldTrampoline(1);
-    gCurTask->unk3C += 2;
+    gCurTask->frame += 2;
     TaskYieldTrampoline(1);
     TaskSetFrame(0x102A);
     TaskYieldTrampoline(1);
@@ -87,28 +87,28 @@ void sub_0804f948(void)
     {
         struct Task *t = gCurTask;
         t->unk2C++;
-        t->unk3C++;
+        t->frame++;
         TaskYieldTrampoline(1);
     }
     {
         struct Task *t = gCurTask;
         t->unk2C = -1;
-        t->unk3C++;
+        t->frame++;
     }
     TaskYieldTrampoline(1);
-    gCurTask->unk3C++;
+    gCurTask->frame++;
     TaskYieldTrampoline(1);
-    gCurTask->unk3C++;
+    gCurTask->frame++;
     TaskYieldTrampoline(1);
-    gCurTask->unk3C++;
+    gCurTask->frame++;
     TaskYieldTrampoline(1);
     {
         struct Task *t = gCurTask;
         t->unk28++;
-        t->unk3C++;
+        t->frame++;
     }
     TaskYieldTrampoline(1);
-    gCurTask->unk3C++;
+    gCurTask->frame++;
     TaskYieldTrampoline(1);
     gCurTask->unk70++;
     TaskSleepForever();
@@ -160,7 +160,7 @@ void sub_0804fba4(void)
     PlaySfxIfLocalPlayer(100, (u16)gCurTask->unk88->unk00);
     {
         struct Task *t = gCurTask;
-        t->unk2C = t->unk43;
+        t->unk2C = t->facing;
         t->unk80 = 25;
     }
     {
@@ -181,7 +181,7 @@ void sub_0804fba4(void)
         {
             struct Task *t = gCurTask;
             t->unk28++;
-            t->unk3C++;
+            t->frame++;
             TaskYieldTrampoline(1);
         }
         gCurTask->unk28 = -1;
@@ -228,12 +228,12 @@ void sub_0804fc98(void)
             {
                 PlayerCheckBump();
                 PlayerRequestLocomotion();
-                gCurTask->unk43 = gCurTask->unk2C;
+                gCurTask->facing = gCurTask->unk2C;
             }
         }
         else
         {
-            gCurTask->unk43 = gCurTask->unk2C;
+            gCurTask->facing = gCurTask->unk2C;
         }
     }
     {
@@ -300,12 +300,12 @@ void sub_0804ff1c(void)
         if (t->unk48 < 16)
         {
             t->unk48 = 16;
-            t->unk4C = 16 << 16;
+            t->posX = 16 << 16;
         }
         else if (t->unk48 > 224)
         {
             t->unk48 = 224;
-            t->unk4C = 224 << 16;
+            t->posX = 224 << 16;
         }
     }
     {
@@ -313,12 +313,12 @@ void sub_0804ff1c(void)
         if (t->unk4A < 18)
         {
             t->unk4A = 18;
-            t->unk50 = 18 << 16;
+            t->posY = 18 << 16;
         }
         else if (t->unk4A > 132)
         {
             t->unk4A = 132;
-            t->unk50 = 132 << 16;
+            t->posY = 132 << 16;
         }
     }
     if (gSpriteCameraY > 888)

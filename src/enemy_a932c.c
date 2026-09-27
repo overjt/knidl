@@ -1412,22 +1412,22 @@ void sub_080a932c(void)
     if (t->unk4A < gViewRect[2] + gUnk_0874909C[0])
     {
         t->unk4A = gViewRect[2] + gUnk_0874909C[0];
-        t->unk50 = t->unk4A << 16;
+        t->posY = t->unk4A << 16;
     }
     else if (t->unk4A > gViewRect[3] + gUnk_0874909C[1])
     {
         t->unk4A = gViewRect[3] + gUnk_0874909C[1];
-        t->unk50 = t->unk4A << 16;
+        t->posY = t->unk4A << 16;
     }
     u = gCurTask;
     if (u->unk48 < gViewRect[0] + gUnk_0874909C[2])
     {
         u->unk48 = gViewRect[0] + gUnk_0874909C[2];
-        u->unk4C = u->unk48 << 16;
+        u->posX = u->unk48 << 16;
     }
     else if (u->unk48 > gViewRect[1] + gUnk_0874909C[3])
     {
         u->unk48 = gViewRect[1] + gUnk_0874909C[3];
-        u->unk4C = u->unk48 << 16;
+        u->posX = u->unk48 << 16;
     }
 }

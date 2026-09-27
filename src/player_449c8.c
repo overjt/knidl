@@ -51,7 +51,7 @@ void sub_080449c8(void)
         } else {
             t->unk28--;
         }
-        switch (gCurTask->unk3C) {
+        switch (gCurTask->frame) {
         case 0x36B:
         case 0x36C:
         case 0x36F:
@@ -121,20 +121,20 @@ void sub_08044b94(void)
     gCurTask->unk80 = 0;
     TaskSetFrame(0x3E9);
     TaskYieldTrampoline(2);
-    gCurTask->unk3C++;
+    gCurTask->frame++;
     TaskYieldTrampoline(10);
-    gCurTask->unk3C++;
+    gCurTask->frame++;
     TaskYieldTrampoline(2);
     if (gCurTask->unk7A & 1)
         CreatePlayerEffect(gCurTask->unk88->unk00, 28, 3);
     sub_08053a44(gCurTask->unk88->unk00, 5, 0);
     gCurTask->unk28++;
     PlaySfxIfLocalPlayer(144, gCurTask->unk88->unk00);
-    gCurTask->unk3C++;
+    gCurTask->frame++;
     TaskYieldTrampoline(4);
-    gCurTask->unk3C++;
+    gCurTask->frame++;
     TaskYieldTrampoline(3);
-    gCurTask->unk3C++;
+    gCurTask->frame++;
     TaskYieldTrampoline(3);
     gCurTask->unk28++;
     TaskSleepForever();

@@ -111,7 +111,7 @@ void sub_0804dc08(void)
         PlayerSetMotionXPreset(11, 5);
         TaskSetFrame(0xE79);
         TaskYieldTrampoline(4);
-        gCurTask->unk3C++;
+        gCurTask->frame++;
         TaskYieldTrampoline(4);
         PlayerStopAxes(1);
         TaskYieldTrampoline(2);
@@ -142,34 +142,34 @@ void sub_0804dc08(void)
                 PlayerSetMotionYPreset(19);
             TaskSetFrame(0xE7D);
             TaskYieldTrampoline(5);
-            gCurTask->unk3C++;
+            gCurTask->frame++;
             TaskYieldTrampoline(2);
             if (gCurTask->unk7A & 1)
                 PlayerSetMotionYPreset(19);
-            gCurTask->unk3C++;
+            gCurTask->frame++;
             TaskYieldTrampoline(5);
-            gCurTask->unk3C--;
+            gCurTask->frame--;
             TaskYieldTrampoline(2);
             if (gCurTask->unk7A & 1)
                 PlayerSetMotionYPreset(19);
             TaskSetFrame(0xE7D);
             TaskYieldTrampoline(5);
-            gCurTask->unk3C++;
+            gCurTask->frame++;
             TaskYieldTrampoline(2);
             if (gCurTask->unk7A & 1)
                 PlayerSetMotionYPreset(19);
-            gCurTask->unk3C++;
+            gCurTask->frame++;
             TaskYieldTrampoline(4);
-            gCurTask->unk3C++;
+            gCurTask->frame++;
             TaskYieldTrampoline(3);
             if (gCurTask->unk7A & 1)
             {
                 PlayerStopAxes(2);
                 CreatePlayerEffect(gCurTask->unk88->unk00, 28, 5);
-                gCurTask->unk3C++;
+                gCurTask->frame++;
                 TaskYieldTrampoline(2);
                 PlayerSetMotionXPreset(11, 8);
-                gCurTask->unk3C++;
+                gCurTask->frame++;
                 TaskYieldTrampoline(8);
             }
         }
@@ -311,11 +311,11 @@ void sub_0804e0e0(void)
         gCurTask->unk73 = 1;
         TaskSetFrame(0xF6E);
         TaskYieldTrampoline(2);
-        gCurTask->unk3C++;
+        gCurTask->frame++;
         TaskYieldTrampoline(2);
         PlayerStartSfx(103, gCurTask->unk88->unk00);
         gCurTask->unk88->unk40 |= 4;
-        gCurTask->unk3C++;
+        gCurTask->frame++;
         TaskYieldTrampoline(2);
         gCurTask->unk73 = 1;
     case 1:
@@ -328,7 +328,7 @@ void sub_0804e0e0(void)
                     goto hit;
                 TaskYieldTrampoline(1);
             }
-            gCurTask->unk3C++;
+            gCurTask->frame++;
             for (gCurTask->unk6C = 0; (s16)gCurTask->unk6C <= 2; gCurTask->unk6C++)
             {
                 if ((s8)gCurTask->unk88->unk07 != 0 && (s8)gCurTask->unk88->unk07 == (s8)gCurTask->unk88->unk08)

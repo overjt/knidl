@@ -72,8 +72,8 @@ void PlayerActionExitDoor(void)
     gCurTask->unk88->unk05 = gCurTask->unk88->unk04;
     gCurTask->unk88->unk04 = 19;
     gCurTask->unk15 = 19;
-    gCurTask->unk43 = 1;
-    gCurTask->unk3C = 0xFFFF;
+    gCurTask->facing = 1;
+    gCurTask->frame = 0xFFFF;
     TaskInitWaterFlags();
     sub_08021c74((s8 *)gPlayerDefaultTerrainBox, gCurTaskIdx);
     if (gUnk_020055C4 == 0)
@@ -94,8 +94,8 @@ void PlayerActionExitDoor(void)
         t->unk28 = 0;
         if (t->unk2C == 1 || t->unk2C == 3)
         {
-            t->unk43 = -1;
-            gCurTask->unk4C = (gCurTask->unk48 - 10) << 16;
+            t->facing = -1;
+            gCurTask->posX = (gCurTask->unk48 - 10) << 16;
         }
     }
     while (gFadeSteps != 0)
@@ -115,11 +115,11 @@ void PlayerActionExitDoor(void)
             default:
                 TaskSetFrame(gCurTask->unk46);
                 TaskYieldTrampoline(2);
-                gCurTask->unk3C++;
+                gCurTask->frame++;
                 TaskYieldTrampoline(2);
-                gCurTask->unk3C++;
+                gCurTask->frame++;
                 TaskYieldTrampoline(2);
-                gCurTask->unk3C++;
+                gCurTask->frame++;
                 TaskYieldTrampoline(2);
                 break;
             case 1:
@@ -130,17 +130,17 @@ void PlayerActionExitDoor(void)
             case 23:
                 TaskSetFrame(gCurTask->unk46);
                 TaskYieldTrampoline(2);
-                gCurTask->unk3C++;
+                gCurTask->frame++;
                 TaskYieldTrampoline(2);
-                gCurTask->unk3C++;
+                gCurTask->frame++;
                 TaskYieldTrampoline(2);
-                gCurTask->unk3C++;
+                gCurTask->frame++;
                 TaskYieldTrampoline(2);
-                gCurTask->unk3C++;
+                gCurTask->frame++;
                 TaskYieldTrampoline(2);
-                gCurTask->unk3C--;
+                gCurTask->frame--;
                 TaskYieldTrampoline(2);
-                gCurTask->unk3C++;
+                gCurTask->frame++;
                 TaskYieldTrampoline(2);
                 break;
             }
@@ -150,11 +150,11 @@ void PlayerActionExitDoor(void)
             gCurTask->unk46 = sub_0803f7e0(1);
             TaskSetFrame(gCurTask->unk46);
             TaskYieldTrampoline(2);
-            gCurTask->unk3C++;
+            gCurTask->frame++;
             TaskYieldTrampoline(2);
-            gCurTask->unk3C++;
+            gCurTask->frame++;
             TaskYieldTrampoline(2);
-            gCurTask->unk3C++;
+            gCurTask->frame++;
             TaskYieldTrampoline(2);
         }
     }
@@ -195,13 +195,13 @@ void PlayerActionExitDoor(void)
         }
         TaskSetFrame(gCurTask->unk46);
         TaskYieldTrampoline(2);
-        gCurTask->unk3C++;
+        gCurTask->frame++;
         TaskYieldTrampoline(2);
         if (gCurTask->unk2C == 0)
             sub_0802651c(r);
         for (gCurTask->unk6C = 0; (s16)gCurTask->unk6C <= 4; gCurTask->unk6C++)
         {
-            gCurTask->unk3C++;
+            gCurTask->frame++;
             TaskYieldTrampoline(2);
         }
         PlayerStopAxes(1);
@@ -223,7 +223,7 @@ void PlayerActionExitDoor(void)
             {
                 struct Task *t;
 
-                gCurTask->unk43 = 1;
+                gCurTask->facing = 1;
                 PlayerSetMotionXPreset(10, 9);
                 t = gCurTask;
                 t->unk54 += t->unk2C << 13;
@@ -234,7 +234,7 @@ void PlayerActionExitDoor(void)
             {
                 struct Task *t;
 
-                gCurTask->unk43 = -1;
+                gCurTask->facing = -1;
                 PlayerSetMotionXPreset(10, 10);
                 t = gCurTask;
                 t->unk54 -= (t->unk2C - 1) << 13;
@@ -253,7 +253,7 @@ void PlayerActionExitDoor(void)
             TaskYieldTrampoline(2);
             for (gCurTask->unk6C = 0; (s16)gCurTask->unk6C <= 5; gCurTask->unk6C++)
             {
-                gCurTask->unk3C++;
+                gCurTask->frame++;
                 TaskYieldTrampoline(2);
             }
             {
@@ -298,9 +298,9 @@ void PlayerActionExitDoor(void)
                 case 0:
                 default:
                     PlayerSetMotionXPreset(10, 11);
-                    gCurTask->unk3C = gCurTask->unk46;
+                    gCurTask->frame = gCurTask->unk46;
                     TaskYieldTrampoline(4);
-                    gCurTask->unk3C++;
+                    gCurTask->frame++;
                     TaskYieldTrampoline(2);
                     break;
                 case 1:
@@ -310,13 +310,13 @@ void PlayerActionExitDoor(void)
                 case 22:
                 case 23:
                     PlayerSetMotionXPreset(10, 12);
-                    gCurTask->unk3C = gCurTask->unk46;
+                    gCurTask->frame = gCurTask->unk46;
                     TaskYieldTrampoline(2);
-                    gCurTask->unk3C++;
+                    gCurTask->frame++;
                     TaskYieldTrampoline(2);
-                    gCurTask->unk3C++;
+                    gCurTask->frame++;
                     TaskYieldTrampoline(2);
-                    gCurTask->unk3C++;
+                    gCurTask->frame++;
                     TaskYieldTrampoline(2);
                     break;
                 }
@@ -324,9 +324,9 @@ void PlayerActionExitDoor(void)
             else
             {
                 PlayerSetMotionXPreset(10, 11);
-                gCurTask->unk3C = gCurTask->unk46 = sub_0803f7e0(3);
+                gCurTask->frame = gCurTask->unk46 = sub_0803f7e0(3);
                 TaskYieldTrampoline(4);
-                gCurTask->unk3C++;
+                gCurTask->frame++;
                 TaskYieldTrampoline(2);
             }
         }
@@ -344,28 +344,28 @@ void PlayerActionExitDoor(void)
             PlayerSetMotionYPreset(21);
             gCurTask->unk46 = sub_0803f7e0(4);
         }
-        gCurTask->unk3C = gCurTask->unk46;
+        gCurTask->frame = gCurTask->unk46;
         TaskYieldTrampoline(2);
-        gCurTask->unk3C++;
+        gCurTask->frame++;
         TaskYieldTrampoline(2);
-        gCurTask->unk3C--;
+        gCurTask->frame--;
         TaskYieldTrampoline(2);
-        gCurTask->unk3C++;
+        gCurTask->frame++;
         TaskYieldTrampoline(2);
         sub_0802651c(r);
-        gCurTask->unk3C = gCurTask->unk46;
+        gCurTask->frame = gCurTask->unk46;
         TaskYieldTrampoline(2);
-        gCurTask->unk3C += 2;
+        gCurTask->frame += 2;
         TaskYieldTrampoline(2);
-        gCurTask->unk3C++;
+        gCurTask->frame++;
         TaskYieldTrampoline(2);
-        gCurTask->unk3C++;
+        gCurTask->frame++;
         TaskYieldTrampoline(2);
-        gCurTask->unk3C--;
+        gCurTask->frame--;
         TaskYieldTrampoline(2);
-        gCurTask->unk3C++;
+        gCurTask->frame++;
         TaskYieldTrampoline(2);
-        gCurTask->unk3C--;
+        gCurTask->frame--;
         TaskYieldTrampoline(2);
         PlayerStopAxes(3);
         i = sub_0802653c();
@@ -384,7 +384,7 @@ void PlayerActionExitDoor(void)
                 {
                 case 0:
                 default:
-                    gCurTask->unk3C = gCurTask->unk46;
+                    gCurTask->frame = gCurTask->unk46;
                     TaskYieldTrampoline(24);
                     break;
                 case 1:
@@ -395,9 +395,9 @@ void PlayerActionExitDoor(void)
                 case 23:
                     for (gCurTask->unk6C = 0; (s16)gCurTask->unk6C <= 5; gCurTask->unk6C++)
                     {
-                        gCurTask->unk3C = gCurTask->unk46;
+                        gCurTask->frame = gCurTask->unk46;
                         TaskYieldTrampoline(2);
-                        gCurTask->unk3C++;
+                        gCurTask->frame++;
                         TaskYieldTrampoline(2);
                     }
                     break;
@@ -405,7 +405,7 @@ void PlayerActionExitDoor(void)
             }
             else
             {
-                gCurTask->unk3C = sub_0803f7e0(5);
+                gCurTask->frame = sub_0803f7e0(5);
                 TaskYieldTrampoline(24);
             }
         }
@@ -432,14 +432,14 @@ void PlayerActionExitDoor(void)
                 case 23:
                     for (;;)
                     {
-                        gCurTask->unk3C = gCurTask->unk46;
+                        gCurTask->frame = gCurTask->unk46;
                         TaskYieldTrampoline(1);
                         if (gUnk_020055E8 != 0)
                             break;
                         TaskYieldTrampoline(1);
                         if (gUnk_020055E8 != 0)
                             break;
-                        gCurTask->unk3C++;
+                        gCurTask->frame++;
                         TaskYieldTrampoline(1);
                         if (gUnk_020055E8 != 0)
                             break;
@@ -478,14 +478,14 @@ void PlayerActionExitDoor(void)
             {
                 struct Task *u;
 
-                gCurTask->unk3C = gCurTask->unk46;
+                gCurTask->frame = gCurTask->unk46;
                 TaskYieldTrampoline(2);
                 u = gCurTask;
-                u->unk3C = gPlayerDoorAnims[u->unk88->unk0D][6];
+                u->frame = gPlayerDoorAnims[u->unk88->unk0D][6];
                 TaskYieldTrampoline(2);
                 for (gCurTask->unk6C = 0; (s16)gCurTask->unk6C <= 4; gCurTask->unk6C++)
                 {
-                    gCurTask->unk3C--;
+                    gCurTask->frame--;
                     TaskYieldTrampoline(2);
                 }
                 break;
@@ -497,33 +497,33 @@ void PlayerActionExitDoor(void)
                 sub_08049a58();
             default:
             anim:
-                gCurTask->unk3C = gCurTask->unk46;
+                gCurTask->frame = gCurTask->unk46;
                 TaskYieldTrampoline(2);
-                gCurTask->unk3C++;
+                gCurTask->frame++;
                 TaskYieldTrampoline(2);
-                gCurTask->unk3C--;
+                gCurTask->frame--;
                 TaskYieldTrampoline(2);
-                gCurTask->unk3C++;
+                gCurTask->frame++;
                 TaskYieldTrampoline(2);
-                gCurTask->unk3C--;
+                gCurTask->frame--;
                 TaskYieldTrampoline(2);
-                gCurTask->unk3C++;
+                gCurTask->frame++;
                 TaskYieldTrampoline(2);
-                gCurTask->unk3C--;
+                gCurTask->frame--;
                 TaskYieldTrampoline(2);
                 break;
             }
             PlayerSetMotionXPreset(10, 15);
             while (1)
             {
-                gCurTask->unk3C = gCurTask->unk46;
+                gCurTask->frame = gCurTask->unk46;
                 TaskYieldTrampoline(1);
                 if (gCurTask->unk7A & 1)
                     break;
                 TaskYieldTrampoline(1);
                 if (gCurTask->unk7A & 1)
                     break;
-                gCurTask->unk3C++;
+                gCurTask->frame++;
                 TaskYieldTrampoline(1);
                 if (gCurTask->unk7A & 1)
                     break;
@@ -535,7 +535,7 @@ void PlayerActionExitDoor(void)
         else
         {
             PlayerSetMotionYPreset(21);
-            gCurTask->unk3C = sub_0803f7e0(6);
+            gCurTask->frame = sub_0803f7e0(6);
             TaskYieldTrampoline(14);
             PlayerSetMotionXPreset(10, 15);
             while (!(gCurTask->unk7A & 1))

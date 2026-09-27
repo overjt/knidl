@@ -33,9 +33,9 @@ struct Task
     /*0x04*/ u32 unk04;
     /*0x08*/ u32 unk08;
     /*0x0C*/ u32 unk0C;
-    /*0x10*/ u16 unk10;
-    /*0x12*/ s8 unk12;
-    /*0x13*/ u8 unk13;
+    /*0x10*/ u16 sleepFrames;
+    /*0x12*/ s8 taskClass;
+    /*0x13*/ u8 skipMask;
     /*0x14*/ u8 unk14;
     /*0x15*/ u8 unk15;
     /*0x16*/ u16 unk16;
@@ -48,17 +48,17 @@ struct Task
     /*0x30*/ s32 unk30;
     /*0x34*/ s32 unk34;
     /*0x38*/ u32 *unk38;
-    /*0x3C*/ s16 unk3C;
+    /*0x3C*/ s16 frame;
     /*0x3E*/ u16 unk3E;
     /*0x40*/ u16 unk40;
-    /*0x42*/ u8 unk42;
-    /*0x43*/ s8 unk43;
+    /*0x42*/ u8 layer;
+    /*0x43*/ s8 facing;
     /*0x44*/ s16 unk44;
     /*0x46*/ s16 unk46;
     /*0x48*/ s16 unk48;
     /*0x4A*/ s16 unk4A;
-    /*0x4C*/ s32 unk4C;
-    /*0x50*/ s32 unk50;
+    /*0x4C*/ s32 posX;
+    /*0x50*/ s32 posY;
     /*0x54*/ s32 unk54;
     /*0x58*/ s32 unk58;
     /*0x5C*/ s32 unk5C;
@@ -97,12 +97,12 @@ struct Task
 /* 8 bytes per task type in ROM at 0x0872FF30. */
 struct TaskType
 {
-    /*0x00*/ u8 unk00;
+    /*0x00*/ u8 taskClass;
     /*0x01*/ u8 pad01[3];
-    /*0x04*/ u32 unk04;
+    /*0x04*/ u32 entry;
 };
 
-/* Per-task graphics descriptor reached through Task.unk38[Task.unk3C]. */
+/* Per-task graphics descriptor reached through Task.unk38[Task.frame]. */
 struct TaskGfx
 {
     /*0x00*/ u32 unk00;

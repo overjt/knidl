@@ -170,7 +170,7 @@ void sub_080974f8(void)
     t = gCurTask;
     t->unk00 = (u32)ActorMove;
     t->unk0C = (u32)sub_08065438;
-    t->unk42 = 11;
+    t->layer = 11;
     gCurTask->unk38 = gUnk_087537FC;
     gUnk_02007D00[8]++;
     sub_08066088(0);
@@ -615,7 +615,7 @@ void sub_08097e90(void)
         TaskYieldTrampoline(4);
     }
     gUnk_030023D4 = d = gCurTask->unk48 - gViewRect[0];
-    k = gCurTask->unk43;
+    k = gCurTask->facing;
     if (120 - d >= 0)
         goto chk2;
     if (k <= 0)
@@ -844,10 +844,10 @@ void sub_08098450(void)
     p->unk0C = 12;
     p->unk0E = 8;
     p->unk0A = 1;
-    d = t->unk43;
+    d = t->facing;
     TaskFaceNearestPlayer();
     gCurTask->unk46 = CreateActorFromDescAtOffsetFacing(&sp, 1);
-    gCurTask->unk43 = d;
+    gCurTask->facing = d;
 }
 
 void sub_080984b4(void)
@@ -886,7 +886,7 @@ s32 sub_08098540(void)
     t = gCurTask;
     if (t->unk14 != 3)
         return 0;
-    d = t->unk43;
+    d = t->facing;
     if (t->unk54 < 0) {
         if (d < 0)
             goto hit;
@@ -916,7 +916,7 @@ s32 sub_08098594(void)
     ActorFaceHitter();
     t = gCurTask;
     if (t->unk18 >= 0) {
-        sub_080689c8(t->unk18, -t->unk43);
+        sub_080689c8(t->unk18, -t->facing);
         gCurTask->unk18 = -1;
     }
     ActorSetState(8);
@@ -934,7 +934,7 @@ void sub_080985e0(void)
     t->unk04 = (u32)sub_0809869c;
     t->unk00 = (u32)ActorMove;
     t->unk0C = (u32)ActorDrawWorldInViewOrDestroy;
-    t->unk42 = 9;
+    t->layer = 9;
     zero = 0;
     gCurTask->unk38 = gUnk_08753054;
     TaskFaceNearestPlayer();
@@ -1036,7 +1036,7 @@ void sub_0809876c(void)
     t = gCurTask;
     t->unk00 = (u32)ActorMove;
     t->unk0C = (u32)ActorDrawWorldInViewOrDestroy;
-    t->unk42 = 9;
+    t->layer = 9;
     zero = 0;
     u = gCurTask;
     u->unk38 = gUnk_087538B0;

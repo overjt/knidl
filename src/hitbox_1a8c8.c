@@ -172,7 +172,7 @@ u8 sub_0801a8c8(void)
             gColliderLeft = (x - (u16)gViewRect[0]) + gColliderBodyBox->unk02;
             gColliderRight = (x - (u16)gViewRect[0]) + gColliderBodyBox->unk04;
         }
-        else if (t->unk43 == 1)
+        else if (t->facing == 1)
         {
             s32 x;
             gColliderX = x = gColliderBodyBox->unk00 + e->unk02;
@@ -377,7 +377,7 @@ u8 sub_0801af14(void)
             gColliderLeft = (x - (u16)gViewRect[0]) + gColliderBodyBox->unk02;
             gColliderRight = (x - (u16)gViewRect[0]) + gColliderBodyBox->unk04;
         }
-        else if (t->unk43 == 1)
+        else if (t->facing == 1)
         {
             s32 x;
             gColliderX = x = gColliderBodyBox->unk00 + e->unk02;

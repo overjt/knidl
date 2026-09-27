@@ -186,7 +186,7 @@ void AirGrindRacer(void)
     gAirGrindPtr->unk01C[player].unk02 = 0;
     gAirGrindPtr->unk01C[player].unk0E = 0;
     gAirGrindPtr->unk01C[player].unk01 = 0;
-    gCurTask->unk4C = gAirGrindCoursePtr->unk000 << 16;
+    gCurTask->posX = gAirGrindCoursePtr->unk000 << 16;
     gCurTask->unk54 = 0x28000;
     gCurTask->unk5C = 0;
     gAirGrindPtr->unk004[player] = 0;
@@ -310,7 +310,7 @@ s32 AirGrindCpuHoldsA(s32 player, s32 pos)
 void AirGrindRacerUpdate(void)
 {
     s32 player = gCurTask->unk1C;
-    s32 pos = gCurTask->unk4C >> 16;
+    s32 pos = gCurTask->posX >> 16;
     u16 prev = gAirGrindPtr->unk01C[player].unk02;
     s32 src;
 

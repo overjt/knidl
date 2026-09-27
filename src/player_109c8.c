@@ -85,7 +85,7 @@ void sub_080109c8(void)
             x = gCurTask->unk48 + ((s16 *)&p->unk00)[1];
             y = gCurTask->unk4A + ((s16 *)&p->unk04)[1] + 4;
             if (IsWorldPosOnScreen(x, y))
-                QueueSprite(gCurTask->unk42 - 1, gUnk_08732104[d], 0, 12, x, (s16)y);
+                QueueSprite(gCurTask->layer - 1, gUnk_08732104[d], 0, 12, x, (s16)y);
         }
         i++;
     } while (i <= 2);

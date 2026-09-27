@@ -328,7 +328,7 @@ void sub_08098d58(void)
     sp.unk00 = 13;
     sp.unk04 = 115;
     sp.unk08 = 0;
-    sp.unk09 = t->unk43;
+    sp.unk09 = t->facing;
     sp.unk0C = 0;
     sp.unk0E = 0;
     sp.unk10 = a->unk20;
@@ -386,7 +386,7 @@ void sub_08098e64(void)
     t = gCurTask;
     t->unk00 = (u32)ActorMove;
     t->unk0C = (u32)sub_08065438;
-    t->unk42 = 11;
+    t->layer = 11;
     zero = 0;
     gCurTask->unk38 = gUnk_08753090;
     gUnk_02007D00[0]++;

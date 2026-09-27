@@ -1444,7 +1444,7 @@ void sub_080a8878(void)
 
     gCurTask->unk15 = 0;
     t = gCurTask;
-    t->unk50 = (gViewRect[2] - 16) << 16;
+    t->posY = (gViewRect[2] - 16) << 16;
     t->unk58 = 128 << 8;
     TaskYieldTrampoline(8);
     sub_08066544();
@@ -1462,7 +1462,7 @@ void sub_080a8878(void)
         gCurTask->unk6C++;
     } while ((s16)gCurTask->unk6C <= 10);
     gCurTask->unk58 = 0;
-    gCurTask->unk50 = (gViewRect[2] + 48) << 16;
+    gCurTask->posY = (gViewRect[2] + 48) << 16;
     gUnk_02007D00[0] = 0;
     while (gUnk_0200AFF8 == 0)
         TaskYieldTrampoline(1);
@@ -1559,8 +1559,8 @@ st3:
             break;
         case 2:
             ActorSetState(2);
-            gCurTask->unk4C = (gUnk_087490E4[gCurTask->unk30] + gViewRect[0]) << 16;
-            gCurTask->unk50 = (gViewRect[2] + 48) << 16;
+            gCurTask->posX = (gUnk_087490E4[gCurTask->unk30] + gViewRect[0]) << 16;
+            gCurTask->posY = (gViewRect[2] + 48) << 16;
             gCurTask->unk2C = 3;
             break;
         }
@@ -1634,13 +1634,13 @@ void sub_080a8c84(void)
     {
         if (gUnk_030023B4 > 167)
         {
-            t->unk4C = (gViewRect[0] + 168) << 16;
+            t->posX = (gViewRect[0] + 168) << 16;
             t->unk24++;
         }
     }
     else if (gUnk_030023B4 <= 72)
     {
-        t->unk4C = (gViewRect[0] + 72) << 16;
+        t->posX = (gViewRect[0] + 72) << 16;
         t->unk24++;
     }
     if (gCurTask->unk24 != 0)
@@ -1663,9 +1663,9 @@ void sub_080a8d1c(void)
     TaskStop();
     StartBgPaletteBlend(8, 128);
     if (gCurTask->unk30 == 0)
-        gCurTask->unk43 = 1;
+        gCurTask->facing = 1;
     else
-        gCurTask->unk43 = 255;
+        gCurTask->facing = 255;
     TaskSetMotionXFacing(-0x20000, 0x5A5A5A5A);
     gCurTask->unk58 = 128 << 9;
     TaskYieldTrampoline(16);
@@ -1764,9 +1764,9 @@ void sub_080a8fdc(void)
     gCurTask->unk15 = 5;
     gUnk_02007D00[0] = 1;
     if (gCurTask->unk30 == 0)
-        gCurTask->unk43 = 1;
+        gCurTask->facing = 1;
     else
-        gCurTask->unk43 = 255;
+        gCurTask->facing = 255;
     TaskSetMotionXFacing(128 << 10, 0x5A5A5A5A);
     gCurTask->unk58 = -0x10000;
     TaskYieldTrampoline(10);

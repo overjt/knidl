@@ -31,7 +31,7 @@ void sub_0801a76c(s32 i)
 
     t->unk00 = (u32)TaskMove;
     t->unk0C = (u32)sub_0803ddc0;
-    t->unk42 = 7;
+    t->layer = 7;
     gCurTask->unk38 = gUnk_0874CFEC;
     gCurTask->unk40 = (i << 13) | (i << 7);
     gCurTask->unk88 = &gPlayerStates[i];

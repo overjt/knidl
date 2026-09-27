@@ -172,7 +172,7 @@ void sub_080c3f44(void)
         gCurTask->unk6E = 3;
         gCurTask->unk0C = (u32)sub_080c4e10;
         gCurTask->unk38 = gUnk_08755FC4;
-        gCurTask->unk3C = 5;
+        gCurTask->frame = 5;
         gCurTask->unk04 = (u32)sub_080c44bc;
         break;
     case 2:
@@ -191,26 +191,26 @@ void sub_080c3f44(void)
         gCurTask->unk0C = (u32)sub_080c4e10;
         gCurTask->unk40 = 0x8210;
         gCurTask->unk38 = gUnk_087572E0;
-        gCurTask->unk3C = 0;
+        gCurTask->frame = 0;
         gCurTask->unk04 = (u32)sub_080c4568;
         gAirGrindPtr->unk451 = 1;
         break;
     case 0:
         scale = sub_080c623c(gAirGrindCoursePtr->unk018[gCurTask->unk18].unk08);
         gCurTask->unk0C = (u32)sub_080c4e10;
-        gCurTask->unk42 = u->unk42;
+        gCurTask->layer = u->layer;
         gCurTask->unk3E = u->unk3E & 0x6000;
         gCurTask->unk00 = (u32)TaskMove;
         gCurTask->unk54 = -u->unk54;
         gCurTask->unk28 = u->unk28;
         x = u->unk48 - scale / 32;
         y = u->unk4A + (s32)((AirGrindRandom(4) & 7) - 3) * scale / 256;
-        gCurTask->unk4C = x << 16;
-        gCurTask->unk50 = y << 16;
+        gCurTask->posX = x << 16;
+        gCurTask->posY = y << 16;
         gCurTask->unk6C = 2;
         gCurTask->unk6E = 18;
         gCurTask->unk38 = gUnk_08755FC4;
-        gCurTask->unk3C = 3;
+        gCurTask->frame = 3;
         gCurTask->unk04 = (u32)sub_080c4364;
         break;
     case 3:
@@ -218,7 +218,7 @@ void sub_080c3f44(void)
         scale = sub_080c623c(gAirGrindCoursePtr->unk018[gCurTask->unk18].unk08);
         gCurTask->unk0C = (u32)sub_080c4e10;
         gCurTask->unk00 = (u32)TaskMove;
-        gCurTask->unk42 = u->unk42;
+        gCurTask->layer = u->layer;
         gCurTask->unk3E = u->unk3E & 0x6000;
         vx = (s32)(AirGrindRandom(4) & 0xFFF) * (scale << 6) / 256;
         if (gCurTask->unk20 == 3)
@@ -230,27 +230,27 @@ void sub_080c3f44(void)
         gCurTask->unk28 = u->unk28;
         x = u->unk48 + (s32)((AirGrindRandom(4) & 31) - 15) * scale / 256;
         y = u->unk4A - scale / 32;
-        gCurTask->unk4C = x << 16;
-        gCurTask->unk50 = y << 16;
+        gCurTask->posX = x << 16;
+        gCurTask->posY = y << 16;
         gCurTask->unk6C = 2;
         gCurTask->unk6E = 50;
         gCurTask->unk38 = gUnk_08755FC4;
-        gCurTask->unk3C = 3;
+        gCurTask->frame = 3;
         gCurTask->unk04 = (u32)sub_080c43e8;
         break;
     case 6:
     case 7:
         gCurTask->unk0C = (u32)TaskDrawScreen;
         gCurTask->unk00 = (u32)TaskMove;
-        gCurTask->unk42 = 3;
+        gCurTask->layer = 3;
         gCurTask->unk3E = 0;
-        gCurTask->unk4C = u->unk48 << 16;
-        gCurTask->unk50 = u->unk4A << 16;
+        gCurTask->posX = u->unk48 << 16;
+        gCurTask->posY = u->unk4A << 16;
         gCurTask->unk58 = u->unk4A < 80 ? 0x10000 : -0x10000;
         gCurTask->unk54 = 0x10000;
         gCurTask->unk6E = 40;
         gCurTask->unk38 = gUnk_08755FEC;
-        gCurTask->unk3C = gCurTask->unk20 == 6 ? 15 : 14;
+        gCurTask->frame = gCurTask->unk20 == 6 ? 15 : 14;
         gCurTask->unk04 = (u32)sub_080c45d4;
         break;
     case 8:
@@ -259,7 +259,7 @@ void sub_080c3f44(void)
         gCurTask->unk15 = 0;
         gCurTask->unk0C = (u32)sub_080c4e10;
         gCurTask->unk38 = gUnk_08755FC4;
-        gCurTask->unk3C = 9;
+        gCurTask->frame = 9;
         gCurTask->unk04 = (u32)sub_080c45fc;
         break;
     }
@@ -272,7 +272,7 @@ void sub_080c42dc(s32 layer)
     struct Task *u = &gTasks[gCurTask->unk18];
 
     gCurTask->unk28 = u->unk28;
-    gCurTask->unk42 = u->unk42 + layer;
+    gCurTask->layer = u->layer + layer;
     gCurTask->unk3E = u->unk3E & 0x6000;
     if (gCurTask->unk15 == 0) {
         gCurTask->unk48 = u->unk48;
@@ -287,7 +287,7 @@ void sub_080c4364(void)
 {
     struct Task *u = &gTasks[gCurTask->unk18];
 
-    gCurTask->unk42 = u->unk42;
+    gCurTask->layer = u->layer;
     gCurTask->unk3E = u->unk3E & 0x6000;
     gCurTask->unk28 += 14;
     if (--gCurTask->unk6E < 0) {
@@ -295,8 +295,8 @@ void sub_080c4364(void)
     } else {
         if ((s16)gCurTask->unk6C <= 0) {
             gCurTask->unk6C = 2;
-            if (--gCurTask->unk3C < 0)
-                gCurTask->unk3C = 3;
+            if (--gCurTask->frame < 0)
+                gCurTask->frame = 3;
         }
         gCurTask->unk6C--;
     }
@@ -310,16 +310,16 @@ void sub_080c43e8(void)
     }
     if ((s16)gCurTask->unk6C <= 0) {
         gCurTask->unk6C = 2;
-        if (--gCurTask->unk3C < 0)
-            gCurTask->unk3C = 3;
+        if (--gCurTask->frame < 0)
+            gCurTask->frame = 3;
     }
     gCurTask->unk6C--;
     if ((u16)(gCurTask->unk48 + 63) <= 366
         && gCurTask->unk4A > -64 && gCurTask->unk4A < 224) {
         u32 *tbl = gCurTask->unk38;
 
-        QueueSprite(gCurTask->unk42,
-                     sub_080c4f60((u16 *)tbl[gCurTask->unk3C], gCurTask->unk28),
+        QueueSprite(gCurTask->layer,
+                     sub_080c4f60((u16 *)tbl[gCurTask->frame], gCurTask->unk28),
                      gCurTask->unk3E, gCurTask->unk40,
                      gCurTask->unk48, gCurTask->unk4A);
     } else
@@ -342,7 +342,7 @@ void sub_080c44f0(void)
     if ((*(s16 *)&t->unk6C)-- <= 0) {
         t->unk6C = 2;
         if (gUnk_080CFF52[++t->unk6E] != -1) {
-            t->unk3C = gUnk_080CFF52[t->unk6E];
+            t->frame = gUnk_080CFF52[t->unk6E];
         } else {
             gAirGrindPtr->unk450 = 0;
             TaskFree(gCurTaskIdx);
@@ -356,7 +356,7 @@ void sub_080c4568(void)
 {
     if ((s16)gCurTask->unk6C <= 0) {
         gCurTask->unk6C = 2;
-        if (++gCurTask->unk3C > gCurTask->unk6E) {
+        if (++gCurTask->frame > gCurTask->unk6E) {
             gAirGrindPtr->unk451 = 0;
             TaskFree(gCurTaskIdx);
             return;

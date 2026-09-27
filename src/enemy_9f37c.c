@@ -56,7 +56,7 @@ void sub_0809f37c(void)
     t = gCurTask;
     t->unk00 = (u32)ActorMove;
     t->unk0C = (u32)ActorDrawWorldInViewOrDestroy;
-    p = &t->unk42;
+    p = &t->layer;
     z = 0;
     *p = 9;
     u = gCurTask;
@@ -106,8 +106,8 @@ void sub_0809f3e0(void)
     u->unk28 = n;
     if ((n & 2) != 0)
     {
-        h = u->unk3C;
-        u->unk3C = (0xFE & h) + ((h + 1) & 1);
+        h = u->frame;
+        u->frame = (0xFE & h) + ((h + 1) & 1);
     }
     ActorCheckHits();
     ActorReactToHit();
@@ -178,12 +178,12 @@ u8 sub_0809f588(void)
     {
     case 2:
     case 3:
-        p = &t->unk43;
+        p = &t->facing;
         *p = -*p;
         u = gCurTask;
         vx = -u->unk54;
         u->unk54 = vx;
-        if (u->unk43 == 1 && vx > 0)
+        if (u->facing == 1 && vx > 0)
             goto zero;
         break;
     case 0:
@@ -199,7 +199,7 @@ u8 sub_0809f588(void)
         goto end;
     }
     v = gCurTask;
-    if (v->unk43 == -1 && v->unk54 < 0)
+    if (v->facing == -1 && v->unk54 < 0)
     {
     zero:
         gCurTask->unk28 = 0;
@@ -246,54 +246,54 @@ void sub_0809f61c(void)
         t = gCurTask;
         t->unk00 = (u32)TaskMove;
         t->unk0C = (u32)ActorDrawWorldInViewOrDestroy;
-        p = &t->unk42;
+        p = &t->layer;
         z = 0;
         *p = 11;
         u = gCurTask;
         u->unk38 = gUnk_087535A8;
         u->unk40 = z;
         PlaySfx(142 << 1);
-        gCurTask->unk3C = z;
+        gCurTask->frame = z;
         TaskYieldTrampoline(1);
-        gCurTask->unk3C++;
+        gCurTask->frame++;
         TaskYieldTrampoline(1);
-        gCurTask->unk3C++;
+        gCurTask->frame++;
         TaskYieldTrampoline(1);
-        gCurTask->unk3C++;
+        gCurTask->frame++;
         TaskYieldTrampoline(1);
-        gCurTask->unk3C++;
+        gCurTask->frame++;
         TaskYieldTrampoline(1);
-        gCurTask->unk3C++;
+        gCurTask->frame++;
         TaskYieldTrampoline(1);
-        gCurTask->unk3C++;
+        gCurTask->frame++;
         TaskYieldTrampoline(1);
-        gCurTask->unk3C++;
+        gCurTask->frame++;
         TaskYieldTrampoline(1);
-        gCurTask->unk3C++;
+        gCurTask->frame++;
         TaskYieldTrampoline(1);
-        gCurTask->unk3C++;
+        gCurTask->frame++;
         TaskYieldTrampoline(1);
-        gCurTask->unk3C++;
+        gCurTask->frame++;
         TaskYieldTrampoline(1);
-        gCurTask->unk3C++;
+        gCurTask->frame++;
         TaskYieldTrampoline(1);
-        gCurTask->unk3C++;
+        gCurTask->frame++;
         TaskYieldTrampoline(1);
-        gCurTask->unk3C++;
+        gCurTask->frame++;
         TaskYieldTrampoline(1);
-        gCurTask->unk3C++;
+        gCurTask->frame++;
         TaskYieldTrampoline(1);
-        gCurTask->unk3C++;
+        gCurTask->frame++;
         TaskYieldTrampoline(1);
-        gCurTask->unk3C++;
+        gCurTask->frame++;
         TaskYieldTrampoline(1);
-        gCurTask->unk3C++;
+        gCurTask->frame++;
         TaskYieldTrampoline(1);
-        gCurTask->unk3C++;
+        gCurTask->frame++;
         TaskYieldTrampoline(1);
-        gCurTask->unk3C++;
+        gCurTask->frame++;
         TaskYieldTrampoline(1);
-        gCurTask->unk3C++;
+        gCurTask->frame++;
         TaskYieldTrampoline(1);
         break;
     }
@@ -366,9 +366,9 @@ void TaskFaceScreenCenter(void)
 {
     TaskGetScreenPos();
     if (gUnk_030023B4 <= 119)
-        gCurTask->unk43 = 1;
+        gCurTask->facing = 1;
     else
-        gCurTask->unk43 = -1;
+        gCurTask->facing = -1;
     TaskUpdateFlip();
 }
 
@@ -380,7 +380,7 @@ void sub_0809f90c(void)
 
 void sub_0809f91c(void)
 {
-    gCurTask->unk43 = -gCurTask->unk43;
+    gCurTask->facing = -gCurTask->facing;
 }
 
 void sub_0809f930(void)
@@ -388,10 +388,10 @@ void sub_0809f930(void)
     struct Task *t;
     s8 f;
 
-    f = gCurTask->unk43;
+    f = gCurTask->facing;
     TaskFaceNearestPlayer();
     TaskUpdateFlip();
-    gCurTask->unk43 = -f;
+    gCurTask->facing = -f;
     t = gCurTask;
     t->unk54 = -t->unk54;
 }
@@ -406,7 +406,7 @@ void sub_0809f970(void)
 {
     struct Task *t;
 
-    gCurTask->unk43 = -gCurTask->unk43;
+    gCurTask->facing = -gCurTask->facing;
     t = gCurTask;
     t->unk54 = -t->unk54;
     TaskUpdateFlip();

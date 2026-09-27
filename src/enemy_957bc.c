@@ -161,7 +161,7 @@ void sub_080957bc(void)
     t = gCurTask;
     t->unk00 = (u32)ActorMove;
     t->unk0C = (u32)sub_08065438;
-    t->unk42 = 11;
+    t->layer = 11;
     gCurTask->unk38 = gUnk_08753718;
     gUnk_02007D00[8]++;
     sub_08095834();
@@ -362,7 +362,7 @@ void sub_08095be8(void)
     do {
         u = gCurTask;
         if (u->unk2C != 0)
-            u->unk43 = -u->unk43;
+            u->facing = -u->facing;
         else
             TaskFaceNearestPlayer();
         sub_08095d40();
@@ -386,7 +386,7 @@ void sub_08095be8(void)
         do {
             w = gCurTask;
             if (w->unk2C != 0)
-                w->unk43 = -w->unk43;
+                w->facing = -w->facing;
             else
                 TaskFaceNearestPlayer();
             sub_08095d40();
@@ -434,7 +434,7 @@ void sub_08095d40(void)
     TaskYieldTrampoline(2);
     TaskSetFrame(11);
     TaskYieldTrampoline(5);
-    if (gCurTask->unk43 != TaskGetFacingTowardNearestPlayer() || gCurTask->unk2C != 0) {
+    if (gCurTask->facing != TaskGetFacingTowardNearestPlayer() || gCurTask->unk2C != 0) {
         sub_0806cc90(1, 1, -4, 12);
         TaskSetFrame(16);
         TaskYieldTrampoline(15);
@@ -487,7 +487,7 @@ void sub_08095eac(void)
             sub_08095d40();
             t = gCurTask;
             if (t->unk2C != 0) {
-                t->unk43 = -t->unk43;
+                t->facing = -t->facing;
                 sub_08095d40();
                 break;
             }
@@ -533,7 +533,7 @@ void sub_08096058(void)
 {
     struct Task *t;
 
-    switch (gCurTask->unk3C) {
+    switch (gCurTask->frame) {
     case 26:
         ActorCheckHitsWithBox(gUnk_0874513C);
         break;
@@ -598,7 +598,7 @@ void sub_0809619c(void)
     TaskSetMotionXFacing(0x30000, 0x5A5A5A5A);
     gCurTask->unk28 = ActorStartAnim(gUnk_0874453C);
     TaskYieldTrampoline(48);
-    while (gCurTask->unk43 == TaskGetFacingTowardNearestPlayer()) {
+    while (gCurTask->facing == TaskGetFacingTowardNearestPlayer()) {
         if (abs(TaskGetNearestPlayerDx()) > 48)
             break;
         TaskYieldTrampoline(10);
@@ -716,7 +716,7 @@ void sub_080963dc(void)
         goto doloop;
     goto rest;
 flip:
-    t->unk43 = -t->unk43;
+    t->facing = -t->facing;
     sub_08095d40();
     goto rest;
 poscheck:
@@ -1011,7 +1011,7 @@ void sub_08096a40(void)
     t = gCurTask;
     if (t->unk30 == 0)
         return;
-    switch (t->unk3C) {
+    switch (t->frame) {
     case 8:
     case 17:
     case 18:
@@ -1069,22 +1069,22 @@ void sub_08096b7c(void)
     TaskSetMotionY(-0x30000, 0x1A00, 0x30000);
     TaskSetFrame(21);
     ActorSetAttackBox(gUnk_08744F0C);
-    sub_08063a00(gUnk_087446E8[gCurTask->unk3C]);
-    sub_080639f0(gUnk_087447B8[gCurTask->unk3C]);
+    sub_08063a00(gUnk_087446E8[gCurTask->frame]);
+    sub_080639f0(gUnk_087447B8[gCurTask->frame]);
     ActorSetTerrainBox(gUnk_08745304);
     while (gCurTask->unk58 < 0)
         TaskYieldTrampoline(1);
     TaskSetFrame(38);
     ActorSetAttackBox(gUnk_087450CC);
     sub_08063a00(gUnk_087450E8);
-    sub_080639f0(gUnk_087447B8[gCurTask->unk3C]);
+    sub_080639f0(gUnk_087447B8[gCurTask->frame]);
     while (gCurTask->unk34 == 0)
         TaskYieldTrampoline(1);
     gCurTask->unk28 = ActorStartAnim(gUnk_08744550);
     TaskSetFrameByFacing(40);
     ActorSetAttackBox(gUnk_08745104);
     sub_08063a00(gUnk_08745120);
-    sub_080639f0(gUnk_087447B8[gCurTask->unk3C]);
+    sub_080639f0(gUnk_087447B8[gCurTask->frame]);
     RequestScreenShake(4);
     PlaySfx(0x1F7);
     CreateChildTaskHere(141, 0);
@@ -1161,7 +1161,7 @@ s32 sub_08096e24(void)
     ActorFaceHitter();
     t = gCurTask;
     if (t->unk18 >= 0) {
-        sub_080689c8(t->unk18, -t->unk43);
+        sub_080689c8(t->unk18, -t->facing);
         gCurTask->unk18 = -1;
     }
     ActorSetState(10);
@@ -1243,12 +1243,12 @@ void sub_08097024(void)
 
     t = gCurTask;
     if (t->unk14 != 10) {
-        ActorSetAttackBox(gUnk_08744618[t->unk3C]);
+        ActorSetAttackBox(gUnk_08744618[t->frame]);
         u = gCurTask;
-        v = u->unk3C;
+        v = u->frame;
         if (v < 40 || v > 43)
-            sub_08063a00(gUnk_087446E8[u->unk3C]);
-        sub_080639f0(gUnk_087447B8[gCurTask->unk3C]);
+            sub_08063a00(gUnk_087446E8[u->frame]);
+        sub_080639f0(gUnk_087447B8[gCurTask->frame]);
     }
 }
 

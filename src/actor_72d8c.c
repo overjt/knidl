@@ -72,12 +72,12 @@ void sub_08074568(void);
 void sub_08072d8c(void)
 {
     gCurTask->unk15 = 13;
-    gCurTask->unk43 = 255;
+    gCurTask->facing = 255;
     {
         struct Task *t = gCurTask;
 
-        t->unk4C = (t->unk48 - gViewRect[0]) << 16;
-        t->unk50 = (t->unk4A - gViewRect[2]) << 16;
+        t->posX = (t->unk48 - gViewRect[0]) << 16;
+        t->posY = (t->unk4A - gViewRect[2]) << 16;
         t->unk00 = (u32)TaskMoveRelativeToView;
         t->unk24 = 0;
     }
@@ -327,8 +327,8 @@ void sub_080731d0(void)
     {
         struct Task *t = gCurTask;
 
-        t->unk4C = 0x200000;
-        t->unk50 = -0x40000;
+        t->posX = 0x200000;
+        t->posY = -0x40000;
         t->unk00 = (u32)TaskMoveRelativeToView;
     }
     sub_08071898();
@@ -340,7 +340,7 @@ void sub_080731d0(void)
         t->unk58 = 0x20000;
     }
     TaskYieldTrampoline(44);
-    gCurTask->unk43 = 255;
+    gCurTask->facing = 255;
     sub_080277f0(gCurTask->unk48, gCurTask->unk4A);
     RequestScreenShake(4);
     StopSfxOnPlayer(gUnk_02004B4C, gUnk_02005584);
@@ -366,8 +366,8 @@ void sub_08073298(void)
     {
         struct Task *t = gCurTask;
 
-        t->unk4C = (t->unk48 - gViewRect[0]) << 16;
-        t->unk50 = (t->unk4A - gViewRect[2]) << 16;
+        t->posX = (t->unk48 - gViewRect[0]) << 16;
+        t->posY = (t->unk4A - gViewRect[2]) << 16;
         t->unk00 = (u32)TaskMoveRelativeToView;
         t->unk24 = 0;
     }
@@ -510,8 +510,8 @@ void sub_08073584(void)
     {
         struct Task *t = gCurTask;
 
-        t->unk4C = (t->unk48 - gViewRect[0]) << 16;
-        t->unk50 = (t->unk4A - gViewRect[2]) << 16;
+        t->posX = (t->unk48 - gViewRect[0]) << 16;
+        t->posY = (t->unk4A - gViewRect[2]) << 16;
         t->unk00 = (u32)TaskMoveRelativeToView;
         t->unk24 = 0;
     }
@@ -692,8 +692,8 @@ void sub_08073804(void)
     {
         struct Task *t = gCurTask;
 
-        t->unk4C = (t->unk48 - gViewRect[0]) << 16;
-        t->unk50 = (t->unk4A - gViewRect[2]) << 16;
+        t->posX = (t->unk48 - gViewRect[0]) << 16;
+        t->posY = (t->unk4A - gViewRect[2]) << 16;
         t->unk00 = (u32)TaskMoveRelativeToView;
         t->unk24 = 0;
         t->unk18 = 0x3F0000;
@@ -791,8 +791,8 @@ void sub_08073a54(void)
     {
         struct Task *t = gCurTask;
 
-        t->unk4C = (t->unk48 - gViewRect[0]) << 16;
-        t->unk50 = (t->unk4A - gViewRect[2]) << 16;
+        t->posX = (t->unk48 - gViewRect[0]) << 16;
+        t->posY = (t->unk4A - gViewRect[2]) << 16;
         t->unk00 = (u32)TaskMoveRelativeToView;
         t->unk24 = 0;
     }
@@ -930,8 +930,8 @@ void sub_08073ce0(void)
     {
         struct Task *t = gCurTask;
 
-        t->unk4C = (t->unk48 - gViewRect[0]) << 16;
-        t->unk50 = (t->unk4A - gViewRect[2]) << 16;
+        t->posX = (t->unk48 - gViewRect[0]) << 16;
+        t->posY = (t->unk4A - gViewRect[2]) << 16;
         t->unk00 = (u32)TaskMoveRelativeToView;
         t->unk24 = 0;
     }
@@ -980,8 +980,8 @@ void sub_08073e0c(void)
     {
         struct Task *t = gCurTask;
 
-        t->unk4C = (t->unk48 - gViewRect[0]) << 16;
-        t->unk50 = (t->unk4A - gViewRect[2]) << 16;
+        t->posX = (t->unk48 - gViewRect[0]) << 16;
+        t->posY = (t->unk4A - gViewRect[2]) << 16;
         t->unk00 = (u32)TaskMoveRelativeToView;
     }
     {
@@ -1067,8 +1067,8 @@ void sub_08073f18(void)
 
         t->unk18 = 0x100000;
         t->unk28 = -0xD00;
-        t->unk4C = 0x8A0000;
-        t->unk50 = -0x100000;
+        t->posX = 0x8A0000;
+        t->posY = -0x100000;
         t->unk54 = -0x10000;
         t->unk58 = 0x8000;
     }
@@ -1100,7 +1100,7 @@ void sub_08073f18(void)
         t->unk28 = 0;
         t->unk38 = gUnk_08754560;
         t->unk40 = 0xF010;
-        t->unk43 = 1;
+        t->facing = 1;
     }
     {
         struct Task *t = gCurTask;
@@ -1118,7 +1118,7 @@ void sub_08073f18(void)
 
 void sub_0807409c(void)
 {
-    if ((gCurTask->unk50 >> 16) < -32)
+    if ((gCurTask->posY >> 16) < -32)
         TaskStop();
 }
 
@@ -1130,8 +1130,8 @@ void sub_080740bc(void)
     {
         struct Task *t = gCurTask;
 
-        t->unk4C = 0;
-        t->unk50 = -0x220000;
+        t->posX = 0;
+        t->posY = -0x220000;
         t->unk00 = (u32)TaskMoveRelativeToView;
     }
     sub_08071898();
@@ -1293,7 +1293,7 @@ void sub_080740bc(void)
     }
     TaskYieldTrampoline(8);
     RequestScreenShake(4);
-    gCurTask->unk43 = 1;
+    gCurTask->facing = 1;
     RequestScreenShake(4);
     StopSfxOnPlayer(gUnk_02004B4C, gUnk_02005584);
     PlaySfx(219);
@@ -1344,7 +1344,7 @@ void sub_08074420(void)
         r = PlaySfx(218);
         gUnk_02004B4C = r;
     }
-    gCurTask->unk43 = 1;
+    gCurTask->facing = 1;
     sub_0807186c(1, 11, 4, 0x400);
     {
         struct Task *t = gCurTask;
@@ -1402,8 +1402,8 @@ void sub_08074588(void)
     {
         struct Task *t = gCurTask;
 
-        t->unk4C = gTasks[gLocalPlayer].unk48 << 16;
-        t->unk50 = gTasks[gLocalPlayer].unk4A << 16;
+        t->posX = gTasks[gLocalPlayer].unk48 << 16;
+        t->posY = gTasks[gLocalPlayer].unk4A << 16;
         TaskYieldTrampoline(1);
     }
 }
@@ -1661,7 +1661,7 @@ loop:
     if (gViewRect[2] <= 7)
     {
         TaskStop();
-        gCurTask->unk50 = 0x620000;
+        gCurTask->posY = 0x620000;
     }
     else
     {
@@ -1681,8 +1681,8 @@ void sub_08074b60(void)
     {
         struct Task *t = gCurTask;
 
-        t->unk4C = t->unk48 << 16;
-        t->unk50 = 0x700000;
+        t->posX = t->unk48 << 16;
+        t->posY = 0x700000;
     }
     TaskStop();
     gCurTask->unk58 = 0x10000;

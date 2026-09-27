@@ -96,16 +96,16 @@ void Task_IntroStoryPicture(void)
 
     gCurTask->unk00 = (u32)TaskMove;
     gCurTask->unk0C = (u32)TaskDrawScreen;
-    gCurTask->unk42 = 8;
+    gCurTask->layer = 8;
     gCurTask->unk38 = gUnk_087555D8;
     gCurTask->unk40 = 0x800;
-    gCurTask->unk4C = 0x300000;
-    gCurTask->unk50 = 0x780000;
+    gCurTask->posX = 0x300000;
+    gCurTask->posY = 0x780000;
     h = gUnk_087555FC[gCurTask->unk18];
     RequestCopy(2, (u32)h->unk08, (u32)gObjPalette, h->unk00 << 5);
     LZ77UnCompVram(h->unk0C, gUnk_02020000);
     RequestCopy(3, (u32)gUnk_02020000, (u32)gObjVram, h->unk02 << 5);
-    gCurTask->unk3C = gCurTask->unk18;
+    gCurTask->frame = gCurTask->unk18;
     TaskYieldTrampoline(gUnk_08731CE6[gCurTask->unk18] + 67);
     TaskExitTrampoline();
 }

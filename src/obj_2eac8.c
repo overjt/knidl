@@ -61,9 +61,9 @@ s32 sub_0802eac8(s32 x, s32 y, s32 a)
     {
         t = &gTasks[id];
         t->unk48 = x;
-        t->unk4C = t->unk48 << 16;
+        t->posX = t->unk48 << 16;
         t->unk4A = y - 28;
-        t->unk50 = t->unk4A << 16;
+        t->posY = t->unk4A << 16;
         t->unk54 = x;
         t->unk58 = y;
         t->unk20 = 1;
@@ -81,11 +81,11 @@ void sub_0802eb28(void)
     t->unk00 = (u32)TaskUpdatePixelPos;
     t->unk0C = (u32)DoorObjectDraw;
     t->unk38 = gUnk_087558BC;
-    t->unk42 = 15;
+    t->layer = 15;
     u = gCurTask;
     u->unk40 = 0x8800;
     u->unk28 = -1;
-    u->unk3C = 0;
+    u->frame = 0;
     u->unk04 = (u32)sub_0802eba4;
     for (;;)
     {
@@ -124,9 +124,9 @@ s32 sub_0802ec1c(s32 x, s32 y, s32 a)
     {
         t = &gTasks[id];
         t->unk48 = x;
-        t->unk4C = t->unk48 << 16;
+        t->posX = t->unk48 << 16;
         t->unk4A = y - 28;
-        t->unk50 = t->unk4A << 16;
+        t->posY = t->unk4A << 16;
         t->unk54 = x;
         t->unk58 = y;
         t->unk20 = 2;
@@ -144,13 +144,13 @@ void sub_0802ec7c(void)
     t->unk00 = (u32)TaskUpdatePixelPos;
     t->unk0C = (u32)sub_0802f718;
     t->unk38 = gUnk_087558C0;
-    t->unk42 = 15;
+    t->layer = 15;
     u = gCurTask;
     u->unk40 = 0x8800;
     u->unk2C = -1;
     u->unk34 = (s32)gUnk_087558DC;
     u->unk28 = 0;
-    u->unk3C = 0;
+    u->frame = 0;
     u->unk04 = (u32)sub_0802ed20;
     for (;;)
     {
@@ -196,8 +196,8 @@ s32 sub_0802ed94(s32 x, s32 y, s32 a)
         t = &gTasks[id];
         t->unk48 = x;
         t->unk4A = y;
-        t->unk4C = t->unk48 << 16;
-        t->unk50 = t->unk4A << 16;
+        t->posX = t->unk48 << 16;
+        t->posY = t->unk4A << 16;
         t->unk18 = a;
     }
     return id;
@@ -214,11 +214,11 @@ void sub_0802ede4(void)
     t->unk00 = (u32)TaskUpdatePixelPos;
     t->unk0C = (u32)TaskDrawWorld;
     t->unk38 = gUnk_087558E8;
-    t->unk3C = 0;
-    t->unk42 = 14;
+    t->frame = 0;
+    t->layer = 14;
     u = gCurTask;
     u->unk40 = 0x8800;
-    u->unk12 = 4;
+    u->taskClass = 4;
     v = gCurTask;
     v->unk28 = -1;
     v->unk04 = (u32)sub_0802ee88;
@@ -287,9 +287,9 @@ s32 sub_0802ef90(s32 x, s32 y, s32 a, s32 b)
         t = &gTasks[id];
         t->unk48 = x + 26;
         t->unk4A = y;
-        t->unk4C = t->unk48 << 16;
-        t->unk50 = t->unk4A << 16;
-        t->unk42 = a;
+        t->posX = t->unk48 << 16;
+        t->posY = t->unk4A << 16;
+        t->layer = a;
         t->unk3E = b;
     }
     return id;
@@ -306,13 +306,13 @@ void sub_0802eff8(void)
     t->unk40 = 0x8800;
     for (;;)
     {
-        gCurTask->unk3C = 0;
+        gCurTask->frame = 0;
         TaskYieldTrampoline(6);
-        gCurTask->unk3C++;
+        gCurTask->frame++;
         TaskYieldTrampoline(6);
-        gCurTask->unk3C++;
+        gCurTask->frame++;
         TaskYieldTrampoline(6);
-        gCurTask->unk3C++;
+        gCurTask->frame++;
         TaskYieldTrampoline(6);
     }
 }
@@ -327,9 +327,9 @@ s32 sub_0802f05c(s32 x, s32 y, s32 a, s32 b)
     {
         t = &gTasks[id];
         t->unk48 = x;
-        t->unk4C = t->unk48 << 16;
+        t->posX = t->unk48 << 16;
         t->unk4A = y - 25;
-        t->unk50 = t->unk4A << 16;
+        t->posY = t->unk4A << 16;
         t->unk54 = x;
         t->unk58 = y;
         t->unk1C = a;
@@ -347,7 +347,7 @@ void sub_0802f0cc(void)
     t = gCurTask;
     t->unk00 = (u32)TaskUpdatePixelPos;
     t->unk38 = gUnk_087558FC;
-    t->unk42 = 15;
+    t->layer = 15;
     u = gCurTask;
     u->unk40 = 0x8800;
     if (u->unk1C == 0)
@@ -362,31 +362,31 @@ void sub_0802f110(void)
     gCurTask->unk0C = (u32)DoorObjectDraw;
     for (;;)
     {
-        gCurTask->unk3C = 0;
+        gCurTask->frame = 0;
         TaskYieldTrampoline(64);
-        gCurTask->unk3C++;
+        gCurTask->frame++;
         TaskYieldTrampoline(2);
-        gCurTask->unk3C++;
+        gCurTask->frame++;
         TaskYieldTrampoline(1);
-        gCurTask->unk3C++;
+        gCurTask->frame++;
         TaskYieldTrampoline(1);
-        gCurTask->unk3C++;
+        gCurTask->frame++;
         TaskYieldTrampoline(1);
-        gCurTask->unk3C++;
+        gCurTask->frame++;
         TaskYieldTrampoline(1);
-        gCurTask->unk3C++;
+        gCurTask->frame++;
         TaskYieldTrampoline(1);
-        gCurTask->unk3C++;
+        gCurTask->frame++;
         TaskYieldTrampoline(1);
-        gCurTask->unk3C++;
+        gCurTask->frame++;
         TaskYieldTrampoline(1);
-        gCurTask->unk3C++;
+        gCurTask->frame++;
         TaskYieldTrampoline(1);
-        gCurTask->unk3C++;
+        gCurTask->frame++;
         TaskYieldTrampoline(1);
-        gCurTask->unk3C++;
+        gCurTask->frame++;
         TaskYieldTrampoline(1);
-        gCurTask->unk3C++;
+        gCurTask->frame++;
         TaskYieldTrampoline(1);
     }
 }
@@ -397,7 +397,7 @@ void sub_0802f1dc(void)
 
     t = gCurTask;
     t->unk0C = (u32)sub_0802ff70;
-    t->unk3C = 0;
+    t->frame = 0;
     TaskSleepForever();
 }
 
@@ -411,9 +411,9 @@ s32 sub_0802f1fc(s32 x, s32 y, s32 a, s32 b)
     {
         t = &gTasks[id];
         t->unk48 = x;
-        t->unk4C = t->unk48 << 16;
+        t->posX = t->unk48 << 16;
         t->unk4A = y - 25;
-        t->unk50 = t->unk4A << 16;
+        t->posY = t->unk4A << 16;
         t->unk54 = x;
         t->unk58 = y;
         t->unk1C = a;
@@ -431,7 +431,7 @@ void sub_0802f26c(void)
     t = gCurTask;
     t->unk00 = (u32)TaskUpdatePixelPos;
     t->unk38 = gUnk_08755930;
-    t->unk42 = 15;
+    t->layer = 15;
     u = gCurTask;
     u->unk40 = 0x8800;
     if (u->unk1C == 0)
@@ -446,13 +446,13 @@ void sub_0802f2b0(void)
     gCurTask->unk0C = (u32)DoorObjectDraw;
     for (;;)
     {
-        gCurTask->unk3C = 0;
+        gCurTask->frame = 0;
         TaskYieldTrampoline(62);
-        gCurTask->unk3C++;
+        gCurTask->frame++;
         TaskYieldTrampoline(6);
-        gCurTask->unk3C--;
+        gCurTask->frame--;
         TaskYieldTrampoline(6);
-        gCurTask->unk3C = 2;
+        gCurTask->frame = 2;
         TaskYieldTrampoline(30);
     }
 }
@@ -463,7 +463,7 @@ void sub_0802f2fc(void)
 
     t = gCurTask;
     t->unk0C = (u32)sub_0802ff70;
-    t->unk3C = 0;
+    t->frame = 0;
     TaskSleepForever();
 }
 
@@ -477,9 +477,9 @@ s32 sub_0802f31c(s32 x, s32 y, s32 a, s32 b)
     {
         t = &gTasks[id];
         t->unk48 = x;
-        t->unk4C = t->unk48 << 16;
+        t->posX = t->unk48 << 16;
         t->unk4A = y - 25;
-        t->unk50 = t->unk4A << 16;
+        t->posY = t->unk4A << 16;
         t->unk54 = x;
         t->unk58 = y;
         t->unk1C = a;
@@ -497,7 +497,7 @@ void sub_0802f38c(void)
     t = gCurTask;
     t->unk00 = (u32)TaskUpdatePixelPos;
     t->unk38 = gUnk_0875593C;
-    t->unk42 = 15;
+    t->layer = 15;
     u = gCurTask;
     u->unk40 = 0x8800;
     if (u->unk1C == 0)
@@ -512,9 +512,9 @@ void sub_0802f3d0(void)
     gCurTask->unk0C = (u32)DoorObjectDraw;
     for (;;)
     {
-        gCurTask->unk3C = 0;
+        gCurTask->frame = 0;
         TaskYieldTrampoline(20);
-        gCurTask->unk3C++;
+        gCurTask->frame++;
         TaskYieldTrampoline(20);
     }
 }
@@ -525,7 +525,7 @@ void sub_0802f400(void)
 
     t = gCurTask;
     t->unk0C = (u32)sub_0802ff70;
-    t->unk3C = 0;
+    t->frame = 0;
     TaskSleepForever();
 }
 
@@ -539,9 +539,9 @@ s32 sub_0802f420(s32 x, s32 y, s32 a)
     {
         t = &gTasks[id];
         t->unk48 = x;
-        t->unk4C = t->unk48 << 16;
+        t->posX = t->unk48 << 16;
         t->unk4A = y - 28;
-        t->unk50 = t->unk4A << 16;
+        t->posY = t->unk4A << 16;
         t->unk54 = x;
         t->unk58 = y;
         t->unk20 = 1;
@@ -559,10 +559,10 @@ void sub_0802f480(void)
     t->unk00 = (u32)TaskUpdatePixelPos;
     t->unk0C = (u32)DoorObjectDraw;
     t->unk38 = gUnk_08755944;
-    t->unk42 = 15;
+    t->layer = 15;
     u = gCurTask;
     u->unk40 = 0x8800;
-    u->unk3C = 0;
+    u->frame = 0;
     TaskYieldTrampoline(20);
     TaskSleepForever();
 }
@@ -577,9 +577,9 @@ s32 sub_0802f4c8(s32 x, s32 y, s32 a, s32 b)
     {
         t = &gTasks[id];
         t->unk48 = x;
-        t->unk4C = t->unk48 << 16;
+        t->posX = t->unk48 << 16;
         t->unk4A = y - 24;
-        t->unk50 = t->unk4A << 16;
+        t->posY = t->unk4A << 16;
         t->unk54 = x;
         t->unk58 = y;
         t->unk18 = a;
@@ -600,9 +600,9 @@ s32 sub_0802f53c(s32 x, s32 y, s32 a, s32 b)
     {
         t = &gTasks[id];
         t->unk48 = x;
-        t->unk4C = t->unk48 << 16;
+        t->posX = t->unk48 << 16;
         t->unk4A = y - 24;
-        t->unk50 = t->unk4A << 16;
+        t->posY = t->unk4A << 16;
         t->unk54 = x;
         t->unk58 = y;
         t->unk18 = a;
@@ -623,9 +623,9 @@ s32 sub_0802f5b4(s32 x, s32 y, s32 a, s32 b)
     {
         t = &gTasks[id];
         t->unk48 = x;
-        t->unk4C = t->unk48 << 16;
+        t->posX = t->unk48 << 16;
         t->unk4A = y - 24;
-        t->unk50 = t->unk4A << 16;
+        t->posY = t->unk4A << 16;
         t->unk54 = x;
         t->unk58 = y;
         t->unk18 = a;

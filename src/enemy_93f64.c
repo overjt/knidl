@@ -192,12 +192,12 @@ void sub_08093f64(void)
     t = gCurTask;
     t->unk00 = (u32)ActorMove;
     t->unk0C = (u32)ActorDrawWorldInViewOrDestroy;
-    t->unk42 = 9;
+    t->layer = 9;
     zero = 0;
     gCurTask->unk38 = gUnk_087536FC;
     TaskFaceLikeParent();
     u = gCurTask;
-    u->unk28 = gUnk_087441BC[u->unk73] * (s8)u->unk43 + 384;
+    u->unk28 = gUnk_087441BC[u->unk73] * (s8)u->facing + 384;
     u->unk2C = zero;
     u->unk30 = 384;
     u->unk34 = 2;
@@ -282,7 +282,7 @@ void sub_08094144(void)
     t->unk34--;
     if (t->unk34 == 0) {
         t->unk34 = 2;
-        t->unk3C ^= 1;
+        t->frame ^= 1;
     }
 }
 
@@ -306,7 +306,7 @@ void sub_080941ac(void)
     t = gCurTask;
     t->unk00 = (u32)ActorMove;
     t->unk0C = (u32)sub_08065438;
-    t->unk42 = 11;
+    t->layer = 11;
     gCurTask->unk38 = gUnk_08752F74;
     sub_08066088(0);
     gUnk_02007D00[8]++;
@@ -386,7 +386,7 @@ void sub_08094358(void)
     t = gCurTask;
     if (t->unk14 == 10) {
         if (t->unk2C == 0 && t->unk58 < 0) {
-            v = t->unk3C;
+            v = t->frame;
             if (v >= 4 && v <= 9) {
                 ActorSetAttackBox(gUnk_08744A20);
                 sub_08063a00(gUnk_08744A04);
@@ -411,7 +411,7 @@ void sub_08094358(void)
             }
         } else {
             u = gCurTask;
-            v = u->unk3C;
+            v = u->frame;
             if (v >= 20 && v <= 27) {
                 ActorSetAttackBox(gUnk_08744AE4);
                 sub_08063a00(gUnk_08744B00);
@@ -424,7 +424,7 @@ void sub_08094358(void)
             }
         }
     } else {
-        v = t->unk3C;
+        v = t->frame;
         if (v >= 4 && v <= 9) {
             ActorSetAttackBox(gUnk_087449E8);
             sub_08063a00(gUnk_08744A04);
@@ -545,7 +545,7 @@ void sub_08094758(void)
         return;
     TaskStopX();
     v = gCurTask;
-    v->unk4C = v->unk2C << 16;
+    v->posX = v->unk2C << 16;
     if (RandomRange(4) == 0)
         goto quiet;
     ActorSetState(4);
@@ -644,7 +644,7 @@ void sub_08094930(void)
     }
     TaskFaceNearestPlayer();
     t = gCurTask;
-    t->unk30 = t->unk43;
+    t->unk30 = t->facing;
     gUnk_02007D00[1] = PlaySfx(0x209);
     if (gCurTask->unk8C->unk2C != gUnk_08744384)
         gCurTask->unk28 = sub_080956c8(gUnk_08744384);
@@ -676,7 +676,7 @@ void sub_080949e0(void)
     if (t->unk54 == 0)
         return;
     sub_08094bbc();
-    if (gCurTask->unk43 != TaskGetFacingTowardNearestPlayer())
+    if (gCurTask->facing != TaskGetFacingTowardNearestPlayer())
         goto other;
     if (gCurTask->unk2C != 0)
         return;
@@ -704,11 +704,11 @@ other:
         p = &w->unk4A;
         switch (GetCollisionTileAtPixel(a, ((s8 *)w->unk8C->unk50)[3] + *p)) {
         case 2:
-            if (gCurTask->unk43 == -1)
+            if (gCurTask->facing == -1)
                 return;
             break;
         case 3:
-            if (gCurTask->unk43 == 1)
+            if (gCurTask->facing == 1)
                 return;
             break;
         }
@@ -791,19 +791,19 @@ s32 sub_08094d10(void)
         if ((u8)(gTerrainResult[4] - 1) <= 3) {
             switch (gTerrainResult[4]) {
             case 3:
-                if (t->unk43 == 1)
+                if (t->facing == 1)
                     return 1;
                 return 2;
             case 1:
-                if (t->unk43 == 1)
+                if (t->facing == 1)
                     return 3;
                 return 4;
             case 4:
-                if (t->unk43 == 1)
+                if (t->facing == 1)
                     return 2;
                 return 1;
             case 2:
-                if (t->unk43 == 1)
+                if (t->facing == 1)
                     return 4;
                 return 3;
             }
@@ -821,7 +821,7 @@ void sub_08094da4(void)
     gCurTask->unk15 = 5;
     t = gCurTask;
     t->unk30 = 60;
-    t->unk2C = t->unk43;
+    t->unk2C = t->facing;
     t->unk1C = 0;
     gCurTask->unk28 = sub_080956c8(gUnk_087443D0);
     PlaySfx(0x20A);
@@ -884,7 +884,7 @@ s32 sub_08094e88(void)
     v = gCurTask;
     v->unk1C++;
     if (v->unk1C == 8) {
-        if (v->unk2C == v->unk43)
+        if (v->unk2C == v->facing)
             sub_0806cc90(1, 1, -4, 12);
         else
             sub_0806cc90(1, 1, -4, 12);
@@ -904,7 +904,7 @@ void sub_08094f28(void)
     v = sub_080956c8(gUnk_087443BC);
     t = gCurTask;
     t->unk28 = v;
-    t->unk2C = t->unk43;
+    t->unk2C = t->facing;
     t->unk1C = zero;
     PlaySfx(0x20A);
     TaskSleepForever();
@@ -939,7 +939,7 @@ void sub_08094fb0(void)
     v = sub_080956c8(gUnk_087443D0);
     t = gCurTask;
     t->unk28 = v;
-    t->unk2C = t->unk43;
+    t->unk2C = t->facing;
     t->unk30 = zero;
     t->unk1C = zero;
     PlaySfx(0x20A);
@@ -955,7 +955,7 @@ void sub_08094fb0(void)
     gCurTask->unk28 = sub_080956c8(gUnk_087443D0);
     StopSfxOnPlayer(gUnk_02007D00[1], 0x209);
     u = gCurTask;
-    u->unk2C = u->unk43;
+    u->unk2C = u->facing;
     u->unk30 = zero;
     u->unk1C = zero;
     PlaySfx(0x20A);
@@ -1052,9 +1052,9 @@ void sub_08095254(void)
     gCurTask->unk15 = 9;
     t = gCurTask;
     if (t->unk54 > 0)
-        t->unk43 = 1;
+        t->facing = 1;
     else
-        t->unk43 = -1;
+        t->facing = -1;
     PlaySfx(0x1F7);
     RequestScreenShake(2);
     TaskSetMotionXFacing(-0x10000, 0x5A5A5A5A);
@@ -1262,7 +1262,7 @@ s32 sub_080956e4(void)
         a->unk2C = 0;
         goto tail;
     }
-    if (gCurTask->unk43 == 1) {
+    if (gCurTask->facing == 1) {
         if ((c->unk00 & 1) != 0)
             TaskSetFrameFlip(c->unk00);
         else

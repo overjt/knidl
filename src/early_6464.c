@@ -17,7 +17,7 @@
  *   RandomSpread  base + ((rand(256) * amount) >> 8) * scale   (u16)
  *   RandomSpreadFacing  same, signed by the running task's facing byte
  *                 (gCurTask->b43 == 1 -> +, else -).
- *   TaskFreezeOrThawOthers  push/pop the per-task "phase skip mask" (Task.b13, see
+ *   TaskFreezeOrThawOthers  push/pop the per-task "phase skip mask" (Task.skipMask, see
  *                 pending/early_4fec.c): val==0 pops the snapshot from
  *                 gTaskSkipMaskStack[--gTaskSkipMaskDepth], val!=0 pushes one and then
  *                 ORs val into every ALLOCATED task's mask (free slots, i.e.
@@ -87,9 +87,9 @@ struct Task {
     /* 0x04 */ void (*f04)(void);
     /* 0x08 */ void (*f08)(void);
     /* 0x0C */ void (*f0C)(void);
-    /* 0x10 */ s16 h10;
-    /* 0x12 */ u8  b12;
-    /* 0x13 */ u8  b13;
+    /* 0x10 */ s16 sleepFrames;
+    /* 0x12 */ u8  taskClass;
+    /* 0x13 */ u8  skipMask;
     /* 0x14 */ u8  pad14[0x7C];
 };
 
@@ -176,34 +176,34 @@ void TaskFreezeOrThawOthers(u16 val, s32 idx)
     u16 i;
 
     if (val == 0) {
-        save = gTasks[idx].b13;
+        save = gTasks[idx].skipMask;
         for (i = 0; i < 64; i++)
-            gTasks[i].b13 = gTaskSkipMaskStack[gTaskSkipMaskDepth][i];
-        gTasks[idx].b13 = save;
+            gTasks[i].skipMask = gTaskSkipMaskStack[gTaskSkipMaskDepth][i];
+        gTasks[idx].skipMask = save;
         gTaskSkipMaskDepth--;
     } else {
         gTaskSkipMaskDepth++;
         for (i = 0; i < 64; i++)
-            gTaskSkipMaskStack[gTaskSkipMaskDepth][i] = gTasks[i].b13;
-        save = gTasks[idx].b13;
+            gTaskSkipMaskStack[gTaskSkipMaskDepth][i] = gTasks[i].skipMask;
+        save = gTasks[idx].skipMask;
         for (i = 0; i < 64; i++) {
             if ((s16)gTaskSlotTypes[i] != -1)
-                gTasks[i].b13 = val | gTasks[i].b13;
+                gTasks[i].skipMask = val | gTasks[i].skipMask;
             else
-                gTasks[i].b13 = 0;
+                gTasks[i].skipMask = 0;
         }
-        gTasks[idx].b13 = save;
+        gTasks[idx].skipMask = save;
     }
 }
 
 void TaskRestoreSkipMask(u32 idx)
 {
-    gTasks[idx].b13 = gTaskSkipMaskStack[gTaskSkipMaskDepth][idx];
+    gTasks[idx].skipMask = gTaskSkipMaskStack[gTaskSkipMaskDepth][idx];
 }
 
 void TaskSaveSkipMask(u32 idx)
 {
-    gTaskSkipMaskStack[gTaskSkipMaskDepth][idx] = gTasks[idx].b13;
+    gTaskSkipMaskStack[gTaskSkipMaskDepth][idx] = gTasks[idx].skipMask;
 }
 
 void InitLinkDriver(void)

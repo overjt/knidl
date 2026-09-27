@@ -253,7 +253,7 @@ void sub_0808e54c(void)
     TaskStop();
     while (1)
     {
-        gCurTask->unk3C = 4;
+        gCurTask->frame = 4;
         TaskYieldTrampoline(1);
         gCurTask->unk58 = 0xFFFFF000;
         TaskYieldTrampoline(4);
@@ -297,7 +297,7 @@ void sub_0808e610(void)
     gCurTask->unk30 = 0;
     TaskStop();
     t = gCurTask;
-    switch (t->unk43)
+    switch (t->facing)
     {
     case 1:
         t->unk34 = 0;
@@ -454,7 +454,7 @@ void sub_0808e8d4(void)
     t = gCurTask;
     t->unk00 = (u32)TaskMove;
     t->unk0C = (u32)ActorDrawWorldInViewOrDestroy;
-    t->unk42 = 11;
+    t->layer = 11;
     u = gCurTask;
     u->unk38 = gUnk_087524A4;
     CallTableEntry(u->unk73, 3, gUnk_08743224);
@@ -469,10 +469,10 @@ void sub_0808e914(void)
     switch (t->unk73)
     {
     case 0:
-        t->unk43 = 1;
+        t->facing = 1;
         break;
     case 1:
-        t->unk43 = 255;
+        t->facing = 255;
         break;
     }
     ActorSetState(0);
@@ -523,37 +523,37 @@ void sub_0808ea00(void)
     {
         TaskSetFrame(7);
         TaskYieldTrampoline(2);
-        gCurTask->unk3C += 1;
+        gCurTask->frame += 1;
         TaskYieldTrampoline(2);
-        gCurTask->unk3C += 1;
-        TaskYieldTrampoline(2);
-        TaskTurnAround();
-        gCurTask->unk3C -= 1;
-        TaskYieldTrampoline(2);
-        gCurTask->unk3C += 2;
-        TaskYieldTrampoline(2);
-        gCurTask->unk3C += 1;
-        TaskYieldTrampoline(2);
-        gCurTask->unk3C += 1;
+        gCurTask->frame += 1;
         TaskYieldTrampoline(2);
         TaskTurnAround();
-        gCurTask->unk3C += 1;
+        gCurTask->frame -= 1;
         TaskYieldTrampoline(2);
-        gCurTask->unk3C += 1;
+        gCurTask->frame += 2;
         TaskYieldTrampoline(2);
-        gCurTask->unk3C += 1;
+        gCurTask->frame += 1;
         TaskYieldTrampoline(2);
-        TaskTurnAround();
-        gCurTask->unk3C -= 1;
-        TaskYieldTrampoline(2);
-        gCurTask->unk3C -= 1;
+        gCurTask->frame += 1;
         TaskYieldTrampoline(2);
         TaskTurnAround();
-        gCurTask->unk3C -= 1;
+        gCurTask->frame += 1;
         TaskYieldTrampoline(2);
-        gCurTask->unk3C -= 1;
+        gCurTask->frame += 1;
         TaskYieldTrampoline(2);
-        gCurTask->unk3C -= 1;
+        gCurTask->frame += 1;
+        TaskYieldTrampoline(2);
+        TaskTurnAround();
+        gCurTask->frame -= 1;
+        TaskYieldTrampoline(2);
+        gCurTask->frame -= 1;
+        TaskYieldTrampoline(2);
+        TaskTurnAround();
+        gCurTask->frame -= 1;
+        TaskYieldTrampoline(2);
+        gCurTask->frame -= 1;
+        TaskYieldTrampoline(2);
+        gCurTask->frame -= 1;
         TaskYieldTrampoline(2);
     }
 }
@@ -967,7 +967,7 @@ void sub_0808f224(void)
     t = gCurTask;
     t->unk00 = (u32)TaskMove;
     t->unk0C = (u32)ActorDrawWorldInViewOrDestroy;
-    t->unk42 = 11;
+    t->layer = 11;
     u = gCurTask;
     u->unk38 = gUnk_087524E4;
     u->unk8C->unk1A = 4;
@@ -993,7 +993,7 @@ void sub_0808f2c4(void)
 {
     gCurTask->unk04 = (u32)sub_0808f2fc;
     ActorSetState(0);
-    gCurTask->unk43 = 255;
+    gCurTask->facing = 255;
     CallTableEntry(gCurTask->unk14, 3, gUnk_087432B4);
 }
 

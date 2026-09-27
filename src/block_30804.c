@@ -128,7 +128,7 @@ u16 TaskBreakBlocksAt(struct HitBoxSet *p, s32 x, s32 y, s32 e)
     s32 dir;
 
     if (p->unk0 & 0x8000)
-        dir = gCurTask->unk43;
+        dir = gCurTask->facing;
     else
         dir = 1;
     return BreakBlocksInHitBoxes(p, x, y, dir, e);
@@ -139,7 +139,7 @@ u16 TaskBreakBlocks(struct HitBoxSet *p, s32 e)
     s32 dir;
 
     if (p->unk0 & 0x8000)
-        dir = gCurTask->unk43;
+        dir = gCurTask->facing;
     else
         dir = 1;
     return BreakBlocksInHitBoxes(p, gCurTask->unk48, gCurTask->unk4A, dir, e);
@@ -150,7 +150,7 @@ u16 sub_08030898(struct HitBoxSet *p, s32 e)
     s32 dir;
 
     if (p->unk0 & 0x8000)
-        dir = gCurTask->unk43;
+        dir = gCurTask->facing;
     else
         dir = 1;
     return sub_08030b14(p, gCurTask->unk48, gCurTask->unk4A, dir, e);
@@ -161,7 +161,7 @@ u16 TaskBreakBlocksNoPlayer(struct HitBoxSet *p)
     s32 dir;
 
     if (p->unk0 & 0x8000)
-        dir = gCurTask->unk43;
+        dir = gCurTask->facing;
     else
         dir = 1;
     return BreakBlocksInHitBoxes(p, gCurTask->unk48, gCurTask->unk4A, dir, -1);
@@ -172,7 +172,7 @@ u16 sub_0803093c(struct HitBoxSet *p, s32 x, s32 y)
     s32 dir;
 
     if (p->unk0 & 0x8000)
-        dir = gCurTask->unk43;
+        dir = gCurTask->facing;
     else
         dir = 1;
     return BreakBlocksInHitBoxes(p, x, y, dir, -1);
@@ -355,7 +355,7 @@ u16 sub_08030db8(struct HitBoxSet *p)
     s32 dir;
 
     if (p->unk0 & 0x8000)
-        dir = gCurTask->unk43;
+        dir = gCurTask->facing;
     else
         dir = 1;
     return sub_08030e00(p, gCurTask->unk48, gCurTask->unk4A, dir);

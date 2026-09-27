@@ -41,7 +41,7 @@ void TaskDrawWorldTilesLoaded(void);
 void TaskSetMotionXFacing(s32 a, s32 b);
 void TaskSetFrame(s32 a);
 u16 RandomSpread(s32 base, u8 scale, u8 amount);   /* base + ((rand(256) * amount) >> 8) * scale */
-s16 RandomSpreadFacing(s32 base, u8 scale, u8 amount);   /* the same, negated when Task.unk43 != 1 */
+s16 RandomSpreadFacing(s32 base, u8 scale, u8 amount);   /* the same, negated when Task.facing != 1 */
 void RegisterCollider(u8 a, s16 x, s16 y, void *p);   /* M11's caller spelling */
 u16 TaskBreakBlocksAt(struct HitBoxSet *p, s32 x, s32 y, s32 e);
 void sub_0805707c(void);
@@ -54,7 +54,7 @@ void sub_08056dd4(void)
     gCurTask->unk00 = (u32)TaskMove;
     gCurTask->unk0C = (u32)TaskDrawWorld;
     gCurTask->unk04 = (u32)sub_0805707c;
-    gCurTask->unk42 = 5;
+    gCurTask->layer = 5;
     t = gCurTask;
     t->unk38 = gUnk_08751CA4;
     t->unk40 = (((struct Task *)t->unk8C)->unk40 + 0x1800) | 12;
@@ -62,66 +62,66 @@ void sub_08056dd4(void)
     switch (t->unk18 & 15)
     {
     case 0:
-        t->unk3C = 0xFFFF;
+        t->frame = 0xFFFF;
         TaskYieldTrampoline(12);
         do
         {
-            gCurTask->unk4C = (RandomSpreadFacing(16, 1, 32) + ((struct Task *)gCurTask->unk8C)->unk48) << 16;
-            gCurTask->unk50 = (RandomSpread(-8, 1, 8) + ((struct Task *)gCurTask->unk8C)->unk4A) << 16;
+            gCurTask->posX = (RandomSpreadFacing(16, 1, 32) + ((struct Task *)gCurTask->unk8C)->unk48) << 16;
+            gCurTask->posY = (RandomSpread(-8, 1, 8) + ((struct Task *)gCurTask->unk8C)->unk4A) << 16;
             TaskSetMotionXFacing(0x18000, -0x800);
             gCurTask->unk58 = 0;
             gCurTask->unk60 = -0x2000;
-            gCurTask->unk3C = 0;
+            gCurTask->frame = 0;
             TaskYieldTrampoline(3);
-            gCurTask->unk3C++;
+            gCurTask->frame++;
             TaskYieldTrampoline(3);
-            gCurTask->unk3C++;
+            gCurTask->frame++;
             TaskYieldTrampoline(3);
-            gCurTask->unk3C++;
+            gCurTask->frame++;
             TaskYieldTrampoline(1);
-            gCurTask->unk3C++;
+            gCurTask->frame++;
             TaskYieldTrampoline(2);
-            gCurTask->unk3C++;
+            gCurTask->frame++;
             TaskYieldTrampoline(4);
         } while (gCurTask->unk28 == 0);
         break;
     case 1:
-        t->unk3C = 0xFFFF;
+        t->frame = 0xFFFF;
         TaskYieldTrampoline(8);
         do
         {
-            gCurTask->unk4C = (RandomSpreadFacing(32, 1, 8) + ((struct Task *)gCurTask->unk8C)->unk48) << 16;
-            gCurTask->unk50 = (RandomSpread(0, 1, 8) + ((struct Task *)gCurTask->unk8C)->unk4A) << 16;
+            gCurTask->posX = (RandomSpreadFacing(32, 1, 8) + ((struct Task *)gCurTask->unk8C)->unk48) << 16;
+            gCurTask->posY = (RandomSpread(0, 1, 8) + ((struct Task *)gCurTask->unk8C)->unk4A) << 16;
             TaskSetMotionXFacing(0x10000, 0x4000);
             gCurTask->unk58 = 0;
             gCurTask->unk60 = (RandomRange(32) - 16) << 8;
-            gCurTask->unk3C = 0;
+            gCurTask->frame = 0;
             TaskYieldTrampoline(3);
-            gCurTask->unk3C++;
+            gCurTask->frame++;
             TaskYieldTrampoline(3);
-            gCurTask->unk3C++;
+            gCurTask->frame++;
             TaskYieldTrampoline(3);
-            gCurTask->unk3C++;
+            gCurTask->frame++;
             TaskYieldTrampoline(1);
         } while (gCurTask->unk28 == 0);
         break;
     case 2:
-        t->unk3C = 0xFFFF;
+        t->frame = 0xFFFF;
         TaskYieldTrampoline(4);
         do
         {
-            gCurTask->unk4C = (RandomSpreadFacing(20, 1, 12) + ((struct Task *)gCurTask->unk8C)->unk48) << 16;
-            gCurTask->unk50 = (RandomSpread(0, 1, 8) + ((struct Task *)gCurTask->unk8C)->unk4A) << 16;
+            gCurTask->posX = (RandomSpreadFacing(20, 1, 12) + ((struct Task *)gCurTask->unk8C)->unk48) << 16;
+            gCurTask->posY = (RandomSpread(0, 1, 8) + ((struct Task *)gCurTask->unk8C)->unk4A) << 16;
             TaskSetMotionXFacing(0x8000, 0x2000);
             gCurTask->unk58 = 0;
             gCurTask->unk60 = (RandomRange(32) - 16) << 8;
-            gCurTask->unk3C = 0;
+            gCurTask->frame = 0;
             TaskYieldTrampoline(3);
-            gCurTask->unk3C++;
+            gCurTask->frame++;
             TaskYieldTrampoline(3);
-            gCurTask->unk3C++;
+            gCurTask->frame++;
             TaskYieldTrampoline(3);
-            gCurTask->unk3C++;
+            gCurTask->frame++;
             TaskYieldTrampoline(1);
         } while (gCurTask->unk28 == 0);
         break;
@@ -134,7 +134,7 @@ void sub_0805707c(void)
     {
         struct Task *t = gCurTask;
 
-        if (t->unk28 == 0 && (t->unk88->unk04 != 13 || t->unk43 != ((struct Task *)t->unk8C)->unk43))
+        if (t->unk28 == 0 && (t->unk88->unk04 != 13 || t->facing != ((struct Task *)t->unk8C)->facing))
             t->unk28 = 1;
     }
     {
@@ -155,7 +155,7 @@ void sub_0805710c(void)
 
     gCurTask->unk00 = (u32)TaskMoveRelativeToParent;
     gCurTask->unk04 = (u32)sub_080573a4;
-    gCurTask->unk42 = 8;
+    gCurTask->layer = 8;
     t = gCurTask;
     t->unk38 = gUnk_08751CBC;
     t->unk40 = (((struct Task *)t->unk8C)->unk40 + 0x800) | 12;
@@ -167,49 +167,49 @@ void sub_0805710c(void)
     y = gUnk_0873BA8C[gCurTask->unk28][1];
     for (;;)
     {
-        gCurTask->unk4C = RandomSpreadFacing(x[0], x[1], x[2]) << 16;
-        gCurTask->unk50 = RandomSpreadFacing(y[0], y[1], y[2]) << 16;
+        gCurTask->posX = RandomSpreadFacing(x[0], x[1], x[2]) << 16;
+        gCurTask->posY = RandomSpreadFacing(y[0], y[1], y[2]) << 16;
         TaskSetFrame(0);
         TaskYieldTrampoline(2);
-        gCurTask->unk4C = RandomSpreadFacing(x[0], x[1], x[2]) << 16;
-        gCurTask->unk50 = RandomSpreadFacing(y[0], y[1], y[2]) << 16;
-        gCurTask->unk3C += 2;
+        gCurTask->posX = RandomSpreadFacing(x[0], x[1], x[2]) << 16;
+        gCurTask->posY = RandomSpreadFacing(y[0], y[1], y[2]) << 16;
+        gCurTask->frame += 2;
         TaskYieldTrampoline(2);
-        gCurTask->unk4C = RandomSpreadFacing(x[0], x[1], x[2]) << 16;
-        gCurTask->unk50 = RandomSpreadFacing(y[0], y[1], y[2]) << 16;
-        gCurTask->unk3C += 2;
+        gCurTask->posX = RandomSpreadFacing(x[0], x[1], x[2]) << 16;
+        gCurTask->posY = RandomSpreadFacing(y[0], y[1], y[2]) << 16;
+        gCurTask->frame += 2;
         TaskYieldTrampoline(2);
-        gCurTask->unk4C = RandomSpreadFacing(x[0], x[1], x[2]) << 16;
-        gCurTask->unk50 = RandomSpreadFacing(y[0], y[1], y[2]) << 16;
+        gCurTask->posX = RandomSpreadFacing(x[0], x[1], x[2]) << 16;
+        gCurTask->posY = RandomSpreadFacing(y[0], y[1], y[2]) << 16;
         TaskSetFrame(8);
         TaskYieldTrampoline(2);
-        gCurTask->unk4C = RandomSpreadFacing(x[0], x[1], x[2]) << 16;
-        gCurTask->unk50 = RandomSpreadFacing(y[0], y[1], y[2]) << 16;
-        gCurTask->unk3C += 2;
+        gCurTask->posX = RandomSpreadFacing(x[0], x[1], x[2]) << 16;
+        gCurTask->posY = RandomSpreadFacing(y[0], y[1], y[2]) << 16;
+        gCurTask->frame += 2;
         TaskYieldTrampoline(2);
-        gCurTask->unk4C = RandomSpreadFacing(x[0], x[1], x[2]) << 16;
-        gCurTask->unk50 = RandomSpreadFacing(y[0], y[1], y[2]) << 16;
+        gCurTask->posX = RandomSpreadFacing(x[0], x[1], x[2]) << 16;
+        gCurTask->posY = RandomSpreadFacing(y[0], y[1], y[2]) << 16;
         TaskSetFrame(1);
         TaskYieldTrampoline(2);
-        gCurTask->unk4C = RandomSpreadFacing(x[0], x[1], x[2]) << 16;
-        gCurTask->unk50 = RandomSpreadFacing(y[0], y[1], y[2]) << 16;
-        gCurTask->unk3C += 2;
+        gCurTask->posX = RandomSpreadFacing(x[0], x[1], x[2]) << 16;
+        gCurTask->posY = RandomSpreadFacing(y[0], y[1], y[2]) << 16;
+        gCurTask->frame += 2;
         TaskYieldTrampoline(2);
-        gCurTask->unk4C = RandomSpreadFacing(x[0], x[1], x[2]) << 16;
-        gCurTask->unk50 = RandomSpreadFacing(y[0], y[1], y[2]) << 16;
-        gCurTask->unk3C += 2;
+        gCurTask->posX = RandomSpreadFacing(x[0], x[1], x[2]) << 16;
+        gCurTask->posY = RandomSpreadFacing(y[0], y[1], y[2]) << 16;
+        gCurTask->frame += 2;
         TaskYieldTrampoline(2);
-        gCurTask->unk4C = RandomSpreadFacing(x[0], x[1], x[2]) << 16;
-        gCurTask->unk50 = RandomSpreadFacing(y[0], y[1], y[2]) << 16;
-        gCurTask->unk3C += 2;
+        gCurTask->posX = RandomSpreadFacing(x[0], x[1], x[2]) << 16;
+        gCurTask->posY = RandomSpreadFacing(y[0], y[1], y[2]) << 16;
+        gCurTask->frame += 2;
         TaskYieldTrampoline(2);
-        gCurTask->unk4C = RandomSpreadFacing(x[0], x[1], x[2]) << 16;
-        gCurTask->unk50 = RandomSpreadFacing(y[0], y[1], y[2]) << 16;
-        gCurTask->unk3C += 2;
+        gCurTask->posX = RandomSpreadFacing(x[0], x[1], x[2]) << 16;
+        gCurTask->posY = RandomSpreadFacing(y[0], y[1], y[2]) << 16;
+        gCurTask->frame += 2;
         TaskYieldTrampoline(2);
-        gCurTask->unk4C = RandomSpreadFacing(x[0], x[1], x[2]) << 16;
-        gCurTask->unk50 = RandomSpreadFacing(y[0], y[1], y[2]) << 16;
-        gCurTask->unk3C += 2;
+        gCurTask->posX = RandomSpreadFacing(x[0], x[1], x[2]) << 16;
+        gCurTask->posY = RandomSpreadFacing(y[0], y[1], y[2]) << 16;
+        gCurTask->frame += 2;
         TaskYieldTrampoline(2);
     }
 }
@@ -237,11 +237,11 @@ void sub_08057430(void)
 
     gCurTask->unk00 = (u32)TaskMoveRelativeToParent;
     gCurTask->unk0C = (u32)TaskDrawWorld;
-    gCurTask->unk42 = 5;
+    gCurTask->layer = 5;
     gCurTask->unk38 = gUnk_08751CEC;
-    gCurTask->unk4C = RandomSpreadFacing(-32, 1, 16) << 16;
-    gCurTask->unk50 = RandomSpread(-4, 1, 16) << 16;
-    gCurTask->unk3C = 0;
+    gCurTask->posX = RandomSpreadFacing(-32, 1, 16) << 16;
+    gCurTask->posY = RandomSpread(-4, 1, 16) << 16;
+    gCurTask->frame = 0;
     TaskYieldTrampoline(3);
     TaskExitTrampoline();
 }

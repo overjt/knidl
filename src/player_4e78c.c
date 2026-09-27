@@ -74,26 +74,26 @@ void sub_0804e78c(void)
         PlayerSetMotionYPreset(47);
         TaskSetFrame(0xCCA);
         TaskYieldTrampoline(6);
-        gCurTask->unk3C++;
+        gCurTask->frame++;
         TaskYieldTrampoline(2);
     }
     TaskSetFrame(0xCCC);
     TaskYieldTrampoline(2);
     for (gCurTask->unk6C = 0; (s16)gCurTask->unk6C <= 4; gCurTask->unk6C++)
     {
-        gCurTask->unk3C++;
+        gCurTask->frame++;
         TaskYieldTrampoline(2);
     }
-    gCurTask->unk3C = 0xCDA;
+    gCurTask->frame = 0xCDA;
     TaskYieldTrampoline(2);
     for (gCurTask->unk6C = 0; (s16)gCurTask->unk6C <= 5; gCurTask->unk6C++)
     {
-        gCurTask->unk3C++;
+        gCurTask->frame++;
         TaskYieldTrampoline(2);
     }
     {
         struct Task *t = gCurTask;
-        t->unk6E = t->unk43;
+        t->unk6E = t->facing;
         t->unk70++;
         CreatePlayerEffect(t->unk88->unk00, 44, 0x100);
     }
@@ -221,20 +221,20 @@ void sub_0804eb60(void)
             t = gCurTask;
             t->unk54 = -t->unk54;
             t->unk5C = -t->unk5C;
-            t->unk43 = -t->unk43;
+            t->facing = -t->facing;
             gCurTask->unk24 = 0;
             TaskSetEntry(sub_0804e600, gCurTaskIdx);
             break;
         }
         if (gLatchedHeldKeys[gCurTask->unk88->unk00] & 16)
         {
-            if (gCurTask->unk43 == -1)
+            if (gCurTask->facing == -1)
             {
                 gCurTask->unk73 = 3;
                 break;
             }
         }
-        else if ((gLatchedHeldKeys[gCurTask->unk88->unk00] & 32) && gCurTask->unk43 == 1)
+        else if ((gLatchedHeldKeys[gCurTask->unk88->unk00] & 32) && gCurTask->facing == 1)
         {
             gCurTask->unk73 = 3;
             break;
@@ -280,7 +280,7 @@ void sub_0804ecec(void)
             t = gCurTask;
             t->unk54 = -t->unk54;
             t->unk5C = -t->unk5C;
-            t->unk43 = -t->unk43;
+            t->facing = -t->facing;
             gCurTask->unk73 = 2;
             break;
         }
@@ -288,13 +288,13 @@ void sub_0804ecec(void)
         {
             if (gLatchedHeldKeys[gCurTask->unk88->unk00] & 48)
             {
-                if (gCurTask->unk43 == 1)
+                if (gCurTask->facing == 1)
                 {
                     if (gLatchedHeldKeys[gCurTask->unk88->unk00] & 32)
-                        gCurTask->unk43 = -1;
+                        gCurTask->facing = -1;
                 }
                 else if (gLatchedHeldKeys[gCurTask->unk88->unk00] & 16)
-                    gCurTask->unk43 = 1;
+                    gCurTask->facing = 1;
                 PlayerUpdateFlip();
                 gCurTask->unk5C = 0;
                 gCurTask->unk73 = 2;

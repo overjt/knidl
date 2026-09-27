@@ -19,7 +19,7 @@
 
 /* The 6-byte directional record ActorGetTerrainBox fills on the stack: three raw
    bytes copied from Actor.unk50 plus three that are negated when the task
-   faces left (Task.unk43 == -1). */
+   faces left (Task.facing == -1). */
 struct InputState
 {
     /*0x00*/ u8 unk00;
@@ -490,8 +490,8 @@ u32 sub_080699a8(void)
             d = y - u->unk48;
             u->unk48 = y + d;
             u->unk4A = u->unk24;
-            u->unk4C = u->unk48 << 16;
-            u->unk50 = u->unk4A << 16;
+            u->posX = u->unk48 << 16;
+            u->posY = u->unk4A << 16;
             return 1;
         }
     }
@@ -508,7 +508,7 @@ void ActorGetTerrainBox(struct InputState *out)
     out->unk01 = ((struct InputState *)a->unk50)->unk01;
     out->unk02 = ((struct InputState *)a->unk50)->unk02;
     out->unk03 = ((struct InputState *)a->unk50)->unk03;
-    if (t->unk43 == -1)
+    if (t->facing == -1)
     {
         out->unk00 = -((struct InputState *)a->unk50)->unk00;
         out->unk04 = -((struct InputState *)a->unk50)->unk05;
@@ -579,7 +579,7 @@ u32 sub_08069bbc(void)
 
     if (gTaskSlotTypes[gCurTaskIdx] == -1)
         return 0;
-    gCurTask->unk43 = 1;
+    gCurTask->facing = 1;
     r = 0;
     switch ((s8)gCurTask->unk7C)
     {
@@ -719,9 +719,9 @@ void ActorStartHitStun(void)
     a = t->unk8C;
     TaskSetSkipMask(7, gCurTaskIdx);
     u = gCurTask;
-    u->unk4C = u->unk48 << 16;
-    u->unk50 = u->unk4A << 16;
-    a->unk14 = u->unk3C;
+    u->posX = u->unk48 << 16;
+    u->posY = u->unk4A << 16;
+    a->unk14 = u->frame;
     TaskSetFrame(0);
     gCurTask->unk08 = (u32)sub_08069fb0;
     a->unk01 = 11;
@@ -743,9 +743,9 @@ void ActorEndHitStun(void)
     TaskSetSkipMask(0, gCurTaskIdx);
     u = gCurTask;
     u->unk08 = 0;
-    u->unk48 = u->unk4C >> 16;
-    u->unk4A = u->unk50 >> 16;
-    u->unk3C = a->unk14;
+    u->unk48 = u->posX >> 16;
+    u->unk4A = u->posY >> 16;
+    u->frame = a->unk14;
     u->unk40 = (u->unk40 & 0xFFF) | u->unk8C->unk22;
 }
 
@@ -835,7 +835,7 @@ void ActorFaceHitter(void)
 
     t = gCurTask;
     if (t->unk72 == 1 || t->unk72 == 2)
-        gCurTask->unk43 = TaskGetFacingToward(t->unk7F);
+        gCurTask->facing = TaskGetFacingToward(t->unk7F);
 }
 
 s16 sub_0806a03c(void)

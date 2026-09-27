@@ -54,15 +54,15 @@ void sub_08049b48(void)
     case 0:
         TaskSetFrame(0xA0A);
         TaskYieldTrampoline(2);
-        gCurTask->unk3C++;
+        gCurTask->frame++;
         TaskYieldTrampoline(2);
-        gCurTask->unk3C++;
+        gCurTask->frame++;
         TaskYieldTrampoline(6);
-        gCurTask->unk3C--;
+        gCurTask->frame--;
         TaskYieldTrampoline(2);
         TaskSetFrame(0xA0D);
         TaskYieldTrampoline(1);
-        gCurTask->unk3C++;
+        gCurTask->frame++;
         TaskYieldTrampoline(1);
         gCurTask->unk73 = 1;
         /* fallthrough */
@@ -83,7 +83,7 @@ void sub_08049b48(void)
             TaskYieldTrampoline(2);
             gCurTask->unk6C = 0;
             do {
-                gCurTask->unk3C++;
+                gCurTask->frame++;
                 TaskYieldTrampoline(2);
             } while ((s16)++gCurTask->unk6C <= 14);
         }
@@ -91,7 +91,7 @@ void sub_08049b48(void)
         TaskSetFrame(0xA0E);
         TaskYieldTrampoline(3);
         PlayerStopSfx();
-        gCurTask->unk3C++;
+        gCurTask->frame++;
         TaskYieldTrampoline(3);
         gCurTask->unk73 = 3;
         break;
@@ -158,7 +158,7 @@ void sub_08049d94(void)
             TaskYieldTrampoline(1);
             gCurTask->unk6C = 0;
             do {
-                gCurTask->unk3C++;
+                gCurTask->frame++;
                 TaskYieldTrampoline(1);
             } while ((s16)++gCurTask->unk6C <= 6);
         }

@@ -56,7 +56,7 @@ void TaskFree(s32 id)
     gTaskSlotTypes[id] = 0xFFFF;
     gTaskResumeAddrs[id] = 0;
     t = &gTasks[id];
-    t->unk12 = -1;
+    t->taskClass = -1;
     t->unk00 = 0;
     t->unk04 = 0;
     t->unk08 = 0;
@@ -64,11 +64,11 @@ void TaskFree(s32 id)
     t->unk16 = 0;
     t->unk15 = 0;
     t->unk14 = 0;
-    t->unk13 = 0;
-    t->unk3C = -1;
-    t->unk42 = 0;
+    t->skipMask = 0;
+    t->frame = -1;
+    t->layer = 0;
     t->unk38 = 0;
-    t->unk43 = 0;
+    t->facing = 0;
     t->unk40 = 0;
     t->unk3E = 0;
     t->unk46 = -1;
@@ -81,8 +81,8 @@ void TaskFree(s32 id)
     t->unk20 = 0;
     t->unk1C = 0;
     t->unk18 = 0;
-    t->unk50 = 0;
-    t->unk4C = 0;
+    t->posY = 0;
+    t->posX = 0;
     t->unk4A = 0;
     t->unk48 = 0;
     t->unk60 = 0;
@@ -136,20 +136,20 @@ s32 TaskCreate(u32 type)
     gTaskCount++;
     gTaskSlotTypes[gTaskCursor] = type;
     t = &gTasks[gTaskCursor];
-    t->unk12 = gTaskTypes[type].unk00;
+    t->taskClass = gTaskTypes[type].taskClass;
     /* The task's 256-byte stack in EWRAM, spelled as the literal that
      * src/early_5d9c.c's TaskSetEntry uses: a CONST_INT operand that reload
      * materialises (the ROM's `ldr r7, =0x0203BFE0` in the dead `type`
      * register); `(u32)gUnk_0203BFE0` makes it a local pseudo instead
      * (lesson 3.486). */
     gTaskStackPtrs[gTaskCursor] = 0x0203BFE0 + (gTaskCursor << 8);
-    gTaskResumeAddrs[gTaskCursor] = gTaskTypes[type].unk04;
-    t->unk10 = 0;
-    t->unk13 = 0;
+    gTaskResumeAddrs[gTaskCursor] = gTaskTypes[type].entry;
+    t->sleepFrames = 0;
+    t->skipMask = 0;
     t->unk44 = gCurTaskIdx;
     if (gTaskRunPhase >= 0)
     {
-        cls = t->unk12;
+        cls = t->taskClass;
         gTaskClassLists[cls][gTaskClassListLen[cls]] = gTaskCursor;
         gTaskListRefs[gTaskCursor] = (cls << 8) | gTaskClassListLen[cls];
         gTaskClassListLen[cls]++;

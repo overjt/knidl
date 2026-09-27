@@ -45,7 +45,7 @@ extern u16 gTerrainTileRight;
 extern s16 gTerrainBoxLeft;           /* box left offset */
 extern struct Unk03005530 gTerrainProbeResult;
 extern s16 gTerrainProbeX;           /* probe x */
-extern u8 gTerrainFacing;            /* Task.unk43 */
+extern u8 gTerrainFacing;            /* Task.facing */
 extern s16 gTerrainProbeY;           /* probe y */
 extern u16 gUnk_03005574;           /* queried cell: byte 2 */
 extern u16 gTerrainTile;           /* queried cell: tile set */

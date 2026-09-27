@@ -292,7 +292,7 @@ void PlayerActionDuck(void)
             TaskYieldTrampoline(2);
             for (gCurTask->unk6C = 0; (s16)gCurTask->unk6C <= 2; gCurTask->unk6C++)
             {
-                gCurTask->unk3C++;
+                gCurTask->frame++;
                 TaskYieldTrampoline(2);
             }
         }
@@ -303,7 +303,7 @@ void PlayerActionDuck(void)
             TaskYieldTrampoline(6);
             for (gCurTask->unk6C = 0; (s16)gCurTask->unk6C <= 2; gCurTask->unk6C++)
             {
-                gCurTask->unk3C++;
+                gCurTask->frame++;
                 TaskYieldTrampoline(6);
             }
         }
@@ -316,7 +316,7 @@ void PlayerActionDuck(void)
 
 void PlayerActionDuckUpdate(void)
 {
-    s32 dir = gCurTask->unk43;
+    s32 dir = gCurTask->facing;
 
     PlayerFaceHeldDirection();
     while (sub_0803fe68() == 0 && PlayerCheckDropAbility() == 0)
@@ -341,7 +341,7 @@ void PlayerActionDuckUpdate(void)
                 t->unk7A = 0;
                 gCurTask->unk88->unk01 = 7;
                 gCurTask->unk84 = 0;
-                gCurTask->unk50 += 0x10000;
+                gCurTask->posY += 0x10000;
                 break;
             }
             t->unk28--;
@@ -349,7 +349,7 @@ void PlayerActionDuckUpdate(void)
         {
             struct Task *w = gCurTask;
 
-            if (w->unk88->unk4B != w->unk2C || dir != w->unk43)
+            if (w->unk88->unk4B != w->unk2C || dir != w->facing)
             {
                 if (gUnk_03001F30 == 0)
                     TaskSetEntry(PlayerActionDuck, gCurTaskIdx);
@@ -401,7 +401,7 @@ void PlayerActionSlide(void)
                 TaskYieldTrampoline(2);
                 for (gCurTask->unk6C = 0; (s16)gCurTask->unk6C <= 2; gCurTask->unk6C++)
                 {
-                    gCurTask->unk3C++;
+                    gCurTask->frame++;
                     TaskYieldTrampoline(2);
                 }
             }
@@ -416,7 +416,7 @@ void PlayerActionSlide(void)
             {
                 TaskSetFrame(gCurTask->unk46);
                 TaskYieldTrampoline(2);
-                gCurTask->unk3C++;
+                gCurTask->frame++;
                 TaskYieldTrampoline(2);
             }
         }

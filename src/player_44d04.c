@@ -15,7 +15,7 @@
  * through the 8-byte rows of gUnk_0873CCB4 (ground) or gUnk_0873CD04 /
  * gUnk_0873CD44 (air, two passes, counters Task.unk6C/unk6E) with
  * LoadPlayerHitBoxSet, with effects 31 and 28 and sounds 147/148; the air form
- * restores the facing Task.unk43 it saved in Task.unk34.  Its handler
+ * restores the facing Task.facing it saved in Task.unk34.  Its handler
  * sub_08045398 copies the collider row Task.unk2C of gUnk_0873BF3C
  * (ground) or gUnk_0873BF98/gUnk_0873BFD8 (air) with LoadPlayerBodyBoxRect and
  * registers it every frame, requests action 23 through PlayerHasCrossedWaterSurface and
@@ -69,7 +69,7 @@ void sub_08044d04(void)
         else
             t->unk30 = 0;
     }
-    gCurTask->unk34 = gCurTask->unk43;
+    gCurTask->unk34 = gCurTask->facing;
     gCurTask->unk80 = 4;
     if (gCurTask->unk7A & 1)
         gCurTask->unk73 = 0;
@@ -82,14 +82,14 @@ void sub_08044d04(void)
         if (gCurTask->unk30 == 0) {
             TaskSetFrame(0x4BA);
             TaskYieldTrampoline(1);
-            gCurTask->unk3C++;
+            gCurTask->frame++;
             TaskYieldTrampoline(1);
-            gCurTask->unk3C++;
+            gCurTask->frame++;
             TaskYieldTrampoline(1);
             CreatePlayerEffect(gCurTask->unk88->unk00, 31, 0);
-            gCurTask->unk3C++;
+            gCurTask->frame++;
             TaskYieldTrampoline(4);
-            gCurTask->unk3C++;
+            gCurTask->frame++;
             TaskYieldTrampoline(1);
             CreatePlayerEffect(gCurTask->unk88->unk00, 28, 3);
             PlaySfxIfLocalPlayer(147, gCurTask->unk88->unk00);
@@ -99,49 +99,49 @@ void sub_08044d04(void)
                 t->unk2C++;
                 LoadPlayerHitBoxSet(t->unk88->unk00, (s32)((u8 *)gUnk_0873CCB4 + t->unk2C * 8));
             }
-            gCurTask->unk3C++;
+            gCurTask->frame++;
             TaskYieldTrampoline(1);
             gCurTask->unk2C++;
             LoadPlayerHitBoxSet(gCurTask->unk88->unk00, (s32)((u8 *)gUnk_0873CCB4 + gCurTask->unk2C * 8));
-            gCurTask->unk3C++;
+            gCurTask->frame++;
             TaskYieldTrampoline(1);
-            gCurTask->unk3C++;
-            TaskYieldTrampoline(1);
-            gCurTask->unk2C++;
-            LoadPlayerHitBoxSet(gCurTask->unk88->unk00, (s32)((u8 *)gUnk_0873CCB4 + gCurTask->unk2C * 8));
-            gCurTask->unk3C++;
-            TaskYieldTrampoline(1);
-            gCurTask->unk3C++;
+            gCurTask->frame++;
             TaskYieldTrampoline(1);
             gCurTask->unk2C++;
             LoadPlayerHitBoxSet(gCurTask->unk88->unk00, (s32)((u8 *)gUnk_0873CCB4 + gCurTask->unk2C * 8));
-            gCurTask->unk3C++;
+            gCurTask->frame++;
             TaskYieldTrampoline(1);
-            gCurTask->unk3C++;
+            gCurTask->frame++;
             TaskYieldTrampoline(1);
             gCurTask->unk2C++;
             LoadPlayerHitBoxSet(gCurTask->unk88->unk00, (s32)((u8 *)gUnk_0873CCB4 + gCurTask->unk2C * 8));
-            gCurTask->unk3C++;
+            gCurTask->frame++;
+            TaskYieldTrampoline(1);
+            gCurTask->frame++;
+            TaskYieldTrampoline(1);
+            gCurTask->unk2C++;
+            LoadPlayerHitBoxSet(gCurTask->unk88->unk00, (s32)((u8 *)gUnk_0873CCB4 + gCurTask->unk2C * 8));
+            gCurTask->frame++;
             TaskYieldTrampoline(1);
             gCurTask->unk2C = -1;
             gCurTask->unk88->unk6C = 0;
-            gCurTask->unk3C++;
+            gCurTask->frame++;
             TaskYieldTrampoline(2);
-            gCurTask->unk3C++;
+            gCurTask->frame++;
             TaskYieldTrampoline(2);
-            gCurTask->unk3C++;
+            gCurTask->frame++;
             TaskYieldTrampoline(2);
         } else {
             TaskSetFrame(0x4CA);
             TaskYieldTrampoline(2);
-            gCurTask->unk3C++;
+            gCurTask->frame++;
             TaskYieldTrampoline(3);
-            gCurTask->unk3C++;
+            gCurTask->frame++;
             TaskYieldTrampoline(3);
             CreatePlayerEffect(gCurTask->unk88->unk00, 31, 0);
-            gCurTask->unk3C++;
+            gCurTask->frame++;
             TaskYieldTrampoline(4);
-            gCurTask->unk3C++;
+            gCurTask->frame++;
             TaskYieldTrampoline(2);
             CreatePlayerEffect(gCurTask->unk88->unk00, 28, 3);
             PlaySfxIfLocalPlayer(147, gCurTask->unk88->unk00);
@@ -151,38 +151,38 @@ void sub_08044d04(void)
                 t->unk2C++;
                 LoadPlayerHitBoxSet(t->unk88->unk00, (s32)((u8 *)gUnk_0873CCB4 + t->unk2C * 8));
             }
-            gCurTask->unk3C++;
+            gCurTask->frame++;
             TaskYieldTrampoline(2);
             gCurTask->unk2C++;
             LoadPlayerHitBoxSet(gCurTask->unk88->unk00, (s32)((u8 *)gUnk_0873CCB4 + gCurTask->unk2C * 8));
-            gCurTask->unk3C++;
+            gCurTask->frame++;
             TaskYieldTrampoline(1);
-            gCurTask->unk3C++;
-            TaskYieldTrampoline(1);
-            gCurTask->unk2C++;
-            LoadPlayerHitBoxSet(gCurTask->unk88->unk00, (s32)((u8 *)gUnk_0873CCB4 + gCurTask->unk2C * 8));
-            gCurTask->unk3C++;
-            TaskYieldTrampoline(1);
-            gCurTask->unk3C++;
+            gCurTask->frame++;
             TaskYieldTrampoline(1);
             gCurTask->unk2C++;
             LoadPlayerHitBoxSet(gCurTask->unk88->unk00, (s32)((u8 *)gUnk_0873CCB4 + gCurTask->unk2C * 8));
-            gCurTask->unk3C++;
+            gCurTask->frame++;
             TaskYieldTrampoline(1);
-            gCurTask->unk3C++;
+            gCurTask->frame++;
+            TaskYieldTrampoline(1);
+            gCurTask->unk2C++;
+            LoadPlayerHitBoxSet(gCurTask->unk88->unk00, (s32)((u8 *)gUnk_0873CCB4 + gCurTask->unk2C * 8));
+            gCurTask->frame++;
+            TaskYieldTrampoline(1);
+            gCurTask->frame++;
             TaskYieldTrampoline(2);
             gCurTask->unk2C++;
             LoadPlayerHitBoxSet(gCurTask->unk88->unk00, (s32)((u8 *)gUnk_0873CCB4 + gCurTask->unk2C * 8));
-            gCurTask->unk3C++;
+            gCurTask->frame++;
             TaskYieldTrampoline(2);
             gCurTask->unk2C++;
             gCurTask->unk88->unk6C = 0;
-            gCurTask->unk3C++;
+            gCurTask->frame++;
             TaskYieldTrampoline(3);
-            gCurTask->unk3C++;
+            gCurTask->frame++;
             TaskYieldTrampoline(3);
             gCurTask->unk2C = -1;
-            gCurTask->unk3C++;
+            gCurTask->frame++;
             TaskYieldTrampoline(3);
         }
         break;
@@ -204,13 +204,13 @@ void sub_08044d04(void)
                 for (gCurTask->unk6E = 0; gCurTask->unk6E <= 6; gCurTask->unk6E++) {
                     gCurTask->unk2C++;
                     LoadPlayerHitBoxSet(gCurTask->unk88->unk00, (s32)((u8 *)gUnk_0873CD04 + gCurTask->unk2C * 8));
-                    gCurTask->unk3C++;
+                    gCurTask->frame++;
                     TaskYieldTrampoline(1);
                 }
             }
             gCurTask->unk2C = -1;
             gCurTask->unk88->unk6C = 0;
-            gCurTask->unk43 = gCurTask->unk34;
+            gCurTask->facing = gCurTask->unk34;
             TaskSetFrame(0x4E2);
             TaskYieldTrampoline(1);
         } else {
@@ -227,13 +227,13 @@ void sub_08044d04(void)
                 for (gCurTask->unk6E = 0; gCurTask->unk6E <= 10; gCurTask->unk6E++) {
                     gCurTask->unk2C++;
                     LoadPlayerHitBoxSet(gCurTask->unk88->unk00, (s32)((u8 *)gUnk_0873CD44 + gCurTask->unk2C * 8));
-                    gCurTask->unk3C++;
+                    gCurTask->frame++;
                     TaskYieldTrampoline(1);
                 }
             }
             gCurTask->unk2C = -1;
             gCurTask->unk88->unk6C = 0;
-            gCurTask->unk43 = gCurTask->unk34;
+            gCurTask->facing = gCurTask->unk34;
             TaskSetFrame(0x4EF);
             TaskYieldTrampoline(1);
         }

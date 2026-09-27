@@ -9,7 +9,7 @@
  * over Task.unk73: state 0 winds up (animation 0x701, effect 6, sound
  * 154), state 1 installs the script gUnk_0873CB34 and the block hit-box
  * set gUnk_0873CDAC and spins in an endless yield loop, state 2 turns
- * round (it negates the facing Task.unk43) and goes back to state 1,
+ * round (it negates the facing Task.facing) and goes back to state 1,
  * state 3 finishes the move and state 4 bounces off (sound 153, the
  * screen shake RequestScreenShake(4), velocity preset 36).  Its handler
  * sub_0804676c is what leaves the spin: every frame of state 1 it
@@ -98,7 +98,7 @@ again:
             PlayerSetMotionXPreset(11, 45);
             gCurTask->unk6C = 0;
             do {
-                gCurTask->unk3C++;
+                gCurTask->frame++;
                 TaskYieldTrampoline(1);
             } while ((s16)++gCurTask->unk6C <= 7);
             PlayerStartSfx(154, gCurTask->unk88->unk00);
@@ -117,11 +117,11 @@ again:
                     CreatePlayerEffect(gCurTask->unk88->unk00, 34, 1);
                 TaskSetFrame(0x70A);
                 TaskYieldTrampoline(1);
-                gCurTask->unk3C++;
+                gCurTask->frame++;
                 TaskYieldTrampoline(1);
-                gCurTask->unk3C++;
+                gCurTask->frame++;
                 TaskYieldTrampoline(1);
-                gCurTask->unk3C++;
+                gCurTask->frame++;
                 TaskYieldTrampoline(1);
             }
         case 2:
@@ -132,29 +132,29 @@ again:
                 TaskSetFrame(0x70E);
                 TaskYieldTrampoline(4);
                 PlayerSetMotionXPreset(11, 47);
-                gCurTask->unk43 = -gCurTask->unk43;
-                gCurTask->unk3C++;
+                gCurTask->facing = -gCurTask->facing;
+                gCurTask->frame++;
                 TaskYieldTrampoline(3);
                 PlayerSetMotionXPreset(11, 48);
-                gCurTask->unk3C++;
+                gCurTask->frame++;
                 TaskYieldTrampoline(2);
                 PlayerSetMotionXPreset(11, 49);
-                gCurTask->unk3C++;
+                gCurTask->frame++;
                 TaskYieldTrampoline(3);
                 PlayerStopAxes(1);
             } else {
                 PlayerSetMotionXPreset(11, 50);
                 TaskSetFrame(0x70E);
                 TaskYieldTrampoline(4);
-                gCurTask->unk43 = -gCurTask->unk43;
-                gCurTask->unk3C++;
+                gCurTask->facing = -gCurTask->facing;
+                gCurTask->frame++;
                 TaskYieldTrampoline(3);
-                gCurTask->unk3C++;
+                gCurTask->frame++;
                 TaskYieldTrampoline(2);
-                gCurTask->unk3C++;
+                gCurTask->frame++;
                 TaskYieldTrampoline(3);
             }
-            gCurTask->unk3C++;
+            gCurTask->frame++;
             TaskYieldTrampoline(4);
             {
                 struct Task *u = gCurTask;
@@ -177,7 +177,7 @@ again:
             TaskYieldTrampoline(1);
             gCurTask->unk6C = 0;
             do {
-                gCurTask->unk3C++;
+                gCurTask->frame++;
                 TaskYieldTrampoline(1);
             } while ((s16)++gCurTask->unk6C <= 6);
             TaskSetFrame(0x701);
@@ -200,7 +200,7 @@ again:
                 TaskYieldTrampoline(1);
                 gCurTask->unk6C = 0;
                 do {
-                    gCurTask->unk3C++;
+                    gCurTask->frame++;
                     TaskYieldTrampoline(1);
                 } while ((s16)++gCurTask->unk6C <= 6);
             }
@@ -278,8 +278,8 @@ void sub_0804676c(void)
                         PlayerStopAxes(2);
                         {
                             struct Task *u = gCurTask;
-                            u->unk50 = ((u->unk4A & 0xFFF0) + 5) << 16;
-                            u->unk4A = u->unk50 >> 16;
+                            u->posY = ((u->unk4A & 0xFFF0) + 5) << 16;
+                            u->unk4A = u->posY >> 16;
                             u->unk28 = 1;
                         }
                     } else {
@@ -290,8 +290,8 @@ void sub_0804676c(void)
                 } else {
                     PlayerSetMotionXPreset(11, 46);
                 }
-                if ((gLatchedHeldKeys[gCurTask->unk88->unk00] & 16 && gCurTask->unk43 == -1)
-                    || (gLatchedHeldKeys[gCurTask->unk88->unk00] & 32 && gCurTask->unk43 == 1)) {
+                if ((gLatchedHeldKeys[gCurTask->unk88->unk00] & 16 && gCurTask->facing == -1)
+                    || (gLatchedHeldKeys[gCurTask->unk88->unk00] & 32 && gCurTask->facing == 1)) {
                     gCurTask->unk73 = 2;
                     TaskSetEntry(sub_08046330, gCurTaskIdx);
                 } else if (*(u16 *)&gTerrainResult != 0

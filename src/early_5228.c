@@ -69,25 +69,25 @@ struct Task {
     /* 0x04 */ void (*f04)(void);
     /* 0x08 */ void (*f08)(void);
     /* 0x0C */ void (*f0C)(void);
-    /* 0x10 */ s16 h10;
-    /* 0x12 */ u8  b12;
-    /* 0x13 */ u8  b13;
+    /* 0x10 */ s16 sleepFrames;
+    /* 0x12 */ u8  taskClass;
+    /* 0x13 */ u8  skipMask;
     /* 0x14 */ u8  b14;
     /* 0x15 */ u8  b15;
     /* 0x16 */ u16 h16;
     /* 0x18 */ u32 w18[8];
     /* 0x38 */ u32 w38;
-    /* 0x3C */ u16 h3C;
+    /* 0x3C */ u16 frame;
     /* 0x3E */ u16 h3E;
     /* 0x40 */ u16 h40;
-    /* 0x42 */ u8  b42;
-    /* 0x43 */ u8  b43;
+    /* 0x42 */ u8  layer;
+    /* 0x43 */ u8  facing;
     /* 0x44 */ u16 h44;
     /* 0x46 */ u16 h46;
     /* 0x48 */ u16 h48;
     /* 0x4A */ u16 h4A;
-    /* 0x4C */ u32 w4C;
-    /* 0x50 */ u32 w50;
+    /* 0x4C */ u32 posX;
+    /* 0x50 */ u32 posY;
     /* 0x54 */ u32 w54;
     /* 0x58 */ u32 w58;
     /* 0x5C */ u32 w5C;
@@ -158,7 +158,7 @@ void RunTasks(void)
         gTaskClassPassStart[i] = gTaskClassPassEnd[i] = 0;
 
     for (i = 0; i <= 63; i++) {
-        s32 t = (s8)gTasks[i].b12;
+        s32 t = (s8)gTasks[i].taskClass;
         if (t >= 0) {
             gTaskListRefs[i] = (t << 8) | gTaskClassPassEnd[t];
             gTaskClassLists[t][gTaskClassPassEnd[t]++] = i;
@@ -177,17 +177,17 @@ void RunTasks(void)
                     if (gTaskClassLists[i][j] != 0xFF) {
                         gCurTaskIdx = gTaskClassLists[i][j];
                         gCurTask = &gTasks[gCurTaskIdx];
-                        if ((s8)gCurTask->b12 >= 0) {
+                        if ((s8)gCurTask->taskClass >= 0) {
                             gTaskRunPhase = 1;
-                            if ((gCurTask->b13 & 1) == 0) {
+                            if ((gCurTask->skipMask & 1) == 0) {
                                 if (gTaskResumeAddrs[gCurTaskIdx] != 0) {
-                                    if (--gCurTask->h10 <= 0) {
+                                    if (--gCurTask->sleepFrames <= 0) {
                                         gTaskSavedR0 = -1;
                                         TaskSwitchTrampoline(gCurTaskIdx,
                                                              gTaskResumeAddrs[gCurTaskIdx],
                                                              gTaskStackPtrs[gCurTaskIdx]);
                                         if (*(vs32 *)&gTaskSavedR0 != -1) {
-                                            gCurTask->h10 = *(vs32 *)&gTaskSavedR0;
+                                            gCurTask->sleepFrames = *(vs32 *)&gTaskSavedR0;
                                             gTaskResumeAddrs[gCurTaskIdx] = gTaskSavedLr;
                                             gTaskStackPtrs[gCurTaskIdx] = gTaskSavedSp;
                                         }
@@ -195,12 +195,12 @@ void RunTasks(void)
                                 }
                             }
                             gTaskRunPhase = 2;
-                            if ((gCurTask->b13 & 2) == 0) {
+                            if ((gCurTask->skipMask & 2) == 0) {
                                 if (gCurTask->f00 != 0)
                                     gCurTask->f00();
                             }
                             gTaskRunPhase = 3;
-                            if ((gCurTask->b13 & 4) == 0) {
+                            if ((gCurTask->skipMask & 4) == 0) {
                                 if (gCurTask->f04 != 0)
                                     gCurTask->f04();
                             }
@@ -228,8 +228,8 @@ void RunTasks(void)
                 if (gTaskClassLists[i][j] != 0xFF) {
                     gCurTaskIdx = gTaskClassLists[i][j];
                     gCurTask = &gTasks[gCurTaskIdx];
-                    if ((s8)gCurTask->b12 >= 0) {
-                        if ((gCurTask->b13 & 8) == 0) {
+                    if ((s8)gCurTask->taskClass >= 0) {
+                        if ((gCurTask->skipMask & 8) == 0) {
                             if (gCurTask->f08 != 0)
                                 gCurTask->f08();
                         }
@@ -250,8 +250,8 @@ void RunTasks(void)
                 } else {
                     gCurTaskIdx = gTaskClassLists[i][j];
                     gCurTask = &gTasks[gCurTaskIdx];
-                    if ((s8)gCurTask->b12 >= 0) {
-                        if ((gCurTask->b13 & 0x10) == 0) {
+                    if ((s8)gCurTask->taskClass >= 0) {
+                        if ((gCurTask->skipMask & 0x10) == 0) {
                             if (gCurTask->f0C != 0)
                                 gCurTask->f0C();
                         }

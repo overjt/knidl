@@ -84,7 +84,7 @@ void sub_080474e8(void)
             CreatePlayerEffect(gCurTask->unk88->unk00, 28, 3);
         gCurTask->unk6C = 0;
         do {
-            gCurTask->unk3C++;
+            gCurTask->frame++;
             TaskYieldTrampoline(1);
         } while ((s16)++gCurTask->unk6C <= 4);
         CreatePlayerEffect(gCurTask->unk88->unk00, 36, 0);
@@ -94,32 +94,32 @@ void sub_080474e8(void)
         do {
             TaskSetFrame(0x8D8);
             TaskYieldTrampoline(2);
-            gCurTask->unk3C++;
+            gCurTask->frame++;
             TaskYieldTrampoline(2);
         } while ((s16)++gCurTask->unk6C <= 2);
         TaskSetFrame(0x8DA);
         TaskYieldTrampoline(2);
-        gCurTask->unk3C++;
+        gCurTask->frame++;
         TaskYieldTrampoline(2);
-        gCurTask->unk3C++;
+        gCurTask->frame++;
         TaskYieldTrampoline(1);
-        gCurTask->unk3C++;
+        gCurTask->frame++;
         TaskYieldTrampoline(1);
-        gCurTask->unk3C++;
+        gCurTask->frame++;
     } else {
         TaskSetFrame(0x8DF);
         TaskYieldTrampoline(4);
         if (gCurTask->unk7A & 1)
             CreatePlayerEffect(gCurTask->unk88->unk00, 28, 3);
-        gCurTask->unk3C++;
+        gCurTask->frame++;
         TaskYieldTrampoline(2);
-        gCurTask->unk3C++;
+        gCurTask->frame++;
         TaskYieldTrampoline(2);
         TaskSetFrame(0x8D5);
         TaskYieldTrampoline(2);
-        gCurTask->unk3C++;
+        gCurTask->frame++;
         TaskYieldTrampoline(2);
-        gCurTask->unk3C++;
+        gCurTask->frame++;
         TaskYieldTrampoline(2);
         CreatePlayerEffect(gCurTask->unk88->unk00, 36, 0);
         CreatePlayerEffect(gCurTask->unk88->unk00, 36, 1);
@@ -128,18 +128,18 @@ void sub_080474e8(void)
         do {
             TaskSetFrame(0x8D8);
             TaskYieldTrampoline(2);
-            gCurTask->unk3C++;
+            gCurTask->frame++;
             TaskYieldTrampoline(2);
         } while ((s16)++gCurTask->unk6C <= 2);
         TaskSetFrame(0x8DA);
         TaskYieldTrampoline(2);
-        gCurTask->unk3C++;
+        gCurTask->frame++;
         TaskYieldTrampoline(2);
         TaskSetFrame(0x8E2);
         TaskYieldTrampoline(2);
-        gCurTask->unk3C++;
+        gCurTask->frame++;
         TaskYieldTrampoline(2);
-        gCurTask->unk3C++;
+        gCurTask->frame++;
         TaskYieldTrampoline(1);
     }
     gCurTask->unk28++;
@@ -179,19 +179,19 @@ void sub_08047844(void)
     PlayerSetMotionXPreset(0, 72);
     TaskSetFrame(0x8E5);
     TaskYieldTrampoline(16);
-    gCurTask->unk3C++;
+    gCurTask->frame++;
     TaskYieldTrampoline(4);
-    gCurTask->unk3C--;
+    gCurTask->frame--;
     TaskYieldTrampoline(4);
-    gCurTask->unk3C++;
+    gCurTask->frame++;
     TaskYieldTrampoline(4);
-    gCurTask->unk3C--;
+    gCurTask->frame--;
     TaskYieldTrampoline(16);
     TaskSetFrame(0x8EF);
     TaskYieldTrampoline(2);
     TaskSetFrame(0x8E6);
     TaskYieldTrampoline(4);
-    gCurTask->unk3C--;
+    gCurTask->frame--;
     TaskYieldTrampoline(8);
     TaskSetFrame(0x8EF);
     TaskYieldTrampoline(4);
@@ -200,15 +200,15 @@ void sub_08047844(void)
     PlaySfxIfLocalPlayer(180, gCurTask->unk88->unk00);
     TaskSetFrame(0x8F0);
     TaskYieldTrampoline(4);
-    gCurTask->unk3C++;
+    gCurTask->frame++;
     TaskYieldTrampoline(4);
-    gCurTask->unk3C++;
+    gCurTask->frame++;
     TaskYieldTrampoline(4);
     TaskSetFrame(0x8E7);
     TaskYieldTrampoline(6);
-    gCurTask->unk3C++;
+    gCurTask->frame++;
     TaskYieldTrampoline(6);
-    gCurTask->unk3C++;
+    gCurTask->frame++;
     TaskYieldTrampoline(6);
     CreatePlayerEffect(gCurTask->unk88->unk00, 38, 0);
     TaskSetFrame(0x8EA);
@@ -217,43 +217,43 @@ void sub_08047844(void)
     do {
         TaskSetFrame(0x8E9);
         TaskYieldTrampoline(12);
-        gCurTask->unk3C--;
+        gCurTask->frame--;
         TaskYieldTrampoline(12);
-        gCurTask->unk3C--;
+        gCurTask->frame--;
         TaskYieldTrampoline(12);
-        gCurTask->unk3C++;
+        gCurTask->frame++;
         TaskYieldTrampoline(10);
         PlaySfxIfLocalPlayer(180, gCurTask->unk88->unk00);
         TaskYieldTrampoline(2);
-        gCurTask->unk3C++;
+        gCurTask->frame++;
         TaskYieldTrampoline(12);
         CreatePlayerEffect(gCurTask->unk88->unk00, 38, (s16)gCurTask->unk6C + 1);
-        gCurTask->unk3C++;
+        gCurTask->frame++;
         TaskYieldTrampoline(12);
     } while ((s16)++gCurTask->unk6C <= 1);
     PlaySfxIfLocalPlayer(274, gCurTask->unk88->unk00);
     TaskSetFrame(0x8E9);
     TaskYieldTrampoline(2);
-    gCurTask->unk3C--;
+    gCurTask->frame--;
     TaskYieldTrampoline(2);
-    gCurTask->unk3C--;
+    gCurTask->frame--;
     TaskYieldTrampoline(2);
     TaskSetFrame(0x8EB);
     TaskYieldTrampoline(4);
     CreatePlayerEffect(gCurTask->unk88->unk00, 38, 3);
-    gCurTask->unk3C++;
+    gCurTask->frame++;
     TaskYieldTrampoline(4);
-    gCurTask->unk3C++;
+    gCurTask->frame++;
     TaskYieldTrampoline(16);
-    gCurTask->unk3C++;
+    gCurTask->frame++;
     TaskYieldTrampoline(4);
-    gCurTask->unk3C--;
+    gCurTask->frame--;
     TaskYieldTrampoline(4);
-    gCurTask->unk3C++;
+    gCurTask->frame++;
     TaskYieldTrampoline(4);
     gCurTask->unk88->unk42 &= 0xFFFD;
     SetPlayerAbility(0, -1, gCurTask->unk88->unk00);
-    gCurTask->unk3C--;
+    gCurTask->frame--;
     TaskYieldTrampoline(32);
     TaskSetFrame(0x8F6);
     TaskYieldTrampoline(6);
@@ -264,17 +264,17 @@ void sub_08047844(void)
     }
     TaskSetFrame(244);
     TaskYieldTrampoline(2);
-    gCurTask->unk3C++;
+    gCurTask->frame++;
     TaskYieldTrampoline(2);
-    gCurTask->unk3C++;
+    gCurTask->frame++;
     TaskYieldTrampoline(2);
-    gCurTask->unk3C++;
+    gCurTask->frame++;
     TaskYieldTrampoline(2);
-    gCurTask->unk3C++;
+    gCurTask->frame++;
     TaskYieldTrampoline(2);
-    gCurTask->unk3C++;
+    gCurTask->frame++;
     TaskYieldTrampoline(2);
-    gCurTask->unk3C++;
+    gCurTask->frame++;
     TaskYieldTrampoline(2);
     gCurTask->unk28++;
     TaskSleepForever();
@@ -378,7 +378,7 @@ void sub_08047e74(void)
         /* fallthrough */
     case 0:
     case 2:
-        gCurTask->unk3C = e[gCurTask->unk28];
+        gCurTask->frame = e[gCurTask->unk28];
         if (gCurTask->unk2C >= 0) {
             if (gCurTask->unk28 != 0) {
                 LoadPlayerBodyBoxRect(gCurTask->unk88->unk00,
