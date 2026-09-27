@@ -592,13 +592,13 @@ landed the last three as plain pin-free C (`src/player_18e14.c`,
 * **Called from** M14 x21, M18 x10, M13 x8, M12 x7, M11 x6.
 * **Known RAM cells touched** BLDALPHA hi/lo shadows, BG3HOFS/BG3VOFS shadows (16.16, read as `vs32` and shifted right 16 for the camera), BLDCNT hi/lo shadows.
 
-### M06 `0x0801A8C8-0x08021B17` - the box-vs-terrain collision engine and the actor-vs-collider hit tests - **landed (#84) except one function**
+### M06 `0x0801A8C8-0x08021B17` - the box-vs-terrain collision engine and the actor-vs-collider hit tests - **landed (#84 and the final campaign)**
 
 The range is decompiled and carved out of the split asm, so it now appears in
 `module-map.csv` as `c_code` rows instead of one clusterable module; the census
 below is the pre-decompilation one, kept for the record.
 
-* **Landed as** 21 files, 54 of the 55 functions byte-exact under the
+* **Landed as** 22 files, all 55 functions byte-exact under the
   `--newpb` recipe with no `asm` statements and no `register` pins.  PR
   #131 landed 28 (`src/terrain_1bcac.c`, `terrain_1c30c.c`,
   `terrain_1c444.c`, `terrain_1c51c.c`, `terrain_1c8dc.c`,
@@ -611,16 +611,15 @@ below is the pre-decompilation one, kept for the record.
   `src/terrain_1f540.c` (6), `src/terrain_1ff84.c` (2),
   `src/terrain_207a0.c` (2) and `src/terrain_2136c.c` (1), with 19 new
   `split_config.json` `data_symbols` (the hit-test cells
-  `0x03005294-0x030054F0` and three ROM tables).  **One function is left in
-  asm:** `sub_0801b24c` (`0x0801B24C-0x0801B7DC`, 1424 bytes, the hit test
-  against the third collider list), parked on #84 at 44 differing bytes
-  with the right size: a gcse copy of `&gUnk_030054E4` set in three arms
-  has its live length doubled per set by `update_equiv_regs`, which moves
-  it below the value it must outrank in global allocation (lesson 3.464).
-  The straggler campaign's plain rewrite gives the same 44 bytes, so the
-  residue is not the old candidate's shapes; its second half is a cse1/cse2
-  path effect on the `p` block (lesson 3.478), and the best source is on
-  #84.
+  `0x03005294-0x030054F0` and three ROM tables).  The last function,
+  `sub_0801b24c` (`0x0801B24C-0x0801B7DC`, 1424 bytes, the hit test
+  against the third collider list), parked by #84 at 44 differing bytes,
+  landed in the final campaign as `src/hitbox_1b24c.c` (three more ROM
+  tables named): its player index is read from `gUnk_03005394` at every
+  use instead of through a `p` local, and every table mask goes through
+  one `u32 m` (lesson 3.492).  The triple-doubled reaching register of
+  lesson 3.464 is doubled three times in the matching build too; it was
+  never the residue.
 * **What it turned out to be** not a pure leaf, and two things.  The
   collision engine: ten per-frame entry points (the nine `sub_0801bcac` ...
   `sub_0801c444`, and `sub_0801baa4` for the player, which M09's player
@@ -694,7 +693,7 @@ below is the pre-decompilation one, kept for the record.
   from plain source: a `u16` marker, whose `& 0x100` test is then an
   HImode constant chain agbcc's second loop pass hoists, and a struct copy
   for the map store (`docs/lessons-learned.md` 3.489).  Both neighbours,
-  M06 and M08, are C (M06 partly).
+  M06 and M08, are C.
 * **What it turned out to be** (`docs/analysis/rom-map.md` §9): the half of
   the level engine that decides WHICH room is on screen, one subsystem with
   M08 (the camera and map streaming), which it drives.

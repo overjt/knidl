@@ -1593,11 +1593,10 @@ child issues of #35 are created from it. Findings that belong in this document:
   levers (lessons 3.275-3.278).
 - **M06 (`0x0801A8C8-0x08021B17`) is the box-vs-terrain collision engine
   and the actor-vs-collider hit tests.** Decompiled in #84: PR #131 landed
-  28 functions, the second run 26 more, so 54 of the 55 are C
-  (`src/hitbox_1a8c8.c`, `hitbox_1b7dc.c` and `src/terrain_1baa4.c` ...
-  `terrain_214e0.c`, 21 files; ROM-identical).  `sub_0801b24c`
-  (`0x0801B24C-0x0801B7DC`) is still asm, parked at 44 differing bytes
-  (plain source since the straggler campaign; lessons 3.464, 3.478).
+  28 functions, the second run 26 more, and the final campaign the last
+  one, `sub_0801b24c` (`src/hitbox_1b24c.c`, lesson 3.492), so all 55 are C
+  (`src/hitbox_1a8c8.c`, `hitbox_1b24c.c`, `hitbox_1b7dc.c` and
+  `src/terrain_1baa4.c` ... `terrain_214e0.c`, 22 files; ROM-identical).
   It is not a pure leaf: the probes call M06's own cell queries
   constantly, M07's `sub_08021b18`/`sub_08022650`, M02's `sub_08009ee8`
   (the health counter) and `ArcTan2`.  Three parts:

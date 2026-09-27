@@ -524,9 +524,8 @@ Matching decompilation of Kirby: The Amazing Mirror's predecessor, **Kirby: Nigh
   `src/terrain_207a0.c` and `src/terrain_2136c.c` (26) - **54 of 55
   functions**, no `asm` statements and no `register` pins; the one hole is
   `sub_0801b24c` (1424 bytes, the third collider list's hit test), parked
-  at 44 differing bytes with its best sources on #84, so
-  `0x0801A8C8-0x08030803` (M06-M08) is C except it and M07's
-  `sub_08027a6c`.  The census name "terrain / collision query (pure leaf)"
+  at 44 differing bytes, which the final campaign landed as
+  `src/hitbox_1b24c.c`, so `0x0801A8C8-0x08030803` (M06-M08) is all C.  The census name "terrain / collision query (pure leaf)"
   was half right: the range is the collision engine every actor and player
   runs - ten per-frame entry points that load a box, compute its
   room-relative corners and run a probe set picked by the x velocity and
@@ -564,9 +563,9 @@ Matching decompilation of Kirby: The Amazing Mirror's predecessor, **Kirby: Nigh
   `sub_080b5670` a missing third call argument, the compiler's own QImode
   byte copy behind the `[sp, #4]` slot (correcting 3.269) and a VRAM base
   that must be a dropped pointer local (3.258).  `sub_0801b24c` (M06,
-  1424 bytes) stays parked at 44 differing bytes, now from plain source,
+  1424 bytes) stayed parked at 44 differing bytes, now from plain source,
   with its residue traced to 3.464's reaching register and a cse1/cse2
-  path effect (3.478; best source on #84).  No census row changed; 13
+  path effect (3.478); the final campaign landed it (3.492).  No census row changed; 13
   ROM tables named via `split_config.json` `data_symbols`; new lessons
   3.472-3.478 and 4.111.
 - The engine zone's last asm functions (issue #63, the backlog #32 left):
