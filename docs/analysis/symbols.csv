@@ -5259,7 +5259,8 @@ vma,size,isa,evidence,name
 0x080CE484,0xC,thumb,bl-target,ld_r3_tp_adr
 0x080CE490,0x14,thumb,rom-pointer,ply_lfos
 0x080CE4A4,0x14,thumb,rom-pointer,ply_mod
-0x080CE4B8,0x68,thumb,bl-target,MidiKeyToFreq
+0x080CE4B8,0x64,thumb,bl-target,MidiKeyToFreq
+0x080CE51C,0x4,thumb,curated,UnusedDummyFunc
 0x080CE520,0x1C,thumb,bl-target,MPlayContinue
 0x080CE53C,0x20,thumb,bl-target,MPlayFadeOut
 0x080CE55C,0x78,thumb,bl-target,m4aSoundInit

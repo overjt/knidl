@@ -156,10 +156,13 @@ KNOWN_SYMBOLS = {
     0x080CE484: "ld_r3_tp_adr",  # fetch byte at track->cmdPtr++, no check (descriptive)
     0x080CE490: "ply_lfos",  # template[17]: strb -> track->lfoSpeed (0x19), 0 -> ClearModM
     0x080CE4A4: "ply_mod",  # template[19]: strb -> track->mod (0x17), 0 -> ClearModM
+    #
+    #   C driver ("m4a.c", old_agbcc -O2): 0x080CE4B8-0x080CFA4B.  It opens
+    #   with pokeemerald m4a.c's MidiKeyToFreq and UnusedDummyFunc, which
+    #   the asm core's segment held until src/m4a_c1.c took them over.
     0x080CE4B8: "MidiKeyToFreq",  # clamp key 0xB2; gScaleTable 0x0860A1D0 +
     # gFreqTable 0x0860A284 interpolation via 2x umul3232H32
-    #
-    #   C driver ("m4a.c", old_agbcc -O1 expected): 0x080CE520-0x080CFA4B.
+    0x080CE51C: "UnusedDummyFunc",  # empty `bx lr`, dead (pokeemerald m4a.c)
     #   Function order matches pokeemerald src/m4a.c; each identified by
     #   its literal pool (SOUND_INFO_PTR / ID_NUMBER / gSongTable
     #   0x0860B460 / gMPlayTable 0x0860B430 / IO regs) and field offsets.
@@ -981,6 +984,7 @@ EXTRA_THUMB_ENTRIES = {
     # -fprologue-bugfix prologue filter cannot propose; the anchor table word
     # at 0x08740E6C points at it.
     0x08078B64,
+    0x080CE51C,  # UnusedDummyFunc (empty, after MidiKeyToFreq's pool)
     0x080CE60C,  # m4aSongNumStartOrChange
     0x080CE6E0,  # m4aSongNumContinue
     0x080CE740,  # m4aMPlayContinue (wrapper)

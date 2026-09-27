@@ -2,12 +2,40 @@
 #include "gba/m4a_internal.h"
 
 /* m4a/mp2k sound engine, C driver part 1 (issue #53):
- * 0x080CE520-0x080CEFB3 — init / song-number / MPlay API.
+ * 0x080CE4B8-0x080CEFB3 — MidiKeyToFreq, init / song-number / MPlay API.
  * SDK library code: old_agbcc -O2 -mthumb-interwork (lesson 3.15; verify
- * with `./tools/fnmatch.sh 0x080CE520 0x080CEFB4 src/m4a_c1.c --old2`).
+ * with `./tools/fnmatch.sh 0x080CE4B8 0x080CEFB4 src/m4a_c1.c --old2`).
  * Source shapes follow pokeruby's src/libs/m4a.c generation (internal
  * MPlayContinue/MPlayFadeOut bodies + thin public wrappers, ident locks
  * in source); struct layouts are katam's m4a.h variant. */
+
+/* MidiKeyToFreq and UnusedDummyFunc open pokeemerald's src/m4a.c and are
+ * verbatim here; they sat at the end of the asm core's segment (m4a_1)
+ * until it was cut back to 0x080CE4B8. */
+u32 MidiKeyToFreq(struct WaveData *wav, u8 key, u8 fineAdjust)
+{
+    u32 val1;
+    u32 val2;
+    u32 fineAdjustShifted = fineAdjust << 24;
+
+    if (key > 178)
+    {
+        key = 178;
+        fineAdjustShifted = 255 << 24;
+    }
+
+    val1 = gScaleTable[key];
+    val1 = gFreqTable[val1 & 0xF] >> (val1 >> 4);
+
+    val2 = gScaleTable[key + 1];
+    val2 = gFreqTable[val2 & 0xF] >> (val2 >> 4);
+
+    return umul3232H32(wav->freq, val1 + umul3232H32(val2 - val1, fineAdjustShifted));
+}
+
+void UnusedDummyFunc(void)
+{
+}
 
 /* The ident lock write pairs (ident++ ... ident = ID_NUMBER) are in the
  * source as in pokeruby's m4a.c, but old_agbcc -O2 optimizes the two
