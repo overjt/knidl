@@ -130,6 +130,10 @@ C_COMMENT_RE = re.compile(r"/\*.*?\*/|//[^\n]*", re.S)
 ASM_COMMENT_RE = re.compile(r"/\*.*?\*/|@[^\n]*", re.S)
 
 
+def collapse_ws(text):
+    return re.sub(r"\s+", " ", text).strip()
+
+
 def comments_of(text, is_asm):
     return (ASM_COMMENT_RE if is_asm else C_COMMENT_RE).findall(text)
 
@@ -542,6 +546,11 @@ def verify_diff(ref):
         if path.endswith((".c", ".h", ".s", ".inc")):
             is_asm = path.endswith(".s")
             a, b = strip_comments(old, is_asm), strip_comments(new, is_asm)
+            if not is_asm:
+                # C is free-form: an added or removed comment leaves a
+                # different run of whitespace behind, which is not a code
+                # change.  (make compare remains the byte-level proof.)
+                a, b = collapse_ws(a), collapse_ws(b)
             if a != b and not (field_pairs and not is_asm
                                and fields_only_differ(a, b, field_pairs, field_uses)):
                 problems.append("%s: code differs beyond the renames" % path)
