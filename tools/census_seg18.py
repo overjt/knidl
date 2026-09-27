@@ -60,6 +60,7 @@ HITBOXSETS = [
     0x0873CC64, 0x0873CC74, 0x0873CC84, 0x0873CC94, 0x0873CCA4, 0x0873CDAC,
     0x0873CF4C, 0x0873CF5C, 0x0873CF6C, 0x0873CF7C, 0x0873CF8C, 0x0873D03C,
     0x0873F8CC, 0x0873F8DC, 0x08749B84, 0x0874B538,
+    0x0874C108,  # round 2: TaskBreakBlocksNoPlayer, src/enemy_ae3bc.c:3755
 ]
 
 # struct ActorDef records not reached from src/data/actor_defs.c (their
@@ -77,7 +78,7 @@ SCALAR_TABLES = [
     (0x080CFF70, 0x080CFF96, "value", "s16 divisors gUnk_080CFF70 (div = tbl + 2 read as s16, "
      "src/subgame_c4630.c:261-264) followed by u8 gUnk_080CFF76[4][4][2] OBJ {width, height} "
      "(include/subgame.h:221, src/subgame_c4d08.c:130)"),
-    (0x08732302, None, "value-nextlabel", "s8 gUnk_08732302[][6] big-switch index by [level][stage] (src/level_242d0.c:750)"),
+    (0x0873231A, 0x08732320, "value", "s8 gUnk_08732302[level][6], row 4: level 4 has 7 stages (gUnk_08334EB4[4], src/level_2296c.c), so all six columns are read (src/level_242d0.c:750)"),
     (0x08732428, None, "value-nextlabel", "s8 gUnk_08732428[][3] camera step counts (src/camtask_2d38c.c:345-365)"),
     (0x0873B634, 0x0873B652, "value", "u8 gUnk_0873B634[] roulette delays read until 0 (src/player_47fe8.c:116); the 0 is at +0x1E"),
     (0x0873B7C0, 0x0873B808, "value", "u16 gUnk_0873B7C0[3][2][6] 8.8 velocities (src/plobj_5239c.c:234-311)"),
@@ -85,26 +86,29 @@ SCALAR_TABLES = [
     (0x0873B8C6, 0x0873B926, "value", "u16 gUnk_0873B8C6[3][2][8] 8.8 velocities (src/plobj_52f6c.c:63-78)"),
     (0x0873BA4C, 0x0873BA8C, "value", "u16 gUnk_0873BA4C[][4] velocities/accelerations, rows (unk18 & 7) + 0..4 (src/effect_54a80.c:55-72)"),
     (0x0873D0F8, 0x0873D206, "value", "u16 gUnk_0873D0F8[27][5] animation ids by ability, row 26 read explicitly (src/player_337f4.c:78-80)"),
-    (0x0873D210, None, "value-nextlabel", "s16 gUnk_0873D210[ability * 4] animation ids (src/stage_3cd60.c:88)"),
-    (0x0873D3B8, None, "value-nextlabel", "s16 gUnk_0873D3B8[ability][2] animation ids (src/player_34f8c.c:75)"),
-    (0x0873D420, None, "value-nextlabel", "s16 gUnk_0873D420[ability][3] animation ids (src/player_34f8c.c:275)"),
-    (0x0873D4BC, None, "value-nextlabel", "u16 gUnk_0873D4BC[ability][5] animation ids (src/player_36280.c:237)"),
-    (0x0873D5CA, None, "value-nextlabel", "s16 gUnk_0873D5CA[ability][2] animation ids (src/player_36280.c:343)"),
-    (0x0873D632, None, "value-nextlabel", "u16 gPlayerDoorAnims[ability][7] animation ids (src/player_39c24.c:77-450)"),
-    (0x0873D7E4, None, "value-nextlabel", "s16 gUnk_0873D7E4[ability][3] animation ids (src/player_34f8c.c:429)"),
-    (0x0873DA62, None, "value-nextlabel", "u16 gUnk_0873DA62[ability][2] animation ids (src/player_3bde8.c:72)"),
+    (0x0873D210, 0x0873D2D8, "value", "s16 gUnk_0873D210[ability * 4] animation ids (src/stage_3cd60.c:88); abilities 0-24 are reached (the roulette steps through 1-24, src/player_47fe8.c:17-22,105)"),
+    (0x0873D3B8, 0x0873D41C, "value", "s16 gUnk_0873D3B8[ability][2] animation ids (src/player_34f8c.c:75), rows 0-24 (abilities 1-24, src/player_47fe8.c:17-22,105)"),
+    (0x0873D420, 0x0873D4B6, "value", "s16 gUnk_0873D420[ability][3] animation ids (src/player_34f8c.c:275), rows 0-24 (abilities 1-24, src/player_47fe8.c:17-22,105)"),
+    (0x0873D4BC, 0x0873D5B6, "value", "u16 gUnk_0873D4BC[ability][5] animation ids (src/player_36280.c:237), rows 0-24 (abilities 1-24, src/player_47fe8.c:17-22,105)"),
+    (0x0873D5CA, 0x0873D62E, "value", "s16 gUnk_0873D5CA[ability][2] animation ids (src/player_36280.c:343), rows 0-24 (abilities 1-24, src/player_47fe8.c:17-22,105)"),
+    (0x0873D632, 0x0873D790, "value", "u16 gPlayerDoorAnims[ability][7] animation ids (src/player_39c24.c:77-450), rows 0-24 (abilities 1-24, src/player_47fe8.c:17-22,105)"),
+    (0x0873D7E4, 0x0873D87A, "value", "s16 gUnk_0873D7E4[ability][3] animation ids (src/player_34f8c.c:429), rows 0-24 (abilities 1-24, src/player_47fe8.c:17-22,105)"),
+    (0x0873DA62, 0x0873DAC6, "value", "u16 gUnk_0873DA62[ability][2] animation ids (src/player_3bde8.c:72), rows 0-24 (abilities 1-24, src/player_47fe8.c:17-22,105)"),
     (0x0873DACA, 0x0873DADE, "value", "s16 gUnk_0873DACA[5][2] animation ids, rows 0-4 read explicitly (src/player_3bde8.c:108-341)"),
     (0x0873DCC0, 0x0873DCC8, "value", "s8 offsets ((s8 *)gUnk_0873DCC0)[RandomRange(8)] (src/effect_5afac.c:835)"),
     (0x0873E1B4, 0x0873E1B8, "value", "s8 gUnk_0873E1B4[gActivePlayerCount - 1] health bonus (src/actor_653ec.c:1254)"),
-    (0x0873FF98, None, "value-nextlabel", "s16 gUnk_0873FF98[] affine scales (src/ending_c6c64.c:469, src/actor_74c0c.c:1250)"),
-    (0x08741350, None, "value-nextlabel", "u8 gUnk_08741350[] (src/enemy_7f044.c:189)"),
-    (0x0874202C, None, "value-nextlabel", "u8 gUnk_0874202C[] loop bounds (src/enemy_84d14.c:615)"),
-    (0x0874324C, None, "value-nextlabel", "s8 gUnk_0874324C[] x offsets (src/enemy_8e404.c:751-755)"),
+    (0x0873FF98, 0x08740098, "value", "s16 gUnk_0873FF98[128] affine scales: the index Task.unk18 >> 16 is clamped to 0..127 (src/ending_c6c64.c:456-469)"),
+    (0x08741350, 0x08741355, "value", "u8 gUnk_08741350[5] (src/enemy_7f044.c:189): indexed like the parallel s32[5] tables gUnk_08741328 and gUnk_0874133C (20 bytes each, src/enemy_7f044.c:190-191)"),
+    (0x0874202C, 0x08742030, "value", "u8 gUnk_0874202C[4] loop bounds indexed by Task.unk74 like the parallel u8[4] tables gUnk_08742020/24/28 and the s32[4] gUnk_08742010 (src/enemy_84d14.c:496-615)"),
+    (0x0874324C, 0x08743251, "value", "s8 gUnk_0874324C[5] x offsets: Task.unk30 is set to 0..4 by the switch at src/enemy_8e404.c:573-602 (read at :751), and the y twin gUnk_08743251 starts at +5"),
     (0x087493A4, None, "value-nextlabel", "s8 gUnk_087493A4[frame] (src/enemy_a93ec.c:577)"),
     (0x087494C8, None, "value-nextlabel", "s8 gUnk_087494C8[frame] (src/enemy_aa338.c:1553)"),
     (0x0874B63E, None, "value-nextlabel", "u8 gUnk_0874B63E[frame] (src/enemy_ae3bc.c:2955)"),
     (0x087561CC, None, "value-nextlabel", "s8 wave table gUnk_087561CC[i >> 3] (src/save_b6b08.c:56)"),
     (0x08756570, None, "value-nextlabel", "u8 gUnk_08756570[] beat lengths (src/subgame_bda2c.c:97)"),
+    (0x08756577, 0x087565E0, "value", "the three u8[35] rows gUnk_087565F4[] points at "
+     "(0x08756577, 0x0875659A, 0x087565BD: 35 bytes apart, 7 groups of 5), read r[unk2C * 5 + 0..3] "
+     "as numbers (src/subgame_bda2c.c:1123-1127)"),
     (0x08756610, 0x0875664F, "value", "the three u8[21] rows gUnk_08756650[level] points at, read "
      "[unk2C * 3 + gBombRallyOutCount] (src/subgame_bda2c.c:1280); they end at gUnk_08756650"),
 ]
