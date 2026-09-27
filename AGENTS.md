@@ -630,7 +630,7 @@ Matching decompilation of Kirby: The Amazing Mirror's predecessor, **Kirby: Nigh
   decompiled**; 184 of 8282 symbols have real names.
 - Next milestones (after #35): (1) a "natural C" campaign that removes the
   `register ... asm("rN")` pins and zero-byte `asm("")` levers left in the
-  early modules (134 functions in 45 files, mostly M28-M33); (2) #36, data
+  early modules (133 functions in 45 files, mostly M28-M33); (2) #36, data
   structure under the data policy above (labels, types and pointer symbols,
   no ROM bytes committed); (3) names for functions, globals and struct
   fields, then #37's final audit.
