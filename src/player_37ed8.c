@@ -1,6 +1,12 @@
 #include "gba/gba.h"
 #include "global.h"
 #include "task.h"
+#include "main.h"
+#include "link.h"
+#include "hud.h"
+#include "player.h"
+#include "effect.h"
+#include "actor.h"
 
 /* player_37ed8.c (0x08037ED8-0x0803919B, issue #91).
  *
@@ -15,30 +21,9 @@
  * leaves.  PlayerActionHurtUpdate, handler 16, steers every state into state 6 and
  * re-binds the coroutine. */
 
-extern u16 gLocalPlayer;
-extern u16 gFrameCount;
-
-void TaskYieldTrampoline(s32 frames);
-void TaskSleepForever(void);
 void TaskSetEntry(void *a, u32 i);
-void TaskSetFrame(s32 a);
-void TaskSetFrameNoFlip(s32 a);
-void TaskSetFrameFlip(s32 a);
-s32 SetPlayerAbility(s32 a, s32 b, u32 c);
-void HudShowAbility(s32 a, s32 id);
 void RequestScreenShake(u16 a);
-void PlayerStopAxes(s32 a0);
-void SetPlayerInvulnerability(s32 a0, s32 a1, s32 a2);
-s32 PlaySfxIfLocalPlayer(s32 a0, u16 a1);
-void PlayerSetWaterMotionY(void);
-void PlayerStopAtCeilingAndWall(void);
-s32 PlayerCheckLanding(void);
-s32 PlayerHasCrossedWaterSurface(s32 a);
-void sub_08040710(void);
 void PlayerSetMotionXPreset(s32 a0, s32 a1);           /* M11, still asm; M11's own spelling */
-void PlayerSetMotionYPreset(s32 a0);
-s32 CreatePlayerEffect(s32 a0, s32 a1, s32 a2);
-s32 CreateAbilityStar(u8 p2);
 
 void PlayerActionHurt(void)
 {

@@ -86,6 +86,7 @@ struct RoomDef
     /*0x56*/ u8 unk56;
     /*0x57*/ u8 unk57;
 };
+/* Not from room.h: this file's view of gUnk_0200AFE0 differs (lesson 3.517). */
 extern struct RoomDef *gCurRoomDef;
 extern u16 gMetatileTiles[];
 extern struct MapCell gUnk_02006AA0[];
@@ -234,4 +235,3 @@ void sub_08027a6c(void)
         }
     }
 }
-

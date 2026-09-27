@@ -1,6 +1,10 @@
 #include "gba/gba.h"
 #include "global.h"
 #include "task.h"
+#include "main.h"
+#include "mode.h"
+#include "menu.h"
+#include "room.h"
 
 /* menutask_0f180.c (0x0800F180-0x0800FCBB, issue #99).
  *
@@ -13,52 +17,19 @@
  * (sub_0800fa30) and #258 (sub_0800fb94) cycle and cross-fade the
  * background palettes when the menu screen changes. */
 
-extern s8 gMenuScreen;
-extern s8 gPrevMenuScreen;
-extern s8 gUnk_02007FC8;
 /* Plain u8 here (vu8 elsewhere): a volatile byte load expands to a load plus
    two shifts, which lengthens this address's live range in sub_0800f408 enough
    to lose r6 to the hoisted copy of &gCurTask. */
+/* Not from link.h: this file's view of gMultiBootStruct differs (lesson
+   3.517). */
 extern u8 gMultiBootStruct[];
-extern u16 gUnk_030012B0[];
-extern u16 gUnk_03001430[];
-extern u16 gUnk_03001612[];
-extern u16 gUnk_085563C8[];
-extern u16 gUnk_08562FE4[][8];
-extern u16 gUnk_08563024[][13];
-extern u16 *gUnk_08731CF8[];
-extern u16 *gUnk_08731D28[];
-extern u16 gUnk_08731D58[];
-extern u32 gUnk_08731D70[];
-extern s32 gUnk_08731E58[][4];
-extern s32 gUnk_08731E98[];
-extern u16 gUnk_08731EA8[];
-extern s16 gUnk_08731EB0[];
-extern s16 gUnk_08731EB8[];
-extern s16 gUnk_08731EC0[];
-extern s32 gUnk_08731EC8[][4];
-extern s32 gUnk_08731F08[][4];
-extern s16 gUnk_08731F48[][4];
-extern u32 gUnk_08755620[];
-extern u32 gUnk_08755688[];
 
-void TaskExitTrampoline(void);
-void TaskYieldTrampoline(s32 frames);
 void RequestCopy(u32 mode, u32 src, u32 dst, u32 size);
+/* Declared here, not through a header: the calls in this file pass other
+   types than the definition takes (lessons 3.428, 3.517). */
 s32 QueueSprite(u32 a, u32 b, u32 c, u32 d, u32 e, s16 f);
 s32 DrawAffineSprite(s32 a, s16 b, s16 c, s32 d);
 void BlendColors(u16 *src, u16 *dst, s32 ratio, s32 count, u16 *out);
-s32 TaskCreateFrom(u32 type, s32 idx);
-void TaskMove(void);
-void TaskDrawScreen(void);
-void TaskSleepForever(void);
-void LoadGfxSet(u16 a0);
-s32 sub_0800ffd8(void);
-u8 TaskIsOnScreenNoCamera(void);
-void sub_0800f2b4(void);
-void sub_0800f408(void);
-void sub_0800f698(void);
-void sub_0800f840(void);
 
 void Task_LinkPlayPlayerList(void)
 {

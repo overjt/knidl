@@ -1,6 +1,11 @@
 #include "gba/gba.h"
 #include "global.h"
 #include "task.h"
+#include "main.h"
+#include "collision.h"
+#include "room.h"
+#include "player.h"
+#include "effect.h"
 
 /* player_46330.c (0x08046330-0x08046BFF, issue #87).
  *
@@ -19,52 +24,10 @@
  * slopes and ledges with M06's terrain probes IsFullBlockAtPixel and
  * IsWaterAtPixel and registers the collider gUnk_0873BF14. */
 
-/* gTerrainResult: M06's collision result block (src/terrain_1bcac.c spells it
-   the same way except unk8, which M09 reads with ldrsh).  A 16-bit test of
-   unk0/unk1 together is `*(u16 *)&gTerrainResult` (good/PlayerActionBurningUpdate.c). */
-struct Unk03005550
-{
-    /*0x00*/ u8 unk0;
-    /*0x01*/ u8 ceilingHits;
-    /*0x02*/ u8 unk2;
-    /*0x03*/ u8 unk3;
-    /*0x04*/ u8 slope;
-    /*0x05*/ u8 unk5;
-    /*0x06*/ u8 unk6;
-    /*0x07*/ u8 unk7;
-    /*0x08*/ s16 unk8;
-    /*0x0A*/ u8 atDoor;
-    /*0x0B*/ u8 onSlipperyFloor;
-    /*0x0C*/ u8 unkC;
-    /*0x0D*/ u8 unkD;
-};
-
-extern u32 gPlayerDefaultTerrainBox[];
-extern u32 gUnk_0873CB34[];
-extern u32 gUnk_0873CDAC[];
-extern u16 gLatchedHeldKeys[];             /* held keys, latched per player (M11) */
-extern u16 gLatchedPressedKeys[];             /* newly-pressed keys, latched per player */
-extern struct Unk03005550 gTerrainResult;
-extern u32 gUnk_0873BF14[];
-
-void TaskYieldTrampoline(s32 frames);
-void TaskSleepForever(void);
 void TaskSetEntry(void *a, u32 i);
-void TaskSetFrame(s32 a);
 void RegisterCollider(u8 a, s16 x, s16 y, void *p);   /* M11's caller spelling */
-u8 IsWaterAtPixel(s16 x, s16 y);
-s32 IsFullBlockAtPixel(u16 x, u16 y);
 void RequestScreenShake(u16 a);
-void PlayerStopAxes(s32 a0);
-void SetPlayerInvulnerability(s32 a0, s32 a1, s32 a2);
-s32 PlaySfxIfLocalPlayer(s32 a0, u16 a1);
-void PlayerStartSfx(s32 a0, u16 a1);
-void PlayerStopSfx(void);
-s32 PlayerLand(s32 a0);
-s32 PlayerRequestLocomotion(void);
 void PlayerSetMotionXPreset(s32 a0, s32 a1);           /* M11, still asm; M11's own spelling */
-void PlayerSetMotionYPreset(s32 a0);
-s32 CreatePlayerEffect(s32 a0, s32 a1, s32 a2);
 
 void PlayerActionWheel(void)
 {

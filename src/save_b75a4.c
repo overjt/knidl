@@ -1,6 +1,9 @@
 #include "gba/gba.h"
 #include "global.h"
 #include "task.h"
+#include "main.h"
+#include "link.h"
+#include "save.h"
 
 /* save_b75a4.c (0x080B75A4-0x080B77D3, issue #94).
  *
@@ -21,57 +24,6 @@
  * whose AND is dropped for an all-ones value and whose OR survives because cse
  * still holds the element from the `!=` test, lesson 3.469); the count is an
  * s8 local (3.340). */
-
-struct LinkSave
-{
-    /*0x000*/ u32 unk00;
-    /*0x004*/ u16 unk04;
-    /*0x006*/ u16 unk06;
-    /*0x008*/ u8 unk08;
-    /*0x009*/ u8 unk09;
-    /*0x00A*/ u8 unk0A;
-    /*0x00B*/ u8 unk0B;
-    /*0x00C*/ u16 unk0C;
-    /*0x00E*/ u16 unk0E;
-    /*0x010*/ u16 unk10;
-    /*0x012*/ u8 unk12;
-    /*0x013*/ u8 unk13;
-    /*0x014*/ u16 unk14;
-    /*0x016*/ u16 unk16[4];
-    /*0x01E*/ u16 unk1E[4];
-    /*0x026*/ u16 unk26[4];
-    /*0x02E*/ u16 unk2E[4];
-    /*0x036*/ u16 unk36;
-    /*0x038*/ u8 unk38[8];
-    /*0x040*/ u16 unk40[8][8];
-    /*0x0C0*/ u16 unkC0;
-    /*0x0C2*/ u16 unkC2;
-    /*0x0C4*/ u8 unkC4[2];
-    /*0x0C6*/ u8 unkC6[2];
-    /*0x0C8*/ u8 unkC8[2];
-    /*0x0CA*/ u8 unkCA[2];
-    /*0x0CC*/ u32 unkCC[2];
-    /*0x0D4*/ u8 unkD4[8][7];
-    /*0x10C*/ u16 unk10C[4];
-    /*0x114*/ u16 unk114[4];
-    /*0x11C*/ u16 unk11C;
-    /*0x11E*/ u8 unk11E;
-    /*0x11F*/ u8 pad11F[0xD];
-    /*0x12C*/ u16 unk12C[0x3B6A];
-};
-
-extern u8 gInputRecorderRunning;
-extern u16 gUnk_0200EC60[];
-extern u8 gUnk_0200EC68[];
-extern struct LinkSave *gInputRecordingPtr;
-extern u16 gUnk_0200EC70[];
-extern u16 gUnk_0200EC78[];
-extern u16 gUnk_02016480[];
-extern vu16 gPlayerHeldKeys[];
-extern vu16 gPlayerPressedKeys[];
-extern u16 gPlayerCount;
-
-u32 WriteInputRecordingEntry(u8 *src, s32 i);
 
 void InputRecorderRecordFrame(void)
 {

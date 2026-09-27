@@ -35,154 +35,45 @@
 #include "gba/gba.h"
 #include "global.h"
 #include "task.h"
+#include "link.h"
+#include "sound.h"
+#include "mode.h"
+#include "hud.h"
+#include "room.h"
+#include "subgame.h"
 
-extern s8 gSubGameLevel;
-extern u8 gUnk_020061DC;
-extern s8 gBombRallySeats[];
-extern u8 gBombRallyOutMask;
-extern u8 gBombRallyOutCount;
-extern u8 gBombRallyFinishOrder[];
-extern u16 gFadeSteps;
+/* Not from main.h: this file's view of gBgPalette differs (lesson 3.517). */
+extern vu16 gFadeSteps;
 extern u8 gObjPalette[];
 extern vs32 gBg3ScrollX;
 extern vs32 gBg3ScrollY;
 extern vu16 gPlayerPressedKeys[];
-extern u16 gPrevGameState;
-extern u16 gLocalPlayer;
-extern u16 gPlayerCount;
 
-extern s8 gUnk_08756560[];
-extern s8 gUnk_08756564[];
-extern u32 gUnk_08755E00[];
-extern u32 gUnk_08755E0C[];
-extern u32 gUnk_08755E44[];
-extern u32 gUnk_08755E7C[];
 extern vu16 gBgPalette[];
 extern vu16 gDispCnt;
-extern s32 gUnk_08756540[];
-extern s32 gUnk_08756550[];
-extern s16 gUnk_08756798[];
-extern s32 gUnk_087567A8[][3];
-extern s32 *gUnk_08756D3C[][2];
-extern u32 gUnk_08755EB4;
-extern u32 gUnk_08755EB8[];
-extern u32 gUnk_08755EC4[];
-extern u32 gUnk_087571F8[];
-extern s16 gUnk_08757014[];
-extern s32 *gUnk_0875716C[];
-extern s32 gUnk_08757178[][4];
-extern s32 gUnk_087571B8[][4];
-extern s32 gUnk_08756D74[];
-extern s32 gUnk_08756DC8[];
-extern s32 gUnk_08756E1C[];
-extern s32 gUnk_08756E38[];
-extern s32 gUnk_08756E54[][4];
-extern s32 gUnk_08756EC4[][4];
-extern s32 gUnk_08756F34[][4];
-extern s32 gUnk_08756FA4[][4];
-extern s16 gUnk_08756770[];
-extern u16 gUnk_08756778[];
-extern s8 gUnk_0875673C[];
-extern s16 gUnk_087567A0[];
-extern u8 gUnk_0875676C[];
-extern u32 gUnk_08756780[];
-extern u32 gUnk_0875678C[];
-extern u32 *gUnk_0875671C[];
-extern u32 gUnk_0875674C[];
-extern u32 gUnk_0875675C[];
-extern u32 gUnk_08756528[];
-extern u8 gUnk_08756570[];
-extern u8 gUnk_0875665C[];
-extern u8 gUnk_0875665F[];
-extern u8 gUnk_08756662[];
-extern u32 gBombRallyStates[];
-extern u32 gBombRallyStateUpdates[];
-extern u32 gBombRallyResultsStates[];
-extern u32 gBombRallyResultsStateUpdates[];
-extern u32 gBombRallyObjectVariants[];
-extern u32 gUnk_08755DC0;
-extern u16 gUnk_08756538[];
-extern u8 gUnk_087565E0[];
-extern u8 *gUnk_08756650[];
-extern u8 *gUnk_087565F4[];
-extern u32 *gUnk_0875670C[];
-extern s16 gUnk_0875672C[];
-extern s16 gUnk_08756734[];
-extern s8 gUnk_08756740[];
-extern s8 gUnk_08756744[];
-extern s8 gUnk_08756748[];
-extern u32 gBombRallyPlayerStates[];
-extern u32 gBombRallyPlayerStateUpdates[];
 
-extern void TaskYieldTrampoline(u32 frames);
-
+/* Declared here, not through a header: the calls in this file pass other
+   types than the definition takes (lessons 3.428, 3.517). */
 extern void CallTableEntry(u32 a, u32 b, u32 *c);
 extern void BeginFastFadeInFromWhite(void);
 extern void BeginFastFadeOutToWhite(void);
-extern s32 TaskCreateFrom(u32 type, s32 idx);
 extern void TaskSetEntry(void *a, u32 i);
-extern void TaskMoveRelativeToBg3(void);
-extern void TaskDrawScreen(void);
-extern void TaskMove(void);
-extern void TaskExitTrampoline(void);
-extern void sub_080bdf9c(u32 a);
-extern void sub_080c0ca4(void);
 extern void TaskSetFrame(s32 a);
 extern void PlaySfx(u32 a);
 extern void sub_080060c0(void);
-extern void AddPlayerLivesNoHud(u32 a, u32 b);
 extern void RequestCopy(u32 mode, u32 src, u32 dst, u32 size);
 extern s32 QueueSprite(u32 a, u32 b, u32 c, u32 d, u32 e, u32 f);
 extern s32 DrawAffineSprite(s32 a, s16 b, s16 c, s32 d);
 extern void TaskStop(void);
 extern u32 RandomRange(u32 range);
-extern void PlayBgm(u32 a);
-extern void StopBgm(void);
 extern void TaskSleepForever(void);
-extern void SubGameReplay(s32 a);
-extern void SubGameQuit(void);
-extern void SubGameCheckEnd(void);
 
-extern void BombRallyRoundUpdate(void);
-extern void BombRallyEnterState(void);
-extern u32 BombRallyKnockOutTurnPlayer(void);
-extern u32 BombRallyIsMatchOver(void);
-extern void sub_080bddb8(void);
-extern void sub_080bde0c(void);
-extern void sub_080bde78(u32 a);
-extern void BombRallySeatPlayers(void);
-extern void BombRallyResultsUpdate(void);
-extern void BombRallyResultsEnterState(void);
-extern void sub_080be4a4(void);
-extern void sub_080be550(void);
-extern void sub_080be5fc(void);
-extern void CreateBombRallyContinueItems(u32 a);
-extern void CreateBombRallyLevelItems(u32 a);
-extern void BombRallyAwardLives(void);
-extern void BombRallyPlayerUpdate(void);
-extern u32 BombRallyPlayerJudgePress(void);
-extern void BombRallyPlayerUpdatePose(void);
-extern void BombRallyPlayerEnterState(void);
-extern void sub_080bfdb0(void);
-extern void sub_080bfdcc(void);
-extern void sub_080be010(void);
 extern void TaskStopY(void);
-extern s32 Div(s32 numerator, s32 denominator);
-extern void sub_080c05f0(u32 a);
-extern void sub_080c0704(u32 a);
-extern void sub_080c0b18(u32 a);
-extern s32 sub_080c1ebc(s32 a, s32 b);
-extern void sub_080c061c(s32 a, s32 b, s32 c, s32 d);
-extern void sub_080c072c(s32 a, s32 b, s32 c, s32 d, s32 e, s32 f);
-extern void sub_080c0a10(s32 a, s32 b, s32 c, s32 d, s16 e);
 /* NOTE: sub_080bdebc's third parameter is `u16` at its definition
    (src/subgame_bda2c.c) but the ROM's call sites here sign-extend the
    argument, so the declaration visible here is the wider `s32` - the
    original source had the same prototype mismatch. */
 extern void sub_080bdebc(s32 a, s32 b, s32 c, s32 d);
-extern void sub_080bdf3c(s32 a, s32 b, u32 c, u32 d);
-extern void sub_080be7c0(u32 a);
-
 
 void BombRallyPlayerAutoServe(void)
 {

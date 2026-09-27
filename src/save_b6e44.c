@@ -1,15 +1,10 @@
 #include "gba/gba.h"
 #include "global.h"
 #include "task.h"
-
-extern void (*gFrameCallback)(void);
-extern u8 gHBlankScrollStarted;
-extern u8 gHBlankScrollState;
-extern s32 gHBlankScrollTimer;
-extern u16 gHBlankScrollEffect;
-
-void UpdateHBlankScroll(void);
-void UpdateRoomHBlankScroll(void);
+#include "main.h"
+#include "hud.h"
+#include "room.h"
+#include "save.h"
 
 void ResetHBlankScroll(void)
 {

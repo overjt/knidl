@@ -1,6 +1,14 @@
 #include "gba/gba.h"
 #include "global.h"
 #include "task.h"
+#include "main.h"
+#include "link.h"
+#include "sound.h"
+#include "mode.h"
+#include "room.h"
+#include "player.h"
+#include "save.h"
+#include "ending.h"
 
 /* mode_c6260.c (0x080C6260-0x080C641F, issue #98).
  *
@@ -21,38 +29,7 @@
  *   sub_080c6354 / sub_080c63ec   spawn M38's task type #100 / #101,
  *       retrying every frame until a slot is free, with Task.variant = 0. */
 
-extern u16 gUnk_02000028;
-extern u16 gLocalPlayer;
-extern u16 gUnk_02007D3C;
-extern u16 gLinkIsMaster;
-extern u16 gUnk_0200616C;
-extern u16 gLinkPlayerCount;
-extern u16 gUnk_02004C94;
-extern u16 gPlayerCount;
-extern u16 gPrevGameState;
-extern u8 gUnk_03001F30;
-extern s32 gCurSaveSlot;
-extern u8 gEndingSceneActive;
-extern vu16 gDispCnt;
-
-void BeginFastFadeInFromWhite(void);
-void BeginFastFadeOutToWhite(void);
-void LinkRequestSync(void);
-void LinkSyncClock(void);
-void DisconnectLink(void);
-void RunLinkFrame(void);
-void RunLinkFramesUntilFadeDone(void);
-void StopAllSound(void);
 s32 TaskCreateFrom(u32 type, s32 idx);                         /* spawn a task */
-void LoadBgLayout(s32 a0);
-void sub_08024610(s32 x, s32 y);
-void sub_08024654(s32 x, s32 y);
-void sub_08027178(void);
-void LoadSaveSlot(s32 a);
-void sub_080c62f0(void);
-void sub_080c6354(void);
-void sub_080c6388(void);
-void sub_080c63ec(void);
 
 void EndingMain(void)
 {

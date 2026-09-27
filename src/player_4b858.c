@@ -1,6 +1,10 @@
 #include "gba/gba.h"
 #include "global.h"
 #include "task.h"
+#include "main.h"
+#include "room.h"
+#include "player.h"
+#include "effect.h"
 
 /* player_4b858.c (0x0804B858-0x0804C64B, issue #88).
  *
@@ -25,30 +29,10 @@
  * moves once PlayerState.unk16 >= 0 and unk08 == 0, and requests action
  * 23 through PlayerHasCrossedWaterSurface. */
 
-extern u16 gLatchedHeldKeys[];             /* held keys, latched per player (M11) */
-extern s32 gUnk_03001F2C;               /* boot_091ac.c spelling */
-extern u8 gUnk_0873B65E[];
-
-void TaskYieldTrampoline(s32 frames);
 u32 RandomRange(u32 range);
-void TaskSleepForever(void);
 void TaskSetEntry(void *a, u32 i);
-void TaskSetMotionXFacing(s32 a, s32 b);
-void TaskSetFrame(s32 a);
 void RequestScreenShake(u16 a);
-void PlayerStopAxes(s32 a0);
-void SetPlayerInvulnerability(s32 a0, s32 a1, s32 a2);
-s32 PlaySfxIfLocalPlayer(s32 a0, u16 a1);
-s32 PlayerLand(s32 a0);
-void PlayerStartOffsetScript(s32 a0);
-void PlayerTurnToHeldDirection(void);
-s32 PlayerGetHeldDirection(void);
-void PlayerStopAtCeilingAndWall(void);
-s32 PlayerHasCrossedWaterSurface(s32 a);
-s32 PlayerRequestLocomotion(void);
 void PlayerSetMotionXPreset(s32 a0, s32 a1);           /* M11, still asm; M11's own spelling */
-void PlayerSetMotionYPreset(s32 a0);
-s32 CreatePlayerEffect(s32 a0, s32 a1, s32 a2);
 
 void PlayerActionBackdropHold(void)
 {

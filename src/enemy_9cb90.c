@@ -1,19 +1,13 @@
 #include "gba/gba.h"
 #include "global.h"
 #include "task.h"
-
-/* RAM cells / ROM tables */
-extern u32 gUnk_08747EF4[];
+#include "enemy.h"
 
 /* Externals */
 extern u8 ActorCollideTerrain(void);
 extern u32 ActorCheckHitsWithBox(s32 a);
 extern u32 ActorCheckHits(void);
 extern u32 ActorReactToHit(void);
-extern void sub_0809f970(void);
-extern s32 sub_0809f994(void);
-extern void sub_0809f9dc(void);
-extern void sub_0809fb10(void);
 
 void sub_0809cb90(void)
 {

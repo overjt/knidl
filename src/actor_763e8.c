@@ -10,108 +10,27 @@
 #include "gba/gba.h"
 #include "global.h"
 #include "task.h"
-
-
-/* The 0x087401E4 script records M19's ending-sequence tasks walk: a pointer
-   table indexed by Task.unk20, each entry a header plus two `s16` step lists
-   (the "forward" list at +6 and the "reverse" one at +18) that
-   sub_0807777c picks between on Task.unk18/unk24. */
-struct M19Script
-{
-    /*0x00*/ u8 unk00[4];
-    /*0x04*/ u16 unk04;
-    /*0x06*/ u16 unk06[6];
-    /*0x12*/ u16 unk12[1];
-};
-
-
-/* RAM cells and ROM tables */
-extern s16 gPlayerHealth[];
-extern s16 gUnk_0300244C;
-extern s16 gUnk_0873D384[];
-extern s32 gUnk_030023B4;
-extern s32 gUnk_030023D4;
-extern s8 gCannonFuseState;
-extern s8 gLevelIndex;
-extern s8 gUnk_087401CC[];
-extern struct M19Script *gUnk_087401E4[];
-extern struct PlayerState gPlayerStates[];
-extern struct Task * gCurTask;
-extern struct Task gTasks[];
-extern u16 gLocalPlayer;
-extern u16 gPlayerCount;
-extern u16 gUnk_0874009C[];
-extern u16 gUnk_087400A6[];
-extern u16 gUnk_087400E4[];
-extern u16 gUnk_08740124[];
-extern u32 gUnk_0873F5E4[];
-extern u32 gCannonVariants[];
-extern u32 gCannonStates[];
-extern u32 gCannonStateUpdates[];
-extern u32 gCannonFuseVariants[];
-extern u32 gCannonFuseStates[];
-extern u32 gCannonFuseStateUpdates[];
-extern u32 gCannonFrames[];
-extern u32 gCannonFuseFrames[];
-extern u8 gUnk_03001F30;
-extern u8 gActivePlayerMask;
-extern u8 gActivePlayerCount;
-extern vs32 gCurTaskIdx;
-extern vu16 gPlayerHeldKeys[4];
-extern vu16 gPlayerPressedKeys[4];
+#include "main.h"
+#include "link.h"
+#include "hud.h"
+#include "cutscene.h"
+#include "collision.h"
+#include "room.h"
+#include "actor.h"
 
 /* callees */
 extern s32 PlaySfx(u32 a);
-extern s32 HudShowAbility();
-extern s32 sub_08022540();
-extern s32 sub_0802610c();
+/* Declared here, not through a header: the calls in this file pass other
+   types than the definition takes (lessons 3.428, 3.517). */
 extern s32 sub_080269d8();
-extern s32 CreateChildTaskHere(u32 type, u8 keepPrio);
 extern u32 ActorCheckHits(void);
 extern u32 ActorCollideTerrain(void);
-extern void TaskYieldTrampoline(u32 a);
 extern void CallTableEntry(u32 a, u32 b, u32 *c);
-extern void TaskFree(s32 id);
-extern void TaskMoveRelativeToParent(void);
-extern void TaskSleepForever(void);
 extern void TaskSetEntry(void *a, u32 i);
-extern void TaskSetMotionXFacing(s32 a, s32 b);
-extern void TaskSetMotionY(s32 a, s32 b, s32 c);
-extern void TaskStopY(void);
-extern void TaskStop(void);
-extern void TaskStopSlot(u32 i);
-extern void TaskSetFrame(s32 a);
 extern void sub_0801bcac(u32 *p);
 extern void RequestScreenShake(u32 a);
-extern void SetCameraFocus(s32 a, s32 b);
 extern void ActorSetState(u8 v);
 extern void AngleToVector(s16 t, s16 mag);
-extern void TaskGetScreenPos(void);
-extern void ActorDrawWorldInView(void);
-extern void ActorMove(void);
-extern void sub_08067108(void);
-extern void sub_08068a8c(s32 i, u8 flag);
-extern void sub_08068b88(s32 i, u16 b, u8 c, u8 d);
-extern void CreateBurstEffect(u32 a, s32 b);
-extern void sub_0806da3c(u32 a, u32 b);
-extern void sub_0807022c(void);
-extern void sub_08070264(void);
-extern void sub_0807029c(void);
-extern void sub_080702d8(void);
-extern void sub_08070334(void);
-extern void sub_080703a8(void);
-extern void sub_08070614(u32 a);
-extern void sub_08076318(void);
-extern void sub_080763c4(void);
-
-/* defined below */
-void sub_08076f50(s32 a);
-void sub_08076f04(s32 a);
-void CannonEnterState(void);
-void CannonUpdate(void);
-void sub_08077898(struct M19Script *p);
-void sub_080779dc(void);
-void CannonFuseUpdate(void);
 
 void sub_080763e8(void)
 {

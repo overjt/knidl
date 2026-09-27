@@ -1,6 +1,9 @@
 #include "gba/gba.h"
 #include "global.h"
 #include "task.h"
+#include "main.h"
+#include "link.h"
+#include "ending.h"
 
 /* gameover_ccd4c.c (0x080CCD4C-0x080CD32F, issue #100).
  *
@@ -14,30 +17,10 @@
  *       sub_080cd248, two scripted sprites with empty handlers.
  *   sub_080cd24c / sub_080cd2f8   variants 4 and 5. */
 
-extern u16 gPlayerCount;           /* number of players */
-extern s8 gGameOverCursor;            /* game-over screen: cursor (continue = 0?) */
-extern s16 gGameOverPlayerTask;           /* game-over screen: the #264 variant-0 task's index */
-extern u32 gUnk_087549FC[];
-extern s32 gUnk_087582F4[];
-extern void (*gUnk_08758324[])(void);
-extern void (*gUnk_0875832C[])(void);
-extern u32 gUnk_08754984[];
-extern u32 gUnk_08754908[];
-extern u32 gUnk_087548B8[];
-extern u32 gUnk_087548A8[];
-
-void TaskExitTrampoline(void);
-void TaskYieldTrampoline(s32 frames);
 void CallTableEntry(u32 idx, u32 count, void (**fns)(void));   /* if (idx < count) fns[idx](); */
 s32 PlaySfx(s32 id);                                    /* play a sound effect */
 void TaskFree(s32 id);                                   /* kill task */
 void TaskSleepForever(void);                                     /* end the running task */
-void TaskSetMotionXFacing(s32 a, s32 b);
-void TaskSetMotion(s32 a, s32 b, s32 c, s32 d, s32 e, s32 f);
-void TaskStop(void);
-void TaskSetFrame(s32 a);
-void sub_080cce98(void);
-void sub_080ccf10(void);
 
 /* Task type #264 variant 2. */
 void sub_080ccd4c(void)

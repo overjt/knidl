@@ -1,6 +1,12 @@
 #include "gba/gba.h"
 #include "global.h"
 #include "task.h"
+#include "main.h"
+#include "link.h"
+#include "room.h"
+#include "camera.h"
+#include "player.h"
+#include "save.h"
 
 /* stage_261c0.c (0x080261C0-0x08026B5F, issue #93).
  *
@@ -18,160 +24,11 @@
  * sub_08026a0c, sub_08026a80 and sub_08026aec arm the scroll lock of one
  * room each.  sub_08026994 is an empty dead export. */
 
-struct Unk03005670
-{
-    /*0x00*/ u8 unk0;
-    /*0x01*/ u8 filler01;
-    /*0x02*/ s16 unk2;
-    /*0x04*/ s16 unk4;
-    /*0x06*/ u8 unk6;
-};
-
-struct CamRect { s16 x0, x1, y0, y1; };
-
-struct Unk020061F0
-{
-    /*0x00*/ u16 unk0;
-    /*0x02*/ u16 unk2;
-    /*0x04*/ u16 unk4;
-    /*0x06*/ u16 unk6;
-    /*0x08*/ u8 filler08[0x18];
-};
-
-struct Door
-{
-    /*0x00*/ s16 unk0;
-    /*0x02*/ u16 unk2;
-    /*0x04*/ u16 unk4;
-    /*0x06*/ u16 unk6;
-    /*0x08*/ u16 unk8;
-    /*0x0A*/ u16 unkA;
-};
-
-struct BgMap
-{
-    /*0x00*/ u16 unk0;
-    /*0x02*/ u16 width;
-    /*0x04*/ u16 height;
-    /*0x06*/ u16 unk6[0];
-};
-
-struct RoomDef
-{
-    /*0x00*/ u8 filler00[4];
-    /*0x04*/ s8 bgm;
-    /*0x05*/ u8 mapsCompressed;
-    /*0x06*/ u8 filler06[2];
-    /*0x08*/ void *metatileMap;
-    /*0x0C*/ void *blockLayer;
-    /*0x10*/ void *unk10;
-    /*0x14*/ u16 width;
-    /*0x16*/ u16 height;
-    /*0x18*/ u16 *bg2Palette;
-    /*0x1C*/ void *bg2Tiles;
-    /*0x20*/ void *metatileTiles;
-    /*0x24*/ u16 borderX;
-    /*0x26*/ u16 borderY;
-    /*0x28*/ u16 *bg3Palette;
-    /*0x2C*/ void *bg3Tiles;
-    /*0x30*/ struct BgMap *bg3Map;
-    /*0x34*/ u16 bg3BorderX;
-    /*0x36*/ u16 bg3BorderY;
-    /*0x38*/ u16 unk38;
-    /*0x3A*/ u16 doorCount;
-    /*0x3C*/ u16 objectCount;
-    /*0x3E*/ u16 objectsSortedByY;
-    /*0x40*/ u16 bgAnimSet;
-    /*0x42*/ u16 unk42;
-    /*0x44*/ struct Door *doors;
-    /*0x48*/ void *objects;
-    /*0x4C*/ u8 filler4C[4];
-    /*0x50*/ u16 entryX;
-    /*0x52*/ u16 entryY;
-    /*0x54*/ u8 unk54;
-    /*0x55*/ u8 unk55;
-    /*0x56*/ u8 unk56;
-    /*0x57*/ u8 unk57;
-};
-
-struct Unk03005680
-{
-    /*0x00*/ u8 unk0;
-    /*0x01*/ u8 lockedAxes;
-    /*0x02*/ u16 x0;
-    /*0x04*/ u16 x1;
-    /*0x06*/ u16 y0;
-    /*0x08*/ u16 y1;
-    /*0x0A*/ u16 unkA;
-    /*0x0C*/ u16 unkC;
-};
-
-extern struct Unk03005670 gScreenShake;
-extern vs16 gTaskSlotTypes[];
-extern s16 gCameraFocusX;
-extern s16 gCameraFocusY;
-extern s8 gUnk_03002444;
-extern u16 gCameraMode;
-extern s16 gCameraAnchorX;
-extern s16 gCameraAnchorY;
-extern u8 gUnk_0200D080;
-extern u16 gUnk_08732638[][2];
-extern u16 gCameraStreamPos[2];
-extern u16 gCameraPos[2];
-extern s32 gCameraCenterX;
-extern u16 gBg3Pos[2];
-extern u16 gBg3StreamPos[2];
-extern s16 gViewRect[4];
-extern s16 gCameraBounds[4];
-extern s16 gUnk_020055B8[4];
-extern u16 gPlayerCount;
-extern struct CamRect gPlayerBounds[4];
-extern s16 gSpriteCameraX;
-extern u16 gUnk_02007FA0;
-extern struct Unk020061F0 gBreakingBlocks[];
-extern s16 gRoomWidth;
-extern struct RoomDef *gCurRoomDef;
-extern s8 gDoorObjectTasks[][3];
-extern s8 gUnk_0200B034;
-extern u8 gUnk_0200AF00;
-extern u8 gUnk_03002400[8][7];
-extern s8 gStageIndex;
-extern u8 gUnk_0200AF08;
-extern s16 gRoomBounds[4];
-extern u8 gUnk_020055E8;
-extern u8 gUnk_02007D38;
-extern s16 gRoomEntryX;
-extern s16 gRoomEntryY;
-extern s8 gUnk_030023E0;
-extern s8 gUnk_030023B8;
-extern s8 gUnk_03002384;
-extern u8 gUnk_03001F20;
-extern u16 gUnk_02007FB0;
-extern u8 gUnk_03001F30;
-extern s32 gCurSaveSlot;
-extern u8 gUnk_02005578;
-extern s8 gUnk_02007FF8;
-extern struct Unk03005680 gScrollLock;
-
 void PlaySfx(s32 id);
-s32 TaskCreateFrom(u32 type, s32 idx);
 void TaskSetEntry(void *a, u32 i);
-void CameraWriteScrollParallax(void);
-void StartScrollLock(s32 x0, s32 x1, s32 y0, s32 y1);
-void CameraStartHoldAnchor(void);
-s32 CreateMapEvent(s32 type);
-s32 sub_0802d478(s32 x, s32 y);
-s32 sub_0802ed94(s32 x, s32 y, s32 a);
-s32 sub_0802ef90(s32 x, s32 y, s32 a, s32 b);
-void sub_0802f1dc(void);
-void sub_0802f2fc(void);
-void sub_0802f400(void);
-void sub_0802f6c0(void);
-void sub_0802f6f4(void);
-s32 CreateStageEffect(s32 a, s32 x, s32 y);
-s32 BreakBlockAt(u32 x, u32 y);
+/* Declared here, not through a header: the calls in this file pass other
+   types than the definition takes (lessons 3.428, 3.517). */
 void sub_08031738(u32 x, u32 y);
-void SaveProgress(s32 a);
 
 s32 CreateBlockBreakEffect(s32 x, s32 y)
 {

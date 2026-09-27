@@ -30,7 +30,7 @@ jobs:
       # ----- Checks that never require baserom.gba (always run) -----
 
       - name: Python tooling check (tools/gbafix.py, tools/symdb.py, tools/symdb_check.py, tools/split.py, tools/modmap.py, tools/datastats.py, tools/check_data_policy.py, tools/rename.py)
-        run: docker run --rm -v "$PWD":/src -w /src knidl-builder python3 -m py_compile tools/gbafix.py tools/symdb.py tools/symdb_check.py tools/split.py tools/modmap.py tools/datastats.py tools/check_data_policy.py tools/rename.py
+        run: docker run --rm -v "$PWD":/src -w /src knidl-builder python3 -m py_compile tools/gbafix.py tools/symdb.py tools/symdb_check.py tools/split.py tools/modmap.py tools/datastats.py tools/check_data_policy.py tools/rename.py tools/rename_field.py tools/carve_data.py tools/resegment.py
 
       - name: Perl tooling check (tools/calcrom.pl)
         run: docker run --rm -v "$PWD":/src -w /src knidl-builder perl -c tools/calcrom.pl
@@ -55,9 +55,9 @@ jobs:
         shell: bash
         run: |
           objects=(build/asm/crt0.o)
-          for c in src/*.c; do
+          for c in src/*.c src/data/*.c; do
             [ -e "$c" ] || continue
-            objects+=("build/src/$(basename "$c" .c).o")
+            objects+=("build/${c%.c}.o")
           done
           docker run --rm -v "$PWD":/src -w /src knidl-builder make "${objects[@]}" INSIDE_DOCKER=1
 

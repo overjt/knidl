@@ -1,5 +1,6 @@
 #include "gba/gba.h"
 #include "global.h"
+#include "main.h"
 
 /* Link (SIO multi-play + multiboot) driver work area at 0x0200EBC0. */
 struct SioWork
@@ -40,30 +41,26 @@ struct SioRecv
     u32 b;
 };
 
+/* Not from link.h: this file's view of gMultiBootStruct differs (lesson
+   3.517). */
 extern struct SioWork gMultiBootStruct;
 extern vu16 gMultiBootDataRecv[4];
 extern u8 gLinkBlockAcks[4];
 extern u32 *gLinkBlockSrc;
-extern u32 gLinkDriverMode;
-extern u32 gLinkBlockState;
+extern vs32 gLinkBlockState;
 extern u8 gLinkBroadcastAcks;
 extern u32 *gLinkBlockDst;
 extern u32 gUnk_0200EBB8;
 extern vs32 gLinkBlockWords;
 extern vs32 gLinkBlockIndex;
 extern vu32 gLinkBlockParentChecksum;
-extern u32 gLinkBlockFrames;
+extern s32 gLinkBlockFrames;
 extern u32 gLinkBlockChecksum;
 extern vs32 gLinkSetupMode;
 extern u8 gUnk_0200EC4C;
-extern vu16 gIntrEnable;
-extern u32 gIntrTable[];
-extern vu16 gIntrMasterEnable;
-extern u16 gLinkIsMaster;
 extern u16 gRecvCmds[];
-extern u16 gSendCmd[];
+extern u16 gSendCmd[4];
 
-extern void IntrDummy(void);
 extern void LinkSetupDetect(void);
 extern void LinkSetupMultiCart(void);
 extern void LinkSetupMultiBoot(void);

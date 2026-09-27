@@ -1,6 +1,14 @@
 #include "gba/gba.h"
 #include "global.h"
 #include "task.h"
+#include "main.h"
+#include "link.h"
+#include "sound.h"
+#include "mode.h"
+#include "room.h"
+#include "player.h"
+#include "actor.h"
+#include "save.h"
 
 /* gfx_08b8c.c (0x08008B8C-0x080091AB, issue #96).
  *
@@ -11,73 +19,9 @@
  * ROM-wide); sub_08008fc4 loads the pause
  * pictures; LinkErrorScreen is the soft-reset prompt. */
 
-extern u32 gUnk_02020000[];
-extern u32 gUnk_02028000[];
-extern u32 gUnk_02030000[];
-extern void (*gFrameEndCallback)(void);
-extern vu16 gPressedKeys;
-extern vu16 gFadeBlankAtWhite;
-extern vs32 gBg3ScrollX;
-extern vs32 gBg3ScrollY;
-extern vs16 gBrightness;
-extern vu16 gBgPalette[];
-extern u8 gUnk_03001370[];
-extern u8 gUnk_030013B0[];
-extern u32 gUnk_03001610[];
-extern vu16 gDispCnt;
-extern u8 gUnk_03001F30;
-extern u32 gObjVram[];
-extern u8 gUnk_080D1B78[];
-extern u8 gUnk_080D2AD0[];
-extern u8 gUnk_0856F2A8[];
-extern u8 gUnk_0856F308[];
-extern u8 gUnk_0857014C[];
-extern u8 gUnk_085704CC[];
-extern u8 gUnk_085707D4[];
-extern u8 gUnk_085708A8[];
-extern u8 gUnk_085709EC[];
-extern u8 gUnk_08570B28[];
-extern u8 gUnk_08570F1C[];
-extern u8 gUnk_0857111C[];
-extern u8 gUnk_08571248[];
-extern u8 gUnk_0857172C[];
-extern u8 gUnk_08571838[];
-extern u8 gUnk_08571BE0[];
-extern u8 gUnk_08571D74[];
-extern u8 gUnk_08572164[];
-extern u8 gUnk_085A3CB8[];
-extern u8 gUnk_085A4904[];
-extern u8 gUnk_085A49E8[];
-extern u8 gUnk_085CCB58[];
-extern u16 *gUnk_08730884[];
-extern struct TransferNode *gUnk_0873185C[];
-extern u32 gUnk_08731980[][2][2];
-extern u16 gUnk_087319B0[][2][2];
-extern u32 gUnk_087319C8[][3];
-extern u32 gUnk_08731A28[][3];
-extern u8 gUnk_08731A88[];
-extern u32 gAbilityPictures[][2];
-extern u32 gUnk_08731B70[];
-extern u16 gUnk_08731B88[][2];
-extern u32 gUnk_08731BA0[][2];
-
 void SoftReset(u32 resetFlags);
-void RequestCopyList(struct TransferNode *node);
 void RequestCopy(u32 mode, u32 src, u32 dst, u32 size);
-void ResetFadeAndBlend(void);
-void BeginFastFadeInFromWhite(void);
-void BeginFastFadeOutToWhite(void);
-void ResetTasksAndOam(void);
-void RunFrameNoTasks(void);
-void RunFramesNoTasks(s32 count);
-void RunFramesNoTasksUntilFadeDone(void);
-void ApplyBgLayout(u16 *p);
 void PlaySfx(s32 id);
-void StopAllSound(void);
-void DisableSerial(void);
-void StopHBlankScroll(void);
-void LoadBgLayout(s32 a0);
-void LoadGfxSet(u16 a0);
 
 void LinkErrorScreen(void)
 {

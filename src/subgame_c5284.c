@@ -1,6 +1,8 @@
 #include "gba/gba.h"
 #include "global.h"
 #include "task.h"
+#include "main.h"
+#include "subgame.h"
 
 /* subgame_c5284.c (0x080C5284-0x080C623B, issue #98).
  *
@@ -50,78 +52,7 @@
  * label of &gAirGrindCourse, numbered after this file's 40 earlier ones; #98
  * had parked it at 22 bytes (or byte-exact with 37 empty asm statements). */
 
-/* per-player records of gAirGrindCourse, M37Course.players[4] (0x3C bytes) */
-struct M37CoursePlayer
-{
-    /*0x00*/ s32 coursePos;
-    /*0x04*/ s32 unk04;
-    /*0x08*/ s32 unk08;
-    /*0x0C*/ s32 unk0C;
-    /*0x10*/ s32 unk10;
-    /*0x14*/ s32 unk14;
-    /*0x18*/ s32 unk18;
-    /*0x1C*/ s32 unk1C;
-    /*0x20*/ s32 unk20;
-    /*0x24*/ s32 unk24;
-    /*0x28*/ s32 unk28;
-    /*0x2C*/ s32 unk2C;
-    /*0x30*/ s32 unk30;
-    /*0x34*/ s32 prevCoursePos;
-    /*0x38*/ s32 unk38;
-};
-
-/* gAirGrindCourse, reached through gAirGrindCoursePtr (and directly by the
-   0x080C5284-0x080C623C builder) */
-struct M37Course
-{
-    /*0x000*/ s32 scrollPos;
-    /*0x004*/ s32 unk004;
-    /*0x008*/ s32 unk008;
-    /*0x00C*/ s32 unk00C;
-    /*0x010*/ s32 finishLine;
-    /*0x014*/ s32 unk014;
-    /*0x018*/ struct M37CoursePlayer players[4];
-    /*0x108*/ s32 unk108;
-    /*0x10C*/ s32 unk10C;
-    /*0x110*/ s32 unk110;
-};
-
-extern struct M37Course gAirGrindCourse;
-extern s16 gUnk_080D0398[];
-extern s32 gUnk_0201BFC0;
-extern s32 gUnk_0201B200[4][73];
-extern s32 gUnk_0201B690[];
-extern u32 gUnk_02018920[];
-extern s16 gUnk_02017980[4][500];
-extern s16 gUnk_02019140[4][500];
-extern s16 gUnk_0201B1F4;
-extern s16 gUnk_080D075A[];
-extern s16 gUnk_080D0760[];
-extern vu16 gBg0Cnt;
-extern vu16 gBg1Cnt;
-extern vu16 gBg2Cnt;
-extern vu16 gBg3Cnt;
-extern u32 gBg0ScrollX;
-extern vs32 gBg1ScrollX;
-extern vs32 gBg2ScrollX;
-extern vs32 gBg3ScrollX;
-extern u32 gBg0ScrollY;
-extern vs32 gBg1ScrollY;
-extern vs32 gBg2ScrollY;
-extern vs32 gBg3ScrollY;
-extern u16 gBgPalette[];
-extern u16 gUnk_080D0198[];
-extern u32 gUnk_0201A0E0[4][256];
-extern s16 gUnk_0201B7C0[4][256];
-extern s16 gUnk_02017180[4][256];
-extern s16 gUnk_080D059A[];
-extern s16 gUnk_080D0766[];
-extern s32 *gUnk_08757300[];
-extern s32 *gUnk_08757310[];
-extern u16 *gUnk_08757320[];
-
 u32 Random(void);                                      /* LCG step */
-void AirGrindDrawCourse(void);
 
 s32 sub_080c5284(s32 angle)
 {

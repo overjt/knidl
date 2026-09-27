@@ -1,6 +1,12 @@
 #include "gba/gba.h"
 #include "global.h"
 #include "task.h"
+#include "sound.h"
+#include "room.h"
+#include "player.h"
+#include "effect.h"
+#include "enemy.h"
+#include "ending.h"
 
 /* ending_c9004.c (0x080C9004-0x080CAA3B, issue #100).
  *
@@ -25,77 +31,35 @@
  *   sub_080c9a28 / sub_080c9cf0   variant 11, the finale: palette flashes,
  *       variants 2, 9 and 10, a fade to an OBJ-only display. */
 
+/* Not from main.h: this file's view of gObjPalette differs (lesson 3.517). */
 extern vu16 gDispCnt;          /* DISPCNT shadow */
 extern vs32 gBg3ScrollY;
 extern vs32 gBg3ScrollX;          /* ... BG3 */
-extern u16 gUnk_02000028;
-extern u16 gUnk_02004C94;
 extern s16 gSpriteCameraX;
 extern s16 gSpriteCameraY;
-extern u32 gUnk_02020000[];         /* decompression buffer */
-extern u16 gUnk_03001570[];         /* palette buffer */
-extern u32 gObjVram[];         /* OBJ VRAM */
-extern u16 gPlayerPalettes[][16];     /* per-player palettes */
-extern void (*gUnk_087573F4[])(void);
-extern struct GfxHeader gUnk_0859A09C;
-extern u16 gUnk_085E0070[];
-extern u32 gUnk_085E0090[];
-extern u16 gUnk_08757424[];
-extern u32 gUnk_0875585C[];
-extern u16 gUnk_0859A0B0[];
-extern u16 gUnk_0859A0D0[];
+extern u8 gObjVram[];         /* OBJ VRAM */
 extern u16 gObjPalette[];
-extern u8 gEndingSceneActive;
-extern u16 gUnk_08757432[];
-extern u32 gUnk_0874C500[];
-extern u16 gUnk_085E2920[];
-extern u16 gUnk_085E2A20[];
-extern u16 gUnk_085E2B20[];
-extern u16 gUnk_0875743E[];
-extern u16 gUnk_03001370[];
-extern vu16 gBgPalette[];
+extern u16 gBgPalette[];
 extern vu16 gFadeSteps;
 extern vs16 gBrightness;
-extern vu16 gFadeStep;
+extern vs16 gFadeStep;
 extern vu16 gFadeTimer;
 extern vu16 gFadeInterval;
 extern vu16 gFadeBlankAtWhite;
 extern u16 *gFadeKeepMask;
-extern u32 gUnk_0874CF94[];
-extern u32 gUnk_0874C44C[];
-extern u32 gUnk_0874CF28[];
-extern u32 gUnk_08755440[];
-extern u32 gUnk_0875546C[];
-extern u32 gUnk_08755484[];
 
-void TaskExitTrampoline(void);
-void TaskYieldTrampoline(s32 frames);
 void RequestCopy(u32 mode, u32 src, u32 dst, u32 size);
 s32 QueueSprite(u32 a, u32 b, u32 c, u32 d, u32 e, s16 f);  /* sprite draw; callers pass f sign-extended (lsls/asrs #16), the early_1518 definition says u16 (lesson 3.428) */
 void CallTableEntry(u32 idx, u32 count, void (**fns)(void));   /* if (idx < count) fns[idx](); */
 u32 RandomRange(u32 range);                                 /* random 0 .. range-1 */
 void BlendColors(u16 *src, u16 *dst, s32 ratio, s32 count, u16 *out);
 s32 PlaySfx(s32 id);                                    /* play a sound effect */
-void SetBgmVolume(u16 volume);
 s32 TaskCreateFrom(u32 type, s32 idx);                         /* spawn a task */
-void TaskMove(void);
 u32 TaskIsOnScreen(void);
 u32 TaskIsInView(void);
-void TaskDrawScreen(void);
 void TaskDrawWorld(void);
 void TaskSleepForever(void);                                     /* end the running task */
 void TaskStop(void);
-void sub_0801a3e4(void);
-void SetCameraFocusOrAnchor(s32 x, s32 y);
-void sub_080c9040(void);
-void sub_080c90c8(void);
-void sub_080c9418(void);
-void sub_080c972c(void);
-void sub_080c97a0(void);
-void sub_080c9974(void);
-void sub_080c9cf0(void);
-void sub_080ca570(void);
-void sub_080ca640(void);
 
 /* Task type #101 (class 3): variant 0 loads the graphics and spawns the
    other variants; variants 1-11 run the anchor table gUnk_087573F4[]. */

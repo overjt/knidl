@@ -53,6 +53,7 @@
  *   symbol: integer-literal pointers let gcc fold `p + 0x100` into a
  *   single pool constant and drop the entry guard the ROM has. */
 
+/* Not from main.h: this file's view of gOamBuffer differs (lesson 3.517). */
 extern vu16 gDispCnt; /* REG_DISPCNT shadow */
 extern vu16 gIntrEnable; /* REG_IE shadow */
 extern vu16 gDispStat; /* REG_DISPSTAT shadow */
@@ -66,9 +67,9 @@ extern u32 gOamBufferCursor;
 extern vs32 gSpriteQueueTop;  /* record counter, -1 = empty */
 extern vu16 gOamAffineCount;
 extern vu16 gAffineSpriteBufferPos;
-extern u32 gSpriteLayerCounts[]; /* per-lane counts (16 words, CpuFastSet-cleared) */
+extern vu32 gSpriteLayerCounts[16]; /* per-lane counts (16 words, CpuFastSet-cleared) */
 extern vu8 gSpriteLayerLists[]; /* per-lane byte lists [lane][64] */
-extern u8 gSpriteQueue[];  /* 12-byte records, indexed by gSpriteQueueTop */
+extern u16 gSpriteQueue[][6];  /* 12-byte records, indexed by gSpriteQueueTop */
 
 extern void ClearHBlankIntr(void);
 extern void ClearVCountIntr(void);

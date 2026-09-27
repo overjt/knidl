@@ -1,31 +1,14 @@
 #include "gba/gba.h"
 #include "global.h"
 #include "task.h"
+#include "cutscene.h"
+#include "player.h"
 
-extern struct Task *gCurTask;
-extern u32 gUnk_08732104[];
-
+/* Declared here, not through a header: the calls in this file pass other
+   types than the definition takes (lessons 3.428, 3.517). */
 s32 QueueSprite(u32 a, u32 b, u32 c, u32 d, s32 e, s32 f);
 s32 RandomRange(s32 a);
 u32 IsWorldPosOnScreen(s16 x, s16 y);
-
-/* 16-byte per-slot record, 3 slots per player, at gUnk_02007E90.
-   unk00/unk04 are 16.16 (x,y) offsets whose high halves are read directly,
-   unk08 is the 16.16 y-delta, unk0C a down-counter, unk0D a frame id.
-   hdr.c only has `extern u32 gUnk_02007E90[]`, so the real 2-D shape and the
-   s16 pair-table at 0x087320C4 are aliased in here. */
-struct M04Spark
-{
-    /*0x00*/ s32 unk00;
-    /*0x04*/ s32 unk04;
-    /*0x08*/ s32 unk08;
-    /*0x0C*/ u8 unk0C;
-    /*0x0D*/ u8 unk0D;
-    /*0x0E*/ u16 unk0E;
-};
-
-extern struct M04Spark gUnk_02007E90[][3];
-extern s16 gUnk_087320C4[][16];
 
 void sub_080109c8(void)
 {

@@ -14,6 +14,7 @@
  */
 #include "gba/gba.h"
 #include "global.h"
+#include "main.h"
 
 /* The draw code's view of struct Task (include/task.h): gCurTask is the
  * running task and gTasks[] the 64 control blocks (stride 0x90, indexed
@@ -52,16 +53,17 @@ struct Sprite
     /*0x6C*/ u8 filler6C[0x90 - 0x6C];
 };
 
+/* Not from task.h: this file's view of gCurTask differs (lesson 3.517). */
 extern struct Sprite *gCurTask;
 extern struct Sprite gTasks[];
 extern void *gTaskResumeAddrs[];
 extern u32 gTaskStackPtrs[];
 /* Camera scroll origin: subtracted from the world coordinates to get the
  * screen coordinates handed to QueueSprite. */
-extern s16 gSpriteCameraX;
-extern s16 gSpriteCameraY;
-extern u32 gCurTaskIdx;
+extern vs32 gCurTaskIdx;
 
+/* Declared here, not through a header: the calls in this file pass other
+   types than the definition takes (lessons 3.428, 3.517). */
 extern s32 QueueSprite(u32 a, u32 b, u32 c, u32 d, u32 e, u32 f);
 extern void TaskFree(u32 a);
 extern u8 TaskIsOnScreen(void);

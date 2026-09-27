@@ -1,5 +1,9 @@
 #include "gba/gba.h"
 #include "global.h"
+#include "main.h"
+#include "link.h"
+#include "mode.h"
+#include "hud.h"
 
 /* Link-cable session drivers, 0x08002378-0x0800293C (issue #32, batch C1).
  *
@@ -76,25 +80,9 @@
  *   clamp's and the outer 0x7755 case's uses) and none moved it.
  */
 
-extern void RunFrameNoTasks(void);
+/* Declared here, not through a header: the calls in this file pass other
+   types than the definition takes (lessons 3.428, 3.517). */
 extern void LinkMain1(void *, void *, void *);
-extern int IsLinkError(void);
-extern void LinkErrorScreen(void);
-
-extern u16 gHudClock[4];
-extern vu32 gRngValue;
-extern u16 gFrameCount;
-extern u32 gUnk_03001EFC;
-extern u16 gLinkIsMaster;
-extern s8 gUnk_030023A8[];
-extern u16 gLocalPlayer;
-extern u16 gLinkPlayerCount;
-extern s16 gUnk_0300244C;
-extern u16 gRecvCmds[4][4];
-extern u32 gSerialIntrCount;
-extern u16 gShouldAdvanceLinkState;
-extern u16 gSendCmd[4];
-extern u16 gLinkCommand;
 
 void LinkSyncClock(void)
 {

@@ -1,6 +1,12 @@
 #include "gba/gba.h"
 #include "global.h"
 #include "task.h"
+#include "main.h"
+#include "sound.h"
+#include "player.h"
+#include "effect.h"
+#include "enemy.h"
+#include "ending.h"
 
 /* ending_c6c64.c (0x080C6C64-0x080C7E4B, issue #100).
  *
@@ -17,48 +23,17 @@
  *   sub_080c7cc0   variant 3: a sprite that drifts right from its spawner and
  *       plays one of three animations five times. */
 
-extern u16 gUnk_02000028;
-extern u16 gUnk_02004C94;
-extern u32 gUnk_02020000[];         /* decompression buffer */
-extern u16 gUnk_03001570[];         /* palette buffer */
-extern u32 gObjVram[];         /* OBJ VRAM */
-extern u16 gPlayerPalettes[][16];     /* per-player palettes */
-extern void (*gUnk_08757330[])(void);
-extern struct GfxHeader gUnk_085995AC;
-extern struct GfxHeader gUnk_0859990C;
-extern u16 gUnk_0875735C[];
-extern u32 gUnk_08755708[];
-extern u32 gUnk_080DBEF8[];
-extern u32 gUnk_080DBF00[];
-extern u32 gUnk_080DBF08[];
-extern u32 gUnk_080DBF18[];
-extern u32 gUnk_080DBF28[];
-extern u32 gUnk_080DBF30[];
-extern u8 gEndingSceneActive;
-extern s16 gUnk_0873FF98[];
-extern u32 gUnk_0874CF28[];
-
-void TaskExitTrampoline(void);
-void TaskYieldTrampoline(s32 frames);
 void RequestCopy(u32 mode, u32 src, u32 dst, u32 size);
 s32 QueueSprite(u32 a, u32 b, u32 c, u32 d, u32 e, s16 f);  /* sprite draw; callers pass f sign-extended (lsls/asrs #16), the early_1518 definition says u16 (lesson 3.428) */
+/* Declared here, not through a header: the calls in this file pass other
+   types than the definition takes (lessons 3.428, 3.517). */
 s32 DrawAffineSprite(s32 a, s16 b, s16 c, s32 d);
 void CallTableEntry(u32 idx, u32 count, void (**fns)(void));   /* if (idx < count) fns[idx](); */
 u32 RandomRange(u32 range);                                 /* random 0 .. range-1 */
-s32 PlayBgm(s32 songId);
 s32 PlaySfx(s32 id);                                    /* play a sound effect */
 s32 TaskCreateFrom(u32 type, s32 idx);                         /* spawn a task */
-void TaskMove(void);
-void TaskMoveRelativeToParent(void);
-void TaskDrawScreen(void);
 void TaskSleepForever(void);                                     /* end the running task */
-void TaskSetMotion(s32 a, s32 b, s32 c, s32 d, s32 e, s32 f);
-void TaskStop(void);
 void LoadGfxSet(u16 a0);                                   /* load screen graphics */
-void sub_080c6ca0(void);
-void sub_080c6d38(void);
-void sub_080c769c(void);
-void sub_080c77cc(void);
 
 /* Task type #100 (class 3): variant 0 loads the graphics and spawns the
    other variants; variants 1-10 run the anchor table gUnk_08757330[]. */

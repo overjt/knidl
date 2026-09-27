@@ -1,6 +1,13 @@
 #include "gba/gba.h"
 #include "global.h"
 #include "task.h"
+#include "main.h"
+#include "sound.h"
+#include "hud.h"
+#include "room.h"
+#include "player.h"
+#include "effect.h"
+#include "actor.h"
 
 /* player_45d34.c (0x08045D34-0x0804632F, issue #87).
  *
@@ -17,27 +24,9 @@
  * PlayerActionMikeUpdate requests action 1 or 7 (on the ground or in the air) once
  * it has finished. */
 
-extern vu16 gDispCnt;              /* DISPCNT shadow */
-extern u8 gUnk_03001F34;
-extern u32 gPlayerDefaultTerrainBox[];
-
-void TaskYieldTrampoline(s32 frames);
 s32 PlaySfx(s32 id);
-s32 StopSfx(s32 songId);
-void TaskSleepForever(void);
-void TaskSetFrame(s32 a);
-s32 SetPlayerAbilityNoHud(s32 a, s32 b, u32 c);
-void HudShowAbility(s32 a, s32 id);
 void RequestScreenShake(u16 a);
-void SetRoomUpdateFlags(u32 a);
-void PlayerStopAxes(s32 a0);
-void SetPlayerInvulnerability(s32 a0, s32 a1, s32 a2);
-void FreezeOtherTasks(s32 a0);
-void PlayerStartOffsetScript(s32 a0);
-void PlayerStopAtCeilingAndWall(void);
 void PlayerSetMotionXPreset(s32 a0, s32 a1);           /* M11, still asm; M11's own spelling */
-void PlayerSetMotionYPreset(s32 a0);
-s32 CreatePlayerEffect(s32 a0, s32 a1, s32 a2);
 
 void PlayerActionMike(void)
 {

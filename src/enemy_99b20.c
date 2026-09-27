@@ -33,70 +33,20 @@
 #include "gba/gba.h"
 #include "global.h"
 #include "task.h"
-
-/* RAM cells */
-extern s32 gUnk_02007D00[];
-extern u8 gDigits[6];
-extern vu16 gTaskSlotTypes[];
-
-/* ROM tables */
-extern u8 gUnk_087456D0[];
-extern u8 gUnk_087456D2[];
-extern u8 gUnk_087456D4[];
-extern u8 gUnk_087456E4[];
-extern u8 gUnk_087456F4[];
-extern u8 gUnk_08745704[];
-extern u8 gUnk_08745714[];
-extern u8 gUnk_087456CC[];
-extern u32 gUnk_08745964[];
-extern u32 gUnk_08745980[];
-extern u32 gUnk_087459D4[];
-extern u32 gUnk_087459F0[];
-extern struct AnimCmd gUnk_08745744[];
-extern u32 gMrTickTockVariants[];
-extern u32 gMrTickTockStates[];
-extern u32 gMrTickTockStateUpdates[];
-extern u32 gUnk_08745A1C[];
-extern u32 gUnk_08745A24[];
-extern u32 gUnk_08745A98[];
-extern u32 gUnk_08745AE4[];
-extern u32 gUnk_08745B00[];
-extern u32 gUnk_08745B04[];
-extern u32 gUnk_08745B1C[];
-extern u32 gUnk_08745B08[];
-extern u32 gUnk_08745BD0[];
-extern u32 gUnk_08745BEC[];
-extern u32 gUnk_08745C08[];
-extern u32 gUnk_08745C24[];
-extern u32 gUnk_08745C40[];
-extern u32 gUnk_08745AE8[];
-extern u32 gUnk_08745AF4[];
-extern u32 gUnk_0874CB7C[];
-extern u32 gMrTickTockFrames[];
-extern u32 gMrTickTockRingFrames[];
-extern u32 gMrTickTockNoteFrames[];
-extern void *gUnk_082797C8;
+#include "main.h"
+#include "link.h"
+#include "sound.h"
+#include "actor.h"
+#include "enemy.h"
 
 /* Externals */
-extern void TaskYieldTrampoline(u32 a);
+/* Declared here, not through a header: the calls in this file pass other
+   types than the definition takes (lessons 3.428, 3.517). */
 extern void CallTableEntry(u32 a, u32 b, u32 *c);
 extern u32 RandomRange(u32 range);
-extern void IntToDigits(s16 n);
-extern void TaskFree(s32 id);
-extern void TaskSleepForever(void);
 extern void TaskSetEntry(void *fn, s32 i);
-extern void TaskSetMotionXFacing(s32 a, s32 b);
-extern void TaskStopX(void);
-extern void TaskStopY(void);
-extern void TaskStop(void);
-extern void TaskSetFrame(s32 a);
-extern void TaskSetFrameNoFlip(s32 a);
-extern void TaskSetFrameFlip(s32 a);
 extern s32 PlaySfx(s32 id);
 extern void RequestScreenShake(s32 a);
-extern void StopSfxOnPlayer(s32 player, s32 songId);
-extern s32 TaskGetNearestPlayerDx(void);
-extern s32 TaskGetNearestPlayerDy(void);
 extern u32 sub_08021a40(s32 x, s32 y);
 extern void ActorSetState(u16 v);
 extern void ActorSetHitReactions(u32 *p);
@@ -104,45 +54,13 @@ extern void ActorSetAttackBox(u32 *p);
 extern void ActorSetTerrainBox(u32 *p);
 extern void sub_08063a00(u32 *p);
 extern s32 TaskGetDxTo(s32 i);
-extern void TaskFaceNearestPlayer(void);
-extern void TaskTurnAround(void);
-extern s32 CreateActorFromDescAtOffsetFacing(struct ActorSpawn *p, u8 keepPrio);
-extern s32 CreateChildTaskHere(u32 type, u8 keepPrio);
-extern u16 sub_08066088(u32 mode);
-extern void ActorFlashPalette(void *src, u32 size);
-extern void sub_08066468(void);
-extern void sub_08066580(void);
-extern void sub_080666cc(struct AnimCmd *p);
-extern void sub_080667c0(u8 a, u16 b);
-extern void sub_0806684c(void);
-extern void sub_08066ae0(void);
-extern void sub_08065438(void);
-extern void ActorDrawWorldInViewOrDestroy(void);
 extern u32 ActorCheckHits(void);
-extern void ActorAttachEffect(s32 a, s32 b);
-extern void PlayRayBurstAnim(void);
-extern void ActorDestroy(void);
-extern void ActorMove(void);
-extern u8 sub_08067060(void);
 extern void sub_08068f68(void);
 extern u8 ActorCollideTerrain(void);
 extern s32 ActorReactToHit(void);
-extern void ActorDie(void);
-extern void sub_0806ad18(void);
-extern s16 CreateStarFlash(u8 kind, s32 dx, s32 dy);
-extern s16 CreateDustTrail(u8 flag, u16 vx, s32 c, s32 d);
-extern void sub_0806cffc(s16 dx, s16 dy);
-extern void sub_0806ee2c(void);
-extern void sub_08098afc(void);
-extern void sub_0809baec(void);
 
 /* Defined below */
 void sub_0809a080(u8 a);
-void MrTickTockUpdate(void);
-void MrTickTockEnterState(void);
-void sub_0809b5b4(void);
-void sub_0809b868(void);
-void sub_0809b5ec(void);
 
 u8 sub_08099b20(void)
 {

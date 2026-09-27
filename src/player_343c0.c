@@ -1,6 +1,12 @@
 #include "gba/gba.h"
 #include "global.h"
 #include "task.h"
+#include "main.h"
+#include "collision.h"
+#include "room.h"
+#include "player.h"
+#include "effect.h"
+#include "actor.h"
 
 /* player_343c0.c (0x080343C0-0x08034F8B, issue #92).
  *
@@ -18,60 +24,8 @@
  * on TaskYieldTrampoline; the handlers run M11's transition predicates
  * and write the next request into PlayerState.requestedAction. */
 
-/* gTerrainResult: M06's collision result block (src/terrain_1bcac.c spells it
-   the same way except unk8, which M09 reads with ldrsh). */
-struct Unk03005550
-{
-    /*0x00*/ u8 unk0;
-    /*0x01*/ u8 ceilingHits;
-    /*0x02*/ u8 unk2;
-    /*0x03*/ u8 unk3;
-    /*0x04*/ u8 slope;
-    /*0x05*/ u8 unk5;
-    /*0x06*/ u8 unk6;
-    /*0x07*/ u8 unk7;
-    /*0x08*/ s16 unk8;
-    /*0x0A*/ u8 atDoor;
-    /*0x0B*/ u8 onSlipperyFloor;
-    /*0x0C*/ u8 unkC;
-    /*0x0D*/ u8 unkD;
-};
-
-extern u16 gLatchedHeldKeys[];             /* latched state mask per player (M11) */
-extern u16 gUnk_0873D31C[];
-extern u16 gUnk_0873D350[];
-extern struct Unk03005550 gTerrainResult;
-extern u16 gUnk_0873D384[];
-
-void TaskYieldTrampoline(s32 frames);
-void TaskSleepForever(void);
 void TaskSetEntry(void *a, u32 i);
-void TaskSetFrame(s32 a);
-s32 IsFullBlockAtPixel(u16 x, u16 y);
-void PlayerActionFall(void);
-void PlayerPlayBump(void);
-void PlayerStopAxes(s32 a0);
-s32 PlaySfxIfLocalPlayer(s32 a0, u16 a1);
-void PlayerStartSfx(s32 a0, u16 a1);
-s32 PlayerLand(s32 a0);
-void PlayerTurnToHeldDirection(void);
-void PlayerCheckBump(void);
-s32 PlayerStopAtWall(void);
-s32 sub_0803fd20(s32 a0);
-s32 PlayerCheckSkid(void);
-s32 PlayerCheckJump(void);
-s32 sub_0803fe68(void);
-s32 PlayerCheckDuckOrSwallow(void);
-s32 PlayerCheckLadder(void);
-s32 PlayerCheckFloat(void);
-s32 PlayerCheckAirFloat(void);
-s32 PlayerCheckBButton(void);
-s32 PlayerCheckEnterDoor(void);
-s32 PlayerCheckDropAbility(void);
-s32 PlayerRequestLocomotion(void);
 void PlayerSetMotionXPreset(s32 a0, s32 a1);           /* M11, still asm; M11's own spelling */
-void PlayerSetMotionYPreset(s32 a0);
-s32 CreatePlayerEffect(s32 band, s32 id, s32 payload);
 
 void PlayerActionRun(void)
 {

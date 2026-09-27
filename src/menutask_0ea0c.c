@@ -1,6 +1,8 @@
 #include "gba/gba.h"
 #include "global.h"
 #include "task.h"
+#include "main.h"
+#include "menu.h"
 
 /* menutask_0ea0c.c (0x0800EA0C-0x0800F17F, issue #99).
  *
@@ -15,39 +17,11 @@
  * palettes of the link-play screen (menu screen 8) through BlendColors
  * blends. */
 
-extern s8 gMenuScreen;
-extern s8 gMenuChoiceCursor;
-extern s8 gPrevMenuScreen;
-extern s16 gSoundTestSelection[];
-extern s8 gMenuCursor;
-extern vu16 gPressedKeys;
-extern vu8 gBldAlphaEva;
-extern u16 gUnk_030012F0[][16];
-extern u16 gUnk_03001310[][16];
-extern u16 gUnk_03001372[];
-extern u16 gUnk_030015D0[];
-extern u16 gUnk_030015F4[];
-extern vu8 gBldAlphaEvb;
-extern u16 gUnk_08559BA4[][16];
-extern u16 gUnk_08560DBC[][16];
-extern u16 gUnk_08560F9C[];
-extern u16 gUnk_08561224[][10];
-extern u16 gUnk_0856342C[][10];
-extern u16 gUnk_085634D8[][16];
-extern u16 gUnk_08564F38[][5];
-extern u32 gUnk_08755650[];
-extern u32 gUnk_087556D4[];
-
-void TaskExitTrampoline(void);
-void TaskYieldTrampoline(s32 frames);
 void RequestCopy(u32 mode, u32 src, u32 dst, u32 size);
+/* Declared here, not through a header: the calls in this file pass other
+   types than the definition takes (lessons 3.428, 3.517). */
 s32 QueueSprite(u32 a, u32 b, u32 c, u32 d, u32 e, s16 f);
 void BlendColors(u16 *src, u16 *dst, s32 ratio, s32 count, u16 *out);
-void TaskMove(void);
-u8 TaskIsOnScreenNoCamera(void);
-void SetBlend(s32 a, s32 b, s32 c, s32 d);
-void sub_0800ec08(void);
-void sub_0800ecb8(void);
 
 void sub_0800ea0c(void)
 {

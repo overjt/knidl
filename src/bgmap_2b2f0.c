@@ -1,6 +1,9 @@
 #include "gba/gba.h"
 #include "global.h"
 #include "task.h"
+#include "main.h"
+#include "room.h"
+#include "camera.h"
 
 /* bgmap_2b2f0.c (0x0802B2F0-0x0802B4BB, issue #86).
  *
@@ -9,13 +12,6 @@
  * streamed camera position, clamped to the room; the three differ only in
  * the window width.  SetBg23ScreenSize and SetBg3ScreenSize set the screen-size
  * bits (15:14) of the BG2CNT/BG3CNT shadows gBg2Cnt/gBg3Cnt. */
-
-extern s16 gUnk_020055B8[4];
-extern u16 gCameraStreamPos[2];
-extern s16 gRoomHeight;
-extern s16 gRoomWidth;
-extern vu16 gBg2Cnt;
-extern vu16 gBg3Cnt;
 
 void sub_0802b2f0(void)
 {

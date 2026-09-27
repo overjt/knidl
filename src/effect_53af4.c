@@ -1,6 +1,10 @@
 #include "gba/gba.h"
 #include "global.h"
 #include "task.h"
+#include "main.h"
+#include "player.h"
+#include "effect.h"
+#include "enemy.h"
 
 /* effect_53af4.c (0x08053AF4-0x0805432F, issue #89).
  *
@@ -37,37 +41,13 @@
  * Task.unk18, when the spawner's Task.onGround clears, a countdown in
  * Task.unk30 runs out or M11's sub_0803fd20 no longer returns 4. */
 
-extern void (*gPlayerEffectVariants[])(void);   /* task type #7's 49 variants, indexed by Task.unk18 >> 24 */
-extern u32 gUnk_08751C44[];
-extern u32 gUnk_0874C600[];
-extern u32 gUnk_08751CEC[];
-extern u32 gUnk_0874C500[];
-extern s16 gUnk_0873B9EC[];             /* [6][8]: s16 x, y offsets, 8.8 velocities */
-
-void TaskExitTrampoline(void);
-void TaskYieldTrampoline(s32 frames);
 void CallTableEntry(u32 idx, u32 count, void (**fns)(void));   /* if (idx < count) fns[idx](); */
 u32 RandomRange(u32 range);                       /* RNG: 0 .. range-1 */
 void TaskFree(s32 id);                         /* kill task (M09+ spelling, 49 landed files) */
-void TaskMove(void);
-void TaskMoveRelativeToParent(void);
-void TaskDrawScreen(void);
-void TaskDrawWorld(void);
-void TaskSetFrameByFacing(s16 a);
-void TaskSetMotionXFacing(s32 a, s32 b);
-void TaskStop(void);
-void TaskSetFrame(s32 a);
 void TaskSetPosXFacing(u16 a);
-void TaskStepForward(s16 a);
 u16 RandomSpread(s32 base, u8 scale, u8 amount);   /* base + ((rand(256) * amount) >> 8) * scale */
 s16 RandomSpreadFacing(s32 base, u8 scale, u8 amount);   /* the same, negated when Task.facing != 1 */
-void sub_0803dfc8(void);
-s32 sub_0803fd20(s32 a0);
 s32 CreatePlayerEffect(s32 a0, s32 a1, s32 a2);          /* M16's effect spawner (spawns task type #7) */
-void sub_08053be0(void);
-void sub_08053c1c(void);
-void sub_08053e34(void);
-void sub_08054298(void);
 
 void Task_PlayerEffect(void)
 {

@@ -12,62 +12,23 @@
 #include "gba/gba.h"
 #include "global.h"
 #include "task.h"
-
-
-/* RAM cells and ROM tables */
-extern s16 gViewRect[];
-extern s32 gUnk_030023D4;
-extern struct Task * gCurTask;
-extern struct Task gTasks[];
-extern u16 gLocalPlayer;
-extern u32 gUnk_02004B4C;
-extern u32 gUnk_02005584;
-extern u32 gUnk_0873F5CC[];
-extern u32 gUnk_0873FC94[];
-extern u32 gUnk_08754560[];
-extern u8 gUnk_020061E0;
-extern u8 gUnk_03001F30;
+#include "main.h"
+#include "link.h"
+#include "sound.h"
+#include "cutscene.h"
+#include "room.h"
+#include "camera.h"
+#include "player.h"
+#include "actor.h"
+#include "enemy.h"
 
 /* callees */
-extern s32 PlayBgm(s32 songId);
 extern s32 PlaySfx(u32 a);
-extern s32 TaskCreateFrom(u32 type, s32 idx);
-extern s32 sub_08025b0c();
-extern s32 sub_08025e00();
-extern s32 sub_08025e0c();
-extern s32 sub_08025f00();
-extern s32 SetCameraFocusOrAnchor();
-extern s32 sub_08027798();
-extern s32 sub_080277f0();
-extern s32 CreateChildTaskAt(u32 type, s16 xArg, s16 yArg, u8 keepPrio);
-extern void TaskExitTrampoline(void);
-extern void TaskYieldTrampoline(u32 a);
+/* Declared here, not through a header: the calls in this file pass other
+   types than the definition takes (lessons 3.428, 3.517). */
 extern void CallTableEntry(u32 a, u32 b, u32 *c);
-extern void StopBgm(void);
-extern void StopSfxOnPlayer(s32 player, s32 songId);
-extern void TaskMove(void);
-extern void TaskSleepForever(void);
-extern void TaskSetMotionXFacing(s32 a, s32 b);
-extern void TaskSetMotionY(s32 a, s32 b, s32 c);
-extern void TaskSetMotion(s32 a, s32 b, s32 c, s32 d, s32 e, s32 f);
-extern void TaskStop(void);
-extern void TaskSetFrame(s32 a);
 extern void sub_0801bcac(u32 *p);
 extern void RequestScreenShake(u32 a);
-extern void ActorDestroy(void);
-extern void TaskGetScreenPos(void);
-extern void TaskMoveRelativeToView(void);
-extern void CreateBurstEffect(u32 a, s32 b);
-extern void sub_0807186c(int a, int b, int c, int d);
-extern void sub_08071898(void);
-extern void sub_080718c0(void);
-extern void sub_08071bb0(u16 a);
-extern void sub_08071c38(u16 a);
-extern void sub_08071d2c(void);
-extern void sub_08075290(s32 a);
-
-/* defined below */
-void sub_08074568(void);
 
 void sub_08072d8c(void)
 {

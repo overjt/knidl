@@ -1,6 +1,9 @@
 #include "gba/gba.h"
 #include "global.h"
 #include "task.h"
+#include "main.h"
+#include "link.h"
+#include "effect.h"
 
 /* effect_55460.c (0x08055460-0x08055B23, issue #89).
  *
@@ -17,32 +20,13 @@
  * spawner, and sub_08055abc kills it (or, while gUnk_0300244C is set, hides
  * it) when the player is in mode 13, 16, 18 or 20. */
 
-extern u32 gUnk_0874C960[];
-extern u32 gUnk_0874C980[];
-extern u32 gUnk_0874C804[];
-extern u32 gUnk_0874C784[];
-extern s16 gSpriteCameraX;               /* scalar, read with ldrsh (33 landed files) */
-extern s16 gSpriteCameraY;               /* scalar, read with ldrsh (32 landed files) */
-extern u32 gUnk_0874C600[];
-extern u32 gUnk_0874C780[];
-extern s16 gUnk_0300244C;
-
-void TaskExitTrampoline(void);
-void TaskYieldTrampoline(s32 frames);
+/* Declared here, not through a header: the calls in this file pass other
+   types than the definition takes (lessons 3.428, 3.517). */
 s32 QueueSprite(u32 a, u32 b, u32 c, u32 d, u32 e, s16 f);
 void TaskFree(s32 id);                         /* kill task (M09+ spelling, 49 landed files) */
-void TaskMove(void);
-void TaskMoveRelativeToParent(void);
-void TaskUpdatePixelPos(void);
-void TaskDrawWorld(void);
-void TaskSetFrameByFacing(s16 a);
-void TaskSetMotionXFacing(s32 a, s32 b);
-void TaskStop(void);
 u16 RandomSpread(s32 base, u8 scale, u8 amount);   /* base + ((rand(256) * amount) >> 8) * scale */
 s16 RandomSpreadFacing(s32 base, u8 scale, u8 amount);   /* the same, negated when Task.facing != 1 */
 s32 CreatePlayerEffect(s32 a0, s32 a1, s32 a2);          /* M16's effect spawner (spawns task type #7) */
-void sub_080557d4(void);
-void sub_08055abc(void);
 
 void sub_08055460(void)
 {

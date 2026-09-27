@@ -1,6 +1,14 @@
 #include "gba/gba.h"
 #include "global.h"
 #include "task.h"
+#include "main.h"
+#include "link.h"
+#include "sound.h"
+#include "mode.h"
+#include "menu.h"
+#include "room.h"
+#include "player.h"
+#include "save.h"
 
 /* menu_0b920.c (0x0800B920-0x0800C09B, issue #99).
  *
@@ -15,112 +23,10 @@
  * sub_0800be8c/sub_0800bf10 its picture and palette, sub_0800bf6c its
  * second number. */
 
-struct SaveSlot
-{
-    /*0x00*/ u32 unk00;
-    /*0x04*/ s32 unk04;
-    /*0x08*/ u32 generation;
-    /*0x0C*/ s32 saveCount;
-    /*0x10*/ u16 milestoneFlags;
-    /*0x12*/ u16 completionPercent[2];
-    /*0x16*/ u8 unk16[2];
-    /*0x18*/ u8 unk18[2];
-    /*0x1A*/ u8 unk1A[2];
-    /*0x1C*/ u8 unk1C[2];
-    /*0x1E*/ u8 pad1E[2];
-    /*0x20*/ u32 unk20[2];
-    /*0x28*/ u8 unk28[8][7];
-    /*0x60*/ u16 unk60[4];
-    /*0x68*/ u16 unk68[4];
-    /*0x70*/ u32 checksum;
-    /*0x74*/ u8 filler74[0x8C];
-};
-
-extern s8 gLinkSessionMode;
-extern u32 gMenuBufferedKeys;
-extern u8 gUnk_02006090;
-extern s8 gMenuScreen;
-extern s8 gMenuTransitionTimer;
-extern u8 gCutscenePending;
-extern s16 gSoundTestSelection[];
-extern s8 gMenuCursor;
-extern struct SaveSlot gSaveSlots[];
-extern u32 gLinkSetupMode;
-extern vu16 gFadeBlankAtWhite;
-extern vs16 gFadeStep;
-extern vs32 gBg3ScrollY;
-extern vs16 gBrightness;
-extern vu16 gKeyRepeatDelay;
-extern vu16 gFadeTimer;
-extern u16 gUnk_03001490[];
-extern vu16 gFadeSteps;
-extern vu16 gFadeInterval;
-extern vu16 gKeyRepeatInterval;
-extern u16 *gFadeKeepMask;
-extern vu16 gDispCnt;
-extern s8 gDigits[];
-extern u8 gUnk_03001F30;
-extern u16 gPrevGameState;
-extern u16 gPlayerCount;
-extern u16 gGameState;
-extern s32 gCurSaveSlot;
-extern s16 gUnk_0300244C;
-extern u32 gLinkStatus;
-extern u32 gObjVram[];
-extern u8 gUnk_08551110[];
-extern u8 gUnk_08553210[];
-extern u8 gUnk_08553510[];
-extern u8 gUnk_08553810[];
-extern u16 gUnk_08554B78[];
-extern u16 gUnk_08731E18[];
-extern u16 gUnk_08731E1E[2][3];
-extern u8 *gUnk_08731E2C[2];
-
 void RequestCopy(u32 mode, u32 src, u32 dst, u32 size);
-void ResetFadeAndBlend(void);
-void BeginFastFadeOutToWhite(void);
-void ResetTasksAndOam(void);
-void RunFrame(void);
-void LinkStopKeyExchange(void);
-void RunFrames(s32 count);
-void RunFramesUntilFadeDone(void);
-void RunLinkFramesUntilFadeDone(void);
-void IntToDigits(s16 n);
-s32 PlayBgm(s32 songId);
-void FadeOutBgm(s32 speed);
-void LinkSetupStop(void);
-void LinkSetupMain(u16 a);
-s32 TaskCreateFrom(u32 type, s32 idx);
-void DisableSerial(void);
-void LoadBgLayout(s32 a0);
-void LoadGfxSet(u16 a0);
-void ResetScoresAndMaxHealth(void);
-void sub_0800c09c(void);
-void sub_0800c34c(void);
-void sub_0800c558(void);
-void sub_0800c610(void);
-void sub_0800c8a0(void);
-void MenuEnterModeList(void);
-void sub_0800cd60(void);
-void sub_0800d0f4(void);
-void sub_0800d450(void);
-void sub_0800d85c(void);
-void CreateFileSelectSprites(s32 mode);
-void BgScrollInit(void);
-void BgScrollStartY(s32 speed, s32 dist, s32 bg);
-void SetBlend(s32 a, s32 b, s32 c, s32 d);
-void ResetHBlankScroll(void);
-void SelectLatestSaveSlot(void);
-void LoadSaveSlot(s32 a);
+/* Declared here, not through a header: the calls in this file pass other
+   types than the definition takes (lessons 3.428, 3.517). */
 void sub_080b81a0(s32 a);
-s32 CheckNewMilestones(void);
-void sub_080b8888(void);
-void sub_080b8918(void);
-void MenuDrawSaveSlots(void);
-void sub_0800bda4(s32 slot);
-void sub_0800be8c(s32 slot, u32 pal);
-s32 sub_0800bf10(s32 slot, u32 pal);
-void sub_0800bf6c(s32 slot, s32 value, s32 mode);
 
 void MainMenuMain(void)
 {

@@ -361,8 +361,77 @@ struct PointPair
     u32 y1:16;
 };
 
-extern struct Task *gCurTask;
-extern struct Task gTasks[];
+
+
+/* EWRAM */
+extern u8  gTaskSkipMaskStack[2][64];
+extern u8  gTaskSkipMaskDepth;
+extern u8 gUnk_0203BFE0[];
+
+/* IWRAM */
+extern vu32 gTaskSavedSp;
+extern vu8  gTaskClassListPos[];
+extern vu8  gTaskClassPassEnd[];
+extern vu32 gCurTaskListPos;
 extern vs32 gCurTaskIdx;
+extern struct Task *gCurTask;
+extern vs32 gTaskCursor;
+extern vu8  gTaskClassLists[5][64];
+extern s32  gTaskSavedR0;
+extern u32  gTaskResumeAddrs[];
+extern vu32 gTaskCount;
+extern vs32 gTaskRunPhase;
+extern vu32 gTaskSavedLr;
+extern vu8  gTaskClassListLen[];
+extern vu8  gTaskClassPassStart[];
+extern vu16 gTaskListRefs[];
+extern struct Task gTasks[];
+extern u32 gTaskStackPtrs[];
+extern vs32 gCurTaskClass;
+extern vu32 gTaskBaseSp;
+extern vs16 gTaskSlotTypes[];
+
+/* ROM */
+extern const struct TaskType gTaskTypes[];
+
+/* Functions (defined in the files named above each group). */
+
+/* src/early_4fec.c */
+void InitTasks(void);
+
+/* src/early_5228.c */
+void RunTasks(void);
+
+/* src/early_55b0.c */
+void TaskSetSkipMask(u8 val, s32 idx);
+void TaskSetOthersSkipMask(u16 val, s32 idx);
+void TaskSetAllSkipMask(u16 val);
+
+/* src/early_5654.c */
+void TaskFree(s32 id);
+s32 TaskCreate(u32 type);
+
+/* src/early_58e4.c */
+s32 TaskCreateFrom(u32 type, s32 idx);
+s32 TaskCreateInRange(u32 type, s32 start, s32 end);
+void TaskClampVelocity(void);
+void TaskIntegrateMotion(void);
+void TaskMove(void);
+void TaskMoveRelativeToParent(void);
+void TaskUpdatePixelPos(void);
+void TaskMoveRelativeToBg3(void);
+
+/* src/early_5acc.c */
+u32 TaskLoadFrameTilesAndPalette(u32 alt);
+u32 TaskLoadFrameTiles(u32 alt);
+
+/* src/early_5c4c.c */
+void TaskDrawScreen(void);
+void TaskDrawScreenOrFree(void);
+
+/* asm/sdk_libc.s: the task trampolines into the ARM task switcher (rom-map section 6) */
+void TaskExitTrampoline(void);
+void TaskSwitchTrampoline(s32 id, u32 fn, u32 stack);
+void TaskYieldTrampoline(u32 frames);
 
 #endif // GUARD_TASK_H

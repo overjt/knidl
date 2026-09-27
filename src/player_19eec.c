@@ -1,6 +1,9 @@
 #include "gba/gba.h"
 #include "global.h"
 #include "task.h"
+#include "main.h"
+#include "room.h"
+#include "player.h"
 
 /* player_19eec.c (0x08019EEC-0x0801A07B, issue #125).
  *
@@ -17,19 +20,7 @@
  * else in src/; the ROM re-reads gBldAlphaEvb right after storing it
  * (lesson 3.472). */
 
-extern vu8 gBldCntTarget1;          /* BLDCNT lo shadow */
-extern vu8 gBldCntTarget2;          /* BLDCNT hi shadow */
-extern vu8 gBldAlphaEva;          /* BLDALPHA lo shadow (EVA) */
-extern vu8 gBldAlphaEvb;          /* BLDALPHA hi shadow (EVB) */
-extern u16 gUnk_03001370[];
-extern u16 gUnk_085E2920[];
-extern u16 gUnk_085E2A20[];
-extern u16 gUnk_085E2B20[];
-
-void TaskYieldTrampoline(s32 frames);
 void BlendColors(u16 *src, u16 *dst, s32 ratio, s32 count, u16 *out);
-void TaskMove(void);
-void TaskSleepForever(void);
 
 void sub_08019eec(void)
 {

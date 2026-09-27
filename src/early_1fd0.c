@@ -1,5 +1,6 @@
 #include "gba/gba.h"
 #include "global.h"
+#include "task.h"
 
 /* Early game-code block 0x08001CC8-0x08002377 (issue #32, batch B2).
  *
@@ -28,21 +29,21 @@
  * between evidenced functions and were recovered by disassembling the gaps.
  */
 
+/* Not from main.h: this file's view of gBg2ScrollX differs (lesson 3.517). */
 extern vs16 gAffineSpriteBuffer[];       /* affine OBJ staging buffer */
 extern vu16 gAffineSpriteBufferPos;         /* staging buffer write index */
 extern vu16 gOamBuffer[];       /* OAM shadow (attrs + affine params) */
 extern vu16 gOamAffineCount;         /* affine matrix index */
-extern u8 gUnk_0872EB14[];   /* shape/size -> {w,h} half-dims */
+extern const u8 gUnk_0872EB14[4][4][2];   /* shape/size -> {w,h} half-dims */
 extern s16 gCosTable[];  /* trig table (mid pointer) */
 
-
 /* BG scroll shadow cells (cleared as one volatile chain each). */
-extern vu32 gBg0ScrollX;
-extern vu32 gBg1ScrollX;
+extern vs32 gBg0ScrollX;
+extern vs32 gBg1ScrollX;
 extern vu32 gBg2ScrollX;
 extern vu32 gBg3ScrollX;
-extern vu32 gBg0ScrollY;
-extern vu32 gBg1ScrollY;
+extern vs32 gBg0ScrollY;
+extern vs32 gBg1ScrollY;
 extern vu32 gBg2ScrollY;
 extern vu32 gBg3ScrollY;
 
@@ -50,9 +51,9 @@ extern vu32 gBg3ScrollY;
 extern vs16 gFadeSteps;
 extern vs16 gBrightness;
 extern vs16 gFadeStep;
-extern vs16 gFadeTimer;
-extern vs16 gFadeInterval;
-extern vs16 gFadeBlankAtWhite;
+extern vu16 gFadeTimer;
+extern vu16 gFadeInterval;
+extern vu16 gFadeBlankAtWhite;
 extern u32 gFadeKeepMask;
 
 /* Blend/window shadow bytes. */
@@ -60,22 +61,20 @@ extern vu8 gBldCntTarget1;
 extern vu8 gBldCntTarget2;
 extern vu8 gBldAlphaEva;
 extern vu8 gBldAlphaEvb;
-extern u16 gBldY;
+extern vu16 gBldY;
 
 extern vu32 gWarmBoot;
 extern u16 gPlayTime[4];
-extern vu16 gPlayerPressedKeys[4];
-extern vu16 gPlayerHeldKeys[4];
-extern vu16 gLinkCommand;
-extern vu16 gLinkIsMaster;
+extern vu16 gPlayerPressedKeys[];
+extern vu16 gPlayerHeldKeys[];
+extern u16 gLinkCommand;
+extern u16 gLinkIsMaster;
 extern const u8 gBootSignature[];
 
-extern void InitTasks(void);
 extern void ResetOamShadow(void);
 extern void RunBuildOamInIwram(void);
 extern void EndFrame(void);
 extern void ResetSpriteQueue(void);
-extern void RunTasks(void);
 
 void ResetBgScroll(void)
 {

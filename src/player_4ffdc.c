@@ -1,6 +1,11 @@
 #include "gba/gba.h"
 #include "global.h"
 #include "task.h"
+#include "main.h"
+#include "hud.h"
+#include "room.h"
+#include "player.h"
+#include "actor.h"
 
 /* player_4ffdc.c (0x0804FFDC-0x080507BB, issue #90).
  *
@@ -15,36 +20,9 @@
  * gUnk_0873B724[Task.unk6E], PlayerState.unk10 counting the glide
  * frames). */
 
-extern u8 gUnk_03001F34;
-extern u16 gGameState;
-extern s16 gPlayerHealth[];             /* per-player health (M02's HUD) */
-extern s16 gMaxHealth;
-extern u8 gUnk_020055C4;
-extern u16 gUnk_0873B6CC[][2];
-extern u32 gPlayerDefaultBodyBox[];             /* stored to PlayerState.bodyBox as (u32)gPlayerDefaultBodyBox */
-extern u16 gLatchedHeldKeys[];             /* held keys, latched per player (M11) */
-extern u8 gUnk_0873B6DC[];
-extern u16 gUnk_0873B6E8[][6];
-extern u16 gFrameCount;
-extern u16 gLatchedPressedKeys[];             /* newly-pressed keys, latched per player */
-extern u16 gUnk_0873B724[][4];
-
-void TaskYieldTrampoline(s32 frames);
-void TaskSleepForever(void);
 void TaskSetEntry(void *a, u32 i);
-s32 AddPlayerHealth(s32 a, s32 b);
-void PlayerUpdate(void);
-void sub_0803332c(void);
-void PlayerStopAxes(s32 a0);
-void SetPlayerInvulnerability(s32 a0, s32 a1, s32 a2);
-s32 PlaySfxIfLocalPlayer(s32 a0, u16 a1);
-void sub_0803f6e0(void);
 void PlayerSetMotionXPreset(s32 a0, s32 a1);           /* M11, still asm; M11's own spelling */
-void PlayerActionStarRodFlight(void);
-void sub_0804fee8(void);
 s32 sub_08053a44(s8 player, u8 variant, s32 arg);
-void sub_080502f0(void);
-s32 sub_08050664(void);
 
 void sub_0804ffdc(void)
 {

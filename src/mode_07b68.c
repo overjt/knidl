@@ -1,6 +1,13 @@
 #include "gba/gba.h"
 #include "global.h"
 #include "task.h"
+#include "main.h"
+#include "link.h"
+#include "sound.h"
+#include "mode.h"
+#include "player.h"
+#include "save.h"
+#include "ending.h"
 
 /* mode_07b68.c (0x08007B68-0x080082CF, issue #96).
  *
@@ -12,91 +19,16 @@
  * 0x5503 SIO handshake (sub_08007b68/sub_08007c5c); sub_08007d4c is the
  * failure prompt that returns to state 4. */
 
-extern s8 gLinkSessionMode;
-extern u32 gUnk_02004000[];
-extern u8 gUnk_02006090;
+/* Not from room.h or actor.h: this file's view of gRoomTable and
+   gUnk_02007D00 differs (lesson 3.517). */
 extern s8 gSubGameLevel;
 extern s32 gUnk_02007D00;
-extern u8 gUnk_02007FCC;
-extern u32 gLinkDriverMode;
-extern u8 gLinkBroadcastAcks;
-extern vu8 gMultiBootStruct[];
-extern vu32 gLinkBlockParentChecksum;
-extern u32 gLinkBlockChecksum;
-extern u32 gLinkSetupMode;
-extern u32 gUnk_02020000[];
-extern vs32 gBg0ScrollY;
-extern vu16 gPressedKeys;
-extern vu16 gFadeBlankAtWhite;
-extern vs32 gBg3ScrollX;
-extern vs32 gBg3ScrollY;
-extern vs32 gBg0ScrollX;
-extern vu16 gFadeSteps;
-extern vu16 gPlayerPressedKeys[];
-extern vu16 gDispCnt;
-extern u16 gUnk_03001F18[];
-extern u16 gLinkIsMaster;
-extern u16 gPrevGameState;
-extern u16 gUnk_03002378[];
-extern u16 gPlayerCount;
 extern u16 gGameState;
-extern u16 gLinkPlayerCount;
-extern u16 gRecvCmds[4][4];
-extern u16 gShouldAdvanceLinkState[];
-extern u16 gSendCmd[4];
-extern s32 gUnk_03005280;
-extern u16 gUnk_085B113C[];
-extern u16 gUnk_085B119C[];
-extern u16 gUnk_085B274C[];
-extern u16 gUnk_085B2D0C[];
-extern u16 gUnk_085B2D8C[];
-extern u16 gUnk_085B450C[];
-extern u16 gUnk_085B4ACC[];
-extern u16 gUnk_085B4B4C[];
-extern u16 gUnk_085B64C8[];
-extern u8 gUnk_0876B1FC[];
-extern u8 gUnk_0876F690[];
-extern u8 gUnk_087954C0[];
-extern u8 gUnk_087C0A4C[];
 extern u8 gRoomTable[];
 
 void RequestCopy(u32 mode, u32 src, u32 dst, u32 size);
-void BeginFastFadeInFromWhite(void);
-void BeginFastFadeOutToWhite(void);
-void ResetTasksAndOam(void);
-void RunFrameNoTasks(void);
-void RunFrame(void);
-void LinkStartKeyExchange(void);
-void LinkStopKeyExchange(void);
-void LinkRequestSync(void);
-void LinkSyncRandom(void);
-void RunLinkFrame(void);
-void RunFrames(s32 count);
-void RunFramesNoTasks(s32 count);
-void RunLinkFrames(s32 count);
-void RunFramesUntilFadeDone(void);
-void RunFramesNoTasksUntilFadeDone(void);
-void RunLinkFramesUntilFadeDone(void);
-s32 PlayBgm(s32 songId);
 void PlaySfx(s32 id);
-void EnableSoundDriver(void);
-void MultiBootSetParams(u8 *start, u8 *end);
-void LinkSetupRequestStart(void);
-void LinkSetupMain(u16 a);
-u32 LinkBroadcastWordStep(void);
-void LinkBlockAnnounce(u32 *src, u32 *dst, u32 size);
-u32 LinkBlockHandshakeStep(void);
-void LinkBlockStart(void);
-u32 IsLinkBlockDone(void);
-void DisableSerial(void);
 void LinkMain1(u8 *cmd, u16 *send, u16 *recv);
-u32 ConnectLink(void);
-u32 IsLinkError(void);
-void sub_080082d0(void);
-void LoadBgLayout(s32 a0);
-void LoadGfxSet(u16 a0);
-void sub_08008e1c(s32 a0);
-void DrawClockToBgMap(u16 *a, s32 b, s32 c);
 
 s32 sub_08007b68(u32 *src, u32 *dst, u32 size)
 {

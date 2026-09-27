@@ -33,55 +33,17 @@
 #include "gba/gba.h"
 #include "global.h"
 #include "task.h"
+#include "main.h"
+#include "link.h"
+#include "sound.h"
+#include "room.h"
+#include "subgame.h"
 
-extern s32 gCurTaskIdx;
-extern u8 gUnk_02004B5C;
-extern s8 gSubGameLevel;
-extern u8 gQuickDrawBestTime;
-extern u8 gQuickDrawWins[];
-extern u8 gUnk_0200B048;
-extern u8 gQuickDrawRanking[];
-extern vu16 gFadeSteps;
-extern vu16 gDispCnt;
-extern u16 gPlayerCount;
-extern struct Task *gCurTask;
-extern struct Task gTasks[];
-extern vs16 gTaskSlotTypes[];
-extern u32 gQuickDrawStates[];
-extern u32 gQuickDrawStateUpdates[];
-extern u32 gUnk_08756334[];
-extern u32 gUnk_08756350[];
-
-void TaskYieldTrampoline(u32 frames);
-void BeginFastFadeInFromWhite(void);
-void BeginFastFadeOutToWhite(void);
+/* Declared here, not through a header: the calls in this file pass other
+   types than the definition takes (lessons 3.428, 3.517). */
 void CallTableEntry(u32 a, u32 b, u32 *c);
-s32 PlayBgm(s32 songId);
 s32 PlaySfx(s32 id);
-void StopBgm(void);
-void TaskSetOthersSkipMask(u16 val, s32 idx);
-void TaskFree(s32 id);
-s32 TaskCreateFrom(u32 type, s32 idx);
-void TaskSleepForever(void);
 void TaskSetEntry(void *fn, u32 i);
-void SubGameCheckEnd(void);
-void QuickDrawFreeze(void);
-void sub_080ba61c(void);
-void QuickDrawStartTimer(void);
-void QuickDrawWaitForSignal(void);
-s32 QuickDrawCountPresses(void);
-void QuickDrawSetPlayerState(s32 a0, u16 a1);
-void sub_080bc79c(u16 a0);
-void QuickDrawLoadOpponentGraphics(s32 a0);
-void QuickDrawSetOpponentState(s32 a0, u16 a1);
-
-void sub_080ba900(void);
-void sub_080baa38(void);
-void sub_080ba94c(void);
-void sub_080ba978(void);
-void sub_080baabc(void);
-void QuickDrawRoundUpdate(void);
-void CreateQuickDrawOpponent(void);
 
 u8 QuickDrawIsTimeUp(void)
 {

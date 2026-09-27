@@ -1,6 +1,10 @@
 #include "gba/gba.h"
 #include "global.h"
 #include "task.h"
+#include "room.h"
+#include "player.h"
+#include "enemy.h"
+#include "ending.h"
 
 /* ending_c7e4c.c (0x080C7E4C-0x080C9003, issue #100).
  *
@@ -22,52 +26,29 @@
  *       4 KiB of BG tiles from the decompression buffer, blend them in, hold
  *       and blend them out; then turn BG0 off. */
 
+/* Not from main.h: this file's view of gObjPalette differs (lesson 3.517). */
 extern vu16 gDispCnt;          /* DISPCNT shadow */
 extern s16 gSpriteCameraX;
 extern s16 gSpriteCameraY;
-extern u32 gUnk_02020000[];         /* decompression buffer */
-extern u32 gUnk_08755708[];
 extern u16 gObjPalette[];
-extern u16 gFrameCount;
-extern u16 gUnk_0859A0B0[];
-extern u16 gUnk_0859A0D0[];
-extern u8 gUnk_08757368[];
-extern s16 gUnk_0873FF98[];
-extern u32 gUnk_0875581C[];
-extern u16 gUnk_0859A0F0[];
-extern u16 gUnk_0859A110[];
-extern u32 gUnk_0874CEE8[];
-extern s32 gUnk_08757374[];
-extern s32 gUnk_08757394[];
-extern s32 gUnk_087573B4[];
-extern s32 gUnk_087573D4[];
+extern vu16 gFrameCount;
 extern vs16 gBrightness;
 extern vu8 gBldCntTarget1;
 extern vu8 gBldCntTarget2;
 extern vu8 gBldAlphaEva;
 extern vu8 gBldAlphaEvb;
 
-void TaskExitTrampoline(void);
-void TaskYieldTrampoline(s32 frames);
 void RequestCopy(u32 mode, u32 src, u32 dst, u32 size);
 s32 QueueSprite(u32 a, u32 b, u32 c, u32 d, u32 e, s16 f);  /* sprite draw; callers pass f sign-extended (lsls/asrs #16), the early_1518 definition says u16 (lesson 3.428) */
+/* Declared here, not through a header: the calls in this file pass other
+   types than the definition takes (lessons 3.428, 3.517). */
 s32 DrawAffineSprite(s32 a, s16 b, s16 c, s32 d);
 void BlendColors(u16 *src, u16 *dst, s32 ratio, s32 count, u16 *out);
 s32 PlaySfx(s32 id);                                    /* play a sound effect */
 s32 TaskCreateFrom(u32 type, s32 idx);                         /* spawn a task */
-void TaskMove(void);
-void TaskDrawScreen(void);
-void TaskDrawScreenOrFree(void);
 void TaskSleepForever(void);                                     /* end the running task */
 void TaskSetMotion(s32 a, s32 b, s32 c, s32 d, s32 e, s32 f);
 void TaskStop(void);
-void SetCameraFocusOrAnchor(s32 x, s32 y);
-void sub_080269e8(void);
-void sub_080c8298(void);
-void sub_080c8468(void);
-void sub_080c8778(void);
-void sub_080c8924(void);
-void sub_080c8e88(void);
 
 /* Task type #100 variant 4: the long scripted sprite of the first ending
    scene; its draw callback sub_080c8298 cycles the palette blend.  Near

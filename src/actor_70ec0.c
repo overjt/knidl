@@ -10,100 +10,34 @@
 #include "gba/gba.h"
 #include "global.h"
 #include "task.h"
-
-
-/* RAM cells and ROM tables */
-extern s16 gPlayerHealth[];
-extern s16 gViewRect[];
-extern s16 gSpriteCameraX;
-extern s16 gSpriteCameraY;
-extern s16 gUnk_0300244C;
-extern s16 gUnk_0873FF98[];
-extern s32 gUnk_030023D4;
-extern s32 gUnk_0873FB94[];
-extern s8 gUnk_02006160;
-extern s8 gUnk_030023B8;
-extern struct PlayerState gPlayerStates[];
-extern struct Task * gCurTask;
-extern struct Task gTasks[];
-extern u16 gUnk_020055C0;
-extern u16 gLocalPlayer;
-extern u16 gPlayerCount;
-extern u32 gUnk_02004B4C;
-extern u32 gUnk_02005584;
-extern u32 gUnk_02007D00[];
-extern u32 gUnk_0824A9CC[];
-extern u32 gUnk_0825D2C8[];
-extern u32 gUnk_0873F554[];
-extern u32 gUnk_0873F5CC[];
-extern u32 gUnk_0873FB7C[];
-extern u32 gWarpStarStates[];
-extern u32 gWarpStarStateUpdates[];
-extern u32 gUnk_0873FBC4[];
-extern u32 gUnk_0873FC2C[];
-extern u32 gWarpStarFrames[];
-extern u32 gUnk_08752D8C[];
-extern u8 gUnk_020061E0;
-extern u8 gUnk_02007CF0;
-extern u8 gUnk_03001F30;
-extern u8 gActivePlayerMask;
-extern u8 gActivePlayerCount;
-extern u8 gUnk_0873FAE8[];
-extern vs32 gCurTaskIdx;
+#include "main.h"
+#include "link.h"
+#include "sound.h"
+#include "mode.h"
+#include "cutscene.h"
+#include "room.h"
+#include "camera.h"
+#include "player.h"
+#include "actor.h"
+#include "enemy.h"
 
 /* callees */
+/* Declared here, not through a header: the calls in this file pass other
+   types than the definition takes (lessons 3.428, 3.517). */
 extern s32 QueueSprite(u32 a, u32 b, u32 c, u32 d, u32 e, s16 f);
 extern s32 DrawAffineSprite(s32 a, s16 b, s16 c, s32 d);
 extern s32 PlaySfx(u32 a);
 extern s32 IsOnScreen(s16 a, s16 b);
-extern s32 sub_08025f00();
-extern s32 sub_08027750();
-extern s32 sub_080277f0();
-extern s32 sub_08040934();
-extern s32 CreateChildTaskHere(u32 type, u8 keepPrio);
-extern s32 CreateChildTaskAt(u32 type, s16 xArg, s16 yArg, u8 keepPrio);
-extern s32 CreateActorByKind(u8 cls, u32 sub, u8 p3, u8 p4, int x, int y, u16 prio);
 extern u32 RandomRange(u32 range);
 extern u32 TaskIsOnScreen(void);
-extern u32 sub_08025e88(s32 i);
 extern u32 ActorCheckHits(void);
-extern u8 ActorIsInView(void);
-extern void TaskYieldTrampoline(u32 a);
 extern void RequestCopy(u32 mode, u32 src, u32 dst, u32 size);
 extern void CallTableEntry(u32 a, u32 b, u32 *c);
-extern void StopSfxOnPlayer(s32 player, s32 songId);
-extern void TaskFree(s32 id);
-extern void TaskMove(void);
-extern void TaskSleepForever(void);
 extern void TaskSetEntry(void *a, u32 i);
-extern void TaskSetMotionXFacing(s32 a, s32 b);
-extern void TaskSetMotionY(s32 a, s32 b, s32 c);
-extern void TaskStopY(void);
-extern void TaskStop(void);
-extern void TaskSetFrame(s32 a);
 extern void sub_0801bcac(u32 *p);
 extern void RequestScreenShake(u32 a);
 extern void ActorSetState(u8 v);
 extern void ActorSetAttackBox(u32 v);
-extern void ActorDestroy(void);
-extern void ActorDrawWorldInView(void);
-extern void ActorMove(void);
-extern void TaskMoveRelativeToView(void);
-extern void sub_08067108(void);
-extern void CreateBurstEffect(u32 a, s32 b);
-extern void sub_0806ef38(void);
-extern void sub_08070454(void);
-extern void sub_08070498(u32 a, s32 b);
-extern void sub_08070758(void);
-extern void sub_08074bb0(int a, int b, int c);
-
-/* defined below */
-void WarpStarUpdate(void);
-void sub_080711d0(void);
-u16 sub_08071360(s32 idx);
-void sub_08071778(void);
-void sub_080719a0(void);
-void sub_08071830(void);
 
 void sub_08070ec0(void)
 {

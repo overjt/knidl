@@ -35,81 +35,30 @@
 #include "gba/gba.h"
 #include "global.h"
 #include "task.h"
-
-/* RAM cells */
-extern s32 gUnk_02007D00[];
-extern u8 gDigits[6];
-extern vu16 gTaskSlotTypes[];
-
-/* ROM tables */
-extern u8 gUnk_08745618[];
-extern u8 gUnk_0874561F[];
-extern struct AnimCmd gUnk_08745624[];
-extern u32 gMrFrostyVariants[];
-extern u32 gMrFrostyStates[];
-extern u32 gMrFrostyStateUpdates[];
-extern u32 gUnk_08745868[];
-extern u32 gUnk_08745884[];
-extern u32 gUnk_087458A0[];
-extern u32 gUnk_087458BC[];
-extern u32 gUnk_087458F4[];
-extern u32 gUnk_08745910[];
-extern u32 gUnk_0874592C[];
-extern u32 gUnk_08745948[];
-extern u32 gUnk_08745A0C[];
-extern u32 gUnk_08745A14[];
-extern u32 gUnk_08745A80[];
-extern u32 gMrFrostyFrames[];
-extern void *gUnk_08274840;
+#include "main.h"
+#include "link.h"
+#include "actor.h"
+#include "enemy.h"
 
 /* Externals */
-extern void TaskYieldTrampoline(u32 a);
+/* Declared here, not through a header: the calls in this file pass other
+   types than the definition takes (lessons 3.428, 3.517). */
 extern void CallTableEntry(u32 a, u32 b, u32 *c);
 extern u32 RandomRange(u32 range);
-extern void IntToDigits(s16 n);
-extern void TaskFree(s32 id);
 extern void TaskSetEntry(void *fn, s32 i);
-extern void TaskStopY(void);
-extern void TaskSetFrame(s32 a);
 extern void ActorSetState(u16 v);
 extern void ActorSetHitReactions(u32 *p);
 extern void ActorSetAttackBox(u32 *p);
 extern void ActorSetTerrainBox(u32 *p);
 extern void sub_08063a00(u32 *p);
 extern s32 TaskGetDxTo(s32 i);
-extern s32 CreateActorFromDescAtOffsetFacing(struct ActorSpawn *p, u8 keepPrio);
-extern s32 CreateChildTaskHere(u32 type, u8 keepPrio);
-extern u16 sub_08066088(u32 mode);
-extern void sub_080666cc(struct AnimCmd *p);
-extern void sub_08066580(void);
-extern void sub_08066ae0(void);
-extern void sub_08065438(void);
-extern void ActorMove(void);
 extern void RequestScreenShake(s32 a);
-extern void sub_0806ee2c(void);
-extern void TaskStop(void);
-extern void TaskFaceNearestPlayer(void);
-extern void ActorFlashPalette(void *src, u32 size);
-extern void sub_08066468(void);
-extern u8 sub_08067060(void);
 extern void sub_08068f68(void);
 extern u8 ActorCollideTerrain(void);
 extern s32 ActorReactToHit(void);
-extern void TaskSetMotionXFacing(s32 a, s32 b);
-extern void TaskSleepForever(void);
 extern void PlaySfx(s32 id);
-extern s16 CreateStarFlash(u8 kind, s32 dx, s32 dy);
-extern s16 CreateDustTrail(u8 flag, u16 vx, s32 c, s32 d);
-extern void TaskTurnAround(void);
-extern void sub_0806684c(void);
-extern void sub_080667c0(u8 a, u16 b);
-extern void ActorDie(void);
-extern void sub_0806ad18(void);
 
 /* Defined below */
-void MrFrostyUpdate(void);
-void MrTickTockEnterState(void);
-void MrFrostyEnterState(void);
 void sub_0809a080(s32 a);
 
 u8 sub_080988f8(void)

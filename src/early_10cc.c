@@ -1,5 +1,7 @@
 #include "gba/gba.h"
 #include "global.h"
+#include "link.h"
+#include "sound.h"
 
 /* VBlank interrupt handler (0x080010CC-0x080011AB, issue #32 batch A1).
  * agbcc -O2 -mthumb-interwork (game-code recipe).
@@ -8,11 +10,13 @@
  * and palette shadows via CopyOamAndPalette, pumps the copy queue, and clears the
  * frame flag gWaitingForVBlank that EndFrame spins on. */
 
+/* Not from main.h: this file's view of gVBlankCallback differs (lesson
+   3.517). */
 extern vu16 gFadeTimer;
 extern vu16 gFadeInterval;
 extern vu16 gFadeSteps;
 extern vs16 gBrightness;
-extern vu16 gFadeStep;
+extern vs16 gFadeStep;
 extern u16 *gFadeKeepMask;
 extern vu32 gPaletteSource;
 extern vu16 gFadeBlankAtWhite;
@@ -31,9 +35,9 @@ extern vu16 gWaitingForVBlank;
 extern vu16 gFrameInProgress;
 extern vu16 gHeldKeys;
 extern vu16 gPressedKeys;
-extern vu16 gLinkPlayerCount;
+extern u16 gLinkPlayerCount;
 extern vu16 gIntrMasterEnable;
-extern vu32 gLinkDriverMode;
+extern u32 gLinkDriverMode;
 extern vu16 gFrameCount;
 extern u16 gPlayTime[4];
 extern void (*gFrameEndCallback)(void);
@@ -52,14 +56,8 @@ extern struct MusicPlayerInfo gMPlayInfo_BGM;
 extern struct MusicPlayerInfo gMPlayInfo_SE1;
 extern struct MusicPlayerInfo gMPlayInfo_SE2;
 extern struct MusicPlayerInfo gMPlayInfo_SE3;
-extern void m4aMPlayVolumeControl(struct MusicPlayerInfo *mplayInfo, u16 trackBits, u16 volume);
 extern void m4aSoundVSync(void);
-extern void m4aSoundMain(void);
-extern void SoundDriverVSyncOff(void);
 extern void SoftReset(u32 resetFlags);
-extern void StopAllSound(void);
-extern void LinkBlockMain(void);
-extern void LinkVSync(void);
 extern void ReadKeys(void);
 extern void FlushDisplayRegs(void);
 extern void CopyOamAndPalette(void);

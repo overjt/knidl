@@ -12,103 +12,30 @@
 #include "gba/gba.h"
 #include "global.h"
 #include "task.h"
+#include "main.h"
+#include "link.h"
+#include "hud.h"
+#include "room.h"
+#include "camera.h"
+#include "actor.h"
 
-extern u8 gUnk_02006178;
-extern u8 gTaskSkipMaskStack[][64];
-extern u32 gUnk_02007F50;
-extern u16 gNextActorSerial;
-extern u8 gActivePlayerMask;
-extern vs16 gTaskSlotTypes[];
-extern u16 gPlayerCount;
-extern s32 gUnk_030023B4;
-extern s32 gUnk_030023D4;
-
-extern struct ActorDef *gUnk_0873ECEC[];
-extern struct ActorDef *gMidBossDefs[];
-extern struct ActorDef *gBossDefs[];
-extern struct ActorDef *gUnk_0873EDDC[];
-extern struct ActorDef *gUnk_0873EE70[];
-extern struct ActorDef *gUnk_0873EE88[];
-
-extern s32 TaskCreateInRange(u32 type, s32 start, s32 end);
-extern void sub_08065ce0(u32 i);
+/* Declared here, not through a header: the calls in this file pass other
+   types than the definition takes (lessons 3.428, 3.517). */
 extern u16 ActorComputeHealth(u32 a);
 extern u16 ActorComputeHealthSlot(u32 i);
 extern void sub_08069ac4(u32 i);
 extern void sub_080b54a4(u32 i);
-extern void TaskFree(s32 id);
-extern void TaskSetFrame(s32 a);
-extern void TaskSetMotionX(s32 a, s32 b, s32 c);
-extern void TaskExitTrampoline(void);
-extern s32 gTaskRunPhase;
-extern s16 gCosTable[];
-extern u8 gActivePlayerCount;
-extern s16 gSpriteCameraX;
-extern s16 gSpriteCameraY;
-extern s16 gViewRect[];
-extern u16 gGameState;
-extern u16 gFrameCount;
-extern s32 gUnk_0873DF14[];
-extern struct Actor gActors[];
-extern struct PlayerState gPlayerStates[];
-extern u32 gUnk_0873F198[];
-extern u32 gMidBossTaskTypes[];
-extern u32 gBossTaskTypes[];
-extern u32 gUnk_0873F288[];
-extern u32 gUnk_0873F2A0[];
-extern void AddPlayerScore(s32 a, u32 b);
 extern s32 sub_08021a40(s16 x, s16 y);
 extern u32 TaskIsOnScreen(void);
 extern s32 QueueSprite(u32 a, u32 b, u32 c, u32 d, s32 e, s32 f);
-extern u8 sub_08066a6c(void);
-extern u8 sub_08066a80(void);
-extern void HudRemoveHpBar(void);
 
-void ActorLoadDefSlot(u32 i, struct ActorDef *d);
-void ActorSetAttackBoxSlot(u32 i, u32 v);
-void sub_08063a14(u32 i, u32 v);
-void sub_08063704(u32 i);
-void ActorResetHealthSlot(u32 i);
-void sub_080637e4(u32 i);
-s32 sub_08063a9c(u32 i);
-s32 TaskFindNearestPlayer(void);
-s32 GetDistSq(struct PointPair *p);
-s32 GetTaskDistSq(u32 i, u32 j);
-s32 TaskGetDistSqTo(u32 i);
-s32 GetTaskDx(u32 i, u32 j);
 s32 TaskGetDxTo(u32 i);
-s32 GetTaskDy(u32 i, u32 j);
-s32 TaskGetDyTo(u32 i);
-void TaskGetPosSlot(u32 i);
-s32 TaskGetFacingToward(u32 i);
-s32 TaskGetFacingTowardNearestPlayer(void);
 s32 TaskIsInRectSlot(struct Rect *r, u32 i);
-void ActorDestroySlot(s32 i);
-void TaskFaceNearestPlayer(void);
-s32 ActorStepAnim(void);
-u16 GetPointAngle(s16 x0, s16 y0, s16 x1, s16 y1, s32 prec);
-u16 GetTaskAngle(u32 i, u32 j, s32 prec);
-u16 TaskGetAngleTo(u32 i, s32 prec);
-u8 TaskGetYDirBitTo(u32 i);
-u8 TaskGetXDirBitTo(u32 i);
-u8 TaskGetCompassDirTo(u32 i);
 u16 TaskGetAngleToNearestPlayer(s32 prec);
-void TaskAccelerateAxisPlus(s32 step, s32 limit, u8 axis);
-void TaskAccelerateAxisMinus(s32 step, s32 limit, u8 axis);
-void TaskDecelerateAxis(s32 step, u8 axis);
-void TaskGetScreenPosSlot(u32 i);
-s8 TaskGetParentFacing(void);
-void ActorInitSlot(u32 i);
-s32 sub_08064a78(struct ActorSpawn *p);
-s32 CreateChildTask(u32 type, int xArg, int yArg, int prioArg);
-s32 CreateChildTaskHere(u32 type, u8 keepPrio);
 s32 sub_08064d9c(u32 sub, u32 type, int p2Arg, int xArg, int yArg, int prioArg,
                  int altArg);
-s32 sub_08064e5c(u32 sub, u32 type, u8 p2);
 s32 CreateActor(u8 cls, u32 sub, u32 type, u8 p3, u8 p4, int x, int y,
                  u16 prio);
-u8 ActorIsInView(void);
-void ActorDestroy(void);
 
 s32 sub_08063698(u32 type, s32 start)
 {

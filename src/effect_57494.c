@@ -1,6 +1,9 @@
 #include "gba/gba.h"
 #include "global.h"
 #include "task.h"
+#include "main.h"
+#include "player.h"
+#include "effect.h"
 
 /* effect_57494.c (0x08057494-0x08057CDF, issue #89).
  *
@@ -15,32 +18,10 @@
  * sub-states with the draw hooks TaskDrawWorldInViewOrFree and sub_0805af80 (shared with
  * variant 48) and the kill test sub_08057c98 (player mode 13). */
 
-extern u32 gUnk_08751CF0[];
-extern u16 gUnk_0873BAB0[][3];   /* per sub-state: 8.8 x velocity, 8.8 y acceleration, frame */
-extern u32 gUnk_0874C600[];
-extern u32 gUnk_0874C718[];
-extern u32 gUnk_08751BF4[];
-extern u16 gUnk_0873BAE6[];
-extern u32 gUnk_08751D80[];
-extern u32 gUnk_08751D50[];
-
-void TaskExitTrampoline(void);
-void TaskYieldTrampoline(s32 frames);
 void TaskFree(s32 id);                         /* kill task (M09+ spelling, 49 landed files) */
-void TaskMove(void);
-void TaskMoveRelativeToParent(void);
-void TaskDrawWorld(void);
-void TaskDrawWorldInViewOrFree(void);
-void TaskSetFrameByFacing(s16 a);
-void TaskSetMotionXFacing(s32 a, s32 b);
-void TaskStop(void);
-void TaskSetFrame(s32 a);
 u16 RandomSpread(s32 base, u8 scale, u8 amount);   /* base + ((rand(256) * amount) >> 8) * scale */
 s16 RandomSpreadFacing(s32 base, u8 scale, u8 amount);   /* the same, negated when Task.facing != 1 */
-void sub_0805af80(void);
 s32 CreatePlayerEffect(s32 a0, s32 a1, s32 a2);          /* M16's effect spawner (spawns task type #7) */
-void sub_08057a10(void);
-void sub_08057c98(void);
 
 void sub_08057494(void)
 {

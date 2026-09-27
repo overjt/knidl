@@ -1,6 +1,7 @@
 #include "gba/gba.h"
 #include "global.h"
 #include "task.h"
+#include "collision.h"
 
 /* terrain_207a0.c (0x080207A0-0x0802112F, issue #84).
  *
@@ -12,50 +13,6 @@
  * then the bodies in the order right, left, up, down - which is the only
  * spelling that gives the ROM's layout (the first jump pass moves the first
  * block of each body reached by an unconditional goto into its place). */
-
-/* The probe result block, filled by the terrain probes and mirrored into
-   gTerrainResult by TerrainProbeEnd. */
-struct Unk03005530
-{
-    /*0x00*/ u8 unk0;
-    /*0x01*/ u8 ceilingHits;
-    /*0x02*/ u8 unk2;
-    /*0x03*/ u8 unk3;
-    /*0x04*/ u8 slope;
-    /*0x05*/ u8 unk5;
-    /*0x06*/ u8 onGround;
-    /*0x07*/ u8 waterFlags;
-    /*0x08*/ u16 unk8;
-    /*0x0A*/ u8 atDoor;
-    /*0x0B*/ u8 unkB;
-    /*0x0C*/ u8 unkC;
-    /*0x0D*/ u8 unkD;
-    /*0x0E*/ u8 onSlipperyFloor;
-    /*0x0F*/ u8 unkF;
-    /*0x10*/ u8 unk10;
-};
-
-extern u8 gCollisionTileSlope[];
-extern u8 gUnk_08732DF0[];
-extern s8 gUnk_087336F0[];
-extern s8 gUnk_087338F0[];
-extern u16 gTerrainTileRight;
-extern s32 gTerrainVelY;           /* Task.velY */
-extern struct Unk03005530 gTerrainProbeResult;
-extern s16 gTerrainProbeX;           /* probe x */
-extern s16 gTerrainProbeY;           /* probe y */
-extern u16 gTerrainTile;           /* queried cell: tile set */
-extern u16 gTerrainTileBelow;           /* cell below: tile set */
-extern u16 gTerrainTileLeft;           /* cell to the left: tile set */
-extern s32 gTerrainVelX;           /* Task.velX */
-
-s32 TerrainQueryPixel(u32 x, u32 y);
-s32 TerrainQueryPixelAndBelow(u32 x, u32 y);
-s32 TerrainQueryPixelAndSides(u32 x, u32 y);
-s32 GetTilePushDown(u16 a);
-s32 GetTilePushUp(u16 a);
-s32 GetTilePushRight(u16 a);
-s32 GetTilePushLeft(u16 a);
 
 /* Slope-follow probe of sub_0801c30c (src/terrain_1c30c.c): when the pixel
    under the probe point is solid, step the point along its cell -

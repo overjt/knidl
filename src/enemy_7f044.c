@@ -43,114 +43,26 @@
 #include "gba/gba.h"
 #include "global.h"
 #include "task.h"
-
-/* RAM cells */
-extern u16 gFrameCount;
-extern struct PlayerState gPlayerStates[];
-extern struct Task *gCurTask;
-extern struct Task gTasks[];
-
-/* ROM tables */
-extern u32 gUnk_0873F500[];
-extern u32 gUnk_0873F720[];
-extern u8 gUnk_08741318[];
-extern u8 gUnk_0874131A[];
-extern u8 gUnk_0874131C[];
-extern s32 gUnk_08741328[];
-extern s32 gUnk_0874133C[];
-extern u8 gUnk_08741350[];
-extern u8 gUnk_08741355[];
-extern u8 gUnk_08741357[];
-extern u8 gUnk_08741365[];
-extern u8 gUnk_08741367[];
-extern u8 gUnk_0874136D[];
-extern s32 gUnk_08741378[];
-extern u32 gUnk_08741390[];
-extern u32 gUnk_0874139C[];
-extern u32 gUnk_087413A8[];
-extern u32 gUnk_087413B4[];
-extern u32 gUnk_087413C0[];
-extern u32 gUnk_087413C8[];
-extern u32 gUnk_087413D0[];
-extern u32 gUnk_087413D4[];
-extern u8 gUnk_087413D8[];
-extern u8 gUnk_087413DA[];
-extern s32 gUnk_087413DC[];
-extern s32 gUnk_087413E4[];
-extern struct AnimCmd gUnk_087413EC[];
-extern struct AnimCmd gUnk_08741420[];
-extern struct AnimCmd gUnk_08741454[];
-extern u32 gTwisterVariants[];
-extern u32 gTwisterStates[];
-extern u32 gTwisterStateUpdates[];
-extern u32 gUnk_087414A8[];
-extern u32 gUnk_087414AC[];
-extern u8 gUnk_087414B0[];
-extern u32 gHotHeadVariants[];
-extern u32 gHotHeadWalkStates[];
-extern u32 gHotHeadWalkStateUpdates[];
-extern u32 gUnk_087414D8[];
-extern u32 gUnk_087414DC[];
-extern u32 gHotHeadStandStates[];
-extern u32 gHotHeadStandStateUpdates[];
-extern u32 gUnk_08741ADC[];
-extern u32 gUnk_08741CE0[];
-extern u32 gTwisterFrames[];
-extern u32 gHotHeadFrames[];
+#include "main.h"
+#include "collision.h"
+#include "actor.h"
+#include "enemy.h"
 
 /* Externals */
 extern s32 RandomRange(s32 a);
-extern u16 sub_08021c14(s16 x, s16 y);
-extern s32 TaskFindNearestPlayer(void);
-extern s32 TaskGetNearestPlayerDistSq(void);
 extern s32 TaskGetDxTo(u32 i);
-extern s32 TaskGetNearestPlayerDx(void);
-extern s32 TaskGetDyTo(u32 i);
-extern s32 ActorStartAnim(struct AnimCmd *p);
-extern s32 ActorStepAnim(void);
-extern s32 ActorTickAnim(s32 n);
-extern s32 CreateActorFromDescHere(struct ActorSpawn *p, u8 keepPrio);
-extern s32 CreateChildTaskHere(u32 type, u8 keepPrio);
 extern u32 ActorCheckHits(void);
 extern u32 ActorCollideTerrain(void);
 extern u32 ActorReactToHit(void);
-extern void TaskYieldTrampoline(u32 frames);
+/* Declared here, not through a header: the calls in this file pass other
+   types than the definition takes (lessons 3.428, 3.517). */
 extern void CallTableEntry(u32 a, u32 b, u32 *c);
 extern void PlaySfx(s32 id);
-extern void TaskSleepForever(void);
 extern void TaskSetEntry(void *fn, u32 i);
-extern void TaskSetMotionXFacing(s32 a, s32 b);
-extern void TaskStopX(void);
-extern void TaskSetMotionY(s32 a, s32 b, s32 c);
-extern void TaskStopY(void);
-extern void TaskStop(void);
-extern void TaskSetFrame(s32 a);
 extern void RequestScreenShake(s32 a);
 extern void ActorSetState(u32 v);
 extern void ActorSetHitReactions(u32 *p);
 extern void ActorSetAttackBox(u32 *p);
-extern void TaskFaceToward(u32 i);
-extern void TaskFaceNearestPlayer(void);
-extern void ActorDestroy(void);
-extern void sub_0806a0f0(s32 a);
-extern void ActorDie(void);
-extern void CreateBurstEffect(u32 a, s32 b);
-extern void ActorDrawWorldInViewOrDestroy(void);
-extern void ActorMove(void);
-
-/* Defined below */
-void sub_0807f094(void);
-void sub_0807f3d4(void);
-s32 sub_0807f6a8(int px, int py, s8 *p);
-void sub_0807f8d8(void);
-void sub_0807fb60(void);
-void TwisterUpdate(void);
-void sub_08080374(s32 a, s32 b);
-void sub_0808031c(void);
-void HotHeadWalkUpdate(void);
-void sub_08080b2c(void);
-void sub_080807d8(void);
-void HotHeadStandUpdate(void);
 
 void sub_0807f044(void)
 {

@@ -1,6 +1,11 @@
 #include "gba/gba.h"
 #include "global.h"
 #include "task.h"
+#include "main.h"
+#include "collision.h"
+#include "player.h"
+#include "effect.h"
+#include "actor.h"
 
 /* effect_54330.c (0x08054330-0x08054A7F, issue #89).
  *
@@ -22,50 +27,11 @@
  * sub_0801c3a4) kills it once its Task.waterFlags is clear or gTerrainResult.unk1
  * is set. */
 
-/* gTerrainResult: M06's collision result block (src/terrain_1bcac.c spells it
-   the same way except unk8, which M09 reads with ldrsh).  A 16-bit test of
-   unk0/unk1 together is `*(u16 *)&gTerrainResult` (M12's PlayerActionBurningUpdate). */
-struct Unk03005550
-{
-    /*0x00*/ u8 unk0;
-    /*0x01*/ u8 ceilingHits;
-    /*0x02*/ u8 unk2;
-    /*0x03*/ u8 unk3;
-    /*0x04*/ u8 slope;
-    /*0x05*/ u8 unk5;
-    /*0x06*/ u8 unk6;
-    /*0x07*/ u8 unk7;
-    /*0x08*/ s16 unk8;
-    /*0x0A*/ u8 atDoor;
-    /*0x0B*/ u8 onSlipperyFloor;
-    /*0x0C*/ u8 unkC;
-    /*0x0D*/ u8 unkD;
-};
-
-extern u32 gUnk_0874C600[];
-extern u32 gUnk_0874C520[];
-extern u32 gUnk_0874C648[];
-extern s8 gUnk_0873CB74[];              /* collision box passed to sub_0801c3a4 */
-extern struct Unk03005550 gTerrainResult;
-
-void TaskExitTrampoline(void);
-void TaskYieldTrampoline(s32 frames);
 void TaskFree(s32 id);                         /* kill task (M09+ spelling, 49 landed files) */
-void TaskMove(void);
-void TaskDrawWorld(void);
-void TaskDrawWorldInViewOrFree(void);
-void TaskSetFrameByFacing(s16 a);
-void TaskSetMotionXFacing(s32 a, s32 b);
-void TaskStop(void);
 u16 RandomSpread(s32 base, u8 scale, u8 amount);   /* base + ((rand(256) * amount) >> 8) * scale */
 s16 RandomSpreadFacing(s32 base, u8 scale, u8 amount);   /* the same, negated when Task.facing != 1 */
 u16 sub_0801c3a4(const s8 *p);
-s32 IsFullBlockAtPixel(u16 x, u16 y);
-s32 PlaySfxIfLocalPlayer(s32 a0, u16 a1);
 s32 CreatePlayerEffect(s32 a0, s32 a1, s32 a2);          /* M16's effect spawner (spawns task type #7) */
-void sub_08054504(void);
-void sub_08054838(void);
-void sub_08054a44(void);
 
 void sub_08054330(void)
 {

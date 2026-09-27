@@ -11,11 +11,9 @@
 #include "gba/gba.h"
 #include "global.h"
 #include "task.h"
-
-extern void TaskYieldTrampoline(u32 a);
-extern void TaskSetMotion(s32 a, s32 b, s32 c, s32 d, s32 e, s32 f);
-extern void TaskStop(void);
-extern void CreatePlayerEffect(s32 a, s32 b, s32 c);
+#include "main.h"
+#include "effect.h"
+#include "actor.h"
 
 void sub_08062584(void)
 {

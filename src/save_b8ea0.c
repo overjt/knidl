@@ -1,97 +1,19 @@
 #include "gba/gba.h"
 #include "global.h"
 #include "task.h"
+#include "main.h"
+#include "link.h"
+#include "hud.h"
+#include "room.h"
+#include "player.h"
+#include "save.h"
 
-struct Unk02005E00
-{
-    /*0x00*/ s32 unk00;
-    /*0x04*/ u8 unk04[4];
-    /*0x08*/ u8 unk08[4];
-};
-
-extern vu16 gPlayerPressedKeys[];    /* per-player keys pressed */
+/* Declared here, not through a header: the calls in this file pass other
+   types than the definition takes (lessons 3.428, 3.517). */
 extern void CallTableEntry(u32 a, u32 b, u32 *c);
-extern struct Task *gCurTask;
-extern void TaskExitTrampoline(void);
-extern void HudRedraw(s32 a);
-extern void TaskFree(s32 a);
-extern void AddPlayerLives(s32 a, s32 b);
 extern void HudDrawTiles(u8 *s, s32 a, s32 b, s32 c);
-extern void HudClearTiles(s32 a, s32 b, s32 c);
-extern void TaskYieldTrampoline(u32 frames);
-extern s32 gCurTaskIdx;
-extern u16 gUnk_02000010[];
-extern struct Unk02005E00 gUnk_02005E00;
-extern s16 gPlayerLives[];
-extern u32 gBgPalette[];
-extern s8 gDigits[];
-extern u8 gActivePlayerMask;
-extern u16 gLocalPlayer;
-extern u16 gPlayerCount;
-extern u8 gUnk_085ADD1C[];
-extern u8 gUnk_085B09BC[];
-extern u8 gUnk_085B09DC[];
-extern u8 gUnk_085B0A10[];
-extern u8 gUnk_085B0A30[];
-extern u8 gUnk_085B0A64[];
-extern u8 gUnk_085B0AB0[];
-extern u8 gUnk_085B0AD0[];
-extern u8 gUnk_085B0AD4[];
-extern u8 gUnk_085B0AFC[];
-extern u8 gUnk_085B0B00[];
-extern u8 gUnk_085B0B08[];
-extern u8 gUnk_085B0B10[];
-extern u8 gUnk_085B0B28[];
-extern u8 gUnk_085B0B5C[];
-extern u8 gUnk_085B0BB4[];
-extern u8 gUnk_085B0BD4[];
-extern u8 gUnk_085B0C2C[];
-extern u32 gUnk_0875625C[];
-extern u16 gUnk_08756268[];
-extern u32 gUnk_08756270[];
-extern u32 gUnk_0875628C[];
 extern void TaskSetEntry(void *fn, s32 i);
-extern s32 IntToDigits(s16 n);
 extern void RequestCopy(u32 mode, u32 src, u32 dst, u32 size);
-extern void TaskSleepForever(void);
-extern void HudClearTilemap(void);
-
-void sub_080b8ea0(void);
-void sub_080b8ef4(void);
-void sub_080b8f8c(s32 a);
-void sub_080b8ff0(void);
-void sub_080b902c(void);
-void sub_080b9064(void);
-void sub_080b9090(void);
-void sub_080b90c8(void);
-void sub_080b90f8(void);
-void sub_080b9108(void);
-void sub_080b9118(void);
-void sub_080b9140(void);
-void sub_080b9198(void);
-void sub_080b91fc(void);
-void sub_080b927c(void);
-void sub_080b9344(void);
-void sub_080b938c(void);
-void sub_080b93d8(void);
-s32 sub_080b9424(void);
-void sub_080b94b4(s32 a, s32 b);
-void sub_080b9578(void);
-void sub_080b95ac(void);
-void sub_080b95ec(void);
-void sub_080b963c(void);
-void sub_080b9658(void);
-void sub_080b97fc(s32 a);
-void sub_080b9878(void);
-void sub_080b98c0(void);
-void sub_080b9968(s32 a, s32 b);
-void sub_080b99e8(s32 a, s32 b, s32 c);
-void sub_080b9a88(s32 a);
-void sub_080b9b08(s32 a);
-void sub_080b9b98(s32 a);
-void sub_080b9c28(void);
-void sub_080b9c74(void);
-void sub_080b9cc0(void);
 
 void sub_080b8ea0(void)
 {

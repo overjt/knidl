@@ -1,0 +1,852 @@
+#ifndef GUARD_ROOM_H
+#define GUARD_ROOM_H
+
+#include "gba/types.h"
+
+/* room.h: the RAM cells and ROM tables of the level / room builder, the doors
+   and the stage helpers (M07).  One declaration per symbol, with the type its
+   consumers prove (issue #36 phase 2, docs/header-conventions.md). */
+
+struct Unk020055D8Entry;
+
+struct BgMap
+{
+    /*0x00*/ u16 unk0;
+    /*0x02*/ u16 width;
+    /*0x04*/ u16 height;
+    /*0x06*/ u16 unk6[0];
+};
+
+/* M08's per-player camera positions (src/camera_28b8c.c) */
+struct CamPos { u16 x, y; };
+
+struct CamRect { s16 x0, x1, y0, y1; };
+
+struct Door
+{
+    /*0x00*/ s16 unk0;
+    /*0x02*/ u16 unk2;
+    /*0x04*/ u16 unk4;
+    /*0x06*/ u16 unk6;
+    /*0x08*/ u16 unk8;
+    /*0x0A*/ u16 unkA;
+};
+
+struct MapCell
+{
+    /*0x00*/ u8 unk0;
+    /*0x01*/ u8 unk1;
+    /*0x02*/ u8 unk2;
+    /*0x03*/ u8 collisionTile;
+};
+
+/* M08's view of a map cell (src/bgmap_2a9cc.c): the metatile index is a u16 */
+struct MapTile
+{
+    /*0x00*/ u16 metatile;
+    /*0x02*/ u8 unk2;
+    /*0x03*/ u8 collisionTile;
+};
+
+/* The room header gCurRoomDef points at (one entry of the gRoomTable
+   room table): unk18/unk28 are length-prefixed palettes, unk30 the BG map
+   streamed into 0x06003000, unk40 the room's BG animation script set. */
+struct RoomDef
+{
+    /*0x00*/ u8 filler00[4];
+    /*0x04*/ s8 bgm;
+    /*0x05*/ u8 mapsCompressed;
+    /*0x06*/ u8 filler06[2];
+    /*0x08*/ void *metatileMap;
+    /*0x0C*/ void *blockLayer;
+    /*0x10*/ void *unk10;
+    /*0x14*/ u16 width;
+    /*0x16*/ u16 height;
+    /*0x18*/ u16 *bg2Palette;
+    /*0x1C*/ void *bg2Tiles;
+    /*0x20*/ void *metatileTiles;
+    /*0x24*/ u16 borderX;
+    /*0x26*/ u16 borderY;
+    /*0x28*/ u16 *bg3Palette;
+    /*0x2C*/ void *bg3Tiles;
+    /*0x30*/ struct BgMap *bg3Map;
+    /*0x34*/ u16 bg3BorderX;
+    /*0x36*/ u16 bg3BorderY;
+    /*0x38*/ u16 unk38;
+    /*0x3A*/ u16 doorCount;
+    /*0x3C*/ u16 objectCount;
+    /*0x3E*/ u16 objectsSortedByY;
+    /*0x40*/ u16 bgAnimSet;
+    /*0x42*/ u16 unk42;
+    /*0x44*/ struct Door *doors;
+    /*0x48*/ void *objects;
+    /*0x4C*/ u8 filler4C[4];
+    /*0x50*/ u16 entryX;
+    /*0x52*/ u16 entryY;
+    /*0x54*/ u8 unk54;
+    /*0x55*/ u8 unk55;
+    /*0x56*/ u8 unk56;
+    /*0x57*/ u8 unk57;
+};
+
+struct Unk02004B90
+{
+    /*0x00*/ u8 unk0;
+    /*0x01*/ u8 unk1;
+    /*0x02*/ u8 filler02[2];
+    /*0x04*/ u8 unk4_0:4;
+    /*0x04*/ u8 unk4_4:4;
+    /*0x05*/ u8 filler05[3];
+};
+
+struct Unk020055D8
+{
+    /*0x00*/ s16 count;
+    /*0x02*/ s16 sortedByY;
+    /*0x04*/ struct Unk020055D8Entry *entries;
+};
+
+struct Unk020061F0
+{
+    /*0x00*/ u16 unk0;
+    /*0x02*/ u16 unk2;
+    /*0x04*/ u16 unk4;
+    /*0x06*/ u16 unk6;
+    /*0x08*/ struct MapTile *unk8;
+    /*0x0C*/ u16 *unkC;
+    /*0x10*/ u16 *unk10;
+    /*0x14*/ u16 unk14;
+    /*0x16*/ u16 unk16;
+    /*0x18*/ u16 unk18;
+    /*0x1A*/ u16 unk1A;
+    /*0x1C*/ s8 unk1C;
+    /*0x1D*/ u8 filler1D[3];
+};
+
+struct Unk03005670
+{
+    /*0x00*/ u8 unk0;
+    /*0x01*/ u8 filler01;
+    /*0x02*/ s16 unk2;
+    /*0x04*/ s16 unk4;
+    /*0x06*/ u8 unk6;
+};
+
+struct Unk03005680
+{
+    /*0x00*/ u8 unk0;
+    /*0x01*/ u8 lockedAxes;
+    /*0x02*/ u16 x0;
+    /*0x04*/ u16 x1;
+    /*0x06*/ u16 y0;
+    /*0x08*/ u16 y1;
+    /*0x0A*/ u16 unkA;
+    /*0x0C*/ u16 unkC;
+};
+
+/* EWRAM */
+extern s8 gUnk_02000000;
+extern u16 gUnk_0200001C;
+extern u8 gUnk_02000020;
+extern u16 gUnk_02000030;
+extern struct MapCell gRoomMapBuffer[];
+extern u16 gPlayerAbilities[];
+extern u8 gUnk_02004B64;
+extern s16 gObjectSpawnViewRect[4];
+extern u16 gUnk_02004B80;
+extern struct Unk02004B90 gDoorStates[];
+extern s8 gUnk_02004C98;
+extern u16 gBg1MetatileMap[];
+extern u8 gUnk_02005574[];
+extern u8 gUnk_02005578;
+extern s16 gMaxHealth;
+extern s16 gPlayerHealth[]; /* health per player (M02's HUD) */
+extern s8 gUnk_02005590[];
+extern u8 gBg3MapShape;
+extern s16 gUnk_020055B8[4];
+extern u8 gUnk_020055C8;
+extern s16 gUnk_020055D4;
+extern struct Unk020055D8 gRoomObjectList;
+extern s16 gRoomEntryX;
+extern u8 gUnk_020055E8;
+extern s8 gUnk_02006098[];
+extern s8 gSubGameLevel;
+extern u8 gRoomEntrySet;
+extern struct Unk020061F0 gBreakingBlocks[];
+extern u8 gUnk_020069F0;
+extern s8 gDoorObjectTasks[][3];
+extern struct MapCell gUnk_02006AA0[];
+extern u32 gUnk_02007BF0[8][8];
+extern u8 gUnk_02007CF0;
+extern u8 gUnk_02007D38;
+extern s16 gPlayerLives[];
+extern u16 gUnk_02007D50;
+extern u8 gUsedSubGameDoors[];
+extern u16 gUnk_02007D60;
+extern s8 gUnk_02007D64;
+extern u8 gUnk_02007E8C;
+extern u16 gUnk_02007FA0; /* the block sub_08030b14 broke: x (pixels) */
+extern u16 gSavedPlayerAbilityUses[];
+extern u16 gUnk_02007FB0;
+extern u8 gUnk_02007FB4;
+extern u8 gCutscenePending;
+extern u16 gUnk_02007FF0;
+extern s8 gUnk_02007FF8;
+extern u8 gUnk_02008000;
+extern u16 gSavedPlayerAbilities[];
+extern u16 gUnk_02008050;
+extern u16 gUnk_02008054;
+extern u16 gUnk_02008060[];
+extern u16 gBlockLayer[]; /* per-cell block layer: low byte = replacement index, 0x8000 = being broken */
+extern s16 gRoomEntryY;
+extern u8 gUnk_0200AF00;
+extern u8 gUnk_0200AF04;
+extern u8 gUnk_0200AF08;
+extern s16 gUnk_0200AF0C;
+extern u16 gPlayerAbilityUses[];
+extern s16 gUnk_0200AFE0[4];
+extern u16 gUnk_0200AFF4;
+extern s8 gUnk_0200B02C;
+extern s8 gUnk_0200B034;
+extern s8 gUnk_0200B038;
+extern u8 gHBlankScrollStarted;
+extern u8 gUnk_0200B04C;
+extern u8 gRoomBgLayout;
+extern u8 gUnk_0200B078;
+extern u16 gMetatileTiles[];
+extern u8 gUnk_0200D080;
+
+/* IWRAM */
+extern u16 gUnk_030012B0[];
+extern u16 gUnk_03001370[];
+extern s16 gCameraAnchorY;
+extern u32 gUnk_03001F10;
+extern s8 gUnk_03001F20;
+extern s32 gUnk_03001F2C; /* boot_091ac.c spelling */
+extern u8 gUnk_03001F30; /* set only by the mode list's fifth row
+                                       (src/menu_0ca10.c); not link play */
+extern u32 gUnk_03002160;
+extern u8 gActivePlayerMask;
+extern s32 gUnk_03002344;
+extern u8 gUnk_0300234C;
+extern u8 gActivePlayerCount;
+extern u16 gMilestoneFlags;
+extern s8 gUnk_03002384;
+extern s16 gCameraFocusY;
+extern s8 gLevelIndex;
+extern s16 gCameraAnchorX;
+extern s8 gUnk_030023B8;
+extern u16 gLatchedPressedKeys[]; /* newly-pressed keys, latched per player */
+extern u32 gBigSwitchFlags[];
+extern s16 gCameraFocusX;
+extern u16 gGameState; /* current game state (main dispatch) */
+extern s8 gUnk_030023E0;
+extern s32 gCurSaveSlot;
+extern s8 gStageIndex;
+extern u8 gUnk_03002400[8][7];
+extern s8 gStageRequest; /* stage request (M02) */
+extern s8 gUnk_03002444;
+extern s32 gUnk_03002448;
+extern u16 gLatchedHeldKeys[]; /* latched state mask per player (M11) */
+extern u8 gExtraMode;
+extern s8 gRoomIndex;
+extern s16 *gCurTileDrifts;
+extern u16 gCameraMode;
+extern struct CamPos gPlayerCameraPos[4];
+extern s16 gRoomMetatileCount;
+extern s32 gBg3ParallaxX;
+extern struct RoomDef *gCurRoomDef; /* the current room header */
+extern s32 gRoomDriftVelX;
+extern u16 gPlayerGroupCenter[2];
+extern s16 gCameraBounds[4];
+extern u16 gRoomBorder[2];
+extern u16 gCameraPos[2];
+extern u16 gBg3Border[2];
+extern u8 gPlayerCameraMode[];
+extern s32 gScrollLockSpeedX;
+extern s32 gCameraCenterX;
+extern s32 gRoomDriftVelY;
+extern s16 gRoomHeight; /* map height in metatiles */
+extern s16 gRoomWidth; /* map width in metatiles */
+extern u16 gRoomUpdateFlags;
+extern s16 gRoomBounds[];
+extern s32 gBg3ParallaxY;
+extern s32 gCameraCenterY;
+extern struct CamRect gPlayerBounds[4];
+extern struct MapCell *gRoomMap; /* the room's metatile map */
+extern s32 gScrollLockSpeedY;
+extern u16 gBg3StreamPos[2];
+extern u16 gCameraStreamPos[2];
+extern struct Unk03005670 gScreenShake;
+extern struct Unk03005680 gScrollLock;
+extern u16 gBg3Pos[2];
+
+/* ROM */
+extern u8 gUnk_08334EB4[];
+extern struct RoomDef gUnk_0835D08C;
+extern struct RoomDef gUnk_0835D300;
+extern struct RoomDef gUnk_0835D4F0;
+extern struct RoomDef gUnk_0835DDC0;
+extern struct RoomDef gUnk_0835E2A0;
+extern struct RoomDef gUnk_0835E70C;
+extern struct RoomDef gUnk_0835E924;
+extern struct RoomDef gUnk_0835EF1C;
+extern struct RoomDef gUnk_0835F1A4;
+extern struct RoomDef gUnk_0835F544;
+extern struct RoomDef gUnk_0835FC24;
+extern struct RoomDef gUnk_0835FFE4;
+extern struct RoomDef gUnk_083601DC;
+extern struct RoomDef gUnk_08360690;
+extern struct RoomDef gUnk_08360B38;
+extern struct RoomDef gUnk_08360F38;
+extern struct RoomDef gUnk_083613A0;
+extern struct RoomDef gUnk_0836179C;
+extern struct RoomDef gUnk_08361CB8;
+extern struct RoomDef gUnk_08362104;
+extern struct RoomDef gUnk_08362788;
+extern struct RoomDef gUnk_08362AD0;
+extern struct RoomDef gUnk_083630A0;
+extern struct RoomDef gUnk_083634E0;
+extern struct RoomDef gUnk_08363A0C;
+extern struct RoomDef gUnk_08363E04;
+extern struct RoomDef gUnk_08364014;
+extern struct RoomDef gUnk_083643BC;
+extern struct RoomDef gUnk_0836463C;
+extern struct RoomDef gUnk_08364A38;
+extern struct RoomDef gUnk_08365558;
+extern struct RoomDef gUnk_083657C0;
+extern struct RoomDef gUnk_08366340;
+extern struct RoomDef gUnk_0836663C;
+extern struct RoomDef gUnk_08366974;
+extern struct RoomDef gUnk_08366B98;
+extern struct RoomDef gUnk_08366D1C;
+extern struct RoomDef gUnk_08367274;
+extern struct RoomDef gUnk_0836753C;
+extern struct RoomDef gUnk_083677F4;
+extern struct RoomDef gUnk_08367A50;
+extern struct RoomDef gUnk_08367E8C;
+extern struct RoomDef gUnk_083684D4;
+extern struct RoomDef gUnk_08368710;
+extern struct RoomDef gUnk_08368D30;
+extern struct RoomDef gUnk_083692D8;
+extern struct RoomDef gUnk_08369BE0;
+extern struct RoomDef gUnk_0836A0A8;
+extern struct RoomDef gUnk_0836A318;
+extern struct RoomDef gUnk_0836A534;
+extern struct RoomDef gUnk_0836A6DC;
+extern struct RoomDef gUnk_0836A89C;
+extern struct RoomDef gUnk_0836AC58;
+extern struct RoomDef gUnk_0836AEE4;
+extern struct RoomDef gUnk_0836B160;
+extern struct RoomDef gUnk_0836B44C;
+extern struct RoomDef gUnk_0836B7B4;
+extern struct RoomDef gUnk_0836B968;
+extern struct RoomDef gUnk_0836BC70;
+extern struct RoomDef gUnk_0836C0B0;
+extern struct RoomDef gUnk_0836C50C;
+extern struct RoomDef gUnk_0836CA98;
+extern struct RoomDef gUnk_0836CDA8;
+extern struct RoomDef gUnk_0836D19C;
+extern struct RoomDef gUnk_0836D334;
+extern struct RoomDef gUnk_0836D4FC;
+extern struct RoomDef gUnk_0836DADC;
+extern struct RoomDef gUnk_0836DD44;
+extern struct RoomDef gUnk_0836E09C;
+extern struct RoomDef gUnk_0836E3F4;
+extern struct RoomDef gUnk_0836E660;
+extern struct RoomDef gUnk_0836E824;
+extern struct RoomDef gUnk_0836EED8;
+extern struct RoomDef gUnk_0836F0A4;
+extern struct RoomDef gUnk_0836F270;
+extern struct RoomDef gUnk_0836F634;
+extern struct RoomDef gUnk_0836F7E4;
+extern struct RoomDef gUnk_0836F9B0;
+extern struct RoomDef gUnk_0836FD44;
+extern struct RoomDef gUnk_08370000;
+extern struct RoomDef gUnk_083702FC;
+extern struct RoomDef gUnk_083704E4;
+extern struct RoomDef gUnk_08370684;
+extern struct RoomDef gUnk_08370AF4;
+extern struct RoomDef gUnk_08370E08;
+extern struct RoomDef gUnk_0837108C;
+extern struct RoomDef gUnk_08371388;
+extern struct RoomDef gUnk_08371728;
+extern struct RoomDef gUnk_0837181C;
+extern struct RoomDef gUnk_08371D90;
+extern struct RoomDef gUnk_08372040;
+extern struct RoomDef gUnk_08372240;
+extern struct RoomDef gUnk_083723B0;
+extern struct RoomDef gUnk_08372518;
+extern struct RoomDef gUnk_08372680;
+extern struct RoomDef gUnk_08372A78;
+extern struct RoomDef gUnk_08372D58;
+extern struct RoomDef gUnk_0837301C;
+extern struct RoomDef gUnk_083736A8;
+extern struct RoomDef gUnk_08373914;
+extern struct RoomDef gUnk_08373AC4;
+extern struct RoomDef gUnk_0837410C;
+extern struct RoomDef gUnk_083742CC;
+extern struct RoomDef gUnk_083747D0;
+extern struct RoomDef gUnk_08374B28;
+extern struct RoomDef gUnk_08374C74;
+extern struct RoomDef gUnk_08374DBC;
+extern struct RoomDef gUnk_0837531C;
+extern struct RoomDef gUnk_083761D0;
+extern struct RoomDef gUnk_08376B24;
+extern struct RoomDef gUnk_08376D94;
+extern struct RoomDef gUnk_08376F18;
+extern struct RoomDef gUnk_08377144;
+extern struct RoomDef gUnk_08377334;
+extern struct RoomDef gUnk_08377AF0;
+extern struct RoomDef gUnk_08377FBC;
+extern struct RoomDef gUnk_08378A80;
+extern struct RoomDef gUnk_08378EB0;
+extern struct RoomDef gUnk_08379218;
+extern struct RoomDef gUnk_08379B84;
+extern struct RoomDef gUnk_08379E60;
+extern struct RoomDef gUnk_0837A0CC;
+extern struct RoomDef gUnk_0837A52C;
+extern struct RoomDef gUnk_0837AB88;
+extern struct RoomDef gUnk_0837AD38;
+extern struct RoomDef gUnk_0837AF10;
+extern struct RoomDef gUnk_0837B7CC;
+extern struct RoomDef gUnk_0837BB9C;
+extern struct RoomDef gUnk_0837BC90;
+extern struct RoomDef gUnk_0837BFA8;
+extern struct RoomDef gUnk_0837C288;
+extern struct RoomDef gUnk_0837C424;
+extern struct RoomDef gUnk_0837C520;
+extern struct RoomDef gUnk_0837C698;
+extern struct RoomDef gUnk_0837D968;
+extern struct RoomDef gUnk_0837DE3C;
+extern struct RoomDef gUnk_0837E598;
+extern struct RoomDef gUnk_0837EB34;
+extern struct RoomDef gUnk_0837ECA8;
+extern struct RoomDef gUnk_0837EE60;
+extern struct RoomDef gUnk_0837F028;
+extern struct RoomDef gUnk_0837F73C;
+extern struct RoomDef gUnk_0837FA44;
+extern struct RoomDef gUnk_0837FDC8;
+extern struct RoomDef gUnk_083800D0;
+extern struct RoomDef gUnk_083805BC;
+extern struct RoomDef gUnk_08380758;
+extern struct RoomDef gUnk_08380CFC;
+extern struct RoomDef gUnk_083811A8;
+extern struct RoomDef gUnk_08381CCC;
+extern struct RoomDef gUnk_083821BC;
+extern struct RoomDef gUnk_083825D8;
+extern struct RoomDef gUnk_083828C4;
+extern struct RoomDef gUnk_0838328C;
+extern struct RoomDef gUnk_08383B28;
+extern struct RoomDef gUnk_083840C0;
+extern struct RoomDef gUnk_083847B4;
+extern struct RoomDef gUnk_08384ADC;
+extern struct RoomDef gUnk_08384CB0;
+extern struct RoomDef gUnk_08384E3C;
+extern struct RoomDef gUnk_08385964;
+extern struct RoomDef gUnk_08385FCC;
+extern struct RoomDef gUnk_08386348;
+extern struct RoomDef gUnk_08386700;
+extern struct RoomDef gUnk_08386BC0;
+extern struct RoomDef gUnk_08386F80;
+extern struct RoomDef gUnk_08387308;
+extern struct RoomDef gUnk_08387498;
+extern struct RoomDef gUnk_083879E8;
+extern struct RoomDef gUnk_083881D4;
+extern struct RoomDef gUnk_0838875C;
+extern struct RoomDef gUnk_08388970;
+extern struct RoomDef gUnk_08388BB8;
+extern struct RoomDef gUnk_0838928C;
+extern struct RoomDef gUnk_083893DC;
+extern struct RoomDef gUnk_08389A60;
+extern struct RoomDef gUnk_08389F2C;
+extern struct RoomDef gUnk_0838A420;
+extern struct RoomDef gUnk_0838A668;
+extern struct RoomDef gUnk_0838A85C;
+extern struct RoomDef gUnk_0838A9D0;
+extern struct RoomDef gUnk_0838AF20;
+extern struct RoomDef gUnk_0838B394;
+extern struct RoomDef gUnk_0838B744;
+extern struct RoomDef gUnk_0838BB74;
+extern struct RoomDef gUnk_0838BD4C;
+extern struct RoomDef gUnk_0838BF0C;
+extern struct RoomDef gUnk_0838C068;
+extern struct RoomDef gUnk_0838C574;
+extern struct RoomDef gUnk_0838CB58;
+extern struct RoomDef gUnk_0838D190;
+extern struct RoomDef gUnk_0838D7FC;
+extern struct RoomDef gUnk_0838DBEC;
+extern struct RoomDef gUnk_0838DD58;
+extern struct RoomDef gUnk_0838DEC4;
+extern struct RoomDef gUnk_0838E038;
+extern struct RoomDef gUnk_0838E2C8;
+extern struct RoomDef gUnk_0838E478;
+extern struct RoomDef gUnk_0838E688;
+extern struct RoomDef gUnk_0838E818;
+extern struct RoomDef gUnk_0838EEE4;
+extern struct RoomDef gUnk_0838F788;
+extern struct RoomDef gUnk_0838F914;
+extern struct RoomDef gUnk_0838FCF4;
+extern struct RoomDef gUnk_083900AC;
+extern struct RoomDef gUnk_083902B0;
+extern struct RoomDef gUnk_0839059C;
+extern struct RoomDef gUnk_08390BA8;
+extern struct RoomDef gUnk_08391138;
+extern struct RoomDef gUnk_08391C40;
+extern struct RoomDef gUnk_08391D9C;
+extern struct RoomDef gUnk_08392308;
+extern struct RoomDef gUnk_08392778;
+extern struct RoomDef gUnk_08392AA8;
+extern struct RoomDef gUnk_08392F0C;
+extern struct RoomDef gUnk_08393430;
+extern struct RoomDef gUnk_083935AC;
+extern struct RoomDef gUnk_08393760;
+extern struct RoomDef gUnk_083938C0;
+extern struct RoomDef gUnk_08393A7C;
+extern struct RoomDef gUnk_08393C2C;
+extern struct RoomDef gUnk_08393DC8;
+extern struct RoomDef gUnk_08393EF4;
+extern struct RoomDef gUnk_08394458;
+extern struct RoomDef gUnk_08394C58;
+extern struct RoomDef gUnk_083950F8;
+extern struct RoomDef gUnk_08395298;
+extern struct RoomDef gUnk_08395450;
+extern struct RoomDef gUnk_0839570C;
+extern struct RoomDef gUnk_083959C8;
+extern struct RoomDef gUnk_08395C90;
+extern struct RoomDef gUnk_08395F34;
+extern struct RoomDef gUnk_083961E4;
+extern struct RoomDef gUnk_083964AC;
+extern struct RoomDef gUnk_08396754;
+extern struct RoomDef gUnk_08396A00;
+extern struct RoomDef gUnk_08396CB8;
+extern struct RoomDef gUnk_0839706C;
+extern struct RoomDef gUnk_08397358;
+extern struct RoomDef gUnk_08397508;
+extern struct RoomDef gUnk_08397680;
+extern struct RoomDef gUnk_08397804;
+extern struct RoomDef gUnk_08397970;
+extern struct RoomDef gUnk_08397B54;
+extern struct RoomDef gUnk_08397CFC;
+extern struct RoomDef gUnk_08397ED0;
+extern struct RoomDef gUnk_0839804C;
+extern struct RoomDef gUnk_08398220;
+extern struct RoomDef gUnk_083983D8;
+extern struct RoomDef gUnk_083985D0;
+extern struct RoomDef gUnk_0839875C;
+extern struct RoomDef gUnk_08398858;
+extern struct RoomDef gUnk_08398DDC;
+extern struct RoomDef gUnk_08399208;
+extern struct RoomDef gUnk_083995EC;
+extern struct RoomDef gUnk_08399CB8;
+extern struct RoomDef gUnk_0839A214;
+extern struct RoomDef gUnk_0839A4C8;
+extern struct RoomDef gUnk_0839A774;
+extern struct RoomDef gUnk_0839AA40;
+extern struct RoomDef gUnk_0839AD18;
+extern struct RoomDef gUnk_0839B260;
+extern struct RoomDef gUnk_0839BB28;
+extern struct RoomDef gUnk_0839BED4;
+extern struct RoomDef gUnk_0839C0D0;
+extern struct RoomDef gUnk_0839C57C;
+extern struct RoomDef gUnk_0839CB34;
+extern struct RoomDef gUnk_0839CD48;
+extern struct RoomDef gUnk_0839D254;
+extern struct RoomDef gUnk_0839D5B4;
+extern struct RoomDef gUnk_0839D8BC;
+extern struct RoomDef gUnk_0839DAFC;
+extern struct RoomDef gUnk_0839DED4;
+extern struct RoomDef gUnk_0839E190;
+extern struct RoomDef gUnk_0839E590;
+extern struct RoomDef gUnk_0839E944;
+extern struct RoomDef gUnk_0839EBB4;
+extern struct RoomDef gUnk_0839EE14;
+extern struct RoomDef gUnk_0839F3D8;
+extern struct RoomDef gUnk_0839F684;
+extern struct RoomDef gUnk_0839FC40;
+extern struct RoomDef gUnk_083A0058;
+extern struct RoomDef gUnk_083A0370;
+extern struct RoomDef gUnk_083A06DC;
+extern struct RoomDef gUnk_083A0AA0;
+extern struct RoomDef gUnk_083A0D2C;
+extern struct RoomDef gUnk_083A0F00;
+extern struct RoomDef gUnk_083A142C;
+extern struct RoomDef gUnk_083A1644;
+extern struct RoomDef gUnk_083A17CC;
+extern struct RoomDef gUnk_083A1B64;
+extern struct RoomDef gUnk_083A1FD8;
+extern struct RoomDef gUnk_083A24F0;
+extern struct RoomDef gUnk_083A2578;
+extern struct RoomDef gUnk_083A2694;
+extern struct RoomDef gUnk_083A291C;
+extern struct RoomDef gUnk_083A2AC4;
+extern struct RoomDef gUnk_083A32BC;
+extern struct RoomDef gUnk_083A3344;
+extern struct RoomDef gUnk_083A34E4;
+extern struct RoomDef gUnk_083A360C;
+extern struct RoomDef gUnk_083A38FC;
+extern struct RoomDef gUnk_083A3A74;
+extern struct RoomDef gUnk_083A3FF4;
+extern struct RoomDef gUnk_083A407C;
+extern struct RoomDef gUnk_083A421C;
+extern struct RoomDef gUnk_083A433C;
+extern struct RoomDef gUnk_083A45DC;
+extern struct RoomDef gUnk_083A46FC;
+extern struct RoomDef gUnk_083A4D80;
+extern struct RoomDef gUnk_083A4E08;
+extern struct RoomDef gUnk_083A4FA8;
+extern struct RoomDef gUnk_083A50D0;
+extern struct RoomDef gUnk_083A5354;
+extern struct RoomDef gUnk_083A5480;
+extern struct RoomDef gUnk_083A5BE8;
+extern struct RoomDef gUnk_083A5C70;
+extern struct RoomDef gUnk_083A5E10;
+extern struct RoomDef gUnk_083A5F3C;
+extern struct RoomDef gUnk_083A61E4;
+extern struct RoomDef gUnk_083A633C;
+extern struct RoomDef gUnk_083A6AE0;
+extern struct RoomDef gUnk_083A6B68;
+extern struct RoomDef gUnk_083A6D08;
+extern struct RoomDef gUnk_083A6E24;
+extern struct RoomDef gUnk_083A70A0;
+extern struct RoomDef gUnk_083A71E4;
+extern struct RoomDef gUnk_083A77C4;
+extern struct RoomDef gUnk_083A784C;
+extern struct RoomDef gUnk_083A7ADC;
+extern struct RoomDef gUnk_083A7C28;
+extern struct RoomDef gUnk_083A8364;
+extern struct RoomDef gUnk_083A85D4;
+extern s32 gRoomDriftVelocities[][2];
+extern s8 gUnk_08732302[][6];
+extern u32 gUnk_0873232C[];
+extern u16 gUnk_08732348[][9];
+extern u8 gUnk_087323E2[][3][2];
+extern u16 *gUnk_0873240C[];
+extern s16 gUnk_087325A2[];
+extern void (*gRoomTaskVariants[])(void);
+extern u8 gUnk_08732630[];
+extern u16 gUnk_08732638[][2];
+extern u8 gUnk_0873264C[][2];
+extern s16 gTileDrifts[];
+extern s16 gTileDriftsDoubled[];
+extern u32 gUnk_0874CDF8[];
+extern struct RoomDef *const *const gRoomTable[][8];
+extern struct RoomDef *const gUnk_087E1F58[];
+extern struct RoomDef *const gUnk_087E1F68[];
+extern struct RoomDef *const gUnk_087E1F7C[];
+extern struct RoomDef *const gUnk_087E1F98[];
+extern struct RoomDef *const gUnk_087E1FAC[];
+extern struct RoomDef *const gUnk_087E1FC0[];
+extern struct RoomDef *const gUnk_087E1FC8[];
+extern struct RoomDef *const gUnk_087E1FDC[];
+extern struct RoomDef *const gUnk_087E1FF4[];
+extern struct RoomDef *const gUnk_087E2010[];
+extern struct RoomDef *const gUnk_087E2030[];
+extern struct RoomDef *const gUnk_087E2050[];
+extern struct RoomDef *const gUnk_087E2058[];
+extern struct RoomDef *const gUnk_087E2074[];
+extern struct RoomDef *const gUnk_087E2098[];
+extern struct RoomDef *const gUnk_087E20B0[];
+extern struct RoomDef *const gUnk_087E20CC[];
+extern struct RoomDef *const gUnk_087E20E4[];
+extern struct RoomDef *const gUnk_087E2110[];
+extern struct RoomDef *const gUnk_087E2120[];
+extern struct RoomDef *const gUnk_087E213C[];
+extern struct RoomDef *const gUnk_087E2158[];
+extern struct RoomDef *const gUnk_087E2178[];
+extern struct RoomDef *const gUnk_087E2190[];
+extern struct RoomDef *const gUnk_087E21B0[];
+extern struct RoomDef *const gUnk_087E21D4[];
+extern struct RoomDef *const gUnk_087E21DC[];
+extern struct RoomDef *const gUnk_087E21F4[];
+extern struct RoomDef *const gUnk_087E2214[];
+extern struct RoomDef *const gUnk_087E2230[];
+extern struct RoomDef *const gUnk_087E2250[];
+extern struct RoomDef *const gUnk_087E2274[];
+extern struct RoomDef *const gUnk_087E228C[];
+extern struct RoomDef *const gUnk_087E2298[];
+extern struct RoomDef *const gUnk_087E22B4[];
+extern struct RoomDef *const gUnk_087E22D4[];
+extern struct RoomDef *const gUnk_087E2308[];
+extern struct RoomDef *const gUnk_087E2324[];
+extern struct RoomDef *const gUnk_087E233C[];
+extern struct RoomDef *const gUnk_087E236C[];
+extern struct RoomDef *const gUnk_087E2374[];
+extern struct RoomDef *const gUnk_087E2388[];
+extern struct RoomDef *const gUnk_087E23F0[];
+extern struct RoomDef *const gUnk_087E2404[];
+extern struct RoomDef *const gUnk_087E2424[];
+extern struct RoomDef *const gUnk_087E243C[];
+extern struct RoomDef *const gUnk_087E2464[];
+extern struct RoomDef *const gUnk_087E246C[];
+extern struct RoomDef *const gUnk_087E247C[];
+extern struct RoomDef *const gUnk_087E24AC[];
+extern struct RoomDef *const gUnk_087E24C4[];
+extern struct RoomDef *const gUnk_087E24E0[];
+extern struct RoomDef *const gUnk_087E24FC[];
+extern struct RoomDef *const gUnk_087E2518[];
+extern struct RoomDef *const gUnk_087E2534[];
+extern struct RoomDef *const gUnk_087E2550[];
+extern struct RoomDef *const gUnk_087E2564[];
+
+
+/* Functions (defined in the files named above each group). */
+
+/* src/level_2296c.c */
+void sub_0802296c(void);
+void sub_08022c3c(void);
+void sub_08022f50(void);
+void sub_08022f98(void);
+void sub_08022f9c(void);
+void sub_08022fa8(void);
+void sub_080233e0(void);
+void CreateRoomTask(s32 a);
+
+/* src/roomtask_23618.c */
+void Task_Room(void);
+void sub_08023634(void);
+void RoomTaskDraw(void);
+void RoomTaskUpdateCamera(void);
+void sub_08023748(void);
+void sub_080237a4(void);
+void sub_080237fc(void);
+void sub_0802385c(void);
+void sub_080238a4(void);
+void sub_080238ec(void);
+
+/* src/level_23948.c */
+void sub_08023948(void);
+void sub_08023ca0(void);
+void sub_08023e34(void);
+void sub_08023e78(void);
+void sub_08023ea0(void);
+void sub_08023efc(void);
+void sub_08023f18(void);
+void sub_08023f5c(void);
+void sub_08023fa0(void);
+void sub_08023fd4(void);
+
+/* src/level_242d0.c */
+void sub_080242d0(void);
+void sub_08024300(void);
+void sub_08024540(void);
+void sub_0802457c(void);
+void sub_08024598(void);
+void sub_080245d0(void);
+void sub_08024610(s32 x, s32 y);
+void sub_08024654(s32 x, s32 y);
+void sub_08024698(s32 a0);
+void sub_08024904(void);
+void sub_0802497c(void);
+void sub_08024da4(void);
+s32 FindDoorAt(s32 x, s32 y);
+s32 EnterDoor(void);
+void ExitClearedStage(void);
+void sub_08025a30(void);
+void sub_08025acc(void);
+void sub_08025b0c(void);
+void sub_08025b5c(void);
+void sub_08025bc8(s32 id);
+void sub_08025dc4(void);
+void sub_08025e00(void);
+void sub_08025e0c(void);
+s32 sub_08025e88(s32 i);
+s32 sub_08025f00(void);
+s32 sub_080260b0(void);
+s32 sub_0802610c(void);
+
+/* src/stage_261c0.c */
+s32 CreateBlockBreakEffect(s32 x, s32 y);
+s32 TaskCreateHighSlot(s32 type);
+void SetCameraFocus(s32 x, s32 y);
+void SetCameraFocusOrAnchor(s32 x, s32 y);
+void sub_080262dc(void);
+void sub_080262e8(s32 a);
+void sub_08026308(void);
+s32 sub_080264b0(void);
+void sub_0802651c(s32 i);
+s32 sub_0802653c(void);
+s32 sub_08026584(void);
+void sub_08026704(s32 i);
+s32 sub_0802672c(void);
+s32 sub_08026834(void);
+void sub_08026900(void);
+void sub_0802695c(void);
+void sub_08026994(void);
+void sub_08026998(void);
+void sub_080269e8(void);
+u32 sub_08026a0c(void);
+u32 sub_08026a80(void);
+u32 sub_08026aec(void);
+
+/* src/door_26b60.c */
+void sub_08026b60(void);
+void UpdateDoors(void);
+void DrawDoors(void);
+
+/* src/stage_270d0.c */
+void sub_080270d0(void);
+void sub_08027128(void);
+void sub_08027178(void);
+void sub_08027198(void);
+void PauseRoom(void);
+void SetRoomUpdateFlags(u32 a);
+void ResumeRoom(void);
+void sub_08027228(void);
+void sub_08027240(void);
+void sub_080272dc(void);
+
+/* src/stage_273a0.c */
+void sub_080273a0(void);
+void sub_08027548(void);
+s32 sub_08027588(void);
+s32 sub_080275cc(s32 a);
+s32 sub_080276ac(s32 a);
+s32 sub_080276cc(s32 i);
+s32 sub_08027750(void);
+void sub_08027798(s32 x, s32 y);
+void sub_080277f0(s32 x, s32 y);
+void sub_08027850(s32 a);
+void sub_08027908(void);
+s32 sub_08027a30(void);
+void sub_08027a60(void);
+
+/* src/level_27a6c.c */
+void sub_08027a6c(void);
+
+/* src/room_27e28.c */
+void InitRoomBgLayout(void);
+void sub_08028130(void);
+void sub_08028280(s32 a);
+void sub_08028304(void);
+
+/* src/room_28320.c */
+void SpawnDoorObjects(void);
+void CalcBg3Parallax(void);
+void CalcRoomBounds(void);
+void CameraResetBoundsToGroup(void);
+void CameraResetBounds(void);
+
+/* src/camera_28b8c.c */
+void sub_08028b8c(void);
+void sub_08028e3c(void);
+void SetRoomEntryPoint(void);
+void sub_08029034(void);
+void sub_080290ac(void);
+void CameraInitPos(void);
+void sub_08029110(void);
+void sub_08029194(void);
+void LoadBg2Gfx(void);
+void LoadBg3Gfx(void);
+void ClearBg2Bg3Maps(void);
+void SelectBg3MapShape(void);
+void LoadBg3Map(void);
+void SpawnRoomObjectsInView(void);
+void InitDoors(void);
+void CameraUpdatePos(void);
+void CameraUpdatePosNoParallax(void);
+void CameraUpdatePosBg3AutoScrollX(void);
+void StreamBg2Map(void);
+void StreamBg3Map(void);
+
+#endif /* GUARD_ROOM_H */

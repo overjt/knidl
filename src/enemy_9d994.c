@@ -1,13 +1,12 @@
 #include "gba/gba.h"
 #include "global.h"
 #include "task.h"
-
-/* RAM cells / ROM tables */
-extern s16 gSpriteCameraX;
-extern s16 gSpriteCameraY;
-extern s16 gUnk_08747B88[];
+#include "main.h"
+#include "enemy.h"
 
 /* Externals */
+/* Declared here, not through a header: the calls in this file pass other
+   types than the definition takes (lessons 3.428, 3.517). */
 extern s32 QueueSprite(u32 a, u32 b, u32 c, u32 d, s32 e, s32 f);
 
 void sub_0809d994(void)

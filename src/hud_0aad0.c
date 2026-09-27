@@ -1,6 +1,11 @@
 #include "gba/gba.h"
 #include "global.h"
 #include "task.h"
+#include "main.h"
+#include "link.h"
+#include "mode.h"
+#include "hud.h"
+#include "room.h"
 
 /* hud_0aad0.c (0x0800AAD0-0x0800B317, issue #96).
  *
@@ -8,35 +13,8 @@
  * the lives, health and bar renderers, the 8-digit decimal score renderer
  * HudDrawScore and the clock renderer HudDrawClock. */
 
-extern s16 gMaxHealth;
-extern u8 gHudMode;
-extern u8 gHudShowsClock;
-extern u16 gHudClock[];
-extern u8 gHudShowsHpBar;
-extern u16 gPlayTime[4];
-extern s8 gDigits[];
-extern s8 gUnk_030023B8;
-extern s8 gUnk_03002444;
-extern u16 gUnk_085A5654[];
-extern u8 gUnk_085A6714[];
-extern u16 gHudDigitTiles[2][10];
-extern u16 gUnk_085A6F5C[];
-extern u16 gUnk_085A6F60[];
-extern u16 gUnk_085A6F64[];
-extern u16 gUnk_085A6F68[][5];
-extern u16 gHudPlayerIconTiles[2][4][2];
-extern u16 gUnk_085A6FC4[];
-extern u16 gUnk_085A6FC8[];
-extern u16 gUnk_085A6FF0[];
-extern u16 gUnk_085A6FF8[];
-extern u16 gUnk_085A6FFC[];
-
 void RequestCopy(u32 mode, u32 src, u32 dst, u32 size);
-void IntToDigits(s16 n);
-void sub_08008e6c(s32 a0);
 void HudDrawTiles(u16 *src, s32 x, s32 y, s32 n);
-void HudClearTiles(s32 x, s32 y, s32 n);
-void HudDrawClock(u16 *time);
 
 void sub_0800aad0(void)
 {

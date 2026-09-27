@@ -1,6 +1,9 @@
 #include "gba/gba.h"
 #include "global.h"
 #include "task.h"
+#include "main.h"
+#include "room.h"
+#include "camera.h"
 
 /* camera_296a0.c (0x080296A0-0x08029C73, issue #86).
  *
@@ -17,66 +20,12 @@
  * the visible rectangle gViewRect that moved past the previous one,
  * gObjectSpawnViewRect, while gRoomObjectList is set, then remembers it. */
 
-struct Unk03005670
-{
-    /*0x00*/ u8 unk0;
-    /*0x01*/ u8 filler01;
-    /*0x02*/ s16 unk2;
-    /*0x04*/ s16 unk4;
-    /*0x06*/ u8 unk6;
-};
-
-struct Unk03004B00
-{
-    /*0x00*/ u32 unk0;
-    /*0x04*/ u32 unk4;
-    /*0x08*/ u32 unk8;
-};
-
 struct Unk020055D8Entry
 {
     /*0x00*/ u8 filler0[4];
     /*0x04*/ u16 x;
     /*0x06*/ u16 y;
 };
-
-struct Unk020055D8
-{
-    /*0x00*/ s16 count;
-    /*0x02*/ s16 sortedByY;
-    /*0x04*/ struct Unk020055D8Entry *entries;
-};
-
-extern u16 gCameraPos[2];
-extern u16 gCameraStreamPos[2];
-extern s32 gUnk_03001F2C;
-extern s32 gUnk_03002448;
-extern struct Unk03005670 gScreenShake;
-extern u16 gBg3Pos[2];
-extern s8 gUnk_02000000;
-extern s16 gSpriteCameraX;
-extern s16 gSpriteCameraY;
-extern vs32 gBg3ScrollX;
-extern vs32 gBg3ScrollY;
-extern vs32 gBg2ScrollX;
-extern vs32 gBg2ScrollY;
-extern s32 gUnk_02016C30;
-extern vs32 gBg1ScrollX;
-extern vs32 gBg1ScrollY;
-extern struct Unk03004B00 gUnk_03004B00;
-extern struct Unk020055D8 gRoomObjectList;
-extern s16 gObjectSpawnViewRect[4];
-extern s16 gViewRect[4];
-
-void sub_08023f18(void);
-void SpawnRoomObjectsInRect(s32 x0, s32 x1, s32 y0, s32 y1);
-void sub_0802aae8(s32 x);
-void DrawBg123Row(s32 x0, s32 x1, s32 y);
-void DrawBg123Column(s32 x, s32 y0, s32 y1);
-void DrawBg23Row(s32 x0, s32 x1, s32 y);
-void DrawBg23Column(s32 x, s32 y0, s32 y1);
-void DrawBg23FullRow(s32 y);
-void sub_0802b25c(s32 x);
 
 void sub_080296a0(void)
 {

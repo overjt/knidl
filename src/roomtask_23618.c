@@ -1,6 +1,10 @@
 #include "gba/gba.h"
 #include "global.h"
 #include "task.h"
+#include "main.h"
+#include "hud.h"
+#include "room.h"
+#include "camera.h"
 
 /* roomtask_23618.c (0x08023618-0x08023947, issue #93).
  *
@@ -17,44 +21,7 @@
  * cell gRoomUpdateFlags: 1 = camera, BG animation and BG streaming, 2 =
  * screen shake, 8 = HUD, 16 = door objects (UpdateDoors). */
 
-extern void (*gRoomTaskVariants[])(void);
-extern u8 gRoomBgLayout;
-extern u16 gRoomUpdateFlags;
-extern u16 gCameraMode;
-
 void CallTableEntry(u32 idx, u32 count, void (**fns)(void));
-void TaskSleepForever(void);
-void sub_0800a6a4(void);
-void HudUpdateAbilityPanel(void);
-void HudUpdateHpBars(void);
-void UpdateDoors(void);
-void DrawDoors(void);
-void CameraUpdatePos(void);
-void CameraUpdatePosNoParallax(void);
-void CameraUpdatePosBg3AutoScrollX(void);
-void StreamBg2Map(void);
-void StreamBg3Map(void);
-void sub_080296a0(void);
-void StreamBg23Maps(void);
-void StreamBg23Rows(void);
-void CameraWriteScrollParallax(void);
-void CameraWriteScrollHBlank(void);
-void SpawnRoomObjectsScrolledIn(void);
-void CameraFollowFocus(void);
-void CameraSlideToScrollLock(void);
-void CameraFollowScrollLocked(void);
-void CameraSlideFromScrollLock(void);
-void CameraHoldAnchor(void);
-void UpdateScreenShake(void);
-void UpdateBgAnims(void);
-void RoomTaskDraw(void);
-void RoomTaskUpdateCamera(void);
-void sub_08023748(void);
-void sub_080237a4(void);
-void sub_080237fc(void);
-void sub_0802385c(void);
-void sub_080238a4(void);
-void sub_080238ec(void);
 
 void Task_Room(void)
 {

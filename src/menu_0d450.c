@@ -1,6 +1,13 @@
 #include "gba/gba.h"
 #include "global.h"
 #include "task.h"
+#include "main.h"
+#include "link.h"
+#include "sound.h"
+#include "mode.h"
+#include "menu.h"
+#include "room.h"
+#include "save.h"
 
 /* menu_0d450.c (0x0800D450-0x0800DAF7, issue #99).
  *
@@ -12,62 +19,7 @@
  * partners (sub_0800da74) and leaves for game state 5 or 13.
  * CreateFileSelectSprites spawns the file-select sprite tasks #238-#240. */
 
-extern s8 gLinkSessionMode;
-extern s8 gSoundTestRepeatCount;
-extern s8 gMenuScreen;
-extern s8 gMenuTransitionTimer;
-extern s8 gPrevMenuScreen;
-extern s8 gUnk_02007FC8;
-extern u8 gUnk_02007FCC;
-extern s16 gSoundTestSelection[];
-extern s8 gMenuCursor;
-extern vu8 gMultiBootStruct[];
-extern u32 gLinkSetupMode;
-extern vu16 gPressedKeys;
-extern vs16 gCurrentBgm;
-extern vu16 gRepeatedKeys;
-extern vs32 gBg2ScrollX;
-extern vs32 gBg3ScrollY;
-extern vu16 gKeyRepeatDelay;
-extern vs32 gBg2ScrollY;
-extern vu16 gKeyRepeatInterval;
-extern vu16 gDispCnt;
-extern vu16 gHeldKeys;
-extern s32 gUnk_03001F2C;
-extern u8 gUnk_03001F30;
-extern u16 gGameState;
-extern u8 gExtraMode;
-extern const s16 gUnk_08731DC0[];
-extern u8 gUnk_0876B1FC[];
-extern u8 gUnk_0876F690[];
-
-void RunFrame(void);
-void RunFrames(s32 count);
-s32 PlayBgm(s32 songId);
 s32 PlaySfx(s32 id);
-void StopAllSfx(void);
-void FadeOutBgm(s32 speed);
-void LinkSetupInit(void);
-void LinkSetupStop(void);
-void MultiBootInitWithParams(u8 *start, u8 *end);
-void LinkSetupRequestStart(void);
-void LinkSetupMain(u16 a);
-s32 TaskCreateFrom(u32 type, s32 idx);
-u32 ConnectLink(void);
-void LinkErrorScreen(void);
-void LoadGfxSet(u16 a0);
-void MenuSetupFileMenu(void);
-void MenuEnterModeList(void);
-void sub_0800d310(void);
-void sub_0800d35c(s32 a);
-void sub_0800d404(void);
-void BgScrollStartX(s32 speed, s32 dist, s32 bg);
-void BgScrollFinish(void);
-void StopHBlankScroll(void);
-void StartHBlankScroll(s32 a);
-void CopySaveSlotToLinkSlot(void);
-void sub_0800da18(void);
-s32 sub_0800da74(void);
 
 void sub_0800d450(void)
 {

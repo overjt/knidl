@@ -1,6 +1,14 @@
 #include "gba/gba.h"
 #include "global.h"
 #include "task.h"
+#include "main.h"
+#include "link.h"
+#include "sound.h"
+#include "mode.h"
+#include "hud.h"
+#include "room.h"
+#include "player.h"
+#include "ending.h"
 
 /* results_c6420.c (0x080C6420-0x080C6C63, issue #100).
  *
@@ -16,61 +24,17 @@
  *       M02's sub_08007f9c calls DrawClockToBgMap too.
  *   CopyToBgMap   copy n map entries to column x, row y of that BG map. */
 
-extern vu16 gDispCnt;          /* DISPCNT shadow */
-extern vs32 gBg0ScrollY;          /* BG0 16.16 scroll shadows ... */
-extern vs32 gBg0ScrollX;
-extern vs32 gBg2ScrollY;
-extern vs32 gBg2ScrollX;
-extern vs32 gBg3ScrollY;
-extern vs32 gBg3ScrollX;          /* ... BG3 */
-extern u8 gUnk_03001F30;            /* set only by the mode list's fifth row
-                                       (src/menu_0ca10.c); not link play */
-extern u16 gPrevGameState;           /* previous game state */
-extern u16 gPlayerCount;           /* number of players */
-extern u8 gExtraMode;
-extern u16 gMilestoneFlags;
-extern u16 gUnk_02000028;
-extern s32 gPlayerScores[];         /* score per player */
-extern u16 gHudClock[];         /* clock (four fields) */
-extern vu16 gPlayerPressedKeys[];        /* keys pressed per player */
-extern u32 gUnk_02020000[];         /* decompression buffer */
-extern u16 gHudDigitTiles[2][10];    /* digit tiles, top and bottom rows */
-extern u16 gUnk_085A6F5C[];         /* the clock's colon tiles */
-extern s8 gDigits[];
-extern vu16 gPressedKeys;
-
 void RequestCopy(u32 mode, u32 src, u32 dst, u32 size);
-void ResetFadeAndBlend(void);
-void BeginFastFadeInFromWhite(void);
-void BeginFadeOutToWhite(void);
-void BeginFastFadeOutToWhite(void);
 /* Declared without its parameter: early_1fd0.c defines it as
    `u32 ClearWarmBoot(u32 arg)` (it returns arg unchanged, lesson 3.391) and
    this call sets up no argument (lesson 3.428). */
+/* Declared here, not through a header: the calls in this file pass other
+   types than the definition takes (lessons 3.428, 3.517). */
 void ClearWarmBoot(void);
-void ResetTasksAndOam(void);
-void RunFrameNoTasks(void);
-void LinkStartKeyExchange(void);
-void LinkStopKeyExchange(void);
-void LinkRequestSync(void);
-void LinkSyncRandom(void);
 void RunLinkFrame(void);                                     /* run one frame */
-void RunFramesNoTasks(s32 count);
-void RunLinkFrames(s32 count);
-void RunFramesNoTasksUntilFadeDone(void);
-void RunLinkFramesUntilFadeDone(void);
-void IntToDigits(s16 n);
-s32 PlayBgm(s32 songId);
 s32 PlaySfx(s32 id);                                    /* play a sound effect */
-void FadeOutBgm(s32 speed);
-void SetBgmVolume(u16 volume);
 void LoadBgLayout(s32 a0);                                   /* load palette set */
 void LoadGfxSet(u16 a0);                                   /* load screen graphics */
-void DrawLargeClockScreen(void);
-void DrawScoreToBgMap(s32 v, s32 x, s32 y);
-void DrawClockToBgMap(u16 *time, s32 x, s32 y);
-
-void CopyToBgMap(u16 *src, s32 x, s32 y, s32 n);
 
 /* AgbMain state 12, after the staff credits: the final screen.  After
    AgbMain state 20 it shows DrawLargeClockScreen's clock screen, when gUnk_03001F30 is

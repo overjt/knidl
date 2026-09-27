@@ -39,165 +39,44 @@
 #include "gba/gba.h"
 #include "global.h"
 #include "task.h"
-
-/* RAM cells */
-extern s32 gUnk_02007D00[];
-extern s32 gUnk_03001F2C;
-extern u16 gFrameCount;
-extern struct PlayerState gPlayerStates[];
-extern s32 gUnk_030023B4;
-extern s32 gUnk_030023D4;
-extern u16 gLocalPlayer;
-extern vs16 gTaskSlotTypes[];
+#include "main.h"
+#include "link.h"
+#include "room.h"
+#include "actor.h"
+#include "enemy.h"
 
 /* ROM tables */
-extern u8 gUnk_08743A70[];
-extern u8 gUnk_08743A8E[];
-extern s32 gUnk_08743A9C[];
-extern u32 gUnk_08743AA4[];
-extern u32 gUnk_08743AAC[];
-extern u8 gUnk_08743AB4[];
-extern s8 gUnk_08743AB8[];
-extern s8 gUnk_08743AC2[];
+/* Not from collision.h: this file's view of gTerrainResult differs (lesson
+   3.517). */
 extern s8 gUnk_087339F0[];
-extern u32 gUnk_0874410C[];
-extern u32 gUnk_08744170[];
-extern u32 gUnk_08744174[];
-extern u32 gUnk_08744178[];
-extern u32 gBonkersNutFrames[];
-extern u32 gUnk_0874430C[];
-extern u32 gPoppyBrosSrBombFrames[];
-extern u32 gUnk_087441A4[];
-extern u32 gUnk_087441AC[];
-extern u32 gUnk_0874417C[][2];
-extern u32 gUnk_0874418C[][2];
-extern u32 gUnk_08744324[];
-extern u32 gUnk_0874419C[];
-extern u32 gUnk_087441B4[];
-extern u8 gUnk_08743B48[];
-extern u32 gUnk_087536FC[];
 extern vu8 gTerrainResult;
-extern u32 gUnk_08743A94[];
-extern u32 gUnk_08743A74[];
-extern u8 gUnk_08743A7C[];
-extern u8 gUnk_08743A82[];
-extern u8 gUnk_08743A88[];
-extern u32 gUnk_08743A10[];
-extern u32 gUnk_08743A28[];
-extern u32 gUnk_08743A40[];
-extern u32 gUnk_08743A58[];
-extern u32 gBugzzyStateUpdates[];
-extern void *gUnk_082959A8;
-extern struct AnimCmd gUnk_08743AC8[];
-extern u32 gBugzzyStates[];
-extern struct AnimCmd gUnk_0874397C[];
-extern u32 gPoppyBrosSrStates[];
-extern u32 gPoppyBrosSrStateUpdates[];
-extern u32 gUnk_087440F4[];
-extern struct AnimCmd *gUnk_08743A00[];
-extern u32 gBugzzyVariants[];
-extern u32 gBugzzyFrames[];
-extern u32 gUnk_08753128[];
-extern u32 gUnk_08753148[];
-extern u8 gUnk_087438DC[];
-extern u32 gUnk_087438E4[];
-extern u32 gUnk_087438EC[];
-extern u32 gUnk_0874391C[];
-extern u32 gUnk_0874394C[];
-extern struct GfxHeader gPoppyBrosSrGfx;
-extern u32 gUnk_08275670;
 
 /* Externals */
 extern void ClampTaskToRoom(struct Task *t);
 extern u32 sub_0806914c(s32 a);
-extern void TaskFaceToward(u32 i);
-extern u16 sub_0806660c(u16 a);
-extern u16 sub_080665fc(void);
-extern u8 TaskGetYDirBitToNearestPlayer(void);
-extern s32 CreateChildTaskAt(u32 type, s16 xArg, s16 yArg, u8 keepPrio);
-extern s32 CreateChildTaskAtOffsetFacing(u32 type, s16 dx, s16 dy, u8 keepPrio);
-extern void sub_08068920(s32 i, u8 c);
 extern s32 GetCollisionTileAtOffset(s16 x, s16 y, s32 c, s32 d);
-extern void TaskGetPosSlot(u32 i);
-extern void sub_080685ec(s32 i, s32 j, u8 c);
-extern s32 TaskFindNearestPlayer(void);
-extern void TaskYieldTrampoline(u32 a);
-extern void TaskExitTrampoline(void);
-extern void TaskFaceLikeParent(void);
-extern u16 sub_08066630(u16 a);
-extern void ActorDrawWorldInView(void);
-extern void TaskMove(void);
-extern void ActorDrawWorldInViewOrDestroy(void);
 extern void ActorCheckHits(void);
-extern void TaskTurnAroundAndReverseX(void);
+/* Declared here, not through a header: the calls in this file pass other
+   types than the definition takes (lessons 3.428, 3.517). */
 extern void sub_080689c8(s32 i, s32 d);
-extern void sub_080653ec(void);
-extern void ActorMove(void);
 extern void CallTableEntry(u32 a, u32 b, u32 *c);
 extern u32 RandomRange(u32 range);
 extern void PlaySfx(s32 id);
-extern void TaskFree(s32 id);
-extern void TaskSleepForever(void);
 extern void TaskSetEntry(void *fn, s32 i);
-extern void TaskSetMotionX(s32 a, s32 b, s32 c);
-extern void TaskSetMotionXFacing(s32 a, s32 b);
-extern void TaskSetMotionY(s32 a, s32 b, s32 c);
-extern void TaskStopX(void);
-extern void TaskStopY(void);
-extern void TaskStop(void);
-extern void TaskUpdateFlip(void);
-extern void TaskSetFrame(s32 a);
 extern void RequestScreenShake(s32 a);
 extern void ActorSetState(u16 v);
 extern void ActorSetHitReactions(u32 *p);
 extern void ActorSetAttackBox(u32 v);
 extern void sub_080639f0(u32 v);
 extern void sub_08063a00(u32 v);
-extern s32 TaskGetNearestPlayerDx(void);
-extern s32 TaskGetNearestPlayerDy(void);
-extern void TaskFaceNearestPlayer(void);
-extern s32 ActorStartAnim(struct AnimCmd *p);
-extern s32 ActorStepAnim(void);
-extern s32 CreateActorFromDescAtOffsetFacing(struct ActorSpawn *p, u8 keepPrio);
-extern s32 CreateChildTask(u32 type, int xArg, int yArg, int prioArg);
-extern s32 CreateChildTaskHere(u32 type, u8 keepPrio);
-extern u16 sub_08066088(u32 mode);
-extern void ActorFlashPalette(void *src, u32 size);
-extern void sub_08066468(void);
-extern void sub_08066480(struct GfxHeader *h, u32 src, u32 size);
-extern void ActorLoadHeaderPalette(struct GfxHeader *h);
-extern void sub_08066580(void);
-extern void sub_080666cc(struct AnimCmd *p);
-extern void sub_080667c0(u8 a, u16 b);
-extern void sub_0806684c(void);
-extern void sub_08066ae0(void);
-extern u8 sub_08067060(void);
 extern s32 sub_08067120(s16 x, s16 y, u16 dir, u8 p8);
 extern void sub_08068f68(void);
 extern u32 ActorCheckHitsWithBox(s32 a);
 extern u8 ActorCollideTerrain(void);
 extern s32 ActorReactToHit(void);
 extern u8 sub_0806acf8(void);
-extern void sub_0806ad18(void);
-extern void ActorDie(void);
-extern s16 CreateStarFlash(u8 kind, s32 dx, s32 dy);
-extern s16 CreateDustTrail(u8 flag, u16 vx, s32 c, s32 d);
-extern void sub_0806cffc(s16 dx, s16 dy);
-extern s32 Div(s32 numerator, s32 denominator);
 
 /* Defined below */
-void BugzzyEnterState(void);
-void BugzzyUpdate(void);
-void sub_080934b8(void);
-void sub_080934f8(void);
-void sub_0809364c(void);
-void sub_080936a0(void);
-void sub_08093780(void);
-void sub_08093a00(s32 a);
-void sub_0809397c(void);
-void sub_08093a98(void);
-void sub_08093c7c(void);
-void sub_08093c60(void);
 void BugzzyInit(void)
 {
     struct Task *t;

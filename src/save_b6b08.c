@@ -1,6 +1,8 @@
 #include "gba/gba.h"
 #include "global.h"
 #include "task.h"
+#include "camera.h"
+#include "save.h"
 
 /* save_b6b08.c (0x080B6B08-0x080B6C3F, issue #94).
  *
@@ -16,17 +18,12 @@
  * copy the address into a second register, lesson 3.354); the plain u32
  * local for the fixed scroll is what the allocator spills to [sp]. */
 
-extern u8 gHBlankScrollState;
-extern s32 gHBlankScrollTimer;
-extern u16 gHBlankScrollTable[];
-extern s32 gUnk_02016C30;
+/* Not from main.h: this file's view of gBg2ScrollY differs (lesson 3.517). */
 extern void (*gFrameCallback)(void);
-extern u32 gHBlankDmaDest;
 extern vs32 gBg3ScrollX;
 extern vs32 gBg2ScrollX;
 extern vu32 gBg2ScrollY;
-extern u16 gSpriteCameraY;
-extern s8 gUnk_087561CC[];
+extern s16 gSpriteCameraY;
 
 s32 sub_080b6b08(void)
 {

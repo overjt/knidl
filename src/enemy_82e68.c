@@ -43,118 +43,30 @@
 #include "gba/gba.h"
 #include "global.h"
 #include "task.h"
-
-/* RAM cells */
-extern s32 gUnk_030023B4;
-extern s32 gUnk_030023D4;
-extern vu16 gTaskSlotTypes[];
-extern s32 gUnk_03001F2C;
-
-/* ROM tables */
-extern s8 gUnk_087339F0[];
-extern u8 gCollisionTileSlope[];
-extern u32 gUnk_0873F500[];
-extern u32 gUnk_0873F720[];
-extern u32 gUnk_0873F758[];
-extern u32 gFlamerStates[];
-extern u32 gFlamerStateUpdates[];
-extern u8 gUnk_087416AD[];
-extern s32 gUnk_087416B0[];
-extern u8 gUnk_087416CC[];
-extern u32 gSirKibbleCutterFrames[];
-extern u32 gHotHeadFireFrames[];
-extern s32 gUnk_08741E54[];
-extern s32 gUnk_08741E5C[];
-extern u32 gUnk_08741F64[];
-extern u32 gUnk_08741E90[];
-extern s32 gUnk_08741E94[];
-extern s32 gUnk_08741EA4[];
-extern u32 gNoddyVariants[];
-extern u32 gNoddyFrames[];
-extern u32 gFlamerFrames[];
-extern s16 gUnk_08741E70[];
-extern u32 gHotHeadFireVariants[];
-extern u32 gUnk_08741E84[];
-extern u32 gUnk_08741E88[];
-extern u32 gUnk_08741E8C[];
-extern u32 gUnk_08741E64[];
-extern u32 gUnk_08741E68[];
-extern u32 gUnk_08741E6C[];
-extern s8 gUnk_08741684[];
-extern s8 gUnk_08741688[];
-extern s8 gUnk_0874168C[];
-extern s8 gUnk_08741690[];
-extern s8 gUnk_08741694[];
-extern s8 gUnk_08741698[];
-extern s8 gUnk_0874169C[];
-extern s8 gUnk_087416A0[];
-extern u8 gUnk_087416A4[];
-extern u16 gUnk_087416D4[];
-extern u16 gUnk_087416E4[];
-extern s16 gUnk_087416EC[][2];
-extern s32 gUnk_087416F8[];
-extern s32 gUnk_08741708[];
-extern s32 gUnk_08741718[];
-extern s32 gUnk_08741728[];
-extern struct AnimCmd gUnk_08741744[];
-extern struct AnimCmd gUnk_08741758[];
-extern u8 gUnk_08741738[];
-extern s16 gUnk_0874173C[];
-extern u32 gUnk_087417B0[];
-extern u32 gUnk_087417B4[];
+#include "main.h"
+#include "collision.h"
+#include "room.h"
+#include "actor.h"
+#include "enemy.h"
 
 /* Externals */
-extern void TaskYieldTrampoline(u32 frames);
-extern void TaskExitTrampoline(void);
+/* Declared here, not through a header: the calls in this file pass other
+   types than the definition takes (lessons 3.428, 3.517). */
 extern void CallTableEntry(u32 a, u32 b, u32 *c);
 extern void PlaySfx(s32 a);
-extern void TaskSleepForever(void);
 extern void TaskSetEntry(void *fn, s32 i);
-extern void TaskSetMotionXFacing(s32 a, s32 b);
-extern void TaskStopX(void);
-extern void TaskSetMotionY(s32 a, s32 b, s32 c);
-extern void TaskStop(void);
-extern void TaskSetFrame(s32 a);
 extern void ActorSetState(s32 a);
 extern void ActorSetHitReactions(u32 *p);
 extern void ActorSetAttackBox(u32 *p);
-extern void TaskFaceNearestPlayer(void);
 extern u16 TaskGetAngleToNearestPlayer(s32 a);
-extern s32 ActorTickAnim(s32 n);
 extern void AngleToVector(s32 a, s32 b);
-extern void TaskGetNearestPlayerPos(void);
-extern void TaskFaceLikeParent(void);
-extern void sub_0806a0f0(s32 a);
 extern u8 sub_0806951c(void);
-extern void ActorDie(void);
-extern void ActorMove(void);
-extern void ActorDrawWorldInViewOrDestroy(void);
-extern s32 TaskGetNearestPlayerDx(void);
-extern s32 ActorStartAnim(struct AnimCmd *p);
-extern s32 CreateChildTaskAtOffsetFacing(u32 type, s16 dx, s16 dy, u8 keepPrio);
-extern s32 TaskGetFacingTowardNearestPlayer(void);
-extern s32 GetDistSq(struct PointPair *p);
 extern s32 TaskIsNearestPlayerInRect(struct PointPair *p);
 extern s32 TaskIsInRect(struct PointPair *r);
-extern void ActorDestroy(void);
-extern s32 GetCollisionTileAtPixel(u16 x, u16 y);
 extern s32 GetCollisionTileAtOffset(s16 x, s16 y, s32 c, s32 d);
 extern void ActorCheckHits(void);
 extern u8 ActorCollideTerrain(void);
 extern void ActorReactToHit(void);
-
-/* Defined below */
-void FlamerUpdate(void);
-void sub_080839ec(void);
-u8 sub_08083a48(s32 dir);
-u8 sub_08083ad4(s32 dir);
-u8 sub_08083bbc(s32 dir, s32 k);
-u8 sub_08083cb8(s16 x, s16 y);
-s32 sub_08083d28(u8 a);
-void sub_08083dfc(void);
-void sub_08083f04(void);
-void sub_080840f0(void);
-void sub_080842b8(void);
 
 void FlamerInit(void)
 {

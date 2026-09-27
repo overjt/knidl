@@ -1,29 +1,9 @@
 #include "gba/gba.h"
 #include "global.h"
 #include "task.h"
-
-struct Collider
-{
-    /*0x00*/ u8 unk00;
-    /*0x01*/ u8 filler01;
-    /*0x02*/ u16 unk02;
-    /*0x04*/ u16 unk04;
-    /*0x06*/ u8 filler06[2];
-    /*0x08*/ u8 *unk08;
-};
-
-extern struct PlayerState gPlayerStates[];
-extern struct Task *gCurTask;
-extern u8 gPlayerColliderCount;
-extern struct Collider gUnk_030052A0[];
-extern struct Collider gUnk_030053A0[];
-extern u8 gUnk_030054A8;
-extern struct Collider gPlayerColliders[];
-extern u8 gUnk_030054F4;
-extern u32 gUnk_0874CFEC[];
-
-void TaskMove(void);
-void sub_0803ddc0(void);
+#include "collision.h"
+#include "player.h"
+#include "actor.h"
 
 void sub_0801a76c(s32 i)
 {

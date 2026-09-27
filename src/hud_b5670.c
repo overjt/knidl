@@ -1,6 +1,12 @@
 #include "gba/gba.h"
 #include "global.h"
 #include "task.h"
+#include "main.h"
+#include "hud.h"
+#include "room.h"
+#include "player.h"
+#include "actor.h"
+#include "enemy.h"
 
 /* hud_b5670.c (0x080B5670-0x080B583F, issue #97).
  *
@@ -32,43 +38,7 @@ struct Unk020055D8Entry
     /*0x06*/ u16 y;
 };
 
-struct Unk020055D8
-{
-    /*0x00*/ s16 count;
-    /*0x02*/ s16 sortedByY;
-    /*0x04*/ struct Unk020055D8Entry *entries;
-};
-
-struct Unk0873EEA0
-{
-    /*0x00*/ u16 paletteBankCount;
-    /*0x02*/ u16 tileCount;
-    /*0x04*/ u16 unk4;
-    /*0x06*/ u16 tilesCompressed;
-    /*0x08*/ u32 palette;
-    /*0x0C*/ u32 tiles;
-};
-
-struct Unk020060A0
-{
-    /*0x00*/ s8 unk0;
-    /*0x01*/ s8 unk1;
-    /*0x02*/ s16 unk2;
-};
-
-extern struct Unk020055D8 gRoomObjectList;
-extern struct Unk020060A0 gUnk_020060A0[];
-extern s8 gUnk_02006130[];
-extern u8 gUnk_02020000[];
-extern u8 gObjPalette[];
-extern u8 gObjVram[];
-extern struct Unk0873EEA0 *gUnk_0873EEA0[];
-extern s8 gUnk_0873EF48[];
-
 void RequestCopy(u32 mode, u32 src, u32 dst, u32 size);
-void sub_08065dbc(u32 slot, u32 sub, u32 level);
-s32 sub_080b5628(u32 a);
-s32 sub_080b5654(u32 a);
 
 s32 sub_080b5670(struct Unk020055D8Entry *e, s32 idx, s32 n)
 {

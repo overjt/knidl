@@ -1,99 +1,23 @@
 #include "gba/gba.h"
 #include "global.h"
 #include "task.h"
+#include "main.h"
+#include "sound.h"
+#include "actor.h"
+#include "enemy.h"
 
 /* RAM cells */
-extern s32 gUnk_02007D00[];
-extern s32 gUnk_030023D4;
-extern vu16 gTaskSlotTypes[];
-extern vu16 gFrameCount;
-extern s32 gUnk_030023B4;
+/* Not from collision.h: this file's view of gTerrainResult differs (lesson
+   3.517). */
 extern u8 gTerrainResult[];
 
-/* ROM tables */
-extern u32 gUnk_087536FC[];
-extern u32 gUnk_0826F170[];
-extern u32 gUnk_087441BC[];
-extern u32 gUnk_087441C4[];
-extern u32 gUnk_087441CC[];
-extern u32 gUnk_087441D0[];
-extern u32 gUnk_087441D4[];
-extern struct AnimCmd gUnk_0874433C[];
-extern struct AnimCmd gUnk_08744360[];
-extern struct AnimCmd gUnk_08744384[];
-extern struct AnimCmd gUnk_087443A8[];
-extern struct AnimCmd gUnk_087443BC[];
-extern struct AnimCmd gUnk_087443D0[];
-extern struct AnimCmd gUnk_087443E4[];
-extern struct AnimCmd gUnk_08744408[];
-extern struct AnimCmd gUnk_0874441C[];
-extern u32 gGrandWheelieVariants[];
-extern u32 gGrandWheelieStates[];
-extern u32 gGrandWheelieStateUpdates[];
-extern u16 gUnk_0874449C[];
-extern u32 gUnk_087444A4[];
-extern u32 gUnk_087444AC[];
-extern u32 gUnk_087444B4[];
-extern u32 gUnk_087444BC[];
-extern u32 gUnk_087444C4[];
-extern u32 gUnk_087444CC[];
-extern u32 gUnk_087449E8[];
-extern u32 gUnk_08744A04[];
-extern u32 gUnk_08744A20[];
-extern u32 gUnk_08744A3C[];
-extern u32 gUnk_08744A58[];
-extern u32 gUnk_08744A74[];
-extern u32 gUnk_08744A90[];
-extern u32 gUnk_08744AAC[];
-extern u32 gUnk_08744AC8[];
-extern u32 gUnk_08744AE4[];
-extern u32 gUnk_08744B00[];
-extern u32 gUnk_08744B1C[];
-extern u32 gUnk_08744B38[];
-extern u32 gUnk_08744B54[];
-extern u32 gUnk_08744B70[];
-extern u32 gUnk_08744B8C[];
-extern u32 gUnk_08744BA8[];
-extern u32 gUnk_08744BC4[];
-extern u32 gUnk_08744BE0[];
-extern u32 gUnk_08744BFC[];
-extern u32 gUnk_08744C18[];
-extern u32 gUnk_08744C34[];
-extern u32 gUnk_08744C50[];
-extern u32 gUnk_08744C6C[];
-extern u32 gUnk_08744C88[];
-extern u32 gUnk_08744CA4[];
-extern u32 gUnk_08744CC0[];
-extern u32 gUnk_0874531C[];
-extern u32 gUnk_08745324[];
-extern u32 gUnk_0874532C[];
-extern u32 gUnk_08745334[];
-extern u32 gUnk_0874533C[];
-extern u32 gUnk_08745344[];
-extern u32 gUnk_0874534C[];
-extern u32 gUnk_0874541C[];
-extern u32 gGrandWheelieFrames[];
-
 /* Externals */
-extern void ActorDrawWorldInViewOrDestroy(void);
-extern void sub_08065438(void);
-extern void ActorMove(void);
+/* Declared here, not through a header: the calls in this file pass other
+   types than the definition takes (lessons 3.428, 3.517). */
 extern void CallTableEntry(u32 a, u32 b, u32 *c);
 extern u32 RandomRange(u32 range);
 extern s32 PlaySfx(s32 id);
-extern void StopSfxOnPlayer(s32 player, s32 songId);
-extern void TaskFree(s32 id);
-extern void TaskSleepForever(void);
 extern void TaskSetEntry(void *fn, s32 i);
-extern void TaskSetMotionXFacing(s32 a, s32 b);
-extern void TaskStopX(void);
-extern void TaskSetMotionY(s32 a, s32 b, s32 c);
-extern void TaskStopY(void);
-extern void TaskStop(void);
-extern void TaskUpdateFlip(void);
-extern void TaskSetFrame(s32 a);
-extern void TaskSetFrameNoFlip(s32 a);
-extern void TaskSetFrameFlip(s32 a);
 extern s32 GetCollisionTileAtPixel(u16 x, u16 y);
 extern void RequestScreenShake(s32 a);
 extern void ActorSetState(u16 v);
@@ -101,87 +25,12 @@ extern void ActorSetHitReactions(void *p);
 extern void ActorSetAttackBox(void *p);
 extern void sub_080639f0(void *p);
 extern void sub_08063a00(void *p);
-extern s32 TaskGetNearestPlayerDx(void);
-extern s32 TaskGetFacingTowardNearestPlayer(void);
-extern void TaskFaceNearestPlayer(void);
-extern void TaskTurnAround(void);
 extern void AngleToVector(s16 t, s16 mag);
-extern u8 TaskGetYDirBitToNearestPlayer(void);
-extern void TaskFaceLikeParent(void);
-extern s32 CreateActorFromDescAtOffsetFacing(struct ActorSpawn *p, u8 keepPrio);
-extern s32 CreateChildTaskHere(u32 type, u8 keepPrio);
-extern u16 sub_08066088(u32 mode);
-extern void ActorFlashPalette(void *src, u32 size);
-extern void sub_08066468(void);
-extern void sub_08066580(void);
-extern void sub_080666cc(struct AnimCmd *p);
-extern void sub_080667c0(u8 a, u16 b);
-extern void sub_0806684c(void);
-extern void sub_08066ae0(void);
-extern u8 sub_08067060(void);
 extern u32 ActorCheckHits(void);
 extern u32 sub_08068f68(void);
 extern u8 ActorCollideTerrain(void);
 extern u32 ActorReactToHit(void);
-extern void ActorFaceHitter(void);
-extern void ActorDie(void);
 extern u8 sub_0806acf8(void);
-extern void sub_0806ad18(void);
-extern s16 CreateDustTrail(u8 flag, u16 vx, s32 c, s32 d);
-extern s32 sub_0806e6f8(s16 x, s16 y);
-extern void TaskYieldTrampoline(u32 frames);
-
-/* Defined below */
-void sub_08093f64(void);
-void sub_08093fe0(void);
-void sub_08094010(void);
-void sub_08094040(void);
-void sub_08094144(void);
-void sub_08094164(void);
-void Task_GrandWheelie(void);
-void GrandWheelieInit(void);
-void GrandWheelieEnterState(void);
-void sub_080942b4(void);
-void GrandWheelieUpdate(void);
-void sub_08094358(void);
-void sub_080945fc(void);
-void sub_08094640(void);
-void sub_0809465c(void);
-void sub_0809467c(void);
-void sub_080946b0(void);
-void sub_08094758(void);
-s32 sub_080947cc(void);
-s32 sub_08094810(void);
-void sub_08094844(void);
-void sub_08094894(void);
-void sub_080948d4(void);
-void sub_08094908(void);
-void GrandWheelieCharge(void);
-void sub_080949e0(void);
-s32 sub_08094b94(void);
-void sub_08094bbc(void);
-s32 sub_08094d10(void);
-void sub_08094da4(void);
-void sub_08094dec(void);
-s32 sub_08094e88(void);
-void sub_08094f28(void);
-void sub_08094f68(void);
-void sub_08094fb0(void);
-void sub_080950b4(void);
-void sub_0809513c(void);
-void sub_08095220(void);
-void sub_08095254(void);
-void sub_0809532c(void);
-void sub_08095360(void);
-void sub_08095484(void);
-s32 sub_080954f0(void);
-s32 sub_080955a8(void);
-void sub_08095674(void);
-void sub_08095694(void);
-s32 sub_080956c8(struct AnimCmd *p);
-s32 sub_080956e4(void);
-s32 sub_08095768(s32 a);
-s32 sub_08095794(s32 a);
 
 void sub_08093f64(void)
 {

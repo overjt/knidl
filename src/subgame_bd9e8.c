@@ -15,15 +15,12 @@
 #include "gba/gba.h"
 #include "global.h"
 #include "task.h"
+#include "main.h"
+#include "subgame.h"
 
-extern u8 gSubGamePhase;
-extern u8 gBombRallyOutMask;
-extern u8 gBombRallyOutCount;
-extern u8 gBombRallyFinishOrder[];
-extern u32 gBombRallyPhases[];
-
+/* Declared here, not through a header: the calls in this file pass other
+   types than the definition takes (lessons 3.428, 3.517). */
 void CallTableEntry(u32 a, u32 b, u32 *c);
-void TaskSleepForever(void);
 
 void BombRallyInit(void)
 {

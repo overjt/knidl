@@ -1,5 +1,6 @@
 #include "gba/gba.h"
 #include "global.h"
+#include "link.h"
 
 /* Link (SIO multi-play) interrupt handlers and session bootstrap,
  * 0x08006D18-0x080072FF (issue #32, batch H1) -- the last block of the
@@ -60,50 +61,19 @@ struct Link {
     /*0x4D0*/ u8 unk4D0, unk4D1;
 };
 
-extern u8 gLink[];      /* link work area */
-extern vu16 gUnk_03004D38[];    /* receive staging, 4 halfwords */
-extern u16 gShouldAdvanceLinkState[];     /* send/receive mailbox (LinkMain1) */
-extern u16 gSendCmd[4];
-extern u16 gRecvCmds[3][4];
-extern u32 gLinkErrorMask;
-extern u32 gLinkRecvVCount;
+/* Not from main.h: this file's view of gIntrTable differs (lesson 3.517). */
 extern u32 gLinkPauseFrames;
-extern u32 gLinkStatus;
-extern u32 gChecksumAvailable;
-extern u32 gUnk_03004D78;
-extern u32 gSerialIntrCount;
-extern vu16 gRecvNonzeroCheck;
-extern u8 gLastRecvQueueCount;
-extern vu16 gLocalPlayer;
-extern vu16 gLinkIsMaster;
-extern vu16 gLinkPlayerCount;
-extern vu16 gPlayerCount;
+extern u16 gLinkIsMaster;
+extern u16 gLinkPlayerCount;
 extern vu16 gIntrMasterEnable;
-extern vu16 gLinkCommand;
-extern u8 gSendBufferEmpty;
+extern u16 gLinkCommand;
 extern void (*gIntrTable[])(void);
 extern u32 gLinkDriverMode;
-extern vu8 gMultiBootStruct[];
-extern vu16 gUnk_04000006;      /* REG_VCOUNT */
-extern vu16 gUnk_0400010C;      /* REG_TM3CNT_L */
-extern vu16 gUnk_0400010E;      /* REG_TM3CNT_H */
-extern vu16 gUnk_04000120;      /* REG_SIOMULTI0 */
-extern vu16 gUnk_04000128;      /* REG_SIOCNT */
-extern vu16 gUnk_0400012A;      /* REG_SIOMLT_SEND */
-extern vu16 gUnk_04000208;      /* REG_IME */
 
-void EnableSerial(void);
-void DisableSerial(void);
+/* Declared here, not through a header: the calls in this file pass other
+   types than the definition takes (lessons 3.428, 3.517). */
 void LinkMain1(u16 *a, u16 *b, u16 *c);
 void RunFrame(void);
-
-void Timer3Intr(void);
-void SerialCB(void);
-void StartTransfer(void);
-void DoRecv(void);
-void DoSend(void);
-void StopTimer(void);
-void SendRecvDone(void);
 
 void DoSend(void)
 {

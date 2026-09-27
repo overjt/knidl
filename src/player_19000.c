@@ -1,36 +1,18 @@
 #include "gba/gba.h"
 #include "global.h"
 #include "task.h"
+#include "main.h"
+#include "cutscene.h"
+#include "room.h"
+#include "player.h"
+#include "actor.h"
+#include "enemy.h"
 
-extern u32 gUnk_03001610[];
-extern u16 gSpriteCameraX;
-extern u16 gSpriteCameraY;
-extern struct Task *gCurTask;
-extern u32 gNightmarePowerOrbGfx[];
-extern u32 gUnk_082FE0E4[];
-extern u32 gUnk_082FE104[];
-extern u16 gUnk_0874AD44[];
-extern u32 gUnk_087553DC[];
-extern u32 gUnk_087553FC[];
-extern u32 gUnk_08755440[];
-extern u32 gUnk_0875546C[];
-extern u32 gUnk_08755484[];
-
-void TaskYieldTrampoline(s32 frames);
 void RequestCopy(u32 mode, u32 src, u32 dst, u32 size);
+/* Declared here, not through a header: the calls in this file pass other
+   types than the definition takes (lessons 3.428, 3.517). */
 void BlendColors(s32 a, s32 b, s32 c, s32 d, void *e);
 s32 PlaySfx(s32 id);
-void TaskMove(void);
-void TaskDrawScreen(void);
-void TaskSleepForever(void);
-void TaskSetMotion(s32 a, s32 b, s32 c, s32 d, s32 e, s32 f);
-void TaskStop(void);
-void CreateCutsceneActor(s32 a, s32 b);
-void sub_08019590(void);
-void sub_08019ecc(void);
-void sub_0801a310(void);
-void sub_0801a3e4(void);
-void SetCameraFocus(s32 x, s32 y);
 
 void sub_08019000(void)
 {

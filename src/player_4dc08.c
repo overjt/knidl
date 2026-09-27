@@ -1,6 +1,12 @@
 #include "gba/gba.h"
 #include "global.h"
 #include "task.h"
+#include "main.h"
+#include "link.h"
+#include "collision.h"
+#include "player.h"
+#include "effect.h"
+#include "actor.h"
 
 /* player_4dc08.c (0x0804DC08-0x0804E39F, issue #90).
  *
@@ -23,67 +29,17 @@
  * bit 2 set until PlayerState.attachedCount is non-zero and equal to unk08, then
  * recovers or releases (sound 201, PlayerState.unk42 bit 9). */
 
-/* gTerrainResult: M06's collision result block (src/terrain_1bcac.c spells it
-   the same way except unk8, which M09 reads with ldrsh).  A 16-bit test of
-   unk0/unk1 together is `*(u16 *)&gTerrainResult` (M12's PlayerActionBurningUpdate). */
-struct Unk03005550
-{
-    /*0x00*/ u8 unk0;
-    /*0x01*/ u8 ceilingHits;
-    /*0x02*/ u8 unk2;
-    /*0x03*/ u8 unk3;
-    /*0x04*/ u8 slope;
-    /*0x05*/ u8 unk5;
-    /*0x06*/ u8 unk6;
-    /*0x07*/ u8 unk7;
-    /*0x08*/ s16 unk8;
-    /*0x0A*/ u8 atDoor;
-    /*0x0B*/ u8 onSlipperyFloor;
-    /*0x0C*/ u8 unkC;
-    /*0x0D*/ u8 unkD;
-};
-
-/* gUnk_02007E90[4][3]: M04's per-player spark records (src/player_10358.c) */
-struct M04Spark
-{
-    /*0x00*/ s32 unk00;
-    /*0x04*/ s32 unk04;
-    /*0x08*/ s32 unk08;
-    /*0x0C*/ u8 unk0C;
-    /*0x0D*/ u8 unk0D;
-    /*0x0E*/ u16 unk0E;
-};
-
-extern u32 gUnk_0873CC64[];             /* hit-box set, passed as (struct HitBoxSet *) */
+/* Not from room.h: this file's view of gUnk_02007FA0 differs (lesson 3.517). */
 extern s16 gUnk_02007FA0[];
-extern s16 gUnk_02004B6C[];
-extern struct Unk03005550 gTerrainResult;
-extern u32 gUnk_0873BED8[];             /* collider row passed to RegisterCollider (4th arg) */
-extern s16 gUnk_0300244C;
-extern u8 gUnk_02007CF4[];
 extern s32 gUnk_03001F2C;               /* boot_091ac.c spelling */
-extern struct M04Spark gUnk_02007E90[][3];
 
 /* M09's hit-box set (src/block_30804.c); only a pointer is passed here */
 struct HitBoxSet;
-void TaskYieldTrampoline(s32 frames);
-void TaskSleepForever(void);
 void TaskSetEntry(void *a, u32 i);
-void TaskSetFrame(s32 a);
 void RegisterCollider(u8 a, s16 x, s16 y, void *p);   /* M11's caller spelling */
 void RequestScreenShake(u16 a);
 u16 sub_08030898(struct HitBoxSet *p, s32 e);
-void PlayerStopAxes(s32 a0);
-void SetPlayerInvulnerability(s32 a0, s32 a1, s32 a2);
-s32 PlaySfxIfLocalPlayer(s32 a0, u16 a1);
-void PlayerStartSfx(s32 a0, u16 a1);
-void PlayerStopSfx(void);
-void PlayerSetWaterMotionY(void);
-s32 PlayerCheckLanding(void);
-s32 PlayerHasCrossedWaterSurface(s32 a);
 void PlayerSetMotionXPreset(s32 a0, s32 a1);           /* M11, still asm; M11's own spelling */
-void PlayerSetMotionYPreset(s32 a0);
-s32 CreatePlayerEffect(s32 a0, s32 a1, s32 a2);
 s32 sub_08065100(s32 x, s32 y, u32 p2, u8 p3, u8 p4);   /* this caller passes x and y unnarrowed (ldrsh; adds #8) */
 
 void PlayerActionBackdrop(void)

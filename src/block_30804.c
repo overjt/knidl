@@ -1,6 +1,8 @@
 #include "gba/gba.h"
 #include "global.h"
 #include "task.h"
+#include "main.h"
+#include "hud.h"
 
 /* block_30804.c (0x08030804-0x080318B3, issue #92).
  *
@@ -86,11 +88,12 @@ struct RoomDef
     /*0x10*/ struct MapTile *unk10;
 };
 
+/* Not from room.h or player.h: this file's view of gRoomMap and gUnk_02004B6C
+   differs (lesson 3.517). */
 extern s16 gRoomWidth;               /* map width in metatiles */
 extern s16 gRoomHeight;               /* map height in metatiles */
 extern u16 gUnk_02007FA0;               /* the block sub_08030b14 broke: x (pixels) */
 extern u16 gUnk_02004B6C;               /*   y (pixels) */
-extern u32 gBlockAnimHook;               /* per-frame stage hook (UpdateBlockAnims / UpdateBlockAnimsWithEdges / UpdateBg1BlockAnims) */
 extern u16 gBlockLayer[];             /* per-cell block layer: low byte = replacement index, 0x8000 = being broken */
 extern struct MapTile *gRoomMap;   /* the room's metatile map */
 extern struct RoomDef *gCurRoomDef;   /* the current room header */
@@ -109,7 +112,6 @@ extern s16 gViewRect[];
 extern u8 gUnk_0200B078;
 
 s32 PlaySfx(s32 id);
-void AddPlayerScore(s32 a, u32 b);
 s32 CreateBlockBreakEffect(s32 x, s32 y);
 void RequestScreenShake(u16 a);
 s32 CreateStageEffect(s32 a, s32 x, s32 y);

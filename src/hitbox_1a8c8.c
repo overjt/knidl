@@ -1,6 +1,9 @@
 #include "gba/gba.h"
 #include "global.h"
 #include "task.h"
+#include "hud.h"
+#include "room.h"
+#include "camera.h"
 
 /* hitbox_1a8c8.c (0x0801A8C8-0x0801B24B, issue #84).
  *
@@ -87,9 +90,10 @@ struct HitEntry
 };
 
 /* Actor-vs-player hit test cells (M17's src/actor_673ec.c widths). */
+/* Not from collision.h: this file's view of gPlayerColliders differs (lesson
+   3.517). */
 extern u8 gUnk_03001F24;
 extern s8 gAttackHitDuration;
-extern s16 gViewRect[];         /* camera rectangle: left, right, top, bottom */
 extern u8 gHitTimer;
 extern u16 gAttackX;           /* actor x */
 extern u16 gAttackHealth;
@@ -118,13 +122,11 @@ extern s16 gColliderLeft;           /* body box left */
 extern s16 gColliderRight;           /* body box right */
 extern s16 gColliderTop;           /* body box top */
 extern s16 gColliderBottom;           /* body box bottom */
-extern s16 gPlayerHealth[];
 extern struct HitEntry gUnk_030053A0[];
 extern u8 gUnk_030054A8;
 extern u16 gUnk_08732218[];
 extern u16 gUnk_08732224[];
 
-s32 AddPlayerHealth(s32 a, u32 b);
 void sub_0801b8e4(void);
 void sub_0801b9e4(void);
 

@@ -1,6 +1,9 @@
 #include "gba/gba.h"
 #include "global.h"
 #include "task.h"
+#include "main.h"
+#include "player.h"
+#include "effect.h"
 
 /* effect_58810.c (0x08058810-0x0805956F, issue #89).
  *
@@ -17,22 +20,10 @@
  * PlayerState.unk40 bit 8 is clear, when the spawner's Task.variant is not 1)
  * and kills it on the same unk40/unk7B test. */
 
-extern u32 gUnk_08751E5C[];
-extern u32 gUnk_08751E7C[];
-
-void TaskExitTrampoline(void);
-void TaskYieldTrampoline(s32 frames);
 u32 RandomRange(u32 range);                       /* RNG: 0 .. range-1 */
 void TaskFree(s32 id);                         /* kill task (M09+ spelling, 49 landed files) */
-void TaskMove(void);
-void TaskMoveRelativeToParent(void);
-void TaskDrawWorld(void);
-void TaskSetMotionXFacing(s32 a, s32 b);
-void TaskStop(void);
 u16 RandomSpread(s32 base, u8 scale, u8 amount);   /* base + ((rand(256) * amount) >> 8) * scale */
 s16 RandomSpreadFacing(s32 base, u8 scale, u8 amount);   /* the same, negated when Task.facing != 1 */
-void sub_08058e80(void);
-void sub_080594e0(void);
 
 void sub_08058810(void)
 {

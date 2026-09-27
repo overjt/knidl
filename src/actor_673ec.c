@@ -11,22 +11,21 @@
 #include "gba/gba.h"
 #include "global.h"
 #include "task.h"
+#include "main.h"
+#include "link.h"
+#include "sound.h"
+#include "hud.h"
+#include "room.h"
+#include "player.h"
+#include "actor.h"
 
-extern u8 gUnk_03001F30;
-extern u16 gLocalPlayer;
-extern s8 gUnk_0873E1F8[];
-extern u32 gUnk_0873E2F0[];
-extern u32 gUnk_0873E31C[];
-extern vs16 gTaskSlotTypes[];
-extern u32 gUnk_02007D00[];
-extern struct PlayerState gPlayerStates[];
-extern s16 gPlayerHealth[];
+/* Not from collision.h: this file's view of gAttackBox differs (lesson
+   3.517). */
 extern u16 gAttackX;
 extern u16 gAttackY;
 extern u16 gAttackHealth;
 extern u8 gAttackLastHitterSlot;
 extern u8 gAttackLastHitter;
-extern u8 gUnk_030023F0;
 extern s16 gAttackFacing;
 extern s8 gAttackHitDuration;
 extern u8 gUnk_03002460;
@@ -41,67 +40,19 @@ extern u8 gUnk_03001F24;
 extern u8 gUnk_030023A4;
 extern u8 gUnk_030023D0;
 
+/* Declared here, not through a header: the calls in this file pass other
+   types than the definition takes (lessons 3.428, 3.517). */
 extern void CallTableEntry(u32 a, u32 b, u32 *c);
-extern void TaskStopSlot(s32 i);
-extern s32 AddPlayerHealth(s32 a, s32 b);
-extern void CreateAbilityStar(u32 a);
-extern void SetPlayerAbility(u32 a, s32 b, s32 c);
-extern void StopSfxOnPlayer(s32 a, s32 b);
-extern void sub_0803d1c4(s32 i);
-extern void sub_0803d2d4(s32 i);
-extern void sub_08067108(void);
-extern void sub_08067114(void);
-extern void PlayerUpdate(void);
-extern void sub_0803332c(void);
-extern void PlayerStartRequestedAction(void);
 extern void sub_0801b7dc(void);
 extern u8 sub_0801b24c(void);
 extern u8 sub_0801af14(void);
 extern u8 sub_0801a8c8(void);
-extern void ActorStoreHit(u8 a);
-extern u32 ActorTestColliders(u8 a);
-extern void ActorUpdateAttachedEffect(void);
-extern void sub_08068a8c(s32 i, u8 flag);
-extern void sub_08068b88(s32 i, u16 b, u8 c, u8 d);
-extern void sub_0806737c(void);
-extern void PlayerUpdateInvulnerability(void);
-extern void sub_0803e080(void);
-extern void SetCameraFocus(s16 x, s16 y);
-extern void sub_08068690(void);
-extern void sub_08068760(void);
-extern u32 sub_080687a0(void);
-extern void TaskStop(void);
-extern void sub_080687e0(void);
-extern void TaskSleepForever(void);
-extern void sub_080687fc(void);
-extern void sub_08068828(void);
-extern void PlayerMove(void);
-extern void sub_08068840(void);
-extern void sub_0806865c(s32 i);
-extern void sub_0806896c(void);
-extern void TaskSetFrame(s32 a);
-extern s32 sub_080684a4(void);
-extern void TaskYieldTrampoline(u32 a);
-extern u16 gFrameCount;
-extern s32 sub_08068a2c(s32 a, s32 b);
-extern void SetPlayerInvulnerability(u32 a, u32 b, s32 c);
 extern void PlaySfx(u32 a);
-extern void TaskSetMotionXFacing(s32 a, s32 b);
-extern void TaskSetMotionY(s32 a, s32 b, s32 c);
-extern void TaskSetFrameFlip(s32 a);
-extern u32 gPlayerDefaultTerrainBox[];
 extern u8 gTerrainResult;
-extern s32 gUnk_0873E348[];
-extern s32 gUnk_0873E388[];
 extern void ClampTaskToRoom(struct Task *t);
 extern void sub_0801bcac(u32 *p);
-extern u16 gUnk_0873E3C8[];
 extern void RequestScreenShake(u32 a);
-extern void sub_080682a8(void);
 extern void TaskSetEntry(void *fn, s32 i);
-extern s32 CreateChildTaskHere(u32 type, u8 keepPrio);
-
-void sub_080675e4(void);
 
 void sub_080673ec(void)
 {

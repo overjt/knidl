@@ -26,12 +26,15 @@
 #include "gba/gba.h"
 #include "global.h"
 #include "task.h"
+#include "main.h"
+#include "room.h"
+#include "camera.h"
+#include "player.h"
+#include "effect.h"
 
 /* RAM cells */
+/* Not from actor.h: this file's view of gUnk_0873E5F8 differs (lesson 3.517). */
 extern u16 gUnk_020055C0;
-extern u8 gUnk_03001F30;
-extern s8 gUnk_030023B8;
-extern vs16 gTaskSlotTypes[];
 
 /* ROM tables */
 extern s16 gUnk_0873E5F8[][2];
@@ -39,33 +42,20 @@ extern u32 gUnk_0873ECE0[];
 extern u8 gUnk_0873FAE8[];
 extern u32 gUnk_0873FB04[];
 extern u32 gUnk_0873FB24[];
-extern u32 gUnk_0874C718[];
-extern u32 gUnk_0874C828[];
 extern u32 gUnk_0874CB3C[];
 extern u32 gUnk_0874CB7C[];
 extern u32 gUnk_0874CBD0[];
 extern u32 gUnk_0874CC38[];
 extern u32 gUnk_0874CCA4[];
-extern u32 gUnk_0874CFEC[];
-extern u32 gUnk_08752548[];
 extern u32 gWarpStarFrames[];
 
 /* Externals */
-extern void TaskExitTrampoline(void);
-extern void TaskYieldTrampoline(u32 a);
+/* Declared here, not through a header: the calls in this file pass other
+   types than the definition takes (lessons 3.428, 3.517). */
 extern void CallTableEntry(u32 a, u32 b, u32 *c);
-extern void TaskMove(void);
-extern void TaskMoveRelativeToParent(void);
-extern void TaskFree(s32 id);
-extern void TaskDrawScreen(void);
-extern void TaskSleepForever(void);
-extern void TaskSetMotionXFacing(s32 a, s32 b);
-extern void TaskStop(void);
-extern void TaskSetFrame(s32 a);
 extern void TaskSetPosXFacing(s32 a);
 extern u16 RandomSpread(s32 base, u8 scale, u8 amount);
 extern s16 RandomSpreadFacing(s32 base, u8 scale, u8 amount);
-extern u32 sub_08025e88(s32 i);
 extern void TaskFaceLikeParent(void);
 extern s32 CreateChildTaskHere(u32 type, u8 keepPrio);
 extern s32 CreateChildTaskAt(u32 type, s16 xArg, s16 yArg, u8 keepPrio);

@@ -1,5 +1,7 @@
 #include "gba/gba.h"
 #include "global.h"
+#include "main.h"
+#include "link.h"
 
 /* The link block-transfer step + the AGB SDK MultiBoot client library
  * (0x08004734-0x08004FEB, issue #32 batch E2).
@@ -36,73 +38,24 @@
  * every mention.  See the batch report for the full analysis.
  */
 
-/* AGB SDK MultiBootParam (0x4C bytes); the live instance is gMultiBootParam. */
-struct MultiBootParam
-{
-    /*0x00*/ u32 system_work[5];
-    /*0x14*/ u8 handshake_data;
-    /*0x15*/ u8 padding;
-    /*0x16*/ u16 handshake_timeout;
-    /*0x18*/ u8 probe_count;
-    /*0x19*/ u8 client_data[3];
-    /*0x1C*/ u8 palette_data;
-    /*0x1D*/ u8 response_bit;
-    /*0x1E*/ u8 client_bit;
-    /*0x1F*/ u8 reserved1;
-    /*0x20*/ u8 *boot_srcp;
-    /*0x24*/ u8 *boot_endp;
-    /*0x28*/ vu8 *masterp;
-    /*0x2C*/ u8 *reserved2[3];
-    /*0x38*/ u32 system_work2[4];
-    /*0x48*/ u8 sendflag;
-    /*0x49*/ u8 probe_target_bit;
-    /*0x4A*/ u8 check_wait;
-    /*0x4B*/ u8 server_type;
-};
-
 /* REG_SIOMULTI0..3 as an array.  UNRESOLVED (see the report): MultiBootHandShake
  * only reproduces the ROM through the cast literal (gcc rematerialises the
  * pool word at every mention), while MultiBootMain only reproduces the ROM's
  * instruction *count* through a symbol reference.  Both spell 0x04000120. */
 #define SIOMULTI  ((vu16 *)REG_ADDR_SIOMULTI0)
-extern vu16 gUnk_04000120[];
 #define SIOMULTI2 gUnk_04000120
-
-/* Per-client probe response cache (3 halfwords). */
-extern u16 gMultiBootClientData[];
-
-/* Link session sequencer state / frame counters (EWRAM). */
-extern s32 gLinkDriverMode;
-extern s32 gLinkBlockTimeout;
-extern vs32 gLinkBlockState;
-extern s32 gLinkBlockWords;
-extern s32 gLinkBlockIndex;
-extern s32 gLinkBlockFrames;
-extern vu16 gIntrEnable;      /* REG_IE shadow */
-extern vu16 gIntrMasterEnable;      /* REG_IME shadow */
-extern vu16 gLinkIsMaster;      /* link-mode flag */
 
 /* REG_IME must be reached through a SYMBOL here, not the io_reg.h cast
  * literal: with the literal, cse.c derives 0x04000208 from the still-live
  * 0x0400010C (REG_TM3CNT_L) as `adds r1,#252`, which removes one address
  * pseudo and shifts the whole register allocation by one.  The ROM pools
  * 0x04000208 on its own at every mention. */
-extern vu16 gUnk_04000208;
 #define GIME gUnk_04000208
 
 /* The MultiBoot SWI thunk returns an error code; syscall.h declares it u8,
  * but the ROM keeps the value untruncated, i.e. the original prototype was
  * int-returning.  Alias it rather than fight the header (see report). */
 extern int MultiBootSvc(struct MultiBootParam *mp) asm("MultiBoot");
-
-int MultiBootSend(struct MultiBootParam *mp, u16 data);
-int MultiBootHandShake(struct MultiBootParam *mp);
-void MultiBootWaitCycles(s32 cycles);
-void MultiBootWaitSendDone(void);
-void MultiBootInit(struct MultiBootParam *mp);
-void MultiBootStartProbe(struct MultiBootParam *mp);
-int MultiBootCheckComplete(struct MultiBootParam *mp);
-
 
 /*FN LinkBlockMain*/
 void LinkBlockMain(void)
@@ -167,7 +120,6 @@ void LinkBlockMain(void)
     gLinkBlockFrames++;
 }
 
-
 /*FN MultiBootInit*/
 void MultiBootInit(struct MultiBootParam *mp)
 {
@@ -178,4 +130,3 @@ void MultiBootInit(struct MultiBootParam *mp)
     mp->sendflag = 0;
     mp->handshake_timeout = 0;
 }
-

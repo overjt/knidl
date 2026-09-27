@@ -1,6 +1,9 @@
 #include "gba/gba.h"
 #include "global.h"
 #include "task.h"
+#include "main.h"
+#include "player.h"
+#include "effect.h"
 
 /* effect_59570.c (0x08059570-0x0805A357, issue #89).
  *
@@ -17,37 +20,13 @@
  * transfer (RequestCopy) and installs sub_0805a320, which kills it when the
  * spawner's Task.variant is 8 or the player is in neither mode 13 nor mode 3. */
 
-extern u32 gUnk_08751F0C[];
-extern u32 gUnk_0874C804[];
-extern u32 gUnk_0874C828[];
-extern u32 gUnk_0873C23C[];
-extern u32 gUnk_0873C250[];
-extern s16 gSpriteCameraX;               /* scalar, read with ldrsh (33 landed files) */
-extern s16 gSpriteCameraY;               /* scalar, read with ldrsh (32 landed files) */
-extern u32 gUnk_08751ECC[];
-extern u32 gUnk_08751F84[];
-extern u8 gUnk_081FD870[];
-extern u16 gUnk_0873BB0E[][3];   /* per sub-state: 8.8 x velocity, 8.8 y velocity, frame */
-
-void TaskExitTrampoline(void);
-void TaskYieldTrampoline(s32 frames);
 void RequestCopy(u32 mode, void *src, void *dst, u32 size);   /* early_1518; effect_5afac's pointer spelling */
 s32 QueueSprite(u32 a, u32 b, u32 c, u32 d, u32 e, s16 f);   /* callers pass f sign-extended (lsls/asrs #16); the early_1518 definition says u16 */
 void TaskFree(s32 id);                         /* kill task (M09+ spelling, 49 landed files) */
-void TaskMove(void);
-void TaskMoveRelativeToParent(void);
-void TaskUpdatePixelPos(void);
-void TaskDrawWorld(void);
-void TaskDrawWorldTilesLoaded(void);
-void TaskSetMotionXFacing(s32 a, s32 b);
 u32 IsWorldPosOnScreen(s16 a, s16 b);   /* the ROM tests r0 unnarrowed (src callers spell u32) */
 u16 RandomSpread(s32 base, u8 scale, u8 amount);   /* base + ((rand(256) * amount) >> 8) * scale */
 s16 RandomSpreadFacing(s32 base, u8 scale, u8 amount);   /* the same, negated when Task.facing != 1 */
 void RegisterCollider(u8 a, s16 x, s16 y, void *p);   /* M11's caller spelling */
-void sub_0803dfc8(void);
-void sub_08059aac(void);
-void sub_08059b18(void);
-void sub_0805a320(void);
 
 void sub_08059570(void)
 {

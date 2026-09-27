@@ -1,5 +1,6 @@
 #include "gba/gba.h"
 #include "global.h"
+#include "main.h"
 
 /* OAM shadow builder (0x08001B08-0x08001CC7, issue #32 batch B1).
  *
@@ -32,13 +33,6 @@
  * the separate 255 constants come out of the u16 arithmetic by themselves.
  *
  * STATUS: byte-exact (448/448). */
-
-extern u16 *gOamBufferCursor;       /* OAM shadow write cursor */
-extern vu32 gSpriteLayerCounts[16];   /* per-bucket sprite counts */
-extern u8 gSpriteLayerLists[16][64]; /* per-bucket sprite slot indices */
-extern u16 gSpriteQueue[][6];   /* 12-byte sprite records */
-extern u16 gOamBuffer[];      /* OAM shadow (128 entries * 4 halfwords) */
-extern vu16 gUnk_03001EC8;       /* number of OAM entries used */
 
 void BuildOam(void)
 {

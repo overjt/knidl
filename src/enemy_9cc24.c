@@ -2,75 +2,24 @@
 #include "gba/gba.h"
 #include "global.h"
 #include "task.h"
-
-/* RAM cells / ROM tables */
-extern u16 gFrameCount;
-extern struct Task gTasks[];
-extern vu16 gTaskSlotTypes[];
-extern u32 gUnk_08745CEC[];
-extern u32 gJavelinKnightVariants[];
-extern u32 gUnk_08747AE4[];
-extern u32 gUnk_08747AFC[];
-extern u32 gUnk_08747B10[];
-extern u32 gUnk_08747B24[];
-extern u32 gUnk_08747B38[];
-extern u32 gUnk_08747B58[];
-extern u32 gUnk_08747B68[];
-extern u32 gUnk_08747E64[];
-extern u32 gAxeKnightAxeFrames[];
-extern u32 gJavelinKnightFrames[];
+#include "main.h"
+#include "actor.h"
+#include "enemy.h"
 
 /* Externals */
-extern void TaskYieldTrampoline(u32 a);
+/* Declared here, not through a header: the calls in this file pass other
+   types than the definition takes (lessons 3.428, 3.517). */
 extern void CallTableEntry(u32 a, u32 b, u32 *c);
 extern u32 RandomRange(u32 range);
 extern s32 PlaySfx(s32 id);
-extern void TaskMove(void);
-extern void TaskSleepForever(void);
 extern void TaskSetEntry(void *fn, s32 i);
-extern void TaskSetMotionXFacing(s32 a, s32 b);
-extern void TaskStopX(void);
-extern void TaskStopY(void);
-extern void TaskStop(void);
-extern void TaskSetFrame(s32 a);
 extern void ActorLoadDef(u32 def);
 extern void ActorSetState(u16 v);
-extern s32 TaskGetNearestPlayerDx(void);
 extern s32 TaskIsInRectSlot(struct PointPair *box, s32 i);
-extern void ActorDestroy(void);
-extern void TaskFaceLikeParent(void);
-extern s32 CreateActorFromDescAtOffsetFacing(struct ActorSpawn *p, u8 keepPrio);
-extern void ActorDrawWorldInViewOrDestroy(void);
 extern u32 ActorCheckHitsWithBox(s32 a);
 extern u32 ActorCheckHits(void);
 extern u8 ActorCollideTerrain(void);
 extern u32 ActorReactToHit(void);
-extern void sub_0809c50c(void);
-extern void sub_0809c528(void);
-extern void sub_0809c5a4(void);
-extern void sub_0809d994(void);
-extern u8 sub_0809dbc4(void);
-extern u8 sub_0809dc3c(void);
-extern void TaskFaceScreenCenter(void);
-extern void sub_0809f90c(void);
-extern void sub_0809f930(void);
-extern void sub_0809f970(void);
-extern s32 sub_0809f994(void);
-extern void sub_0809f9dc(void);
-extern void sub_0809fb10(void);
-
-/* Defined below */
-void sub_0809cd4c(void);
-void sub_0809cec4(void);
-void sub_0809cfe0(void);
-void sub_0809d17c(void);
-void sub_0809d1dc(void);
-void sub_0809d280(void);
-void sub_0809d2a4(void);
-void sub_0809d6dc(void);
-void sub_0809d83c(void);
-void sub_0809d8f8(void);
-void sub_0809d944(void);
 
 void sub_0809cc24(void)
 {

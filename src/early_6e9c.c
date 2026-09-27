@@ -1,5 +1,6 @@
 #include "gba/gba.h"
 #include "global.h"
+#include "main.h"
 
 /* early_6e9c.c (0x08006E9C-0x08007003, issue #63).
  *
@@ -38,15 +39,13 @@ struct Link {
 
 struct Pair { u32 a, b; };
 
+/* Not from link.h: this file's view of gLink differs (lesson 3.517). */
 extern struct Link gLink;
 extern vu16 gUnk_03004D38[];    /* receive staging, 4 halfwords */
 extern vu16 gUnk_04000120;      /* REG_SIOMULTI0 */
 extern u32 gChecksumAvailable;
 extern u32 gLinkRecvVCount;
-extern u32 gLinkPauseFrames;
-extern vu16 gRecvNonzeroCheck;
-extern vu16 gLinkCommand;
-extern u32 gLinkDriverMode;
+extern u16 gRecvNonzeroCheck;
 
 /* Receive step of the serial interrupt (pokeruby's DoRecv): snapshot the
  * four SIOMULTI words, then either check the round's checksum or queue the

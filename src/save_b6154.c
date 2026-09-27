@@ -1,6 +1,8 @@
 #include "gba/gba.h"
 #include "global.h"
 #include "task.h"
+#include "main.h"
+#include "save.h"
 
 /* save_b6154.c (0x080B6154-0x080B628F, issue #94).
  *
@@ -13,16 +15,6 @@
  * Matching note: the plain subscripted loops with the counter read inline at
  * every use are the source (lesson 3.465); the ROM's preheader order
  * [table, 256, &gHBlankScrollTimer] comes from agbcc's second loop pass. */
-
-extern u8 gHBlankScrollState;
-extern s32 gHBlankScrollTimer;
-extern u16 gHBlankScrollTable[];
-extern void (*gFrameCallback)(void);
-extern u32 gHBlankDmaDest;
-extern vu8 gBldAlphaEva;
-extern vu16 gDispCnt;
-extern vu8 gBldAlphaEvb;
-extern vs32 gBg1ScrollX;
 
 s32 sub_080b6154(void)
 {

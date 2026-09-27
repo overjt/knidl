@@ -1,6 +1,11 @@
 #include "gba/gba.h"
 #include "global.h"
 #include "task.h"
+#include "main.h"
+#include "sound.h"
+#include "mode.h"
+#include "hud.h"
+#include "subgame.h"
 
 /* subgame_c243c.c (0x080C243C-0x080C2FF7, issue #98).
  *
@@ -33,167 +38,12 @@
  *   AirGrindSkyVBlankCallback   the VBlank hook: sets backdrop colour 0 and re-arms DMA0
  *       to copy that gradient into it on every HBlank (0xA2400001). */
 
-/* 16-byte object records, M37ObjSet.unk04[7] (sub_080c4664, sub_080c4790) */
-struct M37Obj
-{
-    /*0x00*/ s16 unk0;
-    /*0x02*/ u16 unk2;
-    /*0x04*/ s32 unk4;
-    /*0x08*/ s32 unk8;          /* 16.16; the ROM also reads its high half */
-    /*0x0C*/ s32 unkC;          /* 16.16; the ROM also reads its high half */
-};
-
-/* M37Game.unk0EC (0xB8 bytes with the compiler's 2-byte tail pad): task
-   type #96 variant 1's seven scrolling objects.  sub_080c4664 addresses an
-   object as &set->unk04[i] off the set's own base (`lsls #4; adds #4`), so
-   the records are a sub-struct, not flat fields; the two 16-colour rows
-   AirGrindSetupRace fills end it exactly at M37Game.randomStates. */
-struct M37ObjSet
-{
-    /*0x00*/ s32 unk00;         /* the scroll position last frame */
-    /*0x04*/ struct M37Obj unk04[7];
-    /*0x74*/ s16 unk74;         /* the last object's sprite id */
-    /*0x76*/ u16 unk76[16];     /* M37Game + 0x162 */
-    /*0x96*/ u16 unk96[16];     /* M37Game + 0x182 */
-};
-
-/* per-player records, M37Game.players[4] (0x34 bytes) */
-struct M37Player
-{
-    /*0x00*/ u8 unk00;
-    /*0x01*/ u8 unk01;
-    /*0x02*/ u16 unk02;
-    /*0x04*/ u16 unk04;
-    /*0x06*/ s16 unk06;
-    /*0x08*/ s16 unk08;
-    /*0x0A*/ s16 unk0A;
-    /*0x0C*/ s16 unk0C;
-    /*0x0E*/ u16 unk0E;
-    /*0x10*/ s32 unk10;
-    /*0x14*/ s32 unk14;
-    /*0x18*/ s32 unk18;
-    /*0x1C*/ s32 unk1C;
-    /*0x20*/ u8 unk20;
-    /*0x21*/ u8 unk21;
-    /*0x22*/ u8 pad22[2];
-    /*0x24*/ s32 unk24;
-    /*0x28*/ s32 unk28;
-    /*0x2C*/ s32 unk2C;
-    /*0x30*/ s32 unk30;
-};
-
-/* gAirGrind, the game's state; always used through gAirGrindPtr */
-struct M37Game
-{
-    /*0x000*/ s32 level;       /* the level (M36's AirGrindInit copies gSubGameLevel) */
-    /*0x004*/ s32 raceTimes[4];
-    /*0x014*/ s32 unk014;
-    /*0x018*/ s32 unk018;
-    /*0x01C*/ struct M37Player players[4];
-    /*0x0EC*/ struct M37ObjSet unk0EC;
-    /*0x1A4*/ s32 randomStates[5];    /* five LCG streams (AirGrindRandom, AirGrindRandomRange) */
-    /*0x1B8*/ s32 unk1B8;
-    /*0x1BC*/ u16 skyLineColors[160]; /* per-scanline colour, HBlank DMA source */
-    /*0x2FC*/ u16 backdropColor;
-    /*0x2FE*/ u8 pad2FE[2];
-    /*0x300*/ u32 frameCount;       /* frame counter */
-    /*0x304*/ s16 unk304;       /* sub_080c4f60's OAM list: entry count */
-    /*0x306*/ s16 unk306[160];  /* ... and entries */
-    /*0x446*/ u16 localPlayer;       /* gLocalPlayer */
-    /*0x448*/ u16 playerCount;       /* gLinkPlayerCount */
-    /*0x44A*/ u8 pad44A[2];
-    /*0x44C*/ s32 unk44C;       /* a task index into gTasks */
-    /*0x450*/ u8 unk450;
-    /*0x451*/ u8 unk451;
-    /*0x452*/ u8 pad452[2];
-};
-
-/* per-player records of gAirGrindCourse, M37Course.players[4] (0x3C bytes) */
-struct M37CoursePlayer
-{
-    /*0x00*/ s32 coursePos;
-    /*0x04*/ s32 unk04;
-    /*0x08*/ s32 unk08;
-    /*0x0C*/ s32 unk0C;
-    /*0x10*/ s32 unk10;
-    /*0x14*/ s32 unk14;
-    /*0x18*/ s32 unk18;
-    /*0x1C*/ s32 unk1C;
-    /*0x20*/ s32 unk20;
-    /*0x24*/ s32 unk24;
-    /*0x28*/ s32 unk28;
-    /*0x2C*/ s32 unk2C;
-    /*0x30*/ s32 unk30;
-    /*0x34*/ s32 prevCoursePos;
-    /*0x38*/ s32 unk38;
-};
-
-/* gAirGrindCourse, reached through gAirGrindCoursePtr (and directly by the
-   0x080C5284-0x080C623C builder) */
-struct M37Course
-{
-    /*0x000*/ s32 scrollPos;
-    /*0x004*/ s32 unk004;
-    /*0x008*/ s32 unk008;
-    /*0x00C*/ s32 unk00C;
-    /*0x010*/ s32 finishLine;
-    /*0x014*/ s32 unk014;
-    /*0x018*/ struct M37CoursePlayer players[4];
-    /*0x108*/ s32 unk108;
-    /*0x10C*/ s32 unk10C;
-    /*0x110*/ s32 unk110;
-};
-
-/* the results screen's state (AirGrindResults, sub_080c25c4, sub_080c2740) */
-struct M37Results
-{
-    /*0x00*/ s8 unk00;          /* state */
-    /*0x01*/ s8 unk01;
-    /*0x02*/ s8 unk02;
-    /*0x03*/ s8 unk03;
-    /*0x04*/ u8 unk04[4];       /* the players, sorted by score */
-    /*0x08*/ u8 unk08[4];       /* each player's index into unk04 */
-    /*0x0C*/ u8 unk0C[4];       /* the places, ties shared */
-    /*0x10*/ s32 unk10;         /* the winner's pulsing scale */
-    /*0x14*/ s32 unk14;
-    /*0x18*/ s32 unk18;         /* frame timer */
-    /*0x1C*/ s32 unk1C[4];
-};
-
-extern struct M37Game gAirGrind;
-extern struct M37Game *gAirGrindPtr;
-extern struct M37Course *gAirGrindCoursePtr;
-extern u16 gAirGrindFrame;
-extern struct M37Results gAirGrindResults;
-extern u8 gUnk_080CFE2C[][4];
-extern u16 gPrevGameState;
-extern vu16 gPlayerPressedKeys[];
-extern u32 gUnk_0875602C[];
-extern u16 gUnk_08609F40[][16];
-extern u16 gUnk_03001510[];
-extern u8 gUnk_080CFE60[11][3];
-extern u8 gUnk_080CFE81[11][3];
-extern u8 gUnk_080CFEA2[11][3];
-extern u8 gUnk_080CFEC3[11][3];
-
 s32 QueueSprite(u32 a, u32 b, u32 c, u32 d, u32 e, s16 f);  /* sprite draw; callers pass f sign-extended (lsls/asrs #16), the early_1518 definition says u16 */
 void BlendColors(u16 *src, u16 *dst, s32 ratio, s32 count, u16 *out);
-s32 PlayBgm(s32 songId);
 s32 PlaySfx(s32 id);
 void TaskSleepForever(void);                                     /* end the running task */
-s32 AddPlayerLivesNoHud(s32 a, u32 b);
-void SubGameReplay(s32 a0);
-void SubGameQuit(void);
-void SubGameCheckEnd(void);
-void sub_080c4a48(s32 pal);
-void sub_080c4a94(s32 idx, s32 x, s32 y);
 void sub_080c4ac4(s32 t, s32 x, s32 y);                   /* draw a frame count as ss:cc */
 void sub_080c4bec(s32 a, s32 b, s32 x, s32 y);            /* draw min(a * 1000 / b, 1000) */
-void sub_080c4c30(s32 idx, s32 pal, s32 scale, s32 x, s32 y, u32 layer);
-void sub_080c25c4(void);
-void sub_080c2b8c(void);
-void sub_080c2ba8(void);
-void sub_080c2ccc(s32 mode);
 
 void AirGrindResults(void)
 {

@@ -1,6 +1,13 @@
 #include "gba/gba.h"
 #include "global.h"
 #include "task.h"
+#include "main.h"
+#include "link.h"
+#include "sound.h"
+#include "mode.h"
+#include "hud.h"
+#include "room.h"
+#include "ending.h"
 
 /* boot_091ac.c (0x080091AC-0x080099FB, issue #96).
  *
@@ -12,75 +19,10 @@
  * title palette, task type #2 (Task_TitleSprites) spawns ten sprite children
  * (sub_08009640) - with the nine-scene intro story IntroStory. */
 
-extern vs32 gBg0ScrollY;
-extern vu16 gPressedKeys;
-extern vu8 gBldCntTarget2;
-extern vu16 gWin0V;
-extern vu16 gFadeBlankAtWhite;
-extern vu16 gFadeStep;
-extern vu8 gBldAlphaEva;
-extern vu8 gWinIn0;
-extern vs32 gBg3ScrollX;
-extern vu8 gWinOut;
-extern vs32 gBg2ScrollX;
-extern vs32 gBg3ScrollY;
-extern vs16 gBrightness;
-extern vs32 gBg1ScrollY;
-extern vu16 gWin0H;
-extern vu16 gFadeTimer;
-extern vs32 gBg0ScrollX;
-extern vu8 gBldCntTarget1;
-extern u16 gUnk_03001430[];
-extern vu16 gFadeSteps;
-extern vs32 gBg2ScrollY;
-extern vu16 gFadeInterval;
-extern vu8 gBldAlphaEvb;
-extern u16 *gFadeKeepMask;
-extern vu16 gDispCnt;
-extern vs32 gBg1ScrollX;
-extern s32 gUnk_03001F2C;
-extern u16 gPrevGameState;
-extern u16 gLinkPlayerCount;
-extern u16 gUnk_08541D98[][16];
-extern u16 gUnk_08541F58[];
-extern u16 gUnk_08731C88[];
-extern u16 gUnk_08731CC8[];
-extern u8 gUnk_08731CDC[];
-extern u16 gUnk_08731CE6[];
-extern u32 gUnk_087555B4[];
-
-void TaskExitTrampoline(void);
-void TaskYieldTrampoline(s32 frames);
 u32 BeginFade(u16 steps, u16 delta, u16 *mask);
 void RequestCopy(u32 mode, u32 src, u32 dst, u32 size);
-void BeginFadeInFromWhite(void);
-void BeginFastFadeInFromWhite(void);
-void BeginFadeOutToWhite(void);
-void BeginFastFadeOutToWhite(void);
-void ResetTasksAndOam(void);
-void RunFrame(void);
-void RunFrames(s32 count);
-void RunFramesUntilFadeDone(void);
 void BlendColors(u16 *src, u16 *dst, s32 ratio, s32 count, u16 *out);
-s32 PlayBgm(s32 songId);
 s32 PlaySfx(s32 id);
-void StopAllSfx(void);
-void SetBgmVolume(u16 volume);
-s32 TaskCreateFrom(u32 type, s32 idx);
-void TaskMove(void);
-void TaskDrawScreen(void);
-void TaskSleepForever(void);
-void LoadBgLayout(s32 a0);
-void LoadGfxSet(u16 a0);
-void BootLogoInitObjects(void);
-void BootLogoUpdateObjects(void);
-s32 PlayBootLogo(void);
-s32 BootLogoWait(s32 n);
-void sub_080095e4(void);
-void sub_08009640(void);
-s32 TitleScreen(void);
-void IntroStory(void);
-s32 sub_080099c8(s32 n);
 
 void BootLogoMain(void)
 {

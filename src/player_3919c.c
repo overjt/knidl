@@ -1,6 +1,15 @@
 #include "gba/gba.h"
 #include "global.h"
 #include "task.h"
+#include "main.h"
+#include "link.h"
+#include "sound.h"
+#include "hud.h"
+#include "room.h"
+#include "player.h"
+#include "effect.h"
+#include "actor.h"
+#include "save.h"
 
 /* player_3919c.c (0x0803919C-0x08039C23, issue #91).
  *
@@ -18,64 +27,10 @@
  * door code EnterDoor and plays the ability's door animation
  * (gPlayerDoorAnims[ability][0]). */
 
-struct CamPos { u16 x, y; };
-
-extern u8 gActivePlayerCount;
-extern u8 gActivePlayerMask;
-extern u16 gUnk_0873D9FA[][2];
-extern u16 gPlayerCount;               /* number of players */
-extern s16 gPlayerHealth[];             /* health per player (M02's HUD) */
-extern u16 gLocalPlayer;
-extern vu16 gDispCnt;              /* DISPCNT shadow */
-extern vs16 gTaskSlotTypes[];
-extern u8 gUnk_02007CF0;
-extern u8 gUnk_0300234C;
-extern s8 gStageRequest;                /* stage request (M02) */
-extern s16 gPlayerLives[];
-extern u8 gUnk_03001F34;
-extern u16 gGameState;
-extern struct CamPos gPlayerCameraPos[4];
-extern s16 gSpriteCameraY;
-extern s8 gUnk_03002444;
-extern s16 gUnk_0873D7E4[][3];
-extern u16 gPlayerDoorAnims[][7];
-
-void TaskExitTrampoline(void);
-void TaskYieldTrampoline(s32 frames);
-s32 PlayBgm(s32 songId);
 s32 PlaySfx(s32 id);
-void StopAllSound(void);
-s32 StopOtherSfx(s32 songId);
-void StopAllSfx(void);
-void TaskSetSkipMask(u8 val, s32 idx);
-void TaskSleepForever(void);
 void TaskSetEntry(void *a, u32 i);
-void TaskSetFrame(s32 a);
-s32 SetPlayerAbility(s32 a, s32 b, u32 c);
-s32 EnterDoor(void);
 void RequestScreenShake(u16 a);
-s32 sub_080264b0(void);
-void PauseRoom(void);
-void SetRoomUpdateFlags(u32 a);
-void sub_08027548(void);
-s32 sub_080276ac(s32 a);
-s32 sub_080276cc(s32 i);
-void PlayerStopAxes(s32 a0);
-void sub_0803e080(void);
-void SetPlayerInvulnerability(s32 a0, s32 a1, s32 a2);
-s32 PlaySfxIfLocalPlayer(s32 a0, u16 a1);
-void FreezeOtherTasks(s32 a0);
-void sub_0803e868(void);
-u16 sub_0803f7e0(u16 a0);
-s32 sub_080404e4(void);
-void sub_08040934(s32 a0);
-void PlayerSetMotionYPreset(s32 a0);
 void CreatePlayerObject(s32 a, s32 b, s32 c);      /* M14, src/plobj_52f6c.c (defined s32 (s8, u8, s32); the result is unused here) */
-s32 CreatePlayerEffect(s32 a0, s32 a1, s32 a2);
-s32 CreatePlayerEffectHighSlot(s32 a0, s32 a1, s32 a2);
-void sub_080b9118(void);
-void sub_080b9610(void);
-void sub_080396a4(void);
 
 void PlayerActionDie(void)
 {

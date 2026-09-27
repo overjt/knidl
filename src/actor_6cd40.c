@@ -14,25 +14,13 @@
 #include "gba/gba.h"
 #include "global.h"
 #include "task.h"
+#include "main.h"
+#include "actor.h"
 
-extern u32 gUnk_0874CB90[];
-extern vs16 gTaskSlotTypes[];
-
-extern void TaskYieldTrampoline(u32 a);
-extern void TaskExitTrampoline(void);
-extern void ActorMove(void);
-extern void ActorDrawWorldInViewOrDestroy(void);
-extern void TaskSetMotionXFacing(s32 a, s32 b);
-extern void TaskSetFrameByFacing(u32 a);
-extern void TaskStop(void);
-extern void CreateDustPuff(void);
-extern u8 TaskHasSameSerial(s32 i);
-extern void TaskFaceLikeParent(void);
+/* Declared here, not through a header: the calls in this file pass other
+   types than the definition takes (lessons 3.428, 3.517). */
 extern s16 RandomSpreadFacing(s32 base, u8 scale, u8 amount);
 extern u16 RandomSpread(s32 base, u8 scale, u8 amount);
-extern s32 CreateChildTask(u32 type, int xArg, int yArg, int prioArg);
-extern s32 CreateChildTaskAt(u32 type, s16 xArg, s16 yArg, u8 keepPrio);
-extern void TaskSetFrame(s32 a);
 
 void Task_DustTrail(void)
 {

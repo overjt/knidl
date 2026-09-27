@@ -1,6 +1,11 @@
 #include "gba/gba.h"
 #include "global.h"
 #include "task.h"
+#include "main.h"
+#include "collision.h"
+#include "room.h"
+#include "player.h"
+#include "effect.h"
 
 /* player_4ee08.c (0x0804EE08-0x0804F613, issue #90).
  *
@@ -12,49 +17,9 @@
  * Sub-handler 17 (sub_0804f5bc, a push-less leaf) requests action 7, 20
  * or 23 from the ground flag and the key state. */
 
-/* gTerrainResult: M06's collision result block (src/terrain_1bcac.c spells it
-   the same way except unk8, which M09 reads with ldrsh).  A 16-bit test of
-   unk0/unk1 together is `*(u16 *)&gTerrainResult` (M12's PlayerActionBurningUpdate). */
-struct Unk03005550
-{
-    /*0x00*/ u8 unk0;
-    /*0x01*/ u8 ceilingHits;
-    /*0x02*/ u8 unk2;
-    /*0x03*/ u8 unk3;
-    /*0x04*/ u8 slope;
-    /*0x05*/ u8 unk5;
-    /*0x06*/ u8 unk6;
-    /*0x07*/ u8 unk7;
-    /*0x08*/ s16 unk8;
-    /*0x0A*/ u8 atDoor;
-    /*0x0B*/ u8 onSlipperyFloor;
-    /*0x0C*/ u8 unkC;
-    /*0x0D*/ u8 unkD;
-};
-
-extern u16 gLatchedHeldKeys[];             /* held keys, latched per player (M11) */
-extern struct Unk03005550 gTerrainResult;
-extern u32 gPlayerDefaultBodyBox[];             /* stored to PlayerState.bodyBox as (u32)gPlayerDefaultBodyBox */
-extern u32 gPlayerDefaultTerrainBox[];
-
-void TaskYieldTrampoline(s32 frames);
-void TaskSleepForever(void);
 void TaskSetEntry(void *a, u32 i);
 void RequestScreenShake(u16 a);
-void PlayerStopAxes(s32 a0);
-s32 PlaySfxIfLocalPlayer(s32 a0, u16 a1);
-void FreezeOtherTasks(s32 a0);
-void PlayerTurnToHeldDirection(void);
-void PlayerCheckBump(void);
-s32 PlayerHasCrossedWaterSurface(s32 a);
 void PlayerSetMotionXPreset(s32 a0, s32 a1);           /* M11, still asm; M11's own spelling */
-void PlayerSetMotionYPreset(s32 a0);
-void sub_0804e600(void);
-s32 sub_0804f614(void);
-void sub_0804f79c(void);
-s32 sub_0804f7f8(s32 a);
-s32 sub_0804f8ec(s32 a0);
-s32 CreatePlayerEffect(s32 a0, s32 a1, s32 a2);
 
 void sub_0804ee08(void)
 {

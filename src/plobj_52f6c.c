@@ -1,6 +1,11 @@
 #include "gba/gba.h"
 #include "global.h"
 #include "task.h"
+#include "main.h"
+#include "link.h"
+#include "collision.h"
+#include "player.h"
+#include "effect.h"
 
 /* plobj_52f6c.c (0x08052F6C-0x08053AF3, issue #90).
  *
@@ -29,79 +34,18 @@
  * return the task index or -1; the landed callers outside M14 declare
  * them `void (s32, s32, s32)`. */
 
-/* gTerrainResult: M06's collision result block (src/terrain_1bcac.c spells it
-   the same way except unk8, which M09 reads with ldrsh).  A 16-bit test of
-   unk0/unk1 together is `*(u16 *)&gTerrainResult` (M12's PlayerActionBurningUpdate). */
-struct Unk03005550
-{
-    /*0x00*/ u8 unk0;
-    /*0x01*/ u8 ceilingHits;
-    /*0x02*/ u8 unk2;
-    /*0x03*/ u8 unk3;
-    /*0x04*/ u8 slope;
-    /*0x05*/ u8 unk5;
-    /*0x06*/ u8 unk6;
-    /*0x07*/ u8 unk7;
-    /*0x08*/ s16 unk8;
-    /*0x0A*/ u8 atDoor;
-    /*0x0B*/ u8 onSlipperyFloor;
-    /*0x0C*/ u8 unkC;
-    /*0x0D*/ u8 unkD;
-};
-
-extern u32 gUnk_08751BF4[];
-extern u16 gUnk_0873B862[][2];
-extern u8 gUnk_0873B872[][8];
-extern u8 gUnk_0873B88A[][5];
-extern u16 gUnk_0873B8C6[][2][8];
-extern s8 gUnk_0873CB5C[];
-extern s8 gUnk_0873CB6C[];
-extern struct Unk03005550 gTerrainResult;
-extern u32 gUnk_0873CC3C[];
-extern u32 gUnk_0873CC44[];
-extern u32 gUnk_0873BE4C[];
-extern u32 gUnk_0873BE60[];
-extern s16 gSpriteCameraX;               /* scalar, read with ldrsh (33 landed files) */
-extern s16 gSpriteCameraY;               /* scalar, read with ldrsh (32 landed files) */
-extern u32 gUnk_087520A8[];
-extern u32 gUnk_0874C4E4[];
-extern s8 gUnk_0873CB4C[];
-extern u32 gUnk_0873BE74[];
-extern u32 gUnk_0873BE88[];
-
 /* M09's hit-box set (src/block_30804.c); only a pointer is passed here */
 struct HitBoxSet;
-void TaskExitTrampoline(void);
-void TaskYieldTrampoline(s32 frames);
+/* Declared here, not through a header: the calls in this file pass other
+   types than the definition takes (lessons 3.428, 3.517). */
 s32 QueueSprite(u32 a, u32 b, u32 c, u32 d, u32 e, s16 f);
 s32 PlaySfx(s32 id);
-s32 TaskCreateInRange(u32 type, s32 start, s32 end);
-void TaskMove(void);
-void TaskMoveRelativeToParent(void);
-void TaskDrawScreenOrFree(void);
-void TaskDrawWorld(void);
-void TaskDrawWorldInViewOrFree(void);
-void TaskSleepForever(void);
 void TaskSetEntry(void *a, u32 i);
-void TaskSetMotionXFacing(s32 a, s32 b);
-void TaskStop(void);
 u32 IsWorldPosOnScreen(s16 x, s16 y);
-u32 IsInView(s16 x, s16 y);
 void RegisterCollider(u8 a, s16 x, s16 y, void *p);   /* M11's caller spelling */
 void sub_0801c230(const s8 *p);
 void sub_0802205c(s8 *box);
-void sub_0802233c(s8 *off);
 s32 TaskBreakBlocks(struct HitBoxSet *p, s32 e);   /* M14's callers test r0 unnarrowed (good/sub_08050c48.c); landed M09/M12/M13 files spell it u16 */
-s32 PlaySfxIfLocalPlayer(s32 a0, u16 a1);
-void sub_08050814(void);
-void sub_08050f80(void);
-void sub_080520dc(void);
-s32 sub_08052b08(void);
-s32 CreatePlayerEffect(s32 a0, s32 a1, s32 a2);
-void sub_08053380(void);
-void sub_080534d0(void);
-void sub_080536dc(void);
-void sub_080538cc(void);
 
 void sub_08052f6c(void)
 {

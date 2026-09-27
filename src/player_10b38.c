@@ -1,47 +1,21 @@
 #include "gba/gba.h"
 #include "global.h"
 #include "task.h"
+#include "main.h"
+#include "sound.h"
+#include "cutscene.h"
+#include "player.h"
+#include "effect.h"
+#include "actor.h"
+#include "enemy.h"
 
-extern u32 gBgPalette[];
-extern vu16 gDispCnt;
-extern u16 gSpriteCameraX;
-extern u16 gSpriteCameraY;
-extern struct Task *gCurTask;
-extern struct Task gTasks[];
-extern u32 gUnk_08732134[];
-extern u32 gUnk_08732138[];
-extern u32 gUnk_0873E640[];
-extern u32 gUnk_0874C500[];
-extern u32 gUnk_0874C67C[];
-extern u32 gUnk_0874CA1C[];
-extern u32 gUnk_08751CEC[];
-extern u32 gUnk_08751E00[];
-extern u32 gUnk_08754A14[];
-extern u32 gUnk_08754ABC[];
-extern u32 gUnk_08754B80[];
-extern u32 gUnk_08754C90[];
-extern u32 gUnk_08754D60[];
-extern u32 gUnk_08754E7C[];
-extern u32 gUnk_08754F68[];
-
-void TaskExitTrampoline(void);
-void TaskYieldTrampoline(s32 frames);
+/* Declared here, not through a header: the calls in this file pass other
+   types than the definition takes (lessons 3.428, 3.517). */
 s32 QueueSprite(u32 a, u32 b, u32 c, u32 d, s32 e, s32 f);
-void PlayBgm(u32 a);
-s32 TaskCreateFrom(u32 type, s32 idx);
-void TaskIntegrateMotion(void);
-void TaskMove(void);
-void TaskMoveRelativeToParent(void);
-void TaskDrawScreen(void);
-void TaskSleepForever(void);
-void TaskSetMotion(s32 a, s32 b, s32 c, s32 d, s32 e, s32 f);
-void TaskStop(void);
 u32 IsWorldPosOnScreen(s16 x, s16 y);
 s32 RandomSpread(s32 a, s32 b, s32 c);
 s16 RandomSpreadFacing(s32 a, u32 b, u32 c);
-s32 CreateCutsceneActor(s32 a, s32 b);
 void RequestScreenShake(s32 a);
-s32 PlayerLoadFrameTilesAndPalette(s32 mode);
 void LoadBackdropColor(u16 *p);
 
 void sub_08010b38(void)
@@ -1526,8 +1500,6 @@ void sub_08012df8(void)
     gCurTask->frame = 0xFFFF;
     TaskSleepForever();
 }
-
-void sub_08012fe0(void);
 
 void sub_08012e6c(void)
 {

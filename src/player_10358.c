@@ -1,40 +1,27 @@
 #include "gba/gba.h"
 #include "global.h"
 #include "task.h"
+#include "link.h"
+#include "sound.h"
+#include "cutscene.h"
+#include "room.h"
+#include "player.h"
+#include "effect.h"
+#include "actor.h"
 
-extern u32 gUnk_02007D00[];
+/* Not from main.h: this file's view of gPlayerPressedKeys differs (lesson
+   3.517). */
 extern u8 gObjPalette[];
 extern u16 gPlayerPressedKeys;
-extern s32 gUnk_03001F2C;
-extern u16 gPlayerCount;
-extern u16 gUnk_030023B8;
-extern u16 gGameState;
-extern struct Task *gCurTask;
-extern struct Task gTasks[];
-extern u32 gUnk_081AC358[];
-extern u32 gUnk_081AC378[];
-extern u32 gUnk_08731F78[];
-extern u32 gCutsceneDurations[];
-extern u32 gUnk_08731FA8[];
-extern u32 gUnk_08731FC8[];
-extern u32 gUnk_08751C44[];
-extern u32 gUnk_08754A14[];
 
-void TaskExitTrampoline(void);
-void TaskYieldTrampoline(s32 frames);
 void RequestCopy(u32 mode, u32 src, u32 dst, u32 size);
+/* Declared here, not through a header: the calls in this file pass other
+   types than the definition takes (lessons 3.428, 3.517). */
 void CallTableEntry(u32 a, u32 b, u32 *c);
-void PlayBgm(u32 a);
-void StopSfxOnPlayer(s32 player, s32 songId);
-void TaskFree(s32 id);
-s32 TaskCreateInRange(u32 type, s32 start, s32 end);
-void TaskMove(void);
-void TaskDrawScreen(void);
 void TaskSleepForever(void);
 void TaskSetMotion(s32 a, s32 b, s32 c, s32 d, s32 e, s32 f);
 void TaskStop(void);
 void TaskSetFrame(s32 a);
-void CutsceneCheckSkip(void);
 
 s32 CreateCutsceneActor(s32 a, s32 b)
 {
@@ -234,26 +221,6 @@ void sub_08010528(void)
     gCurTask->frame = 36;
     TaskSleepForever();
 }
-
-/* Not in hdr.c yet: the two task entry points this state installs. */
-void sub_080109c8(void);
-void sub_08010b38(void);
-
-/* 16-byte per-slot record, 3 slots per player, at gUnk_02007E90.
-   unk00/unk04 are 16.16 (x,y), unk08 a 16.16 y-delta, unk0C a timer,
-   unk0D a frame/anim id.  hdr.c only has `extern u32 gUnk_02007E90[]`, so
-   the real 2-D shape is aliased in here. */
-struct M04Spark
-{
-    /*0x00*/ s32 unk00;
-    /*0x04*/ s32 unk04;
-    /*0x08*/ s32 unk08;
-    /*0x0C*/ u8 unk0C;
-    /*0x0D*/ u8 unk0D;
-    /*0x0E*/ u16 unk0E;
-};
-
-extern struct M04Spark gUnk_02007E90[][3];
 
 /* OBJ VRAM tile base; not in hdr.c. */
 extern u8 gObjVram[];

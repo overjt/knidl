@@ -1,17 +1,8 @@
 #include "gba/gba.h"
 #include "global.h"
 #include "task.h"
-
-extern void (*gFrameCallback)(void);
-extern u8 gHBlankScrollState;
-extern s32 gHBlankScrollTimer;
-extern u16 gHBlankScrollTable[];
-extern vs32 gBg3ScrollX;
-extern vs32 gBg2ScrollX;
-extern u32 gHBlankDmaDest;
-extern vu32 gBg2ScrollY;
-extern vu16 gDispCnt;
-extern vs32 gBg1ScrollX;
+#include "main.h"
+#include "save.h"
 
 s32 sub_080b6c40(void)
 {

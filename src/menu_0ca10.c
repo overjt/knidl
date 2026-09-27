@@ -1,6 +1,13 @@
 #include "gba/gba.h"
 #include "global.h"
 #include "task.h"
+#include "main.h"
+#include "link.h"
+#include "sound.h"
+#include "mode.h"
+#include "menu.h"
+#include "room.h"
+#include "save.h"
 
 /* menu_0ca10.c (0x0800CA10-0x0800D44F, issue #99).
  *
@@ -16,84 +23,8 @@
  * sub_0800d310/sub_0800d35c/sub_0800d404 draw its cursor and three-digit
  * numbers and play the chosen sound. */
 
-struct SaveSlot
-{
-    /*0x00*/ u32 unk00;
-    /*0x04*/ s32 unk04;
-    /*0x08*/ u32 generation;
-    /*0x0C*/ s32 saveCount;
-    /*0x10*/ u16 milestoneFlags;
-    /*0x12*/ u16 completionPercent[2];
-    /*0x16*/ u8 unk16[2];
-    /*0x18*/ u8 unk18[2];
-    /*0x1A*/ u8 unk1A[2];
-    /*0x1C*/ u8 unk1C[2];
-    /*0x1E*/ u8 pad1E[2];
-    /*0x20*/ u32 unk20[2];
-    /*0x28*/ u8 unk28[8][7];
-    /*0x60*/ u16 unk60[4];
-    /*0x68*/ u16 unk68[4];
-    /*0x70*/ u32 checksum;
-    /*0x74*/ u8 filler74[0x8C];
-};
-
-struct SongEntry
-{
-    struct SongHeader *header;
-    u8 prio;
-    u8 chans;
-    u8 pad[2];
-};
-
-extern s8 gModeListExtraRows;
-extern u32 gMenuBufferedKeys;
-extern u8 gUnk_02006090;
-extern s8 gMenuScreen;
-extern s8 gSubGameLevel;
-extern s8 gMenuTransitionTimer;
-extern s8 gMenuChoiceCursor;
-extern s8 gPrevMenuScreen;
-extern u8 gUnk_02007FCC;
-extern s16 gSoundTestSelection[];
-extern s8 gMenuCursor;
-extern struct SaveSlot gSaveSlots[];
-extern vu16 gPressedKeys;
-extern vu16 gRepeatedKeys;
-extern vs32 gBg3ScrollX;
-extern vs32 gBg2ScrollX;
-extern vs32 gBg3ScrollY;
-extern u16 gUnk_030015F0[];
-extern vs32 gBg2ScrollY;
-extern vu16 gDispCnt;
-extern vu16 gHeldKeys;
-extern s8 gDigits[];
-extern u8 gUnk_03001F30;
-extern u16 gGameState;
-extern s32 gCurSaveSlot;
-extern u8 gExtraMode;
-extern u32 gObjVram[];
-extern const u8 gUnk_0855A5F8[];
-extern u16 gUnk_08564F34[];
-extern const u8 gUnk_085653C4[];
-extern const struct SongEntry gSfxTable[];
-
 void RequestCopy(u32 mode, u32 src, u32 dst, u32 size);
-void RunFrame(void);
-void RunFrames(s32 count);
-void IntToDigits(s16 n);
 s32 PlaySfx(s32 id);
-void FadeOutBgm(s32 speed);
-s32 TaskCreateFrom(u32 type, s32 idx);
-void LoadGfxSet(u16 a0);
-void MenuSetupFileMenu(void);
-void BgScrollStartX(s32 speed, s32 dist, s32 bg);
-s32 BgScrollStartBg3Slide(s32 speed);
-void BgScrollFinish(void);
-void SetBlend(s32 a, s32 b, s32 c, s32 d);
-void SetWindow(s32 in, s32 out, s32 h, s32 v, s32 win);
-void StopHBlankScroll(void);
-void StartHBlankScroll(s32 a);
-void MenuDrawModeList(void);
 
 void MenuEnterModeList(void)
 {

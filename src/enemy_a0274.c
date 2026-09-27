@@ -2,80 +2,25 @@
 #include "gba/gba.h"
 #include "global.h"
 #include "task.h"
-
-/* RAM cells / ROM tables */
-extern s32 gUnk_02006190[];
-extern s32 gUnk_02007D00[];
-extern s16 gViewRect[];
-extern s32 gUnk_030023B4;
-extern s32 gUnk_030023D4;
-extern vu16 gTaskSlotTypes[];
-extern s16 gRoomBounds[];
-extern u32 gUnk_082D8638[];
-extern u16 * gUnk_087482A8[];
-extern s16 gUnk_08748374[];
-extern struct AnimCmd gUnk_08748384[];
-extern struct AnimCmd gUnk_08748398[];
-extern s32 gUnk_087483B8[];
-extern s32 gUnk_08748410[];
-extern u16 gUnk_08748420[];
-extern s16 gUnk_08748430[];
-extern u32 gKingDededeStates[];
-extern u32 gKingDededeStateUpdates[];
-extern u32 gUnk_087484C4[];
-extern u32 gUnk_087484CC[];
-extern u32 gUnk_08748820[];
-extern u32 gKingDededeFrames[];
+#include "main.h"
+#include "sound.h"
+#include "room.h"
+#include "camera.h"
+#include "actor.h"
+#include "enemy.h"
 
 /* Externals */
-extern void TaskYieldTrampoline(u32 a);
+/* Declared here, not through a header: the calls in this file pass other
+   types than the definition takes (lessons 3.428, 3.517). */
 extern void CallTableEntry(u32 a, u32 b, u32 *c);
 extern u32 RandomRange(u32 range);
 extern s32 PlaySfx(s32 id);
-extern void StopSfxOnPlayer(s32 player, s32 songId);
-extern void TaskFree(s32 id);
-extern void TaskSleepForever(void);
 extern void TaskSetEntry(void *fn, s32 i);
-extern void TaskSetMotionXFacing(s32 a, s32 b);
-extern void TaskStopX(void);
-extern void TaskSetMotionY(s32 a, s32 b, s32 c);
-extern void TaskStopY(void);
-extern void TaskStop(void);
-extern void TaskSetFrame(s32 a);
-extern void TaskStepForward(s16 a);
 extern void RequestScreenShake(s32 a);
 extern void ActorSetState(u16 v);
 extern void sub_08063a00(u32 v);
-extern s32 TaskGetNearestPlayerDx(void);
-extern void TaskGetNearestPlayerPos(void);
-extern void TaskFaceNearestPlayer(void);
-extern s32 ActorStartAnim(struct AnimCmd *p);
-extern s32 ActorTickAnimFacingNearestPlayer(s32 n);
-extern u8 TaskGetYDirBitToNearestPlayer(void);
-extern u8 TaskGetXDirBitToNearestPlayer(void);
-extern s32 TaskGetNearestPlayerScreenPos(void);
-extern s32 CreateActorFromDescAtOffsetFacing(struct ActorSpawn *p, u8 keepPrio);
-extern s32 CreateChildTaskAtOffsetFacing(u32 type, s16 dx, s16 dy, u8 keepPrio);
-extern s32 CreateChildTaskHere(u32 type, u8 keepPrio);
-extern void sub_08065438(void);
-extern void ActorFlashPalette(void *src, u32 size);
-extern void sub_08066468(void);
-extern void sub_080664e0(struct AnimCmd *p);
-extern void sub_080666f8(struct AnimCmd *p);
 extern s32 sub_08067120(s16 x, s16 y, s16 dir, u8 p8);
 extern u8 ActorCollideTerrain(void);
-extern void sub_0806d08c(s16 a, s16 b, s16 c);
-extern s32 CreateDustBurst(s16 a, s16 b);
-extern void sub_0809fca4(void);
-extern void sub_0809fd20(void);
-extern void sub_080a0028(void);
-extern void sub_080a0098(void);
-extern void sub_080a00ec(void);
-
-/* Defined below */
-void KingDededeUpdate(void);
-void KingDededeEnterState(void);
-void sub_080a1550(void);
 
 void sub_080a0274(void)
 {

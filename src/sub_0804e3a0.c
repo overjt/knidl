@@ -2,6 +2,8 @@
 #include "global.h"
 #include "task.h"
 
+/* Not from room.h or player.h: this file's view of gUnk_02007FA0 and
+   gUnk_0873CC54 differs (lesson 3.517). */
 extern s16 gUnk_02004B6C[];
 extern s16 gUnk_02007FA0[];
 extern u16 gLatchedHeldKeys[];
@@ -9,6 +11,8 @@ extern u8 gUnk_0873BEEC[];
 extern u8 gUnk_0873CC54[];
 
 void TaskSetEntry(void *func, u32 arg);
+/* Declared here, not through a header: the calls in this file pass other
+   types than the definition takes (lessons 3.428, 3.517). */
 void RegisterCollider(u8 a, s16 x, s16 y, void *p);
 u16 sub_08030898(void *table, s32 id);
 void PlayerSetWaterMotionY(void);

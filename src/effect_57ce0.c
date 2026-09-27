@@ -1,6 +1,12 @@
 #include "gba/gba.h"
 #include "global.h"
 #include "task.h"
+#include "main.h"
+#include "link.h"
+#include "room.h"
+#include "player.h"
+#include "effect.h"
+#include "actor.h"
 
 /* effect_57ce0.c (0x08057CE0-0x0805880F, issue #89).
  *
@@ -21,43 +27,9 @@
  * spawner through four sub-states and draws through M11's sub_0803dfc8;
  * sub_080586fc kills it once the player leaves mode 13. */
 
-/* M08's per-player camera positions (src/camera_28b8c.c) */
-struct CamPos { u16 x, y; };
-
-extern u32 gUnk_08751D88[];
-extern u32 gUnk_08751DB0[];
-extern u16 gUnk_0873BAEE[];
-extern struct CamPos gPlayerCameraPos[4];
-extern u8 gUnk_02006178;
-extern s8 gUnk_03002444;
-extern vs16 gTaskSlotTypes[];
-extern vu16 gDispCnt;              /* DISPCNT shadow */
-extern u16 gUnk_0200B000[];
-extern u16 gBgPalette[];
-extern u8 gUnk_0873BAFA[];
-extern u8 gUnk_0873C04C[];
-extern u32 gUnk_08751DD0[];
-extern u32 gUnk_08751DBC[];
-extern u16 gUnk_0873BAFC[];
-extern u32 gUnk_08751E00[];
-
-void TaskExitTrampoline(void);
-void TaskYieldTrampoline(s32 frames);
-void TaskSetSkipMask(u8 val, s32 idx);
 void TaskFree(s32 id);                         /* kill task (M09+ spelling, 49 landed files) */
-void TaskMove(void);
-void TaskMoveRelativeToParent(void);
-void TaskDrawWorld(void);
-void TaskSetFrameByFacing(s16 a);
-void TaskSetMotionXFacing(s32 a, s32 b);
-void TaskSetFrame(s32 a);
-void TaskRestoreSkipMask(u32 idx);
-void TaskSaveSkipMask(u32 idx);
 void RegisterCollider(u8 a, s16 x, s16 y, void *p);   /* M11's caller spelling */
-void sub_0803dfc8(void);
 void LoadBackdropColor(u32 src);
-void sub_08058410(void);
-void sub_080586fc(void);
 
 void sub_08057ce0(void)
 {

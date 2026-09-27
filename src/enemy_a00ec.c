@@ -1,16 +1,15 @@
 #include "gba/gba.h"
 #include "global.h"
 #include "task.h"
-
-/* RAM cells / ROM tables */
-extern s32 gUnk_02006040[];
-extern s32 gUnk_03001F2C;
-extern s16 gViewRect[];
-extern s32 gUnk_03002448;
-extern u32 gUnk_080D2148[];
-extern s16 gUnk_08748268[2][16];
+#include "room.h"
+#include "camera.h"
+#include "player.h"
+#include "actor.h"
+#include "enemy.h"
 
 /* Externals */
+/* Declared here, not through a header: the calls in this file pass other
+   types than the definition takes (lessons 3.428, 3.517). */
 extern s32 QueueSprite(u32 a, u32 b, u32 c, u32 d, s32 e, s32 f);
 extern u32 RandomRange(u32 range);
 

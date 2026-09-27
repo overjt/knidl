@@ -2,49 +2,33 @@
 #include "gba/gba.h"
 #include "global.h"
 #include "task.h"
+#include "main.h"
+#include "link.h"
+#include "sound.h"
+#include "hud.h"
+#include "actor.h"
+#include "enemy.h"
+#include "save.h"
 
 /* RAM cells / ROM tables */
-extern u32 gUnk_02006040[];
-extern s32 gUnk_02006190[];
-extern s32 gUnk_02007D00[];
+/* Not from room.h: this file's view of gCurSaveSlot differs (lesson 3.517). */
 extern u8 gUnk_03001F30;
-extern struct PlayerState gPlayerStates[];
 extern u8 gActivePlayerMask;
-extern s32 gUnk_030023B4;
 extern u32 gCurSaveSlot[];
-extern s16 gUnk_0300244C;
-extern u32 gKingDededeVariants[];
-extern u32 gUnk_08748974[];
-extern u32 gKingDededeFrames[];
 
 /* Externals */
+/* Declared here, not through a header: the calls in this file pass other
+   types than the definition takes (lessons 3.428, 3.517). */
 extern void CallTableEntry(u32 a, u32 b, u32 *c);
 extern s32 PlaySfx(s32 id);
-extern void StopSfxOnPlayer(s32 player, s32 songId);
-extern void TaskSetSkipMask(u32 a, u32 b);
-extern void TaskFree(s32 id);
-extern void TaskMove(void);
 extern void TaskSetEntry(void *fn, s32 i);
-extern void TaskSetFrame(s32 a);
-extern void sub_0800a698(void);
 extern void RequestScreenShake(s32 a);
 extern void ActorSetState(u16 v);
 extern void ActorSetHitReactions(u32 *p);
-extern void TaskGetScreenPos(void);
-extern s32 CreateActorFromDescAtOffsetFacing(struct ActorSpawn *p, u8 keepPrio);
-extern s32 CreateChildTaskAtOffsetFacing(u32 type, s16 dx, s16 dy, u8 keepPrio);
-extern void sub_08065438(void);
 extern s16 ActorComputeHealth(void);
-extern u16 sub_08066088(u32 mode);
-extern void sub_08066468(void);
 extern void sub_080689c8(s32 i, s32 d);
 extern void sub_08068f68(void);
 extern u32 ActorReactToHit(void);
-extern void ActorDie(void);
-extern s16 CreateStarFlash(u8 kind, s32 dx, s32 dy);
-extern void sub_080a0a84(void);
-extern void KingDededeEnterState(void);
-extern void sub_080b7c00(u32 a);
 
 void sub_0809fbd0(void)
 {

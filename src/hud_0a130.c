@@ -1,6 +1,13 @@
 #include "gba/gba.h"
 #include "global.h"
 #include "task.h"
+#include "main.h"
+#include "link.h"
+#include "mode.h"
+#include "hud.h"
+#include "room.h"
+#include "player.h"
+#include "actor.h"
 
 /* hud_0a130.c (0x0800A130-0x0800AACF, issue #96).
  *
@@ -8,66 +15,7 @@
  * per-player bar records gHudHpBars[] and the two 5-way state switches
  * (sub_0800a19c, sub_0800a21c) over gHudAbilityPanelState. */
 
-struct HudBar
-{
-    /*0x00*/ u8 unk0;
-    /*0x01*/ u8 unk1;
-    /*0x02*/ s16 unk2;
-    /*0x04*/ s16 unk4;
-    /*0x06*/ s16 unk6;
-};
-
-struct Unk02005E00
-{
-    /*0x00*/ s32 unk00;
-    /*0x04*/ u8 unk04[4];
-    /*0x08*/ u8 unk08[4];
-};
-
-extern u8 gUnk_02000034;
-extern s8 gHudHpBarIndex;
-extern s16 gHudHpBarMaxHp;
-extern s8 gUnk_02005590[];
-extern s8 gUnk_020055D0;
-extern s8 gUnk_020055F0[];
-extern struct Unk02005E00 gUnk_02005E00;
-extern u8 gHudMode;
-extern s32 gPlayerScores[];
-extern u8 gHudShowsClock;
-extern u16 gHudClock[];
-extern s8 gUnk_0200617C;
-extern s8 gHudAbilityPanelState;
-extern struct HudBar gHudHpBars[];
-extern s16 gUnk_02007D30;
-extern s16 gHudHpBarValues[];
-extern s16 gUnk_02008014[];
-extern s16 gUnk_0200801C;
-extern u8 gUnk_0200AFF8;
-extern u8 gHudShowsHpBar;
-extern void (*gFrameEndCallback)(void);
-extern u16 gLocalPlayer;
-extern u8 gUnk_030023B0;
-extern s8 gUnk_03002444;
-extern s32 gUnk_03002448;
-
 void PlaySfx(s32 id);
-void HudClearAbilityPicture(void);
-void HudLoadAbilityPicture(s32 a0);
-void HudRedrawClock(void);
-void HudDrawScore(s32 v);
-void HudDrawClock(u16 *time);
-void HudDrawAbilityPanel(s32 n);
-void sub_0800b0fc(void);
-void HudDrawHpBar(s32 x);
-void sub_0800b190(s32 from, s32 to);
-void sub_0800b230(s32 a, s32 b);
-void HudClearTiles(s32 x, s32 y, s32 n);
-void HudFlushTilemap(void);
-void HudAnimateHpBar(s32 from, s32 to, s32 i);
-s32 sub_0800aa18(s32 from, s32 to);
-void HudSetHpBar(s32 x, s32 i);
-void HudResetHpBar(s32 i);
-void sub_0800aaac(s32 i);
 
 void HudShowAbility(s32 a, s32 id)
 {

@@ -20,69 +20,30 @@
 #include "gba/gba.h"
 #include "global.h"
 #include "task.h"
+#include "link.h"
+#include "actor.h"
 
-extern u32 gUnk_0873E5BC[];
-extern u32 gActorDefeatsByEffect[];
-extern u16 gUnk_0873E610[];
-extern s16 gUnk_0873E5F8[];
-extern u32 gUnk_0874CB7C[];
-extern s16 gUnk_0300244C;
-extern struct ActorDef gUnk_0873F6BC;
-extern struct PlayerState gPlayerStates[];
-extern u32 gUnk_0873E670[];
-extern u32 gUnk_0873E67C[];
-extern vs16 gTaskSlotTypes[];
-extern u8 gUnk_0873F880[];
-extern u32 gUnk_0874C9D8[];
-extern u32 gUnk_0873E688[];
+/* Not from main.h: this file's view of gBgPalette differs (lesson 3.517). */
 extern u16 gBgPalette;
 extern vu16 gDispCnt;
-extern u16 gUnk_0873E698[];
-extern struct ActorDef gUnk_0873F6E8;
-extern u8 gUnk_0873F81C[];
-extern struct ActorDef gUnk_0873F704;
-extern s32 gUnk_030023B4;
-extern s32 gUnk_030023D4;
 
+/* Declared here, not through a header: the calls in this file pass other
+   types than the definition takes (lessons 3.428, 3.517). */
 extern void CallTableEntry(u32 a, u32 b, u32 *c);
-extern void TaskFree(s32 a);
 extern void TaskStop(void);
 extern void TaskSetFrame(s32 a);
-extern void ActorDestroy(void);
-extern void ActorMove(void);
-extern void CreateBurstEffect(s32 a, s32 b);
-extern void sub_0806a0cc(void);
-extern void ActorAttachEffect(s32 a, s32 b);
-extern void ActorDefeatBlinkAndBurst(void);
-extern void sub_0806a524(void);
-extern void sub_0806a55c(void);
-extern void sub_0806a594(void);
-extern s32 CreateChildTaskHere(u32 type, u8 keepPrio);
 extern void ActorSetState(u8 v);
 extern void ActorLoadDef(u32 def);
-extern void ActorDrawWorldInViewOrDestroy(void);
 extern void TaskSetEntry(void *fn, s32 i);
-extern void sub_0806a8d8(void);
-extern u8 TaskGetXDirBitTo(s32 a);
 extern u32 RandomRange(s32 a);
-extern void sub_0806a7f4(void);
 extern void RegisterCollider(u8 a, s16 b, s16 c, void *d);
 extern void ActorCheckHits(void);
 extern s32 ActorReactToHit(void);
 extern void TaskSleepForever(void);
 extern void PlaySfx(s32 a);
 extern void TaskSetMotionXFacing(s32 a, s32 b);
-extern void PlayRayBurstAnim(void);
-extern void PlayExplosionAnim(void);
-extern void ActorPlaySfx(s32 a, s32 b);
-extern void sub_0806aa40(void);
 extern void LoadBackdropColor(u16 *p);
 extern void RequestScreenShake(s32 a);
-extern void sub_0806aba4(void);
-extern void sub_0806ac48(void);
-extern void sub_0806acc4(void);
-extern void TaskYieldTrampoline(u32 a);
-extern s16 TaskGetHitAngle(void);
 extern void AngleToVector(s32 a, s32 b);
 
 void ActorDie(void)

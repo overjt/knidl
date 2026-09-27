@@ -1,70 +1,20 @@
 #include "gba/gba.h"
 #include "global.h"
 #include "task.h"
-
-/* RAM cells */
-extern s32 gUnk_02007D00[];
-extern s32 gUnk_030023D4;
-extern u16 gLocalPlayer;
-extern struct PlayerState gPlayerStates[];
-extern s16 gViewRect[];
-extern u8 gObjPalette[];
-
-/* ROM tables */
-extern u32 gUnk_082B07BC[];
-extern u32 gUnk_087444E4[];
-extern struct AnimCmd gUnk_08744510[];
-extern u8 gUnk_08744524[];
-extern u8 gUnk_08744526[];
-extern u32 gUnk_0874452C[];
-extern u32 gUnk_08744534[];
-extern struct AnimCmd gUnk_0874453C[];
-extern struct AnimCmd gUnk_08744550[];
-extern u8 gUnk_08744562[];
-extern u32 gUnk_08744564[];
-extern void *gUnk_08744598[][4];
-extern u16 gUnk_087445D8[];
-extern s16 gUnk_087445E8[];
-extern u16 gUnk_08744608[];
-extern void *gUnk_08744618[];
-extern void *gUnk_087446E8[];
-extern void *gUnk_087447B8[];
-extern u32 gUnk_08744F0C[];
-extern u32 gUnk_08745040[];
-extern u32 gUnk_087450CC[];
-extern u32 gUnk_087450E8[];
-extern u32 gUnk_08745104[];
-extern u32 gUnk_08745120[];
-extern u32 gUnk_0874513C[];
-extern u32 gUnk_08745158[];
-extern u32 gUnk_08745174[];
-extern u32 gUnk_08745190[];
-extern u32 gUnk_087451AC[];
-extern u32 gUnk_087451C8[];
-extern u32 gUnk_087451E4[];
-extern u32 gUnk_08745200[];
-extern u32 gUnk_08745304[];
-extern u32 gUnk_0874530C[];
-extern u32 gUnk_08745434[];
-extern u32 gFireLionFrames[];
+#include "main.h"
+#include "link.h"
+#include "camera.h"
+#include "actor.h"
+#include "enemy.h"
 
 /* Externals */
-extern void sub_08065438(void);
-extern void ActorMove(void);
+/* Declared here, not through a header: the calls in this file pass other
+   types than the definition takes (lessons 3.428, 3.517). */
 extern void CallTableEntry(u32 a, u32 b, u32 *c);
 extern u32 RandomRange(u32 range);
 extern void BlendColors(void *src, void *dst, s32 ratio, s32 count, void *out);
 extern s32 PlaySfx(s32 id);
-extern void TaskFree(s32 id);
-extern void TaskSleepForever(void);
 extern void TaskSetEntry(void *fn, s32 i);
-extern void TaskSetFrameByFacing(s16 a);
-extern void TaskSetMotionXFacing(s32 a, s32 b);
-extern void TaskStopX(void);
-extern void TaskSetMotionY(s32 a, s32 b, s32 c);
-extern void TaskStopY(void);
-extern void TaskStop(void);
-extern void TaskSetFrame(s32 a);
 extern void RequestScreenShake(s32 a);
 extern void ActorSetState(u16 v);
 extern void ActorSetHitReactions(void *p);
@@ -72,87 +22,14 @@ extern void ActorSetAttackBox(void *p);
 extern void ActorSetTerrainBox(void *p);
 extern void sub_080639f0(void *p);
 extern void sub_08063a00(void *p);
-extern s32 TaskGetNearestPlayerDx(void);
-extern s32 TaskGetNearestPlayerDy(void);
-extern void TaskFaceToward(u32 i);
-extern s32 TaskGetFacingTowardNearestPlayer(void);
-extern void TaskFaceNearestPlayer(void);
-extern void ActorStopAnim(void);
-extern s32 ActorStartAnim(struct AnimCmd *p);
-extern s32 ActorTickAnim(s32 n);
-extern s32 CreateChildTaskAtOffsetFacing(u32 type, s16 dx, s16 dy, u8 keepPrio);
-extern s32 CreateChildTaskHere(u32 type, u8 keepPrio);
 extern s16 ActorComputeHealth(void);
-extern u16 sub_08066088(u32 mode);
-extern void sub_08066580(void);
-extern void sub_080666cc(struct AnimCmd *p);
-extern void sub_080667c0(u8 a, u16 b);
-extern void sub_0806684c(void);
-extern void sub_08066ae0(void);
-extern u8 sub_08067060(void);
 extern s32 sub_08067120(s16 x, s16 y, s16 dir, u8 p8);
-extern void sub_080685ec(s32 i, s32 j, u8 c);
-extern void sub_08068920(s32 i, u8 c);
 extern void sub_080689c8(s32 i, s32 d);
 extern u32 ActorCheckHitsWithBox(void *p);
 extern u32 sub_08068f68(void);
 extern u8 ActorCollideTerrain(void);
 extern u32 ActorReactToHit(void);
-extern void ActorFaceHitter(void);
-extern void ActorDie(void);
 extern u8 sub_0806acf8(void);
-extern void sub_0806ad18(void);
-extern s16 CreateDustTrail(u8 flag, u16 vx, s32 c, s32 d);
-extern void TaskYieldTrampoline(u32 frames);
-
-/* Defined below */
-void Task_FireLion(void);
-void sub_08095834(void);
-void sub_08095940(void);
-void sub_0809595c(void);
-void sub_080959e8(void);
-void sub_080959ec(void);
-void sub_08095a54(void);
-void sub_08095ad0(void);
-void sub_08095aec(void);
-void sub_08095be4(void);
-void sub_08095be8(void);
-void sub_08095d20(void);
-void sub_08095d40(void);
-void sub_08095e4c(void);
-void sub_08095eac(void);
-void sub_08096058(void);
-void sub_080960bc(void);
-void sub_0809616c(void);
-void sub_0809619c(void);
-void sub_08096278(void);
-void sub_080962ac(void);
-void sub_080962d0(void);
-void sub_08096320(void);
-void sub_080963c0(void);
-void sub_080963dc(void);
-void sub_08096640(void);
-void sub_08096680(void);
-void sub_0809680c(void);
-void sub_08096888(void);
-void sub_080968c0(void);
-void sub_08096920(void);
-void sub_08096924(void);
-void sub_0809699c(void);
-void sub_080969c8(void);
-void sub_08096a28(void);
-void sub_08096a40(void);
-void sub_08096b7c(void);
-void sub_08096d20(void);
-s32 sub_08096d64(void);
-s32 sub_08096df4(void);
-s32 sub_08096e0c(void);
-s32 sub_08096e24(void);
-void sub_08096e70(void);
-void sub_08096e9c(void);
-void sub_08096fc0(void);
-void sub_08097024(void);
-void sub_08097088(void);
 
 void Task_FireLion(void)
 {

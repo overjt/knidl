@@ -1,6 +1,10 @@
 #include "gba/gba.h"
 #include "global.h"
 #include "task.h"
+#include "link.h"
+#include "hud.h"
+#include "room.h"
+#include "camera.h"
 
 /* camera_29c74.c (0x08029C74-0x0802A9CB, issue #86).
  *
@@ -20,54 +24,12 @@
  * of the room's object list gRoomObjectList (sorted along one axis) that
  * lie inside a rectangle, through sub_080b5338. */
 
-struct CamPos { u16 x, y; };
-
-struct Unk03005680
-{
-    /*0x00*/ u8 unk0;
-    /*0x01*/ u8 lockedAxes;
-    /*0x02*/ u16 x0;
-    /*0x04*/ u16 x1;
-    /*0x06*/ u16 y0;
-    /*0x08*/ u16 y1;
-    /*0x0A*/ u16 unkA;
-    /*0x0C*/ u16 unkC;
-};
-
-struct CamRect { s16 x0, x1, y0, y1; };
-
 struct Unk020055D8Entry
 {
     /*0x00*/ u8 filler0[4];
     /*0x04*/ u16 x;
     /*0x06*/ u16 y;
 };
-
-struct Unk020055D8
-{
-    /*0x00*/ s16 count;
-    /*0x02*/ s16 sortedByY;
-    /*0x04*/ struct Unk020055D8Entry *entries;
-};
-
-extern s16 gRoomWidth;
-extern s16 gRoomHeight;
-extern u16 gPlayerCount;
-extern s16 gCameraBounds[4];
-extern u8 gPlayerCameraMode[];
-extern u16 gPlayerGroupCenter[2];
-extern struct CamPos gPlayerCameraPos[4];
-extern u8 gUnk_0200B078;
-extern s16 gRoomBounds[4];
-extern struct Unk03005680 gScrollLock;
-extern s32 gScrollLockSpeedX;
-extern s32 gScrollLockSpeedY;
-extern u8 gActivePlayerMask;
-extern struct CamRect gPlayerBounds[4];
-extern s16 gViewRect[4];
-extern struct Unk020055D8 gRoomObjectList;
-
-s32 sub_080b5338(s32 i);
 
 void UpdatePlayerGroupCenter(void)
 {

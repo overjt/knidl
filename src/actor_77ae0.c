@@ -10,124 +10,31 @@
 #include "gba/gba.h"
 #include "global.h"
 #include "task.h"
-
-
-/* The eight 4-byte records at 0x03000FE0 that M19's credits tasks animate:
-   a frame table index (unk00), the frame within it (unk01), the timer
-   (unk02) and the countdown sub_080782b4 draws on (unk03). */
-struct M19Particle
-{
-    /*0x00*/ u8 unk00;
-    /*0x01*/ u8 unk01;
-    /*0x02*/ u8 unk02;
-    /*0x03*/ u8 unk03;
-};
-
-/* The 24-entry animation rows at 0x08740320 / 0x087404A0 the credits
-   particles walk: `unk00` indexes the gfx pointer table, `unk02` is the
-   step's delay. */
-struct M19Frame
-{
-    /*0x00*/ u8 unk00;
-    /*0x01*/ u8 unk01;
-    /*0x02*/ u8 unk02;
-    /*0x03*/ u8 unk03;
-};
-
-
-/* RAM cells and ROM tables */
-extern s16 gSpriteCameraX;
-extern s16 gSpriteCameraY;
-extern s8 gCannonFuseState;
-extern struct AnimCmd gUnk_087406A0[];
-extern struct M19Frame gUnk_08740320[][24];
-extern struct M19Frame gUnk_087404A0[][24];
-extern struct M19Particle gUnk_03000FE0[];
-extern struct PlayerState gPlayerStates[];
-extern struct Task * gCurTask;
-extern u16 gPlayerCount;
-extern u32 gBigSwitchVariants[];
-extern u32 gBigSwitchStates[];
-extern u32 gBigSwitchStateUpdates[];
-extern u32 gStakeVariants[];
-extern u32 gStakeStates[];
-extern u32 gStakeStateUpdates[];
-extern u32 gUnk_087402FC[];
-extern u32 gWaddleDeeVariants[];
-extern u32 gUnk_08740BD4[];
-extern u32 gWaddleDeeFrames[];
-extern u32 gBigSwitchFrames[];
-extern u32 gStakeFrames[];
-extern u32 gUnk_08752DB8[];
-extern u32 gUnk_08752E00[];
-extern u8 gUnk_02004B64;
-extern u8 gActivePlayerMask;
-extern u8 gUnk_08740620[];
-extern vs16 gBrightness;
-extern vs32 gCurTaskIdx;
+#include "main.h"
+#include "link.h"
+#include "sound.h"
+#include "hud.h"
+#include "cutscene.h"
+#include "collision.h"
+#include "room.h"
+#include "actor.h"
+#include "enemy.h"
 
 /* callees */
 extern s32 QueueSprite(u32 a, u32 b, u32 c, u32 d, u32 e, s16 f);
 extern s32 PlaySfx(u32 a);
-extern s32 sub_08009e14();
-extern s32 sub_08009e20();
-extern s32 GetCollisionTileAtPixel(u16 x, u16 y);
-extern s32 sub_08025bc8();
-extern s32 ActorStartAnim(struct AnimCmd *p);
-extern s32 sub_080b4204();
 extern u32 RandomRange(u32 range);
 extern u32 ActorCheckHits(void);
 extern u32 ActorCollideTerrain(void);
-extern void TaskYieldTrampoline(u32 a);
+/* Declared here, not through a header: the calls in this file pass other
+   types than the definition takes (lessons 3.428, 3.517). */
 extern void CallTableEntry(u32 a, u32 b, u32 *c);
-extern void FadeInSfx(u16 speed);
-extern void FadeOutSfx(s32 speed);
-extern void TaskSleepForever(void);
 extern void TaskSetEntry(void *a, u32 i);
-extern void TaskStop(void);
 extern void RequestScreenShake(u32 a);
-extern void SetRoomUpdateFlags(u32);
 extern void ActorSetState(u8 v);
 extern void ActorSetStateSlot(u32 i, u8 v);
-extern void ActorDestroy(void);
-extern void TaskTurnAroundAndReverseX(void);
-extern void ActorDrawWorldInView(void);
-extern void ActorDrawWorldInViewOrDestroy(void);
-extern void ActorMove(void);
-extern void sub_08066b70(void);
 extern void sub_08066c08(u32 *p, s32 b);
 extern void sub_08066c3c(u32 *p);
-extern void sub_080670ac(u16 a);
-extern void sub_080670d4(void);
-extern void sub_08067108(void);
-extern void sub_08067114(void);
-extern void sub_0806a0f0(s32 a);
-extern void ActorDie(void);
-extern void sub_0806ee2c(void);
-extern void sub_0807775c(void);
-extern void sub_08077830(void);
-extern void sub_08077980(void);
-extern void sub_08077a48(void);
-extern void CannonFuseEnterState(void);
-extern void WaddleDeeWalkEnterState(void);
-extern void WaddleDeePaceEnterState(void);
-extern void WaddleDeeJumpEnterState(void);
-extern void ParasolWaddleDeeWalkEnterState(void);
-extern void ParasolWaddleDeeStandEnterState(void);
-
-/* defined below */
-void BigSwitchEnterState(void);
-void BigSwitchUpdate(void);
-void StakeUpdate(void);
-void sub_080781fc(struct M19Particle *p);
-void sub_080782b4(struct M19Particle *p);
-void sub_0807831c(struct M19Particle *p);
-u8 sub_080783e0(s16 x, s16 y);
-void sub_080786b4(void);
-void sub_08078734(void);
-void sub_080787b8(void);
-void sub_0807883c(void);
-void sub_080788e0(void);
 
 void sub_08077ae0(void)
 {

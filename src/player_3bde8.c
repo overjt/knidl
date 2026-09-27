@@ -1,6 +1,12 @@
 #include "gba/gba.h"
 #include "global.h"
 #include "task.h"
+#include "main.h"
+#include "link.h"
+#include "hud.h"
+#include "room.h"
+#include "player.h"
+#include "actor.h"
 
 /* player_3bde8.c (0x0803BDE8-0x0803CD5F, issue #91).
  *
@@ -19,57 +25,12 @@
  * offsets PlayerState.pixelOffsetX/unk26; sub_0803ccd8 (M09's PlayerActionFall)
  * applies step n of the 8.8 motion table gUnk_0873AEBC. */
 
-/* gUnk_02007E90[4][3]: M04's per-player spark records (src/player_10358.c) */
-struct M04Spark
-{
-    /*0x00*/ s32 unk00;
-    /*0x04*/ s32 unk04;
-    /*0x08*/ s32 unk08;
-    /*0x0C*/ u8 unk0C;
-    /*0x0D*/ u8 unk0D;
-    /*0x0E*/ u16 unk0E;
-};
-
-/* one step of a player's knock-back script: {dx, dy, flags} with
-   flags & 15 = frames to hold, & 64 = mirror dx with the facing,
-   & 128 = sound; a zero flags byte ends the script */
-struct Unk0873A994
-{
-    /*0x00*/ u16 unk0;
-    /*0x02*/ u16 unk2;
-    /*0x04*/ u8 unk4;
-    /*0x05*/ u8 filler5[3];
-};
-
-extern u16 gUnk_0873DA62[][2];
-extern s16 gUnk_0873DACA[][2];
-extern struct PlayerState gPlayerStates[];
-extern s16 gPlayerHealth[];             /* health per player (M02's HUD) */
-extern s16 gMaxHealth;
-extern u16 gLocalPlayer;
-extern u8 gExtraMode;
-extern struct M04Spark gUnk_02007E90[][3];
-extern s16 gSpriteCameraY;
-extern s16 gSpriteCameraX;
-extern s16 gUnk_0873A924[][16];
-extern u32 gUnk_0873A964[];
-extern struct Unk0873A994 *gUnk_0873A994[];
-extern u16 gUnk_0873AEBC[][2];
-
-void TaskYieldTrampoline(s32 frames);
+/* Declared here, not through a header: the calls in this file pass other
+   types than the definition takes (lessons 3.428, 3.517). */
 s32 QueueSprite(u32 a, u32 b, u32 c, u32 d, u32 e, s16 f);
 u32 RandomRange(u32 range);
 s32 PlaySfx(s32 id);
-void TaskSetSkipMask(u8 val, s32 idx);
-void TaskSleepForever(void);
-void TaskSetMotionY(s32 a, s32 b, s32 c);
-void TaskSetFrame(s32 a);
 u32 IsWorldPosOnScreen(s16 a, s16 b);        /* u8 in early_5d9c.c; u32 as in player_109c8.c (u8 costs 78 bytes) */
-void PlayerStopAxes(s32 a0);
-s32 PlaySfxIfLocalPlayer(s32 a0, u16 a1);
-void FreezeOtherTasks(s32 a0);
-void sub_08040710(void);
-s32 sub_080b4204(u32 a);
 
 /* Action 19 enter (mode 23, per-frame handler 18), aimed at the player
    Task.unk18 names.  With itself as the target it only plays the ability's

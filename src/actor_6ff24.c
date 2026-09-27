@@ -32,50 +32,28 @@
 #include "gba/gba.h"
 #include "global.h"
 #include "task.h"
+#include "link.h"
+#include "cutscene.h"
+#include "room.h"
+#include "player.h"
+#include "actor.h"
+#include "enemy.h"
 
 /* RAM cells */
-extern s8 gCannonFuseState;
-extern u16 gUnk_020055C0;
+/* Not from main.h: this file's view of gObjPalette differs (lesson 3.517). */
 extern u16 gObjPalette[];
-extern u8 gUnk_03001F30;
-extern struct PlayerState gPlayerStates[];
-extern u16 gSpriteCameraX;
-extern u16 gLocalPlayer;
+extern s16 gSpriteCameraX;
 
-extern u16 gPlayerCount;
-extern u16 gSpriteCameraY;
-extern s16 gUnk_0300244C;
-
-/* ROM tables */
-extern s16 gUnk_0873D420[][3];
-extern u8 gUnk_0873F5D4[];
-extern s16 *gUnk_0873F950[];
-extern u16 gUnk_0873FAB4[];
-extern u8 gUnk_0873FAE8[];
-extern u32 gUnk_0873FB44[];
-extern u32 gUnk_0873FB60[];
-extern s16 gUnk_0873FF98[];
-
-/* The 0x0824A9E4 record sub_08070648 uploads from (two tile-count halfwords
-   plus two source pointers).  Local to this file until it gets a header. */
-struct GfxSrc
-{
-    /*0x00*/ u16 unk00;
-    /*0x02*/ u16 unk02;
-    /*0x04*/ u32 unk04;
-    /*0x08*/ void *unk08;
-    /*0x0C*/ void *unk0C;
-};
-extern struct GfxSrc gUnk_0824A9E4;
+extern s16 gSpriteCameraY;
 
 /* Externals */
-extern void TaskYieldTrampoline(u32 a);
+/* Declared here, not through a header: the calls in this file pass other
+   types than the definition takes (lessons 3.428, 3.517). */
 extern void RequestCopy(u32 mode, void *src, void *dst, u32 size);
 extern void QueueSprite(u32 a, s32 b, u32 c, u32 d, s16 e, s16 f);
 extern s32 DrawAffineSprite(s32 a, s16 b, s16 c, s32 d);
 extern void CallTableEntry(u32 a, u32 b, u32 *c);
 extern void PlaySfx(s32 a);
-extern void TaskMove(void);
 extern void TaskSleepForever(void);
 extern void TaskSetEntry(u32 fn, u32 a);
 extern void TaskSetMotionXFacing(s32 a, s32 b);
@@ -84,30 +62,7 @@ extern void TaskStop(void);
 extern void TaskSetFrame(s32 a);
 extern s32 IsOnScreen(s16 x, s16 y);
 extern void sub_0801bcac(u8 *a);
-extern u32 sub_08025e88(u32 i);
 extern void RequestScreenShake(s32 a);
-extern void SetCameraFocus(s32 x, s32 y);
-extern s32 PlayerLoadFrameTilesAndPalette(s32 a);
-extern void sub_0803d7c4(void);
-extern void sub_0803db74(void);
-extern void sub_0803ddc0(void);
-extern void sub_08040808(u32 a);
-extern void sub_08068a8c(u32 a, u8 flag);
-extern void sub_08068b88(s32 i, u16 b, u8 c, u8 d);
-extern void CreateBurstEffect(s32 a, s32 b);
-extern void sub_0806ee30(void);
-extern void sub_08070ec0(void);
-extern void sub_08070ffc(void);
-
-/* Defined below */
-void sub_080700e8(void);
-void sub_0807029c(void);
-void sub_080702d8(void);
-void sub_0807042c(void);
-void sub_08070454(void);
-void sub_0807073c(void);
-void sub_08070334(void);
-void sub_08070614(u32 a);
 
 void sub_0806ff24(void)
 {

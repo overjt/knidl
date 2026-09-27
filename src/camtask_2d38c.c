@@ -1,6 +1,9 @@
 #include "gba/gba.h"
 #include "global.h"
 #include "task.h"
+#include "main.h"
+#include "room.h"
+#include "player.h"
 
 /* camtask_2d38c.c (0x0802D38C-0x0802EAC7, issue #86).
  *
@@ -18,29 +21,6 @@
  * gUnk_087324A6 (axis order, x steps, y steps) inside the room bounds,
  * wait, and pan back. */
 
-struct BgMap
-{
-    /*0x00*/ u16 unk0;
-    /*0x02*/ u16 width;
-    /*0x04*/ u16 height;
-    /*0x06*/ u16 unk6[0];
-};
-
-/* The room header gCurRoomDef points at (one entry of the gRoomTable
-   room table): unk18/unk28 are length-prefixed palettes, unk30 the BG map
-   streamed into 0x06003000, unk40 the room's BG animation script set. */
-struct RoomDef
-{
-    /*0x00*/ u8 filler00[0x18];
-    /*0x18*/ u16 *bg2Palette;
-    /*0x1C*/ u8 filler1C[0xC];
-    /*0x28*/ u16 *bg3Palette;
-    /*0x2C*/ u8 filler2C[4];
-    /*0x30*/ struct BgMap *bg3Map;
-    /*0x34*/ u8 filler34[0xC];
-    /*0x40*/ u16 bgAnimSet;
-};
-
 /* gUnk_02006098[3] is cleared through an 8-bit signed bit-field: only a
    bit-field store of -1 gives the ROM's `movs #255; orrs rX, rLoaded; strb`
    (a plain `= -1` or `|= 0xFF` is folded to `movs #255; strb`). */
@@ -53,58 +33,24 @@ struct Unk0200A6F0
     /*0x08*/ u8 filler08[0x18];
 };
 
-extern u16 gCameraMode;
-extern u8 gUnk_0200D080;
-extern u16 gUnk_02007D60;
-extern s8 gUnk_02007D64;
-extern struct RoomDef *gCurRoomDef;
-extern u16 gBgPalette[];
-extern struct RoomDef **gRoomTable[][8];
-extern s8 gStageIndex;
-extern s8 gLevelIndex;
-extern s8 gRoomIndex;
+/* Not from camera.h: this file's view of gUnk_02005E10 differs (lesson
+   3.517). */
 extern u16 gUnk_02005E10[];
-extern s8 gUnk_02006098[];
-extern u8 gObjPalette[];
 extern u8 gUnk_087328BC[];
-extern u16 gUnk_0200001C;
 extern s8 gUnk_08732428[][3];
-extern s16 gCameraAnchorX;
-extern s16 gCameraAnchorY;
-extern s16 gRoomBounds[4];
-extern s16 gUnk_0200AFE0[4];
 extern u16 gUnk_087323C6[][2];
 extern u8 gUnk_02007FC4;
-extern s8 gUnk_030023B8;
-extern s16 gRoomWidth;
-extern u16 gBg1MetatileMap[];
 extern struct Unk0200A6F0 gBg1BreakingBlocks[];
-extern u8 gUnk_0200AF08;
-extern s16 gUnk_020055D4;
-extern u8 gUnk_020055E8;
 extern s8 gUnk_087324A6[][3];
-extern vs16 gBrightness;
 
-void TaskExitTrampoline(void);
-void TaskYieldTrampoline(u32 frames);
 void RequestCopy(u32 mode, u32 src, u32 dst, u32 size);
 void BlendColors(u16 *src, u16 *dst, s32 ratio, s32 count, u16 *out);
 void PlaySfx(u32 a);
-void TaskFree(s32 id);
-void TaskSleepForever(void);
-void sub_08025dc4(void);
-s32 CreateBlockBreakEffect(s32 x, s32 y);
-s32 TaskCreateHighSlot(s32 type);
-s32 sub_08026584(void);
-s32 sub_08027750(void);
 void sub_08029b30(void);
 void CameraLeaveScrollLock(void);
 s32 CreateStageEffect(s32 a, s32 x, s32 y);
 void PauseBlockAnims(void);
 void sub_080307e8(void);
-s32 BreakBlockAt(u32 x, u32 y);
-s32 CanBreakBg1Block(s32 x, s32 y);
-s32 BreakBg1BlockAtCursor(void);
 s32 sub_0802d478(s32 x, s32 y);
 s32 sub_0802d5b4(s32 x, s32 y);
 void sub_0802da8c(void);

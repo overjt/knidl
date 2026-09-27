@@ -1,6 +1,12 @@
 #include "gba/gba.h"
 #include "global.h"
 #include "task.h"
+#include "main.h"
+#include "link.h"
+#include "room.h"
+#include "player.h"
+#include "effect.h"
+#include "actor.h"
 
 /* effect_5a358.c (0x0805A358-0x0805AFAB, issue #89).
  *
@@ -29,70 +35,19 @@
  * 13, otherwise the task dies) and the callback sub_0805af44, which kills it
  * once the player leaves mode 13 or releases both A and B. */
 
-/* M08's per-player camera positions (src/camera_28b8c.c) */
-struct CamPos { u16 x, y; };
-
-extern u32 gUnk_08751FCC[];
-extern struct CamPos gPlayerCameraPos[4];
-extern s16 gSpriteCameraX;               /* scalar, read with ldrsh (33 landed files) */
-extern s16 gSpriteCameraY;               /* scalar, read with ldrsh (32 landed files) */
-extern s8 gUnk_03002444;
-extern u8 gUnk_02006178;
-extern vs16 gTaskSlotTypes[];
-extern u32 gUnk_08752020[];
-extern u8 gUnk_082030D8[];
-extern u8 gUnk_0873BB3E[];
-extern s8 gUnk_02007D64;
-extern u16 gUnk_02007F60[];
-extern u16 gUnk_03001570[];
-extern u16 gUnk_0200AF20[];
-extern u16 gUnk_0200B000[];             /* 20 task indices, 0xFFFF = empty; non-volatile, signed reads cast (s16) (variant 37 in effect_57ce0.c) */
-extern vs16 gBrightness;
-extern u8 gUnk_03001F34;
-extern u16 gUnk_0873BC3E[];
-extern u16 gUnk_0873BB7E[];
-extern u8 gUnk_0873C2B4[];
-extern s16 gUnk_0873BB26[];
-extern u32 gUnk_0874C600[];
-extern u32 gUnk_0873CF8C[];             /* hit-box set, passed as (struct HitBoxSet *) */
-extern u32 gUnk_08752090[];
-extern u16 gLatchedHeldKeys[];
-
 /* M09's hit-box set (src/block_30804.c); only a pointer is passed here */
 struct HitBoxSet;
-void TaskExitTrampoline(void);
-void TaskYieldTrampoline(s32 frames);
 u32 BeginFade(u16 steps, s16 delta, u16 *mask);   /* callers pass -4 as movs/negs (src/player_47fe8.c spells it s16 too) */
 void RequestCopy(u32 mode, void *src, void *dst, u32 size);   /* early_1518; effect_5afac's pointer spelling */
 s32 QueueSprite(u32 a, u32 b, u32 c, u32 d, u32 e, s16 f);   /* callers pass f sign-extended (lsls/asrs #16); the early_1518 definition says u16 */
+/* Declared here, not through a header: the calls in this file pass other
+   types than the definition takes (lessons 3.428, 3.517). */
 s32 DrawAffineSprite(s32 a, s16 b, s16 c, s32 d);
 void BlendColors(u16 *src, u16 *dst, s32 ratio, s32 count, u16 *out);
-void TaskSetSkipMask(u8 val, s32 idx);
 void TaskFree(s32 id);                         /* kill task (M09+ spelling, 49 landed files) */
-void TaskMove(void);
-void TaskMoveRelativeToParent(void);
-void TaskDrawWorld(void);
-void TaskDrawWorldInView(void);
-void TaskSetFrameByFacing(s16 a);
-void TaskSetMotionXFacing(s32 a, s32 b);
-void TaskStop(void);
 u32 IsWorldPosOnScreen(s16 a, s16 b);   /* the ROM tests r0 unnarrowed (src callers spell u32) */
-u32 IsInView(s16 x, s16 y);
-void TaskRestoreSkipMask(u32 idx);
-void TaskSaveSkipMask(u32 idx);
 void RegisterCollider(u8 a, s16 x, s16 y, void *p);   /* M11's caller spelling */
 u16 TaskBreakBlocksAt(struct HitBoxSet *p, s32 x, s32 y, s32 e);
-void sub_0803dfc8(void);
-void FreezeOtherTasks(s32 a0);
-void sub_0803f834(u16 a0, void *src);
-void sub_08065e6c(void);
-void sub_08065ed0(void);
-void sub_0805a508(void);
-void sub_0805ab04(void);
-void sub_0805ac50(void);
-void sub_0805ae00(void);
-void sub_0805af44(void);
-void sub_0805af80(void);
 
 void sub_0805a358(void)
 {

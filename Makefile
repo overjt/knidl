@@ -131,10 +131,20 @@ $(BUILD_DIR)/src/%.o: src/%.c
 # the objects are never linked into the ROM.
 GBA_HEADERS := $(wildcard include/gba/*.h)
 
-check-headers: $(BUILD_DIR)/header_smoke_agbcc.o $(BUILD_DIR)/header_smoke_old_agbcc.o
-	@echo "header smoke check passed (agbcc + old_agbcc)"
+check-headers: $(BUILD_DIR)/header_smoke_agbcc.o $(BUILD_DIR)/header_smoke_old_agbcc.o $(BUILD_DIR)/header_smoke_game.o
+	@echo "header smoke check passed (agbcc + old_agbcc; game headers)"
 
 $(BUILD_DIR)/header_smoke_agbcc.o: tools/header_smoke.c $(GBA_HEADERS)
+	@mkdir -p $(dir $@)
+	$(CPP) $(INCLUDE) $< | $(CC) $(CFLAGS) -o - - | \
+	  { cat; printf '.text\n\t.align\t2, 0\n'; } | \
+	  $(AS) -mcpu=arm7tdmi -o $@ -
+
+# The subsystem headers (issue #36 phase 2) all in one TU: each symbol is
+# declared once, so they must compile together.
+GAME_HEADERS := $(wildcard include/*.h)
+
+$(BUILD_DIR)/header_smoke_game.o: tools/header_smoke_game.c $(GAME_HEADERS) $(GBA_HEADERS)
 	@mkdir -p $(dir $@)
 	$(CPP) $(INCLUDE) $< | $(CC) $(CFLAGS) -o - - | \
 	  { cat; printf '.text\n\t.align\t2, 0\n'; } | \

@@ -33,171 +33,37 @@
 #include "gba/gba.h"
 #include "global.h"
 #include "task.h"
+#include "main.h"
+#include "link.h"
+#include "actor.h"
+#include "enemy.h"
 
 /* RAM cells */
-extern s16 gUnk_0300244C;
-extern s32 gUnk_030023B4;
-extern s32 gUnk_030023D4;
-extern s8 gUnk_02007FB8[];
-extern struct Task *gCurTask;
+/* Not from collision.h: this file's view of gTerrainResult differs (lesson
+   3.517). */
 extern u8 gTerrainResult[];
-extern vs16 gTaskSlotTypes[];
-
-/* ROM tables */
-extern s16 gUnk_0874094C[];
-extern s16 gUnk_08740B3C[];
-extern s16 gUnk_08740B60[];
-extern struct AnimCmd gUnk_08740854[];
-extern struct AnimCmd gUnk_0874093C[];
-extern struct AnimCmd gUnk_0874099C[];
-extern struct AnimCmd gUnk_087409C0[];
-extern struct AnimCmd gUnk_08740A98[];
-extern struct AnimCmd gUnk_08740AAC[];
-extern u32 gUFOGfx[];
-extern u32 gUnk_0873F500[];
-extern u32 gUnk_0873F720[];
-extern u32 gUnk_08740864[];
-extern u32 gUnk_087408AC[];
-extern u32 gUnk_08740934[];
-extern u32 gUnk_08740950[];
-extern u32 gScarfyStates[];
-extern u32 gScarfyStateUpdates[];
-extern u32 gUnk_08740990[];
-extern u32 gUnk_087409E4[];
-extern u32 gUnk_087409FC[];
-extern u32 gUnk_08740A1C[];
-extern u32 gUnk_08740A3C[];
-extern u32 gUnk_08740A40[];
-extern u32 gUnk_08740A44[];
-extern u32 gUnk_08740A5C[];
-extern u32 gUnk_08740A74[];
-extern u32 gTogezoVariants[];
-extern u32 gUnk_08740A80[];
-extern u32 gUnk_08740A88[];
-extern u32 gUnk_08740A90[];
-extern u32 gTogezoStates[];
-extern u32 gTogezoStateUpdates[];
-extern u32 gUnk_08740AF8[];
-extern u32 gUnk_08740AFC[];
-extern u32 gUFOVariants[];
-extern u32 gUnk_08740B08[];
-extern u32 gUFOStates[];
-extern u32 gUFOStateUpdates[];
-extern u32 gUnk_08740BA4[];
-extern u32 gUnk_08740BA8[];
-extern u32 gParasolVariants[];
-extern u32 gUnk_08740BBC[];
-extern u32 gUnk_08740BC0[];
-extern u32 gParasolChaseStates[];
-extern u32 gParasolChaseStateUpdates[];
-extern u32 gUnk_08740BCC[];
-extern u32 gUnk_08740BD0[];
-extern u32 gUnk_08740E38[];
-extern u32 gUnk_08740F50[];
-extern u32 gUnk_08740F5C[];
-extern u32 gUnk_08740FA4[];
-extern u32 gUnk_08741088[];
-extern u32 gUnk_0874108C[];
-extern u32 gUnk_08741090[];
-extern u32 gUnk_08741094[];
-extern u32 gUnk_087410A0[];
-extern u32 gUnk_087410AC[];
-extern u32 gUnk_087410B0[];
-extern u32 gUnk_087410B8[];
-extern u32 gUnk_0874CB5C[];
-extern u32 gPengyIceBreathFrames[];
-extern u32 gScarfyAngryFrames[];
-extern u32 gUnk_087529D8[];
-extern u32 gUnk_08752A24[];
-extern u32 gTogezoFrames[];
-extern u32 gUFOFrames[];
-extern u32 gUFOLaserFrames[];
-extern u32 gParasolFrames[];
 
 /* Externals */
-extern s16 CreateDustTrail(u8 flag, u16 vx, s32 c, s32 d);
 extern s32 RandomRange(s32 a);
 extern s32 PlaySfx(s32 id);
 extern s32 sub_08021a40(s32 x, s32 y);
-extern s32 sub_08063a2c(void);
-extern s32 GetDistSq(struct PointPair *p);
-extern s32 TaskGetNearestPlayerDx(void);
-extern s32 TaskGetNearestPlayerDy(void);
+/* Declared here, not through a header: the calls in this file pass other
+   types than the definition takes (lessons 3.428, 3.517). */
 extern s32 TaskIsInRectSlot(struct PointPair *box, s32 i);
 extern s32 ActorStartAnimNoFlip(u32 *p);
-extern s32 ActorStartAnim(struct AnimCmd *p);
-extern s32 ActorTickAnimFacingNearestPlayer(s32 n);
-extern s32 ActorTickAnim(s32 n);
-extern s32 GetPointAngle(s16 x0, s16 y0, s16 x1, s16 y1, s32 mode);
 extern s32 TaskGetAngleToNearestPlayer(s32 prec);
-extern s32 sub_08064984();
-extern s32 CreateActorFromDescAtOffsetFacing(struct ActorSpawn *p, u8 keepPrio);
-extern s32 CreateChildTaskHere(u32 a, u32 b);
 extern s32 sub_08066338();
 extern s32 ActorReactToHit(void);
-extern u16 TaskGetAngleTo(s32 a, s32 b);
 extern u32 ActorCheckHits(void);
 extern u32 ActorCollideTerrain(void);
-extern u32 ActorDie(void);
-extern u32 ActorAttachToHitter(void);
 extern u8 sub_08069604(void);
 extern u8 sub_080699a8(void);
-extern void TaskExitTrampoline(void);
-extern void TaskYieldTrampoline(u32 frames);
 extern void CallTableEntry(u32 a, u32 b, u32 *c);
-extern void TaskMove(void);
-extern void TaskSleepForever(void);
 extern void TaskSetEntry(void *fn, u32 i);
-extern void TaskSetFrameByFacing(s16 a);
-extern void TaskSetMotionXFacing(s32 a, s32 b);
-extern void TaskStopX(void);
-extern void TaskSetMotionY(s32 a, s32 b, s32 c);
-extern void TaskStop(void);
-extern void TaskSetFrame(s32 a);
 extern void ActorSetState(u32 v);
 extern void ActorSetHitReactions(u32 *p);
 extern void ActorSetAttackBox(u32 *p);
-extern void TaskGetNearestPlayerPos(void);
-extern void TaskFaceNearestPlayer(void);
-extern void ActorDestroy(void);
-extern void TaskTurnAroundAndReverseX(void);
-extern void ActorStopAnim(void);
 extern void AngleToVector(s16 t, s16 mag);
-extern void TaskAccelerateTowardNearestPlayer(s32 step, s32 limit);
-extern void TaskAccelerateInDir(s32 step, s32 limit, u16 dir);
-extern void TaskFaceLikeParent(void);
-extern void ActorDrawWorldInViewOrDestroy(void);
-extern void ActorMove(void);
-extern void SetPaletteAnimSource(u32 i, u32 p1, u8 p2);
-extern void AcquirePaletteAnim(u32 p0, s32 idx);
-extern void sub_0806a0f0(s32 a);
-extern void sub_0806ee2c(void);
-
-/* Forward declarations */
-extern s32 sub_0807a8d4();
-extern s32 sub_0807a8fc();
-extern s32 sub_0807a968();
-extern s32 sub_0807aa0c();
-void ScarfyUpdate(void);
-void sub_0807b32c(void);
-void sub_0807b3dc(void);
-void sub_0807b844(void);
-void sub_0807b918(void);
-void sub_0807bd14(void);
-void TogezoUpdate(void);
-void TogezoEnterState(void);
-void sub_0807c394(void);
-s32 sub_0807c5ac(struct Rect *r);
-void UFOUpdate(void);
-void sub_0807ca98(void);
-void sub_0807cc9c(void);
-void ParasolChaseUpdate(void);
-void sub_0807cf20(void);
-void sub_0807cff0(void);
-void sub_0807d094(void);
-void sub_0807d230(void);
-void sub_0807d29c(void);
-extern s32 sub_0807d3b0();
 
 void sub_0807aa5c(void)
 {

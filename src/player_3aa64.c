@@ -1,6 +1,10 @@
 #include "gba/gba.h"
 #include "global.h"
 #include "task.h"
+#include "main.h"
+#include "link.h"
+#include "room.h"
+#include "player.h"
 
 /* player_3aa64.c (0x0803AA64-0x0803BDE7, issue #91).
  *
@@ -18,29 +22,8 @@
  * request the next action through PlayerState.requestedAction.  sub_0803bd90
  * (action 18) installs handler 17, the leaf sub_0803bdd4. */
 
-extern u16 gLatchedHeldKeys[];             /* held keys, latched per player (M11) */
-extern s16 gUnk_0873D9DA[4][4];
-extern u16 gLatchedPressedKeys[];             /* newly-pressed keys, latched per player */
-extern s16 gUnk_0300244C;
-
-void TaskYieldTrampoline(s32 frames);
-void TaskSleepForever(void);
 void TaskSetEntry(void *a, u32 i);
-void TaskSetMotionXFacing(s32 a, s32 b);
-void TaskSetFrame(s32 a);
-void PlayerStopAxes(s32 a0);
-s32 PlaySfxIfLocalPlayer(s32 a0, u16 a1);
-void PlayerSetWaterMotionY(void);
-s32 PlayerLand(s32 a0);
-void PlayerTurnToHeldDirection(void);
-void PlayerStopAtCeilingAndWall(void);
-s32 PlayerCheckDuckOrSwallow(void);
-s32 PlayerCheckBButton(void);
-s32 PlayerCheckEnterDoor(void);
-s32 PlayerCheckDropAbility(void);
-s32 PlayerCheckStartSwim(void);
 void PlayerSetMotionXPreset(s32 a0, s32 a1);           /* M11, still asm; M11's own spelling */
-void PlayerSetMotionYPreset(s32 a0);
 void CreatePlayerObject(s32 a, s32 b, s32 c);      /* M14, src/plobj_52f6c.c (defined s32 (s8, u8, s32); the result is unused here) */
 
 void PlayerActionSwim(void)

@@ -6,128 +6,26 @@
 #include "gba/gba.h"
 #include "global.h"
 #include "task.h"
-
-/* RAM cells */
-extern s32 gUnk_030023B4;
-extern s32 gUnk_030023D4;
-extern struct Task *gCurTask;
-extern struct Task gTasks[];
-
-/* ROM tables */
-extern s16 gUnk_08742824[];
-extern s16 gUnk_08742834[];
-extern s16 gUnk_08742844[];
-extern s32 gUnk_0874269C[];
-extern s32 gUnk_087426A4[];
-extern s32 gUnk_087426EC[];
-extern s32 gUnk_08742734[];
-extern s32 gUnk_0874276C[];
-extern s32 gUnk_08742818[];
-extern u16 gUnk_08742862[];
-extern u32 gUnk_0873F500[];
-extern u32 gUnk_0874266C[];
-extern u32 gUnk_08742684[];
-extern u32 gUnk_087426AC[];
-extern u32 gUnk_087426B0[];
-extern u32 gSquishyVariants[];
-extern u32 gUnk_087426C4[];
-extern u32 gUnk_087426D8[];
-extern u32 gUnk_087426F4[];
-extern u32 gUnk_08742704[];
-extern u32 gUnk_08742710[];
-extern u32 gUnk_0874271C[];
-extern u32 gUnk_08742728[];
-extern u32 gUnk_0874273C[];
-extern u32 gUnk_08742744[];
-extern u32 gUnk_08742758[];
-extern u32 gGlunkVariants[];
-extern u32 gGlunkStates[];
-extern u32 gGlunkStateUpdates[];
-extern u32 gUnk_087427B4[];
-extern u32 gUnk_087427BC[];
-extern u32 gUnk_087427E8[];
-extern u32 gUnk_08742C14[];
-extern u32 gUnk_08742C30[];
-extern u32 gUnk_08742C4C[];
-extern u32 gUnk_08742C68[];
-extern u32 gUnk_08742C84[];
-extern u32 gUnk_08742CA0[];
-extern u32 gUnk_08742CBC[];
-extern u32 gUnk_08742E50[];
-extern u32 gUnk_08742E5C[];
-extern u32 gSquishyFrames[];
-extern u32 gUnk_087526A8[];
-extern u32 gGlunkFrames[];
-extern u32 gGlunkShotFrames[];
-extern u32 gUnk_08752828[];
-extern u8 gUnk_08742778[];
-extern u8 gUnk_087427B0[];
-extern u8 gUnk_087427B2[];
-extern u8 gUnk_08742814[];
-extern u8 gUnk_08742820[];
-extern u8 gUnk_08742822[];
-extern u8 gUnk_08742830[];
-extern u8 gUnk_08742854[];
-extern u8 gUnk_08742856[];
-extern u8 gUnk_0874285C[];
+#include "main.h"
+#include "collision.h"
+#include "actor.h"
+#include "enemy.h"
 
 /* Externals */
-extern s32 TaskFindNearestPlayer(void);
-extern s32 TaskGetNearestPlayerDx(void);
-extern s32 TaskGetNearestPlayerDy(void);
-extern s32 CreateActorFromDescAtOffsetFacing(struct ActorSpawn *p, u8 keepPrio);
-extern s32 CreateChildTaskHere(u32 type, u8 keepPrio);
-extern s8 TaskGetParentFacing(void);
-extern u16 sub_08021c14(s16 x, s16 y);
 extern u16 TaskGetAngleToNearestPlayer(s32 prec);
 extern u32 RandomRange(u32 range);
 extern u32 ActorCheckHits(void);
 extern u32 ActorCollideTerrain(void);
 extern u32 sub_08069888(void);
 extern u32 ActorReactToHit(void);
-extern u8 IsWaterAtPixel(s16 x, s16 y);
-extern void TaskExitTrampoline(void);
-extern void TaskYieldTrampoline(u32 frames);
+/* Declared here, not through a header: the calls in this file pass other
+   types than the definition takes (lessons 3.428, 3.517). */
 extern void CallTableEntry(u32 a, u32 b, u32 *c);
 extern void PlaySfx(s32 id);
-extern void TaskMove(void);
-extern void TaskDrawWorld(void);
-extern void TaskSleepForever(void);
 extern void TaskSetEntry(void *fn, u32 i);
-extern void TaskSetMotionXFacing(s32 a, s32 b);
-extern void TaskSetMotionY(s32 a, s32 b, s32 c);
-extern void TaskStop(void);
-extern void TaskSetFrame(s32 a);
-extern void TaskInitWaterFlags(void);
 extern void ActorSetState(u8 v);
 extern void ActorSetAttackBox(u32 v);
-extern void TaskFaceNearestPlayer(void);
-extern void TaskTurnAroundAndReverseX(void);
 extern void AngleToVector(s16 t, s16 mag);
-extern void ActorDrawWorldInViewOrDestroy(void);
-extern void ActorMove(void);
-extern void sub_0806a0f0(s32 a);
-void Task_Twizzy(void);
-void sub_08087e60(void);
-
-/* Defined below */
-void sub_08088024(void);
-void sub_080883b8(void);
-void sub_080884d0(void);
-void sub_080886d8(void);
-void sub_08088b10(void);
-void sub_08088d7c(void);
-void sub_08088fac(void);
-void sub_0808921c(void);
-void sub_080896dc(void);
-void sub_08089808(u8 a);
-void GlunkUpdate(void);
-void sub_08089bdc(void);
-void sub_08089d44(void);
-void sub_0808a7e0(void);
-void sub_0808a7f4(u8 a);
-void sub_0808a84c(u8 *p, s32 b);
-void sub_0808a880(s32 a);
 
 void sub_08088000(void)
 {

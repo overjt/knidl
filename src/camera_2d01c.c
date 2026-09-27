@@ -103,6 +103,7 @@ struct MapTile
     /*0x03*/ u8 collisionTile;
 };
 
+/* Not from room.h: this file's view of gRoomMap differs (lesson 3.517). */
 extern u16 gCameraMode;
 extern struct Unk03005680 gScrollLock;
 extern s32 gScrollLockSpeedX;

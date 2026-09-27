@@ -44,138 +44,33 @@
 #include "gba/gba.h"
 #include "global.h"
 #include "task.h"
+#include "main.h"
+#include "link.h"
+#include "actor.h"
+#include "enemy.h"
 
 /* RAM cells */
-extern s8 gUnk_02007FB8[];
-extern s8 gDigits[];
-extern s32 gUnk_030023B4;
-extern s32 gUnk_030023D4;
-extern vu16 gTaskSlotTypes[];
+/* Not from collision.h: this file's view of gTerrainResult differs (lesson
+   3.517). */
 extern u8 gTerrainResult[];
 
-/* ROM tables */
-extern u32 gUnk_0873F500[];
-extern s16 gUnk_08742FAC[];
-extern u8 gUnk_0874313C[];
-extern u32 gUnk_08743144[];
-extern u32 gUnk_08743158[];
-extern u32 gBroomHatterVariants[];
-extern u32 gUnk_08743194[];
-extern u32 gUnk_087431A0[];
-extern u32 gUnk_087431AC[];
-extern u32 gUnk_087431B8[];
-extern u32 gUnk_087431C4[];
-extern u32 gUnk_087431C8[];
-extern u32 gUnk_087431CC[];
-extern u32 gUnk_087431D8[];
-extern u32 gLaserBallVariants[];
-extern u32 gBroomHatterFrames[];
-extern u32 gLaserBallFrames[];
-extern u32 gChillyFreezeFrames[];
-extern u32 gWaddleDooBeamFrames[];
-extern u32 gGlunkShotFrames[];
-extern u32 gUnk_08752C18[];
-
 /* Externals */
-extern void TaskExitTrampoline(void);
-extern void TaskYieldTrampoline(u32 a);
+/* Declared here, not through a header: the calls in this file pass other
+   types than the definition takes (lessons 3.428, 3.517). */
 extern void CallTableEntry(u32 a, u32 b, u32 *c);
 extern u32 RandomRange(u32 range);
-extern void IntToDigits(s16 n);
-extern void TaskMove(void);
-extern void TaskDrawWorld(void);
-extern void TaskSleepForever(void);
 extern void TaskSetEntry(void *a, u32 i);
-extern void TaskSetFrameByFacing(s16 a);
-extern void TaskSetMotionXFacing(s32 a, s32 b);
-extern void TaskSetMotionY(s32 a, s32 b, s32 c);
-extern void TaskStop(void);
-extern void TaskUpdateFlip(void);
-extern void TaskSetFrame(s32 a);
 extern u16 RandomSpread(s32 base, u8 scale, u8 amount);
 extern s32 sub_08021a40(s32 x, s32 y);
 extern void ActorSetState(u16 v);
 extern void ActorSetAttackBox(void *p);
-extern s32 TaskFindNearestPlayer(void);
-extern s32 GetDistSq(struct PointPair *p);
-extern void TaskFaceNearestPlayer(void);
-extern void ActorDestroy(void);
-extern void TaskTurnAround(void);
 extern void AngleToVector(s32 a, s32 b);
-extern u8 TaskGetXDirBitToNearestPlayer(void);
-extern void TaskAccelerateInDir(s32 step, s32 limit, u16 dir);
-extern s8 TaskGetParentFacing(void);
-extern s32 CreateActorFromDescAtOffsetFacing(struct ActorSpawn *p, u8 keepPrio);
-extern void ActorDrawWorldInViewOrDestroy(void);
-extern void sub_08065640(void);
-extern void ActorMove(void);
-extern void SetPaletteAnimSource(u32 i, u32 p1, u8 p2);
-extern void AcquirePaletteAnim(u32 p0, s32 idx);
 extern void ActorCheckHits(void);
 extern u8 ActorCollideTerrain(void);
 extern u8 sub_08069604(void);
 extern u8 sub_08069660(void);
 extern u8 sub_080699a8(void);
 extern u32 ActorReactToHit(void);
-extern void sub_0806a0f0(s32 a);
-extern void ActorDie(void);
-extern void sub_0806ee2c(void);
-extern void LaserBallEnterState(void);
-
-/* Forward declarations */
-void Task_ChillyFreezeSparkle(void);
-void sub_0808cfec(void);
-void Task_WaddleDooBeam(void);
-void sub_0808d100(void);
-void sub_0808d130(void);
-void Task_GlunkShot(void);
-void sub_0808d1d0(void);
-void sub_0808d200(void);
-void sub_0808d218(void);
-void sub_0808d2a8(void);
-s32 sub_0808d2b8(void);
-s32 sub_0808d304(void);
-s32 sub_0808d354(void);
-s32 sub_0808d364(void);
-s32 sub_0808d388(void);
-void sub_0808d3e4(void);
-void sub_0808d460(void);
-void sub_0808d494(void);
-void sub_0808d4a8(void);
-void sub_0808d4bc(void);
-void sub_0808d4d0(void);
-void Task_BroomHatter(void);
-void sub_0808d558(void);
-void sub_0808d58c(void);
-void sub_0808d624(void);
-void sub_0808d640(void);
-void sub_0808d764(void);
-void sub_0808d790(void);
-void sub_0808d938(void);
-void sub_0808d964(void);
-void sub_0808d9fc(void);
-void sub_0808da00(void);
-void sub_0808da34(void);
-void sub_0808dacc(void);
-void sub_0808dae8(void);
-void sub_0808dc68(void);
-void sub_0808dc94(void);
-void sub_0808de90(void);
-void sub_0808debc(void);
-void sub_0808df54(void);
-void sub_0808df58(void);
-void sub_0808df9c(void);
-void sub_0808dfc4(void);
-void sub_0808e050(void);
-void sub_0808e054(void);
-void sub_0808e070(void);
-void sub_0808e0d0(void);
-void sub_0808e174(void);
-void sub_0808e254(void);
-void sub_0808e2b4(void);
-void sub_0808e33c(void);
-void sub_0808e36c(void);
-void Task_LaserBall(void);
 
 void Task_ChillyFreezeSparkle(void)
 {
@@ -1243,4 +1138,3 @@ void Task_LaserBall(void)
     SetPaletteAnimSource(1, 0, gCurTask->unk8C->paletteVariant);
     CallTableEntry(gCurTask->variant, 2, gLaserBallVariants);
 }
-

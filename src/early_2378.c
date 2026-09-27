@@ -1,5 +1,8 @@
 #include "gba/gba.h"
 #include "global.h"
+#include "main.h"
+#include "link.h"
+#include "mode.h"
 
 /* early_2378.c (0x08002378-0x08002667, issue #63).
  *
@@ -22,24 +25,9 @@
  * see the comment at the site and lesson 3.488.  Issue #32 had called the
  * residue a gcse insertion one block late (lesson 3.55). */
 
-extern vu32 gRngValue;
-extern u16 gFrameCount;
-extern u32 gUnk_03001EFC;
-extern u16 gLinkIsMaster;
-extern s8 gUnk_030023A8[];
-extern u16 gLocalPlayer;
-extern u16 gLinkPlayerCount;
-extern s16 gUnk_0300244C;
-extern u16 gRecvCmds[4][4];
-extern u32 gSerialIntrCount;
-extern u16 gShouldAdvanceLinkState;
-extern u16 gSendCmd[4];
-extern u16 gLinkCommand;
-
-void RunFrameNoTasks(void);
+/* Declared here, not through a header: the calls in this file pass other
+   types than the definition takes (lessons 3.428, 3.517). */
 void LinkMain1(void *, void *, void *);
-int IsLinkError(void);
-void LinkErrorScreen(void);
 
 /* The 0x7700-series link handshake, twin of LinkSyncClock (src/early_2668.c)
  * with the payload kept in gRngValue/gFrameCount.  The negotiation

@@ -1,6 +1,7 @@
 #include "gba/gba.h"
 #include "global.h"
 #include "task.h"
+#include "camera.h"
 
 /* hitbox_1b24c.c (0x0801B24C-0x0801B7DB, issue #84).
  *
@@ -76,9 +77,10 @@ struct HitEntry
     /*0x08*/ struct BodyBox *unk08;
 };
 
+/* Not from collision.h: this file's view of gUnk_030052A0 differs (lesson
+   3.517). */
 extern u8 gHitDirection;
 extern u16 gAttackY;           /* actor y */
-extern s16 gViewRect[];         /* camera rectangle: left, right, top, bottom */
 extern u16 gAttackX;           /* actor x */
 extern u16 gAttackHealth;
 extern struct AttackBox *gAttackBox;

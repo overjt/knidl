@@ -18,63 +18,30 @@
 #include "gba/gba.h"
 #include "global.h"
 #include "task.h"
+#include "sound.h"
+#include "hud.h"
+#include "room.h"
+#include "actor.h"
 
-extern void TaskYieldTrampoline(u32 a);
-
+/* Not from main.h: this file's view of gBgPalette differs (lesson 3.517). */
 extern vu16 gDispCnt; /* DISPCNT shadow */
 extern u16 gBgPalette;
-extern u16 gUnk_0873E69A;
-extern u16 gUnk_0873E69C;
 
 extern void RequestScreenShake(u32);
-extern void SetRoomUpdateFlags(u32);
-extern void sub_080670ac(u32);
-extern void sub_080670d4(void);
+/* Declared here, not through a header: the calls in this file pass other
+   types than the definition takes (lessons 3.428, 3.517). */
 extern void LoadBackdropColor(u16 *);
 extern void PlaySfx(u32);
-extern void TaskSetSkipMask(u32, u32);
 extern void TaskSetMotionXFacing(u32, u32);
 extern void TaskStop(void);
 extern void TaskSetFrame(u32);
-extern void CreateChildTaskHere(u32, u32);
-extern void ActorPlaySfx(u32, u32);
-extern void ActorDrawWorldInViewOrDestroy(void);
-extern void CreateBurstEffect(u32, u32);
 
-
-extern u32 gUnk_0873E6A0[];
-extern u32 gUnk_0873E6D0[];
-extern u32 gUnk_0874CA78[];
-extern u16 gUnk_0873E72E;
-extern u16 gUnk_0873E730;
-extern u32 gUnk_0873E734[];
-extern u16 gGameState;
-
-extern void StopBgm(void);
-extern void sub_080668c8(void);
-extern void sub_08067108(void);
-extern void CreateStarRing(void);
-extern void HudRemoveHpBar(void);
 extern void CallTableEntry(u32, u32, void *);
 extern void TaskSetEntry(void (*)(void), u32);
 extern void ActorSetState(u32);
-extern void sub_08066f78(void);
 extern void ActorCheckHits(void);
 extern void ActorReactToHit(void);
-extern void sub_08069fc8(void);
-extern void ActorDefeatFrozen(void);
-void sub_0806b2ac(void);
 extern u8 ActorCollideTerrain(void);
-extern void ActorMove(void);
-extern void sub_0806b2e4(void);
-extern void sub_0806ed9c(void);
-
-extern u32 gUnk_02007D00[];
-extern u8 gUnk_0873E758[];
-extern u8 gUnk_0873E77C[];
-extern u8 gUnk_0873E78C[];
-extern u8 gUnk_0873E798[];
-extern u32 gUnk_0874C9D8[];
 
 void sub_0806ad18(void)
 {

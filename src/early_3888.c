@@ -1,5 +1,6 @@
 #include "gba/gba.h"
 #include "global.h"
+#include "main.h"
 
 /* early_3888.c (0x08003888-0x08003963, issue #63).
  *
@@ -54,14 +55,13 @@ struct Unk030023A8
     /*0x03*/ u8 unk03;
 };
 
+/* Not from link.h: this file's view of gMultiBootStruct differs (lesson
+   3.517). */
 extern struct SioWork gMultiBootStruct;
-extern u32 gLinkBlockState;
-extern u32 gLinkSetupMode;
+extern vs32 gLinkBlockState;
+extern vs32 gLinkSetupMode;
 extern struct Unk030023A8 gUnk_030023A8;
-extern vu16 gUnk_0300244C;
-extern u32 gIntrTable[];
-extern vu16 gIntrEnable;
-extern vu16 gIntrMasterEnable;
+extern s16 gUnk_0300244C;
 
 void LinkSetupIntr(void);
 

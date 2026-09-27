@@ -35,29 +35,13 @@
 #include "gba/gba.h"
 #include "global.h"
 #include "task.h"
+#include "main.h"
+#include "link.h"
+#include "room.h"
+#include "player.h"
+#include "actor.h"
 
-
-extern u16 gLocalPlayer;
-extern u8 gUnk_0873F5D4[];
-extern s16 gUnk_0873D3B8[][2];
-extern u16 gUnk_0873D384[];
-
-extern void TaskYieldTrampoline(u32 a);
-
-extern void TaskSleepForever(void);
-extern void TaskSetMotionXFacing(u32, u32);
-extern void TaskStop(void);
-extern void TaskSetFrame(s32 a);
 extern void sub_0801bcac(u8 *);
-extern void SetCameraFocus(s32, s32);
-extern void sub_0803ddc0(void);
-extern void LoadAbilityTiles(void);
-extern void sub_08049a58(void);
-extern void sub_08070208(void);
-extern void sub_08070264(void);
-extern void sub_0807029c(void);
-extern void sub_0807042c(void);
-extern void sub_08070614(u32);
 extern void sub_080706a8(void);
 
 void sub_0806ef5c(void)

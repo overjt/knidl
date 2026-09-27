@@ -1,6 +1,11 @@
 #include "gba/gba.h"
 #include "global.h"
 #include "task.h"
+#include "link.h"
+#include "mode.h"
+#include "collision.h"
+#include "room.h"
+#include "camera.h"
 
 /* room_28320.c (0x08028320-0x08028B8B, issue #93).
  *
@@ -11,125 +16,6 @@
  * CalcBg3Parallax computes the BG3 parallax factors, CalcRoomBounds the room
  * bounds, CameraResetBoundsToGroup the multi-player group bounds and CameraResetBounds
  * copies the room bounds into the camera and per-player bounds. */
-
-struct MapCell
-{
-    /*0x00*/ u8 unk0;
-    /*0x01*/ u8 unk1;
-    /*0x02*/ u8 unk2;
-    /*0x03*/ u8 collisionTile;
-};
-
-struct BgMap
-{
-    /*0x00*/ u16 unk0;
-    /*0x02*/ u16 width;
-    /*0x04*/ u16 height;
-    /*0x06*/ u16 unk6[0];
-};
-
-struct Door
-{
-    /*0x00*/ s16 unk0;
-    /*0x02*/ u16 unk2;
-    /*0x04*/ u16 unk4;
-    /*0x06*/ u16 unk6;
-    /*0x08*/ u16 unk8;
-    /*0x0A*/ u16 unkA;
-};
-
-struct RoomDef
-{
-    /*0x00*/ u8 filler00[4];
-    /*0x04*/ s8 bgm;
-    /*0x05*/ u8 mapsCompressed;
-    /*0x06*/ u8 filler06[2];
-    /*0x08*/ void *metatileMap;
-    /*0x0C*/ void *blockLayer;
-    /*0x10*/ void *unk10;
-    /*0x14*/ u16 width;
-    /*0x16*/ u16 height;
-    /*0x18*/ u16 *bg2Palette;
-    /*0x1C*/ void *bg2Tiles;
-    /*0x20*/ void *metatileTiles;
-    /*0x24*/ u16 borderX;
-    /*0x26*/ u16 borderY;
-    /*0x28*/ u16 *bg3Palette;
-    /*0x2C*/ void *bg3Tiles;
-    /*0x30*/ struct BgMap *bg3Map;
-    /*0x34*/ u16 bg3BorderX;
-    /*0x36*/ u16 bg3BorderY;
-    /*0x38*/ u16 unk38;
-    /*0x3A*/ u16 doorCount;
-    /*0x3C*/ u16 objectCount;
-    /*0x3E*/ u16 objectsSortedByY;
-    /*0x40*/ u16 bgAnimSet;
-    /*0x42*/ u16 unk42;
-    /*0x44*/ struct Door *doors;
-    /*0x48*/ void *objects;
-    /*0x4C*/ u8 filler4C[4];
-    /*0x50*/ u16 entryX;
-    /*0x52*/ u16 entryY;
-    /*0x54*/ u8 unk54;
-    /*0x55*/ u8 unk55;
-    /*0x56*/ u8 unk56;
-    /*0x57*/ u8 unk57;
-};
-
-struct CamRect { s16 x0, x1, y0, y1; };
-
-extern s8 gUnk_0200B034;
-extern s8 gDoorObjectTasks[][3];
-extern s32 gScrollLockSpeedX;
-extern s32 gScrollLockSpeedY;
-extern s32 gRoomDriftVelX;
-extern s32 gRoomDriftVelY;
-extern s16 gUnk_020055D4;
-extern u8 gUnk_020069F0;
-extern s16 gRoomEntryX;
-extern s16 gRoomEntryY;
-extern struct RoomDef *gCurRoomDef;
-extern u16 gUnk_08732348[][9];
-extern s8 gUnk_030023B8;
-extern u32 gBigSwitchFlags[];
-extern u8 gUnk_03002400[8][7];
-extern s8 gUnk_030023E0;
-extern s8 gUnk_03002384;
-extern s8 gStageIndex;
-extern u8 gUnk_0200AF00;
-extern u8 gUsedSubGameDoors[];
-extern u8 gUnk_0200AF08;
-extern u8 gUnk_0200B04C;
-extern s8 gUnk_03002444;
-extern s32 gBg3ParallaxX;
-extern s32 gBg3ParallaxY;
-extern u16 gBg3Border[2];
-extern u16 gRoomBorder[2];
-extern s16 gRoomWidth;
-extern s16 gRoomHeight;
-extern s16 gRoomBounds[4];
-extern u16 gPlayerCount;
-extern u8 gActivePlayerMask;
-extern u16 gPlayerGroupCenter[2];
-extern s16 gCameraBounds[4];
-extern struct CamRect gPlayerBounds[4];
-
-void LoadGfxSet(u16 a0);
-s32 GetCollisionTileAtPixel(u16 x, u16 y);
-void UpdatePlayerCameras(void);
-s32 sub_0802eac8(s32 x, s32 y, s32 a);
-s32 sub_0802ec1c(s32 x, s32 y, s32 a);
-s32 sub_0802ef90(s32 x, s32 y, s32 a, s32 b);
-s32 sub_0802f05c(s32 x, s32 y, s32 a, s32 b);
-s32 sub_0802f1fc(s32 x, s32 y, s32 a, s32 b);
-s32 sub_0802f31c(s32 x, s32 y, s32 a, s32 b);
-s32 sub_0802f420(s32 x, s32 y, s32 a);
-s32 sub_0802f4c8(s32 x, s32 y, s32 a, s32 b);
-s32 sub_0802f53c(s32 x, s32 y, s32 a, s32 b);
-s32 sub_0802f5b4(s32 x, s32 y, s32 a, s32 b);
-s32 sub_0802f7dc(s32 x, s32 y, s32 a, s32 b);
-s32 sub_0802fa3c(s32 x, s32 y, s32 a, s32 b);
-s32 sub_0802fdf4(s32 x, s32 y, s32 a, s32 b);
 
 void SpawnDoorObjects(void)
 {

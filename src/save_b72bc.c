@@ -1,83 +1,11 @@
 #include "gba/gba.h"
 #include "global.h"
 #include "task.h"
-
-struct LinkSave
-{
-    /*0x000*/ u32 unk00;
-    /*0x004*/ u16 unk04;
-    /*0x006*/ u16 unk06;
-    /*0x008*/ u8 unk08;
-    /*0x009*/ u8 unk09;
-    /*0x00A*/ u8 unk0A;
-    /*0x00B*/ u8 unk0B;
-    /*0x00C*/ u16 unk0C;
-    /*0x00E*/ u16 unk0E;
-    /*0x010*/ u16 unk10;
-    /*0x012*/ u8 unk12;
-    /*0x013*/ u8 unk13;
-    /*0x014*/ u16 unk14;
-    /*0x016*/ u16 unk16[4];
-    /*0x01E*/ u16 unk1E[4];
-    /*0x026*/ u16 unk26[4];
-    /*0x02E*/ u16 unk2E[4];
-    /*0x036*/ u16 unk36;
-    /*0x038*/ u8 unk38[8];
-    /*0x040*/ u16 unk40[8][8];
-    /*0x0C0*/ u16 unkC0;
-    /*0x0C2*/ u16 unkC2;
-    /*0x0C4*/ u8 unkC4[2];
-    /*0x0C6*/ u8 unkC6[2];
-    /*0x0C8*/ u8 unkC8[2];
-    /*0x0CA*/ u8 unkCA[2];
-    /*0x0CC*/ u32 unkCC[2];
-    /*0x0D4*/ u8 unkD4[8][7];
-    /*0x10C*/ u16 unk10C[4];
-    /*0x114*/ u16 unk114[4];
-    /*0x11C*/ u16 unk11C;
-    /*0x11E*/ u8 unk11E;
-};
-
-extern struct LinkSave *gInputRecordingPtr;
-extern s32 Div(s32 a, s32 b);
-extern u8 gUnk_02000020;
-extern u16 gPlayerAbilities[];
-extern u16 gMaxHealth;
-extern s16 gPlayerHealth[];
-extern u16 gRoomEntryX;
-extern u8 gRoomEntrySet;
-extern u8 gUnk_020069F0;
-extern u32 gUnk_02007BF0[8][8];
-extern s16 gPlayerLives[];
-extern u8 gUsedSubGameDoors[];
-extern u16 gRoomEntryY;
-extern u16 gPlayerAbilityUses[];
-extern u8 gUnk_0200B04C;
-extern u8 gUnk_0200EC68[];
-extern u16 gUnk_0200EC70[];
-extern u16 gUnk_0200EC78[];
-extern u16 gUnk_02016480[];
-extern u16 gVBlankCount;
-extern u32 gRngValue;
-extern u16 gFrameCount;
-extern u16 gUnk_03001F18[];
-extern u8 gUnk_03001F20;
-extern u8 gUnk_03001F30;
-extern u16 gCompletionPercent;
-extern u16 gLocalPlayer;
-extern u16 gMilestoneFlags;
-extern u16 gUnk_03002378[];
-extern s8 gUnk_03002384;
-extern s8 gLevelIndex;
-extern u16 gPlayerCount;
-extern u8 gUnk_030023B0;
-extern u8 gUnk_030023B8;
-extern s32 gBigSwitchFlags[];
-extern s8 gUnk_030023E0;
-extern u8 gStageIndex;
-extern u8 gUnk_03002400[8][7];
-extern u8 gExtraMode;
-extern u8 gRoomIndex;
+#include "main.h"
+#include "link.h"
+#include "room.h"
+#include "player.h"
+#include "save.h"
 
 void sub_080b72bc(void)
 {

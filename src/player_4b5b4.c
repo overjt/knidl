@@ -1,6 +1,9 @@
 #include "gba/gba.h"
 #include "global.h"
 #include "task.h"
+#include "main.h"
+#include "player.h"
+#include "actor.h"
 
 /* player_4b5b4.c (0x0804B5B4-0x0804B857, issue #88).
  *
@@ -15,17 +18,7 @@
  * ROM keeps a dead `ldr [t, #84]` of a test whose two arms were
  * merged. */
 
-extern u8 gUnk_03001F34;
-extern u32 gPlayerDefaultTerrainBox[];
-
-void TaskYieldTrampoline(s32 frames);
-void TaskSleepForever(void);
-void TaskSetFrame(s32 a);
 s32 SetPlayerAbility(s32 a, s32 b, u32 c);       /* landed (hud_099fc.c); M12 calls it as SetPlayerAbility(0, -1, p->unk00) */
-void PlayerStopAxes(s32 a0);
-void FreezeOtherTasks(s32 a0);
-void PlayerStopAtCeilingAndWall(void);
-void PlayerSetMotionYPreset(s32 a0);
 void CreatePlayerObject(s32 a, s32 b, s32 c);      /* M14, src/plobj_52f6c.c (defined s32 (s8, u8, s32); the result is unused here) */
 
 void PlayerActionLight(void)

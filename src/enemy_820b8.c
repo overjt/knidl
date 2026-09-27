@@ -30,82 +30,27 @@
 #include "gba/gba.h"
 #include "global.h"
 #include "task.h"
-
-/* RAM cells */
-extern u8 gUnk_02006178;
-extern s32 gUnk_030023B4;
-extern s16 gUnk_0300244C;
-extern struct Task *gCurTask;
-
-/* ROM tables */
-extern u32 gUnk_0873F500[];
-extern s32 gUnk_087415E4[];
-extern u8 gUnk_087415F0[];
-extern s32 gUnk_087415F4[];
-extern s32 gUnk_087415FC[];
-extern u32 gUnk_08741610[];
-extern u32 gUnk_08741614[];
-extern u32 gUnk_08741618[];
-extern u32 gUnk_0874161C[];
-extern u32 gUnk_08741620[];
-extern u32 gUnk_08741624[];
-extern s32 gUnk_08741628[];
-extern s32 gUnk_08741630[];
-extern u8 gUnk_08741638[];
-extern u8 gUnk_0874163B[];
-extern u32 gWheelieVariants[];
-extern u32 gWheelieStates[];
-extern u32 gWheelieStateUpdates[];
-extern u32 gUnk_0874167C[];
-extern u32 gUnk_08741680[];
-extern u32 gFlamerVariants[];
-extern u32 gPoppyBrosJrFrames[];
-extern u32 gWheelieFrames[];
-extern u32 gFlamerFrames[];
+#include "main.h"
+#include "link.h"
+#include "hud.h"
+#include "actor.h"
+#include "enemy.h"
 
 /* Externals */
 extern s32 RandomRange(s32 a);
-extern s32 TaskGetNearestPlayerDy(void);
-extern s32 TaskGetFacingTowardNearestPlayer(void);
-extern s32 CreateActorByKind(u8 cls, u32 sub, u8 p3, u8 p4, int x, int y, u16 prio);
-extern s16 CreateDustTrail(u8 flag, u16 vx, s32 c, s32 d);
 extern s32 TaskGetAngleToNearestPlayer(s32 prec);
 extern u32 ActorCheckHits(void);
 extern u32 ActorCollideTerrain(void);
 extern u32 ActorReactToHit(void);
-extern void TaskYieldTrampoline(u32 frames);
+/* Declared here, not through a header: the calls in this file pass other
+   types than the definition takes (lessons 3.428, 3.517). */
 extern void CallTableEntry(u32 a, u32 b, u32 *c);
 extern void PlaySfx(s32 id);
-extern void TaskSleepForever(void);
 extern void TaskSetEntry(void *fn, u32 i);
-extern void TaskSetMotionXFacing(s32 a, s32 b);
-extern void TaskStopX(void);
-extern void TaskSetMotionY(s32 a, s32 b, s32 c);
-extern void TaskStopY(void);
-extern void TaskStop(void);
-extern void TaskSetFrame(s32 a);
 extern void RequestScreenShake(s32 a);
 extern void ActorSetState(u32 v);
 extern void ActorSetAttackBox(u32 *p);
-extern void TaskFaceNearestPlayer(void);
-extern void ActorDestroy(void);
-extern void TaskTurnAroundAndReverseX(void);
 extern void AngleToVector(s16 t, s16 mag);
-extern void sub_0806a0f0(s32 a);
-extern void ActorDrawWorldInViewOrDestroy(void);
-extern void ActorMove(void);
-extern void sub_080b5540(s32 a, s32 b);
-
-/* Defined below */
-void sub_08082108(void);
-void sub_08082554(void);
-void sub_080825ec(void);
-void sub_08082300(void);
-void sub_080824ec(void);
-void WheelieUpdate(void);
-void sub_08082c5c(void);
-void sub_08082cc4(void);
-void sub_08082c18(void);
 
 void sub_080820b8(void)
 {

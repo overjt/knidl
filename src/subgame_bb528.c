@@ -28,49 +28,18 @@
 #include "gba/gba.h"
 #include "global.h"
 #include "task.h"
+#include "main.h"
+#include "link.h"
+#include "sound.h"
+#include "mode.h"
+#include "room.h"
+#include "subgame.h"
 
-extern s32 gCurTaskIdx;
-extern s8 gSubGameLevel;
-extern u8 gQuickDrawBestTime;
-extern u8 gQuickDrawWins[];
-extern u8 gUnk_0200B048;
-extern u8 gQuickDrawRanking[];
-extern vs16 gBrightness;
-extern vu16 gPlayerPressedKeys[];
-extern u16 gPrevGameState;
-extern u16 gLocalPlayer;
-extern u16 gPlayerCount;
-extern struct Task *gCurTask;
-extern struct Task gTasks[];
-extern u32 gUnk_08755A34[];
-extern u32 gUnk_08755A88[];
-extern u32 gUnk_08755BAC[];
-extern s16 gUnk_0875636C[];
-extern u32 gUnk_08756378[];
-extern u32 gUnk_08756394[];
-
-void TaskYieldTrampoline(u32 frames);
+/* Declared here, not through a header: the calls in this file pass other
+   types than the definition takes (lessons 3.428, 3.517). */
 void CallTableEntry(u32 a, u32 b, u32 *c);
-s32 PlayBgm(s32 songId);
 s32 PlaySfx(s32 id);
-s32 TaskCreateFrom(u32 type, s32 idx);
-void TaskDrawScreen(void);
-void TaskSleepForever(void);
 void TaskSetEntry(void *fn, u32 i);
-void SubGameReplay(s32 a0);
-void SubGameQuit(void);
-u8 sub_080b9d68(void);
-void SubGameCheckEnd(void);
-void CreateQuickDrawPlayers(s32 a0);
-
-void sub_080bbb70(void);
-void sub_080bbc04(void);
-void sub_080bba1c(void);
-void sub_080bbbb8(void);
-void sub_080bbc70(void);
-void sub_080bbcdc(void);
-void sub_080bbd4c(void);
-void QuickDrawResultsUpdate(void);
 
 void sub_080bb528(void)
 {

@@ -36,90 +36,21 @@
 #include "gba/gba.h"
 #include "global.h"
 #include "task.h"
+#include "main.h"
+#include "link.h"
+#include "mode.h"
+#include "hud.h"
+#include "player.h"
+#include "effect.h"
+#include "subgame.h"
 
-struct GfxDesc
-{
-    u16 unk00;
-    u16 unk02;
-    u32 unk04;
-    u32 unk08;
-    const void *unk0C;
-};
-
-extern s32 gCurTaskIdx;
-extern u8 gQuickDrawWins[];
-extern u8 gUnk_0200B048;
-extern u32 gUnk_02020000[];
-extern vs16 gBrightness;
-extern u32 gUnk_03001570[];
-extern u16 gPrevGameState;
-extern u16 gLocalPlayer;
-extern u16 gPlayerCount;
-extern struct Task *gCurTask;
-extern struct Task gTasks[];
-extern u32 gUnk_087559E4[];
-extern u32 gUnk_087559F4[];
-extern u32 gUnk_08755A04[];
-extern u32 gUnk_08755A14[];
-extern u32 gUnk_08755A24[];
-extern u32 gUnk_08755A34[];
-extern u32 gUnk_08755A5C[];
-extern u32 gUnk_08755A68[];
-extern u32 gUnk_08755A78[];
-extern u32 gUnk_08755A7C[];
-extern u32 gUnk_08755A88[];
-extern u32 gUnk_08755AA4[];
-extern u32 gUnk_08755AB8[];
-extern u32 gUnk_08755AC8[];
-extern u32 gUnk_08755AD8[];
-extern u32 gUnk_08755ADC[];
-extern u32 gUnk_08755AF0[];
-extern u32 gUnk_08755B18[];
-extern u32 gUnk_08755B40[];
-extern u32 gUnk_08755B68[];
-extern u32 gUnk_08755B90[];
-extern u32 gQuickDrawObjectKinds[];
-extern u16 gUnk_087563D8[];
-extern u16 gUnk_08756410[];
-extern s16 gUnk_08756448[];
-extern s16 gUnk_08756450[];
-extern s16 gUnk_08756458[];
-extern s16 gUnk_08756460[];
-extern u32 gUnk_08756468[];
-extern u32 gUnk_08756480[];
-extern u16 gUnk_08756498[];
-extern u32 gUnk_087564A0[];
-extern s16 gUnk_087564B0[];
-extern struct GfxDesc *const gUnk_087564D0[];
-extern u32 gUnk_087564E4[];
-extern u32 gUnk_087564FC[];
-extern u16 gUnk_08756514[];
-extern u16 gUnk_0875651C[];
-
-void TaskExitTrampoline(void);
-void TaskYieldTrampoline(u32 frames);
-void LZ77UnCompWram(const void *src, void *dest);
 void RequestCopy(u32 mode, u32 src, u32 dst, u32 size);
+/* Declared here, not through a header: the calls in this file pass other
+   types than the definition takes (lessons 3.428, 3.517). */
 s32 QueueSprite(u32 a, u32 b, u32 c, u32 d, u32 e, s16 f);
 void CallTableEntry(u32 a, u32 b, u32 *c);
 s32 PlaySfx(s32 id);
-void TaskFree(s32 id);
-s32 TaskCreateFrom(u32 type, s32 idx);
-void TaskMove(void);
-void TaskDrawScreen(void);
-void TaskSleepForever(void);
 void TaskSetEntry(void *fn, u32 i);
-void TaskStop(void);
-void AddPlayerLivesNoHud(u32 a, u32 b);
-void AddPlayerScoreNoHud(u32 a, u32 b);
-
-void sub_080bc1c4(void);
-void QuickDrawPlayerEnterState(void);
-void QuickDrawPlayerUpdate(void);
-void sub_080bcf8c(void);
-void QuickDrawOpponentEnterState(void);
-void sub_080bd290(void);
-void QuickDrawOpponentUpdate(void);
 
 void Task_QuickDrawObject(void)
 {

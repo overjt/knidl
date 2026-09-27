@@ -1,6 +1,10 @@
 #include "gba/gba.h"
 #include "global.h"
 #include "task.h"
+#include "main.h"
+#include "mode.h"
+#include "room.h"
+#include "camera.h"
 
 /* obj_2f62c.c (0x0802F62C-0x08030237, issue #86).
  *
@@ -15,48 +19,7 @@
  * sub_08030100 spawns up to two #235 objects from the table
  * gUnk_087328C0. */
 
-struct Unk02004B90
-{
-    /*0x00*/ u8 unk0;
-    /*0x01*/ u8 unk1;
-    /*0x02*/ u8 filler02[6];
-};
-
-extern u32 gUnk_08755948[];
-extern u32 gUnk_087558DC[];
-extern u32 gUnk_087558C4[];
-extern struct Unk02004B90 gDoorStates[];
-extern u32 gUnk_08755978[];
-extern u8 gUnk_085A2DF8[][32];
-extern s16 gUnk_020055D4;
-extern u32 gUnk_087558D0[];
-extern u8 gUnk_02007FC4;
-extern u32 gUnk_0875597C[];
-extern u32 gUnk_0875599C[];
-extern u32 gUnk_087559A4[];
-extern u32 gUnk_087559C0[];
-extern s16 gUnk_087328C0[][2];
-extern u32 gUnk_087559DC[];
-
-void TaskExitTrampoline(void);
-void TaskYieldTrampoline(u32 frames);
 void RequestCopy(u32 mode, u32 src, u32 dst, u32 size);
-s32 TaskCreateInRange(u32 type, s32 start, s32 end);
-void TaskMove(void);
-void TaskUpdatePixelPos(void);
-void TaskDrawWorld(void);
-void TaskSleepForever(void);
-void sub_08008f10(s32 a0);
-s32 QueueWorldSprite(u8 a, s32 b, u16 c, u16 d, s16 x, s16 y);
-void sub_0802f684(void);
-void sub_0802f6c0(void);
-void sub_0802f6f4(void);
-void sub_0802f718(void);
-void sub_0802f8c8(void);
-void sub_0802f93c(void);
-void sub_0802fd98(void);
-void DoorObjectDraw(void);
-s32 sub_08030140(u8 a, s32 b);
 
 void sub_0802f62c(void)
 {

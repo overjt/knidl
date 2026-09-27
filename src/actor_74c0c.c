@@ -10,69 +10,35 @@
 #include "gba/gba.h"
 #include "global.h"
 #include "task.h"
-
+#include "main.h"
+#include "link.h"
+#include "cutscene.h"
+#include "actor.h"
+#include "enemy.h"
 
 /* RAM cells and ROM tables */
+/* Not from room.h or effect.h: this file's view of gUnk_0200AF20 and
+   gUnk_03001370 differs (lesson 3.517). */
 extern s16 gViewRect[];
-extern s16 gSpriteCameraX;
-extern s16 gSpriteCameraY;
-extern s16 gUnk_0873FCF8[];
-extern s16 gUnk_0873FD20[];
-extern s16 gUnk_0873FD48[];
-extern s16 gUnk_0873FD70[];
-extern s16 gUnk_0873FF98[];
-extern s32 gUnk_030023B4;
-extern s32 gUnk_030023D4;
-extern struct PlayerState gPlayerStates[];
-extern struct Task * gCurTask;
-extern struct Task gTasks[];
-extern u16 gLocalPlayer;
-extern u16 gPlayerCount;
-extern u32 gUnk_080D21C8[];
-extern u32 gUnk_085E6FA4[];
-extern u32 gUnk_085E6FE4[];
-extern u32 gUnk_085E72D4[];
-extern u32 gUnk_0873FD98[];
-extern u32 gUnk_0873FE98[];
-extern u32 gUnk_08740098[];
-extern u32 gUnk_087400B0[];
-extern u32 gUnk_087400C8[];
-extern u32 gUnk_0874C44C[];
-extern u32 gUnk_0874C500[];
-extern u32 gUnk_0875549C[];
 extern u8 gUnk_02005E10[];
 extern u8 gUnk_0200AF20[];
-extern u8 gBgPalette[];
 extern u8 gUnk_03001370[];
 extern u8 gActivePlayerMask;
-extern vu16 gDispCnt;
 
 /* callees */
+/* Declared here, not through a header: the calls in this file pass other
+   types than the definition takes (lessons 3.428, 3.517). */
 extern s32 QueueSprite(u32 a, u32 b, u32 c, u32 d, u32 e, s16 f);
 extern s32 DrawAffineSprite(s32 a, s16 b, s16 c, s32 d);
 extern s32 PlaySfx(u32 a);
-extern s32 TaskCreateFrom(u32 type, s32 idx);
 extern u32 RandomRange(u32 range);
 extern u32 TaskIsOnScreen(void);
-extern void TaskExitTrampoline(void);
-extern void TaskYieldTrampoline(u32 a);
 extern void RequestCopy(u32 mode, u32 src, u32 dst, u32 size);
 extern void CallTableEntry(u32 a, u32 b, u32 *c);
 extern void BlendColors(void *src, void *dst, s32 ratio, s32 count, void *out);
-extern void TaskMove(void);
-extern void TaskSleepForever(void);
-extern void TaskStop(void);
 extern void SetCameraFocus(s32 a, s32 b);
 extern void AngleToVector(s16 t, s16 mag);
-extern void ActorDrawWorldInViewOrDestroy(void);
-extern void sub_080652c8(void);
 extern void LoadBackdropColor(u32 src);
-extern void CreateBurstEffect(u32 a, s32 b);
-
-/* defined below */
-void sub_08075290(s32 a);
-void sub_08076074(void);
-void sub_0807637c(void);
 
 void sub_08074c0c(void)
 {

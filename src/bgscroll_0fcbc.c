@@ -1,6 +1,9 @@
 #include "gba/gba.h"
 #include "global.h"
 #include "task.h"
+#include "main.h"
+#include "link.h"
+#include "menu.h"
 
 /* bgscroll_0fcbc.c (0x0800FCBC-0x080100AB, issue #99).
  *
@@ -15,30 +18,6 @@
  * Also: sub_0800ffd8 (link work byte 1 minus one, floored at 0),
  * TaskIsOnScreenNoCamera (is the current task on screen), SetBlend (the four
  * blend shadow bytes) and SetWindow (window 0/1 setup). */
-
-extern u8 gBgScrollActive;
-extern s32 gBgScrollSpeeds[2][4];
-extern s32 gBgScrollTargets[2][4];
-extern vu8 gMultiBootStruct[];
-extern vu8 gBldCntTarget2;
-extern vu16 gWin0V;
-extern vu16 gWin1V;
-extern vu8 gBldAlphaEva;
-extern vu8 gWinIn0;
-extern vu8 gWinOut;
-extern vs32 gBg3ScrollY;
-extern vu16 gWin0H;
-extern vu16 gWin1H;
-extern vu8 gBldCntTarget1;
-extern vu8 gBldAlphaEvb;
-extern vu8 gWinIn1;
-extern vu16 gDispCnt;
-extern vs32 *const gBgScrollYPtrs[4];
-extern vs32 *const gBgScrollXPtrs[4];
-
-void TaskYieldTrampoline(s32 frames);
-void BgScrollStartX(s32 speed, s32 dist, s32 bg);
-void BgScrollStartY(s32 speed, s32 dist, s32 bg);
 
 void BgScrollInit(void)
 {

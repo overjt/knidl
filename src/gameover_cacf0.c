@@ -1,6 +1,14 @@
 #include "gba/gba.h"
 #include "global.h"
 #include "task.h"
+#include "main.h"
+#include "link.h"
+#include "sound.h"
+#include "mode.h"
+#include "hud.h"
+#include "room.h"
+#include "player.h"
+#include "ending.h"
 
 /* gameover_cacf0.c (0x080CACF0-0x080CB353, issue #100).
  *
@@ -20,72 +28,12 @@
  *       and picks the next game state.
  *   GameOverResetWait   reset the done flag and the count. */
 
-extern vu16 gDispCnt;          /* DISPCNT shadow */
-extern vs32 gBg1ScrollY;
-extern vs32 gBg1ScrollX;
-extern vs32 gBg2ScrollY;
-extern vs32 gBg2ScrollX;
-extern vs32 gBg3ScrollY;
-extern vs32 gBg3ScrollX;          /* ... BG3 */
-extern u8 gUnk_03001F30;            /* set only by the mode list's fifth row
-                                       (src/menu_0ca10.c); not link play */
-extern u16 gPrevGameState;           /* previous game state */
-extern u16 gGameState;           /* game state (AgbMain dispatch) */
-extern u16 gLocalPlayer;           /* this player's index */
-extern u16 gPlayerCount;           /* number of players */
-extern s32 gPlayerScores[];         /* score per player */
-extern u16 gHudClock[];         /* clock (four fields) */
-extern vu16 gPlayerPressedKeys[];        /* keys pressed per player */
-extern u32 gUnk_02020000[];         /* decompression buffer */
-extern u8 gGameOverDone;            /* game-over screen: done flag */
-extern s16 gGameOverTimer;           /* game-over screen: frames left */
-extern s8 gGameOverCursor;            /* game-over screen: cursor (continue = 0?) */
-extern s16 gGameOverPlayerTask;           /* game-over screen: the #264 variant-0 task's index */
-extern u32 gObjVram[];         /* OBJ VRAM */
-extern vu16 gKeyRepeatDelay;
-extern vu16 gKeyRepeatInterval;
-extern u8 gCutscenePending;
-extern s8 gStageRequest;
-extern u32 gUnk_085E2C20[];
-extern u32 gUnk_085E2CE0[];
-extern u32 gUnk_085E4064[];
-extern u32 gUnk_085E5BC4[];
-extern u16 gUnk_030014F0[];
-
 void RequestCopy(u32 mode, u32 src, u32 dst, u32 size);
-void ResetFadeAndBlend(void);
-void BeginFastFadeInFromWhite(void);
-void BeginFastFadeOutToWhite(void);
-void ResetTasksAndOam(void);
-void LinkStartKeyExchange(void);
-void LinkStopKeyExchange(void);
-void LinkRequestSync(void);
-void LinkSyncRandom(void);
-void LinkSyncClock(void);
-void DisconnectLink(void);
 void RunLinkFrame(void);                                     /* run one frame */
-void RunLinkFrames(s32 count);
-void RunLinkFramesUntilFadeDone(void);
-s32 PlayBgm(s32 songId);
 s32 PlaySfx(s32 id);                                    /* play a sound effect */
 s32 TaskCreateFrom(u32 type, s32 idx);                         /* spawn a task */
 void LoadBgLayout(s32 a0);                                   /* load palette set */
 void LoadGfxSet(u16 a0);                                   /* load screen graphics */
-void ResetPlayerRecords(void);
-void sub_08022c3c(void);
-void DrawScoreToBgMap(s32 v, s32 x, s32 y);
-void DrawClockToBgMap(u16 *time, s32 x, s32 y);
-void GameOverScreen(void);
-void sub_080caeec(void);
-void GameOverShowClock(s32 n);
-void sub_080cb058(void);
-void GameOverMoveCursor(void);
-u8 GameOverIsUpDownPressed(void);
-void GameOverCheckTimeout(void);
-void GameOverCheckChoice(void);
-void GameOverLoadGraphics(void);
-void GameOverResetWait(void);
-void CreateGameOverObjects(void);
 
 /* AgbMain state 22: the game-over / continue screen. */
 void GameOverMain(void)

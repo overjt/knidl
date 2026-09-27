@@ -1,6 +1,9 @@
 #include "gba/gba.h"
 #include "global.h"
 #include "task.h"
+#include "main.h"
+#include "camera.h"
+#include "effect.h"
 
 /* obj_30238.c (0x08030238-0x080306B3, issue #86).
  *
@@ -11,21 +14,7 @@
  * falls (Task.accelY = -0x400) and sub_080304ec rises (Task.velY =
  * -0x10000). */
 
-extern void (*gUnk_087328D8[])(void);
-extern u32 gUnk_0874CD54[];
-extern u32 gUnk_0874CD68[];
-extern u32 gUnk_08752548[];
-extern u32 gUnk_0874CDE0[];
-extern u32 gUnk_0874C804[];
-
-void TaskExitTrampoline(void);
-void TaskYieldTrampoline(u32 frames);
 void CallTableEntry(u32 idx, u32 count, void (**fns)(void));
-void TaskMove(void);
-void TaskUpdatePixelPos(void);
-void TaskDrawWorld(void);
-void TaskSleepForever(void);
-void TaskStop(void);
 
 void Task_StageEffect(void)
 {

@@ -1,6 +1,13 @@
 #include "gba/gba.h"
 #include "global.h"
 #include "task.h"
+#include "main.h"
+#include "link.h"
+#include "mode.h"
+#include "cutscene.h"
+#include "room.h"
+#include "player.h"
+#include "effect.h"
 
 /* mode_100ac.c (0x080100AC-0x08010357, issue #99).
  *
@@ -12,55 +19,7 @@
  * window 0 (full width for sequence 7), spawns M04's director, task
  * type #91, and pumps frames until the director leaves state 7. */
 
-extern u8 gUnk_0200AF04;
-extern u32 gUnk_02020000[];
-extern vs32 gBg0ScrollY;
-extern vu8 gBldCntTarget2;
-extern vu16 gWin0V;
-extern vu8 gBldAlphaEva;
-extern vu8 gWinIn0;
-extern vs32 gBg3ScrollX;
-extern vu8 gWinOut;
-extern vs32 gBg2ScrollX;
-extern vs32 gBg3ScrollY;
-extern vs32 gBg1ScrollY;
-extern vu16 gWin0H;
-extern vs32 gBg0ScrollX;
-extern vu8 gBldCntTarget1;
-extern u16 gUnk_03001570[];
-extern vs32 gBg2ScrollY;
-extern vu8 gBldAlphaEvb;
-extern vu16 gDispCnt;
-extern vs32 gBg1ScrollX;
-extern vu16 gBldY;
-extern u8 gUnk_03001F30;
-extern u16 gLocalPlayer;
-extern u16 gPlayerCount;
-extern s8 gUnk_030023B8;
-extern u16 gGameState;
-extern vu16 gLinkCommand;
-extern u32 gObjVram[];
-extern u16 gPlayerPalettes[][16];
-extern struct GfxHeader *const gUnk_08731F78[];
-
 void RequestCopy(u32 mode, u32 src, u32 dst, u32 size);
-void BeginFastFadeInFromWhite(void);
-void BeginFastFadeOutToWhite(void);
-void ResetTasksAndOam(void);
-void LinkStartKeyExchange(void);
-void LinkStopKeyExchange(void);
-void LinkRequestSync(void);
-void LinkSyncRandom(void);
-void RunLinkFrame(void);
-void RunLinkFramesUntilFadeDone(void);
-s32 TaskCreateFrom(u32 type, s32 idx);
-void LoadBgLayout(s32 a0);
-void LoadGfxSet(u16 a0);
-void sub_08008d98(s32 a0);
-void sub_08024300(void);
-void sub_08027178(void);
-void InitPlayerState(s32 a0);
-void sub_080102c0(void);
 
 void CutsceneMain(void)
 {

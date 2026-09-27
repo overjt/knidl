@@ -1,5 +1,7 @@
 #include "gba/gba.h"
 #include "global.h"
+#include "link.h"
+#include "camera.h"
 
 /* Early subsystem: view-bounds test + task skip-mask stack + the SIO
  * MULTI-PLAY link driver (0x08006464-0x08006D17, issue #32 batch G2).
@@ -93,52 +95,22 @@ struct Task {
     /* 0x14 */ u8  pad14[0x7C];
 };
 
+/* Not from main.h or task.h: this file's view of gCurTask and gIntrTable
+   differs (lesson 3.517). */
 extern struct Task gTasks[];
-extern vu16 gTaskSlotTypes[];
+extern vs16 gTaskSlotTypes[];
 extern u8  gTaskSkipMaskStack[2][64];
 extern u8  gTaskSkipMaskDepth;
-extern s16 gViewRect[];
 extern s8 *gCurTask;
-extern u8  gLink[];
 extern vu16 gIntrMasterEnable;
 extern vu16 gIntrEnable;
-extern u16 gLocalPlayer;
 extern u16 gLinkIsMaster;
-extern vu16 gLinkPlayerCount;
-extern u16 gPlayerCount;
+extern u16 gLinkPlayerCount;
 extern void (*gIntrTable[])(void);
 extern u32 gLinkDriverMode;
-extern u32 gSerialIntrCount;
-extern u32 gChecksumAvailable;
-extern u32 gLinkStatus;
 extern u32 gLinkPauseFrames;
-extern u32 gLinkRecvVCount;
-extern u32 gSendCmdFilled;
-extern u32 gLinkErrorMask;
-extern u16 gRecvNonzeroCheck;
-extern u16 gSendNonzeroCheck;
-extern u16 gLinkSavedIme;
-extern u8  gLastRecvQueueCount;
-extern u8  gLastSendQueueCount;
-extern u8  gUnk_03004D34;
-extern u8  gUnk_03005278;
-extern u16 gSendCmd[4];
-extern u16 gRecvCmds[4][4];
 
-extern u16 gSendNonzeroCheck;
-extern u8  gUnk_03005270;
-void StartTransfer(void);
 u32 RandomRange(u32 range);
-void SerialCB(void);
-void Timer3Intr(void);
-void ResetSendBuffer(void);
-void ResetRecvBuffer(void);
-void EnableSerial(void);
-void DisableSerial(void);
-void CheckMasterOrSlave(void);
-void InitTimer(void);
-void EnqueueSendCmd(u16 *p);
-void DequeueRecvCmds(u16 (*p)[4]);
 
 u32 IsInView(s16 x, s16 y)
 {
@@ -392,6 +364,3 @@ void InitTimer(void)
         REG_IME = gLinkSavedIme;
     }
 }
-
-
-

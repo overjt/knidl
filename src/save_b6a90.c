@@ -1,26 +1,21 @@
 #include "gba/gba.h"
 #include "global.h"
 #include "task.h"
+#include "main.h"
+#include "hud.h"
+#include "camera.h"
+#include "enemy.h"
 
-extern void (*gFrameCallback)(void);
-extern s16 (*gHBlankScrollEffects[])(void);
+/* Not from save.h: this file's view of gHBlankDmaSrc differs (lesson 3.517). */
 extern u16 *gHBlankDmaSrc;
 extern u8 gHBlankScrollState;
 extern s32 gHBlankScrollTimer;
 extern u16 gHBlankScrollTable[];
 extern s16 gHBlankScrollEffect;
 extern u16 gHBlankScrollDmaTable[];
-extern s32 gUnk_02016C30;
-extern vs32 gBg3ScrollX;
-extern vs32 gBg2ScrollX;
-extern u32 gVBlankCallback;
 extern u32 gHBlankDmaDest;
 extern u32 gHBlankDmaCnt;
-extern u32 gBg2ScrollY;
-extern u16 gSpriteCameraY;
 extern s8 gUnk_087561CC[];
-
-void HBlankScrollVBlankCallback(void);
 
 void UpdateRoomHBlankScroll(void)
 {

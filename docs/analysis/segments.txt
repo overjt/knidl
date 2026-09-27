@@ -328,12 +328,12 @@
 0x080CFE20 0x080CFF00 data lib_misc [split] # gSramIdString "AGB  KIRBY" + sound-driver coefficient windows
 0x080CFF00 0x080D0000 data lib_rodata_fir_tables [split] # FIR/envelope-style coefficient tables (sound driver)
 0x080D0000 0x08120000 data level_object_tables
-0x08120000 0x083356E0 data level_graphics_palettes
-0x083356E0 0x0834EEE8 data sound_samples_1
-0x0834EEE8 0x08350AF8 data level_graphics_palettes_2
-0x08350AF8 0x083A85D4 data sound_samples_2
-0x083A85D4 0x083D0000 data level_graphics_palettes_3
-0x083D0000 0x085C0000 data compressed_graphics
+0x08120000 0x08334EC0 data level_graphics_palettes # Level graphics and palettes (asset); its last 12 bytes are the stage-count table gUnk_08334EB4
+0x08334EC0 0x0835CFD4 data room_bg_anims # Room BG animations (#36 phase 2): 30 scripts, 181 tile frames, 14 palette fades, 28 palettes (LoadRoomBgAnims, src/camera_2d01c.c)
+0x0835CFD4 0x083A862C data room_data # Room records (#36 phase 2): 333 RoomDefs, each after its metatile map, block layer, block table, doors and object list
+0x083A862C 0x083B5538 data room_metatiles # Room metatile tables (#36 phase 2): 23 LZ77 RoomDef.metatileTiles streams
+0x083B5538 0x083D0148 data room_bg3_maps # Room BG3 maps (#36 phase 2): 32 struct BgMap, 25 LZ77 and 7 raw
+0x083D0148 0x085C0000 data compressed_graphics # Compressed graphics (LZ77/RLE-class)
 0x085C0000 0x0860A140 data m4a_songs # song track data head (songs/samples extraction is issue #36)
 0x0860A140 0x0860A418 data m4a_engine_rodata [split] # m4a engine tables (issue #51, rom-map section 8.3): gMPlayJumpTableTemplate..gXcmdTable (gXcmdTable has 12 entries and ends 0x0860A418, not 0x0860A410 as the issue text assumed)
 0x0860A418 0x0860B430 data m4a_song_tracks # song track data referenced by song headers (stays incbin, issue #36)
@@ -342,8 +342,14 @@
 0x0872E9F8 0x0872EA02 data sram_v112_string
 0x0872EA02 0x0872EA04 data gap_sram_v112_string_sram_driver_fn_table
 0x0872EA04 0x0872EA14 data sram_driver_fn_table
-0x0872EA14 0x08730000 data gap_sram_driver_fn_table_asset_metadata_index
-0x08730000 0x08760000 data asset_metadata_index
+0x0872EA14 0x0872FF30 data gap_sram_driver_fn_table_asset_metadata_index
+0x0872FF30 0x08730780 c_data task_types # src/data/task_types.c (carved by tools/carve_data.py)
+0x08730780 0x0873ECEC data asset_metadata_index
+0x0873ECEC 0x0873EEA0 c_data actor_defs # src/data/actor_defs.c (carved by tools/carve_data.py)
+0x0873EEA0 0x08760000 data asset_metadata_index_0873eea0
 0x08760000 0x087E1D58 data song_tail_misc_audio
-0x087E1D58 0x087E3088 data sample_set_index # really the room table gUnk_087E1D58[level][stage][room] (M07, rom-map seg 20); name kept until #36 restructures the zone
+0x087E1D58 0x087E1E78 c_data room_table # src/data/room_table.c (carved by tools/carve_data.py)
+0x087E1E78 0x087E1F58 data room_bg_anim_lists # Room BG-animation script lists (#36 phase 2): 12 NULL-ended lists of the 30 scripts and their index gRoomBgAnimScripts
+0x087E1F58 0x087E2570 c_data room_lists # src/data/room_lists.c (carved by tools/carve_data.py)
+0x087E2570 0x087E3088 data sprite_frame_lists # Sprite frame lists (#36 phase 2): 23 per-sheet lists of frame pointers, one per extended GfxHeader trailer; no code reference found
 0x087E3088 0x08800000 data zero_padding

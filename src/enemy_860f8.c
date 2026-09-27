@@ -6,114 +6,28 @@
 #include "gba/gba.h"
 #include "global.h"
 #include "task.h"
+#include "main.h"
+#include "actor.h"
+#include "enemy.h"
 
 /* RAM cells */
-extern s32 gUnk_030023B4;
-extern s32 gUnk_030023D4;
-extern struct Task *gCurTask;
-extern struct Task gTasks[];
+/* Not from collision.h: this file's view of gTerrainResult differs (lesson
+   3.517). */
 extern u8 gTerrainResult[];
 
-/* ROM tables */
-extern s16 gUnk_08742150[];
-extern s32 gUnk_08742088[];
-extern s32 gUnk_08742090[];
-extern s32 gUnk_08742098[];
-extern s32 gUnk_087420A8[];
-extern s32 gUnk_087420AC[];
-extern s32 gUnk_087420F4[];
-extern s32 gUnk_0874210C[];
-extern s32 gUnk_087425B8[];
-extern s32 gUnk_087425C0[];
-extern s32 gUnk_087425C8[];
-extern s32 gUnk_087425D8[];
-extern s32 gUnk_087425DC[];
-extern s32 gUnk_08742600[];
-extern s32 gUnk_08742614[];
-extern struct AnimCmd gUnk_087420C0[];
-extern struct AnimCmd gUnk_087420D4[];
-extern struct AnimCmd gUnk_08742144[];
-extern struct AnimCmd gUnk_08742598[];
-extern struct AnimCmd gUnk_087425A4[];
-extern struct AnimCmd gUnk_08742634[];
-extern u32 gUnk_0873F500[];
-extern u32 gBrontoBurtWaveStates[];
-extern u32 gBrontoBurtWaveStateUpdates[];
-extern u32 gUnk_087420A0[];
-extern u32 gUnk_087420A4[];
-extern u32 gUnk_087420BC[];
-extern u32 gUnk_087420E8[];
-extern u32 gBrontoBurtDiagonalStates[];
-extern u32 gBrontoBurtDiagonalStateUpdates[];
-extern u32 gBrontoBurtChaseStates[];
-extern u32 gBrontoBurtChaseStateUpdates[];
-extern u32 gBrontoBurtTakeOffStates[];
-extern u32 gBrontoBurtTakeOffStateUpdates[];
-extern u32 gTwizzyVariants[];
-extern u32 gTwizzyWaveStates[];
-extern u32 gTwizzyWaveStateUpdates[];
-extern u32 gUnk_087425D0[];
-extern u32 gUnk_087425D4[];
-extern u32 gUnk_087425EC[];
-extern u32 gUnk_087425F0[];
-extern u32 gTwizzyDiagonalStates[];
-extern u32 gTwizzyDiagonalStateUpdates[];
-extern u32 gTwizzyChaseStates[];
-extern u32 gTwizzyChaseStateUpdates[];
-extern u32 gTwizzyTakeOffStates[];
-extern u32 gTwizzyTakeOffStateUpdates[];
-extern u32 gUnk_08742654[];
-extern u32 gUnk_08742660[];
-extern u32 gUnk_0874266C[];
-extern u32 gTwizzyFrames[];
-
 /* Externals */
-extern s32 TaskFindNearestPlayer(void);
-extern s32 TaskGetNearestPlayerDx(void);
-extern s32 TaskGetNearestPlayerDy(void);
-extern s32 ActorStartAnim(struct AnimCmd *p);
-extern s32 ActorStepAnim(void);
 extern u32 RandomRange(u32 range);
 extern u32 ActorCheckHits(void);
 extern u32 ActorCollideTerrain(void);
 extern u32 ActorReactToHit(void);
-extern u8 TaskGetCompassDirToNearestPlayer(void);
-extern void TaskYieldTrampoline(u32 frames);
+/* Declared here, not through a header: the calls in this file pass other
+   types than the definition takes (lessons 3.428, 3.517). */
 extern void CallTableEntry(u32 a, u32 b, u32 *c);
 extern void PlaySfx(s32 id);
-extern void TaskSleepForever(void);
 extern void TaskSetEntry(void *fn, u32 i);
-extern void TaskSetMotionXFacing(s32 a, s32 b);
-extern void TaskSetMotionY(s32 a, s32 b, s32 c);
-extern void TaskStop(void);
-extern void TaskSetFrame(s32 a);
 extern void ActorSetState(u8 v);
 extern void ActorSetAttackBox(u32 v);
-extern void TaskFaceNearestPlayer(void);
-extern void TaskTurnAroundAndReverseX(void);
 extern void AngleToVector(s16 t, s16 mag);
-extern void TaskAccelerateTowardNearestPlayer(s32 step, s32 limit);
-extern void ActorDrawWorldInViewOrDestroy(void);
-extern void ActorMove(void);
-extern void sub_080860d8(void);
-void sub_08088024(void);
-
-/* Defined below */
-void BrontoBurtWaveUpdate(void);
-void sub_08086320(void);
-void sub_0808659c(void);
-void BrontoBurtDiagonalUpdate(void);
-void BrontoBurtChaseUpdate(void);
-void BrontoBurtTakeOffUpdate(void);
-void sub_08086f40(void);
-s32 sub_08086f54(void);
-void TwizzyWaveUpdate(void);
-void sub_080872bc(void);
-void sub_08087508(void);
-void TwizzyDiagonalUpdate(void);
-void TwizzyChaseUpdate(void);
-void TwizzyTakeOffUpdate(void);
-void sub_08087e84(void);
 
 void BrontoBurtWaveInit(void)
 {

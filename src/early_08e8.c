@@ -1,5 +1,8 @@
 #include "gba/gba.h"
 #include "global.h"
+#include "main.h"
+#include "link.h"
+#include "sound.h"
 
 /* Palette fade engine (0x080008E8-0x08000DE3, issue #32 batch A1).
  * agbcc -O2 -mthumb-interwork (game-code recipe).
@@ -15,64 +18,9 @@
  *    shifts by one; as extern arrays each mention is its own pool word,
  *    exactly as the ROM has it. */
 
-extern vu16 gFadeTimer;
-extern vu16 gFadeInterval;
-extern vu16 gFadeSteps;
-extern vs16 gBrightness;
-extern vu16 gFadeStep;
-extern u16 *gFadeKeepMask;
-extern vu32 gPaletteSource;
-extern vu16 gFadeBlankAtWhite;
-extern vu16 gDispCnt;
-extern u16 gBgPalette[];
-extern u16 gFadedPalette[];
-
-extern vs16 gVolumeRampMode;
-extern vs16 gVolumeRampLevel;
-extern vu16 gVolumeRampSpeed;
-extern vu16 gSoundDisabled;
-extern void (*gFrameCallback)(void);
-extern vu16 gUnk_03001014;
-extern u32 gUnk_03000B74;
-extern vu16 gWaitingForVBlank;
-extern vu16 gFrameInProgress;
-extern vu16 gHeldKeys;
-extern vu16 gPressedKeys;
-extern vu16 gLinkPlayerCount;
-extern vu16 gIntrMasterEnable;
-extern vu32 gLinkDriverMode;
-extern vu16 gFrameCount;
-extern u16 gPlayTime[4];
-extern void (*gFrameEndCallback)(void);
-
-extern vu16 gSoundDriverOn;
-extern u32 gLinkPauseFrames;
-extern void (*gVBlankCallback)(void);
-extern vu16 gVBlankCount;
-extern vu16 gUnk_03001008;
-extern void (*gUnk_03000F90)(void);
-extern void (*gBlockAnimHook)(void);
-extern void (*gVBlankEndCallback)(void);
-
 struct MusicPlayerInfo;
-extern struct MusicPlayerInfo gMPlayInfo_BGM;
-extern struct MusicPlayerInfo gMPlayInfo_SE1;
-extern struct MusicPlayerInfo gMPlayInfo_SE2;
-extern struct MusicPlayerInfo gMPlayInfo_SE3;
-extern void m4aMPlayVolumeControl(struct MusicPlayerInfo *mplayInfo, u16 trackBits, u16 volume);
 extern void m4aSoundVSync(void);
-extern void m4aSoundMain(void);
-extern void SoundDriverVSyncOff(void);
 extern void SoftReset(u32 resetFlags);
-extern void StopAllSound(void);
-extern void LinkBlockMain(void);
-extern void LinkVSync(void);
-extern void ReadKeys(void);
-extern void FlushDisplayRegs(void);
-extern void CopyOamAndPalette(void);
-extern void ProcessCopyQueue(void);
-
-void UpdateFade(void);
 
 u32 BeginFade(u16 steps, u16 delta, u16 *mask)
 {

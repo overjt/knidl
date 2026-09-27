@@ -35,139 +35,27 @@
 #include "gba/gba.h"
 #include "global.h"
 #include "task.h"
-
-/* RAM cells */
-extern s8 gUnk_02007FB8[];
-extern struct Task *gCurTask;
-extern struct Task gTasks[];
-extern vs16 gTaskSlotTypes[];
-
-/* ROM tables */
-extern struct AnimCmd gUnk_087412A8[];
-extern struct AnimCmd gUnk_087412EC[];
-extern u32 gUnk_0873F500[];
-extern u32 gUnk_087410C0[];
-extern u32 gUnk_087410D8[];
-extern u32 gUnk_08741158[];
-extern u32 gUnk_08741174[];
-extern u32 gRockyVariants[];
-extern u32 gRockyWalkStates[];
-extern u32 gRockyWalkStateUpdates[];
-extern u32 gUnk_087411F4[];
-extern u32 gUnk_087411F8[];
-extern u32 gRockyStandStates[];
-extern u32 gRockyStandStateUpdates[];
-extern u32 gUnk_08741218[];
-extern u32 gUnk_08741220[];
-extern u32 gSirKibbleVariants[];
-extern u32 gSirKibbleStandStates[];
-extern u32 gSirKibbleStandStateUpdates[];
-extern u32 gSirKibbleWalkStates[];
-extern u32 gSirKibbleWalkStateUpdates[];
-extern u32 gUnk_08741264[];
-extern u32 gUnk_08741268[];
-extern u32 gCappyVariants[];
-extern u32 gCappyCappedStates[];
-extern u32 gCappyCappedStateUpdates[];
-extern u32 gCappyCaplessStates[];
-extern u32 gCappyCaplessStateUpdates[];
-extern u32 gUnk_08741290[];
-extern u32 gUnk_08741294[];
-extern u32 gUnk_08741298[];
-extern u32 gUnk_087412A0[];
-extern u32 gGordoVariants[];
-extern u32 gGordoBobStates[];
-extern u32 gGordoBobStateUpdates[];
-extern u32 gGordoBounceVerticalStates[];
-extern u32 gGordoBounceVerticalStateUpdates[];
-extern u32 gGordoBounceHorizontalStates[];
-extern u32 gGordoBounceHorizontalStateUpdates[];
-extern u32 gGordoSweepStates[];
-extern u32 gGordoSweepStateUpdates[];
-extern u32 gCoolSpookVariants[];
-extern u32 gUnk_08741308[];
-extern u32 gUnk_0874130C[];
-extern u32 gUnk_08741310[];
-extern u32 gUnk_08741314[];
-extern u32 gKabuVariants[];
-extern u32 gUnk_0874183C[];
-extern u32 gGordoFrames[];
-extern u32 gRockyFrames[];
-extern u32 gPengyIceBreathFrames[];
-extern u32 gSirKibbleFrames[];
-extern u32 gCappyFrames[];
-extern u32 gCappyCaplessFrames[];
-extern u32 gCoolSpookFrames[];
-extern u32 gKabuFrames[];
-extern u8 gUnk_08741214[];
-extern u8 gUnk_08741216[];
+#include "main.h"
+#include "hud.h"
+#include "actor.h"
+#include "enemy.h"
 
 /* Externals */
 extern s32 RandomRange(s32 a);
 extern s32 PlaySfx(s32 id);
-extern s32 TaskFindNearestPlayer(void);
 extern s32 TaskGetDxTo(s32 i);
-extern s32 TaskGetNearestPlayerDx(void);
-extern s32 TaskGetDyTo(u32 i);
-extern s32 TaskGetFacingTowardNearestPlayer(void);
-extern s32 ActorStartAnim(struct AnimCmd *p);
-extern s32 ActorTickAnim(s32 n);
-extern s32 CreateActorFromDescAtOffsetFacing(struct ActorSpawn *p, u8 keepPrio);
-extern s32 CreateActorByKind(u8 cls, u32 sub, u8 p3, u8 p4, int x, int y, u16 prio);
-extern s32 sub_0806956c();
-extern s32 sub_080695bc();
 extern s32 ActorReactToHit(void);
+/* Declared here, not through a header: the calls in this file pass other
+   types than the definition takes (lessons 3.428, 3.517). */
 extern u32 ActorCheckHitsWithBox(void *p);
 extern u32 ActorCheckHits(void);
 extern u32 ActorCollideTerrain(void);
-extern u8 TaskHasSameSerial(s32 i);
-extern void TaskExitTrampoline(void);
-extern void TaskYieldTrampoline(u32 frames);
 extern void CallTableEntry(u32 a, u32 b, u32 *c);
-extern void TaskFree(s32 a);
-extern void TaskMove(void);
-extern void TaskSleepForever(void);
 extern void TaskSetEntry(void *fn, u32 i);
-extern void TaskSetMotionX(s32 a, s32 b, s32 c);
-extern void TaskSetMotionXFacing(s32 a, s32 b);
-extern void TaskSetMotionY(s32 a, s32 b, s32 c);
-extern void TaskStopY(void);
-extern void TaskStop(void);
-extern void TaskSetFrame(s32 a);
 extern void RequestScreenShake(s32 a);
 extern void ActorLoadDef(u32 *def);
 extern void ActorSetState(u32 v);
 extern void ActorSetAttackBox(u32 *p);
-extern void TaskFaceToward(u32 i);
-extern void TaskFaceNearestPlayer(void);
-extern void TaskTurnAroundAndReverseX(void);
-extern void TaskFaceLikeParent(void);
-extern void ActorDrawWorldInView(void);
-extern void ActorDrawWorldInViewOrDestroy(void);
-extern void ActorMove(void);
-extern void AcquirePaletteAnim(u32 p0, s32 idx);
-extern void sub_0806a0f0(s32 a);
-extern void sub_080b5540(s32 a, s32 b);
-
-/* Forward declarations */
-void RockyWalkUpdate(void);
-void sub_0807db0c(void);
-void RockyStandUpdate(void);
-void sub_0807dd10(void);
-void SirKibbleStandUpdate(void);
-void SirKibbleWalkUpdate(void);
-void sub_0807e444(void);
-void sub_0807e484(void);
-void CappyCappedUpdate(void);
-void CappyCaplessUpdate(void);
-void sub_0807e920(void);
-void GordoBobUpdate(void);
-void GordoBounceVerticalUpdate(void);
-void GordoBounceHorizontalUpdate(void);
-void GordoSweepUpdate(void);
-void sub_0807ee60(void);
-void sub_0807ef24(void);
-void sub_0807ef7c(void);
 
 void sub_0807d3b0(void)
 {

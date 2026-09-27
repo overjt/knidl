@@ -1,6 +1,12 @@
 #include "gba/gba.h"
 #include "global.h"
 #include "task.h"
+#include "main.h"
+#include "mode.h"
+#include "menu.h"
+#include "room.h"
+#include "player.h"
+#include "save.h"
 
 /* menutask_0daf8.c (0x0800DAF8-0x0800E313, issue #99).
  *
@@ -14,63 +20,11 @@
  * marks the selected entry (MenuUpdateFileMenuPalette) and loads its picture
  * (MenuLoadPicture: LZ77 into 0x02020000, one 2 KiB part to 0x06004200). */
 
-struct SaveSlot
-{
-    /*0x00*/ u32 unk00;
-    /*0x04*/ s32 unk04;
-    /*0x08*/ u32 generation;
-    /*0x0C*/ s32 saveCount;
-    /*0x10*/ u16 milestoneFlags;
-    /*0x12*/ u16 completionPercent[2];
-    /*0x16*/ u8 unk16[2];
-    /*0x18*/ u8 unk18[2];
-    /*0x1A*/ u8 unk1A[2];
-    /*0x1C*/ u8 unk1C[2];
-    /*0x1E*/ u8 pad1E[2];
-    /*0x20*/ u32 unk20[2];
-    /*0x28*/ u8 unk28[8][7];
-    /*0x60*/ u16 unk60[4];
-    /*0x68*/ u16 unk68[4];
-    /*0x70*/ u32 checksum;
-    /*0x74*/ u8 filler74[0x8C];
-};
-
-extern s8 gFileMenuCursor;
-extern s8 gMenuScreen;
-extern s8 gMenuCursor;
-extern struct SaveSlot gSaveSlots[];
-extern u32 gUnk_02020000[];
-extern u16 gBgPalette[];
-extern u16 gUnk_0300153C[];
-extern u16 gUnk_03001668[];
-extern s32 gCurSaveSlot;
-extern u8 gUnk_08550B9C[];
-extern u16 gUnk_08554B60[][4];
-extern u16 gUnk_08554D7A[];
-extern u16 gUnk_08554D80[];
-extern u16 gUnk_08559B68[][10];
-extern u16 gUnk_08559B90[];
-extern void *const gUnk_08731E34[];
-extern u32 gUnk_08755620[];
-extern u32 gUnk_08755650[];
-
-void TaskExitTrampoline(void);
-void TaskYieldTrampoline(s32 frames);
 void RequestCopy(u32 mode, u32 src, u32 dst, u32 size);
+/* Declared here, not through a header: the calls in this file pass other
+   types than the definition takes (lessons 3.428, 3.517). */
 s32 QueueSprite(u32 a, u32 b, u32 c, u32 d, u32 e, s16 f);
 void BlendColors(u16 *src, u16 *dst, s32 ratio, s32 count, u16 *out);
-void TaskMove(void);
-void TaskDrawScreen(void);
-void LoadGfxSet(u16 a0);
-s32 sub_0800bf10(s32 slot, u32 pal);
-u8 TaskIsOnScreenNoCamera(void);
-void sub_0800dbdc(void);
-void sub_0800dc98(void);
-void sub_0800dda0(void);
-void sub_0800dfdc(void);
-void sub_0800e148(void);
-void MenuUpdateFileMenuPalette(void);
-s32 MenuLoadPicture(s32 id, s32 part);
 
 void sub_0800daf8(void)
 {

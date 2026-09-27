@@ -14,71 +14,30 @@
 #include "gba/gba.h"
 #include "global.h"
 #include "task.h"
+#include "main.h"
+#include "link.h"
+#include "hud.h"
+#include "player.h"
+#include "actor.h"
 
-extern u32 gUnk_0873E78C[];
-extern u32 gUnk_0874C9D8[];
-
+/* Declared here, not through a header: the calls in this file pass other
+   types than the definition takes (lessons 3.428, 3.517). */
 extern void CallTableEntry(u32 a, u32 b, u32 *c);
 extern void PlaySfx(u32 a);
-extern void TaskSleepForever(void);
 extern void TaskSetEntry(void *fn, s32 i);
-extern void TaskStop(void);
-extern void TaskSetFrame(s32 a);
 extern void ActorSetState(s32 a);
-extern void ActorDestroy(void);
-extern void sub_0806a0cc(void);
-extern void PlayRayBurstAnim(void);
-extern void sub_080b54d0(s32 i);
-extern void TaskYieldTrampoline(u32 a);
 extern u32 sub_08021a40(s32 x, s32 y);
-extern u32 CanBreakBlock(s32 x, s32 y, s32 c, s32 d);
 extern void ActorSetTerrainBox(u32 *p);
 
-extern s16 gUnk_0873E7C4[];
-extern s16 gUnk_0873E864[];
-extern u16 gUnk_0873EAD8[][4];
-extern u32 gUnk_0873F8B4[];
-extern u32 gUnk_0873F8BC[];
-
-void sub_0806b8bc(void);
-extern void ActorDrawWorldInViewOrDestroy(void);
-extern void TaskMove(void);
-extern void ActorDie(void);
-extern void sub_08065640(void);
 extern void ActorSetHitReactions(u32 *p);
-extern u32 gUnk_0873F92C[];
-extern struct PlayerState gPlayerStates[];
-extern void sub_08065d44(u32 a, u32 b, u32 c, u32 d, u32 e, u32 f);
 extern s32 TaskGetDxTo(s32 i);
-extern void ActorAwardScore(s32 a, s32 b);
-extern s16 gUnk_0873E7A4[];
-extern s16 gUnk_0300244C;
-extern u8 gUnk_02007CF4[];
-extern u8 gUnk_02006178;
-extern u32 gActorAttachedStates[];
-extern u32 gUnk_0873F938[];
-extern u32 gUnk_0873F8F4[];
-extern void TaskMoveRelativeToParent(void);
 extern void ActorSetTerrainHandlers(u32 *p);
-void sub_0806bfd8(void);
-void sub_0806c0c0(void);
-void sub_0806c148(void);
-void sub_0806c1d0(void);
-extern void PickupCollect(void);
-extern void ActorMove(void);
 extern void ActorCollideTerrain(void);
 extern void RequestScreenShake(u32 a);
 extern void RegisterCollider(u8 a, s16 x, s16 y, u32 *p);
-extern void TaskSetMotionXFacing(u32 a, u32 b);
-extern void TaskSetMotionY(u32 a, u32 b, u32 c);
-extern u32 gUnk_0873F830[];
-extern u32 gUnk_0873F844[];
-extern u32 gUnk_0873F894[];
+/* Not from collision.h: this file's view of gTerrainResult differs (lesson
+   3.517). */
 extern u8 gTerrainResult[];
-void sub_0806bd10(void);
-void sub_0806bf38(void);
-void sub_0806bc54(void);
-void ActorAttachedEnterState(void);
 
 void sub_0806b2e4(void)
 {

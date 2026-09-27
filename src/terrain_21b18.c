@@ -1,6 +1,8 @@
 #include "gba/gba.h"
 #include "global.h"
 #include "task.h"
+#include "collision.h"
+#include "room.h"
 
 /* terrain_21b18.c (0x08021B18-0x0802296B, issue #93).
  *
@@ -20,131 +22,6 @@
  * (Task.waterFlags).  The rest clamp a body or a task to the per-player bounds
  * gPlayerBounds, the camera bounds gCameraBounds or the room bounds
  * gRoomBounds and return which edges were hit. */
-
-struct MapCell
-{
-    /*0x00*/ u8 unk0;
-    /*0x01*/ u8 unk1;
-    /*0x02*/ u8 unk2;
-    /*0x03*/ u8 collisionTile;
-};
-
-struct Unk03005530
-{
-    /*0x00*/ u8 unk0;
-    /*0x01*/ u8 ceilingHits;
-    /*0x02*/ u8 unk2;
-    /*0x03*/ u8 unk3;
-    /*0x04*/ u8 slope;
-    /*0x05*/ u8 unk5;
-    /*0x06*/ u8 onGround;
-    /*0x07*/ u8 waterFlags;
-    /*0x08*/ u16 unk8;
-    /*0x0A*/ u8 atDoor;
-    /*0x0B*/ u8 unkB;
-    /*0x0C*/ u8 unkC;
-    /*0x0D*/ u8 unkD;
-    /*0x0E*/ u8 onSlipperyFloor;
-    /*0x0F*/ u8 unkF;
-};
-
-struct BgMap
-{
-    /*0x00*/ u16 unk0;
-    /*0x02*/ u16 width;
-    /*0x04*/ u16 height;
-    /*0x06*/ u16 unk6[0];
-};
-
-struct Door
-{
-    /*0x00*/ s16 unk0;
-    /*0x02*/ u16 unk2;
-    /*0x04*/ u16 unk4;
-    /*0x06*/ u16 unk6;
-    /*0x08*/ u16 unk8;
-    /*0x0A*/ u16 unkA;
-};
-
-struct RoomDef
-{
-    /*0x00*/ u8 filler00[4];
-    /*0x04*/ s8 bgm;
-    /*0x05*/ u8 mapsCompressed;
-    /*0x06*/ u8 filler06[2];
-    /*0x08*/ void *metatileMap;
-    /*0x0C*/ void *blockLayer;
-    /*0x10*/ void *unk10;
-    /*0x14*/ u16 width;
-    /*0x16*/ u16 height;
-    /*0x18*/ u16 *bg2Palette;
-    /*0x1C*/ void *bg2Tiles;
-    /*0x20*/ void *metatileTiles;
-    /*0x24*/ u16 borderX;
-    /*0x26*/ u16 borderY;
-    /*0x28*/ u16 *bg3Palette;
-    /*0x2C*/ void *bg3Tiles;
-    /*0x30*/ struct BgMap *bg3Map;
-    /*0x34*/ u16 bg3BorderX;
-    /*0x36*/ u16 bg3BorderY;
-    /*0x38*/ u16 unk38;
-    /*0x3A*/ u16 doorCount;
-    /*0x3C*/ u16 objectCount;
-    /*0x3E*/ u16 objectsSortedByY;
-    /*0x40*/ u16 bgAnimSet;
-    /*0x42*/ u16 unk42;
-    /*0x44*/ struct Door *doors;
-    /*0x48*/ void *objects;
-    /*0x4C*/ u8 filler4C[4];
-    /*0x50*/ u16 entryX;
-    /*0x52*/ u16 entryY;
-    /*0x54*/ u8 unk54;
-    /*0x55*/ u8 unk55;
-    /*0x56*/ u8 unk56;
-    /*0x57*/ u8 unk57;
-};
-
-struct CamRect { s16 x0, x1, y0, y1; };
-
-extern struct MapCell *gRoomMap;
-extern s16 gRoomWidth;
-extern s16 gRoomHeight;
-extern u16 gTerrainTile;
-extern s8 gUnk_087339F0[];
-extern struct Unk03005530 gTerrainProbeResult;
-extern s16 gTerrainProbeX;
-extern s16 gTerrainProbeY;
-extern s16 gTerrainBoxTop;
-extern s16 gTerrainBoxBottom;
-extern s16 gTerrainBoxLeft;
-extern s16 gTerrainBoxRight;
-extern s8 gCollisionTileShapeClass[];
-extern u16 gUnk_03005574;
-extern u16 gTerrainTileBelow;
-extern u16 gUnk_030055AC;
-extern u16 gTerrainPixelIndex;
-extern u16 gUnk_08735018[];
-extern s8 gUnk_087336F0[];
-extern u8 gCollisionTileSlope[];
-extern u16 gTerrainTileRight;
-extern u8 gUnk_08732DF0[];
-extern u16 gTerrainTileLeft;
-extern u16 gBlockLayer[];
-extern struct RoomDef *gCurRoomDef;
-extern s8 *const gCollisionTileShapes[];
-extern s8 gUnk_087335F0[];
-extern u8 gTerrainBoundsClamp;
-extern u16 gUnk_03005544;
-extern struct CamRect gPlayerBounds[4];
-extern u8 gUnk_02005574[];
-extern s16 gRoomBounds[4];
-extern s16 gCameraBounds[4];
-
-s32 TerrainQueryPixel(u32 x, u32 y);
-s32 TerrainQueryPixelAndBelow(u32 x, u32 y);
-s32 TerrainQueryPixelAndSides(u32 x, u32 y);
-s32 GetTileFloorSnap(u16 a);
-s32 GetCollisionTile(u32 x, u32 y);
 
 s32 GetCollisionTileAtPixel(u16 x, u16 y)
 {

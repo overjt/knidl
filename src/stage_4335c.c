@@ -1,6 +1,8 @@
 #include "gba/gba.h"
 #include "global.h"
 #include "task.h"
+#include "room.h"
+#include "player.h"
 
 /* stage_4335c.c (0x0804335C-0x08043653, issue #85).
  *
@@ -21,18 +23,7 @@
  * and `tp` locals are stand-ins for an address copy agbcc's gcse cannot
  * produce across the calls (lesson 3.477). */
 
-extern u16 gLatchedPressedKeys[];   /* newly pressed keys, latched per player */
-extern u16 gLatchedHeldKeys[];   /* held keys, latched per player */
-
 void TaskSetEntry(void *a, u32 i);
-s32 PlayerLand(s32 a0);
-void PlayerTurnToHeldDirection(void);
-void PlayerStopAtCeilingAndWall(void);
-s32 PlayerCheckBButton(void);
-s32 PlayerCheckEnterDoor(void);
-void PlayerSetMotionXPreset(s32 a0, s32 a1);
-void PlayerSetMotionYPreset(s32 a0);
-void sub_08043014(void);
 
 /* Same shape as M10's twin PlayerActionSwimUpdate (src/player_3aa64.c):
    `st = &t->unk73` for the five unk73

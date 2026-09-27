@@ -1,6 +1,13 @@
 #include "gba/gba.h"
 #include "global.h"
 #include "task.h"
+#include "main.h"
+#include "link.h"
+#include "mode.h"
+#include "hud.h"
+#include "player.h"
+#include "actor.h"
+#include "save.h"
 
 /* mode_0b44c.c (0x0800B44C-0x0800B91F, issue #96).
  *
@@ -10,77 +17,28 @@
  * cleared records per player), sub_0800b5dc/sub_0800b628, and the three
  * screen setups sub_0800b648/sub_0800b788/sub_0800b87c. */
 
-struct Unk02005E00
-{
-    /*0x00*/ s32 unk00;
-    /*0x04*/ u8 unk04[4];
-    /*0x08*/ u8 unk08[4];
-};
-
-extern u16 gNextActorSerial;
+/* Not from room.h or effect.h: this file's view of gSavedPlayerAbilityUses
+   and gUnk_020060CC differs (lesson 3.517). */
 extern u8 gUnk_02000020;
 extern u16 gPlayerAbilities[];
 extern u8 gUnk_02004B64;
 extern s16 gMaxHealth;
 extern s16 gPlayerHealth[];
-extern u8 gUnk_020055C4;
-extern u8 gUnk_020055CC;
-extern struct Unk02005E00 gUnk_02005E00;
-extern s32 gPlayerScores[];
-extern s8 gCannonFuseState;
 extern u8 gUnk_020060CC;
-extern s8 gUnk_02006160;
-extern u8 gUnk_02006178;
-extern u8 gUnk_020061E0;
 extern u8 gUnk_02007CF0;
-extern u8 gUnk_02007CF4[];
 extern s16 gPlayerLives[];
-extern u32 gUnk_02007F50;
 extern vs16 gSavedPlayerAbilityUses[];
-extern s8 gUnk_02007FB8[];
 extern u16 gSavedPlayerAbilities[];
 extern s8 gUnk_02008010;
-extern vu16 gPlayerAbilityUses[];
-extern u32 gUnk_0200EC50;
-extern s16 gInputRecorderMode;
-extern vs32 gBg0ScrollY;
-extern vu16 gUnk_03000B24;
-extern vs32 gBg3ScrollX;
-extern vs32 gBg2ScrollX;
-extern vu16 gPlayerHeldKeys[];
-extern vs32 gBg3ScrollY;
-extern vs32 gBg1ScrollY;
-extern vs32 gBg0ScrollX;
-extern vs32 gBg2ScrollY;
-extern vu16 gPlayerPressedKeys[];
-extern vu16 gDispCnt;
-extern vs32 gBg1ScrollX;
+extern u16 gPlayerAbilityUses[];
 extern u8 gUnk_03001F30;
-extern u8 gUnk_03001F34;
-extern u16 gLinkIsMaster;
 extern u8 gActivePlayerMask;
 extern u8 gActivePlayerCount;
-extern u16 gLocalPlayer;
-extern u16 gPlayerCount;
-extern u8 gUnk_030023B0;
 extern u16 gLatchedPressedKeys[];
 extern s8 gStageRequest;
-extern u16 gLinkPlayerCount;
-extern s16 gUnk_0300244C;
 extern u16 gLatchedHeldKeys[];
 extern u8 gExtraMode;
-extern vu16 gLinkCommand;
 
-void ResetBgScroll(void);
-void ResetFadeAndBlend(void);
-void ResetTasksAndOam(void);
-void ResetPlayTime(void);
-void LoadGfxSet(u16 a0);
-void sub_08008c7c(void);
-void sub_08008cb8(void);
-void HudShowScore(void);
-void HudShowClock(void);
-void ClearColliderLists(void);
 void sub_0802296c(void);
 void sub_08022f98(void);
 void sub_08022f9c(void);
@@ -88,8 +46,6 @@ void sub_08022fa8(void);
 void sub_080233e0(void);
 void sub_08023948(void);
 void sub_08023ca0(void);
-void InitPlayerState(s32 a0);
-void sub_08066144(void);
 
 void sub_0800b44c(void)
 {

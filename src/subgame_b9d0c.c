@@ -29,20 +29,16 @@
 #include "gba/gba.h"
 #include "global.h"
 #include "task.h"
+#include "sound.h"
+#include "mode.h"
+#include "room.h"
+#include "subgame.h"
 
-extern s32 gCurTaskIdx;
-extern u8 gUnk_02004B5C;
-extern s16 gUnk_020055EC;
-extern s8 gSubGameLevel;
-extern u8 gQuickDrawBestTime;
-extern u8 gSubGamePhase;
-extern u8 gUnk_02007FCC;
-extern u8 gQuickDrawWins[];
-extern u8 gUnk_0200B048;
-extern u8 gQuickDrawRanking[];
+/* Not from main.h or link.h: this file's view of gFrameCallback and gRecvCmds
+   differs (lesson 3.517). */
 extern u32 gLinkDriverMode;
-extern u32 gLinkSetupMode;
-extern u32 gBg0ScrollY;
+extern vs32 gLinkSetupMode;
+extern vs32 gBg0ScrollY;
 extern u32 gFrameCallback;
 extern vu16 gFadeBlankAtWhite;
 extern vs32 gBg3ScrollX;
@@ -51,7 +47,7 @@ extern u32 gVBlankCallback;
 extern vs32 gBg3ScrollY;
 extern vu16 gVBlankCount;
 extern vs32 gBg1ScrollY;
-extern u32 gBg0ScrollX;
+extern vs32 gBg0ScrollX;
 extern vu8 gBldCntTarget1;
 extern u16 gBgPalette[];
 extern vu16 gFadeSteps;
@@ -60,32 +56,18 @@ extern vu16 gPlayerPressedKeys[];
 extern vu16 gDispCnt;
 extern vs32 gBg1ScrollX;
 extern vu16 gBldY;
-extern vu16 gLinkIsMaster;
-extern u16 gPrevGameState;
+extern u16 gLinkIsMaster;
 extern u16 gLocalPlayer;
 extern u16 gPlayerCount;
-extern u16 gGameState;
 extern vu16 gLinkPlayerCount;
-extern struct Task *gCurTask;
-extern struct Task gTasks[];
-extern vs16 gTaskSlotTypes[];
 extern u32 gLinkErrorMask;
 extern u16 gRecvCmds[];
 extern u32 gLinkStatus;
 extern u32 gSerialIntrCount;
 extern u16 gShouldAdvanceLinkState[];
-extern u16 gSendCmd[];
+extern u16 gSendCmd[4];
 extern u16 gLinkCommand;     /* SIO handshake word; see SubGameSyncLink */
-extern u32 gUnk_087562A8[][2];
-extern u16 gUnk_087562C0[];
-extern s32 (*const gSubGameInitHooks[])(void);
-extern void *gSubGameBodies[];
-extern u16 gUnk_087562E4[];
-extern u32 gQuickDrawPhases[];
-extern s16 gUnk_087562F0[];
-extern s16 gUnk_087562F6[];
 
-void TaskYieldTrampoline(u32 frames);
 void EndFrame(void);
 void RequestCopy(u32 mode, u32 src, u32 dst, u32 size);
 void ResetFadeAndBlend(void);
@@ -99,33 +81,18 @@ void LinkStopKeyExchange(void);
 void LinkRequestSync(void);
 void LinkSyncRandom(void);
 void RunLinkFrame(void);
+/* Declared here, not through a header: the calls in this file pass other
+   types than the definition takes (lessons 3.428, 3.517). */
 void CallTableEntry(u32 a, u32 b, u32 *c);
 u32 Random(void);
 u32 RandomRange(u32 range);
 s32 PlaySfx(s32 id);
-void StopBgm(void);
-void TaskSetSkipMask(u8 val, s32 idx);
-void TaskSetOthersSkipMask(u16 val, s32 idx);
-void TaskFree(s32 id);
-s32 TaskCreateFrom(u32 type, s32 idx);
 void TaskSleepForever(void);
 void TaskSetEntry(void *fn, u32 i);
 void DisableSerial(void);
 void LinkMain1(void *cmd, void *send, void *recv);
 u32 ConnectLink(void);
 u32 IsLinkError(void);
-void LinkErrorScreen(void);
-void LoadBgLayout(u32 a);
-void LoadGfxSet(u16 a);
-void sub_08008d10(u32 a, u32 b);
-void sub_080c1f88(void);
-void AirGrindBuildCourse(s32 a, s32 b);
-
-void SubGameRunFrame(void);
-void SubGameRunLinkFrame(void);
-void SubGameSyncLink(void);
-void Task_SubGame(void);
-void SubGameStartBody(void);
 
 void SubGameReplay(s32 a0)
 {

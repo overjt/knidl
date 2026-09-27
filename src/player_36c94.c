@@ -1,6 +1,12 @@
 #include "gba/gba.h"
 #include "global.h"
 #include "task.h"
+#include "main.h"
+#include "link.h"
+#include "collision.h"
+#include "room.h"
+#include "effect.h"
+#include "actor.h"
 
 /* player_36c94.c (0x08036C94-0x08037ED7, issue #91).
  *
@@ -17,25 +23,6 @@
  * and 15 (PlayerActionSpit, PlayerActionSwallow) are short animation scripts, and
  * handlers 14 and 15 pick the next velocity preset from the ground flags
  * Task.onGround/unk7B. */
-
-/* gTerrainResult: M06's collision result block (src/terrain_1bcac.c spells it
-   the same way except unk8, which M09 reads with ldrsh). */
-struct Unk03005550
-{
-    /*0x00*/ u8 unk0;
-    /*0x01*/ u8 ceilingHits;
-    /*0x02*/ u8 unk2;
-    /*0x03*/ u8 unk3;
-    /*0x04*/ u8 slope;
-    /*0x05*/ u8 unk5;
-    /*0x06*/ u8 unk6;
-    /*0x07*/ u8 unk7;
-    /*0x08*/ s16 unk8;
-    /*0x0A*/ u8 atDoor;
-    /*0x0B*/ u8 onSlipperyFloor;
-    /*0x0C*/ u8 unkC;
-    /*0x0D*/ u8 unkD;
-};
 
 /* gUnk_02007E90[4][3]: M04's per-player spark records (src/player_10358.c) */
 struct M04Spark
@@ -57,25 +44,19 @@ struct HitBoxSet
     /*0x04*/ s8 (*boxes)[4];
 };
 
-extern u16 gLatchedHeldKeys[];             /* held keys, latched per player (M11) */
+/* Not from player.h: this file's view of gUnk_02004B6C differs (lesson
+   3.517). */
 extern s16 gUnk_0873D880[];
 extern u16 gUnk_0873D8B4[];
 extern u16 gUnk_0873D908[];
-extern u16 gLatchedPressedKeys[];             /* newly-pressed keys, latched per player */
-extern struct Unk03005550 gTerrainResult;
-extern s16 gUnk_0300244C;
 extern struct M04Spark gUnk_02007E90[][3];
-extern u8 gUnk_02007CF4[];
-extern s32 gUnk_03001F2C;
 extern struct HitBoxSet gUnk_0873CC54;
-extern u16 gUnk_02007FA0;
 extern u16 gUnk_02004B6C;
 extern u8 gUnk_0873BEC4[];
 
-void TaskYieldTrampoline(s32 frames);
-void TaskSleepForever(void);
 void TaskSetEntry(void *a, u32 i);
-void TaskSetFrame(s32 a);
+/* Declared here, not through a header: the calls in this file pass other
+   types than the definition takes (lessons 3.428, 3.517). */
 u32 RegisterCollider(u8 idx, s16 x, s16 y, u8 *p);
 u16 sub_08030898(struct HitBoxSet *p, s32 e);
 void PlayerStopAxes(s32 a0);
@@ -93,7 +74,6 @@ void PlayerSetMotionXPreset(s32 a0, s32 a1);           /* M11, still asm; M11's 
 void PlayerSetMotionYPreset(s32 a0);
 void LoadAbilityTiles(void);                     /* M13, src/player_49738.c */
 void CreatePlayerObject(s32 a, s32 b, s32 c);      /* M14, src/plobj_52f6c.c (defined s32 (s8, u8, s32); the result is unused here) */
-s32 CreatePlayerEffect(s32 a0, s32 a1, s32 a2);
 s32 sub_08065100(s16 x, s16 y, u32 p2, u8 p3, u8 p4);
 
 void PlayerActionLadder(void)
