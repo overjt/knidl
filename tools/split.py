@@ -1078,6 +1078,9 @@ class DataPlan(object):
         # Slots of "extent": "next-label" tables (docs/data.md 5.1), kept
         # apart so the metrics can count them separately.
         self.heuristic_slots = set()
+        # Pointer slots whose bit 0 is a flag, not part of the address
+        # (a "targets" "tagged" field): emitted as `label+1` when set.
+        self.tagged_slots = set()
         # The m4a song structure (config "m4a", tools/m4a_struct.py,
         # docs/data.md 3.4): a label at every song header, track position,
         # voicegroup and wave, and a pointer slot at every pointer field,
@@ -1251,6 +1254,14 @@ class DataPlan(object):
                                   "\"why\"" % index)
             loffs = [parse_int(o, "pointer_tables[%d].targets" % index)
                      for o in layout.get("pointers", [])]
+            # "tagged": {"<off>": ["<off>", ...]}: the pointer field at <off>
+            # carries a flag in bit 0; when the flag is set the record has
+            # the listed extra pointer fields too (a longer record variant).
+            tagged = {}
+            for toff, extra in sorted(layout.get("tagged", {}).items()):
+                what = "pointer_tables[%d].targets.tagged" % index
+                tagged[parse_int(toff, what)] = [parse_int(o, what)
+                                                 for o in extra]
             for addr, _why in base:
                 if addr in self.not_pointers:
                     continue
@@ -1259,6 +1270,12 @@ class DataPlan(object):
                     continue
                 for off in loffs:
                     add(target + off, lwhy)
+                for toff, extra in sorted(tagged.items()):
+                    add(target + toff, lwhy)
+                    self.tagged_slots.add(target + toff)
+                    if self.word(target + toff) & 1:
+                        for off in extra:
+                            add(target + off, lwhy)
         for addr, (_target, why) in sorted(self.m4a_slots.items()):
             if addr % 4 == 0:
                 add(addr, why)
@@ -1286,8 +1303,18 @@ class DataPlan(object):
                     % (addr, slot_why, inside[0])
                 )
                 return
-            operand = self.function_operand(v)
-            kind = "code"
+            if addr in self.tagged_slots and v & 1:
+                # a flagged data pointer: the label is at v & ~1
+                operand = self.label_operand(v & ~1)
+                kind = "data"
+                if operand is None:
+                    self.missing.setdefault(v & ~1, []).append(
+                        (addr, slot_why))
+                    return
+                operand += "+1"
+            else:
+                operand = self.function_operand(v)
+                kind = "code"
             if operand is None:
                 operand = self.label_operand(v)
                 kind = "data"

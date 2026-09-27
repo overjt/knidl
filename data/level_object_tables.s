@@ -3,7 +3,7 @@
 @ Segment level_object_tables: 0x080D0000-0x08120000 (data, 0x50000 bytes)
 @ Structure only (docs/data.md): labels, symbolic pointer words and
 @ .incbin slices of the user's baserom.gba; no ROM bytes are committed.
-@ 39 label(s), 0 code pointer(s), 0 data pointer(s), 40 .incbin slice(s) (0x50000 bytes).
+@ 2526 label(s), 0 code pointer(s), 0 data pointer(s), 2527 .incbin slice(s) (0x50000 bytes).
 
 	.section .level_object_tables, "a"
 	.global	level_object_tables
@@ -41,19 +41,904 @@ gUnk_080D07C8:
 	.incbin	"baserom.gba", 0xD07C8, 0x13B0
 	.global	gUnk_080D1B78
 gUnk_080D1B78:
-	.incbin	"baserom.gba", 0xD1B78, 0x5D0
+	.incbin	"baserom.gba", 0xD1B78, 0x80
+	.global	gUnk_080D1BF8
+gUnk_080D1BF8:
+	.incbin	"baserom.gba", 0xD1BF8, 0x20
+	.global	gUnk_080D1C18
+gUnk_080D1C18:
+	.incbin	"baserom.gba", 0xD1C18, 0x28
+	.global	gUnk_080D1C40
+gUnk_080D1C40:
+	.incbin	"baserom.gba", 0xD1C40, 0x20
+	.global	gUnk_080D1C60
+gUnk_080D1C60:
+	.incbin	"baserom.gba", 0xD1C60, 0x28
+	.global	gUnk_080D1C88
+gUnk_080D1C88:
+	.incbin	"baserom.gba", 0xD1C88, 0x8
+	.global	gUnk_080D1C90
+gUnk_080D1C90:
+	.incbin	"baserom.gba", 0xD1C90, 0x8
+	.global	gUnk_080D1C98
+gUnk_080D1C98:
+	.incbin	"baserom.gba", 0xD1C98, 0x8
+	.global	gUnk_080D1CA0
+gUnk_080D1CA0:
+	.incbin	"baserom.gba", 0xD1CA0, 0x30
+	.global	gUnk_080D1CD0
+gUnk_080D1CD0:
+	.incbin	"baserom.gba", 0xD1CD0, 0x38
+	.global	gUnk_080D1D08
+gUnk_080D1D08:
+	.incbin	"baserom.gba", 0xD1D08, 0x30
+	.global	gUnk_080D1D38
+gUnk_080D1D38:
+	.incbin	"baserom.gba", 0xD1D38, 0x38
+	.global	gUnk_080D1D70
+gUnk_080D1D70:
+	.incbin	"baserom.gba", 0xD1D70, 0x30
+	.global	gUnk_080D1DA0
+gUnk_080D1DA0:
+	.incbin	"baserom.gba", 0xD1DA0, 0x38
+	.global	gUnk_080D1DD8
+gUnk_080D1DD8:
+	.incbin	"baserom.gba", 0xD1DD8, 0x30
+	.global	gUnk_080D1E08
+gUnk_080D1E08:
+	.incbin	"baserom.gba", 0xD1E08, 0x38
+	.global	gUnk_080D1E40
+gUnk_080D1E40:
+	.incbin	"baserom.gba", 0xD1E40, 0x30
+	.global	gUnk_080D1E70
+gUnk_080D1E70:
+	.incbin	"baserom.gba", 0xD1E70, 0x38
+	.global	gUnk_080D1EA8
+gUnk_080D1EA8:
+	.incbin	"baserom.gba", 0xD1EA8, 0x30
+	.global	gUnk_080D1ED8
+gUnk_080D1ED8:
+	.incbin	"baserom.gba", 0xD1ED8, 0x38
+	.global	gUnk_080D1F10
+gUnk_080D1F10:
+	.incbin	"baserom.gba", 0xD1F10, 0x30
+	.global	gUnk_080D1F40
+gUnk_080D1F40:
+	.incbin	"baserom.gba", 0xD1F40, 0x38
+	.global	gUnk_080D1F78
+gUnk_080D1F78:
+	.incbin	"baserom.gba", 0xD1F78, 0x30
+	.global	gUnk_080D1FA8
+gUnk_080D1FA8:
+	.incbin	"baserom.gba", 0xD1FA8, 0x38
+	.global	gUnk_080D1FE0
+gUnk_080D1FE0:
+	.incbin	"baserom.gba", 0xD1FE0, 0x28
+	.global	gUnk_080D2008
+gUnk_080D2008:
+	.incbin	"baserom.gba", 0xD2008, 0x28
+	.global	gUnk_080D2030
+gUnk_080D2030:
+	.incbin	"baserom.gba", 0xD2030, 0x28
+	.global	gUnk_080D2058
+gUnk_080D2058:
+	.incbin	"baserom.gba", 0xD2058, 0x30
+	.global	gUnk_080D2088
+gUnk_080D2088:
+	.incbin	"baserom.gba", 0xD2088, 0x28
+	.global	gUnk_080D20B0
+gUnk_080D20B0:
+	.incbin	"baserom.gba", 0xD20B0, 0x28
+	.global	gUnk_080D20D8
+gUnk_080D20D8:
+	.incbin	"baserom.gba", 0xD20D8, 0x28
+	.global	gUnk_080D2100
+gUnk_080D2100:
+	.incbin	"baserom.gba", 0xD2100, 0x30
+	.global	gUnk_080D2130
+gUnk_080D2130:
+	.incbin	"baserom.gba", 0xD2130, 0x8
+	.global	gUnk_080D2138
+gUnk_080D2138:
+	.incbin	"baserom.gba", 0xD2138, 0x8
+	.global	gUnk_080D2140
+gUnk_080D2140:
+	.incbin	"baserom.gba", 0xD2140, 0x8
 	.global	gUnk_080D2148
 gUnk_080D2148:
-	.incbin	"baserom.gba", 0xD2148, 0x80
+	.incbin	"baserom.gba", 0xD2148, 0x20
+	.global	gUnk_080D2168
+gUnk_080D2168:
+	.incbin	"baserom.gba", 0xD2168, 0x20
+	.global	gUnk_080D2188
+gUnk_080D2188:
+	.incbin	"baserom.gba", 0xD2188, 0x20
+	.global	gUnk_080D21A8
+gUnk_080D21A8:
+	.incbin	"baserom.gba", 0xD21A8, 0x20
 	.global	gUnk_080D21C8
 gUnk_080D21C8:
-	.incbin	"baserom.gba", 0xD21C8, 0x908
+	.incbin	"baserom.gba", 0xD21C8, 0x8
+	.global	gUnk_080D21D0
+gUnk_080D21D0:
+	.incbin	"baserom.gba", 0xD21D0, 0x8
+	.global	gUnk_080D21D8
+gUnk_080D21D8:
+	.incbin	"baserom.gba", 0xD21D8, 0x8
+	.global	gUnk_080D21E0
+gUnk_080D21E0:
+	.incbin	"baserom.gba", 0xD21E0, 0x8
+	.global	gUnk_080D21E8
+gUnk_080D21E8:
+	.incbin	"baserom.gba", 0xD21E8, 0x58
+	.global	gUnk_080D2240
+gUnk_080D2240:
+	.incbin	"baserom.gba", 0xD2240, 0x70
+	.global	gUnk_080D22B0
+gUnk_080D22B0:
+	.incbin	"baserom.gba", 0xD22B0, 0x60
+	.global	gUnk_080D2310
+gUnk_080D2310:
+	.incbin	"baserom.gba", 0xD2310, 0x60
+	.global	gUnk_080D2370
+gUnk_080D2370:
+	.incbin	"baserom.gba", 0xD2370, 0x58
+	.global	gUnk_080D23C8
+gUnk_080D23C8:
+	.incbin	"baserom.gba", 0xD23C8, 0x38
+	.global	gUnk_080D2400
+gUnk_080D2400:
+	.incbin	"baserom.gba", 0xD2400, 0x28
+	.global	gUnk_080D2428
+gUnk_080D2428:
+	.incbin	"baserom.gba", 0xD2428, 0x20
+	.global	gUnk_080D2448
+gUnk_080D2448:
+	.incbin	"baserom.gba", 0xD2448, 0x28
+	.global	gUnk_080D2470
+gUnk_080D2470:
+	.incbin	"baserom.gba", 0xD2470, 0x28
+	.global	gUnk_080D2498
+gUnk_080D2498:
+	.incbin	"baserom.gba", 0xD2498, 0x10
+	.global	gUnk_080D24A8
+gUnk_080D24A8:
+	.incbin	"baserom.gba", 0xD24A8, 0x38
+	.global	gUnk_080D24E0
+gUnk_080D24E0:
+	.incbin	"baserom.gba", 0xD24E0, 0x60
+	.global	gUnk_080D2540
+gUnk_080D2540:
+	.incbin	"baserom.gba", 0xD2540, 0x18
+	.global	gUnk_080D2558
+gUnk_080D2558:
+	.incbin	"baserom.gba", 0xD2558, 0x10
+	.global	gUnk_080D2568
+gUnk_080D2568:
+	.incbin	"baserom.gba", 0xD2568, 0x20
+	.global	gUnk_080D2588
+gUnk_080D2588:
+	.incbin	"baserom.gba", 0xD2588, 0x20
+	.global	gUnk_080D25A8
+gUnk_080D25A8:
+	.incbin	"baserom.gba", 0xD25A8, 0x18
+	.global	gUnk_080D25C0
+gUnk_080D25C0:
+	.incbin	"baserom.gba", 0xD25C0, 0x8
+	.global	gUnk_080D25C8
+gUnk_080D25C8:
+	.incbin	"baserom.gba", 0xD25C8, 0x8
+	.global	gUnk_080D25D0
+gUnk_080D25D0:
+	.incbin	"baserom.gba", 0xD25D0, 0x18
+	.global	gUnk_080D25E8
+gUnk_080D25E8:
+	.incbin	"baserom.gba", 0xD25E8, 0x18
+	.global	gUnk_080D2600
+gUnk_080D2600:
+	.incbin	"baserom.gba", 0xD2600, 0x18
+	.global	gUnk_080D2618
+gUnk_080D2618:
+	.incbin	"baserom.gba", 0xD2618, 0x18
+	.global	gUnk_080D2630
+gUnk_080D2630:
+	.incbin	"baserom.gba", 0xD2630, 0x8
+	.global	gUnk_080D2638
+gUnk_080D2638:
+	.incbin	"baserom.gba", 0xD2638, 0x8
+	.global	gUnk_080D2640
+gUnk_080D2640:
+	.incbin	"baserom.gba", 0xD2640, 0x8
+	.global	gUnk_080D2648
+gUnk_080D2648:
+	.incbin	"baserom.gba", 0xD2648, 0x8
+	.global	gUnk_080D2650
+gUnk_080D2650:
+	.incbin	"baserom.gba", 0xD2650, 0x18
+	.global	gUnk_080D2668
+gUnk_080D2668:
+	.incbin	"baserom.gba", 0xD2668, 0x18
+	.global	gUnk_080D2680
+gUnk_080D2680:
+	.incbin	"baserom.gba", 0xD2680, 0x18
+	.global	gUnk_080D2698
+gUnk_080D2698:
+	.incbin	"baserom.gba", 0xD2698, 0x18
+	.global	gUnk_080D26B0
+gUnk_080D26B0:
+	.incbin	"baserom.gba", 0xD26B0, 0x18
+	.global	gUnk_080D26C8
+gUnk_080D26C8:
+	.incbin	"baserom.gba", 0xD26C8, 0x18
+	.global	gUnk_080D26E0
+gUnk_080D26E0:
+	.incbin	"baserom.gba", 0xD26E0, 0x18
+	.global	gUnk_080D26F8
+gUnk_080D26F8:
+	.incbin	"baserom.gba", 0xD26F8, 0x18
+	.global	gUnk_080D2710
+gUnk_080D2710:
+	.incbin	"baserom.gba", 0xD2710, 0x18
+	.global	gUnk_080D2728
+gUnk_080D2728:
+	.incbin	"baserom.gba", 0xD2728, 0x18
+	.global	gUnk_080D2740
+gUnk_080D2740:
+	.incbin	"baserom.gba", 0xD2740, 0x18
+	.global	gUnk_080D2758
+gUnk_080D2758:
+	.incbin	"baserom.gba", 0xD2758, 0x18
+	.global	gUnk_080D2770
+gUnk_080D2770:
+	.incbin	"baserom.gba", 0xD2770, 0x20
+	.global	gUnk_080D2790
+gUnk_080D2790:
+	.incbin	"baserom.gba", 0xD2790, 0x20
+	.global	gUnk_080D27B0
+gUnk_080D27B0:
+	.incbin	"baserom.gba", 0xD27B0, 0x20
+	.global	gUnk_080D27D0
+gUnk_080D27D0:
+	.incbin	"baserom.gba", 0xD27D0, 0x20
+	.global	gUnk_080D27F0
+gUnk_080D27F0:
+	.incbin	"baserom.gba", 0xD27F0, 0x20
+	.global	gUnk_080D2810
+gUnk_080D2810:
+	.incbin	"baserom.gba", 0xD2810, 0x20
+	.global	gUnk_080D2830
+gUnk_080D2830:
+	.incbin	"baserom.gba", 0xD2830, 0x30
+	.global	gUnk_080D2860
+gUnk_080D2860:
+	.incbin	"baserom.gba", 0xD2860, 0x30
+	.global	gUnk_080D2890
+gUnk_080D2890:
+	.incbin	"baserom.gba", 0xD2890, 0x38
+	.global	gUnk_080D28C8
+gUnk_080D28C8:
+	.incbin	"baserom.gba", 0xD28C8, 0x38
+	.global	gUnk_080D2900
+gUnk_080D2900:
+	.incbin	"baserom.gba", 0xD2900, 0x18
+	.global	gUnk_080D2918
+gUnk_080D2918:
+	.incbin	"baserom.gba", 0xD2918, 0x18
+	.global	gUnk_080D2930
+gUnk_080D2930:
+	.incbin	"baserom.gba", 0xD2930, 0x18
+	.global	gUnk_080D2948
+gUnk_080D2948:
+	.incbin	"baserom.gba", 0xD2948, 0x18
+	.global	gUnk_080D2960
+gUnk_080D2960:
+	.incbin	"baserom.gba", 0xD2960, 0x18
+	.global	gUnk_080D2978
+gUnk_080D2978:
+	.incbin	"baserom.gba", 0xD2978, 0x18
+	.global	gUnk_080D2990
+gUnk_080D2990:
+	.incbin	"baserom.gba", 0xD2990, 0x20
+	.global	gUnk_080D29B0
+gUnk_080D29B0:
+	.incbin	"baserom.gba", 0xD29B0, 0x30
+	.global	gUnk_080D29E0
+gUnk_080D29E0:
+	.incbin	"baserom.gba", 0xD29E0, 0x18
+	.global	gUnk_080D29F8
+gUnk_080D29F8:
+	.incbin	"baserom.gba", 0xD29F8, 0x18
+	.global	gUnk_080D2A10
+gUnk_080D2A10:
+	.incbin	"baserom.gba", 0xD2A10, 0x18
+	.global	gUnk_080D2A28
+gUnk_080D2A28:
+	.incbin	"baserom.gba", 0xD2A28, 0x18
+	.global	gUnk_080D2A40
+gUnk_080D2A40:
+	.incbin	"baserom.gba", 0xD2A40, 0x30
+	.global	gUnk_080D2A70
+gUnk_080D2A70:
+	.incbin	"baserom.gba", 0xD2A70, 0x18
+	.global	gUnk_080D2A88
+gUnk_080D2A88:
+	.incbin	"baserom.gba", 0xD2A88, 0x18
+	.global	gUnk_080D2AA0
+gUnk_080D2AA0:
+	.incbin	"baserom.gba", 0xD2AA0, 0x18
+	.global	gUnk_080D2AB8
+gUnk_080D2AB8:
+	.incbin	"baserom.gba", 0xD2AB8, 0x18
 	.global	gUnk_080D2AD0
 gUnk_080D2AD0:
-	.incbin	"baserom.gba", 0xD2AD0, 0x4C8
+	.incbin	"baserom.gba", 0xD2AD0, 0x3A0
+	.global	gUnk_080D2E70
+gUnk_080D2E70:
+	.incbin	"baserom.gba", 0xD2E70, 0x8
+	.global	gUnk_080D2E78
+gUnk_080D2E78:
+	.incbin	"baserom.gba", 0xD2E78, 0x8
+	.global	gUnk_080D2E80
+gUnk_080D2E80:
+	.incbin	"baserom.gba", 0xD2E80, 0x8
+	.global	gUnk_080D2E88
+gUnk_080D2E88:
+	.incbin	"baserom.gba", 0xD2E88, 0x8
+	.global	gUnk_080D2E90
+gUnk_080D2E90:
+	.incbin	"baserom.gba", 0xD2E90, 0x8
+	.global	gUnk_080D2E98
+gUnk_080D2E98:
+	.incbin	"baserom.gba", 0xD2E98, 0x8
+	.global	gUnk_080D2EA0
+gUnk_080D2EA0:
+	.incbin	"baserom.gba", 0xD2EA0, 0x8
+	.global	gUnk_080D2EA8
+gUnk_080D2EA8:
+	.incbin	"baserom.gba", 0xD2EA8, 0x8
+	.global	gUnk_080D2EB0
+gUnk_080D2EB0:
+	.incbin	"baserom.gba", 0xD2EB0, 0x8
+	.global	gUnk_080D2EB8
+gUnk_080D2EB8:
+	.incbin	"baserom.gba", 0xD2EB8, 0x8
+	.global	gUnk_080D2EC0
+gUnk_080D2EC0:
+	.incbin	"baserom.gba", 0xD2EC0, 0x8
+	.global	gUnk_080D2EC8
+gUnk_080D2EC8:
+	.incbin	"baserom.gba", 0xD2EC8, 0x30
+	.global	gUnk_080D2EF8
+gUnk_080D2EF8:
+	.incbin	"baserom.gba", 0xD2EF8, 0x30
+	.global	gUnk_080D2F28
+gUnk_080D2F28:
+	.incbin	"baserom.gba", 0xD2F28, 0x10
+	.global	gUnk_080D2F38
+gUnk_080D2F38:
+	.incbin	"baserom.gba", 0xD2F38, 0x10
+	.global	gUnk_080D2F48
+gUnk_080D2F48:
+	.incbin	"baserom.gba", 0xD2F48, 0x8
+	.global	gUnk_080D2F50
+gUnk_080D2F50:
+	.incbin	"baserom.gba", 0xD2F50, 0x8
+	.global	gUnk_080D2F58
+gUnk_080D2F58:
+	.incbin	"baserom.gba", 0xD2F58, 0x10
+	.global	gUnk_080D2F68
+gUnk_080D2F68:
+	.incbin	"baserom.gba", 0xD2F68, 0x10
+	.global	gUnk_080D2F78
+gUnk_080D2F78:
+	.incbin	"baserom.gba", 0xD2F78, 0x10
+	.global	gUnk_080D2F88
+gUnk_080D2F88:
+	.incbin	"baserom.gba", 0xD2F88, 0x10
 	.global	gUnk_080D2F98
 gUnk_080D2F98:
-	.incbin	"baserom.gba", 0xD2F98, 0x1408
+	.incbin	"baserom.gba", 0xD2F98, 0x8
+	.global	gUnk_080D2FA0
+gUnk_080D2FA0:
+	.incbin	"baserom.gba", 0xD2FA0, 0x10
+	.global	gUnk_080D2FB0
+gUnk_080D2FB0:
+	.incbin	"baserom.gba", 0xD2FB0, 0x10
+	.global	gUnk_080D2FC0
+gUnk_080D2FC0:
+	.incbin	"baserom.gba", 0xD2FC0, 0x28
+	.global	gUnk_080D2FE8
+gUnk_080D2FE8:
+	.incbin	"baserom.gba", 0xD2FE8, 0x28
+	.global	gUnk_080D3010
+gUnk_080D3010:
+	.incbin	"baserom.gba", 0xD3010, 0x28
+	.global	gUnk_080D3038
+gUnk_080D3038:
+	.incbin	"baserom.gba", 0xD3038, 0x28
+	.global	gUnk_080D3060
+gUnk_080D3060:
+	.incbin	"baserom.gba", 0xD3060, 0x8
+	.global	gUnk_080D3068
+gUnk_080D3068:
+	.incbin	"baserom.gba", 0xD3068, 0x8
+	.global	gUnk_080D3070
+gUnk_080D3070:
+	.incbin	"baserom.gba", 0xD3070, 0x8
+	.global	gUnk_080D3078
+gUnk_080D3078:
+	.incbin	"baserom.gba", 0xD3078, 0x8
+	.global	gUnk_080D3080
+gUnk_080D3080:
+	.incbin	"baserom.gba", 0xD3080, 0x8
+	.global	gUnk_080D3088
+gUnk_080D3088:
+	.incbin	"baserom.gba", 0xD3088, 0x8
+	.global	gUnk_080D3090
+gUnk_080D3090:
+	.incbin	"baserom.gba", 0xD3090, 0x8
+	.global	gUnk_080D3098
+gUnk_080D3098:
+	.incbin	"baserom.gba", 0xD3098, 0x10
+	.global	gUnk_080D30A8
+gUnk_080D30A8:
+	.incbin	"baserom.gba", 0xD30A8, 0x10
+	.global	gUnk_080D30B8
+gUnk_080D30B8:
+	.incbin	"baserom.gba", 0xD30B8, 0x8
+	.global	gUnk_080D30C0
+gUnk_080D30C0:
+	.incbin	"baserom.gba", 0xD30C0, 0x10
+	.global	gUnk_080D30D0
+gUnk_080D30D0:
+	.incbin	"baserom.gba", 0xD30D0, 0x10
+	.global	gUnk_080D30E0
+gUnk_080D30E0:
+	.incbin	"baserom.gba", 0xD30E0, 0x18
+	.global	gUnk_080D30F8
+gUnk_080D30F8:
+	.incbin	"baserom.gba", 0xD30F8, 0x20
+	.global	gUnk_080D3118
+gUnk_080D3118:
+	.incbin	"baserom.gba", 0xD3118, 0x20
+	.global	gUnk_080D3138
+gUnk_080D3138:
+	.incbin	"baserom.gba", 0xD3138, 0x20
+	.global	gUnk_080D3158
+gUnk_080D3158:
+	.incbin	"baserom.gba", 0xD3158, 0x20
+	.global	gUnk_080D3178
+gUnk_080D3178:
+	.incbin	"baserom.gba", 0xD3178, 0x20
+	.global	gUnk_080D3198
+gUnk_080D3198:
+	.incbin	"baserom.gba", 0xD3198, 0x10
+	.global	gUnk_080D31A8
+gUnk_080D31A8:
+	.incbin	"baserom.gba", 0xD31A8, 0x10
+	.global	gUnk_080D31B8
+gUnk_080D31B8:
+	.incbin	"baserom.gba", 0xD31B8, 0x10
+	.global	gUnk_080D31C8
+gUnk_080D31C8:
+	.incbin	"baserom.gba", 0xD31C8, 0x20
+	.global	gUnk_080D31E8
+gUnk_080D31E8:
+	.incbin	"baserom.gba", 0xD31E8, 0x20
+	.global	gUnk_080D3208
+gUnk_080D3208:
+	.incbin	"baserom.gba", 0xD3208, 0x8
+	.global	gUnk_080D3210
+gUnk_080D3210:
+	.incbin	"baserom.gba", 0xD3210, 0x20
+	.global	gUnk_080D3230
+gUnk_080D3230:
+	.incbin	"baserom.gba", 0xD3230, 0x20
+	.global	gUnk_080D3250
+gUnk_080D3250:
+	.incbin	"baserom.gba", 0xD3250, 0x20
+	.global	gUnk_080D3270
+gUnk_080D3270:
+	.incbin	"baserom.gba", 0xD3270, 0x20
+	.global	gUnk_080D3290
+gUnk_080D3290:
+	.incbin	"baserom.gba", 0xD3290, 0x20
+	.global	gUnk_080D32B0
+gUnk_080D32B0:
+	.incbin	"baserom.gba", 0xD32B0, 0x20
+	.global	gUnk_080D32D0
+gUnk_080D32D0:
+	.incbin	"baserom.gba", 0xD32D0, 0x20
+	.global	gUnk_080D32F0
+gUnk_080D32F0:
+	.incbin	"baserom.gba", 0xD32F0, 0x48
+	.global	gUnk_080D3338
+gUnk_080D3338:
+	.incbin	"baserom.gba", 0xD3338, 0x48
+	.global	gUnk_080D3380
+gUnk_080D3380:
+	.incbin	"baserom.gba", 0xD3380, 0x88
+	.global	gUnk_080D3408
+gUnk_080D3408:
+	.incbin	"baserom.gba", 0xD3408, 0x88
+	.global	gUnk_080D3490
+gUnk_080D3490:
+	.incbin	"baserom.gba", 0xD3490, 0x60
+	.global	gUnk_080D34F0
+gUnk_080D34F0:
+	.incbin	"baserom.gba", 0xD34F0, 0x40
+	.global	gUnk_080D3530
+gUnk_080D3530:
+	.incbin	"baserom.gba", 0xD3530, 0x40
+	.global	gUnk_080D3570
+gUnk_080D3570:
+	.incbin	"baserom.gba", 0xD3570, 0x40
+	.global	gUnk_080D35B0
+gUnk_080D35B0:
+	.incbin	"baserom.gba", 0xD35B0, 0x8
+	.global	gUnk_080D35B8
+gUnk_080D35B8:
+	.incbin	"baserom.gba", 0xD35B8, 0x8
+	.global	gUnk_080D35C0
+gUnk_080D35C0:
+	.incbin	"baserom.gba", 0xD35C0, 0x8
+	.global	gUnk_080D35C8
+gUnk_080D35C8:
+	.incbin	"baserom.gba", 0xD35C8, 0x8
+	.global	gUnk_080D35D0
+gUnk_080D35D0:
+	.incbin	"baserom.gba", 0xD35D0, 0x20
+	.global	gUnk_080D35F0
+gUnk_080D35F0:
+	.incbin	"baserom.gba", 0xD35F0, 0x20
+	.global	gUnk_080D3610
+gUnk_080D3610:
+	.incbin	"baserom.gba", 0xD3610, 0x20
+	.global	gUnk_080D3630
+gUnk_080D3630:
+	.incbin	"baserom.gba", 0xD3630, 0x20
+	.global	gUnk_080D3650
+gUnk_080D3650:
+	.incbin	"baserom.gba", 0xD3650, 0x18
+	.global	gUnk_080D3668
+gUnk_080D3668:
+	.incbin	"baserom.gba", 0xD3668, 0x18
+	.global	gUnk_080D3680
+gUnk_080D3680:
+	.incbin	"baserom.gba", 0xD3680, 0x18
+	.global	gUnk_080D3698
+gUnk_080D3698:
+	.incbin	"baserom.gba", 0xD3698, 0x18
+	.global	gUnk_080D36B0
+gUnk_080D36B0:
+	.incbin	"baserom.gba", 0xD36B0, 0x18
+	.global	gUnk_080D36C8
+gUnk_080D36C8:
+	.incbin	"baserom.gba", 0xD36C8, 0x18
+	.global	gUnk_080D36E0
+gUnk_080D36E0:
+	.incbin	"baserom.gba", 0xD36E0, 0x18
+	.global	gUnk_080D36F8
+gUnk_080D36F8:
+	.incbin	"baserom.gba", 0xD36F8, 0x18
+	.global	gUnk_080D3710
+gUnk_080D3710:
+	.incbin	"baserom.gba", 0xD3710, 0x8
+	.global	gUnk_080D3718
+gUnk_080D3718:
+	.incbin	"baserom.gba", 0xD3718, 0x8
+	.global	gUnk_080D3720
+gUnk_080D3720:
+	.incbin	"baserom.gba", 0xD3720, 0x8
+	.global	gUnk_080D3728
+gUnk_080D3728:
+	.incbin	"baserom.gba", 0xD3728, 0x8
+	.global	gUnk_080D3730
+gUnk_080D3730:
+	.incbin	"baserom.gba", 0xD3730, 0x8
+	.global	gUnk_080D3738
+gUnk_080D3738:
+	.incbin	"baserom.gba", 0xD3738, 0x8
+	.global	gUnk_080D3740
+gUnk_080D3740:
+	.incbin	"baserom.gba", 0xD3740, 0x8
+	.global	gUnk_080D3748
+gUnk_080D3748:
+	.incbin	"baserom.gba", 0xD3748, 0x8
+	.global	gUnk_080D3750
+gUnk_080D3750:
+	.incbin	"baserom.gba", 0xD3750, 0x8
+	.global	gUnk_080D3758
+gUnk_080D3758:
+	.incbin	"baserom.gba", 0xD3758, 0x8
+	.global	gUnk_080D3760
+gUnk_080D3760:
+	.incbin	"baserom.gba", 0xD3760, 0x8
+	.global	gUnk_080D3768
+gUnk_080D3768:
+	.incbin	"baserom.gba", 0xD3768, 0x10
+	.global	gUnk_080D3778
+gUnk_080D3778:
+	.incbin	"baserom.gba", 0xD3778, 0x10
+	.global	gUnk_080D3788
+gUnk_080D3788:
+	.incbin	"baserom.gba", 0xD3788, 0x10
+	.global	gUnk_080D3798
+gUnk_080D3798:
+	.incbin	"baserom.gba", 0xD3798, 0x10
+	.global	gUnk_080D37A8
+gUnk_080D37A8:
+	.incbin	"baserom.gba", 0xD37A8, 0x10
+	.global	gUnk_080D37B8
+gUnk_080D37B8:
+	.incbin	"baserom.gba", 0xD37B8, 0x10
+	.global	gUnk_080D37C8
+gUnk_080D37C8:
+	.incbin	"baserom.gba", 0xD37C8, 0x10
+	.global	gUnk_080D37D8
+gUnk_080D37D8:
+	.incbin	"baserom.gba", 0xD37D8, 0x10
+	.global	gUnk_080D37E8
+gUnk_080D37E8:
+	.incbin	"baserom.gba", 0xD37E8, 0x8
+	.global	gUnk_080D37F0
+gUnk_080D37F0:
+	.incbin	"baserom.gba", 0xD37F0, 0x8
+	.global	gUnk_080D37F8
+gUnk_080D37F8:
+	.incbin	"baserom.gba", 0xD37F8, 0x8
+	.global	gUnk_080D3800
+gUnk_080D3800:
+	.incbin	"baserom.gba", 0xD3800, 0x8
+	.global	gUnk_080D3808
+gUnk_080D3808:
+	.incbin	"baserom.gba", 0xD3808, 0x8
+	.global	gUnk_080D3810
+gUnk_080D3810:
+	.incbin	"baserom.gba", 0xD3810, 0x8
+	.global	gUnk_080D3818
+gUnk_080D3818:
+	.incbin	"baserom.gba", 0xD3818, 0x28
+	.global	gUnk_080D3840
+gUnk_080D3840:
+	.incbin	"baserom.gba", 0xD3840, 0x30
+	.global	gUnk_080D3870
+gUnk_080D3870:
+	.incbin	"baserom.gba", 0xD3870, 0x20
+	.global	gUnk_080D3890
+gUnk_080D3890:
+	.incbin	"baserom.gba", 0xD3890, 0x28
+	.global	gUnk_080D38B8
+gUnk_080D38B8:
+	.incbin	"baserom.gba", 0xD38B8, 0x8
+	.global	gUnk_080D38C0
+gUnk_080D38C0:
+	.incbin	"baserom.gba", 0xD38C0, 0x8
+	.global	gUnk_080D38C8
+gUnk_080D38C8:
+	.incbin	"baserom.gba", 0xD38C8, 0x10
+	.global	gUnk_080D38D8
+gUnk_080D38D8:
+	.incbin	"baserom.gba", 0xD38D8, 0x10
+	.global	gUnk_080D38E8
+gUnk_080D38E8:
+	.incbin	"baserom.gba", 0xD38E8, 0x18
+	.global	gUnk_080D3900
+gUnk_080D3900:
+	.incbin	"baserom.gba", 0xD3900, 0x18
+	.global	gUnk_080D3918
+gUnk_080D3918:
+	.incbin	"baserom.gba", 0xD3918, 0x20
+	.global	gUnk_080D3938
+gUnk_080D3938:
+	.incbin	"baserom.gba", 0xD3938, 0x20
+	.global	gUnk_080D3958
+gUnk_080D3958:
+	.incbin	"baserom.gba", 0xD3958, 0x20
+	.global	gUnk_080D3978
+gUnk_080D3978:
+	.incbin	"baserom.gba", 0xD3978, 0x20
+	.global	gUnk_080D3998
+gUnk_080D3998:
+	.incbin	"baserom.gba", 0xD3998, 0x18
+	.global	gUnk_080D39B0
+gUnk_080D39B0:
+	.incbin	"baserom.gba", 0xD39B0, 0x18
+	.global	gUnk_080D39C8
+gUnk_080D39C8:
+	.incbin	"baserom.gba", 0xD39C8, 0x8
+	.global	gUnk_080D39D0
+gUnk_080D39D0:
+	.incbin	"baserom.gba", 0xD39D0, 0x8
+	.global	gUnk_080D39D8
+gUnk_080D39D8:
+	.incbin	"baserom.gba", 0xD39D8, 0x20
+	.global	gUnk_080D39F8
+gUnk_080D39F8:
+	.incbin	"baserom.gba", 0xD39F8, 0x48
+	.global	gUnk_080D3A40
+gUnk_080D3A40:
+	.incbin	"baserom.gba", 0xD3A40, 0x48
+	.global	gUnk_080D3A88
+gUnk_080D3A88:
+	.incbin	"baserom.gba", 0xD3A88, 0x88
+	.global	gUnk_080D3B10
+gUnk_080D3B10:
+	.incbin	"baserom.gba", 0xD3B10, 0x88
+	.global	gUnk_080D3B98
+gUnk_080D3B98:
+	.incbin	"baserom.gba", 0xD3B98, 0x60
+	.global	gUnk_080D3BF8
+gUnk_080D3BF8:
+	.incbin	"baserom.gba", 0xD3BF8, 0x40
+	.global	gUnk_080D3C38
+gUnk_080D3C38:
+	.incbin	"baserom.gba", 0xD3C38, 0x40
+	.global	gUnk_080D3C78
+gUnk_080D3C78:
+	.incbin	"baserom.gba", 0xD3C78, 0x40
+	.global	gUnk_080D3CB8
+gUnk_080D3CB8:
+	.incbin	"baserom.gba", 0xD3CB8, 0x8
+	.global	gUnk_080D3CC0
+gUnk_080D3CC0:
+	.incbin	"baserom.gba", 0xD3CC0, 0x8
+	.global	gUnk_080D3CC8
+gUnk_080D3CC8:
+	.incbin	"baserom.gba", 0xD3CC8, 0x10
+	.global	gUnk_080D3CD8
+gUnk_080D3CD8:
+	.incbin	"baserom.gba", 0xD3CD8, 0x10
+	.global	gUnk_080D3CE8
+gUnk_080D3CE8:
+	.incbin	"baserom.gba", 0xD3CE8, 0x8
+	.global	gUnk_080D3CF0
+gUnk_080D3CF0:
+	.incbin	"baserom.gba", 0xD3CF0, 0x8
+	.global	gUnk_080D3CF8
+gUnk_080D3CF8:
+	.incbin	"baserom.gba", 0xD3CF8, 0x18
+	.global	gUnk_080D3D10
+gUnk_080D3D10:
+	.incbin	"baserom.gba", 0xD3D10, 0x18
+	.global	gUnk_080D3D28
+gUnk_080D3D28:
+	.incbin	"baserom.gba", 0xD3D28, 0x30
+	.global	gUnk_080D3D58
+gUnk_080D3D58:
+	.incbin	"baserom.gba", 0xD3D58, 0x30
+	.global	gUnk_080D3D88
+gUnk_080D3D88:
+	.incbin	"baserom.gba", 0xD3D88, 0x18
+	.global	gUnk_080D3DA0
+gUnk_080D3DA0:
+	.incbin	"baserom.gba", 0xD3DA0, 0x18
+	.global	gUnk_080D3DB8
+gUnk_080D3DB8:
+	.incbin	"baserom.gba", 0xD3DB8, 0x10
+	.global	gUnk_080D3DC8
+gUnk_080D3DC8:
+	.incbin	"baserom.gba", 0xD3DC8, 0x10
+	.global	gUnk_080D3DD8
+gUnk_080D3DD8:
+	.incbin	"baserom.gba", 0xD3DD8, 0x8
+	.global	gUnk_080D3DE0
+gUnk_080D3DE0:
+	.incbin	"baserom.gba", 0xD3DE0, 0x8
+	.global	gUnk_080D3DE8
+gUnk_080D3DE8:
+	.incbin	"baserom.gba", 0xD3DE8, 0x28
+	.global	gUnk_080D3E10
+gUnk_080D3E10:
+	.incbin	"baserom.gba", 0xD3E10, 0x40
+	.global	gUnk_080D3E50
+gUnk_080D3E50:
+	.incbin	"baserom.gba", 0xD3E50, 0x20
+	.global	gUnk_080D3E70
+gUnk_080D3E70:
+	.incbin	"baserom.gba", 0xD3E70, 0x10
+	.global	gUnk_080D3E80
+gUnk_080D3E80:
+	.incbin	"baserom.gba", 0xD3E80, 0x10
+	.global	gUnk_080D3E90
+gUnk_080D3E90:
+	.incbin	"baserom.gba", 0xD3E90, 0x40
+	.global	gUnk_080D3ED0
+gUnk_080D3ED0:
+	.incbin	"baserom.gba", 0xD3ED0, 0x20
+	.global	gUnk_080D3EF0
+gUnk_080D3EF0:
+	.incbin	"baserom.gba", 0xD3EF0, 0x10
+	.global	gUnk_080D3F00
+gUnk_080D3F00:
+	.incbin	"baserom.gba", 0xD3F00, 0x30
+	.global	gUnk_080D3F30
+gUnk_080D3F30:
+	.incbin	"baserom.gba", 0xD3F30, 0x10
+	.global	gUnk_080D3F40
+gUnk_080D3F40:
+	.incbin	"baserom.gba", 0xD3F40, 0x40
+	.global	gUnk_080D3F80
+gUnk_080D3F80:
+	.incbin	"baserom.gba", 0xD3F80, 0x40
+	.global	gUnk_080D3FC0
+gUnk_080D3FC0:
+	.incbin	"baserom.gba", 0xD3FC0, 0x40
+	.global	gUnk_080D4000
+gUnk_080D4000:
+	.incbin	"baserom.gba", 0xD4000, 0x40
+	.global	gUnk_080D4040
+gUnk_080D4040:
+	.incbin	"baserom.gba", 0xD4040, 0x40
+	.global	gUnk_080D4080
+gUnk_080D4080:
+	.incbin	"baserom.gba", 0xD4080, 0x40
+	.global	gUnk_080D40C0
+gUnk_080D40C0:
+	.incbin	"baserom.gba", 0xD40C0, 0x40
+	.global	gUnk_080D4100
+gUnk_080D4100:
+	.incbin	"baserom.gba", 0xD4100, 0x40
+	.global	gUnk_080D4140
+gUnk_080D4140:
+	.incbin	"baserom.gba", 0xD4140, 0x40
+	.global	gUnk_080D4180
+gUnk_080D4180:
+	.incbin	"baserom.gba", 0xD4180, 0x40
+	.global	gUnk_080D41C0
+gUnk_080D41C0:
+	.incbin	"baserom.gba", 0xD41C0, 0x40
+	.global	gUnk_080D4200
+gUnk_080D4200:
+	.incbin	"baserom.gba", 0xD4200, 0x40
+	.global	gUnk_080D4240
+gUnk_080D4240:
+	.incbin	"baserom.gba", 0xD4240, 0x28
+	.global	gUnk_080D4268
+gUnk_080D4268:
+	.incbin	"baserom.gba", 0xD4268, 0x28
+	.global	gUnk_080D4290
+gUnk_080D4290:
+	.incbin	"baserom.gba", 0xD4290, 0x28
+	.global	gUnk_080D42B8
+gUnk_080D42B8:
+	.incbin	"baserom.gba", 0xD42B8, 0x28
+	.global	gUnk_080D42E0
+gUnk_080D42E0:
+	.incbin	"baserom.gba", 0xD42E0, 0x8
+	.global	gUnk_080D42E8
+gUnk_080D42E8:
+	.incbin	"baserom.gba", 0xD42E8, 0x8
+	.global	gUnk_080D42F0
+gUnk_080D42F0:
+	.incbin	"baserom.gba", 0xD42F0, 0x8
+	.global	gUnk_080D42F8
+gUnk_080D42F8:
+	.incbin	"baserom.gba", 0xD42F8, 0x8
+	.global	gUnk_080D4300
+gUnk_080D4300:
+	.incbin	"baserom.gba", 0xD4300, 0x20
+	.global	gUnk_080D4320
+gUnk_080D4320:
+	.incbin	"baserom.gba", 0xD4320, 0x20
+	.global	gUnk_080D4340
+gUnk_080D4340:
+	.incbin	"baserom.gba", 0xD4340, 0x20
+	.global	gUnk_080D4360
+gUnk_080D4360:
+	.incbin	"baserom.gba", 0xD4360, 0x20
+	.global	gUnk_080D4380
+gUnk_080D4380:
+	.incbin	"baserom.gba", 0xD4380, 0x8
+	.global	gUnk_080D4388
+gUnk_080D4388:
+	.incbin	"baserom.gba", 0xD4388, 0x8
+	.global	gUnk_080D4390
+gUnk_080D4390:
+	.incbin	"baserom.gba", 0xD4390, 0x8
+	.global	gUnk_080D4398
+gUnk_080D4398:
+	.incbin	"baserom.gba", 0xD4398, 0x8
 	.global	gUnk_080D43A0
 gUnk_080D43A0:
 	.incbin	"baserom.gba", 0xD43A0, 0x8
@@ -65,7 +950,784 @@ gUnk_080D43B8:
 	.incbin	"baserom.gba", 0xD43B8, 0x10
 	.global	gUnk_080D43C8
 gUnk_080D43C8:
-	.incbin	"baserom.gba", 0xD43C8, 0x2DD8
+	.incbin	"baserom.gba", 0xD43C8, 0x18
+	.global	gUnk_080D43E0
+gUnk_080D43E0:
+	.incbin	"baserom.gba", 0xD43E0, 0x40
+	.global	gUnk_080D4420
+gUnk_080D4420:
+	.incbin	"baserom.gba", 0xD4420, 0x40
+	.global	gUnk_080D4460
+gUnk_080D4460:
+	.incbin	"baserom.gba", 0xD4460, 0x40
+	.global	gUnk_080D44A0
+gUnk_080D44A0:
+	.incbin	"baserom.gba", 0xD44A0, 0x40
+	.global	gUnk_080D44E0
+gUnk_080D44E0:
+	.incbin	"baserom.gba", 0xD44E0, 0x40
+	.global	gUnk_080D4520
+gUnk_080D4520:
+	.incbin	"baserom.gba", 0xD4520, 0x40
+	.global	gUnk_080D4560
+gUnk_080D4560:
+	.incbin	"baserom.gba", 0xD4560, 0x40
+	.global	gUnk_080D45A0
+gUnk_080D45A0:
+	.incbin	"baserom.gba", 0xD45A0, 0x40
+	.global	gUnk_080D45E0
+gUnk_080D45E0:
+	.incbin	"baserom.gba", 0xD45E0, 0x48
+	.global	gUnk_080D4628
+gUnk_080D4628:
+	.incbin	"baserom.gba", 0xD4628, 0x20
+	.global	gUnk_080D4648
+gUnk_080D4648:
+	.incbin	"baserom.gba", 0xD4648, 0x20
+	.global	gUnk_080D4668
+gUnk_080D4668:
+	.incbin	"baserom.gba", 0xD4668, 0x28
+	.global	gUnk_080D4690
+gUnk_080D4690:
+	.incbin	"baserom.gba", 0xD4690, 0x40
+	.global	gUnk_080D46D0
+gUnk_080D46D0:
+	.incbin	"baserom.gba", 0xD46D0, 0x28
+	.global	gUnk_080D46F8
+gUnk_080D46F8:
+	.incbin	"baserom.gba", 0xD46F8, 0x20
+	.global	gUnk_080D4718
+gUnk_080D4718:
+	.incbin	"baserom.gba", 0xD4718, 0x48
+	.global	gUnk_080D4760
+gUnk_080D4760:
+	.incbin	"baserom.gba", 0xD4760, 0x40
+	.global	gUnk_080D47A0
+gUnk_080D47A0:
+	.incbin	"baserom.gba", 0xD47A0, 0x40
+	.global	gUnk_080D47E0
+gUnk_080D47E0:
+	.incbin	"baserom.gba", 0xD47E0, 0x40
+	.global	gUnk_080D4820
+gUnk_080D4820:
+	.incbin	"baserom.gba", 0xD4820, 0x40
+	.global	gUnk_080D4860
+gUnk_080D4860:
+	.incbin	"baserom.gba", 0xD4860, 0x48
+	.global	gUnk_080D48A8
+gUnk_080D48A8:
+	.incbin	"baserom.gba", 0xD48A8, 0x20
+	.global	gUnk_080D48C8
+gUnk_080D48C8:
+	.incbin	"baserom.gba", 0xD48C8, 0x20
+	.global	gUnk_080D48E8
+gUnk_080D48E8:
+	.incbin	"baserom.gba", 0xD48E8, 0x10
+	.global	gUnk_080D48F8
+gUnk_080D48F8:
+	.incbin	"baserom.gba", 0xD48F8, 0x30
+	.global	gUnk_080D4928
+gUnk_080D4928:
+	.incbin	"baserom.gba", 0xD4928, 0x30
+	.global	gUnk_080D4958
+gUnk_080D4958:
+	.incbin	"baserom.gba", 0xD4958, 0x30
+	.global	gUnk_080D4988
+gUnk_080D4988:
+	.incbin	"baserom.gba", 0xD4988, 0x40
+	.global	gUnk_080D49C8
+gUnk_080D49C8:
+	.incbin	"baserom.gba", 0xD49C8, 0x28
+	.global	gUnk_080D49F0
+gUnk_080D49F0:
+	.incbin	"baserom.gba", 0xD49F0, 0x20
+	.global	gUnk_080D4A10
+gUnk_080D4A10:
+	.incbin	"baserom.gba", 0xD4A10, 0x28
+	.global	gUnk_080D4A38
+gUnk_080D4A38:
+	.incbin	"baserom.gba", 0xD4A38, 0x20
+	.global	gUnk_080D4A58
+gUnk_080D4A58:
+	.incbin	"baserom.gba", 0xD4A58, 0x8
+	.global	gUnk_080D4A60
+gUnk_080D4A60:
+	.incbin	"baserom.gba", 0xD4A60, 0x8
+	.global	gUnk_080D4A68
+gUnk_080D4A68:
+	.incbin	"baserom.gba", 0xD4A68, 0x8
+	.global	gUnk_080D4A70
+gUnk_080D4A70:
+	.incbin	"baserom.gba", 0xD4A70, 0x8
+	.global	gUnk_080D4A78
+gUnk_080D4A78:
+	.incbin	"baserom.gba", 0xD4A78, 0x20
+	.global	gUnk_080D4A98
+gUnk_080D4A98:
+	.incbin	"baserom.gba", 0xD4A98, 0x20
+	.global	gUnk_080D4AB8
+gUnk_080D4AB8:
+	.incbin	"baserom.gba", 0xD4AB8, 0x20
+	.global	gUnk_080D4AD8
+gUnk_080D4AD8:
+	.incbin	"baserom.gba", 0xD4AD8, 0x20
+	.global	gUnk_080D4AF8
+gUnk_080D4AF8:
+	.incbin	"baserom.gba", 0xD4AF8, 0x8
+	.global	gUnk_080D4B00
+gUnk_080D4B00:
+	.incbin	"baserom.gba", 0xD4B00, 0x8
+	.global	gUnk_080D4B08
+gUnk_080D4B08:
+	.incbin	"baserom.gba", 0xD4B08, 0x8
+	.global	gUnk_080D4B10
+gUnk_080D4B10:
+	.incbin	"baserom.gba", 0xD4B10, 0x8
+	.global	gUnk_080D4B18
+gUnk_080D4B18:
+	.incbin	"baserom.gba", 0xD4B18, 0x8
+	.global	gUnk_080D4B20
+gUnk_080D4B20:
+	.incbin	"baserom.gba", 0xD4B20, 0x8
+	.global	gUnk_080D4B28
+gUnk_080D4B28:
+	.incbin	"baserom.gba", 0xD4B28, 0x10
+	.global	gUnk_080D4B38
+gUnk_080D4B38:
+	.incbin	"baserom.gba", 0xD4B38, 0x10
+	.global	gUnk_080D4B48
+gUnk_080D4B48:
+	.incbin	"baserom.gba", 0xD4B48, 0x8
+	.global	gUnk_080D4B50
+gUnk_080D4B50:
+	.incbin	"baserom.gba", 0xD4B50, 0x8
+	.global	gUnk_080D4B58
+gUnk_080D4B58:
+	.incbin	"baserom.gba", 0xD4B58, 0x40
+	.global	gUnk_080D4B98
+gUnk_080D4B98:
+	.incbin	"baserom.gba", 0xD4B98, 0x10
+	.global	gUnk_080D4BA8
+gUnk_080D4BA8:
+	.incbin	"baserom.gba", 0xD4BA8, 0x58
+	.global	gUnk_080D4C00
+gUnk_080D4C00:
+	.incbin	"baserom.gba", 0xD4C00, 0x10
+	.global	gUnk_080D4C10
+gUnk_080D4C10:
+	.incbin	"baserom.gba", 0xD4C10, 0x68
+	.global	gUnk_080D4C78
+gUnk_080D4C78:
+	.incbin	"baserom.gba", 0xD4C78, 0x20
+	.global	gUnk_080D4C98
+gUnk_080D4C98:
+	.incbin	"baserom.gba", 0xD4C98, 0x68
+	.global	gUnk_080D4D00
+gUnk_080D4D00:
+	.incbin	"baserom.gba", 0xD4D00, 0x18
+	.global	gUnk_080D4D18
+gUnk_080D4D18:
+	.incbin	"baserom.gba", 0xD4D18, 0x38
+	.global	gUnk_080D4D50
+gUnk_080D4D50:
+	.incbin	"baserom.gba", 0xD4D50, 0x18
+	.global	gUnk_080D4D68
+gUnk_080D4D68:
+	.incbin	"baserom.gba", 0xD4D68, 0x38
+	.global	gUnk_080D4DA0
+gUnk_080D4DA0:
+	.incbin	"baserom.gba", 0xD4DA0, 0x20
+	.global	gUnk_080D4DC0
+gUnk_080D4DC0:
+	.incbin	"baserom.gba", 0xD4DC0, 0x48
+	.global	gUnk_080D4E08
+gUnk_080D4E08:
+	.incbin	"baserom.gba", 0xD4E08, 0x40
+	.global	gUnk_080D4E48
+gUnk_080D4E48:
+	.incbin	"baserom.gba", 0xD4E48, 0x40
+	.global	gUnk_080D4E88
+gUnk_080D4E88:
+	.incbin	"baserom.gba", 0xD4E88, 0x40
+	.global	gUnk_080D4EC8
+gUnk_080D4EC8:
+	.incbin	"baserom.gba", 0xD4EC8, 0x40
+	.global	gUnk_080D4F08
+gUnk_080D4F08:
+	.incbin	"baserom.gba", 0xD4F08, 0x20
+	.global	gUnk_080D4F28
+gUnk_080D4F28:
+	.incbin	"baserom.gba", 0xD4F28, 0x50
+	.global	gUnk_080D4F78
+gUnk_080D4F78:
+	.incbin	"baserom.gba", 0xD4F78, 0x58
+	.global	gUnk_080D4FD0
+gUnk_080D4FD0:
+	.incbin	"baserom.gba", 0xD4FD0, 0x48
+	.global	gUnk_080D5018
+gUnk_080D5018:
+	.incbin	"baserom.gba", 0xD5018, 0x50
+	.global	gUnk_080D5068
+gUnk_080D5068:
+	.incbin	"baserom.gba", 0xD5068, 0x58
+	.global	gUnk_080D50C0
+gUnk_080D50C0:
+	.incbin	"baserom.gba", 0xD50C0, 0x60
+	.global	gUnk_080D5120
+gUnk_080D5120:
+	.incbin	"baserom.gba", 0xD5120, 0x60
+	.global	gUnk_080D5180
+gUnk_080D5180:
+	.incbin	"baserom.gba", 0xD5180, 0x60
+	.global	gUnk_080D51E0
+gUnk_080D51E0:
+	.incbin	"baserom.gba", 0xD51E0, 0x48
+	.global	gUnk_080D5228
+gUnk_080D5228:
+	.incbin	"baserom.gba", 0xD5228, 0x58
+	.global	gUnk_080D5280
+gUnk_080D5280:
+	.incbin	"baserom.gba", 0xD5280, 0x60
+	.global	gUnk_080D52E0
+gUnk_080D52E0:
+	.incbin	"baserom.gba", 0xD52E0, 0x60
+	.global	gUnk_080D5340
+gUnk_080D5340:
+	.incbin	"baserom.gba", 0xD5340, 0x30
+	.global	gUnk_080D5370
+gUnk_080D5370:
+	.incbin	"baserom.gba", 0xD5370, 0x38
+	.global	gUnk_080D53A8
+gUnk_080D53A8:
+	.incbin	"baserom.gba", 0xD53A8, 0x60
+	.global	gUnk_080D5408
+gUnk_080D5408:
+	.incbin	"baserom.gba", 0xD5408, 0x30
+	.global	gUnk_080D5438
+gUnk_080D5438:
+	.incbin	"baserom.gba", 0xD5438, 0x58
+	.global	gUnk_080D5490
+gUnk_080D5490:
+	.incbin	"baserom.gba", 0xD5490, 0x30
+	.global	gUnk_080D54C0
+gUnk_080D54C0:
+	.incbin	"baserom.gba", 0xD54C0, 0x18
+	.global	gUnk_080D54D8
+gUnk_080D54D8:
+	.incbin	"baserom.gba", 0xD54D8, 0x18
+	.global	gUnk_080D54F0
+gUnk_080D54F0:
+	.incbin	"baserom.gba", 0xD54F0, 0x8
+	.global	gUnk_080D54F8
+gUnk_080D54F8:
+	.incbin	"baserom.gba", 0xD54F8, 0x8
+	.global	gUnk_080D5500
+gUnk_080D5500:
+	.incbin	"baserom.gba", 0xD5500, 0x8
+	.global	gUnk_080D5508
+gUnk_080D5508:
+	.incbin	"baserom.gba", 0xD5508, 0x58
+	.global	gUnk_080D5560
+gUnk_080D5560:
+	.incbin	"baserom.gba", 0xD5560, 0x98
+	.global	gUnk_080D55F8
+gUnk_080D55F8:
+	.incbin	"baserom.gba", 0xD55F8, 0xC8
+	.global	gUnk_080D56C0
+gUnk_080D56C0:
+	.incbin	"baserom.gba", 0xD56C0, 0xA0
+	.global	gUnk_080D5760
+gUnk_080D5760:
+	.incbin	"baserom.gba", 0xD5760, 0x120
+	.global	gUnk_080D5880
+gUnk_080D5880:
+	.incbin	"baserom.gba", 0xD5880, 0xC8
+	.global	gUnk_080D5948
+gUnk_080D5948:
+	.incbin	"baserom.gba", 0xD5948, 0xF0
+	.global	gUnk_080D5A38
+gUnk_080D5A38:
+	.incbin	"baserom.gba", 0xD5A38, 0xA8
+	.global	gUnk_080D5AE0
+gUnk_080D5AE0:
+	.incbin	"baserom.gba", 0xD5AE0, 0x30
+	.global	gUnk_080D5B10
+gUnk_080D5B10:
+	.incbin	"baserom.gba", 0xD5B10, 0x18
+	.global	gUnk_080D5B28
+gUnk_080D5B28:
+	.incbin	"baserom.gba", 0xD5B28, 0x38
+	.global	gUnk_080D5B60
+gUnk_080D5B60:
+	.incbin	"baserom.gba", 0xD5B60, 0x40
+	.global	gUnk_080D5BA0
+gUnk_080D5BA0:
+	.incbin	"baserom.gba", 0xD5BA0, 0x80
+	.global	gUnk_080D5C20
+gUnk_080D5C20:
+	.incbin	"baserom.gba", 0xD5C20, 0x48
+	.global	gUnk_080D5C68
+gUnk_080D5C68:
+	.incbin	"baserom.gba", 0xD5C68, 0xB0
+	.global	gUnk_080D5D18
+gUnk_080D5D18:
+	.incbin	"baserom.gba", 0xD5D18, 0x60
+	.global	gUnk_080D5D78
+gUnk_080D5D78:
+	.incbin	"baserom.gba", 0xD5D78, 0x30
+	.global	gUnk_080D5DA8
+gUnk_080D5DA8:
+	.incbin	"baserom.gba", 0xD5DA8, 0x58
+	.global	gUnk_080D5E00
+gUnk_080D5E00:
+	.incbin	"baserom.gba", 0xD5E00, 0x30
+	.global	gUnk_080D5E30
+gUnk_080D5E30:
+	.incbin	"baserom.gba", 0xD5E30, 0x18
+	.global	gUnk_080D5E48
+gUnk_080D5E48:
+	.incbin	"baserom.gba", 0xD5E48, 0x18
+	.global	gUnk_080D5E60
+gUnk_080D5E60:
+	.incbin	"baserom.gba", 0xD5E60, 0x8
+	.global	gUnk_080D5E68
+gUnk_080D5E68:
+	.incbin	"baserom.gba", 0xD5E68, 0x18
+	.global	gUnk_080D5E80
+gUnk_080D5E80:
+	.incbin	"baserom.gba", 0xD5E80, 0x8
+	.global	gUnk_080D5E88
+gUnk_080D5E88:
+	.incbin	"baserom.gba", 0xD5E88, 0x8
+	.global	gUnk_080D5E90
+gUnk_080D5E90:
+	.incbin	"baserom.gba", 0xD5E90, 0x8
+	.global	gUnk_080D5E98
+gUnk_080D5E98:
+	.incbin	"baserom.gba", 0xD5E98, 0x8
+	.global	gUnk_080D5EA0
+gUnk_080D5EA0:
+	.incbin	"baserom.gba", 0xD5EA0, 0x20
+	.global	gUnk_080D5EC0
+gUnk_080D5EC0:
+	.incbin	"baserom.gba", 0xD5EC0, 0x40
+	.global	gUnk_080D5F00
+gUnk_080D5F00:
+	.incbin	"baserom.gba", 0xD5F00, 0x40
+	.global	gUnk_080D5F40
+gUnk_080D5F40:
+	.incbin	"baserom.gba", 0xD5F40, 0x40
+	.global	gUnk_080D5F80
+gUnk_080D5F80:
+	.incbin	"baserom.gba", 0xD5F80, 0x40
+	.global	gUnk_080D5FC0
+gUnk_080D5FC0:
+	.incbin	"baserom.gba", 0xD5FC0, 0x40
+	.global	gUnk_080D6000
+gUnk_080D6000:
+	.incbin	"baserom.gba", 0xD6000, 0x68
+	.global	gUnk_080D6068
+gUnk_080D6068:
+	.incbin	"baserom.gba", 0xD6068, 0x38
+	.global	gUnk_080D60A0
+gUnk_080D60A0:
+	.incbin	"baserom.gba", 0xD60A0, 0x18
+	.global	gUnk_080D60B8
+gUnk_080D60B8:
+	.incbin	"baserom.gba", 0xD60B8, 0x38
+	.global	gUnk_080D60F0
+gUnk_080D60F0:
+	.incbin	"baserom.gba", 0xD60F0, 0x18
+	.global	gUnk_080D6108
+gUnk_080D6108:
+	.incbin	"baserom.gba", 0xD6108, 0x68
+	.global	gUnk_080D6170
+gUnk_080D6170:
+	.incbin	"baserom.gba", 0xD6170, 0x20
+	.global	gUnk_080D6190
+gUnk_080D6190:
+	.incbin	"baserom.gba", 0xD6190, 0x68
+	.global	gUnk_080D61F8
+gUnk_080D61F8:
+	.incbin	"baserom.gba", 0xD61F8, 0x10
+	.global	gUnk_080D6208
+gUnk_080D6208:
+	.incbin	"baserom.gba", 0xD6208, 0x58
+	.global	gUnk_080D6260
+gUnk_080D6260:
+	.incbin	"baserom.gba", 0xD6260, 0x10
+	.global	gUnk_080D6270
+gUnk_080D6270:
+	.incbin	"baserom.gba", 0xD6270, 0x40
+	.global	gUnk_080D62B0
+gUnk_080D62B0:
+	.incbin	"baserom.gba", 0xD62B0, 0x20
+	.global	gUnk_080D62D0
+gUnk_080D62D0:
+	.incbin	"baserom.gba", 0xD62D0, 0x48
+	.global	gUnk_080D6318
+gUnk_080D6318:
+	.incbin	"baserom.gba", 0xD6318, 0x40
+	.global	gUnk_080D6358
+gUnk_080D6358:
+	.incbin	"baserom.gba", 0xD6358, 0x40
+	.global	gUnk_080D6398
+gUnk_080D6398:
+	.incbin	"baserom.gba", 0xD6398, 0x8
+	.global	gUnk_080D63A0
+gUnk_080D63A0:
+	.incbin	"baserom.gba", 0xD63A0, 0x8
+	.global	gUnk_080D63A8
+gUnk_080D63A8:
+	.incbin	"baserom.gba", 0xD63A8, 0x8
+	.global	gUnk_080D63B0
+gUnk_080D63B0:
+	.incbin	"baserom.gba", 0xD63B0, 0x8
+	.global	gUnk_080D63B8
+gUnk_080D63B8:
+	.incbin	"baserom.gba", 0xD63B8, 0x30
+	.global	gUnk_080D63E8
+gUnk_080D63E8:
+	.incbin	"baserom.gba", 0xD63E8, 0x30
+	.global	gUnk_080D6418
+gUnk_080D6418:
+	.incbin	"baserom.gba", 0xD6418, 0x10
+	.global	gUnk_080D6428
+gUnk_080D6428:
+	.incbin	"baserom.gba", 0xD6428, 0x10
+	.global	gUnk_080D6438
+gUnk_080D6438:
+	.incbin	"baserom.gba", 0xD6438, 0x8
+	.global	gUnk_080D6440
+gUnk_080D6440:
+	.incbin	"baserom.gba", 0xD6440, 0x8
+	.global	gUnk_080D6448
+gUnk_080D6448:
+	.incbin	"baserom.gba", 0xD6448, 0x10
+	.global	gUnk_080D6458
+gUnk_080D6458:
+	.incbin	"baserom.gba", 0xD6458, 0x10
+	.global	gUnk_080D6468
+gUnk_080D6468:
+	.incbin	"baserom.gba", 0xD6468, 0x10
+	.global	gUnk_080D6478
+gUnk_080D6478:
+	.incbin	"baserom.gba", 0xD6478, 0x10
+	.global	gUnk_080D6488
+gUnk_080D6488:
+	.incbin	"baserom.gba", 0xD6488, 0x20
+	.global	gUnk_080D64A8
+gUnk_080D64A8:
+	.incbin	"baserom.gba", 0xD64A8, 0x20
+	.global	gUnk_080D64C8
+gUnk_080D64C8:
+	.incbin	"baserom.gba", 0xD64C8, 0x28
+	.global	gUnk_080D64F0
+gUnk_080D64F0:
+	.incbin	"baserom.gba", 0xD64F0, 0x28
+	.global	gUnk_080D6518
+gUnk_080D6518:
+	.incbin	"baserom.gba", 0xD6518, 0x28
+	.global	gUnk_080D6540
+gUnk_080D6540:
+	.incbin	"baserom.gba", 0xD6540, 0x28
+	.global	gUnk_080D6568
+gUnk_080D6568:
+	.incbin	"baserom.gba", 0xD6568, 0x8
+	.global	gUnk_080D6570
+gUnk_080D6570:
+	.incbin	"baserom.gba", 0xD6570, 0x8
+	.global	gUnk_080D6578
+gUnk_080D6578:
+	.incbin	"baserom.gba", 0xD6578, 0x8
+	.global	gUnk_080D6580
+gUnk_080D6580:
+	.incbin	"baserom.gba", 0xD6580, 0x8
+	.global	gUnk_080D6588
+gUnk_080D6588:
+	.incbin	"baserom.gba", 0xD6588, 0x8
+	.global	gUnk_080D6590
+gUnk_080D6590:
+	.incbin	"baserom.gba", 0xD6590, 0x48
+	.global	gUnk_080D65D8
+gUnk_080D65D8:
+	.incbin	"baserom.gba", 0xD65D8, 0x40
+	.global	gUnk_080D6618
+gUnk_080D6618:
+	.incbin	"baserom.gba", 0xD6618, 0x40
+	.global	gUnk_080D6658
+gUnk_080D6658:
+	.incbin	"baserom.gba", 0xD6658, 0x40
+	.global	gUnk_080D6698
+gUnk_080D6698:
+	.incbin	"baserom.gba", 0xD6698, 0x40
+	.global	gUnk_080D66D8
+gUnk_080D66D8:
+	.incbin	"baserom.gba", 0xD66D8, 0x8
+	.global	gUnk_080D66E0
+gUnk_080D66E0:
+	.incbin	"baserom.gba", 0xD66E0, 0x8
+	.global	gUnk_080D66E8
+gUnk_080D66E8:
+	.incbin	"baserom.gba", 0xD66E8, 0x8
+	.global	gUnk_080D66F0
+gUnk_080D66F0:
+	.incbin	"baserom.gba", 0xD66F0, 0x8
+	.global	gUnk_080D66F8
+gUnk_080D66F8:
+	.incbin	"baserom.gba", 0xD66F8, 0x8
+	.global	gUnk_080D6700
+gUnk_080D6700:
+	.incbin	"baserom.gba", 0xD6700, 0x8
+	.global	gUnk_080D6708
+gUnk_080D6708:
+	.incbin	"baserom.gba", 0xD6708, 0x8
+	.global	gUnk_080D6710
+gUnk_080D6710:
+	.incbin	"baserom.gba", 0xD6710, 0x20
+	.global	gUnk_080D6730
+gUnk_080D6730:
+	.incbin	"baserom.gba", 0xD6730, 0x20
+	.global	gUnk_080D6750
+gUnk_080D6750:
+	.incbin	"baserom.gba", 0xD6750, 0x20
+	.global	gUnk_080D6770
+gUnk_080D6770:
+	.incbin	"baserom.gba", 0xD6770, 0x20
+	.global	gUnk_080D6790
+gUnk_080D6790:
+	.incbin	"baserom.gba", 0xD6790, 0x18
+	.global	gUnk_080D67A8
+gUnk_080D67A8:
+	.incbin	"baserom.gba", 0xD67A8, 0x18
+	.global	gUnk_080D67C0
+gUnk_080D67C0:
+	.incbin	"baserom.gba", 0xD67C0, 0x18
+	.global	gUnk_080D67D8
+gUnk_080D67D8:
+	.incbin	"baserom.gba", 0xD67D8, 0x18
+	.global	gUnk_080D67F0
+gUnk_080D67F0:
+	.incbin	"baserom.gba", 0xD67F0, 0x18
+	.global	gUnk_080D6808
+gUnk_080D6808:
+	.incbin	"baserom.gba", 0xD6808, 0x18
+	.global	gUnk_080D6820
+gUnk_080D6820:
+	.incbin	"baserom.gba", 0xD6820, 0x18
+	.global	gUnk_080D6838
+gUnk_080D6838:
+	.incbin	"baserom.gba", 0xD6838, 0x18
+	.global	gUnk_080D6850
+gUnk_080D6850:
+	.incbin	"baserom.gba", 0xD6850, 0x8
+	.global	gUnk_080D6858
+gUnk_080D6858:
+	.incbin	"baserom.gba", 0xD6858, 0x8
+	.global	gUnk_080D6860
+gUnk_080D6860:
+	.incbin	"baserom.gba", 0xD6860, 0x8
+	.global	gUnk_080D6868
+gUnk_080D6868:
+	.incbin	"baserom.gba", 0xD6868, 0x8
+	.global	gUnk_080D6870
+gUnk_080D6870:
+	.incbin	"baserom.gba", 0xD6870, 0x8
+	.global	gUnk_080D6878
+gUnk_080D6878:
+	.incbin	"baserom.gba", 0xD6878, 0x8
+	.global	gUnk_080D6880
+gUnk_080D6880:
+	.incbin	"baserom.gba", 0xD6880, 0x8
+	.global	gUnk_080D6888
+gUnk_080D6888:
+	.incbin	"baserom.gba", 0xD6888, 0x8
+	.global	gUnk_080D6890
+gUnk_080D6890:
+	.incbin	"baserom.gba", 0xD6890, 0x8
+	.global	gUnk_080D6898
+gUnk_080D6898:
+	.incbin	"baserom.gba", 0xD6898, 0x8
+	.global	gUnk_080D68A0
+gUnk_080D68A0:
+	.incbin	"baserom.gba", 0xD68A0, 0x8
+	.global	gUnk_080D68A8
+gUnk_080D68A8:
+	.incbin	"baserom.gba", 0xD68A8, 0x8
+	.global	gUnk_080D68B0
+gUnk_080D68B0:
+	.incbin	"baserom.gba", 0xD68B0, 0x8
+	.global	gUnk_080D68B8
+gUnk_080D68B8:
+	.incbin	"baserom.gba", 0xD68B8, 0x8
+	.global	gUnk_080D68C0
+gUnk_080D68C0:
+	.incbin	"baserom.gba", 0xD68C0, 0x8
+	.global	gUnk_080D68C8
+gUnk_080D68C8:
+	.incbin	"baserom.gba", 0xD68C8, 0x8
+	.global	gUnk_080D68D0
+gUnk_080D68D0:
+	.incbin	"baserom.gba", 0xD68D0, 0x28
+	.global	gUnk_080D68F8
+gUnk_080D68F8:
+	.incbin	"baserom.gba", 0xD68F8, 0x30
+	.global	gUnk_080D6928
+gUnk_080D6928:
+	.incbin	"baserom.gba", 0xD6928, 0x20
+	.global	gUnk_080D6948
+gUnk_080D6948:
+	.incbin	"baserom.gba", 0xD6948, 0x28
+	.global	gUnk_080D6970
+gUnk_080D6970:
+	.incbin	"baserom.gba", 0xD6970, 0x28
+	.global	gUnk_080D6998
+gUnk_080D6998:
+	.incbin	"baserom.gba", 0xD6998, 0x28
+	.global	gUnk_080D69C0
+gUnk_080D69C0:
+	.incbin	"baserom.gba", 0xD69C0, 0x20
+	.global	gUnk_080D69E0
+gUnk_080D69E0:
+	.incbin	"baserom.gba", 0xD69E0, 0x20
+	.global	gUnk_080D6A00
+gUnk_080D6A00:
+	.incbin	"baserom.gba", 0xD6A00, 0x18
+	.global	gUnk_080D6A18
+gUnk_080D6A18:
+	.incbin	"baserom.gba", 0xD6A18, 0x18
+	.global	gUnk_080D6A30
+gUnk_080D6A30:
+	.incbin	"baserom.gba", 0xD6A30, 0x20
+	.global	gUnk_080D6A50
+gUnk_080D6A50:
+	.incbin	"baserom.gba", 0xD6A50, 0x28
+	.global	gUnk_080D6A78
+gUnk_080D6A78:
+	.incbin	"baserom.gba", 0xD6A78, 0x20
+	.global	gUnk_080D6A98
+gUnk_080D6A98:
+	.incbin	"baserom.gba", 0xD6A98, 0x28
+	.global	gUnk_080D6AC0
+gUnk_080D6AC0:
+	.incbin	"baserom.gba", 0xD6AC0, 0x40
+	.global	gUnk_080D6B00
+gUnk_080D6B00:
+	.incbin	"baserom.gba", 0xD6B00, 0x40
+	.global	gUnk_080D6B40
+gUnk_080D6B40:
+	.incbin	"baserom.gba", 0xD6B40, 0x20
+	.global	gUnk_080D6B60
+gUnk_080D6B60:
+	.incbin	"baserom.gba", 0xD6B60, 0x8
+	.global	gUnk_080D6B68
+gUnk_080D6B68:
+	.incbin	"baserom.gba", 0xD6B68, 0x20
+	.global	gUnk_080D6B88
+gUnk_080D6B88:
+	.incbin	"baserom.gba", 0xD6B88, 0x8
+	.global	gUnk_080D6B90
+gUnk_080D6B90:
+	.incbin	"baserom.gba", 0xD6B90, 0x30
+	.global	gUnk_080D6BC0
+gUnk_080D6BC0:
+	.incbin	"baserom.gba", 0xD6BC0, 0x38
+	.global	gUnk_080D6BF8
+gUnk_080D6BF8:
+	.incbin	"baserom.gba", 0xD6BF8, 0x30
+	.global	gUnk_080D6C28
+gUnk_080D6C28:
+	.incbin	"baserom.gba", 0xD6C28, 0x38
+	.global	gUnk_080D6C60
+gUnk_080D6C60:
+	.incbin	"baserom.gba", 0xD6C60, 0x30
+	.global	gUnk_080D6C90
+gUnk_080D6C90:
+	.incbin	"baserom.gba", 0xD6C90, 0x38
+	.global	gUnk_080D6CC8
+gUnk_080D6CC8:
+	.incbin	"baserom.gba", 0xD6CC8, 0x30
+	.global	gUnk_080D6CF8
+gUnk_080D6CF8:
+	.incbin	"baserom.gba", 0xD6CF8, 0x38
+	.global	gUnk_080D6D30
+gUnk_080D6D30:
+	.incbin	"baserom.gba", 0xD6D30, 0x30
+	.global	gUnk_080D6D60
+gUnk_080D6D60:
+	.incbin	"baserom.gba", 0xD6D60, 0x38
+	.global	gUnk_080D6D98
+gUnk_080D6D98:
+	.incbin	"baserom.gba", 0xD6D98, 0x30
+	.global	gUnk_080D6DC8
+gUnk_080D6DC8:
+	.incbin	"baserom.gba", 0xD6DC8, 0x38
+	.global	gUnk_080D6E00
+gUnk_080D6E00:
+	.incbin	"baserom.gba", 0xD6E00, 0x30
+	.global	gUnk_080D6E30
+gUnk_080D6E30:
+	.incbin	"baserom.gba", 0xD6E30, 0x38
+	.global	gUnk_080D6E68
+gUnk_080D6E68:
+	.incbin	"baserom.gba", 0xD6E68, 0x30
+	.global	gUnk_080D6E98
+gUnk_080D6E98:
+	.incbin	"baserom.gba", 0xD6E98, 0x38
+	.global	gUnk_080D6ED0
+gUnk_080D6ED0:
+	.incbin	"baserom.gba", 0xD6ED0, 0x48
+	.global	gUnk_080D6F18
+gUnk_080D6F18:
+	.incbin	"baserom.gba", 0xD6F18, 0x20
+	.global	gUnk_080D6F38
+gUnk_080D6F38:
+	.incbin	"baserom.gba", 0xD6F38, 0x20
+	.global	gUnk_080D6F58
+gUnk_080D6F58:
+	.incbin	"baserom.gba", 0xD6F58, 0x10
+	.global	gUnk_080D6F68
+gUnk_080D6F68:
+	.incbin	"baserom.gba", 0xD6F68, 0x50
+	.global	gUnk_080D6FB8
+gUnk_080D6FB8:
+	.incbin	"baserom.gba", 0xD6FB8, 0x38
+	.global	gUnk_080D6FF0
+gUnk_080D6FF0:
+	.incbin	"baserom.gba", 0xD6FF0, 0x50
+	.global	gUnk_080D7040
+gUnk_080D7040:
+	.incbin	"baserom.gba", 0xD7040, 0x40
+	.global	gUnk_080D7080
+gUnk_080D7080:
+	.incbin	"baserom.gba", 0xD7080, 0x20
+	.global	gUnk_080D70A0
+gUnk_080D70A0:
+	.incbin	"baserom.gba", 0xD70A0, 0x28
+	.global	gUnk_080D70C8
+gUnk_080D70C8:
+	.incbin	"baserom.gba", 0xD70C8, 0x20
+	.global	gUnk_080D70E8
+gUnk_080D70E8:
+	.incbin	"baserom.gba", 0xD70E8, 0x28
+	.global	gUnk_080D7110
+gUnk_080D7110:
+	.incbin	"baserom.gba", 0xD7110, 0x30
+	.global	gUnk_080D7140
+gUnk_080D7140:
+	.incbin	"baserom.gba", 0xD7140, 0x8
+	.global	gUnk_080D7148
+gUnk_080D7148:
+	.incbin	"baserom.gba", 0xD7148, 0x20
+	.global	gUnk_080D7168
+gUnk_080D7168:
+	.incbin	"baserom.gba", 0xD7168, 0x8
+	.global	gUnk_080D7170
+gUnk_080D7170:
+	.incbin	"baserom.gba", 0xD7170, 0x10
+	.global	gUnk_080D7180
+gUnk_080D7180:
+	.incbin	"baserom.gba", 0xD7180, 0x20
 	.global	gUnk_080D71A0
 gUnk_080D71A0:
 	.incbin	"baserom.gba", 0xD71A0, 0x28
@@ -89,7 +1751,385 @@ gUnk_080D9708:
 	.incbin	"baserom.gba", 0xD9708, 0x8A0
 	.global	gUnk_080D9FA8
 gUnk_080D9FA8:
-	.incbin	"baserom.gba", 0xD9FA8, 0x1F50
+	.incbin	"baserom.gba", 0xD9FA8, 0x5C0
+	.global	gUnk_080DA568
+gUnk_080DA568:
+	.incbin	"baserom.gba", 0xDA568, 0x8
+	.global	gUnk_080DA570
+gUnk_080DA570:
+	.incbin	"baserom.gba", 0xDA570, 0x8
+	.global	gUnk_080DA578
+gUnk_080DA578:
+	.incbin	"baserom.gba", 0xDA578, 0x20
+	.global	gUnk_080DA598
+gUnk_080DA598:
+	.incbin	"baserom.gba", 0xDA598, 0x8
+	.global	gUnk_080DA5A0
+gUnk_080DA5A0:
+	.incbin	"baserom.gba", 0xDA5A0, 0x20
+	.global	gUnk_080DA5C0
+gUnk_080DA5C0:
+	.incbin	"baserom.gba", 0xDA5C0, 0x10
+	.global	gUnk_080DA5D0
+gUnk_080DA5D0:
+	.incbin	"baserom.gba", 0xDA5D0, 0x20
+	.global	gUnk_080DA5F0
+gUnk_080DA5F0:
+	.incbin	"baserom.gba", 0xDA5F0, 0x40
+	.global	gUnk_080DA630
+gUnk_080DA630:
+	.incbin	"baserom.gba", 0xDA630, 0x58
+	.global	gUnk_080DA688
+gUnk_080DA688:
+	.incbin	"baserom.gba", 0xDA688, 0x68
+	.global	gUnk_080DA6F0
+gUnk_080DA6F0:
+	.incbin	"baserom.gba", 0xDA6F0, 0x60
+	.global	gUnk_080DA750
+gUnk_080DA750:
+	.incbin	"baserom.gba", 0xDA750, 0x40
+	.global	gUnk_080DA790
+gUnk_080DA790:
+	.incbin	"baserom.gba", 0xDA790, 0x48
+	.global	gUnk_080DA7D8
+gUnk_080DA7D8:
+	.incbin	"baserom.gba", 0xDA7D8, 0x38
+	.global	gUnk_080DA810
+gUnk_080DA810:
+	.incbin	"baserom.gba", 0xDA810, 0x40
+	.global	gUnk_080DA850
+gUnk_080DA850:
+	.incbin	"baserom.gba", 0xDA850, 0x48
+	.global	gUnk_080DA898
+gUnk_080DA898:
+	.incbin	"baserom.gba", 0xDA898, 0x48
+	.global	gUnk_080DA8E0
+gUnk_080DA8E0:
+	.incbin	"baserom.gba", 0xDA8E0, 0x48
+	.global	gUnk_080DA928
+gUnk_080DA928:
+	.incbin	"baserom.gba", 0xDA928, 0x38
+	.global	gUnk_080DA960
+gUnk_080DA960:
+	.incbin	"baserom.gba", 0xDA960, 0x48
+	.global	gUnk_080DA9A8
+gUnk_080DA9A8:
+	.incbin	"baserom.gba", 0xDA9A8, 0x28
+	.global	gUnk_080DA9D0
+gUnk_080DA9D0:
+	.incbin	"baserom.gba", 0xDA9D0, 0x30
+	.global	gUnk_080DAA00
+gUnk_080DAA00:
+	.incbin	"baserom.gba", 0xDAA00, 0x18
+	.global	gUnk_080DAA18
+gUnk_080DAA18:
+	.incbin	"baserom.gba", 0xDAA18, 0x8
+	.global	gUnk_080DAA20
+gUnk_080DAA20:
+	.incbin	"baserom.gba", 0xDAA20, 0x10
+	.global	gUnk_080DAA30
+gUnk_080DAA30:
+	.incbin	"baserom.gba", 0xDAA30, 0x10
+	.global	gUnk_080DAA40
+gUnk_080DAA40:
+	.incbin	"baserom.gba", 0xDAA40, 0x18
+	.global	gUnk_080DAA58
+gUnk_080DAA58:
+	.incbin	"baserom.gba", 0xDAA58, 0x20
+	.global	gUnk_080DAA78
+gUnk_080DAA78:
+	.incbin	"baserom.gba", 0xDAA78, 0x20
+	.global	gUnk_080DAA98
+gUnk_080DAA98:
+	.incbin	"baserom.gba", 0xDAA98, 0x20
+	.global	gUnk_080DAAB8
+gUnk_080DAAB8:
+	.incbin	"baserom.gba", 0xDAAB8, 0x20
+	.global	gUnk_080DAAD8
+gUnk_080DAAD8:
+	.incbin	"baserom.gba", 0xDAAD8, 0x20
+	.global	gUnk_080DAAF8
+gUnk_080DAAF8:
+	.incbin	"baserom.gba", 0xDAAF8, 0x10
+	.global	gUnk_080DAB08
+gUnk_080DAB08:
+	.incbin	"baserom.gba", 0xDAB08, 0x10
+	.global	gUnk_080DAB18
+gUnk_080DAB18:
+	.incbin	"baserom.gba", 0xDAB18, 0x10
+	.global	gUnk_080DAB28
+gUnk_080DAB28:
+	.incbin	"baserom.gba", 0xDAB28, 0x8
+	.global	gUnk_080DAB30
+gUnk_080DAB30:
+	.incbin	"baserom.gba", 0xDAB30, 0x28
+	.global	gUnk_080DAB58
+gUnk_080DAB58:
+	.incbin	"baserom.gba", 0xDAB58, 0x20
+	.global	gUnk_080DAB78
+gUnk_080DAB78:
+	.incbin	"baserom.gba", 0xDAB78, 0x28
+	.global	gUnk_080DABA0
+gUnk_080DABA0:
+	.incbin	"baserom.gba", 0xDABA0, 0x28
+	.global	gUnk_080DABC8
+gUnk_080DABC8:
+	.incbin	"baserom.gba", 0xDABC8, 0x28
+	.global	gUnk_080DABF0
+gUnk_080DABF0:
+	.incbin	"baserom.gba", 0xDABF0, 0x30
+	.global	gUnk_080DAC20
+gUnk_080DAC20:
+	.incbin	"baserom.gba", 0xDAC20, 0x28
+	.global	gUnk_080DAC48
+gUnk_080DAC48:
+	.incbin	"baserom.gba", 0xDAC48, 0x28
+	.global	gUnk_080DAC70
+gUnk_080DAC70:
+	.incbin	"baserom.gba", 0xDAC70, 0x30
+	.global	gUnk_080DACA0
+gUnk_080DACA0:
+	.incbin	"baserom.gba", 0xDACA0, 0x30
+	.global	gUnk_080DACD0
+gUnk_080DACD0:
+	.incbin	"baserom.gba", 0xDACD0, 0x28
+	.global	gUnk_080DACF8
+gUnk_080DACF8:
+	.incbin	"baserom.gba", 0xDACF8, 0x28
+	.global	gUnk_080DAD20
+gUnk_080DAD20:
+	.incbin	"baserom.gba", 0xDAD20, 0x30
+	.global	gUnk_080DAD50
+gUnk_080DAD50:
+	.incbin	"baserom.gba", 0xDAD50, 0x70
+	.global	gUnk_080DADC0
+gUnk_080DADC0:
+	.incbin	"baserom.gba", 0xDADC0, 0x68
+	.global	gUnk_080DAE28
+gUnk_080DAE28:
+	.incbin	"baserom.gba", 0xDAE28, 0x68
+	.global	gUnk_080DAE90
+gUnk_080DAE90:
+	.incbin	"baserom.gba", 0xDAE90, 0x70
+	.global	gUnk_080DAF00
+gUnk_080DAF00:
+	.incbin	"baserom.gba", 0xDAF00, 0x70
+	.global	gUnk_080DAF70
+gUnk_080DAF70:
+	.incbin	"baserom.gba", 0xDAF70, 0x68
+	.global	gUnk_080DAFD8
+gUnk_080DAFD8:
+	.incbin	"baserom.gba", 0xDAFD8, 0x68
+	.global	gUnk_080DB040
+gUnk_080DB040:
+	.incbin	"baserom.gba", 0xDB040, 0x70
+	.global	gUnk_080DB0B0
+gUnk_080DB0B0:
+	.incbin	"baserom.gba", 0xDB0B0, 0xA8
+	.global	gUnk_080DB158
+gUnk_080DB158:
+	.incbin	"baserom.gba", 0xDB158, 0xA8
+	.global	gUnk_080DB200
+gUnk_080DB200:
+	.incbin	"baserom.gba", 0xDB200, 0xA0
+	.global	gUnk_080DB2A0
+gUnk_080DB2A0:
+	.incbin	"baserom.gba", 0xDB2A0, 0xB0
+	.global	gUnk_080DB350
+gUnk_080DB350:
+	.incbin	"baserom.gba", 0xDB350, 0xC0
+	.global	gUnk_080DB410
+gUnk_080DB410:
+	.incbin	"baserom.gba", 0xDB410, 0xC0
+	.global	gUnk_080DB4D0
+gUnk_080DB4D0:
+	.incbin	"baserom.gba", 0xDB4D0, 0x48
+	.global	gUnk_080DB518
+gUnk_080DB518:
+	.incbin	"baserom.gba", 0xDB518, 0x48
+	.global	gUnk_080DB560
+gUnk_080DB560:
+	.incbin	"baserom.gba", 0xDB560, 0x40
+	.global	gUnk_080DB5A0
+gUnk_080DB5A0:
+	.incbin	"baserom.gba", 0xDB5A0, 0x50
+	.global	gUnk_080DB5F0
+gUnk_080DB5F0:
+	.incbin	"baserom.gba", 0xDB5F0, 0x60
+	.global	gUnk_080DB650
+gUnk_080DB650:
+	.incbin	"baserom.gba", 0xDB650, 0x60
+	.global	gUnk_080DB6B0
+gUnk_080DB6B0:
+	.incbin	"baserom.gba", 0xDB6B0, 0x8
+	.global	gUnk_080DB6B8
+gUnk_080DB6B8:
+	.incbin	"baserom.gba", 0xDB6B8, 0x8
+	.global	gUnk_080DB6C0
+gUnk_080DB6C0:
+	.incbin	"baserom.gba", 0xDB6C0, 0x8
+	.global	gUnk_080DB6C8
+gUnk_080DB6C8:
+	.incbin	"baserom.gba", 0xDB6C8, 0x8
+	.global	gUnk_080DB6D0
+gUnk_080DB6D0:
+	.incbin	"baserom.gba", 0xDB6D0, 0x8
+	.global	gUnk_080DB6D8
+gUnk_080DB6D8:
+	.incbin	"baserom.gba", 0xDB6D8, 0x8
+	.global	gUnk_080DB6E0
+gUnk_080DB6E0:
+	.incbin	"baserom.gba", 0xDB6E0, 0x20
+	.global	gUnk_080DB700
+gUnk_080DB700:
+	.incbin	"baserom.gba", 0xDB700, 0x48
+	.global	gUnk_080DB748
+gUnk_080DB748:
+	.incbin	"baserom.gba", 0xDB748, 0x48
+	.global	gUnk_080DB790
+gUnk_080DB790:
+	.incbin	"baserom.gba", 0xDB790, 0x48
+	.global	gUnk_080DB7D8
+gUnk_080DB7D8:
+	.incbin	"baserom.gba", 0xDB7D8, 0x40
+	.global	gUnk_080DB818
+gUnk_080DB818:
+	.incbin	"baserom.gba", 0xDB818, 0x40
+	.global	gUnk_080DB858
+gUnk_080DB858:
+	.incbin	"baserom.gba", 0xDB858, 0x40
+	.global	gUnk_080DB898
+gUnk_080DB898:
+	.incbin	"baserom.gba", 0xDB898, 0x40
+	.global	gUnk_080DB8D8
+gUnk_080DB8D8:
+	.incbin	"baserom.gba", 0xDB8D8, 0x40
+	.global	gUnk_080DB918
+gUnk_080DB918:
+	.incbin	"baserom.gba", 0xDB918, 0x40
+	.global	gUnk_080DB958
+gUnk_080DB958:
+	.incbin	"baserom.gba", 0xDB958, 0x40
+	.global	gUnk_080DB998
+gUnk_080DB998:
+	.incbin	"baserom.gba", 0xDB998, 0x40
+	.global	gUnk_080DB9D8
+gUnk_080DB9D8:
+	.incbin	"baserom.gba", 0xDB9D8, 0x40
+	.global	gUnk_080DBA18
+gUnk_080DBA18:
+	.incbin	"baserom.gba", 0xDBA18, 0x40
+	.global	gUnk_080DBA58
+gUnk_080DBA58:
+	.incbin	"baserom.gba", 0xDBA58, 0x8
+	.global	gUnk_080DBA60
+gUnk_080DBA60:
+	.incbin	"baserom.gba", 0xDBA60, 0x40
+	.global	gUnk_080DBAA0
+gUnk_080DBAA0:
+	.incbin	"baserom.gba", 0xDBAA0, 0x40
+	.global	gUnk_080DBAE0
+gUnk_080DBAE0:
+	.incbin	"baserom.gba", 0xDBAE0, 0x40
+	.global	gUnk_080DBB20
+gUnk_080DBB20:
+	.incbin	"baserom.gba", 0xDBB20, 0x40
+	.global	gUnk_080DBB60
+gUnk_080DBB60:
+	.incbin	"baserom.gba", 0xDBB60, 0x40
+	.global	gUnk_080DBBA0
+gUnk_080DBBA0:
+	.incbin	"baserom.gba", 0xDBBA0, 0x40
+	.global	gUnk_080DBBE0
+gUnk_080DBBE0:
+	.incbin	"baserom.gba", 0xDBBE0, 0x40
+	.global	gUnk_080DBC20
+gUnk_080DBC20:
+	.incbin	"baserom.gba", 0xDBC20, 0x40
+	.global	gUnk_080DBC60
+gUnk_080DBC60:
+	.incbin	"baserom.gba", 0xDBC60, 0x40
+	.global	gUnk_080DBCA0
+gUnk_080DBCA0:
+	.incbin	"baserom.gba", 0xDBCA0, 0x40
+	.global	gUnk_080DBCE0
+gUnk_080DBCE0:
+	.incbin	"baserom.gba", 0xDBCE0, 0x8
+	.global	gUnk_080DBCE8
+gUnk_080DBCE8:
+	.incbin	"baserom.gba", 0xDBCE8, 0x8
+	.global	gUnk_080DBCF0
+gUnk_080DBCF0:
+	.incbin	"baserom.gba", 0xDBCF0, 0x8
+	.global	gUnk_080DBCF8
+gUnk_080DBCF8:
+	.incbin	"baserom.gba", 0xDBCF8, 0x8
+	.global	gUnk_080DBD00
+gUnk_080DBD00:
+	.incbin	"baserom.gba", 0xDBD00, 0x20
+	.global	gUnk_080DBD20
+gUnk_080DBD20:
+	.incbin	"baserom.gba", 0xDBD20, 0x8
+	.global	gUnk_080DBD28
+gUnk_080DBD28:
+	.incbin	"baserom.gba", 0xDBD28, 0x8
+	.global	gUnk_080DBD30
+gUnk_080DBD30:
+	.incbin	"baserom.gba", 0xDBD30, 0x8
+	.global	gUnk_080DBD38
+gUnk_080DBD38:
+	.incbin	"baserom.gba", 0xDBD38, 0x8
+	.global	gUnk_080DBD40
+gUnk_080DBD40:
+	.incbin	"baserom.gba", 0xDBD40, 0x8
+	.global	gUnk_080DBD48
+gUnk_080DBD48:
+	.incbin	"baserom.gba", 0xDBD48, 0x8
+	.global	gUnk_080DBD50
+gUnk_080DBD50:
+	.incbin	"baserom.gba", 0xDBD50, 0x8
+	.global	gUnk_080DBD58
+gUnk_080DBD58:
+	.incbin	"baserom.gba", 0xDBD58, 0x8
+	.global	gUnk_080DBD60
+gUnk_080DBD60:
+	.incbin	"baserom.gba", 0xDBD60, 0x20
+	.global	gUnk_080DBD80
+gUnk_080DBD80:
+	.incbin	"baserom.gba", 0xDBD80, 0x20
+	.global	gUnk_080DBDA0
+gUnk_080DBDA0:
+	.incbin	"baserom.gba", 0xDBDA0, 0x48
+	.global	gUnk_080DBDE8
+gUnk_080DBDE8:
+	.incbin	"baserom.gba", 0xDBDE8, 0x8
+	.global	gUnk_080DBDF0
+gUnk_080DBDF0:
+	.incbin	"baserom.gba", 0xDBDF0, 0x28
+	.global	gUnk_080DBE18
+gUnk_080DBE18:
+	.incbin	"baserom.gba", 0xDBE18, 0x30
+	.global	gUnk_080DBE48
+gUnk_080DBE48:
+	.incbin	"baserom.gba", 0xDBE48, 0x40
+	.global	gUnk_080DBE88
+gUnk_080DBE88:
+	.incbin	"baserom.gba", 0xDBE88, 0x30
+	.global	gUnk_080DBEB8
+gUnk_080DBEB8:
+	.incbin	"baserom.gba", 0xDBEB8, 0x8
+	.global	gUnk_080DBEC0
+gUnk_080DBEC0:
+	.incbin	"baserom.gba", 0xDBEC0, 0x8
+	.global	gUnk_080DBEC8
+gUnk_080DBEC8:
+	.incbin	"baserom.gba", 0xDBEC8, 0x18
+	.global	gUnk_080DBEE0
+gUnk_080DBEE0:
+	.incbin	"baserom.gba", 0xDBEE0, 0x8
+	.global	gUnk_080DBEE8
+gUnk_080DBEE8:
+	.incbin	"baserom.gba", 0xDBEE8, 0x10
 	.global	gUnk_080DBEF8
 gUnk_080DBEF8:
 	.incbin	"baserom.gba", 0xDBEF8, 0x8
@@ -107,7 +2147,154 @@ gUnk_080DBF28:
 	.incbin	"baserom.gba", 0xDBF28, 0x8
 	.global	gUnk_080DBF30
 gUnk_080DBF30:
-	.incbin	"baserom.gba", 0xDBF30, 0x6F8
+	.incbin	"baserom.gba", 0xDBF30, 0x8
+	.global	gUnk_080DBF38
+gUnk_080DBF38:
+	.incbin	"baserom.gba", 0xDBF38, 0x8
+	.global	gUnk_080DBF40
+gUnk_080DBF40:
+	.incbin	"baserom.gba", 0xDBF40, 0x8
+	.global	gUnk_080DBF48
+gUnk_080DBF48:
+	.incbin	"baserom.gba", 0xDBF48, 0x8
+	.global	gUnk_080DBF50
+gUnk_080DBF50:
+	.incbin	"baserom.gba", 0xDBF50, 0x8
+	.global	gUnk_080DBF58
+gUnk_080DBF58:
+	.incbin	"baserom.gba", 0xDBF58, 0x20
+	.global	gUnk_080DBF78
+gUnk_080DBF78:
+	.incbin	"baserom.gba", 0xDBF78, 0x20
+	.global	gUnk_080DBF98
+gUnk_080DBF98:
+	.incbin	"baserom.gba", 0xDBF98, 0x20
+	.global	gUnk_080DBFB8
+gUnk_080DBFB8:
+	.incbin	"baserom.gba", 0xDBFB8, 0x20
+	.global	gUnk_080DBFD8
+gUnk_080DBFD8:
+	.incbin	"baserom.gba", 0xDBFD8, 0x8
+	.global	gUnk_080DBFE0
+gUnk_080DBFE0:
+	.incbin	"baserom.gba", 0xDBFE0, 0x8
+	.global	gUnk_080DBFE8
+gUnk_080DBFE8:
+	.incbin	"baserom.gba", 0xDBFE8, 0x8
+	.global	gUnk_080DBFF0
+gUnk_080DBFF0:
+	.incbin	"baserom.gba", 0xDBFF0, 0x8
+	.global	gUnk_080DBFF8
+gUnk_080DBFF8:
+	.incbin	"baserom.gba", 0xDBFF8, 0x40
+	.global	gUnk_080DC038
+gUnk_080DC038:
+	.incbin	"baserom.gba", 0xDC038, 0x40
+	.global	gUnk_080DC078
+gUnk_080DC078:
+	.incbin	"baserom.gba", 0xDC078, 0x40
+	.global	gUnk_080DC0B8
+gUnk_080DC0B8:
+	.incbin	"baserom.gba", 0xDC0B8, 0x40
+	.global	gUnk_080DC0F8
+gUnk_080DC0F8:
+	.incbin	"baserom.gba", 0xDC0F8, 0x40
+	.global	gUnk_080DC138
+gUnk_080DC138:
+	.incbin	"baserom.gba", 0xDC138, 0x40
+	.global	gUnk_080DC178
+gUnk_080DC178:
+	.incbin	"baserom.gba", 0xDC178, 0x40
+	.global	gUnk_080DC1B8
+gUnk_080DC1B8:
+	.incbin	"baserom.gba", 0xDC1B8, 0x40
+	.global	gUnk_080DC1F8
+gUnk_080DC1F8:
+	.incbin	"baserom.gba", 0xDC1F8, 0x40
+	.global	gUnk_080DC238
+gUnk_080DC238:
+	.incbin	"baserom.gba", 0xDC238, 0x40
+	.global	gUnk_080DC278
+gUnk_080DC278:
+	.incbin	"baserom.gba", 0xDC278, 0x20
+	.global	gUnk_080DC298
+gUnk_080DC298:
+	.incbin	"baserom.gba", 0xDC298, 0x40
+	.global	gUnk_080DC2D8
+gUnk_080DC2D8:
+	.incbin	"baserom.gba", 0xDC2D8, 0x40
+	.global	gUnk_080DC318
+gUnk_080DC318:
+	.incbin	"baserom.gba", 0xDC318, 0x40
+	.global	gUnk_080DC358
+gUnk_080DC358:
+	.incbin	"baserom.gba", 0xDC358, 0x40
+	.global	gUnk_080DC398
+gUnk_080DC398:
+	.incbin	"baserom.gba", 0xDC398, 0x40
+	.global	gUnk_080DC3D8
+gUnk_080DC3D8:
+	.incbin	"baserom.gba", 0xDC3D8, 0x40
+	.global	gUnk_080DC418
+gUnk_080DC418:
+	.incbin	"baserom.gba", 0xDC418, 0x40
+	.global	gUnk_080DC458
+gUnk_080DC458:
+	.incbin	"baserom.gba", 0xDC458, 0x40
+	.global	gUnk_080DC498
+gUnk_080DC498:
+	.incbin	"baserom.gba", 0xDC498, 0x40
+	.global	gUnk_080DC4D8
+gUnk_080DC4D8:
+	.incbin	"baserom.gba", 0xDC4D8, 0x40
+	.global	gUnk_080DC518
+gUnk_080DC518:
+	.incbin	"baserom.gba", 0xDC518, 0x20
+	.global	gUnk_080DC538
+gUnk_080DC538:
+	.incbin	"baserom.gba", 0xDC538, 0x10
+	.global	gUnk_080DC548
+gUnk_080DC548:
+	.incbin	"baserom.gba", 0xDC548, 0x10
+	.global	gUnk_080DC558
+gUnk_080DC558:
+	.incbin	"baserom.gba", 0xDC558, 0x10
+	.global	gUnk_080DC568
+gUnk_080DC568:
+	.incbin	"baserom.gba", 0xDC568, 0x10
+	.global	gUnk_080DC578
+gUnk_080DC578:
+	.incbin	"baserom.gba", 0xDC578, 0x10
+	.global	gUnk_080DC588
+gUnk_080DC588:
+	.incbin	"baserom.gba", 0xDC588, 0x10
+	.global	gUnk_080DC598
+gUnk_080DC598:
+	.incbin	"baserom.gba", 0xDC598, 0x10
+	.global	gUnk_080DC5A8
+gUnk_080DC5A8:
+	.incbin	"baserom.gba", 0xDC5A8, 0x10
+	.global	gUnk_080DC5B8
+gUnk_080DC5B8:
+	.incbin	"baserom.gba", 0xDC5B8, 0x10
+	.global	gUnk_080DC5C8
+gUnk_080DC5C8:
+	.incbin	"baserom.gba", 0xDC5C8, 0x10
+	.global	gUnk_080DC5D8
+gUnk_080DC5D8:
+	.incbin	"baserom.gba", 0xDC5D8, 0x10
+	.global	gUnk_080DC5E8
+gUnk_080DC5E8:
+	.incbin	"baserom.gba", 0xDC5E8, 0x10
+	.global	gUnk_080DC5F8
+gUnk_080DC5F8:
+	.incbin	"baserom.gba", 0xDC5F8, 0x10
+	.global	gUnk_080DC608
+gUnk_080DC608:
+	.incbin	"baserom.gba", 0xDC608, 0x10
+	.global	gUnk_080DC618
+gUnk_080DC618:
+	.incbin	"baserom.gba", 0xDC618, 0x10
 	.global	gPlayerPalettes
 gPlayerPalettes:
 	.incbin	"baserom.gba", 0xDC628, 0x100
@@ -125,4 +2312,5278 @@ gUnk_080DCC48:
 	.incbin	"baserom.gba", 0xDCC48, 0x20
 	.global	gUnk_080DCC68
 gUnk_080DCC68:
-	.incbin	"baserom.gba", 0xDCC68, 0x43398
+	.incbin	"baserom.gba", 0xDCC68, 0x400
+	.global	gUnk_080DD068
+gUnk_080DD068:
+	.incbin	"baserom.gba", 0xDD068, 0x8
+	.global	gUnk_080DD070
+gUnk_080DD070:
+	.incbin	"baserom.gba", 0xDD070, 0x8
+	.global	gUnk_080DD078
+gUnk_080DD078:
+	.incbin	"baserom.gba", 0xDD078, 0x10
+	.global	gUnk_080DD088
+gUnk_080DD088:
+	.incbin	"baserom.gba", 0xDD088, 0x10
+	.global	gUnk_080DD098
+gUnk_080DD098:
+	.incbin	"baserom.gba", 0xDD098, 0x8
+	.global	gUnk_080DD0A0
+gUnk_080DD0A0:
+	.incbin	"baserom.gba", 0xDD0A0, 0x10
+	.global	gUnk_080DD0B0
+gUnk_080DD0B0:
+	.incbin	"baserom.gba", 0xDD0B0, 0x10
+	.global	gUnk_080DD0C0
+gUnk_080DD0C0:
+	.incbin	"baserom.gba", 0xDD0C0, 0x22
+	.global	gUnk_080DD0E2
+gUnk_080DD0E2:
+	.incbin	"baserom.gba", 0xDD0E2, 0x22
+	.global	gUnk_080DD104
+gUnk_080DD104:
+	.incbin	"baserom.gba", 0xDD104, 0x22
+	.global	gUnk_080DD126
+gUnk_080DD126:
+	.incbin	"baserom.gba", 0xDD126, 0x22
+	.global	gUnk_080DD148
+gUnk_080DD148:
+	.incbin	"baserom.gba", 0xDD148, 0x22
+	.global	gUnk_080DD16A
+gUnk_080DD16A:
+	.incbin	"baserom.gba", 0xDD16A, 0x22
+	.global	gUnk_080DD18C
+gUnk_080DD18C:
+	.incbin	"baserom.gba", 0xDD18C, 0x22
+	.global	gUnk_080DD1AE
+gUnk_080DD1AE:
+	.incbin	"baserom.gba", 0xDD1AE, 0x22
+	.global	gUnk_080DD1D0
+gUnk_080DD1D0:
+	.incbin	"baserom.gba", 0xDD1D0, 0x22
+	.global	gUnk_080DD1F2
+gUnk_080DD1F2:
+	.incbin	"baserom.gba", 0xDD1F2, 0x22
+	.global	gUnk_080DD214
+gUnk_080DD214:
+	.incbin	"baserom.gba", 0xDD214, 0x22
+	.global	gUnk_080DD236
+gUnk_080DD236:
+	.incbin	"baserom.gba", 0xDD236, 0x22
+	.global	gUnk_080DD258
+gUnk_080DD258:
+	.incbin	"baserom.gba", 0xDD258, 0x22
+	.global	gUnk_080DD27A
+gUnk_080DD27A:
+	.incbin	"baserom.gba", 0xDD27A, 0x22
+	.global	gUnk_080DD29C
+gUnk_080DD29C:
+	.incbin	"baserom.gba", 0xDD29C, 0x22
+	.global	gUnk_080DD2BE
+gUnk_080DD2BE:
+	.incbin	"baserom.gba", 0xDD2BE, 0x22
+	.global	gUnk_080DD2E0
+gUnk_080DD2E0:
+	.incbin	"baserom.gba", 0xDD2E0, 0x22
+	.global	gUnk_080DD302
+gUnk_080DD302:
+	.incbin	"baserom.gba", 0xDD302, 0x22
+	.global	gUnk_080DD324
+gUnk_080DD324:
+	.incbin	"baserom.gba", 0xDD324, 0x22
+	.global	gUnk_080DD346
+gUnk_080DD346:
+	.incbin	"baserom.gba", 0xDD346, 0x22
+	.global	gUnk_080DD368
+gUnk_080DD368:
+	.incbin	"baserom.gba", 0xDD368, 0x126
+	.global	gUnk_080DD48E
+gUnk_080DD48E:
+	.incbin	"baserom.gba", 0xDD48E, 0x106
+	.global	gUnk_080DD594
+gUnk_080DD594:
+	.incbin	"baserom.gba", 0xDD594, 0x126
+	.global	gUnk_080DD6BA
+gUnk_080DD6BA:
+	.incbin	"baserom.gba", 0xDD6BA, 0xC6
+	.global	gUnk_080DD780
+gUnk_080DD780:
+	.incbin	"baserom.gba", 0xDD780, 0x126
+	.global	gUnk_080DD8A6
+gUnk_080DD8A6:
+	.incbin	"baserom.gba", 0xDD8A6, 0xC6
+	.global	gUnk_080DD96C
+gUnk_080DD96C:
+	.incbin	"baserom.gba", 0xDD96C, 0x126
+	.global	gUnk_080DDA92
+gUnk_080DDA92:
+	.incbin	"baserom.gba", 0xDDA92, 0xC6
+	.global	gUnk_080DDB58
+gUnk_080DDB58:
+	.incbin	"baserom.gba", 0xDDB58, 0x126
+	.global	gUnk_080DDC7E
+gUnk_080DDC7E:
+	.incbin	"baserom.gba", 0xDDC7E, 0xC6
+	.global	gUnk_080DDD44
+gUnk_080DDD44:
+	.incbin	"baserom.gba", 0xDDD44, 0x126
+	.global	gUnk_080DDE6A
+gUnk_080DDE6A:
+	.incbin	"baserom.gba", 0xDDE6A, 0xC6
+	.global	gUnk_080DDF30
+gUnk_080DDF30:
+	.incbin	"baserom.gba", 0xDDF30, 0x106
+	.global	gUnk_080DE036
+gUnk_080DE036:
+	.incbin	"baserom.gba", 0xDE036, 0x106
+	.global	gUnk_080DE13C
+gUnk_080DE13C:
+	.incbin	"baserom.gba", 0xDE13C, 0x106
+	.global	gUnk_080DE242
+gUnk_080DE242:
+	.incbin	"baserom.gba", 0xDE242, 0x106
+	.global	gUnk_080DE348
+gUnk_080DE348:
+	.incbin	"baserom.gba", 0xDE348, 0x106
+	.global	gUnk_080DE44E
+gUnk_080DE44E:
+	.incbin	"baserom.gba", 0xDE44E, 0x106
+	.global	gUnk_080DE554
+gUnk_080DE554:
+	.incbin	"baserom.gba", 0xDE554, 0x126
+	.global	gUnk_080DE67A
+gUnk_080DE67A:
+	.incbin	"baserom.gba", 0xDE67A, 0x106
+	.global	gUnk_080DE780
+gUnk_080DE780:
+	.incbin	"baserom.gba", 0xDE780, 0x106
+	.global	gUnk_080DE886
+gUnk_080DE886:
+	.incbin	"baserom.gba", 0xDE886, 0xC6
+	.global	gUnk_080DE94C
+gUnk_080DE94C:
+	.incbin	"baserom.gba", 0xDE94C, 0xC6
+	.global	gUnk_080DEA12
+gUnk_080DEA12:
+	.incbin	"baserom.gba", 0xDEA12, 0x186
+	.global	gUnk_080DEB98
+gUnk_080DEB98:
+	.incbin	"baserom.gba", 0xDEB98, 0x186
+	.global	gUnk_080DED1E
+gUnk_080DED1E:
+	.incbin	"baserom.gba", 0xDED1E, 0x186
+	.global	gUnk_080DEEA4
+gUnk_080DEEA4:
+	.incbin	"baserom.gba", 0xDEEA4, 0x186
+	.global	gUnk_080DF02A
+gUnk_080DF02A:
+	.incbin	"baserom.gba", 0xDF02A, 0xA6
+	.global	gUnk_080DF0D0
+gUnk_080DF0D0:
+	.incbin	"baserom.gba", 0xDF0D0, 0xA6
+	.global	gUnk_080DF176
+gUnk_080DF176:
+	.incbin	"baserom.gba", 0xDF176, 0xC6
+	.global	gUnk_080DF23C
+gUnk_080DF23C:
+	.incbin	"baserom.gba", 0xDF23C, 0xC6
+	.global	gUnk_080DF302
+gUnk_080DF302:
+	.incbin	"baserom.gba", 0xDF302, 0xE6
+	.global	gUnk_080DF3E8
+gUnk_080DF3E8:
+	.incbin	"baserom.gba", 0xDF3E8, 0x106
+	.global	gUnk_080DF4EE
+gUnk_080DF4EE:
+	.incbin	"baserom.gba", 0xDF4EE, 0xC6
+	.global	gUnk_080DF5B4
+gUnk_080DF5B4:
+	.incbin	"baserom.gba", 0xDF5B4, 0xC6
+	.global	gUnk_080DF67A
+gUnk_080DF67A:
+	.incbin	"baserom.gba", 0xDF67A, 0x126
+	.global	gUnk_080DF7A0
+gUnk_080DF7A0:
+	.incbin	"baserom.gba", 0xDF7A0, 0x106
+	.global	gUnk_080DF8A6
+gUnk_080DF8A6:
+	.incbin	"baserom.gba", 0xDF8A6, 0x126
+	.global	gUnk_080DF9CC
+gUnk_080DF9CC:
+	.incbin	"baserom.gba", 0xDF9CC, 0xC6
+	.global	gUnk_080DFA92
+gUnk_080DFA92:
+	.incbin	"baserom.gba", 0xDFA92, 0xC6
+	.global	gUnk_080DFB58
+gUnk_080DFB58:
+	.incbin	"baserom.gba", 0xDFB58, 0x126
+	.global	gUnk_080DFC7E
+gUnk_080DFC7E:
+	.incbin	"baserom.gba", 0xDFC7E, 0xC6
+	.global	gUnk_080DFD44
+gUnk_080DFD44:
+	.incbin	"baserom.gba", 0xDFD44, 0x126
+	.global	gUnk_080DFE6A
+gUnk_080DFE6A:
+	.incbin	"baserom.gba", 0xDFE6A, 0x126
+	.global	gUnk_080DFF90
+gUnk_080DFF90:
+	.incbin	"baserom.gba", 0xDFF90, 0x106
+	.global	gUnk_080E0096
+gUnk_080E0096:
+	.incbin	"baserom.gba", 0xE0096, 0x126
+	.global	gUnk_080E01BC
+gUnk_080E01BC:
+	.incbin	"baserom.gba", 0xE01BC, 0x126
+	.global	gUnk_080E02E2
+gUnk_080E02E2:
+	.incbin	"baserom.gba", 0xE02E2, 0xC6
+	.global	gUnk_080E03A8
+gUnk_080E03A8:
+	.incbin	"baserom.gba", 0xE03A8, 0xC6
+	.global	gUnk_080E046E
+gUnk_080E046E:
+	.incbin	"baserom.gba", 0xE046E, 0xC6
+	.global	gUnk_080E0534
+gUnk_080E0534:
+	.incbin	"baserom.gba", 0xE0534, 0xC6
+	.global	gUnk_080E05FA
+gUnk_080E05FA:
+	.incbin	"baserom.gba", 0xE05FA, 0x106
+	.global	gUnk_080E0700
+gUnk_080E0700:
+	.incbin	"baserom.gba", 0xE0700, 0xC6
+	.global	gUnk_080E07C6
+gUnk_080E07C6:
+	.incbin	"baserom.gba", 0xE07C6, 0xE6
+	.global	gUnk_080E08AC
+gUnk_080E08AC:
+	.incbin	"baserom.gba", 0xE08AC, 0x106
+	.global	gUnk_080E09B2
+gUnk_080E09B2:
+	.incbin	"baserom.gba", 0xE09B2, 0xA6
+	.global	gUnk_080E0A58
+gUnk_080E0A58:
+	.incbin	"baserom.gba", 0xE0A58, 0xA6
+	.global	gUnk_080E0AFE
+gUnk_080E0AFE:
+	.incbin	"baserom.gba", 0xE0AFE, 0xA6
+	.global	gUnk_080E0BA4
+gUnk_080E0BA4:
+	.incbin	"baserom.gba", 0xE0BA4, 0xA6
+	.global	gUnk_080E0C4A
+gUnk_080E0C4A:
+	.incbin	"baserom.gba", 0xE0C4A, 0x106
+	.global	gUnk_080E0D50
+gUnk_080E0D50:
+	.incbin	"baserom.gba", 0xE0D50, 0xE6
+	.global	gUnk_080E0E36
+gUnk_080E0E36:
+	.incbin	"baserom.gba", 0xE0E36, 0xE6
+	.global	gUnk_080E0F1C
+gUnk_080E0F1C:
+	.incbin	"baserom.gba", 0xE0F1C, 0x106
+	.global	gUnk_080E1022
+gUnk_080E1022:
+	.incbin	"baserom.gba", 0xE1022, 0xA6
+	.global	gUnk_080E10C8
+gUnk_080E10C8:
+	.incbin	"baserom.gba", 0xE10C8, 0xA6
+	.global	gUnk_080E116E
+gUnk_080E116E:
+	.incbin	"baserom.gba", 0xE116E, 0x106
+	.global	gUnk_080E1274
+gUnk_080E1274:
+	.incbin	"baserom.gba", 0xE1274, 0xC6
+	.global	gUnk_080E133A
+gUnk_080E133A:
+	.incbin	"baserom.gba", 0xE133A, 0xE6
+	.global	gUnk_080E1420
+gUnk_080E1420:
+	.incbin	"baserom.gba", 0xE1420, 0x106
+	.global	gUnk_080E1526
+gUnk_080E1526:
+	.incbin	"baserom.gba", 0xE1526, 0xA6
+	.global	gUnk_080E15CC
+gUnk_080E15CC:
+	.incbin	"baserom.gba", 0xE15CC, 0xA6
+	.global	gUnk_080E1672
+gUnk_080E1672:
+	.incbin	"baserom.gba", 0xE1672, 0xA6
+	.global	gUnk_080E1718
+gUnk_080E1718:
+	.incbin	"baserom.gba", 0xE1718, 0xA6
+	.global	gUnk_080E17BE
+gUnk_080E17BE:
+	.incbin	"baserom.gba", 0xE17BE, 0x106
+	.global	gUnk_080E18C4
+gUnk_080E18C4:
+	.incbin	"baserom.gba", 0xE18C4, 0x106
+	.global	gUnk_080E19CA
+gUnk_080E19CA:
+	.incbin	"baserom.gba", 0xE19CA, 0x126
+	.global	gUnk_080E1AF0
+gUnk_080E1AF0:
+	.incbin	"baserom.gba", 0xE1AF0, 0xC6
+	.global	gUnk_080E1BB6
+gUnk_080E1BB6:
+	.incbin	"baserom.gba", 0xE1BB6, 0xC6
+	.global	gUnk_080E1C7C
+gUnk_080E1C7C:
+	.incbin	"baserom.gba", 0xE1C7C, 0xC6
+	.global	gUnk_080E1D42
+gUnk_080E1D42:
+	.incbin	"baserom.gba", 0xE1D42, 0xC6
+	.global	gUnk_080E1E08
+gUnk_080E1E08:
+	.incbin	"baserom.gba", 0xE1E08, 0xC6
+	.global	gUnk_080E1ECE
+gUnk_080E1ECE:
+	.incbin	"baserom.gba", 0xE1ECE, 0xC6
+	.global	gUnk_080E1F94
+gUnk_080E1F94:
+	.incbin	"baserom.gba", 0xE1F94, 0xE6
+	.global	gUnk_080E207A
+gUnk_080E207A:
+	.incbin	"baserom.gba", 0xE207A, 0xE6
+	.global	gUnk_080E2160
+gUnk_080E2160:
+	.incbin	"baserom.gba", 0xE2160, 0xE6
+	.global	gUnk_080E2246
+gUnk_080E2246:
+	.incbin	"baserom.gba", 0xE2246, 0x126
+	.global	gUnk_080E236C
+gUnk_080E236C:
+	.incbin	"baserom.gba", 0xE236C, 0x106
+	.global	gUnk_080E2472
+gUnk_080E2472:
+	.incbin	"baserom.gba", 0xE2472, 0x126
+	.global	gUnk_080E2598
+gUnk_080E2598:
+	.incbin	"baserom.gba", 0xE2598, 0xC6
+	.global	gUnk_080E265E
+gUnk_080E265E:
+	.incbin	"baserom.gba", 0xE265E, 0x126
+	.global	gUnk_080E2784
+gUnk_080E2784:
+	.incbin	"baserom.gba", 0xE2784, 0xC6
+	.global	gUnk_080E284A
+gUnk_080E284A:
+	.incbin	"baserom.gba", 0xE284A, 0x126
+	.global	gUnk_080E2970
+gUnk_080E2970:
+	.incbin	"baserom.gba", 0xE2970, 0xC6
+	.global	gUnk_080E2A36
+gUnk_080E2A36:
+	.incbin	"baserom.gba", 0xE2A36, 0x126
+	.global	gUnk_080E2B5C
+gUnk_080E2B5C:
+	.incbin	"baserom.gba", 0xE2B5C, 0xC6
+	.global	gUnk_080E2C22
+gUnk_080E2C22:
+	.incbin	"baserom.gba", 0xE2C22, 0x126
+	.global	gUnk_080E2D48
+gUnk_080E2D48:
+	.incbin	"baserom.gba", 0xE2D48, 0x126
+	.global	gUnk_080E2E6E
+gUnk_080E2E6E:
+	.incbin	"baserom.gba", 0xE2E6E, 0x106
+	.global	gUnk_080E2F74
+gUnk_080E2F74:
+	.incbin	"baserom.gba", 0xE2F74, 0x106
+	.global	gUnk_080E307A
+gUnk_080E307A:
+	.incbin	"baserom.gba", 0xE307A, 0x126
+	.global	gUnk_080E31A0
+gUnk_080E31A0:
+	.incbin	"baserom.gba", 0xE31A0, 0x106
+	.global	gUnk_080E32A6
+gUnk_080E32A6:
+	.incbin	"baserom.gba", 0xE32A6, 0x106
+	.global	gUnk_080E33AC
+gUnk_080E33AC:
+	.incbin	"baserom.gba", 0xE33AC, 0x106
+	.global	gUnk_080E34B2
+gUnk_080E34B2:
+	.incbin	"baserom.gba", 0xE34B2, 0x126
+	.global	gUnk_080E35D8
+gUnk_080E35D8:
+	.incbin	"baserom.gba", 0xE35D8, 0x126
+	.global	gUnk_080E36FE
+gUnk_080E36FE:
+	.incbin	"baserom.gba", 0xE36FE, 0x106
+	.global	gUnk_080E3804
+gUnk_080E3804:
+	.incbin	"baserom.gba", 0xE3804, 0x126
+	.global	gUnk_080E392A
+gUnk_080E392A:
+	.incbin	"baserom.gba", 0xE392A, 0xC6
+	.global	gUnk_080E39F0
+gUnk_080E39F0:
+	.incbin	"baserom.gba", 0xE39F0, 0x126
+	.global	gUnk_080E3B16
+gUnk_080E3B16:
+	.incbin	"baserom.gba", 0xE3B16, 0xC6
+	.global	gUnk_080E3BDC
+gUnk_080E3BDC:
+	.incbin	"baserom.gba", 0xE3BDC, 0x126
+	.global	gUnk_080E3D02
+gUnk_080E3D02:
+	.incbin	"baserom.gba", 0xE3D02, 0xC6
+	.global	gUnk_080E3DC8
+gUnk_080E3DC8:
+	.incbin	"baserom.gba", 0xE3DC8, 0x126
+	.global	gUnk_080E3EEE
+gUnk_080E3EEE:
+	.incbin	"baserom.gba", 0xE3EEE, 0xC6
+	.global	gUnk_080E3FB4
+gUnk_080E3FB4:
+	.incbin	"baserom.gba", 0xE3FB4, 0x126
+	.global	gUnk_080E40DA
+gUnk_080E40DA:
+	.incbin	"baserom.gba", 0xE40DA, 0x20
+	.global	gUnk_080E40FA
+gUnk_080E40FA:
+	.incbin	"baserom.gba", 0xE40FA, 0x8
+	.global	gUnk_080E4102
+gUnk_080E4102:
+	.incbin	"baserom.gba", 0xE4102, 0x20
+	.global	gUnk_080E4122
+gUnk_080E4122:
+	.incbin	"baserom.gba", 0xE4122, 0x10
+	.global	gUnk_080E4132
+gUnk_080E4132:
+	.incbin	"baserom.gba", 0xE4132, 0x20
+	.global	gUnk_080E4152
+gUnk_080E4152:
+	.incbin	"baserom.gba", 0xE4152, 0x10
+	.global	gUnk_080E4162
+gUnk_080E4162:
+	.incbin	"baserom.gba", 0xE4162, 0x20
+	.global	gUnk_080E4182
+gUnk_080E4182:
+	.incbin	"baserom.gba", 0xE4182, 0x10
+	.global	gUnk_080E4192
+gUnk_080E4192:
+	.incbin	"baserom.gba", 0xE4192, 0x20
+	.global	gUnk_080E41B2
+gUnk_080E41B2:
+	.incbin	"baserom.gba", 0xE41B2, 0x10
+	.global	gUnk_080E41C2
+gUnk_080E41C2:
+	.incbin	"baserom.gba", 0xE41C2, 0x20
+	.global	gUnk_080E41E2
+gUnk_080E41E2:
+	.incbin	"baserom.gba", 0xE41E2, 0x30
+	.global	gUnk_080E4212
+gUnk_080E4212:
+	.incbin	"baserom.gba", 0xE4212, 0x28
+	.global	gUnk_080E423A
+gUnk_080E423A:
+	.incbin	"baserom.gba", 0xE423A, 0x28
+	.global	gUnk_080E4262
+gUnk_080E4262:
+	.incbin	"baserom.gba", 0xE4262, 0x28
+	.global	gUnk_080E428A
+gUnk_080E428A:
+	.incbin	"baserom.gba", 0xE428A, 0x28
+	.global	gUnk_080E42B2
+gUnk_080E42B2:
+	.incbin	"baserom.gba", 0xE42B2, 0x20
+	.global	gUnk_080E42D2
+gUnk_080E42D2:
+	.incbin	"baserom.gba", 0xE42D2, 0x20
+	.global	gUnk_080E42F2
+gUnk_080E42F2:
+	.incbin	"baserom.gba", 0xE42F2, 0x20
+	.global	gUnk_080E4312
+gUnk_080E4312:
+	.incbin	"baserom.gba", 0xE4312, 0x40
+	.global	gUnk_080E4352
+gUnk_080E4352:
+	.incbin	"baserom.gba", 0xE4352, 0x38
+	.global	gUnk_080E438A
+gUnk_080E438A:
+	.incbin	"baserom.gba", 0xE438A, 0x38
+	.global	gUnk_080E43C2
+gUnk_080E43C2:
+	.incbin	"baserom.gba", 0xE43C2, 0x38
+	.global	gUnk_080E43FA
+gUnk_080E43FA:
+	.incbin	"baserom.gba", 0xE43FA, 0x40
+	.global	gUnk_080E443A
+gUnk_080E443A:
+	.incbin	"baserom.gba", 0xE443A, 0x38
+	.global	gUnk_080E4472
+gUnk_080E4472:
+	.incbin	"baserom.gba", 0xE4472, 0x38
+	.global	gUnk_080E44AA
+gUnk_080E44AA:
+	.incbin	"baserom.gba", 0xE44AA, 0x38
+	.global	gUnk_080E44E2
+gUnk_080E44E2:
+	.incbin	"baserom.gba", 0xE44E2, 0x30
+	.global	gUnk_080E4512
+gUnk_080E4512:
+	.incbin	"baserom.gba", 0xE4512, 0x28
+	.global	gUnk_080E453A
+gUnk_080E453A:
+	.incbin	"baserom.gba", 0xE453A, 0x28
+	.global	gUnk_080E4562
+gUnk_080E4562:
+	.incbin	"baserom.gba", 0xE4562, 0x28
+	.global	gUnk_080E458A
+gUnk_080E458A:
+	.incbin	"baserom.gba", 0xE458A, 0x30
+	.global	gUnk_080E45BA
+gUnk_080E45BA:
+	.incbin	"baserom.gba", 0xE45BA, 0x28
+	.global	gUnk_080E45E2
+gUnk_080E45E2:
+	.incbin	"baserom.gba", 0xE45E2, 0x28
+	.global	gUnk_080E460A
+gUnk_080E460A:
+	.incbin	"baserom.gba", 0xE460A, 0x28
+	.global	gUnk_080E4632
+gUnk_080E4632:
+	.incbin	"baserom.gba", 0xE4632, 0x40
+	.global	gUnk_080E4672
+gUnk_080E4672:
+	.incbin	"baserom.gba", 0xE4672, 0x38
+	.global	gUnk_080E46AA
+gUnk_080E46AA:
+	.incbin	"baserom.gba", 0xE46AA, 0x38
+	.global	gUnk_080E46E2
+gUnk_080E46E2:
+	.incbin	"baserom.gba", 0xE46E2, 0x38
+	.global	gUnk_080E471A
+gUnk_080E471A:
+	.incbin	"baserom.gba", 0xE471A, 0x40
+	.global	gUnk_080E475A
+gUnk_080E475A:
+	.incbin	"baserom.gba", 0xE475A, 0x38
+	.global	gUnk_080E4792
+gUnk_080E4792:
+	.incbin	"baserom.gba", 0xE4792, 0x38
+	.global	gUnk_080E47CA
+gUnk_080E47CA:
+	.incbin	"baserom.gba", 0xE47CA, 0x38
+	.global	gUnk_080E4802
+gUnk_080E4802:
+	.incbin	"baserom.gba", 0xE4802, 0x30
+	.global	gUnk_080E4832
+gUnk_080E4832:
+	.incbin	"baserom.gba", 0xE4832, 0x28
+	.global	gUnk_080E485A
+gUnk_080E485A:
+	.incbin	"baserom.gba", 0xE485A, 0x28
+	.global	gUnk_080E4882
+gUnk_080E4882:
+	.incbin	"baserom.gba", 0xE4882, 0x28
+	.global	gUnk_080E48AA
+gUnk_080E48AA:
+	.incbin	"baserom.gba", 0xE48AA, 0x30
+	.global	gUnk_080E48DA
+gUnk_080E48DA:
+	.incbin	"baserom.gba", 0xE48DA, 0x28
+	.global	gUnk_080E4902
+gUnk_080E4902:
+	.incbin	"baserom.gba", 0xE4902, 0x28
+	.global	gUnk_080E492A
+gUnk_080E492A:
+	.incbin	"baserom.gba", 0xE492A, 0x28
+	.global	gUnk_080E4952
+gUnk_080E4952:
+	.incbin	"baserom.gba", 0xE4952, 0x40
+	.global	gUnk_080E4992
+gUnk_080E4992:
+	.incbin	"baserom.gba", 0xE4992, 0x38
+	.global	gUnk_080E49CA
+gUnk_080E49CA:
+	.incbin	"baserom.gba", 0xE49CA, 0x40
+	.global	gUnk_080E4A0A
+gUnk_080E4A0A:
+	.incbin	"baserom.gba", 0xE4A0A, 0x38
+	.global	gUnk_080E4A42
+gUnk_080E4A42:
+	.incbin	"baserom.gba", 0xE4A42, 0x40
+	.global	gUnk_080E4A82
+gUnk_080E4A82:
+	.incbin	"baserom.gba", 0xE4A82, 0x18
+	.global	gUnk_080E4A9A
+gUnk_080E4A9A:
+	.incbin	"baserom.gba", 0xE4A9A, 0x40
+	.global	gUnk_080E4ADA
+gUnk_080E4ADA:
+	.incbin	"baserom.gba", 0xE4ADA, 0x20
+	.global	gUnk_080E4AFA
+gUnk_080E4AFA:
+	.incbin	"baserom.gba", 0xE4AFA, 0x40
+	.global	gUnk_080E4B3A
+gUnk_080E4B3A:
+	.incbin	"baserom.gba", 0xE4B3A, 0x20
+	.global	gUnk_080E4B5A
+gUnk_080E4B5A:
+	.incbin	"baserom.gba", 0xE4B5A, 0x40
+	.global	gUnk_080E4B9A
+gUnk_080E4B9A:
+	.incbin	"baserom.gba", 0xE4B9A, 0x20
+	.global	gUnk_080E4BBA
+gUnk_080E4BBA:
+	.incbin	"baserom.gba", 0xE4BBA, 0x40
+	.global	gUnk_080E4BFA
+gUnk_080E4BFA:
+	.incbin	"baserom.gba", 0xE4BFA, 0x20
+	.global	gUnk_080E4C1A
+gUnk_080E4C1A:
+	.incbin	"baserom.gba", 0xE4C1A, 0x38
+	.global	gUnk_080E4C52
+gUnk_080E4C52:
+	.incbin	"baserom.gba", 0xE4C52, 0x38
+	.global	gUnk_080E4C8A
+gUnk_080E4C8A:
+	.incbin	"baserom.gba", 0xE4C8A, 0x38
+	.global	gUnk_080E4CC2
+gUnk_080E4CC2:
+	.incbin	"baserom.gba", 0xE4CC2, 0x38
+	.global	gUnk_080E4CFA
+gUnk_080E4CFA:
+	.incbin	"baserom.gba", 0xE4CFA, 0x38
+	.global	gUnk_080E4D32
+gUnk_080E4D32:
+	.incbin	"baserom.gba", 0xE4D32, 0x20
+	.global	gUnk_080E4D52
+gUnk_080E4D52:
+	.incbin	"baserom.gba", 0xE4D52, 0x20
+	.global	gUnk_080E4D72
+gUnk_080E4D72:
+	.incbin	"baserom.gba", 0xE4D72, 0x20
+	.global	gUnk_080E4D92
+gUnk_080E4D92:
+	.incbin	"baserom.gba", 0xE4D92, 0x20
+	.global	gUnk_080E4DB2
+gUnk_080E4DB2:
+	.incbin	"baserom.gba", 0xE4DB2, 0x38
+	.global	gUnk_080E4DEA
+gUnk_080E4DEA:
+	.incbin	"baserom.gba", 0xE4DEA, 0x38
+	.global	gUnk_080E4E22
+gUnk_080E4E22:
+	.incbin	"baserom.gba", 0xE4E22, 0x38
+	.global	gUnk_080E4E5A
+gUnk_080E4E5A:
+	.incbin	"baserom.gba", 0xE4E5A, 0x38
+	.global	gUnk_080E4E92
+gUnk_080E4E92:
+	.incbin	"baserom.gba", 0xE4E92, 0x38
+	.global	gUnk_080E4ECA
+gUnk_080E4ECA:
+	.incbin	"baserom.gba", 0xE4ECA, 0x38
+	.global	gUnk_080E4F02
+gUnk_080E4F02:
+	.incbin	"baserom.gba", 0xE4F02, 0x38
+	.global	gUnk_080E4F3A
+gUnk_080E4F3A:
+	.incbin	"baserom.gba", 0xE4F3A, 0x38
+	.global	gUnk_080E4F72
+gUnk_080E4F72:
+	.incbin	"baserom.gba", 0xE4F72, 0x28
+	.global	gUnk_080E4F9A
+gUnk_080E4F9A:
+	.incbin	"baserom.gba", 0xE4F9A, 0x28
+	.global	gUnk_080E4FC2
+gUnk_080E4FC2:
+	.incbin	"baserom.gba", 0xE4FC2, 0x28
+	.global	gUnk_080E4FEA
+gUnk_080E4FEA:
+	.incbin	"baserom.gba", 0xE4FEA, 0x28
+	.global	gUnk_080E5012
+gUnk_080E5012:
+	.incbin	"baserom.gba", 0xE5012, 0x28
+	.global	gUnk_080E503A
+gUnk_080E503A:
+	.incbin	"baserom.gba", 0xE503A, 0x28
+	.global	gUnk_080E5062
+gUnk_080E5062:
+	.incbin	"baserom.gba", 0xE5062, 0x28
+	.global	gUnk_080E508A
+gUnk_080E508A:
+	.incbin	"baserom.gba", 0xE508A, 0x28
+	.global	gUnk_080E50B2
+gUnk_080E50B2:
+	.incbin	"baserom.gba", 0xE50B2, 0x38
+	.global	gUnk_080E50EA
+gUnk_080E50EA:
+	.incbin	"baserom.gba", 0xE50EA, 0x38
+	.global	gUnk_080E5122
+gUnk_080E5122:
+	.incbin	"baserom.gba", 0xE5122, 0x38
+	.global	gUnk_080E515A
+gUnk_080E515A:
+	.incbin	"baserom.gba", 0xE515A, 0x38
+	.global	gUnk_080E5192
+gUnk_080E5192:
+	.incbin	"baserom.gba", 0xE5192, 0x38
+	.global	gUnk_080E51CA
+gUnk_080E51CA:
+	.incbin	"baserom.gba", 0xE51CA, 0x38
+	.global	gUnk_080E5202
+gUnk_080E5202:
+	.incbin	"baserom.gba", 0xE5202, 0x38
+	.global	gUnk_080E523A
+gUnk_080E523A:
+	.incbin	"baserom.gba", 0xE523A, 0x38
+	.global	gUnk_080E5272
+gUnk_080E5272:
+	.incbin	"baserom.gba", 0xE5272, 0x28
+	.global	gUnk_080E529A
+gUnk_080E529A:
+	.incbin	"baserom.gba", 0xE529A, 0x28
+	.global	gUnk_080E52C2
+gUnk_080E52C2:
+	.incbin	"baserom.gba", 0xE52C2, 0x28
+	.global	gUnk_080E52EA
+gUnk_080E52EA:
+	.incbin	"baserom.gba", 0xE52EA, 0x28
+	.global	gUnk_080E5312
+gUnk_080E5312:
+	.incbin	"baserom.gba", 0xE5312, 0x28
+	.global	gUnk_080E533A
+gUnk_080E533A:
+	.incbin	"baserom.gba", 0xE533A, 0x28
+	.global	gUnk_080E5362
+gUnk_080E5362:
+	.incbin	"baserom.gba", 0xE5362, 0x28
+	.global	gUnk_080E538A
+gUnk_080E538A:
+	.incbin	"baserom.gba", 0xE538A, 0x28
+	.global	gUnk_080E53B2
+gUnk_080E53B2:
+	.incbin	"baserom.gba", 0xE53B2, 0x38
+	.global	gUnk_080E53EA
+gUnk_080E53EA:
+	.incbin	"baserom.gba", 0xE53EA, 0x38
+	.global	gUnk_080E5422
+gUnk_080E5422:
+	.incbin	"baserom.gba", 0xE5422, 0x38
+	.global	gUnk_080E545A
+gUnk_080E545A:
+	.incbin	"baserom.gba", 0xE545A, 0x38
+	.global	gUnk_080E5492
+gUnk_080E5492:
+	.incbin	"baserom.gba", 0xE5492, 0x30
+	.global	gUnk_080E54C2
+gUnk_080E54C2:
+	.incbin	"baserom.gba", 0xE54C2, 0x18
+	.global	gUnk_080E54DA
+gUnk_080E54DA:
+	.incbin	"baserom.gba", 0xE54DA, 0x30
+	.global	gUnk_080E550A
+gUnk_080E550A:
+	.incbin	"baserom.gba", 0xE550A, 0x20
+	.global	gUnk_080E552A
+gUnk_080E552A:
+	.incbin	"baserom.gba", 0xE552A, 0x30
+	.global	gUnk_080E555A
+gUnk_080E555A:
+	.incbin	"baserom.gba", 0xE555A, 0x20
+	.global	gUnk_080E557A
+gUnk_080E557A:
+	.incbin	"baserom.gba", 0xE557A, 0x30
+	.global	gUnk_080E55AA
+gUnk_080E55AA:
+	.incbin	"baserom.gba", 0xE55AA, 0x20
+	.global	gUnk_080E55CA
+gUnk_080E55CA:
+	.incbin	"baserom.gba", 0xE55CA, 0x30
+	.global	gUnk_080E55FA
+gUnk_080E55FA:
+	.incbin	"baserom.gba", 0xE55FA, 0x20
+	.global	gUnk_080E561A
+gUnk_080E561A:
+	.incbin	"baserom.gba", 0xE561A, 0x30
+	.global	gUnk_080E564A
+gUnk_080E564A:
+	.incbin	"baserom.gba", 0xE564A, 0x30
+	.global	gUnk_080E567A
+gUnk_080E567A:
+	.incbin	"baserom.gba", 0xE567A, 0x18
+	.global	gUnk_080E5692
+gUnk_080E5692:
+	.incbin	"baserom.gba", 0xE5692, 0x30
+	.global	gUnk_080E56C2
+gUnk_080E56C2:
+	.incbin	"baserom.gba", 0xE56C2, 0x20
+	.global	gUnk_080E56E2
+gUnk_080E56E2:
+	.incbin	"baserom.gba", 0xE56E2, 0x30
+	.global	gUnk_080E5712
+gUnk_080E5712:
+	.incbin	"baserom.gba", 0xE5712, 0x20
+	.global	gUnk_080E5732
+gUnk_080E5732:
+	.incbin	"baserom.gba", 0xE5732, 0x30
+	.global	gUnk_080E5762
+gUnk_080E5762:
+	.incbin	"baserom.gba", 0xE5762, 0x20
+	.global	gUnk_080E5782
+gUnk_080E5782:
+	.incbin	"baserom.gba", 0xE5782, 0x30
+	.global	gUnk_080E57B2
+gUnk_080E57B2:
+	.incbin	"baserom.gba", 0xE57B2, 0x20
+	.global	gUnk_080E57D2
+gUnk_080E57D2:
+	.incbin	"baserom.gba", 0xE57D2, 0x30
+	.global	gUnk_080E5802
+gUnk_080E5802:
+	.incbin	"baserom.gba", 0xE5802, 0x28
+	.global	gUnk_080E582A
+gUnk_080E582A:
+	.incbin	"baserom.gba", 0xE582A, 0x10
+	.global	gUnk_080E583A
+gUnk_080E583A:
+	.incbin	"baserom.gba", 0xE583A, 0x38
+	.global	gUnk_080E5872
+gUnk_080E5872:
+	.incbin	"baserom.gba", 0xE5872, 0x18
+	.global	gUnk_080E588A
+gUnk_080E588A:
+	.incbin	"baserom.gba", 0xE588A, 0x38
+	.global	gUnk_080E58C2
+gUnk_080E58C2:
+	.incbin	"baserom.gba", 0xE58C2, 0x18
+	.global	gUnk_080E58DA
+gUnk_080E58DA:
+	.incbin	"baserom.gba", 0xE58DA, 0x38
+	.global	gUnk_080E5912
+gUnk_080E5912:
+	.incbin	"baserom.gba", 0xE5912, 0x18
+	.global	gUnk_080E592A
+gUnk_080E592A:
+	.incbin	"baserom.gba", 0xE592A, 0x38
+	.global	gUnk_080E5962
+gUnk_080E5962:
+	.incbin	"baserom.gba", 0xE5962, 0x18
+	.global	gUnk_080E597A
+gUnk_080E597A:
+	.incbin	"baserom.gba", 0xE597A, 0x20
+	.global	gUnk_080E599A
+gUnk_080E599A:
+	.incbin	"baserom.gba", 0xE599A, 0x30
+	.global	gUnk_080E59CA
+gUnk_080E59CA:
+	.incbin	"baserom.gba", 0xE59CA, 0x18
+	.global	gUnk_080E59E2
+gUnk_080E59E2:
+	.incbin	"baserom.gba", 0xE59E2, 0x30
+	.global	gUnk_080E5A12
+gUnk_080E5A12:
+	.incbin	"baserom.gba", 0xE5A12, 0x20
+	.global	gUnk_080E5A32
+gUnk_080E5A32:
+	.incbin	"baserom.gba", 0xE5A32, 0x30
+	.global	gUnk_080E5A62
+gUnk_080E5A62:
+	.incbin	"baserom.gba", 0xE5A62, 0x20
+	.global	gUnk_080E5A82
+gUnk_080E5A82:
+	.incbin	"baserom.gba", 0xE5A82, 0x30
+	.global	gUnk_080E5AB2
+gUnk_080E5AB2:
+	.incbin	"baserom.gba", 0xE5AB2, 0x20
+	.global	gUnk_080E5AD2
+gUnk_080E5AD2:
+	.incbin	"baserom.gba", 0xE5AD2, 0x30
+	.global	gUnk_080E5B02
+gUnk_080E5B02:
+	.incbin	"baserom.gba", 0xE5B02, 0x20
+	.global	gUnk_080E5B22
+gUnk_080E5B22:
+	.incbin	"baserom.gba", 0xE5B22, 0x30
+	.global	gUnk_080E5B52
+gUnk_080E5B52:
+	.incbin	"baserom.gba", 0xE5B52, 0x40
+	.global	gUnk_080E5B92
+gUnk_080E5B92:
+	.incbin	"baserom.gba", 0xE5B92, 0x10
+	.global	gUnk_080E5BA2
+gUnk_080E5BA2:
+	.incbin	"baserom.gba", 0xE5BA2, 0x40
+	.global	gUnk_080E5BE2
+gUnk_080E5BE2:
+	.incbin	"baserom.gba", 0xE5BE2, 0x18
+	.global	gUnk_080E5BFA
+gUnk_080E5BFA:
+	.incbin	"baserom.gba", 0xE5BFA, 0x40
+	.global	gUnk_080E5C3A
+gUnk_080E5C3A:
+	.incbin	"baserom.gba", 0xE5C3A, 0x18
+	.global	gUnk_080E5C52
+gUnk_080E5C52:
+	.incbin	"baserom.gba", 0xE5C52, 0x40
+	.global	gUnk_080E5C92
+gUnk_080E5C92:
+	.incbin	"baserom.gba", 0xE5C92, 0x18
+	.global	gUnk_080E5CAA
+gUnk_080E5CAA:
+	.incbin	"baserom.gba", 0xE5CAA, 0x40
+	.global	gUnk_080E5CEA
+gUnk_080E5CEA:
+	.incbin	"baserom.gba", 0xE5CEA, 0x18
+	.global	gUnk_080E5D02
+gUnk_080E5D02:
+	.incbin	"baserom.gba", 0xE5D02, 0x40
+	.global	gUnk_080E5D42
+gUnk_080E5D42:
+	.incbin	"baserom.gba", 0xE5D42, 0x40
+	.global	gUnk_080E5D82
+gUnk_080E5D82:
+	.incbin	"baserom.gba", 0xE5D82, 0x38
+	.global	gUnk_080E5DBA
+gUnk_080E5DBA:
+	.incbin	"baserom.gba", 0xE5DBA, 0x40
+	.global	gUnk_080E5DFA
+gUnk_080E5DFA:
+	.incbin	"baserom.gba", 0xE5DFA, 0x40
+	.global	gUnk_080E5E3A
+gUnk_080E5E3A:
+	.incbin	"baserom.gba", 0xE5E3A, 0x18
+	.global	gUnk_080E5E52
+gUnk_080E5E52:
+	.incbin	"baserom.gba", 0xE5E52, 0x18
+	.global	gUnk_080E5E6A
+gUnk_080E5E6A:
+	.incbin	"baserom.gba", 0xE5E6A, 0x18
+	.global	gUnk_080E5E82
+gUnk_080E5E82:
+	.incbin	"baserom.gba", 0xE5E82, 0x18
+	.global	gUnk_080E5E9A
+gUnk_080E5E9A:
+	.incbin	"baserom.gba", 0xE5E9A, 0x40
+	.global	gUnk_080E5EDA
+gUnk_080E5EDA:
+	.incbin	"baserom.gba", 0xE5EDA, 0x38
+	.global	gUnk_080E5F12
+gUnk_080E5F12:
+	.incbin	"baserom.gba", 0xE5F12, 0x38
+	.global	gUnk_080E5F4A
+gUnk_080E5F4A:
+	.incbin	"baserom.gba", 0xE5F4A, 0x40
+	.global	gUnk_080E5F8A
+gUnk_080E5F8A:
+	.incbin	"baserom.gba", 0xE5F8A, 0x20
+	.global	gUnk_080E5FAA
+gUnk_080E5FAA:
+	.incbin	"baserom.gba", 0xE5FAA, 0x20
+	.global	gUnk_080E5FCA
+gUnk_080E5FCA:
+	.incbin	"baserom.gba", 0xE5FCA, 0x20
+	.global	gUnk_080E5FEA
+gUnk_080E5FEA:
+	.incbin	"baserom.gba", 0xE5FEA, 0x20
+	.global	gUnk_080E600A
+gUnk_080E600A:
+	.incbin	"baserom.gba", 0xE600A, 0x40
+	.global	gUnk_080E604A
+gUnk_080E604A:
+	.incbin	"baserom.gba", 0xE604A, 0x38
+	.global	gUnk_080E6082
+gUnk_080E6082:
+	.incbin	"baserom.gba", 0xE6082, 0x38
+	.global	gUnk_080E60BA
+gUnk_080E60BA:
+	.incbin	"baserom.gba", 0xE60BA, 0x40
+	.global	gUnk_080E60FA
+gUnk_080E60FA:
+	.incbin	"baserom.gba", 0xE60FA, 0x20
+	.global	gUnk_080E611A
+gUnk_080E611A:
+	.incbin	"baserom.gba", 0xE611A, 0x20
+	.global	gUnk_080E613A
+gUnk_080E613A:
+	.incbin	"baserom.gba", 0xE613A, 0x20
+	.global	gUnk_080E615A
+gUnk_080E615A:
+	.incbin	"baserom.gba", 0xE615A, 0x20
+	.global	gUnk_080E617A
+gUnk_080E617A:
+	.incbin	"baserom.gba", 0xE617A, 0x40
+	.global	gUnk_080E61BA
+gUnk_080E61BA:
+	.incbin	"baserom.gba", 0xE61BA, 0x38
+	.global	gUnk_080E61F2
+gUnk_080E61F2:
+	.incbin	"baserom.gba", 0xE61F2, 0x40
+	.global	gUnk_080E6232
+gUnk_080E6232:
+	.incbin	"baserom.gba", 0xE6232, 0x40
+	.global	gUnk_080E6272
+gUnk_080E6272:
+	.incbin	"baserom.gba", 0xE6272, 0x20
+	.global	gUnk_080E6292
+gUnk_080E6292:
+	.incbin	"baserom.gba", 0xE6292, 0x20
+	.global	gUnk_080E62B2
+gUnk_080E62B2:
+	.incbin	"baserom.gba", 0xE62B2, 0x20
+	.global	gUnk_080E62D2
+gUnk_080E62D2:
+	.incbin	"baserom.gba", 0xE62D2, 0x20
+	.global	gUnk_080E62F2
+gUnk_080E62F2:
+	.incbin	"baserom.gba", 0xE62F2, 0x40
+	.global	gUnk_080E6332
+gUnk_080E6332:
+	.incbin	"baserom.gba", 0xE6332, 0x38
+	.global	gUnk_080E636A
+gUnk_080E636A:
+	.incbin	"baserom.gba", 0xE636A, 0x40
+	.global	gUnk_080E63AA
+gUnk_080E63AA:
+	.incbin	"baserom.gba", 0xE63AA, 0x40
+	.global	gUnk_080E63EA
+gUnk_080E63EA:
+	.incbin	"baserom.gba", 0xE63EA, 0x20
+	.global	gUnk_080E640A
+gUnk_080E640A:
+	.incbin	"baserom.gba", 0xE640A, 0x20
+	.global	gUnk_080E642A
+gUnk_080E642A:
+	.incbin	"baserom.gba", 0xE642A, 0x20
+	.global	gUnk_080E644A
+gUnk_080E644A:
+	.incbin	"baserom.gba", 0xE644A, 0x20
+	.global	gUnk_080E646A
+gUnk_080E646A:
+	.incbin	"baserom.gba", 0xE646A, 0x38
+	.global	gUnk_080E64A2
+gUnk_080E64A2:
+	.incbin	"baserom.gba", 0xE64A2, 0x38
+	.global	gUnk_080E64DA
+gUnk_080E64DA:
+	.incbin	"baserom.gba", 0xE64DA, 0x38
+	.global	gUnk_080E6512
+gUnk_080E6512:
+	.incbin	"baserom.gba", 0xE6512, 0x38
+	.global	gUnk_080E654A
+gUnk_080E654A:
+	.incbin	"baserom.gba", 0xE654A, 0x30
+	.global	gUnk_080E657A
+gUnk_080E657A:
+	.incbin	"baserom.gba", 0xE657A, 0x18
+	.global	gUnk_080E6592
+gUnk_080E6592:
+	.incbin	"baserom.gba", 0xE6592, 0x30
+	.global	gUnk_080E65C2
+gUnk_080E65C2:
+	.incbin	"baserom.gba", 0xE65C2, 0x20
+	.global	gUnk_080E65E2
+gUnk_080E65E2:
+	.incbin	"baserom.gba", 0xE65E2, 0x30
+	.global	gUnk_080E6612
+gUnk_080E6612:
+	.incbin	"baserom.gba", 0xE6612, 0x20
+	.global	gUnk_080E6632
+gUnk_080E6632:
+	.incbin	"baserom.gba", 0xE6632, 0x30
+	.global	gUnk_080E6662
+gUnk_080E6662:
+	.incbin	"baserom.gba", 0xE6662, 0x20
+	.global	gUnk_080E6682
+gUnk_080E6682:
+	.incbin	"baserom.gba", 0xE6682, 0x30
+	.global	gUnk_080E66B2
+gUnk_080E66B2:
+	.incbin	"baserom.gba", 0xE66B2, 0x20
+	.global	gUnk_080E66D2
+gUnk_080E66D2:
+	.incbin	"baserom.gba", 0xE66D2, 0x30
+	.global	gUnk_080E6702
+gUnk_080E6702:
+	.incbin	"baserom.gba", 0xE6702, 0x38
+	.global	gUnk_080E673A
+gUnk_080E673A:
+	.incbin	"baserom.gba", 0xE673A, 0x20
+	.global	gUnk_080E675A
+gUnk_080E675A:
+	.incbin	"baserom.gba", 0xE675A, 0x38
+	.global	gUnk_080E6792
+gUnk_080E6792:
+	.incbin	"baserom.gba", 0xE6792, 0x28
+	.global	gUnk_080E67BA
+gUnk_080E67BA:
+	.incbin	"baserom.gba", 0xE67BA, 0x38
+	.global	gUnk_080E67F2
+gUnk_080E67F2:
+	.incbin	"baserom.gba", 0xE67F2, 0x28
+	.global	gUnk_080E681A
+gUnk_080E681A:
+	.incbin	"baserom.gba", 0xE681A, 0x38
+	.global	gUnk_080E6852
+gUnk_080E6852:
+	.incbin	"baserom.gba", 0xE6852, 0x20
+	.global	gUnk_080E6872
+gUnk_080E6872:
+	.incbin	"baserom.gba", 0xE6872, 0x38
+	.global	gUnk_080E68AA
+gUnk_080E68AA:
+	.incbin	"baserom.gba", 0xE68AA, 0x20
+	.global	gUnk_080E68CA
+gUnk_080E68CA:
+	.incbin	"baserom.gba", 0xE68CA, 0x38
+	.global	gUnk_080E6902
+gUnk_080E6902:
+	.incbin	"baserom.gba", 0xE6902, 0x20
+	.global	gUnk_080E6922
+gUnk_080E6922:
+	.incbin	"baserom.gba", 0xE6922, 0x8
+	.global	gUnk_080E692A
+gUnk_080E692A:
+	.incbin	"baserom.gba", 0xE692A, 0x20
+	.global	gUnk_080E694A
+gUnk_080E694A:
+	.incbin	"baserom.gba", 0xE694A, 0x10
+	.global	gUnk_080E695A
+gUnk_080E695A:
+	.incbin	"baserom.gba", 0xE695A, 0x20
+	.global	gUnk_080E697A
+gUnk_080E697A:
+	.incbin	"baserom.gba", 0xE697A, 0x10
+	.global	gUnk_080E698A
+gUnk_080E698A:
+	.incbin	"baserom.gba", 0xE698A, 0x20
+	.global	gUnk_080E69AA
+gUnk_080E69AA:
+	.incbin	"baserom.gba", 0xE69AA, 0x10
+	.global	gUnk_080E69BA
+gUnk_080E69BA:
+	.incbin	"baserom.gba", 0xE69BA, 0x20
+	.global	gUnk_080E69DA
+gUnk_080E69DA:
+	.incbin	"baserom.gba", 0xE69DA, 0x10
+	.global	gUnk_080E69EA
+gUnk_080E69EA:
+	.incbin	"baserom.gba", 0xE69EA, 0x20
+	.global	gUnk_080E6A0A
+gUnk_080E6A0A:
+	.incbin	"baserom.gba", 0xE6A0A, 0x40
+	.global	gUnk_080E6A4A
+gUnk_080E6A4A:
+	.incbin	"baserom.gba", 0xE6A4A, 0x40
+	.global	gUnk_080E6A8A
+gUnk_080E6A8A:
+	.incbin	"baserom.gba", 0xE6A8A, 0x38
+	.global	gUnk_080E6AC2
+gUnk_080E6AC2:
+	.incbin	"baserom.gba", 0xE6AC2, 0x40
+	.global	gUnk_080E6B02
+gUnk_080E6B02:
+	.incbin	"baserom.gba", 0xE6B02, 0x28
+	.global	gUnk_080E6B2A
+gUnk_080E6B2A:
+	.incbin	"baserom.gba", 0xE6B2A, 0x20
+	.global	gUnk_080E6B4A
+gUnk_080E6B4A:
+	.incbin	"baserom.gba", 0xE6B4A, 0x20
+	.global	gUnk_080E6B6A
+gUnk_080E6B6A:
+	.incbin	"baserom.gba", 0xE6B6A, 0x28
+	.global	gUnk_080E6B92
+gUnk_080E6B92:
+	.incbin	"baserom.gba", 0xE6B92, 0x40
+	.global	gUnk_080E6BD2
+gUnk_080E6BD2:
+	.incbin	"baserom.gba", 0xE6BD2, 0x38
+	.global	gUnk_080E6C0A
+gUnk_080E6C0A:
+	.incbin	"baserom.gba", 0xE6C0A, 0x38
+	.global	gUnk_080E6C42
+gUnk_080E6C42:
+	.incbin	"baserom.gba", 0xE6C42, 0x40
+	.global	gUnk_080E6C82
+gUnk_080E6C82:
+	.incbin	"baserom.gba", 0xE6C82, 0x40
+	.global	gUnk_080E6CC2
+gUnk_080E6CC2:
+	.incbin	"baserom.gba", 0xE6CC2, 0x38
+	.global	gUnk_080E6CFA
+gUnk_080E6CFA:
+	.incbin	"baserom.gba", 0xE6CFA, 0x38
+	.global	gUnk_080E6D32
+gUnk_080E6D32:
+	.incbin	"baserom.gba", 0xE6D32, 0x40
+	.global	gUnk_080E6D72
+gUnk_080E6D72:
+	.incbin	"baserom.gba", 0xE6D72, 0x30
+	.global	gUnk_080E6DA2
+gUnk_080E6DA2:
+	.incbin	"baserom.gba", 0xE6DA2, 0x28
+	.global	gUnk_080E6DCA
+gUnk_080E6DCA:
+	.incbin	"baserom.gba", 0xE6DCA, 0x28
+	.global	gUnk_080E6DF2
+gUnk_080E6DF2:
+	.incbin	"baserom.gba", 0xE6DF2, 0x30
+	.global	gUnk_080E6E22
+gUnk_080E6E22:
+	.incbin	"baserom.gba", 0xE6E22, 0x30
+	.global	gUnk_080E6E52
+gUnk_080E6E52:
+	.incbin	"baserom.gba", 0xE6E52, 0x28
+	.global	gUnk_080E6E7A
+gUnk_080E6E7A:
+	.incbin	"baserom.gba", 0xE6E7A, 0x28
+	.global	gUnk_080E6EA2
+gUnk_080E6EA2:
+	.incbin	"baserom.gba", 0xE6EA2, 0x30
+	.global	gUnk_080E6ED2
+gUnk_080E6ED2:
+	.incbin	"baserom.gba", 0xE6ED2, 0x40
+	.global	gUnk_080E6F12
+gUnk_080E6F12:
+	.incbin	"baserom.gba", 0xE6F12, 0x38
+	.global	gUnk_080E6F4A
+gUnk_080E6F4A:
+	.incbin	"baserom.gba", 0xE6F4A, 0x38
+	.global	gUnk_080E6F82
+gUnk_080E6F82:
+	.incbin	"baserom.gba", 0xE6F82, 0x40
+	.global	gUnk_080E6FC2
+gUnk_080E6FC2:
+	.incbin	"baserom.gba", 0xE6FC2, 0x40
+	.global	gUnk_080E7002
+gUnk_080E7002:
+	.incbin	"baserom.gba", 0xE7002, 0x38
+	.global	gUnk_080E703A
+gUnk_080E703A:
+	.incbin	"baserom.gba", 0xE703A, 0x38
+	.global	gUnk_080E7072
+gUnk_080E7072:
+	.incbin	"baserom.gba", 0xE7072, 0x40
+	.global	gUnk_080E70B2
+gUnk_080E70B2:
+	.incbin	"baserom.gba", 0xE70B2, 0x30
+	.global	gUnk_080E70E2
+gUnk_080E70E2:
+	.incbin	"baserom.gba", 0xE70E2, 0x28
+	.global	gUnk_080E710A
+gUnk_080E710A:
+	.incbin	"baserom.gba", 0xE710A, 0x28
+	.global	gUnk_080E7132
+gUnk_080E7132:
+	.incbin	"baserom.gba", 0xE7132, 0x30
+	.global	gUnk_080E7162
+gUnk_080E7162:
+	.incbin	"baserom.gba", 0xE7162, 0x30
+	.global	gUnk_080E7192
+gUnk_080E7192:
+	.incbin	"baserom.gba", 0xE7192, 0x28
+	.global	gUnk_080E71BA
+gUnk_080E71BA:
+	.incbin	"baserom.gba", 0xE71BA, 0x28
+	.global	gUnk_080E71E2
+gUnk_080E71E2:
+	.incbin	"baserom.gba", 0xE71E2, 0x30
+	.global	gUnk_080E7212
+gUnk_080E7212:
+	.incbin	"baserom.gba", 0xE7212, 0x40
+	.global	gUnk_080E7252
+gUnk_080E7252:
+	.incbin	"baserom.gba", 0xE7252, 0x40
+	.global	gUnk_080E7292
+gUnk_080E7292:
+	.incbin	"baserom.gba", 0xE7292, 0x38
+	.global	gUnk_080E72CA
+gUnk_080E72CA:
+	.incbin	"baserom.gba", 0xE72CA, 0x40
+	.global	gUnk_080E730A
+gUnk_080E730A:
+	.incbin	"baserom.gba", 0xE730A, 0x20
+	.global	gUnk_080E732A
+gUnk_080E732A:
+	.incbin	"baserom.gba", 0xE732A, 0x8
+	.global	gUnk_080E7332
+gUnk_080E7332:
+	.incbin	"baserom.gba", 0xE7332, 0x20
+	.global	gUnk_080E7352
+gUnk_080E7352:
+	.incbin	"baserom.gba", 0xE7352, 0x10
+	.global	gUnk_080E7362
+gUnk_080E7362:
+	.incbin	"baserom.gba", 0xE7362, 0x20
+	.global	gUnk_080E7382
+gUnk_080E7382:
+	.incbin	"baserom.gba", 0xE7382, 0x10
+	.global	gUnk_080E7392
+gUnk_080E7392:
+	.incbin	"baserom.gba", 0xE7392, 0x20
+	.global	gUnk_080E73B2
+gUnk_080E73B2:
+	.incbin	"baserom.gba", 0xE73B2, 0x10
+	.global	gUnk_080E73C2
+gUnk_080E73C2:
+	.incbin	"baserom.gba", 0xE73C2, 0x20
+	.global	gUnk_080E73E2
+gUnk_080E73E2:
+	.incbin	"baserom.gba", 0xE73E2, 0x10
+	.global	gUnk_080E73F2
+gUnk_080E73F2:
+	.incbin	"baserom.gba", 0xE73F2, 0x22
+	.global	gUnk_080E7414
+gUnk_080E7414:
+	.incbin	"baserom.gba", 0xE7414, 0x22
+	.global	gUnk_080E7436
+gUnk_080E7436:
+	.incbin	"baserom.gba", 0xE7436, 0x22
+	.global	gUnk_080E7458
+gUnk_080E7458:
+	.incbin	"baserom.gba", 0xE7458, 0x22
+	.global	gUnk_080E747A
+gUnk_080E747A:
+	.incbin	"baserom.gba", 0xE747A, 0x22
+	.global	gUnk_080E749C
+gUnk_080E749C:
+	.incbin	"baserom.gba", 0xE749C, 0x22
+	.global	gUnk_080E74BE
+gUnk_080E74BE:
+	.incbin	"baserom.gba", 0xE74BE, 0x22
+	.global	gUnk_080E74E0
+gUnk_080E74E0:
+	.incbin	"baserom.gba", 0xE74E0, 0x22
+	.global	gUnk_080E7502
+gUnk_080E7502:
+	.incbin	"baserom.gba", 0xE7502, 0x126
+	.global	gUnk_080E7628
+gUnk_080E7628:
+	.incbin	"baserom.gba", 0xE7628, 0x186
+	.global	gUnk_080E77AE
+gUnk_080E77AE:
+	.incbin	"baserom.gba", 0xE77AE, 0x106
+	.global	gUnk_080E78B4
+gUnk_080E78B4:
+	.incbin	"baserom.gba", 0xE78B4, 0x1A6
+	.global	gUnk_080E7A5A
+gUnk_080E7A5A:
+	.incbin	"baserom.gba", 0xE7A5A, 0x126
+	.global	gUnk_080E7B80
+gUnk_080E7B80:
+	.incbin	"baserom.gba", 0xE7B80, 0xC6
+	.global	gUnk_080E7C46
+gUnk_080E7C46:
+	.incbin	"baserom.gba", 0xE7C46, 0x186
+	.global	gUnk_080E7DCC
+gUnk_080E7DCC:
+	.incbin	"baserom.gba", 0xE7DCC, 0x126
+	.global	gUnk_080E7EF2
+gUnk_080E7EF2:
+	.incbin	"baserom.gba", 0xE7EF2, 0xC6
+	.global	gUnk_080E7FB8
+gUnk_080E7FB8:
+	.incbin	"baserom.gba", 0xE7FB8, 0x126
+	.global	gUnk_080E80DE
+gUnk_080E80DE:
+	.incbin	"baserom.gba", 0xE80DE, 0xC6
+	.global	gUnk_080E81A4
+gUnk_080E81A4:
+	.incbin	"baserom.gba", 0xE81A4, 0x126
+	.global	gUnk_080E82CA
+gUnk_080E82CA:
+	.incbin	"baserom.gba", 0xE82CA, 0xC6
+	.global	gUnk_080E8390
+gUnk_080E8390:
+	.incbin	"baserom.gba", 0xE8390, 0x126
+	.global	gUnk_080E84B6
+gUnk_080E84B6:
+	.incbin	"baserom.gba", 0xE84B6, 0x126
+	.global	gUnk_080E85DC
+gUnk_080E85DC:
+	.incbin	"baserom.gba", 0xE85DC, 0x106
+	.global	gUnk_080E86E2
+gUnk_080E86E2:
+	.incbin	"baserom.gba", 0xE86E2, 0x106
+	.global	gUnk_080E87E8
+gUnk_080E87E8:
+	.incbin	"baserom.gba", 0xE87E8, 0x126
+	.global	gUnk_080E890E
+gUnk_080E890E:
+	.incbin	"baserom.gba", 0xE890E, 0xE6
+	.global	gUnk_080E89F4
+gUnk_080E89F4:
+	.incbin	"baserom.gba", 0xE89F4, 0x126
+	.global	gUnk_080E8B1A
+gUnk_080E8B1A:
+	.incbin	"baserom.gba", 0xE8B1A, 0xE6
+	.global	gUnk_080E8C00
+gUnk_080E8C00:
+	.incbin	"baserom.gba", 0xE8C00, 0x126
+	.global	gUnk_080E8D26
+gUnk_080E8D26:
+	.incbin	"baserom.gba", 0xE8D26, 0xE6
+	.global	gUnk_080E8E0C
+gUnk_080E8E0C:
+	.incbin	"baserom.gba", 0xE8E0C, 0x126
+	.global	gUnk_080E8F32
+gUnk_080E8F32:
+	.incbin	"baserom.gba", 0xE8F32, 0xE6
+	.global	gUnk_080E9018
+gUnk_080E9018:
+	.incbin	"baserom.gba", 0xE9018, 0x126
+	.global	gUnk_080E913E
+gUnk_080E913E:
+	.incbin	"baserom.gba", 0xE913E, 0x126
+	.global	gUnk_080E9264
+gUnk_080E9264:
+	.incbin	"baserom.gba", 0xE9264, 0x126
+	.global	gUnk_080E938A
+gUnk_080E938A:
+	.incbin	"baserom.gba", 0xE938A, 0xC6
+	.global	gUnk_080E9450
+gUnk_080E9450:
+	.incbin	"baserom.gba", 0xE9450, 0x146
+	.global	gUnk_080E9596
+gUnk_080E9596:
+	.incbin	"baserom.gba", 0xE9596, 0x40
+	.global	gUnk_080E95D6
+gUnk_080E95D6:
+	.incbin	"baserom.gba", 0xE95D6, 0x30
+	.global	gUnk_080E9606
+gUnk_080E9606:
+	.incbin	"baserom.gba", 0xE9606, 0x40
+	.global	gUnk_080E9646
+gUnk_080E9646:
+	.incbin	"baserom.gba", 0xE9646, 0x38
+	.global	gUnk_080E967E
+gUnk_080E967E:
+	.incbin	"baserom.gba", 0xE967E, 0x40
+	.global	gUnk_080E96BE
+gUnk_080E96BE:
+	.incbin	"baserom.gba", 0xE96BE, 0x30
+	.global	gUnk_080E96EE
+gUnk_080E96EE:
+	.incbin	"baserom.gba", 0xE96EE, 0x40
+	.global	gUnk_080E972E
+gUnk_080E972E:
+	.incbin	"baserom.gba", 0xE972E, 0x38
+	.global	gUnk_080E9766
+gUnk_080E9766:
+	.incbin	"baserom.gba", 0xE9766, 0x40
+	.global	gUnk_080E97A6
+gUnk_080E97A6:
+	.incbin	"baserom.gba", 0xE97A6, 0x38
+	.global	gUnk_080E97DE
+gUnk_080E97DE:
+	.incbin	"baserom.gba", 0xE97DE, 0x40
+	.global	gUnk_080E981E
+gUnk_080E981E:
+	.incbin	"baserom.gba", 0xE981E, 0x38
+	.global	gUnk_080E9856
+gUnk_080E9856:
+	.incbin	"baserom.gba", 0xE9856, 0x20
+	.global	gUnk_080E9876
+gUnk_080E9876:
+	.incbin	"baserom.gba", 0xE9876, 0x38
+	.global	gUnk_080E98AE
+gUnk_080E98AE:
+	.incbin	"baserom.gba", 0xE98AE, 0x30
+	.global	gUnk_080E98DE
+gUnk_080E98DE:
+	.incbin	"baserom.gba", 0xE98DE, 0x38
+	.global	gUnk_080E9916
+gUnk_080E9916:
+	.incbin	"baserom.gba", 0xE9916, 0x30
+	.global	gUnk_080E9946
+gUnk_080E9946:
+	.incbin	"baserom.gba", 0xE9946, 0x38
+	.global	gUnk_080E997E
+gUnk_080E997E:
+	.incbin	"baserom.gba", 0xE997E, 0x30
+	.global	gUnk_080E99AE
+gUnk_080E99AE:
+	.incbin	"baserom.gba", 0xE99AE, 0x38
+	.global	gUnk_080E99E6
+gUnk_080E99E6:
+	.incbin	"baserom.gba", 0xE99E6, 0x30
+	.global	gUnk_080E9A16
+gUnk_080E9A16:
+	.incbin	"baserom.gba", 0xE9A16, 0x38
+	.global	gUnk_080E9A4E
+gUnk_080E9A4E:
+	.incbin	"baserom.gba", 0xE9A4E, 0x40
+	.global	gUnk_080E9A8E
+gUnk_080E9A8E:
+	.incbin	"baserom.gba", 0xE9A8E, 0x28
+	.global	gUnk_080E9AB6
+gUnk_080E9AB6:
+	.incbin	"baserom.gba", 0xE9AB6, 0x40
+	.global	gUnk_080E9AF6
+gUnk_080E9AF6:
+	.incbin	"baserom.gba", 0xE9AF6, 0x30
+	.global	gUnk_080E9B26
+gUnk_080E9B26:
+	.incbin	"baserom.gba", 0xE9B26, 0x40
+	.global	gUnk_080E9B66
+gUnk_080E9B66:
+	.incbin	"baserom.gba", 0xE9B66, 0x30
+	.global	gUnk_080E9B96
+gUnk_080E9B96:
+	.incbin	"baserom.gba", 0xE9B96, 0x40
+	.global	gUnk_080E9BD6
+gUnk_080E9BD6:
+	.incbin	"baserom.gba", 0xE9BD6, 0x30
+	.global	gUnk_080E9C06
+gUnk_080E9C06:
+	.incbin	"baserom.gba", 0xE9C06, 0x40
+	.global	gUnk_080E9C46
+gUnk_080E9C46:
+	.incbin	"baserom.gba", 0xE9C46, 0x30
+	.global	gUnk_080E9C76
+gUnk_080E9C76:
+	.incbin	"baserom.gba", 0xE9C76, 0x40
+	.global	gUnk_080E9CB6
+gUnk_080E9CB6:
+	.incbin	"baserom.gba", 0xE9CB6, 0x30
+	.global	gUnk_080E9CE6
+gUnk_080E9CE6:
+	.incbin	"baserom.gba", 0xE9CE6, 0x38
+	.global	gUnk_080E9D1E
+gUnk_080E9D1E:
+	.incbin	"baserom.gba", 0xE9D1E, 0x18
+	.global	gUnk_080E9D36
+gUnk_080E9D36:
+	.incbin	"baserom.gba", 0xE9D36, 0x22
+	.global	gUnk_080E9D58
+gUnk_080E9D58:
+	.incbin	"baserom.gba", 0xE9D58, 0x22
+	.global	gUnk_080E9D7A
+gUnk_080E9D7A:
+	.incbin	"baserom.gba", 0xE9D7A, 0x22
+	.global	gUnk_080E9D9C
+gUnk_080E9D9C:
+	.incbin	"baserom.gba", 0xE9D9C, 0x22
+	.global	gUnk_080E9DBE
+gUnk_080E9DBE:
+	.incbin	"baserom.gba", 0xE9DBE, 0x22
+	.global	gUnk_080E9DE0
+gUnk_080E9DE0:
+	.incbin	"baserom.gba", 0xE9DE0, 0x22
+	.global	gUnk_080E9E02
+gUnk_080E9E02:
+	.incbin	"baserom.gba", 0xE9E02, 0x22
+	.global	gUnk_080E9E24
+gUnk_080E9E24:
+	.incbin	"baserom.gba", 0xE9E24, 0x22
+	.global	gUnk_080E9E46
+gUnk_080E9E46:
+	.incbin	"baserom.gba", 0xE9E46, 0x22
+	.global	gUnk_080E9E68
+gUnk_080E9E68:
+	.incbin	"baserom.gba", 0xE9E68, 0x22
+	.global	gUnk_080E9E8A
+gUnk_080E9E8A:
+	.incbin	"baserom.gba", 0xE9E8A, 0x22
+	.global	gUnk_080E9EAC
+gUnk_080E9EAC:
+	.incbin	"baserom.gba", 0xE9EAC, 0x22
+	.global	gUnk_080E9ECE
+gUnk_080E9ECE:
+	.incbin	"baserom.gba", 0xE9ECE, 0x22
+	.global	gUnk_080E9EF0
+gUnk_080E9EF0:
+	.incbin	"baserom.gba", 0xE9EF0, 0x22
+	.global	gUnk_080E9F12
+gUnk_080E9F12:
+	.incbin	"baserom.gba", 0xE9F12, 0x22
+	.global	gUnk_080E9F34
+gUnk_080E9F34:
+	.incbin	"baserom.gba", 0xE9F34, 0x22
+	.global	gUnk_080E9F56
+gUnk_080E9F56:
+	.incbin	"baserom.gba", 0xE9F56, 0x22
+	.global	gUnk_080E9F78
+gUnk_080E9F78:
+	.incbin	"baserom.gba", 0xE9F78, 0x22
+	.global	gUnk_080E9F9A
+gUnk_080E9F9A:
+	.incbin	"baserom.gba", 0xE9F9A, 0x22
+	.global	gUnk_080E9FBC
+gUnk_080E9FBC:
+	.incbin	"baserom.gba", 0xE9FBC, 0x22
+	.global	gUnk_080E9FDE
+gUnk_080E9FDE:
+	.incbin	"baserom.gba", 0xE9FDE, 0x22
+	.global	gUnk_080EA000
+gUnk_080EA000:
+	.incbin	"baserom.gba", 0xEA000, 0x126
+	.global	gUnk_080EA126
+gUnk_080EA126:
+	.incbin	"baserom.gba", 0xEA126, 0x126
+	.global	gUnk_080EA24C
+gUnk_080EA24C:
+	.incbin	"baserom.gba", 0xEA24C, 0xC6
+	.global	gUnk_080EA312
+gUnk_080EA312:
+	.incbin	"baserom.gba", 0xEA312, 0xE6
+	.global	gUnk_080EA3F8
+gUnk_080EA3F8:
+	.incbin	"baserom.gba", 0xEA3F8, 0x126
+	.global	gUnk_080EA51E
+gUnk_080EA51E:
+	.incbin	"baserom.gba", 0xEA51E, 0x126
+	.global	gUnk_080EA644
+gUnk_080EA644:
+	.incbin	"baserom.gba", 0xEA644, 0x126
+	.global	gUnk_080EA76A
+gUnk_080EA76A:
+	.incbin	"baserom.gba", 0xEA76A, 0xC6
+	.global	gUnk_080EA830
+gUnk_080EA830:
+	.incbin	"baserom.gba", 0xEA830, 0x106
+	.global	gUnk_080EA936
+gUnk_080EA936:
+	.incbin	"baserom.gba", 0xEA936, 0x126
+	.global	gUnk_080EAA5C
+gUnk_080EAA5C:
+	.incbin	"baserom.gba", 0xEAA5C, 0x126
+	.global	gUnk_080EAB82
+gUnk_080EAB82:
+	.incbin	"baserom.gba", 0xEAB82, 0xC6
+	.global	gUnk_080EAC48
+gUnk_080EAC48:
+	.incbin	"baserom.gba", 0xEAC48, 0x106
+	.global	gUnk_080EAD4E
+gUnk_080EAD4E:
+	.incbin	"baserom.gba", 0xEAD4E, 0x106
+	.global	gUnk_080EAE54
+gUnk_080EAE54:
+	.incbin	"baserom.gba", 0xEAE54, 0x126
+	.global	gUnk_080EAF7A
+gUnk_080EAF7A:
+	.incbin	"baserom.gba", 0xEAF7A, 0xE6
+	.global	gUnk_080EB060
+gUnk_080EB060:
+	.incbin	"baserom.gba", 0xEB060, 0xC6
+	.global	gUnk_080EB126
+gUnk_080EB126:
+	.incbin	"baserom.gba", 0xEB126, 0xE6
+	.global	gUnk_080EB20C
+gUnk_080EB20C:
+	.incbin	"baserom.gba", 0xEB20C, 0x106
+	.global	gUnk_080EB312
+gUnk_080EB312:
+	.incbin	"baserom.gba", 0xEB312, 0x106
+	.global	gUnk_080EB418
+gUnk_080EB418:
+	.incbin	"baserom.gba", 0xEB418, 0x106
+	.global	gUnk_080EB51E
+gUnk_080EB51E:
+	.incbin	"baserom.gba", 0xEB51E, 0xC6
+	.global	gUnk_080EB5E4
+gUnk_080EB5E4:
+	.incbin	"baserom.gba", 0xEB5E4, 0x106
+	.global	gUnk_080EB6EA
+gUnk_080EB6EA:
+	.incbin	"baserom.gba", 0xEB6EA, 0x106
+	.global	gUnk_080EB7F0
+gUnk_080EB7F0:
+	.incbin	"baserom.gba", 0xEB7F0, 0xC6
+	.global	gUnk_080EB8B6
+gUnk_080EB8B6:
+	.incbin	"baserom.gba", 0xEB8B6, 0x106
+	.global	gUnk_080EB9BC
+gUnk_080EB9BC:
+	.incbin	"baserom.gba", 0xEB9BC, 0x106
+	.global	gUnk_080EBAC2
+gUnk_080EBAC2:
+	.incbin	"baserom.gba", 0xEBAC2, 0x106
+	.global	gUnk_080EBBC8
+gUnk_080EBBC8:
+	.incbin	"baserom.gba", 0xEBBC8, 0x106
+	.global	gUnk_080EBCCE
+gUnk_080EBCCE:
+	.incbin	"baserom.gba", 0xEBCCE, 0xC6
+	.global	gUnk_080EBD94
+gUnk_080EBD94:
+	.incbin	"baserom.gba", 0xEBD94, 0x106
+	.global	gUnk_080EBE9A
+gUnk_080EBE9A:
+	.incbin	"baserom.gba", 0xEBE9A, 0x106
+	.global	gUnk_080EBFA0
+gUnk_080EBFA0:
+	.incbin	"baserom.gba", 0xEBFA0, 0xE6
+	.global	gUnk_080EC086
+gUnk_080EC086:
+	.incbin	"baserom.gba", 0xEC086, 0xC6
+	.global	gUnk_080EC14C
+gUnk_080EC14C:
+	.incbin	"baserom.gba", 0xEC14C, 0x106
+	.global	gUnk_080EC252
+gUnk_080EC252:
+	.incbin	"baserom.gba", 0xEC252, 0xC6
+	.global	gUnk_080EC318
+gUnk_080EC318:
+	.incbin	"baserom.gba", 0xEC318, 0x106
+	.global	gUnk_080EC41E
+gUnk_080EC41E:
+	.incbin	"baserom.gba", 0xEC41E, 0x106
+	.global	gUnk_080EC524
+gUnk_080EC524:
+	.incbin	"baserom.gba", 0xEC524, 0xC6
+	.global	gUnk_080EC5EA
+gUnk_080EC5EA:
+	.incbin	"baserom.gba", 0xEC5EA, 0x126
+	.global	gUnk_080EC710
+gUnk_080EC710:
+	.incbin	"baserom.gba", 0xEC710, 0x126
+	.global	gUnk_080EC836
+gUnk_080EC836:
+	.incbin	"baserom.gba", 0xEC836, 0x106
+	.global	gUnk_080EC93C
+gUnk_080EC93C:
+	.incbin	"baserom.gba", 0xEC93C, 0x106
+	.global	gUnk_080ECA42
+gUnk_080ECA42:
+	.incbin	"baserom.gba", 0xECA42, 0x106
+	.global	gUnk_080ECB48
+gUnk_080ECB48:
+	.incbin	"baserom.gba", 0xECB48, 0xE6
+	.global	gUnk_080ECC2E
+gUnk_080ECC2E:
+	.incbin	"baserom.gba", 0xECC2E, 0xC6
+	.global	gUnk_080ECCF4
+gUnk_080ECCF4:
+	.incbin	"baserom.gba", 0xECCF4, 0xC6
+	.global	gUnk_080ECDBA
+gUnk_080ECDBA:
+	.incbin	"baserom.gba", 0xECDBA, 0x106
+	.global	gUnk_080ECEC0
+gUnk_080ECEC0:
+	.incbin	"baserom.gba", 0xECEC0, 0xE6
+	.global	gUnk_080ECFA6
+gUnk_080ECFA6:
+	.incbin	"baserom.gba", 0xECFA6, 0xC6
+	.global	gUnk_080ED06C
+gUnk_080ED06C:
+	.incbin	"baserom.gba", 0xED06C, 0x126
+	.global	gUnk_080ED192
+gUnk_080ED192:
+	.incbin	"baserom.gba", 0xED192, 0x126
+	.global	gUnk_080ED2B8
+gUnk_080ED2B8:
+	.incbin	"baserom.gba", 0xED2B8, 0x126
+	.global	gUnk_080ED3DE
+gUnk_080ED3DE:
+	.incbin	"baserom.gba", 0xED3DE, 0x126
+	.global	gUnk_080ED504
+gUnk_080ED504:
+	.incbin	"baserom.gba", 0xED504, 0x146
+	.global	gUnk_080ED64A
+gUnk_080ED64A:
+	.incbin	"baserom.gba", 0xED64A, 0x146
+	.global	gUnk_080ED790
+gUnk_080ED790:
+	.incbin	"baserom.gba", 0xED790, 0x1C6
+	.global	gUnk_080ED956
+gUnk_080ED956:
+	.incbin	"baserom.gba", 0xED956, 0x1C6
+	.global	gUnk_080EDB1C
+gUnk_080EDB1C:
+	.incbin	"baserom.gba", 0xEDB1C, 0x126
+	.global	gUnk_080EDC42
+gUnk_080EDC42:
+	.incbin	"baserom.gba", 0xEDC42, 0x1A6
+	.global	gUnk_080EDDE8
+gUnk_080EDDE8:
+	.incbin	"baserom.gba", 0xEDDE8, 0x1A6
+	.global	gUnk_080EDF8E
+gUnk_080EDF8E:
+	.incbin	"baserom.gba", 0xEDF8E, 0x126
+	.global	gUnk_080EE0B4
+gUnk_080EE0B4:
+	.incbin	"baserom.gba", 0xEE0B4, 0x186
+	.global	gUnk_080EE23A
+gUnk_080EE23A:
+	.incbin	"baserom.gba", 0xEE23A, 0x186
+	.global	gUnk_080EE3C0
+gUnk_080EE3C0:
+	.incbin	"baserom.gba", 0xEE3C0, 0x186
+	.global	gUnk_080EE546
+gUnk_080EE546:
+	.incbin	"baserom.gba", 0xEE546, 0x186
+	.global	gUnk_080EE6CC
+gUnk_080EE6CC:
+	.incbin	"baserom.gba", 0xEE6CC, 0x1A6
+	.global	gUnk_080EE872
+gUnk_080EE872:
+	.incbin	"baserom.gba", 0xEE872, 0x1A6
+	.global	gUnk_080EEA18
+gUnk_080EEA18:
+	.incbin	"baserom.gba", 0xEEA18, 0x1C6
+	.global	gUnk_080EEBDE
+gUnk_080EEBDE:
+	.incbin	"baserom.gba", 0xEEBDE, 0x1C6
+	.global	gUnk_080EEDA4
+gUnk_080EEDA4:
+	.incbin	"baserom.gba", 0xEEDA4, 0x146
+	.global	gUnk_080EEEEA
+gUnk_080EEEEA:
+	.incbin	"baserom.gba", 0xEEEEA, 0x186
+	.global	gUnk_080EF070
+gUnk_080EF070:
+	.incbin	"baserom.gba", 0xEF070, 0x186
+	.global	gUnk_080EF1F6
+gUnk_080EF1F6:
+	.incbin	"baserom.gba", 0xEF1F6, 0xC6
+	.global	gUnk_080EF2BC
+gUnk_080EF2BC:
+	.incbin	"baserom.gba", 0xEF2BC, 0xC6
+	.global	gUnk_080EF382
+gUnk_080EF382:
+	.incbin	"baserom.gba", 0xEF382, 0xC6
+	.global	gUnk_080EF448
+gUnk_080EF448:
+	.incbin	"baserom.gba", 0xEF448, 0xC6
+	.global	gUnk_080EF50E
+gUnk_080EF50E:
+	.incbin	"baserom.gba", 0xEF50E, 0xC6
+	.global	gUnk_080EF5D4
+gUnk_080EF5D4:
+	.incbin	"baserom.gba", 0xEF5D4, 0xC6
+	.global	gUnk_080EF69A
+gUnk_080EF69A:
+	.incbin	"baserom.gba", 0xEF69A, 0xC6
+	.global	gUnk_080EF760
+gUnk_080EF760:
+	.incbin	"baserom.gba", 0xEF760, 0xC6
+	.global	gUnk_080EF826
+gUnk_080EF826:
+	.incbin	"baserom.gba", 0xEF826, 0x86
+	.global	gUnk_080EF8AC
+gUnk_080EF8AC:
+	.incbin	"baserom.gba", 0xEF8AC, 0xC6
+	.global	gUnk_080EF972
+gUnk_080EF972:
+	.incbin	"baserom.gba", 0xEF972, 0xC6
+	.global	gUnk_080EFA38
+gUnk_080EFA38:
+	.incbin	"baserom.gba", 0xEFA38, 0xC6
+	.global	gUnk_080EFAFE
+gUnk_080EFAFE:
+	.incbin	"baserom.gba", 0xEFAFE, 0xC6
+	.global	gUnk_080EFBC4
+gUnk_080EFBC4:
+	.incbin	"baserom.gba", 0xEFBC4, 0xC6
+	.global	gUnk_080EFC8A
+gUnk_080EFC8A:
+	.incbin	"baserom.gba", 0xEFC8A, 0xA6
+	.global	gUnk_080EFD30
+gUnk_080EFD30:
+	.incbin	"baserom.gba", 0xEFD30, 0x106
+	.global	gUnk_080EFE36
+gUnk_080EFE36:
+	.incbin	"baserom.gba", 0xEFE36, 0xE6
+	.global	gUnk_080EFF1C
+gUnk_080EFF1C:
+	.incbin	"baserom.gba", 0xEFF1C, 0xE6
+	.global	gUnk_080F0002
+gUnk_080F0002:
+	.incbin	"baserom.gba", 0xF0002, 0xC6
+	.global	gUnk_080F00C8
+gUnk_080F00C8:
+	.incbin	"baserom.gba", 0xF00C8, 0xE6
+	.global	gUnk_080F01AE
+gUnk_080F01AE:
+	.incbin	"baserom.gba", 0xF01AE, 0xE6
+	.global	gUnk_080F0294
+gUnk_080F0294:
+	.incbin	"baserom.gba", 0xF0294, 0xE6
+	.global	gUnk_080F037A
+gUnk_080F037A:
+	.incbin	"baserom.gba", 0xF037A, 0xE6
+	.global	gUnk_080F0460
+gUnk_080F0460:
+	.incbin	"baserom.gba", 0xF0460, 0xE6
+	.global	gUnk_080F0546
+gUnk_080F0546:
+	.incbin	"baserom.gba", 0xF0546, 0xC6
+	.global	gUnk_080F060C
+gUnk_080F060C:
+	.incbin	"baserom.gba", 0xF060C, 0xC6
+	.global	gUnk_080F06D2
+gUnk_080F06D2:
+	.incbin	"baserom.gba", 0xF06D2, 0xE6
+	.global	gUnk_080F07B8
+gUnk_080F07B8:
+	.incbin	"baserom.gba", 0xF07B8, 0xC6
+	.global	gUnk_080F087E
+gUnk_080F087E:
+	.incbin	"baserom.gba", 0xF087E, 0xC6
+	.global	gUnk_080F0944
+gUnk_080F0944:
+	.incbin	"baserom.gba", 0xF0944, 0xC6
+	.global	gUnk_080F0A0A
+gUnk_080F0A0A:
+	.incbin	"baserom.gba", 0xF0A0A, 0xC6
+	.global	gUnk_080F0AD0
+gUnk_080F0AD0:
+	.incbin	"baserom.gba", 0xF0AD0, 0xC6
+	.global	gUnk_080F0B96
+gUnk_080F0B96:
+	.incbin	"baserom.gba", 0xF0B96, 0xC6
+	.global	gUnk_080F0C5C
+gUnk_080F0C5C:
+	.incbin	"baserom.gba", 0xF0C5C, 0xC6
+	.global	gUnk_080F0D22
+gUnk_080F0D22:
+	.incbin	"baserom.gba", 0xF0D22, 0xC6
+	.global	gUnk_080F0DE8
+gUnk_080F0DE8:
+	.incbin	"baserom.gba", 0xF0DE8, 0xA6
+	.global	gUnk_080F0E8E
+gUnk_080F0E8E:
+	.incbin	"baserom.gba", 0xF0E8E, 0xE6
+	.global	gUnk_080F0F74
+gUnk_080F0F74:
+	.incbin	"baserom.gba", 0xF0F74, 0x106
+	.global	gUnk_080F107A
+gUnk_080F107A:
+	.incbin	"baserom.gba", 0xF107A, 0xC6
+	.global	gUnk_080F1140
+gUnk_080F1140:
+	.incbin	"baserom.gba", 0xF1140, 0x106
+	.global	gUnk_080F1246
+gUnk_080F1246:
+	.incbin	"baserom.gba", 0xF1246, 0xC6
+	.global	gUnk_080F130C
+gUnk_080F130C:
+	.incbin	"baserom.gba", 0xF130C, 0x106
+	.global	gUnk_080F1412
+gUnk_080F1412:
+	.incbin	"baserom.gba", 0xF1412, 0x106
+	.global	gUnk_080F1518
+gUnk_080F1518:
+	.incbin	"baserom.gba", 0xF1518, 0x126
+	.global	gUnk_080F163E
+gUnk_080F163E:
+	.incbin	"baserom.gba", 0xF163E, 0x106
+	.global	gUnk_080F1744
+gUnk_080F1744:
+	.incbin	"baserom.gba", 0xF1744, 0xE6
+	.global	gUnk_080F182A
+gUnk_080F182A:
+	.incbin	"baserom.gba", 0xF182A, 0x126
+	.global	gUnk_080F1950
+gUnk_080F1950:
+	.incbin	"baserom.gba", 0xF1950, 0x106
+	.global	gUnk_080F1A56
+gUnk_080F1A56:
+	.incbin	"baserom.gba", 0xF1A56, 0x106
+	.global	gUnk_080F1B5C
+gUnk_080F1B5C:
+	.incbin	"baserom.gba", 0xF1B5C, 0x126
+	.global	gUnk_080F1C82
+gUnk_080F1C82:
+	.incbin	"baserom.gba", 0xF1C82, 0x126
+	.global	gUnk_080F1DA8
+gUnk_080F1DA8:
+	.incbin	"baserom.gba", 0xF1DA8, 0x126
+	.global	gUnk_080F1ECE
+gUnk_080F1ECE:
+	.incbin	"baserom.gba", 0xF1ECE, 0x126
+	.global	gUnk_080F1FF4
+gUnk_080F1FF4:
+	.incbin	"baserom.gba", 0xF1FF4, 0x126
+	.global	gUnk_080F211A
+gUnk_080F211A:
+	.incbin	"baserom.gba", 0xF211A, 0x146
+	.global	gUnk_080F2260
+gUnk_080F2260:
+	.incbin	"baserom.gba", 0xF2260, 0x146
+	.global	gUnk_080F23A6
+gUnk_080F23A6:
+	.incbin	"baserom.gba", 0xF23A6, 0x126
+	.global	gUnk_080F24CC
+gUnk_080F24CC:
+	.incbin	"baserom.gba", 0xF24CC, 0x126
+	.global	gUnk_080F25F2
+gUnk_080F25F2:
+	.incbin	"baserom.gba", 0xF25F2, 0x126
+	.global	gUnk_080F2718
+gUnk_080F2718:
+	.incbin	"baserom.gba", 0xF2718, 0x126
+	.global	gUnk_080F283E
+gUnk_080F283E:
+	.incbin	"baserom.gba", 0xF283E, 0x126
+	.global	gUnk_080F2964
+gUnk_080F2964:
+	.incbin	"baserom.gba", 0xF2964, 0x126
+	.global	gUnk_080F2A8A
+gUnk_080F2A8A:
+	.incbin	"baserom.gba", 0xF2A8A, 0xE6
+	.global	gUnk_080F2B70
+gUnk_080F2B70:
+	.incbin	"baserom.gba", 0xF2B70, 0x106
+	.global	gUnk_080F2C76
+gUnk_080F2C76:
+	.incbin	"baserom.gba", 0xF2C76, 0x106
+	.global	gUnk_080F2D7C
+gUnk_080F2D7C:
+	.incbin	"baserom.gba", 0xF2D7C, 0x106
+	.global	gUnk_080F2E82
+gUnk_080F2E82:
+	.incbin	"baserom.gba", 0xF2E82, 0xC6
+	.global	gUnk_080F2F48
+gUnk_080F2F48:
+	.incbin	"baserom.gba", 0xF2F48, 0xC6
+	.global	gUnk_080F300E
+gUnk_080F300E:
+	.incbin	"baserom.gba", 0xF300E, 0xC6
+	.global	gUnk_080F30D4
+gUnk_080F30D4:
+	.incbin	"baserom.gba", 0xF30D4, 0xC6
+	.global	gUnk_080F319A
+gUnk_080F319A:
+	.incbin	"baserom.gba", 0xF319A, 0xC6
+	.global	gUnk_080F3260
+gUnk_080F3260:
+	.incbin	"baserom.gba", 0xF3260, 0xC6
+	.global	gUnk_080F3326
+gUnk_080F3326:
+	.incbin	"baserom.gba", 0xF3326, 0xC6
+	.global	gUnk_080F33EC
+gUnk_080F33EC:
+	.incbin	"baserom.gba", 0xF33EC, 0xC6
+	.global	gUnk_080F34B2
+gUnk_080F34B2:
+	.incbin	"baserom.gba", 0xF34B2, 0x106
+	.global	gUnk_080F35B8
+gUnk_080F35B8:
+	.incbin	"baserom.gba", 0xF35B8, 0xE6
+	.global	gUnk_080F369E
+gUnk_080F369E:
+	.incbin	"baserom.gba", 0xF369E, 0xC6
+	.global	gUnk_080F3764
+gUnk_080F3764:
+	.incbin	"baserom.gba", 0xF3764, 0x106
+	.global	gUnk_080F386A
+gUnk_080F386A:
+	.incbin	"baserom.gba", 0xF386A, 0x106
+	.global	gUnk_080F3970
+gUnk_080F3970:
+	.incbin	"baserom.gba", 0xF3970, 0x106
+	.global	gUnk_080F3A76
+gUnk_080F3A76:
+	.incbin	"baserom.gba", 0xF3A76, 0xE6
+	.global	gUnk_080F3B5C
+gUnk_080F3B5C:
+	.incbin	"baserom.gba", 0xF3B5C, 0xE6
+	.global	gUnk_080F3C42
+gUnk_080F3C42:
+	.incbin	"baserom.gba", 0xF3C42, 0xE6
+	.global	gUnk_080F3D28
+gUnk_080F3D28:
+	.incbin	"baserom.gba", 0xF3D28, 0xC6
+	.global	gUnk_080F3DEE
+gUnk_080F3DEE:
+	.incbin	"baserom.gba", 0xF3DEE, 0xE6
+	.global	gUnk_080F3ED4
+gUnk_080F3ED4:
+	.incbin	"baserom.gba", 0xF3ED4, 0x106
+	.global	gUnk_080F3FDA
+gUnk_080F3FDA:
+	.incbin	"baserom.gba", 0xF3FDA, 0x126
+	.global	gUnk_080F4100
+gUnk_080F4100:
+	.incbin	"baserom.gba", 0xF4100, 0x126
+	.global	gUnk_080F4226
+gUnk_080F4226:
+	.incbin	"baserom.gba", 0xF4226, 0x106
+	.global	gUnk_080F432C
+gUnk_080F432C:
+	.incbin	"baserom.gba", 0xF432C, 0x126
+	.global	gUnk_080F4452
+gUnk_080F4452:
+	.incbin	"baserom.gba", 0xF4452, 0x126
+	.global	gUnk_080F4578
+gUnk_080F4578:
+	.incbin	"baserom.gba", 0xF4578, 0x126
+	.global	gUnk_080F469E
+gUnk_080F469E:
+	.incbin	"baserom.gba", 0xF469E, 0x126
+	.global	gUnk_080F47C4
+gUnk_080F47C4:
+	.incbin	"baserom.gba", 0xF47C4, 0x106
+	.global	gUnk_080F48CA
+gUnk_080F48CA:
+	.incbin	"baserom.gba", 0xF48CA, 0x126
+	.global	gUnk_080F49F0
+gUnk_080F49F0:
+	.incbin	"baserom.gba", 0xF49F0, 0x126
+	.global	gUnk_080F4B16
+gUnk_080F4B16:
+	.incbin	"baserom.gba", 0xF4B16, 0x126
+	.global	gUnk_080F4C3C
+gUnk_080F4C3C:
+	.incbin	"baserom.gba", 0xF4C3C, 0x126
+	.global	gUnk_080F4D62
+gUnk_080F4D62:
+	.incbin	"baserom.gba", 0xF4D62, 0x126
+	.global	gUnk_080F4E88
+gUnk_080F4E88:
+	.incbin	"baserom.gba", 0xF4E88, 0x126
+	.global	gUnk_080F4FAE
+gUnk_080F4FAE:
+	.incbin	"baserom.gba", 0xF4FAE, 0x126
+	.global	gUnk_080F50D4
+gUnk_080F50D4:
+	.incbin	"baserom.gba", 0xF50D4, 0x126
+	.global	gUnk_080F51FA
+gUnk_080F51FA:
+	.incbin	"baserom.gba", 0xF51FA, 0x126
+	.global	gUnk_080F5320
+gUnk_080F5320:
+	.incbin	"baserom.gba", 0xF5320, 0x126
+	.global	gUnk_080F5446
+gUnk_080F5446:
+	.incbin	"baserom.gba", 0xF5446, 0x126
+	.global	gUnk_080F556C
+gUnk_080F556C:
+	.incbin	"baserom.gba", 0xF556C, 0x126
+	.global	gUnk_080F5692
+gUnk_080F5692:
+	.incbin	"baserom.gba", 0xF5692, 0x126
+	.global	gUnk_080F57B8
+gUnk_080F57B8:
+	.incbin	"baserom.gba", 0xF57B8, 0x126
+	.global	gUnk_080F58DE
+gUnk_080F58DE:
+	.incbin	"baserom.gba", 0xF58DE, 0x126
+	.global	gUnk_080F5A04
+gUnk_080F5A04:
+	.incbin	"baserom.gba", 0xF5A04, 0x126
+	.global	gUnk_080F5B2A
+gUnk_080F5B2A:
+	.incbin	"baserom.gba", 0xF5B2A, 0x126
+	.global	gUnk_080F5C50
+gUnk_080F5C50:
+	.incbin	"baserom.gba", 0xF5C50, 0x126
+	.global	gUnk_080F5D76
+gUnk_080F5D76:
+	.incbin	"baserom.gba", 0xF5D76, 0x126
+	.global	gUnk_080F5E9C
+gUnk_080F5E9C:
+	.incbin	"baserom.gba", 0xF5E9C, 0x126
+	.global	gUnk_080F5FC2
+gUnk_080F5FC2:
+	.incbin	"baserom.gba", 0xF5FC2, 0x126
+	.global	gUnk_080F60E8
+gUnk_080F60E8:
+	.incbin	"baserom.gba", 0xF60E8, 0x126
+	.global	gUnk_080F620E
+gUnk_080F620E:
+	.incbin	"baserom.gba", 0xF620E, 0x126
+	.global	gUnk_080F6334
+gUnk_080F6334:
+	.incbin	"baserom.gba", 0xF6334, 0x146
+	.global	gUnk_080F647A
+gUnk_080F647A:
+	.incbin	"baserom.gba", 0xF647A, 0x106
+	.global	gUnk_080F6580
+gUnk_080F6580:
+	.incbin	"baserom.gba", 0xF6580, 0x126
+	.global	gUnk_080F66A6
+gUnk_080F66A6:
+	.incbin	"baserom.gba", 0xF66A6, 0x126
+	.global	gUnk_080F67CC
+gUnk_080F67CC:
+	.incbin	"baserom.gba", 0xF67CC, 0x126
+	.global	gUnk_080F68F2
+gUnk_080F68F2:
+	.incbin	"baserom.gba", 0xF68F2, 0x106
+	.global	gUnk_080F69F8
+gUnk_080F69F8:
+	.incbin	"baserom.gba", 0xF69F8, 0xE6
+	.global	gUnk_080F6ADE
+gUnk_080F6ADE:
+	.incbin	"baserom.gba", 0xF6ADE, 0x126
+	.global	gUnk_080F6C04
+gUnk_080F6C04:
+	.incbin	"baserom.gba", 0xF6C04, 0x126
+	.global	gUnk_080F6D2A
+gUnk_080F6D2A:
+	.incbin	"baserom.gba", 0xF6D2A, 0x126
+	.global	gUnk_080F6E50
+gUnk_080F6E50:
+	.incbin	"baserom.gba", 0xF6E50, 0x126
+	.global	gUnk_080F6F76
+gUnk_080F6F76:
+	.incbin	"baserom.gba", 0xF6F76, 0x106
+	.global	gUnk_080F707C
+gUnk_080F707C:
+	.incbin	"baserom.gba", 0xF707C, 0x106
+	.global	gUnk_080F7182
+gUnk_080F7182:
+	.incbin	"baserom.gba", 0xF7182, 0x126
+	.global	gUnk_080F72A8
+gUnk_080F72A8:
+	.incbin	"baserom.gba", 0xF72A8, 0x126
+	.global	gUnk_080F73CE
+gUnk_080F73CE:
+	.incbin	"baserom.gba", 0xF73CE, 0x20
+	.global	gUnk_080F73EE
+gUnk_080F73EE:
+	.incbin	"baserom.gba", 0xF73EE, 0x20
+	.global	gUnk_080F740E
+gUnk_080F740E:
+	.incbin	"baserom.gba", 0xF740E, 0x10
+	.global	gUnk_080F741E
+gUnk_080F741E:
+	.incbin	"baserom.gba", 0xF741E, 0x18
+	.global	gUnk_080F7436
+gUnk_080F7436:
+	.incbin	"baserom.gba", 0xF7436, 0x20
+	.global	gUnk_080F7456
+gUnk_080F7456:
+	.incbin	"baserom.gba", 0xF7456, 0x20
+	.global	gUnk_080F7476
+gUnk_080F7476:
+	.incbin	"baserom.gba", 0xF7476, 0x20
+	.global	gUnk_080F7496
+gUnk_080F7496:
+	.incbin	"baserom.gba", 0xF7496, 0x10
+	.global	gUnk_080F74A6
+gUnk_080F74A6:
+	.incbin	"baserom.gba", 0xF74A6, 0x20
+	.global	gUnk_080F74C6
+gUnk_080F74C6:
+	.incbin	"baserom.gba", 0xF74C6, 0x20
+	.global	gUnk_080F74E6
+gUnk_080F74E6:
+	.incbin	"baserom.gba", 0xF74E6, 0x20
+	.global	gUnk_080F7506
+gUnk_080F7506:
+	.incbin	"baserom.gba", 0xF7506, 0x30
+	.global	gUnk_080F7536
+gUnk_080F7536:
+	.incbin	"baserom.gba", 0xF7536, 0x30
+	.global	gUnk_080F7566
+gUnk_080F7566:
+	.incbin	"baserom.gba", 0xF7566, 0x30
+	.global	gUnk_080F7596
+gUnk_080F7596:
+	.incbin	"baserom.gba", 0xF7596, 0x28
+	.global	gUnk_080F75BE
+gUnk_080F75BE:
+	.incbin	"baserom.gba", 0xF75BE, 0x28
+	.global	gUnk_080F75E6
+gUnk_080F75E6:
+	.incbin	"baserom.gba", 0xF75E6, 0x30
+	.global	gUnk_080F7616
+gUnk_080F7616:
+	.incbin	"baserom.gba", 0xF7616, 0x30
+	.global	gUnk_080F7646
+gUnk_080F7646:
+	.incbin	"baserom.gba", 0xF7646, 0x30
+	.global	gUnk_080F7676
+gUnk_080F7676:
+	.incbin	"baserom.gba", 0xF7676, 0x30
+	.global	gUnk_080F76A6
+gUnk_080F76A6:
+	.incbin	"baserom.gba", 0xF76A6, 0x30
+	.global	gUnk_080F76D6
+gUnk_080F76D6:
+	.incbin	"baserom.gba", 0xF76D6, 0x30
+	.global	gUnk_080F7706
+gUnk_080F7706:
+	.incbin	"baserom.gba", 0xF7706, 0x30
+	.global	gUnk_080F7736
+gUnk_080F7736:
+	.incbin	"baserom.gba", 0xF7736, 0x28
+	.global	gUnk_080F775E
+gUnk_080F775E:
+	.incbin	"baserom.gba", 0xF775E, 0x30
+	.global	gUnk_080F778E
+gUnk_080F778E:
+	.incbin	"baserom.gba", 0xF778E, 0x30
+	.global	gUnk_080F77BE
+gUnk_080F77BE:
+	.incbin	"baserom.gba", 0xF77BE, 0x30
+	.global	gUnk_080F77EE
+gUnk_080F77EE:
+	.incbin	"baserom.gba", 0xF77EE, 0x28
+	.global	gUnk_080F7816
+gUnk_080F7816:
+	.incbin	"baserom.gba", 0xF7816, 0x30
+	.global	gUnk_080F7846
+gUnk_080F7846:
+	.incbin	"baserom.gba", 0xF7846, 0x30
+	.global	gUnk_080F7876
+gUnk_080F7876:
+	.incbin	"baserom.gba", 0xF7876, 0x28
+	.global	gUnk_080F789E
+gUnk_080F789E:
+	.incbin	"baserom.gba", 0xF789E, 0x38
+	.global	gUnk_080F78D6
+gUnk_080F78D6:
+	.incbin	"baserom.gba", 0xF78D6, 0x38
+	.global	gUnk_080F790E
+gUnk_080F790E:
+	.incbin	"baserom.gba", 0xF790E, 0x40
+	.global	gUnk_080F794E
+gUnk_080F794E:
+	.incbin	"baserom.gba", 0xF794E, 0x38
+	.global	gUnk_080F7986
+gUnk_080F7986:
+	.incbin	"baserom.gba", 0xF7986, 0x38
+	.global	gUnk_080F79BE
+gUnk_080F79BE:
+	.incbin	"baserom.gba", 0xF79BE, 0x30
+	.global	gUnk_080F79EE
+gUnk_080F79EE:
+	.incbin	"baserom.gba", 0xF79EE, 0x30
+	.global	gUnk_080F7A1E
+gUnk_080F7A1E:
+	.incbin	"baserom.gba", 0xF7A1E, 0x30
+	.global	gUnk_080F7A4E
+gUnk_080F7A4E:
+	.incbin	"baserom.gba", 0xF7A4E, 0x30
+	.global	gUnk_080F7A7E
+gUnk_080F7A7E:
+	.incbin	"baserom.gba", 0xF7A7E, 0x38
+	.global	gUnk_080F7AB6
+gUnk_080F7AB6:
+	.incbin	"baserom.gba", 0xF7AB6, 0x38
+	.global	gUnk_080F7AEE
+gUnk_080F7AEE:
+	.incbin	"baserom.gba", 0xF7AEE, 0x38
+	.global	gUnk_080F7B26
+gUnk_080F7B26:
+	.incbin	"baserom.gba", 0xF7B26, 0x38
+	.global	gUnk_080F7B5E
+gUnk_080F7B5E:
+	.incbin	"baserom.gba", 0xF7B5E, 0x38
+	.global	gUnk_080F7B96
+gUnk_080F7B96:
+	.incbin	"baserom.gba", 0xF7B96, 0x38
+	.global	gUnk_080F7BCE
+gUnk_080F7BCE:
+	.incbin	"baserom.gba", 0xF7BCE, 0x38
+	.global	gUnk_080F7C06
+gUnk_080F7C06:
+	.incbin	"baserom.gba", 0xF7C06, 0x30
+	.global	gUnk_080F7C36
+gUnk_080F7C36:
+	.incbin	"baserom.gba", 0xF7C36, 0x38
+	.global	gUnk_080F7C6E
+gUnk_080F7C6E:
+	.incbin	"baserom.gba", 0xF7C6E, 0x38
+	.global	gUnk_080F7CA6
+gUnk_080F7CA6:
+	.incbin	"baserom.gba", 0xF7CA6, 0x38
+	.global	gUnk_080F7CDE
+gUnk_080F7CDE:
+	.incbin	"baserom.gba", 0xF7CDE, 0x38
+	.global	gUnk_080F7D16
+gUnk_080F7D16:
+	.incbin	"baserom.gba", 0xF7D16, 0x40
+	.global	gUnk_080F7D56
+gUnk_080F7D56:
+	.incbin	"baserom.gba", 0xF7D56, 0x40
+	.global	gUnk_080F7D96
+gUnk_080F7D96:
+	.incbin	"baserom.gba", 0xF7D96, 0x38
+	.global	gUnk_080F7DCE
+gUnk_080F7DCE:
+	.incbin	"baserom.gba", 0xF7DCE, 0x38
+	.global	gUnk_080F7E06
+gUnk_080F7E06:
+	.incbin	"baserom.gba", 0xF7E06, 0x38
+	.global	gUnk_080F7E3E
+gUnk_080F7E3E:
+	.incbin	"baserom.gba", 0xF7E3E, 0x38
+	.global	gUnk_080F7E76
+gUnk_080F7E76:
+	.incbin	"baserom.gba", 0xF7E76, 0x40
+	.global	gUnk_080F7EB6
+gUnk_080F7EB6:
+	.incbin	"baserom.gba", 0xF7EB6, 0x40
+	.global	gUnk_080F7EF6
+gUnk_080F7EF6:
+	.incbin	"baserom.gba", 0xF7EF6, 0x38
+	.global	gUnk_080F7F2E
+gUnk_080F7F2E:
+	.incbin	"baserom.gba", 0xF7F2E, 0x38
+	.global	gUnk_080F7F66
+gUnk_080F7F66:
+	.incbin	"baserom.gba", 0xF7F66, 0x38
+	.global	gUnk_080F7F9E
+gUnk_080F7F9E:
+	.incbin	"baserom.gba", 0xF7F9E, 0x30
+	.global	gUnk_080F7FCE
+gUnk_080F7FCE:
+	.incbin	"baserom.gba", 0xF7FCE, 0x38
+	.global	gUnk_080F8006
+gUnk_080F8006:
+	.incbin	"baserom.gba", 0xF8006, 0x38
+	.global	gUnk_080F803E
+gUnk_080F803E:
+	.incbin	"baserom.gba", 0xF803E, 0x30
+	.global	gUnk_080F806E
+gUnk_080F806E:
+	.incbin	"baserom.gba", 0xF806E, 0x30
+	.global	gUnk_080F809E
+gUnk_080F809E:
+	.incbin	"baserom.gba", 0xF809E, 0x30
+	.global	gUnk_080F80CE
+gUnk_080F80CE:
+	.incbin	"baserom.gba", 0xF80CE, 0x28
+	.global	gUnk_080F80F6
+gUnk_080F80F6:
+	.incbin	"baserom.gba", 0xF80F6, 0x30
+	.global	gUnk_080F8126
+gUnk_080F8126:
+	.incbin	"baserom.gba", 0xF8126, 0x30
+	.global	gUnk_080F8156
+gUnk_080F8156:
+	.incbin	"baserom.gba", 0xF8156, 0x30
+	.global	gUnk_080F8186
+gUnk_080F8186:
+	.incbin	"baserom.gba", 0xF8186, 0x30
+	.global	gUnk_080F81B6
+gUnk_080F81B6:
+	.incbin	"baserom.gba", 0xF81B6, 0x30
+	.global	gUnk_080F81E6
+gUnk_080F81E6:
+	.incbin	"baserom.gba", 0xF81E6, 0x30
+	.global	gUnk_080F8216
+gUnk_080F8216:
+	.incbin	"baserom.gba", 0xF8216, 0x28
+	.global	gUnk_080F823E
+gUnk_080F823E:
+	.incbin	"baserom.gba", 0xF823E, 0x30
+	.global	gUnk_080F826E
+gUnk_080F826E:
+	.incbin	"baserom.gba", 0xF826E, 0x30
+	.global	gUnk_080F829E
+gUnk_080F829E:
+	.incbin	"baserom.gba", 0xF829E, 0x30
+	.global	gUnk_080F82CE
+gUnk_080F82CE:
+	.incbin	"baserom.gba", 0xF82CE, 0x28
+	.global	gUnk_080F82F6
+gUnk_080F82F6:
+	.incbin	"baserom.gba", 0xF82F6, 0x30
+	.global	gUnk_080F8326
+gUnk_080F8326:
+	.incbin	"baserom.gba", 0xF8326, 0x30
+	.global	gUnk_080F8356
+gUnk_080F8356:
+	.incbin	"baserom.gba", 0xF8356, 0x30
+	.global	gUnk_080F8386
+gUnk_080F8386:
+	.incbin	"baserom.gba", 0xF8386, 0x30
+	.global	gUnk_080F83B6
+gUnk_080F83B6:
+	.incbin	"baserom.gba", 0xF83B6, 0x30
+	.global	gUnk_080F83E6
+gUnk_080F83E6:
+	.incbin	"baserom.gba", 0xF83E6, 0x30
+	.global	gUnk_080F8416
+gUnk_080F8416:
+	.incbin	"baserom.gba", 0xF8416, 0x30
+	.global	gUnk_080F8446
+gUnk_080F8446:
+	.incbin	"baserom.gba", 0xF8446, 0x28
+	.global	gUnk_080F846E
+gUnk_080F846E:
+	.incbin	"baserom.gba", 0xF846E, 0x28
+	.global	gUnk_080F8496
+gUnk_080F8496:
+	.incbin	"baserom.gba", 0xF8496, 0x28
+	.global	gUnk_080F84BE
+gUnk_080F84BE:
+	.incbin	"baserom.gba", 0xF84BE, 0x20
+	.global	gUnk_080F84DE
+gUnk_080F84DE:
+	.incbin	"baserom.gba", 0xF84DE, 0x28
+	.global	gUnk_080F8506
+gUnk_080F8506:
+	.incbin	"baserom.gba", 0xF8506, 0x28
+	.global	gUnk_080F852E
+gUnk_080F852E:
+	.incbin	"baserom.gba", 0xF852E, 0x28
+	.global	gUnk_080F8556
+gUnk_080F8556:
+	.incbin	"baserom.gba", 0xF8556, 0x28
+	.global	gUnk_080F857E
+gUnk_080F857E:
+	.incbin	"baserom.gba", 0xF857E, 0x28
+	.global	gUnk_080F85A6
+gUnk_080F85A6:
+	.incbin	"baserom.gba", 0xF85A6, 0x28
+	.global	gUnk_080F85CE
+gUnk_080F85CE:
+	.incbin	"baserom.gba", 0xF85CE, 0x28
+	.global	gUnk_080F85F6
+gUnk_080F85F6:
+	.incbin	"baserom.gba", 0xF85F6, 0x30
+	.global	gUnk_080F8626
+gUnk_080F8626:
+	.incbin	"baserom.gba", 0xF8626, 0x30
+	.global	gUnk_080F8656
+gUnk_080F8656:
+	.incbin	"baserom.gba", 0xF8656, 0x30
+	.global	gUnk_080F8686
+gUnk_080F8686:
+	.incbin	"baserom.gba", 0xF8686, 0x28
+	.global	gUnk_080F86AE
+gUnk_080F86AE:
+	.incbin	"baserom.gba", 0xF86AE, 0x30
+	.global	gUnk_080F86DE
+gUnk_080F86DE:
+	.incbin	"baserom.gba", 0xF86DE, 0x30
+	.global	gUnk_080F870E
+gUnk_080F870E:
+	.incbin	"baserom.gba", 0xF870E, 0x30
+	.global	gUnk_080F873E
+gUnk_080F873E:
+	.incbin	"baserom.gba", 0xF873E, 0x30
+	.global	gUnk_080F876E
+gUnk_080F876E:
+	.incbin	"baserom.gba", 0xF876E, 0x30
+	.global	gUnk_080F879E
+gUnk_080F879E:
+	.incbin	"baserom.gba", 0xF879E, 0x30
+	.global	gUnk_080F87CE
+gUnk_080F87CE:
+	.incbin	"baserom.gba", 0xF87CE, 0x30
+	.global	gUnk_080F87FE
+gUnk_080F87FE:
+	.incbin	"baserom.gba", 0xF87FE, 0x38
+	.global	gUnk_080F8836
+gUnk_080F8836:
+	.incbin	"baserom.gba", 0xF8836, 0x38
+	.global	gUnk_080F886E
+gUnk_080F886E:
+	.incbin	"baserom.gba", 0xF886E, 0x30
+	.global	gUnk_080F889E
+gUnk_080F889E:
+	.incbin	"baserom.gba", 0xF889E, 0x30
+	.global	gUnk_080F88CE
+gUnk_080F88CE:
+	.incbin	"baserom.gba", 0xF88CE, 0x40
+	.global	gUnk_080F890E
+gUnk_080F890E:
+	.incbin	"baserom.gba", 0xF890E, 0x38
+	.global	gUnk_080F8946
+gUnk_080F8946:
+	.incbin	"baserom.gba", 0xF8946, 0x40
+	.global	gUnk_080F8986
+gUnk_080F8986:
+	.incbin	"baserom.gba", 0xF8986, 0x30
+	.global	gUnk_080F89B6
+gUnk_080F89B6:
+	.incbin	"baserom.gba", 0xF89B6, 0x38
+	.global	gUnk_080F89EE
+gUnk_080F89EE:
+	.incbin	"baserom.gba", 0xF89EE, 0x38
+	.global	gUnk_080F8A26
+gUnk_080F8A26:
+	.incbin	"baserom.gba", 0xF8A26, 0x38
+	.global	gUnk_080F8A5E
+gUnk_080F8A5E:
+	.incbin	"baserom.gba", 0xF8A5E, 0x38
+	.global	gUnk_080F8A96
+gUnk_080F8A96:
+	.incbin	"baserom.gba", 0xF8A96, 0x38
+	.global	gUnk_080F8ACE
+gUnk_080F8ACE:
+	.incbin	"baserom.gba", 0xF8ACE, 0x38
+	.global	gUnk_080F8B06
+gUnk_080F8B06:
+	.incbin	"baserom.gba", 0xF8B06, 0x38
+	.global	gUnk_080F8B3E
+gUnk_080F8B3E:
+	.incbin	"baserom.gba", 0xF8B3E, 0x30
+	.global	gUnk_080F8B6E
+gUnk_080F8B6E:
+	.incbin	"baserom.gba", 0xF8B6E, 0x40
+	.global	gUnk_080F8BAE
+gUnk_080F8BAE:
+	.incbin	"baserom.gba", 0xF8BAE, 0x40
+	.global	gUnk_080F8BEE
+gUnk_080F8BEE:
+	.incbin	"baserom.gba", 0xF8BEE, 0x38
+	.global	gUnk_080F8C26
+gUnk_080F8C26:
+	.incbin	"baserom.gba", 0xF8C26, 0x38
+	.global	gUnk_080F8C5E
+gUnk_080F8C5E:
+	.incbin	"baserom.gba", 0xF8C5E, 0x38
+	.global	gUnk_080F8C96
+gUnk_080F8C96:
+	.incbin	"baserom.gba", 0xF8C96, 0x38
+	.global	gUnk_080F8CCE
+gUnk_080F8CCE:
+	.incbin	"baserom.gba", 0xF8CCE, 0x38
+	.global	gUnk_080F8D06
+gUnk_080F8D06:
+	.incbin	"baserom.gba", 0xF8D06, 0x40
+	.global	gUnk_080F8D46
+gUnk_080F8D46:
+	.incbin	"baserom.gba", 0xF8D46, 0x28
+	.global	gUnk_080F8D6E
+gUnk_080F8D6E:
+	.incbin	"baserom.gba", 0xF8D6E, 0x28
+	.global	gUnk_080F8D96
+gUnk_080F8D96:
+	.incbin	"baserom.gba", 0xF8D96, 0x28
+	.global	gUnk_080F8DBE
+gUnk_080F8DBE:
+	.incbin	"baserom.gba", 0xF8DBE, 0x30
+	.global	gUnk_080F8DEE
+gUnk_080F8DEE:
+	.incbin	"baserom.gba", 0xF8DEE, 0x28
+	.global	gUnk_080F8E16
+gUnk_080F8E16:
+	.incbin	"baserom.gba", 0xF8E16, 0x30
+	.global	gUnk_080F8E46
+gUnk_080F8E46:
+	.incbin	"baserom.gba", 0xF8E46, 0x30
+	.global	gUnk_080F8E76
+gUnk_080F8E76:
+	.incbin	"baserom.gba", 0xF8E76, 0x30
+	.global	gUnk_080F8EA6
+gUnk_080F8EA6:
+	.incbin	"baserom.gba", 0xF8EA6, 0x30
+	.global	gUnk_080F8ED6
+gUnk_080F8ED6:
+	.incbin	"baserom.gba", 0xF8ED6, 0x30
+	.global	gUnk_080F8F06
+gUnk_080F8F06:
+	.incbin	"baserom.gba", 0xF8F06, 0x30
+	.global	gUnk_080F8F36
+gUnk_080F8F36:
+	.incbin	"baserom.gba", 0xF8F36, 0x28
+	.global	gUnk_080F8F5E
+gUnk_080F8F5E:
+	.incbin	"baserom.gba", 0xF8F5E, 0x30
+	.global	gUnk_080F8F8E
+gUnk_080F8F8E:
+	.incbin	"baserom.gba", 0xF8F8E, 0x40
+	.global	gUnk_080F8FCE
+gUnk_080F8FCE:
+	.incbin	"baserom.gba", 0xF8FCE, 0x38
+	.global	gUnk_080F9006
+gUnk_080F9006:
+	.incbin	"baserom.gba", 0xF9006, 0x38
+	.global	gUnk_080F903E
+gUnk_080F903E:
+	.incbin	"baserom.gba", 0xF903E, 0x38
+	.global	gUnk_080F9076
+gUnk_080F9076:
+	.incbin	"baserom.gba", 0xF9076, 0x30
+	.global	gUnk_080F90A6
+gUnk_080F90A6:
+	.incbin	"baserom.gba", 0xF90A6, 0x38
+	.global	gUnk_080F90DE
+gUnk_080F90DE:
+	.incbin	"baserom.gba", 0xF90DE, 0x30
+	.global	gUnk_080F910E
+gUnk_080F910E:
+	.incbin	"baserom.gba", 0xF910E, 0x38
+	.global	gUnk_080F9146
+gUnk_080F9146:
+	.incbin	"baserom.gba", 0xF9146, 0x38
+	.global	gUnk_080F917E
+gUnk_080F917E:
+	.incbin	"baserom.gba", 0xF917E, 0x38
+	.global	gUnk_080F91B6
+gUnk_080F91B6:
+	.incbin	"baserom.gba", 0xF91B6, 0x38
+	.global	gUnk_080F91EE
+gUnk_080F91EE:
+	.incbin	"baserom.gba", 0xF91EE, 0x38
+	.global	gUnk_080F9226
+gUnk_080F9226:
+	.incbin	"baserom.gba", 0xF9226, 0x38
+	.global	gUnk_080F925E
+gUnk_080F925E:
+	.incbin	"baserom.gba", 0xF925E, 0x20
+	.global	gUnk_080F927E
+gUnk_080F927E:
+	.incbin	"baserom.gba", 0xF927E, 0x20
+	.global	gUnk_080F929E
+gUnk_080F929E:
+	.incbin	"baserom.gba", 0xF929E, 0x20
+	.global	gUnk_080F92BE
+gUnk_080F92BE:
+	.incbin	"baserom.gba", 0xF92BE, 0x20
+	.global	gUnk_080F92DE
+gUnk_080F92DE:
+	.incbin	"baserom.gba", 0xF92DE, 0x20
+	.global	gUnk_080F92FE
+gUnk_080F92FE:
+	.incbin	"baserom.gba", 0xF92FE, 0x20
+	.global	gUnk_080F931E
+gUnk_080F931E:
+	.incbin	"baserom.gba", 0xF931E, 0x20
+	.global	gUnk_080F933E
+gUnk_080F933E:
+	.incbin	"baserom.gba", 0xF933E, 0x20
+	.global	gUnk_080F935E
+gUnk_080F935E:
+	.incbin	"baserom.gba", 0xF935E, 0x20
+	.global	gUnk_080F937E
+gUnk_080F937E:
+	.incbin	"baserom.gba", 0xF937E, 0x20
+	.global	gUnk_080F939E
+gUnk_080F939E:
+	.incbin	"baserom.gba", 0xF939E, 0x20
+	.global	gUnk_080F93BE
+gUnk_080F93BE:
+	.incbin	"baserom.gba", 0xF93BE, 0x30
+	.global	gUnk_080F93EE
+gUnk_080F93EE:
+	.incbin	"baserom.gba", 0xF93EE, 0x30
+	.global	gUnk_080F941E
+gUnk_080F941E:
+	.incbin	"baserom.gba", 0xF941E, 0x30
+	.global	gUnk_080F944E
+gUnk_080F944E:
+	.incbin	"baserom.gba", 0xF944E, 0x30
+	.global	gUnk_080F947E
+gUnk_080F947E:
+	.incbin	"baserom.gba", 0xF947E, 0x30
+	.global	gUnk_080F94AE
+gUnk_080F94AE:
+	.incbin	"baserom.gba", 0xF94AE, 0x30
+	.global	gUnk_080F94DE
+gUnk_080F94DE:
+	.incbin	"baserom.gba", 0xF94DE, 0x30
+	.global	gUnk_080F950E
+gUnk_080F950E:
+	.incbin	"baserom.gba", 0xF950E, 0x28
+	.global	gUnk_080F9536
+gUnk_080F9536:
+	.incbin	"baserom.gba", 0xF9536, 0x30
+	.global	gUnk_080F9566
+gUnk_080F9566:
+	.incbin	"baserom.gba", 0xF9566, 0x20
+	.global	gUnk_080F9586
+gUnk_080F9586:
+	.incbin	"baserom.gba", 0xF9586, 0x30
+	.global	gUnk_080F95B6
+gUnk_080F95B6:
+	.incbin	"baserom.gba", 0xF95B6, 0x30
+	.global	gUnk_080F95E6
+gUnk_080F95E6:
+	.incbin	"baserom.gba", 0xF95E6, 0x30
+	.global	gUnk_080F9616
+gUnk_080F9616:
+	.incbin	"baserom.gba", 0xF9616, 0x30
+	.global	gUnk_080F9646
+gUnk_080F9646:
+	.incbin	"baserom.gba", 0xF9646, 0x30
+	.global	gUnk_080F9676
+gUnk_080F9676:
+	.incbin	"baserom.gba", 0xF9676, 0x30
+	.global	gUnk_080F96A6
+gUnk_080F96A6:
+	.incbin	"baserom.gba", 0xF96A6, 0x30
+	.global	gUnk_080F96D6
+gUnk_080F96D6:
+	.incbin	"baserom.gba", 0xF96D6, 0x30
+	.global	gUnk_080F9706
+gUnk_080F9706:
+	.incbin	"baserom.gba", 0xF9706, 0x30
+	.global	gUnk_080F9736
+gUnk_080F9736:
+	.incbin	"baserom.gba", 0xF9736, 0x30
+	.global	gUnk_080F9766
+gUnk_080F9766:
+	.incbin	"baserom.gba", 0xF9766, 0x40
+	.global	gUnk_080F97A6
+gUnk_080F97A6:
+	.incbin	"baserom.gba", 0xF97A6, 0x38
+	.global	gUnk_080F97DE
+gUnk_080F97DE:
+	.incbin	"baserom.gba", 0xF97DE, 0x20
+	.global	gUnk_080F97FE
+gUnk_080F97FE:
+	.incbin	"baserom.gba", 0xF97FE, 0x20
+	.global	gUnk_080F981E
+gUnk_080F981E:
+	.incbin	"baserom.gba", 0xF981E, 0x20
+	.global	gUnk_080F983E
+gUnk_080F983E:
+	.incbin	"baserom.gba", 0xF983E, 0x20
+	.global	gUnk_080F985E
+gUnk_080F985E:
+	.incbin	"baserom.gba", 0xF985E, 0x18
+	.global	gUnk_080F9876
+gUnk_080F9876:
+	.incbin	"baserom.gba", 0xF9876, 0x20
+	.global	gUnk_080F9896
+gUnk_080F9896:
+	.incbin	"baserom.gba", 0xF9896, 0x20
+	.global	gUnk_080F98B6
+gUnk_080F98B6:
+	.incbin	"baserom.gba", 0xF98B6, 0x20
+	.global	gUnk_080F98D6
+gUnk_080F98D6:
+	.incbin	"baserom.gba", 0xF98D6, 0x20
+	.global	gUnk_080F98F6
+gUnk_080F98F6:
+	.incbin	"baserom.gba", 0xF98F6, 0x20
+	.global	gUnk_080F9916
+gUnk_080F9916:
+	.incbin	"baserom.gba", 0xF9916, 0x20
+	.global	gUnk_080F9936
+gUnk_080F9936:
+	.incbin	"baserom.gba", 0xF9936, 0x20
+	.global	gUnk_080F9956
+gUnk_080F9956:
+	.incbin	"baserom.gba", 0xF9956, 0x22
+	.global	gUnk_080F9978
+gUnk_080F9978:
+	.incbin	"baserom.gba", 0xF9978, 0x22
+	.global	gUnk_080F999A
+gUnk_080F999A:
+	.incbin	"baserom.gba", 0xF999A, 0x22
+	.global	gUnk_080F99BC
+gUnk_080F99BC:
+	.incbin	"baserom.gba", 0xF99BC, 0x22
+	.global	gUnk_080F99DE
+gUnk_080F99DE:
+	.incbin	"baserom.gba", 0xF99DE, 0x22
+	.global	gUnk_080F9A00
+gUnk_080F9A00:
+	.incbin	"baserom.gba", 0xF9A00, 0x22
+	.global	gUnk_080F9A22
+gUnk_080F9A22:
+	.incbin	"baserom.gba", 0xF9A22, 0x22
+	.global	gUnk_080F9A44
+gUnk_080F9A44:
+	.incbin	"baserom.gba", 0xF9A44, 0x22
+	.global	gUnk_080F9A66
+gUnk_080F9A66:
+	.incbin	"baserom.gba", 0xF9A66, 0x126
+	.global	gUnk_080F9B8C
+gUnk_080F9B8C:
+	.incbin	"baserom.gba", 0xF9B8C, 0x166
+	.global	gUnk_080F9CF2
+gUnk_080F9CF2:
+	.incbin	"baserom.gba", 0xF9CF2, 0x166
+	.global	gUnk_080F9E58
+gUnk_080F9E58:
+	.incbin	"baserom.gba", 0xF9E58, 0x126
+	.global	gUnk_080F9F7E
+gUnk_080F9F7E:
+	.incbin	"baserom.gba", 0xF9F7E, 0x166
+	.global	gUnk_080FA0E4
+gUnk_080FA0E4:
+	.incbin	"baserom.gba", 0xFA0E4, 0x106
+	.global	gUnk_080FA1EA
+gUnk_080FA1EA:
+	.incbin	"baserom.gba", 0xFA1EA, 0x166
+	.global	gUnk_080FA350
+gUnk_080FA350:
+	.incbin	"baserom.gba", 0xFA350, 0x106
+	.global	gUnk_080FA456
+gUnk_080FA456:
+	.incbin	"baserom.gba", 0xFA456, 0x186
+	.global	gUnk_080FA5DC
+gUnk_080FA5DC:
+	.incbin	"baserom.gba", 0xFA5DC, 0x126
+	.global	gUnk_080FA702
+gUnk_080FA702:
+	.incbin	"baserom.gba", 0xFA702, 0x186
+	.global	gUnk_080FA888
+gUnk_080FA888:
+	.incbin	"baserom.gba", 0xFA888, 0x126
+	.global	gUnk_080FA9AE
+gUnk_080FA9AE:
+	.incbin	"baserom.gba", 0xFA9AE, 0x166
+	.global	gUnk_080FAB14
+gUnk_080FAB14:
+	.incbin	"baserom.gba", 0xFAB14, 0x166
+	.global	gUnk_080FAC7A
+gUnk_080FAC7A:
+	.incbin	"baserom.gba", 0xFAC7A, 0x126
+	.global	gUnk_080FADA0
+gUnk_080FADA0:
+	.incbin	"baserom.gba", 0xFADA0, 0x186
+	.global	gUnk_080FAF26
+gUnk_080FAF26:
+	.incbin	"baserom.gba", 0xFAF26, 0x106
+	.global	gUnk_080FB02C
+gUnk_080FB02C:
+	.incbin	"baserom.gba", 0xFB02C, 0x166
+	.global	gUnk_080FB192
+gUnk_080FB192:
+	.incbin	"baserom.gba", 0xFB192, 0x106
+	.global	gUnk_080FB298
+gUnk_080FB298:
+	.incbin	"baserom.gba", 0xFB298, 0x186
+	.global	gUnk_080FB41E
+gUnk_080FB41E:
+	.incbin	"baserom.gba", 0xFB41E, 0x106
+	.global	gUnk_080FB524
+gUnk_080FB524:
+	.incbin	"baserom.gba", 0xFB524, 0x166
+	.global	gUnk_080FB68A
+gUnk_080FB68A:
+	.incbin	"baserom.gba", 0xFB68A, 0x126
+	.global	gUnk_080FB7B0
+gUnk_080FB7B0:
+	.incbin	"baserom.gba", 0xFB7B0, 0x186
+	.global	gUnk_080FB936
+gUnk_080FB936:
+	.incbin	"baserom.gba", 0xFB936, 0x126
+	.global	gUnk_080FBA5C
+gUnk_080FBA5C:
+	.incbin	"baserom.gba", 0xFBA5C, 0xE6
+	.global	gUnk_080FBB42
+gUnk_080FBB42:
+	.incbin	"baserom.gba", 0xFBB42, 0x126
+	.global	gUnk_080FBC68
+gUnk_080FBC68:
+	.incbin	"baserom.gba", 0xFBC68, 0x106
+	.global	gUnk_080FBD6E
+gUnk_080FBD6E:
+	.incbin	"baserom.gba", 0xFBD6E, 0x106
+	.global	gUnk_080FBE74
+gUnk_080FBE74:
+	.incbin	"baserom.gba", 0xFBE74, 0x106
+	.global	gUnk_080FBF7A
+gUnk_080FBF7A:
+	.incbin	"baserom.gba", 0xFBF7A, 0x106
+	.global	gUnk_080FC080
+gUnk_080FC080:
+	.incbin	"baserom.gba", 0xFC080, 0x106
+	.global	gUnk_080FC186
+gUnk_080FC186:
+	.incbin	"baserom.gba", 0xFC186, 0x126
+	.global	gUnk_080FC2AC
+gUnk_080FC2AC:
+	.incbin	"baserom.gba", 0xFC2AC, 0x106
+	.global	gUnk_080FC3B2
+gUnk_080FC3B2:
+	.incbin	"baserom.gba", 0xFC3B2, 0x126
+	.global	gUnk_080FC4D8
+gUnk_080FC4D8:
+	.incbin	"baserom.gba", 0xFC4D8, 0x106
+	.global	gUnk_080FC5DE
+gUnk_080FC5DE:
+	.incbin	"baserom.gba", 0xFC5DE, 0x126
+	.global	gUnk_080FC704
+gUnk_080FC704:
+	.incbin	"baserom.gba", 0xFC704, 0x106
+	.global	gUnk_080FC80A
+gUnk_080FC80A:
+	.incbin	"baserom.gba", 0xFC80A, 0x106
+	.global	gUnk_080FC910
+gUnk_080FC910:
+	.incbin	"baserom.gba", 0xFC910, 0x126
+	.global	gUnk_080FCA36
+gUnk_080FCA36:
+	.incbin	"baserom.gba", 0xFCA36, 0x126
+	.global	gUnk_080FCB5C
+gUnk_080FCB5C:
+	.incbin	"baserom.gba", 0xFCB5C, 0x126
+	.global	gUnk_080FCC82
+gUnk_080FCC82:
+	.incbin	"baserom.gba", 0xFCC82, 0x126
+	.global	gUnk_080FCDA8
+gUnk_080FCDA8:
+	.incbin	"baserom.gba", 0xFCDA8, 0x126
+	.global	gUnk_080FCECE
+gUnk_080FCECE:
+	.incbin	"baserom.gba", 0xFCECE, 0x126
+	.global	gUnk_080FCFF4
+gUnk_080FCFF4:
+	.incbin	"baserom.gba", 0xFCFF4, 0x126
+	.global	gUnk_080FD11A
+gUnk_080FD11A:
+	.incbin	"baserom.gba", 0xFD11A, 0x126
+	.global	gUnk_080FD240
+gUnk_080FD240:
+	.incbin	"baserom.gba", 0xFD240, 0x126
+	.global	gUnk_080FD366
+gUnk_080FD366:
+	.incbin	"baserom.gba", 0xFD366, 0x126
+	.global	gUnk_080FD48C
+gUnk_080FD48C:
+	.incbin	"baserom.gba", 0xFD48C, 0x146
+	.global	gUnk_080FD5D2
+gUnk_080FD5D2:
+	.incbin	"baserom.gba", 0xFD5D2, 0x106
+	.global	gUnk_080FD6D8
+gUnk_080FD6D8:
+	.incbin	"baserom.gba", 0xFD6D8, 0xC6
+	.global	gUnk_080FD79E
+gUnk_080FD79E:
+	.incbin	"baserom.gba", 0xFD79E, 0x146
+	.global	gUnk_080FD8E4
+gUnk_080FD8E4:
+	.incbin	"baserom.gba", 0xFD8E4, 0xC6
+	.global	gUnk_080FD9AA
+gUnk_080FD9AA:
+	.incbin	"baserom.gba", 0xFD9AA, 0x146
+	.global	gUnk_080FDAF0
+gUnk_080FDAF0:
+	.incbin	"baserom.gba", 0xFDAF0, 0xA6
+	.global	gUnk_080FDB96
+gUnk_080FDB96:
+	.incbin	"baserom.gba", 0xFDB96, 0x126
+	.global	gUnk_080FDCBC
+gUnk_080FDCBC:
+	.incbin	"baserom.gba", 0xFDCBC, 0xA6
+	.global	gUnk_080FDD62
+gUnk_080FDD62:
+	.incbin	"baserom.gba", 0xFDD62, 0x126
+	.global	gUnk_080FDE88
+gUnk_080FDE88:
+	.incbin	"baserom.gba", 0xFDE88, 0x126
+	.global	gUnk_080FDFAE
+gUnk_080FDFAE:
+	.incbin	"baserom.gba", 0xFDFAE, 0xC6
+	.global	gUnk_080FE074
+gUnk_080FE074:
+	.incbin	"baserom.gba", 0xFE074, 0x146
+	.global	gUnk_080FE1BA
+gUnk_080FE1BA:
+	.incbin	"baserom.gba", 0xFE1BA, 0x86
+	.global	gUnk_080FE240
+gUnk_080FE240:
+	.incbin	"baserom.gba", 0xFE240, 0x106
+	.global	gUnk_080FE346
+gUnk_080FE346:
+	.incbin	"baserom.gba", 0xFE346, 0x40
+	.global	gUnk_080FE386
+gUnk_080FE386:
+	.incbin	"baserom.gba", 0xFE386, 0x40
+	.global	gUnk_080FE3C6
+gUnk_080FE3C6:
+	.incbin	"baserom.gba", 0xFE3C6, 0x40
+	.global	gUnk_080FE406
+gUnk_080FE406:
+	.incbin	"baserom.gba", 0xFE406, 0x40
+	.global	gUnk_080FE446
+gUnk_080FE446:
+	.incbin	"baserom.gba", 0xFE446, 0x38
+	.global	gUnk_080FE47E
+gUnk_080FE47E:
+	.incbin	"baserom.gba", 0xFE47E, 0x40
+	.global	gUnk_080FE4BE
+gUnk_080FE4BE:
+	.incbin	"baserom.gba", 0xFE4BE, 0x40
+	.global	gUnk_080FE4FE
+gUnk_080FE4FE:
+	.incbin	"baserom.gba", 0xFE4FE, 0x40
+	.global	gUnk_080FE53E
+gUnk_080FE53E:
+	.incbin	"baserom.gba", 0xFE53E, 0x40
+	.global	gUnk_080FE57E
+gUnk_080FE57E:
+	.incbin	"baserom.gba", 0xFE57E, 0x40
+	.global	gUnk_080FE5BE
+gUnk_080FE5BE:
+	.incbin	"baserom.gba", 0xFE5BE, 0x48
+	.global	gUnk_080FE606
+gUnk_080FE606:
+	.incbin	"baserom.gba", 0xFE606, 0x40
+	.global	gUnk_080FE646
+gUnk_080FE646:
+	.incbin	"baserom.gba", 0xFE646, 0x40
+	.global	gUnk_080FE686
+gUnk_080FE686:
+	.incbin	"baserom.gba", 0xFE686, 0x38
+	.global	gUnk_080FE6BE
+gUnk_080FE6BE:
+	.incbin	"baserom.gba", 0xFE6BE, 0x38
+	.global	gUnk_080FE6F6
+gUnk_080FE6F6:
+	.incbin	"baserom.gba", 0xFE6F6, 0x38
+	.global	gUnk_080FE72E
+gUnk_080FE72E:
+	.incbin	"baserom.gba", 0xFE72E, 0x30
+	.global	gUnk_080FE75E
+gUnk_080FE75E:
+	.incbin	"baserom.gba", 0xFE75E, 0x38
+	.global	gUnk_080FE796
+gUnk_080FE796:
+	.incbin	"baserom.gba", 0xFE796, 0x38
+	.global	gUnk_080FE7CE
+gUnk_080FE7CE:
+	.incbin	"baserom.gba", 0xFE7CE, 0x38
+	.global	gUnk_080FE806
+gUnk_080FE806:
+	.incbin	"baserom.gba", 0xFE806, 0x38
+	.global	gUnk_080FE83E
+gUnk_080FE83E:
+	.incbin	"baserom.gba", 0xFE83E, 0x38
+	.global	gUnk_080FE876
+gUnk_080FE876:
+	.incbin	"baserom.gba", 0xFE876, 0x38
+	.global	gUnk_080FE8AE
+gUnk_080FE8AE:
+	.incbin	"baserom.gba", 0xFE8AE, 0x38
+	.global	gUnk_080FE8E6
+gUnk_080FE8E6:
+	.incbin	"baserom.gba", 0xFE8E6, 0x40
+	.global	gUnk_080FE926
+gUnk_080FE926:
+	.incbin	"baserom.gba", 0xFE926, 0x40
+	.global	gUnk_080FE966
+gUnk_080FE966:
+	.incbin	"baserom.gba", 0xFE966, 0x40
+	.global	gUnk_080FE9A6
+gUnk_080FE9A6:
+	.incbin	"baserom.gba", 0xFE9A6, 0x38
+	.global	gUnk_080FE9DE
+gUnk_080FE9DE:
+	.incbin	"baserom.gba", 0xFE9DE, 0x40
+	.global	gUnk_080FEA1E
+gUnk_080FEA1E:
+	.incbin	"baserom.gba", 0xFEA1E, 0x40
+	.global	gUnk_080FEA5E
+gUnk_080FEA5E:
+	.incbin	"baserom.gba", 0xFEA5E, 0x40
+	.global	gUnk_080FEA9E
+gUnk_080FEA9E:
+	.incbin	"baserom.gba", 0xFEA9E, 0x40
+	.global	gUnk_080FEADE
+gUnk_080FEADE:
+	.incbin	"baserom.gba", 0xFEADE, 0x40
+	.global	gUnk_080FEB1E
+gUnk_080FEB1E:
+	.incbin	"baserom.gba", 0xFEB1E, 0x40
+	.global	gUnk_080FEB5E
+gUnk_080FEB5E:
+	.incbin	"baserom.gba", 0xFEB5E, 0x40
+	.global	gUnk_080FEB9E
+gUnk_080FEB9E:
+	.incbin	"baserom.gba", 0xFEB9E, 0x30
+	.global	gUnk_080FEBCE
+gUnk_080FEBCE:
+	.incbin	"baserom.gba", 0xFEBCE, 0x38
+	.global	gUnk_080FEC06
+gUnk_080FEC06:
+	.incbin	"baserom.gba", 0xFEC06, 0x30
+	.global	gUnk_080FEC36
+gUnk_080FEC36:
+	.incbin	"baserom.gba", 0xFEC36, 0x38
+	.global	gUnk_080FEC6E
+gUnk_080FEC6E:
+	.incbin	"baserom.gba", 0xFEC6E, 0x30
+	.global	gUnk_080FEC9E
+gUnk_080FEC9E:
+	.incbin	"baserom.gba", 0xFEC9E, 0x38
+	.global	gUnk_080FECD6
+gUnk_080FECD6:
+	.incbin	"baserom.gba", 0xFECD6, 0x28
+	.global	gUnk_080FECFE
+gUnk_080FECFE:
+	.incbin	"baserom.gba", 0xFECFE, 0x30
+	.global	gUnk_080FED2E
+gUnk_080FED2E:
+	.incbin	"baserom.gba", 0xFED2E, 0x30
+	.global	gUnk_080FED5E
+gUnk_080FED5E:
+	.incbin	"baserom.gba", 0xFED5E, 0x38
+	.global	gUnk_080FED96
+gUnk_080FED96:
+	.incbin	"baserom.gba", 0xFED96, 0x30
+	.global	gUnk_080FEDC6
+gUnk_080FEDC6:
+	.incbin	"baserom.gba", 0xFEDC6, 0x38
+	.global	gUnk_080FEDFE
+gUnk_080FEDFE:
+	.incbin	"baserom.gba", 0xFEDFE, 0x30
+	.global	gUnk_080FEE2E
+gUnk_080FEE2E:
+	.incbin	"baserom.gba", 0xFEE2E, 0x38
+	.global	gUnk_080FEE66
+gUnk_080FEE66:
+	.incbin	"baserom.gba", 0xFEE66, 0x30
+	.global	gUnk_080FEE96
+gUnk_080FEE96:
+	.incbin	"baserom.gba", 0xFEE96, 0x38
+	.global	gUnk_080FEECE
+gUnk_080FEECE:
+	.incbin	"baserom.gba", 0xFEECE, 0x30
+	.global	gUnk_080FEEFE
+gUnk_080FEEFE:
+	.incbin	"baserom.gba", 0xFEEFE, 0x38
+	.global	gUnk_080FEF36
+gUnk_080FEF36:
+	.incbin	"baserom.gba", 0xFEF36, 0x30
+	.global	gUnk_080FEF66
+gUnk_080FEF66:
+	.incbin	"baserom.gba", 0xFEF66, 0x38
+	.global	gUnk_080FEF9E
+gUnk_080FEF9E:
+	.incbin	"baserom.gba", 0xFEF9E, 0x28
+	.global	gUnk_080FEFC6
+gUnk_080FEFC6:
+	.incbin	"baserom.gba", 0xFEFC6, 0x32
+	.global	gUnk_080FEFF8
+gUnk_080FEFF8:
+	.incbin	"baserom.gba", 0xFEFF8, 0x22
+	.global	gUnk_080FF01A
+gUnk_080FF01A:
+	.incbin	"baserom.gba", 0xFF01A, 0x22
+	.global	gUnk_080FF03C
+gUnk_080FF03C:
+	.incbin	"baserom.gba", 0xFF03C, 0x22
+	.global	gUnk_080FF05E
+gUnk_080FF05E:
+	.incbin	"baserom.gba", 0xFF05E, 0x22
+	.global	gUnk_080FF080
+gUnk_080FF080:
+	.incbin	"baserom.gba", 0xFF080, 0x22
+	.global	gUnk_080FF0A2
+gUnk_080FF0A2:
+	.incbin	"baserom.gba", 0xFF0A2, 0x22
+	.global	gUnk_080FF0C4
+gUnk_080FF0C4:
+	.incbin	"baserom.gba", 0xFF0C4, 0x22
+	.global	gUnk_080FF0E6
+gUnk_080FF0E6:
+	.incbin	"baserom.gba", 0xFF0E6, 0x22
+	.global	gUnk_080FF108
+gUnk_080FF108:
+	.incbin	"baserom.gba", 0xFF108, 0x22
+	.global	gUnk_080FF12A
+gUnk_080FF12A:
+	.incbin	"baserom.gba", 0xFF12A, 0x22
+	.global	gUnk_080FF14C
+gUnk_080FF14C:
+	.incbin	"baserom.gba", 0xFF14C, 0x22
+	.global	gUnk_080FF16E
+gUnk_080FF16E:
+	.incbin	"baserom.gba", 0xFF16E, 0x22
+	.global	gUnk_080FF190
+gUnk_080FF190:
+	.incbin	"baserom.gba", 0xFF190, 0x22
+	.global	gUnk_080FF1B2
+gUnk_080FF1B2:
+	.incbin	"baserom.gba", 0xFF1B2, 0x22
+	.global	gUnk_080FF1D4
+gUnk_080FF1D4:
+	.incbin	"baserom.gba", 0xFF1D4, 0x22
+	.global	gUnk_080FF1F6
+gUnk_080FF1F6:
+	.incbin	"baserom.gba", 0xFF1F6, 0x22
+	.global	gUnk_080FF218
+gUnk_080FF218:
+	.incbin	"baserom.gba", 0xFF218, 0x22
+	.global	gUnk_080FF23A
+gUnk_080FF23A:
+	.incbin	"baserom.gba", 0xFF23A, 0x22
+	.global	gUnk_080FF25C
+gUnk_080FF25C:
+	.incbin	"baserom.gba", 0xFF25C, 0x22
+	.global	gUnk_080FF27E
+gUnk_080FF27E:
+	.incbin	"baserom.gba", 0xFF27E, 0x22
+	.global	gUnk_080FF2A0
+gUnk_080FF2A0:
+	.incbin	"baserom.gba", 0xFF2A0, 0x126
+	.global	gUnk_080FF3C6
+gUnk_080FF3C6:
+	.incbin	"baserom.gba", 0xFF3C6, 0x126
+	.global	gUnk_080FF4EC
+gUnk_080FF4EC:
+	.incbin	"baserom.gba", 0xFF4EC, 0x126
+	.global	gUnk_080FF612
+gUnk_080FF612:
+	.incbin	"baserom.gba", 0xFF612, 0x126
+	.global	gUnk_080FF738
+gUnk_080FF738:
+	.incbin	"baserom.gba", 0xFF738, 0x126
+	.global	gUnk_080FF85E
+gUnk_080FF85E:
+	.incbin	"baserom.gba", 0xFF85E, 0x126
+	.global	gUnk_080FF984
+gUnk_080FF984:
+	.incbin	"baserom.gba", 0xFF984, 0x126
+	.global	gUnk_080FFAAA
+gUnk_080FFAAA:
+	.incbin	"baserom.gba", 0xFFAAA, 0x126
+	.global	gUnk_080FFBD0
+gUnk_080FFBD0:
+	.incbin	"baserom.gba", 0xFFBD0, 0x126
+	.global	gUnk_080FFCF6
+gUnk_080FFCF6:
+	.incbin	"baserom.gba", 0xFFCF6, 0x146
+	.global	gUnk_080FFE3C
+gUnk_080FFE3C:
+	.incbin	"baserom.gba", 0xFFE3C, 0x106
+	.global	gUnk_080FFF42
+gUnk_080FFF42:
+	.incbin	"baserom.gba", 0xFFF42, 0x146
+	.global	gUnk_08100088
+gUnk_08100088:
+	.incbin	"baserom.gba", 0x100088, 0x126
+	.global	gUnk_081001AE
+gUnk_081001AE:
+	.incbin	"baserom.gba", 0x1001AE, 0xE6
+	.global	gUnk_08100294
+gUnk_08100294:
+	.incbin	"baserom.gba", 0x100294, 0x126
+	.global	gUnk_081003BA
+gUnk_081003BA:
+	.incbin	"baserom.gba", 0x1003BA, 0x126
+	.global	gUnk_081004E0
+gUnk_081004E0:
+	.incbin	"baserom.gba", 0x1004E0, 0x106
+	.global	gUnk_081005E6
+gUnk_081005E6:
+	.incbin	"baserom.gba", 0x1005E6, 0x106
+	.global	gUnk_081006EC
+gUnk_081006EC:
+	.incbin	"baserom.gba", 0x1006EC, 0x106
+	.global	gUnk_081007F2
+gUnk_081007F2:
+	.incbin	"baserom.gba", 0x1007F2, 0x106
+	.global	gUnk_081008F8
+gUnk_081008F8:
+	.incbin	"baserom.gba", 0x1008F8, 0x106
+	.global	gUnk_081009FE
+gUnk_081009FE:
+	.incbin	"baserom.gba", 0x1009FE, 0x106
+	.global	gUnk_08100B04
+gUnk_08100B04:
+	.incbin	"baserom.gba", 0x100B04, 0x1C6
+	.global	gUnk_08100CCA
+gUnk_08100CCA:
+	.incbin	"baserom.gba", 0x100CCA, 0x1C6
+	.global	gUnk_08100E90
+gUnk_08100E90:
+	.incbin	"baserom.gba", 0x100E90, 0x1E6
+	.global	gUnk_08101076
+gUnk_08101076:
+	.incbin	"baserom.gba", 0x101076, 0x1C6
+	.global	gUnk_0810123C
+gUnk_0810123C:
+	.incbin	"baserom.gba", 0x10123C, 0x1C6
+	.global	gUnk_08101402
+gUnk_08101402:
+	.incbin	"baserom.gba", 0x101402, 0x1C6
+	.global	gUnk_081015C8
+gUnk_081015C8:
+	.incbin	"baserom.gba", 0x1015C8, 0x1C6
+	.global	gUnk_0810178E
+gUnk_0810178E:
+	.incbin	"baserom.gba", 0x10178E, 0x86
+	.global	gUnk_08101814
+gUnk_08101814:
+	.incbin	"baserom.gba", 0x101814, 0x86
+	.global	gUnk_0810189A
+gUnk_0810189A:
+	.incbin	"baserom.gba", 0x10189A, 0x86
+	.global	gUnk_08101920
+gUnk_08101920:
+	.incbin	"baserom.gba", 0x101920, 0x86
+	.global	gUnk_081019A6
+gUnk_081019A6:
+	.incbin	"baserom.gba", 0x1019A6, 0x86
+	.global	gUnk_08101A2C
+gUnk_08101A2C:
+	.incbin	"baserom.gba", 0x101A2C, 0x86
+	.global	gUnk_08101AB2
+gUnk_08101AB2:
+	.incbin	"baserom.gba", 0x101AB2, 0xA6
+	.global	gUnk_08101B58
+gUnk_08101B58:
+	.incbin	"baserom.gba", 0x101B58, 0xC6
+	.global	gUnk_08101C1E
+gUnk_08101C1E:
+	.incbin	"baserom.gba", 0x101C1E, 0xC6
+	.global	gUnk_08101CE4
+gUnk_08101CE4:
+	.incbin	"baserom.gba", 0x101CE4, 0xC6
+	.global	gUnk_08101DAA
+gUnk_08101DAA:
+	.incbin	"baserom.gba", 0x101DAA, 0xC6
+	.global	gUnk_08101E70
+gUnk_08101E70:
+	.incbin	"baserom.gba", 0x101E70, 0xA6
+	.global	gUnk_08101F16
+gUnk_08101F16:
+	.incbin	"baserom.gba", 0x101F16, 0x106
+	.global	gUnk_0810201C
+gUnk_0810201C:
+	.incbin	"baserom.gba", 0x10201C, 0xC6
+	.global	gUnk_081020E2
+gUnk_081020E2:
+	.incbin	"baserom.gba", 0x1020E2, 0x106
+	.global	gUnk_081021E8
+gUnk_081021E8:
+	.incbin	"baserom.gba", 0x1021E8, 0xC6
+	.global	gUnk_081022AE
+gUnk_081022AE:
+	.incbin	"baserom.gba", 0x1022AE, 0x106
+	.global	gUnk_081023B4
+gUnk_081023B4:
+	.incbin	"baserom.gba", 0x1023B4, 0xC6
+	.global	gUnk_0810247A
+gUnk_0810247A:
+	.incbin	"baserom.gba", 0x10247A, 0x106
+	.global	gUnk_08102580
+gUnk_08102580:
+	.incbin	"baserom.gba", 0x102580, 0xC6
+	.global	gUnk_08102646
+gUnk_08102646:
+	.incbin	"baserom.gba", 0x102646, 0x106
+	.global	gUnk_0810274C
+gUnk_0810274C:
+	.incbin	"baserom.gba", 0x10274C, 0xC6
+	.global	gUnk_08102812
+gUnk_08102812:
+	.incbin	"baserom.gba", 0x102812, 0x106
+	.global	gUnk_08102918
+gUnk_08102918:
+	.incbin	"baserom.gba", 0x102918, 0xC6
+	.global	gUnk_081029DE
+gUnk_081029DE:
+	.incbin	"baserom.gba", 0x1029DE, 0x106
+	.global	gUnk_08102AE4
+gUnk_08102AE4:
+	.incbin	"baserom.gba", 0x102AE4, 0xC6
+	.global	gUnk_08102BAA
+gUnk_08102BAA:
+	.incbin	"baserom.gba", 0x102BAA, 0xC6
+	.global	gUnk_08102C70
+gUnk_08102C70:
+	.incbin	"baserom.gba", 0x102C70, 0xC6
+	.global	gUnk_08102D36
+gUnk_08102D36:
+	.incbin	"baserom.gba", 0x102D36, 0xC6
+	.global	gUnk_08102DFC
+gUnk_08102DFC:
+	.incbin	"baserom.gba", 0x102DFC, 0xC6
+	.global	gUnk_08102EC2
+gUnk_08102EC2:
+	.incbin	"baserom.gba", 0x102EC2, 0xC6
+	.global	gUnk_08102F88
+gUnk_08102F88:
+	.incbin	"baserom.gba", 0x102F88, 0xC6
+	.global	gUnk_0810304E
+gUnk_0810304E:
+	.incbin	"baserom.gba", 0x10304E, 0xC6
+	.global	gUnk_08103114
+gUnk_08103114:
+	.incbin	"baserom.gba", 0x103114, 0xC6
+	.global	gUnk_081031DA
+gUnk_081031DA:
+	.incbin	"baserom.gba", 0x1031DA, 0xC6
+	.global	gUnk_081032A0
+gUnk_081032A0:
+	.incbin	"baserom.gba", 0x1032A0, 0x106
+	.global	gUnk_081033A6
+gUnk_081033A6:
+	.incbin	"baserom.gba", 0x1033A6, 0x106
+	.global	gUnk_081034AC
+gUnk_081034AC:
+	.incbin	"baserom.gba", 0x1034AC, 0x106
+	.global	gUnk_081035B2
+gUnk_081035B2:
+	.incbin	"baserom.gba", 0x1035B2, 0x106
+	.global	gUnk_081036B8
+gUnk_081036B8:
+	.incbin	"baserom.gba", 0x1036B8, 0x106
+	.global	gUnk_081037BE
+gUnk_081037BE:
+	.incbin	"baserom.gba", 0x1037BE, 0x106
+	.global	gUnk_081038C4
+gUnk_081038C4:
+	.incbin	"baserom.gba", 0x1038C4, 0x106
+	.global	gUnk_081039CA
+gUnk_081039CA:
+	.incbin	"baserom.gba", 0x1039CA, 0x106
+	.global	gUnk_08103AD0
+gUnk_08103AD0:
+	.incbin	"baserom.gba", 0x103AD0, 0x106
+	.global	gUnk_08103BD6
+gUnk_08103BD6:
+	.incbin	"baserom.gba", 0x103BD6, 0x106
+	.global	gUnk_08103CDC
+gUnk_08103CDC:
+	.incbin	"baserom.gba", 0x103CDC, 0x106
+	.global	gUnk_08103DE2
+gUnk_08103DE2:
+	.incbin	"baserom.gba", 0x103DE2, 0x106
+	.global	gUnk_08103EE8
+gUnk_08103EE8:
+	.incbin	"baserom.gba", 0x103EE8, 0x106
+	.global	gUnk_08103FEE
+gUnk_08103FEE:
+	.incbin	"baserom.gba", 0x103FEE, 0x106
+	.global	gUnk_081040F4
+gUnk_081040F4:
+	.incbin	"baserom.gba", 0x1040F4, 0x106
+	.global	gUnk_081041FA
+gUnk_081041FA:
+	.incbin	"baserom.gba", 0x1041FA, 0x106
+	.global	gUnk_08104300
+gUnk_08104300:
+	.incbin	"baserom.gba", 0x104300, 0xC6
+	.global	gUnk_081043C6
+gUnk_081043C6:
+	.incbin	"baserom.gba", 0x1043C6, 0xC6
+	.global	gUnk_0810448C
+gUnk_0810448C:
+	.incbin	"baserom.gba", 0x10448C, 0xC6
+	.global	gUnk_08104552
+gUnk_08104552:
+	.incbin	"baserom.gba", 0x104552, 0xC6
+	.global	gUnk_08104618
+gUnk_08104618:
+	.incbin	"baserom.gba", 0x104618, 0x106
+	.global	gUnk_0810471E
+gUnk_0810471E:
+	.incbin	"baserom.gba", 0x10471E, 0x146
+	.global	gUnk_08104864
+gUnk_08104864:
+	.incbin	"baserom.gba", 0x104864, 0x146
+	.global	gUnk_081049AA
+gUnk_081049AA:
+	.incbin	"baserom.gba", 0x1049AA, 0x126
+	.global	gUnk_08104AD0
+gUnk_08104AD0:
+	.incbin	"baserom.gba", 0x104AD0, 0x126
+	.global	gUnk_08104BF6
+gUnk_08104BF6:
+	.incbin	"baserom.gba", 0x104BF6, 0x126
+	.global	gUnk_08104D1C
+gUnk_08104D1C:
+	.incbin	"baserom.gba", 0x104D1C, 0x126
+	.global	gUnk_08104E42
+gUnk_08104E42:
+	.incbin	"baserom.gba", 0x104E42, 0x146
+	.global	gUnk_08104F88
+gUnk_08104F88:
+	.incbin	"baserom.gba", 0x104F88, 0x146
+	.global	gUnk_081050CE
+gUnk_081050CE:
+	.incbin	"baserom.gba", 0x1050CE, 0x126
+	.global	gUnk_081051F4
+gUnk_081051F4:
+	.incbin	"baserom.gba", 0x1051F4, 0x126
+	.global	gUnk_0810531A
+gUnk_0810531A:
+	.incbin	"baserom.gba", 0x10531A, 0x126
+	.global	gUnk_08105440
+gUnk_08105440:
+	.incbin	"baserom.gba", 0x105440, 0x126
+	.global	gUnk_08105566
+gUnk_08105566:
+	.incbin	"baserom.gba", 0x105566, 0x126
+	.global	gUnk_0810568C
+gUnk_0810568C:
+	.incbin	"baserom.gba", 0x10568C, 0x126
+	.global	gUnk_081057B2
+gUnk_081057B2:
+	.incbin	"baserom.gba", 0x1057B2, 0x126
+	.global	gUnk_081058D8
+gUnk_081058D8:
+	.incbin	"baserom.gba", 0x1058D8, 0x126
+	.global	gUnk_081059FE
+gUnk_081059FE:
+	.incbin	"baserom.gba", 0x1059FE, 0x126
+	.global	gUnk_08105B24
+gUnk_08105B24:
+	.incbin	"baserom.gba", 0x105B24, 0x126
+	.global	gUnk_08105C4A
+gUnk_08105C4A:
+	.incbin	"baserom.gba", 0x105C4A, 0x106
+	.global	gUnk_08105D50
+gUnk_08105D50:
+	.incbin	"baserom.gba", 0x105D50, 0x106
+	.global	gUnk_08105E56
+gUnk_08105E56:
+	.incbin	"baserom.gba", 0x105E56, 0x126
+	.global	gUnk_08105F7C
+gUnk_08105F7C:
+	.incbin	"baserom.gba", 0x105F7C, 0x106
+	.global	gUnk_08106082
+gUnk_08106082:
+	.incbin	"baserom.gba", 0x106082, 0x106
+	.global	gUnk_08106188
+gUnk_08106188:
+	.incbin	"baserom.gba", 0x106188, 0x126
+	.global	gUnk_081062AE
+gUnk_081062AE:
+	.incbin	"baserom.gba", 0x1062AE, 0x166
+	.global	gUnk_08106414
+gUnk_08106414:
+	.incbin	"baserom.gba", 0x106414, 0x166
+	.global	gUnk_0810657A
+gUnk_0810657A:
+	.incbin	"baserom.gba", 0x10657A, 0x166
+	.global	gUnk_081066E0
+gUnk_081066E0:
+	.incbin	"baserom.gba", 0x1066E0, 0x166
+	.global	gUnk_08106846
+gUnk_08106846:
+	.incbin	"baserom.gba", 0x106846, 0x166
+	.global	gUnk_081069AC
+gUnk_081069AC:
+	.incbin	"baserom.gba", 0x1069AC, 0x166
+	.global	gUnk_08106B12
+gUnk_08106B12:
+	.incbin	"baserom.gba", 0x106B12, 0x166
+	.global	gUnk_08106C78
+gUnk_08106C78:
+	.incbin	"baserom.gba", 0x106C78, 0x166
+	.global	gUnk_08106DDE
+gUnk_08106DDE:
+	.incbin	"baserom.gba", 0x106DDE, 0x20
+	.global	gUnk_08106DFE
+gUnk_08106DFE:
+	.incbin	"baserom.gba", 0x106DFE, 0x20
+	.global	gUnk_08106E1E
+gUnk_08106E1E:
+	.incbin	"baserom.gba", 0x106E1E, 0x20
+	.global	gUnk_08106E3E
+gUnk_08106E3E:
+	.incbin	"baserom.gba", 0x106E3E, 0x20
+	.global	gUnk_08106E5E
+gUnk_08106E5E:
+	.incbin	"baserom.gba", 0x106E5E, 0x20
+	.global	gUnk_08106E7E
+gUnk_08106E7E:
+	.incbin	"baserom.gba", 0x106E7E, 0x20
+	.global	gUnk_08106E9E
+gUnk_08106E9E:
+	.incbin	"baserom.gba", 0x106E9E, 0x20
+	.global	gUnk_08106EBE
+gUnk_08106EBE:
+	.incbin	"baserom.gba", 0x106EBE, 0x20
+	.global	gUnk_08106EDE
+gUnk_08106EDE:
+	.incbin	"baserom.gba", 0x106EDE, 0x48
+	.global	gUnk_08106F26
+gUnk_08106F26:
+	.incbin	"baserom.gba", 0x106F26, 0x50
+	.global	gUnk_08106F76
+gUnk_08106F76:
+	.incbin	"baserom.gba", 0x106F76, 0x40
+	.global	gUnk_08106FB6
+gUnk_08106FB6:
+	.incbin	"baserom.gba", 0x106FB6, 0x48
+	.global	gUnk_08106FFE
+gUnk_08106FFE:
+	.incbin	"baserom.gba", 0x106FFE, 0x40
+	.global	gUnk_0810703E
+gUnk_0810703E:
+	.incbin	"baserom.gba", 0x10703E, 0x38
+	.global	gUnk_08107076
+gUnk_08107076:
+	.incbin	"baserom.gba", 0x107076, 0x40
+	.global	gUnk_081070B6
+gUnk_081070B6:
+	.incbin	"baserom.gba", 0x1070B6, 0x48
+	.global	gUnk_081070FE
+gUnk_081070FE:
+	.incbin	"baserom.gba", 0x1070FE, 0x30
+	.global	gUnk_0810712E
+gUnk_0810712E:
+	.incbin	"baserom.gba", 0x10712E, 0x30
+	.global	gUnk_0810715E
+gUnk_0810715E:
+	.incbin	"baserom.gba", 0x10715E, 0x30
+	.global	gUnk_0810718E
+gUnk_0810718E:
+	.incbin	"baserom.gba", 0x10718E, 0x30
+	.global	gUnk_081071BE
+gUnk_081071BE:
+	.incbin	"baserom.gba", 0x1071BE, 0x28
+	.global	gUnk_081071E6
+gUnk_081071E6:
+	.incbin	"baserom.gba", 0x1071E6, 0x30
+	.global	gUnk_08107216
+gUnk_08107216:
+	.incbin	"baserom.gba", 0x107216, 0x30
+	.global	gUnk_08107246
+gUnk_08107246:
+	.incbin	"baserom.gba", 0x107246, 0x30
+	.global	gUnk_08107276
+gUnk_08107276:
+	.incbin	"baserom.gba", 0x107276, 0x48
+	.global	gUnk_081072BE
+gUnk_081072BE:
+	.incbin	"baserom.gba", 0x1072BE, 0x48
+	.global	gUnk_08107306
+gUnk_08107306:
+	.incbin	"baserom.gba", 0x107306, 0x50
+	.global	gUnk_08107356
+gUnk_08107356:
+	.incbin	"baserom.gba", 0x107356, 0x48
+	.global	gUnk_0810739E
+gUnk_0810739E:
+	.incbin	"baserom.gba", 0x10739E, 0x48
+	.global	gUnk_081073E6
+gUnk_081073E6:
+	.incbin	"baserom.gba", 0x1073E6, 0x48
+	.global	gUnk_0810742E
+gUnk_0810742E:
+	.incbin	"baserom.gba", 0x10742E, 0x48
+	.global	gUnk_08107476
+gUnk_08107476:
+	.incbin	"baserom.gba", 0x107476, 0x48
+	.global	gUnk_081074BE
+gUnk_081074BE:
+	.incbin	"baserom.gba", 0x1074BE, 0x28
+	.global	gUnk_081074E6
+gUnk_081074E6:
+	.incbin	"baserom.gba", 0x1074E6, 0x28
+	.global	gUnk_0810750E
+gUnk_0810750E:
+	.incbin	"baserom.gba", 0x10750E, 0x28
+	.global	gUnk_08107536
+gUnk_08107536:
+	.incbin	"baserom.gba", 0x107536, 0x28
+	.global	gUnk_0810755E
+gUnk_0810755E:
+	.incbin	"baserom.gba", 0x10755E, 0x28
+	.global	gUnk_08107586
+gUnk_08107586:
+	.incbin	"baserom.gba", 0x107586, 0x28
+	.global	gUnk_081075AE
+gUnk_081075AE:
+	.incbin	"baserom.gba", 0x1075AE, 0x28
+	.global	gUnk_081075D6
+gUnk_081075D6:
+	.incbin	"baserom.gba", 0x1075D6, 0x28
+	.global	gUnk_081075FE
+gUnk_081075FE:
+	.incbin	"baserom.gba", 0x1075FE, 0x30
+	.global	gUnk_0810762E
+gUnk_0810762E:
+	.incbin	"baserom.gba", 0x10762E, 0x30
+	.global	gUnk_0810765E
+gUnk_0810765E:
+	.incbin	"baserom.gba", 0x10765E, 0x30
+	.global	gUnk_0810768E
+gUnk_0810768E:
+	.incbin	"baserom.gba", 0x10768E, 0x30
+	.global	gUnk_081076BE
+gUnk_081076BE:
+	.incbin	"baserom.gba", 0x1076BE, 0x30
+	.global	gUnk_081076EE
+gUnk_081076EE:
+	.incbin	"baserom.gba", 0x1076EE, 0x30
+	.global	gUnk_0810771E
+gUnk_0810771E:
+	.incbin	"baserom.gba", 0x10771E, 0x30
+	.global	gUnk_0810774E
+gUnk_0810774E:
+	.incbin	"baserom.gba", 0x10774E, 0x30
+	.global	gUnk_0810777E
+gUnk_0810777E:
+	.incbin	"baserom.gba", 0x10777E, 0x30
+	.global	gUnk_081077AE
+gUnk_081077AE:
+	.incbin	"baserom.gba", 0x1077AE, 0x30
+	.global	gUnk_081077DE
+gUnk_081077DE:
+	.incbin	"baserom.gba", 0x1077DE, 0x30
+	.global	gUnk_0810780E
+gUnk_0810780E:
+	.incbin	"baserom.gba", 0x10780E, 0x28
+	.global	gUnk_08107836
+gUnk_08107836:
+	.incbin	"baserom.gba", 0x107836, 0x28
+	.global	gUnk_0810785E
+gUnk_0810785E:
+	.incbin	"baserom.gba", 0x10785E, 0x28
+	.global	gUnk_08107886
+gUnk_08107886:
+	.incbin	"baserom.gba", 0x107886, 0x30
+	.global	gUnk_081078B6
+gUnk_081078B6:
+	.incbin	"baserom.gba", 0x1078B6, 0x30
+	.global	gUnk_081078E6
+gUnk_081078E6:
+	.incbin	"baserom.gba", 0x1078E6, 0x30
+	.global	gUnk_08107916
+gUnk_08107916:
+	.incbin	"baserom.gba", 0x107916, 0x30
+	.global	gUnk_08107946
+gUnk_08107946:
+	.incbin	"baserom.gba", 0x107946, 0x30
+	.global	gUnk_08107976
+gUnk_08107976:
+	.incbin	"baserom.gba", 0x107976, 0x30
+	.global	gUnk_081079A6
+gUnk_081079A6:
+	.incbin	"baserom.gba", 0x1079A6, 0x30
+	.global	gUnk_081079D6
+gUnk_081079D6:
+	.incbin	"baserom.gba", 0x1079D6, 0x30
+	.global	gUnk_08107A06
+gUnk_08107A06:
+	.incbin	"baserom.gba", 0x107A06, 0x30
+	.global	gUnk_08107A36
+gUnk_08107A36:
+	.incbin	"baserom.gba", 0x107A36, 0x30
+	.global	gUnk_08107A66
+gUnk_08107A66:
+	.incbin	"baserom.gba", 0x107A66, 0x30
+	.global	gUnk_08107A96
+gUnk_08107A96:
+	.incbin	"baserom.gba", 0x107A96, 0x38
+	.global	gUnk_08107ACE
+gUnk_08107ACE:
+	.incbin	"baserom.gba", 0x107ACE, 0x38
+	.global	gUnk_08107B06
+gUnk_08107B06:
+	.incbin	"baserom.gba", 0x107B06, 0x38
+	.global	gUnk_08107B3E
+gUnk_08107B3E:
+	.incbin	"baserom.gba", 0x107B3E, 0x38
+	.global	gUnk_08107B76
+gUnk_08107B76:
+	.incbin	"baserom.gba", 0x107B76, 0x38
+	.global	gUnk_08107BAE
+gUnk_08107BAE:
+	.incbin	"baserom.gba", 0x107BAE, 0x38
+	.global	gUnk_08107BE6
+gUnk_08107BE6:
+	.incbin	"baserom.gba", 0x107BE6, 0x38
+	.global	gUnk_08107C1E
+gUnk_08107C1E:
+	.incbin	"baserom.gba", 0x107C1E, 0x28
+	.global	gUnk_08107C46
+gUnk_08107C46:
+	.incbin	"baserom.gba", 0x107C46, 0x28
+	.global	gUnk_08107C6E
+gUnk_08107C6E:
+	.incbin	"baserom.gba", 0x107C6E, 0x28
+	.global	gUnk_08107C96
+gUnk_08107C96:
+	.incbin	"baserom.gba", 0x107C96, 0x28
+	.global	gUnk_08107CBE
+gUnk_08107CBE:
+	.incbin	"baserom.gba", 0x107CBE, 0x28
+	.global	gUnk_08107CE6
+gUnk_08107CE6:
+	.incbin	"baserom.gba", 0x107CE6, 0x28
+	.global	gUnk_08107D0E
+gUnk_08107D0E:
+	.incbin	"baserom.gba", 0x107D0E, 0x28
+	.global	gUnk_08107D36
+gUnk_08107D36:
+	.incbin	"baserom.gba", 0x107D36, 0x28
+	.global	gUnk_08107D5E
+gUnk_08107D5E:
+	.incbin	"baserom.gba", 0x107D5E, 0x28
+	.global	gUnk_08107D86
+gUnk_08107D86:
+	.incbin	"baserom.gba", 0x107D86, 0x28
+	.global	gUnk_08107DAE
+gUnk_08107DAE:
+	.incbin	"baserom.gba", 0x107DAE, 0x28
+	.global	gUnk_08107DD6
+gUnk_08107DD6:
+	.incbin	"baserom.gba", 0x107DD6, 0x30
+	.global	gUnk_08107E06
+gUnk_08107E06:
+	.incbin	"baserom.gba", 0x107E06, 0x30
+	.global	gUnk_08107E36
+gUnk_08107E36:
+	.incbin	"baserom.gba", 0x107E36, 0x30
+	.global	gUnk_08107E66
+gUnk_08107E66:
+	.incbin	"baserom.gba", 0x107E66, 0x30
+	.global	gUnk_08107E96
+gUnk_08107E96:
+	.incbin	"baserom.gba", 0x107E96, 0x28
+	.global	gUnk_08107EBE
+gUnk_08107EBE:
+	.incbin	"baserom.gba", 0x107EBE, 0x30
+	.global	gUnk_08107EEE
+gUnk_08107EEE:
+	.incbin	"baserom.gba", 0x107EEE, 0x30
+	.global	gUnk_08107F1E
+gUnk_08107F1E:
+	.incbin	"baserom.gba", 0x107F1E, 0x30
+	.global	gUnk_08107F4E
+gUnk_08107F4E:
+	.incbin	"baserom.gba", 0x107F4E, 0x30
+	.global	gUnk_08107F7E
+gUnk_08107F7E:
+	.incbin	"baserom.gba", 0x107F7E, 0x30
+	.global	gUnk_08107FAE
+gUnk_08107FAE:
+	.incbin	"baserom.gba", 0x107FAE, 0x30
+	.global	gUnk_08107FDE
+gUnk_08107FDE:
+	.incbin	"baserom.gba", 0x107FDE, 0x30
+	.global	gUnk_0810800E
+gUnk_0810800E:
+	.incbin	"baserom.gba", 0x10800E, 0x30
+	.global	gUnk_0810803E
+gUnk_0810803E:
+	.incbin	"baserom.gba", 0x10803E, 0x20
+	.global	gUnk_0810805E
+gUnk_0810805E:
+	.incbin	"baserom.gba", 0x10805E, 0x20
+	.global	gUnk_0810807E
+gUnk_0810807E:
+	.incbin	"baserom.gba", 0x10807E, 0x20
+	.global	gUnk_0810809E
+gUnk_0810809E:
+	.incbin	"baserom.gba", 0x10809E, 0x20
+	.global	gUnk_081080BE
+gUnk_081080BE:
+	.incbin	"baserom.gba", 0x1080BE, 0x20
+	.global	gUnk_081080DE
+gUnk_081080DE:
+	.incbin	"baserom.gba", 0x1080DE, 0x20
+	.global	gUnk_081080FE
+gUnk_081080FE:
+	.incbin	"baserom.gba", 0x1080FE, 0x20
+	.global	gUnk_0810811E
+gUnk_0810811E:
+	.incbin	"baserom.gba", 0x10811E, 0x20
+	.global	gUnk_0810813E
+gUnk_0810813E:
+	.incbin	"baserom.gba", 0x10813E, 0x30
+	.global	gUnk_0810816E
+gUnk_0810816E:
+	.incbin	"baserom.gba", 0x10816E, 0x30
+	.global	gUnk_0810819E
+gUnk_0810819E:
+	.incbin	"baserom.gba", 0x10819E, 0x28
+	.global	gUnk_081081C6
+gUnk_081081C6:
+	.incbin	"baserom.gba", 0x1081C6, 0x28
+	.global	gUnk_081081EE
+gUnk_081081EE:
+	.incbin	"baserom.gba", 0x1081EE, 0x30
+	.global	gUnk_0810821E
+gUnk_0810821E:
+	.incbin	"baserom.gba", 0x10821E, 0x28
+	.global	gUnk_08108246
+gUnk_08108246:
+	.incbin	"baserom.gba", 0x108246, 0x28
+	.global	gUnk_0810826E
+gUnk_0810826E:
+	.incbin	"baserom.gba", 0x10826E, 0x30
+	.global	gUnk_0810829E
+gUnk_0810829E:
+	.incbin	"baserom.gba", 0x10829E, 0x18
+	.global	gUnk_081082B6
+gUnk_081082B6:
+	.incbin	"baserom.gba", 0x1082B6, 0x18
+	.global	gUnk_081082CE
+gUnk_081082CE:
+	.incbin	"baserom.gba", 0x1082CE, 0x18
+	.global	gUnk_081082E6
+gUnk_081082E6:
+	.incbin	"baserom.gba", 0x1082E6, 0x18
+	.global	gUnk_081082FE
+gUnk_081082FE:
+	.incbin	"baserom.gba", 0x1082FE, 0x18
+	.global	gUnk_08108316
+gUnk_08108316:
+	.incbin	"baserom.gba", 0x108316, 0x18
+	.global	gUnk_0810832E
+gUnk_0810832E:
+	.incbin	"baserom.gba", 0x10832E, 0x18
+	.global	gUnk_08108346
+gUnk_08108346:
+	.incbin	"baserom.gba", 0x108346, 0x1A
+	.global	gUnk_08108360
+gUnk_08108360:
+	.incbin	"baserom.gba", 0x108360, 0x22
+	.global	gUnk_08108382
+gUnk_08108382:
+	.incbin	"baserom.gba", 0x108382, 0x22
+	.global	gUnk_081083A4
+gUnk_081083A4:
+	.incbin	"baserom.gba", 0x1083A4, 0x22
+	.global	gUnk_081083C6
+gUnk_081083C6:
+	.incbin	"baserom.gba", 0x1083C6, 0x22
+	.global	gUnk_081083E8
+gUnk_081083E8:
+	.incbin	"baserom.gba", 0x1083E8, 0x22
+	.global	gUnk_0810840A
+gUnk_0810840A:
+	.incbin	"baserom.gba", 0x10840A, 0x22
+	.global	gUnk_0810842C
+gUnk_0810842C:
+	.incbin	"baserom.gba", 0x10842C, 0x22
+	.global	gUnk_0810844E
+gUnk_0810844E:
+	.incbin	"baserom.gba", 0x10844E, 0x126
+	.global	gUnk_08108574
+gUnk_08108574:
+	.incbin	"baserom.gba", 0x108574, 0x186
+	.global	gUnk_081086FA
+gUnk_081086FA:
+	.incbin	"baserom.gba", 0x1086FA, 0x126
+	.global	gUnk_08108820
+gUnk_08108820:
+	.incbin	"baserom.gba", 0x108820, 0x186
+	.global	gUnk_081089A6
+gUnk_081089A6:
+	.incbin	"baserom.gba", 0x1089A6, 0x126
+	.global	gUnk_08108ACC
+gUnk_08108ACC:
+	.incbin	"baserom.gba", 0x108ACC, 0x186
+	.global	gUnk_08108C52
+gUnk_08108C52:
+	.incbin	"baserom.gba", 0x108C52, 0x126
+	.global	gUnk_08108D78
+gUnk_08108D78:
+	.incbin	"baserom.gba", 0x108D78, 0x186
+	.global	gUnk_08108EFE
+gUnk_08108EFE:
+	.incbin	"baserom.gba", 0x108EFE, 0x126
+	.global	gUnk_08109024
+gUnk_08109024:
+	.incbin	"baserom.gba", 0x109024, 0x186
+	.global	gUnk_081091AA
+gUnk_081091AA:
+	.incbin	"baserom.gba", 0x1091AA, 0x126
+	.global	gUnk_081092D0
+gUnk_081092D0:
+	.incbin	"baserom.gba", 0x1092D0, 0x186
+	.global	gUnk_08109456
+gUnk_08109456:
+	.incbin	"baserom.gba", 0x109456, 0x126
+	.global	gUnk_0810957C
+gUnk_0810957C:
+	.incbin	"baserom.gba", 0x10957C, 0x186
+	.global	gUnk_08109702
+gUnk_08109702:
+	.incbin	"baserom.gba", 0x109702, 0x126
+	.global	gUnk_08109828
+gUnk_08109828:
+	.incbin	"baserom.gba", 0x109828, 0x186
+	.global	gUnk_081099AE
+gUnk_081099AE:
+	.incbin	"baserom.gba", 0x1099AE, 0x126
+	.global	gUnk_08109AD4
+gUnk_08109AD4:
+	.incbin	"baserom.gba", 0x109AD4, 0x106
+	.global	gUnk_08109BDA
+gUnk_08109BDA:
+	.incbin	"baserom.gba", 0x109BDA, 0x126
+	.global	gUnk_08109D00
+gUnk_08109D00:
+	.incbin	"baserom.gba", 0x109D00, 0x106
+	.global	gUnk_08109E06
+gUnk_08109E06:
+	.incbin	"baserom.gba", 0x109E06, 0x126
+	.global	gUnk_08109F2C
+gUnk_08109F2C:
+	.incbin	"baserom.gba", 0x109F2C, 0x106
+	.global	gUnk_0810A032
+gUnk_0810A032:
+	.incbin	"baserom.gba", 0x10A032, 0x126
+	.global	gUnk_0810A158
+gUnk_0810A158:
+	.incbin	"baserom.gba", 0x10A158, 0x106
+	.global	gUnk_0810A25E
+gUnk_0810A25E:
+	.incbin	"baserom.gba", 0x10A25E, 0x126
+	.global	gUnk_0810A384
+gUnk_0810A384:
+	.incbin	"baserom.gba", 0x10A384, 0x106
+	.global	gUnk_0810A48A
+gUnk_0810A48A:
+	.incbin	"baserom.gba", 0x10A48A, 0x126
+	.global	gUnk_0810A5B0
+gUnk_0810A5B0:
+	.incbin	"baserom.gba", 0x10A5B0, 0x126
+	.global	gUnk_0810A6D6
+gUnk_0810A6D6:
+	.incbin	"baserom.gba", 0x10A6D6, 0x126
+	.global	gUnk_0810A7FC
+gUnk_0810A7FC:
+	.incbin	"baserom.gba", 0x10A7FC, 0x126
+	.global	gUnk_0810A922
+gUnk_0810A922:
+	.incbin	"baserom.gba", 0x10A922, 0x126
+	.global	gUnk_0810AA48
+gUnk_0810AA48:
+	.incbin	"baserom.gba", 0x10AA48, 0x126
+	.global	gUnk_0810AB6E
+gUnk_0810AB6E:
+	.incbin	"baserom.gba", 0x10AB6E, 0x126
+	.global	gUnk_0810AC94
+gUnk_0810AC94:
+	.incbin	"baserom.gba", 0x10AC94, 0x126
+	.global	gUnk_0810ADBA
+gUnk_0810ADBA:
+	.incbin	"baserom.gba", 0x10ADBA, 0x126
+	.global	gUnk_0810AEE0
+gUnk_0810AEE0:
+	.incbin	"baserom.gba", 0x10AEE0, 0x126
+	.global	gUnk_0810B006
+gUnk_0810B006:
+	.incbin	"baserom.gba", 0x10B006, 0x126
+	.global	gUnk_0810B12C
+gUnk_0810B12C:
+	.incbin	"baserom.gba", 0x10B12C, 0x126
+	.global	gUnk_0810B252
+gUnk_0810B252:
+	.incbin	"baserom.gba", 0x10B252, 0xC6
+	.global	gUnk_0810B318
+gUnk_0810B318:
+	.incbin	"baserom.gba", 0x10B318, 0x146
+	.global	gUnk_0810B45E
+gUnk_0810B45E:
+	.incbin	"baserom.gba", 0x10B45E, 0xA6
+	.global	gUnk_0810B504
+gUnk_0810B504:
+	.incbin	"baserom.gba", 0x10B504, 0x126
+	.global	gUnk_0810B62A
+gUnk_0810B62A:
+	.incbin	"baserom.gba", 0x10B62A, 0xA6
+	.global	gUnk_0810B6D0
+gUnk_0810B6D0:
+	.incbin	"baserom.gba", 0x10B6D0, 0x126
+	.global	gUnk_0810B7F6
+gUnk_0810B7F6:
+	.incbin	"baserom.gba", 0x10B7F6, 0x86
+	.global	gUnk_0810B87C
+gUnk_0810B87C:
+	.incbin	"baserom.gba", 0x10B87C, 0x106
+	.global	gUnk_0810B982
+gUnk_0810B982:
+	.incbin	"baserom.gba", 0x10B982, 0x40
+	.global	gUnk_0810B9C2
+gUnk_0810B9C2:
+	.incbin	"baserom.gba", 0x10B9C2, 0x40
+	.global	gUnk_0810BA02
+gUnk_0810BA02:
+	.incbin	"baserom.gba", 0x10BA02, 0x40
+	.global	gUnk_0810BA42
+gUnk_0810BA42:
+	.incbin	"baserom.gba", 0x10BA42, 0x40
+	.global	gUnk_0810BA82
+gUnk_0810BA82:
+	.incbin	"baserom.gba", 0x10BA82, 0x40
+	.global	gUnk_0810BAC2
+gUnk_0810BAC2:
+	.incbin	"baserom.gba", 0x10BAC2, 0x40
+	.global	gUnk_0810BB02
+gUnk_0810BB02:
+	.incbin	"baserom.gba", 0x10BB02, 0x40
+	.global	gUnk_0810BB42
+gUnk_0810BB42:
+	.incbin	"baserom.gba", 0x10BB42, 0x40
+	.global	gUnk_0810BB82
+gUnk_0810BB82:
+	.incbin	"baserom.gba", 0x10BB82, 0x38
+	.global	gUnk_0810BBBA
+gUnk_0810BBBA:
+	.incbin	"baserom.gba", 0x10BBBA, 0x38
+	.global	gUnk_0810BBF2
+gUnk_0810BBF2:
+	.incbin	"baserom.gba", 0x10BBF2, 0x38
+	.global	gUnk_0810BC2A
+gUnk_0810BC2A:
+	.incbin	"baserom.gba", 0x10BC2A, 0x38
+	.global	gUnk_0810BC62
+gUnk_0810BC62:
+	.incbin	"baserom.gba", 0x10BC62, 0x38
+	.global	gUnk_0810BC9A
+gUnk_0810BC9A:
+	.incbin	"baserom.gba", 0x10BC9A, 0x38
+	.global	gUnk_0810BCD2
+gUnk_0810BCD2:
+	.incbin	"baserom.gba", 0x10BCD2, 0x38
+	.global	gUnk_0810BD0A
+gUnk_0810BD0A:
+	.incbin	"baserom.gba", 0x10BD0A, 0x38
+	.global	gUnk_0810BD42
+gUnk_0810BD42:
+	.incbin	"baserom.gba", 0x10BD42, 0x40
+	.global	gUnk_0810BD82
+gUnk_0810BD82:
+	.incbin	"baserom.gba", 0x10BD82, 0x40
+	.global	gUnk_0810BDC2
+gUnk_0810BDC2:
+	.incbin	"baserom.gba", 0x10BDC2, 0x40
+	.global	gUnk_0810BE02
+gUnk_0810BE02:
+	.incbin	"baserom.gba", 0x10BE02, 0x40
+	.global	gUnk_0810BE42
+gUnk_0810BE42:
+	.incbin	"baserom.gba", 0x10BE42, 0x40
+	.global	gUnk_0810BE82
+gUnk_0810BE82:
+	.incbin	"baserom.gba", 0x10BE82, 0x40
+	.global	gUnk_0810BEC2
+gUnk_0810BEC2:
+	.incbin	"baserom.gba", 0x10BEC2, 0x48
+	.global	gUnk_0810BF0A
+gUnk_0810BF0A:
+	.incbin	"baserom.gba", 0x10BF0A, 0x40
+	.global	gUnk_0810BF4A
+gUnk_0810BF4A:
+	.incbin	"baserom.gba", 0x10BF4A, 0x30
+	.global	gUnk_0810BF7A
+gUnk_0810BF7A:
+	.incbin	"baserom.gba", 0x10BF7A, 0x38
+	.global	gUnk_0810BFB2
+gUnk_0810BFB2:
+	.incbin	"baserom.gba", 0x10BFB2, 0x30
+	.global	gUnk_0810BFE2
+gUnk_0810BFE2:
+	.incbin	"baserom.gba", 0x10BFE2, 0x38
+	.global	gUnk_0810C01A
+gUnk_0810C01A:
+	.incbin	"baserom.gba", 0x10C01A, 0x30
+	.global	gUnk_0810C04A
+gUnk_0810C04A:
+	.incbin	"baserom.gba", 0x10C04A, 0x38
+	.global	gUnk_0810C082
+gUnk_0810C082:
+	.incbin	"baserom.gba", 0x10C082, 0x28
+	.global	gUnk_0810C0AA
+gUnk_0810C0AA:
+	.incbin	"baserom.gba", 0x10C0AA, 0x30
+	.global	gUnk_0810C0DA
+gUnk_0810C0DA:
+	.incbin	"baserom.gba", 0x10C0DA, 0x28
+	.global	gUnk_0810C102
+gUnk_0810C102:
+	.incbin	"baserom.gba", 0x10C102, 0x30
+	.global	gUnk_0810C132
+gUnk_0810C132:
+	.incbin	"baserom.gba", 0x10C132, 0x28
+	.global	gUnk_0810C15A
+gUnk_0810C15A:
+	.incbin	"baserom.gba", 0x10C15A, 0x30
+	.global	gUnk_0810C18A
+gUnk_0810C18A:
+	.incbin	"baserom.gba", 0x10C18A, 0x30
+	.global	gUnk_0810C1BA
+gUnk_0810C1BA:
+	.incbin	"baserom.gba", 0x10C1BA, 0x38
+	.global	gUnk_0810C1F2
+gUnk_0810C1F2:
+	.incbin	"baserom.gba", 0x10C1F2, 0x30
+	.global	gUnk_0810C222
+gUnk_0810C222:
+	.incbin	"baserom.gba", 0x10C222, 0x3A
+	.global	gUnk_0810C25C
+gUnk_0810C25C:
+	.incbin	"baserom.gba", 0x10C25C, 0x22
+	.global	gUnk_0810C27E
+gUnk_0810C27E:
+	.incbin	"baserom.gba", 0x10C27E, 0x22
+	.global	gUnk_0810C2A0
+gUnk_0810C2A0:
+	.incbin	"baserom.gba", 0x10C2A0, 0x22
+	.global	gUnk_0810C2C2
+gUnk_0810C2C2:
+	.incbin	"baserom.gba", 0x10C2C2, 0x22
+	.global	gUnk_0810C2E4
+gUnk_0810C2E4:
+	.incbin	"baserom.gba", 0x10C2E4, 0x22
+	.global	gUnk_0810C306
+gUnk_0810C306:
+	.incbin	"baserom.gba", 0x10C306, 0x22
+	.global	gUnk_0810C328
+gUnk_0810C328:
+	.incbin	"baserom.gba", 0x10C328, 0x22
+	.global	gUnk_0810C34A
+gUnk_0810C34A:
+	.incbin	"baserom.gba", 0x10C34A, 0x22
+	.global	gUnk_0810C36C
+gUnk_0810C36C:
+	.incbin	"baserom.gba", 0x10C36C, 0x22
+	.global	gUnk_0810C38E
+gUnk_0810C38E:
+	.incbin	"baserom.gba", 0x10C38E, 0x22
+	.global	gUnk_0810C3B0
+gUnk_0810C3B0:
+	.incbin	"baserom.gba", 0x10C3B0, 0x22
+	.global	gUnk_0810C3D2
+gUnk_0810C3D2:
+	.incbin	"baserom.gba", 0x10C3D2, 0x22
+	.global	gUnk_0810C3F4
+gUnk_0810C3F4:
+	.incbin	"baserom.gba", 0x10C3F4, 0x22
+	.global	gUnk_0810C416
+gUnk_0810C416:
+	.incbin	"baserom.gba", 0x10C416, 0x22
+	.global	gUnk_0810C438
+gUnk_0810C438:
+	.incbin	"baserom.gba", 0x10C438, 0x22
+	.global	gUnk_0810C45A
+gUnk_0810C45A:
+	.incbin	"baserom.gba", 0x10C45A, 0x22
+	.global	gUnk_0810C47C
+gUnk_0810C47C:
+	.incbin	"baserom.gba", 0x10C47C, 0x22
+	.global	gUnk_0810C49E
+gUnk_0810C49E:
+	.incbin	"baserom.gba", 0x10C49E, 0x22
+	.global	gUnk_0810C4C0
+gUnk_0810C4C0:
+	.incbin	"baserom.gba", 0x10C4C0, 0x22
+	.global	gUnk_0810C4E2
+gUnk_0810C4E2:
+	.incbin	"baserom.gba", 0x10C4E2, 0x22
+	.global	gUnk_0810C504
+gUnk_0810C504:
+	.incbin	"baserom.gba", 0x10C504, 0x126
+	.global	gUnk_0810C62A
+gUnk_0810C62A:
+	.incbin	"baserom.gba", 0x10C62A, 0x126
+	.global	gUnk_0810C750
+gUnk_0810C750:
+	.incbin	"baserom.gba", 0x10C750, 0x126
+	.global	gUnk_0810C876
+gUnk_0810C876:
+	.incbin	"baserom.gba", 0x10C876, 0x126
+	.global	gUnk_0810C99C
+gUnk_0810C99C:
+	.incbin	"baserom.gba", 0x10C99C, 0x126
+	.global	gUnk_0810CAC2
+gUnk_0810CAC2:
+	.incbin	"baserom.gba", 0x10CAC2, 0x126
+	.global	gUnk_0810CBE8
+gUnk_0810CBE8:
+	.incbin	"baserom.gba", 0x10CBE8, 0x126
+	.global	gUnk_0810CD0E
+gUnk_0810CD0E:
+	.incbin	"baserom.gba", 0x10CD0E, 0x126
+	.global	gUnk_0810CE34
+gUnk_0810CE34:
+	.incbin	"baserom.gba", 0x10CE34, 0x126
+	.global	gUnk_0810CF5A
+gUnk_0810CF5A:
+	.incbin	"baserom.gba", 0x10CF5A, 0x126
+	.global	gUnk_0810D080
+gUnk_0810D080:
+	.incbin	"baserom.gba", 0x10D080, 0x126
+	.global	gUnk_0810D1A6
+gUnk_0810D1A6:
+	.incbin	"baserom.gba", 0x10D1A6, 0x126
+	.global	gUnk_0810D2CC
+gUnk_0810D2CC:
+	.incbin	"baserom.gba", 0x10D2CC, 0x126
+	.global	gUnk_0810D3F2
+gUnk_0810D3F2:
+	.incbin	"baserom.gba", 0x10D3F2, 0xC6
+	.global	gUnk_0810D4B8
+gUnk_0810D4B8:
+	.incbin	"baserom.gba", 0x10D4B8, 0x126
+	.global	gUnk_0810D5DE
+gUnk_0810D5DE:
+	.incbin	"baserom.gba", 0x10D5DE, 0x126
+	.global	gUnk_0810D704
+gUnk_0810D704:
+	.incbin	"baserom.gba", 0x10D704, 0x126
+	.global	gUnk_0810D82A
+gUnk_0810D82A:
+	.incbin	"baserom.gba", 0x10D82A, 0x126
+	.global	gUnk_0810D950
+gUnk_0810D950:
+	.incbin	"baserom.gba", 0x10D950, 0xE6
+	.global	gUnk_0810DA36
+gUnk_0810DA36:
+	.incbin	"baserom.gba", 0x10DA36, 0xC6
+	.global	gUnk_0810DAFC
+gUnk_0810DAFC:
+	.incbin	"baserom.gba", 0x10DAFC, 0x106
+	.global	gUnk_0810DC02
+gUnk_0810DC02:
+	.incbin	"baserom.gba", 0x10DC02, 0xC6
+	.global	gUnk_0810DCC8
+gUnk_0810DCC8:
+	.incbin	"baserom.gba", 0x10DCC8, 0x166
+	.global	gUnk_0810DE2E
+gUnk_0810DE2E:
+	.incbin	"baserom.gba", 0x10DE2E, 0xE6
+	.global	gUnk_0810DF14
+gUnk_0810DF14:
+	.incbin	"baserom.gba", 0x10DF14, 0x146
+	.global	gUnk_0810E05A
+gUnk_0810E05A:
+	.incbin	"baserom.gba", 0x10E05A, 0xC6
+	.global	gUnk_0810E120
+gUnk_0810E120:
+	.incbin	"baserom.gba", 0x10E120, 0x126
+	.global	gUnk_0810E246
+gUnk_0810E246:
+	.incbin	"baserom.gba", 0x10E246, 0x106
+	.global	gUnk_0810E34C
+gUnk_0810E34C:
+	.incbin	"baserom.gba", 0x10E34C, 0x126
+	.global	gUnk_0810E472
+gUnk_0810E472:
+	.incbin	"baserom.gba", 0x10E472, 0x126
+	.global	gUnk_0810E598
+gUnk_0810E598:
+	.incbin	"baserom.gba", 0x10E598, 0x126
+	.global	gUnk_0810E6BE
+gUnk_0810E6BE:
+	.incbin	"baserom.gba", 0x10E6BE, 0x126
+	.global	gUnk_0810E7E4
+gUnk_0810E7E4:
+	.incbin	"baserom.gba", 0x10E7E4, 0x126
+	.global	gUnk_0810E90A
+gUnk_0810E90A:
+	.incbin	"baserom.gba", 0x10E90A, 0x126
+	.global	gUnk_0810EA30
+gUnk_0810EA30:
+	.incbin	"baserom.gba", 0x10EA30, 0x126
+	.global	gUnk_0810EB56
+gUnk_0810EB56:
+	.incbin	"baserom.gba", 0x10EB56, 0x126
+	.global	gUnk_0810EC7C
+gUnk_0810EC7C:
+	.incbin	"baserom.gba", 0x10EC7C, 0x126
+	.global	gUnk_0810EDA2
+gUnk_0810EDA2:
+	.incbin	"baserom.gba", 0x10EDA2, 0x126
+	.global	gUnk_0810EEC8
+gUnk_0810EEC8:
+	.incbin	"baserom.gba", 0x10EEC8, 0x106
+	.global	gUnk_0810EFCE
+gUnk_0810EFCE:
+	.incbin	"baserom.gba", 0x10EFCE, 0xE6
+	.global	gUnk_0810F0B4
+gUnk_0810F0B4:
+	.incbin	"baserom.gba", 0x10F0B4, 0x126
+	.global	gUnk_0810F1DA
+gUnk_0810F1DA:
+	.incbin	"baserom.gba", 0x10F1DA, 0xE6
+	.global	gUnk_0810F2C0
+gUnk_0810F2C0:
+	.incbin	"baserom.gba", 0x10F2C0, 0x126
+	.global	gUnk_0810F3E6
+gUnk_0810F3E6:
+	.incbin	"baserom.gba", 0x10F3E6, 0x126
+	.global	gUnk_0810F50C
+gUnk_0810F50C:
+	.incbin	"baserom.gba", 0x10F50C, 0x106
+	.global	gUnk_0810F612
+gUnk_0810F612:
+	.incbin	"baserom.gba", 0x10F612, 0xC6
+	.global	gUnk_0810F6D8
+gUnk_0810F6D8:
+	.incbin	"baserom.gba", 0x10F6D8, 0x126
+	.global	gUnk_0810F7FE
+gUnk_0810F7FE:
+	.incbin	"baserom.gba", 0x10F7FE, 0xE6
+	.global	gUnk_0810F8E4
+gUnk_0810F8E4:
+	.incbin	"baserom.gba", 0x10F8E4, 0xE6
+	.global	gUnk_0810F9CA
+gUnk_0810F9CA:
+	.incbin	"baserom.gba", 0x10F9CA, 0xE6
+	.global	gUnk_0810FAB0
+gUnk_0810FAB0:
+	.incbin	"baserom.gba", 0x10FAB0, 0xE6
+	.global	gUnk_0810FB96
+gUnk_0810FB96:
+	.incbin	"baserom.gba", 0x10FB96, 0x106
+	.global	gUnk_0810FC9C
+gUnk_0810FC9C:
+	.incbin	"baserom.gba", 0x10FC9C, 0x106
+	.global	gUnk_0810FDA2
+gUnk_0810FDA2:
+	.incbin	"baserom.gba", 0x10FDA2, 0x106
+	.global	gUnk_0810FEA8
+gUnk_0810FEA8:
+	.incbin	"baserom.gba", 0x10FEA8, 0xC6
+	.global	gUnk_0810FF6E
+gUnk_0810FF6E:
+	.incbin	"baserom.gba", 0x10FF6E, 0xE6
+	.global	gUnk_08110054
+gUnk_08110054:
+	.incbin	"baserom.gba", 0x110054, 0xE6
+	.global	gUnk_0811013A
+gUnk_0811013A:
+	.incbin	"baserom.gba", 0x11013A, 0xC6
+	.global	gUnk_08110200
+gUnk_08110200:
+	.incbin	"baserom.gba", 0x110200, 0x146
+	.global	gUnk_08110346
+gUnk_08110346:
+	.incbin	"baserom.gba", 0x110346, 0x186
+	.global	gUnk_081104CC
+gUnk_081104CC:
+	.incbin	"baserom.gba", 0x1104CC, 0x1C6
+	.global	gUnk_08110692
+gUnk_08110692:
+	.incbin	"baserom.gba", 0x110692, 0x1C6
+	.global	gUnk_08110858
+gUnk_08110858:
+	.incbin	"baserom.gba", 0x110858, 0x186
+	.global	gUnk_081109DE
+gUnk_081109DE:
+	.incbin	"baserom.gba", 0x1109DE, 0x1A6
+	.global	gUnk_08110B84
+gUnk_08110B84:
+	.incbin	"baserom.gba", 0x110B84, 0x126
+	.global	gUnk_08110CAA
+gUnk_08110CAA:
+	.incbin	"baserom.gba", 0x110CAA, 0x1A6
+	.global	gUnk_08110E50
+gUnk_08110E50:
+	.incbin	"baserom.gba", 0x110E50, 0x186
+	.global	gUnk_08110FD6
+gUnk_08110FD6:
+	.incbin	"baserom.gba", 0x110FD6, 0x186
+	.global	gUnk_0811115C
+gUnk_0811115C:
+	.incbin	"baserom.gba", 0x11115C, 0x186
+	.global	gUnk_081112E2
+gUnk_081112E2:
+	.incbin	"baserom.gba", 0x1112E2, 0x166
+	.global	gUnk_08111448
+gUnk_08111448:
+	.incbin	"baserom.gba", 0x111448, 0x186
+	.global	gUnk_081115CE
+gUnk_081115CE:
+	.incbin	"baserom.gba", 0x1115CE, 0x186
+	.global	gUnk_08111754
+gUnk_08111754:
+	.incbin	"baserom.gba", 0x111754, 0x186
+	.global	gUnk_081118DA
+gUnk_081118DA:
+	.incbin	"baserom.gba", 0x1118DA, 0x1C6
+	.global	gUnk_08111AA0
+gUnk_08111AA0:
+	.incbin	"baserom.gba", 0x111AA0, 0x186
+	.global	gUnk_08111C26
+gUnk_08111C26:
+	.incbin	"baserom.gba", 0x111C26, 0x186
+	.global	gUnk_08111DAC
+gUnk_08111DAC:
+	.incbin	"baserom.gba", 0x111DAC, 0x186
+	.global	gUnk_08111F32
+gUnk_08111F32:
+	.incbin	"baserom.gba", 0x111F32, 0x186
+	.global	gUnk_081120B8
+gUnk_081120B8:
+	.incbin	"baserom.gba", 0x1120B8, 0x186
+	.global	gUnk_0811223E
+gUnk_0811223E:
+	.incbin	"baserom.gba", 0x11223E, 0x86
+	.global	gUnk_081122C4
+gUnk_081122C4:
+	.incbin	"baserom.gba", 0x1122C4, 0x86
+	.global	gUnk_0811234A
+gUnk_0811234A:
+	.incbin	"baserom.gba", 0x11234A, 0x86
+	.global	gUnk_081123D0
+gUnk_081123D0:
+	.incbin	"baserom.gba", 0x1123D0, 0x86
+	.global	gUnk_08112456
+gUnk_08112456:
+	.incbin	"baserom.gba", 0x112456, 0x86
+	.global	gUnk_081124DC
+gUnk_081124DC:
+	.incbin	"baserom.gba", 0x1124DC, 0x86
+	.global	gUnk_08112562
+gUnk_08112562:
+	.incbin	"baserom.gba", 0x112562, 0x86
+	.global	gUnk_081125E8
+gUnk_081125E8:
+	.incbin	"baserom.gba", 0x1125E8, 0x86
+	.global	gUnk_0811266E
+gUnk_0811266E:
+	.incbin	"baserom.gba", 0x11266E, 0x86
+	.global	gUnk_081126F4
+gUnk_081126F4:
+	.incbin	"baserom.gba", 0x1126F4, 0x86
+	.global	gUnk_0811277A
+gUnk_0811277A:
+	.incbin	"baserom.gba", 0x11277A, 0x86
+	.global	gUnk_08112800
+gUnk_08112800:
+	.incbin	"baserom.gba", 0x112800, 0x86
+	.global	gUnk_08112886
+gUnk_08112886:
+	.incbin	"baserom.gba", 0x112886, 0x86
+	.global	gUnk_0811290C
+gUnk_0811290C:
+	.incbin	"baserom.gba", 0x11290C, 0x86
+	.global	gUnk_08112992
+gUnk_08112992:
+	.incbin	"baserom.gba", 0x112992, 0x86
+	.global	gUnk_08112A18
+gUnk_08112A18:
+	.incbin	"baserom.gba", 0x112A18, 0x86
+	.global	gUnk_08112A9E
+gUnk_08112A9E:
+	.incbin	"baserom.gba", 0x112A9E, 0x86
+	.global	gUnk_08112B24
+gUnk_08112B24:
+	.incbin	"baserom.gba", 0x112B24, 0xC6
+	.global	gUnk_08112BEA
+gUnk_08112BEA:
+	.incbin	"baserom.gba", 0x112BEA, 0x106
+	.global	gUnk_08112CF0
+gUnk_08112CF0:
+	.incbin	"baserom.gba", 0x112CF0, 0xE6
+	.global	gUnk_08112DD6
+gUnk_08112DD6:
+	.incbin	"baserom.gba", 0x112DD6, 0xC6
+	.global	gUnk_08112E9C
+gUnk_08112E9C:
+	.incbin	"baserom.gba", 0x112E9C, 0xC6
+	.global	gUnk_08112F62
+gUnk_08112F62:
+	.incbin	"baserom.gba", 0x112F62, 0xC6
+	.global	gUnk_08113028
+gUnk_08113028:
+	.incbin	"baserom.gba", 0x113028, 0xC6
+	.global	gUnk_081130EE
+gUnk_081130EE:
+	.incbin	"baserom.gba", 0x1130EE, 0xC6
+	.global	gUnk_081131B4
+gUnk_081131B4:
+	.incbin	"baserom.gba", 0x1131B4, 0xC6
+	.global	gUnk_0811327A
+gUnk_0811327A:
+	.incbin	"baserom.gba", 0x11327A, 0xC6
+	.global	gUnk_08113340
+gUnk_08113340:
+	.incbin	"baserom.gba", 0x113340, 0xC6
+	.global	gUnk_08113406
+gUnk_08113406:
+	.incbin	"baserom.gba", 0x113406, 0xC6
+	.global	gUnk_081134CC
+gUnk_081134CC:
+	.incbin	"baserom.gba", 0x1134CC, 0x86
+	.global	gUnk_08113552
+gUnk_08113552:
+	.incbin	"baserom.gba", 0x113552, 0xC6
+	.global	gUnk_08113618
+gUnk_08113618:
+	.incbin	"baserom.gba", 0x113618, 0xC6
+	.global	gUnk_081136DE
+gUnk_081136DE:
+	.incbin	"baserom.gba", 0x1136DE, 0x64
+	.global	gUnk_08113742
+gUnk_08113742:
+	.incbin	"baserom.gba", 0x113742, 0xE6
+	.global	gUnk_08113828
+gUnk_08113828:
+	.incbin	"baserom.gba", 0x113828, 0xE6
+	.global	gUnk_0811390E
+gUnk_0811390E:
+	.incbin	"baserom.gba", 0x11390E, 0x106
+	.global	gUnk_08113A14
+gUnk_08113A14:
+	.incbin	"baserom.gba", 0x113A14, 0xE6
+	.global	gUnk_08113AFA
+gUnk_08113AFA:
+	.incbin	"baserom.gba", 0x113AFA, 0x126
+	.global	gUnk_08113C20
+gUnk_08113C20:
+	.incbin	"baserom.gba", 0x113C20, 0x106
+	.global	gUnk_08113D26
+gUnk_08113D26:
+	.incbin	"baserom.gba", 0x113D26, 0x126
+	.global	gUnk_08113E4C
+gUnk_08113E4C:
+	.incbin	"baserom.gba", 0x113E4C, 0x106
+	.global	gUnk_08113F52
+gUnk_08113F52:
+	.incbin	"baserom.gba", 0x113F52, 0xC6
+	.global	gUnk_08114018
+gUnk_08114018:
+	.incbin	"baserom.gba", 0x114018, 0x146
+	.global	gUnk_0811415E
+gUnk_0811415E:
+	.incbin	"baserom.gba", 0x11415E, 0x106
+	.global	gUnk_08114264
+gUnk_08114264:
+	.incbin	"baserom.gba", 0x114264, 0xC6
+	.global	gUnk_0811432A
+gUnk_0811432A:
+	.incbin	"baserom.gba", 0x11432A, 0xE6
+	.global	gUnk_08114410
+gUnk_08114410:
+	.incbin	"baserom.gba", 0x114410, 0xE6
+	.global	gUnk_081144F6
+gUnk_081144F6:
+	.incbin	"baserom.gba", 0x1144F6, 0xC6
+	.global	gUnk_081145BC
+gUnk_081145BC:
+	.incbin	"baserom.gba", 0x1145BC, 0xE6
+	.global	gUnk_081146A2
+gUnk_081146A2:
+	.incbin	"baserom.gba", 0x1146A2, 0xC6
+	.global	gUnk_08114768
+gUnk_08114768:
+	.incbin	"baserom.gba", 0x114768, 0xE6
+	.global	gUnk_0811484E
+gUnk_0811484E:
+	.incbin	"baserom.gba", 0x11484E, 0xE6
+	.global	gUnk_08114934
+gUnk_08114934:
+	.incbin	"baserom.gba", 0x114934, 0x126
+	.global	gUnk_08114A5A
+gUnk_08114A5A:
+	.incbin	"baserom.gba", 0x114A5A, 0x106
+	.global	gUnk_08114B60
+gUnk_08114B60:
+	.incbin	"baserom.gba", 0x114B60, 0x126
+	.global	gUnk_08114C86
+gUnk_08114C86:
+	.incbin	"baserom.gba", 0x114C86, 0x126
+	.global	gUnk_08114DAC
+gUnk_08114DAC:
+	.incbin	"baserom.gba", 0x114DAC, 0x106
+	.global	gUnk_08114EB2
+gUnk_08114EB2:
+	.incbin	"baserom.gba", 0x114EB2, 0x106
+	.global	gUnk_08114FB8
+gUnk_08114FB8:
+	.incbin	"baserom.gba", 0x114FB8, 0x126
+	.global	gUnk_081150DE
+gUnk_081150DE:
+	.incbin	"baserom.gba", 0x1150DE, 0x106
+	.global	gUnk_081151E4
+gUnk_081151E4:
+	.incbin	"baserom.gba", 0x1151E4, 0xC6
+	.global	gUnk_081152AA
+gUnk_081152AA:
+	.incbin	"baserom.gba", 0x1152AA, 0xE6
+	.global	gUnk_08115390
+gUnk_08115390:
+	.incbin	"baserom.gba", 0x115390, 0xC6
+	.global	gUnk_08115456
+gUnk_08115456:
+	.incbin	"baserom.gba", 0x115456, 0x106
+	.global	gUnk_0811555C
+gUnk_0811555C:
+	.incbin	"baserom.gba", 0x11555C, 0xC6
+	.global	gUnk_08115622
+gUnk_08115622:
+	.incbin	"baserom.gba", 0x115622, 0xE6
+	.global	gUnk_08115708
+gUnk_08115708:
+	.incbin	"baserom.gba", 0x115708, 0x126
+	.global	gUnk_0811582E
+gUnk_0811582E:
+	.incbin	"baserom.gba", 0x11582E, 0xC6
+	.global	gUnk_081158F4
+gUnk_081158F4:
+	.incbin	"baserom.gba", 0x1158F4, 0x86
+	.global	gUnk_0811597A
+gUnk_0811597A:
+	.incbin	"baserom.gba", 0x11597A, 0xA6
+	.global	gUnk_08115A20
+gUnk_08115A20:
+	.incbin	"baserom.gba", 0x115A20, 0xC6
+	.global	gUnk_08115AE6
+gUnk_08115AE6:
+	.incbin	"baserom.gba", 0x115AE6, 0xA6
+	.global	gUnk_08115B8C
+gUnk_08115B8C:
+	.incbin	"baserom.gba", 0x115B8C, 0xA6
+	.global	gUnk_08115C32
+gUnk_08115C32:
+	.incbin	"baserom.gba", 0x115C32, 0x86
+	.global	gUnk_08115CB8
+gUnk_08115CB8:
+	.incbin	"baserom.gba", 0x115CB8, 0x126
+	.global	gUnk_08115DDE
+gUnk_08115DDE:
+	.incbin	"baserom.gba", 0x115DDE, 0xC6
+	.global	gUnk_08115EA4
+gUnk_08115EA4:
+	.incbin	"baserom.gba", 0x115EA4, 0xC6
+	.global	gUnk_08115F6A
+gUnk_08115F6A:
+	.incbin	"baserom.gba", 0x115F6A, 0x126
+	.global	gUnk_08116090
+gUnk_08116090:
+	.incbin	"baserom.gba", 0x116090, 0xC6
+	.global	gUnk_08116156
+gUnk_08116156:
+	.incbin	"baserom.gba", 0x116156, 0xC6
+	.global	gUnk_0811621C
+gUnk_0811621C:
+	.incbin	"baserom.gba", 0x11621C, 0xE6
+	.global	gUnk_08116302
+gUnk_08116302:
+	.incbin	"baserom.gba", 0x116302, 0x126
+	.global	gUnk_08116428
+gUnk_08116428:
+	.incbin	"baserom.gba", 0x116428, 0x106
+	.global	gUnk_0811652E
+gUnk_0811652E:
+	.incbin	"baserom.gba", 0x11652E, 0x106
+	.global	gUnk_08116634
+gUnk_08116634:
+	.incbin	"baserom.gba", 0x116634, 0xE4
+	.global	gUnk_08116718
+gUnk_08116718:
+	.incbin	"baserom.gba", 0x116718, 0x106
+	.global	gUnk_0811681E
+gUnk_0811681E:
+	.incbin	"baserom.gba", 0x11681E, 0xC6
+	.global	gUnk_081168E4
+gUnk_081168E4:
+	.incbin	"baserom.gba", 0x1168E4, 0xC6
+	.global	gUnk_081169AA
+gUnk_081169AA:
+	.incbin	"baserom.gba", 0x1169AA, 0xC6
+	.global	gUnk_08116A70
+gUnk_08116A70:
+	.incbin	"baserom.gba", 0x116A70, 0x106
+	.global	gUnk_08116B76
+gUnk_08116B76:
+	.incbin	"baserom.gba", 0x116B76, 0xE6
+	.global	gUnk_08116C5C
+gUnk_08116C5C:
+	.incbin	"baserom.gba", 0x116C5C, 0xE6
+	.global	gUnk_08116D42
+gUnk_08116D42:
+	.incbin	"baserom.gba", 0x116D42, 0x106
+	.global	gUnk_08116E48
+gUnk_08116E48:
+	.incbin	"baserom.gba", 0x116E48, 0x106
+	.global	gUnk_08116F4E
+gUnk_08116F4E:
+	.incbin	"baserom.gba", 0x116F4E, 0xE6
+	.global	gUnk_08117034
+gUnk_08117034:
+	.incbin	"baserom.gba", 0x117034, 0x126
+	.global	gUnk_0811715A
+gUnk_0811715A:
+	.incbin	"baserom.gba", 0x11715A, 0x106
+	.global	gUnk_08117260
+gUnk_08117260:
+	.incbin	"baserom.gba", 0x117260, 0x126
+	.global	gUnk_08117386
+gUnk_08117386:
+	.incbin	"baserom.gba", 0x117386, 0x106
+	.global	gUnk_0811748C
+gUnk_0811748C:
+	.incbin	"baserom.gba", 0x11748C, 0x106
+	.global	gUnk_08117592
+gUnk_08117592:
+	.incbin	"baserom.gba", 0x117592, 0xA6
+	.global	gUnk_08117638
+gUnk_08117638:
+	.incbin	"baserom.gba", 0x117638, 0xC6
+	.global	gUnk_081176FE
+gUnk_081176FE:
+	.incbin	"baserom.gba", 0x1176FE, 0x126
+	.global	gUnk_08117824
+gUnk_08117824:
+	.incbin	"baserom.gba", 0x117824, 0x106
+	.global	gUnk_0811792A
+gUnk_0811792A:
+	.incbin	"baserom.gba", 0x11792A, 0xE6
+	.global	gUnk_08117A10
+gUnk_08117A10:
+	.incbin	"baserom.gba", 0x117A10, 0x106
+	.global	gUnk_08117B16
+gUnk_08117B16:
+	.incbin	"baserom.gba", 0x117B16, 0xC6
+	.global	gUnk_08117BDC
+gUnk_08117BDC:
+	.incbin	"baserom.gba", 0x117BDC, 0x106
+	.global	gUnk_08117CE2
+gUnk_08117CE2:
+	.incbin	"baserom.gba", 0x117CE2, 0x106
+	.global	gUnk_08117DE8
+gUnk_08117DE8:
+	.incbin	"baserom.gba", 0x117DE8, 0xE6
+	.global	gUnk_08117ECE
+gUnk_08117ECE:
+	.incbin	"baserom.gba", 0x117ECE, 0xC6
+	.global	gUnk_08117F94
+gUnk_08117F94:
+	.incbin	"baserom.gba", 0x117F94, 0x106
+	.global	gUnk_0811809A
+gUnk_0811809A:
+	.incbin	"baserom.gba", 0x11809A, 0x106
+	.global	gUnk_081181A0
+gUnk_081181A0:
+	.incbin	"baserom.gba", 0x1181A0, 0x126
+	.global	gUnk_081182C6
+gUnk_081182C6:
+	.incbin	"baserom.gba", 0x1182C6, 0x126
+	.global	gUnk_081183EC
+gUnk_081183EC:
+	.incbin	"baserom.gba", 0x1183EC, 0x106
+	.global	gUnk_081184F2
+gUnk_081184F2:
+	.incbin	"baserom.gba", 0x1184F2, 0x126
+	.global	gUnk_08118618
+gUnk_08118618:
+	.incbin	"baserom.gba", 0x118618, 0x126
+	.global	gUnk_0811873E
+gUnk_0811873E:
+	.incbin	"baserom.gba", 0x11873E, 0x126
+	.global	gUnk_08118864
+gUnk_08118864:
+	.incbin	"baserom.gba", 0x118864, 0x1A6
+	.global	gUnk_08118A0A
+gUnk_08118A0A:
+	.incbin	"baserom.gba", 0x118A0A, 0x1A6
+	.global	gUnk_08118BB0
+gUnk_08118BB0:
+	.incbin	"baserom.gba", 0x118BB0, 0x126
+	.global	gUnk_08118CD6
+gUnk_08118CD6:
+	.incbin	"baserom.gba", 0x118CD6, 0xC6
+	.global	gUnk_08118D9C
+gUnk_08118D9C:
+	.incbin	"baserom.gba", 0x118D9C, 0x106
+	.global	gUnk_08118EA2
+gUnk_08118EA2:
+	.incbin	"baserom.gba", 0x118EA2, 0xC6
+	.global	gUnk_08118F68
+gUnk_08118F68:
+	.incbin	"baserom.gba", 0x118F68, 0x106
+	.global	gUnk_0811906E
+gUnk_0811906E:
+	.incbin	"baserom.gba", 0x11906E, 0xC6
+	.global	gUnk_08119134
+gUnk_08119134:
+	.incbin	"baserom.gba", 0x119134, 0xE6
+	.global	gUnk_0811921A
+gUnk_0811921A:
+	.incbin	"baserom.gba", 0x11921A, 0x126
+	.global	gUnk_08119340
+gUnk_08119340:
+	.incbin	"baserom.gba", 0x119340, 0xE6
+	.global	gUnk_08119426
+gUnk_08119426:
+	.incbin	"baserom.gba", 0x119426, 0x126
+	.global	gUnk_0811954C
+gUnk_0811954C:
+	.incbin	"baserom.gba", 0x11954C, 0x126
+	.global	gUnk_08119672
+gUnk_08119672:
+	.incbin	"baserom.gba", 0x119672, 0x126
+	.global	gUnk_08119798
+gUnk_08119798:
+	.incbin	"baserom.gba", 0x119798, 0xC6
+	.global	gUnk_0811985E
+gUnk_0811985E:
+	.incbin	"baserom.gba", 0x11985E, 0x106
+	.global	gUnk_08119964
+gUnk_08119964:
+	.incbin	"baserom.gba", 0x119964, 0xC6
+	.global	gUnk_08119A2A
+gUnk_08119A2A:
+	.incbin	"baserom.gba", 0x119A2A, 0x126
+	.global	gUnk_08119B50
+gUnk_08119B50:
+	.incbin	"baserom.gba", 0x119B50, 0x126
+	.global	gUnk_08119C76
+gUnk_08119C76:
+	.incbin	"baserom.gba", 0x119C76, 0x106
+	.global	gUnk_08119D7C
+gUnk_08119D7C:
+	.incbin	"baserom.gba", 0x119D7C, 0x106
+	.global	gUnk_08119E82
+gUnk_08119E82:
+	.incbin	"baserom.gba", 0x119E82, 0x126
+	.global	gUnk_08119FA8
+gUnk_08119FA8:
+	.incbin	"baserom.gba", 0x119FA8, 0x126
+	.global	gUnk_0811A0CE
+gUnk_0811A0CE:
+	.incbin	"baserom.gba", 0x11A0CE, 0x126
+	.global	gUnk_0811A1F4
+gUnk_0811A1F4:
+	.incbin	"baserom.gba", 0x11A1F4, 0x126
+	.global	gUnk_0811A31A
+gUnk_0811A31A:
+	.incbin	"baserom.gba", 0x11A31A, 0xC6
+	.global	gUnk_0811A3E0
+gUnk_0811A3E0:
+	.incbin	"baserom.gba", 0x11A3E0, 0x126
+	.global	gUnk_0811A506
+gUnk_0811A506:
+	.incbin	"baserom.gba", 0x11A506, 0xC6
+	.global	gUnk_0811A5CC
+gUnk_0811A5CC:
+	.incbin	"baserom.gba", 0x11A5CC, 0xC6
+	.global	gUnk_0811A692
+gUnk_0811A692:
+	.incbin	"baserom.gba", 0x11A692, 0x106
+	.global	gUnk_0811A798
+gUnk_0811A798:
+	.incbin	"baserom.gba", 0x11A798, 0xE6
+	.global	gUnk_0811A87E
+gUnk_0811A87E:
+	.incbin	"baserom.gba", 0x11A87E, 0x126
+	.global	gUnk_0811A9A4
+gUnk_0811A9A4:
+	.incbin	"baserom.gba", 0x11A9A4, 0x106
+	.global	gUnk_0811AAAA
+gUnk_0811AAAA:
+	.incbin	"baserom.gba", 0x11AAAA, 0x106
+	.global	gUnk_0811ABB0
+gUnk_0811ABB0:
+	.incbin	"baserom.gba", 0x11ABB0, 0x126
+	.global	gUnk_0811ACD6
+gUnk_0811ACD6:
+	.incbin	"baserom.gba", 0x11ACD6, 0x126
+	.global	gUnk_0811ADFC
+gUnk_0811ADFC:
+	.incbin	"baserom.gba", 0x11ADFC, 0x106
+	.global	gUnk_0811AF02
+gUnk_0811AF02:
+	.incbin	"baserom.gba", 0x11AF02, 0x106
+	.global	gUnk_0811B008
+gUnk_0811B008:
+	.incbin	"baserom.gba", 0x11B008, 0xE6
+	.global	gUnk_0811B0EE
+gUnk_0811B0EE:
+	.incbin	"baserom.gba", 0x11B0EE, 0x146
+	.global	gUnk_0811B234
+gUnk_0811B234:
+	.incbin	"baserom.gba", 0x11B234, 0x146
+	.global	gUnk_0811B37A
+gUnk_0811B37A:
+	.incbin	"baserom.gba", 0x11B37A, 0x126
+	.global	gUnk_0811B4A0
+gUnk_0811B4A0:
+	.incbin	"baserom.gba", 0x11B4A0, 0x106
+	.global	gUnk_0811B5A6
+gUnk_0811B5A6:
+	.incbin	"baserom.gba", 0x11B5A6, 0x126
+	.global	gUnk_0811B6CC
+gUnk_0811B6CC:
+	.incbin	"baserom.gba", 0x11B6CC, 0x106
+	.global	gUnk_0811B7D2
+gUnk_0811B7D2:
+	.incbin	"baserom.gba", 0x11B7D2, 0xE6
+	.global	gUnk_0811B8B8
+gUnk_0811B8B8:
+	.incbin	"baserom.gba", 0x11B8B8, 0x126
+	.global	gUnk_0811B9DE
+gUnk_0811B9DE:
+	.incbin	"baserom.gba", 0x11B9DE, 0x126
+	.global	gUnk_0811BB04
+gUnk_0811BB04:
+	.incbin	"baserom.gba", 0x11BB04, 0x126
+	.global	gUnk_0811BC2A
+gUnk_0811BC2A:
+	.incbin	"baserom.gba", 0x11BC2A, 0x106
+	.global	gUnk_0811BD30
+gUnk_0811BD30:
+	.incbin	"baserom.gba", 0x11BD30, 0x106
+	.global	gUnk_0811BE36
+gUnk_0811BE36:
+	.incbin	"baserom.gba", 0x11BE36, 0x106
+	.global	gUnk_0811BF3C
+gUnk_0811BF3C:
+	.incbin	"baserom.gba", 0x11BF3C, 0x126
+	.global	gUnk_0811C062
+gUnk_0811C062:
+	.incbin	"baserom.gba", 0x11C062, 0x126
+	.global	gUnk_0811C188
+gUnk_0811C188:
+	.incbin	"baserom.gba", 0x11C188, 0x126
+	.global	gUnk_0811C2AE
+gUnk_0811C2AE:
+	.incbin	"baserom.gba", 0x11C2AE, 0x126
+	.global	gUnk_0811C3D4
+gUnk_0811C3D4:
+	.incbin	"baserom.gba", 0x11C3D4, 0x126
+	.global	gUnk_0811C4FA
+gUnk_0811C4FA:
+	.incbin	"baserom.gba", 0x11C4FA, 0x126
+	.global	gUnk_0811C620
+gUnk_0811C620:
+	.incbin	"baserom.gba", 0x11C620, 0x126
+	.global	gUnk_0811C746
+gUnk_0811C746:
+	.incbin	"baserom.gba", 0x11C746, 0x126
+	.global	gUnk_0811C86C
+gUnk_0811C86C:
+	.incbin	"baserom.gba", 0x11C86C, 0x126
+	.global	gUnk_0811C992
+gUnk_0811C992:
+	.incbin	"baserom.gba", 0x11C992, 0x126
+	.global	gUnk_0811CAB8
+gUnk_0811CAB8:
+	.incbin	"baserom.gba", 0x11CAB8, 0x126
+	.global	gUnk_0811CBDE
+gUnk_0811CBDE:
+	.incbin	"baserom.gba", 0x11CBDE, 0x126
+	.global	gUnk_0811CD04
+gUnk_0811CD04:
+	.incbin	"baserom.gba", 0x11CD04, 0x126
+	.global	gUnk_0811CE2A
+gUnk_0811CE2A:
+	.incbin	"baserom.gba", 0x11CE2A, 0xC6
+	.global	gUnk_0811CEF0
+gUnk_0811CEF0:
+	.incbin	"baserom.gba", 0x11CEF0, 0x126
+	.global	gUnk_0811D016
+gUnk_0811D016:
+	.incbin	"baserom.gba", 0x11D016, 0x126
+	.global	gUnk_0811D13C
+gUnk_0811D13C:
+	.incbin	"baserom.gba", 0x11D13C, 0x126
+	.global	gUnk_0811D262
+gUnk_0811D262:
+	.incbin	"baserom.gba", 0x11D262, 0x126
+	.global	gUnk_0811D388
+gUnk_0811D388:
+	.incbin	"baserom.gba", 0x11D388, 0xC6
+	.global	gUnk_0811D44E
+gUnk_0811D44E:
+	.incbin	"baserom.gba", 0x11D44E, 0xE6
+	.global	gUnk_0811D534
+gUnk_0811D534:
+	.incbin	"baserom.gba", 0x11D534, 0x126
+	.global	gUnk_0811D65A
+gUnk_0811D65A:
+	.incbin	"baserom.gba", 0x11D65A, 0x126
+	.global	gUnk_0811D780
+gUnk_0811D780:
+	.incbin	"baserom.gba", 0x11D780, 0x126
+	.global	gUnk_0811D8A6
+gUnk_0811D8A6:
+	.incbin	"baserom.gba", 0x11D8A6, 0xC6
+	.global	gUnk_0811D96C
+gUnk_0811D96C:
+	.incbin	"baserom.gba", 0x11D96C, 0x126
+	.global	gUnk_0811DA92
+gUnk_0811DA92:
+	.incbin	"baserom.gba", 0x11DA92, 0xE6
+	.global	gUnk_0811DB78
+gUnk_0811DB78:
+	.incbin	"baserom.gba", 0x11DB78, 0x126
+	.global	gUnk_0811DC9E
+gUnk_0811DC9E:
+	.incbin	"baserom.gba", 0x11DC9E, 0x126
+	.global	gUnk_0811DDC4
+gUnk_0811DDC4:
+	.incbin	"baserom.gba", 0x11DDC4, 0x126
+	.global	gUnk_0811DEEA
+gUnk_0811DEEA:
+	.incbin	"baserom.gba", 0x11DEEA, 0x126
+	.global	gUnk_0811E010
+gUnk_0811E010:
+	.incbin	"baserom.gba", 0x11E010, 0x146
+	.global	gUnk_0811E156
+gUnk_0811E156:
+	.incbin	"baserom.gba", 0x11E156, 0x126
+	.global	gUnk_0811E27C
+gUnk_0811E27C:
+	.incbin	"baserom.gba", 0x11E27C, 0x126
+	.global	gUnk_0811E3A2
+gUnk_0811E3A2:
+	.incbin	"baserom.gba", 0x11E3A2, 0xC6
+	.global	gUnk_0811E468
+gUnk_0811E468:
+	.incbin	"baserom.gba", 0x11E468, 0xC6
+	.global	gUnk_0811E52E
+gUnk_0811E52E:
+	.incbin	"baserom.gba", 0x11E52E, 0x106
+	.global	gUnk_0811E634
+gUnk_0811E634:
+	.incbin	"baserom.gba", 0x11E634, 0xC6
+	.global	gUnk_0811E6FA
+gUnk_0811E6FA:
+	.incbin	"baserom.gba", 0x11E6FA, 0x126
+	.global	gUnk_0811E820
+gUnk_0811E820:
+	.incbin	"baserom.gba", 0x11E820, 0x126
+	.global	gUnk_0811E946
+gUnk_0811E946:
+	.incbin	"baserom.gba", 0x11E946, 0x126
+	.global	gUnk_0811EA6C
+gUnk_0811EA6C:
+	.incbin	"baserom.gba", 0x11EA6C, 0x126
+	.global	gUnk_0811EB92
+gUnk_0811EB92:
+	.incbin	"baserom.gba", 0x11EB92, 0x126
+	.global	gUnk_0811ECB8
+gUnk_0811ECB8:
+	.incbin	"baserom.gba", 0x11ECB8, 0x126
+	.global	gUnk_0811EDDE
+gUnk_0811EDDE:
+	.incbin	"baserom.gba", 0x11EDDE, 0x126
+	.global	gUnk_0811EF04
+gUnk_0811EF04:
+	.incbin	"baserom.gba", 0x11EF04, 0x126
+	.global	gUnk_0811F02A
+gUnk_0811F02A:
+	.incbin	"baserom.gba", 0x11F02A, 0x146
+	.global	gUnk_0811F170
+gUnk_0811F170:
+	.incbin	"baserom.gba", 0x11F170, 0x166
+	.global	gUnk_0811F2D6
+gUnk_0811F2D6:
+	.incbin	"baserom.gba", 0x11F2D6, 0x126
+	.global	gUnk_0811F3FC
+gUnk_0811F3FC:
+	.incbin	"baserom.gba", 0x11F3FC, 0x126
+	.global	gUnk_0811F522
+gUnk_0811F522:
+	.incbin	"baserom.gba", 0x11F522, 0x126
+	.global	gUnk_0811F648
+gUnk_0811F648:
+	.incbin	"baserom.gba", 0x11F648, 0x126
+	.global	gUnk_0811F76E
+gUnk_0811F76E:
+	.incbin	"baserom.gba", 0x11F76E, 0xC6
+	.global	gUnk_0811F834
+gUnk_0811F834:
+	.incbin	"baserom.gba", 0x11F834, 0x126
+	.global	gUnk_0811F95A
+gUnk_0811F95A:
+	.incbin	"baserom.gba", 0x11F95A, 0x126
+	.global	gUnk_0811FA80
+gUnk_0811FA80:
+	.incbin	"baserom.gba", 0x11FA80, 0x126
+	.global	gUnk_0811FBA6
+gUnk_0811FBA6:
+	.incbin	"baserom.gba", 0x11FBA6, 0x126
+	.global	gUnk_0811FCCC
+gUnk_0811FCCC:
+	.incbin	"baserom.gba", 0x11FCCC, 0x126
+	.global	gUnk_0811FDF2
+gUnk_0811FDF2:
+	.incbin	"baserom.gba", 0x11FDF2, 0x126
+	.global	gUnk_0811FF18
+gUnk_0811FF18:
+	.incbin	"baserom.gba", 0x11FF18, 0x20
+	.global	gUnk_0811FF38
+gUnk_0811FF38:
+	.incbin	"baserom.gba", 0x11FF38, 0x20
+	.global	gUnk_0811FF58
+gUnk_0811FF58:
+	.incbin	"baserom.gba", 0x11FF58, 0x20
+	.global	gUnk_0811FF78
+gUnk_0811FF78:
+	.incbin	"baserom.gba", 0x11FF78, 0x20
+	.global	gUnk_0811FF98
+gUnk_0811FF98:
+	.incbin	"baserom.gba", 0x11FF98, 0x20
+	.global	gUnk_0811FFB8
+gUnk_0811FFB8:
+	.incbin	"baserom.gba", 0x11FFB8, 0x20
+	.global	gUnk_0811FFD8
+gUnk_0811FFD8:
+	.incbin	"baserom.gba", 0x11FFD8, 0x20
+	.global	gUnk_0811FFF8
+gUnk_0811FFF8:
+	.incbin	"baserom.gba", 0x11FFF8, 0x8
