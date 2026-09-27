@@ -1967,8 +1967,8 @@ void sub_080a2164(void)
 /* sub_080a21a0 (0x080A21A0-0x080A2224) */
 void sub_080a21a0(void *a)
 {
-    register struct Task *t asm("r3");
-    register s16 *p asm("r2");
+    struct Task *t;
+    s16 *p;
     s32 d;
     u16 y;
     u16 m3;
@@ -2002,7 +2002,10 @@ void sub_080a21a0(void *a)
     return;
 snap:
     *p = y + gUnk_02006040[4];
-    t->unk50 = *p << 16;
+    do
+    {
+        t->unk50 = *p << 16;
+    } while (0);
     sub_080062c4();
     sub_0806395c(3);
     sub_08006148(a, gCurTaskIdx);
@@ -2055,7 +2058,7 @@ void sub_080a22d4(void)
     struct Task *t;
     s32 ofs;
     s32 r;
-    register s32 acc asm("r2");
+    s32 acc;
     s32 i;
 
     t = gUnk_03002490;
@@ -2073,14 +2076,20 @@ void sub_080a22d4(void)
             goto sel;
     }
 dec:
-    i--;
-    if (i < 0)
-        goto sel;
-    if (gUnk_03002490->unk24 == i)
-        goto dec;
-    acc += gUnk_087484EC[i + ofs];
-    if (acc < r)
-        goto dec;
+    /* Zero-code stand-in: the loop note of this do/while (0) weights the
+       refs of acc inside it, so global allocation ranks acc (r2) above r
+       (r3); acc's constant `= 0` set halves its priority otherwise. */
+    do
+    {
+        i--;
+        if (i < 0)
+            goto sel;
+        if (gUnk_03002490->unk24 == i)
+            goto dec;
+        acc += gUnk_087484EC[i + ofs];
+        if (acc < r)
+            goto dec;
+    } while (0);
 sel:
     if (gUnk_02007D00[4] != 0 && !(i & 1))
     {
