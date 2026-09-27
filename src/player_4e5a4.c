@@ -33,28 +33,28 @@ s32 sub_0803fce4(s32 a);
 
 void sub_0804e5a4(void)
 {
-    gUnk_03002490->unk88->unk05 = gUnk_03002490->unk88->unk04;
-    gUnk_03002490->unk88->unk04 = 13;
-    gUnk_03002490->unk15 = 46;
-    gUnk_03002490->unk74 = 0;
-    gUnk_03002490->unk88->unk3E = 0;
-    gUnk_03002490->unk24 = 0;
-    gUnk_03002490->unk73 = 0;
-    gUnk_03002490->unk80 = 18;
-    CallTableEntry(gUnk_03002490->unk73, 9, gUnk_0873B664);
+    gCurTask->unk88->unk05 = gCurTask->unk88->unk04;
+    gCurTask->unk88->unk04 = 13;
+    gCurTask->unk15 = 46;
+    gCurTask->unk74 = 0;
+    gCurTask->unk88->unk3E = 0;
+    gCurTask->unk24 = 0;
+    gCurTask->unk73 = 0;
+    gCurTask->unk80 = 18;
+    CallTableEntry(gCurTask->unk73, 9, gUnk_0873B664);
 }
 
 void sub_0804e600(void)
 {
-    gUnk_03002490->unk88->unk3D = 0;
-    gUnk_03002490->unk88->unk05 = gUnk_03002490->unk88->unk04;
-    gUnk_03002490->unk88->unk04 = 13;
-    CallTableEntry(gUnk_03002490->unk73, 9, gUnk_0873B664);
+    gCurTask->unk88->unk3D = 0;
+    gCurTask->unk88->unk05 = gCurTask->unk88->unk04;
+    gCurTask->unk88->unk04 = 13;
+    CallTableEntry(gCurTask->unk73, 9, gUnk_0873B664);
 }
 
 void sub_0804e640(void)
 {
-    struct Task *t = gUnk_03002490;
+    struct Task *t = gCurTask;
 
     if (t->unk46 != -1)
     {
@@ -65,25 +65,25 @@ void sub_0804e640(void)
             else
                 TaskSetFrameFlip(gUnk_0873DB0A[t->unk46]);
         }
-        if (gUnk_03002490->unk46 == 9)
-            gUnk_03002490->unk6E = gUnk_03002490->unk43;
+        if (gCurTask->unk46 == 9)
+            gCurTask->unk6E = gCurTask->unk43;
     }
-    if (abs(gUnk_03002490->unk58) > 0x20000)
+    if (abs(gCurTask->unk58) > 0x20000)
     {
-        sub_0803e1b8(3, 0, gUnk_03002490->unk88->unk00);
-        if ((u32)abs(gUnk_03002490->unk54) > 0x8000)
-            gUnk_03002490->unk88->unk6C = gUnk_0873CF7C;
+        sub_0803e1b8(3, 0, gCurTask->unk88->unk00);
+        if ((u32)abs(gCurTask->unk54) > 0x8000)
+            gCurTask->unk88->unk6C = gUnk_0873CF7C;
         else
-            gUnk_03002490->unk88->unk6C = 0;
-        sub_0801a828(gCurTaskIdx, gUnk_03002490->unk48, gUnk_03002490->unk4A, gUnk_0873C28C);
+            gCurTask->unk88->unk6C = 0;
+        sub_0801a828(gCurTaskIdx, gCurTask->unk48, gCurTask->unk4A, gUnk_0873C28C);
     }
     else
     {
-        gUnk_03002490->unk88->unk6C = 0;
-        sub_0803e1b8(0xFF, 0, gUnk_03002490->unk88->unk00);
+        gCurTask->unk88->unk6C = 0;
+        sub_0803e1b8(0xFF, 0, gCurTask->unk88->unk00);
     }
     if (sub_0803fce4(0) != 0)
-        gUnk_03002490->unk88->unk01 = 23;
+        gCurTask->unk88->unk01 = 23;
     else
-        CallTableEntry(gUnk_03002490->unk73, 9, gUnk_0873B688);
+        CallTableEntry(gCurTask->unk73, 9, gUnk_0873B688);
 }

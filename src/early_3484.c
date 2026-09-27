@@ -36,7 +36,7 @@
  *   EnableSoundDriver  m4aSoundVSyncOn + forget the BGM.
  *
  * Matching notes:
- *  - gUnk_03000490 must be `vs16`, not `vu16`: only the signed type keeps the
+ *  - gCurrentBgm must be `vs16`, not `vu16`: only the signed type keeps the
  *    -999 "no song" constant as the ROM's full-word 0xFFFFFC19 pool entry
  *    (a u16 destination truncates it to 0x0000FC19 at compile time), and the
  *    volatile read is what gives the ROM's `ldrh` + `lsls #16` + `asrs #16`
@@ -83,20 +83,20 @@ struct SongEntry
     u8 pad[2];
 };
 
-extern const struct SongEntry gUnk_0872EB38[];
+extern const struct SongEntry gSfxTable[];
 
-extern vs16 gUnk_03000490;
-extern vu16 gUnk_03000AF8;
-extern vu16 gUnk_03000B0C;
-extern vu16 gUnk_03000FBC;
-extern vu16 gUnk_03000FCC;
-extern vu16 gUnk_03001EDC;
-extern vu16 gUnk_03001EE4;
+extern vs16 gCurrentBgm;
+extern vu16 gSoundDisabled;
+extern vu16 gVolumeRampMode;
+extern vu16 gVolumeRampLevel;
+extern vu16 gVolumeRampSpeed;
+extern vu16 gSfxDisabled;
+extern vu16 gSoundDriverOn;
 
-extern vu16 gUnk_03000F80[];
-extern vu8 gUnk_0300001C[];
-extern vu8 gUnk_03001180[];
-extern vu8 gUnk_03001674[];
+extern vu16 gSfxSlotSongs[];
+extern vu8 gSfxPlayerSlots[];
+extern vu8 gSfxSlotPlayers[];
+extern vu8 gSfxSlotAges[];
 
 
 
@@ -104,25 +104,25 @@ extern vu8 gUnk_03001674[];
 
 void StopAllSound(void)
 {
-    gUnk_03000490 = -999;
+    gCurrentBgm = -999;
     m4aMPlayAllStop();
 }
 
 void PauseAllSound(void)
 {
-    if (gUnk_03000AF8 == 0)
+    if (gSoundDisabled == 0)
         m4aMPlayAllStop();
 }
 
 void ResumeAllSound(void)
 {
-    if (gUnk_03000AF8 == 0)
+    if (gSoundDisabled == 0)
         m4aMPlayAllContinue();
 }
 
 void StopBgm(void)
 {
-    if (gUnk_03000AF8 == 0)
+    if (gSoundDisabled == 0)
         m4aMPlayStop(gMPlayTable[0].info);
 }
 
@@ -131,7 +131,7 @@ void StopSfxOnPlayer(s32 player, s32 songId)
     struct MusicPlayerInfo *info;
     s32 id;
 
-    if (gUnk_03001EDC != 0)
+    if (gSfxDisabled != 0)
         return;
     id = songId - 100;
     if ((u32)id > 478)
@@ -141,10 +141,10 @@ void StopSfxOnPlayer(s32 player, s32 songId)
     info = gMPlayTable[player].info;
     if ((s32)info->status < 0)
         return;
-    if ((s16)gUnk_03000F80[(s8)gUnk_0300001C[player]] != id)
+    if ((s16)gSfxSlotSongs[(s8)gSfxPlayerSlots[player]] != id)
         return;
     m4aMPlayStop(info);
-    gUnk_03000F80[(s8)gUnk_0300001C[player]] = 0xFFFF;
+    gSfxSlotSongs[(s8)gSfxPlayerSlots[player]] = 0xFFFF;
 }
 
 s32 StopSfx(s32 songId)
@@ -156,7 +156,7 @@ s32 StopSfx(s32 songId)
     s32 limit;
 
     mask = 0;
-    if (gUnk_03001EDC != 0)
+    if (gSfxDisabled != 0)
         return 0;
     limit = 478;
     if ((u32)(id = songId - 100) > limit)
@@ -166,10 +166,10 @@ s32 StopSfx(s32 songId)
         info = gMPlayTable[i].info;
         if ((s32)info->status < 0)
             continue;
-        if ((s16)gUnk_03000F80[(s8)gUnk_0300001C[i]] != id)
+        if ((s16)gSfxSlotSongs[(s8)gSfxPlayerSlots[i]] != id)
             continue;
         m4aMPlayStop(info);
-        gUnk_03000F80[(s8)gUnk_0300001C[i]] = 0xFFFF;
+        gSfxSlotSongs[(s8)gSfxPlayerSlots[i]] = 0xFFFF;
         mask |= 1 << i;
     }
     return mask;
@@ -184,7 +184,7 @@ s32 StopOtherSfx(s32 songId)
     s32 limit;
 
     mask = 0;
-    if (gUnk_03001EDC != 0)
+    if (gSfxDisabled != 0)
         return 0;
     limit = 478;
     if ((u32)(id = songId - 100) > limit)
@@ -194,10 +194,10 @@ s32 StopOtherSfx(s32 songId)
         info = gMPlayTable[i].info;
         if ((s32)info->status < 0)
             continue;
-        if ((s16)gUnk_03000F80[(s8)gUnk_0300001C[i]] != id)
+        if ((s16)gSfxSlotSongs[(s8)gSfxPlayerSlots[i]] != id)
         {
             m4aMPlayStop(info);
-            gUnk_03000F80[(s8)gUnk_0300001C[i]] = 0xFFFF;
+            gSfxSlotSongs[(s8)gSfxPlayerSlots[i]] = 0xFFFF;
         }
         else
         {
@@ -211,7 +211,7 @@ void StopAllSfx(void)
 {
     s32 i;
 
-    if (gUnk_03001EDC != 0)
+    if (gSfxDisabled != 0)
         return;
     for (i = 1; i <= 3; i++)
         m4aMPlayStop(gMPlayTable[i].info);
@@ -227,43 +227,43 @@ void PlayBgmFadeIn(u16 speed, u16 songId)
         return;
     if (id < 0)
         return;
-    flag = (s16)gUnk_03000AF8;
+    flag = (s16)gSoundDisabled;
     if (flag != 0)
     {
-        gUnk_03000490 = songId;
+        gCurrentBgm = songId;
         return;
     }
-    gUnk_03000B0C = 1;
-    gUnk_03000FBC = flag;
-    gUnk_03000FCC = speed;
-    if (gUnk_03000490 == id)
+    gVolumeRampMode = 1;
+    gVolumeRampLevel = flag;
+    gVolumeRampSpeed = speed;
+    if (gCurrentBgm == id)
     {
-        if (gUnk_03000AF8 == 0)
+        if (gSoundDisabled == 0)
             m4aSongNumStartOrContinue(id);
         return;
     }
     if (id == -1)
         return;
-    if (gUnk_03000AF8 != 0)
+    if (gSoundDisabled != 0)
         return;
     m4aSongNumStart(id);
     m4aMPlayImmInit(&gMPlayInfo_BGM);
-    gUnk_03000490 = songId;
+    gCurrentBgm = songId;
 }
 
 void FadeOutBgm(s32 speed)
 {
-    gUnk_03000B0C = 2;
-    gUnk_03000FBC = 256;
-    gUnk_03000FCC = -speed;
+    gVolumeRampMode = 2;
+    gVolumeRampLevel = 256;
+    gVolumeRampSpeed = -speed;
 }
 
 void SetBgmVolume(u16 volume)
 {
     if (volume > 256)
         volume = 256;
-    gUnk_03000FBC = volume;
-    if (gUnk_03000AF8 == 0)
+    gVolumeRampLevel = volume;
+    if (gSoundDisabled == 0)
         m4aMPlayVolumeControl(&gMPlayInfo_BGM, 0xFF, volume);
 }
 
@@ -271,8 +271,8 @@ void SetSfxVolume(u16 volume)
 {
     if (volume > 256)
         volume = 256;
-    gUnk_03000FBC = volume;
-    if (gUnk_03000AF8 == 0)
+    gVolumeRampLevel = volume;
+    if (gSoundDisabled == 0)
     {
         m4aMPlayVolumeControl(&gMPlayInfo_SE1, 0xFF, volume);
         m4aMPlayVolumeControl(&gMPlayInfo_SE2, 0xFF, volume);
@@ -282,28 +282,28 @@ void SetSfxVolume(u16 volume)
 
 void FadeInSfx(u16 speed)
 {
-    gUnk_03000B0C = 3;
-    gUnk_03000FBC = 0;
-    gUnk_03000FCC = speed;
+    gVolumeRampMode = 3;
+    gVolumeRampLevel = 0;
+    gVolumeRampSpeed = speed;
 }
 
 void FadeOutSfx(s32 speed)
 {
-    gUnk_03000B0C = 4;
-    gUnk_03000FBC = 256;
-    gUnk_03000FCC = -speed;
+    gVolumeRampMode = 4;
+    gVolumeRampLevel = 256;
+    gVolumeRampSpeed = -speed;
 }
 
 void DisableSoundDriver(void)
 {
     m4aSoundVSyncOff();
-    gUnk_03000490 = -999;
-    gUnk_03001EE4 = 0;
+    gCurrentBgm = -999;
+    gSoundDriverOn = 0;
 }
 
 void EnableSoundDriver(void)
 {
     m4aSoundVSyncOn();
-    gUnk_03000490 = -999;
-    gUnk_03001EE4 = 1;
+    gCurrentBgm = -999;
+    gSoundDriverOn = 1;
 }

@@ -44,15 +44,15 @@ extern s8 gUnk_02007D34;
 extern s8 gUnk_02007E88;
 extern s8 gUnk_0200B074;
 extern struct SaveSlot gSaveSlots[];
-extern vu16 gUnk_03000038;
-extern vu16 gUnk_03000B70;
-extern vs32 gUnk_03000FA8;
-extern vs32 gUnk_03001E94;
-extern vu16 gUnk_03001ED8;
-extern vu16 gUnk_03001EF4;
+extern vu16 gPressedKeys;
+extern vu16 gRepeatedKeys;
+extern vs32 gBg3ScrollY;
+extern vs32 gBg2ScrollY;
+extern vu16 gDispCnt;
+extern vu16 gHeldKeys;
 extern u8 gUnk_03001F30;
 extern u16 gUnk_03002150;
-extern u16 gUnk_030023D8;
+extern u16 gGameState;
 extern s32 gCurSaveSlot;
 extern u8 gExtraMode;
 
@@ -87,7 +87,7 @@ void sub_0800c20c(void);
 
 void sub_0800c09c(void)
 {
-    vu16 *keys = &gUnk_03000038;
+    vu16 *keys = &gPressedKeys;
     s8 *state = &gUnk_020060D0;
     s32 i;
     s32 done;
@@ -121,8 +121,8 @@ void sub_0800c09c(void)
                 sub_08008c4c(2);
                 sub_0800bcf0();
                 sub_08008c64(19);
-                gUnk_03001ED8 &= 0xE0FF;
-                gUnk_03001ED8 |= 0x1C00;
+                gDispCnt &= 0xE0FF;
+                gDispCnt |= 0x1C00;
                 BeginFastFadeInFromWhite();
                 RunFramesUntilFadeDone();
             }
@@ -137,16 +137,16 @@ void sub_0800c09c(void)
             PlaySfx(215);
             *state = 10;
             gUnk_03002150 = 4;
-            gUnk_030023D8 = 3;
+            gGameState = 3;
             return;
         }
-        if (gUnk_03000B70 & 0x40)
+        if (gRepeatedKeys & 0x40)
         {
             PlaySfx(101);
             if (--gUnk_0200B074 < 0)
                 gUnk_0200B074 = 2;
         }
-        else if (gUnk_03000B70 & 0x80)
+        else if (gRepeatedKeys & 0x80)
         {
             PlaySfx(101);
             if (++gUnk_0200B074 > 2)
@@ -170,8 +170,8 @@ void sub_0800c20c(void)
     case 0:
         gUnk_020055E4 = 0;
         sub_08008c64(25);
-        gUnk_03001ED8 &= 0xE0FF;
-        gUnk_03001ED8 |= 0x1E00;
+        gDispCnt &= 0xE0FF;
+        gDispCnt |= 0x1E00;
         StartHBlankScroll(0);
         RunFrames(8);
         gUnk_02006180 = 9;
@@ -179,8 +179,8 @@ void sub_0800c20c(void)
     case 4:
         gUnk_020055E4 = 1;
         sub_08008c64(25);
-        gUnk_03001ED8 &= 0xE0FF;
-        gUnk_03001ED8 |= 0x1F00;
+        gDispCnt &= 0xE0FF;
+        gDispCnt |= 0x1F00;
         TaskCreateFrom(242, 32);
         StartHBlankScroll(3);
         gUnk_02006180 = 17;
@@ -193,8 +193,8 @@ void sub_0800c20c(void)
     case 7:
         gUnk_020055E4 = 2;
         sub_08008c64(25);
-        gUnk_03001ED8 &= 0xE0FF;
-        gUnk_03001ED8 |= 0x1A00;
+        gDispCnt &= 0xE0FF;
+        gDispCnt |= 0x1A00;
         StartHBlankScroll(0);
         gUnk_02006180 = 17;
         break;
@@ -208,12 +208,12 @@ void sub_0800c34c(void)
     {
         if (gUnk_02006180 != 0)
         {
-            if (--gUnk_02006180 != 0 && (gUnk_03000038 & 11))
+            if (--gUnk_02006180 != 0 && (gPressedKeys & 11))
             {
                 gUnk_02006180 = 0;
                 StopHBlankScroll();
                 sub_0800fe94();
-                gUnk_02004B70 = gUnk_03000038;
+                gUnk_02004B70 = gPressedKeys;
             }
             if (gUnk_02006180 == 0)
             {
@@ -223,7 +223,7 @@ void sub_0800c34c(void)
                     RunFrames(4);
             }
         }
-        if ((gUnk_03000038 & 9) || (gUnk_02004B70 & 9))
+        if ((gPressedKeys & 9) || (gUnk_02004B70 & 9))
         {
             PlaySfx(102);
             switch (gUnk_020055E4)
@@ -258,14 +258,14 @@ void sub_0800c34c(void)
             }
             return;
         }
-        if ((gUnk_03000038 & 2) || (gUnk_02004B70 & 2))
+        if ((gPressedKeys & 2) || (gUnk_02004B70 & 2))
         {
             PlaySfx(215);
             gUnk_020060D0 = 0;
             sub_0800bcf0();
             sub_0800da9c(1);
-            gUnk_03001ED8 &= 0xE0FF;
-            gUnk_03001ED8 |= 0x1E00;
+            gDispCnt &= 0xE0FF;
+            gDispCnt |= 0x1E00;
             StartHBlankScroll(1);
             sub_08008c64(25);
             sub_0800fe54(0xFFF80000);
@@ -274,13 +274,13 @@ void sub_0800c34c(void)
         }
         if (gUnk_02006180 == 0)
         {
-            if (gUnk_03000B70 & 0x40)
+            if (gRepeatedKeys & 0x40)
             {
                 PlaySfx(101);
                 if (--gUnk_020055E4 < 0)
                     gUnk_020055E4 = 3;
             }
-            else if (gUnk_03000B70 & 0x80)
+            else if (gRepeatedKeys & 0x80)
             {
                 PlaySfx(101);
                 if (++gUnk_020055E4 > 3)
@@ -293,7 +293,7 @@ void sub_0800c34c(void)
 
 void sub_0800c558(void)
 {
-    vu16 *keys = &gUnk_03000038;
+    vu16 *keys = &gPressedKeys;
     s8 *state = &gUnk_020060D0;
 
     while (!(*keys & 9))
@@ -305,12 +305,12 @@ void sub_0800c558(void)
             RunFrames(10);
             return;
         }
-        if ((gUnk_03001EF4 & 0x80) && gUnk_02007D34 == 0)
+        if ((gHeldKeys & 0x80) && gUnk_02007D34 == 0)
         {
             PlaySfx(101);
             gUnk_02007D34 = 1;
         }
-        else if ((gUnk_03001EF4 & 0x40) && gUnk_02007D34 == 1)
+        else if ((gHeldKeys & 0x40) && gUnk_02007D34 == 1)
         {
             PlaySfx(101);
             gUnk_02007D34 = 0;
@@ -332,17 +332,17 @@ void sub_0800c610(void)
     {
         if (gUnk_02006180 != 0)
         {
-            if (--gUnk_02006180 != 0 && (gUnk_03000038 & 11))
+            if (--gUnk_02006180 != 0 && (gPressedKeys & 11))
             {
                 gUnk_02006180 = 0;
                 StopHBlankScroll();
                 sub_0800fe94();
-                gUnk_02004B70 = gUnk_03000038;
+                gUnk_02004B70 = gPressedKeys;
             }
             if (gUnk_02006180 == 0)
             {
-                gUnk_03001ED8 &= 0xE0FF;
-                gUnk_03001ED8 |= 0x1F00;
+                gDispCnt &= 0xE0FF;
+                gDispCnt |= 0x1F00;
                 TaskCreateFrom(242, 32);
                 if (gSaveSlots[gCurSaveSlot].unk10 & 4)
                 {
@@ -355,23 +355,23 @@ void sub_0800c610(void)
                     RunFrames(1);
             }
         }
-        if ((gUnk_03000038 & 9) || (gUnk_02004B70 & 9))
+        if ((gPressedKeys & 9) || (gUnk_02004B70 & 9))
         {
             PlaySfx(102);
             if (gUnk_02004B44 == 0)
             {
                 gUnk_020060D0 = 9;
                 gUnk_03001F30 = 0;
-                gUnk_030023D8 = 5;
+                gGameState = 5;
             }
             else
             {
                 gUnk_02007E88 = gUnk_020060D0;
                 gUnk_020060D0 = 8;
                 sub_08008c64(36);
-                gUnk_03001ED8 &= 0xE0FF;
-                gUnk_03001ED8 |= 0x1A00;
-                gUnk_03001E94 = gUnk_03000FA8 = 0;
+                gDispCnt &= 0xE0FF;
+                gDispCnt |= 0x1A00;
+                gBg2ScrollY = gBg3ScrollY = 0;
                 sub_0800fd24(0xFFF00000, 256, 2);
                 sub_0800fd24(0xFFF00000, 256, 3);
                 TaskCreateFrom(250, 32);
@@ -380,8 +380,8 @@ void sub_0800c610(void)
                 RunFrames(16);
                 sub_08008c64(39);
                 sub_08008c64(37);
-                gUnk_03001ED8 &= 0xE0FF;
-                gUnk_03001ED8 |= 0x1E00;
+                gDispCnt &= 0xE0FF;
+                gDispCnt |= 0x1E00;
                 TaskCreateFrom(249, 32);
                 RunFrames(8);
                 sub_08008c64(40);
@@ -389,7 +389,7 @@ void sub_0800c610(void)
             }
             return;
         }
-        if ((gUnk_03000038 & 2) || (gUnk_02004B70 & 2))
+        if ((gPressedKeys & 2) || (gUnk_02004B70 & 2))
         {
             PlaySfx(215);
             if (gSaveSlots[gCurSaveSlot].unk10 & 4)
@@ -401,12 +401,12 @@ void sub_0800c610(void)
         }
         if (gUnk_02006180 == 0)
         {
-            if ((gUnk_03001EF4 & 0x80) && gUnk_02004B44 == 0)
+            if ((gHeldKeys & 0x80) && gUnk_02004B44 == 0)
             {
                 PlaySfx(101);
                 gUnk_02004B44 = 1;
             }
-            else if ((gUnk_03001EF4 & 0x40) && gUnk_02004B44 == 1)
+            else if ((gHeldKeys & 0x40) && gUnk_02004B44 == 1)
             {
                 PlaySfx(101);
                 gUnk_02004B44 = 0;
@@ -425,10 +425,10 @@ void sub_0800c8a0(void)
     sub_08008c64(29);
     TaskCreateFrom(243, 32);
     RunFrames(10);
-    keys = &gUnk_03000038;
+    keys = &gPressedKeys;
     while (1)
     {
-        if ((gUnk_03000038 & 9) && gUnk_02007D34 == 0)
+        if ((gPressedKeys & 9) && gUnk_02007D34 == 0)
         {
             PlaySfx(102);
             if (++gUnk_0200618C == 1)
@@ -445,8 +445,8 @@ void sub_0800c8a0(void)
                 EraseSaveSlot(gCurSaveSlot);
                 gUnk_020060D0 = 0;
                 sub_0800bcf0();
-                gUnk_03001ED8 &= 0xE0FF;
-                gUnk_03001ED8 |= 0x1E00;
+                gDispCnt &= 0xE0FF;
+                gDispCnt |= 0x1E00;
                 StartHBlankScroll(1);
                 sub_08008c64(25);
                 sub_0800fe54(0xFFF80000);
@@ -466,12 +466,12 @@ void sub_0800c8a0(void)
             RunFrames(10);
             return;
         }
-        if ((gUnk_03001EF4 & 0x20) && gUnk_02007D34 == 1)
+        if ((gHeldKeys & 0x20) && gUnk_02007D34 == 1)
         {
             PlaySfx(101);
             gUnk_02007D34 = 0;
         }
-        else if ((gUnk_03001EF4 & 0x10) && gUnk_02007D34 == 0)
+        else if ((gHeldKeys & 0x10) && gUnk_02007D34 == 0)
         {
             PlaySfx(101);
             gUnk_02007D34 = 1;

@@ -23,19 +23,19 @@ extern s16 gUnk_0200A6E0[];
 extern s8 gUnk_0200B074;
 extern vu8 gUnk_0200EBC0[];
 extern u32 gUnk_0200EC48;
-extern vu16 gUnk_03000038;
-extern vs16 gUnk_03000490;
-extern vu16 gUnk_03000B70;
-extern vs32 gUnk_03000F8C;
-extern vs32 gUnk_03000FA8;
-extern vu16 gUnk_03000FC8;
-extern vs32 gUnk_03001E94;
-extern vu16 gUnk_03001ECC;
-extern vu16 gUnk_03001ED8;
-extern vu16 gUnk_03001EF4;
+extern vu16 gPressedKeys;
+extern vs16 gCurrentBgm;
+extern vu16 gRepeatedKeys;
+extern vs32 gBg2ScrollX;
+extern vs32 gBg3ScrollY;
+extern vu16 gKeyRepeatDelay;
+extern vs32 gBg2ScrollY;
+extern vu16 gKeyRepeatInterval;
+extern vu16 gDispCnt;
+extern vu16 gHeldKeys;
 extern s32 gUnk_03001F2C;
 extern u8 gUnk_03001F30;
-extern u16 gUnk_030023D8;
+extern u16 gGameState;
 extern u8 gExtraMode;
 extern const s16 gUnk_08731DC0[];
 extern u8 gUnk_0876B1FC[];
@@ -73,7 +73,7 @@ void sub_0800d450(void)
 {
     while (1) {
         if (gUnk_02006180 != 0) {
-            if (--gUnk_02006180 != 0 && (gUnk_03000038 & 2)) {
+            if (--gUnk_02006180 != 0 && (gPressedKeys & 2)) {
                 gUnk_02006180 = 0;
                 StopHBlankScroll();
                 sub_0800fe94();
@@ -85,14 +85,14 @@ void sub_0800d450(void)
                 sub_0800d310();
                 TaskCreateFrom(254, 32);
                 TaskCreateFrom(255, 32);
-                gUnk_03001ED8 &= 0xE0FF;
-                gUnk_03001ED8 |= 0x1D00;
+                gDispCnt &= 0xE0FF;
+                gDispCnt |= 0x1D00;
             }
         }
         gUnk_03001F2C = gUnk_08731DC0[gUnk_0200A6E0[gUnk_0200B074]];
-        if (gUnk_03000038 & 1) {
+        if (gPressedKeys & 1) {
             if (gUnk_0200B074 == 0) {
-                if (gUnk_03001F2C == gUnk_03000490
+                if (gUnk_03001F2C == gCurrentBgm
                     && (s32)gMPlayTable[gSongTable[gUnk_03001F2C].ms].info->status >= 0) {
                     m4aSongNumStop(gUnk_03001F2C);
                     sub_08008c64(49);
@@ -107,18 +107,18 @@ void sub_0800d450(void)
             }
             RunFrames(3);
             sub_08008c64(47);
-        } else if (gUnk_03000038 & 2) {
-            gUnk_03000FC8 = 10;
-            gUnk_03001ECC = 6;
+        } else if (gPressedKeys & 2) {
+            gKeyRepeatDelay = 10;
+            gKeyRepeatInterval = 6;
             StopAllSfx();
             PlaySfx(215);
             sub_08008c64(50);
             RunFrames(3);
             sub_08008c64(47);
-            gUnk_03001ED8 &= 0xE0FF;
-            gUnk_03001ED8 |= 0x1A00;
+            gDispCnt &= 0xE0FF;
+            gDispCnt |= 0x1A00;
             sub_0800fd24(0x100000, 256, 3);
-            gUnk_03000F8C = 0;
+            gBg2ScrollX = 0;
             gUnk_02007E88 = gUnk_020060D0;
             gUnk_020060D0 = 1;
             if (gUnk_03001F2C != 40
@@ -130,23 +130,23 @@ void sub_0800d450(void)
             return;
         }
         if (gUnk_02006180 == 0) {
-            if ((gUnk_03000038 & 16) && gUnk_0200B074 == 0) {
+            if ((gPressedKeys & 16) && gUnk_0200B074 == 0) {
                 gUnk_0200B074 = 1;
                 sub_0800d310();
                 gUnk_02006010 = 0;
-                gUnk_03000FC8 = 10;
-                gUnk_03001ECC = 6;
-            } else if ((gUnk_03000038 & 32) && gUnk_0200B074 == 1) {
+                gKeyRepeatDelay = 10;
+                gKeyRepeatInterval = 6;
+            } else if ((gPressedKeys & 32) && gUnk_0200B074 == 1) {
                 gUnk_0200B074 = 0;
                 sub_0800d310();
                 gUnk_02006010 = 0;
-                gUnk_03000FC8 = 10;
-                gUnk_03001ECC = 6;
-            } else if (gUnk_03000B70 & 128) {
+                gKeyRepeatDelay = 10;
+                gKeyRepeatInterval = 6;
+            } else if (gRepeatedKeys & 128) {
                 gUnk_0200A6E0[gUnk_0200B074]--;
                 if (++gUnk_02006010 == 5) {
-                    gUnk_03000FC8 = 10;
-                    gUnk_03001ECC = 3;
+                    gKeyRepeatDelay = 10;
+                    gKeyRepeatInterval = 3;
                 }
                 if (gUnk_0200A6E0[gUnk_0200B074] < 0) {
                     if (gUnk_0200B074 == 0)
@@ -155,11 +155,11 @@ void sub_0800d450(void)
                         gUnk_0200A6E0[gUnk_0200B074] = 0x111;
                 }
                 sub_0800d35c(gUnk_0200B074);
-            } else if (gUnk_03000B70 & 64) {
+            } else if (gRepeatedKeys & 64) {
                 gUnk_0200A6E0[gUnk_0200B074]++;
                 if (++gUnk_02006010 == 5) {
-                    gUnk_03000FC8 = 10;
-                    gUnk_03001ECC = 3;
+                    gKeyRepeatDelay = 10;
+                    gKeyRepeatInterval = 3;
                 }
                 if (gUnk_0200B074 == 0 && gUnk_0200A6E0[gUnk_0200B074] > 43)
                     gUnk_0200A6E0[gUnk_0200B074] = 0;
@@ -167,10 +167,10 @@ void sub_0800d450(void)
                     gUnk_0200A6E0[gUnk_0200B074] = 0;
                 sub_0800d35c(gUnk_0200B074);
             }
-            if (!(gUnk_03001EF4 & 0xC0)) {
+            if (!(gHeldKeys & 0xC0)) {
                 gUnk_02006010 = 0;
-                gUnk_03000FC8 = 10;
-                gUnk_03001ECC = 6;
+                gKeyRepeatDelay = 10;
+                gKeyRepeatInterval = 6;
             }
         }
         RunFrame();
@@ -186,18 +186,18 @@ void sub_0800d85c(void)
     gUnk_02007FC8 = 0;
     RunFrames(4);
     while (1) {
-        if (gUnk_03000038 & 2) {
+        if (gPressedKeys & 2) {
             PlaySfx(215);
             sub_08003964();
-            gUnk_03001ED8 &= 0xE0FF;
-            gUnk_03001ED8 |= 0x1A00;
+            gDispCnt &= 0xE0FF;
+            gDispCnt |= 0x1A00;
             if (gUnk_02007FC8 == 1)
                 sub_08008c64(37);
             if (gUnk_02007E88 == 3) {
                 sub_08008c64(39);
                 gUnk_02007E88 = gUnk_020060D0;
                 gUnk_020060D0 = 3;
-                gUnk_03001E94 = gUnk_03000FA8 = 0;
+                gBg2ScrollY = gBg3ScrollY = 0;
                 sub_0800fd24(0x100000, 256, 2);
                 sub_0800fd24(0x100000, 256, 3);
                 StartHBlankScroll(6);
@@ -215,14 +215,14 @@ void sub_0800d85c(void)
                 gUnk_020060D0 = 9;
                 gUnk_03001F30 = 0;
                 if (gUnk_02007E88 == 3)
-                    gUnk_030023D8 = 5;
+                    gGameState = 5;
                 else
-                    gUnk_030023D8 = 13;
+                    gGameState = 13;
                 if (ConnectLink())
                     sub_08008b8c();
                 return;
             }
-            if (gUnk_0200EBC0[2] == 2 && gUnk_0200EBC0[0] == 0 && (gUnk_03000038 & 9)) {
+            if (gUnk_0200EBC0[2] == 2 && gUnk_0200EBC0[0] == 0 && (gPressedKeys & 9)) {
                 if (gUnk_0200EC48 != 1) {
                     gUnk_020060D0 = 9;
                     return;
@@ -277,15 +277,15 @@ void sub_0800da9c(s32 mode)
     s32 id;
 
     id = TaskCreateFrom(240, 32);
-    t = &gUnk_03002790[id];
+    t = &gTasks[id];
     t->unk18 = mode;
     for (i = 0; i <= 2; i++) {
         id = TaskCreateFrom(238, 32);
-        t = &gUnk_03002790[id];
+        t = &gTasks[id];
         t->unk18 = mode;
         t->unk1C = i;
         id = TaskCreateFrom(239, 32);
-        t = &gUnk_03002790[id];
+        t = &gTasks[id];
         t->unk18 = mode;
         t->unk1C = i;
     }

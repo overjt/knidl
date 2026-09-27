@@ -7,7 +7,7 @@
  * (src/early_6464.c, src/early_6cd4.c, src/early_6d18.c): the per-frame link
  * step LinkMain1 calls EnqueueSendCmd to queue the frame's four command
  * words into the send ring gLink.ring[4][30] (the words are ORed into
- * gUnk_03004D84 first; an all-zero frame is not queued, a full ring sets the
+ * gSendNonzeroCheck first; an all-zero frame is not queued, a full ring sets the
  * overflow flag unk14) and DequeueRecvCmds to take the oldest four-player frame
  * out of the receive ring gLink.buf[4][4][30] (or clear the caller's
  * 4x4 matrix and set the "received nothing" flag unk0C).  Both run with the
@@ -41,9 +41,9 @@ struct Link {
 };
 
 extern struct Link gLink;
-extern u16 gUnk_03004D44;       /* saved REG_IME */
-extern u16 gUnk_03004D84;       /* OR of the frame's send words */
-extern u8 gUnk_03004D20;
+extern u16 gLinkSavedIme;       /* saved REG_IME */
+extern u16 gSendNonzeroCheck;       /* OR of the frame's send words */
+extern u8 gLastSendQueueCount;
 
 /* Queue one 4-halfword send frame into the send ring (pokeruby's
  * EnqueueSendCmd) and clear the caller's buffer.  REG_IME is the io_reg.h
@@ -55,7 +55,7 @@ void EnqueueSendCmd(u16 *p)
     u32 n;
     u32 i;
 
-    gUnk_03004D44 = REG_IME;
+    gLinkSavedIme = REG_IME;
     REG_IME = 0;
     ie = REG_IE;
     REG_IE = 2;
@@ -67,7 +67,7 @@ void EnqueueSendCmd(u16 *p)
             n -= 30;
         for (i = 0; i < 4; i++)
         {
-            gUnk_03004D84 |= *p;
+            gSendNonzeroCheck |= *p;
             gLink.ring[i][n] = *p;
             *p = 0;
             p++;
@@ -77,15 +77,15 @@ void EnqueueSendCmd(u16 *p)
     {
         gLink.unk14 = 1;
     }
-    if (gUnk_03004D84)
+    if (gSendNonzeroCheck)
     {
         gLink.unk10D++;
-        gUnk_03004D84 = 0;
+        gSendNonzeroCheck = 0;
     }
     REG_IME = 0;
     REG_IE = ie;
-    REG_IME = gUnk_03004D44;
-    gUnk_03004D20 = gLink.unk10D;
+    REG_IME = gLinkSavedIme;
+    gLastSendQueueCount = gLink.unk10D;
 }
 
 /* Dequeue one 4x4 receive frame out of the receive ring (pokeruby's
@@ -99,7 +99,7 @@ void DequeueRecvCmds(u16 (*p)[4])
     u32 i;
     u32 j;
 
-    gUnk_03004D44 = REG_IME;
+    gLinkSavedIme = REG_IME;
     REG_IME = 0;
     ie = REG_IE;
     REG_IE = 2;
@@ -124,5 +124,5 @@ void DequeueRecvCmds(u16 (*p)[4])
     }
     REG_IME = 0;
     REG_IE = ie;
-    REG_IME = gUnk_03004D44;
+    REG_IME = gLinkSavedIme;
 }

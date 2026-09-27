@@ -13,19 +13,19 @@
  *
  * ROM order / semantics:
  *   IsInView  in-view test: 1 when (x,y) is inside the camera rect
- *                 gUnk_03002158[0..3] widened by 64 px on every side.
+ *                 gViewRect[0..3] widened by 64 px on every side.
  *   RandomSpread  base + ((rand(256) * amount) >> 8) * scale   (u16)
  *   RandomSpreadFacing  same, signed by the running task's facing byte
- *                 (gUnk_03002490->b43 == 1 -> +, else -).
+ *                 (gCurTask->b43 == 1 -> +, else -).
  *   sub_0800652c  push/pop the per-task "phase skip mask" (Task.b13, see
  *                 pending/early_4fec.c): val==0 pops the snapshot from
- *                 gUnk_0200D090[--gUnk_0200D110], val!=0 pushes one and then
+ *                 gTaskSkipMaskStack[--gTaskSkipMaskDepth], val!=0 pushes one and then
  *                 ORs val into every ALLOCATED task's mask (free slots, i.e.
- *                 gUnk_03004CA0[i] == -1, get 0).  One task id is exempt.
+ *                 gTaskSlotTypes[i] == -1, get 0).  One task id is exempt.
  *   TaskRestoreSkipMask  restore one task's mask from the current snapshot  (HIDDEN)
  *   TaskSaveSkipMask  save one task's mask into the current snapshot     (HIDDEN)
  *   sub_0800668c  cold link init (clear the session block, install the SIO
- *                 and timer-3 IRQ handlers at gUnk_030004B0[0]/[1]) (HIDDEN)
+ *                 and timer-3 IRQ handlers at gIntrTable[0]/[1]) (HIDDEN)
  *   EnableSerial  start a MULTI-PLAY session: RCNT=0, SIOCNT=0x2000|0x4003
  *                 (multi-play, 115200 bd, IRQ), enable IE bit 7 (serial),
  *                 clear the session block and the key mirrors.
@@ -34,7 +34,7 @@
  *   ResetSerial  stop + start (HIDDEN)
  *   LinkMain1  the per-frame link driver called from src/early_2b04.c;
  *                 5-state machine on gLink[1], then packs the link
- *                 status word into gUnk_03004D70.
+ *                 status word into gLinkStatus.
  *   CheckMasterOrSlave  refresh the connection state from SIOCNT bits 2-3
  *                 (8 = "all players ready" and we are the parent).
  *   InitTimer  arm timer 3 (0xFF7C, /1024 + IRQ) and enable IE bit 6.
@@ -66,12 +66,12 @@
  *    shift and the base add, and the outer loop must be the explicit
  *    `n = i + 1; ...; i = n;` do/while shape.
  *  - DisableSerial/a70/ac8/bb4 restore REG_IME by RE-READING the shadow
- *    gUnk_03004D44, not from a local (a local adds a `lsls/lsrs` pair).
+ *    gLinkSavedIme, not from a local (a local adds a `lsls/lsrs` pair).
  *  - LinkMain1's status word is ONE assignment expression with the two
  *    conditions as ternaries: that is what materialises the destination
  *    address into r8 first (expand_assignment does the LHS first, 3.60) and
  *    what makes gcc evaluate all six shifted bytes before the branch.
- *    Splitting it into `v = ...; if (...) v |= ...; gUnk_03004D70 = v;`
+ *    Splitting it into `v = ...; if (...) v |= ...; gLinkStatus = v;`
  *    loads the fields lazily and drops the r8 push.
  *
  * STATUS: 14 of the 16 functions are byte-exact.  EnqueueSendCmd is 8 bytes
@@ -93,39 +93,39 @@ struct Task {
     /* 0x14 */ u8  pad14[0x7C];
 };
 
-extern struct Task gUnk_03002790[];
-extern vu16 gUnk_03004CA0[];
-extern u8  gUnk_0200D090[2][64];
-extern u8  gUnk_0200D110;
-extern s16 gUnk_03002158[];
-extern s8 *gUnk_03002490;
+extern struct Task gTasks[];
+extern vu16 gTaskSlotTypes[];
+extern u8  gTaskSkipMaskStack[2][64];
+extern u8  gTaskSkipMaskDepth;
+extern s16 gViewRect[];
+extern s8 *gCurTask;
 extern u8  gLink[];
-extern vu16 gUnk_03001EF8;
-extern vu16 gUnk_03000018;
-extern u16 gUnk_03002360;
-extern u16 gUnk_03001F38;
-extern vu16 gUnk_0300243C;
-extern u16 gUnk_030023AC;
-extern void (*gUnk_030004B0[])(void);
+extern vu16 gIntrMasterEnable;
+extern vu16 gIntrEnable;
+extern u16 gLocalPlayer;
+extern u16 gLinkIsMaster;
+extern vu16 gLinkPlayerCount;
+extern u16 gPlayerCount;
+extern void (*gIntrTable[])(void);
 extern u32 gUnk_0200EBA0;
-extern u32 gUnk_03004D7C;
-extern u32 gUnk_03004D74;
-extern u32 gUnk_03004D70;
+extern u32 gSerialIntrCount;
+extern u32 gChecksumAvailable;
+extern u32 gLinkStatus;
 extern u32 gUnk_03004D30;
 extern u32 gUnk_03004D28;
 extern u32 gUnk_03004D2C;
-extern u32 gUnk_03004D24;
-extern u16 gUnk_03004D80;
-extern u16 gUnk_03004D84;
-extern u16 gUnk_03004D44;
-extern u8  gUnk_03004D40;
-extern u8  gUnk_03004D20;
+extern u32 gLinkErrorMask;
+extern u16 gRecvNonzeroCheck;
+extern u16 gSendNonzeroCheck;
+extern u16 gLinkSavedIme;
+extern u8  gLastRecvQueueCount;
+extern u8  gLastSendQueueCount;
 extern u8  gUnk_03004D34;
 extern u8  gUnk_03005278;
-extern u16 gUnk_03004D90[4];
-extern u16 gUnk_03004D50[4][4];
+extern u16 gSendCmd[4];
+extern u16 gRecvCmds[4][4];
 
-extern u16 gUnk_03004D84;
+extern u16 gSendNonzeroCheck;
 extern u8  gUnk_03005270;
 void StartTransfer(void);
 u32 RandomRange(u32 range);

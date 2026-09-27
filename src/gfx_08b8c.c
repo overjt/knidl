@@ -13,19 +13,19 @@
 extern u32 gUnk_02020000[];
 extern u32 gUnk_02028000[];
 extern u32 gUnk_02030000[];
-extern void (*gUnk_03000014)(void);
-extern vu16 gUnk_03000038;
+extern void (*gFrameEndCallback)(void);
+extern vu16 gPressedKeys;
 extern vu16 gUnk_03000048;
-extern vs32 gUnk_03000B78;
-extern vs32 gUnk_03000FA8;
-extern vs16 gUnk_03000FB8;
-extern vu16 gUnk_03001270[];
+extern vs32 gBg3ScrollX;
+extern vs32 gBg3ScrollY;
+extern vs16 gBrightness;
+extern vu16 gBgPalette[];
 extern u8 gUnk_03001370[];
 extern u8 gUnk_030013B0[];
 extern u32 gUnk_03001610[];
-extern vu16 gUnk_03001ED8;
+extern vu16 gDispCnt;
 extern u8 gUnk_03001F30;
-extern u32 gUnk_06010000[];
+extern u32 gObjVram[];
 extern u8 gUnk_080D1B78[];
 extern u8 gUnk_080D2AD0[];
 extern u8 gUnk_0856F2A8[];
@@ -85,23 +85,23 @@ void sub_08008b8c(void)
     StopAllSound();
     DisableSerial();
     StopHBlankScroll();
-    gUnk_03000014 = 0;
-    gUnk_03000FB8 = 31;
+    gFrameEndCallback = 0;
+    gBrightness = 31;
     RunFrameNoTasks();
     sub_08008c4c(3);
     sub_08008c64(65);
-    gUnk_03000B78 = gUnk_03000FA8 = 0;
-    gUnk_03001ED8 &= 0xE0FF;
-    gUnk_03001ED8 |= 0x800;
+    gBg3ScrollX = gBg3ScrollY = 0;
+    gDispCnt &= 0xE0FF;
+    gDispCnt |= 0x800;
     BeginFastFadeInFromWhite();
     RunFramesNoTasks(32);
     gUnk_03000048 = 0;
     for (;;) {
-        if (gUnk_03000038 & 9) {
+        if (gPressedKeys & 9) {
             PlaySfx(102);
             break;
         }
-        if (gUnk_03000038 & 2) {
+        if (gPressedKeys & 2) {
             PlaySfx(215);
             break;
         }
@@ -149,11 +149,11 @@ void sub_08008d10(s32 a0, s32 a1)
 {
     if (gUnk_08731980[a0][a1][0] != 0) {
         LZ77UnCompWram((void *)gUnk_08731980[a0][a1][0], gUnk_02020000);
-        RequestCopy(3, (u32)gUnk_02020000, (u32)gUnk_06010000, gUnk_087319B0[a0][a1][0] << 5);
+        RequestCopy(3, (u32)gUnk_02020000, (u32)gObjVram, gUnk_087319B0[a0][a1][0] << 5);
     }
     if (gUnk_08731980[a0][a1][1] != 0) {
         LZ77UnCompWram((void *)gUnk_08731980[a0][a1][1], gUnk_02020000);
-        RequestCopy(4, (u32)gUnk_02020000, (u32)gUnk_06010000, gUnk_087319B0[a0][a1][1] << 5);
+        RequestCopy(4, (u32)gUnk_02020000, (u32)gObjVram, gUnk_087319B0[a0][a1][1] << 5);
     }
 }
 
@@ -161,7 +161,7 @@ void sub_08008d98(s32 a0)
 {
     RequestCopy(6, 0, 0x06001000, 0x800);
     RequestCopy(6, 0, 0x06001800, 0x800);
-    RequestCopy(2, gUnk_087319C8[a0][0], (u32)gUnk_03001270, 64);
+    RequestCopy(2, gUnk_087319C8[a0][0], (u32)gBgPalette, 64);
     LZ77UnCompVram((void *)gUnk_087319C8[a0][1], (void *)0x06000000);
     LZ77UnCompVram((void *)gUnk_087319C8[a0][2], (void *)0x06001000);
     if (a0 == 7)
@@ -189,7 +189,7 @@ void sub_08008ebc(void)
 
 void sub_08008ed4(s32 a0)
 {
-    RequestCopy(2, gUnk_08731A90[a0][0] + 2, (u32)&gUnk_03001270[1], 30);
+    RequestCopy(2, gUnk_08731A90[a0][0] + 2, (u32)&gBgPalette[1], 30);
     RequestCopy(1, gUnk_08731A90[a0][1], 0x06000400, 0x3E0);
 }
 

@@ -169,10 +169,10 @@ void sub_0801bcac(const s8 *p)
     s32 v;
 
     sub_0801c51c(p);
-    gUnk_03005598 = gUnk_03002490->unk54;
-    gUnk_03005514 = gUnk_03002490->unk58;
-    gUnk_03005518 = ((gUnk_03005560 << 16) + (gUnk_03002490->unk4C & 0xFFFF) - gUnk_03005598) >> 16;
-    gUnk_03005520 = ((gUnk_03005570 << 16) + (gUnk_03002490->unk50 & 0xFFFF) - gUnk_03005514) >> 16;
+    gUnk_03005598 = gCurTask->unk54;
+    gUnk_03005514 = gCurTask->unk58;
+    gUnk_03005518 = ((gUnk_03005560 << 16) + (gCurTask->unk4C & 0xFFFF) - gUnk_03005598) >> 16;
+    gUnk_03005520 = ((gUnk_03005570 << 16) + (gCurTask->unk50 & 0xFFFF) - gUnk_03005514) >> 16;
     gUnk_0300550C = gUnk_03005518 + gUnk_0300551C;
     gUnk_03005590 = gUnk_03005518 + gUnk_0300559C;
     gUnk_030055A4 = gUnk_03005520 + gUnk_0300557C;
@@ -217,10 +217,10 @@ void sub_0801bde0(const s8 *p)
     s32 v;
 
     sub_0801c51c(p);
-    gUnk_03005598 = gUnk_03002490->unk54;
-    gUnk_03005514 = gUnk_03002490->unk58;
-    gUnk_03005518 = ((gUnk_03005560 << 16) + (gUnk_03002490->unk4C & 0xFFFF) - gUnk_03005598) >> 16;
-    gUnk_03005520 = ((gUnk_03005570 << 16) + (gUnk_03002490->unk50 & 0xFFFF) - gUnk_03005514) >> 16;
+    gUnk_03005598 = gCurTask->unk54;
+    gUnk_03005514 = gCurTask->unk58;
+    gUnk_03005518 = ((gUnk_03005560 << 16) + (gCurTask->unk4C & 0xFFFF) - gUnk_03005598) >> 16;
+    gUnk_03005520 = ((gUnk_03005570 << 16) + (gCurTask->unk50 & 0xFFFF) - gUnk_03005514) >> 16;
     gUnk_0300550C = gUnk_03005518 + gUnk_0300551C;
     gUnk_03005590 = gUnk_03005518 + gUnk_0300559C;
     gUnk_030055A4 = gUnk_03005520 + gUnk_0300557C;
@@ -267,10 +267,10 @@ void sub_0801bf1c(const s8 *p)
     s32 v;
 
     sub_0801c51c(p);
-    gUnk_03005598 = gUnk_03002490->unk54;
-    gUnk_03005514 = gUnk_03002490->unk58;
-    gUnk_03005518 = ((gUnk_03005560 << 16) + (gUnk_03002490->unk4C & 0xFFFF) - gUnk_03005598) >> 16;
-    gUnk_03005520 = ((gUnk_03005570 << 16) + (gUnk_03002490->unk50 & 0xFFFF) - gUnk_03005514) >> 16;
+    gUnk_03005598 = gCurTask->unk54;
+    gUnk_03005514 = gCurTask->unk58;
+    gUnk_03005518 = ((gUnk_03005560 << 16) + (gCurTask->unk4C & 0xFFFF) - gUnk_03005598) >> 16;
+    gUnk_03005520 = ((gUnk_03005570 << 16) + (gCurTask->unk50 & 0xFFFF) - gUnk_03005514) >> 16;
     gUnk_0300550C = gUnk_03005518 + gUnk_0300551C;
     gUnk_03005590 = gUnk_03005518 + gUnk_0300559C;
     gUnk_030055A4 = gUnk_03005520 + gUnk_0300557C;
@@ -295,10 +295,10 @@ void sub_0801bf1c(const s8 *p)
 void sub_0801c030(const s8 *p)
 {
     sub_0801c51c(p);
-    gUnk_03005598 = gUnk_03002490->unk54;
-    gUnk_03005514 = gUnk_03002490->unk58;
-    gUnk_03005518 = ((gUnk_03005560 << 16) + (gUnk_03002490->unk4C & 0xFFFF) - gUnk_03005598) >> 16;
-    gUnk_03005520 = ((gUnk_03005570 << 16) + (gUnk_03002490->unk50 & 0xFFFF) - gUnk_03005514) >> 16;
+    gUnk_03005598 = gCurTask->unk54;
+    gUnk_03005514 = gCurTask->unk58;
+    gUnk_03005518 = ((gUnk_03005560 << 16) + (gCurTask->unk4C & 0xFFFF) - gUnk_03005598) >> 16;
+    gUnk_03005520 = ((gUnk_03005570 << 16) + (gCurTask->unk50 & 0xFFFF) - gUnk_03005514) >> 16;
     gUnk_0300550C = gUnk_03005518 + gUnk_0300551C;
     gUnk_03005590 = gUnk_03005518 + gUnk_0300559C;
     gUnk_030055A4 = gUnk_03005520 + gUnk_0300557C;
@@ -317,10 +317,10 @@ void sub_0801c030(const s8 *p)
 void sub_0801c12c(const s8 *p)
 {
     sub_0801c51c(p);
-    gUnk_03005598 = gUnk_03002490->unk54;
-    gUnk_03005514 = gUnk_03002490->unk58;
-    gUnk_03005518 = ((gUnk_03005560 << 16) + (gUnk_03002490->unk4C & 0xFFFF) - gUnk_03005598) >> 16;
-    gUnk_03005520 = ((gUnk_03005570 << 16) + (gUnk_03002490->unk50 & 0xFFFF) - gUnk_03005514) >> 16;
+    gUnk_03005598 = gCurTask->unk54;
+    gUnk_03005514 = gCurTask->unk58;
+    gUnk_03005518 = ((gUnk_03005560 << 16) + (gCurTask->unk4C & 0xFFFF) - gUnk_03005598) >> 16;
+    gUnk_03005520 = ((gUnk_03005570 << 16) + (gCurTask->unk50 & 0xFFFF) - gUnk_03005514) >> 16;
     gUnk_0300550C = gUnk_03005518 + gUnk_0300551C;
     gUnk_03005590 = gUnk_03005518 + gUnk_0300559C;
     gUnk_030055A4 = gUnk_03005520 + gUnk_0300557C;
@@ -341,10 +341,10 @@ void sub_0801c12c(const s8 *p)
 void sub_0801c230(const s8 *p)
 {
     sub_0801c51c(p);
-    gUnk_03005598 = gUnk_03002490->unk54;
-    gUnk_03005514 = gUnk_03002490->unk58;
-    gUnk_03005518 = ((gUnk_03005560 << 16) + (gUnk_03002490->unk4C & 0xFFFF) - gUnk_03005598) >> 16;
-    gUnk_03005520 = ((gUnk_03005570 << 16) + (gUnk_03002490->unk50 & 0xFFFF) - gUnk_03005514) >> 16;
+    gUnk_03005598 = gCurTask->unk54;
+    gUnk_03005514 = gCurTask->unk58;
+    gUnk_03005518 = ((gUnk_03005560 << 16) + (gCurTask->unk4C & 0xFFFF) - gUnk_03005598) >> 16;
+    gUnk_03005520 = ((gUnk_03005570 << 16) + (gCurTask->unk50 & 0xFFFF) - gUnk_03005514) >> 16;
     gUnk_0300550C = gUnk_03005518 + gUnk_0300551C;
     gUnk_03005590 = gUnk_03005518 + gUnk_0300559C;
     gUnk_030055A4 = gUnk_03005520 + gUnk_0300557C;

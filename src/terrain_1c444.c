@@ -139,10 +139,10 @@ void sub_0801c444(const s8 *p)
     sub_0801c51c(p);
     if (gUnk_03005530.unkB & 0x80)
         gUnk_03005530.unkB = 0;
-    gUnk_03005598 = gUnk_03002490->unk54;
-    gUnk_03005514 = gUnk_03002490->unk58;
-    gUnk_03005518 = ((gUnk_03005560 << 16) + (gUnk_03002490->unk4C & 0xFFFF) - gUnk_03005598) >> 16;
-    gUnk_03005520 = ((gUnk_03005570 << 16) + (gUnk_03002490->unk50 & 0xFFFF) - gUnk_03005514) >> 16;
+    gUnk_03005598 = gCurTask->unk54;
+    gUnk_03005514 = gCurTask->unk58;
+    gUnk_03005518 = ((gUnk_03005560 << 16) + (gCurTask->unk4C & 0xFFFF) - gUnk_03005598) >> 16;
+    gUnk_03005520 = ((gUnk_03005570 << 16) + (gCurTask->unk50 & 0xFFFF) - gUnk_03005514) >> 16;
     gUnk_0300550C = gUnk_03005518 + gUnk_0300551C;
     gUnk_03005590 = gUnk_03005518 + gUnk_0300559C;
     gUnk_030055A4 = gUnk_03005520 + gUnk_0300557C;

@@ -97,10 +97,10 @@ struct M37Game
     /*0x300*/ u32 unk300;       /* frame counter */
     /*0x304*/ s16 unk304;       /* sub_080c4f60's OAM list: entry count */
     /*0x306*/ s16 unk306[160];  /* ... and entries */
-    /*0x446*/ u16 unk446;       /* gUnk_03002360 */
-    /*0x448*/ u16 unk448;       /* gUnk_0300243C */
+    /*0x446*/ u16 unk446;       /* gLocalPlayer */
+    /*0x448*/ u16 unk448;       /* gLinkPlayerCount */
     /*0x44A*/ u8 pad44A[2];
-    /*0x44C*/ s32 unk44C;       /* a task index into gUnk_03002790 */
+    /*0x44C*/ s32 unk44C;       /* a task index into gTasks */
     /*0x450*/ u8 unk450;
     /*0x451*/ u8 unk451;
     /*0x452*/ u8 pad452[2];
@@ -164,7 +164,7 @@ extern s8 gUnk_080CFF01[];
 extern u8 gUnk_080CFE2C[][4];
 extern u16 gUnk_08609D42[][16];
 extern u16 gUnk_080CFF1C[];
-extern u16 gUnk_03001470[];
+extern u16 gObjPalette[];
 
 void m4aMPlayPitchControl(struct MusicPlayerInfo *mplayInfo, u16 trackBits, s16 pitch);
 void BlendColors(u16 *src, u16 *dst, s32 ratio, s32 count, u16 *out);
@@ -178,7 +178,7 @@ s32 sub_080c623c(s32 x);
 
 void sub_080c3648(void)
 {
-    struct Task *t = gUnk_03002490;
+    struct Task *t = gCurTask;
 
     t->unk5C = -0x3800;
     if (t->unk54 < 0x18000) {
@@ -198,7 +198,7 @@ void sub_080c3670(s32 pos)
 
 s32 sub_080c3698(s32 player)
 {
-    s32 speed = gUnk_03002490->unk54;
+    s32 speed = gCurTask->unk54;
     s32 ret = 0;
 
     if (gAirGrindCoursePtr->unk018[player].unk00 > gAirGrindCoursePtr->unk010 - 50)
@@ -206,18 +206,18 @@ s32 sub_080c3698(s32 player)
     if (abs(gAirGrindPtr->unk01C[player].unk10) <= abs((speed * 3) >> 16)) {
         if (abs(gAirGrindPtr->unk01C[player].unk10) <= abs(speed >> 16)) {
             if (player == 0)
-                sub_080c2078(0, gUnk_03002490->unk18, 6);
+                sub_080c2078(0, gCurTask->unk18, 6);
             gAirGrindPtr->unk01C[player].unk01++;
-            gUnk_03002490->unk54 += 0x10000;
-            if (gUnk_03002490->unk54 > gUnk_080CFE3C[gAirGrindPtr->unk000][0])
-                gUnk_03002490->unk54 = gUnk_080CFE3C[gAirGrindPtr->unk000][0];
+            gCurTask->unk54 += 0x10000;
+            if (gCurTask->unk54 > gUnk_080CFE3C[gAirGrindPtr->unk000][0])
+                gCurTask->unk54 = gUnk_080CFE3C[gAirGrindPtr->unk000][0];
             ret = 2;
         } else {
             if (player == 0)
-                sub_080c2078(0, gUnk_03002490->unk18, 7);
-            gUnk_03002490->unk54 += 0x8000;
-            if (gUnk_03002490->unk54 > gUnk_080CFE3C[gAirGrindPtr->unk000][0])
-                gUnk_03002490->unk54 = gUnk_080CFE3C[gAirGrindPtr->unk000][0];
+                sub_080c2078(0, gCurTask->unk18, 7);
+            gCurTask->unk54 += 0x8000;
+            if (gCurTask->unk54 > gUnk_080CFE3C[gAirGrindPtr->unk000][0])
+                gCurTask->unk54 = gUnk_080CFE3C[gAirGrindPtr->unk000][0];
             ret = 1;
         }
         gAirGrindPtr->unk01C[player].unk0A = 5;
@@ -233,7 +233,7 @@ void sub_080c37b8(s32 a, s32 on)
                 gAirGrindPtr->unk014 = PlaySfx(400);
             else
                 m4aMPlayPitchControl(gMPlayTable[gAirGrindPtr->unk014].info, 0xFFFF,
-                                     (gUnk_03002490->unk54 - 0x40000) >> 5);
+                                     (gCurTask->unk54 - 0x40000) >> 5);
         } else {
             if (gAirGrindPtr->unk014 != -1) {
                 StopSfxOnPlayer(gAirGrindPtr->unk014, 400);
@@ -250,7 +250,7 @@ void sub_080c383c(s32 player)
     u16 rank;
 
     if (player == 0) {
-        sub_080c3670((gUnk_03002490->unk4C >> 16) + 48);
+        sub_080c3670((gCurTask->unk4C >> 16) + 48);
         sub_080c5b84();
         max = 0;
         for (i = 0; i < 4; i++) {
@@ -260,11 +260,11 @@ void sub_080c383c(s32 player)
         gAirGrindPtr->unk1B8 = max;
     }
     rank = (u16)gAirGrindCoursePtr->unk018[player].unk18;
-    gUnk_03002490->unk42 = rank + 4;
+    gCurTask->unk42 = rank + 4;
     if (rank > 2)
         rank = 2;
-    gUnk_03002490->unk3E = (rank << 13) & 0x6000;
-    gUnk_03002490->unk28 = gAirGrindCoursePtr->unk018[player].unk08;
+    gCurTask->unk3E = (rank << 13) & 0x6000;
+    gCurTask->unk28 = gAirGrindCoursePtr->unk018[player].unk08;
 }
 
 void sub_080c38c8(s32 player)
@@ -274,28 +274,28 @@ void sub_080c38c8(s32 player)
     if (gAirGrindPtr->unk01C[player].unk08 != 0) {
         sub_080c3648();
         if (player == 0 && gAirGrindPtr->unk01C[0].unk08 > 19)
-            sub_080c2078(0, gUnk_03002490->unk18, (gAirGrindPtr->unk01C[0].unk08 & 1) ? 3 : 4);
+            sub_080c2078(0, gCurTask->unk18, (gAirGrindPtr->unk01C[0].unk08 & 1) ? 3 : 4);
     } else if (gAirGrindPtr->unk01C[player].unk02 & 1) {
         if (gAirGrindCoursePtr->unk018[player].unk14 != 0) {
             ret = 0;
             sub_080c37b8(player, 1);
-            if (gUnk_03002490->unk54 > gUnk_080CFE3C[gAirGrindPtr->unk000][1])
-                gUnk_03002490->unk5C = 0x200;
-            else if (gUnk_03002490->unk54 > gUnk_080CFE3C[gAirGrindPtr->unk000][2])
-                gUnk_03002490->unk5C = 0xA00;
+            if (gCurTask->unk54 > gUnk_080CFE3C[gAirGrindPtr->unk000][1])
+                gCurTask->unk5C = 0x200;
+            else if (gCurTask->unk54 > gUnk_080CFE3C[gAirGrindPtr->unk000][2])
+                gCurTask->unk5C = 0xA00;
             else
-                gUnk_03002490->unk5C = 0x8000;
+                gCurTask->unk5C = 0x8000;
             if (player == 0) {
                 if ((gUnk_02017170 & 3) == 0)
-                    sub_080c2078(0, gUnk_03002490->unk18, 0);
+                    sub_080c2078(0, gCurTask->unk18, 0);
                 if ((gUnk_02017170 & 7) == 1)
-                    sub_080c2078(0, gUnk_03002490->unk18, 1);
+                    sub_080c2078(0, gCurTask->unk18, 1);
             }
             if (gAirGrindPtr->unk01C[player].unk0A == 0 && gAirGrindPtr->unk01C[player].unk00 == 0)
                 ret = sub_080c3698(player);
             if (gAirGrindPtr->unk01C[player].unk04 & 1) {
                 if (player == 0 && gAirGrindPtr->unk450 == 0)
-                    sub_080c2078(0, gUnk_03002490->unk18, 2);
+                    sub_080c2078(0, gCurTask->unk18, 2);
                 gAirGrindPtr->unk01C[player].unk0C = 4;
                 if (ret == 1) {
                     gAirGrindPtr->unk01C[player].unk0C = 6;
@@ -315,7 +315,7 @@ void sub_080c38c8(s32 player)
             gAirGrindPtr->unk01C[player].unk08 = 24;
             if (player == 0)
                 sub_080c523c(3);
-            sub_080c2078(player, gUnk_03002490->unk18, 8);
+            sub_080c2078(player, gCurTask->unk18, 8);
             gAirGrindPtr->unk01C[player].unk00 = 0;
         }
         gAirGrindPtr->unk01C[player].unk14 -= 0x20000;
@@ -324,18 +324,18 @@ void sub_080c38c8(s32 player)
     } else {
         gAirGrindPtr->unk01C[player].unk0C = 0;
         sub_080c37b8(player, 0);
-        if (gUnk_03002490->unk54 < 0x18000) {
-            gUnk_03002490->unk5C = 0;
-            gUnk_03002490->unk54 = 0x18000;
+        if (gCurTask->unk54 < 0x18000) {
+            gCurTask->unk5C = 0;
+            gCurTask->unk54 = 0x18000;
         } else {
-            gUnk_03002490->unk5C = -0x800;
+            gCurTask->unk5C = -0x800;
         }
         gAirGrindPtr->unk01C[player].unk14 += 0x20000;
         if (gAirGrindPtr->unk01C[player].unk14 > 0x80000)
             gAirGrindPtr->unk01C[player].unk14 = 0x80000;
         if (gAirGrindPtr->unk01C[player].unk00 == 1) {
             if (player == 0 && gAirGrindPtr->unk451 == 0)
-                sub_080c2078(0, gUnk_03002490->unk18, 5);
+                sub_080c2078(0, gCurTask->unk18, 5);
             if (gAirGrindPtr->unk01C[player].unk0A == 0)
                 sub_080c3698(player);
         }
@@ -353,14 +353,14 @@ void sub_080c38c8(s32 player)
         gAirGrindPtr->unk01C[player].unk1C = gAirGrindCoursePtr->unk018[player].unk28;
     gAirGrindPtr->unk01C[player].unk10 = gAirGrindPtr->unk01C[player].unk1C - gAirGrindCoursePtr->unk018[player].unk00;
     if (gAirGrindPtr->unk01C[player].unk08 == 0) {
-        if (gUnk_03002490->unk3C > 8)
+        if (gCurTask->unk3C > 8)
             gAirGrindPtr->unk01C[player].unk06 = 0;
         if (gAirGrindCoursePtr->unk018[player].unk1C > 16)
-            gUnk_03002490->unk3C = 0;
+            gCurTask->unk3C = 0;
         else if (gAirGrindCoursePtr->unk018[player].unk1C < -16)
-            gUnk_03002490->unk3C = 6;
+            gCurTask->unk3C = 6;
         else
-            gUnk_03002490->unk3C = 3;
+            gCurTask->unk3C = 3;
         if (gAirGrindPtr->unk01C[player].unk02 & 1) {
             if (gAirGrindPtr->unk01C[player].unk06 > 0)
                 gAirGrindPtr->unk01C[player].unk06--;
@@ -368,16 +368,16 @@ void sub_080c38c8(s32 player)
             if (gAirGrindPtr->unk01C[player].unk06 <= 3)
                 gAirGrindPtr->unk01C[player].unk06++;
         }
-        gUnk_03002490->unk3C += gUnk_080CFEE4[gAirGrindPtr->unk01C[player].unk06];
+        gCurTask->unk3C += gUnk_080CFEE4[gAirGrindPtr->unk01C[player].unk06];
     } else {
-        if (gUnk_03002490->unk3C <= 8)
+        if (gCurTask->unk3C <= 8)
             gAirGrindPtr->unk01C[player].unk06 = 0;
         if (player == 0 && gAirGrindPtr->unk01C[0].unk06 == 0)
             PlaySfx(401);
-        gUnk_03002490->unk3C = 9;
+        gCurTask->unk3C = 9;
         if (++gAirGrindPtr->unk01C[player].unk06 > 23)
             gAirGrindPtr->unk01C[player].unk06 = 0;
-        gUnk_03002490->unk3C += gUnk_080CFEE9[gAirGrindPtr->unk01C[player].unk06];
+        gCurTask->unk3C += gUnk_080CFEE9[gAirGrindPtr->unk01C[player].unk06];
         gAirGrindPtr->unk01C[player].unk14 = gUnk_080CFF01[gAirGrindPtr->unk01C[player].unk06] << 16;
     }
 }
@@ -385,22 +385,22 @@ void sub_080c38c8(s32 player)
 void sub_080c3d58(s32 player)
 {
     sub_080c37b8(player, 0);
-    if (gUnk_03002490->unk14 == 0) {
+    if (gCurTask->unk14 == 0) {
         gAirGrindPtr->unk01C[player].unk14 -= 0x20000;
         if (gAirGrindPtr->unk01C[player].unk14 < 0)
             gAirGrindPtr->unk01C[player].unk14 = 0;
     }
-    if (gUnk_03002490->unk3C > 8)
+    if (gCurTask->unk3C > 8)
         gAirGrindPtr->unk01C[player].unk06 = 0;
     if (gAirGrindCoursePtr->unk018[player].unk1C > 16)
-        gUnk_03002490->unk3C = 0;
+        gCurTask->unk3C = 0;
     else if (gAirGrindCoursePtr->unk018[player].unk1C < -16)
-        gUnk_03002490->unk3C = 6;
+        gCurTask->unk3C = 6;
     else
-        gUnk_03002490->unk3C = 3;
-    if (gUnk_03002490->unk14 == 0)
+        gCurTask->unk3C = 3;
+    if (gCurTask->unk14 == 0)
         gAirGrindPtr->unk01C[player].unk06 = 3;
-    gUnk_03002490->unk3C += gUnk_080CFEE4[gAirGrindPtr->unk01C[player].unk06];
+    gCurTask->unk3C += gUnk_080CFEE4[gAirGrindPtr->unk01C[player].unk06];
 }
 
 void sub_080c3e18(s32 player)
@@ -410,8 +410,8 @@ void sub_080c3e18(s32 player)
     u16 ratio;
 
     scale = sub_080c623c(gAirGrindCoursePtr->unk018[player].unk08);
-    gUnk_03002490->unk48 = gAirGrindCoursePtr->unk018[player].unk0C + ((scale * gAirGrindPtr->unk01C[player].unk18) >> 24);
-    gUnk_03002490->unk4A = gAirGrindCoursePtr->unk018[player].unk10 - ((scale * gAirGrindPtr->unk01C[player].unk14) >> 24);
+    gCurTask->unk48 = gAirGrindCoursePtr->unk018[player].unk0C + ((scale * gAirGrindPtr->unk01C[player].unk18) >> 24);
+    gCurTask->unk4A = gAirGrindCoursePtr->unk018[player].unk10 - ((scale * gAirGrindPtr->unk01C[player].unk14) >> 24);
     if (player != 0) {
         pal = gUnk_080CFE2C[gAirGrindPtr->unk446][player];
         ratio = 0;
@@ -420,13 +420,13 @@ void sub_080c3e18(s32 player)
         /* colour 1 of palette pal: the ROM scales the whole index
            (pal * 16 + 1) by 2, so the offset is written in bytes */
         BlendColors(gUnk_08609D42[pal], gUnk_080CFF1C, ratio, 15,
-                     (u16 *)((u8 *)gUnk_03001470 + (pal * 16 + 1) * 2));
+                     (u16 *)((u8 *)gObjPalette + (pal * 16 + 1) * 2));
     }
 }
 
 void sub_080c3efc(void)
 {
-    s32 player = gUnk_03002490->unk1C;
+    s32 player = gCurTask->unk1C;
 
     sub_080c383c(player);
     sub_080c38c8(player);
@@ -435,7 +435,7 @@ void sub_080c3efc(void)
 
 void sub_080c3f20(void)
 {
-    s32 player = gUnk_03002490->unk1C;
+    s32 player = gCurTask->unk1C;
 
     sub_080c383c(player);
     sub_080c3d58(player);

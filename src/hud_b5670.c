@@ -14,7 +14,7 @@
  * copies the descriptor's tiles (through gUnk_02020000 when compressed), then
  * shares the palette of an earlier slot in the same palette group
  * gUnk_0873EF48[kind] or allocates one (sub_080b5654) and copies it into the
- * palette buffer gUnk_03001470; a non-zero high nibble of e->unk2 is passed
+ * palette buffer gObjPalette; a non-zero high nibble of e->unk2 is passed
  * to sub_08065dbc with the slot's palette.  It returns 1.
  *
  * Matching notes (issue #97): sub_08065dbc takes three arguments; the VRAM
@@ -60,8 +60,8 @@ extern struct Unk020055D8 gUnk_020055D8;
 extern struct Unk020060A0 gUnk_020060A0[];
 extern s8 gUnk_02006130[];
 extern u8 gUnk_02020000[];
-extern u8 gUnk_03001470[];
-extern u8 gUnk_06010000[];
+extern u8 gObjPalette[];
+extern u8 gObjVram[];
 extern struct Unk0873EEA0 *gUnk_0873EEA0[];
 extern s8 gUnk_0873EF48[];
 
@@ -78,9 +78,9 @@ s32 sub_080b5670(struct Unk020055D8Entry *e, s32 idx, s32 n)
     u32 vram;
 
     /* a plain pointer local that global alloc drops: reload rematerialises
-       `ldr r0, =gUnk_06010000` at both uses, which the ROM's reload order
+       `ldr r0, =gObjVram` at both uses, which the ROM's reload order
        needs (lesson 3.258) */
-    vram = (u32)gUnk_06010000;
+    vram = (u32)gObjVram;
     d = gUnk_0873EEA0[e->unk1];
     if (d == NULL)
         return 0;
@@ -132,7 +132,7 @@ s32 sub_080b5670(struct Unk020055D8Entry *e, s32 idx, s32 n)
         if (cnt == 0)
         {
             gUnk_020060A0[n].unk1 = sub_080b5654(d->unk0);
-            RequestCopy(2, d->unk8, (u32)gUnk_03001470 + (gUnk_020060A0[n].unk1 << 5), d->unk0 << 5);
+            RequestCopy(2, d->unk8, (u32)gObjPalette + (gUnk_020060A0[n].unk1 << 5), d->unk0 << 5);
         }
         if (e->unk2 >> 4)
             sub_08065dbc(gUnk_020060A0[n].unk1, e->unk1, e->unk2 >> 4);

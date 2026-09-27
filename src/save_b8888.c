@@ -52,15 +52,15 @@ extern u16 gCompletionPercent;
 extern u16 gUnk_03002364;
 extern u16 gUnk_03002378[];
 extern s8 gUnk_03002384;
-extern u16 gUnk_030023AC;
+extern u16 gPlayerCount;
 extern u8 gUnk_030023B8;
 extern s32 gUnk_030023C8[];
 extern s8 gUnk_030023E0;
 extern s32 gCurSaveSlot;
 extern u8 gUnk_03002400[8][7];
 extern u8 gExtraMode;
-extern u16 gUnk_03004D50[];
-extern u16 gUnk_03004D90[];
+extern u16 gRecvCmds[];
+extern u16 gSendCmd[];
 extern void sub_08002338(void);
 extern void sub_08002348(void);
 extern void RunLinkFrame(void);
@@ -88,12 +88,12 @@ void sub_080b8888(void)
         }
         else
         {
-            for (i = 0; i < gUnk_030023AC; i++)
+            for (i = 0; i < gPlayerCount; i++)
             {
-                if ((gUnk_03004D50[i] & 0xFF00) == (204 << 7) && (gUnk_03004D50[i] & 255) == 27)
+                if ((gRecvCmds[i] & 0xFF00) == (204 << 7) && (gRecvCmds[i] & 255) == 27)
                     n++;
             }
         }
-    } while (n != gUnk_030023AC);
+    } while (n != gPlayerCount);
     sub_08002338();
 }

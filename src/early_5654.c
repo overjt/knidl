@@ -6,42 +6,42 @@
  *
  * Task free and task create, the two ends of the task system of
  * src/early_4fec.c, src/early_5228.c and src/early_55b0.c (64 task control
- * blocks of 0x90 bytes at gUnk_03002790; gUnk_03004CA0[slot] is the slot's
- * task type, -1 when free, and gUnk_030026F0 the live count).
+ * blocks of 0x90 bytes at gTasks; gTaskSlotTypes[slot] is the slot's
+ * task type, -1 when free, and gTaskCount the live count).
  *
  * TaskFree frees slot `id` (tasks free themselves with
  * TaskFree(gCurTaskIdx), and the ARM dispatcher at 0x08000288 calls it
  * for a task whose coroutine returns): it clears the
- * slot's resume address gTaskFlagsTable[id], resets every field of the
+ * slot's resume address gTaskResumeAddrs[id], resets every field of the
  * control block to its default (callbacks and counters 0, class -1, graphics
  * index -1, parent and link -1, velocity limits 0x80000000) and, while the
- * per-class lists of the frame driver are live (gUnk_030026F4 >= 0), marks
- * its entry in gUnk_030024A0[class][] (found through the back-reference
- * gUnk_03002710[id] = class << 8 | position) as removed.
+ * per-class lists of the frame driver are live (gTaskRunPhase >= 0), marks
+ * its entry in gTaskClassLists[class][] (found through the back-reference
+ * gTaskListRefs[id] = class << 8 | position) as removed.
  *
  * TaskCreate claims the first free slot at or after the allocation cursor
- * gUnk_03002494 (wrapping at 64; -1 when the table is full) for task type
+ * gTaskCursor (wrapping at 64; -1 when the table is full) for task type
  * `type`: the class byte and the entry address come from the task-type table
- * gUnk_0872FF30[type], the stack is the slot's 256 bytes at 0x0203BFE0, the
+ * gTaskTypes[type], the stack is the slot's 256 bytes at 0x0203BFE0, the
  * parent (Task.unk44) is the running task gCurTaskIdx, and the slot is
  * appended to its class list when the lists are live.  The cursor moves past
  * the slot, whose index is returned.  src/early_58e4.c's allocation wrappers
  * call it.
  *
  * Matching notes (issue #63): TaskFree's tail is `cls = ... >> 8;
- * gUnk_030024A0[cls][...] = 0xFF;` (lesson 3.485); in TaskCreate the search's
+ * gTaskClassLists[cls][...] = 0xFF;` (lesson 3.485); in TaskCreate the search's
  * start slot and the returned slot are one variable and the stack base is the
  * plain number the landed TaskSetEntry uses (lesson 3.486). */
 
-extern vs16 gUnk_03004CA0[];
-extern s32 gUnk_030026F0;
-extern s32 gUnk_030026F4;
-extern u32 gTaskFlagsTable[];
-extern vu16 gUnk_03002710[];
-extern vu8 gUnk_030024A0[][64];
-extern vs32 gUnk_03002494;
-extern u32 gUnk_03004B90[];
-extern struct TaskType gUnk_0872FF30[];
+extern vs16 gTaskSlotTypes[];
+extern s32 gTaskCount;
+extern s32 gTaskRunPhase;
+extern u32 gTaskResumeAddrs[];
+extern vu16 gTaskListRefs[];
+extern vu8 gTaskClassLists[][64];
+extern vs32 gTaskCursor;
+extern u32 gTaskStackPtrs[];
+extern struct TaskType gTaskTypes[];
 extern vu8 gUnk_03002700[];
 
 /* Free the task in slot `id`. */
@@ -50,12 +50,12 @@ void TaskFree(s32 id)
     struct Task *t;
     u8 cls;
 
-    if (gUnk_03004CA0[id] == -1)
+    if (gTaskSlotTypes[id] == -1)
         return;
-    gUnk_030026F0--;
-    gUnk_03004CA0[id] = 0xFFFF;
-    gTaskFlagsTable[id] = 0;
-    t = &gUnk_03002790[id];
+    gTaskCount--;
+    gTaskSlotTypes[id] = 0xFFFF;
+    gTaskResumeAddrs[id] = 0;
+    t = &gTasks[id];
     t->unk12 = -1;
     t->unk00 = 0;
     t->unk04 = 0;
@@ -109,10 +109,10 @@ void TaskFree(s32 id)
     t->unk7E = -1;
     t->unk7F = -1;
     t->unk80 = -1;
-    if (gUnk_030026F4 >= 0)
+    if (gTaskRunPhase >= 0)
     {
-        cls = gUnk_03002710[id] >> 8;
-        gUnk_030024A0[cls][gUnk_03002710[id] & 0xFF] = 0xFF;
+        cls = gTaskListRefs[id] >> 8;
+        gTaskClassLists[cls][gTaskListRefs[id] & 0xFF] = 0xFF;
     }
 }
 
@@ -124,41 +124,41 @@ s32 TaskCreate(u32 type)
     s8 cls;
     struct Task *t;
 
-    id = gUnk_03002494;
-    while (gUnk_03004CA0[gUnk_03002494] != -1)
+    id = gTaskCursor;
+    while (gTaskSlotTypes[gTaskCursor] != -1)
     {
-        gUnk_03002494++;
-        if (gUnk_03002494 > 63)
-            gUnk_03002494 = 0;
-        if (gUnk_03002494 == id)
+        gTaskCursor++;
+        if (gTaskCursor > 63)
+            gTaskCursor = 0;
+        if (gTaskCursor == id)
             return -1;
     }
-    gUnk_030026F0++;
-    gUnk_03004CA0[gUnk_03002494] = type;
-    t = &gUnk_03002790[gUnk_03002494];
-    t->unk12 = gUnk_0872FF30[type].unk00;
+    gTaskCount++;
+    gTaskSlotTypes[gTaskCursor] = type;
+    t = &gTasks[gTaskCursor];
+    t->unk12 = gTaskTypes[type].unk00;
     /* The task's 256-byte stack in EWRAM, spelled as the literal that
      * src/early_5d9c.c's TaskSetEntry uses: a CONST_INT operand that reload
      * materialises (the ROM's `ldr r7, =0x0203BFE0` in the dead `type`
      * register); `(u32)gUnk_0203BFE0` makes it a local pseudo instead
      * (lesson 3.486). */
-    gUnk_03004B90[gUnk_03002494] = 0x0203BFE0 + (gUnk_03002494 << 8);
-    gTaskFlagsTable[gUnk_03002494] = gUnk_0872FF30[type].unk04;
+    gTaskStackPtrs[gTaskCursor] = 0x0203BFE0 + (gTaskCursor << 8);
+    gTaskResumeAddrs[gTaskCursor] = gTaskTypes[type].unk04;
     t->unk10 = 0;
     t->unk13 = 0;
     t->unk44 = gCurTaskIdx;
-    if (gUnk_030026F4 >= 0)
+    if (gTaskRunPhase >= 0)
     {
         cls = t->unk12;
-        gUnk_030024A0[cls][gUnk_03002700[cls]] = gUnk_03002494;
-        gUnk_03002710[gUnk_03002494] = (cls << 8) | gUnk_03002700[cls];
+        gTaskClassLists[cls][gUnk_03002700[cls]] = gTaskCursor;
+        gTaskListRefs[gTaskCursor] = (cls << 8) | gUnk_03002700[cls];
         gUnk_03002700[cls]++;
         if (gUnk_03002700[cls] > 63)
             gUnk_03002700[cls] = 0;
     }
-    id = gUnk_03002494;
-    gUnk_03002494++;
-    if (gUnk_03002494 > 63)
-        gUnk_03002494 = 0;
+    id = gTaskCursor;
+    gTaskCursor++;
+    if (gTaskCursor > 63)
+        gTaskCursor = 0;
     return id;
 }

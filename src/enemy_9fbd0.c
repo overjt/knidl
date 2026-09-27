@@ -73,17 +73,17 @@ void sub_0809fc44(void)
     struct Task *t;
     s32 v;
 
-    t = gUnk_03002490;
+    t = gCurTask;
     sub_08066088(0);
     v = sub_08065f5c();
     v = (v * 85) >> 8;
-    t = gUnk_03002490;
+    t = gCurTask;
     t->unk70 = v;
     t->unk00 = (u32)TaskMove;
     t->unk0C = (u32)sub_08065438;
     t->unk42 = 11;
-    gUnk_03002490->unk38 = gUnk_087538E0;
-    CallTableEntry(gUnk_03002490->unk73, 1, gUnk_08748264);
+    gCurTask->unk38 = gUnk_087538E0;
+    CallTableEntry(gCurTask->unk73, 1, gUnk_08748264);
 }
 
 void sub_0809fca4(void)
@@ -99,7 +99,7 @@ void sub_0809fcb4(void)
 
     sub_080261d4(4);
     TaskSetSkipMask(7, gCurTaskIdx);
-    t = gUnk_03002490;
+    t = gCurTask;
     t->unk08 = (u32)sub_080a0a84;
     gUnk_02006190[0] = t->unk48;
     gUnk_02006190[1] = t->unk4A;
@@ -119,7 +119,7 @@ void sub_0809fd20(void)
     s32 z;
 
     TaskSetSkipMask(0, gCurTaskIdx);
-    t = gUnk_03002490;
+    t = gCurTask;
     z = 0;
     t->unk08 = z;
     t->unk48 = gUnk_02006190[0];
@@ -136,16 +136,16 @@ u8 sub_0809fd64(void)
 
     sub_080639a4(gUnk_08748974);
     TaskSetFrame(9);
-    t = gUnk_03002490;
+    t = gCurTask;
     p = &t->unk46;
     if (*p != -1)
     {
         TaskFree(*p);
-        gUnk_03002490->unk46 = 0xFFFF;
+        gCurTask->unk46 = 0xFFFF;
     }
     if (gUnk_02007D00[8] != -1 && gUnk_02007D00[1] != -1)
     {
-        sub_080689c8(gUnk_02007D00[8], -gUnk_03002490->unk43);
+        sub_080689c8(gUnk_02007D00[8], -gCurTask->unk43);
         gUnk_02007D00[8] = -1;
     }
     if (gUnk_02007D00[9] != -1)
@@ -174,14 +174,14 @@ u8 sub_0809fe10(void)
     struct Actor *a;
     u8 s0;
 
-    t = gUnk_03002490;
+    t = gCurTask;
     a = t->unk8C;
     s0 = t->unk14;
     sub_0809fcb4();
-    switch (gUnk_03002490->unk14)
+    switch (gCurTask->unk14)
     {
     case 3:
-        u = gUnk_03002490;
+        u = gCurTask;
         if ((u->unk7A & 1) == 0)
         {
             gUnk_02006190[2] = 43;
@@ -196,7 +196,7 @@ u8 sub_0809fe10(void)
         }
         goto install;
     case 4:
-        v = gUnk_03002490;
+        v = gCurTask;
         if ((v->unk7A & 1) == 0)
         {
             if (gUnk_0300244C != 0)
@@ -214,7 +214,7 @@ u8 sub_0809fe10(void)
         BLOCK_CROSS_JUMP
         goto install;
     case 7:
-        w = gUnk_03002490;
+        w = gCurTask;
         if (w->unk24 == 2)
         {
             if (gUnk_0300244C != 0)
@@ -232,26 +232,26 @@ u8 sub_0809fe10(void)
         BLOCK_CROSS_JUMP
         goto install;
     case 2:
-        x = gUnk_03002490;
+        x = gCurTask;
         x->unk2C = 1;
         gUnk_02006190[2] = 4;
         sub_0806395c(1);
-        a->unk1C = gUnk_03002490->unk1C;
+        a->unk1C = gCurTask->unk1C;
     install:
         TaskSetEntry(sub_080a0b10, gCurTaskIdx);
         break;
     case 8:
     case 9:
         TaskSetSkipMask(0, gCurTaskIdx);
-        y = gUnk_03002490;
+        y = gCurTask;
         y->unk08 = 0;
         y->unk3C = gUnk_02006190[2];
         gUnk_02006190[5] = 14;
         break;
     case 0:
-        gUnk_03002490->unk14 = 1;
+        gCurTask->unk14 = 1;
     case 1:
-        z = gUnk_03002490;
+        z = gCurTask;
         z->unk2C = 1;
         gUnk_02006190[2] = 4;
         sub_0806395c(1);
@@ -261,7 +261,7 @@ u8 sub_0809fe10(void)
     case 6:
         break;
     }
-    if (s0 == gUnk_03002490->unk14)
+    if (s0 == gCurTask->unk14)
         return 0;
     return 1;
 }
@@ -270,7 +270,7 @@ void sub_0809ffec(void)
 {
     struct Task *t;
 
-    t = gUnk_03002490;
+    t = gCurTask;
     if (t->unk7C == 6 && t->unk82 == 4)
         gUnk_03002170[t->unk7E].unk01 = 18;
 }
@@ -281,9 +281,9 @@ void sub_080a0028(void)
 
     sub_08064970();
     if (gUnk_030023B4 <= 127)
-        gUnk_03002490->unk43 = 1;
+        gCurTask->unk43 = 1;
     else
-        gUnk_03002490->unk43 = -1;
+        gCurTask->unk43 = -1;
     TaskSetFrame(29);
     sp.unk00 = 10;
     sp.unk04 = 112;
@@ -305,7 +305,7 @@ void sub_080a0098(void)
     s32 *r;
     s32 z;
 
-    tp = &gUnk_03002490;
+    tp = &gCurTask;
     r = gUnk_02007D00;
     q = gUnk_02006040;
     z = 0;

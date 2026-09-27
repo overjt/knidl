@@ -9,46 +9,46 @@
  *    the u16 parameter is truncated in place (r0) instead of into the copy
  *    r5 the ROM keeps, and the function pushes one register less.
  *  - UpdateFade: the fade source/destination buffers 0x03001270 and
- *    0x03001A90 are SYMBOLS (gUnk_03001270 / gUnk_03001A90), not address
+ *    0x03001A90 are SYMBOLS (gBgPalette / gFadedPalette), not address
  *    literals.  Written as literals, gcc CSEs the two mentions of each
  *    address into one pseudo and the whole entry/tail register assignment
  *    shifts by one; as extern arrays each mention is its own pool word,
  *    exactly as the ROM has it. */
 
-extern vu16 gUnk_03001174;
-extern vu16 gUnk_03001E98;
-extern vu16 gUnk_03001E90;
-extern vs16 gUnk_03000FB8;
-extern vu16 gUnk_030004A4;
-extern u16 *gUnk_03001ED4;
-extern vu32 gUnk_03000FB0;
+extern vu16 gFadeTimer;
+extern vu16 gFadeInterval;
+extern vu16 gFadeSteps;
+extern vs16 gBrightness;
+extern vu16 gFadeStep;
+extern u16 *gFadeKeepMask;
+extern vu32 gPaletteSource;
 extern vu16 gUnk_03000048;
-extern vu16 gUnk_03001ED8;
-extern u16 gUnk_03001270[];
-extern u16 gUnk_03001A90[];
+extern vu16 gDispCnt;
+extern u16 gBgPalette[];
+extern u16 gFadedPalette[];
 
-extern vs16 gUnk_03000B0C;
-extern vs16 gUnk_03000FBC;
-extern vu16 gUnk_03000FCC;
-extern vu16 gUnk_03000AF8;
-extern void (*gUnk_0300003C)(void);
+extern vs16 gVolumeRampMode;
+extern vs16 gVolumeRampLevel;
+extern vu16 gVolumeRampSpeed;
+extern vu16 gSoundDisabled;
+extern void (*gFrameCallback)(void);
 extern vu16 gUnk_03001014;
 extern u32 gUnk_03000B74;
-extern vu16 gUnk_03001EC4;
-extern vu16 gUnk_03000FD0;
-extern vu16 gUnk_03001EF4;
-extern vu16 gUnk_03000038;
-extern vu16 gUnk_0300243C;
-extern vu16 gUnk_03001EF8;
+extern vu16 gWaitingForVBlank;
+extern vu16 gFrameInProgress;
+extern vu16 gHeldKeys;
+extern vu16 gPressedKeys;
+extern vu16 gLinkPlayerCount;
+extern vu16 gIntrMasterEnable;
 extern vu32 gUnk_0200EBA0;
-extern vu16 gUnk_03001EA4;
-extern u16 gUnk_03000498[4];
-extern void (*gUnk_03000014)(void);
+extern vu16 gFrameCount;
+extern u16 gPlayTime[4];
+extern void (*gFrameEndCallback)(void);
 
-extern vu16 gUnk_03001EE4;
+extern vu16 gSoundDriverOn;
 extern u32 gUnk_03004D30;
 extern void (*gUnk_03000FA4)(void);
-extern vu16 gUnk_03000FAC;
+extern vu16 gVBlankCount;
 extern vu16 gUnk_03001008;
 extern void (*gUnk_03000F90)(void);
 extern void (*gUnk_030004A0)(void);
@@ -76,10 +76,10 @@ void UpdateFade(void);
 
 u32 BeginFade(u16 steps, u16 delta, u16 *mask)
 {
-    gUnk_03001174 = gUnk_03001E98 = 1;
-    gUnk_03001E90 = steps;
-    gUnk_03000FB8 += (gUnk_030004A4 = delta);
-    gUnk_03001ED4 = mask;
+    gFadeTimer = gFadeInterval = 1;
+    gFadeSteps = steps;
+    gBrightness += (gFadeStep = delta);
+    gFadeKeepMask = mask;
     if (0)
         return steps;
 }
@@ -95,58 +95,58 @@ void UpdateFade(void)
     s32 rv, gv, bv;
     u32 hv;
 
-    gUnk_03000FB0 = (u32)gUnk_03001270;
-    v = gUnk_03001E90;
+    gPaletteSource = (u32)gBgPalette;
+    v = gFadeSteps;
 
     if (v != 0)
     {
-        gUnk_03001174--;
-        if ((s16)gUnk_03001174 <= 0)
+        gFadeTimer--;
+        if ((s16)gFadeTimer <= 0)
         {
-            gUnk_03000FB8 += gUnk_030004A4;
-            gUnk_03001E90--;
-            if ((s16)gUnk_03001E90 > 0)
-                gUnk_03001174 = gUnk_03001E98;
+            gBrightness += gFadeStep;
+            gFadeSteps--;
+            if ((s16)gFadeSteps > 0)
+                gFadeTimer = gFadeInterval;
             else
-                gUnk_030004A4 = gUnk_03001174 = gUnk_03001E98 = gUnk_03001E90 = 0;
+                gFadeStep = gFadeTimer = gFadeInterval = gFadeSteps = 0;
         }
     }
 
-    if (gUnk_03000FB8 > 31)
+    if (gBrightness > 31)
     {
-        gUnk_03000FB8 = 31;
-        gUnk_030004A4 = gUnk_03001174 = gUnk_03001E98 = gUnk_03001E90 = 0;
+        gBrightness = 31;
+        gFadeStep = gFadeTimer = gFadeInterval = gFadeSteps = 0;
     }
 
-    if (gUnk_03000FB8 < -31)
+    if (gBrightness < -31)
     {
-        gUnk_03000FB8 = -31;
-        gUnk_030004A4 = gUnk_03001174 = gUnk_03001E98 = gUnk_03001E90 = 0;
+        gBrightness = -31;
+        gFadeStep = gFadeTimer = gFadeInterval = gFadeSteps = 0;
     }
 
-    if (gUnk_03000FB8 != 0)
+    if (gBrightness != 0)
     {
-        src = (u32 *)gUnk_03001270;
-        dst = (u32 *)gUnk_03001A90;
+        src = (u32 *)gBgPalette;
+        dst = (u32 *)gFadedPalette;
 
-        if (gUnk_03000FB8 < 0)
-            rAbs = -gUnk_03000FB8;
+        if (gBrightness < 0)
+            rAbs = -gBrightness;
         else
-            rAbs = gUnk_03000FB8;
+            rAbs = gBrightness;
 
-        if (gUnk_03000FB8 < 0)
-            gAbs = -(gUnk_03000FB8 << 5);
+        if (gBrightness < 0)
+            gAbs = -(gBrightness << 5);
         else
-            gAbs = gUnk_03000FB8 << 5;
+            gAbs = gBrightness << 5;
 
-        if (gUnk_03000FB8 < 0)
-            bAbs = -(gUnk_03000FB8 << 10);
+        if (gBrightness < 0)
+            bAbs = -(gBrightness << 10);
         else
-            bAbs = gUnk_03000FB8 << 10;
+            bAbs = gBrightness << 10;
 
-        if (gUnk_03001ED4 == 0)
+        if (gFadeKeepMask == 0)
         {
-            if (gUnk_03000FB8 < 0)
+            if (gBrightness < 0)
             {
                 for (i = 0; i < 256; i++)
                 {
@@ -217,13 +217,13 @@ void UpdateFade(void)
         }
         else
         {
-            if (gUnk_03000FB8 < 0)
+            if (gBrightness < 0)
             {
                 for (i = 0; i < 256; i++)
                 {
                     word = *src++;
                     hv = word >> 16;
-                    if (((gUnk_03001ED4[i >> 3] >> ((i * 2 + 1) & 15)) & 1) == 0)
+                    if (((gFadeKeepMask[i >> 3] >> ((i * 2 + 1) & 15)) & 1) == 0)
                     {
                         rv = hv & 31;
                         gv = hv & 0x3E0;
@@ -239,7 +239,7 @@ void UpdateFade(void)
                             bv = 0;
                         hv = bv | gv | rv;
                     }
-                    if (((gUnk_03001ED4[i >> 3] >> ((i * 2) & 15)) & 1) == 0)
+                    if (((gFadeKeepMask[i >> 3] >> ((i * 2) & 15)) & 1) == 0)
                     {
                         rv = word & 31;
                         gv = word & 0x3E0;
@@ -265,7 +265,7 @@ void UpdateFade(void)
                     word = *src++;
                     hv = word >> 16;
                     word &= 0xFFFF;
-                    if (((gUnk_03001ED4[i >> 3] >> ((i * 2 + 1) & 15)) & 1) == 0)
+                    if (((gFadeKeepMask[i >> 3] >> ((i * 2 + 1) & 15)) & 1) == 0)
                     {
                         rv = hv & 31;
                         gv = hv & 0x3E0;
@@ -281,7 +281,7 @@ void UpdateFade(void)
                             bv = 0x7C00;
                         hv = bv | gv | rv;
                     }
-                    if (((gUnk_03001ED4[i >> 3] >> ((i * 2) & 15)) & 1) == 0)
+                    if (((gFadeKeepMask[i >> 3] >> ((i * 2) & 15)) & 1) == 0)
                     {
                         rv = word & 31;
                         gv = word & 0x3E0;
@@ -302,14 +302,14 @@ void UpdateFade(void)
             }
         }
 
-        gUnk_03000FB0 = (u32)gUnk_03001A90;
+        gPaletteSource = (u32)gFadedPalette;
 
         if (gUnk_03000048 != 0)
         {
-            if (gUnk_03000FB8 == 31)
-                gUnk_03001ED8 |= 0x80;
+            if (gBrightness == 31)
+                gDispCnt |= 0x80;
             else
-                gUnk_03001ED8 &= 0xFF7F;
+                gDispCnt &= 0xFF7F;
         }
     }
 }

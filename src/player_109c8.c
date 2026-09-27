@@ -2,7 +2,7 @@
 #include "global.h"
 #include "task.h"
 
-extern struct Task *gUnk_03002490;
+extern struct Task *gCurTask;
 extern u32 gUnk_08732104[];
 
 s32 QueueSprite(u32 a, u32 b, u32 c, u32 d, s32 e, s32 f);
@@ -41,7 +41,7 @@ void sub_080109c8(void)
     i = 0;
     do
     {
-        p = &gUnk_02007E90[gUnk_03002490->unk88->unk00][i];
+        p = &gUnk_02007E90[gCurTask->unk88->unk00][i];
         if (p->unk00 == 0)
         {
             p->unk08 = 0;
@@ -82,10 +82,10 @@ void sub_080109c8(void)
                 p->unk0C = 1;
             }
             d = p->unk0D;
-            x = gUnk_03002490->unk48 + ((s16 *)&p->unk00)[1];
-            y = gUnk_03002490->unk4A + ((s16 *)&p->unk04)[1] + 4;
+            x = gCurTask->unk48 + ((s16 *)&p->unk00)[1];
+            y = gCurTask->unk4A + ((s16 *)&p->unk04)[1] + 4;
             if (IsWorldPosOnScreen(x, y))
-                QueueSprite(gUnk_03002490->unk42 - 1, gUnk_08732104[d], 0, 12, x, (s16)y);
+                QueueSprite(gCurTask->unk42 - 1, gUnk_08732104[d], 0, 12, x, (s16)y);
         }
         i++;
     } while (i <= 2);

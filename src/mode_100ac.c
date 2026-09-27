@@ -14,32 +14,32 @@
 
 extern u8 gUnk_0200AF04;
 extern u32 gUnk_02020000[];
-extern vs32 gUnk_03000010;
-extern vu8 gUnk_03000040;
-extern vu16 gUnk_03000044;
-extern vu8 gUnk_03000B08;
-extern vu8 gUnk_03000B18;
-extern vs32 gUnk_03000B78;
+extern vs32 gBg0ScrollY;
+extern vu8 gBldCntTarget2;
+extern vu16 gWin0V;
+extern vu8 gBldAlphaEva;
+extern vu8 gWinIn0;
+extern vs32 gBg3ScrollX;
 extern vu8 gUnk_03000F7C;
-extern vs32 gUnk_03000F8C;
-extern vs32 gUnk_03000FA8;
-extern vs32 gUnk_03000FC0;
-extern vu16 gUnk_03000FD4;
-extern vs32 gUnk_0300117C;
-extern vu8 gUnk_0300118C;
+extern vs32 gBg2ScrollX;
+extern vs32 gBg3ScrollY;
+extern vs32 gBg1ScrollY;
+extern vu16 gWin0H;
+extern vs32 gBg0ScrollX;
+extern vu8 gBldCntTarget1;
 extern u16 gUnk_03001570[];
-extern vs32 gUnk_03001E94;
-extern vu8 gUnk_03001EAC;
-extern vu16 gUnk_03001ED8;
-extern vs32 gUnk_03001EE0;
-extern vu16 gUnk_03001EEC;
+extern vs32 gBg2ScrollY;
+extern vu8 gBldAlphaEvb;
+extern vu16 gDispCnt;
+extern vs32 gBg1ScrollX;
+extern vu16 gBldY;
 extern u8 gUnk_03001F30;
-extern u16 gUnk_03002360;
-extern u16 gUnk_030023AC;
+extern u16 gLocalPlayer;
+extern u16 gPlayerCount;
 extern s8 gUnk_030023B8;
-extern u16 gUnk_030023D8;
-extern vu16 gUnk_03005274;
-extern u32 gUnk_06010000[];
+extern u16 gGameState;
+extern vu16 gLinkCommand;
+extern u32 gObjVram[];
 extern u16 gUnk_080DC628[][16];
 extern struct GfxHeader *const gUnk_08731F78[];
 
@@ -68,7 +68,7 @@ void sub_080100ac(void)
 
     ResetTasksAndOam();
     if (gUnk_03001F30 != 1) {
-        gUnk_0300118C = gUnk_03000040 = gUnk_03000B08 = gUnk_03001EAC = gUnk_03001EEC = 0;
+        gBldCntTarget1 = gBldCntTarget2 = gBldAlphaEva = gBldAlphaEvb = gBldY = 0;
         sub_08008c64(0);
         gUnk_0200AF04 = 1;
         sub_08024300();
@@ -77,28 +77,28 @@ void sub_080100ac(void)
         else
             sub_08008c4c(9);
         sub_08008d98(gUnk_030023B8);
-        gUnk_03000F8C = gUnk_03000B78 = 0;
-        gUnk_03001E94 = gUnk_03000FA8 = 0;
-        gUnk_03000010 = 0x280000;
-        gUnk_0300117C = 0x100000;
-        gUnk_03000FC0 = 0x280000;
-        gUnk_03001EE0 = 0x100000;
+        gBg2ScrollX = gBg3ScrollX = 0;
+        gBg2ScrollY = gBg3ScrollY = 0;
+        gBg0ScrollY = 0x280000;
+        gBg0ScrollX = 0x100000;
+        gBg1ScrollY = 0x280000;
+        gBg1ScrollX = 0x100000;
         if (gUnk_030023B8 == 7) {
-            gUnk_03001ED8 &= 0xE0FF;
-            gUnk_03001ED8 |= 0x3F00;
+            gDispCnt &= 0xE0FF;
+            gDispCnt |= 0x3F00;
         } else {
-            gUnk_03001ED8 &= 0xE0FF;
-            gUnk_03001ED8 |= 0x3D00;
+            gDispCnt &= 0xE0FF;
+            gDispCnt |= 0x3D00;
         }
         if (gUnk_030023B8 == 7) {
-            gUnk_03000FD4 = 240;
-            gUnk_03000044 = 0x1090;
-            gUnk_03000B18 = 63;
+            gWin0H = 240;
+            gWin0V = 0x1090;
+            gWinIn0 = 63;
             gUnk_03000F7C = 47;
         } else {
-            gUnk_03000FD4 = 0x28D0;
-            gUnk_03000044 = 0x1090;
-            gUnk_03000B18 = 63;
+            gWin0H = 0x28D0;
+            gWin0V = 0x1090;
+            gWinIn0 = 63;
             gUnk_03000F7C = 47;
         }
         for (i = 0; i <= 3; i++)
@@ -110,16 +110,16 @@ void sub_080100ac(void)
         sub_080022fc();
         BeginFastFadeInFromWhite();
         RunLinkFramesUntilFadeDone();
-        gUnk_03005274 = 0x8800;
+        gLinkCommand = 0x8800;
         do
             RunLinkFrame();
-        while (gUnk_030023D8 == 7);
+        while (gGameState == 7);
         sub_08002338();
         BeginFastFadeOutToWhite();
         RunLinkFramesUntilFadeDone();
-        gUnk_03001ED8 &= 0xDFFF;
-        gUnk_03000FD4 = gUnk_03000044 = gUnk_03000B18 = gUnk_03000F7C = 0;
-        gUnk_0300118C = gUnk_03000040 = gUnk_03000B08 = gUnk_03001EAC = 0;
+        gDispCnt &= 0xDFFF;
+        gWin0H = gWin0V = gWinIn0 = gUnk_03000F7C = 0;
+        gBldCntTarget1 = gBldCntTarget2 = gBldAlphaEva = gBldAlphaEvb = 0;
         sub_08027178();
     }
 }
@@ -130,10 +130,10 @@ void sub_080102c0(void)
 
     if (h != NULL) {
         LZ77UnCompWram(h->unk0C, gUnk_02020000);
-        RequestCopy(4, (u32)gUnk_02020000, (u32)gUnk_06010000, h->unk02 << 5);
+        RequestCopy(4, (u32)gUnk_02020000, (u32)gObjVram, h->unk02 << 5);
         RequestCopy(2, (u32)h->unk08, (u32)gUnk_03001570, h->unk00 << 5);
-        if (gUnk_030023AC > 1)
-            RequestCopy(2, (u32)gUnk_080DC628[gUnk_03002360], (u32)gUnk_03001570, 22);
+        if (gPlayerCount > 1)
+            RequestCopy(2, (u32)gUnk_080DC628[gLocalPlayer], (u32)gUnk_03001570, 22);
     }
     if (gUnk_030023B8 == 7)
         LZ77UnCompWram((void *)0x085E0090, gUnk_02020000);

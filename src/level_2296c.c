@@ -150,8 +150,8 @@ extern u16 gUnk_03005624;
 extern u8 gUnk_03002340;
 extern u8 gUnk_03002350;
 extern u8 gUnk_0300234C;
-extern u16 gUnk_030023AC;
-extern s16 gUnk_02007D48[];
+extern u16 gPlayerCount;
+extern s16 gPlayerLives[];
 extern s16 gUnk_02005588[];
 extern s16 gUnk_02005580;
 extern u16 gUnk_02008008[];
@@ -159,11 +159,11 @@ extern u16 gUnk_02007FA8[];
 extern u16 gUnk_02004B50[];
 extern u16 gUnk_0200AF18[];
 extern u8 gUnk_0300560C[];
-extern vu16 gUnk_03000F98[];
-extern vu16 gUnk_03001EB8[];
+extern vu16 gPlayerHeldKeys[];
+extern vu16 gPlayerPressedKeys[];
 extern u16 gUnk_03002458[];
 extern u16 gUnk_030023C0[];
-extern u16 gUnk_03002360;
+extern u16 gLocalPlayer;
 extern u8 gUnk_0200B050;
 extern u16 gUnk_03005604[2];
 extern u16 gUnk_03005690[2];
@@ -503,9 +503,9 @@ void sub_08022fa8(void)
     gUnk_03002340 = 0;
     gUnk_03002350 = 0;
     gUnk_0300234C = 0;
-    for (i = 0; i < gUnk_030023AC; i++)
+    for (i = 0; i < gPlayerCount; i++)
     {
-        if (gUnk_02007D48[i] != 0 || gUnk_02005588[i] != 0)
+        if (gPlayerLives[i] != 0 || gUnk_02005588[i] != 0)
         {
             if (gUnk_02005588[i] == 0)
             {
@@ -532,15 +532,15 @@ void sub_08022fa8(void)
         }
         CreatePlayer(i);
         sub_0803d1c4(i);
-        gUnk_03000F98[i] = gUnk_03001EB8[i] = 0;
+        gPlayerHeldKeys[i] = gPlayerPressedKeys[i] = 0;
         gUnk_03002458[i] = gUnk_030023C0[i] = 0;
     }
     sub_080b5024();
-    if (gUnk_030023AC == 1)
+    if (gPlayerCount == 1)
         sub_08028b1c();
     else
         sub_08028990();
-    sub_08009b2c(gUnk_03002360);
+    sub_08009b2c(gLocalPlayer);
     switch (gUnk_030055C0)
     {
     default:
@@ -625,7 +625,7 @@ void sub_080233e0(void)
     sub_08029318();
     sub_080307b0();
     sub_080290ac();
-    if (gUnk_030023AC == 1)
+    if (gPlayerCount == 1)
         sub_08028b1c();
     else
         sub_08028990();
@@ -668,7 +668,7 @@ void sub_080235ec(s32 a)
 
     if (id != -1)
     {
-        t = &gUnk_03002790[id];
+        t = &gTasks[id];
         t->unk14 = a;
     }
 }

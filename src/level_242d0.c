@@ -165,8 +165,8 @@ extern u16 gUnk_02008160[];
 extern u8 gUnk_020069F0;
 extern u8 gUnk_03002350;
 extern u8 gUnk_0300234C;
-extern u16 gUnk_030023AC;
-extern s16 gUnk_02007D48[];
+extern u16 gPlayerCount;
+extern s16 gPlayerLives[];
 extern s16 gUnk_02005588[];
 extern s16 gUnk_02005580;
 extern u16 gUnk_02008008[];
@@ -174,8 +174,8 @@ extern u16 gUnk_02007FA8[];
 extern u16 gUnk_02004B50[];
 extern u16 gUnk_0200AF18[];
 extern u8 gUnk_0300560C[];
-extern vu16 gUnk_03000F98[];
-extern vu16 gUnk_03001EB8[];
+extern vu16 gPlayerHeldKeys[];
+extern vu16 gPlayerPressedKeys[];
 extern u16 gUnk_03002458[];
 extern u16 gUnk_030023C0[];
 extern struct Unk02004B90 gUnk_02004B90[];
@@ -187,7 +187,7 @@ extern s8 gUnk_030023E0;
 extern s8 gUnk_03002384;
 extern s8 gUnk_03002438;
 extern u8 gUnk_08334EB4[];
-extern u16 gUnk_030023D8;
+extern u16 gGameState;
 extern u8 gUnk_03001F30;
 extern u32 gUnk_030023C8[];
 extern u8 gUnk_03002400[8][7];
@@ -219,7 +219,7 @@ extern u8 gUnk_02007E8C;
 extern u16 gUnk_02004B80;
 extern s16 gUnk_03005628[4];
 extern s16 gUnk_030055F8[4];
-extern s16 gUnk_03002158[4];
+extern s16 gViewRect[4];
 extern struct CamRect gUnk_03005640[4];
 extern s8 gUnk_0200B02C;
 
@@ -287,7 +287,7 @@ void sub_08024698(s32 a0);
 
 void sub_080242d0(void)
 {
-    struct Task *t = gUnk_03002490;
+    struct Task *t = gCurTask;
 
     t->unk00 = 0;
     t->unk0C = (u32)sub_080236d4;
@@ -374,7 +374,7 @@ void sub_08024300(void)
 
 void sub_08024540(void)
 {
-    struct Task *t = gUnk_03002490;
+    struct Task *t = gCurTask;
 
     t->unk00 = 0;
     t->unk0C = 0;
@@ -532,7 +532,7 @@ void sub_08024698(s32 a0)
 
 void sub_08024904(void)
 {
-    struct Task *t = gUnk_03002490;
+    struct Task *t = gCurTask;
 
     t->unk00 = 0;
     t->unk0C = 0;
@@ -540,17 +540,17 @@ void sub_08024904(void)
     switch (gUnk_0200B050)
     {
     case 1:
-        gUnk_03002490->unk08 = (u32)sub_080237fc;
+        gCurTask->unk08 = (u32)sub_080237fc;
         break;
     case 4:
-        gUnk_03002490->unk08 = (u32)sub_0802385c;
+        gCurTask->unk08 = (u32)sub_0802385c;
         break;
     default:
     case 0:
     case 2:
     case 3:
     case 5:
-        gUnk_03002490->unk08 = (u32)sub_08023748;
+        gCurTask->unk08 = (u32)sub_08023748;
         break;
     }
     TaskSleepForever();
@@ -624,9 +624,9 @@ void sub_0802497c(void)
     gUnk_03002340 = 0;
     gUnk_03002350 = 0;
     gUnk_0300234C = 0;
-    for (i = 0; i < gUnk_030023AC; i++)
+    for (i = 0; i < gPlayerCount; i++)
     {
-        if (gUnk_02007D48[i] != 0 || gUnk_02005588[i] != 0)
+        if (gPlayerLives[i] != 0 || gUnk_02005588[i] != 0)
         {
             if (gUnk_02005588[i] == 0)
             {
@@ -653,11 +653,11 @@ void sub_0802497c(void)
         }
         CreatePlayer(i);
         sub_0803d0a0(i);
-        gUnk_03000F98[i] = gUnk_03001EB8[i] = 0;
+        gPlayerHeldKeys[i] = gPlayerPressedKeys[i] = 0;
         gUnk_03002458[i] = gUnk_030023C0[i] = 0;
     }
     sub_080b5024();
-    if (gUnk_030023AC == 1)
+    if (gPlayerCount == 1)
         sub_08028b1c();
     else
         sub_08028990();
@@ -706,7 +706,7 @@ void sub_0802497c(void)
 
 void sub_08024da4(void)
 {
-    struct Task *t = gUnk_03002490;
+    struct Task *t = gCurTask;
 
     t->unk00 = 0;
     t->unk0C = 0;
@@ -715,22 +715,22 @@ void sub_08024da4(void)
     {
     default:
     case 0:
-        gUnk_03002490->unk08 = (u32)sub_08023748;
+        gCurTask->unk08 = (u32)sub_08023748;
         break;
     case 1:
-        gUnk_03002490->unk08 = (u32)sub_080237fc;
+        gCurTask->unk08 = (u32)sub_080237fc;
         break;
     case 2:
-        gUnk_03002490->unk08 = (u32)sub_080238ec;
+        gCurTask->unk08 = (u32)sub_080238ec;
         break;
     case 3:
-        gUnk_03002490->unk08 = (u32)sub_080237a4;
+        gCurTask->unk08 = (u32)sub_080237a4;
         break;
     case 4:
-        gUnk_03002490->unk08 = (u32)sub_0802385c;
+        gCurTask->unk08 = (u32)sub_0802385c;
         break;
     case 5:
-        gUnk_03002490->unk08 = (u32)sub_080238a4;
+        gCurTask->unk08 = (u32)sub_080238a4;
         break;
     }
     TaskSleepForever();
@@ -952,7 +952,7 @@ s32 sub_08025024(void)
     else if (gUnk_02007D64 != 0)
     {
         gUnk_03002468 = d->unk0;
-        t = gUnk_030023D8 - 11;
+        t = gGameState - 11;
         room = gUnk_087E1D58[gUnk_0300238C][gUnk_030023EC][gUnk_03002468];
         e = room->unk44;
         for (i = 0; i < room->unk3A; e++, i++)
@@ -1048,7 +1048,7 @@ s32 sub_08025024(void)
 
 void sub_080258e0(void)
 {
-    if (gUnk_030023D8 == 8)
+    if (gGameState == 8)
     {
         struct RoomDef *room;
         struct Door *d;
@@ -1098,7 +1098,7 @@ void sub_08025a30(void)
         gUnk_030023EC = 0;
         gUnk_03002468 = 0;
         gUnk_02006170 = 0;
-        if (gUnk_030023D8 == 8)
+        if (gGameState == 8)
         {
             gUnk_02007FC0 = 1;
             gUnk_03002438 = 2;
@@ -1143,7 +1143,7 @@ void sub_08025b0c(void)
 
 void sub_08025b5c(void)
 {
-    if (gUnk_030023D8 == 8)
+    if (gGameState == 8)
     {
         if (gExtraMode != 0)
             gUnk_03002364 |= 2;
@@ -1223,12 +1223,12 @@ void sub_08025e0c(void)
 
     gUnk_03005628[2] = gUnk_0300561C * 16 - gUnk_03005600[1] - 80;
     gUnk_030055F8[2] = gUnk_03005628[2];
-    for (i = 0; i < gUnk_030023AC; i++)
+    for (i = 0; i < gPlayerCount; i++)
     {
         if ((gUnk_03002340 >> i) & 1)
             gUnk_03005640[i].y0 = gUnk_030055F8[2] - 76;
     }
-    gUnk_03002158[2] = gUnk_03005628[2] - 80;
+    gViewRect[2] = gUnk_03005628[2] - 80;
 }
 
 s32 sub_08025e88(s32 i)

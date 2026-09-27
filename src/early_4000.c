@@ -56,12 +56,12 @@ extern u32 gUnk_0200EC40;
 extern u32 gUnk_0200EC44;
 extern vs32 gUnk_0200EC48;
 extern u8 gUnk_0200EC4C;
-extern vu16 gUnk_03000018;
-extern u32 gUnk_030004B0[];
-extern vu16 gUnk_03001EF8;
-extern u16 gUnk_03001F38;
-extern u16 gUnk_03004D50[];
-extern u16 gUnk_03004D90[];
+extern vu16 gIntrEnable;
+extern u32 gIntrTable[];
+extern vu16 gIntrMasterEnable;
+extern u16 gLinkIsMaster;
+extern u16 gRecvCmds[];
+extern u16 gSendCmd[];
 
 extern void IntrDummy(void);
 extern void sub_08003ab8(void);
@@ -235,16 +235,16 @@ u32 sub_08004308(void)
     u16 *p;
     u32 n;
 
-    if (gUnk_03004D50[0] == 0xAA02)
+    if (gRecvCmds[0] == 0xAA02)
         return 1;
-    if (gUnk_03004D50[0] == 0xAA00)
+    if (gRecvCmds[0] == 0xAA00)
     {
-        gUnk_03004D90[0] = 0xAA01;
-        gUnk_0200EC4C = gUnk_03004D50[4];
+        gSendCmd[0] = 0xAA01;
+        gUnk_0200EC4C = gRecvCmds[4];
     }
-    if (gUnk_03001F38 != 0)
+    if (gLinkIsMaster != 0)
     {
-        p = gUnk_03004D50;
+        p = gRecvCmds;
         for (i = 0; i < 4; i++)
         {
             if (*p == 0xAA01)
@@ -258,7 +258,7 @@ u32 sub_08004308(void)
         if (*(vu8 *)&gUnk_0200EBB0 == n)
         {
             gUnk_0200EBB0 = 0;
-            gUnk_03004D90[0] = 0xAA02;
+            gSendCmd[0] = 0xAA02;
         }
     }
     return 0;
@@ -267,17 +267,17 @@ u32 sub_08004308(void)
 /*FN sub_08004390*/
 void sub_08004390(u32 *src, u32 *dst, u32 size)
 {
-    if (gUnk_03001F38 == 0)
+    if (gLinkIsMaster == 0)
         return;
     gUnk_0200EBB8 = 0;
     gUnk_0200EB90 = src;
     gUnk_0200EBB4 = dst;
     gUnk_0200EBAC = (size + 15) >> 2;
     gUnk_0200EC44 = 0;
-    gUnk_03004D90[0] = 0x5500;
-    gUnk_03004D90[1] = (u32)dst;
-    gUnk_03004D90[2] = (u32)dst >> 16;
-    gUnk_03004D90[3] = (u32)gUnk_0200EBAC >> 2;
+    gSendCmd[0] = 0x5500;
+    gSendCmd[1] = (u32)dst;
+    gSendCmd[2] = (u32)dst >> 16;
+    gSendCmd[3] = (u32)gUnk_0200EBAC >> 2;
     gUnk_0200EB94[0] = gUnk_0200EB94[1] = gUnk_0200EB94[2] = gUnk_0200EB94[3] = 0;
 }
 
@@ -286,19 +286,19 @@ u32 sub_08004400(void)
 {
     s32 i;
 
-    if (gUnk_03004D50[0] == 0x5502)
+    if (gRecvCmds[0] == 0x5502)
         return 1;
-    if (gUnk_03004D50[0] == 0x5500)
+    if (gRecvCmds[0] == 0x5500)
     {
-        gUnk_03004D90[0] = 0x5501;
-        gUnk_0200EBB4 = (u32 *)(gUnk_03004D50[4] | (gUnk_03004D50[8] << 16));
-        gUnk_0200EBAC = gUnk_03004D50[12] << 2;
+        gSendCmd[0] = 0x5501;
+        gUnk_0200EBB4 = (u32 *)(gRecvCmds[4] | (gRecvCmds[8] << 16));
+        gUnk_0200EBAC = gRecvCmds[12] << 2;
     }
-    if (gUnk_03001F38 != 0)
+    if (gLinkIsMaster != 0)
     {
         for (i = 0; i < 4; i++)
         {
-            if (gUnk_03004D50[i] == 0x5501)
+            if (gRecvCmds[i] == 0x5501)
             {
                 gUnk_0200EB94[i] = 1;
                 gUnk_0200EBB8++;
@@ -308,7 +308,7 @@ u32 sub_08004400(void)
         {
             gUnk_0200EBB8 = 0;
             gUnk_0200EB94[0] = gUnk_0200EB94[1] = gUnk_0200EB94[2] = gUnk_0200EB94[3] = 0;
-            gUnk_03004D90[0] = 0x5502;
+            gSendCmd[0] = 0x5502;
         }
     }
     return 0;
@@ -320,25 +320,25 @@ void sub_080044b8(void)
     gUnk_0200EBA8 = 0;
     gUnk_0200EC40 = 0;
     gUnk_0200EBBC = -1;
-    if (gUnk_03001F38 != 0)
+    if (gLinkIsMaster != 0)
     {
-        gUnk_03001EF8 = REG_IME = REG_IME & 0xFFFE;
-        REG_IE = gUnk_03000018 = gUnk_03000018 & 0xFF3F;
-        gUnk_03001EF8 = REG_IME = REG_IME | 1;
+        gIntrMasterEnable = REG_IME = REG_IME & 0xFFFE;
+        REG_IE = gIntrEnable = gIntrEnable & 0xFF3F;
+        gIntrMasterEnable = REG_IME = REG_IME | 1;
         REG_SIOCNT = 0x2000;
         REG_TM3CNT = 0;
-        gUnk_030004B0[0] = (u32)IntrDummy;
-        gUnk_030004B0[1] = (u32)sub_080045e8;
+        gIntrTable[0] = (u32)IntrDummy;
+        gIntrTable[1] = (u32)sub_080045e8;
         REG_SIOCNT = 0x1000;
         REG_SIOCNT = 0x1001;
     }
     else
     {
-        gUnk_03001EF8 = REG_IME = REG_IME & 0xFFFE;
-        REG_IE = gUnk_03000018 = gUnk_03000018 & 0xFF3F;
-        gUnk_03001EF8 = REG_IME = REG_IME | 1;
-        gUnk_030004B0[0] = (u32)sub_0800469c;
-        gUnk_030004B0[1] = (u32)IntrDummy;
+        gIntrMasterEnable = REG_IME = REG_IME & 0xFFFE;
+        REG_IE = gIntrEnable = gIntrEnable & 0xFF3F;
+        gIntrMasterEnable = REG_IME = REG_IME | 1;
+        gIntrTable[0] = (u32)sub_0800469c;
+        gIntrTable[1] = (u32)IntrDummy;
         REG_SIOCNT = 0x2000;
     }
     gUnk_0200EC44 = 0;

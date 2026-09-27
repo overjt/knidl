@@ -2,15 +2,15 @@
 #include "global.h"
 #include "task.h"
 
-extern void (*gUnk_0300003C)(void);
+extern void (*gFrameCallback)(void);
 extern u8 gHBlankScrollState;
 extern s32 gHBlankScrollTimer;
 extern u16 gHBlankScrollTable[];
-extern vu8 gUnk_03000B08;
+extern vu8 gBldAlphaEva;
 extern u32 gHBlankDmaDest;
-extern vu8 gUnk_03001EAC;
-extern vu16 gUnk_03001ED8;
-extern vs32 gUnk_03001EE0;
+extern vu8 gBldAlphaEvb;
+extern vu16 gDispCnt;
+extern vs32 gBg1ScrollX;
 
 s32 sub_080b63a4(void)
 {
@@ -27,13 +27,13 @@ s32 sub_080b63a4(void)
 
     if (gHBlankScrollState == 2 || gHBlankScrollTimer == 16)
     {
-        gUnk_0300003C = NULL;
+        gFrameCallback = NULL;
         gHBlankScrollTimer = 0;
-        gUnk_03001EE0 = 0;
+        gBg1ScrollX = 0;
     }
     else
     {
-        pe = &gUnk_03001EE0;
+        pe = &gBg1ScrollX;
         base = gHBlankScrollTable;
         pc = &gHBlankDmaDest;
         p1 = base;

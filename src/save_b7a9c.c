@@ -27,7 +27,7 @@ struct SaveSlot
 extern u16 gUnk_02006068[];
 extern struct SaveSlot gSaveSlots[];
 extern s32 gSramAvailable;
-extern u16 gUnk_030023AC;
+extern u16 gPlayerCount;
 extern s32 gCurSaveSlot;
 extern u8 gUnk_080CFE20[];
 
@@ -86,7 +86,7 @@ void sub_080b7b7c(s32 a)
 
     if (a == -1)
         return;
-    if (gUnk_030023AC == 1)
+    if (gPlayerCount == 1)
         sub_080b7e14(gCurSaveSlot);
     else
         sub_080b8b2c(gCurSaveSlot);
@@ -145,7 +145,7 @@ void sub_080b7cb4(s32 a)
 
     if (a == -1)
         return;
-    if (gUnk_030023AC != 1)
+    if (gPlayerCount != 1)
         return;
     m = 1;
     t = 0;

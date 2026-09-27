@@ -37,14 +37,14 @@ extern u16 gCompletionPercent;
 extern u16 gUnk_03002364;
 extern u16 gUnk_03002378[];
 extern s8 gUnk_03002384;
-extern u16 gUnk_030023AC;
+extern u16 gPlayerCount;
 extern u8 gUnk_030023B8;
 extern s32 gUnk_030023C8[];
 extern s8 gUnk_030023E0;
 extern s32 gCurSaveSlot;
 extern u8 gUnk_03002400[8][7];
 extern u8 gExtraMode;
-extern u16 gUnk_03004D90[];
+extern u16 gSendCmd[];
 
 s32 CalcCompletionPercent(s32 a);
 s32 WriteSaveSlot(s32 a);
@@ -113,7 +113,7 @@ void sub_080b8070(s32 a)
 
     if (a == -1)
         return;
-    if (gUnk_030023AC != 1)
+    if (gPlayerCount != 1)
         a = 3;
     gUnk_03002364 = gSaveSlots[a].unk10;
     gUnk_030023B8 = gSaveSlots[a].unk16[gExtraMode];
@@ -205,7 +205,7 @@ s32 sub_080b8290(void)
         goto zero;
     if (gCurSaveSlot == -1)
         return r;
-    if (gUnk_030023AC == 1)
+    if (gPlayerCount == 1)
         sub_080b7e14(gCurSaveSlot);
     else
         sub_080b8b2c(gCurSaveSlot);
@@ -260,22 +260,22 @@ void sub_080b84f0(void)
     s32 q;
     s32 r;
 
-    gUnk_03004D90[0] = gUnk_0200EB80 | (204 << 7);
+    gSendCmd[0] = gUnk_0200EB80 | (204 << 7);
     switch (gUnk_0200EB80)
     {
     case 0:
         break;
     case 1:
-        gUnk_03004D90[1] = ((s8)gSaveSlots[gCurSaveSlot].unk16[gExtraMode] << 8)
+        gSendCmd[1] = ((s8)gSaveSlots[gCurSaveSlot].unk16[gExtraMode] << 8)
                          | (s8)gSaveSlots[gCurSaveSlot].unk18[gExtraMode];
-        gUnk_03004D90[2] = ((s8)gSaveSlots[gCurSaveSlot].unk1A[gExtraMode] << 8)
+        gSendCmd[2] = ((s8)gSaveSlots[gCurSaveSlot].unk1A[gExtraMode] << 8)
                          | (s8)gSaveSlots[gCurSaveSlot].unk1C[gExtraMode];
-        gUnk_03004D90[3] = gSaveSlots[gCurSaveSlot].unk12[gExtraMode];
+        gSendCmd[3] = gSaveSlots[gCurSaveSlot].unk12[gExtraMode];
         break;
     case 2:
-        gUnk_03004D90[1] = gSaveSlots[gCurSaveSlot].unk20[gExtraMode] >> 16;
-        gUnk_03004D90[2] = gSaveSlots[gCurSaveSlot].unk20[gExtraMode];
-        gUnk_03004D90[3] = gSaveSlots[gCurSaveSlot].unk10;
+        gSendCmd[1] = gSaveSlots[gCurSaveSlot].unk20[gExtraMode] >> 16;
+        gSendCmd[2] = gSaveSlots[gCurSaveSlot].unk20[gExtraMode];
+        gSendCmd[3] = gSaveSlots[gCurSaveSlot].unk10;
         break;
     default:
         q = Div(gUnk_0200EB80 - 3, 3);
@@ -285,17 +285,17 @@ void sub_080b84f0(void)
         switch (r)
         {
         case 0:
-            gUnk_03004D90[1] = gSaveSlots[gCurSaveSlot].unk28[q][0];
-            gUnk_03004D90[2] = gSaveSlots[gCurSaveSlot].unk28[q][1];
-            gUnk_03004D90[3] = gSaveSlots[gCurSaveSlot].unk28[q][2];
+            gSendCmd[1] = gSaveSlots[gCurSaveSlot].unk28[q][0];
+            gSendCmd[2] = gSaveSlots[gCurSaveSlot].unk28[q][1];
+            gSendCmd[3] = gSaveSlots[gCurSaveSlot].unk28[q][2];
             break;
         case 1:
-            gUnk_03004D90[1] = gSaveSlots[gCurSaveSlot].unk28[q][3];
-            gUnk_03004D90[2] = gSaveSlots[gCurSaveSlot].unk28[q][4];
-            gUnk_03004D90[3] = gSaveSlots[gCurSaveSlot].unk28[q][5];
+            gSendCmd[1] = gSaveSlots[gCurSaveSlot].unk28[q][3];
+            gSendCmd[2] = gSaveSlots[gCurSaveSlot].unk28[q][4];
+            gSendCmd[3] = gSaveSlots[gCurSaveSlot].unk28[q][5];
             break;
         case 2:
-            gUnk_03004D90[1] = gSaveSlots[gCurSaveSlot].unk28[q][6];
+            gSendCmd[1] = gSaveSlots[gCurSaveSlot].unk28[q][6];
             break;
         }
         break;

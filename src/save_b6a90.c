@@ -2,7 +2,7 @@
 #include "global.h"
 #include "task.h"
 
-extern void (*gUnk_0300003C)(void);
+extern void (*gFrameCallback)(void);
 extern s16 (*gHBlankScrollEffects[])(void);
 extern u16 *gHBlankDmaSrc;
 extern u8 gHBlankScrollState;
@@ -11,13 +11,13 @@ extern u16 gHBlankScrollTable[];
 extern s16 gHBlankScrollEffect;
 extern u16 gHBlankScrollDmaTable[];
 extern s32 gUnk_02016C30;
-extern vs32 gUnk_03000B78;
-extern vs32 gUnk_03000F8C;
+extern vs32 gBg3ScrollX;
+extern vs32 gBg2ScrollX;
 extern u32 gUnk_03000FA4;
 extern u32 gHBlankDmaDest;
 extern u32 gHBlankDmaCnt;
-extern u32 gUnk_03001E94;
-extern u16 gUnk_030023E4;
+extern u32 gBg2ScrollY;
+extern u16 gSpriteCameraY;
 extern s8 gUnk_087561CC[];
 
 void HBlankScrollVBlankCallback(void);

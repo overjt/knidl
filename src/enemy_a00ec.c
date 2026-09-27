@@ -5,7 +5,7 @@
 /* RAM cells / ROM tables */
 extern s32 gUnk_02006040[];
 extern s32 gUnk_03001F2C;
-extern s16 gUnk_03002158[];
+extern s16 gViewRect[];
 extern s32 gUnk_03002448;
 extern u32 gUnk_080D2148[];
 extern s16 gUnk_08748268[2][16];
@@ -32,7 +32,7 @@ void sub_080a00ec(void)
         {
             gUnk_02006040[i + 6] = 0;
             r = RandomRange(16);
-            if (gUnk_03002490->unk43 == 1)
+            if (gCurTask->unk43 == 1)
                 gUnk_02006040[i] = (gUnk_08748268[0][r] + 20) << 16;
             else
                 gUnk_02006040[i] = -((gUnk_08748268[0][r] + 20) << 16);
@@ -54,12 +54,12 @@ void sub_080a00ec(void)
         if (gUnk_02006040[i + 3] > 0)
             v = -v;
         gUnk_02006040[i + 3] += v;
-        t = gUnk_03002490;
-        gUnk_03001F2C = t->unk48 + (gUnk_02006040[i] >> 16) - gUnk_03002158[0];
+        t = gCurTask;
+        gUnk_03001F2C = t->unk48 + (gUnk_02006040[i] >> 16) - gViewRect[0];
         uy = t->unk4A;
         sh = gUnk_02006040[i + 3] >> 16;
         sh += 16;
-        *pb = uy + sh - gUnk_03002158[2];
+        *pb = uy + sh - gViewRect[2];
         QueueSprite(t->unk42, (u32)gUnk_080D2148, 0, 0, gUnk_03001F2C, (s16)*pb);
     }
 }

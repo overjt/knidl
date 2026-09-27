@@ -15,8 +15,8 @@
 #include "gba/gba.h"
 #include "global.h"
 
-/* Sprite / draw-request record.  gUnk_03002490 points at the entry that is
- * currently being filled in; gUnk_03002790[] is the array those entries live
+/* Sprite / draw-request record.  gCurTask points at the entry that is
+ * currently being filled in; gTasks[] is the array those entries live
  * in (stride 0x90, indexed by the same slot number used by TaskSetEntry).
  *
  * Evidence for the field types is in the ROM itself:
@@ -52,14 +52,14 @@ struct Sprite
     /*0x6C*/ u8 filler6C[0x90 - 0x6C];
 };
 
-extern struct Sprite *gUnk_03002490;
-extern struct Sprite gUnk_03002790[];
-extern void *gTaskFlagsTable[];
-extern u32 gUnk_03004B90[];
+extern struct Sprite *gCurTask;
+extern struct Sprite gTasks[];
+extern void *gTaskResumeAddrs[];
+extern u32 gTaskStackPtrs[];
 /* Camera scroll origin: subtracted from the world coordinates to get the
  * screen coordinates handed to QueueSprite. */
-extern s16 gUnk_03002348;
-extern s16 gUnk_030023E4;
+extern s16 gSpriteCameraX;
+extern s16 gSpriteCameraY;
 extern u32 gCurTaskIdx;
 
 extern s32 QueueSprite(u32 a, u32 b, u32 c, u32 d, u32 e, u32 f);
@@ -75,14 +75,14 @@ void TaskDrawWorld(void)
     struct Sprite *q;
     void **tbl;
 
-    p = gUnk_03002490;
+    p = gCurTask;
     if (p->unk38 == NULL) return;
     if (p->unk3C == -1) return;
     if (TaskIsOnScreen() == 0) return;
-    q = gUnk_03002490;
+    q = gCurTask;
     tbl = q->unk38;
     QueueSprite(q->unk42, (u32)tbl[q->unk3C], q->unk3E, q->unk40,
-                 q->unk48 - gUnk_03002348, (s16)(q->unk4A - gUnk_030023E4));
+                 q->unk48 - gSpriteCameraX, (s16)(q->unk4A - gSpriteCameraY));
 }
 
 void TaskDrawWorldOrFree(void)
@@ -91,15 +91,15 @@ void TaskDrawWorldOrFree(void)
     struct Sprite *q;
     void **tbl;
 
-    p = gUnk_03002490;
+    p = gCurTask;
     if (p->unk38 == NULL) return;
     if (p->unk3C == -1) return;
     if (TaskIsOnScreen() != 0) {
-        q = gUnk_03002490;
+        q = gCurTask;
         tbl = q->unk38;
         QueueSprite(q->unk42, (u32)tbl[q->unk3C], q->unk3E, q->unk40,
-                     q->unk48 - gUnk_03002348,
-                     (s16)(q->unk4A - gUnk_030023E4));
+                     q->unk48 - gSpriteCameraX,
+                     (s16)(q->unk4A - gSpriteCameraY));
     } else {
         TaskFree(gCurTaskIdx);
     }
@@ -111,16 +111,16 @@ void TaskDrawWorldInView(void)
     struct Sprite *q;
     void **tbl;
 
-    p = gUnk_03002490;
+    p = gCurTask;
     if (p->unk38 == NULL) return;
     if (p->unk3C == -1) return;
     if (TaskIsInView() == 0) return;
     if (TaskIsOnScreen() == 0) return;
-    q = gUnk_03002490;
+    q = gCurTask;
     tbl = q->unk38;
     QueueSprite(q->unk42, (u32)tbl[q->unk3C], q->unk3E, q->unk40,
-                 q->unk48 - gUnk_03002348,
-                 (s16)(q->unk4A - gUnk_030023E4));
+                 q->unk48 - gSpriteCameraX,
+                 (s16)(q->unk4A - gSpriteCameraY));
 }
 
 void TaskDrawWorldInViewOrFree(void)
@@ -129,16 +129,16 @@ void TaskDrawWorldInViewOrFree(void)
     struct Sprite *q;
     void **tbl;
 
-    p = gUnk_03002490;
+    p = gCurTask;
     if (p->unk38 == NULL) return;
     if (p->unk3C == -1) return;
     if (TaskIsInView() != 0) {
         if (TaskIsOnScreen() == 0) return;
-        q = gUnk_03002490;
+        q = gCurTask;
         tbl = q->unk38;
         QueueSprite(q->unk42, (u32)tbl[q->unk3C], q->unk3E, q->unk40,
-                     q->unk48 - gUnk_03002348,
-                     (s16)(q->unk4A - gUnk_030023E4));
+                     q->unk48 - gSpriteCameraX,
+                     (s16)(q->unk4A - gSpriteCameraY));
     } else {
         TaskFree(gCurTaskIdx);
     }
@@ -150,15 +150,15 @@ void TaskDrawWorldLoadTiles(void)
     struct Sprite *q;
     u32 v;
 
-    p = gUnk_03002490;
+    p = gCurTask;
     if (p->unk38 == NULL) return;
     if (p->unk3C == -1) return;
     if (TaskIsOnScreen() == 0) return;
     v = TaskLoadFrameTiles(0);
-    q = gUnk_03002490;
+    q = gCurTask;
     QueueSprite(q->unk42, v, q->unk3E, q->unk40,
-                 q->unk48 - gUnk_03002348,
-                 (s16)(q->unk4A - gUnk_030023E4));
+                 q->unk48 - gSpriteCameraX,
+                 (s16)(q->unk4A - gSpriteCameraY));
 }
 
 void sub_08006040(void)
@@ -168,16 +168,16 @@ void sub_08006040(void)
     void **tbl;
     u32 *r;
 
-    p = gUnk_03002490;
+    p = gCurTask;
     if (p->unk38 == NULL) return;
     if (p->unk3C == -1) return;
     if (TaskIsOnScreen() == 0) return;
-    q = gUnk_03002490;
+    q = gCurTask;
     tbl = q->unk38;
     r = tbl[q->unk3C];
     QueueSprite(q->unk42, *r, q->unk3E, q->unk40,
-                 q->unk48 - gUnk_03002348,
-                 (s16)(q->unk4A - gUnk_030023E4));
+                 q->unk48 - gSpriteCameraX,
+                 (s16)(q->unk4A - gSpriteCameraY));
 }
 
 void sub_080060c0(void)
@@ -186,7 +186,7 @@ void sub_080060c0(void)
     void **tbl;
     u16 t;
 
-    p = gUnk_03002490;
+    p = gCurTask;
     if (p->unk38 == NULL) return;
     if (p->unk3C == -1) return;
     t = p->unk48 + 31;
@@ -206,16 +206,16 @@ void TaskSleepForever(void)
 
 void TaskSetEntry(void *a, u32 i)
 {
-    gUnk_03002790[i].unk10 = 0;
-    gTaskFlagsTable[i] = a;
-    gUnk_03004B90[i] = 0x0203BFE0 + (i << 8);
+    gTasks[i].unk10 = 0;
+    gTaskResumeAddrs[i] = a;
+    gTaskStackPtrs[i] = 0x0203BFE0 + (i << 8);
 }
 
 void TaskSetFrameByFacing(s16 a)
 {
     struct Sprite *p;
 
-    p = gUnk_03002490;
+    p = gCurTask;
     if (p->unk43 == 1)
         p->unk3C = a;
     else
@@ -226,7 +226,7 @@ void TaskSetMotionX(s32 a, s32 b, s32 c)
 {
     struct Sprite *p;
 
-    p = gUnk_03002490;
+    p = gCurTask;
     p->unk54 = a;
     p->unk5C = b;
     p->unk64 = abs(c);
@@ -236,13 +236,13 @@ void TaskSetMotionXFacing(s32 a, s32 b)
 {
     struct Sprite *p;
 
-    p = gUnk_03002490;
+    p = gCurTask;
     if (p->unk43 == 1) {
         if (a != 0x5A5A5A5A) p->unk54 = a;
-        if (b != 0x5A5A5A5A) gUnk_03002490->unk5C = b;
+        if (b != 0x5A5A5A5A) gCurTask->unk5C = b;
     } else {
         if (a != 0x5A5A5A5A) p->unk54 = -a;
-        if (b != 0x5A5A5A5A) gUnk_03002490->unk5C = -b;
+        if (b != 0x5A5A5A5A) gCurTask->unk5C = -b;
     }
 }
 
@@ -250,7 +250,7 @@ void TaskStopX(void)
 {
     struct Sprite *p;
 
-    p = gUnk_03002490;
+    p = gCurTask;
     p->unk5C = 0;
     p->unk54 = 0;
     p->unk64 = 0x80000000;
@@ -260,7 +260,7 @@ void TaskSetMotionY(s32 a, s32 b, s32 c)
 {
     struct Sprite *p;
 
-    p = gUnk_03002490;
+    p = gCurTask;
     p->unk58 = a;
     p->unk60 = b;
     p->unk68 = abs(c);
@@ -270,7 +270,7 @@ void TaskStopY(void)
 {
     struct Sprite *p;
 
-    p = gUnk_03002490;
+    p = gCurTask;
     p->unk60 = 0;
     p->unk58 = 0;
     p->unk68 = 0x80000000;
@@ -278,19 +278,19 @@ void TaskStopY(void)
 
 void TaskSetMotion(s32 a, s32 b, s32 c, s32 d, s32 e, s32 f)
 {
-    if (a != 0x5A5A5A5A) gUnk_03002490->unk54 = a;
-    if (b != 0x5A5A5A5A) gUnk_03002490->unk5C = b;
-    if (c != 0x5A5A5A5A) gUnk_03002490->unk64 = abs(c);
-    if (d != 0x5A5A5A5A) gUnk_03002490->unk58 = d;
-    if (e != 0x5A5A5A5A) gUnk_03002490->unk60 = e;
-    if (f != 0x5A5A5A5A) gUnk_03002490->unk68 = abs(f);
+    if (a != 0x5A5A5A5A) gCurTask->unk54 = a;
+    if (b != 0x5A5A5A5A) gCurTask->unk5C = b;
+    if (c != 0x5A5A5A5A) gCurTask->unk64 = abs(c);
+    if (d != 0x5A5A5A5A) gCurTask->unk58 = d;
+    if (e != 0x5A5A5A5A) gCurTask->unk60 = e;
+    if (f != 0x5A5A5A5A) gCurTask->unk68 = abs(f);
 }
 
 void TaskStop(void)
 {
     struct Sprite *p;
 
-    p = gUnk_03002490;
+    p = gCurTask;
     p->unk60 = 0;
     p->unk58 = 0;
     p->unk5C = 0;
@@ -303,7 +303,7 @@ void TaskStopSlot(u32 i)
 {
     struct Sprite *p;
 
-    p = &gUnk_03002790[i];
+    p = &gTasks[i];
     p->unk60 = 0;
     p->unk58 = 0;
     p->unk5C = 0;
@@ -316,7 +316,7 @@ void TaskUpdateFlip(void)
 {
     struct Sprite *p;
 
-    p = gUnk_03002490;
+    p = gCurTask;
     if (p->unk43 == 1)
         p->unk3E &= 0x7FFF;
     else
@@ -325,7 +325,7 @@ void TaskUpdateFlip(void)
 
 void TaskSetFrame(s32 a)
 {
-    gUnk_03002490->unk3C = a;
+    gCurTask->unk3C = a;
     TaskUpdateFlip();
 }
 
@@ -333,7 +333,7 @@ void TaskSetFrameNoFlip(s32 a)
 {
     struct Sprite *p;
 
-    p = gUnk_03002490;
+    p = gCurTask;
     p->unk3E &= 0x7FFF;
     p->unk3C = a;
 }
@@ -342,7 +342,7 @@ void TaskSetFrameFlip(s32 a)
 {
     struct Sprite *p;
 
-    p = gUnk_03002490;
+    p = gCurTask;
     p->unk3E |= 0x8000;
     p->unk3C = a;
 }
@@ -351,7 +351,7 @@ void sub_08006384(u16 a)
 {
     struct Sprite *p;
 
-    p = gUnk_03002490;
+    p = gCurTask;
     if (p->unk43 == 1)
         p->unk4C = a << 16;
     else
@@ -362,7 +362,7 @@ void TaskStepForward(s16 a)
 {
     struct Sprite *p;
 
-    p = gUnk_03002490;
+    p = gCurTask;
     if (p->unk43 == 1)
         p->unk4C = (p->unk48 + a) << 16;
     else
@@ -386,8 +386,8 @@ u8 IsWorldPosOnScreen(s16 a, s16 b)
     s16 y;
     u16 t;
 
-    x = a - gUnk_03002348;
-    y = b - gUnk_030023E4;
+    x = a - gSpriteCameraX;
+    y = b - gSpriteCameraY;
     t = x + 63;
     if (t > 366) return 0;
     if (y <= -64) return 0;

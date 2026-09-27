@@ -11,7 +11,7 @@
  * screen gUnk_020060D0 until it reaches 9 (start a game: state 5 or 13)
  * or 10 (back to the title).  The rest draws the file-select screen's
  * three save slots: sub_0800bcf0 all three, sub_0800bda4 a slot's label
- * (empty, finished, or its number through the digit buffer gUnk_03001F08),
+ * (empty, finished, or its number through the digit buffer gDigits),
  * sub_0800be8c/sub_0800bf10 its picture and palette, sub_0800bf6c its
  * second number. */
 
@@ -47,26 +47,26 @@ extern s8 gUnk_0200B074;
 extern struct SaveSlot gSaveSlots[];
 extern u32 gUnk_0200EC48;
 extern vu16 gUnk_03000048;
-extern vs16 gUnk_030004A4;
-extern vs32 gUnk_03000FA8;
-extern vs16 gUnk_03000FB8;
-extern vu16 gUnk_03000FC8;
-extern vu16 gUnk_03001174;
+extern vs16 gFadeStep;
+extern vs32 gBg3ScrollY;
+extern vs16 gBrightness;
+extern vu16 gKeyRepeatDelay;
+extern vu16 gFadeTimer;
 extern u16 gUnk_03001490[];
-extern vu16 gUnk_03001E90;
-extern vu16 gUnk_03001E98;
-extern vu16 gUnk_03001ECC;
-extern u16 *gUnk_03001ED4;
-extern vu16 gUnk_03001ED8;
-extern s8 gUnk_03001F08[];
+extern vu16 gFadeSteps;
+extern vu16 gFadeInterval;
+extern vu16 gKeyRepeatInterval;
+extern u16 *gFadeKeepMask;
+extern vu16 gDispCnt;
+extern s8 gDigits[];
 extern u8 gUnk_03001F30;
 extern u16 gUnk_03002150;
-extern u16 gUnk_030023AC;
-extern u16 gUnk_030023D8;
+extern u16 gPlayerCount;
+extern u16 gGameState;
 extern s32 gCurSaveSlot;
 extern s16 gUnk_0300244C;
-extern u32 gUnk_03004D70;
-extern u32 gUnk_06010000[];
+extern u32 gLinkStatus;
+extern u32 gObjVram[];
 extern u8 gUnk_08551110[];
 extern u8 gUnk_08553210[];
 extern u8 gUnk_08553510[];
@@ -126,7 +126,7 @@ void sub_0800b920(void)
 {
     sub_08003964();
     DisableSerial();
-    gUnk_03004D70 = 0;
+    gLinkStatus = 0;
     ResetTasksAndOam();
     ResetFadeAndBlend();
     ResetHBlankScroll();
@@ -134,8 +134,8 @@ void sub_0800b920(void)
         SelectLatestSaveSlot();
     gUnk_0200A6E0[0] = 0;
     gUnk_0200A6E0[1] = 0;
-    gUnk_03000FC8 = 10;
-    gUnk_03001ECC = 6;
+    gKeyRepeatDelay = 10;
+    gKeyRepeatInterval = 6;
     gUnk_02006180 = 0;
     sub_08008c4c(2);
     sub_08008c64(22);
@@ -147,10 +147,10 @@ void sub_0800b920(void)
     switch (gUnk_03002150)
     {
     case 3:
-        gUnk_03000FA8 = 64;
+        gBg3ScrollY = 64;
         sub_0800fdb8(0x80000, 80, 3);
-        gUnk_03001ED8 &= 0xE0FF;
-        gUnk_03001ED8 |= 0x1C00;
+        gDispCnt &= 0xE0FF;
+        gDispCnt |= 0x1C00;
         gUnk_020060D0 = 0;
         sub_0800bcf0();
         sub_0800da9c(0);
@@ -160,7 +160,7 @@ void sub_0800b920(void)
     case 16:
     case 20:
     case 21:
-        gUnk_03000FA8 = 64;
+        gBg3ScrollY = 64;
         sub_0800fdb8(0x80000, 80, 3);
         if (gUnk_03002150 <= 16)
             gUnk_0200B074 = gUnk_03002150 - 14;
@@ -174,13 +174,13 @@ void sub_0800b920(void)
         break;
     }
     PlayBgm(40);
-    gUnk_03001E90 = 10;
-    gUnk_03000FB8 = 30;
-    gUnk_030004A4 = -3;
-    gUnk_03001174 = 0;
-    gUnk_03001E98 = 1;
+    gFadeSteps = 10;
+    gBrightness = 30;
+    gFadeStep = -3;
+    gFadeTimer = 0;
+    gFadeInterval = 1;
     gUnk_03000048 = 1;
-    gUnk_03001ED4 = 0;
+    gFadeKeepMask = 0;
     RunFramesUntilFadeDone();
     RunFrames(6);
     do
@@ -220,22 +220,22 @@ void sub_0800b920(void)
     if (gUnk_0200EC48 == 2)
     {
         FadeOutBgm(16);
-        while (gUnk_03001E90 != 0)
+        while (gFadeSteps != 0)
         {
             RunFrame();
             sub_08004000(gUnk_02000004);
         }
         gUnk_03000048 = 0;
         gUnk_03001F30 = 0;
-        gUnk_030023D8 = 13;
+        gGameState = 13;
     }
     else
     {
-        if (gUnk_030023D8 == 5 || gUnk_030023D8 == 3)
+        if (gGameState == 5 || gGameState == 3)
             FadeOutBgm(16);
-        if (gUnk_030023AC > 1)
+        if (gPlayerCount > 1)
         {
-            if (gUnk_030023D8 == 5)
+            if (gGameState == 5)
             {
                 sub_080b8888();
                 sub_080b8918();
@@ -250,8 +250,8 @@ void sub_0800b920(void)
         }
     }
     sub_08010020(0, 0, 0, 0);
-    gUnk_03001ED8 &= 0xDFFF;
-    switch (gUnk_030023D8)
+    gDispCnt &= 0xDFFF;
+    switch (gGameState)
     {
     case 3: /* empty but load-bearing: it adds the `cmp #5; ble` split */
         break;
@@ -294,21 +294,21 @@ void sub_0800bda4(s32 slot)
 
     if (gSaveSlots[slot].unk04 == 0x99999999)
     {
-        RequestCopy(3, (u32)gUnk_08553510, (u32)gUnk_06010000 + ((slot * 64 + 576) << 5), 0x180);
-        RequestCopy(3, (u32)&gUnk_08553510[0x180], (u32)gUnk_06010000 + ((slot * 64 + 608) << 5), 0x180);
+        RequestCopy(3, (u32)gUnk_08553510, (u32)gObjVram + ((slot * 64 + 576) << 5), 0x180);
+        RequestCopy(3, (u32)&gUnk_08553510[0x180], (u32)gObjVram + ((slot * 64 + 608) << 5), 0x180);
     }
     else if (gSaveSlots[slot].unk10 & 2)
     {
-        RequestCopy(3, (u32)gUnk_08553210, (u32)gUnk_06010000 + ((slot * 64 + 576) << 5), 0x180);
-        RequestCopy(3, (u32)&gUnk_08553210[0x180], (u32)gUnk_06010000 + ((slot * 64 + 608) << 5), 0x180);
+        RequestCopy(3, (u32)gUnk_08553210, (u32)gObjVram + ((slot * 64 + 576) << 5), 0x180);
+        RequestCopy(3, (u32)&gUnk_08553210[0x180], (u32)gObjVram + ((slot * 64 + 608) << 5), 0x180);
     }
     else
     {
         IntToDigits(gSaveSlots[slot].unk12[0]);
-        n = (gUnk_03001F08[1] + gUnk_03001F08[2] * 10) * 2;
-        RequestCopy(3, (u32)&gUnk_08551110[n * 0x180], (u32)gUnk_06010000 + ((slot * 64 + 576) << 5), 0x180);
+        n = (gDigits[1] + gDigits[2] * 10) * 2;
+        RequestCopy(3, (u32)&gUnk_08551110[n * 0x180], (u32)gObjVram + ((slot * 64 + 576) << 5), 0x180);
         n++;
-        RequestCopy(3, (u32)&gUnk_08551110[n * 0x180], (u32)gUnk_06010000 + ((slot * 64 + 608) << 5), 0x180);
+        RequestCopy(3, (u32)&gUnk_08551110[n * 0x180], (u32)gObjVram + ((slot * 64 + 608) << 5), 0x180);
     }
 }
 
@@ -319,9 +319,9 @@ void sub_0800be8c(s32 slot, u32 pal)
     if (pal > 6)
         pal = 7;
     i = pal * 15;
-    RequestCopy(3, (u32)&gUnk_08553810[i * 32], (u32)gUnk_06010000 + (gUnk_08731E18[slot] << 5), 160);
-    RequestCopy(3, (u32)&gUnk_08553810[(i + 5) * 32], (u32)gUnk_06010000 + ((gUnk_08731E18[slot] + 32) << 5), 160);
-    RequestCopy(3, (u32)&gUnk_08553810[(i + 10) * 32], (u32)gUnk_06010000 + ((gUnk_08731E18[slot] + 64) << 5), 160);
+    RequestCopy(3, (u32)&gUnk_08553810[i * 32], (u32)gObjVram + (gUnk_08731E18[slot] << 5), 160);
+    RequestCopy(3, (u32)&gUnk_08553810[(i + 5) * 32], (u32)gObjVram + ((gUnk_08731E18[slot] + 32) << 5), 160);
+    RequestCopy(3, (u32)&gUnk_08553810[(i + 10) * 32], (u32)gObjVram + ((gUnk_08731E18[slot] + 64) << 5), 160);
     sub_0800bf10(slot, pal);
 }
 
@@ -340,18 +340,18 @@ void sub_0800bf6c(s32 slot, s32 value, s32 mode)
     IntToDigits(value);
     if (value < 0 || value > 100)
     {
-        gUnk_03001F08[1] = 10;
-        gUnk_03001F08[2] = 10;
-        gUnk_03001F08[0] = 0;
+        gDigits[1] = 10;
+        gDigits[2] = 10;
+        gDigits[0] = 0;
     }
     else if (value < 10)
     {
-        gUnk_03001F08[1] = 10;
-        gUnk_03001F08[2] = 10;
+        gDigits[1] = 10;
+        gDigits[2] = 10;
     }
     else if (value < 100)
     {
-        gUnk_03001F08[2] = 10;
+        gDigits[2] = 10;
     }
 
     switch (mode)
@@ -359,16 +359,16 @@ void sub_0800bf6c(s32 slot, s32 value, s32 mode)
     case 0:
         if (value == 100)
         {
-            gUnk_03001F08[1] = 11;
-            gUnk_03001F08[0] = 12;
+            gDigits[1] = 11;
+            gDigits[0] = 12;
         }
-        RequestCopy(3, (u32)(gUnk_08731E2C[0] + gUnk_03001F08[1] * 32), (u32)gUnk_06010000 + ((gUnk_08731E1E[0][slot] + 1) << 5), 32);
-        RequestCopy(3, (u32)(gUnk_08731E2C[0] + gUnk_03001F08[0] * 32), (u32)gUnk_06010000 + ((gUnk_08731E1E[0][slot] + 2) << 5), 32);
+        RequestCopy(3, (u32)(gUnk_08731E2C[0] + gDigits[1] * 32), (u32)gObjVram + ((gUnk_08731E1E[0][slot] + 1) << 5), 32);
+        RequestCopy(3, (u32)(gUnk_08731E2C[0] + gDigits[0] * 32), (u32)gObjVram + ((gUnk_08731E1E[0][slot] + 2) << 5), 32);
         break;
     case 1:
-        RequestCopy(3, (u32)(gUnk_08731E2C[1] + gUnk_03001F08[2] * 32), (u32)gUnk_06010000 + (gUnk_08731E1E[mode][slot] << 5), 32);
-        RequestCopy(3, (u32)(gUnk_08731E2C[1] + gUnk_03001F08[1] * 32), (u32)gUnk_06010000 + ((gUnk_08731E1E[mode][slot] + 1) << 5), 32);
-        RequestCopy(3, (u32)(gUnk_08731E2C[1] + gUnk_03001F08[0] * 32), (u32)gUnk_06010000 + ((gUnk_08731E1E[mode][slot] + 2) << 5), 32);
+        RequestCopy(3, (u32)(gUnk_08731E2C[1] + gDigits[2] * 32), (u32)gObjVram + (gUnk_08731E1E[mode][slot] << 5), 32);
+        RequestCopy(3, (u32)(gUnk_08731E2C[1] + gDigits[1] * 32), (u32)gObjVram + ((gUnk_08731E1E[mode][slot] + 1) << 5), 32);
+        RequestCopy(3, (u32)(gUnk_08731E2C[1] + gDigits[0] * 32), (u32)gObjVram + ((gUnk_08731E1E[mode][slot] + 2) << 5), 32);
         break;
     }
 }

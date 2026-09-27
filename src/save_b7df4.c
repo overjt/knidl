@@ -27,7 +27,7 @@ struct SaveSlot
 extern u16 gUnk_02006068[];
 extern struct SaveSlot gSaveSlots[];
 extern s32 gSramAvailable;
-extern u16 gUnk_030023AC;
+extern u16 gPlayerCount;
 
 s32 WriteSaveSlot(s32 a);
 void ClearSaveSlot(s32 a);

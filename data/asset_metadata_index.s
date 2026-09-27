@@ -867,16 +867,16 @@ gUnk_08731D70:
 	.incbin	"baserom.gba", 0x731D70, 0x30
 	.global	gUnk_08731DA0
 gUnk_08731DA0:
-	.word	gUnk_03000010
-	.word	gUnk_03000FC0
-	.word	gUnk_03001E94
-	.word	gUnk_03000FA8
+	.word	gBg0ScrollY
+	.word	gBg1ScrollY
+	.word	gBg2ScrollY
+	.word	gBg3ScrollY
 	.global	gUnk_08731DB0
 gUnk_08731DB0:
-	.word	gUnk_0300117C
-	.word	gUnk_03001EE0
-	.word	gUnk_03000F8C
-	.word	gUnk_03000B78
+	.word	gBg0ScrollX
+	.word	gBg1ScrollX
+	.word	gBg2ScrollX
+	.word	gBg3ScrollX
 	.global	gUnk_08731DC0
 gUnk_08731DC0:
 	.incbin	"baserom.gba", 0x731DC0, 0x58
@@ -11240,22 +11240,22 @@ gUnk_087572EC:
 	.word	gUnk_080D00F6
 	.global	gUnk_08757300
 gUnk_08757300:
-	.word	gUnk_0300117C
-	.word	gUnk_03001EE0
-	.word	gUnk_03000F8C
-	.word	gUnk_03000B78
+	.word	gBg0ScrollX
+	.word	gBg1ScrollX
+	.word	gBg2ScrollX
+	.word	gBg3ScrollX
 	.global	gUnk_08757310
 gUnk_08757310:
-	.word	gUnk_03000010
-	.word	gUnk_03000FC0
-	.word	gUnk_03001E94
-	.word	gUnk_03000FA8
+	.word	gBg0ScrollY
+	.word	gBg1ScrollY
+	.word	gBg2ScrollY
+	.word	gBg3ScrollY
 	.global	gUnk_08757320
 gUnk_08757320:
-	.word	gUnk_03001188
-	.word	gUnk_03000B14
-	.word	gUnk_03000B10
-	.word	gUnk_03001EB4
+	.word	gBg0Cnt
+	.word	gBg1Cnt
+	.word	gBg2Cnt
+	.word	gBg3Cnt
 	.global	gUnk_08757330
 gUnk_08757330:
 	.incbin	"baserom.gba", 0x757330, 0x4

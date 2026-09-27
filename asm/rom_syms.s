@@ -239,8 +239,8 @@ gUnk_02007D38 = 0x02007D38
 gUnk_02007D3C = 0x02007D3C
 	.global	gUnk_02007D40
 gUnk_02007D40 = 0x02007D40
-	.global	gUnk_02007D48
-gUnk_02007D48 = 0x02007D48
+	.global	gPlayerLives
+gPlayerLives = 0x02007D48
 	.global	gUnk_02007D50
 gUnk_02007D50 = 0x02007D50
 	.global	gUnk_02007D58
@@ -383,10 +383,10 @@ gUnk_0200B080 = 0x0200B080
 gUnk_0200C320 = 0x0200C320
 	.global	gUnk_0200D080
 gUnk_0200D080 = 0x0200D080
-	.global	gUnk_0200D090
-gUnk_0200D090 = 0x0200D090
-	.global	gUnk_0200D110
-gUnk_0200D110 = 0x0200D110
+	.global	gTaskSkipMaskStack
+gTaskSkipMaskStack = 0x0200D090
+	.global	gTaskSkipMaskDepth
+gTaskSkipMaskDepth = 0x0200D110
 	.global	gUnk_0200D120
 gUnk_0200D120 = 0x0200D120
 	.global	gSaveSlots
@@ -523,116 +523,116 @@ gUnk_02028000 = 0x02028000
 gUnk_02030000 = 0x02030000
 	.global	gUnk_0203BFE0
 gUnk_0203BFE0 = 0x0203BFE0
-	.global	gUnk_03000010
-gUnk_03000010 = 0x03000010
-	.global	gUnk_03000014
-gUnk_03000014 = 0x03000014
-	.global	gUnk_03000018
-gUnk_03000018 = 0x03000018
-	.global	gUnk_0300001C
-gUnk_0300001C = 0x0300001C
+	.global	gBg0ScrollY
+gBg0ScrollY = 0x03000010
+	.global	gFrameEndCallback
+gFrameEndCallback = 0x03000014
+	.global	gIntrEnable
+gIntrEnable = 0x03000018
+	.global	gSfxPlayerSlots
+gSfxPlayerSlots = 0x0300001C
 	.global	gUnk_03000020
 gUnk_03000020 = 0x03000020
-	.global	gUnk_03000038
-gUnk_03000038 = 0x03000038
-	.global	gUnk_0300003C
-gUnk_0300003C = 0x0300003C
-	.global	gUnk_03000040
-gUnk_03000040 = 0x03000040
-	.global	gUnk_03000044
-gUnk_03000044 = 0x03000044
+	.global	gPressedKeys
+gPressedKeys = 0x03000038
+	.global	gFrameCallback
+gFrameCallback = 0x0300003C
+	.global	gBldCntTarget2
+gBldCntTarget2 = 0x03000040
+	.global	gWin0V
+gWin0V = 0x03000044
 	.global	gUnk_03000048
 gUnk_03000048 = 0x03000048
-	.global	gUnk_03000050
-gUnk_03000050 = 0x03000050
-	.global	gUnk_03000490
-gUnk_03000490 = 0x03000490
-	.global	gUnk_03000498
-gUnk_03000498 = 0x03000498
+	.global	gOamBuffer
+gOamBuffer = 0x03000050
+	.global	gCurrentBgm
+gCurrentBgm = 0x03000490
+	.global	gPlayTime
+gPlayTime = 0x03000498
 	.global	gUnk_030004A0
 gUnk_030004A0 = 0x030004A0
-	.global	gUnk_030004A4
-gUnk_030004A4 = 0x030004A4
-	.global	gUnk_030004B0
-gUnk_030004B0 = 0x030004B0
-	.global	gUnk_030004F0
-gUnk_030004F0 = 0x030004F0
+	.global	gFadeStep
+gFadeStep = 0x030004A4
+	.global	gIntrTable
+gIntrTable = 0x030004B0
+	.global	gSpriteQueue
+gSpriteQueue = 0x030004F0
 	.global	gUnk_03000AF4
 gUnk_03000AF4 = 0x03000AF4
-	.global	gUnk_03000AF8
-gUnk_03000AF8 = 0x03000AF8
-	.global	gUnk_03000AFC
-gUnk_03000AFC = 0x03000AFC
+	.global	gSoundDisabled
+gSoundDisabled = 0x03000AF8
+	.global	gWin1V
+gWin1V = 0x03000AFC
 	.global	gUnk_03000B00
 gUnk_03000B00 = 0x03000B00
-	.global	gUnk_03000B04
-gUnk_03000B04 = 0x03000B04
-	.global	gUnk_03000B08
-gUnk_03000B08 = 0x03000B08
-	.global	gUnk_03000B0C
-gUnk_03000B0C = 0x03000B0C
-	.global	gUnk_03000B10
-gUnk_03000B10 = 0x03000B10
-	.global	gUnk_03000B14
-gUnk_03000B14 = 0x03000B14
-	.global	gUnk_03000B18
-gUnk_03000B18 = 0x03000B18
+	.global	gOamBufferCursor
+gOamBufferCursor = 0x03000B04
+	.global	gBldAlphaEva
+gBldAlphaEva = 0x03000B08
+	.global	gVolumeRampMode
+gVolumeRampMode = 0x03000B0C
+	.global	gBg2Cnt
+gBg2Cnt = 0x03000B10
+	.global	gBg1Cnt
+gBg1Cnt = 0x03000B14
+	.global	gWinIn0
+gWinIn0 = 0x03000B18
 	.global	gUnk_03000B1C
 gUnk_03000B1C = 0x03000B1C
 	.global	gUnk_03000B20
 gUnk_03000B20 = 0x03000B20
 	.global	gUnk_03000B24
 gUnk_03000B24 = 0x03000B24
-	.global	gUnk_03000B30
-gUnk_03000B30 = 0x03000B30
-	.global	gUnk_03000B70
-gUnk_03000B70 = 0x03000B70
+	.global	gSpriteLayerCounts
+gSpriteLayerCounts = 0x03000B30
+	.global	gRepeatedKeys
+gRepeatedKeys = 0x03000B70
 	.global	gUnk_03000B74
 gUnk_03000B74 = 0x03000B74
-	.global	gUnk_03000B78
-gUnk_03000B78 = 0x03000B78
+	.global	gBg3ScrollX
+gBg3ScrollX = 0x03000B78
 	.global	gUnk_03000B7C
 gUnk_03000B7C = 0x03000B7C
 	.global	gUnk_03000F7C
 gUnk_03000F7C = 0x03000F7C
-	.global	gUnk_03000F80
-gUnk_03000F80 = 0x03000F80
-	.global	gUnk_03000F88
-gUnk_03000F88 = 0x03000F88
-	.global	gUnk_03000F8C
-gUnk_03000F8C = 0x03000F8C
+	.global	gSfxSlotSongs
+gSfxSlotSongs = 0x03000F80
+	.global	gCopyQueueRead
+gCopyQueueRead = 0x03000F88
+	.global	gBg2ScrollX
+gBg2ScrollX = 0x03000F8C
 	.global	gUnk_03000F90
 gUnk_03000F90 = 0x03000F90
-	.global	gUnk_03000F98
-gUnk_03000F98 = 0x03000F98
+	.global	gPlayerHeldKeys
+gPlayerHeldKeys = 0x03000F98
 	.global	gUnk_03000FA0
 gUnk_03000FA0 = 0x03000FA0
 	.global	gUnk_03000FA4
 gUnk_03000FA4 = 0x03000FA4
-	.global	gUnk_03000FA8
-gUnk_03000FA8 = 0x03000FA8
-	.global	gUnk_03000FAC
-gUnk_03000FAC = 0x03000FAC
-	.global	gUnk_03000FB0
-gUnk_03000FB0 = 0x03000FB0
-	.global	gUnk_03000FB4
-gUnk_03000FB4 = 0x03000FB4
-	.global	gUnk_03000FB8
-gUnk_03000FB8 = 0x03000FB8
-	.global	gUnk_03000FBC
-gUnk_03000FBC = 0x03000FBC
-	.global	gUnk_03000FC0
-gUnk_03000FC0 = 0x03000FC0
-	.global	gUnk_03000FC4
-gUnk_03000FC4 = 0x03000FC4
-	.global	gUnk_03000FC8
-gUnk_03000FC8 = 0x03000FC8
-	.global	gUnk_03000FCC
-gUnk_03000FCC = 0x03000FCC
-	.global	gUnk_03000FD0
-gUnk_03000FD0 = 0x03000FD0
-	.global	gUnk_03000FD4
-gUnk_03000FD4 = 0x03000FD4
+	.global	gBg3ScrollY
+gBg3ScrollY = 0x03000FA8
+	.global	gVBlankCount
+gVBlankCount = 0x03000FAC
+	.global	gPaletteSource
+gPaletteSource = 0x03000FB0
+	.global	gRngValue
+gRngValue = 0x03000FB4
+	.global	gBrightness
+gBrightness = 0x03000FB8
+	.global	gVolumeRampLevel
+gVolumeRampLevel = 0x03000FBC
+	.global	gBg1ScrollY
+gBg1ScrollY = 0x03000FC0
+	.global	gCopyQueueWrite
+gCopyQueueWrite = 0x03000FC4
+	.global	gKeyRepeatDelay
+gKeyRepeatDelay = 0x03000FC8
+	.global	gVolumeRampSpeed
+gVolumeRampSpeed = 0x03000FCC
+	.global	gFrameInProgress
+gFrameInProgress = 0x03000FD0
+	.global	gWin0H
+gWin0H = 0x03000FD4
 	.global	gUnk_03000FD8
 gUnk_03000FD8 = 0x03000FD8
 	.global	gUnk_03000FE0
@@ -649,32 +649,32 @@ gUnk_0300100C = 0x0300100C
 gUnk_03001010 = 0x03001010
 	.global	gUnk_03001014
 gUnk_03001014 = 0x03001014
-	.global	gUnk_03001018
-gUnk_03001018 = 0x03001018
+	.global	gWin1H
+gWin1H = 0x03001018
 	.global	gHBlankDmaDest
 gHBlankDmaDest = 0x0300101C
 	.global	gUnk_03001020
 gUnk_03001020 = 0x03001020
 	.global	gUnk_03001170
 gUnk_03001170 = 0x03001170
-	.global	gUnk_03001174
-gUnk_03001174 = 0x03001174
+	.global	gFadeTimer
+gFadeTimer = 0x03001174
 	.global	gUnk_03001178
 gUnk_03001178 = 0x03001178
-	.global	gUnk_0300117C
-gUnk_0300117C = 0x0300117C
-	.global	gUnk_03001180
-gUnk_03001180 = 0x03001180
+	.global	gBg0ScrollX
+gBg0ScrollX = 0x0300117C
+	.global	gSfxSlotPlayers
+gSfxSlotPlayers = 0x03001180
 	.global	gHBlankDmaCnt
 gHBlankDmaCnt = 0x03001184
-	.global	gUnk_03001188
-gUnk_03001188 = 0x03001188
-	.global	gUnk_0300118C
-gUnk_0300118C = 0x0300118C
+	.global	gBg0Cnt
+gBg0Cnt = 0x03001188
+	.global	gBldCntTarget1
+gBldCntTarget1 = 0x0300118C
 	.global	gUnk_03001190
 gUnk_03001190 = 0x03001190
-	.global	gUnk_03001270
-gUnk_03001270 = 0x03001270
+	.global	gBgPalette
+gBgPalette = 0x03001270
 	.global	gUnk_030012B0
 gUnk_030012B0 = 0x030012B0
 	.global	gUnk_030012F0
@@ -691,8 +691,8 @@ gUnk_03001390 = 0x03001390
 gUnk_030013B0 = 0x030013B0
 	.global	gUnk_03001430
 gUnk_03001430 = 0x03001430
-	.global	gUnk_03001470
-gUnk_03001470 = 0x03001470
+	.global	gObjPalette
+gObjPalette = 0x03001470
 	.global	gUnk_03001490
 gUnk_03001490 = 0x03001490
 	.global	gUnk_030014F0
@@ -725,74 +725,74 @@ gUnk_03001610 = 0x03001610
 gUnk_03001612 = 0x03001612
 	.global	gUnk_03001668
 gUnk_03001668 = 0x03001668
-	.global	gUnk_03001670
-gUnk_03001670 = 0x03001670
-	.global	gUnk_03001674
-gUnk_03001674 = 0x03001674
-	.global	gUnk_03001680
-gUnk_03001680 = 0x03001680
+	.global	gKeyRepeatTimer
+gKeyRepeatTimer = 0x03001670
+	.global	gSfxSlotAges
+gSfxSlotAges = 0x03001674
+	.global	gSpriteLayerLists
+gSpriteLayerLists = 0x03001680
 	.global	gUnk_03001A80
 gUnk_03001A80 = 0x03001A80
-	.global	gUnk_03001A90
-gUnk_03001A90 = 0x03001A90
-	.global	gUnk_03001E90
-gUnk_03001E90 = 0x03001E90
-	.global	gUnk_03001E94
-gUnk_03001E94 = 0x03001E94
-	.global	gUnk_03001E98
-gUnk_03001E98 = 0x03001E98
-	.global	gUnk_03001E9C
-gUnk_03001E9C = 0x03001E9C
+	.global	gFadedPalette
+gFadedPalette = 0x03001A90
+	.global	gFadeSteps
+gFadeSteps = 0x03001E90
+	.global	gBg2ScrollY
+gBg2ScrollY = 0x03001E94
+	.global	gFadeInterval
+gFadeInterval = 0x03001E98
+	.global	gDispStat
+gDispStat = 0x03001E9C
 	.global	gUnk_03001EA0
 gUnk_03001EA0 = 0x03001EA0
-	.global	gUnk_03001EA4
-gUnk_03001EA4 = 0x03001EA4
+	.global	gFrameCount
+gFrameCount = 0x03001EA4
 	.global	gSramAvailable
 gSramAvailable = 0x03001EA8
-	.global	gUnk_03001EAC
-gUnk_03001EAC = 0x03001EAC
-	.global	gUnk_03001EB0
-gUnk_03001EB0 = 0x03001EB0
-	.global	gUnk_03001EB4
-gUnk_03001EB4 = 0x03001EB4
-	.global	gUnk_03001EB8
-gUnk_03001EB8 = 0x03001EB8
-	.global	gUnk_03001EC4
-gUnk_03001EC4 = 0x03001EC4
+	.global	gBldAlphaEvb
+gBldAlphaEvb = 0x03001EAC
+	.global	gBgMosaic
+gBgMosaic = 0x03001EB0
+	.global	gBg3Cnt
+gBg3Cnt = 0x03001EB4
+	.global	gPlayerPressedKeys
+gPlayerPressedKeys = 0x03001EB8
+	.global	gWaitingForVBlank
+gWaitingForVBlank = 0x03001EC4
 	.global	gUnk_03001EC8
 gUnk_03001EC8 = 0x03001EC8
-	.global	gUnk_03001ECC
-gUnk_03001ECC = 0x03001ECC
-	.global	gUnk_03001ED0
-gUnk_03001ED0 = 0x03001ED0
-	.global	gUnk_03001ED4
-gUnk_03001ED4 = 0x03001ED4
-	.global	gUnk_03001ED8
-gUnk_03001ED8 = 0x03001ED8
-	.global	gUnk_03001EDC
-gUnk_03001EDC = 0x03001EDC
-	.global	gUnk_03001EE0
-gUnk_03001EE0 = 0x03001EE0
-	.global	gUnk_03001EE4
-gUnk_03001EE4 = 0x03001EE4
-	.global	gUnk_03001EE8
-gUnk_03001EE8 = 0x03001EE8
-	.global	gUnk_03001EEC
-gUnk_03001EEC = 0x03001EEC
+	.global	gKeyRepeatInterval
+gKeyRepeatInterval = 0x03001ECC
+	.global	gWinIn1
+gWinIn1 = 0x03001ED0
+	.global	gFadeKeepMask
+gFadeKeepMask = 0x03001ED4
+	.global	gDispCnt
+gDispCnt = 0x03001ED8
+	.global	gSfxDisabled
+gSfxDisabled = 0x03001EDC
+	.global	gBg1ScrollX
+gBg1ScrollX = 0x03001EE0
+	.global	gSoundDriverOn
+gSoundDriverOn = 0x03001EE4
+	.global	gSpriteQueueTop
+gSpriteQueueTop = 0x03001EE8
+	.global	gBldY
+gBldY = 0x03001EEC
 	.global	gHBlankDmaSrc
 gHBlankDmaSrc = 0x03001EF0
-	.global	gUnk_03001EF4
-gUnk_03001EF4 = 0x03001EF4
-	.global	gUnk_03001EF8
-gUnk_03001EF8 = 0x03001EF8
+	.global	gHeldKeys
+gHeldKeys = 0x03001EF4
+	.global	gIntrMasterEnable
+gIntrMasterEnable = 0x03001EF8
 	.global	gUnk_03001EFC
 gUnk_03001EFC = 0x03001EFC
 	.global	gUnk_03001F00
 gUnk_03001F00 = 0x03001F00
 	.global	gUnk_03001F04
 gUnk_03001F04 = 0x03001F04
-	.global	gUnk_03001F08
-gUnk_03001F08 = 0x03001F08
+	.global	gDigits
+gDigits = 0x03001F08
 	.global	gUnk_03001F10
 gUnk_03001F10 = 0x03001F10
 	.global	gUnk_03001F18
@@ -807,8 +807,8 @@ gUnk_03001F2C = 0x03001F2C
 gUnk_03001F30 = 0x03001F30
 	.global	gUnk_03001F34
 gUnk_03001F34 = 0x03001F34
-	.global	gUnk_03001F38
-gUnk_03001F38 = 0x03001F38
+	.global	gLinkIsMaster
+gLinkIsMaster = 0x03001F38
 	.global	gUnk_03002140
 gUnk_03002140 = 0x03002140
 	.global	gUnk_03002144
@@ -819,8 +819,8 @@ gUnk_03002148 = 0x03002148
 gUnk_0300214C = 0x0300214C
 	.global	gUnk_03002150
 gUnk_03002150 = 0x03002150
-	.global	gUnk_03002158
-gUnk_03002158 = 0x03002158
+	.global	gViewRect
+gViewRect = 0x03002158
 	.global	gUnk_03002160
 gUnk_03002160 = 0x03002160
 	.global	gUnk_03002170
@@ -829,8 +829,8 @@ gUnk_03002170 = 0x03002170
 gUnk_03002340 = 0x03002340
 	.global	gUnk_03002344
 gUnk_03002344 = 0x03002344
-	.global	gUnk_03002348
-gUnk_03002348 = 0x03002348
+	.global	gSpriteCameraX
+gSpriteCameraX = 0x03002348
 	.global	gUnk_0300234C
 gUnk_0300234C = 0x0300234C
 	.global	gUnk_03002350
@@ -841,8 +841,8 @@ gUnk_03002354 = 0x03002354
 gUnk_03002358 = 0x03002358
 	.global	gCompletionPercent
 gCompletionPercent = 0x0300235C
-	.global	gUnk_03002360
-gUnk_03002360 = 0x03002360
+	.global	gLocalPlayer
+gLocalPlayer = 0x03002360
 	.global	gUnk_03002364
 gUnk_03002364 = 0x03002364
 	.global	gUnk_03002368
@@ -871,8 +871,8 @@ gUnk_0300239C = 0x0300239C
 gUnk_030023A4 = 0x030023A4
 	.global	gUnk_030023A8
 gUnk_030023A8 = 0x030023A8
-	.global	gUnk_030023AC
-gUnk_030023AC = 0x030023AC
+	.global	gPlayerCount
+gPlayerCount = 0x030023AC
 	.global	gUnk_030023B0
 gUnk_030023B0 = 0x030023B0
 	.global	gUnk_030023B4
@@ -889,14 +889,14 @@ gUnk_030023CC = 0x030023CC
 gUnk_030023D0 = 0x030023D0
 	.global	gUnk_030023D4
 gUnk_030023D4 = 0x030023D4
-	.global	gUnk_030023D8
-gUnk_030023D8 = 0x030023D8
+	.global	gGameState
+gGameState = 0x030023D8
 	.global	gUnk_030023DC
 gUnk_030023DC = 0x030023DC
 	.global	gUnk_030023E0
 gUnk_030023E0 = 0x030023E0
-	.global	gUnk_030023E4
-gUnk_030023E4 = 0x030023E4
+	.global	gSpriteCameraY
+gSpriteCameraY = 0x030023E4
 	.global	gCurSaveSlot
 gCurSaveSlot = 0x030023E8
 	.global	gUnk_030023EC
@@ -907,8 +907,8 @@ gUnk_030023F0 = 0x030023F0
 gUnk_03002400 = 0x03002400
 	.global	gUnk_03002438
 gUnk_03002438 = 0x03002438
-	.global	gUnk_0300243C
-gUnk_0300243C = 0x0300243C
+	.global	gLinkPlayerCount
+gLinkPlayerCount = 0x0300243C
 	.global	gUnk_03002440
 gUnk_03002440 = 0x03002440
 	.global	gUnk_03002444
@@ -937,44 +937,44 @@ gUnk_03002480 = 0x03002480
 gUnk_03002488 = 0x03002488
 	.global	gCurTaskIdx
 gCurTaskIdx = 0x0300248C
-	.global	gUnk_03002490
-gUnk_03002490 = 0x03002490
-	.global	gUnk_03002494
-gUnk_03002494 = 0x03002494
-	.global	gUnk_030024A0
-gUnk_030024A0 = 0x030024A0
+	.global	gCurTask
+gCurTask = 0x03002490
+	.global	gTaskCursor
+gTaskCursor = 0x03002494
+	.global	gTaskClassLists
+gTaskClassLists = 0x030024A0
 	.global	gTaskSavedR0
 gTaskSavedR0 = 0x030025E0
-	.global	gTaskFlagsTable
-gTaskFlagsTable = 0x030025F0
-	.global	gUnk_030026F0
-gUnk_030026F0 = 0x030026F0
-	.global	gUnk_030026F4
-gUnk_030026F4 = 0x030026F4
+	.global	gTaskResumeAddrs
+gTaskResumeAddrs = 0x030025F0
+	.global	gTaskCount
+gTaskCount = 0x030026F0
+	.global	gTaskRunPhase
+gTaskRunPhase = 0x030026F4
 	.global	gTaskSavedLr
 gTaskSavedLr = 0x030026F8
 	.global	gUnk_03002700
 gUnk_03002700 = 0x03002700
 	.global	gUnk_03002708
 gUnk_03002708 = 0x03002708
-	.global	gUnk_03002710
-gUnk_03002710 = 0x03002710
-	.global	gUnk_03002790
-gUnk_03002790 = 0x03002790
+	.global	gTaskListRefs
+gTaskListRefs = 0x03002710
+	.global	gTasks
+gTasks = 0x03002790
 	.global	gUnk_03004B00
 gUnk_03004B00 = 0x03004B00
-	.global	gUnk_03004B90
-gUnk_03004B90 = 0x03004B90
-	.global	gUnk_03004C90
-gUnk_03004C90 = 0x03004C90
+	.global	gTaskStackPtrs
+gTaskStackPtrs = 0x03004B90
+	.global	gCurTaskClass
+gCurTaskClass = 0x03004C90
 	.global	gTaskBaseSp
 gTaskBaseSp = 0x03004C94
-	.global	gUnk_03004CA0
-gUnk_03004CA0 = 0x03004CA0
-	.global	gUnk_03004D20
-gUnk_03004D20 = 0x03004D20
-	.global	gUnk_03004D24
-gUnk_03004D24 = 0x03004D24
+	.global	gTaskSlotTypes
+gTaskSlotTypes = 0x03004CA0
+	.global	gLastSendQueueCount
+gLastSendQueueCount = 0x03004D20
+	.global	gLinkErrorMask
+gLinkErrorMask = 0x03004D24
 	.global	gUnk_03004D28
 gUnk_03004D28 = 0x03004D28
 	.global	gUnk_03004D2C
@@ -985,40 +985,40 @@ gUnk_03004D30 = 0x03004D30
 gUnk_03004D34 = 0x03004D34
 	.global	gUnk_03004D38
 gUnk_03004D38 = 0x03004D38
-	.global	gUnk_03004D40
-gUnk_03004D40 = 0x03004D40
-	.global	gUnk_03004D44
-gUnk_03004D44 = 0x03004D44
-	.global	gUnk_03004D50
-gUnk_03004D50 = 0x03004D50
-	.global	gUnk_03004D70
-gUnk_03004D70 = 0x03004D70
-	.global	gUnk_03004D74
-gUnk_03004D74 = 0x03004D74
+	.global	gLastRecvQueueCount
+gLastRecvQueueCount = 0x03004D40
+	.global	gLinkSavedIme
+gLinkSavedIme = 0x03004D44
+	.global	gRecvCmds
+gRecvCmds = 0x03004D50
+	.global	gLinkStatus
+gLinkStatus = 0x03004D70
+	.global	gChecksumAvailable
+gChecksumAvailable = 0x03004D74
 	.global	gUnk_03004D78
 gUnk_03004D78 = 0x03004D78
-	.global	gUnk_03004D7C
-gUnk_03004D7C = 0x03004D7C
-	.global	gUnk_03004D80
-gUnk_03004D80 = 0x03004D80
-	.global	gUnk_03004D84
-gUnk_03004D84 = 0x03004D84
-	.global	gUnk_03004D88
-gUnk_03004D88 = 0x03004D88
-	.global	gUnk_03004D90
-gUnk_03004D90 = 0x03004D90
+	.global	gSerialIntrCount
+gSerialIntrCount = 0x03004D7C
+	.global	gRecvNonzeroCheck
+gRecvNonzeroCheck = 0x03004D80
+	.global	gSendNonzeroCheck
+gSendNonzeroCheck = 0x03004D84
+	.global	gShouldAdvanceLinkState
+gShouldAdvanceLinkState = 0x03004D88
+	.global	gSendCmd
+gSendCmd = 0x03004D90
 	.global	gLink
 gLink = 0x03004DA0
 	.global	gUnk_03004DA4
 gUnk_03004DA4 = 0x03004DA4
 	.global	gUnk_03005270
 gUnk_03005270 = 0x03005270
-	.global	gUnk_03005274
-gUnk_03005274 = 0x03005274
+	.global	gLinkCommand
+gLinkCommand = 0x03005274
 	.global	gUnk_03005278
 gUnk_03005278 = 0x03005278
-	.global	gUnk_0300527C
-gUnk_0300527C = 0x0300527C
+	.global	gSendBufferEmpty
+gSendBufferEmpty = 0x0300527C
 	.global	gUnk_03005280
 gUnk_03005280 = 0x03005280
 	.global	gUnk_03005290
@@ -1229,8 +1229,8 @@ gUnk_04000128 = 0x04000128
 gUnk_0400012A = 0x0400012A
 	.global	gUnk_04000208
 gUnk_04000208 = 0x04000208
-	.global	gUnk_06010000
-gUnk_06010000 = 0x06010000
+	.global	gObjVram
+gObjVram = 0x06010000
 
 @ Link-time constants (tools/split_config.json "abs_symbols"):
 @ absolute symbols whose VALUE is the constant (SDK idiom, e.g.

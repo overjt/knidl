@@ -7,7 +7,7 @@
  * HBlank wavy-scroll table driver, the fade variant of the four-loop family
  * (src/save_b6290.c, src/save_b63a4.c, src/save_b6474.c): the first 24 lines
  * and lines 136-151 get 256 - 16 * frame, the 7x8 grid between them
- * 256 -/+ 16 * frame, and the BLDALPHA shadows gUnk_03000B08/gUnk_03001EAC
+ * 256 -/+ 16 * frame, and the BLDALPHA shadows gBldAlphaEva/gBldAlphaEvb
  * fade with the frame counter gHBlankScrollTimer until it reaches 16.
  *
  * Matching note: the plain subscripted loops with the counter read inline at
@@ -17,12 +17,12 @@
 extern u8 gHBlankScrollState;
 extern s32 gHBlankScrollTimer;
 extern u16 gHBlankScrollTable[];
-extern void (*gUnk_0300003C)(void);
+extern void (*gFrameCallback)(void);
 extern u32 gHBlankDmaDest;
-extern vu8 gUnk_03000B08;
-extern vu16 gUnk_03001ED8;
-extern vu8 gUnk_03001EAC;
-extern vs32 gUnk_03001EE0;
+extern vu8 gBldAlphaEva;
+extern vu16 gDispCnt;
+extern vu8 gBldAlphaEvb;
+extern vs32 gBg1ScrollX;
 
 s32 sub_080b6154(void)
 {
@@ -36,22 +36,22 @@ s32 sub_080b6154(void)
 
     if (gHBlankScrollState == 2 || gHBlankScrollTimer == 16)
     {
-        gUnk_0300003C = NULL;
+        gFrameCallback = NULL;
         gHBlankScrollTimer = 0;
-        gUnk_03001EE0 = 0;
-        gUnk_03001ED8 &= 0xE0FF;
-        gUnk_03001ED8 |= 0x1F00;
-        gUnk_03000B08 = 13;
-        gUnk_03001EAC = 3;
+        gBg1ScrollX = 0;
+        gDispCnt &= 0xE0FF;
+        gDispCnt |= 0x1F00;
+        gBldAlphaEva = 13;
+        gBldAlphaEvb = 3;
     }
     else
     {
         if (gHBlankScrollTimer <= 13)
         {
-            gUnk_03000B08 = gHBlankScrollTimer;
-            gUnk_03001EAC = 16 - gHBlankScrollTimer;
+            gBldAlphaEva = gHBlankScrollTimer;
+            gBldAlphaEvb = 16 - gHBlankScrollTimer;
         }
-        pe = &gUnk_03001EE0;
+        pe = &gBg1ScrollX;
         base = gHBlankScrollTable;
         pc = &gHBlankDmaDest;
         for (n = 0; n <= 23; n++)

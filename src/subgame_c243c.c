@@ -99,10 +99,10 @@ struct M37Game
     /*0x300*/ u32 unk300;       /* frame counter */
     /*0x304*/ s16 unk304;       /* sub_080c4f60's OAM list: entry count */
     /*0x306*/ s16 unk306[160];  /* ... and entries */
-    /*0x446*/ u16 unk446;       /* gUnk_03002360 */
-    /*0x448*/ u16 unk448;       /* gUnk_0300243C */
+    /*0x446*/ u16 unk446;       /* gLocalPlayer */
+    /*0x448*/ u16 unk448;       /* gLinkPlayerCount */
     /*0x44A*/ u8 pad44A[2];
-    /*0x44C*/ s32 unk44C;       /* a task index into gUnk_03002790 */
+    /*0x44C*/ s32 unk44C;       /* a task index into gTasks */
     /*0x450*/ u8 unk450;
     /*0x451*/ u8 unk451;
     /*0x452*/ u8 pad452[2];
@@ -167,7 +167,7 @@ extern u16 gUnk_02017170;
 extern struct M37Results gUnk_02017140;
 extern u8 gUnk_080CFE2C[][4];
 extern u16 gUnk_03002150;
-extern vu16 gUnk_03001EB8[];
+extern vu16 gPlayerPressedKeys[];
 extern u32 gUnk_0875602C[];
 extern u16 gUnk_08609F40[][16];
 extern u16 gUnk_03001510[];
@@ -205,9 +205,9 @@ void AirGrindResults(void)
     gUnk_02017140.unk00 = 0;
     gUnk_02017140.unk01 = 0;
     gUnk_02017140.unk02 = 0;
-    gUnk_03002490->unk04 = (u32)sub_080c2b8c;
-    gUnk_03002490->unk3C = 0xFFFF;
-    gUnk_03002490->unk0C = (u32)sub_080c25c4;
+    gCurTask->unk04 = (u32)sub_080c2b8c;
+    gCurTask->unk3C = 0xFFFF;
+    gCurTask->unk0C = (u32)sub_080c25c4;
     x = gAirGrindCoursePtr->unk014 * 2;
     for (i = 0; i < 4; i++) {
         if (gAirGrindPtr->unk01C[i].unk01 == x && gAirGrindPtr->unk01C[i].unk0E == x + 1)
@@ -362,9 +362,9 @@ void sub_080c2740(void)
         }
         break;
     case 4:
-        if (gUnk_03001EB8[0] & 9) {
+        if (gPlayerPressedKeys[0] & 9) {
             if (gUnk_03002150 != 5) {
-                t = gUnk_03002490;
+                t = gCurTask;
                 t->unk28 = 0;
                 t->unk2C = gAirGrind.unk000;
                 if (gAirGrindPtr->unk446 == 0) {
@@ -401,28 +401,28 @@ void sub_080c2740(void)
         }
         break;
     case 5:
-        if (gUnk_03001EB8[0] & 64) {
-            if (--gUnk_03002490->unk28 < 0)
-                gUnk_03002490->unk28 = 1;
+        if (gPlayerPressedKeys[0] & 64) {
+            if (--gCurTask->unk28 < 0)
+                gCurTask->unk28 = 1;
             if (gAirGrindPtr->unk446 == 0) {
-                sub_080c2ccc(gUnk_03002490->unk28);
+                sub_080c2ccc(gCurTask->unk28);
                 PlaySfx(101);
             }
         }
-        if (gUnk_03001EB8[0] & 128) {
-            if (++gUnk_03002490->unk28 > 1)
-                gUnk_03002490->unk28 = 0;
+        if (gPlayerPressedKeys[0] & 128) {
+            if (++gCurTask->unk28 > 1)
+                gCurTask->unk28 = 0;
             if (gAirGrindPtr->unk446 == 0) {
-                sub_080c2ccc(gUnk_03002490->unk28);
+                sub_080c2ccc(gCurTask->unk28);
                 PlaySfx(101);
             }
         }
-        if (gUnk_03001EB8[0] & 9) {
-            if (gUnk_03002490->unk28 == 0) {
-                gUnk_03002490->unk2C = gAirGrind.unk000;
+        if (gPlayerPressedKeys[0] & 9) {
+            if (gCurTask->unk28 == 0) {
+                gCurTask->unk2C = gAirGrind.unk000;
                 if (gAirGrindPtr->unk446 == 0) {
-                    gUnk_03002490->unk3C = 0;
-                    sub_080c2ccc(gUnk_03002490->unk2C);
+                    gCurTask->unk3C = 0;
+                    sub_080c2ccc(gCurTask->unk2C);
                 }
                 gUnk_02017140.unk00++;
             } else {
@@ -434,31 +434,31 @@ void sub_080c2740(void)
         }
         break;
     case 6:
-        if (gUnk_03001EB8[0] & 64) {
-            if (--gUnk_03002490->unk2C < 0)
-                gUnk_03002490->unk2C = 2;
+        if (gPlayerPressedKeys[0] & 64) {
+            if (--gCurTask->unk2C < 0)
+                gCurTask->unk2C = 2;
             if (gAirGrindPtr->unk446 == 0) {
-                sub_080c2ccc(gUnk_03002490->unk2C);
+                sub_080c2ccc(gCurTask->unk2C);
                 PlaySfx(101);
             }
         }
-        if (gUnk_03001EB8[0] & 128) {
-            if (++gUnk_03002490->unk2C > 2)
-                gUnk_03002490->unk2C = 0;
+        if (gPlayerPressedKeys[0] & 128) {
+            if (++gCurTask->unk2C > 2)
+                gCurTask->unk2C = 0;
             if (gAirGrindPtr->unk446 == 0) {
-                sub_080c2ccc(gUnk_03002490->unk2C);
+                sub_080c2ccc(gCurTask->unk2C);
                 PlaySfx(101);
             }
         }
-        if (gUnk_03001EB8[0] & 9) {
-            SubGameReplay(gUnk_03002490->unk2C);
+        if (gPlayerPressedKeys[0] & 9) {
+            SubGameReplay(gCurTask->unk2C);
             gUnk_02017140.unk00 = 99;
             if (gAirGrindPtr->unk446 == 0)
                 PlaySfx(102);
-        } else if (gUnk_03001EB8[0] & 2) {
+        } else if (gPlayerPressedKeys[0] & 2) {
             if (gAirGrindPtr->unk446 == 0) {
-                gUnk_03002490->unk3C = 1;
-                sub_080c2ccc(gUnk_03002490->unk28);
+                gCurTask->unk3C = 1;
+                sub_080c2ccc(gCurTask->unk28);
                 PlaySfx(215);
             }
             gUnk_02017140.unk00--;
@@ -483,24 +483,24 @@ void sub_080c2ba8(void)
     s32 step;
     s32 step2;
 
-    gUnk_03002490->unk6C--;
-    if ((s16)gUnk_03002490->unk6C < 0)
-        gUnk_03002490->unk6C = 8;
-    from = gUnk_03002490->unk6E;
+    gCurTask->unk6C--;
+    if ((s16)gCurTask->unk6C < 0)
+        gCurTask->unk6C = 8;
+    from = gCurTask->unk6E;
     to = from + 1;
-    step = 8 - (s16)gUnk_03002490->unk6C;
+    step = 8 - (s16)gCurTask->unk6C;
     BlendColors(gUnk_08609F40[from], gUnk_08609F40[to], (u16)(step * 32), 16, gUnk_03001510);
-    gUnk_03002490->unk70--;
-    if ((s16)gUnk_03002490->unk70 < 0)
-        gUnk_03002490->unk70 = 8;
-    step2 = 8 - (s16)gUnk_03002490->unk70;
+    gCurTask->unk70--;
+    if ((s16)gCurTask->unk70 < 0)
+        gCurTask->unk70 = 8;
+    step2 = 8 - (s16)gCurTask->unk70;
     BlendColors(gUnk_08609F40[6], gUnk_08609F40[7], (u16)(step2 * 32), 16, &gUnk_03001510[16]);
     if (gAirGrindPtr->unk446 == 0) {
-        t = gUnk_03002490;
+        t = gCurTask;
         tbl = t->unk38;
         if (tbl != NULL && t->unk3C != -1) {
             QueueSprite(t->unk42, tbl[t->unk3C + 2], t->unk3E, 0x6000, t->unk48, t->unk4A);
-            t = gUnk_03002490;
+            t = gCurTask;
             QueueSprite(t->unk42, tbl[t->unk3C], t->unk3E, 0x5000, t->unk48, t->unk4A);
         }
     }
@@ -510,20 +510,20 @@ void sub_080c2ccc(s32 mode)
 {
     switch (mode) {
     case 0:
-        gUnk_03002490->unk6E = 0;
+        gCurTask->unk6E = 0;
         break;
     case 1:
-        gUnk_03002490->unk6E = 2;
+        gCurTask->unk6E = 2;
         break;
     case 2:
-        gUnk_03002490->unk6E = 4;
+        gCurTask->unk6E = 4;
         break;
     default:
-        gUnk_03002490->unk6E = 0;
-        gUnk_03002490->unk70 = 8;
+        gCurTask->unk6E = 0;
+        gCurTask->unk70 = 8;
         break;
     }
-    gUnk_03002490->unk6C = 8;
+    gCurTask->unk6C = 8;
 }
 
 void sub_080c2d38(void)

@@ -9,10 +9,10 @@
  * On the checksum round (send index unk18 == 0) it compares every player's
  * word with the running checksum chk (a mismatch sets unk13), clears chk and
  * records REG_VCOUNT in gUnk_03004D28; otherwise it adds the words to chk,
- * ORs them into gUnk_03004D80 and stores them into the receive ring at the
+ * ORs them into gRecvNonzeroCheck and stores them into the receive ring at the
  * current command index unk19 (a full ring sets unk14 = 2), and after the
  * fourth command queues the frame if any word was non-zero.  While
- * gUnk_03005274 is in the 0x88xx range a word above 4 in command 3 sets
+ * gLinkCommand is in the 0x88xx range a word above 4 in command 3 sets
  * gUnk_03004D30 = 6 and clears gUnk_0200EBA0.
  *
  * Matching note (issue #63): this revision walks the staging buffer with a
@@ -41,11 +41,11 @@ struct Pair { u32 a, b; };
 extern struct Link gLink;
 extern vu16 gUnk_03004D38[];    /* receive staging, 4 halfwords */
 extern vu16 gUnk_04000120;      /* REG_SIOMULTI0 */
-extern u32 gUnk_03004D74;
+extern u32 gChecksumAvailable;
 extern u32 gUnk_03004D28;
 extern u32 gUnk_03004D30;
-extern vu16 gUnk_03004D80;
-extern vu16 gUnk_03005274;
+extern vu16 gRecvNonzeroCheck;
+extern vu16 gLinkCommand;
 extern u32 gUnk_0200EBA0;
 
 /* Receive step of the serial interrupt (pokeruby's DoRecv): snapshot the
@@ -67,10 +67,10 @@ void DoRecv(void)
     if (gLink.unk18 == 0)
     {
         for (i = 0; i < gLink.count; i++)
-            if (gLink.chk != *p++ && gUnk_03004D74)
+            if (gLink.chk != *p++ && gChecksumAvailable)
                 gLink.unk13 = 1;
         gLink.chk = 0;
-        gUnk_03004D74 = 1;
+        gChecksumAvailable = 1;
         gUnk_03004D28 = REG_VCOUNT;
     }
     else
@@ -83,13 +83,13 @@ void DoRecv(void)
             for (i = 0; i < gLink.count; i++)
             {
                 gLink.chk += *p;
-                if ((gUnk_03005274 & 0xFF00) == 0x8800 && gLink.unk19 == 3
+                if ((gLinkCommand & 0xFF00) == 0x8800 && gLink.unk19 == 3
                  && *p > 4)
                 {
                     gUnk_03004D30 = 6;
                     gUnk_0200EBA0 = 0;
                 }
-                gUnk_03004D80 |= *p;
+                gRecvNonzeroCheck |= *p;
                 gLink.buf[i][gLink.unk19][index] = *p++;
             }
         }
@@ -98,10 +98,10 @@ void DoRecv(void)
             gLink.unk14 = 2;
         }
         gLink.unk19++;
-        if (gLink.unk19 == 4 && gUnk_03004D80)
+        if (gLink.unk19 == 4 && gRecvNonzeroCheck)
         {
             gLink.unk4D1++;
-            gUnk_03004D80 = 0;
+            gRecvNonzeroCheck = 0;
         }
     }
 }

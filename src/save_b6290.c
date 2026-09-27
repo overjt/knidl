@@ -5,12 +5,12 @@
 extern u8 gHBlankScrollState;
 extern s32 gHBlankScrollTimer;
 extern u16 gHBlankScrollTable[];
-extern void (*gUnk_0300003C)(void);
+extern void (*gFrameCallback)(void);
 extern u32 gHBlankDmaDest;
-extern vu8 gUnk_03000B08;
-extern vu16 gUnk_03001ED8;
-extern vu8 gUnk_03001EAC;
-extern vs32 gUnk_03001EE0;
+extern vu8 gBldAlphaEva;
+extern vu16 gDispCnt;
+extern vu8 gBldAlphaEvb;
+extern vs32 gBg1ScrollX;
 
 /* The two loop counters are NOT interchangeable (lesson 4.55): `n` covers the
    first two loops and the third loop's outer index, which never overlap, while
@@ -38,19 +38,19 @@ s32 sub_080b6290(void)
 
     if (gHBlankScrollState == 2 || gHBlankScrollTimer == 16)
     {
-        gUnk_0300003C = NULL;
+        gFrameCallback = NULL;
         gHBlankScrollTimer = 0;
-        gUnk_03001EE0 = 0x01000000;
-        gUnk_03001ED8 &= 0xFDFF;
+        gBg1ScrollX = 0x01000000;
+        gDispCnt &= 0xFDFF;
     }
     else
     {
         if (gHBlankScrollTimer <= 13)
         {
-            gUnk_03000B08 = 13 - gHBlankScrollTimer;
-            gUnk_03001EAC = 16 - gUnk_03000B08;
+            gBldAlphaEva = 13 - gHBlankScrollTimer;
+            gBldAlphaEvb = 16 - gBldAlphaEva;
         }
-        pe = &gUnk_03001EE0;
+        pe = &gBg1ScrollX;
         base = gHBlankScrollTable;
         pc = &gHBlankDmaDest;
         for (n = 0; n <= 23; n++)

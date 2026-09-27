@@ -20,14 +20,14 @@ extern s8 gUnk_02007D34;
 extern s8 gUnk_02007E88;
 extern s16 gUnk_0200A6E0[];
 extern s8 gUnk_0200B074;
-extern vu16 gUnk_03000038;
-extern vu8 gUnk_03000B08;
+extern vu16 gPressedKeys;
+extern vu8 gBldAlphaEva;
 extern u16 gUnk_030012F0[][16];
 extern u16 gUnk_03001310[][16];
 extern u16 gUnk_03001372[];
 extern u16 gUnk_030015D0[];
 extern u16 gUnk_030015F4[];
-extern vu8 gUnk_03001EAC;
+extern vu8 gBldAlphaEvb;
 extern u16 gUnk_08559BA4[][16];
 extern u16 gUnk_08560DBC[][16];
 extern u16 gUnk_08560F9C[];
@@ -59,34 +59,34 @@ void sub_0800ea0c(void)
     s32 k;
 
     if (sub_0800ffe8()) {
-        struct Task *s = gUnk_03002490;
+        struct Task *s = gCurTask;
         u32 *tbl = s->unk38;
 
         QueueSprite(3, tbl[8], 0, 0, s->unk48, s->unk4A);
-        QueueSprite(2, tbl[9], 0, 0, gUnk_03002490->unk48, gUnk_03002490->unk4A);
+        QueueSprite(2, tbl[9], 0, 0, gCurTask->unk48, gCurTask->unk4A);
     }
-    t = gUnk_03002490;
+    t = gCurTask;
     if (t->unk34 == 256) {
         if (++t->unk2C > 1)
             t->unk2C = 0;
-        u = gUnk_03002490;
+        u = gCurTask;
         if (++u->unk30 > 1)
             u->unk30 = 0;
-        gUnk_03002490->unk34 = 0;
+        gCurTask->unk34 = 0;
     }
-    v = gUnk_03002490;
+    v = gCurTask;
     n = v->unk34 + 32;
     v->unk34 = n;
     if (n > 256)
         v->unk34 = 256;
     k = gUnk_02007D34 * 2;
-    x = gUnk_03002490;
+    x = gCurTask;
     BlendColors(gUnk_08559BA4[k + x->unk2C], gUnk_08559BA4[k + x->unk30], (u16)x->unk34, 16, gUnk_030015D0);
 }
 
 void sub_0800eae4(void)
 {
-    struct Task *t = gUnk_03002490;
+    struct Task *t = gCurTask;
 
     t->unk00 = (u32)TaskMove;
     t->unk0C = 0;
@@ -94,25 +94,25 @@ void sub_0800eae4(void)
     t->unk38 = gUnk_08755650;
     t->unk28 = 0;
     t->unk2C = 0;
-    for (t->unk6C = 0; (s16)gUnk_03002490->unk6C <= 9; gUnk_03002490->unk6C++) {
-        struct Task *u = gUnk_03002490;
+    for (t->unk6C = 0; (s16)gCurTask->unk6C <= 9; gCurTask->unk6C++) {
+        struct Task *u = gCurTask;
 
         u->unk28 += ((s16)u->unk6C + 1) * 9 << 15;
         TaskYieldTrampoline(1);
     }
-    for (gUnk_03002490->unk6C = 0; (s16)gUnk_03002490->unk6C <= 1; gUnk_03002490->unk6C++) {
-        for (gUnk_03002490->unk6E = 0; gUnk_03002490->unk6E <= 1; gUnk_03002490->unk6E++) {
-            gUnk_03002490->unk2C += 0x60000;
+    for (gCurTask->unk6C = 0; (s16)gCurTask->unk6C <= 1; gCurTask->unk6C++) {
+        for (gCurTask->unk6E = 0; gCurTask->unk6E <= 1; gCurTask->unk6E++) {
+            gCurTask->unk2C += 0x60000;
             TaskYieldTrampoline(1);
         }
-        for (gUnk_03002490->unk6E = 0; gUnk_03002490->unk6E <= 1; gUnk_03002490->unk6E++) {
-            gUnk_03002490->unk2C -= 0x60000;
+        for (gCurTask->unk6E = 0; gCurTask->unk6E <= 1; gCurTask->unk6E++) {
+            gCurTask->unk2C -= 0x60000;
             TaskYieldTrampoline(1);
         }
     }
     TaskYieldTrampoline(16);
-    for (gUnk_03002490->unk6C = 0; (s16)gUnk_03002490->unk6C <= 9; gUnk_03002490->unk6C++) {
-        struct Task *u = gUnk_03002490;
+    for (gCurTask->unk6C = 0; (s16)gCurTask->unk6C <= 9; gCurTask->unk6C++) {
+        struct Task *u = gCurTask;
 
         u->unk28 -= ((s16)u->unk6C + 1) * 9 << 15;
         TaskYieldTrampoline(1);
@@ -123,17 +123,17 @@ void sub_0800eae4(void)
 void sub_0800ec08(void)
 {
     if (sub_0800ffe8()) {
-        struct Task *t = gUnk_03002490;
+        struct Task *t = gCurTask;
         u32 *tbl = t->unk38;
 
         QueueSprite(1, tbl[10], 0, 0, (t->unk28 >> 16) - 127, (t->unk2C >> 16) + 144);
-        QueueSprite(1, tbl[11], 0, 0, 0x16F - (gUnk_03002490->unk28 >> 16), (gUnk_03002490->unk2C >> 16) + 144);
+        QueueSprite(1, tbl[11], 0, 0, 0x16F - (gCurTask->unk28 >> 16), (gCurTask->unk2C >> 16) + 144);
     }
 }
 
 void sub_0800ec70(void)
 {
-    struct Task *t = gUnk_03002490;
+    struct Task *t = gCurTask;
 
     t->unk00 = 0;
     t->unk0C = 0;
@@ -160,24 +160,24 @@ void sub_0800ecb8(void)
         QueueSprite(8, tbl[1], 0, 0, 94, 136);
         QueueSprite(8, tbl[2], 0, 0, 146, 136);
     }
-    t = gUnk_03002490;
+    t = gCurTask;
     if (t->unk34 == 256) {
         t->unk2C ^= 1;
         t->unk30 ^= 1;
         t->unk34 = 0;
     }
-    u = gUnk_03002490;
+    u = gCurTask;
     v = u->unk34 + 32;
     u->unk34 = v;
     if (v > 256)
         u->unk34 = 256;
-    w = gUnk_03002490;
+    w = gCurTask;
     BlendColors(gUnk_08564F38[w->unk2C], gUnk_08564F38[w->unk30], (u16)w->unk34, 5, gUnk_030015F4);
 }
 
 void sub_0800ed78(void)
 {
-    struct Task *t = gUnk_03002490;
+    struct Task *t = gCurTask;
 
     t->unk28 = 0;
     t->unk2C = 0;
@@ -190,19 +190,19 @@ void sub_0800ed78(void)
         struct Task *w;
         s32 n;
 
-        u = gUnk_03002490;
+        u = gCurTask;
         if (u->unk34 == 256) {
             if (++u->unk2C > 5) {
                 u->unk2C = 0;
                 u->unk28 = 4;
                 u->unk18 = 0;
             }
-            v = gUnk_03002490;
+            v = gCurTask;
             if (++v->unk30 > 5)
                 v->unk30 = 0;
-            gUnk_03002490->unk34 = 0;
+            gCurTask->unk34 = 0;
         }
-        v = gUnk_03002490;
+        v = gCurTask;
         if (v->unk28 != 0) {
             v->unk28--;
         } else {
@@ -213,14 +213,14 @@ void sub_0800ed78(void)
         }
         if (gUnk_0200B074 == 0) {
             if ((s32)gMPlayTable[gSongTable[gUnk_0200A6E0[gUnk_0200B074]].ms].info->status >= 0) {
-                w = gUnk_03002490;
+                w = gCurTask;
                 BlendColors(gUnk_085634D8[w->unk2C], gUnk_085634D8[w->unk30], (u16)w->unk34, 16, gUnk_03001310[gUnk_0200B074]);
             } else {
-                BlendColors(gUnk_085634D8[5], gUnk_085634D8[5], (u16)gUnk_03002490->unk34, 16, gUnk_03001310[gUnk_0200B074]);
+                BlendColors(gUnk_085634D8[5], gUnk_085634D8[5], (u16)gCurTask->unk34, 16, gUnk_03001310[gUnk_0200B074]);
             }
         } else {
-            if (gUnk_03000038 & 1) {
-                struct Task *x = gUnk_03002490;
+            if (gPressedKeys & 1) {
+                struct Task *x = gCurTask;
 
                 x->unk18 = 1;
                 x->unk28 = 0;
@@ -228,7 +228,7 @@ void sub_0800ed78(void)
                 x->unk30 = 1;
                 x->unk34 = 0;
             }
-            w = gUnk_03002490;
+            w = gCurTask;
             if (w->unk18 != 0)
                 BlendColors(gUnk_085634D8[w->unk2C], gUnk_085634D8[w->unk30], (u16)w->unk34, 16, gUnk_03001310[gUnk_0200B074]);
             else
@@ -242,7 +242,7 @@ void sub_0800ed78(void)
 
 void sub_0800ef30(void)
 {
-    struct Task *t = gUnk_03002490;
+    struct Task *t = gCurTask;
 
     t->unk28 = 0;
     t->unk2C = 0;
@@ -256,33 +256,33 @@ void sub_0800ef30(void)
         s32 n;
 
         {
-            struct Task *s = gUnk_03002490;
+            struct Task *s = gCurTask;
 
             if (s->unk18 <= 19) {
                 s->unk18++;
-                gUnk_03000B08 = s->unk18 >> 2;
-                gUnk_03001EAC = 16 - gUnk_03000B08;
+                gBldAlphaEva = s->unk18 >> 2;
+                gBldAlphaEvb = 16 - gBldAlphaEva;
             }
         }
-        u = gUnk_03002490;
+        u = gCurTask;
         if (u->unk34 == 256) {
             if (++u->unk2C > 15) {
                 u->unk2C = 0;
                 if (++u->unk28 > 3)
                     u->unk28 = 0;
             }
-            v = gUnk_03002490;
+            v = gCurTask;
             if (++v->unk30 > 15)
                 v->unk30 = 0;
-            gUnk_03002490->unk34 = 0;
+            gCurTask->unk34 = 0;
         }
-        v = gUnk_03002490;
+        v = gCurTask;
         n = v->unk34 + 64;
         v->unk34 = n;
         if (n > 256)
             v->unk34 = 256;
-        for (gUnk_03002490->unk6C = 0; (s16)gUnk_03002490->unk6C <= 3; gUnk_03002490->unk6C++) {
-            struct Task *w = gUnk_03002490;
+        for (gCurTask->unk6C = 0; (s16)gCurTask->unk6C <= 3; gCurTask->unk6C++) {
+            struct Task *w = gCurTask;
             s32 i = (s16)w->unk6C;
 
             if (i == w->unk28)
@@ -297,7 +297,7 @@ void sub_0800ef30(void)
 
 void sub_0800f084(void)
 {
-    struct Task *t = gUnk_03002490;
+    struct Task *t = gCurTask;
 
     t->unk28 = gUnk_02007E88;
     t->unk2C = 0;
@@ -309,21 +309,21 @@ void sub_0800f084(void)
         struct Task *w;
         s32 n;
 
-        u = gUnk_03002490;
+        u = gCurTask;
         if (u->unk34 == 256) {
             if (++u->unk2C > 6)
                 u->unk2C = 0;
-            v = gUnk_03002490;
+            v = gCurTask;
             if (++v->unk30 > 6)
                 v->unk30 = 0;
-            gUnk_03002490->unk34 = 0;
+            gCurTask->unk34 = 0;
         }
-        v = gUnk_03002490;
+        v = gCurTask;
         n = v->unk34 + 16;
         v->unk34 = n;
         if (n > 256)
             v->unk34 = 256;
-        w = gUnk_03002490;
+        w = gCurTask;
         if (w->unk28 == 3)
             BlendColors(gUnk_08561224[w->unk2C], gUnk_08561224[w->unk30], (u16)w->unk34, 10, gUnk_03001372);
         else

@@ -20,29 +20,29 @@
  *       and picks the next game state.
  *   sub_080cb2b0   reset the done flag and the count. */
 
-extern vu16 gUnk_03001ED8;          /* DISPCNT shadow */
-extern vs32 gUnk_03000FC0;
-extern vs32 gUnk_03001EE0;
-extern vs32 gUnk_03001E94;
-extern vs32 gUnk_03000F8C;
-extern vs32 gUnk_03000FA8;
-extern vs32 gUnk_03000B78;          /* ... BG3 */
+extern vu16 gDispCnt;          /* DISPCNT shadow */
+extern vs32 gBg1ScrollY;
+extern vs32 gBg1ScrollX;
+extern vs32 gBg2ScrollY;
+extern vs32 gBg2ScrollX;
+extern vs32 gBg3ScrollY;
+extern vs32 gBg3ScrollX;          /* ... BG3 */
 extern u8 gUnk_03001F30;            /* link-play mode */
 extern u16 gUnk_03002150;           /* previous game state */
-extern u16 gUnk_030023D8;           /* game state (AgbMain dispatch) */
-extern u16 gUnk_03002360;           /* this player's index */
-extern u16 gUnk_030023AC;           /* number of players */
+extern u16 gGameState;           /* game state (AgbMain dispatch) */
+extern u16 gLocalPlayer;           /* this player's index */
+extern u16 gPlayerCount;           /* number of players */
 extern s32 gUnk_02006020[];         /* score per player */
 extern u16 gUnk_02006068[];         /* clock (four fields) */
-extern vu16 gUnk_03001EB8[];        /* keys pressed per player */
+extern vu16 gPlayerPressedKeys[];        /* keys pressed per player */
 extern u32 gUnk_02020000[];         /* decompression buffer */
 extern u8 gGameOverDone;            /* game-over screen: done flag */
 extern s16 gUnk_0200557C;           /* game-over screen: frames left */
 extern s8 gGameOverCursor;            /* game-over screen: cursor (continue = 0?) */
 extern s16 gUnk_02007D28;           /* game-over screen: the #264 variant-0 task's index */
-extern u32 gUnk_06010000[];         /* OBJ VRAM */
-extern vu16 gUnk_03000FC8;
-extern vu16 gUnk_03001ECC;
+extern u32 gObjVram[];         /* OBJ VRAM */
+extern vu16 gKeyRepeatDelay;
+extern vu16 gKeyRepeatInterval;
 extern u8 gUnk_02007FC0;
 extern s8 gUnk_03002438;
 extern u32 gUnk_085E2C20[];
@@ -90,8 +90,8 @@ void sub_080cb2cc(void);
 void GameOverMain(void)
 {
     ResetTasksAndOam();
-    gUnk_03000FC8 = 10;
-    gUnk_03001ECC = 6;
+    gKeyRepeatDelay = 10;
+    gKeyRepeatInterval = 6;
     gGameOverCursor = 0;
     if (gUnk_03002150 != 20) {
         if (gUnk_03001F30 == 0)
@@ -104,12 +104,12 @@ void GameOverMain(void)
     sub_08002338();
     BeginFastFadeOutToWhite();
     RunLinkFramesUntilFadeDone();
-    if (gUnk_030023D8 == 5) {
+    if (gGameState == 5) {
         gUnk_02007FC0 = 1;
         sub_0800b514();
         sub_08022c3c();
         if (gUnk_03002438 != 1)
-            gUnk_030023D8 = 6;
+            gGameState = 6;
     } else {
         sub_0800293c();
     }
@@ -122,15 +122,15 @@ void sub_080cad8c(void)
 {
     s32 i;
 
-    gUnk_03001EE0 = gUnk_03000FC0 = 0;
-    gUnk_03000F8C = gUnk_03000B78 = 240 << 16;
-    gUnk_03001E94 = gUnk_03000FA8 = 0;
+    gBg1ScrollX = gBg1ScrollY = 0;
+    gBg2ScrollX = gBg3ScrollX = 240 << 16;
+    gBg2ScrollY = gBg3ScrollY = 0;
     sub_08008c4c(6);
     sub_08008c64(4);
     sub_08008c64(51);
-    DrawScoreToBgMap(gUnk_02006020[gUnk_03002360], 22, 18);
-    gUnk_03001ED8 &= 0xE0FF;
-    gUnk_03001ED8 |= 0x1D00;
+    DrawScoreToBgMap(gUnk_02006020[gLocalPlayer], 22, 18);
+    gDispCnt &= 0xE0FF;
+    gDispCnt |= 0x1D00;
     sub_080cb21c();
     sub_08002358();
     sub_08002378();
@@ -138,20 +138,20 @@ void sub_080cad8c(void)
     PlayBgm(16);
     ResetFadeAndBlend();
     BeginFastFadeInFromWhite();
-    while (gUnk_03000F8C != 0) {
-        gUnk_03000F8C -= 0x78000;
-        if (gUnk_03000B78 != 180 << 16) {
-            gUnk_03000B78 -= 0x30000;
-            if (gUnk_03000B78 == 180 << 16) {
-                gUnk_03001ED8 &= 0xE0FF;
-                gUnk_03001ED8 |= 0x1F00;
+    while (gBg2ScrollX != 0) {
+        gBg2ScrollX -= 0x78000;
+        if (gBg3ScrollX != 180 << 16) {
+            gBg3ScrollX -= 0x30000;
+            if (gBg3ScrollX == 180 << 16) {
+                gDispCnt &= 0xE0FF;
+                gDispCnt |= 0x1F00;
                 TaskCreateFrom(262, 32);
             }
         }
         RunLinkFrame();
     }
     for (i = 0; i < 8; i++) {
-        struct Task *t = &gUnk_03002790[TaskCreateFrom(260, 32)];
+        struct Task *t = &gTasks[TaskCreateFrom(260, 32)];
         t->unk18 = i;
         RunLinkFrames(8);
     }
@@ -160,7 +160,7 @@ void sub_080cad8c(void)
     RunLinkFrames(8);
     do {
         RunLinkFrame();
-        if (gUnk_030023AC != 1)
+        if (gPlayerCount != 1)
             sub_080cb178();
     } while (gGameOverDone == 0);
 }
@@ -172,34 +172,34 @@ void sub_080caeec(void)
 {
     s32 i;
 
-    gUnk_03001EE0 = gUnk_03000FC0 = 0;
-    gUnk_03000F8C = gUnk_03000B78 = 240 << 16;
-    gUnk_03001E94 = gUnk_03000FA8 = 0;
+    gBg1ScrollX = gBg1ScrollY = 0;
+    gBg2ScrollX = gBg3ScrollX = 240 << 16;
+    gBg2ScrollY = gBg3ScrollY = 0;
     sub_08008c4c(6);
     sub_08008c64(4);
     sub_08008c64(51);
     sub_08002358();
     sub_08002378();
     sub_080022fc();
-    gUnk_03001ED8 &= 0xE0FF;
-    gUnk_03001ED8 |= 0x1D00;
+    gDispCnt &= 0xE0FF;
+    gDispCnt |= 0x1D00;
     PlayBgm(16);
     ResetFadeAndBlend();
     BeginFastFadeInFromWhite();
-    while (gUnk_03000F8C != 0) {
-        gUnk_03000F8C -= 0x78000;
-        if (gUnk_03000B78 != 180 << 16) {
-            gUnk_03000B78 -= 0x30000;
-            if (gUnk_03000B78 == 180 << 16) {
-                gUnk_03001ED8 &= 0xE0FF;
-                gUnk_03001ED8 |= 0x1F00;
+    while (gBg2ScrollX != 0) {
+        gBg2ScrollX -= 0x78000;
+        if (gBg3ScrollX != 180 << 16) {
+            gBg3ScrollX -= 0x30000;
+            if (gBg3ScrollX == 180 << 16) {
+                gDispCnt &= 0xE0FF;
+                gDispCnt |= 0x1F00;
                 TaskCreateFrom(262, 32);
             }
         }
         sub_080cb030(1);
     }
     for (i = 0; i < 8; i++) {
-        struct Task *t = &gUnk_03002790[TaskCreateFrom(260, 32)];
+        struct Task *t = &gTasks[TaskCreateFrom(260, 32)];
         t->unk18 = i;
         sub_080cb030(8);
     }
@@ -227,7 +227,7 @@ void sub_080cb030(s32 n)
    clock on screen until the countdown or a button ends it. */
 void sub_080cb058(void)
 {
-    gUnk_03000B78 = gUnk_03000FA8 = 0;
+    gBg3ScrollX = gBg3ScrollY = 0;
     sub_08008c4c(6);
     sub_08008c64(4);
     sub_08008c64(52);
@@ -235,8 +235,8 @@ void sub_080cb058(void)
     sub_08002668();
     sub_080022fc();
     DrawClockToBgMap(gUnk_02006068, 22, 18);
-    gUnk_03001ED8 &= 0xE0FF;
-    gUnk_03001ED8 |= 0x900;
+    gDispCnt &= 0xE0FF;
+    gDispCnt |= 0x900;
     PlayBgm(16);
     ResetFadeAndBlend();
     BeginFastFadeInFromWhite();
@@ -256,7 +256,7 @@ void sub_080cb0e8(void)
 
 u8 sub_080cb108(void)
 {
-    if (gUnk_03001EB8[0] & 0xC0) {
+    if (gPlayerPressedKeys[0] & 0xC0) {
         PlaySfx(101);
         return 1;
     }
@@ -267,8 +267,8 @@ u8 sub_080cb12c(void)
 {
     s32 i;
 
-    for (i = 0; i < gUnk_030023AC; i++) {
-        if (gUnk_03001EB8[i] & 9) {
+    for (i = 0; i < gPlayerCount; i++) {
+        if (gPlayerPressedKeys[i] & 9) {
             PlaySfx(102);
             gGameOverDone = 1;
             return 1;
@@ -286,19 +286,19 @@ void sub_080cb178(void)
     gUnk_0200557C--;
     if (gGameOverDone != 0) {
         if (gUnk_03002150 == 20)
-            gUnk_030023D8 = 4;
+            gGameState = 4;
         else
-            gUnk_030023D8 = 1;
+            gGameState = 1;
     }
 }
 
 void sub_080cb1d8(void)
 {
     if (sub_080cb12c()) {
-        if (gGameOverCursor == 0 && gUnk_030023AC == 1)
-            gUnk_030023D8 = 5;
+        if (gGameOverCursor == 0 && gPlayerCount == 1)
+            gGameState = 5;
         else
-            gUnk_030023D8 = 1;
+            gGameState = 1;
     }
 }
 
@@ -307,14 +307,14 @@ void sub_080cb1d8(void)
 void sub_080cb21c(void)
 {
     RequestCopy(2, (u32)gUnk_085E2C20, (u32)gUnk_030014F0, 192);
-    if (gUnk_030023AC == 1) {
+    if (gPlayerCount == 1) {
         LZ77UnCompWram(gUnk_085E2CE0, gUnk_02020000);
         RequestCopy(3, (u32)gUnk_02020000, 0x06012C00, 0x2A00);
         LZ77UnCompWram(gUnk_085E4064, gUnk_02020000);
-        RequestCopy(4, (u32)gUnk_02020000, (u32)gUnk_06010000, 0x3A00);
+        RequestCopy(4, (u32)gUnk_02020000, (u32)gObjVram, 0x3A00);
     } else {
         LZ77UnCompWram(gUnk_085E5BC4, gUnk_02020000);
-        RequestCopy(4, (u32)gUnk_02020000, (u32)gUnk_06010000, 0xC00);
+        RequestCopy(4, (u32)gUnk_02020000, (u32)gObjVram, 0xC00);
     }
 }
 
@@ -333,12 +333,12 @@ void sub_080cb2cc(void)
     s32 id;
     struct Task *t;
 
-    if (gUnk_030023AC == 1) {
+    if (gPlayerCount == 1) {
         TaskCreateFrom(261, 32);
         for (i = 0; i <= 2; i++) {
             id = TaskCreateFrom(264, 32);
             if (id != -1) {
-                t = &gUnk_03002790[id];
+                t = &gTasks[id];
                 t->unk73 = i;
                 if (i == 0)
                     gUnk_02007D28 = id;
@@ -347,7 +347,7 @@ void sub_080cb2cc(void)
     } else {
         id = TaskCreateFrom(264, 32);
         if (id != -1) {
-            struct Task *t2 = &gUnk_03002790[id];
+            struct Task *t2 = &gTasks[id];
             t2->unk73 = 5;
         }
     }

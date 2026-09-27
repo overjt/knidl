@@ -83,7 +83,7 @@ extern struct Unk02004B90 gUnk_02004B90[];
 extern s16 gUnk_0200AEF0;
 extern s32 gUnk_03001F2C;
 extern s32 gUnk_03002448;
-extern u16 gUnk_030023AC;
+extern u16 gPlayerCount;
 extern u8 gUnk_03002350;
 extern s32 gUnk_03002344;
 extern s16 gUnk_020055E0;
@@ -95,8 +95,8 @@ extern s8 gUnk_03002444;
 extern u32 gUnk_03001F10;
 extern u8 gUnk_02007CF0;
 extern u32 gUnk_0874CDF8[];
-extern s16 gUnk_03002348;
-extern u16 gUnk_030023E4;
+extern s16 gSpriteCameraX;
+extern u16 gSpriteCameraY;
 
 s32 QueueSprite(u32 a, u32 b, u32 c, u32 d, u32 e, s16 f);
 u32 IsWorldPosOnScreen(s16 x, s16 y);
@@ -120,7 +120,7 @@ void sub_08026b60(void)
         x = d->unk2 << 4;
         y = d->unk4 << 4;
         p->unk1 = 0;
-        if (gUnk_030023AC > 1 && gUnk_03002350 > 1)
+        if (gPlayerCount > 1 && gUnk_03002350 > 1)
         {
             gUnk_03002344 = 128;
             gUnk_03001F2C = x - gUnk_020055E0;
@@ -166,15 +166,15 @@ void sub_08026ca4(void)
         k = sub_08021b18(x, y);
         if (gUnk_08733AF0[k] == 0)
             continue;
-        if (gUnk_030023AC > 1 && gUnk_03002350 > 1)
+        if (gPlayerCount > 1 && gUnk_03002350 > 1)
         {
             gUnk_03002160 = 0;
             gUnk_03002344 = 128;
-            for (j = 0; j < gUnk_030023AC; j++)
+            for (j = 0; j < gPlayerCount; j++)
             {
                 if ((gUnk_03002340 >> j) & 1)
                 {
-                    struct Task *t = &gUnk_03002790[j];
+                    struct Task *t = &gTasks[j];
 
                     gUnk_03001F2C = x - t->unk48;
                     gUnk_03002448 = y - t->unk4A;
@@ -186,7 +186,7 @@ void sub_08026ca4(void)
                     gUnk_03002160++;
                 }
             }
-            if (gUnk_03002160 == gUnk_030023AC)
+            if (gUnk_03002160 == gPlayerCount)
                 p->unk1 = 1;
             else
                 p->unk1 = 0;
@@ -270,7 +270,7 @@ void sub_08026eec(void)
             gUnk_03001F10 += gUnk_0873264C[p->unk4_0][0];
             break;
         }
-        QueueSprite(15, gUnk_0874CDF8[gUnk_03001F10], 0, 0, x + gUnk_03001F2C - gUnk_03002348,
-                     -gUnk_030023E4 + y);
+        QueueSprite(15, gUnk_0874CDF8[gUnk_03001F10], 0, 0, x + gUnk_03001F2C - gSpriteCameraX,
+                     -gSpriteCameraY + y);
     }
 }

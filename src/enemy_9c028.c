@@ -19,12 +19,12 @@ void sub_0809c028(void)
     u32 *p;
 
     if (gUnk_0300244C != 0)
-        p = gUnk_08745D4C[gUnk_03002490->unk73 * 4 + gUnk_03002350 - 1];
+        p = gUnk_08745D4C[gCurTask->unk73 * 4 + gUnk_03002350 - 1];
     else
-        p = gUnk_08745CFC[gUnk_03002490->unk73 * 4 + gUnk_03002350 - 1];
+        p = gUnk_08745CFC[gCurTask->unk73 * 4 + gUnk_03002350 - 1];
     sub_08063908(p[0]);
     gUnk_02007D00[4] = p[1];
-    t = gUnk_03002490;
+    t = gCurTask;
     t->unk28 = p[2];
     t->unk2C = p[3];
     t->unk30 = p[4];

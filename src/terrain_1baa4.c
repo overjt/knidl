@@ -95,10 +95,10 @@ void sub_0801baa4(u32 p)
     s32 r;
 
     sub_0801c51c((const s8 *)p);
-    gUnk_03005530.unkD = gUnk_03002490->unk88->unk50 << 4;
+    gUnk_03005530.unkD = gCurTask->unk88->unk50 << 4;
     zero = 0;
-    gUnk_03005518 = gUnk_03002490->unk88->unk5E + (box = (s8 *)gUnk_03002490->unk88->unk70)[0];
-    gUnk_03005520 = box[1] + gUnk_03002490->unk88->unk60;
+    gUnk_03005518 = gCurTask->unk88->unk5E + (box = (s8 *)gCurTask->unk88->unk70)[0];
+    gUnk_03005520 = box[1] + gCurTask->unk88->unk60;
     gUnk_0300550C = gUnk_03005518 + box[4];
     gUnk_03005590 = gUnk_03005518 + box[5];
     gUnk_030055A4 = gUnk_03005520 + box[2];
@@ -144,13 +144,13 @@ void sub_0801baa4(u32 p)
     }
     sub_08021130();
     sub_08021564();
-    ps = gUnk_03002490->unk88;
+    ps = gCurTask->unk88;
     if (gUnk_030055A8 & 0x8000)
         r = ((gUnk_030055A8 << 8) | 0xFF000000) + gUnk_030055F0;
     else
         r = (gUnk_030055A8 << 8) + gUnk_030055F0;
     ps->unk54 = r;
-    ps = gUnk_03002490->unk88;
+    ps = gCurTask->unk88;
     if (gUnk_03005580 & 0x8000)
         r = ((gUnk_03005580 << 8) | 0xFF000000) + gUnk_03005618;
     else

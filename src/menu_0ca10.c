@@ -5,7 +5,7 @@
 /* menu_0ca10.c (0x0800CA10-0x0800D44F, issue #99).
  *
  * Main-menu screens, second part (gUnk_020060D0 is the menu screen,
- * gUnk_0200B074 the cursor, gUnk_03000038/gUnk_03000B70 the newly pressed
+ * gUnk_0200B074 the cursor, gPressedKeys/gRepeatedKeys the newly pressed
  * and auto-repeat keys).  sub_0800ca10 opens the mode list (screen 4)
  * and draws its 3-5 rows with sub_0800cc30 according to the save slot
  * unlock bits; sub_0800cd60 is its input loop (A/START picks a mode and
@@ -57,25 +57,25 @@ extern u8 gUnk_02007FCC;
 extern s16 gUnk_0200A6E0[];
 extern s8 gUnk_0200B074;
 extern struct SaveSlot gSaveSlots[];
-extern vu16 gUnk_03000038;
-extern vu16 gUnk_03000B70;
-extern vs32 gUnk_03000B78;
-extern vs32 gUnk_03000F8C;
-extern vs32 gUnk_03000FA8;
+extern vu16 gPressedKeys;
+extern vu16 gRepeatedKeys;
+extern vs32 gBg3ScrollX;
+extern vs32 gBg2ScrollX;
+extern vs32 gBg3ScrollY;
 extern u16 gUnk_030015F0[];
-extern vs32 gUnk_03001E94;
-extern vu16 gUnk_03001ED8;
-extern vu16 gUnk_03001EF4;
-extern s8 gUnk_03001F08[];
+extern vs32 gBg2ScrollY;
+extern vu16 gDispCnt;
+extern vu16 gHeldKeys;
+extern s8 gDigits[];
 extern u8 gUnk_03001F30;
-extern u16 gUnk_030023D8;
+extern u16 gGameState;
 extern s32 gCurSaveSlot;
 extern u8 gExtraMode;
-extern u32 gUnk_06010000[];
+extern u32 gObjVram[];
 extern const u8 gUnk_0855A5F8[];
 extern u16 gUnk_08564F34[];
 extern const u8 gUnk_085653C4[];
-extern const struct SongEntry gUnk_0872EB38[];
+extern const struct SongEntry gSfxTable[];
 
 void RequestCopy(u32 mode, u32 src, u32 dst, u32 size);
 void RunFrame(void);
@@ -104,13 +104,13 @@ void sub_0800ca10(void)
         sub_08008c64(18);
         sub_08008c64(21);
         gUnk_020060D0 = 4;
-        gUnk_03001ED8 &= 0xE0FF;
-        gUnk_03001ED8 |= 0x1F00;
+        gDispCnt &= 0xE0FF;
+        gDispCnt |= 0x1F00;
         sub_08010020(66, 12, 13, 3);
     } else if (gUnk_02007E88 == 1) {
         gUnk_0200B074 = 0;
-        gUnk_03001ED8 &= 0xE0FF;
-        gUnk_03001ED8 |= 0x1E00;
+        gDispCnt &= 0xE0FF;
+        gDispCnt |= 0x1E00;
         gUnk_020060D0 = 4;
         sub_0800fe54(0x80000);
         sub_08008c64(25);
@@ -118,13 +118,13 @@ void sub_0800ca10(void)
         RunFrames(8);
         gUnk_02004B70 = 0;
         for (i = 0; i < 8; i++) {
-            if (gUnk_03000038 & 11) {
+            if (gPressedKeys & 11) {
                 StopHBlankScroll();
                 sub_0800fe94();
-                gUnk_02004B70 = gUnk_03000038;
+                gUnk_02004B70 = gPressedKeys;
                 sub_08010048(61, 63, 255, 136, 0x2000);
                 RunFrame();
-                gUnk_03001ED8 &= 0xDFFF;
+                gDispCnt &= 0xDFFF;
                 break;
             }
             RunFrame();
@@ -133,19 +133,19 @@ void sub_0800ca10(void)
             gUnk_02006180 = 16;
         else
             gUnk_02006180 = 0;
-        gUnk_03001ED8 &= 0xE0FF;
-        gUnk_03001ED8 |= 0x1F00;
+        gDispCnt &= 0xE0FF;
+        gDispCnt |= 0x1F00;
     } else {
         gUnk_020060D0 = 5;
         StartHBlankScroll(7);
         RunFrames(8);
-        gUnk_03001E94 = gUnk_03000FA8 = 0;
+        gBg2ScrollY = gBg3ScrollY = 0;
         sub_0800fd24(0x100000, 256, 2);
         sub_0800fd24(0x100000, 256, 3);
         sub_08008c64(41);
         gUnk_02006180 = 16;
-        gUnk_03001ED8 &= 0xE0FF;
-        gUnk_03001ED8 |= 0x1A00;
+        gDispCnt &= 0xE0FF;
+        gDispCnt |= 0x1A00;
     }
     sub_08008c64(31);
     if (gSaveSlots[gCurSaveSlot].unk10 & 2)
@@ -191,21 +191,21 @@ void sub_0800cd60(void)
     while (1) {
         if (gUnk_02006180 != 0) {
             sub_08010048(61, 63, ((16 - gUnk_02006180) << 12) | 0xFF, 135, 0x2000);
-            if ((gUnk_03000038 & 11) || (gUnk_02004B70 & 11)) {
+            if ((gPressedKeys & 11) || (gUnk_02004B70 & 11)) {
                 gUnk_02006180 = 1;
-                gUnk_02004B70 |= gUnk_03000038;
+                gUnk_02004B70 |= gPressedKeys;
             }
             if (--gUnk_02006180 == 0)
-                gUnk_03001ED8 &= 0xDFFF;
+                gDispCnt &= 0xDFFF;
         }
-        if ((gUnk_03000038 & 9) || (gUnk_02004B70 & 9)) {
+        if ((gPressedKeys & 9) || (gUnk_02004B70 & 9)) {
             gUnk_02004B70 = 0;
             PlaySfx(102);
             if (gUnk_0200B074 == 4) {
                 gUnk_020060D0 = 9;
                 gExtraMode = 0;
                 gUnk_03001F30 = 1;
-                gUnk_030023D8 = 13;
+                gGameState = 13;
                 gUnk_02006090 = 7;
                 gUnk_02007FCC = 7;
                 return;
@@ -226,32 +226,32 @@ void sub_0800cd60(void)
             RunFrames(6);
             return;
         }
-        if ((gUnk_03000038 & 2) || (gUnk_02004B70 & 2)) {
+        if ((gPressedKeys & 2) || (gUnk_02004B70 & 2)) {
             gUnk_02004B70 = 0;
             PlaySfx(215);
             gUnk_02007E88 = gUnk_020060D0;
             gUnk_020060D0 = 1;
-            gUnk_03001ED8 &= 0xE0FF;
-            gUnk_03001ED8 |= 0x1E00;
+            gDispCnt &= 0xE0FF;
+            gDispCnt |= 0x1E00;
             sub_0800fe54(0xFFF80000);
             sub_08008c64(33);
             for (i = 1; i < 16; i++) {
                 sub_08010048(60, 63, (0x10000 - (i << 12)) | 0xFF, 135, 0x2000);
                 RunFrame();
-                if (i > 8 && (gUnk_03000038 & 11)) {
+                if (i > 8 && (gPressedKeys & 11)) {
                     sub_0800fe94();
                     break;
                 }
             }
-            gUnk_03001ED8 &= 0xDFFF;
+            gDispCnt &= 0xDFFF;
             sub_0800c20c();
             return;
         }
-        if (gUnk_03000B70 & 64) {
+        if (gRepeatedKeys & 64) {
             PlaySfx(101);
             if (--gUnk_0200B074 < 0)
                 gUnk_0200B074 = gUnk_02000018 + 2;
-        } else if (gUnk_03000B70 & 128) {
+        } else if (gRepeatedKeys & 128) {
             PlaySfx(101);
             if (++gUnk_0200B074 >= gUnk_02000018 + 3)
                 gUnk_0200B074 = 0;
@@ -267,9 +267,9 @@ void sub_0800cff4(void)
     gUnk_02007E88 = gUnk_020060D0;
     gUnk_020060D0 = 8;
     sub_08008c64(36);
-    gUnk_03001ED8 &= 0xE0FF;
-    gUnk_03001ED8 |= 0x1A00;
-    gUnk_03001E94 = gUnk_03000FA8 = 0;
+    gDispCnt &= 0xE0FF;
+    gDispCnt |= 0x1A00;
+    gBg2ScrollY = gBg3ScrollY = 0;
     sub_0800fd24(0xFFF00000, 256, 2);
     sub_0800fd24(0xFFF00000, 256, 3);
     TaskCreateFrom(250, 32);
@@ -280,11 +280,11 @@ void sub_0800cff4(void)
             sub_08010048(60, 63, (0x10000 - (i << 12)) | 0xFF, 135, 0x2000);
         RunFrame();
     }
-    gUnk_03001ED8 &= 0xDFFF;
+    gDispCnt &= 0xDFFF;
     sub_08008c64(41);
     sub_08008c64(37);
-    gUnk_03001ED8 &= 0xE0FF;
-    gUnk_03001ED8 |= 0x1E00;
+    gDispCnt &= 0xE0FF;
+    gDispCnt |= 0x1E00;
     TaskCreateFrom(249, 32);
     RunFrames(8);
     sub_08008c64(42);
@@ -296,15 +296,15 @@ void sub_0800d0f4(void)
     gUnk_02004B70 = 0;
     while (1) {
         if (gUnk_02006180 != 0) {
-            if (--gUnk_02006180 != 0 && (gUnk_03000038 & 11)) {
+            if (--gUnk_02006180 != 0 && (gPressedKeys & 11)) {
                 gUnk_02006180 = 0;
                 StopHBlankScroll();
                 sub_0800fe94();
-                gUnk_02004B70 = gUnk_03000038;
+                gUnk_02004B70 = gPressedKeys;
             }
             if (gUnk_02006180 == 0) {
-                gUnk_03001ED8 &= 0xE0FF;
-                gUnk_03001ED8 |= 0x1F00;
+                gDispCnt &= 0xE0FF;
+                gDispCnt |= 0x1F00;
                 TaskCreateFrom(247, 32);
                 gUnk_02007D34 = 1;
                 TaskCreateFrom(248, 32);
@@ -312,19 +312,19 @@ void sub_0800d0f4(void)
                     RunFrames(1);
             }
         }
-        if ((gUnk_03000038 & 9) || (gUnk_02004B70 & 9)) {
+        if ((gPressedKeys & 9) || (gUnk_02004B70 & 9)) {
             gUnk_02004B70 = 0;
             PlaySfx(102);
             if (gUnk_02007D34 == 0) {
                 gUnk_020060D0 = 9;
                 gUnk_03001F30 = 0;
-                gUnk_030023D8 = 13;
+                gGameState = 13;
                 return;
             }
             sub_0800cff4();
             return;
         }
-        if ((gUnk_03000038 & 2) || (gUnk_02004B70 & 2)) {
+        if ((gPressedKeys & 2) || (gUnk_02004B70 & 2)) {
             gUnk_02004B70 = 0;
             PlaySfx(215);
             gUnk_020060D0 = 4;
@@ -332,10 +332,10 @@ void sub_0800d0f4(void)
             return;
         }
         if (gUnk_02006180 == 0) {
-            if ((gUnk_03001EF4 & 128) && gUnk_02007D34 == 0) {
+            if ((gHeldKeys & 128) && gUnk_02007D34 == 0) {
                 PlaySfx(101);
                 gUnk_02007D34 = 1;
-            } else if ((gUnk_03001EF4 & 64) && gUnk_02007D34 == 1) {
+            } else if ((gHeldKeys & 64) && gUnk_02007D34 == 1) {
                 PlaySfx(101);
                 gUnk_02007D34 = 0;
             }
@@ -347,17 +347,17 @@ void sub_0800d0f4(void)
 void sub_0800d280(void)
 {
     RunFrames(2);
-    gUnk_03001ED8 &= 0xE0FF;
-    gUnk_03001ED8 |= 0x1A00;
+    gDispCnt &= 0xE0FF;
+    gDispCnt |= 0x1A00;
     RunFrame();
     FadeOutBgm(32);
     gUnk_020060D0 = 7;
     sub_08008c64(45);
     StartHBlankScroll(1);
     sub_08008c64(25);
-    gUnk_03000FA8 = gUnk_03000B78 = 0;
+    gBg3ScrollY = gBg3ScrollX = 0;
     sub_0800fd24(0xFFF00000, 256, 3);
-    gUnk_03000F8C = 0x1000000;
+    gBg2ScrollX = 0x1000000;
     RunFrames(8);
     gUnk_02006180 = 8;
 }
@@ -377,12 +377,12 @@ void sub_0800d35c(s32 a)
 
     IntToDigits(gUnk_0200A6E0[a]);
     if (gUnk_0200A6E0[a] < 100)
-        gUnk_03001F08[2] = 10;
+        gDigits[2] = 10;
     if (gUnk_0200A6E0[a] < 10)
-        gUnk_03001F08[1] = 10;
+        gDigits[1] = 10;
     for (i = 0; i < 3; i++) {
-        RequestCopy(3, (u32)&gUnk_085653C4[gUnk_03001F08[2 - i] * 128], (u32)gUnk_06010000 + (a * 6 + i * 2 + 4) * 32, 64);
-        RequestCopy(3, (u32)&gUnk_085653C4[(gUnk_03001F08[2 - i] * 4 + 2) * 32], (u32)gUnk_06010000 + (a * 6 + i * 2 + 36) * 32, 64);
+        RequestCopy(3, (u32)&gUnk_085653C4[gDigits[2 - i] * 128], (u32)gObjVram + (a * 6 + i * 2 + 4) * 32, 64);
+        RequestCopy(3, (u32)&gUnk_085653C4[(gDigits[2 - i] * 4 + 2) * 32], (u32)gObjVram + (a * 6 + i * 2 + 36) * 32, 64);
     }
 }
 
@@ -395,7 +395,7 @@ void sub_0800d404(void)
     if (i != target) {
         i = 1;
         do {
-            if (gUnk_0872EB38[i].header != NULL)
+            if (gSfxTable[i].header != NULL)
                 n++;
             if (n == target)
                 break;

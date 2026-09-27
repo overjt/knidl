@@ -35,12 +35,12 @@ void sub_0804e3a0(void)
         if (sub_0803fce4(0) != 0)
         {
             sub_0803e4a8();
-            if ((s8)gUnk_03002490->unk88->unk07 != 0)
-                gUnk_03002490->unk88->unk16 = 0xFF;
-            gUnk_03002490->unk88->unk01 = 23;
+            if ((s8)gCurTask->unk88->unk07 != 0)
+                gCurTask->unk88->unk16 = 0xFF;
+            gCurTask->unk88->unk01 = 23;
             break;
         }
-        t = gUnk_03002490;
+        t = gCurTask;
         switch (t->unk73)
         {
         case 1:
@@ -52,18 +52,18 @@ void sub_0804e3a0(void)
                     if (sub_08030898(gUnk_0873CC54, p->unk00) != 0)
                     {
                         sub_08065100(gUnk_02007FA0[0] + 8, gUnk_02004B6C[0] + 8, gCurTaskIdx, 4, 2);
-                        gUnk_03002490->unk88->unk09 = 2;
+                        gCurTask->unk88->unk09 = 2;
                     }
                 }
                 else
                 {
                     t->unk28--;
                 }
-                u = gUnk_03002490;
+                u = gCurTask;
                 if (u->unk88->unk09 == 0)
                     sub_0801a828(gCurTaskIdx, u->unk48, u->unk4A, gUnk_0873BEEC);
             }
-            v = gUnk_03002490;
+            v = gCurTask;
             if ((s8)v->unk88->unk07 == 0)
             {
                 if (v->unk2C == 0)
@@ -82,7 +82,7 @@ void sub_0804e3a0(void)
             else if (v->unk30 == 0)
             {
                 sub_0803e650(1);
-                gUnk_03002490->unk30++;
+                gCurTask->unk30++;
             }
             break;
         case 0:
@@ -100,7 +100,7 @@ void sub_0804e3a0(void)
         }
         break;
     }
-    w = gUnk_03002490;
+    w = gCurTask;
     if (w->unk7A & 1)
     {
         if (w->unk54 != 0)

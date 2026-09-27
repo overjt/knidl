@@ -12,35 +12,35 @@
  * title palette, task type #2 (Task_TitleSprites) spawns ten sprite children
  * (sub_08009640) - with the nine-scene intro story sub_080098a8. */
 
-extern vs32 gUnk_03000010;
-extern vu16 gUnk_03000038;
-extern vu8 gUnk_03000040;
-extern vu16 gUnk_03000044;
+extern vs32 gBg0ScrollY;
+extern vu16 gPressedKeys;
+extern vu8 gBldCntTarget2;
+extern vu16 gWin0V;
 extern vu16 gUnk_03000048;
-extern vu16 gUnk_030004A4;
-extern vu8 gUnk_03000B08;
-extern vu8 gUnk_03000B18;
-extern vs32 gUnk_03000B78;
+extern vu16 gFadeStep;
+extern vu8 gBldAlphaEva;
+extern vu8 gWinIn0;
+extern vs32 gBg3ScrollX;
 extern vu8 gUnk_03000F7C;
-extern vs32 gUnk_03000F8C;
-extern vs32 gUnk_03000FA8;
-extern vs16 gUnk_03000FB8;
-extern vs32 gUnk_03000FC0;
-extern vu16 gUnk_03000FD4;
-extern vu16 gUnk_03001174;
-extern vs32 gUnk_0300117C;
-extern vu8 gUnk_0300118C;
+extern vs32 gBg2ScrollX;
+extern vs32 gBg3ScrollY;
+extern vs16 gBrightness;
+extern vs32 gBg1ScrollY;
+extern vu16 gWin0H;
+extern vu16 gFadeTimer;
+extern vs32 gBg0ScrollX;
+extern vu8 gBldCntTarget1;
 extern u16 gUnk_03001430[];
-extern vu16 gUnk_03001E90;
-extern vs32 gUnk_03001E94;
-extern vu16 gUnk_03001E98;
-extern vu8 gUnk_03001EAC;
-extern u16 *gUnk_03001ED4;
-extern vu16 gUnk_03001ED8;
-extern vs32 gUnk_03001EE0;
+extern vu16 gFadeSteps;
+extern vs32 gBg2ScrollY;
+extern vu16 gFadeInterval;
+extern vu8 gBldAlphaEvb;
+extern u16 *gFadeKeepMask;
+extern vu16 gDispCnt;
+extern vs32 gBg1ScrollX;
 extern s32 gUnk_03001F2C;
 extern u16 gUnk_03002150;
-extern u16 gUnk_0300243C;
+extern u16 gLinkPlayerCount;
 extern u16 gUnk_08541D98[][16];
 extern u16 gUnk_08541F58[];
 extern u16 gUnk_08731C88[];
@@ -108,40 +108,40 @@ s32 sub_08009200(void)
 
     ResetTasksAndOam();
     BootLogoInitObjects();
-    gUnk_0300243C = 0x9999;
+    gLinkPlayerCount = 0x9999;
     sub_08008c4c(0);
     sub_08008c64(6);
     sub_08008c64(7);
-    gUnk_03000010 = gUnk_0300117C = gUnk_03000FC0 = gUnk_03001EE0 = gUnk_03001E94 = gUnk_03000F8C = gUnk_03000FA8 = gUnk_03000B78 = 0;
-    gUnk_03001ED8 &= 0xE0FF;
-    gUnk_03001ED8 |= 0x1100;
+    gBg0ScrollY = gBg0ScrollX = gBg1ScrollY = gBg1ScrollX = gBg2ScrollY = gBg2ScrollX = gBg3ScrollY = gBg3ScrollX = 0;
+    gDispCnt &= 0xE0FF;
+    gDispCnt |= 0x1100;
     BeginFastFadeInFromWhite();
     RunFramesUntilFadeDone();
     RunFrames(60);
     TaskCreateFrom(0, 0);
     RunFrames(60);
-    gUnk_0300243C = 1;
+    gLinkPlayerCount = 1;
     if (sub_08009398(70) != 0)
         return 1;
     PlaySfx(0x10D);
     if (sub_08009398(35) != 0)
         return 1;
-    gUnk_03001ED8 &= 0xE0FF;
-    gUnk_03001ED8 |= 0x1F00;
+    gDispCnt &= 0xE0FF;
+    gDispCnt |= 0x1F00;
     if (sub_08009398(21) != 0)
         return 1;
-    gUnk_03000B18 = 49;
+    gWinIn0 = 49;
     gUnk_03000F7C = 62;
-    gUnk_03000FD4 = 255;
-    gUnk_03000044 = 160;
-    gUnk_03001ED8 |= 0x2000;
+    gWin0H = 255;
+    gWin0V = 160;
+    gDispCnt |= 0x2000;
     for (i = 85; i >= 0; i--) {
-        gUnk_03000FD4 = i * 3;
+        gWin0H = i * 3;
         RunFrame();
     }
-    gUnk_03001ED8 &= 0xE0FF;
-    gUnk_03001ED8 |= 0x1E00;
-    gUnk_03001ED8 &= 0xDFFF;
+    gDispCnt &= 0xE0FF;
+    gDispCnt |= 0x1E00;
+    gDispCnt &= 0xDFFF;
     return 0;
 }
 
@@ -150,7 +150,7 @@ s32 sub_08009398(s32 n)
     s32 i;
 
     for (i = 0; i < n; i++) {
-        if (gUnk_03000038 & 11)
+        if (gPressedKeys & 11)
             return 1;
         RunFrame();
     }
@@ -159,8 +159,8 @@ s32 sub_08009398(s32 n)
 
 s32 sub_080093cc(void)
 {
-    while (gUnk_03001E90 != 0) {
-        if (gUnk_03000038 & 11)
+    while (gFadeSteps != 0) {
+        if (gPressedKeys & 11)
             return 1;
         RunFrame();
     }
@@ -169,7 +169,7 @@ s32 sub_080093cc(void)
 
 void Task_BootLogo(void)
 {
-    struct Task *t = gUnk_03002490;
+    struct Task *t = gCurTask;
 
     t->unk00 = 0;
     t->unk0C = 0;
@@ -181,24 +181,24 @@ void Task_BootLogo(void)
 
 void Task_TitlePalette(void)
 {
-    struct Task *t = gUnk_03002490;
+    struct Task *t = gCurTask;
     s32 *p;
     u16 *q;
 
     t->unk00 = 0;
     t->unk0C = 0;
-    for (t->unk6C = 0; (s16)gUnk_03002490->unk6C <= 10; gUnk_03002490->unk6C++) {
-        RequestCopy(2, (u32)gUnk_08541D98[(s16)gUnk_03002490->unk6C], (u32)gUnk_03001430, 32);
+    for (t->unk6C = 0; (s16)gCurTask->unk6C <= 10; gCurTask->unk6C++) {
+        RequestCopy(2, (u32)gUnk_08541D98[(s16)gCurTask->unk6C], (u32)gUnk_03001430, 32);
         TaskYieldTrampoline(1);
     }
-    for (gUnk_03002490->unk6C = 0; (s16)gUnk_03002490->unk6C <= 11; gUnk_03002490->unk6C++) {
-        BlendColors(gUnk_08541D98[13], gUnk_08541D98[11], (u16)(((s16)gUnk_03002490->unk6C + 1) * 21), 16, gUnk_03001430);
-        BlendColors(gUnk_08541F58, gUnk_08541F58 + 8, (u16)(((s16)gUnk_03002490->unk6C + 1) * 21), 8, gUnk_03001430 + 17);
+    for (gCurTask->unk6C = 0; (s16)gCurTask->unk6C <= 11; gCurTask->unk6C++) {
+        BlendColors(gUnk_08541D98[13], gUnk_08541D98[11], (u16)(((s16)gCurTask->unk6C + 1) * 21), 16, gUnk_03001430);
+        BlendColors(gUnk_08541F58, gUnk_08541F58 + 8, (u16)(((s16)gCurTask->unk6C + 1) * 21), 8, gUnk_03001430 + 17);
         TaskYieldTrampoline(1);
     }
-    for (gUnk_03002490->unk6C = 0; (s16)gUnk_03002490->unk6C <= 7; gUnk_03002490->unk6C++) {
-        BlendColors(gUnk_08541D98[11], gUnk_08541D98[12], (u16)(((s16)gUnk_03002490->unk6C + 1) * 32), 16, gUnk_03001430);
-        BlendColors(gUnk_08541F58 + 8, gUnk_08541F58, (u16)(((s16)gUnk_03002490->unk6C + 1) * 32), 8, gUnk_03001430 + 17);
+    for (gCurTask->unk6C = 0; (s16)gCurTask->unk6C <= 7; gCurTask->unk6C++) {
+        BlendColors(gUnk_08541D98[11], gUnk_08541D98[12], (u16)(((s16)gCurTask->unk6C + 1) * 32), 16, gUnk_03001430);
+        BlendColors(gUnk_08541F58 + 8, gUnk_08541F58, (u16)(((s16)gCurTask->unk6C + 1) * 32), 8, gUnk_03001430 + 17);
         TaskYieldTrampoline(1);
     }
     /* Loop 4: the ROM hoists the store's &gUnk_03001F2C (after the task
@@ -213,10 +213,10 @@ void Task_TitlePalette(void)
        hoisted register instead. */
     q = (u16 *)&gUnk_03001F2C;
     for (;;) {
-        gUnk_03002490->unk6C = 0;
+        gCurTask->unk6C = 0;
         p = &gUnk_03001F2C;
-        for (; (s16)gUnk_03002490->unk6C <= 15; gUnk_03002490->unk6C++) {
-            *p = ((s16)gUnk_03002490->unk6C > 7 ? 16 - (s16)gUnk_03002490->unk6C : (s16)gUnk_03002490->unk6C) << 5;
+        for (; (s16)gCurTask->unk6C <= 15; gCurTask->unk6C++) {
+            *p = ((s16)gCurTask->unk6C > 7 ? 16 - (s16)gCurTask->unk6C : (s16)gCurTask->unk6C) << 5;
             q = (u16 *)&gUnk_03001F2C;
             BlendColors(gUnk_08541D98[12], gUnk_08541D98[13], *q, 16, gUnk_03001430);
             TaskYieldTrampoline(1);
@@ -226,7 +226,7 @@ void Task_TitlePalette(void)
 
 void Task_TitleSprites(void)
 {
-    if (gUnk_03002490->unk18 == -1)
+    if (gCurTask->unk18 == -1)
         sub_080095e4();
     else
         sub_08009640();
@@ -237,12 +237,12 @@ void sub_080095e4(void)
     struct Task *t;
     s32 idx;
 
-    TaskYieldTrampoline(gUnk_03002490->unk1C);
-    for (gUnk_03002490->unk6C = 0; (s16)gUnk_03002490->unk6C < 10; gUnk_03002490->unk6C++) {
+    TaskYieldTrampoline(gCurTask->unk1C);
+    for (gCurTask->unk6C = 0; (s16)gCurTask->unk6C < 10; gCurTask->unk6C++) {
         idx = TaskCreateFrom(2, 0);
-        t = gUnk_03002490;
+        t = gCurTask;
         t->unk28 = idx;
-        gUnk_03002790[idx].unk18 = (s16)t->unk6C;
+        gTasks[idx].unk18 = (s16)t->unk6C;
         TaskYieldTrampoline(3);
     }
     TaskExitTrampoline();
@@ -252,12 +252,12 @@ void sub_08009640(void)
 {
     struct Task *t, *u, *v;
 
-    t = gUnk_03002490;
+    t = gCurTask;
     t->unk00 = (u32)TaskMove;
     t->unk0C = (u32)TaskDrawScreen;
     t->unk38 = gUnk_087555B4;
     t->unk42 = 8;
-    u = gUnk_03002490;
+    u = gCurTask;
     if (u->unk18 <= 4) {
         u->unk4C = u->unk18 * 0x140000 + 0x180000;
         u->unk50 = 0x800000;
@@ -265,13 +265,13 @@ void sub_08009640(void)
         u->unk4C = (u->unk18 - 5) * 0x140000 + 0x880000;
         u->unk50 = 0x800000;
     }
-    gUnk_03002490->unk3C = 8;
+    gCurTask->unk3C = 8;
     TaskYieldTrampoline(1);
-    gUnk_03002490->unk3C--;
+    gCurTask->unk3C--;
     TaskYieldTrampoline(1);
-    gUnk_03002490->unk3C--;
+    gCurTask->unk3C--;
     TaskYieldTrampoline(1);
-    v = gUnk_03002490;
+    v = gCurTask;
     v->unk3C = gUnk_08731CC8[v->unk18];
     TaskSleepForever();
 }
@@ -280,13 +280,13 @@ void sub_080096e0(void)
 {
     while (sub_0800973c() == 0)
         sub_080098a8();
-    gUnk_03001E90 = 10;
-    gUnk_03000FB8 = 2;
-    gUnk_030004A4 = 3;
-    gUnk_03001174 = 0;
-    gUnk_03001E98 = 1;
+    gFadeSteps = 10;
+    gBrightness = 2;
+    gFadeStep = 3;
+    gFadeTimer = 0;
+    gFadeInterval = 1;
     gUnk_03000048 = 1;
-    gUnk_03001ED4 = 0;
+    gFadeKeepMask = 0;
     RunFramesUntilFadeDone();
 }
 
@@ -302,20 +302,20 @@ s32 sub_0800973c(void)
         ResetTasksAndOam();
         sub_08008c4c(0);
         sub_08008c64(7);
-        gUnk_03000010 = gUnk_0300117C = gUnk_03000FC0 = gUnk_03001EE0 = gUnk_03001E94 = gUnk_03000F8C = gUnk_03000FA8 = gUnk_03000B78 = 0;
-        gUnk_03001ED8 &= 0xE0FF;
-        gUnk_03001ED8 |= 0x1E00;
+        gBg0ScrollY = gBg0ScrollX = gBg1ScrollY = gBg1ScrollX = gBg2ScrollY = gBg2ScrollX = gBg3ScrollY = gBg3ScrollX = 0;
+        gDispCnt &= 0xE0FF;
+        gDispCnt |= 0x1E00;
     }
     if (gUnk_03002150 != 1) {
         BeginFastFadeInFromWhite();
         RunFramesUntilFadeDone();
         idx = TaskCreateFrom(2, 0);
-        gUnk_03002790[idx].unk18 = -1;
-        gUnk_03002790[idx].unk1C = 0;
+        gTasks[idx].unk18 = -1;
+        gTasks[idx].unk1C = 0;
     } else {
         idx = TaskCreateFrom(2, 0);
-        gUnk_03002790[idx].unk18 = -1;
-        gUnk_03002790[idx].unk1C = 90;
+        gTasks[idx].unk18 = -1;
+        gTasks[idx].unk1C = 90;
     }
     TaskCreateFrom(1, 0);
     PlayBgm(26);
@@ -328,7 +328,7 @@ s32 sub_0800973c(void)
         if (--i == 0)
             goto timeout;
         RunFrame();
-        if (gUnk_03000038 & 9)
+        if (gPressedKeys & 9)
             goto pressed;
     }
 pressed:
@@ -352,21 +352,21 @@ void sub_080098a8(void)
     ResetTasksAndOam();
     sub_08008c4c(1);
     sub_08008c64(8);
-    gUnk_03001ED8 &= 0xE0FF;
-    gUnk_03001ED8 |= 0x1C00;
-    gUnk_0300118C = 84;
-    gUnk_03000040 = 8;
-    gUnk_03000B08 = 0;
-    gUnk_03001EAC = 16;
+    gDispCnt &= 0xE0FF;
+    gDispCnt |= 0x1C00;
+    gBldCntTarget1 = 84;
+    gBldCntTarget2 = 8;
+    gBldAlphaEva = 0;
+    gBldAlphaEvb = 16;
     BeginFadeInFromWhite();
     RunFramesUntilFadeDone();
     for (i = 0; i < 9; i++) {
         sub_08008c64(gUnk_08731CDC[i]);
         t = TaskCreateFrom(237, 0);
-        gUnk_03002790[t].unk18 = i;
+        gTasks[t].unk18 = i;
         for (j = 0; j <= 16; j++) {
-            gUnk_03000B08 = j;
-            gUnk_03001EAC = 16 - j;
+            gBldAlphaEva = j;
+            gBldAlphaEvb = 16 - j;
             if (sub_080099c8(2))
                 goto end;
         }
@@ -375,8 +375,8 @@ void sub_080098a8(void)
         if (i == 8)
             break;
         for (j = 0; j <= 16; j++) {
-            gUnk_03000B08 = 16 - j;
-            gUnk_03001EAC = j;
+            gBldAlphaEva = 16 - j;
+            gBldAlphaEvb = j;
             if (sub_080099c8(2))
                 goto end;
         }
@@ -384,7 +384,7 @@ void sub_080098a8(void)
 end:
     BeginFadeOutToWhite();
     RunFramesUntilFadeDone();
-    gUnk_0300118C = gUnk_03000040 = gUnk_03000B08 = gUnk_03001EAC = 0;
+    gBldCntTarget1 = gBldCntTarget2 = gBldAlphaEva = gBldAlphaEvb = 0;
 }
 
 s32 sub_080099c8(s32 n)
@@ -392,7 +392,7 @@ s32 sub_080099c8(s32 n)
     s32 i;
 
     for (i = 0; i < n; i++) {
-        if (gUnk_03000038 & 11)
+        if (gPressedKeys & 11)
             return 1;
         RunFrame();
     }

@@ -13,8 +13,8 @@ extern u8 gUnk_02006014;
 extern u8 gUnk_02006030;
 extern u16 gUnk_02006068[];
 extern u8 gUnk_0200B028;
-extern u16 gUnk_03000498[4];
-extern s8 gUnk_03001F08[];
+extern u16 gPlayTime[4];
+extern s8 gDigits[];
 extern s8 gUnk_030023B8;
 extern s8 gUnk_03002444;
 extern u16 gUnk_085A5654[];
@@ -40,16 +40,16 @@ void sub_0800af40(u16 *time);
 
 void sub_0800aad0(void)
 {
-    if (gUnk_03000498[3] > 99) {
+    if (gPlayTime[3] > 99) {
         gUnk_02006068[3] = 99;
         gUnk_02006068[2] = 59;
         gUnk_02006068[1] = 59;
         gUnk_02006068[0] = 59;
     } else {
-        gUnk_02006068[3] = gUnk_03000498[3];
-        gUnk_02006068[2] = gUnk_03000498[2];
-        gUnk_02006068[1] = gUnk_03000498[1];
-        gUnk_02006068[0] = gUnk_03000498[0];
+        gUnk_02006068[3] = gPlayTime[3];
+        gUnk_02006068[2] = gPlayTime[2];
+        gUnk_02006068[1] = gPlayTime[1];
+        gUnk_02006068[0] = gPlayTime[0];
     }
 }
 
@@ -79,10 +79,10 @@ void sub_0800abc0(s32 n)
 {
     if (gUnk_02006014 == 1) {
         IntToDigits(n);
-        sub_0800b318(&gUnk_085A6F34[0][gUnk_03001F08[1]], 10, 18, 1);
-        sub_0800b318(&gUnk_085A6F34[1][gUnk_03001F08[1]], 10, 19, 1);
-        sub_0800b318(&gUnk_085A6F34[0][gUnk_03001F08[0]], 11, 18, 1);
-        sub_0800b318(&gUnk_085A6F34[1][gUnk_03001F08[0]], 11, 19, 1);
+        sub_0800b318(&gUnk_085A6F34[0][gDigits[1]], 10, 18, 1);
+        sub_0800b318(&gUnk_085A6F34[1][gDigits[1]], 10, 19, 1);
+        sub_0800b318(&gUnk_085A6F34[0][gDigits[0]], 11, 18, 1);
+        sub_0800b318(&gUnk_085A6F34[1][gDigits[0]], 11, 19, 1);
     }
 }
 

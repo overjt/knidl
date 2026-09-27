@@ -126,33 +126,33 @@ s32 sub_08021634(u32 x, u32 y);
 
 void sub_0801c51c(const s8 *p)
 {
-    gUnk_03005560 = (gUnk_03002490->unk4C >> 16) + p[0];
-    gUnk_03005570 = (gUnk_03002490->unk50 >> 16) + p[1];
+    gUnk_03005560 = (gCurTask->unk4C >> 16) + p[0];
+    gUnk_03005570 = (gCurTask->unk50 >> 16) + p[1];
     gUnk_0300557C = p[2];
     gUnk_03005584 = p[3];
     gUnk_0300551C = p[4];
     gUnk_0300559C = p[5];
-    gUnk_03005564 = gUnk_03002490->unk43;
+    gUnk_03005564 = gCurTask->unk43;
     gUnk_03005530.unk0 = gUnk_03005530.unk1 = gUnk_03005530.unk2 = gUnk_03005530.unk3 = gUnk_03005530.unk4 = gUnk_03005530.unk5 = gUnk_03005530.unkE = gUnk_03005530.unkF = gUnk_03005530.unk10 = 0;
-    gUnk_03005530.unk6 = gUnk_03002490->unk7A;
-    gUnk_03005530.unk7 = gUnk_03002490->unk7B;
-    gUnk_03005530.unkB = gUnk_03002490->unk84;
-    gUnk_03005530.unkC = gUnk_03002490->unk84 >> 8;
+    gUnk_03005530.unk6 = gCurTask->unk7A;
+    gUnk_03005530.unk7 = gCurTask->unk7B;
+    gUnk_03005530.unkB = gCurTask->unk84;
+    gUnk_03005530.unkC = gCurTask->unk84 >> 8;
 }
 
 void sub_0801c5c8(const s8 *p)
 {
-    gUnk_03002490->unk7A = gUnk_03005530.unk6;
-    gUnk_03002490->unk7B = gUnk_03005530.unk7;
-    if (gUnk_03002490->unk4C >> 16 != gUnk_03005560 - p[0])
+    gCurTask->unk7A = gUnk_03005530.unk6;
+    gCurTask->unk7B = gUnk_03005530.unk7;
+    if (gCurTask->unk4C >> 16 != gUnk_03005560 - p[0])
     {
-        gUnk_03002490->unk4C = ((gUnk_03005560 - p[0]) << 16) + 0x8000;
-        gUnk_03002490->unk48 = gUnk_03005560 - p[0];
+        gCurTask->unk4C = ((gUnk_03005560 - p[0]) << 16) + 0x8000;
+        gCurTask->unk48 = gUnk_03005560 - p[0];
     }
-    if (gUnk_03002490->unk50 >> 16 != gUnk_03005570 - p[1])
+    if (gCurTask->unk50 >> 16 != gUnk_03005570 - p[1])
     {
-        gUnk_03002490->unk50 = ((gUnk_03005570 - p[1]) << 16) + 0x8000;
-        gUnk_03002490->unk4A = gUnk_03005570 - p[1];
+        gCurTask->unk50 = ((gUnk_03005570 - p[1]) << 16) + 0x8000;
+        gCurTask->unk4A = gUnk_03005570 - p[1];
     }
     gUnk_03005550.unk0 = gUnk_03005530.unk0;
     gUnk_03005550.unk1 = gUnk_03005530.unk1;
@@ -164,5 +164,5 @@ void sub_0801c5c8(const s8 *p)
     gUnk_03005550.unkB = gUnk_03005530.unkE;
     gUnk_03005550.unkC = gUnk_03005530.unkF;
     gUnk_03005550.unkD = gUnk_03005530.unk10;
-    gUnk_03002490->unk84 = (gUnk_03005530.unkC << 8) | gUnk_03005530.unkB;
+    gCurTask->unk84 = (gUnk_03005530.unkC << 8) | gUnk_03005530.unkB;
 }

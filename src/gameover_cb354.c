@@ -18,16 +18,16 @@
  *       sub_080cb62c. */
 
 extern u8 gUnk_03001F30;            /* link-play mode */
-extern u16 gUnk_03002360;           /* this player's index */
+extern u16 gLocalPlayer;           /* this player's index */
 extern s32 gUnk_02006020[];         /* score per player */
 extern s8 gGameOverCursor;            /* game-over screen: cursor (continue = 0?) */
 extern u32 gUnk_087556E0[];
 extern u16 gUnk_08758274[];
 extern u16 gUnk_08758284[];
-extern vu8 gUnk_0300118C;
-extern vu8 gUnk_03000040;
-extern vu8 gUnk_03000B08;
-extern vu8 gUnk_03001EAC;
+extern vu8 gBldCntTarget1;
+extern vu8 gBldCntTarget2;
+extern vu8 gBldAlphaEva;
+extern vu8 gBldAlphaEvb;
 extern u16 gUnk_08584BB0[][4];
 extern u16 gUnk_03001390[];
 extern void (*gGameOverObjectVariants[])(void);
@@ -49,32 +49,32 @@ void sub_080cb610(void);
    Task.unk18. */
 void Task_GameOverSprite(void)
 {
-    gUnk_03002490->unk00 = (u32)TaskMove;
-    gUnk_03002490->unk0C = (u32)TaskDrawScreen;
-    gUnk_03002490->unk42 = 9;
-    gUnk_03002490->unk38 = gUnk_087556E0;
-    gUnk_03002490->unk3C = gUnk_03002490->unk18;
-    gUnk_03002490->unk4C = gUnk_08758274[gUnk_03002490->unk18] << 16;
-    gUnk_03002490->unk50 = gUnk_08758284[gUnk_03002490->unk18] << 16;
+    gCurTask->unk00 = (u32)TaskMove;
+    gCurTask->unk0C = (u32)TaskDrawScreen;
+    gCurTask->unk42 = 9;
+    gCurTask->unk38 = gUnk_087556E0;
+    gCurTask->unk3C = gCurTask->unk18;
+    gCurTask->unk4C = gUnk_08758274[gCurTask->unk18] << 16;
+    gCurTask->unk50 = gUnk_08758284[gCurTask->unk18] << 16;
     TaskSleepForever();
 }
 
 /* Task type #261 (class 4): the cursor; its frame follows gGameOverCursor. */
 void Task_GameOverCursor(void)
 {
-    gUnk_03002490->unk00 = (u32)TaskMove;
-    gUnk_03002490->unk0C = (u32)TaskDrawScreen;
-    gUnk_03002490->unk42 = 8;
-    gUnk_03002490->unk38 = gUnk_087556E0;
+    gCurTask->unk00 = (u32)TaskMove;
+    gCurTask->unk0C = (u32)TaskDrawScreen;
+    gCurTask->unk42 = 8;
+    gCurTask->unk38 = gUnk_087556E0;
     if (gUnk_03001F30 == 0) {
-        gUnk_03002490->unk4C = 184 << 16;
-        gUnk_03002490->unk50 = 94 << 16;
+        gCurTask->unk4C = 184 << 16;
+        gCurTask->unk50 = 94 << 16;
     } else {
-        gUnk_03002490->unk4C = 184 << 16;
-        gUnk_03002490->unk50 = 96 << 16;
+        gCurTask->unk4C = 184 << 16;
+        gCurTask->unk50 = 96 << 16;
     }
     for (;;) {
-        gUnk_03002490->unk3C = gGameOverCursor + 8;
+        gCurTask->unk3C = gGameOverCursor + 8;
         TaskYieldTrampoline(1);
     }
 }
@@ -83,34 +83,34 @@ void Task_GameOverCursor(void)
    four colours between two palettes of gUnk_08584BB0. */
 void Task_GameOverPalette(void)
 {
-    gUnk_03002490->unk28 = 0;
-    gUnk_03002490->unk2C = 0;
-    gUnk_03002490->unk30 = 1;
-    gUnk_03002490->unk34 = 0;
-    gUnk_0300118C = 66;
-    gUnk_03000040 = 12;
-    gUnk_03000B08 = 0;
-    gUnk_03001EAC = 16;
+    gCurTask->unk28 = 0;
+    gCurTask->unk2C = 0;
+    gCurTask->unk30 = 1;
+    gCurTask->unk34 = 0;
+    gBldCntTarget1 = 66;
+    gBldCntTarget2 = 12;
+    gBldAlphaEva = 0;
+    gBldAlphaEvb = 16;
     for (;;) {
-        if (gUnk_03002490->unk28 < 32) {
-            gUnk_03002490->unk28++;
-            if (gUnk_03002490->unk28 == 32) {
-                gUnk_0300118C = gUnk_03000040 = gUnk_03000B08 = gUnk_03001EAC = 0;
+        if (gCurTask->unk28 < 32) {
+            gCurTask->unk28++;
+            if (gCurTask->unk28 == 32) {
+                gBldCntTarget1 = gBldCntTarget2 = gBldAlphaEva = gBldAlphaEvb = 0;
             } else {
-                gUnk_03000B08 = gUnk_03002490->unk28 >> 1;
-                gUnk_03001EAC = 16 - gUnk_03000B08;
+                gBldAlphaEva = gCurTask->unk28 >> 1;
+                gBldAlphaEvb = 16 - gBldAlphaEva;
             }
         }
-        if (gUnk_03002490->unk34 == 256) {
-            gUnk_03002490->unk2C ^= 1;
-            gUnk_03002490->unk30 ^= 1;
-            gUnk_03002490->unk34 = 0;
+        if (gCurTask->unk34 == 256) {
+            gCurTask->unk2C ^= 1;
+            gCurTask->unk30 ^= 1;
+            gCurTask->unk34 = 0;
         }
-        gUnk_03002490->unk34 += 4;
-        if (gUnk_03002490->unk34 > 256)
-            gUnk_03002490->unk34 = 256;
-        BlendColors(gUnk_08584BB0[gUnk_03002490->unk2C], gUnk_08584BB0[gUnk_03002490->unk30],
-            (u16)gUnk_03002490->unk34, 4, gUnk_03001390);
+        gCurTask->unk34 += 4;
+        if (gCurTask->unk34 > 256)
+            gCurTask->unk34 = 256;
+        BlendColors(gUnk_08584BB0[gCurTask->unk2C], gUnk_08584BB0[gCurTask->unk30],
+            (u16)gCurTask->unk34, 4, gUnk_03001390);
         TaskYieldTrampoline(1);
     }
 }
@@ -119,15 +119,15 @@ void Task_GameOverPalette(void)
    multiple of 10 and count the displayed score down to it. */
 void Task_HalveScore(void)
 {
-    gUnk_03002490->unk00 = 0;
-    gUnk_03002490->unk0C = 0;
-    gUnk_03002490->unk28 = gUnk_02006020[gUnk_03002360];
-    gUnk_02006020[gUnk_03002360] >>= 1;
-    gUnk_03002490->unk2C = Mod(gUnk_02006020[gUnk_03002360], 10);
-    gUnk_02006020[gUnk_03002360] -= gUnk_03002490->unk2C;
-    while (gUnk_03002490->unk28 != gUnk_02006020[gUnk_03002360]) {
-        gUnk_03002490->unk28 -= 10;
-        DrawScoreToBgMap(gUnk_03002490->unk28, 22, 18);
+    gCurTask->unk00 = 0;
+    gCurTask->unk0C = 0;
+    gCurTask->unk28 = gUnk_02006020[gLocalPlayer];
+    gUnk_02006020[gLocalPlayer] >>= 1;
+    gCurTask->unk2C = Mod(gUnk_02006020[gLocalPlayer], 10);
+    gUnk_02006020[gLocalPlayer] -= gCurTask->unk2C;
+    while (gCurTask->unk28 != gUnk_02006020[gLocalPlayer]) {
+        gCurTask->unk28 -= 10;
+        DrawScoreToBgMap(gCurTask->unk28, 22, 18);
         TaskYieldTrampoline(1);
     }
     TaskExitTrampoline();
@@ -136,10 +136,10 @@ void Task_HalveScore(void)
 /* Task type #264 (class 4): six variants, gGameOverObjectVariants[Task.unk73]. */
 void Task_GameOverObject(void)
 {
-    gUnk_03002490->unk00 = (u32)TaskMove;
-    gUnk_03002490->unk0C = (u32)TaskDrawScreen;
-    gUnk_03002490->unk40 = 0x4800;
-    CallTableEntry(gUnk_03002490->unk73, 6, gGameOverObjectVariants);
+    gCurTask->unk00 = (u32)TaskMove;
+    gCurTask->unk0C = (u32)TaskDrawScreen;
+    gCurTask->unk40 = 0x4800;
+    CallTableEntry(gCurTask->unk73, 6, gGameOverObjectVariants);
     TaskSleepForever();
 }
 
@@ -147,27 +147,27 @@ void Task_GameOverObject(void)
    handlers gUnk_087582B8[Task.unk15] (sub_080cb610). */
 void sub_080cb5c4(void)
 {
-    gUnk_03002490->unk04 = (u32)sub_080cb610;
-    gUnk_03002490->unk42 = 8;
-    gUnk_03002490->unk38 = gUnk_08754914;
-    gUnk_03002490->unk24 = 0;
-    gUnk_03002490->unk18 = 0;
-    gUnk_03002490->unk43 = 1;
-    gUnk_03002490->unk14 = 0;
-    CallTableEntry(gUnk_03002490->unk14, 3, gUnk_087582AC);
+    gCurTask->unk04 = (u32)sub_080cb610;
+    gCurTask->unk42 = 8;
+    gCurTask->unk38 = gUnk_08754914;
+    gCurTask->unk24 = 0;
+    gCurTask->unk18 = 0;
+    gCurTask->unk43 = 1;
+    gCurTask->unk14 = 0;
+    CallTableEntry(gCurTask->unk14, 3, gUnk_087582AC);
     TaskSleepForever();
 }
 
 /* Task type #264 variant 0's per-frame hook: handler gUnk_087582B8[Task.unk15]. */
 void sub_080cb610(void)
 {
-    CallTableEntry(gUnk_03002490->unk15, 3, gUnk_087582B8);
+    CallTableEntry(gCurTask->unk15, 3, gUnk_087582B8);
 }
 
 /* Re-enter task type #264 variant 0 (TaskSetEntry installs this as its
    body): Task.unk24 = 1, then sub-state gUnk_087582AC[Task.unk14]. */
 void sub_080cb62c(void)
 {
-    gUnk_03002490->unk24 = 1;
-    CallTableEntry(gUnk_03002490->unk14, 3, gUnk_087582AC);
+    gCurTask->unk24 = 1;
+    CallTableEntry(gCurTask->unk14, 3, gUnk_087582AC);
 }

@@ -58,12 +58,12 @@ void sub_080238ec(void);
 
 void Task_Room(void)
 {
-    CallTableEntry(gUnk_03002490->unk14, 7, gRoomTaskVariants);
+    CallTableEntry(gCurTask->unk14, 7, gRoomTaskVariants);
 }
 
 void sub_08023634(void)
 {
-    struct Task *t = gUnk_03002490;
+    struct Task *t = gCurTask;
 
     t->unk00 = 0;
     t->unk0C = (u32)sub_080236d4;
@@ -72,22 +72,22 @@ void sub_08023634(void)
     {
     default:
     case 0:
-        gUnk_03002490->unk08 = (u32)sub_08023748;
+        gCurTask->unk08 = (u32)sub_08023748;
         break;
     case 1:
-        gUnk_03002490->unk08 = (u32)sub_080237fc;
+        gCurTask->unk08 = (u32)sub_080237fc;
         break;
     case 2:
-        gUnk_03002490->unk08 = (u32)sub_080238ec;
+        gCurTask->unk08 = (u32)sub_080238ec;
         break;
     case 3:
-        gUnk_03002490->unk08 = (u32)sub_080237a4;
+        gCurTask->unk08 = (u32)sub_080237a4;
         break;
     case 4:
-        gUnk_03002490->unk08 = (u32)sub_0802385c;
+        gCurTask->unk08 = (u32)sub_0802385c;
         break;
     case 5:
-        gUnk_03002490->unk08 = (u32)sub_080238a4;
+        gCurTask->unk08 = (u32)sub_080238a4;
         break;
     }
     TaskSleepForever();

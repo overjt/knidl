@@ -12,7 +12,7 @@
  * and sub_0802cc90 follow the player (gUnk_030023CC/gUnk_03002388, the
  * task gUnk_02007D38 or the multiplayer group of camera_29c74.c) inside
  * the bounds gUnk_030055F8 and write the 16.16 target
- * gUnk_03005614/gUnk_03005634 and the visible rectangle gUnk_03002158.
+ * gUnk_03005614/gUnk_03005634 and the visible rectangle gViewRect.
  * sub_0802cd24 clears and sub_0802cd38 steps the screen shake
  * gUnk_03005670 through the offset lists of gUnk_08732880 (0x8000 ends a
  * list, 0x9999 restarts it).  sub_0802cda0(x0, x1, y0, y1) arms the scroll
@@ -49,15 +49,15 @@ extern s16 gUnk_03002398;
 extern s16 gUnk_03001F00;
 extern s16 gUnk_03005628[4];
 extern s16 gUnk_030055F8[4];
-extern u16 gUnk_030023AC;
-extern s16 gUnk_03002158[4];
+extern u16 gPlayerCount;
+extern s16 gViewRect[4];
 extern struct CamRect gUnk_03005640[4];
 extern struct CamPos gUnk_030055D0[4];
 extern s32 gUnk_03005614;
 extern s32 gUnk_03005634;
 extern s16 gUnk_030023CC;
 extern s16 gUnk_03002388;
-extern u16 gUnk_03002360;
+extern u16 gLocalPlayer;
 extern u8 gUnk_03002340;
 extern u8 gUnk_02007D38;
 extern u8 gUnk_0300560C[];
@@ -93,7 +93,7 @@ void sub_0802c42c(void)
             y = gUnk_03005628[3];
         gUnk_030055F8[0] = gUnk_030055F8[1] = x;
         gUnk_030055F8[2] = gUnk_030055F8[3] = y;
-        for (i = 0; i < gUnk_030023AC; i++)
+        for (i = 0; i < gPlayerCount; i++)
         {
             gUnk_03005640[i].x0 = x - 117;
             gUnk_03005640[i].x1 = x + 117;
@@ -104,10 +104,10 @@ void sub_0802c42c(void)
         }
         gUnk_03005614 = x << 16;
         gUnk_03005634 = y << 16;
-        gUnk_03002158[0] = x - 120;
-        gUnk_03002158[1] = x + 120;
-        gUnk_03002158[2] = y - 80;
-        gUnk_03002158[3] = y + 80;
+        gViewRect[0] = x - 120;
+        gViewRect[1] = x + 120;
+        gViewRect[2] = y - 80;
+        gViewRect[3] = y + 80;
     }
 }
 
@@ -115,7 +115,7 @@ void sub_0802c550(void)
 {
     s32 x, y;
 
-    if (gUnk_030023AC == 1)
+    if (gPlayerCount == 1)
     {
         struct CamPos *c;
 
@@ -130,20 +130,20 @@ void sub_0802c550(void)
         if (y > gUnk_030055F8[3])
             y = gUnk_030055F8[3];
         c = gUnk_030055D0;
-        c[gUnk_03002360].x = x;
-        c[gUnk_03002360].y = y;
+        c[gLocalPlayer].x = x;
+        c[gLocalPlayer].y = y;
         gUnk_03005614 = x << 16;
         gUnk_03005634 = y << 16;
-        gUnk_03002158[0] = x - 120;
-        gUnk_03002158[1] = x - 120 + 240;
-        gUnk_03002158[2] = y - 80;
-        gUnk_03002158[3] = y - 80 + 160;
+        gViewRect[0] = x - 120;
+        gViewRect[1] = x - 120 + 240;
+        gViewRect[2] = y - 80;
+        gViewRect[3] = y - 80 + 160;
     }
     else
     {
         sub_08029c74();
         sub_0802a190();
-        if ((gUnk_03002340 >> gUnk_03002360) & 1)
+        if ((gUnk_03002340 >> gLocalPlayer) & 1)
         {
             x = gUnk_030023CC;
             y = gUnk_03002388;
@@ -160,8 +160,8 @@ void sub_0802c550(void)
         {
             struct CamPos *c = gUnk_030055D0;
 
-            x = c[gUnk_03002360].x;
-            y = c[gUnk_03002360].y;
+            x = c[gLocalPlayer].x;
+            y = c[gLocalPlayer].y;
         }
         gUnk_03005614 = x << 16;
         gUnk_03005634 = y << 16;
@@ -173,7 +173,7 @@ void sub_0802c680(void)
 {
     s32 x, y;
 
-    if (gUnk_030023AC == 1)
+    if (gPlayerCount == 1)
     {
         struct CamPos *c;
 
@@ -188,21 +188,21 @@ void sub_0802c680(void)
         if (y > gUnk_030055F8[3])
             y = gUnk_030055F8[3];
         c = gUnk_030055D0;
-        c[gUnk_03002360].x = x;
-        c[gUnk_03002360].y = y;
+        c[gLocalPlayer].x = x;
+        c[gLocalPlayer].y = y;
         gUnk_03005614 = x << 16;
         gUnk_03005634 = y << 16;
-        gUnk_03002158[0] = x - 120;
-        gUnk_03002158[1] = x - 120 + 240;
-        gUnk_03002158[2] = y - 80;
-        gUnk_03002158[3] = y - 80 + 160;
+        gViewRect[0] = x - 120;
+        gViewRect[1] = x - 120 + 240;
+        gViewRect[2] = y - 80;
+        gViewRect[3] = y - 80 + 160;
     }
     else
     {
         s32 i;
 
-        x = gUnk_03002790[gUnk_02007D38].unk48;
-        y = gUnk_03002790[gUnk_02007D38].unk4A;
+        x = gTasks[gUnk_02007D38].unk48;
+        y = gTasks[gUnk_02007D38].unk4A;
         if (x < gUnk_030055F8[0])
             x = gUnk_030055F8[0];
         if (x > gUnk_030055F8[1])
@@ -213,17 +213,17 @@ void sub_0802c680(void)
             y = gUnk_030055F8[3];
         /* indexed as a u16[][2] here: the struct spelling (.x/.y) gives the
            loop one address giv and reorders the hoisted rectangle sums */
-        for (i = 0; i < gUnk_030023AC; i++)
+        for (i = 0; i < gPlayerCount; i++)
         {
             ((u16 (*)[2])gUnk_030055D0)[i][0] = x;
             ((u16 (*)[2])gUnk_030055D0)[i][1] = y;
         }
         gUnk_03005614 = x << 16;
         gUnk_03005634 = y << 16;
-        gUnk_03002158[0] = x - 120;
-        gUnk_03002158[1] = x + 120;
-        gUnk_03002158[2] = y - 80;
-        gUnk_03002158[3] = y + 80;
+        gViewRect[0] = x - 120;
+        gViewRect[1] = x + 120;
+        gViewRect[2] = y - 80;
+        gViewRect[3] = y + 80;
     }
 }
 
@@ -231,7 +231,7 @@ void sub_0802c7f4(void)
 {
     s32 x, y;
 
-    if (gUnk_030023AC == 1)
+    if (gPlayerCount == 1)
     {
         x = gUnk_030023CC;
         y = gUnk_03002388;
@@ -243,65 +243,65 @@ void sub_0802c7f4(void)
             y = gUnk_030055F8[2];
         if (y > gUnk_030055F8[3])
             y = gUnk_030055F8[3];
-        if (gUnk_0300560C[gUnk_03002360] == 2)
+        if (gUnk_0300560C[gLocalPlayer] == 2)
         {
-            if (x == gUnk_030055D0[gUnk_03002360].x && y == gUnk_030055D0[gUnk_03002360].y)
+            if (x == gUnk_030055D0[gLocalPlayer].x && y == gUnk_030055D0[gLocalPlayer].y)
             {
-                gUnk_0300560C[gUnk_03002360] = 0;
+                gUnk_0300560C[gLocalPlayer] = 0;
             }
             else
             {
-                if (x < gUnk_030055D0[gUnk_03002360].x)
+                if (x < gUnk_030055D0[gLocalPlayer].x)
                 {
-                    gUnk_030055D0[gUnk_03002360].x -= 3;
-                    if (gUnk_030055D0[gUnk_03002360].x < x)
-                        gUnk_030055D0[gUnk_03002360].x = x;
+                    gUnk_030055D0[gLocalPlayer].x -= 3;
+                    if (gUnk_030055D0[gLocalPlayer].x < x)
+                        gUnk_030055D0[gLocalPlayer].x = x;
                 }
                 else
                 {
-                    gUnk_030055D0[gUnk_03002360].x += 3;
-                    if (x < gUnk_030055D0[gUnk_03002360].x)
-                        gUnk_030055D0[gUnk_03002360].x = x;
+                    gUnk_030055D0[gLocalPlayer].x += 3;
+                    if (x < gUnk_030055D0[gLocalPlayer].x)
+                        gUnk_030055D0[gLocalPlayer].x = x;
                 }
-                if (y < gUnk_030055D0[gUnk_03002360].y)
+                if (y < gUnk_030055D0[gLocalPlayer].y)
                 {
-                    gUnk_030055D0[gUnk_03002360].y -= 3;
-                    if (gUnk_030055D0[gUnk_03002360].y < y)
-                        gUnk_030055D0[gUnk_03002360].y = y;
+                    gUnk_030055D0[gLocalPlayer].y -= 3;
+                    if (gUnk_030055D0[gLocalPlayer].y < y)
+                        gUnk_030055D0[gLocalPlayer].y = y;
                 }
                 else
                 {
-                    gUnk_030055D0[gUnk_03002360].y += 3;
-                    if (y < gUnk_030055D0[gUnk_03002360].y)
-                        gUnk_030055D0[gUnk_03002360].y = y;
+                    gUnk_030055D0[gLocalPlayer].y += 3;
+                    if (y < gUnk_030055D0[gLocalPlayer].y)
+                        gUnk_030055D0[gLocalPlayer].y = y;
                 }
             }
-            x = gUnk_030055D0[gUnk_03002360].x;
-            y = gUnk_030055D0[gUnk_03002360].y;
+            x = gUnk_030055D0[gLocalPlayer].x;
+            y = gUnk_030055D0[gLocalPlayer].y;
         }
         else
         {
-            gUnk_030055D0[gUnk_03002360].x = x;
-            gUnk_030055D0[gUnk_03002360].y = y;
+            gUnk_030055D0[gLocalPlayer].x = x;
+            gUnk_030055D0[gLocalPlayer].y = y;
         }
         gUnk_03005614 = x << 16;
         gUnk_03005634 = y << 16;
-        gUnk_03002158[0] = x - 120;
-        gUnk_03002158[1] = x - 120 + 240;
-        gUnk_03002158[2] = y - 80;
-        gUnk_03002158[3] = y - 80 + 160;
+        gViewRect[0] = x - 120;
+        gViewRect[1] = x - 120 + 240;
+        gViewRect[2] = y - 80;
+        gViewRect[3] = y - 80 + 160;
     }
     else
     {
         s32 i;
 
         sub_0802a340();
-        for (i = 0; i < gUnk_030023AC; i++)
+        for (i = 0; i < gPlayerCount; i++)
         {
             if ((gUnk_03002340 >> i) & 1)
             {
-                x = gUnk_03002790[i].unk48;
-                y = gUnk_03002790[i].unk4A;
+                x = gTasks[i].unk48;
+                y = gTasks[i].unk4A;
                 if (x < gUnk_030055F8[0])
                     x = gUnk_030055F8[0];
                 if (gUnk_030055F8[1] < x)
@@ -382,8 +382,8 @@ void sub_0802c7f4(void)
                 }
             }
         }
-        x = gUnk_030055D0[gUnk_03002360].x;
-        y = gUnk_030055D0[gUnk_03002360].y;
+        x = gUnk_030055D0[gLocalPlayer].x;
+        y = gUnk_030055D0[gLocalPlayer].y;
         gUnk_03005614 = x << 16;
         gUnk_03005634 = y << 16;
         sub_0802a4ec();
@@ -408,7 +408,7 @@ void sub_0802cab0(void)
             y = gUnk_03005628[3];
         gUnk_030055F8[0] = gUnk_030055F8[1] = x;
         gUnk_030055F8[2] = gUnk_030055F8[3] = y;
-        for (i = 0; i < gUnk_030023AC; i++)
+        for (i = 0; i < gPlayerCount; i++)
         {
             struct CamRect *p = &gUnk_03005640[i];
             p->x0 = x - 117;
@@ -418,10 +418,10 @@ void sub_0802cab0(void)
         }
         gUnk_03005614 = x << 16;
         gUnk_03005634 = y << 16;
-        gUnk_03002158[0] = x - 120;
-        gUnk_03002158[1] = x + 120;
-        gUnk_03002158[2] = y - 80;
-        gUnk_03002158[3] = y + 80;
+        gViewRect[0] = x - 120;
+        gViewRect[1] = x + 120;
+        gViewRect[2] = y - 80;
+        gViewRect[3] = y + 80;
     }
 }
 
@@ -441,17 +441,17 @@ void sub_0802cbb8(void)
             y = gUnk_03005628[2];
         if (y > gUnk_03005628[3])
             y = gUnk_03005628[3];
-        for (i = 0; i < gUnk_030023AC; i++)
+        for (i = 0; i < gPlayerCount; i++)
         {
             gUnk_030055D0[i].x = x;
             gUnk_030055D0[i].y = y;
         }
         gUnk_03005614 = x << 16;
         gUnk_03005634 = y << 16;
-        gUnk_03002158[0] = x - 120;
-        gUnk_03002158[1] = x + 120;
-        gUnk_03002158[2] = y - 80;
-        gUnk_03002158[3] = y + 80;
+        gViewRect[0] = x - 120;
+        gViewRect[1] = x + 120;
+        gViewRect[2] = y - 80;
+        gViewRect[3] = y + 80;
     }
 }
 
@@ -471,14 +471,14 @@ void sub_0802cc90(void)
     if (y > gUnk_030055F8[3])
         y = gUnk_030055F8[3];
     c = gUnk_030055D0;
-    c[gUnk_03002360].x = x;
-    c[gUnk_03002360].y = y;
+    c[gLocalPlayer].x = x;
+    c[gLocalPlayer].y = y;
     gUnk_03005614 = x << 16;
     gUnk_03005634 = y << 16;
-    gUnk_03002158[0] = x - 120;
-    gUnk_03002158[1] = x - 120 + 240;
-    gUnk_03002158[2] = y - 80;
-    gUnk_03002158[3] = y - 80 + 160;
+    gViewRect[0] = x - 120;
+    gViewRect[1] = x - 120 + 240;
+    gViewRect[2] = y - 80;
+    gViewRect[3] = y - 80 + 160;
 }
 
 void sub_0802cd24(void)
@@ -577,7 +577,7 @@ void sub_0802cda0(s32 x0, s32 x1, s32 y0, s32 y1)
         gUnk_030055C0 = 2;
         gUnk_03005680.unk1 = flags;
         gUnk_03005680.unk0 = 0;
-        if (gUnk_030023AC == 1)
+        if (gPlayerCount == 1)
         {
             if (flags & 1)
             {
@@ -585,17 +585,17 @@ void sub_0802cda0(s32 x0, s32 x1, s32 y0, s32 y1)
 
                 if (gUnk_03005610 > 0)
                 {
-                    gUnk_030055F8[0] = gUnk_030055D0[gUnk_03002360].x;
+                    gUnk_030055F8[0] = gUnk_030055D0[gLocalPlayer].x;
                     gUnk_030055F8[1] = gUnk_03005680.unk4;
                 }
                 else
                 {
                     gUnk_030055F8[0] = gUnk_03005680.unk2;
-                    gUnk_030055F8[1] = gUnk_030055D0[gUnk_03002360].x;
+                    gUnk_030055F8[1] = gUnk_030055D0[gLocalPlayer].x;
                 }
                 b = gUnk_03005640;
-                b[gUnk_03002360].x0 = gUnk_030055F8[0] - 117;
-                b[gUnk_03002360].x1 = gUnk_030055F8[1] + 117;
+                b[gLocalPlayer].x0 = gUnk_030055F8[0] - 117;
+                b[gLocalPlayer].x1 = gUnk_030055F8[1] + 117;
             }
             if (gUnk_03005680.unk1 & 2)
             {
@@ -606,7 +606,7 @@ void sub_0802cda0(s32 x0, s32 x1, s32 y0, s32 y1)
                     s16 *d = gUnk_030055F8;
                     struct CamPos *c = gUnk_030055D0;
 
-                    d[2] = c[gUnk_03002360].y;
+                    d[2] = c[gLocalPlayer].y;
                     gUnk_030055F8[3] = gUnk_03005680.unk8;
                 }
                 else
@@ -615,23 +615,23 @@ void sub_0802cda0(s32 x0, s32 x1, s32 y0, s32 y1)
 
                     gUnk_030055F8[2] = gUnk_03005680.unk6;
                     c = gUnk_030055D0;
-                    gUnk_030055F8[3] = c[gUnk_03002360].y;
+                    gUnk_030055F8[3] = c[gLocalPlayer].y;
                 }
                 b = gUnk_03005640;
-                b[gUnk_03002360].y0 = gUnk_030055F8[2] - 76;
-                b[gUnk_03002360].y1 = gUnk_030055F8[3] + 104;
+                b[gLocalPlayer].y0 = gUnk_030055F8[2] - 76;
+                b[gLocalPlayer].y1 = gUnk_030055F8[3] + 104;
             }
         }
         else
         {
             sub_0802a63c();
             if (gUnk_03005680.unk1 & 1)
-                gUnk_030055D0[gUnk_030023AC].x = gUnk_03005680.unkA;
+                gUnk_030055D0[gPlayerCount].x = gUnk_03005680.unkA;
             if (gUnk_03005680.unk1 & 2)
             {
                 struct CamPos *c = gUnk_030055D0;
 
-                c[gUnk_030023AC].y = gUnk_03005680.unkC;
+                c[gPlayerCount].y = gUnk_03005680.unkC;
             }
         }
     }

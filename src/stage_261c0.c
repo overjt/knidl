@@ -107,7 +107,7 @@ struct Unk03005680
 };
 
 extern struct Unk03005670 gUnk_03005670;
-extern vs16 gUnk_03004CA0[];
+extern vs16 gTaskSlotTypes[];
 extern s16 gUnk_030023CC;
 extern s16 gUnk_03002388;
 extern s8 gUnk_03002444;
@@ -121,12 +121,12 @@ extern u16 gUnk_03005604[2];
 extern s32 gUnk_03005614;
 extern u16 gUnk_03005690[2];
 extern u16 gUnk_03005668[2];
-extern s16 gUnk_03002158[4];
+extern s16 gViewRect[4];
 extern s16 gUnk_030055F8[4];
 extern s16 gUnk_020055B8[4];
-extern u16 gUnk_030023AC;
+extern u16 gPlayerCount;
 extern struct CamRect gUnk_03005640[4];
-extern s16 gUnk_03002348;
+extern s16 gSpriteCameraX;
 extern u16 gUnk_02007FA0;
 extern struct Unk020061F0 gUnk_020061F0[];
 extern s16 gUnk_03005620;
@@ -202,7 +202,7 @@ s32 sub_0802621c(s32 type)
 {
     s32 i = 62;
 
-    while (gUnk_03004CA0[i] != -1)
+    while (gTaskSlotTypes[i] != -1)
     {
         i--;
         if (i <= 31)
@@ -260,20 +260,20 @@ void sub_08026308(void)
         gUnk_03005690[0] &= 0x1FF;
         gUnk_03005668[0] &= 0x1FF;
         sub_08029930();
-        gUnk_03002158[0] &= 0x1FF;
-        gUnk_03002158[1] &= 0x1FF;
+        gViewRect[0] &= 0x1FF;
+        gViewRect[1] &= 0x1FF;
         gUnk_030055F8[0] &= 0x1FF;
         gUnk_030055F8[1] &= 0x1FF;
         gUnk_020055B8[0] &= 0x1FF;
         gUnk_020055B8[1] &= 0x1FF;
-        for (i = 0; i < gUnk_030023AC; i++)
+        for (i = 0; i < gPlayerCount; i++)
         {
             gUnk_03005640[i].x0 &= 0x1FF;
             gUnk_03005640[i].x1 &= 0x1FF;
         }
         gUnk_030023CC &= 0x1FF;
         gUnk_03002398 &= 0x1FF;
-        gUnk_03002348 &= 0x1FF;
+        gSpriteCameraX &= 0x1FF;
         gUnk_02007FA0 &= 31;
         for (i = 0; i < 64; i++)
         {
@@ -285,10 +285,10 @@ void sub_08026308(void)
         }
         for (i = 0; i < 64; i++)
         {
-            if (gUnk_03004CA0[i] != -1)
+            if (gTaskSlotTypes[i] != -1)
             {
-                gUnk_03002790[i].unk4C &= 0x1FFFFFF;
-                gUnk_03002790[i].unk48 &= 0x1FF;
+                gTasks[i].unk4C &= 0x1FFFFFF;
+                gTasks[i].unk48 &= 0x1FF;
             }
         }
     }
@@ -302,7 +302,7 @@ s32 sub_080264b0(void)
     if (gUnk_02006A20[gUnk_0200B034][0] != -1 && gUnk_0200B034 != -1)
     {
         d = &gUnk_030055EC->unk44[gUnk_0200B034];
-        r = sub_0802ed94((d->unk2 << 4) + 16, (d->unk4 << 4) + 8, gUnk_03002790[gUnk_02006A20[gUnk_0200B034][0]].unk20);
+        r = sub_0802ed94((d->unk2 << 4) + 16, (d->unk4 << 4) + 8, gTasks[gUnk_02006A20[gUnk_0200B034][0]].unk20);
     }
     return r;
 }
@@ -310,7 +310,7 @@ s32 sub_080264b0(void)
 void sub_0802651c(s32 i)
 {
     if (i != -1)
-        gUnk_03002790[i].unk1C = 1;
+        gTasks[i].unk1C = 1;
 }
 
 s32 sub_0802653c(void)
@@ -387,7 +387,7 @@ void sub_08026704(s32 i)
 
     if (i != -1)
     {
-        t = &gUnk_03002790[i];
+        t = &gTasks[i];
         t->unk42 = 15;
         t->unk3E = 0x4000;
     }
@@ -401,21 +401,21 @@ s32 sub_0802672c(void)
 
     if (id != -1)
     {
-        t = &gUnk_03002790[id];
+        t = &gTasks[id];
         f = gUnk_0200AF08 & 16;
         if (f != 0)
             t->unk24 = 1;
         else
             t->unk24 = 0;
-        if (gUnk_030023AC == 1)
+        if (gPlayerCount == 1)
         {
             gUnk_03002398 = gUnk_030023CC;
             gUnk_03001F00 = gUnk_03002388;
         }
         else
         {
-            gUnk_03002398 = gUnk_03002790[gUnk_02007D38].unk48;
-            gUnk_03001F00 = gUnk_03002790[gUnk_02007D38].unk4A;
+            gUnk_03002398 = gTasks[gUnk_02007D38].unk48;
+            gUnk_03001F00 = gTasks[gUnk_02007D38].unk4A;
         }
         if (gUnk_03002398 < gUnk_03005628[0])
             gUnk_03002398 = gUnk_03005628[0];
@@ -439,7 +439,7 @@ s32 sub_08026834(void)
 
     if (id != -1)
     {
-        t = &gUnk_03002790[id];
+        t = &gTasks[id];
         f = gUnk_0200AF08 & 16;
         if (f != 0)
             t->unk24 = 1;
@@ -514,7 +514,7 @@ u32 sub_08026a0c(void)
     switch (gUnk_030055C0)
     {
     case 0:
-        if (gUnk_03002158[3] > 0x167)
+        if (gViewRect[3] > 0x167)
         {
             gUnk_03005680.unkC = 280;
             sub_0802cda0(0xFFFF, 0xFFFF, 200, 360);
@@ -536,7 +536,7 @@ u32 sub_08026a80(void)
     switch (gUnk_030055C0)
     {
     case 0:
-        if (gUnk_03002158[2] <= 69)
+        if (gViewRect[2] <= 69)
         {
             gUnk_03005680.unkC = 149;
             sub_0802cda0(0xFFFF, 0xFFFF, 16, 176);
@@ -558,7 +558,7 @@ u32 sub_08026aec(void)
     switch (gUnk_030055C0)
     {
     case 0:
-        if (gUnk_03002158[3] > 0x147)
+        if (gViewRect[3] > 0x147)
         {
             gUnk_03005680.unkC = 248;
             sub_0802cda0(0xFFFF, 0xFFFF, 168, 328);

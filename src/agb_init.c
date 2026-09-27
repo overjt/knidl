@@ -25,74 +25,74 @@
 
 extern vu16 gUnk_03001004;
 extern vu32 gUnk_03000FA0;
-extern vu16 gUnk_03001EA4;
-extern vu16 gUnk_03000FAC;
-extern vu16 gUnk_03000FD0;
-extern vu16 gUnk_03001EC4;
-extern u16 gUnk_03000498[4];
-extern u32 gUnk_03000F88;
-extern u32 gUnk_03000FC4;
+extern vu16 gFrameCount;
+extern vu16 gVBlankCount;
+extern vu16 gFrameInProgress;
+extern vu16 gWaitingForVBlank;
+extern u16 gPlayTime[4];
+extern u32 gCopyQueueRead;
+extern u32 gCopyQueueWrite;
 extern u32 gUnk_03000020[4];
-extern vu16 gUnk_03001EF4;
-extern vu16 gUnk_03000B70;
-extern vu16 gUnk_03000038;
-extern vu16 gUnk_03000FC8;
-extern vu16 gUnk_03001ECC;
-extern vu16 gUnk_03001670;
-extern vu16 gUnk_03001EB8[4];
-extern vu16 gUnk_03000F98[4];
-extern vu32 gUnk_03000FB4;
+extern vu16 gHeldKeys;
+extern vu16 gRepeatedKeys;
+extern vu16 gPressedKeys;
+extern vu16 gKeyRepeatDelay;
+extern vu16 gKeyRepeatInterval;
+extern vu16 gKeyRepeatTimer;
+extern vu16 gPlayerPressedKeys[4];
+extern vu16 gPlayerHeldKeys[4];
+extern vu32 gRngValue;
 extern vu32 gUnk_03000AF4;
 extern vu32 gUnk_03000F90;
 extern vu32 gUnk_030004A0;
-extern vu32 gUnk_03000014;
-extern vu16 gUnk_03001ED8;
-extern vu16 gUnk_03001E9C;
-extern vu16 gUnk_03001188;
-extern vu16 gUnk_03000B14;
-extern vu16 gUnk_03000B10;
-extern vu16 gUnk_03001EB4;
-extern u32 gUnk_03000010;
-extern u32 gUnk_0300117C;
-extern u32 gUnk_03000FC0;
-extern u32 gUnk_03001EE0;
-extern u32 gUnk_03001E94;
-extern u32 gUnk_03000F8C;
-extern u32 gUnk_03000FA8;
-extern u32 gUnk_03000B78;
-extern vu16 gUnk_03000FD4;
-extern vu16 gUnk_03001018;
-extern vu16 gUnk_03000044;
-extern vu16 gUnk_03000AFC;
-extern vu8 gUnk_03000B18;
-extern vu8 gUnk_03001ED0;
+extern vu32 gFrameEndCallback;
+extern vu16 gDispCnt;
+extern vu16 gDispStat;
+extern vu16 gBg0Cnt;
+extern vu16 gBg1Cnt;
+extern vu16 gBg2Cnt;
+extern vu16 gBg3Cnt;
+extern u32 gBg0ScrollY;
+extern u32 gBg0ScrollX;
+extern u32 gBg1ScrollY;
+extern u32 gBg1ScrollX;
+extern u32 gBg2ScrollY;
+extern u32 gBg2ScrollX;
+extern u32 gBg3ScrollY;
+extern u32 gBg3ScrollX;
+extern vu16 gWin0H;
+extern vu16 gWin1H;
+extern vu16 gWin0V;
+extern vu16 gWin1V;
+extern vu8 gWinIn0;
+extern vu8 gWinIn1;
 extern vu8 gUnk_03000F7C;
 extern vu8 gUnk_03001010;
-extern vu8 gUnk_03001EB0;
+extern vu8 gBgMosaic;
 extern vu8 gUnk_03001000;
-extern vu8 gUnk_0300118C;
-extern vu8 gUnk_03000040;
-extern vu8 gUnk_03000B08;
-extern vu8 gUnk_03001EAC;
-extern vu16 gUnk_03001EEC;
+extern vu8 gBldCntTarget1;
+extern vu8 gBldCntTarget2;
+extern vu8 gBldAlphaEva;
+extern vu8 gBldAlphaEvb;
+extern vu16 gBldY;
 extern vu16 gUnk_0300100C;
 extern vu16 gUnk_03000FD8;
 extern vu16 gUnk_03001EA0;
 extern vu32 gSramAvailable;
-extern vu16 gUnk_03001EE4;
-extern vu16 gUnk_03000B0C;
-extern vu16 gUnk_03000FCC;
-extern vu16 gUnk_03000FBC;
-extern vs16 gUnk_03000490;
-extern vu16 gUnk_03001EDC;
-extern vu16 gUnk_03000AF8;
-extern u16 gUnk_03000F80[4];
-extern vu8 gUnk_03001674[4];
-extern vu8 gUnk_03001180[4];
-extern vu8 gUnk_0300001C[4];
-extern vu32 gUnk_03000FB0;
+extern vu16 gSoundDriverOn;
+extern vu16 gVolumeRampMode;
+extern vu16 gVolumeRampSpeed;
+extern vu16 gVolumeRampLevel;
+extern vs16 gCurrentBgm;
+extern vu16 gSfxDisabled;
+extern vu16 gSoundDisabled;
+extern u16 gSfxSlotSongs[4];
+extern vu8 gSfxSlotAges[4];
+extern vu8 gSfxSlotPlayers[4];
+extern vu8 gSfxPlayerSlots[4];
+extern vu32 gPaletteSource;
 extern u32 gUnk_03000FA4;
-extern u32 gUnk_0300003C;
+extern u32 gFrameCallback;
 extern u32 gUnk_03000B74;
 extern u16 gUnk_03001014;
 extern vu16 gUnk_03001170;
@@ -102,12 +102,12 @@ extern vu16 gUnk_03001020;
 extern vu16 gUnk_03000B20;
 extern vu16 gUnk_03001008;
 extern vu16 gUnk_03000B24;
-extern vu16 gUnk_03000018;
-extern vu16 gUnk_03001EF8;
+extern vu16 gIntrEnable;
+extern vu16 gIntrMasterEnable;
 extern vu32 gUnk_0200EC48;
 extern vu32 gUnk_0200EBA0;
-extern u16 gUnk_030023AC;
-extern u16 gUnk_0300243C;
+extern u16 gPlayerCount;
+extern u16 gLinkPlayerCount;
 struct Unk_030023A8
 {
     s8 unk0;
@@ -161,23 +161,23 @@ void AgbInit(void)
     CpuSet((const void *)0x08000108, (void *)0x03001030, 160);
     INTR_VECTOR = (void (*)(void))0x03001030;
 
-    gUnk_03000FAC = gUnk_03001EA4 = zeroA;
-    gUnk_03001EC4 = gUnk_03000FD0 = zeroA;
+    gVBlankCount = gFrameCount = zeroA;
+    gWaitingForVBlank = gFrameInProgress = zeroA;
 
-    gUnk_03000498[3] = zeroA;
-    gUnk_03000498[2] = zeroA;
-    gUnk_03000498[1] = zeroA;
-    gUnk_03000498[0] = zeroA;
+    gPlayTime[3] = zeroA;
+    gPlayTime[2] = zeroA;
+    gPlayTime[1] = zeroA;
+    gPlayTime[0] = zeroA;
 
-    gUnk_03000FC4 = gUnk_03000F88 = 0x03000B80;
+    gCopyQueueWrite = gCopyQueueRead = 0x03000B80;
 
     gUnk_03000020[3] = zeroA;
-    gUnk_03001EF4 = zeroA;
-    gUnk_03000B70 = zeroA;
-    gUnk_03000038 = zeroA;
-    gUnk_03000FC8 = 14;
-    gUnk_03001ECC = 4;
-    gUnk_03001670 = gUnk_03001ECC;
+    gHeldKeys = zeroA;
+    gRepeatedKeys = zeroA;
+    gPressedKeys = zeroA;
+    gKeyRepeatDelay = 14;
+    gKeyRepeatInterval = 4;
+    gKeyRepeatTimer = gKeyRepeatInterval;
 
     /* Computed here (matching the ROM), used for the CpuSet fills below;
      * both live across the calls in r8/r9. */
@@ -186,51 +186,51 @@ void AgbInit(void)
 
     zeroHwA = 0;
     for (i = 0; i < 4; i++)
-        gUnk_03000F98[i] = gUnk_03001EB8[i] = zeroHwA;
+        gPlayerHeldKeys[i] = gPlayerPressedKeys[i] = zeroHwA;
 
-    gUnk_03000FB4 = zeroB = 0;
+    gRngValue = zeroB = 0;
     gUnk_03000AF4 = zeroB;
     gUnk_03000F90 = zeroB;
     gUnk_030004A0 = zeroB;
-    gUnk_03000014 = zeroB;
+    gFrameEndCallback = zeroB;
 
     gUnk_03001004 = REG_WAITCNT & 0x8000;
 
-    REG_DISPCNT = gUnk_03001ED8 = 128;
+    REG_DISPCNT = gDispCnt = 128;
 
     zeroByteB = 0;
-    REG_DISPSTAT = gUnk_03001E9C = zeroB;
-    REG_BG0CNT = gUnk_03001188 = zeroB;
-    REG_BG1CNT = gUnk_03000B14 = zeroB;
-    REG_BG2CNT = gUnk_03000B10 = zeroB;
-    REG_BG3CNT = gUnk_03001EB4 = zeroB;
+    REG_DISPSTAT = gDispStat = zeroB;
+    REG_BG0CNT = gBg0Cnt = zeroB;
+    REG_BG1CNT = gBg1Cnt = zeroB;
+    REG_BG2CNT = gBg2Cnt = zeroB;
+    REG_BG3CNT = gBg3Cnt = zeroB;
 
-    REG_BG0VOFS = gUnk_03000010 = zeroB;
-    REG_BG0HOFS = gUnk_0300117C = zeroB;
-    REG_BG1VOFS = gUnk_03000FC0 = zeroB;
-    REG_BG1HOFS = gUnk_03001EE0 = zeroB;
-    REG_BG2VOFS = gUnk_03001E94 = zeroB;
-    REG_BG2HOFS = gUnk_03000F8C = zeroB;
-    REG_BG3VOFS = gUnk_03000FA8 = zeroB;
-    REG_BG3HOFS = gUnk_03000B78 = zeroB;
+    REG_BG0VOFS = gBg0ScrollY = zeroB;
+    REG_BG0HOFS = gBg0ScrollX = zeroB;
+    REG_BG1VOFS = gBg1ScrollY = zeroB;
+    REG_BG1HOFS = gBg1ScrollX = zeroB;
+    REG_BG2VOFS = gBg2ScrollY = zeroB;
+    REG_BG2HOFS = gBg2ScrollX = zeroB;
+    REG_BG3VOFS = gBg3ScrollY = zeroB;
+    REG_BG3HOFS = gBg3ScrollX = zeroB;
 
-    REG_WIN0H = gUnk_03000FD4 = zeroB;
-    REG_WIN1H = gUnk_03001018 = zeroB;
-    REG_WIN0V = gUnk_03000044 = zeroB;
-    REG_WIN1V = gUnk_03000AFC = zeroB;
+    REG_WIN0H = gWin0H = zeroB;
+    REG_WIN1H = gWin1H = zeroB;
+    REG_WIN0V = gWin0V = zeroB;
+    REG_WIN1V = gWin1V = zeroB;
 
-    gUnk_03000B18 = gUnk_03001ED0 = zeroByteB;
-    REG_WININ = (gUnk_03001ED0 << 8) | gUnk_03000B18;
+    gWinIn0 = gWinIn1 = zeroByteB;
+    REG_WININ = (gWinIn1 << 8) | gWinIn0;
     gUnk_03000F7C = gUnk_03001010 = zeroByteB;
     REG_WINOUT = (gUnk_03001010 << 8) | gUnk_03000F7C;
-    gUnk_03001EB0 = gUnk_03001000 = zeroByteB;
-    REG_MOSAIC = (gUnk_03001000 << 8) | gUnk_03001EB0;
-    gUnk_0300118C = gUnk_03000040 = zeroByteB;
-    REG_BLDCNT = (gUnk_03000040 << 8) | gUnk_0300118C;
-    gUnk_03000B08 = gUnk_03001EAC = zeroByteB;
-    REG_BLDALPHA = (gUnk_03001EAC << 8) | gUnk_03000B08;
+    gBgMosaic = gUnk_03001000 = zeroByteB;
+    REG_MOSAIC = (gUnk_03001000 << 8) | gBgMosaic;
+    gBldCntTarget1 = gBldCntTarget2 = zeroByteB;
+    REG_BLDCNT = (gBldCntTarget2 << 8) | gBldCntTarget1;
+    gBldAlphaEva = gBldAlphaEvb = zeroByteB;
+    REG_BLDALPHA = (gBldAlphaEvb << 8) | gBldAlphaEva;
 
-    REG_BLDY = gUnk_03001EEC = zeroB;
+    REG_BLDY = gBldY = zeroB;
 
     REG_DMA0CNT_H = zeroB;
     REG_DMA1CNT_H = zeroB;
@@ -257,24 +257,24 @@ void AgbInit(void)
 
     m4aSoundInit();
 
-    gUnk_03001EE4 = 1;
-    gUnk_03000B0C = zeroB;
-    gUnk_03000FCC = zeroB;
-    gUnk_03000FBC = 0x100;
-    gUnk_03000490 = -999;
-    gUnk_03000AF8 = gUnk_03001EDC = zeroB;
+    gSoundDriverOn = 1;
+    gVolumeRampMode = zeroB;
+    gVolumeRampSpeed = zeroB;
+    gVolumeRampLevel = 0x100;
+    gCurrentBgm = -999;
+    gSoundDisabled = gSfxDisabled = zeroB;
 
-    /* gUnk_03000F80 must be a plain (non-volatile) array: |= on a volatile
+    /* gSfxSlotSongs must be a plain (non-volatile) array: |= on a volatile
      * indexed element would emit two reads, the ROM has one. */
     for (i = 0; i < 4; i++)
     {
-        gUnk_03000F80[i] |= 0xFFFF;
-        gUnk_03001674[i] = 0;
-        gUnk_03001180[i] = i;
-        gUnk_0300001C[i] = i;
+        gSfxSlotSongs[i] |= 0xFFFF;
+        gSfxSlotAges[i] = 0;
+        gSfxSlotPlayers[i] = i;
+        gSfxPlayerSlots[i] = i;
     }
 
-    gUnk_03000FB0 = 0x03001270;
+    gPaletteSource = 0x03001270;
     zeroC = 0;
     *fillA = zeroC;
     CpuSet(fillA, (void *)0x03001270, 0x01000200);
@@ -293,22 +293,22 @@ void AgbInit(void)
      * tail reuses zeroC's register across the three calls above). */
     zeroC = 2;
 
-    gUnk_0300003C = gUnk_03000FA4 = 0;
+    gFrameCallback = gUnk_03000FA4 = 0;
     gUnk_03001014 = gUnk_03000B74 = 0;
 
     gUnk_03000B24 = gUnk_03001008 = gUnk_03000B20 = gUnk_03001020 = gUnk_03001178 = gUnk_03000B7C = gUnk_03001170 = 0;
 
-    REG_DISPSTAT = gUnk_03001E9C = 8;
+    REG_DISPSTAT = gDispStat = 8;
 
     REG_IF = 0;
-    REG_IE = gUnk_03000018 = 0x2001;
-    REG_IME = gUnk_03001EF8 = 1;
+    REG_IE = gIntrEnable = 0x2001;
+    REG_IME = gIntrMasterEnable = 1;
     REG_RCNT = 0;
 
     gUnk_0200EC48 = -1;
     gUnk_0200EBA0 = 0;
 
-    gUnk_0300243C = gUnk_030023AC = 1;
+    gLinkPlayerCount = gPlayerCount = 1;
 
     /* One expression: gUnk_0300244C's address is materialized before the
      * byte stores but written last, exactly as in the ROM. */

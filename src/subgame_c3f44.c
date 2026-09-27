@@ -88,10 +88,10 @@ struct M37Game
     /*0x300*/ u32 unk300;       /* frame counter */
     /*0x304*/ s16 unk304;       /* sub_080c4f60's OAM list: entry count */
     /*0x306*/ s16 unk306[160];  /* ... and entries */
-    /*0x446*/ u16 unk446;       /* gUnk_03002360 */
-    /*0x448*/ u16 unk448;       /* gUnk_0300243C */
+    /*0x446*/ u16 unk446;       /* gLocalPlayer */
+    /*0x448*/ u16 unk448;       /* gLinkPlayerCount */
     /*0x44A*/ u8 pad44A[2];
-    /*0x44C*/ s32 unk44C;       /* a task index into gUnk_03002790 */
+    /*0x44C*/ s32 unk44C;       /* a task index into gTasks */
     /*0x450*/ u8 unk450;
     /*0x451*/ u8 unk451;
     /*0x452*/ u8 pad452[2];
@@ -160,107 +160,107 @@ void sub_080c45fc(void);
 
 void sub_080c3f44(void)
 {
-    struct Task *u = &gUnk_03002790[gUnk_03002490->unk18];
+    struct Task *u = &gTasks[gCurTask->unk18];
     s32 scale;
     s32 x;
     s32 y;
     s32 vx;
     s32 vy;
 
-    switch (gUnk_03002490->unk20) {
+    switch (gCurTask->unk20) {
     case 1:
-        gUnk_03002490->unk6E = 3;
-        gUnk_03002490->unk0C = (u32)sub_080c4e10;
-        gUnk_03002490->unk38 = gUnk_08755FC4;
-        gUnk_03002490->unk3C = 5;
-        gUnk_03002490->unk04 = (u32)sub_080c44bc;
+        gCurTask->unk6E = 3;
+        gCurTask->unk0C = (u32)sub_080c4e10;
+        gCurTask->unk38 = gUnk_08755FC4;
+        gCurTask->unk3C = 5;
+        gCurTask->unk04 = (u32)sub_080c44bc;
         break;
     case 2:
-        gUnk_03002490->unk6C = 0;
-        gUnk_03002490->unk6E = 0;
-        gUnk_03002490->unk15 = 0;
-        gUnk_03002490->unk0C = (u32)sub_080c4e10;
-        gUnk_03002490->unk38 = gUnk_08755FC4;
-        gUnk_03002490->unk04 = (u32)sub_080c44f0;
+        gCurTask->unk6C = 0;
+        gCurTask->unk6E = 0;
+        gCurTask->unk15 = 0;
+        gCurTask->unk0C = (u32)sub_080c4e10;
+        gCurTask->unk38 = gUnk_08755FC4;
+        gCurTask->unk04 = (u32)sub_080c44f0;
         gAirGrindPtr->unk450 = 1;
         break;
     case 5:
-        gUnk_03002490->unk6C = 2;
-        gUnk_03002490->unk6E = 2;
-        gUnk_03002490->unk15 = 1;
-        gUnk_03002490->unk0C = (u32)sub_080c4e10;
-        gUnk_03002490->unk40 = 0x8210;
-        gUnk_03002490->unk38 = gUnk_087572E0;
-        gUnk_03002490->unk3C = 0;
-        gUnk_03002490->unk04 = (u32)sub_080c4568;
+        gCurTask->unk6C = 2;
+        gCurTask->unk6E = 2;
+        gCurTask->unk15 = 1;
+        gCurTask->unk0C = (u32)sub_080c4e10;
+        gCurTask->unk40 = 0x8210;
+        gCurTask->unk38 = gUnk_087572E0;
+        gCurTask->unk3C = 0;
+        gCurTask->unk04 = (u32)sub_080c4568;
         gAirGrindPtr->unk451 = 1;
         break;
     case 0:
-        scale = sub_080c623c(gAirGrindCoursePtr->unk018[gUnk_03002490->unk18].unk08);
-        gUnk_03002490->unk0C = (u32)sub_080c4e10;
-        gUnk_03002490->unk42 = u->unk42;
-        gUnk_03002490->unk3E = u->unk3E & 0x6000;
-        gUnk_03002490->unk00 = (u32)TaskMove;
-        gUnk_03002490->unk54 = -u->unk54;
-        gUnk_03002490->unk28 = u->unk28;
+        scale = sub_080c623c(gAirGrindCoursePtr->unk018[gCurTask->unk18].unk08);
+        gCurTask->unk0C = (u32)sub_080c4e10;
+        gCurTask->unk42 = u->unk42;
+        gCurTask->unk3E = u->unk3E & 0x6000;
+        gCurTask->unk00 = (u32)TaskMove;
+        gCurTask->unk54 = -u->unk54;
+        gCurTask->unk28 = u->unk28;
         x = u->unk48 - scale / 32;
         y = u->unk4A + (s32)((sub_080c4ca4(4) & 7) - 3) * scale / 256;
-        gUnk_03002490->unk4C = x << 16;
-        gUnk_03002490->unk50 = y << 16;
-        gUnk_03002490->unk6C = 2;
-        gUnk_03002490->unk6E = 18;
-        gUnk_03002490->unk38 = gUnk_08755FC4;
-        gUnk_03002490->unk3C = 3;
-        gUnk_03002490->unk04 = (u32)sub_080c4364;
+        gCurTask->unk4C = x << 16;
+        gCurTask->unk50 = y << 16;
+        gCurTask->unk6C = 2;
+        gCurTask->unk6E = 18;
+        gCurTask->unk38 = gUnk_08755FC4;
+        gCurTask->unk3C = 3;
+        gCurTask->unk04 = (u32)sub_080c4364;
         break;
     case 3:
     case 4:
-        scale = sub_080c623c(gAirGrindCoursePtr->unk018[gUnk_03002490->unk18].unk08);
-        gUnk_03002490->unk0C = (u32)sub_080c4e10;
-        gUnk_03002490->unk00 = (u32)TaskMove;
-        gUnk_03002490->unk42 = u->unk42;
-        gUnk_03002490->unk3E = u->unk3E & 0x6000;
+        scale = sub_080c623c(gAirGrindCoursePtr->unk018[gCurTask->unk18].unk08);
+        gCurTask->unk0C = (u32)sub_080c4e10;
+        gCurTask->unk00 = (u32)TaskMove;
+        gCurTask->unk42 = u->unk42;
+        gCurTask->unk3E = u->unk3E & 0x6000;
         vx = (s32)(sub_080c4ca4(4) & 0xFFF) * (scale << 6) / 256;
-        if (gUnk_03002490->unk20 == 3)
+        if (gCurTask->unk20 == 3)
             vx = -vx;
         vy = -((s32)((sub_080c4ca4(4) & 0xFFF) * 48 + 0x10000) * scale) / 256;
-        gUnk_03002490->unk54 = vx;
-        gUnk_03002490->unk58 = vy;
-        gUnk_03002490->unk60 = scale << 6;
-        gUnk_03002490->unk28 = u->unk28;
+        gCurTask->unk54 = vx;
+        gCurTask->unk58 = vy;
+        gCurTask->unk60 = scale << 6;
+        gCurTask->unk28 = u->unk28;
         x = u->unk48 + (s32)((sub_080c4ca4(4) & 31) - 15) * scale / 256;
         y = u->unk4A - scale / 32;
-        gUnk_03002490->unk4C = x << 16;
-        gUnk_03002490->unk50 = y << 16;
-        gUnk_03002490->unk6C = 2;
-        gUnk_03002490->unk6E = 50;
-        gUnk_03002490->unk38 = gUnk_08755FC4;
-        gUnk_03002490->unk3C = 3;
-        gUnk_03002490->unk04 = (u32)sub_080c43e8;
+        gCurTask->unk4C = x << 16;
+        gCurTask->unk50 = y << 16;
+        gCurTask->unk6C = 2;
+        gCurTask->unk6E = 50;
+        gCurTask->unk38 = gUnk_08755FC4;
+        gCurTask->unk3C = 3;
+        gCurTask->unk04 = (u32)sub_080c43e8;
         break;
     case 6:
     case 7:
-        gUnk_03002490->unk0C = (u32)TaskDrawScreen;
-        gUnk_03002490->unk00 = (u32)TaskMove;
-        gUnk_03002490->unk42 = 3;
-        gUnk_03002490->unk3E = 0;
-        gUnk_03002490->unk4C = u->unk48 << 16;
-        gUnk_03002490->unk50 = u->unk4A << 16;
-        gUnk_03002490->unk58 = u->unk4A < 80 ? 0x10000 : -0x10000;
-        gUnk_03002490->unk54 = 0x10000;
-        gUnk_03002490->unk6E = 40;
-        gUnk_03002490->unk38 = gUnk_08755FEC;
-        gUnk_03002490->unk3C = gUnk_03002490->unk20 == 6 ? 15 : 14;
-        gUnk_03002490->unk04 = (u32)sub_080c45d4;
+        gCurTask->unk0C = (u32)TaskDrawScreen;
+        gCurTask->unk00 = (u32)TaskMove;
+        gCurTask->unk42 = 3;
+        gCurTask->unk3E = 0;
+        gCurTask->unk4C = u->unk48 << 16;
+        gCurTask->unk50 = u->unk4A << 16;
+        gCurTask->unk58 = u->unk4A < 80 ? 0x10000 : -0x10000;
+        gCurTask->unk54 = 0x10000;
+        gCurTask->unk6E = 40;
+        gCurTask->unk38 = gUnk_08755FEC;
+        gCurTask->unk3C = gCurTask->unk20 == 6 ? 15 : 14;
+        gCurTask->unk04 = (u32)sub_080c45d4;
         break;
     case 8:
-        gUnk_03002490->unk6C = 12;
-        gUnk_03002490->unk6E = 9;
-        gUnk_03002490->unk15 = 0;
-        gUnk_03002490->unk0C = (u32)sub_080c4e10;
-        gUnk_03002490->unk38 = gUnk_08755FC4;
-        gUnk_03002490->unk3C = 9;
-        gUnk_03002490->unk04 = (u32)sub_080c45fc;
+        gCurTask->unk6C = 12;
+        gCurTask->unk6E = 9;
+        gCurTask->unk15 = 0;
+        gCurTask->unk0C = (u32)sub_080c4e10;
+        gCurTask->unk38 = gUnk_08755FC4;
+        gCurTask->unk3C = 9;
+        gCurTask->unk04 = (u32)sub_080c45fc;
         break;
     }
     TaskSetSkipMask(1, gCurTaskIdx);
@@ -269,66 +269,66 @@ void sub_080c3f44(void)
 
 void sub_080c42dc(s32 layer)
 {
-    struct Task *u = &gUnk_03002790[gUnk_03002490->unk18];
+    struct Task *u = &gTasks[gCurTask->unk18];
 
-    gUnk_03002490->unk28 = u->unk28;
-    gUnk_03002490->unk42 = u->unk42 + layer;
-    gUnk_03002490->unk3E = u->unk3E & 0x6000;
-    if (gUnk_03002490->unk15 == 0) {
-        gUnk_03002490->unk48 = u->unk48;
-        gUnk_03002490->unk4A = u->unk4A;
+    gCurTask->unk28 = u->unk28;
+    gCurTask->unk42 = u->unk42 + layer;
+    gCurTask->unk3E = u->unk3E & 0x6000;
+    if (gCurTask->unk15 == 0) {
+        gCurTask->unk48 = u->unk48;
+        gCurTask->unk4A = u->unk4A;
     } else {
-        gUnk_03002490->unk48 = gAirGrindCoursePtr->unk018[gUnk_03002490->unk18].unk0C;
-        gUnk_03002490->unk4A = gAirGrindCoursePtr->unk018[gUnk_03002490->unk18].unk10;
+        gCurTask->unk48 = gAirGrindCoursePtr->unk018[gCurTask->unk18].unk0C;
+        gCurTask->unk4A = gAirGrindCoursePtr->unk018[gCurTask->unk18].unk10;
     }
 }
 
 void sub_080c4364(void)
 {
-    struct Task *u = &gUnk_03002790[gUnk_03002490->unk18];
+    struct Task *u = &gTasks[gCurTask->unk18];
 
-    gUnk_03002490->unk42 = u->unk42;
-    gUnk_03002490->unk3E = u->unk3E & 0x6000;
-    gUnk_03002490->unk28 += 14;
-    if (--gUnk_03002490->unk6E < 0) {
+    gCurTask->unk42 = u->unk42;
+    gCurTask->unk3E = u->unk3E & 0x6000;
+    gCurTask->unk28 += 14;
+    if (--gCurTask->unk6E < 0) {
         TaskFree(gCurTaskIdx);
     } else {
-        if ((s16)gUnk_03002490->unk6C <= 0) {
-            gUnk_03002490->unk6C = 2;
-            if (--gUnk_03002490->unk3C < 0)
-                gUnk_03002490->unk3C = 3;
+        if ((s16)gCurTask->unk6C <= 0) {
+            gCurTask->unk6C = 2;
+            if (--gCurTask->unk3C < 0)
+                gCurTask->unk3C = 3;
         }
-        gUnk_03002490->unk6C--;
+        gCurTask->unk6C--;
     }
 }
 
 void sub_080c43e8(void)
 {
-    if (--gUnk_03002490->unk6E < 0) {
+    if (--gCurTask->unk6E < 0) {
         TaskFree(gCurTaskIdx);
         return;
     }
-    if ((s16)gUnk_03002490->unk6C <= 0) {
-        gUnk_03002490->unk6C = 2;
-        if (--gUnk_03002490->unk3C < 0)
-            gUnk_03002490->unk3C = 3;
+    if ((s16)gCurTask->unk6C <= 0) {
+        gCurTask->unk6C = 2;
+        if (--gCurTask->unk3C < 0)
+            gCurTask->unk3C = 3;
     }
-    gUnk_03002490->unk6C--;
-    if ((u16)(gUnk_03002490->unk48 + 63) <= 366
-        && gUnk_03002490->unk4A > -64 && gUnk_03002490->unk4A < 224) {
-        u32 *tbl = gUnk_03002490->unk38;
+    gCurTask->unk6C--;
+    if ((u16)(gCurTask->unk48 + 63) <= 366
+        && gCurTask->unk4A > -64 && gCurTask->unk4A < 224) {
+        u32 *tbl = gCurTask->unk38;
 
-        QueueSprite(gUnk_03002490->unk42,
-                     sub_080c4f60((u16 *)tbl[gUnk_03002490->unk3C], gUnk_03002490->unk28),
-                     gUnk_03002490->unk3E, gUnk_03002490->unk40,
-                     gUnk_03002490->unk48, gUnk_03002490->unk4A);
+        QueueSprite(gCurTask->unk42,
+                     sub_080c4f60((u16 *)tbl[gCurTask->unk3C], gCurTask->unk28),
+                     gCurTask->unk3E, gCurTask->unk40,
+                     gCurTask->unk48, gCurTask->unk4A);
     } else
         TaskFree(gCurTaskIdx);
 }
 
 void sub_080c44bc(void)
 {
-    if (--gUnk_03002490->unk6E < 0)
+    if (--gCurTask->unk6E < 0)
         TaskFree(gCurTaskIdx);
     else
         sub_080c42dc(0);
@@ -336,7 +336,7 @@ void sub_080c44bc(void)
 
 void sub_080c44f0(void)
 {
-    struct Task *t = gUnk_03002490;
+    struct Task *t = gCurTask;
 
     /* Task.unk6C is u16 in task.h; this callback counts it as s16 */
     if ((*(s16 *)&t->unk6C)-- <= 0) {
@@ -354,28 +354,28 @@ void sub_080c44f0(void)
 
 void sub_080c4568(void)
 {
-    if ((s16)gUnk_03002490->unk6C <= 0) {
-        gUnk_03002490->unk6C = 2;
-        if (++gUnk_03002490->unk3C > gUnk_03002490->unk6E) {
+    if ((s16)gCurTask->unk6C <= 0) {
+        gCurTask->unk6C = 2;
+        if (++gCurTask->unk3C > gCurTask->unk6E) {
             gAirGrindPtr->unk451 = 0;
             TaskFree(gCurTaskIdx);
             return;
         }
     }
-    gUnk_03002490->unk6C--;
+    gCurTask->unk6C--;
     sub_080c42dc(0);
 }
 
 void sub_080c45d4(void)
 {
-    if (--gUnk_03002490->unk6E < 0)
+    if (--gCurTask->unk6E < 0)
         TaskFree(gCurTaskIdx);
 }
 
 void sub_080c45fc(void)
 {
     /* Task.unk6C is u16 in task.h; this callback counts it as s16 */
-    if ((*(s16 *)&gUnk_03002490->unk6C)-- <= 0)
+    if ((*(s16 *)&gCurTask->unk6C)-- <= 0)
         TaskFree(gCurTaskIdx);
     else
         sub_080c42dc(-1);

@@ -11,26 +11,26 @@
 
 extern u16 gUnk_02004B60;
 extern s16 gUnk_02005588[];
-extern s16 gUnk_02007D48[];
+extern s16 gPlayerLives[];
 extern s8 gUnk_02007D64;
 extern s16 gInputRecorderMode;
 extern vu16 gUnk_03000048;
-extern vs32 gUnk_03000B78;
-extern vs32 gUnk_03000F8C;
-extern vs32 gUnk_03000FA8;
+extern vs32 gBg3ScrollX;
+extern vs32 gBg2ScrollX;
+extern vs32 gBg3ScrollY;
 extern u8 gUnk_03001390[];
-extern vu16 gUnk_03001E90;
-extern vs32 gUnk_03001E94;
-extern vu16 gUnk_03001EB8[];
-extern vu16 gUnk_03001ED8;
+extern vu16 gFadeSteps;
+extern vs32 gBg2ScrollY;
+extern vu16 gPlayerPressedKeys[];
+extern vu16 gDispCnt;
 extern s8 gUnk_03001F20;
 extern u8 gUnk_03001F30;
 extern struct PlayerState gUnk_03002170[];
 extern u8 gUnk_03002340;
-extern u16 gUnk_03002360;
-extern u16 gUnk_030023AC;
+extern u16 gLocalPlayer;
+extern u16 gPlayerCount;
 extern s8 gUnk_030023B8;
-extern u16 gUnk_030023D8;
+extern u16 gGameState;
 extern u8 gUnk_03002400[8][7];
 extern s8 gUnk_03002438;
 extern s8 gUnk_03002444;
@@ -81,7 +81,7 @@ void sub_08008664(void)
     s32 pressed;
     u16 mode;
 
-    id = gUnk_03002170[gUnk_03002360].unk0D;
+    id = gUnk_03002170[gLocalPlayer].unk0D;
     PlaySfx(232);
     for (i = 0; i < 64; i++)
         TaskSetSkipMask(15, i);
@@ -94,28 +94,28 @@ void sub_08008664(void)
         TaskSetSkipMask(31, i);
     sub_080b6eec();
     sub_08027228();
-    mode = gUnk_030023D8;
+    mode = gGameState;
     flag = 0;
     if (mode == 8 && gUnk_03002400[gUnk_030023B8][gUnk_03001F20] != 0)
         flag = gUnk_02007D64 != 5;
     sub_08008c4c(5);
     if (gUnk_03001F30 == 1) {
-        gUnk_03001ED8 &= 0xE0FF;
-        gUnk_03001ED8 |= 0xC00;
+        gDispCnt &= 0xE0FF;
+        gDispCnt |= 0xC00;
         id = 28;
-    } else if (gUnk_02007D48[gUnk_03002360] == 0 && gUnk_02005588[gUnk_03002360] == 0) {
-        gUnk_03001ED8 &= 0xE0FF;
-        gUnk_03001ED8 |= 0x800;
+    } else if (gPlayerLives[gLocalPlayer] == 0 && gUnk_02005588[gLocalPlayer] == 0) {
+        gDispCnt &= 0xE0FF;
+        gDispCnt |= 0x800;
         id = 27;
     } else {
-        if (!((gUnk_03002340 >> gUnk_03002360) & 1))
+        if (!((gUnk_03002340 >> gLocalPlayer) & 1))
             id = 26;
-        gUnk_03001ED8 &= 0xE0FF;
-        gUnk_03001ED8 |= 0xE00;
+        gDispCnt &= 0xE0FF;
+        gDispCnt |= 0xE00;
     }
     sub_08008fc4(id, flag);
-    gUnk_03000F8C = gUnk_03001E94 = 0;
-    gUnk_03000B78 = gUnk_03000FA8 = 0;
+    gBg2ScrollX = gBg2ScrollY = 0;
+    gBg3ScrollX = gBg3ScrollY = 0;
     sel = 0;
     sub_080089e0(0);
     sub_08002358();
@@ -128,20 +128,20 @@ void sub_08008664(void)
         RunLinkFrame();
         pressed = 0;
         if (gUnk_0300244C == 0) {
-            for (i = 0; i < gUnk_030023AC; i++) {
-                if (gUnk_02007D48[i] != 0 || gUnk_02005588[i] != 0) {
-                    if (gUnk_03001EB8[i] & 9) {
+            for (i = 0; i < gPlayerCount; i++) {
+                if (gPlayerLives[i] != 0 || gUnk_02005588[i] != 0) {
+                    if (gPlayerPressedKeys[i] & 9) {
                         if (sel != 0) {
-                            gUnk_030023D8 = 5;
+                            gGameState = 5;
                             StopAllSfx();
                         }
                         PlaySfx(0x11F);
                         pressed++;
-                    } else if (gUnk_03001EB8[i] & 2) {
+                    } else if (gPlayerPressedKeys[i] & 2) {
                         PlaySfx(215);
                         pressed++;
                     }
-                    if (flag != 0 && (gUnk_03001EB8[i] & 0xC0)) {
+                    if (flag != 0 && (gPlayerPressedKeys[i] & 0xC0)) {
                         PlaySfx(286);
                         sel ^= 1;
                         sub_080089e0(sel);
@@ -149,25 +149,25 @@ void sub_08008664(void)
                 }
             }
         } else {
-            if (flag != 0 && (gUnk_03001EB8[gUnk_02004B60] & 0xC0)) {
+            if (flag != 0 && (gPlayerPressedKeys[gUnk_02004B60] & 0xC0)) {
                 PlaySfx(286);
                 sel ^= 1;
                 sub_080089e0(sel);
             }
-            if (gUnk_03001EB8[gUnk_02004B60] & 9) {
+            if (gPlayerPressedKeys[gUnk_02004B60] & 9) {
                 if (sel != 0) {
-                    gUnk_030023D8 = 5;
+                    gGameState = 5;
                     StopAllSfx();
                 }
                 PlaySfx(0x11F);
                 pressed++;
-            } else if (gUnk_03001EB8[gUnk_02004B60] & 2) {
+            } else if (gPlayerPressedKeys[gUnk_02004B60] & 2) {
                 PlaySfx(215);
                 pressed++;
             }
         }
     } while (pressed == 0);
-    if (gUnk_03002444 != 0 || gUnk_030023D8 != 5) {
+    if (gUnk_03002444 != 0 || gGameState != 5) {
         sub_08002338();
         BeginFastFadeOutToWhite();
         RunLinkFramesUntilFadeDone();
@@ -203,15 +203,15 @@ void sub_08008a00(void)
     gInputRecorderMode = 0;
     InputRecorderStart();
     sub_0800b648();
-    for (i = 0; i < gUnk_030023AC; i++)
+    for (i = 0; i < gPlayerCount; i++)
         sub_0803d0a0(i);
     sub_08002358();
     sub_08002378();
     sub_080022fc();
-    gUnk_03001ED8 &= 0xE0FF;
-    gUnk_03001ED8 |= 0x1D00;
+    gDispCnt &= 0xE0FF;
+    gDispCnt |= 0x1D00;
     BeginFastFadeInFromWhite();
-    while (gUnk_03001E90 != 0) {
+    while (gFadeSteps != 0) {
         RunLinkFrame();
         InputRecorderUpdate();
     }
@@ -240,23 +240,23 @@ void sub_08008a00(void)
             gUnk_03002438 = 0;
             break;
         case 6:
-            gUnk_030023D8 = 22;
+            gGameState = 22;
             done = 1;
             break;
         case 7:
-            gUnk_030023D8 = 11;
+            gGameState = 11;
             done = 1;
             break;
         }
     } while (done == 0);
     sub_08002338();
     BeginFastFadeOutToWhite();
-    while (gUnk_03001E90 != 0) {
+    while (gFadeSteps != 0) {
         RunLinkFrame();
         InputRecorderUpdate();
     }
     gUnk_03000048 = 0;
-    for (i = 0; i < gUnk_030023AC; i++) {
+    for (i = 0; i < gPlayerCount; i++) {
         if (gUnk_03002170[i].unk2C != -1) {
             StopSfxOnPlayer(gUnk_03002170[i].unk2C, gUnk_03002170[i].unk2E);
             gUnk_03002170[i].unk2C = -1;

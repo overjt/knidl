@@ -8,7 +8,7 @@
  * (0x30 bytes), resets the session state (gUnk_0200EBA8, gUnk_0200EC48, the
  * per-player bytes gUnk_030023A8 and their minimum gUnk_0300244C), puts SIO in
  * multi-play mode (115200 bps, IRQ on) and installs sub_08004068 as both link
- * IRQ handlers (serial and timer 3, gUnk_030004B0[0]/[1]) before enabling the
+ * IRQ handlers (serial and timer 3, gIntrTable[0]/[1]) before enabling the
  * serial interrupt.
  *
  * Matching note (issue #63): the per-player bytes and their minimum are one
@@ -59,9 +59,9 @@ extern u32 gUnk_0200EBA8;
 extern u32 gUnk_0200EC48;
 extern struct Unk030023A8 gUnk_030023A8;
 extern vu16 gUnk_0300244C;
-extern u32 gUnk_030004B0[];
-extern vu16 gUnk_03000018;
-extern vu16 gUnk_03001EF8;
+extern u32 gIntrTable[];
+extern vu16 gIntrEnable;
+extern vu16 gIntrMasterEnable;
 
 void sub_08004068(void);
 
@@ -72,7 +72,7 @@ void sub_08003888(void)
 {
     vu16 zero;
 
-    gUnk_03001EF8 = REG_IME = REG_IME & 0xFFFE;
+    gIntrMasterEnable = REG_IME = REG_IME & 0xFFFE;
     zero = 0;
     CpuSet((void *)&zero, &gUnk_0200EBC0, 0x01000018);
     gUnk_0200EBC0.unk06 = gUnk_0200EBC0.unk08 = 0x100;
@@ -83,7 +83,7 @@ void sub_08003888(void)
     REG_SIOCNT = 0x2000;
     REG_SIOCNT |= 0x4003;
     REG_SIOMLT_SEND = 0;
-    gUnk_030004B0[1] = gUnk_030004B0[0] = (u32)sub_08004068;
-    REG_IE = gUnk_03000018 = gUnk_03000018 | 0x80;
-    gUnk_03001EF8 = REG_IME = REG_IME | 1;
+    gIntrTable[1] = gIntrTable[0] = (u32)sub_08004068;
+    REG_IE = gIntrEnable = gIntrEnable | 0x80;
+    gIntrMasterEnable = REG_IME = REG_IME | 1;
 }

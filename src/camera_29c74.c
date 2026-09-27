@@ -7,14 +7,14 @@
  * Multiplayer camera targets.  Player i has a camera position
  * gUnk_030055D0[i], bounds gUnk_03005640[i] and a mode gUnk_0300560C[i]
  * (0 follows its task, 2 glides to the group centre, 3 is parked there);
- * gUnk_030023AC is the player count and gUnk_03002340 the mask of the
+ * gPlayerCount is the player count and gUnk_03002340 the mask of the
  * players present.  sub_08029c74, sub_08029ef4 and sub_0802a340 compute
  * the group centre gUnk_030055F4 (the midpoint of the players' extremes,
  * clamped to the camera bounds gUnk_030055F8), sub_08029e24 re-centres
  * those bounds on it inside the room bounds gUnk_03005628,
  * sub_0802a190/sub_0802a260 update the per-player positions,
  * sub_0802a42c/sub_0802a484 their bounds and sub_0802a4ec/sub_0802a568
- * the visible rectangle gUnk_03002158 around them.  sub_0802a63c moves
+ * the visible rectangle gViewRect around them.  sub_0802a63c moves
  * the bounds once every player has crossed the scroll line held in the
  * camera control block gUnk_03005680.  sub_0802a82c spawns the entries
  * of the room's object list gUnk_020055D8 (sorted along one axis) that
@@ -52,7 +52,7 @@ struct Unk020055D8
 
 extern s16 gUnk_03005620;
 extern s16 gUnk_0300561C;
-extern u16 gUnk_030023AC;
+extern u16 gPlayerCount;
 extern s16 gUnk_030055F8[4];
 extern u8 gUnk_0300560C[];
 extern u16 gUnk_030055F4[2];
@@ -64,7 +64,7 @@ extern s32 gUnk_03005610;
 extern s32 gUnk_03005664;
 extern u8 gUnk_03002340;
 extern struct CamRect gUnk_03005640[4];
-extern s16 gUnk_03002158[4];
+extern s16 gViewRect[4];
 extern struct Unk020055D8 gUnk_020055D8;
 
 s32 sub_080b5338(s32 i);
@@ -77,12 +77,12 @@ void sub_08029c74(void)
     x1 = 0;
     y0 = gUnk_0300561C << 4;
     y1 = 0;
-    for (i = 0; i < gUnk_030023AC; i++)
+    for (i = 0; i < gPlayerCount; i++)
     {
         switch (gUnk_0300560C[i])
         {
         case 0:
-            y = gUnk_03002790[i].unk48;
+            y = gTasks[i].unk48;
             if (y < gUnk_030055F8[0])
                 y = gUnk_030055F8[0];
             if (gUnk_030055F8[1] < y)
@@ -91,7 +91,7 @@ void sub_08029c74(void)
                 x0 = y;
             if (x1 < y)
                 x1 = y;
-            y = gUnk_03002790[i].unk4A;
+            y = gTasks[i].unk4A;
             if (y < gUnk_030055F8[2])
                 y = gUnk_030055F8[2];
             if (gUnk_030055F8[3] < y)
@@ -119,7 +119,7 @@ void sub_08029c74(void)
     }
     cx = (x0 + x1) >> 1;
     cy = (y0 + y1) >> 1;
-    for (i = 0; i < gUnk_030023AC; i++)
+    for (i = 0; i < gPlayerCount; i++)
     {
         if (gUnk_0300560C[i] == 2)
         {
@@ -175,7 +175,7 @@ void sub_08029e24(void)
     if (gUnk_0200B078 == 2)
     {
         y = 0;
-        for (i = 0; i < gUnk_030023AC; i++)
+        for (i = 0; i < gPlayerCount; i++)
         {
             if (gUnk_0300560C[i] != 3 && y < gUnk_030055D0[i].y)
                 y = gUnk_030055D0[i].y;
@@ -206,14 +206,14 @@ void sub_08029ef4(void)
     x1 = 0;
     y0 = gUnk_0300561C << 4;
     y1 = 0;
-    for (i = 0; i < gUnk_030023AC; i++)
+    for (i = 0; i < gPlayerCount; i++)
     {
         switch (gUnk_0300560C[i])
         {
         case 0:
             if ((gUnk_03005680.unk0 >> i) & 1)
                 break;
-            x = gUnk_03002790[i].unk48;
+            x = gTasks[i].unk48;
             if (x < gUnk_030055F8[0])
                 x = gUnk_030055F8[0];
             if (gUnk_030055F8[1] < x)
@@ -222,7 +222,7 @@ void sub_08029ef4(void)
                 x0 = x;
             if (x1 < x)
                 x1 = x;
-            y = gUnk_03002790[i].unk4A;
+            y = gTasks[i].unk4A;
             if (y < gUnk_030055F8[2])
                 y = gUnk_030055F8[2];
             if (gUnk_030055F8[3] < y)
@@ -274,7 +274,7 @@ void sub_08029ef4(void)
     }
     cx = (x0 + x1) >> 1;
     cy = (y0 + y1) >> 1;
-    if (!((gUnk_03005680.unk0 >> gUnk_030023AC) & 1) || !(gUnk_03005680.unk1 & 1))
+    if (!((gUnk_03005680.unk0 >> gPlayerCount) & 1) || !(gUnk_03005680.unk1 & 1))
     {
         gUnk_030055F8[0] = t = cx - 80;
         gUnk_030055F8[1] = cx + 80;
@@ -283,13 +283,13 @@ void sub_08029ef4(void)
         if (gUnk_03005628[1] < gUnk_030055F8[1])
             gUnk_030055F8[1] = gUnk_03005628[1];
     }
-    if (!((gUnk_03005680.unk0 >> gUnk_030023AC) & 1) || !(gUnk_03005680.unk1 & 2))
+    if (!((gUnk_03005680.unk0 >> gPlayerCount) & 1) || !(gUnk_03005680.unk1 & 2))
     {
         gUnk_030055F8[2] = cy - 120;
         if (gUnk_0200B078 == 2)
         {
             y1 = 0;
-            for (i = 0; i < gUnk_030023AC; i++)
+            for (i = 0; i < gPlayerCount; i++)
             {
                 if (gUnk_0300560C[i] != 3 && !(((gUnk_03005680.unk0 & gUnk_03002340) >> i) & 1)
                     && y1 < gUnk_030055D0[i].y)
@@ -313,17 +313,17 @@ void sub_0802a190(void)
 {
     s32 i;
 
-    for (i = 0; i < gUnk_030023AC; i++)
+    for (i = 0; i < gPlayerCount; i++)
     {
         switch (gUnk_0300560C[i])
         {
         case 0:
-            gUnk_030055D0[i].x = gUnk_03002790[i].unk48;
+            gUnk_030055D0[i].x = gTasks[i].unk48;
             if (gUnk_030055D0[i].x < gUnk_030055F8[0])
                 gUnk_030055D0[i].x = gUnk_030055F8[0];
             if (gUnk_030055F8[1] < gUnk_030055D0[i].x)
                 gUnk_030055D0[i].x = gUnk_030055F8[1];
-            gUnk_030055D0[i].y = gUnk_03002790[i].unk4A;
+            gUnk_030055D0[i].y = gTasks[i].unk4A;
             if (gUnk_030055D0[i].y < gUnk_030055F8[2])
                 gUnk_030055D0[i].y = gUnk_030055F8[2];
             if (gUnk_030055F8[3] < gUnk_030055D0[i].y)
@@ -344,19 +344,19 @@ void sub_0802a260(void)
 {
     s32 i;
 
-    for (i = 0; i < gUnk_030023AC; i++)
+    for (i = 0; i < gPlayerCount; i++)
     {
         switch (gUnk_0300560C[i])
         {
         case 0:
             if ((gUnk_03005680.unk0 >> i) & 1)
                 break;
-            gUnk_030055D0[i].x = gUnk_03002790[i].unk48;
+            gUnk_030055D0[i].x = gTasks[i].unk48;
             if (gUnk_030055D0[i].x < gUnk_030055F8[0])
                 gUnk_030055D0[i].x = gUnk_030055F8[0];
             if (gUnk_030055F8[1] < gUnk_030055D0[i].x)
                 gUnk_030055D0[i].x = gUnk_030055F8[1];
-            gUnk_030055D0[i].y = gUnk_03002790[i].unk4A;
+            gUnk_030055D0[i].y = gTasks[i].unk4A;
             if (gUnk_030055D0[i].y < gUnk_030055F8[2])
                 gUnk_030055D0[i].y = gUnk_030055F8[2];
             if (gUnk_030055F8[3] < gUnk_030055D0[i].y)
@@ -381,11 +381,11 @@ void sub_0802a340(void)
     x1 = 0;
     y0 = gUnk_0300561C << 4;
     y1 = 0;
-    for (i = 0; i < gUnk_030023AC; i++)
+    for (i = 0; i < gPlayerCount; i++)
     {
         if ((gUnk_03002340 >> i) & 1)
         {
-            v = gUnk_03002790[i].unk48;
+            v = gTasks[i].unk48;
             if (v < gUnk_030055F8[0])
                 v = gUnk_030055F8[0];
             if (gUnk_030055F8[1] < v)
@@ -394,7 +394,7 @@ void sub_0802a340(void)
                 x0 = v;
             if (x1 < v)
                 x1 = v;
-            v = gUnk_03002790[i].unk4A;
+            v = gTasks[i].unk4A;
             if (v < gUnk_030055F8[2])
                 v = gUnk_030055F8[2];
             if (gUnk_030055F8[3] < v)
@@ -413,7 +413,7 @@ void sub_0802a42c(void)
 {
     s32 i;
 
-    for (i = 0; i < gUnk_030023AC; i++)
+    for (i = 0; i < gPlayerCount; i++)
     {
         if ((gUnk_03002340 >> i) & 1)
         {
@@ -429,7 +429,7 @@ void sub_0802a484(void)
 {
     s32 i;
 
-    for (i = 0; i < gUnk_030023AC; i++)
+    for (i = 0; i < gPlayerCount; i++)
     {
         if (((gUnk_03002340 >> i) & 1) && !((gUnk_03005680.unk0 >> i) & 1))
         {
@@ -449,7 +449,7 @@ void sub_0802a4ec(void)
     x1 = 0;
     y0 = gUnk_0300561C << 4;
     y1 = 0;
-    for (i = 0; i < gUnk_030023AC; i++)
+    for (i = 0; i < gPlayerCount; i++)
     {
         v = gUnk_030055D0[i].x;
         if (v < x0)
@@ -462,10 +462,10 @@ void sub_0802a4ec(void)
         if (y1 < v)
             y1 = v;
     }
-    gUnk_03002158[0] = x0 - 120;
-    gUnk_03002158[1] = x1 + 120;
-    gUnk_03002158[2] = y0 - 80;
-    gUnk_03002158[3] = y1 + 80;
+    gViewRect[0] = x0 - 120;
+    gViewRect[1] = x1 + 120;
+    gViewRect[2] = y0 - 80;
+    gViewRect[3] = y1 + 80;
 }
 
 void sub_0802a568(void)
@@ -476,7 +476,7 @@ void sub_0802a568(void)
     x1 = 0;
     y0 = gUnk_0300561C << 4;
     y1 = 0;
-    for (i = 0; i < gUnk_030023AC; i++)
+    for (i = 0; i < gPlayerCount; i++)
     {
         v = gUnk_030055D0[i].x;
         if (v < x0)
@@ -491,7 +491,7 @@ void sub_0802a568(void)
     }
     if (gUnk_03005680.unk1 & 1)
     {
-        v = gUnk_030055D0[gUnk_030023AC].x;
+        v = gUnk_030055D0[gPlayerCount].x;
         if (v < x0)
             x0 = v;
         if (x1 < v)
@@ -499,27 +499,27 @@ void sub_0802a568(void)
     }
     if (gUnk_03005680.unk1 & 2)
     {
-        v = gUnk_030055D0[gUnk_030023AC].y;
+        v = gUnk_030055D0[gPlayerCount].y;
         if (v < y0)
             y0 = v;
         if (y1 < v)
             y1 = v;
     }
-    gUnk_03002158[0] = x0 - 120;
-    gUnk_03002158[1] = x1 + 120;
-    gUnk_03002158[2] = y0 - 80;
-    gUnk_03002158[3] = y1 + 80;
+    gViewRect[0] = x0 - 120;
+    gViewRect[1] = x1 + 120;
+    gViewRect[2] = y0 - 80;
+    gViewRect[3] = y1 + 80;
 }
 
 void sub_0802a63c(void)
 {
     s32 i;
 
-    if ((gUnk_03005680.unk0 >> gUnk_030023AC) & 1)
+    if ((gUnk_03005680.unk0 >> gPlayerCount) & 1)
         return;
     if (gUnk_03005680.unk1 & 1)
     {
-        for (i = 0; i < gUnk_030023AC; i++)
+        for (i = 0; i < gPlayerCount; i++)
         {
             if (((gUnk_03002340 >> i) & 1) && !((gUnk_03005680.unk0 >> i) & 1))
             {
@@ -540,7 +540,7 @@ void sub_0802a63c(void)
     }
     if (gUnk_03005680.unk1 & 2)
     {
-        for (i = 0; i < gUnk_030023AC; i++)
+        for (i = 0; i < gPlayerCount; i++)
         {
             if (((gUnk_03002340 >> i) & 1) && !((gUnk_03005680.unk0 >> i) & 1))
             {
@@ -561,7 +561,7 @@ void sub_0802a63c(void)
     }
     if ((gUnk_03005680.unk0 & gUnk_03002340) == gUnk_03002340)
     {
-        gUnk_03005680.unk0 |= 1 << gUnk_030023AC;
+        gUnk_03005680.unk0 |= 1 << gPlayerCount;
         if (gUnk_03005680.unk1 & 1)
         {
             if (gUnk_03005610 > 0)

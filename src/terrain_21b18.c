@@ -207,7 +207,7 @@ u8 sub_08021c4c(s16 x, s16 y)
 
 void sub_08021c74(s8 *box, s32 id)
 {
-    struct Task *t = &gUnk_03002790[id];
+    struct Task *t = &gTasks[id];
     s32 tile;
     s32 flags;
     s32 n;
@@ -328,14 +328,14 @@ done:
 
 void sub_0802205c(s8 *box)
 {
-    gUnk_03005560 = (gUnk_03002490->unk4C >> 16) + box[0];
-    gUnk_03005570 = (gUnk_03002490->unk50 >> 16) + box[1];
+    gUnk_03005560 = (gCurTask->unk4C >> 16) + box[0];
+    gUnk_03005570 = (gCurTask->unk50 >> 16) + box[1];
     gUnk_0300557C = box[2];
     gUnk_03005584 = box[3];
     gUnk_0300551C = box[4];
     gUnk_0300559C = box[5];
     gUnk_03005530.unkB = 0;
-    if (gUnk_03002490->unk43 != -1)
+    if (gCurTask->unk43 != -1)
     {
         if (sub_080217dc(gUnk_03005560 + gUnk_0300559C, gUnk_03005570) == 0)
         {
@@ -372,7 +372,7 @@ void sub_0802205c(s8 *box)
             gUnk_03005530.unkC = (gUnk_03005570 + gUnk_03005584 + 16) >> 4;
     }
 end:
-    gUnk_03002490->unk84 = gUnk_03005530.unkB;
+    gCurTask->unk84 = gUnk_03005530.unkB;
 }
 
 void sub_080222b0(s32 x, s32 y)
@@ -396,12 +396,12 @@ void sub_080222b0(s32 x, s32 y)
 
 void sub_0802233c(s8 *off)
 {
-    gUnk_03005560 = (gUnk_03002490->unk4C >> 16) + off[0];
-    gUnk_03005570 = (gUnk_03002490->unk50 >> 16) + off[1];
+    gUnk_03005560 = (gCurTask->unk4C >> 16) + off[0];
+    gUnk_03005570 = (gCurTask->unk50 >> 16) + off[1];
     gUnk_03005530.unkB = 0;
     if (sub_080217dc(gUnk_03005560, gUnk_03005570) == 0)
     {
-        if (gUnk_03002490->unk43 != -1)
+        if (gCurTask->unk43 != -1)
         {
             if ((gUnk_087336F0[gUnk_03005578] != 0 && gUnk_08732CF0[gUnk_03005578] != 0
                  && (gUnk_08732CF0[gUnk_03005578] & 1))
@@ -420,22 +420,22 @@ void sub_0802233c(s8 *off)
                 gUnk_03005530.unkB |= 2;
         }
     }
-    gUnk_03002490->unk84 = gUnk_03005530.unkB;
+    gCurTask->unk84 = gUnk_03005530.unkB;
 }
 
 void sub_080224b0(void)
 {
-    sub_08021634(gUnk_03002490->unk4C >> 16, gUnk_03002490->unk50 >> 16);
+    sub_08021634(gCurTask->unk4C >> 16, gCurTask->unk50 >> 16);
     if (gUnk_03005578 > 127)
-        gUnk_03002490->unk7B = 3;
+        gCurTask->unk7B = 3;
     else
-        gUnk_03002490->unk7B = 0;
-    gUnk_03002490->unk84 = 128;
+        gCurTask->unk7B = 0;
+    gCurTask->unk84 = 128;
 }
 
 void sub_080224f8(s32 id)
 {
-    struct Task *t = &gUnk_03002790[id];
+    struct Task *t = &gTasks[id];
 
     sub_08021634(t->unk4C >> 16, t->unk50 >> 16);
     if (gUnk_03005578 > 127)

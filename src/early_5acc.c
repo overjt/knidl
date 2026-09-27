@@ -6,7 +6,7 @@
  *
  * Three task helpers of the task system (src/early_58e4.c):
  *   TaskIsOnScreen  is the running task's position (Task.unk48/unk4A) on screen,
- *                 relative to the camera gUnk_03002348/gUnk_030023E4, with a
+ *                 relative to the camera gSpriteCameraX/gSpriteCameraY, with a
  *                 63-pixel margin on every side?
  *   TaskLoadFrameTilesAndPalette  upload the running task's tile stream (its graphics
  *                 descriptor Task.unk38[Task.unk3C], struct TaskGfx) to OBJ VRAM
@@ -23,23 +23,23 @@
  * lesson 3.79).  Issue #32 had declared both upload functions unreachable
  * (lesson 3.73); plain C matches them. */
 
-extern u16 gUnk_03002348;
-extern u16 gUnk_030023E4;
-extern u8 gUnk_06010000[];
-extern u16 gUnk_03001470[];
+extern u16 gSpriteCameraX;
+extern u16 gSpriteCameraY;
+extern u8 gObjVram[];
+extern u16 gObjPalette[];
 
 void RequestCopy(u32 mode, u32 src, u32 dst, u32 size);
 
 /* Is the running task on screen (with a 63-pixel margin on every side)
- * relative to the camera gUnk_03002348/gUnk_030023E4? */
+ * relative to the camera gSpriteCameraX/gSpriteCameraY? */
 u32 TaskIsOnScreen(void)
 {
     s16 x;
     s16 y;
     u16 t;
 
-    x = gUnk_03002490->unk48 - gUnk_03002348;
-    y = gUnk_03002490->unk4A - gUnk_030023E4;
+    x = gCurTask->unk48 - gSpriteCameraX;
+    y = gCurTask->unk4A - gSpriteCameraY;
     t = x + 63;
     if (t > 366)
         return 0;
@@ -62,13 +62,13 @@ u32 TaskLoadFrameTilesAndPalette(u32 alt)
     u16 *q;
     u16 *pal;
 
-    attr = gUnk_03002490->unk40;
+    attr = gCurTask->unk40;
     if (alt == 0)
-        dst = (attr & 0x7FF) * 32 + (u32)gUnk_06010000;
+        dst = (attr & 0x7FF) * 32 + (u32)gObjVram;
     else
         dst = (attr & 0x7FF) * 32 + 0x0600FE00;
-    tbl = gUnk_03002490->unk38;
-    g = (struct TaskGfx *)tbl[gUnk_03002490->unk3C];
+    tbl = gCurTask->unk38;
+    g = (struct TaskGfx *)tbl[gCurTask->unk3C];
     p = g->unk08;
     while (*p != 0xFFFF)
     {
@@ -78,7 +78,7 @@ u32 TaskLoadFrameTilesAndPalette(u32 alt)
         dst += 0x400;
     }
     pal = g->unk04;
-    RequestCopy(2, (u32)(pal + 1), (attr >> 12) * 32 + (u32)gUnk_03001470, *pal);
+    RequestCopy(2, (u32)(pal + 1), (attr >> 12) * 32 + (u32)gObjPalette, *pal);
     return g->unk00;
 }
 
@@ -92,13 +92,13 @@ u32 TaskLoadFrameTiles(u32 alt)
     u16 *p;
     u16 *q;
 
-    attr = gUnk_03002490->unk40;
+    attr = gCurTask->unk40;
     if (alt == 0)
-        dst = (attr & 0x7FF) * 32 + (u32)gUnk_06010000;
+        dst = (attr & 0x7FF) * 32 + (u32)gObjVram;
     else
         dst = (attr & 0x7FF) * 32 + 0x0600FE00;
-    tbl = gUnk_03002490->unk38;
-    g = (struct TaskGfx *)tbl[gUnk_03002490->unk3C];
+    tbl = gCurTask->unk38;
+    g = (struct TaskGfx *)tbl[gCurTask->unk3C];
     p = g->unk08;
     while (*p != 0xFFFF)
     {

@@ -19,24 +19,24 @@ extern s16 gUnk_02005580;
 extern s16 gUnk_02005588[];
 extern u8 gUnk_020055CC;
 extern u8 gUnk_02006090;
-extern s16 gUnk_02007D48[];
+extern s16 gPlayerLives[];
 extern u8 gUnk_02007FCC;
 extern u16 gUnk_0200AF18[];
 extern s16 gInputRecorderMode;
 extern vu16 gUnk_03000048;
-extern vu16 gUnk_03001E90;
-extern vu16 gUnk_03001EB8[];
-extern vu16 gUnk_03001ED8;
+extern vu16 gFadeSteps;
+extern vu16 gPlayerPressedKeys[];
+extern vu16 gDispCnt;
 extern s32 gUnk_03001F2C;
 extern u8 gUnk_03001F30;
 extern u8 gUnk_03001F34;
 extern u16 gUnk_03002150;
 extern struct PlayerState gUnk_03002170[];
 extern u8 gUnk_03002340;
-extern u16 gUnk_03002360;
+extern u16 gLocalPlayer;
 extern u16 gUnk_03002364;
-extern u16 gUnk_030023AC;
-extern u16 gUnk_030023D8;
+extern u16 gPlayerCount;
+extern u16 gGameState;
 extern s32 gCurSaveSlot;
 extern s8 gUnk_03002438;
 extern u8 gExtraMode;
@@ -74,9 +74,9 @@ void sub_080075b8(void)
 {
     s32 i;
 
-    for (i = 0; i < gUnk_030023AC; i++) {
+    for (i = 0; i < gPlayerCount; i++) {
         if (((gUnk_03002340 >> i) & 1) && gUnk_03001F34 == 0
-            && (gUnk_03001EB8[i] & 8)) {
+            && (gPlayerPressedKeys[i] & 8)) {
             gUnk_03002438 = 5;
             gUnk_02004B60 = i;
             return;
@@ -95,8 +95,8 @@ void sub_08007624(void)
     sub_08002358();
     sub_08002378();
     sub_080022fc();
-    gUnk_03001ED8 &= 0xE0FF;
-    gUnk_03001ED8 |= 0x1F00;
+    gDispCnt &= 0xE0FF;
+    gDispCnt |= 0x1F00;
     BeginFastFadeInFromWhite();
     RunLinkFramesUntilFadeDone();
     do {
@@ -108,15 +108,15 @@ void sub_08007624(void)
         case 0:
             break;
         case 2:
-            gUnk_030023D8 = 6;
+            gGameState = 6;
             done = 1;
             break;
         case 3:
-            gUnk_030023D8 = 8;
+            gGameState = 8;
             done = 1;
             break;
         case 1:
-            gUnk_030023D8 = 5;
+            gGameState = 5;
             done = 1;
             break;
         case 4:
@@ -126,12 +126,12 @@ void sub_08007624(void)
             gUnk_03002438 = 0;
             break;
         case 6:
-            if (gUnk_02007D48[gUnk_03002360] != 0) {
-                gUnk_02005588[gUnk_03002360] = gUnk_02005580;
-                gUnk_02004B50[gUnk_03002360] = 0;
-                gUnk_0200AF18[gUnk_03002360] = 0xFFFF;
+            if (gPlayerLives[gLocalPlayer] != 0) {
+                gUnk_02005588[gLocalPlayer] = gUnk_02005580;
+                gUnk_02004B50[gLocalPlayer] = 0;
+                gUnk_0200AF18[gLocalPlayer] = 0xFFFF;
             } else {
-                gUnk_030023D8 = 1;
+                gGameState = 1;
             }
             done = 1;
             break;
@@ -148,11 +148,11 @@ void sub_08007624(void)
             gUnk_02006090 = gUnk_03002438 - 9;
             if (!((gUnk_020055CC >> gUnk_02006090) & 1)) {
                 gUnk_02007FCC = gUnk_03001F2C - 14;
-                gUnk_030023D8 = 13;
+                gGameState = 13;
                 if (gUnk_02006090 > 2)
                     gUnk_020055CC |= 1 << gUnk_02006090;
             } else {
-                gUnk_030023D8 = gUnk_03001F2C;
+                gGameState = gUnk_03001F2C;
             }
             gUnk_03002150 = 5;
             done = 1;
@@ -162,7 +162,7 @@ void sub_08007624(void)
     sub_08002338();
     BeginFastFadeOutToWhite();
     RunLinkFramesUntilFadeDone();
-    for (i = 0; i < gUnk_030023AC; i++) {
+    for (i = 0; i < gPlayerCount; i++) {
         if (gUnk_03002170[i].unk2C != -1) {
             StopSfxOnPlayer(gUnk_03002170[i].unk2C, gUnk_03002170[i].unk2E);
             gUnk_03002170[i].unk2C = -1;
@@ -180,8 +180,8 @@ void sub_0800783c(void)
     sub_08002358();
     sub_08002378();
     sub_080022fc();
-    gUnk_03001ED8 &= 0xE0FF;
-    gUnk_03001ED8 |= 0x1E00;
+    gDispCnt &= 0xE0FF;
+    gDispCnt |= 0x1E00;
     BeginFastFadeInFromWhite();
     RunLinkFramesUntilFadeDone();
     do {
@@ -192,7 +192,7 @@ void sub_0800783c(void)
         case 2:
             break;
         case 3:
-            gUnk_030023D8 = 8;
+            gGameState = 8;
             done = 1;
             break;
         case 4:
@@ -231,10 +231,10 @@ void sub_0800791c(void)
     sub_08002358();
     sub_08002378();
     sub_080022fc();
-    gUnk_03001ED8 &= 0xE0FF;
-    gUnk_03001ED8 |= 0x1D00;
+    gDispCnt &= 0xE0FF;
+    gDispCnt |= 0x1D00;
     BeginFastFadeInFromWhite();
-    while (gUnk_03001E90 != 0) {
+    while (gFadeSteps != 0) {
         RunLinkFrame();
         InputRecorderUpdate();
     }
@@ -249,23 +249,23 @@ void sub_0800791c(void)
         case 0:
             break;
         case 2:
-            gUnk_030023D8 = 6;
+            gGameState = 6;
             done = 1;
             break;
         case 1:
-            gUnk_030023D8 = 5;
+            gGameState = 5;
             done = 1;
             break;
         case 3:
             done = 1;
             break;
         case 4:
-            gUnk_030023D8 = 9;
+            gGameState = 9;
             done = 1;
             break;
         case 5:
             sub_08008664();
-            if (gUnk_030023D8 == 5) {
+            if (gGameState == 5) {
                 sub_080272dc();
                 done = 1;
             } else {
@@ -273,17 +273,17 @@ void sub_0800791c(void)
             }
             break;
         case 6:
-            if (gUnk_030023AC == 1) {
-                if (gUnk_02007D48[gUnk_03002360] != 0) {
+            if (gPlayerCount == 1) {
+                if (gPlayerLives[gLocalPlayer] != 0) {
                     sub_080273a0();
                 } else {
                 gameover:
-                    gUnk_030023D8 = 22;
+                    gGameState = 22;
                 }
             } else {
                 n = 0;
-                for (i = 0; i < gUnk_030023AC; i++) {
-                    if (gUnk_02007D48[i] != 0)
+                for (i = 0; i < gPlayerCount; i++) {
+                    if (gPlayerLives[i] != 0)
                         n++;
                 }
                 if (n == 0)
@@ -293,11 +293,11 @@ void sub_0800791c(void)
             done = 1;
             break;
         case 7:
-            gUnk_030023D8 = 11;
+            gGameState = 11;
             done = 1;
             break;
         case 8:
-            gUnk_030023D8 = 10;
+            gGameState = 10;
             done = 1;
             break;
         case 9:
@@ -305,7 +305,7 @@ void sub_0800791c(void)
         case 11:
             break;
         case 12:
-            gUnk_030023D8 = 17;
+            gGameState = 17;
             done = 1;
             break;
         case 13:
@@ -315,13 +315,13 @@ void sub_0800791c(void)
     } while (done == 0);
     sub_08002338();
     BeginFastFadeOutToWhite();
-    while (gUnk_03001E90 != 0) {
+    while (gFadeSteps != 0) {
         RunLinkFrame();
         InputRecorderUpdate();
     }
     gUnk_03000048 = 0;
     sub_08027128();
-    if (gUnk_03001F30 == 0 && gUnk_030023D8 != 9
+    if (gUnk_03001F30 == 0 && gGameState != 9
         && (gUnk_03002364 & (4 << gExtraMode))
         && !(gUnk_03002364 & (64 << gExtraMode))) {
         gUnk_03002364 |= 64 << gExtraMode;

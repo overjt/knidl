@@ -17,8 +17,8 @@
  * sub_08049a58 uploads ability 2's tiles gUnk_081BE45C at +0x100, and
  * again at +0x180 when gUnk_03002444 is set. */
 
-extern u8 gUnk_06010000[];              /* OBJ tile VRAM (M13's sub_08049738) */
-extern u8 gUnk_03001470[];              /* OBJ palette buffer (M11 spelling) */
+extern u8 gObjVram[];              /* OBJ tile VRAM (M13's sub_08049738) */
+extern u8 gObjPalette[];              /* OBJ palette buffer (M11 spelling) */
 extern u8 gUnk_081AC378[];
 extern u8 gUnk_081AC358[];
 extern u8 gUnk_081BBD70[];
@@ -42,16 +42,16 @@ void RequestCopy(u32 mode, void *src, void *dst, u32 size);   /* early_1518; eff
 
 void sub_08049738(void)
 {
-    u8 *vram = gUnk_06010000 + ((gUnk_03002490->unk40 & 0x7FF) << 5);
+    u8 *vram = gObjVram + ((gCurTask->unk40 & 0x7FF) << 5);
 
-    switch (gUnk_03002490->unk88->unk0D) {
+    switch (gCurTask->unk88->unk0D) {
     case 0:
         RequestCopy(1, gUnk_081AC378, vram + 0x180, 128);
         RequestCopy(1, gUnk_081AC378 + 128, vram + 0x580, 128);
         RequestCopy(1, gUnk_081AC378 + 256, vram + 0x980, 128);
         RequestCopy(1, gUnk_081AC378 + 384, vram + 0xD80, 128);
         RequestCopy(2, gUnk_081AC358,
-                     gUnk_03001470 + (((gUnk_03002490->unk40 >> 12) + 1) << 5), 32);
+                     gObjPalette + (((gCurTask->unk40 >> 12) + 1) << 5), 32);
         break;
     case 1:
         RequestCopy(1, gUnk_081BBD70, vram + 0x180, 128);
@@ -140,7 +140,7 @@ void sub_08049738(void)
 
 void sub_08049a58(void)
 {
-    struct Task *t = gUnk_03002490;
+    struct Task *t = gCurTask;
     u32 off = (t->unk40 & 0x7FF) << 5;
 
     if (t->unk88->unk0D == 2) {

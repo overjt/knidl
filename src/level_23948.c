@@ -111,8 +111,8 @@ extern u16 gUnk_03005624;
 extern u8 gUnk_03002340;
 extern u8 gUnk_03002350;
 extern u8 gUnk_0300234C;
-extern u16 gUnk_030023AC;
-extern s16 gUnk_02007D48[];
+extern u16 gPlayerCount;
+extern s16 gPlayerLives[];
 extern s16 gUnk_02005588[];
 extern s16 gUnk_02005580;
 extern u16 gUnk_02008008[];
@@ -120,11 +120,11 @@ extern u16 gUnk_02007FA8[];
 extern u16 gUnk_02004B50[];
 extern u16 gUnk_0200AF18[];
 extern u8 gUnk_0300560C[];
-extern vu16 gUnk_03000F98[];
-extern vu16 gUnk_03001EB8[];
+extern vu16 gPlayerHeldKeys[];
+extern vu16 gPlayerPressedKeys[];
 extern u16 gUnk_03002458[];
 extern u16 gUnk_030023C0[];
-extern u16 gUnk_03002360;
+extern u16 gLocalPlayer;
 extern u16 gUnk_03005604[2];
 extern struct MapCell gUnk_02000040[];
 extern u16 gUnk_0200B080[];
@@ -236,9 +236,9 @@ void sub_08023948(void)
     gUnk_03002340 = 0;
     gUnk_03002350 = 0;
     gUnk_0300234C = 0;
-    for (i = 0; i < gUnk_030023AC; i++)
+    for (i = 0; i < gPlayerCount; i++)
     {
-        if (gUnk_02007D48[i] != 0 || gUnk_02005588[i] != 0)
+        if (gPlayerLives[i] != 0 || gUnk_02005588[i] != 0)
         {
             if (gUnk_02005588[i] == 0)
             {
@@ -265,11 +265,11 @@ void sub_08023948(void)
         }
         CreatePlayer(i);
         sub_0803d1c4(i);
-        gUnk_03000F98[i] = gUnk_03001EB8[i] = 0;
+        gPlayerHeldKeys[i] = gPlayerPressedKeys[i] = 0;
         gUnk_03002458[i] = gUnk_030023C0[i] = 0;
     }
     sub_08028b1c();
-    sub_08009b2c(gUnk_03002360);
+    sub_08009b2c(gLocalPlayer);
     switch (gUnk_030055C0)
     {
     default:
@@ -352,7 +352,7 @@ void sub_08023ca0(void)
 
 void sub_08023e34(void)
 {
-    struct Task *t = gUnk_03002490;
+    struct Task *t = gCurTask;
 
     t->unk00 = 0;
     t->unk0C = (u32)sub_080236d4;
@@ -366,7 +366,7 @@ void sub_08023e34(void)
 
 void sub_08023e78(void)
 {
-    struct Task *t = gUnk_03002490;
+    struct Task *t = gCurTask;
 
     t->unk00 = 0;
     t->unk0C = 0;
@@ -498,9 +498,9 @@ void sub_08023fd4(void)
     gUnk_03002340 = 0;
     gUnk_03002350 = 0;
     gUnk_0300234C = 0;
-    for (i = 0; i < gUnk_030023AC; i++)
+    for (i = 0; i < gPlayerCount; i++)
     {
-        if (gUnk_02007D48[i] != 0 || gUnk_02005588[i] != 0)
+        if (gPlayerLives[i] != 0 || gUnk_02005588[i] != 0)
         {
             if (gUnk_02005588[i] == 0)
             {
@@ -526,12 +526,12 @@ void sub_08023fd4(void)
         }
         CreatePlayer(i);
         sub_0803d0a0(i);
-        gUnk_03000F98[i] = gUnk_03001EB8[i] = 0;
+        gPlayerHeldKeys[i] = gPlayerPressedKeys[i] = 0;
         gUnk_03002458[i] = gUnk_030023C0[i] = 0;
     }
     sub_08040788();
     sub_08028b1c();
-    sub_08009b2c(gUnk_03002360);
+    sub_08009b2c(gLocalPlayer);
     sub_0802cc90();
     sub_080290dc();
     sub_08029930();

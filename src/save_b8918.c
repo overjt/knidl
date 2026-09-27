@@ -52,15 +52,15 @@ extern u16 gCompletionPercent;
 extern u16 gUnk_03002364;
 extern u16 gUnk_03002378[];
 extern s8 gUnk_03002384;
-extern u16 gUnk_030023AC;
+extern u16 gPlayerCount;
 extern u8 gUnk_030023B8;
 extern s32 gUnk_030023C8[];
 extern s8 gUnk_030023E0;
 extern s32 gCurSaveSlot;
 extern u8 gUnk_03002400[8][7];
 extern u8 gExtraMode;
-extern u16 gUnk_03004D50[];
-extern u16 gUnk_03004D90[];
+extern u16 gRecvCmds[];
+extern u16 gSendCmd[];
 
 s32 CalcCompletionPercent(s32 a);
 s32 WriteSaveSlot(s32 a);
@@ -74,7 +74,7 @@ void sub_080b8918(void)
     s32 j;
     s32 k;
 
-    for (i = 0; i < gUnk_030023AC; i++)
+    for (i = 0; i < gPlayerCount; i++)
     {
         if ((s8)gSaveSlots[3].unk1A[gExtraMode] > (s8)gUnk_0200EA00[i].unk0A[gExtraMode])
         {

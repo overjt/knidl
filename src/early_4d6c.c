@@ -73,9 +73,9 @@ extern vs32 gUnk_0200EBA8;
 extern s32 gUnk_0200EBAC;
 extern s32 gUnk_0200EBBC;
 extern s32 gUnk_0200EC40;
-extern vu16 gUnk_03000018;      /* REG_IE shadow */
-extern vu16 gUnk_03001EF8;      /* REG_IME shadow */
-extern vu16 gUnk_03001F38;      /* link-mode flag */
+extern vu16 gIntrEnable;      /* REG_IE shadow */
+extern vu16 gIntrMasterEnable;      /* REG_IME shadow */
+extern vu16 gLinkIsMaster;      /* link-mode flag */
 
 /* REG_IME must be reached through a SYMBOL here, not the io_reg.h cast
  * literal: with the literal, cse.c derives 0x04000208 from the still-live

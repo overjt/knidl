@@ -8,7 +8,7 @@
  *
  * `struct Task` is the 0x90-byte task control block first mapped in issue #32
  * (`src/early_58e4.c`, `src/early_5d9c.c`); the 64-entry table lives at
- * gUnk_03002790 and gUnk_03002490 points at the task that is currently
+ * gTasks and gCurTask points at the task that is currently
  * running.  `struct Actor` is the larger per-task actor record hanging off
  * Task.unk8C that module M17 (issue #65) is the field API for, and
  * `struct ActorDef` is the ROM descriptor an actor is bound to
@@ -352,8 +352,8 @@ struct PointPair
     u32 y1:16;
 };
 
-extern struct Task *gUnk_03002490;
-extern struct Task gUnk_03002790[];
+extern struct Task *gCurTask;
+extern struct Task gTasks[];
 extern vs32 gCurTaskIdx;
 
 #endif // GUARD_TASK_H

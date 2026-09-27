@@ -42,7 +42,7 @@ extern u8 gUnk_020069F0;
 extern u32 gUnk_02007BF0[8][8];
 extern s32 gUnk_02007D00[];
 extern u32 gUnk_02007D40[];
-extern s16 gUnk_02007D48[];
+extern s16 gPlayerLives[];
 extern u16 gUnk_02007D60;
 extern s8 gUnk_02007D64;
 extern s8 gUnk_02007FB8[];
@@ -70,40 +70,40 @@ extern u32 gHBlankScrollTable[];
 extern u32 gHBlankScrollEffect[];
 extern u32 gHBlankScrollDmaTable[];
 extern u32 gUnk_02020000[];
-extern u32 gUnk_0300003C;
-extern vu16 gUnk_03000B10;
+extern u32 gFrameCallback;
+extern vu16 gBg2Cnt;
 extern u32 gUnk_03000B74;
-extern u16 gUnk_03000F98[];
+extern u16 gPlayerHeldKeys[];
 extern u32 gUnk_03000FA4;
 extern u32 gHBlankDmaDest[];
 extern u32 gHBlankDmaCnt[];
-extern u8 gUnk_03001470[];
+extern u8 gObjPalette[];
 extern u32 gUnk_03001570[];
 extern u32 gUnk_030015B0[];
-extern u16 gUnk_03001EA4;
-extern vu8 gUnk_03001EB0;
-extern vu16 gUnk_03001EB4;
+extern u16 gFrameCount;
+extern vu8 gBgMosaic;
+extern vu16 gBg3Cnt;
 extern u32 gHBlankDmaSrc[];
 extern s16 gUnk_03001F00;
 extern s32 gUnk_03001F2C;
 extern u8 gUnk_03001F30;
-extern s16 gUnk_03002158[];
+extern s16 gViewRect[];
 extern u32 gUnk_03002160;
 extern struct PlayerState gUnk_03002170[];
 extern u8 gUnk_03002340;
 extern s32 gUnk_03002344;
-extern s16 gUnk_03002348;
+extern s16 gSpriteCameraX;
 extern u8 gUnk_03002350;
-extern u16 gUnk_03002360;
+extern u16 gLocalPlayer;
 extern s8 gUnk_0300238C;
 extern s16 gUnk_03002398;
-extern u16 gUnk_030023AC;
+extern u16 gPlayerCount;
 extern u8 gUnk_030023B0;
 extern s32 gUnk_030023B4;
 extern u32 gUnk_030023C8[];
 extern s32 gUnk_030023D4;
-extern u16 gUnk_030023D8;
-extern s16 gUnk_030023E4;
+extern u16 gGameState;
+extern s16 gSpriteCameraY;
 extern u32 gCurSaveSlot[];
 extern s8 gUnk_030023EC;
 extern u32 gUnk_03002448;
@@ -111,7 +111,7 @@ extern s16 gUnk_0300244C;
 extern u32 gExtraMode[];
 extern s8 gUnk_03002468;
 extern u32 gUnk_030027A8[];
-extern vs16 gUnk_03004CA0[];
+extern vs16 gTaskSlotTypes[];
 extern u8 gUnk_03005550[];
 extern u32 gUnk_03005568[];
 extern s16 gUnk_03005628[];
@@ -1487,7 +1487,7 @@ s32 sub_080b5840(u8 *e, s32 i, s32 k)
         pX = (u8 *)((u32)gUnk_020060A0 + o7);
         pX[1] = r;
         w9 = pX[1];
-        RequestCopy(2, *(u32 *)(d5 + 8), ((s8)w9 << 5) + (u32)gUnk_03001470, *(u16 *)d5 << 5);
+        RequestCopy(2, *(u32 *)(d5 + 8), ((s8)w9 << 5) + (u32)gObjPalette, *(u16 *)d5 << 5);
     }
     return 1;
 }
@@ -1533,7 +1533,7 @@ s32 sub_080b590c(u8 *e, s32 i, s32 k)
         pX = (u8 *)((u32)gUnk_020060A0 + o7);
         pX[1] = r;
         w9 = pX[1];
-        RequestCopy(2, *(u32 *)(d5 + 8), ((s8)w9 << 5) + (u32)gUnk_03001470, *(u16 *)d5 << 5);
+        RequestCopy(2, *(u32 *)(d5 + 8), ((s8)w9 << 5) + (u32)gObjPalette, *(u16 *)d5 << 5);
     }
     return 1;
 }
@@ -1610,7 +1610,7 @@ s32 sub_080b5a94(struct Unk020055D8Entry *e, s32 idx, s32 n)
     if (d->unk0 != 0)
     {
         gUnk_020060A0[n].unk1 = sub_080b5654(d->unk0);
-        RequestCopy(2, d->unk8, (gUnk_020060A0[n].unk1 << 5) + (u32)gUnk_03001470, d->unk0 << 5);
+        RequestCopy(2, d->unk8, (gUnk_020060A0[n].unk1 << 5) + (u32)gObjPalette, d->unk0 << 5);
     }
     return 1;
 }
@@ -1662,7 +1662,7 @@ s32 sub_080b5d84(struct Unk020055D8Entry *e)
     slot = sub_0802d344(0);
     if (slot == -1)
         return slot;
-    t = &gUnk_03002790[slot];
+    t = &gTasks[slot];
     t->unk18 = 0;
     t->unk24 = 0;
     if (gUnk_02007D64 != 4)
@@ -1684,7 +1684,7 @@ s32 sub_080b5d84(struct Unk020055D8Entry *e)
             case 1:
                 break;
             case 2:
-                if (e->unk4 < (gUnk_03002158[0] + gUnk_03002158[1]) >> 1)
+                if (e->unk4 < (gViewRect[0] + gViewRect[1]) >> 1)
                     gUnk_03005680.unkA = e->unk4 + 156;
                 else
                     gUnk_03005680.unkA = e->unk4 - 156;
@@ -1692,7 +1692,7 @@ s32 sub_080b5d84(struct Unk020055D8Entry *e)
                 t->unk24 = 1;
                 break;
             case 3:
-                if (e->unk6 < (gUnk_03002158[3] + gUnk_03002158[2]) >> 1)
+                if (e->unk6 < (gViewRect[3] + gViewRect[2]) >> 1)
                     gUnk_03005680.unkC = e->unk6 + 120;
                 else
                     gUnk_03005680.unkC = e->unk6 - 120;
@@ -1756,7 +1756,7 @@ s32 sub_080b5d84(struct Unk020055D8Entry *e)
 void HBlankScrollVBlankCallback(void)
 {
     REG_DMA0CNT_H = 0;
-    if (gUnk_0300003C == 0)
+    if (gFrameCallback == 0)
     {
         gUnk_03000FA4 = 0;
         *(vu32 *)gHBlankDmaDest = *(vu32 *)gHBlankDmaSrc = *(vu32 *)gHBlankDmaCnt = 0;

@@ -7,8 +7,8 @@
  * AgbMain state 11 (src/main.c calls EndingMain once and moves to
  * state 12, which runs M38's sub_080c6420).
  * 
- *   EndingMain   copies gUnk_03002360, gUnk_03001F38, gUnk_0300243C and
- *       gUnk_030023AC into EWRAM cells, runs the SIO teardown sub_0800293c
+ *   EndingMain   copies gLocalPlayer, gLinkIsMaster, gLinkPlayerCount and
+ *       gPlayerCount into EWRAM cells, runs the SIO teardown sub_0800293c
  *       (after sub_08002358/sub_08002668 when gUnk_03002150 is 20, the value
  *       AgbMain's state 20 leaves there), stops the sound (StopAllSound),
  *       plays the two scenes below unless gUnk_03002150 is 20 or
@@ -22,18 +22,18 @@
  *       retrying every frame until a slot is free, with Task.unk73 = 0. */
 
 extern u16 gUnk_02000028;
-extern u16 gUnk_03002360;
+extern u16 gLocalPlayer;
 extern u16 gUnk_02007D3C;
-extern u16 gUnk_03001F38;
+extern u16 gLinkIsMaster;
 extern u16 gUnk_0200616C;
-extern u16 gUnk_0300243C;
+extern u16 gLinkPlayerCount;
 extern u16 gUnk_02004C94;
-extern u16 gUnk_030023AC;
+extern u16 gPlayerCount;
 extern u16 gUnk_03002150;
 extern u8 gUnk_03001F30;
 extern s32 gCurSaveSlot;
 extern u8 gEndingSceneActive;
-extern vu16 gUnk_03001ED8;
+extern vu16 gDispCnt;
 
 void BeginFastFadeInFromWhite(void);
 void BeginFastFadeOutToWhite(void);
@@ -56,10 +56,10 @@ void sub_080c63ec(void);
 
 void EndingMain(void)
 {
-    gUnk_02000028 = gUnk_03002360;
-    gUnk_02007D3C = gUnk_03001F38;
-    gUnk_0200616C = gUnk_0300243C;
-    gUnk_02004C94 = gUnk_030023AC;
+    gUnk_02000028 = gLocalPlayer;
+    gUnk_02007D3C = gLinkIsMaster;
+    gUnk_0200616C = gLinkPlayerCount;
+    gUnk_02004C94 = gPlayerCount;
     if (gUnk_03002150 == 20) {
         sub_08002358();
         sub_08002668();
@@ -79,8 +79,8 @@ void sub_080c62f0(void)
     gEndingSceneActive = 1;
     sub_08024610(0, 0);
     sub_08008c4c(15);
-    gUnk_03001ED8 &= 0xE0FF;
-    gUnk_03001ED8 |= 0x1D00;
+    gDispCnt &= 0xE0FF;
+    gDispCnt |= 0x1D00;
     sub_080c6354();
     BeginFastFadeInFromWhite();
     RunLinkFramesUntilFadeDone();
@@ -98,7 +98,7 @@ void sub_080c6354(void)
 
     while ((id = TaskCreateFrom(100, 32)) == -1)
         RunLinkFrame();
-    t = &gUnk_03002790[id];
+    t = &gTasks[id];
     t->unk73 = 0;
 }
 
@@ -107,8 +107,8 @@ void sub_080c6388(void)
     gEndingSceneActive = 1;
     sub_08024654(632, 248);
     sub_08008c4c(16);
-    gUnk_03001ED8 &= 0xE0FF;
-    gUnk_03001ED8 |= 0x1C00;
+    gDispCnt &= 0xE0FF;
+    gDispCnt |= 0x1C00;
     sub_080c63ec();
     BeginFastFadeInFromWhite();
     RunLinkFramesUntilFadeDone();
@@ -126,6 +126,6 @@ void sub_080c63ec(void)
 
     while ((id = TaskCreateFrom(101, 32)) == -1)
         RunLinkFrame();
-    t = &gUnk_03002790[id];
+    t = &gTasks[id];
     t->unk73 = 0;
 }

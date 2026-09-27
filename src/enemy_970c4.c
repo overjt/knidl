@@ -75,28 +75,28 @@ void sub_080970c4(void)
     s16 *a1;
     s16 *b2;
 
-    t = gUnk_03002490;
+    t = gCurTask;
     t->unk00 = (u32)TaskMove;
     t->unk0C = (u32)TaskDrawWorld;
     t->unk42 = 10;
-    u = gUnk_03002490;
+    u = gCurTask;
     u->unk38 = gUnk_087537E8;
     u->unk40 = gUnk_0200D120[u->unk44 - 32].unk20;
     if (RandomRange(2) != 0)
-        gUnk_03002490->unk43 = 1;
+        gCurTask->unk43 = 1;
     else
-        gUnk_03002490->unk43 = -1;
-    v = gUnk_03002490;
+        gCurTask->unk43 = -1;
+    v = gCurTask;
     v->unk28 = 0;
     v->unk04 = (u32)sub_080974c8;
     while (1) {
-        gUnk_03002490->unk3C = 0xFFFF;
+        gCurTask->unk3C = 0xFFFF;
         TaskYieldTrampoline(RandomRange(8));
-        w = gUnk_03002490;
+        w = gCurTask;
         switch (w->unk73) {
         case 0:
             i0 = w->unk44;
-            q0 = &gUnk_03002790[i0];
+            q0 = &gTasks[i0];
             a0 = &q0->unk48;
             k0 = q0->unk43;
             p0 = gUnk_0200D120[i0 - 32].unk48;
@@ -105,7 +105,7 @@ void sub_080970c4(void)
             break;
         case 1:
             i1 = w->unk44;
-            q1 = &gUnk_03002790[i1];
+            q1 = &gTasks[i1];
             a1 = &q1->unk48;
             k1 = q1->unk43;
             p1 = gUnk_0200D120[i1 - 32].unk48;
@@ -117,12 +117,12 @@ void sub_080970c4(void)
             p2 = gUnk_0200D120[i2 - 32].unk48;
             c4_2 = p2[4];
             c0_2 = p2[0];
-            k2 = gUnk_03002790[i2].unk43;
-            u48_2 = gUnk_03002790[i2].unk48;
+            k2 = gTasks[i2].unk43;
+            u48_2 = gTasks[i2].unk48;
             c2_2 = p2[2];
             x = u48_2 + (c4_2 - (abs(c4_2 - c2_2) >> 1) + c0_2) * k2;
-            j2 = gUnk_03002490->unk44;
-            r = &gUnk_03002790[j2];
+            j2 = gCurTask->unk44;
+            r = &gTasks[j2];
             b2 = &r->unk4A;
             p2b = gUnk_0200D120[j2 - 32].unk48;
             y = (p2b[3] + *b2) + p2b[1];
@@ -132,44 +132,44 @@ void sub_080970c4(void)
             p3 = gUnk_0200D120[i3 - 32].unk48;
             c4_3 = p3[4];
             c0_3 = p3[0];
-            k3 = gUnk_03002790[i3].unk43;
-            u48_3 = gUnk_03002790[i3].unk48;
+            k3 = gTasks[i3].unk43;
+            u48_3 = gTasks[i3].unk48;
             c2_3 = p3[2];
             x = u48_3 + (c4_3 - (abs(c4_3 - c2_3) >> 1) + c0_3) * k3;
-            j3 = gUnk_03002490->unk44;
-            h3 = gUnk_03002790[j3].unk4A;
+            j3 = gCurTask->unk44;
+            h3 = gTasks[j3].unk4A;
             p3b = gUnk_0200D120[j3 - 32].unk48;
             y = (h3 + p3b[5]) - (abs(p3b[5] - p3b[3]) >> 1) + p3b[1];
             break;
         }
-        ia = gUnk_03002490->unk44;
+        ia = gCurTask->unk44;
         pa = gUnk_0200D120[ia - 32].unk48;
         n = RandomRange(abs(pa[4] - pa[2]) >> 1);
-        ib = gUnk_03002490->unk44;
-        x = x + n * gUnk_03002790[ib].unk43;
+        ib = gCurTask->unk44;
+        x = x + n * gTasks[ib].unk43;
         pb = gUnk_0200D120[ib - 32].unk48;
         y = y + RandomRange(abs(pb[5] - pb[3]) >> 1);
-        z = gUnk_03002490;
+        z = gCurTask;
         z->unk4C = x << 16;
         z->unk50 = y << 16;
         if ((z->unk28 & 1) != 0)
             z->unk43 = -z->unk43;
-        gUnk_03002490->unk28++;
+        gCurTask->unk28++;
         TaskSetMotionXFacing(0x14000, -0x1C00);
-        gUnk_03002490->unk58 = -0x10000;
+        gCurTask->unk58 = -0x10000;
         TaskSetFrame(1);
         TaskYieldTrampoline(1);
         TaskSetFrame(2);
         TaskYieldTrampoline(2);
         TaskSetFrame(3);
         TaskYieldTrampoline(2);
-        gUnk_03002490->unk58 = -0x20000;
+        gCurTask->unk58 = -0x20000;
         TaskSetFrame(4);
         TaskYieldTrampoline(2);
         TaskSetFrame(1);
         TaskYieldTrampoline(1);
         TaskSetMotionXFacing(-0x4000, 0x5A5A5A5A);
-        gUnk_03002490->unk58 = -0x40000;
+        gCurTask->unk58 = -0x40000;
         TaskSetFrame(0);
         TaskYieldTrampoline(2);
         TaskSetMotionXFacing(0x4000, 0x5A5A5A5A);

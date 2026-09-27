@@ -7,10 +7,10 @@
  * 64 task slots of 0x90 bytes live at 0x03002790.  Each slot carries four
  * callbacks (+0x00/+0x04/+0x08/+0x0C), a countdown (+0x10), a priority-group
  * id (+0x12, negative = free) and a per-phase skip mask (+0x13).  Slots are
- * bucketed into five priority groups: gUnk_030024A0[group][slot] holds the
+ * bucketed into five priority groups: gTaskClassLists[group][slot] holds the
  * task ids, gUnk_03002480[group] the live count, gUnk_03002700/gUnk_03002708
  * the pending/processed counts used to detect list growth during a pass.
- * gTaskFlagsTable[id]/gUnk_03004B90[id] are the coroutine resume PC/SP consumed
+ * gTaskResumeAddrs[id]/gTaskStackPtrs[id] are the coroutine resume PC/SP consumed
  * by the ARM task switcher at 0x08000234 (reached through its thumb veneer
  * TaskSwitchTrampoline); gTaskSavedR0 is that switcher's "sleep" result.
  *
@@ -31,7 +31,7 @@
  * Matching notes (docs/lessons-learned.md §3):
  *  - TaskSetAllSkipMask is a dead export hidden inside symbols.csv's 0x90 size for
  *    TaskSetOthersSkipMask (lesson 2.13 / zone lesson 14): nothing in ROM calls it.
- *  - `gUnk_03002710[i] = 0xFFFF; gUnk_03004CA0[i] = gUnk_03002710[i];` is the
+ *  - `gTaskListRefs[i] = 0xFFFF; gTaskSlotTypes[i] = gTaskListRefs[i];` is the
  *    shape behind the ROM's `ldrh/orrs/strh` triplet: agbcc emits the
  *    volatile indexed store's dead pre-read (3.7) and then REUSES that
  *    register by OR-ing the all-ones constant into it instead of
@@ -56,9 +56,9 @@
  * byte-exact.  RunTasks reproduces the ROM's instruction sequence
  * one-for-one but diverges on register NAMES only (908 vs 904 bytes).  Root
  * cause: agbcc's local allocator gives the current-task pointer r1 (reusing
- * the dying `ldr r1,=gUnk_03002790`) where the ROM uses a fresh r2; that
+ * the dying `ldr r1,=gTasks`) where the ROM uses a fresh r2; that
  * pushes the `task->b13` temp from r1 to r6, denies r6 to the phase-4/5
- * &gUnk_03002490 pseudo, evicts &gUnk_03002488 from r8 into the
+ * &gCurTask pseudo, evicts &gUnk_03002488 from r8 into the
  * caller-clobbered r3 and so costs one extra `mov` plus a second caller-save
  * slot (`sub sp,#8`).  No source spelling tried moves that one local-alloc
  * decision - see the batch report for the list.
@@ -119,28 +119,28 @@ struct Task {
 };
 
 
-extern struct Task gUnk_03002790[];
-extern vu16 gUnk_03004CA0[];
-extern vu32 gUnk_030026F0;
-extern vs32 gUnk_030026F4;
+extern struct Task gTasks[];
+extern vu16 gTaskSlotTypes[];
+extern vu32 gTaskCount;
+extern vs32 gTaskRunPhase;
 extern vu32 gTaskSavedLr;
 extern vu32 gTaskSavedSp;
 extern vu8  gUnk_03002478[];
 extern vu8  gUnk_03002480[];
 extern vu32 gUnk_03002488;
 extern vs32 gCurTaskIdx;
-extern struct Task *gUnk_03002490;
-extern vu32 gUnk_03002494;
-extern vu8  gUnk_030024A0[5][64];
+extern struct Task *gCurTask;
+extern vu32 gTaskCursor;
+extern vu8  gTaskClassLists[5][64];
 extern s32  gTaskSavedR0;
-extern u32  gTaskFlagsTable[];
+extern u32  gTaskResumeAddrs[];
 extern vu8  gUnk_03002700[];
 extern vu8  gUnk_03002708[];
-extern vu16 gUnk_03002710[];
-extern u32  gUnk_03004B90[];
-extern vs32 gUnk_03004C90;
+extern vu16 gTaskListRefs[];
+extern u32  gTaskStackPtrs[];
+extern vs32 gCurTaskClass;
 extern vu32 gTaskBaseSp;
-extern vu8  gUnk_0200D110;
+extern vu8  gTaskSkipMaskDepth;
 
 void TaskSwitchTrampoline(s32 id, u32 fn, u32 stack);
 
@@ -150,18 +150,18 @@ void RunTasks(void)
     s32 i;
     s32 j;
 
-    if (gUnk_030026F0 == 0)
+    if (gTaskCount == 0)
         return;
 
-    gUnk_030026F4 = 0;
+    gTaskRunPhase = 0;
     for (i = 0; i <= 4; i++)
         gUnk_03002708[i] = gUnk_03002480[i] = 0;
 
     for (i = 0; i <= 63; i++) {
-        s32 t = (s8)gUnk_03002790[i].b12;
+        s32 t = (s8)gTasks[i].b12;
         if (t >= 0) {
-            gUnk_03002710[i] = (t << 8) | gUnk_03002480[t];
-            gUnk_030024A0[t][gUnk_03002480[t]++] = i;
+            gTaskListRefs[i] = (t << 8) | gUnk_03002480[t];
+            gTaskClassLists[t][gUnk_03002480[t]++] = i;
         }
     }
 
@@ -171,38 +171,38 @@ void RunTasks(void)
     restart:
         for (i = 0; i <= 4; i++) {
             if (gUnk_03002708[i] != gUnk_03002480[i]) {
-                gUnk_03004C90 = i;
+                gCurTaskClass = i;
                 for (j = gUnk_03002708[i]; j < gUnk_03002480[i]; j++) {
                     gUnk_03002488 = gUnk_03002478[i] = j;
-                    if (gUnk_030024A0[i][j] != 0xFF) {
-                        gCurTaskIdx = gUnk_030024A0[i][j];
-                        gUnk_03002490 = &gUnk_03002790[gCurTaskIdx];
-                        if ((s8)gUnk_03002490->b12 >= 0) {
-                            gUnk_030026F4 = 1;
-                            if ((gUnk_03002490->b13 & 1) == 0) {
-                                if (gTaskFlagsTable[gCurTaskIdx] != 0) {
-                                    if (--gUnk_03002490->h10 <= 0) {
+                    if (gTaskClassLists[i][j] != 0xFF) {
+                        gCurTaskIdx = gTaskClassLists[i][j];
+                        gCurTask = &gTasks[gCurTaskIdx];
+                        if ((s8)gCurTask->b12 >= 0) {
+                            gTaskRunPhase = 1;
+                            if ((gCurTask->b13 & 1) == 0) {
+                                if (gTaskResumeAddrs[gCurTaskIdx] != 0) {
+                                    if (--gCurTask->h10 <= 0) {
                                         gTaskSavedR0 = -1;
                                         TaskSwitchTrampoline(gCurTaskIdx,
-                                                             gTaskFlagsTable[gCurTaskIdx],
-                                                             gUnk_03004B90[gCurTaskIdx]);
+                                                             gTaskResumeAddrs[gCurTaskIdx],
+                                                             gTaskStackPtrs[gCurTaskIdx]);
                                         if (*(vs32 *)&gTaskSavedR0 != -1) {
-                                            gUnk_03002490->h10 = *(vs32 *)&gTaskSavedR0;
-                                            gTaskFlagsTable[gCurTaskIdx] = gTaskSavedLr;
-                                            gUnk_03004B90[gCurTaskIdx] = gTaskSavedSp;
+                                            gCurTask->h10 = *(vs32 *)&gTaskSavedR0;
+                                            gTaskResumeAddrs[gCurTaskIdx] = gTaskSavedLr;
+                                            gTaskStackPtrs[gCurTaskIdx] = gTaskSavedSp;
                                         }
                                     }
                                 }
                             }
-                            gUnk_030026F4 = 2;
-                            if ((gUnk_03002490->b13 & 2) == 0) {
-                                if (gUnk_03002490->f00 != 0)
-                                    gUnk_03002490->f00();
+                            gTaskRunPhase = 2;
+                            if ((gCurTask->b13 & 2) == 0) {
+                                if (gCurTask->f00 != 0)
+                                    gCurTask->f00();
                             }
-                            gUnk_030026F4 = 3;
-                            if ((gUnk_03002490->b13 & 4) == 0) {
-                                if (gUnk_03002490->f04 != 0)
-                                    gUnk_03002490->f04();
+                            gTaskRunPhase = 3;
+                            if ((gCurTask->b13 & 4) == 0) {
+                                if (gCurTask->f04 != 0)
+                                    gCurTask->f04();
                             }
                         }
                     }
@@ -219,19 +219,19 @@ void RunTasks(void)
     if (j != 0)
         goto restart;
 
-    gUnk_030026F4 = 4;
+    gTaskRunPhase = 4;
     for (i = 0; i <= 4; i++) {
         if (gUnk_03002480[i] != 0) {
-            gUnk_03004C90 = i;
+            gCurTaskClass = i;
             for (j = 0; j < gUnk_03002480[i]; j++) {
                 gUnk_03002488 = gUnk_03002478[i] = j;
-                if (gUnk_030024A0[i][j] != 0xFF) {
-                    gCurTaskIdx = gUnk_030024A0[i][j];
-                    gUnk_03002490 = &gUnk_03002790[gCurTaskIdx];
-                    if ((s8)gUnk_03002490->b12 >= 0) {
-                        if ((gUnk_03002490->b13 & 8) == 0) {
-                            if (gUnk_03002490->f08 != 0)
-                                gUnk_03002490->f08();
+                if (gTaskClassLists[i][j] != 0xFF) {
+                    gCurTaskIdx = gTaskClassLists[i][j];
+                    gCurTask = &gTasks[gCurTaskIdx];
+                    if ((s8)gCurTask->b12 >= 0) {
+                        if ((gCurTask->b13 & 8) == 0) {
+                            if (gCurTask->f08 != 0)
+                                gCurTask->f08();
                         }
                     }
                 }
@@ -239,21 +239,21 @@ void RunTasks(void)
         }
     }
 
-    gUnk_030026F4 = 5;
+    gTaskRunPhase = 5;
     for (i = 0; i <= 4; i++) {
         if (gUnk_03002480[i] != 0) {
-            gUnk_03004C90 = i;
+            gCurTaskClass = i;
             for (j = 0; j < gUnk_03002480[i]; j++) {
                 gUnk_03002488 = gUnk_03002478[i] = j;
-                if (gUnk_030024A0[i][j] == 0xFF) {
-                    gUnk_030024A0[i][j] = 0;
+                if (gTaskClassLists[i][j] == 0xFF) {
+                    gTaskClassLists[i][j] = 0;
                 } else {
-                    gCurTaskIdx = gUnk_030024A0[i][j];
-                    gUnk_03002490 = &gUnk_03002790[gCurTaskIdx];
-                    if ((s8)gUnk_03002490->b12 >= 0) {
-                        if ((gUnk_03002490->b13 & 0x10) == 0) {
-                            if (gUnk_03002490->f0C != 0)
-                                gUnk_03002490->f0C();
+                    gCurTaskIdx = gTaskClassLists[i][j];
+                    gCurTask = &gTasks[gCurTaskIdx];
+                    if ((s8)gCurTask->b12 >= 0) {
+                        if ((gCurTask->b13 & 0x10) == 0) {
+                            if (gCurTask->f0C != 0)
+                                gCurTask->f0C();
                         }
                     }
                 }
@@ -261,7 +261,7 @@ void RunTasks(void)
         }
     }
 
-    gCurTaskIdx = gUnk_030026F4 = -1;
+    gCurTaskIdx = gTaskRunPhase = -1;
 }
 
 

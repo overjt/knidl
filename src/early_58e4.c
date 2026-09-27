@@ -8,17 +8,17 @@
  * TaskIsOnScreen are leaves that end in a bare `bx lr`).
  *
  * The zone manages a 64-entry task table:
- *   gUnk_03002494  s32   allocation cursor (rotates 0..63), volatile
- *   gUnk_03004CA0  s16[64] per-slot "type" (-1 = free)
- *   gUnk_03002790  struct Task[64] (0x90 bytes each) task control blocks
- *   gUnk_03002490  struct Task *  currently running task
- *   gUnk_030026F0  s32   live task count
- *   gTaskFlagsTable (0x030025F0) u32[64] per-slot flag word from the ROM table
- *   gUnk_03004B90  u32[64] per-slot 256-byte scratch pointer into 0x0203BFE0
+ *   gTaskCursor  s32   allocation cursor (rotates 0..63), volatile
+ *   gTaskSlotTypes  s16[64] per-slot "type" (-1 = free)
+ *   gTasks  struct Task[64] (0x90 bytes each) task control blocks
+ *   gCurTask  struct Task *  currently running task
+ *   gTaskCount  s32   live task count
+ *   gTaskResumeAddrs (0x030025F0) u32[64] per-slot flag word from the ROM table
+ *   gTaskStackPtrs  u32[64] per-slot 256-byte scratch pointer into 0x0203BFE0
  *   gUnk_03002700  u8[]  per-class round-robin write index
- *   gUnk_030024A0  u8[]  per-class slot list (class*64 + n)
- *   gUnk_03002710  u16[64] packed (class << 8) | n back-reference
- *   gUnk_0872FF30  ROM table, 8 bytes per task type: u8 class, u32 flags
+ *   gTaskClassLists  u8[]  per-class slot list (class*64 + n)
+ *   gTaskListRefs  u16[64] packed (class << 8) | n back-reference
+ *   gTaskTypes  ROM table, 8 bytes per task type: u8 class, u32 flags
  */
 
 struct Task
@@ -99,26 +99,26 @@ struct TaskGfx
     /*0x08*/ u16 *unk08;
 };
 
-extern struct Task *gUnk_03002490;
-extern struct Task gUnk_03002790[];
-extern struct TaskType gUnk_0872FF30[];
-extern vs32 gUnk_03002494;
-extern vs16 gUnk_03004CA0[];
-extern s32 gUnk_030026F0;
-extern s32 gUnk_030026F4;
-extern u32 gUnk_03004B90[];
+extern struct Task *gCurTask;
+extern struct Task gTasks[];
+extern struct TaskType gTaskTypes[];
+extern vs32 gTaskCursor;
+extern vs16 gTaskSlotTypes[];
+extern s32 gTaskCount;
+extern s32 gTaskRunPhase;
+extern u32 gTaskStackPtrs[];
 extern u8 gUnk_0203BFE0[];
-extern u32 gTaskFlagsTable[];
+extern u32 gTaskResumeAddrs[];
 extern s32 gCurTaskIdx;
-extern vu8 gUnk_030024A0[];
+extern vu8 gTaskClassLists[];
 extern vu8 gUnk_03002700[];
-extern vu16 gUnk_03002710[];
-extern vs32 gUnk_03000B78;
-extern vs32 gUnk_03000FA8;
-extern u16 gUnk_03002348;
-extern u16 gUnk_030023E4;
-extern s16 gUnk_03002158[];
-extern u8 gUnk_03001470[];
+extern vu16 gTaskListRefs[];
+extern vs32 gBg3ScrollX;
+extern vs32 gBg3ScrollY;
+extern u16 gSpriteCameraX;
+extern u16 gSpriteCameraY;
+extern s16 gViewRect[];
+extern u8 gObjPalette[];
 
 extern void RequestCopy(u32 mode, u32 src, u32 dst, u32 size);
 /* NOTE: src/early_1518.c declares the last parameter `u16 f`; the two call
@@ -135,7 +135,7 @@ void TaskClampVelocity(void);
 s32 TaskCreateFrom(u32 type, s32 idx)
 {
     if (idx != -1)
-        gUnk_03002494 = idx;
+        gTaskCursor = idx;
     return TaskCreate(type);
 }
 
@@ -147,13 +147,13 @@ s32 TaskCreateInRange(u32 type, s32 start, s32 end)
     if (start != -1)
     {
         i = start;
-        while (gUnk_03004CA0[i] != -1)
+        while (gTaskSlotTypes[i] != -1)
         {
             i++;
             if (i > end)
                 return -1;
         }
-        gUnk_03002494 = start;
+        gTaskCursor = start;
     }
     i = TaskCreate(type);
     return i;
@@ -166,7 +166,7 @@ void TaskClampVelocity(void)
     struct Task *t;
     struct Task *u;
 
-    t = gUnk_03002490;
+    t = gCurTask;
     v = t->unk64;
     if (v != 0x80000000)
     {
@@ -182,7 +182,7 @@ void TaskClampVelocity(void)
                 t->unk54 = v;
         }
     }
-    u = gUnk_03002490;
+    u = gCurTask;
     v = u->unk68;
     if (v != 0x80000000)
     {
@@ -205,11 +205,11 @@ void TaskIntegrateMotion(void)
 {
     struct Task *t;
 
-    t = gUnk_03002490;
+    t = gCurTask;
     t->unk54 = t->unk54 + t->unk5C;
     t->unk58 = t->unk58 + t->unk60;
     TaskClampVelocity();
-    t = gUnk_03002490;
+    t = gCurTask;
     t->unk4C = t->unk4C + t->unk54;
     t->unk50 = t->unk50 + t->unk58;
 }
@@ -220,7 +220,7 @@ void TaskMove(void)
     struct Task *t;
 
     TaskIntegrateMotion();
-    t = gUnk_03002490;
+    t = gCurTask;
     t->unk48 = t->unk4C >> 16;
     t->unk4A = t->unk50 >> 16;
 }
@@ -232,12 +232,12 @@ void TaskMoveRelativeToParent(void)
     struct Task *t;
     struct Task *u;
 
-    t = gUnk_03002490;
+    t = gCurTask;
     if (t->unk54 != 0 || t->unk58 != 0 || t->unk5C != 0 || t->unk60 != 0)
         TaskIntegrateMotion();
-    u = gUnk_03002490;
-    u->unk48 = (u->unk4C + gUnk_03002790[u->unk44].unk4C) >> 16;
-    u->unk4A = (u->unk50 + gUnk_03002790[u->unk44].unk50) >> 16;
+    u = gCurTask;
+    u->unk48 = (u->unk4C + gTasks[u->unk44].unk4C) >> 16;
+    u->unk4A = (u->unk50 + gTasks[u->unk44].unk50) >> 16;
 }
 
 /* Hidden (unreferenced) export inside TaskMoveRelativeToParent's symbols.csv size. */
@@ -245,7 +245,7 @@ void TaskUpdatePixelPos(void)
 {
     struct Task *t;
 
-    t = gUnk_03002490;
+    t = gCurTask;
     t->unk48 = t->unk4C >> 16;
     t->unk4A = t->unk50 >> 16;
 }
@@ -256,12 +256,12 @@ void TaskMoveRelativeToBg3(void)
     struct Task *t;
 
     TaskIntegrateMotion();
-    t = gUnk_03002490;
-    t->unk48 = (t->unk4C >> 16) - (gUnk_03000B78 >> 16);
-    t->unk4A = (t->unk50 >> 16) - (gUnk_03000FA8 >> 16);
+    t = gCurTask;
+    t->unk48 = (t->unk4C >> 16) - (gBg3ScrollX >> 16);
+    t->unk4A = (t->unk50 >> 16) - (gBg3ScrollY >> 16);
 }
 
-/* Is the running task inside the rectangle at gUnk_03002158 (+/- 64)? */
+/* Is the running task inside the rectangle at gViewRect (+/- 64)? */
 
 /* Task body: enqueue the running task's sprite if it is on screen. */
 

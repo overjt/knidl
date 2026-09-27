@@ -6,42 +6,42 @@
  *
  * Pointer-called entry: runs the sound driver's vsync/main, flushes the OAM
  * and palette shadows via CopyOamAndPalette, pumps the copy queue, and clears the
- * frame flag gUnk_03001EC4 that EndFrame spins on. */
+ * frame flag gWaitingForVBlank that EndFrame spins on. */
 
-extern vu16 gUnk_03001174;
-extern vu16 gUnk_03001E98;
-extern vu16 gUnk_03001E90;
-extern vs16 gUnk_03000FB8;
-extern vu16 gUnk_030004A4;
-extern u16 *gUnk_03001ED4;
-extern vu32 gUnk_03000FB0;
+extern vu16 gFadeTimer;
+extern vu16 gFadeInterval;
+extern vu16 gFadeSteps;
+extern vs16 gBrightness;
+extern vu16 gFadeStep;
+extern u16 *gFadeKeepMask;
+extern vu32 gPaletteSource;
 extern vu16 gUnk_03000048;
-extern vu16 gUnk_03001ED8;
-extern u16 gUnk_03001270[];
-extern u16 gUnk_03001A90[];
+extern vu16 gDispCnt;
+extern u16 gBgPalette[];
+extern u16 gFadedPalette[];
 
-extern vs16 gUnk_03000B0C;
-extern vs16 gUnk_03000FBC;
-extern vu16 gUnk_03000FCC;
-extern vu16 gUnk_03000AF8;
-extern void (*gUnk_0300003C)(void);
+extern vs16 gVolumeRampMode;
+extern vs16 gVolumeRampLevel;
+extern vu16 gVolumeRampSpeed;
+extern vu16 gSoundDisabled;
+extern void (*gFrameCallback)(void);
 extern vu16 gUnk_03001014;
 extern u32 gUnk_03000B74;
-extern vu16 gUnk_03001EC4;
-extern vu16 gUnk_03000FD0;
-extern vu16 gUnk_03001EF4;
-extern vu16 gUnk_03000038;
-extern vu16 gUnk_0300243C;
-extern vu16 gUnk_03001EF8;
+extern vu16 gWaitingForVBlank;
+extern vu16 gFrameInProgress;
+extern vu16 gHeldKeys;
+extern vu16 gPressedKeys;
+extern vu16 gLinkPlayerCount;
+extern vu16 gIntrMasterEnable;
 extern vu32 gUnk_0200EBA0;
-extern vu16 gUnk_03001EA4;
-extern u16 gUnk_03000498[4];
-extern void (*gUnk_03000014)(void);
+extern vu16 gFrameCount;
+extern u16 gPlayTime[4];
+extern void (*gFrameEndCallback)(void);
 
-extern vu16 gUnk_03001EE4;
+extern vu16 gSoundDriverOn;
 extern u32 gUnk_03004D30;
 extern void (*gUnk_03000FA4)(void);
-extern vu16 gUnk_03000FAC;
+extern vu16 gVBlankCount;
 extern vu16 gUnk_03001008;
 extern void (*gUnk_03000F90)(void);
 extern void (*gUnk_030004A0)(void);
@@ -69,10 +69,10 @@ void UpdateFade(void);
 
 void VBlankIntr(void)
 {
-    if (gUnk_03001EE4 != 0)
+    if (gSoundDriverOn != 0)
         m4aSoundVSync();
 
-    if (gUnk_0300243C != 1)
+    if (gLinkPlayerCount != 1)
     {
         if (gUnk_03004D30 != 0)
         {
@@ -88,9 +88,9 @@ void VBlankIntr(void)
     if (gUnk_03000FA4 != 0)
         gUnk_03000FA4();
 
-    gUnk_03000FAC++;
+    gVBlankCount++;
 
-    if (gUnk_03000FD0 != 0)
+    if (gFrameInProgress != 0)
     {
         if (gUnk_03001008 != 0)
             ReadKeys();
@@ -107,11 +107,11 @@ void VBlankIntr(void)
             gUnk_030004A0();
     }
 
-    if (gUnk_03001EE4 != 0)
+    if (gSoundDriverOn != 0)
         m4aSoundMain();
 
     if (gUnk_03000AF4 != 0)
         gUnk_03000AF4();
 
-    gUnk_03001EC4 = 0;
+    gWaitingForVBlank = 0;
 }

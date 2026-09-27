@@ -49,7 +49,7 @@ extern u16 gUnk_02005580;
 extern u16 gUnk_02005588[];
 extern u8 gUnk_020069F0;
 extern u32 gUnk_02007BF0[8][8];
-extern u16 gUnk_02007D48[];
+extern u16 gPlayerLives[];
 extern u8 gUnk_02007D58[];
 extern u16 gUnk_0200AF18[];
 extern u8 gUnk_0200B04C;
@@ -60,19 +60,19 @@ extern u8 gUnk_0200EC68[];
 extern u16 gUnk_0200EC70[];
 extern u16 gUnk_0200EC78[];
 extern struct LinkSave gUnk_0200EC80;
-extern u16 gUnk_03000FAC;
-extern u32 gUnk_03000FB4;
-extern u16 gUnk_03001EA4;
+extern u16 gVBlankCount;
+extern u32 gRngValue;
+extern u16 gFrameCount;
 extern u16 gUnk_03001F18[];
 extern u8 gUnk_03001F20;
 extern u8 gUnk_03001F30;
 extern u16 gCompletionPercent;
-extern u16 gUnk_03002360;
+extern u16 gLocalPlayer;
 extern u16 gUnk_03002364;
 extern u16 gUnk_03002378[];
 extern u8 gUnk_03002384;
 extern u8 gUnk_0300238C;
-extern u16 gUnk_030023AC;
+extern u16 gPlayerCount;
 extern u8 gUnk_030023B8;
 extern u32 gUnk_030023C8[];
 extern u8 gUnk_030023E0;
@@ -96,19 +96,19 @@ void InputRecorderStart(void)
         gInputRecordingPtr = &gUnk_0200EC80;
         for (i = 0; i <= 0x3B69; i++)
             gInputRecordingPtr->unk12C[i] = 0;
-        gInputRecordingPtr->unk00 = gUnk_03000FB4;
-        gInputRecordingPtr->unk04 = gUnk_03000FAC;
-        gInputRecordingPtr->unk06 = gUnk_03001EA4;
+        gInputRecordingPtr->unk00 = gRngValue;
+        gInputRecordingPtr->unk04 = gVBlankCount;
+        gInputRecordingPtr->unk06 = gFrameCount;
         gInputRecordingPtr->unk08 = gUnk_0300238C;
         gInputRecordingPtr->unk09 = gUnk_030023EC;
         gInputRecordingPtr->unk0A = gUnk_03002468;
         gInputRecordingPtr->unk0B = gExtraMode;
-        gInputRecordingPtr->unk0C = gUnk_030023AC;
+        gInputRecordingPtr->unk0C = gPlayerCount;
         gInputRecordingPtr->unk12 = gUnk_020069F0;
         gInputRecordingPtr->unk13 = gUnk_02000020;
         gInputRecordingPtr->unk14 = gUnk_02005580;
         gInputRecordingPtr->unk36 = gUnk_0200B04C;
-        gInputRecordingPtr->unk11C = gUnk_03002360;
+        gInputRecordingPtr->unk11C = gLocalPlayer;
         gInputRecordingPtr->unk11E = gUnk_03001F30;
         for (i = 0; i <= 7; i++)
         {
@@ -119,12 +119,12 @@ void InputRecorderStart(void)
             for (j = 0; j <= 7; j++)
                 gInputRecordingPtr->unk40[i][j] = gUnk_02007BF0[i][j];
         }
-        for (i = 0; i < gUnk_030023AC; i++)
+        for (i = 0; i < gPlayerCount; i++)
         {
             gUnk_0200EC78[i] = i;
             gUnk_0200EC60[i] = 0xFFFF;
             gUnk_0200EC68[i] = 0;
-            gInputRecordingPtr->unk16[i] = gUnk_02007D48[i];
+            gInputRecordingPtr->unk16[i] = gPlayerLives[i];
             gInputRecordingPtr->unk1E[i] = gUnk_02005588[i];
             gInputRecordingPtr->unk26[i] = gUnk_02004B50[i];
             gInputRecordingPtr->unk2E[i] = gUnk_0200AF18[i];
@@ -150,8 +150,8 @@ void InputRecorderStart(void)
         }
         gInputRecordingPtr->unkC2 = gCompletionPercent;
         sub_080b8374();
-        j = Div(0x3B6A, gUnk_030023AC);
-        for (i = 0; i < gUnk_030023AC; i++)
+        j = Div(0x3B6A, gPlayerCount);
+        for (i = 0; i < gPlayerCount; i++)
             gUnk_0200EC70[i] = j - 4;
         break;
     case 2:

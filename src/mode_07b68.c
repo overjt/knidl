@@ -25,25 +25,25 @@ extern vu32 gUnk_0200EC3C;
 extern u32 gUnk_0200EC44;
 extern u32 gUnk_0200EC48;
 extern u32 gUnk_02020000[];
-extern vs32 gUnk_03000010;
-extern vu16 gUnk_03000038;
+extern vs32 gBg0ScrollY;
+extern vu16 gPressedKeys;
 extern vu16 gUnk_03000048;
-extern vs32 gUnk_03000B78;
-extern vs32 gUnk_03000FA8;
-extern vs32 gUnk_0300117C;
-extern vu16 gUnk_03001E90;
-extern vu16 gUnk_03001EB8[];
-extern vu16 gUnk_03001ED8;
+extern vs32 gBg3ScrollX;
+extern vs32 gBg3ScrollY;
+extern vs32 gBg0ScrollX;
+extern vu16 gFadeSteps;
+extern vu16 gPlayerPressedKeys[];
+extern vu16 gDispCnt;
 extern u16 gUnk_03001F18[];
-extern u16 gUnk_03001F38;
+extern u16 gLinkIsMaster;
 extern u16 gUnk_03002150;
 extern u16 gUnk_03002378[];
-extern u16 gUnk_030023AC;
-extern u16 gUnk_030023D8;
-extern u16 gUnk_0300243C;
-extern u16 gUnk_03004D50[4][4];
-extern u16 gUnk_03004D88[];
-extern u16 gUnk_03004D90[4];
+extern u16 gPlayerCount;
+extern u16 gGameState;
+extern u16 gLinkPlayerCount;
+extern u16 gRecvCmds[4][4];
+extern u16 gShouldAdvanceLinkState[];
+extern u16 gSendCmd[4];
 extern s32 gUnk_03005280;
 extern u16 gUnk_085B113C[];
 extern u16 gUnk_085B119C[];
@@ -107,7 +107,7 @@ s32 sub_08007b68(u32 *src, u32 *dst, u32 size)
     sub_08004390(src, dst, size);
     do {
         RunFrame();
-        LinkMain1((u8 *)gUnk_03004D88, gUnk_03004D90, gUnk_03004D50[0]);
+        LinkMain1((u8 *)gShouldAdvanceLinkState, gSendCmd, gRecvCmds[0]);
         if (IsLinkError() != 0)
             goto fail;
     } while (sub_08004400() == 0);
@@ -117,24 +117,24 @@ s32 sub_08007b68(u32 *src, u32 *dst, u32 size)
         RunFrame();
     if (ConnectLink() != 0)
         goto fail;
-    gUnk_03004D90[0] = 0x5503;
-    gUnk_03004D90[1] = 0;
+    gSendCmd[0] = 0x5503;
+    gSendCmd[1] = 0;
     if (gUnk_0200EC44 == gUnk_0200EC3C)
-        gUnk_03004D90[1] = 1;
+        gSendCmd[1] = 1;
     m = 0;
     n = 0;
     do {
         for (i = 0; i < 4; i++) {
-            if (gUnk_03004D50[0][i] == 0x5503) {
+            if (gRecvCmds[0][i] == 0x5503) {
                 n++;
-                if (gUnk_03004D50[1][i] != 0)
+                if (gRecvCmds[1][i] != 0)
                     m++;
             }
         }
-        if (n == gUnk_0300243C)
+        if (n == gLinkPlayerCount)
             goto done;
         RunFrame();
-        LinkMain1((u8 *)gUnk_03004D88, gUnk_03004D90, gUnk_03004D50[0]);
+        LinkMain1((u8 *)gShouldAdvanceLinkState, gSendCmd, gRecvCmds[0]);
     } while (IsLinkError() == 0);
 fail:
     return 1;
@@ -152,14 +152,14 @@ s32 sub_08007c5c(void)
 
     if (ConnectLink() != 0)
         return 1;
-    if (gUnk_03001F38 != 0) {
+    if (gLinkIsMaster != 0) {
         gUnk_0200EBB0 = 0;
-        gUnk_03004D90[0] = 0xAA00;
-        gUnk_03004D90[1] = gUnk_02006090;
+        gSendCmd[0] = 0xAA00;
+        gSendCmd[1] = gUnk_02006090;
     }
     do {
         RunFrame();
-        LinkMain1((u8 *)gUnk_03004D88, gUnk_03004D90, gUnk_03004D50[0]);
+        LinkMain1((u8 *)gShouldAdvanceLinkState, gSendCmd, gRecvCmds[0]);
         if (IsLinkError() != 0)
             return 1;
     } while (sub_08004308() == 0);
@@ -181,8 +181,8 @@ s32 sub_08007c5c(void)
     if (ret != 0)
         return 1;
     gUnk_03005280 = 2;
-    gUnk_03001ED8 &= 0xFEFF;
-    gUnk_0300117C = ret;
+    gDispCnt &= 0xFEFF;
+    gBg0ScrollX = ret;
     sub_080022fc();
     RunLinkFrames(64);
     return 0;
@@ -195,18 +195,18 @@ void sub_08007d4c(void)
     DisableSerial();
     sub_08008c4c(3);
     sub_08008c64(64);
-    gUnk_03000B78 = gUnk_03000FA8 = 0;
-    gUnk_03001ED8 &= 0xE0FF;
-    gUnk_03001ED8 |= 0x800;
+    gBg3ScrollX = gBg3ScrollY = 0;
+    gDispCnt &= 0xE0FF;
+    gDispCnt |= 0x800;
     BeginFastFadeInFromWhite();
     RunFramesNoTasks(32);
     gUnk_03000048 = 0;
     while (1) {
-        if (gUnk_03000038 & 9) {
+        if (gPressedKeys & 9) {
             PlaySfx(102);
             break;
         }
-        if (gUnk_03000038 & 2) {
+        if (gPressedKeys & 2) {
             PlaySfx(215);
             break;
         }
@@ -215,7 +215,7 @@ void sub_08007d4c(void)
     BeginFastFadeOutToWhite();
     RunFramesNoTasksUntilFadeDone();
     gUnk_03002150 = gUnk_02007FCC + 14;
-    gUnk_030023D8 = 4;
+    gGameState = 4;
 }
 
 /* Stage the link-play payload at 0x02020000: the common blob
@@ -280,10 +280,10 @@ void sub_08007f9c(void)
     sub_08008c4c(4);
     sub_08008e1c(gUnk_02006090);
     sub_08008c64(63);
-    gUnk_0300117C = gUnk_03000010 = 0;
-    gUnk_03000B78 = gUnk_03000FA8 = 0;
-    gUnk_03001ED8 &= 0xE0FF;
-    gUnk_03001ED8 |= 0x1800;
+    gBg0ScrollX = gBg0ScrollY = 0;
+    gBg3ScrollX = gBg3ScrollY = 0;
+    gDispCnt &= 0xE0FF;
+    gDispCnt |= 0x1800;
     if (gUnk_02006090 == 6 || gUnk_02006090 == 7) {
         sub_08008c64(4);
         RequestCopy(6, 0, 0x06001000, 0x800);
@@ -294,28 +294,28 @@ void sub_08007f9c(void)
             if (gUnk_03001F18[0] != 0 || gUnk_03001F18[1] != 0
                 || gUnk_03001F18[2] != 0 || gUnk_03001F18[3] != 0) {
                 DrawClockToBgMap(gUnk_03001F18, 22, 18);
-                gUnk_03001ED8 &= 0xE0FF;
-                gUnk_03001ED8 |= 0x1900;
+                gDispCnt &= 0xE0FF;
+                gDispCnt |= 0x1900;
             }
         } else {
             if (gUnk_03002378[0] != 0 || gUnk_03002378[1] != 0
                 || gUnk_03002378[2] != 0 || gUnk_03002378[3] != 0) {
                 DrawClockToBgMap(gUnk_03002378, 22, 18);
-                gUnk_03001ED8 &= 0xE0FF;
-                gUnk_03001ED8 |= 0x1900;
+                gDispCnt &= 0xE0FF;
+                gDispCnt |= 0x1900;
             }
         }
     }
     sub_080082d0();
     gUnk_02007D00 = 0;
     if (gUnk_0200EC48 == 2) {
-        gUnk_0300243C = 999;
+        gLinkPlayerCount = 999;
         sub_08007e04();
-        gUnk_03001ED8 &= 0xE0FF;
-        gUnk_03001ED8 |= 0x1900;
+        gDispCnt &= 0xE0FF;
+        gDispCnt |= 0x1900;
         gUnk_03005280 = 0;
         BeginFastFadeInFromWhite();
-        while (gUnk_03001E90 != 0) {
+        while (gFadeSteps != 0) {
             RunFrame();
             sub_08004000(gUnk_02000004);
         }
@@ -342,7 +342,7 @@ void sub_08007f9c(void)
         PlaySfx(215);
         BeginFastFadeOutToWhite();
         RunFramesUntilFadeDone();
-        gUnk_030023D8 = 4;
+        gGameState = 4;
         gUnk_03002150 = gUnk_02007FCC + 14;
         return;
     } else {
@@ -360,24 +360,24 @@ select:
         RunLinkFrame();
         if (gUnk_03002150 == 4) {
             if (gUnk_02006090 <= 2) {
-                if ((gUnk_03001EB8[0] & 0x20) && gUnk_02006168 != 0) {
+                if ((gPlayerPressedKeys[0] & 0x20) && gUnk_02006168 != 0) {
                     PlaySfx(101);
                     gUnk_02006168--;
-                } else if ((gUnk_03001EB8[0] & 0x10) && gUnk_02006168 != 2) {
+                } else if ((gPlayerPressedKeys[0] & 0x10) && gUnk_02006168 != 2) {
                     PlaySfx(101);
                     gUnk_02006168++;
                 }
             }
-            if (gUnk_030023AC == 1 && (gUnk_03001EB8[0] & 2))
+            if (gPlayerCount == 1 && (gPlayerPressedKeys[0] & 2))
                 goto cancel;
-            if (gUnk_03001EB8[0] & 9) {
+            if (gPlayerPressedKeys[0] & 9) {
                 PlaySfx(102);
                 break;
             }
         } else {
             n = 0;
-            for (i = 0; i < gUnk_030023AC; i++) {
-                if (gUnk_03001EB8[i] & 9)
+            for (i = 0; i < gPlayerCount; i++) {
+                if (gPlayerPressedKeys[i] & 9)
                     n++;
             }
             if (n != 0)
@@ -389,7 +389,7 @@ select:
     gUnk_03005280 = 4;
     sub_08002338();
     /* store address first, then the one read of gUnk_02007FCC, kept in k */
-    gUnk_030023D8 = (k = gUnk_02007FCC) + 14;
+    gGameState = (k = gUnk_02007FCC) + 14;
     if (gUnk_03002150 == 4 && k <= 2)
         RunLinkFrames(32);
     BeginFastFadeOutToWhite();

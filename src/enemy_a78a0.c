@@ -21,7 +21,7 @@ extern u8 gUnk_020069F0;
 extern u32 gUnk_02007BF0[];
 extern s32 gUnk_02007D00[];
 extern u32 gUnk_02007D40[];
-extern s16 gUnk_02007D48[];
+extern s16 gPlayerLives[];
 extern u16 gUnk_02007D60;
 extern u32 gUnk_02007D64[];
 extern s8 gUnk_02007FB8[];
@@ -49,40 +49,40 @@ extern u32 gHBlankScrollTable[];
 extern u32 gHBlankScrollEffect[];
 extern u32 gHBlankScrollDmaTable[];
 extern u32 gUnk_02020000[];
-extern u32 gUnk_0300003C;
-extern vu16 gUnk_03000B10;
+extern u32 gFrameCallback;
+extern vu16 gBg2Cnt;
 extern u32 gUnk_03000B74;
-extern u16 gUnk_03000F98[];
+extern u16 gPlayerHeldKeys[];
 extern u32 gUnk_03000FA4;
 extern u32 gHBlankDmaDest[];
 extern u32 gHBlankDmaCnt[];
-extern u8 gUnk_03001470[];
+extern u8 gObjPalette[];
 extern u32 gUnk_03001570[];
 extern u32 gUnk_030015B0[];
-extern u16 gUnk_03001EA4;
-extern vu8 gUnk_03001EB0;
-extern vu16 gUnk_03001EB4;
+extern u16 gFrameCount;
+extern vu8 gBgMosaic;
+extern vu16 gBg3Cnt;
 extern u32 gHBlankDmaSrc[];
 extern s16 gUnk_03001F00;
 extern s32 gUnk_03001F2C;
 extern u8 gUnk_03001F30;
-extern s16 gUnk_03002158[];
+extern s16 gViewRect[];
 extern u32 gUnk_03002160;
 extern struct PlayerState gUnk_03002170[];
 extern u8 gUnk_03002340;
 extern s32 gUnk_03002344;
-extern s16 gUnk_03002348;
+extern s16 gSpriteCameraX;
 extern u8 gUnk_03002350;
-extern u16 gUnk_03002360;
+extern u16 gLocalPlayer;
 extern s8 gUnk_0300238C;
 extern s16 gUnk_03002398;
-extern u16 gUnk_030023AC;
+extern u16 gPlayerCount;
 extern u8 gUnk_030023B0;
 extern s32 gUnk_030023B4;
 extern u32 gUnk_030023C8[];
 extern s32 gUnk_030023D4;
-extern u16 gUnk_030023D8;
-extern s16 gUnk_030023E4;
+extern u16 gGameState;
+extern s16 gSpriteCameraY;
 extern u32 gCurSaveSlot[];
 extern u32 gUnk_030023EC[];
 extern u32 gUnk_03002448;
@@ -90,7 +90,7 @@ extern s16 gUnk_0300244C;
 extern u32 gExtraMode[];
 extern u32 gUnk_03002468[];
 extern u32 gUnk_030027A8[];
-extern vs16 gUnk_03004CA0[];
+extern vs16 gTaskSlotTypes[];
 extern u8 gUnk_03005550[];
 extern u32 gUnk_03005568[];
 extern s16 gUnk_03005628[];
@@ -1409,10 +1409,10 @@ void sub_080a78a0(void)
     struct Task *t;
     struct Task *o;
 
-    if (gUnk_03004CA0[gUnk_03002490->unk44] != -1)
+    if (gTaskSlotTypes[gCurTask->unk44] != -1)
     {
-        t = gUnk_03002490;
-        o = &gUnk_03002790[t->unk44];
+        t = gCurTask;
+        o = &gTasks[t->unk44];
         if (o->unk76 == 2 && o->unk78 > 0)
         {
             if ((u16)(o->unk3C - 88) <= 33)
@@ -1423,7 +1423,7 @@ void sub_080a78a0(void)
                     t->unk48 = o->unk48 + gUnk_08749014[t->unk28] * o->unk43;
                     t->unk4A = o->unk4A + gUnk_08749058[t->unk28];
                     t->unk43 = o->unk43;
-                    sub_08068cf8(gUnk_08748F8C[gUnk_03002490->unk28]);
+                    sub_08068cf8(gUnk_08748F8C[gCurTask->unk28]);
                 }
             }
         }

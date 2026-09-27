@@ -18,42 +18,42 @@
  *       stream the 14 compressed pages gUnk_087583B4[] into the two BG0 map
  *       halves, and scroll BG0 from the per-frame callback gUnk_03000AF4. */
 
-extern vu16 gUnk_03001ED8;          /* DISPCNT shadow */
-extern vs32 gUnk_03000010;          /* BG0 16.16 scroll shadows ... */
-extern vs32 gUnk_0300117C;
-extern u16 gUnk_03002360;           /* this player's index */
+extern vu16 gDispCnt;          /* DISPCNT shadow */
+extern vs32 gBg0ScrollY;          /* BG0 16.16 scroll shadows ... */
+extern vs32 gBg0ScrollX;
+extern u16 gLocalPlayer;           /* this player's index */
 extern u8 gExtraMode;
 extern u16 gUnk_02000028;
 extern s32 gUnk_02006020[];         /* score per player */
-extern vu16 gUnk_03001EB8[];        /* keys pressed per player */
-extern vu8 gUnk_0300118C;
-extern vu8 gUnk_03000040;
-extern vu8 gUnk_03000B08;
-extern vu8 gUnk_03001EAC;
-extern u16 gUnk_03001EEC;
-extern vu16 gUnk_03001EDC;
+extern vu16 gPlayerPressedKeys[];        /* keys pressed per player */
+extern vu8 gBldCntTarget1;
+extern vu8 gBldCntTarget2;
+extern vu8 gBldAlphaEva;
+extern vu8 gBldAlphaEvb;
+extern u16 gBldY;
+extern vu16 gSfxDisabled;
 extern s32 gUnk_0201C1A4;           /* credits: the score saved over the demos */
 extern u8 gUnk_030023B0;
 extern u8 gUnk_0201C1B0;            /* credits: current demo scene */
 extern u32 gUnk_087583CC[][8];      /* credits: per variant, the scenes' recorded demos, 0-terminated */
 extern u16 gUnk_0875841E[][7];      /* credits: per variant, the scenes' lengths in frames */
-extern vu16 gUnk_03001270[];
+extern vu16 gBgPalette[];
 extern s16 gInputRecorderMode;
 extern u32 gUnk_0200EC50;
 extern u16 gUnk_02008008[];
 extern u16 gUnk_02007FA8[];
 extern u16 gUnk_08758334[];
 extern u16 gUnk_08758374[];
-extern vu16 gUnk_030004A4;
-extern vs16 gUnk_03000FB8;
-extern vu16 gUnk_03001E90;
+extern vu16 gFadeStep;
+extern vs16 gBrightness;
+extern vu16 gFadeSteps;
 extern u32 gUnk_03000AF4;
 extern u8 gUnk_020061E0;
 extern u16 gUnk_02000008;
 extern u8 gUnk_02006178;
 extern u8 gUnk_02007CF0;
 extern s8 gUnk_02007FB8[];
-extern vu16 gUnk_03000F98[];
+extern vu16 gPlayerHeldKeys[];
 extern u8 gUnk_03001F34;
 extern u16 gUnk_030023C0[];
 extern u16 gUnk_03002458[];
@@ -102,13 +102,13 @@ void CreditsMain(void)
     u16 *frames;
     u16 n;
 
-    gUnk_03001ED8 |= 0x80;
-    gUnk_0300118C = gUnk_03000040 = gUnk_03000B08 = gUnk_03001EAC = gUnk_03001EEC = 0;
+    gDispCnt |= 0x80;
+    gBldCntTarget1 = gBldCntTarget2 = gBldAlphaEva = gBldAlphaEvb = gBldY = 0;
     ResetTasksAndOam();
     sub_08008c4c(17);
-    gUnk_03001EDC = 1;
+    gSfxDisabled = 1;
     gUnk_0201C1A4 = gUnk_02006020[gUnk_02000028];
-    gUnk_03002360 = 0;
+    gLocalPlayer = 0;
     if (gExtraMode == 1)
         gUnk_030023B0 = 2;
     else
@@ -120,18 +120,18 @@ void CreditsMain(void)
     sub_0800b4a8();
     sub_0800b514();
     sub_08008c64(0);
-    gUnk_03001270[0] = 0;
+    gBgPalette[0] = 0;
     gInputRecorderMode = 3;
-    gUnk_03001ED8 &= ~0x80;
+    gDispCnt &= ~0x80;
     PlayBgm(20);
     for (;;) {
         gUnk_0200EC50 = scenes[gUnk_0201C1B0];
         InputRecorderStart();
-        gUnk_02008008[gUnk_03002360] = 0;
-        gUnk_02007FA8[gUnk_03002360] = 0xFFFF;
+        gUnk_02008008[gLocalPlayer] = 0;
+        gUnk_02007FA8[gLocalPlayer] = 0xFFFF;
         sub_080cd674();
-        gUnk_03001ED8 &= 0xE0FF;
-        gUnk_03001ED8 |= 0x1D00;
+        gDispCnt &= 0xE0FF;
+        gDispCnt |= 0x1D00;
         if (gUnk_0201C1B0 == 0)
             BeginFade(15, -2, gUnk_08758334);
         else
@@ -139,19 +139,19 @@ void CreditsMain(void)
         n = 15;
         while (n-- != 0) {
             RunLinkFrame();
-            if ((s16)gUnk_030004A4 < 0) {
-                if (gUnk_03000FB8 < -5) {
-                    gUnk_03001E90 = 0;
-                    gUnk_03000FB8 = -5;
+            if ((s16)gFadeStep < 0) {
+                if (gBrightness < -5) {
+                    gFadeSteps = 0;
+                    gBrightness = -5;
                 }
-            } else if (gUnk_03000FB8 > -5) {
-                gUnk_03001E90 = 0;
-                gUnk_03000FB8 = -5;
+            } else if (gBrightness > -5) {
+                gFadeSteps = 0;
+                gBrightness = -5;
             }
             sub_080cd75c();
             InputRecorderUpdate();
         }
-        gUnk_03000FB8 = -5;
+        gBrightness = -5;
         n = frames[gUnk_0201C1B0];
         while (--n != 0) {
             sub_0801a7b4();
@@ -168,8 +168,8 @@ void CreditsMain(void)
                 sub_080cd75c();
                 InputRecorderUpdate();
             }
-            gUnk_03001ED8 &= 0xE0FF;
-            gUnk_03001ED8 |= 0x100;
+            gDispCnt &= 0xE0FF;
+            gDispCnt |= 0x100;
             ResetTasksAndOam();
             RunLinkFrame();
             continue;
@@ -177,7 +177,7 @@ void CreditsMain(void)
         break;
     }
     FadeOutBgm(8);
-    gUnk_03001270[0] = 0xFFFF;
+    gBgPalette[0] = 0xFFFF;
     BeginFade(30, 2, gUnk_08758374);
     n = 30;
     while (n-- != 0) {
@@ -185,9 +185,9 @@ void CreditsMain(void)
         InputRecorderUpdate();
         sub_08040788();
     }
-    gUnk_03001ED8 |= 0x80;
+    gDispCnt |= 0x80;
     gUnk_03000AF4 = 0;
-    gUnk_03001EDC = 0;
+    gSfxDisabled = 0;
     StopAllSound();
     ResetTasksAndOam();
     RunFramesNoTasks(2);
@@ -222,7 +222,7 @@ void sub_080cd674(void)
     gUnk_02007CF0 = 0;
     gUnk_03001F34 = 1;
     for (i = 0; i < 4; i++)
-        gUnk_03000F98[i] = gUnk_03001EB8[i] = gUnk_03002458[i] = gUnk_030023C0[i] = 0;
+        gPlayerHeldKeys[i] = gPlayerPressedKeys[i] = gUnk_03002458[i] = gUnk_030023C0[i] = 0;
 }
 
 /* Start the staff credits' text layer: load its screen, reset the BG0
@@ -277,9 +277,9 @@ void sub_080cd828(void)
         REG_BG0VOFS = gUnk_0201C1A0 >> 16;
         REG_BG0HOFS = gUnk_0201C1AC >> 16;
     } else {
-        gUnk_03000010 = 0x0F580000;
-        gUnk_0300117C = 0x40000;
-        REG_BG0VOFS = gUnk_03000010 >> 16;
-        REG_BG0HOFS = gUnk_0300117C >> 16;
+        gBg0ScrollY = 0x0F580000;
+        gBg0ScrollX = 0x40000;
+        REG_BG0VOFS = gBg0ScrollY >> 16;
+        REG_BG0HOFS = gBg0ScrollX >> 16;
     }
 }

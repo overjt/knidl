@@ -77,7 +77,7 @@ extern s8 gUnk_02006A20[][3];
 extern u16 gUnk_03005624;
 extern u8 gUnk_03001370[];
 extern u16 gUnk_02008060[];
-extern vu16 gUnk_03001ED8;
+extern vu16 gDispCnt;
 extern u8 gUnk_020055B0;
 extern u8 gUnk_0200B078;
 extern u8 gUnk_0200B040;
@@ -192,8 +192,8 @@ void sub_08027228(void)
 
 void sub_08027240(void)
 {
-    gUnk_03001ED8 &= 0xE0FF;
-    gUnk_03001ED8 |= 0x1F00;
+    gDispCnt &= 0xE0FF;
+    gDispCnt |= 0x1F00;
     RequestCopy(8, (u32)gUnk_030055EC->unk2C, 0x06008000, 0);
     CpuSet(gUnk_02008060, gUnk_03001370, 128);
     if (gUnk_020055B0 == 1)

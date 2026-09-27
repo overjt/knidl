@@ -108,7 +108,7 @@ extern u16 gUnk_03005600[2];
 extern s16 gUnk_03005620;
 extern s16 gUnk_0300561C;
 extern s16 gUnk_03005628[4];
-extern u16 gUnk_030023AC;
+extern u16 gPlayerCount;
 extern u8 gUnk_03002340;
 extern u16 gUnk_030055F4[2];
 extern s16 gUnk_030055F8[4];
@@ -361,11 +361,11 @@ void sub_08028990(void)
     x1 = 0;
     y0 = gUnk_0300561C << 4;
     y1 = 0;
-    for (i = 0; i < gUnk_030023AC; i++)
+    for (i = 0; i < gPlayerCount; i++)
     {
         if ((gUnk_03002340 >> i) & 1)
         {
-            v = gUnk_03002790[i].unk48;
+            v = gTasks[i].unk48;
             if (v < gUnk_03005628[0])
                 v = gUnk_03005628[0];
             if (gUnk_03005628[1] < v)
@@ -374,7 +374,7 @@ void sub_08028990(void)
                 x0 = v;
             if (x1 < v)
                 x1 = v;
-            v = gUnk_03002790[i].unk4A;
+            v = gTasks[i].unk4A;
             if (v < gUnk_03005628[2])
                 v = gUnk_03005628[2];
             if (gUnk_03005628[3] < v)
@@ -399,7 +399,7 @@ void sub_08028990(void)
         gUnk_030055F8[2] = gUnk_03005628[2];
     if (gUnk_03005628[3] < gUnk_030055F8[3])
         gUnk_030055F8[3] = gUnk_03005628[3];
-    for (i = 0; i < gUnk_030023AC; i++)
+    for (i = 0; i < gPlayerCount; i++)
     {
         if ((gUnk_03002340 >> i) & 1)
         {
@@ -420,7 +420,7 @@ void sub_08028b1c(void)
     gUnk_030055F8[1] = gUnk_03005628[1];
     gUnk_030055F8[2] = gUnk_03005628[2];
     gUnk_030055F8[3] = gUnk_03005628[3];
-    for (i = 0; i < gUnk_030023AC; i++)
+    for (i = 0; i < gPlayerCount; i++)
     {
         if ((gUnk_03002340 >> i) & 1)
         {

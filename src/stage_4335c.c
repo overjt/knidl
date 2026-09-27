@@ -47,7 +47,7 @@ void sub_08043014(void);
      0.33) and gets r3, the switch value r4.  The key mask is read inline
      twice (cse merges it): a `u16 v` local makes the zero-extend temp an
      SImode pseudo and regmove then ANDs in place (`ands r2, r0`, 7 bytes).
-   * The tail's `m` (the unk7B & 1 test cached) and `tp = &gUnk_03002490`
+   * The tail's `m` (the unk7B & 1 test cached) and `tp = &gCurTask`
      between it and the test are still stand-ins: the ROM's `adds r3, r4, #0`
      is a copy of the post-switch address pseudo placed before the branch.
      In the twin that copy is a gcse PRE insertion at the end of the block
@@ -65,7 +65,7 @@ void sub_0804335c(void)
     struct Task **tp;
 
     sub_0803f870();
-    t = gUnk_03002490;
+    t = gCurTask;
     st = &t->unk73;
     t->unk2C = *st;
     switch (*st)
@@ -125,7 +125,7 @@ void sub_0804335c(void)
         if ((gUnk_03002458[u->unk00] & 0xF1) == 0 && t->unk58 >= 0)
             *st = 0;
     Lmerge:
-        if (gUnk_03002458[gUnk_03002490->unk88->unk00] & 0x30)
+        if (gUnk_03002458[gCurTask->unk88->unk00] & 0x30)
         {
         Lb403:
             sub_08040b40(11, 3);
@@ -134,9 +134,9 @@ void sub_0804335c(void)
         {
             sub_08040b40(11, 4);
         }
-        if (gUnk_03002490->unk28 != 0)
+        if (gCurTask->unk28 != 0)
             goto Ldec28;
-        if (gUnk_03002458[gUnk_03002490->unk88->unk00] & 0x41)
+        if (gUnk_03002458[gCurTask->unk88->unk00] & 0x41)
             sub_080413a4(12);
         else
             sub_080413a4(13);
@@ -156,44 +156,44 @@ void sub_0804335c(void)
         k = 3;
         goto Lstore;
     L25:
-        gUnk_03002490->unk88->unk01 = 25;
+        gCurTask->unk88->unk01 = 25;
         goto L2a;
     Ldec28:
-        gUnk_03002490->unk28--;
+        gCurTask->unk28--;
         sub_080413a4(13);
         break;
     }
-    if (gUnk_03002490->unk2C != gUnk_03002490->unk73)
+    if (gCurTask->unk2C != gCurTask->unk73)
         TaskSetEntry(sub_08043014, gCurTaskIdx);
     if (!sub_080400c0() && !sub_08040298())
     {
-        m = gUnk_03002490->unk7B & 1;
-        tp = &gUnk_03002490;
+        m = gCurTask->unk7B & 1;
+        tp = &gCurTask;
         if (m == 0)
         {
-            if (gUnk_03002458[gUnk_03002490->unk88->unk00] & 0x40)
-                gUnk_03002490->unk88->unk01 = 9;
+            if (gUnk_03002458[gCurTask->unk88->unk00] & 0x40)
+                gCurTask->unk88->unk01 = 9;
             else
-                gUnk_03002490->unk88->unk01 = 5;
+                gCurTask->unk88->unk01 = 5;
             (*tp)->unk88->unk3D = 0;
             ((u8 *)(*tp)->unk88)[15] = 0;
         }
         else
         {
-            if (gUnk_03002490->unk73 != 1
-             || !(gUnk_03002458[gUnk_03002490->unk88->unk00] & 0x41))
+            if (gCurTask->unk73 != 1
+             || !(gUnk_03002458[gCurTask->unk88->unk00] & 0x41))
             {
-                if (gUnk_03002490->unk58 != 0 && (gUnk_03002490->unk7A & 1))
+                if (gCurTask->unk58 != 0 && (gCurTask->unk7A & 1))
                 {
-                    if (gUnk_03002490->unk54 != 0)
+                    if (gCurTask->unk54 != 0)
                         goto L25;
-                    gUnk_03002490->unk88->unk01 = 24;
+                    gCurTask->unk88->unk01 = 24;
                 L2a: ;
                 }
             }
         }
     }
     sub_0803f9c0();
-    if (gUnk_03002490->unk7A & 1)
+    if (gCurTask->unk7A & 1)
         sub_0803e4ec(0);
 }

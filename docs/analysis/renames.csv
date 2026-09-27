@@ -251,3 +251,118 @@ TaskDispatchTrampoline,TaskExitTrampoline,function,"code: its ARM target 0x08000
 sub_08000234,TaskSwitch,function,"code: ARM; saves the scheduler's sp in gTaskBaseSp, switches to the task stack (r2), restores r4-r11 and bx's to the resume address (r1 | 1) (asm/task_switch_helpers.s); role: the target of TaskSwitchTrampoline, called by RunTasks (rom-map 6)",155
 sub_08000258,TaskYield,function,"code: ARM; saves the task's sp/lr/r0 in gTaskSavedSp/gTaskSavedLr/gTaskSavedR0 and returns to the scheduler stack gTaskBaseSp (asm/task_switch_helpers.s); role: the target of TaskYieldTrampoline, whose r0 is the sleep count (rom-map 6, A-vocab)",155
 sub_08000288,TaskExit,function,"code: ARM; TaskFree(gCurTaskIdx) through the veneer, then back to the scheduler stack gTaskBaseSp (asm/task_switch_helpers.s); role: the target of TaskExitTrampoline (rom-map 6)",155
+gUnk_03002490,gCurTask,ram,"code: RunTasks sets it to &gUnk_03002790[gCurTaskIdx] before every coroutine resume and callback (src/early_5228.c); katam: include gCurTask, the running task pointer every task function reads; 28,042 references",155
+gUnk_03002790,gTasks,ram,"code: the 64 struct Task control blocks (0x90 bytes each) TaskCreate claims and TaskFree resets, indexed by slot (src/early_5654.c, include/task.h)",155
+gUnk_0872FF30,gTaskTypes,rom,"code: 266 struct TaskType {u8 class; entry} entries TaskCreate reads by type (src/early_5654.c); doc: split_config pointer_tables reason, rom-map 9; docs/naming.md's own example name",155
+gUnk_03004CA0,gTaskSlotTypes,ram,"code: s16[64], the task type of each slot, -1 when the slot is free; TaskCreate searches it and stores the type, TaskFree writes -1 (src/early_5654.c)",155
+gUnk_03002494,gTaskCursor,ram,"code: the slot TaskCreate starts its free-slot search at, advanced past each new task and wrapping at 64; TaskCreateFrom/TaskCreateInRange move it (src/early_5654.c, src/early_58e4.c)",155
+gUnk_030026F0,gTaskCount,ram,"code: number of live tasks, incremented by TaskCreate, decremented by TaskFree; RunTasks returns at once when it is 0 (src/early_5654.c, src/early_5228.c)",155
+gUnk_030026F4,gTaskRunPhase,ram,"code: RunTasks' phase: 0 while it rebuilds the class lists, 1-5 while it runs coroutines and callbacks unk00/04/08/0C, -1 outside RunTasks; TaskCreate/TaskFree touch the class lists only when it is >= 0 (src/early_5228.c, src/early_5654.c)",155
+gUnk_030024A0,gTaskClassLists,ram,"code: u8[5][64], the slots of each task class in run order; RunTasks rebuilds it every frame, TaskCreate appends, TaskFree marks 0xFF (src/early_5228.c, src/early_5654.c)",155
+gUnk_03002710,gTaskListRefs,ram,"code: u16[64], per slot (class << 8) | position in gUnk_030024A0, so TaskFree can mark the slot's list entry (src/early_5654.c, src/early_5228.c)",155
+gUnk_03004B90,gTaskStackPtrs,ram,"code: u32[64], each slot's saved coroutine stack pointer: TaskCreate/TaskSetEntry set 0x0203BFE0 + slot*256, RunTasks passes it to TaskSwitchTrampoline and stores gTaskSavedSp back after a yield (src/early_5228.c, src/early_5654.c)",155
+gUnk_03004C90,gCurTaskClass,ram,"code: RunTasks stores the class it is running in every phase loop; InitTasks sets -1 (src/early_5228.c, src/early_4fec.c)",155
+gUnk_0200D090,gTaskSkipMaskStack,ram,code: [n][64] snapshots of every task's skip mask Task.unk13 that sub_0800652c pushes (arg != 0) and pops (arg == 0) at depth gUnk_0200D110 (src/early_6464.c),155
+gUnk_0200D110,gTaskSkipMaskDepth,ram,"code: index of the current snapshot in gUnk_0200D090; InitTasks sets 0xFF (empty), sub_0800652c increments on push, decrements on pop (src/early_4fec.c, src/early_6464.c)",155
+gUnk_03002348,gSpriteCameraX,ram,"doc: src/camera_296a0.c header, the sprite camera = camera x + screen shake; code: TaskDrawWorld and TaskIsOnScreen subtract it from the world pixel x (src/early_5d9c.c, src/early_5acc.c)",155
+gUnk_030023E4,gSpriteCameraY,ram,"doc: src/camera_296a0.c header, the sprite camera = camera y + screen shake; code: TaskDrawWorld and TaskIsOnScreen subtract it from the world pixel y (src/early_5d9c.c, src/early_5acc.c)",155
+gUnk_03002158,gViewRect,ram,"code: s16 {left, right, top, bottom} = camera centre -120/+120, -80/+80 in world pixels (src/camera_2b4bc.c); doc: src/camera_296a0.c header 'the visible rectangle'; TaskIsInView tests against it (src/early_5c4c.c)",155
+gUnk_03001ED8,gDispCnt,ram,"hw: written to REG_DISPCNT by FlushDisplayRegs (src/early_11ac.c sub_08001280), bit 7 is forced blank (src/early_1518.c); katam: gDispCnt, the same DISPCNT shadow",155
+gUnk_03001E9C,gDispStat,ram,hw: written to REG_DISPSTAT by FlushDisplayRegs (src/early_11ac.c); the HBlank/VCount IRQ helpers set its bits 4/5 (src/early_11ac.c),155
+gUnk_03000018,gIntrEnable,ram,"hw: the REG_IE shadow: every IE change in the link and IRQ helpers is mirrored into it (src/early_6464.c, src/early_3964.c, src/early_11ac.c) and sub_0800151c restores REG_IE from it (src/early_1518.c)",155
+gUnk_03001EF8,gIntrMasterEnable,ram,"hw: the REG_IME shadow, written as gUnk_03001EF8 = REG_IME = ... wherever REG_IME changes (src/agb_init.c, src/early_0de4.c, src/early_6464.c)",155
+gUnk_030004B0,gIntrTable,ram,"doc: rom-map 4, the 14-entry IRQ handler table the master ISR dispatches through, copied from 0x080CFDE8 by AgbInit (include/gba/interrupts.h); code: slot 0 = SerialCB, 1 = Timer3Intr (src/early_6464.c)",155
+gUnk_03001188,gBg0Cnt,ram,hw: written to REG_BG0CNT by FlushDisplayRegs (src/early_11ac.c sub_08001280),155
+gUnk_03000B14,gBg1Cnt,ram,hw: written to REG_BG1CNT by FlushDisplayRegs (src/early_11ac.c sub_08001280),155
+gUnk_03000B10,gBg2Cnt,ram,hw: written to REG_BG2CNT by FlushDisplayRegs (src/early_11ac.c sub_08001280),155
+gUnk_03001EB4,gBg3Cnt,ram,hw: written to REG_BG3CNT by FlushDisplayRegs (src/early_11ac.c sub_08001280),155
+gUnk_0300117C,gBg0ScrollX,ram,"hw: 16.16, >> 16 written to REG_BG0HOFS by FlushDisplayRegs (src/early_11ac.c sub_08001280)",155
+gUnk_03000010,gBg0ScrollY,ram,"hw: 16.16, >> 16 written to REG_BG0VOFS by FlushDisplayRegs (src/early_11ac.c sub_08001280)",155
+gUnk_03001EE0,gBg1ScrollX,ram,"hw: 16.16, >> 16 written to REG_BG1HOFS by FlushDisplayRegs (src/early_11ac.c sub_08001280)",155
+gUnk_03000FC0,gBg1ScrollY,ram,"hw: 16.16, >> 16 written to REG_BG1VOFS by FlushDisplayRegs (src/early_11ac.c sub_08001280)",155
+gUnk_03000F8C,gBg2ScrollX,ram,"hw: 16.16, >> 16 written to REG_BG2HOFS by FlushDisplayRegs (src/early_11ac.c sub_08001280)",155
+gUnk_03001E94,gBg2ScrollY,ram,"hw: 16.16, >> 16 written to REG_BG2VOFS by FlushDisplayRegs (src/early_11ac.c sub_08001280)",155
+gUnk_03000B78,gBg3ScrollX,ram,"hw: 16.16, >> 16 written to REG_BG3HOFS by FlushDisplayRegs (src/early_11ac.c sub_08001280)",155
+gUnk_03000FA8,gBg3ScrollY,ram,"hw: 16.16, >> 16 written to REG_BG3VOFS by FlushDisplayRegs (src/early_11ac.c sub_08001280)",155
+gUnk_03000FD4,gWin0H,ram,hw: written to REG_WIN0H by FlushDisplayRegs (src/early_11ac.c sub_08001280),155
+gUnk_03001018,gWin1H,ram,hw: written to REG_WIN1H by FlushDisplayRegs (src/early_11ac.c sub_08001280),155
+gUnk_03000044,gWin0V,ram,hw: written to REG_WIN0V by FlushDisplayRegs (src/early_11ac.c sub_08001280),155
+gUnk_03000AFC,gWin1V,ram,hw: written to REG_WIN1V by FlushDisplayRegs (src/early_11ac.c sub_08001280),155
+gUnk_03000B18,gWinIn0,ram,hw: the low byte (window 0 layers) of REG_WININ in FlushDisplayRegs (src/early_11ac.c sub_08001280),155
+gUnk_03001ED0,gWinIn1,ram,hw: the high byte (window 1 layers) of REG_WININ in FlushDisplayRegs (src/early_11ac.c sub_08001280),155
+gUnk_03001EB0,gBgMosaic,ram,hw: the low byte (BG mosaic size) of REG_MOSAIC in FlushDisplayRegs (src/early_11ac.c sub_08001280),155
+gUnk_0300118C,gBldCntTarget1,ram,hw: the low byte (first target layers + effect) of REG_BLDCNT in FlushDisplayRegs (src/early_11ac.c sub_08001280),155
+gUnk_03000040,gBldCntTarget2,ram,hw: the high byte (second target layers) of REG_BLDCNT in FlushDisplayRegs (src/early_11ac.c sub_08001280),155
+gUnk_03000B08,gBldAlphaEva,ram,hw: the low byte (EVA) of REG_BLDALPHA in FlushDisplayRegs (src/early_11ac.c sub_08001280); doc: rom-map 4 'BLDALPHA shadows',155
+gUnk_03001EAC,gBldAlphaEvb,ram,hw: the high byte (EVB) of REG_BLDALPHA in FlushDisplayRegs (src/early_11ac.c sub_08001280); doc: rom-map 4 'BLDALPHA shadows',155
+gUnk_03001EEC,gBldY,ram,hw: written to REG_BLDY by FlushDisplayRegs (src/early_11ac.c sub_08001280),155
+gUnk_03001EF4,gHeldKeys,ram,"code: ReadKeys stores REG_KEYINPUT ^ 0x3FF here each frame and computes the new presses against the old value (src/early_11ac.c); katam: gHeldKeys, same computation",155
+gUnk_03000038,gPressedKeys,ram,"code: ReadKeys: keys held now and not last frame (src/early_11ac.c); katam: gPressedKeys, same computation; doc: rom-map 4 'newly pressed'",155
+gUnk_03000B70,gRepeatedKeys,ram,"code: ReadKeys: the new presses, plus the held keys every gUnk_03001ECC frames after a first delay gUnk_03000FC8 (src/early_11ac.c); katam: gRepeatedKeys; doc: rom-map 4 'auto-repeat'",155
+gUnk_03000FC8,gKeyRepeatDelay,ram,"code: ReadKeys reloads the repeat timer gUnk_03001670 from it when a key goes down (src/early_11ac.c); doc: rom-map 4, the menu sets 'the first delay gUnk_03000FC8 to 10'",155
+gUnk_03001ECC,gKeyRepeatInterval,ram,"code: ReadKeys reloads the repeat timer from it after each repeat (src/early_11ac.c); doc: rom-map 4, 'the interval gUnk_03001ECC to 6'",155
+gUnk_03001670,gKeyRepeatTimer,ram,code: ReadKeys' countdown to the next auto-repeat in gUnk_03000B70 (src/early_11ac.c),155
+gUnk_03000F98,gPlayerHeldKeys,ram,"code: u16[4], each player's held keys: UpdatePlayerKeys copies gUnk_03001EF4 in single play and the received 0x8800 records in link play (src/early_2b04.c sub_08002b8c)",155
+gUnk_03001EB8,gPlayerPressedKeys,ram,"code: u16[4], each player's newly pressed keys: UpdatePlayerKeys copies gUnk_03000038 in single play and the received 0x8800 records in link play (src/early_2b04.c sub_08002b8c)",155
+gUnk_03001EA4,gFrameCount,ram,code: incremented once per frame by EndFrame (src/early_0de4.c); katam: gFrameCount; readers test its low bits for blinking (src/actor_673ec.c),155
+gUnk_03000FAC,gVBlankCount,ram,code: incremented by every VBlankIntr (src/early_10cc.c),155
+gUnk_03001EC4,gWaitingForVBlank,ram,"code: EndFrame sets it to 1 and spins while it is nonzero; VBlankIntr clears it (src/early_0de4.c, src/early_10cc.c)",155
+gUnk_03000FD0,gFrameInProgress,ram,"code: EndFrame clears it while it waits for VBlank and sets it after; VBlankIntr runs the OAM/register/palette flush only when it is 0 (src/early_0de4.c, src/early_10cc.c)",155
+gUnk_0300003C,gFrameCallback,ram,code: called by EndFrame once per frame before the VBlank wait when non-NULL (src/early_0de4.c); role: M34's wavy-scroll drivers install it (AGENTS.md M34 bullet),155
+gUnk_03000014,gFrameEndCallback,ram,code: called by EndFrame as its last step when non-NULL (src/early_0de4.c),155
+gUnk_03000498,gPlayTime,ram,"code: u16[4] frames, seconds, minutes, hours: EndFrame ticks it with 59 rollovers and stops at hour 999 (src/early_0de4.c); ResetPlayTime zeroes it",155
+gUnk_03000050,gOamBuffer,ram,"code: the OAM shadow: CopyOamAndPalette CpuFastSets it to OAM 0x07000000 at VBlank, BuildOam fills it (src/early_11ac.c, src/early_1b08.c); katam: gOamBuffer",155
+gUnk_03000B30,gSpriteLayerCounts,ram,"code: number of queued sprites in each of the 16 layers; QueueSprite increments, BuildOam walks, ResetSpriteQueue zeroes (src/early_1518.c, src/early_1b08.c)",155
+gUnk_03001EE8,gSpriteQueueTop,ram,"code: index of the last request in the sprite queue gUnk_030004F0 (-1 empty, 127 max); QueueSprite increments it, ResetSpriteQueue sets -1 (src/early_1518.c)",155
+gUnk_03000FC4,gCopyQueueWrite,ram,code: write cursor of the VBlank copy ring 0x03000B80-0x03000F7B that RequestCopy fills (src/early_1518.c),155
+gUnk_03000F88,gCopyQueueRead,ram,"code: read cursor of the VBlank copy ring that ProcessCopyQueue empties; RequestCopy waits while the ring is full (src/early_11ac.c, src/early_1518.c)",155
+gUnk_03001270,gBgPalette,ram,"code: the palette shadow (BG half; gUnk_03001470 is the OBJ half): UpdateFade reads it, CopyOamAndPalette copies it to PLTT when no fade is active (src/early_08e8.c, src/early_11ac.c); katam: gBgPalette",155
+gUnk_03001470,gObjPalette,ram,code: OBJ half of the palette shadow at gUnk_03001270 + 0x200: TaskLoadFrameTilesAndPalette writes bank (unk40 >> 12) * 32 here (src/early_5acc.c); katam: gObjPalette,155
+gUnk_03000FB0,gPaletteSource,ram,"code: pointer to the palette buffer CopyOamAndPalette sends to PLTT: gUnk_03001270, or gUnk_03001A90 while a fade is active (src/early_08e8.c, src/early_11ac.c)",155
+gUnk_03000FB8,gBrightness,ram,"code: palette brightness -31 (black) .. 31 (white), 0 = unchanged: UpdateFade darkens for < 0 and whitens for > 0 (src/early_08e8.c); the fade presets seed it (src/early_1fd0.c)",155
+gUnk_03001E90,gFadeSteps,ram,"code: brightness steps left in the running fade; BeginFade and the presets set it, UpdateFade counts it down, RunFramesUntilFadeDone waits for 0 (src/early_08e8.c, src/early_1fd0.c, src/early_2b04.c)",155
+gUnk_030004A4,gFadeStep,ram,"code: brightness change per fade step, added to gUnk_03000FB8 by UpdateFade (src/early_08e8.c)",155
+gUnk_03001E98,gFadeInterval,ram,code: frames per fade step; UpdateFade reloads the timer gUnk_03001174 from it (src/early_08e8.c),155
+gUnk_03001174,gFadeTimer,ram,"code: frames to the next fade step, counted down by UpdateFade (src/early_08e8.c)",155
+gUnk_03001ED4,gFadeKeepMask,ram,"code: pointer to a 1-bit-per-colour mask; UpdateFade leaves the colours whose bit is set unfaded, NULL fades all 512 (src/early_08e8.c); BeginFade's third argument",155
+gUnk_03001F08,gDigits,ram,code: u8[6] IntToDigits' output: five decimal digits (ones first) and a sign code in [5] (src/early_2b04.c sub_08002f14),155
+gUnk_03000FB4,gRngValue,ram,code: the 12-bit LCG state SeedRandom sets and Random/RandomRange step (x * 61 + 0x579) & 0xFFF (src/early_2b04.c); the link handshake sends it to the other players (src/early_2378.c header),155
+gUnk_03000490,gCurrentBgm,ram,"code: song id PlayBgm last started, -999 after StopAllSound; GetCurrentBgm returns it (src/early_3110.c, src/early_3484.c)",155
+gUnk_03000AF8,gSoundDisabled,ram,"code: every m4a call of the BGM/SE front end and the volume ramp is skipped while it is nonzero (src/early_3110.c, src/early_3484.c, src/early_0de4.c); only AgbInit writes it (0)",155
+gUnk_03001EDC,gSfxDisabled,ram,"code: PlaySfx, StopSfx and friends return at once while it is nonzero (src/early_31b8.c, src/early_3484.c); role: the staff credits set it around the demo playback (src/credits_cd330.c)",155
+gUnk_03001EE4,gSoundDriverOn,ram,"code: VBlankIntr calls m4aSoundVSync/m4aSoundMain only while it is nonzero; EnableSoundDriver sets 1, DisableSoundDriver 0 (src/early_10cc.c, src/early_3484.c)",155
+gUnk_03000B0C,gVolumeRampMode,ram,"code: EndFrame's volume ramp: 0 off, 1 BGM up, 2 BGM down then StopAllSound, 3 SE up, 4 SE down (src/early_0de4.c; set by src/early_3484.c)",155
+gUnk_03000FBC,gVolumeRampLevel,ram,"code: current ramp volume 0-256 EndFrame passes to m4aMPlayVolumeControl (src/early_0de4.c, src/early_3484.c)",155
+gUnk_03000FCC,gVolumeRampSpeed,ram,"code: volume change per frame of the ramp, added to gUnk_03000FBC by EndFrame (src/early_0de4.c, src/early_3484.c)",155
+gUnk_0872EB38,gSfxTable,rom,"code: {song header, priority, channel mask} per sound effect id - 100, read by PlaySfx (src/early_31b8.c struct SongEntry)",155
+gUnk_03000F80,gSfxSlotSongs,ram,"code: sound effect id (- 100) playing in SE slot 1-3, 0xFFFF after a stop (src/early_31b8.c header, src/early_3484.c)",155
+gUnk_03001180,gSfxSlotPlayers,ram,code: the gMPlayTable index of SE slot 1-3; PlaySfx swaps entries when it moves a song (src/early_31b8.c header),155
+gUnk_0300001C,gSfxPlayerSlots,ram,"code: inverse of gUnk_03001180: the SE slot of each music player (src/early_31b8.c header, src/early_3484.c)",155
+gUnk_03001674,gSfxSlotAges,ram,"code: age of SE slot 1-3 (1 = newest, 0 = unused) PlaySfx uses to pick the oldest on a priority tie (src/early_31b8.c header)",155
+gUnk_03004D88,gShouldAdvanceLinkState,ram,"public: pokeruby src/link.c gShouldAdvanceLinkState, the u8 first argument of LinkMain1 (sub_08006914) that it clears after each step (src/early_2b04.c, src/early_7004.c)",155
+gUnk_03004D90,gSendCmd,ram,"public: pokeruby src/link.c gSendCmd, the u16[4] second argument of LinkMain1 that EnqueueSendCmd queues and clears (src/early_2b04.c, src/early_6ac8.c)",155
+gUnk_03004D50,gRecvCmds,ram,"public: pokeruby src/link.c gRecvCmds, the [4][4] third argument of LinkMain1 that DequeueRecvCmds fills (src/early_2b04.c, src/early_6ac8.c)",155
+gUnk_03004D70,gLinkStatus,ram,public: pokeruby src/main.c gLinkStatus = LinkMain1(...); here LinkMain1 (sub_08006914) stores the same status word into it itself (src/early_6464.c),155
+gUnk_03004D44,gLinkSavedIme,ram,"public: pokeruby src/link.c gLinkSavedIme, the REG_IME copy DisableSerial, InitTimer and EnqueueSendCmd save and restore (src/early_6464.c, src/early_6ac8.c)",155
+gUnk_03004D84,gSendNonzeroCheck,ram,"public: pokeruby src/link.c sSendNonzeroCheck, same use in EnqueueSendCmd: OR of the queued words, the frame counts only when nonzero (src/early_6ac8.c)",155
+gUnk_03004D80,gRecvNonzeroCheck,ram,"public: pokeruby src/link.c sRecvNonzeroCheck, same use in DoRecv (src/early_6e9c.c)",155
+gUnk_03004D74,gChecksumAvailable,ram,"public: pokeruby src/link.c sChecksumAvailable, same use in DoRecv, cleared by EnableSerial (src/early_6e9c.c, src/early_6464.c)",155
+gUnk_0300527C,gSendBufferEmpty,ram,"public: pokeruby src/link.c sSendBufferEmpty, same use in DoSend (src/early_7004.c sub_08007004)",155
+gUnk_03004D20,gLastSendQueueCount,ram,"public: pokeruby src/link.c gLastSendQueueCount = sendQueue.count at the end of EnqueueSendCmd, same here (src/early_6ac8.c)",155
+gUnk_03004D40,gLastRecvQueueCount,ram,"public: pokeruby src/link.c gLastRecvQueueCount, set from recvQueue.count at a fixed serialIntrCounter in SerialCB, same here (src/early_6d28.c)",155
+gUnk_03004D24,gLinkErrorMask,ram,"code: the gLinkStatus bits IsLinkError reports: EnableSerial sets 0x3F000 (hardware error, bad checksum, queue full, lag), DisableSerial 0 (src/early_6464.c, src/early_7004.c)",155
+gUnk_0300243C,gLinkPlayerCount,ram,"code: SerialCB copies gLink.playerCount here when the handshake succeeds; DisableSerial resets 1; FillSendCmd/UpdatePlayerKeys treat > 1 as link play (src/early_6d28.c, src/early_6464.c, src/early_2b04.c)",155
+gUnk_03001F38,gLinkIsMaster,ram,"code: SerialCB copies gLink.isMaster (8 = master) here when the handshake succeeds, DisableSerial clears it (src/early_6d28.c, src/early_6464.c); pokeruby's field name",155
+gUnk_03004D7C,gSerialIntrCount,ram,"code: incremented by every SerialCB; the blocking link loops treat the link as lost when it stops moving for 30 frames (src/early_6d28.c, src/early_2b04.c, src/early_2378.c)",155
+gUnk_03005274,gLinkCommand,ram,"code: the link command word whose high byte FillSendCmd/UpdatePlayerKeys dispatch on (0x8800 key exchange, 0x9900, 0x6600) and the handshakes step (0x7700-0x7706, 0xBB00, 0xAA00) (src/early_2b04.c, src/early_2668.c, src/early_1fd0.c)",155
+gUnk_03002360,gLocalPlayer,ram,"code: SerialCB sets it to this GBA's SIO multi-play id (gLink.localId) on connection, DisableSerial resets 0; demo playback loads it from the record (src/early_6d28.c, src/early_6464.c, src/save_b72bc.c); declared 'this player's index'",155
+gUnk_030023AC,gPlayerCount,ram,"code: SerialCB copies the link player count here, single play keeps 1, demo playback loads it from the record (src/early_6d28.c, src/early_6464.c, src/save_b72bc.c); declared 'number of players'",155
+gUnk_030023D8,gGameState,ram,"doc: rom-map 4, the u16 game state AgbMain's 23-way loop dispatches on (src/main.c)",155
+gUnk_02007D48,gPlayerLives,ram,"doc: rom-map 4: sub_0800b514 gives each player three lives (gUnk_02007D48[i] = 3), state 20 sets 1, game over when no player has lives left; code: the HUD draws it (src/mode_0b44c.c, src/hud_099fc.c)",155
+gUnk_06010000,gObjVram,ram,hw: the OBJ tile VRAM base 0x06010000: TaskLoadFrameTiles queues tiles to (tile base & 0x7FF) * 32 + gUnk_06010000 (src/early_5acc.c); declared 'OBJ VRAM' / 'OBJ tile VRAM' elsewhere,155
+gUnk_0872FB30,gCosTable,rom,"code: DrawAffineSprite builds the OBJ affine matrix as pa = sx*T[rot] >> 8, pb = -(sx*T[rot-128]) >> 8, pc = sy*T[rot-128] >> 8, pd = sy*T[rot] >> 8, so T[a] = cos, T[a-128] = sin (a quarter turn = 128) (src/early_1cc8.c)",155
+gUnk_03001A90,gFadedPalette,ram,code: UpdateFade writes the faded copy of gUnk_03001270 here and points gUnk_03000FB0 at it (src/early_08e8.c),155
+gUnk_030004F0,gSpriteQueue,ram,"code: 128 12-byte sprite requests {flags, tile, x, y, template} QueueSprite (sub_08001a94) appends and BuildOam (sub_08001b08) reads through the layer lists (src/early_1518.c, src/early_1b08.c)",155
+gUnk_03001680,gSpriteLayerLists,ram,"code: u8[16][64], per layer the indices of the queued requests in gUnk_030004F0, filled by QueueSprite and walked in layer order by BuildOam (src/early_1518.c, src/early_1b08.c)",155
+gUnk_03000B04,gOamBufferCursor,ram,"code: next free OAM shadow entry: ResetSpriteQueue sets it to gUnk_03000050, BuildOam writes from it and stores the end back (src/early_1518.c, src/early_1b08.c)",155
+gTaskFlagsTable,gTaskResumeAddrs,ram,"code: TaskCreate copies the type's entry into gTaskFlagsTable[slot] and TaskSetEntry stores its fn there (src/early_5654.c, src/early_5d9c.c); the ARM switcher resumes the slot at that address (rom-map 6: 'copies .unk04 into the slot's resume address'); it holds code addresses, not flags",155

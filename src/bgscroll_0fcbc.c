@@ -20,19 +20,19 @@ extern u8 gUnk_02004B74;
 extern s32 gUnk_02006070[2][4];
 extern s32 gUnk_020061B0[2][4];
 extern vu8 gUnk_0200EBC0[];
-extern vu8 gUnk_03000040;
-extern vu16 gUnk_03000044;
-extern vu16 gUnk_03000AFC;
-extern vu8 gUnk_03000B08;
-extern vu8 gUnk_03000B18;
+extern vu8 gBldCntTarget2;
+extern vu16 gWin0V;
+extern vu16 gWin1V;
+extern vu8 gBldAlphaEva;
+extern vu8 gWinIn0;
 extern vu8 gUnk_03000F7C;
-extern vs32 gUnk_03000FA8;
-extern vu16 gUnk_03000FD4;
-extern vu16 gUnk_03001018;
-extern vu8 gUnk_0300118C;
-extern vu8 gUnk_03001EAC;
-extern vu8 gUnk_03001ED0;
-extern vu16 gUnk_03001ED8;
+extern vs32 gBg3ScrollY;
+extern vu16 gWin0H;
+extern vu16 gWin1H;
+extern vu8 gBldCntTarget1;
+extern vu8 gBldAlphaEvb;
+extern vu8 gWinIn1;
+extern vu16 gDispCnt;
 extern vs32 *const gUnk_08731DA0[4];
 extern vs32 *const gUnk_08731DB0[4];
 
@@ -106,9 +106,9 @@ void sub_0800fdb8(s32 speed, s32 dist, s32 bg)
 s32 sub_0800fe54(s32 speed)
 {
     if (speed > 0)
-        gUnk_03000FA8 = 0;
+        gBg3ScrollY = 0;
     else
-        gUnk_03000FA8 = 144 << 16;
+        gBg3ScrollY = 144 << 16;
     gUnk_020061B0[1][3] &= 0x01FF0000;
     sub_0800fdb8(speed, 144, 3);
 }
@@ -170,7 +170,7 @@ s32 sub_0800ffd8(void)
 
 u8 sub_0800ffe8(void)
 {
-    struct Task *t = gUnk_03002490;
+    struct Task *t = gCurTask;
     s16 x = t->unk48;
     s16 y = t->unk4A;
 
@@ -185,24 +185,24 @@ u8 sub_0800ffe8(void)
 
 void sub_08010020(s32 a, s32 b, s32 c, s32 d)
 {
-    gUnk_0300118C = a;
-    gUnk_03000040 = b;
-    gUnk_03000B08 = c;
-    gUnk_03001EAC = d;
+    gBldCntTarget1 = a;
+    gBldCntTarget2 = b;
+    gBldAlphaEva = c;
+    gBldAlphaEvb = d;
 }
 
 void sub_08010048(s32 in, s32 out, s32 h, s32 v, s32 win)
 {
     if (win == 0x2000) {
-        gUnk_03000B18 = in;
-        gUnk_03000FD4 = h;
-        gUnk_03000044 = v;
+        gWinIn0 = in;
+        gWin0H = h;
+        gWin0V = v;
     }
     if (win == 0x4000) {
-        gUnk_03001ED0 = in;
-        gUnk_03001018 = h;
-        gUnk_03000AFC = v;
+        gWinIn1 = in;
+        gWin1H = h;
+        gWin1V = v;
     }
     gUnk_03000F7C = out;
-    gUnk_03001ED8 |= win;
+    gDispCnt |= win;
 }

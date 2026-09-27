@@ -25,16 +25,16 @@
 extern u8 gHBlankScrollState;
 extern s32 gHBlankScrollTimer;
 extern u16 gHBlankScrollTable[];
-extern void (*gUnk_0300003C)(void);
+extern void (*gFrameCallback)(void);
 extern u32 gHBlankDmaDest;
-extern vu16 gUnk_03001ED8;
-extern vs32 gUnk_03001EE0;
+extern vu16 gDispCnt;
+extern vs32 gBg1ScrollX;
 extern s16 gHBlankScrollEffect;
-extern vu8 gUnk_03000040;
-extern vu8 gUnk_03000B08;
-extern vs32 gUnk_03000FC0;
-extern vu8 gUnk_0300118C;
-extern vu8 gUnk_03001EAC;
+extern vu8 gBldCntTarget2;
+extern vu8 gBldAlphaEva;
+extern vs32 gBg1ScrollY;
+extern vu8 gBldCntTarget1;
+extern vu8 gBldAlphaEvb;
 extern u8 gUnk_087561C4[];
 
 void sub_08010048(s32 in, s32 out, s32 h, s32 v, s32 win);
@@ -54,15 +54,15 @@ s32 sub_080b6474(void)
 
     if (gHBlankScrollState == 2 || gHBlankScrollTimer == 16)
     {
-        gUnk_0300003C = NULL;
+        gFrameCallback = NULL;
         gHBlankScrollTimer = 0;
-        gUnk_03001EE0 = 0;
-        gUnk_03001ED8 &= 0xE0FF;
-        gUnk_03001ED8 |= 0x1F00;
+        gBg1ScrollX = 0;
+        gDispCnt &= 0xE0FF;
+        gDispCnt |= 0x1F00;
     }
     else
     {
-        pe = &gUnk_03001EE0;
+        pe = &gBg1ScrollX;
         base = gHBlankScrollTable;
         pc = &gHBlankDmaDest;
         p1 = base;
@@ -98,10 +98,10 @@ s32 sub_080b6570(void)
 
     if (gHBlankScrollState == 2 || gHBlankScrollTimer == 24)
     {
-        gUnk_0300003C = NULL;
+        gFrameCallback = NULL;
         gHBlankScrollTimer = 0;
-        gUnk_03001EE0 = 0;
-        gUnk_03000FC0 = 0;
+        gBg1ScrollX = 0;
+        gBg1ScrollY = 0;
     }
     else
     {
@@ -109,10 +109,10 @@ s32 sub_080b6570(void)
         {
             if (gHBlankScrollTimer <= 13)
             {
-                gUnk_0300118C = 66;
-                gUnk_03000040 = 12;
-                gUnk_03000B08 = 13 - gHBlankScrollTimer;
-                gUnk_03001EAC = 16 - gUnk_03000B08;
+                gBldCntTarget1 = 66;
+                gBldCntTarget2 = 12;
+                gBldAlphaEva = 13 - gHBlankScrollTimer;
+                gBldAlphaEvb = 16 - gBldAlphaEva;
             }
             if (gHBlankScrollEffect == 4)
             {
@@ -158,7 +158,7 @@ s32 sub_080b6570(void)
         }
         else
         {
-            gUnk_03001ED8 &= 0xBFFF;
+            gDispCnt &= 0xBFFF;
             for (n = 0; n < 224; n++)
                 gHBlankScrollTable[n] = 0;
             for (n = 0; n < 24; n++)
@@ -169,8 +169,8 @@ s32 sub_080b6570(void)
                 gHBlankScrollTable[(136 + n) * 2 + 1] = gUnk_087561C4[gHBlankScrollTimer - 16];
             }
         }
-        gUnk_03001EE0 = gHBlankScrollTable[0] << 16;
-        gUnk_03000FC0 = gHBlankScrollTable[1] << 16;
+        gBg1ScrollX = gHBlankScrollTable[0] << 16;
+        gBg1ScrollY = gHBlankScrollTable[1] << 16;
         gHBlankDmaDest = 0x04000014;
         return 2;
     }
@@ -185,15 +185,15 @@ s32 sub_080b67dc(void)
 
     if (gHBlankScrollState == 2 || gHBlankScrollTimer == 24)
     {
-        gUnk_0300003C = NULL;
+        gFrameCallback = NULL;
         gHBlankScrollTimer = 0;
-        gUnk_03001EE0 = 0;
-        gUnk_03000FC0 = 0;
-        gUnk_03001ED8 &= 0xBFFF;
-        gUnk_0300118C = 66;
-        gUnk_03000040 = 12;
-        gUnk_03000B08 = 13;
-        gUnk_03001EAC = 3;
+        gBg1ScrollX = 0;
+        gBg1ScrollY = 0;
+        gDispCnt &= 0xBFFF;
+        gBldCntTarget1 = 66;
+        gBldCntTarget2 = 12;
+        gBldAlphaEva = 13;
+        gBldAlphaEvb = 3;
     }
     else
     {
@@ -210,18 +210,18 @@ s32 sub_080b67dc(void)
             }
             if (gHBlankScrollTimer == 7)
             {
-                gUnk_0300118C = 66;
-                gUnk_03000040 = 12;
-                gUnk_03000B08 = 0;
-                gUnk_03001EAC = 16;
+                gBldCntTarget1 = 66;
+                gBldCntTarget2 = 12;
+                gBldAlphaEva = 0;
+                gBldAlphaEvb = 16;
             }
         }
         else
         {
             if (gHBlankScrollTimer <= 21)
             {
-                gUnk_03000B08 = gHBlankScrollTimer - 8;
-                gUnk_03001EAC = 24 - gHBlankScrollTimer;
+                gBldAlphaEva = gHBlankScrollTimer - 8;
+                gBldAlphaEvb = 24 - gHBlankScrollTimer;
             }
             if (gHBlankScrollEffect == 6)
             {
@@ -265,8 +265,8 @@ s32 sub_080b67dc(void)
                 }
             }
         }
-        gUnk_03001EE0 = gHBlankScrollTable[0] << 16;
-        gUnk_03000FC0 = gHBlankScrollTable[1] << 16;
+        gBg1ScrollX = gHBlankScrollTable[0] << 16;
+        gBg1ScrollY = gHBlankScrollTable[1] << 16;
         gHBlankDmaDest = 0x04000014;
         return 2;
     }

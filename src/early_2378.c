@@ -5,13 +5,13 @@
  *
  * The 0x7700-series link-play handshake, twin of sub_08002668
  * (src/early_2668.c, which keeps the payload in the record gUnk_02006068;
- * this one keeps it in gUnk_03000FB4 and gUnk_03001EA4).  It blocks, pumping
+ * this one keeps it in gRngValue and gFrameCount).  It blocks, pumping
  * the link layer once per frame (RunFrameNoTasks, LinkMain1, the abort poll
  * IsLinkError and the reset path sub_08008b8c after 31 frames without the
- * frame counter gUnk_03004D7C moving), and drives the state word
- * gUnk_03005274 through the 0xBB00 exchange of the per-player bytes
+ * frame counter gSerialIntrCount moving), and drives the state word
+ * gLinkCommand through the 0xBB00 exchange of the per-player bytes
  * gUnk_030023A8 and the 0x7700-0x7706 payload exchange, reading the other
- * players' words from gUnk_03004D50; when the payload
+ * players' words from gRecvCmds; when the payload
  * arrives and the per-player bytes are still unnegotiated (gUnk_0300244C ==
  * -1) it clamps them and stores their minimum in gUnk_0300244C.
  *
@@ -22,19 +22,19 @@
  * see the comment at the site and lesson 3.488.  Issue #32 had called the
  * residue a gcse insertion one block late (lesson 3.55). */
 
-extern vu32 gUnk_03000FB4;
-extern u16 gUnk_03001EA4;
+extern vu32 gRngValue;
+extern u16 gFrameCount;
 extern u32 gUnk_03001EFC;
-extern u16 gUnk_03001F38;
+extern u16 gLinkIsMaster;
 extern s8 gUnk_030023A8[];
-extern u16 gUnk_03002360;
-extern u16 gUnk_0300243C;
+extern u16 gLocalPlayer;
+extern u16 gLinkPlayerCount;
 extern s16 gUnk_0300244C;
-extern u16 gUnk_03004D50[4][4];
-extern u32 gUnk_03004D7C;
-extern u16 gUnk_03004D88;
-extern u16 gUnk_03004D90[4];
-extern u16 gUnk_03005274;
+extern u16 gRecvCmds[4][4];
+extern u32 gSerialIntrCount;
+extern u16 gShouldAdvanceLinkState;
+extern u16 gSendCmd[4];
+extern u16 gLinkCommand;
 
 void RunFrameNoTasks(void);
 void LinkMain1(void *, void *, void *);
@@ -42,7 +42,7 @@ int IsLinkError(void);
 void sub_08008b8c(void);
 
 /* The 0x7700-series link handshake, twin of sub_08002668 (src/early_2668.c)
- * with the payload kept in gUnk_03000FB4/gUnk_03001EA4.  The negotiation
+ * with the payload kept in gRngValue/gFrameCount.  The negotiation
  * tail after the loop is reached by a goto; merge_blocks splices it back in
  * behind the 0x7706 handler, which is where the ROM has the store, `i = 0`
  * and the entry test (lesson 3.488). */
@@ -54,91 +54,91 @@ void sub_08002378(void)
     int i;
     u32 old;
 
-    if (gUnk_0300243C <= 1)
+    if (gLinkPlayerCount <= 1)
         return;
 
     a = 0;
     b = 0;
     c = 0;
     for (;;) {
-        switch (gUnk_03005274) {
+        switch (gLinkCommand) {
         case 0x7755:
-            gUnk_03004D90[0] = 0x7755;
+            gSendCmd[0] = 0x7755;
             if (gUnk_0300244C == -1)
-                gUnk_03005274 = 0xBB00;
+                gLinkCommand = 0xBB00;
             else
-                gUnk_03005274 = 0x7700;
+                gLinkCommand = 0x7700;
             break;
         case 0xBB00:
         case 0xBB01:
         case 0xBB02:
         case 0xBB03:
         case 0xBB04:
-            gUnk_03004D90[0] = 0xBB00;
-            gUnk_03004D90[1] = 1;
-            if (gUnk_03002360 == 0) {
-                gUnk_03005274++;
-                if (gUnk_03005274 > 0xBB04)
-                    gUnk_03005274 = 0x7700;
+            gSendCmd[0] = 0xBB00;
+            gSendCmd[1] = 1;
+            if (gLocalPlayer == 0) {
+                gLinkCommand++;
+                if (gLinkCommand > 0xBB04)
+                    gLinkCommand = 0x7700;
             } else {
-                gUnk_03005274 = 0x9900;
+                gLinkCommand = 0x9900;
             }
             break;
         case 0x7700:
             c = 30;
-            gUnk_03004D90[0] = 0x7700;
-            gUnk_03005274 = 0x9900;
+            gSendCmd[0] = 0x7700;
+            gLinkCommand = 0x9900;
             break;
         case 0x7701:
-            gUnk_03004D90[0] = 0x7701;
-            gUnk_03005274 = 0x9900;
+            gSendCmd[0] = 0x7701;
+            gLinkCommand = 0x9900;
             break;
         case 0x7703:
         case 0x7704:
         case 0x7705:
-            gUnk_03005274 = gUnk_03005274 + 1;
+            gLinkCommand = gLinkCommand + 1;
             break;
         case 0x7702:
         case 0x7706:
-            gUnk_03004D90[0] = 0x7706;
-            gUnk_03004D90[1] = gUnk_03000FB4;
-            gUnk_03004D90[2] = gUnk_03000FB4 >> 16;
-            gUnk_03004D90[3] = gUnk_03001EA4;
-            gUnk_03005274 = 0x9900;
+            gSendCmd[0] = 0x7706;
+            gSendCmd[1] = gRngValue;
+            gSendCmd[2] = gRngValue >> 16;
+            gSendCmd[3] = gFrameCount;
+            gLinkCommand = 0x9900;
             break;
         case 0x9900:
             break;
         }
-        old = gUnk_03004D7C;
+        old = gSerialIntrCount;
         RunFrameNoTasks();
-        LinkMain1(&gUnk_03004D88, gUnk_03004D90, gUnk_03004D50);
+        LinkMain1(&gShouldAdvanceLinkState, gSendCmd, gRecvCmds);
         if (IsLinkError() != 0)
             sub_08008b8c();
-        if (old == gUnk_03004D7C) {
+        if (old == gSerialIntrCount) {
             if (++b > 30)
                 sub_08008b8c();
         }
         for (i = 0; i < 4; i++) {
-            switch (gUnk_03004D50[0][i]) {
+            switch (gRecvCmds[0][i]) {
             case 0xBB00:
-                gUnk_030023A8[i] = gUnk_03004D50[1][i];
-                if (gUnk_03002360 != 0) {
+                gUnk_030023A8[i] = gRecvCmds[1][i];
+                if (gLocalPlayer != 0) {
                     if (i == 0)
-                        gUnk_03005274 = 0xBB00;
+                        gLinkCommand = 0xBB00;
                 }
                 break;
             case 0x7700:
-                gUnk_03005274 = 0x7701;
+                gLinkCommand = 0x7701;
                 break;
             case 0x7701:
-                if (gUnk_03001F38 != 0) {
-                    if (++a >= gUnk_0300243C)
-                        gUnk_03005274 = 0x7702;
+                if (gLinkIsMaster != 0) {
+                    if (++a >= gLinkPlayerCount)
+                        gLinkCommand = 0x7702;
                 }
                 break;
             case 0x7706:
-                gUnk_03000FB4 = (gUnk_03004D50[2][0] << 16) | gUnk_03004D50[1][0];
-                gUnk_03001EA4 = gUnk_03004D50[3][0];
+                gRngValue = (gRecvCmds[2][0] << 16) | gRecvCmds[1][0];
+                gFrameCount = gRecvCmds[3][0];
                 gUnk_03001EFC = 0;
                 /* STAND-IN: `gUnk_03001EFC == 0` is always true here (it was
                  * just cleared) and costs no code; it keeps this branch
@@ -158,17 +158,17 @@ void sub_08002378(void)
             }
         }
         if (c != 0) {
-            if (a == gUnk_0300243C)
+            if (a == gLinkPlayerCount)
                 c = 0;
             else if (--c == 0) {
-                gUnk_03005274 = 0x7700;
+                gLinkCommand = 0x7700;
                 a = 0;
             }
         }
     }
 negotiate:
     gUnk_0300244C = 1;
-    for (i = 0; i < gUnk_0300243C; i++) {
+    for (i = 0; i < gLinkPlayerCount; i++) {
         if (gUnk_030023A8[i] == -1)
             gUnk_030023A8[i] = 0;
         if (gUnk_030023A8[i] < gUnk_0300244C)

@@ -15,17 +15,17 @@ gUnk_0872EB14:
 	.global	gUnk_0872EB2C
 gUnk_0872EB2C:
 	.incbin	"baserom.gba", 0x72EB2C, 0xC
-	.global	gUnk_0872EB38
-gUnk_0872EB38:
+	.global	gSfxTable
+gSfxTable:
 	.incbin	"baserom.gba", 0x72EB38, 0xEF8
 	.global	gUnk_0872FA30
 gUnk_0872FA30:
 	.incbin	"baserom.gba", 0x72FA30, 0x100
-	.global	gUnk_0872FB30
-gUnk_0872FB30:
+	.global	gCosTable
+gCosTable:
 	.incbin	"baserom.gba", 0x72FB30, 0x400
-	.global	gUnk_0872FF30
-gUnk_0872FF30:
+	.global	gTaskTypes
+gTaskTypes:
 	.incbin	"baserom.gba", 0x72FF30, 0x4
 	.word	Task_BootLogo+1
 	.incbin	"baserom.gba", 0x72FF38, 0x4

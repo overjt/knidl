@@ -8,7 +8,7 @@
  * sub_0801b7dc places the actor's attack box gUnk_0300236C (struct
  * AttackBox) at the actor's position gUnk_03002358/gUnk_0300214C, mirrored
  * when the actor faces left, relative to the camera rectangle
- * gUnk_03002158[]; sub_0801b8e4 computes a hit's damage (gUnk_03002368
+ * gViewRect[]; sub_0801b8e4 computes a hit's damage (gUnk_03002368
  * minus the body box's defence) and knock-back direction (one of eight, from
  * ArcTan2 between the collider and the actor); sub_0801b9e4 copies the hit's
  * details out for the actor code. */
@@ -67,7 +67,7 @@ extern u8 gUnk_03001F24;
 extern s8 gUnk_03002140;
 extern u8 gUnk_03002144;
 extern u16 gUnk_0300214C;           /* actor y */
-extern s16 gUnk_03002158[];         /* camera rectangle: left, right, top, bottom */
+extern s16 gViewRect[];         /* camera rectangle: left, right, top, bottom */
 extern u8 gUnk_03002354;
 extern u16 gUnk_03002358;           /* actor x */
 extern u16 gUnk_03002368;
@@ -102,27 +102,27 @@ void sub_0801b7dc(void)
     {
         s32 x;
         gUnk_03002358 = x = gUnk_0300236C->unk00 + gUnk_03002358;
-        gUnk_030054A4 = (x - (u16)gUnk_03002158[0]) + gUnk_0300236C->unk02;
-        gUnk_03005490 = (x - (u16)gUnk_03002158[0]) + gUnk_0300236C->unk04;
+        gUnk_030054A4 = (x - (u16)gViewRect[0]) + gUnk_0300236C->unk02;
+        gUnk_03005490 = (x - (u16)gViewRect[0]) + gUnk_0300236C->unk04;
     }
     else if (gUnk_0300239C == 1)
     {
         s32 x;
         gUnk_03002358 = x = gUnk_0300236C->unk00 + gUnk_03002358;
-        gUnk_030054A4 = (x - (u16)gUnk_03002158[0]) + gUnk_0300236C->unk02;
-        gUnk_03005490 = (x - (u16)gUnk_03002158[0]) + gUnk_0300236C->unk04;
+        gUnk_030054A4 = (x - (u16)gViewRect[0]) + gUnk_0300236C->unk02;
+        gUnk_03005490 = (x - (u16)gViewRect[0]) + gUnk_0300236C->unk04;
     }
     else
     {
         s32 x;
         gUnk_03002358 = x = -gUnk_0300236C->unk00 + gUnk_03002358;
-        gUnk_030054A4 = (x - (u16)gUnk_03002158[0]) - gUnk_0300236C->unk04;
-        gUnk_03005490 = (x - (u16)gUnk_03002158[0]) - gUnk_0300236C->unk02;
+        gUnk_030054A4 = (x - (u16)gViewRect[0]) - gUnk_0300236C->unk04;
+        gUnk_03005490 = (x - (u16)gViewRect[0]) - gUnk_0300236C->unk02;
     }
     y = gUnk_0300214C + gUnk_0300236C->unk01;
     gUnk_0300214C = y;
-    gUnk_030054E0 = (y - (u16)gUnk_03002158[2]) + gUnk_0300236C->unk03;
-    gUnk_03005294 = (y - (u16)gUnk_03002158[2]) + gUnk_0300236C->unk05;
+    gUnk_030054E0 = (y - (u16)gViewRect[2]) + gUnk_0300236C->unk03;
+    gUnk_03005294 = (y - (u16)gViewRect[2]) + gUnk_0300236C->unk05;
 }
 
 /* Shared tail of the hit tests: the damage left after the body box's
@@ -158,7 +158,7 @@ void sub_0801b9e4(void)
     gUnk_030023DC = gUnk_03005498;
     gUnk_03001F24 = gUnk_03005394;
     if (gUnk_03002380 == 6 || gUnk_03002380 == 8)
-        gUnk_03002354 = gUnk_03002490->unk75;
+        gUnk_03002354 = gCurTask->unk75;
     else
         gUnk_03002354 = gUnk_03002140;
     /* gUnk_03002358/gUnk_0300214C are read signed here (ldrsh) */

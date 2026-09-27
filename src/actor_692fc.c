@@ -54,10 +54,10 @@ struct ActorVt
     /*0x08*/ u32 unk08;
 };
 
-extern vs16 gUnk_03004CA0[];
+extern vs16 gTaskSlotTypes[];
 extern u8 gUnk_03005550[];
-extern u16 gUnk_03002360;
-extern u16 gUnk_030023D8;
+extern u16 gLocalPlayer;
+extern u16 gGameState;
 extern u16 gUnk_0873E58C[];
 extern s16 gUnk_0873E5A4[];
 extern u32 gUnk_0873F910[];
@@ -126,9 +126,9 @@ u32 sub_080692fc(void)
     s8 f;
     struct InputState v;
 
-    if (gUnk_03004CA0[gCurTaskIdx] == -1)
+    if (gTaskSlotTypes[gCurTaskIdx] == -1)
         return 0;
-    t = gUnk_03002490;
+    t = gCurTask;
     a = t->unk8C;
     r = 0;
     i = 4;
@@ -136,7 +136,7 @@ u32 sub_080692fc(void)
     f = t->unk7B;
     sub_08069a64(&v);
     sub_0801bcac(&v);
-    u = gUnk_03002490;
+    u = gCurTask;
     if ((u->unk7B & 0x80) != 0)
         sub_08064d6c(140, u->unk48, ((s16 *)gUnk_03005550)[i], 0);
     if ((f & 1) != 0)
@@ -144,7 +144,7 @@ u32 sub_080692fc(void)
     if ((f & 0x40) == 0)
         goto s1;
 b1:
-    if ((gUnk_03002490->unk7B & 1) == 0 && (gUnk_03002490->unk7B & 0x40) == 0)
+    if ((gCurTask->unk7B & 1) == 0 && (gCurTask->unk7B & 0x40) == 0)
     {
         fn = ((struct ActorHandlers *)a->unk54)->unk0C;
         if (fn != 0)
@@ -158,7 +158,7 @@ s1:
     if ((f & 0x40) == 0)
         goto s2;
 b2:
-    if ((gUnk_03002490->unk7B & 1) != 0 && (gUnk_03002490->unk7B & 0x40) == 0)
+    if ((gCurTask->unk7B & 1) != 0 && (gCurTask->unk7B & 0x40) == 0)
     {
         fn = ((struct ActorHandlers *)a->unk54)->unk08;
         if (fn != 0)
@@ -169,13 +169,13 @@ s2:
         return 1;
     if (k == 1)
     {
-        if ((gUnk_03002490->unk7A & 1) != 0)
+        if ((gCurTask->unk7A & 1) != 0)
             goto s3;
         fn = ((struct ActorHandlers *)a->unk54)->unk04;
     }
     else
     {
-        if ((gUnk_03002490->unk7A & 1) == 0)
+        if ((gCurTask->unk7A & 1) == 0)
             goto s3;
         fn = ((struct ActorHandlers *)a->unk54)->unk00;
     }
@@ -192,7 +192,7 @@ s3:
     }
     if (r == 1)
         return 1;
-    if ((gUnk_03002490->unk7A & 1) != 0 && (gUnk_03005550[3] & 1) != 0)
+    if ((gCurTask->unk7A & 1) != 0 && (gUnk_03005550[3] & 1) != 0)
     {
         fn = ((struct ActorHandlers *)a->unk54)->unk14;
         if (fn != 0)
@@ -200,7 +200,7 @@ s3:
     }
     if (r == 1)
         return 1;
-    if ((gUnk_03002490->unk7A & 1) == 0 && (gUnk_03005550[1] & 1) != 0)
+    if ((gCurTask->unk7A & 1) == 0 && (gUnk_03005550[1] & 1) != 0)
     {
         fn = ((struct ActorHandlers *)a->unk54)->unk18;
         if (fn != 0)
@@ -213,7 +213,7 @@ u32 sub_080694e0(void)
 {
     struct InputState v;
 
-    if (gUnk_03004CA0[gCurTaskIdx] == -1)
+    if (gTaskSlotTypes[gCurTaskIdx] == -1)
         return 0;
     sub_08069a64(&v);
     sub_0802205c(&v);
@@ -224,7 +224,7 @@ u32 sub_0806951c(void)
     struct InputState v;
     u32 r;
 
-    if (gUnk_03004CA0[gCurTaskIdx] != -1)
+    if (gTaskSlotTypes[gCurTaskIdx] != -1)
     {
         sub_08069a64(&v);
         sub_0801c230(&v);
@@ -242,7 +242,7 @@ u32 sub_0806956c(void)
     struct InputState v;
     u32 r;
 
-    if (gUnk_03004CA0[gCurTaskIdx] != -1)
+    if (gTaskSlotTypes[gCurTaskIdx] != -1)
     {
         sub_08069a64(&v);
         sub_0801c030(&v);
@@ -260,7 +260,7 @@ u32 sub_080695bc(void)
     struct InputState v;
     u32 r;
 
-    if (gUnk_03004CA0[gCurTaskIdx] != -1)
+    if (gTaskSlotTypes[gCurTaskIdx] != -1)
     {
         sub_08069a64(&v);
         sub_0801bf1c(&v);
@@ -278,7 +278,7 @@ u32 sub_08069604(void)
     struct InputState v;
     u32 r;
 
-    if (gUnk_03004CA0[gCurTaskIdx] == -1)
+    if (gTaskSlotTypes[gCurTaskIdx] == -1)
         return 0;
     r = 0;
     sub_08069a64(&v);
@@ -293,7 +293,7 @@ u32 sub_08069660(void)
     struct InputState v;
     u32 r;
 
-    if (gUnk_03004CA0[gCurTaskIdx] != -1)
+    if (gTaskSlotTypes[gCurTaskIdx] != -1)
     {
         sub_08069a64(&v);
         r = (u8)sub_0801c3a4(&v);
@@ -317,9 +317,9 @@ u32 sub_080696a0(void)
     s8 f;
     struct InputState v;
 
-    if (gUnk_03004CA0[gCurTaskIdx] == -1)
+    if (gTaskSlotTypes[gCurTaskIdx] == -1)
         return 0;
-    t = gUnk_03002490;
+    t = gCurTask;
     a = t->unk8C;
     r = 0;
     i = 4;
@@ -328,7 +328,7 @@ u32 sub_080696a0(void)
     sub_08069a64(&v);
     sub_0801bde0(&v);
     sub_080b460c();
-    u = gUnk_03002490;
+    u = gCurTask;
     if ((u->unk7B & 0x80) != 0)
         sub_08064d6c(140, u->unk48, ((s16 *)gUnk_03005550)[i], 0);
     if ((f & 1) != 0)
@@ -336,7 +336,7 @@ u32 sub_080696a0(void)
     if ((f & 0x40) == 0)
         goto s1;
 b1:
-    if ((gUnk_03002490->unk7B & 1) == 0 && (gUnk_03002490->unk7B & 0x40) == 0)
+    if ((gCurTask->unk7B & 1) == 0 && (gCurTask->unk7B & 0x40) == 0)
     {
         fn = ((struct ActorHandlers *)a->unk54)->unk0C;
         if (fn != 0)
@@ -350,7 +350,7 @@ s1:
     if ((f & 0x40) == 0)
         goto s2;
 b2:
-    if ((gUnk_03002490->unk7B & 1) != 0 && (gUnk_03002490->unk7B & 0x40) == 0)
+    if ((gCurTask->unk7B & 1) != 0 && (gCurTask->unk7B & 0x40) == 0)
     {
         fn = ((struct ActorHandlers *)a->unk54)->unk08;
         if (fn != 0)
@@ -361,13 +361,13 @@ s2:
         return 1;
     if (k == 1)
     {
-        if ((gUnk_03002490->unk7A & 1) != 0)
+        if ((gCurTask->unk7A & 1) != 0)
             goto s3;
         fn = ((struct ActorHandlers *)a->unk54)->unk04;
     }
     else
     {
-        if ((gUnk_03002490->unk7A & 1) == 0)
+        if ((gCurTask->unk7A & 1) == 0)
             goto s3;
         fn = ((struct ActorHandlers *)a->unk54)->unk00;
     }
@@ -384,7 +384,7 @@ s3:
     }
     if (r == 1)
         return 1;
-    if ((gUnk_03002490->unk7A & 1) != 0 && (gUnk_03005550[3] & 1) != 0)
+    if ((gCurTask->unk7A & 1) != 0 && (gUnk_03005550[3] & 1) != 0)
     {
         fn = ((struct ActorHandlers *)a->unk54)->unk14;
         if (fn != 0)
@@ -392,7 +392,7 @@ s3:
     }
     if (r == 1)
         return 1;
-    if ((gUnk_03002490->unk7A & 1) == 0 && (gUnk_03005550[1] & 1) != 0)
+    if ((gCurTask->unk7A & 1) == 0 && (gUnk_03005550[1] & 1) != 0)
     {
         fn = ((struct ActorHandlers *)a->unk54)->unk18;
         if (fn != 0)
@@ -413,9 +413,9 @@ u32 sub_08069888(void)
     s8 f;
     struct InputState v;
 
-    if (gUnk_03004CA0[gCurTaskIdx] == -1)
+    if (gTaskSlotTypes[gCurTaskIdx] == -1)
         return 0;
-    t = gUnk_03002490;
+    t = gCurTask;
     a = t->unk8C;
     r = 0;
     i = 4;
@@ -423,7 +423,7 @@ u32 sub_08069888(void)
     f = t->unk7B;
     sub_08069a64(&v);
     sub_0801c12c(&v);
-    u = gUnk_03002490;
+    u = gCurTask;
     if ((u->unk7B & 0x80) != 0)
         sub_08064d6c(140, u->unk48, ((s16 *)gUnk_03005550)[i], 0);
     if ((f & 1) == 0)
@@ -431,7 +431,7 @@ u32 sub_08069888(void)
     if ((f & 0x40) == 0)
         goto s1;
 b1:
-    if ((gUnk_03002490->unk7B & 1) != 0 && (gUnk_03002490->unk7B & 0x40) == 0)
+    if ((gCurTask->unk7B & 1) != 0 && (gCurTask->unk7B & 0x40) == 0)
     {
         fn = ((struct ActorHandlers *)a->unk54)->unk08;
         if (fn != 0)
@@ -442,13 +442,13 @@ s1:
         return 1;
     if (k == 1)
     {
-        if ((gUnk_03002490->unk7A & 1) != 0)
+        if ((gCurTask->unk7A & 1) != 0)
             goto s2;
         fn = ((struct ActorHandlers *)a->unk54)->unk04;
     }
     else
     {
-        if ((gUnk_03002490->unk7A & 1) == 0)
+        if ((gCurTask->unk7A & 1) == 0)
             goto s2;
         fn = ((struct ActorHandlers *)a->unk54)->unk00;
     }
@@ -468,9 +468,9 @@ u32 sub_080699a8(void)
     s16 m;
     s16 d;
 
-    if (gUnk_03004CA0[gCurTaskIdx] != -1)
+    if (gTaskSlotTypes[gCurTaskIdx] != -1)
     {
-        t = gUnk_03002490;
+        t = gCurTask;
         if ((t->unk24 & 0xFFFF0000) != 0
          && (t->unk7A & 1) != 0
          && (gUnk_03005550[4] == 1 || gUnk_03005550[4] == 2
@@ -486,7 +486,7 @@ u32 sub_080699a8(void)
                 m = t->unk48 + 16;
                 y = m & 0xFFF0;
             }
-            u = gUnk_03002490;
+            u = gCurTask;
             d = y - u->unk48;
             u->unk48 = y + d;
             u->unk4A = u->unk24;
@@ -503,7 +503,7 @@ void sub_08069a64(struct InputState *out)
     struct Task *t;
     struct Actor *a;
 
-    t = gUnk_03002490;
+    t = gCurTask;
     a = t->unk8C;
     out->unk01 = ((struct InputState *)a->unk50)->unk01;
     out->unk02 = ((struct InputState *)a->unk50)->unk02;
@@ -526,7 +526,7 @@ void sub_08069ac4(s32 i)
 {
     struct Task *t;
 
-    t = &gUnk_03002790[i];
+    t = &gTasks[i];
     sub_080224f8(i);
     t->unk7A = 1;
 }
@@ -561,14 +561,14 @@ u32 sub_08069ae4(s8 a)
 
 u32 sub_08069b44(void)
 {
-    if (gUnk_03004CA0[gCurTaskIdx] == -1)
+    if (gTaskSlotTypes[gCurTaskIdx] == -1)
         return 0;
-    return sub_08069ae4(gUnk_03002490->unk7C);
+    return sub_08069ae4(gCurTask->unk7C);
 }
 
 u32 sub_08069b84(void)
 {
-    if (gUnk_03004CA0[gCurTaskIdx] == -1)
+    if (gTaskSlotTypes[gCurTaskIdx] == -1)
         return 0;
     return sub_08069ae4(sub_08069c48());
 }
@@ -577,11 +577,11 @@ u32 sub_08069bbc(void)
 {
     u32 r;
 
-    if (gUnk_03004CA0[gCurTaskIdx] == -1)
+    if (gTaskSlotTypes[gCurTaskIdx] == -1)
         return 0;
-    gUnk_03002490->unk43 = 1;
+    gCurTask->unk43 = 1;
     r = 0;
-    switch ((s8)gUnk_03002490->unk7C)
+    switch ((s8)gCurTask->unk7C)
     {
     case 1:
     case 2:
@@ -611,7 +611,7 @@ s8 sub_08069c48(void)
     u8 v;
     s32 c;
 
-    t = gUnk_03002490;
+    t = gCurTask;
     if ((s8)t->unk7C != 0)
     {
         v = t->unk7C;
@@ -624,7 +624,7 @@ s8 sub_08069c48(void)
             v = g[12];
             c = ((s8 *)g)[12];
             t->unk7C = c;
-            gUnk_03002490->unk82 = 0;
+            gCurTask->unk82 = 0;
         }
         else
         {
@@ -639,10 +639,10 @@ void sub_08069c8c(void)
     struct Task *t;
     struct Task *u;
 
-    t = gUnk_03002490;
+    t = gCurTask;
     if (t->unk8C->unk06 == 16 || t->unk8C->unk06 == 32)
     {
-        u = &gUnk_03002790[t->unk7E];
+        u = &gTasks[t->unk7E];
         switch (u->unk80)
         {
         case 3:
@@ -693,7 +693,7 @@ void sub_08069c8c(void)
 
 void sub_08069d78(void)
 {
-    switch (gUnk_03002490->unk72)
+    switch (gCurTask->unk72)
     {
     case 0:
     case 3:
@@ -715,21 +715,21 @@ void sub_08069dc4(void)
     struct Task *v;
     struct Actor *a;
 
-    t = gUnk_03002490;
+    t = gCurTask;
     a = t->unk8C;
     TaskSetSkipMask(7, gCurTaskIdx);
-    u = gUnk_03002490;
+    u = gCurTask;
     u->unk4C = u->unk48 << 16;
     u->unk50 = u->unk4A << 16;
     a->unk14 = u->unk3C;
     TaskSetFrame(0);
-    gUnk_03002490->unk08 = (u32)sub_08069fb0;
+    gCurTask->unk08 = (u32)sub_08069fb0;
     a->unk01 = 11;
-    v = gUnk_03002490;
+    v = gCurTask;
     v->unk8C->unk22 = v->unk40 & 0xF000;
     if (v->unk82 > 3)
         v->unk82 = 0;
-    sub_0806df28(gUnk_03002490->unk82, 1);
+    sub_0806df28(gCurTask->unk82, 1);
 }
 
 void sub_08069e48(void)
@@ -738,10 +738,10 @@ void sub_08069e48(void)
     struct Task *u;
     struct Actor *a;
 
-    t = gUnk_03002490;
+    t = gCurTask;
     a = t->unk8C;
     TaskSetSkipMask(0, gCurTaskIdx);
-    u = gUnk_03002490;
+    u = gCurTask;
     u->unk08 = 0;
     u->unk48 = u->unk4C >> 16;
     u->unk4A = u->unk50 >> 16;
@@ -755,11 +755,11 @@ u32 sub_08069ea0(void)
     struct ActorVt *p;
     u8 r;
 
-    a = gUnk_03002490->unk8C;
+    a = gCurTask->unk8C;
     p = (struct ActorVt *)a->unk5C;
     r = 0;
     sub_08069c8c();
-    if ((gUnk_03002490->unk72 == 1 || gUnk_03002490->unk72 == 2) && a->unk05 != 2)
+    if ((gCurTask->unk72 == 1 || gCurTask->unk72 == 2) && a->unk05 != 2)
         sub_0800a42c();
     if (p != NULL)
     {
@@ -790,7 +790,7 @@ void sub_08069f0c(void)
     struct Actor *a;
     s16 j;
 
-    t = gUnk_03002490;
+    t = gCurTask;
     a = t->unk8C;
     j = gUnk_0873E5A4[(s8)a->unk01] * 2;
     t->unk48 += gUnk_0873E58C[j];
@@ -804,7 +804,7 @@ void sub_08069f70(void)
     struct Task *t;
     struct Actor *a;
 
-    t = gUnk_03002490;
+    t = gCurTask;
     a = t->unk8C;
     if ((a->unk01 & 1) == 0)
         t->unk40 = (t->unk40 & 0xFFF) | 0xF000;
@@ -822,8 +822,8 @@ void sub_08069fb0(void)
 
 void sub_08069fc8(void)
 {
-    if (gUnk_03004CA0[gCurTaskIdx] == 107 || gUnk_03004CA0[gCurTaskIdx] == 109
-     || gUnk_03004CA0[gCurTaskIdx] == 137)
+    if (gTaskSlotTypes[gCurTaskIdx] == 107 || gTaskSlotTypes[gCurTaskIdx] == 109
+     || gTaskSlotTypes[gCurTaskIdx] == 137)
         sub_0806d77c();
     else
         sub_0806d65c();
@@ -833,9 +833,9 @@ void sub_0806a008(void)
 {
     struct Task *t;
 
-    t = gUnk_03002490;
+    t = gCurTask;
     if (t->unk72 == 1 || t->unk72 == 2)
-        gUnk_03002490->unk43 = sub_08063dac(t->unk7F);
+        gCurTask->unk43 = sub_08063dac(t->unk7F);
 }
 
 s16 sub_0806a03c(void)
@@ -843,7 +843,7 @@ s16 sub_0806a03c(void)
     s16 r;
 
     r = 0;
-    switch ((s8)gUnk_03002490->unk7D)
+    switch ((s8)gCurTask->unk7D)
     {
     case 7:
         r += 64;
@@ -889,7 +889,7 @@ void sub_0806a0f0(s32 a)
     struct Task *t;
     struct Actor *b;
 
-    t = gUnk_03002490;
+    t = gCurTask;
     b = t->unk8C;
     if (a == -2)
         t->unk18 = 0;
@@ -897,7 +897,7 @@ void sub_0806a0f0(s32 a)
         t->unk18 = a;
     b->unk05 = 2;
     sub_08063990((u32)gUnk_0873F910);
-    if (gUnk_03002490->unk7A & 1)
+    if (gCurTask->unk7A & 1)
         sub_0806395c(1);
     else
         sub_0806395c(0);
@@ -911,31 +911,31 @@ void sub_0806a158(void)
 {
     struct Task *t;
 
-    if (gUnk_03002490->unk76 != 0)
+    if (gCurTask->unk76 != 0)
         sub_080b54d0(gCurTaskIdx);
-    t = gUnk_03002490;
+    t = gCurTask;
     switch (t->unk76)
     {
     case 1:
-        if (gUnk_03002360 == t->unk7E)
+        if (gLocalPlayer == t->unk7E)
             PlaySfx(220);
-        sub_08009e60(1, gUnk_03002490->unk7E);
+        sub_08009e60(1, gCurTask->unk7E);
         sub_08063fe0();
         break;
     case 3:
-        if (gUnk_03002360 == t->unk7E)
+        if (gLocalPlayer == t->unk7E)
             PlaySfx(198);
-        sub_0804087c(gUnk_03002490->unk7E);
+        sub_0804087c(gCurTask->unk7E);
         sub_08063fe0();
         break;
     case 2:
-        if (gUnk_03002360 == t->unk7E)
+        if (gLocalPlayer == t->unk7E)
             PlaySfx(198);
         sub_0806395c(0);
         TaskSetEntry(sub_080b4240, gCurTaskIdx);
         break;
     case 4:
-        if (gUnk_03002360 == t->unk7E)
+        if (gLocalPlayer == t->unk7E)
             PlaySfx(198);
         sub_0806395c(1);
         TaskSetEntry(sub_080b4240, gCurTaskIdx);
@@ -953,13 +953,13 @@ u32 sub_0806a25c(void)
     struct Task *t;
     u8 r;
 
-    a = gUnk_03002490->unk8C;
+    a = gCurTask->unk8C;
     p = (struct ActorVt *)a->unk5C;
     r = 0;
     sub_08069c8c();
-    if (gUnk_03002490->unk72 == 1 || gUnk_03002490->unk72 == 2)
+    if (gCurTask->unk72 == 1 || gCurTask->unk72 == 2)
         sub_0800a42c();
-    t = gUnk_03002490;
+    t = gCurTask;
     if (t->unk72 == 1)
         sub_080649b4(t->unk7F, 1);
     else
@@ -973,9 +973,9 @@ u32 sub_0806a25c(void)
         }
         else
         {
-            if (gUnk_03002490->unk72 == 1)
+            if (gCurTask->unk72 == 1)
             {
-                if (gUnk_030023D8 != 19)
+                if (gGameState != 19)
                     PlaySfx(510);
                 else
                     PlaySfx(514);

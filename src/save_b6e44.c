@@ -2,7 +2,7 @@
 #include "global.h"
 #include "task.h"
 
-extern void (*gUnk_0300003C)(void);
+extern void (*gFrameCallback)(void);
 extern u8 gUnk_0200B040;
 extern u8 gHBlankScrollState;
 extern s32 gHBlankScrollTimer;
@@ -13,7 +13,7 @@ void sub_080b6a90(void);
 
 void ResetHBlankScroll(void)
 {
-    gUnk_0300003C = NULL;
+    gFrameCallback = NULL;
     gHBlankScrollTimer = 0;
     REG_DMA0CNT_H = 0;
 }
@@ -26,7 +26,7 @@ void StartHBlankScroll(s32 a)
     gHBlankScrollTimer = 0;
     gHBlankScrollState = 1;
     gHBlankScrollEffect = a;
-    gUnk_0300003C = sub_080b60e8;
+    gFrameCallback = sub_080b60e8;
     gUnk_0200B040 = 1;
 }
 void sub_080b6ea0(s32 a)
@@ -34,7 +34,7 @@ void sub_080b6ea0(s32 a)
     gHBlankScrollTimer = 0;
     gHBlankScrollState = 1;
     gHBlankScrollEffect = a;
-    gUnk_0300003C = sub_080b6a90;
+    gFrameCallback = sub_080b6a90;
     gUnk_0200B040 = 1;
 }
 void sub_080b6ed4(void)
@@ -45,12 +45,12 @@ void sub_080b6ed4(void)
 void sub_080b6eec(void)
 {
     if (gUnk_0200B040 != 0)
-        gUnk_0300003C = NULL;
+        gFrameCallback = NULL;
 }
 void sub_080b6f04(void)
 {
     if (gUnk_0200B040 != 0)
-        gUnk_0300003C = sub_080b6a90;
+        gFrameCallback = sub_080b6a90;
 }
 void sub_080b6f20(void)
 {

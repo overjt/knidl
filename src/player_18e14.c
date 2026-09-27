@@ -6,7 +6,7 @@
  *
  * Animation script 52 of the sequence bank (entry 60 of gUnk_08731FA8, run by
  * task type #92, src/player_10358.c): three sparkles that close in on the
- * anchor task gUnk_03002790[Task.unk44].  The particle array gUnk_02006040
+ * anchor task gTasks[Task.unk44].  The particle array gUnk_02006040
  * holds per sparkle i an x offset [i], a y offset [i + 3] and an x
  * acceleration [i + 6], all 16.16.  For the first 50 frames a free slot is
  * refilled from the 16-entry start tables gUnk_08732150[0] (x, mirrored by the
@@ -41,16 +41,16 @@ void sub_08018e14(void)
 
     for (i = 0; i < 10; i++)
         gUnk_02006040[i] = 0;
-    gUnk_03002490->unk6C = 0;
+    gCurTask->unk6C = 0;
     while (1)
     {
         for (i = 0; i < 3; i++)
         {
-            if ((s16)gUnk_03002490->unk6C < 50 && gUnk_02006040[i] == 0)
+            if ((s16)gCurTask->unk6C < 50 && gUnk_02006040[i] == 0)
             {
                 gUnk_02006040[i + 6] = 0;
                 r = RandomRange(16);
-                if ((s8)gUnk_03002490->unk43 == 1)
+                if ((s8)gCurTask->unk43 == 1)
                     gUnk_02006040[i] = gUnk_08732150[0][r] << 16;
                 else
                     gUnk_02006040[i] = -(gUnk_08732150[0][r] << 16);
@@ -74,13 +74,13 @@ void sub_08018e14(void)
             gUnk_02006040[i + 3] += v;
             if (gUnk_02006040[i] != 0)
             {
-                gUnk_03001F2C = gUnk_03002790[gUnk_03002490->unk44].unk48 + (gUnk_02006040[i] >> 16) - 8;
-                gUnk_03002448 = gUnk_03002790[gUnk_03002490->unk44].unk4A + (gUnk_02006040[i + 3] >> 16) + 16;
-                QueueSprite(gUnk_03002490->unk42, (u32)gUnk_080D2148, 0, 0, gUnk_03001F2C, gUnk_03002448);
+                gUnk_03001F2C = gTasks[gCurTask->unk44].unk48 + (gUnk_02006040[i] >> 16) - 8;
+                gUnk_03002448 = gTasks[gCurTask->unk44].unk4A + (gUnk_02006040[i + 3] >> 16) + 16;
+                QueueSprite(gCurTask->unk42, (u32)gUnk_080D2148, 0, 0, gUnk_03001F2C, gUnk_03002448);
             }
         }
-        gUnk_03002490->unk6C++;
-        if ((s16)gUnk_03002490->unk6C > 60)
+        gCurTask->unk6C++;
+        if ((s16)gCurTask->unk6C > 60)
             break;
         TaskYieldTrampoline(1);
     }

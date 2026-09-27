@@ -17,7 +17,7 @@
  *       until it leaves the screen.
  *   sub_080c4974 / sub_080c4890 / sub_080c4a20 / sub_080c495c   four palette
  *       fades (gUnk_020170A0[]): start one (source rows, destination in
- *       gUnk_03001470, period, steps, colour count, repeats), step them every
+ *       gObjPalette, period, steps, colour count, repeats), step them every
  *       frame with BlendColors, free one, free all.
  *   sub_080c4a48 ... sub_080c4c30   the HUD sprites: the digit palette, a
  *       digit, a symbol, a frame count as ss:cc, a number with leading blanks
@@ -93,10 +93,10 @@ struct M37Game
     /*0x300*/ u32 unk300;       /* frame counter */
     /*0x304*/ s16 unk304;       /* sub_080c4f60's OAM list: entry count */
     /*0x306*/ s16 unk306[160];  /* ... and entries */
-    /*0x446*/ u16 unk446;       /* gUnk_03002360 */
-    /*0x448*/ u16 unk448;       /* gUnk_0300243C */
+    /*0x446*/ u16 unk446;       /* gLocalPlayer */
+    /*0x448*/ u16 unk448;       /* gLinkPlayerCount */
     /*0x44A*/ u8 pad44A[2];
-    /*0x44C*/ s32 unk44C;       /* a task index into gUnk_03002790 */
+    /*0x44C*/ s32 unk44C;       /* a task index into gTasks */
     /*0x450*/ u8 unk450;
     /*0x451*/ u8 unk451;
     /*0x452*/ u8 pad452[2];
@@ -160,7 +160,7 @@ extern u16 gUnk_02017170;
 extern u32 gUnk_08755FA8[];
 extern s16 gUnk_080CFF60[];
 extern u32 gUnk_08755FBC[];
-extern u16 gUnk_03001470[];
+extern u16 gObjPalette[];
 extern u32 gUnk_08755FEC[];
 extern u32 gUnk_0875603C[];
 extern s16 gUnk_080CFF70[];
@@ -217,13 +217,13 @@ void sub_080c46ec(void)
     s32 x;
     s32 *p;
 
-    gUnk_03002490->unk0C = (u32)TaskDrawScreen;
-    gUnk_03002490->unk3E &= 0x7FFF;
-    gUnk_03002490->unk42 = 3;
-    gUnk_03002490->unk3E = 0;
-    gUnk_03002490->unk4A = 40;
-    gUnk_03002490->unk38 = gUnk_08755FBC;
-    gUnk_03002490->unk3C = 0xFFFF;
+    gCurTask->unk0C = (u32)TaskDrawScreen;
+    gCurTask->unk3E &= 0x7FFF;
+    gCurTask->unk42 = 3;
+    gCurTask->unk3E = 0;
+    gCurTask->unk4A = 40;
+    gCurTask->unk38 = gUnk_08755FBC;
+    gCurTask->unk3C = 0xFFFF;
     g->unk0EC.unk74 = 0;
     for (i = 0, p = &g->unk0EC.unk04[0].unk8, x = 0; i <= 6; i++) {
         sub_080c4664(i);
@@ -232,7 +232,7 @@ void sub_080c46ec(void)
         x += 0x340000;
     }
     *last = gAirGrindCoursePtr->unk000;
-    gUnk_03002490->unk04 = (u32)sub_080c4790;
+    gCurTask->unk04 = (u32)sub_080c4790;
     TaskSetSkipMask(1, gCurTaskIdx);
     TaskSleepForever();
 }
@@ -264,7 +264,7 @@ void sub_080c4790(void)
 
 void sub_080c4818(void)
 {
-    struct Task *t = gUnk_03002490;
+    struct Task *t = gCurTask;
 
     t->unk48 = (t->unk4C >> 16) - gAirGrindCoursePtr->unk000 + 120;
     t->unk3C = gUnk_02017170 & 1;
@@ -276,7 +276,7 @@ void sub_080c4818(void)
 
 void sub_080c4860(s32 y)
 {
-    struct Task *t = &gUnk_03002790[gAirGrindPtr->unk44C];
+    struct Task *t = &gTasks[gAirGrindPtr->unk44C];
 
     t->unk4C = y << 16;
     t->unk08 = (u32)sub_080c4818;
@@ -336,7 +336,7 @@ s32 sub_080c4974(u16 *src, s32 pal, s32 period, s32 steps, s32 count, s32 repeat
     gUnk_020170A0[i].unk14 = Div(256, period);
     gUnk_020170A0[i].unk18 = count;
     gUnk_020170A0[i].unk1C = (s32)src;
-    gUnk_020170A0[i].unk20 = (s32)&gUnk_03001470[pal];
+    gUnk_020170A0[i].unk20 = (s32)&gObjPalette[pal];
     gUnk_020170A0[i].unk24 = repeat;
     return i;
 }

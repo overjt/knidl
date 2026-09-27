@@ -78,7 +78,7 @@ struct HitEntry
 
 extern u8 gUnk_03002144;
 extern u16 gUnk_0300214C;           /* actor y */
-extern s16 gUnk_03002158[];         /* camera rectangle: left, right, top, bottom */
+extern s16 gViewRect[];         /* camera rectangle: left, right, top, bottom */
 extern u16 gUnk_03002358;           /* actor x */
 extern u16 gUnk_03002368;
 extern struct AttackBox *gUnk_0300236C;
@@ -133,7 +133,7 @@ u8 sub_0801b24c(void)
     for (i = 0; i < gUnk_030054F4; i++)
     {
         gUnk_03005498 = e->unk00;
-        t = &gUnk_03002790[gUnk_03005498];
+        t = &gTasks[gUnk_03005498];
         gUnk_030054F0 = t->unk88;
         gUnk_030054E8 = e->unk08;
         if (gUnk_030054F0 == NULL)
@@ -144,27 +144,27 @@ u8 sub_0801b24c(void)
         {
             s32 x;
             gUnk_0300549C = x = gUnk_030054E8->unk00 + e->unk02;
-            gUnk_030054EC = (x - (u16)gUnk_03002158[0]) + gUnk_030054E8->unk02;
-            gUnk_030054E4 = (x - (u16)gUnk_03002158[0]) + gUnk_030054E8->unk04;
+            gUnk_030054EC = (x - (u16)gViewRect[0]) + gUnk_030054E8->unk02;
+            gUnk_030054E4 = (x - (u16)gViewRect[0]) + gUnk_030054E8->unk04;
         }
         else if (t->unk43 == 1)
         {
             s32 x;
             gUnk_0300549C = x = gUnk_030054E8->unk00 + e->unk02;
-            gUnk_030054EC = (x - (u16)gUnk_03002158[0]) + gUnk_030054E8->unk02;
-            gUnk_030054E4 = (x - (u16)gUnk_03002158[0]) + gUnk_030054E8->unk04;
+            gUnk_030054EC = (x - (u16)gViewRect[0]) + gUnk_030054E8->unk02;
+            gUnk_030054E4 = (x - (u16)gViewRect[0]) + gUnk_030054E8->unk04;
         }
         else
         {
             s32 x;
             gUnk_0300549C = x = -gUnk_030054E8->unk00 + e->unk02;
-            gUnk_030054EC = (x - (u16)gUnk_03002158[0]) - gUnk_030054E8->unk04;
-            gUnk_030054E4 = (x - (u16)gUnk_03002158[0]) - gUnk_030054E8->unk02;
+            gUnk_030054EC = (x - (u16)gViewRect[0]) - gUnk_030054E8->unk04;
+            gUnk_030054E4 = (x - (u16)gViewRect[0]) - gUnk_030054E8->unk02;
         }
         gUnk_030054A0 = gUnk_030054E8->unk01 + e->unk04;
         e++;
-        gUnk_03005390 = (gUnk_030054A0 - (u16)gUnk_03002158[2]) + gUnk_030054E8->unk03;
-        gUnk_03005494 = (gUnk_030054A0 - (u16)gUnk_03002158[2]) + gUnk_030054E8->unk05;
+        gUnk_03005390 = (gUnk_030054A0 - (u16)gViewRect[2]) + gUnk_030054E8->unk03;
+        gUnk_03005494 = (gUnk_030054A0 - (u16)gViewRect[2]) + gUnk_030054E8->unk05;
         if (gUnk_030054E4 < gUnk_030054A4)
             continue;
         if (gUnk_03005490 < gUnk_030054EC)
@@ -174,7 +174,7 @@ u8 sub_0801b24c(void)
         if (gUnk_03005294 < gUnk_03005390)
             continue;
         if (gUnk_03005394 != 4)
-            u = &gUnk_03002790[gUnk_03005394];
+            u = &gTasks[gUnk_03005394];
         b = gUnk_030054E8;
         k = (u32)(b->unk08 << 28) >> 28;
         a = gUnk_0300236C;

@@ -44,8 +44,8 @@ extern s16 gUnk_02008014[];
 extern s16 gUnk_0200801C;
 extern u8 gUnk_0200AFF8;
 extern u8 gUnk_0200B028;
-extern void (*gUnk_03000014)(void);
-extern u16 gUnk_03002360;
+extern void (*gFrameEndCallback)(void);
+extern u16 gLocalPlayer;
 extern u8 gUnk_030023B0;
 extern s8 gUnk_03002444;
 extern s32 gUnk_03002448;
@@ -71,7 +71,7 @@ void sub_0800aaac(s32 i);
 
 void sub_0800a130(s32 a, s32 id)
 {
-    if (id == gUnk_03002360 && gUnk_02006014 == 1) {
+    if (id == gLocalPlayer && gUnk_02006014 == 1) {
         if (a == 0) {
             sub_08008ebc();
             gUnk_020061D4 = 0;
@@ -85,13 +85,13 @@ void sub_0800a130(s32 a, s32 id)
 
 void sub_0800a178(s32 a, s32 id)
 {
-    if (id == gUnk_03002360 && gUnk_02006014 == 1)
+    if (id == gLocalPlayer && gUnk_02006014 == 1)
         gUnk_0200801C = a;
 }
 
 void sub_0800a19c(s32 id)
 {
-    if (id == gUnk_03002360 && gUnk_02006014 == 1) {
+    if (id == gLocalPlayer && gUnk_02006014 == 1) {
         switch (gUnk_020061D4) {
         case 0:
             gUnk_020061D4 = 2;
@@ -115,7 +115,7 @@ void sub_0800a19c(s32 id)
 
 void sub_0800a21c(s32 id)
 {
-    if (id == gUnk_03002360 && gUnk_02006014 == 1) {
+    if (id == gLocalPlayer && gUnk_02006014 == 1) {
         switch (gUnk_020061D4) {
         case 0:
         case 1:
@@ -209,8 +209,8 @@ void sub_0800a42c(void)
             idx = 0;
         else
             idx = gUnk_02005590[gCurTaskIdx - 32];
-        if (gUnk_02008014[idx] != -1 && gUnk_03002490->unk78 > 0) {
-            v = Div(gUnk_03002490->unk78 << 5, gUnk_02004B68);
+        if (gUnk_02008014[idx] != -1 && gCurTask->unk78 > 0) {
+            v = Div(gCurTask->unk78 << 5, gUnk_02004B68);
             if (v != gUnk_02007FBC[idx])
                 sub_0800a9a0(gUnk_02007FBC[idx], v, idx);
             gUnk_02007FBC[idx] = v;
@@ -229,8 +229,8 @@ void sub_0800a4c0(void)
         else
             idx = gUnk_02005590[gCurTaskIdx - 32];
         if (gUnk_02008014[idx] != -1) {
-            if (gUnk_03002490->unk78 > 0)
-                v = Div(gUnk_03002490->unk78 << 5, gUnk_02004B68);
+            if (gCurTask->unk78 > 0)
+                v = Div(gCurTask->unk78 << 5, gUnk_02004B68);
             else
                 v = 0;
             gUnk_02007FBC[idx] = v;
@@ -264,7 +264,7 @@ void sub_0800a554(void)
                 sub_0800b34c(20, 18, 2);
                 sub_0800b34c(20, 19, 2);
                 if (gUnk_02006030 == 0)
-                    sub_0800ad68(gUnk_02006020[gUnk_03002360]);
+                    sub_0800ad68(gUnk_02006020[gLocalPlayer]);
                 else
                     sub_0800af40(gUnk_02006068);
             }
@@ -276,7 +276,7 @@ void sub_0800a554(void)
 
 void sub_0800a698(void)
 {
-    gUnk_03000014 = 0;
+    gFrameEndCallback = 0;
 }
 
 void sub_0800a6a4(void)
@@ -287,14 +287,14 @@ void sub_0800a6a4(void)
     if (mode != 0) {
         if (mode == 1) {
             if (gUnk_020055F0[0] == 0) {
-                if (gUnk_02005E00.unk04[gUnk_03002360] != 0) {
+                if (gUnk_02005E00.unk04[gLocalPlayer] != 0) {
                     gUnk_020055F0[0] = mode;
                     gUnk_020055F0[1] = 0;
                 }
                 if (gUnk_020055F0[0] == 0)
                     goto done;
             }
-            if (gUnk_02005E00.unk04[gUnk_03002360] == 0) {
+            if (gUnk_02005E00.unk04[gLocalPlayer] == 0) {
                 gUnk_020055F0[0] = 0;
                 row = gUnk_03002444 ? 2 : 0;
                 sub_0800b34c(12, row, 16);
@@ -303,10 +303,10 @@ void sub_0800a6a4(void)
                 if (gUnk_020055F0[1] == 0) {
                     if (gUnk_020055F0[0] == 2) {
                         gUnk_020055F0[0] = 1;
-                        sub_0800b230(gUnk_02005E00.unk04[gUnk_03002360] >> 4, 1);
+                        sub_0800b230(gUnk_02005E00.unk04[gLocalPlayer] >> 4, 1);
                     } else {
                         gUnk_020055F0[0] = 2;
-                        sub_0800b230(gUnk_03002360, 2);
+                        sub_0800b230(gLocalPlayer, 2);
                     }
                     gUnk_020055F0[1] = 90;
                 }
@@ -338,7 +338,7 @@ void sub_0800a778(void)
             break;
         case 3:
             if (--gUnk_0200801C <= 0)
-                sub_0800a21c(gUnk_03002360);
+                sub_0800a21c(gLocalPlayer);
             break;
         case 4:
             gUnk_0200801C -= 8;

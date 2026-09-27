@@ -9,7 +9,7 @@
  * (gHBlankDmaDest = 0x04000018).  Every eighth line picks a new offset from
  * the s8 wave table gUnk_087561CC scaled by the frame counter gHBlankScrollTimer
  * (which wraps at 0x200), and each of the 160 lines gets the offset, the
- * fixed BG2VOFS value from its shadow gUnk_03001E94 and the offset again.
+ * fixed BG2VOFS value from its shadow gBg2ScrollY and the offset again.
  *
  * Matching note: the ROM keeps &gHBlankScrollTimer in one register from the wrap
  * test to the loop, which is a pointer local (a direct reference makes gcse
@@ -20,12 +20,12 @@ extern u8 gHBlankScrollState;
 extern s32 gHBlankScrollTimer;
 extern u16 gHBlankScrollTable[];
 extern s32 gUnk_02016C30;
-extern void (*gUnk_0300003C)(void);
+extern void (*gFrameCallback)(void);
 extern u32 gHBlankDmaDest;
-extern vs32 gUnk_03000B78;
-extern vs32 gUnk_03000F8C;
-extern vu32 gUnk_03001E94;
-extern u16 gUnk_030023E4;
+extern vs32 gBg3ScrollX;
+extern vs32 gBg2ScrollX;
+extern vu32 gBg2ScrollY;
+extern u16 gSpriteCameraY;
 extern s8 gUnk_087561CC[];
 
 s32 sub_080b6b08(void)
@@ -39,14 +39,14 @@ s32 sub_080b6b08(void)
 
     if (gHBlankScrollState == 3)
     {
-        gUnk_03000F8C = gHBlankScrollTable[0] << 16;
-        gUnk_03000B78 = gHBlankScrollTable[2] << 16;
+        gBg2ScrollX = gHBlankScrollTable[0] << 16;
+        gBg3ScrollX = gHBlankScrollTable[2] << 16;
         gHBlankDmaDest = 0x04000018;
         return 3;
     }
     if (gHBlankScrollState == 2)
     {
-        gUnk_0300003C = NULL;
+        gFrameCallback = NULL;
         gHBlankScrollTimer = 0;
     }
     else
@@ -54,8 +54,8 @@ s32 sub_080b6b08(void)
         pg = (vs32 *)&gHBlankScrollTimer;
         if (*pg > 0x1FF)
             *pg = 0;
-        i = gUnk_030023E4;
-        w = gUnk_03001E94 >> 16;
+        i = gSpriteCameraY;
+        w = gBg2ScrollY >> 16;
         v = ((gUnk_087561CC[i >> 3] * *pg) >> 1) + gUnk_02016C30;
         p = gHBlankScrollTable;
         for (n = 0; n < 160; n++)
@@ -67,8 +67,8 @@ s32 sub_080b6b08(void)
             *p++ = v;
             i++;
         }
-        gUnk_03000F8C = gHBlankScrollTable[0] << 16;
-        gUnk_03000B78 = gHBlankScrollTable[2] << 16;
+        gBg2ScrollX = gHBlankScrollTable[0] << 16;
+        gBg3ScrollX = gHBlankScrollTable[2] << 16;
         gHBlankDmaDest = 0x04000018;
         return 3;
     }

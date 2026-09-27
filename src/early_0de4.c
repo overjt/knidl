@@ -5,37 +5,37 @@
  * agbcc -O2 -mthumb-interwork (game-code recipe).
  *
  * Runs the palette fade step (UpdateFade), advances the BGM/SE volume ramp
- * state machine (gUnk_03000B0C mode, gUnk_03000FBC volume 0..256,
- * gUnk_03000FCC delta), calls the per-frame hook gUnk_0300003C, spins on the
- * VBlank flag gUnk_03001EC4 (cleared by the handler in src/early_10cc.c),
+ * state machine (gVolumeRampMode mode, gVolumeRampLevel volume 0..256,
+ * gVolumeRampSpeed delta), calls the per-frame hook gFrameCallback, spins on the
+ * VBlank flag gWaitingForVBlank (cleared by the handler in src/early_10cc.c),
  * handles the A+B+Start+Select soft-reset combo, ticks the play-time clock
- * gUnk_03000498[] (frames/seconds/minutes/hours, 59 rollovers, hour cap 998)
- * and finally calls the post-frame hook gUnk_03000014.
+ * gPlayTime[] (frames/seconds/minutes/hours, 59 rollovers, hour cap 998)
+ * and finally calls the post-frame hook gFrameEndCallback.
  *
  * Matching note: the clock counters are pre-incremented in their tests
- * (`if (++gUnk_03000498[1] > 59)`): the HImode increment's zero-extension
+ * (`if (++gPlayTime[1] > 59)`): the HImode increment's zero-extension
  * is what gives the ROM's `ldr r5, =0xFFFF; adds r2, r5, #0` mask and the
  * `ands r0, r2` truncations.
  */
 
-extern vs16 gUnk_03000B0C;
-extern vs16 gUnk_03000FBC;
-extern vu16 gUnk_03000FCC;
-extern vu16 gUnk_03000AF8;
-extern void (*gUnk_0300003C)(void);
+extern vs16 gVolumeRampMode;
+extern vs16 gVolumeRampLevel;
+extern vu16 gVolumeRampSpeed;
+extern vu16 gSoundDisabled;
+extern void (*gFrameCallback)(void);
 extern vu16 gUnk_03001014;
 extern u32 gUnk_03000B74;
-extern vu16 gUnk_03001EC4;
-extern vu16 gUnk_03000FD0;
-extern vu16 gUnk_03001EF4;
-extern vu16 gUnk_03001E90;
-extern vu16 gUnk_03000038;
-extern vu16 gUnk_0300243C;
-extern vu16 gUnk_03001EF8;
+extern vu16 gWaitingForVBlank;
+extern vu16 gFrameInProgress;
+extern vu16 gHeldKeys;
+extern vu16 gFadeSteps;
+extern vu16 gPressedKeys;
+extern vu16 gLinkPlayerCount;
+extern vu16 gIntrMasterEnable;
 extern vu32 gUnk_0200EBA0;
-extern vu16 gUnk_03001EA4;
-extern u16 gUnk_03000498[4];
-extern void (*gUnk_03000014)(void);
+extern vu16 gFrameCount;
+extern u16 gPlayTime[4];
+extern void (*gFrameEndCallback)(void);
 
 struct MusicPlayerInfo;
 extern struct MusicPlayerInfo gMPlayInfo_BGM;
@@ -56,86 +56,86 @@ void EndFrame(void)
     u16 keys;
     UpdateFade();
 
-    switch (gUnk_03000B0C)
+    switch (gVolumeRampMode)
     {
     case 0:
         break;
     case 1:
-        gUnk_03000FBC += gUnk_03000FCC;
-        if (gUnk_03000FBC > 255)
+        gVolumeRampLevel += gVolumeRampSpeed;
+        if (gVolumeRampLevel > 255)
         {
-            gUnk_03000FBC = 256;
-            gUnk_03000FCC = 0;
-            gUnk_03000B0C = 0;
+            gVolumeRampLevel = 256;
+            gVolumeRampSpeed = 0;
+            gVolumeRampMode = 0;
         }
-        if (gUnk_03000AF8 == 0)
-            m4aMPlayVolumeControl(&gMPlayInfo_BGM, 0xFF, gUnk_03000FBC);
+        if (gSoundDisabled == 0)
+            m4aMPlayVolumeControl(&gMPlayInfo_BGM, 0xFF, gVolumeRampLevel);
         break;
     case 2:
-        gUnk_03000FBC += gUnk_03000FCC;
-        if (gUnk_03000FBC <= 0)
+        gVolumeRampLevel += gVolumeRampSpeed;
+        if (gVolumeRampLevel <= 0)
         {
-            gUnk_03000FBC = 0;
-            gUnk_03000FCC = 0;
-            gUnk_03000B0C = 0;
-            if (gUnk_03000AF8 == 0)
+            gVolumeRampLevel = 0;
+            gVolumeRampSpeed = 0;
+            gVolumeRampMode = 0;
+            if (gSoundDisabled == 0)
                 StopAllSound();
         }
-        if (gUnk_03000AF8 == 0)
-            m4aMPlayVolumeControl(&gMPlayInfo_BGM, 0xFF, gUnk_03000FBC);
+        if (gSoundDisabled == 0)
+            m4aMPlayVolumeControl(&gMPlayInfo_BGM, 0xFF, gVolumeRampLevel);
         break;
     case 3:
-        gUnk_03000FBC += gUnk_03000FCC;
-        if (gUnk_03000FBC > 255)
+        gVolumeRampLevel += gVolumeRampSpeed;
+        if (gVolumeRampLevel > 255)
         {
-            gUnk_03000FBC = 256;
-            gUnk_03000FCC = 0;
-            gUnk_03000B0C = 0;
+            gVolumeRampLevel = 256;
+            gVolumeRampSpeed = 0;
+            gVolumeRampMode = 0;
         }
-        if (gUnk_03000AF8 == 0)
+        if (gSoundDisabled == 0)
         {
-            m4aMPlayVolumeControl(&gMPlayInfo_SE1, 0xFF, gUnk_03000FBC);
-            m4aMPlayVolumeControl(&gMPlayInfo_SE2, 0xFF, gUnk_03000FBC);
-            m4aMPlayVolumeControl(&gMPlayInfo_SE3, 0xFF, gUnk_03000FBC);
+            m4aMPlayVolumeControl(&gMPlayInfo_SE1, 0xFF, gVolumeRampLevel);
+            m4aMPlayVolumeControl(&gMPlayInfo_SE2, 0xFF, gVolumeRampLevel);
+            m4aMPlayVolumeControl(&gMPlayInfo_SE3, 0xFF, gVolumeRampLevel);
         }
         break;
     case 4:
-        gUnk_03000FBC += gUnk_03000FCC;
-        if (gUnk_03000FBC <= 0)
+        gVolumeRampLevel += gVolumeRampSpeed;
+        if (gVolumeRampLevel <= 0)
         {
-            gUnk_03000FBC = 0;
-            gUnk_03000FCC = 0;
-            gUnk_03000B0C = 0;
+            gVolumeRampLevel = 0;
+            gVolumeRampSpeed = 0;
+            gVolumeRampMode = 0;
         }
-        if (gUnk_03000AF8 == 0)
+        if (gSoundDisabled == 0)
         {
-            m4aMPlayVolumeControl(&gMPlayInfo_SE1, 0xFF, gUnk_03000FBC);
-            m4aMPlayVolumeControl(&gMPlayInfo_SE2, 0xFF, gUnk_03000FBC);
-            m4aMPlayVolumeControl(&gMPlayInfo_SE3, 0xFF, gUnk_03000FBC);
+            m4aMPlayVolumeControl(&gMPlayInfo_SE1, 0xFF, gVolumeRampLevel);
+            m4aMPlayVolumeControl(&gMPlayInfo_SE2, 0xFF, gVolumeRampLevel);
+            m4aMPlayVolumeControl(&gMPlayInfo_SE3, 0xFF, gVolumeRampLevel);
         }
         break;
     }
 
-    if (gUnk_0300003C != 0)
+    if (gFrameCallback != 0)
     {
         gUnk_03001014 = 0;
-        gUnk_0300003C();
+        gFrameCallback();
         gUnk_03000B74 |= 1;
     }
 
-    gUnk_03001EC4 = 1;
-    gUnk_03000FD0 = 0;
+    gWaitingForVBlank = 1;
+    gFrameInProgress = 0;
 
     if (REG_IME & 1)
     {
-        while (gUnk_03001EC4 != 0)
+        while (gWaitingForVBlank != 0)
             ;
     }
 
-    keys = gUnk_03001EF4 & 15;
-    if (keys == 15 && gUnk_03001E90 == 0 && (keys & gUnk_03000038) != 0 && gUnk_0300243C == 1)
+    keys = gHeldKeys & 15;
+    if (keys == 15 && gFadeSteps == 0 && (keys & gPressedKeys) != 0 && gLinkPlayerCount == 1)
     {
-        gUnk_03001EF8 = REG_IME = REG_IME & 0xFFFE;
+        gIntrMasterEnable = REG_IME = REG_IME & 0xFFFE;
         SoundDriverVSyncOff();
         m4aSoundVSync();
         for (i = 0x4000; i != 0; i--)
@@ -143,30 +143,30 @@ void EndFrame(void)
         SoftReset(0x1C);
     }
 
-    gUnk_03000FD0 = 1;
+    gFrameInProgress = 1;
 
     if (gUnk_0200EBA0 == 2)
         sub_08004734();
 
-    gUnk_03001EA4++;
+    gFrameCount++;
 
-    if (gUnk_03000498[3] <= 998)
+    if (gPlayTime[3] <= 998)
     {
-        if (++gUnk_03000498[0] > 59)
+        if (++gPlayTime[0] > 59)
         {
-            gUnk_03000498[0] = 0;
-            if (++gUnk_03000498[1] > 59)
+            gPlayTime[0] = 0;
+            if (++gPlayTime[1] > 59)
             {
-                gUnk_03000498[1] = 0;
-                if (++gUnk_03000498[2] > 59)
+                gPlayTime[1] = 0;
+                if (++gPlayTime[2] > 59)
                 {
-                    gUnk_03000498[2] = 0;
-                    gUnk_03000498[3]++;
+                    gPlayTime[2] = 0;
+                    gPlayTime[3]++;
                 }
             }
         }
     }
 
-    if (gUnk_03000014 != 0)
-        gUnk_03000014();
+    if (gFrameEndCallback != 0)
+        gFrameEndCallback();
 }

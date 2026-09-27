@@ -105,7 +105,7 @@ extern s16 gUnk_020061D0;               /*   the metatile's collision byte */
 extern s8 gUnk_0873A494[];
 extern u16 *gUnk_0873A47C[];            /* animation script per block kind */
 extern s8 gUnk_0873A5D4[];
-extern s16 gUnk_03002158[];
+extern s16 gViewRect[];
 extern u8 gUnk_0200B078;
 
 s32 PlaySfx(s32 id);
@@ -128,7 +128,7 @@ u16 sub_08030804(struct HitBoxSet *p, s32 x, s32 y, s32 e)
     s32 dir;
 
     if (p->unk0 & 0x8000)
-        dir = gUnk_03002490->unk43;
+        dir = gCurTask->unk43;
     else
         dir = 1;
     return sub_0803097c(p, x, y, dir, e);
@@ -139,10 +139,10 @@ u16 sub_08030848(struct HitBoxSet *p, s32 e)
     s32 dir;
 
     if (p->unk0 & 0x8000)
-        dir = gUnk_03002490->unk43;
+        dir = gCurTask->unk43;
     else
         dir = 1;
-    return sub_0803097c(p, gUnk_03002490->unk48, gUnk_03002490->unk4A, dir, e);
+    return sub_0803097c(p, gCurTask->unk48, gCurTask->unk4A, dir, e);
 }
 
 u16 sub_08030898(struct HitBoxSet *p, s32 e)
@@ -150,10 +150,10 @@ u16 sub_08030898(struct HitBoxSet *p, s32 e)
     s32 dir;
 
     if (p->unk0 & 0x8000)
-        dir = gUnk_03002490->unk43;
+        dir = gCurTask->unk43;
     else
         dir = 1;
-    return sub_08030b14(p, gUnk_03002490->unk48, gUnk_03002490->unk4A, dir, e);
+    return sub_08030b14(p, gCurTask->unk48, gCurTask->unk4A, dir, e);
 }
 
 u16 sub_080308e8(struct HitBoxSet *p)
@@ -161,10 +161,10 @@ u16 sub_080308e8(struct HitBoxSet *p)
     s32 dir;
 
     if (p->unk0 & 0x8000)
-        dir = gUnk_03002490->unk43;
+        dir = gCurTask->unk43;
     else
         dir = 1;
-    return sub_0803097c(p, gUnk_03002490->unk48, gUnk_03002490->unk4A, dir, -1);
+    return sub_0803097c(p, gCurTask->unk48, gCurTask->unk4A, dir, -1);
 }
 
 u16 sub_0803093c(struct HitBoxSet *p, s32 x, s32 y)
@@ -172,7 +172,7 @@ u16 sub_0803093c(struct HitBoxSet *p, s32 x, s32 y)
     s32 dir;
 
     if (p->unk0 & 0x8000)
-        dir = gUnk_03002490->unk43;
+        dir = gCurTask->unk43;
     else
         dir = 1;
     return sub_0803097c(p, x, y, dir, -1);
@@ -355,10 +355,10 @@ u16 sub_08030db8(struct HitBoxSet *p)
     s32 dir;
 
     if (p->unk0 & 0x8000)
-        dir = gUnk_03002490->unk43;
+        dir = gCurTask->unk43;
     else
         dir = 1;
-    return sub_08030e00(p, gUnk_03002490->unk48, gUnk_03002490->unk4A, dir);
+    return sub_08030e00(p, gCurTask->unk48, gCurTask->unk4A, dir);
 }
 
 u16 sub_08030e00(struct HitBoxSet *p, s32 x, s32 y, s32 dir)
@@ -528,17 +528,17 @@ s32 sub_08031310(s32 x, s32 y)
 
     x = x * 16 + 8;
     y = y * 16 + 8;
-    lim = gUnk_03002158[0] - 16;
+    lim = gViewRect[0] - 16;
     if (lim < 0)
         lim = 0;
     if (x > lim)
     {
-        lim = gUnk_03002158[1] + 16;
+        lim = gViewRect[1] + 16;
         if (gUnk_03005620 * 16 < lim)
             lim = gUnk_03005620 * 16;
         if (lim > x)
         {
-            lim = gUnk_03002158[2] - 16;
+            lim = gViewRect[2] - 16;
             if (lim < 0)
                 lim = 0;
             if (y > lim)

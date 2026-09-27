@@ -6,18 +6,18 @@
  * The serial interrupt of the SIO multi-play link driver (pokeruby's SerialCB
  * with DoHandshake written inline; this ROM carries an older revision of the
  * library pokeruby ships as src/link.c, see src/early_6ac8.c), installed in
- * gUnk_030004B0[0] by src/early_6464.c and src/early_7004.c.  It records the
+ * gIntrTable[0] by src/early_6464.c and src/early_7004.c.  It records the
  * player id from SIOCNT, then by link state gLink.unk01: in state 4
  * (connected) it records the SIOCNT error bit and runs the receive step
  * DoRecv, the send step DoSend and SendRecvDone; in state 2 it
  * runs the handshake: it sends 0x8FFF (master, unk10 == 1) or 0xCFF0, copies
  * the four SIOMULTI words into recv[], and on a master's 0x8FFF publishes the
- * player id, the master flag and the player count (gUnk_03002360,
- * gUnk_03001F38, gUnk_0300243C/gUnk_030023AC) and moves to state 3 or 4;
+ * player id, the master flag and the player count (gLocalPlayer,
+ * gLinkIsMaster, gLinkPlayerCount/gPlayerCount) and moves to state 3 or 4;
  * otherwise it counts the players answering 0xCFF0-0xCFF3, stores the count
  * and derives the slot id unk11 from the lowest answer.  Every call bumps the
- * frame counter unk0D and gUnk_03004D7C, and on the fourth frame copies the
- * receive-queue count unk4D1 to gUnk_03004D40.
+ * frame counter unk0D and gSerialIntrCount, and on the fourth frame copies the
+ * receive-queue count unk4D1 to gLastRecvQueueCount.
  *
  * Matching notes (final campaign, lessons 3.490/3.491): the handshake reads
  * the snapshot through the struct, as pokeruby does (a `u16 *recv` local was
@@ -62,12 +62,12 @@ extern struct Link gLink;
 extern vu16 gUnk_04000120;      /* REG_SIOMULTI0 */
 extern vu16 gUnk_04000128;      /* REG_SIOCNT */
 extern vu16 gUnk_0400012A;      /* REG_SIOMLT_SEND */
-extern vu16 gUnk_03002360;
-extern vu16 gUnk_03001F38;
-extern u16 gUnk_0300243C;
-extern vu16 gUnk_030023AC;
-extern u32 gUnk_03004D7C;
-extern u8 gUnk_03004D40;
+extern vu16 gLocalPlayer;
+extern vu16 gLinkIsMaster;
+extern u16 gLinkPlayerCount;
+extern vu16 gPlayerCount;
+extern u32 gSerialIntrCount;
+extern u8 gLastRecvQueueCount;
 void DoRecv(void);
 void DoSend(void);
 void SendRecvDone(void);
@@ -102,10 +102,10 @@ void SerialCB(void)
 
         if (gLink.recv[0] == 0x8FFF)
         {
-            gUnk_03002360 = gLink.unk02;
-            gUnk_03001F38 = gLink.unk00;
-            gUnk_0300243C = gLink.count;
-            gUnk_030023AC = gUnk_0300243C;
+            gLocalPlayer = gLink.unk02;
+            gLinkIsMaster = gLink.unk00;
+            gLinkPlayerCount = gLink.count;
+            gPlayerCount = gLinkPlayerCount;
             if (gLink.unk00)
                 gLink.unk01 = 3;
             else
@@ -149,8 +149,8 @@ void SerialCB(void)
     }
 
     gLink.unk0D++;
-    gUnk_03004D7C++;
+    gSerialIntrCount++;
 
     if ((s8)gLink.unk0D == 4)
-        gUnk_03004D40 = gLink.unk4D1;
+        gLastRecvQueueCount = gLink.unk4D1;
 }

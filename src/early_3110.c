@@ -36,7 +36,7 @@
  *   EnableSoundDriver  m4aSoundVSyncOn + forget the BGM.
  *
  * Matching notes:
- *  - gUnk_03000490 must be `vs16`, not `vu16`: only the signed type keeps the
+ *  - gCurrentBgm must be `vs16`, not `vu16`: only the signed type keeps the
  *    -999 "no song" constant as the ROM's full-word 0xFFFFFC19 pool entry
  *    (a u16 destination truncates it to 0x0000FC19 at compile time), and the
  *    volatile read is what gives the ROM's `ldrh` + `lsls #16` + `asrs #16`
@@ -83,42 +83,42 @@ struct SongEntry
     u8 pad[2];
 };
 
-extern const struct SongEntry gUnk_0872EB38[];
+extern const struct SongEntry gSfxTable[];
 
-extern vs16 gUnk_03000490;
-extern vu16 gUnk_03000AF8;
-extern vu16 gUnk_03000B0C;
-extern vu16 gUnk_03000FBC;
-extern vu16 gUnk_03000FCC;
-extern vu16 gUnk_03001EDC;
-extern vu16 gUnk_03001EE4;
+extern vs16 gCurrentBgm;
+extern vu16 gSoundDisabled;
+extern vu16 gVolumeRampMode;
+extern vu16 gVolumeRampLevel;
+extern vu16 gVolumeRampSpeed;
+extern vu16 gSfxDisabled;
+extern vu16 gSoundDriverOn;
 
-extern vu16 gUnk_03000F80[];
-extern vu8 gUnk_0300001C[];
-extern vu8 gUnk_03001180[];
-extern vu8 gUnk_03001674[];
+extern vu16 gSfxSlotSongs[];
+extern vu8 gSfxPlayerSlots[];
+extern vu8 gSfxSlotPlayers[];
+extern vu8 gSfxSlotAges[];
 
 s32 PlayBgm(s32 songId)
 {
     if (songId & 0x800)
     {
-        gUnk_03000490 = -999;
+        gCurrentBgm = -999;
         songId &= ~0x800;
     }
     if (songId > 56)
         return 0;
     if (songId < 0)
         return 0;
-    if (gUnk_03000490 == songId)
+    if (gCurrentBgm == songId)
     {
-        if (gUnk_03000AF8 == 0)
+        if (gSoundDisabled == 0)
             m4aSongNumStartOrContinue(songId);
-        gUnk_03000490 = songId;
+        gCurrentBgm = songId;
         return 0;
     }
-    if (gUnk_03000AF8 == 0)
+    if (gSoundDisabled == 0)
         m4aSongNumStart(songId);
-    gUnk_03000490 = songId;
+    gCurrentBgm = songId;
     return 1;
 }
 
@@ -131,7 +131,7 @@ s32 GetCurrentBgm(void)
 {
     if ((s32)gMPlayInfo_BGM.status < 0)
         return -1;
-    return gUnk_03000490;
+    return gCurrentBgm;
 }
 
 

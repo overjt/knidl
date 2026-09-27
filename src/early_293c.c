@@ -8,14 +8,14 @@ extern void sub_08008b8c(void);
 extern void RunFrames(int);
 extern void DisableSerial(void);
 
-extern u16 gUnk_03001F38;
-extern u16 gUnk_03005274;
-extern u16 gUnk_0300243C;
-extern u16 gUnk_03004D50[4][4];
-extern u32 gUnk_03004D70;
-extern u32 gUnk_03004D7C;
-extern u16 gUnk_03004D88;
-extern u16 gUnk_03004D90[4];
+extern u16 gLinkIsMaster;
+extern u16 gLinkCommand;
+extern u16 gLinkPlayerCount;
+extern u16 gRecvCmds[4][4];
+extern u32 gLinkStatus;
+extern u32 gSerialIntrCount;
+extern u16 gShouldAdvanceLinkState;
+extern u16 gSendCmd[4];
 extern u32 gUnk_0200EBA0;
 
 void sub_0800293c(void)
@@ -26,56 +26,56 @@ void sub_0800293c(void)
     int i;
     u32 old;
 
-    if (gUnk_03001F38 != 0)
-        gUnk_03005274 = 0x7755;
+    if (gLinkIsMaster != 0)
+        gLinkCommand = 0x7755;
     else
-        gUnk_03005274 = 0x9900;
+        gLinkCommand = 0x9900;
 
-    if (gUnk_0300243C <= 1)
+    if (gLinkPlayerCount <= 1)
         return;
 
     a = 0;
     b = 0;
     c = 0;
     for (;;) {
-        switch (gUnk_03005274) {
+        switch (gLinkCommand) {
         case 0x7755:
-            gUnk_03004D90[0] = 0x7755;
-            gUnk_03005274 = 0xAA00;
+            gSendCmd[0] = 0x7755;
+            gLinkCommand = 0xAA00;
             break;
         case 0xAA00:
             c = 30;
-            gUnk_03004D90[0] = 0xAA00;
-            gUnk_03005274 = 0x9900;
+            gSendCmd[0] = 0xAA00;
+            gLinkCommand = 0x9900;
             break;
         case 0xAA01:
-            gUnk_03004D90[0] = 0xAA01;
-            gUnk_03005274 = 0x9900;
+            gSendCmd[0] = 0xAA01;
+            gLinkCommand = 0x9900;
             break;
         case 0xAA02:
-            gUnk_03004D90[0] = 0xAA02;
+            gSendCmd[0] = 0xAA02;
             break;
         }
-        old = gUnk_03004D7C;
+        old = gSerialIntrCount;
         RunFrameNoTasks();
-        LinkMain1(&gUnk_03004D88, gUnk_03004D90, gUnk_03004D50);
+        LinkMain1(&gShouldAdvanceLinkState, gSendCmd, gRecvCmds);
         if (IsLinkError() != 0)
             sub_08008b8c();
-        if (old == gUnk_03004D7C) {
+        if (old == gSerialIntrCount) {
             if (++b > 30)
                 sub_08008b8c();
         }
         for (i = 0; i < 4; i++) {
-            switch (gUnk_03004D50[0][i]) {
+            switch (gRecvCmds[0][i]) {
             case 0x9900:
                 break;
             case 0xAA00:
-                gUnk_03005274 = 0xAA01;
+                gLinkCommand = 0xAA01;
                 break;
             case 0xAA01:
-                if (gUnk_03001F38 != 0) {
-                    if (++a >= gUnk_0300243C)
-                        gUnk_03005274 = 0xAA02;
+                if (gLinkIsMaster != 0) {
+                    if (++a >= gLinkPlayerCount)
+                        gLinkCommand = 0xAA02;
                 }
                 break;
             case 0xAA02:
@@ -83,18 +83,18 @@ void sub_0800293c(void)
             }
         }
         if (c != 0) {
-            if (a == gUnk_0300243C)
+            if (a == gLinkPlayerCount)
                 c = 0;
             else if (--c == 0) {
-                gUnk_03005274 = 0xAA00;
+                gLinkCommand = 0xAA00;
                 a = 0;
             }
         }
     }
 done:
-    if (gUnk_03001F38 != 0)
+    if (gLinkIsMaster != 0)
         gUnk_0200EBA0 = 0;
     RunFrames(5);
     DisableSerial();
-    gUnk_03004D70 = 0;
+    gLinkStatus = 0;
 }

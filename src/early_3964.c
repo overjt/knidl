@@ -69,9 +69,9 @@ extern u32 gUnk_0200EC48;
 extern vu16 gUnk_0200EB98[];
 extern struct Unk030023A8 gUnk_030023A8;
 extern vu16 gUnk_0300244C;
-extern u32 gUnk_030004B0[];
-extern vu16 gUnk_03000018;
-extern vu16 gUnk_03001EF8;
+extern u32 gIntrTable[];
+extern vu16 gIntrEnable;
+extern vu16 gIntrMasterEnable;
 
 extern void StopAllSound(void);
 extern void DisableSoundDriver(void);
@@ -86,14 +86,14 @@ extern u32 MultiBootCheckComplete(struct MultiBootParam *);
 /*FN sub_08003964*/
 void sub_08003964(void)
 {
-    gUnk_03001EF8 = REG_IME = REG_IME & 0xFFFE;
+    gIntrMasterEnable = REG_IME = REG_IME & 0xFFFE;
     gUnk_0200EC48 = -1;
     REG_SIOCNT = REG_SIOCNT & 0xBFFF;
     REG_SIOMLT_SEND = 0xD952;
-    gUnk_030004B0[1] = gUnk_030004B0[0] = (u32)sub_08004068;
+    gIntrTable[1] = gIntrTable[0] = (u32)sub_08004068;
     gUnk_0200EBC0.unk01 = gUnk_0200EBC0.unk02 = 0;
-    REG_IE = gUnk_03000018 = gUnk_03000018 & 0xFF3F;
-    gUnk_03001EF8 = REG_IME = REG_IME | 1;
+    REG_IE = gIntrEnable = gIntrEnable & 0xFF3F;
+    gIntrMasterEnable = REG_IME = REG_IME | 1;
 }
 
 /*FN sub_08003a00*/

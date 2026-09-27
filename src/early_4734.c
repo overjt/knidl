@@ -76,9 +76,9 @@ extern vs32 gUnk_0200EBA8;
 extern s32 gUnk_0200EBAC;
 extern s32 gUnk_0200EBBC;
 extern s32 gUnk_0200EC40;
-extern vu16 gUnk_03000018;      /* REG_IE shadow */
-extern vu16 gUnk_03001EF8;      /* REG_IME shadow */
-extern vu16 gUnk_03001F38;      /* link-mode flag */
+extern vu16 gIntrEnable;      /* REG_IE shadow */
+extern vu16 gIntrMasterEnable;      /* REG_IME shadow */
+extern vu16 gLinkIsMaster;      /* link-mode flag */
 
 /* REG_IME must be reached through a SYMBOL here, not the io_reg.h cast
  * literal: with the literal, cse.c derives 0x04000208 from the still-live
@@ -112,7 +112,7 @@ void sub_08004734(void)
         gUnk_0200EBA8++;
         break;
     case 1:
-        if (gUnk_03001F38 != 0)
+        if (gLinkIsMaster != 0)
         {
             if (gUnk_0200EC40 <= 5)
                 break;
@@ -123,21 +123,21 @@ void sub_08004734(void)
         }
         REG_SIODATA32 = 0;
         REG_IF |= 0xC0;
-        if (gUnk_03001F38 != 0)
+        if (gLinkIsMaster != 0)
         {
             REG_SIOCNT |= 0x80;
             REG_TM3CNT_L = 0xF318;
             REG_TM3CNT_H = 0xC0;
-            gUnk_03001EF8 = GIME = GIME & 0xFFFE;
-            REG_IE = gUnk_03000018 = gUnk_03000018 | 0x40;
+            gIntrMasterEnable = GIME = GIME & 0xFFFE;
+            REG_IE = gIntrEnable = gIntrEnable | 0x40;
         }
         else
         {
             REG_SIOCNT |= 0x4080;
-            gUnk_03001EF8 = GIME = GIME & 0xFFFE;
-            REG_IE = gUnk_03000018 = gUnk_03000018 | 0x80;
+            gIntrMasterEnable = GIME = GIME & 0xFFFE;
+            REG_IE = gIntrEnable = gIntrEnable | 0x80;
         }
-        gUnk_03001EF8 = GIME = GIME | 1;
+        gIntrMasterEnable = GIME = GIME | 1;
         gUnk_0200EC40 = 0;
         gUnk_0200EBA8++;
         break;
@@ -150,14 +150,14 @@ void sub_08004734(void)
         gUnk_0200EBA8++;
         break;
     case 4:
-        gUnk_03001EF8 = GIME = GIME & 0xFFFE;
-        REG_IE = gUnk_03000018 = gUnk_03000018 & 0xFF3F;
+        gIntrMasterEnable = GIME = GIME & 0xFFFE;
+        REG_IE = gIntrEnable = gIntrEnable & 0xFF3F;
         REG_SIOCNT = 0x1000;
         REG_SIOCNT = 0x2000;
         REG_SIOCNT |= 0x4003;
         REG_TM3CNT_H = 0;
         REG_IF |= 0xC0;
-        gUnk_03001EF8 = GIME = GIME | 1;
+        gIntrMasterEnable = GIME = GIME | 1;
         gUnk_0200EBA8 = 0x9999;
         gUnk_0200EBA0 = 0;
         break;

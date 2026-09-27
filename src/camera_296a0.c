@@ -11,10 +11,10 @@
  * view (bgmap_2a9cc.c), one per room layout; sub_08029b30 streams the whole
  * view.  sub_08029930, sub_080299e8, sub_08029a4c and sub_08029ab4 write
  * the 16.16 BG scroll shadows and the sprite camera
- * gUnk_03002348/gUnk_030023E4 from the camera plus the screen-shake offset
+ * gSpriteCameraX/gSpriteCameraY from the camera plus the screen-shake offset
  * gUnk_03005670 (BG3 follows gUnk_03005690, at half the shake unless
  * gUnk_02000000 is set).  sub_08029bb8 calls sub_0802a82c for every edge of
- * the visible rectangle gUnk_03002158 that moved past the previous one,
+ * the visible rectangle gViewRect that moved past the previous one,
  * gUnk_02004B78, while gUnk_020055D8 is set, then remembers it. */
 
 struct Unk03005670
@@ -54,19 +54,19 @@ extern s32 gUnk_03002448;
 extern struct Unk03005670 gUnk_03005670;
 extern u16 gUnk_03005690[2];
 extern s8 gUnk_02000000;
-extern s16 gUnk_03002348;
-extern s16 gUnk_030023E4;
-extern vs32 gUnk_03000B78;
-extern vs32 gUnk_03000FA8;
-extern vs32 gUnk_03000F8C;
-extern vs32 gUnk_03001E94;
+extern s16 gSpriteCameraX;
+extern s16 gSpriteCameraY;
+extern vs32 gBg3ScrollX;
+extern vs32 gBg3ScrollY;
+extern vs32 gBg2ScrollX;
+extern vs32 gBg2ScrollY;
 extern s32 gUnk_02016C30;
-extern vs32 gUnk_03001EE0;
-extern vs32 gUnk_03000FC0;
+extern vs32 gBg1ScrollX;
+extern vs32 gBg1ScrollY;
 extern struct Unk03004B00 gUnk_03004B00;
 extern struct Unk020055D8 gUnk_020055D8;
 extern s16 gUnk_02004B78[4];
-extern s16 gUnk_03002158[4];
+extern s16 gViewRect[4];
 
 void sub_08023f18(void);
 void sub_0802a82c(s32 x0, s32 x1, s32 y0, s32 y1);
@@ -211,45 +211,45 @@ void sub_080298c4(void)
 
 void sub_08029930(void)
 {
-    gUnk_03000F8C = (gUnk_03005604[0] + gUnk_03005670.unk2) << 16;
-    gUnk_03001E94 = (gUnk_03005604[1] + gUnk_03005670.unk4) << 16;
+    gBg2ScrollX = (gUnk_03005604[0] + gUnk_03005670.unk2) << 16;
+    gBg2ScrollY = (gUnk_03005604[1] + gUnk_03005670.unk4) << 16;
     if (gUnk_02000000 != 0)
     {
-        gUnk_03000B78 = (gUnk_03005690[0] + gUnk_03005670.unk2) << 16;
-        gUnk_03000FA8 = (gUnk_03005690[1] + gUnk_03005670.unk4) << 16;
+        gBg3ScrollX = (gUnk_03005690[0] + gUnk_03005670.unk2) << 16;
+        gBg3ScrollY = (gUnk_03005690[1] + gUnk_03005670.unk4) << 16;
     }
     else
     {
-        gUnk_03000B78 = (gUnk_03005690[0] + (gUnk_03005670.unk2 >> 1)) << 16;
-        gUnk_03000FA8 = gUnk_03005690[1] << 16;
+        gBg3ScrollX = (gUnk_03005690[0] + (gUnk_03005670.unk2 >> 1)) << 16;
+        gBg3ScrollY = gUnk_03005690[1] << 16;
     }
-    gUnk_03002348 = gUnk_03005604[0] + gUnk_03005670.unk2;
-    gUnk_030023E4 = gUnk_03005604[1] + gUnk_03005670.unk4;
+    gSpriteCameraX = gUnk_03005604[0] + gUnk_03005670.unk2;
+    gSpriteCameraY = gUnk_03005604[1] + gUnk_03005670.unk4;
 }
 
 void sub_080299e8(void)
 {
-    gUnk_03001E94 = (gUnk_03005604[1] + gUnk_03005670.unk4) << 16;
-    gUnk_03000FA8 = (gUnk_03005690[1] + gUnk_03005670.unk4) << 16;
-    gUnk_03002348 = gUnk_03005604[0] + gUnk_03005670.unk2;
-    gUnk_030023E4 = gUnk_03005604[1] + gUnk_03005670.unk4;
+    gBg2ScrollY = (gUnk_03005604[1] + gUnk_03005670.unk4) << 16;
+    gBg3ScrollY = (gUnk_03005690[1] + gUnk_03005670.unk4) << 16;
+    gSpriteCameraX = gUnk_03005604[0] + gUnk_03005670.unk2;
+    gSpriteCameraY = gUnk_03005604[1] + gUnk_03005670.unk4;
     gUnk_02016C30 = gUnk_03005604[0];
 }
 
 void sub_08029a4c(void)
 {
-    gUnk_03000B78 = gUnk_03000F8C = (gUnk_03005604[0] + gUnk_03005670.unk2) << 16;
-    gUnk_03000FA8 = gUnk_03001E94 = (gUnk_03005604[1] + gUnk_03005670.unk4) << 16;
-    gUnk_03002348 = gUnk_03005604[0] + gUnk_03005670.unk2;
-    gUnk_030023E4 = gUnk_03005604[1] + gUnk_03005670.unk4;
+    gBg3ScrollX = gBg2ScrollX = (gUnk_03005604[0] + gUnk_03005670.unk2) << 16;
+    gBg3ScrollY = gBg2ScrollY = (gUnk_03005604[1] + gUnk_03005670.unk4) << 16;
+    gSpriteCameraX = gUnk_03005604[0] + gUnk_03005670.unk2;
+    gSpriteCameraY = gUnk_03005604[1] + gUnk_03005670.unk4;
 }
 
 void sub_08029ab4(void)
 {
-    gUnk_03001EE0 = gUnk_03000B78 = gUnk_03000F8C = (gUnk_03005604[0] + gUnk_03005670.unk2) << 16;
-    gUnk_03000FC0 = gUnk_03000FA8 = gUnk_03001E94 = (gUnk_03005604[1] + gUnk_03005670.unk4) << 16;
-    gUnk_03002348 = gUnk_03005604[0] + gUnk_03005670.unk2;
-    gUnk_030023E4 = gUnk_03005604[1] + gUnk_03005670.unk4;
+    gBg1ScrollX = gBg3ScrollX = gBg2ScrollX = (gUnk_03005604[0] + gUnk_03005670.unk2) << 16;
+    gBg1ScrollY = gBg3ScrollY = gBg2ScrollY = (gUnk_03005604[1] + gUnk_03005670.unk4) << 16;
+    gSpriteCameraX = gUnk_03005604[0] + gUnk_03005670.unk2;
+    gSpriteCameraY = gUnk_03005604[1] + gUnk_03005670.unk4;
 }
 
 void sub_08029b30(void)
@@ -267,21 +267,21 @@ void sub_08029b30(void)
     gUnk_0300566C[0] = gUnk_03005604[0];
     gUnk_0300566C[1] = gUnk_03005604[1];
     gUnk_03004B00.unk8 = (u32)sub_08023f18;
-    gUnk_03001EE0 = gUnk_03000FC0 = 0;
+    gBg1ScrollX = gBg1ScrollY = 0;
 }
 
 void sub_08029bb8(void)
 {
     if (gUnk_020055D8.unk0 != 0)
     {
-        if (gUnk_03002158[0] < gUnk_02004B78[0])
+        if (gViewRect[0] < gUnk_02004B78[0])
             sub_0802a82c(gUnk_02004B78[0] - 36, gUnk_02004B78[0] - 28, gUnk_02004B78[2] - 40, gUnk_02004B78[3] + 40);
-        if (gUnk_02004B78[1] < gUnk_03002158[1])
+        if (gUnk_02004B78[1] < gViewRect[1])
             sub_0802a82c(gUnk_02004B78[1] + 28, gUnk_02004B78[1] + 36, gUnk_02004B78[2] - 40, gUnk_02004B78[3] + 40);
-        if (gUnk_03002158[2] < gUnk_02004B78[2])
+        if (gViewRect[2] < gUnk_02004B78[2])
             sub_0802a82c(gUnk_02004B78[0] - 36, gUnk_02004B78[1] + 36, gUnk_02004B78[2] - 40, gUnk_02004B78[2] - 32);
-        if (gUnk_02004B78[3] < gUnk_03002158[3])
+        if (gUnk_02004B78[3] < gViewRect[3])
             sub_0802a82c(gUnk_02004B78[0] - 36, gUnk_02004B78[1] + 36, gUnk_02004B78[3] + 32, gUnk_02004B78[3] + 40);
-        *(long long *)gUnk_02004B78 = *(long long *)gUnk_03002158;
+        *(long long *)gUnk_02004B78 = *(long long *)gViewRect;
     }
 }

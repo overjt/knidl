@@ -27,20 +27,20 @@ s32 sub_0805afac(s32 a0, s32 a1, s32 a2);
 
 s32 sub_0804f614(void)
 {
-    u8 k = gUnk_03002490->unk88->unk3E;
+    u8 k = gCurTask->unk88->unk3E;
 
     if (k != 0)
     {
-        sub_0805afac(gUnk_03002490->unk88->unk00, 4, 0);
-        gUnk_03002490->unk88->unk3E = 0;
-        gUnk_03002490->unk24 = 1;
+        sub_0805afac(gCurTask->unk88->unk00, 4, 0);
+        gCurTask->unk88->unk3E = 0;
+        gCurTask->unk24 = 1;
         switch (k)
         {
         case 1:
-            gUnk_03002490->unk3C = 0xCEB;
+            gCurTask->unk3C = 0xCEB;
             TaskYieldTrampoline(2);
             {
-                struct Task *t = gUnk_03002490;
+                struct Task *t = gCurTask;
                 t->unk58 = -t->unk20;
                 t->unk68 = 0x50000;
             }
@@ -49,42 +49,42 @@ s32 sub_0804f614(void)
             break;
         case 3:
         case 4:
-            sub_0803e34c(107, (u16)gUnk_03002490->unk88->unk00);
-            if (gUnk_03002490->unk40 & 0x8000)
+            sub_0803e34c(107, (u16)gCurTask->unk88->unk00);
+            if (gCurTask->unk40 & 0x8000)
             {
                 TaskSetFrameNoFlip(0xCEA);
                 TaskYieldTrampoline(2);
-                gUnk_03002490->unk3E |= 0x8000;
+                gCurTask->unk3E |= 0x8000;
             }
             else
             {
-                gUnk_03002490->unk3C = 0xCEA;
+                gCurTask->unk3C = 0xCEA;
                 TaskYieldTrampoline(2);
             }
             break;
         case 5:
         case 6:
-            sub_0803e34c(107, (u16)gUnk_03002490->unk88->unk00);
-            if (!(gUnk_03002490->unk40 & 0x8000))
+            sub_0803e34c(107, (u16)gCurTask->unk88->unk00);
+            if (!(gCurTask->unk40 & 0x8000))
             {
                 TaskSetFrameFlip(0xCEA);
                 TaskYieldTrampoline(2);
-                gUnk_03002490->unk3E &= 0x7FFF;
+                gCurTask->unk3E &= 0x7FFF;
             }
             else
             {
-                gUnk_03002490->unk3C = 0xCEA;
+                gCurTask->unk3C = 0xCEA;
                 TaskYieldTrampoline(2);
             }
             break;
         }
-        gUnk_03002490->unk24 = 0;
+        gCurTask->unk24 = 0;
     }
 }
 
 s32 sub_0804f76c(void)
 {
-    s32 v = abs(gUnk_03002490->unk54);
+    s32 v = abs(gCurTask->unk54);
     s32 r;
 
     if (v <= 0xFFFF)
@@ -98,7 +98,7 @@ s32 sub_0804f76c(void)
 
 void sub_0804f79c(void)
 {
-    struct Task *t = gUnk_03002490;
+    struct Task *t = gCurTask;
 
     if (t->unk6E == 1)
     {
@@ -127,7 +127,7 @@ s32 sub_0804f7f8(s32 a)
     {
     case 0:
     {
-        struct Task *t = gUnk_03002490;
+        struct Task *t = gCurTask;
         if ((t->unk7A & 1) && !(gUnk_03002458[t->unk88->unk00] & 0x80)
             && (gUnk_030023C0[t->unk88->unk00] & 1))
         {
@@ -138,7 +138,7 @@ s32 sub_0804f7f8(s32 a)
     }
     case 1:
     {
-        struct Task *t = gUnk_03002490;
+        struct Task *t = gCurTask;
         if (!(t->unk7A & 1))
         {
             t->unk73 = 6;
@@ -147,18 +147,18 @@ s32 sub_0804f7f8(s32 a)
         break;
     }
     case 2:
-        if (gUnk_030023C0[gUnk_03002490->unk88->unk00] & 2)
+        if (gUnk_030023C0[gCurTask->unk88->unk00] & 2)
         {
-            gUnk_03002490->unk73 = 8;
+            gCurTask->unk73 = 8;
             r = 8;
         }
         break;
     case 3:
         if (sub_08040298() != 0)
         {
-            gUnk_03002490->unk88->unk01 = 0;
-            gUnk_03002490->unk74 = 1;
-            gUnk_03002490->unk73 = 8;
+            gCurTask->unk88->unk01 = 0;
+            gCurTask->unk74 = 1;
+            gCurTask->unk73 = 8;
             r = 8;
         }
         break;
@@ -170,9 +170,9 @@ s32 sub_0804f8ec(s32 a0)
 {
     if (sub_0803fa44())
     {
-        if ((gUnk_03002490->unk7B & 1) == 0
-            && (gUnk_03002490->unk58 & 0xFFFF0000) != 0 && a0 != 0)
-            sub_0805afac(gUnk_03002490->unk88->unk00, 4, 0);
+        if ((gCurTask->unk7B & 1) == 0
+            && (gCurTask->unk58 & 0xFFFF0000) != 0 && a0 != 0)
+            sub_0805afac(gCurTask->unk88->unk00, 4, 0);
         sub_0803e050(2);
         return 1;
     }

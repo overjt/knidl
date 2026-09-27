@@ -18,8 +18,8 @@
  *                  0/1, optional link resync (sub_080ba150), fade out, stop
  *                  DMA0 and hand the task over to Task_SubGame
  *   sub_080ba150   the SIO handshake: 0x7755 / 0xAA00 / 0xAA01 / 0xAA02
- *                  exchanged through gUnk_03005274 and the send/receive
- *                  buffers gUnk_03004D90 / gUnk_03004D50 until every
+ *                  exchanged through gLinkCommand and the send/receive
+ *                  buffers gSendCmd / gRecvCmds until every
  *                  linked player reports 0xAA02
  *   Task_SubGame   task type #93: kill every other task, then run the
  *                  per-game body from 0x087562D8
@@ -42,40 +42,40 @@ extern u8 gUnk_0200B048;
 extern u8 gUnk_0200B07C[];
 extern u32 gUnk_0200EBA0;
 extern u32 gUnk_0200EC48;
-extern u32 gUnk_03000010;
-extern u32 gUnk_0300003C;
+extern u32 gBg0ScrollY;
+extern u32 gFrameCallback;
 extern vu16 gUnk_03000048;
-extern vs32 gUnk_03000B78;
-extern vs32 gUnk_03000F8C;
+extern vs32 gBg3ScrollX;
+extern vs32 gBg2ScrollX;
 extern u32 gUnk_03000FA4;
-extern vs32 gUnk_03000FA8;
-extern vu16 gUnk_03000FAC;
-extern vs32 gUnk_03000FC0;
-extern u32 gUnk_0300117C;
-extern vu8 gUnk_0300118C;
-extern u16 gUnk_03001270[];
-extern vu16 gUnk_03001E90;
-extern vs32 gUnk_03001E94;    /* vs32 here (vu32 elsewhere): see sub_080b9f34 */
-extern vu16 gUnk_03001EB8[];
-extern vu16 gUnk_03001ED8;
-extern vs32 gUnk_03001EE0;
-extern vu16 gUnk_03001EEC;
-extern vu16 gUnk_03001F38;
+extern vs32 gBg3ScrollY;
+extern vu16 gVBlankCount;
+extern vs32 gBg1ScrollY;
+extern u32 gBg0ScrollX;
+extern vu8 gBldCntTarget1;
+extern u16 gBgPalette[];
+extern vu16 gFadeSteps;
+extern vs32 gBg2ScrollY;    /* vs32 here (vu32 elsewhere): see sub_080b9f34 */
+extern vu16 gPlayerPressedKeys[];
+extern vu16 gDispCnt;
+extern vs32 gBg1ScrollX;
+extern vu16 gBldY;
+extern vu16 gLinkIsMaster;
 extern u16 gUnk_03002150;
-extern u16 gUnk_03002360;
-extern u16 gUnk_030023AC;
-extern u16 gUnk_030023D8;
-extern vu16 gUnk_0300243C;
-extern struct Task *gUnk_03002490;
-extern struct Task gUnk_03002790[];
-extern vs16 gUnk_03004CA0[];
-extern u32 gUnk_03004D24;
-extern u16 gUnk_03004D50[];
-extern u32 gUnk_03004D70;
-extern u32 gUnk_03004D7C;
-extern u16 gUnk_03004D88[];
-extern u16 gUnk_03004D90[];
-extern u16 gUnk_03005274;     /* SIO handshake word; see sub_080ba150 */
+extern u16 gLocalPlayer;
+extern u16 gPlayerCount;
+extern u16 gGameState;
+extern vu16 gLinkPlayerCount;
+extern struct Task *gCurTask;
+extern struct Task gTasks[];
+extern vs16 gTaskSlotTypes[];
+extern u32 gLinkErrorMask;
+extern u16 gRecvCmds[];
+extern u32 gLinkStatus;
+extern u32 gSerialIntrCount;
+extern u16 gShouldAdvanceLinkState[];
+extern u16 gSendCmd[];
+extern u16 gLinkCommand;     /* SIO handshake word; see sub_080ba150 */
 extern u32 gUnk_087562A8[][2];
 extern u16 gUnk_087562C0[];
 extern s32 (*const gSubGameInitHooks[])(void);
@@ -130,14 +130,14 @@ void sub_080ba42c(void);
 void SubGameReplay(s32 a0)
 {
     gUnk_02006168 = a0;
-    gUnk_03002490->unk18 = 3;
+    gCurTask->unk18 = 3;
 }
 
 void SubGameQuit(void)
 {
     if (gUnk_03002150 == 4)
-        gUnk_03004D24 = 0;
-    gUnk_03002490->unk18 = 4;
+        gLinkErrorMask = 0;
+    gCurTask->unk18 = 4;
 }
 
 s32 sub_080b9d48(void)
@@ -150,9 +150,9 @@ u8 sub_080b9d68(void)
     s32 found = 0;
     s32 i;
 
-    for (i = 0; i < gUnk_030023AC; i++)
+    for (i = 0; i < gPlayerCount; i++)
     {
-        if (gUnk_03001EB8[i] & 9)
+        if (gPlayerPressedKeys[i] & 9)
         {
             found = 1;
             break;
@@ -166,9 +166,9 @@ u8 sub_080b9da8(void)
     s32 found = 0;
     s32 i;
 
-    for (i = 0; i < gUnk_030023AC; i++)
+    for (i = 0; i < gPlayerCount; i++)
     {
-        if (gUnk_03001EB8[i] & 2)
+        if (gPlayerPressedKeys[i] & 2)
         {
             found = 1;
             break;
@@ -182,11 +182,11 @@ void sub_080b9de8(void)
     s32 i;
 
     TaskSetSkipMask(7, gUnk_020055EC);
-    gUnk_03001ED8 |= 0x200;
-    gUnk_0300118C = 0xFD;
+    gDispCnt |= 0x200;
+    gBldCntTarget1 = 0xFD;
     for (i = 0; i <= 4; i++)
     {
-        gUnk_03001EEC = i;
+        gBldY = i;
         sub_080ba134();
     }
     while (1)
@@ -197,7 +197,7 @@ void SubGameCheckEnd(void)
 {
     if (gSubGamePhase <= 1)
     {
-        s32 v = gUnk_03002490->unk18;
+        s32 v = gCurTask->unk18;
         if (v != 0)
             gSubGamePhase = v;
     }
@@ -220,23 +220,23 @@ void sub_080b9ea0(s32 a0)
     switch (gUnk_02007FCC)
     {
     case 0:
-        gUnk_03001ED8 &= 0xE0FF;
-        gUnk_03001ED8 |= 0x1400;
+        gDispCnt &= 0xE0FF;
+        gDispCnt |= 0x1400;
         break;
     case 1:
-        gUnk_03001ED8 &= 0xE0FF;
-        gUnk_03001ED8 |= 0x1800;
+        gDispCnt &= 0xE0FF;
+        gDispCnt |= 0x1800;
         break;
     case 2:
         if (a0 != 0)
         {
-            gUnk_03001ED8 &= 0xE0FF;
-            gUnk_03001ED8 |= 0x1C00;
+            gDispCnt &= 0xE0FF;
+            gDispCnt |= 0x1C00;
         }
         else
         {
-            gUnk_03001ED8 &= 0xE0FF;
-            gUnk_03001ED8 |= 0x1F00;
+            gDispCnt &= 0xE0FF;
+            gDispCnt |= 0x1F00;
         }
         break;
     }
@@ -250,13 +250,13 @@ void sub_080b9f34(s32 a0)
     sub_080b9e50(a0);
     if (a0 != 0 || gUnk_02007FCC != 2)
     {
-        gUnk_0300117C = gUnk_03001EE0 = gUnk_03000F8C = gUnk_03000B78 = 0;
+        gBg0ScrollX = gBg1ScrollX = gBg2ScrollX = gBg3ScrollX = 0;
         /* Every link of a volatile chain is re-read after its store, but
            only while neighbouring links have the same type: a signedness
            change wraps the inner assignment in a conversion that fold()
            turns into `(y = 0, (T)0)`, dropping the re-read.  The ROM
-           re-reads gUnk_03000FA8, so gUnk_03001E94 is vs32 in this file. */
-        gUnk_03000010 = gUnk_03000FC0 = gUnk_03001E94 = gUnk_03000FA8 = 0;
+           re-reads gBg3ScrollY, so gBg2ScrollY is vs32 in this file. */
+        gBg0ScrollY = gBg1ScrollY = gBg2ScrollY = gBg3ScrollY = 0;
     }
     else
     {
@@ -271,7 +271,7 @@ void sub_080b9f34(s32 a0)
     if (gUnk_02007FCC != 2)
     {
         BeginFastFadeInFromWhite();
-        while (gUnk_03001E90 != 0)
+        while (gFadeSteps != 0)
             sub_080ba118();
         goto wait;
         /* The ROM places this call between the two arms: a labelled
@@ -282,11 +282,11 @@ void sub_080b9f34(s32 a0)
     }
     else
     {
-        gUnk_0300118C = 0xBF;
-        gUnk_03001ED8 &= 0xFF7F;
+        gBldCntTarget1 = 0xBF;
+        gDispCnt &= 0xFF7F;
         for (i = 16; i >= 0; i--)
         {
-            gUnk_03001EEC = i;
+            gBldY = i;
             sub_080ba118();
         }
     }
@@ -309,23 +309,23 @@ tail:
     if (gUnk_02007FCC != 2)
     {
         BeginFastFadeOutToWhite();
-        while (gUnk_03001E90 != 0)
+        while (gFadeSteps != 0)
             sub_080ba118();
     }
     else
     {
-        gUnk_0300118C = 0xBF;
+        gBldCntTarget1 = 0xBF;
         for (i = 0; i <= 16; i++)
         {
-            gUnk_03001EEC = i;
+            gBldY = i;
             sub_080ba118();
         }
         ResetFadeAndBlend();
-        gUnk_03001ED8 |= 0x80;
+        gDispCnt |= 0x80;
         EndFrame();
     }
     gUnk_03000048 = 0;
-    gUnk_0300003C = gUnk_03000FA4 = 0;
+    gFrameCallback = gUnk_03000FA4 = 0;
     REG_DMA0CNT_L = REG_DMA0CNT_H = 0;
     TaskSetEntry(Task_SubGame, gUnk_020055EC);
 }
@@ -352,58 +352,58 @@ void sub_080ba150(void)
     s32 i;
     u32 old;
 
-    if (gUnk_03001F38 != 0)
-        gUnk_03005274 = 0x7755;
+    if (gLinkIsMaster != 0)
+        gLinkCommand = 0x7755;
     else
-        gUnk_03005274 = 0x9900;
-    if (gUnk_0300243C <= 1)
+        gLinkCommand = 0x9900;
+    if (gLinkPlayerCount <= 1)
         return;
     n = 0;
     stall = 0;
     timer = 0;     /* nothing ever sets it non-zero, but the ROM keeps it */
     for (;;)
     {
-        /* gUnk_03005274 is NOT volatile here: a vu16 switch operand costs a
+        /* gLinkCommand is NOT volatile here: a vu16 switch operand costs a
            register copy the ROM does not have, and the cell is re-read every
            iteration anyway because the loop calls out. */
-        switch (gUnk_03005274)
+        switch (gLinkCommand)
         {
         case 0x7755:
-            gUnk_03004D90[0] = 0x7755;
-            gUnk_03005274 = 0xAA00;
+            gSendCmd[0] = 0x7755;
+            gLinkCommand = 0xAA00;
             break;
         case 0xAA00:
             timer = 0;
-            gUnk_03004D90[0] = 0xAA00;
-            gUnk_03005274 = 0x9900;
+            gSendCmd[0] = 0xAA00;
+            gLinkCommand = 0x9900;
             break;
         case 0xAA01:
-            gUnk_03004D90[0] = 0xAA01;
-            gUnk_03005274 = 0x9900;
+            gSendCmd[0] = 0xAA01;
+            gLinkCommand = 0x9900;
             break;
         case 0xAA02:
-            gUnk_03004D90[0] = 0xAA02;
+            gSendCmd[0] = 0xAA02;
             break;
         }
-        old = gUnk_03004D7C;
+        old = gSerialIntrCount;
         RunFrame();
-        LinkMain1(gUnk_03004D88, gUnk_03004D90, gUnk_03004D50);
+        LinkMain1(gShouldAdvanceLinkState, gSendCmd, gRecvCmds);
         if (IsLinkError() != 0)
             sub_08008b8c();
-        if (old == gUnk_03004D7C && ++stall > 30)
+        if (old == gSerialIntrCount && ++stall > 30)
             sub_08008b8c();
         for (i = 0; i <= 3; i++)
         {
-            switch (gUnk_03004D50[i])
+            switch (gRecvCmds[i])
             {
             case 0x7755:    /* empty, but it roots the tree at 0xAA00 (3.42) */
                 break;
             case 0xAA00:
-                gUnk_03005274 = 0xAA01;
+                gLinkCommand = 0xAA01;
                 break;
             case 0xAA01:
-                if (gUnk_03001F38 != 0 && ++n >= gUnk_0300243C)
-                    gUnk_03005274 = 0xAA02;
+                if (gLinkIsMaster != 0 && ++n >= gLinkPlayerCount)
+                    gLinkCommand = 0xAA02;
                 break;
             case 0xAA02:
                 goto done;
@@ -411,11 +411,11 @@ void sub_080ba150(void)
         }
         if (timer != 0)
         {
-            if (n == gUnk_0300243C)
+            if (n == gLinkPlayerCount)
                 timer = 0;
             else if (--timer == 0)
             {
-                gUnk_03005274 = 0xAA00;
+                gLinkCommand = 0xAA00;
                 n = 0;
             }
         }
@@ -423,12 +423,12 @@ void sub_080ba150(void)
             sub_080c1f88();
     }
 done:
-    if (gUnk_03001F38 != 0)
+    if (gLinkIsMaster != 0)
         gUnk_0200EBA0 = 0;
     for (i = 4; i >= 0; i--)
         sub_080ba134();
     DisableSerial();
-    gUnk_03004D70 = 0;
+    gLinkStatus = 0;
 }
 
 s32 FreeOtherTasks(void)
@@ -437,7 +437,7 @@ s32 FreeOtherTasks(void)
 
     for (i = 0; i <= 62; i++)
     {
-        if (gUnk_03004CA0[i] != -1 && i != gCurTaskIdx)
+        if (gTaskSlotTypes[i] != -1 && i != gCurTaskIdx)
             TaskFree(i);
     }
 }
@@ -451,9 +451,9 @@ void SubGameMain(void)
         return;
     RunFrameNoTasks();
     RunFrameNoTasks();
-    if (gUnk_03002360 == 0)
+    if (gLocalPlayer == 0)
     {
-        for (i = 0; i < (gUnk_03000FAC & 0xFF); i++)
+        for (i = 0; i < (gVBlankCount & 0xFF); i++)
             Random();
     }
     sub_08002358();
@@ -465,14 +465,14 @@ void SubGameMain(void)
     ResetTasksAndOam();
     if (gSubGamePhase != 3)
     {
-        gUnk_030023D8 = gUnk_03002150;
+        gGameState = gUnk_03002150;
         gUnk_03002150 = gUnk_02007FCC + 14;
     }
 }
 
 void Task_SubGame(void)
 {
-    struct Task *t = gUnk_03002490;
+    struct Task *t = gCurTask;
 
     t->unk00 = 0;
     t->unk0C = 0;
@@ -489,7 +489,7 @@ void sub_080ba42c(void)
 
 void QuickDrawInit(void)
 {
-    struct Task *t = &gUnk_03002790[gUnk_020055EC];
+    struct Task *t = &gTasks[gUnk_020055EC];
     s32 i;
 
     for (i = 0; i <= 3; i++)
@@ -501,12 +501,12 @@ void QuickDrawInit(void)
     gUnk_02006184 = 99;
     gUnk_0200B048 = 0;
     t->unk34 = 3;
-    RequestCopy(2, (u32)gUnk_087562E4, (u32)gUnk_03001270, 2);
+    RequestCopy(2, (u32)gUnk_087562E4, (u32)gBgPalette, 2);
 }
 
 void QuickDrawMain(void)
 {
-    gUnk_03002490->unk04 = 0;
+    gCurTask->unk04 = 0;
     CallTableEntry(gSubGamePhase, 2, gUnk_087562E8);
     TaskSleepForever();
 }
@@ -516,11 +516,11 @@ void sub_080ba50c(void)
     struct Task *t;
 
     TaskSetOthersSkipMask(31, gCurTaskIdx);
-    if (gUnk_03004CA0[62] != -1)
+    if (gTaskSlotTypes[62] != -1)
         TaskFree(62);
-    gUnk_03001ED8 &= 0xE0FF;
-    gUnk_03001ED8 |= 0x1000;
-    t = &gUnk_03002790[gUnk_03002490->unk28];
+    gDispCnt &= 0xE0FF;
+    gDispCnt |= 0x1000;
+    t = &gTasks[gCurTask->unk28];
     t->unk1C = 0;
 }
 
@@ -530,11 +530,11 @@ void sub_080ba578(void)
 
     if (idx != -1)
     {
-        struct Task *t = &gUnk_03002790[idx];
+        struct Task *t = &gTasks[idx];
 
         t->unk44 = gCurTaskIdx;
         t->unk73 = 2;
-        gUnk_03002490->unk28 = idx;
+        gCurTask->unk28 = idx;
     }
 }
 
@@ -542,13 +542,13 @@ void sub_080ba5bc(s32 a0)
 {
     s32 i;
 
-    for (i = 0; i < gUnk_030023AC; i++)
+    for (i = 0; i < gPlayerCount; i++)
     {
         s32 idx = TaskCreateFrom(94, 0);
 
         if (idx != -1)
         {
-            struct Task *t = &gUnk_03002790[idx];
+            struct Task *t = &gTasks[idx];
 
             t->unk44 = gCurTaskIdx;
             t->unk18 = idx;
@@ -565,7 +565,7 @@ void sub_080ba61c(void)
 
     sub_080ba5bc(0);
     sub_080ba578();
-    t = gUnk_03002490;
+    t = gCurTask;
     t->unk24 = 0;
     t->unk75 = 0;
 }
@@ -576,7 +576,7 @@ void sub_080ba63c(void)
 
     if (idx != -1)
     {
-        struct Task *t = &gUnk_03002790[idx];
+        struct Task *t = &gTasks[idx];
 
         t->unk73 = 1;
         t->unk18 = 0;
@@ -595,13 +595,13 @@ void sub_080ba688(void)
 
     PlaySfx(234);
     StopBgm();
-    t = &gUnk_03002790[gUnk_03002490->unk28];
+    t = &gTasks[gCurTask->unk28];
     t->unk1C = 1;
 }
 
 void sub_080ba6b4(void)
 {
-    struct Task *t = gUnk_03002490;
+    struct Task *t = gCurTask;
 
     t->unk70 = 0;
     t->unk6E = 0;
@@ -615,14 +615,14 @@ s32 sub_080ba708(void)
     s32 i;
     s32 n;
 
-    for (i = 0, n = 0; i < gUnk_030023AC; i++)
+    for (i = 0, n = 0; i < gPlayerCount; i++)
     {
-        if ((gUnk_03001EB8[i] & 1) && !((gUnk_03002490->unk6E >> i) & 1))
+        if ((gPlayerPressedKeys[i] & 1) && !((gCurTask->unk6E >> i) & 1))
         {
             n++;
             mask |= 1 << i;
         }
     }
-    gUnk_03002490->unk2C = mask;
+    gCurTask->unk2C = mask;
     return n;
 }

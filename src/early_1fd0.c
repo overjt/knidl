@@ -30,44 +30,44 @@
 
 extern vs16 gUnk_03001190[];       /* affine OBJ staging buffer */
 extern vu16 gUnk_03001A80;         /* staging buffer write index */
-extern vu16 gUnk_03000050[];       /* OAM shadow (attrs + affine params) */
+extern vu16 gOamBuffer[];       /* OAM shadow (attrs + affine params) */
 extern vu16 gUnk_03000B1C;         /* affine matrix index */
 extern u8 gUnk_0872EB14[];   /* shape/size -> {w,h} half-dims */
-extern s16 gUnk_0872FB30[];  /* trig table (mid pointer) */
+extern s16 gCosTable[];  /* trig table (mid pointer) */
 
 
 /* BG scroll shadow cells (cleared as one volatile chain each). */
-extern vu32 gUnk_0300117C;
-extern vu32 gUnk_03001EE0;
-extern vu32 gUnk_03000F8C;
-extern vu32 gUnk_03000B78;
-extern vu32 gUnk_03000010;
-extern vu32 gUnk_03000FC0;
-extern vu32 gUnk_03001E94;
-extern vu32 gUnk_03000FA8;
+extern vu32 gBg0ScrollX;
+extern vu32 gBg1ScrollX;
+extern vu32 gBg2ScrollX;
+extern vu32 gBg3ScrollX;
+extern vu32 gBg0ScrollY;
+extern vu32 gBg1ScrollY;
+extern vu32 gBg2ScrollY;
+extern vu32 gBg3ScrollY;
 
 /* Brightness/fade state block. */
-extern vs16 gUnk_03001E90;
-extern vs16 gUnk_03000FB8;
-extern vs16 gUnk_030004A4;
-extern vs16 gUnk_03001174;
-extern vs16 gUnk_03001E98;
+extern vs16 gFadeSteps;
+extern vs16 gBrightness;
+extern vs16 gFadeStep;
+extern vs16 gFadeTimer;
+extern vs16 gFadeInterval;
 extern vs16 gUnk_03000048;
-extern u32 gUnk_03001ED4;
+extern u32 gFadeKeepMask;
 
 /* Blend/window shadow bytes. */
-extern vu8 gUnk_0300118C;
-extern vu8 gUnk_03000040;
-extern vu8 gUnk_03000B08;
-extern vu8 gUnk_03001EAC;
-extern u16 gUnk_03001EEC;
+extern vu8 gBldCntTarget1;
+extern vu8 gBldCntTarget2;
+extern vu8 gBldAlphaEva;
+extern vu8 gBldAlphaEvb;
+extern u16 gBldY;
 
 extern vu32 gUnk_03000B00;
-extern u16 gUnk_03000498[4];
-extern vu16 gUnk_03001EB8[4];
-extern vu16 gUnk_03000F98[4];
-extern vu16 gUnk_03005274;
-extern vu16 gUnk_03001F38;
+extern u16 gPlayTime[4];
+extern vu16 gPlayerPressedKeys[4];
+extern vu16 gPlayerHeldKeys[4];
+extern vu16 gLinkCommand;
+extern vu16 gLinkIsMaster;
 extern const u8 gUnk_0872EB2C[];
 
 extern void InitTasks(void);
@@ -79,79 +79,79 @@ extern void RunTasks(void);
 
 void ResetBgScroll(void)
 {
-    gUnk_0300117C = gUnk_03001EE0 = gUnk_03000F8C = gUnk_03000B78 = 0;
-    gUnk_03000010 = gUnk_03000FC0 = gUnk_03001E94 = gUnk_03000FA8 = 0;
+    gBg0ScrollX = gBg1ScrollX = gBg2ScrollX = gBg3ScrollX = 0;
+    gBg0ScrollY = gBg1ScrollY = gBg2ScrollY = gBg3ScrollY = 0;
 }
 
 void ResetFadeAndBlend(void)
 {
-    gUnk_03000FB8 = gUnk_030004A4 = gUnk_03001174 = gUnk_03001E98 = gUnk_03001E90 = gUnk_03000048 = gUnk_03001ED4 = 0;
-    gUnk_0300118C = gUnk_03000040 = gUnk_03000B08 = gUnk_03001EAC = gUnk_03001EEC = 0;
+    gBrightness = gFadeStep = gFadeTimer = gFadeInterval = gFadeSteps = gUnk_03000048 = gFadeKeepMask = 0;
+    gBldCntTarget1 = gBldCntTarget2 = gBldAlphaEva = gBldAlphaEvb = gBldY = 0;
 }
 
 void BeginFadeInFromWhite(void)
 {
-    gUnk_03001E90 = gUnk_03000FB8 = 31;
-    gUnk_030004A4 = -1;
-    gUnk_03001174 = 0;
-    gUnk_03001E98 = 1;
+    gFadeSteps = gBrightness = 31;
+    gFadeStep = -1;
+    gFadeTimer = 0;
+    gFadeInterval = 1;
     gUnk_03000048 = 1;
-    gUnk_03001ED4 = 0;
+    gFadeKeepMask = 0;
 }
 
 void BeginFadeInFromBlack(void)
 {
-    gUnk_03001E90 = 31;
-    gUnk_03000FB8 = -31;
-    gUnk_030004A4 = 1;
-    gUnk_03001174 = 0;
-    gUnk_03001E98 = 1;
+    gFadeSteps = 31;
+    gBrightness = -31;
+    gFadeStep = 1;
+    gFadeTimer = 0;
+    gFadeInterval = 1;
     gUnk_03000048 = 1;
-    gUnk_03001ED4 = 0;
+    gFadeKeepMask = 0;
 }
 
 void BeginFastFadeInFromWhite(void)
 {
-    gUnk_03001E90 = 16;
-    gUnk_03000FB8 = 32;
-    gUnk_030004A4 = -2;
-    gUnk_03001174 = 0;
-    gUnk_03001E98 = 1;
+    gFadeSteps = 16;
+    gBrightness = 32;
+    gFadeStep = -2;
+    gFadeTimer = 0;
+    gFadeInterval = 1;
     gUnk_03000048 = 1;
-    gUnk_03001ED4 = 0;
+    gFadeKeepMask = 0;
 }
 
 void BeginFadeOutToWhite(void)
 {
-    gUnk_03001E90 = 31;
-    gUnk_03000FB8 = 0;
-    gUnk_030004A4 = 1;
-    gUnk_03001174 = 0;
-    gUnk_03001E98 = 1;
+    gFadeSteps = 31;
+    gBrightness = 0;
+    gFadeStep = 1;
+    gFadeTimer = 0;
+    gFadeInterval = 1;
     gUnk_03000048 = 1;
-    gUnk_03001ED4 = 0;
+    gFadeKeepMask = 0;
 }
 
 void BeginFastFadeOutToWhite(void)
 {
-    gUnk_03001E90 = 16;
-    gUnk_03000FB8 = 0;
-    gUnk_030004A4 = 2;
-    gUnk_03001174 = 0;
-    gUnk_03001E98 = 1;
+    gFadeSteps = 16;
+    gBrightness = 0;
+    gFadeStep = 2;
+    gFadeTimer = 0;
+    gFadeInterval = 1;
     gUnk_03000048 = 1;
-    gUnk_03001ED4 = 0;
+    gFadeKeepMask = 0;
 }
 
 void BeginFadeOutToBlack(void)
 {
-    gUnk_03001E90 = 31;
-    gUnk_03000FB8 = 0;
-    gUnk_030004A4 = -1;
-    gUnk_03001174 = 0;
-    gUnk_03001E98 = 1;
+    gFadeSteps = 31;
+    gBrightness = 0;
+    gFadeStep = -1;
+    gFadeTimer = 0;
+    gFadeInterval = 1;
     gUnk_03000048 = 0;
-    gUnk_03001ED4 = 0;
+    gFadeKeepMask = 0;
 }
 
 u32 sub_08002268(void)
@@ -186,10 +186,10 @@ void ResetTasksAndOam(void)
 
 void ResetPlayTime(void)
 {
-    gUnk_03000498[3] = 0;
-    gUnk_03000498[2] = 0;
-    gUnk_03000498[1] = 0;
-    gUnk_03000498[0] = 0;
+    gPlayTime[3] = 0;
+    gPlayTime[2] = 0;
+    gPlayTime[1] = 0;
+    gPlayTime[0] = 0;
 }
 
 void RunFrameNoTasks(void)
@@ -212,22 +212,22 @@ void sub_080022fc(void)
     s32 i;
 
     for (i = 0; i < 4; i++)
-        gUnk_03000F98[i] = gUnk_03001EB8[i] = 0;
-    gUnk_03005274 = 0x8800;
+        gPlayerHeldKeys[i] = gPlayerPressedKeys[i] = 0;
+    gLinkCommand = 0x8800;
 }
 
 void sub_08002338(void)
 {
-    gUnk_03005274 = 0x9900;
+    gLinkCommand = 0x9900;
 }
 
 void sub_08002348(void)
 {
-    gUnk_03005274 = 0x6600;
+    gLinkCommand = 0x6600;
 }
 
 void sub_08002358(void)
 {
-    if (gUnk_03001F38 != 0)
-        gUnk_03005274 = 0x7755;
+    if (gLinkIsMaster != 0)
+        gLinkCommand = 0x7755;
 }

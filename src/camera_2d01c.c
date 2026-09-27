@@ -305,7 +305,7 @@ s32 sub_0802d344(s32 a)
     id = sub_0802621c(4);
     if (id != -1)
     {
-        t = &gUnk_03002790[id];
+        t = &gTasks[id];
         t->unk14 = a;
     }
     return id;
@@ -313,5 +313,5 @@ s32 sub_0802d344(s32 a)
 
 void Task_MapEvent(void)
 {
-    CallTableEntry(gUnk_03002490->unk14, 7, gMapEventVariants);
+    CallTableEntry(gCurTask->unk14, 7, gMapEventVariants);
 }

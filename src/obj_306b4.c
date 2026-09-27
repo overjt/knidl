@@ -5,7 +5,7 @@
 /* obj_306b4.c (0x080306B4-0x08030803, issue #86).
  *
  * sub_080306b4 draws one OAM sprite relative to the BG camera
- * (gUnk_03002348/gUnk_030023E4) when it is on screen, and returns garbage
+ * (gSpriteCameraX/gSpriteCameraY) when it is on screen, and returns garbage
  * when it is not.  The rest manage the per-frame stage hook gUnk_030004A0:
  * sub_08030724 clears it and the 64 records gUnk_020061F0[] (unk6 =
  * 0x7FFF), sub_08030758 re-installs it from its id gUnk_02000024,
@@ -24,8 +24,8 @@ struct Unk020061F0
     /*0x08*/ u8 filler08[0x18];
 };
 
-extern s16 gUnk_03002348;
-extern s16 gUnk_030023E4;
+extern s16 gSpriteCameraX;
+extern s16 gSpriteCameraY;
 extern struct Unk020061F0 gUnk_020061F0[];
 extern u32 gUnk_030004A0;
 extern u8 gUnk_02000024;
@@ -40,8 +40,8 @@ s32 sub_080306b4(u8 a, s32 b, u16 c, u16 d, s16 x, s16 y)
     s16 sx;
     s16 sy;
 
-    sx = x - gUnk_03002348;
-    sy = y - gUnk_030023E4;
+    sx = x - gSpriteCameraX;
+    sy = y - gSpriteCameraY;
     if ((u16)(sx + 63) <= 366 && sy > -64 && sy <= 223)
         return QueueSprite(a, b, c, d, sx, sy);
 }

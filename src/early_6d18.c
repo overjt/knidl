@@ -29,10 +29,10 @@
  *   ResetRecvBuffer  clear the 4x4x30 halfword buffer at +0x110 and its cursors.
  *   ConnectLink  blocking link bring-up loop; returns 1 on timeout (60
  *                 frames without reaching state 4), 0 on success.
- *   IsLinkError  poll gUnk_03004D70 against the mask in gUnk_03004D24.
+ *   IsLinkError  poll gLinkStatus against the mask in gLinkErrorMask.
  *
  * gLink is the link work area (0x4D2 bytes, ending just below
- * gUnk_03005274).  Byte offsets used here:
+ * gLinkCommand).  Byte offsets used here:
  *   +0x00 session-active flag      +0x01 state (1,2,3,4)
  *   +0x02 player id (SIOCNT bits 4-5)   +0x03 player count
  *   +0x04 u16 recv[4] (= gUnk_03004DA4, the SIOMULTI snapshot)
@@ -61,26 +61,26 @@ struct Link {
 
 extern u8 gLink[];      /* link work area */
 extern vu16 gUnk_03004D38[];    /* receive staging, 4 halfwords */
-extern u16 gUnk_03004D88[];     /* send/receive mailbox (LinkMain1) */
-extern u16 gUnk_03004D90[4];
-extern u16 gUnk_03004D50[3][4];
-extern u32 gUnk_03004D24;
+extern u16 gShouldAdvanceLinkState[];     /* send/receive mailbox (LinkMain1) */
+extern u16 gSendCmd[4];
+extern u16 gRecvCmds[3][4];
+extern u32 gLinkErrorMask;
 extern u32 gUnk_03004D28;
 extern u32 gUnk_03004D30;
-extern u32 gUnk_03004D70;
-extern u32 gUnk_03004D74;
+extern u32 gLinkStatus;
+extern u32 gChecksumAvailable;
 extern u32 gUnk_03004D78;
-extern u32 gUnk_03004D7C;
-extern vu16 gUnk_03004D80;
-extern u8 gUnk_03004D40;
-extern vu16 gUnk_03002360;
-extern vu16 gUnk_03001F38;
-extern vu16 gUnk_0300243C;
-extern vu16 gUnk_030023AC;
-extern vu16 gUnk_03001EF8;
-extern vu16 gUnk_03005274;
-extern u8 gUnk_0300527C;
-extern void (*gUnk_030004B0[])(void);
+extern u32 gSerialIntrCount;
+extern vu16 gRecvNonzeroCheck;
+extern u8 gLastRecvQueueCount;
+extern vu16 gLocalPlayer;
+extern vu16 gLinkIsMaster;
+extern vu16 gLinkPlayerCount;
+extern vu16 gPlayerCount;
+extern vu16 gIntrMasterEnable;
+extern vu16 gLinkCommand;
+extern u8 gSendBufferEmpty;
+extern void (*gIntrTable[])(void);
 extern u32 gUnk_0200EBA0;
 extern vu8 gUnk_0200EBC0[];
 extern vu16 gUnk_04000006;      /* REG_VCOUNT */

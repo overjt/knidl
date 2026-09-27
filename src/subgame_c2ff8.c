@@ -19,7 +19,7 @@
  *       M37Player.unk30 re-rolled from the LCG around the course record's
  *       unk28, and the resulting "hold A" decision.
  *   sub_080c34ac   variant 0's per-frame callback: reads the player's keys
- *       (gUnk_03000F98/gUnk_03001EB8 for a linked player, sub_080c33a0 for a
+ *       (gPlayerHeldKeys/gPlayerPressedKeys for a linked player, sub_080c33a0 for a
  *       computer one) into M37Player.unk02/unk04, counts A presses in unk0E
  *       and publishes the position and the pressed flag in the course
  *       record gAirGrindCoursePtr->unk018[player]. */
@@ -90,10 +90,10 @@ struct M37Game
     /*0x300*/ u32 unk300;       /* frame counter */
     /*0x304*/ s16 unk304;       /* sub_080c4f60's OAM list: entry count */
     /*0x306*/ s16 unk306[160];  /* ... and entries */
-    /*0x446*/ u16 unk446;       /* gUnk_03002360 */
-    /*0x448*/ u16 unk448;       /* gUnk_0300243C */
+    /*0x446*/ u16 unk446;       /* gLocalPlayer */
+    /*0x448*/ u16 unk448;       /* gLinkPlayerCount */
     /*0x44A*/ u8 pad44A[2];
-    /*0x44C*/ s32 unk44C;       /* a task index into gUnk_03002790 */
+    /*0x44C*/ s32 unk44C;       /* a task index into gTasks */
     /*0x450*/ u8 unk450;
     /*0x451*/ u8 unk451;
     /*0x452*/ u8 pad452[2];
@@ -140,8 +140,8 @@ extern struct M37Course *gAirGrindCoursePtr;
 extern void (*gUnk_087572D4[])(void);
 extern u16 *gUnk_08755F54[];
 extern u8 gUnk_080CFE2C[][4];
-extern vu16 gUnk_03000F98[];
-extern vu16 gUnk_03001EB8[];
+extern vu16 gPlayerHeldKeys[];
+extern vu16 gPlayerPressedKeys[];
 
 void TaskYieldTrampoline(s32 frames);
 void CallTableEntry(u32 idx, u32 count, void (**fns)(void));   /* if (idx < count) fns[idx](); */
@@ -156,23 +156,23 @@ void sub_080c34ac(void);
 
 void Task_AirGrindObject(void)
 {
-    CallTableEntry(gUnk_03002490->unk73, 5, gUnk_087572D4);
+    CallTableEntry(gCurTask->unk73, 5, gUnk_087572D4);
 }
 
 void sub_080c3018(void)
 {
-    s32 player = gUnk_03002490->unk1C;
+    s32 player = gCurTask->unk1C;
     s32 src;
 
-    gUnk_03002490->unk0C = (u32)sub_080c4d08;
-    gUnk_03002490->unk00 = (u32)sub_080c4ea8;
-    gUnk_03002490->unk38 = (u32 *)gUnk_08755F54;
-    gUnk_03002490->unk3E &= 0x7FFF;
-    gUnk_03002490->unk40 = gUnk_080CFE2C[gAirGrindPtr->unk446][player] << 12;
-    gUnk_03002490->unk04 = (u32)sub_080c34ac;
-    gUnk_03002490->unk08 = (u32)sub_080c3f20;
-    gUnk_03002490->unk14 = 0;
-    gUnk_03002490->unk28 = 256;
+    gCurTask->unk0C = (u32)sub_080c4d08;
+    gCurTask->unk00 = (u32)sub_080c4ea8;
+    gCurTask->unk38 = (u32 *)gUnk_08755F54;
+    gCurTask->unk3E &= 0x7FFF;
+    gCurTask->unk40 = gUnk_080CFE2C[gAirGrindPtr->unk446][player] << 12;
+    gCurTask->unk04 = (u32)sub_080c34ac;
+    gCurTask->unk08 = (u32)sub_080c3f20;
+    gCurTask->unk14 = 0;
+    gCurTask->unk28 = 256;
     gAirGrindPtr->unk01C[player].unk14 = 0x80000;
     gAirGrindPtr->unk01C[player].unk18 = 0;
     gAirGrindPtr->unk01C[player].unk06 = 0;
@@ -186,9 +186,9 @@ void sub_080c3018(void)
     gAirGrindPtr->unk01C[player].unk02 = 0;
     gAirGrindPtr->unk01C[player].unk0E = 0;
     gAirGrindPtr->unk01C[player].unk01 = 0;
-    gUnk_03002490->unk4C = gAirGrindCoursePtr->unk000 << 16;
-    gUnk_03002490->unk54 = 0x28000;
-    gUnk_03002490->unk5C = 0;
+    gCurTask->unk4C = gAirGrindCoursePtr->unk000 << 16;
+    gCurTask->unk54 = 0x28000;
+    gCurTask->unk5C = 0;
     gAirGrindPtr->unk004[player] = 0;
     gAirGrindPtr->unk01C[player].unk20 = 0;
     if (gAirGrindPtr->unk448 <= 1) {
@@ -248,18 +248,18 @@ void sub_080c3018(void)
     gAirGrindPtr->unk01C[player].unk21 = 1;
     while (gAirGrindCoursePtr->unk000 < gAirGrindCoursePtr->unk00C)
         TaskYieldTrampoline(1);
-    gUnk_03002490->unk14 = 1;
-    gUnk_03002490->unk08 = (u32)sub_080c3efc;
+    gCurTask->unk14 = 1;
+    gCurTask->unk08 = (u32)sub_080c3efc;
     while (gAirGrindCoursePtr->unk018[player].unk00 < gAirGrindCoursePtr->unk010) {
         gAirGrindPtr->unk004[player]++;
         TaskYieldTrampoline(1);
     }
-    gUnk_03002490->unk14 = 2;
-    gUnk_03002490->unk08 = (u32)sub_080c3f20;
-    gUnk_03002490->unk5C = 0;
+    gCurTask->unk14 = 2;
+    gCurTask->unk08 = (u32)sub_080c3f20;
+    gCurTask->unk5C = 0;
     while (gAirGrindCoursePtr->unk018[player].unk00 < gAirGrindCoursePtr->unk010 + 240)
         TaskYieldTrampoline(1);
-    gUnk_03002490->unk54 = 0;
+    gCurTask->unk54 = 0;
     TaskSleepForever();
 }
 
@@ -309,8 +309,8 @@ s32 sub_080c33a0(s32 player, s32 pos)
 
 void sub_080c34ac(void)
 {
-    s32 player = gUnk_03002490->unk1C;
-    s32 pos = gUnk_03002490->unk4C >> 16;
+    s32 player = gCurTask->unk1C;
+    s32 pos = gCurTask->unk4C >> 16;
     u16 prev = gAirGrindPtr->unk01C[player].unk02;
     s32 src;
 
@@ -322,11 +322,11 @@ void sub_080c34ac(void)
         gAirGrindPtr->unk01C[player].unk0C--;
     if (pos > gAirGrindCoursePtr->unk010 + 240)
         pos = gAirGrindCoursePtr->unk010 + 240;
-    if (gUnk_03002490->unk14 == 1) {
+    if (gCurTask->unk14 == 1) {
         if (gAirGrindPtr->unk448 <= 1) {
             if (player == 0) {
-                gAirGrindPtr->unk01C[0].unk02 = gUnk_03000F98[0];
-                gAirGrindPtr->unk01C[0].unk04 = gUnk_03001EB8[0];
+                gAirGrindPtr->unk01C[0].unk02 = gPlayerHeldKeys[0];
+                gAirGrindPtr->unk01C[0].unk04 = gPlayerPressedKeys[0];
             } else {
                 u16 keys = sub_080c33a0(player, pos);
 
@@ -336,8 +336,8 @@ void sub_080c34ac(void)
         } else {
             src = gUnk_080CFE2C[gAirGrindPtr->unk446][player];
             if (src < gAirGrindPtr->unk448) {
-                gAirGrindPtr->unk01C[player].unk02 = gUnk_03000F98[src];
-                gAirGrindPtr->unk01C[player].unk04 = gUnk_03001EB8[src];
+                gAirGrindPtr->unk01C[player].unk02 = gPlayerHeldKeys[src];
+                gAirGrindPtr->unk01C[player].unk04 = gPlayerPressedKeys[src];
             } else {
                 u16 keys = sub_080c33a0(player, pos);
 

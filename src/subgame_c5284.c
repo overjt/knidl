@@ -97,19 +97,19 @@ extern s16 gUnk_02019140[4][500];
 extern s16 gUnk_0201B1F4;
 extern s16 gUnk_080D075A[];
 extern s16 gUnk_080D0760[];
-extern vu16 gUnk_03001188;
-extern vu16 gUnk_03000B14;
-extern vu16 gUnk_03000B10;
-extern vu16 gUnk_03001EB4;
-extern u32 gUnk_0300117C;
-extern vs32 gUnk_03001EE0;
-extern vs32 gUnk_03000F8C;
-extern vs32 gUnk_03000B78;
-extern u32 gUnk_03000010;
-extern vs32 gUnk_03000FC0;
-extern vs32 gUnk_03001E94;
-extern vs32 gUnk_03000FA8;
-extern u16 gUnk_03001270[];
+extern vu16 gBg0Cnt;
+extern vu16 gBg1Cnt;
+extern vu16 gBg2Cnt;
+extern vu16 gBg3Cnt;
+extern u32 gBg0ScrollX;
+extern vs32 gBg1ScrollX;
+extern vs32 gBg2ScrollX;
+extern vs32 gBg3ScrollX;
+extern u32 gBg0ScrollY;
+extern vs32 gBg1ScrollY;
+extern vs32 gBg2ScrollY;
+extern vs32 gBg3ScrollY;
+extern u16 gBgPalette[];
 extern u16 gUnk_080D0198[];
 extern u32 gUnk_0201A0E0[4][256];
 extern s16 gUnk_0201B7C0[4][256];
@@ -369,12 +369,12 @@ void sub_080c59d8(s32 a, s32 b)
     s32 i;
     struct M37CoursePlayer *p;
 
-    gUnk_03001188 = 0x1C80;
-    gUnk_03000B14 = 0x1D81;
-    gUnk_03000B10 = 0x1E82;
-    gUnk_03001EB4 = 0x1F83;
-    gUnk_0300117C = gUnk_03001EE0 = gUnk_03000F8C = gUnk_03000B78 = 0;
-    gUnk_03000010 = gUnk_03000FC0 = gUnk_03001E94 = gUnk_03000FA8 = 0x300000;
+    gBg0Cnt = 0x1C80;
+    gBg1Cnt = 0x1D81;
+    gBg2Cnt = 0x1E82;
+    gBg3Cnt = 0x1F83;
+    gBg0ScrollX = gBg1ScrollX = gBg2ScrollX = gBg3ScrollX = 0;
+    gBg0ScrollY = gBg1ScrollY = gBg2ScrollY = gBg3ScrollY = 0x300000;
     gAirGrindCourse.unk110 = a;
     gAirGrindCourse.unk10C = b;
     gAirGrindCourse.unk108 = 0;
@@ -410,7 +410,7 @@ void sub_080c59d8(s32 a, s32 b)
     for (i = 0; i < 64; i++)
         ((vu8 *)0x06000000)[i] = 0;
     for (i = 0; i < 256; i++)
-        gUnk_03001270[i] = gUnk_080D0198[i];
+        gBgPalette[i] = gUnk_080D0198[i];
     sub_080c5678(a);
     for (i = 0; i < 64; i++)
         ((vu8 *)0x0600C000)[i] = 8;

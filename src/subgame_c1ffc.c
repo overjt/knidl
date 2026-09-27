@@ -15,7 +15,7 @@
  *   sub_080c20b4   the state set-up: gAirGrindPtr = &gAirGrind,
  *       gAirGrindCoursePtr = &gAirGrindCourse, the linked-player count and mode
  *       cells, the four players' course records, the per-frame hook
- *       sub_080c2d38 (gUnk_0300003C, called by the frame driver EndFrame)
+ *       sub_080c2d38 (gFrameCallback, called by the frame driver EndFrame)
  *       and the VBlank hook sub_080c2fb8 (gUnk_03000FA4, called by the VBlank
  *       handler), and two 16-colour rows of gUnk_08609E40.
  *   AirGrindRace   the screen's task body: waits for the scroll position
@@ -91,10 +91,10 @@ struct M37Game
     /*0x300*/ u32 unk300;       /* frame counter */
     /*0x304*/ s16 unk304;       /* sub_080c4f60's OAM list: entry count */
     /*0x306*/ s16 unk306[160];  /* ... and entries */
-    /*0x446*/ u16 unk446;       /* gUnk_03002360 */
-    /*0x448*/ u16 unk448;       /* gUnk_0300243C */
+    /*0x446*/ u16 unk446;       /* gLocalPlayer */
+    /*0x448*/ u16 unk448;       /* gLinkPlayerCount */
     /*0x44A*/ u8 pad44A[2];
-    /*0x44C*/ s32 unk44C;       /* a task index into gUnk_03002790 */
+    /*0x44C*/ s32 unk44C;       /* a task index into gTasks */
     /*0x450*/ u8 unk450;
     /*0x451*/ u8 unk451;
     /*0x452*/ u8 pad452[2];
@@ -141,9 +141,9 @@ extern struct M37Game *gAirGrindPtr;
 extern struct M37Course gAirGrindCourse;
 extern struct M37Course *gAirGrindCoursePtr;
 extern u16 gUnk_02017170;
-extern u16 gUnk_03002360;
-extern u16 gUnk_0300243C;
-extern u32 gUnk_0300003C;
+extern u16 gLocalPlayer;
+extern u16 gLinkPlayerCount;
+extern u32 gFrameCallback;
 extern u32 gUnk_03000FA4;
 extern u16 gUnk_08609E40[];
 extern u32 gUnk_08755FEC[];
@@ -180,7 +180,7 @@ void CreateAirGrindRacers(void)
     for (i = 0; i < 4; i++) {
         id = TaskCreateFrom(96, 0);
         if (id != -1) {
-            t = &gUnk_03002790[id];
+            t = &gTasks[id];
             t->unk18 = id;
             t->unk1C = i;
             t->unk73 = 0;
@@ -195,7 +195,7 @@ void sub_080c2038(s32 unused)
 
     id = TaskCreateFrom(96, 32);
     if (id != -1) {
-        t = &gUnk_03002790[id];
+        t = &gTasks[id];
         t->unk73 = 1;
         gAirGrindPtr->unk44C = id;
     }
@@ -208,7 +208,7 @@ void sub_080c2078(s32 a, s32 b, s32 c)
 
     id = TaskCreateFrom(96, 32);
     if (id != -1) {
-        t = &gUnk_03002790[id];
+        t = &gTasks[id];
         t->unk18 = b;
         t->unk1C = a;
         t->unk73 = 2;
@@ -222,8 +222,8 @@ void sub_080c20b4(void)
 
     gAirGrindPtr = &gAirGrind;
     gAirGrindCoursePtr = &gAirGrindCourse;
-    gAirGrindPtr->unk446 = gUnk_03002360;
-    gAirGrindPtr->unk448 = gUnk_0300243C;
+    gAirGrindPtr->unk446 = gLocalPlayer;
+    gAirGrindPtr->unk448 = gLinkPlayerCount;
     gUnk_02017170 = 0;
     StopBgm();
     StopAllSfx();
@@ -235,7 +235,7 @@ void sub_080c20b4(void)
     }
     gAirGrindPtr->unk014 = -1;
     gAirGrindPtr->unk300 = 0;
-    gUnk_0300003C = (u32)sub_080c2d38;
+    gFrameCallback = (u32)sub_080c2d38;
     gUnk_03000FA4 = (u32)sub_080c2fb8;
     sub_080c495c();
     for (i = 0; i < 16; i++) {
@@ -250,13 +250,13 @@ void AirGrindRace(void)
     s32 i;
 
     sub_080c20b4();
-    gUnk_03002490->unk0C = (u32)TaskDrawScreen;
-    gUnk_03002490->unk38 = gUnk_08755FEC;
-    gUnk_03002490->unk3C = 0xFFFF;
+    gCurTask->unk0C = (u32)TaskDrawScreen;
+    gCurTask->unk38 = gUnk_08755FEC;
+    gCurTask->unk3C = 0xFFFF;
     PlayBgm(0x82B);
     CreateAirGrindRacers();
     sub_080c2038(0);
-    gUnk_03002490->unk04 = (u32)sub_080c241c;
+    gCurTask->unk04 = (u32)sub_080c241c;
     while (gAirGrindCoursePtr->unk000 < gAirGrindCoursePtr->unk00C - 240)
         TaskYieldTrampoline(1);
     sub_080c4860(gAirGrindCoursePtr->unk00C);
@@ -265,17 +265,17 @@ void AirGrindRace(void)
             break;
         TaskYieldTrampoline(1);
     }
-    gUnk_03002490->unk48 = 144;
-    gUnk_03002490->unk4A = 80;
-    gUnk_03002490->unk34 = sub_080c4974(gUnk_0860A042, 241, 10, 8, 15, 0);
-    gUnk_03002490->unk3C = 0;
+    gCurTask->unk48 = 144;
+    gCurTask->unk4A = 80;
+    gCurTask->unk34 = sub_080c4974(gUnk_0860A042, 241, 10, 8, 15, 0);
+    gCurTask->unk3C = 0;
     PlayBgm(0x82A);
     while (gAirGrindCoursePtr->unk000 < gAirGrindCoursePtr->unk00C + 240)
         TaskYieldTrampoline(1);
-    gUnk_03002490->unk08 = 0;
-    gUnk_03002490->unk3C = 0xFFFF;
-    sub_080c4a20(gUnk_03002490->unk34);
-    if (gUnk_0300003C != 0 && gAirGrind.unk000 != 2) {
+    gCurTask->unk08 = 0;
+    gCurTask->unk3C = 0xFFFF;
+    sub_080c4a20(gCurTask->unk34);
+    if (gFrameCallback != 0 && gAirGrind.unk000 != 2) {
         while (gAirGrindPtr->unk300 <= 0x4AF)
             TaskYieldTrampoline(1);
         sub_080c4974(&gAirGrindPtr->unk0EC.unk76[1], 161, 256, 2, 6, 1);
@@ -290,10 +290,10 @@ void AirGrindRace(void)
     }
     while (gAirGrindCoursePtr->unk018[0].unk00 < gAirGrindCoursePtr->unk010)
         TaskYieldTrampoline(1);
-    gUnk_03002490->unk48 = 112;
-    gUnk_03002490->unk4A = 80;
-    gUnk_03002490->unk34 = sub_080c4974(gUnk_0860A042, 241, 10, 8, 15, 0);
-    gUnk_03002490->unk3C = 1;
+    gCurTask->unk48 = 112;
+    gCurTask->unk4A = 80;
+    gCurTask->unk34 = sub_080c4974(gUnk_0860A042, 241, 10, 8, 15, 0);
+    gCurTask->unk3C = 1;
     PlayBgm(0x82C);
     while (1) {
         n = 0;
@@ -309,7 +309,7 @@ void AirGrindRace(void)
     StopAllSfx();
     ClearHBlankIntr();
     gUnk_03000AF4 = 0;
-    gUnk_03002490->unk18 = 2;
+    gCurTask->unk18 = 2;
     TaskSleepForever();
 }
 

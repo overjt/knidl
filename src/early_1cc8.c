@@ -11,8 +11,8 @@
  * around the sprite's centre (the half sizes come from the shape/size table
  * gUnk_0872EB14[shape][size]), double-size unless both scales are at least
  * 256, and pointed at affine slot gUnk_03000B1C; the slot's matrix (sx, sy
- * and the rotation rot through the trig table gUnk_0872FB30) goes into the
- * OAM shadow gUnk_03000050.  Returns the address of the first staged entry.
+ * and the rotation rot through the trig table gCosTable) goes into the
+ * OAM shadow gOamBuffer.  Returns the address of the first staged entry.
  *
  * The definition's parameters are (u16 *, s16, s16, s16): the ROM truncates
  * all three at entry and sign-extends them at every use (lesson 3.27).  The
@@ -28,10 +28,10 @@
 
 extern vs16 gUnk_03001190[];       /* affine OBJ staging buffer */
 extern vu16 gUnk_03001A80;         /* staging buffer write index */
-extern vu16 gUnk_03000050[];       /* OAM shadow (attrs + affine params) */
+extern vu16 gOamBuffer[];       /* OAM shadow (attrs + affine params) */
 extern vu16 gUnk_03000B1C;         /* affine matrix index */
 extern const u8 gUnk_0872EB14[4][4][2];   /* [shape][size] -> {w,h} */
-extern s16 gUnk_0872FB30[];  /* trig table (mid pointer) */
+extern s16 gCosTable[];  /* trig table (mid pointer) */
 
 /* Emit an affine sprite: copy the OAM template stream at `p` into the
  * staging buffer with every entry scaled by 256/sx, 256/sy around its
@@ -126,17 +126,17 @@ loop:
 
     if (rot != 0)
     {
-        gUnk_03000050[((s16)gUnk_03000B1C << 4) + 3] = (sx * *(gUnk_0872FB30 + rot)) >> 8;
-        gUnk_03000050[((s16)gUnk_03000B1C << 4) + 7] = -((sx * *(gUnk_0872FB30 - 128 + rot)) >> 8);
-        gUnk_03000050[((s16)gUnk_03000B1C << 4) + 11] = (sy * *(gUnk_0872FB30 - 128 + rot)) >> 8;
-        gUnk_03000050[((s16)gUnk_03000B1C << 4) + 15] = (sy * *(gUnk_0872FB30 + rot)) >> 8;
+        gOamBuffer[((s16)gUnk_03000B1C << 4) + 3] = (sx * *(gCosTable + rot)) >> 8;
+        gOamBuffer[((s16)gUnk_03000B1C << 4) + 7] = -((sx * *(gCosTable - 128 + rot)) >> 8);
+        gOamBuffer[((s16)gUnk_03000B1C << 4) + 11] = (sy * *(gCosTable - 128 + rot)) >> 8;
+        gOamBuffer[((s16)gUnk_03000B1C << 4) + 15] = (sy * *(gCosTable + rot)) >> 8;
     }
     else
     {
-        gUnk_03000050[((s16)gUnk_03000B1C << 4) + 3] = sx;
-        gUnk_03000050[((s16)gUnk_03000B1C << 4) + 7] = 0;
-        gUnk_03000050[((s16)gUnk_03000B1C << 4) + 11] = 0;
-        gUnk_03000050[((s16)gUnk_03000B1C << 4) + 15] = sy;
+        gOamBuffer[((s16)gUnk_03000B1C << 4) + 3] = sx;
+        gOamBuffer[((s16)gUnk_03000B1C << 4) + 7] = 0;
+        gOamBuffer[((s16)gUnk_03000B1C << 4) + 11] = 0;
+        gOamBuffer[((s16)gUnk_03000B1C << 4) + 15] = sy;
     }
     gUnk_03000B1C++;
     return (s32)first;

@@ -78,7 +78,7 @@ extern s8 gUnk_030023EC;
 extern s8 gUnk_0300238C;
 extern s8 gUnk_03002468;
 extern u16 gUnk_02007FF0;
-extern u16 gUnk_030023D8;
+extern u16 gGameState;
 extern s16 gUnk_020055E0;
 extern s16 gUnk_0200AEF0;
 extern u8 gUnk_02006170;
@@ -92,11 +92,11 @@ extern u16 gUnk_02007D60;
 extern u8 gUnk_0200B078;
 extern s8 gUnk_02006098[];
 extern u8 gUnk_0300560C[];
-extern u16 gUnk_030023AC;
+extern u16 gPlayerCount;
 extern u8 gUnk_03002340;
 extern u16 gUnk_030055C0;
-extern u16 gUnk_03002360;
-extern s16 gUnk_02007D48[];
+extern u16 gLocalPlayer;
+extern s16 gPlayerLives[];
 extern s16 gUnk_03002398;
 extern s16 gUnk_03001F00;
 extern s32 gUnk_03005614;
@@ -136,7 +136,7 @@ void sub_080273a0(void)
         else
         {
             gUnk_03002468 = 0;
-            k = gUnk_030023D8 - 11;
+            k = gGameState - 11;
         }
         r = gUnk_087E1D58[gUnk_0300238C][gUnk_030023EC][gUnk_03002468];
         d = r->unk44;
@@ -150,7 +150,7 @@ void sub_080273a0(void)
         gUnk_02006170 = 1;
         gUnk_0200AF00 = 0;
         gUnk_020069F0 = 1;
-        gUnk_030023D8 = 5;
+        gGameState = 5;
     }
     else
     {
@@ -280,22 +280,22 @@ s32 sub_080275cc(s32 a)
 
 s32 sub_080276ac(s32 a)
 {
-    gUnk_0300560C[gUnk_03002490->unk88->unk00] = 1;
+    gUnk_0300560C[gCurTask->unk88->unk00] = 1;
     return a;
 }
 
 s32 sub_080276cc(s32 i)
 {
-    if (gUnk_030023AC > 1 && gUnk_03002340 != 0)
+    if (gPlayerCount > 1 && gUnk_03002340 != 0)
     {
         if (gUnk_030055C0 != 5)
             gUnk_0300560C[i] = 2;
         else
             gUnk_0300560C[i] = 3;
-        if (i == gUnk_03002360)
+        if (i == gLocalPlayer)
         {
-            if (gUnk_02007D48[i] != 0)
-                sub_0800a0dc(26, gUnk_03002490->unk88->unk00);
+            if (gPlayerLives[i] != 0)
+                sub_0800a0dc(26, gCurTask->unk88->unk00);
             else
                 sub_08009e2c(i);
         }
@@ -306,7 +306,7 @@ s32 sub_08027750(void)
 {
     s32 i;
 
-    for (i = 0; i < gUnk_030023AC; i++)
+    for (i = 0; i < gPlayerCount; i++)
     {
         if (((gUnk_03002340 >> i) & 1) == 0 && gUnk_0300560C[i] != 3)
             return 0;
@@ -349,16 +349,16 @@ void sub_08027850(s32 a)
     s32 x;
     s32 y;
 
-    if (gUnk_030023AC == 1)
+    if (gPlayerCount == 1)
     {
-        gUnk_02007D38 = gUnk_03002360;
+        gUnk_02007D38 = gLocalPlayer;
         gUnk_030055C0 = 0;
     }
     else
     {
         gUnk_02007D38 = a;
         gUnk_030055C0 = 1;
-        for (i = 0; i < gUnk_030023AC; i++)
+        for (i = 0; i < gPlayerCount; i++)
         {
             x = gUnk_03002398;
             y = gUnk_03001F00;
@@ -383,7 +383,7 @@ void sub_08027908(void)
     s32 y;
     u16 *m;
 
-    if (gUnk_030023AC == 1)
+    if (gPlayerCount == 1)
     {
         x = gUnk_03002398;
         y = gUnk_03001F00;
@@ -395,15 +395,15 @@ void sub_08027908(void)
             y = gUnk_030055F8[2];
         if (gUnk_030055F8[3] < y)
             y = gUnk_030055F8[3];
-        gUnk_030055D0[gUnk_03002360].x = x;
-        gUnk_030055D0[gUnk_03002360].y = y;
+        gUnk_030055D0[gLocalPlayer].x = x;
+        gUnk_030055D0[gLocalPlayer].y = y;
         gUnk_030055C0 = 0;
     }
     else
     {
         i = 0;
         m = &gUnk_030055C0;
-        for (; i < gUnk_030023AC; i++)
+        for (; i < gPlayerCount; i++)
         {
             x = gUnk_03002398;
             y = gUnk_03001F00;
@@ -430,7 +430,7 @@ s32 sub_08027a30(void)
 {
     s32 i;
 
-    for (i = 0; i < gUnk_030023AC; i++)
+    for (i = 0; i < gPlayerCount; i++)
     {
         if (gUnk_0300560C[i] == 2)
             return 0;
