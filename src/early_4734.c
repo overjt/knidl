@@ -21,7 +21,7 @@
  *   0x08004EAC  MultiBootHandShake      (static)
  *   0x08004F98  MultiBootWaitCycles     (static)
  *   0x08004FB0  MultiBootWaitSendDone   (static)
- * sub_08004734 is game code: the 5-step link/multiboot session sequencer
+ * LinkBlockMain is game code: the 5-step link/multiboot session sequencer
  * driven by the counter at 0x0200EBA8.
  *
  * STATUS: 9 of the 10 functions are byte-exact.
@@ -67,15 +67,15 @@ extern vu16 gUnk_04000120[];
 #define SIOMULTI2 gUnk_04000120
 
 /* Per-client probe response cache (3 halfwords). */
-extern u16 gUnk_03006920[];
+extern u16 gMultiBootClientData[];
 
 /* Link session sequencer state / frame counters (EWRAM). */
-extern s32 gUnk_0200EBA0;
-extern s32 gUnk_0200EBA4;
-extern vs32 gUnk_0200EBA8;
-extern s32 gUnk_0200EBAC;
-extern s32 gUnk_0200EBBC;
-extern s32 gUnk_0200EC40;
+extern s32 gLinkDriverMode;
+extern s32 gLinkBlockTimeout;
+extern vs32 gLinkBlockState;
+extern s32 gLinkBlockWords;
+extern s32 gLinkBlockIndex;
+extern s32 gLinkBlockFrames;
 extern vu16 gIntrEnable;      /* REG_IE shadow */
 extern vu16 gIntrMasterEnable;      /* REG_IME shadow */
 extern vu16 gLinkIsMaster;      /* link-mode flag */
@@ -102,19 +102,19 @@ void MultiBootStartProbe(struct MultiBootParam *mp);
 int MultiBootCheckComplete(struct MultiBootParam *mp);
 
 
-/*FN sub_08004734*/
-void sub_08004734(void)
+/*FN LinkBlockMain*/
+void LinkBlockMain(void)
 {
-    switch (gUnk_0200EBA8)
+    switch (gLinkBlockState)
     {
     case 0:
-        gUnk_0200EBA4 = ((((gUnk_0200EBAC << 2) >> 2) * 0x10B3) >> 18) + 9;
-        gUnk_0200EBA8++;
+        gLinkBlockTimeout = ((((gLinkBlockWords << 2) >> 2) * 0x10B3) >> 18) + 9;
+        gLinkBlockState++;
         break;
     case 1:
         if (gLinkIsMaster != 0)
         {
-            if (gUnk_0200EC40 <= 5)
+            if (gLinkBlockFrames <= 5)
                 break;
         }
         else
@@ -138,16 +138,16 @@ void sub_08004734(void)
             REG_IE = gIntrEnable = gIntrEnable | 0x80;
         }
         gIntrMasterEnable = GIME = GIME | 1;
-        gUnk_0200EC40 = 0;
-        gUnk_0200EBA8++;
+        gLinkBlockFrames = 0;
+        gLinkBlockState++;
         break;
     case 2:
-        if (gUnk_0200EBBC < gUnk_0200EBAC && gUnk_0200EC40 < gUnk_0200EBA4)
+        if (gLinkBlockIndex < gLinkBlockWords && gLinkBlockFrames < gLinkBlockTimeout)
             break;
-        gUnk_0200EBA8++;
+        gLinkBlockState++;
         break;
     case 3:
-        gUnk_0200EBA8++;
+        gLinkBlockState++;
         break;
     case 4:
         gIntrMasterEnable = GIME = GIME & 0xFFFE;
@@ -158,11 +158,11 @@ void sub_08004734(void)
         REG_TM3CNT_H = 0;
         REG_IF |= 0xC0;
         gIntrMasterEnable = GIME = GIME | 1;
-        gUnk_0200EBA8 = 0x9999;
-        gUnk_0200EBA0 = 0;
+        gLinkBlockState = 0x9999;
+        gLinkDriverMode = 0;
         break;
     }
-    gUnk_0200EC40++;
+    gLinkBlockFrames++;
 }
 
 

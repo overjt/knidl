@@ -8,10 +8,10 @@
  * state 12, which runs M38's sub_080c6420).
  * 
  *   EndingMain   copies gLocalPlayer, gLinkIsMaster, gLinkPlayerCount and
- *       gPlayerCount into EWRAM cells, runs the SIO teardown sub_0800293c
- *       (after sub_08002358/sub_08002668 when gUnk_03002150 is 20, the value
+ *       gPlayerCount into EWRAM cells, runs the SIO teardown DisconnectLink
+ *       (after LinkRequestSync/LinkSyncClock when gPrevGameState is 20, the value
  *       AgbMain's state 20 leaves there), stops the sound (StopAllSound),
- *       plays the two scenes below unless gUnk_03002150 is 20 or
+ *       plays the two scenes below unless gPrevGameState is 20 or
  *       gUnk_03001F30 is 1, and ends with sub_080b8070(gCurSaveSlot).
  *   sub_080c62f0 / sub_080c6388   one scene each: preset and load a room
  *       (sub_08024610(0, 0) / sub_08024654(632, 248)), palette set 15 / 16
@@ -29,7 +29,7 @@ extern u16 gUnk_0200616C;
 extern u16 gLinkPlayerCount;
 extern u16 gUnk_02004C94;
 extern u16 gPlayerCount;
-extern u16 gUnk_03002150;
+extern u16 gPrevGameState;
 extern u8 gUnk_03001F30;
 extern s32 gCurSaveSlot;
 extern u8 gEndingSceneActive;
@@ -37,9 +37,9 @@ extern vu16 gDispCnt;
 
 void BeginFastFadeInFromWhite(void);
 void BeginFastFadeOutToWhite(void);
-void sub_08002358(void);
-void sub_08002668(void);
-void sub_0800293c(void);
+void LinkRequestSync(void);
+void LinkSyncClock(void);
+void DisconnectLink(void);
 void RunLinkFrame(void);
 void RunLinkFramesUntilFadeDone(void);
 void StopAllSound(void);
@@ -60,13 +60,13 @@ void EndingMain(void)
     gUnk_02007D3C = gLinkIsMaster;
     gUnk_0200616C = gLinkPlayerCount;
     gUnk_02004C94 = gPlayerCount;
-    if (gUnk_03002150 == 20) {
-        sub_08002358();
-        sub_08002668();
+    if (gPrevGameState == 20) {
+        LinkRequestSync();
+        LinkSyncClock();
     }
-    sub_0800293c();
+    DisconnectLink();
     StopAllSound();
-    if (gUnk_03002150 != 20 && gUnk_03001F30 != 1) {
+    if (gPrevGameState != 20 && gUnk_03001F30 != 1) {
         sub_080c62f0();
         sub_080c6388();
     }

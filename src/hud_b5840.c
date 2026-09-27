@@ -74,7 +74,7 @@ extern u32 gFrameCallback;
 extern vu16 gBg2Cnt;
 extern u32 gUnk_03000B74;
 extern u16 gPlayerHeldKeys[];
-extern u32 gUnk_03000FA4;
+extern u32 gVBlankCallback;
 extern u32 gHBlankDmaDest[];
 extern u32 gHBlankDmaCnt[];
 extern u8 gObjPalette[];
@@ -1758,7 +1758,7 @@ void HBlankScrollVBlankCallback(void)
     REG_DMA0CNT_H = 0;
     if (gFrameCallback == 0)
     {
-        gUnk_03000FA4 = 0;
+        gVBlankCallback = 0;
         *(vu32 *)gHBlankDmaDest = *(vu32 *)gHBlankDmaSrc = *(vu32 *)gHBlankDmaCnt = 0;
         gUnk_03000B74 = 0;
     }
@@ -1790,7 +1790,7 @@ void sub_080b60e8(void)
     m = 0xA2600000;
     m |= w;
     *(vu32 *)gHBlankDmaCnt = m;
-    *(vu32 *)&gUnk_03000FA4 = (u32)HBlankScrollVBlankCallback;
+    *(vu32 *)&gVBlankCallback = (u32)HBlankScrollVBlankCallback;
     p = (vu32 *)gHBlankScrollTimer;
     w1 = *p;
     if (w1 <= 0xFFFF)

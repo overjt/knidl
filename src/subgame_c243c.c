@@ -16,7 +16,7 @@
  *       and the place or the stars won, then the two palette cycles
  *       (sub_080c2ba8).
  *   sub_080c2740   the results state machine (gUnk_02017140.unk00): a place
- *       jingle (songs 0x81D/0x81C/0x817), in the extra mode (gUnk_03002150 ==
+ *       jingle (songs 0x81D/0x81C/0x817), in the extra mode (gPrevGameState ==
  *       5) the stars counted up and handed to the linked players
  *       (sub_08009eb8) before M35's SubGameQuit ends the screen, otherwise a
  *       retry/quit choice and a three-way level choice passed to M35's
@@ -166,7 +166,7 @@ extern struct M37Course *gAirGrindCoursePtr;
 extern u16 gUnk_02017170;
 extern struct M37Results gUnk_02017140;
 extern u8 gUnk_080CFE2C[][4];
-extern u16 gUnk_03002150;
+extern u16 gPrevGameState;
 extern vu16 gPlayerPressedKeys[];
 extern u32 gUnk_0875602C[];
 extern u16 gUnk_08609F40[][16];
@@ -268,7 +268,7 @@ void sub_080c25c4(void)
             layer = 3;
         sub_080c4c30(0, pal, scale, 76, y, layer);
         if (gUnk_02017140.unk00 != 3) {
-            if (gUnk_02017140.unk00 > 3 && gUnk_03002150 == 5)
+            if (gUnk_02017140.unk00 > 3 && gPrevGameState == 5)
                 blink = gUnk_02017170 & 64;
             else
                 blink = 1;
@@ -336,7 +336,7 @@ void sub_080c2740(void)
         break;
     case 2:
         if (++gUnk_02017140.unk18 > 174) {
-            if (gUnk_03002150 != 5) {
+            if (gPrevGameState != 5) {
                 gUnk_02017140.unk00 = 4;
             } else {
                 gUnk_02017140.unk18 = 20;
@@ -363,7 +363,7 @@ void sub_080c2740(void)
         break;
     case 4:
         if (gPlayerPressedKeys[0] & 9) {
-            if (gUnk_03002150 != 5) {
+            if (gPrevGameState != 5) {
                 t = gCurTask;
                 t->unk28 = 0;
                 t->unk2C = gAirGrind.unk000;

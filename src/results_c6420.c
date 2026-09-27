@@ -24,13 +24,13 @@ extern vs32 gBg2ScrollX;
 extern vs32 gBg3ScrollY;
 extern vs32 gBg3ScrollX;          /* ... BG3 */
 extern u8 gUnk_03001F30;            /* link-play mode */
-extern u16 gUnk_03002150;           /* previous game state */
+extern u16 gPrevGameState;           /* previous game state */
 extern u16 gPlayerCount;           /* number of players */
 extern u8 gExtraMode;
 extern u16 gUnk_03002364;
 extern u16 gUnk_02000028;
 extern s32 gPlayerScores[];         /* score per player */
-extern u16 gUnk_02006068[];         /* clock (four fields) */
+extern u16 gHudClock[];         /* clock (four fields) */
 extern vu16 gPlayerPressedKeys[];        /* keys pressed per player */
 extern u32 gUnk_02020000[];         /* decompression buffer */
 extern u16 gHudDigitTiles[2][10];    /* digit tiles, top and bottom rows */
@@ -44,15 +44,15 @@ void BeginFastFadeInFromWhite(void);
 void BeginFadeOutToWhite(void);
 void BeginFastFadeOutToWhite(void);
 /* Declared without its parameter: early_1fd0.c defines it as
-   `u32 sub_080022a0(u32 arg)` (it returns arg unchanged, lesson 3.391) and
+   `u32 ClearWarmBoot(u32 arg)` (it returns arg unchanged, lesson 3.391) and
    this call sets up no argument (lesson 3.428). */
-void sub_080022a0(void);
+void ClearWarmBoot(void);
 void ResetTasksAndOam(void);
 void RunFrameNoTasks(void);
-void sub_080022fc(void);
-void sub_08002338(void);
-void sub_08002358(void);
-void sub_08002378(void);
+void LinkStartKeyExchange(void);
+void LinkStopKeyExchange(void);
+void LinkRequestSync(void);
+void LinkSyncRandom(void);
 void RunLinkFrame(void);                                     /* run one frame */
 void RunFramesNoTasks(s32 count);
 void RunLinkFrames(s32 count);
@@ -77,7 +77,7 @@ void sub_080c6c3c(u16 *src, s32 x, s32 y, s32 n);
    and returns (AgbMain goes back to state 0). */
 void sub_080c6420(void)
 {
-    if (gUnk_03002150 != 20) {
+    if (gPrevGameState != 20) {
         LoadGfxSet(4);
         if (gUnk_03001F30 == 0) {
             if (gExtraMode == 0)
@@ -87,7 +87,7 @@ void sub_080c6420(void)
             DrawScoreToBgMap(gPlayerScores[gUnk_02000028], 22, 0);
         } else {
             LoadGfxSet(55);
-            DrawClockToBgMap(gUnk_02006068, 22, 18);
+            DrawClockToBgMap(gHudClock, 22, 18);
         }
     } else {
         LoadGfxSet(54);
@@ -99,7 +99,7 @@ void sub_080c6420(void)
     gBg0ScrollX = gBg0ScrollY = 0;
     gBg2ScrollX = gBg2ScrollY = 0;
     gBg3ScrollX = gBg3ScrollY = 0;
-    if (gUnk_03002150 == 20) {
+    if (gPrevGameState == 20) {
         gDispCnt &= 0xE0FF;
         gDispCnt |= 0x800;
     } else if (gUnk_03001F30 == 1) {
@@ -114,7 +114,7 @@ void sub_080c6420(void)
     }
     BeginFastFadeInFromWhite();
     RunLinkFramesUntilFadeDone();
-    if (gUnk_03002150 == 20 || gUnk_03001F30 == 1) {
+    if (gPrevGameState == 20 || gUnk_03001F30 == 1) {
         PlayBgm(29);
         RunLinkFrames(174);
     } else {
@@ -125,13 +125,13 @@ void sub_080c6420(void)
         RunLinkFrame();
     while (!(gPlayerPressedKeys[0] & 8));
     PlaySfx(102);
-    sub_08002338();
+    LinkStopKeyExchange();
     FadeOutBgm(8);
     BeginFadeOutToWhite();
     RunLinkFramesUntilFadeDone();
     RunFramesNoTasks(2);
     SetBgmVolume(255);
-    sub_080022a0();
+    ClearWarmBoot();
 }
 
 /* The final screen after AgbMain state 20: the clock drawn with the large
@@ -140,17 +140,17 @@ void sub_080c6420(void)
 void sub_080c6600(void)
 {
     LoadGfxSet(53);
-    IntToDigits(gUnk_02006068[3]);
+    IntToDigits(gHudClock[3]);
     RequestCopy(1, (u32)gUnk_02020000 + (gDigits[1] << 5), 0x0600AEA0, 32);
     RequestCopy(1, (u32)gUnk_02020000 + ((gDigits[1] + 16) << 5), 0x0600B0A0, 32);
     RequestCopy(1, (u32)gUnk_02020000 + (gDigits[0] << 5), 0x0600AEC0, 32);
     RequestCopy(1, (u32)gUnk_02020000 + ((gDigits[0] + 16) << 5), 0x0600B0C0, 32);
-    IntToDigits(gUnk_02006068[2]);
+    IntToDigits(gHudClock[2]);
     RequestCopy(1, (u32)gUnk_02020000 + (gDigits[1] << 5), 0x0600AF00, 32);
     RequestCopy(1, (u32)gUnk_02020000 + ((gDigits[1] + 16) << 5), 0x0600B100, 32);
     RequestCopy(1, (u32)gUnk_02020000 + (gDigits[0] << 5), 0x0600AF20, 32);
     RequestCopy(1, (u32)gUnk_02020000 + ((gDigits[0] + 16) << 5), 0x0600B120, 32);
-    IntToDigits(gUnk_02006068[1]);
+    IntToDigits(gHudClock[1]);
     RequestCopy(1, (u32)gUnk_02020000 + ((gDigits[1] + 32) << 5), 0x0600AF60, 32);
     RequestCopy(1, (u32)gUnk_02020000 + ((gDigits[1] + 48) << 5), 0x0600B160, 32);
     RequestCopy(1, (u32)gUnk_02020000 + ((gDigits[0] + 32) << 5), 0x0600AF80, 32);
@@ -171,9 +171,9 @@ void sub_080c6750(void)
     else
         LoadGfxSet(59);
     gBg3ScrollX = gBg3ScrollY = 0;
-    sub_08002358();
-    sub_08002378();
-    sub_080022fc();
+    LinkRequestSync();
+    LinkSyncRandom();
+    LinkStartKeyExchange();
     gDispCnt &= 0xE0FF;
     gDispCnt |= 0x800;
     BeginFastFadeInFromWhite();
@@ -188,7 +188,7 @@ void sub_080c6750(void)
             }
         }
     } while (i == gPlayerCount);
-    sub_08002338();
+    LinkStopKeyExchange();
     BeginFastFadeOutToWhite();
     RunLinkFramesUntilFadeDone();
 }

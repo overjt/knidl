@@ -42,7 +42,7 @@ extern vu8 gTaskClassLists[][64];
 extern vs32 gTaskCursor;
 extern u32 gTaskStackPtrs[];
 extern struct TaskType gTaskTypes[];
-extern vu8 gUnk_03002700[];
+extern vu8 gTaskClassListLen[];
 
 /* Free the task in slot `id`. */
 void TaskFree(s32 id)
@@ -150,11 +150,11 @@ s32 TaskCreate(u32 type)
     if (gTaskRunPhase >= 0)
     {
         cls = t->unk12;
-        gTaskClassLists[cls][gUnk_03002700[cls]] = gTaskCursor;
-        gTaskListRefs[gTaskCursor] = (cls << 8) | gUnk_03002700[cls];
-        gUnk_03002700[cls]++;
-        if (gUnk_03002700[cls] > 63)
-            gUnk_03002700[cls] = 0;
+        gTaskClassLists[cls][gTaskClassListLen[cls]] = gTaskCursor;
+        gTaskListRefs[gTaskCursor] = (cls << 8) | gTaskClassListLen[cls];
+        gTaskClassListLen[cls]++;
+        if (gTaskClassListLen[cls] > 63)
+            gTaskClassListLen[cls] = 0;
     }
     id = gTaskCursor;
     gTaskCursor++;

@@ -16,7 +16,7 @@
  *       of M02's sub_0800b788).
  *   sub_080cd70c / sub_080cd75c / sub_080cd828   the text layer: load it,
  *       stream the 14 compressed pages gUnk_087583B4[] into the two BG0 map
- *       halves, and scroll BG0 from the per-frame callback gUnk_03000AF4. */
+ *       halves, and scroll BG0 from the per-frame callback gVBlankEndCallback. */
 
 extern vu16 gDispCnt;          /* DISPCNT shadow */
 extern vs32 gBg0ScrollY;          /* BG0 16.16 scroll shadows ... */
@@ -47,7 +47,7 @@ extern u16 gUnk_08758374[];
 extern vu16 gFadeStep;
 extern vs16 gBrightness;
 extern vu16 gFadeSteps;
-extern u32 gUnk_03000AF4;
+extern u32 gVBlankEndCallback;
 extern u8 gUnk_020061E0;
 extern u16 gNextActorSerial;
 extern u8 gUnk_02006178;
@@ -186,7 +186,7 @@ void CreditsMain(void)
         LatchPlayerKeys();
     }
     gDispCnt |= 0x80;
-    gUnk_03000AF4 = 0;
+    gVBlankEndCallback = 0;
     gSfxDisabled = 0;
     StopAllSound();
     ResetTasksAndOam();
@@ -232,7 +232,7 @@ void sub_080cd70c(void)
     LoadGfxSet(72);
     gUnk_0201C1A0 = 0x400000;
     gUnk_0201C1AC = 0x40000;
-    gUnk_03000AF4 = (u32)sub_080cd828;
+    gVBlankEndCallback = (u32)sub_080cd828;
     gUnk_0201C1A8 = 0;
     gUnk_0201C19C = 0;
     gUnk_0201C1B4 = gUnk_0201C1A0 >> 12;
@@ -266,7 +266,7 @@ void sub_080cd75c(void)
     }
 }
 
-/* The staff credits' per-frame callback (installed in gUnk_03000AF4 by
+/* The staff credits' per-frame callback (installed in gVBlankEndCallback by
    sub_080cd70c): scroll BG0 up by half a pixel a frame until the text has
    gone by, then park it through the BG0 scroll shadows. */
 void sub_080cd828(void)

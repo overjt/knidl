@@ -82,10 +82,10 @@ void ResetFadeAndBlend(void);
 void BeginFastFadeInFromWhite(void);
 void BeginFastFadeOutToWhite(void);
 void ResetTasksAndOam(void);
-void sub_080022fc(void);
-void sub_08002338(void);
-void sub_08002358(void);
-void sub_08002378(void);
+void LinkStartKeyExchange(void);
+void LinkStopKeyExchange(void);
+void LinkRequestSync(void);
+void LinkSyncRandom(void);
 void RunLinkFrame(void);
 void RunLinkFramesUntilFadeDone(void);
 void CallTableEntry(u32 a, u32 b, u32 *c);
@@ -238,9 +238,9 @@ void sub_0805b110(void)
     LoadBgLayout(3);
     sub_0805b16c();
     sub_08009b2c(gLocalPlayer);
-    sub_08002358();
-    sub_08002378();
-    sub_080022fc();
+    LinkRequestSync();
+    LinkSyncRandom();
+    LinkStartKeyExchange();
     BeginFastFadeInFromWhite();
     RunLinkFramesUntilFadeDone();
     do
@@ -248,7 +248,7 @@ void sub_0805b110(void)
         RunLinkFrame();
         LatchPlayerKeys();
     } while (*(s8 *)0x03002438 == 0);
-    sub_08002338();
+    LinkStopKeyExchange();
     BeginFastFadeOutToWhite();
     RunLinkFramesUntilFadeDone();
     sub_08026998();

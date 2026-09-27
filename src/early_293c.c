@@ -16,9 +16,9 @@ extern u32 gLinkStatus;
 extern u32 gSerialIntrCount;
 extern u16 gShouldAdvanceLinkState;
 extern u16 gSendCmd[4];
-extern u32 gUnk_0200EBA0;
+extern u32 gLinkDriverMode;
 
-void sub_0800293c(void)
+void DisconnectLink(void)
 {
     int a;
     u32 b;
@@ -93,7 +93,7 @@ void sub_0800293c(void)
     }
 done:
     if (gLinkIsMaster != 0)
-        gUnk_0200EBA0 = 0;
+        gLinkDriverMode = 0;
     RunFrames(5);
     DisableSerial();
     gLinkStatus = 0;

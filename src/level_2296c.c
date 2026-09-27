@@ -109,7 +109,7 @@ extern u8 gRoomEntrySet;
 extern u8 gUnk_020069F0;
 extern u8 gUnk_02007D58[];
 extern u16 gUnk_02007D60;
-extern u8 gUnk_02007FC0;
+extern u8 gCutscenePending;
 extern u16 gUnk_02007FF0;
 extern s8 gUnk_02007FF8;
 extern s16 gRoomEntryY;
@@ -304,7 +304,7 @@ void sub_0802296c(void)
         }
         gRoomEntrySet = 1;
     }
-    gUnk_02007FC0 = 1;
+    gCutscenePending = 1;
 }
 
 void sub_08022c3c(void)
@@ -410,7 +410,7 @@ void sub_08022c3c(void)
         gRoomEntrySet = 1;
     }
     gUnk_0200B038 = 0;
-    gUnk_02007FC0 = 1;
+    gCutscenePending = 1;
 }
 
 void sub_08022f50(void)
@@ -420,7 +420,7 @@ void sub_08022f50(void)
     gRoomIndex = 0;
     gUnk_020069F0 = 0;
     gRoomEntrySet = 0;
-    gUnk_02007FC0 = 0;
+    gCutscenePending = 0;
     HudShowClock();
 }
 

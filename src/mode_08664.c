@@ -14,7 +14,7 @@ extern s16 gPlayerHealth[];
 extern s16 gPlayerLives[];
 extern s8 gUnk_02007D64;
 extern s16 gInputRecorderMode;
-extern vu16 gUnk_03000048;
+extern vu16 gFadeBlankAtWhite;
 extern vs32 gBg3ScrollX;
 extern vs32 gBg2ScrollX;
 extern vs32 gBg3ScrollY;
@@ -41,10 +41,10 @@ void RequestCopy(u32 mode, u32 src, u32 dst, u32 size);
 void ResetFadeAndBlend(void);
 void BeginFastFadeInFromWhite(void);
 void BeginFastFadeOutToWhite(void);
-void sub_080022fc(void);
-void sub_08002338(void);
-void sub_08002358(void);
-void sub_08002378(void);
+void LinkStartKeyExchange(void);
+void LinkStopKeyExchange(void);
+void LinkRequestSync(void);
+void LinkSyncRandom(void);
 void RunLinkFrame(void);
 void RunLinkFrames(s32 count);
 void RunLinkFramesUntilFadeDone(void);
@@ -118,9 +118,9 @@ void PauseScreen(void)
     gBg3ScrollX = gBg3ScrollY = 0;
     sel = 0;
     sub_080089e0(0);
-    sub_08002358();
-    sub_08002378();
-    sub_080022fc();
+    LinkRequestSync();
+    LinkSyncRandom();
+    LinkStartKeyExchange();
     ResetFadeAndBlend();
     BeginFastFadeInFromWhite();
     RunLinkFramesUntilFadeDone();
@@ -168,7 +168,7 @@ void PauseScreen(void)
         }
     } while (pressed == 0);
     if (gUnk_03002444 != 0 || gGameState != 5) {
-        sub_08002338();
+        LinkStopKeyExchange();
         BeginFastFadeOutToWhite();
         RunLinkFramesUntilFadeDone();
         LoadBgLayout(3);
@@ -176,9 +176,9 @@ void PauseScreen(void)
         for (i = 0; i < 64; i++)
             TaskSetSkipMask(15, i);
         sub_080b6f04();
-        sub_08002358();
-        sub_08002378();
-        sub_080022fc();
+        LinkRequestSync();
+        LinkSyncRandom();
+        LinkStartKeyExchange();
         FadeInSfx(16);
         BeginFastFadeInFromWhite();
         RunLinkFramesUntilFadeDone();
@@ -205,9 +205,9 @@ void sub_08008a00(void)
     sub_0800b648();
     for (i = 0; i < gPlayerCount; i++)
         InitPlayerState(i);
-    sub_08002358();
-    sub_08002378();
-    sub_080022fc();
+    LinkRequestSync();
+    LinkSyncRandom();
+    LinkStartKeyExchange();
     gDispCnt &= 0xE0FF;
     gDispCnt |= 0x1D00;
     BeginFastFadeInFromWhite();
@@ -215,7 +215,7 @@ void sub_08008a00(void)
         RunLinkFrame();
         InputRecorderUpdate();
     }
-    gUnk_03000048 = 0;
+    gFadeBlankAtWhite = 0;
     do {
         ClearColliderLists();
         RunLinkFrame();
@@ -249,13 +249,13 @@ void sub_08008a00(void)
             break;
         }
     } while (done == 0);
-    sub_08002338();
+    LinkStopKeyExchange();
     BeginFastFadeOutToWhite();
     while (gFadeSteps != 0) {
         RunLinkFrame();
         InputRecorderUpdate();
     }
-    gUnk_03000048 = 0;
+    gFadeBlankAtWhite = 0;
     for (i = 0; i < gPlayerCount; i++) {
         if (gPlayerStates[i].unk2C != -1) {
             StopSfxOnPlayer(gPlayerStates[i].unk2C, gPlayerStates[i].unk2E);

@@ -24,7 +24,7 @@
  *   6  sub_080bd110  a three-frame sprite
  *   7  sub_080bd7f0  a sprite drawn by TaskDrawScreen (0x08755B90)
  *   8  sub_080bd8ac  the same graphics as a per-player award: in
- *                    gUnk_03002150 == 5, sub_080bd828 passes 1000 / 3000 /
+ *                    gPrevGameState == 5, sub_080bd828 passes 1000 / 3000 /
  *                    5000 or 10 to AddPlayerScoreNoHud, or 1 to sub_08009eb8
  *   9  sub_080bd9b0  a sprite drawn by sub_080bd938 (0x08755A68)
  *
@@ -52,7 +52,7 @@ extern u8 gUnk_0200B048;
 extern u32 gUnk_02020000[];
 extern vs16 gBrightness;
 extern u32 gUnk_03001570[];
-extern u16 gUnk_03002150;
+extern u16 gPrevGameState;
 extern u16 gLocalPlayer;
 extern u16 gPlayerCount;
 extern struct Task *gCurTask;
@@ -1296,7 +1296,7 @@ void sub_080bd7f0(void)
 
 void sub_080bd828(void)
 {
-    if (gUnk_03002150 == 5)
+    if (gPrevGameState == 5)
     {
         switch (gCurTask->unk3C)
         {

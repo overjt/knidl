@@ -5,7 +5,7 @@
  * split and 15bpp colour blending (0x08002B04-0x0800310F, issue #32 batch C2).
  *
  * Recipe: old_agbcc -O2 -mthumb-interwork (fnmatch --old2).  Evidence: the
- * leaf sub_08002e38 ends in a bare `bx lr`; agbcc unconditionally emits
+ * leaf ApplyBgLayout ends in a bare `bx lr`; agbcc unconditionally emits
  * `push {lr}` / `pop {r0}; bx r0` even for leaves.
  *
  * Matching notes (see docs/lessons-learned.md §3):
@@ -24,7 +24,7 @@
  *    (§3.7), and `gPlayerHeldKeys[i] = gPlayerPressedKeys[i] = 0` is the chained
  *    assignment idiom (§3.8) — outer address materialised first, inner cell
  *    re-read for the outer store.
- *  - sub_08002e38's first parameter read must be volatile (`*(vu16 *)p`);
+ *  - ApplyBgLayout's first parameter read must be volatile (`*(vu16 *)p`);
  *    without it the address/temporary pseudos swap r1<->r2.  The remaining
  *    reads p[1..4] are plain (a volatile pointer re-reads them).
  *  - IntToDigits keeps the digit buffer in a function-scope `u8 *b` that
@@ -39,7 +39,7 @@
  */
 
 extern vu16 gLinkPlayerCount;      /* number of linked players */
-extern u32 gUnk_03004D30;
+extern u32 gLinkPauseFrames;
 extern vu16 gLinkCommand;      /* link session state, high byte = command */
 extern u16 gSendCmd[4];    /* link send buffer */
 extern vu16 gHeldKeys;      /* keys held last frame */
@@ -51,13 +51,13 @@ extern vu16 gPlayerPressedKeys[];    /* per-player keys pressed */
 extern u16 gShouldAdvanceLinkState[];
 extern u16 gRecvCmds[3][4]; /* [0]=state [1]=keys held [2]=keys pressed */
 extern u8 gLink[];
-extern u32 gUnk_03004D28;
+extern u32 gLinkRecvVCount;
 extern vu16 gWaitingForVBlank;      /* VBlank wait flag */
 extern u32 gSerialIntrCount;       /* frame counter */
-extern u32 gUnk_03004D2C;
+extern u32 gSendCmdFilled;
 
 extern vu16 gFadeSteps;      /* frames left to wait */
-extern u16 gUnk_03000048;
+extern u16 gFadeBlankAtWhite;
 extern vu16 gDispCnt;      /* display/mode flags */
 extern u16 gBg0Cnt;
 extern u16 gBg1Cnt;
@@ -82,7 +82,7 @@ void FillSendCmd(void)
 {
     s32 t;
 
-    if (gLinkPlayerCount > 1 && gUnk_03004D30 == 0) {
+    if (gLinkPlayerCount > 1 && gLinkPauseFrames == 0) {
         t = gLinkCommand & 0xFF00;
         if (t != 0x6600) {
             if (t > 0x6600) {
@@ -128,9 +128,9 @@ void UpdatePlayerKeys(void)
 
             do {
                 v = REG_VCOUNT;
-                if (v < gUnk_03004D28)
+                if (v < gLinkRecvVCount)
                     v += 228;
-            } while (v - gUnk_03004D28 <= 38);
+            } while (v - gLinkRecvVCount <= 38);
 
             while (gLink[12] != 0) {
                 old = gSerialIntrCount;
@@ -147,7 +147,7 @@ void UpdatePlayerKeys(void)
                 FillSendCmd();
                 LinkMain1(gShouldAdvanceLinkState, gSendCmd, gRecvCmds[0]);
             }
-            gUnk_03004D2C = 1;
+            gSendCmdFilled = 1;
         }
     }
 
@@ -172,9 +172,9 @@ void RunLinkFrame(void)
 {
     RunTasks();
     RunBuildOamInIwram();
-    if (gUnk_03004D2C == 0)
+    if (gSendCmdFilled == 0)
         FillSendCmd();
-    gUnk_03004D2C = 0;
+    gSendCmdFilled = 0;
     EndFrame();
     ResetSpriteQueue();
     UpdatePlayerKeys();
@@ -204,24 +204,24 @@ void RunFramesUntilFadeDone(void)
 {
     while (gFadeSteps != 0)
         RunFrame();
-    gUnk_03000048 = 0;
+    gFadeBlankAtWhite = 0;
 }
 
 void RunFramesNoTasksUntilFadeDone(void)
 {
     while (gFadeSteps != 0)
         RunFrameNoTasks();
-    gUnk_03000048 = 0;
+    gFadeBlankAtWhite = 0;
 }
 
 void RunLinkFramesUntilFadeDone(void)
 {
     while (gFadeSteps != 0)
         RunLinkFrame();
-    gUnk_03000048 = 0;
+    gFadeBlankAtWhite = 0;
 }
 
-void sub_08002e38(u16 *p)
+void ApplyBgLayout(u16 *p)
 {
     gDispCnt &= 0xFF80;
     gDispCnt |= *(vu16 *)p;

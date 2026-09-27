@@ -16,12 +16,12 @@ extern vs32 gBg0ScrollY;
 extern vu16 gPressedKeys;
 extern vu8 gBldCntTarget2;
 extern vu16 gWin0V;
-extern vu16 gUnk_03000048;
+extern vu16 gFadeBlankAtWhite;
 extern vu16 gFadeStep;
 extern vu8 gBldAlphaEva;
 extern vu8 gWinIn0;
 extern vs32 gBg3ScrollX;
-extern vu8 gUnk_03000F7C;
+extern vu8 gWinOut;
 extern vs32 gBg2ScrollX;
 extern vs32 gBg3ScrollY;
 extern vs16 gBrightness;
@@ -39,7 +39,7 @@ extern u16 *gFadeKeepMask;
 extern vu16 gDispCnt;
 extern vs32 gBg1ScrollX;
 extern s32 gUnk_03001F2C;
-extern u16 gUnk_03002150;
+extern u16 gPrevGameState;
 extern u16 gLinkPlayerCount;
 extern u16 gUnk_08541D98[][16];
 extern u16 gUnk_08541F58[];
@@ -98,7 +98,7 @@ void BootLogoMain(void)
         SetBgmVolume(256);
         ResetTasksAndOam();
     } else {
-        gUnk_03002150 = 1;
+        gPrevGameState = 1;
     }
 }
 
@@ -131,7 +131,7 @@ s32 PlayBootLogo(void)
     if (BootLogoWait(21) != 0)
         return 1;
     gWinIn0 = 49;
-    gUnk_03000F7C = 62;
+    gWinOut = 62;
     gWin0H = 255;
     gWin0V = 160;
     gDispCnt |= 0x2000;
@@ -285,7 +285,7 @@ void TitleMain(void)
     gFadeStep = 3;
     gFadeTimer = 0;
     gFadeInterval = 1;
-    gUnk_03000048 = 1;
+    gFadeBlankAtWhite = 1;
     gFadeKeepMask = 0;
     RunFramesUntilFadeDone();
 }
@@ -298,7 +298,7 @@ s32 TitleScreen(void)
 {
     s32 idx, i, ret;
 
-    if (gUnk_03002150 != 1) {
+    if (gPrevGameState != 1) {
         ResetTasksAndOam();
         LoadBgLayout(0);
         LoadGfxSet(7);
@@ -306,7 +306,7 @@ s32 TitleScreen(void)
         gDispCnt &= 0xE0FF;
         gDispCnt |= 0x1E00;
     }
-    if (gUnk_03002150 != 1) {
+    if (gPrevGameState != 1) {
         BeginFastFadeInFromWhite();
         RunFramesUntilFadeDone();
         idx = TaskCreateFrom(2, 0);
@@ -319,7 +319,7 @@ s32 TitleScreen(void)
     }
     TaskCreateFrom(1, 0);
     PlayBgm(26);
-    if (gUnk_03002150 != 1)
+    if (gPrevGameState != 1)
         RunFrames(60);
     else
         RunFrames(210);
@@ -335,7 +335,7 @@ pressed:
     ret = 1;
     goto out;
 timeout:
-    gUnk_03002150 = 3;
+    gPrevGameState = 3;
     BeginFastFadeOutToWhite();
     RunFramesUntilFadeDone();
     ret = 0;

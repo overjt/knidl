@@ -10,11 +10,11 @@
  * LinkErrorScreen (error/reset path, taken after 31 frames without the counter
  * at gSerialIntrCount moving).
  *
- *  - sub_08002378 / sub_08002668 run the 0x7700-series handshake.  They are
+ *  - LinkSyncRandom / LinkSyncClock run the 0x7700-series handshake.  They are
  *    the same function except for where the 4-halfword payload lives: 0x2378
  *    packs it into gRngValue (u32, read twice per use => volatile) plus
- *    gFrameCount, 0x2668 mirrors it to/from the record at gUnk_02006068.
- *    (sub_0800293c, the 0xAA00-series teardown twin, lives in src/early_293c.c.)
+ *    gFrameCount, 0x2668 mirrors it to/from the record at gHudClock.
+ *    (DisconnectLink, the 0xAA00-series teardown twin, lives in src/early_293c.c.)
  *
  * gRecvCmds is the 4x4 halfword mailbox shared with LinkMain1: row 0
  * = per-player state word, row 1 = per-player payload byte, rows 2/3 = extra
@@ -46,7 +46,7 @@
  *    pointer arithmetic always builds `ptr + int`, so `arr[i]` emits
  *    `adds r2,r5,r4` while the ROM has `adds r2,r4,r5` (lesson 3.32).
  *
- * STATUS: sub_08002668 byte-matches (724/724).  sub_08002378 does NOT
+ * STATUS: LinkSyncClock byte-matches (724/724).  LinkSyncRandom does NOT
  * (732 vs 752).  It is instruction-for-instruction identical to the ROM
  * except for ONE allocator decision, pinned with `agbcc -da` (lesson 3.34):
  *   - ROM's i-loop preheader hoists `&gUnk_0300244C` into sl (pool word
@@ -81,7 +81,7 @@ extern void LinkMain1(void *, void *, void *);
 extern int IsLinkError(void);
 extern void LinkErrorScreen(void);
 
-extern u16 gUnk_02006068[4];
+extern u16 gHudClock[4];
 extern vu32 gRngValue;
 extern u16 gFrameCount;
 extern u32 gUnk_03001EFC;
@@ -96,7 +96,7 @@ extern u16 gShouldAdvanceLinkState;
 extern u16 gSendCmd[4];
 extern u16 gLinkCommand;
 
-void sub_08002668(void)
+void LinkSyncClock(void)
 {
     int a;
     u32 b;
@@ -152,9 +152,9 @@ void sub_08002668(void)
         case 0x7702:
         case 0x7706:
             gSendCmd[0] = 0x7706;
-            gSendCmd[1] = gUnk_02006068[1];
-            gSendCmd[2] = gUnk_02006068[2];
-            gSendCmd[3] = gUnk_02006068[3];
+            gSendCmd[1] = gHudClock[1];
+            gSendCmd[2] = gHudClock[2];
+            gSendCmd[3] = gHudClock[3];
             gLinkCommand = 0x9900;
             break;
         case 0x9900:
@@ -188,9 +188,9 @@ void sub_08002668(void)
                 }
                 break;
             case 0x7706:
-                gUnk_02006068[1] = gRecvCmds[1][0];
-                gUnk_02006068[2] = gRecvCmds[2][0];
-                gUnk_02006068[3] = gRecvCmds[3][0];
+                gHudClock[1] = gRecvCmds[1][0];
+                gHudClock[2] = gRecvCmds[2][0];
+                gHudClock[3] = gRecvCmds[3][0];
                 gUnk_03001EFC = 0;
                 if (gUnk_0300244C == -1) {
                     gUnk_0300244C = 1;

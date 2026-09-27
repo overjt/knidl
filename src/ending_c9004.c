@@ -59,7 +59,7 @@ extern vs16 gBrightness;
 extern vu16 gFadeStep;
 extern vu16 gFadeTimer;
 extern vu16 gFadeInterval;
-extern vu16 gUnk_03000048;
+extern vu16 gFadeBlankAtWhite;
 extern u16 *gFadeKeepMask;
 extern u32 gUnk_0874CF94[];
 extern u32 gUnk_0874C44C[];
@@ -500,7 +500,7 @@ void sub_080c9a28(void)
     gFadeStep = 1;
     gFadeTimer = 0;
     gFadeInterval = 1;
-    gUnk_03000048 = 0;
+    gFadeBlankAtWhite = 0;
     gFadeKeepMask = 0;
     while (gFadeSteps != 0)
         TaskYieldTrampoline(1);

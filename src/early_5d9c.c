@@ -161,7 +161,7 @@ void TaskDrawWorldLoadTiles(void)
                  (s16)(q->unk4A - gSpriteCameraY));
 }
 
-void sub_08006040(void)
+void TaskDrawWorldTilesLoaded(void)
 {
     struct Sprite *p;
     struct Sprite *q;
@@ -347,7 +347,7 @@ void TaskSetFrameFlip(s32 a)
     p->unk3C = a;
 }
 
-void sub_08006384(u16 a)
+void TaskSetPosXFacing(u16 a)
 {
     struct Sprite *p;
 

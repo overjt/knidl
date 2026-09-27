@@ -44,7 +44,7 @@ extern u8 gObjPalette[];
 extern vs32 gBg3ScrollX;
 extern vs32 gBg3ScrollY;
 extern vu16 gPlayerPressedKeys[];
-extern u16 gUnk_03002150;
+extern u16 gPrevGameState;
 extern u16 gLocalPlayer;
 extern u16 gPlayerCount;
 
@@ -480,7 +480,7 @@ void sub_080be1ec(void)
         TaskYieldTrampoline(168);
     else
         TaskYieldTrampoline(174);
-    if (gUnk_03002150 == 4) {
+    if (gPrevGameState == 4) {
         gCurTask->unk14 = 1;
     } else {
         sub_080be550();
@@ -652,7 +652,7 @@ void sub_080be5fc(void)
     s32 i;
     s32 k;
 
-    if (gUnk_03002150 != 5) {
+    if (gPrevGameState != 5) {
         if (gPlayerCount == 1) {
             k = TaskCreateFrom(0x5F, 32);
             if (k != -1) {

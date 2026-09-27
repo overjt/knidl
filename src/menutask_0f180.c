@@ -19,7 +19,7 @@ extern s8 gUnk_02007FC8;
 /* Plain u8 here (vu8 elsewhere): a volatile byte load expands to a load plus
    two shifts, which lengthens this address's live range in sub_0800f408 enough
    to lose r6 to the hoisted copy of &gCurTask. */
-extern u8 gUnk_0200EBC0[];
+extern u8 gMultiBootStruct[];
 extern u16 gUnk_030012B0[];
 extern u16 gUnk_03001430[];
 extern u16 gUnk_03001612[];
@@ -149,7 +149,7 @@ void sub_0800f2b4(void)
     y = gCurTask;
     BlendColors(gUnk_08563024[y->unk2C], gUnk_08563024[y->unk30], (u16)y->unk34, 13, &gUnk_03001612[16]);
     x = gCurTask;
-    if (x->unk20 == 0 && x->unk24 != 0 && gUnk_0200EBC0[0] == 0 && gUnk_02007FC8 == 0)
+    if (x->unk20 == 0 && x->unk24 != 0 && gMultiBootStruct[0] == 0 && gUnk_02007FC8 == 0)
         x->unk3C = 17;
     else
         gCurTask->unk3C = 0xFFFF;
@@ -187,7 +187,7 @@ void sub_0800f408(void)
     if (p->unk18 != 0) {
         if (p->unk18 == 1) {
             t->unk28 = p->unk1C;
-            if (p->unk1C == t->unk18 && gUnk_0200EBC0[0] == 0)
+            if (p->unk1C == t->unk18 && gMultiBootStruct[0] == 0)
                 t->unk2C = 24;
         } else {
             t->unk28 = p->unk1C + 1;
@@ -206,10 +206,10 @@ void sub_0800f408(void)
             w = gCurTask;
             tbl = w->unk38;
             QueueSprite(w->unk42 - 1, tbl[gUnk_08731EB0[p->unk1C]], 0, 0, w->unk48, w->unk4A);
-            if (gUnk_0200EBC0[0] == (gCurTask->unk18 & 0xFF) && sub_0800ffd8() != 0) {
+            if (gMultiBootStruct[0] == (gCurTask->unk18 & 0xFF) && sub_0800ffd8() != 0) {
                 x = gCurTask;
                 if (p->unk1C >= x->unk18)
-                    QueueSprite(x->unk42 - 1, tbl[gUnk_0200EBC0[0] + 13], 0, 0, x->unk48, x->unk4A + 16);
+                    QueueSprite(x->unk42 - 1, tbl[gMultiBootStruct[0] + 13], 0, 0, x->unk48, x->unk4A + 16);
             }
             y = gCurTask;
             if (y->unk2C != 0 && --y->unk2C <= 17) {

@@ -59,13 +59,13 @@ extern vu16 gDispStat; /* REG_DISPSTAT shadow */
 
 extern u32 gCopyQueueWrite;  /* transfer ring write cursor */
 extern u32 gCopyQueueRead;  /* transfer ring consumer cursor */
-extern vu8 gUnk_03000F7C;  /* transfer ring buffer end (0x03000B80 + 0x3FC) */
+extern vu8 gWinOut;  /* transfer ring buffer end (0x03000B80 + 0x3FC) */
 
 extern u32 gOamBuffer[]; /* 128 8-byte free-list entries */
 extern u32 gOamBufferCursor;
 extern vs32 gSpriteQueueTop;  /* record counter, -1 = empty */
-extern vu16 gUnk_03000B1C;
-extern vu16 gUnk_03001A80;
+extern vu16 gOamAffineCount;
+extern vu16 gAffineSpriteBufferPos;
 extern u32 gSpriteLayerCounts[]; /* per-lane counts (16 words, CpuFastSet-cleared) */
 extern vu8 gSpriteLayerLists[]; /* per-lane byte lists [lane][64] */
 extern u8 gSpriteQueue[];  /* 12-byte records, indexed by gSpriteQueueTop */
@@ -130,8 +130,8 @@ void RequestCopyList(struct TransferNode *node)
                 *q++ = cmd;
                 *q++ = src;
                 *q++ = dst;
-                if (q >= (u32 *)&gUnk_03000F7C)
-                    q = (u32 *)((u32)&gUnk_03000F7C - 0x3FC);
+                if (q >= (u32 *)&gWinOut)
+                    q = (u32 *)((u32)&gWinOut - 0x3FC);
                 while (gCopyQueueRead == (u32)q)
                     ;
             }
@@ -165,8 +165,8 @@ void RequestCopyList(struct TransferNode *node)
                     *q++ = cmd;
                     *q++ = src;
                     *q++ = dst;
-                    if (q >= (u32 *)&gUnk_03000F7C)
-                        q = (u32 *)((u32)&gUnk_03000F7C - 0x3FC);
+                    if (q >= (u32 *)&gWinOut)
+                        q = (u32 *)((u32)&gWinOut - 0x3FC);
                     while (gCopyQueueRead == (u32)q)
                         ;
                 }
@@ -193,8 +193,8 @@ void RequestCopyList(struct TransferNode *node)
                 src &= 0xFFFF;
                 *q++ = (src << 16) | src;
                 *q++ = dst;
-                if (q >= (u32 *)&gUnk_03000F7C)
-                    q = (u32 *)((u32)&gUnk_03000F7C - 0x3FC);
+                if (q >= (u32 *)&gWinOut)
+                    q = (u32 *)((u32)&gWinOut - 0x3FC);
                 while (gCopyQueueRead == (u32)q)
                     ;
             }
@@ -230,8 +230,8 @@ void RequestCopy(u32 mode, u32 src, u32 dst, u32 size)
             *q++ = mode;
             *q++ = src;
             *q++ = dst;
-            if (q >= (u32 *)&gUnk_03000F7C)
-                q = (u32 *)((u32)&gUnk_03000F7C - 0x3FC);
+            if (q >= (u32 *)&gWinOut)
+                q = (u32 *)((u32)&gWinOut - 0x3FC);
             while (gCopyQueueRead == (u32)q)
                 ;
         }
@@ -267,8 +267,8 @@ void RequestCopy(u32 mode, u32 src, u32 dst, u32 size)
                 *q++ = mode;
                 *q++ = src;
                 *q++ = dst;
-                if (q >= (u32 *)&gUnk_03000F7C)
-                    q = (u32 *)((u32)&gUnk_03000F7C - 0x3FC);
+                if (q >= (u32 *)&gWinOut)
+                    q = (u32 *)((u32)&gWinOut - 0x3FC);
                 while (gCopyQueueRead == (u32)q)
                     ;
             }
@@ -295,8 +295,8 @@ void RequestCopy(u32 mode, u32 src, u32 dst, u32 size)
             src &= 0xFFFF;
             *q++ = (src << 16) | src;
             *q++ = dst;
-            if (q >= (u32 *)&gUnk_03000F7C)
-                q = (u32 *)((u32)&gUnk_03000F7C - 0x3FC);
+            if (q >= (u32 *)&gWinOut)
+                q = (u32 *)((u32)&gWinOut - 0x3FC);
             while (gCopyQueueRead == (u32)q)
                 ;
         }
@@ -336,7 +336,7 @@ void ResetSpriteQueue(void)
     zero = 0;
     zeroWord = zero;
     CpuFastSet(&zeroWord, (u32 *)0x03000B30, 0x01000010);
-    gUnk_03000B1C = gUnk_03001A80 = zero;
+    gOamAffineCount = gAffineSpriteBufferPos = zero;
 }
 
 void RunBuildOamInIwram(void)

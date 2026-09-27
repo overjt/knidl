@@ -51,7 +51,7 @@ extern vs32 gBg2ScrollY;
 extern vu16 gDispCnt;
 extern vu16 gHeldKeys;
 extern u8 gUnk_03001F30;
-extern u16 gUnk_03002150;
+extern u16 gPrevGameState;
 extern u16 gGameState;
 extern s32 gCurSaveSlot;
 extern u8 gExtraMode;
@@ -136,7 +136,7 @@ void sub_0800c09c(void)
         {
             PlaySfx(215);
             *state = 10;
-            gUnk_03002150 = 4;
+            gPrevGameState = 4;
             gGameState = 3;
             return;
         }

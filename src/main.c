@@ -13,9 +13,9 @@
  * cases 1/3 and the "state = 5" tails of cases 10/21). */
 
 extern u16 gGameState; /* current game state (main dispatch) */
-extern u16 gUnk_03002150; /* requested/next game state */
-extern u8 gUnk_02007FC0;
-extern vu32 gUnk_03000B00;
+extern u16 gPrevGameState; /* requested/next game state */
+extern u8 gCutscenePending;
+extern vu32 gWarmBoot;
 extern u8 gUnk_03001F30;
 extern u16 gPlayerHealth[4];
 extern u16 gPlayerLives[4];
@@ -57,14 +57,14 @@ void AgbMain(void)
             gGameState = 1;
             break;
         case 1:
-            if (gUnk_03000B00 == 0)
+            if (gWarmBoot == 0)
                 BootLogoMain();
             gGameState = 3;
             break;
         case 3:
             TitleMain();
             gGameState = 4;
-            gUnk_03002150 = 3;
+            gPrevGameState = 3;
             break;
         case 4:
             MainMenuMain();
@@ -72,14 +72,14 @@ void AgbMain(void)
             ResetPlayerRecords();
             break;
         case 7:
-            if (gUnk_02007FC0 != 0)
+            if (gCutscenePending != 0)
                 CutsceneMain();
-            gUnk_02007FC0 = 0;
-            gGameState = gUnk_03002150;
+            gCutscenePending = 0;
+            gGameState = gPrevGameState;
             break;
         case 5:
-            if (gUnk_02007FC0 != 0) {
-                gUnk_03002150 = 5;
+            if (gCutscenePending != 0) {
+                gPrevGameState = 5;
                 gGameState = 7;
             } else {
                 sub_0800b5dc();
@@ -90,8 +90,8 @@ void AgbMain(void)
             }
             break;
         case 6:
-            if (gUnk_02007FC0 != 0) {
-                gUnk_03002150 = 6;
+            if (gCutscenePending != 0) {
+                gPrevGameState = 6;
                 gGameState = 7;
             } else {
                 sub_0800b628();
@@ -101,7 +101,7 @@ void AgbMain(void)
         case 8:
             while (gGameState == 8)
                 sub_0800791c();
-            gUnk_03002150 = 8;
+            gPrevGameState = 8;
             break;
         case 9:
             while (gGameState == 9)
@@ -146,11 +146,11 @@ void AgbMain(void)
             sub_08022f50();
             while (gGameState == 20)
                 sub_08008a00();
-            gUnk_03002150 = 20;
+            gPrevGameState = 20;
             break;
         case 21:
             ResetScoresAndMaxHealth();
-            gUnk_02007FC0 = 1;
+            gCutscenePending = 1;
             gGameState = 5;
             break;
         case 11:
@@ -158,7 +158,7 @@ void AgbMain(void)
             gGameState = 12;
             break;
         case 12:
-            if (gUnk_03001F30 != 1 && gUnk_03002150 != 20)
+            if (gUnk_03001F30 != 1 && gPrevGameState != 20)
                 CreditsMain();
             sub_080c6420();
             gGameState = 0;

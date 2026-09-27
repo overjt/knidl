@@ -10,7 +10,7 @@
  * sub_080bbde4):
  *
  *   0  wait, play song Task.unk2C | 0x800, then go to state Task.unk30
- *   1  spawn a kind-7 object (sub_080bb718) when gUnk_03002150 == 5
+ *   1  spawn a kind-7 object (sub_080bb718) when gPrevGameState == 5
  *   2  count the markers in (sub_080bb760 / sub_080bb7a0)
  *   3  place the per-player markers (sub_080bb8f8 -> sub_080bb874)
  *   4  two-option cursor (sub_080bb554, sub_080bb5b8): option 0 goes to
@@ -37,7 +37,7 @@ extern u8 gUnk_0200B048;
 extern u8 gUnk_0200B07C[];
 extern vs16 gBrightness;
 extern vu16 gPlayerPressedKeys[];
-extern u16 gUnk_03002150;
+extern u16 gPrevGameState;
 extern u16 gLocalPlayer;
 extern u16 gPlayerCount;
 extern struct Task *gCurTask;
@@ -424,11 +424,11 @@ void sub_080bbad4(void)
 
 void sub_080bbb70(void)
 {
-    if (gUnk_03002150 == 5)
+    if (gPrevGameState == 5)
         sub_080bb718(0, 120, 16);
     sub_080ba5bc(1);
     sub_080bbad4();
-    if (gUnk_03002150 == 5)
+    if (gPrevGameState == 5)
         gCurTask->unk30 = 2;
     else
         gCurTask->unk30 = 3;
@@ -457,7 +457,7 @@ void sub_080bbc04(void)
 {
     sub_080bbc70();
     sub_080bbcdc();
-    if (gUnk_03002150 != 5)
+    if (gPrevGameState != 5)
         sub_080bbd4c();
     switch (gUnk_0200B048)
     {
@@ -587,7 +587,7 @@ void sub_080bbe80(void)
 {
     gCurTask->unk15 = 1;
     TaskYieldTrampoline(16);
-    if (gUnk_03002150 == 5)
+    if (gPrevGameState == 5)
     {
         if (gUnk_0200B048 != 0)
         {

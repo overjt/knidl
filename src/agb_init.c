@@ -42,7 +42,7 @@ extern vu16 gKeyRepeatTimer;
 extern vu16 gPlayerPressedKeys[4];
 extern vu16 gPlayerHeldKeys[4];
 extern vu32 gRngValue;
-extern vu32 gUnk_03000AF4;
+extern vu32 gVBlankEndCallback;
 extern vu32 gUnk_03000F90;
 extern vu32 gBlockAnimHook;
 extern vu32 gFrameEndCallback;
@@ -66,10 +66,10 @@ extern vu16 gWin0V;
 extern vu16 gWin1V;
 extern vu8 gWinIn0;
 extern vu8 gWinIn1;
-extern vu8 gUnk_03000F7C;
-extern vu8 gUnk_03001010;
+extern vu8 gWinOut;
+extern vu8 gWinObj;
 extern vu8 gBgMosaic;
-extern vu8 gUnk_03001000;
+extern vu8 gObjMosaic;
 extern vu8 gBldCntTarget1;
 extern vu8 gBldCntTarget2;
 extern vu8 gBldAlphaEva;
@@ -91,7 +91,7 @@ extern vu8 gSfxSlotAges[4];
 extern vu8 gSfxSlotPlayers[4];
 extern vu8 gSfxPlayerSlots[4];
 extern vu32 gPaletteSource;
-extern u32 gUnk_03000FA4;
+extern u32 gVBlankCallback;
 extern u32 gFrameCallback;
 extern u32 gUnk_03000B74;
 extern u16 gUnk_03001014;
@@ -104,8 +104,8 @@ extern vu16 gUnk_03001008;
 extern vu16 gUnk_03000B24;
 extern vu16 gIntrEnable;
 extern vu16 gIntrMasterEnable;
-extern vu32 gUnk_0200EC48;
-extern vu32 gUnk_0200EBA0;
+extern vu32 gLinkSetupMode;
+extern vu32 gLinkDriverMode;
 extern u16 gPlayerCount;
 extern u16 gLinkPlayerCount;
 struct Unk_030023A8
@@ -117,13 +117,13 @@ struct Unk_030023A8
 };
 extern struct Unk_030023A8 gUnk_030023A8;
 extern vs16 gUnk_0300244C;
-extern vu32 gUnk_03000B00;
+extern vu32 gWarmBoot;
 
 extern void m4aSoundInit(void);
 extern void ResetOamShadow(void);
 extern void BuildOam(void);
 extern void ResetFadeAndBlend(void);
-extern void sub_08002268(void);
+extern void CheckWarmBoot(void);
 extern void SeedRandom(u32 arg);
 
 void AgbInit(void)
@@ -189,7 +189,7 @@ void AgbInit(void)
         gPlayerHeldKeys[i] = gPlayerPressedKeys[i] = zeroHwA;
 
     gRngValue = zeroB = 0;
-    gUnk_03000AF4 = zeroB;
+    gVBlankEndCallback = zeroB;
     gUnk_03000F90 = zeroB;
     gBlockAnimHook = zeroB;
     gFrameEndCallback = zeroB;
@@ -221,10 +221,10 @@ void AgbInit(void)
 
     gWinIn0 = gWinIn1 = zeroByteB;
     REG_WININ = (gWinIn1 << 8) | gWinIn0;
-    gUnk_03000F7C = gUnk_03001010 = zeroByteB;
-    REG_WINOUT = (gUnk_03001010 << 8) | gUnk_03000F7C;
-    gBgMosaic = gUnk_03001000 = zeroByteB;
-    REG_MOSAIC = (gUnk_03001000 << 8) | gBgMosaic;
+    gWinOut = gWinObj = zeroByteB;
+    REG_WINOUT = (gWinObj << 8) | gWinOut;
+    gBgMosaic = gObjMosaic = zeroByteB;
+    REG_MOSAIC = (gObjMosaic << 8) | gBgMosaic;
     gBldCntTarget1 = gBldCntTarget2 = zeroByteB;
     REG_BLDCNT = (gBldCntTarget2 << 8) | gBldCntTarget1;
     gBldAlphaEva = gBldAlphaEvb = zeroByteB;
@@ -293,7 +293,7 @@ void AgbInit(void)
      * tail reuses zeroC's register across the three calls above). */
     zeroC = 2;
 
-    gFrameCallback = gUnk_03000FA4 = 0;
+    gFrameCallback = gVBlankCallback = 0;
     gUnk_03001014 = gUnk_03000B74 = 0;
 
     gUnk_03000B24 = gUnk_03001008 = gUnk_03000B20 = gUnk_03001020 = gUnk_03001178 = gUnk_03000B7C = gUnk_03001170 = 0;
@@ -305,8 +305,8 @@ void AgbInit(void)
     REG_IME = gIntrMasterEnable = 1;
     REG_RCNT = 0;
 
-    gUnk_0200EC48 = -1;
-    gUnk_0200EBA0 = 0;
+    gLinkSetupMode = -1;
+    gLinkDriverMode = 0;
 
     gLinkPlayerCount = gPlayerCount = 1;
 
@@ -317,8 +317,8 @@ void AgbInit(void)
                      gUnk_030023A8.unk1 = -1,
                      gUnk_030023A8.unk0 = -1);
 
-    sub_08002268();
+    CheckWarmBoot();
 
-    if (gUnk_03000B00 == 0)
+    if (gWarmBoot == 0)
         SeedRandom(0xDEFBC);
 }

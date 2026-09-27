@@ -12,7 +12,7 @@
  * collider rows gUnk_0873C23C and gUnk_0873C250 through RegisterCollider in
  * sub-states 3 and 4) and the draw hook sub_08059b18 (QueueSprite when on
  * screen).  Variant 43 (sub_08059c28) has four sub-states with the draw
- * hooks sub_08006040 and M11's sub_0803dfc8.  Variant 44 (sub_08059d7c)
+ * hooks TaskDrawWorldTilesLoaded and M11's sub_0803dfc8.  Variant 44 (sub_08059d7c)
  * selects on the second byte of Task.unk18 (0x100-0x500), queues a VRAM
  * transfer (RequestCopy) and installs sub_0805a320, which kills it when the
  * spawner's Task.unk73 is 8 or the player is in neither mode 13 nor mode 3. */
@@ -38,7 +38,7 @@ void TaskMove(void);
 void TaskMoveRelativeToParent(void);
 void TaskUpdatePixelPos(void);
 void TaskDrawWorld(void);
-void sub_08006040(void);
+void TaskDrawWorldTilesLoaded(void);
 void TaskSetMotionXFacing(s32 a, s32 b);
 u32 IsWorldPosOnScreen(s16 a, s16 b);   /* the ROM tests r0 unnarrowed (src callers spell u32) */
 u16 RandomSpread(s32 base, u8 scale, u8 amount);   /* base + ((rand(256) * amount) >> 8) * scale */
@@ -307,19 +307,19 @@ void sub_08059c28(void)
         u->unk3C = 0;
         break;
     case 1:
-        u->unk0C = (u32)sub_08006040;
+        u->unk0C = (u32)TaskDrawWorldTilesLoaded;
         u->unk54 = 0x18000;
         u->unk58 = -0x18000;
         u->unk3C = 4;
         break;
     case 2:
-        u->unk0C = (u32)sub_08006040;
+        u->unk0C = (u32)TaskDrawWorldTilesLoaded;
         u->unk54 = -0x18000;
         u->unk58 = 0x18000;
         u->unk3C = 8;
         break;
     case 3:
-        u->unk0C = (u32)sub_08006040;
+        u->unk0C = (u32)TaskDrawWorldTilesLoaded;
         u->unk54 = 0x18000;
         u->unk58 = 0x18000;
         u->unk3C = 11;

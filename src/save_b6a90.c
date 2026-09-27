@@ -13,7 +13,7 @@ extern u16 gHBlankScrollDmaTable[];
 extern s32 gUnk_02016C30;
 extern vs32 gBg3ScrollX;
 extern vs32 gBg2ScrollX;
-extern u32 gUnk_03000FA4;
+extern u32 gVBlankCallback;
 extern u32 gHBlankDmaDest;
 extern u32 gHBlankDmaCnt;
 extern u32 gBg2ScrollY;
@@ -31,7 +31,7 @@ void sub_080b6a90(void)
     gHBlankDmaSrc = &gHBlankScrollDmaTable[r];
     v = 0xA2600000 | r;
     gHBlankDmaCnt = v;
-    gUnk_03000FA4 = (u32)HBlankScrollVBlankCallback;
+    gVBlankCallback = (u32)HBlankScrollVBlankCallback;
     if (gHBlankScrollState != 3 && gHBlankScrollTimer <= 0xFFFF)
         gHBlankScrollTimer++;
 }

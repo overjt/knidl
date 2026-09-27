@@ -34,7 +34,7 @@ extern struct Unk02005E00 gUnk_02005E00;
 extern u8 gHudMode;
 extern s32 gPlayerScores[];
 extern u8 gHudShowsClock;
-extern u16 gUnk_02006068[];
+extern u16 gHudClock[];
 extern s8 gUnk_0200617C;
 extern s8 gHudAbilityPanelState;
 extern struct HudBar gHudHpBars[];
@@ -266,7 +266,7 @@ void HudRemoveHpBar(void)
                 if (gHudShowsClock == 0)
                     HudDrawScore(gPlayerScores[gLocalPlayer]);
                 else
-                    HudDrawClock(gUnk_02006068);
+                    HudDrawClock(gHudClock);
             }
             gHudShowsHpBar = 0;
             gHudHpBarMaxHp = gUnk_02007D30 = 0;

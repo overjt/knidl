@@ -129,7 +129,7 @@ extern struct ActorDef gUnk_0873F690;
 extern u8 gUnk_0873F7E4[];
 extern u32 gUnk_0874CCBC[];
 extern u32 gUnk_0873E280[];
-extern void sub_0800652c(u16 a, s32 b);
+extern void TaskFreezeOrThawOthers(u16 a, s32 b);
 extern void PauseRoom(void);
 extern void ResumeRoom(void);
 extern s32 CreateActorFromDesc(struct ActorSpawn *p, u8 keepPrio);
@@ -1864,7 +1864,7 @@ u8 sub_08067074(void)
 
 void sub_080670ac(u16 a)
 {
-    sub_0800652c(a, gCurTaskIdx);
+    TaskFreezeOrThawOthers(a, gCurTaskIdx);
     TaskSetSkipMask(0, 63);
     PauseRoom();
     sub_08067108();
@@ -1872,7 +1872,7 @@ void sub_080670ac(u16 a)
 
 void sub_080670d4(void)
 {
-    sub_0800652c(0, gCurTaskIdx);
+    TaskFreezeOrThawOthers(0, gCurTaskIdx);
     ResumeRoom();
     sub_08067114();
 }

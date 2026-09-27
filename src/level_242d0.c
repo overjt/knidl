@@ -205,7 +205,7 @@ extern u8 gUnk_0200AF08;
 extern u16 gUnk_0200AFF4;
 extern s8 gUnk_0200B034;
 extern s8 gUnk_02006168;
-extern u8 gUnk_02007FC0;
+extern u8 gCutscenePending;
 extern u8 gExtraMode;
 extern u16 gUnk_02007FF0;
 extern u16 gUnk_02007FB0;
@@ -866,7 +866,7 @@ s32 sub_08025024(void)
                 gStageRequest = 1;
                 gUnk_020069F0 = 1;
                 gUnk_0200AF00 = 0;
-                gUnk_02007FC0 = 0;
+                gCutscenePending = 0;
                 break;
             case 2:
                 if (gUnk_030023B8 >= gUnk_030023E0)
@@ -896,7 +896,7 @@ s32 sub_08025024(void)
                     gRoomEntrySet = 1;
                     gStageRequest = 1;
                     gUnk_020069F0 = 1;
-                    gUnk_02007FC0 = 0;
+                    gCutscenePending = 0;
                 }
                 gUnk_0200AF00 = 0;
                 break;
@@ -1074,7 +1074,7 @@ void sub_080258e0(void)
         gStageRequest = 1;
         gUnk_0200AF00 = 0;
         gUnk_020069F0 = 1;
-        gUnk_02007FC0 = 1;
+        gCutscenePending = 1;
         sub_0802695c();
         gUnk_02007FF0 = 0;
     }
@@ -1100,7 +1100,7 @@ void sub_08025a30(void)
         gRoomEntrySet = 0;
         if (gGameState == 8)
         {
-            gUnk_02007FC0 = 1;
+            gCutscenePending = 1;
             gStageRequest = 2;
         }
         else
@@ -1291,7 +1291,7 @@ s32 sub_08025f00(void)
         gRoomEntryY = gRoomHeight * 16 - gRoomBorder[1] - 168;
         gRoomEntrySet = 1;
         gStageRequest = 12;
-        gUnk_02007FC0 = 0;
+        gCutscenePending = 0;
     }
     gUnk_020069F0 = 2;
     gUnk_0200B038 = 0;

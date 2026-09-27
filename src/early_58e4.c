@@ -17,7 +17,7 @@
  *                (the type's entry from the ROM table at first)
  *   gTaskStackPtrs  u32[64] per-slot saved coroutine stack pointer (256-byte
  *                stacks below 0x0203BFE0)
- *   gUnk_03002700  u8[]  per-class round-robin write index
+ *   gTaskClassListLen  u8[]  per-class round-robin write index
  *   gTaskClassLists  u8[]  per-class slot list (class*64 + n)
  *   gTaskListRefs  u16[64] packed (class << 8) | n back-reference
  *   gTaskTypes  ROM table, 8 bytes per task type: u8 class, u32 entry
@@ -113,7 +113,7 @@ extern u8 gUnk_0203BFE0[];
 extern u32 gTaskResumeAddrs[];
 extern s32 gCurTaskIdx;
 extern vu8 gTaskClassLists[];
-extern vu8 gUnk_03002700[];
+extern vu8 gTaskClassListLen[];
 extern vu16 gTaskListRefs[];
 extern vs32 gBg3ScrollX;
 extern vs32 gBg3ScrollY;

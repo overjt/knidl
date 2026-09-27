@@ -37,7 +37,7 @@ extern struct Unk02005E00 gUnk_02005E00;
 extern u8 gHudMode;
 extern s32 gPlayerScores[];
 extern u8 gHudShowsClock;
-extern u16 gUnk_02006068[];
+extern u16 gHudClock[];
 extern s8 gUnk_0200617C;
 extern s8 gHudAbilityPanelState;
 extern struct HudBar gHudHpBars[];
@@ -176,7 +176,7 @@ void sub_08009b2c(s32 i)
         if (gHudShowsClock == 0)
             HudDrawScore(gPlayerScores[i]);
         else
-            HudDrawClock(gUnk_02006068);
+            HudDrawClock(gHudClock);
         gHudShowsHpBar = 0;
         for (j = 0; j < 2; j++) {
             gHudHpBarValues[j] = 0;
@@ -221,7 +221,7 @@ void HudRedraw(s32 i)
         if (gHudShowsClock == 0)
             HudDrawScore(gPlayerScores[i]);
         else
-            HudDrawClock(gUnk_02006068);
+            HudDrawClock(gHudClock);
     } else {
         sub_0800a280();
         HudDrawHpBar(gHudHpBars[gHudHpBarIndex].unk4);

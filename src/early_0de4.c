@@ -32,7 +32,7 @@ extern vu16 gFadeSteps;
 extern vu16 gPressedKeys;
 extern vu16 gLinkPlayerCount;
 extern vu16 gIntrMasterEnable;
-extern vu32 gUnk_0200EBA0;
+extern vu32 gLinkDriverMode;
 extern vu16 gFrameCount;
 extern u16 gPlayTime[4];
 extern void (*gFrameEndCallback)(void);
@@ -48,7 +48,7 @@ extern void SoundDriverVSyncOff(void);
 extern void SoftReset(u32 resetFlags);
 extern void UpdateFade(void);
 extern void StopAllSound(void);
-extern void sub_08004734(void);
+extern void LinkBlockMain(void);
 
 void EndFrame(void)
 {
@@ -145,8 +145,8 @@ void EndFrame(void)
 
     gFrameInProgress = 1;
 
-    if (gUnk_0200EBA0 == 2)
-        sub_08004734();
+    if (gLinkDriverMode == 2)
+        LinkBlockMain();
 
     gFrameCount++;
 

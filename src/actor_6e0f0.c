@@ -62,7 +62,7 @@ extern void TaskSleepForever(void);
 extern void TaskSetMotionXFacing(s32 a, s32 b);
 extern void TaskStop(void);
 extern void TaskSetFrame(s32 a);
-extern void sub_08006384(s32 a);
+extern void TaskSetPosXFacing(s32 a);
 extern u16 RandomSpread(s32 base, u8 scale, u8 amount);
 extern s16 RandomSpreadFacing(s32 base, u8 scale, u8 amount);
 extern u32 sub_08025e88(s32 i);
@@ -344,7 +344,7 @@ void sub_0806e73c(void)
     TaskFaceLikeParent();
     while (1)
     {
-        sub_08006384(gCurTask->unk24);
+        TaskSetPosXFacing(gCurTask->unk24);
         gCurTask->unk50 = gCurTask->unk20 << 16;
         TaskSetMotionXFacing(0xFFFD0000, 0x5A5A5A5A);
         TaskSetFrame(0);

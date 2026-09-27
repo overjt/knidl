@@ -16,7 +16,7 @@ extern u32 gUnk_02028000[];
 extern u32 gUnk_02030000[];
 extern void (*gFrameEndCallback)(void);
 extern vu16 gPressedKeys;
-extern vu16 gUnk_03000048;
+extern vu16 gFadeBlankAtWhite;
 extern vs32 gBg3ScrollX;
 extern vs32 gBg3ScrollY;
 extern vs16 gBrightness;
@@ -71,7 +71,7 @@ void ResetTasksAndOam(void);
 void RunFrameNoTasks(void);
 void RunFramesNoTasks(s32 count);
 void RunFramesNoTasksUntilFadeDone(void);
-void sub_08002e38(u16 *p);
+void ApplyBgLayout(u16 *p);
 void PlaySfx(s32 id);
 void StopAllSound(void);
 void DisableSerial(void);
@@ -96,7 +96,7 @@ void LinkErrorScreen(void)
     gDispCnt |= 0x800;
     BeginFastFadeInFromWhite();
     RunFramesNoTasks(32);
-    gUnk_03000048 = 0;
+    gFadeBlankAtWhite = 0;
     for (;;) {
         if (gPressedKeys & 9) {
             PlaySfx(102);
@@ -115,7 +115,7 @@ void LinkErrorScreen(void)
 
 void LoadBgLayout(s32 a0)
 {
-    sub_08002e38(gUnk_08730884[a0]);
+    ApplyBgLayout(gUnk_08730884[a0]);
 }
 
 void LoadGfxSet(u16 a0)

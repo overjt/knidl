@@ -141,8 +141,8 @@ gPlayerScores = 0x02006020
 gHudShowsClock = 0x02006030
 	.global	gUnk_02006040
 gUnk_02006040 = 0x02006040
-	.global	gUnk_02006068
-gUnk_02006068 = 0x02006068
+	.global	gHudClock
+gHudClock = 0x02006068
 	.global	gBgScrollSpeeds
 gBgScrollSpeeds = 0x02006070
 	.global	gUnk_02006090
@@ -275,8 +275,8 @@ gUnk_02007FB4 = 0x02007FB4
 gUnk_02007FB8 = 0x02007FB8
 	.global	gHudHpBarValues
 gHudHpBarValues = 0x02007FBC
-	.global	gUnk_02007FC0
-gUnk_02007FC0 = 0x02007FC0
+	.global	gCutscenePending
+gCutscenePending = 0x02007FC0
 	.global	gUnk_02007FC4
 gUnk_02007FC4 = 0x02007FC4
 	.global	gUnk_02007FC8
@@ -397,40 +397,40 @@ gUnk_0200E900 = 0x0200E900
 gUnk_0200EA00 = 0x0200EA00
 	.global	gUnk_0200EB80
 gUnk_0200EB80 = 0x0200EB80
-	.global	gUnk_0200EB90
-gUnk_0200EB90 = 0x0200EB90
-	.global	gUnk_0200EB94
-gUnk_0200EB94 = 0x0200EB94
-	.global	gUnk_0200EB98
-gUnk_0200EB98 = 0x0200EB98
-	.global	gUnk_0200EBA0
-gUnk_0200EBA0 = 0x0200EBA0
-	.global	gUnk_0200EBA4
-gUnk_0200EBA4 = 0x0200EBA4
-	.global	gUnk_0200EBA8
-gUnk_0200EBA8 = 0x0200EBA8
-	.global	gUnk_0200EBAC
-gUnk_0200EBAC = 0x0200EBAC
-	.global	gUnk_0200EBB0
-gUnk_0200EBB0 = 0x0200EBB0
-	.global	gUnk_0200EBB4
-gUnk_0200EBB4 = 0x0200EBB4
+	.global	gLinkBlockSrc
+gLinkBlockSrc = 0x0200EB90
+	.global	gLinkBlockAcks
+gLinkBlockAcks = 0x0200EB94
+	.global	gMultiBootDataRecv
+gMultiBootDataRecv = 0x0200EB98
+	.global	gLinkDriverMode
+gLinkDriverMode = 0x0200EBA0
+	.global	gLinkBlockTimeout
+gLinkBlockTimeout = 0x0200EBA4
+	.global	gLinkBlockState
+gLinkBlockState = 0x0200EBA8
+	.global	gLinkBlockWords
+gLinkBlockWords = 0x0200EBAC
+	.global	gLinkBroadcastAcks
+gLinkBroadcastAcks = 0x0200EBB0
+	.global	gLinkBlockDst
+gLinkBlockDst = 0x0200EBB4
 	.global	gUnk_0200EBB8
 gUnk_0200EBB8 = 0x0200EBB8
-	.global	gUnk_0200EBBC
-gUnk_0200EBBC = 0x0200EBBC
-	.global	gUnk_0200EBC0
-gUnk_0200EBC0 = 0x0200EBC0
+	.global	gLinkBlockIndex
+gLinkBlockIndex = 0x0200EBBC
+	.global	gMultiBootStruct
+gMultiBootStruct = 0x0200EBC0
 	.global	gMultiBootParam
 gMultiBootParam = 0x0200EBF0
-	.global	gUnk_0200EC3C
-gUnk_0200EC3C = 0x0200EC3C
-	.global	gUnk_0200EC40
-gUnk_0200EC40 = 0x0200EC40
-	.global	gUnk_0200EC44
-gUnk_0200EC44 = 0x0200EC44
-	.global	gUnk_0200EC48
-gUnk_0200EC48 = 0x0200EC48
+	.global	gLinkBlockParentChecksum
+gLinkBlockParentChecksum = 0x0200EC3C
+	.global	gLinkBlockFrames
+gLinkBlockFrames = 0x0200EC40
+	.global	gLinkBlockChecksum
+gLinkBlockChecksum = 0x0200EC44
+	.global	gLinkSetupMode
+gLinkSetupMode = 0x0200EC48
 	.global	gUnk_0200EC4C
 gUnk_0200EC4C = 0x0200EC4C
 	.global	gUnk_0200EC50
@@ -541,8 +541,8 @@ gFrameCallback = 0x0300003C
 gBldCntTarget2 = 0x03000040
 	.global	gWin0V
 gWin0V = 0x03000044
-	.global	gUnk_03000048
-gUnk_03000048 = 0x03000048
+	.global	gFadeBlankAtWhite
+gFadeBlankAtWhite = 0x03000048
 	.global	gOamBuffer
 gOamBuffer = 0x03000050
 	.global	gCurrentBgm
@@ -557,14 +557,14 @@ gFadeStep = 0x030004A4
 gIntrTable = 0x030004B0
 	.global	gSpriteQueue
 gSpriteQueue = 0x030004F0
-	.global	gUnk_03000AF4
-gUnk_03000AF4 = 0x03000AF4
+	.global	gVBlankEndCallback
+gVBlankEndCallback = 0x03000AF4
 	.global	gSoundDisabled
 gSoundDisabled = 0x03000AF8
 	.global	gWin1V
 gWin1V = 0x03000AFC
-	.global	gUnk_03000B00
-gUnk_03000B00 = 0x03000B00
+	.global	gWarmBoot
+gWarmBoot = 0x03000B00
 	.global	gOamBufferCursor
 gOamBufferCursor = 0x03000B04
 	.global	gBldAlphaEva
@@ -577,8 +577,8 @@ gBg2Cnt = 0x03000B10
 gBg1Cnt = 0x03000B14
 	.global	gWinIn0
 gWinIn0 = 0x03000B18
-	.global	gUnk_03000B1C
-gUnk_03000B1C = 0x03000B1C
+	.global	gOamAffineCount
+gOamAffineCount = 0x03000B1C
 	.global	gUnk_03000B20
 gUnk_03000B20 = 0x03000B20
 	.global	gUnk_03000B24
@@ -593,8 +593,8 @@ gUnk_03000B74 = 0x03000B74
 gBg3ScrollX = 0x03000B78
 	.global	gUnk_03000B7C
 gUnk_03000B7C = 0x03000B7C
-	.global	gUnk_03000F7C
-gUnk_03000F7C = 0x03000F7C
+	.global	gWinOut
+gWinOut = 0x03000F7C
 	.global	gSfxSlotSongs
 gSfxSlotSongs = 0x03000F80
 	.global	gCopyQueueRead
@@ -607,8 +607,8 @@ gUnk_03000F90 = 0x03000F90
 gPlayerHeldKeys = 0x03000F98
 	.global	gUnk_03000FA0
 gUnk_03000FA0 = 0x03000FA0
-	.global	gUnk_03000FA4
-gUnk_03000FA4 = 0x03000FA4
+	.global	gVBlankCallback
+gVBlankCallback = 0x03000FA4
 	.global	gBg3ScrollY
 gBg3ScrollY = 0x03000FA8
 	.global	gVBlankCount
@@ -637,16 +637,16 @@ gWin0H = 0x03000FD4
 gUnk_03000FD8 = 0x03000FD8
 	.global	gUnk_03000FE0
 gUnk_03000FE0 = 0x03000FE0
-	.global	gUnk_03001000
-gUnk_03001000 = 0x03001000
+	.global	gObjMosaic
+gObjMosaic = 0x03001000
 	.global	gUnk_03001004
 gUnk_03001004 = 0x03001004
 	.global	gUnk_03001008
 gUnk_03001008 = 0x03001008
 	.global	gUnk_0300100C
 gUnk_0300100C = 0x0300100C
-	.global	gUnk_03001010
-gUnk_03001010 = 0x03001010
+	.global	gWinObj
+gWinObj = 0x03001010
 	.global	gUnk_03001014
 gUnk_03001014 = 0x03001014
 	.global	gWin1H
@@ -671,8 +671,8 @@ gHBlankDmaCnt = 0x03001184
 gBg0Cnt = 0x03001188
 	.global	gBldCntTarget1
 gBldCntTarget1 = 0x0300118C
-	.global	gUnk_03001190
-gUnk_03001190 = 0x03001190
+	.global	gAffineSpriteBuffer
+gAffineSpriteBuffer = 0x03001190
 	.global	gBgPalette
 gBgPalette = 0x03001270
 	.global	gUnk_030012B0
@@ -731,8 +731,8 @@ gKeyRepeatTimer = 0x03001670
 gSfxSlotAges = 0x03001674
 	.global	gSpriteLayerLists
 gSpriteLayerLists = 0x03001680
-	.global	gUnk_03001A80
-gUnk_03001A80 = 0x03001A80
+	.global	gAffineSpriteBufferPos
+gAffineSpriteBufferPos = 0x03001A80
 	.global	gFadedPalette
 gFadedPalette = 0x03001A90
 	.global	gFadeSteps
@@ -817,8 +817,8 @@ gHitDirection = 0x03002144
 gUnk_03002148 = 0x03002148
 	.global	gAttackY
 gAttackY = 0x0300214C
-	.global	gUnk_03002150
-gUnk_03002150 = 0x03002150
+	.global	gPrevGameState
+gPrevGameState = 0x03002150
 	.global	gViewRect
 gViewRect = 0x03002158
 	.global	gUnk_03002160
@@ -929,12 +929,12 @@ gExtraMode = 0x03002464
 gRoomIndex = 0x03002468
 	.global	gTaskSavedSp
 gTaskSavedSp = 0x03002470
-	.global	gUnk_03002478
-gUnk_03002478 = 0x03002478
-	.global	gUnk_03002480
-gUnk_03002480 = 0x03002480
-	.global	gUnk_03002488
-gUnk_03002488 = 0x03002488
+	.global	gTaskClassListPos
+gTaskClassListPos = 0x03002478
+	.global	gTaskClassPassEnd
+gTaskClassPassEnd = 0x03002480
+	.global	gCurTaskListPos
+gCurTaskListPos = 0x03002488
 	.global	gCurTaskIdx
 gCurTaskIdx = 0x0300248C
 	.global	gCurTask
@@ -953,10 +953,10 @@ gTaskCount = 0x030026F0
 gTaskRunPhase = 0x030026F4
 	.global	gTaskSavedLr
 gTaskSavedLr = 0x030026F8
-	.global	gUnk_03002700
-gUnk_03002700 = 0x03002700
-	.global	gUnk_03002708
-gUnk_03002708 = 0x03002708
+	.global	gTaskClassListLen
+gTaskClassListLen = 0x03002700
+	.global	gTaskClassPassStart
+gTaskClassPassStart = 0x03002708
 	.global	gTaskListRefs
 gTaskListRefs = 0x03002710
 	.global	gTasks
@@ -975,12 +975,12 @@ gTaskSlotTypes = 0x03004CA0
 gLastSendQueueCount = 0x03004D20
 	.global	gLinkErrorMask
 gLinkErrorMask = 0x03004D24
-	.global	gUnk_03004D28
-gUnk_03004D28 = 0x03004D28
-	.global	gUnk_03004D2C
-gUnk_03004D2C = 0x03004D2C
-	.global	gUnk_03004D30
-gUnk_03004D30 = 0x03004D30
+	.global	gLinkRecvVCount
+gLinkRecvVCount = 0x03004D28
+	.global	gSendCmdFilled
+gSendCmdFilled = 0x03004D2C
+	.global	gLinkPauseFrames
+gLinkPauseFrames = 0x03004D30
 	.global	gUnk_03004D34
 gUnk_03004D34 = 0x03004D34
 	.global	gUnk_03004D38
@@ -1199,8 +1199,8 @@ gMPlayInfo_SE2 = 0x03006890
 gMPlayMemAccArea = 0x030068D0
 	.global	gMPlayInfo_SE3
 gMPlayInfo_SE3 = 0x030068E0
-	.global	gUnk_03006920
-gUnk_03006920 = 0x03006920
+	.global	gMultiBootClientData
+gMultiBootClientData = 0x03006920
 	.global	gUnk_03006928
 gUnk_03006928 = 0x03006928
 	.global	gMPlayTrack_BGM

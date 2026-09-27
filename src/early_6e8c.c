@@ -66,8 +66,8 @@ extern u16 gShouldAdvanceLinkState[];     /* send/receive mailbox (LinkMain1) */
 extern u16 gSendCmd[4];
 extern u16 gRecvCmds[3][4];
 extern u32 gLinkErrorMask;
-extern u32 gUnk_03004D28;
-extern u32 gUnk_03004D30;
+extern u32 gLinkRecvVCount;
+extern u32 gLinkPauseFrames;
 extern u32 gLinkStatus;
 extern u32 gChecksumAvailable;
 extern u32 gUnk_03004D78;
@@ -82,8 +82,8 @@ extern vu16 gIntrMasterEnable;
 extern vu16 gLinkCommand;
 extern u8 gSendBufferEmpty;
 extern void (*gIntrTable[])(void);
-extern u32 gUnk_0200EBA0;
-extern vu8 gUnk_0200EBC0[];
+extern u32 gLinkDriverMode;
+extern vu8 gMultiBootStruct[];
 extern vu16 gUnk_04000006;      /* REG_VCOUNT */
 extern vu16 gUnk_0400010C;      /* REG_TM3CNT_L */
 extern vu16 gUnk_0400010E;      /* REG_TM3CNT_H */

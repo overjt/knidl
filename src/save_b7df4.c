@@ -24,7 +24,7 @@ struct SaveSlot
     /*0x74*/ u8 filler74[0x8C];
 };
 
-extern u16 gUnk_02006068[];
+extern u16 gHudClock[];
 extern struct SaveSlot gSaveSlots[];
 extern s32 gSramAvailable;
 extern u16 gPlayerCount;

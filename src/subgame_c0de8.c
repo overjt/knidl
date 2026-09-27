@@ -38,7 +38,7 @@ extern u8 gObjPalette[];
 extern vs32 gBg3ScrollX;
 extern vs32 gBg3ScrollY;
 extern vu16 gPlayerPressedKeys[];
-extern u16 gUnk_03002150;
+extern u16 gPrevGameState;
 extern u16 gLocalPlayer;
 extern u16 gPlayerCount;
 

@@ -50,9 +50,9 @@ extern vu16 gWin0V; /* WIN0V shadow */
 extern vu16 gWin1V; /* WIN1V shadow */
 extern vu8 gWinIn1;  /* WININ hi shadow */
 extern vu8 gWinIn0;  /* WININ lo shadow */
-extern vu8 gUnk_03001010;  /* WINOUT hi shadow */
-extern vu8 gUnk_03000F7C;  /* WINOUT lo shadow; also end of copy queue */
-extern vu8 gUnk_03001000;  /* MOSAIC hi shadow */
+extern vu8 gWinObj;  /* WINOUT hi shadow */
+extern vu8 gWinOut;  /* WINOUT lo shadow; also end of copy queue */
+extern vu8 gObjMosaic;  /* MOSAIC hi shadow */
 extern vu8 gBgMosaic;  /* MOSAIC lo shadow */
 extern vu8 gBldCntTarget2;  /* BLDCNT hi shadow */
 extern vu8 gBldCntTarget1;  /* BLDCNT lo shadow */
@@ -128,8 +128,8 @@ void FlushDisplayRegs(void)
     REG_WIN0V = gWin0V;
     REG_WIN1V = gWin1V;
     REG_WININ = (gWinIn1 << 8) | gWinIn0;
-    REG_WINOUT = (gUnk_03001010 << 8) | gUnk_03000F7C;
-    REG_MOSAIC = (gUnk_03001000 << 8) | gBgMosaic;
+    REG_WINOUT = (gWinObj << 8) | gWinOut;
+    REG_MOSAIC = (gObjMosaic << 8) | gBgMosaic;
     REG_BLDCNT = (gBldCntTarget2 << 8) | gBldCntTarget1;
     REG_BLDALPHA = (gBldAlphaEvb << 8) | gBldAlphaEva;
     REG_BLDY = gBldY;
@@ -163,8 +163,8 @@ void ProcessCopyQueue(void)
         else
             CpuSet(src, (void *)*p++, ctrl >> 4);
 
-        if (p >= (u32 *)&gUnk_03000F7C)
-            p = (u32 *)((u32)&gUnk_03000F7C - 0x3FC);
+        if (p >= (u32 *)&gWinOut)
+            p = (u32 *)((u32)&gWinOut - 0x3FC);
     }
 
     gCopyQueueRead = (u32)p;

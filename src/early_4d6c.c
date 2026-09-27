@@ -20,7 +20,7 @@
  *   MultiBootHandShake  MultiBootHandShake      (static)
  *   MultiBootWaitCycles  MultiBootWaitCycles     (static)
  *   MultiBootWaitSendDone  MultiBootWaitSendDone   (static)
- * sub_08004734 is game code: the 5-step link/multiboot session sequencer
+ * LinkBlockMain is game code: the 5-step link/multiboot session sequencer
  * driven by the counter at 0x0200EBA8.
  *
  * STATUS: 9 of the 10 functions are byte-exact.  MultiBootMain
@@ -64,15 +64,15 @@ extern vu16 gUnk_04000120[];
 #define SIOMULTI2 gUnk_04000120
 
 /* Per-client probe response cache (3 halfwords). */
-extern u16 gUnk_03006920[];
+extern u16 gMultiBootClientData[];
 
 /* Link session sequencer state / frame counters (EWRAM). */
-extern s32 gUnk_0200EBA0;
-extern s32 gUnk_0200EBA4;
-extern vs32 gUnk_0200EBA8;
-extern s32 gUnk_0200EBAC;
-extern s32 gUnk_0200EBBC;
-extern s32 gUnk_0200EC40;
+extern s32 gLinkDriverMode;
+extern s32 gLinkBlockTimeout;
+extern vs32 gLinkBlockState;
+extern s32 gLinkBlockWords;
+extern s32 gLinkBlockIndex;
+extern s32 gLinkBlockFrames;
 extern vu16 gIntrEnable;      /* REG_IE shadow */
 extern vu16 gIntrMasterEnable;      /* REG_IME shadow */
 extern vu16 gLinkIsMaster;      /* link-mode flag */

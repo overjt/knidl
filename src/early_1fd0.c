@@ -12,10 +12,10 @@
  *                 shadow bytes.
  *   BeginFadeInFromWhite .. BeginFadeOutToBlack  the fade-request family: each one seeds the
  *                 brightness state block (target/current level, step, flags).
- *   sub_08002268  compares and refreshes the 9 header bytes at 0x03000000
+ *   CheckWarmBoot  compares and refreshes the 9 header bytes at 0x03000000
  *                 against the ROM copy at 0x0872EB2C; result cached in
- *                 gUnk_03000B00 and returned.
- *   sub_080022a0 .. sub_08002358  small helpers (reset the cached flag,
+ *                 gWarmBoot and returned.
+ *   ClearWarmBoot .. LinkRequestSync  small helpers (reset the cached flag,
  *                 re-init wrappers, OAM-shadow bookkeeping, 0x03005274 codes).
  *
  * Recipe: this translation unit is old_agbcc -O2 -mthumb-interwork
@@ -24,14 +24,14 @@
  * no `push {lr}` at all, which agbcc always emits.
  *
  * Three functions in this range are dead exports with no in-ROM references
- * (lesson 2.13): BeginFadeInFromBlack, BeginFadeOutToBlack and sub_08002358.  They sit
+ * (lesson 2.13): BeginFadeInFromBlack, BeginFadeOutToBlack and LinkRequestSync.  They sit
  * between evidenced functions and were recovered by disassembling the gaps.
  */
 
-extern vs16 gUnk_03001190[];       /* affine OBJ staging buffer */
-extern vu16 gUnk_03001A80;         /* staging buffer write index */
+extern vs16 gAffineSpriteBuffer[];       /* affine OBJ staging buffer */
+extern vu16 gAffineSpriteBufferPos;         /* staging buffer write index */
 extern vu16 gOamBuffer[];       /* OAM shadow (attrs + affine params) */
-extern vu16 gUnk_03000B1C;         /* affine matrix index */
+extern vu16 gOamAffineCount;         /* affine matrix index */
 extern u8 gUnk_0872EB14[];   /* shape/size -> {w,h} half-dims */
 extern s16 gCosTable[];  /* trig table (mid pointer) */
 
@@ -52,7 +52,7 @@ extern vs16 gBrightness;
 extern vs16 gFadeStep;
 extern vs16 gFadeTimer;
 extern vs16 gFadeInterval;
-extern vs16 gUnk_03000048;
+extern vs16 gFadeBlankAtWhite;
 extern u32 gFadeKeepMask;
 
 /* Blend/window shadow bytes. */
@@ -62,13 +62,13 @@ extern vu8 gBldAlphaEva;
 extern vu8 gBldAlphaEvb;
 extern u16 gBldY;
 
-extern vu32 gUnk_03000B00;
+extern vu32 gWarmBoot;
 extern u16 gPlayTime[4];
 extern vu16 gPlayerPressedKeys[4];
 extern vu16 gPlayerHeldKeys[4];
 extern vu16 gLinkCommand;
 extern vu16 gLinkIsMaster;
-extern const u8 gUnk_0872EB2C[];
+extern const u8 gBootSignature[];
 
 extern void InitTasks(void);
 extern void ResetOamShadow(void);
@@ -85,7 +85,7 @@ void ResetBgScroll(void)
 
 void ResetFadeAndBlend(void)
 {
-    gBrightness = gFadeStep = gFadeTimer = gFadeInterval = gFadeSteps = gUnk_03000048 = gFadeKeepMask = 0;
+    gBrightness = gFadeStep = gFadeTimer = gFadeInterval = gFadeSteps = gFadeBlankAtWhite = gFadeKeepMask = 0;
     gBldCntTarget1 = gBldCntTarget2 = gBldAlphaEva = gBldAlphaEvb = gBldY = 0;
 }
 
@@ -95,7 +95,7 @@ void BeginFadeInFromWhite(void)
     gFadeStep = -1;
     gFadeTimer = 0;
     gFadeInterval = 1;
-    gUnk_03000048 = 1;
+    gFadeBlankAtWhite = 1;
     gFadeKeepMask = 0;
 }
 
@@ -106,7 +106,7 @@ void BeginFadeInFromBlack(void)
     gFadeStep = 1;
     gFadeTimer = 0;
     gFadeInterval = 1;
-    gUnk_03000048 = 1;
+    gFadeBlankAtWhite = 1;
     gFadeKeepMask = 0;
 }
 
@@ -117,7 +117,7 @@ void BeginFastFadeInFromWhite(void)
     gFadeStep = -2;
     gFadeTimer = 0;
     gFadeInterval = 1;
-    gUnk_03000048 = 1;
+    gFadeBlankAtWhite = 1;
     gFadeKeepMask = 0;
 }
 
@@ -128,7 +128,7 @@ void BeginFadeOutToWhite(void)
     gFadeStep = 1;
     gFadeTimer = 0;
     gFadeInterval = 1;
-    gUnk_03000048 = 1;
+    gFadeBlankAtWhite = 1;
     gFadeKeepMask = 0;
 }
 
@@ -139,7 +139,7 @@ void BeginFastFadeOutToWhite(void)
     gFadeStep = 2;
     gFadeTimer = 0;
     gFadeInterval = 1;
-    gUnk_03000048 = 1;
+    gFadeBlankAtWhite = 1;
     gFadeKeepMask = 0;
 }
 
@@ -150,11 +150,11 @@ void BeginFadeOutToBlack(void)
     gFadeStep = -1;
     gFadeTimer = 0;
     gFadeInterval = 1;
-    gUnk_03000048 = 0;
+    gFadeBlankAtWhite = 0;
     gFadeKeepMask = 0;
 }
 
-u32 sub_08002268(void)
+u32 CheckWarmBoot(void)
 {
     vu8 *p = (vu8 *)0x03000000;
     u32 ok = 1;
@@ -163,18 +163,18 @@ u32 sub_08002268(void)
 
     for (i = 0; i < 9; i++)
     {
-        c = gUnk_0872EB2C[i];
+        c = gBootSignature[i];
         if (*p != c)
             ok = 0;
         *p++ = c;
     }
-    gUnk_03000B00 = ok;
+    gWarmBoot = ok;
     return ok;
 }
 
-u32 sub_080022a0(u32 arg)
+u32 ClearWarmBoot(u32 arg)
 {
-    gUnk_03000B00 = 0;
+    gWarmBoot = 0;
     return arg;
 }
 
@@ -207,7 +207,7 @@ void RunFrame(void)
     ResetSpriteQueue();
 }
 
-void sub_080022fc(void)
+void LinkStartKeyExchange(void)
 {
     s32 i;
 
@@ -216,17 +216,17 @@ void sub_080022fc(void)
     gLinkCommand = 0x8800;
 }
 
-void sub_08002338(void)
+void LinkStopKeyExchange(void)
 {
     gLinkCommand = 0x9900;
 }
 
-void sub_08002348(void)
+void LinkStartRecordExchange(void)
 {
     gLinkCommand = 0x6600;
 }
 
-void sub_08002358(void)
+void LinkRequestSync(void)
 {
     if (gLinkIsMaster != 0)
         gLinkCommand = 0x7755;

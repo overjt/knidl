@@ -12,8 +12,8 @@ gap_sram_driver_fn_table_asset_metadata_index:
 	.global	gUnk_0872EB14
 gUnk_0872EB14:
 	.incbin	"baserom.gba", 0x72EB14, 0x18
-	.global	gUnk_0872EB2C
-gUnk_0872EB2C:
+	.global	gBootSignature
+gBootSignature:
 	.incbin	"baserom.gba", 0x72EB2C, 0xC
 	.global	gSfxTable
 gSfxTable:

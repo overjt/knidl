@@ -23,14 +23,14 @@ extern s16 gPlayerLives[];
 extern u8 gUnk_02007FCC;
 extern u16 gUnk_0200AF18[];
 extern s16 gInputRecorderMode;
-extern vu16 gUnk_03000048;
+extern vu16 gFadeBlankAtWhite;
 extern vu16 gFadeSteps;
 extern vu16 gPlayerPressedKeys[];
 extern vu16 gDispCnt;
 extern s32 gUnk_03001F2C;
 extern u8 gUnk_03001F30;
 extern u8 gUnk_03001F34;
-extern u16 gUnk_03002150;
+extern u16 gPrevGameState;
 extern struct PlayerState gPlayerStates[];
 extern u8 gActivePlayerMask;
 extern u16 gLocalPlayer;
@@ -44,10 +44,10 @@ extern u8 gExtraMode;
 void BeginFastFadeInFromWhite(void);
 void BeginFastFadeOutToWhite(void);
 void ResetTasksAndOam(void);
-void sub_080022fc(void);
-void sub_08002338(void);
-void sub_08002358(void);
-void sub_08002378(void);
+void LinkStartKeyExchange(void);
+void LinkStopKeyExchange(void);
+void LinkRequestSync(void);
+void LinkSyncRandom(void);
 void RunLinkFrame(void);
 void RunLinkFramesUntilFadeDone(void);
 void StopSfxOnPlayer(s32 player, s32 songId);
@@ -92,9 +92,9 @@ void sub_08007624(void)
     gPausingPlayer = 0;
     LoadBgLayout(3);
     sub_0800b788();
-    sub_08002358();
-    sub_08002378();
-    sub_080022fc();
+    LinkRequestSync();
+    LinkSyncRandom();
+    LinkStartKeyExchange();
     gDispCnt &= 0xE0FF;
     gDispCnt |= 0x1F00;
     BeginFastFadeInFromWhite();
@@ -154,12 +154,12 @@ void sub_08007624(void)
             } else {
                 gGameState = gUnk_03001F2C;
             }
-            gUnk_03002150 = 5;
+            gPrevGameState = 5;
             done = 1;
             break;
         }
     } while (done == 0);
-    sub_08002338();
+    LinkStopKeyExchange();
     BeginFastFadeOutToWhite();
     RunLinkFramesUntilFadeDone();
     for (i = 0; i < gPlayerCount; i++) {
@@ -177,9 +177,9 @@ void sub_0800783c(void)
 
     LoadBgLayout(3);
     sub_0800b87c();
-    sub_08002358();
-    sub_08002378();
-    sub_080022fc();
+    LinkRequestSync();
+    LinkSyncRandom();
+    LinkStartKeyExchange();
     gDispCnt &= 0xE0FF;
     gDispCnt |= 0x1E00;
     BeginFastFadeInFromWhite();
@@ -209,7 +209,7 @@ void sub_0800783c(void)
             break;
         }
     } while (done == 0);
-    sub_08002338();
+    LinkStopKeyExchange();
     BeginFastFadeOutToWhite();
     RunLinkFramesUntilFadeDone();
     sub_08027198();
@@ -228,9 +228,9 @@ void sub_0800791c(void)
     InputRecorderStart();
     LoadBgLayout(3);
     sub_0800b648();
-    sub_08002358();
-    sub_08002378();
-    sub_080022fc();
+    LinkRequestSync();
+    LinkSyncRandom();
+    LinkStartKeyExchange();
     gDispCnt &= 0xE0FF;
     gDispCnt |= 0x1D00;
     BeginFastFadeInFromWhite();
@@ -238,7 +238,7 @@ void sub_0800791c(void)
         RunLinkFrame();
         InputRecorderUpdate();
     }
-    gUnk_03000048 = 0;
+    gFadeBlankAtWhite = 0;
     do {
         ClearColliderLists();
         RunLinkFrame();
@@ -313,13 +313,13 @@ void sub_0800791c(void)
             break;
         }
     } while (done == 0);
-    sub_08002338();
+    LinkStopKeyExchange();
     BeginFastFadeOutToWhite();
     while (gFadeSteps != 0) {
         RunLinkFrame();
         InputRecorderUpdate();
     }
-    gUnk_03000048 = 0;
+    gFadeBlankAtWhite = 0;
     sub_08027128();
     if (gUnk_03001F30 == 0 && gGameState != 9
         && (gUnk_03002364 & (4 << gExtraMode))

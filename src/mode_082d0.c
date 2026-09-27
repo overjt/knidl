@@ -18,7 +18,7 @@ extern vu16 gBgPalette[];
 extern u16 gObjPalette[];
 extern u16 gUnk_03001490[];
 extern u16 gFrameCount;
-extern u16 gUnk_03002150;
+extern u16 gPrevGameState;
 extern u16 gLocalPlayer;
 extern s32 gUnk_03005280;
 extern u8 gUnk_085B6A90[];
@@ -121,7 +121,7 @@ void sub_080084dc(void)
 {
     gCurTask->unk15 = 1;
     for (;;) {
-        if (gUnk_03002150 == 4 && gLocalPlayer == 0)
+        if (gPrevGameState == 4 && gLocalPlayer == 0)
             QueueSprite(8, gUnk_08756054[gUnk_02006168 + 4], 0, 0, 120, 144);
         else
             QueueSprite(8, gUnk_08756054[gUnk_02006168 + 7], 0, 0, 200, 144);

@@ -28,12 +28,12 @@ extern vs32 gBg2ScrollX;
 extern vs32 gBg3ScrollY;
 extern vs32 gBg3ScrollX;          /* ... BG3 */
 extern u8 gUnk_03001F30;            /* link-play mode */
-extern u16 gUnk_03002150;           /* previous game state */
+extern u16 gPrevGameState;           /* previous game state */
 extern u16 gGameState;           /* game state (AgbMain dispatch) */
 extern u16 gLocalPlayer;           /* this player's index */
 extern u16 gPlayerCount;           /* number of players */
 extern s32 gPlayerScores[];         /* score per player */
-extern u16 gUnk_02006068[];         /* clock (four fields) */
+extern u16 gHudClock[];         /* clock (four fields) */
 extern vu16 gPlayerPressedKeys[];        /* keys pressed per player */
 extern u32 gUnk_02020000[];         /* decompression buffer */
 extern u8 gGameOverDone;            /* game-over screen: done flag */
@@ -43,7 +43,7 @@ extern s16 gUnk_02007D28;           /* game-over screen: the #264 variant-0 task
 extern u32 gObjVram[];         /* OBJ VRAM */
 extern vu16 gKeyRepeatDelay;
 extern vu16 gKeyRepeatInterval;
-extern u8 gUnk_02007FC0;
+extern u8 gCutscenePending;
 extern s8 gStageRequest;
 extern u32 gUnk_085E2C20[];
 extern u32 gUnk_085E2CE0[];
@@ -56,12 +56,12 @@ void ResetFadeAndBlend(void);
 void BeginFastFadeInFromWhite(void);
 void BeginFastFadeOutToWhite(void);
 void ResetTasksAndOam(void);
-void sub_080022fc(void);
-void sub_08002338(void);
-void sub_08002358(void);
-void sub_08002378(void);
-void sub_08002668(void);
-void sub_0800293c(void);
+void LinkStartKeyExchange(void);
+void LinkStopKeyExchange(void);
+void LinkRequestSync(void);
+void LinkSyncRandom(void);
+void LinkSyncClock(void);
+void DisconnectLink(void);
 void RunLinkFrame(void);                                     /* run one frame */
 void RunLinkFrames(s32 count);
 void RunLinkFramesUntilFadeDone(void);
@@ -93,7 +93,7 @@ void GameOverMain(void)
     gKeyRepeatDelay = 10;
     gKeyRepeatInterval = 6;
     gGameOverCursor = 0;
-    if (gUnk_03002150 != 20) {
+    if (gPrevGameState != 20) {
         if (gUnk_03001F30 == 0)
             sub_080cad8c();
         else
@@ -101,17 +101,17 @@ void GameOverMain(void)
     } else {
         sub_080cb058();
     }
-    sub_08002338();
+    LinkStopKeyExchange();
     BeginFastFadeOutToWhite();
     RunLinkFramesUntilFadeDone();
     if (gGameState == 5) {
-        gUnk_02007FC0 = 1;
+        gCutscenePending = 1;
         ResetPlayerRecords();
         sub_08022c3c();
         if (gStageRequest != 1)
             gGameState = 6;
     } else {
-        sub_0800293c();
+        DisconnectLink();
     }
 }
 
@@ -132,9 +132,9 @@ void sub_080cad8c(void)
     gDispCnt &= 0xE0FF;
     gDispCnt |= 0x1D00;
     sub_080cb21c();
-    sub_08002358();
-    sub_08002378();
-    sub_080022fc();
+    LinkRequestSync();
+    LinkSyncRandom();
+    LinkStartKeyExchange();
     PlayBgm(16);
     ResetFadeAndBlend();
     BeginFastFadeInFromWhite();
@@ -178,9 +178,9 @@ void sub_080caeec(void)
     LoadBgLayout(6);
     LoadGfxSet(4);
     LoadGfxSet(51);
-    sub_08002358();
-    sub_08002378();
-    sub_080022fc();
+    LinkRequestSync();
+    LinkSyncRandom();
+    LinkStartKeyExchange();
     gDispCnt &= 0xE0FF;
     gDispCnt |= 0x1D00;
     PlayBgm(16);
@@ -218,12 +218,12 @@ void sub_080cb030(s32 n)
     s32 i;
 
     for (i = 0; i < n; i++) {
-        DrawClockToBgMap(gUnk_02006068, 22, 18);
+        DrawClockToBgMap(gHudClock, 22, 18);
         RunLinkFrame();
     }
 }
 
-/* The game-over screen after game state 20 (gUnk_03002150 == 20): the
+/* The game-over screen after game state 20 (gPrevGameState == 20): the
    clock on screen until the countdown or a button ends it. */
 void sub_080cb058(void)
 {
@@ -231,10 +231,10 @@ void sub_080cb058(void)
     LoadBgLayout(6);
     LoadGfxSet(4);
     LoadGfxSet(52);
-    sub_08002358();
-    sub_08002668();
-    sub_080022fc();
-    DrawClockToBgMap(gUnk_02006068, 22, 18);
+    LinkRequestSync();
+    LinkSyncClock();
+    LinkStartKeyExchange();
+    DrawClockToBgMap(gHudClock, 22, 18);
     gDispCnt &= 0xE0FF;
     gDispCnt |= 0x900;
     PlayBgm(16);
@@ -285,7 +285,7 @@ void sub_080cb178(void)
         sub_080cb12c();
     gUnk_0200557C--;
     if (gGameOverDone != 0) {
-        if (gUnk_03002150 == 20)
+        if (gPrevGameState == 20)
             gGameState = 4;
         else
             gGameState = 1;

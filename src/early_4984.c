@@ -46,7 +46,7 @@ struct MultiBootParam
     /*0x4B*/ u8 server_type;
 };
 
-extern u16 gUnk_03006920[];
+extern u16 gMultiBootClientData[];
 
 void MultiBootInit(struct MultiBootParam *mp);
 int MultiBootSend(struct MultiBootParam *mp, u16 data);
@@ -176,7 +176,7 @@ output_burst:
             j = REG_SIOMULTI(i);
             if ((j >> 8) == 0x72)
             {
-                gUnk_03006920[i - 1] = j;
+                gMultiBootClientData[i - 1] = j;
                 j &= 0xFF;
                 if (j == (1 << i))
                     mp->probe_target_bit |= j;
@@ -195,7 +195,7 @@ output_burst:
             if (mp->probe_target_bit & (1 << i))
             {
                 j = REG_SIOMULTI(i);
-                if (j != gUnk_03006920[i - 1])
+                if (j != gMultiBootClientData[i - 1])
                     mp->probe_target_bit ^= 1 << i;
             }
         }
@@ -215,7 +215,7 @@ output_burst:
                     MultiBootInit(mp);
                     return 0x60;
                 }
-                if (j == gUnk_03006920[i - 1])
+                if (j == gMultiBootClientData[i - 1])
                     k = 0;
             }
         }

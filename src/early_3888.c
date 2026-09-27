@@ -4,10 +4,10 @@
 /* early_3888.c (0x08003888-0x08003963, issue #63).
  *
  * Cold link init, called once from the main menu's link-play screen
- * (src/menu_0d450.c): it clears the link driver work area gUnk_0200EBC0
- * (0x30 bytes), resets the session state (gUnk_0200EBA8, gUnk_0200EC48, the
+ * (src/menu_0d450.c): it clears the link driver work area gMultiBootStruct
+ * (0x30 bytes), resets the session state (gLinkBlockState, gLinkSetupMode, the
  * per-player bytes gUnk_030023A8 and their minimum gUnk_0300244C), puts SIO in
- * multi-play mode (115200 bps, IRQ on) and installs sub_08004068 as both link
+ * multi-play mode (115200 bps, IRQ on) and installs LinkSetupIntr as both link
  * IRQ handlers (serial and timer 3, gIntrTable[0]/[1]) before enabling the
  * serial interrupt.
  *
@@ -54,36 +54,36 @@ struct Unk030023A8
     /*0x03*/ u8 unk03;
 };
 
-extern struct SioWork gUnk_0200EBC0;
-extern u32 gUnk_0200EBA8;
-extern u32 gUnk_0200EC48;
+extern struct SioWork gMultiBootStruct;
+extern u32 gLinkBlockState;
+extern u32 gLinkSetupMode;
 extern struct Unk030023A8 gUnk_030023A8;
 extern vu16 gUnk_0300244C;
 extern u32 gIntrTable[];
 extern vu16 gIntrEnable;
 extern vu16 gIntrMasterEnable;
 
-void sub_08004068(void);
+void LinkSetupIntr(void);
 
 /* Cold link init: clear the driver work area, reset the session state,
- * put SIO in multi-play mode and install sub_08004068 as both link IRQ
+ * put SIO in multi-play mode and install LinkSetupIntr as both link IRQ
  * handlers. */
-void sub_08003888(void)
+void LinkSetupInit(void)
 {
     vu16 zero;
 
     gIntrMasterEnable = REG_IME = REG_IME & 0xFFFE;
     zero = 0;
-    CpuSet((void *)&zero, &gUnk_0200EBC0, 0x01000018);
-    gUnk_0200EBC0.unk06 = gUnk_0200EBC0.unk08 = 0x100;
-    gUnk_0200EBA8 = 0;
-    gUnk_0200EC48 = 0;
+    CpuSet((void *)&zero, &gMultiBootStruct, 0x01000018);
+    gMultiBootStruct.unk06 = gMultiBootStruct.unk08 = 0x100;
+    gLinkBlockState = 0;
+    gLinkSetupMode = 0;
     gUnk_0300244C = gUnk_030023A8.unk00[0] = gUnk_030023A8.unk00[1]
         = gUnk_030023A8.unk00[2] = gUnk_030023A8.unk03 = 0xFF;
     REG_SIOCNT = 0x2000;
     REG_SIOCNT |= 0x4003;
     REG_SIOMLT_SEND = 0;
-    gIntrTable[1] = gIntrTable[0] = (u32)sub_08004068;
+    gIntrTable[1] = gIntrTable[0] = (u32)LinkSetupIntr;
     REG_IE = gIntrEnable = gIntrEnable | 0x80;
     gIntrMasterEnable = REG_IME = REG_IME | 1;
 }

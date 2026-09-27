@@ -6,11 +6,11 @@
  * Affine sprite emitter, called by the actors, enemies, effects, HUD, menus,
  * sub-games and ending scenes that draw a rotated or scaled sprite.  The OAM
  * template stream at p (4 halfwords per entry, the last one flagged by bit 12
- * of attr0) is copied into the affine staging buffer gUnk_03001190 at
- * gUnk_03001A80 with every entry's position scaled by 256/sx and 256/sy
+ * of attr0) is copied into the affine staging buffer gAffineSpriteBuffer at
+ * gAffineSpriteBufferPos with every entry's position scaled by 256/sx and 256/sy
  * around the sprite's centre (the half sizes come from the shape/size table
  * gUnk_0872EB14[shape][size]), double-size unless both scales are at least
- * 256, and pointed at affine slot gUnk_03000B1C; the slot's matrix (sx, sy
+ * 256, and pointed at affine slot gOamAffineCount; the slot's matrix (sx, sy
  * and the rotation rot through the trig table gCosTable) goes into the
  * OAM shadow gOamBuffer.  Returns the address of the first staged entry.
  *
@@ -26,17 +26,17 @@
  * store as `(s16)dbl | (s16)(...)`; lesson 3.479.  Issue #32 had called the
  * last 8 bytes an unreachable regmove tie (lesson 3.35). */
 
-extern vs16 gUnk_03001190[];       /* affine OBJ staging buffer */
-extern vu16 gUnk_03001A80;         /* staging buffer write index */
+extern vs16 gAffineSpriteBuffer[];       /* affine OBJ staging buffer */
+extern vu16 gAffineSpriteBufferPos;         /* staging buffer write index */
 extern vu16 gOamBuffer[];       /* OAM shadow (attrs + affine params) */
-extern vu16 gUnk_03000B1C;         /* affine matrix index */
+extern vu16 gOamAffineCount;         /* affine matrix index */
 extern const u8 gUnk_0872EB14[4][4][2];   /* [shape][size] -> {w,h} */
 extern s16 gCosTable[];  /* trig table (mid pointer) */
 
 /* Emit an affine sprite: copy the OAM template stream at `p` into the
  * staging buffer with every entry scaled by 256/sx, 256/sy around its
  * centre (double-size unless both scales are >= 256), then write the
- * rotation/scale matrix for `rot` into affine slot gUnk_03000B1C.  Returns
+ * rotation/scale matrix for `rot` into affine slot gOamAffineCount.  Returns
  * the address of the first staged entry. */
 s32 DrawAffineSprite(u16 *p, s16 sx, s16 sy, s16 rot)
 {
@@ -50,7 +50,7 @@ s32 DrawAffineSprite(u16 *p, s16 sx, s16 sy, s16 rot)
     s32 v;
     s32 half;
 
-    first = &gUnk_03001190[(s16)gUnk_03001A80];
+    first = &gAffineSpriteBuffer[(s16)gAffineSpriteBufferPos];
     /* A goto loop, not do/while: the ROM re-loads the pool words and
      * re-extends sx/sy every pass, which loop.c would hoist (lesson 3.21). */
 loop:
@@ -90,7 +90,7 @@ loop:
         v &= 0xFF;
         /* Both (s16) casts are in the ROM: the sign-extension of dbl
          * survives only this spelling (u16 dbl is what tests it without one). */
-        gUnk_03001190[(s16)gUnk_03001A80++] = (s16)dbl | (s16)((a0 & 0xFF00) | v | 0x100);
+        gAffineSpriteBuffer[(s16)gAffineSpriteBufferPos++] = (s16)dbl | (s16)((a0 & 0xFF00) | v | 0x100);
 
         inv = 0;
         if (sx != 0)
@@ -116,28 +116,28 @@ loop:
         v >>= 8;
         v -= w;
         v &= 0x1FF;
-        gUnk_03001190[(s16)gUnk_03001A80++] = (a1 & 0xC000) | v | (gUnk_03000B1C << 9);
-        gUnk_03001190[(s16)gUnk_03001A80++] = 0;
+        gAffineSpriteBuffer[(s16)gAffineSpriteBufferPos++] = (a1 & 0xC000) | v | (gOamAffineCount << 9);
+        gAffineSpriteBuffer[(s16)gAffineSpriteBufferPos++] = 0;
         p++;
-        gUnk_03001190[(s16)gUnk_03001A80++] = *p++;
+        gAffineSpriteBuffer[(s16)gAffineSpriteBufferPos++] = *p++;
     }
     if (!(a0 & 0x1000))
         goto loop;
 
     if (rot != 0)
     {
-        gOamBuffer[((s16)gUnk_03000B1C << 4) + 3] = (sx * *(gCosTable + rot)) >> 8;
-        gOamBuffer[((s16)gUnk_03000B1C << 4) + 7] = -((sx * *(gCosTable - 128 + rot)) >> 8);
-        gOamBuffer[((s16)gUnk_03000B1C << 4) + 11] = (sy * *(gCosTable - 128 + rot)) >> 8;
-        gOamBuffer[((s16)gUnk_03000B1C << 4) + 15] = (sy * *(gCosTable + rot)) >> 8;
+        gOamBuffer[((s16)gOamAffineCount << 4) + 3] = (sx * *(gCosTable + rot)) >> 8;
+        gOamBuffer[((s16)gOamAffineCount << 4) + 7] = -((sx * *(gCosTable - 128 + rot)) >> 8);
+        gOamBuffer[((s16)gOamAffineCount << 4) + 11] = (sy * *(gCosTable - 128 + rot)) >> 8;
+        gOamBuffer[((s16)gOamAffineCount << 4) + 15] = (sy * *(gCosTable + rot)) >> 8;
     }
     else
     {
-        gOamBuffer[((s16)gUnk_03000B1C << 4) + 3] = sx;
-        gOamBuffer[((s16)gUnk_03000B1C << 4) + 7] = 0;
-        gOamBuffer[((s16)gUnk_03000B1C << 4) + 11] = 0;
-        gOamBuffer[((s16)gUnk_03000B1C << 4) + 15] = sy;
+        gOamBuffer[((s16)gOamAffineCount << 4) + 3] = sx;
+        gOamBuffer[((s16)gOamAffineCount << 4) + 7] = 0;
+        gOamBuffer[((s16)gOamAffineCount << 4) + 11] = 0;
+        gOamBuffer[((s16)gOamAffineCount << 4) + 15] = sy;
     }
-    gUnk_03000B1C++;
+    gOamAffineCount++;
     return (s32)first;
 }

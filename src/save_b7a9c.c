@@ -24,7 +24,7 @@ struct SaveSlot
     /*0x74*/ u8 filler74[0x8C];
 };
 
-extern u16 gUnk_02006068[];
+extern u16 gHudClock[];
 extern struct SaveSlot gSaveSlots[];
 extern s32 gSramAvailable;
 extern u16 gPlayerCount;
@@ -117,13 +117,13 @@ void sub_080b7c00(s32 a)
     for (i = 0; i <= 3; i++)
     {
         s += gSaveSlots[a].unk68[i] * m;
-        t += gUnk_02006068[i] * m;
+        t += gHudClock[i] * m;
         m = ((m << 4) - m) << 2;
     }
     if (s != 0 && s < t)
         return;
     for (i = 0; i < 4; i++)
-        gSaveSlots[a].unk68[i] = gUnk_02006068[i];
+        gSaveSlots[a].unk68[i] = gHudClock[i];
     best = 0;
     for (i = 0; i < 3; i++)
     {
@@ -153,13 +153,13 @@ void sub_080b7cb4(s32 a)
     for (i = 0; i <= 3; i++)
     {
         s += gSaveSlots[a].unk60[i] * m;
-        t += gUnk_02006068[i] * m;
+        t += gHudClock[i] * m;
         m = ((m << 4) - m) << 2;
     }
     if (s != 0 && s < t)
         return;
     for (i = 0; i < 4; i++)
-        gSaveSlots[a].unk60[i] = gUnk_02006068[i];
+        gSaveSlots[a].unk60[i] = gHudClock[i];
     best = 0;
     for (i = 0; i < 3; i++)
     {

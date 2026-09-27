@@ -11,7 +11,7 @@
  * the spawner's, and kills it when the ability is no longer 1 or when
  * PlayerState.unk40 bit 8 is clear while the spawner's Task.unk7B bit 0 is
  * set.  Variant 30 (sub_0805710c, M11/M13) rides on its spawner with the
- * draw hook TaskDrawWorldLoadTiles (sub-state 0) or sub_08006040 and re-rolls its
+ * draw hook TaskDrawWorldLoadTiles (sub-state 0) or TaskDrawWorldTilesLoaded and re-rolls its
  * position every two frames from the {base, scale, amount} rows
  * gUnk_0873BA8C[][2][3]; its callback sub_080573a4 kills it when the player
  * leaves mode 13 or the spawner's Task.unk73 is not 1, and otherwise, while
@@ -37,7 +37,7 @@ void TaskMove(void);
 void TaskMoveRelativeToParent(void);
 void TaskDrawWorld(void);
 void TaskDrawWorldLoadTiles(void);
-void sub_08006040(void);
+void TaskDrawWorldTilesLoaded(void);
 void TaskSetMotionXFacing(s32 a, s32 b);
 void TaskSetFrame(s32 a);
 u16 RandomSpread(s32 base, u8 scale, u8 amount);   /* base + ((rand(256) * amount) >> 8) * scale */
@@ -162,7 +162,7 @@ void sub_0805710c(void)
     if ((t->unk28 = t->unk18 & 15) == 0)
         t->unk0C = (u32)TaskDrawWorldLoadTiles;
     else
-        t->unk0C = (u32)sub_08006040;
+        t->unk0C = (u32)TaskDrawWorldTilesLoaded;
     x = gUnk_0873BA8C[gCurTask->unk28][0];
     y = gUnk_0873BA8C[gCurTask->unk28][1];
     for (;;)

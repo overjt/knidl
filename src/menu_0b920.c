@@ -6,7 +6,7 @@
  *
  * AgbMain state 4 (MainMenuMain), the main menu: it resets the menu cells,
  * spawns the background tasks #256-#259, picks the first screen from the
- * return state gUnk_03002150 (3 = file select, 14-16/20/21 = back from an
+ * return state gPrevGameState (3 = file select, 14-16/20/21 = back from an
  * extra mode, straight to the mode list) and dispatches on the menu
  * screen gMenuScreen until it reaches 9 (start a game: state 5 or 13)
  * or 10 (back to the title).  The rest draws the file-select screen's
@@ -41,12 +41,12 @@ extern u32 gMenuBufferedKeys;
 extern u8 gUnk_02006090;
 extern s8 gMenuScreen;
 extern s8 gMenuTransitionTimer;
-extern u8 gUnk_02007FC0;
+extern u8 gCutscenePending;
 extern s16 gSoundTestSelection[];
 extern s8 gMenuCursor;
 extern struct SaveSlot gSaveSlots[];
-extern u32 gUnk_0200EC48;
-extern vu16 gUnk_03000048;
+extern u32 gLinkSetupMode;
+extern vu16 gFadeBlankAtWhite;
 extern vs16 gFadeStep;
 extern vs32 gBg3ScrollY;
 extern vs16 gBrightness;
@@ -60,7 +60,7 @@ extern u16 *gFadeKeepMask;
 extern vu16 gDispCnt;
 extern s8 gDigits[];
 extern u8 gUnk_03001F30;
-extern u16 gUnk_03002150;
+extern u16 gPrevGameState;
 extern u16 gPlayerCount;
 extern u16 gGameState;
 extern s32 gCurSaveSlot;
@@ -81,15 +81,15 @@ void ResetFadeAndBlend(void);
 void BeginFastFadeOutToWhite(void);
 void ResetTasksAndOam(void);
 void RunFrame(void);
-void sub_08002338(void);
+void LinkStopKeyExchange(void);
 void RunFrames(s32 count);
 void RunFramesUntilFadeDone(void);
 void RunLinkFramesUntilFadeDone(void);
 void IntToDigits(s16 n);
 s32 PlayBgm(s32 songId);
 void FadeOutBgm(s32 speed);
-void sub_08003964(void);
-void sub_08004000(u16 a);
+void LinkSetupStop(void);
+void LinkSetupMain(u16 a);
 s32 TaskCreateFrom(u32 type, s32 idx);
 void DisableSerial(void);
 void LoadBgLayout(s32 a0);
@@ -124,7 +124,7 @@ void sub_0800bf6c(s32 slot, s32 value, s32 mode);
 
 void MainMenuMain(void)
 {
-    sub_08003964();
+    LinkSetupStop();
     DisableSerial();
     gLinkStatus = 0;
     ResetTasksAndOam();
@@ -144,7 +144,7 @@ void MainMenuMain(void)
     TaskCreateFrom(0x102, 32);
     TaskCreateFrom(0x103, 32);
     TaskCreateFrom(0x100, 32);
-    switch (gUnk_03002150)
+    switch (gPrevGameState)
     {
     case 3:
         gBg3ScrollY = 64;
@@ -162,9 +162,9 @@ void MainMenuMain(void)
     case 21:
         gBg3ScrollY = 64;
         BgScrollStartY(0x80000, 80, 3);
-        if (gUnk_03002150 <= 16)
-            gMenuCursor = gUnk_03002150 - 14;
-        else if (gUnk_03002150 == 20)
+        if (gPrevGameState <= 16)
+            gMenuCursor = gPrevGameState - 14;
+        else if (gPrevGameState == 20)
             gMenuCursor = 3;
         else
             gMenuCursor = 4;
@@ -179,7 +179,7 @@ void MainMenuMain(void)
     gFadeStep = -3;
     gFadeTimer = 0;
     gFadeInterval = 1;
-    gUnk_03000048 = 1;
+    gFadeBlankAtWhite = 1;
     gFadeKeepMask = 0;
     RunFramesUntilFadeDone();
     RunFrames(6);
@@ -217,15 +217,15 @@ void MainMenuMain(void)
         }
     } while (gMenuScreen != 9 && gMenuScreen != 10);
     BeginFastFadeOutToWhite();
-    if (gUnk_0200EC48 == 2)
+    if (gLinkSetupMode == 2)
     {
         FadeOutBgm(16);
         while (gFadeSteps != 0)
         {
             RunFrame();
-            sub_08004000(gLinkSessionMode);
+            LinkSetupMain(gLinkSessionMode);
         }
-        gUnk_03000048 = 0;
+        gFadeBlankAtWhite = 0;
         gUnk_03001F30 = 0;
         gGameState = 13;
     }
@@ -240,7 +240,7 @@ void MainMenuMain(void)
                 sub_080b8888();
                 sub_080b8918();
             }
-            sub_08002338();
+            LinkStopKeyExchange();
             RunLinkFramesUntilFadeDone();
         }
         else
@@ -259,7 +259,7 @@ void MainMenuMain(void)
         sub_080b8070(gCurSaveSlot);
         sub_080b8290();
         ResetScoresAndMaxHealth();
-        gUnk_02007FC0 = 1;
+        gCutscenePending = 1;
         break;
     case 13:
         if (gUnk_02006090 == 6 || gUnk_02006090 == 7)
@@ -269,7 +269,7 @@ void MainMenuMain(void)
             if (gUnk_02006090 == 7)
                 sub_080b81a0(gCurSaveSlot);
         }
-        gUnk_03002150 = 4;
+        gPrevGameState = 4;
         break;
     }
 }

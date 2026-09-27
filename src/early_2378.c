@@ -3,8 +3,8 @@
 
 /* early_2378.c (0x08002378-0x08002667, issue #63).
  *
- * The 0x7700-series link-play handshake, twin of sub_08002668
- * (src/early_2668.c, which keeps the payload in the record gUnk_02006068;
+ * The 0x7700-series link-play handshake, twin of LinkSyncClock
+ * (src/early_2668.c, which keeps the payload in the record gHudClock;
  * this one keeps it in gRngValue and gFrameCount).  It blocks, pumping
  * the link layer once per frame (RunFrameNoTasks, LinkMain1, the abort poll
  * IsLinkError and the reset path LinkErrorScreen after 31 frames without the
@@ -41,12 +41,12 @@ void LinkMain1(void *, void *, void *);
 int IsLinkError(void);
 void LinkErrorScreen(void);
 
-/* The 0x7700-series link handshake, twin of sub_08002668 (src/early_2668.c)
+/* The 0x7700-series link handshake, twin of LinkSyncClock (src/early_2668.c)
  * with the payload kept in gRngValue/gFrameCount.  The negotiation
  * tail after the loop is reached by a goto; merge_blocks splices it back in
  * behind the 0x7706 handler, which is where the ROM has the store, `i = 0`
  * and the entry test (lesson 3.488). */
-void sub_08002378(void)
+void LinkSyncRandom(void)
 {
     int a;
     u32 b;

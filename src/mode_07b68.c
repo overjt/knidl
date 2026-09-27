@@ -18,16 +18,16 @@ extern u8 gUnk_02006090;
 extern s8 gUnk_02006168;
 extern s32 gUnk_02007D00;
 extern u8 gUnk_02007FCC;
-extern u32 gUnk_0200EBA0;
-extern u8 gUnk_0200EBB0;
-extern vu8 gUnk_0200EBC0[];
-extern vu32 gUnk_0200EC3C;
-extern u32 gUnk_0200EC44;
-extern u32 gUnk_0200EC48;
+extern u32 gLinkDriverMode;
+extern u8 gLinkBroadcastAcks;
+extern vu8 gMultiBootStruct[];
+extern vu32 gLinkBlockParentChecksum;
+extern u32 gLinkBlockChecksum;
+extern u32 gLinkSetupMode;
 extern u32 gUnk_02020000[];
 extern vs32 gBg0ScrollY;
 extern vu16 gPressedKeys;
-extern vu16 gUnk_03000048;
+extern vu16 gFadeBlankAtWhite;
 extern vs32 gBg3ScrollX;
 extern vs32 gBg3ScrollY;
 extern vs32 gBg0ScrollX;
@@ -36,7 +36,7 @@ extern vu16 gPlayerPressedKeys[];
 extern vu16 gDispCnt;
 extern u16 gUnk_03001F18[];
 extern u16 gLinkIsMaster;
-extern u16 gUnk_03002150;
+extern u16 gPrevGameState;
 extern u16 gUnk_03002378[];
 extern u16 gPlayerCount;
 extern u16 gGameState;
@@ -66,10 +66,10 @@ void BeginFastFadeOutToWhite(void);
 void ResetTasksAndOam(void);
 void RunFrameNoTasks(void);
 void RunFrame(void);
-void sub_080022fc(void);
-void sub_08002338(void);
-void sub_08002358(void);
-void sub_08002378(void);
+void LinkStartKeyExchange(void);
+void LinkStopKeyExchange(void);
+void LinkRequestSync(void);
+void LinkSyncRandom(void);
 void RunLinkFrame(void);
 void RunFrames(s32 count);
 void RunFramesNoTasks(s32 count);
@@ -80,14 +80,14 @@ void RunLinkFramesUntilFadeDone(void);
 s32 PlayBgm(s32 songId);
 void PlaySfx(s32 id);
 void EnableSoundDriver(void);
-void sub_08003a00(u8 *start, u8 *end);
-void sub_08003a98(void);
-void sub_08004000(u16 a);
-u32 sub_08004308(void);
-void sub_08004390(u32 *src, u32 *dst, u32 size);
-u32 sub_08004400(void);
-void sub_080044b8(void);
-u32 sub_08004714(void);
+void MultiBootSetParams(u8 *start, u8 *end);
+void LinkSetupRequestStart(void);
+void LinkSetupMain(u16 a);
+u32 LinkBroadcastWordStep(void);
+void LinkBlockAnnounce(u32 *src, u32 *dst, u32 size);
+u32 LinkBlockHandshakeStep(void);
+void LinkBlockStart(void);
+u32 IsLinkBlockDone(void);
 void DisableSerial(void);
 void LinkMain1(u8 *cmd, u16 *send, u16 *recv);
 u32 ConnectLink(void);
@@ -104,22 +104,22 @@ s32 sub_08007b68(u32 *src, u32 *dst, u32 size)
     s32 n;
     s32 m;
 
-    sub_08004390(src, dst, size);
+    LinkBlockAnnounce(src, dst, size);
     do {
         RunFrame();
         LinkMain1((u8 *)gShouldAdvanceLinkState, gSendCmd, gRecvCmds[0]);
         if (IsLinkError() != 0)
             goto fail;
-    } while (sub_08004400() == 0);
+    } while (LinkBlockHandshakeStep() == 0);
     RunFrames(2);
-    sub_080044b8();
-    while (sub_08004714() == 0)
+    LinkBlockStart();
+    while (IsLinkBlockDone() == 0)
         RunFrame();
     if (ConnectLink() != 0)
         goto fail;
     gSendCmd[0] = 0x5503;
     gSendCmd[1] = 0;
-    if (gUnk_0200EC44 == gUnk_0200EC3C)
+    if (gLinkBlockChecksum == gLinkBlockParentChecksum)
         gSendCmd[1] = 1;
     m = 0;
     n = 0;
@@ -153,7 +153,7 @@ s32 sub_08007c5c(void)
     if (ConnectLink() != 0)
         return 1;
     if (gLinkIsMaster != 0) {
-        gUnk_0200EBB0 = 0;
+        gLinkBroadcastAcks = 0;
         gSendCmd[0] = 0xAA00;
         gSendCmd[1] = gUnk_02006090;
     }
@@ -162,7 +162,7 @@ s32 sub_08007c5c(void)
         LinkMain1((u8 *)gShouldAdvanceLinkState, gSendCmd, gRecvCmds[0]);
         if (IsLinkError() != 0)
             return 1;
-    } while (sub_08004308() == 0);
+    } while (LinkBroadcastWordStep() == 0);
     switch (gUnk_02006090) {
     case 0:
         src = gUnk_0876F690;
@@ -183,7 +183,7 @@ s32 sub_08007c5c(void)
     gUnk_03005280 = 2;
     gDispCnt &= 0xFEFF;
     gBg0ScrollX = ret;
-    sub_080022fc();
+    LinkStartKeyExchange();
     RunLinkFrames(64);
     return 0;
 }
@@ -200,7 +200,7 @@ void sub_08007d4c(void)
     gDispCnt |= 0x800;
     BeginFastFadeInFromWhite();
     RunFramesNoTasks(32);
-    gUnk_03000048 = 0;
+    gFadeBlankAtWhite = 0;
     while (1) {
         if (gPressedKeys & 9) {
             PlaySfx(102);
@@ -214,7 +214,7 @@ void sub_08007d4c(void)
     }
     BeginFastFadeOutToWhite();
     RunFramesNoTasksUntilFadeDone();
-    gUnk_03002150 = gUnk_02007FCC + 14;
+    gPrevGameState = gUnk_02007FCC + 14;
     gGameState = 4;
 }
 
@@ -267,7 +267,7 @@ void sub_08007e04(void)
         dst = (u8 *)(size + 0x02021DD0);
         break;
     }
-    sub_08003a00((u8 *)gUnk_02020000, dst);
+    MultiBootSetParams((u8 *)gUnk_02020000, dst);
 }
 
 void sub_08007f9c(void)
@@ -308,7 +308,7 @@ void sub_08007f9c(void)
     }
     sub_080082d0();
     gUnk_02007D00 = 0;
-    if (gUnk_0200EC48 == 2) {
+    if (gLinkSetupMode == 2) {
         gLinkPlayerCount = 999;
         sub_08007e04();
         gDispCnt &= 0xE0FF;
@@ -317,15 +317,15 @@ void sub_08007f9c(void)
         BeginFastFadeInFromWhite();
         while (gFadeSteps != 0) {
             RunFrame();
-            sub_08004000(gLinkSessionMode);
+            LinkSetupMain(gLinkSessionMode);
         }
-        gUnk_03000048 = 0;
-        sub_08003a98();
+        gFadeBlankAtWhite = 0;
+        LinkSetupRequestStart();
         do {
             RunFrame();
-            sub_08004000(gLinkSessionMode);
-        } while (gUnk_0200EBC0[2] != 3 && gUnk_0200EBC0[44] == 0);
-        if (gUnk_0200EBC0[3] != 0) {
+            LinkSetupMain(gLinkSessionMode);
+        } while (gMultiBootStruct[2] != 3 && gMultiBootStruct[44] == 0);
+        if (gMultiBootStruct[3] != 0) {
             sub_08007d4c();
             EnableSoundDriver();
             return;
@@ -343,12 +343,12 @@ void sub_08007f9c(void)
         BeginFastFadeOutToWhite();
         RunFramesUntilFadeDone();
         gGameState = 4;
-        gUnk_03002150 = gUnk_02007FCC + 14;
+        gPrevGameState = gUnk_02007FCC + 14;
         return;
     } else {
-        sub_08002358();
-        sub_08002378();
-        sub_080022fc();
+        LinkRequestSync();
+        LinkSyncRandom();
+        LinkStartKeyExchange();
         gUnk_03005280 = 3;
         BeginFastFadeInFromWhite();
         RunLinkFramesUntilFadeDone();
@@ -358,7 +358,7 @@ select:
     gUnk_03005280 = 3;
     while (1) {
         RunLinkFrame();
-        if (gUnk_03002150 == 4) {
+        if (gPrevGameState == 4) {
             if (gUnk_02006090 <= 2) {
                 if ((gPlayerPressedKeys[0] & 0x20) && gUnk_02006168 != 0) {
                     PlaySfx(101);
@@ -384,13 +384,13 @@ select:
                 break;
         }
     }
-    if (gUnk_0200EC48 == 2)
-        gUnk_0200EBA0 = 0;
+    if (gLinkSetupMode == 2)
+        gLinkDriverMode = 0;
     gUnk_03005280 = 4;
-    sub_08002338();
+    LinkStopKeyExchange();
     /* store address first, then the one read of gUnk_02007FCC, kept in k */
     gGameState = (k = gUnk_02007FCC) + 14;
-    if (gUnk_03002150 == 4 && k <= 2)
+    if (gPrevGameState == 4 && k <= 2)
         RunLinkFrames(32);
     BeginFastFadeOutToWhite();
     RunLinkFramesUntilFadeDone();

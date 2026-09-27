@@ -68,7 +68,7 @@ extern u32 gFrameCallback;
 extern vu16 gBg2Cnt;
 extern u32 gUnk_03000B74;
 extern u16 gPlayerHeldKeys[];
-extern u32 gUnk_03000FA4;
+extern u32 gVBlankCallback;
 extern u32 gHBlankDmaDest[];
 extern u32 gHBlankDmaCnt[];
 extern u8 gObjPalette[];

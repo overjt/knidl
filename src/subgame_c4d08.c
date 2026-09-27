@@ -18,7 +18,7 @@
  *   sub_080c4f60   copies a sprite's OAM list into M37Game.unk304/unk306[]
  *       with its size and offsets scaled by `scale` (the depth table through
  *       sub_080c623c, OBJ sizes from gUnk_080CFF76, double-size affine
- *       objects), fills the affine matrix gUnk_03000B1C of the OAM shadow
+ *       objects), fills the affine matrix gOamAffineCount of the OAM shadow
  *       gOamBuffer and returns the address of the first entry written.
  *       Its loop is a goto loop: a do/while hoists the (s16) conversion of
  *       the scale.
@@ -120,7 +120,7 @@ extern struct M37Script gUnk_03006928;
 extern u8 gUnk_080CFE2C[][4];
 extern s32 gUnk_080CFE3C[][3];
 extern u8 gUnk_080CFF76[4][4][2];    /* OBJ shape/size -> {width, height} */
-extern vu16 gUnk_03000B1C;             /* affine matrix index */
+extern vu16 gOamAffineCount;             /* affine matrix index */
 extern vu16 gOamBuffer[];           /* OAM shadow (attrs + affine params) */
 extern u16 *gUnk_087572EC[];
 
@@ -261,17 +261,17 @@ loop:
     v >>= 8;
     v -= w;
     v &= 0x1FF;
-    gAirGrindPtr->unk306[gAirGrindPtr->unk304++] = (b & 0xC000) | v | (gUnk_03000B1C << 9);
+    gAirGrindPtr->unk306[gAirGrindPtr->unk304++] = (b & 0xC000) | v | (gOamAffineCount << 9);
     gAirGrindPtr->unk306[gAirGrindPtr->unk304++] = 0;
     src++;
     gAirGrindPtr->unk306[gAirGrindPtr->unk304++] = *src++ & 0xF3FF;
     if (!(a & 0x1000))
         goto loop;
-    gOamBuffer[(s16)gUnk_03000B1C * 16 + 3] = half;
-    gOamBuffer[(s16)gUnk_03000B1C * 16 + 7] = 0;
-    gOamBuffer[(s16)gUnk_03000B1C * 16 + 11] = 0;
-    gOamBuffer[(s16)gUnk_03000B1C * 16 + 15] = half;
-    gUnk_03000B1C++;
+    gOamBuffer[(s16)gOamAffineCount * 16 + 3] = half;
+    gOamBuffer[(s16)gOamAffineCount * 16 + 7] = 0;
+    gOamBuffer[(s16)gOamAffineCount * 16 + 11] = 0;
+    gOamBuffer[(s16)gOamAffineCount * 16 + 15] = half;
+    gOamAffineCount++;
     return ret;
 }
 

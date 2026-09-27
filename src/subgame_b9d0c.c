@@ -40,14 +40,14 @@ extern u8 gUnk_02007FCC;
 extern u8 gUnk_0200B03C[];
 extern u8 gUnk_0200B048;
 extern u8 gUnk_0200B07C[];
-extern u32 gUnk_0200EBA0;
-extern u32 gUnk_0200EC48;
+extern u32 gLinkDriverMode;
+extern u32 gLinkSetupMode;
 extern u32 gBg0ScrollY;
 extern u32 gFrameCallback;
-extern vu16 gUnk_03000048;
+extern vu16 gFadeBlankAtWhite;
 extern vs32 gBg3ScrollX;
 extern vs32 gBg2ScrollX;
-extern u32 gUnk_03000FA4;
+extern u32 gVBlankCallback;
 extern vs32 gBg3ScrollY;
 extern vu16 gVBlankCount;
 extern vs32 gBg1ScrollY;
@@ -61,7 +61,7 @@ extern vu16 gDispCnt;
 extern vs32 gBg1ScrollX;
 extern vu16 gBldY;
 extern vu16 gLinkIsMaster;
-extern u16 gUnk_03002150;
+extern u16 gPrevGameState;
 extern u16 gLocalPlayer;
 extern u16 gPlayerCount;
 extern u16 gGameState;
@@ -94,10 +94,10 @@ void BeginFastFadeOutToWhite(void);
 void ResetTasksAndOam(void);
 void RunFrameNoTasks(void);
 void RunFrame(void);
-void sub_080022fc(void);
-void sub_08002338(void);
-void sub_08002358(void);
-void sub_08002378(void);
+void LinkStartKeyExchange(void);
+void LinkStopKeyExchange(void);
+void LinkRequestSync(void);
+void LinkSyncRandom(void);
 void RunLinkFrame(void);
 void CallTableEntry(u32 a, u32 b, u32 *c);
 u32 Random(void);
@@ -135,7 +135,7 @@ void SubGameReplay(s32 a0)
 
 void SubGameQuit(void)
 {
-    if (gUnk_03002150 == 4)
+    if (gPrevGameState == 4)
         gLinkErrorMask = 0;
     gCurTask->unk18 = 4;
 }
@@ -263,10 +263,10 @@ void sub_080b9f34(s32 a0)
         sub_080c59d8(gUnk_02006168, 1);
         sub_080c1f88();
     }
-    sub_08002358();
-    sub_08002378();
+    LinkRequestSync();
+    LinkSyncRandom();
     sub_080ba134();
-    sub_080022fc();
+    LinkStartKeyExchange();
     sub_080b9ea0(a0);
     if (gUnk_02007FCC != 2)
     {
@@ -291,21 +291,21 @@ void sub_080b9f34(s32 a0)
         }
     }
 wait:
-    gUnk_03000048 = 0;
+    gFadeBlankAtWhite = 0;
     /* goto loop, not do/while: the ROM re-loads the cell's address every
        iteration, and a loop note would hoist it (lesson 3.21). */
 loop:
     sub_080ba118();
     if (gSubGamePhase <= 1)
         goto loop;
-    if (gSubGamePhase == 4 && gUnk_03002150 == 4)
+    if (gSubGamePhase == 4 && gPrevGameState == 4)
     {
-        if (gUnk_0200EC48 == 2)
+        if (gLinkSetupMode == 2)
             goto de8;
         sub_080ba150();
     }
 tail:
-    sub_08002338();
+    LinkStopKeyExchange();
     if (gUnk_02007FCC != 2)
     {
         BeginFastFadeOutToWhite();
@@ -324,8 +324,8 @@ tail:
         gDispCnt |= 0x80;
         EndFrame();
     }
-    gUnk_03000048 = 0;
-    gFrameCallback = gUnk_03000FA4 = 0;
+    gFadeBlankAtWhite = 0;
+    gFrameCallback = gVBlankCallback = 0;
     REG_DMA0CNT_L = REG_DMA0CNT_H = 0;
     TaskSetEntry(Task_SubGame, gUnk_020055EC);
 }
@@ -424,7 +424,7 @@ void sub_080ba150(void)
     }
 done:
     if (gLinkIsMaster != 0)
-        gUnk_0200EBA0 = 0;
+        gLinkDriverMode = 0;
     for (i = 4; i >= 0; i--)
         sub_080ba134();
     DisableSerial();
@@ -447,7 +447,7 @@ void SubGameMain(void)
     s32 i;
 
     ResetTasksAndOam();
-    if (gUnk_0200EC48 == 2 && ConnectLink() != 0)
+    if (gLinkSetupMode == 2 && ConnectLink() != 0)
         return;
     RunFrameNoTasks();
     RunFrameNoTasks();
@@ -456,8 +456,8 @@ void SubGameMain(void)
         for (i = 0; i < (gVBlankCount & 0xFF); i++)
             Random();
     }
-    sub_08002358();
-    sub_08002378();
+    LinkRequestSync();
+    LinkSyncRandom();
     gUnk_020055EC = TaskCreateFrom(93, 63);
     sub_080b9d48();
     sub_080b9f34(0);
@@ -465,8 +465,8 @@ void SubGameMain(void)
     ResetTasksAndOam();
     if (gSubGamePhase != 3)
     {
-        gGameState = gUnk_03002150;
-        gUnk_03002150 = gUnk_02007FCC + 14;
+        gGameState = gPrevGameState;
+        gPrevGameState = gUnk_02007FCC + 14;
     }
 }
 

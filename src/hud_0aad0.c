@@ -11,7 +11,7 @@
 extern s16 gMaxHealth;
 extern u8 gHudMode;
 extern u8 gHudShowsClock;
-extern u16 gUnk_02006068[];
+extern u16 gHudClock[];
 extern u8 gHudShowsHpBar;
 extern u16 gPlayTime[4];
 extern s8 gDigits[];
@@ -41,22 +41,22 @@ void HudDrawClock(u16 *time);
 void sub_0800aad0(void)
 {
     if (gPlayTime[3] > 99) {
-        gUnk_02006068[3] = 99;
-        gUnk_02006068[2] = 59;
-        gUnk_02006068[1] = 59;
-        gUnk_02006068[0] = 59;
+        gHudClock[3] = 99;
+        gHudClock[2] = 59;
+        gHudClock[1] = 59;
+        gHudClock[0] = 59;
     } else {
-        gUnk_02006068[3] = gPlayTime[3];
-        gUnk_02006068[2] = gPlayTime[2];
-        gUnk_02006068[1] = gPlayTime[1];
-        gUnk_02006068[0] = gPlayTime[0];
+        gHudClock[3] = gPlayTime[3];
+        gHudClock[2] = gPlayTime[2];
+        gHudClock[1] = gPlayTime[1];
+        gHudClock[0] = gPlayTime[0];
     }
 }
 
 void sub_0800ab08(void)
 {
     if (gHudMode == 1 && gHudShowsHpBar != 1 && gHudShowsClock == 1)
-        HudDrawClock(gUnk_02006068);
+        HudDrawClock(gHudClock);
 }
 
 void sub_0800ab3c(void)

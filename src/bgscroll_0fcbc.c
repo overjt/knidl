@@ -19,13 +19,13 @@
 extern u8 gBgScrollActive;
 extern s32 gBgScrollSpeeds[2][4];
 extern s32 gBgScrollTargets[2][4];
-extern vu8 gUnk_0200EBC0[];
+extern vu8 gMultiBootStruct[];
 extern vu8 gBldCntTarget2;
 extern vu16 gWin0V;
 extern vu16 gWin1V;
 extern vu8 gBldAlphaEva;
 extern vu8 gWinIn0;
-extern vu8 gUnk_03000F7C;
+extern vu8 gWinOut;
 extern vs32 gBg3ScrollY;
 extern vu16 gWin0H;
 extern vu16 gWin1H;
@@ -161,7 +161,7 @@ void Task_BgScroll(void)
 
 s32 sub_0800ffd8(void)
 {
-    s32 n = gUnk_0200EBC0[1];
+    s32 n = gMultiBootStruct[1];
 
     if (n != 0)
         n--;
@@ -203,6 +203,6 @@ void SetWindow(s32 in, s32 out, s32 h, s32 v, s32 win)
         gWin1H = h;
         gWin1V = v;
     }
-    gUnk_03000F7C = out;
+    gWinOut = out;
     gDispCnt |= win;
 }

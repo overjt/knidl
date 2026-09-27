@@ -57,7 +57,7 @@ void TaskSetFrameByFacing(s16 a);
 void TaskSetMotionXFacing(s32 a, s32 b);
 void TaskStop(void);
 void TaskSetFrame(s32 a);
-void sub_08006384(u16 a);
+void TaskSetPosXFacing(u16 a);
 void TaskStepForward(s16 a);
 u16 RandomSpread(s32 base, u8 scale, u8 amount);   /* base + ((rand(256) * amount) >> 8) * scale */
 s16 RandomSpreadFacing(s32 base, u8 scale, u8 amount);   /* the same, negated when Task.unk43 != 1 */
@@ -90,7 +90,7 @@ void sub_08053b40(void)
     t = gCurTask;
     t->unk38 = gUnk_08751C44;
     t->unk40 = (((struct Task *)t->unk8C)->unk40 + 0x1800) | 4;
-    sub_08006384(4);
+    TaskSetPosXFacing(4);
     gCurTask->unk50 = 0x40000;
     for (;;)
     {

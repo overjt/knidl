@@ -17,14 +17,14 @@
  *   RandomSpread  base + ((rand(256) * amount) >> 8) * scale   (u16)
  *   RandomSpreadFacing  same, signed by the running task's facing byte
  *                 (gCurTask->b43 == 1 -> +, else -).
- *   sub_0800652c  push/pop the per-task "phase skip mask" (Task.b13, see
+ *   TaskFreezeOrThawOthers  push/pop the per-task "phase skip mask" (Task.b13, see
  *                 pending/early_4fec.c): val==0 pops the snapshot from
  *                 gTaskSkipMaskStack[--gTaskSkipMaskDepth], val!=0 pushes one and then
  *                 ORs val into every ALLOCATED task's mask (free slots, i.e.
  *                 gTaskSlotTypes[i] == -1, get 0).  One task id is exempt.
  *   TaskRestoreSkipMask  restore one task's mask from the current snapshot  (HIDDEN)
  *   TaskSaveSkipMask  save one task's mask into the current snapshot     (HIDDEN)
- *   sub_0800668c  cold link init (clear the session block, install the SIO
+ *   InitLinkDriver  cold link init (clear the session block, install the SIO
  *                 and timer-3 IRQ handlers at gIntrTable[0]/[1]) (HIDDEN)
  *   EnableSerial  start a MULTI-PLAY session: RCNT=0, SIOCNT=0x2000|0x4003
  *                 (multi-play, 115200 bd, IRQ), enable IE bit 7 (serial),
@@ -47,7 +47,7 @@
  *   LinkVSync  per-VBlank link tick, called from VBlankIntr (pokeruby's LinkVSync).
  *
  * symbols.csv hides FOUR unreferenced/extra functions in this range
- * (lesson 2.13 / zone lesson 14): TaskSaveSkipMask and sub_0800668c inside the
+ * (lesson 2.13 / zone lesson 14): TaskSaveSkipMask and InitLinkDriver inside the
  * 0xE8 recorded for TaskRestoreSkipMask, and ResetSerial inside the 0xAC recorded
  * for DisableSerial.  The assigned RANGE is right; only the sizes are wrong.
  *
@@ -58,7 +58,7 @@
  *    to HImode (convert_to_integer's "shorten"), which turns the product
  *    into `(subreg:SI (reg:HI))`, swaps the operands and shifts the whole
  *    function's allocation by one register.  (New; see the batch report.)
- *  - sub_0800652c's free-slot test must be `!= -1` with the OR branch first:
+ *  - TaskFreezeOrThawOthers's free-slot test must be `!= -1` with the OR branch first:
  *    the reversed spelling flips every branch in the loop.
  *  - EnableSerial: the CpuSet fill source must be `vu32` (3.48) so its zero
  *    is not CSE'd with the plain zero stores; the 4x4 clear loop needs the
@@ -107,13 +107,13 @@ extern u16 gLinkIsMaster;
 extern vu16 gLinkPlayerCount;
 extern u16 gPlayerCount;
 extern void (*gIntrTable[])(void);
-extern u32 gUnk_0200EBA0;
+extern u32 gLinkDriverMode;
 extern u32 gSerialIntrCount;
 extern u32 gChecksumAvailable;
 extern u32 gLinkStatus;
-extern u32 gUnk_03004D30;
-extern u32 gUnk_03004D28;
-extern u32 gUnk_03004D2C;
+extern u32 gLinkPauseFrames;
+extern u32 gLinkRecvVCount;
+extern u32 gSendCmdFilled;
 extern u32 gLinkErrorMask;
 extern u16 gRecvNonzeroCheck;
 extern u16 gSendNonzeroCheck;
@@ -170,7 +170,7 @@ s16 RandomSpreadFacing(u16 base, u8 scale, u8 amount)
     return -v;
 }
 
-void sub_0800652c(u16 val, s32 idx)
+void TaskFreezeOrThawOthers(u16 val, s32 idx)
 {
     u8 save;
     u16 i;
@@ -206,7 +206,7 @@ void TaskSaveSkipMask(u32 idx)
     gTaskSkipMaskStack[gTaskSkipMaskDepth][idx] = gTasks[idx].b13;
 }
 
-void sub_0800668c(void)
+void InitLinkDriver(void)
 {
     u32 zero = 0;
 
@@ -217,12 +217,12 @@ void sub_0800668c(void)
     gPlayerCount = 1;
     gIntrTable[0] = SerialCB;
     gIntrTable[1] = Timer3Intr;
-    gUnk_0200EBA0 = 0;
+    gLinkDriverMode = 0;
     gSerialIntrCount = 0;
     gChecksumAvailable = 0;
-    gUnk_03004D30 = 0;
-    gUnk_03004D28 = 0;
-    gUnk_03004D2C = 0;
+    gLinkPauseFrames = 0;
+    gLinkRecvVCount = 0;
+    gSendCmdFilled = 0;
     gLinkErrorMask = 0x3F000;
 }
 
@@ -252,12 +252,12 @@ void EnableSerial(void)
     gSendNonzeroCheck = gRecvNonzeroCheck = 0;
     gLastSendQueueCount = gLastRecvQueueCount = 0;
     gUnk_03005278 = gUnk_03004D34 = 0;
-    gUnk_0200EBA0 = 0;
+    gLinkDriverMode = 0;
     gSerialIntrCount = 0;
     gChecksumAvailable = 0;
-    gUnk_03004D30 = 0;
-    gUnk_03004D28 = 0;
-    gUnk_03004D2C = 0;
+    gLinkPauseFrames = 0;
+    gLinkRecvVCount = 0;
+    gSendCmdFilled = 0;
     gLinkErrorMask = 0x3F000;
 
     b = gSendCmd;
@@ -295,7 +295,7 @@ void DisableSerial(void)
     gLinkSavedIme = REG_IME;
     REG_IME = 0;
     REG_IE &= 0xFF3F;
-    gUnk_0200EBA0 = 0;
+    gLinkDriverMode = 0;
     gSerialIntrCount = 0;
     REG_IME = gLinkSavedIme;
     REG_SIOCNT = 0;
@@ -318,7 +318,7 @@ void ResetSerial(void)
 
 void LinkMain1(u8 *cmd, u16 *send, u16 *recv)
 {
-    if (gUnk_0200EBA0 == 2)
+    if (gLinkDriverMode == 2)
         return;
 
     switch (gLink[1]) {

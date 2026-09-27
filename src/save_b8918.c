@@ -40,7 +40,7 @@ struct LinkRec
 
 extern s32 Div(s32 a, s32 b);
 extern s32 Mod(s32 a, s32 b);
-extern u16 gUnk_02006068[];
+extern u16 gHudClock[];
 extern struct SaveSlot gSaveSlots[];
 extern struct LinkRec gUnk_0200EA00[];
 extern u8 gUnk_0200EB80;

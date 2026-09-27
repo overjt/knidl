@@ -40,7 +40,7 @@ struct LinkRec
 
 extern s32 Div(s32 a, s32 b);
 extern s32 Mod(s32 a, s32 b);
-extern u16 gUnk_02006068[];
+extern u16 gHudClock[];
 extern struct SaveSlot gSaveSlots[];
 extern struct LinkRec gUnk_0200EA00[];
 extern u8 gUnk_0200EB80;
@@ -61,8 +61,8 @@ extern u8 gUnk_03002400[8][7];
 extern u8 gExtraMode;
 extern u16 gRecvCmds[];
 extern u16 gSendCmd[];
-extern void sub_08002338(void);
-extern void sub_08002348(void);
+extern void LinkStopKeyExchange(void);
+extern void LinkStartRecordExchange(void);
 extern void RunLinkFrame(void);
 
 s32 CalcCompletionPercent(s32 a);
@@ -76,7 +76,7 @@ void sub_080b8888(void)
     s32 n;
     s32 i;
 
-    sub_08002348();
+    LinkStartRecordExchange();
     gUnk_0200EB80 = 0;
     do
     {
@@ -95,5 +95,5 @@ void sub_080b8888(void)
             }
         }
     } while (n != gPlayerCount);
-    sub_08002338();
+    LinkStopKeyExchange();
 }

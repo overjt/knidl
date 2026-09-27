@@ -5,7 +5,7 @@
 /* mode_100ac.c (0x080100AC-0x08010357, issue #99).
  *
  * AgbMain state 7 (CutsceneMain), entered instead of states 5/6 while
- * gUnk_02007FC0 is set: the scripted sequence of stage gUnk_030023B8.
+ * gCutscenePending is set: the scripted sequence of stage gUnk_030023B8.
  * It clears the blend and window shadows, loads the sequence's palette
  * set and pictures (sub_08008d98, and sub_080102c0: the sprite sheet
  * gUnk_08731F78[stage] plus, in link play, the player palette), opens
@@ -20,7 +20,7 @@ extern vu16 gWin0V;
 extern vu8 gBldAlphaEva;
 extern vu8 gWinIn0;
 extern vs32 gBg3ScrollX;
-extern vu8 gUnk_03000F7C;
+extern vu8 gWinOut;
 extern vs32 gBg2ScrollX;
 extern vs32 gBg3ScrollY;
 extern vs32 gBg1ScrollY;
@@ -47,10 +47,10 @@ void RequestCopy(u32 mode, u32 src, u32 dst, u32 size);
 void BeginFastFadeInFromWhite(void);
 void BeginFastFadeOutToWhite(void);
 void ResetTasksAndOam(void);
-void sub_080022fc(void);
-void sub_08002338(void);
-void sub_08002358(void);
-void sub_08002378(void);
+void LinkStartKeyExchange(void);
+void LinkStopKeyExchange(void);
+void LinkRequestSync(void);
+void LinkSyncRandom(void);
 void RunLinkFrame(void);
 void RunLinkFramesUntilFadeDone(void);
 s32 TaskCreateFrom(u32 type, s32 idx);
@@ -94,31 +94,31 @@ void CutsceneMain(void)
             gWin0H = 240;
             gWin0V = 0x1090;
             gWinIn0 = 63;
-            gUnk_03000F7C = 47;
+            gWinOut = 47;
         } else {
             gWin0H = 0x28D0;
             gWin0V = 0x1090;
             gWinIn0 = 63;
-            gUnk_03000F7C = 47;
+            gWinOut = 47;
         }
         for (i = 0; i <= 3; i++)
             InitPlayerState(i);
         sub_080102c0();
         TaskCreateFrom(91, 32);
-        sub_08002358();
-        sub_08002378();
-        sub_080022fc();
+        LinkRequestSync();
+        LinkSyncRandom();
+        LinkStartKeyExchange();
         BeginFastFadeInFromWhite();
         RunLinkFramesUntilFadeDone();
         gLinkCommand = 0x8800;
         do
             RunLinkFrame();
         while (gGameState == 7);
-        sub_08002338();
+        LinkStopKeyExchange();
         BeginFastFadeOutToWhite();
         RunLinkFramesUntilFadeDone();
         gDispCnt &= 0xDFFF;
-        gWin0H = gWin0V = gWinIn0 = gUnk_03000F7C = 0;
+        gWin0H = gWin0V = gWinIn0 = gWinOut = 0;
         gBldCntTarget1 = gBldCntTarget2 = gBldAlphaEva = gBldAlphaEvb = 0;
         sub_08027178();
     }

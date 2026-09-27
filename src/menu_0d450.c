@@ -21,8 +21,8 @@ extern s8 gUnk_02007FC8;
 extern u8 gUnk_02007FCC;
 extern s16 gSoundTestSelection[];
 extern s8 gMenuCursor;
-extern vu8 gUnk_0200EBC0[];
-extern u32 gUnk_0200EC48;
+extern vu8 gMultiBootStruct[];
+extern u32 gLinkSetupMode;
 extern vu16 gPressedKeys;
 extern vs16 gCurrentBgm;
 extern vu16 gRepeatedKeys;
@@ -47,11 +47,11 @@ s32 PlayBgm(s32 songId);
 s32 PlaySfx(s32 id);
 void StopAllSfx(void);
 void FadeOutBgm(s32 speed);
-void sub_08003888(void);
-void sub_08003964(void);
-void sub_08003a34(u8 *start, u8 *end);
-void sub_08003a98(void);
-void sub_08004000(u16 a);
+void LinkSetupInit(void);
+void LinkSetupStop(void);
+void MultiBootInitWithParams(u8 *start, u8 *end);
+void LinkSetupRequestStart(void);
+void LinkSetupMain(u16 a);
 s32 TaskCreateFrom(u32 type, s32 idx);
 u32 ConnectLink(void);
 void LinkErrorScreen(void);
@@ -181,14 +181,14 @@ void sub_0800d85c(void)
 {
     sub_080b83b8();
     sub_0800da18();
-    sub_08003888();
-    sub_08003a34(gUnk_0876B1FC, gUnk_0876F690);
+    LinkSetupInit();
+    MultiBootInitWithParams(gUnk_0876B1FC, gUnk_0876F690);
     gUnk_02007FC8 = 0;
     RunFrames(4);
     while (1) {
         if (gPressedKeys & 2) {
             PlaySfx(215);
-            sub_08003964();
+            LinkSetupStop();
             gDispCnt &= 0xE0FF;
             gDispCnt |= 0x1A00;
             if (gUnk_02007FC8 == 1)
@@ -210,8 +210,8 @@ void sub_0800d85c(void)
             return;
         }
         if (gUnk_02007FC8 == 0) {
-            sub_08004000(gLinkSessionMode);
-            if (gUnk_0200EBC0[2] == 3) {
+            LinkSetupMain(gLinkSessionMode);
+            if (gMultiBootStruct[2] == 3) {
                 gMenuScreen = 9;
                 gUnk_03001F30 = 0;
                 if (gPrevMenuScreen == 3)
@@ -222,15 +222,15 @@ void sub_0800d85c(void)
                     LinkErrorScreen();
                 return;
             }
-            if (gUnk_0200EBC0[2] == 2 && gUnk_0200EBC0[0] == 0 && (gPressedKeys & 9)) {
-                if (gUnk_0200EC48 != 1) {
+            if (gMultiBootStruct[2] == 2 && gMultiBootStruct[0] == 0 && (gPressedKeys & 9)) {
+                if (gLinkSetupMode != 1) {
                     gMenuScreen = 9;
                     return;
                 }
-                sub_08003a98();
+                LinkSetupRequestStart();
             }
-            if ((gUnk_0200EBC0[3] & 1) || sub_0800da74() == 1) {
-                sub_08003964();
+            if ((gMultiBootStruct[3] & 1) || sub_0800da74() == 1) {
+                LinkSetupStop();
                 gUnk_02007FC8 = 1;
                 LoadGfxSet(38);
             }
@@ -261,7 +261,7 @@ s32 sub_0800da74(void)
     case 1:
     case 2:
     case 3:
-        if (gUnk_0200EC48 == 2)
+        if (gLinkSetupMode == 2)
             r = 1;
         break;
     case 4:

@@ -16,7 +16,7 @@
  *       gAirGrindCoursePtr = &gAirGrindCourse, the linked-player count and mode
  *       cells, the four players' course records, the per-frame hook
  *       sub_080c2d38 (gFrameCallback, called by the frame driver EndFrame)
- *       and the VBlank hook sub_080c2fb8 (gUnk_03000FA4, called by the VBlank
+ *       and the VBlank hook sub_080c2fb8 (gVBlankCallback, called by the VBlank
  *       handler), and two 16-colour rows of gUnk_08609E40.
  *   AirGrindRace   the screen's task body: waits for the scroll position
  *       gAirGrindCoursePtr->unk000 to reach the two course lines unk00C and unk010
@@ -144,11 +144,11 @@ extern u16 gUnk_02017170;
 extern u16 gLocalPlayer;
 extern u16 gLinkPlayerCount;
 extern u32 gFrameCallback;
-extern u32 gUnk_03000FA4;
+extern u32 gVBlankCallback;
 extern u16 gUnk_08609E40[];
 extern u32 gUnk_08755FEC[];
 extern u16 gUnk_0860A042[];
-extern u32 gUnk_03000AF4;
+extern u32 gVBlankEndCallback;
 
 void TaskYieldTrampoline(s32 frames);
 void ClearHBlankIntr(void);
@@ -236,7 +236,7 @@ void sub_080c20b4(void)
     gAirGrindPtr->unk014 = -1;
     gAirGrindPtr->unk300 = 0;
     gFrameCallback = (u32)sub_080c2d38;
-    gUnk_03000FA4 = (u32)sub_080c2fb8;
+    gVBlankCallback = (u32)sub_080c2fb8;
     sub_080c495c();
     for (i = 0; i < 16; i++) {
         gAirGrindPtr->unk0EC.unk76[i] = gUnk_08609E40[32 + i];
@@ -308,7 +308,7 @@ void AirGrindRace(void)
     StopBgm();
     StopAllSfx();
     ClearHBlankIntr();
-    gUnk_03000AF4 = 0;
+    gVBlankEndCallback = 0;
     gCurTask->unk18 = 2;
     TaskSleepForever();
 }

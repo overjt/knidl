@@ -84,7 +84,7 @@ s32 TaskCreateFrom(u32 type, s32 idx);
 void TaskSetFrame(s32 a);
 s32 IsOnScreen(s16 x, s16 y);
 u32 IsWorldPosOnScreen(s16 a, s16 b);
-void sub_0800652c(u16 a, s32 b);
+void TaskFreezeOrThawOthers(u16 a, s32 b);
 void TaskRestoreSkipMask(u32 idx);
 s32 AddPlayerHealth(s32 a, s32 b);
 void SetPlayerAbilityNoHud(s32 a, s32 b, s32 c);
@@ -1120,7 +1120,7 @@ void PlayerStopSfx(void)
 
 void FreezeOtherTasks(s32 a0)
 {
-    sub_0800652c((u16)a0, gCurTaskIdx);
+    TaskFreezeOrThawOthers((u16)a0, gCurTaskIdx);
     if (a0 != 0)
     {
         TaskRestoreSkipMask(63);
