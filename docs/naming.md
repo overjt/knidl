@@ -152,10 +152,24 @@ it, in PascalCase (`WaddleDee`, `BrontoBurt`, `PoppyBrosJr`, `UFO`).
 | the task-type body a room object of that subtype runs | `Task_<Enemy>` | `Task_WaddleDee` |
 | its frame table (`Task.frameTable`) | `g<Enemy>Frames` | `gRockyFrames` |
 | its variant table (`CallTableEntry(Task.unk73, n, ...)`) | `g<Enemy>Variants` | `gSparkyVariants` |
-| a state machine's entry / per-frame guard | `<Enemy>EnterState` / `<Enemy>Update` | `ScarfyEnterState` |
-| its state tables (`Task.state` / `Task.updateState`) | `g<Enemy>States` / `g<Enemy>StateUpdates` | `gScarfyStates` |
-| a state body with a verb the code shows | `<Enemy><Verb>` | `ScarfyChase` |
-| its graphics descriptor, where it has a label | `g<Enemy>Gfx` | `gUFOGfx` |
+| a variant row that installs the update hook, sets state 0 and enters the state table once | `<Enemy>[<Row>]Init` | `PengyInit`, `SirKibbleWalkInit` |
+| the re-arm entry `CallTableEntry(Task.state, n, states)` / the per-frame hook | `<Enemy>[<Row>]EnterState` / `<Enemy>[<Row>]Update` | `ScarfyEnterState` |
+| its state tables (`Task.state` / `Task.updateState`) | `g<Enemy>[<Row>]States` / `g<Enemy>[<Row>]StateUpdates` | `gScarfyStates` |
+| a state body with a verb the code shows | `<Enemy><Verb>` | `ScarfyChase`, `PengyShoot` |
+| a child object only that family spawns (a projectile, an effect) | `Task_<Enemy><Thing>` | `Task_WaddleDooBeam`, `Task_WhispyWoodsApple` |
+| its ActorDef / graphics descriptor, where it has a label | `g<Enemy>Def` / `g<Enemy>Gfx` | `gBonkersDef`, `gUFOGfx` |
+
+`<Row>` is left out when the row is the family's only state machine.  A
+row word says what that row does (`SirKibbleStand...` stands between
+throws, `SirKibbleWalk...` walks).  The verbs are defined by the body:
+**Wait** (no motion; loops until its check picks the next state), **Walk**
+(`TaskSetMotionXFacing` plus a walk-frame loop), **Fall** (only gravity
+and the fall speed limit), **Shoot** (spawns projectile actors in a loop),
+**Jump** (an upward velocity, then waits for `Task.onGround`).  Mid-bosses
+and bosses use the same table (`Task_KingDedede`, `KingDededeEnterState`,
+`gKingDededeStates`); effect tasks are named by what they show
+(`Task_HitFlames`, `Task_StarFlash`), and a callback that frees a task
+whose parent has died is `<Thing>CheckParent`.
 
 An enemy that two species could be (Sword Knight and Blade Knight share
 one script) stays unnamed until a second source tells them apart.
