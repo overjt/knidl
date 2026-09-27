@@ -11059,6 +11059,13 @@
     "0x0872EA04": "sram_driver_fn_table[0] = ReadSram_Core+1, which src/agb_sram.c defines static (as the SDK source does), so no global symbol names it",
     "0x0872EA0C": "sram_driver_fn_table[2] = VerifySram_Core+1, static in src/agb_sram.c like ReadSram_Core"
   },
+  "raw_ranges": [
+    {
+      "start": "0x080CD93C",
+      "end": "0x080CDCCE",
+      "why": "SoundMainRAM's ARM mixer: the Thumb head ends with `adr r1; bx r1; nop` at 0x080CD936-0x080CD93B and the rest of the function (m4aSoundInit copies it to IWRAM) is ARM code; decoded as Thumb it produced a false `b.n CreditsInitText` at 0x080CDBFE and a false label at 0x080CDD6E that split gMPlayJumpTableTemplate's pool word (#36 phase 2 run 2)"
+    }
+  ],
   "pointer_tables": [
     {
       "start": "0x0872FF30",

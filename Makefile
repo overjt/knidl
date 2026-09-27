@@ -156,8 +156,13 @@ $(BUILD_DIR)/header_smoke_old_agbcc.o: tools/header_smoke.c $(GBA_HEADERS)
 	  { cat; printf '.text\n\t.align\t2, 0\n'; } | \
 	  $(AS) -mcpu=arm7tdmi -o $@ -
 
+# MATCHING=1 (the default) turns on linker.ld's per-section address
+# assertions, so a matching build fails at the first section that moved;
+# a modified ROM links with `make MATCHING=0` (docs/data.md section 8).
+MATCHING ?= 1
+
 $(ELF): $(ALL_OBJS) linker.ld
-	$(LD) -T linker.ld -Map $(BUILD_DIR)/knidl.map -o $@ $(ALL_OBJS)
+	$(LD) --defsym MATCHING=$(MATCHING) -T linker.ld -Map $(BUILD_DIR)/knidl.map -o $@ $(ALL_OBJS)
 
 $(ROM): $(ELF)
 	$(OBJCOPY) -O binary $< $@
@@ -233,7 +238,7 @@ image:
 	docker build -t $(IMAGE) .
 
 all: image
-	$(DOCKER_RUN) make all INSIDE_DOCKER=1
+	$(DOCKER_RUN) make all INSIDE_DOCKER=1 $(if $(MATCHING),MATCHING=$(MATCHING))
 
 compare: image
 	$(DOCKER_RUN) make compare INSIDE_DOCKER=1

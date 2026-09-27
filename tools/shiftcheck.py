@@ -24,8 +24,8 @@ targets once they are symbols).
 No emulator is needed and the test is exact about what moved: the same
 objects are linked twice, and only the linker decides.  How the padding is
 inserted depends on linker.ld: every section whose pinned address is at or
-after P gets the pin + N, and a `. = . + N;` statement goes in front of the
-section at P for the sections that follow each other without pins
+after P gets the pin + N, and an N-byte `.shift_pad` section goes in front
+of the section at P for the sections that follow each other without pins
 (docs/data.md section 8.2).  The MEMORY region is widened to 32 MiB (the
 GBA maximum) so the padded image fits, and `--defsym MATCHING=0` turns the
 compare-mode address assertions off.
@@ -67,7 +67,7 @@ DEFAULT_POINTS = [
 
 SECTION_LINE_RE = re.compile(
     r'^(\s*)\.([A-Za-z0-9_]+)(\s+)(0x[0-9A-Fa-f]+)?(\s*):(\s*)\{')
-MEMORY_RE = re.compile(r'(ROM\s*:\s*ORIGIN\s*=\s*0x08000000\s*,\s*LENGTH\s*=\s*)8M')
+MEMORY_RE = re.compile(r'(ROM\s*:\s*ORIGIN\s*=\s*0x08000000\s*,\s*LENGTH\s*=\s*)\w+')
 
 
 def run(cmd):
@@ -115,7 +115,11 @@ def shifted_script(text, at_section, pad):
             name = m.group(2)
             if name == at_section:
                 seen = True
-                out.append("%s. = . + 0x%X;\n" % (m.group(1), pad))
+                # a section of its own: with `> ROM` ld places the next
+                # section at the region's free address, which a bare
+                # `. = . + N` between sections does not advance
+                out.append("%s.shift_pad : { BYTE(0); . = . + 0x%X; } > ROM\n"
+                           % (m.group(1), pad - 1))
             if seen and m.group(4):
                 addr = int(m.group(4), 16) + pad
                 line = "%s.%s%s0x%08X%s:%s{%s" % (
@@ -128,7 +132,7 @@ def shifted_script(text, at_section, pad):
     text = "".join(out)
     text, n = MEMORY_RE.subn(r'\g<1>32M', text)
     if n != 1:
-        sys.exit("error: the ROM MEMORY region is not the expected 8M one")
+        sys.exit("error: no ROM MEMORY region at 0x08000000 in the script")
     return text
 
 

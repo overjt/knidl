@@ -392,6 +392,10 @@ class SegmentEmitter(object):
         self.level = level  # 0 = real instructions, 1 = raw .short
         self.extra_labels = extra_labels or {}  # addr -> name (config)
         self.data_symbols = data_symbols or {}  # word value -> name (config)
+        # extra_labels that name data inside a structure-only data segment
+        # (the m4a engine tables): pool words equal to one are pointers to
+        # that label, like data_symbols (#36 phase 2 run 2)
+        self.data_labels = {}
         # Chunked emission (issue #25): several files share one linker
         # section; chunk_index None means the legacy one-file-per-segment
         # layout with file-local .L_ labels.
@@ -421,6 +425,10 @@ class SegmentEmitter(object):
         # forces them to raw .short bytes.  Persists across emit() calls so
         # the assembly repair loop can grow it incrementally.
         self.forced_raw_addrs = set()
+        # [(start, end)] of config "raw_ranges": bytes of a function that
+        # are not instructions of its ISA (SoundMainRAM's ARM mixer inside a
+        # Thumb function); never decoded for labels or pools, always raw
+        self.raw_ranges = []
         # Address of every instruction line appended to self.lines, in
         # order (parallel to the file's instruction lines; used by
         # addrs_from_asm_errors).
@@ -538,6 +546,8 @@ class SegmentEmitter(object):
                     size, info = thumb_decode(self.rom, off)
                 else:
                     size, info = arm_decode(self.rom, off)
+                if info and self.in_raw_range(ROM_BASE + off):
+                    info = None
                 if info:
                     if "pool" in info:
                         target = info["pool"]
@@ -564,6 +574,9 @@ class SegmentEmitter(object):
         if v in self.data_symbols:
             self.stats["named_words"] += 1
             return "\t.word\t%s" % self.data_symbols[v]
+        if v in self.data_labels:
+            self.stats["named_words"] += 1
+            return "\t.word\t%s" % self.data_labels[v]
         if v & 1:
             target = v & ~1
             if target in self.db:
@@ -723,13 +736,16 @@ class SegmentEmitter(object):
                 self.raw_bytes_lines(addr, size)
                 addr += size
 
+    def in_raw_range(self, addr):
+        return any(s <= addr < e for s, e in self.raw_ranges)
+
     def emit_instruction(self, addr, decode_size, entry_size, text, info):
         """Emit one objdump-derived instruction line.
 
         Returns True if the instruction was emitted (caller advances by
         entry_size), False if the caller should use raw bytes instead.
         """
-        if addr in self.forced_raw_addrs:
+        if addr in self.forced_raw_addrs or self.in_raw_range(addr):
             # gas rejected this line in an earlier repair round; emit the
             # halfwords verbatim instead.
             return False
@@ -1594,6 +1610,20 @@ def main():
     except (AttributeError, ValueError):
         sys.exit("error: abs_symbols must map names to \"0x...\" hex values")
     not_pointers = parse_addr_map(cfg.get("not_pointers", {}), "not_pointers")
+    # "raw_ranges": [{"start", "end", "why"}] code bytes that are not
+    # instructions of their function's ISA (ARM code inside a Thumb
+    # function): emitted raw and never decoded, because a halfword that
+    # decodes as a branch would be relocated and a shifted ROM would
+    # rewrite it (#36 phase 2 run 2)
+    raw_ranges = []
+    for i, r in enumerate(cfg.get("raw_ranges", [])):
+        try:
+            a, b = int(r["start"], 16), int(r["end"], 16)
+        except (KeyError, TypeError, ValueError):
+            sys.exit("error: raw_ranges[%d] needs hex \"start\" and \"end\"" % i)
+        if not r.get("why"):
+            sys.exit("error: raw_ranges[%d] needs a \"why\"" % i)
+        raw_ranges.append((a, b, r["why"]))
     pointer_tables = cfg.get("pointer_tables", [])
     if not isinstance(pointer_tables, list):
         sys.exit("error: pointer_tables must be a list of tables")
@@ -1637,6 +1667,10 @@ def main():
         all_ranges = (
             [(s, e) for _n, s, e, _k, _c in entries]
             + [(s, e) for _n, s, e, _k, _a in data_entries]
+        )
+        data_labels = dict(
+            (a, n) for a, n in extra_labels.items()
+            if any(s <= a < e for _n, s, e, _k, _a in data_entries)
         )
 
         # Config sanity: every extra label must live inside one configured
@@ -1914,6 +1948,10 @@ def main():
                     ),
                 )
                 em.forced_raw_addrs = raw_addrs[uid]
+                em.raw_ranges = [
+                    (a, b) for a, b, _w in raw_ranges
+                    if a < u["end"] and b > u["start"]]
+                em.data_labels = data_labels
                 text = None
                 obj = os.path.join(
                     tmpdir, "%s_%d_%d.o" % (uid, em.level, attempt % 2)

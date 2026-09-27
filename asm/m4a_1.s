@@ -111,7 +111,6 @@ SoundMain:
 	bls.n	.L_080cd90e	@ 0x080CD90E
 	ldrb	r1, [r0, #11]
 	subs	r1, r1, r7
-.L_080cd908:
 	mov	r2, r8
 	muls	r2, r1
 	adds	r5, r5, r2
@@ -137,524 +136,473 @@ SoundMainRAM:
 	.short	0xA101
 	bx	r1
 	movs	r0, r0
-	movs	r2, r0
-	b.n	.L_080cdfea	@ 0x080CDFEA
-	ldrb	r5, [r6, #24]
-	lsls	r0, r0, #10
-	strb	r0, [r1, #0]
-	asrs	r5, r0, #2
-	ands	r0, r1
-	b.n	.L_080cdc8e	@ 0x080CDC8E
-	lsls	r6, r2, #3
-	b.n	.L_080cdc7c	@ 0x080CDC7C
-	asrs	r0, r2, #3
-	b.n	.L_080cdd00	@ 0x080CDD00
-	movs	r1, r0
-	b.n	.L_080cda5a	@ 0x080CDA5A
-	asrs	r6, r2, #3
-	b.n	.L_080cdc8c	@ 0x080CDC8C
-	movs	r1, r0
-	b.n	.L_080cda62	@ 0x080CDA62
-	asrs	r1, r2, #3
-	b.n	.L_080cdb14	@ 0x080CDB14
-	movs	r1, r0
-	b.n	.L_080cda6a	@ 0x080CDA6A
-	lsls	r0, r2, #14
-	b.n	.L_080cd970	@ 0x080CD970
-	lsls	r1, r0, #19
-	b.n	.L_080cdcb2	@ 0x080CDCB2
-.L_080cd970:
-	lsls	r0, r0, #2
-	b.n	.L_080cdf96	@ 0x080CDF96
-	movs	r1, r0
-	asrs	r0, r0, #10
-	movs	r6, r0
-	b.n	.L_080cd908	@ 0x080CD908
-	movs	r1, r0
+	.short	0x0002
+	.short	0xE354
+	.short	0x7E35
+	.short	0x0280
+	.short	0x7008
+	.short	0x1085
+	.short	0x4008
+	.short	0xE1A0
+	.short	0x00D6
+	.short	0xE195
+	.short	0x10D0
+	.short	0xE1D5
+	.short	0x0001
+	.short	0xE080
+	.short	0x10D6
+	.short	0xE197
+	.short	0x0001
+	.short	0xE080
+	.short	0x10D1
+	.short	0xE0D7
+	.short	0x0001
+	.short	0xE080
+	.short	0x0390
+	.short	0xE001
+	.short	0x04C1
+	.short	0xE1A0
+	.short	0x0080
+	.short	0xE310
+	.short	0x0001
+	.short	0x1280
+	.short	0x0006
+	.short	0xE7C5
+	.short	0x0001
 	.short	0xE4C5
-	ands	r1, r0
-	b.n	.L_080cde2e	@ 0x080CDE2E
+	.short	0x4001
+	.short	0xE254
 	.short	0xFFF0
 	.short	0xCAFF
-	movs	r7, r5
-	b.n	.L_080cdeac	@ 0x080CDEAC
+	.short	0x002F
+	.short	0xE28F
 	.short	0xFF10
 	.short	0xE12F
 .L_080cd990:
-	movs	r0, #0
-	mov	r1, r8
-	adds	r6, r6, r5
-	lsrs	r1, r1, #3
-	bcc.n	.L_080cd99e	@ 0x080CD99E
-	stmia	r5!, {r0}
-	stmia	r6!, {r0}
-.L_080cd99e:
-	lsrs	r1, r1, #1
-	bcc.n	.L_080cd9aa	@ 0x080CD9AA
-	stmia	r5!, {r0}
-	stmia	r6!, {r0}
-	stmia	r5!, {r0}
-	stmia	r6!, {r0}
-.L_080cd9aa:
-	stmia	r5!, {r0}
+	.short	0x2000
+	.short	0x4641
+	.short	0x1976
+	.short	0x08C9
+	.short	0xD301
+	.short	0xC501
+	.short	0xC601
+	.short	0x0849
+	.short	0xD303
+	.short	0xC501
+	.short	0xC601
+	.short	0xC501
+	.short	0xC601
+	.short	0xC501
 .L_080cd9ac:
-	stmia	r6!, {r0}
-	stmia	r5!, {r0}
-	stmia	r6!, {r0}
-	stmia	r5!, {r0}
-	stmia	r6!, {r0}
-	stmia	r5!, {r0}
-	stmia	r6!, {r0}
-	subs	r1, #1
-	bgt.n	.L_080cd9aa	@ 0x080CD9AA
-	ldr	r4, [sp, #24]
-	ldr	r0, [r4, #24]
-	mov	ip, r0
-	ldrb	r0, [r4, #6]
-	adds	r4, #80
-.L_080cd9c8:
-	str	r0, [sp, #4]
-	ldr	r3, [r4, #36]
-	ldr	r0, [sp, #20]
-	cmp	r0, #0
-	beq.n	.L_080cd9e8	@ 0x080CD9E8
-	ldr	r1, [pc, #16]	@ 0x080CD9E4
-	ldrb	r1, [r1, #0]
-	cmp	r1, #160
-	bcs.n	.L_080cd9dc	@ 0x080CD9DC
-	adds	r1, #228
-.L_080cd9dc:
-	cmp	r1, r0
-	bcc.n	.L_080cd9e8	@ 0x080CD9E8
-	b.n	.L_080cdcba	@ 0x080CDCBA
-	movs	r0, r0
-	.word	gUnk_04000006
-.L_080cd9e8:
-	ldrb	r6, [r4, #0]
-	movs	r0, #199
-	tst	r0, r6
-	bne.n	.L_080cd9f2	@ 0x080CD9F2
-	b.n	.L_080cdcb0	@ 0x080CDCB0
-.L_080cd9f2:
-	movs	r0, #128
-	tst	r0, r6
-	beq.n	.L_080cda22	@ 0x080CDA22
-	movs	r0, #64
-	tst	r0, r6
-	bne.n	.L_080cda32	@ 0x080CDA32
-	movs	r6, #3
-	strb	r6, [r4, #0]
-	adds	r0, r3, #0
-	adds	r0, #16
-	str	r0, [r4, #40]
-	ldr	r0, [r3, #12]
-	str	r0, [r4, #24]
-	movs	r5, #0
-	strb	r5, [r4, #9]
-	str	r5, [r4, #28]
-	ldrb	r2, [r3, #3]
-	movs	r0, #192
-	tst	r0, r2
-	beq.n	.L_080cda7a	@ 0x080CDA7A
-	movs	r0, #16
-	orrs	r6, r0
-	strb	r6, [r4, #0]
-	b.n	.L_080cda7a	@ 0x080CDA7A
-.L_080cda22:
-	ldrb	r5, [r4, #9]
-	movs	r0, #4
-	tst	r0, r6
-	beq.n	.L_080cda38	@ 0x080CDA38
-	ldrb	r0, [r4, #13]
-	subs	r0, #1
-	strb	r0, [r4, #13]
-	bhi.n	.L_080cda88	@ 0x080CDA88
-.L_080cda32:
-	movs	r0, #0
-	strb	r0, [r4, #0]
-	b.n	.L_080cdcb0	@ 0x080CDCB0
-.L_080cda38:
-	movs	r0, #64
-	tst	r0, r6
-	beq.n	.L_080cda58	@ 0x080CDA58
-	ldrb	r0, [r4, #7]
-	muls	r5, r0
-	lsrs	r5, r5, #8
-	ldrb	r0, [r4, #12]
-	cmp	r5, r0
-	bhi.n	.L_080cda88	@ 0x080CDA88
-.L_080cda4a:
-	ldrb	r5, [r4, #12]
-	cmp	r5, #0
-	beq.n	.L_080cda32	@ 0x080CDA32
-	movs	r0, #4
-	orrs	r6, r0
-	strb	r6, [r4, #0]
-	b.n	.L_080cda88	@ 0x080CDA88
-.L_080cda58:
-	movs	r2, #3
-.L_080cda5a:
-	ands	r2, r6
-	cmp	r2, #2
-	bne.n	.L_080cda76	@ 0x080CDA76
-	ldrb	r0, [r4, #5]
-.L_080cda62:
-	muls	r5, r0
-	lsrs	r5, r5, #8
-	ldrb	r0, [r4, #6]
-	cmp	r5, r0
-.L_080cda6a:
-	bhi.n	.L_080cda88	@ 0x080CDA88
-	adds	r5, r0, #0
-	beq.n	.L_080cda4a	@ 0x080CDA4A
-	subs	r6, #1
-	strb	r6, [r4, #0]
-	b.n	.L_080cda88	@ 0x080CDA88
-.L_080cda76:
-	cmp	r2, #3
-	bne.n	.L_080cda88	@ 0x080CDA88
-.L_080cda7a:
-	ldrb	r0, [r4, #4]
-	adds	r5, r5, r0
-	cmp	r5, #255
-	bcc.n	.L_080cda88	@ 0x080CDA88
-	movs	r5, #255
-	subs	r6, #1
-	strb	r6, [r4, #0]
-.L_080cda88:
-	strb	r5, [r4, #9]
-	ldr	r0, [sp, #24]
-	ldrb	r0, [r0, #7]
-	adds	r0, #1
-	muls	r0, r5
-	lsrs	r5, r0, #4
-	ldrb	r0, [r4, #2]
-	muls	r0, r5
-	lsrs	r0, r0, #8
-	strb	r0, [r4, #10]
-	ldrb	r0, [r4, #3]
-	muls	r0, r5
-	lsrs	r0, r0, #8
-	strb	r0, [r4, #11]
-	movs	r0, #16
-	ands	r0, r6
-	str	r0, [sp, #16]
-	beq.n	.L_080cdabc	@ 0x080CDABC
-	adds	r0, r3, #0
-	adds	r0, #16
-	ldr	r1, [r3, #8]
-	adds	r0, r0, r1
-	str	r0, [sp, #12]
-	ldr	r0, [r3, #12]
-	subs	r0, r0, r1
-	str	r0, [sp, #16]
-.L_080cdabc:
-	ldr	r5, [sp, #8]
-	ldr	r2, [r4, #24]
-	ldr	r3, [r4, #40]
+	.short	0xC601
+	.short	0xC501
+	.short	0xC601
+	.short	0xC501
+	.short	0xC601
+	.short	0xC501
+	.short	0xC601
+	.short	0x3901
+	.short	0xDCF5
+	.short	0x9C06
+	.short	0x69A0
+	.short	0x4684
+	.short	0x79A0
+	.short	0x3450
+	.short	0x9001
+	.short	0x6A63
+	.short	0x9805
+	.short	0x2800
+	.short	0xD00A
+	.short	0x4904
+	.short	0x7809
+	.short	0x29A0
+	.short	0xD200
+	.short	0x31E4
+	.short	0x4281
+	.short	0xD303
+	.short	0xE16B
+	.short	0x0000
+	.short	0x0006
+	.short	0x0400
+	.short	0x7826
+	.short	0x20C7
+	.short	0x4230
+	.short	0xD100
+	.short	0xE15E
+	.short	0x2080
+	.short	0x4230
+	.short	0xD014
+	.short	0x2040
+	.short	0x4230
+	.short	0xD119
+	.short	0x2603
+	.short	0x7026
+	.short	0x1C18
+	.short	0x3010
+	.short	0x62A0
+	.short	0x68D8
+	.short	0x61A0
+	.short	0x2500
+	.short	0x7265
+	.short	0x61E5
+	.short	0x78DA
+	.short	0x20C0
+	.short	0x4210
+	.short	0xD02F
+	.short	0x2010
+	.short	0x4306
+	.short	0x7026
+	.short	0xE02B
+	.short	0x7A65
+	.short	0x2004
+	.short	0x4230
+	.short	0xD006
+	.short	0x7B60
+	.short	0x3801
+	.short	0x7360
+	.short	0xD82A
+	.short	0x2000
+	.short	0x7020
+	.short	0xE13B
+	.short	0x2040
+	.short	0x4230
+	.short	0xD00C
+	.short	0x79E0
+	.short	0x4345
+	.short	0x0A2D
+	.short	0x7B20
+	.short	0x4285
+	.short	0xD81E
+	.short	0x7B25
+	.short	0x2D00
+	.short	0xD0F0
+	.short	0x2004
+	.short	0x4306
+	.short	0x7026
+	.short	0xE017
+	.short	0x2203
+	.short	0x4032
+	.short	0x2A02
+	.short	0xD10A
+	.short	0x7960
+	.short	0x4345
+	.short	0x0A2D
+	.short	0x79A0
+	.short	0x4285
+	.short	0xD80D
+	.short	0x1C05
+	.short	0xD0EC
+	.short	0x3E01
+	.short	0x7026
+	.short	0xE008
+	.short	0x2A03
+	.short	0xD106
+	.short	0x7920
+	.short	0x182D
+	.short	0x2DFF
+	.short	0xD302
+	.short	0x25FF
+	.short	0x3E01
+	.short	0x7026
+	.short	0x7265
+	.short	0x9806
+	.short	0x79C0
+	.short	0x3001
+	.short	0x4368
+	.short	0x0905
+	.short	0x78A0
+	.short	0x4368
+	.short	0x0A00
+	.short	0x72A0
+	.short	0x78E0
+	.short	0x4368
+	.short	0x0A00
+	.short	0x72E0
+	.short	0x2010
+	.short	0x4030
+	.short	0x9004
+	.short	0xD007
+	.short	0x1C18
+	.short	0x3010
+	.short	0x6899
+	.short	0x1840
+	.short	0x9003
+	.short	0x68D8
+	.short	0x1A40
+	.short	0x9004
+	.short	0x9D02
+	.short	0x69A2
+	.short	0x6AA3
 	.short	0xA001
-	bx	r0
-	movs	r0, r0
-	strh	r0, [r0, #0]
+	.short	0x4700
+	.short	0x0000
+	.short	0x8000
 	.short	0xE58D
 	.short	0xA00A
 	.short	0xE5D4
-	add	sp, #44
+	.short	0xB00B
 	.short	0xE5D4
-	add	r0, sp, #40
-	b.n	.L_080cde1a	@ 0x080CDE1A
+	.short	0xA80A
+	.short	0xE1A0
 	.short	0xB80B
-	b.n	.L_080cde1e	@ 0x080CDE1E
-	movs	r1, r0
+	.short	0xE1A0
+	.short	0x0001
 	.short	0xE5D4
-	movs	r0, r1
-	b.n	.L_080ce106	@ 0x080CE106
-	lsls	r7, r0, #1
-	lsrs	r0, r0, #8
-	movs	r4, r0
-	b.n	.L_080ce192	@ 0x080CE192
-	movs	r1, r3
-	bge.n	.L_080cdaf2	@ 0x080CDAF2
-	movs	r0, #8
-.L_080cdaf2:
-	b.n	.L_080cdb9a	@ 0x080CDB9A
-	b.n	.L_080cdaf8	@ 0x080CDAF8
-	stmia	r3!, {r5, r7}
-.L_080cdaf8:
-	movs	r5, r0
+	.short	0x0008
+	.short	0xE310
+	.short	0x0047
+	.short	0x0A00
+	.short	0x0004
+	.short	0xE352
+	.short	0x0019
+	.short	0xDA00
+	.short	0x2008
+	.short	0xE052
+	.short	0xE000
+	.short	0xC3A0
+	.short	0x0005
 	.short	0xCA00
-	b.n	.L_080cdb10	@ 0x080CDB10
-	b.n	.L_080cde42	@ 0x080CDE42
-	movs	r0, #8
-	b.n	.L_080cdc0a	@ 0x080CDC0A
-	strh	r4, [r0, #0]
-	b.n	.L_080cdf8e	@ 0x080CDF8E
-	b.n	.L_080cdb1c	@ 0x080CDB1C
-	b.n	.L_080cdbaa	@ 0x080CDBAA
+	.short	0xE008
+	.short	0xE1A0
+	.short	0x2008
+	.short	0xE082
+	.short	0x8004
+	.short	0xE242
+	.short	0xE008
+	.short	0xE04E
 .L_080cdb0c:
-	movs	r0, #3
-	b.n	.L_080cdf36	@ 0x080CDF36
-.L_080cdb10:
-	movs	r0, #4
-	lsls	r0, r4, #14
-.L_080cdb14:
-	str	r0, [r0, #0]
+	.short	0x2003
+	.short	0xE212
+	.short	0x2004
+	.short	0x03A0
+	.short	0x6000
 	.short	0xE595
-	strb	r0, [r6, #24]
+	.short	0x7630
 	.short	0xE595
-.L_080cdb1c:
-	lsls	r1, r2, #3
-	b.n	.L_080cdcc8	@ 0x080CDCC8
-	lsls	r2, r3, #2
-	b.n	.L_080cdb28	@ 0x080CDB28
-	adds	r7, r7, r3
-	b.n	.L_080ce2ac	@ 0x080CE2AC
-.L_080cdb28:
-	str	r6, [r4, #68]
-	b.n	.L_080cdc30	@ 0x080CDC30
-	lsls	r3, r3, #2
-	b.n	.L_080cdb34	@ 0x080CDB34
-	adds	r7, r7, r3
-	b.n	.L_080ce2b8	@ 0x080CE2B8
-.L_080cdb34:
-	strb	r7, [r4, #17]
-	b.n	.L_080cdc3c	@ 0x080CDC3C
-	str	r1, [r0, r4]
-	b.n	.L_080ce068	@ 0x080CE068
+	.short	0x00D1
+	.short	0xE0D3
+	.short	0x009A
+	.short	0xE001
+	.short	0x18FF
+	.short	0xE3C1
+	.short	0x6466
+	.short	0xE081
+	.short	0x009B
+	.short	0xE001
+	.short	0x18FF
+	.short	0xE3C1
+	.short	0x7467
+	.short	0xE081
+	.short	0x5101
+	.short	0xE295
 	.short	0xFFF6
 	.short	0x3AFF
-	strb	r0, [r6, #24]
+	.short	0x7630
 	.short	0xE585
-	str	r4, [r0, #0]
+	.short	0x6004
 	.short	0xE485
-	strh	r4, [r0, #0]
-	b.n	.L_080cdffe	@ 0x080CDFFE
+	.short	0x8004
+	.short	0xE258
 	.short	0xFFF0
 	.short	0xCAFF
-	strh	r6, [r1, #0]
-	b.n	.L_080cdc86	@ 0x080CDC86
-	lsls	r0, r2, #1
-	lsrs	r0, r0, #8
-	str	r0, [r0, #0]
+	.short	0x800E
+	.short	0xE098
+	.short	0x0050
+	.short	0x0A00
+	.short	0x6000
 	.short	0xE595
-	strb	r0, [r6, #24]
+	.short	0x7630
 	.short	0xE595
-	lsls	r1, r2, #3
-	b.n	ply_fine	@ 0x080CDD0C
-	lsls	r2, r3, #2
-	b.n	.L_080cdb6c	@ 0x080CDB6C
-	adds	r7, r7, r3
-	b.n	.L_080ce2f0	@ 0x080CE2F0
-.L_080cdb6c:
-	str	r6, [r4, #68]
-	b.n	.L_080cdc74	@ 0x080CDC74
-	lsls	r3, r3, #2
-	b.n	.L_080cdb78	@ 0x080CDB78
-	adds	r7, r7, r3
-	b.n	.L_080ce2fc	@ 0x080CE2FC
-.L_080cdb78:
-	strb	r7, [r4, #17]
-	b.n	.L_080cdc80	@ 0x080CDC80
-	movs	r0, #1
-	b.n	.L_080ce026	@ 0x080CE026
-	movs	r2, r2
-	lsrs	r0, r0, #8
-	str	r1, [r0, r4]
-	b.n	.L_080ce0b4	@ 0x080CE0B4
+	.short	0x00D1
+	.short	0xE0D3
+	.short	0x009A
+	.short	0xE001
+	.short	0x18FF
+	.short	0xE3C1
+	.short	0x6466
+	.short	0xE081
+	.short	0x009B
+	.short	0xE001
+	.short	0x18FF
+	.short	0xE3C1
+	.short	0x7467
+	.short	0xE081
+	.short	0x2001
+	.short	0xE252
+	.short	0x0012
+	.short	0x0A00
+	.short	0x5101
+	.short	0xE295
 	.short	0xFFF4
 	.short	0x3AFF
-	strb	r0, [r6, #24]
+	.short	0x7630
 	.short	0xE585
-	str	r4, [r0, #0]
+	.short	0x6004
 	.short	0xE485
-	strh	r4, [r0, #0]
-	b.n	.L_080ce04a	@ 0x080CE04A
+	.short	0x8004
+	.short	0xE258
 	.short	0xFFD2
-.L_080cdb9a:
 	.short	0xCAFF
-	movs	r6, r7
+	.short	0x003E
 	.short	0xEA00
 	.short	0x0018
 	.short	0xE59D
-	movs	r0, r0
-	b.n	.L_080ce24a	@ 0x080CE24A
-	movs	r5, r0
-.L_080cdbaa:
-	lsrs	r0, r0, #8
-	adds	r0, #20
+	.short	0x0000
+	.short	0xE350
+	.short	0x0005
+	.short	0x0A00
+	.short	0x3014
 	.short	0xE59D
-	str	r0, [sp, #0]
-	b.n	.L_080ce07a	@ 0x080CE07A
-	movs	r0, #2
-	b.n	.L_080cdcda	@ 0x080CDCDA
-	movs	r3, r5
+	.short	0x9000
+	.short	0xE262
+	.short	0x2002
+	.short	0xE090
+	.short	0x002B
 	.short	0xCA00
-	str	r0, [sp, #0]
-	b.n	.L_080cdc54	@ 0x080CDC54
+	.short	0x9000
+	.short	0xE049
 	.short	0xFFFB
 	.short	0xEAFF
-	asrs	r0, r2, #32
+	.short	0x1010
 	.short	0xE8BD
 	.short	0x2000
-	b.n	.L_080ce30e	@ 0x080CE30E
-	movs	r3, r0
+	.short	0xE3A0
+	.short	0x0003
 	.short	0xEA00
 	.short	0x2010
 	.short	0xE59D
-	movs	r0, r0
-	b.n	.L_080ce27e	@ 0x080CE27E
-	adds	r0, #12
-	asrs	r5, r3, #22
+	.short	0x0000
+	.short	0xE352
+	.short	0x300C
+	.short	0x159D
 	.short	0xFFE8
 	.short	0x1AFF
-	movs	r0, #0
+	.short	0x2000
 	.short	0xE5C4
-	lsrs	r5, r4, #28
-	b.n	.L_080cdf2a	@ 0x080CDF2A
-	str	r3, [r0, r4]
-	b.n	.L_080ce378	@ 0x080CE378
-	movs	r3, r0
-	b.n	.L_080ce0b2	@ 0x080CE0B2
-.L_080cdbf0:
-	lsls	r0, r0, #6
-	b.n	.L_080cdf36	@ 0x080CDF36
-	str	r6, [r6, #4]
-	b.n	.L_080cdf3a	@ 0x080CDF3A
-	strb	r7, [r6, #1]
-	b.n	.L_080cdf3e	@ 0x080CDF3E
-	strb	r0, [r6, #24]
-	b.n	CreditsInitText	@ 0x080CD70C
-	str	r4, [r0, #0]
+	.short	0x0F25
+	.short	0xE1A0
+	.short	0x5103
+	.short	0xE3C5
+	.short	0x0003
+	.short	0xE260
+	.short	0x0180
+	.short	0xE1A0
+	.short	0x6076
+	.short	0xE1A0
+	.short	0x7077
+	.short	0xE1A0
+	.short	0x7630
+	.short	0xE585
+	.short	0x6004
 	.short	0xE485
-	movs	r6, r4
+	.short	0x0026
 	.short	0xEA00
 	.short	0x1010
-.L_080cdc0a:
 	.short	0xE92D
 	.short	0xE01C
 	.short	0xE594
-	asrs	r0, r4, #32
+	.short	0x1020
 	.short	0xE594
-	lsls	r4, r3, #6
-	b.n	.L_080cdc22	@ 0x080CDC22
-	lsls	r0, r2, #3
-	b.n	.L_080cdfc4	@ 0x080CDFC4
-	asrs	r1, r2, #3
-	b.n	.L_080ce008	@ 0x080CE008
-	asrs	r0, r0, #32
-.L_080cdc22:
-	b.n	.L_080cdca8	@ 0x080CDCA8
-	str	r0, [r0, #0]
+	.short	0x019C
+	.short	0xE004
+	.short	0x00D0
+	.short	0xE1D3
+	.short	0x10D1
+	.short	0xE1F3
+	.short	0x1000
+	.short	0xE041
+	.short	0x6000
 	.short	0xE595
-	strb	r0, [r6, #24]
+	.short	0x7630
 	.short	0xE595
-	lsls	r6, r3, #6
-	b.n	.L_080cdc44	@ 0x080CDC44
-.L_080cdc30:
-	ldr	r3, [sp, #804]
-	b.n	.L_080cdd36	@ 0x080CDD36
-	lsrs	r2, r3, #6
-	b.n	.L_080cdc52	@ 0x080CDC52
-	ldmia	r0, {r0, r1, r2, r3, r4, r5, r6, r7}
-	b.n	.L_080ce3d6	@ 0x080CE3D6
-.L_080cdc3c:
-	str	r6, [r4, #68]
-	b.n	.L_080cdd5a	@ 0x080CDD5A
-	lsrs	r3, r3, #6
-	b.n	.L_080cdc5e	@ 0x080CDC5E
-.L_080cdc44:
-	ldmia	r0, {r0, r1, r2, r3, r4, r5, r6, r7}
-	b.n	.L_080ce3e2	@ 0x080CE3E2
-.L_080cdc48:
-	strb	r7, [r4, #17]
-	b.n	.L_080cdd66	@ 0x080CDD66
-	b.n	.L_080cdc58	@ 0x080CDC58
-	b.n	.L_080cdd6e	@ 0x080CDD6E
-	ldr	r3, [sp, #696]
-.L_080cdc52:
-	b.n	.L_080cdfb6	@ 0x080CDFB6
-.L_080cdc54:
-	movs	r7, r0
-	lsrs	r0, r0, #8
-.L_080cdc58:
+	.short	0x019E
+	.short	0xE009
+	.short	0x9BC9
+	.short	0xE080
+	.short	0x099A
+	.short	0xE00C
+	.short	0xC8FF
+	.short	0xE3CC
+	.short	0x6466
+	.short	0xE08C
+	.short	0x099B
+	.short	0xE00C
+	.short	0xC8FF
+	.short	0xE3CC
+	.short	0x7467
+	.short	0xE08C
+	.short	0xE004
+	.short	0xE08E
+	.short	0x9BAE
+	.short	0xE1B0
+	.short	0x0007
+	.short	0x0A00
 	.short	0xE5FE
-	b.n	.L_080ce3fa	@ 0x080CE3FA
-	movs	r0, #9
-.L_080cdc5e:
-	b.n	.L_080cdd06	@ 0x080CDD06
+	.short	0xE3CE
+	.short	0x2009
+	.short	0xE052
 	.short	0xFFCE
 	.short	0xDAFF
-.L_080cdc64:
-	str	r0, [sp, #4]
-	b.n	.L_080ce11c	@ 0x080CE11C
-	movs	r1, r0
-	lsls	r0, r0, #2
-	lsls	r1, r3, #3
-	asrs	r3, r6, #6
-	asrs	r1, r2, #3
-	b.n	.L_080ce05c	@ 0x080CE05C
-.L_080cdc74:
-	asrs	r0, r0, #32
-	b.n	.L_080cdcfc	@ 0x080CDCFC
-	str	r1, [r0, r4]
-	b.n	.L_080ce1a8	@ 0x080CE1A8
-.L_080cdc7c:
+	.short	0x9001
+	.short	0xE259
+	.short	0x0001
+	.short	0x0080
+	.short	0x00D9
+	.short	0x11B3
+	.short	0x10D1
+	.short	0xE1F3
+	.short	0x1000
+	.short	0xE041
+	.short	0x5101
+	.short	0xE295
 	.short	0xFFEA
 	.short	0x3AFF
-.L_080cdc80:
-	strb	r0, [r6, #24]
+	.short	0x7630
 	.short	0xE585
-	str	r4, [r0, #0]
-.L_080cdc86:
+	.short	0x6004
 	.short	0xE485
-	strh	r4, [r0, #0]
-	b.n	.L_080ce13e	@ 0x080CE13E
-.L_080cdc8c:
+	.short	0x8004
+	.short	0xE258
 	.short	0xFFE4
-.L_080cdc8e:
 	.short	0xCAFF
-	adds	r0, #1
-	b.n	.L_080ce11c	@ 0x080CE11C
-	asrs	r0, r2, #32
+	.short	0x3001
+	.short	0xE243
+	.short	0x1010
 	.short	0xE8BD
 	.short	0xE01C
 	.short	0xE584
-	movs	r0, #24
+	.short	0x2018
 	.short	0xE584
-	adds	r0, #40
+	.short	0x3028
 	.short	0xE584
-	strh	r0, [r0, #0]
+	.short	0x8000
 	.short	0xE59D
-.L_080cdca8:
-	movs	r1, r0
-	b.n	.L_080ce1cc	@ 0x080CE1CC
+	.short	0x0001
+	.short	0xE28F
 	.short	0xFF10
 	.short	0xE12F
-.L_080cdcb0:
-	ldr	r0, [sp, #4]
-.L_080cdcb2:
-	subs	r0, #1
-	ble.n	.L_080cdcba	@ 0x080CDCBA
-	adds	r4, #64
-	b.n	.L_080cd9c8	@ 0x080CD9C8
-.L_080cdcba:
-	ldr	r0, [sp, #24]
-	ldr	r3, [pc, #16]	@ 0x080CDCD0
-	str	r3, [r0, #0]
-	add	sp, #28
-	pop	{r0, r1, r2, r3, r4, r5, r6, r7}
-	mov	r8, r0
-	mov	r9, r1
-.L_080cdcc8:
-	mov	sl, r2
-	mov	fp, r3
-	pop	{r3}
+	.short	0x9801
+	.short	0x3801
+	.short	0xDD01
+	.short	0x3440
+	.short	0xE686
+	.short	0x9806
+	.short	0x4B04
+	.short	0x6003
+	.short	0xB007
+	.short	0xBCFF
+	.short	0x4680
+	.short	0x4689
+	.short	0x4692
+	.short	0x469B
+	.short	0xBC08
 	.thumb_func
 	.global	sub_080cdcce
 sub_080cdcce:
 	.thumb
 	bx	r3
-	.word	0x68736D53
+	ldr	r3, [r2, #84]
+	ldr	r3, [r6, #4]
 	.thumb_func
 	.global	SoundMainBTM
 SoundMainBTM:
@@ -662,7 +610,6 @@ SoundMainBTM:
 	mov	ip, r4
 	movs	r1, #0
 	movs	r2, #0
-.L_080cdcda:
 	movs	r3, #0
 	movs	r4, #0
 	stmia	r0!, {r1, r2, r3, r4}
@@ -684,7 +631,6 @@ RealClearChain:
 	cmp	r2, #0
 	beq.n	.L_080cdcfe	@ 0x080CDCFE
 	str	r1, [r2, #52]
-.L_080cdcfc:
 	b.n	.L_080cdd00	@ 0x080CDD00
 .L_080cdcfe:
 	str	r1, [r3, #32]
@@ -724,7 +670,6 @@ ply_fine:
 	movs	r0, #0
 	strb	r0, [r5, #0]
 	pop	{r4, r5}
-.L_080cdd36:
 	pop	{r0}
 	bx	r0
 	movs	r0, r0
@@ -755,7 +700,6 @@ chk_adr_r2:
 	.thumb
 	push	{r0}
 	lsrs	r0, r2, #25
-.L_080cdd5a:
 	bne.n	.L_080cdd68	@ 0x080CDD68
 	ldr	r0, [pc, #12]	@ 0x080CDD6C
 	cmp	r2, r0
@@ -767,9 +711,7 @@ chk_adr_r2:
 .L_080cdd68:
 	pop	{r0}
 	bx	lr
-	.short	0xA140
-.L_080cdd6e:
-	lsrs	r0, r4, #1
+	.word	gMPlayJumpTableTemplate
 	.thumb_func
 	.global	ld_r3_tp_adr_i
 ld_r3_tp_adr_i:
@@ -889,14 +831,12 @@ ply_tempo:
 	muls	r3, r2
 	lsrs	r3, r3, #8
 	strh	r3, [r0, #32]
-.L_080cde1a:
 	bx	ip
 	.thumb_func
 	.global	ply_keysh
 ply_keysh:
 	.thumb
 	mov	ip, lr
-.L_080cde1e:
 	bl	ld_r3_tp_adr_i	@ 0x080CDD70
 	strb	r3, [r1, #10]
 	ldrb	r3, [r1, #0]
@@ -904,7 +844,6 @@ ply_keysh:
 	orrs	r3, r2
 	strb	r3, [r1, #0]
 	bx	ip
-.L_080cde2e:
 	movs	r0, r0
 	.thumb_func
 	.global	ply_voice
@@ -919,7 +858,6 @@ ply_voice:
 	adds	r2, r2, r3
 	lsls	r2, r2, #2
 	ldr	r3, [r0, #48]
-.L_080cde42:
 	adds	r2, r2, r3
 	ldr	r3, [r2, #0]
 	bl	chk_adr_r2	@ 0x080CDD56
@@ -982,7 +920,6 @@ ply_bendr:
 	movs	r2, #12
 	orrs	r3, r2
 	strb	r3, [r1, #0]
-.L_080cdeac:
 	bx	ip
 	movs	r0, r0
 	.thumb_func
@@ -1049,7 +986,6 @@ m4aSoundVSync:
 	cmp	r3, #1
 	bhi.n	.L_080cdf40	@ 0x080CDF40
 	ldrb	r1, [r0, #4]
-.L_080cdf10:
 	subs	r1, #1
 	strb	r1, [r0, #4]
 	bgt.n	.L_080cdf40	@ 0x080CDF40
@@ -1064,7 +1000,6 @@ m4aSoundVSync:
 .L_080cdf26:
 	ldr	r1, [r2, #20]
 	lsls	r1, r1, #7
-.L_080cdf2a:
 	bcc.n	.L_080cdf30	@ 0x080CDF30
 	ldr	r1, [pc, #24]	@ 0x080CDF48
 	str	r1, [r2, #20]
@@ -1072,13 +1007,10 @@ m4aSoundVSync:
 	movs	r1, #4
 	lsls	r1, r1, #8
 	strh	r1, [r2, #10]
-.L_080cdf36:
 	strh	r1, [r2, #22]
 	movs	r1, #182
-.L_080cdf3a:
 	lsls	r1, r1, #8
 	strh	r1, [r2, #10]
-.L_080cdf3e:
 	strh	r1, [r2, #22]
 .L_080cdf40:
 	bx	lr
@@ -1123,13 +1055,11 @@ MPlayMain:
 	adds	r0, r7, #0
 	bl	FadeOutBody	@ 0x080CEE38
 	ldr	r0, [r7, #4]
-.L_080cdf8e:
 	cmp	r0, #0
 	bge.n	.L_080cdf94	@ 0x080CDF94
 	b.n	.L_080ce194	@ 0x080CE194
 .L_080cdf94:
 	ldrh	r0, [r7, #34]
-.L_080cdf96:
 	ldrh	r1, [r7, #32]
 	adds	r0, r0, r1
 	b.n	.L_080ce0e4	@ 0x080CE0E4
@@ -1149,7 +1079,6 @@ MPlayMain:
 	orrs	r4, r3
 	mov	fp, r4
 	ldr	r4, [r5, #32]
-.L_080cdfb6:
 	cmp	r4, #0
 	beq.n	.L_080cdfe2	@ 0x080CDFE2
 .L_080cdfba:
@@ -1158,7 +1087,6 @@ MPlayMain:
 	tst	r0, r1
 	beq.n	.L_080cdfd6	@ 0x080CDFD6
 	ldrb	r0, [r4, #16]
-.L_080cdfc4:
 	cmp	r0, #0
 	beq.n	.L_080cdfdc	@ 0x080CDFDC
 	subs	r0, #1
@@ -1180,7 +1108,6 @@ MPlayMain:
 	movs	r0, #64
 	tst	r0, r3
 	beq.n	.L_080ce060	@ 0x080CE060
-.L_080cdfea:
 	adds	r0, r5, #0
 	bl	Clear64byte	@ 0x080CE948
 	movs	r0, #128
@@ -1190,7 +1117,6 @@ MPlayMain:
 	movs	r0, #64
 	strb	r0, [r5, #19]
 	movs	r0, #22
-.L_080cdffe:
 	strb	r0, [r5, #25]
 	movs	r0, #1
 	adds	r1, r5, #6
@@ -1214,7 +1140,6 @@ MPlayMain:
 	bcc.n	.L_080ce034	@ 0x080CE034
 	mov	r0, r8
 	ldr	r3, [r0, #56]
-.L_080ce026:
 	adds	r0, r1, #0
 	subs	r0, #207
 	adds	r1, r7, #0
@@ -1233,7 +1158,6 @@ MPlayMain:
 	ldr	r3, [r3, r0]
 	adds	r0, r7, #0
 	adds	r1, r5, #0
-.L_080ce04a:
 	bl	sub_080ce1a4	@ 0x080CE1A4
 	ldrb	r0, [r5, #0]
 	cmp	r0, #0
@@ -1243,7 +1167,6 @@ MPlayMain:
 	ldr	r0, [pc, #336]	@ 0x080CE1A8
 	subs	r1, #128
 	adds	r1, r1, r0
-.L_080ce05c:
 	ldrb	r0, [r1, #0]
 	strb	r0, [r5, #1]
 .L_080ce060:
@@ -1251,7 +1174,6 @@ MPlayMain:
 	cmp	r0, #0
 	beq.n	.L_080ce008	@ 0x080CE008
 	subs	r0, #1
-.L_080ce068:
 	strb	r0, [r5, #1]
 	ldrb	r1, [r5, #25]
 	cmp	r1, #0
@@ -1261,7 +1183,6 @@ MPlayMain:
 	beq.n	.L_080ce0bc	@ 0x080CE0BC
 	ldrb	r0, [r5, #28]
 	cmp	r0, #0
-.L_080ce07a:
 	beq.n	.L_080ce082	@ 0x080CE082
 	subs	r0, #1
 	strb	r0, [r5, #28]
@@ -1293,9 +1214,7 @@ MPlayMain:
 	ldrb	r1, [r5, #24]
 	cmp	r1, #0
 	bne.n	.L_080ce0b6	@ 0x080CE0B6
-.L_080ce0b2:
 	movs	r1, #12
-.L_080ce0b4:
 	b.n	.L_080ce0b8	@ 0x080CE0B8
 .L_080ce0b6:
 	movs	r1, #3
@@ -1345,9 +1264,7 @@ MPlayMain:
 	mov	r9, r2
 	adds	r0, r7, #0
 	adds	r1, r5, #0
-	.short	0xF000
-.L_080ce106:
-	.short	0xFEFC
+	bl	TrkVolPitSet	@ 0x080CEF00
 	ldr	r4, [r5, #32]
 	cmp	r4, #0
 	beq.n	.L_080ce180	@ 0x080CE180
@@ -1358,7 +1275,6 @@ MPlayMain:
 	bne.n	.L_080ce11e	@ 0x080CE11E
 	adds	r0, r4, #0
 	bl	ClearChain	@ 0x080CE934
-.L_080ce11c:
 	b.n	.L_080ce17a	@ 0x080CE17A
 .L_080ce11e:
 	ldrb	r0, [r4, #1]
@@ -1377,7 +1293,6 @@ MPlayMain:
 	strb	r0, [r4, #29]
 .L_080ce13c:
 	ldrb	r3, [r5, #0]
-.L_080ce13e:
 	movs	r0, #12
 	tst	r0, r3
 	beq.n	.L_080ce17a	@ 0x080CE17A
@@ -1423,7 +1338,6 @@ MPlayMain:
 	ble.n	.L_080ce194	@ 0x080CE194
 	movs	r0, #80
 	adds	r5, r5, r0
-.L_080ce192:
 	bgt.n	.L_080ce0f0	@ 0x080CE0F0
 .L_080ce194:
 	ldr	r0, [pc, #24]	@ 0x080CE1B0
@@ -1440,8 +1354,7 @@ sub_080ce1a4:
 	.thumb
 	bx	r3
 	movs	r0, r0
-.L_080ce1a8:
-	.word	0x0860A3B4
+	.word	gClockTable
 	.word	SOUND_INFO_PTR
 	.word	0x68736D53
 	.thumb_func
@@ -1461,7 +1374,6 @@ TrackStop:
 .L_080ce1c8:
 	ldrb	r0, [r4, #0]
 	cmp	r0, #0
-.L_080ce1cc:
 	beq.n	.L_080ce1e2	@ 0x080CE1E2
 	ldrb	r0, [r4, #1]
 	movs	r3, #7
@@ -1537,7 +1449,6 @@ ply_note:
 	ldrb	r0, [r0, #0]
 	strb	r0, [r5, #4]
 	ldr	r3, [r5, #64]
-.L_080ce24a:
 	ldrb	r0, [r3, #0]
 	cmp	r0, #128
 	bcs.n	.L_080ce26e	@ 0x080CE26E
@@ -1566,7 +1477,6 @@ ply_note:
 	movs	r0, #192
 	tst	r0, r2
 	beq.n	.L_080ce2c0	@ 0x080CE2C0
-.L_080ce27e:
 	ldrb	r3, [r5, #5]
 	movs	r0, #64
 	tst	r0, r2
@@ -1593,14 +1503,12 @@ ply_note:
 .L_080ce2a8:
 	movs	r0, #128
 	tst	r0, r2
-.L_080ce2ac:
 	beq.n	.L_080ce2c4	@ 0x080CE2C4
 	ldrb	r1, [r6, #3]
 	movs	r0, #128
 	tst	r0, r1
 	beq.n	.L_080ce2bc	@ 0x080CE2BC
 	subs	r1, #192
-.L_080ce2b8:
 	lsls	r1, r1, #1
 	str	r1, [sp, #20]
 .L_080ce2bc:
@@ -1634,14 +1542,12 @@ ply_note:
 .L_080ce2ec:
 	subs	r6, #1
 	lsls	r0, r6, #6
-.L_080ce2f0:
 	adds	r4, r4, r0
 	ldrb	r1, [r4, #0]
 	movs	r0, #199
 	tst	r0, r1
 	beq.n	.L_080ce368	@ 0x080CE368
 	movs	r0, #64
-.L_080ce2fc:
 	tst	r0, r1
 	bne.n	.L_080ce368	@ 0x080CE368
 	ldrb	r1, [r4, #19]
@@ -1652,7 +1558,6 @@ ply_note:
 	b.n	.L_080ce40e	@ 0x080CE40E
 .L_080ce30c:
 	ldr	r0, [r4, #44]
-.L_080ce30e:
 	cmp	r0, r5
 	bcs.n	.L_080ce368	@ 0x080CE368
 	b.n	.L_080ce40e	@ 0x080CE40E
@@ -1714,7 +1619,6 @@ ply_note:
 	ldr	r3, [r5, #32]
 	str	r3, [r4, #52]
 	cmp	r3, #0
-.L_080ce378:
 	beq.n	.L_080ce37c	@ 0x080CE37C
 	str	r4, [r3, #48]
 .L_080ce37c:
@@ -1762,7 +1666,6 @@ ply_note:
 	ldrb	r0, [r6, #2]
 	strb	r0, [r4, #30]
 	ldrb	r1, [r6, #3]
-.L_080ce3d6:
 	movs	r0, #128
 	tst	r0, r1
 	bne.n	.L_080ce3e2	@ 0x080CE3E2
@@ -1783,7 +1686,6 @@ ply_note:
 .L_080ce3f6:
 	ldrb	r2, [r5, #9]
 	adds	r1, r3, #0
-.L_080ce3fa:
 	adds	r0, r7, #0
 	bl	MidiKeyToFreq	@ 0x080CE4B8
 .L_080ce400:
@@ -1805,7 +1707,7 @@ ply_note:
 	bx	r0
 	movs	r0, r0
 	.word	SOUND_INFO_PTR
-	.word	0x0860A3B4
+	.word	gClockTable
 	.thumb_func
 	.global	ply_endtie
 ply_endtie:

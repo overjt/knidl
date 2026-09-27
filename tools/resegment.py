@@ -31,6 +31,9 @@ import os
 import re
 import sys
 
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import ldblocks  # noqa: E402  (tools/ldblocks.py: linker.ld section blocks)
+
 SEGMENTS = 'docs/analysis/segments.txt'
 CONFIG = 'tools/split_config.json'
 LINKER = 'linker.ld'
@@ -109,18 +112,14 @@ def main():
     old_ld = open(LINKER).read()
     spans = []
     for n in old_names:
-        m = re.search(r'(?:[ \t]*/\*[^\n]*\*/[ \t]*\n)?[ \t]*\.%s[ \t]+0x[0-9A-Fa-f]+'
-                      r'[ \t]*:[ \t]*\{[^}]*\}[ \t]*>[ \t]*ROM' % re.escape(n), old_ld)
+        m = ldblocks.block_re(n, comment=True).search(old_ld)
         if not m:
             die('linker.ld section .%s not found' % n)
         spans.append((m.start(), m.end()))
     for (a0, a1), (b0, _b1) in zip(spans, spans[1:]):
         if old_ld[a1:b0].strip():
             die('linker.ld blocks of %s are not consecutive' % old_names)
-    blocks = ['    /* %s */\n'
-              '    .%s 0x%08X : {\n'
-              '        KEEP(*(.%s)) KEEP(*(.%s.tail))\n'
-              '    } > ROM' % (d, n, bounds[i], n, n)
+    blocks = ['    /* %s */\n' % d + ldblocks.data_block(n, bounds[i])
               for i, (_a, n, d) in enumerate(new)]
     new_ld = old_ld[:spans[0][0]] + '\n\n'.join(blocks) + old_ld[spans[-1][1]:]
 

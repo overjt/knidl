@@ -41,6 +41,9 @@ import difflib
 import json
 import re
 import sys
+import os
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import ldblocks  # noqa: E402  (tools/ldblocks.py: linker.ld section blocks)
 
 SEGMENTS = 'docs/analysis/segments.txt'
 CONFIG = 'tools/split_config.json'
@@ -165,29 +168,19 @@ def main():
 
     # ── linker.ld ───────────────────────────────────────────────────────────
     old_ld = open(LINKER).read()
-    block_re = re.compile(
-        r'([ \t]*\.%s[ \t]+0x[0-9A-Fa-f]+[ \t]*:[ \t]*\{[^}]*\}[ \t]*>'
-        r'[ \t]*ROM)' % re.escape(seg['name']))
-    m = block_re.search(old_ld)
+    m = ldblocks.block_re(seg['name']).search(old_ld)
     if not m:
         die('linker.ld section .%s not found' % seg['name'])
     blocks = []
     if pre:
-        blocks.append(
-            '    .%s 0x%08X : {\n'
-            '        KEEP(*(.%s)) KEEP(*(.%s.tail))\n'
-            '    } > ROM' % (seg['name'], pre[0], seg['name'], seg['name']))
+        blocks.append(ldblocks.data_block(seg['name'], pre[0]))
     blocks.append(
-        '    /* %s — decompiled to C (src/%s.c, carved by tools/carve.py) */\n'
-        '    .%s 0x%08X : {\n'
-        '        build/src/%s.o(.text)\n'
-        '    } > ROM' % (name, name, name, start, name))
+        '    /* %s \u2014 decompiled to C (src/%s.c, carved by tools/carve.py) */\n'
+        % (name, name)
+        + ldblocks.block(name, start, 'build/src/%s.o(.text)' % name))
     if post:
-        blocks.append(
-            '    .%s 0x%08X : {\n'
-            '        KEEP(*(.%s)) KEEP(*(.%s.tail))\n'
-            '    } > ROM' % (post_name, post[0], post_name, post_name))
-    new_ld = old_ld[:m.start(1)] + '\n\n'.join(blocks) + old_ld[m.end(1):]
+        blocks.append(ldblocks.data_block(post_name, post[0]))
+    new_ld = old_ld[:m.start()] + '\n\n'.join(blocks) + old_ld[m.end():]
 
     # ── emit ────────────────────────────────────────────────────────────────
     changes = [(SEGMENTS, old_txt, new_txt), (CONFIG, cfg_raw, new_cfg),
