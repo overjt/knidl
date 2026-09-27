@@ -667,8 +667,8 @@ extern u32 ActorReactToDefeat(void);
 extern void ActorDie(void);
 extern void sub_0806b05c(void);
 extern void sub_0806b098(void);
-extern s16 sub_0806caa0(u8 kind, s32 dx, s32 dy);
-extern s16 sub_0806cc90(u8 flag, u16 vx, s32 c, s32 d);
+extern s16 CreateStarFlash(u8 kind, s32 dx, s32 dy);
+extern s16 CreateDustTrail(u8 flag, u16 vx, s32 c, s32 d);
 extern void sub_0806d4e4(u32 a, s32 b);
 extern void sub_0806d730(void);
 extern s32 sub_0806e6f8(s16 x, s16 y);
@@ -1352,7 +1352,7 @@ s32 sub_080b4524();
 s32 sub_080b45c0();
 void sub_080b460c();
 void sub_080b4648();
-void sub_080b469c();
+void Task_AbilityStar();
 void sub_080b4714();
 void sub_080b4754();
 void sub_080b4770();
@@ -1893,7 +1893,7 @@ s32 sub_080a1fc8(void)
         sub_0806619c(13, (u32)sub_080a1f90, (u32)gUnk_082FB230, 16, 2);
     else
         sub_0806619c(13, (u32)sub_080a1f90, (u32)gUnk_082FB210, 16, 0);
-    sub_0806caa0(1, 0, 0);
+    CreateStarFlash(1, 0, 0);
     return 0;
 }
 

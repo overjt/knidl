@@ -115,7 +115,7 @@ extern u32 gUFOLaserFrames[];
 extern u32 gParasolFrames[];
 
 /* Externals */
-extern s16 sub_0806cc90(u8 flag, u16 vx, s32 c, s32 d);
+extern s16 CreateDustTrail(u8 flag, u16 vx, s32 c, s32 d);
 extern s32 RandomRange(s32 a);
 extern s32 PlaySfx(s32 id);
 extern s32 sub_08021a40(s32 x, s32 y);
@@ -1369,7 +1369,7 @@ void sub_0807c2b8(void)
     sub_0807c030();
     while (1)
     {
-        sub_0806cc90(1, 1, 4, 4);
+        CreateDustTrail(1, 1, 4, 4);
         TaskYieldTrampoline(8);
     }
 }

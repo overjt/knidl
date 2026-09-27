@@ -44,7 +44,7 @@ extern u8 gUnk_030023D0;
 extern void CallTableEntry(u32 a, u32 b, u32 *c);
 extern void TaskStopSlot(s32 i);
 extern s32 AddPlayerHealth(s32 a, s32 b);
-extern void sub_08064eb8(u32 a);
+extern void CreateAbilityStar(u32 a);
 extern void SetPlayerAbility(u32 a, s32 b, s32 c);
 extern void StopSfxOnPlayer(s32 a, s32 b);
 extern void sub_0803d1c4(s32 i);
@@ -1151,7 +1151,7 @@ s32 sub_08068a2c(s32 a, s32 b)
     r = AddPlayerHealth(a, gCurTaskIdx);
     if (gCurTask->player->ability != 0)
     {
-        sub_08064eb8(0);
+        CreateAbilityStar(0);
         SetPlayerAbility(0, -1, gCurTask->player->playerIndex);
     }
     t = gCurTask;

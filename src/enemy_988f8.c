@@ -98,8 +98,8 @@ extern s32 ActorReactToHit(void);
 extern void TaskSetMotionXFacing(s32 a, s32 b);
 extern void TaskSleepForever(void);
 extern void PlaySfx(s32 id);
-extern s16 sub_0806caa0(u8 kind, s32 dx, s32 dy);
-extern s16 sub_0806cc90(u8 flag, u16 vx, s32 c, s32 d);
+extern s16 CreateStarFlash(u8 kind, s32 dx, s32 dy);
+extern s16 CreateDustTrail(u8 flag, u16 vx, s32 c, s32 d);
 extern void TaskTurnAround(void);
 extern void sub_0806684c(void);
 extern void sub_080667c0(u8 a, u16 b);
@@ -599,7 +599,7 @@ void sub_080991ac(void)
 
     t = gCurTask;
     t->updateState = 3;
-    gCurTask->unk46 = sub_0806cc90(1, 10, -8, 24);
+    gCurTask->unk46 = CreateDustTrail(1, 10, -8, 24);
     PlaySfx(502);
     v = gCurTask;
     switch (v->unk74)
@@ -676,8 +676,8 @@ void sub_080992ac(void)
     v = gCurTask;
     v->velY = -65536;
     RequestScreenShake(2);
-    gCurTask->unk46 = sub_0806cc90(0, 4, 8, 24);
-    sub_0806caa0(0, 0, 24);
+    gCurTask->unk46 = CreateDustTrail(0, 4, 8, 24);
+    CreateStarFlash(0, 0, 24);
     TaskSetFrame(24);
     TaskSleepForever();
 }
@@ -1026,7 +1026,7 @@ void sub_08099818(void)
     v = gCurTask;
     v->velY = -196608;
     v->accelY = 0x1A00;
-    sub_0806caa0(0, -10, 24);
+    CreateStarFlash(0, -10, 24);
     TaskSetFrame(24);
     TaskSleepForever();
 }
@@ -1046,8 +1046,8 @@ void sub_080998a4(void)
     t->updateState = 14;
     u = gCurTask;
     u->unk30 = 32;
-    sub_0806caa0(1, 0, 0);
-    gCurTask->unk46 = sub_0806cc90(0, 4, 8, 24);
+    CreateStarFlash(1, 0, 0);
+    gCurTask->unk46 = CreateDustTrail(0, 4, 8, 24);
     TaskStop();
     TaskSetMotionXFacing(-32768, 0x5A5A5A5A);
     v = gCurTask;
@@ -1083,7 +1083,7 @@ void sub_08099944(void)
     t->updateState = 15;
     u = gCurTask;
     u->unk30 = zero;
-    sub_0806caa0(1, 0, 0);
+    CreateStarFlash(1, 0, 0);
     TaskStop();
     TaskSetFrame(24);
     TaskYieldTrampoline(170);

@@ -1556,7 +1556,7 @@ s32 sub_08064e90(u32 sub, u32 type, u8 p2, s16 xArg, s16 yArg)
     return sub_08064d9c(sub, type, p2, x, y, 0, 1);
 }
 
-s32 sub_08064eb8(u8 p2)
+s32 CreateAbilityStar(u8 p2)
 {
     struct Task *t;
     struct Actor *a;

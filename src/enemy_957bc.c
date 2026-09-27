@@ -102,7 +102,7 @@ extern void ActorFaceHitter(void);
 extern void ActorDie(void);
 extern u8 sub_0806acf8(void);
 extern void sub_0806ad18(void);
-extern s16 sub_0806cc90(u8 flag, u16 vx, s32 c, s32 d);
+extern s16 CreateDustTrail(u8 flag, u16 vx, s32 c, s32 d);
 extern void TaskYieldTrampoline(u32 frames);
 
 /* Defined below */
@@ -435,13 +435,13 @@ void sub_08095d40(void)
     TaskSetFrame(11);
     TaskYieldTrampoline(5);
     if (gCurTask->facing != TaskGetFacingTowardNearestPlayer() || gCurTask->unk2C != 0) {
-        sub_0806cc90(1, 1, -4, 12);
+        CreateDustTrail(1, 1, -4, 12);
         TaskSetFrame(16);
         TaskYieldTrampoline(15);
     } else {
         TaskSetFrame(8);
         TaskYieldTrampoline(2);
-        sub_0806cc90(1, 1, -4, 12);
+        CreateDustTrail(1, 1, -4, 12);
         TaskYieldTrampoline(7);
     }
     TaskStop();
@@ -1108,7 +1108,7 @@ void sub_08096d20(void)
     if (t->unk34 == 1 && t->velX != 0) {
         t->unk20++;
         if (t->unk20 == 16) {
-            sub_0806cc90(0, 1, 8, 10);
+            CreateDustTrail(0, 1, 8, 10);
             gCurTask->unk20 = 0;
         }
     }

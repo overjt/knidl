@@ -667,8 +667,8 @@ extern u32 ActorReactToDefeat(void);
 extern void ActorDie(void);
 extern void sub_0806b05c(void);
 extern void sub_0806b098(void);
-extern s16 sub_0806caa0(u8 kind, s32 dx, s32 dy);
-extern s16 sub_0806cc90(u8 flag, u16 vx, s32 c, s32 d);
+extern s16 CreateStarFlash(u8 kind, s32 dx, s32 dy);
+extern s16 CreateDustTrail(u8 flag, u16 vx, s32 c, s32 d);
 extern void sub_0806d4e4(u32 a, s32 b);
 extern void sub_0806d730(void);
 extern s32 sub_0806e6f8(s16 x, s16 y);
@@ -1352,7 +1352,7 @@ s32 sub_080b4524();
 s32 sub_080b45c0();
 void sub_080b460c();
 void sub_080b4648();
-void sub_080b469c();
+void Task_AbilityStar();
 void sub_080b4714();
 void sub_080b4754();
 void sub_080b4770();
@@ -2274,7 +2274,7 @@ s32 sub_080ab854(void)
 {
     gUnk_02007D00[0] |= 1;
     gCurTask->facing = TaskGetFacingToward(gCurTask->hitterPlayer);
-    sub_0806caa0(1, 0, 0);
+    CreateStarFlash(1, 0, 0);
     ActorSetState(11);
     TaskSetEntry(NightmareWizardEnterState, gCurTaskIdx);
     return 1;
@@ -3297,7 +3297,7 @@ void sub_080acf68(void)
     sub_080ad32c();
     gUnk_02007D00[1] = 0;
     gCurTask->unk30 = 16;
-    sub_0806cc90(1, 3, 8, 10);
+    CreateDustTrail(1, 3, 8, 10);
     while (gCurTask->unk30 > 0)
         sub_080ad278();
     sub_080ad170();

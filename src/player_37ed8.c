@@ -10,7 +10,7 @@
  * State 5, the entry, picks the next state from Task.unk82 (its low
  * nibble, or 4 when bit 7 is set) and, for a player holding an ability
  * (PlayerState.ability) with bit 1 of PlayerState.unk42 clear, releases it
- * through M17's sub_08064eb8(PlayerState.unk30) and M02's HUD
+ * through M17's CreateAbilityStar(PlayerState.unk30) and M02's HUD
  * (SetPlayerAbility); states 0-4 play the ability's animations and state 6
  * leaves.  PlayerActionHurtUpdate, handler 16, steers every state into state 6 and
  * re-binds the coroutine. */
@@ -38,7 +38,7 @@ void sub_08040710(void);
 void PlayerSetMotionXPreset(s32 a0, s32 a1);           /* M11, still asm; M11's own spelling */
 void PlayerSetMotionYPreset(s32 a0);
 s32 CreatePlayerEffect(s32 a0, s32 a1, s32 a2);
-s32 sub_08064eb8(u8 p2);
+s32 CreateAbilityStar(u8 p2);
 
 void PlayerActionHurt(void)
 {
@@ -86,7 +86,7 @@ loop:
                 if (gCurTask->player->ability != 0)
                 {
                     gCurTask->player->unk42 &= 0xFFFB;
-                    sub_08064eb8(gCurTask->player->unk30);
+                    CreateAbilityStar(gCurTask->player->unk30);
                     SetPlayerAbility(0, -1, gCurTask->player->playerIndex);
                 }
             }

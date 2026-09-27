@@ -3,9 +3,9 @@
  * RECIPE: agbcc -O2 -mthumb-interwork -fprologue-bugfix
  *   ./tools/fnmatch.sh 0x0806CD40 0x0806D22C src/actor_6cd40.c --newpb
  *
- * The tail of the vehicle/ride block: sub_0806cd40's per-frame integrator
+ * The tail of the vehicle/ride block: Task_DustTrail's per-frame integrator
  * over the gTasks[] task table, the two sprite-list players
- * sub_0806ceb8 / sub_0806cf70, and the spawn/teardown helpers
+ * Task_DustPuff / sub_0806cf70, and the spawn/teardown helpers
  * sub_0806cffc / sub_0806d08c / sub_0806d148 / sub_0806d1e8.  Every literal
  * pool in this range ends exactly on the next function's entry, so any
  * symbols.csv boundary here is a valid carve point.
@@ -25,7 +25,7 @@ extern void ActorDrawWorldInViewOrDestroy(void);
 extern void TaskSetMotionXFacing(s32 a, s32 b);
 extern void TaskSetFrameByFacing(u32 a);
 extern void TaskStop(void);
-extern void sub_0806cd30(void);
+extern void CreateDustPuff(void);
 extern u8 TaskHasSameSerial(s32 i);
 extern void TaskFaceLikeParent(void);
 extern s16 RandomSpreadFacing(s32 base, u8 scale, u8 amount);
@@ -34,7 +34,7 @@ extern s32 CreateChildTask(u32 type, int xArg, int yArg, int prioArg);
 extern s32 CreateChildTaskAt(u32 type, s16 xArg, s16 yArg, u8 keepPrio);
 extern void TaskSetFrame(s32 a);
 
-void sub_0806cd40(void)
+void Task_DustTrail(void)
 {
     struct Task *t;
     struct Task *u;
@@ -68,7 +68,7 @@ void sub_0806cd40(void)
         TaskYieldTrampoline(2);
         gCurTask->frame += 2;
         TaskYieldTrampoline(1);
-        sub_0806cd30();
+        CreateDustPuff();
         TaskYieldTrampoline(1);
         gCurTask->frame -= 2;
         TaskYieldTrampoline(2);
@@ -83,7 +83,7 @@ void sub_0806cd40(void)
     TaskExitTrampoline();
 }
 
-void sub_0806ceb8(void)
+void Task_DustPuff(void)
 {
     struct Task *t;
     struct Task *u;

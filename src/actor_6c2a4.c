@@ -10,7 +10,7 @@
  * switch over Task.unk46, the gUnk_0873EAC0 speed table and the
  * gUnk_0873EAF0 drift table), and the short spawn-effect bodies that only
  * walk Task.frame through a gfx list (gUnk_0874C520 / gUnk_0874CBC8) before
- * TaskExitTrampoline.  sub_0806caa0 and sub_0806cc90 are the two helper
+ * TaskExitTrampoline.  CreateStarFlash and CreateDustTrail are the two helper
  * spawners that fix up Task.facing (facing) on the task they created.
  *
  * sub_0806c770 was the hardest function in M18: instruction-identical to the
@@ -102,8 +102,8 @@ void sub_0806c490(void);
 void sub_0806c5d4(void);
 void sub_0806c770(void);
 void sub_0806c9e8(void);
-void sub_0806cbd4(void);
-void sub_0806cd30(void);
+void StarFlashFollowParent(void);
+void CreateDustPuff(void);
 
 void sub_0806c2a4(void)
 {
@@ -470,7 +470,7 @@ void sub_0806c9e8(void)
         sub_0806b8bc();
 }
 
-void sub_0806ca00(void)
+void Task_ActorSplash(void)
 {
     struct Task *t;
     struct Task *u;
@@ -500,7 +500,7 @@ void sub_0806ca00(void)
     TaskExitTrampoline();
 }
 
-s16 sub_0806caa0(u8 kind, s32 dx, s32 dy)
+s16 CreateStarFlash(u8 kind, s32 dx, s32 dy)
 {
     struct Task *t;
     s32 i;
@@ -525,7 +525,7 @@ s16 sub_0806caa0(u8 kind, s32 dx, s32 dy)
     return r;
 }
 
-void sub_0806cb10(void)
+void Task_StarFlash(void)
 {
     struct Task *t;
     struct Task *u;
@@ -544,7 +544,7 @@ void sub_0806cb10(void)
     TaskExitTrampoline();
 }
 
-void sub_0806cb64(void)
+void Task_StarFlashOnParent(void)
 {
     struct Task *t;
     struct Task *u;
@@ -555,7 +555,7 @@ void sub_0806cb64(void)
     t->layer = 10;
     u = gCurTask;
     u->frameTable = gUnk_0874CBC8;
-    u->updateCallback = (u32)sub_0806cbd4;
+    u->updateCallback = (u32)StarFlashFollowParent;
     TaskFaceLikeParent();
     gCurTask->unk6C = 0;
     do
@@ -568,7 +568,7 @@ void sub_0806cb64(void)
     TaskExitTrampoline();
 }
 
-void sub_0806cbd4(void)
+void StarFlashFollowParent(void)
 {
     struct Task *t;
     struct Task *p;
@@ -588,7 +588,7 @@ void sub_0806cbd4(void)
     }
 }
 
-s16 sub_0806cc90(u8 flag, u16 vx, s32 c, s32 d)
+s16 CreateDustTrail(u8 flag, u16 vx, s32 c, s32 d)
 {
     struct Task *p;
     s32 i;
@@ -617,7 +617,7 @@ s16 sub_0806cc90(u8 flag, u16 vx, s32 c, s32 d)
     return r;
 }
 
-void sub_0806cd30(void)
+void CreateDustPuff(void)
 {
     CreateChildTaskHere(144, 0);
 }

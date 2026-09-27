@@ -18,7 +18,7 @@
  *   <spawner>      sub_0806e6f8 / sub_0806e808 / sub_0806e9b4 allocate a task
  *                  of type 167/168/169 and seed its unk24/unk20 position.
  *
- * The tail (sub_0806ec40-sub_0806ef38) is the "cursor"/menu-ish task group:
+ * The tail (Task_IceBlock-sub_0806ef38) is the "cursor"/menu-ish task group:
  * sub_0806ed28 walks a 6-entry s16[6][2] table at 0x0873E5F8, and
  * sub_0806ee30 is a class-1 entry point that re-arms the running task from
  * the player record (Task.player) and the id at 0x020055C0.
@@ -76,10 +76,10 @@ extern void sub_0806ff7c(void);
 extern void sub_08070648(void);
 
 /* Defined below */
-void sub_0806e210(void);
-void sub_0806e3dc(void);
+void HitFlamesCheckParent(void);
+void HitSparksCheckParent(void);
 void sub_0806e5f0(void);
-void sub_0806e6b0(void);
+void AbilityReleaseFlashCheckParent(void);
 void sub_0806e7c0(void);
 void sub_0806e96c(void);
 s32 sub_0806e9b4(u8 a, s16 x, s16 y);
@@ -88,7 +88,7 @@ void sub_0806ed28(void);
 void sub_0806ed9c(void);
 void sub_0806ef1c(void);
 
-void sub_0806e0f0(void)
+void HitFrostCheckParent(void)
 {
     s32 i;
 
@@ -96,7 +96,7 @@ void sub_0806e0f0(void)
         TaskFree(gCurTaskIdx);
 }
 
-void sub_0806e138(void)
+void Task_HitFlames(void)
 {
     struct Task *t;
 
@@ -105,7 +105,7 @@ void sub_0806e138(void)
     t->drawCallback = (u32)ActorDrawWorldInView;
     t->frameTable = gUnk_0874CBD0;
     t->layer = 10;
-    gCurTask->updateCallback = (u32)sub_0806e210;
+    gCurTask->updateCallback = (u32)HitFlamesCheckParent;
     gCurTask->tileWord = 0;
     while (1)
     {
@@ -131,7 +131,7 @@ void sub_0806e138(void)
     }
 }
 
-void sub_0806e210(void)
+void HitFlamesCheckParent(void)
 {
     s32 i;
 
@@ -139,7 +139,7 @@ void sub_0806e210(void)
         TaskFree(gCurTaskIdx);
 }
 
-void sub_0806e258(void)
+void Task_HitSparks(void)
 {
     struct Task *t;
 
@@ -148,7 +148,7 @@ void sub_0806e258(void)
     t->drawCallback = (u32)ActorDrawWorldInView;
     t->frameTable = gUnk_0874CC38;
     t->layer = 10;
-    gCurTask->updateCallback = (u32)sub_0806e3dc;
+    gCurTask->updateCallback = (u32)HitSparksCheckParent;
     gCurTask->tileWord = 0;
     while (1)
     {
@@ -195,7 +195,7 @@ void sub_0806e258(void)
     }
 }
 
-void sub_0806e3dc(void)
+void HitSparksCheckParent(void)
 {
     s32 i;
 
@@ -279,7 +279,7 @@ void sub_0806e5f0(void)
         TaskFree(gCurTaskIdx);
 }
 
-void sub_0806e638(void)
+void Task_AbilityReleaseFlash(void)
 {
     struct Task *t;
     struct Task *u;
@@ -290,7 +290,7 @@ void sub_0806e638(void)
     t->frameTable = gUnk_0874CB3C;
     t->layer = 4;
     u = gCurTask;
-    u->updateCallback = (u32)sub_0806e6b0;
+    u->updateCallback = (u32)AbilityReleaseFlashCheckParent;
     u->tileWord = 0;
     u->posX = 0;
     u->posY = 0;
@@ -305,7 +305,7 @@ void sub_0806e638(void)
     TaskExitTrampoline();
 }
 
-void sub_0806e6b0(void)
+void AbilityReleaseFlashCheckParent(void)
 {
     s32 i;
 
@@ -550,7 +550,7 @@ void sub_0806eba4(void)
     TaskExitTrampoline();
 }
 
-void sub_0806ec40(void)
+void Task_IceBlock(void)
 {
     struct Task *t;
     struct Task *u;

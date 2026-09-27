@@ -180,8 +180,8 @@ extern s32 ActorReactToHit(void);
 extern u8 sub_0806acf8(void);
 extern void sub_0806ad18(void);
 extern void ActorDie(void);
-extern s16 sub_0806caa0(u8 kind, s32 dx, s32 dy);
-extern s16 sub_0806cc90(u8 flag, u16 vx, s32 c, s32 d);
+extern s16 CreateStarFlash(u8 kind, s32 dx, s32 dy);
+extern s16 CreateDustTrail(u8 flag, u16 vx, s32 c, s32 d);
 extern void sub_0806cffc(s16 dx, s16 dy);
 extern s32 Div(s32 numerator, s32 denominator);
 
@@ -541,7 +541,7 @@ void sub_080926fc(void)
         TaskSetFrame(17);
         TaskYieldTrampoline(2);
         if (gCurTask->onGround != 0)
-            sub_0806cc90(1, 1, -24, 24);
+            CreateDustTrail(1, 1, -24, 24);
         TaskSetMotionXFacing(0xFFFE0000, 0x5A5A5A5A);
         u = gCurTask;
         u->unk24 = u->unk8C->palette;
@@ -559,7 +559,7 @@ void sub_080926fc(void)
         TaskSetFrame(19);
         TaskYieldTrampoline(2);
         if (gCurTask->onGround != 0)
-            sub_0806cc90(1, 1, -24, 24);
+            CreateDustTrail(1, 1, -24, 24);
         TaskSetMotionXFacing(0xFFFE0000, 0x5A5A5A5A);
         u2 = gCurTask;
         u2->unk24 = u2->unk8C->palette;
@@ -576,7 +576,7 @@ void sub_080926fc(void)
         TaskSetFrame(21);
         TaskYieldTrampoline(2);
         if (gCurTask->onGround != 0)
-            sub_0806cc90(1, 1, -24, 24);
+            CreateDustTrail(1, 1, -24, 24);
         TaskSetMotionXFacing(0xFFFE0000, 0x5A5A5A5A);
         u3 = gCurTask;
         u3->unk24 = u3->unk8C->palette;
@@ -875,7 +875,7 @@ void sub_08092f2c(void)
         TaskYieldTrampoline(1);
     RequestScreenShake(4);
     PlaySfx(0x1F7);
-    sub_0806cc90(0, 4, 24, 24);
+    CreateDustTrail(0, 4, 24, 24);
     TaskStopY();
     TaskSetMotionXFacing(0xFFFF8000, 0x5A5A5A5A);
     TaskYieldTrampoline(30);
@@ -1054,7 +1054,7 @@ void sub_08093380(void)
     if (--gUnk_02007D00[7] == 0)
         sub_0806684c();
     sub_080667c0(1, 63);
-    sub_0806caa0(1, 0, 0);
+    CreateStarFlash(1, 0, 0);
     TaskStop();
     gCurTask->onGround = 0;
     TaskSetMotionXFacing(0xFFFF0000, 0x5A5A5A5A);
@@ -1067,16 +1067,16 @@ void sub_08093380(void)
     gCurTask->unk34 = 4;
     while (gCurTask->onGround == 0)
         TaskYieldTrampoline(1);
-    sub_0806caa0(0, 0, 10);
+    CreateStarFlash(0, 0, 10);
     RequestScreenShake(4);
     PlaySfx(0x1F7);
-    sub_0806cc90(0, 4, 24, 24);
+    CreateDustTrail(0, 4, 24, 24);
     TaskStopY();
     TaskSetMotionXFacing(0xFFFF8000, 0x5A5A5A5A);
     TaskYieldTrampoline(30);
     TaskStopX();
     TaskYieldTrampoline(170);
-    sub_0806caa0(1, 0, 0);
+    CreateStarFlash(1, 0, 0);
     sub_0806ad18();
     gUnk_02007D00[4] = 1;
     TaskSleepForever();
@@ -1285,7 +1285,7 @@ void sub_08093858(void)
 s32 sub_08093868(void)
 {
     gCurTask->unk30 = 1;
-    sub_0806caa0(1, 0, 0);
+    CreateStarFlash(1, 0, 0);
     RequestScreenShake(2);
     return 0;
 }

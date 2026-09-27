@@ -19,7 +19,7 @@ extern struct Actor gActors[];
 extern s8 gUnk_02007FB8[];
 extern u32 gUnk_030012B0[];
 extern u32 gUnk_02005E10[];
-extern u32 gUnk_0873DF24[];
+extern u32 gPaletteAnimVariants[];
 extern u8 gUnk_0825088C[];
 extern u8 gObjPalette[];
 extern u32 gUnk_0873DF38[][4];
@@ -456,9 +456,9 @@ void AcquirePaletteAnim(u32 p0, s32 idx)
     gUnk_02007FB8[idx]++;
 }
 
-void sub_080658b8(void)
+void Task_PaletteAnim(void)
 {
-    CallTableEntry(gCurTask->variant, 5, gUnk_0873DF24);
+    CallTableEntry(gCurTask->variant, 5, gPaletteAnimVariants);
 }
 
 /* Task body: cross-fade two palettes while the helper's refcount holds. */
@@ -635,7 +635,7 @@ void sub_08065b14(void)
 }
 
 /* Task body: fade the shared palette in, out, or straight to zero. */
-void sub_08065c14(void)
+void PaletteAnimBgBlend(void)
 {
     struct Task *t;
     struct Task *u;

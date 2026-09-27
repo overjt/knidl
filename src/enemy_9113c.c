@@ -114,8 +114,8 @@ extern s32 ActorReactToHit(void);
 extern u8 sub_0806acf8(void);
 extern void sub_0806ad18(void);
 extern void ActorDie(void);
-extern s16 sub_0806caa0(u8 kind, s32 dx, s32 dy);
-extern s16 sub_0806cc90(u8 flag, u16 vx, s32 c, s32 d);
+extern s16 CreateStarFlash(u8 kind, s32 dx, s32 dy);
+extern s16 CreateDustTrail(u8 flag, u16 vx, s32 c, s32 d);
 extern void sub_0806cffc(s16 dx, s16 dy);
 extern s32 Div(s32 numerator, s32 denominator);
 
@@ -445,7 +445,7 @@ void sub_08091824(void)
     if (--gUnk_02007D00[0] == 0)
         sub_0806684c();
     sub_080667c0(0, 10);
-    sub_0806caa0(1, 0, 0);
+    CreateStarFlash(1, 0, 0);
     gCurTask->onGround = 0;
     TaskSetMotionXFacing(0xFFFF0000, 0x5A5A5A5A);
     TaskSetMotionY(0xFFFD0000, 6656, 196608);
@@ -454,7 +454,7 @@ void sub_08091824(void)
         TaskYieldTrampoline(1);
     RequestScreenShake(2);
     PlaySfx(0x1F7);
-    sub_0806cc90(0, 4, 16, 4);
+    CreateDustTrail(0, 4, 16, 4);
     gCurTask->onGround = 0;
     TaskSetMotionXFacing(0xFFFF8000, 0x5A5A5A5A);
     TaskSetMotionY(0xFFFF0000, 32768, 196608);
@@ -566,7 +566,7 @@ void sub_08091a98(void)
 s32 sub_08091b00(void)
 {
     gCurTask->unk34 = 1;
-    sub_0806caa0(1, 0, -8);
+    CreateStarFlash(1, 0, -8);
     RequestScreenShake(2);
     return 0;
 }

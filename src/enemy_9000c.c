@@ -22,7 +22,7 @@
  * TaskSetMotionXFacing / TaskSetMotionY, and the guard re-arms BonkersEnterState through
  * TaskSetEntry whenever Task.state leaves the state.  State 4 aims with
  * Div(|TaskGetNearestPlayerDx()|, 3), state 5 spawns the actors 8 and 145, and state 10
- * is the defeat sequence (sub_0806684c, sub_0806caa0, sub_0806ad18).
+ * is the defeat sequence (sub_0806684c, CreateStarFlash, sub_0806ad18).
  *
  * The tail holds the pieces the states share - sub_08090e18 (fire a shot at
  * the boss's own position through sub_08067120), sub_08090e54 (advance the
@@ -98,7 +98,7 @@ extern u32 RandomRange(u32 range);
 extern void TaskUpdateFlip(void);
 extern void sub_0806684c(void);
 extern void sub_080667c0(u8 a, u16 b);
-extern s16 sub_0806caa0(u8 kind, s32 dx, s32 dy);
+extern s16 CreateStarFlash(u8 kind, s32 dx, s32 dy);
 extern void TaskStopY(void);
 extern void TaskStopX(void);
 extern void sub_0806ad18(void);
@@ -115,7 +115,7 @@ extern s32 TaskGetNearestPlayerDy(void);
 extern s32 Div(s32 numerator, s32 denominator);
 extern s32 ActorStartAnim(struct AnimCmd *p);
 extern s32 ActorStepAnim(void);
-extern s16 sub_0806cc90(u8 flag, u16 vx, s32 c, s32 d);
+extern s16 CreateDustTrail(u8 flag, u16 vx, s32 c, s32 d);
 extern s32 CreateActorFromDescAtOffsetFacing(struct ActorSpawn *p, u8 keepPrio);
 extern s32 CreateChildTask(u32 type, int xArg, int yArg, int prioArg);
 
@@ -426,7 +426,7 @@ void sub_080905d8(void)
         if (--gCurTask->unk20 == 0)
         {
             if ((++gCurTask->unk24 & 1) != 0)
-                sub_0806cc90(1, 1, -16, 8);
+                CreateDustTrail(1, 1, -16, 8);
             gCurTask->unk20 = ActorStepAnim();
         }
         gCurTask->unk6C++;
@@ -674,7 +674,7 @@ void sub_08090cd0(void)
     if (--gUnk_02007D00[0] == 0)
         sub_0806684c();
     sub_080667c0(1, 32);
-    sub_0806caa0(1, 0, 0);
+    CreateStarFlash(1, 0, 0);
     TaskStop();
     TaskSetFrame(32);
     gCurTask->onGround = 0;
@@ -685,16 +685,16 @@ void sub_08090cd0(void)
     TaskSetFrame(33);
     while (gCurTask->onGround == 0)
         TaskYieldTrampoline(1);
-    sub_0806caa0(0, 0, 10);
+    CreateStarFlash(0, 0, 10);
     RequestScreenShake(4);
     PlaySfx(0x1F7);
-    sub_0806cc90(0, 4, 16, 8);
+    CreateDustTrail(0, 4, 16, 8);
     TaskStopY();
     TaskSetMotionXFacing(0xFFFF8000, 0x5A5A5A5A);
     TaskYieldTrampoline(30);
     TaskStopX();
     TaskYieldTrampoline(170);
-    sub_0806caa0(1, 0, 0);
+    CreateStarFlash(1, 0, 0);
     sub_0806ad18();
     gCurTask->unk34 = 2;
     TaskSleepForever();
@@ -748,7 +748,7 @@ void sub_08090e9c(void)
 s32 sub_08090ef0(void)
 {
     gCurTask->unk30 = 1;
-    sub_0806caa0(1, 0, 0);
+    CreateStarFlash(1, 0, 0);
     RequestScreenShake(2);
     return 0;
 }

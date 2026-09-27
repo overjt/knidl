@@ -127,7 +127,7 @@ extern void ActorFaceHitter(void);
 extern void ActorDie(void);
 extern u8 sub_0806acf8(void);
 extern void sub_0806ad18(void);
-extern s16 sub_0806cc90(u8 flag, u16 vx, s32 c, s32 d);
+extern s16 CreateDustTrail(u8 flag, u16 vx, s32 c, s32 d);
 extern s32 sub_0806e6f8(s16 x, s16 y);
 extern void TaskYieldTrampoline(u32 frames);
 
@@ -885,9 +885,9 @@ s32 sub_08094e88(void)
     v->unk1C++;
     if (v->unk1C == 8) {
         if (v->unk2C == v->facing)
-            sub_0806cc90(1, 1, -4, 12);
+            CreateDustTrail(1, 1, -4, 12);
         else
-            sub_0806cc90(1, 1, -4, 12);
+            CreateDustTrail(1, 1, -4, 12);
         gCurTask->unk1C = 0;
     }
     return 0;
@@ -1144,7 +1144,7 @@ void sub_08095484(void)
     if (t->unk2C == 1) {
         t->unk1C++;
         if (t->unk1C == 16) {
-            sub_0806cc90(0, 1, 8, 10);
+            CreateDustTrail(0, 1, 8, 10);
             gCurTask->unk1C = 0;
         }
     }

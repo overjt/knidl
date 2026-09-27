@@ -11,7 +11,7 @@
  * helpers sub_0806d4e4/d928/da3c, the eight-way "carried" body
  * sub_0806d7ec, the gTasks[].unk73-keyed body sub_0806daec (with its
  * per-frame mover sub_0806da74), the two-sprite draw callback sub_0806dca0,
- * and the two random-walk bodies sub_0806dd90 and sub_0806df98.
+ * and the two random-walk bodies sub_0806dd90 and Task_HitFrost.
  */
 
 #include "gba/gba.h"
@@ -52,7 +52,7 @@ extern void ActorDrawWorldInViewOrDestroy(void);
 extern void TaskFaceLikeParent(void);
 extern void TaskSetMotionXFacing(s32 a, s32 b);
 extern void TaskSetFrameByFacing(u32 a);
-extern void sub_0806cd30(void);
+extern void CreateDustPuff(void);
 extern void TaskStop(void);
 extern u8 TaskHasSameSerial(s32 i);
 extern void TaskFree(s32 i);
@@ -71,7 +71,7 @@ extern s32 QueueSprite(u32 a, u32 b, u32 c, u32 d, s32 e, s32 f);
 extern s32 RandomSpread(s32 a, s32 b, s32 c);
 extern void TaskUpdatePixelPos(void);
 extern void TaskSetMotion(s32 a, s32 b, s32 c, s32 d, s32 e, s32 f);
-extern void sub_0806e0f0(void);
+extern void HitFrostCheckParent(void);
 
 void sub_0806d49c(void);
 void sub_0806d5e0(void);
@@ -113,7 +113,7 @@ void sub_0806d22c(void)
     TaskYieldTrampoline(2);
     gCurTask->frame += 2;
     TaskYieldTrampoline(1);
-    sub_0806cd30();
+    CreateDustPuff();
     TaskSetFrameByFacing(4);
     TaskYieldTrampoline(1);
     gCurTask->frame -= 2;
@@ -759,7 +759,7 @@ void ActorAttachEffect(s32 a, s32 b)
         p->attachedTaskLifetime = 0xFFFE;
 }
 
-void sub_0806df98(void)
+void Task_HitFrost(void)
 {
     struct Task *t;
     struct Task *u;
@@ -770,7 +770,7 @@ void sub_0806df98(void)
     t->frameTable = gUnk_0874CC48;
     t->layer = 6;
     u = gCurTask;
-    u->updateCallback = (u32)sub_0806e0f0;
+    u->updateCallback = (u32)HitFrostCheckParent;
     u->tileWord = 0;
     u->unk6E = 0;
     do

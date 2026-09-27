@@ -113,7 +113,7 @@ void PlayerSetMotionXPreset(s32 a0, s32 a1);
 void PlayerSetMotionYPreset(s32 a0);
 s32 CreatePlayerEffect(s32 band, s32 id, s32 payload);
 s32 CreatePlayerEffectHighSlot(s32 band, s32 id, s32 payload);
-void sub_08064eb8(u32 a);
+void CreateAbilityStar(u32 a);
 
 void PlayerPlayBump(void)
 {
@@ -2769,7 +2769,7 @@ s32 PlayerCheckDropAbility(void)
      && (gLatchedPressedKeys[gCurTask->player->playerIndex] & 4)
      && gCurTask->player->ability != 0)
     {
-        sub_08064eb8(gCurTask->player->unk30);
+        CreateAbilityStar(gCurTask->player->unk30);
         PlaySfxIfLocalPlayer(182, (u16)gCurTask->player->playerIndex);
         SetPlayerAbility(0, -1, gCurTask->player->playerIndex);
         gCurTask->player->requestedAction = gCurTask->player->action;

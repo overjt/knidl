@@ -129,8 +129,8 @@ extern u8 ActorCollideTerrain(void);
 extern s32 ActorReactToHit(void);
 extern void ActorDie(void);
 extern void sub_0806ad18(void);
-extern s16 sub_0806caa0(u8 kind, s32 dx, s32 dy);
-extern s16 sub_0806cc90(u8 flag, u16 vx, s32 c, s32 d);
+extern s16 CreateStarFlash(u8 kind, s32 dx, s32 dy);
+extern s16 CreateDustTrail(u8 flag, u16 vx, s32 c, s32 d);
 extern void sub_0806cffc(s16 dx, s16 dy);
 extern void sub_0806ee2c(void);
 extern void sub_08098afc(void);
@@ -842,7 +842,7 @@ void sub_0809a654(void)
     t->updateState = 6;
     u = gCurTask;
     u->unk28 = zero;
-    gCurTask->unk46 = sub_0806cc90(1, 10, -12, 16);
+    gCurTask->unk46 = CreateDustTrail(1, 10, -12, 16);
     TaskStop();
     switch (gCurTask->unk74)
     {
@@ -1342,7 +1342,7 @@ void sub_0809ae40(void)
     u = gCurTask;
     u->unk30 = zero;
     u->unk28 = zero;
-    sub_0806caa0(0, 0, 24);
+    CreateStarFlash(0, 0, 24);
     TaskStop();
     while (1)
     {
@@ -1558,7 +1558,7 @@ void sub_0809b214(void)
     v = gCurTask;
     v->velY = -196608;
     v->accelY = 0x1A00;
-    sub_0806caa0(0, -10, 24);
+    CreateStarFlash(0, -10, 24);
     TaskSetFrame(7);
     TaskSleepForever();
 }
@@ -1578,8 +1578,8 @@ void sub_0809b2ac(void)
     t->updateState = 20;
     u = gCurTask;
     u->unk30 = 32;
-    sub_0806caa0(1, 0, 0);
-    gCurTask->unk46 = sub_0806cc90(0, 4, 8, 24);
+    CreateStarFlash(1, 0, 0);
+    gCurTask->unk46 = CreateDustTrail(0, 4, 8, 24);
     TaskStop();
     TaskSetMotionXFacing(-32768, 0x5A5A5A5A);
     v = gCurTask;
@@ -1615,7 +1615,7 @@ void sub_0809b34c(void)
     t->updateState = 21;
     u = gCurTask;
     u->unk30 = zero;
-    sub_0806caa0(1, 0, 0);
+    CreateStarFlash(1, 0, 0);
     TaskStop();
     TaskSetFrame(14);
     TaskYieldTrampoline(170);

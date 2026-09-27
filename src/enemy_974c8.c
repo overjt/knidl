@@ -100,7 +100,7 @@ extern u32 ActorReactToDefeat(void);
 extern void ActorDie(void);
 extern u8 sub_0806acf8(void);
 extern void sub_0806ad18(void);
-extern s16 sub_0806cc90(u8 flag, u16 vx, s32 c, s32 d);
+extern s16 CreateDustTrail(u8 flag, u16 vx, s32 c, s32 d);
 extern void sub_0806cffc(s16 dx, s16 dy);
 extern void TaskYieldTrampoline(u32 frames);
 extern s32 sub_08094d10(void);
@@ -466,7 +466,7 @@ void sub_08097b74(void)
     if (t->unk74 == 0)
         TaskYieldTrampoline(16);
     PlaySfx(500);
-    sub_0806cc90(1, 3, 8, 10);
+    CreateDustTrail(1, 3, 8, 10);
     TaskSetMotionXFacing(gUnk_087448F8[gCurTask->unk74], 0x5A5A5A5A);
     TaskYieldTrampoline(48);
     TaskStop();
@@ -509,7 +509,7 @@ void sub_08097c78(void)
         TaskYieldTrampoline(1);
     RequestScreenShake(4);
     PlaySfx(0x1F7);
-    sub_0806cc90(0, 1, 8, 10);
+    CreateDustTrail(0, 1, 8, 10);
     TaskSetMotionXFacing(-0x18000, 0x5A5A5A5A);
     TaskSetFrame(29);
     TaskYieldTrampoline(2);
@@ -779,7 +779,7 @@ void sub_0809829c(void)
     TaskSetFrame(29);
     RequestScreenShake(4);
     CreateChildTaskHere(141, 0);
-    sub_0806cc90(0, 1, -4, 12);
+    CreateDustTrail(0, 1, -4, 12);
     TaskYieldTrampoline(170);
     sub_0806ad18();
     ActorDie();

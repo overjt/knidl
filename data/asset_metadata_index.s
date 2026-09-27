@@ -94,7 +94,7 @@ asset_metadata_index:
 	.incbin	"baserom.gba", 0x730148, 0x4
 	.word	Task_NightmareWizard+1
 	.incbin	"baserom.gba", 0x730150, 0x4
-	.word	sub_080b469c+1
+	.word	Task_AbilityStar+1
 	.incbin	"baserom.gba", 0x730158, 0x4
 	.word	Task_OneUp+1
 	.incbin	"baserom.gba", 0x730160, 0x4
@@ -238,15 +238,15 @@ asset_metadata_index:
 	.incbin	"baserom.gba", 0x730388, 0x4
 	.word	sub_080671c0+1
 	.incbin	"baserom.gba", 0x730390, 0x4
-	.word	sub_0806ca00+1
+	.word	Task_ActorSplash+1
 	.incbin	"baserom.gba", 0x730398, 0x4
-	.word	sub_0806cb10+1
+	.word	Task_StarFlash+1
 	.incbin	"baserom.gba", 0x7303A0, 0x4
-	.word	sub_0806cb64+1
+	.word	Task_StarFlashOnParent+1
 	.incbin	"baserom.gba", 0x7303A8, 0x4
-	.word	sub_0806cd40+1
+	.word	Task_DustTrail+1
 	.incbin	"baserom.gba", 0x7303B0, 0x4
-	.word	sub_0806ceb8+1
+	.word	Task_DustPuff+1
 	.incbin	"baserom.gba", 0x7303B8, 0x4
 	.word	sub_0806cf70+1
 	.incbin	"baserom.gba", 0x7303C0, 0x4
@@ -276,11 +276,11 @@ asset_metadata_index:
 	.incbin	"baserom.gba", 0x730420, 0x4
 	.word	sub_0806de60+1
 	.incbin	"baserom.gba", 0x730428, 0x4
-	.word	sub_0806df98+1
+	.word	Task_HitFrost+1
 	.incbin	"baserom.gba", 0x730430, 0x4
-	.word	sub_0806e138+1
+	.word	Task_HitFlames+1
 	.incbin	"baserom.gba", 0x730438, 0x4
-	.word	sub_0806e258+1
+	.word	Task_HitSparks+1
 	.incbin	"baserom.gba", 0x730440, 0x4
 	.word	sub_0806da04+1
 	.incbin	"baserom.gba", 0x730448, 0x4
@@ -290,7 +290,7 @@ asset_metadata_index:
 	.incbin	"baserom.gba", 0x730458, 0x4
 	.word	sub_08074c0c+1
 	.incbin	"baserom.gba", 0x730460, 0x4
-	.word	sub_0806e638+1
+	.word	Task_AbilityReleaseFlash+1
 	.incbin	"baserom.gba", 0x730468, 0x4
 	.word	sub_0806e73c+1
 	.incbin	"baserom.gba", 0x730470, 0x4
@@ -300,13 +300,13 @@ asset_metadata_index:
 	.incbin	"baserom.gba", 0x730480, 0x4
 	.word	sub_080b3c68+1
 	.incbin	"baserom.gba", 0x730488, 0x4
-	.word	sub_0806ec40+1
+	.word	Task_IceBlock+1
 	.incbin	"baserom.gba", 0x730490, 0x4
 	.word	sub_0806ee1c+1
 	.incbin	"baserom.gba", 0x730498, 0x4
 	.word	sub_0807d388+1
 	.incbin	"baserom.gba", 0x7304A0, 0x4
-	.word	sub_080658b8+1
+	.word	Task_PaletteAnim+1
 	.incbin	"baserom.gba", 0x7304A8, 0x4
 	.word	Task_HotHeadFlame+1
 	.incbin	"baserom.gba", 0x7304B0, 0x4
@@ -3401,13 +3401,13 @@ gUnk_0873DEDC:
 	.global	gUnk_0873DF14
 gUnk_0873DF14:
 	.incbin	"baserom.gba", 0x73DF14, 0x10
-	.global	gUnk_0873DF24
-gUnk_0873DF24:
+	.global	gPaletteAnimVariants
+gPaletteAnimVariants:
 	.word	sub_080658d8+1
 	.word	sub_080659b4+1
 	.word	sub_08065a68+1
 	.word	sub_08065b14+1
-	.word	sub_08065c14+1
+	.word	PaletteAnimBgBlend+1
 	.global	gUnk_0873DF38
 gUnk_0873DF38:
 	.incbin	"baserom.gba", 0x73DF38, 0x40

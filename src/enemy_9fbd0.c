@@ -41,7 +41,7 @@ extern void sub_080689c8(s32 i, s32 d);
 extern void sub_08068f68(void);
 extern u32 ActorReactToHit(void);
 extern void ActorDie(void);
-extern s16 sub_0806caa0(u8 kind, s32 dx, s32 dy);
+extern s16 CreateStarFlash(u8 kind, s32 dx, s32 dy);
 extern void sub_080a0a84(void);
 extern void KingDededeEnterState(void);
 extern void sub_080b7c00(u32 a);
@@ -110,7 +110,7 @@ void sub_0809fcb4(void)
     gUnk_02006190[3] = one;
     gUnk_02006190[4] = -2;
     gUnk_02006190[5] = 0;
-    sub_0806caa0(1, 0, 0);
+    CreateStarFlash(1, 0, 0);
 }
 
 void sub_0809fd20(void)

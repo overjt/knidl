@@ -81,7 +81,7 @@ extern s32 TaskFindNearestPlayer(void);
 extern s32 TaskGetNearestPlayerDx(void);
 extern s32 TaskGetNearestPlayerDy(void);
 extern s32 TaskGetFacingTowardNearestPlayer(void);
-extern s16 sub_0806cc90(u8 flag, u16 vx, s32 c, s32 d);
+extern s16 CreateDustTrail(u8 flag, u16 vx, s32 c, s32 d);
 extern s32 TaskGetAngleToNearestPlayer(s32 prec);
 extern u32 ActorCheckHits(void);
 extern u32 ActorCollideTerrain(void);
@@ -542,7 +542,7 @@ void sub_080812f0(void)
     TaskSetFrame(16);
     while (1)
     {
-        sub_0806cc90(1, 1, -2, 5);
+        CreateDustTrail(1, 1, -2, 5);
         TaskYieldTrampoline(8);
     }
 }
