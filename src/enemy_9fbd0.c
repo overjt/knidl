@@ -195,7 +195,6 @@ u8 sub_0809fe10(void)
             gUnk_02006190[2] = 4;
             sub_0806395c(1);
         }
-        BLOCK_CROSS_JUMP
         goto install;
     case 4:
         v = gUnk_03002490;
@@ -263,16 +262,9 @@ u8 sub_0809fe10(void)
     case 6:
         break;
     }
-    if (s0 != gUnk_03002490->unk14)
-    {
-        res = 1;
-        BLOCK_CROSS_JUMP
-    }
-    else
-    {
-        res = 0;
-    }
-    return res;
+    if (s0 == gUnk_03002490->unk14)
+        return 0;
+    return 1;
 }
 
 void sub_0809ffec(void)

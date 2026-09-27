@@ -1686,40 +1686,20 @@ void sub_080b5558(void)
 
 s32 sub_080b55d8(u32 a, u32 b)
 {
-    u32 av;
-    u32 wt2;
-    u32 bv;
-    register vu16 *p4 asm("r4");
-    vu16 *p3;
-    register s32 w2 asm("r2");
-    register s32 wt asm("r0");
-    register s32 wu asm("r1");
-    register s32 m0 asm("r1");
-    s32 w0;
+    s32 r;
+    u32 n;
 
-    av = a;
-    bv = b;
-    p4 = (vu16 *)&gUnk_0200000C;
-    wt = *p4;
-    asm("" : "+r"(wt));
-    if (av + wt > 512)
-        *p4 = 0;
-    p3 = (vu16 *)&gUnk_02007D40;
-    wt = *p3;
-    asm("" : "+r"(wt));
-    if (bv + wt > 14)
-        *p3 = 8;
-    w2 = *p4;
-    w0 = (w2 << 16) | *p3;
-    w2 = w2 + av;
-    wu = *p3;
-    wu = wu + bv;
-    *p3 = wu;
-    m0 = 0xFFF0;
-    w2 &= m0;
-    w2 += 16;
-    *p4 = w2;
-    return w0;
+    if (a + gUnk_0200000C > 512)
+        gUnk_0200000C = 0;
+    if (b + gUnk_02007D40 > 14)
+        gUnk_02007D40 = 8;
+    r = (gUnk_0200000C << 16) | *(vu16 *)&gUnk_02007D40;
+    n = gUnk_0200000C + a;
+    gUnk_02007D40 += b;
+    n &= 0xFFF0;
+    n += 16;
+    gUnk_0200000C = n;
+    return r;
 }
 
 s32 sub_080b5628(u32 a)
