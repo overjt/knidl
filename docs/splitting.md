@@ -8,9 +8,13 @@ range is split, `build/knidl.map` shows every function (so `asmdiff.sh`,
 functions one by one.
 
 All SDK/ARM segments around the code region are split (issues #23/#24), and
-the whole Thumb game-code region is split into per-function chunks (issue
-#25). `data/` incbin slices remain only for bulk asset zones. The currently
-configured segments (`tools/split_config.json`):
+the whole Thumb game-code region was split into per-function chunks (issue
+#25) before it became C. Since issue #36 every **data** segment is
+configured too, and emitted by a separate structure-only emitter into
+`data/<segment>.s`: labels, symbolic pointer words and `.incbin` slices of
+`baserom.gba`, never ROM values (the data policy; rules, config keys and
+metrics in [`docs/data.md`](data.md)). The code segments configured today
+(the chunked game-code rows below are history: that code is C now):
 
 | segment              | range                        | contents                          |
 | -------------------- | ---------------------------- | --------------------------------- |
@@ -22,12 +26,12 @@ configured segments (`tools/split_config.json`):
 | `sdk_reset_helper`   | `0x080CFA7F-0x080CFA9C`      | odd-start segment: `SoftReset` (0x080CFA80) + pool|
 | `sdk_libc`           | `0x080CFC30-0x080CFDDC`      | `_call_via_r0..lr`, division/modulo, task trampolines |
 | `interworking_veneer`| `0x080CFDDC-0x080CFDE4`      | ARM `ldr ip,[pc]; bx ip` -> `0x08005654\|1` |
-| `gap_interworking_veneer_irq_handler_table_14` | `0x080CFDE4-0x080CFDE8` | the veneer's literal word (not padding) |
-| `irq_handler_table_14` | `0x080CFDE8-0x080CFE20`    | 14-entry IRQ handler pointer table|
-| `lib_misc`           | `0x080CFE20-0x080CFF00`      | SRAM id string + sound-driver coefficient windows |
-| `lib_rodata_fir_tables` | `0x080CFF00-0x080D0000`   | FIR/envelope-style coefficient tables |
-| `m4a_engine_rodata`  | `0x0860A140-0x0860A418`      | m4a engine tables (#51): `gMPlayJumpTableTemplate`/`gXcmdTable` (`.word <fn>+1`), `gScaleTable`, `gFreqTable`, `gPcmSamplesPerVBlankTable`, `gCgbScaleTable`, `gCgbFreqTable`, `gNoiseTable`, `gCgb3Vol`, `gClockTable` |
-| `m4a_song_table`     | `0x0860B430-0x0860C678`      | `gMPlayTable` (RAM cells emitted symbolically) + `gSongTable` (579 entries; header pointers stay numeric until #36 extracts song data) |
+
+The six data segments this table used to list (the veneer's literal word,
+the IRQ handler table, `lib_misc`, `lib_rodata_fir_tables`, the m4a engine
+rodata and the m4a song table) were value lists in `asm/` until #36, which
+moved them to `data/` with every value replaced by an `.incbin` slice or a
+symbol.
 
 ## Chunked segments (issue #25)
 
@@ -79,9 +83,13 @@ make compare    # must stay byte-identical (SHA-1 vs knidl.sha1)
     symbols.csv because nothing `bl`s them (the libgcc `_call_via_r4..lr`
     half of lesson 3.4's family) or for named items inside data segments
     (`gSramIdString`);
-  * `data_symbols`: `{value: name}` — non-ROM word values emitted
-    symbolically wherever they appear as pool/data words (the task system's
-    IWRAM cells); definitions are appended to `asm/rom_syms.s`.
+  * `data_symbols`: `{value: name}` — word values emitted symbolically
+    wherever they appear as code pool words (the task system's IWRAM
+    cells); a RAM/I-O value's definition is appended to `asm/rom_syms.s`,
+    while a ROM value inside a data segment becomes a real label in its
+    `data/<segment>.s` (#36);
+  * `pointer_tables`, `not_pointers` and a segment's `"asset": true`
+    drive the data emitter ([`docs/data.md`](data.md) §3-§4).
 * `docs/analysis/segments.txt` — segment boundaries and kinds (the single
   source of truth; the config only selects segments by name);
 * `docs/analysis/symbols.csv` — the function database (issue #22).
@@ -122,6 +130,17 @@ the authoritative check.
   for external targets. A `@ 0x........` comment preserves the target address.
 * Non-function pointer words (MMIO/IWRAM addresses, plain rodata) stay
   numeric: `.word 0x04000208`.
+
+### Data segments (issue #36)
+
+A `data`-kind segment never goes through the rules above. Its file is
+`data/<segment>.s`, and it holds only `.global` labels (every ROM
+`data_symbols`/`extra_labels` address in it), `.word <symbol>` lines for
+proven pointers (function entries outside asset segments, and the words of
+consumer-proven `pointer_tables`) and `.incbin "baserom.gba", <offset>,
+<length>` for everything else. It is verified in the same group link as the
+code files, cannot fall back to raw bytes, and is checked by `make
+check-data`. See [`docs/data.md`](data.md).
 
 ### Odd boundaries
 

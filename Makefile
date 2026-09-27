@@ -107,7 +107,7 @@ ALL_OBJS  := $(ASM_OBJS) $(DATA_OBJS) $(SRC_OBJS)
 
 ELF := $(BUILD_DIR)/$(ROM:.gba=.elf)
 
-.PHONY: all compare check-headers progress report symbols split modmap clean
+.PHONY: all compare check-headers check-data progress datastats report symbols split modmap clean
 
 all: $(ROM)
 
@@ -162,6 +162,19 @@ compare: $(ROM)
 progress: $(ELF)
 	perl tools/calcrom.pl $(BUILD_DIR)/knidl.map
 
+# Data-structure metrics (issue #36, docs/data.md): ROM data symbols still
+# defined by absolute address, and the pointer-like words of the data
+# segments that are not yet symbolic.  Reads the committed data/ files and
+# asm/rom_syms.s against baserom.gba; needs no build.
+datastats: baserom.gba tools/datastats.py tools/split_config.json docs/analysis/segments.txt
+	python3 tools/datastats.py --rom baserom.gba
+
+# Data policy (AGENTS.md, docs/data.md): assets are never committed, and
+# data/ may hold only labels, symbolic .words and .incbin slices of
+# baserom.gba; needs no baserom, so CI runs it on every push.
+check-data:
+	python3 tools/check_data_policy.py
+
 # objdiff-schema progress report (report.json) for decomp.dev — derived
 # from the repo's own ground truth (segments.txt / symbols.csv /
 # module-map.csv), no baserom needed.  CI uploads the artifact.
@@ -183,9 +196,11 @@ modmap: baserom.gba tools/modmap.py docs/analysis/segments.txt docs/analysis/sym
 	python3 tools/modmap.py --rom baserom.gba
 
 # Extract configured ROM ranges into labeled, byte-identical assembly
-# (issue #23; see docs/splitting.md).  For each segment in tools/
-# split_config.json this writes asm/<name>.s, deletes the data/<name>.s
-# incbin slice, and regenerates asm/rom_syms.s.
+# (issue #23; see docs/splitting.md).  For each code segment in tools/
+# split_config.json this writes asm/<name>.s and deletes the data/<name>.s
+# incbin slice; each data segment becomes a structure-only data/<name>.s
+# (labels, symbolic pointers, baserom .incbin slices: issue #36,
+# docs/data.md).  asm/rom_syms.s is regenerated too.
 split: baserom.gba tools/split.py tools/split_config.json docs/analysis/segments.txt docs/analysis/symbols.csv
 	python3 tools/split.py --rom baserom.gba --config tools/split_config.json
 
@@ -196,7 +211,7 @@ else
 
 DOCKER_RUN := docker run --rm -v $(CURDIR):/src -w /src $(IMAGE)
 
-.PHONY: image all compare check-headers progress symbols split modmap clean
+.PHONY: image all compare check-headers check-data progress datastats symbols split modmap clean
 
 image:
 	docker build -t $(IMAGE) .
@@ -212,6 +227,12 @@ check-headers: image
 
 progress: image
 	$(DOCKER_RUN) make progress INSIDE_DOCKER=1
+
+datastats: image
+	$(DOCKER_RUN) make datastats INSIDE_DOCKER=1
+
+check-data: image
+	$(DOCKER_RUN) make check-data INSIDE_DOCKER=1
 
 # report.json generation only needs Python + the repo's ground-truth CSVs,
 # so it runs directly on the host (no toolchain image required).
