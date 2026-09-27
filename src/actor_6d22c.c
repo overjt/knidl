@@ -712,17 +712,17 @@ void ActorUpdateAttachedEffect(void)
     struct Actor *a;
 
     a = gCurTask->unk8C;
-    if (a->unk10 == -1)
+    if (a->attachedTask == -1)
         return;
-    if (*(s16 *)&a->unk12 == -2)
+    if (*(s16 *)&a->attachedTaskLifetime == -2)
         return;
-    if (*(s16 *)&a->unk12 <= 0)
+    if (*(s16 *)&a->attachedTaskLifetime <= 0)
     {
-        TaskFree(a->unk10);
-        a->unk10 = 0xFFFF;
-        a->unk12 = 0xFFFE;
+        TaskFree(a->attachedTask);
+        a->attachedTask = 0xFFFF;
+        a->attachedTaskLifetime = 0xFFFE;
     }
-    a->unk12--;
+    a->attachedTaskLifetime--;
 }
 
 void ActorAttachEffect(s32 a, s32 b)
@@ -731,10 +731,10 @@ void ActorAttachEffect(s32 a, s32 b)
     s32 c;
 
     p = gCurTask->unk8C;
-    if (p->unk10 != -1)
+    if (p->attachedTask != -1)
     {
-        TaskFree(p->unk10);
-        p->unk10 = 0xFFFF;
+        TaskFree(p->attachedTask);
+        p->attachedTask = 0xFFFF;
     }
     switch (a)
     {
@@ -752,11 +752,11 @@ void ActorAttachEffect(s32 a, s32 b)
         c = -1;
         break;
     }
-    p->unk10 = c;
+    p->attachedTask = c;
     if (b == 1)
-        p->unk12 = 60;
+        p->attachedTaskLifetime = 60;
     else
-        p->unk12 = 0xFFFE;
+        p->attachedTaskLifetime = 0xFFFE;
 }
 
 void sub_0806df98(void)

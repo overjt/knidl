@@ -303,7 +303,7 @@ void sub_0808ae80(void)
 
 void sub_0808aeec(void)
 {
-    if (gCurTask->unk8C->unk2C != 0)
+    if (gCurTask->unk8C->animScript != 0)
     {
         if (gCurTask->unk28 == 0)
             gCurTask->unk28 = ActorStepAnim();
@@ -381,7 +381,7 @@ void sub_0808b094(void)
     TaskSetEntry(sub_0808afac, gCurTaskIdx);
     return;
 anim:
-    if (gCurTask->unk8C->unk2C != 0)
+    if (gCurTask->unk8C->animScript != 0)
     {
         if (gCurTask->unk28 == 0)
             gCurTask->unk28 = ActorStepAnim();
@@ -534,7 +534,7 @@ void sub_0808b468(void)
     if (gCurTask->unk34 > 0 && gCurTask->unk58 > 0
         && (u8)IsWaterAtPixel(gCurTask->unk48,
                             (u16)gCurTask->unk4A
-                                + ((s8 *)gCurTask->unk8C->unk50)[2]) != 0)
+                                + ((s8 *)gCurTask->unk8C->terrainBox)[2]) != 0)
     {
         gCurTask->unk58 >>= 2;
         ActorSetState(0);
@@ -717,7 +717,7 @@ void sub_0808b8c4(void)
 {
     if ((u8)IsWaterAtPixel(gCurTask->unk48,
                          (u16)gCurTask->unk4A
-                             + ((s8 *)gCurTask->unk8C->unk50)[2]) != 0)
+                             + ((s8 *)gCurTask->unk8C->terrainBox)[2]) != 0)
     {
         switch (gCurTask->unk73)
         {
@@ -1112,13 +1112,13 @@ void sub_0808c1d0(void)
         TaskSetEntry(sub_0808be3c, gCurTaskIdx);
     if (gCurTask->facing == 1)
     {
-        if (sub_0808ca00(12, ((s8 *)gCurTask->unk8C->unk50)[3]) < 0)
+        if (sub_0808ca00(12, ((s8 *)gCurTask->unk8C->terrainBox)[3]) < 0)
         {
             ActorSetState(8);
             TaskSetEntry(sub_0808be3c, gCurTaskIdx);
         }
     }
-    else if (sub_0808cab8(12, ((s8 *)gCurTask->unk8C->unk50)[3]) < 0)
+    else if (sub_0808cab8(12, ((s8 *)gCurTask->unk8C->terrainBox)[3]) < 0)
     {
         ActorSetState(8);
         TaskSetEntry(sub_0808be3c, gCurTaskIdx);
@@ -1202,13 +1202,13 @@ void sub_0808c3e8(void)
         TaskSetEntry(sub_0808be3c, gCurTaskIdx);
     if (gCurTask->facing == 1)
     {
-        if (sub_0808ca00(12, ((s8 *)gCurTask->unk8C->unk50)[3]) < 0)
+        if (sub_0808ca00(12, ((s8 *)gCurTask->unk8C->terrainBox)[3]) < 0)
         {
             ActorSetState(9);
             TaskSetEntry(sub_0808be3c, gCurTaskIdx);
         }
     }
-    else if (sub_0808cab8(12, ((s8 *)gCurTask->unk8C->unk50)[3]) < 0)
+    else if (sub_0808cab8(12, ((s8 *)gCurTask->unk8C->terrainBox)[3]) < 0)
     {
         ActorSetState(9);
         TaskSetEntry(sub_0808be3c, gCurTaskIdx);
@@ -1417,7 +1417,7 @@ s32 sub_0808c82c(void)
     if (r >= 0)
     {
         gCurTask->unk48 = (u16)gCurTask->unk48
-            + (r - ((s8 *)gCurTask->unk8C->unk50)[5]);
+            + (r - ((s8 *)gCurTask->unk8C->terrainBox)[5]);
         gCurTask->posX = (s16)gCurTask->unk48 << 16;
         gCurTask->facing = 1;
         return 1;
@@ -1426,7 +1426,7 @@ s32 sub_0808c82c(void)
     if (r >= 0)
     {
         gCurTask->unk48 = (u16)gCurTask->unk48
-            - (((s8 *)gCurTask->unk8C->unk50)[4] + r);
+            - (((s8 *)gCurTask->unk8C->terrainBox)[4] + r);
         gCurTask->posX = (s16)gCurTask->unk48 << 16;
         gCurTask->facing = -1;
         return 1;
@@ -1462,14 +1462,14 @@ void sub_0808c934(void)
     struct ActorSpawn sp;
     u8 zero;
 
-    sp.unk00 = 34;
-    sp.unk04 = 137;
+    sp.subtype = 34;
+    sp.taskType = 137;
     sp.unk08 = gCurTask->unk73;
     sp.unk09 = gCurTask->unk74;
     zero = 0;
-    sp.unk0C = 6;
-    sp.unk0E = -6;
-    sp.unk0A = zero;
+    sp.x = 6;
+    sp.y = -6;
+    sp.checkTerrain = zero;
     gCurTask->unk46 = CreateActorFromDescAtOffsetFacing(&sp, 0);
 }
 

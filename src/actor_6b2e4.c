@@ -341,7 +341,7 @@ void sub_0806b878(void)
     t = gCurTask;
     v = t->unk40;
     m = 0xF000;
-    q = t->unk8C->unk22;
+    q = t->unk8C->savedPaletteBits;
     m &= v;
     if (m == q)
         return;
@@ -350,7 +350,7 @@ void sub_0806b878(void)
     w = t->unk40;
     n = 0xFFF;
     n &= w;
-    t->unk40 = n | t->unk8C->unk22;
+    t->unk40 = n | t->unk8C->savedPaletteBits;
 }
 
 void sub_0806b8bc(void)
@@ -414,7 +414,7 @@ void sub_0806b95c(void)
     w = v->unk40;
     m = 0xF000;
     m &= w;
-    c->unk22 = m;
+    c->savedPaletteBits = m;
     v->unk2C = 2;
     a->unk04 = v->unk82;
 }
@@ -446,15 +446,15 @@ void sub_0806ba34(void)
     a = t->unk8C;
     v = t->unk40;
     z = v >> 12;
-    if (a->unk28 != 0)
-        sub_08065d44(z, t->unk76, a->unk0C, a->unk24, t->unk72, a->unk28);
+    if (a->palette != 0)
+        sub_08065d44(z, t->unk76, a->paletteVariant, a->paletteColorCount, t->unk72, a->palette);
     else if (t->unk72 == 0 || t->unk72 == 3)
     {
         m = 0xFFF;
         m &= v;
-        t->unk40 = m | a->unk22;
+        t->unk40 = m | a->savedPaletteBits;
     }
-    a->unk0A |= 1;
+    a->paletteOverridden |= 1;
 }
 
 void sub_0806ba9c(void)
@@ -631,7 +631,7 @@ void sub_0806bd10(void)
     t = gCurTask;
     a = t->unk8C;
     p = t->unk88;
-    if ((s8)a->unk44->unk0D == 1)
+    if ((s8)a->def->unk0D == 1)
     {
         if (*(s8 *)&p->unk07 == 1 && t->unk72 == 6 && t->unk76 != 0)
         {
@@ -651,7 +651,7 @@ void sub_0806bd10(void)
         p->unk06 = 1;
     }
     p->unk31 = 0;
-    if (*(s8 *)&a->unk00 == 0)
+    if (*(s8 *)&a->ability == 0)
         return;
     u = gCurTask;
     if (u->unk72 == 6)
@@ -676,8 +676,8 @@ void sub_0806bd10(void)
         p->unk0A++;
     if (*(s8 *)&p->unk0B != 0)
         return;
-    p->unk0B = a->unk00;
-    switch ((s8)a->unk00)
+    p->unk0B = a->ability;
+    switch ((s8)a->ability)
     {
     case 7:
         q = 3;
@@ -739,7 +739,7 @@ u8 sub_0806be84(void)
         w = t->unk40;
         m = 0xFFF;
         m &= w;
-        t->unk40 = m | t->unk8C->unk22;
+        t->unk40 = m | t->unk8C->savedPaletteBits;
         t->posX = t->unk48 << 16;
         t->posY = t->unk4A << 16;
         if (t->unk72 != 1 && t->unk72 != 6)
@@ -880,7 +880,7 @@ void sub_0806c158(void)
     t->unk00 = (u32)ActorMove;
     t->unk04 = (u32)sub_0806c1d0;
     t->unk08 = 0;
-    if (gUnk_0300244C != 0 && t->unk8C->unk50 == 0)
+    if (gUnk_0300244C != 0 && t->unk8C->terrainBox == 0)
         ActorSetTerrainBox(gUnk_0873F894);
     TaskSetMotionXFacing(0x38000, 0x5A5A5A5A);
     TaskSetMotionY(0x30000, 0x8000, 0x60000);

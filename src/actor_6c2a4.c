@@ -225,7 +225,7 @@ void sub_0806c4a0(void)
     t->unk04 = (u32)sub_0806c5d4;
     t->unk08 = (u32)sub_0806c770;
     t->layer = 11;
-    if (gUnk_0300244C != 0 && gCurTask->unk8C->unk50 == 0)
+    if (gUnk_0300244C != 0 && gCurTask->unk8C->terrainBox == 0)
         ActorSetTerrainBox((u32)gUnk_0873F894);
     u = gCurTask;
     i = (s16)u->unk70 - 3;

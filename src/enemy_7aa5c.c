@@ -524,7 +524,7 @@ void sub_0807b11c(void)
 {
     struct Task *t = gCurTask;
 
-    t->unk8C->unk2C = 0;
+    t->unk8C->animScript = 0;
     t->unk34 = 0;
     t->unk30 = 0;
     t->unk2C = 0;
@@ -536,7 +536,7 @@ void sub_0807b11c(void)
 
 void sub_0807b144(void)
 {
-    if (gCurTask->unk8C->unk2C == 0)
+    if (gCurTask->unk8C->animScript == 0)
         gCurTask->unk34 = ActorStartAnim(gUnk_0874099C);
 }
 
@@ -615,7 +615,7 @@ void sub_0807b294(void *fn)
     t->unk2C = t->facing;
     t->unk30 = 1;
     t->unk34 = 0;
-    a->unk2C = 0;
+    a->animScript = 0;
     if (RandomRange(4) == 0)
     {
         ActorSetState(1);
@@ -1133,13 +1133,13 @@ s32 sub_0807be08(void)
     switch (st)
     {
     case 1:
-        ActorSetState(a->unk1C);
+        ActorSetState(a->prevState);
         break;
     case 2:
         ActorSetState(3);
         break;
     case 3:
-        if (gUnk_0300244C != 0 && a->unk2C == 0)
+        if (gUnk_0300244C != 0 && a->animScript == 0)
             gCurTask->unk34 = ActorStartAnim(gUnk_08740AAC);
         ActorSetState(4);
         break;
@@ -1459,10 +1459,10 @@ void sub_0807c4a0(void)
     u32 v;
 
     AcquirePaletteAnim(1, 0);
-    v = a->unk28;
+    v = a->palette;
     if (v == 0)
         v = gUnk_0825B350[2];
-    SetPaletteAnimSource(0, v, a->unk0C);
+    SetPaletteAnimSource(0, v, a->paletteVariant);
 }
 
 void sub_0807c4d4(void)
@@ -1538,13 +1538,13 @@ void sub_0807c618(void)
 
     if (sub_08021a40(t->unk48 + t->facing * 16, t->unk4A) == 0)
     {
-        spawn.unk00 = 31;
-        spawn.unk04 = 134;
+        spawn.subtype = 31;
+        spawn.taskType = 134;
         spawn.unk08 = 0;
         spawn.unk09 = 0;
-        spawn.unk0C = 8;
-        spawn.unk0E = 0;
-        spawn.unk0A = 1;
+        spawn.x = 8;
+        spawn.y = 0;
+        spawn.checkTerrain = 1;
         gCurTask->unk46 = CreateActorFromDescAtOffsetFacing(&spawn, 0);
         PlaySfx(165);
     }
@@ -1676,18 +1676,18 @@ void sub_0807c8d0(void)
         {
             struct Actor *a = t->unk8C;
 
-            if (sub_08021a40(t->unk48, t->unk4A + ((s8 *)a->unk50)[2]) != 0)
+            if (sub_08021a40(t->unk48, t->unk4A + ((s8 *)a->terrainBox)[2]) != 0)
                 gCurTask->unk1C = 0;
             {
                 struct Task *u = gCurTask;
 
-                if (sub_08021a40(u->unk48 + ((s8 *)a->unk50)[5], u->unk4A) != 0)
+                if (sub_08021a40(u->unk48 + ((s8 *)a->terrainBox)[5], u->unk4A) != 0)
                     gCurTask->unk1C = 0;
             }
             {
                 struct Task *u = gCurTask;
 
-                if (sub_08021a40(u->unk48 + ((s8 *)a->unk50)[4], u->unk4A) != 0)
+                if (sub_08021a40(u->unk48 + ((s8 *)a->terrainBox)[4], u->unk4A) != 0)
                     gCurTask->unk1C = 0;
             }
             ActorSetState(0);

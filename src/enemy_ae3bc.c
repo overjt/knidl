@@ -1494,7 +1494,7 @@ void sub_080ae4c4(void)
     sub_08063a00((u32)gUnk_0874B450);
     c = &gCurTask;
     t = *c;
-    t->unk8C->unk2C = 0;
+    t->unk8C->animScript = 0;
     t->unk28 = 0;
     t->facing = 1;
     u = *c;
@@ -2175,8 +2175,8 @@ void sub_080aefd4(u32 a)
     struct Task *u;
 
     t = gCurTask;
-    t->unk8C->unk2C = (struct AnimCmd *)a;
-    t->unk8C->unk09 = 0;
+    t->unk8C->animScript = (struct AnimCmd *)a;
+    t->unk8C->animScriptPos = 0;
     u = gCurTask;
     u->unk28 = 0;
     sub_080af020();
@@ -2187,7 +2187,7 @@ void sub_080aeff8(void)
     struct Task *t;
 
     t = gCurTask;
-    if (t->unk8C->unk2C != 0)
+    if (t->unk8C->animScript != 0)
     {
         t->unk28--;
         if (t->unk28 <= 0)
@@ -2216,38 +2216,38 @@ void sub_080af020(void)
 top:
     t = gCurTask;
     a = t->unk8C;
-    i = a->unk09;
-    v = ((s32 *)a->unk2C)[i];
+    i = a->animScriptPos;
+    v = ((s32 *)a->animScript)[i];
     switch (v)
     {
     case -1:
         break;
     case -2:
-        a->unk09 = 0;
+        a->animScriptPos = 0;
         goto top;
     case -3:
-        a->unk09 = i + 1;
+        a->animScriptPos = i + 1;
         a2 = gCurTask->unk8C;
-        ((void (*)(void))((s32 *)a2->unk2C)[a2->unk09++])();
+        ((void (*)(void))((s32 *)a2->animScript)[a2->animScriptPos++])();
         goto top;
     case -4:
-        a->unk09 = i + 1;
+        a->animScriptPos = i + 1;
         t3 = gCurTask;
         a3 = t3->unk8C;
-        t3->frame = ((s32 *)a3->unk2C)[a3->unk09++];
+        t3->frame = ((s32 *)a3->animScript)[a3->animScriptPos++];
         t4 = gCurTask;
         a4 = t4->unk8C;
-        r = ((s32 (*)(void))((s32 *)a4->unk2C)[a4->unk09++])();
+        r = ((s32 (*)(void))((s32 *)a4->animScript)[a4->animScriptPos++])();
         u = gCurTask;
         u->unk28 = r;
         break;
     default:
         t5 = gCurTask;
         a5 = t5->unk8C;
-        t5->frame = ((s32 *)a5->unk2C)[a5->unk09++];
+        t5->frame = ((s32 *)a5->animScript)[a5->animScriptPos++];
         t6 = gCurTask;
         a6 = t6->unk8C;
-        t6->unk28 = ((s32 *)a6->unk2C)[a6->unk09++];
+        t6->unk28 = ((s32 *)a6->animScript)[a6->animScriptPos++];
         break;
     }
 }
@@ -2337,14 +2337,14 @@ void sub_080af20c(u8 a)
 
     if (gUnk_02007D00[0] == 0)
     {
-        sp.unk00 = 32;
-        sp.unk04 = 135;
+        sp.subtype = 32;
+        sp.taskType = 135;
         sp.unk08 = a;
         sp.unk09 = gCurTask->unk74;
-        sp.unk10 = 0xA110;
-        sp.unk0C = gCurTask->posX >> 16;
-        sp.unk0E = gCurTask->posY >> 16;
-        sp.unk0A = 0;
+        sp.tileWord = 0xA110;
+        sp.x = gCurTask->posX >> 16;
+        sp.y = gCurTask->posY >> 16;
+        sp.checkTerrain = 0;
         gCurTask->unk46 = CreateActorFromDesc(&sp, 1);
     }
 }
@@ -2369,11 +2369,11 @@ void sub_080af294(void)
     TaskStop();
     c = &gCurTask;
     t = *c;
-    t->unk8C->unk2C = 0;
+    t->unk8C->animScript = 0;
     t->unk15 = 3;
     gUnk_02007D00[0] = 1;
     ActorSetAttackBox(0);
-    (*c)->unk8C->unk38 = 0x23E;
+    (*c)->unk8C->sfxOverride = 0x23E;
     HudRemoveHpBar();
     sub_0806b05c();
     sub_0806b098();
@@ -3407,7 +3407,7 @@ void sub_080b05e8(void)
     (*c)->facing = 1;
     u = *c;
     u->frame = 0xFFFF;
-    u->unk8C->unk2C = (struct AnimCmd *)z;
+    u->unk8C->animScript = (struct AnimCmd *)z;
     p[6] = z;
     p[7] = 3;
     sub_08063698(80, 32);
@@ -3960,11 +3960,11 @@ void sub_080b1264(void)
     while (1)
     {
         PlaySfx(0x222);
-        sp.unk00 = 15;
-        sp.unk04 = 117;
+        sp.subtype = 15;
+        sp.taskType = 117;
         sp.unk08 = gCurTask->unk73;
         sp.unk09 = gCurTask->unk74;
-        sp.unk0A = 1;
+        sp.checkTerrain = 1;
         gCurTask->unk46 = CreateActorFromDescHere(&sp, 0);
         gCurTask->unk6C = 0;
         do
@@ -5247,15 +5247,15 @@ void sub_080b2768(void)
     s32 z;
 
     PlaySfx(0x223);
-    sp.unk00 = 23;
-    sp.unk04 = 126;
+    sp.subtype = 23;
+    sp.taskType = 126;
     sp.unk08 = 0;
     sp.unk09 = 0;
     z = 0;
-    sp.unk0C = 24;
-    sp.unk0E = 40;
-    sp.unk10 = sub_08066630(8);
-    sp.unk0A = z;
+    sp.x = 24;
+    sp.y = 40;
+    sp.tileWord = sub_08066630(8);
+    sp.checkTerrain = z;
     CreateActorFromDescAtOffsetFacing(&sp, 1);
 }
 
@@ -5264,16 +5264,16 @@ void sub_080b27b0(void)
     struct ActorSpawn sp;
     s32 z;
 
-    sp.unk00 = 22;
-    sp.unk04 = 125;
+    sp.subtype = 22;
+    sp.taskType = 125;
     sp.unk08 = 0;
     sp.unk09 = 0;
-    sp.unk0C = (u8)sub_080b2804();
+    sp.x = (u8)sub_080b2804();
     z = 0;
-    sp.unk0E = 224;
-    sp.unk10 = sub_08066630(1);
-    sp.unk0A = z;
-    CreateChildTask(170, sp.unk0C, sp.unk0E, 0);
+    sp.y = 224;
+    sp.tileWord = sub_08066630(1);
+    sp.checkTerrain = z;
+    CreateChildTask(170, sp.x, sp.y, 0);
     CreateActorFromDesc(&sp, 1);
 }
 

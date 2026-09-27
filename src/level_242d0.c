@@ -21,7 +21,7 @@
  * split at 0x08024E40, EnterDoor and ExitClearedStage swap hoisted address
  * registers, lesson 4.79).  FindDoorAt(x, y) finds an enterable door at a
  * pixel - the door metatiles 16/144, 54/182 and 55/183, the door records
- * RoomDef.unk44 and their locks gUsedSubGameDoors[]/gUnk_0200B04C - and records
+ * RoomDef.doors and their locks gUsedSubGameDoors[]/gUnk_0200B04C - and records
  * it in gUnk_02000030 (type << 8 | index); EnterDoor enters it, a 9-way
  * switch on the door kind (RoomDef door byte +6) that sets the next
  * level/stage/room, the arrival position gRoomEntryX/gRoomEntryY and
@@ -54,35 +54,35 @@ struct Door
 struct RoomDef
 {
     /*0x00*/ u8 filler00[4];
-    /*0x04*/ s8 unk04;
-    /*0x05*/ u8 unk05;
+    /*0x04*/ s8 bgm;
+    /*0x05*/ u8 mapsCompressed;
     /*0x06*/ u8 filler06[2];
-    /*0x08*/ void *unk08;
-    /*0x0C*/ void *unk0C;
+    /*0x08*/ void *metatileMap;
+    /*0x0C*/ void *blockLayer;
     /*0x10*/ void *unk10;
-    /*0x14*/ u16 unk14;
-    /*0x16*/ u16 unk16;
-    /*0x18*/ u16 *unk18;
-    /*0x1C*/ void *unk1C;
-    /*0x20*/ void *unk20;
-    /*0x24*/ u16 unk24;
-    /*0x26*/ u16 unk26;
-    /*0x28*/ u16 *unk28;
-    /*0x2C*/ void *unk2C;
-    /*0x30*/ struct BgMap *unk30;
-    /*0x34*/ u16 unk34;
-    /*0x36*/ u16 unk36;
+    /*0x14*/ u16 width;
+    /*0x16*/ u16 height;
+    /*0x18*/ u16 *bg2Palette;
+    /*0x1C*/ void *bg2Tiles;
+    /*0x20*/ void *metatileTiles;
+    /*0x24*/ u16 borderX;
+    /*0x26*/ u16 borderY;
+    /*0x28*/ u16 *bg3Palette;
+    /*0x2C*/ void *bg3Tiles;
+    /*0x30*/ struct BgMap *bg3Map;
+    /*0x34*/ u16 bg3BorderX;
+    /*0x36*/ u16 bg3BorderY;
     /*0x38*/ u16 unk38;
-    /*0x3A*/ u16 unk3A;
-    /*0x3C*/ u16 unk3C;
+    /*0x3A*/ u16 doorCount;
+    /*0x3C*/ u16 objectCount;
     /*0x3E*/ u16 unk3E;
-    /*0x40*/ u16 unk40;
+    /*0x40*/ u16 bgAnimSet;
     /*0x42*/ u16 unk42;
-    /*0x44*/ struct Door *unk44;
-    /*0x48*/ void *unk48;
+    /*0x44*/ struct Door *doors;
+    /*0x48*/ void *objects;
     /*0x4C*/ u8 filler4C[4];
-    /*0x50*/ u16 unk50;
-    /*0x52*/ u16 unk52;
+    /*0x50*/ u16 entryX;
+    /*0x52*/ u16 entryY;
     /*0x54*/ u8 unk54;
     /*0x55*/ u8 unk55;
     /*0x56*/ u8 unk56;
@@ -320,19 +320,19 @@ void sub_08024300(void)
     LoadBg2Gfx();
     LoadBg3Gfx();
     SelectBg3MapShape();
-    gRoomWidth = gCurRoomDef->unk14;
-    gRoomHeight = gCurRoomDef->unk16;
+    gRoomWidth = gCurRoomDef->width;
+    gRoomHeight = gCurRoomDef->height;
     gRoomMetatileCount = gRoomWidth * gRoomHeight;
-    gRoomBorder[0] = gCurRoomDef->unk24;
-    gRoomBorder[1] = gCurRoomDef->unk26;
-    gBg3Border[0] = gCurRoomDef->unk34;
-    gBg3Border[1] = gCurRoomDef->unk36;
+    gRoomBorder[0] = gCurRoomDef->borderX;
+    gRoomBorder[1] = gCurRoomDef->borderY;
+    gBg3Border[0] = gCurRoomDef->bg3BorderX;
+    gBg3Border[1] = gCurRoomDef->bg3BorderY;
     gRoomMap = gRoomMapBuffer;
-    if (gCurRoomDef->unk05 != 0)
-        RequestCopy(8, (u32)gCurRoomDef->unk08, (u32)gRoomMapBuffer, 0);
+    if (gCurRoomDef->mapsCompressed != 0)
+        RequestCopy(8, (u32)gCurRoomDef->metatileMap, (u32)gRoomMapBuffer, 0);
     else
-        CpuSet(gCurRoomDef->unk08, gRoomMapBuffer, (gRoomMetatileCount * 2) & 0x1FFFFF);
-    RequestCopy(8, (u32)gCurRoomDef->unk20, (u32)gMetatileTiles, 0);
+        CpuSet(gCurRoomDef->metatileMap, gRoomMapBuffer, (gRoomMetatileCount * 2) & 0x1FFFFF);
+    RequestCopy(8, (u32)gCurRoomDef->metatileTiles, (u32)gMetatileTiles, 0);
     gUnk_02000020 = 0;
     gUnk_0200B078 = 0;
     gHBlankScrollStarted = 0;
@@ -460,28 +460,28 @@ void sub_08024698(s32 a0)
     LoadBg2Gfx();
     LoadBg3Gfx();
     SelectBg3MapShape();
-    gRoomWidth = gCurRoomDef->unk14;
-    gRoomHeight = gCurRoomDef->unk16;
+    gRoomWidth = gCurRoomDef->width;
+    gRoomHeight = gCurRoomDef->height;
     gRoomMetatileCount = gRoomWidth * gRoomHeight;
-    gRoomBorder[0] = gCurRoomDef->unk24;
-    gRoomBorder[1] = gCurRoomDef->unk26;
-    gBg3Border[0] = gCurRoomDef->unk34;
-    gBg3Border[1] = gCurRoomDef->unk36;
-    gRoomObjectList.unk0 = gCurRoomDef->unk3C;
+    gRoomBorder[0] = gCurRoomDef->borderX;
+    gRoomBorder[1] = gCurRoomDef->borderY;
+    gBg3Border[0] = gCurRoomDef->bg3BorderX;
+    gBg3Border[1] = gCurRoomDef->bg3BorderY;
+    gRoomObjectList.unk0 = gCurRoomDef->objectCount;
     gRoomObjectList.unk2 = gCurRoomDef->unk3E;
-    gRoomObjectList.unk4 = gCurRoomDef->unk48;
+    gRoomObjectList.unk4 = gCurRoomDef->objects;
     gRoomMap = gRoomMapBuffer;
-    if (gCurRoomDef->unk05 != 0)
+    if (gCurRoomDef->mapsCompressed != 0)
     {
-        RequestCopy(8, (u32)gCurRoomDef->unk08, (u32)gRoomMapBuffer, 0);
-        RequestCopy(8, (u32)gCurRoomDef->unk0C, (u32)gBlockLayer, 0);
+        RequestCopy(8, (u32)gCurRoomDef->metatileMap, (u32)gRoomMapBuffer, 0);
+        RequestCopy(8, (u32)gCurRoomDef->blockLayer, (u32)gBlockLayer, 0);
     }
     else
     {
-        CpuSet(gCurRoomDef->unk08, gRoomMapBuffer, (gRoomMetatileCount * 2) & 0x1FFFFF);
-        CpuSet(gCurRoomDef->unk0C, gBlockLayer, gRoomMetatileCount & 0x1FFFFF);
+        CpuSet(gCurRoomDef->metatileMap, gRoomMapBuffer, (gRoomMetatileCount * 2) & 0x1FFFFF);
+        CpuSet(gCurRoomDef->blockLayer, gBlockLayer, gRoomMetatileCount & 0x1FFFFF);
     }
-    RequestCopy(8, (u32)gCurRoomDef->unk20, (u32)gMetatileTiles, 0);
+    RequestCopy(8, (u32)gCurRoomDef->metatileTiles, (u32)gMetatileTiles, 0);
     gUnk_02000020 = 0;
     gUnk_0200B078 = 0;
     gHBlankScrollStarted = 0;
@@ -585,28 +585,28 @@ void sub_0802497c(void)
     LoadBg2Gfx();
     LoadBg3Gfx();
     SelectBg3MapShape();
-    gRoomWidth = gCurRoomDef->unk14;
-    gRoomHeight = gCurRoomDef->unk16;
+    gRoomWidth = gCurRoomDef->width;
+    gRoomHeight = gCurRoomDef->height;
     gRoomMetatileCount = gRoomWidth * gRoomHeight;
-    gRoomBorder[0] = gCurRoomDef->unk24;
-    gRoomBorder[1] = gCurRoomDef->unk26;
-    gBg3Border[0] = gCurRoomDef->unk34;
-    gBg3Border[1] = gCurRoomDef->unk36;
-    gRoomObjectList.unk0 = gCurRoomDef->unk3C;
+    gRoomBorder[0] = gCurRoomDef->borderX;
+    gRoomBorder[1] = gCurRoomDef->borderY;
+    gBg3Border[0] = gCurRoomDef->bg3BorderX;
+    gBg3Border[1] = gCurRoomDef->bg3BorderY;
+    gRoomObjectList.unk0 = gCurRoomDef->objectCount;
     gRoomObjectList.unk2 = gCurRoomDef->unk3E;
-    gRoomObjectList.unk4 = gCurRoomDef->unk48;
+    gRoomObjectList.unk4 = gCurRoomDef->objects;
     gRoomMap = gRoomMapBuffer;
-    if (gCurRoomDef->unk05 != 0)
+    if (gCurRoomDef->mapsCompressed != 0)
     {
-        RequestCopy(8, (u32)gCurRoomDef->unk08, (u32)gRoomMapBuffer, 0);
-        RequestCopy(8, (u32)gCurRoomDef->unk0C, (u32)gBlockLayer, 0);
+        RequestCopy(8, (u32)gCurRoomDef->metatileMap, (u32)gRoomMapBuffer, 0);
+        RequestCopy(8, (u32)gCurRoomDef->blockLayer, (u32)gBlockLayer, 0);
     }
     else
     {
-        CpuSet(gCurRoomDef->unk08, gRoomMapBuffer, (gRoomMetatileCount * 2) & 0x1FFFFF);
-        CpuSet(gCurRoomDef->unk0C, gBlockLayer, gRoomMetatileCount & 0x1FFFFF);
+        CpuSet(gCurRoomDef->metatileMap, gRoomMapBuffer, (gRoomMetatileCount * 2) & 0x1FFFFF);
+        CpuSet(gCurRoomDef->blockLayer, gBlockLayer, gRoomMetatileCount & 0x1FFFFF);
     }
-    RequestCopy(8, (u32)gCurRoomDef->unk20, (u32)gMetatileTiles, 0);
+    RequestCopy(8, (u32)gCurRoomDef->metatileTiles, (u32)gMetatileTiles, 0);
     gUnk_02000020 = 0;
     gUnk_0200B078 = 0;
     gHBlankScrollStarted = 0;
@@ -743,7 +743,7 @@ s32 FindDoorAt(s32 x, s32 y)
     struct Door *d;
 
     gUnk_02000030 = 0xFF;
-    if (gCurRoomDef->unk3A == 0)
+    if (gCurRoomDef->doorCount == 0)
         return 0;
     switch (GetCollisionTileAtPixel(x, y))
     {
@@ -763,8 +763,8 @@ s32 FindDoorAt(s32 x, s32 y)
     default:
         return 0;
     }
-    d = gCurRoomDef->unk44;
-    for (i = 0; i < gCurRoomDef->unk3A; d++, i++)
+    d = gCurRoomDef->doors;
+    for (i = 0; i < gCurRoomDef->doorCount; d++, i++)
     {
         if (gUnk_03002444 != 0)
         {
@@ -831,7 +831,7 @@ s32 EnterDoor(void)
     idx = gUnk_02000030 & 0xFF;
     if (idx == 0xFF)
         return 0;
-    d = &gCurRoomDef->unk44[idx];
+    d = &gCurRoomDef->doors[idx];
     gRoomEntrySet = 0;
     gUnk_0200AF08 = 0;
     if (gUnk_03002444 != 0)
@@ -854,8 +854,8 @@ s32 EnterDoor(void)
                     gStageIndex = 0;
                 gRoomIndex = 0;
                 room = gRoomTable[gLevelIndex][gStageIndex][gRoomIndex];
-                e = room->unk44;
-                for (i = 0; i < room->unk3A; e++, i++)
+                e = room->doors;
+                for (i = 0; i < room->doorCount; e++, i++)
                 {
                     if (e->unk0 == 0x270F && *(u8 *)&e->unk6 == 2)
                         break;
@@ -885,8 +885,8 @@ s32 EnterDoor(void)
                         gStageIndex = 7;
                     gRoomIndex = 0;
                     room = gRoomTable[gLevelIndex][gStageIndex][gRoomIndex];
-                    e = room->unk44;
-                    for (i = 0; i < room->unk3A; e++, i++)
+                    e = room->doors;
+                    for (i = 0; i < room->doorCount; e++, i++)
                     {
                         if (e->unk0 == 0x270F && *(u8 *)&e->unk6 == 1)
                             break;
@@ -954,8 +954,8 @@ s32 EnterDoor(void)
         gRoomIndex = d->unk0;
         t = gGameState - 11;
         room = gRoomTable[gLevelIndex][gStageIndex][gRoomIndex];
-        e = room->unk44;
-        for (i = 0; i < room->unk3A; e++, i++)
+        e = room->doors;
+        for (i = 0; i < room->doorCount; e++, i++)
         {
             if (e->unk0 == 0x270F && (e->unk6 & 0xFF) == t)
                 break;
@@ -1003,8 +1003,8 @@ s32 EnterDoor(void)
             gStageIndex = gUnk_030023B8;
             gRoomIndex = 0;
             room = gRoomTable[gLevelIndex][gStageIndex][gRoomIndex];
-            e = room->unk44;
-            for (i = 0; i < room->unk3A; e++, i++)
+            e = room->doors;
+            for (i = 0; i < room->doorCount; e++, i++)
             {
                 if (e->unk0 == 0x270F && *(u8 *)&e->unk6 == 0 && e->unk8 == (s8)gUnk_03001F20)
                     break;
@@ -1061,8 +1061,8 @@ void ExitClearedStage(void)
             gStageIndex = 7;
         gRoomIndex = 0;
         room = gRoomTable[gLevelIndex][gStageIndex][gRoomIndex];
-        d = room->unk44;
-        for (i = 0; i < room->unk3A; i++)
+        d = room->doors;
+        for (i = 0; i < room->doorCount; i++)
         {
             if (d->unk0 == 0x270F && (u8)d->unk6 == 1)
                 break;
@@ -1174,8 +1174,8 @@ void sub_08025bc8(s32 id)
     gStageIndex = gUnk_030023B8;
     gRoomIndex = 0;
     room = gRoomTable[gLevelIndex][gStageIndex][gRoomIndex];
-    d = room->unk44;
-    for (i = 0; i < room->unk3A; d++, i++)
+    d = room->doors;
+    for (i = 0; i < room->doorCount; d++, i++)
     {
         if (d->unk0 == 0x270F && (u8)d->unk6 == 0 && d->unk8 == (s8)gUnk_03001F20)
             break;
@@ -1256,9 +1256,9 @@ s32 sub_08025f00(void)
 
     if (gUnk_02004C98 == 0)
     {
-        struct Door *d = gCurRoomDef->unk44;
+        struct Door *d = gCurRoomDef->doors;
 
-        for (i = 0; i < gCurRoomDef->unk3A; i++)
+        for (i = 0; i < gCurRoomDef->doorCount; i++)
         {
             if (d->unk0 == 0x1E61 || d->unk0 == 0x1A0A)
                 break;
@@ -1304,10 +1304,10 @@ s32 sub_080260b0(void)
 
     if (gUnk_02004C98 == 0)
     {
-        struct Door *d = gCurRoomDef->unk44;
+        struct Door *d = gCurRoomDef->doors;
         s32 i;
 
-        for (i = 0; i < gCurRoomDef->unk3A; i++)
+        for (i = 0; i < gCurRoomDef->doorCount; i++)
         {
             if (d->unk0 == 0x1A0A)
                 break;
@@ -1327,10 +1327,10 @@ s32 sub_080260b0(void)
 
 s32 sub_0802610c(void)
 {
-    struct Door *d = gCurRoomDef->unk44;
+    struct Door *d = gCurRoomDef->doors;
     s32 i;
 
-    for (i = 0; i < gCurRoomDef->unk3A; i++)
+    for (i = 0; i < gCurRoomDef->doorCount; i++)
     {
         if (d->unk0 == 0x1E61)
             break;

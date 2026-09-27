@@ -88,14 +88,14 @@ void sub_080a028c(void)
     struct Actor *a;
 
     a = gCurTask->unk8C;
-    sp.unk00 = 11;
-    sp.unk04 = 113;
+    sp.subtype = 11;
+    sp.taskType = 113;
     sp.unk08 = 0;
     sp.unk09 = 0;
-    sp.unk0C = 32;
-    sp.unk0E = 16;
-    sp.unk10 = a->unk20;
-    sp.unk0A = 0;
+    sp.x = 32;
+    sp.y = 16;
+    sp.tileWord = a->savedTileWord;
+    sp.checkTerrain = 0;
     gCurTask->unk46 = CreateActorFromDescAtOffsetFacing(&sp, 1);
 }
 
@@ -389,7 +389,7 @@ void sub_080a06f0(void)
     }
     else
     {
-        tab = gUnk_087482A8[a->unk1C];
+        tab = gUnk_087482A8[a->prevState];
         i = RandomRange(8);
         q = i * 4 + (s32)tab;
         ActorSetState(*(u16 *)q);
@@ -1146,9 +1146,9 @@ void sub_080a146c(void)
     TaskStop();
     TaskSetFrame(41);
     TaskYieldTrampoline(10);
-    f = a->unk1C;
+    f = a->prevState;
     ActorSetState(1);
-    a->unk1C = (s8)f;
+    a->prevState = (s8)f;
     TaskSleepForever();
 }
 

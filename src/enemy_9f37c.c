@@ -424,7 +424,7 @@ s32 sub_0809f994(void)
     p = &t->unk48;
     h = *p;
     a = t->unk8C;
-    q = (s8 *)a->unk50;
+    q = (s8 *)a->terrainBox;
     if (h < q[4] + 24)
     {
         if (t->unk54 < 0)

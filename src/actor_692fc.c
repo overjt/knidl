@@ -8,7 +8,7 @@
  * 6-byte stack record (ActorGetTerrainBox) and hand it to one of the input decoders
  * at 0x0801BCAC..0x0801C3A4; the three big dispatchers (ActorCollideTerrain,
  * sub_080696a0, sub_08069888) then walk the actor's seven-entry handler table
- * at Actor.unk54, calling the first handler that claims the frame.  The tail
+ * at Actor.terrainHandlers, calling the first handler that claims the frame.  The tail
  * of the module is the class-1 "carried" task body: state machine entry
  * points (ActorReactToHitKind/sub_08069bbc), the ActorPlayHitSfx sound dispatcher and
  * the ActorStartHitStun/ActorEndHitStun push/pop of the actor's transform.
@@ -18,7 +18,7 @@
 #include "task.h"
 
 /* The 6-byte directional record ActorGetTerrainBox fills on the stack: three raw
-   bytes copied from Actor.unk50 plus three that are negated when the task
+   bytes copied from Actor.terrainBox plus three that are negated when the task
    faces left (Task.facing == -1). */
 struct InputState
 {
@@ -30,7 +30,7 @@ struct InputState
     /*0x05*/ u8 unk05;
 };
 
-/* Seven-entry handler table hanging off Actor.unk54; every entry is a
+/* Seven-entry handler table hanging off Actor.terrainHandlers; every entry is a
    u8 (*)(void) that returns 1 when it consumed the frame. */
 struct ActorHandlers
 {
@@ -43,7 +43,7 @@ struct ActorHandlers
     /*0x18*/ u32 unk18;
 };
 
-/* Block Actor.unk5C points at: two s8 mode bytes and two u8 (*)(void)
+/* Block Actor.hitReactions points at: two s8 mode bytes and two u8 (*)(void)
    hooks.  Compare struct ActorAux, which is the Actor.unk60 block. */
 struct ActorVt
 {
@@ -146,7 +146,7 @@ u32 ActorCollideTerrain(void)
 b1:
     if ((gCurTask->unk7B & 1) == 0 && (gCurTask->unk7B & 0x40) == 0)
     {
-        fn = ((struct ActorHandlers *)a->unk54)->unk0C;
+        fn = ((struct ActorHandlers *)a->terrainHandlers)->unk0C;
         if (fn != 0)
             r = ((u8 (*)(void))fn)();
     }
@@ -160,7 +160,7 @@ s1:
 b2:
     if ((gCurTask->unk7B & 1) != 0 && (gCurTask->unk7B & 0x40) == 0)
     {
-        fn = ((struct ActorHandlers *)a->unk54)->unk08;
+        fn = ((struct ActorHandlers *)a->terrainHandlers)->unk08;
         if (fn != 0)
             r = ((u8 (*)(void))fn)();
     }
@@ -171,13 +171,13 @@ s2:
     {
         if ((gCurTask->unk7A & 1) != 0)
             goto s3;
-        fn = ((struct ActorHandlers *)a->unk54)->unk04;
+        fn = ((struct ActorHandlers *)a->terrainHandlers)->unk04;
     }
     else
     {
         if ((gCurTask->unk7A & 1) == 0)
             goto s3;
-        fn = ((struct ActorHandlers *)a->unk54)->unk00;
+        fn = ((struct ActorHandlers *)a->terrainHandlers)->unk00;
     }
     if (fn != 0)
         r = ((u8 (*)(void))fn)();
@@ -186,7 +186,7 @@ s3:
         return 1;
     if ((gTerrainResult[0] & 3) != 0)
     {
-        fn = ((struct ActorHandlers *)a->unk54)->unk10;
+        fn = ((struct ActorHandlers *)a->terrainHandlers)->unk10;
         if (fn != 0)
             r = ((u8 (*)(void))fn)();
     }
@@ -194,7 +194,7 @@ s3:
         return 1;
     if ((gCurTask->unk7A & 1) != 0 && (gTerrainResult[3] & 1) != 0)
     {
-        fn = ((struct ActorHandlers *)a->unk54)->unk14;
+        fn = ((struct ActorHandlers *)a->terrainHandlers)->unk14;
         if (fn != 0)
             r = ((u8 (*)(void))fn)();
     }
@@ -202,7 +202,7 @@ s3:
         return 1;
     if ((gCurTask->unk7A & 1) == 0 && (gTerrainResult[1] & 1) != 0)
     {
-        fn = ((struct ActorHandlers *)a->unk54)->unk18;
+        fn = ((struct ActorHandlers *)a->terrainHandlers)->unk18;
         if (fn != 0)
             r = ((u8 (*)(void))fn)();
     }
@@ -338,7 +338,7 @@ u32 sub_080696a0(void)
 b1:
     if ((gCurTask->unk7B & 1) == 0 && (gCurTask->unk7B & 0x40) == 0)
     {
-        fn = ((struct ActorHandlers *)a->unk54)->unk0C;
+        fn = ((struct ActorHandlers *)a->terrainHandlers)->unk0C;
         if (fn != 0)
             r = ((u8 (*)(void))fn)();
     }
@@ -352,7 +352,7 @@ s1:
 b2:
     if ((gCurTask->unk7B & 1) != 0 && (gCurTask->unk7B & 0x40) == 0)
     {
-        fn = ((struct ActorHandlers *)a->unk54)->unk08;
+        fn = ((struct ActorHandlers *)a->terrainHandlers)->unk08;
         if (fn != 0)
             r = ((u8 (*)(void))fn)();
     }
@@ -363,13 +363,13 @@ s2:
     {
         if ((gCurTask->unk7A & 1) != 0)
             goto s3;
-        fn = ((struct ActorHandlers *)a->unk54)->unk04;
+        fn = ((struct ActorHandlers *)a->terrainHandlers)->unk04;
     }
     else
     {
         if ((gCurTask->unk7A & 1) == 0)
             goto s3;
-        fn = ((struct ActorHandlers *)a->unk54)->unk00;
+        fn = ((struct ActorHandlers *)a->terrainHandlers)->unk00;
     }
     if (fn != 0)
         r = ((u8 (*)(void))fn)();
@@ -378,7 +378,7 @@ s3:
         return 1;
     if ((gTerrainResult[0] & 3) != 0)
     {
-        fn = ((struct ActorHandlers *)a->unk54)->unk10;
+        fn = ((struct ActorHandlers *)a->terrainHandlers)->unk10;
         if (fn != 0)
             r = ((u8 (*)(void))fn)();
     }
@@ -386,7 +386,7 @@ s3:
         return 1;
     if ((gCurTask->unk7A & 1) != 0 && (gTerrainResult[3] & 1) != 0)
     {
-        fn = ((struct ActorHandlers *)a->unk54)->unk14;
+        fn = ((struct ActorHandlers *)a->terrainHandlers)->unk14;
         if (fn != 0)
             r = ((u8 (*)(void))fn)();
     }
@@ -394,7 +394,7 @@ s3:
         return 1;
     if ((gCurTask->unk7A & 1) == 0 && (gTerrainResult[1] & 1) != 0)
     {
-        fn = ((struct ActorHandlers *)a->unk54)->unk18;
+        fn = ((struct ActorHandlers *)a->terrainHandlers)->unk18;
         if (fn != 0)
             r = ((u8 (*)(void))fn)();
     }
@@ -433,7 +433,7 @@ u32 sub_08069888(void)
 b1:
     if ((gCurTask->unk7B & 1) != 0 && (gCurTask->unk7B & 0x40) == 0)
     {
-        fn = ((struct ActorHandlers *)a->unk54)->unk08;
+        fn = ((struct ActorHandlers *)a->terrainHandlers)->unk08;
         if (fn != 0)
             r = ((u8 (*)(void))fn)();
     }
@@ -444,13 +444,13 @@ s1:
     {
         if ((gCurTask->unk7A & 1) != 0)
             goto s2;
-        fn = ((struct ActorHandlers *)a->unk54)->unk04;
+        fn = ((struct ActorHandlers *)a->terrainHandlers)->unk04;
     }
     else
     {
         if ((gCurTask->unk7A & 1) == 0)
             goto s2;
-        fn = ((struct ActorHandlers *)a->unk54)->unk00;
+        fn = ((struct ActorHandlers *)a->terrainHandlers)->unk00;
     }
     if (fn != 0)
         r = ((u8 (*)(void))fn)();
@@ -505,20 +505,20 @@ void ActorGetTerrainBox(struct InputState *out)
 
     t = gCurTask;
     a = t->unk8C;
-    out->unk01 = ((struct InputState *)a->unk50)->unk01;
-    out->unk02 = ((struct InputState *)a->unk50)->unk02;
-    out->unk03 = ((struct InputState *)a->unk50)->unk03;
+    out->unk01 = ((struct InputState *)a->terrainBox)->unk01;
+    out->unk02 = ((struct InputState *)a->terrainBox)->unk02;
+    out->unk03 = ((struct InputState *)a->terrainBox)->unk03;
     if (t->facing == -1)
     {
-        out->unk00 = -((struct InputState *)a->unk50)->unk00;
-        out->unk04 = -((struct InputState *)a->unk50)->unk05;
-        out->unk05 = -((struct InputState *)a->unk50)->unk04;
+        out->unk00 = -((struct InputState *)a->terrainBox)->unk00;
+        out->unk04 = -((struct InputState *)a->terrainBox)->unk05;
+        out->unk05 = -((struct InputState *)a->terrainBox)->unk04;
     }
     else
     {
-        out->unk00 = ((struct InputState *)a->unk50)->unk00;
-        out->unk04 = ((struct InputState *)a->unk50)->unk04;
-        out->unk05 = ((struct InputState *)a->unk50)->unk05;
+        out->unk00 = ((struct InputState *)a->terrainBox)->unk00;
+        out->unk04 = ((struct InputState *)a->terrainBox)->unk04;
+        out->unk05 = ((struct InputState *)a->terrainBox)->unk05;
     }
 }
 
@@ -721,12 +721,12 @@ void ActorStartHitStun(void)
     u = gCurTask;
     u->posX = u->unk48 << 16;
     u->posY = u->unk4A << 16;
-    a->unk14 = u->frame;
+    a->savedFrame = u->frame;
     TaskSetFrame(0);
     gCurTask->unk08 = (u32)sub_08069fb0;
-    a->unk01 = 11;
+    a->hitStunTimer = 11;
     v = gCurTask;
-    v->unk8C->unk22 = v->unk40 & 0xF000;
+    v->unk8C->savedPaletteBits = v->unk40 & 0xF000;
     if (v->unk82 > 3)
         v->unk82 = 0;
     ActorAttachEffect(gCurTask->unk82, 1);
@@ -745,8 +745,8 @@ void ActorEndHitStun(void)
     u->unk08 = 0;
     u->unk48 = u->posX >> 16;
     u->unk4A = u->posY >> 16;
-    u->frame = a->unk14;
-    u->unk40 = (u->unk40 & 0xFFF) | u->unk8C->unk22;
+    u->frame = a->savedFrame;
+    u->unk40 = (u->unk40 & 0xFFF) | u->unk8C->savedPaletteBits;
 }
 
 u32 ActorReactToDamage(void)
@@ -756,10 +756,10 @@ u32 ActorReactToDamage(void)
     u8 r;
 
     a = gCurTask->unk8C;
-    p = (struct ActorVt *)a->unk5C;
+    p = (struct ActorVt *)a->hitReactions;
     r = 0;
     ActorPlayHitSfx();
-    if ((gCurTask->unk72 == 1 || gCurTask->unk72 == 2) && a->unk05 != 2)
+    if ((gCurTask->unk72 == 1 || gCurTask->unk72 == 2) && a->hitState != 2)
         HudAnimateTaskHpBar();
     if (p != NULL)
     {
@@ -792,10 +792,10 @@ void sub_08069f0c(void)
 
     t = gCurTask;
     a = t->unk8C;
-    j = gUnk_0873E5A4[(s8)a->unk01] * 2;
+    j = gUnk_0873E5A4[(s8)a->hitStunTimer] * 2;
     t->unk48 += gUnk_0873E58C[j];
     t->unk4A += gUnk_0873E58C[j + 1];
-    if ((s8)--a->unk01 < 0)
+    if ((s8)--a->hitStunTimer < 0)
         ActorEndHitStun();
 }
 
@@ -806,10 +806,10 @@ void sub_08069f70(void)
 
     t = gCurTask;
     a = t->unk8C;
-    if ((a->unk01 & 1) == 0)
+    if ((a->hitStunTimer & 1) == 0)
         t->unk40 = (t->unk40 & 0xFFF) | 0xF000;
     else
-        t->unk40 = (t->unk40 & 0xFFF) | a->unk22;
+        t->unk40 = (t->unk40 & 0xFFF) | a->savedPaletteBits;
 }
 
 void sub_08069fb0(void)
@@ -895,7 +895,7 @@ void sub_0806a0f0(s32 a)
         t->unk18 = 0;
     else
         t->unk18 = a;
-    b->unk05 = 2;
+    b->hitState = 2;
     ActorSetTerrainHandlers((u32)gUnk_0873F910);
     if (gCurTask->unk7A & 1)
         ActorSetState(1);
@@ -954,7 +954,7 @@ u32 ActorReactToDefeat(void)
     u8 r;
 
     a = gCurTask->unk8C;
-    p = (struct ActorVt *)a->unk5C;
+    p = (struct ActorVt *)a->hitReactions;
     r = 0;
     ActorPlayHitSfx();
     if (gCurTask->unk72 == 1 || gCurTask->unk72 == 2)
@@ -985,13 +985,13 @@ u32 ActorReactToDefeat(void)
             else
                 sub_0806ee2c();
         }
-        a->unk05 = 2;
+        a->hitState = 2;
     }
     else
     {
         sub_0806ee2c();
     }
     if (a->unk0D == 0)
-        a->unk1A = 0xFFFF;
+        a->extraFrame = 0xFFFF;
     return r;
 }

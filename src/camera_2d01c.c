@@ -71,13 +71,13 @@ struct BgMap
 struct RoomDef
 {
     /*0x00*/ u8 filler00[0x18];
-    /*0x18*/ u16 *unk18;
+    /*0x18*/ u16 *bg2Palette;
     /*0x1C*/ u8 filler1C[0xC];
-    /*0x28*/ u16 *unk28;
+    /*0x28*/ u16 *bg3Palette;
     /*0x2C*/ u8 filler2C[4];
-    /*0x30*/ struct BgMap *unk30;
+    /*0x30*/ struct BgMap *bg3Map;
     /*0x34*/ u8 filler34[0xC];
-    /*0x40*/ u16 unk40;
+    /*0x40*/ u16 bgAnimSet;
 };
 
 struct Unk0802D25C
@@ -183,12 +183,12 @@ void LoadRoomBgAnims(void)
         gBgAnims[k].unk0 = 0x7FFF;
         gBgAnims[k].unk8 |= 0xFFFF;
     }
-    if (gCurRoomDef->unk40 != 0)
+    if (gCurRoomDef->bgAnimSet != 0)
     {
-        while (gRoomBgAnimScripts[gCurRoomDef->unk40][i] != 0)
+        while (gRoomBgAnimScripts[gCurRoomDef->bgAnimSet][i] != 0)
         {
             struct Unk02007D70 *p = &gBgAnims[i];
-            p->unk4 = gRoomBgAnimScripts[gCurRoomDef->unk40][i];
+            p->unk4 = gRoomBgAnimScripts[gCurRoomDef->bgAnimSet][i];
             p->unk0 = 0;
             p->unk2 = 0;
             i++;

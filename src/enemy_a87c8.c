@@ -1738,13 +1738,13 @@ void sub_080a8f40(void)
     TaskStop();
     gUnk_02007D00[0] = 1;
     TaskYieldTrampoline(36);
-    sp.unk00 = 25;
-    sp.unk04 = 128;
+    sp.subtype = 25;
+    sp.taskType = 128;
     sp.unk08 = 0;
     sp.unk09 = 0;
-    sp.unk0C = 0;
-    sp.unk0E = 16;
-    sp.unk0A = 1;
+    sp.x = 0;
+    sp.y = 16;
+    sp.checkTerrain = 1;
     CreateActorFromDescAtOffsetFacing(&sp, 0);
     PlaySfx(506);
     gUnk_02007D00[0] = 0;

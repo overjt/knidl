@@ -28,7 +28,7 @@
  * states live in src/enemy_91f9c.c: it installs ActorMove / sub_080653ec as
  * the draw and per-frame hooks, points Task.unk38 at gUnk_087535FC, counts the
  * boss into gUnk_02007D00[7], seeds the state block (Task.unk28 = -1,
- * Task.unk34 = 1, Task.unk1C = -1, Task.unk24 = Actor.unk28) and dispatches
+ * Task.unk34 = 1, Task.unk1C = -1, Task.unk24 = Actor.palette) and dispatches
  * Task.unk73 through the 27-entry anchor table at 0x08743ADC.
  *
  * The one empty `asm` in sub_08091e18 is load-bearing and emits no code; see
@@ -618,14 +618,14 @@ void sub_08091b6c(void)
     v->unk30 = zero;
     v->unk34 = 0x40000;
     v->unk1C = zero;
-    spawn.unk00 = 9;
-    spawn.unk04 = 111;
+    spawn.subtype = 9;
+    spawn.taskType = 111;
     spawn.unk08 = v->unk18;
     spawn.unk09 = v->unk74;
-    spawn.unk0C = zero;
-    spawn.unk0E = zero;
-    spawn.unk0A = 1;
-    spawn.unk10 = sub_08066630(1);
+    spawn.x = zero;
+    spawn.y = zero;
+    spawn.checkTerrain = 1;
+    spawn.tileWord = sub_08066630(1);
     gCurTask->unk46 = CreateActorFromDescAtOffsetFacing(&spawn, 1);
     gCurTask->unk28 = 0x30000;
     gCurTask->unk30 = 0xFFFA0000;
@@ -757,8 +757,8 @@ void sub_08091e18(void)
                 v->unk30 = u->unk30;
                 v->unk2C = 0;
                 p = gUnk_08743A00[v->unk30];
-                v->unk28 = p->unk02;
-                v->frame = p->unk00;
+                v->unk28 = p->delay;
+                v->frame = p->frame;
             }
             w = gCurTask;
             n3 = w->unk28;
@@ -771,15 +771,15 @@ void sub_08091e18(void)
                     n = ++w->unk2C;
                     b2 = (u32)gUnk_08743A00[w->unk30];
                     q = (struct AnimCmd *)(n * 4 + b2);
-                    frame = q->unk00;
-                    if (q->unk00 != -1)
+                    frame = q->frame;
+                    if (q->frame != -1)
                     {
                         /* Emits no code: it keeps the decremented timer
                          * live through this test, which is what pins the
                          * ldrsh scratch registers and the subtract's
                          * destination (lessons-learned 3.156). */
                         asm("" : : "r"(d2));
-                        w->unk28 = q->unk02;
+                        w->unk28 = q->delay;
                         w->frame = frame;
                     }
                 }
@@ -814,7 +814,7 @@ void sub_08091f08(void)
     u->unk30 = 0;
     u->unk34 = 1;
     u->unk1C = -1;
-    u->unk24 = u->unk8C->unk28;
+    u->unk24 = u->unk8C->palette;
     if (sub_08067060() == 1)
         gCurTask->unk20 = 24;
     else

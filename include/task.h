@@ -12,7 +12,7 @@
  * running.  `struct Actor` is the larger per-task actor record hanging off
  * Task.unk8C that module M17 (issue #65) is the field API for, and
  * `struct ActorDef` is the ROM descriptor an actor is bound to
- * (Actor.unk44).
+ * (Actor.def).
  *
  * Field signedness is evidence-based: `ldrsh`/`ldrsb`, or `ldrh`/`ldrb`
  * followed by a `lsls #16; asrs #16` (or `#24`) pair, means the field is
@@ -110,106 +110,106 @@ struct TaskGfx
     /*0x08*/ u16 *unk08;
 };
 
-/* ROM descriptor an actor is bound to (Actor.unk44). */
+/* ROM descriptor an actor is bound to (Actor.def). */
 struct ActorDef
 {
-    /*0x00*/ u16 unk00;
-    /*0x02*/ u16 unk02;
-    /*0x04*/ u16 unk04;
-    /*0x06*/ u16 unk06;
-    /*0x08*/ u32 unk08;
-    /*0x0C*/ u8 unk0C;
+    /*0x00*/ u16 health1Player;
+    /*0x02*/ u16 health2Players;
+    /*0x04*/ u16 health3Players;
+    /*0x06*/ u16 health4Players;
+    /*0x08*/ u32 score;
+    /*0x0C*/ u8 ability;
     /*0x0D*/ u8 unk0D;
     /*0x0E*/ u16 unk0E;
     /*0x10*/ struct ActorAux *unk10;
-    /*0x14*/ u32 unk14;
-    /*0x18*/ s32 unk18;
-    /*0x1C*/ u32 unk1C;
-    /*0x20*/ u32 unk20;
+    /*0x14*/ u32 attackBox;
+    /*0x18*/ s32 terrainBox;
+    /*0x1C*/ u32 terrainHandlers;
+    /*0x20*/ u32 hitReactions;
     /*0x24*/ void (*unk24)(u32);
-    /*0x28*/ void (*unk28)(void);
+    /*0x28*/ void (*teardown)(void);
 };
 
 /* Block ActorDef.unk10 / Actor.unk60 point at (0x08068E04). */
 struct ActorAux
 {
-    /*0x00*/ s8 unk00;
+    /*0x00*/ s8 hitDuration;
     /*0x01*/ u8 filler01[3];
-    /*0x04*/ u32 unk04;
+    /*0x04*/ u32 altAttackBox;
 };
 
 /* Graphics header the actor's tail block points at (0x08066088). */
 struct GfxHeader
 {
-    /*0x00*/ u16 unk00;
-    /*0x02*/ u16 unk02;
+    /*0x00*/ u16 paletteBankCount;
+    /*0x02*/ u16 tileCount;
     /*0x04*/ u32 unk04;
-    /*0x08*/ void *unk08;
-    /*0x0C*/ void *unk0C;
+    /*0x08*/ void *palette;
+    /*0x0C*/ void *tiles;
 };
 
 /* The 12-byte block at Actor+0x64, copied as one unit (0x0806505C). */
 struct ActorTail
 {
-    /*0x00*/ struct GfxHeader *unk00;
-    /*0x04*/ u32 unk04;
-    /*0x08*/ u32 unk08;
+    /*0x00*/ struct GfxHeader *header;
+    /*0x04*/ u32 tileBits;
+    /*0x08*/ u32 paletteBank;
 };
 
 /* Per-task actor record (Task.unk8C). */
 struct Actor
 {
-    /*0x00*/ u8 unk00;
-    /*0x01*/ u8 unk01;
-    /*0x02*/ s8 unk02;
-    /*0x03*/ s8 unk03;
+    /*0x00*/ u8 ability;
+    /*0x01*/ u8 hitStunTimer;
+    /*0x02*/ s8 healthBonus;
+    /*0x03*/ s8 extraLayerOffset;
     /*0x04*/ u8 unk04;
-    /*0x05*/ u8 unk05;
+    /*0x05*/ u8 hitState;
     /*0x06*/ u8 unk06;
     /*0x07*/ u8 unk07;
-    /*0x08*/ u8 unk08;
-    /*0x09*/ u8 unk09;
-    /*0x0A*/ u8 unk0A;
-    /*0x0B*/ u8 unk0B;
-    /*0x0C*/ u8 unk0C;
+    /*0x08*/ u8 animNoFlip;
+    /*0x09*/ u8 animScriptPos;
+    /*0x0A*/ u8 paletteOverridden;
+    /*0x0B*/ u8 paletteLocked;
+    /*0x0C*/ u8 paletteVariant;
     /*0x0D*/ u8 unk0D;
     /*0x0E*/ s16 unk0E;
-    /*0x10*/ s16 unk10;
-    /*0x12*/ s16 unk12;
-    /*0x14*/ u16 unk14;
+    /*0x10*/ s16 attachedTask;
+    /*0x12*/ s16 attachedTaskLifetime;
+    /*0x14*/ u16 savedFrame;
     /*0x16*/ s16 unk16;
-    /*0x18*/ u16 unk18;
-    /*0x1A*/ s16 unk1A;
-    /*0x1C*/ u16 unk1C;
-    /*0x1E*/ u16 unk1E;
-    /*0x20*/ u16 unk20;
-    /*0x22*/ u16 unk22;
-    /*0x24*/ u16 unk24;
+    /*0x18*/ u16 extraOffsetY;
+    /*0x1A*/ s16 extraFrame;
+    /*0x1C*/ u16 prevState;
+    /*0x1E*/ u16 extraTileWord;
+    /*0x20*/ u16 savedTileWord;
+    /*0x22*/ u16 savedPaletteBits;
+    /*0x24*/ u16 paletteColorCount;
     /*0x26*/ u16 unk26;
-    /*0x28*/ u32 unk28;
-    /*0x2C*/ struct AnimCmd *unk2C;
-    /*0x30*/ u32 unk30;
+    /*0x28*/ u32 palette;
+    /*0x2C*/ struct AnimCmd *animScript;
+    /*0x30*/ u32 score;
     /*0x34*/ s32 unk34;
-    /*0x38*/ s32 unk38;
+    /*0x38*/ s32 sfxOverride;
     /*0x3C*/ u32 unk3C;
-    /*0x40*/ void (*unk40)(void);
-    /*0x44*/ struct ActorDef *unk44;
-    /*0x48*/ u32 unk48;
+    /*0x40*/ void (*teardown)(void);
+    /*0x44*/ struct ActorDef *def;
+    /*0x48*/ u32 attackBox;
     /*0x4C*/ u32 unk4C;
-    /*0x50*/ u32 unk50;
-    /*0x54*/ u32 unk54;
-    /*0x58*/ u32 unk58;
-    /*0x5C*/ u32 unk5C;
+    /*0x50*/ u32 terrainBox;
+    /*0x54*/ u32 terrainHandlers;
+    /*0x58*/ u32 prevTerrainHandlers;
+    /*0x5C*/ u32 hitReactions;
     /*0x60*/ struct ActorAux *unk60;
-    /*0x64*/ struct ActorTail unk64;
+    /*0x64*/ struct ActorTail gfx;
 };
 
-/* One entry of the actor animation script Actor.unk2C walks (0x080640FC).
+/* One entry of the actor animation script Actor.animScript walks (0x080640FC).
    unk00 is the frame id, or -3 (loop) / -2 (stop); unk02 is the delay. */
 struct AnimCmd
 {
-    /*0x00*/ s16 unk00;
-    /*0x02*/ s16 unk02;
+    /*0x00*/ s16 frame;
+    /*0x02*/ s16 delay;
 };
 
 /* 116-byte per-player record at gPlayerStates (0x08064EB8); Task.unk88 points
@@ -304,15 +304,15 @@ struct PlayerState
 /* Spawn descriptor sub_08064A78 turns into a class-4 task. */
 struct ActorSpawn
 {
-    /*0x00*/ u32 unk00;
-    /*0x04*/ u32 unk04;
+    /*0x00*/ u32 subtype;
+    /*0x04*/ u32 taskType;
     /*0x08*/ u8 unk08;
     /*0x09*/ u8 unk09;
-    /*0x0A*/ u8 unk0A;
+    /*0x0A*/ u8 checkTerrain;
     /*0x0B*/ u8 unk0B;
-    /*0x0C*/ s16 unk0C;
-    /*0x0E*/ s16 unk0E;
-    /*0x10*/ u16 unk10;
+    /*0x0C*/ s16 x;
+    /*0x0E*/ s16 y;
+    /*0x10*/ u16 tileWord;
 };
 
 /* Axis-aligned box the actor overlap helpers take (0x08063E2C).

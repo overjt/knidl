@@ -1190,26 +1190,26 @@ void sub_08096e9c(void)
     s16 *q;
 
     a = gCurTask->unk8C;
-    if ((a->unk0B & 1) == 0) {
-    a->unk0A = 1;
+    if ((a->paletteLocked & 1) == 0) {
+    a->paletteOverridden = 1;
     t = gCurTask;
-    if ((t->unk75 != 0 && t->unk8C->unk05 != 0) || t->unk1C != 0) {
+    if ((t->unk75 != 0 && t->unk8C->hitState != 0) || t->unk1C != 0) {
         u = gCurTask;
         q = (s16 *)&u->unk70;
         if (*q <= 3) {
-            BlendColors(gUnk_08744598[u->unk8C->unk0C][0],
-                         gUnk_08744598[u->unk8C->unk0C][1],
+            BlendColors(gUnk_08744598[u->unk8C->paletteVariant][0],
+                         gUnk_08744598[u->unk8C->paletteVariant][1],
                          gUnk_087445D8[*q], 16,
                          &gObjPalette[(u->unk40 >> 12) * 32]);
         } else {
-            BlendColors(gUnk_08744598[u->unk8C->unk0C][0],
+            BlendColors(gUnk_08744598[u->unk8C->paletteVariant][0],
                          gUnk_082B07BC,
                          gUnk_087445D8[*q], 16,
                          &gObjPalette[(u->unk40 >> 12) * 32]);
         }
     } else {
-        BlendColors(gUnk_08744598[t->unk8C->unk0C][0],
-                     gUnk_08744598[t->unk8C->unk0C][1],
+        BlendColors(gUnk_08744598[t->unk8C->paletteVariant][0],
+                     gUnk_08744598[t->unk8C->paletteVariant][1],
                      gUnk_087445D8[(s16)t->unk70], 16,
                      &gObjPalette[(t->unk40 >> 12) * 32]);
     }

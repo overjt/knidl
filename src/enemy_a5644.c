@@ -1501,14 +1501,14 @@ void sub_080a57d4(void)
     {
         for (i = 0; i < gActivePlayerCount; i++)
         {
-            sp.unk00 = 18;
-            sp.unk04 = 120;
+            sp.subtype = 18;
+            sp.taskType = 120;
             sp.unk08 = 0;
             sp.unk09 = i;
-            sp.unk0C = gUnk_08748D28[i + (gActivePlayerCount - 1) * 4] + gViewRect[0];
-            sp.unk0E = gViewRect[2];
-            sp.unk10 = gCurTask->unk8C->unk20;
-            sp.unk0A = 0;
+            sp.x = gUnk_08748D28[i + (gActivePlayerCount - 1) * 4] + gViewRect[0];
+            sp.y = gViewRect[2];
+            sp.tileWord = gCurTask->unk8C->savedTileWord;
+            sp.checkTerrain = 0;
             CreateActorFromDesc(&sp, 1);
         }
     }
@@ -1532,7 +1532,7 @@ void sub_080a57d4(void)
     gCurTask->frame++;
     TaskYieldTrampoline(3);
     t = gCurTask;
-    CreateChildTask(185, (s16)(t->unk48 + 8), t->unk4A, t->unk8C->unk20);
+    CreateChildTask(185, (s16)(t->unk48 + 8), t->unk4A, t->unk8C->savedTileWord);
     gCurTask->frame++;
     TaskYieldTrampoline(3);
     gCurTask->frame++;
@@ -1556,7 +1556,7 @@ void sub_080a57d4(void)
     gCurTask->frame++;
     TaskYieldTrampoline(3);
     t = gCurTask;
-    CreateChildTask(188, (s16)(t->unk48 - 32), t->unk4A, t->unk8C->unk20 | (240 << 8));
+    CreateChildTask(188, (s16)(t->unk48 - 32), t->unk4A, t->unk8C->savedTileWord | (240 << 8));
     gCurTask->unk58 = 128 << 10;
     gCurTask->unk60 = -0x10000;
     TaskYieldTrampoline(3);
@@ -2325,7 +2325,7 @@ void sub_080a6b3c(void)
     if (t->unk7A == 0)
     {
         CreateChildTask(188, (s16)(t->unk48 + t->facing * 4), (s16)(t->unk4A - 4),
-                     t->unk8C->unk20 | (240 << 8));
+                     t->unk8C->savedTileWord | (240 << 8));
         gCurTask->unk60 = 168 << 5;
         gCurTask->unk68 = 192 << 10;
         gCurTask->unk6C = 0;
@@ -2341,7 +2341,7 @@ void sub_080a6b3c(void)
     else
     {
         CreateChildTask(188, (s16)(t->unk48 + t->facing * 16), (s16)(t->unk4A + 4),
-                     t->unk8C->unk20 | (240 << 8));
+                     t->unk8C->savedTileWord | (240 << 8));
         TaskStop();
         TaskSetFrame(69);
     }
@@ -2725,14 +2725,14 @@ void sub_080a7438(void)
     gCurTask->unk68 = 192 << 10;
     while (gCurTask->unk7A == 0)
         TaskYieldTrampoline(1);
-    sp.unk00 = 18;
-    sp.unk04 = 120;
+    sp.subtype = 18;
+    sp.taskType = 120;
     sp.unk08 = 1;
     sp.unk09 = 0;
-    sp.unk0C = 0;
-    sp.unk0E = 0;
-    sp.unk10 = gCurTask->unk8C->unk20 + (128 << 5);
-    sp.unk0A = 0;
+    sp.x = 0;
+    sp.y = 0;
+    sp.tileWord = gCurTask->unk8C->savedTileWord + (128 << 5);
+    sp.checkTerrain = 0;
     CreateActorFromDescHere(&sp, 1);
     TaskGetScreenPosSlot(gCurTaskIdx);
     gCurTask->unk30 = gUnk_030023B4;
@@ -2782,7 +2782,7 @@ void sub_080a75c8(void)
         gCurTask->unk6C++;
     } while ((s16)gCurTask->unk6C <= 1);
     t = gCurTask;
-    CreateChildTask(186, (s16)(t->unk48 - t->facing * 2), (s16)(t->unk4A - 1), t->unk8C->unk20);
+    CreateChildTask(186, (s16)(t->unk48 - t->facing * 2), (s16)(t->unk4A - 1), t->unk8C->savedTileWord);
     TaskSetFrame(24);
     TaskYieldTrampoline(8);
     gCurTask->frame++;

@@ -356,11 +356,11 @@ void sub_08085180(void)
         u = gCurTask;
         u->unk6C++;
     } while ((s16)u->unk6C <= 14);
-    sp.unk00 = 2;
-    sp.unk04 = 104;
+    sp.subtype = 2;
+    sp.taskType = 104;
     sp.unk08 = zero2 = 0;
     sp.unk09 = u->unk74;
-    sp.unk0A = zero2;
+    sp.checkTerrain = zero2;
     gCurTask->unk46 = CreateActorFromDescHere(&sp, 0);
     gCurTask->unk6C = zero2;
     do
@@ -495,7 +495,7 @@ void sub_08085450(void)
     t->layer = 11;
     u = gCurTask;
     u->unk38 = gUnk_087523A0;
-    u->unk8C->unk1A = 4;
+    u->unk8C->extraFrame = 4;
     CallTableEntry(u->unk73, 4, gUnk_08741FE8);
 }
 
@@ -662,14 +662,14 @@ void sub_080856e0(void)
     gCurTask->unk6C = zero2;
     while ((s16)gCurTask->unk6C < gUnk_0874202C[gCurTask->unk74])
     {
-        sp.unk00 = 4;
-        sp.unk04 = 106;
+        sp.subtype = 4;
+        sp.taskType = 106;
         sp.unk08 = 0;
         w = gCurTask;
         sp.unk09 = w->unk74;
-        sp.unk0C = 8;
-        sp.unk0E = 3;
-        sp.unk0A = 1;
+        sp.x = 8;
+        sp.y = 3;
+        sp.checkTerrain = 1;
         if (sub_08021a40(w->unk48 + (w->facing << 3), w->unk4A + 3) == 0)
             gCurTask->unk46 = CreateActorFromDescAtOffsetFacing(&sp, 0);
         TaskYieldTrampoline(2);
@@ -772,7 +772,7 @@ void sub_08085998(void)
     s32 n;
 
     t = gCurTask;
-    if (t->unk2C == 0 && t->unk8C->unk1A == -1 && --t->unk28 == 0)
+    if (t->unk2C == 0 && t->unk8C->extraFrame == -1 && --t->unk28 == 0)
     {
         v = RandomRange(4);
         switch (v)
@@ -857,13 +857,13 @@ void sub_08085a84(void)
     gCurTask->unk6C = zero2;
     while ((s16)gCurTask->unk6C < gUnk_0874202C[gCurTask->unk74])
     {
-        sp.unk00 = 4;
-        sp.unk04 = 106;
+        sp.subtype = 4;
+        sp.taskType = 106;
         sp.unk08 = 0;
         sp.unk09 = 1;
-        sp.unk0C = 8;
-        sp.unk0E = 3;
-        sp.unk0A = 1;
+        sp.x = 8;
+        sp.y = 3;
+        sp.checkTerrain = 1;
         w = gCurTask;
         if (sub_08021a40(w->unk48 + (w->facing << 3), w->unk4A + 3) == 0)
             gCurTask->unk46 = CreateActorFromDescAtOffsetFacing(&sp, 0);
@@ -1018,13 +1018,13 @@ void sub_08085cd8(void)
         gCurTask->unk6C = 0;
         do
         {
-            sp.unk00 = 4;
-            sp.unk04 = 106;
+            sp.subtype = 4;
+            sp.taskType = 106;
             sp.unk08 = 0;
             sp.unk09 = 0;
-            sp.unk0C = 8;
-            sp.unk0E = 3;
-            sp.unk0A = 1;
+            sp.x = 8;
+            sp.y = 3;
+            sp.checkTerrain = 1;
             w = gCurTask;
             if (sub_08021a40(w->unk48 + (w->facing << 3), w->unk4A + 3) == 0)
                 gCurTask->unk46 = CreateActorFromDescAtOffsetFacing(&sp, 0);
@@ -1091,7 +1091,7 @@ u8 sub_08085ef0(void)
         TaskSetEntry(sub_080854d0, gCurTaskIdx);
         return 1;
     case 1:
-        if (t->unk8C->unk1A == -1)
+        if (t->unk8C->extraFrame == -1)
         {
             t->unk2C = 1;
             t->unk60 = 0x1500;

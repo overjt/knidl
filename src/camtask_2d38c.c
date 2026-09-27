@@ -32,13 +32,13 @@ struct BgMap
 struct RoomDef
 {
     /*0x00*/ u8 filler00[0x18];
-    /*0x18*/ u16 *unk18;
+    /*0x18*/ u16 *bg2Palette;
     /*0x1C*/ u8 filler1C[0xC];
-    /*0x28*/ u16 *unk28;
+    /*0x28*/ u16 *bg3Palette;
     /*0x2C*/ u8 filler2C[4];
-    /*0x30*/ struct BgMap *unk30;
+    /*0x30*/ struct BgMap *bg3Map;
     /*0x34*/ u8 filler34[0xC];
-    /*0x40*/ u16 unk40;
+    /*0x40*/ u16 bgAnimSet;
 };
 
 /* gUnk_02006098[3] is cleared through an 8-bit signed bit-field: only a
@@ -236,15 +236,15 @@ void sub_0802d6cc(void)
     t->unk00 = 0;
     t->unk0C = 0;
     m = gCurRoomDef;
-    p18 = m->unk18;
+    p18 = m->bg2Palette;
     t->unk54 = *p18 >> 1;
-    p28 = m->unk28;
+    p28 = m->bg3Palette;
     t->unk58 = *p28 >> 1;
     t->unk60 = (s32)((u8 *)(gBgPalette + 0x100) - *p28);
     t->unk28 = (s32)(p18 + 1);
     t->unk2C = (s32)(p28 + 1);
-    t->unk30 = (s32)(gRoomTable[gLevelIndex][gStageIndex][gRoomIndex + 1]->unk18 + 1);
-    t->unk34 = (s32)(gRoomTable[gLevelIndex][gStageIndex][gRoomIndex + 1]->unk28 + 1);
+    t->unk30 = (s32)(gRoomTable[gLevelIndex][gStageIndex][gRoomIndex + 1]->bg2Palette + 1);
+    t->unk34 = (s32)(gRoomTable[gLevelIndex][gStageIndex][gRoomIndex + 1]->bg3Palette + 1);
     t->unk6C = 0;
     do
     {
@@ -294,13 +294,13 @@ void sub_0802d96c(void)
     t->unk00 = 0;
     t->unk0C = 0;
     m = gCurRoomDef;
-    t->unk64 = *m->unk18 >> 1;
-    t->unk68 = *m->unk28 >> 1;
-    t->unk60 = (s32)(gObjPalette - *m->unk28);
-    t->unk28 = (s32)(gRoomTable[gLevelIndex][gStageIndex][gUnk_087328BC[gUnk_02006098[1]]]->unk18 + 1);
-    t->unk2C = (s32)(gRoomTable[gLevelIndex][gStageIndex][gUnk_087328BC[gUnk_02006098[1]]]->unk28 + 1);
-    t->unk30 = (s32)(gRoomTable[gLevelIndex][gStageIndex][gUnk_087328BC[gUnk_02006098[2]]]->unk18 + 1);
-    t->unk34 = (s32)(gRoomTable[gLevelIndex][gStageIndex][gUnk_087328BC[gUnk_02006098[2]]]->unk28 + 1);
+    t->unk64 = *m->bg2Palette >> 1;
+    t->unk68 = *m->bg3Palette >> 1;
+    t->unk60 = (s32)(gObjPalette - *m->bg3Palette);
+    t->unk28 = (s32)(gRoomTable[gLevelIndex][gStageIndex][gUnk_087328BC[gUnk_02006098[1]]]->bg2Palette + 1);
+    t->unk2C = (s32)(gRoomTable[gLevelIndex][gStageIndex][gUnk_087328BC[gUnk_02006098[1]]]->bg3Palette + 1);
+    t->unk30 = (s32)(gRoomTable[gLevelIndex][gStageIndex][gUnk_087328BC[gUnk_02006098[2]]]->bg2Palette + 1);
+    t->unk34 = (s32)(gRoomTable[gLevelIndex][gStageIndex][gUnk_087328BC[gUnk_02006098[2]]]->bg3Palette + 1);
     t->unk04 = (u32)sub_0802da8c;
     if (gUnk_02006098[4] > 0)
         t->unk6C = 0;
@@ -339,8 +339,8 @@ void sub_0802da8c(void)
             ((struct Unk02006098Bits *)gUnk_02006098)->unk3 = -1;
             u->unk28 = u->unk30;
             u->unk2C = u->unk34;
-            u->unk30 = (s32)(gRoomTable[gLevelIndex][gStageIndex][gUnk_087328BC[gUnk_02006098[2]]]->unk18 + 1);
-            u->unk34 = (s32)(gRoomTable[gLevelIndex][gStageIndex][gUnk_087328BC[gUnk_02006098[2]]]->unk28 + 1);
+            u->unk30 = (s32)(gRoomTable[gLevelIndex][gStageIndex][gUnk_087328BC[gUnk_02006098[2]]]->bg2Palette + 1);
+            u->unk34 = (s32)(gRoomTable[gLevelIndex][gStageIndex][gUnk_087328BC[gUnk_02006098[2]]]->bg3Palette + 1);
             u->unk6C = 0;
             gUnk_02006098[0] = gUnk_02006098[1] | 0x80;
         }
@@ -359,8 +359,8 @@ void sub_0802da8c(void)
             ((struct Unk02006098Bits *)gUnk_02006098)->unk3 = -1;
             v->unk30 = v->unk28;
             v->unk34 = v->unk2C;
-            v->unk28 = (s32)(gRoomTable[gLevelIndex][gStageIndex][gUnk_087328BC[gUnk_02006098[1]]]->unk18 + 1);
-            v->unk2C = (s32)(gRoomTable[gLevelIndex][gStageIndex][gUnk_087328BC[gUnk_02006098[1]]]->unk28 + 1);
+            v->unk28 = (s32)(gRoomTable[gLevelIndex][gStageIndex][gUnk_087328BC[gUnk_02006098[1]]]->bg2Palette + 1);
+            v->unk2C = (s32)(gRoomTable[gLevelIndex][gStageIndex][gUnk_087328BC[gUnk_02006098[1]]]->bg3Palette + 1);
             v->unk6C = 0x100;
             gUnk_02006098[0] = gUnk_02006098[2] | 0x80;
         }

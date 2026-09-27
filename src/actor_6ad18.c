@@ -81,7 +81,7 @@ void sub_0806ad18(void)
     struct Task *t;
 
     t = gCurTask;
-    t->unk8C->unk1A = 0;
+    t->unk8C->extraFrame = 0;
     t->posY = (t->unk4A + 1) << 16;
     TaskYieldTrampoline(2);
     gCurTask->unk6C = 0;
@@ -99,7 +99,7 @@ void sub_0806ad18(void)
     t = gCurTask;
     t->posY = (t->unk4A - 1) << 16;
     TaskYieldTrampoline(2);
-    gCurTask->unk8C->unk1A = 0xFFFF;
+    gCurTask->unk8C->extraFrame = 0xFFFF;
 }
 
 void sub_0806adb0(void)

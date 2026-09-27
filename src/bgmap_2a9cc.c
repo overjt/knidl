@@ -31,13 +31,13 @@ struct BgMap
 struct RoomDef
 {
     /*0x00*/ u8 filler00[0x18];
-    /*0x18*/ u16 *unk18;
+    /*0x18*/ u16 *bg2Palette;
     /*0x1C*/ u8 filler1C[0xC];
-    /*0x28*/ u16 *unk28;
+    /*0x28*/ u16 *bg3Palette;
     /*0x2C*/ u8 filler2C[4];
-    /*0x30*/ struct BgMap *unk30;
+    /*0x30*/ struct BgMap *bg3Map;
     /*0x34*/ u8 filler34[0xC];
-    /*0x40*/ u16 unk40;
+    /*0x40*/ u16 bgAnimSet;
 };
 
 struct MapTile
@@ -137,7 +137,7 @@ void DrawBg3View(s32 px, s32 py)
     py >>= 3;
     y0 = py - 3;
     y1 = py + 22;
-    m = gCurRoomDef->unk30;
+    m = gCurRoomDef->bg3Map;
     w = m->unk2;
     if (x0 < 0)
         x0 = 0;
@@ -159,7 +159,7 @@ void DrawBg3Row(s32 x0, s32 x1, s32 y)
     struct BgMap *m;
     s32 w;
 
-    if (y < 0 || y >= (m = gCurRoomDef->unk30)->unk4)
+    if (y < 0 || y >= (m = gCurRoomDef->bg3Map)->unk4)
         return;
     w = m->unk2;
     if (x0 < 0)
@@ -176,7 +176,7 @@ void DrawBg3Column(s32 x, s32 y0, s32 y1)
     struct BgMap *m;
     s32 h;
 
-    if (x < 0 || x >= (m = gCurRoomDef->unk30)->unk2)
+    if (x < 0 || x >= (m = gCurRoomDef->bg3Map)->unk2)
         return;
     h = m->unk4;
     if (y0 < 0)
@@ -371,7 +371,7 @@ void DrawBg3Tile(s32 x, s32 y)
     u16 *src;
     s32 i;
 
-    src = &gCurRoomDef->unk30->unk6[x] + gCurRoomDef->unk30->unk2 * y;
+    src = &gCurRoomDef->bg3Map->unk6[x] + gCurRoomDef->bg3Map->unk2 * y;
     i = (x & 31) + ((y & 31) << 5) + ((x & 32) << 5);
     ((u16 *)0x06003000)[i] = *src;
 }

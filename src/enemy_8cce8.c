@@ -29,7 +29,7 @@
  *     the 16-pixel grid, `sub_0808d3e4` rolls a new mode out of the 8-entry
  *     table `gUnk_0874313C`, `sub_0808d460` flips the sprite through
  *     Task.unk3E and `sub_0808d494` / `sub_0808d4a8` / `sub_0808d4bc` /
- *     `sub_0808d4d0` set the animation id in Actor.unk1A;
+ *     `sub_0808d4d0` set the animation id in Actor.extraFrame;
  *   * script 2's entry `sub_0808e3a8` (Task.unk73 -> `0x087431E4`) and its
  *     aiming half: `sub_0808e070` / `sub_0808e0d0` / `sub_0808e174` turn the
  *     vector to the target into a heading with ArcTan2, `sub_0808e254` spawns
@@ -511,22 +511,22 @@ void sub_0808d460(void)
 
 void sub_0808d494(void)
 {
-    gCurTask->unk8C->unk1A = 9;
+    gCurTask->unk8C->extraFrame = 9;
 }
 
 void sub_0808d4a8(void)
 {
-    gCurTask->unk8C->unk1A = 8;
+    gCurTask->unk8C->extraFrame = 8;
 }
 
 void sub_0808d4bc(void)
 {
-    gCurTask->unk8C->unk1A = 10;
+    gCurTask->unk8C->extraFrame = 10;
 }
 
 void sub_0808d4d0(void)
 {
-    gCurTask->unk8C->unk1A = -1;
+    gCurTask->unk8C->extraFrame = -1;
 }
 
 void sub_0808d4e8(void)
@@ -536,8 +536,8 @@ void sub_0808d4e8(void)
 
     t = gCurTask;
     t->unk8C->unk16 = 0;
-    t->unk8C->unk18 = 0;
-    t->unk8C->unk1E = (t->unk40 & 0xFFF) | (240 << 8);
+    t->unk8C->extraOffsetY = 0;
+    t->unk8C->extraTileWord = (t->unk40 & 0xFFF) | (240 << 8);
     t->unk34 = 1;
     t->unk00 = (u32)TaskMove;
     t->unk0C = (u32)sub_08065640;
@@ -1176,13 +1176,13 @@ void sub_0808e254(void)
     t = gCurTask;
     if (sub_08021a40(t->unk48 + (t->facing << 4), t->unk4A) == 0)
     {
-        sp.unk00 = 1;
-        sp.unk04 = 103;
+        sp.subtype = 1;
+        sp.taskType = 103;
         sp.unk08 = 0;
         sp.unk09 = gCurTask->unk34;
-        sp.unk0C = 16;
-        sp.unk0E = 0;
-        sp.unk0A = 1;
+        sp.x = 16;
+        sp.y = 0;
+        sp.checkTerrain = 1;
         CreateActorFromDescAtOffsetFacing(&sp, 0);
     }
 }
@@ -1240,7 +1240,7 @@ void sub_0808e3a8(void)
     t->layer = 11;
     gCurTask->unk38 = gUnk_08752248;
     AcquirePaletteAnim(3, 1);
-    SetPaletteAnimSource(1, 0, gCurTask->unk8C->unk0C);
+    SetPaletteAnimSource(1, 0, gCurTask->unk8C->paletteVariant);
     CallTableEntry(gCurTask->unk73, 2, gUnk_087431E4);
 }
 

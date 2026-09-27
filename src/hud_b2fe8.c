@@ -2268,14 +2268,14 @@ void sub_080b3f54(void)
     struct Actor *a;
 
     a = gCurTask->unk8C;
-    if (a->unk2C == NULL)
+    if (a->animScript == NULL)
         gCurTask->unk34 = ActorStartAnim((struct AnimCmd *)gUnk_08756084);
     gCurTask->unk40 = (gCurTask->unk40 & 0xFFF) | 0xF000;
     if (gUnk_03001F30 == 1 && gCurTask->unk76 == 1)
         gCurTask->unk40 = (gCurTask->unk40 & 0xFFF) | 0xE000;
-    a->unk03 = 1;
-    a->unk1E = 0xF000;
-    a->unk18 = 0;
+    a->extraLayerOffset = 1;
+    a->extraTileWord = 0xF000;
+    a->extraOffsetY = 0;
     a->unk16 = 0;
 }
 

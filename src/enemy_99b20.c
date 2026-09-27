@@ -329,14 +329,14 @@ s32 sub_08099e9c(void)
 
     t = gCurTask;
     a = t->unk8C;
-    sp.unk00 = 16;
-    sp.unk04 = 118;
+    sp.subtype = 16;
+    sp.taskType = 118;
     sp.unk08 = 0;
     sp.unk09 = t->facing;
-    sp.unk0C = 0;
-    sp.unk0E = 0;
-    sp.unk10 = a->unk20;
-    sp.unk0A = 0;
+    sp.x = 0;
+    sp.y = 0;
+    sp.tileWord = a->savedTileWord;
+    sp.checkTerrain = 0;
     return CreateActorFromDescAtOffsetFacing(&sp, 1);
 }
 
@@ -366,14 +366,14 @@ void sub_08099ee4(u8 a)
     zero = 0;
     gCurTask->unk70 = RandomRange(4);
     gCurTask->unk6C = (s8)gUnk_087456CC[(s16)gCurTask->unk70];
-    sp.unk00 = 17;
-    sp.unk04 = 119;
+    sp.subtype = 17;
+    sp.taskType = 119;
     sp.unk08 = zero;
     sp.unk09 = a;
-    sp.unk0C = gCurTask->unk6C;
-    sp.unk0E = 0xFFF0;
-    sp.unk10 = act->unk20;
-    sp.unk0A = 1;
+    sp.x = gCurTask->unk6C;
+    sp.y = 0xFFF0;
+    sp.tileWord = act->savedTileWord;
+    sp.checkTerrain = 1;
     CreateActorFromDescAtOffsetFacing(&sp, 1);
 }
 
@@ -1856,10 +1856,10 @@ void sub_0809b6f8(void)
     u->unk68 = 0x30000;
     u->unk7A = zero;
     PlaySfx(0x1FB);
-    if (a->unk10 != -1)
+    if (a->attachedTask != -1)
     {
-        TaskFree(a->unk10);
-        a->unk10 = 0xFFFF;
+        TaskFree(a->attachedTask);
+        a->attachedTask = 0xFFFF;
     }
     sub_0809b4fc();
     switch (gCurTask->unk28)
@@ -1899,10 +1899,10 @@ void sub_0809b794(void)
     u->unk28 = zero;
     u->unk7A = zero;
     TaskStop();
-    if (a->unk10 != -1)
+    if (a->attachedTask != -1)
     {
-        TaskFree(a->unk10);
-        a->unk10 = 0xFFFF;
+        TaskFree(a->attachedTask);
+        a->attachedTask = 0xFFFF;
     }
     TaskSetFrameNoFlip(4);
     TaskYieldTrampoline(2);

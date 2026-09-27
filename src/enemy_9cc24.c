@@ -210,14 +210,14 @@ void sub_0809cf04(void)
     struct Task *t;
 
     PlaySfx(186);
-    sp.unk00 = 26;
-    sp.unk04 = 129;
+    sp.subtype = 26;
+    sp.taskType = 129;
     sp.unk08 = (t = gCurTask)->unk73;
     sp.unk09 = t->unk74;
-    sp.unk0C = 20;
-    sp.unk0E = 0;
-    sp.unk10 = gUnk_08745CEC[0];
-    sp.unk0A = 0;
+    sp.x = 20;
+    sp.y = 0;
+    sp.tileWord = gUnk_08745CEC[0];
+    sp.checkTerrain = 0;
     gCurTask->unk46 = CreateActorFromDescAtOffsetFacing(&sp, 1);
 }
 
@@ -382,7 +382,7 @@ void sub_0809d1dc(void)
         t = gCurTask;
         p = &t->unk4A;
         a = t->unk8C;
-        q = (s8 *)a->unk50;
+        q = (s8 *)a->terrainBox;
         lim = q[2];
         if (*p < lim)
         {
@@ -780,13 +780,13 @@ void sub_0809d944(void)
     struct ActorSpawn sp;
     struct Task *t;
 
-    sp.unk00 = 29;
-    sp.unk04 = 132;
+    sp.subtype = 29;
+    sp.taskType = 132;
     sp.unk08 = (t = gCurTask)->unk73;
     sp.unk09 = t->unk74;
-    sp.unk0C = 0;
-    sp.unk0E = 0;
-    sp.unk10 = 0xF110;
-    sp.unk0A = 0;
+    sp.x = 0;
+    sp.y = 0;
+    sp.tileWord = 0xF110;
+    sp.checkTerrain = 0;
     gCurTask->unk46 = CreateActorFromDescAtOffsetFacing(&sp, 1);
 }

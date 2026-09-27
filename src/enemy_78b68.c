@@ -482,7 +482,7 @@ void sub_080791bc(void)
 void sub_080791c0(void)
 {
     gCurTask->unk15 = 1;
-    if (gCurTask->unk8C->unk1A == -1)
+    if (gCurTask->unk8C->extraFrame == -1)
     {
         ActorStopAnim();
         TaskSetMotionY(0, 0x1500, 0x30000);
@@ -581,7 +581,7 @@ void sub_080793c4(void)
 void sub_080793d0(void)
 {
     gCurTask->unk15 = 1;
-    if (gCurTask->unk8C->unk1A == -1)
+    if (gCurTask->unk8C->extraFrame == -1)
     {
         ActorStopAnim();
         TaskSetMotionY(0, 0x1500, 0x30000);
@@ -774,7 +774,7 @@ void sub_08079710(void)
     u32 *cbase;
     s16 *dbase;
 
-    t->unk8C->unk2C = 0;
+    t->unk8C->animScript = 0;
     t->unk15 = 1;
     TaskStop();
     gCurTask->unk34 = ActorStartAnim(gUnk_0874074C);
@@ -821,16 +821,16 @@ void sub_080797ec(void)
     TaskSetFrame(7);
     TaskYieldTrampoline(15);
     i = 0;
-    spawn.unk00 = 0;
-    spawn.unk04 = 102;
+    spawn.subtype = 0;
+    spawn.taskType = 102;
     spawn.unk08 = 0;
-    spawn.unk0A = 0;
+    spawn.checkTerrain = 0;
     gCurTask->unk6C = 0;
     do
     {
         spawn.unk09 = i;
-        spawn.unk0C = 10;
-        spawn.unk0E = 0;
+        spawn.x = 10;
+        spawn.y = 0;
         PlaySfx(164);
         gCurTask->unk46 = CreateActorFromDescAtOffsetFacing(&spawn, 0);
         CreateChildTaskAtOffsetFacing(216, 10, 0, 1);

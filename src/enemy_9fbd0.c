@@ -236,7 +236,7 @@ u8 sub_0809fe10(void)
         x->unk2C = 1;
         gUnk_02006190[2] = 4;
         ActorSetState(1);
-        a->unk1C = gCurTask->unk1C;
+        a->prevState = gCurTask->unk1C;
     install:
         TaskSetEntry(sub_080a0b10, gCurTaskIdx);
         break;
@@ -285,14 +285,14 @@ void sub_080a0028(void)
     else
         gCurTask->facing = -1;
     TaskSetFrame(29);
-    sp.unk00 = 10;
-    sp.unk04 = 112;
+    sp.subtype = 10;
+    sp.taskType = 112;
     sp.unk08 = 0;
     sp.unk09 = 0;
-    sp.unk10 = 0;
-    sp.unk0C = 32;
-    sp.unk0E = 16;
-    sp.unk0A = 0;
+    sp.tileWord = 0;
+    sp.x = 32;
+    sp.y = 16;
+    sp.checkTerrain = 0;
     CreateActorFromDescAtOffsetFacing(&sp, 1);
     PlaySfx(0x21D);
 }

@@ -273,11 +273,11 @@ void sub_0809bfac(void)
 
     RequestCopy(4, (u32)gUnk_02020000, 0x06010000, 240 << 6);
     g = (struct GfxHeader *)gUnk_0827AC64;
-    RequestCopy(2, (u32)g->unk08, (u32)(p = (u16 *)gUnk_03001570), g->unk00 << 5);
+    RequestCopy(2, (u32)g->palette, (u32)(p = (u16 *)gUnk_03001570), g->paletteBankCount << 5);
     g = (struct GfxHeader *)gUnk_0827B8F8;
-    RequestCopy(2, (u32)g->unk08, (u32)(p + 16), g->unk00 << 5);
+    RequestCopy(2, (u32)g->palette, (u32)(p + 16), g->paletteBankCount << 5);
     g = (struct GfxHeader *)gUnk_0827CA48;
-    RequestCopy(2, (u32)g->unk08, (u32)(p + 32), g->unk00 << 5);
+    RequestCopy(2, (u32)g->palette, (u32)(p + 32), g->paletteBankCount << 5);
     g = (struct GfxHeader *)gUnk_0827D808;
-    RequestCopy(2, (u32)g->unk08, (u32)(p + 48), g->unk00 << 5);
+    RequestCopy(2, (u32)g->palette, (u32)(p + 48), g->paletteBankCount << 5);
 }

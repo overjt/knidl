@@ -847,13 +847,13 @@ void sub_0807e188(void)
     TaskYieldTrampoline(4);
     gCurTask->frame++;
     TaskYieldTrampoline(4);
-    spawn.unk00 = 3;
-    spawn.unk04 = 105;
+    spawn.subtype = 3;
+    spawn.taskType = 105;
     spawn.unk08 = 0;
     spawn.unk09 = 0;
-    spawn.unk0C = 16;
-    spawn.unk0E = 0;
-    spawn.unk0A = 0;
+    spawn.x = 16;
+    spawn.y = 0;
+    spawn.checkTerrain = 0;
     {
         struct Task *t;
         s32 id = CreateActorFromDescAtOffsetFacing(&spawn, 0);
@@ -915,13 +915,13 @@ void sub_0807e290(void)
     TaskYieldTrampoline(4);
     gCurTask->frame++;
     TaskYieldTrampoline(4);
-    spawn.unk00 = 3;
-    spawn.unk04 = 105;
+    spawn.subtype = 3;
+    spawn.taskType = 105;
     spawn.unk08 = 0;
     spawn.unk09 = 1;
-    spawn.unk0C = 16;
-    spawn.unk0E = 0;
-    spawn.unk0A = 0;
+    spawn.x = 16;
+    spawn.y = 0;
+    spawn.checkTerrain = 0;
     gCurTask->unk46 = CreateActorFromDescAtOffsetFacing(&spawn, 0);
     TaskYieldTrampoline(30);
     TaskSetFrame(11);

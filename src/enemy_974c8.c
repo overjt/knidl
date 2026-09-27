@@ -221,7 +221,7 @@ void sub_080975fc(void)
     struct Task *t;
 
     t = gCurTask;
-    if ((t->unk75 != 0 && t->unk8C->unk05 != 0) || t->unk14 == 8)
+    if ((t->unk75 != 0 && t->unk8C->hitState != 0) || t->unk14 == 8)
         ActorFlashPalette(gUnk_082BFBA4, 16);
     else
         sub_08066468();
@@ -834,16 +834,16 @@ void sub_08098450(void)
     struct ActorSpawn *p;
     s8 d;
 
-    sp.unk00 = 35;
-    sp.unk04 = 138;
+    sp.subtype = 35;
+    sp.taskType = 138;
     p = &sp;
     t = gCurTask;
     p->unk08 = t->unk73;
     p->unk09 = t->unk74;
-    p->unk10 = t->unk8C->unk20;
-    p->unk0C = 12;
-    p->unk0E = 8;
-    p->unk0A = 1;
+    p->tileWord = t->unk8C->savedTileWord;
+    p->x = 12;
+    p->y = 8;
+    p->checkTerrain = 1;
     d = t->facing;
     TaskFaceNearestPlayer();
     gCurTask->unk46 = CreateActorFromDescAtOffsetFacing(&sp, 1);
@@ -947,11 +947,11 @@ void sub_080985e0(void)
         u = gCurTask;
         switch (u->unk2C) {
         case 0:
-            if (u->unk8C->unk2C != gUnk_087454B8)
+            if (u->unk8C->animScript != gUnk_087454B8)
                 gCurTask->unk28 = ActorStartAnim(gUnk_087454B8);
             break;
         case 1:
-            if (u->unk8C->unk2C != gUnk_087454C4)
+            if (u->unk8C->animScript != gUnk_087454C4)
                 gCurTask->unk28 = ActorStartAnim(gUnk_087454C4);
             break;
         }

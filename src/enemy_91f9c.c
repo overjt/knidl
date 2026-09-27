@@ -31,7 +31,7 @@
  * The fourth boss starts at sub_08093a24 (table 0x087441A4, graphics
  * gUnk_08752F60): sub_08093a64 installs sub_08093a98 as its body,
  * sub_08093ac8 is its one state, sub_08093bd4 / sub_08093c30 are the second
- * entry pair (graphics gUnk_08753160, Actor.unk38 = 0x20E), sub_08093ccc and
+ * entry pair (graphics gUnk_08753160, Actor.sfxOverride = 0x20E), sub_08093ccc and
  * sub_08093dcc are the endless spawners that call CreateChildTaskAtOffsetFacing(181, -8, -8, 1)
  * every six frames, and sub_08093cf8 / sub_08093e58 / sub_08093f00 are the
  * companions that copy the boss's 16.16 position (±8 rows) and expire with it.
@@ -207,7 +207,7 @@ void sub_08091f9c(void)
     t->unk04 = (u32)sub_08091ffc;
     sub_080666cc(gUnk_08743AC8);
     u = gCurTask;
-    u->unk24 = u->unk8C->unk28;
+    u->unk24 = u->unk8C->palette;
     ActorSetState(0);
     CallTableEntry(gCurTask->unk14, 13, gUnk_08743AE0);
 }
@@ -277,7 +277,7 @@ void sub_08091ffc(void)
             x->posX = m << 16;
             ClampTaskToRoom(x);
             y = gCurTask;
-            y->unk8C->unk28 = y->unk24;
+            y->unk8C->palette = y->unk24;
             TaskSetFrame(36);
             if (gCurTask->unk1C == gLocalPlayer)
                 PlaySfx(0x23D);
@@ -481,24 +481,24 @@ void sub_080925b8(void)
     TaskYieldTrampoline(5);
     gCurTask->frame++;
     TaskYieldTrampoline(5);
-    spawn.unk00 = 30;
-    spawn.unk04 = 133;
+    spawn.subtype = 30;
+    spawn.taskType = 133;
     spawn.unk08 = 0;
     spawn.unk09 = gCurTask->unk74;
-    spawn.unk0C = 0xFFFE;
-    spawn.unk0E = 0;
-    spawn.unk10 = sub_0806660c(1);
+    spawn.x = 0xFFFE;
+    spawn.y = 0;
+    spawn.tileWord = sub_0806660c(1);
     CreateActorFromDescAtOffsetFacing(&spawn, 1);
     gCurTask->frame++;
     TaskYieldTrampoline(24);
-    spawn.unk00 = 30;
-    spawn.unk04 = 133;
+    spawn.subtype = 30;
+    spawn.taskType = 133;
     spawn.unk08 = 1;
     spawn.unk09 = gCurTask->unk74;
-    spawn.unk0C = 0xFFFE;
-    spawn.unk0E = 0;
-    spawn.unk10 = sub_0806660c(1);
-    spawn.unk0A = 0;
+    spawn.x = 0xFFFE;
+    spawn.y = 0;
+    spawn.tileWord = sub_0806660c(1);
+    spawn.checkTerrain = 0;
     CreateActorFromDescAtOffsetFacing(&spawn, 1);
     TaskYieldTrampoline(4);
     gCurTask->unk6C = 0;
@@ -544,12 +544,12 @@ void sub_080926fc(void)
             sub_0806cc90(1, 1, -24, 24);
         TaskSetMotionXFacing(0xFFFE0000, 0x5A5A5A5A);
         u = gCurTask;
-        u->unk24 = u->unk8C->unk28;
-        u->unk8C->unk28 = 0;
+        u->unk24 = u->unk8C->palette;
+        u->unk8C->palette = 0;
         u->frame++;
         TaskYieldTrampoline(2);
         v = gCurTask;
-        v->unk8C->unk28 = v->unk24;
+        v->unk8C->palette = v->unk24;
         gCurTask->unk6C++;
     }
     gCurTask->unk6C = 0;
@@ -562,12 +562,12 @@ void sub_080926fc(void)
             sub_0806cc90(1, 1, -24, 24);
         TaskSetMotionXFacing(0xFFFE0000, 0x5A5A5A5A);
         u2 = gCurTask;
-        u2->unk24 = u2->unk8C->unk28;
-        u2->unk8C->unk28 = 0;
+        u2->unk24 = u2->unk8C->palette;
+        u2->unk8C->palette = 0;
         u2->frame++;
         TaskYieldTrampoline(2);
         v2 = gCurTask;
-        v2->unk8C->unk28 = v2->unk24;
+        v2->unk8C->palette = v2->unk24;
     } while ((s16)++gCurTask->unk6C <= 0);
     gCurTask->unk6C = 0;
     while ((s16)gCurTask->unk6C < gUnk_08743A8E[gCurTask->unk74])
@@ -579,12 +579,12 @@ void sub_080926fc(void)
             sub_0806cc90(1, 1, -24, 24);
         TaskSetMotionXFacing(0xFFFE0000, 0x5A5A5A5A);
         u3 = gCurTask;
-        u3->unk24 = u3->unk8C->unk28;
-        u3->unk8C->unk28 = 0;
+        u3->unk24 = u3->unk8C->palette;
+        u3->unk8C->palette = 0;
         u3->frame++;
         TaskYieldTrampoline(2);
         v3 = gCurTask;
-        v3->unk8C->unk28 = v3->unk24;
+        v3->unk8C->palette = v3->unk24;
         gCurTask->unk6C++;
     }
     w = gCurTask;
@@ -1460,7 +1460,7 @@ void sub_08093bd4(void)
     u->unk38 = gUnk_08753160;
     TaskFaceLikeParent();
     v = gCurTask;
-    v->unk8C->unk38 = 0x20E;
+    v->unk8C->sfxOverride = 0x20E;
     v->unk7A = 0;
     CallTableEntry(gCurTask->unk73, 2, gUnk_087441A4);
 }

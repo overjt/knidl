@@ -253,7 +253,7 @@ void sub_0809c404(void)
     t->layer = 11;
     u = gCurTask;
     a = u->unk8C;
-    a->unk22 = 0xF000 & u->unk40;
+    a->savedPaletteBits = 0xF000 & u->unk40;
     sub_0809f818(1);
     switch (gCurTask->unk74)
     {

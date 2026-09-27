@@ -152,7 +152,7 @@ void sub_08082108(void)
         if (gUnk_02006178 == 1)
         {
             t->unk8C->unk0D = 1;
-            gCurTask->unk8C->unk1A = 8;
+            gCurTask->unk8C->extraFrame = 8;
         }
         else
         {
@@ -382,10 +382,10 @@ void sub_080825ec(void)
     a = v->unk8C;
     a->unk16 = 0;
     h = ((s16 *)&v->unk34)[1];
-    v->unk8C->unk18 = h - 16;
-    v->unk8C->unk1E = v->unk2C;
-    v->unk8C->unk1A = v->unk1C;
-    v->unk8C->unk03 = -1;
+    v->unk8C->extraOffsetY = h - 16;
+    v->unk8C->extraTileWord = v->unk2C;
+    v->unk8C->extraFrame = v->unk1C;
+    v->unk8C->extraLayerOffset = -1;
 }
 
 s32 sub_08082678(void)

@@ -2000,7 +2000,7 @@ void sub_080aa288(void)
     gCurTask->unk0C = (u32)sub_080a9ed8;
     gCurTask->layer = 11;
     gCurTask->unk38 = gUnk_0875456C;
-    gCurTask->unk8C->unk38 = 0x23E;
+    gCurTask->unk8C->sfxOverride = 0x23E;
     gUnk_02007D00[2] = 0;
     gUnk_02007D00[3] = 1;
     gUnk_02007D00[4] = 0;

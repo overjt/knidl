@@ -1334,7 +1334,7 @@ u32 ActorCheckHits(void)
     t = gCurTask;
     a = t->unk8C;
     t->unk7C = 0;
-    if (a->unk48 == 0)
+    if (a->attackBox == 0)
         return 0;
     u = gCurTask;
     if (u->unk7E != -1)
@@ -1344,8 +1344,8 @@ u32 ActorCheckHits(void)
             gCurTask->unk75 = 0;
             gCurTask->unk7E = 255;
             gCurTask->unk7F = -1;
-            if (a->unk05 != 2)
-                a->unk05 = 0;
+            if (a->hitState != 2)
+                a->hitState = 0;
         }
     }
     gAttackX = gCurTask->unk48;
@@ -1359,16 +1359,16 @@ u32 ActorCheckHits(void)
     gAttackFacing = v->facing;
     if (a->unk60 != NULL)
     {
-        gAttackHitDuration = a->unk60->unk00;
-        if (v->unk75 > (a->unk60->unk00 >> 1))
-            gAttackBox = a->unk60->unk04;
+        gAttackHitDuration = a->unk60->hitDuration;
+        if (v->unk75 > (a->unk60->hitDuration >> 1))
+            gAttackBox = a->unk60->altAttackBox;
         else
-            gAttackBox = a->unk48;
+            gAttackBox = a->attackBox;
     }
     else
     {
         gAttackHitDuration = 30;
-        gAttackBox = a->unk48;
+        gAttackBox = a->attackBox;
     }
     ActorUpdateAttachedEffect();
     if (gAttackHitDuration - gCurTask->unk75 <= 5)
@@ -1388,7 +1388,7 @@ u32 sub_08068f68(void)
     t = gCurTask;
     a = t->unk8C;
     t->unk7C = 0;
-    if (a->unk48 != 0)
+    if (a->attackBox != 0)
     {
         u = gCurTask;
         if (u->unk7E != -1)
@@ -1398,8 +1398,8 @@ u32 sub_08068f68(void)
                 gCurTask->unk75 = 0;
                 gCurTask->unk7E = 255;
                 gCurTask->unk7F = -1;
-                if (a->unk05 != 2)
-                    a->unk05 = 0;
+                if (a->hitState != 2)
+                    a->hitState = 0;
             }
         }
         gAttackX = gCurTask->unk48;
@@ -1413,16 +1413,16 @@ u32 sub_08068f68(void)
         gAttackFacing = v->facing;
         if (a->unk60 != NULL)
         {
-            gAttackHitDuration = a->unk60->unk00;
-            if (v->unk75 > (a->unk60->unk00 >> 1))
-                gAttackBox = a->unk60->unk04;
+            gAttackHitDuration = a->unk60->hitDuration;
+            if (v->unk75 > (a->unk60->hitDuration >> 1))
+                gAttackBox = a->unk60->altAttackBox;
             else
-                gAttackBox = a->unk48;
+                gAttackBox = a->attackBox;
         }
         else
         {
             gAttackHitDuration = 30;
-            gAttackBox = a->unk48;
+            gAttackBox = a->attackBox;
         }
         if (gAttackHitDuration - gCurTask->unk75 <= 5)
             return 0;
@@ -1438,9 +1438,9 @@ u32 sub_08068f68(void)
     sub_0801b7dc();
     if (a->unk60 != NULL)
     {
-        gAttackHitDuration = a->unk60->unk00;
-        if (gCurTask->unk75 > (a->unk60->unk00 >> 1))
-            gAttackBox = a->unk60->unk04;
+        gAttackHitDuration = a->unk60->hitDuration;
+        if (gCurTask->unk75 > (a->unk60->hitDuration >> 1))
+            gAttackBox = a->unk60->altAttackBox;
         else
             gAttackBox = a->unk4C;
     }
@@ -1476,7 +1476,7 @@ u32 sub_0806914c(s32 a)
     gUnk_030023F0 = u->unk75;
     gAttackFacing = u->facing;
     if (b->unk60 != NULL)
-        gAttackHitDuration = b->unk60->unk00;
+        gAttackHitDuration = b->unk60->hitDuration;
     else
         gAttackHitDuration = 30;
     gAttackBox = a;
@@ -1505,8 +1505,8 @@ void ActorStoreHit(u8 a)
     {
         if ((u8)(gHitKind - 3) > 1)
         {
-            if (b->unk05 != 2)
-                b->unk05 = 1;
+            if (b->hitState != 2)
+                b->hitState = 1;
         }
         b->unk06 = gUnk_030023A4;
         b->unk07 = gUnk_030023D0;

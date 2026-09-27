@@ -1643,8 +1643,8 @@ void sub_080a19ec(void)
     ta = &gTasks[gUnk_02007D00[0]];
     ab = tb->unk8C;
     aa = ta->unk8C;
-    ActorSetAttackBoxSlot(gUnk_02007D00[1], ab->unk60->unk04);
-    ActorSetAttackBoxSlot(gUnk_02007D00[0], aa->unk60->unk04);
+    ActorSetAttackBoxSlot(gUnk_02007D00[1], ab->unk60->altAttackBox);
+    ActorSetAttackBoxSlot(gUnk_02007D00[0], aa->unk60->altAttackBox);
     gUnk_0200AFF8 = 0;
     HudShowHpBar();
     HudStartHpBar(tb->unk78 * 2, tb->unk78);
@@ -1672,8 +1672,8 @@ void sub_080a1ad0(void)
     s32 r;
 
     a = gCurTask->unk8C;
-    gUnk_02007D00[1] = sub_0806505c(1, 0, gViewRect[0] + 192, gViewRect[2] + 48, a->unk20);
-    v = a->unk20 & 0xFFF;
+    gUnk_02007D00[1] = sub_0806505c(1, 0, gViewRect[0] + 192, gViewRect[2] + 48, a->savedTileWord);
+    v = a->savedTileWord & 0xFFF;
     w = gCurTask->unk40 & 0xF000;
     gUnk_02007D00[0] = sub_0806505c(2, 0, gViewRect[0] + 32, gViewRect[2] + 64, v | w);
     r = sub_0806505c(3, 0, 0, 0, gCurTask->unk40);
@@ -2318,7 +2318,7 @@ void sub_080a2814(void)
 {
     struct Task *t = gCurTask;
 
-    if (!(t->unk8C->unk0B & 1))
+    if (!(t->unk8C->paletteLocked & 1))
     {
         if ((s16)t->unk70 != 0 || t->unk20 != 0)
         {
@@ -2375,13 +2375,13 @@ void sub_080a291c(void)
 {
     struct ActorSpawn sp;
 
-    sp.unk00 = 24;
-    sp.unk04 = 127;
+    sp.subtype = 24;
+    sp.taskType = 127;
     sp.unk08 = 0;
     sp.unk09 = 0;
-    sp.unk0C = 24;
-    sp.unk0E = 0;
-    sp.unk0A = 1;
+    sp.x = 24;
+    sp.y = 0;
+    sp.checkTerrain = 1;
     CreateActorFromDescAtOffsetFacing(&sp, 0);
     PlaySfx(0x226);
 }
@@ -2394,13 +2394,13 @@ void sub_080a2954(void)
 
     t->unk34--;
     t->unk30 = 45;
-    sp.unk00 = 24;
-    sp.unk04 = 127;
+    sp.subtype = 24;
+    sp.taskType = 127;
     sp.unk08 = 2;
     sp.unk09 = t->unk34;
-    sp.unk0C = 0;
-    sp.unk0E = 0;
-    sp.unk0A = 0;
+    sp.x = 0;
+    sp.y = 0;
+    sp.checkTerrain = 0;
     CreateActorFromDescAtOffsetFacing(&sp, 0);
 }
 
@@ -2425,7 +2425,7 @@ void sub_080a29cc(void)
     a = gCurTask->unk8C;
     TaskStop();
     sub_080a2994();
-    if (a->unk1C != 6)
+    if (a->prevState != 6)
         gCurTask->unk30 = 300;
     gUnk_02007D00[7] = 1;
 }
@@ -2522,9 +2522,9 @@ void sub_080a2b2c(void *a, u32 b)
     u32 *gt;
     s16 fr;
 
-    if (t->unk38 != 0 && t->frame != -1 && !(t->unk8C->unk0B & 1))
+    if (t->unk38 != 0 && t->frame != -1 && !(t->unk8C->paletteLocked & 1))
     {
-        t->unk8C->unk0A |= 1;
+        t->unk8C->paletteOverridden |= 1;
         gt = gTasks[gUnk_02006040[5]].unk38;
         fr = gTasks[gUnk_02006040[5]].frame;
         if (fr != -1)
@@ -2548,14 +2548,14 @@ void sub_080a2bc4(void)
     struct Task *o;
     u32 v;
 
-    if (!(act->unk0B & 1))
+    if (!(act->paletteLocked & 1))
     {
         if ((s16)t->unk70 != 0 || t->unk20 != 0)
         {
             v = 2;
             if (t->unk20 != 0)
                 v = 4;
-            act->unk0A |= 1;
+            act->paletteOverridden |= 1;
             v &= gFrameCount;
             if (v == 0)
                 RequestCopy(2, (u32)gUnk_082FB230,
@@ -2579,7 +2579,7 @@ void sub_080a2bc4(void)
 /* sub_080a2c90 (0x080A2C90-0x080A2CA8) */
 void sub_080a2c90(void)
 {
-    gCurTask->unk8C->unk0A = 0;
+    gCurTask->unk8C->paletteOverridden = 0;
     gCurTask->unk70 = 0;
 }
 
@@ -2588,14 +2588,14 @@ void sub_080a2ca8(void)
 {
     struct ActorSpawn sp;
 
-    sp.unk00 = 24;
-    sp.unk04 = 127;
+    sp.subtype = 24;
+    sp.taskType = 127;
     sp.unk08 = 1;
     sp.unk09 = 0;
-    sp.unk0C = 24;
-    sp.unk0E = 0;
-    sp.unk10 = sub_0806660c(1);
-    sp.unk0A = 1;
+    sp.x = 24;
+    sp.y = 0;
+    sp.tileWord = sub_0806660c(1);
+    sp.checkTerrain = 1;
     CreateActorFromDescAtOffsetFacing(&sp, 1);
     PlaySfx(0x227);
 }
@@ -2605,14 +2605,14 @@ void sub_080a2ce8(void)
 {
     struct ActorSpawn sp;
 
-    sp.unk00 = 24;
-    sp.unk04 = 127;
+    sp.subtype = 24;
+    sp.taskType = 127;
     sp.unk08 = 3;
     sp.unk09 = 0;
-    sp.unk0C = 0;
-    sp.unk0E = 64;
-    sp.unk10 = sub_0806660c(2);
-    sp.unk0A = 0;
+    sp.x = 0;
+    sp.y = 64;
+    sp.tileWord = sub_0806660c(2);
+    sp.checkTerrain = 0;
     gUnk_02006040[0] = CreateActorFromDesc(&sp, 1);
     gUnk_02006040[6] = PlaySfx(0x216);
 }
@@ -2711,7 +2711,7 @@ void sub_080a2edc(void)
     }
     else
         gCurTask->unk1C = ActorStartAnimNoFlip(gUnk_08748588);
-    if (a->unk1C != 6)
+    if (a->prevState != 6)
         gCurTask->unk30 = 300;
     gUnk_02007D00[7] = 1;
 }
@@ -3972,7 +3972,7 @@ void sub_080a4814(void)
     if (pt->frame > 15)
         gCurTask->frame = 0xFFFF;
     gCurTask->facing = pt->facing;
-    myact->unk0A = pact->unk0A;
+    myact->paletteOverridden = pact->paletteOverridden;
 }
 
 /* sub_080a488c (0x080A488C-0x080A498C) */
@@ -4013,7 +4013,7 @@ void sub_080a488c(void)
         }
         else
             g = (struct TaskGfx *)gt[0];
-        if (!(act->unk0A & 1))
+        if (!(act->paletteOverridden & 1))
             ActorLoadPalette((void *)((u32)g->unk04 + 2), g->unk04[0], 0);
     }
 }
@@ -4181,7 +4181,7 @@ void sub_080a4c84(void)
     t->unk00 = (u32)ActorMove;
     t->unk0C = (u32)ActorDrawWorldInViewOrDestroy;
     t->layer = 9;
-    a->unk38 = -2;
+    a->sfxOverride = -2;
     CallTableEntry(gCurTask->unk73, 4, gUnk_087489E0);
 }
 

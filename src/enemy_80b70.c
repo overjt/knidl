@@ -234,7 +234,7 @@ void sub_08080d58(void)
         k = n * 144;
         q = (struct Actor **)((u8 *)p + 140);
         a = *(struct Actor **)((u8 *)q + k);
-        if ((s16)gTaskSlotTypes[n] == -1 || a->unk05 == 2)
+        if ((s16)gTaskSlotTypes[n] == -1 || a->hitState == 2)
             TaskFree(gCurTaskIdx);
     }
     else

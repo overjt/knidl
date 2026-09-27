@@ -892,7 +892,7 @@ s32 sub_08089064(void)
 {
     if (gCurTask->unk73 != 3)
     {
-        gCurTask->unk8C->unk5C = (u32)gUnk_08742E5C;
+        gCurTask->unk8C->hitReactions = (u32)gUnk_08742E5C;
         switch (gCurTask->unk73)
         {
         case 0:
@@ -913,7 +913,7 @@ s32 sub_080890d4(void)
 {
     if (gCurTask->unk73 != 3)
     {
-        gCurTask->unk8C->unk5C = (u32)gUnk_08742E50;
+        gCurTask->unk8C->hitReactions = (u32)gUnk_08742E50;
         if (gCurTask->unk73 != 0)
             return 0;
         ActorSetState(4);
@@ -1384,13 +1384,13 @@ void sub_080899fc(void)
     {
         if (gCurTask->unk74 == 1)
         {
-            sp.unk00 = 5;
-            sp.unk04 = 107;
+            sp.subtype = 5;
+            sp.taskType = 107;
             sp.unk08 = zero = 0;
             sp.unk09 = gCurTask->unk74;
-            sp.unk0C = zero;
-            sp.unk0E = -8;
-            sp.unk0A = 1;
+            sp.x = zero;
+            sp.y = -8;
+            sp.checkTerrain = 1;
             PlaySfx(195);
             gCurTask->unk46 = CreateActorFromDescAtOffsetFacing(&sp, 0);
             CreateChildTaskHere(219, 1);

@@ -88,8 +88,8 @@ void ActorDie(void)
     s8 *p;
 
     a = gCurTask->unk8C;
-    p = (s8 *)a->unk5C;
-    a->unk05 = 2;
+    p = (s8 *)a->hitReactions;
+    a->hitState = 2;
     t = gCurTask;
     t->unk00 = (u32)ActorMove;
     t->unk04 = 0;
@@ -98,10 +98,10 @@ void ActorDie(void)
     TaskSetFrame(0);
     if (p != NULL)
         CallTableEntry(p[1], 11, gUnk_0873E5BC);
-    if (a->unk10 != -1)
+    if (a->attachedTask != -1)
     {
-        TaskFree(a->unk10);
-        a->unk10 = 0xFFFF;
+        TaskFree(a->attachedTask);
+        a->attachedTask = 0xFFFF;
     }
     ActorDestroy();
 }
@@ -131,7 +131,7 @@ void sub_0806a3dc(void)
     gCurTask->unk7A = 0;
     t = gCurTask;
     a = t->unk8C;
-    a->unk22 = t->unk40 & 0xF000;
+    a->savedPaletteBits = t->unk40 & 0xF000;
     t->unk2C = t->unk4A;
     t->unk30 = 14;
     t->unk34 = 14;
@@ -165,7 +165,7 @@ void sub_0806a488(void)
         if ((t->unk30 & 1) == 0)
             t->unk40 = (t->unk40 & 0xFFF) | 0xF000;
         else
-            t->unk40 = (t->unk40 & 0xFFF) | t->unk8C->unk22;
+            t->unk40 = (t->unk40 & 0xFFF) | t->unk8C->savedPaletteBits;
     }
     u = gCurTask;
     if (u->unk34 <= 0)
@@ -269,7 +269,7 @@ void sub_0806a5a0(void)
         t->unk38 = gUnk_0874CB7C;
         t->unk40 = 0;
         if (gUnk_0300244C != 0)
-            t->unk8C->unk22 = 0;
+            t->unk8C->savedPaletteBits = 0;
         w = gCurTask;
         if (w->frame == -1)
             w->frame = 4;
@@ -301,9 +301,9 @@ void sub_0806a638(void)
     gCurTask->unk7A = zero;
     ActorSetState(0);
     gCurTask->unk0C = (u32)ActorDrawWorldInViewOrDestroy;
-    fn = a->unk40;
+    fn = a->teardown;
     ActorLoadDef((u32)&gUnk_0873F6BC);
-    a->unk40 = fn;
+    a->teardown = fn;
 }
 
 void sub_0806a6a0(void)
@@ -412,10 +412,10 @@ void sub_0806a7f4(void)
         else
         {
             a = gCurTask->unk8C;
-            if (a->unk10 != -1)
+            if (a->attachedTask != -1)
             {
-                TaskFree(a->unk10);
-                a->unk10 = 0xFFFF;
+                TaskFree(a->attachedTask);
+                a->attachedTask = 0xFFFF;
             }
         }
     }
@@ -464,10 +464,10 @@ void sub_0806a980(void)
     one = 1;
     t->unk15 = one;
     gCurTask->taskClass = one;
-    if (a->unk10 != -1)
+    if (a->attachedTask != -1)
     {
-        TaskFree(a->unk10);
-        a->unk10 = 0xFFFF;
+        TaskFree(a->attachedTask);
+        a->attachedTask = 0xFFFF;
     }
     TaskStop();
     PlaySfx(229);
@@ -587,7 +587,7 @@ void sub_0806ab34(void)
     zb = 0;
     u->unk78 = 127;
     u->unk04 = (u32)sub_0806aba4;
-    a->unk48 = (u32)&gUnk_0873F6E8;
+    a->attackBox = (u32)&gUnk_0873F6E8;
     u->unk80 = zb;
     v = gCurTask;
     v->unk2C = zero;
@@ -627,7 +627,7 @@ void sub_0806abec(void)
     u = gCurTask;
     u->unk78 = 127;
     u->unk04 = (u32)sub_0806ac48;
-    a->unk48 = (u32)&gUnk_0873F704;
+    a->attackBox = (u32)&gUnk_0873F704;
     u->unk2C = zero;
     RequestScreenShake(2);
     ActorPlaySfx(189, 0);
@@ -690,7 +690,7 @@ void sub_0806acc8(void)
 
 u32 sub_0806acf8(void)
 {
-    if (gCurTask->unk8C->unk1A == -1)
+    if (gCurTask->unk8C->extraFrame == -1)
         return 0;
     return 1;
 }

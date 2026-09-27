@@ -542,15 +542,15 @@ s32 sub_0809e214(void)
     s32 z;
     s32 r;
 
-    sp.unk00 = 27;
-    sp.unk04 = 130;
+    sp.subtype = 27;
+    sp.taskType = 130;
     sp.unk08 = (t = gCurTask)->unk73;
     z = 0;
     sp.unk09 = t->unk74;
-    sp.unk0C = z;
-    sp.unk0E = 0xFFF0;
-    sp.unk10 = gUnk_08745CEC[2];
-    sp.unk0A = 0;
+    sp.x = z;
+    sp.y = 0xFFF0;
+    sp.tileWord = gUnk_08745CEC[2];
+    sp.checkTerrain = 0;
     r = CreateActorFromDesc(&sp, 1);
     p = &gCurTask->unk46;
     *p = r;
@@ -1421,14 +1421,14 @@ s32 sub_0809f29c(s32 a)
     s32 r;
 
     PlaySfx(214);
-    sp.unk00 = 28;
-    sp.unk04 = 131;
+    sp.subtype = 28;
+    sp.taskType = 131;
     sp.unk08 = a;
     sp.unk09 = gCurTask->unk74;
-    sp.unk0C = 12;
-    sp.unk0E = 0xFFEC;
-    sp.unk10 = 0xF310;
-    sp.unk0A = 0;
+    sp.x = 12;
+    sp.y = 0xFFEC;
+    sp.tileWord = 0xF310;
+    sp.checkTerrain = 0;
     r = CreateActorFromDescAtOffsetFacing(&sp, 1);
     gCurTask->unk46 = r;
 }

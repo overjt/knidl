@@ -860,7 +860,7 @@ void sub_0807893c(void)
         struct Task *t = gCurTask;
 
         t->unk38 = gUnk_08752118;
-        t->unk8C->unk1A = 4;
+        t->unk8C->extraFrame = 4;
         CallTableEntry(t->unk73, 6, gUnk_08740630);
     }
 }

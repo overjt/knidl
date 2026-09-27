@@ -325,14 +325,14 @@ void sub_08098d58(void)
 
     t = gCurTask;
     a = t->unk8C;
-    sp.unk00 = 13;
-    sp.unk04 = 115;
+    sp.subtype = 13;
+    sp.taskType = 115;
     sp.unk08 = 0;
     sp.unk09 = t->facing;
-    sp.unk0C = 0;
-    sp.unk0E = 0;
-    sp.unk10 = a->unk20;
-    sp.unk0A = 1;
+    sp.x = 0;
+    sp.y = 0;
+    sp.tileWord = a->savedTileWord;
+    sp.checkTerrain = 1;
     gCurTask->unk1C = CreateActorFromDescAtOffsetFacing(&sp, 1);
 }
 

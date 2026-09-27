@@ -31,7 +31,7 @@
  *     `sub_0808088c` (`0x087414E0`);
  *   * the bank's four-corner terrain probe `sub_0807f6a8` (four
  *     sub_08021c14 samples around a box whose six signed offsets come from
- *     Actor.unk50) and the jump-table state machine `sub_0807fe18`
+ *     Actor.terrainBox) and the jump-table state machine `sub_0807fe18`
  *     (five states over Task.unk30);
  *   * the six-frame flap loop `sub_08080b2c` and the "spawn a puff of six
  *     class-6 actors" routines `sub_08080570` / `sub_08080930`.
@@ -443,7 +443,7 @@ void sub_0807f4dc(void)
         m = RandomRange(9);
         d = gCurTask;
         d->unk34 = o->unk4A + (s8)gUnk_0874136D[m];
-        if (sub_0807f6a8(d->unk30, d->unk34, (s8 *)d->unk8C->unk50) != 0)
+        if (sub_0807f6a8(d->unk30, d->unk34, (s8 *)d->unk8C->terrainBox) != 0)
             break;
         if (++*(s16 *)&gCurTask->unk6C > 59)
             break;
@@ -1169,7 +1169,7 @@ void sub_080801cc(void)
         while (1)
         {
             c = gCurTask;
-            if ((u8)sub_0807f6a8(c->unk48, c->unk4A, (s8 *)c->unk8C->unk50) != 0)
+            if ((u8)sub_0807f6a8(c->unk48, c->unk4A, (s8 *)c->unk8C->terrainBox) != 0)
                 break;
             TaskYieldTrampoline(1);
         }
@@ -1361,12 +1361,12 @@ void sub_08080570(void)
     TaskFaceNearestPlayer();
     if (abs(TaskGetNearestPlayerDistSq()) <= 0x143F)
     {
-        sp.unk00 = 6;
-        sp.unk04 = 108;
+        sp.subtype = 6;
+        sp.taskType = 108;
         sp.unk08 = 0;
         sp.unk09 = 0;
-        sp.unk10 = (gCurTask->unk40 & 0xFFF) | 0xF000;
-        sp.unk0A = 0;
+        sp.tileWord = (gCurTask->unk40 & 0xFFF) | 0xF000;
+        sp.checkTerrain = 0;
         *(s16 *)&gCurTask->unk6C = 0;
         do
         {
@@ -1383,11 +1383,11 @@ void sub_08080570(void)
     }
     else
     {
-        sp.unk00 = 6;
-        sp.unk04 = 108;
+        sp.subtype = 6;
+        sp.taskType = 108;
         sp.unk08 = 1;
         sp.unk09 = 0;
-        sp.unk10 = (gCurTask->unk40 & 0xFFF) | 0xF000;
+        sp.tileWord = (gCurTask->unk40 & 0xFFF) | 0xF000;
         gCurTask->unk46 = CreateActorFromDescHere(&sp, 1);
         *(s16 *)&gCurTask->unk6C = 0;
         do
@@ -1539,12 +1539,12 @@ void sub_08080930(void)
     TaskFaceNearestPlayer();
     if (abs(TaskGetNearestPlayerDistSq()) <= 0x143F)
     {
-        sp.unk00 = 6;
-        sp.unk04 = 108;
+        sp.subtype = 6;
+        sp.taskType = 108;
         sp.unk08 = 0;
         sp.unk09 = 0;
-        sp.unk10 = (gCurTask->unk40 & 0xFFF) | 0xF000;
-        sp.unk0A = 0;
+        sp.tileWord = (gCurTask->unk40 & 0xFFF) | 0xF000;
+        sp.checkTerrain = 0;
         *(s16 *)&gCurTask->unk6C = 0;
         do
         {
@@ -1561,12 +1561,12 @@ void sub_08080930(void)
     }
     else
     {
-        sp.unk00 = 6;
-        sp.unk04 = 108;
+        sp.subtype = 6;
+        sp.taskType = 108;
         sp.unk08 = 1;
         sp.unk09 = 0;
-        sp.unk10 = (gCurTask->unk40 & 0xFFF) | 0xF000;
-        sp.unk0A = 1;
+        sp.tileWord = (gCurTask->unk40 & 0xFFF) | 0xF000;
+        sp.checkTerrain = 1;
         gCurTask->unk46 = CreateActorFromDescHere(&sp, 1);
         *(s16 *)&gCurTask->unk6C = 0;
         do

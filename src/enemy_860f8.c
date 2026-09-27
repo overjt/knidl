@@ -427,7 +427,7 @@ void sub_080867b8(void)
         TaskSetEntry(sub_080860d8, gCurTaskIdx);
         return;
     }
-    if (gCurTask->unk8C->unk2C != 0)
+    if (gCurTask->unk8C->animScript != 0)
     {
         if (gCurTask->unk28 == 0)
             gCurTask->unk28 = ActorStepAnim();
@@ -506,7 +506,7 @@ void sub_08086984(void)
 void sub_080869b8(void)
 {
     gCurTask->unk34--;
-    if (gCurTask->unk8C->unk2C != 0)
+    if (gCurTask->unk8C->animScript != 0)
     {
         if (gCurTask->unk28 == 0)
             gCurTask->unk28 = ActorStepAnim();
@@ -660,7 +660,7 @@ void sub_08086ccc(void)
         TaskSetEntry(sub_08086bf0, gCurTaskIdx);
         return;
     }
-    if (gCurTask->unk8C->unk2C != 0)
+    if (gCurTask->unk8C->animScript != 0)
     {
         if (gCurTask->unk28 == 0)
             gCurTask->unk28 = ActorStepAnim();
@@ -695,7 +695,7 @@ void sub_08086da4(void)
         TaskSetEntry(sub_08086bf0, gCurTaskIdx);
         return;
     }
-    if (gCurTask->unk8C->unk2C != 0)
+    if (gCurTask->unk8C->animScript != 0)
     {
         if (gCurTask->unk28 == 0)
             gCurTask->unk28 = ActorStepAnim();
@@ -738,7 +738,7 @@ void sub_08086df0(void)
 
 void sub_08086ec8(void)
 {
-    if (gCurTask->unk8C->unk2C != 0)
+    if (gCurTask->unk8C->animScript != 0)
     {
         if (gCurTask->unk28 == 0)
             gCurTask->unk28 = ActorStepAnim();
@@ -1121,7 +1121,7 @@ void sub_08087724(void)
         TaskSetEntry(sub_080870a4, gCurTaskIdx);
         return;
     }
-    if (gCurTask->unk8C->unk2C != 0)
+    if (gCurTask->unk8C->animScript != 0)
     {
         if (gCurTask->unk28 == 0)
             gCurTask->unk28 = ActorStepAnim();
@@ -1202,7 +1202,7 @@ void sub_080878f0(void)
 void sub_08087924(void)
 {
     gCurTask->unk34--;
-    if (gCurTask->unk8C->unk2C != 0)
+    if (gCurTask->unk8C->animScript != 0)
     {
         if (gCurTask->unk28 == 0)
             gCurTask->unk28 = ActorStepAnim();
@@ -1346,7 +1346,7 @@ void sub_08087bfc(void)
         TaskSetEntry(sub_08087b20, gCurTaskIdx);
         return;
     }
-    if (gCurTask->unk8C->unk2C != 0)
+    if (gCurTask->unk8C->animScript != 0)
     {
         if (gCurTask->unk28 == 0)
             gCurTask->unk28 = ActorStepAnim();
@@ -1381,7 +1381,7 @@ void sub_08087cd4(void)
         TaskSetEntry(sub_08087b20, gCurTaskIdx);
         return;
     }
-    if (gCurTask->unk8C->unk2C != 0)
+    if (gCurTask->unk8C->animScript != 0)
     {
         if (gCurTask->unk28 == 0)
             gCurTask->unk28 = ActorStepAnim();
@@ -1424,7 +1424,7 @@ void sub_08087d20(void)
 
 void sub_08087df8(void)
 {
-    if (gCurTask->unk8C->unk2C != 0)
+    if (gCurTask->unk8C->animScript != 0)
     {
         if (gCurTask->unk28 == 0)
             gCurTask->unk28 = ActorStepAnim();

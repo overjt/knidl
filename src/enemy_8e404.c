@@ -856,13 +856,13 @@ void sub_0808efdc(void)
 {
     struct ActorSpawn sp;
 
-    sp.unk00 = 7;
-    sp.unk04 = 109;
+    sp.subtype = 7;
+    sp.taskType = 109;
     sp.unk08 = 0;
     sp.unk09 = gCurTask->unk74;
-    sp.unk0C = gUnk_0874324C[gCurTask->unk30];
-    sp.unk0E = gUnk_08743251[gCurTask->unk30];
-    sp.unk0A = 1;
+    sp.x = gUnk_0874324C[gCurTask->unk30];
+    sp.y = gUnk_08743251[gCurTask->unk30];
+    sp.checkTerrain = 1;
     CreateActorFromDescAtOffsetFacing(&sp, 0);
     gCurTask->unk46 = CreateChildTaskAtOffsetFacing(172, gUnk_0874324C[gCurTask->unk30], gUnk_08743251[gCurTask->unk30], 0);
 }
@@ -871,13 +871,13 @@ void sub_0808f058(void)
 {
     struct ActorSpawn sp;
 
-    sp.unk00 = 7;
-    sp.unk04 = 109;
+    sp.subtype = 7;
+    sp.taskType = 109;
     sp.unk08 = 0;
     sp.unk09 = 4;
-    sp.unk0C = gUnk_08743256[gCurTask->unk34];
-    sp.unk0E = gUnk_08743251[gCurTask->unk34];
-    sp.unk0A = 1;
+    sp.x = gUnk_08743256[gCurTask->unk34];
+    sp.y = gUnk_08743251[gCurTask->unk34];
+    sp.checkTerrain = 1;
     CreateActorFromDescAtOffsetFacing(&sp, 0);
     gCurTask->unk46 = CreateChildTaskAtOffsetFacing(172, gUnk_08743256[gCurTask->unk34], gUnk_08743251[gCurTask->unk34], 0);
 }
@@ -970,7 +970,7 @@ void sub_0808f224(void)
     t->layer = 11;
     u = gCurTask;
     u->unk38 = gUnk_087524E4;
-    u->unk8C->unk1A = 4;
+    u->unk8C->extraFrame = 4;
     CallTableEntry(u->unk73, 6, gUnk_08743284);
 }
 

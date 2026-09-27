@@ -141,28 +141,28 @@ void sub_08063704(u32 i)
 
     t = &gTasks[i];
     a = t->unk8C;
-    a->unk44 = NULL;
+    a->def = NULL;
     switch (t->unk72)
     {
     case 0:
-        a->unk44 = gUnk_0873ECEC[t->unk76];
+        a->def = gUnk_0873ECEC[t->unk76];
         break;
     case 1:
     case 3:
-        a->unk44 = gUnk_0873ED90[t->unk76];
+        a->def = gUnk_0873ED90[t->unk76];
         break;
     case 2:
-        a->unk44 = gUnk_0873EDB8[t->unk76];
+        a->def = gUnk_0873EDB8[t->unk76];
         gUnk_02007F50 = t->unk76;
         break;
     case 4:
-        a->unk44 = gUnk_0873EDDC[t->unk76];
+        a->def = gUnk_0873EDDC[t->unk76];
         break;
     case 5:
-        a->unk44 = gUnk_0873EE70[t->unk76];
+        a->def = gUnk_0873EE70[t->unk76];
         break;
     default:
-        a->unk44 = gUnk_0873EE88[t->unk76];
+        a->def = gUnk_0873EE88[t->unk76];
         break;
     }
 }
@@ -188,26 +188,26 @@ void sub_080637e4(u32 i)
 
     t = &gTasks[i];
     a = t->unk8C;
-    a->unk1C = 0xFFFF;
+    a->prevState = 0xFFFF;
     a->unk04 = 0;
-    a->unk05 = 0;
+    a->hitState = 0;
     a->unk06 = 0;
     a->unk07 = 0;
-    a->unk2C = 0;
-    a->unk01 = 0;
-    a->unk08 = 0;
-    a->unk09 = 0;
-    a->unk0A = 0;
-    a->unk0B = 0;
+    a->animScript = 0;
+    a->hitStunTimer = 0;
+    a->animNoFlip = 0;
+    a->animScriptPos = 0;
+    a->paletteOverridden = 0;
+    a->paletteLocked = 0;
     a->unk0E = -1;
-    a->unk10 = -1;
-    a->unk12 = 0xFFFE;
-    a->unk22 = t->unk40 & 0xF000;
-    a->unk24 = 16;
-    a->unk28 = 0;
-    a->unk0C = t->unk73 >> 4;
+    a->attachedTask = -1;
+    a->attachedTaskLifetime = 0xFFFE;
+    a->savedPaletteBits = t->unk40 & 0xF000;
+    a->paletteColorCount = 16;
+    a->palette = 0;
+    a->paletteVariant = t->unk73 >> 4;
     t->unk73 = t->unk73 & 15;
-    if (a->unk0C != 0)
+    if (a->paletteVariant != 0)
         sub_08065ce0(i);
     t->unk16 = gNextActorSerial;
     if (gNextActorSerial > 0xFFFE)
@@ -216,43 +216,43 @@ void sub_080637e4(u32 i)
         gNextActorSerial = gNextActorSerial + 1;
     a->unk3C = 0;
     a->unk34 = -1;
-    a->unk38 = -1;
+    a->sfxOverride = -1;
     a->unk0D = 0;
-    a->unk18 = 0;
+    a->extraOffsetY = 0;
     a->unk16 = 0;
-    a->unk03 = 0;
-    a->unk1E = 0;
-    a->unk1A = 0xFFFF;
-    a->unk02 = 0;
-    d = a->unk44;
+    a->extraLayerOffset = 0;
+    a->extraTileWord = 0;
+    a->extraFrame = 0xFFFF;
+    a->healthBonus = 0;
+    d = a->def;
     if (d != NULL)
     {
-        a->unk48 = d->unk14;
+        a->attackBox = d->attackBox;
         a->unk4C = 0;
-        a->unk50 = d->unk18;
-        a->unk58 = a->unk54 = d->unk1C;
-        a->unk5C = d->unk20;
-        a->unk00 = d->unk0C;
-        a->unk30 = d->unk08;
+        a->terrainBox = d->terrainBox;
+        a->prevTerrainHandlers = a->terrainHandlers = d->terrainHandlers;
+        a->hitReactions = d->hitReactions;
+        a->ability = d->ability;
+        a->score = d->score;
         ActorResetHealthSlot(i);
-        if (a->unk44->unk24 != NULL)
-            a->unk44->unk24(i);
-        a->unk40 = a->unk44->unk28;
-        a->unk60 = a->unk44->unk10;
+        if (a->def->unk24 != NULL)
+            a->def->unk24(i);
+        a->teardown = a->def->teardown;
+        a->unk60 = a->def->unk10;
     }
     else
     {
-        a->unk48 = 0;
+        a->attackBox = 0;
         a->unk4C = 0;
-        a->unk50 = 0;
-        a->unk54 = 0;
-        a->unk58 = 0;
-        a->unk5C = 0;
-        a->unk00 = 0;
-        a->unk30 = 0;
+        a->terrainBox = 0;
+        a->terrainHandlers = 0;
+        a->prevTerrainHandlers = 0;
+        a->hitReactions = 0;
+        a->ability = 0;
+        a->score = 0;
         t->unk78 = 0;
         a->unk60 = 0;
-        a->unk40 = 0;
+        a->teardown = 0;
     }
 }
 
@@ -266,15 +266,15 @@ void ActorLoadDefSlot(u32 i, struct ActorDef *d)
     struct Actor *a;
 
     a = (&gTasks[i])->unk8C;
-    a->unk44 = d;
-    a->unk48 = d->unk14;
-    a->unk50 = d->unk18;
-    a->unk58 = a->unk54;
-    a->unk54 = d->unk1C;
-    a->unk5C = d->unk20;
-    a->unk00 = d->unk0C;
-    a->unk30 = d->unk08;
-    a->unk40 = d->unk28;
+    a->def = d;
+    a->attackBox = d->attackBox;
+    a->terrainBox = d->terrainBox;
+    a->prevTerrainHandlers = a->terrainHandlers;
+    a->terrainHandlers = d->terrainHandlers;
+    a->hitReactions = d->hitReactions;
+    a->ability = d->ability;
+    a->score = d->score;
+    a->teardown = d->teardown;
     ActorResetHealthSlot(i);
 }
 
@@ -283,7 +283,7 @@ void ActorSetState(u8 v)
     struct Task *t;
 
     t = gCurTask;
-    t->unk8C->unk1C = t->unk14;
+    t->unk8C->prevState = t->unk14;
     t->unk14 = v;
 }
 
@@ -292,7 +292,7 @@ void ActorSetStateSlot(u32 i, u8 v)
     struct Task *t;
 
     t = &gTasks[i];
-    t->unk8C->unk1C = t->unk14;
+    t->unk8C->prevState = t->unk14;
     t->unk14 = v;
 }
 
@@ -301,13 +301,13 @@ void ActorSetTerrainHandlers(u32 v)
     struct Actor *a;
 
     a = gCurTask->unk8C;
-    a->unk58 = a->unk54;
-    a->unk54 = v;
+    a->prevTerrainHandlers = a->terrainHandlers;
+    a->terrainHandlers = v;
 }
 
 void ActorSetHitReactions(u32 v)
 {
-    gCurTask->unk8C->unk5C = v;
+    gCurTask->unk8C->hitReactions = v;
 }
 
 void ActorSetAttackBox(u32 v)
@@ -320,12 +320,12 @@ void ActorSetAttackBoxSlot(u32 i, u32 v)
     struct Task *t;
 
     t = &gTasks[i];
-    t->unk8C->unk48 = v;
+    t->unk8C->attackBox = v;
 }
 
 void ActorSetTerrainBox(u32 v)
 {
-    gCurTask->unk8C->unk50 = v;
+    gCurTask->unk8C->terrainBox = v;
 }
 
 void sub_080639f0(struct ActorAux *v)
@@ -644,12 +644,12 @@ void ActorDestroySlot(s32 i)
     a = t->unk8C;
     if (a != NULL && (u8)(t->unk72 - 7) > 3)
     {
-        if (a->unk40 != NULL)
-            a->unk40();
-        if (a->unk10 != -1)
+        if (a->teardown != NULL)
+            a->teardown();
+        if (a->attachedTask != -1)
         {
-            TaskFree(a->unk10);
-            a->unk10 = 0xFFFF;
+            TaskFree(a->attachedTask);
+            a->attachedTask = 0xFFFF;
         }
         switch (t->unk72)
         {
@@ -709,15 +709,15 @@ s32 ActorStartAnimNoFlip(struct AnimCmd *p)
     struct Actor *a;
 
     a = gCurTask->unk8C;
-    a->unk2C = p;
-    a->unk09 = 0;
-    a->unk08 = 1;
+    a->animScript = p;
+    a->animScriptPos = 0;
+    a->animNoFlip = 1;
     return ActorStepAnim();
 }
 
 void ActorStopAnim(void)
 {
-    gCurTask->unk8C->unk2C = NULL;
+    gCurTask->unk8C->animScript = NULL;
 }
 
 s32 ActorStartAnim(struct AnimCmd *p)
@@ -725,9 +725,9 @@ s32 ActorStartAnim(struct AnimCmd *p)
     struct Actor *a;
 
     a = gCurTask->unk8C;
-    a->unk2C = p;
-    a->unk09 = 0;
-    a->unk08 = 0;
+    a->animScript = p;
+    a->animScriptPos = 0;
+    a->animNoFlip = 0;
     return ActorStepAnim();
 }
 
@@ -742,33 +742,33 @@ s32 ActorStepAnim(void)
     s32 cmd;
 
     a = gCurTask->unk8C;
-    p = a->unk2C;
-    p += a->unk09;
-    cmd = p->unk00;
+    p = a->animScript;
+    p += a->animScriptPos;
+    cmd = p->frame;
     if (cmd == -3)
     {
-        a->unk09 = 0;
-        p = a->unk2C;
+        a->animScriptPos = 0;
+        p = a->animScript;
     }
     else if (cmd == -2)
     {
         delay = cmd;
-        a->unk2C = NULL;
-        a->unk09++;
+        a->animScript = NULL;
+        a->animScriptPos++;
         return delay;
     }
-    if (a->unk08 != 0)
-        gCurTask->frame = p->unk00;
+    if (a->animNoFlip != 0)
+        gCurTask->frame = p->frame;
     else
-        TaskSetFrame(p->unk00);
-    delay = p->unk02;
-    a->unk09++;
+        TaskSetFrame(p->frame);
+    delay = p->delay;
+    a->animScriptPos++;
     return delay;
 }
 
 s32 ActorTickAnimFacingNearestPlayer(s32 n)
 {
-    if (gCurTask->unk8C->unk2C != NULL)
+    if (gCurTask->unk8C->animScript != NULL)
     {
         if (n <= 0)
         {
@@ -782,7 +782,7 @@ s32 ActorTickAnimFacingNearestPlayer(s32 n)
 
 s32 ActorTickAnim(s32 n)
 {
-    if (gCurTask->unk8C->unk2C != NULL)
+    if (gCurTask->unk8C->animScript != NULL)
     {
         if (n <= 0)
             n = ActorStepAnim();
@@ -1293,7 +1293,7 @@ void ActorAwardScore(u32 arg, s32 mul)
     a = t->unk8C;
     if (gGameState == 18)
         return;
-    v = a->unk30;
+    v = a->score;
     if (t->unk72 == 0 && t->unk76 == 37)
     {
         k = gFrameCount & 3;
@@ -1327,25 +1327,25 @@ s32 sub_08064a78(struct ActorSpawn *p)
     struct Task *t;
     s32 i;
 
-    if (p->unk0A == 1)
+    if (p->checkTerrain == 1)
     {
-        if (sub_08021a40(p->unk0C, p->unk0E) != 0)
+        if (sub_08021a40(p->x, p->y) != 0)
             return -1;
     }
-    i = sub_08063698(p->unk04, 32);
+    i = sub_08063698(p->taskType, 32);
     if (i != -1)
     {
         t = &gTasks[i];
         t->unk72 = 4;
-        t->unk76 = p->unk00;
+        t->unk76 = p->subtype;
         t->unk73 = p->unk08;
         t->unk74 = p->unk09;
-        t->unk48 = p->unk0C;
-        t->unk4A = p->unk0E;
-        t->posX = p->unk0C << 16;
-        t->posY = p->unk0E << 16;
+        t->unk48 = p->x;
+        t->unk4A = p->y;
+        t->posX = p->x << 16;
+        t->posY = p->y << 16;
         t->unk44 = gCurTaskIdx;
-        t->unk40 = p->unk10;
+        t->unk40 = p->tileWord;
         t->unk8C = &gActors[i];
         ActorInitSlot(i);
     }
@@ -1357,10 +1357,10 @@ s32 CreateActorFromDescHere(struct ActorSpawn *p, u8 keepPrio)
     struct Task *t;
 
     t = gCurTask;
-    p->unk0C = t->unk48;
-    p->unk0E = t->unk4A;
+    p->x = t->unk48;
+    p->y = t->unk4A;
     if (keepPrio == 0)
-        p->unk10 = t->unk40;
+        p->tileWord = t->unk40;
     return sub_08064a78(p);
 }
 
@@ -1369,17 +1369,17 @@ s32 CreateActorFromDescAtOffsetFacing(struct ActorSpawn *p, u8 keepPrio)
     struct Task *t;
 
     t = gCurTask;
-    p->unk0C = t->unk48 + p->unk0C * t->facing;
-    p->unk0E += t->unk4A;
+    p->x = t->unk48 + p->x * t->facing;
+    p->y += t->unk4A;
     if (keepPrio == 0)
-        p->unk10 = t->unk40;
+        p->tileWord = t->unk40;
     return sub_08064a78(p);
 }
 
 s32 CreateActorFromDesc(struct ActorSpawn *p, u8 keepPrio)
 {
     if (keepPrio == 0)
-        p->unk10 = gCurTask->unk40;
+        p->tileWord = gCurTask->unk40;
     return sub_08064a78(p);
 }
 
@@ -1572,7 +1572,7 @@ s32 sub_08064eb8(u8 p2)
         t->unk18 = p->unk0D;
         t->unk1C = p->unk0E;
         t->unk20 = gCurTaskIdx;
-        a->unk00 = p->unk0D;
+        a->ability = p->unk0D;
     }
     CreateChildTaskHere(166, 0);
     return i;
@@ -1653,7 +1653,7 @@ s32 sub_0806505c(u8 p3, u8 p4, u32 x, u32 y, u16 prio)
         u = &gTasks[i];
         b = u->unk8C;
         u->unk44 = gCurTaskIdx;
-        b->unk64 = a->unk64;
+        b->gfx = a->gfx;
     }
     return i;
 }
