@@ -79,7 +79,9 @@ Matching decompilation of Kirby: The Amazing Mirror's predecessor, **Kirby: Nigh
   `src/enemy_9fbd0.c`, `src/enemy_a00ec.c` and `src/enemy_a0274.c` (**all 204
   functions, no asm left in the range**; the last one, `sub_080A00EC`, the
   392-byte three-star burst stepper, fell to the address-reload phase mechanism
-  in `docs/lessons-learned.md` 3.258 after 3.249-3.257 document the road there).
+  in `docs/lessons-learned.md` 3.258 after 3.249-3.257 document the road there;
+  since #154 it and the module's other pinned functions are plain C, lesson
+  3.513).
   Despite the census name this is NOT one
   behaviour bank: seven ROM task types share the range, and three of them are a
   four-lane actor spawner (#57), a six-variant enemy family whose variant picks
@@ -198,8 +200,8 @@ Matching decompilation of Kirby: The Amazing Mirror's predecessor, **Kirby: Nigh
   `src/mode_08664.c`, `src/gfx_08b8c.c`, `src/boot_091ac.c`,
   `src/hud_099fc.c`, `src/hud_0a130.c`, `src/hud_0aad0.c`,
   `src/hud_0b318.c` and `src/mode_0b44c.c` (**all 109 functions, no asm left
-  in the range**; one zero-byte `asm("" ::: "r0")` clobber, no `register`
-  pins).  It is what `AgbMain` dispatches into: the per-frame bodies of game
+  in the range**; its one zero-byte `asm("" ::: "r0")` clobber went in #154,
+  no `register` pins).  It is what `AgbMain` dispatches into: the per-frame bodies of game
   states 5, 8/17/18/19, 9 and 20, which loop until the stage-request byte
   `gUnk_03002438` asks for a state change, the pause screen (request 5) or a
   lost life (6); the extra modes' title screen (state 13, which in
@@ -220,8 +222,8 @@ Matching decompilation of Kirby: The Amazing Mirror's predecessor, **Kirby: Nigh
   `src/menu_0ca10.c`, `src/menu_0d450.c`, `src/menutask_0daf8.c`,
   `src/menutask_0e314.c`, `src/menutask_0ea0c.c`, `src/menutask_0f180.c`,
   `src/bgscroll_0fcbc.c` and `src/mode_100ac.c` (**all 79 functions, no asm
-  left in the range**; one zero-byte `asm("" ::: "r6")` clobber, no
-  `register` pins), so `0x080075B8-0x08017667` (M02-M04) is contiguous C.
+  left in the range**; its one zero-byte `asm("" ::: "r6")` clobber went in
+  #154, no `register` pins), so `0x080075B8-0x08017667` (M02-M04) is contiguous C.
   `AgbMain` state 4 is the main menu: `sub_0800b920` dispatches on the menu
   screen `gUnk_020060D0` (file select, file menu, two-way choices, the mode
   list whose rows pick M35-M37's sub-game `gUnk_02007FCC`, erase, the sound
@@ -628,9 +630,33 @@ Matching decompilation of Kirby: The Amazing Mirror's predecessor, **Kirby: Nigh
   tables as data (lesson 4.114).  `make progress`: 847028 of 851204 code
   bytes in `src/` (99.5094%), **0 bytes of code remaining to be
   decompiled**; 184 of 8282 symbols have real names.
-- Next milestones (after #35): (1) a "natural C" campaign that removes the
-  `register ... asm("rN")` pins and zero-byte `asm("")` levers left in the
-  early modules (133 functions in 45 files, mostly M28-M33); (2) #36, data
+- Natural-C campaign (issue #154): the 133 functions in 45 files that
+  matched only with `register ... asm("rN")` pins or zero-byte `asm("")`
+  levers (mostly M28-M33) were redrafted as plain C that still matches byte
+  for byte: **130 of 133 are clean**, pins 622 -> 10 and `asm("")` levers
+  189 -> 9, with two commented zero-code stand-ins (`sub_080a22d4`'s
+  `do { } while (0)`, `sub_080b55d8`'s volatile read); `sub_080109c8` keeps
+  #82's two commented `volatile` placeholder re-reads.  M29-M32
+  (`enemy_a1590.c` ... `enemy_ae3bc.c`), M28 and the tail have no pin or
+  empty `asm` left; `hud_b4ea8.c` lost its file-scope r9-r11 register
+  globals.  The census had missed `BLOCK_CROSS_JUMP` (`global.h`'s
+  `asm("");` macro): 13 sites, 9 of them in three unlisted functions, now 4,
+  all in `sub_0809fe10`, where the ROM really duplicates the tails (a
+  sanctioned pret idiom).  Still carrying: `sub_080b38f0` (hud_b2fe8.c, 10
+  pins + 6 levers; best plain attempt 7 bytes off, an r3/r4 local-alloc
+  order), `sub_08091e18` (enemy_9113c.c, one lever; lesson 3.156: cse folds
+  every use of the decremented value inside its `== 0` block, 9 bytes) and
+  `sub_080caab8` (boot_caab8.c, #152's two approved levers, 3.494).  The
+  pins described the old candidates, not the functions: 36 matched with
+  their pins merely deleted, and the rest fell to wrong declarations
+  (`u16` for `s16`, `vu8` for `u8` and back, `u32 []` headers), literals
+  written at every use, table elements read twice, full arms that
+  cross-jump, variable roles and loop shapes.  No header or cross-file
+  prototype changed; done by four agents plus the coordinator; new lessons
+  3.495-3.514 and 4.115, and correction notes on 34 older lessons
+  (3.229-3.281 and 3.341, 3.370 among them).
+- Next milestones (after #35 and #154's natural-C campaign): (1) #36, data
   structure under the data policy above (labels, types and pointer symbols,
-  no ROM bytes committed); (3) names for functions, globals and struct
-  fields, then #37's final audit.
+  no ROM bytes committed); (2) names for functions, globals and struct
+  fields, then #37's final audit.  The three functions #154 left pinned or
+  levered are listed in its bullet above.

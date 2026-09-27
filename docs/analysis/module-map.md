@@ -369,8 +369,9 @@ below is the pre-decompilation one, kept for the record.
   `src/hud_0aad0.c` (`0x0800AAD0-0x0800B318`, 14),
   `src/hud_0b318.c` (`0x0800B318-0x0800B44C`, 6),
   `src/mode_0b44c.c` (`0x0800B44C-0x0800B920`, 8).
-  One function carries a zero-byte `asm("" ::: "r0")` clobber
-  (`sub_08009640`, lessons-learned 3.370); there are no `register` pins.
+  `sub_08009640` carried a zero-byte `asm("" ::: "r0")` clobber (lessons-learned
+  3.370) until the natural-C campaign (#154) wrote its shared store in both
+  arms (3.506); there are no `register` pins and no `asm` statements.
 * **What it turned out to be** the code `AgbMain` (`src/main.c`) dispatches
   into, in five parts:
   * **The per-frame bodies of the game states** (`src/mode_075b8.c`,
@@ -455,9 +456,10 @@ below is the pre-decompilation one, kept for the record.
   `src/menutask_0f180.c` (`0x0800F180-0x0800FCBC`, 10),
   `src/bgscroll_0fcbc.c` (`0x0800FCBC-0x080100AC`, 11),
   `src/mode_100ac.c` (`0x080100AC-0x08010358`, 2).
-  One function carries a zero-byte `asm("" ::: "r6")` clobber
-  (`sub_0800f408`, a global-alloc priority tie the `-da` dump explains);
-  there are no `register` pins.  With M02 and M04, `0x080075B8-0x08017667`
+  `sub_0800f408` carried a zero-byte `asm("" ::: "r6")` clobber (a
+  global-alloc priority tie) until the natural-C campaign (#154) found the
+  cause, a `vu8` declaration of `gUnk_0200EBC0` (3.509); there are no
+  `register` pins and no `asm` statements.  With M02 and M04, `0x080075B8-0x08017667`
   is now contiguous C.
 * **What it turned out to be** the code behind two `AgbMain` states
   (`docs/analysis/rom-map.md` §4):
@@ -2259,6 +2261,13 @@ below is the pre-decompilation one, kept for the record.
   (lesson 3.258).  Found in an hour with an RRTRACE-instrumented build of the
   pinned agbcc source printing every `allocate_reload_reg` decision - the
   instrument, not more sweeping, is the escalation that works.
+* **Natural C (#154).** The ten functions that still carried `register`
+  pins or `asm("")` levers are plain C, `sub_080A00EC` included: it is a transcription of its landed twin `sub_08018e14`
+  (`src/player_18e14.c`) with a 2-D `s16 gUnk_08748268[2][16]` start table,
+  no offset locals and a pointer local for ONE of its two globals (lesson
+  3.513).  The only lever left in the range is four of the seven
+  `BLOCK_CROSS_JUMP`s of `sub_0809fe10`, which mark tails the ROM really
+  duplicates (lesson 3.503).
 * **Census fixes** eight rows curated in `tools/symdb.py`, so the module has
   **204** functions, not 198. `0x080A02FC` is a `FALSE_POSITIVES` entry - it
   is the pool-skip branch inside `sub_080A02D4`, not a function - and seven
@@ -2295,7 +2304,8 @@ below is the pre-decompilation one, kept for the record.
 
 ### M29 `0x080A1590-0x080A5643` - enemy/object behaviour bank 10 - **landed (#76)**
 
-* **Decompiled** into `src/enemy_a1590.c` (226 functions incl. census additions, all byte-matched; `make compare` ROM-identical). Same guard+body script shape as M25/M27 over the 80-entry anchor table `0x08748624`; four-slot EWRAM state in `gUnk_02007D00[]`, companion actors via `gUnk_03002790[]`.
+* **Decompiled** into `src/enemy_a1590.c` (226 functions incl. census additions, all byte-matched; `make compare` ROM-identical).
+* **Natural C (#154).** The three functions that still carried `register` pins (`sub_080a21a0`, `sub_080a22d4`, `sub_080a4814`) are plain C: the file has no `register ... asm` pin and no `asm` statement left (lessons 3.495-3.512). Same guard+body script shape as M25/M27 over the 80-entry anchor table `0x08748624`; four-slot EWRAM state in `gUnk_02007D00[]`, companion actors via `gUnk_03002790[]`.
 * **Size** 16.2 KiB (`0x40b4`), 221 functions (153 reachable only through pointer tables), mean `0x4a`, largest `0x100`, pool words 15.4% of bytes.
 * **Difficulty** 2/6 - 21 distinct RAM cells, 0 jump-table dispatches, 0 functions >= `0x200`.
 * **Seam cost** 0 in / 0 out (local `bl` edges crossing the boundary).
@@ -2310,7 +2320,7 @@ below is the pre-decompilation one, kept for the record.
 
 ### M30 `0x080A5644-0x080AA337` - enemy/object behaviour bank 11 - **landed (#72, complete: 130/130)**
 
-* **Decompiled** into `src/enemy_a5644.c`, `enemy_a78a0.c`, `enemy_a7998.c`, `enemy_a860c.c`, `enemy_a87c8.c`, `enemy_a932c.c`, `enemy_a93ec.c` (all 130 functions byte-matched; `make clean && make compare` ROM-identical, zero asm bytes in the range). The 3 former terminals fell to the zero-byte hard-liveness levers: `sub_080A78A0` (r7 spill-set enrollment forced with pinned x-var windows over the zero-temp chain, 3.275), `sub_080A932C` (pinned staging replaced by real reloads + self-load `bS = *(u16 *)bS`, 3.277/3.278), `sub_080A860C` (the "impossible" retard-rotation fixed by two asm live-range extensions, 3.278).
+* **Decompiled** into `src/enemy_a5644.c`, `enemy_a78a0.c`, `enemy_a7998.c`, `enemy_a860c.c`, `enemy_a87c8.c`, `enemy_a932c.c`, `enemy_a93ec.c` (all 130 functions byte-matched; `make clean && make compare` ROM-identical, zero asm bytes in the range). The 3 former terminals first fell to the zero-byte hard-liveness levers (3.275-3.278); the natural-C campaign (#154) rewrote all of them as plain C, so the range has no pin and no `asm` statement left: `sub_080A78A0`'s r7 temporary is a narrowed 16-bit multiply over a `s16` table the old header declared `u16` (lesson 3.508), `sub_080A860C`'s "four rotation phases" were the pins (an inline table index decides which load loop.c hoists, 3.510), and `sub_080A932C` is plain as well; `sub_080a6aac`, `sub_080a7438` and `sub_080a8d1c` lost their pins the same way.
 
 * **Size** 19.2 KiB (`0x4cf4`), 130 functions (110 reachable only through pointer tables), mean `0x97`, largest `0x5ac`, pool words 12.0% of bytes.
 * **Difficulty** 1/6 - 30 distinct RAM cells, 2 jump-table dispatches, 7 functions >= `0x200`.
@@ -2328,6 +2338,7 @@ below is the pre-decompilation one, kept for the record.
 ### M31 `0x080AA338-0x080AE3BB` - enemy/object behaviour bank 12 - **landed (#78)**
 
 * **Decompiled** into `src/enemy_aa338.c` (123 functions, all byte-matched; `make clean && make compare` ROM-identical). Last straggler `sub_080ADA20` (3 bytes) closed via the dropped-pseudo address-reload form (lessons 3.258/3.273).
+* **Natural C (#154).** All 18 functions that carried pins or levers (73 pins, 9 levers) are plain C, `sub_080ADA20` included (cells read at every use and a `while (1)` loop; the AND mask of its index is `& 255`, lesson 3.504): the file has no pin and no `asm` statement left.
 
 * **Size** 16.1 KiB (`0x4084`), 121 functions (96 reachable only through pointer tables), mean `0x88`, largest `0x378`, pool words 14.3% of bytes.
 * **Difficulty** 2/6 - 21 distinct RAM cells, 1 jump-table dispatches, 2 functions >= `0x200`.
@@ -2345,6 +2356,7 @@ below is the pre-decompilation one, kept for the record.
 ### M32 `0x080AE3BC-0x080B2FE7` - enemy/object behaviour bank 13 - **landed (#73)**
 
 * **Decompiled** into `src/enemy_ae3bc.c` (135 functions, all byte-matched; `make clean && make compare` ROM-identical).
+* **Natural C (#154).** The 37 functions that carried pins or levers (206 pins, 28 levers, a third of the campaign) are plain C with no stand-ins: literals written at every use, the draw-callback table element read twice with typed tables (3.505), and the afdf0/aff40/b0144/b0338 quartet's two task pointers (3.507).  The file has no pin and no `asm` statement left.
 
 * **Size** 19.0 KiB (`0x4c2c`), 129 functions (96 reachable only through pointer tables), mean `0x97`, largest `0x320`, pool words 11.9% of bytes.
 * **Difficulty** 1/6 - 15 distinct RAM cells, 4 jump-table dispatches, 3 functions >= `0x200`.
@@ -2360,6 +2372,7 @@ below is the pre-decompilation one, kept for the record.
 
 ### M33 `0x080B2FE8-0x080B6153` - HUD / overlay effects? - **landed (#97)**
 
+* **Natural C (#154).** 33 of the 34 functions that carried pins or levers (including `sub_080B4EA8`, `sub_080B5D84` with 51 pins, and the file-scope r9-r11 register globals of `hud_b4ea8.c`) are plain C: real cell types instead of the old `u32 []` header, `struct PointPair` bit-fields, the DMA0 io_reg.h macros, listed empty switch cases and `* 2` for a narrowed argument (lessons 3.508, 3.511).  `sub_080b38f0` keeps its 10 pins and 6 levers (best plain attempt 7 bytes off, a local-alloc order, lesson 3.514); `sub_080b55d8` has one commented stand-in (a volatile read).
 * **Decompiled** into `src/hud_b2fe8.c`, `hud_b4ea8.c`, `hud_b5024.c`, `hud_b5670.c`, `hud_b5840.c` (all 108 functions; no asm left in the range). `sub_080B4EA8` (the 3.274 r7 "web-split" terminal) matched via pre-switch n3/n7 + file-scope register globals r9-r11 + per-arm unique asm barriers + natural caller-save + a deliberately-mergeable duplicate case-5 tail whose reload chains advance the rotation before jump2 folds it away (lessons 3.275-3.281). The last one, `sub_080B5670` (464 B, parked at 34 differing bytes with a pinned candidate), fell in the straggler campaign as plain pin-free C: it is the room-object graphics loader `sub_080b4ea8` calls per kind-1 entry of `gUnk_020055D8` (shared or new graphics slot in `gUnk_020060A0[]`, tiles through `sub_080b5628`, palette group `gUnk_0873EF48[kind]`), `sub_08065dbc` takes three arguments, the VRAM base is a dropped pointer local (lesson 3.258) and the `[sp, #4]` byte slot is the compiler's own copy of `gUnk_02006130[i]` (lesson 3.474).
 
 * **Size** 12.4 KiB (`0x316c`), 108 functions (69 reachable only through pointer tables), mean `0x75`, largest `0x380`, pool words 14.2% of bytes.
