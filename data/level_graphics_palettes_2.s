@@ -3,11 +3,13 @@
 @ Segment level_graphics_palettes_2: 0x0834EEE8-0x08350AF8 (data, 0x1C10 bytes)
 @ Structure only (docs/data.md): labels, symbolic pointer words and
 @ .incbin slices of the user's baserom.gba; no ROM bytes are committed.
-@ 0 label(s), 0 code pointer(s), 0 data pointer(s), 1 .incbin slice(s) (0x1C10 bytes).
+@ 1 label(s), 0 code pointer(s), 0 data pointer(s), 1 .incbin slice(s) (0x1C10 bytes).
 @ Asset segment: its bytes stay extracted from baserom.gba forever; only
 @ labels and consumer-proven pointer tables are structure.
 
 	.section .level_graphics_palettes_2, "a"
 	.global	level_graphics_palettes_2
 level_graphics_palettes_2:
+	.global	gUnk_0834EEE8
+gUnk_0834EEE8:
 	.incbin	"baserom.gba", 0x34EEE8, 0x1C10
