@@ -4454,6 +4454,35 @@ The coordinator's leftovers (natc-a, natc-d):
   approved levers (3.494); `sub_0809fe10` keeps four `BLOCK_CROSS_JUMP`s
   (3.503).
 
+### 3.515 A rename is codegen-neutral under agbcc's Thumb backend (measured on #155's 1,145 renames)
+Lessons 4.79, 4.86 and 3.493 made the risk real: gcse's `hash_expr_1`
+hashes a `SYMBOL_REF` by the characters of its name (`gcc/gcse.c`, "Don't
+hash on the symbol's address"), and PRE's slot order follows the hash
+buckets.  If a global's own `symbol_ref` reached gcse, renaming it would
+move PRE.  It never does.  `thumb.h`'s `LEGITIMATE_CONSTANT_P` accepts a
+`SYMBOL_REF` only when it is a constant-pool address
+(`CONSTANT_ADDRESS_P`), so `emit_move_insn` (`gcc/expr.c`) turns every
+address of a global or a function into `force_const_mem` at expand time.
+From then on the RTL loads `(mem/u (symbol_ref "*.LCn"))`, whose name is
+the pool label's, numbered by creation order; the global's name lives only
+inside the pool entry and in `REG_EQUAL` notes, which PRE does not hash.
+cse's `canon_hash` hashes a `SYMBOL_REF` by its string's ADDRESS, which
+identifier lengths do shift, but only as a lookup key: equal expressions
+still find each other and classes are ordered by cost.  Calls go through
+`(call (mem (symbol_ref ...)))`, which gcse never enters in its table.
+Measured: #155 renamed 1,145 symbols in 14 batches, changing identifier
+lengths by -8 to +22 characters across the 306 source files, and `make clean
+&& make compare` passed after every batch.  The batches covered the
+functions the hash-order lessons are about: `sub_080c5b84`'s PRE slot
+`&gUnk_0201B0E0` (3.493, now `gAirGrindCourse`), `obj_30238.c`'s
+`sub_08030724` (4.79, now `ResetBlockAnims`) and `level_242d0.c`'s door
+code (4.86).  So a pure rename needs no K-scan and no per-function check;
+`tools/rename.py --verify-diff` plus `make compare` is the whole proof.
+Two limits: the pool label names (`.LCn`) still come from the count of
+constants before a function (4.86), so adding or removing a *reference*
+still matters; and this holds for identifiers, not for string literals,
+whose bytes are data.
+
 ## 4. Splitting ROM ranges into asm (tools/split.py)
 
 ### 4.1 objdump text only round-trips under `.syntax unified`
@@ -10293,6 +10322,80 @@ pointers, not through its name.
   status` before committing a split change.
 - The whole emit-and-verify of 7.5 MB of data takes about 7 s in the
   container; `make clean && make compare` about 10 s.
+
+### 4.123 `tools/rename.py`: where a name lives, and the pure-rename proof
+A name lives in five places, and a rename must update all of them or the
+next `make split` or link breaks: `tools/symdb.py` (`KNOWN_SYMBOLS`, or
+`ARM_ENTRIES` for the ARM helpers) for `docs/analysis/symbols.csv`;
+`tools/split_config.json` (`data_symbols` and `extra_labels` values,
+`abs_symbols` keys, the sorted `external_defined` list that keeps C-defined
+names out of `asm/rom_syms.s`, and the names quoted in `pointer_tables` /
+`not_pointers` reasons); every use in `src/` and `include/`; the
+hand-written asm; and the generated files, which only `make symbols && make
+split && make modmap` may rewrite.  Findings from writing and running it:
+* `split_config.json` round-trips exactly through `json.dumps(indent=2)`,
+  so the tool edits it structurally and keeps `external_defined` sorted
+  (`carve.py`'s convention).
+* Two C file names are also function names (`src/sub_0804e3a0.c`,
+  `src/sub_080c6258.c`, with `.sub_...` linker sections): the pattern must
+  not match a name preceded by `/` or `.` or followed by `.c/.h/.o/.s`, or
+  a rename rewrites a path.  `linker.ld` and `segments.txt` are never
+  edited.
+* The old names are matched with either hex case (`sub_080A00EC` in a
+  comment is the same symbol as `sub_080a00ec`).
+* The "already used" check must ignore words that only occur in comments:
+  several file headers already listed the public names (`MultiBootInit`,
+  `SerialCB`, ...) before they were applied.  The tool notes such words
+  and still refuses a real identifier collision in any case.
+* `--verify-diff REF` proves a branch is a pure rename: it composes the
+  rows `renames.csv` gained since REF (following chains) into one forward
+  map, applies it to REF's copy of every file the way the tool does, and
+  requires the result to equal the tree - C and asm outside comments,
+  generated files exactly, `symdb.py` as a line multiset with only its
+  renamed `KNOWN_SYMBOLS`/`ARM_ENTRIES` entries different (the tool never
+  edits its comments, so it is compared unmapped), and the config as
+  parsed JSON with `external_defined` sorted (comparing its lines failed
+  when a rename moved the list's comma-less last entry).  The first
+  version mapped the tree BACK to the old names and was wrong twice in one
+  batch: a new name that already appeared in prose (`TaskCreate` in a
+  config reason, `IsOnScreen` in a `symdb.py` comment) mapped to an old
+  name that was never there.  Map forward.
+* The check leaves comments to the reviewer: it lists the files whose
+  comments differ from the mechanical result (hand-fixed headers, and
+  `split.py`'s own header example in `asm/rom_syms.s`).
+* A batch driver that pipes the tool into `grep | tail` needs `set -o
+  pipefail`: without it a failed verify still reached `git commit`.
+
+### 4.124 Harness notes from #155 run 1 (names)
+- Ownership before names: the worklists (`pending/names/mklists.py`,
+  `mkcells.py`) gave every function to the agent of its address zone and
+  every much-used cell to one agent (the zone with the most references,
+  or the engine agent for any cell the engine zone uses outside
+  `AgbInit`'s zeroing).  No two proposal files ever named the same symbol;
+  `xcheck.py` cross-checked them for duplicate new names.
+- The engine agent wrote its vocabulary file (`A-vocab.md`: current task,
+  sleep/free, motion fields, facing, frame, sprite queue, keys, fades)
+  within 30 minutes, and the other three built on it, so the families
+  came out parallel across 0x08000000-0x080CD89B without a harmonising
+  pass (`TaskMove`/`ActorMove`, `TaskDrawWorldInViewOrFree` /
+  `ActorDrawWorldInViewOrDestroy`, `TaskFaceNearestPlayer`).
+- Agents may run `tools/rename.py` as a dry run: it is the collision and
+  style check, and it sees names applied since the agent started.
+- Applying names while agents still read `src/` worked: their targets keep
+  their old names until applied, and `renames.csv` maps the rest.
+- Agents found stale file-header comments while naming (Timer3Intr called
+  the serial IRQ, a sprite request's x/y offsets swapped, a palette loader
+  that loads the display layout); fix them as comment-only commits.
+- One agent forked three helpers of itself for its 142-function zone;
+  forbid that in the brief if the run has an agent cap.
+- A second round on the same zones is worth it, and it corrects the first:
+  B's second pass proved `Task.unk78` is health, which turned C's
+  `gAttackPower`/`gHitDamage` into `gAttackHealth`/`gHitHealthLeft` (a
+  rename chain, logged as two rows); C proved `gUnk_03001F30` is set only
+  by the mode list's fifth row, so the "link-play mode" reading in three
+  file headers and in D's evidence was wrong, and the game-over screen it
+  gates stayed unnamed.  Grep every writer of a cell before trusting a
+  header comment's role for it.
 
 ## 5. Workflow that worked
 

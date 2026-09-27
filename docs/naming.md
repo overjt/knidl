@@ -71,6 +71,33 @@ Rules that follow from the table:
   reserved for placeholders and compiler/library symbols; a real name never
   uses them.
 
+### 2.1 The engine's vocabulary (run 1 of #155)
+
+These words were fixed by run 1 and the families built on them; keep them.
+
+- **Task** functions act on the running task `gCurTask` (`TaskMove`,
+  `TaskSetFrame`, `TaskFaceNearestPlayer`); the same with a slot argument
+  ends in `Slot` (`TaskStopSlot`, `ActorSetStateSlot`).  `Actor` functions
+  act on the running task's `struct Actor` (`gActors[slot]`, M16-M18).
+- A coroutine **sleeps** n frames (`TaskYieldTrampoline(n)`), is sent to a
+  new state with `TaskSetEntry`, and ends with `TaskExitTrampoline`
+  (`TaskFree(gCurTaskIdx)`).  A task is **freed** (`TaskFree`, `...OrFree`);
+  an actor is **destroyed** (`ActorDestroy`, `...OrDestroy`) because that
+  also runs its teardown and frees its attached task.
+- **Facing** in a name means the sign follows `Task.unk43` (1 = right).
+- **World** / **Screen** coordinates: world pixels minus the sprite camera
+  (`gSpriteCameraX/Y`) are screen pixels.  **InView** tests the view rect
+  `gViewRect` widened by 64 px; **OnScreen** tests the screen widened by
+  about 64 px.
+- Motion: **position** (16.16, `Task.unk4C/50`), **pixel position**
+  (`unk48/4A`), **velocity**, **acceleration**, **speed limit**.
+  `Task.unk78` is **health** (actors and players).
+- The player's action machine: `PlayerAction<Name>` is the enter coroutine
+  in `gPlayerActions`, `PlayerAction<Name>Update` the per-frame handler it
+  installs, `PlayerCheck<Name>` the check that requests it.
+- Do not reuse a public name with a different shape: pokeruby's
+  `BuildSendCmd` takes a command and ours does not, hence `FillSendCmd`.
+
 ## 3. Words with a fixed meaning
 
 | Word | Means | Not |

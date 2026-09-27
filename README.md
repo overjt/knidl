@@ -68,16 +68,16 @@ make progress
         0 bytes in 0 functions in asm/nonmatching
         4176 bytes excluded from decompilation tracking
 
-8282 total symbols
-    184 symbols documented (2.2217%)
-    8098 symbols undocumented (97.7783%)
+11065 total symbols
+    1326 symbols documented (11.9837%)
+    9739 symbols undocumented (88.0163%)
 
 7537436 total bytes of data
     16 bytes of data in src (0.0002%)
-    7531236 bytes of data in data (99.9177%)
-    6184 bytes of data from asm (0.0820%)
+    7537184 bytes of data in data (99.9967%)
+    236 bytes of data from asm (0.0031%)
 
-7531388 bytes of data in 19 baserom incbins (99.9198%)
+17372184 bytes of data in 35630 baserom incbins (230.4787%)
 ```
 
 (Output from the current tree; run `make progress` for live values.)
@@ -87,8 +87,13 @@ What is left:
 - **Data.** The ROM's data is still `.incbin`'d from `baserom.gba` at build
   time and is never committed. Issue #36 turns the structured tables into
   labeled, typed symbols without committing their contents.
-- **Names.** Most functions and globals still have address-based names
-  (`sub_08XXXXXX`, `gUnk_XXXXXXXX`), shown as "symbols undocumented" above.
+- **Names.** Issue #155 gives functions and globals real names with
+  `tools/rename.py`, each with its evidence in `docs/analysis/renames.csv`
+  (convention: `docs/naming.md`).  Run 1 named 1,141 symbols, among them
+  178 of the engine zone's 182 functions and most of the widely called
+  helpers.  The rest still have address-based names (`sub_08XXXXXX`,
+  `gUnk_XXXXXXXX`), shown as "symbols undocumented" above, and struct
+  fields are still `unkXX`.
 
 ## CI
 
